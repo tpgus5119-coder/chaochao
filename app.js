@@ -44,8 +44,10 @@ function toneRow(tones, small) {
   const r = el('div', 'tones' + (small ? ' sm' : ''));
   (tones || []).forEach(t => {
     const b = el('span', 'tchip ' + t.name);
-    b.append(el('b', null, esc(t.shape)), el('span', null, esc(t.name)));
-    b.title = t.syl + ' — ' + t.ko;
+    b.append(el('i', null, esc(t.syl)),
+             el('b', null, esc(t.shape)),
+             el('span', null, esc(t.name)));
+    b.title = t.syl + ' — ' + t.name + ' · ' + t.ko;
     r.append(b);
   });
   return r;

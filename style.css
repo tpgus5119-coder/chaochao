@@ -173,6 +173,7 @@ button:active{transform:scale(.98)}
   border:1px solid var(--line); border-radius:99px; padding:3px 10px;
   font-size:11px; color:var(--dim); background:var(--bg);
 }
+.tchip i{font-style:normal; font-weight:700; font-size:12px; color:var(--fg)}
 .tchip b{font-size:14px; color:var(--fg); line-height:1}
 .tchip.ngang b{color:var(--dim)}
 .tchip.huyen b,.tchip.nặng b{color:var(--accent)}
