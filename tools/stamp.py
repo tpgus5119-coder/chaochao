@@ -10,11 +10,12 @@ def h8(*paths):
         m.update(pathlib.Path(p).read_bytes())
     return m.hexdigest()[:8]
 
-ver = h8('style.css', 'app.js', 'data/days.json')
+ver = h8('style.css', 'app.js', 'pitch.js', 'data/days.json')
 
 f = pathlib.Path('index.html'); s = f.read_text()
 s = re.sub(r'(href="style\.css)(\?v=[^"]*)?"', rf'\1?v={ver}"', s)
 s = re.sub(r'(src="app\.js)(\?v=[^"]*)?"', rf'\1?v={ver}"', s)
+s = re.sub(r'(src="pitch\.js)(\?v=[^"]*)?"', rf'\1?v={ver}"', s)
 f.write_text(s)
 
 w = pathlib.Path('sw.js'); t = w.read_text()

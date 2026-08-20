@@ -163,15 +163,18 @@ function drawCompare(text, box) {
   b.onclick = () => {
     if (REC.key === text) playMine();
   };
-  const c = el('button', 'primary', '↔ 번갈아 듣기');
+  const t = el('button', 'primary', '📈 성조 보기');
+  const curve = el('div', 'curvearea');
+  t.onclick = () => showTone(text, REC.url, curve);
+  const c = el('button', 'ghost', '↔ 번갈아 듣기');
   c.onclick = async () => {
     play(text, false);
     await new Promise(r => setTimeout(r, 2200));
     if (REC.key === text) playMine();
   };
-  row.append(a, b, c);
+  row.append(a, b, c, t);
   box.append(row);
-  box.append(el('div', 'cmpnote', '성조가 오르내리는 방향이 같은지만 들어보세요. 똑같지 않아도 괜찮습니다.'));
+  box.append(curve);
 }
 
 function speakRow(text) {
@@ -185,6 +188,82 @@ function speakRow(text) {
   b.onclick = () => toggleRec(text, b, box);
   wrap.append(b, box);
   return wrap;
+}
+
+
+/* ---------- 성조 그림으로 보기 ----------
+   음성인식이 아니다. 소리의 **높낮이 곡선**만 뽑아 원어민 것과 겹쳐 그린다.
+   "맞다/틀리다"로 단정하지 않는다 — 모양이 눈에 보이면 스스로 고칠 수 있다. */
+let actx = null;
+const nativeCache = {};
+
+function getCtx() {
+  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+  if (actx.state === 'suspended') actx.resume();
+  return actx;
+}
+
+async function nativeCurve(text) {
+  if (nativeCache[text] !== undefined) return nativeCache[text];
+  const h = AIDX[text];
+  if (!h) return (nativeCache[text] = null);
+  try {
+    const r = await fetch(`audio/${S.voice}/slow/${h}.mp3`);
+    const c = await PITCH.analyze(await r.arrayBuffer(), getCtx());
+    return (nativeCache[text] = c);
+  } catch (e) { return (nativeCache[text] = null); }
+}
+
+function curveSvg(mine, native) {
+  const W = 260, H = 92, PAD = 8;
+  const all = [...(mine || []), ...(native || [])].filter(v => v !== null && isFinite(v));
+  const lo = Math.min(-4, Math.min(...all)), hi = Math.max(4, Math.max(...all));
+  const px = (i, n) => PAD + i * (W - PAD * 2) / (n - 1);
+  const py = v => PAD + (hi - v) * (H - PAD * 2) / (hi - lo || 1);
+  const path = arr => arr ? arr.map((v, i) => `${i ? 'L' : 'M'}${px(i, arr.length).toFixed(1)} ${py(v).toFixed(1)}`).join(' ') : '';
+  const zero = py(0).toFixed(1);
+  return `<svg viewBox="0 0 ${W} ${H}" class="curve">
+    <line x1="${PAD}" y1="${zero}" x2="${W - PAD}" y2="${zero}" class="mid"/>
+    ${native ? `<path d="${path(native)}" class="nat"/>` : ''}
+    ${mine ? `<path d="${path(mine)}" class="mine"/>` : ''}
+  </svg>`;
+}
+
+async function showTone(text, blobUrl, box) {
+  box.textContent = '';
+  const wait = el('div', 'cmpnote', '소리 높낮이를 재는 중…');
+  box.append(wait);
+  let mine = null, nat = null;
+  try {
+    const r = await fetch(blobUrl);
+    mine = await PITCH.analyze(await r.arrayBuffer(), getCtx());
+  } catch (e) { }
+  nat = await nativeCurve(text);
+  wait.remove();
+
+  if (!mine) {
+    box.append(el('div', 'cmpnote', '소리가 너무 작거나 짧아 높낮이를 못 읽었습니다. 조금 크게 다시 말해 보세요.'));
+    return;
+  }
+  const wrap = el('div', 'curvebox');
+  wrap.innerHTML = curveSvg(mine, nat);
+  box.append(wrap);
+
+  const lg = el('div', 'curvelegend');
+  lg.innerHTML = `<span class="k nat"></span>원어민 &nbsp; <span class="k mine"></span>내 소리`;
+  box.append(lg);
+
+  if (nat) {
+    const sc = PITCH.similarity(mine, nat);
+    const t = sc >= 70 ? ['모양이 비슷합니다', 'ok'] :
+              sc >= 45 ? ['방향은 맞는데 조금 다릅니다', 'mid'] :
+                         ['오르내리는 방향이 다릅니다', 'no'];
+    const b = el('div', 'tonescore ' + t[1]);
+    b.append(el('b', null, sc + '점'), el('span', null, t[0]));
+    box.append(b);
+    box.append(el('div', 'cmpnote',
+      '점수는 참고만 하세요. 기계가 재는 건 <b>높낮이 모양</b>이지 발음 전체가 아닙니다.'));
+  }
 }
 
 /* ---------- 화면 ---------- */
