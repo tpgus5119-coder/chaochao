@@ -374,6 +374,53 @@ function showMission(d) {
 $('#back').onclick = renderHome;
 $('#goReview').onclick = () => startQuiz(null, null);
 $('#goTone').onclick = startTone;
+/* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
+   200단어가 다 쌓이면 원본이 7.5KB라 압축해서 내보낸다 (10,600자 → 2,900자). */
+const b64 = u8 => { let s = ''; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
+const unb64 = t => Uint8Array.from(atob(t), c => c.charCodeAt(0));
+
+async function makeBackup() {
+  const raw = JSON.stringify({ done: S.done, srs: S.srs, firstDay: S.firstDay });
+  if (typeof CompressionStream === 'undefined')
+    return 'VNSTUDY1' + btoa(unescape(encodeURIComponent(raw)));
+  const st = new Blob([raw]).stream().pipeThrough(new CompressionStream('gzip'));
+  return 'VNSTUDY2' + b64(new Uint8Array(await new Response(st).arrayBuffer()));
+}
+
+async function readBackup(v) {
+  if (v.startsWith('VNSTUDY2')) {
+    const st = new Blob([unb64(v.slice(8))]).stream().pipeThrough(new DecompressionStream('gzip'));
+    return JSON.parse(await new Response(st).text());
+  }
+  if (v.startsWith('VNSTUDY1'))
+    return JSON.parse(decodeURIComponent(escape(atob(v.slice(8)))));
+  throw new Error('형식 아님');
+}
+
+$('#bkExport').onclick = async () => {
+  const blob = await makeBackup();
+  let copied = false;
+  try { await navigator.clipboard.writeText(blob); copied = true; } catch (e) { }
+  const n = Object.keys(S.done).length;
+  prompt(`${n}일치 진도를 담았습니다 (${blob.length}자).\n` +
+    (copied ? '이미 복사해 뒀습니다. ' : '') +
+    '메모 앱에 붙여넣어 두세요.', blob);
+};
+
+$('#bkImport').onclick = async () => {
+  const v = (prompt('백업해둔 글자를 붙여넣으세요.') || '').trim();
+  if (!v) return;
+  try {
+    const o = await readBackup(v);
+    const nd = Object.keys(o.done || {}).length, nw = Object.keys(o.srs || {}).length;
+    if (!confirm(`${nd}일치 진도와 단어 ${nw}개를 되살립니다.\n지금 진도는 덮어씁니다. 진행할까요?`)) return;
+    S.done = o.done || {}; S.srs = o.srs || {}; S.firstDay = o.firstDay;
+    save(); renderHome(); alert('되살렸습니다.');
+  } catch (e) {
+    alert('백업 글자가 아니거나 중간이 잘렸습니다.\nVNSTUDY 로 시작하는 글자 전체를 복사해 주세요.');
+  }
+};
+
 $('#voice').onclick = () => {
   S.voice = S.voice === 'f' ? 'm' : 'f'; save();
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';

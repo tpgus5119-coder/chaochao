@@ -155,3 +155,8 @@ button:active{transform:scale(.98)}
 .tonelist .tmark{font-size:12px; color:var(--dim); min-width:52px}
 .tonelist .tko{font-size:14px; color:var(--dim)}
 .tonelist button[data-r="ok"] .tmark,.tonelist button[data-r="ok"] .tko{color:var(--ok)}
+
+.backup{display:flex; gap:8px; justify-content:center; margin-top:18px}
+.backup button{flex:1; max-width:170px; font-size:14px; padding:10px 8px}
+.foot.small{font-size:12px; margin-top:10px; line-height:1.5}
+.foot.small b{color:var(--fg)}
