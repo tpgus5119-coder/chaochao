@@ -4,7 +4,18 @@
 const KEY = 'vnstudy.v2';
 const S = Object.assign({ voice: 'f', done: {}, srs: {}, act: {}, stats: {} },
   JSON.parse(localStorage.getItem(KEY) || '{}'));
-const save = () => localStorage.setItem(KEY, JSON.stringify(S));
+let saveWarned = false;
+function save() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(S));
+  } catch (e) {
+    // 시크릿 모드나 저장 공간이 꽉 찬 경우. 학습은 계속 되게 두고 한 번만 알린다.
+    if (!saveWarned) {
+      saveWarned = true;
+      alert('이 브라우저에서는 진도가 저장되지 않습니다.\n시크릿 모드를 끄거나 다른 브라우저로 열어 주세요.\n(학습은 그대로 하실 수 있습니다)');
+    }
+  }
+}
 
 const DAY = 864e5;
 const STEPS = [1, 3, 7, 14, 30, 60];   // 일 단위. 반년~1년 기억을 목표로 한 간격
@@ -19,13 +30,25 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 const label = d => (typeof d.day === 'string' ? '준비 ' + d.day.slice(1) : 'Day ' + d.day);
 
 /* ---------- 소리 ---------- */
-let audio = null;
+/* 아이폰 사파리는 '사용자가 방금 누른 것'이 아니면 새 Audio 재생을 막는다.
+   그래서 Audio 하나를 만들어 두고 주소만 바꿔 쓴다. 한 번 허락되면 그 뒤로는 계속 난다. */
+const audio = new Audio();
+const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 둔다)
+
 function play(text, slow) {
   const h = AIDX[text];
   if (!h) return;
-  if (audio) audio.pause();
-  audio = new Audio(`audio/${S.voice}/${slow ? 'slow' : 'n'}/${h}.mp3`);
+  audio.pause();
+  audio.src = `audio/${S.voice}/${slow ? 'slow' : 'n'}/${h}.mp3`;
+  audio.currentTime = 0;
   audio.play().catch(() => { });
+}
+function playMine() {
+  if (!REC.url) return;
+  myVoice.pause();
+  myVoice.src = REC.url;
+  myVoice.currentTime = 0;
+  myVoice.play().catch(() => { });
 }
 function soundRow(text, withSlow) {
   const row = el('div', 'sound');
@@ -61,13 +84,15 @@ async function playSeq(list) {
     if ($('#' + view).hidden) return;        // 화면을 떠났으면 중단
     const h = AIDX[t];
     if (!h) continue;
-    if (audio) audio.pause();
-    audio = new Audio(`audio/${S.voice}/n/${h}.mp3`);
+    audio.pause();
+    audio.src = `audio/${S.voice}/n/${h}.mp3`;
+    audio.currentTime = 0;
     await new Promise(res => {
       audio.onended = audio.onerror = res;
       audio.play().catch(res);
       setTimeout(res, 9000);
     });
+    audio.onended = audio.onerror = null;
     await new Promise(r => setTimeout(r, 350));
   }
 }
@@ -133,13 +158,13 @@ function drawCompare(text, box) {
   a.onclick = () => play(text, false);
   const b = el('button', 'ghost', '🙋 내 소리');
   b.onclick = () => {
-    if (REC.url && REC.key === text) new Audio(REC.url).play().catch(() => { });
+    if (REC.key === text) playMine();
   };
   const c = el('button', 'primary', '↔ 번갈아 듣기');
   c.onclick = async () => {
     play(text, false);
     await new Promise(r => setTimeout(r, 2200));
-    if (REC.url && REC.key === text) new Audio(REC.url).play().catch(() => { });
+    if (REC.key === text) playMine();
   };
   row.append(a, b, c);
   box.append(row);
@@ -162,7 +187,7 @@ function speakRow(text) {
 /* ---------- 화면 ---------- */
 const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone'];
 function show(v, title, canBack) {
-  if (audio) { audio.pause(); audio = null; }   // 넘어가면 재생 중이던 소리도 멈춘다
+  audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
   $('#title').textContent = title;
@@ -176,7 +201,12 @@ function show(v, title, canBack) {
    그런데 간격 반복은 돌아와야만 돌아간다. 그래서 목표를 '돌아오는 것'에만 건다.
    연속 기록(streak)은 하루 끊기면 그만두는 원인이라 쓰지 않는다.
    대신 '이번 주 5일'로 두고 이틀은 쉬어도 되게 한다. */
-const ymd = t => new Date(t || Date.now()).toISOString().slice(0, 10);
+const ymd = t => {
+  // 반드시 '그 사람이 사는 곳의 날짜'로 센다.
+  // toISOString()은 UTC라, 한국(UTC+9)에서 오전 9시 이전 공부가 전날로 기록된다.
+  const d = t ? new Date(t) : new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+};
 
 function touchToday() {
   const k = ymd();
@@ -381,7 +411,7 @@ function drawCard() {
       SONG[songUrl] = r.ok;
       if (!r.ok) return;
       const sg = el('button', 'song', '🎵 오늘의 노래');
-      sg.onclick = () => { if (audio) audio.pause(); audio = new Audio(songUrl); audio.play().catch(() => { }); };
+      sg.onclick = () => { audio.pause(); audio.src = songUrl; audio.currentTime = 0; audio.play().catch(() => { }); };
       all.after(sg);
     }).catch(() => { });
 
@@ -444,8 +474,12 @@ function drawCard() {
 }
 
 $('#prev').onclick = () => { if (L.i > 0) { L.i--; drawCard(); } };
+let leaving = false;
 $('#next').onclick = () => {
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
+  if (leaving) return;                       // 연타로 두 번 넘어가는 것 방지
+  leaving = true;
+  setTimeout(() => { leaving = false; }, 800);
   if ((L.day.words || []).length) startQuiz(L.day.words, L.day);
   else showMission(L.day);
 };
