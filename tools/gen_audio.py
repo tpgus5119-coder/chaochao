@@ -25,11 +25,10 @@ def collect(data):
     for d in data["days"]:
         for w in d["words"]:
             out[w["vi"]] = "word"
-        for st in d["sets"]:
-            for sen in st["sentences"]:
-                out[sen["vi"]] = "sent"    # 본문장은 느린 버전도
-                for sw in sen["swap"]:
-                    out.setdefault(sw, "ex")
+        for l in d["dialog"]["lines"]:
+            out[l["vi"]] = "sent"          # 대화 문장은 느린 버전도
+        for t in d["dialog"]["extra"]:
+            out.setdefault(t, "ex")
     return out
 
 async def one(text, voice_id, voice_name, rate):

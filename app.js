@@ -39,6 +39,34 @@ function soundRow(text, withSlow) {
   return row;
 }
 
+/* 성조 표시 — 글자에서 자동으로 뽑은 것 */
+function toneRow(tones, small) {
+  const r = el('div', 'tones' + (small ? ' sm' : ''));
+  (tones || []).forEach(t => {
+    const b = el('span', 'tchip ' + t.name);
+    b.append(el('b', null, esc(t.shape)), el('span', null, esc(t.name)));
+    b.title = t.syl + ' — ' + t.ko;
+    r.append(b);
+  });
+  return r;
+}
+
+/* 대화 전체를 순서대로 재생한다 */
+async function playSeq(list) {
+  for (const t of list) {
+    const h = AIDX[t];
+    if (!h) continue;
+    if (audio) audio.pause();
+    audio = new Audio(`audio/${S.voice}/n/${h}.mp3`);
+    await new Promise(res => {
+      audio.onended = audio.onerror = res;
+      audio.play().catch(res);
+      setTimeout(res, 9000);
+    });
+    await new Promise(r => setTimeout(r, 350));
+  }
+}
+
 /* ---------- 화면 ---------- */
 const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone'];
 function show(v, title, canBack) {
@@ -81,7 +109,7 @@ function renderHome() {
     b.append(
       el('span', 'num', esc(label(d))),
       el('span', 'nm', esc(d.theme)),
-      el('span', 'st', done ? '완료 ✔' : (n ? n + '단어 · 4문장' : '소리 연습'))
+      el('span', 'st', done ? '완료 ✔' : (n ? n + '단어 · 대화 1개' : '소리 연습'))
     );
     b.onclick = () => startLearn(d);
     const li = el('li'); li.append(b); list.append(li);
@@ -97,8 +125,7 @@ function startLearn(d) {
   (d.letters || []).forEach(x => items.push({ k: 'letter', d: x }));
   (d.tones || []).forEach(x => items.push({ k: 'tone', d: x }));
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
-  (d.sets || []).forEach(set => set.sentences.forEach(x =>
-    items.push({ k: 'sent', d: x, set })));
+  if (d.dialog) items.push({ k: 'dialog', d: d.dialog });
   L = { day: d, items, i: 0 };
   $('#learnIntro').textContent = d.intro || '';
   drawCard();
@@ -141,36 +168,57 @@ function drawCard() {
 
   if (it.k === 'word') {
     c.append(el('div', 'vi', esc(x.vi)));
+    c.append(toneRow(x.tones));
     c.append(soundRow(x.vi, true));
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
     c.append(reveal(x.kr_read));
   }
 
-  if (it.k === 'sent') {
-    c.append(el('div', 'setbadge ' + (it.set.kind === '일상' ? 'daily' : 'work'), esc(it.set.title)));
-    c.append(el('div', 'vi sm', esc(x.vi)));
-    c.append(soundRow(x.vi, true));
-    c.append(el('div', 'ko', esc(x.ko)));
-    // 단어별 풀이 — 쌩초보에게 통문장은 벽이다
-    const g = el('div', 'gloss');
-    x.gloss.forEach(p => {
-      const cell = el('div', 'gcell');
-      cell.append(el('span', 'gw', esc(p.w)), el('span', 'gm', esc(p.m)));
-      g.append(cell);
+  if (it.k === 'dialog') {
+    c.classList.add('wide');
+    c.append(el('div', 'setbadge daily', '오늘의 대화 · ' + esc(x.title)));
+    const all = el('button', 'primary', '▶ 대화 전체 듣기');
+    all.onclick = () => playSeq(x.lines.map(l => l.vi));
+    c.append(all);
+
+    x.lines.forEach(l => {
+      const row = el('div', 'line ' + (l.who === 'A' ? 'a' : 'b'));
+      const head = el('div', 'lhead');
+      head.append(el('span', 'who', l.who));
+      const bt = el('button', 'ghost', '🔊');
+      bt.onclick = () => play(l.vi, false);
+      const bs = el('button', 'ghost', '🐢');
+      bs.onclick = () => play(l.vi, true);
+      head.append(bt, bs);
+      row.append(head);
+      row.append(el('div', 'lvi', esc(l.vi)));
+      row.append(el('div', 'lko', esc(l.ko)));
+      row.append(toneRow(l.tones, true));
+      const g = el('div', 'gloss');
+      l.gloss.forEach(pp => {
+        const cell = el('div', 'gcell');
+        cell.append(el('span', 'gw', esc(pp.w)), el('span', 'gm', esc(pp.m)));
+        g.append(cell);
+      });
+      row.append(g);
+      row.append(reveal(l.kr_read));
+      c.append(row);
     });
-    c.append(g);
-    c.append(reveal(x.kr_read));
-    // 갈아끼운 문장
-    const sw = el('div', 'ex');
-    sw.append(el('div', 'exhead', '이렇게도 말합니다'));
-    x.swap.forEach(s => {
-      const b = el('button');
-      b.append(el('span', 'exvi', esc(s)), el('span', null, '🔊'));
-      b.onclick = () => play(s, false);
-      sw.append(b);
-    });
-    c.append(sw);
+
+    if (x.extra && x.extra.length) {
+      const sw = el('div', 'ex');
+      sw.append(el('div', 'exhead', '이렇게도 말합니다'));
+      x.extra.forEach(t => {
+        const b = el('button');
+        b.append(el('span', 'exvi', esc(t)), el('span', null, '🔊'));
+        b.onclick = () => play(t, false);
+        sw.append(b);
+      });
+      c.append(sw);
+    }
+  } else {
+    c.classList.remove('wide');
   }
 
   $('#pos').textContent = (L.i + 1) + ' / ' + L.items.length;

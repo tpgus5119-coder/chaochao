@@ -1,61 +1,47 @@
 #!/usr/bin/env python3
-"""part1/2/3 을 days.json 으로 합치고, 어휘 순서를 엄격히 검증한다."""
+"""준비 3일 + 일상 20일을 days.json 으로 합치고 검증한다.
+검증 두 가지: 단어 중복 / 대화에 아직 안 배운 낱말이 섞였는지."""
 import json, pathlib, re, sys, collections
 R = pathlib.Path('.')
-p1 = json.loads((R/'data/_part1.json').read_text())
-p2 = json.loads((R/'data/_part2.json').read_text())
-p3 = json.loads((R/'data/_part3.json').read_text())
+p1 = json.loads((R/'data/_part1.json').read_text())      # 준비 3일 + 성조 드릴
+d1 = json.loads((R/'data/_daily1.json').read_text())
+d2 = json.loads((R/'data/_daily2.json').read_text())
 
-out = {"meta": {"version": "v2",
+out = {"meta": {"version": "v3",
                 "voices": {"f": "vi-VN-HoaiMyNeural", "m": "vi-VN-NamMinhNeural"},
-                "note": "북부(하노이) 표준. 완전 초보용 — 준비 3일 + 20일."},
-       "prep": p1["prep"],
-       "tonedrill": p1["tonedrill"],
-       "days": p1["days"] + p2["days"] + p3["days"]}
+                "track": "일상 기초 (완전 초보)",
+                "note": "북부(하노이) 표준. 하루 = 단어 5개 + 주고받는 대화 1개."},
+       "prep": p1["prep"], "tonedrill": p1["tonedrill"],
+       "days": d1["days"] + d2["days"]}
 
-# --- 검증 1: 단어 중복 ---
 seen = collections.defaultdict(list)
 for d in out["days"]:
     for w in d["words"]:
         seen[w["vi"]].append(d["day"])
 dups = {k: v for k, v in seen.items() if len(v) > 1}
 
-# --- 검증 2: 문장에 아직 안 배운 낱말이 있는지 (누적, 엄격) ---
-def toks(s):
-    return [t for t in re.split(r"[\s,.!?]+", s) if t]
-
-PROPER = {"hàn","quốc","việt","nam","minsu","nguyễn","văn","hùng","trần","thị","lan"}
-vocab = set()
-bad = []
+PROPER = {"hàn","quốc","việt","nam","minsu","nguyễn","văn","hùng","trần","thị","lan",
+          "hà","nội","busan"}
+toks = lambda s: [t for t in re.split(r"[\s,.!?]+", s) if t]
+vocab, bad = set(), []
 for d in out["days"]:
     for w in d["words"]:
         vocab.update(t.lower() for t in w["vi"].split())
-    for st in d["sets"]:
-        for sen in st["sentences"]:
-            for txt in [sen["vi"]] + sen["swap"]:
-                for t in toks(txt):
-                    lt = t.lower()
-                    if lt in PROPER:          # 고유명사만 건너뛴다 (첫 글자 대문자는 봐주지 않는다)
-                        continue
-                    if lt not in vocab:
-                        bad.append((d["day"], txt, t))
+    texts = [l["vi"] for l in d["dialog"]["lines"]] + d["dialog"]["extra"]
+    for txt in texts:
+        for t in toks(txt):
+            lt = t.lower()
+            if lt in PROPER or lt in vocab:
+                continue
+            bad.append((d["day"], txt, t))
 
-# --- 검증 3: gloss 가 문장 낱말을 다 덮는지 (대략) ---
-thin = []
-for d in out["days"]:
-    for st in d["sets"]:
-        for sen in st["sentences"]:
-            if len(sen["gloss"]) < 2 and len(toks(sen["vi"])) > 2:
-                thin.append((d["day"], sen["vi"]))
-
-print("Day 수:", len(out["days"]), "| 준비:", len(out["prep"]))
-print("단어 총", sum(len(d["words"]) for d in out["days"]), "| 고유", len(seen))
-print("문장 총", sum(len(s["sentences"]) for d in out["days"] for s in d["sets"]),
-      "| 변형 포함", sum(1+len(sen["swap"]) for d in out["days"] for s in d["sets"] for sen in s["sentences"]))
+n_words = sum(len(d["words"]) for d in out["days"])
+n_lines = sum(len(d["dialog"]["lines"]) for d in out["days"])
+print(f"준비 {len(out['prep'])}일 + Day {len(out['days'])}일")
+print(f"단어 {n_words} (고유 {len(seen)}) / 대화 {len(out['days'])}개 · {n_lines}문장 / 변형 {sum(len(d['dialog']['extra']) for d in out['days'])}")
 print("\n중복 단어:", dups or "없음")
 print("미학습 낱말 %d건:" % len(bad))
 for a in bad: print('   Day%-3s "%s"  ←  %s' % a)
-if thin: print("gloss 빈약:", thin)
 
 if "--write" in sys.argv and not bad and not dups:
     (R/'data/days.json').write_text(json.dumps(out, ensure_ascii=False, indent=1))

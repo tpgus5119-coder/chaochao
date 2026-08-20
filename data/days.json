@@ -1,11 +1,12 @@
 {
  "meta": {
-  "version": "v2",
+  "version": "v3",
   "voices": {
    "f": "vi-VN-HoaiMyNeural",
    "m": "vi-VN-NamMinhNeural"
   },
-  "note": "북부(하노이) 표준. 완전 초보용 — 준비 3일 + 20일."
+  "track": "일상 기초 (완전 초보)",
+  "note": "북부(하노이) 표준. 하루 = 단어 5개 + 주고받는 대화 1개."
  },
  "prep": [
   {
@@ -397,3818 +398,4314 @@
  "days": [
   {
    "day": 1,
-   "theme": "인사와 호칭",
-   "intro": "베트남어는 '너/나'가 나이·관계에 따라 바뀐다. 한국어의 형·누나·동생과 똑같은 구조라 우리에겐 오히려 쉽다. 영어권 사람들이 가장 어려워하는 부분이다.",
+   "theme": "인사",
+   "intro": "베트남어는 '너/나'가 나이·관계에 따라 바뀐다. 한국어의 형·누나·동생과 똑같아서 우리에겐 오히려 쉽다.",
    "words": [
     {
      "vi": "chào",
      "ko": "안녕 (인사말)",
      "kr_read": "짜오",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "chào",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
     },
     {
      "vi": "anh",
      "ko": "형·오빠 (손위 남자)",
      "kr_read": "아인",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "anh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
     },
     {
      "vi": "chị",
      "ko": "누나·언니 (손위 여자)",
      "kr_read": "찌",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "chị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
     },
     {
      "vi": "em",
      "ko": "동생 (손아래)",
      "kr_read": "앰",
-     "hanja": null
-    },
-    {
-     "vi": "tôi",
-     "ko": "나·저",
-     "kr_read": "또이",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "em",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
     },
     {
      "vi": "bạn",
      "ko": "너·친구 (동갑)",
      "kr_read": "반",
-     "hanja": null
-    },
-    {
-     "vi": "vâng",
-     "ko": "네",
-     "kr_read": "벙",
-     "hanja": null
-    },
-    {
-     "vi": "cảm ơn",
-     "ko": "고맙습니다",
-     "kr_read": "깜 언",
-     "hanja": "感恩 (감은)"
-    },
-    {
-     "vi": "giám đốc",
-     "ko": "사장·감독",
-     "kr_read": "잠 독",
-     "hanja": "監督 (감독)"
-    },
-    {
-     "vi": "công nhân",
-     "ko": "작업자·직공",
-     "kr_read": "꼼 년",
-     "hanja": "工人 (공인)"
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Chào anh!",
-       "ko": "안녕하세요! (손위 남자에게)",
-       "kr_read": "짜오 아인",
-       "gloss": [
-        {
-         "w": "Chào",
-         "m": "안녕"
-        },
-        {
-         "w": "anh",
-         "m": "형·오빠"
-        }
-       ],
-       "swap": [
-        "Chào chị!",
-        "Chào em!"
-       ]
-      },
-      {
-       "vi": "Cảm ơn chị.",
-       "ko": "고맙습니다. (손위 여자에게)",
-       "kr_read": "깜 언 찌",
-       "gloss": [
-        {
-         "w": "Cảm ơn",
-         "m": "고맙다"
-        },
-        {
-         "w": "chị",
-         "m": "누나·언니"
-        }
-       ],
-       "swap": [
-        "Cảm ơn anh.",
-        "Cảm ơn bạn."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Chào giám đốc!",
-       "ko": "사장님, 안녕하세요!",
-       "kr_read": "짜오 잠 독",
-       "gloss": [
-        {
-         "w": "Chào",
-         "m": "안녕"
-        },
-        {
-         "w": "giám đốc",
-         "m": "사장 監督"
-        }
-       ],
-       "swap": [
-        "Chào công nhân!",
-        "Chào anh!"
-       ]
-      },
-      {
-       "vi": "Vâng, cảm ơn anh.",
-       "ko": "네, 고맙습니다.",
-       "kr_read": "벙 깜 언 아인",
-       "gloss": [
-        {
-         "w": "Vâng",
-         "m": "네"
-        },
-        {
-         "w": "cảm ơn",
-         "m": "고맙다"
-        },
-        {
-         "w": "anh",
-         "m": "형·오빠"
-        }
-       ],
-       "swap": [
-        "Vâng, cảm ơn chị.",
-        "Vâng, cảm ơn giám đốc."
-       ]
+       "syl": "bạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
       }
      ]
     }
    ],
+   "dialog": {
+    "title": "처음 만나 인사하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Chào anh!",
+      "ko": "안녕하세요! (손위 남자에게)",
+      "kr_read": "짜오 아인",
+      "gloss": [
+       {
+        "w": "Chào",
+        "m": "안녕"
+       },
+       {
+        "w": "anh",
+        "m": "형·오빠"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Chào",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "anh!",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Chào em!",
+      "ko": "안녕! (손아래에게)",
+      "kr_read": "짜오 앰",
+      "gloss": [
+       {
+        "w": "Chào",
+        "m": "안녕"
+       },
+       {
+        "w": "em",
+        "m": "동생"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Chào",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "em!",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Chào chị!",
+     "Chào bạn!"
+    ]
+   },
    "mission": {
-    "goal": "상대에게 맞는 호칭을 정하라",
-    "how": "서로 나이를 모른다. 카드만 보고 대화해서 상대를 anh/chị/em 중 뭐라고 부를지 합의하라.",
+    "goal": "상대에게 맞는 호칭 정하기",
+    "how": "서로 나이를 모른다. 대화해서 상대를 anh / chị / em 중 뭐라고 부를지 정하라.",
     "a": "당신은 25살 남자입니다",
     "b": "당신은 32살 여자입니다"
    }
   },
   {
    "day": 2,
-   "theme": "이름과 소속",
-   "intro": "của는 '~의'다. 순서가 한국어와 반대다 — 'tên của tôi'는 '이름 의 나' 순서로 붙는다. 이것만 뒤집어 생각하면 된다.",
+   "theme": "이름 묻기",
+   "intro": "của는 '~의'다. 순서가 한국어와 반대라 'tên của tôi'는 '이름 의 나' 순서로 붙는다.",
    "words": [
     {
-     "vi": "tên",
-     "ko": "이름",
-     "kr_read": "뗀",
-     "hanja": null
-    },
-    {
-     "vi": "gì",
-     "ko": "무엇",
-     "kr_read": "지",
-     "hanja": null
+     "vi": "tôi",
+     "ko": "나·저",
+     "kr_read": "또이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "tôi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
     },
     {
      "vi": "là",
      "ko": "~이다",
      "kr_read": "라",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "là",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "tên",
+     "ko": "이름",
+     "kr_read": "뗀",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "tên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "gì",
+     "ko": "무엇",
+     "kr_read": "지",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "gì",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
     },
     {
      "vi": "của",
      "ko": "~의",
      "kr_read": "꾸어",
-     "hanja": null
-    },
-    {
-     "vi": "người",
-     "ko": "사람",
-     "kr_read": "응어이",
-     "hanja": null
-    },
-    {
-     "vi": "xin lỗi",
-     "ko": "미안합니다·실례합니다",
-     "kr_read": "씬 로이",
-     "hanja": null
-    },
-    {
-     "vi": "nhân viên",
-     "ko": "직원",
-     "kr_read": "년 비엔",
-     "hanja": "人員 (인원)"
-    },
-    {
-     "vi": "công ty",
-     "ko": "회사",
-     "kr_read": "꼼 띠",
-     "hanja": "公司 (공사)"
-    },
-    {
-     "vi": "nhà máy",
-     "ko": "공장",
-     "kr_read": "냐 마이",
-     "hanja": null
-    },
-    {
-     "vi": "ở",
-     "ko": "~에 (있다)",
-     "kr_read": "어",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Tên bạn là gì?",
-       "ko": "네 이름이 뭐야?",
-       "kr_read": "뗀 반 라 지",
-       "gloss": [
-        {
-         "w": "Tên",
-         "m": "이름"
-        },
-        {
-         "w": "bạn",
-         "m": "너"
-        },
-        {
-         "w": "là",
-         "m": "~이다"
-        },
-        {
-         "w": "gì",
-         "m": "무엇"
-        }
-       ],
-       "swap": [
-        "Tên anh là gì?",
-        "Tên chị là gì?"
-       ]
-      },
-      {
-       "vi": "Tôi là Minsu.",
-       "ko": "저는 민수입니다.",
-       "kr_read": "또이 라 민수",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "là",
-         "m": "~이다"
-        },
-        {
-         "w": "Minsu",
-         "m": "민수"
-        }
-       ],
-       "swap": [
-        "Tôi là em.",
-        "Tôi là bạn của anh."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Tôi là nhân viên công ty.",
-       "ko": "저는 회사 직원입니다.",
-       "kr_read": "또이 라 년 비엔 꼼 띠",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "là",
-         "m": "~이다"
-        },
-        {
-         "w": "nhân viên",
-         "m": "직원 人員"
-        },
-        {
-         "w": "công ty",
-         "m": "회사 公司"
-        }
-       ],
-       "swap": [
-        "Tôi là công nhân.",
-        "Tôi là giám đốc công ty."
-       ]
-      },
-      {
-       "vi": "Xin lỗi, tôi ở nhà máy.",
-       "ko": "실례합니다, 저는 공장에 있습니다.",
-       "kr_read": "씬 로이 또이 어 냐 마이",
-       "gloss": [
-        {
-         "w": "Xin lỗi",
-         "m": "실례합니다"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "ở",
-         "m": "~에 있다"
-        },
-        {
-         "w": "nhà máy",
-         "m": "공장"
-        }
-       ],
-       "swap": [
-        "Tôi ở công ty.",
-        "Giám đốc ở nhà máy."
-       ]
+       "syl": "của",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
       }
      ]
     }
    ],
+   "dialog": {
+    "title": "이름 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Tên của anh là gì?",
+      "ko": "형 이름이 뭐예요?",
+      "kr_read": "뗀 꾸어 아인 라 지",
+      "gloss": [
+       {
+        "w": "Tên",
+        "m": "이름"
+       },
+       {
+        "w": "của",
+        "m": "~의"
+       },
+       {
+        "w": "anh",
+        "m": "형"
+       },
+       {
+        "w": "là",
+        "m": "~이다"
+       },
+       {
+        "w": "gì",
+        "m": "무엇"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tên",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "của",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "gì?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tên tôi là Nam.",
+      "ko": "제 이름은 남이에요.",
+      "kr_read": "뗀 또이 라 남",
+      "gloss": [
+       {
+        "w": "Tên",
+        "m": "이름"
+       },
+       {
+        "w": "tôi",
+        "m": "나"
+       },
+       {
+        "w": "là",
+        "m": "~이다"
+       },
+       {
+        "w": "Nam",
+        "m": "남 (이름)"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tên",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Nam.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Tên bạn là gì?",
+     "Tôi là Minsu."
+    ]
+   },
    "mission": {
-    "goal": "상대의 이름과 소속을 알아내라",
-    "how": "각자 카드를 받고 서로 안 보여준다. Tên ... là gì? 만 써서 이름을 알아내고 철자까지 정확히 적어라.",
-    "a": "당신 이름은 Nguyễn Văn Hùng, nhà máy 소속입니다",
-    "b": "당신 이름은 Trần Thị Lan, công ty 소속입니다"
+    "goal": "상대의 이름을 알아내 받아 적어라",
+    "how": "각자 이름 카드를 받고 안 보여준다. 오늘 대화만 써서 알아내고 철자까지 정확히 적어라.",
+    "a": "당신의 이름은 Nguyễn Văn Hùng 입니다",
+    "b": "당신의 이름은 Trần Thị Lan 입니다"
    }
   },
   {
    "day": 3,
-   "theme": "나라와 하는 일",
-   "intro": "không은 '아니다'인데 문장 끝에 붙으면 '~입니까?'가 된다. 이 한 글자가 베트남어 의문문의 절반이다.",
+   "theme": "만나서 반갑습니다",
+   "intro": "được은 '~하게 되다'는 뜻이다. 'được gặp'은 '만나게 되어서'. 인사말에 늘 붙는다.",
    "words": [
-    {
-     "vi": "nước",
-     "ko": "나라·물",
-     "kr_read": "느억",
-     "hanja": null
-    },
-    {
-     "vi": "Hàn Quốc",
-     "ko": "한국",
-     "kr_read": "한 꾸옥",
-     "hanja": "韓國 (한국)"
-    },
-    {
-     "vi": "Việt Nam",
-     "ko": "베트남",
-     "kr_read": "비엣 남",
-     "hanja": "越南 (월남)"
-    },
-    {
-     "vi": "nào",
-     "ko": "어느",
-     "kr_read": "나오",
-     "hanja": null
-    },
-    {
-     "vi": "sống",
-     "ko": "살다",
-     "kr_read": "쏨",
-     "hanja": null
-    },
-    {
-     "vi": "làm",
-     "ko": "하다·일하다",
-     "kr_read": "람",
-     "hanja": null
-    },
-    {
-     "vi": "việc",
-     "ko": "일",
-     "kr_read": "비엑",
-     "hanja": null
-    },
-    {
-     "vi": "có",
-     "ko": "있다",
-     "kr_read": "꼬",
-     "hanja": null
-    },
-    {
-     "vi": "không",
-     "ko": "아니다 / ~입니까?",
-     "kr_read": "콤",
-     "hanja": null
-    },
-    {
-     "vi": "và",
-     "ko": "그리고",
-     "kr_read": "바",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Tôi là người Hàn Quốc.",
-       "ko": "저는 한국 사람입니다.",
-       "kr_read": "또이 라 응어이 한 꾸옥",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "là",
-         "m": "~이다"
-        },
-        {
-         "w": "người",
-         "m": "사람"
-        },
-        {
-         "w": "Hàn Quốc",
-         "m": "한국 韓國"
-        }
-       ],
-       "swap": [
-        "Tôi là người Việt Nam.",
-        "Bạn là người nước nào?"
-       ]
-      },
-      {
-       "vi": "Tôi sống ở Việt Nam.",
-       "ko": "저는 베트남에 삽니다.",
-       "kr_read": "또이 쏨 어 비엣 남",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "sống",
-         "m": "살다"
-        },
-        {
-         "w": "ở",
-         "m": "~에"
-        },
-        {
-         "w": "Việt Nam",
-         "m": "베트남 越南"
-        }
-       ],
-       "swap": [
-        "Tôi sống ở Hàn Quốc.",
-        "Anh sống ở nước nào?"
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Tôi làm việc ở nhà máy.",
-       "ko": "저는 공장에서 일합니다.",
-       "kr_read": "또이 람 비엑 어 냐 마이",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "làm",
-         "m": "하다"
-        },
-        {
-         "w": "việc",
-         "m": "일"
-        },
-        {
-         "w": "ở",
-         "m": "~에서"
-        },
-        {
-         "w": "nhà máy",
-         "m": "공장"
-        }
-       ],
-       "swap": [
-        "Tôi làm việc ở công ty.",
-        "Chị làm việc ở công ty."
-       ]
-      },
-      {
-       "vi": "Anh có làm việc không?",
-       "ko": "일하십니까?",
-       "kr_read": "아인 꼬 람 비엑 콤",
-       "gloss": [
-        {
-         "w": "Anh",
-         "m": "형·오빠"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "làm việc",
-         "m": "일하다"
-        },
-        {
-         "w": "không",
-         "m": "~입니까?"
-        }
-       ],
-       "swap": [
-        "Chị có làm việc không?",
-        "Tôi không làm việc."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "상대의 나라와 일터를 알아내라",
-    "how": "카드는 숨긴다. 오늘의 문장만 써서 상대가 어느 나라 사람이고 어디서 일하는지 알아내라.",
-    "a": "당신은 Việt Nam 사람이고 nhà máy에서 일합니다",
-    "b": "당신은 Hàn Quốc 사람이고 công ty에서 일합니다"
-   }
-  },
-  {
-   "day": 4,
-   "theme": "못 알아들었을 때",
-   "intro": "쌩초보에게 가장 중요한 날이다. 이 네 문장을 못 하면 나머지 190단어가 소용없다. 막혔을 때 한국어로 도망가지 않게 해주는 안전장치다.",
-   "words": [
-    {
-     "vi": "hiểu",
-     "ko": "이해하다",
-     "kr_read": "히에우",
-     "hanja": null
-    },
-    {
-     "vi": "biết",
-     "ko": "알다",
-     "kr_read": "비엣",
-     "hanja": null
-    },
-    {
-     "vi": "nói",
-     "ko": "말하다",
-     "kr_read": "노이",
-     "hanja": null
-    },
-    {
-     "vi": "nghe",
-     "ko": "듣다",
-     "kr_read": "응애",
-     "hanja": null
-    },
-    {
-     "vi": "từ từ",
-     "ko": "천천히",
-     "kr_read": "뜨 뜨",
-     "hanja": null
-    },
-    {
-     "vi": "lại",
-     "ko": "다시",
-     "kr_read": "라이",
-     "hanja": null
-    },
-    {
-     "vi": "chậm",
-     "ko": "느리다·천천히",
-     "kr_read": "쩜",
-     "hanja": null
-    },
-    {
-     "vi": "được",
-     "ko": "~할 수 있다",
-     "kr_read": "드억",
-     "hanja": null
-    },
-    {
-     "vi": "tiếng Việt",
-     "ko": "베트남어",
-     "kr_read": "띠엥 비엣",
-     "hanja": null
-    },
-    {
-     "vi": "tiếng Hàn",
-     "ko": "한국어",
-     "kr_read": "띠엥 한",
-     "hanja": "韓 (한)"
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Tôi không hiểu.",
-       "ko": "저는 이해 못 했어요.",
-       "kr_read": "또이 콤 히에우",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "không",
-         "m": "아니다"
-        },
-        {
-         "w": "hiểu",
-         "m": "이해하다"
-        }
-       ],
-       "swap": [
-        "Tôi không biết.",
-        "Tôi hiểu."
-       ]
-      },
-      {
-       "vi": "Nói từ từ được không?",
-       "ko": "천천히 말해 주실 수 있나요?",
-       "kr_read": "노이 뜨 뜨 드억 콤",
-       "gloss": [
-        {
-         "w": "Nói",
-         "m": "말하다"
-        },
-        {
-         "w": "từ từ",
-         "m": "천천히"
-        },
-        {
-         "w": "được",
-         "m": "할 수 있다"
-        },
-        {
-         "w": "không",
-         "m": "~입니까?"
-        }
-       ],
-       "swap": [
-        "Nói lại được không?",
-        "Nói chậm được không?"
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Tôi không biết tiếng Việt.",
-       "ko": "저는 베트남어를 모릅니다.",
-       "kr_read": "또이 콤 비엣 띠엥 비엣",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "không",
-         "m": "아니다"
-        },
-        {
-         "w": "biết",
-         "m": "알다"
-        },
-        {
-         "w": "tiếng Việt",
-         "m": "베트남어"
-        }
-       ],
-       "swap": [
-        "Tôi biết tiếng Hàn.",
-        "Tôi không nghe được."
-       ]
-      },
-      {
-       "vi": "Anh nói tiếng Hàn được không?",
-       "ko": "한국어 하실 수 있나요?",
-       "kr_read": "아인 노이 띠엥 한 드억 콤",
-       "gloss": [
-        {
-         "w": "Anh",
-         "m": "형·오빠"
-        },
-        {
-         "w": "nói",
-         "m": "말하다"
-        },
-        {
-         "w": "tiếng Hàn",
-         "m": "한국어 韓"
-        },
-        {
-         "w": "được không",
-         "m": "할 수 있나요"
-        }
-       ],
-       "swap": [
-        "Chị nói tiếng Việt được không?",
-        "Giám đốc nói tiếng Hàn được không?"
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "일부러 못 알아듣는 척하고 버텨라",
-    "how": "A가 아무 말이나 베트남어로 빠르게 한다. B는 절대 한국어를 쓰지 않고 오늘의 문장만으로 세 번 되묻는다. 성공하면 역할 교대.",
-    "a": "당신이 빠르게 말합니다 (아무 문장이나)",
-    "b": "당신은 한국어를 한 마디도 쓰면 안 됩니다"
-   }
-  },
-  {
-   "day": 5,
-   "theme": "안부와 작별",
-   "intro": "'có ... không?'은 베트남어에서 가장 많이 쓰는 질문 틀이다. 가운데에 아무 말이나 넣으면 질문이 된다. 이 틀 하나로 앞으로 배울 거의 모든 걸 물어볼 수 있다.",
-   "words": [
-    {
-     "vi": "khỏe",
-     "ko": "건강하다·잘 지내다",
-     "kr_read": "코애",
-     "hanja": null
-    },
-    {
-     "vi": "mệt",
-     "ko": "피곤하다",
-     "kr_read": "멧",
-     "hanja": null
-    },
     {
      "vi": "rất",
      "ko": "매우",
      "kr_read": "젓",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "rất",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
     },
     {
      "vi": "vui",
      "ko": "기쁘다",
      "kr_read": "부이",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "vui",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
     },
     {
      "vi": "gặp",
      "ko": "만나다",
      "kr_read": "갑",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "gặp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
     },
     {
-     "vi": "hôm nay",
-     "ko": "오늘",
-     "kr_read": "홈 나이",
-     "hanja": null
-    },
-    {
-     "vi": "tạm biệt",
-     "ko": "안녕히 가세요",
-     "kr_read": "땀 비엣",
-     "hanja": "暫別 (잠별)"
-    },
-    {
-     "vi": "hẹn gặp lại",
-     "ko": "또 만나요",
-     "kr_read": "핸 갑 라이",
-     "hanja": null
-    },
-    {
-     "vi": "nhiều",
-     "ko": "많이",
-     "kr_read": "니에우",
-     "hanja": null
+     "vi": "được",
+     "ko": "~하게 되다·할 수 있다",
+     "kr_read": "드억",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "được",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
     },
     {
      "vi": "cũng",
      "ko": "~도·또한",
      "kr_read": "꿈",
-     "hanja": null
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "cũng",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ]
     }
    ],
-   "sets": [
+   "dialog": {
+    "title": "인사 뒤에 이어 말하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Rất vui được gặp chị.",
+      "ko": "만나서 반갑습니다.",
+      "kr_read": "젓 부이 드억 갑 찌",
+      "gloss": [
+       {
+        "w": "Rất",
+        "m": "매우"
+       },
+       {
+        "w": "vui",
+        "m": "기쁘다"
+       },
+       {
+        "w": "được",
+        "m": "~하게 되어"
+       },
+       {
+        "w": "gặp",
+        "m": "만나다"
+       },
+       {
+        "w": "chị",
+        "m": "누나"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "vui",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "gặp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chị.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi cũng rất vui.",
+      "ko": "저도 반갑습니다.",
+      "kr_read": "또이 꿈 젓 부이",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "cũng",
+        "m": "~도"
+       },
+       {
+        "w": "rất",
+        "m": "매우"
+       },
+       {
+        "w": "vui",
+        "m": "기쁘다"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cũng",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "vui.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Rất vui được gặp anh.",
+     "Tôi cũng rất vui được gặp chị."
+    ]
+   },
+   "mission": {
+    "goal": "인사 → 이름 → 반갑다 이어 붙이기",
+    "how": "Day 1~3을 순서대로 다 써서 처음 만난 사람처럼 대화하라. 한국어를 쓰면 처음부터.",
+    "a": "당신이 먼저 말을 겁니다",
+    "b": "당신은 상대보다 나이가 많습니다"
+   }
+  },
+  {
+   "day": 4,
+   "theme": "감사·대답",
+   "intro": "ạ를 문장 끝에 붙이면 공손해진다. 손위 사람에게 말할 때 붙이면 인상이 완전히 달라진다.",
+   "words": [
     {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
+     "vi": "cảm ơn",
+     "ko": "고맙습니다",
+     "kr_read": "깜 언",
+     "hanja": "感恩 (감은)",
+     "tones": [
       {
-       "vi": "Anh có khỏe không?",
-       "ko": "잘 지내세요?",
-       "kr_read": "아인 꼬 코애 콤",
-       "gloss": [
-        {
-         "w": "Anh",
-         "m": "형·오빠"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "khỏe",
-         "m": "건강하다"
-        },
-        {
-         "w": "không",
-         "m": "~입니까?"
-        }
-       ],
-       "swap": [
-        "Chị có khỏe không?",
-        "Tôi khỏe, cảm ơn."
-       ]
+       "syl": "cảm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
       },
       {
-       "vi": "Rất vui được gặp anh.",
-       "ko": "만나서 반갑습니다.",
-       "kr_read": "젓 부이 드억 갑 아인",
-       "gloss": [
-        {
-         "w": "Rất",
-         "m": "매우"
-        },
-        {
-         "w": "vui",
-         "m": "기쁘다"
-        },
-        {
-         "w": "được",
-         "m": "~하게 되다"
-        },
-        {
-         "w": "gặp",
-         "m": "만나다"
-        },
-        {
-         "w": "anh",
-         "m": "형·오빠"
-        }
-       ],
-       "swap": [
-        "Rất vui được gặp chị.",
-        "Tôi cũng rất vui."
-       ]
+       "syl": "ơn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       }
      ]
     },
     {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
+     "vi": "vâng",
+     "ko": "네",
+     "kr_read": "벙",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Hôm nay anh có mệt không?",
-       "ko": "오늘 피곤하세요?",
-       "kr_read": "홈 나이 아인 꼬 멧 콤",
-       "gloss": [
-        {
-         "w": "Hôm nay",
-         "m": "오늘"
-        },
-        {
-         "w": "anh",
-         "m": "형·오빠"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "mệt",
-         "m": "피곤하다"
-        },
-        {
-         "w": "không",
-         "m": "~입니까?"
-        }
-       ],
-       "swap": [
-        "Hôm nay tôi rất mệt.",
-        "Tôi không mệt."
-       ]
-      },
+       "syl": "vâng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "không",
+     "ko": "아니다·안",
+     "kr_read": "콤",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Tạm biệt, hẹn gặp lại.",
-       "ko": "안녕히 가세요, 또 뵙겠습니다.",
-       "kr_read": "땀 비엣 핸 갑 라이",
-       "gloss": [
-        {
-         "w": "Tạm biệt",
-         "m": "안녕히 暫別"
-        },
-        {
-         "w": "hẹn gặp lại",
-         "m": "또 만나요"
-        }
-       ],
-       "swap": [
-        "Tạm biệt giám đốc.",
-        "Cảm ơn nhiều, tạm biệt."
-       ]
+       "syl": "không",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "có",
+     "ko": "있다",
+     "kr_read": "꼬",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "có",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "ạ",
+     "ko": "(공손하게)",
+     "kr_read": "아",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "ạ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
       }
      ]
     }
    ],
+   "dialog": {
+    "title": "고맙다고 하고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Cảm ơn anh ạ!",
+      "ko": "고맙습니다!",
+      "kr_read": "깜 언 아인 아",
+      "gloss": [
+       {
+        "w": "Cảm ơn",
+        "m": "고맙다"
+       },
+       {
+        "w": "anh",
+        "m": "형"
+       },
+       {
+        "w": "ạ",
+        "m": "공손"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Cảm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "ơn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ạ!",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Vâng, không có gì.",
+      "ko": "네, 별말씀을요.",
+      "kr_read": "벙 콤 꼬 지",
+      "gloss": [
+       {
+        "w": "Vâng",
+        "m": "네"
+       },
+       {
+        "w": "không",
+        "m": "아니다"
+       },
+       {
+        "w": "có",
+        "m": "있다"
+       },
+       {
+        "w": "gì",
+        "m": "무엇"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "gì.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Cảm ơn chị ạ.",
+     "Không có gì."
+    ]
+   },
    "mission": {
-    "goal": "인사부터 작별까지 한 번에 하라",
-    "how": "인사 → 안부 → 감사 → 작별 네 단계를 순서대로 지나야 통과. 중간에 한국어를 쓰면 처음부터. Day 4의 'Tôi không hiểu'는 써도 된다.",
-    "a": "당신이 먼저 말을 겁니다",
-    "b": "당신은 오늘 매우 mệt 합니다"
+    "goal": "다섯 번 고맙다고 하기",
+    "how": "A가 상황을 만들고 B가 고마워한다. 다섯 번을 서로 다른 호칭으로 하면 통과.",
+    "a": "당신이 도와줍니다",
+    "b": "당신이 고마워합니다"
+   }
+  },
+  {
+   "day": 5,
+   "theme": "잘 지내요?",
+   "intro": "'có ... không?'은 베트남어에서 가장 많이 쓰는 질문 틀이다. 가운데에 아무 말이나 넣으면 질문이 된다.",
+   "words": [
+    {
+     "vi": "khỏe",
+     "ko": "건강하다·잘 지내다",
+     "kr_read": "코애",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "khỏe",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "mệt",
+     "ko": "피곤하다",
+     "kr_read": "멧",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "mệt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "lắm",
+     "ko": "아주 (말 끝에)",
+     "kr_read": "람",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "lắm",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "hôm nay",
+     "ko": "오늘",
+     "kr_read": "홈 나이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "hôm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "thế nào",
+     "ko": "어떻다·어때",
+     "kr_read": "테 나오",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "thế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "nào",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "안부 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Hôm nay anh thế nào?",
+      "ko": "오늘 어떠세요?",
+      "kr_read": "홈 나이 아인 테 나오",
+      "gloss": [
+       {
+        "w": "Hôm nay",
+        "m": "오늘"
+       },
+       {
+        "w": "anh",
+        "m": "형"
+       },
+       {
+        "w": "thế nào",
+        "m": "어때"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thế",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nào?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi khỏe. Chị có mệt lắm không?",
+      "ko": "저는 괜찮아요. 누나는 많이 피곤하세요?",
+      "kr_read": "또이 코애 찌 꼬 멧 람 콤",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "khỏe",
+        "m": "괜찮다"
+       },
+       {
+        "w": "chị",
+        "m": "누나"
+       },
+       {
+        "w": "có...không",
+        "m": "~입니까"
+       },
+       {
+        "w": "mệt",
+        "m": "피곤하다"
+       },
+       {
+        "w": "lắm",
+        "m": "아주"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "khỏe.",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "Chị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mệt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "lắm",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Anh có khỏe không?",
+     "Tôi mệt lắm."
+    ]
+   },
+   "mission": {
+    "goal": "안부를 되받아 물어라",
+    "how": "묻기만 하지 말고 반드시 되물어야 한다. 서로 세 번씩 주고받으면 통과.",
+    "a": "당신은 오늘 아주 피곤합니다",
+    "b": "당신은 오늘 괜찮습니다"
    }
   },
   {
    "day": 6,
-   "theme": "숫자 1~10",
-   "intro": "베트남어 숫자는 변형이 거의 없다. 이 열 개가 앞으로 수량·시간·불량 개수·급여까지 전부 만든다. 오늘 확실히 해두면 두고두고 편하다.",
+   "theme": "어느 나라 사람",
+   "intro": "Hàn Quốc(한국)은 한자어 韓國이다. 베트남어 단어의 상당수가 한자에서 왔고 우리말 한자어와 대응한다. 그냥 얻는 것이다.",
    "words": [
     {
-     "vi": "một",
-     "ko": "1",
-     "kr_read": "못",
-     "hanja": null
-    },
-    {
-     "vi": "hai",
-     "ko": "2",
-     "kr_read": "하이",
-     "hanja": null
-    },
-    {
-     "vi": "ba",
-     "ko": "3",
-     "kr_read": "바",
-     "hanja": null
-    },
-    {
-     "vi": "bốn",
-     "ko": "4",
-     "kr_read": "본",
-     "hanja": null
-    },
-    {
-     "vi": "năm",
-     "ko": "5",
-     "kr_read": "남",
-     "hanja": null
-    },
-    {
-     "vi": "sáu",
-     "ko": "6",
-     "kr_read": "사우",
-     "hanja": null
-    },
-    {
-     "vi": "bảy",
-     "ko": "7",
-     "kr_read": "바이",
-     "hanja": null
-    },
-    {
-     "vi": "tám",
-     "ko": "8",
-     "kr_read": "땀",
-     "hanja": null
-    },
-    {
-     "vi": "chín",
-     "ko": "9",
-     "kr_read": "찐",
-     "hanja": null
-    },
-    {
-     "vi": "mười",
-     "ko": "10",
-     "kr_read": "므어이",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
+     "vi": "người",
+     "ko": "사람",
+     "kr_read": "응어이",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Tôi có hai người bạn.",
-       "ko": "저는 친구가 두 명 있어요.",
-       "kr_read": "또이 꼬 하이 응어이 반",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "hai",
-         "m": "2"
-        },
-        {
-         "w": "người",
-         "m": "사람"
-        },
-        {
-         "w": "bạn",
-         "m": "친구"
-        }
-       ],
-       "swap": [
-        "Tôi có ba người bạn.",
-        "Tôi có một người bạn."
-       ]
-      },
-      {
-       "vi": "Tôi có ba em.",
-       "ko": "저는 동생이 셋 있어요.",
-       "kr_read": "또이 꼬 바 앰",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "ba",
-         "m": "3"
-        },
-        {
-         "w": "em",
-         "m": "동생"
-        }
-       ],
-       "swap": [
-        "Tôi có hai em.",
-        "Tôi không có em."
-       ]
+       "syl": "người",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
       }
      ]
     },
     {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
+     "vi": "nước",
+     "ko": "나라·물",
+     "kr_read": "느억",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Công ty có tám nhân viên.",
-       "ko": "회사에 직원이 여덟 명 있습니다.",
-       "kr_read": "꼼 띠 꼬 땀 년 비엔",
-       "gloss": [
-        {
-         "w": "Công ty",
-         "m": "회사 公司"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "tám",
-         "m": "8"
-        },
-        {
-         "w": "nhân viên",
-         "m": "직원 人員"
-        }
-       ],
-       "swap": [
-        "Công ty có mười nhân viên.",
-        "Nhà máy có chín nhân viên."
-       ]
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "nào",
+     "ko": "어느",
+     "kr_read": "나오",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "nào",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "Hàn Quốc",
+     "ko": "한국",
+     "kr_read": "한 꾸옥",
+     "hanja": "韓國 (한국)",
+     "tones": [
+      {
+       "syl": "Hàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
       },
       {
-       "vi": "Hôm nay có sáu công nhân.",
-       "ko": "오늘 작업자가 여섯 명 있습니다.",
-       "kr_read": "홈 나이 꼬 사우 꼼 년",
-       "gloss": [
-        {
-         "w": "Hôm nay",
-         "m": "오늘"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "sáu",
-         "m": "6"
-        },
-        {
-         "w": "công nhân",
-         "m": "작업자 工人"
-        }
-       ],
-       "swap": [
-        "Hôm nay có bốn công nhân.",
-        "Hôm nay có năm người."
-       ]
+       "syl": "Quốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "Việt Nam",
+     "ko": "베트남",
+     "kr_read": "비엣 남",
+     "hanja": "越南 (월남)",
+     "tones": [
+      {
+       "syl": "Việt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "Nam",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       }
      ]
     }
    ],
+   "dialog": {
+    "title": "국적 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Anh là người nước nào?",
+      "ko": "어느 나라 사람이세요?",
+      "kr_read": "아인 라 응어이 느억 나오",
+      "gloss": [
+       {
+        "w": "Anh",
+        "m": "형"
+       },
+       {
+        "w": "là",
+        "m": "~이다"
+       },
+       {
+        "w": "người",
+        "m": "사람"
+       },
+       {
+        "w": "nước",
+        "m": "나라"
+       },
+       {
+        "w": "nào",
+        "m": "어느"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "người",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nước",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nào?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi là người Hàn Quốc.",
+      "ko": "저는 한국 사람이에요.",
+      "kr_read": "또이 라 응어이 한 꾸옥",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "là",
+        "m": "~이다"
+       },
+       {
+        "w": "người",
+        "m": "사람"
+       },
+       {
+        "w": "Hàn Quốc",
+        "m": "한국 韓國"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "người",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Hàn",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Quốc.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Tôi là người Việt Nam.",
+     "Chị là người nước nào?"
+    ]
+   },
    "mission": {
-    "goal": "서로의 숫자를 물어 합을 구하라",
-    "how": "각자 숫자 카드를 받고 안 보여준다. 베트남어로만 물어서 두 수의 합을 베트남어로 말하면 통과.",
-    "a": "당신의 숫자는 7 (bảy) 입니다",
-    "b": "당신의 숫자는 4 (bốn) 입니다"
+    "goal": "상대의 나라를 알아내라",
+    "how": "카드는 숨긴다. 오늘 대화만 써서 알아내고 베트남어로 말하면 통과.",
+    "a": "당신은 Việt Nam 사람입니다",
+    "b": "당신은 Hàn Quốc 사람입니다"
    }
   },
   {
    "day": 7,
-   "theme": "개수 세기",
-   "intro": "cái는 물건, chiếc은 기계에 붙는 '단위'다. 한국어의 개·대·마리와 같은 것이라 우리에겐 낯설지 않다. 영어에는 없는 개념이다.",
+   "theme": "어디 살아요",
+   "intro": "ở는 '~에 있다'와 '~에서' 둘 다 된다. 위치를 말할 땐 거의 다 ở로 시작한다.",
    "words": [
     {
-     "vi": "cái",
-     "ko": "개 (물건 단위)",
-     "kr_read": "까이",
-     "hanja": null
-    },
-    {
-     "vi": "chiếc",
-     "ko": "대 (기계 단위)",
-     "kr_read": "찌엑",
-     "hanja": null
-    },
-    {
-     "vi": "hộp",
-     "ko": "갑·통",
-     "kr_read": "홉",
-     "hanja": null
-    },
-    {
-     "vi": "thùng",
-     "ko": "상자·박스",
-     "kr_read": "퉁",
-     "hanja": null
-    },
-    {
-     "vi": "này",
-     "ko": "이·이것",
-     "kr_read": "나이",
-     "hanja": null
-    },
-    {
-     "vi": "mấy",
-     "ko": "몇 (적은 수)",
-     "kr_read": "머이",
-     "hanja": null
-    },
-    {
-     "vi": "bao nhiêu",
-     "ko": "얼마나 (큰 수)",
-     "kr_read": "바오 니에우",
-     "hanja": null
-    },
-    {
-     "vi": "tất cả",
-     "ko": "전부·모두",
-     "kr_read": "떳 까",
-     "hanja": null
-    },
-    {
-     "vi": "còn",
-     "ko": "남다·아직 있다",
-     "kr_read": "꼰",
-     "hanja": null
-    },
-    {
-     "vi": "thiếu",
-     "ko": "부족하다",
-     "kr_read": "티에우",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Cái này là gì?",
-       "ko": "이건 뭐예요?",
-       "kr_read": "까이 나이 라 지",
-       "gloss": [
-        {
-         "w": "Cái",
-         "m": "개·것"
-        },
-        {
-         "w": "này",
-         "m": "이"
-        },
-        {
-         "w": "là",
-         "m": "~이다"
-        },
-        {
-         "w": "gì",
-         "m": "무엇"
-        }
-       ],
-       "swap": [
-        "Cái này là hộp.",
-        "Chiếc này là gì?"
-       ]
-      },
-      {
-       "vi": "Có mấy cái?",
-       "ko": "몇 개 있어요?",
-       "kr_read": "꼬 머이 까이",
-       "gloss": [
-        {
-         "w": "Có",
-         "m": "있다"
-        },
-        {
-         "w": "mấy",
-         "m": "몇"
-        },
-        {
-         "w": "cái",
-         "m": "개"
-        }
-       ],
-       "swap": [
-        "Có mấy hộp?",
-        "Có bao nhiêu người?"
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Còn ba thùng.",
-       "ko": "세 상자 남았습니다.",
-       "kr_read": "꼰 바 퉁",
-       "gloss": [
-        {
-         "w": "Còn",
-         "m": "남다"
-        },
-        {
-         "w": "ba",
-         "m": "3"
-        },
-        {
-         "w": "thùng",
-         "m": "상자"
-        }
-       ],
-       "swap": [
-        "Còn năm hộp.",
-        "Còn hai cái."
-       ]
-      },
-      {
-       "vi": "Thiếu hai hộp.",
-       "ko": "두 통 부족합니다.",
-       "kr_read": "티에우 하이 홉",
-       "gloss": [
-        {
-         "w": "Thiếu",
-         "m": "부족하다"
-        },
-        {
-         "w": "hai",
-         "m": "2"
-        },
-        {
-         "w": "hộp",
-         "m": "갑·통"
-        }
-       ],
-       "swap": [
-        "Thiếu một thùng.",
-        "Tất cả có mười cái."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "재고를 합쳐 총 몇 개인지 알아내라",
-    "how": "각자 재고 카드를 받고 안 보여준다. mấy / bao nhiêu / còn 만 써서 총합을 구하라.",
-    "a": "당신에게 hộp 5개가 있습니다",
-    "b": "당신에게 thùng 3개가 있습니다"
-   }
-  },
-  {
-   "day": 8,
-   "theme": "몇 시입니까",
-   "intro": "rưỡi는 '반'이다. tám giờ rưỡi = 8시 반. 출퇴근·교대 시간이 전부 여기서 나오니 현장에서 하루에도 몇 번씩 쓴다.",
-   "words": [
-    {
-     "vi": "giờ",
-     "ko": "시·시간",
-     "kr_read": "저",
-     "hanja": null
-    },
-    {
-     "vi": "phút",
-     "ko": "분",
-     "kr_read": "풋",
-     "hanja": null
-    },
-    {
-     "vi": "bây giờ",
-     "ko": "지금",
-     "kr_read": "버이 저",
-     "hanja": null
-    },
-    {
-     "vi": "sáng",
-     "ko": "아침·오전",
-     "kr_read": "상",
-     "hanja": null
-    },
-    {
-     "vi": "chiều",
-     "ko": "오후",
-     "kr_read": "찌에우",
-     "hanja": null
-    },
-    {
-     "vi": "tối",
-     "ko": "저녁·밤",
-     "kr_read": "또이",
-     "hanja": null
-    },
-    {
-     "vi": "rưỡi",
-     "ko": "반 (30분)",
-     "kr_read": "즈어이",
-     "hanja": null
-    },
-    {
-     "vi": "lúc",
-     "ko": "~에 (시각)",
-     "kr_read": "룩",
-     "hanja": null
-    },
-    {
-     "vi": "đến",
-     "ko": "오다·~까지",
-     "kr_read": "덴",
-     "hanja": null
-    },
-    {
-     "vi": "muộn",
-     "ko": "늦다",
-     "kr_read": "무온",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Bây giờ là mấy giờ?",
-       "ko": "지금 몇 시예요?",
-       "kr_read": "버이 저 라 머이 저",
-       "gloss": [
-        {
-         "w": "Bây giờ",
-         "m": "지금"
-        },
-        {
-         "w": "là",
-         "m": "~이다"
-        },
-        {
-         "w": "mấy",
-         "m": "몇"
-        },
-        {
-         "w": "giờ",
-         "m": "시"
-        }
-       ],
-       "swap": [
-        "Bây giờ là tám giờ.",
-        "Bây giờ là chín giờ rưỡi."
-       ]
-      },
-      {
-       "vi": "Bây giờ là bảy giờ sáng.",
-       "ko": "지금은 아침 7시입니다.",
-       "kr_read": "버이 저 라 바이 저 상",
-       "gloss": [
-        {
-         "w": "Bây giờ",
-         "m": "지금"
-        },
-        {
-         "w": "là",
-         "m": "~이다"
-        },
-        {
-         "w": "bảy",
-         "m": "7"
-        },
-        {
-         "w": "giờ",
-         "m": "시"
-        },
-        {
-         "w": "sáng",
-         "m": "아침"
-        }
-       ],
-       "swap": [
-        "Bây giờ là sáu giờ chiều.",
-        "Bây giờ là mười giờ tối."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Tôi làm việc đến sáu giờ chiều.",
-       "ko": "저는 오후 6시까지 일합니다.",
-       "kr_read": "또이 람 비엑 덴 사우 저 찌에우",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "làm việc",
-         "m": "일하다"
-        },
-        {
-         "w": "đến",
-         "m": "~까지"
-        },
-        {
-         "w": "sáu",
-         "m": "6"
-        },
-        {
-         "w": "giờ",
-         "m": "시"
-        },
-        {
-         "w": "chiều",
-         "m": "오후"
-        }
-       ],
-       "swap": [
-        "Tôi làm việc đến năm giờ.",
-        "Tôi làm việc từ tám giờ sáng."
-       ]
-      },
-      {
-       "vi": "Xin lỗi, tôi đến muộn.",
-       "ko": "죄송합니다, 늦었습니다.",
-       "kr_read": "씬 로이 또이 덴 무온",
-       "gloss": [
-        {
-         "w": "Xin lỗi",
-         "m": "죄송합니다"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "đến",
-         "m": "오다"
-        },
-        {
-         "w": "muộn",
-         "m": "늦다"
-        }
-       ],
-       "swap": [
-        "Tôi đến lúc bảy giờ.",
-        "Giám đốc đến muộn."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "상대의 출근 시각을 알아내라",
-    "how": "카드는 숨긴다. mấy giờ / lúc 만 써서 상대가 몇 시에 출근하는지 알아내고 베트남어로 말하라.",
-    "a": "당신은 아침 7시(bảy giờ sáng)에 출근합니다",
-    "b": "당신은 아침 8시 반(tám giờ rưỡi)에 출근합니다"
-   }
-  },
-  {
-   "day": 9,
-   "theme": "요일",
-   "intro": "베트남어 요일은 '둘째·셋째…'로 센다. 월요일이 thứ hai(둘째)다. 숫자를 알면 요일은 공짜로 따라온다. 일요일만 chủ nhật로 예외.",
-   "words": [
-    {
-     "vi": "thứ hai",
-     "ko": "월요일",
-     "kr_read": "트 하이",
-     "hanja": null
-    },
-    {
-     "vi": "thứ ba",
-     "ko": "화요일",
-     "kr_read": "트 바",
-     "hanja": null
-    },
-    {
-     "vi": "thứ tư",
-     "ko": "수요일",
-     "kr_read": "트 뜨",
-     "hanja": null
-    },
-    {
-     "vi": "thứ năm",
-     "ko": "목요일",
-     "kr_read": "트 남",
-     "hanja": null
-    },
-    {
-     "vi": "thứ sáu",
-     "ko": "금요일",
-     "kr_read": "트 사우",
-     "hanja": null
-    },
-    {
-     "vi": "thứ bảy",
-     "ko": "토요일",
-     "kr_read": "트 바이",
-     "hanja": null
-    },
-    {
-     "vi": "chủ nhật",
-     "ko": "일요일",
-     "kr_read": "쭈 녓",
-     "hanja": "主日 (주일)"
-    },
-    {
-     "vi": "hôm qua",
-     "ko": "어제",
-     "kr_read": "홈 꾸아",
-     "hanja": null
-    },
-    {
-     "vi": "ngày",
-     "ko": "날·일",
-     "kr_read": "응아이",
-     "hanja": null
-    },
-    {
-     "vi": "tuần",
-     "ko": "주",
-     "kr_read": "뚜언",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Hôm nay là thứ mấy?",
-       "ko": "오늘 무슨 요일이에요?",
-       "kr_read": "홈 나이 라 트 머이",
-       "gloss": [
-        {
-         "w": "Hôm nay",
-         "m": "오늘"
-        },
-        {
-         "w": "là",
-         "m": "~이다"
-        },
-        {
-         "w": "thứ",
-         "m": "번째"
-        },
-        {
-         "w": "mấy",
-         "m": "몇"
-        }
-       ],
-       "swap": [
-        "Hôm nay là thứ hai.",
-        "Hôm qua là chủ nhật."
-       ]
-      },
-      {
-       "vi": "Chủ nhật tôi không làm việc.",
-       "ko": "일요일에 저는 일하지 않아요.",
-       "kr_read": "쭈 녓 또이 콤 람 비엑",
-       "gloss": [
-        {
-         "w": "Chủ nhật",
-         "m": "일요일 主日"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "không",
-         "m": "아니다"
-        },
-        {
-         "w": "làm việc",
-         "m": "일하다"
-        }
-       ],
-       "swap": [
-        "Thứ bảy tôi không làm việc.",
-        "Chủ nhật tôi ở nhà máy."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Thứ bảy tôi cũng làm việc.",
-       "ko": "토요일에도 저는 일합니다.",
-       "kr_read": "트 바이 또이 꿈 람 비엑",
-       "gloss": [
-        {
-         "w": "Thứ bảy",
-         "m": "토요일"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "cũng",
-         "m": "~도"
-        },
-        {
-         "w": "làm việc",
-         "m": "일하다"
-        }
-       ],
-       "swap": [
-        "Thứ hai tôi cũng làm việc.",
-        "Hôm qua tôi làm việc."
-       ]
-      },
-      {
-       "vi": "Một tuần tôi làm sáu ngày.",
-       "ko": "일주일에 엿새 일합니다.",
-       "kr_read": "못 뚜언 또이 람 사우 응아이",
-       "gloss": [
-        {
-         "w": "Một",
-         "m": "1"
-        },
-        {
-         "w": "tuần",
-         "m": "주"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "làm",
-         "m": "하다"
-        },
-        {
-         "w": "sáu",
-         "m": "6"
-        },
-        {
-         "w": "ngày",
-         "m": "날"
-        }
-       ],
-       "swap": [
-        "Một tuần tôi làm năm ngày.",
-        "Một tuần có bảy ngày."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "둘 다 쉬는 날을 찾아라",
-    "how": "각자 근무표를 받고 안 보여준다. 요일을 하나씩 물어서 둘 다 쉬는 날을 찾아내라.",
-    "a": "당신은 thứ hai ~ thứ sáu 근무입니다",
-    "b": "당신은 thứ ba ~ thứ bảy 근무입니다"
-   }
-  },
-  {
-   "day": 10,
-   "theme": "하루 일과",
-   "intro": "bắt đầu(시작)와 kết thúc(끝)은 현장 방송에서 매일 듣는 말이다. muốn(~하고 싶다)과 cần(필요하다)은 부탁의 시작점이다.",
-   "words": [
-    {
-     "vi": "bắt đầu",
-     "ko": "시작하다",
-     "kr_read": "밧 더우",
-     "hanja": null
-    },
-    {
-     "vi": "kết thúc",
-     "ko": "끝나다",
-     "kr_read": "껫 툭",
-     "hanja": "結束 (결속)"
-    },
-    {
-     "vi": "đi",
-     "ko": "가다",
-     "kr_read": "디",
-     "hanja": null
-    },
-    {
-     "vi": "về",
-     "ko": "돌아가다",
-     "kr_read": "베",
-     "hanja": null
-    },
-    {
-     "vi": "nghỉ",
-     "ko": "쉬다",
-     "kr_read": "응이",
-     "hanja": null
-    },
-    {
-     "vi": "sớm",
-     "ko": "일찍·이르다",
-     "kr_read": "섬",
-     "hanja": null
-    },
-    {
-     "vi": "mỗi",
-     "ko": "매·각각",
-     "kr_read": "모이",
-     "hanja": null
-    },
-    {
-     "vi": "thường",
-     "ko": "보통·자주",
-     "kr_read": "트엉",
-     "hanja": "常 (상)"
-    },
-    {
-     "vi": "muốn",
-     "ko": "~하고 싶다",
-     "kr_read": "무온",
-     "hanja": null
-    },
-    {
-     "vi": "cần",
-     "ko": "필요하다",
-     "kr_read": "껀",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Tôi muốn về sớm.",
-       "ko": "저는 일찍 가고 싶어요.",
-       "kr_read": "또이 무온 베 섬",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "muốn",
-         "m": "하고 싶다"
-        },
-        {
-         "w": "về",
-         "m": "돌아가다"
-        },
-        {
-         "w": "sớm",
-         "m": "일찍"
-        }
-       ],
-       "swap": [
-        "Tôi muốn nghỉ.",
-        "Tôi muốn đi."
-       ]
-      },
-      {
-       "vi": "Mỗi ngày tôi đi làm.",
-       "ko": "저는 매일 출근합니다.",
-       "kr_read": "모이 응아이 또이 디 람",
-       "gloss": [
-        {
-         "w": "Mỗi",
-         "m": "매"
-        },
-        {
-         "w": "ngày",
-         "m": "날"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "đi",
-         "m": "가다"
-        },
-        {
-         "w": "làm",
-         "m": "일하다"
-        }
-       ],
-       "swap": [
-        "Mỗi tuần tôi nghỉ một ngày.",
-        "Tôi thường đi làm sớm."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Mấy giờ bắt đầu?",
-       "ko": "몇 시에 시작합니까?",
-       "kr_read": "머이 저 밧 더우",
-       "gloss": [
-        {
-         "w": "Mấy",
-         "m": "몇"
-        },
-        {
-         "w": "giờ",
-         "m": "시"
-        },
-        {
-         "w": "bắt đầu",
-         "m": "시작하다"
-        }
-       ],
-       "swap": [
-        "Mấy giờ kết thúc?",
-        "Bắt đầu lúc tám giờ."
-       ]
-      },
-      {
-       "vi": "Hôm nay kết thúc lúc năm giờ.",
-       "ko": "오늘은 5시에 끝납니다.",
-       "kr_read": "홈 나이 껫 툭 룩 남 저",
-       "gloss": [
-        {
-         "w": "Hôm nay",
-         "m": "오늘"
-        },
-        {
-         "w": "kết thúc",
-         "m": "끝나다 結束"
-        },
-        {
-         "w": "lúc",
-         "m": "~에"
-        },
-        {
-         "w": "năm",
-         "m": "5"
-        },
-        {
-         "w": "giờ",
-         "m": "시"
-        }
-       ],
-       "swap": [
-        "Hôm nay kết thúc sớm.",
-        "Tôi cần nghỉ."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "상대의 하루 일과를 시간표로 그려라",
-    "how": "출근·시작·휴식·종료·퇴근 다섯 시각을 물어서 종이에 적어라. 한국어를 쓰면 처음부터.",
-    "a": "출근 7시 / 시작 8시 / 휴식 12시 / 종료 5시 / 퇴근 6시",
-    "b": "출근 8시 반 / 시작 9시 / 휴식 1시 / 종료 6시 / 퇴근 6시 반"
-   }
-  },
-  {
-   "day": 11,
-   "theme": "지시와 부탁",
-   "intro": "여기서부터 현장이다. hãy(~하세요)와 đừng(~하지 마세요) 두 개면 지시의 절반이 끝난다. làm ơn을 앞에 붙이면 부탁이 된다.",
-   "words": [
-    {
-     "vi": "hãy",
-     "ko": "~하세요 (지시)",
-     "kr_read": "하이",
-     "hanja": null
-    },
-    {
-     "vi": "đừng",
-     "ko": "~하지 마세요",
-     "kr_read": "등",
-     "hanja": null
-    },
-    {
-     "vi": "làm ơn",
-     "ko": "부디·좀",
-     "kr_read": "람 언",
-     "hanja": null
-    },
-    {
-     "vi": "giúp",
-     "ko": "돕다",
-     "kr_read": "줍",
-     "hanja": null
-    },
-    {
-     "vi": "đưa",
-     "ko": "건네다·주다",
-     "kr_read": "드어",
-     "hanja": null
-    },
-    {
-     "vi": "lấy",
-     "ko": "가져오다·집다",
-     "kr_read": "러이",
-     "hanja": null
-    },
-    {
-     "vi": "để",
-     "ko": "놓다·두다",
-     "kr_read": "데",
-     "hanja": null
-    },
-    {
-     "vi": "mở",
-     "ko": "열다·켜다",
-     "kr_read": "머",
-     "hanja": null
-    },
-    {
-     "vi": "tắt",
-     "ko": "끄다",
-     "kr_read": "땃",
-     "hanja": null
-    },
-    {
-     "vi": "máy",
-     "ko": "기계",
-     "kr_read": "마이",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Làm ơn giúp tôi.",
-       "ko": "좀 도와주세요.",
-       "kr_read": "람 언 줍 또이",
-       "gloss": [
-        {
-         "w": "Làm ơn",
-         "m": "부디"
-        },
-        {
-         "w": "giúp",
-         "m": "돕다"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        }
-       ],
-       "swap": [
-        "Làm ơn đưa cái này.",
-        "Hãy giúp tôi."
-       ]
-      },
-      {
-       "vi": "Hãy nói lại.",
-       "ko": "다시 말해 주세요.",
-       "kr_read": "하이 노이 라이",
-       "gloss": [
-        {
-         "w": "Hãy",
-         "m": "~하세요"
-        },
-        {
-         "w": "nói",
-         "m": "말하다"
-        },
-        {
-         "w": "lại",
-         "m": "다시"
-        }
-       ],
-       "swap": [
-        "Hãy nói từ từ.",
-        "Hãy nghe tôi."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Đừng tắt máy!",
-       "ko": "기계를 끄지 마세요!",
-       "kr_read": "등 땃 마이",
-       "gloss": [
-        {
-         "w": "Đừng",
-         "m": "하지 마세요"
-        },
-        {
-         "w": "tắt",
-         "m": "끄다"
-        },
-        {
-         "w": "máy",
-         "m": "기계"
-        }
-       ],
-       "swap": [
-        "Hãy mở máy.",
-        "Đừng lấy hộp này."
-       ]
-      },
-      {
-       "vi": "Hãy lấy hộp này.",
-       "ko": "이 상자를 가져오세요.",
-       "kr_read": "하이 러이 홉 나이",
-       "gloss": [
-        {
-         "w": "Hãy",
-         "m": "~하세요"
-        },
-        {
-         "w": "lấy",
-         "m": "가져오다"
-        },
-        {
-         "w": "hộp",
-         "m": "갑·통"
-        },
-        {
-         "w": "này",
-         "m": "이"
-        }
-       ],
-       "swap": [
-        "Hãy đưa thùng này.",
-        "Đừng mở máy."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "말만 듣고 지시대로 움직여라",
-    "how": "A가 오늘 배운 지시 5개를 베트남어로 말한다. B는 손짓·행동으로 수행한다. 5개 중 4개 맞으면 통과. 그다음 역할 교대.",
-    "a": "당신이 먼저 지시합니다",
-    "b": "당신이 먼저 수행합니다"
-   }
-  },
-  {
-   "day": 12,
-   "theme": "다 됐어요 / 빨리",
-   "intro": "xong chưa?(다 했어요?)는 현장에서 하루에 수십 번 쓴다. 대답은 rồi(했다) 아니면 chưa(아직)다. 이 두 마디만 알아도 하루가 굴러간다.",
-   "words": [
-    {
-     "vi": "nhanh",
-     "ko": "빠르다·빨리",
-     "kr_read": "냐인",
-     "hanja": null
-    },
-    {
-     "vi": "dừng",
-     "ko": "멈추다",
-     "kr_read": "증",
-     "hanja": null
-    },
-    {
-     "vi": "tiếp tục",
-     "ko": "계속하다",
-     "kr_read": "띠엡 뚝",
-     "hanja": "接續 (접속)"
-    },
-    {
-     "vi": "xong",
-     "ko": "다 되다·완료",
+     "vi": "sống",
+     "ko": "살다",
      "kr_read": "쏨",
-     "hanja": null
-    },
-    {
-     "vi": "rồi",
-     "ko": "이미·했다",
-     "kr_read": "조이",
-     "hanja": null
-    },
-    {
-     "vi": "chưa",
-     "ko": "아직 (안)",
-     "kr_read": "쯔어",
-     "hanja": null
-    },
-    {
-     "vi": "ngay",
-     "ko": "즉시·바로",
-     "kr_read": "응아이",
-     "hanja": null
-    },
-    {
-     "vi": "một chút",
-     "ko": "조금",
-     "kr_read": "못 쭛",
-     "hanja": null
-    },
-    {
-     "vi": "đã",
-     "ko": "이미 ~했다",
-     "kr_read": "다",
-     "hanja": null
-    },
-    {
-     "vi": "thêm",
-     "ko": "더·추가로",
-     "kr_read": "템",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Đã xong chưa?",
-       "ko": "다 됐어요?",
-       "kr_read": "다 쏨 쯔어",
-       "gloss": [
-        {
-         "w": "Đã",
-         "m": "이미"
-        },
-        {
-         "w": "xong",
-         "m": "다 되다"
-        },
-        {
-         "w": "chưa",
-         "m": "아직?"
-        }
-       ],
-       "swap": [
-        "Xong rồi.",
-        "Chưa xong."
-       ]
-      },
-      {
-       "vi": "Tôi làm xong rồi.",
-       "ko": "저 다 했어요.",
-       "kr_read": "또이 람 쏨 조이",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "làm",
-         "m": "하다"
-        },
-        {
-         "w": "xong",
-         "m": "다 되다"
-        },
-        {
-         "w": "rồi",
-         "m": "이미"
-        }
-       ],
-       "swap": [
-        "Tôi chưa xong.",
-        "Đã làm xong."
-       ]
+       "syl": "sống",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
       }
      ]
     },
     {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
+     "vi": "ở",
+     "ko": "~에 (있다)",
+     "kr_read": "어",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Hãy làm nhanh, đừng dừng.",
-       "ko": "빨리 하세요, 멈추지 마세요.",
-       "kr_read": "하이 람 냐인 등 증",
-       "gloss": [
-        {
-         "w": "Hãy",
-         "m": "~하세요"
-        },
-        {
-         "w": "làm",
-         "m": "하다"
-        },
-        {
-         "w": "nhanh",
-         "m": "빨리"
-        },
-        {
-         "w": "đừng",
-         "m": "하지 마세요"
-        },
-        {
-         "w": "dừng",
-         "m": "멈추다"
-        }
-       ],
-       "swap": [
-        "Hãy tiếp tục làm.",
-        "Hãy dừng ngay!"
-       ]
-      },
-      {
-       "vi": "Cần thêm hai cái.",
-       "ko": "두 개 더 필요합니다.",
-       "kr_read": "껀 템 하이 까이",
-       "gloss": [
-        {
-         "w": "Cần",
-         "m": "필요하다"
-        },
-        {
-         "w": "thêm",
-         "m": "더"
-        },
-        {
-         "w": "hai",
-         "m": "2"
-        },
-        {
-         "w": "cái",
-         "m": "개"
-        }
-       ],
-       "swap": [
-        "Cần thêm một thùng.",
-        "Cần thêm ngay."
-       ]
+       "syl": "ở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
       }
      ]
-    }
-   ],
-   "mission": {
-    "goal": "작업 진행 상황을 알아내라",
-    "how": "A는 작업 3개 중 몇 개를 끝냈는지 안다. B는 'Đã xong chưa?' 만 써서 알아내라. 한국어 금지.",
-    "a": "작업 3개 중 2개는 rồi, 1개는 chưa 입니다",
-    "b": "당신은 상대의 진행 상황을 모릅니다. 물어서 알아내세요"
-   }
-  },
-  {
-   "day": 13,
-   "theme": "품질과 불량",
-   "intro": "bị는 나쁜 일을 '당했다'는 표시다. bị lỗi(불량이 났다), bị hỏng(고장났다). 오늘 한자어가 셋이나 나온다 — 檢查·質量·産品. 한국어를 아는 사람에겐 거의 공짜다.",
-   "words": [
-    {
-     "vi": "lỗi",
-     "ko": "불량·오류",
-     "kr_read": "로이",
-     "hanja": null
-    },
-    {
-     "vi": "hỏng",
-     "ko": "고장나다·망가지다",
-     "kr_read": "홈",
-     "hanja": null
-    },
-    {
-     "vi": "tốt",
-     "ko": "좋다",
-     "kr_read": "똣",
-     "hanja": null
-    },
-    {
-     "vi": "xấu",
-     "ko": "나쁘다",
-     "kr_read": "서우",
-     "hanja": null
-    },
-    {
-     "vi": "bị",
-     "ko": "(나쁜 일을) 당하다",
-     "kr_read": "비",
-     "hanja": null
-    },
-    {
-     "vi": "kiểm tra",
-     "ko": "검사하다",
-     "kr_read": "끼엠 짜",
-     "hanja": "檢查 (검사)"
-    },
-    {
-     "vi": "chất lượng",
-     "ko": "품질",
-     "kr_read": "쩟 르엉",
-     "hanja": "質量 (질량)"
-    },
-    {
-     "vi": "sản phẩm",
-     "ko": "제품",
-     "kr_read": "산 펌",
-     "hanja": "産品 (산품)"
-    },
-    {
-     "vi": "sửa",
-     "ko": "고치다·수리하다",
-     "kr_read": "스어",
-     "hanja": null
-    },
-    {
-     "vi": "vấn đề",
-     "ko": "문제",
-     "kr_read": "번 데",
-     "hanja": "問題 (문제)"
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Cái này không tốt.",
-       "ko": "이건 안 좋아요.",
-       "kr_read": "까이 나이 콤 똣",
-       "gloss": [
-        {
-         "w": "Cái này",
-         "m": "이것"
-        },
-        {
-         "w": "không",
-         "m": "아니다"
-        },
-        {
-         "w": "tốt",
-         "m": "좋다"
-        }
-       ],
-       "swap": [
-        "Cái này tốt.",
-        "Cái này xấu."
-       ]
-      },
-      {
-       "vi": "Có vấn đề gì không?",
-       "ko": "무슨 문제 있어요?",
-       "kr_read": "꼬 번 데 지 콤",
-       "gloss": [
-        {
-         "w": "Có",
-         "m": "있다"
-        },
-        {
-         "w": "vấn đề",
-         "m": "문제 問題"
-        },
-        {
-         "w": "gì",
-         "m": "무엇"
-        },
-        {
-         "w": "không",
-         "m": "~입니까?"
-        }
-       ],
-       "swap": [
-        "Không có vấn đề.",
-        "Có vấn đề rồi."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Sản phẩm này bị lỗi.",
-       "ko": "이 제품은 불량입니다.",
-       "kr_read": "산 펌 나이 비 로이",
-       "gloss": [
-        {
-         "w": "Sản phẩm",
-         "m": "제품 産品"
-        },
-        {
-         "w": "này",
-         "m": "이"
-        },
-        {
-         "w": "bị",
-         "m": "당하다"
-        },
-        {
-         "w": "lỗi",
-         "m": "불량"
-        }
-       ],
-       "swap": [
-        "Máy này bị hỏng.",
-        "Cái này bị lỗi rồi."
-       ]
-      },
-      {
-       "vi": "Hãy kiểm tra chất lượng.",
-       "ko": "품질을 검사하세요.",
-       "kr_read": "하이 끼엠 짜 쩟 르엉",
-       "gloss": [
-        {
-         "w": "Hãy",
-         "m": "~하세요"
-        },
-        {
-         "w": "kiểm tra",
-         "m": "검사하다 檢查"
-        },
-        {
-         "w": "chất lượng",
-         "m": "품질 質量"
-        }
-       ],
-       "swap": [
-        "Hãy kiểm tra lại.",
-        "Hãy sửa cái này."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "불량을 신고하고 확인받아라",
-    "how": "A는 제품 상태를 안다. B는 검사자다. B가 물어서 어느 제품이 왜 불량인지 알아내고 베트남어로 요약하면 통과.",
-    "a": "제품 3개 중 2번째가 bị lỗi, 3번째가 bị hỏng 입니다",
-    "b": "당신은 검사자입니다. 물어서 알아내세요"
-   }
-  },
-  {
-   "day": 14,
-   "theme": "수량 보고와 요청",
-   "intro": "'cho tôi'는 '나에게 주세요'다. 식당에서도 창고에서도 똑같이 쓴다. 초보가 가장 먼저 써먹을 수 있는 부탁 표현이다.",
-   "words": [
-    {
-     "vi": "số lượng",
-     "ko": "수량",
-     "kr_read": "소 르엉",
-     "hanja": "數量 (수량)"
-    },
-    {
-     "vi": "tổng",
-     "ko": "총·합계",
-     "kr_read": "똠",
-     "hanja": "總 (총)"
-    },
-    {
-     "vi": "hàng",
-     "ko": "물건·제품",
-     "kr_read": "항",
-     "hanja": null
-    },
-    {
-     "vi": "giao",
-     "ko": "넘기다·납품하다",
-     "kr_read": "자오",
-     "hanja": "交 (교)"
-    },
-    {
-     "vi": "nhận",
-     "ko": "받다",
-     "kr_read": "년",
-     "hanja": null
-    },
-    {
-     "vi": "gửi",
-     "ko": "보내다",
-     "kr_read": "그이",
-     "hanja": null
-    },
-    {
-     "vi": "hết",
-     "ko": "다 떨어지다",
-     "kr_read": "헷",
-     "hanja": null
-    },
-    {
-     "vi": "đủ",
-     "ko": "충분하다",
-     "kr_read": "두",
-     "hanja": null
-    },
-    {
-     "vi": "xin",
-     "ko": "청하다·주세요",
-     "kr_read": "씬",
-     "hanja": null
-    },
-    {
-     "vi": "cho",
-     "ko": "~에게 주다",
-     "kr_read": "쩌",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Cho tôi xin một cái.",
-       "ko": "하나 주세요.",
-       "kr_read": "쩌 또이 씬 못 까이",
-       "gloss": [
-        {
-         "w": "Cho",
-         "m": "주다"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "xin",
-         "m": "청하다"
-        },
-        {
-         "w": "một",
-         "m": "1"
-        },
-        {
-         "w": "cái",
-         "m": "개"
-        }
-       ],
-       "swap": [
-        "Cho tôi xin hai cái.",
-        "Cho tôi xin một hộp."
-       ]
-      },
-      {
-       "vi": "Hết rồi.",
-       "ko": "다 떨어졌어요.",
-       "kr_read": "헷 조이",
-       "gloss": [
-        {
-         "w": "Hết",
-         "m": "다 떨어지다"
-        },
-        {
-         "w": "rồi",
-         "m": "이미"
-        }
-       ],
-       "swap": [
-        "Chưa hết.",
-        "Còn đủ."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Số lượng đủ chưa?",
-       "ko": "수량이 충분합니까?",
-       "kr_read": "소 르엉 두 쯔어",
-       "gloss": [
-        {
-         "w": "Số lượng",
-         "m": "수량 數量"
-        },
-        {
-         "w": "đủ",
-         "m": "충분하다"
-        },
-        {
-         "w": "chưa",
-         "m": "아직?"
-        }
-       ],
-       "swap": [
-        "Số lượng thiếu.",
-        "Tổng là mười cái."
-       ]
-      },
-      {
-       "vi": "Hàng đã giao chưa?",
-       "ko": "물건은 납품했습니까?",
-       "kr_read": "항 다 자오 쯔어",
-       "gloss": [
-        {
-         "w": "Hàng",
-         "m": "물건"
-        },
-        {
-         "w": "đã",
-         "m": "이미"
-        },
-        {
-         "w": "giao",
-         "m": "납품하다 交"
-        },
-        {
-         "w": "chưa",
-         "m": "아직?"
-        }
-       ],
-       "swap": [
-        "Hàng đã nhận rồi.",
-        "Đã gửi chưa?"
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "부족한 자재를 정확히 요청하라",
-    "how": "A는 창고 담당, B는 라인 담당. B가 베트남어로만 요청하고 A는 재고를 보고 답한다. 숫자와 단위가 맞아야 통과.",
-    "a": "창고: hộp 2개, thùng 0개(hết), cái 10개",
-    "b": "라인에 hộp 4개와 thùng 1개가 필요합니다"
-   }
-  },
-  {
-   "day": 15,
-   "theme": "위치와 옮기기",
-   "intro": "위치어는 명사 앞에 온다 — trên bàn(책상 위), trong thùng(상자 안). 한국어와 순서가 같아서 이건 그냥 외우면 된다.",
-   "words": [
-    {
-     "vi": "đây",
-     "ko": "여기",
-     "kr_read": "더이",
-     "hanja": null
-    },
-    {
-     "vi": "kia",
-     "ko": "저기",
-     "kr_read": "끼어",
-     "hanja": null
-    },
-    {
-     "vi": "trên",
-     "ko": "위",
-     "kr_read": "쩬",
-     "hanja": null
-    },
-    {
-     "vi": "dưới",
-     "ko": "아래",
-     "kr_read": "즈어이",
-     "hanja": null
-    },
-    {
-     "vi": "trong",
-     "ko": "안·속",
-     "kr_read": "쫌",
-     "hanja": null
-    },
-    {
-     "vi": "ngoài",
-     "ko": "밖",
-     "kr_read": "응와이",
-     "hanja": null
-    },
-    {
-     "vi": "bên cạnh",
-     "ko": "옆",
-     "kr_read": "벤 까인",
-     "hanja": null
-    },
-    {
-     "vi": "mang",
-     "ko": "가져가다·나르다",
-     "kr_read": "망",
-     "hanja": null
-    },
-    {
-     "vi": "đặt",
-     "ko": "놓다·두다",
-     "kr_read": "닷",
-     "hanja": null
     },
     {
      "vi": "đâu",
      "ko": "어디",
      "kr_read": "더우",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Anh ở đâu?",
-       "ko": "어디 계세요?",
-       "kr_read": "아인 어 더우",
-       "gloss": [
-        {
-         "w": "Anh",
-         "m": "형·오빠"
-        },
-        {
-         "w": "ở",
-         "m": "~에 있다"
-        },
-        {
-         "w": "đâu",
-         "m": "어디"
-        }
-       ],
-       "swap": [
-        "Chị ở đâu?",
-        "Cái này ở đâu?"
-       ]
-      },
-      {
-       "vi": "Tôi ở đây.",
-       "ko": "저 여기 있어요.",
-       "kr_read": "또이 어 더이",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "ở",
-         "m": "~에 있다"
-        },
-        {
-         "w": "đây",
-         "m": "여기"
-        }
-       ],
-       "swap": [
-        "Tôi ở kia.",
-        "Tôi ở ngoài."
-       ]
+       "syl": "đâu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       }
      ]
     },
     {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
+     "vi": "đây",
+     "ko": "여기",
+     "kr_read": "더이",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Hàng ở trong thùng.",
-       "ko": "물건은 상자 안에 있습니다.",
-       "kr_read": "항 어 쫌 퉁",
-       "gloss": [
-        {
-         "w": "Hàng",
-         "m": "물건"
-        },
-        {
-         "w": "ở",
-         "m": "~에 있다"
-        },
-        {
-         "w": "trong",
-         "m": "안"
-        },
-        {
-         "w": "thùng",
-         "m": "상자"
-        }
-       ],
-       "swap": [
-        "Hàng ở trên máy.",
-        "Hộp ở bên cạnh."
-       ]
-      },
+       "syl": "đây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "kia",
+     "ko": "저기",
+     "kr_read": "끼어",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Hãy mang hộp này đến đây.",
-       "ko": "이 상자를 여기로 가져오세요.",
-       "kr_read": "하이 망 홉 나이 덴 더이",
-       "gloss": [
-        {
-         "w": "Hãy",
-         "m": "~하세요"
-        },
-        {
-         "w": "mang",
-         "m": "가져오다"
-        },
-        {
-         "w": "hộp",
-         "m": "갑"
-        },
-        {
-         "w": "này",
-         "m": "이"
-        },
-        {
-         "w": "đến",
-         "m": "~까지"
-        },
-        {
-         "w": "đây",
-         "m": "여기"
-        }
-       ],
-       "swap": [
-        "Hãy đặt ở đây.",
-        "Đừng đặt ở kia."
-       ]
+       "syl": "kia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       }
      ]
     }
    ],
+   "dialog": {
+    "title": "사는 곳 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Chị sống ở đâu?",
+      "ko": "어디 사세요?",
+      "kr_read": "찌 쏨 어 더우",
+      "gloss": [
+       {
+        "w": "Chị",
+        "m": "누나"
+       },
+       {
+        "w": "sống",
+        "m": "살다"
+       },
+       {
+        "w": "ở",
+        "m": "~에"
+       },
+       {
+        "w": "đâu",
+        "m": "어디"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Chị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "sống",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đâu?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi sống ở đây.",
+      "ko": "저는 여기 살아요.",
+      "kr_read": "또이 쏨 어 더이",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "sống",
+        "m": "살다"
+       },
+       {
+        "w": "ở",
+        "m": "~에"
+       },
+       {
+        "w": "đây",
+        "m": "여기"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sống",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Anh sống ở đâu?",
+     "Tôi sống ở kia."
+    ]
+   },
    "mission": {
-    "goal": "말만으로 물건 위치를 전달하라",
-    "how": "A만 위치를 안다. 손으로 가리키지 않는다. 말로만 설명해서 B가 세 물건의 위치를 그리면 통과.",
-    "a": "hàng은 thùng 안, hộp은 máy 옆, găng tay는 ngoài 에 있습니다",
-    "b": "당신은 위치를 모릅니다. 물어서 그리세요"
+    "goal": "상대가 사는 곳을 알아내라",
+    "how": "손으로 가리키지 않는다. 말로만. 오늘 대화 + Day 6을 같이 써도 된다.",
+    "a": "당신은 Hà Nội에 삽니다",
+    "b": "당신은 Busan에 삽니다"
+   }
+  },
+  {
+   "day": 8,
+   "theme": "못 알아들었을 때",
+   "intro": "쌩초보에게 가장 중요한 날이다. 이 두 문장을 못 하면 나머지가 소용없다. 막혔을 때 한국어로 도망가지 않게 해주는 안전장치다.",
+   "words": [
+    {
+     "vi": "hiểu",
+     "ko": "이해하다",
+     "kr_read": "히에우",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "hiểu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "xin lỗi",
+     "ko": "미안합니다·실례합니다",
+     "kr_read": "씬 로이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "xin",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lỗi",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ]
+    },
+    {
+     "vi": "nói",
+     "ko": "말하다",
+     "kr_read": "노이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "nói",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "lại",
+     "ko": "다시",
+     "kr_read": "라이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "lại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "từ từ",
+     "ko": "천천히",
+     "kr_read": "뜨 뜨",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "từ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "từ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "못 알아들었다고 말하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Xin lỗi, tôi không hiểu.",
+      "ko": "죄송해요, 못 알아들었어요.",
+      "kr_read": "씬 로이 또이 콤 히에우",
+      "gloss": [
+       {
+        "w": "Xin lỗi",
+        "m": "죄송합니다"
+       },
+       {
+        "w": "tôi",
+        "m": "나"
+       },
+       {
+        "w": "không",
+        "m": "아니다"
+       },
+       {
+        "w": "hiểu",
+        "m": "이해하다"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Xin",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lỗi,",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hiểu.",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Vâng, tôi nói lại từ từ.",
+      "ko": "네, 다시 천천히 말할게요.",
+      "kr_read": "벙 또이 노이 라이 뜨 뜨",
+      "gloss": [
+       {
+        "w": "Vâng",
+        "m": "네"
+       },
+       {
+        "w": "tôi",
+        "m": "나"
+       },
+       {
+        "w": "nói",
+        "m": "말하다"
+       },
+       {
+        "w": "lại",
+        "m": "다시"
+       },
+       {
+        "w": "từ từ",
+        "m": "천천히"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nói",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "lại",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "từ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "từ.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Xin nói lại.",
+     "Nói từ từ được không?"
+    ]
+   },
+   "mission": {
+    "goal": "일부러 못 알아듣고 버텨라",
+    "how": "A가 아무 말이나 빠르게 한다. B는 한국어를 한 마디도 쓰지 않고 오늘 문장으로 세 번 되묻는다.",
+    "a": "당신이 빠르게 말합니다",
+    "b": "당신은 한국어를 쓰면 안 됩니다"
+   }
+  },
+  {
+   "day": 9,
+   "theme": "알아요 / 몰라요",
+   "intro": "một chút(조금)은 겸손하게 답할 때 늘 쓴다. 'biết một chút'은 실제로 잘해도 이렇게 말한다.",
+   "words": [
+    {
+     "vi": "biết",
+     "ko": "알다",
+     "kr_read": "비엣",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "biết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "nghe",
+     "ko": "듣다",
+     "kr_read": "응애",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "nghe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "tiếng Việt",
+     "ko": "베트남어",
+     "kr_read": "띠엥 비엣",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "tiếng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "Việt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "tiếng Hàn",
+     "ko": "한국어",
+     "kr_read": "띠엥 한",
+     "hanja": "韓 (한)",
+     "tones": [
+      {
+       "syl": "tiếng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "Hàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "một chút",
+     "ko": "조금",
+     "kr_read": "못 쭛",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "một",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "chút",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "할 줄 아는지 묻기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Anh biết tiếng Việt không?",
+      "ko": "베트남어 하실 줄 아세요?",
+      "kr_read": "아인 비엣 띠엥 비엣 콤",
+      "gloss": [
+       {
+        "w": "Anh",
+        "m": "형"
+       },
+       {
+        "w": "biết",
+        "m": "알다"
+       },
+       {
+        "w": "tiếng Việt",
+        "m": "베트남어"
+       },
+       {
+        "w": "không",
+        "m": "~입니까"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "biết",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tiếng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Việt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi biết một chút. Chị nghe được không?",
+      "ko": "조금 알아요. 알아들으시겠어요?",
+      "kr_read": "또이 비엣 못 쭛 찌 응애 드억 콤",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "biết",
+        "m": "알다"
+       },
+       {
+        "w": "một chút",
+        "m": "조금"
+       },
+       {
+        "w": "chị",
+        "m": "누나"
+       },
+       {
+        "w": "nghe",
+        "m": "듣다"
+       },
+       {
+        "w": "được không",
+        "m": "할 수 있나요"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "biết",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chút.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Chị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "nghe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Anh biết tiếng Hàn không?",
+     "Tôi không biết."
+    ]
+   },
+   "mission": {
+    "goal": "서로 뭘 할 줄 아는지 물어라",
+    "how": "베트남어·한국어 말고 다른 것도 넣어보라(운전, 요리 등은 한국어로 말해도 된다). 틀만 지키면 된다.",
+    "a": "당신은 베트남어를 조금 압니다",
+    "b": "당신은 한국어를 모릅니다"
+   }
+  },
+  {
+   "day": 10,
+   "theme": "안녕히 가세요",
+   "intro": "nhé는 말끝에 붙여 부드럽게 만드는 말이다. '~하자', '~할게' 같은 느낌이라 친구 사이에 많이 쓴다.",
+   "words": [
+    {
+     "vi": "tạm biệt",
+     "ko": "안녕히 가세요",
+     "kr_read": "땀 비엣",
+     "hanja": "暫別 (잠별)",
+     "tones": [
+      {
+       "syl": "tạm",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "biệt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "hẹn gặp lại",
+     "ko": "또 만나요",
+     "kr_read": "핸 갑 라이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "hẹn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "gặp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "lại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "mai",
+     "ko": "내일",
+     "kr_read": "마이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "mai",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "nhé",
+     "ko": "~할게요 (부드럽게)",
+     "kr_read": "냬",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "nhé",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "đi",
+     "ko": "가다",
+     "kr_read": "디",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "đi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "헤어지며 인사하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Tạm biệt anh, em đi nhé.",
+      "ko": "안녕히 계세요, 저 갈게요.",
+      "kr_read": "땀 비엣 아인 앰 디 냬",
+      "gloss": [
+       {
+        "w": "Tạm biệt",
+        "m": "안녕히"
+       },
+       {
+        "w": "anh",
+        "m": "형"
+       },
+       {
+        "w": "em",
+        "m": "저"
+       },
+       {
+        "w": "đi",
+        "m": "가다"
+       },
+       {
+        "w": "nhé",
+        "m": "~할게요"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tạm",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "biệt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "anh,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Vâng, hẹn gặp lại. Mai gặp nhé!",
+      "ko": "네, 또 봐요. 내일 봐요!",
+      "kr_read": "벙 핸 갑 라이 마이 갑 냬",
+      "gloss": [
+       {
+        "w": "Vâng",
+        "m": "네"
+       },
+       {
+        "w": "hẹn gặp lại",
+        "m": "또 만나요"
+       },
+       {
+        "w": "mai",
+        "m": "내일"
+       },
+       {
+        "w": "gặp",
+        "m": "만나다"
+       },
+       {
+        "w": "nhé",
+        "m": "~해요"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hẹn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "gặp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "lại.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "Mai",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "gặp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "nhé!",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Tạm biệt chị!",
+     "Hẹn gặp lại nhé."
+    ]
+   },
+   "mission": {
+    "goal": "1~10일치로 처음부터 끝까지",
+    "how": "인사 → 이름 → 반갑다 → 안부 → 나라 → 작별. 여섯 단계를 한국어 없이 통과하면 1주차 완료.",
+    "a": "당신이 먼저 말을 겁니다",
+    "b": "당신은 오늘 피곤합니다"
+   }
+  },
+  {
+   "day": 11,
+   "theme": "몇 개 있어요",
+   "intro": "cái는 물건에 붙는 단위다. 한국어의 '개'와 같다. 숫자 뒤에는 반드시 단위가 붙는다.",
+   "words": [
+    {
+     "vi": "mấy",
+     "ko": "몇",
+     "kr_read": "머이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "mấy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "một",
+     "ko": "1",
+     "kr_read": "못",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "một",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "hai",
+     "ko": "2",
+     "kr_read": "하이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "hai",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "ba",
+     "ko": "3",
+     "kr_read": "바",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "ba",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "cái",
+     "ko": "개 (물건 단위)",
+     "kr_read": "까이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "cái",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "개수 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Chị có mấy cái?",
+      "ko": "몇 개 있으세요?",
+      "kr_read": "찌 꼬 머이 까이",
+      "gloss": [
+       {
+        "w": "Chị",
+        "m": "누나"
+       },
+       {
+        "w": "có",
+        "m": "있다"
+       },
+       {
+        "w": "mấy",
+        "m": "몇"
+       },
+       {
+        "w": "cái",
+        "m": "개"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Chị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mấy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cái?",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi có ba cái.",
+      "ko": "세 개 있어요.",
+      "kr_read": "또이 꼬 바 까이",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "có",
+        "m": "있다"
+       },
+       {
+        "w": "ba",
+        "m": "3"
+       },
+       {
+        "w": "cái",
+        "m": "개"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ba",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cái.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Tôi có một cái.",
+     "Tôi có hai cái."
+    ]
+   },
+   "mission": {
+    "goal": "서로 가진 개수를 합쳐라",
+    "how": "각자 숫자 카드를 받고 안 보여준다. 물어서 두 수를 합해 베트남어로 말하면 통과.",
+    "a": "당신은 3개(ba cái) 가지고 있습니다",
+    "b": "당신은 2개(hai cái) 가지고 있습니다"
+   }
+  },
+  {
+   "day": 12,
+   "theme": "숫자 4~8",
+   "intro": "숫자는 변형이 없어 외우기 쉽다. 오늘까지 여덟 개를 알면 일상 대부분이 된다.",
+   "words": [
+    {
+     "vi": "bốn",
+     "ko": "4",
+     "kr_read": "본",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "bốn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "năm",
+     "ko": "5",
+     "kr_read": "남",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "năm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "sáu",
+     "ko": "6",
+     "kr_read": "사우",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "sáu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "bảy",
+     "ko": "7",
+     "kr_read": "바이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "bảy",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "tám",
+     "ko": "8",
+     "kr_read": "땀",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "tám",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "친구가 몇 명인지 묻기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Anh có mấy người bạn?",
+      "ko": "친구가 몇 명이에요?",
+      "kr_read": "아인 꼬 머이 응어이 반",
+      "gloss": [
+       {
+        "w": "Anh",
+        "m": "형"
+       },
+       {
+        "w": "có",
+        "m": "있다"
+       },
+       {
+        "w": "mấy",
+        "m": "몇"
+       },
+       {
+        "w": "người",
+        "m": "사람"
+       },
+       {
+        "w": "bạn",
+        "m": "친구"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mấy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "người",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bạn?",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi có năm người bạn.",
+      "ko": "다섯 명이요.",
+      "kr_read": "또이 꼬 남 응어이 반",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "có",
+        "m": "있다"
+       },
+       {
+        "w": "năm",
+        "m": "5"
+       },
+       {
+        "w": "người",
+        "m": "사람"
+       },
+       {
+        "w": "bạn",
+        "m": "친구"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "năm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "người",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bạn.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Tôi có bốn người bạn.",
+     "Tôi có tám cái."
+    ]
+   },
+   "mission": {
+    "goal": "1부터 8까지 이어 말하기",
+    "how": "한 명이 하나씩 말하고 다음 사람이 이어받는다. 틀리면 처음부터. 두 바퀴 돌면 통과.",
+    "a": "당신이 một 부터 시작합니다",
+    "b": "당신이 이어받습니다"
+   }
+  },
+  {
+   "day": 13,
+   "theme": "나이 묻기",
+   "intro": "mười(10)에 숫자를 붙이면 11~19가 되고, 숫자 뒤에 mươi를 붙이면 20·30이 된다. hai mươi = 20.",
+   "words": [
+    {
+     "vi": "chín",
+     "ko": "9",
+     "kr_read": "찐",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "chín",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "mười",
+     "ko": "10",
+     "kr_read": "므어이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "mười",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "tuổi",
+     "ko": "살·나이",
+     "kr_read": "뚜오이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "tuổi",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "bao nhiêu",
+     "ko": "얼마나·몇 (큰 수)",
+     "kr_read": "바오 니에우",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "bao",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhiêu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "mươi",
+     "ko": "십 (20·30의 '십')",
+     "kr_read": "므어이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "mươi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "나이 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Em bao nhiêu tuổi?",
+      "ko": "몇 살이에요?",
+      "kr_read": "앰 바오 니에우 뚜오이",
+      "gloss": [
+       {
+        "w": "Em",
+        "m": "동생"
+       },
+       {
+        "w": "bao nhiêu",
+        "m": "몇"
+       },
+       {
+        "w": "tuổi",
+        "m": "살"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bao",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhiêu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tuổi?",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Em mười chín tuổi.",
+      "ko": "저 열아홉이요.",
+      "kr_read": "앰 므어이 찐 뚜오이",
+      "gloss": [
+       {
+        "w": "Em",
+        "m": "저"
+       },
+       {
+        "w": "mười",
+        "m": "10"
+       },
+       {
+        "w": "chín",
+        "m": "9"
+       },
+       {
+        "w": "tuổi",
+        "m": "살"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mười",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "chín",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tuổi.",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Anh bao nhiêu tuổi?",
+     "Tôi ba mươi tuổi."
+    ]
+   },
+   "mission": {
+    "goal": "나이를 물어 호칭을 다시 정하라",
+    "how": "Day 1의 anh/chị/em 을 오늘 알아낸 나이로 확정하라. 서로 맞는 호칭으로 한 번 더 인사하면 통과.",
+    "a": "당신은 스물셋입니다",
+    "b": "당신은 열아홉입니다"
+   }
+  },
+  {
+   "day": 14,
+   "theme": "지금 몇 시",
+   "intro": "rưỡi는 '반'이다. chín giờ rưỡi = 9시 반. 약속 잡을 때 매번 쓴다.",
+   "words": [
+    {
+     "vi": "giờ",
+     "ko": "시·시간",
+     "kr_read": "저",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "giờ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "bây giờ",
+     "ko": "지금",
+     "kr_read": "버이 저",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "bây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "giờ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "rưỡi",
+     "ko": "반 (30분)",
+     "kr_read": "즈어이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "rưỡi",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ]
+    },
+    {
+     "vi": "sáng",
+     "ko": "아침·오전",
+     "kr_read": "상",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "sáng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "chiều",
+     "ko": "오후",
+     "kr_read": "찌에우",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "chiều",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "시간 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Bây giờ là mấy giờ?",
+      "ko": "지금 몇 시예요?",
+      "kr_read": "버이 저 라 머이 저",
+      "gloss": [
+       {
+        "w": "Bây giờ",
+        "m": "지금"
+       },
+       {
+        "w": "là",
+        "m": "~이다"
+       },
+       {
+        "w": "mấy",
+        "m": "몇"
+       },
+       {
+        "w": "giờ",
+        "m": "시"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Bây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "mấy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "giờ?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Bây giờ là chín giờ rưỡi sáng.",
+      "ko": "지금 아침 9시 반이요.",
+      "kr_read": "버이 저 라 찐 저 즈어이 상",
+      "gloss": [
+       {
+        "w": "Bây giờ",
+        "m": "지금"
+       },
+       {
+        "w": "chín",
+        "m": "9"
+       },
+       {
+        "w": "giờ",
+        "m": "시"
+       },
+       {
+        "w": "rưỡi",
+        "m": "반"
+       },
+       {
+        "w": "sáng",
+        "m": "아침"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Bây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "chín",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "giờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rưỡi",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "sáng.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Bây giờ là tám giờ.",
+     "Bây giờ là ba giờ chiều."
+    ]
+   },
+   "mission": {
+    "goal": "서로 다른 시각 다섯 개 말하기",
+    "how": "A가 시각을 말하면 B가 그걸 한국어로 확인해준다. 다섯 개 다 맞으면 역할 교대.",
+    "a": "당신이 시각을 냅니다",
+    "b": "당신이 확인합니다"
+   }
+  },
+  {
+   "day": 15,
+   "theme": "몇 시에 나가요",
+   "intro": "lúc은 '~시에'의 '에'다. 시각 앞에 붙는다.",
+   "words": [
+    {
+     "vi": "làm",
+     "ko": "하다·일하다",
+     "kr_read": "람",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "việc",
+     "ko": "일",
+     "kr_read": "비엑",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "việc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "lúc",
+     "ko": "~에 (시각)",
+     "kr_read": "룩",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "lúc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "về",
+     "ko": "돌아가다",
+     "kr_read": "베",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "về",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "nhà",
+     "ko": "집",
+     "kr_read": "냐",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "하루 일과 묻기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Mấy giờ chị đi làm việc?",
+      "ko": "몇 시에 일하러 가세요?",
+      "kr_read": "머이 저 찌 디 람 비엑",
+      "gloss": [
+       {
+        "w": "Mấy giờ",
+        "m": "몇 시"
+       },
+       {
+        "w": "chị",
+        "m": "누나"
+       },
+       {
+        "w": "đi",
+        "m": "가다"
+       },
+       {
+        "w": "làm",
+        "m": "하다"
+       },
+       {
+        "w": "việc",
+        "m": "일"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Mấy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "giờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "chị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "việc?",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi đi làm lúc tám giờ. Sáu giờ về nhà.",
+      "ko": "여덟 시에 나가고 여섯 시에 집에 와요.",
+      "kr_read": "또이 디 람 룩 땀 저 사우 저 베 냐",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "đi làm",
+        "m": "일하러 가다"
+       },
+       {
+        "w": "lúc",
+        "m": "~에"
+       },
+       {
+        "w": "tám giờ",
+        "m": "8시"
+       },
+       {
+        "w": "sáu giờ",
+        "m": "6시"
+       },
+       {
+        "w": "về",
+        "m": "돌아가다"
+       },
+       {
+        "w": "nhà",
+        "m": "집"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "lúc",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tám",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "giờ.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Sáu",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "giờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "về",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nhà.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Mấy giờ anh về nhà?",
+     "Tôi về nhà lúc bảy giờ."
+    ]
+   },
+   "mission": {
+    "goal": "상대의 하루를 시간표로 그려라",
+    "how": "나가는 시각과 오는 시각을 물어서 적어라. 한국어를 쓰면 처음부터.",
+    "a": "8시에 나가고 6시에 옵니다",
+    "b": "9시 반에 나가고 7시에 옵니다"
    }
   },
   {
    "day": 16,
-   "theme": "안전 — 위험과 보호구",
-   "intro": "오늘은 한자어가 여섯이다. 安全·危險·謹愼·災難·注意·保護. 한국어를 아는 사람은 뜻을 이미 알고 있다. 소리만 익히면 된다.",
+   "theme": "무슨 요일",
+   "intro": "베트남어 요일은 '둘째·셋째'로 센다. 월요일이 thứ hai(둘째)다. 숫자를 알면 요일은 공짜로 따라온다.",
    "words": [
     {
-     "vi": "an toàn",
-     "ko": "안전",
-     "kr_read": "안 또안",
-     "hanja": "安全 (안전)"
-    },
-    {
-     "vi": "nguy hiểm",
-     "ko": "위험",
-     "kr_read": "응위 히엠",
-     "hanja": "危險 (위험)"
-    },
-    {
-     "vi": "cẩn thận",
-     "ko": "조심하다",
-     "kr_read": "껀 턴",
-     "hanja": "謹愼 (근신)"
-    },
-    {
-     "vi": "tai nạn",
-     "ko": "사고",
-     "kr_read": "따이 난",
-     "hanja": "災難 (재난)"
-    },
-    {
-     "vi": "cấm",
-     "ko": "금지하다",
-     "kr_read": "껌",
-     "hanja": "禁 (금)"
-    },
-    {
-     "vi": "chú ý",
-     "ko": "주의하다",
-     "kr_read": "쭈 이",
-     "hanja": "注意 (주의)"
-    },
-    {
-     "vi": "bảo hộ",
-     "ko": "보호",
-     "kr_read": "바오 호",
-     "hanja": "保護 (보호)"
-    },
-    {
-     "vi": "găng tay",
-     "ko": "장갑",
-     "kr_read": "강 따이",
-     "hanja": null
-    },
-    {
-     "vi": "khẩu trang",
-     "ko": "마스크",
-     "kr_read": "커우 짱",
-     "hanja": null
-    },
-    {
-     "vi": "phải",
-     "ko": "~해야 한다",
-     "kr_read": "파이",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
+     "vi": "thứ hai",
+     "ko": "월요일",
+     "kr_read": "트 하이",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Cẩn thận!",
-       "ko": "조심하세요!",
-       "kr_read": "껀 턴",
-       "gloss": [
-        {
-         "w": "Cẩn thận",
-         "m": "조심하다 謹愼"
-        }
-       ],
-       "swap": [
-        "Chú ý!",
-        "Nguy hiểm!"
-       ]
+       "syl": "thứ",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
       },
       {
-       "vi": "Ở đây nguy hiểm.",
-       "ko": "여기 위험해요.",
-       "kr_read": "어 더이 응위 히엠",
-       "gloss": [
-        {
-         "w": "Ở",
-         "m": "~에"
-        },
-        {
-         "w": "đây",
-         "m": "여기"
-        },
-        {
-         "w": "nguy hiểm",
-         "m": "위험 危險"
-        }
-       ],
-       "swap": [
-        "Ở kia nguy hiểm.",
-        "Ở đây an toàn."
-       ]
+       "syl": "hai",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       }
      ]
     },
     {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
+     "vi": "thứ ba",
+     "ko": "화요일",
+     "kr_read": "트 바",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Phải chú ý an toàn.",
-       "ko": "안전에 주의해야 합니다.",
-       "kr_read": "파이 쭈 이 안 또안",
-       "gloss": [
-        {
-         "w": "Phải",
-         "m": "해야 한다"
-        },
-        {
-         "w": "chú ý",
-         "m": "주의하다 注意"
-        },
-        {
-         "w": "an toàn",
-         "m": "안전 安全"
-        }
-       ],
-       "swap": [
-        "Phải cẩn thận.",
-        "Phải kiểm tra."
-       ]
+       "syl": "thứ",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
       },
       {
-       "vi": "Phải có găng tay và khẩu trang.",
-       "ko": "장갑과 마스크가 있어야 합니다.",
-       "kr_read": "파이 꼬 강 따이 바 커우 짱",
-       "gloss": [
-        {
-         "w": "Phải",
-         "m": "해야 한다"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "găng tay",
-         "m": "장갑"
-        },
-        {
-         "w": "và",
-         "m": "그리고"
-        },
-        {
-         "w": "khẩu trang",
-         "m": "마스크"
-        }
-       ],
-       "swap": [
-        "Phải có bảo hộ.",
-        "Cấm! Nguy hiểm!"
-       ]
+       "syl": "ba",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "chủ nhật",
+     "ko": "일요일",
+     "kr_read": "쭈 녓",
+     "hanja": "主日 (주일)",
+     "tones": [
+      {
+       "syl": "chủ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "nhật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "ngày",
+     "ko": "날·일",
+     "kr_read": "응아이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "ngày",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "tuần",
+     "ko": "주",
+     "kr_read": "뚜언",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "tuần",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
       }
      ]
     }
    ],
+   "dialog": {
+    "title": "요일 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Hôm nay là thứ mấy?",
+      "ko": "오늘 무슨 요일이에요?",
+      "kr_read": "홈 나이 라 트 머이",
+      "gloss": [
+       {
+        "w": "Hôm nay",
+        "m": "오늘"
+       },
+       {
+        "w": "là",
+        "m": "~이다"
+       },
+       {
+        "w": "thứ",
+        "m": "번째"
+       },
+       {
+        "w": "mấy",
+        "m": "몇"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "thứ",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mấy?",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Hôm nay là thứ ba.",
+      "ko": "오늘 화요일이요.",
+      "kr_read": "홈 나이 라 트 바",
+      "gloss": [
+       {
+        "w": "Hôm nay",
+        "m": "오늘"
+       },
+       {
+        "w": "là",
+        "m": "~이다"
+       },
+       {
+        "w": "thứ ba",
+        "m": "화요일"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "thứ",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ba.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Hôm nay là thứ hai.",
+     "Chủ nhật tôi ở nhà."
+    ]
+   },
    "mission": {
-    "goal": "위험 요소 세 가지를 경고하라",
-    "how": "A만 위험 요소를 안다. 오늘의 문장으로 B에게 경고하고, B는 무엇이 왜 위험한지 받아 적어야 한다.",
-    "a": "위험 3가지: máy가 bị hỏng, 바닥에 dây, khẩu trang 없이 작업 중",
-    "b": "당신은 위험을 모릅니다. 듣고 받아 적으세요"
+    "goal": "둘 다 쉬는 날을 찾아라",
+    "how": "각자 일정표를 받고 안 보여준다. 요일을 하나씩 물어서 둘 다 쉬는 날을 찾아내라.",
+    "a": "당신은 chủ nhật 에만 쉽니다",
+    "b": "당신은 thứ hai 와 chủ nhật 에 쉽니다"
    }
   },
   {
    "day": 17,
-   "theme": "착용과 응급",
-   "intro": "đeo(차다)·mặc(입다)·đội(쓰다)는 한국어처럼 대상에 따라 동사가 다르다. 장갑은 đeo, 옷은 mặc, 헬멧은 đội. 우리말과 같은 감각이다.",
+   "theme": "뭐 먹을래요",
+   "intro": "베트남에서 '밥 먹었어요?'는 '안녕하세요' 만큼 자주 쓰는 인사다. 진짜 물어보는 게 아니어도 대답은 해야 한다.",
    "words": [
     {
-     "vi": "đeo",
-     "ko": "차다·끼다 (장갑·마스크)",
-     "kr_read": "대오",
-     "hanja": null
+     "vi": "ăn",
+     "ko": "먹다",
+     "kr_read": "안",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
     },
     {
-     "vi": "mặc",
-     "ko": "입다 (옷)",
-     "kr_read": "막",
-     "hanja": null
+     "vi": "cơm",
+     "ko": "밥",
+     "kr_read": "껌",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "cơm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
     },
     {
-     "vi": "đội",
-     "ko": "쓰다 (모자·헬멧)",
-     "kr_read": "도이",
-     "hanja": null
+     "vi": "ngon",
+     "ko": "맛있다",
+     "kr_read": "응온",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "ngon",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
     },
     {
-     "vi": "giày",
-     "ko": "신발·안전화",
-     "kr_read": "자이",
-     "hanja": null
+     "vi": "muốn",
+     "ko": "~하고 싶다",
+     "kr_read": "무온",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "muốn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "uống",
+     "ko": "마시다",
+     "kr_read": "우옴",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "uống",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "먹고 싶은 것 묻기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Anh muốn ăn gì?",
+      "ko": "뭐 드시고 싶으세요?",
+      "kr_read": "아인 무온 안 지",
+      "gloss": [
+       {
+        "w": "Anh",
+        "m": "형"
+       },
+       {
+        "w": "muốn",
+        "m": "하고 싶다"
+       },
+       {
+        "w": "ăn",
+        "m": "먹다"
+       },
+       {
+        "w": "gì",
+        "m": "무엇"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "muốn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "gì?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Tôi muốn ăn cơm. Cơm ngon lắm!",
+      "ko": "밥 먹고 싶어요. 밥 맛있어요!",
+      "kr_read": "또이 무온 안 껌 껌 응온 람",
+      "gloss": [
+       {
+        "w": "Tôi",
+        "m": "나"
+       },
+       {
+        "w": "muốn",
+        "m": "하고 싶다"
+       },
+       {
+        "w": "ăn",
+        "m": "먹다"
+       },
+       {
+        "w": "cơm",
+        "m": "밥"
+       },
+       {
+        "w": "ngon",
+        "m": "맛있다"
+       },
+       {
+        "w": "lắm",
+        "m": "아주"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "muốn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cơm.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "Cơm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ngon",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lắm!",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Chị muốn uống gì?",
+     "Tôi không muốn ăn."
+    ]
+   },
+   "mission": {
+    "goal": "메뉴 정하기",
+    "how": "둘이 뭘 먹을지 베트남어로만 정하라. 서로 하나씩 제안하고 합의하면 통과.",
+    "a": "당신은 cơm 을 먹고 싶습니다",
+    "b": "당신은 배가 안 고픕니다"
+   }
+  },
+  {
+   "day": 18,
+   "theme": "얼마예요",
+   "intro": "시장에서 값을 물을 때 거의 이 문장 하나로 끝난다. 값을 못 알아들으면 Day 8의 'Nói từ từ'를 쓴다.",
+   "words": [
+    {
+     "vi": "này",
+     "ko": "이·이것",
+     "kr_read": "나이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "này",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "tiền",
+     "ko": "돈",
+     "kr_read": "띠엔",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "đắt",
+     "ko": "비싸다",
+     "kr_read": "닷",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "đắt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "rẻ",
+     "ko": "싸다",
+     "kr_read": "재",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "rẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "mua",
+     "ko": "사다",
+     "kr_read": "무어",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "값 묻고 답하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Cái này bao nhiêu tiền?",
+      "ko": "이거 얼마예요?",
+      "kr_read": "까이 나이 바오 니에우 띠엔",
+      "gloss": [
+       {
+        "w": "Cái",
+        "m": "개·것"
+       },
+       {
+        "w": "này",
+        "m": "이"
+       },
+       {
+        "w": "bao nhiêu",
+        "m": "얼마"
+       },
+       {
+        "w": "tiền",
+        "m": "돈"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Cái",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bao",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhiêu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tiền?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Cái này không đắt. Rẻ lắm!",
+      "ko": "이거 안 비싸요. 아주 싸요!",
+      "kr_read": "까이 나이 콤 닷 재 람",
+      "gloss": [
+       {
+        "w": "Cái này",
+        "m": "이것"
+       },
+       {
+        "w": "không",
+        "m": "아니다"
+       },
+       {
+        "w": "đắt",
+        "m": "비싸다"
+       },
+       {
+        "w": "rẻ",
+        "m": "싸다"
+       },
+       {
+        "w": "lắm",
+        "m": "아주"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Cái",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "không",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đắt.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Rẻ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "lắm!",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Tôi muốn mua cái này.",
+     "Đắt lắm!"
+    ]
+   },
+   "mission": {
+    "goal": "값을 깎아라",
+    "how": "A는 파는 사람, B는 사는 사람. 베트남어로만 흥정하라. 숫자는 Day 11~13 것을 쓴다.",
+    "a": "당신은 파는 사람입니다. 값은 tám 입니다",
+    "b": "당신은 사는 사람입니다. năm 까지만 낼 수 있습니다"
+   }
+  },
+  {
+   "day": 19,
+   "theme": "도와주세요",
+   "intro": "làm ơn을 앞에 붙이면 무슨 부탁이든 정중해진다. 모르는 사람에게 말 걸 때 이걸로 시작한다.",
+   "words": [
+    {
+     "vi": "làm ơn",
+     "ko": "부디·좀 (부탁)",
+     "kr_read": "람 언",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "ơn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "giúp",
+     "ko": "돕다",
+     "kr_read": "줍",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "giúp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "cần",
+     "ko": "필요하다",
+     "kr_read": "껀",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "cần",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "hỏi",
+     "ko": "묻다",
+     "kr_read": "호이",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "hỏi",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "được không",
+     "ko": "~해 주실 수 있나요",
+     "kr_read": "드억 콤",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "được",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "không",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "도움 청하기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Làm ơn giúp tôi được không?",
+      "ko": "좀 도와주실 수 있나요?",
+      "kr_read": "람 언 줍 또이 드억 콤",
+      "gloss": [
+       {
+        "w": "Làm ơn",
+        "m": "부디"
+       },
+       {
+        "w": "giúp",
+        "m": "돕다"
+       },
+       {
+        "w": "tôi",
+        "m": "나"
+       },
+       {
+        "w": "được không",
+        "m": "해 주실 수 있나요"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ơn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giúp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Vâng, anh cần hỏi gì?",
+      "ko": "네, 뭘 물어보시려고요?",
+      "kr_read": "벙 아인 껀 호이 지",
+      "gloss": [
+       {
+        "w": "Vâng",
+        "m": "네"
+       },
+       {
+        "w": "anh",
+        "m": "형"
+       },
+       {
+        "w": "cần",
+        "m": "필요하다"
+       },
+       {
+        "w": "hỏi",
+        "m": "묻다"
+       },
+       {
+        "w": "gì",
+        "m": "무엇"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "hỏi",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "gì?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Làm ơn nói lại được không?",
+     "Tôi cần giúp."
+    ]
+   },
+   "mission": {
+    "goal": "길 잃은 사람 되어보기",
+    "how": "A는 도움이 필요하고 B는 도와준다. Day 7(위치)과 Day 8(못 알아들음)을 같이 써야 통과.",
+    "a": "당신은 길을 잃었습니다",
+    "b": "당신은 도와주는 사람입니다"
+   }
+  },
+  {
+   "day": 20,
+   "theme": "약속하기",
+   "intro": "đừng은 '~하지 마세요'다. hãy(하세요)와 짝이라 둘만 알면 부탁의 절반이 끝난다.",
+   "words": [
+    {
+     "vi": "nhớ",
+     "ko": "기억하다·잊지 않다",
+     "kr_read": "녀",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "nhớ",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "đừng",
+     "ko": "~하지 마세요",
+     "kr_read": "등",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "đừng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
     },
     {
      "vi": "quên",
      "ko": "잊다",
      "kr_read": "꾸엔",
-     "hanja": null
-    },
-    {
-     "vi": "nhớ",
-     "ko": "기억하다·잊지 않다",
-     "kr_read": "녀",
-     "hanja": null
-    },
-    {
-     "vi": "gọi",
-     "ko": "부르다·전화하다",
-     "kr_read": "고이",
-     "hanja": null
-    },
-    {
-     "vi": "cứu",
-     "ko": "구하다",
-     "kr_read": "끄우",
-     "hanja": "救 (구)"
-    },
-    {
-     "vi": "đau",
-     "ko": "아프다",
-     "kr_read": "다우",
-     "hanja": null
-    },
-    {
-     "vi": "bệnh viện",
-     "ko": "병원",
-     "kr_read": "벤 비엔",
-     "hanja": "病院 (병원)"
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Tôi bị đau.",
-       "ko": "저 아파요.",
-       "kr_read": "또이 비 다우",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "bị",
-         "m": "당하다"
-        },
-        {
-         "w": "đau",
-         "m": "아프다"
-        }
-       ],
-       "swap": [
-        "Tôi không đau.",
-        "Anh có đau không?"
-       ]
-      },
-      {
-       "vi": "Đừng quên!",
-       "ko": "잊지 마세요!",
-       "kr_read": "등 꾸엔",
-       "gloss": [
-        {
-         "w": "Đừng",
-         "m": "하지 마세요"
-        },
-        {
-         "w": "quên",
-         "m": "잊다"
-        }
-       ],
-       "swap": [
-        "Tôi nhớ rồi.",
-        "Tôi quên rồi."
-       ]
+       "syl": "quên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       }
      ]
     },
     {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
+     "vi": "hứa",
+     "ko": "약속하다",
+     "kr_read": "흐어",
+     "hanja": null,
+     "tones": [
       {
-       "vi": "Đừng quên đeo găng tay!",
-       "ko": "장갑 끼는 것 잊지 마세요!",
-       "kr_read": "등 꾸엔 대오 강 따이",
-       "gloss": [
-        {
-         "w": "Đừng",
-         "m": "하지 마세요"
-        },
-        {
-         "w": "quên",
-         "m": "잊다"
-        },
-        {
-         "w": "đeo",
-         "m": "끼다"
-        },
-        {
-         "w": "găng tay",
-         "m": "장갑"
-        }
-       ],
-       "swap": [
-        "Đừng quên đeo khẩu trang!",
-        "Nhớ mang giày."
-       ]
+       "syl": "hứa",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "chắc chắn",
+     "ko": "확실히",
+     "kr_read": "짝 짠",
+     "hanja": null,
+     "tones": [
+      {
+       "syl": "chắc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
       },
       {
-       "vi": "Có tai nạn, hãy gọi bệnh viện!",
-       "ko": "사고입니다, 병원을 부르세요!",
-       "kr_read": "꼬 따이 난 하이 고이 벤 비엔",
-       "gloss": [
-        {
-         "w": "Có",
-         "m": "있다"
-        },
-        {
-         "w": "tai nạn",
-         "m": "사고 災難"
-        },
-        {
-         "w": "hãy",
-         "m": "~하세요"
-        },
-        {
-         "w": "gọi",
-         "m": "부르다"
-        },
-        {
-         "w": "bệnh viện",
-         "m": "병원 病院"
-        }
-       ],
-       "swap": [
-        "Hãy gọi giám đốc!",
-        "Cứu tôi!"
-       ]
+       "syl": "chắn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
       }
      ]
     }
    ],
+   "dialog": {
+    "title": "약속 잡고 다짐받기",
+    "lines": [
+     {
+      "who": "A",
+      "vi": "Mai gặp nhé. Đừng quên!",
+      "ko": "내일 봐요. 잊지 마세요!",
+      "kr_read": "마이 갑 냬 등 꾸엔",
+      "gloss": [
+       {
+        "w": "Mai",
+        "m": "내일"
+       },
+       {
+        "w": "gặp",
+        "m": "만나다"
+       },
+       {
+        "w": "nhé",
+        "m": "~해요"
+       },
+       {
+        "w": "Đừng",
+        "m": "하지 마세요"
+       },
+       {
+        "w": "quên",
+        "m": "잊다"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Mai",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "gặp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Đừng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "quên!",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ]
+     },
+     {
+      "who": "B",
+      "vi": "Vâng, tôi hứa. Tôi nhớ chắc chắn ạ.",
+      "ko": "네, 약속해요. 확실히 기억할게요.",
+      "kr_read": "벙 또이 흐어 또이 녀 짝 짠 아",
+      "gloss": [
+       {
+        "w": "Vâng",
+        "m": "네"
+       },
+       {
+        "w": "tôi",
+        "m": "나"
+       },
+       {
+        "w": "hứa",
+        "m": "약속하다"
+       },
+       {
+        "w": "nhớ",
+        "m": "기억하다"
+       },
+       {
+        "w": "chắc chắn",
+        "m": "확실히"
+       },
+       {
+        "w": "ạ",
+        "m": "공손"
+       }
+      ],
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hứa.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhớ",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chắc",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chắn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ạ.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ]
+     }
+    ],
+    "extra": [
+     "Đừng quên nhé!",
+     "Tôi hứa chắc chắn."
+    ]
+   },
    "mission": {
-    "goal": "응급 상황 역할극",
-    "how": "B가 다쳤다(bị đau). A는 상태를 묻고 필요한 사람을 부른다. 여덟 문장 안에 파악 → 호출까지 마치면 통과.",
-    "a": "당신은 관리자입니다. 묻고 조치하세요",
-    "b": "당신은 손을 다쳤습니다. găng tay를 안 껴서 생긴 일입니다"
-   }
-  },
-  {
-   "day": 18,
-   "theme": "교대와 근무",
-   "intro": "ca는 '조·교대'다. ca sáng(주간조), ca đêm(야간조). tăng ca는 잔업 — 增(증)에서 왔다. 급여와 직결되는 단어들이라 제일 먼저 외워진다.",
-   "words": [
-    {
-     "vi": "ca",
-     "ko": "조·교대",
-     "kr_read": "까",
-     "hanja": null
-    },
-    {
-     "vi": "đêm",
-     "ko": "밤",
-     "kr_read": "뎀",
-     "hanja": null
-    },
-    {
-     "vi": "tăng ca",
-     "ko": "잔업·특근",
-     "kr_read": "땅 까",
-     "hanja": "增 (증) + ca"
-    },
-    {
-     "vi": "nghỉ phép",
-     "ko": "휴가",
-     "kr_read": "응이 팹",
-     "hanja": null
-    },
-    {
-     "vi": "lương",
-     "ko": "급여·월급",
-     "kr_read": "르엉",
-     "hanja": null
-    },
-    {
-     "vi": "thay",
-     "ko": "대신하다·교대하다",
-     "kr_read": "타이",
-     "hanja": null
-    },
-    {
-     "vi": "đổi",
-     "ko": "바꾸다",
-     "kr_read": "도이",
-     "hanja": null
-    },
-    {
-     "vi": "ốm",
-     "ko": "아프다 (병나다)",
-     "kr_read": "옴",
-     "hanja": null
-    },
-    {
-     "vi": "trước",
-     "ko": "~전에·앞",
-     "kr_read": "쯔억",
-     "hanja": null
-    },
-    {
-     "vi": "sau",
-     "ko": "~후에·뒤",
-     "kr_read": "사우",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Hôm qua tôi bị ốm.",
-       "ko": "어제 저 아팠어요.",
-       "kr_read": "홈 꾸아 또이 비 옴",
-       "gloss": [
-        {
-         "w": "Hôm qua",
-         "m": "어제"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "bị",
-         "m": "당하다"
-        },
-        {
-         "w": "ốm",
-         "m": "병나다"
-        }
-       ],
-       "swap": [
-        "Hôm nay tôi bị ốm.",
-        "Tôi không bị ốm."
-       ]
-      },
-      {
-       "vi": "Tôi muốn nghỉ phép.",
-       "ko": "저 휴가 내고 싶어요.",
-       "kr_read": "또이 무온 응이 팹",
-       "gloss": [
-        {
-         "w": "Tôi",
-         "m": "나"
-        },
-        {
-         "w": "muốn",
-         "m": "하고 싶다"
-        },
-        {
-         "w": "nghỉ phép",
-         "m": "휴가"
-        }
-       ],
-       "swap": [
-        "Tôi muốn đổi ca.",
-        "Tôi cần nghỉ."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Hôm nay tôi làm ca đêm.",
-       "ko": "오늘 저는 야간조입니다.",
-       "kr_read": "홈 나이 또이 람 까 뎀",
-       "gloss": [
-        {
-         "w": "Hôm nay",
-         "m": "오늘"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "làm",
-         "m": "하다"
-        },
-        {
-         "w": "ca",
-         "m": "조"
-        },
-        {
-         "w": "đêm",
-         "m": "밤"
-        }
-       ],
-       "swap": [
-        "Hôm nay tôi làm ca sáng.",
-        "Hôm qua tôi tăng ca."
-       ]
-      },
-      {
-       "vi": "Anh thay tôi được không?",
-       "ko": "저 대신 해주실 수 있나요?",
-       "kr_read": "아인 타이 또이 드억 콤",
-       "gloss": [
-        {
-         "w": "Anh",
-         "m": "형·오빠"
-        },
-        {
-         "w": "thay",
-         "m": "대신하다"
-        },
-        {
-         "w": "tôi",
-         "m": "나"
-        },
-        {
-         "w": "được không",
-         "m": "할 수 있나요"
-        }
-       ],
-       "swap": [
-        "Chị thay tôi được không?",
-        "Tôi muốn đổi ca."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "교대를 바꿔달라고 협상하라",
-    "how": "A는 사정이 있어 조를 바꿔야 한다. B는 조건이 맞아야 승낙한다. 다섯 턴 안에 합의하거나 거절하면 통과.",
-    "a": "당신은 내일 ca đêm인데 bị ốm 입니다. 부탁하세요",
-    "b": "당신은 내일 ca sáng입니다. 어제 tăng ca를 해서 피곤합니다"
-   }
-  },
-  {
-   "day": 19,
-   "theme": "설비와 공구",
-   "intro": "'Máy bị hỏng rồi'는 Day 13의 bị와 Day 12의 rồi를 그대로 쓴 것이다. 새 문법이 아니다 — 배운 틀에 새 단어만 끼웠다. 앞으로도 계속 이 방식이다.",
-   "words": [
-    {
-     "vi": "dụng cụ",
-     "ko": "공구·도구",
-     "kr_read": "줌 꾸",
-     "hanja": "用具 (용구)"
-    },
-    {
-     "vi": "điện",
-     "ko": "전기",
-     "kr_read": "디엔",
-     "hanja": "電 (전)"
-    },
-    {
-     "vi": "nút",
-     "ko": "버튼",
-     "kr_read": "눗",
-     "hanja": null
-    },
-    {
-     "vi": "bấm",
-     "ko": "누르다",
-     "kr_read": "범",
-     "hanja": null
-    },
-    {
-     "vi": "dây",
-     "ko": "줄·선",
-     "kr_read": "저이",
-     "hanja": null
-    },
-    {
-     "vi": "băng chuyền",
-     "ko": "컨베이어",
-     "kr_read": "방 쭈엔",
-     "hanja": null
-    },
-    {
-     "vi": "dao",
-     "ko": "칼",
-     "kr_read": "자오",
-     "hanja": null
-    },
-    {
-     "vi": "kim",
-     "ko": "바늘",
-     "kr_read": "낌",
-     "hanja": null
-    },
-    {
-     "vi": "kéo",
-     "ko": "가위",
-     "kr_read": "깨오",
-     "hanja": null
-    },
-    {
-     "vi": "đỏ",
-     "ko": "빨강",
-     "kr_read": "도",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Không có điện.",
-       "ko": "전기가 안 들어와요.",
-       "kr_read": "콤 꼬 디엔",
-       "gloss": [
-        {
-         "w": "Không",
-         "m": "아니다"
-        },
-        {
-         "w": "có",
-         "m": "있다"
-        },
-        {
-         "w": "điện",
-         "m": "전기 電"
-        }
-       ],
-       "swap": [
-        "Có điện rồi.",
-        "Điện bị hỏng."
-       ]
-      },
-      {
-       "vi": "Cái kéo ở đâu?",
-       "ko": "가위 어디 있어요?",
-       "kr_read": "까이 깨오 어 더우",
-       "gloss": [
-        {
-         "w": "Cái",
-         "m": "개·것"
-        },
-        {
-         "w": "kéo",
-         "m": "가위"
-        },
-        {
-         "w": "ở",
-         "m": "~에 있다"
-        },
-        {
-         "w": "đâu",
-         "m": "어디"
-        }
-       ],
-       "swap": [
-        "Cái dao ở đâu?",
-        "Dụng cụ ở đâu?"
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Máy bị hỏng rồi.",
-       "ko": "기계가 고장났습니다.",
-       "kr_read": "마이 비 홈 조이",
-       "gloss": [
-        {
-         "w": "Máy",
-         "m": "기계"
-        },
-        {
-         "w": "bị",
-         "m": "당하다"
-        },
-        {
-         "w": "hỏng",
-         "m": "고장나다"
-        },
-        {
-         "w": "rồi",
-         "m": "이미"
-        }
-       ],
-       "swap": [
-        "Băng chuyền bị hỏng rồi.",
-        "Dây bị hỏng."
-       ]
-      },
-      {
-       "vi": "Hãy bấm nút đỏ.",
-       "ko": "빨간 버튼을 누르세요.",
-       "kr_read": "하이 범 눗 도",
-       "gloss": [
-        {
-         "w": "Hãy",
-         "m": "~하세요"
-        },
-        {
-         "w": "bấm",
-         "m": "누르다"
-        },
-        {
-         "w": "nút",
-         "m": "버튼"
-        },
-        {
-         "w": "đỏ",
-         "m": "빨강"
-        }
-       ],
-       "swap": [
-        "Đừng bấm nút này!",
-        "Hãy tắt máy."
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "고장을 신고하고 조치를 받아라",
-    "how": "A는 기계 상태를 안다. B는 정비 담당. 말로만 전달하고 B가 조치를 지시하면 통과.",
-    "a": "băng chuyền이 멈췄고 dây가 bị hỏng. điện은 들어옵니다",
-    "b": "당신은 정비 담당입니다. 물어서 원인을 찾고 지시하세요"
-   }
-  },
-  {
-   "day": 20,
-   "theme": "묻고 답하기 — 총정리",
-   "intro": "마지막 날이다. 20일 동안 200단어와 문장 80개를 봤다. 오늘은 새 걸 배우는 날이 아니라, 막혔을 때 물어서 뚫는 법을 굳히는 날이다.",
-   "words": [
-    {
-     "vi": "hỏi",
-     "ko": "묻다",
-     "kr_read": "호이",
-     "hanja": null
-    },
-    {
-     "vi": "trả lời",
-     "ko": "대답하다",
-     "kr_read": "짜 러이",
-     "hanja": null
-    },
-    {
-     "vi": "dịch",
-     "ko": "통역·번역하다",
-     "kr_read": "직",
-     "hanja": "譯 (역)"
-    },
-    {
-     "vi": "ai",
-     "ko": "누구",
-     "kr_read": "아이",
-     "hanja": null
-    },
-    {
-     "vi": "chỗ",
-     "ko": "자리·곳",
-     "kr_read": "쪼",
-     "hanja": null
-    },
-    {
-     "vi": "tại sao",
-     "ko": "왜",
-     "kr_read": "따이 사오",
-     "hanja": null
-    },
-    {
-     "vi": "quan trọng",
-     "ko": "중요하다",
-     "kr_read": "꾸안 쫌",
-     "hanja": "關重 (관중)"
-    },
-    {
-     "vi": "dễ",
-     "ko": "쉽다",
-     "kr_read": "제",
-     "hanja": null
-    },
-    {
-     "vi": "khó",
-     "ko": "어렵다",
-     "kr_read": "코",
-     "hanja": null
-    },
-    {
-     "vi": "giỏi",
-     "ko": "잘하다·능숙하다",
-     "kr_read": "조이",
-     "hanja": null
-    }
-   ],
-   "sets": [
-    {
-     "kind": "일상",
-     "title": "일상 — 완전 처음",
-     "sentences": [
-      {
-       "vi": "Tiếng Việt khó không?",
-       "ko": "베트남어 어려워요?",
-       "kr_read": "띠엥 비엣 코 콤",
-       "gloss": [
-        {
-         "w": "Tiếng Việt",
-         "m": "베트남어"
-        },
-        {
-         "w": "khó",
-         "m": "어렵다"
-        },
-        {
-         "w": "không",
-         "m": "~입니까?"
-        }
-       ],
-       "swap": [
-        "Tiếng Việt dễ không?",
-        "Tiếng Hàn khó không?"
-       ]
-      },
-      {
-       "vi": "Anh nói tiếng Việt giỏi.",
-       "ko": "베트남어 잘하시네요.",
-       "kr_read": "아인 노이 띠엥 비엣 조이",
-       "gloss": [
-        {
-         "w": "Anh",
-         "m": "형·오빠"
-        },
-        {
-         "w": "nói",
-         "m": "말하다"
-        },
-        {
-         "w": "tiếng Việt",
-         "m": "베트남어"
-        },
-        {
-         "w": "giỏi",
-         "m": "잘하다"
-        }
-       ],
-       "swap": [
-        "Chị nói tiếng Hàn giỏi.",
-        "Tôi nói không giỏi."
-       ]
-      }
-     ]
-    },
-    {
-     "kind": "현장",
-     "title": "작업현장 — 초보",
-     "sentences": [
-      {
-       "vi": "Ai dịch được?",
-       "ko": "누가 통역할 수 있나요?",
-       "kr_read": "아이 직 드억",
-       "gloss": [
-        {
-         "w": "Ai",
-         "m": "누구"
-        },
-        {
-         "w": "dịch",
-         "m": "통역하다 譯"
-        },
-        {
-         "w": "được",
-         "m": "할 수 있다"
-        }
-       ],
-       "swap": [
-        "Ai làm việc ở đây?",
-        "Ai là giám đốc?"
-       ]
-      },
-      {
-       "vi": "Cái này rất quan trọng.",
-       "ko": "이건 매우 중요합니다.",
-       "kr_read": "까이 나이 젓 꾸안 쫌",
-       "gloss": [
-        {
-         "w": "Cái này",
-         "m": "이것"
-        },
-        {
-         "w": "rất",
-         "m": "매우"
-        },
-        {
-         "w": "quan trọng",
-         "m": "중요하다"
-        }
-       ],
-       "swap": [
-        "Chỗ này rất quan trọng.",
-        "Tại sao quan trọng?"
-       ]
-      }
-     ]
-    }
-   ],
-   "mission": {
-    "goal": "20일치를 다 써서 5분 대화하라",
-    "how": "주제는 자유. 규칙 하나 — 막히면 한국어로 넘어가지 말고 Day 4의 'Tôi không hiểu. Nói từ từ được không?' 를 쓴다. 5분을 한국어 없이 버티면 통과.",
+    "goal": "20일치 총동원 — 5분 대화",
+    "how": "주제는 자유. 규칙 하나 — 막히면 한국어로 넘어가지 말고 Day 8의 'Tôi không hiểu. Nói từ từ.'를 쓴다. 5분을 한국어 없이 버티면 20일 완주.",
     "a": "당신이 먼저 말을 겁니다",
-    "b": "당신은 오늘 ca đêm 근무이고 몸이 안 좋습니다"
+    "b": "당신은 오늘 피곤하고 배가 고픕니다"
    }
   }
  ]
