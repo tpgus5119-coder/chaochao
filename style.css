@@ -201,3 +201,13 @@ button:active{transform:scale(.98)}
 .lko{font-size:15px; color:var(--dim)}
 .card.wide .gloss{justify-content:flex-start; margin:2px 0 0}
 .card.wide .reveal{align-self:flex-start; font-size:13px; padding:6px 11px}
+
+/* 뜻 + 성조를 한 칸에 */
+.gtop{display:flex; align-items:center; gap:5px}
+.gt{font-size:15px; line-height:1}
+.gt.ngang{color:var(--dim)}
+.gt.huyền,.gt.nặng{color:var(--accent)}
+.gt.sắc,.gt.ngã{color:var(--warn)}
+.gt.hỏi{color:var(--bad)}
+.gtn{font-size:10px; color:var(--dim); letter-spacing:.02em}
+.card.wide .gcell{min-width:62px; gap:2px}
