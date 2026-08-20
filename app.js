@@ -163,7 +163,7 @@ function drawCompare(text, box) {
   b.onclick = () => {
     if (REC.key === text) playMine();
   };
-  const t = el('button', 'primary', '📈 성조 보기');
+  const t = el('button', 'primary', '📈 내 성조 그려보기');
   const curve = el('div', 'curvearea');
   t.onclick = () => showTone(text, REC.url, curve);
   const c = el('button', 'ghost', '↔ 번갈아 듣기');
@@ -261,10 +261,13 @@ async function showTone(text, blobUrl, box) {
     const b = el('div', 'tonescore ' + t[1]);
     b.append(el('b', null, sc + '점'), el('span', null, t[0]));
     box.append(b);
+    box.append(el('div', 'toneable',
+      '<b>이 도구가 잘 잡아내는 것</b> — 올라가는 소리(sắc)와 내려가는 소리(huyền)를 헷갈렸는지, ' +
+      '내렸다 올리는 hỏi 가 되는지.<br>' +
+      '<b>못 잡아내는 것</b> — huyền·nặng·ngang 처럼 <b>모양이 서로 닮은 셋</b>. ' +
+      '이건 그림을 눈으로 보고 판단하세요.'));
     box.append(el('div', 'cmpnote',
-      '기계가 재는 건 <b>높낮이 모양과 길이</b>입니다. 발음 전체가 아닙니다.<br>' +
-      '올림(sắc)·내림(huyền)·내렸다올림(hỏi)은 잘 갈라내지만, ' +
-      'huyền과 nặng처럼 모양이 비슷한 둘은 헷갈릴 수 있습니다.'));
+      '점수보다 <b>위 그림</b>을 보세요. 회색(원어민)과 파란색(내 소리)이 같은 방향으로 움직이면 됩니다.'));
   }
 }
 
