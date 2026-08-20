@@ -2,7 +2,7 @@
 
 /* ---------- 저장 ---------- */
 const KEY = 'vnstudy.v2';
-const S = Object.assign({ voice: 'f', done: {}, srs: {} },
+const S = Object.assign({ voice: 'f', done: {}, srs: {}, act: {}, stats: {} },
   JSON.parse(localStorage.getItem(KEY) || '{}'));
 const save = () => localStorage.setItem(KEY, JSON.stringify(S));
 
@@ -55,7 +55,9 @@ function toneRow(tones, small) {
 
 /* 대화 전체를 순서대로 재생한다 */
 async function playSeq(list) {
+  const view = 'learn';
   for (const t of list) {
+    if ($('#' + view).hidden) return;        // 화면을 떠났으면 중단
     const h = AIDX[t];
     if (!h) continue;
     if (audio) audio.pause();
@@ -76,6 +78,23 @@ async function playSeq(list) {
    자동 채점은 하지 않는다 — 성조 채점은 지금 기술로 못 믿는다. 나란히 듣고 사람이 판단한다. */
 let REC = { stream: null, mr: null, url: null, key: null };
 
+/* 카드를 넘기거나 화면을 떠나면 녹음 상태를 비운다.
+   안 그러면 앞 단어의 녹음이 다음 카드에서 '내 소리'로 재생된다. */
+function resetRec() {
+  try { if (REC.mr && REC.mr.state === 'recording') REC.mr.stop(); } catch (e) { }
+  if (REC.url) { URL.revokeObjectURL(REC.url); REC.url = null; }
+  REC.mr = null; REC.key = null;
+  releaseMic();
+}
+
+/* 마이크는 다 쓰면 반드시 놓아준다. 안 놓으면 폰에 녹음 표시가 계속 뜬다. */
+function releaseMic() {
+  if (REC.stream) {
+    REC.stream.getTracks().forEach(t => t.stop());
+    REC.stream = null;
+  }
+}
+
 const canRecord = () => !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
 
 async function toggleRec(text, btn, box) {
@@ -91,10 +110,12 @@ async function toggleRec(text, btn, box) {
   REC.mr = mr; REC.key = text;
   mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
   mr.onstop = () => {
+    releaseMic();                      // 녹음이 끝나면 마이크를 놓는다
     if (REC.url) URL.revokeObjectURL(REC.url);
     REC.url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
     btn.textContent = '🎤 다시 녹음';
     btn.dataset.on = '0';
+    bumpSaid();
     drawCompare(text, box);
   };
   mr.start();
@@ -110,12 +131,14 @@ function drawCompare(text, box) {
   const a = el('button', 'ghost', '👤 원어민');
   a.onclick = () => play(text, false);
   const b = el('button', 'ghost', '🙋 내 소리');
-  b.onclick = () => { if (REC.url) { const au = new Audio(REC.url); au.play().catch(() => { }); } };
+  b.onclick = () => {
+    if (REC.url && REC.key === text) new Audio(REC.url).play().catch(() => { });
+  };
   const c = el('button', 'primary', '↔ 번갈아 듣기');
   c.onclick = async () => {
     play(text, false);
     await new Promise(r => setTimeout(r, 2200));
-    if (REC.url) new Audio(REC.url).play().catch(() => { });
+    if (REC.url && REC.key === text) new Audio(REC.url).play().catch(() => { });
   };
   row.append(a, b, c);
   box.append(row);
@@ -138,10 +161,95 @@ function speakRow(text) {
 /* ---------- 화면 ---------- */
 const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone'];
 function show(v, title, canBack) {
+  if (audio) { audio.pause(); audio = null; }   // 넘어가면 재생 중이던 소리도 멈춘다
+  resetRec();
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
   $('#title').textContent = title;
   $('#back').hidden = !canBack;
   window.scrollTo(0, 0);
+}
+
+
+/* ---------- 기록과 배지 ----------
+   솔직히: 점수·배지가 '학습'을 만든다는 증거는 약하다. 올리는 건 '참여'다.
+   그런데 간격 반복은 돌아와야만 돌아간다. 그래서 목표를 '돌아오는 것'에만 건다.
+   연속 기록(streak)은 하루 끊기면 그만두는 원인이라 쓰지 않는다.
+   대신 '이번 주 5일'로 두고 이틀은 쉬어도 되게 한다. */
+const ymd = t => new Date(t || Date.now()).toISOString().slice(0, 10);
+
+function touchToday() {
+  const k = ymd();
+  if (!S.act[k]) { S.act[k] = 1; save(); }
+}
+function bumpSaid(n) {
+  S.stats.said = (S.stats.said || 0) + (n || 1);
+  touchToday(); save();
+}
+
+/* 이번 주(월~일) 며칠 했는가 */
+function weekDots() {
+  const now = new Date();
+  const mon = new Date(now); mon.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  const out = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(mon); d.setDate(mon.getDate() + i);
+    out.push({ key: ymd(d), done: !!S.act[ymd(d)], future: d > now, today: ymd(d) === ymd() });
+  }
+  return out;
+}
+
+const BADGES = [
+  { id: 'prep',  icon: '🔤', name: '글자를 뗐다',   test: () => ['P1','P2','P3'].every(k => S.done[k]) },
+  { id: 'w1',    icon: '👋', name: '1주차 완주',    test: () => [1,2,3,4,5].every(k => S.done[k]) },
+  { id: 'half',  icon: '🌓', name: '절반까지',      test: () => Object.keys(S.done).filter(k => +k >= 1).length >= 10 },
+  { id: 'all',   icon: '🏁', name: '20일 완주',     test: () => Array.from({length:20},(_,i)=>i+1).every(k => S.done[k]) },
+  { id: 'w100',  icon: '💯', name: '단어 100개',    test: () => Object.keys(S.srs).length >= 100 },
+  { id: 'tone8', icon: '👂', name: '성조 8/10',     test: () => (S.stats.toneBest || 0) >= 8 },
+  { id: 'say50', icon: '🗣️', name: '50번 소리 냈다', test: () => (S.stats.said || 0) >= 50 },
+  { id: 'week5', icon: '📅', name: '한 주 5일',     test: () => weekDots().filter(d => d.done).length >= 5 }
+];
+
+function renderProgress() {
+  const box = $('#progress');
+  box.textContent = '';
+
+  const dots = weekDots();
+  const n = dots.filter(d => d.done).length;
+  const head = el('div', 'phead');
+  head.append(el('strong', null, '이번 주 ' + n + ' / 5일'));
+  head.append(el('span', null, n >= 5 ? '목표 달성 ✔' : '이틀은 쉬어도 됩니다'));
+  box.append(head);
+
+  const row = el('div', 'dots');
+  '월화수목금토일'.split('').forEach((label, i) => {
+    const d = dots[i];
+    const s = el('span', 'dot' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
+    s.textContent = label;
+    row.append(s);
+  });
+  box.append(row);
+
+  const st = el('div', 'stats');
+  const words = Object.keys(S.srs).length;
+  const days = Object.keys(S.done).filter(k => +k >= 1).length;
+  [['배운 단어', words], ['끝낸 날', days + '일'], ['소리 낸 횟수', S.stats.said || 0]]
+    .forEach(([k, v]) => {
+      const c = el('div', 'stat');
+      c.append(el('b', null, String(v)), el('span', null, k));
+      st.append(c);
+    });
+  box.append(st);
+
+  const got = BADGES.filter(b => b.test());
+  const bd = el('div', 'badges');
+  BADGES.forEach(b => {
+    const on = got.includes(b);
+    const s = el('span', 'badge' + (on ? ' on' : ''));
+    s.append(el('i', null, b.icon), el('em', null, b.name));
+    s.title = on ? '달성' : '아직';
+    bd.append(s);
+  });
+  box.append(bd);
 }
 
 /* ---------- 홈 ---------- */
@@ -160,6 +268,7 @@ const GROUPS = [
 ];
 
 function renderHome() {
+  renderProgress();
   // 성조 훈련 시점: 저녁에 하면 자는 동안 '성조 범주'로 정리된다는 실험이 있다.
   // (아침에 훈련한 집단은 하루가 지나며 오히려 정확도가 떨어졌다)
   const h = new Date().getHours();
@@ -224,6 +333,7 @@ function reveal(txt) {
 }
 
 function drawCard() {
+  resetRec();
   const c = $('#card');
   c.textContent = '';
   const it = L.items[L.i], x = it.d;
@@ -444,6 +554,7 @@ function answer(btn, correct, w) {
 }
 
 function grade(vi, ok) {
+  touchToday();
   const r = S.srs[vi] || { lv: 0 };
   r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : 0;
   r.due = now() + STEPS[r.lv] * DAY;
@@ -522,6 +633,8 @@ function drawTone() {
 
 function finishTone() {
   const n = T.ok, t = T.list.length;
+  if (n > (S.stats.toneBest || 0)) { S.stats.toneBest = n; save(); }
+  touchToday();
   const r = el('div', 'result');
   r.append(el('div', 'n', n + ' / ' + t));
   r.append(el('div', null, n >= 7 ? '귀가 트이고 있습니다'
@@ -562,7 +675,7 @@ function showMission(d) {
   body.append(el('p', 'note', '한 명이 A, 다른 한 명이 B를 맡습니다. 상대 카드는 보지 않습니다. 대화는 단톡방에서 하세요.'));
   const b = el('button', 'primary big', '오늘 완료');
   b.style.marginTop = '20px'; b.style.width = '100%';
-  b.onclick = () => { S.done[d.day] = true; save(); renderHome(); };
+  b.onclick = () => { S.done[d.day] = true; touchToday(); save(); renderHome(); };
   body.append(b);
   show('mission', '오늘의 대화 미션', true);
 }
@@ -577,7 +690,7 @@ const b64 = u8 => { let s = ''; u8.forEach(b => s += String.fromCharCode(b)); re
 const unb64 = t => Uint8Array.from(atob(t), c => c.charCodeAt(0));
 
 async function makeBackup() {
-  const raw = JSON.stringify({ done: S.done, srs: S.srs, firstDay: S.firstDay });
+  const raw = JSON.stringify({ done: S.done, srs: S.srs, firstDay: S.firstDay, act: S.act, stats: S.stats });
   if (typeof CompressionStream === 'undefined')
     return 'VNSTUDY1' + btoa(unescape(encodeURIComponent(raw)));
   const st = new Blob([raw]).stream().pipeThrough(new CompressionStream('gzip'));
@@ -612,6 +725,7 @@ $('#bkImport').onclick = async () => {
     const nd = Object.keys(o.done || {}).length, nw = Object.keys(o.srs || {}).length;
     if (!confirm(`${nd}일치 진도와 단어 ${nw}개를 되살립니다.\n지금 진도는 덮어씁니다. 진행할까요?`)) return;
     S.done = o.done || {}; S.srs = o.srs || {}; S.firstDay = o.firstDay;
+    S.act = o.act || {}; S.stats = o.stats || {};
     save(); renderHome(); alert('되살렸습니다.');
   } catch (e) {
     alert('백업 글자가 아니거나 중간이 잘렸습니다.\nVNSTUDY 로 시작하는 글자 전체를 복사해 주세요.');

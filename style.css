@@ -263,3 +263,37 @@ button.song{
   padding:18px 14px; margin:14px 0 18px; display:flex; flex-direction:column;
   align-items:center; gap:10px;
 }
+
+/* 이번 주 기록 */
+.progress{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:14px 16px; margin-bottom:14px; display:flex; flex-direction:column; gap:12px;
+}
+.phead{display:flex; align-items:baseline; justify-content:space-between; gap:8px}
+.phead strong{font-size:17px}
+.phead span{font-size:12px; color:var(--dim)}
+.dots{display:flex; gap:6px}
+.dot{
+  flex:1; height:34px; border-radius:9px; display:grid; place-items:center;
+  font-size:12px; font-weight:700; color:var(--dim);
+  background:var(--bg); border:1px solid var(--line);
+}
+.dot.on{background:var(--accent); color:var(--accent-fg); border-color:transparent}
+.dot.today{outline:2px solid var(--accent); outline-offset:1px}
+.dot.fut{opacity:.4}
+.stats{display:flex; gap:8px}
+.stat{
+  flex:1; background:var(--bg); border:1px solid var(--line); border-radius:10px;
+  padding:8px 4px; text-align:center; display:flex; flex-direction:column; gap:1px;
+}
+.stat b{font-size:19px; font-variant-numeric:tabular-nums}
+.stat span{font-size:11px; color:var(--dim)}
+.badges{display:flex; flex-wrap:wrap; gap:5px}
+.badge{
+  display:inline-flex; align-items:center; gap:4px; padding:4px 9px;
+  border:1px solid var(--line); border-radius:99px; font-size:11px;
+  color:var(--dim); opacity:.45; filter:grayscale(1);
+}
+.badge.on{opacity:1; filter:none; border-color:var(--ok); color:var(--fg)}
+.badge i{font-style:normal; font-size:13px}
+.badge em{font-style:normal}
