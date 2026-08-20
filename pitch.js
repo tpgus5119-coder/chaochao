@@ -117,20 +117,24 @@ const PITCH = (() => {
   }
 
   /* 두 곡선의 '모양'이 얼마나 닮았나 (0~100).
-     절대 높이가 아니라 **오르내리는 방향**을 본다. */
+     앞서 기울기(차이값)로 재봤더니 잡음이 심해 같은 성조끼리도 낮게 나왔다.
+     곡선 값 자체를 각자 표준화한 뒤 상관을 보는 쪽이 훨씬 안정적이다. */
+  function zscore(a) {
+    const m = a.reduce((s, v) => s + v, 0) / a.length;
+    const sd = Math.sqrt(a.reduce((s, v) => s + (v - m) ** 2, 0) / a.length);
+    return sd < 0.25 ? a.map(() => 0) : a.map(v => (v - m) / sd);
+  }
+
   function similarity(a, b) {
-    if (!a || !b) return null;
-    const da = [], db = [];
-    for (let i = 1; i < a.length; i++) { da.push(a[i] - a[i - 1]); db.push(b[i] - b[i - 1]); }
-    const m = x => x.reduce((s, v) => s + v, 0) / x.length;
-    const ma = m(da), mb = m(db);
+    if (!a || !b || a.length !== b.length) return null;
+    const za = zscore(a), zb = zscore(b);
     let num = 0, sa = 0, sb = 0;
-    for (let i = 0; i < da.length; i++) {
-      num += (da[i] - ma) * (db[i] - mb); sa += (da[i] - ma) ** 2; sb += (db[i] - mb) ** 2;
-    }
+    for (let i = 0; i < za.length; i++) { num += za[i] * zb[i]; sa += za[i] ** 2; sb += zb[i] ** 2; }
     const r = (sa && sb) ? num / Math.sqrt(sa * sb) : 0;
-    const range = Math.abs((Math.max(...a) - Math.min(...a)) - (Math.max(...b) - Math.min(...b)));
-    return Math.max(0, Math.round((r * 0.75 + 0.25) * 100 - range * 2));
+    // 전체 오르내림 폭도 본다 — 방향은 같은데 밋밋하면 성조가 아니다
+    const span = x => Math.max(...x) - Math.min(...x);
+    const dv = Math.abs(span(a) - span(b));
+    return Math.max(0, Math.min(100, Math.round((r + 1) / 2 * 100 - dv * 2.5)));
   }
 
   return { analyze, similarity };
