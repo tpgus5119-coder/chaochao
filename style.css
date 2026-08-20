@@ -211,3 +211,39 @@ button:active{transform:scale(.98)}
 .gt.hỏi{color:var(--bad)}
 .gtn{font-size:10px; color:var(--dim); letter-spacing:.02em}
 .card.wide .gcell{min-width:62px; gap:2px}
+
+/* 그림 */
+.pic{font-size:56px; line-height:1}
+
+/* 따라 말하기 */
+.speak{width:100%; display:flex; flex-direction:column; gap:8px; align-items:center; margin-top:6px}
+.card.wide .speak{align-items:flex-start}
+button.rec{
+  background:transparent; color:var(--bad); border:1px solid var(--bad);
+  padding:8px 16px; font-size:14px; font-weight:650;
+}
+button.rec[data-on="1"]{background:var(--bad); color:#fff; border-color:var(--bad)}
+.cmpbox{width:100%; display:flex; flex-direction:column; gap:6px; align-items:center}
+.card.wide .cmpbox{align-items:flex-start}
+.cmp{display:flex; gap:6px; flex-wrap:wrap; justify-content:center}
+.cmp button{padding:8px 13px; font-size:13px}
+.cmpnote{font-size:12px; color:var(--dim); text-align:center; line-height:1.5}
+.card.wide .cmpnote{text-align:left}
+
+/* 노래 */
+button.song{
+  align-self:center; background:transparent; color:var(--warn);
+  border:1px solid var(--warn); padding:9px 18px; font-weight:650;
+}
+
+/* 규칙 상자 */
+.rule{
+  border:1px solid var(--line); border-left:4px solid var(--warn);
+  border-radius:var(--radius); padding:12px 14px; font-size:13px;
+  color:var(--dim); line-height:1.6; margin:14px 0; text-align:left;
+}
+.rule b{color:var(--fg)}
+
+/* 저녁엔 성조를 앞으로 */
+.banner.tone[data-night="1"]{border-left-color:var(--warn); background:var(--card)}
+.banner.tone[data-night="1"] strong::after{content:" 🌙"}

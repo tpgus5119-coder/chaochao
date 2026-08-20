@@ -2,6 +2,8 @@
 """준비 3일 + 일상 20일을 days.json 으로 합치고 검증한다.
 검증 두 가지: 단어 중복 / 대화에 아직 안 배운 낱말이 섞였는지."""
 import json, pathlib, re, sys, collections
+sys.path.insert(0,'tools')
+from visuals import attach
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())      # 준비 3일 + 성조 드릴
 d1 = json.loads((R/'data/_daily1.json').read_text())
@@ -13,6 +15,10 @@ out = {"meta": {"version": "v3",
                 "note": "북부(하노이) 표준. 하루 = 단어 5개 + 주고받는 대화 1개."},
        "prep": p1["prep"], "tonedrill": p1["tonedrill"],
        "days": d1["days"] + d2["days"]}
+
+for d in out["days"]:
+    for w in d["words"]:
+        attach(w)
 
 seen = collections.defaultdict(list)
 for d in out["days"]:

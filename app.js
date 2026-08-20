@@ -69,6 +69,72 @@ async function playSeq(list) {
   }
 }
 
+
+/* ---------- 따라 말하기 ----------
+   산출 효과(production effect): 눈으로만 보는 것보다 소리 내어 말하면 기억이 크게 좋아진다.
+   그리고 남이 읽어주는 걸 듣는 것보다 '내가 말한 것'이 더 잘 남는다(운동 정보 + 자기참조).
+   자동 채점은 하지 않는다 — 성조 채점은 지금 기술로 못 믿는다. 나란히 듣고 사람이 판단한다. */
+let REC = { stream: null, mr: null, url: null, key: null };
+
+const canRecord = () => !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
+
+async function toggleRec(text, btn, box) {
+  if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
+  try {
+    if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (e) {
+    box.textContent = '마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.';
+    return;
+  }
+  const chunks = [];
+  const mr = new MediaRecorder(REC.stream);
+  REC.mr = mr; REC.key = text;
+  mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+  mr.onstop = () => {
+    if (REC.url) URL.revokeObjectURL(REC.url);
+    REC.url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
+    btn.textContent = '🎤 다시 녹음';
+    btn.dataset.on = '0';
+    drawCompare(text, box);
+  };
+  mr.start();
+  btn.textContent = '⏹ 멈추기';
+  btn.dataset.on = '1';
+  box.textContent = '';
+  setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, 8000);
+}
+
+function drawCompare(text, box) {
+  box.textContent = '';
+  const row = el('div', 'cmp');
+  const a = el('button', 'ghost', '👤 원어민');
+  a.onclick = () => play(text, false);
+  const b = el('button', 'ghost', '🙋 내 소리');
+  b.onclick = () => { if (REC.url) { const au = new Audio(REC.url); au.play().catch(() => { }); } };
+  const c = el('button', 'primary', '↔ 번갈아 듣기');
+  c.onclick = async () => {
+    play(text, false);
+    await new Promise(r => setTimeout(r, 2200));
+    if (REC.url) new Audio(REC.url).play().catch(() => { });
+  };
+  row.append(a, b, c);
+  box.append(row);
+  box.append(el('div', 'cmpnote', '성조가 오르내리는 방향이 같은지만 들어보세요. 똑같지 않아도 괜찮습니다.'));
+}
+
+function speakRow(text) {
+  const wrap = el('div', 'speak');
+  if (!canRecord()) {
+    wrap.append(el('div', 'cmpnote', '🗣️ 소리 내어 따라 말해 보세요. 속으로 읽는 것보다 훨씬 잘 남습니다.'));
+    return wrap;
+  }
+  const box = el('div', 'cmpbox');
+  const b = el('button', 'rec', '🎤 따라 말하기');
+  b.onclick = () => toggleRec(text, b, box);
+  wrap.append(b, box);
+  return wrap;
+}
+
 /* ---------- 화면 ---------- */
 const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone'];
 function show(v, title, canBack) {
@@ -94,6 +160,16 @@ const GROUPS = [
 ];
 
 function renderHome() {
+  // 성조 훈련 시점: 저녁에 하면 자는 동안 '성조 범주'로 정리된다는 실험이 있다.
+  // (아침에 훈련한 집단은 하루가 지나며 오히려 정확도가 떨어졌다)
+  const h = new Date().getHours();
+  const night = h >= 19 || h < 3;
+  const tb = $('#toneBanner');
+  tb.dataset.night = night ? '1' : '0';
+  $('#toneWhy').textContent = night
+    ? '지금이 좋은 때입니다 — 자는 동안 소리가 정리됩니다'
+    : '소리만 듣고 6성조 구별하기';
+
   const due = dueWords();
   $('#reviewCard').hidden = due.length === 0;
   $('#reviewCount').textContent = due.length + '개';
@@ -169,12 +245,14 @@ function drawCard() {
   }
 
   if (it.k === 'word') {
+    if (x.emoji) c.append(el('div', 'pic', esc(x.emoji)));
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(toneRow(x.tones));
     c.append(soundRow(x.vi, true));
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
     c.append(reveal(x.kr_read));
+    c.append(speakRow(x.vi));
   }
 
   if (it.k === 'dialog') {
@@ -183,6 +261,15 @@ function drawCard() {
     const all = el('button', 'primary', '▶ 대화 전체 듣기');
     all.onclick = () => playSeq(x.lines.map(l => l.vi));
     c.append(all);
+
+    // 노래본이 있으면 띄운다. 멜로디에 얹은 구절은 그냥 말한 것보다 잘 남는다.
+    const songUrl = `audio/song/day${String(L.day.day).padStart(2, '0')}.mp3`;
+    fetch(songUrl, { method: 'HEAD' }).then(r => {
+      if (!r.ok) return;
+      const sg = el('button', 'song', '🎵 오늘의 노래');
+      sg.onclick = () => { if (audio) audio.pause(); audio = new Audio(songUrl); audio.play().catch(() => { }); };
+      all.after(sg);
+    }).catch(() => { });
 
     x.lines.forEach(l => {
       const row = el('div', 'line ' + (l.who === 'A' ? 'a' : 'b'));
@@ -217,6 +304,7 @@ function drawCard() {
       });
       row.append(g);
       row.append(reveal(l.kr_read));
+      row.append(speakRow(l.vi));
       c.append(row);
     });
 
@@ -400,6 +488,9 @@ function finishTone() {
     : n >= 4 ? '보통입니다. 성조는 몇 주 걸립니다'
     : '괜찮습니다. 처음엔 아무도 못 구별합니다'));
   r.append(el('p', 'note', '가장 어려운 건 hỏi(내렸다 올림)와 ngã(끊었다 올림)입니다. 이 둘은 원어민도 지역에 따라 섞어 씁니다.'));
+  r.append(el('div', 'rule',
+    '<b>✍️ 일주일에 한 번은 손으로 써보세요.</b><br>' +
+    '종이에 <b>à á ả ã ạ</b> 를 다섯 번씩. 눈으로만 보면 hỏi와 ngã가 끝까지 안 구별됩니다.'));
   const b = el('button', 'primary big', '다시 하기');
   b.style.marginTop = '18px';
   b.onclick = startTone;
@@ -424,6 +515,10 @@ function showMission(d) {
     roles.append(r);
   });
   body.append(roles);
+  body.append(el('div', 'rule',
+    '<b>✋ 규칙 하나 — 말할 때 손짓을 같이 하세요.</b><br>' +
+    '몸을 쓰며 외운 단어는 그냥 외운 것보다 훨씬 오래 갑니다. ' +
+    '연구에서는 14개월 뒤까지 차이가 남았습니다. 어색해도 손을 움직이세요.'));
   body.append(el('p', 'note', '한 명이 A, 다른 한 명이 B를 맡습니다. 상대 카드는 보지 않습니다. 대화는 단톡방에서 하세요.'));
   const b = el('button', 'primary big', '오늘 완료');
   b.style.marginTop = '20px'; b.style.width = '100%';
