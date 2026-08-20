@@ -251,6 +251,7 @@ function drawCard() {
     c.append(soundRow(x.vi, true));
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
+    if (x.gesture) c.append(el('div', 'gest', '✋ ' + esc(x.gesture)));
     c.append(reveal(x.kr_read));
     c.append(speakRow(x.vi));
   }
@@ -342,12 +343,12 @@ let Q = null;
 function buildQuestions(words) {
   const pool = allWords();
   return words.map(w => {
+    const lv = (S.srs[w.vi] || {}).lv || 0;
+    // 익숙해진 단어(2단계 이상)는 보기 없이 직접 떠올리게 한다
+    const mode = lv >= 2 ? 'recall'
+      : (Math.random() < .5 && AIDX[w.vi] ? 'listen' : 'meaning');
     const others = pool.filter(x => x.vi !== w.vi).sort(() => Math.random() - .5).slice(0, 3);
-    return {
-      w,
-      mode: Math.random() < .5 && AIDX[w.vi] ? 'listen' : 'meaning',
-      opts: [w, ...others].sort(() => Math.random() - .5)
-    };
+    return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
   }).sort(() => Math.random() - .5);
 }
 
@@ -366,7 +367,10 @@ function drawQuiz() {
   if (Q.i >= Q.list.length) return finishQuiz();
 
   const q = Q.list[Q.i];
-  body.append(el('div', 'q', q.mode === 'listen' ? '듣고 고르세요' : '뜻을 고르세요'));
+  const LABEL = { listen: '듣고 고르세요', meaning: '뜻을 고르세요', recall: '소리 내어 말해 보세요' };
+  body.append(el('div', 'q', LABEL[q.mode]));
+
+  if (q.mode === 'recall') return drawRecall(body, q);
 
   if (q.mode === 'listen') {
     const wrap = el('div', 'qplay');
@@ -388,6 +392,42 @@ function drawQuiz() {
     opts.append(b);
   });
   body.append(opts);
+}
+
+
+/* 회상형 — 보기를 주지 않고 직접 떠올려 소리 내게 한다.
+   4지선다는 아는 것처럼 보이게 만든다(실제보다 20% 과대평가). 회상이 진짜다.
+   게다가 소리 내어 말하므로 산출 효과까지 같이 얻는다. 채점은 본인이 한다. */
+function drawRecall(body, q) {
+  body.append(el('div', 'qmain', esc(q.w.ko)));
+  if (q.w.emoji) body.append(el('div', 'pic mid', esc(q.w.emoji)));
+  if (q.w.gesture) body.append(el('div', 'gest mid', '✋ ' + esc(q.w.gesture)));
+
+  const hint = el('p', 'cmpnote', '베트남어로 <b>입 밖에 내어</b> 말해 보세요. 속으로만 생각하면 효과가 절반입니다.');
+  body.append(hint);
+
+  const show = el('button', 'primary big', '말했어요 · 정답 보기');
+  show.style.width = '100%';
+  body.append(show);
+
+  show.onclick = () => {
+    show.remove(); hint.remove();
+    const ans = el('div', 'ansbox');
+    ans.append(el('div', 'vi sm', esc(q.w.vi)));
+    ans.append(toneRow(q.w.tones));
+    const sr = soundRow(q.w.vi, true);
+    sr.classList.add('mid');
+    ans.append(sr);
+    body.append(ans);
+
+    const grade2 = el('div', 'opts');
+    const ok = el('button', null, '✓ 맞았어요');
+    ok.onclick = () => { grade(q.w.vi, true); Q.ok++; Q.i++; drawQuiz(); };
+    const no = el('button', null, '✗ 못 맞혔어요');
+    no.onclick = () => { grade(q.w.vi, false); Q.i++; drawQuiz(); };
+    grade2.append(ok, no);
+    body.append(grade2);
+  };
 }
 
 function answer(btn, correct, w) {

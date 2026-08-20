@@ -4,6 +4,7 @@
 import json, pathlib, re, sys, collections
 sys.path.insert(0,'tools')
 from visuals import attach
+from gestures import attach as attach_gesture
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())      # 준비 3일 + 성조 드릴
 d1 = json.loads((R/'data/_daily1.json').read_text())
@@ -19,6 +20,7 @@ out = {"meta": {"version": "v3",
 for d in out["days"]:
     for w in d["words"]:
         attach(w)
+        attach_gesture(w)
 
 seen = collections.defaultdict(list)
 for d in out["days"]:

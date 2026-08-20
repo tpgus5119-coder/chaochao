@@ -247,3 +247,19 @@ button.song{
 /* 저녁엔 성조를 앞으로 */
 .banner.tone[data-night="1"]{border-left-color:var(--warn); background:var(--card)}
 .banner.tone[data-night="1"] strong::after{content:" 🌙"}
+
+/* 손짓 안내 */
+.gest{
+  font-size:13px; color:var(--ok); border:1px dashed var(--ok);
+  border-radius:9px; padding:7px 12px; line-height:1.5; max-width:320px;
+}
+.gest.mid{margin:10px auto; text-align:center}
+.pic.mid{margin:6px auto; text-align:center}
+.sound.mid{justify-content:center}
+
+/* 회상형 정답 상자 */
+.ansbox{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px 14px; margin:14px 0 18px; display:flex; flex-direction:column;
+  align-items:center; gap:10px;
+}
