@@ -473,13 +473,12 @@ function drawCard() {
   $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›' : '대화 미션 ›') : '다음 ›';
 }
 
-$('#prev').onclick = () => { if (L.i > 0) { L.i--; drawCard(); } };
-let leaving = false;
+$('#prev').onclick = () => { if (!$('#learn').hidden && L.i > 0) { L.i--; drawCard(); } };
 $('#next').onclick = () => {
+  // 연타 방지는 시간이 아니라 '아직 이 화면에 있는가'로 판단한다.
+  // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
+  if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
-  if (leaving) return;                       // 연타로 두 번 넘어가는 것 방지
-  leaving = true;
-  setTimeout(() => { leaving = false; }, 800);
   if ((L.day.words || []).length) startQuiz(L.day.words, L.day);
   else showMission(L.day);
 };
