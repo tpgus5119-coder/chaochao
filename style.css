@@ -301,3 +301,10 @@ button.song{
 .bbtns{display:flex; gap:6px; flex:none}
 .bbtns button{white-space:nowrap; padding:10px 13px; font-size:14px}
 .result .sub{font-size:13px; color:var(--dim); margin-top:6px}
+
+/* 준비일 안내에 표시 */
+.intro[data-prep="1"]{border-left:3.5mm solid var(--warn)}
+.intro[data-prep="1"]::before{
+  content:"준비 단계 · 외울 단어 없이 소리만 익힙니다";
+  display:block; font-size:12px; font-weight:800; color:var(--warn); margin-bottom:6px;
+}

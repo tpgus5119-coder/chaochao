@@ -327,7 +327,8 @@ function renderHome() {
     b.append(
       el('span', 'num', esc(label(d))),
       el('span', 'nm', esc(d.theme)),
-      el('span', 'st', done ? '완료 ✔' : (n ? n + '단어 · 대화 1개' : '소리 연습'))
+      el('span', 'st', done ? '완료 ✔'
+        : (n ? n + '단어 + 대화 2문장' : '소리만 · 외울 것 없음'))
     );
     b.onclick = () => startLearn(d);
     const li = el('li'); li.append(b); list.append(li);
@@ -346,6 +347,7 @@ function startLearn(d) {
   if (d.dialog) items.push({ k: 'dialog', d: d.dialog });
   L = { day: d, items, i: 0 };
   $('#learnIntro').textContent = d.intro || '';
+  $('#learnIntro').dataset.prep = (d.words || []).length ? '0' : '1';
   drawCard();
   show('learn', label(d) + ' · ' + d.theme, true);
 }
@@ -467,7 +469,16 @@ function drawCard() {
     c.classList.remove('wide');
   }
 
-  $('#pos').textContent = (L.i + 1) + ' / ' + L.items.length;
+  // '1 / 12'만 보면 외울 게 12개인 줄 안다. 무엇을 세는지 붙여준다.
+  const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화' };
+  const kinds = L.items.map(x => x.k);
+  if (it.k === 'dialog') {
+    $('#pos').textContent = '오늘의 대화';
+  } else {
+    const same = kinds.filter(k => k === it.k).length;
+    const nth = kinds.slice(0, L.i + 1).filter(k => k === it.k).length;
+    $('#pos').textContent = `${KIND[it.k] || ''} ${nth} / ${same}`;
+  }
   $('#prev').disabled = L.i === 0;
   const last = L.i === L.items.length - 1;
   $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›' : '대화 미션 ›') : '다음 ›';
