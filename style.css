@@ -324,3 +324,5 @@ button.song{
 /* 한글 발음이 켜져 있을 때 */
 .reveal[data-open="1"]{border-style:solid; color:var(--fg); font-weight:600}
 #krToggle{font-size:13px; min-width:40px}
+
+.card.wide>.pic{align-self:center; font-size:44px}
