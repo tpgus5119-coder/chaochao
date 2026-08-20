@@ -276,7 +276,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone', 'mark'];
+const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone', 'mark', 'rules'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -974,6 +974,57 @@ function finishMark() {
   $('#markBody').append(r);
 }
 
+
+/* ---------- 꼭 알아야 할 규칙 3개 ----------
+   문법 '수업'은 만들지 않는다. 조사 결론이 그렇다 —
+   초급자에게는 설명보다 덩어리 표현과 산출 직후 교정이 낫고,
+   메타분석의 큰 효과는 대부분 '빈칸 채우기 시험' 점수에서 나온 것이라
+   실제 말하기로 이어진다는 근거가 얇다.
+   다만 **짧고 기능 부하가 큰 규칙 셋**은 예외로 둔다. */
+const RULES = [
+  { icon: '👤', title: '누구를 부르느냐에 따라 내 호칭도 바뀐다',
+    body: '한국어와 같은 구조라 우리에겐 오히려 쉽다. 다만 한국어보다 한 걸음 더 간다 — ' +
+          '<b>상대가 바뀌면 "나"를 가리키는 말도 바뀐다.</b>',
+    ex: [['손위 남자에게', 'Em chào <b>anh</b>. → 나는 <b>em</b>'],
+         ['손아래에게', 'Anh chào <b>em</b>. → 나는 <b>anh</b>'],
+         ['처음 보는 사이', '<b>Tôi</b> 로 시작해도 실례가 아니다']] },
+  { icon: '↔️', title: '꾸미는 말이 뒤에 온다',
+    body: '한국어와 <b>정반대</b>다. 이것만 뒤집어 생각하면 문장이 만들어진다.',
+    ex: [['좋은 사람', 'người tốt <span class="dim">(사람 + 좋은)</span>'],
+         ['내 이름', 'tên của tôi <span class="dim">(이름 + 의 + 나)</span>'],
+         ['이 상자', 'hộp này <span class="dim">(상자 + 이)</span>']] },
+  { icon: '🔢', title: '숫자 뒤에는 단위가 붙는다',
+    body: '한국어의 개·마리·권과 같다. 다섯 개만 알면 초급은 넘어간다.',
+    ex: [['물건', '<b>cái</b> — hai cái (두 개)'],
+         ['기계·탈것', '<b>chiếc</b> — một chiếc (한 대)'],
+         ['동물', '<b>con</b> — ba con (세 마리)'],
+         ['갑·상자', '<b>hộp</b> / <b>thùng</b>']] }
+];
+
+function showRules() {
+  const b = $('#rulesBody');
+  b.textContent = '';
+  b.append(el('p', 'lede',
+    '문법을 따로 공부할 필요는 없습니다. 베트남어는 동사도 명사도 모양이 안 바뀝니다.<br>' +
+    '다만 <b>이 셋</b>은 알아두면 문장이 훨씬 빨리 만들어집니다.'));
+  RULES.forEach((r, i) => {
+    const c = el('div', 'rulecard');
+    c.append(el('div', 'rhead', `<span class="ri">${r.icon}</span><b>${i + 1}. ${r.title}</b>`));
+    c.append(el('div', 'rbody', r.body));
+    const t = el('div', 'rex');
+    r.ex.forEach(([k, v]) => {
+      const row = el('div', 'rrow');
+      row.append(el('span', 'rk', esc(k)), el('span', 'rv', v));
+      t.append(row);
+    });
+    c.append(t);
+    b.append(c);
+  });
+  b.append(el('p', 'note',
+    '이 화면은 한 번 읽고 잊어도 됩니다. 매일 대화를 하다 보면 저절로 몸에 붙습니다.'));
+  show('rules', '꼭 알아야 할 규칙 3개', true);
+}
+
 /* ---------- 미션 ---------- */
 function showMission(d) {
   const m = d.mission, body = $('#missionBody');
@@ -1005,6 +1056,7 @@ $('#goReview').onclick = () => startQuiz(null, null);
 $('#goQuick').onclick = () => startQuiz(null, null, 10);
 $('#goTone').onclick = startTone;
 $('#goMark').onclick = startMarks;
+$('#goRules').onclick = showRules;
 $('#goWeekly').onclick = () => {
   const ws = weekWords();
   if (!ws.length) return;

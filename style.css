@@ -361,3 +361,23 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .markopts .mkname{font-size:12px; color:var(--dim)}
 .markopts .mkko{font-size:11px; color:var(--dim)}
 .markopts button[data-r="ok"] .mkname,.markopts button[data-r="ok"] .mkko{color:var(--ok)}
+
+/* 규칙 3개 */
+.rulesbtn{
+  width:100%; margin-top:14px; background:transparent; color:var(--dim);
+  border:1px dashed var(--line); padding:12px; font-size:14px;
+}
+.rulecard{
+  border:1px solid var(--line); border-left:4px solid var(--accent);
+  border-radius:var(--radius); padding:14px 16px; margin-bottom:12px;
+}
+.rhead{display:flex; align-items:center; gap:9px; font-size:15px; margin-bottom:7px}
+.rhead .ri{font-size:20px}
+.rbody{font-size:13.5px; line-height:1.75; color:var(--dim)}
+.rbody b{color:var(--fg)}
+.rex{margin-top:10px; display:flex; flex-direction:column; gap:6px}
+.rrow{display:flex; gap:10px; align-items:baseline; font-size:13.5px}
+.rrow .rk{flex:none; width:84px; color:var(--dim); font-size:12px}
+.rrow .rv{flex:1; line-height:1.6}
+.rrow .rv b{color:var(--accent)}
+.rrow .dim{color:var(--dim); font-size:12px}
