@@ -233,42 +233,46 @@ async function showTone(text, blobUrl, box) {
   box.textContent = '';
   const wait = el('div', 'cmpnote', '소리 높낮이를 재는 중…');
   box.append(wait);
+
   let mine = null, nat = null;
   try {
     const r = await fetch(blobUrl);
-    mine = await PITCH.analyze(await r.arrayBuffer(), getCtx());
+    mine = await PITCH.analyze(await r.arrayBuffer(), getCtx(), true);   // 허밍 거르기
   } catch (e) { }
   nat = await nativeCurve(text);
   wait.remove();
 
-  if (!mine) {
-    box.append(el('div', 'cmpnote', '소리가 너무 작거나 짧아 높낮이를 못 읽었습니다. 조금 크게 다시 말해 보세요.'));
+  if (mine && mine.reject) { box.append(el('div', 'cmpnote', esc(mine.reject))); return; }
+  if (!mine || !mine.curve) {
+    box.append(el('div', 'cmpnote', '높낮이를 못 읽었습니다. 조금 크고 또박또박 다시 말해 보세요.'));
     return;
   }
-  const wrap = el('div', 'curvebox');
-  wrap.innerHTML = curveSvg(mine, nat);
-  box.append(wrap);
 
+  const wrap = el('div', 'curvebox');
+  wrap.innerHTML = curveSvg(mine.curve, nat && nat.curve);
+  box.append(wrap);
   const lg = el('div', 'curvelegend');
   lg.innerHTML = `<span class="k nat"></span>원어민 &nbsp; <span class="k mine"></span>내 소리`;
   box.append(lg);
 
-  if (nat) {
-    const sc = PITCH.similarity(mine, nat);
-    const t = sc >= 70 ? ['모양이 비슷합니다', 'ok'] :
-              sc >= 45 ? ['방향은 맞는데 조금 다릅니다', 'mid'] :
-                         ['오르내리는 방향이 다릅니다', 'no'];
-    const b = el('div', 'tonescore ' + t[1]);
-    b.append(el('b', null, sc + '점'), el('span', null, t[0]));
+  /* 점수를 매기지 않는다.
+     음높이만 보는 방식은 성조를 세밀하게 가려내지 못한다(문헌상 72~75%).
+     그래서 '오르내리는 방향'이 같았는지만 말해주고, 나머지는 눈으로 보게 한다. */
+  const DIR = { up: '올라감 ／', down: '내려감 ＼', dip: '내렸다 올림 ∨', flat: '평평함 —' };
+  const dm = PITCH.direction(mine), dn = nat && PITCH.direction(nat);
+  if (dn) {
+    const same = dm === dn;
+    const b = el('div', 'tonedir ' + (same ? 'ok' : 'no'));
+    b.append(el('b', null, same ? '방향이 같습니다' : '방향이 다릅니다'));
+    b.append(el('span', null, `원어민 ${DIR[dn]} · 내 소리 ${DIR[dm] || '?'}`));
     box.append(b);
-    box.append(el('div', 'toneable',
-      '<b>이 도구가 잘 잡아내는 것</b> — 올라가는 소리(sắc)와 내려가는 소리(huyền)를 헷갈렸는지, ' +
-      '내렸다 올리는 hỏi 가 되는지.<br>' +
-      '<b>못 잡아내는 것</b> — huyền·nặng·ngang 처럼 <b>모양이 서로 닮은 셋</b>. ' +
-      '이건 그림을 눈으로 보고 판단하세요.'));
-    box.append(el('div', 'cmpnote',
-      '점수보다 <b>위 그림</b>을 보세요. 회색(원어민)과 파란색(내 소리)이 같은 방향으로 움직이면 됩니다.'));
   }
+  box.append(el('div', 'toneable',
+    '<b>이건 채점이 아닙니다.</b> 소리의 <b>높낮이 모양</b>만 그린 것입니다. ' +
+    '무슨 소리를 냈는지는 보지 않으므로, 위 그림을 직접 눈으로 비교하세요.<br>' +
+    '<b>믿어도 되는 것</b> — 올라가는지(sắc) 내려가는지(huyền) 내렸다 올리는지(hỏi).<br>' +
+    '<b>믿으면 안 되는 것</b> — hỏi와 ngã의 구별. 이 둘은 남부 베트남어에서 아예 하나로 합쳐져 ' +
+    '원어민도 갈라 쓰지 않습니다.'));
 }
 
 /* ---------- 화면 ---------- */

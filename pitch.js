@@ -110,6 +110,36 @@ const PITCH = (() => {
     return out;
   }
 
+
+  /* 허밍·잡음 거르기.
+     음높이만 보면 '아~' 하고 흥얼거려도 곡선이 맞아버린다.
+     말소리에는 있고 허밍에는 없는 것 — 에너지가 오르내리고, 자음 때문에
+     무성 구간이 섞이고, 길이가 한 음절 범위 안이다 — 로 걸러낸다. */
+  function speechLike(samples, rate, hz) {
+    const win = Math.round(rate * 0.02);
+    const env = [];
+    for (let s = 0; s + win < samples.length; s += win) {
+      let e = 0;
+      for (let i = s; i < s + win; i++) e += samples[i] * samples[i];
+      env.push(Math.sqrt(e / win));
+    }
+    const peak = Math.max(...env, 1e-9);
+    const loud = env.filter(v => v > peak * 0.25);
+    const sec = loud.length * 0.02;
+    const voiced = hz.filter(x => x).length / Math.max(1, hz.filter((x, i) => {
+      return true;
+    }).length);
+    // 에너지 변동폭 — 허밍은 평평하다
+    const m = env.reduce((a, b) => a + b, 0) / env.length;
+    const sd = Math.sqrt(env.reduce((a, b) => a + (b - m) ** 2, 0) / env.length);
+    const flux = m ? sd / m : 0;
+    if (sec < 0.12) return { ok: false, why: '너무 짧습니다. 한 음절을 또박또박 말해 보세요.' };
+    if (sec > 2.5) return { ok: false, why: '너무 깁니다. 한 단어만 말해 보세요.' };
+    if (voiced > 0.97 && flux < 0.45) return { ok: false, why: '허밍처럼 들립니다. 입을 열고 또박또박 말해 보세요.' };
+    if (peak < 0.02) return { ok: false, why: '소리가 너무 작습니다. 조금 크게 말해 보세요.' };
+    return { ok: true, sec };
+  }
+
   /* 소리가 실제로 난 길이(초). nặng 처럼 '짧고 뚝 끊기는' 성조는
      높낮이 모양만으로는 huyền 과 구별이 안 된다. 길이가 그 차이를 잡아준다. */
   function voicedSec(hz, rate, hop) {
@@ -117,11 +147,15 @@ const PITCH = (() => {
     return n * hop / rate;
   }
 
-  async function analyze(arrayBuffer, ctx) {
+  async function analyze(arrayBuffer, ctx, checkSpeech) {
     const buf = await ctx.decodeAudioData(arrayBuffer.slice(0));
     const ch = buf.getChannelData(0);
     const rate = buf.sampleRate;
     const hz = contour(ch, rate);
+    if (checkSpeech) {
+      const g = speechLike(ch, rate, hz);
+      if (!g.ok) return { reject: g.why };
+    }
     const curve = resample(clean(normalize(hz)));
     return curve ? { curve, sec: voicedSec(hz, rate, Math.round(rate * 0.010)) } : null;
   }
@@ -133,6 +167,24 @@ const PITCH = (() => {
     const m = a.reduce((s, v) => s + v, 0) / a.length;
     const sd = Math.sqrt(a.reduce((s, v) => s + (v - m) ** 2, 0) / a.length);
     return sd < 0.25 ? a.map(() => 0) : a.map(v => (v - m) / sd);
+  }
+
+  /* 곡선의 '방향'만 뽑는다. 숫자 점수보다 이쪽이 정직하다.
+     문헌상 F0 단독 성조 분류는 72~75%밖에 안 된다 — 세밀한 판정은 하지 않는다. */
+  function direction(A) {
+    const a = A && (A.curve || A);
+    if (!a) return null;
+    const n = a.length, third = Math.floor(n / 3);
+    const head = a.slice(0, third).reduce((s, v) => s + v, 0) / third;
+    const tail = a.slice(n - third).reduce((s, v) => s + v, 0) / third;
+    const mid = a.slice(third, n - third);
+    const midMin = Math.min(...mid);
+    const net = tail - head;
+    const dip = Math.min(head, tail) - midMin;
+    if (dip > 1.6 && net > -1.0) return 'dip';    // 내렸다 올림
+    if (net > 1.2) return 'up';
+    if (net < -1.2) return 'down';
+    return 'flat';
   }
 
   function similarity(A, B) {
@@ -154,5 +206,5 @@ const PITCH = (() => {
     return Math.max(0, Math.min(100, Math.round(sc)));
   }
 
-  return { analyze, similarity };
+  return { analyze, similarity, direction };
 })();
