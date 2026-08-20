@@ -28,7 +28,7 @@ def collect(data):
         for l in d["dialog"]["lines"]:
             out[l["vi"]] = "sent"          # 대화 문장은 느린 버전도
         for t in d["dialog"]["extra"]:
-            out.setdefault(t, "ex")
+            out.setdefault(t["vi"] if isinstance(t, dict) else t, "ex")
     return out
 
 async def one(text, voice_id, voice_name, rate):

@@ -2,7 +2,7 @@
 
 /* ---------- 저장 ---------- */
 const KEY = 'vnstudy.v2';
-const S = Object.assign({ voice: 'f', done: {}, srs: {}, act: {}, stats: {} },
+const S = Object.assign({ voice: 'f', kr: 'show', done: {}, srs: {}, act: {}, stats: {} },
   JSON.parse(localStorage.getItem(KEY) || '{}'));
 let saveWarned = false;
 function save() {
@@ -78,10 +78,12 @@ function toneRow(tones, small) {
 }
 
 /* 대화 전체를 순서대로 재생한다 */
-async function playSeq(list) {
+async function playSeq(list, rows) {
   const view = 'learn';
-  for (const t of list) {
-    if ($('#' + view).hidden) return;        // 화면을 떠났으면 중단
+  for (let i = 0; i < list.length; i++) {
+    const t = list[i];
+    if ($('#' + view).hidden) { (rows || []).forEach(r => r.classList.remove('now')); return; }
+    if (rows) { rows.forEach(r => r.classList.remove('now')); rows[i]?.classList.add('now'); }
     const h = AIDX[t];
     if (!h) continue;
     audio.pause();
@@ -93,8 +95,9 @@ async function playSeq(list) {
       setTimeout(res, 9000);
     });
     audio.onended = audio.onerror = null;
-    await new Promise(r => setTimeout(r, 350));
+    await new Promise(r => setTimeout(r, 400));
   }
+  (rows || []).forEach(r => r.classList.remove('now'));
 }
 
 
@@ -356,12 +359,11 @@ function startLearn(d) {
 function reveal(txt) {
   if (!txt) return el('span');
   if (!S.firstDay) { S.firstDay = now(); save(); }
-  if (now() - S.firstDay > 14 * DAY) return el('span');
-  const b = el('button', 'reveal', '한글 발음 보기');
-  b.onclick = () => {
-    b.dataset.open = '1';
-    b.textContent = '[' + txt + '] — 참고용일 뿐, 성조는 담기지 않습니다';
-  };
+  if (S.kr === 'off') return el('span');
+  const b = el('button', 'reveal', '');
+  const open = () => { b.dataset.open = '1'; b.textContent = '[' + txt + ']'; };
+  const shut = () => { b.dataset.open = '0'; b.textContent = '한글 발음 보기'; };
+  if (S.kr === 'hide') { shut(); b.onclick = open; } else { open(); b.onclick = shut; }
   return b;
 }
 
@@ -402,8 +404,10 @@ function drawCard() {
   if (it.k === 'dialog') {
     c.classList.add('wide');
     c.append(el('div', 'setbadge daily', '오늘의 대화 · ' + esc(x.title)));
+    if (x.emoji) c.append(el('div', 'pic', esc(x.emoji)));
+    const lineEls = [];
     const all = el('button', 'primary', '▶ 대화 전체 듣기');
-    all.onclick = () => playSeq(x.lines.map(l => l.vi));
+    all.onclick = () => playSeq(x.lines.map(l => l.vi), lineEls);
     c.append(all);
 
     // 노래본이 있으면 띄운다. 멜로디에 얹은 구절은 그냥 말한 것보다 잘 남는다.
@@ -451,6 +455,7 @@ function drawCard() {
       row.append(g);
       row.append(reveal(l.kr_read));
       row.append(speakRow(l.vi));
+      lineEls.push(row);
       c.append(row);
     });
 
@@ -458,9 +463,14 @@ function drawCard() {
       const sw = el('div', 'ex');
       sw.append(el('div', 'exhead', '이렇게도 말합니다'));
       x.extra.forEach(t => {
-        const b = el('button');
-        b.append(el('span', 'exvi', esc(t)), el('span', null, '🔊'));
-        b.onclick = () => play(t, false);
+        const o = typeof t === 'string' ? { vi: t } : t;
+        const b = el('button', 'exrow');
+        const L2 = el('span', 'exl');
+        L2.append(el('span', 'exvi', esc(o.vi)));
+        if (o.ko) L2.append(el('span', 'exko', esc(o.ko)));
+        if (o.kr_read) L2.append(el('span', 'exkr', '[' + esc(o.kr_read) + ']'));
+        b.append(L2, el('span', 'exspk', '🔊'));
+        b.onclick = () => play(o.vi, false);
         sw.append(b);
       });
       c.append(sw);
@@ -798,6 +808,18 @@ $('#bkImport').onclick = async () => {
   }
 };
 
+/* 한글 발음: 켜짐 → 눌러야 보임 → 아예 끔, 세 단계 */
+const KR = { show: ['한', '한글 발음 켜짐'], hide: ['한*', '눌러야 보임'], off: ['한✕', '한글 발음 꺼짐'] };
+function drawKr() {
+  $('#krToggle').textContent = KR[S.kr || 'show'][0];
+  $('#krToggle').title = KR[S.kr || 'show'][1];
+}
+$('#krToggle').onclick = () => {
+  S.kr = { show: 'hide', hide: 'off', off: 'show' }[S.kr || 'show'];
+  save(); drawKr();
+  if (!$('#learn').hidden) drawCard();
+};
+
 $('#voice').onclick = () => {
   S.voice = S.voice === 'f' ? 'm' : 'f'; save();
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';
@@ -815,5 +837,6 @@ Promise.all([
   DRILL = d.tonedrill || [];
   AIDX = a;
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';
+  drawKr();
   renderHome();
 }).catch(e => { $('#title').textContent = '불러오기 실패'; console.error(e); });

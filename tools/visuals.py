@@ -45,6 +45,30 @@ V = {
  # --- 부탁·약속 ---
  "giúp":("🆘","action"), "nhớ":("🧠","thing"), "quên":("💨","action"),
  "đừng":("🚫","thing"), "hứa":("🤞","action"),
+
+ # --- 2차 추가 (단어 200개 확장분) ---
+ "thành phố":("🏙️","thing"), "chợ":("🏪","thing"), "đường":("🛣️","thing"),
+ "nhà vệ sinh":("🚻","thing"), "bệnh viện":("🏥","thing"), "thuốc":("💊","thing"),
+ "phở":("🍜","thing"), "cà phê":("☕","thing"), "đói":("😣","thing"), "no":("😌","thing"),
+ "thích":("❤️","thing"), "muốn":("💭","thing"),
+ "gia đình":("👨‍👩‍👧","thing"), "bố":("👨","thing"), "mẹ":("👩","thing"),
+ "con trai":("👦","thing"), "em gái":("👧","thing"), "vợ":("👰","thing"), "chồng":("🤵","thing"),
+ "tay":("🤚","thing"), "chân":("🦵","thing"), "đầu":("🤯","thing"), "đau":("🤕","thing"),
+ "bị":("💥","thing"), "cảm":("🤧","thing"),
+ "trên":("⬆️","thing"), "dưới":("⬇️","thing"), "trong":("📥","thing"), "ngoài":("📤","thing"),
+ "bên cạnh":("↔️","thing"), "gần":("🔍","thing"), "xa":("🔭","thing"),
+ "mở":("🔓","action"), "đóng":("🔒","action"), "đợi":("⏳","action"),
+ "tốt":("👍","thing"), "xấu":("👎","thing"), "đẹp":("✨","thing"), "hay":("🎉","thing"),
+ "khó":("🧗","thing"), "dễ":("🛝","thing"), "mới":("🆕","thing"), "cũ":("🕰️","thing"),
+ "nhiều":("🗄️","thing"), "ít":("🤏","thing"),
+ "dậy":("⏰","action"), "nghỉ":("😴","action"), "muộn":("🐌","thing"),
+ "bắt đầu":("▶️","action"), "kết thúc":("⏹️","action"),
+ "phút":("⏱️","thing"), "rưỡi":("🕧","thing"), "tối":("🌙","thing"), "hôm qua":("⏪","thing"),
+ "bán":("🏷️","action"), "nghìn":("🔢","thing"), "đồng":("💴","thing"),
+ "hộp":("🎁","thing"), "thùng":("📦","thing"), "chiếc":("🚲","thing"), "con":("🐕","thing"),
+ "thứ hai":("1️⃣","thing"), "chủ nhật":("🛌","thing"),
+ "xong":("✅","action"), "chưa":("⏳","thing"), "cùng":("🤝","action"),
+ "quan trọng":("❗","thing"), "chắc chắn":("✔️","thing"),
 }
 
 def attach(word):
