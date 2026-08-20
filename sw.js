@@ -1,7 +1,7 @@
 /* 오프라인 캐시.
    앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
    음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
-const V = 'vn-v2-1';
+const V = 'vn-c25b3683';
 const SHELL = ['./', './index.html', './app.js', './style.css',
                './manifest.json', './icon.png',
                './data/days.json', './data/audio_index.json'];
@@ -29,8 +29,9 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // 나머지: 네트워크 먼저, 실패하면 캐시 (내용 갱신이 바로 반영되게)
-  e.respondWith(fetch(e.request).then(r => {
+  // 나머지: 서버에 항상 다시 물어본다(ETag 로 확인만 하므로 가볍다). 실패하면 캐시.
+  // 이렇게 안 하면 Pages 의 10분 캐시 때문에 고친 내용이 바로 안 보인다.
+  e.respondWith(fetch(e.request, { cache: 'no-cache' }).then(r => {
     if (r.ok) { const cp = r.clone(); caches.open(V).then(c => c.put(e.request, cp)); }
     return r;
   }).catch(() => caches.match(e.request)));
