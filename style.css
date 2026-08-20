@@ -160,3 +160,7 @@ button:active{transform:scale(.98)}
 .backup button{flex:1; max-width:170px; font-size:14px; padding:10px 8px}
 .foot.small{font-size:12px; margin-top:10px; line-height:1.5}
 .foot.small b{color:var(--fg)}
+
+.banner button{white-space:nowrap; flex:none}
+.banner>div{min-width:0}
+.banner.tone span{display:block; font-size:14px; color:var(--dim); margin-top:2px}
