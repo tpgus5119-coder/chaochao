@@ -12,6 +12,7 @@ const now = () => Date.now();
 
 /* ---------- 데이터 ---------- */
 let ALL = [], AIDX = {}, DRILL = [];
+const SONG = {};   // 노래 파일 있는지 확인한 결과
 const $ = s => document.querySelector(s);
 const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -375,7 +376,9 @@ function drawCard() {
 
     // 노래본이 있으면 띄운다. 멜로디에 얹은 구절은 그냥 말한 것보다 잘 남는다.
     const songUrl = `audio/song/day${String(L.day.day).padStart(2, '0')}.mp3`;
+    if (SONG[songUrl] === false) return;      // 없다고 이미 확인한 날은 다시 묻지 않는다
     fetch(songUrl, { method: 'HEAD' }).then(r => {
+      SONG[songUrl] = r.ok;
       if (!r.ok) return;
       const sg = el('button', 'song', '🎵 오늘의 노래');
       sg.onclick = () => { if (audio) audio.pause(); audio = new Audio(songUrl); audio.play().catch(() => { }); };
