@@ -1,175 +1,2009 @@
 {
-  "meta": {
-    "version": "v1",
-    "voices": { "f": "vi-VN-HoaiMyNeural", "m": "vi-VN-NamMinhNeural" },
-    "note": "북부(하노이) 표준. 남부 음성은 v2."
+ "meta": {
+  "version": "v1",
+  "voices": {
+   "f": "vi-VN-HoaiMyNeural",
+   "m": "vi-VN-NamMinhNeural"
   },
-  "days": [
+  "note": "북부(하노이) 표준. 남부 음성은 v2."
+ },
+ "days": [
+  {
+   "day": 0,
+   "theme": "문자와 성조",
+   "intro": "베트남어는 소리의 높낮이(성조)로 뜻이 완전히 달라진다. 오늘은 새 단어를 외우지 않는다. 6개를 귀로 구분하는 것만 한다.",
+   "tones": [
     {
-      "day": 0,
-      "theme": "문자와 성조",
-      "intro": "베트남어는 소리의 높낮이(성조)로 뜻이 완전히 달라진다. 오늘은 새 단어를 외우지 않는다. 6개를 귀로 구분하는 것만 한다.",
-      "tones": [
-        { "vi": "ma",  "mark": "없음(ngang)", "ko": "귀신",   "kr_read": "마",  "shape": "평평하게 —" },
-        { "vi": "mà",  "mark": "huyền",       "ko": "그런데", "kr_read": "마↘", "shape": "낮게 내려감 ＼" },
-        { "vi": "má",  "mark": "sắc",         "ko": "엄마",   "kr_read": "마↗", "shape": "짧게 올라감 ／" },
-        { "vi": "mả",  "mark": "hỏi",         "ko": "무덤",   "kr_read": "마↘↗","shape": "내렸다 올림 ∨" },
-        { "vi": "mã",  "mark": "ngã",         "ko": "말(馬)", "kr_read": "마~↗","shape": "끊었다 올림 ∿" },
-        { "vi": "mạ",  "mark": "nặng",        "ko": "모종",   "kr_read": "마↓", "shape": "짧고 무겁게 뚝 ↓" }
-      ],
-      "words": [],
-      "frames": [],
-      "mission": {
-        "goal": "서로 성조 알아맞히기",
-        "how": "한 명이 ma / mà / má / mả / mã / mạ 중 하나를 말한다. 다른 사람이 몇 번인지 맞힌다. 5번 중 3번 맞히면 통과.",
-        "a": "당신이 먼저 5번 낸다",
-        "b": "당신이 먼저 맞힌다"
-      }
+     "vi": "ma",
+     "mark": "없음(ngang)",
+     "ko": "귀신",
+     "kr_read": "마",
+     "shape": "평평하게 —"
     },
     {
-      "day": 1,
-      "theme": "인사와 호칭",
-      "intro": "베트남어는 '너/나'가 나이·관계에 따라 바뀐다. 한국어의 형·누나·동생과 같은 구조라 우리에겐 유리하다.",
-      "words": [
-        { "vi": "chào",   "ko": "안녕(인사말)",        "kr_read": "짜오",  "hanja": null },
-        { "vi": "anh",    "ko": "형·오빠 (손위 남자)", "kr_read": "아인",  "hanja": null },
-        { "vi": "chị",    "ko": "누나·언니 (손위 여자)","kr_read": "찌",   "hanja": null },
-        { "vi": "em",     "ko": "동생 (손아래)",       "kr_read": "앰",    "hanja": null },
-        { "vi": "tôi",    "ko": "나·저 (중립)",        "kr_read": "또이",  "hanja": null },
-        { "vi": "bạn",    "ko": "너·친구 (동등)",      "kr_read": "반",    "hanja": null },
-        { "vi": "là",     "ko": "~이다",               "kr_read": "라",    "hanja": null },
-        { "vi": "xin",    "ko": "정중하게 청하다",      "kr_read": "씬",    "hanja": null },
-        { "vi": "cảm ơn", "ko": "고맙습니다",           "kr_read": "깜 언",  "hanja": "感恩 (감은)" },
-        { "vi": "vâng",   "ko": "네 (북부)",            "kr_read": "벙",    "hanja": null }
-      ],
-      "frames": [
-        { "vi": "Chào {X}!", "ko": "{X} 안녕하세요!",
-          "examples": ["Chào anh!", "Chào chị!", "Chào em!", "Chào bạn!", "Xin chào!"] },
-        { "vi": "Tôi là {X}.", "ko": "저는 {X}입니다.",
-          "examples": ["Tôi là Minsu.", "Tôi là em.", "Tôi là bạn của anh.", "Tôi là người Hàn Quốc.", "Tôi là Seohyeon."] }
-      ],
-      "mission": {
-        "goal": "상대에게 맞는 호칭(anh / chị / em)을 정하라",
-        "how": "서로 나이를 모른다. 아래 카드만 보고 대화해서 상대를 뭐라고 불러야 할지 합의하라. 오늘 배운 말만 쓴다.",
-        "a": "당신은 25살 남자입니다",
-        "b": "당신은 32살 여자입니다"
-      }
+     "vi": "mà",
+     "mark": "huyền",
+     "ko": "그런데",
+     "kr_read": "마↘",
+     "shape": "낮게 내려감 ＼"
     },
     {
-      "day": 2,
-      "theme": "이름 묻고 답하기",
-      "intro": "của는 '~의'다. 순서가 한국어와 반대라 'Tên của tôi' = '이름 의 나' 로 붙는다.",
-      "words": [
-        { "vi": "tên",   "ko": "이름",          "kr_read": "뗀",   "hanja": null },
-        { "vi": "gì",    "ko": "무엇",          "kr_read": "지",   "hanja": null },
-        { "vi": "của",   "ko": "~의",           "kr_read": "꾸어",  "hanja": null },
-        { "vi": "ai",    "ko": "누구",          "kr_read": "아이",  "hanja": null },
-        { "vi": "người", "ko": "사람",          "kr_read": "응어이", "hanja": null },
-        { "vi": "rất",   "ko": "매우",          "kr_read": "젓",   "hanja": null },
-        { "vi": "vui",   "ko": "기쁘다",        "kr_read": "부이",  "hanja": null },
-        { "vi": "gặp",   "ko": "만나다",        "kr_read": "갑",   "hanja": null },
-        { "vi": "được",  "ko": "~할 수 있다·되다","kr_read": "드억",  "hanja": null },
-        { "vi": "và",    "ko": "그리고",        "kr_read": "바",   "hanja": null }
-      ],
-      "frames": [
-        { "vi": "Tên {X} là gì?", "ko": "{X}의 이름은 무엇인가요?",
-          "examples": ["Tên anh là gì?", "Tên chị là gì?", "Tên em là gì?", "Tên bạn là gì?", "Tên của anh là gì?"] },
-        { "vi": "Rất vui được gặp {X}.", "ko": "{X}를 만나서 반갑습니다.",
-          "examples": ["Rất vui được gặp anh.", "Rất vui được gặp chị.", "Rất vui được gặp em.", "Rất vui được gặp bạn.", "Tôi rất vui."] }
-      ],
-      "mission": {
-        "goal": "상대의 이름을 알아내서 받아 적어라",
-        "how": "각자 아래 이름 카드를 받는다. 상대에게 보여주지 않는다. Tên ... là gì? 만 써서 알아내고, 철자까지 정확히 적어라.",
-        "a": "당신의 이름은 Nguyễn Văn Hùng 입니다",
-        "b": "당신의 이름은 Trần Thị Lan 입니다"
-      }
+     "vi": "má",
+     "mark": "sắc",
+     "ko": "엄마",
+     "kr_read": "마↗",
+     "shape": "짧게 올라감 ／"
     },
     {
-      "day": 3,
-      "theme": "나라와 사는 곳",
-      "intro": "Hàn Quốc(한국)은 한자어 韓國이다. 베트남어 어휘의 상당수가 한자에서 왔고 우리말 한자어와 대응한다. 이런 단어는 그냥 얻는 것이다.",
-      "words": [
-        { "vi": "nước",     "ko": "나라·물",    "kr_read": "느억",   "hanja": null },
-        { "vi": "Hàn Quốc", "ko": "한국",       "kr_read": "한 꾸옥",  "hanja": "韓國 (한국)" },
-        { "vi": "Việt Nam", "ko": "베트남",     "kr_read": "비엣 남",  "hanja": "越南 (월남)" },
-        { "vi": "nào",      "ko": "어느",       "kr_read": "나오",   "hanja": null },
-        { "vi": "ở",        "ko": "~에 (있다)", "kr_read": "어",     "hanja": null },
-        { "vi": "đâu",      "ko": "어디",       "kr_read": "더우",   "hanja": null },
-        { "vi": "sống",     "ko": "살다",       "kr_read": "쏨",     "hanja": null },
-        { "vi": "đến",      "ko": "오다·가다",   "kr_read": "덴",     "hanja": null },
-        { "vi": "từ",       "ko": "~부터",      "kr_read": "뜨",     "hanja": null },
-        { "vi": "không",    "ko": "아니다·안",   "kr_read": "콤",     "hanja": null }
-      ],
-      "frames": [
-        { "vi": "{X} là người nước nào?", "ko": "{X}는 어느 나라 사람인가요?",
-          "examples": ["Anh là người nước nào?", "Chị là người nước nào?", "Bạn là người nước nào?", "Tôi là người Hàn Quốc.", "Tôi là người Việt Nam."] },
-        { "vi": "{X} sống ở đâu?", "ko": "{X}는 어디에 사나요?",
-          "examples": ["Anh sống ở đâu?", "Chị sống ở đâu?", "Tôi sống ở Hà Nội.", "Tôi sống ở Busan.", "Tôi đến từ Hàn Quốc."] }
-      ],
-      "mission": {
-        "goal": "상대의 나라와 사는 도시를 알아내라",
-        "how": "카드는 상대에게 보이지 않는다. 오늘의 틀 2개만으로 알아내고 종이에 적어라. 5턴 안에.",
-        "a": "당신은 베트남 사람이고 Hà Nội에 삽니다",
-        "b": "당신은 한국 사람이고 Busan에 삽니다"
-      }
+     "vi": "mả",
+     "mark": "hỏi",
+     "ko": "무덤",
+     "kr_read": "마↘↗",
+     "shape": "내렸다 올림 ∨"
     },
     {
-      "day": 4,
-      "theme": "직업과 일터",
-      "intro": "오늘부터 현장 단어가 들어온다. công ty(公司)·công nhân(工人)·nhân viên(人員)·giám đốc(監督) 전부 한자어다.",
-      "words": [
-        { "vi": "làm",       "ko": "하다·일하다", "kr_read": "람",     "hanja": null },
-        { "vi": "việc",      "ko": "일",         "kr_read": "비엑",   "hanja": null },
-        { "vi": "công ty",   "ko": "회사",       "kr_read": "꼼 띠",   "hanja": "公司 (공사)" },
-        { "vi": "nhà máy",   "ko": "공장",       "kr_read": "냐 마이",  "hanja": null },
-        { "vi": "công nhân", "ko": "노동자·직공", "kr_read": "꼼 년",   "hanja": "工人 (공인)" },
-        { "vi": "nhân viên", "ko": "직원",       "kr_read": "년 비엔",  "hanja": "人員 (인원)" },
-        { "vi": "giám đốc",  "ko": "사장·감독",   "kr_read": "잠 독",   "hanja": "監督 (감독)" },
-        { "vi": "nghề",      "ko": "직업",       "kr_read": "응에",   "hanja": null },
-        { "vi": "đang",      "ko": "~하는 중",    "kr_read": "당",     "hanja": null },
-        { "vi": "cũng",      "ko": "~도·또한",    "kr_read": "꿈",     "hanja": null }
-      ],
-      "frames": [
-        { "vi": "{X} làm việc ở đâu?", "ko": "{X}는 어디서 일하나요?",
-          "examples": ["Anh làm việc ở đâu?", "Chị làm việc ở đâu?", "Tôi làm việc ở nhà máy.", "Tôi làm việc ở công ty.", "Tôi đang làm việc."] },
-        { "vi": "{X} là {직업}.", "ko": "{X}는 {직업}입니다.",
-          "examples": ["Tôi là công nhân.", "Tôi là nhân viên.", "Anh ấy là giám đốc.", "Tôi cũng là công nhân.", "Chị là nhân viên công ty."] }
-      ],
-      "mission": {
-        "goal": "상대의 직업과 일터를 알아내라",
-        "how": "서로 카드를 숨긴다. 오늘의 틀로 물어서 알아내라. 알아낸 뒤엔 상대 직업을 베트남어로 말해줘야 통과.",
-        "a": "당신은 공장(nhà máy)에서 일하는 công nhân 입니다",
-        "b": "당신은 회사(công ty)에서 일하는 giám đốc 입니다"
-      }
+     "vi": "mã",
+     "mark": "ngã",
+     "ko": "말(馬)",
+     "kr_read": "마~↗",
+     "shape": "끊었다 올림 ∿"
     },
     {
-      "day": 5,
-      "theme": "안부·감사·작별",
-      "intro": "có ... không? 은 베트남어에서 가장 많이 쓰는 의문 틀이다. 이 틀 하나로 앞으로 배울 거의 모든 형용사·동사를 물어볼 수 있다.",
-      "words": [
-        { "vi": "khỏe",        "ko": "건강하다·잘 지내다", "kr_read": "코애",   "hanja": null },
-        { "vi": "có",          "ko": "있다·(의문 표지)",   "kr_read": "꼬",     "hanja": null },
-        { "vi": "xin lỗi",     "ko": "미안합니다",        "kr_read": "씬 로이",  "hanja": null },
-        { "vi": "dạ",          "ko": "네 (공손)",         "kr_read": "자",     "hanja": null },
-        { "vi": "tạm biệt",    "ko": "안녕히 가세요",      "kr_read": "땀 비엣",  "hanja": "暫別 (잠별)" },
-        { "vi": "hẹn gặp lại", "ko": "또 만나요",         "kr_read": "핸 갑 라이","hanja": null },
-        { "vi": "mai",         "ko": "내일",             "kr_read": "마이",    "hanja": null },
-        { "vi": "nhiều",       "ko": "많이·많다",         "kr_read": "니에우",   "hanja": null },
-        { "vi": "lắm",         "ko": "매우 (말 끝에)",     "kr_read": "람",     "hanja": null },
-        { "vi": "bình thường", "ko": "보통이다",          "kr_read": "빈 트엉",  "hanja": "平常 (평상)" }
-      ],
-      "frames": [
-        { "vi": "{X} có khỏe không?", "ko": "{X}는 잘 지내세요?",
-          "examples": ["Anh có khỏe không?", "Chị có khỏe không?", "Em có khỏe không?", "Tôi khỏe.", "Tôi bình thường."] },
-        { "vi": "Cảm ơn {X} nhiều.", "ko": "{X}에게 정말 감사합니다.",
-          "examples": ["Cảm ơn anh nhiều.", "Cảm ơn chị nhiều.", "Xin lỗi anh.", "Tạm biệt anh.", "Hẹn gặp lại."] }
-      ],
-      "mission": {
-        "goal": "5턴 안에 인사→안부→감사→작별을 완성하라",
-        "how": "Day 1~5에서 배운 말만 쓴다. 순서대로 네 단계를 다 지나야 통과. 중간에 한국어를 쓰면 처음부터.",
-        "a": "당신이 먼저 말을 건다",
-        "b": "당신은 오늘 컨디션이 bình thường 입니다"
-      }
+     "vi": "mạ",
+     "mark": "nặng",
+     "ko": "모종",
+     "kr_read": "마↓",
+     "shape": "짧고 무겁게 뚝 ↓"
     }
-  ]
+   ],
+   "words": [],
+   "frames": [],
+   "mission": {
+    "goal": "서로 성조 알아맞히기",
+    "how": "한 명이 ma / mà / má / mả / mã / mạ 중 하나를 말한다. 다른 사람이 몇 번인지 맞힌다. 5번 중 3번 맞히면 통과.",
+    "a": "당신이 먼저 5번 낸다",
+    "b": "당신이 먼저 맞힌다"
+   }
+  },
+  {
+   "day": 1,
+   "theme": "인사와 호칭",
+   "intro": "베트남어는 '너/나'가 나이·관계에 따라 바뀐다. 한국어의 형·누나·동생과 같은 구조라 우리에겐 유리하다.",
+   "words": [
+    {
+     "vi": "chào",
+     "ko": "안녕(인사말)",
+     "kr_read": "짜오",
+     "hanja": null
+    },
+    {
+     "vi": "anh",
+     "ko": "형·오빠 (손위 남자)",
+     "kr_read": "아인",
+     "hanja": null
+    },
+    {
+     "vi": "chị",
+     "ko": "누나·언니 (손위 여자)",
+     "kr_read": "찌",
+     "hanja": null
+    },
+    {
+     "vi": "em",
+     "ko": "동생 (손아래)",
+     "kr_read": "앰",
+     "hanja": null
+    },
+    {
+     "vi": "tôi",
+     "ko": "나·저 (중립)",
+     "kr_read": "또이",
+     "hanja": null
+    },
+    {
+     "vi": "bạn",
+     "ko": "너·친구 (동등)",
+     "kr_read": "반",
+     "hanja": null
+    },
+    {
+     "vi": "là",
+     "ko": "~이다",
+     "kr_read": "라",
+     "hanja": null
+    },
+    {
+     "vi": "xin",
+     "ko": "정중하게 청하다",
+     "kr_read": "씬",
+     "hanja": null
+    },
+    {
+     "vi": "cảm ơn",
+     "ko": "고맙습니다",
+     "kr_read": "깜 언",
+     "hanja": "感恩 (감은)"
+    },
+    {
+     "vi": "vâng",
+     "ko": "네 (북부)",
+     "kr_read": "벙",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Chào {X}!",
+     "ko": "{X} 안녕하세요!",
+     "examples": [
+      "Chào anh!",
+      "Chào chị!",
+      "Chào em!",
+      "Chào bạn!",
+      "Xin chào!"
+     ]
+    },
+    {
+     "vi": "Tôi là {X}.",
+     "ko": "저는 {X}입니다.",
+     "examples": [
+      "Tôi là Minsu.",
+      "Tôi là em.",
+      "Tôi là bạn.",
+      "Tôi là anh.",
+      "Tôi là Seohyeon."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "상대에게 맞는 호칭(anh / chị / em)을 정하라",
+    "how": "서로 나이를 모른다. 아래 카드만 보고 대화해서 상대를 뭐라고 불러야 할지 합의하라. 오늘 배운 말만 쓴다.",
+    "a": "당신은 25살 남자입니다",
+    "b": "당신은 32살 여자입니다"
+   }
+  },
+  {
+   "day": 2,
+   "theme": "이름 묻고 답하기",
+   "intro": "của는 '~의'다. 순서가 한국어와 반대라 'Tên của tôi' = '이름 의 나' 로 붙는다.",
+   "words": [
+    {
+     "vi": "tên",
+     "ko": "이름",
+     "kr_read": "뗀",
+     "hanja": null
+    },
+    {
+     "vi": "gì",
+     "ko": "무엇",
+     "kr_read": "지",
+     "hanja": null
+    },
+    {
+     "vi": "của",
+     "ko": "~의",
+     "kr_read": "꾸어",
+     "hanja": null
+    },
+    {
+     "vi": "ai",
+     "ko": "누구",
+     "kr_read": "아이",
+     "hanja": null
+    },
+    {
+     "vi": "người",
+     "ko": "사람",
+     "kr_read": "응어이",
+     "hanja": null
+    },
+    {
+     "vi": "rất",
+     "ko": "매우",
+     "kr_read": "젓",
+     "hanja": null
+    },
+    {
+     "vi": "vui",
+     "ko": "기쁘다",
+     "kr_read": "부이",
+     "hanja": null
+    },
+    {
+     "vi": "gặp",
+     "ko": "만나다",
+     "kr_read": "갑",
+     "hanja": null
+    },
+    {
+     "vi": "được",
+     "ko": "~할 수 있다·되다",
+     "kr_read": "드억",
+     "hanja": null
+    },
+    {
+     "vi": "và",
+     "ko": "그리고",
+     "kr_read": "바",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Tên {X} là gì?",
+     "ko": "{X}의 이름은 무엇인가요?",
+     "examples": [
+      "Tên anh là gì?",
+      "Tên chị là gì?",
+      "Tên em là gì?",
+      "Tên bạn là gì?",
+      "Tên của anh là gì?"
+     ]
+    },
+    {
+     "vi": "Rất vui được gặp {X}.",
+     "ko": "{X}를 만나서 반갑습니다.",
+     "examples": [
+      "Rất vui được gặp anh.",
+      "Rất vui được gặp chị.",
+      "Rất vui được gặp em.",
+      "Rất vui được gặp bạn.",
+      "Tôi rất vui."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "상대의 이름을 알아내서 받아 적어라",
+    "how": "각자 아래 이름 카드를 받는다. 상대에게 보여주지 않는다. Tên ... là gì? 만 써서 알아내고, 철자까지 정확히 적어라.",
+    "a": "당신의 이름은 Nguyễn Văn Hùng 입니다",
+    "b": "당신의 이름은 Trần Thị Lan 입니다"
+   }
+  },
+  {
+   "day": 3,
+   "theme": "나라와 사는 곳",
+   "intro": "Hàn Quốc(한국)은 한자어 韓國이다. 베트남어 어휘의 상당수가 한자에서 왔고 우리말 한자어와 대응한다. 이런 단어는 그냥 얻는 것이다.",
+   "words": [
+    {
+     "vi": "nước",
+     "ko": "나라·물",
+     "kr_read": "느억",
+     "hanja": null
+    },
+    {
+     "vi": "Hàn Quốc",
+     "ko": "한국",
+     "kr_read": "한 꾸옥",
+     "hanja": "韓國 (한국)"
+    },
+    {
+     "vi": "Việt Nam",
+     "ko": "베트남",
+     "kr_read": "비엣 남",
+     "hanja": "越南 (월남)"
+    },
+    {
+     "vi": "nào",
+     "ko": "어느",
+     "kr_read": "나오",
+     "hanja": null
+    },
+    {
+     "vi": "ở",
+     "ko": "~에 (있다)",
+     "kr_read": "어",
+     "hanja": null
+    },
+    {
+     "vi": "đâu",
+     "ko": "어디",
+     "kr_read": "더우",
+     "hanja": null
+    },
+    {
+     "vi": "sống",
+     "ko": "살다",
+     "kr_read": "쏨",
+     "hanja": null
+    },
+    {
+     "vi": "đến",
+     "ko": "오다·가다",
+     "kr_read": "덴",
+     "hanja": null
+    },
+    {
+     "vi": "từ",
+     "ko": "~부터",
+     "kr_read": "뜨",
+     "hanja": null
+    },
+    {
+     "vi": "không",
+     "ko": "아니다·안",
+     "kr_read": "콤",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "{X} là người nước nào?",
+     "ko": "{X}는 어느 나라 사람인가요?",
+     "examples": [
+      "Anh là người nước nào?",
+      "Chị là người nước nào?",
+      "Bạn là người nước nào?",
+      "Tôi là người Hàn Quốc.",
+      "Tôi là người Việt Nam."
+     ]
+    },
+    {
+     "vi": "{X} sống ở đâu?",
+     "ko": "{X}는 어디에 사나요?",
+     "examples": [
+      "Anh sống ở đâu?",
+      "Chị sống ở đâu?",
+      "Tôi sống ở Hà Nội.",
+      "Tôi sống ở Busan.",
+      "Tôi đến từ Hàn Quốc."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "상대의 나라와 사는 도시를 알아내라",
+    "how": "카드는 상대에게 보이지 않는다. 오늘의 틀 2개만으로 알아내고 종이에 적어라. 5턴 안에.",
+    "a": "당신은 베트남 사람이고 Hà Nội에 삽니다",
+    "b": "당신은 한국 사람이고 Busan에 삽니다"
+   }
+  },
+  {
+   "day": 4,
+   "theme": "직업과 일터",
+   "intro": "오늘부터 현장 단어가 들어온다. công ty(公司)·công nhân(工人)·nhân viên(人員)·giám đốc(監督) 전부 한자어다.",
+   "words": [
+    {
+     "vi": "làm",
+     "ko": "하다·일하다",
+     "kr_read": "람",
+     "hanja": null
+    },
+    {
+     "vi": "việc",
+     "ko": "일",
+     "kr_read": "비엑",
+     "hanja": null
+    },
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꼼 띠",
+     "hanja": "公司 (공사)"
+    },
+    {
+     "vi": "nhà máy",
+     "ko": "공장",
+     "kr_read": "냐 마이",
+     "hanja": null
+    },
+    {
+     "vi": "công nhân",
+     "ko": "노동자·직공",
+     "kr_read": "꼼 년",
+     "hanja": "工人 (공인)"
+    },
+    {
+     "vi": "nhân viên",
+     "ko": "직원",
+     "kr_read": "년 비엔",
+     "hanja": "人員 (인원)"
+    },
+    {
+     "vi": "giám đốc",
+     "ko": "사장·감독",
+     "kr_read": "잠 독",
+     "hanja": "監督 (감독)"
+    },
+    {
+     "vi": "nghề",
+     "ko": "직업",
+     "kr_read": "응에",
+     "hanja": null
+    },
+    {
+     "vi": "đang",
+     "ko": "~하는 중",
+     "kr_read": "당",
+     "hanja": null
+    },
+    {
+     "vi": "cũng",
+     "ko": "~도·또한",
+     "kr_read": "꿈",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "{X} làm việc ở đâu?",
+     "ko": "{X}는 어디서 일하나요?",
+     "examples": [
+      "Anh làm việc ở đâu?",
+      "Chị làm việc ở đâu?",
+      "Tôi làm việc ở nhà máy.",
+      "Tôi làm việc ở công ty.",
+      "Tôi đang làm việc."
+     ]
+    },
+    {
+     "vi": "{X} là {직업}.",
+     "ko": "{X}는 {직업}입니다.",
+     "examples": [
+      "Tôi là công nhân.",
+      "Tôi là nhân viên.",
+      "Anh là giám đốc.",
+      "Tôi cũng là công nhân.",
+      "Chị là nhân viên công ty."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "상대의 직업과 일터를 알아내라",
+    "how": "서로 카드를 숨긴다. 오늘의 틀로 물어서 알아내라. 알아낸 뒤엔 상대 직업을 베트남어로 말해줘야 통과.",
+    "a": "당신은 공장(nhà máy)에서 일하는 công nhân 입니다",
+    "b": "당신은 회사(công ty)에서 일하는 giám đốc 입니다"
+   }
+  },
+  {
+   "day": 5,
+   "theme": "안부·감사·작별",
+   "intro": "có ... không? 은 베트남어에서 가장 많이 쓰는 의문 틀이다. 이 틀 하나로 앞으로 배울 거의 모든 형용사·동사를 물어볼 수 있다.",
+   "words": [
+    {
+     "vi": "khỏe",
+     "ko": "건강하다·잘 지내다",
+     "kr_read": "코애",
+     "hanja": null
+    },
+    {
+     "vi": "có",
+     "ko": "있다·(의문 표지)",
+     "kr_read": "꼬",
+     "hanja": null
+    },
+    {
+     "vi": "xin lỗi",
+     "ko": "미안합니다",
+     "kr_read": "씬 로이",
+     "hanja": null
+    },
+    {
+     "vi": "dạ",
+     "ko": "네 (공손)",
+     "kr_read": "자",
+     "hanja": null
+    },
+    {
+     "vi": "tạm biệt",
+     "ko": "안녕히 가세요",
+     "kr_read": "땀 비엣",
+     "hanja": "暫別 (잠별)"
+    },
+    {
+     "vi": "hẹn gặp lại",
+     "ko": "또 만나요",
+     "kr_read": "핸 갑 라이",
+     "hanja": null
+    },
+    {
+     "vi": "mai",
+     "ko": "내일",
+     "kr_read": "마이",
+     "hanja": null
+    },
+    {
+     "vi": "nhiều",
+     "ko": "많이·많다",
+     "kr_read": "니에우",
+     "hanja": null
+    },
+    {
+     "vi": "lắm",
+     "ko": "매우 (말 끝에)",
+     "kr_read": "람",
+     "hanja": null
+    },
+    {
+     "vi": "bình thường",
+     "ko": "보통이다",
+     "kr_read": "빈 트엉",
+     "hanja": "平常 (평상)"
+    }
+   ],
+   "frames": [
+    {
+     "vi": "{X} có khỏe không?",
+     "ko": "{X}는 잘 지내세요?",
+     "examples": [
+      "Anh có khỏe không?",
+      "Chị có khỏe không?",
+      "Em có khỏe không?",
+      "Tôi khỏe.",
+      "Tôi bình thường."
+     ]
+    },
+    {
+     "vi": "Cảm ơn {X} nhiều.",
+     "ko": "{X}에게 정말 감사합니다.",
+     "examples": [
+      "Cảm ơn anh nhiều.",
+      "Cảm ơn chị nhiều.",
+      "Xin lỗi anh.",
+      "Tạm biệt anh.",
+      "Hẹn gặp lại."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "5턴 안에 인사→안부→감사→작별을 완성하라",
+    "how": "Day 1~5에서 배운 말만 쓴다. 순서대로 네 단계를 다 지나야 통과. 중간에 한국어를 쓰면 처음부터.",
+    "a": "당신이 먼저 말을 건다",
+    "b": "당신은 오늘 컨디션이 bình thường 입니다"
+   }
+  },
+  {
+   "day": 6,
+   "theme": "숫자 1~10",
+   "intro": "베트남어 숫자는 변형이 거의 없어 외우기 쉽다. 현장에서 수량·시간·불량 개수까지 전부 이 열 개에서 나온다.",
+   "words": [
+    {
+     "vi": "một",
+     "ko": "1",
+     "kr_read": "못",
+     "hanja": null
+    },
+    {
+     "vi": "hai",
+     "ko": "2",
+     "kr_read": "하이",
+     "hanja": null
+    },
+    {
+     "vi": "ba",
+     "ko": "3",
+     "kr_read": "바",
+     "hanja": null
+    },
+    {
+     "vi": "bốn",
+     "ko": "4",
+     "kr_read": "본",
+     "hanja": null
+    },
+    {
+     "vi": "năm",
+     "ko": "5·해(年)",
+     "kr_read": "남",
+     "hanja": null
+    },
+    {
+     "vi": "sáu",
+     "ko": "6",
+     "kr_read": "사우",
+     "hanja": null
+    },
+    {
+     "vi": "bảy",
+     "ko": "7",
+     "kr_read": "바이",
+     "hanja": null
+    },
+    {
+     "vi": "tám",
+     "ko": "8",
+     "kr_read": "땀",
+     "hanja": null
+    },
+    {
+     "vi": "chín",
+     "ko": "9",
+     "kr_read": "찐",
+     "hanja": null
+    },
+    {
+     "vi": "mười",
+     "ko": "10",
+     "kr_read": "므어이",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Có {숫자} người.",
+     "ko": "{숫자}명 있습니다.",
+     "examples": [
+      "Có một người.",
+      "Có hai người.",
+      "Có năm người.",
+      "Có mười người.",
+      "Có ba người."
+     ]
+    },
+    {
+     "vi": "{숫자} và {숫자} là {숫자}.",
+     "ko": "{숫자}와 {숫자}는 {숫자}입니다.",
+     "examples": [
+      "Một và hai là ba.",
+      "Hai và ba là năm.",
+      "Bốn và bốn là tám.",
+      "Năm và năm là mười.",
+      "Ba và ba là sáu."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "서로의 숫자를 물어 합을 구하라",
+    "how": "각자 아래 숫자를 받는다. 상대에게 보여주지 않는다. 베트남어로만 물어서 두 수의 합을 베트남어로 말하면 통과.",
+    "a": "당신의 숫자는 7 (bảy) 입니다",
+    "b": "당신의 숫자는 4 (bốn) 입니다"
+   }
+  },
+  {
+   "day": 7,
+   "theme": "수량과 세기",
+   "intro": "cái는 사물, chiếc은 기계·탈것에 붙는 '단위'다. 한국어의 개·대·마리와 같은 것이라 우리에겐 낯설지 않다.",
+   "words": [
+    {
+     "vi": "mấy",
+     "ko": "몇 (적은 수)",
+     "kr_read": "머이",
+     "hanja": null
+    },
+    {
+     "vi": "bao nhiêu",
+     "ko": "얼마나 (큰 수)",
+     "kr_read": "바오 니에우",
+     "hanja": null
+    },
+    {
+     "vi": "cái",
+     "ko": "개 (사물 단위)",
+     "kr_read": "까이",
+     "hanja": null
+    },
+    {
+     "vi": "chiếc",
+     "ko": "대 (기계 단위)",
+     "kr_read": "찌엑",
+     "hanja": null
+    },
+    {
+     "vi": "hộp",
+     "ko": "갑·통",
+     "kr_read": "홉",
+     "hanja": null
+    },
+    {
+     "vi": "thùng",
+     "ko": "상자·박스",
+     "kr_read": "퉁",
+     "hanja": null
+    },
+    {
+     "vi": "tất cả",
+     "ko": "전부·모두",
+     "kr_read": "떳 까",
+     "hanja": null
+    },
+    {
+     "vi": "còn",
+     "ko": "남다·아직",
+     "kr_read": "꼰",
+     "hanja": null
+    },
+    {
+     "vi": "thiếu",
+     "ko": "부족하다",
+     "kr_read": "티에우",
+     "hanja": null
+    },
+    {
+     "vi": "đủ",
+     "ko": "충분하다",
+     "kr_read": "두",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Có mấy {단위}?",
+     "ko": "몇 {단위} 있어요?",
+     "examples": [
+      "Có mấy cái?",
+      "Có mấy hộp?",
+      "Có mấy thùng?",
+      "Có mấy người?",
+      "Có mấy chiếc?"
+     ]
+    },
+    {
+     "vi": "Còn {숫자} {단위}.",
+     "ko": "{숫자} {단위} 남았습니다.",
+     "examples": [
+      "Còn ba cái.",
+      "Còn năm hộp.",
+      "Còn hai thùng.",
+      "Còn một cái.",
+      "Không còn cái nào."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "재고를 합쳐 총 몇 개인지 알아내라",
+    "how": "각자 아래 재고 카드를 받는다. 서로 안 보여준다. mấy / bao nhiêu / còn 만 써서 총합을 구하라.",
+    "a": "당신에게는 hộp 5개가 있습니다",
+    "b": "당신에게는 thùng 3개가 있습니다"
+   }
+  },
+  {
+   "day": 8,
+   "theme": "몇 시입니까",
+   "intro": "rưỡi는 '반'이다. bảy giờ rưỡi = 7시 반. 교대·출퇴근 시간이 전부 이 틀에서 나온다.",
+   "words": [
+    {
+     "vi": "giờ",
+     "ko": "시·시간",
+     "kr_read": "저",
+     "hanja": null
+    },
+    {
+     "vi": "phút",
+     "ko": "분",
+     "kr_read": "풋",
+     "hanja": null
+    },
+    {
+     "vi": "bây giờ",
+     "ko": "지금",
+     "kr_read": "버이 저",
+     "hanja": null
+    },
+    {
+     "vi": "sáng",
+     "ko": "아침·오전",
+     "kr_read": "상",
+     "hanja": null
+    },
+    {
+     "vi": "chiều",
+     "ko": "오후",
+     "kr_read": "찌에우",
+     "hanja": null
+    },
+    {
+     "vi": "tối",
+     "ko": "저녁·밤",
+     "kr_read": "또이",
+     "hanja": null
+    },
+    {
+     "vi": "rưỡi",
+     "ko": "반 (30분)",
+     "kr_read": "즈어이",
+     "hanja": null
+    },
+    {
+     "vi": "đúng",
+     "ko": "정각·맞다",
+     "kr_read": "둠",
+     "hanja": null
+    },
+    {
+     "vi": "lúc",
+     "ko": "~에 (시점)",
+     "kr_read": "룩",
+     "hanja": null
+    },
+    {
+     "vi": "muộn",
+     "ko": "늦다",
+     "kr_read": "무온",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Bây giờ là mấy giờ?",
+     "ko": "지금 몇 시입니까?",
+     "examples": [
+      "Bây giờ là mấy giờ?",
+      "Bây giờ là tám giờ.",
+      "Bây giờ là chín giờ rưỡi.",
+      "Bây giờ là bảy giờ sáng.",
+      "Bây giờ là sáu giờ chiều."
+     ]
+    },
+    {
+     "vi": "Lúc {숫자} giờ.",
+     "ko": "{숫자}시에.",
+     "examples": [
+      "Lúc bảy giờ.",
+      "Lúc tám giờ rưỡi.",
+      "Lúc năm giờ chiều.",
+      "Tôi đến lúc sáu giờ.",
+      "Đừng đến muộn."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "상대의 출근 시각을 알아내라",
+    "how": "카드는 숨긴다. mấy giờ / lúc 만 써서 상대가 몇 시에 출근하는지 알아내고 베트남어로 말하라.",
+    "a": "당신은 아침 7시(bảy giờ sáng)에 출근합니다",
+    "b": "당신은 아침 8시 반(tám giờ rưỡi)에 출근합니다"
+   }
+  },
+  {
+   "day": 9,
+   "theme": "요일과 근무일",
+   "intro": "베트남어 요일은 '두 번째·세 번째…'로 센다. 월요일이 thứ hai(둘째)다. 일요일만 chủ nhật로 예외.",
+   "words": [
+    {
+     "vi": "thứ hai",
+     "ko": "월요일",
+     "kr_read": "트 하이",
+     "hanja": null
+    },
+    {
+     "vi": "thứ ba",
+     "ko": "화요일",
+     "kr_read": "트 바",
+     "hanja": null
+    },
+    {
+     "vi": "thứ tư",
+     "ko": "수요일",
+     "kr_read": "트 뜨",
+     "hanja": null
+    },
+    {
+     "vi": "thứ năm",
+     "ko": "목요일",
+     "kr_read": "트 남",
+     "hanja": null
+    },
+    {
+     "vi": "thứ sáu",
+     "ko": "금요일",
+     "kr_read": "트 사우",
+     "hanja": null
+    },
+    {
+     "vi": "thứ bảy",
+     "ko": "토요일",
+     "kr_read": "트 바이",
+     "hanja": null
+    },
+    {
+     "vi": "chủ nhật",
+     "ko": "일요일",
+     "kr_read": "쭈 녓",
+     "hanja": "主日 (주일)"
+    },
+    {
+     "vi": "hôm nay",
+     "ko": "오늘",
+     "kr_read": "홈 나이",
+     "hanja": null
+    },
+    {
+     "vi": "ngày",
+     "ko": "날·일",
+     "kr_read": "응아이",
+     "hanja": null
+    },
+    {
+     "vi": "tuần",
+     "ko": "주",
+     "kr_read": "뚜언",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Hôm nay là thứ mấy?",
+     "ko": "오늘은 무슨 요일입니까?",
+     "examples": [
+      "Hôm nay là thứ mấy?",
+      "Hôm nay là thứ hai.",
+      "Hôm nay là thứ sáu.",
+      "Hôm nay là chủ nhật.",
+      "Hôm nay là thứ tư."
+     ]
+    },
+    {
+     "vi": "{요일} tôi làm việc.",
+     "ko": "{요일}에 저는 일합니다.",
+     "examples": [
+      "Thứ hai tôi làm việc.",
+      "Thứ bảy tôi làm việc.",
+      "Chủ nhật tôi không làm việc.",
+      "Tôi làm việc sáu ngày.",
+      "Một tuần bảy ngày."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "둘 다 쉬는 날을 찾아라",
+    "how": "각자 근무표를 받는다. 서로 안 보여준다. 요일을 하나씩 물어서 둘 다 쉬는 날을 찾아내라.",
+    "a": "당신은 thứ hai ~ thứ sáu 근무입니다",
+    "b": "당신은 thứ ba ~ thứ bảy 근무입니다"
+   }
+  },
+  {
+   "day": 10,
+   "theme": "하루 일과",
+   "intro": "bắt đầu(시작)와 kết thúc(끝)은 현장 방송에서 매일 듣는 말이다. 오늘로 일상 구간이 끝나고, 내일부터 현장 말이 시작된다.",
+   "words": [
+    {
+     "vi": "bắt đầu",
+     "ko": "시작하다",
+     "kr_read": "밧 더우",
+     "hanja": null
+    },
+    {
+     "vi": "kết thúc",
+     "ko": "끝나다·종료",
+     "kr_read": "껫 툭",
+     "hanja": "結束 (결속)"
+    },
+    {
+     "vi": "nghỉ",
+     "ko": "쉬다",
+     "kr_read": "응이",
+     "hanja": null
+    },
+    {
+     "vi": "đi làm",
+     "ko": "출근하다",
+     "kr_read": "디 람",
+     "hanja": null
+    },
+    {
+     "vi": "về",
+     "ko": "돌아가다",
+     "kr_read": "베",
+     "hanja": null
+    },
+    {
+     "vi": "sớm",
+     "ko": "이르다·일찍",
+     "kr_read": "섬",
+     "hanja": null
+    },
+    {
+     "vi": "trước",
+     "ko": "~전에·앞",
+     "kr_read": "쯔억",
+     "hanja": null
+    },
+    {
+     "vi": "sau",
+     "ko": "~후에·뒤",
+     "kr_read": "사우",
+     "hanja": null
+    },
+    {
+     "vi": "mỗi",
+     "ko": "매·각각",
+     "kr_read": "모이",
+     "hanja": null
+    },
+    {
+     "vi": "thường",
+     "ko": "보통·자주",
+     "kr_read": "트엉",
+     "hanja": "常 (상)"
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Mấy giờ {동사}?",
+     "ko": "몇 시에 {동사}합니까?",
+     "examples": [
+      "Mấy giờ bắt đầu?",
+      "Mấy giờ kết thúc?",
+      "Mấy giờ đi làm?",
+      "Mấy giờ về?",
+      "Mấy giờ nghỉ?"
+     ]
+    },
+    {
+     "vi": "Tôi {동사} lúc {숫자} giờ.",
+     "ko": "저는 {숫자}시에 {동사}합니다.",
+     "examples": [
+      "Tôi đi làm lúc bảy giờ.",
+      "Tôi về lúc sáu giờ.",
+      "Tôi nghỉ lúc mười hai giờ.",
+      "Tôi bắt đầu lúc tám giờ.",
+      "Mỗi ngày tôi đi làm sớm."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "상대의 하루 일과를 시간표로 그려라",
+    "how": "출근·시작·휴식·종료·퇴근 다섯 시각을 물어서 종이에 적어라. 한국어를 쓰면 처음부터.",
+    "a": "출근 7시 / 시작 8시 / 휴식 12시 / 종료 5시 / 퇴근 6시",
+    "b": "출근 8시 반 / 시작 9시 / 휴식 1시 / 종료 6시 / 퇴근 6시 반"
+   }
+  },
+  {
+   "day": 11,
+   "theme": "작업 지시",
+   "intro": "여기서부터 현장이다. hãy(~하세요)와 đừng(~하지 마세요) 두 개면 지시의 절반이 끝난다. làm ơn을 앞에 붙이면 정중해진다.",
+   "words": [
+    {
+     "vi": "làm ơn",
+     "ko": "부디·please",
+     "kr_read": "람 언",
+     "hanja": null
+    },
+    {
+     "vi": "hãy",
+     "ko": "~하세요 (지시)",
+     "kr_read": "하이",
+     "hanja": null
+    },
+    {
+     "vi": "đừng",
+     "ko": "~하지 마세요",
+     "kr_read": "등",
+     "hanja": null
+    },
+    {
+     "vi": "giúp",
+     "ko": "돕다",
+     "kr_read": "줍",
+     "hanja": null
+    },
+    {
+     "vi": "đưa",
+     "ko": "건네다·주다",
+     "kr_read": "드어",
+     "hanja": null
+    },
+    {
+     "vi": "lấy",
+     "ko": "가져오다·집다",
+     "kr_read": "러이",
+     "hanja": null
+    },
+    {
+     "vi": "để",
+     "ko": "놓다·두다",
+     "kr_read": "데",
+     "hanja": null
+    },
+    {
+     "vi": "mở",
+     "ko": "열다·켜다",
+     "kr_read": "머",
+     "hanja": null
+    },
+    {
+     "vi": "đóng",
+     "ko": "닫다",
+     "kr_read": "돔",
+     "hanja": null
+    },
+    {
+     "vi": "tắt",
+     "ko": "끄다",
+     "kr_read": "땃",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Hãy {동사}!",
+     "ko": "{동사}하세요!",
+     "examples": [
+      "Hãy giúp tôi!",
+      "Hãy lấy hộp!",
+      "Hãy đưa thùng!",
+      "Hãy mở hộp!",
+      "Làm ơn giúp tôi."
+     ]
+    },
+    {
+     "vi": "Đừng {동사}!",
+     "ko": "{동사}하지 마세요!",
+     "examples": [
+      "Đừng lấy!",
+      "Đừng đóng!",
+      "Đừng tắt!",
+      "Đừng đưa!",
+      "Đừng đi làm muộn."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "말만 듣고 지시대로 움직여라",
+    "how": "A가 오늘 배운 지시 5개를 베트남어로 말한다. B는 손짓·행동으로 수행한다. 5개 중 4개 맞으면 통과. 그다음 역할을 바꾼다.",
+    "a": "당신이 먼저 지시합니다",
+    "b": "당신이 먼저 수행합니다"
+   }
+  },
+  {
+   "day": 12,
+   "theme": "빠르게·천천히·다 됐어요",
+   "intro": "xong chưa? 는 현장에서 하루에 수십 번 쓴다. '다 했어요?'라는 뜻이고, 대답은 rồi(했다) 또는 chưa(아직)다.",
+   "words": [
+    {
+     "vi": "nhanh",
+     "ko": "빠르다·빨리",
+     "kr_read": "냐인",
+     "hanja": null
+    },
+    {
+     "vi": "chậm",
+     "ko": "느리다·천천히",
+     "kr_read": "쩜",
+     "hanja": null
+    },
+    {
+     "vi": "dừng",
+     "ko": "멈추다",
+     "kr_read": "증",
+     "hanja": null
+    },
+    {
+     "vi": "tiếp tục",
+     "ko": "계속하다",
+     "kr_read": "띠엡 뚝",
+     "hanja": "接續 (접속)"
+    },
+    {
+     "vi": "xong",
+     "ko": "다 되다·완료",
+     "kr_read": "쏨",
+     "hanja": null
+    },
+    {
+     "vi": "chưa",
+     "ko": "아직 (안)",
+     "kr_read": "쯔어",
+     "hanja": null
+    },
+    {
+     "vi": "rồi",
+     "ko": "이미·했다",
+     "kr_read": "조이",
+     "hanja": null
+    },
+    {
+     "vi": "lại",
+     "ko": "다시",
+     "kr_read": "라이",
+     "hanja": null
+    },
+    {
+     "vi": "một chút",
+     "ko": "조금",
+     "kr_read": "못 쭛",
+     "hanja": null
+    },
+    {
+     "vi": "ngay",
+     "ko": "즉시·바로",
+     "kr_read": "응아이",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "{동사} xong chưa?",
+     "ko": "{동사} 다 했어요?",
+     "examples": [
+      "Làm xong chưa?",
+      "Làm lại xong chưa?",
+      "Xong rồi.",
+      "Chưa xong.",
+      "Chưa, một chút."
+     ]
+    },
+    {
+     "vi": "Hãy làm {부사}.",
+     "ko": "{부사} 하세요.",
+     "examples": [
+      "Hãy làm nhanh.",
+      "Hãy làm chậm.",
+      "Hãy làm lại.",
+      "Hãy dừng ngay!",
+      "Hãy tiếp tục."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "작업 진행 상황을 알아내라",
+    "how": "A는 작업 3개 중 몇 개를 끝냈는지 안다. B는 xong chưa? 만 써서 알아내라. 한국어 금지.",
+    "a": "당신은 작업 3개 중 2개를 끝냈습니다 (2개는 rồi, 1개는 chưa)",
+    "b": "당신은 상대의 진행 상황을 모릅니다. 물어서 알아내세요"
+   }
+  },
+  {
+   "day": 13,
+   "theme": "품질과 불량",
+   "intro": "bị는 나쁜 일이 '당했다'는 표시다. bị lỗi(불량이 났다), bị hỏng(고장났다). 그리고 오늘 한자어가 셋이나 나온다 — 檢查·質量·産品.",
+   "words": [
+    {
+     "vi": "lỗi",
+     "ko": "불량·오류",
+     "kr_read": "로이",
+     "hanja": null
+    },
+    {
+     "vi": "hỏng",
+     "ko": "고장나다·망가지다",
+     "kr_read": "홈",
+     "hanja": null
+    },
+    {
+     "vi": "tốt",
+     "ko": "좋다·양호",
+     "kr_read": "똣",
+     "hanja": null
+    },
+    {
+     "vi": "xấu",
+     "ko": "나쁘다",
+     "kr_read": "서우",
+     "hanja": null
+    },
+    {
+     "vi": "bị",
+     "ko": "(나쁜 일을) 당하다",
+     "kr_read": "비",
+     "hanja": null
+    },
+    {
+     "vi": "này",
+     "ko": "이·이것",
+     "kr_read": "나이",
+     "hanja": null
+    },
+    {
+     "vi": "kiểm tra",
+     "ko": "검사하다",
+     "kr_read": "끼엠 짜",
+     "hanja": "檢查 (검사)"
+    },
+    {
+     "vi": "chất lượng",
+     "ko": "품질",
+     "kr_read": "쩟 르엉",
+     "hanja": "質量 (질량)"
+    },
+    {
+     "vi": "sản phẩm",
+     "ko": "제품",
+     "kr_read": "산 펌",
+     "hanja": "産品 (산품)"
+    },
+    {
+     "vi": "sửa",
+     "ko": "고치다·수리하다",
+     "kr_read": "스어",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Cái này bị {문제}.",
+     "ko": "이건 {문제}입니다.",
+     "examples": [
+      "Cái này bị lỗi.",
+      "Cái này bị hỏng.",
+      "Sản phẩm này bị lỗi.",
+      "Cái này bị hỏng rồi.",
+      "Cái này không tốt."
+     ]
+    },
+    {
+     "vi": "Hãy kiểm tra {대상}.",
+     "ko": "{대상}를 검사하세요.",
+     "examples": [
+      "Hãy kiểm tra cái này.",
+      "Hãy kiểm tra sản phẩm.",
+      "Hãy kiểm tra chất lượng.",
+      "Hãy kiểm tra lại.",
+      "Chất lượng tốt không?"
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "불량을 신고하고 확인받아라",
+    "how": "A는 제품 상태를 안다. B는 검사자다. B가 물어서 어느 제품이 왜 불량인지 알아내고, 마지막에 베트남어로 요약하면 통과.",
+    "a": "당신 앞의 제품 3개 중 2번째가 bị lỗi 이고 3번째는 bị hỏng 입니다",
+    "b": "당신은 검사자입니다. 어느 것이 문제인지 물어서 알아내세요"
+   }
+  },
+  {
+   "day": 14,
+   "theme": "수량 보고와 자재 요청",
+   "intro": "số lượng(數量)은 현장 보고의 첫 단어다. đã는 '이미 했다', chưa는 '아직'. 이 둘로 모든 진행 확인이 된다.",
+   "words": [
+    {
+     "vi": "tổng",
+     "ko": "총·합계",
+     "kr_read": "똠",
+     "hanja": "總 (총)"
+    },
+    {
+     "vi": "số lượng",
+     "ko": "수량",
+     "kr_read": "소 르엉",
+     "hanja": "數量 (수량)"
+    },
+    {
+     "vi": "hàng",
+     "ko": "물건·제품",
+     "kr_read": "항",
+     "hanja": null
+    },
+    {
+     "vi": "giao",
+     "ko": "넘기다·납품하다",
+     "kr_read": "자오",
+     "hanja": "交 (교)"
+    },
+    {
+     "vi": "nhận",
+     "ko": "받다",
+     "kr_read": "년",
+     "hanja": null
+    },
+    {
+     "vi": "gửi",
+     "ko": "보내다",
+     "kr_read": "그이",
+     "hanja": null
+    },
+    {
+     "vi": "thêm",
+     "ko": "더·추가로",
+     "kr_read": "템",
+     "hanja": null
+    },
+    {
+     "vi": "hết",
+     "ko": "다 떨어지다",
+     "kr_read": "헷",
+     "hanja": null
+    },
+    {
+     "vi": "đã",
+     "ko": "이미 ~했다",
+     "kr_read": "다",
+     "hanja": null
+    },
+    {
+     "vi": "cần",
+     "ko": "필요하다",
+     "kr_read": "껀",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Cần thêm {숫자} {단위}.",
+     "ko": "{숫자} {단위} 더 필요합니다.",
+     "examples": [
+      "Cần thêm hai hộp.",
+      "Cần thêm năm cái.",
+      "Cần thêm một thùng.",
+      "Hết hàng rồi.",
+      "Tôi cần cái này."
+     ]
+    },
+    {
+     "vi": "Hàng đã {동사} chưa?",
+     "ko": "물건은 {동사}했습니까?",
+     "examples": [
+      "Hàng đã giao chưa?",
+      "Hàng đã nhận chưa?",
+      "Đã gửi chưa?",
+      "Đã giao rồi.",
+      "Chưa nhận."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "부족한 자재를 정확히 요청하라",
+    "how": "A는 창고 담당, B는 라인 담당. B가 필요한 것을 베트남어로만 요청하고, A는 재고를 보고 답한다. 숫자와 단위가 맞아야 통과.",
+    "a": "창고: hộp 2개, thùng 0개, cái 10개 (thùng은 hết)",
+    "b": "라인에 hộp 4개와 thùng 1개가 필요합니다"
+   }
+  },
+  {
+   "day": 15,
+   "theme": "위치와 옮기기",
+   "intro": "위치어는 명사 앞에 온다 — trên bàn(책상 위). 한국어와 순서가 같아서 이건 쉽다.",
+   "words": [
+    {
+     "vi": "đây",
+     "ko": "여기",
+     "kr_read": "더이",
+     "hanja": null
+    },
+    {
+     "vi": "kia",
+     "ko": "저기",
+     "kr_read": "끼어",
+     "hanja": null
+    },
+    {
+     "vi": "trên",
+     "ko": "위",
+     "kr_read": "쩬",
+     "hanja": null
+    },
+    {
+     "vi": "dưới",
+     "ko": "아래",
+     "kr_read": "즈어이",
+     "hanja": null
+    },
+    {
+     "vi": "trong",
+     "ko": "안·속",
+     "kr_read": "쫌",
+     "hanja": null
+    },
+    {
+     "vi": "ngoài",
+     "ko": "밖",
+     "kr_read": "응와이",
+     "hanja": null
+    },
+    {
+     "vi": "bên cạnh",
+     "ko": "옆",
+     "kr_read": "벤 까인",
+     "hanja": null
+    },
+    {
+     "vi": "mang",
+     "ko": "가져가다·나르다",
+     "kr_read": "망",
+     "hanja": null
+    },
+    {
+     "vi": "đặt",
+     "ko": "놓다·두다",
+     "kr_read": "닷",
+     "hanja": null
+    },
+    {
+     "vi": "chỗ",
+     "ko": "자리·곳",
+     "kr_read": "쪼",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "{X} ở đâu?",
+     "ko": "{X}는 어디에 있습니까?",
+     "examples": [
+      "Hàng ở đâu?",
+      "Hộp ở đâu?",
+      "Ở đây.",
+      "Ở trong thùng.",
+      "Ở bên cạnh."
+     ]
+    },
+    {
+     "vi": "Hãy mang {X} đến {위치}.",
+     "ko": "{X}를 {위치}로 가져오세요.",
+     "examples": [
+      "Hãy mang hàng đến đây.",
+      "Hãy mang hộp đến kia.",
+      "Hãy đặt ở đây.",
+      "Đừng đặt ở kia.",
+      "Hãy đặt trong thùng."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "말만으로 물건 위치를 전달하라",
+    "how": "A만 위치를 안다. 손으로 가리키지 않는다. 말로만 설명해서 B가 세 물건의 위치를 종이에 그리면 통과.",
+    "a": "hàng은 thùng 안, dụng cụ는 máy 옆, găng tay는 밖에 있습니다",
+    "b": "당신은 위치를 모릅니다. 물어서 그림으로 그리세요"
+   }
+  },
+  {
+   "day": 16,
+   "theme": "안전 — 위험과 보호구",
+   "intro": "오늘은 한자어가 여섯이다. 安全·危險·謹愼·災難·注意·保護. 한국어를 아는 사람에게는 거의 공짜로 들어오는 단어들이다.",
+   "words": [
+    {
+     "vi": "an toàn",
+     "ko": "안전",
+     "kr_read": "안 또안",
+     "hanja": "安全 (안전)"
+    },
+    {
+     "vi": "nguy hiểm",
+     "ko": "위험",
+     "kr_read": "응위 히엠",
+     "hanja": "危險 (위험)"
+    },
+    {
+     "vi": "cẩn thận",
+     "ko": "조심하다",
+     "kr_read": "껀 턴",
+     "hanja": "謹愼 (근신)"
+    },
+    {
+     "vi": "tai nạn",
+     "ko": "사고",
+     "kr_read": "따이 난",
+     "hanja": "災難 (재난)"
+    },
+    {
+     "vi": "cấm",
+     "ko": "금지하다",
+     "kr_read": "껌",
+     "hanja": "禁 (금)"
+    },
+    {
+     "vi": "chú ý",
+     "ko": "주의하다",
+     "kr_read": "쭈 이",
+     "hanja": "注意 (주의)"
+    },
+    {
+     "vi": "bảo hộ",
+     "ko": "보호",
+     "kr_read": "바오 호",
+     "hanja": "保護 (보호)"
+    },
+    {
+     "vi": "găng tay",
+     "ko": "장갑",
+     "kr_read": "강 따이",
+     "hanja": null
+    },
+    {
+     "vi": "khẩu trang",
+     "ko": "마스크",
+     "kr_read": "커우 짱",
+     "hanja": null
+    },
+    {
+     "vi": "phải",
+     "ko": "~해야 한다",
+     "kr_read": "파이",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Cẩn thận, {X} nguy hiểm!",
+     "ko": "조심하세요, {X}는 위험합니다!",
+     "examples": [
+      "Cẩn thận, nguy hiểm!",
+      "Ở đây nguy hiểm.",
+      "Chú ý an toàn!",
+      "Có tai nạn!",
+      "Cấm!"
+     ]
+    },
+    {
+     "vi": "Phải {동사}.",
+     "ko": "{동사}해야 합니다.",
+     "examples": [
+      "Phải cẩn thận.",
+      "Phải kiểm tra.",
+      "Phải dừng ngay.",
+      "Phải kiểm tra lại.",
+      "Phải an toàn."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "위험 요소 세 가지를 경고하라",
+    "how": "A만 위험 요소를 안다. 오늘의 틀로 B에게 경고하고, B는 무엇이 왜 위험한지 받아 적어야 한다. 한국어를 쓰면 처음부터.",
+    "a": "위험 3가지: máy가 bị hỏng, 바닥에 điện 선, khẩu trang 없이 작업 중",
+    "b": "당신은 위험 요소를 모릅니다. 듣고 받아 적으세요"
+   }
+  },
+  {
+   "day": 17,
+   "theme": "안전 — 착용과 응급",
+   "intro": "đeo(차다)·mặc(입다)·đội(쓰다)는 한국어처럼 대상에 따라 다른 동사를 쓴다. 장갑은 đeo, 옷은 mặc, 헬멧은 đội.",
+   "words": [
+    {
+     "vi": "đeo",
+     "ko": "차다·착용하다 (장갑·마스크)",
+     "kr_read": "대오",
+     "hanja": null
+    },
+    {
+     "vi": "mặc",
+     "ko": "입다 (옷)",
+     "kr_read": "막",
+     "hanja": null
+    },
+    {
+     "vi": "đội",
+     "ko": "쓰다 (모자·헬멧)",
+     "kr_read": "도이",
+     "hanja": null
+    },
+    {
+     "vi": "giày",
+     "ko": "신발·안전화",
+     "kr_read": "자이",
+     "hanja": null
+    },
+    {
+     "vi": "quên",
+     "ko": "잊다",
+     "kr_read": "꾸엔",
+     "hanja": null
+    },
+    {
+     "vi": "nhớ",
+     "ko": "기억하다·잊지 않다",
+     "kr_read": "녀",
+     "hanja": null
+    },
+    {
+     "vi": "gọi",
+     "ko": "부르다·전화하다",
+     "kr_read": "고이",
+     "hanja": null
+    },
+    {
+     "vi": "cứu",
+     "ko": "구하다·구조",
+     "kr_read": "끄우",
+     "hanja": "救 (구)"
+    },
+    {
+     "vi": "đau",
+     "ko": "아프다",
+     "kr_read": "다우",
+     "hanja": null
+    },
+    {
+     "vi": "bệnh viện",
+     "ko": "병원",
+     "kr_read": "벤 비엔",
+     "hanja": "病院 (병원)"
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Đừng quên {동사}!",
+     "ko": "{동사}하는 것 잊지 마세요!",
+     "examples": [
+      "Đừng quên đeo găng tay!",
+      "Đừng quên đeo khẩu trang!",
+      "Đừng quên mang giày!",
+      "Nhớ mặc bảo hộ.",
+      "Đừng quên kiểm tra."
+     ]
+    },
+    {
+     "vi": "Hãy gọi {X}!",
+     "ko": "{X}를 부르세요!",
+     "examples": [
+      "Hãy gọi giám đốc!",
+      "Hãy gọi bệnh viện!",
+      "Cứu tôi!",
+      "Tôi bị đau.",
+      "Có tai nạn!"
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "응급 상황 역할극",
+    "how": "B가 다쳤다(bị đau). A는 상태를 묻고 필요한 사람을 부른다. 여덟 문장 안에 상황 파악 → 호출까지 마치면 통과.",
+    "a": "당신은 관리자입니다. 상태를 묻고 조치하세요",
+    "b": "당신은 손을 다쳤습니다. găng tay를 안 껴서 생긴 일입니다"
+   }
+  },
+  {
+   "day": 18,
+   "theme": "교대와 근무 조건",
+   "intro": "ca는 '조·교대'다. ca sáng(주간조), ca đêm(야간조). tăng ca는 잔업 — 增(증)에서 왔다.",
+   "words": [
+    {
+     "vi": "ca",
+     "ko": "조·교대",
+     "kr_read": "까",
+     "hanja": null
+    },
+    {
+     "vi": "đêm",
+     "ko": "밤",
+     "kr_read": "뎀",
+     "hanja": null
+    },
+    {
+     "vi": "tăng ca",
+     "ko": "잔업·특근",
+     "kr_read": "땅 까",
+     "hanja": "增 (증) + ca"
+    },
+    {
+     "vi": "nghỉ phép",
+     "ko": "휴가",
+     "kr_read": "응이 팹",
+     "hanja": null
+    },
+    {
+     "vi": "muốn",
+     "ko": "~하고 싶다",
+     "kr_read": "무온",
+     "hanja": null
+    },
+    {
+     "vi": "lương",
+     "ko": "급여·월급",
+     "kr_read": "르엉",
+     "hanja": null
+    },
+    {
+     "vi": "hôm qua",
+     "ko": "어제",
+     "kr_read": "홈 꾸아",
+     "hanja": null
+    },
+    {
+     "vi": "thay",
+     "ko": "교대하다·대신하다",
+     "kr_read": "타이",
+     "hanja": null
+    },
+    {
+     "vi": "đổi",
+     "ko": "바꾸다",
+     "kr_read": "도이",
+     "hanja": null
+    },
+    {
+     "vi": "ốm",
+     "ko": "아프다 (병나다)",
+     "kr_read": "옴",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Hôm nay {X} ca nào?",
+     "ko": "오늘 {X}는 무슨 조입니까?",
+     "examples": [
+      "Hôm nay anh ca nào?",
+      "Tôi làm ca sáng.",
+      "Tôi làm ca đêm.",
+      "Hôm qua tôi tăng ca.",
+      "Ca đêm mấy giờ bắt đầu?"
+     ]
+    },
+    {
+     "vi": "Tôi muốn đổi {X}.",
+     "ko": "저는 {X}를 바꾸고 싶습니다.",
+     "examples": [
+      "Tôi muốn đổi ca.",
+      "Tôi muốn nghỉ phép.",
+      "Tôi bị ốm.",
+      "Anh thay tôi được không?",
+      "Hôm nay tôi không tăng ca."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "교대를 바꿔달라고 협상하라",
+    "how": "A는 사정이 있어 조를 바꿔야 한다. B는 조건이 맞아야 승낙한다. 다섯 턴 안에 합의하거나 거절하면 통과.",
+    "a": "당신은 내일 ca đêm인데 bị ốm 입니다. 바꿔달라고 부탁하세요",
+    "b": "당신은 내일 ca sáng입니다. 어제 tăng ca를 해서 피곤합니다"
+   }
+  },
+  {
+   "day": 19,
+   "theme": "설비와 공구",
+   "intro": "'{X} bị hỏng rồi'는 Day 13의 bị와 Day 12의 rồi를 그대로 쓴 것이다. 새 문법이 아니라 배운 틀에 새 단어를 끼운 것뿐이다.",
+   "words": [
+    {
+     "vi": "máy",
+     "ko": "기계",
+     "kr_read": "마이",
+     "hanja": null
+    },
+    {
+     "vi": "dụng cụ",
+     "ko": "공구·도구",
+     "kr_read": "줌 꾸",
+     "hanja": "用具 (용구)"
+    },
+    {
+     "vi": "điện",
+     "ko": "전기",
+     "kr_read": "디엔",
+     "hanja": "電 (전)"
+    },
+    {
+     "vi": "nút",
+     "ko": "버튼",
+     "kr_read": "눗",
+     "hanja": null
+    },
+    {
+     "vi": "bấm",
+     "ko": "누르다",
+     "kr_read": "범",
+     "hanja": null
+    },
+    {
+     "vi": "dây",
+     "ko": "줄·선",
+     "kr_read": "저이",
+     "hanja": null
+    },
+    {
+     "vi": "băng chuyền",
+     "ko": "컨베이어",
+     "kr_read": "방 쭈엔",
+     "hanja": null
+    },
+    {
+     "vi": "dao",
+     "ko": "칼",
+     "kr_read": "자오",
+     "hanja": null
+    },
+    {
+     "vi": "kim",
+     "ko": "바늘",
+     "kr_read": "낌",
+     "hanja": null
+    },
+    {
+     "vi": "kéo",
+     "ko": "가위·당기다",
+     "kr_read": "깨오",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "{X} bị hỏng rồi.",
+     "ko": "{X}가 고장났습니다.",
+     "examples": [
+      "Máy bị hỏng rồi.",
+      "Băng chuyền bị hỏng rồi.",
+      "Dây bị hỏng.",
+      "Không có điện.",
+      "Dụng cụ ở đâu?"
+     ]
+    },
+    {
+     "vi": "Hãy bấm nút {X}.",
+     "ko": "{X} 버튼을 누르세요.",
+     "examples": [
+      "Hãy bấm nút này.",
+      "Hãy bấm nút.",
+      "Đừng bấm nút này!",
+      "Hãy tắt máy.",
+      "Hãy mở máy."
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "고장을 신고하고 조치를 받아라",
+    "how": "A는 기계 상태를 안다. B는 정비 담당. 무엇이 어떻게 고장났는지 말로만 전달하고, B가 조치를 지시하면 통과.",
+    "a": "băng chuyền이 멈췄고 dây가 끊어졌습니다. điện은 들어옵니다",
+    "b": "당신은 정비 담당입니다. 물어서 원인을 찾고 지시를 내리세요"
+   }
+  },
+  {
+   "day": 20,
+   "theme": "못 알아들었을 때",
+   "intro": "20일 중 가장 많이 쓸 문장이 오늘 나온다. 'Tôi không hiểu. Hãy nói từ từ.' 이 한 마디를 못 하면 나머지 190단어가 소용없다.",
+   "words": [
+    {
+     "vi": "hiểu",
+     "ko": "이해하다",
+     "kr_read": "히에우",
+     "hanja": null
+    },
+    {
+     "vi": "biết",
+     "ko": "알다",
+     "kr_read": "비엣",
+     "hanja": null
+    },
+    {
+     "vi": "nói",
+     "ko": "말하다",
+     "kr_read": "노이",
+     "hanja": null
+    },
+    {
+     "vi": "nghe",
+     "ko": "듣다",
+     "kr_read": "응애",
+     "hanja": null
+    },
+    {
+     "vi": "từ từ",
+     "ko": "천천히",
+     "kr_read": "뜨 뜨",
+     "hanja": null
+    },
+    {
+     "vi": "tiếng Việt",
+     "ko": "베트남어",
+     "kr_read": "띠엥 비엣",
+     "hanja": null
+    },
+    {
+     "vi": "tiếng Hàn",
+     "ko": "한국어",
+     "kr_read": "띠엥 한",
+     "hanja": "韓 (한)"
+    },
+    {
+     "vi": "dịch",
+     "ko": "번역·통역하다",
+     "kr_read": "직",
+     "hanja": "譯 (역)"
+    },
+    {
+     "vi": "hỏi",
+     "ko": "묻다",
+     "kr_read": "호이",
+     "hanja": null
+    },
+    {
+     "vi": "trả lời",
+     "ko": "대답하다",
+     "kr_read": "짜 러이",
+     "hanja": null
+    }
+   ],
+   "frames": [
+    {
+     "vi": "Tôi không {동사}.",
+     "ko": "저는 {동사}하지 못합니다.",
+     "examples": [
+      "Tôi không hiểu.",
+      "Tôi không biết.",
+      "Tôi không nghe được.",
+      "Tôi không nói được tiếng Việt.",
+      "Xin lỗi, tôi không hiểu."
+     ]
+    },
+    {
+     "vi": "{X} nói tiếng Hàn được không?",
+     "ko": "{X}는 한국어를 할 수 있습니까?",
+     "examples": [
+      "Anh nói tiếng Hàn được không?",
+      "Chị nói tiếng Việt được không?",
+      "Hãy nói từ từ.",
+      "Hãy nói lại.",
+      "Ai dịch được?"
+     ]
+    }
+   ],
+   "mission": {
+    "goal": "20일치를 다 써서 5분 대화하라",
+    "how": "주제는 자유. 규칙 하나 — 막히면 한국어로 넘어가지 말고 'Tôi không hiểu. Hãy nói từ từ.' 를 쓴다. 5분을 한국어 없이 버티면 통과.",
+    "a": "당신이 먼저 말을 겁니다",
+    "b": "당신은 오늘 ca đêm 근무이고 몸이 안 좋습니다"
+   }
+  }
+ ]
 }

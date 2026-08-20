@@ -48,7 +48,17 @@ function renderHome() {
 
   const list = $('#dayList');
   list.textContent = '';
+  const GROUPS = [
+    [0, 0, '준비'],
+    [1, 5, '1주차 · 사람과 인사'],
+    [6, 10, '2주차 · 숫자와 시간'],
+    [11, 15, '3주차 · 현장의 말'],
+    [16, 20, '4주차 · 안전과 설비']
+  ];
+  let g = -1;
   DAYS.forEach(d => {
+    const gi = GROUPS.findIndex(([a, b]) => d.day >= a && d.day <= b);
+    if (gi !== g) { g = gi; list.append(el('li', 'grp', esc(GROUPS[gi][2]))); }
     const done = !!S.done[d.day];
     const b = el('button');
     b.dataset.done = done ? '1' : '0';
