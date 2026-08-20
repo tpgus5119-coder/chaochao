@@ -10,6 +10,7 @@ out = {"meta": {"version": "v2",
                 "voices": {"f": "vi-VN-HoaiMyNeural", "m": "vi-VN-NamMinhNeural"},
                 "note": "북부(하노이) 표준. 완전 초보용 — 준비 3일 + 20일."},
        "prep": p1["prep"],
+       "tonedrill": p1["tonedrill"],
        "days": p1["days"] + p2["days"] + p3["days"]}
 
 # --- 검증 1: 단어 중복 ---

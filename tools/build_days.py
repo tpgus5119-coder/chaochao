@@ -189,5 +189,27 @@ DAYS.append(D(5, "안부와 작별",
  "당신이 먼저 말을 겁니다",
  "당신은 오늘 매우 mệt 합니다"))
 
-pathlib.Path('data/_part1.json').write_text(json.dumps({"prep": PREP, "days": DAYS}, ensure_ascii=False, indent=1))
+
+# 성조 미니멀 페어 — 성조만 다르고 나머지는 같은 단어쌍.
+# 연구상 성조 습득의 표준 훈련법이고, 시판 앱 대부분이 빠뜨린 부분이다.
+TONEDRILL = [
+ {"base":"ma","note":"교과서 표준 예시",
+  "items":[{"vi":"ma","ko":"귀신","mark":"ngang"},{"vi":"mà","ko":"그런데","mark":"huyền"},
+           {"vi":"má","ko":"엄마","mark":"sắc"},{"vi":"mả","ko":"무덤","mark":"hỏi"},
+           {"vi":"mã","ko":"말(馬)·코드","mark":"ngã"},{"vi":"mạ","ko":"모종","mark":"nặng"}]},
+ {"base":"ban","note":"bạn(친구)은 Day 1에서 배운다",
+  "items":[{"vi":"ban","ko":"부서","mark":"ngang"},{"vi":"bàn","ko":"책상","mark":"huyền"},
+           {"vi":"bán","ko":"팔다","mark":"sắc"},{"vi":"bản","ko":"판·부","mark":"hỏi"},
+           {"vi":"bạn","ko":"친구","mark":"nặng"}]},
+ {"base":"la","note":"là(~이다)는 Day 2에서 배운다",
+  "items":[{"vi":"la","ko":"소리치다","mark":"ngang"},{"vi":"là","ko":"~이다","mark":"huyền"},
+           {"vi":"lá","ko":"잎","mark":"sắc"},{"vi":"lả","ko":"지치다","mark":"hỏi"},
+           {"vi":"lã","ko":"맹물","mark":"ngã"},{"vi":"lạ","ko":"낯설다","mark":"nặng"}]},
+ {"base":"co","note":"có(있다)는 Day 3에서 배운다",
+  "items":[{"vi":"co","ko":"오그라들다","mark":"ngang"},{"vi":"cò","ko":"황새","mark":"huyền"},
+           {"vi":"có","ko":"있다","mark":"sắc"},{"vi":"cỏ","ko":"풀","mark":"hỏi"},
+           {"vi":"cọ","ko":"문지르다","mark":"nặng"}]},
+]
+
+pathlib.Path('data/_part1.json').write_text(json.dumps({"prep": PREP, "tonedrill": TONEDRILL, "days": DAYS}, ensure_ascii=False, indent=1))
 print("part1: 준비 %d일 + Day %d~%d" % (len(PREP), DAYS[0]['day'], DAYS[-1]['day']))

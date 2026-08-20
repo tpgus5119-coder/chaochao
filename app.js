@@ -11,7 +11,7 @@ const STEPS = [1, 3, 7, 14];
 const now = () => Date.now();
 
 /* ---------- 데이터 ---------- */
-let ALL = [], AIDX = {};
+let ALL = [], AIDX = {}, DRILL = [];
 const $ = s => document.querySelector(s);
 const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -40,7 +40,7 @@ function soundRow(text, withSlow) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'mission'];
+const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone'];
 function show(v, title, canBack) {
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
   $('#title').textContent = title;
@@ -277,6 +277,78 @@ function finishQuiz() {
   $('#quizBody').append(r);
 }
 
+
+/* ---------- 성조 훈련 (미니멀 페어) ----------
+   성조만 다르고 나머지는 같은 단어를 소리로만 구별시킨다.
+   시판 앱 대부분이 빠뜨린 부분이고, 성조 습득 연구가 가리키는 표준 훈련법이다. */
+let T = null;
+
+function startTone() {
+  const qs = [];
+  DRILL.forEach(g => g.items.forEach(it => qs.push({ g, it })));
+  T = { list: qs.sort(() => Math.random() - .5).slice(0, 10), i: 0, ok: 0 };
+  drawTone();
+  show('tone', '성조 훈련', true);
+}
+
+function drawTone() {
+  const body = $('#toneBody');
+  body.textContent = '';
+  if (T.i >= T.list.length) return finishTone();
+  const { g, it } = T.list[T.i];
+
+  body.append(el('div', 'q', `${T.i + 1} / ${T.list.length} · 소리를 듣고 고르세요`));
+  body.append(el('div', 'tonehint', `글자는 모두 <b>${esc(g.base)}</b> 로 같습니다. 성조만 다릅니다.`));
+
+  const wrap = el('div', 'qplay');
+  const b = el('button', 'primary big', '🔊 다시 듣기');
+  b.onclick = () => play(it.vi, false);
+  const sl = el('button', 'ghost', '🐢 느리게');
+  sl.onclick = () => play(it.vi, true);
+  wrap.append(b, sl);
+  body.append(wrap);
+  play(it.vi, false);
+
+  const opts = el('div', 'opts tonelist');
+  g.items.forEach(o => {
+    const btn = el('button');
+    btn.append(el('span', 'tvi', esc(o.vi)),
+               el('span', 'tmark', esc(o.mark)),
+               el('span', 'tko', esc(o.ko)));
+    btn.onclick = () => {
+      [...opts.children].forEach(x => x.disabled = true);
+      const good = o.vi === it.vi;
+      btn.dataset.r = good ? 'ok' : 'no';
+      if (!good) [...opts.children].forEach(x => {
+        if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
+      });
+      if (good) T.ok++;
+      setTimeout(() => { T.i++; drawTone(); }, good ? 500 : 1600);
+    };
+    opts.append(btn);
+  });
+  body.append(opts);
+}
+
+function finishTone() {
+  const n = T.ok, t = T.list.length;
+  const r = el('div', 'result');
+  r.append(el('div', 'n', n + ' / ' + t));
+  r.append(el('div', null, n >= 7 ? '귀가 트이고 있습니다'
+    : n >= 4 ? '보통입니다. 성조는 몇 주 걸립니다'
+    : '괜찮습니다. 처음엔 아무도 못 구별합니다'));
+  r.append(el('p', 'note', '가장 어려운 건 hỏi(내렸다 올림)와 ngã(끊었다 올림)입니다. 이 둘은 원어민도 지역에 따라 섞어 씁니다.'));
+  const b = el('button', 'primary big', '다시 하기');
+  b.style.marginTop = '18px';
+  b.onclick = startTone;
+  const h = el('button', 'ghost big', '홈으로');
+  h.style.marginTop = '10px'; h.style.marginLeft = '8px';
+  h.onclick = renderHome;
+  r.append(b, h);
+  $('#toneBody').textContent = '';
+  $('#toneBody').append(r);
+}
+
 /* ---------- 미션 ---------- */
 function showMission(d) {
   const m = d.mission, body = $('#missionBody');
@@ -301,16 +373,22 @@ function showMission(d) {
 /* ---------- 시작 ---------- */
 $('#back').onclick = renderHome;
 $('#goReview').onclick = () => startQuiz(null, null);
+$('#goTone').onclick = startTone;
 $('#voice').onclick = () => {
   S.voice = S.voice === 'f' ? 'm' : 'f'; save();
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';
 };
+
+if ('serviceWorker' in navigator) {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));
+}
 
 Promise.all([
   fetch('data/days.json').then(r => r.json()),
   fetch('data/audio_index.json').then(r => r.json())
 ]).then(([d, a]) => {
   ALL = [...(d.prep || []), ...d.days];
+  DRILL = d.tonedrill || [];
   AIDX = a;
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';
   renderHome();

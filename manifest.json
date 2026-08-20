@@ -1,0 +1,12 @@
+{
+ "name": "베트남어 스터디",
+ "short_name": "베트남어",
+ "start_url": "./index.html",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#0f1115",
+ "theme_color": "#0f1115",
+ "icons": [
+  { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+ ]
+}

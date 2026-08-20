@@ -19,6 +19,9 @@ def collect(data):
             out[l["ex"]] = "word"          # 글자는 예시 단어로 듣는다
         for t in pr.get("tones", []):
             out[t["vi"]] = "tone"
+    for g in data.get("tonedrill", []):
+        for it in g["items"]:
+            out[it["vi"]] = "tone"
     for d in data["days"]:
         for w in d["words"]:
             out[w["vi"]] = "word"
@@ -35,7 +38,7 @@ async def one(text, voice_id, voice_name, rate):
     if path.exists():
         return False
     path.parent.mkdir(parents=True, exist_ok=True)
-    kw = {"rate": "-25%"} if rate else {}
+    kw = {"rate": "-40%"} if rate else {}
     await edge_tts.Communicate(text, voice_name, **kw).save(str(path))
     return True
 

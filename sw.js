@@ -1,0 +1,37 @@
+/* 오프라인 캐시.
+   앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
+   음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
+const V = 'vn-v2-1';
+const SHELL = ['./', './index.html', './app.js', './style.css',
+               './manifest.json', './icon.png',
+               './data/days.json', './data/audio_index.json'];
+
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys()
+    .then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k))))
+    .then(() => self.clients.claim()));
+});
+
+self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  if (e.request.method !== 'GET' || url.origin !== location.origin) return;
+
+  // 음성: 캐시에 있으면 캐시, 없으면 받아서 캐시에 넣는다
+  if (url.pathname.endsWith('.mp3')) {
+    e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(r => {
+      if (r.ok) { const cp = r.clone(); caches.open(V).then(c => c.put(e.request, cp)); }
+      return r;
+    })));
+    return;
+  }
+
+  // 나머지: 네트워크 먼저, 실패하면 캐시 (내용 갱신이 바로 반영되게)
+  e.respondWith(fetch(e.request).then(r => {
+    if (r.ok) { const cp = r.clone(); caches.open(V).then(c => c.put(e.request, cp)); }
+    return r;
+  }).catch(() => caches.match(e.request)));
+});
