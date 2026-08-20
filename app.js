@@ -7,7 +7,7 @@ const S = Object.assign({ voice: 'f', done: {}, srs: {}, act: {}, stats: {} },
 const save = () => localStorage.setItem(KEY, JSON.stringify(S));
 
 const DAY = 864e5;
-const STEPS = [1, 3, 7, 14];
+const STEPS = [1, 3, 7, 14, 30, 60];   // 일 단위. 반년~1년 기억을 목표로 한 간격
 const now = () => Date.now();
 
 /* ---------- 데이터 ---------- */
@@ -465,12 +465,14 @@ function buildQuestions(words) {
   }).sort(() => Math.random() - .5);
 }
 
-function startQuiz(words, day) {
-  const src = words || dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+function startQuiz(words, day, cap) {
+  let src = words || dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
   if (!src.length) { renderHome(); return; }
-  Q = { list: buildQuestions(src), i: 0, ok: 0, day };
+  if (cap) src = src.slice(0, cap);            // 짧게 끊어 하는 모드
+  const list = buildQuestions(src);
+  Q = { list, i: 0, ok: 0, day, total: list.length };
   drawQuiz();
-  show('quiz', day ? '확인 문제' : '복습', true);
+  show('quiz', day ? '확인 문제' : (cap ? '3분 복습' : '복습'), true);
 }
 
 function drawQuiz() {
@@ -538,7 +540,7 @@ function drawRecall(body, q) {
     const ok = el('button', null, '✓ 맞았어요');
     ok.onclick = () => { grade(q.w.vi, true); Q.ok++; Q.i++; drawQuiz(); };
     const no = el('button', null, '✗ 못 맞혔어요');
-    no.onclick = () => { grade(q.w.vi, false); Q.i++; drawQuiz(); };
+    no.onclick = () => { grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
     grade2.append(ok, no);
     body.append(grade2);
   };
@@ -553,14 +555,22 @@ function answer(btn, correct, w) {
     });
   }
   if (correct) Q.ok++;
+  else requeue(Q.list[Q.i]);        // 틀린 건 이번 판 끝에 한 번 더
   grade(w.vi, correct);
   setTimeout(() => { Q.i++; drawQuiz(); }, correct ? 450 : 1400);
+}
+
+/* 틀린 문제를 같은 판 뒤쪽에 한 번만 다시 넣는다.
+   틀린 채로 끝내면 그 기억이 남는다. 맞히고 끝내야 한다. */
+function requeue(q) {
+  if (q.retry) return;                          // 두 번은 안 미룬다
+  Q.list.push({ ...q, retry: true });
 }
 
 function grade(vi, ok) {
   touchToday();
   const r = S.srs[vi] || { lv: 0 };
-  r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : 0;
+  r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : Math.max(0, r.lv - 2);
   r.due = now() + STEPS[r.lv] * DAY;
   S.srs[vi] = r;
   save();
@@ -568,12 +578,19 @@ function grade(vi, ok) {
 
 function finishQuiz() {
   $('#quizFill').style.width = '100%';
-  const n = Q.ok, t = Q.list.length;
+  const n = Q.ok, t = Q.total;
+  const again = Q.list.length - Q.total;
   const r = el('div', 'result');
   r.append(el('div', 'n', n + ' / ' + t));
+  if (again) r.append(el('div', 'sub', again + '개는 그 자리에서 한 번 더 물었습니다'));
   r.append(el('div', null, n === t ? '전부 맞혔습니다' :
     n >= t * .7 ? '좋습니다. 틀린 건 내일 다시 나옵니다' :
       '틀린 건 내일 다시 나옵니다. 처음엔 다 그렇습니다'));
+  const soon = Object.values(S.srs).map(v => v.due).filter(d => d > now()).sort((a, b) => a - b)[0];
+  if (soon) {
+    const days = Math.max(1, Math.round((soon - now()) / DAY));
+    r.append(el('p', 'note', `다음 복습은 ${days}일 뒤입니다. 잊기 직전에 다시 꺼내야 오래 남습니다.`));
+  }
   const b = el('button', 'primary big', Q.day ? '오늘의 대화 미션 ›' : '홈으로');
   b.style.marginTop = '24px';
   b.onclick = () => Q.day ? showMission(Q.day) : renderHome();
@@ -687,6 +704,7 @@ function showMission(d) {
 /* ---------- 시작 ---------- */
 $('#back').onclick = renderHome;
 $('#goReview').onclick = () => startQuiz(null, null);
+$('#goQuick').onclick = () => startQuiz(null, null, 10);
 $('#goTone').onclick = startTone;
 /* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
    200단어가 다 쌓이면 원본이 7.5KB라 압축해서 내보낸다 (10,600자 → 2,900자). */
