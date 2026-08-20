@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<title>베트남어 스터디</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header id="top">
+  <button id="back" class="ghost" hidden>‹</button>
+  <h1 id="title">베트남어 스터디</h1>
+  <button id="voice" class="ghost" title="목소리 바꾸기">여</button>
+</header>
+
+<main>
+  <!-- 홈 -->
+  <section id="home" class="view">
+    <p class="lede">하루 15분. 단어 10개와 문형 틀 2개. 그리고 서로 대화 한 번.</p>
+    <div id="reviewCard" class="banner" hidden>
+      <div>
+        <strong id="reviewCount"></strong>
+        <span>복습할 차례입니다</span>
+      </div>
+      <button id="goReview" class="primary">복습</button>
+    </div>
+    <ol id="dayList" class="days"></ol>
+    <p class="foot">진도는 이 기기에만 저장됩니다. 신규는 다 같이, 복습은 각자.</p>
+  </section>
+
+  <!-- 학습 -->
+  <section id="learn" class="view" hidden>
+    <div id="learnIntro" class="intro"></div>
+    <div id="card" class="card"></div>
+    <div class="pager">
+      <button id="prev" class="ghost big">‹</button>
+      <span id="pos"></span>
+      <button id="next" class="primary big">다음 ›</button>
+    </div>
+  </section>
+
+  <!-- 퀴즈 -->
+  <section id="quiz" class="view" hidden>
+    <div id="quizBar" class="bar"><div id="quizFill"></div></div>
+    <div id="quizBody"></div>
+  </section>
+
+  <!-- 미션 -->
+  <section id="mission" class="view" hidden>
+    <div id="missionBody"></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

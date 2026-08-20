@@ -1,0 +1,115 @@
+:root{
+  --bg:#ffffff; --fg:#16181d; --dim:#5f6672; --line:#e3e6ea;
+  --card:#f6f7f9; --accent:#1f6feb; --accent-fg:#fff;
+  --ok:#137a4a; --bad:#b3261e; --warn:#8a5a00;
+  --radius:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme=light]){
+    --bg:#0f1115; --fg:#e8eaee; --dim:#98a0ad; --line:#262a31;
+    --card:#171a20; --accent:#4c8dff; --accent-fg:#08121f;
+    --ok:#4ade80; --bad:#ff7b72; --warn:#e3b341;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+header{
+  position:sticky; top:0; z-index:10; display:flex; align-items:center; gap:8px;
+  padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;
+  background:var(--bg); border-bottom:1px solid var(--line);
+}
+header h1{flex:1; margin:0; font-size:16px; font-weight:650; text-align:center}
+main{max-width:640px; margin:0 auto; padding:16px 14px 48px}
+button{font:inherit; cursor:pointer; border-radius:10px; border:1px solid var(--line); transition:.12s}
+button:active{transform:scale(.98)}
+.ghost{background:transparent; color:var(--fg); padding:6px 12px; min-width:44px}
+.primary{background:var(--accent); color:var(--accent-fg); border-color:transparent; padding:10px 18px; font-weight:650}
+.big{padding:14px 22px; font-size:17px}
+.lede{color:var(--dim); margin:0 0 18px}
+.foot{color:var(--dim); font-size:13px; margin-top:24px; text-align:center}
+
+/* 홈 */
+.banner{
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:var(--card); border:1px solid var(--line); border-left:4px solid var(--accent);
+  border-radius:var(--radius); padding:14px 16px; margin-bottom:18px;
+}
+.banner strong{font-size:20px; margin-right:6px}
+.days{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+.days li{margin:0}
+.days button{
+  width:100%; display:flex; align-items:center; gap:12px; text-align:left;
+  background:var(--card); padding:14px 16px; border-radius:var(--radius); color:var(--fg);
+}
+.days .num{
+  flex:none; width:44px; font-variant-numeric:tabular-nums; font-weight:700;
+  color:var(--dim); font-size:13px;
+}
+.days .nm{flex:1; font-weight:600}
+.days .st{flex:none; font-size:13px; color:var(--dim)}
+.days button[data-done="1"]{border-left:4px solid var(--ok)}
+.days button[data-done="1"] .st{color:var(--ok)}
+
+/* 학습 카드 */
+.intro{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:12px 14px; font-size:14px; color:var(--dim); margin-bottom:14px;
+}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 20px; min-height:250px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:12px; text-align:center;
+}
+.vi{font-size:38px; font-weight:700; line-height:1.25; word-break:keep-all}
+.vi.sm{font-size:26px}
+.ko{font-size:19px}
+.tone-shape{font-size:15px; color:var(--dim); letter-spacing:.1em}
+.hanja{
+  font-size:14px; color:var(--warn); border:1px dashed var(--warn);
+  border-radius:8px; padding:4px 10px;
+}
+.reveal{
+  font-size:15px; color:var(--dim); background:transparent;
+  border:1px dashed var(--line); padding:8px 14px;
+}
+.reveal[data-open="1"]{border-style:solid; color:var(--fg)}
+.sound{display:flex; gap:8px; flex-wrap:wrap; justify-content:center}
+.ex{
+  width:100%; margin-top:6px; display:grid; gap:6px; text-align:left;
+}
+.ex button{
+  background:transparent; color:var(--fg); padding:9px 12px; font-size:15px;
+  display:flex; gap:10px; align-items:baseline;
+}
+.ex .exvi{flex:1; font-weight:600}
+.pager{display:flex; align-items:center; gap:12px; margin-top:18px}
+.pager #pos{flex:1; text-align:center; color:var(--dim); font-size:14px; font-variant-numeric:tabular-nums}
+
+/* 퀴즈 */
+.bar{height:5px; background:var(--card); border-radius:99px; overflow:hidden; margin-bottom:20px}
+.bar div{height:100%; background:var(--accent); width:0; transition:.25s}
+.q{font-size:15px; color:var(--dim); margin-bottom:6px}
+.qmain{font-size:30px; font-weight:700; margin:6px 0 20px; text-align:center; word-break:keep-all}
+.opts{display:grid; gap:9px}
+.opts button{
+  background:var(--card); color:var(--fg); padding:15px 16px; text-align:left; font-size:16px;
+}
+.opts button[data-r="ok"]{border-color:var(--ok); color:var(--ok); font-weight:650}
+.opts button[data-r="no"]{border-color:var(--bad); color:var(--bad)}
+.result{text-align:center; padding:30px 0}
+.result .n{font-size:44px; font-weight:700}
+
+/* 미션 */
+.mgoal{font-size:22px; font-weight:700; margin:0 0 10px; word-break:keep-all}
+.mhow{color:var(--dim); margin:0 0 20px}
+.roles{display:grid; gap:10px; margin-bottom:18px}
+.role{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px}
+.role b{display:block; font-size:13px; color:var(--accent); margin-bottom:4px}
+.note{font-size:13px; color:var(--dim); border-top:1px solid var(--line); padding-top:14px}
+
+[hidden]{display:none !important}
