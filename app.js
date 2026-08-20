@@ -521,6 +521,7 @@ function drawRecall(body, q) {
   body.append(show);
 
   show.onclick = () => {
+    bumpSaid();                      // 소리 내어 말했다고 스스로 누른 순간
     show.remove(); hint.remove();
     const ans = el('div', 'ansbox');
     ans.append(el('div', 'vi sm', esc(q.w.vi)));
