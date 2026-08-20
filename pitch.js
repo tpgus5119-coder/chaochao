@@ -110,10 +110,20 @@ const PITCH = (() => {
     return out;
   }
 
+  /* 소리가 실제로 난 길이(초). nặng 처럼 '짧고 뚝 끊기는' 성조는
+     높낮이 모양만으로는 huyền 과 구별이 안 된다. 길이가 그 차이를 잡아준다. */
+  function voicedSec(hz, rate, hop) {
+    const n = hz.filter(x => x).length;
+    return n * hop / rate;
+  }
+
   async function analyze(arrayBuffer, ctx) {
     const buf = await ctx.decodeAudioData(arrayBuffer.slice(0));
     const ch = buf.getChannelData(0);
-    return resample(clean(normalize(contour(ch, buf.sampleRate))));
+    const rate = buf.sampleRate;
+    const hz = contour(ch, rate);
+    const curve = resample(clean(normalize(hz)));
+    return curve ? { curve, sec: voicedSec(hz, rate, Math.round(rate * 0.010)) } : null;
   }
 
   /* 두 곡선의 '모양'이 얼마나 닮았나 (0~100).
@@ -125,7 +135,8 @@ const PITCH = (() => {
     return sd < 0.25 ? a.map(() => 0) : a.map(v => (v - m) / sd);
   }
 
-  function similarity(a, b) {
+  function similarity(A, B) {
+    const a = A && (A.curve || A), b = B && (B.curve || B);
     if (!a || !b || a.length !== b.length) return null;
     const za = zscore(a), zb = zscore(b);
     let num = 0, sa = 0, sb = 0;
@@ -134,7 +145,13 @@ const PITCH = (() => {
     // 전체 오르내림 폭도 본다 — 방향은 같은데 밋밋하면 성조가 아니다
     const span = x => Math.max(...x) - Math.min(...x);
     const dv = Math.abs(span(a) - span(b));
-    return Math.max(0, Math.min(100, Math.round((r + 1) / 2 * 100 - dv * 2.5)));
+    let sc = (r + 1) / 2 * 100 - dv * 2.5;
+    // 길이 차이도 반영한다 (한쪽이 두 배 이상 길면 다른 성조로 본다)
+    if (A && B && A.sec && B.sec) {
+      const ratio = Math.max(A.sec, B.sec) / Math.min(A.sec, B.sec);
+      if (ratio > 1.35) sc -= Math.min(45, (ratio - 1.35) * 60);
+    }
+    return Math.max(0, Math.min(100, Math.round(sc)));
   }
 
   return { analyze, similarity };

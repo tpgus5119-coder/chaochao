@@ -262,7 +262,9 @@ async function showTone(text, blobUrl, box) {
     b.append(el('b', null, sc + '점'), el('span', null, t[0]));
     box.append(b);
     box.append(el('div', 'cmpnote',
-      '점수는 참고만 하세요. 기계가 재는 건 <b>높낮이 모양</b>이지 발음 전체가 아닙니다.'));
+      '기계가 재는 건 <b>높낮이 모양과 길이</b>입니다. 발음 전체가 아닙니다.<br>' +
+      '올림(sắc)·내림(huyền)·내렸다올림(hỏi)은 잘 갈라내지만, ' +
+      'huyền과 nặng처럼 모양이 비슷한 둘은 헷갈릴 수 있습니다.'));
   }
 }
 
