@@ -12,16 +12,21 @@ def key(text: str) -> str:
     return hashlib.sha1(text.encode()).hexdigest()[:12]
 
 def collect(data):
-    """음성이 필요한 베트남어 문자열 전부 (중복 제거)"""
+    """음성이 필요한 베트남어 문자열 전부. 값은 느린 버전도 만들지 여부."""
     out = {}
-    for d in data["days"]:
-        for t in d.get("tones", []):
+    for pr in data.get("prep", []):
+        for l in pr.get("letters", []):
+            out[l["ex"]] = "word"          # 글자는 예시 단어로 듣는다
+        for t in pr.get("tones", []):
             out[t["vi"]] = "tone"
+    for d in data["days"]:
         for w in d["words"]:
             out[w["vi"]] = "word"
-        for f in d["frames"]:
-            for ex in f["examples"]:
-                out[ex] = "ex"
+        for st in d["sets"]:
+            for sen in st["sentences"]:
+                out[sen["vi"]] = "sent"    # 본문장은 느린 버전도
+                for sw in sen["swap"]:
+                    out.setdefault(sw, "ex")
     return out
 
 async def one(text, voice_id, voice_name, rate):
@@ -54,7 +59,7 @@ async def main():
     for text, kind in items.items():
         for vid, vname in VOICES.items():
             jobs.append(guarded(text, vid, vname, False))
-            if kind in ("tone", "word"):
+            if kind in ("tone", "word", "sent"):
                 jobs.append(guarded(text, vid, vname, True))
     made = sum(1 for r in await asyncio.gather(*jobs) if r)
     # 파일명 대조표 (앱이 읽는다)
