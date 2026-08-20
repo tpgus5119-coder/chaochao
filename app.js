@@ -197,14 +197,15 @@ function drawCard() {
       row.append(el('div', 'lvi', esc(l.vi)));
       row.append(el('div', 'lko', esc(l.ko)));
       // 단어별 풀이 + 그 단어의 성조를 한 칸에
+      const norm = x => x.toLowerCase().replace(/[.,!?;:'"]/g, '');
       const tmap = {};
-      (l.tones || []).forEach(t => { tmap[t.syl.toLowerCase()] = t; });
+      (l.tones || []).forEach(t => { tmap[norm(t.syl)] = t; });
       const g = el('div', 'gloss');
       l.gloss.forEach(pp => {
         const cell = el('div', 'gcell');
         const top = el('span', 'gtop');
         top.append(el('span', 'gw', esc(pp.w)));
-        const t = tmap[pp.w.split(' ')[0].toLowerCase().replace(/[.,!?]/g, '')];
+        const t = tmap[norm(pp.w.split(' ')[0])];
         if (t) {
           const ch = el('span', 'gt ' + t.name, esc(t.shape));
           ch.title = t.name + ' · ' + t.ko;
