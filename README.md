@@ -54,11 +54,15 @@ python3 -m http.server 5177
 브라우저에서 http://localhost:5177 열기.
 
 ## 배포
-`main` 에 push 하면 GitHub Pages 가 1분 안에 자동 반영한다.
-
 ```
+python3 tools/stamp.py          # ← 반드시 먼저. 안 하면 옛 화면이 계속 보인다
 git add -A && git commit -m "..." && git push
 ```
+`main` 에 push 하면 GitHub Pages 가 1분 안에 반영한다.
+
+> **왜 stamp.py 가 필요한가**: GitHub Pages 는 CSS/JS 에 `max-age=600` 을 붙여
+> 브라우저가 10분간 옛 파일을 쓴다. `stamp.py` 가 `style.css?v=<내용해시>` 처럼
+> 주소를 바꿔서 강제로 다시 받게 한다. 내용이 안 바뀌면 해시도 그대로라 헛되이 안 받는다.
 
 ## 콘텐츠 늘리기
 커리큘럼 원본은 `tools/build_*.py` 다. `data/days.json` 을 직접 고치지 말 것.
