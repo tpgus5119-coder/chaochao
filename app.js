@@ -26,6 +26,17 @@ let ALL = [], AIDX = {}, DRILL = [];
 const SONG = {};   // 노래 파일 있는지 확인한 결과
 const $ = s => document.querySelector(s);
 const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
+// 그림: img/ 폴더에 파일이 있으면 그걸, 없으면 이모지를 보여준다 (파일 확인은 브라우저가 알아서)
+const pic = (x, cls) => {
+  if (!x.emoji && !x.img) return null;
+  const d = el('div', cls, esc(x.emoji || ''));
+  if (x.img) {
+    const im = new Image();
+    im.alt = ''; im.src = 'img/' + x.img;
+    im.onload = () => { d.textContent = ''; d.append(im); };
+  }
+  return d;
+};
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const label = d => (typeof d.day === 'string' ? '준비 ' + d.day.slice(1) : 'Day ' + d.day);
 
@@ -507,7 +518,7 @@ function drawCard() {
   }
 
   if (it.k === 'word') {
-    if (x.emoji) c.append(el('div', 'pic', esc(x.emoji)));
+    const p = pic(x, 'pic'); if (p) c.append(p);
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(toneRow(x.tones));
     c.append(soundRow(x.vi, true));
@@ -521,7 +532,7 @@ function drawCard() {
   if (it.k === 'dialog') {
     c.classList.add('wide');
     c.append(el('div', 'setbadge daily', '오늘의 대화 · ' + esc(x.title)));
-    if (x.emoji) c.append(el('div', 'pic', esc(x.emoji)));
+    const p = pic(x, 'pic'); if (p) c.append(p);
     const lineEls = [];
     const all = el('button', 'primary', '▶ 대화 전체 듣기');
     all.onclick = () => playSeq(x.lines.map(l => l.vi), lineEls);
@@ -686,7 +697,7 @@ function drawQuiz() {
    게다가 소리 내어 말하므로 산출 효과까지 같이 얻는다. 채점은 본인이 한다. */
 function drawRecall(body, q) {
   body.append(el('div', 'qmain', esc(q.w.ko)));
-  if (q.w.emoji) body.append(el('div', 'pic mid', esc(q.w.emoji)));
+  { const p = pic(q.w, 'pic mid'); if (p) body.append(p); }
   if (q.w.gesture) body.append(el('div', 'gest mid', '✋ ' + esc(q.w.gesture)));
 
   const hint = el('p', 'cmpnote', '베트남어로 <b>입 밖에 내어</b> 말해 보세요. 속으로만 생각하면 효과가 절반입니다.');

@@ -214,6 +214,7 @@ button:active{transform:scale(.98)}
 
 /* 그림 */
 .pic{font-size:56px; line-height:1}
+.pic img{max-width:160px; max-height:120px; border-radius:12px; display:block; margin:0 auto}
 
 /* 따라 말하기 */
 .speak{width:100%; display:flex; flex-direction:column; gap:8px; align-items:center; margin-top:6px}

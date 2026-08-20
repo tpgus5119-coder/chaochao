@@ -416,7 +416,8 @@
      ],
      "emoji": "👋",
      "vkind": "action",
-     "gesture": "손을 들어 좌우로 흔든다"
+     "gesture": "손을 들어 좌우로 흔든다",
+     "img": "d01-chao.webp"
     },
     {
      "vi": "xin chào",
@@ -436,8 +437,7 @@
        "ko": "낮게 내려감",
        "shape": "＼"
       }
-     ],
-     "gesture": "두 손을 모으고 고개를 숙인다"
+     ]
     },
     {
      "vi": "anh",
@@ -454,7 +454,7 @@
      ],
      "emoji": "👨",
      "vkind": "thing",
-     "gesture": "손바닥을 자기 머리보다 위에 둔다 (손위)"
+     "img": "d01-anh.webp"
     },
     {
      "vi": "chị",
@@ -471,7 +471,7 @@
      ],
      "emoji": "👩",
      "vkind": "thing",
-     "gesture": "손바닥을 자기 머리보다 위에 둔다 (손위·여자)"
+     "img": "d01-chi.webp"
     },
     {
      "vi": "em",
@@ -488,7 +488,7 @@
      ],
      "emoji": "🧒",
      "vkind": "thing",
-     "gesture": "손바닥을 자기 어깨보다 아래에 둔다 (손아래)"
+     "img": "d01-em.webp"
     },
     {
      "vi": "bạn",
@@ -505,7 +505,7 @@
      ],
      "emoji": "👫",
      "vkind": "thing",
-     "gesture": "두 손 검지를 나란히 세워 붙인다 (같은 높이)"
+     "img": "d01-ban.webp"
     },
     {
      "vi": "tôi",
@@ -571,7 +571,8 @@
      ],
      "emoji": "🙏",
      "vkind": "action",
-     "gesture": "두 손을 모으고 고개를 살짝 숙인다"
+     "gesture": "두 손을 모으고 고개를 살짝 숙인다",
+     "img": "d01-cam-on.webp"
     }
    ],
    "dialog": {
@@ -772,7 +773,8 @@
       ]
      }
     ],
-    "emoji": "👋"
+    "emoji": "👋",
+    "img": "d01-scene.webp"
    },
    "mission": {
     "goal": "상대에게 맞는 호칭 정하기",
@@ -857,7 +859,7 @@
      ],
      "emoji": "🧍",
      "vkind": "thing",
-     "gesture": "검지·중지로 걸어가는 사람을 만든다"
+     "img": "d02-nguoi.webp"
     },
     {
      "vi": "xin lỗi",
@@ -880,7 +882,8 @@
      ],
      "emoji": "🙇",
      "vkind": "action",
-     "gesture": "한 손을 가슴에 얹는다"
+     "gesture": "고개를 깊이 숙인다",
+     "img": "d02-xin-loi.webp"
     },
     {
      "vi": "không",
@@ -940,7 +943,7 @@
      ],
      "emoji": "😊",
      "vkind": "thing",
-     "gesture": "엄지를 치켜세우고 웃는다"
+     "img": "d02-vui.webp"
     }
    ],
    "dialog": {
@@ -1239,7 +1242,8 @@
       ]
      }
     ],
-    "emoji": "🪪"
+    "emoji": "🪪",
+    "img": "d02-scene.webp"
    },
    "mission": {
     "goal": "상대의 이름을 알아내 받아 적어라",
@@ -1268,7 +1272,7 @@
      ],
      "emoji": "🌏",
      "vkind": "thing",
-     "gesture": "두 손으로 큰 공(지구)을 그린다"
+     "img": "d03-nuoc.webp"
     },
     {
      "vi": "nào",
@@ -1304,7 +1308,8 @@
       }
      ],
      "emoji": "🇰🇷",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d03-han-quoc.webp"
     },
     {
      "vi": "Việt Nam",
@@ -1326,7 +1331,8 @@
       }
      ],
      "emoji": "🇻🇳",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d03-viet-nam.webp"
     },
     {
      "vi": "sống",
@@ -1343,7 +1349,7 @@
      ],
      "emoji": "🏡",
      "vkind": "thing",
-     "gesture": "두 손으로 지붕 모양을 만든다"
+     "img": "d03-song.webp"
     },
     {
      "vi": "ở",
@@ -1371,8 +1377,7 @@
        "ko": "평평하게 그대로",
        "shape": "—"
       }
-     ],
-     "gesture": "양손을 펴 벌리고 어깨를 으쓱한다"
+     ]
     },
     {
      "vi": "đây",
@@ -1389,7 +1394,7 @@
      ],
      "emoji": "📍",
      "vkind": "thing",
-     "gesture": "검지로 자기 발밑을 가리킨다"
+     "img": "d03-day.webp"
     },
     {
      "vi": "kia",
@@ -1403,8 +1408,7 @@
        "ko": "평평하게 그대로",
        "shape": "—"
       }
-     ],
-     "gesture": "팔을 멀리 뻗어 가리킨다"
+     ]
     },
     {
      "vi": "thành phố",
@@ -1427,7 +1431,7 @@
      ],
      "emoji": "🏙️",
      "vkind": "thing",
-     "gesture": "두 손으로 높은 건물을 여러 채 그린다"
+     "img": "d03-thanh-pho.webp"
     }
    ],
    "dialog": {
@@ -1756,7 +1760,8 @@
       ]
      }
     ],
-    "emoji": "🌏"
+    "emoji": "🌏",
+    "img": "d03-scene.webp"
    },
    "mission": {
     "goal": "상대의 나라와 도시를 알아내라",
@@ -1799,7 +1804,7 @@
      ],
      "emoji": "🤝",
      "vkind": "action",
-     "gesture": "양손 검지를 세워 마주 보게 하다가 딱 맞댄다"
+     "img": "d04-gap.webp"
     },
     {
      "vi": "được",
@@ -1830,7 +1835,8 @@
      ],
      "emoji": "💪",
      "vkind": "thing",
-     "gesture": "팔을 굽혀 알통을 만든다"
+     "gesture": "팔을 굽혀 알통을 만든다",
+     "img": "d04-khoe.webp"
     },
     {
      "vi": "mệt",
@@ -1847,7 +1853,8 @@
      ],
      "emoji": "😩",
      "vkind": "thing",
-     "gesture": "어깨를 축 늘어뜨리고 숨을 내쉰다"
+     "gesture": "어깨를 축 늘어뜨리고 숨을 내쉰다",
+     "img": "d04-met.webp"
     },
     {
      "vi": "hôm nay",
@@ -1869,7 +1876,8 @@
       }
      ],
      "emoji": "📅",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d04-hom-nay.webp"
     },
     {
      "vi": "thế nào",
@@ -2254,7 +2262,8 @@
       ]
      }
     ],
-    "emoji": "😊"
+    "emoji": "😊",
+    "img": "d04-scene.webp"
    },
    "mission": {
     "goal": "안부를 되받아 물어라",
@@ -2283,7 +2292,7 @@
      ],
      "emoji": "💡",
      "vkind": "thing",
-     "gesture": "관자놀이 옆에서 손가락을 튕긴다 (딱!)"
+     "img": "d05-hieu.webp"
     },
     {
      "vi": "biết",
@@ -2297,8 +2306,7 @@
        "ko": "짧게 올라감",
        "shape": "／"
       }
-     ],
-     "gesture": "관자놀이를 검지로 톡톡 친다"
+     ]
     },
     {
      "vi": "nói",
@@ -2315,7 +2323,7 @@
      ],
      "emoji": "🗣️",
      "vkind": "action",
-     "gesture": "입 앞에서 손을 폈다 오므린다"
+     "img": "d05-noi.webp"
     },
     {
      "vi": "nghe",
@@ -2332,7 +2340,8 @@
      ],
      "emoji": "👂",
      "vkind": "action",
-     "gesture": "손을 귀에 컵처럼 댄다"
+     "gesture": "손을 귀에 컵처럼 댄다",
+     "img": "d05-nghe.webp"
     },
     {
      "vi": "lại",
@@ -2349,7 +2358,7 @@
      ],
      "emoji": "🔁",
      "vkind": "action",
-     "gesture": "검지로 공중에 원을 한 바퀴 그린다"
+     "img": "d05-lai.webp"
     },
     {
      "vi": "từ từ",
@@ -2372,7 +2381,8 @@
      ],
      "emoji": "🐢",
      "vkind": "action",
-     "gesture": "손바닥을 아래로 향해 천천히 누른다"
+     "gesture": "손바닥을 아래로 향해 천천히 누른다",
+     "img": "d05-tu-tu.webp"
     },
     {
      "vi": "chậm",
@@ -2408,7 +2418,8 @@
       }
      ],
      "emoji": "🇻🇳",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d05-tieng-viet.webp"
     },
     {
      "vi": "tiếng Hàn",
@@ -2430,7 +2441,8 @@
       }
      ],
      "emoji": "🇰🇷",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d05-tieng-han.webp"
     },
     {
      "vi": "một chút",
@@ -2451,7 +2463,7 @@
        "shape": "／"
       }
      ],
-     "gesture": "엄지와 검지를 아주 조금만 벌린다"
+     "gesture": "엄지와 검지를 아주 조금 벌린다"
     }
    ],
    "dialog": {
@@ -2760,7 +2772,8 @@
       ]
      }
     ],
-    "emoji": "❓"
+    "emoji": "❓",
+    "img": "d05-scene.webp"
    },
    "mission": {
     "goal": "일부러 못 알아듣고 버텨라",
@@ -2795,7 +2808,8 @@
      ],
      "emoji": "👋",
      "vkind": "action",
-     "gesture": "손을 크게 흔든다"
+     "gesture": "손을 크게 흔든다",
+     "img": "d06-tam-biet.webp"
     },
     {
      "vi": "hẹn gặp lại",
@@ -2838,7 +2852,7 @@
      ],
      "emoji": "📆",
      "vkind": "thing",
-     "gesture": "손을 앞으로 한 번 튕겨 보낸다"
+     "img": "d06-mai.webp"
     },
     {
      "vi": "nhé",
@@ -2869,7 +2883,8 @@
      ],
      "emoji": "🚶",
      "vkind": "action",
-     "gesture": "검지·중지로 앞으로 걸어간다"
+     "gesture": "검지·중지로 걸어가는 사람을 만든다",
+     "img": "d06-di.webp"
     },
     {
      "vi": "về",
@@ -2886,7 +2901,7 @@
      ],
      "emoji": "🔙",
      "vkind": "action",
-     "gesture": "손바닥을 자기 쪽으로 당긴다"
+     "img": "d06-ve.webp"
     },
     {
      "vi": "nhà",
@@ -2903,7 +2918,7 @@
      ],
      "emoji": "🏠",
      "vkind": "thing",
-     "gesture": "두 손으로 지붕 모양을 만든다"
+     "img": "d06-nha.webp"
     },
     {
      "vi": "sau",
@@ -3220,7 +3235,8 @@
       ]
      }
     ],
-    "emoji": "🚪"
+    "emoji": "🚪",
+    "img": "d06-scene.webp"
    },
    "mission": {
     "goal": "1~6일치로 처음부터 끝까지",
@@ -3249,7 +3265,8 @@
      ],
      "emoji": "1️⃣",
      "vkind": "thing",
-     "gesture": "손가락 1개"
+     "gesture": "손가락 1개",
+     "img": "d07-mot.webp"
     },
     {
      "vi": "hai",
@@ -3266,7 +3283,8 @@
      ],
      "emoji": "2️⃣",
      "vkind": "thing",
-     "gesture": "손가락 2개"
+     "gesture": "손가락 2개",
+     "img": "d07-hai.webp"
     },
     {
      "vi": "ba",
@@ -3283,7 +3301,8 @@
      ],
      "emoji": "3️⃣",
      "vkind": "thing",
-     "gesture": "손가락 3개"
+     "gesture": "손가락 3개",
+     "img": "d07-ba.webp"
     },
     {
      "vi": "bốn",
@@ -3300,7 +3319,8 @@
      ],
      "emoji": "4️⃣",
      "vkind": "thing",
-     "gesture": "손가락 4개"
+     "gesture": "손가락 4개",
+     "img": "d07-bon.webp"
     },
     {
      "vi": "năm",
@@ -3317,7 +3337,8 @@
      ],
      "emoji": "5️⃣",
      "vkind": "thing",
-     "gesture": "손가락 5개(손바닥 활짝)"
+     "gesture": "손가락 5개(손바닥 활짝)",
+     "img": "d07-nam.webp"
     },
     {
      "vi": "sáu",
@@ -3334,7 +3355,8 @@
      ],
      "emoji": "6️⃣",
      "vkind": "thing",
-     "gesture": "손가락 6개(양손)"
+     "gesture": "손가락 6개(양손)",
+     "img": "d07-sau.webp"
     },
     {
      "vi": "bảy",
@@ -3351,7 +3373,8 @@
      ],
      "emoji": "7️⃣",
      "vkind": "thing",
-     "gesture": "손가락 7개(양손)"
+     "gesture": "손가락 7개(양손)",
+     "img": "d07-bay.webp"
     },
     {
      "vi": "tám",
@@ -3368,7 +3391,8 @@
      ],
      "emoji": "8️⃣",
      "vkind": "thing",
-     "gesture": "손가락 8개(양손)"
+     "gesture": "손가락 8개(양손)",
+     "img": "d07-tam.webp"
     },
     {
      "vi": "chín",
@@ -3385,7 +3409,8 @@
      ],
      "emoji": "9️⃣",
      "vkind": "thing",
-     "gesture": "손가락 9개(양손)"
+     "gesture": "손가락 9개(양손)",
+     "img": "d07-chin.webp"
     },
     {
      "vi": "mười",
@@ -3402,7 +3427,8 @@
      ],
      "emoji": "🔟",
      "vkind": "thing",
-     "gesture": "양손 활짝 10개"
+     "gesture": "양손 활짝 10개",
+     "img": "d07-muoi.webp"
     }
    ],
    "dialog": {
@@ -3687,7 +3713,8 @@
       ]
      }
     ],
-    "emoji": "🔢"
+    "emoji": "🔢",
+    "img": "d07-scene.webp"
    },
    "mission": {
     "goal": "서로의 숫자를 물어 합을 구하라",
@@ -3750,7 +3777,7 @@
      ],
      "emoji": "📦",
      "vkind": "thing",
-     "gesture": "엄지와 검지로 물건 하나를 집는다"
+     "img": "d08-cai.webp"
     },
     {
      "vi": "chiếc",
@@ -3766,7 +3793,8 @@
       }
      ],
      "emoji": "🚲",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d08-chiec.webp"
     },
     {
      "vi": "con",
@@ -3783,7 +3811,7 @@
      ],
      "emoji": "🐕",
      "vkind": "thing",
-     "gesture": "손가락으로 작은 동물이 걷는 시늉"
+     "img": "d08-con.webp"
     },
     {
      "vi": "hộp",
@@ -3800,7 +3828,7 @@
      ],
      "emoji": "🎁",
      "vkind": "thing",
-     "gesture": "두 손으로 작은 상자를 그린다"
+     "img": "d08-hop.webp"
     },
     {
      "vi": "thùng",
@@ -3817,7 +3845,7 @@
      ],
      "emoji": "📦",
      "vkind": "thing",
-     "gesture": "두 손으로 큰 상자를 그린다"
+     "img": "d08-thung.webp"
     },
     {
      "vi": "tất cả",
@@ -4122,7 +4150,8 @@
       ]
      }
     ],
-    "emoji": "📦"
+    "emoji": "📦",
+    "img": "d08-scene.webp"
    },
    "mission": {
     "goal": "재고를 합쳐 총 몇 개인지 알아내라",
@@ -4151,7 +4180,7 @@
      ],
      "emoji": "🎂",
      "vkind": "thing",
-     "gesture": "손가락으로 나이를 세어 보인다"
+     "img": "d09-tuoi.webp"
     },
     {
      "vi": "mươi",
@@ -4182,7 +4211,8 @@
      ],
      "emoji": "🕐",
      "vkind": "thing",
-     "gesture": "반대쪽 손목을 검지로 두드린다 (시계)"
+     "gesture": "반대쪽 손목을 검지로 두드린다 (시계)",
+     "img": "d09-gio.webp"
     },
     {
      "vi": "phút",
@@ -4199,7 +4229,7 @@
      ],
      "emoji": "⏱️",
      "vkind": "thing",
-     "gesture": "검지로 원을 작게 한 바퀴"
+     "img": "d09-phut.webp"
     },
     {
      "vi": "bây giờ",
@@ -4222,7 +4252,7 @@
      ],
      "emoji": "⏰",
      "vkind": "thing",
-     "gesture": "검지로 바닥을 콕 찍는다 (바로 지금)"
+     "img": "d09-bay-gio.webp"
     },
     {
      "vi": "rưỡi",
@@ -4238,7 +4268,8 @@
       }
      ],
      "emoji": "🕧",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d09-ruoi.webp"
     },
     {
      "vi": "sáng",
@@ -4255,7 +4286,7 @@
      ],
      "emoji": "🌅",
      "vkind": "thing",
-     "gesture": "손을 아래에서 위로 올린다 (해가 뜬다)"
+     "img": "d09-sang.webp"
     },
     {
      "vi": "chiều",
@@ -4272,7 +4303,7 @@
      ],
      "emoji": "🌇",
      "vkind": "thing",
-     "gesture": "손을 위에서 아래로 내린다 (해가 진다)"
+     "img": "d09-chieu.webp"
     },
     {
      "vi": "tối",
@@ -4289,7 +4320,7 @@
      ],
      "emoji": "🌙",
      "vkind": "thing",
-     "gesture": "두 손으로 눈을 가린다"
+     "img": "d09-toi.webp"
     },
     {
      "vi": "lúc",
@@ -4622,7 +4653,8 @@
       ]
      }
     ],
-    "emoji": "🕐"
+    "emoji": "🕐",
+    "img": "d09-scene.webp"
    },
    "mission": {
     "goal": "상대의 나이와 출근 시각을 알아내라",
@@ -4656,7 +4688,8 @@
       }
      ],
      "emoji": "1️⃣",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d10-thu-hai.webp"
     },
     {
      "vi": "thứ ba",
@@ -4778,7 +4811,8 @@
       }
      ],
      "emoji": "🛌",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d10-chu-nhat.webp"
     },
     {
      "vi": "hôm qua",
@@ -4801,7 +4835,7 @@
      ],
      "emoji": "⏪",
      "vkind": "thing",
-     "gesture": "엄지로 어깨 뒤를 가리킨다"
+     "img": "d10-hom-qua.webp"
     },
     {
      "vi": "ngày",
@@ -4821,7 +4855,7 @@
      "vi": "tuần",
      "ko": "주",
      "kr_read": "뚜언",
-     "hanja": null,
+     "hanja": "旬 (순 — 초순·중순의 순)",
      "tones": [
       {
        "syl": "tuần",
@@ -4831,7 +4865,8 @@
       }
      ],
      "emoji": "🗓️",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d10-tuan.webp"
     }
    ],
    "dialog": {
@@ -5176,7 +5211,8 @@
       ]
      }
     ],
-    "emoji": "📅"
+    "emoji": "📅",
+    "img": "d10-scene.webp"
    },
    "mission": {
     "goal": "둘 다 쉬는 날을 찾아라",
@@ -5205,7 +5241,7 @@
      ],
      "emoji": "⏰",
      "vkind": "action",
-     "gesture": "두 손을 아래에서 위로 올린다 (일어남)"
+     "img": "d11-day.webp"
     },
     {
      "vi": "bắt đầu",
@@ -5228,7 +5264,7 @@
      ],
      "emoji": "▶️",
      "vkind": "action",
-     "gesture": "손뼉을 한 번 크게 친다"
+     "img": "d11-bat-dau.webp"
     },
     {
      "vi": "kết thúc",
@@ -5251,7 +5287,7 @@
      ],
      "emoji": "⏹️",
      "vkind": "action",
-     "gesture": "두 손을 좌우로 가르며 자른다"
+     "img": "d11-ket-thuc.webp"
     },
     {
      "vi": "làm",
@@ -5268,7 +5304,7 @@
      ],
      "emoji": "🔨",
      "vkind": "action",
-     "gesture": "주먹으로 망치질을 한다"
+     "img": "d11-lam.webp"
     },
     {
      "vi": "việc",
@@ -5285,7 +5321,7 @@
      ],
      "emoji": "💼",
      "vkind": "thing",
-     "gesture": "서류를 넘기는 시늉을 한다"
+     "img": "d11-viec.webp"
     },
     {
      "vi": "nghỉ",
@@ -5302,7 +5338,7 @@
      ],
      "emoji": "😴",
      "vkind": "action",
-     "gesture": "두 손을 모아 뺨에 대고 눈을 감는다"
+     "img": "d11-nghi.webp"
     },
     {
      "vi": "sớm",
@@ -5316,8 +5352,7 @@
        "ko": "짧게 올라감",
        "shape": "／"
       }
-     ],
-     "gesture": "손목시계를 두드리며 고개를 끄덕인다"
+     ]
     },
     {
      "vi": "muộn",
@@ -5334,7 +5369,7 @@
      ],
      "emoji": "🐌",
      "vkind": "thing",
-     "gesture": "손목시계를 두드리며 고개를 젓는다"
+     "img": "d11-muon.webp"
     },
     {
      "vi": "mỗi",
@@ -5737,7 +5772,8 @@
       ]
      }
     ],
-    "emoji": "⏰"
+    "emoji": "⏰",
+    "img": "d11-scene.webp"
    },
    "mission": {
     "goal": "상대의 하루를 시간표로 그려라",
@@ -5766,7 +5802,8 @@
      ],
      "emoji": "🍽️",
      "vkind": "action",
-     "gesture": "손끝을 모아 입으로 가져간다"
+     "gesture": "손끝을 모아 입으로 가져간다",
+     "img": "d12-an.webp"
     },
     {
      "vi": "uống",
@@ -5783,7 +5820,8 @@
      ],
      "emoji": "🥤",
      "vkind": "action",
-     "gesture": "컵을 들어 마시는 시늉을 한다"
+     "gesture": "컵을 들어 마시는 시늉",
+     "img": "d12-uong.webp"
     },
     {
      "vi": "cơm",
@@ -5800,7 +5838,7 @@
      ],
      "emoji": "🍚",
      "vkind": "thing",
-     "gesture": "한 손을 밥그릇처럼 받치고 다른 손으로 젓가락질"
+     "img": "d12-com.webp"
     },
     {
      "vi": "phở",
@@ -5817,7 +5855,8 @@
      ],
      "emoji": "🍜",
      "vkind": "thing",
-     "gesture": "젓가락으로 면을 들어올린다"
+     "gesture": "젓가락으로 면을 들어올리는 시늉",
+     "img": "d12-pho.webp"
     },
     {
      "vi": "muốn",
@@ -5834,7 +5873,7 @@
      ],
      "emoji": "💭",
      "vkind": "thing",
-     "gesture": "가슴에 손을 대고 앞으로 뻗는다"
+     "img": "d12-muon.webp"
     },
     {
      "vi": "cà phê",
@@ -5857,7 +5896,7 @@
      ],
      "emoji": "☕",
      "vkind": "thing",
-     "gesture": "작은 잔을 들고 홀짝인다"
+     "img": "d12-ca-phe.webp"
     },
     {
      "vi": "ngon",
@@ -5874,7 +5913,7 @@
      ],
      "emoji": "😋",
      "vkind": "thing",
-     "gesture": "검지로 볼을 콕 찍고 돌린다"
+     "img": "d12-ngon.webp"
     },
     {
      "vi": "đói",
@@ -5891,7 +5930,8 @@
      ],
      "emoji": "😣",
      "vkind": "thing",
-     "gesture": "배를 문지르며 찡그린다"
+     "gesture": "배를 문지르며 찡그린다",
+     "img": "d12-doi.webp"
     },
     {
      "vi": "no",
@@ -5908,7 +5948,8 @@
      ],
      "emoji": "😌",
      "vkind": "thing",
-     "gesture": "배를 두드리며 웃는다"
+     "gesture": "배를 두드리며 웃는다",
+     "img": "d12-no.webp"
     },
     {
      "vi": "thích",
@@ -5925,7 +5966,8 @@
      ],
      "emoji": "❤️",
      "vkind": "thing",
-     "gesture": "두 손으로 하트를 만든다"
+     "gesture": "두 손으로 하트를 만든다",
+     "img": "d12-thich.webp"
     }
    ],
    "dialog": {
@@ -6212,7 +6254,8 @@
       ]
      }
     ],
-    "emoji": "🍜"
+    "emoji": "🍜",
+    "img": "d12-scene.webp"
    },
    "mission": {
     "goal": "같이 먹을 메뉴를 정하라",
@@ -6255,7 +6298,8 @@
      ],
      "emoji": "💵",
      "vkind": "thing",
-     "gesture": "엄지와 검지를 비빈다"
+     "gesture": "엄지와 검지를 비빈다",
+     "img": "d13-tien.webp"
     },
     {
      "vi": "đắt",
@@ -6272,7 +6316,7 @@
      ],
      "emoji": "💸",
      "vkind": "thing",
-     "gesture": "손을 머리 위로 높이 올린다"
+     "img": "d13-dat.webp"
     },
     {
      "vi": "rẻ",
@@ -6289,7 +6333,7 @@
      ],
      "emoji": "🏷️",
      "vkind": "thing",
-     "gesture": "손을 무릎 아래로 내린다"
+     "img": "d13-re.webp"
     },
     {
      "vi": "mua",
@@ -6306,7 +6350,7 @@
      ],
      "emoji": "🛒",
      "vkind": "action",
-     "gesture": "한 손으로 돈을 건네고 다른 손으로 물건을 받는다"
+     "img": "d13-mua.webp"
     },
     {
      "vi": "bán",
@@ -6323,7 +6367,7 @@
      ],
      "emoji": "🏷️",
      "vkind": "action",
-     "gesture": "물건을 건네주는 시늉"
+     "img": "d13-ban.webp"
     },
     {
      "vi": "cho",
@@ -6367,7 +6411,8 @@
       }
      ],
      "emoji": "🔢",
-     "vkind": "thing"
+     "vkind": "thing",
+     "img": "d13-nghin.webp"
     },
     {
      "vi": "đồng",
@@ -6384,7 +6429,7 @@
      ],
      "emoji": "💴",
      "vkind": "thing",
-     "gesture": "엄지와 검지로 동전을 만든다"
+     "img": "d13-dong.webp"
     }
    ],
    "dialog": {
@@ -6677,7 +6722,8 @@
       ]
      }
     ],
-    "emoji": "🛒"
+    "emoji": "🛒",
+    "img": "d13-scene.webp"
    },
    "mission": {
     "goal": "값을 깎아라",
@@ -6706,7 +6752,8 @@
      ],
      "emoji": "⬆️",
      "vkind": "thing",
-     "gesture": "손을 머리 위로 올린다"
+     "gesture": "손을 머리 위로 올린다",
+     "img": "d14-tren.webp"
     },
     {
      "vi": "dưới",
@@ -6723,7 +6770,8 @@
      ],
      "emoji": "⬇️",
      "vkind": "thing",
-     "gesture": "손을 무릎 아래로 내린다"
+     "gesture": "손을 무릎 아래로 내린다",
+     "img": "d14-duoi.webp"
     },
     {
      "vi": "trong",
@@ -6740,7 +6788,7 @@
      ],
      "emoji": "📥",
      "vkind": "thing",
-     "gesture": "한 손으로 다른 손을 감싼다"
+     "img": "d14-trong.webp"
     },
     {
      "vi": "ngoài",
@@ -6757,7 +6805,7 @@
      ],
      "emoji": "📤",
      "vkind": "thing",
-     "gesture": "손을 몸 밖으로 크게 뻗는다"
+     "img": "d14-ngoai.webp"
     },
     {
      "vi": "bên cạnh",
@@ -6780,7 +6828,7 @@
      ],
      "emoji": "↔️",
      "vkind": "thing",
-     "gesture": "두 손을 나란히 옆으로 붙인다"
+     "img": "d14-ben-canh.webp"
     },
     {
      "vi": "gần",
@@ -6797,7 +6845,8 @@
      ],
      "emoji": "🔍",
      "vkind": "thing",
-     "gesture": "두 손바닥을 가까이 모은다"
+     "gesture": "두 손바닥을 가까이 모은다",
+     "img": "d14-gan.webp"
     },
     {
      "vi": "xa",
@@ -6814,7 +6863,8 @@
      ],
      "emoji": "🔭",
      "vkind": "thing",
-     "gesture": "두 손을 양쪽으로 활짝 벌린다"
+     "gesture": "두 손을 양쪽으로 활짝 벌린다",
+     "img": "d14-xa.webp"
     },
     {
      "vi": "đường",
@@ -6831,7 +6881,7 @@
      ],
      "emoji": "🛣️",
      "vkind": "thing",
-     "gesture": "손날로 앞으로 뻗는 길을 그린다"
+     "img": "d14-duong.webp"
     },
     {
      "vi": "chợ",
@@ -6848,7 +6898,7 @@
      ],
      "emoji": "🏪",
      "vkind": "thing",
-     "gesture": "양손으로 물건을 고르는 시늉"
+     "img": "d14-cho.webp"
     },
     {
      "vi": "nhà vệ sinh",
@@ -6877,7 +6927,7 @@
      ],
      "emoji": "🚻",
      "vkind": "thing",
-     "gesture": "두 손으로 문을 여는 시늉"
+     "img": "d14-nha-ve-sinh.webp"
     }
    ],
    "dialog": {
@@ -7178,7 +7228,8 @@
       ]
      }
     ],
-    "emoji": "🗺️"
+    "emoji": "🗺️",
+    "img": "d14-scene.webp"
    },
    "mission": {
     "goal": "말만으로 길을 안내하라",
@@ -7213,7 +7264,7 @@
      ],
      "emoji": "👨‍👩‍👧",
      "vkind": "thing",
-     "gesture": "두 손으로 작은 원을 만들어 감싼다"
+     "img": "d15-gia-dinh.webp"
     },
     {
      "vi": "bố",
@@ -7230,7 +7281,7 @@
      ],
      "emoji": "👨",
      "vkind": "thing",
-     "gesture": "턱을 쓸어내린다 (수염)"
+     "img": "d15-bo.webp"
     },
     {
      "vi": "mẹ",
@@ -7247,7 +7298,7 @@
      ],
      "emoji": "👩",
      "vkind": "thing",
-     "gesture": "머리를 쓸어넘긴다"
+     "img": "d15-me.webp"
     },
     {
      "vi": "con trai",
@@ -7270,7 +7321,7 @@
      ],
      "emoji": "👦",
      "vkind": "thing",
-     "gesture": "손바닥을 허리 높이에 둔다"
+     "img": "d15-con-trai.webp"
     },
     {
      "vi": "vợ",
@@ -7287,7 +7338,7 @@
      ],
      "emoji": "👰",
      "vkind": "thing",
-     "gesture": "왼손 약지에 반지를 끼는 시늉"
+     "img": "d15-vo.webp"
     },
     {
      "vi": "chồng",
@@ -7304,7 +7355,7 @@
      ],
      "emoji": "🤵",
      "vkind": "thing",
-     "gesture": "오른손 약지에 반지를 끼는 시늉"
+     "img": "d15-chong.webp"
     },
     {
      "vi": "anh trai",
@@ -7324,8 +7375,7 @@
        "ko": "평평하게 그대로",
        "shape": "—"
       }
-     ],
-     "gesture": "손바닥을 머리 위에 둔다"
+     ]
     },
     {
      "vi": "chị gái",
@@ -7345,8 +7395,7 @@
        "ko": "짧게 올라감",
        "shape": "／"
       }
-     ],
-     "gesture": "손바닥을 머리 위에 두고 살짝 흔든다"
+     ]
     },
     {
      "vi": "em trai",
@@ -7366,8 +7415,7 @@
        "ko": "평평하게 그대로",
        "shape": "—"
       }
-     ],
-     "gesture": "손바닥을 어깨 아래에 둔다"
+     ]
     },
     {
      "vi": "em gái",
@@ -7390,7 +7438,7 @@
      ],
      "emoji": "👧",
      "vkind": "thing",
-     "gesture": "손바닥을 허리 높이에 두고 살짝 흔든다"
+     "img": "d15-em-gai.webp"
     }
    ],
    "dialog": {
@@ -7757,7 +7805,8 @@
       ]
      }
     ],
-    "emoji": "👨‍👩‍👧"
+    "emoji": "👨‍👩‍👧",
+    "img": "d15-scene.webp"
    },
    "mission": {
     "goal": "서로의 가족을 그림으로 그려라",
@@ -7786,7 +7835,7 @@
      ],
      "emoji": "💥",
      "vkind": "thing",
-     "gesture": "몸을 움츠린다 (당했다)"
+     "img": "d16-bi.webp"
     },
     {
      "vi": "đau",
@@ -7803,7 +7852,8 @@
      ],
      "emoji": "🤕",
      "vkind": "thing",
-     "gesture": "아픈 곳을 짚고 찡그린다"
+     "gesture": "아픈 곳을 짚고 찡그린다",
+     "img": "d16-dau.webp"
     },
     {
      "vi": "ốm",
@@ -7820,7 +7870,8 @@
      ],
      "emoji": "🤒",
      "vkind": "thing",
-     "gesture": "이마에 손등을 댄다"
+     "gesture": "이마에 손등을 댄다",
+     "img": "d16-om.webp"
     },
     {
      "vi": "bệnh viện",
@@ -7843,7 +7894,7 @@
      ],
      "emoji": "🏥",
      "vkind": "thing",
-     "gesture": "양팔로 십자를 만든다"
+     "img": "d16-benh-vien.webp"
     },
     {
      "vi": "thuốc",
@@ -7860,7 +7911,7 @@
      ],
      "emoji": "💊",
      "vkind": "thing",
-     "gesture": "알약을 입에 넣는 시늉"
+     "img": "d16-thuoc.webp"
     },
     {
      "vi": "đầu",
@@ -7877,7 +7928,7 @@
      ],
      "emoji": "🤯",
      "vkind": "thing",
-     "gesture": "머리를 두 손으로 감싼다"
+     "img": "d16-dau2.webp"
     },
     {
      "vi": "bụng",
@@ -7891,8 +7942,7 @@
        "ko": "짧고 무겁게",
        "shape": "↓"
       }
-     ],
-     "gesture": "배에 손을 얹는다"
+     ]
     },
     {
      "vi": "tay",
@@ -7909,7 +7959,7 @@
      ],
      "emoji": "🤚",
      "vkind": "thing",
-     "gesture": "두 손을 펴 보인다"
+     "img": "d16-tay.webp"
     },
     {
      "vi": "chân",
@@ -7926,7 +7976,7 @@
      ],
      "emoji": "🦵",
      "vkind": "thing",
-     "gesture": "발을 한 번 구른다"
+     "img": "d16-chan.webp"
     },
     {
      "vi": "cảm",
@@ -7943,7 +7993,7 @@
      ],
      "emoji": "🤧",
      "vkind": "thing",
-     "gesture": "코를 훌쩍이며 손등으로 닦는다"
+     "img": "d16-cam.webp"
     }
    ],
    "dialog": {
@@ -8264,7 +8314,8 @@
       ]
      }
     ],
-    "emoji": "🏥"
+    "emoji": "🏥",
+    "img": "d16-scene.webp"
    },
    "mission": {
     "goal": "아픈 곳을 알아내 병원에 데려가라",
@@ -8296,8 +8347,7 @@
        "ko": "평평하게 그대로",
        "shape": "—"
       }
-     ],
-     "gesture": "두 손을 모아 살짝 비빈다"
+     ]
     },
     {
      "vi": "giúp",
@@ -8314,7 +8364,7 @@
      ],
      "emoji": "🆘",
      "vkind": "action",
-     "gesture": "손을 상대에게 내민다"
+     "img": "d17-giup.webp"
     },
     {
      "vi": "cần",
@@ -8345,7 +8395,7 @@
      ],
      "emoji": "🙋",
      "vkind": "action",
-     "gesture": "손을 번쩍 든다"
+     "img": "d17-hoi.webp"
     },
     {
      "vi": "được không",
@@ -8396,7 +8446,8 @@
      ],
      "emoji": "🚫",
      "vkind": "thing",
-     "gesture": "검지를 세워 좌우로 흔든다"
+     "gesture": "검지를 세워 좌우로 흔든다",
+     "img": "d17-dung.webp"
     },
     {
      "vi": "mở",
@@ -8413,7 +8464,8 @@
      ],
      "emoji": "🔓",
      "vkind": "action",
-     "gesture": "두 손으로 문을 여는 시늉"
+     "gesture": "문을 여는 시늉",
+     "img": "d17-mo.webp"
     },
     {
      "vi": "đóng",
@@ -8430,7 +8482,8 @@
      ],
      "emoji": "🔒",
      "vkind": "action",
-     "gesture": "두 손으로 문을 닫는 시늉"
+     "gesture": "문을 닫는 시늉",
+     "img": "d17-dong.webp"
     },
     {
      "vi": "đợi",
@@ -8447,7 +8500,8 @@
      ],
      "emoji": "⏳",
      "vkind": "action",
-     "gesture": "손바닥을 세워 '잠깐' 표시"
+     "gesture": "손바닥을 세워 '잠깐'",
+     "img": "d17-doi.webp"
     }
    ],
    "dialog": {
@@ -8744,7 +8798,8 @@
       ]
      }
     ],
-    "emoji": "🙏"
+    "emoji": "🙏",
+    "img": "d17-scene.webp"
    },
    "mission": {
     "goal": "길 잃은 사람 되어보기",
@@ -8773,7 +8828,8 @@
      ],
      "emoji": "👍",
      "vkind": "thing",
-     "gesture": "엄지를 위로"
+     "gesture": "엄지를 위로",
+     "img": "d18-tot.webp"
     },
     {
      "vi": "xấu",
@@ -8790,7 +8846,8 @@
      ],
      "emoji": "👎",
      "vkind": "thing",
-     "gesture": "엄지를 아래로"
+     "gesture": "엄지를 아래로",
+     "img": "d18-xau.webp"
     },
     {
      "vi": "đẹp",
@@ -8807,7 +8864,7 @@
      ],
      "emoji": "✨",
      "vkind": "thing",
-     "gesture": "손끝을 모아 입에 대고 펼친다 (감탄)"
+     "img": "d18-dep.webp"
     },
     {
      "vi": "hay",
@@ -8824,7 +8881,7 @@
      ],
      "emoji": "🎉",
      "vkind": "thing",
-     "gesture": "박수를 두 번 친다"
+     "img": "d18-hay.webp"
     },
     {
      "vi": "khó",
@@ -8841,7 +8898,7 @@
      ],
      "emoji": "🧗",
      "vkind": "thing",
-     "gesture": "이마를 짚고 고개를 젓는다"
+     "img": "d18-kho.webp"
     },
     {
      "vi": "dễ",
@@ -8858,7 +8915,7 @@
      ],
      "emoji": "🛝",
      "vkind": "thing",
-     "gesture": "손등을 털며 가볍게 흔든다"
+     "img": "d18-de.webp"
     },
     {
      "vi": "mới",
@@ -8875,7 +8932,7 @@
      ],
      "emoji": "🆕",
      "vkind": "thing",
-     "gesture": "손바닥을 앞으로 반짝 펼친다"
+     "img": "d18-moi.webp"
     },
     {
      "vi": "cũ",
@@ -8892,7 +8949,7 @@
      ],
      "emoji": "🕰️",
      "vkind": "thing",
-     "gesture": "손으로 먼지를 터는 시늉"
+     "img": "d18-cu.webp"
     },
     {
      "vi": "nhiều",
@@ -8909,7 +8966,7 @@
      ],
      "emoji": "🗄️",
      "vkind": "thing",
-     "gesture": "두 팔로 큰 산을 그린다"
+     "img": "d18-nhieu.webp"
     },
     {
      "vi": "ít",
@@ -8926,7 +8983,8 @@
      ],
      "emoji": "🤏",
      "vkind": "thing",
-     "gesture": "엄지와 검지를 아주 조금 벌린다"
+     "gesture": "엄지와 검지를 아주 조금 벌린다",
+     "img": "d18-it.webp"
     }
    ],
    "dialog": {
@@ -9229,7 +9287,8 @@
       ]
      }
     ],
-    "emoji": "👍"
+    "emoji": "👍",
+    "img": "d18-scene.webp"
    },
    "mission": {
     "goal": "다섯 가지를 평가하라",
@@ -9300,7 +9359,7 @@
      ],
      "emoji": "⏳",
      "vkind": "thing",
-     "gesture": "손바닥을 좌우로 흔들며 '아직'"
+     "img": "d19-chua.webp"
     },
     {
      "vi": "xong",
@@ -9317,7 +9376,7 @@
      ],
      "emoji": "✅",
      "vkind": "action",
-     "gesture": "두 손을 탁탁 털어 끝냈다는 표시"
+     "img": "d19-xong.webp"
     },
     {
      "vi": "với",
@@ -9331,8 +9390,7 @@
        "ko": "짧게 올라감",
        "shape": "／"
       }
-     ],
-     "gesture": "두 검지를 나란히 붙인다"
+     ]
     },
     {
      "vi": "cùng",
@@ -9349,7 +9407,7 @@
      ],
      "emoji": "🤝",
      "vkind": "action",
-     "gesture": "두 손을 맞잡는다"
+     "img": "d19-cung.webp"
     },
     {
      "vi": "hôm kia",
@@ -9389,8 +9447,7 @@
        "ko": "낮게 내려감",
        "shape": "＼"
       }
-     ],
-     "gesture": "손목을 가리키며 어깨를 으쓱한다"
+     ]
     },
     {
      "vi": "sao",
@@ -9404,8 +9461,7 @@
        "ko": "평평하게 그대로",
        "shape": "—"
       }
-     ],
-     "gesture": "양손을 펴고 고개를 갸웃한다"
+     ]
     }
    ],
    "dialog": {
@@ -9736,7 +9792,8 @@
       ]
      }
     ],
-    "emoji": "⏳"
+    "emoji": "⏳",
+    "img": "d19-scene.webp"
    },
    "mission": {
     "goal": "어제·오늘·내일을 말하라",
@@ -9765,7 +9822,7 @@
      ],
      "emoji": "🧠",
      "vkind": "thing",
-     "gesture": "관자놀이를 손가락으로 꾹 짚는다"
+     "img": "d20-nho.webp"
     },
     {
      "vi": "quên",
@@ -9782,13 +9839,13 @@
      ],
      "emoji": "💨",
      "vkind": "action",
-     "gesture": "머리 뒤로 손을 털어 넘긴다"
+     "img": "d20-quen.webp"
     },
     {
      "vi": "hứa",
      "ko": "약속하다",
      "kr_read": "흐어",
-     "hanja": null,
+     "hanja": "許 (허락할 허)",
      "tones": [
       {
        "syl": "hứa",
@@ -9799,7 +9856,8 @@
      ],
      "emoji": "🤞",
      "vkind": "action",
-     "gesture": "새끼손가락을 내밀어 건다"
+     "gesture": "새끼손가락을 내밀어 건다",
+     "img": "d20-hua.webp"
     },
     {
      "vi": "chắc chắn",
@@ -9822,7 +9880,7 @@
      ],
      "emoji": "✔️",
      "vkind": "thing",
-     "gesture": "주먹을 쥐고 아래로 한 번 내린다"
+     "img": "d20-chac-chan.webp"
     },
     {
      "vi": "hẹn",
@@ -9837,7 +9895,7 @@
        "shape": "↓"
       }
      ],
-     "gesture": "새끼손가락을 내민다"
+     "gesture": "새끼손가락을 내밀어 건다"
     },
     {
      "vi": "ai",
@@ -9851,8 +9909,7 @@
        "ko": "평평하게 그대로",
        "shape": "—"
       }
-     ],
-     "gesture": "양손을 펴고 어깨를 으쓱한다"
+     ]
     },
     {
      "vi": "gì nữa",
@@ -9923,7 +9980,7 @@
      ],
      "emoji": "❗",
      "vkind": "thing",
-     "gesture": "검지로 손바닥을 콕 찍는다"
+     "img": "d20-quan-trong.webp"
     }
    ],
    "dialog": {
@@ -10216,7 +10273,8 @@
       ]
      }
     ],
-    "emoji": "🤞"
+    "emoji": "🤞",
+    "img": "d20-scene.webp"
    },
    "mission": {
     "goal": "20일치를 다 써서 5분 대화하라",

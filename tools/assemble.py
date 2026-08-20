@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """준비 3일 + 일상 20일(하루 단어 10 + 대화 2문장)을 days.json 으로.
 검증: 단어 중복 / 문장에 아직 안 배운 낱말 / 모든 단어가 어딘가 문장에 나오는가"""
-import json, pathlib, re, sys, collections
+import json, pathlib, re, sys, collections, unicodedata
+
+def slug(vi):
+    """베트남어 → 부호 없는 파일이름 (cảm ơn → cam-on). 그림 파일 이름에 쓴다."""
+    s = unicodedata.normalize('NFD', vi)
+    s = ''.join(c for c in s if not unicodedata.combining(c))
+    return s.replace('đ','d').replace('Đ','d').lower().replace(' ','-')
 sys.path.insert(0,'tools')
 from visuals import attach
 from gestures import attach as attach_gesture
@@ -20,9 +26,17 @@ out = {"meta": {"version":"v4",
 SCENE = {1:"👋",2:"🪪",3:"🌏",4:"😊",5:"❓",6:"🚪",7:"🔢",8:"📦",9:"🕐",10:"📅",
          11:"⏰",12:"🍜",13:"🛒",14:"🗺️",15:"👨‍👩‍👧",16:"🏥",17:"🙏",18:"👍",19:"⏳",20:"🤞"}
 for d in out["days"]:
+    used = set()
     for w in d["words"]:
         attach(w); attach_gesture(w)
+        # 구체어(이모지가 붙는 단어)만 그림 파일 자리를 준다. img/ 에 파일을 넣으면 그걸 보여준다.
+        if w.get("emoji"):
+            s = slug(w["vi"])                      # 부호를 떼면 겹칠 수 있다 (đau/đầu → dau)
+            if s in used: s += "2"
+            used.add(s)
+            w["img"] = f"d{d['day']:02d}-{s}.webp"
     d["dialog"]["emoji"] = SCENE.get(d["day"], "")
+    d["dialog"]["img"] = f"d{d['day']:02d}-scene.webp"
 
 seen = collections.defaultdict(list)
 for d in out["days"]:
