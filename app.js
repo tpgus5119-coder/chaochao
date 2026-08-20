@@ -868,6 +868,33 @@ function stripTone(syl) {
   return syl.normalize('NFD').replace(/[\u0300\u0301\u0309\u0303\u0323]/g, '').normalize('NFC');
 }
 
+/* 성조 부호는 **모음**에 붙는다. 자음에 붙이면 글자가 깨진다(c̀on ✗ / còn ✓).
+   원래 단어에 부호가 있으면 그 자리를 그대로 쓰고,
+   없으면(ngang) 베트남어 규칙으로 주모음을 찾는다. */
+function tonePos(syl) {
+  const d = syl.normalize('NFD');
+  const i = d.search(/[\u0300\u0301\u0309\u0303\u0323]/);
+  if (i > 0) {
+    // 결합 부호를 뺀 글자 수 = NFC 기준 위치
+    return [...d.slice(0, i)].filter(ch => !/[\u0300-\u036f]/.test(ch)).length - 1;
+  }
+  const bare = stripTone(syl);
+  const V = [];
+  [...bare].forEach((ch, k) => { if (/[aăâeêioôơuưy]/i.test(ch)) V.push(k); });
+  if (!V.length) return -1;
+  for (const k of V) if (/[ơê]/i.test(bare[k])) return k;   // ơ·ê 가 있으면 무조건 거기
+  if (V.length === 1) return V[0];
+  const last = V[V.length - 1];
+  return last < bare.length - 1 ? last : V[V.length - 2];   // 받침이 있으면 뒤 모음, 없으면 앞 모음
+}
+
+function withMark(bare, mark, pos) {
+  if (!mark || pos < 0) return bare;
+  const a = [...bare];
+  a[pos] = (a[pos] + mark).normalize('NFC');
+  return a.join('');
+}
+
 function markPool() {
   // 성조가 붙은 한 음절짜리 단어만 고른다
   return allWords().filter(w => {
@@ -894,6 +921,7 @@ function drawMark() {
 
   body.append(el('div', 'q', `${MK.i + 1} / ${MK.list.length} · 듣고 성조 부호를 고르세요`));
   const bare = stripTone(w.vi);
+  const pos = tonePos(w.vi);
   body.append(el('div', 'markbare', esc(bare)));
 
   const wrap = el('div', 'qplay');
@@ -906,7 +934,7 @@ function drawMark() {
 
   const opts = el('div', 'opts markopts');
   MARKS.forEach(mk => {
-    const shown = mk.m ? (bare[0] + mk.m).normalize('NFC') + bare.slice(1) : bare;
+    const shown = withMark(bare, mk.m, pos);
     const btn = el('button');
     btn.append(el('span', 'mkvi', esc(shown)),
                el('span', 'mkname', esc(mk.name)),
