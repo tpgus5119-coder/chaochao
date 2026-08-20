@@ -276,7 +276,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone'];
+const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone', 'mark'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -374,6 +374,34 @@ function renderProgress() {
   box.append(bd);
 }
 
+
+/* ---------- 주간 총복습 ----------
+   그 주에 새로 배운 카드를 **한 묶음으로 통째** 한 바퀴 돈다.
+   같은 반복 횟수라면 작게 쪼개 여러 바퀴 도는 것보다 큰 묶음 한 바퀴가 낫다는
+   실험이 있다(Kornell 2009). 그런데 참가자의 72%가 반대로 판단했다 —
+   그래서 '쪼개기' 기능은 일부러 만들지 않는다. */
+function weekWords() {
+  const from = now() - 7 * DAY;
+  const learned = Object.entries(S.srs)
+    .filter(([, v]) => v.first && v.first >= from)
+    .map(([k]) => k);
+  return learned.map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+}
+
+function renderWeekly() {
+  const ws = weekWords();
+  const box = $('#weekly');
+  box.hidden = ws.length < 10;
+  if (box.hidden) return;
+  const dow = new Date().getDay();          // 0=일
+  const due = dow === 0 || dow === 6;       // 주말에 권한다
+  $('#weeklyN').textContent = ws.length + '개';
+  $('#weeklyWhy').textContent = due
+    ? '이번 주에 배운 것을 통째로 한 바퀴 — 지금이 좋은 때입니다'
+    : '이번 주에 배운 것을 통째로 한 바퀴 (주말에 권합니다)';
+  box.dataset.due = due ? '1' : '0';
+}
+
 /* ---------- 홈 ---------- */
 const allWords = () => ALL.flatMap(d => d.words || []);
 function dueWords() {
@@ -391,6 +419,7 @@ const GROUPS = [
 
 function renderHome() {
   renderProgress();
+  renderWeekly();
   // 성조 훈련 시점: 저녁에 하면 자는 동안 '성조 범주'로 정리된다는 실험이 있다.
   // (아침에 훈련한 집단은 하루가 지나며 오히려 정확도가 떨어졌다)
   const h = new Date().getHours();
@@ -711,7 +740,8 @@ function requeue(q) {
 
 function grade(vi, ok) {
   touchToday();
-  const r = S.srs[vi] || { lv: 0 };
+  const r = S.srs[vi] || { lv: 0, first: now() };
+  if (!r.first) r.first = now();
   r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : Math.max(0, r.lv - 2);
   r.due = now() + STEPS[r.lv] * DAY;
   S.srs[vi] = r;
@@ -818,6 +848,104 @@ function finishTone() {
   $('#toneBody').append(r);
 }
 
+
+/* ---------- 성조 부호 붙이기 ----------
+   자유 작문은 넣지 않는다(하루 10분에 안 들어간다).
+   대신 '들은 소리에 맞는 성조 부호 고르기' 하나만 남긴다.
+   ă â đ ê ô ơ ư 와 다섯 성조 부호는 로마자를 쓰는 사람에게도 새 글자 모양이라,
+   눈으로만 보면 hỏi 와 ngã 가 끝까지 구별되지 않는다. */
+let MK = null;
+const MARKS = [
+  { m: '',  name: 'ngang', ko: '평평하게',   ex: 'a' },
+  { m: '\u0300', name: 'huyền', ko: '내려감',   ex: 'à' },
+  { m: '\u0301', name: 'sắc',   ko: '올라감',   ex: 'á' },
+  { m: '\u0309', name: 'hỏi',   ko: '내렸다 올림', ex: 'ả' },
+  { m: '\u0303', name: 'ngã',   ko: '끊었다 올림', ex: 'ã' },
+  { m: '\u0323', name: 'nặng',  ko: '짧고 무겁게', ex: 'ạ' }
+];
+
+function stripTone(syl) {
+  return syl.normalize('NFD').replace(/[\u0300\u0301\u0309\u0303\u0323]/g, '').normalize('NFC');
+}
+
+function markPool() {
+  // 성조가 붙은 한 음절짜리 단어만 고른다
+  return allWords().filter(w => {
+    if (w.vi.split(' ').length !== 1) return false;
+    const t = (w.tones || [])[0];
+    return t && AIDX[w.vi];
+  });
+}
+
+function startMarks() {
+  const pool = markPool().sort(() => Math.random() - .5).slice(0, 8);
+  if (!pool.length) { renderHome(); return; }
+  MK = { list: pool, i: 0, ok: 0 };
+  drawMark();
+  show('mark', '성조 부호 붙이기', true);
+}
+
+function drawMark() {
+  const body = $('#markBody');
+  body.textContent = '';
+  if (MK.i >= MK.list.length) return finishMark();
+  const w = MK.list[MK.i];
+  const want = w.tones[0].name;
+
+  body.append(el('div', 'q', `${MK.i + 1} / ${MK.list.length} · 듣고 성조 부호를 고르세요`));
+  const bare = stripTone(w.vi);
+  body.append(el('div', 'markbare', esc(bare)));
+
+  const wrap = el('div', 'qplay');
+  const b = el('button', 'primary big', '🔊 다시 듣기');
+  b.onclick = () => play(w.vi, false);
+  const sl = el('button', 'ghost', '🐢 느리게');
+  sl.onclick = () => play(w.vi, true);
+  wrap.append(b, sl);
+  body.append(wrap);
+
+  const opts = el('div', 'opts markopts');
+  MARKS.forEach(mk => {
+    const shown = mk.m ? (bare[0] + mk.m).normalize('NFC') + bare.slice(1) : bare;
+    const btn = el('button');
+    btn.append(el('span', 'mkvi', esc(shown)),
+               el('span', 'mkname', esc(mk.name)),
+               el('span', 'mkko', esc(mk.ko)));
+    btn.onclick = () => {
+      [...opts.children].forEach(x => x.disabled = true);
+      const good = mk.name === want;
+      btn.dataset.r = good ? 'ok' : 'no';
+      if (!good) [...opts.children].forEach(x => {
+        if (x.querySelector('.mkname').textContent === want) x.dataset.r = 'ok';
+      });
+      if (good) MK.ok++;
+      grade(w.vi, good);
+      setTimeout(() => { MK.i++; drawMark(); }, good ? 500 : 1500);
+    };
+    opts.append(btn);
+  });
+  body.append(opts);
+  body.append(el('div', 'cmpnote', '뜻: ' + esc(w.ko)));
+  play(w.vi, false);
+}
+
+function finishMark() {
+  const r = el('div', 'result');
+  r.append(el('div', 'n', MK.ok + ' / ' + MK.list.length));
+  r.append(el('div', null, MK.ok >= 6 ? '부호가 눈에 들어오고 있습니다'
+    : '괜찮습니다. hỏi(ả)와 ngã(ã)는 원어민도 자주 틀립니다'));
+  r.append(el('div', 'rule',
+    '<b>✍️ 종이에 한 번 써보세요.</b><br>' +
+    'à á ả ã ạ 를 다섯 번씩. 눈으로만 보면 ả 와 ã 가 끝까지 구별되지 않습니다.'));
+  const b = el('button', 'primary big', '다시 하기');
+  b.style.marginTop = '16px'; b.onclick = startMarks;
+  const h = el('button', 'ghost big', '홈으로');
+  h.style.marginLeft = '8px'; h.onclick = renderHome;
+  r.append(b, h);
+  $('#markBody').textContent = '';
+  $('#markBody').append(r);
+}
+
 /* ---------- 미션 ---------- */
 function showMission(d) {
   const m = d.mission, body = $('#missionBody');
@@ -848,6 +976,13 @@ $('#back').onclick = renderHome;
 $('#goReview').onclick = () => startQuiz(null, null);
 $('#goQuick').onclick = () => startQuiz(null, null, 10);
 $('#goTone').onclick = startTone;
+$('#goMark').onclick = startMarks;
+$('#goWeekly').onclick = () => {
+  const ws = weekWords();
+  if (!ws.length) return;
+  startQuiz(ws, null);          // 통째로 한 바퀴. 쪼개지 않는다.
+  $('#title').textContent = '주간 총복습';
+};
 /* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
    200단어가 다 쌓이면 원본이 7.5KB라 압축해서 내보낸다 (10,600자 → 2,900자). */
 const b64 = u8 => { let s = ''; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };

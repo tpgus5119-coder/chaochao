@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="베트남어">
 <meta name="mobile-web-app-capable" content="yes">
 <title>베트남어 스터디</title>
-<link rel="stylesheet" href="style.css?v=1b07982e">
+<link rel="stylesheet" href="style.css?v=2e06da17">
 </head>
 <body>
 
@@ -32,7 +32,17 @@
         <strong>성조 훈련</strong>
         <span id="toneWhy">소리만 듣고 6성조 구별하기</span>
       </div>
-      <button id="goTone" class="primary">연습</button>
+      <div class="bbtns">
+        <button id="goMark" class="ghost">부호 쓰기</button>
+        <button id="goTone" class="primary">듣기</button>
+      </div>
+    </div>
+    <div id="weekly" class="banner week" hidden>
+      <div>
+        <strong id="weeklyN"></strong>
+        <span id="weeklyWhy"></span>
+      </div>
+      <button id="goWeekly" class="primary">한 바퀴</button>
     </div>
     <div id="reviewCard" class="banner" hidden>
       <div>
@@ -76,13 +86,18 @@
     <div id="toneBody"></div>
   </section>
 
+  <!-- 성조 부호 -->
+  <section id="mark" class="view" hidden>
+    <div id="markBody"></div>
+  </section>
+
   <!-- 미션 -->
   <section id="mission" class="view" hidden>
     <div id="missionBody"></div>
   </section>
 </main>
 
-<script src="pitch.js?v=1b07982e"></script>
-<script src="app.js?v=1b07982e"></script>
+<script src="pitch.js?v=2e06da17"></script>
+<script src="app.js?v=2e06da17"></script>
 </body>
 </html>

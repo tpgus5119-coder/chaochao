@@ -347,3 +347,17 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
   border:1px solid var(--line); border-radius:9px; padding:8px 10px;
 }
 .toneable b{color:var(--fg)}
+
+.banner.week{border-left-color:var(--ok)}
+.banner.week[data-due="1"]{background:var(--card)}
+.banner.week[data-due="1"] strong::after{content:" ⭐"}
+.banner.week span{display:block; font-size:13px; color:var(--dim); margin-top:2px}
+
+/* 성조 부호 붙이기 */
+.markbare{font-size:44px; font-weight:700; text-align:center; margin:14px 0 4px; color:var(--dim)}
+.markopts{grid-template-columns:1fr 1fr; gap:8px}
+.markopts button{display:flex; flex-direction:column; align-items:center; gap:2px; padding:12px 6px}
+.markopts .mkvi{font-size:26px; font-weight:800}
+.markopts .mkname{font-size:12px; color:var(--dim)}
+.markopts .mkko{font-size:11px; color:var(--dim)}
+.markopts button[data-r="ok"] .mkname,.markopts button[data-r="ok"] .mkko{color:var(--ok)}
