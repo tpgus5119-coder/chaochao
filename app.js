@@ -601,7 +601,9 @@ const GROUPS = [
   [d => d.day >= 11 && d.day <= 15, '파트 3 · 일과·음식·시장'],
   [d => d.day >= 16 && d.day <= 20, '파트 4 · 아플 때·부탁·약속'],
   [d => d.track === 'work' && d.day <= 25, '직무 파트 1 · 공장과 봉제'],
-  [d => d.track === 'work', '직무 파트 2 · 품질·안전·회사생활']
+  [d => d.track === 'work' && d.day <= 30, '직무 파트 2 · 품질·안전·소통'],
+  [d => d.track === 'work' && d.day <= 35, '직무 파트 3 · 박음질·재단·기록'],
+  [d => d.track === 'work', '직무 파트 4 · 포장·회사생활·연락']
 ];
 
 function renderHome() {

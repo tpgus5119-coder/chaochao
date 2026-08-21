@@ -13,7 +13,7 @@ from visuals import attach
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days = []
-for f in ['_b1','_b2','_b3','_b4','_w1']:
+for f in ['_b1','_b2','_b3','_b4','_w1','_w2']:
     days += json.loads((R/f'data/{f}.json').read_text())['days']
 
 out = {"meta": {"version":"v4",
