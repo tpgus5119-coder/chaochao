@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="베트남어">
 <meta name="mobile-web-app-capable" content="yes">
 <title>베트남어 스터디</title>
-<link rel="stylesheet" href="style.css?v=c82d410d">
+<link rel="stylesheet" href="style.css?v=c9087f2f">
 </head>
 <body>
 
@@ -28,52 +28,33 @@
     <p class="lede">하루 1세트 15분 — 일상 세트와 직무(봉제·공장) 세트를 번갈아. 완전 처음부터.</p>
     <button id="heroGo" class="hero" hidden></button>
     <div id="progress" class="progress"></div>
-    <div class="banner tone" id="toneBanner">
-      <div>
-        <strong>성조 훈련</strong>
-        <span id="toneWhy">소리만 듣고 6성조 구별하기</span>
+    <div class="menu">
+      <div class="mtile">
+        <b>성조 훈련</b><span id="toneWhy">소리만 듣고 6성조 구별</span>
+        <div class="mbtns"><button id="goTone" class="primary">듣기</button><button id="goMark" class="ghost">부호 쓰기</button></div>
       </div>
-      <div class="bbtns">
-        <button id="goMark" class="primary">부호 쓰기</button>
-        <button id="goTone" class="primary">듣기</button>
+      <div class="mtile">
+        <b>복습</b><span id="revNote"></span>
+        <div class="mbtns"><button id="goReview" class="primary">전부</button><button id="goQuick" class="ghost">3분만</button><button id="goWeekly" class="ghost" hidden>주간</button></div>
       </div>
-    </div>
-    <div id="weekly" class="banner week" hidden>
-      <div>
-        <strong id="weeklyN"></strong>
-        <span id="weeklyWhy"></span>
+      <div class="mtile">
+        <b>말하기 · 듣기</b><span>원어민 곡선과 비교하며</span>
+        <div class="mbtns"><button id="goSpeak" class="primary">따라 말하기</button><button id="goDict" class="ghost">받아쓰기</button></div>
       </div>
-      <button id="goWeekly" class="primary">한 바퀴</button>
-    </div>
-    <div class="banner chat" id="chatBanner">
-      <div>
-        <strong>AI와 대화</strong>
-        <span>배운 문장으로 베트남어 주고받기</span>
+      <div class="mtile">
+        <b>읽기 · 쓰기</b><span>손으로, 자판으로</span>
+        <div class="mbtns"><button id="goWrite" class="primary">손글씨</button><button id="goType" class="ghost">자판</button></div>
       </div>
-      <button id="goChat" class="primary">대화</button>
-    </div>
-    <div class="banner writeb" id="writeBanner">
-      <div>
-        <strong>쓰기 연습</strong>
-        <span>듣고 손으로 쓰기 · 화면 자판으로 치기</span>
+      <div class="mtile">
+        <b>AI 대화</b><span>배운 문장으로 주고받기</span>
+        <div class="mbtns"><button id="goChat" class="primary">대화</button></div>
       </div>
-      <div class="bbtns">
-        <button id="goWrite" class="primary">손글씨</button>
-        <button id="goType" class="primary">자판</button>
-      </div>
-    </div>
-    <div id="reviewCard" class="banner" hidden>
-      <div>
-        <strong id="reviewCount"></strong>
-        <span>복습할 차례입니다</span>
-      </div>
-      <div class="bbtns">
-        <button id="goQuick" class="ghost">3분만</button>
-        <button id="goReview" class="primary">전부</button>
+      <div class="mtile">
+        <b>규칙</b><span>꼭 알아야 할 것 + 남부 차이</span>
+        <div class="mbtns"><button id="goRules" class="primary">보기</button></div>
       </div>
     </div>
     <ol id="dayList" class="days"></ol>
-    <button id="goRules" class="rulesbtn">📐 꼭 알아야 할 규칙 3개</button>
     <p class="foot">진도는 이 기기에만 저장됩니다. 신규는 다 같이, 복습은 각자.</p>
     <div class="backup">
       <button id="bkExport" class="ghost">진도 백업</button>
@@ -115,6 +96,11 @@
     <div id="markBody"></div>
   </section>
 
+  <!-- 따라 말하기 -->
+  <section id="speak" class="view" hidden>
+    <div id="speakBody"></div>
+  </section>
+
   <!-- 손글씨 · 자판 -->
   <section id="write" class="view" hidden>
     <div id="writeBody"></div>
@@ -134,7 +120,7 @@
   </section>
 </main>
 
-<script src="pitch.js?v=c82d410d"></script>
-<script src="app.js?v=c82d410d"></script>
+<script src="pitch.js?v=c9087f2f"></script>
+<script src="app.js?v=c9087f2f"></script>
 </body>
 </html>

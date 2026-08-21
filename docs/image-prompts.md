@@ -551,3 +551,153 @@
 
 **d30-scene.webp** · 오늘의 대화 — 휴가 말하기
 > a worker politely talking to a team leader at an office desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 31 — 박음질 세부
+
+**d31-scene.webp** · 오늘의 대화 — 땀이 고르지 않을 때
+> a worker examining uneven stitches on fabric under a lamp, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 32 — 재단실
+
+**d32-scene.webp** · 오늘의 대화 — 몇 겹 펴는지 묻기
+> workers spreading fabric layers on a long cutting table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 33 — 부자재
+
+**d33-scene.webp** · 오늘의 대화 — 부자재가 떨어졌을 때
+> boxes of labels, zippers and sewing accessories on shelves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 34 — 불량 유형
+
+**d34-scene.webp** · 오늘의 대화 — 불량 이름 말하기
+> an inspector marking defects on a garment with red tags, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 35 — 세고 적기
+
+**d35-scene.webp** · 오늘의 대화 — 세서 기록하기
+> a worker counting boxes and writing numbers on a clipboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 36 — 마무리와 포장
+
+**d36-scene.webp** · 오늘의 대화 — 포장 지시
+> workers folding shirts and packing them into plastic bags, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 37 — 식당과 기숙사
+
+**d37-scene.webp** · 오늘의 대화 — 식당 찾기
+> workers eating lunch together at a factory canteen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 38 — 큰 숫자와 월급
+
+**d38-scene.webp** · 오늘의 대화 — 월급 이야기
+> a person receiving a pay envelope and smiling at a bank book, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 39 — 공장 안 길찾기
+
+**d39-scene.webp** · 오늘의 대화 — 창고 찾아가기
+> a worker pointing directions in a factory corridor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 40 — 전화와 연락
+
+**d40-scene.webp** · 오늘의 대화 — 전화 받기
+> a worker talking on the phone while noting a message, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 41 — 날씨
+
+**d41-scene.webp** · 오늘의 대화 — 아침 날씨 인사
+> two people talking about weather, one holding an umbrella, rain outside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 42 — 타고 다니기
+
+**d42-scene.webp** · 오늘의 대화 — 출근 수단 묻기
+> a person waiting at a bus stop, motorbikes passing by, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 43 — 색깔
+
+**d43-scene.webp** · 오늘의 대화 — 원단 색 고르기
+> two workers choosing fabric colors from colorful rolls, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 44 — 마음 말하기
+
+**d44-scene.webp** · 오늘의 대화 — 향수병 위로하기
+> a coworker comforting a homesick friend on a bench, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 45 — 쉬는 날
+
+**d45-scene.webp** · 오늘의 대화 — 주말 계획 묻기
+> friends playing football in a park on a sunny day, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 46 — 집안일
+
+**d46-scene.webp** · 오늘의 대화 — 일요일 집안일
+> a person doing laundry and cleaning a small room, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 47 — 아플 때 더 자세히
+
+**d47-scene.webp** · 오늘의 대화 — 몸살 말하기
+> a pharmacist handing medicine to a person with a scarf, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 48 — 만나서 한잔
+
+**d48-scene.webp** · 오늘의 대화 — 저녁 약속 잡기
+> friends toasting with drinks at a small restaurant table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 49 — 축하와 명절
+
+**d49-scene.webp** · 오늘의 대화 — 생일 축하하기
+> people celebrating with gifts and red envelopes at Tet, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 50 — 베트남에서 살기
+
+**d50-scene.webp** · 오늘의 대화 — 새로 온 사람
+> a newcomer with a passport and suitcase in a vietnamese street, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 51 — 전자 부품
+
+**d51-scene.webp** · 오늘의 대화 — 부품 이름 묻기
+> a worker examining electronic parts on a workbench, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 52 — 조립 동작
+
+**d52-scene.webp** · 오늘의 대화 — 조립 후 시운전
+> a worker assembling a device with a screwdriver on a line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 53 — 클린룸과 정전기
+
+**d53-scene.webp** · 오늘의 대화 — 클린룸 들어가기
+> workers in cleanroom suits and caps entering a clean room, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 54 — 확대해서 검사
+
+**d54-scene.webp** · 오늘의 대화 — 화면 검사
+> an inspector examining a screen through a magnifying camera, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 55 — 라인 돌리기
+
+**d55-scene.webp** · 오늘의 대화 — 라인이 섰을 때
+> a supervisor pointing at a production dashboard beside a conveyor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 56 — 사무실
+
+**d56-scene.webp** · 오늘의 대화 — 자료 주고받기
+> an office desk with a computer, printer and documents, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 57 — 손님 응대
+
+**d57-scene.webp** · 오늘의 대화 — 주문과 계산
+> a staff member serving a customer at a shop counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 58 — 통역 첫걸음
+
+**d58-scene.webp** · 오늘의 대화 — 뜻 물어보기
+> an interpreter standing between two people talking, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 59 — 일정과 출장
+
+**d59-scene.webp** · 오늘의 대화 — 출장 준비
+> a traveler with a suitcase at an airport departure board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 60 — 은행과 서류
+
+**d60-scene.webp** · 오늘의 대화 — 환전하기
+> a person exchanging money at a bank counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters

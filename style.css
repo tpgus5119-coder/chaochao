@@ -502,3 +502,21 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .vk.wide{max-width:130px; flex:2; font-size:15px}
 .vk.go{background:var(--accent); color:var(--accent-fg); border-color:transparent; font-weight:650}
 .hintvi{text-align:center; font-size:22px; font-weight:700; color:var(--dim); letter-spacing:.03em}
+
+/* 홈 메뉴 격자 */
+.menu{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px}
+.mtile{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:14px; display:flex; flex-direction:column; gap:7px;
+}
+.mtile b{font-size:16px}
+.mtile span{font-size:12px; color:var(--dim); line-height:1.4}
+.mbtns{display:flex; gap:6px; flex-wrap:wrap; margin-top:auto}
+.mbtns button{padding:8px 12px; font-size:14px; min-width:0}
+
+/* 직무 갈래 표찰 */
+.catchip{
+  font-style:normal; font-size:10px; font-weight:700; margin-left:6px;
+  border:1px solid var(--line); border-radius:6px; padding:1px 5px; color:var(--dim);
+  vertical-align:1px;
+}

@@ -47,7 +47,7 @@ const pic = (x, cls) => {
 };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const label = d => (typeof d.day === 'string' ? '준비 ' + d.day.slice(1)
-  : d.track === 'work' ? '직무 ' + (d.day - 20) : 'Day ' + d.day);
+  : d.track === 'work' ? '직무 ' + (d.n || d.day - 20) : 'Day ' + (d.n || d.day));
 
 /* ---------- 소리 ---------- */
 /* 아이폰 사파리는 '사용자가 방금 누른 것'이 아니면 새 Audio 재생을 막는다.
@@ -461,7 +461,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'mark', 'rules', 'chat', 'write', 'type'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'mark', 'rules', 'chat', 'write', 'type', 'speak'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -574,17 +574,7 @@ function weekWords() {
 }
 
 function renderWeekly() {
-  const ws = weekWords();
-  const box = $('#weekly');
-  box.hidden = ws.length < 10;
-  if (box.hidden) return;
-  const dow = new Date().getDay();          // 0=일
-  const due = dow === 0 || dow === 6;       // 주말에 권한다
-  $('#weeklyN').textContent = ws.length + '개';
-  $('#weeklyWhy').textContent = due
-    ? '이번 주에 배운 것을 통째로 한 바퀴 — 지금이 좋은 때입니다'
-    : '이번 주에 배운 것을 통째로 한 바퀴 (주말에 권합니다)';
-  box.dataset.due = due ? '1' : '0';
+  $('#goWeekly').hidden = weekWords().length < 10;
 }
 
 /* ---------- 홈 ---------- */
@@ -600,10 +590,14 @@ const GROUPS = [
   [d => d.day >= 6 && d.day <= 10, '파트 2 · 숫자와 시간'],
   [d => d.day >= 11 && d.day <= 15, '파트 3 · 일과·음식·시장'],
   [d => d.day >= 16 && d.day <= 20, '파트 4 · 아플 때·부탁·약속'],
-  [d => d.track === 'work' && d.day <= 25, '직무 파트 1 · 공장과 봉제'],
-  [d => d.track === 'work' && d.day <= 30, '직무 파트 2 · 품질·안전·소통'],
-  [d => d.track === 'work' && d.day <= 35, '직무 파트 3 · 박음질·재단·기록'],
-  [d => d.track === 'work', '직무 파트 4 · 포장·회사생활·연락']
+  [d => !d.track && d.day >= 41 && d.day <= 45, '파트 5 · 날씨·교통·색·마음'],
+  [d => !d.track && d.day >= 46, '파트 6 · 모임·건강·베트남 생활'],
+  [d => d.track === 'work' && d.day <= 25, '직무 1 · 공장과 봉제'],
+  [d => d.track === 'work' && d.day <= 30, '직무 2 · 품질·안전·소통'],
+  [d => d.track === 'work' && d.day <= 35, '직무 3 · 박음질·재단·기록'],
+  [d => d.track === 'work' && d.day <= 40, '직무 4 · 포장·회사생활·연락'],
+  [d => d.track === 'work' && d.day <= 55, '직무 5 · 전자·디스플레이'],
+  [d => d.track === 'work', '직무 6 · 사무·서비스 (시티잡)']
 ];
 
 function renderHome() {
@@ -634,15 +628,12 @@ function renderHome() {
   // (아침에 훈련한 집단은 하루가 지나며 오히려 정확도가 떨어졌다)
   const h = new Date().getHours();
   const night = h >= 19 || h < 3;
-  const tb = $('#toneBanner');
-  tb.dataset.night = night ? '1' : '0';
   $('#toneWhy').textContent = night
-    ? '지금이 좋은 때입니다 — 자는 동안 소리가 정리됩니다'
-    : '소리만 듣고 6성조 구별하기';
+    ? '지금이 좋은 때 — 자는 동안 소리가 정리됩니다'
+    : '소리만 듣고 6성조 구별';
 
   const due = dueWords();
-  $('#reviewCard').hidden = due.length === 0;
-  $('#reviewCount').textContent = due.length + '개';
+  $('#revNote').textContent = due.length ? due.length + '개가 복습할 때가 됐어요' : '지금은 밀린 복습이 없어요';
 
   const list = $('#dayList');
   list.textContent = '';
@@ -655,9 +646,11 @@ function renderHome() {
     b.dataset.done = done ? '1' : '0';
     if (nx && d.day === nx.day) b.dataset.next = '1';
     const n = (d.words || []).length;
+    const nm = el('span', 'nm', esc(d.theme));
+    if (d.cat) nm.append(el('i', 'catchip', esc(d.cat)));
     b.append(
       el('span', 'num', esc(label(d))),
-      el('span', 'nm', esc(d.theme)),
+      nm,
       el('span', 'st', done ? '완료 ✔'
         : (n ? n + '단어 + 대화 2문장' : '소리만 · 외울 것 없음'))
     );
@@ -697,10 +690,14 @@ function drawCard() {
 
   if (it.k === 'letter') {
     c.append(el('div', 'vi', esc(x.vi)));
-    c.append(reveal(x.kr_read));
-    c.append(el('div', 'ko', esc(x.ko)));
+    c.append(el('div', 'ko', esc(x.ko)));   // ko에 발음이 이미 있어 따로 안 겹쳐 쓴다
     c.append(el('div', 'exline', '예: <b>' + esc(x.ex) + '</b> — ' + esc(x.ex_ko)));
-    c.append(soundRow(x.ex, true));
+    // 소리는 글자가 아니라 예시 단어를 읽는다 — 버튼에 그걸 밝힌다
+    const row = el('div', 'sound');
+    const a = el('button', 'ghost', esc(x.ex) + ' 듣기'); a.onclick = () => play(x.ex, false);
+    const b2 = el('button', 'ghost', '느리게'); b2.onclick = () => play(x.ex, true);
+    row.append(a, b2); c.append(row);
+    c.append(speakRow(x.ex));               // 준비 단계부터 따라 말하기 + 곡선 비교
   }
 
   if (it.k === 'tone') {
@@ -708,7 +705,7 @@ function drawCard() {
     c.append(el('div', 'tone-shape', toneArrow(x.mark)));
     c.append(reveal(x.kr_read));
     c.append(el('div', 'ko', esc(x.ko)));
-    c.append(soundRow(x.vi, true));
+    c.append(speakRow(x.vi, true));         // 듣기·느리게 + 따라 말하기 + 곡선 비교
   }
 
   if (it.k === 'word') {
@@ -1482,6 +1479,47 @@ function drawType() {
     '둘 다 영어 자판에 텔렉스 규칙(aa→â, dd→đ, 낱말 끝 s→´ …)을 얹는 같은 방식이라, 여기서 익힌 글자 그대로 쓸 수 있습니다.'));
 }
 
+/* ---------- 따라 말하기 연습 ---------- */
+let SP = null;
+function startSpeak() {
+  const ws = practiceWords(8).filter(w => AIDX[w.vi]);
+  if (!ws.length) return;
+  SP = { list: ws, i: 0 };
+  drawSpeak();
+  show('speak', '따라 말하기', true);
+}
+function drawSpeak() {
+  const b = $('#speakBody'); b.textContent = '';
+  resetRec();
+  if (SP.i >= SP.list.length) {
+    const r = el('div', 'result');
+    r.append(el('div', 'n', SP.list.length + '개'));
+    r.append(el('div', null, '소리 내어 말한 만큼 입이 기억합니다'));
+    const hm = el('button', 'primary big', '홈으로'); hm.onclick = renderHome;
+    hm.style.marginTop = '24px'; r.append(hm); b.append(r); return;
+  }
+  const w = SP.list[SP.i];
+  b.append(el('div', 'q', `${SP.i + 1} / ${SP.list.length} · 듣고 따라 말해 보세요`));
+  b.append(el('div', 'qmain', esc(w.vi)));
+  b.append(toneRow(w.tones));
+  b.append(reveal(w.kr_read));
+  b.append(el('div', 'q mid', esc(w.ko)));
+  b.append(speakRow(w.vi, true));
+  const nx = el('button', 'primary big', '다음 ›');
+  nx.style.width = '100%'; nx.style.marginTop = '14px';
+  nx.onclick = () => { SP.i++; drawSpeak(); };
+  b.append(nx);
+  play(w.vi, false);
+}
+
+function startDict() {
+  const ws = practiceWords(8).filter(w => AIDX[w.vi]);
+  if (!ws.length) return;
+  Q = { list: ws.map(w => ({ w, mode: 'dict', opts: [] })), i: 0, ok: 0, day: null, total: ws.length };
+  drawQuiz();
+  show('quiz', '받아쓰기', true);
+}
+
 /* ---------- AI 대화 ----------
    대화 시스템으로 연습하면 말하기가 는다는 메타분석이 있다(말하기 d=0.84).
    단, 왕초보에게는 자유대화보다 '배운 단어 안의 제한 대화'가 낫다 —
@@ -1656,6 +1694,8 @@ function beginChat(mode, myRole) {
 /* ---------- 시작 ---------- */
 $('#back').onclick = renderHome;
 $('#goChat').onclick = startChat;
+$('#goSpeak').onclick = startSpeak;
+$('#goDict').onclick = startDict;
 $('#goWrite').onclick = startWrite;
 $('#goType').onclick = startType;
 $('#chatForm').onsubmit = e => {
