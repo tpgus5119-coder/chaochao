@@ -10,7 +10,6 @@ def slug(vi):
     return s.replace('đ','d').replace('Đ','d').lower().replace(' ','-')
 sys.path.insert(0,'tools')
 from visuals import attach
-from gestures import attach as attach_gesture
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days = []
@@ -28,7 +27,7 @@ SCENE = {1:"👋",2:"🪪",3:"🌏",4:"😊",5:"❓",6:"🚪",7:"🔢",8:"📦",
 for d in out["days"]:
     used = set()
     for w in d["words"]:
-        attach(w); attach_gesture(w)
+        attach(w)
         # 구체어(이모지가 붙는 단어)만 그림 파일 자리를 준다. img/ 에 파일을 넣으면 그걸 보여준다.
         if w.get("emoji"):
             s = slug(w["vi"])                      # 부호를 떼면 겹칠 수 있다 (đau/đầu → dau)

@@ -209,13 +209,13 @@ async function toggleRec(text, btn, box) {
     releaseMic();                      // 녹음이 끝나면 마이크를 놓는다
     if (REC.url) URL.revokeObjectURL(REC.url);
     REC.url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
-    btn.textContent = '🎤 다시 녹음';
+    btn.textContent = '다시 녹음';
     btn.dataset.on = '0';
     bumpSaid();
     drawCompare(text, box);
   };
   mr.start();
-  btn.textContent = '⏹ 멈추기';
+  btn.textContent = '멈추기';
   btn.dataset.on = '1';
   box.textContent = '';
   setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, 8000);
@@ -271,6 +271,44 @@ async function recToWav(blobUrl) {
   return btoa(bin);
 }
 
+/* AI 손글씨 읽기 — 캔버스 그림을 보내 무슨 글자로 읽히는지 받아 적게 한다.
+   글자 판독은 참고용이고, 최종 비교는 정답 보기로 본인이 한다. */
+async function aiRead(canvas, target, box) {
+  const note = el('div', 'cmpnote ainote', 'AI가 읽는 중…');
+  box.querySelector('.ainote')?.remove();
+  box.append(note);
+  try {
+    const t = document.createElement('canvas');
+    t.width = canvas.width; t.height = canvas.height;
+    const g = t.getContext('2d');
+    g.fillStyle = getComputedStyle(canvas).backgroundColor || '#fff';
+    g.fillRect(0, 0, t.width, t.height);
+    g.drawImage(canvas, 0, 0);
+    const b64 = t.toDataURL('image/png').split(',')[1];
+    const r = await fetch(GURL(), {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [
+          { text: '이 그림은 한국인이 베트남어 단어를 손으로 쓴 것이다. 쓰인 글자를 성조 부호까지 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
+          { inline_data: { mime_type: 'image/png', data: b64 } }] }],
+        generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
+      })
+    });
+    if (!r.ok) throw new Error(r.status === 429 ? '오늘 무료 한도를 다 썼습니다' : '연결 실패 (' + r.status + ')');
+    const j = await r.json();
+    const seen = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
+    if (!seen) throw new Error('빈 답이 왔습니다');
+    const clean = x => x.toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+    const exact = clean(seen) === clean(target);
+    const close = stripTone(clean(seen)) === stripTone(clean(target));
+    note.innerHTML = exact
+      ? '<b>AI가 "' + esc(seen) + '" 로 읽었습니다.</b> 부호까지 알아볼 수 있게 썼습니다.'
+      : close
+        ? '<b>AI가 "' + esc(seen) + '" 로 읽었습니다.</b> 글자는 맞습니다 — 성조 부호만 정답과 비교해 보세요.'
+        : 'AI에게는 "<b>' + esc(seen) + '</b>" 로 보입니다. 조금 크게 또박또박 써 보세요.';
+  } catch (e) { note.textContent = 'AI 읽기 실패: ' + (e.message || ''); }
+}
+
 /* AI 받아쓰기 판정.
    실험해 보니 AI는 '무슨 음절인지'는 정확히 듣지만 '성조'는 원어민 소리도 틀렸다.
    그래서 성조 채점은 안 시키고, 글자를 알아들을 수 있는 발음인지만 묻는다.
@@ -307,22 +345,30 @@ async function aiListen(text, blobUrl, box) {
   } catch (e) { note.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
 }
 
-function speakRow(text) {
+function speakRow(text, withSound) {
   const wrap = el('div', 'speak');
+  const row = el('div', 'qplay');
+  if (withSound) {
+    const s1 = el('button', 'ghost', '듣기'); s1.onclick = () => play(text, false);
+    const s2 = el('button', 'ghost', '느리게 듣기'); s2.onclick = () => play(text, true);
+    row.append(s1, s2);
+  }
   if (!canRecord()) {
-    wrap.append(el('div', 'cmpnote', '🗣️ 소리 내어 따라 말해 보세요. 속으로 읽는 것보다 훨씬 잘 남습니다.'));
+    if (withSound) wrap.append(row);
+    wrap.append(el('div', 'cmpnote', '소리 내어 따라 말해 보세요. 속으로 읽는 것보다 훨씬 잘 남습니다.'));
     return wrap;
   }
   const box = el('div', 'cmpbox');
-  const b = el('button', 'rec', '🎤 따라 말하기');
+  const b = el('button', 'rec', '따라 말하기');
   b.onclick = () => toggleRec(text, b, box);
+  row.append(b);
   const pre = el('div', 'curvearea prenat');   // 원어민 높낮이는 묻지 않고 바로 보여준다
   nativeCurve(text).then(nat => {
     if (!nat || !nat.curve) return;
     pre.innerHTML = `<div class="curvebox">${curveSvg(null, nat.curve)}</div>` +
       `<div class="curvelegend"><span class="k nat"></span>원어민 소리 높낮이 (느린 발음)</div>`;
   });
-  wrap.append(b, pre, box);
+  wrap.append(row, pre, box);
   return wrap;
 }
 
@@ -414,7 +460,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone', 'mark', 'rules', 'chat', 'write', 'type'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'mark', 'rules', 'chat', 'write', 'type'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -477,7 +523,7 @@ function renderProgress() {
   const n = dots.filter(d => d.done).length;
   const head = el('div', 'phead');
   head.append(el('strong', null, '이번 주 ' + n + ' / 5일'));
-  head.append(el('span', null, n >= 5 ? '목표 달성 ✔' : '이틀은 쉬어도 됩니다'));
+  if (n >= 5) head.append(el('span', null, '목표 달성 ✔'));
   box.append(head);
 
   const row = el('div', 'dots');
@@ -549,10 +595,10 @@ function dueWords() {
 
 const GROUPS = [
   [d => typeof d.day === 'string', '준비 · 글자와 소리 (3일)'],
-  [d => d.day >= 1 && d.day <= 5, '1주차 · 사람과 인사'],
-  [d => d.day >= 6 && d.day <= 10, '2주차 · 숫자와 시간'],
-  [d => d.day >= 11 && d.day <= 15, '3주차 · 일과·음식·시장'],
-  [d => d.day >= 16 && d.day <= 20, '4주차 · 아플 때·부탁·약속']
+  [d => d.day >= 1 && d.day <= 5, '파트 1 · 사람과 인사'],
+  [d => d.day >= 6 && d.day <= 10, '파트 2 · 숫자와 시간'],
+  [d => d.day >= 11 && d.day <= 15, '파트 3 · 일과·음식·시장'],
+  [d => d.day >= 16 && d.day <= 20, '파트 4 · 아플 때·부탁·약속']
 ];
 
 function renderHome() {
@@ -621,15 +667,9 @@ function startLearn(d) {
 }
 
 /* 한글 독음: 기본 숨김. 시작 14일 뒤에는 아예 안 나온다 */
+/* 한글 발음 — 항상 보여준다 (사용자 지시) */
 function reveal(txt) {
-  if (!txt) return el('span');
-  if (!S.firstDay) { S.firstDay = now(); save(); }
-  if (S.kr === 'off') return el('span');
-  const b = el('button', 'reveal', '');
-  const open = () => { b.dataset.open = '1'; b.textContent = '[' + txt + ']'; };
-  const shut = () => { b.dataset.open = '0'; b.textContent = '한글 발음 보기'; };
-  if (S.kr === 'hide') { shut(); b.onclick = open; } else { open(); b.onclick = shut; }
-  return b;
+  return txt ? el('div', 'krline', '[' + esc(txt) + ']') : el('span');
 }
 
 function drawCard() {
@@ -640,31 +680,30 @@ function drawCard() {
 
   if (it.k === 'letter') {
     c.append(el('div', 'vi', esc(x.vi)));
+    c.append(reveal(x.kr_read));
     c.append(el('div', 'ko', esc(x.ko)));
     c.append(el('div', 'exline', '예: <b>' + esc(x.ex) + '</b> — ' + esc(x.ex_ko)));
     c.append(soundRow(x.ex, true));
-    c.append(reveal(x.kr_read));
   }
 
   if (it.k === 'tone') {
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(el('div', 'tone-shape', toneArrow(x.mark)));
-    c.append(soundRow(x.vi, true));
-    c.append(el('div', 'ko', esc(x.ko) + ' <span style="color:var(--dim)">· ' + esc(x.mark) + '</span>'));
     c.append(reveal(x.kr_read));
+    c.append(el('div', 'ko', esc(x.ko)));
+    c.append(soundRow(x.vi, true));
   }
 
   if (it.k === 'word') {
+    // 순서 통일: 그림 → 단어 → 성조 화살표 → 한글 발음 → 뜻 → (한자·남부) → 소리 줄
     const p = pic(x, 'pic'); if (p) c.append(p);
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(toneRow(x.tones));
-    c.append(soundRow(x.vi, true));
-    c.append(reveal(x.kr_read));               // 그림 → 단어 → 발음 → 뜻 순서
+    c.append(reveal(x.kr_read));
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
-    if (x.south) c.append(el('div', 'south', '남부 ▸ ' + esc(x.south)));
-    if (x.gesture) c.append(el('div', 'gest', '✋ ' + esc(x.gesture)));
-    c.append(speakRow(x.vi));
+    if (x.south) c.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
+    c.append(speakRow(x.vi, true));
   }
 
   if (it.k === 'dialog') {
@@ -691,13 +730,14 @@ function drawCard() {
       const row = el('div', 'line ' + (l.who === 'A' ? 'a' : 'b'));
       const head = el('div', 'lhead');
       head.append(el('span', 'who', l.who));
-      const bt = el('button', 'ghost', '🔊');
+      const bt = el('button', 'ghost', '듣기');
       bt.onclick = () => play(l.vi, false);
-      const bs = el('button', 'ghost', '🐢');
+      const bs = el('button', 'ghost', '느리게');
       bs.onclick = () => play(l.vi, true);
       head.append(bt, bs);
       row.append(head);
       row.append(el('div', 'lvi', esc(l.vi)));
+      row.append(reveal(l.kr_read));
       row.append(el('div', 'lko', esc(l.ko)));
       // 단어별 풀이 + 그 단어의 성조를 한 칸에
       const norm = x => x.toLowerCase().replace(/[.,!?;:'"]/g, '');
@@ -718,7 +758,6 @@ function drawCard() {
         g.append(cell);
       });
       row.append(g);
-      row.append(reveal(l.kr_read));
       row.append(speakRow(l.vi));
       lineEls.push(row);
       c.append(row);
@@ -734,7 +773,7 @@ function drawCard() {
         L2.append(el('span', 'exvi', esc(o.vi)));
         if (o.ko) L2.append(el('span', 'exko', esc(o.ko)));
         if (o.kr_read) L2.append(el('span', 'exkr', '[' + esc(o.kr_read) + ']'));
-        b.append(L2, el('span', 'exspk', '🔊'));
+        b.append(L2, el('span', 'exspk', '듣기'));
         b.onclick = () => play(o.vi, false);
         sw.append(b);
       });
@@ -756,7 +795,7 @@ function drawCard() {
   }
   $('#prev').disabled = L.i === 0;
   const last = L.i === L.items.length - 1;
-  $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›' : '대화 미션 ›') : '다음 ›';
+  $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›' : '오늘 완료 ›') : '다음 ›';
 }
 
 $('#prev').onclick = () => { if (!$('#learn').hidden && L.i > 0) { L.i--; drawCard(); } };
@@ -766,7 +805,7 @@ $('#next').onclick = () => {
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
   if ((L.day.words || []).length) startQuiz(L.day.words, L.day);
-  else showMission(L.day);
+  else { S.done[L.day.day] = true; touchToday(); save(); renderHome(); }
 };
 
 /* ---------- 퀴즈 ---------- */
@@ -811,7 +850,7 @@ function drawQuiz() {
 
   if (q.mode === 'listen') {
     const wrap = el('div', 'qplay');
-    const b = el('button', 'primary big', '다시 듣기');
+    const b = el('button', 'primary big', '듣기');
     b.onclick = () => play(q.w.vi, false);
     const sl = el('button', 'ghost', '느리게 듣기');
     sl.onclick = () => play(q.w.vi, true);
@@ -837,7 +876,7 @@ function drawQuiz() {
    보고 베끼기는 인출이 없어 효과가 약하다 — 소리→철자 인출이라야 남는다. */
 function drawDict(body, q) {
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '다시 듣기');
+  const b = el('button', 'primary big', '듣기');
   b.onclick = () => play(q.w.vi, false);
   const sl = el('button', 'ghost', '느리게 듣기');
   sl.onclick = () => play(q.w.vi, true);
@@ -894,7 +933,6 @@ function drawDict(body, q) {
 function drawRecall(body, q) {
   body.append(el('div', 'qmain', esc(q.w.ko)));
   { const p = pic(q.w, 'pic mid'); if (p) body.append(p); }
-  if (q.w.gesture) body.append(el('div', 'gest mid', '✋ ' + esc(q.w.gesture)));
 
   const hint = el('p', 'cmpnote', '베트남어로 <b>입 밖에 내어</b> 말해 보세요. 속으로만 생각하면 효과가 절반입니다.');
   body.append(hint);
@@ -909,6 +947,7 @@ function drawRecall(body, q) {
     const ans = el('div', 'ansbox');
     ans.append(el('div', 'vi sm', esc(q.w.vi)));
     ans.append(toneRow(q.w.tones));
+    ans.append(reveal(q.w.kr_read));
     const sr = soundRow(q.w.vi, true);
     sr.classList.add('mid');
     ans.append(sr);
@@ -978,9 +1017,9 @@ function finishQuiz() {
     const days = Math.max(1, Math.round((soon - now()) / DAY));
     r.append(el('p', 'note', `다음 복습은 ${days}일 뒤입니다. 잊기 직전에 다시 꺼내야 오래 남습니다.`));
   }
-  const b = el('button', 'primary big', Q.day ? '오늘의 대화 미션 ›' : '홈으로');
+  const b = el('button', 'primary big', Q.day ? '오늘 완료' : '홈으로');
   b.style.marginTop = '24px';
-  b.onclick = () => Q.day ? showMission(Q.day) : renderHome();
+  b.onclick = () => { if (Q.day) { S.done[Q.day.day] = true; touchToday(); save(); } renderHome(); };
   r.append(b);
   $('#quizBody').textContent = '';
   $('#quizBody').append(r);
@@ -1010,7 +1049,7 @@ function drawTone() {
   body.append(el('div', 'tonehint', `글자는 모두 <b>${esc(g.base)}</b> 로 같습니다. 성조만 다릅니다.`));
 
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '다시 듣기');
+  const b = el('button', 'primary big', '듣기');
   b.onclick = () => play(it.vi, false, S.voice);
   const sl = el('button', 'ghost', '느리게 듣기');
   sl.onclick = () => play(it.vi, true, S.voice);
@@ -1112,12 +1151,17 @@ function withMark(bare, mark, pos) {
 }
 
 function markPool() {
-  // 성조가 붙은 한 음절짜리 단어만 고른다
-  return allWords().filter(w => {
-    if (w.vi.split(' ').length !== 1) return false;
-    const t = (w.tones || [])[0];
-    return t && AIDX[w.vi];
-  });
+  // 배운 단어 위주. 부호 없는(ngang) 단어는 뺀다 — 제시 글자가 곧 답이 되어버린다.
+  const learned = new Set();
+  for (const d of ALL) {
+    (d.words || []).forEach(w => learned.add(w.vi));
+    if (typeof d.day === 'number' && !S.done[d.day]) break;
+  }
+  const ok = w => w.vi.split(' ').length === 1 && (w.tones || [])[0]
+    && w.tones[0].name !== 'ngang' && AIDX[w.vi];
+  const all = allWords().filter(ok);
+  const mine = all.filter(w => learned.has(w.vi));
+  return mine.length >= 6 ? mine : all;
 }
 
 function startMarks() {
@@ -1141,7 +1185,7 @@ function drawMark() {
   body.append(el('div', 'markbare', esc(bare)));
 
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '다시 듣기');
+  const b = el('button', 'primary big', '듣기');
   b.onclick = () => play(w.vi, false);
   const sl = el('button', 'ghost', '느리게 듣기');
   sl.onclick = () => play(w.vi, true);
@@ -1152,15 +1196,16 @@ function drawMark() {
   MARKS.forEach(mk => {
     const shown = withMark(bare, mk.m, pos);
     const btn = el('button');
+    btn.dataset.tone = mk.name;
     btn.append(el('span', 'mkvi', esc(shown)),
-               el('span', 'mkname', esc(mk.name)),
+               el('span', 'gt ' + mk.name, toneArrow(mk.name)),
                el('span', 'mkko', esc(mk.ko)));
     btn.onclick = () => {
       [...opts.children].forEach(x => x.disabled = true);
       const good = mk.name === want;
       btn.dataset.r = good ? 'ok' : 'no';
       if (!good) [...opts.children].forEach(x => {
-        if (x.querySelector('.mkname').textContent === want) x.dataset.r = 'ok';
+        if (x.dataset.tone === want) x.dataset.r = 'ok';
       });
       if (good) MK.ok++;
       grade(w.vi, good);
@@ -1169,7 +1214,6 @@ function drawMark() {
     opts.append(btn);
   });
   body.append(opts);
-  body.append(el('div', 'cmpnote', '뜻: ' + esc(w.ko)));
   play(w.vi, false);
 }
 
@@ -1255,31 +1299,6 @@ function showRules() {
   show('rules', '꼭 알아야 할 규칙 3개', true);
 }
 
-/* ---------- 미션 ---------- */
-function showMission(d) {
-  const m = d.mission, body = $('#missionBody');
-  body.textContent = '';
-  body.append(el('h2', 'mgoal', '🎯 ' + esc(m.goal)));
-  body.append(el('p', 'mhow', esc(m.how)));
-  const roles = el('div', 'roles');
-  [['A', m.a], ['B', m.b]].forEach(([k, v]) => {
-    const r = el('div', 'role');
-    r.append(el('b', null, k + ' 역할'), el('span', null, esc(v)));
-    roles.append(r);
-  });
-  body.append(roles);
-  body.append(el('div', 'rule',
-    '<b>✋ 규칙 하나 — 말할 때 손짓을 같이 하세요.</b><br>' +
-    '몸을 쓰며 외운 단어는 그냥 외운 것보다 훨씬 오래 갑니다. ' +
-    '연구에서는 14개월 뒤까지 차이가 남았습니다. 어색해도 손을 움직이세요.'));
-  body.append(el('p', 'note', '한 명이 A, 다른 한 명이 B를 맡습니다. 상대 카드는 보지 않습니다. 대화는 단톡방에서 하세요.'));
-  const b = el('button', 'primary big', '오늘 완료');
-  b.style.marginTop = '20px'; b.style.width = '100%';
-  b.onclick = () => { S.done[d.day] = true; touchToday(); save(); renderHome(); };
-  body.append(b);
-  show('mission', '오늘의 대화 미션', true);
-}
-
 /* ---------- 쓰기 연습 (손글씨 + 화면 자판) ----------
    손으로 쓰면 눈으로만 볼 때보다 글자가 더 잘 남는다(쓰는 동작이 기억에 같이 저장된다).
    손글씨는 자동 판정을 하지 않는다 — 판정이 목적이 아니라 쓰는 행위가 목적이고,
@@ -1309,7 +1328,7 @@ function drawPad(host) {
   c.onpointerdown = e => { if (!g) return; on = true; c.setPointerCapture(e.pointerId); const [x, y] = pos(e); g.beginPath(); g.moveTo(x, y); };
   c.onpointermove = e => { if (!on || !g) return; const [x, y] = pos(e); g.lineTo(x, y); g.stroke(); };
   c.onpointerup = c.onpointercancel = () => { on = false; };
-  return { clear: () => { if (!g) return; const d = devicePixelRatio || 1; g.clearRect(0, 0, c.width / d, c.height / d); } };
+  return { canvas: c, clear: () => { if (!g) return; const d = devicePixelRatio || 1; g.clearRect(0, 0, c.width / d, c.height / d); } };
 }
 
 let WR = null;
@@ -1333,13 +1352,18 @@ function drawWrite() {
   b.append(el('div', 'q', `${WR.i + 1} / ${WR.list.length} · 듣고, 떠올려서, 손으로 써 보세요`));
   b.append(el('div', 'qmain', esc(w.ko)));
   const wrap = el('div', 'qplay');
-  const p1 = el('button', 'primary', '다시 듣기'); p1.onclick = () => play(w.vi, false);
+  const p1 = el('button', 'primary', '듣기'); p1.onclick = () => play(w.vi, false);
   const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
   wrap.append(p1, p2); b.append(wrap);
   play(w.vi, false);
   const pad = drawPad(b);
   const row = el('div', 'qplay');
   const clr = el('button', 'ghost', '지우기'); clr.onclick = pad.clear;
+  if (aiReady()) {
+    const ai = el('button', 'ghost', 'AI가 읽기');
+    ai.onclick = () => { ai.disabled = true; aiRead(pad.canvas, w.vi, b).finally(() => { ai.disabled = false; }); };
+    row.append(ai);
+  }
   const showA = el('button', 'primary', '정답 보기');
   row.append(clr, showA); b.append(row);
   showA.onclick = () => {
@@ -1347,7 +1371,7 @@ function drawWrite() {
     const ans = el('div', 'ansbox');
     ans.append(el('div', 'vi sm', esc(w.vi)));
     ans.append(toneRow(w.tones));
-    if (w.kr_read && S.kr !== 'off') ans.append(el('div', 'krline', '[' + esc(w.kr_read) + ']'));
+    if (w.kr_read) ans.append(el('div', 'krline', '[' + esc(w.kr_read) + ']'));
     b.append(ans);
     const g2 = el('div', 'opts');
     const okB = el('button', null, '✓ 비슷하게 썼다');
@@ -1381,7 +1405,7 @@ function drawType() {
   b.append(el('div', 'q', `${TY.i + 1} / ${TY.list.length} · 듣고 자판으로 쳐 보세요`));
   b.append(el('div', 'qmain', esc(w.ko)));
   const wrap = el('div', 'qplay');
-  const p1 = el('button', 'primary', '다시 듣기'); p1.onclick = () => play(w.vi, false);
+  const p1 = el('button', 'primary', '듣기'); p1.onclick = () => play(w.vi, false);
   const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
   // 디딤돌: 먼저 기억으로 쳐 보고, 막히면 글자를 보고 따라 친다.
   // 단 보고 친 성공은 복습 사다리를 올리지 않는다 — 기억에서 꺼낸 게 아니니까.
@@ -1509,7 +1533,7 @@ function aiBubble(text) {
   const b = bubble('ai');
   if (!m.VI) { b.textContent = text.trim(); return; }
   b.append(el('div', 'cvi', esc(m.VI)));
-  if (m.KR && S.kr !== 'off') b.append(el('div', 'ckr', '[' + esc(m.KR) + ']'));
+  if (m.KR) b.append(el('div', 'ckr', '[' + esc(m.KR) + ']'));
   if (m.KO) b.append(el('div', 'cko', esc(m.KO)));
   if (m.FIX) b.append(el('div', 'cfix', '✎ ' + esc(m.FIX)));
   if (viVoice()) {
@@ -1683,17 +1707,6 @@ $('#bkImport').onclick = async () => {
   }
 };
 
-/* 한글 발음: 켜짐 → 눌러야 보임 → 아예 끔, 세 단계 */
-const KR = { show: ['한', '한글 발음 켜짐'], hide: ['한*', '눌러야 보임'], off: ['한✕', '한글 발음 꺼짐'] };
-function drawKr() {
-  $('#krToggle').textContent = KR[S.kr || 'show'][0];
-  $('#krToggle').title = KR[S.kr || 'show'][1];
-}
-$('#krToggle').onclick = () => {
-  S.kr = { show: 'hide', hide: 'off', off: 'show' }[S.kr || 'show'];
-  save(); drawKr();
-  if (!$('#learn').hidden) drawCard();
-};
 
 $('#voice').onclick = () => {
   S.voice = S.voice === 'f' ? 'm' : 'f'; save();
@@ -1721,7 +1734,6 @@ Promise.all([
   DRILL = d.tonedrill || [];
   AIDX = a;
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';
-  drawKr();
   drawRegion();
   renderHome();
 }).catch(e => { $('#title').textContent = '불러오기 실패'; console.error(e); });
