@@ -179,6 +179,17 @@ EN = {
  "d20-hua":"two hands making a pinky promise",
  "d20-chac-chan":"a shield with a check mark",
  "d20-quan-trong":"a gold star with a red exclamation mark",
+ # 직무 파트 (Day 21~30) — 장면만 (단어 그림은 추후)
+ "d21-scene":"a new worker greeting colleagues at a garment factory entrance",
+ "d22-scene":"a sewing workshop table with fabric, thread, needles and scissors",
+ "d23-scene":"two workers examining parts of a shirt on a table",
+ "d24-scene":"a worker sewing at a sewing machine while another irons a shirt",
+ "d25-scene":"a quality inspector checking a garment and pointing at a stitch",
+ "d26-scene":"workers counting stacked boxes of clothes in a warehouse",
+ "d27-scene":"a supervisor showing safety gloves and a mask to a worker",
+ "d28-scene":"a senior worker demonstrating a task while a trainee watches",
+ "d29-scene":"a worker looking at a stopped conveyor machine with warning light",
+ "d30-scene":"a worker politely talking to a team leader at an office desk",
 }
 
 d = json.load(open('data/days.json'))

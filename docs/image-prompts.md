@@ -501,3 +501,53 @@
 
 **d20-quan-trong.webp** · 중요하다 (quan trọng)
 > a gold star with a red exclamation mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 21 — 회사와 사람들
+
+**d21-scene.webp** · 오늘의 대화 — 첫 출근 인사
+> a new worker greeting colleagues at a garment factory entrance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 22 — 재료와 도구
+
+**d22-scene.webp** · 오늘의 대화 — 자재 찾기
+> a sewing workshop table with fabric, thread, needles and scissors, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 23 — 옷의 부위
+
+**d23-scene.webp** · 오늘의 대화 — 사이즈 확인
+> two workers examining parts of a shirt on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 24 — 동작 — 자르고 박고
+
+**d24-scene.webp** · 오늘의 대화 — 오늘 할 일
+> a worker sewing at a sewing machine while another irons a shirt, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 25 — 품질과 불량
+
+**d25-scene.webp** · 오늘의 대화 — 불량 알리기
+> a quality inspector checking a garment and pointing at a stitch, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 26 — 수량과 납기
+
+**d26-scene.webp** · 오늘의 대화 — 물량 확인
+> workers counting stacked boxes of clothes in a warehouse, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 27 — 안전
+
+**d27-scene.webp** · 오늘의 대화 — 위험 확인
+> a supervisor showing safety gloves and a mask to a worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 28 — 지시 알아듣기
+
+**d28-scene.webp** · 오늘의 대화 — 맞는지 물어보기
+> a senior worker demonstrating a task while a trainee watches, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 29 — 기계와 전기
+
+**d29-scene.webp** · 오늘의 대화 — 기계 고장
+> a worker looking at a stopped conveyor machine with warning light, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 30 — 근태와 보고
+
+**d30-scene.webp** · 오늘의 대화 — 휴가 말하기
+> a worker politely talking to a team leader at an office desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters

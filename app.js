@@ -46,7 +46,8 @@ const pic = (x, cls) => {
   return d;
 };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const label = d => (typeof d.day === 'string' ? '준비 ' + d.day.slice(1) : 'Day ' + d.day);
+const label = d => (typeof d.day === 'string' ? '준비 ' + d.day.slice(1)
+  : d.track === 'work' ? '직무 ' + (d.day - 20) : 'Day ' + d.day);
 
 /* ---------- 소리 ---------- */
 /* 아이폰 사파리는 '사용자가 방금 누른 것'이 아니면 새 Audio 재생을 막는다.
@@ -598,15 +599,29 @@ const GROUPS = [
   [d => d.day >= 1 && d.day <= 5, '파트 1 · 사람과 인사'],
   [d => d.day >= 6 && d.day <= 10, '파트 2 · 숫자와 시간'],
   [d => d.day >= 11 && d.day <= 15, '파트 3 · 일과·음식·시장'],
-  [d => d.day >= 16 && d.day <= 20, '파트 4 · 아플 때·부탁·약속']
+  [d => d.day >= 16 && d.day <= 20, '파트 4 · 아플 때·부탁·약속'],
+  [d => d.track === 'work' && d.day <= 25, '직무 파트 1 · 공장과 봉제'],
+  [d => d.track === 'work', '직무 파트 2 · 품질·안전·회사생활']
 ];
 
 function renderHome() {
   renderProgress();
   renderWeekly();
   // '오늘 할 일' 단추 하나를 맨 위에 크게 — 성공한 언어 앱들의 공통 구조.
-  // 열자마자 고를 게 많으면 시작 자체가 늦어진다(선택 마찰). 눌 것 하나만 보여준다.
-  const nx = ALL.find(d => !S.done[d.day]);
+  // 준비를 마치면 일상 세트와 직무 세트를 하루 하나씩 번갈아 추천한다.
+  // (둘 다 하고 싶은 사람은 목록에서 직접 열면 된다 — 막지 않는다)
+  const nx = (() => {
+    const prep = ALL.find(d => typeof d.day === 'string' && !S.done[d.day]);
+    if (prep) return prep;
+    const daily = ALL.find(d => typeof d.day === 'number' && !d.track && !S.done[d.day]);
+    const work = ALL.find(d => d.track === 'work' && !S.done[d.day]);
+    if (daily && work) {
+      const nd = ALL.filter(d => typeof d.day === 'number' && !d.track && S.done[d.day]).length;
+      const nw = ALL.filter(d => d.track === 'work' && S.done[d.day]).length;
+      return nd <= nw ? daily : work;
+    }
+    return daily || work;
+  })();
   const hero = $('#heroGo');
   hero.hidden = !nx;
   if (nx) {
