@@ -74,6 +74,31 @@ function soundRow(text, withSlow) {
   return row;
 }
 
+/* 정답·오답 소리 — 답한 '즉시' 오는 피드백이 늦게 오는 피드백보다 낫다.
+   소리는 짧고 작게(0.2초), 진동은 안드로이드에서만 울린다. */
+function fxTone(ok) {
+  try {
+    const c = getCtx(), t = c.currentTime;
+    if (ok) [880, 1318].forEach((f, i) => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(.07, t + i * .09);
+      g.gain.exponentialRampToValueAtTime(.001, t + i * .09 + .12);
+      o.connect(g); g.connect(c.destination);
+      o.start(t + i * .09); o.stop(t + i * .09 + .13);
+    });
+    else {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = 'triangle'; o.frequency.value = 196;
+      g.gain.setValueAtTime(.06, t);
+      g.gain.exponentialRampToValueAtTime(.001, t + .18);
+      o.connect(g); g.connect(c.destination);
+      o.start(t); o.stop(t + .2);
+    }
+    navigator.vibrate?.(ok ? 12 : 60);
+  } catch (e) { }
+}
+
 /* 성조를 화살표로 그린다 — 이름 없이 방향과 끝점만. 화살촉이 소리가 끝나는 곳이다 */
 const TARR = {
   'ngang': { d: 'M3 10 L15 10',                     x: 16,   y: 10,   a: 0 },
@@ -304,7 +329,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone', 'mark', 'rules'];
+const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone', 'mark', 'rules', 'chat'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -441,13 +466,22 @@ const GROUPS = [
   [d => typeof d.day === 'string', '준비 · 글자와 소리 (3일)'],
   [d => d.day >= 1 && d.day <= 5, '1주차 · 사람과 인사'],
   [d => d.day >= 6 && d.day <= 10, '2주차 · 숫자와 시간'],
-  [d => d.day >= 11 && d.day <= 15, '3주차 · 현장의 말'],
-  [d => d.day >= 16 && d.day <= 20, '4주차 · 안전과 설비']
+  [d => d.day >= 11 && d.day <= 15, '3주차 · 일과·음식·시장'],
+  [d => d.day >= 16 && d.day <= 20, '4주차 · 아플 때·부탁·약속']
 ];
 
 function renderHome() {
   renderProgress();
   renderWeekly();
+  // '오늘 할 일' 단추 하나를 맨 위에 크게 — 성공한 언어 앱들의 공통 구조.
+  // 열자마자 고를 게 많으면 시작 자체가 늦어진다(선택 마찰). 눌 것 하나만 보여준다.
+  const nx = ALL.find(d => !S.done[d.day]);
+  const hero = $('#heroGo');
+  hero.hidden = !nx;
+  if (nx) {
+    hero.innerHTML = `<b>▶ 오늘 학습 시작</b><span>${esc(label(nx) + ' · ' + nx.theme)}</span>`;
+    hero.onclick = () => startLearn(nx);
+  }
   // 성조 훈련 시점: 저녁에 하면 자는 동안 '성조 범주'로 정리된다는 실험이 있다.
   // (아침에 훈련한 집단은 하루가 지나며 오히려 정확도가 떨어졌다)
   const h = new Date().getHours();
@@ -471,6 +505,7 @@ function renderHome() {
     const done = !!S.done[d.day];
     const b = el('button');
     b.dataset.done = done ? '1' : '0';
+    if (nx && d.day === nx.day) b.dataset.next = '1';
     const n = (d.words || []).length;
     b.append(
       el('span', 'num', esc(label(d))),
@@ -542,6 +577,7 @@ function drawCard() {
     c.append(reveal(x.kr_read));               // 그림 → 단어 → 발음 → 뜻 순서
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
+    if (x.south) c.append(el('div', 'south', '남부 ▸ ' + esc(x.south)));
     if (x.gesture) c.append(el('div', 'gest', '✋ ' + esc(x.gesture)));
     c.append(speakRow(x.vi));
   }
@@ -736,7 +772,7 @@ function drawRecall(body, q) {
 
     const grade2 = el('div', 'opts');
     const ok = el('button', null, '✓ 맞았어요');
-    ok.onclick = () => { grade(q.w.vi, true); Q.ok++; Q.i++; drawQuiz(); };
+    ok.onclick = () => { fxTone(true); grade(q.w.vi, true); Q.ok++; Q.i++; drawQuiz(); };
     const no = el('button', null, '✗ 못 맞혔어요');
     no.onclick = () => { grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
     grade2.append(ok, no);
@@ -747,6 +783,7 @@ function drawRecall(body, q) {
 function answer(btn, correct, w) {
   [...btn.parentNode.children].forEach(b => b.disabled = true);
   btn.dataset.r = correct ? 'ok' : 'no';
+  fxTone(correct);
   if (!correct) {
     [...btn.parentNode.children].forEach(b => {
       if (b.textContent === w.vi || b.textContent === w.ko) b.dataset.r = 'ok';
@@ -780,6 +817,13 @@ function finishQuiz() {
   const n = Q.ok, t = Q.total;
   const again = Q.list.length - Q.total;
   const r = el('div', 'result');
+  if (n === t && t > 0) {          // 다 맞힌 날은 축하가 있어야 한다
+    r.classList.add('perfect');
+    const cf = el('div', 'confetti');
+    for (let i = 0; i < 14; i++) { const s = el('i'); s.style.setProperty('--i', i); cf.append(s); }
+    r.append(cf);
+    fxTone(true);
+  }
   r.append(el('div', 'n', n + ' / ' + t));
   if (again) r.append(el('div', 'sub', again + '개는 그 자리에서 한 번 더 물었습니다'));
   r.append(el('div', null, n === t ? '전부 맞혔습니다' :
@@ -840,6 +884,7 @@ function drawTone() {
       [...opts.children].forEach(x => x.disabled = true);
       const good = o.vi === it.vi;
       btn.dataset.r = good ? 'ok' : 'no';
+      fxTone(good);
       if (!good) [...opts.children].forEach(x => {
         if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
       });
@@ -1047,6 +1092,20 @@ function showRules() {
     c.append(t);
     b.append(c);
   });
+  // 남부 배치 대비 — 글은 같고 소리가 다르다
+  const sc = el('div', 'rulecard');
+  sc.append(el('div', 'rhead', '<span class="ri">🧭</span><b>남부(호찌민 쪽)로 가게 되면</b>'));
+  sc.append(el('div', 'rbody',
+    '글은 완전히 같고 <b>소리</b>가 다릅니다. 지금은 북부(하노이) 소리로 배우고, ' +
+    '배치가 정해지면 남부 소리를 추가합니다. 단어 카드의 <b>남부 ▸</b> 표시가 다른 단어입니다.'));
+  const t2 = el('div', 'rex');
+  [['d·gi·v', "'이(y)' 소리가 된다 — dạ 자→야"],
+   ['r', "북부 '즈' → 남부는 혀 굴리는 '르'"],
+   ['성조', 'hỏi·ngã가 하나로 합쳐져 사실상 5성조'],
+   ['다른 단어', 'bố→<b>ba</b>(아빠) · mẹ→<b>má</b> · đắt→<b>mắc</b>(비싸다) · muộn→<b>trễ</b>(늦다) · nghìn→<b>ngàn</b>(천) · vâng→<b>dạ</b>(네)']]
+    .forEach(([k, v]) => { const row = el('div', 'rrow'); row.append(el('span', 'rk', esc(k)), el('span', 'rv', v)); t2.append(row); });
+  sc.append(t2);
+  b.append(sc);
   b.append(el('p', 'note',
     '이 화면은 한 번 읽고 잊어도 됩니다. 매일 대화를 하다 보면 저절로 몸에 붙습니다.'));
   show('rules', '꼭 알아야 할 규칙 3개', true);
@@ -1077,8 +1136,170 @@ function showMission(d) {
   show('mission', '오늘의 대화 미션', true);
 }
 
+/* ---------- AI 대화 ----------
+   대화 시스템으로 연습하면 말하기가 는다는 메타분석이 있다(말하기 d=0.84).
+   단, 왕초보에게는 자유대화보다 '배운 단어 안의 제한 대화'가 낫다 —
+   그래서 지금까지 배운 단어 목록을 매번 같이 보낸다.
+   키는 이 기기에만 저장되고 백업에는 안 들어간다. 대화 내용은 구글 서버로 간다. */
+let CH = null;
+
+function learnedVi() {
+  const out = [];
+  for (const d of ALL) {
+    (d.words || []).forEach(w => out.push(w.vi));
+    if (typeof d.day === 'number' && !S.done[d.day]) break;   // 오늘(진행 중인 날)까지만
+  }
+  return out;
+}
+const todayDay = () => ALL.find(d => typeof d.day === 'number' && !S.done[d.day]) || ALL[ALL.length - 1];
+
+function chatSys(mode) {
+  const t = todayDay();
+  const dlg = (t.dialog?.lines || []).map(l => l.who + ': ' + l.vi).join(' / ');
+  return '당신은 베트남어를 처음 배우는 한국인의 대화 상대다. 북부(하노이) 표준을 쓴다.\n' +
+    '반드시 이 형식으로만 답한다. 다른 말은 붙이지 않는다:\n' +
+    'VI: 베트남어 한 문장 (최대 7단어)\nKR: 그 발음의 한글 표기\nKO: 한국어 뜻\n' +
+    '학습자의 베트남어에 성조나 단어 실수가 있으면 넷째 줄 "FIX: 짧은 교정"으로 알려준다.\n' +
+    '가능한 한 이 단어들만 쓴다(이름·지명은 예외): ' + learnedVi().join(', ') + '\n' +
+    '한 번에 한 문장. 쉬운 질문으로 대화를 이어간다. 학습자가 한국어로 쓰면 그 말을 베트남어로 어떻게 하는지 알려주고 따라 하게 한다.\n' +
+    (mode === 'today'
+      ? '역할극: 오늘의 대화(' + dlg + ')의 B 역할로 시작해서 조금씩 넓힌다.'
+      : '아주 쉬운 자유 대화. 인사로 시작한다.');
+}
+
+function bubble(cls, text) {
+  const b = el('div', 'cb ' + cls);
+  if (text != null) b.textContent = text;
+  $('#chatLog').append(b);
+  b.scrollIntoView({ block: 'end', behavior: 'smooth' });
+  return b;
+}
+
+/* 기기에 베트남어 음성이 깔려 있을 때만 AI 문장을 소리로 들려줄 수 있다 */
+function viVoice() {
+  const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+  return vs.find(v => (v.lang || '').toLowerCase().startsWith('vi')) || null;
+}
+function speakVi(t) {
+  const u = new SpeechSynthesisUtterance(t);
+  const v = viVoice(); if (v) u.voice = v;
+  u.lang = 'vi-VN'; u.rate = .85;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+
+function aiBubble(text) {
+  const m = {};
+  text.split('\n').forEach(l => {
+    const mt = l.match(/^\s*(VI|KR|KO|FIX)\s*:\s*(.+)/i);
+    if (mt) { const k = mt[1].toUpperCase(); m[k] = m[k] ? m[k] + ' ' + mt[2].trim() : mt[2].trim(); }
+  });
+  const b = bubble('ai');
+  if (!m.VI) { b.textContent = text.trim(); return; }
+  b.append(el('div', 'cvi', esc(m.VI)));
+  if (m.KR && S.kr !== 'off') b.append(el('div', 'ckr', '[' + esc(m.KR) + ']'));
+  if (m.KO) b.append(el('div', 'cko', esc(m.KO)));
+  if (m.FIX) b.append(el('div', 'cfix', '✎ ' + esc(m.FIX)));
+  if (viVoice()) {
+    const bt = el('button', 'ghost sm', '듣기');
+    bt.onclick = () => speakVi(m.VI);
+    b.append(bt);
+  }
+  b.scrollIntoView({ block: 'end', behavior: 'smooth' });
+}
+
+async function chatSend(userText) {
+  if (userText) { CH.hist.push({ role: 'user', parts: [{ text: userText }] }); bubble('me', userText); }
+  const wait = bubble('ai wait', '…');
+  try {
+    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='
+      + encodeURIComponent(S.gkey), {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system_instruction: { parts: [{ text: CH.sys }] },
+        contents: CH.hist.slice(-12),          // 최근 12마디만 보낸다 (무료 한도 아끼기)
+        generationConfig: { maxOutputTokens: 800, temperature: .6, thinkingConfig: { thinkingBudget: 0 } }
+      })
+    });
+    if (!r.ok) throw new Error(
+      r.status === 400 || r.status === 403 ? '키가 잘못됐거나 만료됐습니다. 아래에서 키를 지우고 다시 넣어 보세요' :
+      r.status === 429 ? '오늘 무료 한도를 다 썼습니다. 내일 다시 됩니다' :
+      '연결이 안 됩니다 (' + r.status + ')');
+    const j = await r.json();
+    const text = (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('');
+    if (!text) throw new Error('빈 답이 왔습니다. 한 번 더 보내 보세요');
+    CH.hist.push({ role: 'model', parts: [{ text }] });
+    wait.remove();
+    aiBubble(text);
+  } catch (e) {
+    wait.remove();
+    bubble('ai err', '⚠ ' + (e.message || '연결 실패'));
+  }
+}
+
+function startChat() {
+  $('#chatLog').textContent = '';
+  $('#chatForm').hidden = true;
+  CH = null;
+  if (!S.gkey) renderChatKey(); else renderChatModes();
+  show('chat', 'AI 대화', true);
+}
+
+function renderChatKey() {
+  const s = $('#chatSetup');
+  s.hidden = false; s.textContent = '';
+  s.append(el('p', 'lede', 'AI와 베트남어로 대화하려면 <b>구글 무료 키</b>가 한 번 필요합니다.<br>' +
+    '카드 등록 없음 · 하루 수백 마디 무료 · 키는 이 폰에만 저장됩니다.'));
+  const ol = el('ol', 'keysteps');
+  ['구글 계정으로 <b>aistudio.google.com/apikey</b> 에 들어간다',
+   '<b>Create API key</b> 버튼을 누른다',
+   '나온 긴 글자를 복사해 아래에 붙여넣는다'].forEach(t => ol.append(el('li', null, t)));
+  s.append(ol);
+  const inp = el('input', 'keyin'); inp.type = 'password'; inp.placeholder = 'AIza… 로 시작하는 키';
+  const b = el('button', 'primary big', '저장하고 시작');
+  b.onclick = () => {
+    const v = inp.value.trim();
+    if (v.length < 20) { alert('키가 너무 짧습니다. 전체를 복사해 주세요.'); return; }
+    S.gkey = v; save(); renderChatModes();
+  };
+  s.append(inp, b);
+  s.append(el('p', 'note', '대화 내용은 구글 서버로 전송됩니다. 개인정보(실명 전체·주소·사번)는 쓰지 마세요.'));
+}
+
+function renderChatModes() {
+  const s = $('#chatSetup');
+  s.hidden = false; s.textContent = '';
+  const t = todayDay();
+  const m1 = el('button', 'chatmode on');
+  m1.innerHTML = '<b>오늘의 대화 이어가기</b><span>' + esc(label(t) + ' · ' + (t.dialog?.title || '')) + ' — 배운 문장으로 역할극</span>';
+  m1.onclick = () => beginChat('today');
+  const m2 = el('button', 'chatmode');
+  m2.innerHTML = '<b>자유 대화</b><span>아주 쉬운 베트남어로 아무 얘기나</span>';
+  m2.onclick = () => beginChat('free');
+  s.append(m1, m2);
+  s.append(el('p', 'note', 'AI는 연습 상대이지 선생님이 아닙니다 — 이상한 문장이 오면 그냥 넘어가세요.<br>' +
+    '문장 소리는 폰에 베트남어 음성이 있을 때만 나옵니다 (안드로이드는 대부분 있음).'));
+  const del = el('button', 'ghost sm', '키 지우기');
+  del.onclick = () => { if (confirm('저장된 키를 지울까요?')) { delete S.gkey; save(); renderChatKey(); } };
+  s.append(del);
+}
+
+function beginChat(mode) {
+  $('#chatSetup').hidden = true;
+  $('#chatForm').hidden = false;
+  CH = { mode, sys: chatSys(mode), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
+  chatSend(null);
+}
+
 /* ---------- 시작 ---------- */
 $('#back').onclick = renderHome;
+$('#goChat').onclick = startChat;
+$('#chatForm').onsubmit = e => {
+  e.preventDefault();
+  const v = $('#chatText').value.trim();
+  if (!v || !CH) return;
+  $('#chatText').value = '';
+  chatSend(v);
+};
 $('#goReview').onclick = () => startQuiz(null, null);
 $('#goQuick').onclick = () => startQuiz(null, null, 10);
 $('#goTone').onclick = startTone;
@@ -1160,8 +1381,8 @@ if ('serviceWorker' in navigator) {
 }
 
 Promise.all([
-  fetch('data/days.json').then(r => r.json()),
-  fetch('data/audio_index.json').then(r => r.json())
+  fetch('data/days.json', { cache: 'no-cache' }).then(r => r.json()),
+  fetch('data/audio_index.json', { cache: 'no-cache' }).then(r => r.json())
 ]).then(([d, a]) => {
   ALL = [...(d.prep || []), ...d.days];
   DRILL = d.tonedrill || [];

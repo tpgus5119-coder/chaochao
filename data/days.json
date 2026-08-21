@@ -405,7 +405,6 @@
      "vi": "chào",
      "ko": "안녕 (인사말)",
      "kr_read": "짜오",
-     "hanja": null,
      "tones": [
       {
        "syl": "chào",
@@ -423,7 +422,6 @@
      "vi": "xin chào",
      "ko": "안녕하세요 (정중)",
      "kr_read": "씬 짜오",
-     "hanja": null,
      "tones": [
       {
        "syl": "xin",
@@ -443,7 +441,6 @@
      "vi": "anh",
      "ko": "형·오빠 (손위 남자)",
      "kr_read": "아인",
-     "hanja": null,
      "tones": [
       {
        "syl": "anh",
@@ -460,7 +457,6 @@
      "vi": "chị",
      "ko": "누나·언니 (손위 여자)",
      "kr_read": "찌",
-     "hanja": null,
      "tones": [
       {
        "syl": "chị",
@@ -477,7 +473,6 @@
      "vi": "em",
      "ko": "동생 (손아래)",
      "kr_read": "앰",
-     "hanja": null,
      "tones": [
       {
        "syl": "em",
@@ -494,7 +489,6 @@
      "vi": "bạn",
      "ko": "너·친구 (동갑)",
      "kr_read": "반",
-     "hanja": null,
      "tones": [
       {
        "syl": "bạn",
@@ -511,7 +505,6 @@
      "vi": "tôi",
      "ko": "나·저",
      "kr_read": "또이",
-     "hanja": null,
      "tones": [
       {
        "syl": "tôi",
@@ -525,7 +518,6 @@
      "vi": "ạ",
      "ko": "(공손하게)",
      "kr_read": "아",
-     "hanja": null,
      "tones": [
       {
        "syl": "ạ",
@@ -539,7 +531,6 @@
      "vi": "vâng",
      "ko": "네",
      "kr_read": "벙",
-     "hanja": null,
      "tones": [
       {
        "syl": "vâng",
@@ -548,13 +539,13 @@
        "shape": "—"
       }
      ],
+     "south": "dạ [야]",
      "gesture": "고개를 끄덕인다"
     },
     {
      "vi": "cảm ơn",
      "ko": "고맙습니다",
      "kr_read": "깜 언",
-     "hanja": "感恩 (감은)",
      "tones": [
       {
        "syl": "cảm",
@@ -569,6 +560,7 @@
        "shape": "—"
       }
      ],
+     "hanja": "感恩 (감은)",
      "emoji": "🙏",
      "vkind": "action",
      "gesture": "두 손을 모으고 고개를 살짝 숙인다",
@@ -792,7 +784,6 @@
      "vi": "tên",
      "ko": "이름",
      "kr_read": "뗀",
-     "hanja": null,
      "tones": [
       {
        "syl": "tên",
@@ -806,7 +797,6 @@
      "vi": "gì",
      "ko": "무엇",
      "kr_read": "지",
-     "hanja": null,
      "tones": [
       {
        "syl": "gì",
@@ -820,7 +810,6 @@
      "vi": "là",
      "ko": "~이다",
      "kr_read": "라",
-     "hanja": null,
      "tones": [
       {
        "syl": "là",
@@ -834,7 +823,6 @@
      "vi": "của",
      "ko": "~의",
      "kr_read": "꾸어",
-     "hanja": null,
      "tones": [
       {
        "syl": "của",
@@ -848,7 +836,6 @@
      "vi": "người",
      "ko": "사람",
      "kr_read": "응어이",
-     "hanja": null,
      "tones": [
       {
        "syl": "người",
@@ -865,7 +852,6 @@
      "vi": "xin lỗi",
      "ko": "미안합니다·실례합니다",
      "kr_read": "씬 로이",
-     "hanja": null,
      "tones": [
       {
        "syl": "xin",
@@ -889,7 +875,6 @@
      "vi": "không",
      "ko": "아니다 / ~입니까?",
      "kr_read": "콤",
-     "hanja": null,
      "tones": [
       {
        "syl": "không",
@@ -904,7 +889,6 @@
      "vi": "có",
      "ko": "있다",
      "kr_read": "꼬",
-     "hanja": null,
      "tones": [
       {
        "syl": "có",
@@ -918,7 +902,6 @@
      "vi": "rất",
      "ko": "매우",
      "kr_read": "젓",
-     "hanja": null,
      "tones": [
       {
        "syl": "rất",
@@ -932,7 +915,6 @@
      "vi": "vui",
      "ko": "기쁘다",
      "kr_read": "부이",
-     "hanja": null,
      "tones": [
       {
        "syl": "vui",
@@ -1261,7 +1243,6 @@
      "vi": "nước",
      "ko": "나라·물",
      "kr_read": "느억",
-     "hanja": null,
      "tones": [
       {
        "syl": "nước",
@@ -1278,7 +1259,6 @@
      "vi": "nào",
      "ko": "어느",
      "kr_read": "나오",
-     "hanja": null,
      "tones": [
       {
        "syl": "nào",
@@ -1292,7 +1272,6 @@
      "vi": "Hàn Quốc",
      "ko": "한국",
      "kr_read": "한 꾸옥",
-     "hanja": "韓國 (한국)",
      "tones": [
       {
        "syl": "Hàn",
@@ -1307,6 +1286,7 @@
        "shape": "／"
       }
      ],
+     "hanja": "韓國 (한국)",
      "emoji": "🇰🇷",
      "vkind": "thing",
      "img": "d03-han-quoc.webp"
@@ -1315,7 +1295,6 @@
      "vi": "Việt Nam",
      "ko": "베트남",
      "kr_read": "비엣 남",
-     "hanja": "越南 (월남)",
      "tones": [
       {
        "syl": "Việt",
@@ -1330,6 +1309,7 @@
        "shape": "—"
       }
      ],
+     "hanja": "越南 (월남)",
      "emoji": "🇻🇳",
      "vkind": "thing",
      "img": "d03-viet-nam.webp"
@@ -1338,7 +1318,6 @@
      "vi": "sống",
      "ko": "살다",
      "kr_read": "쏨",
-     "hanja": null,
      "tones": [
       {
        "syl": "sống",
@@ -1355,7 +1334,6 @@
      "vi": "ở",
      "ko": "~에 (있다)",
      "kr_read": "어",
-     "hanja": null,
      "tones": [
       {
        "syl": "ở",
@@ -1369,7 +1347,6 @@
      "vi": "đâu",
      "ko": "어디",
      "kr_read": "더우",
-     "hanja": null,
      "tones": [
       {
        "syl": "đâu",
@@ -1383,7 +1360,6 @@
      "vi": "đây",
      "ko": "여기",
      "kr_read": "더이",
-     "hanja": null,
      "tones": [
       {
        "syl": "đây",
@@ -1400,7 +1376,6 @@
      "vi": "kia",
      "ko": "저기",
      "kr_read": "끼어",
-     "hanja": null,
      "tones": [
       {
        "syl": "kia",
@@ -1414,7 +1389,6 @@
      "vi": "thành phố",
      "ko": "도시",
      "kr_read": "타인 포",
-     "hanja": "城鋪 (성포)",
      "tones": [
       {
        "syl": "thành",
@@ -1429,6 +1403,7 @@
        "shape": "／"
       }
      ],
+     "hanja": "城鋪 (성포)",
      "emoji": "🏙️",
      "vkind": "thing",
      "img": "d03-thanh-pho.webp"
@@ -1779,7 +1754,6 @@
      "vi": "và",
      "ko": "그리고",
      "kr_read": "바",
-     "hanja": null,
      "tones": [
       {
        "syl": "và",
@@ -1793,7 +1767,6 @@
      "vi": "gặp",
      "ko": "만나다",
      "kr_read": "갑",
-     "hanja": null,
      "tones": [
       {
        "syl": "gặp",
@@ -1810,7 +1783,6 @@
      "vi": "được",
      "ko": "~하게 되다·할 수 있다",
      "kr_read": "드억",
-     "hanja": null,
      "tones": [
       {
        "syl": "được",
@@ -1824,7 +1796,6 @@
      "vi": "khỏe",
      "ko": "건강하다·잘 지내다",
      "kr_read": "코애",
-     "hanja": null,
      "tones": [
       {
        "syl": "khỏe",
@@ -1842,7 +1813,6 @@
      "vi": "mệt",
      "ko": "피곤하다",
      "kr_read": "멧",
-     "hanja": null,
      "tones": [
       {
        "syl": "mệt",
@@ -1860,7 +1830,6 @@
      "vi": "hôm nay",
      "ko": "오늘",
      "kr_read": "홈 나이",
-     "hanja": null,
      "tones": [
       {
        "syl": "hôm",
@@ -1883,7 +1852,6 @@
      "vi": "thế nào",
      "ko": "어떻다·어때",
      "kr_read": "테 나오",
-     "hanja": null,
      "tones": [
       {
        "syl": "thế",
@@ -1903,7 +1871,6 @@
      "vi": "lắm",
      "ko": "아주 (말 끝에)",
      "kr_read": "람",
-     "hanja": null,
      "tones": [
       {
        "syl": "lắm",
@@ -1917,7 +1884,6 @@
      "vi": "cũng",
      "ko": "~도·또한",
      "kr_read": "꿈",
-     "hanja": null,
      "tones": [
       {
        "syl": "cũng",
@@ -1931,7 +1897,6 @@
      "vi": "bình thường",
      "ko": "보통이다",
      "kr_read": "빈 트엉",
-     "hanja": "平常 (평상)",
      "tones": [
       {
        "syl": "bình",
@@ -1945,7 +1910,8 @@
        "ko": "낮게 내려감",
        "shape": "＼"
       }
-     ]
+     ],
+     "hanja": "平常 (평상)"
     }
    ],
    "dialog": {
@@ -2281,7 +2247,6 @@
      "vi": "hiểu",
      "ko": "이해하다",
      "kr_read": "히에우",
-     "hanja": null,
      "tones": [
       {
        "syl": "hiểu",
@@ -2298,7 +2263,6 @@
      "vi": "biết",
      "ko": "알다",
      "kr_read": "비엣",
-     "hanja": null,
      "tones": [
       {
        "syl": "biết",
@@ -2312,7 +2276,6 @@
      "vi": "nói",
      "ko": "말하다",
      "kr_read": "노이",
-     "hanja": null,
      "tones": [
       {
        "syl": "nói",
@@ -2329,7 +2292,6 @@
      "vi": "nghe",
      "ko": "듣다",
      "kr_read": "응애",
-     "hanja": null,
      "tones": [
       {
        "syl": "nghe",
@@ -2347,7 +2309,6 @@
      "vi": "lại",
      "ko": "다시",
      "kr_read": "라이",
-     "hanja": null,
      "tones": [
       {
        "syl": "lại",
@@ -2364,7 +2325,6 @@
      "vi": "từ từ",
      "ko": "천천히",
      "kr_read": "뜨 뜨",
-     "hanja": null,
      "tones": [
       {
        "syl": "từ",
@@ -2388,7 +2348,6 @@
      "vi": "chậm",
      "ko": "느리다·천천히",
      "kr_read": "쩜",
-     "hanja": null,
      "tones": [
       {
        "syl": "chậm",
@@ -2402,7 +2361,6 @@
      "vi": "tiếng Việt",
      "ko": "베트남어",
      "kr_read": "띠엥 비엣",
-     "hanja": null,
      "tones": [
       {
        "syl": "tiếng",
@@ -2425,7 +2383,6 @@
      "vi": "tiếng Hàn",
      "ko": "한국어",
      "kr_read": "띠엥 한",
-     "hanja": "韓 (한)",
      "tones": [
       {
        "syl": "tiếng",
@@ -2440,6 +2397,7 @@
        "shape": "＼"
       }
      ],
+     "hanja": "韓 (한)",
      "emoji": "🇰🇷",
      "vkind": "thing",
      "img": "d05-tieng-han.webp"
@@ -2448,7 +2406,6 @@
      "vi": "một chút",
      "ko": "조금",
      "kr_read": "못 쭛",
-     "hanja": null,
      "tones": [
       {
        "syl": "một",
@@ -2791,7 +2748,6 @@
      "vi": "tạm biệt",
      "ko": "안녕히 가세요",
      "kr_read": "땀 비엣",
-     "hanja": "暫別 (잠별)",
      "tones": [
       {
        "syl": "tạm",
@@ -2806,6 +2762,7 @@
        "shape": "↓"
       }
      ],
+     "hanja": "暫別 (잠별)",
      "emoji": "👋",
      "vkind": "action",
      "gesture": "손을 크게 흔든다",
@@ -2815,7 +2772,6 @@
      "vi": "hẹn gặp lại",
      "ko": "또 만나요",
      "kr_read": "핸 갑 라이",
-     "hanja": null,
      "tones": [
       {
        "syl": "hẹn",
@@ -2841,7 +2797,6 @@
      "vi": "mai",
      "ko": "내일",
      "kr_read": "마이",
-     "hanja": null,
      "tones": [
       {
        "syl": "mai",
@@ -2858,7 +2813,6 @@
      "vi": "nhé",
      "ko": "~할게요 (부드럽게)",
      "kr_read": "냬",
-     "hanja": null,
      "tones": [
       {
        "syl": "nhé",
@@ -2872,7 +2826,6 @@
      "vi": "đi",
      "ko": "가다",
      "kr_read": "디",
-     "hanja": null,
      "tones": [
       {
        "syl": "đi",
@@ -2890,7 +2843,6 @@
      "vi": "về",
      "ko": "돌아가다",
      "kr_read": "베",
-     "hanja": null,
      "tones": [
       {
        "syl": "về",
@@ -2907,7 +2859,6 @@
      "vi": "nhà",
      "ko": "집",
      "kr_read": "냐",
-     "hanja": null,
      "tones": [
       {
        "syl": "nhà",
@@ -2924,7 +2875,6 @@
      "vi": "sau",
      "ko": "~후에·뒤",
      "kr_read": "사우",
-     "hanja": null,
      "tones": [
       {
        "syl": "sau",
@@ -2938,7 +2888,6 @@
      "vi": "trước",
      "ko": "~전에·앞",
      "kr_read": "쯔억",
-     "hanja": null,
      "tones": [
       {
        "syl": "trước",
@@ -2952,7 +2901,6 @@
      "vi": "rồi",
      "ko": "이미·했다",
      "kr_read": "조이",
-     "hanja": null,
      "tones": [
       {
        "syl": "rồi",
@@ -3254,7 +3202,6 @@
      "vi": "một",
      "ko": "1",
      "kr_read": "못",
-     "hanja": null,
      "tones": [
       {
        "syl": "một",
@@ -3272,7 +3219,6 @@
      "vi": "hai",
      "ko": "2",
      "kr_read": "하이",
-     "hanja": null,
      "tones": [
       {
        "syl": "hai",
@@ -3290,7 +3236,6 @@
      "vi": "ba",
      "ko": "3",
      "kr_read": "바",
-     "hanja": null,
      "tones": [
       {
        "syl": "ba",
@@ -3308,7 +3253,6 @@
      "vi": "bốn",
      "ko": "4",
      "kr_read": "본",
-     "hanja": null,
      "tones": [
       {
        "syl": "bốn",
@@ -3326,7 +3270,6 @@
      "vi": "năm",
      "ko": "5",
      "kr_read": "남",
-     "hanja": null,
      "tones": [
       {
        "syl": "năm",
@@ -3344,7 +3287,6 @@
      "vi": "sáu",
      "ko": "6",
      "kr_read": "사우",
-     "hanja": null,
      "tones": [
       {
        "syl": "sáu",
@@ -3362,7 +3304,6 @@
      "vi": "bảy",
      "ko": "7",
      "kr_read": "바이",
-     "hanja": null,
      "tones": [
       {
        "syl": "bảy",
@@ -3380,7 +3321,6 @@
      "vi": "tám",
      "ko": "8",
      "kr_read": "땀",
-     "hanja": null,
      "tones": [
       {
        "syl": "tám",
@@ -3398,7 +3338,6 @@
      "vi": "chín",
      "ko": "9",
      "kr_read": "찐",
-     "hanja": null,
      "tones": [
       {
        "syl": "chín",
@@ -3416,7 +3355,6 @@
      "vi": "mười",
      "ko": "10",
      "kr_read": "므어이",
-     "hanja": null,
      "tones": [
       {
        "syl": "mười",
@@ -3732,7 +3670,6 @@
      "vi": "mấy",
      "ko": "몇 (적은 수)",
      "kr_read": "머이",
-     "hanja": null,
      "tones": [
       {
        "syl": "mấy",
@@ -3746,7 +3683,6 @@
      "vi": "bao nhiêu",
      "ko": "얼마나·몇 (큰 수)",
      "kr_read": "바오 니에우",
-     "hanja": null,
      "tones": [
       {
        "syl": "bao",
@@ -3766,7 +3702,6 @@
      "vi": "cái",
      "ko": "개 (물건 단위)",
      "kr_read": "까이",
-     "hanja": null,
      "tones": [
       {
        "syl": "cái",
@@ -3783,7 +3718,6 @@
      "vi": "chiếc",
      "ko": "대 (기계 단위)",
      "kr_read": "찌엑",
-     "hanja": null,
      "tones": [
       {
        "syl": "chiếc",
@@ -3800,7 +3734,6 @@
      "vi": "con",
      "ko": "마리 (동물 단위)",
      "kr_read": "꼰",
-     "hanja": null,
      "tones": [
       {
        "syl": "con",
@@ -3817,7 +3750,6 @@
      "vi": "hộp",
      "ko": "갑·통",
      "kr_read": "홉",
-     "hanja": null,
      "tones": [
       {
        "syl": "hộp",
@@ -3834,7 +3766,6 @@
      "vi": "thùng",
      "ko": "상자·박스",
      "kr_read": "퉁",
-     "hanja": null,
      "tones": [
       {
        "syl": "thùng",
@@ -3851,7 +3782,6 @@
      "vi": "tất cả",
      "ko": "전부·모두",
      "kr_read": "떳 까",
-     "hanja": null,
      "tones": [
       {
        "syl": "tất",
@@ -3871,7 +3801,6 @@
      "vi": "còn",
      "ko": "남다·아직 있다",
      "kr_read": "꼰",
-     "hanja": null,
      "tones": [
       {
        "syl": "còn",
@@ -3885,7 +3814,6 @@
      "vi": "thiếu",
      "ko": "부족하다",
      "kr_read": "티에우",
-     "hanja": null,
      "tones": [
       {
        "syl": "thiếu",
@@ -4169,7 +4097,6 @@
      "vi": "tuổi",
      "ko": "살·나이",
      "kr_read": "뚜오이",
-     "hanja": null,
      "tones": [
       {
        "syl": "tuổi",
@@ -4186,7 +4113,6 @@
      "vi": "mươi",
      "ko": "십 (20·30의 십)",
      "kr_read": "므어이",
-     "hanja": null,
      "tones": [
       {
        "syl": "mươi",
@@ -4200,7 +4126,6 @@
      "vi": "giờ",
      "ko": "시·시간",
      "kr_read": "저",
-     "hanja": null,
      "tones": [
       {
        "syl": "giờ",
@@ -4218,7 +4143,6 @@
      "vi": "phút",
      "ko": "분",
      "kr_read": "풋",
-     "hanja": null,
      "tones": [
       {
        "syl": "phút",
@@ -4235,7 +4159,6 @@
      "vi": "bây giờ",
      "ko": "지금",
      "kr_read": "버이 저",
-     "hanja": null,
      "tones": [
       {
        "syl": "bây",
@@ -4258,7 +4181,6 @@
      "vi": "rưỡi",
      "ko": "반 (30분)",
      "kr_read": "즈어이",
-     "hanja": null,
      "tones": [
       {
        "syl": "rưỡi",
@@ -4275,7 +4197,6 @@
      "vi": "sáng",
      "ko": "아침·오전",
      "kr_read": "상",
-     "hanja": null,
      "tones": [
       {
        "syl": "sáng",
@@ -4292,7 +4213,6 @@
      "vi": "chiều",
      "ko": "오후",
      "kr_read": "찌에우",
-     "hanja": null,
      "tones": [
       {
        "syl": "chiều",
@@ -4309,7 +4229,6 @@
      "vi": "tối",
      "ko": "저녁·밤",
      "kr_read": "또이",
-     "hanja": null,
      "tones": [
       {
        "syl": "tối",
@@ -4326,7 +4245,6 @@
      "vi": "lúc",
      "ko": "~에 (시각)",
      "kr_read": "룩",
-     "hanja": null,
      "tones": [
       {
        "syl": "lúc",
@@ -4672,7 +4590,6 @@
      "vi": "thứ hai",
      "ko": "월요일",
      "kr_read": "트 하이",
-     "hanja": null,
      "tones": [
       {
        "syl": "thứ",
@@ -4695,7 +4612,6 @@
      "vi": "thứ ba",
      "ko": "화요일",
      "kr_read": "트 바",
-     "hanja": null,
      "tones": [
       {
        "syl": "thứ",
@@ -4715,7 +4631,6 @@
      "vi": "thứ tư",
      "ko": "수요일",
      "kr_read": "트 뜨",
-     "hanja": null,
      "tones": [
       {
        "syl": "thứ",
@@ -4735,7 +4650,6 @@
      "vi": "thứ năm",
      "ko": "목요일",
      "kr_read": "트 남",
-     "hanja": null,
      "tones": [
       {
        "syl": "thứ",
@@ -4755,7 +4669,6 @@
      "vi": "thứ sáu",
      "ko": "금요일",
      "kr_read": "트 사우",
-     "hanja": null,
      "tones": [
       {
        "syl": "thứ",
@@ -4775,7 +4688,6 @@
      "vi": "thứ bảy",
      "ko": "토요일",
      "kr_read": "트 바이",
-     "hanja": null,
      "tones": [
       {
        "syl": "thứ",
@@ -4795,7 +4707,6 @@
      "vi": "chủ nhật",
      "ko": "일요일",
      "kr_read": "쭈 녓",
-     "hanja": "主日 (주일)",
      "tones": [
       {
        "syl": "chủ",
@@ -4810,6 +4721,7 @@
        "shape": "↓"
       }
      ],
+     "hanja": "主日 (주일)",
      "emoji": "🛌",
      "vkind": "thing",
      "img": "d10-chu-nhat.webp"
@@ -4818,7 +4730,6 @@
      "vi": "hôm qua",
      "ko": "어제",
      "kr_read": "홈 꾸아",
-     "hanja": null,
      "tones": [
       {
        "syl": "hôm",
@@ -4841,7 +4752,6 @@
      "vi": "ngày",
      "ko": "날·일",
      "kr_read": "응아이",
-     "hanja": null,
      "tones": [
       {
        "syl": "ngày",
@@ -4855,7 +4765,6 @@
      "vi": "tuần",
      "ko": "주",
      "kr_read": "뚜언",
-     "hanja": "旬 (순 — 초순·중순의 순)",
      "tones": [
       {
        "syl": "tuần",
@@ -4864,6 +4773,7 @@
        "shape": "＼"
       }
      ],
+     "hanja": "旬 (순 — 초순·중순의 순)",
      "emoji": "🗓️",
      "vkind": "thing",
      "img": "d10-tuan.webp"
@@ -5230,7 +5140,6 @@
      "vi": "dậy",
      "ko": "일어나다",
      "kr_read": "저이",
-     "hanja": null,
      "tones": [
       {
        "syl": "dậy",
@@ -5247,7 +5156,6 @@
      "vi": "bắt đầu",
      "ko": "시작하다",
      "kr_read": "밧 더우",
-     "hanja": null,
      "tones": [
       {
        "syl": "bắt",
@@ -5270,7 +5178,6 @@
      "vi": "kết thúc",
      "ko": "끝나다",
      "kr_read": "껫 툭",
-     "hanja": "結束 (결속)",
      "tones": [
       {
        "syl": "kết",
@@ -5285,6 +5192,7 @@
        "shape": "／"
       }
      ],
+     "hanja": "結束 (결속)",
      "emoji": "⏹️",
      "vkind": "action",
      "img": "d11-ket-thuc.webp"
@@ -5293,7 +5201,6 @@
      "vi": "làm",
      "ko": "하다·일하다",
      "kr_read": "람",
-     "hanja": null,
      "tones": [
       {
        "syl": "làm",
@@ -5310,7 +5217,6 @@
      "vi": "việc",
      "ko": "일",
      "kr_read": "비엑",
-     "hanja": null,
      "tones": [
       {
        "syl": "việc",
@@ -5327,7 +5233,6 @@
      "vi": "nghỉ",
      "ko": "쉬다",
      "kr_read": "응이",
-     "hanja": null,
      "tones": [
       {
        "syl": "nghỉ",
@@ -5344,7 +5249,6 @@
      "vi": "sớm",
      "ko": "일찍·이르다",
      "kr_read": "섬",
-     "hanja": null,
      "tones": [
       {
        "syl": "sớm",
@@ -5358,7 +5262,6 @@
      "vi": "muộn",
      "ko": "늦다",
      "kr_read": "무온",
-     "hanja": null,
      "tones": [
       {
        "syl": "muộn",
@@ -5367,6 +5270,7 @@
        "shape": "↓"
       }
      ],
+     "south": "trễ [쩨]",
      "emoji": "🐌",
      "vkind": "thing",
      "img": "d11-muon.webp"
@@ -5375,7 +5279,6 @@
      "vi": "mỗi",
      "ko": "매·각각",
      "kr_read": "모이",
-     "hanja": null,
      "tones": [
       {
        "syl": "mỗi",
@@ -5389,7 +5292,6 @@
      "vi": "thường",
      "ko": "보통·자주",
      "kr_read": "트엉",
-     "hanja": "常 (상)",
      "tones": [
       {
        "syl": "thường",
@@ -5397,7 +5299,8 @@
        "ko": "낮게 내려감",
        "shape": "＼"
       }
-     ]
+     ],
+     "hanja": "常 (상)"
     }
    ],
    "dialog": {
@@ -5791,7 +5694,6 @@
      "vi": "ăn",
      "ko": "먹다",
      "kr_read": "안",
-     "hanja": null,
      "tones": [
       {
        "syl": "ăn",
@@ -5809,7 +5711,6 @@
      "vi": "uống",
      "ko": "마시다",
      "kr_read": "우옴",
-     "hanja": null,
      "tones": [
       {
        "syl": "uống",
@@ -5827,7 +5728,6 @@
      "vi": "cơm",
      "ko": "밥",
      "kr_read": "껌",
-     "hanja": null,
      "tones": [
       {
        "syl": "cơm",
@@ -5844,7 +5744,6 @@
      "vi": "phở",
      "ko": "쌀국수",
      "kr_read": "퍼",
-     "hanja": null,
      "tones": [
       {
        "syl": "phở",
@@ -5862,7 +5761,6 @@
      "vi": "muốn",
      "ko": "~하고 싶다",
      "kr_read": "무온",
-     "hanja": null,
      "tones": [
       {
        "syl": "muốn",
@@ -5879,7 +5777,6 @@
      "vi": "cà phê",
      "ko": "커피",
      "kr_read": "까 페",
-     "hanja": null,
      "tones": [
       {
        "syl": "cà",
@@ -5902,7 +5799,6 @@
      "vi": "ngon",
      "ko": "맛있다",
      "kr_read": "응온",
-     "hanja": null,
      "tones": [
       {
        "syl": "ngon",
@@ -5919,7 +5815,6 @@
      "vi": "đói",
      "ko": "배고프다",
      "kr_read": "도이",
-     "hanja": null,
      "tones": [
       {
        "syl": "đói",
@@ -5937,7 +5832,6 @@
      "vi": "no",
      "ko": "배부르다",
      "kr_read": "노",
-     "hanja": null,
      "tones": [
       {
        "syl": "no",
@@ -5955,7 +5849,6 @@
      "vi": "thích",
      "ko": "좋아하다",
      "kr_read": "틱",
-     "hanja": null,
      "tones": [
       {
        "syl": "thích",
@@ -6273,7 +6166,6 @@
      "vi": "này",
      "ko": "이·이것",
      "kr_read": "나이",
-     "hanja": null,
      "tones": [
       {
        "syl": "này",
@@ -6287,7 +6179,6 @@
      "vi": "tiền",
      "ko": "돈",
      "kr_read": "띠엔",
-     "hanja": null,
      "tones": [
       {
        "syl": "tiền",
@@ -6305,7 +6196,6 @@
      "vi": "đắt",
      "ko": "비싸다",
      "kr_read": "닷",
-     "hanja": null,
      "tones": [
       {
        "syl": "đắt",
@@ -6314,6 +6204,7 @@
        "shape": "／"
       }
      ],
+     "south": "mắc [막]",
      "emoji": "💸",
      "vkind": "thing",
      "img": "d13-dat.webp"
@@ -6322,7 +6213,6 @@
      "vi": "rẻ",
      "ko": "싸다",
      "kr_read": "재",
-     "hanja": null,
      "tones": [
       {
        "syl": "rẻ",
@@ -6339,7 +6229,6 @@
      "vi": "mua",
      "ko": "사다",
      "kr_read": "무어",
-     "hanja": null,
      "tones": [
       {
        "syl": "mua",
@@ -6356,7 +6245,6 @@
      "vi": "bán",
      "ko": "팔다",
      "kr_read": "반",
-     "hanja": null,
      "tones": [
       {
        "syl": "bán",
@@ -6373,7 +6261,6 @@
      "vi": "cho",
      "ko": "~에게 주다",
      "kr_read": "쩌",
-     "hanja": null,
      "tones": [
       {
        "syl": "cho",
@@ -6387,7 +6274,6 @@
      "vi": "xin",
      "ko": "청하다·주세요",
      "kr_read": "씬",
-     "hanja": null,
      "tones": [
       {
        "syl": "xin",
@@ -6401,7 +6287,6 @@
      "vi": "nghìn",
      "ko": "천 (1000)",
      "kr_read": "응인",
-     "hanja": null,
      "tones": [
       {
        "syl": "nghìn",
@@ -6410,6 +6295,7 @@
        "shape": "＼"
       }
      ],
+     "south": "ngàn [응안]",
      "emoji": "🔢",
      "vkind": "thing",
      "img": "d13-nghin.webp"
@@ -6418,7 +6304,6 @@
      "vi": "đồng",
      "ko": "동 (베트남 돈)",
      "kr_read": "돔",
-     "hanja": "銅 (동)",
      "tones": [
       {
        "syl": "đồng",
@@ -6427,6 +6312,7 @@
        "shape": "＼"
       }
      ],
+     "hanja": "銅 (동)",
      "emoji": "💴",
      "vkind": "thing",
      "img": "d13-dong.webp"
@@ -6741,7 +6627,6 @@
      "vi": "trên",
      "ko": "위",
      "kr_read": "쩬",
-     "hanja": null,
      "tones": [
       {
        "syl": "trên",
@@ -6759,7 +6644,6 @@
      "vi": "dưới",
      "ko": "아래",
      "kr_read": "즈어이",
-     "hanja": null,
      "tones": [
       {
        "syl": "dưới",
@@ -6777,7 +6661,6 @@
      "vi": "trong",
      "ko": "안·속",
      "kr_read": "쫌",
-     "hanja": null,
      "tones": [
       {
        "syl": "trong",
@@ -6794,7 +6677,6 @@
      "vi": "ngoài",
      "ko": "밖",
      "kr_read": "응와이",
-     "hanja": null,
      "tones": [
       {
        "syl": "ngoài",
@@ -6811,7 +6693,6 @@
      "vi": "bên cạnh",
      "ko": "옆",
      "kr_read": "벤 까인",
-     "hanja": null,
      "tones": [
       {
        "syl": "bên",
@@ -6834,7 +6715,6 @@
      "vi": "gần",
      "ko": "가깝다",
      "kr_read": "건",
-     "hanja": null,
      "tones": [
       {
        "syl": "gần",
@@ -6852,7 +6732,6 @@
      "vi": "xa",
      "ko": "멀다",
      "kr_read": "싸",
-     "hanja": null,
      "tones": [
       {
        "syl": "xa",
@@ -6870,7 +6749,6 @@
      "vi": "đường",
      "ko": "길",
      "kr_read": "드엉",
-     "hanja": null,
      "tones": [
       {
        "syl": "đường",
@@ -6887,7 +6765,6 @@
      "vi": "chợ",
      "ko": "시장",
      "kr_read": "쩌",
-     "hanja": null,
      "tones": [
       {
        "syl": "chợ",
@@ -6904,7 +6781,6 @@
      "vi": "nhà vệ sinh",
      "ko": "화장실",
      "kr_read": "냐 베 씬",
-     "hanja": "衛生 (위생)",
      "tones": [
       {
        "syl": "nhà",
@@ -6925,6 +6801,7 @@
        "shape": "—"
       }
      ],
+     "hanja": "衛生 (위생)",
      "emoji": "🚻",
      "vkind": "thing",
      "img": "d14-nha-ve-sinh.webp"
@@ -7247,7 +7124,6 @@
      "vi": "gia đình",
      "ko": "가족",
      "kr_read": "자 딘",
-     "hanja": "家庭 (가정)",
      "tones": [
       {
        "syl": "gia",
@@ -7262,6 +7138,7 @@
        "shape": "＼"
       }
      ],
+     "hanja": "家庭 (가정)",
      "emoji": "👨‍👩‍👧",
      "vkind": "thing",
      "img": "d15-gia-dinh.webp"
@@ -7270,7 +7147,6 @@
      "vi": "bố",
      "ko": "아버지",
      "kr_read": "보",
-     "hanja": null,
      "tones": [
       {
        "syl": "bố",
@@ -7279,6 +7155,7 @@
        "shape": "／"
       }
      ],
+     "south": "ba [바]",
      "emoji": "👨",
      "vkind": "thing",
      "img": "d15-bo.webp"
@@ -7287,7 +7164,6 @@
      "vi": "mẹ",
      "ko": "어머니",
      "kr_read": "매",
-     "hanja": null,
      "tones": [
       {
        "syl": "mẹ",
@@ -7296,6 +7172,7 @@
        "shape": "↓"
       }
      ],
+     "south": "má [마]",
      "emoji": "👩",
      "vkind": "thing",
      "img": "d15-me.webp"
@@ -7304,7 +7181,6 @@
      "vi": "con trai",
      "ko": "아들",
      "kr_read": "꼰 짜이",
-     "hanja": null,
      "tones": [
       {
        "syl": "con",
@@ -7327,7 +7203,6 @@
      "vi": "vợ",
      "ko": "아내",
      "kr_read": "버",
-     "hanja": null,
      "tones": [
       {
        "syl": "vợ",
@@ -7344,7 +7219,6 @@
      "vi": "chồng",
      "ko": "남편",
      "kr_read": "쫌",
-     "hanja": null,
      "tones": [
       {
        "syl": "chồng",
@@ -7361,7 +7235,6 @@
      "vi": "anh trai",
      "ko": "형·오빠",
      "kr_read": "아인 짜이",
-     "hanja": null,
      "tones": [
       {
        "syl": "anh",
@@ -7381,7 +7254,6 @@
      "vi": "chị gái",
      "ko": "누나·언니",
      "kr_read": "찌 가이",
-     "hanja": null,
      "tones": [
       {
        "syl": "chị",
@@ -7401,7 +7273,6 @@
      "vi": "em trai",
      "ko": "남동생",
      "kr_read": "앰 짜이",
-     "hanja": null,
      "tones": [
       {
        "syl": "em",
@@ -7421,7 +7292,6 @@
      "vi": "em gái",
      "ko": "여동생",
      "kr_read": "앰 가이",
-     "hanja": null,
      "tones": [
       {
        "syl": "em",
@@ -7824,7 +7694,6 @@
      "vi": "bị",
      "ko": "(나쁜 일을) 당하다",
      "kr_read": "비",
-     "hanja": null,
      "tones": [
       {
        "syl": "bị",
@@ -7841,7 +7710,6 @@
      "vi": "đau",
      "ko": "아프다",
      "kr_read": "다우",
-     "hanja": null,
      "tones": [
       {
        "syl": "đau",
@@ -7859,7 +7727,6 @@
      "vi": "ốm",
      "ko": "아프다 (병나다)",
      "kr_read": "옴",
-     "hanja": null,
      "tones": [
       {
        "syl": "ốm",
@@ -7868,6 +7735,7 @@
        "shape": "／"
       }
      ],
+     "south": "뜻 주의! 남부에서 ốm은 '마르다'. 아프다는 bệnh [벤]",
      "emoji": "🤒",
      "vkind": "thing",
      "gesture": "이마에 손등을 댄다",
@@ -7877,7 +7745,6 @@
      "vi": "bệnh viện",
      "ko": "병원",
      "kr_read": "벤 비엔",
-     "hanja": "病院 (병원)",
      "tones": [
       {
        "syl": "bệnh",
@@ -7892,6 +7759,7 @@
        "shape": "↓"
       }
      ],
+     "hanja": "病院 (병원)",
      "emoji": "🏥",
      "vkind": "thing",
      "img": "d16-benh-vien.webp"
@@ -7900,7 +7768,6 @@
      "vi": "thuốc",
      "ko": "약",
      "kr_read": "투옥",
-     "hanja": null,
      "tones": [
       {
        "syl": "thuốc",
@@ -7917,7 +7784,6 @@
      "vi": "đầu",
      "ko": "머리",
      "kr_read": "더우",
-     "hanja": null,
      "tones": [
       {
        "syl": "đầu",
@@ -7934,7 +7800,6 @@
      "vi": "bụng",
      "ko": "배",
      "kr_read": "붐",
-     "hanja": null,
      "tones": [
       {
        "syl": "bụng",
@@ -7948,7 +7813,6 @@
      "vi": "tay",
      "ko": "손",
      "kr_read": "따이",
-     "hanja": null,
      "tones": [
       {
        "syl": "tay",
@@ -7965,7 +7829,6 @@
      "vi": "chân",
      "ko": "다리·발",
      "kr_read": "쩐",
-     "hanja": null,
      "tones": [
       {
        "syl": "chân",
@@ -7982,7 +7845,6 @@
      "vi": "cảm",
      "ko": "감기",
      "kr_read": "깜",
-     "hanja": "感 (감)",
      "tones": [
       {
        "syl": "cảm",
@@ -7991,6 +7853,7 @@
        "shape": "∨"
       }
      ],
+     "hanja": "感 (감)",
      "emoji": "🤧",
      "vkind": "thing",
      "img": "d16-cam.webp"
@@ -8333,7 +8196,6 @@
      "vi": "làm ơn",
      "ko": "부디·좀 (부탁)",
      "kr_read": "람 언",
-     "hanja": null,
      "tones": [
       {
        "syl": "làm",
@@ -8353,7 +8215,6 @@
      "vi": "giúp",
      "ko": "돕다",
      "kr_read": "줍",
-     "hanja": null,
      "tones": [
       {
        "syl": "giúp",
@@ -8370,7 +8231,6 @@
      "vi": "cần",
      "ko": "필요하다",
      "kr_read": "껀",
-     "hanja": null,
      "tones": [
       {
        "syl": "cần",
@@ -8384,7 +8244,6 @@
      "vi": "hỏi",
      "ko": "묻다",
      "kr_read": "호이",
-     "hanja": null,
      "tones": [
       {
        "syl": "hỏi",
@@ -8401,7 +8260,6 @@
      "vi": "được không",
      "ko": "~해 주실 수 있나요",
      "kr_read": "드억 콤",
-     "hanja": null,
      "tones": [
       {
        "syl": "được",
@@ -8421,7 +8279,6 @@
      "vi": "hãy",
      "ko": "~하세요 (지시)",
      "kr_read": "하이",
-     "hanja": null,
      "tones": [
       {
        "syl": "hãy",
@@ -8435,7 +8292,6 @@
      "vi": "đừng",
      "ko": "~하지 마세요",
      "kr_read": "등",
-     "hanja": null,
      "tones": [
       {
        "syl": "đừng",
@@ -8453,7 +8309,6 @@
      "vi": "mở",
      "ko": "열다·켜다",
      "kr_read": "머",
-     "hanja": null,
      "tones": [
       {
        "syl": "mở",
@@ -8471,7 +8326,6 @@
      "vi": "đóng",
      "ko": "닫다·끄다",
      "kr_read": "돔",
-     "hanja": null,
      "tones": [
       {
        "syl": "đóng",
@@ -8489,7 +8343,6 @@
      "vi": "đợi",
      "ko": "기다리다",
      "kr_read": "더이",
-     "hanja": null,
      "tones": [
       {
        "syl": "đợi",
@@ -8817,7 +8670,6 @@
      "vi": "tốt",
      "ko": "좋다",
      "kr_read": "똣",
-     "hanja": null,
      "tones": [
       {
        "syl": "tốt",
@@ -8835,7 +8687,6 @@
      "vi": "xấu",
      "ko": "나쁘다",
      "kr_read": "서우",
-     "hanja": null,
      "tones": [
       {
        "syl": "xấu",
@@ -8853,7 +8704,6 @@
      "vi": "đẹp",
      "ko": "예쁘다·아름답다",
      "kr_read": "댑",
-     "hanja": null,
      "tones": [
       {
        "syl": "đẹp",
@@ -8870,7 +8720,6 @@
      "vi": "hay",
      "ko": "재미있다",
      "kr_read": "하이",
-     "hanja": null,
      "tones": [
       {
        "syl": "hay",
@@ -8887,7 +8736,6 @@
      "vi": "khó",
      "ko": "어렵다",
      "kr_read": "코",
-     "hanja": null,
      "tones": [
       {
        "syl": "khó",
@@ -8904,7 +8752,6 @@
      "vi": "dễ",
      "ko": "쉽다",
      "kr_read": "제",
-     "hanja": null,
      "tones": [
       {
        "syl": "dễ",
@@ -8921,7 +8768,6 @@
      "vi": "mới",
      "ko": "새롭다·막 ~했다",
      "kr_read": "머이",
-     "hanja": null,
      "tones": [
       {
        "syl": "mới",
@@ -8938,7 +8784,6 @@
      "vi": "cũ",
      "ko": "오래되다·낡다",
      "kr_read": "꾸",
-     "hanja": null,
      "tones": [
       {
        "syl": "cũ",
@@ -8955,7 +8800,6 @@
      "vi": "nhiều",
      "ko": "많다",
      "kr_read": "니에우",
-     "hanja": null,
      "tones": [
       {
        "syl": "nhiều",
@@ -8972,7 +8816,6 @@
      "vi": "ít",
      "ko": "적다",
      "kr_read": "잇",
-     "hanja": null,
      "tones": [
       {
        "syl": "ít",
@@ -9306,7 +9149,6 @@
      "vi": "đã",
      "ko": "이미 ~했다",
      "kr_read": "다",
-     "hanja": null,
      "tones": [
       {
        "syl": "đã",
@@ -9320,7 +9162,6 @@
      "vi": "đang",
      "ko": "~하는 중",
      "kr_read": "당",
-     "hanja": null,
      "tones": [
       {
        "syl": "đang",
@@ -9334,7 +9175,6 @@
      "vi": "sẽ",
      "ko": "~할 것이다",
      "kr_read": "새",
-     "hanja": null,
      "tones": [
       {
        "syl": "sẽ",
@@ -9348,7 +9188,6 @@
      "vi": "chưa",
      "ko": "아직 (안)",
      "kr_read": "쯔어",
-     "hanja": null,
      "tones": [
       {
        "syl": "chưa",
@@ -9365,7 +9204,6 @@
      "vi": "xong",
      "ko": "다 되다·완료",
      "kr_read": "쏨",
-     "hanja": null,
      "tones": [
       {
        "syl": "xong",
@@ -9382,7 +9220,6 @@
      "vi": "với",
      "ko": "~와 함께",
      "kr_read": "버이",
-     "hanja": null,
      "tones": [
       {
        "syl": "với",
@@ -9396,7 +9233,6 @@
      "vi": "cùng",
      "ko": "같이·함께",
      "kr_read": "꿈",
-     "hanja": null,
      "tones": [
       {
        "syl": "cùng",
@@ -9413,7 +9249,6 @@
      "vi": "hôm kia",
      "ko": "그저께",
      "kr_read": "홈 끼어",
-     "hanja": null,
      "tones": [
       {
        "syl": "hôm",
@@ -9433,7 +9268,6 @@
      "vi": "bao giờ",
      "ko": "언제",
      "kr_read": "바오 저",
-     "hanja": null,
      "tones": [
       {
        "syl": "bao",
@@ -9453,7 +9287,6 @@
      "vi": "sao",
      "ko": "왜·어떻게",
      "kr_read": "사오",
-     "hanja": null,
      "tones": [
       {
        "syl": "sao",
@@ -9811,7 +9644,6 @@
      "vi": "nhớ",
      "ko": "기억하다·그립다",
      "kr_read": "녀",
-     "hanja": null,
      "tones": [
       {
        "syl": "nhớ",
@@ -9828,7 +9660,6 @@
      "vi": "quên",
      "ko": "잊다",
      "kr_read": "꾸엔",
-     "hanja": null,
      "tones": [
       {
        "syl": "quên",
@@ -9845,7 +9676,6 @@
      "vi": "hứa",
      "ko": "약속하다",
      "kr_read": "흐어",
-     "hanja": "許 (허락할 허)",
      "tones": [
       {
        "syl": "hứa",
@@ -9854,6 +9684,7 @@
        "shape": "／"
       }
      ],
+     "hanja": "許 (허락할 허)",
      "emoji": "🤞",
      "vkind": "action",
      "gesture": "새끼손가락을 내밀어 건다",
@@ -9863,7 +9694,6 @@
      "vi": "chắc chắn",
      "ko": "확실히",
      "kr_read": "짝 짠",
-     "hanja": null,
      "tones": [
       {
        "syl": "chắc",
@@ -9886,7 +9716,6 @@
      "vi": "hẹn",
      "ko": "약속하다·잡다",
      "kr_read": "핸",
-     "hanja": null,
      "tones": [
       {
        "syl": "hẹn",
@@ -9901,7 +9730,6 @@
      "vi": "ai",
      "ko": "누구",
      "kr_read": "아이",
-     "hanja": null,
      "tones": [
       {
        "syl": "ai",
@@ -9915,7 +9743,6 @@
      "vi": "gì nữa",
      "ko": "또 뭐",
      "kr_read": "지 느어",
-     "hanja": null,
      "tones": [
       {
        "syl": "gì",
@@ -9935,7 +9762,6 @@
      "vi": "thôi",
      "ko": "그만·~만",
      "kr_read": "토이",
-     "hanja": null,
      "tones": [
       {
        "syl": "thôi",
@@ -9949,7 +9775,6 @@
      "vi": "nữa",
      "ko": "더",
      "kr_read": "느어",
-     "hanja": null,
      "tones": [
       {
        "syl": "nữa",
@@ -9963,7 +9788,6 @@
      "vi": "quan trọng",
      "ko": "중요하다",
      "kr_read": "꾸안 쫌",
-     "hanja": null,
      "tones": [
       {
        "syl": "quan",

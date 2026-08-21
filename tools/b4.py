@@ -2,7 +2,11 @@
 import json, pathlib, sys
 sys.path.insert(0,'tools')
 from tone import word_tones
-def W(vi,ko,kr,h=None): return {"vi":vi,"ko":ko,"kr_read":kr,"hanja":h,"tones":word_tones(vi)}
+def W(vi,ko,kr,h=None,s=None):
+    d={"vi":vi,"ko":ko,"kr_read":kr,"tones":word_tones(vi)}
+    if h: d["hanja"]=h
+    if s: d["south"]=s
+    return d
 def L(who,vi,ko,kr,g): return {"who":who,"vi":vi,"ko":ko,"kr_read":kr,
     "gloss":[{"w":a,"m":b} for a,b in g],"tones":word_tones(vi)}
 def X(vi,ko,kr): return {"vi":vi,"ko":ko,"kr_read":kr,"tones":word_tones(vi)}
@@ -15,7 +19,7 @@ DAYS=[]
 DAYS.append(D(16,"아플 때",
  "bị는 나쁜 일을 '당했다'는 표시다. bị đau(아프다), bị cảm(감기 걸리다). 좋은 일엔 안 쓴다.",
  [W("bị","(나쁜 일을) 당하다","비"), W("đau","아프다","다우"),
-  W("ốm","아프다 (병나다)","옴"),
+  W("ốm","아프다 (병나다)","옴",s="뜻 주의! 남부에서 ốm은 '마르다'. 아프다는 bệnh [벤]"),
   W("bệnh viện","병원","벤 비엔","病院 (병원)"),
   W("thuốc","약","투옥"), W("đầu","머리","더우"),
   W("bụng","배","붐"), W("tay","손","따이"),

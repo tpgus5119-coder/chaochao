@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="베트남어">
 <meta name="mobile-web-app-capable" content="yes">
 <title>베트남어 스터디</title>
-<link rel="stylesheet" href="style.css?v=f3bb5a7a">
+<link rel="stylesheet" href="style.css?v=c0b8983b">
 </head>
 <body>
 
@@ -26,6 +26,7 @@
   <!-- 홈 -->
   <section id="home" class="view">
     <p class="lede">하루 15분. 단어 10개 + 주고받는 대화 1개. 완전 처음부터.</p>
+    <button id="heroGo" class="hero" hidden></button>
     <div id="progress" class="progress"></div>
     <div class="banner tone" id="toneBanner">
       <div>
@@ -43,6 +44,13 @@
         <span id="weeklyWhy"></span>
       </div>
       <button id="goWeekly" class="primary">한 바퀴</button>
+    </div>
+    <div class="banner chat" id="chatBanner">
+      <div>
+        <strong>AI와 대화</strong>
+        <span>배운 문장으로 베트남어 주고받기</span>
+      </div>
+      <button id="goChat" class="primary">대화</button>
     </div>
     <div id="reviewCard" class="banner" hidden>
       <div>
@@ -101,9 +109,19 @@
   <section id="mission" class="view" hidden>
     <div id="missionBody"></div>
   </section>
+
+  <!-- AI 대화 -->
+  <section id="chat" class="view" hidden>
+    <div id="chatSetup" hidden></div>
+    <div id="chatLog" class="chatlog"></div>
+    <form id="chatForm" class="chatin" hidden>
+      <input id="chatText" type="text" placeholder="베트남어나 한국어로…" autocomplete="off">
+      <button class="primary" type="submit">보내기</button>
+    </form>
+  </section>
 </main>
 
-<script src="pitch.js?v=f3bb5a7a"></script>
-<script src="app.js?v=f3bb5a7a"></script>
+<script src="pitch.js?v=c0b8983b"></script>
+<script src="app.js?v=c0b8983b"></script>
 </body>
 </html>

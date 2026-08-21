@@ -2,7 +2,11 @@
 import json, pathlib, sys
 sys.path.insert(0,'tools')
 from tone import word_tones
-def W(vi,ko,kr,h=None): return {"vi":vi,"ko":ko,"kr_read":kr,"hanja":h,"tones":word_tones(vi)}
+def W(vi,ko,kr,h=None,s=None):
+    d={"vi":vi,"ko":ko,"kr_read":kr,"tones":word_tones(vi)}
+    if h: d["hanja"]=h
+    if s: d["south"]=s
+    return d
 def L(who,vi,ko,kr,g): return {"who":who,"vi":vi,"ko":ko,"kr_read":kr,
     "gloss":[{"w":a,"m":b} for a,b in g],"tones":word_tones(vi)}
 def X(vi,ko,kr): return {"vi":vi,"ko":ko,"kr_read":kr,"tones":word_tones(vi)}
@@ -18,7 +22,7 @@ DAYS.append(D(11,"하루 일과",
   W("kết thúc","끝나다","껫 툭","結束 (결속)"),
   W("làm","하다·일하다","람"), W("việc","일","비엑"),
   W("nghỉ","쉬다","응이"), W("sớm","일찍·이르다","섬"),
-  W("muộn","늦다","무온"), W("mỗi","매·각각","모이"),
+  W("muộn","늦다","무온",s="trễ [쩨]"), W("mỗi","매·각각","모이"),
   W("thường","보통·자주","트엉","常 (상)")],
  "하루 일과 묻기",
  [L("A","Mỗi ngày anh dậy lúc mấy giờ? Mấy giờ bắt đầu làm việc?","매일 몇 시에 일어나세요? 몇 시에 일 시작해요?","모이 응아이 아인 저이 룩 머이 저 머이 저 밧 더우 람 비엑",
@@ -56,10 +60,10 @@ DAYS.append(D(12,"먹고 마시기",
 DAYS.append(D(13,"사고 팔기",
  "시장에서 값을 물을 때 거의 이 문장 하나로 끝난다. 값을 못 알아들으면 Day 5의 'Nói từ từ'를 쓴다.",
  [W("này","이·이것","나이"), W("tiền","돈","띠엔"),
-  W("đắt","비싸다","닷"), W("rẻ","싸다","재"),
+  W("đắt","비싸다","닷",s="mắc [막]"), W("rẻ","싸다","재"),
   W("mua","사다","무어"), W("bán","팔다","반"),
   W("cho","~에게 주다","쩌"), W("xin","청하다·주세요","씬"),
-  W("nghìn","천 (1000)","응인"), W("đồng","동 (베트남 돈)","돔","銅 (동)")],
+  W("nghìn","천 (1000)","응인",s="ngàn [응안]"), W("đồng","동 (베트남 돈)","돔","銅 (동)")],
  "값 묻고 흥정하기",
  [L("A","Cái này bao nhiêu tiền? Đắt lắm!","이거 얼마예요? 아주 비싸요!","까이 나이 바오 니에우 띠엔 닷 람",
     [("Cái này","이것"),("bao nhiêu","얼마"),("tiền","돈"),("Đắt","비싸다"),("lắm","아주")]),
@@ -96,7 +100,7 @@ DAYS.append(D(14,"어디에 있어요",
 DAYS.append(D(15,"가족",
  "베트남어 가족 호칭도 한국어처럼 손위·손아래를 나눈다. anh trai(형), em trai(남동생)처럼 뒤에 남녀를 붙인다.",
  [W("gia đình","가족","자 딘","家庭 (가정)"),
-  W("bố","아버지","보"), W("mẹ","어머니","매"),
+  W("bố","아버지","보",s="ba [바]"), W("mẹ","어머니","매",s="má [마]"),
   W("con trai","아들","꼰 짜이"), W("vợ","아내","버"),
   W("chồng","남편","쫌"), W("anh trai","형·오빠","아인 짜이"),
   W("chị gái","누나·언니","찌 가이"), W("em trai","남동생","앰 짜이"),

@@ -2,7 +2,11 @@
 import json, pathlib, sys
 sys.path.insert(0,'tools')
 from tone import word_tones
-def W(vi,ko,kr,h=None): return {"vi":vi,"ko":ko,"kr_read":kr,"hanja":h,"tones":word_tones(vi)}
+def W(vi,ko,kr,h=None,s=None):
+    d={"vi":vi,"ko":ko,"kr_read":kr,"tones":word_tones(vi)}
+    if h: d["hanja"]=h
+    if s: d["south"]=s
+    return d
 def L(who,vi,ko,kr,g): return {"who":who,"vi":vi,"ko":ko,"kr_read":kr,
     "gloss":[{"w":a,"m":b} for a,b in g],"tones":word_tones(vi)}
 def X(vi,ko,kr): return {"vi":vi,"ko":ko,"kr_read":kr,"tones":word_tones(vi)}

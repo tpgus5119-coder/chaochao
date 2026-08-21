@@ -4,7 +4,11 @@
 import json, pathlib, sys
 sys.path.insert(0,'tools')
 from tone import word_tones
-def W(vi,ko,kr,h=None): return {"vi":vi,"ko":ko,"kr_read":kr,"hanja":h,"tones":word_tones(vi)}
+def W(vi,ko,kr,h=None,s=None):
+    d={"vi":vi,"ko":ko,"kr_read":kr,"tones":word_tones(vi)}
+    if h: d["hanja"]=h
+    if s: d["south"]=s
+    return d
 def L(who,vi,ko,kr,g): return {"who":who,"vi":vi,"ko":ko,"kr_read":kr,
     "gloss":[{"w":a,"m":b} for a,b in g],"tones":word_tones(vi)}
 def X(vi,ko,kr): return {"vi":vi,"ko":ko,"kr_read":kr,"tones":word_tones(vi)}
@@ -20,7 +24,7 @@ DAYS.append(D(1,"인사와 호칭",
   W("anh","형·오빠 (손위 남자)","아인"), W("chị","누나·언니 (손위 여자)","찌"),
   W("em","동생 (손아래)","앰"), W("bạn","너·친구 (동갑)","반"),
   W("tôi","나·저","또이"), W("ạ","(공손하게)","아"),
-  W("vâng","네","벙"), W("cảm ơn","고맙습니다","깜 언","感恩 (감은)")],
+  W("vâng","네","벙",s="dạ [야]"), W("cảm ơn","고맙습니다","깜 언","感恩 (감은)")],
  "처음 만나 인사하기",
  [L("A","Xin chào anh ạ!","안녕하세요!","씬 짜오 아인 아",
     [("Xin chào","안녕하세요"),("anh","형·오빠"),("ạ","공손")]),
