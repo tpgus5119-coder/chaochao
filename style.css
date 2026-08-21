@@ -174,11 +174,18 @@ button:active{transform:scale(.98)}
   font-size:11px; color:var(--dim); background:var(--bg);
 }
 .tchip i{font-style:normal; font-weight:700; font-size:12px; color:var(--fg)}
-.tchip b{font-size:14px; color:var(--fg); line-height:1}
+.tchip b{color:var(--fg); line-height:1; display:inline-flex}
 .tchip.ngang b{color:var(--dim)}
-.tchip.huyen b,.tchip.nặng b{color:var(--accent)}
+.tchip.huyền b,.tchip.nặng b{color:var(--accent)}
 .tchip.sắc b,.tchip.ngã b{color:var(--warn)}
 .tchip.hỏi b{color:var(--bad)}
+
+/* 성조 화살표 (SVG) — 색은 글자색을 따라간다 */
+.tarr{width:19px; height:19px; display:inline-block; vertical-align:-4px}
+.tarr path{stroke:currentColor; stroke-width:2.2; fill:none; stroke-linecap:round; stroke-linejoin:round}
+.tarr circle{fill:currentColor}
+.tone-shape .tarr{width:46px; height:46px}
+.gt .tarr{width:15px; height:15px; vertical-align:-2px}
 
 /* 대화 카드 */
 .card.wide{align-items:stretch; text-align:left; padding:18px 16px; gap:14px}
@@ -209,7 +216,6 @@ button:active{transform:scale(.98)}
 .gt.huyền,.gt.nặng{color:var(--accent)}
 .gt.sắc,.gt.ngã{color:var(--warn)}
 .gt.hỏi{color:var(--bad)}
-.gtn{font-size:10px; color:var(--dim); letter-spacing:.02em}
 .card.wide .gcell{min-width:62px; gap:2px}
 
 /* 그림 */

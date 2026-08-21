@@ -63,26 +63,38 @@ function playMine() {
 }
 function soundRow(text, withSlow) {
   const row = el('div', 'sound');
-  const a = el('button', 'ghost', '🔊 듣기');
+  const a = el('button', 'ghost', '듣기');
   a.onclick = () => play(text, false);
   row.append(a);
   if (withSlow) {
-    const b = el('button', 'ghost', '🐢 느리게');
+    const b = el('button', 'ghost', '느리게 듣기');
     b.onclick = () => play(text, true);
     row.append(b);
   }
   return row;
 }
 
-/* 성조 표시 — 글자에서 자동으로 뽑은 것 */
+/* 성조를 화살표로 그린다 — 이름 없이 방향과 끝점만. 화살촉이 소리가 끝나는 곳이다 */
+const TARR = {
+  'ngang': { d: 'M3 10 L15 10',                     x: 16,   y: 10,   a: 0 },
+  'sắc':   { d: 'M4 15.5 L14.5 6.5',                x: 16,   y: 5.2,  a: -40 },
+  'huyền': { d: 'M4 4.5 L14.5 13.5',                x: 16,   y: 14.8, a: 40 },
+  'hỏi':   { d: 'M4 5 C6.5 15.5, 10.5 16, 14 10.5', x: 15,   y: 9.3,  a: -45 },
+  'ngã':   { d: 'M3 15 L8 11 M11 8.2 L14.5 5.4',    x: 15.8, y: 4.4,  a: -38 },
+  'nặng':  { d: 'M8.5 4 L12.5 10',                  x: 13.5, y: 11.6, a: 56, dot: [16, 15.5] },
+};
+function toneArrow(name) {
+  const t = TARR[name] || TARR['ngang'];
+  return `<svg viewBox="0 0 20 20" class="tarr"><path d="${t.d}"/>` +
+    `<g transform="translate(${t.x} ${t.y}) rotate(${t.a})"><path d="M-4.4 -3 L0 0 L-4.4 3"/></g>` +
+    (t.dot ? `<circle cx="${t.dot[0]}" cy="${t.dot[1]}" r="1.7"/>` : '') + `</svg>`;
+}
 function toneRow(tones, small) {
   const r = el('div', 'tones' + (small ? ' sm' : ''));
   (tones || []).forEach(t => {
     const b = el('span', 'tchip ' + t.name);
-    b.append(el('i', null, esc(t.syl)),
-             el('b', null, esc(t.shape)),
-             el('span', null, esc(t.name)));
-    b.title = t.syl + ' — ' + t.name + ' · ' + t.ko;
+    b.append(el('i', null, esc(t.syl)), el('b', null, toneArrow(t.name)));
+    b.title = t.name + ' · ' + t.ko;
     r.append(b);
   });
   return r;
@@ -167,25 +179,24 @@ async function toggleRec(text, btn, box) {
 
 function drawCompare(text, box) {
   box.textContent = '';
+  box.parentElement?.querySelector('.prenat')?.remove();   // 원어민 단독 곡선은 겹쳐 그리기로 대체
   const row = el('div', 'cmp');
-  const a = el('button', 'ghost', '👤 원어민');
+  const a = el('button', 'ghost', '원어민');
   a.onclick = () => play(text, false);
-  const b = el('button', 'ghost', '🙋 내 소리');
+  const b = el('button', 'ghost', '내 소리');
   b.onclick = () => {
     if (REC.key === text) playMine();
   };
-  const t = el('button', 'primary', '📈 내 성조 그려보기');
-  const curve = el('div', 'curvearea');
-  t.onclick = () => showTone(text, REC.url, curve);
-  const c = el('button', 'ghost', '↔ 번갈아 듣기');
+  const c = el('button', 'ghost', '번갈아 듣기');
   c.onclick = async () => {
     play(text, false);
     await new Promise(r => setTimeout(r, 2200));
     if (REC.key === text) playMine();
   };
-  row.append(a, b, c, t);
-  box.append(row);
-  box.append(curve);
+  const curve = el('div', 'curvearea');
+  row.append(a, b, c);
+  box.append(row, curve);
+  showTone(text, REC.url, curve);        // 녹음이 끝나면 버튼 없이 바로 그린다
 }
 
 function speakRow(text) {
@@ -197,7 +208,13 @@ function speakRow(text) {
   const box = el('div', 'cmpbox');
   const b = el('button', 'rec', '🎤 따라 말하기');
   b.onclick = () => toggleRec(text, b, box);
-  wrap.append(b, box);
+  const pre = el('div', 'curvearea prenat');   // 원어민 높낮이는 묻지 않고 바로 보여준다
+  nativeCurve(text).then(nat => {
+    if (!nat || !nat.curve) return;
+    pre.innerHTML = `<div class="curvebox">${curveSvg(null, nat.curve)}</div>` +
+      `<div class="curvelegend"><span class="k nat"></span>원어민 소리 높낮이 (느린 발음)</div>`;
+  });
+  wrap.append(b, pre, box);
   return wrap;
 }
 
@@ -269,7 +286,7 @@ async function showTone(text, blobUrl, box) {
   /* 점수를 매기지 않는다.
      음높이만 보는 방식은 성조를 세밀하게 가려내지 못한다(문헌상 72~75%).
      그래서 '오르내리는 방향'이 같았는지만 말해주고, 나머지는 눈으로 보게 한다. */
-  const DIR = { up: '올라감 ／', down: '내려감 ＼', dip: '내렸다 올림 ∨', flat: '평평함 —' };
+  const DIR = { up: '올라감 ↗', down: '내려감 ↘', dip: '내렸다 올림 ↘↗', flat: '평평함 →' };
   const dm = PITCH.direction(mine), dn = nat && PITCH.direction(nat);
   if (dn) {
     const same = dm === dn;
@@ -511,7 +528,7 @@ function drawCard() {
 
   if (it.k === 'tone') {
     c.append(el('div', 'vi', esc(x.vi)));
-    c.append(el('div', 'tone-shape', esc(x.shape)));
+    c.append(el('div', 'tone-shape', toneArrow(x.mark)));
     c.append(soundRow(x.vi, true));
     c.append(el('div', 'ko', esc(x.ko) + ' <span style="color:var(--dim)">· ' + esc(x.mark) + '</span>'));
     c.append(reveal(x.kr_read));
@@ -522,10 +539,10 @@ function drawCard() {
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(toneRow(x.tones));
     c.append(soundRow(x.vi, true));
+    c.append(reveal(x.kr_read));               // 그림 → 단어 → 발음 → 뜻 순서
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
     if (x.gesture) c.append(el('div', 'gest', '✋ ' + esc(x.gesture)));
-    c.append(reveal(x.kr_read));
     c.append(speakRow(x.vi));
   }
 
@@ -572,12 +589,11 @@ function drawCard() {
         top.append(el('span', 'gw', esc(pp.w)));
         const t = tmap[norm(pp.w.split(' ')[0])];
         if (t) {
-          const ch = el('span', 'gt ' + t.name, esc(t.shape));
+          const ch = el('span', 'gt ' + t.name, toneArrow(t.name));
           ch.title = t.name + ' · ' + t.ko;
           top.append(ch);
         }
         cell.append(top, el('span', 'gm', esc(pp.m)));
-        if (t) cell.append(el('span', 'gtn', esc(t.name)));
         g.append(cell);
       });
       row.append(g);
@@ -671,9 +687,9 @@ function drawQuiz() {
 
   if (q.mode === 'listen') {
     const wrap = el('div', 'qplay');
-    const b = el('button', 'primary big', '🔊 다시 듣기');
+    const b = el('button', 'primary big', '다시 듣기');
     b.onclick = () => play(q.w.vi, false);
-    const sl = el('button', 'ghost', '🐢 느리게');
+    const sl = el('button', 'ghost', '느리게 듣기');
     sl.onclick = () => play(q.w.vi, true);
     wrap.append(b, sl);
     body.append(wrap);
@@ -806,9 +822,9 @@ function drawTone() {
   body.append(el('div', 'tonehint', `글자는 모두 <b>${esc(g.base)}</b> 로 같습니다. 성조만 다릅니다.`));
 
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '🔊 다시 듣기');
+  const b = el('button', 'primary big', '다시 듣기');
   b.onclick = () => play(it.vi, false);
-  const sl = el('button', 'ghost', '🐢 느리게');
+  const sl = el('button', 'ghost', '느리게 듣기');
   sl.onclick = () => play(it.vi, true);
   wrap.append(b, sl);
   body.append(wrap);
@@ -818,7 +834,7 @@ function drawTone() {
   g.items.forEach(o => {
     const btn = el('button');
     btn.append(el('span', 'tvi', esc(o.vi)),
-               el('span', 'tmark', esc(o.mark)),
+               el('span', 'tmark', toneArrow(o.mark)),
                el('span', 'tko', esc(o.ko)));
     btn.onclick = () => {
       [...opts.children].forEach(x => x.disabled = true);
@@ -936,9 +952,9 @@ function drawMark() {
   body.append(el('div', 'markbare', esc(bare)));
 
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '🔊 다시 듣기');
+  const b = el('button', 'primary big', '다시 듣기');
   b.onclick = () => play(w.vi, false);
-  const sl = el('button', 'ghost', '🐢 느리게');
+  const sl = el('button', 'ghost', '느리게 듣기');
   sl.onclick = () => play(w.vi, true);
   wrap.append(b, sl);
   body.append(wrap);
