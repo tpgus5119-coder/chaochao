@@ -239,7 +239,7 @@ function drawCompare(text, box) {
   };
   const curve = el('div', 'curvearea');
   row.append(a, b, c);
-  if (S.gkey) {                          // AI 받아쓰기: 내 발음이 뭐라고 들리는지
+  if (aiReady()) {                       // AI 받아쓰기: 내 발음이 뭐라고 들리는지
     const ai = el('button', 'ghost', 'AI가 듣기');
     ai.onclick = () => {
       if (REC.key !== text) return;
@@ -1447,7 +1447,12 @@ function drawType() {
    그래서 지금까지 배운 단어 목록을 매번 같이 보낸다.
    키는 이 기기에만 저장되고 백업에는 안 들어간다. 대화 내용은 구글 서버로 간다. */
 let CH = null;
-const GURL = () => 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(S.gkey);
+/* AI 중계 서버 — 키를 서버가 숨겨 들고 있어서, 주소가 채워지면 누구나 키 없이 쓴다.
+   비어 있는 동안은 예전 방식(각자 키)으로 돈다. */
+const PROXY = '';
+const aiReady = () => !!(PROXY || S.gkey);
+const GURL = () => PROXY ||
+  ('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(S.gkey));
 
 function learnedVi() {
   const out = [];
@@ -1528,9 +1533,11 @@ async function chatSend(userText) {
       })
     });
     if (!r.ok) throw new Error(
-      r.status === 400 || r.status === 403 ? '키가 잘못됐거나 만료됐습니다. 아래에서 키를 지우고 다시 넣어 보세요' :
-      r.status === 429 ? '오늘 무료 한도를 다 썼습니다. 내일 다시 됩니다' :
-      '연결이 안 됩니다 (' + r.status + ')');
+      r.status === 400 || r.status === 403
+        ? (PROXY ? '서버 연결에 문제가 있습니다. 잠시 뒤 다시 해 보세요'
+                 : '키가 잘못됐거나 만료됐습니다. 아래에서 키를 지우고 다시 넣어 보세요')
+        : r.status === 429 ? '오늘 무료 한도를 다 썼습니다. 내일 다시 됩니다'
+        : '연결이 안 됩니다 (' + r.status + ')');
     const j = await r.json();
     const text = (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('');
     if (!text) throw new Error('빈 답이 왔습니다. 한 번 더 보내 보세요');
@@ -1547,7 +1554,7 @@ function startChat() {
   $('#chatLog').textContent = '';
   $('#chatForm').hidden = true;
   CH = null;
-  if (!S.gkey) renderChatKey(); else renderChatModes();
+  if (!aiReady()) renderChatKey(); else renderChatModes();
   show('chat', 'AI 대화', true);
 }
 
@@ -1591,9 +1598,11 @@ function renderChatModes() {
   s.append(m1, m2);
   s.append(el('p', 'note', 'AI는 연습 상대이지 선생님이 아닙니다 — 이상한 문장이 오면 그냥 넘어가세요.<br>' +
     '문장 소리는 폰에 베트남어 음성이 있을 때만 나옵니다 (안드로이드는 대부분 있음).'));
-  const del = el('button', 'ghost sm', '키 지우기');
-  del.onclick = () => { if (confirm('저장된 키를 지울까요?')) { delete S.gkey; save(); renderChatKey(); } };
-  s.append(del);
+  if (S.gkey) {                          // 개인 키를 쓰는 사람에게만 보인다
+    const del = el('button', 'ghost sm', '키 지우기');
+    del.onclick = () => { if (confirm('저장된 키를 지울까요?')) { delete S.gkey; save(); startChat(); } };
+    s.append(del);
+  }
 }
 
 function beginChat(mode, myRole) {
