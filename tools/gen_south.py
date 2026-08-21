@@ -49,10 +49,11 @@ for i, (t, h, sub, sp) in enumerate(todo):
             break
         if 'rate limit' in str(j.get('message', '')).lower():
             limit_streak += 1
-            if limit_streak > 40:              # 40번(약 45분) 연속이면 하루 한도로 판단
-                print(f'하루 한도로 보임. 저장 {ok}, 실패 {fail}, 남음 {len(todo)-i}', flush=True)
-                sys.exit(1)
-            time.sleep(65); continue
+            # 한도가 풀릴 때까지 장기전: 처음엔 1분, 계속 막히면 15분 간격으로 기다린다
+            wait = 65 if limit_streak < 5 else 900
+            if limit_streak % 4 == 1:
+                print(f'한도 대기 중… (연속 {limit_streak}회, {wait}초 간격, 저장 {ok})', flush=True)
+            time.sleep(wait); continue
         print(f'오류 응답: {j} ← {t[:25]} {sub}', flush=True); fail += 1; break
     if ok and ok % 20 == 0: print(f'{ok}/{len(todo)} 저장', flush=True)
     time.sleep(1.2)                            # 예의상 간격

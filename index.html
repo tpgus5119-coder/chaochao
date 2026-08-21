@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="베트남어">
 <meta name="mobile-web-app-capable" content="yes">
 <title>베트남어 스터디</title>
-<link rel="stylesheet" href="style.css?v=5e421994">
+<link rel="stylesheet" href="style.css?v=360d9505">
 </head>
 <body>
 
@@ -52,6 +52,16 @@
         <span>배운 문장으로 베트남어 주고받기</span>
       </div>
       <button id="goChat" class="primary">대화</button>
+    </div>
+    <div class="banner writeb" id="writeBanner">
+      <div>
+        <strong>쓰기 연습</strong>
+        <span>듣고 손으로 쓰기 · 화면 자판으로 치기</span>
+      </div>
+      <div class="bbtns">
+        <button id="goWrite" class="ghost">손글씨</button>
+        <button id="goType" class="primary">자판</button>
+      </div>
     </div>
     <div id="reviewCard" class="banner" hidden>
       <div>
@@ -111,6 +121,14 @@
     <div id="missionBody"></div>
   </section>
 
+  <!-- 손글씨 · 자판 -->
+  <section id="write" class="view" hidden>
+    <div id="writeBody"></div>
+  </section>
+  <section id="type" class="view" hidden>
+    <div id="typeBody"></div>
+  </section>
+
   <!-- AI 대화 -->
   <section id="chat" class="view" hidden>
     <div id="chatSetup" hidden></div>
@@ -122,7 +140,7 @@
   </section>
 </main>
 
-<script src="pitch.js?v=5e421994"></script>
-<script src="app.js?v=5e421994"></script>
+<script src="pitch.js?v=360d9505"></script>
+<script src="app.js?v=360d9505"></script>
 </body>
 </html>

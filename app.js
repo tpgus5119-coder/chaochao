@@ -414,7 +414,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone', 'mark', 'rules', 'chat'];
+const VIEWS = ['home', 'learn', 'quiz', 'mission', 'tone', 'mark', 'rules', 'chat', 'write', 'type'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -1280,6 +1280,159 @@ function showMission(d) {
   show('mission', '오늘의 대화 미션', true);
 }
 
+/* ---------- 쓰기 연습 (손글씨 + 화면 자판) ----------
+   손으로 쓰면 눈으로만 볼 때보다 글자가 더 잘 남는다(쓰는 동작이 기억에 같이 저장된다).
+   손글씨는 자동 판정을 하지 않는다 — 판정이 목적이 아니라 쓰는 행위가 목적이고,
+   정답을 열어 스스로 비교하는 것으로 충분하다. */
+
+function practiceWords(n) {
+  const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+  const doneDays = ALL.filter(d => typeof d.day === 'number' && S.done[d.day]);
+  const recent = doneDays.length ? doneDays[doneDays.length - 1].words
+    : (ALL.find(d => d.day === 1) || {}).words || [];
+  const pool = [...due, ...recent.filter(w => !due.some(x => x.vi === w.vi))];
+  return pool.slice(0, n);
+}
+
+function drawPad(host) {
+  const c = el('canvas', 'pad'); host.append(c);
+  let g = null;
+  requestAnimationFrame(() => {
+    const r = c.getBoundingClientRect(), d = devicePixelRatio || 1;
+    c.width = r.width * d; c.height = 190 * d;
+    g = c.getContext('2d');
+    g.scale(d, d); g.lineWidth = 5; g.lineCap = g.lineJoin = 'round';
+    g.strokeStyle = getComputedStyle(document.body).color;
+  });
+  let on = false;
+  const pos = e => { const r = c.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  c.onpointerdown = e => { if (!g) return; on = true; c.setPointerCapture(e.pointerId); const [x, y] = pos(e); g.beginPath(); g.moveTo(x, y); };
+  c.onpointermove = e => { if (!on || !g) return; const [x, y] = pos(e); g.lineTo(x, y); g.stroke(); };
+  c.onpointerup = c.onpointercancel = () => { on = false; };
+  return { clear: () => { if (!g) return; const d = devicePixelRatio || 1; g.clearRect(0, 0, c.width / d, c.height / d); } };
+}
+
+let WR = null;
+function startWrite() {
+  const ws = practiceWords(8);
+  if (!ws.length) return;
+  WR = { list: ws, i: 0 };
+  drawWrite();
+  show('write', '손으로 쓰기', true);
+}
+function drawWrite() {
+  const b = $('#writeBody'); b.textContent = '';
+  if (WR.i >= WR.list.length) {
+    const r = el('div', 'result');
+    r.append(el('div', 'n', WR.list.length + '개'));
+    r.append(el('div', null, '손으로 쓴 만큼 손이 기억합니다'));
+    const hm = el('button', 'primary big', '홈으로'); hm.onclick = renderHome;
+    hm.style.marginTop = '24px'; r.append(hm); b.append(r); return;
+  }
+  const w = WR.list[WR.i];
+  b.append(el('div', 'q', `${WR.i + 1} / ${WR.list.length} · 듣고, 떠올려서, 손으로 써 보세요`));
+  b.append(el('div', 'qmain', esc(w.ko)));
+  const wrap = el('div', 'qplay');
+  const p1 = el('button', 'primary', '다시 듣기'); p1.onclick = () => play(w.vi, false);
+  const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
+  wrap.append(p1, p2); b.append(wrap);
+  play(w.vi, false);
+  const pad = drawPad(b);
+  const row = el('div', 'qplay');
+  const clr = el('button', 'ghost', '지우기'); clr.onclick = pad.clear;
+  const showA = el('button', 'primary', '정답 보기');
+  row.append(clr, showA); b.append(row);
+  showA.onclick = () => {
+    showA.disabled = true;
+    const ans = el('div', 'ansbox');
+    ans.append(el('div', 'vi sm', esc(w.vi)));
+    ans.append(toneRow(w.tones));
+    if (w.kr_read && S.kr !== 'off') ans.append(el('div', 'krline', '[' + esc(w.kr_read) + ']'));
+    b.append(ans);
+    const g2 = el('div', 'opts');
+    const okB = el('button', null, '✓ 비슷하게 썼다');
+    okB.onclick = () => { fxTone(true); grade(w.vi, true); WR.i++; drawWrite(); };
+    const noB = el('button', null, '✗ 많이 다르다 — 한 번 더 쓰기');
+    noB.onclick = () => { grade(w.vi, false); drawWrite(); };
+    g2.append(okB, noB); b.append(g2);
+  };
+}
+
+/* 화면 속 베트남어 자판 — 다운로드 없이 브라우저 안에서 바로.
+   실기기 자판(텔렉스 방식)의 전 단계 연습: 글자와 성조 부호의 짝을 손에 익힌다. */
+let TY = null;
+function startType() {
+  const ws = practiceWords(8).filter(w => AIDX[w.vi]);
+  if (!ws.length) return;
+  TY = { list: ws, i: 0, txt: '' };
+  drawType();
+  show('type', '자판 연습', true);
+}
+function drawType() {
+  const b = $('#typeBody'); b.textContent = '';
+  if (TY.i >= TY.list.length) {
+    const r = el('div', 'result');
+    r.append(el('div', 'n', TY.list.length + '개'));
+    r.append(el('div', null, '자판으로 친 단어는 철자까지 정확해집니다'));
+    const hm = el('button', 'primary big', '홈으로'); hm.onclick = renderHome;
+    hm.style.marginTop = '24px'; r.append(hm); b.append(r); return;
+  }
+  const w = TY.list[TY.i]; TY.txt = '';
+  b.append(el('div', 'q', `${TY.i + 1} / ${TY.list.length} · 듣고 자판으로 쳐 보세요`));
+  b.append(el('div', 'qmain', esc(w.ko)));
+  const wrap = el('div', 'qplay');
+  const p1 = el('button', 'primary', '다시 듣기'); p1.onclick = () => play(w.vi, false);
+  const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
+  wrap.append(p1, p2); b.append(wrap);
+  play(w.vi, false);
+
+  const out = el('div', 'dictans');
+  const draw = () => { out.textContent = TY.txt || '· · ·'; };
+  draw(); b.append(out);
+
+  const kb = el('div', 'vkb');
+  const key = (label, fn, cls) => { const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label); k.onclick = fn; return k; };
+  const add = ch => { TY.txt += ch; draw(); };
+  ['q w e r t y u i o p', 'a s d f g h j k l', 'z x c v b n m đ', 'ă â ê ô ơ ư'].forEach(r => {
+    const row = el('div', 'vkrow');
+    r.split(' ').forEach(ch => row.append(key(ch, () => add(ch))));
+    kb.append(row);
+  });
+  const trow = el('div', 'vkrow');   // 성조 줄 — 마지막 음절의 주모음에 붙는다
+  [['ngang', ''], ['huyền', '\u0300'], ['sắc', '\u0301'], ['hỏi', '\u0309'], ['ngã', '\u0303'], ['nặng', '\u0323']]
+    .forEach(([name, mk]) => {
+      const k = key(toneArrow(name), () => {
+        const parts = TY.txt.split(' ');
+        const last = parts.pop();
+        if (!last) return;
+        const bare = stripTone(last);
+        parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
+        TY.txt = parts.join(' ');
+        draw();
+      }, 'tonek ' + name);
+      trow.append(k);
+    });
+  kb.append(trow);
+  const brow = el('div', 'vkrow');
+  brow.append(
+    key('띄어쓰기', () => add(' '), 'wide'),
+    key('⌫', () => { TY.txt = TY.txt.slice(0, -1); draw(); }, 'wide'),
+    key('확인', () => {
+      if (!TY.txt.trim()) return;
+      const good = TY.txt.trim().toLowerCase() === w.vi.toLowerCase();
+      fxTone(good);
+      out.dataset.r = good ? 'ok' : 'no';
+      if (!good) out.textContent = TY.txt.trim() + '  →  ' + w.vi;
+      grade(w.vi, good);
+      setTimeout(() => { TY.i++; drawType(); }, good ? 600 : 1900);
+    }, 'go wide')
+  );
+  kb.append(brow);
+  b.append(kb);
+  b.append(el('p', 'note', '실제 폰·컴퓨터의 베트남어 자판도 설정에서 추가하는 내장 기능입니다(다운로드 아님). ' +
+    '둘 다 영어 자판에 텔렉스 규칙(aa→â, dd→đ, 낱말 끝 s→´ …)을 얹는 같은 방식이라, 여기서 익힌 글자 그대로 쓸 수 있습니다.'));
+}
+
 /* ---------- AI 대화 ----------
    대화 시스템으로 연습하면 말하기가 는다는 메타분석이 있다(말하기 d=0.84).
    단, 왕초보에게는 자유대화보다 '배운 단어 안의 제한 대화'가 낫다 —
@@ -1445,6 +1598,8 @@ function beginChat(mode, myRole) {
 /* ---------- 시작 ---------- */
 $('#back').onclick = renderHome;
 $('#goChat').onclick = startChat;
+$('#goWrite').onclick = startWrite;
+$('#goType').onclick = startType;
 $('#chatForm').onsubmit = e => {
   e.preventDefault();
   const v = $('#chatText').value.trim();
