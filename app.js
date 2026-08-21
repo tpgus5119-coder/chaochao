@@ -2,7 +2,7 @@
 
 /* ---------- 저장 ---------- */
 const KEY = 'vnstudy.v2';
-const S = Object.assign({ voice: 'f', kr: 'show', done: {}, srs: {}, act: {}, stats: {} },
+const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', done: {}, srs: {}, act: {}, stats: {} },
   JSON.parse(localStorage.getItem(KEY) || '{}'));
 let saveWarned = false;
 function save() {
@@ -15,6 +15,14 @@ function save() {
       alert('이 브라우저에서는 진도가 저장되지 않습니다.\n시크릿 모드를 끄거나 다른 브라우저로 열어 주세요.\n(학습은 그대로 하실 수 있습니다)');
     }
   }
+}
+
+/* 단톡방 공유용 키 링크: 주소 뒤 #k=... 를 한 번 읽어 저장하고 지운다.
+   #(해시) 부분은 서버로 전송되지 않아 어디에도 기록이 안 남는다. */
+if (location.hash.startsWith('#k=')) {
+  S.gkey = decodeURIComponent(location.hash.slice(3));
+  save();
+  history.replaceState(null, '', location.pathname + location.search);
 }
 
 const DAY = 864e5;
@@ -46,11 +54,22 @@ const label = d => (typeof d.day === 'string' ? '준비 ' + d.day.slice(1) : 'Da
 const audio = new Audio();
 const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 둔다)
 
-function play(text, slow) {
+/* 지역(북부/남부)에 따른 소리 폴더. 남부는 여성(lannhi) 하나뿐이다. */
+const voiceDir = () => S.region === 's' ? 'sf' : S.voice;
+
+function play(text, slow, dir) {
   const h = AIDX[text];
   if (!h) return;
+  const d = dir || voiceDir();
   audio.pause();
-  audio.src = `audio/${S.voice}/${slow ? 'slow' : 'n'}/${h}.mp3`;
+  audio.onerror = null;
+  audio.src = `audio/${d}/${slow ? 'slow' : 'n'}/${h}.mp3`;
+  // 남부 파일이 아직 없으면 북부로라도 들려준다
+  if (d === 'sf') audio.onerror = () => {
+    audio.onerror = null;
+    audio.src = `audio/${S.voice}/${slow ? 'slow' : 'n'}/${h}.mp3`;
+    audio.play().catch(() => { });
+  };
   audio.currentTime = 0;
   audio.play().catch(() => { });
 }
@@ -135,7 +154,7 @@ async function playSeq(list, rows) {
     const h = AIDX[t];
     if (!h) continue;
     audio.pause();
-    audio.src = `audio/${S.voice}/n/${h}.mp3`;
+    audio.src = `audio/${voiceDir()}/n/${h}.mp3`;
     audio.currentTime = 0;
     await new Promise(res => {
       audio.onended = audio.onerror = res;
@@ -220,8 +239,72 @@ function drawCompare(text, box) {
   };
   const curve = el('div', 'curvearea');
   row.append(a, b, c);
+  if (S.gkey) {                          // AI 받아쓰기: 내 발음이 뭐라고 들리는지
+    const ai = el('button', 'ghost', 'AI가 듣기');
+    ai.onclick = () => {
+      if (REC.key !== text) return;
+      ai.disabled = true;
+      aiListen(text, REC.url, curve).finally(() => { ai.disabled = false; });
+    };
+    row.append(ai);
+  }
   box.append(row, curve);
   showTone(text, REC.url, curve);        // 녹음이 끝나면 버튼 없이 바로 그린다
+}
+
+/* 녹음을 16kHz 모노 WAV 로 바꾼다 — 폰마다 다른 녹음 형식을 AI가 다 읽지는 못해서 */
+async function recToWav(blobUrl) {
+  const src = await getCtx().decodeAudioData(await (await fetch(blobUrl)).arrayBuffer());
+  const off = new OfflineAudioContext(1, Math.ceil(src.duration * 16000), 16000);
+  const s = off.createBufferSource(); s.buffer = src; s.connect(off.destination); s.start();
+  const pcm = (await off.startRendering()).getChannelData(0);
+  const w = new DataView(new ArrayBuffer(44 + pcm.length * 2));
+  const put = (o, t) => [...t].forEach((c, i) => w.setUint8(o + i, c.charCodeAt(0)));
+  put(0, 'RIFF'); w.setUint32(4, 36 + pcm.length * 2, true); put(8, 'WAVEfmt ');
+  w.setUint32(16, 16, true); w.setUint16(20, 1, true); w.setUint16(22, 1, true);
+  w.setUint32(24, 16000, true); w.setUint32(28, 32000, true); w.setUint16(32, 2, true);
+  w.setUint16(34, 16, true); put(36, 'data'); w.setUint32(40, pcm.length * 2, true);
+  pcm.forEach((v, i) => w.setInt16(44 + i * 2, Math.max(-1, Math.min(1, v)) * 32767, true));
+  const u8 = new Uint8Array(w.buffer);
+  let bin = '';
+  for (let i = 0; i < u8.length; i += 32768) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 32768));
+  return btoa(bin);
+}
+
+/* AI 받아쓰기 판정.
+   실험해 보니 AI는 '무슨 음절인지'는 정확히 듣지만 '성조'는 원어민 소리도 틀렸다.
+   그래서 성조 채점은 안 시키고, 글자를 알아들을 수 있는 발음인지만 묻는다.
+   성조는 위의 높낮이 곡선이 담당한다 — 둘이 합쳐야 온전한 피드백이 된다. */
+async function aiListen(text, blobUrl, box) {
+  const note = el('div', 'cmpnote ainote', 'AI가 듣는 중…');
+  box.querySelector('.ainote')?.remove();
+  box.append(note);
+  try {
+    const b64 = await recToWav(blobUrl);
+    const r = await fetch(GURL(), {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [
+          { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
+          { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+        generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
+      })
+    });
+    if (!r.ok) throw new Error(r.status === 429 ? '오늘 무료 한도를 다 썼습니다' : '연결 실패 (' + r.status + ')');
+    const j = await r.json();
+    const heard = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
+    if (!heard) throw new Error('빈 답이 왔습니다');
+    const clean = s => s.toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+    const bare = s => stripTone(clean(s));
+    const exact = clean(heard) === clean(text);
+    const close = bare(heard) === bare(text);
+    note.innerHTML = (exact
+      ? '<b>AI가 정확히 "' + esc(heard) + '" 로 받아 적었습니다.</b> 알아들을 수 있는 발음입니다.'
+      : close
+        ? '<b>AI가 "' + esc(heard) + '" 로 들었습니다.</b> 글자는 맞게 들립니다 — 성조는 위 곡선으로 확인하세요.'
+        : 'AI에게는 "<b>' + esc(heard) + '</b>" 로 들렸습니다 (목표: ' + esc(text) + '). 조금 크게, 또박또박 다시 해 보세요.') +
+      '<br><span class="dimtxt">참고용 — AI도 성조 구별은 잘 못합니다 (원어민 소리로 실험해 확인했습니다).</span>';
+  } catch (e) { note.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
 }
 
 function speakRow(text) {
@@ -257,14 +340,16 @@ function getCtx() {
 }
 
 async function nativeCurve(text) {
-  if (nativeCache[text] !== undefined) return nativeCache[text];
+  const key = voiceDir() + '|' + text;
+  if (nativeCache[key] !== undefined) return nativeCache[key];
   const h = AIDX[text];
-  if (!h) return (nativeCache[text] = null);
+  if (!h) return (nativeCache[key] = null);
   try {
-    const r = await fetch(`audio/${S.voice}/slow/${h}.mp3`);
+    let r = await fetch(`audio/${voiceDir()}/slow/${h}.mp3`);
+    if (!r.ok && voiceDir() === 'sf') r = await fetch(`audio/${S.voice}/slow/${h}.mp3`);
     const c = await PITCH.analyze(await r.arrayBuffer(), getCtx());
-    return (nativeCache[text] = c);
-  } catch (e) { return (nativeCache[text] = null); }
+    return (nativeCache[key] = c);
+  } catch (e) { return (nativeCache[key] = null); }
 }
 
 function curveSvg(mine, native) {
@@ -691,8 +776,10 @@ function buildQuestions(words) {
   const pool = allWords();
   return words.map(w => {
     const lv = (S.srs[w.vi] || {}).lv || 0;
-    // 익숙해진 단어(2단계 이상)는 보기 없이 직접 떠올리게 한다
-    const mode = lv >= 2 ? 'recall'
+    // 익숙해진 단어(2단계 이상)는 보기 없이 직접 떠올리게 한다.
+    // 받아쓰기(dict)는 1단계부터 가끔 섞는다 — 듣기·철자·성조를 한 번에 시험한다.
+    const mode = lv >= 2 ? (Math.random() < .3 && AIDX[w.vi] ? 'dict' : 'recall')
+      : lv >= 1 && AIDX[w.vi] && Math.random() < .3 ? 'dict'
       : (Math.random() < .5 && AIDX[w.vi] ? 'listen' : 'meaning');
     const others = pool.filter(x => x.vi !== w.vi).sort(() => Math.random() - .5).slice(0, 3);
     return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
@@ -716,10 +803,11 @@ function drawQuiz() {
   if (Q.i >= Q.list.length) return finishQuiz();
 
   const q = Q.list[Q.i];
-  const LABEL = { listen: '듣고 고르세요', meaning: '뜻을 고르세요', recall: '소리 내어 말해 보세요' };
+  const LABEL = { listen: '듣고 고르세요', meaning: '뜻을 고르세요', recall: '소리 내어 말해 보세요', dict: '듣고 글자를 만들어 보세요' };
   body.append(el('div', 'q', LABEL[q.mode]));
 
   if (q.mode === 'recall') return drawRecall(body, q);
+  if (q.mode === 'dict') return drawDict(body, q);
 
   if (q.mode === 'listen') {
     const wrap = el('div', 'qplay');
@@ -743,6 +831,62 @@ function drawQuiz() {
   body.append(opts);
 }
 
+
+/* 받아쓰기 — 소리를 듣고 음절 조각으로 그대로 만든다.
+   조각에 '같은 글자, 다른 성조' 미끼를 섞어서 성조까지 들어야 풀리게 한다.
+   보고 베끼기는 인출이 없어 효과가 약하다 — 소리→철자 인출이라야 남는다. */
+function drawDict(body, q) {
+  const wrap = el('div', 'qplay');
+  const b = el('button', 'primary big', '다시 듣기');
+  b.onclick = () => play(q.w.vi, false);
+  const sl = el('button', 'ghost', '느리게 듣기');
+  sl.onclick = () => play(q.w.vi, true);
+  wrap.append(b, sl);
+  body.append(wrap);
+  play(q.w.vi, false);
+  body.append(el('div', 'q mid', esc(q.w.ko)));   // 뜻은 보여준다 — 철자와 성조를 시험하는 것이니까
+
+  const syls = q.w.vi.split(' ');
+  const MKS = ['', '\u0300', '\u0301', '\u0309', '\u0303', '\u0323'];
+  const pool = [];
+  syls.forEach(sy => {
+    pool.push(sy);
+    const bare = stripTone(sy), pos = tonePos(bare);
+    MKS.map(m => withMark(bare, m, pos))
+      .filter(v => v !== sy && !syls.includes(v))
+      .sort(() => Math.random() - .5).slice(0, 2)
+      .forEach(v => pool.push(v));
+  });
+  pool.sort(() => Math.random() - .5);
+
+  const picked = [], used = [];
+  const ans = el('div', 'dictans');
+  const draw = () => { ans.textContent = picked.length ? picked.join(' ') : '· · ·'; };
+  draw();
+  const tiles = el('div', 'dicttiles');
+  pool.forEach(sy => {
+    const t = el('button', 'tile', esc(sy));
+    t.onclick = () => { t.disabled = true; picked.push(sy); used.push(t); draw(); };
+    tiles.append(t);
+  });
+  const undo = el('button', 'ghost', '⌫ 지우기');
+  undo.onclick = () => { if (!picked.length) return; picked.pop(); used.pop().disabled = false; draw(); };
+  const chk = el('button', 'primary', '확인');
+  chk.onclick = () => {
+    if (!picked.length) return;
+    const good = picked.join(' ').toLowerCase() === q.w.vi.toLowerCase();
+    fxTone(good);
+    chk.disabled = undo.disabled = true;
+    [...tiles.children].forEach(t => t.disabled = true);
+    ans.dataset.r = good ? 'ok' : 'no';
+    if (!good) ans.textContent = picked.join(' ') + '  →  ' + q.w.vi;
+    if (good) Q.ok++; else requeue(Q.list[Q.i]);
+    grade(q.w.vi, good);
+    setTimeout(() => { Q.i++; drawQuiz(); }, good ? 600 : 1900);
+  };
+  const row = el('div', 'qplay'); row.append(undo, chk);
+  body.append(ans, tiles, row);
+}
 
 /* 회상형 — 보기를 주지 않고 직접 떠올려 소리 내게 한다.
    4지선다는 아는 것처럼 보이게 만든다(실제보다 20% 과대평가). 회상이 진짜다.
@@ -867,12 +1011,12 @@ function drawTone() {
 
   const wrap = el('div', 'qplay');
   const b = el('button', 'primary big', '다시 듣기');
-  b.onclick = () => play(it.vi, false);
+  b.onclick = () => play(it.vi, false, S.voice);
   const sl = el('button', 'ghost', '느리게 듣기');
-  sl.onclick = () => play(it.vi, true);
+  sl.onclick = () => play(it.vi, true, S.voice);
   wrap.append(b, sl);
   body.append(wrap);
-  play(it.vi, false);
+  play(it.vi, false, S.voice);
 
   const opts = el('div', 'opts tonelist');
   g.items.forEach(o => {
@@ -1142,6 +1286,7 @@ function showMission(d) {
    그래서 지금까지 배운 단어 목록을 매번 같이 보낸다.
    키는 이 기기에만 저장되고 백업에는 안 들어간다. 대화 내용은 구글 서버로 간다. */
 let CH = null;
+const GURL = () => 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(S.gkey);
 
 function learnedVi() {
   const out = [];
@@ -1153,7 +1298,7 @@ function learnedVi() {
 }
 const todayDay = () => ALL.find(d => typeof d.day === 'number' && !S.done[d.day]) || ALL[ALL.length - 1];
 
-function chatSys(mode) {
+function chatSys(mode, myRole) {
   const t = todayDay();
   const dlg = (t.dialog?.lines || []).map(l => l.who + ': ' + l.vi).join(' / ');
   return '당신은 베트남어를 처음 배우는 한국인의 대화 상대다. 북부(하노이) 표준을 쓴다.\n' +
@@ -1163,7 +1308,9 @@ function chatSys(mode) {
     '가능한 한 이 단어들만 쓴다(이름·지명은 예외): ' + learnedVi().join(', ') + '\n' +
     '한 번에 한 문장. 쉬운 질문으로 대화를 이어간다. 학습자가 한국어로 쓰면 그 말을 베트남어로 어떻게 하는지 알려주고 따라 하게 한다.\n' +
     (mode === 'today'
-      ? '역할극: 오늘의 대화(' + dlg + ')의 B 역할로 시작해서 조금씩 넓힌다.'
+      ? `역할극: 오늘의 대화(${dlg})에서 학습자가 ${myRole} 역할, 당신이 ${myRole === 'A' ? 'B' : 'A'} 역할이다. ` +
+        (myRole === 'B' ? '당신(A)의 첫 대사로 시작한다.' : '학습자(A)가 먼저 말하도록 짧게 유도한다.') +
+        ' 대화가 이어지면 조금씩 넓힌다.'
       : '아주 쉬운 자유 대화. 인사로 시작한다.');
 }
 
@@ -1211,8 +1358,7 @@ async function chatSend(userText) {
   if (userText) { CH.hist.push({ role: 'user', parts: [{ text: userText }] }); bubble('me', userText); }
   const wait = bubble('ai wait', '…');
   try {
-    const r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='
-      + encodeURIComponent(S.gkey), {
+    const r = await fetch(GURL(), {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         system_instruction: { parts: [{ text: CH.sys }] },
@@ -1269,9 +1415,15 @@ function renderChatModes() {
   const s = $('#chatSetup');
   s.hidden = false; s.textContent = '';
   const t = todayDay();
-  const m1 = el('button', 'chatmode on');
+  const m1 = el('div', 'chatmode on');
   m1.innerHTML = '<b>오늘의 대화 이어가기</b><span>' + esc(label(t) + ' · ' + (t.dialog?.title || '')) + ' — 배운 문장으로 역할극</span>';
-  m1.onclick = () => beginChat('today');
+  const rr = el('div', 'rolepick');
+  [['A', '내가 A 역할'], ['B', '내가 B 역할']].forEach(([k, txt]) => {
+    const bb = el('button', 'ghost sm', txt);
+    bb.onclick = () => beginChat('today', k);
+    rr.append(bb);
+  });
+  m1.append(rr);
   const m2 = el('button', 'chatmode');
   m2.innerHTML = '<b>자유 대화</b><span>아주 쉬운 베트남어로 아무 얘기나</span>';
   m2.onclick = () => beginChat('free');
@@ -1283,10 +1435,10 @@ function renderChatModes() {
   s.append(del);
 }
 
-function beginChat(mode) {
+function beginChat(mode, myRole) {
   $('#chatSetup').hidden = true;
   $('#chatForm').hidden = false;
-  CH = { mode, sys: chatSys(mode), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
+  CH = { mode, sys: chatSys(mode, myRole), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
   chatSend(null);
 }
 
@@ -1376,6 +1528,15 @@ $('#voice').onclick = () => {
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';
 };
 
+/* 북부(하노이) ↔ 남부(호찌민) 소리 전환. 남부 목소리는 여성 하나뿐이다. */
+function drawRegion() {
+  $('#region').textContent = S.region === 's' ? '남부' : '북부';
+  $('#voice').hidden = S.region === 's';
+}
+$('#region').onclick = () => {
+  S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion();
+};
+
 if ('serviceWorker' in navigator) {
   addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));
 }
@@ -1389,5 +1550,6 @@ Promise.all([
   AIDX = a;
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';
   drawKr();
+  drawRegion();
   renderHome();
 }).catch(e => { $('#title').textContent = '불러오기 실패'; console.error(e); });

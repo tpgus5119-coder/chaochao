@@ -455,3 +455,24 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 }
 .banner.chat{border-left-color:var(--ok)}
 .banner.chat span{display:block; font-size:14px; color:var(--dim); margin-top:2px}
+
+/* 받아쓰기 */
+.q.mid{text-align:center; font-size:17px; color:var(--fg); margin:2px 0 12px}
+.dictans{
+  text-align:center; font-size:24px; font-weight:700; min-height:44px;
+  border:1px dashed var(--line); border-radius:12px; padding:8px 12px; margin-bottom:12px;
+  color:var(--dim);
+}
+.dictans[data-r="ok"]{border-color:var(--ok); color:var(--ok)}
+.dictans[data-r="no"]{border-color:var(--bad); color:var(--bad)}
+.dicttiles{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:14px}
+.tile{
+  background:var(--card); color:var(--fg); font-size:19px; font-weight:600;
+  padding:10px 16px; border-radius:12px; min-width:44px;
+}
+.tile:disabled{opacity:.25}
+
+/* AI 대화 역할 고르기 */
+.rolepick{display:flex; gap:8px; margin-top:8px}
+.chatmode.on .ghost{color:var(--accent-fg); border-color:var(--accent-fg)}
+.dimtxt{color:var(--dim); font-size:12px}
