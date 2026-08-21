@@ -1383,7 +1383,15 @@ function drawType() {
   const wrap = el('div', 'qplay');
   const p1 = el('button', 'primary', '다시 듣기'); p1.onclick = () => play(w.vi, false);
   const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
-  wrap.append(p1, p2); b.append(wrap);
+  // 디딤돌: 먼저 기억으로 쳐 보고, 막히면 글자를 보고 따라 친다.
+  // 단 보고 친 성공은 복습 사다리를 올리지 않는다 — 기억에서 꺼낸 게 아니니까.
+  let hinted = false;
+  const p3 = el('button', 'ghost', '글자 보기');
+  p3.onclick = () => {
+    hinted = true; p3.disabled = true;
+    wrap.after(el('div', 'hintvi', esc(w.vi)));
+  };
+  wrap.append(p1, p2, p3); b.append(wrap);
   play(w.vi, false);
 
   const out = el('div', 'dictans');
@@ -1423,7 +1431,7 @@ function drawType() {
       fxTone(good);
       out.dataset.r = good ? 'ok' : 'no';
       if (!good) out.textContent = TY.txt.trim() + '  →  ' + w.vi;
-      grade(w.vi, good);
+      if (!good || !hinted) grade(w.vi, good);   // 보고 친 성공은 사다리에 반영 안 함
       setTimeout(() => { TY.i++; drawType(); }, good ? 600 : 1900);
     }, 'go wide')
   );
