@@ -423,7 +423,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -629,7 +629,7 @@ function renderHome() {
   $('#goReview').textContent = due.length ? '전부 ' + due.length : '전부';
 
   // 학습 과정 타일 밑줄 — 두 트랙의 진행 상황
-  show('home', '베트남어 스터디', false);
+  show('home', '씬짜오100', false);
 }
 
 /* 학습 과정 목록 — 트랙별로 보여준다 */
@@ -708,6 +708,16 @@ function drawCard() {
     c.append(reveal(x.kr_read));
     c.append(el('div', 'ko', esc(x.ko)));
     c.append(speakRow(x.vi, true));         // 듣기·느리게 + 따라 말하기 + 곡선 비교
+  }
+
+  if (it.k === 'rule') {
+    // 규칙 예문 — 단어 카드와 같은 차림새 + 규칙 설명 한 줄
+    c.append(el('div', 'vi', esc(x.vi)));
+    c.append(toneRow(x.tones));
+    c.append(reveal(x.kr));
+    c.append(el('div', 'ko', esc(x.ko)));
+    c.append(el('div', 'rulenote', esc(x.note)));
+    c.append(speakRow(x.vi, true));
   }
 
   if (it.k === 'word') {
@@ -800,7 +810,7 @@ function drawCard() {
   }
 
   // '1 / 12'만 보면 외울 게 12개인 줄 안다. 무엇을 세는지 붙여준다.
-  const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화' };
+  const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화', rule: '예문' };
   const kinds = L.items.map(x => x.k);
   if (it.k === 'dialog') {
     $('#pos').textContent = '오늘의 대화';
@@ -812,6 +822,7 @@ function drawCard() {
   $('#prev').disabled = L.i === 0;
   const last = L.i === L.items.length - 1;
   $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›'
+    : L.day.rule ? '연습 문제 ›'
     : L.day.day === 'P2' ? '귀로 구별하기 ›' : '오늘 완료 ›') : '다음 ›';
 }
 
@@ -821,12 +832,16 @@ $('#next').onclick = () => {
   // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
-  if ((L.day.words || []).length) startQuiz(L.day.words, L.day);
-  else {
-    S.done[L.day.day] = true; touchToday(); save();
-    // 성조 소개(준비 2)가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
-    if (L.day.day === 'P2') startTone(); else renderHome();
+  if ((L.day.words || []).length) { startQuiz(L.day.words, L.day); return; }
+  if (L.day.rule) {                    // 규칙 카드가 끝나면 연습 문제로
+    RL = { r: L.day.rule, i: 0, ok: 0 };
+    drawRule();
+    show('rules', '규칙 · ' + L.day.rule.title, true);
+    return;
   }
+  S.done[L.day.day] = true; touchToday(); save();
+  // 성조 소개(준비 2)가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
+  if (L.day.day === 'P2') startTone(); else renderHome();
 };
 
 /* ---------- 퀴즈 ---------- */
@@ -1345,44 +1360,65 @@ function markPool() {
 
 
 
-/* ---------- 규칙 수업 4개 ----------
-   문법 '읽기 자료'가 아니라 짧은 수업이다: 설명 → 예문 듣기 → 연습 문제.
-   읽기만 한 규칙은 남지 않는다 — 인출(문제 풀기)이 있어야 남는다(시험 효과).
+/* ---------- 규칙 수업 4개 (기초 훈련) ----------
+   읽기 자료가 아니라 다른 학습과 같은 카드 수업이다:
+   예문 카드(성조 화살표·한글 발음·듣고 따라 말하기) → 연습 문제.
+   규칙 설명은 카드마다 한 줄만 — 초급자는 설명보다 예문으로 배운다.
    짧고 기능 부하가 큰 규칙 넷만 다룬다. 그 이상의 문법 수업은 초급에 근거가 얇다. */
+const RTONE = { ngang: '평평', 'huyền': '내려감', 'sắc': '올라감',
+                'hỏi': '내렸다 올림', 'ngã': '끊었다 올림', 'nặng': '짧고 무겁게' };
+const tns = s => s.split(',').map(p => {
+  const [syl, name] = p.trim().split(':');
+  return { syl, name, ko: RTONE[name] };
+});
 const RULES = [
-  { key: 'R1', icon: '👤', title: '호칭', full: '누구를 부르느냐에 따라 내 호칭도 바뀐다',
-    body: '한국어와 같은 구조라 우리에겐 오히려 쉽다. 다만 한국어보다 한 걸음 더 간다 — ' +
-          '<b>상대가 바뀌면 "나"를 가리키는 말도 바뀐다.</b>',
-    ex: [['손위 남자에게', 'Em chào <b>anh</b>. → 나는 <b>em</b>', 'Em chào anh.'],
-         ['손아래에게', 'Anh chào <b>em</b>. → 나는 <b>anh</b>', 'Anh chào em.'],
-         ['처음 보는 사이', '<b>Tôi</b> 로 시작해도 실례가 아니다']],
+  { key: 'R1', title: '호칭',
+    intro: '한국어처럼 호칭이 있습니다. 다만 한 걸음 더 — 상대가 바뀌면 "나"를 가리키는 말도 바뀝니다.',
+    cards: [
+      { vi: 'Em chào anh.', ko: '(손위 남자에게) 안녕하세요', kr: '앰 짜오 아잉',
+        tones: tns('Em:ngang, chào:huyền, anh:ngang'), note: '상대가 손위 남자(anh)면, 나는 em' },
+      { vi: 'Anh chào em.', ko: '(손아래에게) 안녕', kr: '아잉 짜오 앰',
+        tones: tns('Anh:ngang, chào:huyền, em:ngang'), note: '상대가 손아래(em)면, 이번엔 내가 anh' },
+      { vi: 'tôi', ko: '나 (누구에게나)', kr: '또이',
+        tones: tns('tôi:ngang'), note: '상대를 잘 모를 땐 tôi — 실례가 아니다' }],
     quiz: [{ q: '손위 남자에게 인사합니다. "나"는?', opts: ['em', 'anh'], a: 0, say: 'Em chào anh.' },
            { q: '손아래 직원에게 인사합니다. 이번엔 "나"는?', opts: ['anh', 'em'], a: 0, say: 'Anh chào em.' },
            { q: '처음 보는 사람 앞에서 실례 없는 "나"는?', opts: ['tôi', 'em'], a: 0 }] },
-  { key: 'R2', icon: '↔️', title: '어순', full: '꾸미는 말이 뒤에 온다',
-    body: '한국어와 <b>정반대</b>다. 이것만 뒤집어 생각하면 문장이 만들어진다.',
-    ex: [['좋은 사람', 'người tốt <span class="dim">(사람 + 좋은)</span>', 'người tốt'],
-         ['내 이름', 'tên của tôi <span class="dim">(이름 + 의 + 나)</span>', 'tên của tôi'],
-         ['이 상자', 'hộp này <span class="dim">(상자 + 이)</span>', 'hộp này']],
+  { key: 'R2', title: '어순',
+    intro: '꾸미는 말이 뒤에 옵니다. 한국어와 정반대 — 이것 하나만 뒤집으면 문장이 만들어집니다.',
+    cards: [
+      { vi: 'người tốt', ko: '좋은 사람', kr: '응으어이 똣',
+        tones: tns('người:huyền, tốt:sắc'), note: '사람(người) + 좋은(tốt) — 꾸미는 말이 뒤' },
+      { vi: 'tên của tôi', ko: '내 이름', kr: '뗀 꾸어 또이',
+        tones: tns('tên:ngang, của:hỏi, tôi:ngang'), note: '이름(tên) + 의(của) + 나(tôi)' },
+      { vi: 'hộp này', ko: '이 상자', kr: '홉 나이',
+        tones: tns('hộp:nặng, này:huyền'), note: '상자(hộp) + 이(này)' }],
     quiz: [{ q: '"좋은 사람"은?', opts: ['người tốt', 'tốt người'], a: 0, say: 'người tốt' },
            { q: '"내 이름"은?', opts: ['tên của tôi', 'tôi của tên'], a: 0, say: 'tên của tôi' },
            { q: '"이 상자"는?', opts: ['hộp này', 'này hộp'], a: 0, say: 'hộp này' }] },
-  { key: 'R3', icon: '🔢', title: '단위사', full: '숫자 뒤에는 단위가 붙는다',
-    body: '한국어의 개·마리·권과 같다. 다섯 개만 알면 초급은 넘어간다.',
-    ex: [['물건', '<b>cái</b> — hai cái (두 개)', 'hai cái'],
-         ['기계·탈것', '<b>chiếc</b> — một chiếc (한 대)', 'một chiếc'],
-         ['동물', '<b>con</b> — ba con (세 마리)', 'ba con'],
-         ['갑·상자', '<b>hộp</b> / <b>thùng</b>']],
+  { key: 'R3', title: '단위사',
+    intro: '숫자 뒤에는 단위가 붙습니다. 한국어의 개·마리·대와 같습니다 — 세 개면 초급은 넘어갑니다.',
+    cards: [
+      { vi: 'hai cái', ko: '두 개 (물건)', kr: '하이 까이',
+        tones: tns('hai:ngang, cái:sắc'), note: '물건은 cái' },
+      { vi: 'ba con', ko: '세 마리 (동물)', kr: '바 껀',
+        tones: tns('ba:ngang, con:ngang'), note: '동물은 con' },
+      { vi: 'một chiếc', ko: '한 대 (기계·탈것)', kr: '못 찌엑',
+        tones: tns('một:nặng, chiếc:sắc'), note: '기계·탈것은 chiếc' }],
     quiz: [{ q: '물건 두 개 — 알맞은 쪽은?', opts: ['hai cái', 'hai con'], a: 0, say: 'hai cái' },
            { q: '동물 세 마리는?', opts: ['ba con', 'ba cái'], a: 0, say: 'ba con' },
            { q: '기계 한 대는?', opts: ['một chiếc', 'một cái'], a: 0, say: 'một chiếc' }] },
-  { key: 'R4', icon: '🧭', title: '남부 소리', full: '남부(호찌민 쪽)로 가게 되면',
-    body: '글은 완전히 같고 <b>소리</b>가 다릅니다. 위의 <b>북부</b> 버튼을 누르면 모든 소리가 남부로 바뀝니다. ' +
-          '단어 카드의 <b>남부 ▸</b> 표시가 아예 단어가 다른 경우입니다.',
-    ex: [['d·gi·v', "'이(y)' 소리가 된다 — dạ 자→야", 'dạ'],
-         ['r', "북부 '즈' → 남부는 혀 굴리는 '르'"],
-         ['성조', 'hỏi·ngã가 하나로 합쳐져 사실상 5성조'],
-         ['다른 단어', 'bố→<b>ba</b>(아빠) · mẹ→<b>má</b> · đắt→<b>mắc</b>(비싸다) · muộn→<b>trễ</b>(늦다) · nghìn→<b>ngàn</b>(천) · vâng→<b>dạ</b>(네)']],
+  { key: 'R4', title: '남부 소리',
+    intro: '남부(호찌민 쪽)는 글은 완전히 같고 소리가 다릅니다. 위의 북부 버튼을 눌러 남부 소리로 바꿔 비교하며 들어 보세요.',
+    cards: [
+      { vi: 'dạ', ko: '네 (공손)', kr: '북부 자 → 남부 야',
+        tones: tns('dạ:nặng'), note: 'd·gi·v가 남부에서 "이(y)" 소리가 된다' },
+      { vi: 'ba', ko: '아빠 (남부)', kr: '바',
+        tones: tns('ba:ngang'), note: '북부 bố → 남부 ba. 엄마도 mẹ → má' },
+      { vi: 'mắc', ko: '비싸다 (남부)', kr: '막',
+        tones: tns('mắc:sắc'), note: '북부 đắt → 남부 mắc' },
+      { vi: 'ngàn', ko: '천 1,000 (남부)', kr: '응안',
+        tones: tns('ngàn:huyền'), note: '북부 nghìn → 남부 ngàn. 성조도 hỏi·ngã가 하나로 합쳐진다' }],
     quiz: [{ q: '남부에서 "아빠"는?', opts: ['ba', 'bố'], a: 0, say: 'ba' },
            { q: '남부에서 "비싸다"는?', opts: ['mắc', 'đắt'], a: 0, say: 'mắc' },
            { q: '남부에서 "천(1000)"은?', opts: ['ngàn', 'nghìn'], a: 0, say: 'ngàn' }] }
@@ -1390,40 +1426,19 @@ const RULES = [
 
 let RL = null;
 function startRule(i) {
-  RL = { r: RULES[i], i: -1, ok: 0 };
-  drawRule();
+  const r = RULES[i];
+  // 다른 학습과 같은 카드 화면으로 가르친다 — 카드가 끝나면 연습 문제
+  L = { day: { day: r.key, theme: r.title, intro: r.intro, words: [], rule: r },
+        items: r.cards.map(c => ({ k: 'rule', d: c })), i: 0 };
+  $('#learnIntro').textContent = r.intro;
+  $('#learnIntro').dataset.prep = '1';
+  drawCard();
+  show('learn', '규칙 · ' + r.title, true);
 }
 function drawRule() {
   const b = $('#rulesBody');
   b.textContent = '';
   const r = RL.r;
-
-  if (RL.i < 0) {                       // 1쪽: 설명 + 예문 듣기
-    const c = el('div', 'rulecard');
-    c.append(el('div', 'rhead', `<span class="ri">${r.icon}</span><b>${r.full}</b>`));
-    c.append(el('div', 'rbody', r.body));
-    const t = el('div', 'rex');
-    r.ex.forEach(([k, v, vi]) => {
-      const row = el('div', 'rrow');
-      row.append(el('span', 'rk', esc(k)), el('span', 'rv', v));
-      if (vi && AIDX[vi]) {
-        const p = el('button', 'ghost sm', '듣기');
-        p.onclick = () => play(vi, false);
-        row.append(p);
-      }
-      t.append(row);
-    });
-    c.append(t);
-    b.append(c);
-    const go = el('button', 'primary big', '연습 문제 ›');
-    go.style.width = '100%';
-    go.onclick = () => { RL.i = 0; drawRule(); };
-    b.append(go);
-    if (r.key === 'R1') b.append(el('p', 'note',
-      '문법 공부는 이 네 수업으로 끝입니다 — 베트남어는 동사도 명사도 모양이 안 바뀝니다.'));
-    show('rules', '규칙 · ' + r.title, true);
-    return;
-  }
 
   if (RL.i >= r.quiz.length) {          // 결과
     S.done[r.key] = true; touchToday(); save();
@@ -1596,12 +1611,114 @@ function drawSpeak() {
   play(w.vi, false);
 }
 
-function startDict() {
-  const ws = practiceWords(8).filter(w => AIDX[w.vi]);
+/* ---------- 손글씨 ----------
+   낯선 글자·성조 부호는 손으로 써야 오래 남는다(성인 외국문자 실험에서 손글씨가
+   타이핑을 이겼고, 타이핑으로 배운 글자는 3주 뒤 기억이 무너졌다).
+   흐름: 뜻과 소리만 주고 → 기억으로 쓴다(인출) → 정답과 비교 → 원하면 AI 선생님 점검.
+   AI 점검은 참고용이다 — 흘려 쓰면 AI도 잘못 읽으므로 눈 비교가 기본이다. */
+let WR = null;
+function startWrite() {
+  const ws = practiceWords(6).filter(w => AIDX[w.vi]);
   if (!ws.length) return;
-  Q = { list: ws.map(w => ({ w, mode: 'dict', opts: [] })), i: 0, ok: 0, day: null, total: ws.length };
-  drawQuiz();
-  show('quiz', '받아쓰기', true);
+  WR = { list: ws, i: 0 };
+  drawWrite();
+  show('write', '손글씨', true);
+}
+function drawWrite() {
+  const b = $('#writeBody'); b.textContent = '';
+  if (WR.i >= WR.list.length) {
+    const r = el('div', 'result');
+    r.append(el('div', 'n', WR.list.length + '개'));
+    r.append(el('div', null, '손으로 쓴 글자는 눈으로만 본 것보다 오래 남습니다'));
+    const hm = el('button', 'primary big', '홈으로'); hm.onclick = renderHome;
+    hm.style.marginTop = '24px'; r.append(hm); b.append(r); return;
+  }
+  const w = WR.list[WR.i];
+  b.append(el('div', 'q', `${WR.i + 1} / ${WR.list.length} · 듣고, 기억으로 써 보세요 (성조 부호까지)`));
+  b.append(el('div', 'qmain', esc(w.ko)));
+  const wrap = el('div', 'qplay');
+  const p1 = el('button', 'primary', '듣기'); p1.onclick = () => play(w.vi, false);
+  const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
+  wrap.append(p1, p2); b.append(wrap);
+  play(w.vi, false);
+
+  // 종이처럼 — 흰 바탕에 검은 획 (AI도 이쪽을 잘 읽는다)
+  const cv = el('canvas', 'wpad');
+  cv.width = 640; cv.height = 200;
+  const ctx = cv.getContext('2d');
+  const paper = () => { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height); };
+  paper();
+  ctx.strokeStyle = '#16181d'; ctx.lineWidth = 5; ctx.lineCap = ctx.lineJoin = 'round';
+  let drawing = false, drew = false;
+  const pos = e => {
+    const r = cv.getBoundingClientRect();
+    return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height];
+  };
+  cv.onpointerdown = e => { drawing = drew = true; cv.setPointerCapture(e.pointerId); ctx.beginPath(); ctx.moveTo(...pos(e)); };
+  cv.onpointermove = e => { if (drawing) { ctx.lineTo(...pos(e)); ctx.stroke(); } };
+  cv.onpointerup = cv.onpointercancel = () => { drawing = false; };
+  b.append(cv);
+
+  const box = el('div', 'cmpbox');
+  const row = el('div', 'qplay');
+  const cl = el('button', 'ghost', '지우기');
+  cl.onclick = () => { paper(); ctx.strokeStyle = '#16181d'; drew = false; };
+  row.append(cl);
+  if (aiReady()) {
+    const ai = el('button', 'ghost', 'AI 선생님 점검');
+    ai.onclick = () => {
+      if (!drew) return;
+      ai.disabled = true;
+      aiRead(w.vi, cv, box).finally(() => { ai.disabled = false; });
+    };
+    row.append(ai);
+  }
+  const showA = el('button', 'primary', '정답 보기');
+  showA.onclick = () => {
+    showA.disabled = true;
+    const ans = el('div', 'ansbox');
+    ans.append(el('div', 'vi sm', esc(w.vi)));
+    ans.append(toneRow(w.tones));
+    ans.append(reveal(w.kr_read));
+    b.insertBefore(ans, box);
+    const g = el('div', 'opts');
+    const ok = el('button', null, '✓ 맞게 썼어요');
+    ok.onclick = () => { fxTone(true); grade(w.vi, true); WR.i++; drawWrite(); };
+    const no = el('button', null, '✗ 틀렸어요');
+    no.onclick = () => { grade(w.vi, false); WR.i++; drawWrite(); };
+    g.append(ok, no);
+    b.append(g);
+  };
+  row.append(showA);
+  b.append(row, box);
+}
+
+/* AI가 손글씨를 읽고 선생님처럼 짚어준다 — 무슨 글자로 읽히는지, 빠진 부호, 조언 한 줄 */
+async function aiRead(target, cv, box) {
+  const note = el('div', 'cmpnote ainote', 'AI 선생님이 보는 중…');
+  box.querySelector('.ainote')?.remove();
+  box.append(note);
+  try {
+    const b64 = cv.toDataURL('image/png').split(',')[1];
+    const r = await fetch(GURL(), {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [
+          { text: '사진은 한국인 학습자가 손으로 쓴 베트남어다. 목표 단어는 "' + target + '".\n' +
+                  '딱 세 줄로, 한국어로 답한다:\n1) 읽힘: (손글씨가 읽히는 그대로)\n' +
+                  '2) 짚기: 목표와 다른 글자나 빠진·잘못 붙인 성조 부호. 없으면 "잘 썼습니다"\n' +
+                  '3) 조언: 글씨 모양이나 부호 위치에 대한 한 줄 조언' },
+          { inline_data: { mime_type: 'image/png', data: b64 } }] }],
+        generationConfig: { maxOutputTokens: 250, thinkingConfig: { thinkingBudget: 0 } }
+      })
+    });
+    if (!r.ok) throw new Error(r.status === 429 ? '오늘 무료 한도를 다 썼습니다' : '연결 실패 (' + r.status + ')');
+    const j = await r.json();
+    const t = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
+    if (!t) throw new Error('빈 답이 왔습니다');
+    note.innerHTML = esc(t).replace(/\n/g, '<br>') +
+      '<br><span class="dimtxt">참고용 — 흘려 쓰면 AI도 잘못 읽습니다. 기본은 정답 보기로 직접 비교.</span>';
+  } catch (e) { note.textContent = 'AI 점검 실패: ' + (e.message || ''); }
 }
 
 /* ---------- AI 대화 ----------
@@ -1636,6 +1753,7 @@ function chatSys(mode, myRole) {
     '학습자의 베트남어에 성조나 단어 실수가 있으면 넷째 줄 "FIX: 짧은 교정"으로 알려준다.\n' +
     '가능한 한 이 단어들만 쓴다(이름·지명은 예외): ' + learnedVi().join(', ') + '\n' +
     '한 번에 한 문장. 쉬운 질문으로 대화를 이어간다. 학습자가 한국어로 쓰면 그 말을 베트남어로 어떻게 하는지 알려주고 따라 하게 한다.\n' +
+    '학습자가 사진을 보내면, 사진에 보이는 것을 주제로 아주 쉬운 베트남어 문장으로 대화를 이어간다.\n' +
     (mode === 'today'
       ? `역할극: 오늘의 대화(${dlg})에서 학습자가 ${myRole} 역할, 당신이 ${myRole === 'A' ? 'B' : 'A'} 역할이다. ` +
         (myRole === 'B' ? '당신(A)의 첫 대사로 시작한다.' : '학습자(A)가 먼저 말하도록 짧게 유도한다.') +
@@ -1776,6 +1894,39 @@ function beginChat(mode, myRole) {
   chatSend(null);
 }
 
+/* 사진 보며 대화 — 폰 카메라로 찍은 사진을 줄여서(512px) 대화에 붙인다.
+   실시간 영상은 무료 한도로 무리지만, 사진 한 장씩은 같은 무료 호출에 들어간다. */
+function shrinkImg(file) {
+  return new Promise(res => {
+    const img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, 512 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(img.src);
+      res(c.toDataURL('image/jpeg', .7).split(',')[1]);
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+const camIn = document.createElement('input');
+camIn.type = 'file'; camIn.accept = 'image/*'; camIn.capture = 'environment';
+$('#chatCam').onclick = () => camIn.click();
+camIn.onchange = async () => {
+  const f = camIn.files[0]; camIn.value = '';
+  if (!f || !CH) return;
+  const b64 = await shrinkImg(f);
+  const bub = bubble('me');
+  const im = new Image();
+  im.src = 'data:image/jpeg;base64,' + b64; im.className = 'camth'; im.alt = '';
+  bub.append(im);
+  CH.hist.push({ role: 'user', parts: [
+    { text: '(사진을 보여주며) 이것 봐!' },
+    { inline_data: { mime_type: 'image/jpeg', data: b64 } }] });
+  chatSend(null);
+};
+
 /* ---------- 시작 ---------- */
 $('#back').onclick = renderHome;
 $('#goChat').onclick = startChat;
@@ -1784,9 +1935,28 @@ $('#goP1').onclick = () => { const d = ALL.find(x => x.day === 'P1'); if (d) sta
 $('#goP3').onclick = () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); };
 $('#goDaily').onclick = () => renderDays('daily');
 $('#goWork').onclick = () => renderDays('work');
-$('#goDict').onclick = startDict;
+$('#goWrite').onclick = startWrite;
 $('#goType').onclick = startType;
+$('#goNews').onclick = showNews;
 document.querySelectorAll('[data-rule]').forEach(b => b.onclick = () => startRule(+b.dataset.rule));
+
+/* 오늘 기사 — 깃허브 로봇이 아침마다 골라둔 것을 보여준다 (data/news.json) */
+function showNews() {
+  const b = $('#newsBody');
+  b.textContent = '';
+  fetch('data/news.json', { cache: 'no-cache' }).then(r => r.json()).then(n => {
+    b.append(el('p', 'lede', '제조·경제 위주로 아침마다 자동으로 고른 기사입니다. 누르면 원문이 열립니다.'));
+    (n.items || []).forEach(it => {
+      const a = el('a', 'newsrow');
+      a.href = it.u; a.target = '_blank'; a.rel = 'noopener';
+      a.append(el('b', null, esc(it.t)), el('span', null, esc(it.s + (it.d ? ' · ' + it.d : ''))));
+      b.append(a);
+    });
+    b.append(el('p', 'note', '고르는 기준: 최근 이틀 기사 중 제목에 제조·투자·노동·수출 같은 낱말이 있는 것을 먼저, ' +
+      '나머지는 최신순. 인사이드비나(한국어) 3개 + VnExpress(영어) 2개. 매일 아침 7시(한국시간)에 자동 갱신됩니다.'));
+  }).catch(() => b.append(el('p', 'note', '기사를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.')));
+  show('news', '베트남 소식', true);
+}
 $('#chatForm').onsubmit = e => {
   e.preventDefault();
   const v = $('#chatText').value.trim();

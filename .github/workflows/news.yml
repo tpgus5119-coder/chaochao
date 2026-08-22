@@ -1,0 +1,18 @@
+name: 오늘의 기사
+on:
+  schedule:
+    - cron: '0 22 * * *'   # 한국 아침 7시
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/fetch_news.py
+      - run: |
+          git config user.name news-bot
+          git config user.email actions@users.noreply.github.com
+          git add data/news.json
+          git diff --cached --quiet || { git commit -m "오늘의 기사 자동 갱신" && git push; }

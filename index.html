@@ -8,10 +8,10 @@
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="베트남어">
+<meta name="apple-mobile-web-app-title" content="씬짜오100">
 <meta name="mobile-web-app-capable" content="yes">
-<title>베트남어 스터디</title>
-<link rel="stylesheet" href="style.css?v=2a8ad093">
+<title>씬짜오100 — 베트남어</title>
+<link rel="stylesheet" href="style.css?v=97c14d96">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
       </div>
       <div class="mtile">
         <b>기초 훈련</b>
-        <div class="mbtns"><button id="goP1" class="ghost">글자와 모음</button><button id="goTone" class="primary">성조</button><button id="goP3" class="ghost">자음 소리</button><button id="goVowel" class="ghost">모음 듣기</button></div>
+        <div class="mbtns"><button id="goP1" class="ghost">글자와 모음</button><button id="goTone" class="primary">성조</button><button id="goP3" class="ghost">자음 소리</button><button id="goVowel" class="ghost">모음 듣기</button><button class="ghost" data-rule="0">호칭</button><button class="ghost" data-rule="1">어순</button><button class="ghost" data-rule="2">단위사</button><button class="ghost" data-rule="3">남부 소리</button></div>
       </div>
       <div class="mtile">
         <b>복습</b>
@@ -46,11 +46,11 @@
       </div>
       <div class="mtile">
         <b>읽기 · 쓰기</b>
-        <div class="mbtns"><button id="goDict" class="primary">받아쓰기</button><button id="goType" class="ghost">자판</button></div>
+        <div class="mbtns"><button id="goWrite" class="primary">손글씨</button><button id="goType" class="ghost">자판</button></div>
       </div>
       <div class="mtile">
-        <b>규칙</b>
-        <div class="mbtns"><button class="ghost" data-rule="0">호칭</button><button class="ghost" data-rule="1">어순</button><button class="ghost" data-rule="2">단위사</button><button class="ghost" data-rule="3">남부 소리</button></div>
+        <b>베트남 소식</b>
+        <div class="mbtns"><button id="goNews" class="primary">오늘 기사</button></div>
       </div>
     </div>
     <p class="foot">진도는 이 기기에만 저장됩니다. 신규는 다 같이, 복습은 각자.</p>
@@ -109,18 +109,29 @@
     <div id="typeBody"></div>
   </section>
 
+  <!-- 손글씨 -->
+  <section id="write" class="view" hidden>
+    <div id="writeBody"></div>
+  </section>
+
+  <!-- 베트남 소식 -->
+  <section id="news" class="view" hidden>
+    <div id="newsBody"></div>
+  </section>
+
   <!-- AI 대화 -->
   <section id="chat" class="view" hidden>
     <div id="chatSetup" hidden></div>
     <div id="chatLog" class="chatlog"></div>
     <form id="chatForm" class="chatin" hidden>
+      <button id="chatCam" class="ghost" type="button" title="사진을 보여주며 대화">사진</button>
       <input id="chatText" type="text" placeholder="베트남어나 한국어로…" autocomplete="off">
       <button class="primary" type="submit">보내기</button>
     </form>
   </section>
 </main>
 
-<script src="pitch.js?v=2a8ad093"></script>
-<script src="app.js?v=2a8ad093"></script>
+<script src="pitch.js?v=97c14d96"></script>
+<script src="app.js?v=97c14d96"></script>
 </body>
 </html>
