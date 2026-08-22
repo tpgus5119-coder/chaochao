@@ -574,7 +574,8 @@ function renderAnalysis(host, mode) {
     .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
   if (tn.length) { host.append(el('p', 'newsday', '성조별 정답률 (누적)')); host.append(bars(tn)); }
 
-  const MD = { listen: '듣고 고르기', meaning: '뜻 고르기', recall: '떠올려 말하기', dict: '받아쓰기' };
+  const MD = { listen: '듣고 고르기', meaning: '뜻 고르기', recall: '떠올려 말하기', dict: '받아쓰기',
+               say: '따라 말하기', type: '타이핑', hand: '손글씨' };
   const md = Object.entries(S.stats.md || {}).filter(([, v]) => v.all >= 5)
     .map(([k, v]) => [MD[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
   if (md.length) { host.append(el('p', 'newsday', '문제 유형별 정답률 (누적)')); host.append(bars(md)); }
@@ -1423,9 +1424,15 @@ function buildQuestions(words) {
     const lv = (S.srs[w.vi] || {}).lv || 0;
     // 익숙해진 단어(2단계 이상)는 보기 없이 직접 떠올리게 한다.
     // 받아쓰기(dict)는 1단계부터 가끔 섞는다 — 듣기·철자·성조를 한 번에 시험한다.
-    const mode = lv >= 2 ? (Math.random() < .3 && AIDX[w.vi] ? 'dict' : 'recall')
-      : lv >= 1 && AIDX[w.vi] && Math.random() < .3 ? 'dict'
-      : (Math.random() < .5 && AIDX[w.vi] ? 'listen' : 'meaning');
+    // 한 판 안에 눈·귀·입·손을 섞는다 — 같은 단어를 여러 방식으로 꺼낼수록 오래 남는다.
+    // 처음 만난 단어는 쉬운 것(듣기·뜻)부터, 익숙해질수록 어려운 것(떠올리기·쓰기)으로 간다.
+    const r = Math.random();
+    const mode = lv >= 2
+      ? (r < .25 && AIDX[w.vi] ? 'dict' : r < .40 ? 'say' : r < .52 ? 'type' : r < .62 ? 'hand' : 'recall')
+      : lv >= 1
+        ? (r < .25 && AIDX[w.vi] ? 'dict' : r < .38 ? 'say' : r < .48 ? 'type'
+           : r < .74 && AIDX[w.vi] ? 'listen' : 'meaning')
+        : (r < .5 && AIDX[w.vi] ? 'listen' : 'meaning');
     const others = pool.filter(x => x.vi !== w.vi).sort(() => Math.random() - .5).slice(0, 3);
     return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
   }).sort(() => Math.random() - .5);
@@ -1502,10 +1509,15 @@ function drawQuiz() {
 
   const q = Q.list[Q.i];
   Q.t0 = Date.now();                                   // 이 문제를 언제 봤는지 (반응 속도)
-  const LABEL = { listen: '듣고 고르세요', meaning: '뜻을 고르세요', recall: '소리 내어 말해 보세요', dict: '듣고 글자를 만들어 보세요' };
+  const LABEL = { listen: '듣고 고르세요', meaning: '뜻을 고르세요', recall: '소리 내어 말해 보세요',
+                  dict: '듣고 글자를 만들어 보세요', say: '듣고 따라 말해 보세요',
+                  type: '듣고 자판으로 쳐 보세요', hand: '듣고 손으로 써 보세요' };
   body.append(el('div', 'q', LABEL[q.mode]));
 
   if (q.mode === 'recall') return drawRecall(body, q);
+  if (q.mode === 'say') return drawSay(body, q);
+  if (q.mode === 'type') return drawTypeQ(body, q);
+  if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
 
   if (q.mode === 'listen') {
@@ -1604,6 +1616,118 @@ function drawDict(body, q) {
   };
   const row = el('div', 'qplay'); row.append(undo, chk);
   body.append(ans, tiles, row);
+}
+
+/* 입으로 — 듣고 따라 말하고, 원어민 높낮이와 겹쳐 본다 (복습 안에서) */
+function drawSay(body, q) {
+  const w = q.w;
+  body.append(el('div', 'qmain', esc(w.vi)));
+  body.append(toneRow(w.tones));
+  body.append(reveal(w.kr_read));
+  body.append(el('div', 'q mid', esc(w.ko)));
+  body.append(speakRow(w.vi, true));
+  play(w.vi, false);
+  nextBtn(body, () => { bumpSaid(); grade(w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); });
+}
+
+/* 손으로 — 성조 부호까지 써 본다 (복습 안에서) */
+function drawHandQ(body, q) {
+  const w = q.w;
+  body.append(el('div', 'qmain', esc(w.ko)));
+  const row = el('div', 'qplay');
+  const p1 = el('button', 'ghost', '듣기'); p1.onclick = () => play(w.vi, false);
+  row.append(p1); body.append(row);
+  const cv = el('canvas', 'wpad');
+  cv.width = 640; cv.height = 200;
+  const ctx = cv.getContext('2d');
+  const paper = () => { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+                        ctx.strokeStyle = '#16181d'; ctx.lineWidth = 5; ctx.lineCap = ctx.lineJoin = 'round'; };
+  paper();
+  let drawing = false;
+  const pos = e => { const r = cv.getBoundingClientRect();
+    return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+  cv.onpointerdown = e => { drawing = true; cv.setPointerCapture(e.pointerId); ctx.beginPath(); ctx.moveTo(...pos(e)); };
+  cv.onpointermove = e => { if (drawing) { ctx.lineTo(...pos(e)); ctx.stroke(); } };
+  cv.onpointerup = cv.onpointercancel = () => { drawing = false; };
+  body.append(cv);
+  const box = el('div', 'cmpbox');
+  const tools = el('div', 'qplay');
+  const cl = el('button', 'ghost', '지우기'); cl.onclick = paper;
+  tools.append(cl);
+  if (aiReady()) {
+    const ai = el('button', 'ghost', 'AI 선생님 점검');
+    ai.onclick = () => { ai.disabled = true; aiRead(w.vi, cv, box).finally(() => { ai.disabled = false; }); };
+    tools.append(ai);
+  }
+  const show = el('button', 'primary', '정답 보기');
+  show.onclick = () => {
+    show.disabled = true;
+    const ans = el('div', 'ansbox');
+    ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(w.kr_read));
+    body.insertBefore(ans, box);
+    const g = el('div', 'opts');
+    const ok = el('button', null, '✓ 맞게 썼어요');
+    ok.onclick = () => { fxTone(true); S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+      S.stats.spellOk = (S.stats.spellOk || 0) + 1; grade(w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
+    const no = el('button', null, '✗ 틀렸어요');
+    no.onclick = () => { S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+      grade(w.vi, false); requeue(q); Q.i++; drawQuiz(); };
+    g.append(ok, no);
+    body.append(g);
+  };
+  tools.append(show);
+  body.append(tools, box);
+  play(w.vi, false);
+}
+
+/* 자판으로 — 철자와 부호 위치를 정확히 (복습 안에서) */
+function drawTypeQ(body, q) {
+  const w = q.w;
+  body.append(el('div', 'qmain', esc(w.ko)));
+  const row = el('div', 'qplay');
+  const p1 = el('button', 'ghost', '듣기'); p1.onclick = () => play(w.vi, false);
+  const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
+  row.append(p1, p2); body.append(row);
+  play(w.vi, false);
+  let txt = '';
+  const out = el('div', 'dictans');
+  const draw = () => { out.textContent = txt || '· · ·'; };
+  draw(); body.append(out);
+  const kb = el('div', 'vkb');
+  const key = (label, fn, cls) => { const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label); k.onclick = fn; return k; };
+  const add = ch => { txt += ch; draw(); };
+  ['q w e r t y u i o p', 'a s d f g h j k l', 'z x c v b n m', 'ă â ê ô ơ ư đ'].forEach(r => {
+    const rw = el('div', 'vkrow');
+    r.split(' ').forEach(ch => rw.append(key(ch, () => add(ch))));
+    kb.append(rw);
+  });
+  const trow = el('div', 'vkrow');
+  [['ngang', ''], ['huyền', '\u0300'], ['sắc', '\u0301'], ['hỏi', '\u0309'], ['ngã', '\u0303'], ['nặng', '\u0323']]
+    .forEach(([name, mk]) => trow.append(key(toneArrow(name), () => {
+      const parts = txt.split(' '); const last = parts.pop();
+      if (!last) return;
+      const bare = stripTone(last);
+      parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
+      txt = parts.join(' '); draw();
+    }, 'tonek ' + name)));
+  kb.append(trow);
+  const brow = el('div', 'vkrow');
+  brow.append(key('띄어쓰기', () => add(' '), 'wide'),
+              key('⌫', () => { txt = txt.slice(0, -1); draw(); }, 'wide'),
+              key('확인', () => {
+                if (!txt.trim()) return;
+                const good = txt.trim().toLowerCase() === w.vi.toLowerCase();
+                fxTone(good);
+                S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+                if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
+                out.dataset.r = good ? 'ok' : 'no';
+                if (!good) out.textContent = txt.trim() + '  →  ' + w.vi;
+                grade(w.vi, good, Q.early);
+                if (good) { Q.ok++; setTimeout(() => { Q.i++; drawQuiz(); }, 700); }
+                else { requeue(q); nextBtn(body, () => { Q.i++; drawQuiz(); }); }
+              }, 'go wide'));
+  kb.append(brow);
+  body.append(kb);
 }
 
 /* 회상형 — 보기를 주지 않고 직접 떠올려 소리 내게 한다.
@@ -2920,12 +3044,13 @@ function showGuide() {
     '홈의 <b>외운 단어</b>는 하루 이상 간격을 두고 두 번 이상 맞힌 단어입니다 — 이게 진짜 실력입니다.',
   ]);
   sec('④', '복습 네 가지', [
-    '<b>복습</b> — 오늘 꺼낼 단어를 <b>20개씩</b> 문제로. 다 풀면 남은 개수와 함께 이어서 하기가 나옵니다.',
-    '<b>3분만</b> — 같은 문제를 <b>10개만</b>. 딱 그만큼만 하고 끝내고 싶을 때.',
+    '<b>복습</b> — 오늘 꺼낼 단어를 <b>20개씩</b>. 한 판 안에 <b>듣고 고르기·뜻 고르기·떠올려 말하기·받아쓰기·따라 말하기·손글씨·타이핑</b>이 섞여 나옵니다 — 같은 단어를 눈·귀·입·손으로 꺼낼수록 오래 남습니다.',
+    '<b>3분만</b> — 같은 방식으로 <b>10개만</b>. 딱 그만큼만 하고 끝내고 싶을 때.',
     '둘 다 <b>같은 창고</b>에서 꺼냅니다 — 오늘 것만이 아니라 <b>60일 전 단어도</b> 때가 되면 나옵니다.',
     '카드가 저절로 넘어가는 <b>훑어보기</b>는 복습이 아니라 <b>예습</b>에만 남겼습니다 — 채점이 없어 기억에는 약하기 때문입니다.',
   ]);
   sec('⑤', '연습 도구 네 가지 — 무엇으로, 왜', [
+    '복습 안에 이미 섞여 나옵니다. 아래 버튼은 <b>그것만 골라서</b> 하고 싶을 때 씁니다.',
     '모두 <b>다시 볼 때가 된 단어</b>를 먼저 꺼내고, 모자라면 최근 배운 것으로 채웁니다 — 옛날에 배운 것도 때가 되면 나옵니다.',
     '<b>따라 말하기</b> — 소리 내어 말하면 눈으로만 볼 때보다 훨씬 남습니다. 원어민 높낮이와 내 소리를 겹쳐 보여줍니다.',
     '<b>손글씨</b> — 낯선 글자와 성조 부호는 <b>손으로 써야</b> 남습니다. 어른이 새 문자를 배울 때 타이핑보다 손글씨가 나았다는 실험이 있습니다.',
