@@ -28,7 +28,8 @@ out = {"meta": {"version":"v4",
                 "track":"일상 기초 (완전 초보)",
                 "note":"북부 표준. 하루 = 단어 10개 + 주고받는 대화 2문장 = 1세트."},
        "prep": p1["prep"], "tonedrill": p1["tonedrill"],
-       "voweldrill": p1.get("voweldrill", []), "days": days}
+       "voweldrill": p1.get("voweldrill", []),
+       "ruledrill": p1.get("ruledrill", []), "days": days}
 
 SCENE = {1:"👋",2:"🪪",3:"🌏",4:"😊",5:"❓",6:"🚪",7:"🔢",8:"📦",9:"🕐",10:"📅",
          11:"⏰",12:"🍜",13:"🛒",14:"🗺️",15:"👨‍👩‍👧",16:"🏥",17:"🙏",18:"👍",19:"⏳",20:"🤞"}

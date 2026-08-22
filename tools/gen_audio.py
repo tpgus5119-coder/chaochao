@@ -22,6 +22,8 @@ def collect(data):
     for g in data.get("tonedrill", []) + data.get("voweldrill", []):
         for it in g["items"]:
             out[it["vi"]] = "tone"
+    for t in data.get("ruledrill", []):   # 규칙 수업의 예문
+        out.setdefault(t, "word")
     for d in data["days"]:
         for w in d["words"]:
             out[w["vi"]] = "word"

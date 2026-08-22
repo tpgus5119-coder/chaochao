@@ -423,7 +423,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'mark', 'rules', 'chat', 'type', 'speak', 'course'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -467,16 +467,45 @@ function weekDots() {
   return out;
 }
 
+const doneCount = () => Object.keys(S.done).filter(k => +k >= 1).length;
 const BADGES = [
-  { id: 'prep',  icon: '🔤', name: '글자를 뗐다',   test: () => ['P1','P2','P3'].every(k => S.done[k]) },
-  { id: 'w1',    icon: '👋', name: '1주차 완주',    test: () => [1,2,3,4,5].every(k => S.done[k]) },
-  { id: 'half',  icon: '🌓', name: '절반까지',      test: () => Object.keys(S.done).filter(k => +k >= 1).length >= 10 },
-  { id: 'all',   icon: '🏁', name: '20일 완주',     test: () => Array.from({length:20},(_,i)=>i+1).every(k => S.done[k]) },
-  { id: 'w100',  icon: '💯', name: '단어 100개',    test: () => Object.keys(S.srs).length >= 100 },
-  { id: 'tone8', icon: '👂', name: '성조 8/10',     test: () => (S.stats.toneBest || 0) >= 8 },
-  { id: 'say50', icon: '🗣️', name: '50번 소리 냈다', test: () => (S.stats.said || 0) >= 50 },
-  { id: 'week5', icon: '📅', name: '한 주 5일',     test: () => weekDots().filter(d => d.done).length >= 5 }
+  { icon: '🔤', name: '글자를 뗐다',   how: '기초 훈련 3개(글자·성조·자음) 완료', test: () => ['P1','P2','P3'].every(k => S.done[k]) },
+  { icon: '📐', name: '규칙을 뗐다',   how: '규칙 수업 4개 완료',            test: () => ['R1','R2','R3','R4'].every(k => S.done[k]) },
+  { icon: '👋', name: '첫 5일',        how: '일상 Day 1~5 완료',             test: () => [1,2,3,4,5].every(k => S.done[k]) },
+  { icon: '🏭', name: '출근 첫날',     how: '직무 세트 1개 완료',            test: () => ALL.some(d => d.track === 'work' && S.done[d.day]) },
+  { icon: '🌓', name: '10세트',        how: '아무 세트나 10개 완료',         test: () => doneCount() >= 10 },
+  { icon: '🏔️', name: '25세트',        how: '세트 25개 완료',                test: () => doneCount() >= 25 },
+  { icon: '🎖️', name: '50세트',        how: '세트 50개 완료',                test: () => doneCount() >= 50 },
+  { icon: '🏁', name: '전 과정 완주',  how: '100세트 전부 완료',             test: () => doneCount() >= 100 },
+  { icon: '💯', name: '단어 100',      how: '복습 창고에 단어 100개',        test: () => Object.keys(S.srs).length >= 100 },
+  { icon: '📚', name: '단어 300',      how: '복습 창고에 단어 300개',        test: () => Object.keys(S.srs).length >= 300 },
+  { icon: '🚀', name: '단어 600',      how: '복습 창고에 단어 600개',        test: () => Object.keys(S.srs).length >= 600 },
+  { icon: '👂', name: '성조 8/10',     how: '성조 훈련에서 8점',             test: () => (S.stats.toneBest || 0) >= 8 },
+  { icon: '🎯', name: '성조 만점',     how: '성조 훈련에서 10점',            test: () => (S.stats.toneBest || 0) >= 10 },
+  { icon: '🗣️', name: '50번 말했다',   how: '소리 내어 50번',                test: () => (S.stats.said || 0) >= 50 },
+  { icon: '📢', name: '300번 말했다',  how: '소리 내어 300번',               test: () => (S.stats.said || 0) >= 300 },
+  { icon: '📅', name: '한 주 5일',     how: '이번 주 5일 공부',              test: () => weekDots().filter(d => d.done).length >= 5 },
+  { icon: '🗓️', name: '30일 출석',     how: '지금까지 총 30일 공부',         test: () => Object.keys(S.act).length >= 30 },
+  { icon: '🔁', name: '복습 20판',     how: '복습 퀴즈 20번 완료',           test: () => (S.stats.rev || 0) >= 20 },
+  { icon: '💬', name: 'AI와 첫 대화',  how: 'AI 대화 한 번 시작',            test: () => (S.stats.chat || 0) >= 1 }
 ];
+
+/* 업적 전체 화면 — 홈에는 딴 것 몇 개만 보이고, 나머지는 여기서 */
+function renderAwards() {
+  const b = $('#awardBody');
+  b.textContent = '';
+  const got = BADGES.filter(x => x.test()).length;
+  b.append(el('p', 'lede', `딴 업적 <b>${got}</b> / ${BADGES.length}`));
+  BADGES.forEach(bg => {
+    const on = bg.test();
+    const row = el('div', 'awrow' + (on ? ' on' : ''));
+    row.append(el('span', 'awi', bg.icon),
+               el('span', 'awn', esc(bg.name)),
+               el('span', 'awh', on ? '달성 ✔' : esc(bg.how)));
+    b.append(row);
+  });
+  show('award', '업적', true);
+}
 
 function renderProgress() {
   const box = $('#progress');
@@ -509,15 +538,17 @@ function renderProgress() {
     });
   box.append(st);
 
+  // 딴 업적만 몇 개 미리 보여주고, 전체는 업적 화면에서
   const got = BADGES.filter(b => b.test());
   const bd = el('div', 'badges');
-  BADGES.forEach(b => {
-    const on = got.includes(b);
-    const s = el('span', 'badge' + (on ? ' on' : ''));
+  got.slice(-4).forEach(b => {
+    const s = el('span', 'badge on');
     s.append(el('i', null, b.icon), el('em', null, b.name));
-    s.title = on ? '달성' : '아직';
     bd.append(s);
   });
+  const more = el('button', 'ghost sm', `업적 ${got.length} / ${BADGES.length}`);
+  more.onclick = renderAwards;
+  bd.append(more);
   box.append(bd);
 }
 
@@ -547,7 +578,6 @@ function dueWords() {
 }
 
 const GROUPS = [
-  [d => typeof d.day === 'string', '준비 · 글자와 소리 (3일)'],
   [d => d.day >= 1 && d.day <= 5, '파트 1 · 사람과 인사'],
   [d => d.day >= 6 && d.day <= 10, '파트 2 · 숫자와 시간'],
   [d => d.day >= 11 && d.day <= 15, '파트 3 · 일과·음식·시장'],
@@ -609,7 +639,6 @@ function renderDays(track) {
   list.textContent = '';
   const days = ALL.filter(d =>
     track === 'work' ? d.track === 'work'
-    : track === 'prep' ? typeof d.day === 'string'
     : (typeof d.day === 'number' && !d.track));
   let g = -1;
   days.forEach(d => {
@@ -625,13 +654,12 @@ function renderDays(track) {
     b.append(
       el('span', 'num', esc(label(d))),
       nm,
-      el('span', 'st', done ? '완료 ✔'
-        : (n ? n + '단어 + 대화' : '소리만'))
+      el('span', 'st', done ? '완료 ✔' : n + '단어 + 대화')
     );
     b.onclick = () => startLearn(d);
     const li = el('li'); li.append(b); list.append(li);
   });
-  show('course', track === 'work' ? '직무 과정' : track === 'prep' ? '준비 · 글자와 소리' : '일상 과정', true);
+  show('course', track === 'work' ? '직무 과정' : '일상 과정', true);
 }
 
 /* ---------- 학습 ---------- */
@@ -783,7 +811,8 @@ function drawCard() {
   }
   $('#prev').disabled = L.i === 0;
   const last = L.i === L.items.length - 1;
-  $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›' : '오늘 완료 ›') : '다음 ›';
+  $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›'
+    : L.day.day === 'P2' ? '귀로 구별하기 ›' : '오늘 완료 ›') : '다음 ›';
 }
 
 $('#prev').onclick = () => { if (!$('#learn').hidden && L.i > 0) { L.i--; drawCard(); } };
@@ -793,7 +822,11 @@ $('#next').onclick = () => {
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
   if ((L.day.words || []).length) startQuiz(L.day.words, L.day);
-  else { S.done[L.day.day] = true; touchToday(); save(); renderHome(); }
+  else {
+    S.done[L.day.day] = true; touchToday(); save();
+    // 성조 소개(준비 2)가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
+    if (L.day.day === 'P2') startTone(); else renderHome();
+  }
 };
 
 /* ---------- 퀴즈 ---------- */
@@ -813,14 +846,60 @@ function buildQuestions(words) {
   }).sort(() => Math.random() - .5);
 }
 
-function startQuiz(words, day, cap) {
+function startQuiz(words, day, cap, early) {
   let src = words || dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
   if (!src.length) { renderHome(); return; }
   if (cap) src = src.slice(0, cap);            // 짧게 끊어 하는 모드
   const list = buildQuestions(src);
-  Q = { list, i: 0, ok: 0, day, total: list.length };
+  Q = { list, i: 0, ok: 0, day, total: list.length, early };
   drawQuiz();
   show('quiz', day ? '확인 문제' : (cap ? '3분 복습' : '복습'), true);
+}
+
+/* 복습 입구 — 처음이거나 꺼낼 카드가 없으면 방식부터 설명한다.
+   전에는 카드가 없으면 말없이 홈으로 돌아가서 버튼이 죽은 것처럼 보였다. */
+function reviewStart(cap) {
+  const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+  if (S.revSeen && due.length) { startQuiz(due, null, cap); return; }
+
+  const b = $('#quizBody');
+  b.textContent = '';
+  $('#quizFill').style.width = '0%';
+  const c = el('div', 'rulecard');
+  c.append(el('div', 'rhead', '<span class="ri">🔁</span><b>복습은 이렇게 돌아갑니다</b>'));
+  c.append(el('div', 'rbody',
+    '학습에서 만난 단어는 전부 복습 창고에 들어갑니다. 문제를 <b>맞힐 때마다</b> 그 단어는 더 나중에 나옵니다 — ' +
+    '<b>1일 → 3일 → 7일 → 14일 → 30일 → 60일</b>. 틀리면 두 계단 내려와 곧 다시 나옵니다.<br><br>' +
+    '잊어버리기 <b>직전에</b> 꺼내 보는 것이 기억을 가장 오래 남깁니다(간격 반복 — 기억 연구에서 가장 근거가 단단한 방법입니다). ' +
+    '그래서 복습할 카드가 <b>있는 날도, 없는 날도</b> 있습니다. 없는 날은 정상입니다.'));
+  b.append(c);
+
+  const learned = Object.keys(S.srs).length;
+  const st = el('p', 'note');
+  if (due.length) st.innerHTML = `오늘 꺼낼 카드: <b>${due.length}장</b> · 창고에 ${learned}단어`;
+  else if (learned) {
+    const soon = Object.values(S.srs).map(v => v.due).filter(d => d > now()).sort((x, y) => x - y)[0];
+    st.innerHTML = `지금은 꺼낼 카드가 없습니다 (창고에 ${learned}단어).` +
+      (soon ? ` 다음 카드는 <b>${Math.max(1, Math.round((soon - now()) / DAY))}일 뒤</b>에 나옵니다.` : '');
+  } else st.textContent = '아직 배운 단어가 없습니다. 먼저 오늘 학습을 시작해 보세요.';
+  b.append(st);
+
+  const go = el('button', 'primary big');
+  go.style.width = '100%';
+  if (due.length) {
+    go.textContent = '복습 시작 (' + due.length + '장)';
+    go.onclick = () => { S.revSeen = 1; save(); startQuiz(due, null, cap); };
+  } else if (learned) {
+    // 예정보다 일찍 꺼내 보는 건 자유 — 단, 맞혀도 간격은 안 늘어난다 (미리 본 건 인출이 아니라서)
+    go.textContent = '그래도 최근 단어 다시 보기';
+    go.onclick = () => { S.revSeen = 1; save(); startQuiz(practiceWords(cap || 20), null, null, true); };
+  } else {
+    const nx = nextDay();
+    go.textContent = '오늘 학습 시작';
+    go.onclick = () => nx && startLearn(nx);
+  }
+  b.append(go);
+  show('quiz', '복습', true);
 }
 
 function drawQuiz() {
@@ -847,6 +926,9 @@ function drawQuiz() {
     play(q.w.vi, false);
   } else {
     body.append(el('div', 'qmain', esc(q.w.vi)));
+    const sr = soundRow(q.w.vi, true);   // 복습에서도 글자만 보지 말고 소리를 같이 듣는다
+    sr.classList.add('mid');
+    body.append(sr);
   }
 
   const opts = el('div', 'opts');
@@ -908,7 +990,7 @@ function drawDict(body, q) {
     ans.dataset.r = good ? 'ok' : 'no';
     if (!good) ans.textContent = picked.join(' ') + '  →  ' + q.w.vi;
     if (good) Q.ok++; else requeue(Q.list[Q.i]);
-    grade(q.w.vi, good);
+    grade(q.w.vi, good, Q.early);
     setTimeout(() => { Q.i++; drawQuiz(); }, good ? 600 : 1900);
   };
   const row = el('div', 'qplay'); row.append(undo, chk);
@@ -943,7 +1025,7 @@ function drawRecall(body, q) {
 
     const grade2 = el('div', 'opts');
     const ok = el('button', null, '✓ 맞았어요');
-    ok.onclick = () => { fxTone(true); grade(q.w.vi, true); Q.ok++; Q.i++; drawQuiz(); };
+    ok.onclick = () => { fxTone(true); grade(q.w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
     const no = el('button', null, '✗ 못 맞혔어요');
     no.onclick = () => { grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
     grade2.append(ok, no);
@@ -962,7 +1044,7 @@ function answer(btn, correct, w) {
   }
   if (correct) Q.ok++;
   else requeue(Q.list[Q.i]);        // 틀린 건 이번 판 끝에 한 번 더
-  grade(w.vi, correct);
+  grade(w.vi, correct, Q.early);
   setTimeout(() => { Q.i++; drawQuiz(); }, correct ? 450 : 1400);
 }
 
@@ -973,8 +1055,9 @@ function requeue(q) {
   Q.list.push({ ...q, retry: true });
 }
 
-function grade(vi, ok) {
+function grade(vi, ok, early) {
   touchToday();
+  if (early && ok) return;   // 예정보다 일찍 꺼내 맞힌 건 사다리를 안 올린다 (틀린 건 내린다)
   const r = S.srs[vi] || { lv: 0, first: now() };
   if (!r.first) r.first = now();
   r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : Math.max(0, r.lv - 2);
@@ -985,6 +1068,7 @@ function grade(vi, ok) {
 
 function finishQuiz() {
   $('#quizFill').style.width = '100%';
+  if (!Q.day) { S.stats.rev = (S.stats.rev || 0) + 1; save(); }   // 복습 판 수 (업적용)
   const n = Q.ok, t = Q.total;
   const again = Q.list.length - Q.total;
   const r = el('div', 'result');
@@ -1041,7 +1125,7 @@ function drawVowel() {
   }
   const { g, it } = VD.list[VD.i];
   body.append(el('div', 'q', `${VD.i + 1} / ${VD.list.length} · 소리를 듣고 고르세요`));
-  body.append(el('div', 'tonehint', esc(g.base) + ' — ' + esc(g.note)));
+  body.append(el('div', 'tonehint', esc(g.note)));
   const wrap = el('div', 'qplay');
   const b = el('button', 'primary big', '듣기'); b.onclick = () => play(it.vi, false);
   const sl = el('button', 'ghost', '느리게 듣기'); sl.onclick = () => play(it.vi, true);
@@ -1067,19 +1151,32 @@ function drawVowel() {
   body.append(opts);
 }
 
+/* 성조는 버튼 하나 — 처음이면 소개 카드(준비 2)부터, 그 뒤로는 바로 훈련 */
+function toneEntry() {
+  const p2 = ALL.find(d => d.day === 'P2');
+  if (p2 && !S.done['P2']) { startLearn(p2); return; }
+  startTone();
+}
+
+/* 한 세션 = 듣고 구별 6문제 + 들은 소리에 부호 붙이기 4문제 (같은 귀의 두 얼굴) */
 function startTone() {
   const qs = [];
-  DRILL.forEach(g => g.items.forEach(it => qs.push({ g, it })));
-  T = { list: qs.sort(() => Math.random() - .5).slice(0, 10), i: 0, ok: 0 };
+  DRILL.forEach(g => g.items.forEach(it => qs.push({ kind: 'pair', g, it })));
+  const pairs = qs.sort(() => Math.random() - .5).slice(0, 6);
+  const marks = markPool().sort(() => Math.random() - .5).slice(0, 4)
+    .map(w => ({ kind: 'mark', w }));
+  T = { list: [...pairs, ...marks].sort(() => Math.random() - .5), i: 0, ok: 0 };
   drawTone();
-  show('tone', '성조 훈련', true);
+  show('tone', '성조', true);
 }
 
 function drawTone() {
   const body = $('#toneBody');
   body.textContent = '';
   if (T.i >= T.list.length) return finishTone();
-  const { g, it } = T.list[T.i];
+  const item = T.list[T.i];
+  if (item.kind === 'mark') return drawToneMark(body, item.w);
+  const { g, it } = item;
 
   body.append(el('div', 'q', `${T.i + 1} / ${T.list.length} · 소리를 듣고 고르세요`));
   body.append(el('div', 'tonehint', `글자는 모두 <b>${esc(g.base)}</b> 로 같습니다. 성조만 다릅니다.`));
@@ -1113,6 +1210,54 @@ function drawTone() {
     opts.append(btn);
   });
   body.append(opts);
+  if (T.i === 0) {
+    const rb = el('button', 'ghost sm', '성조 6개 소개 다시 보기');
+    rb.style.marginTop = '14px';
+    rb.onclick = () => startLearn(ALL.find(d => d.day === 'P2'));
+    body.append(rb);
+  }
+}
+
+/* 배운 단어의 성조 부호 고르기 — 성조 세션의 두 번째 문제 유형 */
+function drawToneMark(body, w) {
+  const want = w.tones[0].name;
+  body.append(el('div', 'q', `${T.i + 1} / ${T.list.length} · 듣고 성조 부호를 고르세요`));
+  const bare = stripTone(w.vi);
+  const pos = tonePos(w.vi);
+  body.append(el('div', 'markbare', esc(bare)));
+
+  const wrap = el('div', 'qplay');
+  const b = el('button', 'primary big', '듣기');
+  b.onclick = () => play(w.vi, false);
+  const sl = el('button', 'ghost', '느리게 듣기');
+  sl.onclick = () => play(w.vi, true);
+  wrap.append(b, sl);
+  body.append(wrap);
+
+  const opts = el('div', 'opts markopts');
+  MARKS.forEach(mk => {
+    const shown = withMark(bare, mk.m, pos);
+    const btn = el('button');
+    btn.dataset.tone = mk.name;
+    btn.append(el('span', 'mkvi', esc(shown)),
+               el('span', 'gt ' + mk.name, toneArrow(mk.name)),
+               el('span', 'mkko', esc(mk.ko)));
+    btn.onclick = () => {
+      [...opts.children].forEach(x => x.disabled = true);
+      const good = mk.name === want;
+      btn.dataset.r = good ? 'ok' : 'no';
+      fxTone(good);
+      if (!good) [...opts.children].forEach(x => {
+        if (x.dataset.tone === want) x.dataset.r = 'ok';
+      });
+      if (good) T.ok++;
+      grade(w.vi, good);
+      setTimeout(() => { T.i++; drawTone(); }, good ? 500 : 1500);
+    };
+    opts.append(btn);
+  });
+  body.append(opts);
+  play(w.vi, false);
 }
 
 function finishTone() {
@@ -1140,12 +1285,10 @@ function finishTone() {
 }
 
 
-/* ---------- 성조 부호 붙이기 ----------
-   자유 작문은 넣지 않는다(하루 10분에 안 들어간다).
-   대신 '들은 소리에 맞는 성조 부호 고르기' 하나만 남긴다.
+/* ---------- 성조 부호 도구 ----------
    ă â đ ê ô ơ ư 와 다섯 성조 부호는 로마자를 쓰는 사람에게도 새 글자 모양이라,
-   눈으로만 보면 hỏi 와 ngã 가 끝까지 구별되지 않는다. */
-let MK = null;
+   눈으로만 보면 hỏi 와 ngã 가 끝까지 구별되지 않는다.
+   부호 문제는 위 성조 세션에 섞여 나온다. */
 const MARKS = [
   { m: '',  name: 'ngang', ko: '평평하게',   ex: 'a' },
   { m: '\u0300', name: 'huyền', ko: '내려감',   ex: 'à' },
@@ -1200,139 +1343,126 @@ function markPool() {
   return mine.length >= 6 ? mine : all;
 }
 
-function startMarks() {
-  const pool = markPool().sort(() => Math.random() - .5).slice(0, 8);
-  if (!pool.length) { renderHome(); return; }
-  MK = { list: pool, i: 0, ok: 0 };
-  drawMark();
-  show('mark', '성조 부호 붙이기', true);
-}
-
-function drawMark() {
-  const body = $('#markBody');
-  body.textContent = '';
-  if (MK.i >= MK.list.length) return finishMark();
-  const w = MK.list[MK.i];
-  const want = w.tones[0].name;
-
-  body.append(el('div', 'q', `${MK.i + 1} / ${MK.list.length} · 듣고 성조 부호를 고르세요`));
-  const bare = stripTone(w.vi);
-  const pos = tonePos(w.vi);
-  body.append(el('div', 'markbare', esc(bare)));
-
-  const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '듣기');
-  b.onclick = () => play(w.vi, false);
-  const sl = el('button', 'ghost', '느리게 듣기');
-  sl.onclick = () => play(w.vi, true);
-  wrap.append(b, sl);
-  body.append(wrap);
-
-  const opts = el('div', 'opts markopts');
-  MARKS.forEach(mk => {
-    const shown = withMark(bare, mk.m, pos);
-    const btn = el('button');
-    btn.dataset.tone = mk.name;
-    btn.append(el('span', 'mkvi', esc(shown)),
-               el('span', 'gt ' + mk.name, toneArrow(mk.name)),
-               el('span', 'mkko', esc(mk.ko)));
-    btn.onclick = () => {
-      [...opts.children].forEach(x => x.disabled = true);
-      const good = mk.name === want;
-      btn.dataset.r = good ? 'ok' : 'no';
-      if (!good) [...opts.children].forEach(x => {
-        if (x.dataset.tone === want) x.dataset.r = 'ok';
-      });
-      if (good) MK.ok++;
-      grade(w.vi, good);
-      setTimeout(() => { MK.i++; drawMark(); }, good ? 500 : 1500);
-    };
-    opts.append(btn);
-  });
-  body.append(opts);
-  play(w.vi, false);
-}
-
-function finishMark() {
-  const r = el('div', 'result');
-  r.append(el('div', 'n', MK.ok + ' / ' + MK.list.length));
-  r.append(el('div', null, MK.ok >= 6 ? '부호가 눈에 들어오고 있습니다'
-    : '괜찮습니다. hỏi(ả)와 ngã(ã)는 원어민도 자주 틀립니다'));
-  r.append(el('div', 'rule',
-    '<b>✍️ 종이에 한 번 써보세요.</b><br>' +
-    'à á ả ã ạ 를 다섯 번씩. 눈으로만 보면 ả 와 ã 가 끝까지 구별되지 않습니다.'));
-  const b = el('button', 'primary big', '다시 하기');
-  b.style.marginTop = '16px'; b.onclick = startMarks;
-  const h = el('button', 'ghost big', '홈으로');
-  h.style.marginLeft = '8px'; h.onclick = renderHome;
-  r.append(b, h);
-  $('#markBody').textContent = '';
-  $('#markBody').append(r);
-}
 
 
-/* ---------- 꼭 알아야 할 규칙 3개 ----------
-   문법 '수업'은 만들지 않는다. 조사 결론이 그렇다 —
-   초급자에게는 설명보다 덩어리 표현과 산출 직후 교정이 낫고,
-   메타분석의 큰 효과는 대부분 '빈칸 채우기 시험' 점수에서 나온 것이라
-   실제 말하기로 이어진다는 근거가 얇다.
-   다만 **짧고 기능 부하가 큰 규칙 셋**은 예외로 둔다. */
+/* ---------- 규칙 수업 4개 ----------
+   문법 '읽기 자료'가 아니라 짧은 수업이다: 설명 → 예문 듣기 → 연습 문제.
+   읽기만 한 규칙은 남지 않는다 — 인출(문제 풀기)이 있어야 남는다(시험 효과).
+   짧고 기능 부하가 큰 규칙 넷만 다룬다. 그 이상의 문법 수업은 초급에 근거가 얇다. */
 const RULES = [
-  { icon: '👤', title: '누구를 부르느냐에 따라 내 호칭도 바뀐다',
+  { key: 'R1', icon: '👤', title: '호칭', full: '누구를 부르느냐에 따라 내 호칭도 바뀐다',
     body: '한국어와 같은 구조라 우리에겐 오히려 쉽다. 다만 한국어보다 한 걸음 더 간다 — ' +
           '<b>상대가 바뀌면 "나"를 가리키는 말도 바뀐다.</b>',
-    ex: [['손위 남자에게', 'Em chào <b>anh</b>. → 나는 <b>em</b>'],
-         ['손아래에게', 'Anh chào <b>em</b>. → 나는 <b>anh</b>'],
-         ['처음 보는 사이', '<b>Tôi</b> 로 시작해도 실례가 아니다']] },
-  { icon: '↔️', title: '꾸미는 말이 뒤에 온다',
+    ex: [['손위 남자에게', 'Em chào <b>anh</b>. → 나는 <b>em</b>', 'Em chào anh.'],
+         ['손아래에게', 'Anh chào <b>em</b>. → 나는 <b>anh</b>', 'Anh chào em.'],
+         ['처음 보는 사이', '<b>Tôi</b> 로 시작해도 실례가 아니다']],
+    quiz: [{ q: '손위 남자에게 인사합니다. "나"는?', opts: ['em', 'anh'], a: 0, say: 'Em chào anh.' },
+           { q: '손아래 직원에게 인사합니다. 이번엔 "나"는?', opts: ['anh', 'em'], a: 0, say: 'Anh chào em.' },
+           { q: '처음 보는 사람 앞에서 실례 없는 "나"는?', opts: ['tôi', 'em'], a: 0 }] },
+  { key: 'R2', icon: '↔️', title: '어순', full: '꾸미는 말이 뒤에 온다',
     body: '한국어와 <b>정반대</b>다. 이것만 뒤집어 생각하면 문장이 만들어진다.',
-    ex: [['좋은 사람', 'người tốt <span class="dim">(사람 + 좋은)</span>'],
-         ['내 이름', 'tên của tôi <span class="dim">(이름 + 의 + 나)</span>'],
-         ['이 상자', 'hộp này <span class="dim">(상자 + 이)</span>']] },
-  { icon: '🔢', title: '숫자 뒤에는 단위가 붙는다',
+    ex: [['좋은 사람', 'người tốt <span class="dim">(사람 + 좋은)</span>', 'người tốt'],
+         ['내 이름', 'tên của tôi <span class="dim">(이름 + 의 + 나)</span>', 'tên của tôi'],
+         ['이 상자', 'hộp này <span class="dim">(상자 + 이)</span>', 'hộp này']],
+    quiz: [{ q: '"좋은 사람"은?', opts: ['người tốt', 'tốt người'], a: 0, say: 'người tốt' },
+           { q: '"내 이름"은?', opts: ['tên của tôi', 'tôi của tên'], a: 0, say: 'tên của tôi' },
+           { q: '"이 상자"는?', opts: ['hộp này', 'này hộp'], a: 0, say: 'hộp này' }] },
+  { key: 'R3', icon: '🔢', title: '단위사', full: '숫자 뒤에는 단위가 붙는다',
     body: '한국어의 개·마리·권과 같다. 다섯 개만 알면 초급은 넘어간다.',
-    ex: [['물건', '<b>cái</b> — hai cái (두 개)'],
-         ['기계·탈것', '<b>chiếc</b> — một chiếc (한 대)'],
-         ['동물', '<b>con</b> — ba con (세 마리)'],
-         ['갑·상자', '<b>hộp</b> / <b>thùng</b>']] }
+    ex: [['물건', '<b>cái</b> — hai cái (두 개)', 'hai cái'],
+         ['기계·탈것', '<b>chiếc</b> — một chiếc (한 대)', 'một chiếc'],
+         ['동물', '<b>con</b> — ba con (세 마리)', 'ba con'],
+         ['갑·상자', '<b>hộp</b> / <b>thùng</b>']],
+    quiz: [{ q: '물건 두 개 — 알맞은 쪽은?', opts: ['hai cái', 'hai con'], a: 0, say: 'hai cái' },
+           { q: '동물 세 마리는?', opts: ['ba con', 'ba cái'], a: 0, say: 'ba con' },
+           { q: '기계 한 대는?', opts: ['một chiếc', 'một cái'], a: 0, say: 'một chiếc' }] },
+  { key: 'R4', icon: '🧭', title: '남부 소리', full: '남부(호찌민 쪽)로 가게 되면',
+    body: '글은 완전히 같고 <b>소리</b>가 다릅니다. 위의 <b>북부</b> 버튼을 누르면 모든 소리가 남부로 바뀝니다. ' +
+          '단어 카드의 <b>남부 ▸</b> 표시가 아예 단어가 다른 경우입니다.',
+    ex: [['d·gi·v', "'이(y)' 소리가 된다 — dạ 자→야", 'dạ'],
+         ['r', "북부 '즈' → 남부는 혀 굴리는 '르'"],
+         ['성조', 'hỏi·ngã가 하나로 합쳐져 사실상 5성조'],
+         ['다른 단어', 'bố→<b>ba</b>(아빠) · mẹ→<b>má</b> · đắt→<b>mắc</b>(비싸다) · muộn→<b>trễ</b>(늦다) · nghìn→<b>ngàn</b>(천) · vâng→<b>dạ</b>(네)']],
+    quiz: [{ q: '남부에서 "아빠"는?', opts: ['ba', 'bố'], a: 0, say: 'ba' },
+           { q: '남부에서 "비싸다"는?', opts: ['mắc', 'đắt'], a: 0, say: 'mắc' },
+           { q: '남부에서 "천(1000)"은?', opts: ['ngàn', 'nghìn'], a: 0, say: 'ngàn' }] }
 ];
 
-function showRules() {
+let RL = null;
+function startRule(i) {
+  RL = { r: RULES[i], i: -1, ok: 0 };
+  drawRule();
+}
+function drawRule() {
   const b = $('#rulesBody');
   b.textContent = '';
-  b.append(el('p', 'lede',
-    '문법을 따로 공부할 필요는 없습니다. 베트남어는 동사도 명사도 모양이 안 바뀝니다.<br>' +
-    '다만 <b>이 셋</b>은 알아두면 문장이 훨씬 빨리 만들어집니다.'));
-  RULES.forEach((r, i) => {
+  const r = RL.r;
+
+  if (RL.i < 0) {                       // 1쪽: 설명 + 예문 듣기
     const c = el('div', 'rulecard');
-    c.append(el('div', 'rhead', `<span class="ri">${r.icon}</span><b>${i + 1}. ${r.title}</b>`));
+    c.append(el('div', 'rhead', `<span class="ri">${r.icon}</span><b>${r.full}</b>`));
     c.append(el('div', 'rbody', r.body));
     const t = el('div', 'rex');
-    r.ex.forEach(([k, v]) => {
+    r.ex.forEach(([k, v, vi]) => {
       const row = el('div', 'rrow');
       row.append(el('span', 'rk', esc(k)), el('span', 'rv', v));
+      if (vi && AIDX[vi]) {
+        const p = el('button', 'ghost sm', '듣기');
+        p.onclick = () => play(vi, false);
+        row.append(p);
+      }
       t.append(row);
     });
     c.append(t);
     b.append(c);
+    const go = el('button', 'primary big', '연습 문제 ›');
+    go.style.width = '100%';
+    go.onclick = () => { RL.i = 0; drawRule(); };
+    b.append(go);
+    if (r.key === 'R1') b.append(el('p', 'note',
+      '문법 공부는 이 네 수업으로 끝입니다 — 베트남어는 동사도 명사도 모양이 안 바뀝니다.'));
+    show('rules', '규칙 · ' + r.title, true);
+    return;
+  }
+
+  if (RL.i >= r.quiz.length) {          // 결과
+    S.done[r.key] = true; touchToday(); save();
+    const res = el('div', 'result');
+    res.append(el('div', 'n', RL.ok + ' / ' + r.quiz.length));
+    res.append(el('div', null, RL.ok === r.quiz.length ? '규칙이 손에 붙었습니다'
+      : '틀린 건 앞의 예문을 한 번 더 들어 보세요'));
+    const b2 = el('button', 'primary big', '다시 하기');
+    b2.style.marginTop = '16px';
+    b2.onclick = () => startRule(RULES.indexOf(r));
+    const h = el('button', 'ghost big', '홈으로');
+    h.style.marginLeft = '8px'; h.onclick = renderHome;
+    res.append(b2, h);
+    b.append(res);
+    return;
+  }
+
+  const q = r.quiz[RL.i];               // 문제
+  b.append(el('div', 'q', `${RL.i + 1} / ${r.quiz.length}`));
+  b.append(el('div', 'q mid', esc(q.q)));
+  const order = q.opts.map((_, i) => i).sort(() => Math.random() - .5);
+  const opts = el('div', 'opts');
+  order.forEach(oi => {
+    const btn = el('button', null, esc(q.opts[oi]));
+    btn.onclick = () => {
+      [...opts.children].forEach(x => x.disabled = true);
+      const good = oi === q.a;
+      btn.dataset.r = good ? 'ok' : 'no';
+      fxTone(good);
+      if (!good) [...opts.children].forEach(x => {
+        if (x.textContent === q.opts[q.a]) x.dataset.r = 'ok';
+      });
+      if (good) RL.ok++;
+      if (q.say && AIDX[q.say]) play(q.say, false);   // 정답 소리를 바로 들려준다
+      setTimeout(() => { RL.i++; drawRule(); }, good ? 900 : 1800);
+    };
+    opts.append(btn);
   });
-  // 남부 배치 대비 — 글은 같고 소리가 다르다
-  const sc = el('div', 'rulecard');
-  sc.append(el('div', 'rhead', '<span class="ri">🧭</span><b>남부(호찌민 쪽)로 가게 되면</b>'));
-  sc.append(el('div', 'rbody',
-    '글은 완전히 같고 <b>소리</b>가 다릅니다. 지금은 북부(하노이) 소리로 배우고, ' +
-    '배치가 정해지면 남부 소리를 추가합니다. 단어 카드의 <b>남부 ▸</b> 표시가 다른 단어입니다.'));
-  const t2 = el('div', 'rex');
-  [['d·gi·v', "'이(y)' 소리가 된다 — dạ 자→야"],
-   ['r', "북부 '즈' → 남부는 혀 굴리는 '르'"],
-   ['성조', 'hỏi·ngã가 하나로 합쳐져 사실상 5성조'],
-   ['다른 단어', 'bố→<b>ba</b>(아빠) · mẹ→<b>má</b> · đắt→<b>mắc</b>(비싸다) · muộn→<b>trễ</b>(늦다) · nghìn→<b>ngàn</b>(천) · vâng→<b>dạ</b>(네)']]
-    .forEach(([k, v]) => { const row = el('div', 'rrow'); row.append(el('span', 'rk', esc(k)), el('span', 'rv', v)); t2.append(row); });
-  sc.append(t2);
-  b.append(sc);
-  b.append(el('p', 'note',
-    '이 화면은 한 번 읽고 잊어도 됩니다. 매일 대화를 하다 보면 저절로 몸에 붙습니다.'));
-  show('rules', '꼭 알아야 할 규칙 3개', true);
+  b.append(opts);
 }
 
 /* ---------- 쓰기 연습 (손글씨 + 화면 자판) ----------
@@ -1341,9 +1471,10 @@ function showRules() {
    정답을 열어 스스로 비교하는 것으로 충분하다. */
 
 function practiceWords(n) {
+  // 복습 예정 단어 먼저, 그다음 지금까지 배운 모든 단어를 최근 것부터
   const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
-  const doneDays = ALL.filter(d => typeof d.day === 'number' && S.done[d.day]);
-  const recent = doneDays.length ? doneDays[doneDays.length - 1].words
+  const doneDays = ALL.filter(d => typeof d.day === 'number' && S.done[d.day]).reverse();
+  const recent = doneDays.length ? doneDays.flatMap(d => d.words || [])
     : (ALL.find(d => d.day === 1) || {}).words || [];
   const pool = [...due, ...recent.filter(w => !due.some(x => x.vi === w.vi))];
   return pool.slice(0, n);
@@ -1638,6 +1769,7 @@ function renderChatModes() {
 }
 
 function beginChat(mode, myRole) {
+  S.stats.chat = (S.stats.chat || 0) + 1; touchToday(); save();
   $('#chatSetup').hidden = true;
   $('#chatForm').hidden = false;
   CH = { mode, sys: chatSys(mode, myRole), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
@@ -1648,11 +1780,13 @@ function beginChat(mode, myRole) {
 $('#back').onclick = renderHome;
 $('#goChat').onclick = startChat;
 $('#goSpeak').onclick = startSpeak;
-$('#goPrep').onclick = () => renderDays('prep');
+$('#goP1').onclick = () => { const d = ALL.find(x => x.day === 'P1'); if (d) startLearn(d); };
+$('#goP3').onclick = () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); };
 $('#goDaily').onclick = () => renderDays('daily');
 $('#goWork').onclick = () => renderDays('work');
 $('#goDict').onclick = startDict;
 $('#goType').onclick = startType;
+document.querySelectorAll('[data-rule]').forEach(b => b.onclick = () => startRule(+b.dataset.rule));
 $('#chatForm').onsubmit = e => {
   e.preventDefault();
   const v = $('#chatText').value.trim();
@@ -1660,12 +1794,10 @@ $('#chatForm').onsubmit = e => {
   $('#chatText').value = '';
   chatSend(v);
 };
-$('#goReview').onclick = () => startQuiz(null, null);
-$('#goQuick').onclick = () => startQuiz(null, null, 10);
-$('#goTone').onclick = startTone;
+$('#goReview').onclick = () => reviewStart();
+$('#goQuick').onclick = () => reviewStart(10);
+$('#goTone').onclick = toneEntry;
 $('#goVowel').onclick = startVowel;
-$('#goMark').onclick = startMarks;
-$('#goRules').onclick = showRules;
 $('#goWeekly').onclick = () => {
   const ws = weekWords();
   if (!ws.length) return;

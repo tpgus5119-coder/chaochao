@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="베트남어">
 <meta name="mobile-web-app-capable" content="yes">
 <title>베트남어 스터디</title>
-<link rel="stylesheet" href="style.css?v=df14cc84">
+<link rel="stylesheet" href="style.css?v=5d308b3c">
 </head>
 <body>
 
@@ -25,7 +25,6 @@
 <main>
   <!-- 홈 -->
   <section id="home" class="view">
-    <p class="lede">하루 1세트 15분 — 일상 세트와 직무(봉제·공장) 세트를 번갈아. 완전 처음부터.</p>
     <button id="heroGo" class="hero" hidden></button>
     <div id="progress" class="progress"></div>
     <div class="menu">
@@ -35,7 +34,7 @@
       </div>
       <div class="mtile">
         <b>기초 훈련</b>
-        <div class="mbtns"><button id="goPrep" class="ghost">준비 3일</button><button id="goTone" class="primary">성조 듣기</button><button id="goVowel" class="ghost">모음 듣기</button><button id="goMark" class="ghost">부호 쓰기</button></div>
+        <div class="mbtns"><button id="goP1" class="ghost">글자와 모음</button><button id="goTone" class="primary">성조</button><button id="goP3" class="ghost">자음 소리</button><button id="goVowel" class="ghost">모음 듣기</button></div>
       </div>
       <div class="mtile">
         <b>복습</b>
@@ -51,7 +50,7 @@
       </div>
       <div class="mtile">
         <b>규칙</b>
-        <div class="mbtns"><button id="goRules" class="primary">보기</button></div>
+        <div class="mbtns"><button class="ghost" data-rule="0">호칭</button><button class="ghost" data-rule="1">어순</button><button class="ghost" data-rule="2">단위사</button><button class="ghost" data-rule="3">남부 소리</button></div>
       </div>
     </div>
     <p class="foot">진도는 이 기기에만 저장됩니다. 신규는 다 같이, 복습은 각자.</p>
@@ -90,9 +89,9 @@
     <div id="rulesBody"></div>
   </section>
 
-  <!-- 성조 부호 -->
-  <section id="mark" class="view" hidden>
-    <div id="markBody"></div>
+  <!-- 업적 -->
+  <section id="award" class="view" hidden>
+    <div id="awardBody"></div>
   </section>
 
   <!-- 학습 과정 목록 -->
@@ -121,7 +120,7 @@
   </section>
 </main>
 
-<script src="pitch.js?v=df14cc84"></script>
-<script src="app.js?v=df14cc84"></script>
+<script src="pitch.js?v=5d308b3c"></script>
+<script src="app.js?v=5d308b3c"></script>
 </body>
 </html>
