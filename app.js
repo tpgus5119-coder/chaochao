@@ -583,13 +583,13 @@ function renderAnalysis(host, mode) {
   const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
   const best = ok.reduce((a, x) => x.pct > a.pct ? x : a);
   const RX = {
-    '암기': ['<b>복습</b>을 하루도 밀리지 마세요 — 밀린 카드가 쌓이면 정답률이 먼저 떨어집니다.',
+    '단어': ['<b>복습</b>을 하루도 밀리지 마세요 — 밀린 카드가 쌓이면 정답률이 먼저 떨어집니다.',
              '틀린 단어는 그 자리에서 한 번 더 나옵니다. 그때 <b>소리 내어</b> 말하면 다음 판에서 살아납니다.'],
-    '귀': ['기본기의 <b>성조</b>와 <b>모음</b>을 하루 한 판씩. 저녁에 하면 자는 동안 소리가 정리됩니다.',
+    '듣기': ['기본기의 <b>성조</b>와 <b>모음</b>을 하루 한 판씩. 저녁에 하면 자는 동안 소리가 정리됩니다.',
            '<b>느리게 듣기</b>로 먼저 듣고, 그다음 보통 속도로 한 번 더 들어 보세요.'],
-    '철자': ['<b>손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.',
+    '쓰기': ['<b>손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.',
              '<b>타이핑</b>에서 글자 보기를 누르지 말고 먼저 쳐 보세요 — 보고 치면 기억에 안 남습니다.'],
-    '발음': ['<b>따라 말하기</b>에서 녹음한 뒤 원어민 곡선과 겹쳐 보세요.',
+    '말하기': ['<b>따라 말하기</b>에서 녹음한 뒤 원어민 곡선과 겹쳐 보세요.',
              '<b>AI가 듣기</b>를 눌러 알아듣는 발음인지 확인하세요 — 안 알아들으면 조금 크게, 또박또박.'],
   };
   const card = el('div', 'rulecard');
@@ -823,10 +823,10 @@ function renderWeekly() { }
 const weekKey = t => { const d = t ? new Date(t) : new Date();
   d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return ymd(d); };   // 그 주 월요일
 const SUBJ = [
-  { k: '암기', ok: 'qOk', all: 'qAll', tip: '뜻·소리를 꺼내는 힘 (복습 문제)' },
-  { k: '귀', ok: 'earOk', all: 'earAll', tip: '성조·모음 구별 (기본기 훈련)' },
-  { k: '철자', ok: 'spellOk', all: 'spellAll', tip: '받아쓰기·자판' },
-  { k: '발음', ok: 'pronOk', all: 'pronAll', tip: 'AI가 알아들은 비율 (따라 말하기)' },
+  { k: '단어', ok: 'qOk', all: 'qAll', tip: '배운 단어를 기억해 내기' },
+  { k: '듣기', ok: 'earOk', all: 'earAll', tip: '성조·모음을 소리로 가리기' },
+  { k: '쓰기', ok: 'spellOk', all: 'spellAll', tip: '받아쓰기·타이핑으로 철자 맞히기' },
+  { k: '말하기', ok: 'pronOk', all: 'pronAll', tip: '내 발음을 AI가 알아듣는 비율' },
 ];
 function snapshot() {
   const t = S.stats || {};
@@ -879,9 +879,9 @@ function showWeek(rep) {
     c.append(el('div', 'rbody',
       `<b>강점 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}<br>` +
       `<b>약점 — ${esc(worst.name)} ${worst.pct}%</b> · ${esc(worst.tip)}<br><br>` +
-      (worst.name === '귀' ? '이번 주는 기본기의 <b>성조·모음</b>을 자기 전에 한 번씩 돌려 보세요. 자는 동안 소리가 정리됩니다.'
-       : worst.name === '철자' ? '<b>자판·손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.'
-       : worst.name === '발음' ? '<b>따라 말하기</b>에서 AI가 듣기를 눌러 보세요. 알아듣는 발음인지가 바로 나옵니다.'
+      (worst.name === '듣기' ? '이번 주는 기본기의 <b>성조·모음</b>을 자기 전에 한 번씩 돌려 보세요. 자는 동안 소리가 정리됩니다.'
+       : worst.name === '쓰기' ? '<b>자판·손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.'
+       : worst.name === '말하기' ? '<b>따라 말하기</b>에서 AI가 듣기를 눌러 보세요. 알아듣는 발음인지가 바로 나옵니다.'
        : '<b>복습</b>을 밀리지 않게 하는 것이 제일 빠릅니다 — 잊기 직전에 꺼내야 오래 남습니다.')));
     b.append(c);
   } else {
@@ -1949,7 +1949,7 @@ function finishTone() {
   touchToday();
   const r = el('div', 'result');
   r.append(el('div', 'n', n + ' / ' + t));
-  r.append(el('div', null, n >= 7 ? '귀가 트이고 있습니다'
+  r.append(el('div', null, n >= 7 ? '소리가 들리기 시작했습니다'
     : n >= 4 ? '보통입니다. 성조는 몇 주 걸립니다'
     : '괜찮습니다. 처음엔 아무도 못 구별합니다'));
   r.append(el('p', 'note', '가장 어려운 건 hỏi(내렸다 올림)와 ngã(끊었다 올림)입니다. 이 둘은 원어민도 지역에 따라 섞어 씁니다.'));
@@ -2249,10 +2249,29 @@ function drawType() {
     '둘 다 영어 자판에 텔렉스 규칙(aa→â, dd→đ, 낱말 끝 s→´ …)을 얹는 같은 방식이라, 여기서 익힌 글자 그대로 쓸 수 있습니다.'));
 }
 
+/* 지난 세트의 문장 — 단어만 반복하면 입이 문장까지 못 간다.
+   최근 것만 주지 않고 오래된 것도 섞는다(오래 안 본 것일수록 다시 꺼낼 값어치가 크다). */
+function pastSentences(n) {
+  const done = ALL.filter(d => typeof d.day === 'number' && S.done[d.day] && d.dialog);
+  if (!done.length) return [];
+  const pick = [];
+  const spots = [done.length - 1, 0, Math.floor(done.length / 2)];   // 최근·처음·중간 순
+  for (const idx of spots) {
+    const d = done[idx];
+    const ls = (d.dialog.lines || []).filter(l => AIDX[l.vi]);
+    if (!ls.length) continue;
+    const l = ls[Math.floor(Math.random() * ls.length)];
+    if (!pick.some(x => x.vi === l.vi))
+      pick.push({ vi: l.vi, ko: l.ko, kr_read: l.kr_read, tones: l.tones, sent: true });
+    if (pick.length >= n) break;
+  }
+  return pick;
+}
+
 /* ---------- 따라 말하기 연습 ---------- */
 let SP = null;
 function startSpeak() {
-  const ws = practiceWords(8).filter(w => AIDX[w.vi]);
+  const ws = practiceWords(6).filter(w => AIDX[w.vi]).concat(pastSentences(2));
   if (!ws.length) return;
   SP = { list: ws, i: 0 };
   drawSpeak();
@@ -2269,7 +2288,7 @@ function drawSpeak() {
     hm.style.marginTop = '24px'; r.append(hm); b.append(r); return;
   }
   const w = SP.list[SP.i];
-  b.append(el('div', 'q', `${SP.i + 1} / ${SP.list.length} · 듣고 따라 말해 보세요`));
+  b.append(el('div', 'q', `${SP.i + 1} / ${SP.list.length} · ` + (w.sent ? '지난 세트 문장 — 듣고 따라 말해 보세요' : '듣고 따라 말해 보세요')));
   b.append(el('div', 'qmain', esc(w.vi)));
   b.append(toneRow(w.tones));
   b.append(reveal(w.kr_read));
@@ -2886,14 +2905,14 @@ function showGuide() {
     '끝나면 홈 아래 <b>진도 백업</b>을 한 번 눌러 두세요.',
   ]);
   sec('②', '왜 이 순서인가', [
-    '외운 것을 <b>입으로 말하며</b> 끝내야 오래 남습니다(산출 효과).',
-    '일상과 직무를 <b>하루씩 번갈아</b> 줍니다 — 몰아 배우기보다 기억에 유리합니다(교차 학습).',
+    '외운 것을 <b>입으로 말하며</b> 끝내야 오래 남습니다 — 눈으로만 보면 절반만 남습니다.',
+    '일상과 직무를 <b>하루씩 번갈아</b> 줍니다 — 한쪽만 몰아 하는 것보다 기억에 유리합니다.',
     '내 업종이 아니면 <b>직무 목록 위 스위치</b>로 꺼두세요.',
   ]);
   sec('③', '복습이 심장입니다', [
     '맞힌 단어는 <b>1 → 3 → 7 → 14 → 30 → 60일</b> 뒤에 다시 나옵니다.',
     '틀리면 두 계단 내려와 <b>곧 다시</b> 나옵니다.',
-    '잊기 <b>직전</b>에 꺼내 보는 것이 기억에 가장 좋습니다(간격 반복).',
+    '잊어버리기 <b>직전</b>에 다시 보는 것이 가장 오래 남습니다.',
     '그래서 복습이 <b>없는 날도 정상</b>입니다.',
     '홈의 <b>외운 단어</b>는 하루 이상 간격을 두고 두 번 이상 맞힌 단어입니다 — 이게 진짜 실력입니다.',
   ]);
@@ -2904,17 +2923,17 @@ function showGuide() {
     '카드가 저절로 넘어가는 <b>훑어보기</b>는 복습이 아니라 <b>예습</b>에만 남겼습니다 — 채점이 없어 기억에는 약하기 때문입니다.',
   ]);
   sec('⑤', '연습 도구 네 가지 — 무엇으로, 왜', [
-    '모두 <b>복습할 때가 된 단어</b>를 먼저, 모자라면 최근 배운 단어로 채웁니다.',
-    '<b>따라 말하기</b> — 소리 내어 말하면 눈으로만 볼 때보다 훨씬 남습니다(산출 효과). 원어민 높낮이와 내 소리를 겹쳐 보여줍니다.',
-    '<b>손글씨</b> — 낯선 글자와 성조 부호는 <b>손으로 써야</b> 남습니다(성인 외국문자 실험에서 타이핑을 이겼습니다).',
+    '모두 <b>다시 볼 때가 된 단어</b>를 먼저 꺼내고, 모자라면 최근 배운 것으로 채웁니다 — 옛날에 배운 것도 때가 되면 나옵니다.',
+    '<b>따라 말하기</b> — 소리 내어 말하면 눈으로만 볼 때보다 훨씬 남습니다. 원어민 높낮이와 내 소리를 겹쳐 보여줍니다.',
+    '<b>손글씨</b> — 낯선 글자와 성조 부호는 <b>손으로 써야</b> 남습니다. 어른이 새 문자를 배울 때 타이핑보다 손글씨가 나았다는 실험이 있습니다.',
     '<b>타이핑</b> — 철자와 부호 위치를 정확하게. 실제 폰 자판과 같은 방식입니다.',
-    '<b>대화</b> — 끝낸 세트의 문장으로 AI와 역할극. 배운 것을 실제로 써먹는 마지막 단계입니다.',
+    '<b>대화</b> — 지금까지 끝낸 세트 <b>어느 것이든</b> 골라 그 문장으로 AI와 역할극. 오래된 세트일수록 다시 꺼내 볼 값어치가 큽니다.',
   ]);
   sec('⑥', '문제 유형과 그림', [
     '<b>듣고 고르기 · 뜻 고르기</b> — 처음 만난 단어용.',
-    '<b>말로 떠올리기</b> — 익숙해지면 보기를 없앱니다. 4지선다는 실력을 <b>약 20% 부풀려</b> 보여주기 때문입니다.',
+    '<b>떠올려 말하기</b> — 익숙해지면 보기를 없앱니다. 보기 네 개 중 고르는 문제는 실력을 <b>약 20% 부풀려</b> 보여주기 때문입니다.',
     '<b>받아쓰기</b> — 소리를 듣고 음절 조각으로 조립. 성조까지 들어야 풀립니다.',
-    '<b>그림</b> — 눈에 보이는 단어에만 붙입니다. 그림은 글보다 오래 남지만(그림 우월 효과), 추상어에 억지로 붙이면 방해가 됩니다.',
+    '<b>그림</b> — 눈에 보이는 단어에만 붙입니다. 그림은 글보다 오래 남지만, 눈에 안 보이는 말에 억지로 붙이면 오히려 방해가 됩니다.',
     '<b>예문</b> — 그날 대화에서 그 단어가 든 문장을 꺼내 보여줍니다. 단어와 문장이 따로 놀지 않게.',
   ]);
   sec('⑦', '소리와 성조', [
