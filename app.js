@@ -1803,9 +1803,9 @@ async function aiRead(target, cv, box) {
    그래서 지금까지 배운 단어 목록을 매번 같이 보낸다.
    키는 이 기기에만 저장되고 백업에는 안 들어간다. 대화 내용은 구글 서버로 간다. */
 let CH = null;
-/* AI 중계 서버 — 키를 서버가 숨겨 들고 있어서, 주소가 채워지면 누구나 키 없이 쓴다.
-   비어 있는 동안은 예전 방식(각자 키)으로 돈다. */
-const PROXY = '';
+/* AI 중계 서버 — 키를 서버가 숨겨 들고 있어서 누구나 키 없이 쓴다.
+   (2026-08-22 개통. 비우면 예전 방식(각자 키)으로 돌아간다) */
+const PROXY = 'https://viet-ai.chaochao-app.workers.dev';
 const aiReady = () => !!(PROXY || S.gkey);
 const GURL = () => PROXY ||
   ('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(S.gkey));
