@@ -291,7 +291,7 @@ async function aiListen(text, blobUrl, box) {
         generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
       })
     });
-    if (!r.ok) throw new Error(r.status === 429 ? '오늘 무료 한도를 다 썼습니다' : '연결 실패 (' + r.status + ')');
+    if (!r.ok) throw new Error(r.status === 429 ? '요청이 잠깐 몰렸습니다 — 1분 뒤 다시 해 보세요' : '연결 실패 (' + r.status + ')');
     const j = await r.json();
     const heard = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
     if (!heard) throw new Error('빈 답이 왔습니다');
@@ -1788,7 +1788,7 @@ async function aiRead(target, cv, box) {
         generationConfig: { maxOutputTokens: 250, thinkingConfig: { thinkingBudget: 0 } }
       })
     });
-    if (!r.ok) throw new Error(r.status === 429 ? '오늘 무료 한도를 다 썼습니다' : '연결 실패 (' + r.status + ')');
+    if (!r.ok) throw new Error(r.status === 429 ? '요청이 잠깐 몰렸습니다 — 1분 뒤 다시 해 보세요' : '연결 실패 (' + r.status + ')');
     const j = await r.json();
     const t = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
     if (!t) throw new Error('빈 답이 왔습니다');
@@ -1930,7 +1930,7 @@ async function chatSend(userText) {
       r.status === 400 || r.status === 403
         ? (PROXY ? '서버 연결에 문제가 있습니다. 잠시 뒤 다시 해 보세요'
                  : '키가 잘못됐거나 만료됐습니다. 아래에서 키를 지우고 다시 넣어 보세요')
-        : r.status === 429 ? '오늘 무료 한도를 다 썼습니다. 내일 다시 됩니다'
+        : r.status === 429 ? '요청이 잠깐 몰렸습니다 — 1분 뒤 다시 보내 보세요. 계속 그러면 오늘 무료 한도가 끝난 것입니다'
         : '연결이 안 됩니다 (' + r.status + ')');
     const j = await r.json();
     const text = (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('');
