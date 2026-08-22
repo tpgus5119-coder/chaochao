@@ -1074,7 +1074,8 @@ function askNick() {
    첫 화면에 버튼이 많을수록 고르는 데 힘이 들고, 결국 아무것도 안 누르게 된다. */
 const MENUS = {
   day:   { name: '하루 5분', items: () => [
-            ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')]] },
+            ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')],
+            ['기사', showNewsLearn]] },
   rev:   { name: '복습', items: () => [
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
   basic: { name: '기본기', items: () => [
@@ -1086,7 +1087,7 @@ const MENUS = {
             ['자유 대화', startChat], ['배운 문장으로', startTalk]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   news:  { name: '베트남 소식', items: () => [
-            ['기사', showNews], ['기사로 배우기', showNewsLearn], ['날씨', () => showWx()]] },
+            ['기사', showNews], ['날씨', () => showWx()]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
 function renderMenu(id) {
@@ -3913,7 +3914,7 @@ function showNewsLearn() {
   const b = $('#subBody');
   b.textContent = '';
   b.append(el('p', 'lede', '불러오는 중…'));
-  show('sub', '기사로 배우기', true);
+  show('sub', '기사', true);
   newsSets().then(days => {
     b.textContent = '';
     if (!days.length) {
