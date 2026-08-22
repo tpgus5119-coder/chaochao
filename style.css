@@ -628,3 +628,20 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .subj .sbar i{display:block; height:100%; background:var(--ok)}
 .subj .spct{flex:0 0 42px; text-align:right; font-size:13px; font-weight:700}
 .subj .sn{flex:0 0 56px; text-align:right; font-size:11px; color:var(--dim)}
+
+/* 문화 카드 */
+.cultemo{font-size:56px; text-align:center; margin:6px 0 2px}
+
+/* 사용법 — 짧은 제목 + 한 줄씩 */
+.gsec{border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:12px}
+.gsec .ghead{font-size:16px; font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:8px}
+.gsec .ghead span{color:var(--ok)}
+.gsec ul{margin:0; padding-left:18px}
+.gsec li{font-size:14px; line-height:1.65; margin-bottom:5px; color:var(--dim)}
+.gsec li b{color:var(--fg)}
+
+/* 날씨 — 강수량과 지역 설명 */
+.wxday u{text-decoration:none; font-size:10px; color:#6aa9ff}
+.wxnote{margin:2px 0 10px; padding-left:18px}
+.wxnote li{font-size:14px; line-height:1.65; color:var(--dim); margin-bottom:6px}
+.wxnote li b{color:var(--fg)}

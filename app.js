@@ -832,7 +832,7 @@ function renderHome() {
   else if (nx) prow('오늘 학습', trackName(nx) + label(nx) + ' · ' + nx.theme + ' — 미완', '시작', () => startLearn(nx));
   else prow('오늘 학습', '없음 — 전 과정 완료', null, null);
   // 오늘 복습
-  if (due.length) prow('오늘 복습', due.length + '장 — 미완', '시작', () => reviewStart());
+  if (due.length) prow('오늘 복습', '단어 ' + due.length + '개 — 미완', '시작', () => reviewStart());
   else prow('오늘 복습', S.revDay === ymd() ? '완료' : '없음', null, null);
   // 내일 학습 (+예습)
   const tset = doneToday ? nx : nextAfter(nx);
@@ -841,7 +841,7 @@ function renderHome() {
     (tset.words || []).length ? () => flashRun(tset.words, '예습 · ' + trackName(tset) + label(tset)) : null);
   // 내일 복습 — 내일 새로 나올(만기되는) 카드 수
   const tmr = Object.values(S.srs).filter(v => v.due > now() && v.due <= now() + DAY).length;
-  prow('내일 복습', tmr ? tmr + '장 예정' : '없음', null, null);
+  prow('내일 복습', tmr ? '단어 ' + tmr + '개가 다시 나옵니다' : '없음', null, null);
 
   show('home', '짜오짜오', false);
 }
@@ -975,6 +975,12 @@ function drawCard() {
     c.append(speakRow(x.vi, true));         // 듣기·느리게 + 따라 말하기 + 곡선 비교
   }
 
+  if (it.k === 'cult') {
+    c.append(el('div', 'cultemo', esc(x.e)));
+    c.append(el('div', 'ko', esc(x.t)));
+    c.append(el('div', 'rulenote', x.b));
+  }
+
   if (it.k === 'rule') {
     // 규칙 예문 — 단어 카드와 같은 차림새 + 규칙 설명 한 줄
     c.append(el('div', 'vi', esc(x.vi)));
@@ -1095,7 +1101,7 @@ function drawCard() {
   }
 
   // '1 / 12'만 보면 외울 게 12개인 줄 안다. 무엇을 세는지 붙여준다.
-  const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화', rule: '예문' };
+  const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화', rule: '예문', cult: '문화' };
   const kinds = L.items.map(x => x.k);
   if (it.k === 'dialog') {
     $('#pos').textContent = '오늘의 대화';
@@ -1106,7 +1112,7 @@ function drawCard() {
   }
   $('#prev').disabled = L.i === 0;
   const last = L.i === L.items.length - 1;
-  $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›'
+  $('#next').textContent = last ? (L.cult ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
     : L.day.day === 'P1' || L.day.day === 'P2' ? '귀로 구별하기 ›' : '완료 ›') : '다음 ›';
 }
@@ -1117,6 +1123,7 @@ $('#next').onclick = () => {
   // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
+  if (L.cult) { renderHome(); return; }
   if (L.dlg) {                         // 대화(써먹기)까지 끝나면 오늘 완료
     S.done[L.day.day] = now(); touchToday(); save();
     finishDay(L.day);
@@ -2535,119 +2542,159 @@ document.querySelectorAll('[data-rule]').forEach(b => b.onclick = () => startRul
 const WXICON = { 0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 48: '🌫️',
   51: '🌦️', 53: '🌦️', 55: '🌦️', 61: '🌧️', 63: '🌧️', 65: '🌧️', 66: '🌧️', 67: '🌧️',
   80: '🌧️', 81: '🌧️', 82: '⛈️', 95: '⛈️', 96: '⛈️', 99: '⛈️' };
-let WXI = null;
-function showTime() {
-  show('wx', '시간', true);            // 시계가 화면 표시 여부로 스스로 꺼지므로 먼저 보여준다
-  const b = $('#wxBody');
-  b.textContent = '';
-  b.append(el('p', 'newsday', '베트남 시각 — 한국보다 2시간 늦습니다'));
-  const clock = el('div', 'wxclock');
-  const kr = el('p', 'note');
-  b.append(clock, kr);
-  const tick = () => {
-    if ($('#wx').hidden) { clearInterval(WXI); return; }
-    clock.textContent = new Intl.DateTimeFormat('ko-KR',
-      { timeZone: 'Asia/Ho_Chi_Minh', dateStyle: 'full', timeStyle: 'medium' }).format(new Date());
-    kr.textContent = '한국 지금: ' + new Intl.DateTimeFormat('ko-KR',
-      { timeStyle: 'short' }).format(new Date());
-  };
-  clearInterval(WXI); WXI = setInterval(tick, 1000); tick();
-}
-function showWx() {
+/* 지방별 날씨 이야기 — 옷·건강·출퇴근에 바로 걸리는 것만 */
+const WXNOTE = {
+  n: ['하노이는 <b>사계절이 뚜렷합니다.</b> 봄(2~4월)은 흐리고 이슬비가 계속돼 빨래가 잘 안 마릅니다.',
+      '여름(5~8월)은 35도를 넘고 습해서 체감이 더 높습니다. 오후 소나기가 잦고, 7~9월엔 태풍이 올라옵니다.',
+      '가을(9~11월)이 가장 좋습니다 — 맑고 선선해 밖에서 지내기 좋습니다.',
+      '겨울(12~1월)은 15도 안팎까지 떨어지는데 <b>난방이 없어</b> 체감은 훨씬 춥습니다. 두꺼운 옷을 챙기세요.',
+      '겨울~봄에는 미세먼지가 심한 날이 많습니다. 마스크를 상비하세요.'],
+  s: ['호찌민은 <b>계절이 둘뿐입니다</b> — 우기와 건기. 일 년 내내 27도 안팎으로 덥습니다.',
+      '우기(5~10월)엔 오후 한때 굵은 소나기가 거의 매일 옵니다. 30분이면 그치니 우비 하나면 됩니다.',
+      '건기(11~4월)는 비가 거의 없고 맑습니다. 3~4월이 가장 덥습니다(35도 이상).',
+      '비 온 뒤 길이 잠기는 곳이 있어 오토바이 출퇴근 때 조심해야 합니다.',
+      '겨울에도 반팔로 지냅니다 — 두꺼운 옷은 필요 없습니다.'],
+};
+const WXCLIMATE = {   // 월별 평균 기온(도) / 강수량(mm) — 기상 평년값
+  n: [[17,18],[18,26],[20,44],[24,90],[28,189],[30,240],[30,288],[29,318],[28,265],[26,131],[22,43],[18,23]],
+  s: [[26,14],[27,4],[28,10],[30,50],[29,218],[28,312],[28,294],[28,270],[27,327],[27,267],[27,117],[26,48]],
+};
+const WXCITY = { n: { name: '하노이 (북부)', lat: 21.03, lon: 105.85 },
+                 s: { name: '호찌민 (남부)', lat: 10.82, lon: 106.63 } };
+function showWx(city) {
+  const c = (city === 'n' || city === 's') ? city : (S.region === 's' ? 's' : 'n');
   show('wx', '날씨', true);
   const b = $('#wxBody');
   b.textContent = '';
+  const pick = el('div', 'qplay');
+  ['n', 's'].forEach(k => {
+    const bb = el('button', 'ghost sm' + (k === c ? ' pick' : ''), WXCITY[k].name);
+    bb.onclick = () => showWx(k);
+    pick.append(bb);
+  });
+  b.append(pick);
   const box = el('div', null, '날씨를 불러오는 중…');
   b.append(box);
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=21.03,10.82&longitude=105.85,106.63' +
-        '&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia%2FBangkok')
+  const q = WXCITY[c];
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=' + q.lat + '&longitude=' + q.lon +
+        '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Asia%2FBangkok')
     .then(r => r.json()).then(js => {
       box.textContent = '';
-      const arr = Array.isArray(js) ? js : [js];
-      ['하노이 (북부)', '호찌민 (남부)'].forEach((name, i) => {
-        const d = arr[i] && arr[i].daily;
-        if (!d) return;
-        const cty = i === 0 ? 'n' : 's';
-        box.append(el('p', 'newsday', name));
-        box.append(el('p', 'note', wxSeason(cty)));
-        const row = el('div', 'wxrow');
-        d.time.forEach((t, k) => {
-          const day = new Date(t + 'T00:00');
-          const cell = el('div', 'wxday' + (k === 0 ? ' today' : ''));
-          cell.append(el('span', null, k === 0 ? '오늘' : ['일', '월', '화', '수', '목', '금', '토'][day.getDay()]),
-                      el('i', null, WXICON[d.weather_code[k]] || '☁️'),
-                      el('b', null, Math.round(d.temperature_2m_max[k]) + '°'),
-                      el('em', null, Math.round(d.temperature_2m_min[k]) + '°'));
-          row.append(cell);
-        });
-        box.append(row);
-        box.append(el('p', 'newsday', '월별 평균 기온 · 강수량'));
-        box.append(wxTable(cty));
+      const d = js.daily;
+      box.append(el('p', 'newsday', '이번 주'));
+      const row = el('div', 'wxrow');
+      d.time.forEach((t, k) => {
+        const day = new Date(t + 'T00:00');
+        const cell = el('div', 'wxday' + (k === 0 ? ' today' : ''));
+        cell.append(el('span', null, k === 0 ? '오늘' : ['일','월','화','수','목','금','토'][day.getDay()]),
+                    el('i', null, WXICON[d.weather_code[k]] || '☁️'),
+                    el('b', null, Math.round(d.temperature_2m_max[k]) + '°'),
+                    el('em', null, Math.round(d.temperature_2m_min[k]) + '°'));
+        if (d.precipitation_sum[k] >= 1) cell.append(el('u', null, Math.round(d.precipitation_sum[k]) + 'mm'));
+        row.append(cell);
       });
+      box.append(row);
+      box.append(el('p', 'newsday', '월평균 기온 · 강수량'));
+      const cur = new Date().getMonth();
+      const wrap = el('div', 'wxscroll');
+      const mrow = el('div', 'wxrow wxclim');
+      WXCLIMATE[c].forEach(([tp, rn], i) => {
+        const cell = el('div', 'wxday' + (i === cur ? ' today' : ''));
+        cell.append(el('span', null, (i + 1) + '월'), el('b', null, tp + '°'), el('em', null, rn + 'mm'));
+        mrow.append(cell);
+      });
+      wrap.append(mrow); box.append(wrap);
+      box.append(el('p', 'newsday', WXCITY[c].name + ' 날씨는 이렇습니다'));
+      const ul = el('ul', 'wxnote');
+      WXNOTE[c].forEach(t => { const li = el('li'); li.innerHTML = t; ul.append(li); });
+      box.append(ul);
+      box.append(el('p', 'note', '예보 출처 — Open-Meteo (무료 기상 자료)'));
     }).catch(() => { box.textContent = '날씨를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'; });
 }
 
-/* 기후 특징 — 달과 무관하게 항상 다 보여준다 + 월별 평균 기온·강수량 */
-function wxSeason(city) {
-  return city === 'n'
-    ? '사계절: 봄(2~4월) 흐리고 이슬비 · 여름(5~8월) 무덥고 소나기 · 가을(9~11월) 맑고 선선 · 겨울(12~1월) 15도 안팎, 난방 없어 체감 추움'
-    : '연중 더움(27도 안팎): 우기(5~10월) 오후 한때 소나기 매일 · 건기(11~4월) 비 없이 맑음';
-}
-const WXCLIMATE = {   // 월별 평균 기온(도) / 강수량(mm) — 기상 평년값 기준
-  n: [[17, 18], [18, 26], [20, 44], [24, 90], [28, 189], [30, 240], [30, 288], [29, 318], [28, 265], [26, 131], [22, 43], [18, 23]],
-  s: [[26, 14], [27, 4], [28, 10], [30, 50], [29, 218], [28, 312], [28, 294], [28, 270], [27, 327], [27, 267], [27, 117], [26, 48]],
-};
-function wxTable(city) {
-  const cur = new Date().getMonth();
-  const wrap = el('div', 'wxscroll');
-  const row = el('div', 'wxrow wxclim');
-  WXCLIMATE[city].forEach(([t, r], i) => {
-    const cell = el('div', 'wxday' + (i === cur ? ' today' : ''));
-    cell.append(el('span', null, (i + 1) + '월'),
-                el('b', null, t + '°'),
-                el('em', null, r + 'mm'));
-    row.append(cell);
-  });
-  wrap.append(row);
-  return wrap;
-}
-
-/* 사용법 — 이 앱이 왜 이렇게 생겼는지, 어떻게 쓰면 가장 남는지 (근거 요약) */
+/* 사용법 — 읽기 쉽게: 짧은 제목 + 한 줄씩. 이 앱의 모든 설계 근거가 여기 모여 있다. */
 function showGuide() {
   const b = $('#guideBody');
   b.textContent = '';
-  const card = (t, body) => {
-    const c = el('div', 'rulecard');
-    c.append(el('div', 'rhead', '<b>' + t + '</b>'), el('div', 'rbody', body));
+  const sec = (icon, title, lines) => {
+    const c = el('div', 'gsec');
+    c.append(el('div', 'ghead', `<span>${icon}</span>${title}`));
+    const ul = el('ul');
+    lines.forEach(t => { const li = el('li'); li.innerHTML = t; ul.append(li); });
+    c.append(ul);
     b.append(c);
   };
-  card('하루 5분, 이 순서로',
-    '<b>단어 카드 → 확인 문제 → 문장으로 써먹기 → (원하면) AI 역할극.</b><br>' +
-    '외운 것을 마지막에 입으로 말해야 하루가 완성됩니다 — 소리 내어 말한 것이 눈으로만 본 것보다 훨씬 오래 남습니다(산출 효과). ' +
-    '일상과 직무는 하루씩 번갈아 나옵니다 — 섞어 배우는 쪽이 몰아 배우기보다 기억에 유리합니다(교차 학습).')
-  card('복습이 이 앱의 심장입니다',
-    '맞힌 단어는 <b>1 → 3 → 7 → 14 → 30 → 60일</b> 뒤에 다시 나오고, 틀리면 두 계단 내려옵니다. ' +
-    '잊기 직전에 꺼내 보는 간격 반복은 기억 연구에서 가장 근거가 단단한 방법입니다.<br>' +
-    '<b>복습</b> = 정식(문제 풀기). <b>3분만</b> = 같은 문제를 10개만. <b>훑기</b> = 자동 넘김 구경(바쁜 날용, 효과 약함). ' +
-    '<b>따라 말하기</b> = 입으로, <b>손글씨</b> = 손으로(낯선 글자는 써야 남습니다), <b>자판</b> = 철자로, <b>대화</b> = 배운 문장으로 역할극.')
-  card('시험은 일부러 어렵게 되어 있습니다',
-    '익숙해진 단어는 4지선다가 아니라 <b>보기 없이 직접 떠올리게</b> 바뀝니다. ' +
-    '4지선다는 실력을 약 20% 부풀려 보여주기 때문입니다. 틀리는 것은 실패가 아니라 기억이 강해지는 순간입니다.')
-  card('성조·모음은 귀 근육 운동입니다',
-    '성조·모음 훈련은 며칠 만에 끝나는 게 아니라 틈틈이 평생 돌리는 것입니다. ' +
-    '저녁에 하면 자는 동안 소리 범주가 정리된다는 실험도 있습니다. ' +
-    '자음 구별 훈련이 없는 것은 일부러입니다 — 북부 발음에서 tr=ch, s=x, d=gi=r은 같은 소리입니다.')
-  card('소리는 진짜 사람처럼',
-    '위의 <b>북부|남부</b>로 전 지역 소리를 바꿀 수 있습니다. 성조 채점 AI는 일부러 없습니다 — ' +
-    '실험해 보니 AI도 성조는 못 믿게 틀려서, 대신 원어민 높낮이 곡선과 내 곡선을 겹쳐 보여줍니다. 눈으로 비교하는 것이 정직한 방법입니다.')
-  card('제일 중요한 한 가지',
-    '완벽한 하루보다 <b>돌아오는 것</b>이 중요합니다. 그래서 목표가 연속 기록이 아니라 <b>한 주 5일</b>입니다 — 이틀은 쉬어도 됩니다. ' +
-    '5분이 없는 날은 훑기 한 번이라도 하세요.')
+  b.append(el('p', 'lede', '하루 5분, 이렇게만 하면 됩니다'));
+  sec('①', '오늘 할 일', [
+    '홈 맨 위 <b>오늘 학습</b>을 누르면 오늘 것이 바로 열립니다.',
+    '<b>단어 10개 → 확인 문제 → 문장 써먹기</b> 순서로 5분이면 끝납니다.',
+    '<b>오늘 복습</b>도 떠 있으면 같이 하세요. 이게 실력의 90%입니다.',
+  ]);
+  sec('②', '왜 이 순서인가', [
+    '외운 것을 <b>입으로 말하며</b> 끝내야 오래 남습니다(산출 효과).',
+    '일상과 직무를 <b>하루씩 번갈아</b> 줍니다 — 몰아 배우기보다 기억에 유리합니다.',
+    '내 업종이 아니면 <b>직무 목록 위 스위치</b>로 꺼두세요.',
+  ]);
+  sec('③', '복습이 심장입니다', [
+    '맞힌 단어는 <b>1 → 3 → 7 → 14 → 30 → 60일</b> 뒤에 다시 나옵니다.',
+    '틀리면 두 계단 내려와 <b>곧 다시</b> 나옵니다.',
+    '잊기 <b>직전</b>에 꺼내 보는 것이 기억에 가장 좋습니다(간격 반복).',
+    '그래서 복습이 <b>없는 날도 정상</b>입니다.',
+  ]);
+  sec('④', '복습 버튼 고르는 법', [
+    '<b>복습</b> — 오늘 나온 단어를 전부 문제로 (기본, 이것만 해도 됩니다)',
+    '<b>3분만</b> — 같은 문제를 <b>10개만</b> (시간 없는 날)',
+    '<b>훑기</b> — 문제 없이 카드가 소리와 함께 <b>저절로 넘어감</b> (구경, 효과는 약함)',
+    '<b>대화</b> — 끝낸 세트의 문장으로 AI와 역할극',
+    '<b>따라 말하기 · 손글씨 · 타이핑</b> — 같은 단어를 입 · 손 · 철자로',
+  ]);
+  sec('⑤', '시험은 일부러 어렵습니다', [
+    '익숙해진 단어는 보기를 없애고 <b>직접 떠올리게</b> 합니다.',
+    '4지선다는 실력을 <b>약 20% 부풀려</b> 보여주기 때문입니다.',
+    '틀리는 것은 실패가 아니라 <b>기억이 강해지는 순간</b>입니다.',
+  ]);
+  sec('⑥', '홈 숫자 넷은 이런 뜻', [
+    '<b>배운 단어</b> — 한 번이라도 만난 단어 (복습 창고에 들어온 수)',
+    '<b>외운 단어</b> — 하루 이상 간격을 두고 <b>두 번 이상 맞힌</b> 단어. 이게 진짜 실력입니다.',
+    '<b>끝낸 세트</b> — 완주한 하루치 개수',
+    '<b>소리 낸 횟수</b> — 입 밖으로 말한 횟수. 늘수록 말이 트입니다.',
+  ]);
+  sec('⑦', '소리와 성조', [
+    '위의 <b>북부 | 남부</b>로 모든 소리를 바꿀 수 있습니다.',
+    '성조 채점 AI는 <b>일부러 없습니다</b> — 실험해 보니 AI도 성조를 못 믿게 틀렸습니다.',
+    '대신 <b>원어민 높낮이 곡선</b>과 내 곡선을 겹쳐 보여줍니다. 눈으로 비교하는 것이 정직합니다.',
+    '자음 구별 훈련이 없는 것도 의도입니다 — 북부에서 tr=ch, s=x, d=gi=r은 같은 소리입니다.',
+  ]);
+  sec('⑧', '제일 중요한 한 가지', [
+    '완벽한 하루보다 <b>돌아오는 것</b>이 중요합니다.',
+    '그래서 목표가 연속 기록이 아니라 <b>한 주 5일</b>입니다 — 이틀은 쉬어도 됩니다.',
+    '5분이 없는 날은 <b>훑기</b> 한 번이라도 하세요.',
+  ]);
   show('guide', '사용법', true);
 }
 
-/* 베트남 문화 — 출근 첫 주에 바로 부딪히는 것들 */
+/* 베트남 문화 — 학습 카드와 같은 방식으로 한 장씩 넘기며 본다 */
+const CULTURE = [
+  { e: '🙇', t: '호칭이 예의의 절반', b: '나이를 물어보는 건 실례가 아니라 <b>당신을 뭐라고 부를지 정하려는 것</b>입니다. anh·chị·em만 잘 써도 예의 바른 사람이 됩니다.' },
+  { e: '🍻', t: '회식은 "못 하이 바, 요!"', b: '건배 구호는 <b>Một, hai, ba, dô!</b>(하나, 둘, 셋, 야!). 잔을 부딪칠 때 손윗사람보다 잔을 살짝 낮게 대면 아주 좋아합니다.' },
+  { e: '😴', t: '점심 후 낮잠', b: '많은 공장·사무실이 점심 후 20~30분 불을 끄고 낮잠을 잡니다. 놀라지 말고 같이 쉬면 됩니다.' },
+  { e: '🛵', t: '오토바이가 다리', b: '출퇴근·배달·이사까지 오토바이로 합니다. 길 건널 때는 <b>일정한 속도로 천천히</b> — 멈칫하거나 뛰면 더 위험합니다. 그랩(Grab) 앱이 택시입니다.' },
+  { e: '☕', t: '커피의 나라', b: '연유 넣은 진한 커피(cà phê sữa đá)가 국민 음료입니다. 커피숍에서 몇 시간 앉아 있는 게 일상 문화입니다.' },
+  { e: '🧧', t: '설(Tết)이 일 년의 중심', b: '음력 설 전후 일주일은 나라가 멈춥니다. 공장도 길게 쉬고 <b>13월 월급</b>(보너스)이 관례입니다. 세뱃돈 lì xì 문화도 있습니다.' },
+  { e: '🚫', t: '하지 말 것', b: '어른 머리를 만지지 않기, 밥에 젓가락 꽂지 않기(제사 연상), 사람을 손가락으로 가리키지 않기. 국기·호찌민 주석 험담은 <b>법적 문제</b>가 됩니다.' },
+  { e: '💰', t: '팁은 기본이 아니다', b: '식당·카페에서 팁은 의무가 아닙니다. 대신 시장에서는 흥정이 자연스럽습니다 — [사고 팔기] 세트의 표현을 쓰면 됩니다.' },
+  { e: '🌦️', t: '북부는 사계절, 남부는 두 계절', b: '하노이는 봄(흐리고 이슬비)·여름(무덥고 소나기)·가을(맑고 선선)·겨울(15도 안팎, 난방이 없어 체감은 더 춥다)이 있습니다.<br>호찌민은 연중 27도 안팎에 <b>우기(5~10월)와 건기(11~4월)</b>뿐입니다.' },
+  { e: '🏠', t: '가족이 먼저', b: '월급의 상당 부분을 고향 가족에게 보내는 것이 자연스럽습니다. 가족·고향 이야기를 물어보면 마음이 빨리 열립니다.' },
+];
 function showCulture() {
+  L = { day: { day: 'CULT', theme: '베트남 문화', words: [] },
+        items: CULTURE.map(c => ({ k: 'cult', d: c })), i: 0, cult: true };
+  $('#learnIntro').textContent = '말만 배워서는 반쪽입니다. 첫 주에 바로 부딪히는 것들만 모았습니다.';
+  $('#learnIntro').dataset.prep = '0';
+  drawCard();
+  show('learn', '베트남 문화', true);
+}
+function _oldCulture() {
   const b = $('#cultureBody');
   b.textContent = '';
   const card = (t, body) => {
@@ -2663,18 +2710,6 @@ function showCulture() {
   card('설(Tết)이 일 년의 중심', '음력 설 전후 일주일은 나라가 멈춥니다. 공장도 길게 쉬고, 보너스(13월 월급)가 관례입니다. 이때 귀향 인사 li xì(세뱃돈) 문화도 있습니다.');
   card('하지 말 것', '어른 머리를 만지지 않기, 밥에 젓가락 꽂지 않기(제사 연상), 사람을 손가락으로 가리키지 않기, 국기·호찌민 주석 험담은 절대 금물(법적 문제).');
   card('팁은 기본 아님', '식당·카페에서 팁은 의무가 아닙니다. 시장에서는 흥정이 자연스럽습니다 — [사고 팔기] 세트의 표현을 쓰면 됩니다.');
-  // 이번 주 문화 읽을거리 — 기사 로봇이 골라둔 문화 기사
-  fetch('data/news.json', { cache: 'no-cache' }).then(r => r.json()).then(n => {
-    const cult = (n.items || []).filter(it => it.cat === '문화');
-    if (!cult.length) return;
-    b.append(el('p', 'newsday', '이번 주 문화 읽을거리'));
-    cult.forEach(it => {
-      const a = el('a', 'newsrow');
-      a.href = it.u; a.target = '_blank'; a.rel = 'noopener';
-      a.append(el('b', null, esc(it.t)), el('span', null, esc(it.s)));
-      b.append(a);
-    });
-  }).catch(() => { });
   show('culture', '베트남 문화', true);
 }
 
@@ -2684,14 +2719,14 @@ function showNews() {
   b.textContent = '';
   fetch('data/news.json', { cache: 'no-cache' }).then(r => r.json()).then(n => {
     let last = null;
-    (n.items || []).filter(it => it.cat !== '문화').forEach(it => {
+    (n.items || []).forEach(it => {
       if (it.d !== last) { b.append(el('p', 'newsday', esc(it.d))); last = it.d; }
       const a = el('a', 'newsrow');
       a.href = it.u; a.target = '_blank'; a.rel = 'noopener';
-      a.append(el('b', null, esc(it.t)), el('span', null, esc(it.s)));
+      a.append(el('b', null, esc(it.t)));
       b.append(a);
     });
-    b.append(el('p', 'note', '베트남 전문지(인사이드비나, 한국어)에서 제조·경제 기사 3건과 문화 기사 1건(문화 화면)을 골라 매일 아침 6시 30분에 업데이트됩니다. 최근 3일치만 남습니다.'));
+    b.append(el('p', 'note', '매일 아침 6시 30분에 업데이트됩니다. 최근 3일치만 남습니다.'));
   }).catch(() => b.append(el('p', 'note', '기사를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.')));
   show('news', '베트남 소식', true);
 }
@@ -2708,10 +2743,8 @@ $('#goFlash').onclick = () => {          // 간략 복습 — 밀린 카드를 �
   const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
   flashRun(due.length ? due.slice(0, 20) : practiceWords(15), '간략 복습');
 };
-$('#goHow').onclick = () => drawRevInfo();
 $('#goTone').onclick = toneEntry;
-$('#goWx').onclick = showWx;
-$('#goTime').onclick = showTime;
+$('#goWx').onclick = () => showWx();
 $('#goCulture').onclick = showCulture;
 $('#goGuide').onclick = showGuide;
 $('#goTalk').onclick = startTalk;
