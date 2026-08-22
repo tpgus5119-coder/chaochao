@@ -34,6 +34,16 @@ jobs:
       # ④ 판번호를 새로 찍어야 폰의 캐시가 새 세트를 받는다
       - run: python3 tools/stamp.py
 
+      # ⑤ 사흘 조용한 사람에게 알림 한 번 (하루 한 번까지만)
+      - run: |
+          curl -s -X POST https://viet-club.chaochao-app.workers.dev \
+            -H 'Origin: https://tpgus5119-coder.github.io' \
+            -H 'Content-Type: application/json' \
+            -d "{\"act\":\"push\",\"key\":\"$PUSH_KEY\"}" || true
+        env:
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+        continue-on-error: true
+
       - run: |
           git config user.name news-bot
           git config user.email actions@users.noreply.github.com

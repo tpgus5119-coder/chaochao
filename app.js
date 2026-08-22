@@ -909,6 +909,19 @@ function renderAwards() {
   const ch = el('button', 'ghost sm', '바꾸기');
   ch.onclick = askNick;
   nm.append(ch);
+  if (canPush()) {
+    const nr = el('div', 'planrow');
+    nr.append(el('span', 'pk', '알림'), el('span', 'pv', S.push ? '켜짐' : '꺼짐'));
+    const nb = el('button', 'ghost sm', S.push ? '끄기' : '켜기');
+    nb.onclick = async () => {
+      if (S.push) { await stopPush(); renderAwards(); return; }
+      const err = await askPush();
+      if (err) alert(err); else alert('알림을 켰습니다.\n메시지가 오면 폰에 뜹니다 — 하루 한 번까지만.');
+      renderAwards();
+    };
+    nr.append(nb);
+    b.append(nr);
+  }
   const pc = el('div', 'planrow');
   pc.append(el('span', 'pk', '하루'),
              el('span', 'pv', (S.pace || 1) + '세트' + ((S.pace || 1) > 1 ? ' (일상+직무)' : '')));
@@ -1163,9 +1176,12 @@ function renderMenu(id) {
   const m = MENUS[id];
   const b = $('#subBody');
   b.textContent = '';
+  const unread = Object.values(S.room || {}).reduce((a, r) => a + (r.unread || 0), 0);
   m.items().forEach(([label, fn]) => {
     const btn = el('button', 'bigmenu');
     btn.textContent = label;
+    if (id === 'ai' && label === '자유 대화' && unread)      // 표시가 안쪽까지 이어져야 찾아간다
+      btn.append(el('span', 'mbadge red', String(unread)));
     btn.onclick = () => { dive(() => renderMenu(id)); fn(); };
     b.append(btn);
   });
@@ -3358,7 +3374,8 @@ function viVoices() {
   return vs.filter(v => (v.lang || '').toLowerCase().startsWith('vi'));
 }
 const viVoice = () => viVoices()[0] || null;
-function speakVi(t) {
+function speakVi(t, retry) {
+  if (AIDX[t]) { play(t, false); return; }        // 우리 음원이 있으면 그게 낫다 (원어민 녹음)
   const u = new SpeechSynthesisUtterance(t);
   const vs = viVoices();
   const male = (S.tch || 'f') === 'm';
@@ -3369,9 +3386,12 @@ function speakVi(t) {
   else if (vs.length) { u.voice = vs[0]; u.pitch = male ? .65 : 1.15; }
   if (pick && vs.length === 1) u.pitch = male ? .65 : 1.15;
   u.lang = 'vi-VN'; u.rate = .85;
-  u.onstart = () => $('#tch').classList.add('talk');       // 말하는 동안만 입이 움직인다
+  let started = false;
+  u.onstart = () => { started = true; $('#tch').classList.add('talk'); };
   u.onend = u.onerror = () => $('#tch').classList.remove('talk');
   speechSynthesis.cancel(); speechSynthesis.speak(u);
+  // 크롬·사파리에서 첫 호출이 조용히 씹히는 일이 있다 — 안 시작하면 한 번만 다시
+  if (!retry) setTimeout(() => { if (!started) speakVi(t, true); }, 450);
 }
 
 /* ---------- AI 선생님 캐릭터 ----------
@@ -3420,11 +3440,14 @@ function aiBubble(text) {
   if (m.KR) b.append(el('div', 'ckr', '[' + esc(m.KR) + ']'));
   if (m.KO) b.append(el('div', 'cko', esc(m.KO)));
   if (m.FIX) b.append(el('div', 'cfix', '✎ ' + esc(m.FIX)));
-  if (viVoice()) {
-    speakVi(m.VI);                     // 선생님이 바로 읽어준다 (입도 같이 움직인다)
-    const bt = el('button', 'ghost sm', '다시 듣기');
-    bt.onclick = () => speakVi(m.VI);
-    b.append(bt);
+  speakVi(m.VI);                       // 오면 바로 읽어준다 (입도 같이 움직인다)
+  const bt = el('button', 'ghost sm', '다시 듣기');
+  bt.onclick = () => speakVi(m.VI);
+  b.append(bt);
+  if (!AIDX[m.VI] && !viVoice() && !S.novoice) {   // 한 번만 알린다
+    S.novoice = 1; save();
+    bubble('note wide', '이 폰에는 베트남어 목소리가 없어 소리가 안 날 수 있습니다.\n' +
+      '설정 → 손쉬운 사용 → 음성에서 베트남어를 받으면 들립니다.');
   }
   b.scrollIntoView({ block: 'end', behavior: 'smooth' });
 }
@@ -3621,7 +3644,7 @@ function renderRooms() {
                el('span', 'msglast', esc(last ? last.slice(0, 34) : '대화를 시작해 보세요')));
     btn.append(av, mid);
     if (r && r.unread) btn.append(el('span', 'msgbadge', String(r.unread)));
-    btn.onclick = () => openRoom(rg, tc);
+    btn.onclick = () => { dive(renderRooms); openRoom(rg, tc); };
     s.append(btn);
   });
   show('chat', '메신저', true);
@@ -3757,7 +3780,7 @@ $('#chatMic').onclick = async () => {
         chatGrow();
         inp.focus({ preventScroll: true });
         const w = findItem(heard) || allWords().find(x => x.vi.toLowerCase() === heard.toLowerCase());
-        bubble('ai note', '이렇게 들렸습니다: ' + heard + (w ? ' — ' + w.ko : '') +
+        bubble('note wide', '이렇게 들렸습니다: ' + heard + (w ? ' — ' + w.ko : '') +
           '\n맞으면 보내기, 다르면 고쳐서 보내세요.');
       } catch (e) { bubble('ai err', '⚠ ' + (e.message || '듣기 실패')); }
       URL.revokeObjectURL(url);
@@ -4408,6 +4431,39 @@ function clubHome(j) {
   row.append(others, out);
   b.append(row);
   show('club', '동아리', true);
+}
+
+/* ---------- 폰 알림 ----------
+   서버가 보내는 것은 '깨워라' 신호뿐이다. 대화 내용은 안 보낸다 — 무슨 말이 왔는지는
+   앱을 열어야 보인다. 서버에 남는 것은 알림 주소 하나뿐이고, 그것으로는 누구인지 알 수 없다.
+   아이폰은 **홈 화면에 추가**해야만 알림이 온다(사파리 제약). 안드로이드는 그냥 된다. */
+const VAPID = 'BIXezZvZv-VlkJ49y1sGnEtMfqWkENMJOyZPi1XubrE2J6DeCh2ttTDoimW-EO7PR1U-8qNqSyMetpfZMwZEnTQ';
+const b64bytes = b => { const s = atob(b.replace(/-/g, '+').replace(/_/g, '/'));
+                        return Uint8Array.from(s, c => c.charCodeAt(0)); };
+function canPush() {
+  return 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
+}
+async function askPush() {
+  if (!canPush()) return '이 브라우저는 알림을 지원하지 않습니다.';
+  const ok = await Notification.requestPermission();
+  if (ok !== 'granted') return '알림이 꺼져 있습니다. 브라우저 설정에서 허용해 주세요.';
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.subscribe(
+      { userVisibleOnly: true, applicationServerKey: b64bytes(VAPID) });
+    await cCall({ act: 'sub', uid: myUid(), sub: sub.toJSON() });
+    S.push = 1; save();
+    return null;
+  } catch (e) { return '알림을 켜지 못했습니다 — ' + (e.message || ''); }
+}
+async function stopPush() {
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    if (sub) await sub.unsubscribe();
+    await cCall({ act: 'unsub', uid: myUid() });
+  } catch (e) { }
+  S.push = 0; save();
 }
 
 if ('serviceWorker' in navigator) {

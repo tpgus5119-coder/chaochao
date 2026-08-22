@@ -13,6 +13,9 @@
        (누구나 자기 자리만 안다).
    v5: 운영자용 act:'stats' — **이름 없이 숫자만.** 누가 누구인지는 서버도 모른다.
        운영을 하려면 규모와 흐름은 알아야 하는데, 그걸 알기 위해 개인을 알 필요는 없다.
+   v6: 폰 알림(웹 푸시). 보내는 것은 '깨워라' 신호뿐 — 대화 내용은 서버를 지나가지 않는다.
+       하루 한 번까지만, 사흘 조용한 사람에게만. 읽씹이 사흘 이어지면 그 사람은 쉰다.
+       Settings → Variables and Secrets 에 VAPID_PRIV 와 PUSH_KEY 를 넣어야 돈다.
        재는 것: 몇 명 · 요일별 접속 · **어디까지 갔다 그만두는가(깔때기)** ·
        **얼마나 남아 있는가(코호트)** · **진짜 기억률** · **많은 사람이 틀리는 단어**.
        뒤의 넷이 앱을 어디서 고쳐야 하는지 알려주는 숫자다.
@@ -27,6 +30,33 @@ const cut = (s, n) => String(s == null ? '' : s).slice(0, n);
 const num = (v, hi) => Math.max(0, Math.min(hi, ~~v));
 const week = () => { const d = new Date(); d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
                      return d.toISOString().slice(0, 10); };
+
+/* 웹 푸시 — 내용 없는 신호만 보낸다.
+   VAPID 는 '이 서버가 보낸 게 맞다'는 서명이다. 내용을 안 실으므로 암호화는 필요 없다. */
+const u8 = b64 => Uint8Array.from(atob(b64.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+const b64u = buf => btoa(String.fromCharCode(...new Uint8Array(buf)))
+  .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+async function vapidJwt(aud, privB64) {
+  const key = await crypto.subtle.importKey('pkcs8', u8(privB64),
+    { name: 'ECDSA', namedCurve: 'P-256' }, false, ['sign']);
+  const head = b64u(new TextEncoder().encode(JSON.stringify({ typ: 'JWT', alg: 'ES256' })));
+  const body = b64u(new TextEncoder().encode(JSON.stringify({
+    aud, exp: Math.floor(Date.now() / 1000) + 12 * 3600, sub: 'mailto:chaochao@example.com' })));
+  const sig = await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, key,
+    new TextEncoder().encode(head + '.' + body));
+  return head + '.' + body + '.' + b64u(sig);
+}
+
+async function webpush(endpoint, privB64) {
+  const aud = new URL(endpoint).origin;
+  const jwt = await vapidJwt(aud, privB64);
+  const pub = 'BIXezZvZv-VlkJ49y1sGnEtMfqWkENMJOyZPi1XubrE2J6DeCh2ttTDoimW-EO7PR1U-8qNqSyMetpfZMwZEnTQ';
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: { 'TTL': '86400', 'Authorization': `vapid t=${jwt}, k=${pub}` },
+  });
+}
 
 export default {
   async fetch(req, env) {
@@ -64,6 +94,48 @@ export default {
 
     const GKEY = `r:${week()}`, TTL = { expirationTtl: 60 * 60 * 24 * 30 };
     const FIELDS = ['say', 'ear', 'read', 'spell', 'memo'];
+
+    /* ── 폰 알림 ─────────────────────────────────────────────
+       알림 주소(endpoint)만 들고 있는다. 그것으로는 누구인지 알 수 없다.
+       내용 없는 신호만 보내므로 암호화 짐이 없다 — 무슨 말이 왔는지는 앱을 열어야 본다. */
+    const SUBK = 'push:subs';
+    if (act === 'sub') {
+      const uid = cut(b.uid, 16);
+      if (!uid || !b.sub || !b.sub.endpoint) return send({ error: 'bad sub' });
+      const subs = JSON.parse((await KV.get(SUBK)) || '{}');
+      subs[uid] = { e: cut(b.sub.endpoint, 512), t: 0 };     // t = 마지막으로 보낸 날
+      await KV.put(SUBK, JSON.stringify(subs));
+      return send({ ok: true });
+    }
+    if (act === 'unsub') {
+      const uid = cut(b.uid, 16);
+      const subs = JSON.parse((await KV.get(SUBK)) || '{}');
+      if (subs[uid]) { delete subs[uid]; await KV.put(SUBK, JSON.stringify(subs)); }
+      return send({ ok: true });
+    }
+    if (act === 'push') {                                    // 로봇만 부른다 (PUSH_KEY 필요)
+      if (!env.PUSH_KEY || cut(b.key, 64) !== env.PUSH_KEY) return send({ error: 'no' });
+      if (!env.VAPID_PRIV) return send({ error: 'VAPID_PRIV 없음' });
+      const subs = JSON.parse((await KV.get(SUBK)) || '{}');
+      const g = JSON.parse((await KV.get(GKEY)) || '{}');
+      const today = new Date().toISOString().slice(0, 10);
+      const DAY = 86400000, now = Date.now();
+      let sent = 0, gone = 0, skipped = 0;
+      for (const [uid, v] of Object.entries(subs)) {
+        if (v.t === today) { skipped++; continue; }           // 하루 한 번까지만
+        const me = g[uid];
+        const idle = me && me.l ? Math.floor((now - Date.parse(me.l + 'T00:00:00Z')) / DAY) : 99;
+        if (idle < 3) { skipped++; continue; }                // 사흘은 조용히 둔다
+        if ((v.miss || 0) >= 3) { skipped++; continue; }      // 세 번 내리 안 읽으면 그 사람은 쉰다
+        try {
+          const r = await webpush(v.e, env.VAPID_PRIV);
+          if (r.status === 404 || r.status === 410) { delete subs[uid]; gone++; continue; }
+          v.t = today; v.miss = (v.miss || 0) + 1; sent++;    // 앱을 열면 sub 이 다시 와서 0으로 돌아간다
+        } catch (e) { }
+      }
+      await KV.put(SUBK, JSON.stringify(subs));
+      return send({ sent, gone, skipped, total: Object.keys(subs).length });
+    }
 
     if (act === 'stats') {                                   // 운영 현황 — 숫자만, 이름 없음
       const g = JSON.parse((await KV.get(GKEY)) || '{}');

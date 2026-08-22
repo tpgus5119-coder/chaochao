@@ -902,3 +902,11 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .msgbadge{flex:0 0 auto; min-width:22px; height:22px; border-radius:11px; background:#e0384a; color:#fff;
   font-size:12px; font-weight:800; display:grid; place-items:center; padding:0 6px}
 .menu .mtile .mbadge.red{color:#fff; background:#e0384a; border-color:#e0384a}
+
+/* 안내 줄 — 말풍선이 아니라 가로로 편다 (좌측에 뭉치면 선생님 말처럼 보인다) */
+.cb.note.wide{align-self:stretch; max-width:100%; width:100%; text-align:center;
+  background:transparent; border:1px dashed var(--line); color:var(--dim); font-size:13px}
+/* 하위 메뉴의 안 읽음 표시 */
+.bigmenu .mbadge{margin-left:8px; font-size:12px; font-weight:800; border-radius:11px; padding:2px 8px}
+/* 얼굴은 가운데를 보게 (오른쪽으로 치우쳐 잘리던 것) */
+.msgav img, .tchface{object-position:center 22%}
