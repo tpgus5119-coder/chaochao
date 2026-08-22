@@ -563,8 +563,7 @@
        "shape": "＼"
       }
      ],
-     "form": "인사말",
-     "fex": "xin chào = 안녕하세요"
+     "img": "x-xin-chao.webp"
     },
     {
      "vi": "anh",
@@ -656,8 +655,8 @@
        "shape": "↓"
       }
      ],
-     "form": "문장 끝 공손함 추가",
-     "fex": "vâng ạ = 네(공손)"
+     "form": "문장 끝 공손",
+     "fex": "Chào bạn ạ = 안녕하세요"
     },
     {
      "vi": "vâng",
@@ -672,8 +671,7 @@
       }
      ],
      "south": "dạ [야]",
-     "form": "긍정의 대답",
-     "fex": "vâng = 네"
+     "img": "x-vang.webp"
     },
     {
      "vi": "cảm ơn",
@@ -939,8 +937,7 @@
        "shape": "＼"
       }
      ],
-     "form": "의문사 무엇",
-     "fex": "tên gì = 무엇 이름"
+     "img": "x-gi.webp"
     },
     {
      "vi": "là",
@@ -955,7 +952,7 @@
       }
      ],
      "form": "A là B = A는 B이다",
-     "fex": "tôi là Nam = 나는 남이다"
+     "fex": "Tôi là học sinh = 나는 학생이다"
     },
     {
      "vi": "của",
@@ -1022,8 +1019,7 @@
        "shape": "—"
       }
      ],
-     "form": "A không B = A는 B가 아니다",
-     "fex": "không phải = 아니다"
+     "img": "x-khong.webp"
     },
     {
      "vi": "có",
@@ -1051,8 +1047,7 @@
        "shape": "／"
       }
      ],
-     "form": "rất + 형용사 = 아주 ~",
-     "fex": "rất tốt = 아주 좋다"
+     "img": "x-rat.webp"
     },
     {
      "vi": "vui",
@@ -1411,8 +1406,7 @@
        "shape": "＼"
       }
      ],
-     "form": "명사 + nào = 어느 명사",
-     "fex": "người nào = 어느 사람"
+     "img": "x-nao.webp"
     },
     {
      "vi": "Hàn Quốc",
@@ -1488,8 +1482,7 @@
        "shape": "∨"
       }
      ],
-     "form": "ở + 장소 = ~에 있다",
-     "fex": "ở nhà = 집에 있다"
+     "img": "x-o.webp"
     },
     {
      "vi": "đâu",
@@ -1503,8 +1496,7 @@
        "shape": "—"
       }
      ],
-     "form": "장소 의문사 어디",
-     "fex": "ở đâu = 어디에"
+     "img": "x-dau.webp"
     },
     {
      "vi": "đây",
@@ -1914,8 +1906,7 @@
        "shape": "＼"
       }
      ],
-     "form": "A và B = A 그리고 B",
-     "fex": "anh và tôi = 형 그리고 나"
+     "img": "x-va.webp"
     },
     {
      "vi": "gặp",
@@ -1945,8 +1936,7 @@
        "shape": "↓"
       }
      ],
-     "form": "동사 + được = ~할 수 있다",
-     "fex": "làm được = 할 수 있다"
+     "img": "x-duoc.webp"
     },
     {
      "vi": "khỏe",
@@ -2020,8 +2010,7 @@
        "shape": "＼"
       }
      ],
-     "form": "상태 의문사 어떻다",
-     "fex": "bạn thế nào = 너는 어때"
+     "img": "x-the-nao.webp"
     },
     {
      "vi": "lắm",
@@ -2035,8 +2024,7 @@
        "shape": "／"
       }
      ],
-     "form": "형용사 + lắm = 아주 ~",
-     "fex": "đẹp lắm = 아주 예쁘다"
+     "img": "x-lam.webp"
     },
     {
      "vi": "cũng",
@@ -2050,8 +2038,7 @@
        "shape": "∿"
       }
      ],
-     "form": "A cũng B = A도 B하다",
-     "fex": "tôi cũng vậy = 나도 그래"
+     "img": "x-cung.webp"
     },
     {
      "vi": "bình thường",
@@ -2985,7 +2972,7 @@
       }
      ],
      "form": "문장 끝 부드러운 권유",
-     "fex": "đi nhé = 가자"
+     "fex": "Đi nhé = 가자"
     },
     {
      "vi": "đi",
@@ -3075,8 +3062,7 @@
        "shape": "＼"
       }
      ],
-     "form": "동사 + rồi = 이미 ~했다",
-     "fex": "ăn rồi = 이미 먹었다"
+     "img": "x-roi.webp"
     }
    ],
    "dialog": {
@@ -4338,8 +4324,7 @@
        "shape": "／"
       }
      ],
-     "form": "mấy + 명사 = 몇 개의 ~",
-     "fex": "mấy người = 몇 사람"
+     "img": "x-may.webp"
     },
     {
      "vi": "bao nhiêu",
@@ -4359,8 +4344,7 @@
        "shape": "—"
       }
      ],
-     "form": "bao nhiêu = 얼마나/몇(큰 수)",
-     "fex": "bao nhiêu tiền = 얼마인가요"
+     "img": "x-bao-nhieu.webp"
     },
     {
      "vi": "cái",
@@ -4474,8 +4458,7 @@
        "shape": "＼"
       }
      ],
-     "form": "còn + A = 아직 A가 남았다",
-     "fex": "còn một cái = 하나 남았다"
+     "img": "x-con.webp"
     },
     {
      "vi": "thiếu",
@@ -4790,8 +4773,7 @@
        "shape": "—"
       }
      ],
-     "form": "số + mươi = 십 단위 숫자",
-     "fex": "hai mươi = 20"
+     "img": "x-muoi.webp"
     },
     {
      "vi": "giờ",
@@ -4923,8 +4905,7 @@
        "shape": "／"
       }
      ],
-     "form": "lúc + 시간 = ~할 때",
-     "fex": "lúc ba giờ = 3시에"
+     "img": "x-luc.webp"
     }
    ],
    "dialog": {
@@ -5968,8 +5949,7 @@
        "shape": "∿"
       }
      ],
-     "form": "mỗi + 명사 = 매 ~",
-     "fex": "mỗi ngày = 매일"
+     "img": "x-moi.webp"
     },
     {
      "vi": "thường",
@@ -5984,8 +5964,7 @@
       }
      ],
      "hanja": "常 (상)",
-     "form": "thường + 동사 = 보통 ~한다",
-     "fex": "thường đi học = 보통 학교에 간다"
+     "img": "x-thuong.webp"
     }
    ],
    "dialog": {
@@ -6855,8 +6834,7 @@
        "shape": "＼"
       }
      ],
-     "form": "A + này = 이 A",
-     "fex": "cái này = 이것"
+     "img": "x-nay.webp"
     },
     {
      "vi": "tiền",
@@ -6951,8 +6929,7 @@
        "shape": "—"
       }
      ],
-     "form": "cho + 대상 = ~에게 주다",
-     "fex": "cho tôi = 나에게 주다"
+     "img": "x-cho.webp"
     },
     {
      "vi": "xin",
@@ -6966,8 +6943,7 @@
        "shape": "—"
       }
      ],
-     "form": "xin + 동사 = ~해 주세요",
-     "fex": "xin chào = 안녕하세요"
+     "img": "x-xin.webp"
     },
     {
      "vi": "nghìn",
@@ -9406,8 +9382,7 @@
        "shape": "—"
       }
      ],
-     "form": "làm ơn + 동사 = 부디 ~해주세요",
-     "fex": "làm ơn giúp tôi = 부디 도와주세요"
+     "img": "x-lam-on.webp"
     },
     {
      "vi": "giúp",
@@ -9473,8 +9448,7 @@
        "shape": "—"
       }
      ],
-     "form": "동사 + được không? = ~할 수 있나요?",
-     "fex": "đi được không? = 갈 수 있나요?"
+     "img": "x-duoc-khong.webp"
     },
     {
      "vi": "hãy",
@@ -9488,8 +9462,7 @@
        "shape": "∿"
       }
      ],
-     "form": "hãy + 동사 = ~하세요(명령)",
-     "fex": "hãy ăn đi = 드세요"
+     "img": "x-hay.webp"
     },
     {
      "vi": "đừng",
@@ -10355,8 +10328,7 @@
        "shape": "∿"
       }
      ],
-     "form": "đã + 동사 = 이미 ~했다",
-     "fex": "đã ăn = 이미 먹었다"
+     "img": "x-da.webp"
     },
     {
      "vi": "đang",
@@ -10370,8 +10342,7 @@
        "shape": "—"
       }
      ],
-     "form": "đang + 동사 = ~하는 중이다",
-     "fex": "đang học = 공부하는 중"
+     "img": "x-dang.webp"
     },
     {
      "vi": "sẽ",
@@ -10385,8 +10356,7 @@
        "shape": "∿"
       }
      ],
-     "form": "sẽ + 동사 = ~할 것이다",
-     "fex": "sẽ đi = 갈 것이다"
+     "img": "x-se.webp"
     },
     {
      "vi": "chưa",
@@ -10432,8 +10402,7 @@
        "shape": "／"
       }
      ],
-     "form": "A với B = A와 함께 B",
-     "fex": "đi với tôi = 나와 함께 가다"
+     "img": "x-voi.webp"
     },
     {
      "vi": "cùng",
@@ -10489,8 +10458,7 @@
        "shape": "＼"
       }
      ],
-     "form": "bao giờ + 동사 = 언제 ~합니까?",
-     "fex": "bao giờ đi = 언제 갑니까?"
+     "img": "x-bao-gio.webp"
     },
     {
      "vi": "sao",
@@ -10504,8 +10472,7 @@
        "shape": "—"
       }
      ],
-     "form": "sao = 왜 또는 어떻게",
-     "fex": "sao thế = 왜 그래?"
+     "img": "x-sao.webp"
     }
    ],
    "dialog": {
@@ -10949,8 +10916,7 @@
        "shape": "—"
       }
      ],
-     "form": "ai = 누구",
-     "fex": "ai đó = 누구입니까?"
+     "img": "x-ai.webp"
     },
     {
      "vi": "gì nữa",
@@ -10970,8 +10936,7 @@
        "shape": "∿"
       }
      ],
-     "form": "A gì nữa = 또 무엇을 A합니까?",
-     "fex": "muốn gì nữa = 또 무엇을 원합니까?"
+     "img": "x-gi-nua.webp"
     },
     {
      "vi": "thôi",
@@ -10985,8 +10950,7 @@
        "shape": "—"
       }
      ],
-     "form": "동사 + thôi = ~만 하다",
-     "fex": "xem thôi = 보기만 하다"
+     "img": "x-thoi.webp"
     },
     {
      "vi": "nữa",
@@ -11000,8 +10964,7 @@
        "shape": "∿"
       }
      ],
-     "form": "A nữa = 더 A하다",
-     "fex": "ăn nữa = 더 먹다"
+     "img": "x-nua.webp"
     },
     {
      "vi": "quan trọng",
@@ -12092,8 +12055,7 @@
       }
      ],
      "hanja": "總 (총)",
-     "form": "tổng A = A의 총합",
-     "fex": "tổng tiền = 총 금액"
+     "img": "x-tong.webp"
     },
     {
      "vi": "hàng",
@@ -12195,8 +12157,7 @@
        "shape": "—"
       }
      ],
-     "form": "thêm + A = A를 더하다",
-     "fex": "thêm nước = 물을 더하다"
+     "img": "x-them.webp"
     },
     {
      "vi": "kịp",
@@ -12711,7 +12672,7 @@
        "shape": "∨"
       }
      ],
-     "form": "phải + 동사 = ~해야 한다",
+     "form": "A phải B = A는 B를 해야 한다",
      "fex": "phải đi = 가야 한다"
     }
    ],
@@ -13131,8 +13092,7 @@
        "shape": "＼"
       }
      ],
-     "form": "thế này = 이렇게",
-     "fex": "làm thế này = 이렇게 하다"
+     "img": "x-the-nay.webp"
     },
     {
      "vi": "cái này",
@@ -16631,8 +16591,7 @@
        "shape": "—"
       }
      ],
-     "form": "전화 받을 때 쓰는 인사말",
-     "fex": "alô = 여보세요"
+     "img": "x-alo.webp"
     },
     {
      "vi": "bận",
@@ -24734,8 +24693,7 @@
        "shape": "—"
       }
      ],
-     "form": "A cùng nhau B = A와 B가 함께",
-     "fex": "chúng tôi cùng nhau đi = 우리는 함께 간다"
+     "img": "x-cung-nhau.webp"
     },
     {
      "vi": "mời",
@@ -25793,8 +25751,7 @@
        "shape": "—"
       }
      ],
-     "form": "상대 응원할 때 쓰는 말",
-     "fex": "cố lên! = 힘내세요!"
+     "img": "x-co-len.webp"
     },
     {
      "vi": "xe ôm",
@@ -30116,7 +30073,8 @@
        "shape": "↓"
       }
      ],
-     "img": "x-cuoc-hen.webp"
+     "form": "A có cuộc hẹn = A는 약속이 있다",
+     "fex": "tôi có cuộc hẹn = 나는 약속이 있다"
     },
     {
      "vi": "công tác",
@@ -30274,8 +30232,7 @@
        "shape": "—"
       }
      ],
-     "form": "A + hơn + B = A가 B보다 더하다",
-     "fex": "lớn hơn tôi = 나보다 크다"
+     "img": "x-hon.webp"
     },
     {
      "vi": "chuyến",
@@ -30289,7 +30246,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-chuyen.webp"
+     "form": "chuyến + 교통수단 = ~편",
+     "fex": "chuyến bay = 비행기편"
     }
    ],
    "track": "work",
@@ -32256,8 +32214,7 @@
       }
      ],
      "hanja": "過 (과)",
-     "form": "tính từ + quá = 너무 ~하다",
-     "fex": "đẹp quá = 너무 예쁘다"
+     "img": "x-qua.webp"
     }
    ],
    "track": "work",
@@ -32768,8 +32725,7 @@
        "shape": "／"
       }
      ],
-     "form": "sắp + 동사 = 곧 ~하려 한다",
-     "fex": "sắp đi = 곧 가다"
+     "img": "x-sap.webp"
     },
     {
      "vi": "nhắc",
@@ -33164,8 +33120,7 @@
        "shape": "∿"
       }
      ],
-     "form": "lỡ + 동사 = 그만 ~해 버리다",
-     "fex": "lỡ quên = 그만 잊어버리다"
+     "img": "x-lo.webp"
     },
     {
      "vi": "cố ý",
@@ -33241,8 +33196,7 @@
        "shape": "＼"
       }
      ],
-     "form": "số đếm + lần = ~번",
-     "fex": "hai lần = 두 번"
+     "img": "x-lan.webp"
     },
     {
      "vi": "sửa sai",
@@ -33318,8 +33272,7 @@
       }
      ],
      "hanja": "實 (실)",
-     "form": "thật + tính từ = 정말로 ~한",
-     "fex": "thật tốt = 정말 좋다"
+     "img": "x-that.webp"
     }
    ],
    "track": "work",
@@ -33875,8 +33828,7 @@
        "shape": "∿"
       }
      ],
-     "form": "động từ + kỹ = 꼼꼼히 ~하다",
-     "fex": "xem kỹ = 꼼꼼히 보다"
+     "img": "x-ky.webp"
     }
    ],
    "track": "work",
@@ -36616,8 +36568,7 @@
       }
      ],
      "hanja": "生年 (생년)",
-     "form": "sinh năm + 숫자 = ~년생",
-     "fex": "sinh năm 1995 = 95년생"
+     "img": "x-sinh-nam.webp"
     },
     {
      "vi": "kết hôn",
@@ -37152,8 +37103,7 @@
        "shape": "—"
       }
      ],
-     "form": "trông + 형용사 = ~해 보이다",
-     "fex": "trông đẹp = 예뻐 보인다"
+     "img": "x-trong.webp"
     },
     {
      "vi": "nuôi",
@@ -38573,8 +38523,8 @@
        "shape": "＼"
       }
      ],
-     "form": "문장 끝 à = ~예요? (놀람/확인)",
-     "fex": "anh đi à? = 가세요?"
+     "form": "문장 끝에 붙어 깨달음이나 의문을 나타냄",
+     "fex": "Anh đi à? = 가시나요?"
     },
     {
      "vi": "ừ",
@@ -38588,8 +38538,8 @@
        "shape": "＼"
       }
      ],
-     "form": "문장 앞뒤 ừ = 응 (반말)",
-     "fex": "ừ, tôi đi = 응, 가"
+     "form": "문장 끝에 붙어 가벼운 긍정을 나타냄",
+     "fex": "Ừ, tôi đi. = 응, 가."
     },
     {
      "vi": "nhỉ",
@@ -38603,8 +38553,8 @@
        "shape": "∨"
       }
      ],
-     "form": "문장 끝 nhỉ = ~네요/그렇죠",
-     "fex": "đẹp nhỉ = 예쁘네요"
+     "form": "상대방의 동의를 구하는 어미",
+     "fex": "Đẹp nhỉ! = 예쁘네요, 그쵸?"
     },
     {
      "vi": "ghê",
@@ -38618,8 +38568,7 @@
        "shape": "—"
       }
      ],
-     "form": "형용사 + ghê = 엄청 ~하다",
-     "fex": "đắt ghê = 엄청 비싸다"
+     "img": "x-ghe.webp"
     },
     {
      "vi": "vỗ tay",
@@ -41339,8 +41288,7 @@
        "shape": "／"
       }
      ],
-     "form": "trước hết + 문장 = 우선 ~하다",
-     "fex": "trước hết, ăn đi = 우선 먹어"
+     "img": "x-truoc-het.webp"
     },
     {
      "vi": "đó",
@@ -41354,8 +41302,7 @@
        "shape": "／"
       }
      ],
-     "form": "명사 + đó = 그 명사",
-     "fex": "người đó = 그 사람"
+     "img": "x-do.webp"
     },
     {
      "vi": "sau đó",
@@ -41375,8 +41322,7 @@
        "shape": "／"
       }
      ],
-     "form": "sau đó + 문장 = 그 다음에 ~하다",
-     "fex": "sau đó, đi ngủ = 그 다음에 자다"
+     "img": "x-sau-do.webp"
     },
     {
      "vi": "từng",
@@ -41390,8 +41336,7 @@
        "shape": "＼"
       }
      ],
-     "form": "từng + 명사 = 각각의 명사",
-     "fex": "từng người = 각각의 사람"
+     "img": "x-tung.webp"
     },
     {
      "vi": "theo",
@@ -41405,8 +41350,7 @@
        "shape": "—"
       }
      ],
-     "form": "theo + 명사 = ~에 따라",
-     "fex": "theo tôi = 나를 따라"
+     "img": "x-theo.webp"
     },
     {
      "vi": "làm theo",
@@ -41842,8 +41786,7 @@
        "shape": "—"
       }
      ],
-     "form": "bao lâu = 얼마나 오래",
-     "fex": "bao lâu rồi = 얼마나 됐나요"
+     "img": "x-bao-lau.webp"
     },
     {
      "vi": "còn lại",
@@ -41969,8 +41912,7 @@
       }
      ],
      "hanja": "暫 (잠)",
-     "form": "tạm + 동사 = 일단 ~하다",
-     "fex": "tạm dừng = 일단 멈추다"
+     "img": "x-tam.webp"
     }
    ],
    "track": "work",
@@ -42987,7 +42929,7 @@
        "shape": "／"
       }
      ],
-     "form": "nhờ có A = A 덕분에",
+     "form": "A nhờ có B = B 덕분에 A",
      "fex": "nhờ có bạn = 너 덕분에"
     },
     {
@@ -46501,8 +46443,7 @@
        "shape": "—"
       }
      ],
-     "form": "đầu tiên = 맨 처음에",
-     "fex": "đầu tiên là tôi = 첫 번째는 나"
+     "img": "x-dau-tien.webp"
     },
     {
      "vi": "tiếp theo",
@@ -46522,8 +46463,7 @@
        "shape": "—"
       }
      ],
-     "form": "tiếp theo = 그 다음에",
-     "fex": "tiếp theo là bạn = 다음은 너"
+     "img": "x-tiep-theo.webp"
     },
     {
      "vi": "cuối cùng",
@@ -46543,8 +46483,7 @@
        "shape": "＼"
       }
      ],
-     "form": "cuối cùng = 마지막으로",
-     "fex": "cuối cùng là xong = 마지막으로 끝"
+     "img": "x-cuoi-cung.webp"
     },
     {
      "vi": "chuyển sang",
@@ -46564,8 +46503,7 @@
        "shape": "—"
       }
      ],
-     "form": "chuyển sang A = A로 넘어가다",
-     "fex": "chuyển sang bài mới = 새 과로 넘어가다"
+     "img": "x-chuyen-sang.webp"
     },
     {
      "vi": "bán thành phẩm",
@@ -47060,8 +46998,7 @@
       }
      ],
      "hanja": "分 (분)",
-     "form": "A phân B = B의 A분(단위)",
-     "fex": "một phân = 1푼"
+     "img": "x-phan.webp"
     },
     {
      "vi": "khớp",
@@ -47502,8 +47439,7 @@
       }
      ],
      "hanja": "標準 (표준)",
-     "form": "tiêu chuẩn = 기준, 표준",
-     "fex": "đạt tiêu chuẩn = 기준을 달성하다"
+     "img": "x-tieu-chuan.webp"
     },
     {
      "vi": "phân loại",
@@ -47675,8 +47611,7 @@
        "shape": "／"
       }
      ],
-     "form": "lần cuối = 마지막 번",
-     "fex": "lần cuối cùng = 마지막으로"
+     "img": "x-lan-cuoi.webp"
     }
    ],
    "track": "work",
@@ -48075,8 +48010,7 @@
       }
      ],
      "hanja": "原 (원)",
-     "form": "nguyên = 원래의, 그대로의",
-     "fex": "giữ nguyên = 그대로 유지하다"
+     "img": "x-nguyen.webp"
     },
     {
      "vi": "giữ nguyên",
@@ -48677,8 +48611,7 @@
        "shape": "∨"
       }
      ],
-     "form": "phiên bản = 버전",
-     "fex": "phiên bản mới = 새 버전"
+     "img": "x-phien-ban.webp"
     }
    ],
    "track": "work",
@@ -49603,8 +49536,7 @@
        "shape": "＼"
       }
      ],
-     "form": "phần mềm = 소프트웨어",
-     "fex": "cài phần mềm = 소프트웨어를 설치하다"
+     "img": "x-phan-mem.webp"
     },
     {
      "vi": "mềm",
@@ -51134,8 +51066,7 @@
        "shape": "／"
       }
      ],
-     "form": "chống + 명사 = ~을 막다",
-     "fex": "chống cháy = 불을 막다"
+     "img": "x-chong.webp"
     },
     {
      "vi": "chống ẩm",
@@ -51197,8 +51128,7 @@
        "shape": "／"
       }
      ],
-     "form": "đủ + 명사 = ~가 충분하다",
-     "fex": "đủ số lượng = 수량이 충분하다"
+     "img": "x-du-so.webp"
     }
    ],
    "track": "work",
