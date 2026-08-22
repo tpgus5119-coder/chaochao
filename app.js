@@ -1156,8 +1156,7 @@ const MENUS = {
             ['성조', toneEntry], ['호칭', () => startRule(0)], ['어순', () => startRule(1)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
-  ai:    { name: '메신저', items: () => [
-            ['자유 대화', startChat], ['배운 문장으로', startTalk]] },
+  ai:    { name: '메신저', items: () => [['보기', startChat]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
   keep:  { name: '진도', items: () => [
@@ -1169,12 +1168,9 @@ function renderMenu(id) {
   const m = MENUS[id];
   const b = $('#subBody');
   b.textContent = '';
-  const unread = Object.values(S.room || {}).reduce((a, r) => a + (r.unread || 0), 0);
   m.items().forEach(([label, fn]) => {
     const btn = el('button', 'bigmenu');
     btn.textContent = label;
-    if (id === 'ai' && label === '자유 대화' && unread)      // 표시가 안쪽까지 이어져야 찾아간다
-      btn.append(el('span', 'mbadge red', String(unread)));
     btn.onclick = () => { dive(() => renderMenu(id)); fn(); };
     b.append(btn);
   });
@@ -1387,8 +1383,12 @@ function startLearn(d) {
   const items = [];
   // 설명은 책 표지처럼 맨 앞 한 장으로. 단어 화면에서는 사라져서 그림 자리를 벌어 준다.
   const ci = cultureFor(d);
-  if (d.intro) items.push({ k: 'cover', d: { t: label(d) + ' · ' + d.theme, b: d.intro,
-                                             cult: ci != null ? CULTURE[ci] : null } });
+  if (d.intro) items.push({ k: 'cover', d: {
+    t: label(d) + ' · ' + d.theme, b: d.intro,
+    // 표지 그림은 그날 대화 장면 그림. 이미 만들어 둔 것이라 새로 뽑을 것이 없다.
+    img: (d.dialog && d.dialog.img) || (d.words || []).map(w => w.img).find(Boolean),
+    emoji: (d.dialog && d.dialog.emoji) || '',
+    cult: ci != null ? CULTURE[ci] : null } });
   (d.letters || []).forEach(x => items.push({ k: 'letter', d: x }));
   (d.tones || []).forEach(x => items.push({ k: 'tone', d: x }));
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
@@ -1479,6 +1479,7 @@ function drawCard() {
   const it = L.items[L.i], x = it.d;
 
   if (it.k === 'cover') {
+    const cp = pic(x, 'pic cover'); if (cp) c.append(cp);
     c.append(el('div', 'covert', esc(x.t)));
     c.append(el('div', 'coverb', x.b));       // 우리가 쓴 글이라 굵게 표시를 살린다
     if (x.src) {                              // 기사 세트 — 원문으로 가는 길
@@ -2950,8 +2951,11 @@ let RL = null;
 function startRule(i) {
   const r = (typeof i === 'string') ? GRAMMAR[+i.slice(1)] : RULES[i];
   // 다른 학습과 같은 카드 화면으로 가르친다 — 카드가 끝나면 연습 문제
+  const cw = (r.cards || []).flatMap(c0 => glossOf(c0.vi).map(g => g.w))
+    .map(w => (allWords().find(x => x.vi.toLowerCase() === w.toLowerCase()) || {}).img)
+    .find(Boolean);
   L = { day: { day: r.key, theme: r.title, intro: r.intro, words: [], rule: r },
-        items: [{ k: 'cover', d: { t: r.title, b: r.intro } },
+        items: [{ k: 'cover', d: { t: r.title, b: r.intro, img: cw } },
                 ...r.cards.map(c => ({ k: 'rule', d: c }))], i: 0 };
   drawCard();
   show('learn', r.title, true);
@@ -3352,7 +3356,18 @@ function chatSys(mode, myRole, day) {
     '반드시 이 형식으로만 답한다. 다른 말은 붙이지 않는다:\n' +
     'VI: 베트남어 한 문장 (최대 7단어)\nKR: 그 발음의 한글 표기\nKO: 한국어 뜻\n' +
     '학습자의 베트남어에 성조나 단어 실수가 있으면 넷째 줄 "FIX: 짧은 교정"으로 알려준다.\n' +
-    '가능한 한 이 단어들만 쓴다(이름·지명은 예외): ' + learnedVi().join(', ') + '\n' +
+    /* 어휘 정책 — 세 층으로 나눈다.
+       ① 뼈대는 배운 말: 알아들어야 대화가 되고, 다시 만나야 복습이 된다.
+       ② 한 마디에 새 단어 한둘: 지금 수준보다 아주 조금 위여야 는다(이해 가능한 입력).
+          새 단어는 NEW 줄로 밝힌다 — 알아채지 못한 것은 배워지지 않는다.
+       ③ 이따금 현지 표현: 책에 없는 줄임말·입말은 여기서만 만난다.
+          정석을 먼저 주고 REAL 줄에 곁들인다 — 순서가 바뀌면 초보가 혼란스럽다. */
+    '어휘는 이렇게 고른다:\n' +
+    ' · 뼈대는 학습자가 이미 배운 말로 쓴다: ' + learnedVi().join(', ') + '\n' +
+    ' · 한 마디에 새 단어는 많아야 한둘만 섞는다. 섞었으면 "NEW: 단어=뜻" 줄을 덧붙인다.\n' +
+    ' · 서너 마디에 한 번쯤, 같은 뜻을 현지 사람들이 실제로 쓰는 짧은 말·줄임말로도 알려준다:\n' +
+    '   "REAL: 현지 표현 = 한국어 뜻" 줄로. 매번 붙이지는 마라.\n' +
+    ' · NEW·REAL 은 없으면 그 줄을 아예 쓰지 않는다.\n' +
     '한 번에 한 문장. 쉬운 질문으로 대화를 이어간다. 학습자가 한국어로 쓰면 그 말을 베트남어로 어떻게 하는지 알려주고 따라 하게 한다.\n' +
     '학습자가 사진을 보내면, 사진에 보이는 것을 주제로 아주 쉬운 베트남어 문장으로 대화를 이어간다.\n' +
     (mode === 'today'
@@ -3445,7 +3460,7 @@ function drawTch() {
 function aiBubble(text) {
   const m = {};
   text.split('\n').forEach(l => {
-    const mt = l.match(/^\s*(VI|KR|KO|FIX)\s*:\s*(.+)/i);
+    const mt = l.match(/^\s*(VI|KR|KO|FIX|NEW|REAL)\s*:\s*(.+)/i);
     if (mt) { const k = mt[1].toUpperCase(); m[k] = m[k] ? m[k] + ' ' + mt[2].trim() : mt[2].trim(); }
   });
   const b = bubble('ai');
@@ -3454,6 +3469,8 @@ function aiBubble(text) {
   if (m.KR) b.append(el('div', 'ckr', '[' + esc(m.KR) + ']'));
   if (m.KO) b.append(el('div', 'cko', esc(m.KO)));
   if (m.FIX) b.append(el('div', 'cfix', '✎ ' + esc(m.FIX)));
+  if (m.NEW) b.append(el('div', 'cnew', '＋ 새 단어 · ' + esc(m.NEW)));
+  if (m.REAL) b.append(el('div', 'creal', '💬 현지에서는 · ' + esc(m.REAL)));
   speakVi(m.VI);                       // 오면 바로 읽어준다 (입도 같이 움직인다)
   const bt = el('button', 'ghost sm', '다시 듣기');
   bt.onclick = () => speakVi(m.VI);
@@ -3563,7 +3580,7 @@ function renderChatKey() {
   b.onclick = () => {
     const v = inp.value.trim();
     if (v.length < 20) { alert('키가 너무 짧습니다. 전체를 복사해 주세요.'); return; }
-    S.gkey = v; save(); renderChatModes();
+    S.gkey = v; save(); renderRooms();
   };
   s.append(inp, b);
   s.append(el('p', 'note', '대화 내용은 구글 서버로 전송됩니다. 개인정보(실명 전체·주소·사번)는 쓰지 마세요.'));
@@ -3731,40 +3748,6 @@ function startLineTalk(rg, tc, x) {
   openRoom(rg, tc);
 }
 
-function renderChatModes() {
-  const s = $('#chatSetup');
-  s.hidden = false; s.textContent = '';
-
-  const tp = el('div', 'pickbox');
-  tp.append(el('span', 'pklab', '선생님'));
-  const gp = el('div', 'rolepick');
-  [['f', '여'], ['m', '남']].forEach(([k, txt]) => {
-    const on = (S.tch || 'f') === k;
-    const bb = el('button', 'ghost sm' + (on ? ' pick' : ''), (on ? '✓ ' : '') + txt);
-    bb.onclick = () => { S.tch = k; save(); renderChatModes(); };
-    gp.append(bb);
-  });
-  tp.append(gp, el('span', 'pklab', '말'));
-  const rp = el('div', 'rolepick');
-  [['n', '북부'], ['s', '남부']].forEach(([k, txt]) => {
-    const on = (S.region === 's' ? 's' : 'n') === k;
-    const bb = el('button', 'ghost sm' + (on ? ' pick' : ''), (on ? '✓ ' : '') + txt);
-    bb.onclick = () => { S.region = k; save(); drawRegion(); renderChatModes(); };
-    rp.append(bb);
-  });
-  tp.append(rp);
-  s.append(tp);
-
-  const m2 = el('button', 'chatmode');
-  m2.innerHTML = '<b>대화 시작</b>';
-  m2.onclick = () => beginChat('free');
-  s.append(m2);
-  if (S.gkey) {
-    const del = el('button', 'ghost sm', '키 지우기');
-    del.onclick = () => { if (confirm('저장된 키를 지울까요?')) { delete S.gkey; save(); startChat(); } };
-    s.append(del);
-  }
-}
 
 function beginChat(mode, myRole, day) {
   S.stats.chat = (S.stats.chat || 0) + 1; touchToday(); save();
@@ -3776,36 +3759,6 @@ function beginChat(mode, myRole, day) {
 }
 
 /* 복습 [대화] — 끝낸 세트의 문장으로 AI 선생님과 역할극 (오늘 것뿐 아니라 지난 것도) */
-function startTalk() {
-  if (!aiReady()) { startChat(); return; }
-  $('#chatLog').textContent = '';
-  $('#chatForm').hidden = true;
-  $('#chatKeys').hidden = true;
-  $('#chatKb').classList.remove('pick');
-  drawTch();                                 // 역할극에서도 상대 얼굴이 보여야 말이 나온다
-  CH = null;
-  const s = $('#chatSetup');
-  s.hidden = false; s.textContent = '';
-  const list = ALL.filter(d => typeof d.day === 'number' && S.done[d.day] && d.dialog);
-  if (!list.length) {
-    s.append(el('p', 'note', '아직 끝낸 세트가 없습니다. 오늘 세트를 먼저 끝내면 그 문장으로 역할극할 수 있습니다.'));
-  } else {
-    s.append(el('p', 'lede', '끝낸 세트의 문장으로 역할극합니다. 세트와 역할을 고르세요.'));
-    list.reverse().forEach(d => {
-      const m = el('div', 'chatmode on');
-      m.innerHTML = '<b>' + esc(trackName(d) + label(d) + ' · ' + (d.dialog.title || d.theme)) + '</b>';
-      const rr = el('div', 'rolepick');
-      [['A', '내가 A'], ['B', '내가 B']].forEach(([k, txt]) => {
-        const bb = el('button', 'ghost sm', txt);
-        bb.onclick = () => beginChat('today', k, d);
-        rr.append(bb);
-      });
-      m.append(rr);
-      s.append(m);
-    });
-  }
-  show('chat', '대화 복습', true);
-}
 
 /* 말로 대화 — 녹음한 말을 AI가 받아 적어 그대로 보낸다 (타자 없이 입으로) */
 let MIC = null;
@@ -4036,7 +3989,8 @@ function showGuide() {
   ]);
 
   sec('⑦', 'AI 선생님과 실제로 말해 보기', [
-    '<b>메신저</b>에는 네 사람이 있습니다 — 북부의 Thùy Linh·Anh Tuấn, 남부의 Ngọc Thảo·Quang Huy. 사람마다 말투와 소리가 다릅니다.',
+    '<b>메신저</b>를 누르면 네 사람이 나옵니다 — 북부의 Thùy Linh·Anh Tuấn, 남부의 Ngọc Thảo·Quang Huy. 사람마다 말투와 소리가 다릅니다.',
+    '대화 중 <b>＋ 새 단어</b>는 아직 안 배운 말입니다(한 마디에 한둘만 섞습니다). <b>💬 현지에서는</b> 줄은 교재에 안 나오는 <b>실제 입말·줄임말</b>입니다.',
     '지금까지 배운 단어를 매번 같이 보내므로 <b>내가 아는 단어 안에서</b> 말을 걸어옵니다 — 왕초보에게는 완전한 자유 대화보다 이쪽이 낫습니다. 답은 베트남어 · 발음 · 뜻 세 줄로 옵니다.',
     '내 베트남어에 실수가 있으면 <b>✎</b>로 시작하는 교정 줄이 붙습니다. [다시 듣기]로 문장을 한 번 더 들을 수 있습니다.',
     '입력칸 왼쪽 <b>마이크</b>는 말한 것을 받아 적어 칸에 넣어 줍니다(바로 안 보냅니다 — 고칠 기회를 줍니다). ' +
@@ -4160,7 +4114,9 @@ function showNewsLearn() {
   });
 }
 function startNews(d) {
-  const items = [{ k: 'cover', d: { t: '📰 ' + d.theme, b: esc(d.intro), src: d.u, title: d.title } }];
+  const items = [{ k: 'cover', d: { t: '📰 ' + d.theme, b: esc(d.intro), src: d.u, title: d.title,
+                                    img: (d.words || []).map(w => w.img).find(Boolean),
+                                    emoji: (d.words || []).map(w => w.emoji).find(Boolean) } }];
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
   L = { day: { day: d.day, theme: d.theme, words: d.words, dialog: d.dialog, news: true },
         items, i: 0, news: true };
