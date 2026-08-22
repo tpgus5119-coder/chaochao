@@ -495,7 +495,37 @@ function topBtns() {
   const need = SNDV.includes(CURV);
   $('#region').hidden = !need;
   $('#voice').hidden = !need;
+  $('#wxnow').hidden = CURV !== 'home';          // 첫 화면에서만
 }
+
+/* 머리 왼쪽 — 지금 베트남 시각과 날씨. 지역은 내 정보에서 고른 북부/남부를 따른다.
+   출국 준비 중인 사람에게 '지금 거기 몇 시인가'는 매일 궁금한 것이고,
+   날씨는 그날 뭘 입을지가 아니라 '내가 갈 곳이 어떤 곳인가'를 계속 상기시킨다. */
+let WXNOW = { at: 0, t: null, code: null, city: null };
+function drawWxNow() {
+  const b = $('#wxnow');
+  const c = S.region === 's' ? 's' : 'n';
+  const now = new Date();
+  // 베트남은 한국보다 2시간 느리다 (UTC+7 / UTC+9)
+  const vn = new Date(now.getTime() - 2 * 3600e3);
+  const hh = String(vn.getHours()).padStart(2, '0') + ':' + String(vn.getMinutes()).padStart(2, '0');
+  const icon = WXNOW.city === c && WXNOW.code != null ? (WXICON[WXNOW.code] || '·') : '';
+  const temp = WXNOW.city === c && WXNOW.t != null ? Math.round(WXNOW.t) + '°' : '';
+  b.innerHTML = `<span class="wxt">${hh}</span><span class="wxd">${icon} ${temp}</span>`;
+  b.onclick = () => { dive(renderHome); showWx(c); };
+  if (WXNOW.city !== c || Date.now() - WXNOW.at > 30 * 60e3) {   // 30분에 한 번만 묻는다
+    const q = WXCITY[c];
+    WXNOW.city = c; WXNOW.at = Date.now();
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${q.lat}&longitude=${q.lon}` +
+          '&current=temperature_2m,weather_code&timezone=Asia%2FHo_Chi_Minh')
+      .then(r => r.json()).then(j => {
+        WXNOW.t = j.current?.temperature_2m;
+        WXNOW.code = j.current?.weather_code;
+        drawWxNow();
+      }).catch(() => { });
+  }
+}
+setInterval(() => { if (CURV === 'home') drawWxNow(); }, 60e3);
 function show(v, title, canBack) {
   if (v === 'home') NAV.length = 0;
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
@@ -545,7 +575,7 @@ function weekDots() {
 const doneCount = () => Object.keys(S.done).filter(k => +k >= 1).length;
 const BADGES = [
   // ① 기초 — 시작을 뗐는가
-  { icon: '🔤', name: '기본기를 뗐다', how: '모음·자음·성조 + 규칙 4개 모두 완료',
+  { icon: '🔤', name: '기본기를 뗐다', how: '기본기 학습 완료',
     test: () => ['P1','P2','P3','R1','R2','R3','R4'].every(k => S.done[k]) },
   { icon: '👋', name: '첫 5일',        how: '일상 Day 1~5 완료',             test: () => [1,2,3,4,5].every(k => S.done[k]) },
   { icon: '🏭', name: '출근 첫날',     how: '직무 세트 1개 완료',            test: () => ALL.some(d => d.track === 'work' && S.done[d.day]) },
@@ -644,9 +674,8 @@ function renderAnalysis(host, mode) {
     sbox.textContent = '';
     sbox.append(bars(subj.map((x, i) => [x.name, x.pct === null ? 0 : x.pct, x.n,
                                          avg ? avg[RANKKEY[i]] : undefined])));
-    sbox.append(el('p', 'dimtxt', avg
-      ? '막대는 나, 세로 선은 <b>다른 사람들의 평균</b>입니다. 열 문제를 넘긴 과목만 비교합니다.'
-      : '아직 견줄 사람이 적어 평균이 안 나옵니다 — 세 명부터 나옵니다.'));
+    if (avg) sbox.append(el('p', 'dimtxt',
+      '막대는 나, 세로 선은 <b>다른 사람들의 평균</b>입니다.'));
   };
   drawSubj(null);
   host.append(sbox);
@@ -1124,9 +1153,9 @@ const MENUS = {
   ai:    { name: 'AI 선생님', items: () => [
             ['자유 대화', startChat], ['배운 문장으로', startTalk]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
-  news:  { name: '베트남 소식', items: () => [
-            ['기사', showNews], ['날씨', () => showWx()]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
+  keep:  { name: '진도', items: () => [
+            ['진도 백업', doExport], ['백업 불러오기', doImport], ['진도 초기화', doReset]] },
 };
 function renderMenu(id) {
   const m = MENUS[id];
@@ -1227,6 +1256,7 @@ const nextDay = () => upcoming(1)[0] || null;
 
 function renderHome() {
   drawMenu();
+  drawWxNow();
   renderProgress($('#progress'));      // 이번 주 도장·통계·업적 (첫 화면 일정판 아래)
   const nx = nextDay();
   const due = dueWords();
@@ -3966,8 +3996,7 @@ function showNewsLearn() {
       b.append(el('p', 'note', '매일 새벽 6시 30분에 어제 기사 다섯 편으로 만들어집니다.'));
       return;
     }
-    b.append(el('p', 'note', '어제 베트남 소식을 읽으면서 말도 익힙니다. ' +
-      '여기 단어는 <b>복습에 안 들어갑니다</b> — 외우는 자리가 아니라 스치는 자리입니다. 일주일치만 남습니다.'));
+    b.append(el('p', 'note', '어제 베트남 소식을 읽으면서 말도 익힙니다. 여기 단어는 <b>복습에 안 들어갑니다</b>.'));
     let last = null;
     days.forEach(d => {
       if (d.ts !== last) { b.append(el('p', 'newsday', esc(d.ts.slice(5).replace('-', '월 ') + '일'))); last = d.ts; }
@@ -4013,6 +4042,7 @@ $('#chatForm').onsubmit = e => {
   chatSend(v);
 };
 /* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
+   단추는 홈 아래가 아니라 '진도' 타일 안에 있다 — 첫 화면은 학습만 남긴다.
    200단어가 다 쌓이면 원본이 7.5KB라 압축해서 내보낸다 (10,600자 → 2,900자). */
 const b64 = u8 => { let s = ''; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
 const unb64 = t => Uint8Array.from(atob(t), c => c.charCodeAt(0));
@@ -4035,7 +4065,7 @@ async function readBackup(v) {
   throw new Error('형식 아님');
 }
 
-$('#bkExport').onclick = async () => {
+async function doExport() {
   const blob = await makeBackup();
   let copied = false;
   try { await navigator.clipboard.writeText(blob); copied = true; } catch (e) { }
@@ -4043,9 +4073,9 @@ $('#bkExport').onclick = async () => {
   prompt(`${n}일치 진도를 담았습니다 (${blob.length}자).\n` +
     (copied ? '이미 복사해 뒀습니다. ' : '') +
     '메모 앱에 붙여넣어 두세요.', blob);
-};
+}
 
-$('#bkImport').onclick = async () => {
+async function doImport() {
   const v = (prompt('백업해둔 글자를 붙여넣으세요.') || '').trim();
   if (!v) return;
   try {
@@ -4058,7 +4088,7 @@ $('#bkImport').onclick = async () => {
   } catch (e) {
     alert('백업 글자가 아니거나 중간이 잘렸습니다.\nVNSTUDY 로 시작하는 글자 전체를 복사해 주세요.');
   }
-};
+}
 
 
 /* 위 토글 두 개 — 두 값이 다 보이고 지금 켜진 쪽만 진하게 (현재 상태가 헷갈리지 않게) */
@@ -4069,13 +4099,13 @@ function drawVoiceBtn() {
   $('#voice').innerHTML = seg('여', '남', S.voice === 'f');
 }
 /* 진도 초기화 — 처음부터 다시. 되돌릴 수 없어서 두 번 묻는다 */
-$('#bkReset').onclick = () => {
+function doReset() {
   if (!confirm('배운 기록을 모두 지우고 처음부터 다시 시작할까요?')) return;
   if (!confirm('되돌릴 수 없습니다. 정말 지울까요?\n(백업해 둔 글자가 있으면 나중에 되살릴 수 있습니다)')) return;
   const nick = S.nick;
   S.done = {}; S.srs = {}; S.act = {}; S.stats = {}; S.wk = { k: weekKey(), base: snapshot() };
   S.nick = nick; save(); renderHome();
-};
+}
 
 $('#voice').onclick = () => {
   S.voice = S.voice === 'f' ? 'm' : 'f'; save(); drawVoiceBtn();
