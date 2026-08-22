@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="짜오짜오">
 <meta name="mobile-web-app-capable" content="yes">
 <title>짜오짜오 — 베트남어</title>
-<link rel="stylesheet" href="style.css?v=389c1d53">
+<link rel="stylesheet" href="style.css?v=b0421629">
 </head>
 <body>
 
@@ -38,7 +38,7 @@
       </div>
       <div class="mtile">
         <b>복습</b>
-        <div class="mbtns"><button id="goReview" class="ghost">복습</button><button id="goQuick" class="ghost">3분만</button><button id="goFlash" class="ghost">훑기</button><button id="goTalk" class="ghost">대화</button><button id="goSpeak" class="ghost">따라 말하기</button><button id="goWrite" class="ghost">손글씨</button><button id="goType" class="ghost">타이핑</button><button id="goWeekly" class="ghost" hidden>이번 주 몰아서</button></div>
+        <div class="mbtns"><button id="goReview" class="ghost">복습</button><button id="goQuick" class="ghost">3분만</button><button id="goFlash" class="ghost">간략</button><button id="goTalk" class="ghost">대화</button><button id="goSpeak" class="ghost">따라 말하기</button><button id="goWrite" class="ghost">손글씨</button><button id="goType" class="ghost">타이핑</button><button id="goWeekly" class="ghost" hidden>이번 주 몰아서</button></div>
       </div>
       <div class="mtile">
         <b>AI 선생님</b>
@@ -149,15 +149,23 @@
     <div id="chatSetup" hidden></div>
     <div id="chatLog" class="chatlog"></div>
     <form id="chatForm" class="chatin" hidden>
-      <button id="chatCam" class="ghost" type="button" title="사진을 보여주며 대화">사진</button>
-      <button id="chatMic" class="ghost" type="button" title="말로 대화">말로</button>
-      <input id="chatText" type="text" placeholder="베트남어나 한국어로…" autocomplete="off">
+      <button id="chatCam" class="ghost icon" type="button" title="사진 찍어 보여주기" aria-label="사진">
+        <svg viewBox="0 0 24 24"><path d="M4 8h3.2l1.4-2h6.8l1.4 2H20a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13.5" r="3.6"/></svg>
+      </button>
+      <button id="chatMic" class="ghost icon" type="button" title="말로 하기" aria-label="말로">
+        <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3"/></svg>
+      </button>
+      <input id="chatText" type="text" inputmode="none" placeholder="베트남어나 한국어로…" autocomplete="off">
+      <button id="chatKb" class="ghost icon" type="button" title="베트남어 자판" aria-label="자판">
+        <svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M6 13.5h.01M9.5 13.5h.01M13 13.5h.01M16.5 13.5h.01M8 16.5h8"/></svg>
+      </button>
       <button class="primary" type="submit">보내기</button>
     </form>
+    <div id="chatKeys" class="vkb chatkb" hidden></div>
   </section>
 </main>
 
-<script src="pitch.js?v=389c1d53"></script>
-<script src="app.js?v=389c1d53"></script>
+<script src="pitch.js?v=b0421629"></script>
+<script src="app.js?v=b0421629"></script>
 </body>
 </html>

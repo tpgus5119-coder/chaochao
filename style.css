@@ -654,3 +654,11 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .tchface{width:132px; height:132px; object-fit:cover; border-radius:50%;
   animation:tsway 5s ease-in-out infinite; display:block; margin:0 auto}
 .vi.mid{text-align:center; font-size:20px; margin-top:-6px}
+
+/* 대화창 아이콘 버튼 */
+.chatin .icon{padding:8px; line-height:0; flex:0 0 auto}
+.chatin .icon svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.7;
+  stroke-linecap:round; stroke-linejoin:round}
+.chatin .icon.pick{border-color:var(--ok); color:var(--fg)}
+.chatin .icon.rec{border-color:#e05561; color:#e05561}
+.chatkb{margin-top:8px}

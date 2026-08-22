@@ -564,13 +564,35 @@ async function shareCard() {
 function renderAwards() {
   const b = $('#awardBody');
   b.textContent = '';
+
+  // 지역 설정 — 배치가 정해지면 여기서 바꾼다
+  const rg = el('div', 'planrow');
+  rg.append(el('span', 'pk', '지역'), el('span', 'pv', S.region === 's' ? '남부 (호찌민)' : '북부 (하노이)'));
+  const rb = el('button', 'ghost sm', '바꾸기');
+  rb.onclick = () => { S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion(); renderAwards(); };
+  rg.append(rb);
+
+  // 이번 주 강점·약점 (주간 성적표와 같은 잣대)
+  const rep = weekReport(S.wk && S.wk.base);
+  const ok = rep.subj.filter(x => x.n >= 10);
+  const sc = el('div', 'rulecard');
+  sc.append(el('div', 'rhead', '<b>이번 주 강점과 약점</b>'));
+  if (ok.length >= 2) {
+    const best = ok.reduce((a, x) => x.pct > a.pct ? x : a);
+    const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
+    sc.append(el('div', 'rbody',
+      `<b>강점 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}<br>` +
+      `<b>약점 — ${esc(worst.name)} ${worst.pct}%</b> · ${esc(worst.tip)}`));
+  } else {
+    sc.append(el('div', 'rbody', '아직 문제 수가 적어 판정하지 않습니다. 과목마다 10문제가 넘으면 여기에 나옵니다.'));
+  }
   const got = BADGES.filter(x => x.test()).length;
   const nm = el('div', 'planrow');
   nm.append(el('span', 'pk', '이름'), el('span', 'pv', esc(S.nick || '이름없음')));
   const ch = el('button', 'ghost sm', '바꾸기');
   ch.onclick = askNick;
   nm.append(ch);
-  b.append(nm);
+  b.append(nm, rg, sc);
   const sh = el('button', 'primary big', '자랑 카드 만들기');
   sh.style.width = '100%'; sh.style.marginBottom = '14px';
   sh.onclick = shareCard;
@@ -584,7 +606,7 @@ function renderAwards() {
                el('span', 'awh', on ? '달성 ✔' : esc(bg.how)));
     b.append(row);
   });
-  show('award', '업적', true);
+  show('award', '내 정보', true);
 }
 
 function renderProgress() {
@@ -648,7 +670,7 @@ function weekWords() {
 }
 
 function renderWeekly() {
-  $('#goWeekly').hidden = weekWords().length < 10;
+  $('#goWeekly').hidden = weekWords().length < 20;   // 한 판(20개)이 찰 때만 뜬다
 }
 
 
@@ -1195,9 +1217,8 @@ function drawFlash() {
   audio.pause();
   audio.src = `audio/${voiceDir()}/n/${AIDX[w.vi]}.mp3`;
   audio.currentTime = 0;
-  audio.onended = () => setTimeout(go, 300);
   audio.play().catch(() => { });
-  const tm = setTimeout(go, 3000);       // 소리가 안 나도 멈추지 않게
+  const tm = setTimeout(go, 3000);       // 한 장에 3초 — 소리가 끝나도 남은 시간은 눈으로 본다
   c.onclick = go;                        // 급하면 눌러서 바로 다음
 }
 
@@ -1247,10 +1268,11 @@ function buildQuestions(words) {
   }).sort(() => Math.random() - .5);
 }
 
+const REV_CHUNK = 20;                          // 복습 한 판의 최대 문제 수
 function startQuiz(words, day, cap, early) {
   let src = words || dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
   if (!src.length) { renderHome(); return; }
-  if (cap) src = src.slice(0, cap);            // 짧게 끊어 하는 모드
+  if (!day) src = src.slice(0, cap || REV_CHUNK);   // 복습은 20개씩 끊어 낸다
   const list = buildQuestions(src);
   Q = { list, i: 0, ok: 0, day, total: list.length, early };
   drawQuiz();
@@ -1518,6 +1540,14 @@ function finishQuiz() {
   if (soon) {
     const days = Math.max(1, Math.round((soon - now()) / DAY));
     r.append(el('p', 'note', `다음 복습은 ${days}일 뒤입니다. 잊기 직전에 다시 꺼내야 오래 남습니다.`));
+  }
+  const left = Q.day ? 0 : dueWords().length;
+  if (left) {
+    const more = el('button', 'primary big', '이어서 ' + Math.min(left, REV_CHUNK) + '개 더');
+    more.style.marginTop = '20px'; more.style.width = '100%';
+    more.onclick = () => startQuiz(null, null);
+    r.append(more);
+    r.append(el('p', 'note', '남은 복습 ' + left + '개. 지금 끝내도 됩니다 — 답한 단어는 이미 저장됐습니다.'));
   }
   const hasDlg = Q.day && Q.day.dialog;
   const b = el('button', 'primary big', hasDlg ? '문장으로 써먹기 ›' : Q.day ? '오늘 완료' : '홈으로');
@@ -2345,9 +2375,52 @@ async function chatSend(userText) {
   }
 }
 
+/* 대화창의 베트남어 자판 — 실제 베트남 사람들이 쓰는 방식 그대로.
+   자판 자체는 우리와 같은 QWERTY이고, 부호는 '텔렉스' 규칙(aa→â, dd→đ, 성조는 낱말 뒤에)으로 얹는다.
+   여기서는 텔렉스를 외우지 않아도 되게 부호 글쇠를 따로 뒀다 — 결과는 같은 글자다. */
+function drawChatKeys() {
+  const kb = $('#chatKeys');
+  kb.textContent = '';
+  const inp = $('#chatText');
+  const put = ch => { inp.value += ch; inp.focus({ preventScroll: true }); };
+  const key = (label, fn, cls) => { const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label);
+    k.type = 'button'; k.onclick = fn; return k; };
+  ['q w e r t y u i o p', 'a s d f g h j k l', 'z x c v b n m', 'ă â ê ô ơ ư đ'].forEach(r => {
+    const row = el('div', 'vkrow');
+    r.split(' ').forEach(ch => row.append(key(ch, () => put(ch))));
+    kb.append(row);
+  });
+  const trow = el('div', 'vkrow');
+  [['ngang', ''], ['huyền', '\u0300'], ['sắc', '\u0301'], ['hỏi', '\u0309'], ['ngã', '\u0303'], ['nặng', '\u0323']]
+    .forEach(([name, mk]) => {
+      trow.append(key(toneArrow(name), () => {          // 마지막 낱말의 주모음에 부호를 얹는다
+        const parts = inp.value.split(' ');
+        const last = parts.pop();
+        if (!last) return;
+        const bare = stripTone(last);
+        parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
+        inp.value = parts.join(' ');
+        inp.focus({ preventScroll: true });
+      }, 'tonek ' + name));
+    });
+  kb.append(trow);
+  const brow = el('div', 'vkrow');
+  brow.append(key('띄어쓰기', () => put(' '), 'wide'),
+              key('⌫', () => { inp.value = inp.value.slice(0, -1); inp.focus({ preventScroll: true }); }, 'wide'),
+              key('보내기', () => $('#chatForm').requestSubmit(), 'go wide'));
+  kb.append(brow);
+}
+$('#chatKb').onclick = () => {
+  const kb = $('#chatKeys');
+  if (kb.hidden) { drawChatKeys(); kb.hidden = false; $('#chatKb').classList.add('pick'); }
+  else { kb.hidden = true; $('#chatKb').classList.remove('pick'); }
+};
+
 function startChat() {
   $('#chatLog').textContent = '';
   $('#chatForm').hidden = true;
+  $('#chatKeys').hidden = true;
+  $('#chatKb').classList.remove('pick');
   $('#tch').hidden = true;
   CH = null;
   if (!aiReady()) renderChatKey(); else renderChatModes();
@@ -2424,6 +2497,8 @@ function startTalk() {
   if (!aiReady()) { startChat(); return; }
   $('#chatLog').textContent = '';
   $('#chatForm').hidden = true;
+  $('#chatKeys').hidden = true;
+  $('#chatKb').classList.remove('pick');
   $('#tch').hidden = true;
   CH = null;
   const s = $('#chatSetup');
@@ -2464,7 +2539,7 @@ $('#chatMic').onclick = async () => {
     MIC.onstop = async () => {
       stream.getTracks().forEach(t => t.stop());
       MIC = null;
-      btn.textContent = '말로'; btn.disabled = true;
+      btn.classList.remove('rec'); btn.disabled = true;
       const url = URL.createObjectURL(new Blob(chunks));
       try {
         const b64 = await recToWav(url);
@@ -2486,7 +2561,7 @@ $('#chatMic').onclick = async () => {
       btn.disabled = false;
     };
     MIC.start();
-    btn.textContent = '멈추기';
+    btn.classList.add('rec');
     setTimeout(() => { if (MIC && MIC.state === 'recording') MIC.stop(); }, 8000);
   } catch (e) { bubble('ai err', '⚠ 마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요'); }
 };
@@ -2644,9 +2719,9 @@ function showGuide() {
     '홈의 <b>외운 단어</b>는 하루 이상 간격을 두고 두 번 이상 맞힌 단어입니다 — 이게 진짜 실력입니다.',
   ]);
   sec('④', '복습 네 가지', [
-    '<b>복습</b> — 오늘 나올 단어를 전부 문제로. 기본이고, 이것만 해도 됩니다.',
-    '<b>3분만</b> — 같은 방식으로 <b>10문제만</b>. 시간 없는 날.',
-    '<b>훑기</b> — 문제 없이 카드가 소리와 함께 <b>저절로</b> 넘어갑니다. 구경이라 효과는 약합니다.',
+    '<b>복습</b> — 오늘 꺼낼 단어를 <b>20개씩</b> 문제로. 다 풀면 남은 개수와 함께 이어서 하기가 나옵니다.',
+    '<b>3분만</b> — 같은 문제를 <b>10개만</b>. 딱 그만큼만 하고 끝내고 싶을 때.',
+    '<b>간략</b> — 문제 없이 카드가 <b>3초에 한 장씩</b> 저절로 넘어갑니다. 눈과 귀로 훑는 것이라 효과는 약합니다.',
     '<b>이번 주 몰아서</b> — 그 주에 배운 단어가 10개 넘게 쌓이면 나타납니다. 한 주치를 <b>통째로 한 바퀴</b> — 잘게 쪼개는 것보다 낫다는 실험이 있습니다.',
   ]);
   sec('⑤', '연습 도구 네 가지 — 무엇으로, 왜', [
@@ -2671,7 +2746,7 @@ function showGuide() {
   sec('⑧', '제일 중요한 한 가지', [
     '완벽한 하루보다 <b>돌아오는 것</b>이 중요합니다.',
     '<b>매일</b> 오는 것이 목표입니다. 다만 하루 빠졌다고 처음부터가 아닙니다 — 연속 기록은 세지 않습니다.',
-    '바쁜 날은 <b>훑기</b> 한 번이라도 하세요.',
+    '바쁜 날은 <b>간략</b> 한 번이라도 하세요.',
   ]);
   show('guide', '사용법', true);
 }
