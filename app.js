@@ -243,14 +243,14 @@ async function toggleRec(text, btn, box) {
     releaseMic();                      // 녹음이 끝나면 마이크를 놓는다
     if (REC.url) URL.revokeObjectURL(REC.url);
     REC.url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
-    btn.textContent = '다시 녹음';
     btn.dataset.on = '0';
+    btn.classList.remove('rec-on');
     bumpSaid();
     drawCompare(text, box);
   };
   mr.start();
-  btn.textContent = '멈추기';
   btn.dataset.on = '1';
+  btn.classList.add('rec-on');       // 이름은 그대로, 녹음 중은 색으로만 알린다
   box.textContent = '';
   setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, 8000);
 }

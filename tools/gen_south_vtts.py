@@ -3,7 +3,8 @@
 VieNeu(자기회귀 LLM)와 달리 말 길이를 먼저 정하고 찍어내는 구조라 꼬리 덧말이 없다.
 느린 버전도 시간 늘이기가 아니라 '천천히 말하게' 만들어(length_scale) 소리가 안 뭉갠다.
 검사: ① 말 덩어리 절단 ② 한 음절 성조 방향 — 실패하면 noise_scale 을 바꿔 최대 4번 다시 만든다.
-실행: <환경>/bin/python tools/gen_south_vtts.py [--voice sf|sm] [--limit N]"""
+이미 있는 파일은 건너뛴다(검수 통과분을 덮지 않기 위해). 다시 만들려면 --force.
+실행: <환경>/bin/python tools/gen_south_vtts.py [--voice sf|sm] [--limit N] [--force]"""
 import json, pathlib, sys
 import numpy as np, soundfile as sf
 
@@ -45,6 +46,11 @@ made = fail = healed = 0
 bad = []
 items = list(IDX.items())[:limit] if limit else list(IDX.items())
 for i, (text, h) in enumerate(items):
+    # 이미 있는 것은 건드리지 않는다. 다시 만들면 **검수를 통과한 음성이 검사 안 된 것으로 바뀐다.**
+    # 일부러 다시 만들려면 --force 를 준다.
+    if '--force' not in sys.argv and (R / f'audio/{voice}/n/{h}.mp3').exists() \
+       and (R / f'audio/{voice}/slow/{h}.mp3').exists():
+        continue
     tk = len(text.split())
     tone = tone_of(text) if tk == 1 else None
     ref = speech_span(R / f'audio/f/n/{h}.mp3') or 0.6
