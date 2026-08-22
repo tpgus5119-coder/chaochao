@@ -14,7 +14,8 @@
    v5: 운영자용 act:'stats' — **이름 없이 숫자만.** 누가 누구인지는 서버도 모른다.
        운영을 하려면 규모와 흐름은 알아야 하는데, 그걸 알기 위해 개인을 알 필요는 없다.
    v6: 폰 알림(웹 푸시). 보내는 것은 '깨워라' 신호뿐 — 대화 내용은 서버를 지나가지 않는다.
-       하루 한 번까지만, 사흘 조용한 사람에게만. 읽씹이 사흘 이어지면 그 사람은 쉰다.
+       **하루 한 번**, 오늘 아직 공부 안 한 사람에게만. 읽씹이 사흘 이어지면 그 사람은 쉰다
+       (그다음 앱을 한 번이라도 열면 다시 0부터 — 돌아온 사람은 다시 챙긴다).
        Settings → Variables and Secrets 에 VAPID_PRIV 와 PUSH_KEY 를 넣어야 돈다.
        재는 것: 몇 명 · 요일별 접속 · **어디까지 갔다 그만두는가(깔때기)** ·
        **얼마나 남아 있는가(코호트)** · **진짜 기억률** · **많은 사람이 틀리는 단어**.
@@ -125,7 +126,7 @@ export default {
         if (v.t === today) { skipped++; continue; }           // 하루 한 번까지만
         const me = g[uid];
         const idle = me && me.l ? Math.floor((now - Date.parse(me.l + 'T00:00:00Z')) / DAY) : 99;
-        if (idle < 3) { skipped++; continue; }                // 사흘은 조용히 둔다
+        if (idle < 1) { skipped++; continue; }                // 오늘 이미 공부한 사람은 안 부른다
         if ((v.miss || 0) >= 3) { skipped++; continue; }      // 세 번 내리 안 읽으면 그 사람은 쉰다
         try {
           const r = await webpush(v.e, env.VAPID_PRIV);

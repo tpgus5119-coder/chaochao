@@ -910,3 +910,6 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .bigmenu .mbadge{margin-left:8px; font-size:12px; font-weight:800; border-radius:11px; padding:2px 8px}
 /* 얼굴은 가운데를 보게 (오른쪽으로 치우쳐 잘리던 것) */
 .msgav img, .tchface{object-position:center 22%}
+
+/* 방 안 '문장 고르기' 단추 */
+.pickline{display:block; margin:0 auto 10px; padding:7px 14px; font-size:13px}

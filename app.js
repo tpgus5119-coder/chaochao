@@ -916,7 +916,7 @@ function renderAwards() {
     nb.onclick = async () => {
       if (S.push) { await stopPush(); renderAwards(); return; }
       const err = await askPush();
-      if (err) alert(err); else alert('알림을 켰습니다.\n메시지가 오면 폰에 뜹니다 — 하루 한 번까지만.');
+      if (err) alert(err); else alert('알림을 켰습니다.\n하루 한 번, 그날 아직 공부 안 했을 때만 옵니다.');
       renderAwards();
     };
     nr.append(nb);
@@ -1702,8 +1702,15 @@ $('#next').onclick = () => {
     finishDay(L.day);
     return;
   }
-  if ((L.day.words || []).length) { startQuiz(L.day.words, L.day); return; }
+  if ((L.day.words || []).length) {
+    const back = L.day, at = L.i;                    // 확인 문제에서 뒤로 = 보던 카드로
+    dive(() => { startLearn(back); L.i = Math.min(at, L.items.length - 1); drawCard(); });
+    startQuiz(L.day.words, L.day); return;
+  }
   if (L.day.rule) {                    // 규칙 카드가 끝나면 연습 문제로
+    const r0 = L.day.rule, at = L.i;
+    dive(() => { startRule(RULES.indexOf(r0) >= 0 ? RULES.indexOf(r0) : 'G' + GRAMMAR.indexOf(r0));
+                 L.i = Math.min(at, L.items.length - 1); drawCard(); });
     RL = { r: L.day.rule, i: 0, ok: 0 };
     drawRule();
     show('rules', L.day.rule.title, true);
@@ -1711,8 +1718,10 @@ $('#next').onclick = () => {
   }
   S.done[L.day.day] = now(); touchToday(); save();
   // 소개가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
-  if (L.day.day === 'P1') startVowel();
-  else if (L.day.day === 'P2') startTone();
+  const d0 = L.day, at0 = L.i;
+  const backToCards = () => { startLearn(d0); L.i = Math.min(at0, L.items.length - 1); drawCard(); };
+  if (L.day.day === 'P1') { dive(backToCards); startVowel(); }
+  else if (L.day.day === 'P2') { dive(backToCards); startTone(); }
   else renderHome();
 };
 
@@ -3593,6 +3602,13 @@ const PINGKO = {
   'Dạo này bạn sao rồi?': '요즘 어떻게 지내?',
   'Hôm nay bạn đi làm à?': '오늘 일하러 가?',
 };
+/* 복습할 때가 된 문장이 있으면 **그 문장으로** 말을 건다.
+   그러면 메신저가 곧 문장 복습이 된다 — 따로 '문장 복습'을 누르러 갈 필요가 없다.
+   꺼낼 문장이 없는 날에는 그냥 인사말. */
+function dueSentence() {
+  const d = dueWords().map(findItem).filter(x => x && x.sent);
+  return d.length ? d[0] : null;
+}
 function pingRooms() {
   if (!S.room) return;
   let sent = false;
@@ -3600,9 +3616,12 @@ function pingRooms() {
     if (!r.hist || !r.hist.length) return;                 // 한 번도 안 연 방은 건드리지 않는다
     if (r.unread) return;
     if (r.at && Date.now() - r.at < DAY) return;           // 하루는 기다린다
-    const list = PING[k] || PING.nf;
-    const t = list[Math.floor(Math.random() * list.length)];
-    r.hist.push({ role: 'model', parts: [{ text: 'VI: ' + t + '\nKO: ' + (PINGKO[t] || '') }] });
+    const q = dueSentence();
+    let vi, ko;
+    if (q && !sent) { vi = q.vi; ko = q.ko; }              // 복습 문장은 한 방에만
+    else { const list = PING[k] || PING.nf;
+           vi = list[Math.floor(Math.random() * list.length)]; ko = PINGKO[vi] || ''; }
+    r.hist.push({ role: 'model', parts: [{ text: 'VI: ' + vi + '\nKO: ' + ko }] });
     r.unread = (r.unread || 0) + 1;
     r.at = Date.now();
     sent = true;
@@ -3666,11 +3685,46 @@ function openRoom(rg, tc) {
     else aiBubble(t);
   });
   r.unread = 0; r.at = Date.now(); save();     // 들어오면 읽음 · 마지막 시각 기록
+  const pickBtn = el('button', 'ghost sm pickline', '배운 문장으로 말 걸기');
+  pickBtn.onclick = () => pickLine(rg, tc);
+  $('#chatLog').prepend(pickBtn);
   if (!r.hist.length) {
     CH.hist.push({ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] });
     chatSend(null);
   }
   show('chat', roomName(rg, tc), true);
+}
+
+/* 배운 문장 아무거나 골라 그 문장으로 말을 건다 — 복습 때가 안 됐어도 언제든.
+   위에는 오늘 꺼낼 때가 된 문장을 먼저 올린다. */
+function pickLine(rg, tc) {
+  const b = $('#subBody');
+  b.textContent = '';
+  const due = new Set(dueWords());
+  const all = [...allSents(), ...lessonSents()]
+    .filter(x => x.vi && S.srs[x.vi])                       // 배운 문장만
+    .sort((a, c) => (due.has(c.vi) ? 1 : 0) - (due.has(a.vi) ? 1 : 0));
+  if (!all.length) {
+    b.append(el('p', 'lede', '아직 배운 문장이 없습니다'));
+    b.append(el('p', 'note', '하루 학습을 한 세트 끝내면 그날 대화 문장이 여기에 들어옵니다.'));
+    show('sub', '문장 고르기', true); return;
+  }
+  b.append(el('p', 'note', '고른 문장으로 상대가 말을 겁니다. <b>·</b> 표가 붙은 것은 오늘 꺼낼 때가 된 문장입니다.'));
+  all.slice(0, 60).forEach(x => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, (due.has(x.vi) ? '· ' : '') + esc(x.vi)),
+               el('span', 'msub', esc(x.ko || '')));
+    btn.onclick = () => { NAV.pop(); startLineTalk(rg, tc, x); };
+    b.append(btn);
+  });
+  dive(() => openRoom(rg, tc));
+  show('sub', '문장 고르기', true);
+}
+function startLineTalk(rg, tc, x) {
+  const r = roomOf(roomKey(rg, tc));
+  r.hist.push({ role: 'model', parts: [{ text: 'VI: ' + x.vi + '\nKO: ' + (x.ko || '') }] });
+  r.at = Date.now(); r.unread = 0; save();
+  openRoom(rg, tc);
 }
 
 function renderChatModes() {
