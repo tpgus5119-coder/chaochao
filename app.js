@@ -663,7 +663,7 @@ function renderAnalysis(host, mode) {
   const rows = MORE.map(([box, map, title, note]) => [title, note, named(box, map)])
                    .filter(r => r[2].length);
   const more = el('details', 'moreana');
-  more.append(el('summary', null, '자세히 — 갈래별로 더 쪼개 보기'));
+  more.append(el('summary', null, '자세히'));
   /* 접속 — 요일별로 며칠 중 며칠 왔는가. 정답률이 아니라 '온 날 / 지난 날' 비율이라
      다른 막대와 뜻이 다르다. 그래서 표본 부족 표시(NEED)를 쓰지 않고 따로 그린다. */
   const first = Object.keys(S.act || {}).sort()[0];
@@ -679,8 +679,7 @@ function renderAnalysis(host, mode) {
     more.append(el('p', 'newsday', '요일별 출석'));
     more.append(bars(rows2));
     const tot = cnt.reduce((a, x) => a + x, 0), got = came.reduce((a, x) => a + x, 0);
-    more.append(el('p', 'dimtxt', `첫날부터 ${tot}일 중 <b>${got}일</b> 왔습니다 (${Math.round(got * 100 / tot)}%). ` +
-      '가장 낮은 요일이 곧 무너지는 자리입니다.'));
+    more.append(el('p', 'dimtxt', `첫날부터 ${tot}일 중 <b>${got}일</b> 왔습니다 (${Math.round(got * 100 / tot)}%).`));
   }
 
   const conf = Object.entries(S.stats.conf || {})
@@ -986,12 +985,35 @@ function weekReport(base) {
   });
   const d = k => (cur[k] || 0) - (b[k] || 0);
   const r = { subj, memo: d('memo'), days: d('days'), sets: d('sets'), said: d('said') };
-  // 순위 점수 — 성과(외운 단어)와 노력(문제·발화·출석)을 함께 센다
-  // 한 문제는 한 번만 센다 — 복습 문제는 '암기'에 모두 쌓이고, 기본기 드릴만 따로 센다.
-  // (전에는 과목별 문제 수를 그냥 더해서 같은 문제가 두세 번 세어졌다)
+  r.skill = skillScore();               // 순위와 같은 잣대 — 따로 놀지 않게
+
   const solved = d('qAll') + d('drill');
-  r.score = r.memo * 3 + solved + Math.round(r.said * .5) + r.days * 5;
+  r.solved = solved;
   return r;
+}
+
+/* ---------- 실력 점수 ----------
+   순위와 실력 분석이 따로 놀면 안 된다. 순위는 분석에서 나와야 한다.
+   그래서 점수를 지어내지 않고 **분석이 이미 재고 있는 두 가지만** 쓴다.
+
+     실력 점수 = 외운 단어 수 × 평균 정답률
+
+   뜻이 분명하다 — "믿을 만하게 아는 단어가 몇 개인가".
+     · 외운 단어 = 하루 이상 간격을 두고 두 번 이상 맞힌 단어 (앱이 쓰는 '진짜 실력'의 정의)
+     · 평균 정답률 = 말하기·듣기·읽기·쓰기·암기 중 **10문제를 넘긴 과목만** 평균
+   300단어를 80%로 아는 사람이 240, 100단어를 95%로 아는 사람이 95다.
+
+   뺀 것: 소리 낸 횟수 · 공부한 날 · 푼 문제 수.
+   그건 노력이지 실력이 아니고, 노력은 동아리 출석판이 이미 보여준다.
+   많이 누른 사람이 이기는 순위는 실력 순위가 아니다.
+
+   과목이 하나도 10문제를 못 넘으면 점수를 내지 않는다(0) — 못 잰 것을 재었다고 하지 않는다. */
+function skillScore() {
+  const cur = snapshot();
+  const done = SUBJ.map(x => [cur[x.all] || 0, cur[x.ok] || 0]).filter(([n]) => n >= NEED);
+  if (!done.length) return { score: 0, acc: null, memo: cur.memo, subjects: 0 };
+  const acc = Math.round(done.reduce((a, [n, ok]) => a + ok / n, 0) * 100 / done.length);
+  return { score: Math.round(cur.memo * acc / 100), acc, memo: cur.memo, subjects: done.length };
 }
 function showWeek(rep) {
   const b = $('#weekBody');
@@ -1062,10 +1084,14 @@ function askNick() {
     S.nick = v; S.wk = { k: weekKey(), base: snapshot() }; save();
     renderHome();
   };
-  const skip = el('button', 'ghost sm', '나중에');
-  skip.onclick = () => { S.nick = '이름없음'; S.wk = { k: weekKey(), base: snapshot() }; save(); renderHome(); };
-  b.append(inp, go, skip);
-  show('nick', '짜오짜오', false);
+  b.append(inp, go);
+  // 위쪽 뒤로가기로 그냥 나갈 수 있다. 처음이라 이름이 없으면 '이름없음'으로 두고 나간다.
+  const had = !!S.nick;
+  dive(() => {
+    if (!S.nick) { S.nick = '이름없음'; S.wk = { k: weekKey(), base: snapshot() }; save(); }
+    had ? renderAwards() : renderHome();
+  });
+  show('nick', '이름', true);
 }
 
 
@@ -4075,8 +4101,8 @@ function drawRank(host) {
   host.append(body);
   const again = el('button', 'ghost sm', '새로고침');
   again.onclick = () => drawRank(host);
-  cCall({ act: 'rank', uid: myUid(), score: weekReport(S.wk && S.wk.base).score,
-          memo: Object.values(S.srs).filter(v => v.lv >= 2).length, pct: myPcts() })
+  const sk = skillScore();
+  cCall({ act: 'rank', uid: myUid(), score: sk.score, memo: sk.memo, pct: myPcts() })
     .then(j => {
       body.textContent = '';
       if (j.total < 3) {
@@ -4084,11 +4110,20 @@ function drawRank(host) {
         host.append(again); return;
       }
       // 남의 등수도 이름도 보여주지 않는다 — 누구나 자기 자리만 안다
+      if (!sk.score) {
+        body.innerHTML = '아직 순위를 매길 수 없습니다.<br>' +
+          '<span class="dimtxt">과목 하나가 10문제를 넘으면 점수가 나옵니다. ' +
+          '못 잰 것을 재었다고 하지 않기 위해서입니다.</span>';
+        host.append(again); return;
+      }
       body.innerHTML =
         `<b>${j.total}명 중 ${j.rank}위</b> · 상위 ${j.pct}%` +
-        `<br><span class="dimtxt">내 점수 ${j.myScore} · 전체 평균 ${j.avgScore}</span>` +
+        `<br><span class="dimtxt">내 실력 점수 ${j.myScore} · 전체 평균 ${j.avgScore}</span>` +
         `<br><span class="dimtxt">외운 단어 나 ${j.myMemo} · 전체 평균 ${j.avgMemo}</span>` +
-        '<br><br><span class="dimtxt">점수 = 새로 외운 단어×3 + 푼 문제 + 소리 낸 횟수÷2 + 공부한 날×5' +
+        `<br><br><span class="dimtxt">실력 점수 = <b>외운 단어 ${sk.memo}개 × 평균 정답률 ${sk.acc}%</b>` +
+        `<br>= 믿을 만하게 아는 단어 ${sk.score}개. 위의 실력 분석에서 그대로 나온 값입니다` +
+        `(10문제를 넘긴 ${sk.subjects}개 과목만 셉니다).` +
+        '<br>많이 누른 사람이 아니라 잘 아는 사람이 위로 갑니다.' +
         '<br>내 등수는 나만 봅니다. 다른 사람의 등수와 이름은 아무에게도 보이지 않습니다.</span>';
       // 항목별로 전체 평균과 내 자리를 나란히
       const rows = RANKKEY.map(k => [RANKNM[k], j.avg[k], (j.myPct || {})[k]])
@@ -4149,8 +4184,7 @@ function showClub() {
   if (S.club) {
     const dots = weekDots();
     cCall({ act: 'report', id: S.club.id, days: dots.map(d => d.done ? 1 : 0),
-            memo: Object.values(S.srs).filter(v => v.lv >= 2).length,
-            score: weekReport(S.wk && S.wk.base).score })
+            memo: skillScore().memo, score: 0 })   // 동아리는 출석만 본다 — 점수는 안 쓴다
       .then(clubHome).catch(e => { if (!S.club) clubList(); else clubFail(e); });
   } else clubList();
 }
@@ -4204,9 +4238,8 @@ function clubCreate() {
       .then(j => { S.club = { id: j.id, name: j.name }; save(); showClub(); })
       .catch(clubFail);
   };
-  const back = el('button', 'ghost sm', '목록으로');
-  back.onclick = clubList;
-  b.append(inp, ap, go, back);
+  b.append(inp, ap, go);
+  dive(clubList);                       // 위쪽 뒤로가기로 목록으로 돌아간다
   show('club', '동아리 만들기', true);
   inp.focus();
 }
