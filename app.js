@@ -1446,15 +1446,15 @@ let Q = null;
    고르는 문제는 쉽고, 만들어 내는 문제는 어렵다. 어려운 쪽이 기억에 더 남는다.
    그래서 처음 만난 단어는 듣기·읽기부터, 익숙해질수록 말하기·쓰기가 많아진다. */
 const SKILLS = [
+  { k: 'say',    name: '말하기', how: '뜻만 보고 베트남어로 말하기 — AI가 듣고 채점' },
   { k: 'listen', name: '듣기', how: '소리 듣고 뜻 고르기' },
   { k: 'read',   name: '읽기', how: '글자 보고 뜻 고르기' },
-  { k: 'say',    name: '말하기', how: '뜻 보고 베트남어로 말하기 (AI 채점)' },
-  { k: 'type',   name: '쓰기', how: '소리 듣고 자판으로 쓰기' },
+  { k: 'write',  name: '쓰기', how: '소리 듣고 자판으로 · 가끔 손으로 쓰기' },
 ];
 function pickMode(w, lv) {
   const r = Math.random();
   if (w.sent) return r < .5 ? 'listen' : 'say';          // 문장은 알아듣기와 말하기 위주
-  if (lv >= 2) return r < .35 ? 'say' : r < .60 ? 'type' : r < .80 ? 'listen' : 'read';
+  if (lv >= 2) return r < .35 ? 'say' : r < .52 ? 'type' : r < .60 ? 'hand' : r < .80 ? 'listen' : 'read';
   if (lv >= 1) return r < .22 ? 'say' : r < .45 ? 'type' : r < .75 ? 'listen' : 'read';
   return r < .55 ? 'listen' : 'read';
 }
@@ -1462,7 +1462,8 @@ function buildQuestions(words, forced) {
   const pool = allWords();
   return words.map(w => {
     const lv = (S.srs[w.vi] || {}).lv || 0;
-    let mode = forced || pickMode(w, lv);
+    let mode = forced === 'write' ? (!w.sent && Math.random() < .35 ? 'hand' : 'type')
+             : forced || pickMode(w, lv);
     if ((mode === 'listen' || mode === 'type') && !AIDX[w.vi]) mode = 'read';   // 소리가 없으면 눈으로
     const others = pool.filter(x => x.vi !== w.vi).sort(() => Math.random() - .5).slice(0, 3);
     return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
@@ -1505,17 +1506,20 @@ function reviewMenu(kind) {
   $('#quizFill').style.width = '0%';
   const due = dueWords().map(findItem).filter(Boolean).filter(x => kind === 'sent' ? x.sent : !x.sent);
   b.append(el('p', 'lede', (kind === 'sent' ? '문장' : '단어') + ' 복습 — ' + due.length + '개 대기'));
-  const all = el('button', 'primary big', '전부 섞어서');
+  const all = el('button', 'primary big', '랜덤');
   all.style.width = '100%'; all.style.marginBottom = '12px';
   all.onclick = () => startQuiz(null, null, null, false, { kind });
   b.append(all);
   SKILLS.forEach(sk => {
-    if (kind === 'sent' && sk.k === 'read') return;      // 문장은 읽기 대신 듣기·말하기 중심
     const btn = el('button', 'chatmode');
     btn.innerHTML = `<b>${sk.name}</b><span>${sk.how}</span>`;
     btn.onclick = () => startQuiz(null, null, null, false, { kind, skill: sk.k });
     b.append(btn);
   });
+  const quick = el('button', 'chatmode');
+  quick.innerHTML = '<b>간략</b><span>카드가 3초에 한 장씩 — 눈과 귀로만 훑기 (채점 없음)</span>';
+  quick.onclick = () => flashRun(due.slice(0, 20), (kind === 'sent' ? '문장' : '단어') + ' 간략');
+  b.append(quick);
   show('quiz', (kind === 'sent' ? '문장' : '단어') + ' 복습', true);
 }
 
@@ -1721,8 +1725,12 @@ function drawHandQ(body, q) {
   const cv = el('canvas', 'wpad');
   cv.width = 640; cv.height = 200;
   const ctx = cv.getContext('2d');
-  const paper = () => { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
-                        ctx.strokeStyle = '#16181d'; ctx.lineWidth = 5; ctx.lineCap = ctx.lineJoin = 'round'; };
+  const paper = () => {
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.strokeStyle = '#e3e6ec'; ctx.lineWidth = 2;   // 공책처럼 옅은 줄 — 글자 수는 알려주지 않는다
+    [70, 130].forEach(y => { ctx.beginPath(); ctx.moveTo(20, y); ctx.lineTo(cv.width - 20, y); ctx.stroke(); });
+    ctx.strokeStyle = '#16181d'; ctx.lineWidth = 5; ctx.lineCap = ctx.lineJoin = 'round';
+  };
   paper();
   let drawing = false;
   const pos = e => { const r = cv.getBoundingClientRect();
@@ -2830,19 +2838,45 @@ function drawWrite() {
 
 /* AI가 손글씨를 읽고 선생님처럼 짚어준다 — 무슨 글자로 읽히는지, 빠진 부호, 조언 한 줄.
    요청이 몰려 막히면(분당 한도) 30초 세고 한 번은 스스로 다시 시도한다. */
+/* 손글씨 그림을 가볍게 만든다 — 글씨가 있는 부분만 잘라 512px로 줄인다.
+   보내는 양이 5~10배 줄어 AI 답이 눈에 띄게 빨라진다(내용은 그대로). */
+function inkCrop(cv) {
+  const x = cv.getContext('2d');
+  const d = x.getImageData(0, 0, cv.width, cv.height).data;
+  let x0 = cv.width, y0 = cv.height, x1 = 0, y1 = 0;
+  for (let y = 0; y < cv.height; y += 2) for (let px = 0; px < cv.width; px += 2) {
+    const i = (y * cv.width + px) * 4;
+    if (d[i] < 200 || d[i + 1] < 200 || d[i + 2] < 200) {
+      if (px < x0) x0 = px; if (px > x1) x1 = px;
+      if (y < y0) y0 = y; if (y > y1) y1 = y;
+    }
+  }
+  if (x1 <= x0 || y1 <= y0) return cv.toDataURL('image/png').split(',')[1];
+  const pad = 16;
+  x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad);
+  x1 = Math.min(cv.width, x1 + pad); y1 = Math.min(cv.height, y1 + pad);
+  const w = x1 - x0, h = y1 - y0, k = Math.min(1, 512 / w);
+  const o = document.createElement('canvas');
+  o.width = Math.round(w * k); o.height = Math.round(h * k);
+  const ox = o.getContext('2d');
+  ox.fillStyle = '#fff'; ox.fillRect(0, 0, o.width, o.height);
+  ox.drawImage(cv, x0, y0, w, h, 0, 0, o.width, o.height);
+  return o.toDataURL('image/jpeg', .8).split(',')[1];
+}
+
 async function aiRead(target, cv, box) {
   const note = el('div', 'cmpnote ainote', 'AI 선생님이 보는 중…');
   box.querySelector('.ainote')?.remove();
   box.append(note);
   try {
-    const b64 = cv.toDataURL('image/png').split(',')[1];
+    const b64 = inkCrop(cv);
     const t = await gCall({
       contents: [{ role: 'user', parts: [
         { text: '사진은 한국인 학습자가 손으로 쓴 베트남어다. 목표 단어는 "' + target + '".\n' +
                 '딱 세 줄로, 한국어로 답한다:\n1) 읽힘: (손글씨가 읽히는 그대로)\n' +
                 '2) 짚기: 목표와 다른 글자나 빠진·잘못 붙인 성조 부호. 없으면 "잘 썼습니다"\n' +
                 '3) 조언: 글씨 모양이나 부호 위치에 대한 한 줄 조언' },
-        { inline_data: { mime_type: 'image/png', data: b64 } }] }],
+        { inline_data: { mime_type: 'image/jpeg', data: b64 } }] }],
       generationConfig: { maxOutputTokens: 250, thinkingConfig: { thinkingBudget: 0 } }
     }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     note.innerHTML = esc(t).replace(/\n/g, '<br>') +
@@ -3234,12 +3268,10 @@ camIn.onchange = async () => {
 $('#back').onclick = renderHome;
 $('#goMe').onclick = renderAwards;
 $('#goChat').onclick = startChat;
-$('#goSpeak').onclick = startSpeak;
 $('#goVowelE').onclick = vowelEntry;
 $('#goCons').onclick = () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); };
 $('#goDaily').onclick = () => renderDays('daily');
 $('#goWork').onclick = () => renderDays('work');
-$('#goWrite').onclick = startWrite;
 $('#goNews').onclick = showNews;
 document.querySelectorAll('[data-rule]').forEach(b => b.onclick = () => startRule(+b.dataset.rule));
 document.querySelectorAll('[data-gram]').forEach(b => b.onclick = () => startRule('G' + b.dataset.gram));
@@ -3472,7 +3504,6 @@ $('#chatForm').onsubmit = e => {
 $('#goReview').onclick = () => reviewStart();
 $('#goWordRev').onclick = () => reviewMenu('word');
 $('#goSentRev').onclick = () => reviewMenu('sent');
-$('#goQuick').onclick = () => reviewStart(10);
 $('#goTone').onclick = toneEntry;
 $('#goWx').onclick = () => showWx();
 $('#goCulture').onclick = showCulture;
