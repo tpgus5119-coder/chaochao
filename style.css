@@ -861,3 +861,9 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 기사 원문 링크 */
 .srclink{display:inline-block; margin-top:14px; font-size:14px; color:var(--accent); text-decoration:none}
 .bigmenu .msub{display:block; font-size:13px; font-weight:400; color:var(--dim); margin-top:4px; line-height:1.5}
+
+/* 기능어 카드 — 그림 대신 한 줄 공식 (그림으로 못 그리는 말은 자리를 보여줘야 이해된다) */
+.formbox{border:1px dashed var(--line); border-radius:14px; padding:18px 16px; margin:6px 0 2px;
+  min-height:120px; display:flex; flex-direction:column; justify-content:center; gap:8px}
+.formf{font-size:22px; font-weight:800; line-height:1.4}
+.formex{font-size:15px; color:var(--dim)}

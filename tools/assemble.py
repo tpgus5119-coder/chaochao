@@ -45,6 +45,15 @@ out = {"meta": {"version":"v4",
 
 SCENE = {1:"👋",2:"🪪",3:"🌏",4:"😊",5:"❓",6:"🚪",7:"🔢",8:"📦",9:"🕐",10:"📅",
          11:"⏰",12:"🍜",13:"🛒",14:"🗺️",15:"👨‍👩‍👧",16:"🏥",17:"🙏",18:"👍",19:"⏳",20:"🤞"}
+# 이모지가 안 붙는 단어(추상어·기능어)는 tools/imgrest.json 이 둘로 갈라 놓았다.
+#   draw — 장면으로 그릴 수 있는 말 → 그림 자리를 준다
+#   form — 문법 기능어 → 그림 대신 한 줄 공식을 준다
+# 기능어에 억지 그림을 붙이면 배우는 사람이 그 그림을 뜻으로 오해한다.
+try:
+    REST = json.loads((R/'tools/imgrest.json').read_text())
+except Exception:
+    REST = {}
+
 for d in out["days"]:
     used = set()
     for w in d["words"]:
@@ -55,6 +64,13 @@ for d in out["days"]:
             if s in used: s += "2"
             used.add(s)
             w["img"] = f"d{d['day']:02d}-{s}.webp"
+        else:
+            r = REST.get(w["vi"])
+            if r and r.get("k") == "draw":
+                w["img"] = "x-" + slug(w["vi"]) + ".webp"
+            elif r and r.get("k") == "form":
+                w["form"] = r.get("f", "")
+                if r.get("e"): w["fex"] = r["e"]
     d["dialog"]["emoji"] = SCENE.get(d["day"], "")
     d["dialog"]["img"] = f"d{d['day']:02d}-scene.webp"
 

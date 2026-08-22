@@ -1505,6 +1505,12 @@ function drawCard() {
     // 그림을 크게 두려고 글자 요소를 줄였다.
     // 그림 → [단어 · 발음 · 느리게 · 마이크] → 뜻 → 예문(누르면 소리) → 원어민 곡선
     const p = pic(x, 'pic big'); if (p) c.append(p);
+    else if (x.form) {                       // 그림으로 못 그리는 말은 '자리'를 보여준다
+      const fb = el('div', 'formbox');
+      fb.append(el('div', 'formf', esc(x.form)));
+      if (x.fex) fb.append(el('div', 'formex', esc(x.fex)));
+      c.append(fb);
+    }
     const row = el('div', 'wrow');
     row.append(bigWord(x.vi, x.tones));
     if (x.kr_read) row.append(el('span', 'wkr', '[' + esc(x.kr_read) + ']'));
