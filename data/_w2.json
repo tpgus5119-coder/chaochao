@@ -3256,28 +3256,35 @@
    "intro": "백·백만을 알면 월급 이야기가 된다. thưởng(賞)·thuế(稅)·ngân hàng(銀行) — 전부 한자어다.",
    "words": [
     {
-     "vi": "trăm",
-     "ko": "백 (100)",
-     "kr_read": "짬",
+     "vi": "tạm ứng",
+     "ko": "가불하다·선지급",
+     "kr_read": "땀 응",
      "tones": [
       {
-       "syl": "trăm",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ]
-    },
-    {
-     "vi": "triệu",
-     "ko": "백만",
-     "kr_read": "찌에우",
-     "tones": [
-      {
-       "syl": "triệu",
+       "syl": "tạm",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
+      },
+      {
+       "syl": "ứng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "hanja": "暫應 (잠응)"
+    },
+    {
+     "vi": "khoảng",
+     "ko": "약·쯤",
+     "kr_read": "코앙",
+     "tones": [
+      {
+       "syl": "khoảng",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
       }
      ]
     },
@@ -3689,6 +3696,98 @@
         "name": "huyền",
         "ko": "낮게 내려감",
         "shape": "＼"
+       }
+      ]
+     },
+     {
+      "vi": "Lương khoảng bảy triệu một tháng.",
+      "ko": "월급은 한 달에 700만 동쯤이에요",
+      "kr_read": "르엉 코앙 바이 찌에우 못 탕",
+      "tones": [
+       {
+        "syl": "Lương",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "khoảng",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "bảy",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "triệu",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tháng.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     },
+     {
+      "vi": "Em xin tạm ứng một triệu ạ.",
+      "ko": "백만 동 가불 부탁드립니다",
+      "kr_read": "앰 씬 땀 응 못 찌에우 아",
+      "tones": [
+       {
+        "syl": "Em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xin",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tạm",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "ứng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "triệu",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "ạ.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
        }
       ]
      }

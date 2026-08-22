@@ -3098,31 +3098,31 @@
      ]
     },
     {
-     "vi": "cộng",
-     "ko": "더하다",
-     "kr_read": "꽁",
+     "vi": "nhân",
+     "ko": "곱하다",
+     "kr_read": "년",
      "tones": [
       {
-       "syl": "cộng",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ]
-    },
-    {
-     "vi": "trừ",
-     "ko": "빼다·공제하다",
-     "kr_read": "쯔",
-     "tones": [
-      {
-       "syl": "trừ",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
+       "syl": "nhân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       }
      ],
-     "hanja": "除 (제)"
+     "hanja": "乘 (승)"
+    },
+    {
+     "vi": "chia",
+     "ko": "나누다",
+     "kr_read": "찌아",
+     "tones": [
+      {
+       "syl": "chia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
     },
     {
      "vi": "tổng cộng",
@@ -3501,6 +3501,86 @@
         "name": "sắc",
         "ko": "짧게 올라감",
         "shape": "／"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ]
+     },
+     {
+      "vi": "Ngày công nhân tiền một ngày.",
+      "ko": "근무 일수 곱하기 하루 임금이에요",
+      "kr_read": "응아이 꽁 년 띠엔 못 응아이",
+      "tones": [
+       {
+        "syl": "Ngày",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tiền",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "ngày.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     },
+     {
+      "vi": "Tổng cộng chia hai nhé.",
+      "ko": "합계를 둘로 나눠요",
+      "kr_read": "똥 꽁 찌아 하이 녜",
+      "tones": [
+       {
+        "syl": "Tổng",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "cộng",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chia",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hai",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        },
        {
         "syl": "nhé.",

@@ -261,6 +261,8 @@ EN = {
  "d58-scene":"an interpreter standing between two people talking",
  "d59-scene":"a traveler with a suitcase at an airport departure board",
  "d60-scene":"a person exchanging money at a bank counter",
+ "d101-scene":"two coworkers chatting, one pointing at a factory and the other at an office building",
+ "d102-scene":"a shopper and a vendor counting banknotes and coins at a market stall",
 }
 
 d = json.load(open('data/days.json'))

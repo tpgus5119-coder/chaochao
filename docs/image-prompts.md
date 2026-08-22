@@ -1,4 +1,4 @@
-# 그림 생성 프롬프트 (전체 664장)
+# 그림 생성 프롬프트 (전체 689장)
 
 **만드는 법** — 무료 이미지 AI(빙 이미지 크리에이터 copilot.microsoft.com/images, 캔바 등)에 아래 한 줄을 통째로 붙여넣는다.
 마음에 드는 것을 골라 저장하고, **저장한 파일 이름을 왼쪽 이름으로** 바꾼다 (확장자는 png/jpg 아무거나 — 변환은 내가 한다).
@@ -128,6 +128,38 @@
 
 **d06-nha.webp** · 집 (nhà)
 > a simple house with a red roof, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 101 — 무슨 일 하세요
+
+**d101-scene.webp** · 오늘의 대화 — 무슨 일 하세요?
+> two coworkers chatting, one pointing at a factory and the other at an office building, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-nghe.webp** · 직업·기술 (nghề)
+> a worker in overalls holding tools, representing a trade or occupation, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-cong-ty.webp** · 회사 (công ty)
+> a modern office building exterior with glass windows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-nha-may.webp** · 공장 (nhà máy)
+> a factory building with a large roof and smokestack, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-cong-nhan.webp** · 노동자·직공 (công nhân)
+> a factory worker in uniform and cap standing at a sewing workstation, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-nhan-vien.webp** · 직원 (nhân viên)
+> an office employee with an ID badge standing at a desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-van-phong.webp** · 사무실 (văn phòng)
+> a simple office room with a desk, chair and computer, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-hoc.webp** · 배우다·공부하다 (học)
+> a person reading an open book and taking notes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-vat-va.webp** · 고되다·힘들다 (vất vả)
+> a tired worker wiping sweat from the forehead after hard work, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-tuyen.webp** · 뽑다·채용하다 (tuyển)
+> a hiring notice board with a megaphone, people applying for jobs, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 7 — 숫자 1~10
 
@@ -316,6 +348,41 @@
 
 **d13-dong.webp** · 동 (베트남 돈) (đồng)
 > a single shiny copper coin, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 102 — 숫자와 돈 계산
+
+**d102-scene.webp** · 오늘의 대화 — 얼마예요?
+> a shopper and a vendor counting banknotes and coins at a market stall, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-tram.webp** · 백 (100) (trăm)
+> a bundle of one hundred coins stacked, the number 100 implied by size, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-chuc.webp** · 열 (10개 묶음) (chục)
+> ten identical apples grouped together in one bundle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-trieu.webp** · 백만 (triệu)
+> a huge pile of money bags, representing a very large amount, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-gia.webp** · 가격 (giá)
+> a price tag hanging on a product, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-tinh.webp** · 계산하다 (tính)
+> hands using a calculator to add up numbers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-cong.webp** · 더하다 (cộng)
+> a large plus sign with two groups of apples joining together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-tru.webp** · 빼다 (trừ)
+> a large minus sign with apples being taken away from a group, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-bang.webp** · 같다 (=) (bằng)
+> a large equals sign between two identical groups of apples, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-tien-le.webp** · 잔돈 (tiền lẻ)
+> a small handful of coins and small banknotes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d102-tien-thua.webp** · 거스름돈 (tiền thừa)
+> a cashier handing change back to a customer's open hand, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 14 — 어디에 있어요
 
@@ -507,12 +574,6 @@
 **d21-scene.webp** · 오늘의 대화 — 첫 출근 인사
 > a new worker greeting colleagues at a garment factory entrance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
-**d21-cong-ty.webp** · 회사 (công ty)
-> a modern office building exterior with glass windows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d21-nha-may.webp** · 공장 (nhà máy)
-> a factory building with a large roof and smokestack, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
 **d21-xuong.webp** · 작업장·현장 (xưởng)
 > the interior of a garment workshop with rows of sewing machines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
@@ -522,11 +583,208 @@
 **d21-quan-ly.webp** · 관리자 (quản lý)
 > a manager in a dress shirt overseeing a garment factory floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
-**d21-cong-nhan.webp** · 작업자·공원 (công nhân)
-> a factory worker in uniform and cap standing at a sewing workstation, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+**d21-giam-doc.webp** · 사장·대표 (giám đốc)
+> a company director in a suit standing in front of an office, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d21-nhan-su.webp** · 인사·인사 담당 (nhân sự)
+> an HR staff member holding employee files and folders, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d21-bao-ve.webp** · 경비원 (bảo vệ)
+> a security guard in uniform standing at a factory gate, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d21-dong-nghiep.webp** · 동료 (đồng nghiệp)
 > two smiling coworkers in matching factory uniforms standing side by side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 26 — 수량과 납기
+
+**d26-scene.webp** · 오늘의 대화 — 물량 확인
+> workers counting stacked boxes of clothes in a warehouse, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d26-hang.webp** · 물건·물량 (hàng)
+> stacks of cardboard boxes on a pallet in a warehouse, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d26-giao.webp** · 넘기다·납품하다 (giao)
+> a worker loading cardboard boxes into a delivery truck, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 27 — 안전
+
+**d27-scene.webp** · 오늘의 대화 — 위험 확인
+> a supervisor showing safety gloves and a mask to a worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d27-tai-nan.webp** · 사고 (tai nạn)
+> a worker slipping and falling beside fallen boxes on a factory floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d27-bao-ho.webp** · 보호구·보호 (bảo hộ)
+> a safety helmet, goggles and reflective vest displayed together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d27-gang-tay.webp** · 장갑 (găng tay)
+> a pair of work gloves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d27-khau-trang.webp** · 마스크 (khẩu trang)
+> a white face mask, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 28 — 지시 알아듣기
+
+**d28-scene.webp** · 오늘의 대화 — 맞는지 물어보기
+> a senior worker demonstrating a task while a trainee watches, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 29 — 기계와 전기
+
+**d29-scene.webp** · 오늘의 대화 — 기계 고장
+> a worker looking at a stopped conveyor machine with warning light, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d29-nut.webp** · 버튼 (nút)
+> a large round push button on a machine control panel, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d29-bam.webp** · 누르다 (bấm)
+> a finger pressing a button on a machine control panel, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d29-day.webp** · 줄·선 (dây)
+> a coiled electrical cable with a plug, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d29-bang-chuyen.webp** · 컨베이어 (băng chuyền)
+> a conveyor belt carrying folded garments through a factory, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d29-dao.webp** · 칼 (dao)
+> a fabric cutting knife on a work table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d29-ban-ui.webp** · 다리미 (bàn ủi)
+> a clothes iron standing upright on an ironing board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d29-den.webp** · 등·전등 (đèn)
+> a work lamp shining over a sewing table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d29-dung-cu.webp** · 공구·도구 (dụng cụ)
+> an open toolbox with a wrench, screwdriver and pliers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 30 — 근태와 보고
+
+**d30-scene.webp** · 오늘의 대화 — 휴가 말하기
+> a worker politely talking to a team leader at an office desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d30-di-lam.webp** · 출근하다 (đi làm)
+> a worker with a shoulder bag walking toward a factory gate in the morning, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d30-hop.webp** · 회의하다 (họp)
+> several workers sitting around a table in a meeting, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d30-nghi-phep.webp** · 휴가 내다 (nghỉ phép)
+> a person relaxing in a beach chair under a palm tree, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d30-luong.webp** · 월급 (lương)
+> an open envelope with plain banknotes inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 35 — 세고 적기
+
+**d35-scene.webp** · 오늘의 대화 — 세서 기록하기
+> a worker counting boxes and writing numbers on a clipboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d35-dem.webp** · 세다 (đếm)
+> a worker pointing a finger while counting a stack of folded shirts, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d35-can.webp** · 무게를 달다 (cân)
+> a worker weighing a cardboard box on a platform scale, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d35-ghi.webp** · 기록하다·적다 (ghi)
+> a worker writing with a pen on a clipboard beside stacked boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d35-the.webp** · 카드·사원증 (thẻ)
+> an employee ID badge with a blank photo area hanging on a lanyard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d35-ky.webp** · 서명하다 (ký)
+> a hand with a pen signing a scribbled signature at the bottom of a paper, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d35-kho.webp** · 창고 (kho)
+> a warehouse interior with tall shelves stacked with cardboard boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d35-xuat.webp** · 내보내다·출고하다 (xuất)
+> workers loading cardboard boxes onto a delivery truck, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 37 — 식당과 기숙사
+
+**d37-scene.webp** · 오늘의 대화 — 식당 찾기
+> workers eating lunch together at a factory canteen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d37-nha-an.webp** · 구내식당 (nhà ăn)
+> a factory canteen with long tables, benches and food trays, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d37-com-trua.webp** · 점심밥 (cơm trưa)
+> a lunch tray with a bowl of rice, soup and side dishes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d37-ky-tuc-xa.webp** · 기숙사 (ký túc xá)
+> a dormitory room with two bunk beds, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d37-dong-phuc.webp** · 유니폼·작업복 (đồng phục)
+> a factory work uniform shirt and cap on a hanger, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d37-giay.webp** · 신발 (giày)
+> a pair of sneakers on the floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d37-dep.webp** · 슬리퍼 (dép)
+> a pair of rubber slippers on the floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d37-thang-may.webp** · 엘리베이터 (thang máy)
+> an elevator with open doors in a building hallway, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 38 — 큰 숫자와 월급
+
+**d38-scene.webp** · 오늘의 대화 — 월급 이야기
+> a person receiving a pay envelope and smiling at a bank book, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d38-tam-ung.webp** · 가불하다·선지급 (tạm ứng)
+> a hand receiving an envelope of money in advance from an employer, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d38-khoang.webp** · 약·쯤 (khoảng)
+> a scale with a wavy approximate mark, showing about how much, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d38-ngan-hang.webp** · 은행 (ngân hàng)
+> a bank building facade with columns and glass doors, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 39 — 공장 안 길찾기
+
+**d39-scene.webp** · 오늘의 대화 — 창고 찾아가기
+> a worker pointing directions in a factory corridor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d39-loi-di.webp** · 통로 (lối đi)
+> a clear walkway between factory shelves marked with painted floor lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d39-cua.webp** · 문 (cửa)
+> a closed door with a handle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d39-cau-thang.webp** · 계단 (cầu thang)
+> a staircase with a handrail, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d39-ben-phai.webp** · 오른쪽 (bên phải)
+> a large bold arrow pointing to the right, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d39-ben-trai.webp** · 왼쪽 (bên trái)
+> a large bold arrow pointing to the left, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d39-len.webp** · 오르다·올라가다 (lên)
+> a person walking up a staircase with an upward arrow beside them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d39-xuong.webp** · 내리다·내려가다 (xuống)
+> a person walking down a staircase with a downward arrow beside them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 40 — 전화와 연락
+
+**d40-scene.webp** · 오늘의 대화 — 전화 받기
+> a worker talking on the phone while noting a message, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d40-goi-dien.webp** · 전화를 걸다 (gọi điện)
+> a person holding a smartphone to their ear making a call, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d40-nghe-may.webp** · 전화를 받다 (nghe máy)
+> a hand reaching to pick up a ringing smartphone with sound lines around it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d40-tin-nhan.webp** · 문자 메시지 (tin nhắn)
+> a smartphone screen showing empty chat message bubbles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d40-cho.webp** · 잠깐 기다리다 (chờ)
+> a person holding up one open palm in a wait gesture, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d40-sac.webp** · 충전하다 (sạc)
+> a smartphone plugged into a charging cable, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 22 — 재료와 도구
 
@@ -746,191 +1004,6 @@
 
 **d36-xep.webp** · 개켜 쌓다·정리하다 (xếp)
 > hands folding a shirt on a table next to a neat stack of folded shirts, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 26 — 수량과 납기
-
-**d26-scene.webp** · 오늘의 대화 — 물량 확인
-> workers counting stacked boxes of clothes in a warehouse, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d26-hang.webp** · 물건·물량 (hàng)
-> stacks of cardboard boxes on a pallet in a warehouse, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d26-giao.webp** · 넘기다·납품하다 (giao)
-> a worker loading cardboard boxes into a delivery truck, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 27 — 안전
-
-**d27-scene.webp** · 오늘의 대화 — 위험 확인
-> a supervisor showing safety gloves and a mask to a worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d27-tai-nan.webp** · 사고 (tai nạn)
-> a worker slipping and falling beside fallen boxes on a factory floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d27-bao-ho.webp** · 보호구·보호 (bảo hộ)
-> a safety helmet, goggles and reflective vest displayed together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d27-gang-tay.webp** · 장갑 (găng tay)
-> a pair of work gloves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d27-khau-trang.webp** · 마스크 (khẩu trang)
-> a white face mask, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 28 — 지시 알아듣기
-
-**d28-scene.webp** · 오늘의 대화 — 맞는지 물어보기
-> a senior worker demonstrating a task while a trainee watches, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 29 — 기계와 전기
-
-**d29-scene.webp** · 오늘의 대화 — 기계 고장
-> a worker looking at a stopped conveyor machine with warning light, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d29-nut.webp** · 버튼 (nút)
-> a large round push button on a machine control panel, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d29-bam.webp** · 누르다 (bấm)
-> a finger pressing a button on a machine control panel, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d29-day.webp** · 줄·선 (dây)
-> a coiled electrical cable with a plug, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d29-bang-chuyen.webp** · 컨베이어 (băng chuyền)
-> a conveyor belt carrying folded garments through a factory, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d29-dao.webp** · 칼 (dao)
-> a fabric cutting knife on a work table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d29-ban-ui.webp** · 다리미 (bàn ủi)
-> a clothes iron standing upright on an ironing board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d29-den.webp** · 등·전등 (đèn)
-> a work lamp shining over a sewing table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d29-dung-cu.webp** · 공구·도구 (dụng cụ)
-> an open toolbox with a wrench, screwdriver and pliers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 30 — 근태와 보고
-
-**d30-scene.webp** · 오늘의 대화 — 휴가 말하기
-> a worker politely talking to a team leader at an office desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d30-di-lam.webp** · 출근하다 (đi làm)
-> a worker with a shoulder bag walking toward a factory gate in the morning, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d30-hop.webp** · 회의하다 (họp)
-> several workers sitting around a table in a meeting, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d30-nghi-phep.webp** · 휴가 내다 (nghỉ phép)
-> a person relaxing in a beach chair under a palm tree, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d30-luong.webp** · 월급 (lương)
-> an open envelope with plain banknotes inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 35 — 세고 적기
-
-**d35-scene.webp** · 오늘의 대화 — 세서 기록하기
-> a worker counting boxes and writing numbers on a clipboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d35-dem.webp** · 세다 (đếm)
-> a worker pointing a finger while counting a stack of folded shirts, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d35-can.webp** · 무게를 달다 (cân)
-> a worker weighing a cardboard box on a platform scale, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d35-ghi.webp** · 기록하다·적다 (ghi)
-> a worker writing with a pen on a clipboard beside stacked boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d35-the.webp** · 카드·사원증 (thẻ)
-> an employee ID badge with a blank photo area hanging on a lanyard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d35-ky.webp** · 서명하다 (ký)
-> a hand with a pen signing a scribbled signature at the bottom of a paper, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d35-kho.webp** · 창고 (kho)
-> a warehouse interior with tall shelves stacked with cardboard boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d35-xuat.webp** · 내보내다·출고하다 (xuất)
-> workers loading cardboard boxes onto a delivery truck, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 37 — 식당과 기숙사
-
-**d37-scene.webp** · 오늘의 대화 — 식당 찾기
-> workers eating lunch together at a factory canteen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d37-nha-an.webp** · 구내식당 (nhà ăn)
-> a factory canteen with long tables, benches and food trays, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d37-com-trua.webp** · 점심밥 (cơm trưa)
-> a lunch tray with a bowl of rice, soup and side dishes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d37-ky-tuc-xa.webp** · 기숙사 (ký túc xá)
-> a dormitory room with two bunk beds, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d37-dong-phuc.webp** · 유니폼·작업복 (đồng phục)
-> a factory work uniform shirt and cap on a hanger, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d37-giay.webp** · 신발 (giày)
-> a pair of sneakers on the floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d37-dep.webp** · 슬리퍼 (dép)
-> a pair of rubber slippers on the floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d37-thang-may.webp** · 엘리베이터 (thang máy)
-> an elevator with open doors in a building hallway, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 38 — 큰 숫자와 월급
-
-**d38-scene.webp** · 오늘의 대화 — 월급 이야기
-> a person receiving a pay envelope and smiling at a bank book, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d38-ngan-hang.webp** · 은행 (ngân hàng)
-> a bank building facade with columns and glass doors, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 39 — 공장 안 길찾기
-
-**d39-scene.webp** · 오늘의 대화 — 창고 찾아가기
-> a worker pointing directions in a factory corridor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d39-loi-di.webp** · 통로 (lối đi)
-> a clear walkway between factory shelves marked with painted floor lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d39-cua.webp** · 문 (cửa)
-> a closed door with a handle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d39-cau-thang.webp** · 계단 (cầu thang)
-> a staircase with a handrail, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d39-ben-phai.webp** · 오른쪽 (bên phải)
-> a large bold arrow pointing to the right, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d39-ben-trai.webp** · 왼쪽 (bên trái)
-> a large bold arrow pointing to the left, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d39-len.webp** · 오르다·올라가다 (lên)
-> a person walking up a staircase with an upward arrow beside them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d39-xuong.webp** · 내리다·내려가다 (xuống)
-> a person walking down a staircase with a downward arrow beside them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 40 — 전화와 연락
-
-**d40-scene.webp** · 오늘의 대화 — 전화 받기
-> a worker talking on the phone while noting a message, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d40-goi-dien.webp** · 전화를 걸다 (gọi điện)
-> a person holding a smartphone to their ear making a call, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d40-nghe-may.webp** · 전화를 받다 (nghe máy)
-> a hand reaching to pick up a ringing smartphone with sound lines around it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d40-tin-nhan.webp** · 문자 메시지 (tin nhắn)
-> a smartphone screen showing empty chat message bubbles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d40-cho.webp** · 잠깐 기다리다 (chờ)
-> a person holding up one open palm in a wait gesture, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d40-sac.webp** · 충전하다 (sạc)
-> a smartphone plugged into a charging cable, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 41 — 날씨
 
@@ -1523,6 +1596,12 @@
 **d67-lam-them.webp** · 추가 근무하다 (làm thêm)
 > a worker sewing at a machine at night with a moon visible through the window, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
+**d67-nhan.webp** · 곱하다 (nhân)
+> a large multiplication sign with rows and columns of apples, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d67-chia.webp** · 나누다 (chia)
+> a large division sign with apples split into equal groups, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
 **d67-chuyen-khoan.webp** · 계좌 이체하다 (chuyển khoản)
 > a hand holding a smartphone with coins flying from it toward a bank building, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
@@ -1552,7 +1631,7 @@
 **d68-ban-sao.webp** · 사본 (bản sao)
 > a photocopier machine producing an identical copy of a sheet of paper, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
-## Day 69 — 병원 행정
+## Day 69 — 건강검진과 응급
 
 **d69-scene.webp** · 오늘의 대화 — 검진 물어보기
 > a nurse guiding a worker at a company clinic, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1886,6 +1965,124 @@
 **d85-bieu-quyet.webp** · 표결하다 (biểu quyết)
 > several people around a meeting table raising their hands to vote, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
+## Day 96 — 지게차와 안전거리
+
+**d96-scene.webp** · 오늘의 대화 — 지게차 조심
+> a forklift reversing with warning light while workers step aside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d96-xe-nang.webp** · 지게차 (xe nâng)
+> a yellow forklift lifting a pallet of boxes in a warehouse, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d96-nang.webp** · 들어올리다 (nâng)
+> a worker lifting a heavy box upward with both hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d96-ha.webp** · 내리다 (hạ)
+> a worker bending down to set a cardboard box on the warehouse floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d96-lui.webp** · 후진하다 (lùi)
+> a forklift driver looking back over his shoulder while backing up, with motion lines behind the forklift, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d96-dung.webp** · 서다 (đứng)
+> a worker standing upright with arms at his sides, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d96-nang2.webp** · 무겁다 (nặng)
+> a worker straining and sweating while trying to lift a very heavy box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d96-nhe.webp** · 가볍다 (nhẹ)
+> a smiling worker easily holding a small light box with one hand, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 97 — 입고와 출고
+
+**d97-scene.webp** · 오늘의 대화 — 입고 처리
+> warehouse shelves with labeled bins and a receiving slip, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d97-nhap-kho.webp** · 입고하다 (nhập kho)
+> a worker wheeling a hand truck of boxes in through a warehouse door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d97-xuat-kho.webp** · 출고하다 (xuất kho)
+> a worker carrying boxes out of a warehouse door toward a waiting delivery truck, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d97-ke.webp** · 선반·랙 (kệ)
+> tall metal warehouse shelving racks holding cardboard boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d97-sap-xep.webp** · 정리해 배치하다 (sắp xếp)
+> a worker neatly arranging boxes into straight rows on a shelf, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d97-trong.webp** · 비다 (trống)
+> an open cardboard box that is completely empty inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d97-day.webp** · 가득 차다 (đầy)
+> a cardboard box filled to the top with contents overflowing, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 98 — 재고 조사
+
+**d98-scene.webp** · 오늘의 대화 — 장부 맞추기
+> a stocktake with a clipboard comparing ledger and shelves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d98-kiem-ke.webp** · 재고 조사하다 (kiểm kê)
+> a worker counting stacked boxes on shelves while marking a checklist on a clipboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d98-so-sach.webp** · 장부 (sổ sách)
+> a thick open ledger book with ruled blank lines on a desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d98-lan.webp** · 섞이다 (lẫn)
+> a box in which red parts and blue parts are jumbled together in a mix, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d98-cat.webp** · 간수하다·넣어 두다 (cất)
+> a worker putting a tool away into a storage cabinet, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 99 — 상차와 하차
+
+**d99-scene.webp** · 오늘의 대화 — 상차 지시
+> workers loading tied boxes onto a truck with a crane nearby, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-boc.webp** · 싣다·부리다 (bốc)
+> workers lifting cardboard boxes up onto the open bed of a truck, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-do.webp** · (짐을) 내리다 (dỡ)
+> a worker carrying boxes down off a truck bed onto the ground, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-xe-tai.webp** · 트럭 (xe tải)
+> a box delivery truck with an open cargo bed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-container.webp** · 컨테이너 (container)
+> a large corrugated metal shipping container, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-buoc.webp** · 묶다 (buộc)
+> hands tying a rope tightly around a stack of boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-che.webp** · 가리다·덮다 (che)
+> a worker pulling a tarp cover over goods on a truck bed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-boc2.webp** · 싸다·감싸다 (bọc)
+> hands wrapping an item in bubble wrap, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-cau.webp** · 크레인 (cẩu)
+> a tall crane lifting a shipping container, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d99-chat-len.webp** · 쌓아 올리다 (chất lên)
+> a worker stacking boxes one on top of another into a tall pile, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 100 — 인수인계와 클레임
+
+**d100-scene.webp** · 오늘의 대화 — 파손 클레임
+> a courier and receiver signing a delivery report over a damaged box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d100-giao-nhan.webp** · 인수인계·배송 수령 (giao nhận)
+> a delivery driver handing a package to a receiving worker at a warehouse door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d100-nguoi-nhan.webp** · 수령인 (người nhận)
+> a person with open arms receiving a delivered package, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d100-nguoi-gui.webp** · 발송인 (người gửi)
+> a person handing a parcel over a counter to send it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d100-hu-hong.webp** · 파손되다 (hư hỏng)
+> a dented, crushed cardboard parcel with a torn corner, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d100-chup-lai.webp** · 찍어 두다 (chụp lại)
+> a worker photographing a damaged box with a smartphone, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
 ## Day 86 — 공정 흐름
 
 **d86-scene.webp** · 오늘의 대화 — 공정 순서 설명
@@ -2079,121 +2276,3 @@
 
 **d95-ky-nhan.webp** · 수령 서명하다 (ký nhận)
 > a worker signing a receipt clipboard while a delivery man hands over a box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 96 — 지게차와 안전거리
-
-**d96-scene.webp** · 오늘의 대화 — 지게차 조심
-> a forklift reversing with warning light while workers step aside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d96-xe-nang.webp** · 지게차 (xe nâng)
-> a yellow forklift lifting a pallet of boxes in a warehouse, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d96-nang.webp** · 들어올리다 (nâng)
-> a worker lifting a heavy box upward with both hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d96-ha.webp** · 내리다 (hạ)
-> a worker bending down to set a cardboard box on the warehouse floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d96-lui.webp** · 후진하다 (lùi)
-> a forklift driver looking back over his shoulder while backing up, with motion lines behind the forklift, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d96-dung.webp** · 서다 (đứng)
-> a worker standing upright with arms at his sides, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d96-nang2.webp** · 무겁다 (nặng)
-> a worker straining and sweating while trying to lift a very heavy box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d96-nhe.webp** · 가볍다 (nhẹ)
-> a smiling worker easily holding a small light box with one hand, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 97 — 입고와 출고
-
-**d97-scene.webp** · 오늘의 대화 — 입고 처리
-> warehouse shelves with labeled bins and a receiving slip, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d97-nhap-kho.webp** · 입고하다 (nhập kho)
-> a worker wheeling a hand truck of boxes in through a warehouse door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d97-xuat-kho.webp** · 출고하다 (xuất kho)
-> a worker carrying boxes out of a warehouse door toward a waiting delivery truck, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d97-ke.webp** · 선반·랙 (kệ)
-> tall metal warehouse shelving racks holding cardboard boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d97-sap-xep.webp** · 정리해 배치하다 (sắp xếp)
-> a worker neatly arranging boxes into straight rows on a shelf, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d97-trong.webp** · 비다 (trống)
-> an open cardboard box that is completely empty inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d97-day.webp** · 가득 차다 (đầy)
-> a cardboard box filled to the top with contents overflowing, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 98 — 재고 조사
-
-**d98-scene.webp** · 오늘의 대화 — 장부 맞추기
-> a stocktake with a clipboard comparing ledger and shelves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d98-kiem-ke.webp** · 재고 조사하다 (kiểm kê)
-> a worker counting stacked boxes on shelves while marking a checklist on a clipboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d98-so-sach.webp** · 장부 (sổ sách)
-> a thick open ledger book with ruled blank lines on a desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d98-lan.webp** · 섞이다 (lẫn)
-> a box in which red parts and blue parts are jumbled together in a mix, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d98-cat.webp** · 간수하다·넣어 두다 (cất)
-> a worker putting a tool away into a storage cabinet, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 99 — 상차와 하차
-
-**d99-scene.webp** · 오늘의 대화 — 상차 지시
-> workers loading tied boxes onto a truck with a crane nearby, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-boc.webp** · 싣다·부리다 (bốc)
-> workers lifting cardboard boxes up onto the open bed of a truck, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-do.webp** · (짐을) 내리다 (dỡ)
-> a worker carrying boxes down off a truck bed onto the ground, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-xe-tai.webp** · 트럭 (xe tải)
-> a box delivery truck with an open cargo bed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-container.webp** · 컨테이너 (container)
-> a large corrugated metal shipping container, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-buoc.webp** · 묶다 (buộc)
-> hands tying a rope tightly around a stack of boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-che.webp** · 가리다·덮다 (che)
-> a worker pulling a tarp cover over goods on a truck bed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-boc2.webp** · 싸다·감싸다 (bọc)
-> hands wrapping an item in bubble wrap, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-cau.webp** · 크레인 (cẩu)
-> a tall crane lifting a shipping container, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d99-chat-len.webp** · 쌓아 올리다 (chất lên)
-> a worker stacking boxes one on top of another into a tall pile, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 100 — 인수인계와 클레임
-
-**d100-scene.webp** · 오늘의 대화 — 파손 클레임
-> a courier and receiver signing a delivery report over a damaged box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d100-giao-nhan.webp** · 인수인계·배송 수령 (giao nhận)
-> a delivery driver handing a package to a receiving worker at a warehouse door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d100-nguoi-nhan.webp** · 수령인 (người nhận)
-> a person with open arms receiving a delivered package, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d100-nguoi-gui.webp** · 발송인 (người gửi)
-> a person handing a parcel over a counter to send it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d100-hu-hong.webp** · 파손되다 (hư hỏng)
-> a dented, crushed cardboard parcel with a torn corner, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-**d100-chup-lai.webp** · 찍어 두다 (chụp lại)
-> a worker photographing a damaged box with a smartphone, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters

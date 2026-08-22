@@ -13,7 +13,7 @@ from visuals import attach
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days = []
-for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6']:
+for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6','_b7']:
     days += json.loads((R/f'data/{f}.json').read_text())['days']
 
 # 직무 재배열 — 취업 여정 순서: ①공장 기초(공통, 첫 주에 모두 필요) ②자기 업종 기초
@@ -27,7 +27,8 @@ WORK_ORDER = (W_BASE + W_SEW + list(range(51,61))  # 전자·사무
               + list(range(81,86)) + list(range(96,101))   # 관리자·창고 (공통)
               + list(range(86,96)))                # 봉제·전자 심화
 by = {d["day"]: d for d in days}
-days = ([by[k] for k in range(1, 21)]
+DAILY_HEAD = list(range(1, 7)) + [101] + list(range(7, 14)) + [102] + list(range(14, 21))
+days = ([by[k] for k in DAILY_HEAD]
         + [by[k] for k in W_BASE] + [by[k] for k in W_SEW]
         + [by[k] for k in range(41, 51)] + [by[k] for k in range(51, 71)]
         + [by[k] for k in range(71, 81)]
@@ -66,12 +67,10 @@ CAT = {**{k:'공통' for k in [21,26,27,28,29,30,35,37,38,39,40]},
 for d in out["days"]:
     dd = d["day"]
     if dd in CAT: d["cat"] = CAT[dd]
-    if 41 <= dd <= 50: d["n"] = dd - 20          # 일상 Day 21~30
-    if 71 <= dd <= 80: d["n"] = dd - 40          # 일상 Day 31~40
-wn = 0
+dn = wn = 0
 for d in out["days"]:
-    if d.get("track") == "work":
-        wn += 1; d["n"] = wn                     # 직무 N = 새 순서의 차례
+    if d.get("track") == "work": wn += 1; d["n"] = wn
+    else: dn += 1; d["n"] = dn                   # Day N = 나온 차례 (삽입해도 이어진다)
 
 seen = collections.defaultdict(list)
 for d in out["days"]:

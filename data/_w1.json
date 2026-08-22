@@ -6,45 +6,6 @@
    "intro": "공장 말은 한자어가 많아 우리에게 유리하다 — quản lý(관리), công nhân(공인) 처럼 소리도 닮았다.",
    "words": [
     {
-     "vi": "công ty",
-     "ko": "회사",
-     "kr_read": "꽁 띠",
-     "tones": [
-      {
-       "syl": "công",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "ty",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "hanja": "公司 (공사)"
-    },
-    {
-     "vi": "nhà máy",
-     "ko": "공장",
-     "kr_read": "냐 마이",
-     "tones": [
-      {
-       "syl": "nhà",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "máy",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ]
-    },
-    {
      "vi": "xưởng",
      "ko": "작업장·현장",
      "kr_read": "쓰엉",
@@ -111,24 +72,64 @@
      "hanja": "管理 (관리)"
     },
     {
-     "vi": "công nhân",
-     "ko": "작업자·공원",
-     "kr_read": "꽁 년",
+     "vi": "giám đốc",
+     "ko": "사장·대표",
+     "kr_read": "잠 독",
      "tones": [
       {
-       "syl": "công",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
+       "syl": "giám",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
       },
+      {
+       "syl": "đốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "hanja": "監督 (감독)"
+    },
+    {
+     "vi": "nhân sự",
+     "ko": "인사·인사 담당",
+     "kr_read": "년 스",
+     "tones": [
       {
        "syl": "nhân",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
+      },
+      {
+       "syl": "sự",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
       }
      ],
-     "hanja": "工人 (공인)"
+     "hanja": "人事 (인사)"
+    },
+    {
+     "vi": "bảo vệ",
+     "ko": "경비원",
+     "kr_read": "바오 베",
+     "tones": [
+      {
+       "syl": "bảo",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "vệ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "hanja": "保衛 (보위)"
     },
     {
      "vi": "đồng nghiệp",
@@ -569,6 +570,122 @@
         "name": "huyền",
         "ko": "낮게 내려감",
         "shape": "＼"
+       }
+      ]
+     },
+     {
+      "vi": "Giám đốc và nhân sự ở văn phòng.",
+      "ko": "사장님과 인사 담당은 사무실에 있어요",
+      "kr_read": "잠 독 바 년 스 어 반 퐁",
+      "tones": [
+       {
+        "syl": "Giám",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đốc",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "và",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nhân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sự",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "văn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "phòng.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ]
+     },
+     {
+      "vi": "Bảo vệ ở nhà máy, chào bảo vệ nhé.",
+      "ko": "경비원은 공장에 있어요, 인사해요",
+      "kr_read": "바오 베 어 냐 마이 짜오 바오 베 녜",
+      "tones": [
+       {
+        "syl": "Bảo",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "vệ",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "máy,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chào",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bảo",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "vệ",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
        }
       ]
      }
