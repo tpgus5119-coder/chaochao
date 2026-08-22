@@ -662,3 +662,12 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .chatin .icon.pick{border-color:var(--ok); color:var(--fg)}
 .chatin .icon.rec{border-color:#e05561; color:#e05561}
 .chatkb{margin-top:8px}
+
+/* 헤더 프로필 아이콘 */
+#goMe{padding:7px; line-height:0}
+#goMe svg{width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round}
+
+/* 대화 화면 선택 상자 — 파란 강조 없이 */
+.pickbox{display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+  border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:12px}
+.rolepick .pick{border-color:var(--ok); color:var(--fg); font-weight:700}

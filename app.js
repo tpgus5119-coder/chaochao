@@ -662,9 +662,7 @@ function weekWords() {
   return learned.map(v => allWords().find(w => w.vi === v)).filter(Boolean);
 }
 
-function renderWeekly() {
-  $('#goWeekly').hidden = weekWords().length < 20;   // 한 판(20개)이 찰 때만 뜬다
-}
+function renderWeekly() { }
 
 
 /* ---------- 주간 성적표 ----------
@@ -2441,30 +2439,28 @@ function renderChatModes() {
   const s = $('#chatSetup');
   s.hidden = false; s.textContent = '';
 
-  const tp = el('div', 'chatmode on');
-  tp.innerHTML = '<b>선생님 고르기</b>';
+  const tp = el('div', 'pickbox');
   const gp = el('div', 'rolepick');
-  [['f', 'Cô Linh (여)'], ['m', 'Thầy Nam (남)']].forEach(([k, txt]) => {
-    const bb = el('button', 'ghost sm' + ((S.tch || 'f') === k ? ' pick' : ''), txt);
+  [['f', '여'], ['m', '남']].forEach(([k, txt]) => {
+    const on = (S.tch || 'f') === k;
+    const bb = el('button', 'ghost sm' + (on ? ' pick' : ''), (on ? '✓ ' : '') + txt);
     bb.onclick = () => { S.tch = k; save(); renderChatModes(); };
     gp.append(bb);
   });
-  tp.append(gp);
   const rp = el('div', 'rolepick');
-  [['n', '북부 말'], ['s', '남부 말']].forEach(([k, txt]) => {
-    const bb = el('button', 'ghost sm' + ((S.region === 's' ? 's' : 'n') === k ? ' pick' : ''), txt);
+  [['n', '북부'], ['s', '남부']].forEach(([k, txt]) => {
+    const on = (S.region === 's' ? 's' : 'n') === k;
+    const bb = el('button', 'ghost sm' + (on ? ' pick' : ''), (on ? '✓ ' : '') + txt);
     bb.onclick = () => { S.region = k; save(); drawRegion(); renderChatModes(); };
     rp.append(bb);
   });
-  tp.append(rp);
+  tp.append(gp, rp);
   s.append(tp);
 
   const m2 = el('button', 'chatmode');
-  m2.innerHTML = '<b>대화 시작</b><span>아주 쉬운 베트남어로 아무 얘기나 — 눈앞의 것을 찍어 보여줘도 됩니다</span>';
+  m2.innerHTML = '<b>대화 시작</b>';
   m2.onclick = () => beginChat('free');
   s.append(m2);
-  s.append(el('p', 'note', 'AI는 연습 상대이지 선생님이 아닙니다 — 이상한 문장이 오면 그냥 넘어가세요.<br>' +
-    '오늘 배운 문장으로 하는 역할극은 <b>복습 → 대화</b>에 있습니다.'));
   if (S.gkey) {
     const del = el('button', 'ghost sm', '키 지우기');
     del.onclick = () => { if (confirm('저장된 키를 지울까요?')) { delete S.gkey; save(); startChat(); } };
@@ -2584,6 +2580,7 @@ camIn.onchange = async () => {
 
 /* ---------- 시작 ---------- */
 $('#back').onclick = renderHome;
+$('#goMe').onclick = renderAwards;
 $('#goChat').onclick = startChat;
 $('#goSpeak').onclick = startSpeak;
 $('#goVowelE').onclick = vowelEntry;
@@ -2705,7 +2702,8 @@ function showGuide() {
     '<b>복습</b> — 오늘 꺼낼 단어를 <b>20개씩</b> 문제로. 다 풀면 남은 개수와 함께 이어서 하기가 나옵니다.',
     '<b>3분만</b> — 같은 문제를 <b>10개만</b>. 딱 그만큼만 하고 끝내고 싶을 때.',
     '<b>간략</b> — 문제 없이 카드가 <b>3초에 한 장씩</b> 저절로 넘어갑니다. 눈과 귀로 훑는 것이라 효과는 약합니다.',
-    '<b>이번 주 몰아서</b> — 그 주에 배운 단어가 10개 넘게 쌓이면 나타납니다. 한 주치를 <b>통째로 한 바퀴</b> — 잘게 쪼개는 것보다 낫다는 실험이 있습니다.',
+    '셋 다 <b>같은 창고</b>에서 꺼냅니다 — 오늘 것만이 아니라 <b>60일 전 단어도</b> 때가 되면 나옵니다.',
+    '다만 <b>간략</b>은 채점이 없어 다음 복습 날짜가 <b>안 밀립니다</b>. 그래서 효과가 약합니다.',
   ]);
   sec('⑤', '연습 도구 네 가지 — 무엇으로, 왜', [
     '모두 <b>복습할 때가 된 단어</b>를 먼저, 모자라면 최근 배운 단어로 채웁니다.',
@@ -2828,12 +2826,6 @@ $('#goWx').onclick = () => showWx();
 $('#goCulture').onclick = showCulture;
 $('#goGuide').onclick = showGuide;
 $('#goTalk').onclick = startTalk;
-$('#goWeekly').onclick = () => {
-  const ws = weekWords();
-  if (!ws.length) return;
-  startQuiz(ws, null);          // 통째로 한 바퀴. 쪼개지 않는다.
-  $('#title').textContent = '주간 총복습';
-};
 /* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
    200단어가 다 쌓이면 원본이 7.5KB라 압축해서 내보낸다 (10,600자 → 2,900자). */
 const b64 = u8 => { let s = ''; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
