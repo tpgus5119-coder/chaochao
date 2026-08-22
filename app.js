@@ -490,11 +490,70 @@ const BADGES = [
   { icon: '💬', name: 'AI와 첫 대화',  how: 'AI 대화 한 번 시작',            test: () => (S.stats.chat || 0) >= 1 }
 ];
 
+/* 자랑 카드 — 내 진행 상황을 그림 한 장으로 만들어 단톡방에 공유한다.
+   목표를 남에게 보이면 지속률이 올라간다(공개 선언 효과). 서버 없이 폰 안에서 그린다. */
+async function shareCard() {
+  const c = document.createElement('canvas');
+  c.width = 720; c.height = 900;
+  const x = c.getContext('2d');
+  x.fillStyle = '#0f1115'; x.fillRect(0, 0, 720, 900);
+  x.strokeStyle = '#2a3040'; x.lineWidth = 2; x.strokeRect(24, 24, 672, 852);
+  x.textAlign = 'center';
+  x.fillStyle = '#7aa2ff'; x.font = 'bold 62px sans-serif';
+  x.fillText('짜오짜오', 360, 128);
+  x.fillStyle = '#8b93a7'; x.font = '26px sans-serif';
+  x.fillText(ymd() + ' · 베트남어 공부 중', 360, 176);
+  const dots = weekDots();
+  '월화수목금토일'.split('').forEach((lb, i) => {
+    const cx = 360 + (i - 3) * 88;
+    x.beginPath(); x.arc(cx, 278, 30, 0, 7);
+    x.fillStyle = dots[i].done ? '#2f9e63' : '#1a1f2b'; x.fill();
+    x.strokeStyle = dots[i].today ? '#7aa2ff' : '#2a3040'; x.lineWidth = 3; x.stroke();
+    x.fillStyle = dots[i].done ? '#fff' : '#5a6273'; x.font = '25px sans-serif';
+    x.fillText(lb, cx, 287);
+  });
+  x.fillStyle = '#e7ebf4'; x.font = 'bold 34px sans-serif';
+  x.fillText(`이번 주 ${dots.filter(d => d.done).length} / 5일`, 360, 372);
+  [['배운 단어', Object.keys(S.srs).length], ['끝낸 세트', doneCount()], ['소리 낸 횟수', S.stats.said || 0]]
+    .forEach(([k, v], i) => {
+      const cx = 360 + (i - 1) * 212;
+      x.fillStyle = '#7aa2ff'; x.font = 'bold 50px sans-serif'; x.fillText(String(v), cx, 490);
+      x.fillStyle = '#8b93a7'; x.font = '23px sans-serif'; x.fillText(k, cx, 530);
+    });
+  const got = BADGES.filter(g => g.test());
+  x.fillStyle = '#e7ebf4'; x.font = 'bold 30px sans-serif';
+  x.fillText(got.length ? '최근 업적' : '이제 시작했습니다', 360, 630);
+  if (got.length) {
+    const g = got[got.length - 1];
+    x.font = '62px sans-serif'; x.fillText(g.icon, 360, 712);
+    x.fillStyle = '#7aa2ff'; x.font = 'bold 32px sans-serif'; x.fillText(g.name, 360, 764);
+    x.fillStyle = '#8b93a7'; x.font = '23px sans-serif';
+    x.fillText(`업적 ${got.length} / ${BADGES.length}`, 360, 802);
+  }
+  x.fillStyle = '#5a6273'; x.font = '23px sans-serif';
+  x.fillText('tpgus5119-coder.github.io/chaochao', 360, 858);
+
+  const blob = await new Promise(r => c.toBlob(r, 'image/png'));
+  const file = new File([blob], 'chaochao-card.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file] }); return; } catch (e) { }
+  }
+  // 공유 창이 없는 기기: 카드를 띄워서 길게 눌러 저장하게 한다
+  $('#awardBody .cardimg')?.remove();
+  const im = new Image();
+  im.src = c.toDataURL('image/png'); im.className = 'cardimg'; im.alt = '자랑 카드';
+  $('#awardBody').prepend(im);
+}
+
 /* 업적 전체 화면 — 홈에는 딴 것 몇 개만 보이고, 나머지는 여기서 */
 function renderAwards() {
   const b = $('#awardBody');
   b.textContent = '';
   const got = BADGES.filter(x => x.test()).length;
+  const sh = el('button', 'primary big', '자랑 카드 만들기 — 단톡방에 공유');
+  sh.style.width = '100%'; sh.style.marginBottom = '14px';
+  sh.onclick = shareCard;
+  b.append(sh);
   b.append(el('p', 'lede', `딴 업적 <b>${got}</b> / ${BADGES.length}`));
   BADGES.forEach(bg => {
     const on = bg.test();
@@ -629,7 +688,7 @@ function renderHome() {
   $('#goReview').textContent = due.length ? '전부 ' + due.length : '전부';
 
   // 학습 과정 타일 밑줄 — 두 트랙의 진행 상황
-  show('home', '씬짜오100', false);
+  show('home', '짜오짜오', false);
 }
 
 /* 학습 과정 목록 — 트랙별로 보여준다 */
@@ -1770,15 +1829,51 @@ function bubble(cls, text) {
 }
 
 /* 기기에 베트남어 음성이 깔려 있을 때만 AI 문장을 소리로 들려줄 수 있다 */
-function viVoice() {
+function viVoices() {
   const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
-  return vs.find(v => (v.lang || '').toLowerCase().startsWith('vi')) || null;
+  return vs.filter(v => (v.lang || '').toLowerCase().startsWith('vi'));
 }
+const viVoice = () => viVoices()[0] || null;
 function speakVi(t) {
   const u = new SpeechSynthesisUtterance(t);
-  const v = viVoice(); if (v) u.voice = v;
+  const vs = viVoices();
+  const male = (S.tch || 'f') === 'm';
+  if (vs.length >= 2) u.voice = vs[male ? 1 : 0];          // 목소리가 둘이면 갈라 쓴다
+  else if (vs.length) { u.voice = vs[0]; u.pitch = male ? .7 : 1.1; }  // 하나뿐이면 높낮이로
   u.lang = 'vi-VN'; u.rate = .85;
+  u.onstart = () => $('#tch').classList.add('talk');       // 말하는 동안만 입이 움직인다
+  u.onend = u.onerror = () => $('#tch').classList.remove('talk');
   speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+
+/* ---------- AI 선생님 캐릭터 ----------
+   화면 속 선생님은 성적을 올리는 장치가 아니라 계속 쓰게 만드는 장치다
+   (있기만 해도 동기가 오른다 — 페르소나 효과). 학습 효과 근거는 '말할 때
+   움직일 때'만 있어서(체화 원리), 소리가 나는 동안만 입을 움직인다.
+   그림 파일 없이 SVG라 몇 KB고, 이름으로 cô(여 선생님)·thầy(남 선생님) 호칭도 가르친다. */
+function tchSvg() {
+  const f = (S.tch || 'f') === 'f';
+  const hair = f
+    ? '<path d="M52 58 Q54 24 100 22 Q146 24 148 58 L148 112 Q140 118 136 106 L136 66 Q118 46 100 48 Q82 46 64 66 L64 106 Q60 118 52 112 Z" fill="#2d2438"/>'
+    : '<path d="M54 62 Q52 26 100 24 Q148 26 146 62 L140 56 Q118 40 100 42 Q82 40 60 56 Z" fill="#33291f"/>';
+  return `<svg viewBox="0 0 200 150" class="tchsvg">
+    <ellipse cx="100" cy="152" rx="56" ry="26" fill="${f ? '#c94f6d' : '#3f6ea5'}"/>
+    <path d="M74 134 Q100 120 126 134 L126 150 L74 150 Z" fill="${f ? '#e0607e' : '#4a7cb5'}"/>
+    <circle cx="100" cy="74" r="42" fill="#f2c9a0"/>
+    ${hair}
+    <path d="M76 64 Q83 60 90 64" stroke="#241f1a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M110 64 Q117 60 124 64" stroke="#241f1a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <g class="teye"><circle cx="84" cy="76" r="4.6" fill="#241f1a"/><circle cx="116" cy="76" r="4.6" fill="#241f1a"/></g>
+    <circle cx="72" cy="90" r="6" fill="#eba07c" opacity=".55"/>
+    <circle cx="128" cy="90" r="6" fill="#eba07c" opacity=".55"/>
+    <ellipse class="tmouth" cx="100" cy="98" rx="9" ry="4" fill="#a4543f"/>
+  </svg>`;
+}
+function drawTch() {
+  const p = $('#tch');
+  p.hidden = false;
+  p.innerHTML = tchSvg() +
+    `<span class="tchname">${(S.tch || 'f') === 'm' ? 'Thầy Nam · 터이 남 (남 선생님)' : 'Cô Linh · 꼬 린 (여 선생님)'}</span>`;
 }
 
 function aiBubble(text) {
@@ -1794,7 +1889,8 @@ function aiBubble(text) {
   if (m.KO) b.append(el('div', 'cko', esc(m.KO)));
   if (m.FIX) b.append(el('div', 'cfix', '✎ ' + esc(m.FIX)));
   if (viVoice()) {
-    const bt = el('button', 'ghost sm', '듣기');
+    speakVi(m.VI);                     // 선생님이 바로 읽어준다 (입도 같이 움직인다)
+    const bt = el('button', 'ghost sm', '다시 듣기');
     bt.onclick = () => speakVi(m.VI);
     b.append(bt);
   }
@@ -1834,6 +1930,7 @@ async function chatSend(userText) {
 function startChat() {
   $('#chatLog').textContent = '';
   $('#chatForm').hidden = true;
+  $('#tch').hidden = true;
   CH = null;
   if (!aiReady()) renderChatKey(); else renderChatModes();
   show('chat', 'AI 대화', true);
@@ -1863,6 +1960,19 @@ function renderChatKey() {
 function renderChatModes() {
   const s = $('#chatSetup');
   s.hidden = false; s.textContent = '';
+
+  // 선생님 고르기 — 캐릭터와 목소리가 같이 바뀐다
+  const tp = el('div', 'chatmode on');
+  tp.innerHTML = '<b>선생님 고르기</b>';
+  const gp = el('div', 'rolepick');
+  [['f', 'Cô Linh (여)'], ['m', 'Thầy Nam (남)']].forEach(([k, txt]) => {
+    const bb = el('button', 'ghost sm' + ((S.tch || 'f') === k ? ' pick' : ''), txt);
+    bb.onclick = () => { S.tch = k; save(); renderChatModes(); };
+    gp.append(bb);
+  });
+  tp.append(gp);
+  s.append(tp);
+
   const t = todayDay();
   const m1 = el('div', 'chatmode on');
   m1.innerHTML = '<b>오늘의 대화 이어가기</b><span>' + esc(label(t) + ' · ' + (t.dialog?.title || '')) + ' — 배운 문장으로 역할극</span>';
@@ -1876,7 +1986,10 @@ function renderChatModes() {
   const m2 = el('button', 'chatmode');
   m2.innerHTML = '<b>자유 대화</b><span>아주 쉬운 베트남어로 아무 얘기나</span>';
   m2.onclick = () => beginChat('free');
-  s.append(m1, m2);
+  const m3 = el('button', 'chatmode');
+  m3.innerHTML = '<b>사진 보며 대화</b><span>지금 눈앞의 것을 찍어서 그걸로 대화</span>';
+  m3.onclick = () => beginChat('photo');
+  s.append(m1, m2, m3);
   s.append(el('p', 'note', 'AI는 연습 상대이지 선생님이 아닙니다 — 이상한 문장이 오면 그냥 넘어가세요.<br>' +
     '문장 소리는 폰에 베트남어 음성이 있을 때만 나옵니다 (안드로이드는 대부분 있음).'));
   if (S.gkey) {                          // 개인 키를 쓰는 사람에게만 보인다
@@ -1890,6 +2003,12 @@ function beginChat(mode, myRole) {
   S.stats.chat = (S.stats.chat || 0) + 1; touchToday(); save();
   $('#chatSetup').hidden = true;
   $('#chatForm').hidden = false;
+  drawTch();
+  if (mode === 'photo') {              // 첫 사진이 오면 그때 대화가 시작된다
+    CH = { mode, sys: chatSys('free'), hist: [] };
+    camIn.click();
+    return;
+  }
   CH = { mode, sys: chatSys(mode, myRole), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
   chatSend(null);
 }

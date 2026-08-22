@@ -547,3 +547,19 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
   border-radius:12px; padding:12px 14px; margin-bottom:10px}
 .newsrow b{display:block; font-size:15px; line-height:1.45; margin-bottom:4px}
 .newsrow span{font-size:12px; color:var(--dim)}
+
+/* AI 선생님 캐릭터 — 몸은 천천히 흔들, 눈은 깜빡, 입은 말할 때만 */
+.tch{text-align:center; padding:6px 0 2px}
+.tchsvg{width:150px; height:112px; animation:tsway 5s ease-in-out infinite; transform-origin:50% 100%}
+.tchsvg .teye{animation:tblink 4.2s infinite; transform-box:fill-box; transform-origin:center}
+.tch.talk .tmouth{animation:ttalk .22s infinite alternate; transform-box:fill-box; transform-origin:center}
+.tchname{display:block; font-size:12px; color:var(--dim); margin-top:-2px}
+@keyframes tsway{0%,100%{transform:rotate(-1.4deg)} 50%{transform:rotate(1.4deg) translateY(1px)}}
+@keyframes tblink{0%,90%,100%{transform:scaleY(1)} 94%{transform:scaleY(.08)}}
+@keyframes ttalk{from{transform:scaleY(.6)} to{transform:scaleY(2.2)}}
+
+/* 선생님 선택 표시 */
+.rolepick .pick{border-color:var(--ok); color:var(--fg)}
+
+/* 자랑 카드 (공유 창이 없는 기기용 미리보기) */
+.cardimg{width:100%; max-width:420px; display:block; margin:0 auto 14px; border-radius:14px}
