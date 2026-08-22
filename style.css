@@ -520,3 +520,4 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
   border:1px solid var(--line); border-radius:6px; padding:1px 5px; color:var(--dim);
   vertical-align:1px;
 }
+.mtile.wide{grid-column:1 / -1}

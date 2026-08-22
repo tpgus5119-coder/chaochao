@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="베트남어">
 <meta name="mobile-web-app-capable" content="yes">
 <title>베트남어 스터디</title>
-<link rel="stylesheet" href="style.css?v=c9087f2f">
+<link rel="stylesheet" href="style.css?v=79a4ac82">
 </head>
 <body>
 
@@ -29,6 +29,10 @@
     <button id="heroGo" class="hero" hidden></button>
     <div id="progress" class="progress"></div>
     <div class="menu">
+      <div class="mtile wide">
+        <b>학습 과정</b><span id="courseNote"></span>
+        <div class="mbtns"><button id="goDaily" class="primary">일상 과정</button><button id="goWork" class="primary">직무 과정</button></div>
+      </div>
       <div class="mtile">
         <b>성조 훈련</b><span id="toneWhy">소리만 듣고 6성조 구별</span>
         <div class="mbtns"><button id="goTone" class="primary">듣기</button><button id="goMark" class="ghost">부호 쓰기</button></div>
@@ -54,7 +58,6 @@
         <div class="mbtns"><button id="goRules" class="primary">보기</button></div>
       </div>
     </div>
-    <ol id="dayList" class="days"></ol>
     <p class="foot">진도는 이 기기에만 저장됩니다. 신규는 다 같이, 복습은 각자.</p>
     <div class="backup">
       <button id="bkExport" class="ghost">진도 백업</button>
@@ -96,6 +99,11 @@
     <div id="markBody"></div>
   </section>
 
+  <!-- 학습 과정 목록 -->
+  <section id="course" class="view" hidden>
+    <ol id="dayList" class="days"></ol>
+  </section>
+
   <!-- 따라 말하기 -->
   <section id="speak" class="view" hidden>
     <div id="speakBody"></div>
@@ -120,7 +128,7 @@
   </section>
 </main>
 
-<script src="pitch.js?v=c9087f2f"></script>
-<script src="app.js?v=c9087f2f"></script>
+<script src="pitch.js?v=79a4ac82"></script>
+<script src="app.js?v=79a4ac82"></script>
 </body>
 </html>

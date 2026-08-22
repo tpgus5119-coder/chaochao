@@ -461,7 +461,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'mark', 'rules', 'chat', 'write', 'type', 'speak'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'mark', 'rules', 'chat', 'write', 'type', 'speak', 'course'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -597,27 +597,29 @@ const GROUPS = [
   [d => d.track === 'work' && d.day <= 35, '직무 3 · 박음질·재단·기록'],
   [d => d.track === 'work' && d.day <= 40, '직무 4 · 포장·회사생활·연락'],
   [d => d.track === 'work' && d.day <= 55, '직무 5 · 전자·디스플레이'],
-  [d => d.track === 'work', '직무 6 · 사무·서비스 (시티잡)']
+  [d => d.track === 'work' && d.day <= 60, '직무 6 · 사무·서비스 (시티잡)'],
+  [d => d.track === 'work' && d.day <= 65, '직무 7 · 직장 문화'],
+  [d => d.track === 'work', '직무 8 · 계약·행정']
 ];
+
+/* 오늘 할 세트 — 준비 먼저, 그다음 일상·직무 번갈아 추천 */
+function nextDay() {
+  const prep = ALL.find(d => typeof d.day === 'string' && !S.done[d.day]);
+  if (prep) return prep;
+  const daily = ALL.find(d => typeof d.day === 'number' && !d.track && !S.done[d.day]);
+  const work = ALL.find(d => d.track === 'work' && !S.done[d.day]);
+  if (daily && work) {
+    const nd = ALL.filter(d => typeof d.day === 'number' && !d.track && S.done[d.day]).length;
+    const nw = ALL.filter(d => d.track === 'work' && S.done[d.day]).length;
+    return nd <= nw ? daily : work;
+  }
+  return daily || work;
+}
 
 function renderHome() {
   renderProgress();
   renderWeekly();
-  // '오늘 할 일' 단추 하나를 맨 위에 크게 — 성공한 언어 앱들의 공통 구조.
-  // 준비를 마치면 일상 세트와 직무 세트를 하루 하나씩 번갈아 추천한다.
-  // (둘 다 하고 싶은 사람은 목록에서 직접 열면 된다 — 막지 않는다)
-  const nx = (() => {
-    const prep = ALL.find(d => typeof d.day === 'string' && !S.done[d.day]);
-    if (prep) return prep;
-    const daily = ALL.find(d => typeof d.day === 'number' && !d.track && !S.done[d.day]);
-    const work = ALL.find(d => d.track === 'work' && !S.done[d.day]);
-    if (daily && work) {
-      const nd = ALL.filter(d => typeof d.day === 'number' && !d.track && S.done[d.day]).length;
-      const nw = ALL.filter(d => d.track === 'work' && S.done[d.day]).length;
-      return nd <= nw ? daily : work;
-    }
-    return daily || work;
-  })();
+  const nx = nextDay();
   const hero = $('#heroGo');
   hero.hidden = !nx;
   if (nx) {
@@ -635,16 +637,30 @@ function renderHome() {
   const due = dueWords();
   $('#revNote').textContent = due.length ? due.length + '개가 복습할 때가 됐어요' : '지금은 밀린 복습이 없어요';
 
+  // 학습 과정 타일 밑줄 — 두 트랙의 진행 상황
+  const nd = ALL.filter(d => typeof d.day === 'number' && !d.track && S.done[d.day]).length;
+  const nw = ALL.filter(d => d.track === 'work' && S.done[d.day]).length;
+  const td = ALL.filter(d => typeof d.day === 'number' && !d.track).length;
+  const tw = ALL.filter(d => d.track === 'work').length;
+  $('#courseNote').textContent = `일상 ${nd}/${td} · 직무 ${nw}/${tw} — 하루 한 세트, 번갈아`;
+  show('home', '베트남어 스터디', false);
+}
+
+/* 학습 과정 목록 — 트랙별로 보여준다 */
+function renderDays(track) {
+  const nx = nextDay();
   const list = $('#dayList');
   list.textContent = '';
+  const days = ALL.filter(d => track === 'work' ? d.track === 'work'
+    : (typeof d.day === 'string' || !d.track));
   let g = -1;
-  ALL.forEach(d => {
+  days.forEach(d => {
     const gi = GROUPS.findIndex(([f]) => f(d));
     if (gi !== g) { g = gi; list.append(el('li', 'grp', esc(GROUPS[gi][1]))); }
     const done = !!S.done[d.day];
     const b = el('button');
     b.dataset.done = done ? '1' : '0';
-    if (nx && d.day === nx.day) b.dataset.next = '1';
+    if (nx && d.day === nx.day && (d.track || '') === (nx.track || '')) b.dataset.next = '1';
     const n = (d.words || []).length;
     const nm = el('span', 'nm', esc(d.theme));
     if (d.cat) nm.append(el('i', 'catchip', esc(d.cat)));
@@ -652,12 +668,12 @@ function renderHome() {
       el('span', 'num', esc(label(d))),
       nm,
       el('span', 'st', done ? '완료 ✔'
-        : (n ? n + '단어 + 대화 2문장' : '소리만 · 외울 것 없음'))
+        : (n ? n + '단어 + 대화' : '소리만'))
     );
     b.onclick = () => startLearn(d);
     const li = el('li'); li.append(b); list.append(li);
   });
-  show('home', '베트남어 스터디', false);
+  show('course', track === 'work' ? '직무 과정' : '일상 과정', true);
 }
 
 /* ---------- 학습 ---------- */
@@ -1695,6 +1711,8 @@ function beginChat(mode, myRole) {
 $('#back').onclick = renderHome;
 $('#goChat').onclick = startChat;
 $('#goSpeak').onclick = startSpeak;
+$('#goDaily').onclick = () => renderDays('daily');
+$('#goWork').onclick = () => renderDays('work');
 $('#goDict').onclick = startDict;
 $('#goWrite').onclick = startWrite;
 $('#goType').onclick = startType;

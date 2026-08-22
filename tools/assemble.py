@@ -13,7 +13,7 @@ from visuals import attach
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days = []
-for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3']:
+for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4']:
     days += json.loads((R/f'data/{f}.json').read_text())['days']
 
 out = {"meta": {"version":"v4",
@@ -39,7 +39,8 @@ for d in out["days"]:
 
 CAT = {**{k:'공통' for k in [21,25,26,27,28,29,30,35,36,37,38,39,40]},
        **{k:'봉제' for k in [22,23,24,31,32,33,34]},
-       **{k:'전자' for k in range(51,56)}, **{k:'사무' for k in range(56,61)}}
+       **{k:'전자' for k in range(51,56)}, **{k:'사무' for k in range(56,61)},
+       **{k:'공통' for k in range(61,71)}}
 for d in out["days"]:
     dd = d["day"]
     if dd in CAT: d["cat"] = CAT[dd]

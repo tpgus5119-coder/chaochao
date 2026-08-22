@@ -701,3 +701,53 @@
 
 **d60-scene.webp** · 오늘의 대화 — 환전하기
 > a person exchanging money at a bank counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 61 — 복장과 태도
+
+**d61-scene.webp** · 오늘의 대화 — 작업복 입기
+> a worker in uniform with id badge checking a rules board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 62 — 동료와 지내기
+
+**d62-scene.webp** · 오늘의 대화 — 부탁하기
+> two coworkers helping each other carry a box, smiling, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 63 — 회식
+
+**d63-scene.webp** · 오늘의 대화 — 회식 자리에서
+> coworkers toasting glasses at a company dinner party, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 64 — 휴가와 근태 심화
+
+**d64-scene.webp** · 오늘의 대화 — 휴가 신청
+> a worker politely asking a manager while holding a calendar, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 65 — 실수했을 때
+
+**d65-scene.webp** · 오늘의 대화 — 사과하기
+> a worker bowing slightly in apology, supervisor waving it off kindly, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 66 — 근로계약
+
+**d66-scene.webp** · 오늘의 대화 — 계약서 읽기
+> two people reviewing a contract document with a pen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 67 — 급여명세 읽기
+
+**d67-scene.webp** · 오늘의 대화 — 명세서 확인
+> a person reading a payslip with a calculator, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 68 — 비자와 체류
+
+**d68-scene.webp** · 오늘의 대화 — 허가증 연장
+> a person at an immigration counter with passport and photos, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 69 — 병원 행정
+
+**d69-scene.webp** · 오늘의 대화 — 검진 물어보기
+> a nurse guiding a worker at a company clinic, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 70 — 잃어버렸을 때
+
+**d70-scene.webp** · 오늘의 대화 — 지갑을 잃었다
+> a person reporting a lost wallet at a police desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
