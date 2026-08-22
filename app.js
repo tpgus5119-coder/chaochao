@@ -1438,36 +1438,85 @@ function finishDay(d) {
 /* ---------- 퀴즈 ---------- */
 let Q = null;
 
-function buildQuestions(words) {
+/* 네 가지 힘을 각각 시험한다 — 무엇을 넣고(입력) 무엇을 내놓는가(출력)로 갈린다.
+     듣기 = 소리 듣고 → 뜻 고르기        (귀로 알아듣는 힘)
+     읽기 = 글자 보고 → 뜻 고르기        (눈으로 알아보는 힘)
+     말하기 = 한국어 뜻 보고 → 입으로 말하기 (AI가 받아 적어 채점)
+     쓰기 = 소리 듣고 → 자판으로 쓰기     (듣기와 철자를 한 번에)
+   고르는 문제는 쉽고, 만들어 내는 문제는 어렵다. 어려운 쪽이 기억에 더 남는다.
+   그래서 처음 만난 단어는 듣기·읽기부터, 익숙해질수록 말하기·쓰기가 많아진다. */
+const SKILLS = [
+  { k: 'listen', name: '듣기', how: '소리 듣고 뜻 고르기' },
+  { k: 'read',   name: '읽기', how: '글자 보고 뜻 고르기' },
+  { k: 'say',    name: '말하기', how: '뜻 보고 베트남어로 말하기 (AI 채점)' },
+  { k: 'type',   name: '쓰기', how: '소리 듣고 자판으로 쓰기' },
+];
+function pickMode(w, lv) {
+  const r = Math.random();
+  if (w.sent) return r < .5 ? 'listen' : 'say';          // 문장은 알아듣기와 말하기 위주
+  if (lv >= 2) return r < .35 ? 'say' : r < .60 ? 'type' : r < .80 ? 'listen' : 'read';
+  if (lv >= 1) return r < .22 ? 'say' : r < .45 ? 'type' : r < .75 ? 'listen' : 'read';
+  return r < .55 ? 'listen' : 'read';
+}
+function buildQuestions(words, forced) {
   const pool = allWords();
   return words.map(w => {
-    if (w.sent) return { w, mode: 'say', opts: [] };      // 문장은 입으로 낸다
     const lv = (S.srs[w.vi] || {}).lv || 0;
-    // 익숙해진 단어(2단계 이상)는 보기 없이 직접 떠올리게 한다.
-    // 받아쓰기(dict)는 1단계부터 가끔 섞는다 — 듣기·철자·성조를 한 번에 시험한다.
-    // 한 판 안에 눈·귀·입·손을 섞는다 — 같은 단어를 여러 방식으로 꺼낼수록 오래 남는다.
-    // 처음 만난 단어는 쉬운 것(듣기·뜻)부터, 익숙해질수록 어려운 것(떠올리기·쓰기)으로 간다.
-    const r = Math.random();
-    const mode = lv >= 2
-      ? (r < .25 && AIDX[w.vi] ? 'dict' : r < .40 ? 'say' : r < .52 ? 'type' : r < .62 ? 'hand' : 'recall')
-      : lv >= 1
-        ? (r < .25 && AIDX[w.vi] ? 'dict' : r < .38 ? 'say' : r < .48 ? 'type'
-           : r < .74 && AIDX[w.vi] ? 'listen' : 'meaning')
-        : (r < .5 && AIDX[w.vi] ? 'listen' : 'meaning');
+    let mode = forced || pickMode(w, lv);
+    if ((mode === 'listen' || mode === 'type') && !AIDX[w.vi]) mode = 'read';   // 소리가 없으면 눈으로
     const others = pool.filter(x => x.vi !== w.vi).sort(() => Math.random() - .5).slice(0, 3);
     return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
   }).sort(() => Math.random() - .5);
 }
 
 const REV_CHUNK = 20;                          // 복습 한 판의 최대 문제 수
-function startQuiz(words, day, cap, early) {
+function startQuiz(words, day, cap, early, opt) {
+  const o = opt || {};
   let src = words || dueWords().map(findItem).filter(Boolean);
-  if (!src.length) { renderHome(); return; }
+  if (o.kind === 'word') src = src.filter(x => !x.sent);
+  if (o.kind === 'sent') src = src.filter(x => x.sent);
+  if (!src.length) { noItems(o); return; }
   if (!day) src = src.slice(0, cap || REV_CHUNK);   // 복습은 20개씩 끊어 낸다
-  const list = buildQuestions(src);
-  Q = { list, i: 0, ok: 0, day, total: list.length, early };
+  const list = buildQuestions(src, o.skill);
+  Q = { list, i: 0, ok: 0, day, total: list.length, early, opt: o };
   drawQuiz();
-  show('quiz', day ? '확인 문제' : (cap ? '3분 복습' : '복습'), true);
+  const nm = (o.kind === 'sent' ? '문장' : o.kind === 'word' ? '단어' : '') +
+             (o.skill ? ' ' + (SKILLS.find(x => x.k === o.skill) || {}).name : '');
+  show('quiz', day ? '확인 문제' : (nm.trim() || (cap ? '3분 복습' : '복습')), true);
+}
+function noItems(o) {
+  const b = $('#quizBody');
+  b.textContent = '';
+  $('#quizFill').style.width = '0%';
+  b.append(el('p', 'lede', (o && o.kind === 'sent' ? '문장' : '단어') + ' 복습이 아직 없습니다'));
+  b.append(el('p', 'note', o && o.kind === 'sent'
+    ? '하루 학습을 끝내면 그날 대화 문장이 복습 창고에 들어옵니다.'
+    : '오늘은 꺼낼 단어가 없습니다. 없는 날은 정상입니다.'));
+  const h = el('button', 'primary big', '홈으로');
+  h.style.width = '100%'; h.onclick = renderHome;
+  b.append(h);
+  show('quiz', '복습', true);
+}
+
+/* 복습 고르기 — 단어냐 문장이냐, 그리고 네 가지 힘 중 무엇이냐 */
+function reviewMenu(kind) {
+  const b = $('#quizBody');
+  b.textContent = '';
+  $('#quizFill').style.width = '0%';
+  const due = dueWords().map(findItem).filter(Boolean).filter(x => kind === 'sent' ? x.sent : !x.sent);
+  b.append(el('p', 'lede', (kind === 'sent' ? '문장' : '단어') + ' 복습 — ' + due.length + '개 대기'));
+  const all = el('button', 'primary big', '전부 섞어서');
+  all.style.width = '100%'; all.style.marginBottom = '12px';
+  all.onclick = () => startQuiz(null, null, null, false, { kind });
+  b.append(all);
+  SKILLS.forEach(sk => {
+    if (kind === 'sent' && sk.k === 'read') return;      // 문장은 읽기 대신 듣기·말하기 중심
+    const btn = el('button', 'chatmode');
+    btn.innerHTML = `<b>${sk.name}</b><span>${sk.how}</span>`;
+    btn.onclick = () => startQuiz(null, null, null, false, { kind, skill: sk.k });
+    b.append(btn);
+  });
+  show('quiz', (kind === 'sent' ? '문장' : '단어') + ' 복습', true);
 }
 
 /* 복습 입구 — 처음이거나 꺼낼 카드가 없으면 방식부터 설명한다.
@@ -1530,18 +1579,18 @@ function drawQuiz() {
 
   const q = Q.list[Q.i];
   Q.t0 = Date.now();                                   // 이 문제를 언제 봤는지 (반응 속도)
-  const LABEL = { listen: '듣고 고르세요', meaning: '뜻을 고르세요', recall: '소리 내어 말해 보세요',
-                  dict: '듣고 글자를 만들어 보세요', say: '듣고 따라 말해 보세요',
-                  type: '듣고 자판으로 쳐 보세요', hand: '듣고 손으로 써 보세요' };
+  const LABEL = { listen: '듣고 뜻을 고르세요', read: '뜻을 고르세요', say: '베트남어로 말해 보세요',
+                  type: '듣고 자판으로 쳐 보세요', hand: '듣고 손으로 써 보세요', recall: '소리 내어 말해 보세요',
+                  dict: '듣고 글자를 만들어 보세요' };
   body.append(el('div', 'q', LABEL[q.mode]));
 
-  if (q.mode === 'recall') return drawRecall(body, q);
+  if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
   if (q.mode === 'say') return drawSay(body, q);
   if (q.mode === 'type') return drawTypeQ(body, q);
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
 
-  if (q.mode === 'listen') {
+  if (q.mode === 'listen') {           // 귀로만 — 글자는 답한 뒤에 보여준다
     const wrap = el('div', 'qplay');
     const b = el('button', 'primary big', '듣기');
     b.onclick = () => play(q.w.vi, false);
@@ -1550,21 +1599,14 @@ function drawQuiz() {
     wrap.append(b, sl);
     body.append(wrap);
     play(q.w.vi, false);
-  } else {
-    body.append(el('div', 'qmain', esc(q.w.vi)));
-    const sr = soundRow(q.w.vi, true);   // 글자만 보지 말고 소리도 같이 — 눈과 귀를 함께 묶는다
-    sr.classList.add('mid');
-    body.append(sr);
-    play(q.w.vi, false);
+  } else {                             // 눈으로 — 글자를 보여주고 뜻을 고른다
+    body.append(el('div', 'qmain' + (q.w.sent ? ' sent' : ''), esc(q.w.vi)));
   }
 
   const opts = el('div', 'opts');
   q.opts.forEach(o => {
-    const b = el('button');
+    const b = el('button', null, esc(o.ko));      // 보기는 언제나 '뜻' — 무엇을 묻는지가 분명해진다
     b.dataset.vi = o.vi;
-    if (q.mode === 'listen') {          // 단어만 덜렁 있지 않게 — 뜻도 같이
-      b.append(el('span', 'ovi', esc(o.vi)), el('span', 'oko', esc(o.ko)));
-    } else b.textContent = o.ko;
     b.onclick = () => answer(b, o.vi === q.w.vi, q.w);
     opts.append(b);
   });
@@ -1641,27 +1683,32 @@ function drawDict(body, q) {
 }
 
 /* 입으로 — 듣고 따라 말하고, 원어민 높낮이와 겹쳐 본다 (복습 안에서) */
+/* 말하기 — 한국어 뜻만 보고 베트남어로 말한다(가장 어렵고 가장 남는 방식).
+   보기도 글자도 주지 않는다: 단서 없이 꺼내야 진짜 기억이 된다. */
 function drawSay(body, q) {
   const w = q.w;
-  body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.vi)));
-  body.append(toneRow(w.tones));
-  body.append(reveal(w.kr_read));
-  body.append(el('div', 'q mid', esc(w.ko)));
-  body.append(speakRow(w.vi, true));
-  play(w.vi, false);
+  const p = pic(w, 'pic mid'); if (p) body.append(p);
+  body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.ko)));
   const jbox = el('div', 'cmpnote judge');
   let done = false;
-  const jb = judgeBtn(w.vi, jbox, ok => {
+  const finish = ok => {
     if (done) return; done = true;
     grade(w.vi, ok, Q.early);
     if (ok) Q.ok++; else requeue(q);
+    const ans = el('div', 'ansbox');
+    ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(w.kr_read));
+    const sr = soundRow(w.vi, true); sr.classList.add('mid');
+    ans.append(sr);
+    body.append(ans);
     nextBtn(body, () => { Q.i++; drawQuiz(); });
-  });
-  if (jb) { const row = el('div', 'qplay'); row.append(jb); body.append(row, jbox); }
-  nextBtn(body, () => {
-    if (!done) { bumpSaid(); grade(w.vi, true, Q.early); Q.ok++; }
-    Q.i++; drawQuiz();
-  });
+  };
+  const jb = judgeBtn(w.vi, jbox, finish);
+  const row = el('div', 'qplay');
+  if (jb) row.append(jb);
+  const showA = el('button', jb ? 'ghost' : 'primary big', jb ? '모르겠어요' : '말했어요 · 정답 보기');
+  showA.onclick = () => { bumpSaid(); finish(!jb ? true : false); };
+  row.append(showA);
+  body.append(row, jbox);
 }
 
 /* 손으로 — 성조 부호까지 써 본다 (복습 안에서) */
@@ -3127,7 +3174,6 @@ $('#goCons').onclick = () => { const d = ALL.find(x => x.day === 'P3'); if (d) s
 $('#goDaily').onclick = () => renderDays('daily');
 $('#goWork').onclick = () => renderDays('work');
 $('#goWrite').onclick = startWrite;
-$('#goType').onclick = startType;
 $('#goNews').onclick = showNews;
 document.querySelectorAll('[data-rule]').forEach(b => b.onclick = () => startRule(+b.dataset.rule));
 document.querySelectorAll('[data-gram]').forEach(b => b.onclick = () => startRule('G' + b.dataset.gram));
@@ -3238,19 +3284,21 @@ function showGuide() {
     '그래서 복습이 <b>없는 날도 정상</b>입니다.',
     '홈의 <b>외운 단어</b>는 하루 이상 간격을 두고 두 번 이상 맞힌 단어입니다 — 이게 진짜 실력입니다.',
   ]);
-  sec('④', '복습 네 가지', [
-    '<b>복습</b> — 오늘 꺼낼 단어를 <b>20개씩</b>. 한 판 안에 <b>듣고 고르기·뜻 고르기·떠올려 말하기·받아쓰기·따라 말하기·손글씨·타이핑</b>이 섞여 나옵니다 — 같은 단어를 눈·귀·입·손으로 꺼낼수록 오래 남습니다.',
-    '<b>3분만</b> — 같은 방식으로 <b>10개만</b>. 딱 그만큼만 하고 끝내고 싶을 때.',
-    '둘 다 <b>같은 창고</b>에서 꺼냅니다 — 오늘 것만이 아니라 <b>60일 전 단어도</b> 때가 되면 나옵니다.',
-    '카드가 저절로 넘어가는 <b>훑어보기</b>는 복습이 아니라 <b>예습</b>에만 남겼습니다 — 채점이 없어 기억에는 약하기 때문입니다.',
+  sec('④', '복습 — 무엇을 어떻게', [
+    '<b>복습</b> — 오늘 꺼낼 것을 <b>20개씩</b>, 단어와 문장을 섞어서. 이것만 해도 됩니다.',
+    '<b>단어</b> / <b>문장</b> — 한 가지만 골라서. 들어가면 다시 <b>듣기 · 읽기 · 말하기 · 쓰기</b> 중 고를 수 있습니다.',
+    '<b>듣기</b> = 소리 듣고 뜻 고르기 · <b>읽기</b> = 글자 보고 뜻 고르기',
+    '<b>말하기</b> = 한국어 뜻만 보고 베트남어로 말하기 (AI가 받아 적어 채점)',
+    '<b>쓰기</b> = 소리 듣고 자판으로 쓰기 (듣기와 철자를 한 번에 시험합니다)',
+    '<b>3분만</b> — 섞어서 10개만. <b>대화</b> — 끝낸 세트 문장으로 AI와 역할극.',
+    '모두 <b>같은 창고</b>에서 꺼냅니다 — 60일 전 단어도 때가 되면 나옵니다.',
   ]);
-  sec('⑤', '연습 도구 네 가지 — 무엇으로, 왜', [
-    '복습 안에 이미 섞여 나옵니다. 아래 버튼은 <b>그것만 골라서</b> 하고 싶을 때 씁니다.',
-    '모두 <b>다시 볼 때가 된 단어</b>를 먼저 꺼내고, 모자라면 최근 배운 것으로 채웁니다 — 옛날에 배운 것도 때가 되면 나옵니다.',
-    '<b>따라 말하기</b> — 소리 내어 말하면 눈으로만 볼 때보다 훨씬 남습니다. 원어민 높낮이와 내 소리를 겹쳐 보여줍니다.',
-    '<b>손글씨</b> — 낯선 글자와 성조 부호는 <b>손으로 써야</b> 남습니다. 어른이 새 문자를 배울 때 타이핑보다 손글씨가 나았다는 실험이 있습니다.',
-    '<b>타이핑</b> — 철자와 부호 위치를 정확하게. 실제 폰 자판과 같은 방식입니다.',
-    '<b>대화</b> — 지금까지 끝낸 세트 <b>어느 것이든</b> 골라 그 문장으로 AI와 역할극. 오래된 세트일수록 다시 꺼내 볼 값어치가 큽니다.',
+  sec('⑤', '왜 이렇게 나누었나', [
+    '<b>고르는 문제</b>(듣기·읽기)는 쉽고, <b>만들어 내는 문제</b>(말하기·쓰기)는 어렵습니다. 어려운 쪽이 기억에 훨씬 오래 남습니다.',
+    '그래서 처음 만난 단어는 <b>듣기·읽기</b> 위주로, 익숙해질수록 <b>말하기·쓰기</b>가 많이 나옵니다.',
+    '<b>말하기</b>에서 글자를 안 보여주는 이유 — 글자를 보면 읽기 연습이 되어버려 <b>떠올리는 힘</b>이 안 자랍니다.',
+    '<b>쓰기</b>를 소리로 시작하는 이유 — 성조 부호는 <b>소리를 알아야</b> 제자리에 찍을 수 있습니다.',
+    '<b>손글씨</b>는 따로 뒀습니다. 낯선 글자·부호를 익히는 데는 좋지만 느려서, 필요할 때만 쓰는 게 맞습니다.',
   ]);
   sec('⑥', '문제 유형과 그림', [
     '<b>듣고 고르기 · 뜻 고르기</b> — 처음 만난 단어용.',
@@ -3356,6 +3404,8 @@ $('#chatForm').onsubmit = e => {
   chatSend(v);
 };
 $('#goReview').onclick = () => reviewStart();
+$('#goWordRev').onclick = () => reviewMenu('word');
+$('#goSentRev').onclick = () => reviewMenu('sent');
 $('#goQuick').onclick = () => reviewStart(10);
 $('#goTone').onclick = toneEntry;
 $('#goWx').onclick = () => showWx();
