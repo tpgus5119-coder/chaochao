@@ -1013,7 +1013,11 @@ const allWords = () => ALL.flatMap(d => d.words || []);
 /* 끝낸 세트의 대화 문장 — 복습에서 단어와 같이 다룬다 */
 const allSents = () => ALL.flatMap(d => (d.dialog?.lines || []).map(l =>
   ({ vi: l.vi, ko: l.ko, kr_read: l.kr_read, tones: l.tones, sent: true })));
-const findItem = vi => allWords().find(w => w.vi === vi) || allSents().find(x => x.vi === vi);
+const lessonSents = () => [...(typeof RULES === 'undefined' ? [] : RULES),
+                           ...(typeof GRAMMAR === 'undefined' ? [] : GRAMMAR)]
+  .flatMap(r => (r.cards || []).map(c => ({ vi: c.vi, ko: c.ko, kr_read: c.kr, tones: c.tones, sent: true })));
+const findItem = vi => allWords().find(w => w.vi === vi)
+  || allSents().find(x => x.vi === vi) || lessonSents().find(x => x.vi === vi);
 /* 복습에 꺼낼 단어 — 최근에 배운 것일수록 앞에 오되 ±3일 흔들림을 줘서
    같은 시기 단어끼리는 매번 순서가 바뀐다(무조건 최신순은 아니다). */
 function dueWords() {
@@ -1125,10 +1129,10 @@ function renderDays(track) {
 
   if (track === 'work') {              // 내 업종만 남기기 — 끈 업종은 학습·일정에서도 빠진다
     const li = el('li', 'catpick');
-    li.append(el('span', null, '내 업종만 보기 '));
+    li.append(el('span', null, '업종 '));
     ['봉제', '전자', '사무'].forEach(c => {
       const on = !hiddenCats().includes(c);
-      const bb = el('button', 'ghost sm' + (on ? ' pick' : ''), c);
+      const bb = el('button', 'ghost sm' + (on ? ' pick' : ''), (on ? '✓ ' : '') + c);
       bb.onclick = () => {
         const h = new Set(hiddenCats());
         on ? h.add(c) : h.delete(c);
@@ -2611,7 +2615,13 @@ function drawRule() {
   const r = RL.r;
 
   if (RL.i >= r.quiz.length) {          // 결과
-    S.done[r.key] = now(); touchToday(); save();
+    S.done[r.key] = now();
+    // 배운 예문은 문장 복습 창고로 — 기본기·문법도 복습 체계 안에 들어온다
+    (r.cards || []).forEach(c => {
+      if (c.vi.split(' ').length < 2) return;          // 낱말 하나짜리는 뺀다
+      if (!S.srs[c.vi]) S.srs[c.vi] = { lv: 0, first: now(), due: now() + STEPS[0] * DAY };
+    });
+    touchToday(); save();
     const res = el('div', 'result');
     res.append(el('div', 'n', RL.ok + ' / ' + r.quiz.length));
     res.append(el('div', null, RL.ok === r.quiz.length ? '규칙이 손에 붙었습니다'
@@ -3024,8 +3034,12 @@ function speakVi(t) {
   const u = new SpeechSynthesisUtterance(t);
   const vs = viVoices();
   const male = (S.tch || 'f') === 'm';
-  if (vs.length >= 2) u.voice = vs[male ? 1 : 0];          // 목소리가 둘이면 갈라 쓴다
-  else if (vs.length) { u.voice = vs[0]; u.pitch = male ? .7 : 1.1; }  // 하나뿐이면 높낮이로
+  // 폰마다 목소리 이름이 다르다 — 이름으로 남녀를 찾고, 못 찾으면 높낮이로 흉내 낸다
+  const M = /male|nam\b|vim|minh|_m|-m\b/i, F = /female|linh|hoai|my|vif|_f|-f\b/i;
+  const pick = vs.find(v => (male ? M : F).test(v.name || ''));
+  if (pick) u.voice = pick;
+  else if (vs.length) { u.voice = vs[0]; u.pitch = male ? .65 : 1.15; }
+  if (pick && vs.length === 1) u.pitch = male ? .65 : 1.15;
   u.lang = 'vi-VN'; u.rate = .85;
   u.onstart = () => $('#tch').classList.add('talk');       // 말하는 동안만 입이 움직인다
   u.onend = u.onerror = () => $('#tch').classList.remove('talk');
@@ -3089,7 +3103,8 @@ function aiBubble(text) {
 }
 
 async function chatSend(userText) {
-  if (userText) { CH.hist.push({ role: 'user', parts: [{ text: userText }] }); bubble('me', userText); }
+  if (userText) { CH.hist.push({ role: 'user', parts: [{ text: userText }] }); bubble('me', userText);
+                  if (CH.room) save(); }
   const wait = bubble('ai wait', '…');
   try {
     const text = await gCall({
@@ -3098,6 +3113,7 @@ async function chatSend(userText) {
       generationConfig: { maxOutputTokens: 800, temperature: .6, thinkingConfig: { thinkingBudget: 0 } }
     }, i => { wait.textContent = `붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     CH.hist.push({ role: 'model', parts: [{ text }] });
+    if (CH.room) { if (CH.hist.length > 40) CH.hist.splice(0, CH.hist.length - 40); save(); }
     wait.remove();
     aiBubble(text);
   } catch (e) {
@@ -3141,6 +3157,7 @@ function drawChatKeys() {
               key('보내기', () => $('#chatForm').requestSubmit(), 'go wide'));
   kb.append(brow);
 }
+$('#chatText').onclick = () => { if ($('#chatKeys').hidden) $('#chatKb').click(); };
 $('#chatKb').onclick = () => {
   const kb = $('#chatKeys');
   if (kb.hidden) { drawChatKeys(); kb.hidden = false; $('#chatKb').classList.add('pick'); }
@@ -3148,14 +3165,13 @@ $('#chatKb').onclick = () => {
 };
 
 function startChat() {
-  $('#chatLog').textContent = '';
-  $('#chatForm').hidden = true;
-  $('#chatKeys').hidden = true;
   $('#chatKb').classList.remove('pick');
-  $('#tch').hidden = true;
   CH = null;
-  if (!aiReady()) renderChatKey(); else renderChatModes();
-  show('chat', 'AI 대화', true);
+  if (!aiReady()) {
+    $('#chatLog').textContent = ''; $('#chatForm').hidden = true; $('#tch').hidden = true;
+    renderChatKey(); show('chat', 'AI 대화', true); return;
+  }
+  renderRooms();
 }
 
 function renderChatKey() {
@@ -3177,6 +3193,60 @@ function renderChatKey() {
   };
   s.append(inp, b);
   s.append(el('p', 'note', '대화 내용은 구글 서버로 전송됩니다. 개인정보(실명 전체·주소·사번)는 쓰지 마세요.'));
+}
+
+/* 대화방 — 지역×성별로 넷. 나가도 지난 대화가 남는다(카톡처럼).
+   방마다 선생님이 다르니 말투도 소리도 달라진다. 방 비우기로 처음부터 다시 할 수 있다. */
+const ROOMS = [['n', 'f'], ['n', 'm'], ['s', 'f'], ['s', 'm']];
+const roomKey = (rg, tc) => rg + tc;
+const roomName = (rg, tc) => (rg === 's' ? '남부' : '북부') + ' · ' + (tc === 'm' ? 'Thầy Nam (남)' : 'Cô Linh (여)');
+function roomOf(k) { S.room = S.room || {}; return (S.room[k] = S.room[k] || { hist: [] }); }
+function renderRooms() {
+  const s = $('#chatSetup');
+  s.hidden = false; s.textContent = '';
+  $('#chatLog').textContent = '';
+  $('#chatForm').hidden = true;
+  $('#chatKeys').hidden = true;
+  $('#tch').hidden = true;
+  s.append(el('p', 'lede', '누구와 이야기할까요?'));
+  ROOMS.forEach(([rg, tc]) => {
+    const k = roomKey(rg, tc), r = (S.room || {})[k];
+    const last = r && r.hist.length ? (r.hist[r.hist.length - 1].parts || []).map(x => x.text || '').join('').split('\n')[0].replace(/^VI:\s*/, '') : '';
+    const btn = el('button', 'chatmode');
+    btn.innerHTML = `<b>${esc(roomName(rg, tc))}</b><span>${esc(last ? last.slice(0, 30) : '아직 대화 없음')}</span>`;
+    btn.onclick = () => openRoom(rg, tc);
+    s.append(btn);
+  });
+  show('chat', 'AI 선생님', true);
+}
+function openRoom(rg, tc) {
+  S.region = rg; S.tch = tc; save(); drawRegion();
+  const k = roomKey(rg, tc), r = roomOf(k);
+  S.stats.chat = (S.stats.chat || 0) + 1; touchToday(); save();
+  $('#chatSetup').hidden = true;
+  $('#chatForm').hidden = false;
+  drawTch();
+  $('#chatLog').textContent = '';
+  CH = { mode: 'free', room: k, sys: chatSys('free'), hist: r.hist };
+  // 지난 대화를 다시 그린다
+  r.hist.forEach(m => {
+    const t = (m.parts || []).map(x => x.text || '').join('');
+    if (!t) return;
+    if (m.role === 'user') { if (t !== '(대화를 시작해 주세요)') bubble('me', t); }
+    else aiBubble(t);
+  });
+  const tools = el('div', 'qplay');
+  const clr = el('button', 'ghost sm', '방 비우기');
+  clr.onclick = () => { if (confirm('이 방의 대화를 모두 지울까요?')) { r.hist = []; save(); openRoom(rg, tc); } };
+  const out = el('button', 'ghost sm', '방 나가기');
+  out.onclick = () => { save(); renderRooms(); };
+  tools.append(clr, out);
+  $('#chatLog').prepend(tools);
+  if (!r.hist.length) {
+    CH.hist.push({ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] });
+    chatSend(null);
+  }
+  show('chat', roomName(rg, tc), true);
 }
 
 function renderChatModes() {
@@ -3276,11 +3346,17 @@ $('#chatMic').onclick = async () => {
         const b64 = await recToWav(url);
         const heard = await gCall({
           contents: [{ role: 'user', parts: [
-            { text: '녹음은 한국인이 베트남어(또는 한국어)로 말한 것이다. 들린 그대로만 받아 적어라. 다른 말 금지.' },
+            { text: '녹음은 한국인이 베트남어를 말한 것이다. 들린 대로 <베트남어 철자>로만 적어라. ' +
+                    '한글이나 영어로 적지 마라. 설명·따옴표 없이 문장만 적어라.' },
             { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
           generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
         });
-        chatSend(heard);
+        const inp = $('#chatText');
+        inp.value = heard;                       // 바로 보내지 않는다 — 고쳐 쓸 기회를 준다
+        inp.focus({ preventScroll: true });
+        const w = findItem(heard) || allWords().find(x => x.vi.toLowerCase() === heard.toLowerCase());
+        bubble('ai note', '이렇게 들렸습니다: ' + heard + (w ? ' — ' + w.ko : '') +
+          '\n맞으면 보내기, 다르면 고쳐서 보내세요.');
       } catch (e) { bubble('ai err', '⚠ ' + (e.message || '듣기 실패')); }
       URL.revokeObjectURL(url);
       btn.disabled = false;
@@ -3297,12 +3373,12 @@ function shrinkImg(file) {
   return new Promise(res => {
     const img = new Image();
     img.onload = () => {
-      const k = Math.min(1, 512 / Math.max(img.width, img.height));
+      const k = Math.min(1, 384 / Math.max(img.width, img.height));   // 작을수록 빨리 읽는다
       const c = document.createElement('canvas');
       c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
       c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
       URL.revokeObjectURL(img.src);
-      res(c.toDataURL('image/jpeg', .7).split(',')[1]);
+      res(c.toDataURL('image/jpeg', .72).split(',')[1]);
     };
     img.src = URL.createObjectURL(file);
   });
@@ -3319,7 +3395,8 @@ camIn.onchange = async () => {
   im.src = 'data:image/jpeg;base64,' + b64; im.className = 'camth'; im.alt = '';
   bub.append(im);
   CH.hist.push({ role: 'user', parts: [
-    { text: '(사진을 보여주며) 이것 봐!' },
+    { text: '학습자가 지금 눈앞의 것을 사진으로 보여준다. 사진에서 가장 눈에 띄는 것 하나를 골라, ' +
+            '그 이름을 넣은 아주 쉬운 베트남어 한 문장으로 말을 걸어라. 사진 설명을 길게 하지 마라.' },
     { inline_data: { mime_type: 'image/jpeg', data: b64 } }] });
   chatSend(null);
 };

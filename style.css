@@ -735,3 +735,4 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .bigmenu{display:block; width:100%; text-align:left; font-size:16px; font-weight:700;
   padding:16px 18px; margin-bottom:8px; border:1px solid var(--line); border-radius:12px;
   background:transparent; color:var(--fg); cursor:pointer}
+.cb.note{background:transparent; border:1px dashed var(--line); color:var(--dim); font-size:13px; white-space:pre-line}
