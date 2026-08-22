@@ -271,19 +271,12 @@ function drawCompare(text, box) {
     await new Promise(r => setTimeout(r, 2200));
     if (REC.key === text) playMine();
   };
+  const said = el('div', 'saidbox');    // 발음 판정 — 성조 그림 왼쪽(위)에 먼저 온다
   const curve = el('div', 'curvearea');
   row.append(a, b, c);
-  if (aiReady()) {                       // AI 받아쓰기: 내 발음이 뭐라고 들리는지
-    const ai = el('button', 'ghost', 'AI가 듣기');
-    ai.onclick = () => {
-      if (REC.key !== text) return;
-      ai.disabled = true;
-      aiListen(text, REC.url, curve).finally(() => { ai.disabled = false; });
-    };
-    row.append(ai);
-  }
-  box.append(row, curve);
+  box.append(row, said, curve);
   showTone(text, REC.url, curve);        // 녹음이 끝나면 버튼 없이 바로 그린다
+  if (aiReady()) aiListen(text, REC.url, said);   // 발음도 누를 것 없이 바로
 }
 
 /* 녹음을 16kHz 모노 WAV 로 바꾼다 — 폰마다 다른 녹음 형식을 AI가 다 읽지는 못해서 */
@@ -309,8 +302,10 @@ async function recToWav(blobUrl) {
    실험해 보니 AI는 '무슨 음절인지'는 정확히 듣지만 '성조'는 원어민 소리도 틀렸다.
    그래서 성조 채점은 안 시키고, 글자를 알아들을 수 있는 발음인지만 묻는다.
    성조는 위의 높낮이 곡선이 담당한다 — 둘이 합쳐야 온전한 피드백이 된다. */
+/* 발음(글자)은 AI가 받아 적어 보고, 성조는 아래 높낮이 곡선이 본다.
+   둘이 하는 일이 다르다 — 합쳐야 '무슨 소리를, 어떤 높낮이로' 냈는지가 다 보인다. */
 async function aiListen(text, blobUrl, box) {
-  const note = el('div', 'cmpnote ainote', 'AI가 듣는 중…');
+  const note = el('div', 'cmpnote ainote', '듣는 중…');
   box.querySelector('.ainote')?.remove();
   box.append(note);
   try {
@@ -328,12 +323,13 @@ async function aiListen(text, blobUrl, box) {
     S.stats.pronAll = (S.stats.pronAll || 0) + 1;
     if (exact || close) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
     save();
-    note.innerHTML = (exact
-      ? '<b>AI가 정확히 "' + esc(heard) + '" 로 받아 적었습니다.</b> 알아들을 수 있는 발음입니다.'
-      : close
-        ? '<b>AI가 "' + esc(heard) + '" 로 들었습니다.</b> 글자는 맞게 들립니다 — 성조는 위 곡선으로 확인하세요.'
-        : 'AI에게는 "<b>' + esc(heard) + '</b>" 로 들렸습니다 (목표: ' + esc(text) + '). 조금 크게, 또박또박 다시 해 보세요.') +
-      '<br><span class="dimtxt">참고용 — AI도 성조 구별은 잘 못합니다.</span>';
+    note.className = 'cmpnote ainote ' + (exact || close ? 'ok' : 'no');
+    note.innerHTML = (exact || close
+      ? '<b>알아들을 수 있는 발음입니다</b>'
+      : '<b>다르게 들립니다</b>') +
+      '<span>' + (exact || close
+        ? '들린 대로 적으면 ' + esc(heard)
+        : '들린 대로 적으면 ' + esc(heard) + ' (목표 ' + esc(text) + ') — 조금 크게, 또박또박') + '</span>';
   } catch (e) { note.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
 }
 
@@ -477,11 +473,8 @@ async function showTone(text, blobUrl, box) {
     box.append(b);
   }
   box.append(el('div', 'toneable',
-    '<b>이건 채점이 아닙니다.</b> 소리의 <b>높낮이 모양</b>만 그린 것입니다. ' +
-    '무슨 소리를 냈는지는 보지 않으므로, 위 그림을 직접 눈으로 비교하세요.<br>' +
-    '<b>믿어도 되는 것</b> — 올라가는지(sắc) 내려가는지(huyền) 내렸다 올리는지(hỏi).<br>' +
-    '<b>믿으면 안 되는 것</b> — hỏi와 ngã의 구별. 이 둘은 남부 베트남어에서 아예 하나로 합쳐져 ' +
-    '원어민도 갈라 쓰지 않습니다.'));
+    '소리의 <b>높낮이 모양</b>을 그린 것입니다. 단, <b>hỏi(↘↗)</b>와 <b>ngã(↗↘↗)</b> ' +
+    '이 둘은 남부 베트남어에서 아예 하나로 합쳐져 원어민도 갈라 쓰지 않습니다.'));
 }
 
 /* ---------- 화면 ---------- */
@@ -3383,6 +3376,18 @@ function viVoices() {
   return vs.filter(v => (v.lang || '').toLowerCase().startsWith('vi'));
 }
 const viVoice = () => viVoices()[0] || null;
+/* 폰마다 받는 길이 다르다 — 아이폰과 안드로이드를 구별해서 알려준다.
+   (기종·버전마다 메뉴 이름이 조금씩 달라서 '비슷한 이름'이라고 밝혀 둔다) */
+const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function voiceHowTo() {
+  return isIOS()
+    ? '아이폰: 설정 → 손쉬운 사용 → 콘텐츠 말하기 → 음성 → 베트남어 추가\n' +
+      '(안 보이면 설정 → 일반 → 언어 및 지역에서 베트남어를 넣고 다시 보세요)'
+    : '안드로이드: 설정 → 일반(또는 시스템) → 언어 및 입력 → 음성 → 텍스트 음성 변환 → ' +
+      '구글 TTS 설정 → 음성 데이터 설치 → 베트남어\n(기종마다 메뉴 이름이 조금 다릅니다)';
+}
+
 function speakVi(t, retry) {
   if (AIDX[t]) { play(t, false); return; }        // 우리 음원이 있으면 그게 낫다 (원어민 녹음)
   const u = new SpeechSynthesisUtterance(t);
@@ -3455,8 +3460,7 @@ function aiBubble(text) {
   b.append(bt);
   if (!AIDX[m.VI] && !viVoice() && !S.novoice) {   // 한 번만 알린다
     S.novoice = 1; save();
-    bubble('note wide', '이 폰에는 베트남어 목소리가 없어 소리가 안 날 수 있습니다.\n' +
-      '설정 → 손쉬운 사용 → 음성에서 베트남어를 받으면 들립니다.');
+    bubble('note wide', '이 폰에는 베트남어 목소리가 없어 이 문장은 소리가 안 납니다.\n' + voiceHowTo());
   }
   b.scrollIntoView({ block: 'end', behavior: 'smooth' });
 }

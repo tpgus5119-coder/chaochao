@@ -913,3 +913,11 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 
 /* 방 안 '문장 고르기' 단추 */
 .pickline{display:block; margin:0 auto 10px; padding:7px 14px; font-size:13px}
+
+/* 발음 판정 — 성조 그림 위에, 초록/빨강으로 */
+.saidbox{width:100%}
+.ainote{border-radius:12px; padding:10px 12px; margin:2px 0 8px; text-align:center; font-size:14px}
+.ainote b{display:block; font-size:16px}
+.ainote span{display:block; font-size:12px; margin-top:3px; opacity:.85}
+.ainote.ok{color:var(--ok); border:1px solid var(--ok)}
+.ainote.no{color:var(--bad); border:1px solid var(--bad)}
