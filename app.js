@@ -594,8 +594,11 @@ function renderAnalysis(host, mode) {
   };
   const card = el('div', 'rulecard');
   card.append(el('div', 'rhead', '<b>이렇게 하면 올라갑니다</b>'));
-  const lines = [`<b>약한 곳 — ${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`,
-                 ...(RX[worst.name] || []).map(t => '· ' + t)];
+  const allGood = worst.pct >= 80;
+  const lines = [allGood
+    ? `<b>모두 좋습니다.</b> 더 올릴 곳 — <b>${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`
+    : `<b>약한 곳 — ${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`,
+    ...(RX[worst.name] || []).map(t => '· ' + t)];
   if (tn.length && tn[0][1] < 70) lines.push(`· 성조 중에서는 <b>${tn[0][0]}</b>이 ${tn[0][1]}%로 가장 약합니다 — 기본기 성조에서 그 소리만 골라 들어 보세요.`);
   const miss = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
     .sort((a, b) => b[1] - a[1]).slice(0, 5);
