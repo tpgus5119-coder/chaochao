@@ -5,8 +5,10 @@
      ① 키 여러 개(GEMINI_KEY에 쉼표로) 돌려쓰기 — 분당 한도를 키 수만큼 늘린다
      ② 모델 갈아타기 — 앞 모델이 붐비면(429·500·503) 다음 모델로
      ③ 짧게 쉬었다 재시도 */
-const MODELS = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-2.5-flash-lite'];
-const BUSY = [429, 500, 502, 503, 504];
+const MODELS = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite'];
+// 429·5xx = 붐빔. 404 = 구글이 그 모델을 없앤 것 — 둘 다 '다음 모델로' 가 정답이다.
+// (실제로 gemini-2.5-flash-lite 가 없어져서 예비 모델이 죽은 링크가 되어 있었다)
+const BUSY = [404, 429, 500, 502, 503, 504];
 
 export default {
   async fetch(req, env) {

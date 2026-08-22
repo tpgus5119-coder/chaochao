@@ -817,3 +817,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 
 /* 첫 화면 진도 카드는 일정판 바로 아래 */
 .progress{margin:8px 0 4px}
+
+/* 분석 [자세히] */
+.moreana{margin:6px 0 14px; border:1px solid var(--line); border-radius:12px; padding:0 12px}
+.moreana summary{cursor:pointer; padding:11px 0; font-size:14px; font-weight:700; color:var(--dim)}
+.moreana[open] summary{color:var(--fg); border-bottom:1px solid var(--line); margin-bottom:8px}
+.moreana .newsday{margin-top:12px}
+.moreana .dimtxt{margin:-4px 0 6px; line-height:1.6}

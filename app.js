@@ -31,7 +31,6 @@ const now = () => Date.now();
 
 /* ---------- 데이터 ---------- */
 let ALL = [], AIDX = {}, DRILL = [], VDRILL = [];
-const SONG = {};   // 노래 파일 있는지 확인한 결과
 const $ = s => document.querySelector(s);
 const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
 // 그림: img/ 폴더에 파일이 있으면 그걸, 없으면 이모지를 보여준다 (파일 확인은 브라우저가 알아서)
@@ -634,16 +633,49 @@ function renderAnalysis(host, mode) {
 
   const TN = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감',
                'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
-  const tn = Object.entries(S.stats.tn || {})
-    .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
+  const named = (box, map) => Object.entries(S.stats[box] || {})
+    .map(([k, v]) => [(map && map[k]) || k, Math.round(v.ok * 100 / v.all), v.all])
+    .sort((a, b) => a[1] - b[1]);
+  const tn = named('tn', TN);
   if (tn.length) { host.append(el('p', 'newsday', '성조별 정답률 (누적)')); host.append(bars(tn)); }
 
   const MD = { listen: '듣고 고르기', read: '읽고 고르기', meaning: '뜻 고르기',
                recall: '떠올려 말하기', dict: '받아쓰기',
-               say: '따라 말하기', type: '타이핑', hand: '손글씨' };
-  const md = Object.entries(S.stats.md || {})
-    .map(([k, v]) => [MD[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
+               say: '말하기', type: '타이핑', hand: '손글씨 (스스로 매김)' };
+  const md = named('md', MD);
   if (md.length) { host.append(el('p', 'newsday', '문제 유형별 정답률 (누적)')); host.append(bars(md)); }
+
+  /* 나머지 갈래는 [자세히] 안에 접어 둔다 — 다 펼치면 화면이 두 배가 되어
+     정작 중요한 다섯 과목이 안 보인다. */
+  const MORE = [
+    ['sy' + 'l', null, '단어 길이별', '긴 단어일수록 떨어지면 소리 덩어리를 아직 못 묶은 것입니다'],
+    ['ltr', null, '어려운 글자가 든 단어', 'ư ơ ă â ê ô đ 가 든 단어만 따로 셉니다'],
+    ['lv', null, '복습 사다리 단계별', '뒷단(30·60일)이 낮으면 간격이 너무 벌어진 것입니다'],
+    ['od', null, '얼마나 밀렸을 때 풀었나', '밀릴수록 떨어지는 폭이 곧 손실입니다'],
+    ['try', null, '첫 시도 / 두 번째', '두 번째가 훨씬 높으면 아직 기억이 아니라 눈치입니다'],
+    ['hr', null, '시간대별', '나에게 잘 되는 시간이 언제인지'],
+    ['pic', null, '그림이 있는 단어 / 없는 단어', '그림이 정말 도움이 되는지 확인합니다'],
+    ['han', null, '한자어', '한국어 한자음과 짝인 단어가 실제로 쉬운지'],
+    ['serr', null, '쓰기 오답의 종류', '성조만 흘렸는지, 글자를 틀렸는지'],
+  ];
+  const rows = MORE.map(([box, map, title, note]) => [title, note, named(box, map)])
+                   .filter(r => r[2].length);
+  const conf = Object.entries(S.stats.conf || {})
+    .map(([k, v]) => [k, v.all]).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  if (rows.length || conf.length) {
+    const more = el('details', 'moreana');
+    more.append(el('summary', null, '자세히 — 갈래별로 더 쪼개 보기'));
+    rows.forEach(([title, note, data]) => {
+      more.append(el('p', 'newsday', esc(title)));
+      more.append(bars(data));
+      more.append(el('p', 'dimtxt', esc(note)));
+    });
+    if (conf.length) {
+      more.append(el('p', 'newsday', '자주 헷갈리는 짝 (귀 훈련)'));
+      more.append(el('p', 'dimtxt', conf.map(c => esc(c[0]) + ' ' + c[1] + '번').join('<br>')));
+    }
+    host.append(more);
+  }
 
   // 처방 — 분석만 하고 끝내지 않는다
   if (ok.length < 2) {
@@ -813,9 +845,10 @@ function renderAwards() {
   ch.onclick = askNick;
   nm.append(ch);
   const pc = el('div', 'planrow');
-  pc.append(el('span', 'pk', '하루'), el('span', 'pv', (S.pace || 1) + '세트' + ((S.pace || 1) > 1 ? ' (일상+직무)' : '')));
+  const PACEN = { 1: '', 2: ' (일상+직무)', 3: ' (일상+직무+기사)' };
+  pc.append(el('span', 'pk', '하루'), el('span', 'pv', (S.pace || 1) + '세트' + PACEN[S.pace || 1]));
   const pb = el('button', 'ghost sm', '바꾸기');
-  pb.onclick = () => { S.pace = (S.pace || 1) >= 2 ? 1 : 2; save(); renderAwards(); };
+  pb.onclick = () => { S.pace = ((S.pace || 1) % 3) + 1; save(); renderAwards(); };
   pc.append(pb);
   b.append(nm, rg, pc);
   const ana = el('div');
@@ -1020,7 +1053,7 @@ function askNick() {
    첫 화면에 버튼이 많을수록 고르는 데 힘이 들고, 결국 아무것도 안 누르게 된다. */
 const MENUS = {
   day:   { name: '하루 5분 베트남어', sub: '오늘 배울 것', items: () => [
-            ['일상 과정', () => renderDays('daily')], ['직무 과정', () => renderDays('work')]] },
+            ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')]] },
   rev:   { name: '복습', sub: '다시 볼 때가 된 것', items: () => [
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
   basic: { name: '기본기', sub: '소리와 규칙', items: () => [
@@ -1237,7 +1270,7 @@ function renderDays(track) {
     }
     list.append(li);
   });
-  show('course', track === 'work' ? '직무 과정' : '일상 과정', true);
+  show('course', track === 'work' ? '직무' : '일상', true);
 }
 
 /* ---------- 학습 ---------- */
@@ -1399,17 +1432,6 @@ function drawCard() {
     const all = el('button', 'primary', '▶ 대화 전체 듣기');
     all.onclick = () => playSeq(x.lines.map(l => l.vi), lineEls);
     c.append(all);
-
-    // 노래본이 있으면 띄운다. 멜로디에 얹은 구절은 그냥 말한 것보다 잘 남는다.
-    const songUrl = `audio/song/day${String(L.day.day).padStart(2, '0')}.mp3`;
-    if (SONG[songUrl] === false) return;      // 없다고 이미 확인한 날은 다시 묻지 않는다
-    fetch(songUrl, { method: 'HEAD' }).then(r => {
-      SONG[songUrl] = r.ok;
-      if (!r.ok) return;
-      const sg = el('button', 'song', '🎵 오늘의 노래');
-      sg.onclick = () => { audio.pause(); audio.src = songUrl; audio.currentTime = 0; audio.play().catch(() => { }); };
-      all.after(sg);
-    }).catch(() => { });
 
     x.lines.forEach(l => {
       const row = el('div', 'line ' + (l.who === 'A' ? 'a' : 'b'));
@@ -1855,6 +1877,7 @@ function drawDict(body, q) {
     markSpeed(good, 'dict');
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
+    if (!good) bump('serr', bare(picked.join(' ')) === bare(q.w.vi) ? '성조만 틀림' : '글자를 틀림', false);
     fxTone(good);
     chk.disabled = undo.disabled = true;
     [...tiles.children].forEach(t => t.disabled = true);
@@ -1939,10 +1962,10 @@ function drawHandQ(body, q) {
     body.insertBefore(ans, box);
     const g = el('div', 'opts');
     const ok = el('button', null, '✓ 맞게 썼어요');
-    ok.onclick = () => { fxTone(true); S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+    ok.onclick = () => { fxTone(true); markSpeed(true, 'hand'); S.stats.spellAll = (S.stats.spellAll || 0) + 1;
       S.stats.spellOk = (S.stats.spellOk || 0) + 1; grade(w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
     const no = el('button', null, '✗ 틀렸어요');
-    no.onclick = () => { S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+    no.onclick = () => { markSpeed(false, 'hand'); S.stats.spellAll = (S.stats.spellAll || 0) + 1;
       grade(w.vi, false); requeue(q); Q.i++; drawQuiz(); };
     g.append(ok, no);
     body.append(g);
@@ -1989,9 +2012,11 @@ function drawTypeQ(body, q) {
               key('확인', () => {
                 if (!txt.trim()) return;
                 const good = txt.trim().toLowerCase() === w.vi.toLowerCase();
+                markSpeed(good, 'type');
                 fxTone(good);
                 S.stats.spellAll = (S.stats.spellAll || 0) + 1;
                 if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
+                if (!good) bump('serr', bare(txt) === bare(w.vi) ? '성조만 틀림' : '글자를 틀림', false);
                 out.dataset.r = good ? 'ok' : 'no';
                 if (!good) out.textContent = txt.trim() + '  →  ' + w.vi;
                 grade(w.vi, good, Q.early);
@@ -2093,9 +2118,9 @@ function drawRecall(body, q) {
 
     const grade2 = el('div', 'opts');
     const ok = el('button', null, '✓ 맞았어요');
-    ok.onclick = () => { fxTone(true); markSpeed(true, 'recall'); grade(q.w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
+    ok.onclick = () => { fxTone(true); markSpeed(true, 'say'); grade(q.w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
     const no = el('button', null, '✗ 못 맞혔어요');
-    no.onclick = () => { markSpeed(false, 'recall'); grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
+    no.onclick = () => { markSpeed(false, 'say'); grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
     grade2.append(ok, no);
     body.append(grade2);
   };
@@ -2134,6 +2159,7 @@ function answer(btn, correct, w) {
    정답률이 같아도 느리면 아직 '자동'이 안 된 것이다. */
 function markSpeed(ok, mode) {
   bump('md', mode, ok);
+  bump('try', (Q.list[Q.i] || {}).retry ? '두 번째' : '첫 시도', ok);   // 그 판에서 다시 나온 문제인가
   if (!ok || !Q.t0) return;
   const ms = Date.now() - Q.t0;
   if (ms < 500 || ms > 20000) return;                  // 튀는 값은 버린다
@@ -2157,12 +2183,32 @@ function bump(box, key, ok) {
   const c = b[key] || (b[key] = { ok: 0, all: 0 });
   c.all++; if (ok) c.ok++;
 }
+/* 채점은 잘게 나눌수록 분석이 깊어진다. 다만 한 문제에 조회는 한 번만 한다 —
+   allWords()가 1000개짜리 배열을 훑기 때문에 문제마다 여러 번 부르면 폰이 느려진다. */
+const HARDLTR = ['ư', 'ơ', 'ă', 'â', 'ê', 'ô', 'đ'];
+/* 성조 부호만 뗀 모양. "성조만 틀렸나 글자를 틀렸나"를 가르는 데 쓴다 */
+const bare = t => t.trim().toLowerCase().split(/\s+/).map(stripTone).join(' ');
 function grade(vi, ok, early) {
   touchToday();
   // 암기 점수용 계수기 — 인출 시도와 성공을 센다
   S.stats.qAll = (S.stats.qAll || 0) + 1;
   if (ok) S.stats.qOk = (S.stats.qOk || 0) + 1;
-  bump('tn', toneOfWord(vi), ok);                    // 성조별
+
+  const w = allWords().find(x => x.vi === vi);
+  bump('tn', (w && (w.tones || [])[0] || {}).name || null, ok);          // 성조별
+  const syl = vi.trim().split(/\s+/).length;
+  bump('syl', syl === 1 ? '1음절' : syl === 2 ? '2음절' : '3음절+', ok);   // 길이별
+  if (HARDLTR.some(c => vi.includes(c))) bump('ltr', '어려운 모음·đ', ok); // ư ơ ă â ê ô đ 가 든 단어
+  if (w) bump('pic', w.img ? '그림 있음' : '그림 없음', ok);               // 그림이 기억을 돕는가
+  if (w && w.hanja) bump('han', '한자어', ok);                            // 한자어가 정말 쉬운가
+  bump('hr', ['새벽', '아침', '낮', '저녁', '밤'][Math.min(4, Math.floor(new Date().getHours() / 5))], ok);
+  const r0 = S.srs[vi];
+  if (!early && r0) {
+    bump('lv', '사다리 ' + (r0.lv || 0) + '단', ok);                      // 복습 단계별
+    const od = r0.due ? now() - r0.due : -1;
+    if (od >= 0) bump('od', od < DAY ? '제때' : od < 4 * DAY ? '1~3일 밀림'
+                          : od < 8 * DAY ? '4~7일 밀림' : '8일 넘게 밀림', ok);
+  }
   if (!ok) {                                          // 자주 틀리는 단어
     const m = S.stats.miss || (S.stats.miss = {});
     m[vi] = (m[vi] || 0) + 1;
@@ -2282,6 +2328,7 @@ function drawVowel() {
       S.stats.earAll = (S.stats.earAll || 0) + 1;
       S.stats.drill = (S.stats.drill || 0) + 1;
       if (good) S.stats.earOk = (S.stats.earOk || 0) + 1;
+      else bump('conf', it.vi + ' → ' + o.vi, false);   // 무엇을 무엇으로 잘못 들었나
       save();
       if (good) { VD.ok++; setTimeout(() => { VD.i++; drawVowel(); }, 500); }
       else nextBtn(body, () => { VD.i++; drawVowel(); });
@@ -2358,6 +2405,7 @@ function drawTone() {
       S.stats.earAll = (S.stats.earAll || 0) + 1;
       S.stats.drill = (S.stats.drill || 0) + 1;
       if (good) S.stats.earOk = (S.stats.earOk || 0) + 1;
+      else bump('conf', it.vi + ' → ' + o.vi, false);   // 무엇을 무엇으로 잘못 들었나
       save();
       if (good) { T.ok++; setTimeout(() => { T.i++; drawTone(); }, 500); }
       else nextBtn(body, () => { T.i++; drawTone(); });
@@ -2408,6 +2456,7 @@ function drawToneMark(body, w) {
       S.stats.earAll = (S.stats.earAll || 0) + 1;
       S.stats.drill = (S.stats.drill || 0) + 1;
       if (good) { T.ok++; S.stats.earOk = (S.stats.earOk || 0) + 1; }
+      else bump('conf', want + ' → ' + mk.name, false);
       grade(w.vi, good);
       if (good) setTimeout(() => { T.i++; drawTone(); }, 500);
       else nextBtn(body, () => { T.i++; drawTone(); });
@@ -3632,58 +3681,91 @@ function showGuide() {
     b.append(c);
   };
   b.append(el('p', 'lede', '하루 5분, 이렇게만 하면 됩니다'));
-  sec('①', '오늘 할 일', [
-    '홈 맨 위 <b>오늘 학습</b>을 누르면 오늘 것이 바로 열립니다.',
-    '<b>단어 10개 → 확인 문제 → 문장 써먹기</b> 순서로 5분이면 끝납니다.',
-    '<b>오늘 복습</b>도 떠 있으면 같이 하세요. 이게 실력의 90%입니다.',
-    '끝나면 홈 아래 <b>진도 백업</b>을 한 번 눌러 두세요.',
+
+  sec('①', '처음 5분 — 오늘 할 일은 이것뿐', [
+    '홈 맨 위 <b>오늘 학습</b> 칸을 누르세요. 오늘 할 세트가 바로 열립니다 — 어디서부터 할지 찾을 필요가 없습니다.',
+    '<b>단어 10개 → 확인 문제 → 오늘의 대화</b> 순서로 저절로 이어집니다.',
+    '대화가 마지막인 이유 — 외운 것을 <b>입으로 말해서</b> 끝내야 하루가 완성되기 때문입니다.',
+    '<b>오늘 복습</b> 칸도 떠 있으면 같이 하세요. 실력의 90%는 여기서 나옵니다.',
+    '바쁜 날은 <b>3분만</b>이라도. 완벽한 하루보다 <b>내일 또 오는 것</b>이 중요합니다.',
   ]);
-  sec('②', '왜 이 순서인가', [
-    '외운 것을 <b>입으로 말하며</b> 끝내야 오래 남습니다 — 눈으로만 보면 절반만 남습니다.',
-    '일상과 직무를 <b>하루씩 번갈아</b> 줍니다 — 한쪽만 몰아 하는 것보다 기억에 유리합니다.',
-    '내 업종이 아니면 <b>직무 목록 위 스위치</b>로 꺼두세요.',
+
+  sec('②', '화면 읽는 법 — 어디에 뭐가 있나', [
+    '첫 화면은 <b>큰 칸 여덟 개</b>뿐입니다 — 하루 5분 베트남어 · 복습 · 기본기 · 문법 · AI 선생님 · 동아리 · 베트남 소식 · 사용법. ' +
+      '칸을 누르면 그 안에서 다시 고릅니다(첫 화면에 버튼이 많을수록 고르기가 힘들어 결국 아무것도 안 누르게 됩니다). 왼쪽 위 <b>‹</b>로 한 단계씩 되돌아옵니다.',
+    '<b>복습</b> 칸 오른쪽 숫자는 오늘 꺼낼 카드 수입니다. 숫자가 없으면 오늘은 안 눌러도 됩니다.',
+    '그 아래 <b>이번 주 도장 일곱 칸</b>과 배운 단어 · 외운 단어 · 끝낸 세트가 지금까지의 전부입니다. ' +
+      '<b>외운 단어</b>는 하루 이상 간격을 두고 두 번 이상 맞힌 단어 — 이게 진짜 실력입니다.',
+    '오른쪽 위 <b>사람 아이콘</b>이 내 정보입니다. 이름 · 지역 · 하루 학습량 · 성적이 그 한 화면에 다 있습니다.',
+    '소리가 나는 화면에서만 위에 <b>북부 | 남부</b>와 <b>여 | 남</b>이 뜹니다. 눌러 두면 앱의 모든 소리가 그 목소리로 바뀝니다.',
   ]);
-  sec('③', '복습이 심장입니다', [
-    '맞힌 단어는 <b>1 → 3 → 7 → 14 → 30 → 60일</b> 뒤에 다시 나옵니다.',
-    '틀리면 두 계단 내려와 <b>곧 다시</b> 나옵니다.',
-    '잊어버리기 <b>직전</b>에 다시 보는 것이 가장 오래 남습니다.',
-    '그래서 복습이 <b>없는 날도 정상</b>입니다.',
-    '홈의 <b>외운 단어</b>는 하루 이상 간격을 두고 두 번 이상 맞힌 단어입니다 — 이게 진짜 실력입니다.',
+
+  sec('③', '오늘·내일 일정은 이렇게 짜입니다', [
+    '일정판은 <b>일상 한 세트 · 직무 한 세트</b>를 번갈아 내줍니다 — 한쪽만 몰아 하는 것보다 기억에 유리합니다. 기본기는 일정에 안 넣습니다(각자 짬 날 때).',
+    '더 하고 싶으면 <b>내 정보 → 하루</b>에서 1 → 2 → 3세트로 올리세요.',
+    '오른쪽 두 칸은 <b>내일</b>입니다. [내일 학습]을 누르면 내일 단어가 3초에 한 장씩 소리와 함께 넘어갑니다(예습이라 채점 없음). [내일 복습]은 내일 몇 장이 쌓이는지 보는 칸입니다.',
+    '순서를 건너뛰고 직접 고르려면 <b>하루 5분 베트남어 → 일상 / 직무</b>. 주제 묶음별로 늘어서 있고 다음에 할 세트에 표가 붙습니다.',
+    '직무 목록 맨 위 <b>업종 칩</b>(봉제·전자·사무)을 끄면 그 세트가 목록에서도 일정에서도 사라집니다. 잘못 완료된 세트는 옆 <b>[미완으로]</b>로 되돌립니다.',
   ]);
-  sec('④', '복습 — 무엇을 어떻게', [
-    '홈의 <b>오늘 복습</b>을 누르면 오늘 꺼낼 것을 <b>20개씩</b> 섞어서 줍니다. 이것만 해도 됩니다.',
-    '골라서 하고 싶으면 <b>복습 → 단어</b> 또는 <b>문장</b>으로 들어갑니다.',
-    '<b>랜덤</b> — 그 안에서 네 방식을 섞어 줍니다. 평소엔 이걸 쓰세요.',
-    '<b>말하기</b> = 한국어 뜻만 보고 베트남어로 말하기 (AI가 받아 적어 채점)',
-    '<b>듣기</b> = 소리 듣고 뜻 고르기 · <b>읽기</b> = 글자 보고 뜻 고르기',
-    '<b>쓰기</b> = 소리 듣고 자판으로 · 가끔 손으로 쓰기 (듣기와 철자를 한 번에)',
-    '<b>3분만</b> — 바쁜 날 훑기. 3초에 한 장씩 자동으로 넘어갑니다(채점 없음).',
-    '모두 <b>같은 창고</b>에서 꺼냅니다 — 60일 전 단어도 때가 되면 나옵니다.',
+
+  sec('④', '카드 한 장 안의 모든 것', [
+    '<b>큰 베트남어 글자를 누르면 소리가 납니다</b> — 듣기 단추를 찾지 마세요(그림을 크게 두려고 없앴습니다). 글자 위 화살표가 성조가 오르내리는 방향입니다.',
+    '<b>그림은 눈에 보이는 단어에만</b> 붙습니다. 눈에 안 보이는 말에 억지로 붙이면 오히려 방해가 됩니다. 아래 <b>예문 칸도 누르면</b> 소리가 납니다.',
+    '글자 옆 <b>시계</b>는 느리게 듣기, <b>마이크</b>는 따라 말하기입니다. 녹음하면 [원어민][내 소리][번갈아 듣기]가 생기고 ' +
+      '<b>원어민 높낮이 곡선과 내 곡선이 겹쳐</b> 그려집니다. 맞다·틀리다로 판정하지 않습니다 — 모양이 보이면 스스로 고칠 수 있습니다.',
+    '<b>[AI가 듣기]</b>는 내 발음이 어떤 철자로 들렸는지 알려줍니다. 성조는 AI도 잘 못 가리므로 위의 곡선이 맡습니다 — 둘을 합쳐야 온전한 피드백입니다.',
+    '카드에 <b>🔑 한자어</b> 줄이 있으면 한국어 한자음과 짝이라 외울 것이 거의 없고, <b>남부에서는 …</b> 줄이 있으면 호찌민 쪽에서 다르게 씁니다. ' +
+      '카드를 다 넘기면 <b>확인 문제 → 오늘의 대화</b>로 이어집니다. 대화는 [▶ 전체 듣기] 뒤 줄마다 연습하고, 맨 아래 <b>이렇게도 말합니다</b>가 같은 뜻의 다른 문장입니다.',
   ]);
-  sec('⑤', '왜 이렇게 나누었나', [
-    '<b>고르는 문제</b>(듣기·읽기)는 쉽고, <b>만들어 내는 문제</b>(말하기·쓰기)는 어렵습니다. 어려운 쪽이 기억에 훨씬 오래 남습니다.',
-    '그래서 처음 만난 단어는 <b>듣기·읽기</b> 위주로, 익숙해질수록 <b>말하기·쓰기</b>가 많이 나옵니다.',
-    '<b>말하기</b>에서 글자를 안 보여주는 이유 — 글자를 보면 읽기 연습이 되어버려 <b>떠올리는 힘</b>이 안 자랍니다.',
-    '<b>쓰기</b>를 소리로 시작하는 이유 — 성조 부호는 <b>소리를 알아야</b> 제자리에 찍을 수 있습니다.',
-    '<b>손글씨</b>는 따로 뒀습니다. 낯선 글자·부호를 익히는 데는 좋지만 느려서, 필요할 때만 쓰는 게 맞습니다.',
+
+  sec('⑤', '복습이 이 앱의 심장입니다', [
+    '맞힌 카드는 <b>1 → 3 → 7 → 14 → 30 → 60일</b> 뒤에 다시 나오고, 틀리면 두 계단 내려와 곧 다시 나옵니다. ' +
+      '잊기 <b>직전</b>에 꺼내야 가장 오래 남기 때문에 <b>복습이 없는 날도 정상</b>입니다.',
+    '<b>오늘 복습</b>은 만기된 단어와 문장을 <b>20개씩</b> 끊어 줍니다. 다 풀면 [이어서 20개 더]가 뜨고, 그만둬도 답한 것은 이미 저장돼 있습니다.',
+    '골라서 하려면 <b>복습 → 단어 / 문장</b>. 평소엔 <b>[랜덤]</b>만 누르면 됩니다 — 익숙해질수록 어려운 방식이 많이 나옵니다. 끝낸 세트의 대화 문장과 기본기·문법 예문도 같은 창고에서 나옵니다.',
+    '<b>말하기</b> 뜻만 보고 말하기(AI가 받아 적어 채점) · <b>듣기</b> 소리 듣고 뜻 고르기 · <b>읽기</b> 글자 보고 뜻 고르기 · ' +
+      '<b>쓰기</b> 소리 듣고 화면 자판으로(낱말을 친 뒤 성조 화살표를 누르면 부호가 제자리에 붙습니다). ' +
+      '쓰기에는 <b>손가락으로 쓰는 문제</b>가 가끔 섞이고, [AI 선생님 점검]이 읽힘·짚기·조언 세 줄을 붙여 줍니다. <b>3분만</b>은 바쁜 날 자동 훑기입니다.',
+    '틀린 문제는 <b>그 판 뒤쪽에 한 번 더</b> 나옵니다 — 틀린 채로 끝내면 그 기억이 남으니까요. 카드가 없는 날 더 하고 싶으면 [그래도 최근 단어 다시 보기](미리 본 것은 다음 복습 날짜를 안 밀립니다).',
   ]);
-  sec('⑥', '문제 유형과 그림', [
-    '<b>듣고 고르기 · 뜻 고르기</b> — 처음 만난 단어용.',
-    '<b>떠올려 말하기</b> — 익숙해지면 보기를 없앱니다. 보기 네 개 중 고르는 문제는 실력을 <b>약 20% 부풀려</b> 보여주기 때문입니다.',
-    '<b>받아쓰기</b> — 소리를 듣고 음절 조각으로 조립. 성조까지 들어야 풀립니다.',
-    '<b>그림</b> — 눈에 보이는 단어에만 붙입니다. 그림은 글보다 오래 남지만, 눈에 안 보이는 말에 억지로 붙이면 오히려 방해가 됩니다.',
-    '<b>예문</b> — 그날 대화에서 그 단어가 든 문장을 꺼내 보여줍니다. 단어와 문장이 따로 놀지 않게.',
+
+  sec('⑥', '소리와 뼈대 — 기본기 · 문법', [
+    '기본기는 일정에 안 들어갑니다 — 하루 한 판씩, 특히 <b>자기 전</b>에 돌리면 자는 동안 소리가 정리됩니다.',
+    '<b>모음</b> — o/ô/ơ · u/ư · a/ă 를 귀로 가르는 10문제. 한국인이 가장 오래 헷갈리는 자리입니다.',
+    '<b>성조</b> — 성조만 다른 단어를 소리로 구별하는 문제 + 들은 소리에 부호를 붙이는 문제. 시판 앱 대부분이 빠뜨린 부분입니다.',
+    '<b>자음</b>은 카드만 있고 훈련이 없습니다 — 북부 표준에서 tr=ch, s=x, d=gi=r이 <b>같은 소리</b>라 귀로 가르는 훈련이 성립하지 않습니다.',
+    '<b>호칭 · 어순 · 단위 · 남부 소리</b> 네 수업과 <b>문법 14과</b>는 예문 카드 몇 장 + 연습 문제로 끝납니다. ' +
+      '남부 소리 수업에서는 [북부 소리]와 [남부 소리]를 바로 맞대 들을 수 있고, 끝낸 예문은 문장 복습 창고로 들어갑니다.',
   ]);
-  sec('⑦', '소리와 성조', [
-    '위의 <b>북부 | 남부</b>로 모든 소리를 바꿀 수 있습니다.',
-    '<b>원어민 높낮이 곡선</b>과 내 곡선을 겹쳐 보여줍니다. 눈으로 비교하는 것이 가장 정직합니다.',
-    '자음 구별 훈련이 없는 것은 의도입니다 — 북부에서 tr=ch, s=x, d=gi=r은 같은 소리입니다.',
+
+  sec('⑦', 'AI 선생님과 실제로 말해 보기', [
+    '<b>자유 대화</b>는 북부/남부 × 여/남 <b>네 방</b>입니다. 방마다 말투와 소리가 다르고, 나갔다 와도 지난 대화가 남습니다.',
+    '지금까지 배운 단어를 매번 같이 보내므로 <b>내가 아는 단어 안에서</b> 말을 걸어옵니다 — 왕초보에게는 완전한 자유 대화보다 이쪽이 낫습니다. 답은 베트남어 · 발음 · 뜻 세 줄로 옵니다.',
+    '내 베트남어에 실수가 있으면 <b>✎</b>로 시작하는 교정 줄이 붙습니다. [다시 듣기]로 문장을 한 번 더 들을 수 있습니다.',
+    '입력칸 왼쪽 <b>마이크</b>는 말한 것을 받아 적어 칸에 넣어 줍니다(바로 안 보냅니다 — 고칠 기회를 줍니다). ' +
+      '<b>카메라</b>는 눈앞의 물건을 찍으면 그 이름으로 말을 걸어옵니다. 오른쪽 <b>자판</b>에는 ă â ê ô ơ ư đ 와 성조 글쇠가 있습니다.',
+    '<b>[방 비우기]</b>로 그 방을 처음부터, <b>[방 나가기]</b>로 목록으로. <b>배운 문장으로</b>에서는 끝낸 세트의 대화를 골라 <b>[내가 A] / [내가 B]</b>로 역할극을 합니다.',
   ]);
-  sec('⑧', '제일 중요한 한 가지', [
-    '완벽한 하루보다 <b>돌아오는 것</b>이 중요합니다.',
-    '<b>매일</b> 오는 것이 목표입니다. 다만 하루 빠졌다고 처음부터가 아닙니다 — 연속 기록은 세지 않습니다.',
-    '바쁜 날은 <b>3분만</b>이라도 하세요.',
+
+  sec('⑧', '내 실력을 재는 법 — 채점과 분석', [
+    '오른쪽 위 <b>사람 아이콘</b> → 이름 · 지역 · 하루 학습량을 [바꾸기]로 고칩니다. 별명은 2~10글자, 서버에 올라가는 것은 별명 · 도장 · 외운 단어 수뿐입니다.',
+    '<b>실력 분석</b>은 <b>말하기 · 듣기 · 읽기 · 쓰기 · 암기</b> 다섯 과목을 막대로 보여줍니다. [이번 주]와 [누적]을 눌러 견주세요.',
+    '<b>10문제가 안 되면 일부러 판정하지 않습니다</b> — 적은 표본으로 약점을 말하면 그건 분석이 아니라 점(占)입니다.',
+    '[자세히]를 열면 <b>성조별 · 문제 유형별 · 복습 단계별 · 단어 길이별 · 시간대별</b>까지 나옵니다. 아래 <b>이렇게 하면 올라갑니다</b> 칸에 처방과 <b>발목 잡는 단어</b>(두 번 이상 틀린 것)가 나옵니다.',
+    '<b>업적 31개</b>는 기초 · 진도 · 어휘 · 훈련 · 꾸준함 다섯 갈래입니다. 주가 바뀌면 <b>지난주 성적표</b>가 저절로 뜨고, <b>전체 순위</b>는 ' +
+      '<b>내 자리만</b> 보여줍니다 — 남의 등수도 이름도 아무에게도 안 보입니다. 연속 기록은 일부러 세지 않습니다: 하루 끊겼다고 그만두게 되니까요.',
   ]);
+
+  sec('⑨', '혼자 하지 않기 · 베트남 알기 · 진도 지키기', [
+    '혼자 하는 공부는 3주를 못 넘깁니다. <b>동아리</b>에 들어가면 회원별 <b>이번 주 월~일 도장</b>이 한눈에 보입니다 — 점수가 아니라 누가 나왔는지만 보여줍니다.',
+    '직접 만들 수도 있습니다(예: 빈즈엉 3공장). <b>아무나 못 들어오게</b>를 켜면 승인제가 되어 신청이 오면 [받기]로 들입니다. 실명도 학습 기록도 올라가지 않습니다.',
+    '<b>베트남 소식</b>에는 매일 저녁 로봇이 골라둔 <b>오늘 기사</b>(제목을 누르면 원문), 하노이·호찌민 <b>한 주 예보</b>와 월평균 기온·강수량, ' +
+      '그리고 <b>문화 16장</b>(호칭 · 이름 · 두 손 · 회식 · 낮잠 · 오토바이 · 설 · 금기…)이 있습니다. 말만 배워서는 반쪽입니다.',
+    '하루가 끝나면 홈 아래 <b>[진도 백업]</b>을 한 번 누르세요 — 글자 뭉치가 복사됩니다. 메모 앱에 붙여 두면 폰을 바꿔도 <b>[백업 불러오기]</b>로 되살아납니다. ' +
+      '<b>[진도 초기화]</b>는 되돌릴 수 없어 두 번 묻습니다.',
+    '한 번 연 화면과 한 번 들은 소리는 폰에 남아 <b>인터넷이 끊겨도</b> 열립니다. 브라우저 메뉴에서 <b>홈 화면에 추가</b>해 두면 앱처럼 열립니다.',
+  ]);
+
   show('guide', '사용법', true);
 }
 
