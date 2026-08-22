@@ -428,7 +428,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'culture'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'culture', 'week', 'nick'];
 /* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
@@ -643,6 +643,122 @@ function weekWords() {
 
 function renderWeekly() {
   $('#goWeekly').hidden = weekWords().length < 10;
+}
+
+
+/* ---------- 주간 성적표 ----------
+   점수는 지어내지 않는다. 앱이 직접 채점한 것만 센다:
+   암기=인출 정답률, 귀=성조·모음 구별, 철자=받아쓰기·자판, 발음=AI가 알아들은 비율.
+   문제 수가 적으면(10문제 미만) 판정하지 않는다 — 적은 표본으로 강점·약점을 말하면 거짓이 된다. */
+const weekKey = t => { const d = t ? new Date(t) : new Date();
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return ymd(d); };   // 그 주 월요일
+const SUBJ = [
+  { k: '암기', ok: 'qOk', all: 'qAll', tip: '뜻·소리를 꺼내는 힘 (복습 문제)' },
+  { k: '귀', ok: 'earOk', all: 'earAll', tip: '성조·모음 구별 (기본기 훈련)' },
+  { k: '철자', ok: 'spellOk', all: 'spellAll', tip: '받아쓰기·자판' },
+  { k: '발음', ok: 'pronOk', all: 'pronAll', tip: 'AI가 알아들은 비율 (따라 말하기)' },
+];
+function snapshot() {
+  const t = S.stats || {};
+  const o = { memo: Object.values(S.srs).filter(v => v.lv >= 2).length,
+              days: Object.keys(S.act).length,
+              sets: Object.keys(S.done).filter(k => +k >= 1).length, said: t.said || 0 };
+  SUBJ.forEach(x => { o[x.ok] = t[x.ok] || 0; o[x.all] = t[x.all] || 0; });
+  return o;
+}
+function weekReport(base) {
+  const cur = snapshot(), b = base || {};
+  const subj = SUBJ.map(x => {
+    const n = (cur[x.all] || 0) - (b[x.all] || 0), ok = (cur[x.ok] || 0) - (b[x.ok] || 0);
+    return { name: x.k, n, pct: n ? Math.round(ok * 100 / n) : null, tip: x.tip };
+  });
+  const d = k => (cur[k] || 0) - (b[k] || 0);
+  const r = { subj, memo: d('memo'), days: d('days'), sets: d('sets'), said: d('said') };
+  // 순위 점수 — 성과(외운 단어)와 노력(문제·발화·출석)을 함께 센다
+  const solved = subj.reduce((a, x) => a + x.n, 0);
+  r.score = r.memo * 3 + solved + Math.round(r.said * .5) + r.days * 5;
+  return r;
+}
+function showWeek(rep) {
+  const b = $('#weekBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '지난주 성적표' + (S.nick ? ' — ' + esc(S.nick) : '')));
+  const st = el('div', 'stats');
+  [['공부한 날', rep.days + '일'], ['끝낸 세트', rep.sets], ['새로 외운 단어', rep.memo], ['소리 낸 횟수', rep.said]]
+    .forEach(([k, v]) => { const c = el('div', 'stat');
+      c.append(el('b', null, String(v)), el('span', null, k)); st.append(c); });
+  b.append(st);
+
+  const ok = rep.subj.filter(x => x.n >= 10);
+  rep.subj.forEach(x => {
+    const row = el('div', 'subj');
+    row.append(el('span', 'sname', x.name));
+    const bar = el('span', 'sbar');
+    if (x.pct !== null) { const fill = el('i'); fill.style.width = x.pct + '%'; bar.append(fill); }
+    row.append(bar);
+    row.append(el('span', 'spct', x.pct === null ? '—' : x.pct + '%'));
+    row.append(el('span', 'sn', x.n ? x.n + '문제' : '안 함'));
+    b.append(row);
+  });
+
+  if (ok.length >= 2) {
+    const best = ok.reduce((a, x) => x.pct > a.pct ? x : a);
+    const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
+    const c = el('div', 'rulecard');
+    c.append(el('div', 'rhead', '<b>이번 주 강점과 약점</b>'));
+    c.append(el('div', 'rbody',
+      `<b>강점 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}<br>` +
+      `<b>약점 — ${esc(worst.name)} ${worst.pct}%</b> · ${esc(worst.tip)}<br><br>` +
+      (worst.name === '귀' ? '이번 주는 기본기의 <b>성조·모음</b>을 자기 전에 한 번씩 돌려 보세요. 자는 동안 소리가 정리됩니다.'
+       : worst.name === '철자' ? '<b>자판·손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.'
+       : worst.name === '발음' ? '<b>따라 말하기</b>에서 AI가 듣기를 눌러 보세요. 알아듣는 발음인지가 바로 나옵니다.'
+       : '<b>복습</b>을 밀리지 않게 하는 것이 제일 빠릅니다 — 잊기 직전에 꺼내야 오래 남습니다.')));
+    b.append(c);
+  } else {
+    b.append(el('p', 'note', '아직 문제 수가 적어 강점·약점을 말할 수 없습니다. 한 주만 더 해 보세요 — 과목마다 10문제가 넘으면 판정합니다.'));
+  }
+
+  if (RANKURL && S.nick) {
+    const box = el('div', 'rulecard');
+    box.append(el('div', 'rhead', '<b>이번 주 순위</b>'), el('div', 'rbody', '불러오는 중…'));
+    b.append(box);
+    fetch(RANKURL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nick: S.nick, week: weekKey(), score: rep.score }) })
+      .then(r => r.json()).then(j => {
+        const top = (j.top || []).map((t, i) => `${i + 1}위 ${esc(t.nick)} — ${t.score}점`).join('<br>');
+        box.querySelector('.rbody').innerHTML =
+          (j.rank <= 5 ? `<b>당신은 ${j.rank}위입니다 (${j.total}명 중)</b><br><br>` + top
+           : `<b>당신은 상위 ${j.pct}% 입니다</b> (등수는 본인만 봅니다)<br><br>` + top) +
+          '<br><br><span class="dimtxt">점수 = 새로 외운 단어×3 + 푼 문제 + 소리 낸 횟수÷2 + 공부한 날×5</span>';
+      }).catch(() => { box.querySelector('.rbody').textContent = '순위를 불러오지 못했습니다.'; });
+  }
+
+  const go = el('button', 'primary big', '이번 주 시작하기');
+  go.style.width = '100%'; go.style.marginTop = '18px';
+  go.onclick = () => { S.wk = { k: weekKey(), base: snapshot() }; save(); renderHome(); };
+  b.append(go);
+  show('week', '주간 성적표', false);
+}
+
+/* 닉네임 — 최초 한 번. 서버에 저장되지 않고, 순위에만 쓰인다 */
+function askNick() {
+  const b = $('#nickBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '무엇이라 부를까요?'));
+  b.append(el('p', 'note', '단톡방에서 쓰는 별명이면 됩니다. 이 폰에만 저장되고, 나중에 주간 순위에만 쓰입니다. 실명은 쓰지 마세요.'));
+  const inp = el('input', 'keyin'); inp.type = 'text'; inp.placeholder = '별명 (2~10글자)'; inp.maxLength = 10;
+  const go = el('button', 'primary big', '시작하기');
+  go.style.width = '100%';
+  go.onclick = () => {
+    const v = inp.value.trim();
+    if (v.length < 2) { inp.focus(); return; }
+    S.nick = v; S.wk = { k: weekKey(), base: snapshot() }; save();
+    renderHome();
+  };
+  const skip = el('button', 'ghost sm', '나중에');
+  skip.onclick = () => { S.nick = '이름없음'; S.wk = { k: weekKey(), base: snapshot() }; save(); renderHome(); };
+  b.append(inp, go, skip);
+  show('nick', '짜오짜오', false);
 }
 
 /* ---------- 홈 ---------- */
@@ -2070,6 +2186,8 @@ let CH = null;
 /* AI 중계 서버 — 키를 서버가 숨겨 들고 있어서 누구나 키 없이 쓴다.
    (2026-08-22 개통. 비우면 예전 방식(각자 키)으로 돌아간다) */
 const PROXY = 'https://viet-ai.chaochao-app.workers.dev';
+/* 순위 서버 — 주소를 채우면 주간 순위가 켜진다 (비면 개인 성적표만) */
+const RANKURL = '';
 const aiReady = () => !!(PROXY || S.gkey);
 const GURL = () => PROXY ||
   ('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(S.gkey));
@@ -2686,5 +2804,7 @@ Promise.all([
   VDRILL = d.voweldrill || [];
   AIDX = a;
   drawRegion();
+  if (!S.nick) { askNick(); return; }                 // 최초 1회
+  if (S.wk && S.wk.k !== weekKey()) { showWeek(weekReport(S.wk.base)); return; }
   renderHome();
 }).catch(e => { $('#title').textContent = '불러오기 실패'; console.error(e); });
