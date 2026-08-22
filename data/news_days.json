@@ -288,7 +288,7 @@
     ],
     "extra": []
    },
-   "n": 4
+   "n": 5
   },
   {
    "ts": "2026-08-21",
@@ -577,7 +577,7 @@
     ],
     "extra": []
    },
-   "n": 3
+   "n": 4
   },
   {
    "ts": "2026-08-21",
@@ -841,6 +841,236 @@
         "name": "huyền",
         "ko": "낮게 내려감",
         "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 3
+  },
+  {
+   "ts": "2026-08-21",
+   "day": "Nno=43875",
+   "track": "news",
+   "theme": "베트남 음식",
+   "title": "베트남 분짜, ‘아시아 100대 고기요리’에 선정…테이스트아틀라스",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=43875",
+   "cat": null,
+   "intro": "베트남 분짜, 아시아 100대 고기요리에 선정 베트남 요리 6종이 순위에 올라 미식 매력 입증",
+   "words": [
+    {
+     "vi": "cơm",
+     "ko": "밥",
+     "kr_read": "껌",
+     "emoji": "🍚",
+     "tones": [
+      {
+       "syl": "cơm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-com.webp"
+    },
+    {
+     "vi": "phở",
+     "ko": "쌀국수",
+     "kr_read": "퍼",
+     "emoji": "🍜",
+     "tones": [
+      {
+       "syl": "phở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-pho.webp"
+    },
+    {
+     "vi": "ngon",
+     "ko": "맛있다",
+     "kr_read": "응온",
+     "emoji": "😋",
+     "tones": [
+      {
+       "syl": "ngon",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ngon.webp"
+    },
+    {
+     "vi": "nước",
+     "ko": "물",
+     "kr_read": "느억",
+     "emoji": "💧",
+     "tones": [
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nuoc.webp"
+    },
+    {
+     "vi": "thịt",
+     "ko": "고기",
+     "kr_read": "팃",
+     "emoji": "🥩",
+     "tones": [
+      {
+       "syl": "thịt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-thit.webp"
+    },
+    {
+     "vi": "rau",
+     "ko": "채소",
+     "kr_read": "자우",
+     "emoji": "🥬",
+     "tones": [
+      {
+       "syl": "rau",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-rau.webp"
+    },
+    {
+     "vi": "ăn",
+     "ko": "먹다",
+     "kr_read": "안",
+     "emoji": "🍽️",
+     "tones": [
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-an.webp"
+    },
+    {
+     "vi": "quán",
+     "ko": "식당",
+     "kr_read": "꽌",
+     "emoji": "가게",
+     "tones": [
+      {
+       "syl": "quán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-quan.webp"
+    },
+    {
+     "vi": "chè",
+     "ko": "차",
+     "kr_read": "쩨",
+     "emoji": "🍵",
+     "tones": [
+      {
+       "syl": "chè",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-che.webp"
+    },
+    {
+     "vi": "bún",
+     "ko": "가는 면",
+     "kr_read": "분",
+     "emoji": "🍜",
+     "tones": [
+      {
+       "syl": "bún",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-bun.webp"
+    }
+   ],
+   "dialog": {
+    "title": "베트남 음식",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Món này ngon không?",
+      "ko": "이 음식 맛있어요?",
+      "kr_read": "몬 나이 응온 콩?",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Món",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ngon",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, rất ngon.",
+      "ko": "네, 아주 맛있어요.",
+      "kr_read": "방, 젓 응온.",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        }
       ],
       "gloss": []
@@ -1117,5 +1347,5 @@
    "n": 1
   }
  ],
- "updated": "2026-08-23 00:27"
+ "updated": "2026-08-23 00:30"
 }
