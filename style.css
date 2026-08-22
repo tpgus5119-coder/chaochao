@@ -645,3 +645,12 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .wxnote{margin:2px 0 10px; padding-left:18px}
 .wxnote li{font-size:14px; line-height:1.65; color:var(--dim); margin-bottom:6px}
 .wxnote li b{color:var(--fg)}
+
+/* 기사 분야 표찰 */
+.newsrow .ncat{display:inline-block; font-size:10px; font-weight:700; color:var(--ok);
+  border:1px solid var(--line); border-radius:6px; padding:1px 6px; margin-bottom:5px}
+
+/* 선생님 사진 */
+.tchface{width:132px; height:132px; object-fit:cover; border-radius:50%;
+  animation:tsway 5s ease-in-out infinite; display:block; margin:0 auto}
+.vi.mid{text-align:center; font-size:20px; margin-top:-6px}
