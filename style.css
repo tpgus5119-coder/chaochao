@@ -422,7 +422,8 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 
 /* AI 대화 */
 .chatlog{display:flex; flex-direction:column; gap:10px; padding:2px 0 8px}
-.cb{max-width:86%; padding:10px 14px; border-radius:16px; font-size:15px; line-height:1.5}
+.cb{max-width:86%; padding:10px 14px; border-radius:16px; font-size:15px; line-height:1.5;
+  white-space:pre-line; overflow-wrap:anywhere}
 .cb.me{align-self:flex-end; background:var(--accent); color:var(--accent-fg); border-bottom-right-radius:5px}
 .cb.ai{align-self:flex-start; background:var(--card); border:1px solid var(--line); border-bottom-left-radius:5px}
 .cb.wait{color:var(--dim)}
@@ -433,12 +434,22 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .cb .cfix{font-size:13px; color:var(--warn); margin-top:4px}
 .cb .ghost.sm{margin-top:6px; padding:4px 10px; font-size:13px}
 .chatin{
-  position:sticky; bottom:0; display:flex; gap:8px;
+  position:sticky; bottom:0; display:flex; gap:8px; align-items:flex-end;
   padding:10px 0 calc(env(safe-area-inset-bottom) + 12px); background:var(--bg);
 }
-.chatin input{
-  flex:1; min-width:0; padding:12px 14px; border-radius:12px; font:inherit;
-  border:1px solid var(--line); background:var(--card); color:var(--fg);
+/* 입력칸은 쓴 글을 따라 세로로 자란다 (최대 다섯 줄, 그 뒤로는 칸 안에서 스크롤).
+   높이를 재서 맞추면 사파리에서 어긋난다 — 보이지 않는 쌍둥이 글을 겹쳐 두고
+   그 글의 키를 그대로 칸의 키로 쓴다. */
+.tawrap{flex:1; min-width:0; display:grid; max-height:140px; overflow:hidden}
+.tawrap::after{content:attr(data-v) ' '; visibility:hidden; white-space:pre-wrap}
+.tawrap > textarea, .tawrap::after{
+  grid-area:1 / 1 / 2 / 2; padding:12px 14px; border:1px solid var(--line);
+  border-radius:12px; font:inherit; line-height:1.45; box-sizing:border-box;
+  overflow-wrap:anywhere; word-break:break-word;
+}
+.tawrap > textarea{
+  resize:none; overflow-y:auto; background:var(--card); color:var(--fg);
+  height:100%; max-height:140px;      /* 다섯 줄이 넘으면 칸 안에서 스크롤 */
 }
 .chatmode{
   display:flex; flex-direction:column; align-items:flex-start; gap:3px; width:100%;
@@ -736,3 +747,14 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
   padding:16px 18px; margin-bottom:8px; border:1px solid var(--line); border-radius:12px;
   background:transparent; color:var(--fg); cursor:pointer}
 .cb.note{background:transparent; border:1px dashed var(--line); color:var(--dim); font-size:13px; white-space:pre-line}
+
+/* 동아리 — 이번 주 출석판 */
+.cmem{display:flex; align-items:center; gap:10px; padding:8px 12px; margin-bottom:6px;
+  border:1px solid var(--line); border-radius:10px}
+.cmem.me{border-color:var(--accent)}
+.cmem .cn{flex:0 0 78px; font-weight:700; font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.cmem .dots{flex:1}
+.cmem .dot{flex:0 0 auto; width:16px; height:16px; border-radius:4px}
+.cmem .cw{font-size:12px; color:var(--dim); flex:0 0 auto}
+.chk{display:flex; align-items:center; gap:8px; margin:10px 0 14px; font-size:14px; color:var(--dim)}
+.chk input{width:18px; height:18px}

@@ -421,7 +421,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'culture', 'week', 'nick', 'sub', 'prog'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'culture', 'week', 'nick', 'sub', 'prog', 'club'];
 /* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
@@ -962,6 +962,7 @@ const MENUS = {
   gram:  { name: '문법', sub: '문장을 만드는 뼈대', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
   ai:    { name: 'AI 선생님', sub: '말이 트이는 자리', items: () => [
             ['자유 대화', startChat], ['배운 문장으로', startTalk]] },
+  club:  { name: '동아리', sub: '같이 하는 사람들', items: () => [['보기', showClub]] },
   news:  { name: '베트남 소식', sub: '오늘의 베트남', items: () => [
             ['기사', showNews], ['날씨', () => showWx()], ['문화', showCulture]] },
   guide: { name: '사용법', sub: '이 앱을 쓰는 법', items: () => [['보기', showGuide]] },
@@ -3129,7 +3130,7 @@ function drawChatKeys() {
   const kb = $('#chatKeys');
   kb.textContent = '';
   const inp = $('#chatText');
-  const put = ch => { inp.value += ch; inp.focus({ preventScroll: true }); };
+  const put = ch => { inp.value += ch; chatGrow(); inp.focus({ preventScroll: true }); };
   const key = (label, fn, cls) => { const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label);
     k.type = 'button'; k.onclick = fn; return k; };
   ['q w e r t y u i o p', 'a s d f g h j k l', 'z x c v b n m', 'ă â ê ô ơ ư đ'].forEach(r => {
@@ -3147,16 +3148,27 @@ function drawChatKeys() {
         const bare = stripTone(last);
         parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
         inp.value = parts.join(' ');
+        chatGrow();
         inp.focus({ preventScroll: true });
       }, 'tonek ' + name));
     });
   kb.append(trow);
   const brow = el('div', 'vkrow');
   brow.append(key('띄어쓰기', () => put(' '), 'wide'),
-              key('⌫', () => { inp.value = inp.value.slice(0, -1); inp.focus({ preventScroll: true }); }, 'wide'),
+              key('⌫', () => { inp.value = inp.value.slice(0, -1); chatGrow(); inp.focus({ preventScroll: true }); }, 'wide'),
               key('보내기', () => $('#chatForm').requestSubmit(), 'go wide'));
   kb.append(brow);
 }
+/* 입력칸은 글이 길어지면 세로로 자란다 — 한 줄에 가려 뭘 썼는지 안 보이면 고칠 수가 없다.
+   최대 다섯 줄까지 늘고 그 뒤로는 칸 안에서 스크롤된다. */
+function chatGrow() {
+  const t = $('#chatText');
+  t.parentElement.dataset.v = t.value;   // 틀이 이 글의 키만큼 늘어난다 (높이는 css가 정한다)
+}
+$('#chatText').addEventListener('input', chatGrow);
+$('#chatText').addEventListener('keydown', e => {          // 컴퓨터 자판: 엔터는 보내기, 시프트+엔터는 줄바꿈
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#chatForm').requestSubmit(); }
+});
 $('#chatText').onclick = () => { if ($('#chatKeys').hidden) $('#chatKb').click(); };
 $('#chatKb').onclick = () => {
   const kb = $('#chatKeys');
@@ -3353,6 +3365,7 @@ $('#chatMic').onclick = async () => {
         });
         const inp = $('#chatText');
         inp.value = heard;                       // 바로 보내지 않는다 — 고쳐 쓸 기회를 준다
+        chatGrow();
         inp.focus({ preventScroll: true });
         const w = findItem(heard) || allWords().find(x => x.vi.toLowerCase() === heard.toLowerCase());
         bubble('ai note', '이렇게 들렸습니다: ' + heard + (w ? ' — ' + w.ko : '') +
@@ -3628,6 +3641,7 @@ $('#chatForm').onsubmit = e => {
   const v = $('#chatText').value.trim();
   if (!v || !CH) return;
   $('#chatText').value = '';
+  chatGrow();
   chatSend(v);
 };
 /* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
@@ -3708,6 +3722,155 @@ function drawRegion() {
 $('#region').onclick = () => {
   S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion();
 };
+
+/* ---------- 동아리 ----------
+   왜 있는가: 혼자 하는 공부는 3주를 못 넘긴다. 사람은 "나만 안 하고 있다"는
+   느낌에 가장 잘 움직인다. 그래서 보여 주는 것은 점수가 아니라 도장판이다 —
+   누가 이번 주 며칠 나왔는지. 순위는 곁다리로만 둔다(1~5등만 이름 공개).
+   서버에 올라가는 것은 별명·도장·외운 단어 수뿐. 실명도 기록도 올리지 않는다. */
+const CLUBURL = 'https://viet-club.chaochao-app.workers.dev';
+async function cCall(o) {
+  const r = await fetch(CLUBURL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                                   body: JSON.stringify(Object.assign({ nick: S.nick }, o)) });
+  const j = await r.json();
+  if (j.error === 'gone') { S.club = null; save(); throw new Error('이 동아리는 사라졌습니다.'); }
+  if (j.error) throw new Error(j.error);
+  return j;
+}
+const clubBusy = t => { const b = $('#clubBody'); b.textContent = '';
+                        b.append(el('p', 'lede', t)); show('club', '동아리', true); };
+const clubFail = e => { const b = $('#clubBody'); b.textContent = '';
+  b.append(el('p', 'lede', esc(e.message || '연결하지 못했습니다')));
+  const again = el('button', 'primary big', '다시'); again.style.width = '100%';
+  again.onclick = showClub; b.append(again); show('club', '동아리', true); };
+
+function showClub() {
+  if (!S.nick || S.nick === '이름없음') { askNick(); return; }
+  clubBusy('불러오는 중…');
+  if (S.club) {
+    const dots = weekDots();
+    cCall({ act: 'report', id: S.club.id, days: dots.map(d => d.done ? 1 : 0),
+            memo: Object.values(S.srs).filter(v => v.lv >= 2).length,
+            score: weekReport(S.wk && S.wk.base).score })
+      .then(clubHome).catch(e => { if (!S.club) clubList(); else clubFail(e); });
+  } else clubList();
+}
+
+function clubList() {
+  clubBusy('불러오는 중…');
+  cCall({ act: 'clubs' }).then(j => {
+    const b = $('#clubBody');
+    b.textContent = '';
+    b.append(el('p', 'lede', '같이 하면 오래 갑니다. 이번 주 누가 며칠 나왔는지 서로 보입니다.'));
+    const mk = el('button', 'primary big', '동아리 만들기');
+    mk.style.width = '100%'; mk.style.marginBottom = '14px';
+    mk.onclick = clubCreate;
+    b.append(mk);
+    if (!j.clubs.length) b.append(el('p', 'note', '아직 만들어진 동아리가 없습니다. 첫 번째로 만들어 보세요.'));
+    j.clubs.forEach(c => {
+      const row = el('button', 'bigmenu');
+      row.append(el('b', null, esc(c.name)),
+                 el('span', 'msub', ` ${c.n}명` + (c.approve ? ' · 승인제' : '')));
+      row.onclick = () => {
+        clubBusy('들어가는 중…');
+        cCall({ act: 'join', id: c.id }).then(r => {
+          if (r.state === 'wait') { clubBusy('가입 신청했습니다. 개설자가 받아 주면 들어갑니다.');
+                                    const bk = el('button', 'ghost', '목록으로'); bk.onclick = clubList;
+                                    $('#clubBody').append(bk); return; }
+          S.club = { id: c.id, name: c.name }; save(); showClub();
+        }).catch(clubFail);
+      };
+      b.append(row);
+    });
+    show('club', '동아리', true);
+  }).catch(clubFail);
+}
+
+function clubCreate() {
+  const b = $('#clubBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '어떤 동아리인가요?'));
+  const inp = el('input', 'keyin'); inp.type = 'text'; inp.maxLength = 20;
+  inp.placeholder = '이름 (예: 빈즈엉 3공장)';
+  const ap = el('label', 'chk');
+  const cb = el('input'); cb.type = 'checkbox';
+  ap.append(cb, el('span', null, '아무나 못 들어오게 (내가 받아 줘야 가입)'));
+  const go = el('button', 'primary big', '만들기');
+  go.style.width = '100%';
+  go.onclick = () => {
+    const v = inp.value.trim();
+    if (v.length < 2) { inp.focus(); return; }
+    clubBusy('만드는 중…');
+    cCall({ act: 'create', name: v, approve: cb.checked })
+      .then(j => { S.club = { id: j.id, name: j.name }; save(); showClub(); })
+      .catch(clubFail);
+  };
+  const back = el('button', 'ghost sm', '목록으로');
+  back.onclick = clubList;
+  b.append(inp, ap, go, back);
+  show('club', '동아리 만들기', true);
+  inp.focus();
+}
+
+function clubHome(j) {
+  S.club = { id: S.club.id, name: j.name }; save();
+  const b = $('#clubBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', esc(j.name) + ' · ' + j.total + '명'));
+
+  // 승인 대기 (개설자에게만)
+  (j.wait || []).forEach(w => {
+    const row = el('div', 'planrow');
+    row.append(el('span', 'pk', '신청'), el('span', 'pv', esc(w)));
+    const ok = el('button', 'ghost sm', '받기');
+    ok.onclick = () => { clubBusy('처리 중…'); cCall({ act: 'accept', id: S.club.id, who: w })
+      .then(showClub).catch(clubFail); };
+    row.append(ok);
+    b.append(row);
+  });
+
+  // 이번 주 도장판 — 이 동아리의 핵심 화면
+  const head = el('div', 'phead');
+  head.append(el('strong', null, '이번 주 출석'));
+  head.append(el('span', 'dimtxt', '월 화 수 목 금 토 일'));
+  b.append(head);
+  j.members.forEach(m => {
+    const row = el('div', 'cmem' + (m.nick === S.nick ? ' me' : ''));
+    row.append(el('span', 'cn', esc(m.nick)));
+    const dd = el('span', 'dots');
+    for (let i = 0; i < 7; i++) dd.append(el('i', 'dot' + ((m.days || [])[i] ? ' on' : '')));
+    row.append(dd, el('span', 'cw', (m.memo || 0) + '단어'));
+    b.append(row);
+  });
+
+  // 순위 — 곁다리. 등수는 본인에게만 보인다
+  if (j.total >= 2) {
+    const c = el('div', 'rulecard');
+    c.append(el('div', 'rhead', '<b>이번 주 순위</b>'));
+    const top = j.top.map((t, i) => `${i + 1}위 ${esc(t.nick)} — ${t.score}점`).join('<br>');
+    c.append(el('div', 'rbody',
+      (j.rank <= 5 ? `<b>나는 ${j.rank}위</b> (${j.total}명 중)` :
+       j.pct ? `<b>나는 상위 ${j.pct}%</b> (등수는 나만 봅니다)` : '') +
+      '<br><br>' + top +
+      '<br><br><span class="dimtxt">점수 = 새로 외운 단어×3 + 푼 문제 + 소리 낸 횟수÷2 + 공부한 날×5</span>'));
+    b.append(c);
+  }
+
+  b.append(el('p', 'note', '올라가는 것은 별명과 위 숫자뿐입니다. 배운 내용이나 기록은 올라가지 않습니다.'));
+  const others = el('button', 'ghost sm', '다른 동아리 보기');
+  others.onclick = clubList;
+  const out = el('button', 'ghost sm', '나가기');
+  out.onclick = () => {
+    if (!confirm(j.name + ' 에서 나갈까요?')) return;
+    clubBusy('나가는 중…');
+    cCall({ act: 'leave', id: S.club.id })
+      .then(() => { S.club = null; save(); clubList(); }).catch(clubFail);
+  };
+  const row = el('div', 'rolepick');
+  row.append(others, out);
+  b.append(row);
+  show('club', '동아리', true);
+}
 
 if ('serviceWorker' in navigator) {
   addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));
