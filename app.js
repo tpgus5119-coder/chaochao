@@ -950,6 +950,10 @@ function askNick() {
 
 /* ---------- 홈 ---------- */
 const allWords = () => ALL.flatMap(d => d.words || []);
+/* 끝낸 세트의 대화 문장 — 복습에서 단어와 같이 다룬다 */
+const allSents = () => ALL.flatMap(d => (d.dialog?.lines || []).map(l =>
+  ({ vi: l.vi, ko: l.ko, kr_read: l.kr_read, tones: l.tones, sent: true })));
+const findItem = vi => allWords().find(w => w.vi === vi) || allSents().find(x => x.vi === vi);
 /* 복습에 꺼낼 단어 — 최근에 배운 것일수록 앞에 오되 ±3일 흔들림을 줘서
    같은 시기 단어끼리는 매번 순서가 바뀐다(무조건 최신순은 아니다). */
 function dueWords() {
@@ -1316,7 +1320,11 @@ $('#next').onclick = () => {
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
   if (L.cult) { renderHome(); return; }
   if (L.dlg) {                         // 대화(써먹기)까지 끝나면 오늘 완료
-    S.done[L.day.day] = now(); touchToday(); save();
+    S.done[L.day.day] = now();
+    (L.day.dialog?.lines || []).forEach(l => {          // 그날 문장도 복습 창고로
+      if (!S.srs[l.vi]) S.srs[l.vi] = { lv: 0, first: now(), due: now() + STEPS[0] * DAY };
+    });
+    touchToday(); save();
     finishDay(L.day);
     return;
   }
@@ -1433,6 +1441,7 @@ let Q = null;
 function buildQuestions(words) {
   const pool = allWords();
   return words.map(w => {
+    if (w.sent) return { w, mode: 'say', opts: [] };      // 문장은 입으로 낸다
     const lv = (S.srs[w.vi] || {}).lv || 0;
     // 익숙해진 단어(2단계 이상)는 보기 없이 직접 떠올리게 한다.
     // 받아쓰기(dict)는 1단계부터 가끔 섞는다 — 듣기·철자·성조를 한 번에 시험한다.
@@ -1452,7 +1461,7 @@ function buildQuestions(words) {
 
 const REV_CHUNK = 20;                          // 복습 한 판의 최대 문제 수
 function startQuiz(words, day, cap, early) {
-  let src = words || dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+  let src = words || dueWords().map(findItem).filter(Boolean);
   if (!src.length) { renderHome(); return; }
   if (!day) src = src.slice(0, cap || REV_CHUNK);   // 복습은 20개씩 끊어 낸다
   const list = buildQuestions(src);
@@ -1465,12 +1474,12 @@ function startQuiz(words, day, cap, early) {
    전에는 카드가 없으면 말없이 홈으로 돌아가서 버튼이 죽은 것처럼 보였다.
    설명은 홈의 [방식] 버튼으로 언제든 다시 볼 수 있다. */
 function reviewStart(cap) {
-  const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+  const due = dueWords().map(findItem).filter(Boolean);
   if (S.revSeen && due.length) { startQuiz(due, null, cap); return; }
   drawRevInfo(cap);
 }
 function drawRevInfo(cap) {
-  const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+  const due = dueWords().map(findItem).filter(Boolean);
   const b = $('#quizBody');
   b.textContent = '';
   $('#quizFill').style.width = '0%';
@@ -1634,13 +1643,25 @@ function drawDict(body, q) {
 /* 입으로 — 듣고 따라 말하고, 원어민 높낮이와 겹쳐 본다 (복습 안에서) */
 function drawSay(body, q) {
   const w = q.w;
-  body.append(el('div', 'qmain', esc(w.vi)));
+  body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.vi)));
   body.append(toneRow(w.tones));
   body.append(reveal(w.kr_read));
   body.append(el('div', 'q mid', esc(w.ko)));
   body.append(speakRow(w.vi, true));
   play(w.vi, false);
-  nextBtn(body, () => { bumpSaid(); grade(w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); });
+  const jbox = el('div', 'cmpnote judge');
+  let done = false;
+  const jb = judgeBtn(w.vi, jbox, ok => {
+    if (done) return; done = true;
+    grade(w.vi, ok, Q.early);
+    if (ok) Q.ok++; else requeue(q);
+    nextBtn(body, () => { Q.i++; drawQuiz(); });
+  });
+  if (jb) { const row = el('div', 'qplay'); row.append(jb); body.append(row, jbox); }
+  nextBtn(body, () => {
+    if (!done) { bumpSaid(); grade(w.vi, true, Q.early); Q.ok++; }
+    Q.i++; drawQuiz();
+  });
 }
 
 /* 손으로 — 성조 부호까지 써 본다 (복습 안에서) */
@@ -1743,6 +1764,61 @@ function drawTypeQ(body, q) {
   body.append(kb);
 }
 
+
+/* 말한 것을 AI가 받아 적어 맞는지 본다.
+   성조는 채점하지 않는다(AI도 성조는 틀린다). 글자가 맞으면 정답으로 친다 —
+   "알아들을 수 있게 말했는가"가 이 단계의 목표다. */
+function judgeBtn(target, box, onDone) {
+  if (!canRecord() || !aiReady()) return null;
+  const b = el('button', 'rec', '🎤 말하고 채점받기');
+  b.onclick = async () => {
+    if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
+    try {
+      if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) { box.textContent = '마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.'; return; }
+    const chunks = [];
+    const mr = new MediaRecorder(REC.stream);
+    REC.mr = mr; REC.key = target;
+    mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+    mr.onstop = async () => {
+      releaseMic();
+      b.textContent = '🎤 말하고 채점받기';
+      const url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
+      if (REC.url) URL.revokeObjectURL(REC.url);
+      REC.url = url;
+      box.textContent = 'AI가 듣는 중…';
+      bumpSaid();
+      try {
+        const b64 = await recToWav(url);
+        const heard = await gCall({
+          contents: [{ role: 'user', parts: [
+            { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
+            { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+          generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
+        }, i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
+        const clean = x => x.toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+        const bare = x => stripTone(clean(x));
+        const exact = clean(heard) === clean(target);
+        const close = bare(heard) === bare(target);
+        S.stats.pronAll = (S.stats.pronAll || 0) + 1;
+        if (exact || close) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
+        save();
+        box.innerHTML = exact
+          ? '<b class="okmsg">정확합니다 — AI가 "' + esc(heard) + '"로 받아 적었습니다.</b>'
+          : close
+            ? '<b class="okmsg">알아들었습니다 — "' + esc(heard) + '".</b> 성조는 아래 곡선으로 확인하세요.'
+            : '<b class="nomsg">AI에게는 "' + esc(heard) + '"로 들렸습니다.</b> 목표는 <b>' + esc(target) + '</b> — 조금 크게, 또박또박 다시 해 보세요.';
+        fxTone(exact || close);
+        onDone && onDone(exact || close);
+      } catch (e) { box.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
+    };
+    mr.start();
+    b.textContent = '■ 멈추기';
+    setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, 8000);
+  };
+  return b;
+}
+
 /* 회상형 — 보기를 주지 않고 직접 떠올려 소리 내게 한다.
    4지선다는 아는 것처럼 보이게 만든다(실제보다 20% 과대평가). 회상이 진짜다.
    게다가 소리 내어 말하므로 산출 효과까지 같이 얻는다. 채점은 본인이 한다. */
@@ -1753,7 +1829,15 @@ function drawRecall(body, q) {
   const hint = el('p', 'cmpnote', '베트남어로 <b>입 밖에 내어</b> 말해 보세요. 속으로만 생각하면 효과가 절반입니다.');
   body.append(hint);
 
-  const show = el('button', 'primary big', '말했어요 · 정답 보기');
+  const jbox = el('div', 'cmpnote judge');
+  const jb = judgeBtn(q.w.vi, jbox, ok => {
+    grade(q.w.vi, ok, Q.early);
+    if (ok) Q.ok++; else requeue(q);
+    nextBtn(body, () => { Q.i++; drawQuiz(); });
+  });
+  if (jb) { const row = el('div', 'qplay'); row.append(jb); body.append(row, jbox); }
+
+  const show = el('button', 'primary big', jb ? '모르겠어요 · 정답 보기' : '말했어요 · 정답 보기');
   show.style.width = '100%';
   body.append(show);
 
@@ -2237,9 +2321,101 @@ const RULES = [
            { q: '남부에서 "천(1000)"은?', opts: ['ngàn', 'nghìn'], a: 0, say: 'ngàn' }] }
 ];
 
+
+/* ---------- 문법 8가지 ----------
+   문법 '수업'을 크게 만들지는 않는다. 다만 이 여덟 개는 없으면 말이 안 만들어진다 —
+   부정·질문·시제·부탁처럼 하루에도 수십 번 쓰는 뼈대만 고른다.
+   설명은 한 줄, 나머지는 예문으로 익힌다. */
+const GRAMMAR = [
+  { key: 'G1', title: '아니다', intro: '동사·형용사 앞에 không만 붙이면 부정이 됩니다. 모양이 바뀌는 것은 없습니다.',
+    cards: [
+      { vi: 'không', ko: '아니다·안', kr: '콩', tones: tns('không:ngang'), note: '무엇이든 그 앞에 붙인다' },
+      { vi: 'Tôi không hiểu.', ko: '저는 이해 못 해요', kr: '또이 콩 히에우',
+        tones: tns('Tôi:ngang, không:ngang, hiểu:hỏi'), note: '나 + 안 + 이해하다' },
+      { vi: 'Cái này không đắt.', ko: '이건 안 비싸요', kr: '까이 나이 콩 닷',
+        tones: tns('Cái:sắc, này:huyền, không:ngang, đắt:sắc'), note: '형용사 앞에도 똑같이' }],
+    quiz: [{ q: '"저는 안 가요"는?', opts: ['Tôi không đi', 'Tôi đi không'], a: 0, say: 'Tôi không đi.' },
+           { q: '"안 비싸요"는?', opts: ['không đắt', 'đắt không'], a: 0 },
+           { q: 'không은 어디에 붙나요?', opts: ['동사·형용사 앞', '문장 맨 끝'], a: 0 }] },
+  { key: 'G2', title: '예/아니오 질문', intro: '문장 끝에 không? 을 붙이면 "~해요?"가 됩니다. 대답은 có(네) / không(아니오).',
+    cards: [
+      { vi: 'Anh khỏe không?', ko: '잘 지내세요?', kr: '아인 쾌 콩',
+        tones: tns('Anh:ngang, khỏe:hỏi, không:ngang'), note: '문장 + không? = 물음' },
+      { vi: 'Có.', ko: '네 (있어요·그래요)', kr: '꼬', tones: tns('Có:sắc'), note: '짧게 có 하나로 충분' },
+      { vi: 'Anh có bận không?', ko: '바쁘세요?', kr: '아인 꼬 번 콩',
+        tones: tns('Anh:ngang, có:sắc, bận:nặng, không:ngang'), note: 'có ~ không 으로 감싸도 된다' }],
+    quiz: [{ q: '"밥 먹었어요?"에 가까운 형태는?', opts: ['Anh ăn cơm không?', 'Không anh ăn cơm?'], a: 0 },
+           { q: '"네"라고 짧게 답하려면?', opts: ['Có', 'Không'], a: 0, say: 'Có.' },
+           { q: 'không? 은 어디에 오나요?', opts: ['문장 맨 끝', '문장 맨 앞'], a: 0 }] },
+  { key: 'G3', title: '무엇·어디·언제', intro: '의문사는 한국어와 달리 <b>묻는 자리에 그대로</b> 둡니다. 순서를 바꾸지 않습니다.',
+    cards: [
+      { vi: 'Cái này là gì?', ko: '이게 뭐예요?', kr: '까이 나이 라 지',
+        tones: tns('Cái:sắc, này:huyền, là:huyền, gì:huyền'), note: 'gì = 무엇' },
+      { vi: 'Anh ở đâu?', ko: '어디 계세요?', kr: '아인 어 더우',
+        tones: tns('Anh:ngang, ở:hỏi, đâu:ngang'), note: 'đâu = 어디' },
+      { vi: 'Mấy giờ?', ko: '몇 시예요?', kr: '머이 저',
+        tones: tns('Mấy:sắc, giờ:huyền'), note: 'mấy = 몇 (작은 수)' }],
+    quiz: [{ q: '"이름이 뭐예요?"는?', opts: ['Tên anh là gì?', 'Gì tên anh là?'], a: 0, say: 'Tên anh là gì?' },
+           { q: '"어디"는?', opts: ['đâu', 'gì'], a: 0 },
+           { q: '의문사는 어디에 두나요?', opts: ['묻는 자리 그대로', '항상 문장 맨 앞'], a: 0 }] },
+  { key: 'G4', title: '했다 · 하고 있다 · 할 것이다', intro: '동사는 모양이 안 바뀝니다. 앞에 <b>đã · đang · sẽ</b> 만 얹으면 시제가 됩니다.',
+    cards: [
+      { vi: 'Tôi đã ăn.', ko: '저는 먹었어요', kr: '또이 다 안',
+        tones: tns('Tôi:ngang, đã:ngã, ăn:ngang'), note: 'đã = 이미 (과거)' },
+      { vi: 'Tôi đang làm.', ko: '저는 하고 있어요', kr: '또이 당 람',
+        tones: tns('Tôi:ngang, đang:ngang, làm:huyền'), note: 'đang = ~하는 중' },
+      { vi: 'Tôi sẽ về.', ko: '저는 돌아갈 거예요', kr: '또이 새 베',
+        tones: tns('Tôi:ngang, sẽ:ngã, về:huyền'), note: 'sẽ = ~할 것이다' }],
+    quiz: [{ q: '"먹고 있어요"는?', opts: ['đang ăn', 'đã ăn'], a: 0, say: 'Tôi đang ăn.' },
+           { q: '"갈 거예요"는?', opts: ['sẽ đi', 'đã đi'], a: 0 },
+           { q: '동사 모양은?', opts: ['안 바뀐다', '시제마다 바뀐다'], a: 0 }] },
+  { key: 'G5', title: '해 주세요 · 하지 마세요', intro: '부탁은 <b>làm ơn</b>(부디)이나 문장 끝 <b>nhé</b>, 금지는 <b>đừng</b>입니다.',
+    cards: [
+      { vi: 'Làm ơn giúp tôi.', ko: '좀 도와주세요', kr: '람 언 줍 또이',
+        tones: tns('Làm:huyền, ơn:ngang, giúp:sắc, tôi:ngang'), note: 'làm ơn = 부디 (정중)' },
+      { vi: 'Đừng bấm nút.', ko: '버튼 누르지 마세요', kr: '등 범 눗',
+        tones: tns('Đừng:huyền, bấm:sắc, nút:sắc'), note: 'đừng = ~하지 마' },
+      { vi: 'Làm lại nhé.', ko: '다시 해요', kr: '람 라이 녜',
+        tones: tns('Làm:huyền, lại:nặng, nhé:sắc'), note: 'nhé = 부드럽게 권하는 끝맺음' }],
+    quiz: [{ q: '"하지 마세요"의 앞말은?', opts: ['đừng', 'làm ơn'], a: 0 },
+           { q: '정중히 부탁할 때는?', opts: ['Làm ơn ~', 'Đừng ~'], a: 0, say: 'Làm ơn giúp tôi.' },
+           { q: 'nhé 는 어디에?', opts: ['문장 끝', '문장 앞'], a: 0 }] },
+  { key: 'G6', title: '있다 · 없다', intro: '<b>có</b> 하나로 "있다·가지다"가 다 됩니다. 없으면 앞에 không.',
+    cards: [
+      { vi: 'Tôi có tiền.', ko: '저 돈 있어요', kr: '또이 꼬 띠엔',
+        tones: tns('Tôi:ngang, có:sắc, tiền:huyền'), note: 'có = 있다·가지다' },
+      { vi: 'Không có.', ko: '없어요', kr: '콩 꼬', tones: tns('Không:ngang, có:sắc'), note: '가장 많이 쓰는 두 마디' },
+      { vi: 'Ở đây có nhà vệ sinh không?', ko: '여기 화장실 있어요?', kr: '어 더이 꼬 냐 베 신 콩',
+        tones: tns('Ở:hỏi, đây:ngang, có:sắc, nhà:huyền, vệ:nặng, sinh:ngang, không:ngang'), note: '있다 + 물음' }],
+    quiz: [{ q: '"없어요"는?', opts: ['Không có', 'Có không'], a: 0, say: 'Không có.' },
+           { q: '"돈 있어요"는?', opts: ['Tôi có tiền', 'Tôi tiền có'], a: 0 },
+           { q: 'có 의 뜻은?', opts: ['있다·가지다', '하지 마라'], a: 0 }] },
+  { key: 'G7', title: '더 · 가장', intro: '비교는 <b>hơn</b>(더), 최고는 <b>nhất</b>(가장). 형용사 <b>뒤</b>에 붙습니다.',
+    cards: [
+      { vi: 'Cái này rẻ hơn.', ko: '이게 더 싸요', kr: '까이 나이 재 헌',
+        tones: tns('Cái:sắc, này:huyền, rẻ:hỏi, hơn:ngang'), note: '싸다 + 더' },
+      { vi: 'Cái này tốt nhất.', ko: '이게 가장 좋아요', kr: '까이 나이 똣 녓',
+        tones: tns('Cái:sắc, này:huyền, tốt:sắc, nhất:sắc'), note: '좋다 + 가장' },
+      { vi: 'Nhanh hơn nhé.', ko: '더 빨리요', kr: '냐인 헌 녜',
+        tones: tns('Nhanh:ngang, hơn:ngang, nhé:sắc'), note: '현장에서 매일 듣는 말' }],
+    quiz: [{ q: '"더 싸요"는?', opts: ['rẻ hơn', 'hơn rẻ'], a: 0, say: 'Cái này rẻ hơn.' },
+           { q: '"가장 좋다"는?', opts: ['tốt nhất', 'nhất tốt'], a: 0 },
+           { q: 'hơn·nhất 의 자리는?', opts: ['형용사 뒤', '형용사 앞'], a: 0 }] },
+  { key: 'G8', title: '할 수 있다', intro: '가능·허락은 <b>được</b>. 동사 뒤에 붙이고, 물을 때는 được không? 입니다.',
+    cards: [
+      { vi: 'Được.', ko: '돼요·괜찮아요', kr: '드억', tones: tns('Được:nặng'), note: '한 마디로 승낙' },
+      { vi: 'Tôi làm được.', ko: '저 할 수 있어요', kr: '또이 람 드억',
+        tones: tns('Tôi:ngang, làm:huyền, được:nặng'), note: '동사 + được' },
+      { vi: 'Sửa được không?', ko: '고칠 수 있어요?', kr: '스어 드억 콩',
+        tones: tns('Sửa:hỏi, được:nặng, không:ngang'), note: '가능한지 묻기' }],
+    quiz: [{ q: '"할 수 있어요"는?', opts: ['làm được', 'được làm'], a: 0, say: 'Tôi làm được.' },
+           { q: '"돼요?"라고 물으려면?', opts: ['~ được không?', '~ không được?'], a: 0 },
+           { q: 'được 의 자리는?', opts: ['동사 뒤', '동사 앞'], a: 0 }] },
+];
+
 let RL = null;
 function startRule(i) {
-  const r = RULES[i];
+  const r = (typeof i === 'string') ? GRAMMAR[+i.slice(1)] : RULES[i];
   // 다른 학습과 같은 카드 화면으로 가르친다 — 카드가 끝나면 연습 문제
   L = { day: { day: r.key, theme: r.title, intro: r.intro, words: [], rule: r },
         items: r.cards.map(c => ({ k: 'rule', d: c })), i: 0 };
@@ -2301,7 +2477,7 @@ function drawRule() {
 
 function practiceWords(n) {
   // 복습 예정 단어 먼저, 그다음 지금까지 배운 모든 단어를 최근 것부터
-  const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+  const due = dueWords().map(findItem).filter(Boolean);
   const doneDays = ALL.filter(d => typeof d.day === 'number' && S.done[d.day]).reverse();
   const recent = doneDays.length ? doneDays.flatMap(d => d.words || [])
     : (ALL.find(d => d.day === 1) || {}).words || [];
@@ -2954,6 +3130,7 @@ $('#goWrite').onclick = startWrite;
 $('#goType').onclick = startType;
 $('#goNews').onclick = showNews;
 document.querySelectorAll('[data-rule]').forEach(b => b.onclick = () => startRule(+b.dataset.rule));
+document.querySelectorAll('[data-gram]').forEach(b => b.onclick = () => startRule('G' + b.dataset.gram));
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.
    무료 기상 서비스(Open-Meteo, 키·가입 불필요)라 운영비 0원 원칙에 맞다. */
