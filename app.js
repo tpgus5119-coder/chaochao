@@ -272,44 +272,6 @@ async function recToWav(blobUrl) {
   return btoa(bin);
 }
 
-/* AI 손글씨 읽기 — 캔버스 그림을 보내 무슨 글자로 읽히는지 받아 적게 한다.
-   글자 판독은 참고용이고, 최종 비교는 정답 보기로 본인이 한다. */
-async function aiRead(canvas, target, box) {
-  const note = el('div', 'cmpnote ainote', 'AI가 읽는 중…');
-  box.querySelector('.ainote')?.remove();
-  box.append(note);
-  try {
-    const t = document.createElement('canvas');
-    t.width = canvas.width; t.height = canvas.height;
-    const g = t.getContext('2d');
-    g.fillStyle = getComputedStyle(canvas).backgroundColor || '#fff';
-    g.fillRect(0, 0, t.width, t.height);
-    g.drawImage(canvas, 0, 0);
-    const b64 = t.toDataURL('image/png').split(',')[1];
-    const r = await fetch(GURL(), {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [
-          { text: '이 그림은 한국인이 베트남어 단어를 손으로 쓴 것이다. 쓰인 글자를 성조 부호까지 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
-          { inline_data: { mime_type: 'image/png', data: b64 } }] }],
-        generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
-      })
-    });
-    if (!r.ok) throw new Error(r.status === 429 ? '오늘 무료 한도를 다 썼습니다' : '연결 실패 (' + r.status + ')');
-    const j = await r.json();
-    const seen = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
-    if (!seen) throw new Error('빈 답이 왔습니다');
-    const clean = x => x.toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
-    const exact = clean(seen) === clean(target);
-    const close = stripTone(clean(seen)) === stripTone(clean(target));
-    note.innerHTML = exact
-      ? '<b>AI가 "' + esc(seen) + '" 로 읽었습니다.</b> 부호까지 알아볼 수 있게 썼습니다.'
-      : close
-        ? '<b>AI가 "' + esc(seen) + '" 로 읽었습니다.</b> 글자는 맞습니다 — 성조 부호만 정답과 비교해 보세요.'
-        : 'AI에게는 "<b>' + esc(seen) + '</b>" 로 보입니다. 조금 크게 또박또박 써 보세요.';
-  } catch (e) { note.textContent = 'AI 읽기 실패: ' + (e.message || ''); }
-}
-
 /* AI 받아쓰기 판정.
    실험해 보니 AI는 '무슨 음절인지'는 정확히 듣지만 '성조'는 원어민 소리도 틀렸다.
    그래서 성조 채점은 안 시키고, 글자를 알아들을 수 있는 발음인지만 묻는다.
@@ -461,7 +423,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'mark', 'rules', 'chat', 'write', 'type', 'speak', 'course'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'mark', 'rules', 'chat', 'type', 'speak', 'course'];
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
@@ -591,8 +553,14 @@ const GROUPS = [
   [d => d.day >= 11 && d.day <= 15, '파트 3 · 일과·음식·시장'],
   [d => d.day >= 16 && d.day <= 20, '파트 4 · 아플 때·부탁·약속'],
   [d => !d.track && d.day >= 41 && d.day <= 45, '파트 5 · 날씨·교통·색·마음'],
-  [d => !d.track && d.day >= 46, '파트 6 · 모임·건강·베트남 생활'],
+  [d => !d.track && d.day >= 46 && d.day <= 50, '파트 6 · 모임·건강·베트남 생활'],
+  [d => !d.track && d.day >= 71 && d.day <= 75, '파트 7 · 스몰토크'],
+  [d => !d.track && d.day >= 76, '파트 8 · 생활 심화'],
   [d => d.track === 'work' && d.day === 21, '직무 · 공장 첫날 (공통)'],
+  [d => d.track === 'work' && d.day >= 81 && d.day <= 85, '직무 · 관리자 화법 (공통)'],
+  [d => d.track === 'work' && d.day >= 86 && d.day <= 90, '직무 · 봉제 심화'],
+  [d => d.track === 'work' && d.day >= 91 && d.day <= 95, '직무 · 전자 심화'],
+  [d => d.track === 'work' && d.day >= 96, '직무 · 창고·물류 (공통)'],
   [d => d.track === 'work' && d.cat === '봉제', '직무 · 봉제'],
   [d => d.track === 'work' && d.day >= 61 && d.day <= 65, '직무 · 직장 문화 (공통)'],
   [d => d.track === 'work' && d.day >= 66, '직무 · 계약·행정 (공통)'],
@@ -650,8 +618,10 @@ function renderDays(track) {
   const nx = nextDay();
   const list = $('#dayList');
   list.textContent = '';
-  const days = ALL.filter(d => track === 'work' ? d.track === 'work'
-    : (typeof d.day === 'string' || !d.track));
+  const days = ALL.filter(d =>
+    track === 'work' ? d.track === 'work'
+    : track === 'prep' ? typeof d.day === 'string'
+    : (typeof d.day === 'number' && !d.track));
   let g = -1;
   days.forEach(d => {
     const gi = GROUPS.findIndex(([f]) => f(d));
@@ -672,7 +642,7 @@ function renderDays(track) {
     b.onclick = () => startLearn(d);
     const li = el('li'); li.append(b); list.append(li);
   });
-  show('course', track === 'work' ? '직무 과정' : '일상 과정', true);
+  show('course', track === 'work' ? '직무 과정' : track === 'prep' ? '준비 · 글자와 소리' : '일상 과정', true);
 }
 
 /* ---------- 학습 ---------- */
@@ -1342,75 +1312,6 @@ function practiceWords(n) {
   return pool.slice(0, n);
 }
 
-function drawPad(host) {
-  const c = el('canvas', 'pad'); host.append(c);
-  let g = null;
-  requestAnimationFrame(() => {
-    const r = c.getBoundingClientRect(), d = devicePixelRatio || 1;
-    c.width = r.width * d; c.height = 190 * d;
-    g = c.getContext('2d');
-    g.scale(d, d); g.lineWidth = 5; g.lineCap = g.lineJoin = 'round';
-    g.strokeStyle = getComputedStyle(document.body).color;
-  });
-  let on = false;
-  const pos = e => { const r = c.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-  c.onpointerdown = e => { if (!g) return; on = true; c.setPointerCapture(e.pointerId); const [x, y] = pos(e); g.beginPath(); g.moveTo(x, y); };
-  c.onpointermove = e => { if (!on || !g) return; const [x, y] = pos(e); g.lineTo(x, y); g.stroke(); };
-  c.onpointerup = c.onpointercancel = () => { on = false; };
-  return { canvas: c, clear: () => { if (!g) return; const d = devicePixelRatio || 1; g.clearRect(0, 0, c.width / d, c.height / d); } };
-}
-
-let WR = null;
-function startWrite() {
-  const ws = practiceWords(8);
-  if (!ws.length) return;
-  WR = { list: ws, i: 0 };
-  drawWrite();
-  show('write', '손으로 쓰기', true);
-}
-function drawWrite() {
-  const b = $('#writeBody'); b.textContent = '';
-  if (WR.i >= WR.list.length) {
-    const r = el('div', 'result');
-    r.append(el('div', 'n', WR.list.length + '개'));
-    r.append(el('div', null, '손으로 쓴 만큼 손이 기억합니다'));
-    const hm = el('button', 'primary big', '홈으로'); hm.onclick = renderHome;
-    hm.style.marginTop = '24px'; r.append(hm); b.append(r); return;
-  }
-  const w = WR.list[WR.i];
-  b.append(el('div', 'q', `${WR.i + 1} / ${WR.list.length} · 듣고, 떠올려서, 손으로 써 보세요`));
-  b.append(el('div', 'qmain', esc(w.ko)));
-  const wrap = el('div', 'qplay');
-  const p1 = el('button', 'primary', '듣기'); p1.onclick = () => play(w.vi, false);
-  const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
-  wrap.append(p1, p2); b.append(wrap);
-  play(w.vi, false);
-  const pad = drawPad(b);
-  const row = el('div', 'qplay');
-  const clr = el('button', 'ghost', '지우기'); clr.onclick = pad.clear;
-  if (aiReady()) {
-    const ai = el('button', 'ghost', 'AI가 읽기');
-    ai.onclick = () => { ai.disabled = true; aiRead(pad.canvas, w.vi, b).finally(() => { ai.disabled = false; }); };
-    row.append(ai);
-  }
-  const showA = el('button', 'primary', '정답 보기');
-  row.append(clr, showA); b.append(row);
-  showA.onclick = () => {
-    showA.disabled = true;
-    const ans = el('div', 'ansbox');
-    ans.append(el('div', 'vi sm', esc(w.vi)));
-    ans.append(toneRow(w.tones));
-    if (w.kr_read) ans.append(el('div', 'krline', '[' + esc(w.kr_read) + ']'));
-    b.append(ans);
-    const g2 = el('div', 'opts');
-    const okB = el('button', null, '✓ 비슷하게 썼다');
-    okB.onclick = () => { fxTone(true); grade(w.vi, true); WR.i++; drawWrite(); };
-    const noB = el('button', null, '✗ 많이 다르다 — 한 번 더 쓰기');
-    noB.onclick = () => { grade(w.vi, false); drawWrite(); };
-    g2.append(okB, noB); b.append(g2);
-  };
-}
-
 /* 화면 속 베트남어 자판 — 다운로드 없이 브라우저 안에서 바로.
    실기기 자판(텔렉스 방식)의 전 단계 연습: 글자와 성조 부호의 짝을 손에 익힌다. */
 let TY = null;
@@ -1710,10 +1611,10 @@ function beginChat(mode, myRole) {
 $('#back').onclick = renderHome;
 $('#goChat').onclick = startChat;
 $('#goSpeak').onclick = startSpeak;
+$('#goPrep').onclick = () => renderDays('prep');
 $('#goDaily').onclick = () => renderDays('daily');
 $('#goWork').onclick = () => renderDays('work');
 $('#goDict').onclick = startDict;
-$('#goWrite').onclick = startWrite;
 $('#goType').onclick = startType;
 $('#chatForm').onsubmit = e => {
   e.preventDefault();

@@ -13,14 +13,15 @@ from visuals import attach
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days = []
-for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4']:
+for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6']:
     days += json.loads((R/f'data/{f}.json').read_text())['days']
 
 # 직무 재배열 — 봉제는 봉제끼리. 문장의 '배운 단어만' 규칙이 지켜지는지는 아래 검증이 확인한다.
 WORK_ORDER = [21, 22,23,24,25, 31,32,33,34,36, 26,27,28,29,30, 35,37,38,39,40]
 by = {d["day"]: d for d in days}
 days = ([by[k] for k in range(1, 21)] + [by[k] for k in WORK_ORDER]
-        + [by[k] for k in range(41, 51)] + [by[k] for k in range(51, 71)])
+        + [by[k] for k in range(41, 51)] + [by[k] for k in range(51, 71)]
+        + [by[k] for k in range(71, 81)] + [by[k] for k in range(81, 101)])
 
 out = {"meta": {"version":"v4",
                 "voices":{"f":"vi-VN-HoaiMyNeural","m":"vi-VN-NamMinhNeural"},
@@ -46,7 +47,9 @@ for d in out["days"]:
 CAT = {**{k:'공통' for k in [21,26,27,28,29,30,35,37,38,39,40]},
        **{k:'봉제' for k in [22,23,24,25,31,32,33,34,36]},
        **{k:'전자' for k in range(51,56)}, **{k:'사무' for k in range(56,61)},
-       **{k:'공통' for k in range(61,71)}}
+       **{k:'공통' for k in range(61,71)},
+       **{k:'공통' for k in list(range(81,86))+list(range(96,101))},
+       **{k:'봉제' for k in range(86,91)}, **{k:'전자' for k in range(91,96)}}
 for d in out["days"]:
     dd = d["day"]
     if dd in CAT: d["cat"] = CAT[dd]
@@ -62,7 +65,7 @@ for d in out["days"]:
 dups = {k:v for k,v in seen.items() if len(v)>1}
 
 PROPER = {"hàn","quốc","việt","nam","minsu","nguyễn","văn","hùng","trần","thị","lan",
-          "hà","nội","busan"}
+          "hà","nội","busan","nghệ"}
 toks = lambda s: [t for t in re.split(r"[\s,.!?]+", s) if t]
 vocab, bad = set(), []
 for d in out["days"]:

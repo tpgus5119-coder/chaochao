@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="베트남어">
 <meta name="mobile-web-app-capable" content="yes">
 <title>베트남어 스터디</title>
-<link rel="stylesheet" href="style.css?v=e83f2dce">
+<link rel="stylesheet" href="style.css?v=8e82b0da">
 </head>
 <body>
 
@@ -31,11 +31,11 @@
     <div class="menu">
       <div class="mtile wide">
         <b>학습 과정</b><span id="courseNote"></span>
-        <div class="mbtns"><button id="goDaily" class="primary">일상 과정</button><button id="goWork" class="primary">직무 과정</button></div>
+        <div class="mbtns"><button id="goPrep" class="ghost">준비 3일</button><button id="goDaily" class="primary">일상 과정</button><button id="goWork" class="primary">직무 과정</button></div>
       </div>
       <div class="mtile">
         <b>성조 훈련</b><span id="toneWhy">소리만 듣고 6성조 구별</span>
-        <div class="mbtns"><button id="goTone" class="primary">듣기</button><button id="goMark" class="ghost">부호 쓰기</button></div>
+        <div class="mbtns"><button id="goTone" class="primary">듣기</button></div>
       </div>
       <div class="mtile">
         <b>복습</b><span id="revNote"></span>
@@ -43,11 +43,11 @@
       </div>
       <div class="mtile">
         <b>말하기 · 듣기</b><span>원어민 곡선과 비교하며</span>
-        <div class="mbtns"><button id="goSpeak" class="primary">따라 말하기</button><button id="goDict" class="ghost">받아쓰기</button></div>
+        <div class="mbtns"><button id="goSpeak" class="primary">따라 말하기</button></div>
       </div>
       <div class="mtile">
-        <b>읽기 · 쓰기</b><span>손으로, 자판으로</span>
-        <div class="mbtns"><button id="goWrite" class="primary">손글씨</button><button id="goType" class="ghost">자판</button></div>
+        <b>읽기 · 쓰기</b><span>소리를 글자로 — 쉬운 것부터</span>
+        <div class="mbtns"><button id="goDict" class="primary">받아쓰기</button><button id="goMark" class="ghost">부호 쓰기</button><button id="goType" class="ghost">자판</button></div>
       </div>
       <div class="mtile">
         <b>AI 대화</b><span>배운 문장으로 주고받기</span>
@@ -109,10 +109,7 @@
     <div id="speakBody"></div>
   </section>
 
-  <!-- 손글씨 · 자판 -->
-  <section id="write" class="view" hidden>
-    <div id="writeBody"></div>
-  </section>
+  <!-- 자판 -->
   <section id="type" class="view" hidden>
     <div id="typeBody"></div>
   </section>
@@ -128,7 +125,7 @@
   </section>
 </main>
 
-<script src="pitch.js?v=e83f2dce"></script>
-<script src="app.js?v=e83f2dce"></script>
+<script src="pitch.js?v=8e82b0da"></script>
+<script src="app.js?v=8e82b0da"></script>
 </body>
 </html>
