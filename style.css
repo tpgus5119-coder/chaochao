@@ -676,3 +676,30 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .fldots{display:flex; gap:4px; justify-content:center; margin:10px 0 4px; flex-wrap:wrap}
 .fldots i{width:6px; height:6px; border-radius:50%; background:var(--line)}
 .fldots i.on{background:var(--ok)}
+
+/* 홈 일정판 2×2 */
+.plan{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0 6px}
+.plancell{border:1px solid var(--line); border-radius:12px; padding:12px 12px 14px;
+  min-height:74px; display:flex; flex-direction:column; gap:4px}
+.plancell.go{cursor:pointer}
+.plancell .pk{font-size:11px; color:var(--dim)}
+.plancell .pv{font-size:14px; font-weight:700; line-height:1.35; white-space:pre-line}
+.plancell.todo{border-color:#8c4a52; background:rgba(224,85,97,.09)}
+.plancell.done{border-color:var(--ok); background:rgba(47,158,99,.10)}
+.plancell.next{border-color:#3a4a6b; background:rgba(122,162,255,.07)}
+.plancell.none .pv{color:var(--dim); font-weight:400}
+
+/* 분석 막대 */
+.bars{margin:2px 0 12px}
+.barrow{display:flex; align-items:center; gap:8px; margin:6px 0}
+.barrow .bname{flex:0 0 84px; font-size:12px}
+.barrow .bbar{flex:1; height:12px; background:var(--line); border-radius:7px; overflow:hidden}
+.barrow .bbar i{display:block; height:100%}
+.barrow .bbar i.hi{background:var(--ok)}
+.barrow .bbar i.mid{background:#d8a13c}
+.barrow .bbar i.lo{background:#d1555f}
+.barrow .bpct{flex:0 0 38px; text-align:right; font-size:13px; font-weight:700}
+.barrow .bn{flex:0 0 50px; text-align:right; font-size:11px; color:var(--dim)}
+
+/* 선생님 고르기 라벨 */
+.pklab{font-size:12px; color:var(--dim); align-self:center; margin:0 2px}

@@ -485,18 +485,121 @@ const BADGES = [
   { icon: '🏔️', name: '25세트',        how: '세트 25개 완료',                test: () => doneCount() >= 25 },
   { icon: '🎖️', name: '50세트',        how: '세트 50개 완료',                test: () => doneCount() >= 50 },
   { icon: '🏁', name: '전 과정 완주',  how: '100세트 전부 완료',             test: () => doneCount() >= 100 },
+  { icon: '🔠', name: '단어 50',       how: '복습 창고에 단어 50개',         test: () => Object.keys(S.srs).length >= 50 },
   { icon: '💯', name: '단어 100',      how: '복습 창고에 단어 100개',        test: () => Object.keys(S.srs).length >= 100 },
+  { icon: '📗', name: '단어 200',      how: '복습 창고에 단어 200개',        test: () => Object.keys(S.srs).length >= 200 },
   { icon: '📚', name: '단어 300',      how: '복습 창고에 단어 300개',        test: () => Object.keys(S.srs).length >= 300 },
+  { icon: '📖', name: '단어 450',      how: '복습 창고에 단어 450개',        test: () => Object.keys(S.srs).length >= 450 },
   { icon: '🚀', name: '단어 600',      how: '복습 창고에 단어 600개',        test: () => Object.keys(S.srs).length >= 600 },
+  { icon: '🏆', name: '단어 1000',     how: '전 과정 단어 1000개',           test: () => Object.keys(S.srs).length >= 1000 },
+  { icon: '🧠', name: '외운 단어 100', how: '두 번 이상 맞힌 단어 100개',    test: () => Object.values(S.srs).filter(v => v.lv >= 2).length >= 100 },
+  { icon: '🧩', name: '외운 단어 300', how: '두 번 이상 맞힌 단어 300개',    test: () => Object.values(S.srs).filter(v => v.lv >= 2).length >= 300 },
   { icon: '👂', name: '성조 8/10',     how: '성조 훈련에서 8점',             test: () => (S.stats.toneBest || 0) >= 8 },
   { icon: '🎯', name: '성조 만점',     how: '성조 훈련에서 10점',            test: () => (S.stats.toneBest || 0) >= 10 },
   { icon: '🗣️', name: '50번 말했다',   how: '소리 내어 50번',                test: () => (S.stats.said || 0) >= 50 },
+  { icon: '🎙️', name: '120번 말했다',  how: '소리 내어 120번',               test: () => (S.stats.said || 0) >= 120 },
   { icon: '📢', name: '300번 말했다',  how: '소리 내어 300번',               test: () => (S.stats.said || 0) >= 300 },
+  { icon: '🔊', name: '600번 말했다',  how: '소리 내어 600번',               test: () => (S.stats.said || 0) >= 600 },
   { icon: '📅', name: '한 주 5일',     how: '이번 주 5일 공부',              test: () => weekDots().filter(d => d.done).length >= 5 },
+  { icon: '📆', name: '10일 출석',     how: '지금까지 총 10일 공부',         test: () => Object.keys(S.act).length >= 10 },
   { icon: '🗓️', name: '30일 출석',     how: '지금까지 총 30일 공부',         test: () => Object.keys(S.act).length >= 30 },
-  { icon: '🔁', name: '복습 20판',     how: '복습 퀴즈 20번 완료',           test: () => (S.stats.rev || 0) >= 20 },
+  { icon: '📅', name: '60일 출석',     how: '지금까지 총 60일 공부',         test: () => Object.keys(S.act).length >= 60 },
+  { icon: '💎', name: '100일 출석',    how: '지금까지 총 100일 공부',        test: () => Object.keys(S.act).length >= 100 },
+  { icon: '🔁', name: '복습 10판',     how: '복습 퀴즈 10번 완료',           test: () => (S.stats.rev || 0) >= 10 },
+  { icon: '♻️', name: '복습 30판',     how: '복습 퀴즈 30번 완료',           test: () => (S.stats.rev || 0) >= 30 },
+  { icon: '🔄', name: '복습 80판',     how: '복습 퀴즈 80번 완료',           test: () => (S.stats.rev || 0) >= 80 },
   { icon: '💬', name: 'AI와 첫 대화',  how: 'AI 대화 한 번 시작',            test: () => (S.stats.chat || 0) >= 1 }
 ];
+
+
+/* ---------- 실력 분석 ----------
+   숫자를 눈에 보이게 그린다. 다만 표본이 적으면 그리지 않는다 —
+   10문제로 "약점"을 말하면 그건 분석이 아니라 점(占)이다. */
+function bars(rows) {
+  const box = el('div', 'bars');
+  rows.forEach(([name, pct, n]) => {
+    const r = el('div', 'barrow');
+    r.append(el('span', 'bname', name));
+    const bar = el('span', 'bbar');
+    const fill = el('i');
+    fill.style.width = Math.max(2, pct) + '%';
+    fill.className = pct >= 80 ? 'hi' : pct >= 60 ? 'mid' : 'lo';
+    bar.append(fill);
+    r.append(bar, el('span', 'bpct', pct + '%'), el('span', 'bn', n + '문제'));
+    box.append(r);
+  });
+  return box;
+}
+function analysisData(mode) {
+  const cur = snapshot(), b = (mode === 'week' && S.wk && S.wk.base) || {};
+  const subj = SUBJ.map(x => {
+    const n = (cur[x.all] || 0) - (b[x.all] || 0), ok = (cur[x.ok] || 0) - (b[x.ok] || 0);
+    return { name: x.k, n, pct: n ? Math.round(ok * 100 / n) : null, tip: x.tip };
+  });
+  return subj;
+}
+function renderAnalysis(host, mode) {
+  host.textContent = '';
+  const tab = el('div', 'rolepick');
+  [['week', '이번 주'], ['all', '누적']].forEach(([k, t]) => {
+    const bb = el('button', 'ghost sm' + (mode === k ? ' pick' : ''), (mode === k ? '✓ ' : '') + t);
+    bb.onclick = () => renderAnalysis(host, k);
+    tab.append(bb);
+  });
+  host.append(tab);
+
+  const subj = analysisData(mode);
+  const ok = subj.filter(x => x.n >= 10);
+  if (!ok.length) {
+    host.append(el('p', 'note', '아직 문제 수가 적어 그래프를 그리지 않습니다. 과목마다 10문제가 넘으면 여기에 나옵니다.'));
+    return;
+  }
+  host.append(el('p', 'newsday', '과목별 정답률'));
+  host.append(bars(ok.map(x => [x.name, x.pct, x.n])));
+
+  const TN = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감',
+               'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
+  const tn = Object.entries(S.stats.tn || {}).filter(([, v]) => v.all >= 5)
+    .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
+  if (tn.length) { host.append(el('p', 'newsday', '성조별 정답률 (누적)')); host.append(bars(tn)); }
+
+  const MD = { listen: '듣고 고르기', meaning: '뜻 고르기', recall: '떠올려 말하기', dict: '받아쓰기' };
+  const md = Object.entries(S.stats.md || {}).filter(([, v]) => v.all >= 5)
+    .map(([k, v]) => [MD[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
+  if (md.length) { host.append(el('p', 'newsday', '문제 유형별 정답률 (누적)')); host.append(bars(md)); }
+
+  // 처방 — 분석만 하고 끝내지 않는다
+  const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
+  const best = ok.reduce((a, x) => x.pct > a.pct ? x : a);
+  const RX = {
+    '암기': ['<b>복습</b>을 하루도 밀리지 마세요 — 밀린 카드가 쌓이면 정답률이 먼저 떨어집니다.',
+             '틀린 단어는 그 자리에서 한 번 더 나옵니다. 그때 <b>소리 내어</b> 말하면 다음 판에서 살아납니다.'],
+    '귀': ['기본기의 <b>성조</b>와 <b>모음</b>을 하루 한 판씩. 저녁에 하면 자는 동안 소리가 정리됩니다.',
+           '<b>느리게 듣기</b>로 먼저 듣고, 그다음 보통 속도로 한 번 더 들어 보세요.'],
+    '철자': ['<b>손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.',
+             '<b>타이핑</b>에서 글자 보기를 누르지 말고 먼저 쳐 보세요 — 보고 치면 기억에 안 남습니다.'],
+    '발음': ['<b>따라 말하기</b>에서 녹음한 뒤 원어민 곡선과 겹쳐 보세요.',
+             '<b>AI가 듣기</b>를 눌러 알아듣는 발음인지 확인하세요 — 안 알아들으면 조금 크게, 또박또박.'],
+  };
+  const card = el('div', 'rulecard');
+  card.append(el('div', 'rhead', '<b>이렇게 하면 올라갑니다</b>'));
+  const lines = [`<b>약한 곳 — ${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`,
+                 ...(RX[worst.name] || []).map(t => '· ' + t)];
+  if (tn.length && tn[0][1] < 70) lines.push(`· 성조 중에서는 <b>${tn[0][0]}</b>이 ${tn[0][1]}%로 가장 약합니다 — 기본기 성조에서 그 소리만 골라 들어 보세요.`);
+  if (S.stats.msN >= 10) {
+    const sec = S.stats.ms / S.stats.msN / 1000;
+    lines.push(`· 답하는 속도 <b>평균 ${sec.toFixed(1)}초</b> — ` +
+      (sec <= 3 ? '거의 자동으로 나옵니다. 새 세트를 늘려도 좋습니다.'
+       : sec <= 6 ? '보통입니다. 지금 속도를 유지하세요.'
+       : '아직 생각해서 꺼내는 중입니다. 새 단어보다 <b>복습</b>을 늘리세요.'));
+  }
+  const miss = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
+    .sort((a, b) => b[1] - a[1]).slice(0, 5);
+  if (miss.length) lines.push('· <b>발목 잡는 단어</b> — ' + miss.map(m => esc(m[0])).join(' · ') + ' (이 단어만 따로 소리 내어 다섯 번씩)');
+  lines.push(`<br><b>잘하는 곳 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}`);
+  card.append(el('div', 'rbody', lines.join('<br>')));
+  host.append(card);
+}
 
 /* 자랑 카드 — 내 진행 상황을 그림 한 장으로 만들어 단톡방에 공유한다.
    목표를 남에게 보이면 지속률이 올라간다(공개 선언 효과). 서버 없이 폰 안에서 그린다. */
@@ -565,56 +668,16 @@ function renderAwards() {
   rb.onclick = () => { S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion(); renderAwards(); };
   rg.append(rb);
 
-  // 이번 주 강점·약점 (주간 성적표와 같은 잣대)
-  const rep = weekReport(S.wk && S.wk.base);
-  const ok = rep.subj.filter(x => x.n >= 10);
-  const sc = el('div', 'rulecard');
-  sc.append(el('div', 'rhead', '<b>이번 주 강점과 약점</b>'));
-  if (ok.length >= 2) {
-    const best = ok.reduce((a, x) => x.pct > a.pct ? x : a);
-    const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
-    sc.append(el('div', 'rbody',
-      `<b>강점 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}<br>` +
-      `<b>약점 — ${esc(worst.name)} ${worst.pct}%</b> · ${esc(worst.tip)}`));
-  } else {
-    sc.append(el('div', 'rbody', '아직 문제 수가 적어 판정하지 않습니다. 과목마다 10문제가 넘으면 여기에 나옵니다.'));
-  }
-  // 세밀 분석 — 무엇이 약한지 콕 집어준다
-  const detail = el('div', 'rulecard');
-  detail.append(el('div', 'rhead', '<b>자세히 보기</b>'));
-  const dl = [];
-  const TN = { 'ngang': '평평(ngang)', 'huyền': '내려감(huyền)', 'sắc': '올라감(sắc)',
-               'hỏi': '내렸다 올림(hỏi)', 'ngã': '끊었다 올림(ngã)', 'nặng': '짧고 무겁게(nặng)' };
-  const tn = Object.entries(S.stats.tn || {}).filter(([, v]) => v.all >= 5)
-    .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all)]).sort((a, b) => a[1] - b[1]);
-  if (tn.length) dl.push('<b>성조별</b> — ' + tn.map(t => `${t[0]} ${t[1]}%`).join(' · '));
-  const MD = { listen: '듣고 고르기', meaning: '뜻 고르기', recall: '떠올려 말하기', dict: '받아쓰기' };
-  const md = Object.entries(S.stats.md || {}).filter(([, v]) => v.all >= 5)
-    .map(([k, v]) => [MD[k] || k, Math.round(v.ok * 100 / v.all)]).sort((a, b) => a[1] - b[1]);
-  if (md.length) dl.push('<b>문제 유형별</b> — ' + md.map(t => `${t[0]} ${t[1]}%`).join(' · '));
-  if (S.stats.msN >= 10) {
-    const sec = S.stats.ms / S.stats.msN / 1000;
-    dl.push(`<b>답하는 속도</b> — 평균 ${sec.toFixed(1)}초 ` +
-      (sec <= 3 ? '(빠릅니다 — 거의 자동으로 나옵니다)' : sec <= 6 ? '(보통입니다)'
-       : '(생각해서 꺼내는 중입니다 — 반복이 더 필요합니다)'));
-  }
-  const miss = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
-    .sort((a, b) => b[1] - a[1]).slice(0, 5);
-  if (miss.length) dl.push('<b>발목 잡는 단어</b> — ' + miss.map(m => esc(m[0])).join(' · '));
-  detail.append(el('div', 'rbody', dl.length ? dl.join('<br><br>')
-    : '아직 문제를 조금밖에 풀지 않았습니다. 며칠 하면 성조별·유형별 약점이 여기 나옵니다.'));
-
   const got = BADGES.filter(x => x.test()).length;
   const nm = el('div', 'planrow');
   nm.append(el('span', 'pk', '이름'), el('span', 'pv', esc(S.nick || '이름없음')));
   const ch = el('button', 'ghost sm', '바꾸기');
   ch.onclick = askNick;
   nm.append(ch);
-  b.append(nm, rg, sc, detail);
-  const sh = el('button', 'primary big', '자랑 카드 만들기');
-  sh.style.width = '100%'; sh.style.marginBottom = '14px';
-  sh.onclick = shareCard;
-  b.append(sh);
+  b.append(nm, rg);
+  const ana = el('div');
+  renderAnalysis(ana, 'week');
+  b.append(ana);
   b.append(el('p', 'lede', `딴 업적 <b>${got}</b> / ${BADGES.length}`));
   BADGES.forEach(bg => {
     const on = bg.test();
@@ -624,6 +687,10 @@ function renderAwards() {
                el('span', 'awh', on ? '달성 ✔' : esc(bg.how)));
     b.append(row);
   });
+  const sh = el('button', 'primary big', '자랑 카드 만들기');
+  sh.style.width = '100%'; sh.style.marginTop = '16px';
+  sh.onclick = shareCard;
+  b.append(sh);
   show('award', '내 정보', true);
 }
 
@@ -651,7 +718,7 @@ function renderProgress() {
   const words = Object.keys(S.srs).length;
   const memo = Object.values(S.srs).filter(v => v.lv >= 2).length;   // 간격을 두고 두 번 맞힌 단어
   const days = Object.keys(S.done).filter(k => +k >= 1).length;
-  [['배운 단어', words], ['외운 단어', memo], ['끝낸 세트', days], ['소리 낸 횟수', S.stats.said || 0]]
+  [['배운 단어', words], ['외운 단어', memo], ['끝낸 세트', days]]
     .forEach(([k, v]) => {
       const c = el('div', 'stat');
       c.append(el('b', null, String(v)), el('span', null, k));
@@ -667,9 +734,6 @@ function renderProgress() {
     s.append(el('i', null, b.icon), el('em', null, b.name));
     bd.append(s);
   });
-  const more = el('button', 'ghost sm', `업적 ${got.length} / ${BADGES.length}`);
-  more.onclick = renderAwards;
-  bd.append(more);
   box.append(bd);
 }
 
@@ -868,29 +932,29 @@ function renderHome() {
   const plan = $('#plan');
   plan.textContent = '';
   // 행 자체를 누르면 바로 실행된다
-  const prow = (k, v, act, fn) => {
-    const r = el('div', 'planrow' + (fn ? ' go' : ''));
+  const prow = (k, v, state, fn) => {
+    const r = el('div', 'plancell ' + state + (fn ? ' go' : ''));
     r.append(el('span', 'pk', k), el('span', 'pv', esc(v)));
-    if (fn) { r.append(el('span', 'parrow', '›')); r.onclick = fn; }
+    if (fn) r.onclick = fn;
     plan.append(r);
   };
   const doneToday = Object.entries(S.done)
     .some(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd());   // 세트(Day)만 센다
   // 오늘 학습
-  if (doneToday) prow('오늘 학습', '완료', null, null);
-  else if (nx) prow('오늘 학습', trackName(nx) + label(nx) + ' · ' + nx.theme + ' — 미완', '시작', () => startLearn(nx));
-  else prow('오늘 학습', '없음 — 전 과정 완료', null, null);
+  if (doneToday) prow('오늘 학습', '완료', 'done', null);
+  else if (nx) prow('오늘 학습', trackName(nx) + label(nx) + '\n' + nx.theme, 'todo', () => startLearn(nx));
+  else prow('오늘 학습', '전 과정 완료', 'none', null);
   // 오늘 복습
-  if (due.length) prow('오늘 복습', '단어 ' + due.length + '개 — 미완', '시작', () => reviewStart());
-  else prow('오늘 복습', S.revDay === ymd() ? '완료' : '없음', null, null);
+  if (due.length) prow('오늘 복습', '단어 ' + due.length + '개', 'todo', () => reviewStart());
+  else prow('오늘 복습', S.revDay === ymd() ? '완료' : '없음', S.revDay === ymd() ? 'done' : 'none', null);
   // 내일 학습 (+예습)
   const tset = doneToday ? nx : nextAfter(nx);
-  if (tset) prow('내일 학습', trackName(tset) + label(tset) + ' · ' + tset.theme,
-    (tset.words || []).length ? '예습 10초' : null,
+  if (tset) prow('내일 학습', trackName(tset) + label(tset) + '\n' + tset.theme, 'next',
     (tset.words || []).length ? () => flashRun(tset.words, '예습 · ' + trackName(tset) + label(tset)) : null);
+  else prow('내일 학습', '없음', 'none', null);
   // 내일 복습 — 내일 새로 나올(만기되는) 카드 수
   const tmr = Object.values(S.srs).filter(v => v.due > now() && v.due <= now() + DAY).length;
-  prow('내일 복습', tmr ? '단어 ' + tmr + '개가 다시 나옵니다' : '없음', null, null);
+  prow('내일 복습', tmr ? '단어 ' + tmr + '개' : '없음', tmr ? 'next' : 'none', null);
 
   show('home', '짜오짜오', false);
 }
@@ -2511,6 +2575,7 @@ function renderChatModes() {
   s.hidden = false; s.textContent = '';
 
   const tp = el('div', 'pickbox');
+  tp.append(el('span', 'pklab', '선생님'));
   const gp = el('div', 'rolepick');
   [['f', '여'], ['m', '남']].forEach(([k, txt]) => {
     const on = (S.tch || 'f') === k;
@@ -2518,6 +2583,7 @@ function renderChatModes() {
     bb.onclick = () => { S.tch = k; save(); renderChatModes(); };
     gp.append(bb);
   });
+  tp.append(gp, el('span', 'pklab', '말'));
   const rp = el('div', 'rolepick');
   [['n', '북부'], ['s', '남부']].forEach(([k, txt]) => {
     const on = (S.region === 's' ? 's' : 'n') === k;
@@ -2525,7 +2591,7 @@ function renderChatModes() {
     bb.onclick = () => { S.region = k; save(); drawRegion(); renderChatModes(); };
     rp.append(bb);
   });
-  tp.append(gp, rp);
+  tp.append(rp);
   s.append(tp);
 
   const m2 = el('button', 'chatmode');
