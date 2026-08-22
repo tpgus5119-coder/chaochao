@@ -136,6 +136,33 @@ function toneArrow(name) {
     `<g transform="translate(${t.x} ${t.y}) rotate(${t.a})"><path d="M-4.4 -3 L0 0 L-4.4 3"/></g>` +
     (t.dot ? `<circle cx="${t.dot[0]}" cy="${t.dot[1]}" r="1.7"/>` : '') + `</svg>`;
 }
+/* 단어를 크게 — 글자 위에 성조 화살표를 얹어 한 덩어리로 보여준다.
+   전에는 큰 글자와 작은 성조칩이 따로 있어 같은 단어가 두 번 보였다.
+   누르면 소리가 난다(버튼을 따로 두지 않는다 — 그림 자리를 벌기 위해). */
+function bigWord(vi, tones) {
+  const b = el('button', 'bigw');
+  b.type = 'button';
+  const list = (tones || []).length ? tones : vi.split(' ').map(sy => ({ syl: sy, name: 'ngang' }));
+  list.forEach(t => {
+    const u = el('span', 'bwsyl ' + t.name);
+    u.append(el('b', null, esc(t.syl)), el('i', null, toneArrow(t.name)));
+    if (t.ko) u.title = t.name + ' · ' + t.ko;
+    b.append(u);
+  });
+  b.onclick = () => play(vi, false);
+  return b;
+}
+const ICON = {
+  slow: '<svg viewBox="0 0 24 24"><path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="8.5"/></svg>',
+  mic: '<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3"/></svg>',
+};
+const iconBtn = (kind, title, fn) => {
+  const b = el('button', 'ibtn ' + kind, ICON[kind]);
+  b.type = 'button'; b.title = title; b.setAttribute('aria-label', title);
+  b.onclick = fn;
+  return b;
+};
+
 function toneRow(tones, small) {
   const r = el('div', 'tones' + (small ? ' sm' : ''));
   (tones || []).forEach(t => {
@@ -306,6 +333,39 @@ async function aiListen(text, blobUrl, box) {
   } catch (e) { note.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
 }
 
+/* 첫 단어에서 한 번만 — 눌러서 소리 듣는 법을 모르면 이 앱의 절반이 안 보인다 */
+function tutorTap() {
+  if (S.tut) return;
+  S.tut = 1; save();
+  popup('<b>글자를 누르면 소리가 납니다</b><br>' +
+        '단어도, 아래 예문도 눌러 보세요. 시계 단추는 느리게, 마이크 단추는 따라 말하기입니다.');
+}
+function popup(html) {
+  const back = el('div', 'modalback');
+  const box = el('div', 'modalbox');
+  box.append(el('div', 'modalb', html));
+  const ok = el('button', 'primary big', '알겠어요');
+  ok.style.width = '100%';
+  ok.onclick = () => back.remove();
+  box.append(ok);
+  back.append(box);
+  back.onclick = e => { if (e.target === back) back.remove(); };
+  document.body.append(back);
+}
+
+/* 원어민 높낮이 곡선 + 내 녹음 결과 자리. 버튼은 밖에 두고 여기는 그림만 맡는다. */
+function curveArea(text, box) {
+  const wrap = el('div', 'speak');
+  const pre = el('div', 'curvearea prenat');
+  nativeCurve(text).then(nat => {
+    if (!nat || !nat.curve) return;
+    pre.innerHTML = `<div class="curvebox">${curveSvg(null, nat.curve)}</div>` +
+      `<div class="curvelegend"><span class="k nat"></span>원어민 소리 높낮이 (느린 발음)</div>`;
+  });
+  wrap.append(pre, box);
+  return wrap;
+}
+
 function speakRow(text, withSound) {
   const wrap = el('div', 'speak');
   const row = el('div', 'qplay');
@@ -421,7 +481,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'week', 'nick', 'sub', 'prog', 'club'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'week', 'nick', 'sub', 'club'];
 /* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
@@ -974,7 +1034,6 @@ const MENUS = {
   news:  { name: '베트남 소식', sub: '오늘의 베트남', items: () => [
             ['기사', showNews], ['날씨', () => showWx()], ['문화', showCulture]] },
   guide: { name: '사용법', sub: '이 앱을 쓰는 법', items: () => [['보기', showGuide]] },
-  prog:  { name: '진도', sub: '얼마나 왔는가', items: () => [['보기', showProgress]] },
 };
 function renderMenu(id) {
   const m = MENUS[id];
@@ -1007,15 +1066,6 @@ function drawMenu() {
   });
 }
 
-/* 진도 — 이번 주 도장·통계·업적을 한자리에 (첫 화면에서 빼서 여기로) */
-function showProgress() {
-  const b = $('#progBody');
-  b.textContent = '';
-  const holder = el('div', 'progress');
-  b.append(holder);
-  renderProgress(holder);
-  show('prog', '진도', true);
-}
 
 /* ---------- 홈 ---------- */
 const allWords = () => ALL.flatMap(d => d.words || []);
@@ -1065,59 +1115,26 @@ const GROUPS = [
 const hiddenCats = () => S.hide || [];
 const visibleDay = d => !(d.track === 'work' && hiddenCats().includes(d.cat));
 
-/* 오늘 할 세트 — 일상·직무를 번갈아 추천. 기본기(모음·성조 등)는 일정에 안 넣는다(각자 알아서). */
-function nextDay() {
-  const daily = ALL.find(d => typeof d.day === 'number' && !d.track && !S.done[d.day]);
-  const work = ALL.find(d => d.track === 'work' && !S.done[d.day] && visibleDay(d));
-  if (daily && work) {
-    const nd = ALL.filter(d => typeof d.day === 'number' && !d.track && S.done[d.day]).length;
-    const nw = ALL.filter(d => d.track === 'work' && S.done[d.day]).length;
-    return nd <= nw ? daily : work;
+/* 앞으로 할 세트 n개 — 일상·직무를 번갈아. 기본기(모음·성조 등)는 일정에 안 넣는다(각자 알아서).
+   '하루 몇 세트'를 2로 올리면 오늘 두 개, 내일 두 개가 잡힌다. */
+function upcoming(n) {
+  const daily = ALL.filter(d => typeof d.day === 'number' && !d.track && !S.done[d.day]);
+  const work = ALL.filter(d => d.track === 'work' && !S.done[d.day] && visibleDay(d));
+  let nd = ALL.filter(d => typeof d.day === 'number' && !d.track && S.done[d.day]).length;
+  let nw = ALL.filter(d => d.track === 'work' && S.done[d.day]).length;
+  const out = [];
+  let i = 0, j = 0;
+  while (out.length < n && (i < daily.length || j < work.length)) {
+    const useDaily = j >= work.length || (i < daily.length && nd <= nw);
+    if (useDaily) { out.push(daily[i++]); nd++; } else { out.push(work[j++]); nw++; }
   }
-  return daily || work;
+  return out;
 }
-
-/* 며칠 이어서 왔는가. 끊기면 0이 되지만 '최고 기록'은 남는다 —
-   0으로 되돌아가는 것만 보이면 한 번 빠진 날 그만두게 된다. */
-function streak() {
-  let n = 0;
-  const d = new Date();
-  if (!S.act[ymd(d)]) d.setDate(d.getDate() - 1);      // 오늘 아직 안 했으면 어제부터 센다
-  while (S.act[ymd(d)]) { n++; d.setDate(d.getDate() - 1); }
-  if (n > (S.best || 0)) { S.best = n; save(); }
-  return n;
-}
-
-/* 첫 화면 맨 위 세 칸. 셋을 고른 이유는 서로 다른 질문에 답하기 때문이다:
-   ① 연속 — "계속 하고 있나" (돌아오게 만드는 힘. 간격 반복은 돌아와야만 돌아간다)
-   ② 진도 — "얼마나 왔나" (끝이 보일수록 속도가 붙는다)
-   ③ 외운 단어 — "무엇을 얻었나" (노력이 아니라 성과. 이게 있어야 '늘고 있다'는 실감이 난다)
-   넷째를 더하면 숫자끼리 눈길을 뺏어서 셋 다 안 보게 된다. */
-function drawDash() {
-  const box = $('#dash');
-  box.textContent = '';
-  const total = ALL.filter(d => typeof d.day === 'number' && visibleDay(d)).length;
-  const done = ALL.filter(d => typeof d.day === 'number' && visibleDay(d) && S.done[d.day]).length;
-  const memo = Object.values(S.srs).filter(v => v.lv >= 2).length;
-  const st = streak();
-  const cell = (v, k, sub, fn) => {
-    const c = el('button', 'dcell');
-    c.append(el('b', null, v), el('span', 'dk', k));
-    if (sub) c.append(el('span', 'dsub', sub));
-    c.onclick = fn;
-    box.append(c);
-  };
-  const doneT = !!S.act[ymd()];
-  cell(st + '일', '연속', doneT ? '오늘 완료 ✔' : st ? '오늘도 오세요' : S.best ? '최고 ' + S.best + '일' : '오늘 시작하세요',
-       showProgress);
-  cell(total ? Math.round(done * 100 / total) + '%' : '0%', '진도', done + ' / ' + total + '세트',
-       () => renderMenu('day'));
-  cell(String(memo), '외운 단어', '두 번 이상 맞힌 것', renderAwards);
-}
+const nextDay = () => upcoming(1)[0] || null;
 
 function renderHome() {
   drawMenu();
-  drawDash();
+  renderProgress($('#progress'));      // 이번 주 도장·통계·업적 (첫 화면 일정판 아래)
   const nx = nextDay();
   const due = dueWords();
 
@@ -1134,11 +1151,18 @@ function renderHome() {
   const todayCnt = Object.entries(S.done)
     .filter(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd()).length;
   const pace = S.pace || 1;                       // 하루에 몇 세트 할 것인가 (내 정보에서 바꾼다)
-  const doneToday = todayCnt >= pace;
+  const left = Math.max(0, pace - todayCnt);      // 오늘 남은 세트
+  const doneToday = left === 0;
+  const queue = upcoming(left + pace);            // 오늘 남은 것 + 내일 것
+  const nm = d => trackName(d) + label(d);
   // 오늘 학습
   if (doneToday) prow('오늘 학습', pace > 1 ? todayCnt + '세트 완료' : '완료', 'done', null);
-  else if (nx) prow('오늘 학습', trackName(nx) + label(nx) + '\n' + nx.theme, 'todo', () => startLearn(nx));
-  else prow('오늘 학습', '전 과정 완료', 'none', null);
+  else if (queue.length) {
+    const t = queue.slice(0, left);
+    prow('오늘 학습',
+      t.map(nm).join(' · ') + '\n' + (t.length > 1 ? t.length + '세트' : t[0].theme),
+      'todo', () => startLearn(t[0]));
+  } else prow('오늘 학습', '전 과정 완료', 'none', null);
   // 오늘 복습 — 문장도 같이 나오므로 뭉뚱그려 '단어'라고 하지 않는다
   const dueW = due.map(findItem).filter(Boolean);
   const ns = dueW.filter(x => x.sent).length, nw = dueW.length - ns;
@@ -1146,10 +1170,13 @@ function renderHome() {
                        'todo', () => reviewStart());
   else prow('오늘 복습', S.revDay === ymd() ? '완료' : '없음', S.revDay === ymd() ? 'done' : 'none', null);
   // 내일 학습 (+예습)
-  const tset = doneToday ? nx : nextAfter(nx);
-  if (tset) prow('내일 학습', trackName(tset) + label(tset) + '\n' + tset.theme, 'next',
-    (tset.words || []).length ? () => flashRun(tset.words, '예습 · ' + trackName(tset) + label(tset)) : null);
-  else prow('내일 학습', '없음', 'none', null);
+  const tset = queue.slice(left, left + pace);
+  if (tset.length) {
+    const words = tset.flatMap(d => d.words || []);
+    prow('내일 학습',
+      tset.map(nm).join(' · ') + '\n' + (tset.length > 1 ? tset.length + '세트' : tset[0].theme),
+      'next', words.length ? () => flashRun(words, '예습 · ' + tset.map(nm).join(' · ')) : null);
+  } else prow('내일 학습', '없음', 'none', null);
   // 내일 복습 — 내일 새로 나올(만기되는) 카드 수
   const tmr = Object.entries(S.srs).filter(([, v]) => v.due > now() && v.due <= now() + DAY)
     .map(([k]) => findItem(k)).filter(Boolean);
@@ -1158,19 +1185,6 @@ function renderHome() {
        tmr.length ? 'next' : 'none', null);
 
   show('home', '짜오짜오', false);
-}
-
-/* 오늘 것 다음에 올 세트 — 일상·직무를 번갈아 추천하는 규칙 그대로 한 걸음 앞을 본다 */
-function nextAfter(nx) {
-  if (!nx) return null;
-  const first = t => ALL.find(d => typeof d.day === 'number'
-    && (t === 'work' ? d.track === 'work' : !d.track) && !S.done[d.day] && d !== nx && visibleDay(d));
-  if (typeof nx.day === 'string') {
-    return ALL.find(d => typeof d.day === 'string' && !S.done[d.day] && d !== nx)
-      || first('daily') || first('work');
-  }
-  return (nx.track === 'work' ? first('daily') : first('work'))
-    || first(nx.track === 'work' ? 'work' : 'daily');
 }
 
 /* 학습 과정 목록 — 트랙별로 보여준다 */
@@ -1233,29 +1247,45 @@ function startLearn(d) {
   // 순서: 단어 카드 → 확인 문제(암기 다지기) → 오늘의 대화(문장으로 써먹기).
   // 문장이 마무리인 이유: 외운 것을 산출(말하기)로 끝내야 하루가 완성된다.
   const items = [];
+  // 설명은 책 표지처럼 맨 앞 한 장으로. 단어 화면에서는 사라져서 그림 자리를 벌어 준다.
+  if (d.intro) items.push({ k: 'cover', d: { t: label(d) + ' · ' + d.theme, b: d.intro } });
   (d.letters || []).forEach(x => items.push({ k: 'letter', d: x }));
   (d.tones || []).forEach(x => items.push({ k: 'tone', d: x }));
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
   L = { day: d, items, i: 0 };
-  $('#learnIntro').textContent = d.intro || '';
-  $('#learnIntro').dataset.prep = (d.words || []).length ? '0' : '1';
   drawCard();
   // 제목은 버튼 이름과 같게 — 준비 날들은 주제만 (준비 N 표기는 뺀다)
   show('learn', typeof d.day === 'string' ? d.theme : label(d) + ' · ' + d.theme, true);
 }
 
 /* 단어의 예문 — 새로 짓지 않고 그날 대화·바꿔말하기에서 그 단어가 든 문장을 꺼내 쓴다.
-   (모든 단어가 그날 문장 어딘가에 나오는 것은 조립 검증기가 보장한다. 음원도 이미 있다.) */
-function exampleFor(day, w) {
-  const nm = s => s.toLowerCase().replace(/[.,!?;:]/g, ' ').replace(/\s+/g, ' ').trim();
-  const target = nm(w.vi);
-  const hitLine = (day.dialog?.lines || []).find(l => (' ' + nm(l.vi) + ' ').includes(' ' + target + ' '));
-  if (hitLine) return { vi: hitLine.vi, ko: hitLine.ko, kr: hitLine.kr_read };
-  const hitEx = (day.dialog?.extra || []).map(t => typeof t === 'string' ? { vi: t } : t)
-    .find(o => (' ' + nm(o.vi) + ' ').includes(' ' + target + ' '));
-  if (hitEx) return { vi: hitEx.vi, ko: hitEx.ko, kr: hitEx.kr_read };
-  return null;
+   (모든 단어가 그날 문장 어딘가에 나오는 것은 조립 검증기가 보장한다. 음원도 이미 있다.)
+   같은 문장이 열 단어에 붙으면 예문이 아니라 배경이 된다. 그래서 세트 안에서
+   한 문장은 한 단어에만 준다 — 남는 단어가 없을 때만 다시 쓴다. */
+const exNorm = t => t.toLowerCase().replace(/[.,!?;:]/g, ' ').replace(/\s+/g, ' ').trim();
+function exampleMap(day) {
+  if (day._exmap) return day._exmap;
+  const pool = [
+    ...(day.dialog?.lines || []).map(l => ({ vi: l.vi, ko: l.ko, kr: l.kr_read })),
+    ...(day.dialog?.extra || []).map(t => typeof t === 'string' ? { vi: t } : { vi: t.vi, ko: t.ko, kr: t.kr_read }),
+  ];
+  const holds = pool.map(p => ' ' + exNorm(p.vi) + ' ');
+  const used = new Set(), map = {};
+  const pick = (w, fresh) => {
+    const t = ' ' + exNorm(w.vi) + ' ';
+    for (let i = 0; i < pool.length; i++)
+      if ((!fresh || !used.has(i)) && holds[i].includes(t)) { used.add(i); return pool[i]; }
+    return null;
+  };
+  // 짧은 단어는 여러 문장에 걸리므로, 걸리는 문장이 적은 단어부터 먼저 고르게 한다
+  const ws = [...(day.words || [])].sort((a, b) =>
+    holds.filter(h => h.includes(' ' + exNorm(a.vi) + ' ')).length -
+    holds.filter(h => h.includes(' ' + exNorm(b.vi) + ' ')).length);
+  ws.forEach(w => { const h = pick(w, true); if (h) map[w.vi] = h; });
+  ws.forEach(w => { if (!map[w.vi]) { const h = pick(w, false); if (h) map[w.vi] = h; } });
+  return (day._exmap = map);
 }
+const exampleFor = (day, w) => exampleMap(day)[w.vi] || null;
 
 /* 한글 독음: 기본 숨김. 시작 14일 뒤에는 아예 안 나온다 */
 /* 한글 발음 — 항상 보여준다 (사용자 지시) */
@@ -1268,6 +1298,11 @@ function drawCard() {
   const c = $('#card');
   c.textContent = '';
   const it = L.items[L.i], x = it.d;
+
+  if (it.k === 'cover') {
+    c.append(el('div', 'covert', esc(x.t)));
+    c.append(el('div', 'coverb', x.b));       // 우리가 쓴 글이라 굵게 표시를 살린다
+  }
 
   if (it.k === 'letter') {
     c.append(el('div', 'vi', esc(x.vi)));
@@ -1297,9 +1332,17 @@ function drawCard() {
 
   if (it.k === 'rule') {
     // 규칙 예문 — 단어 카드와 같은 차림새 + 규칙 설명 한 줄
-    c.append(el('div', 'vi', esc(x.vi)));
-    c.append(toneRow(x.tones));
-    c.append(reveal(x.kr));
+    const row = el('div', 'wrow');
+    row.append(bigWord(x.vi, x.tones));
+    if (x.kr) row.append(el('span', 'wkr', '[' + esc(x.kr) + ']'));
+    row.append(iconBtn('slow', '느리게 듣기', () => play(x.vi, true)));
+    const rbox = el('div', 'cmpbox');
+    if (canRecord()) {
+      const mic = iconBtn('mic', '따라 말하기', null);
+      mic.onclick = () => toggleRec(x.vi, mic, rbox);
+      row.append(mic);
+    }
+    c.append(row);
     c.append(el('div', 'ko', esc(x.ko)));
     c.append(el('div', 'rulenote', esc(x.note)));
     if (L.day.day === 'R4') {          // 남부 소리 수업은 카드에서 바로 남북을 맞대 듣는다
@@ -1311,30 +1354,41 @@ function drawCard() {
       cmp.append(bn, bs);
       c.append(cmp);
     }
-    c.append(speakRow(x.vi, true));
+    c.append(curveArea(x.vi, rbox));
   }
 
   if (it.k === 'word') {
-    // 순서 통일: 그림 → 단어 → 성조 화살표 → 한글 발음 → 뜻 → (한자·남부) → 예문 → 소리 줄
-    const p = pic(x, 'pic'); if (p) c.append(p);
-    c.append(el('div', 'vi', esc(x.vi)));
-    c.append(toneRow(x.tones));
-    c.append(reveal(x.kr_read));
+    // 그림을 크게 두려고 글자 요소를 줄였다.
+    // 그림 → [단어 · 발음 · 느리게 · 마이크] → 뜻 → 예문(누르면 소리) → 원어민 곡선
+    const p = pic(x, 'pic big'); if (p) c.append(p);
+    const row = el('div', 'wrow');
+    row.append(bigWord(x.vi, x.tones));
+    if (x.kr_read) row.append(el('span', 'wkr', '[' + esc(x.kr_read) + ']'));
+    row.append(iconBtn('slow', '느리게 듣기', () => play(x.vi, true)));
+    const box = el('div', 'cmpbox');
+    if (canRecord()) {
+      const mic = iconBtn('mic', '따라 말하기', null);
+      mic.onclick = () => toggleRec(x.vi, mic, box);
+      row.append(mic);
+    }
+    c.append(row);
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
     if (x.south) c.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     const exm = exampleFor(L.day, x);
     if (exm) {
-      const eb = el('div', 'wex');
-      eb.append(el('div', 'wexvi', esc(exm.vi)));
-      if (exm.kr) eb.append(el('div', 'wexkr', '[' + esc(exm.kr) + ']'));
+      const eb = el('button', 'wex');
+      eb.type = 'button';
+      const top = el('div', 'wextop');
+      top.append(el('span', 'wexvi', esc(exm.vi)));
+      if (exm.kr) top.append(el('span', 'wexkr', '[' + esc(exm.kr) + ']'));
+      eb.append(top);
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
-      const pb = el('button', 'ghost sm', '예문 듣기');
-      pb.onclick = () => play(exm.vi, false);
-      eb.append(pb);
+      eb.onclick = () => play(exm.vi, false);
       c.append(eb);
     }
-    c.append(speakRow(x.vi, true));
+    c.append(curveArea(x.vi, box));
+    tutorTap();
   }
 
   if (it.k === 'dialog') {
@@ -1416,8 +1470,11 @@ function drawCard() {
 
   // '1 / 12'만 보면 외울 게 12개인 줄 안다. 무엇을 세는지 붙여준다.
   const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화', rule: '예문', cult: '문화' };
+  // 표지는 세는 대상에서 빼야 '단어 1 / 10'이 맞는다
   const kinds = L.items.map(x => x.k);
-  if (it.k === 'dialog') {
+  if (it.k === 'cover') {
+    $('#pos').textContent = '';
+  } else if (it.k === 'dialog') {
     $('#pos').textContent = '오늘의 대화';
   } else {
     const same = kinds.filter(k => k === it.k).length;
@@ -1528,8 +1585,6 @@ function drawFlash() {
 /* 확인 문제 뒤의 마무리 — 오늘 배운 문장을 실제로 써먹는다 */
 function startDialog(d) {
   L = { day: d, items: [{ k: 'dialog', d: d.dialog }], i: 0, dlg: true };
-  $('#learnIntro').textContent = '외운 단어를 문장으로 써먹을 차례입니다. 한 줄씩 따라 말해 보세요.';
-  $('#learnIntro').dataset.prep = '0';
   drawCard();
   show('learn', label(d) + ' · 문장으로 써먹기', true);
 }
@@ -2675,9 +2730,8 @@ function startRule(i) {
   const r = (typeof i === 'string') ? GRAMMAR[+i.slice(1)] : RULES[i];
   // 다른 학습과 같은 카드 화면으로 가르친다 — 카드가 끝나면 연습 문제
   L = { day: { day: r.key, theme: r.title, intro: r.intro, words: [], rule: r },
-        items: r.cards.map(c => ({ k: 'rule', d: c })), i: 0 };
-  $('#learnIntro').innerHTML = r.intro;   // 규칙·문법 머리글은 우리가 쓴 글이라 굵게 표시를 살린다
-  $('#learnIntro').dataset.prep = '0';
+        items: [{ k: 'cover', d: { t: r.title, b: r.intro } },
+                ...r.cards.map(c => ({ k: 'rule', d: c }))], i: 0 };
   drawCard();
   show('learn', r.title, true);
 }
@@ -3667,9 +3721,9 @@ const CULTURE = [
 ];
 function showCulture() {
   L = { day: { day: 'CULT', theme: '베트남 문화', words: [] },
-        items: CULTURE.map(c => ({ k: 'cult', d: c })), i: 0, cult: true };
-  $('#learnIntro').textContent = '말만 배워서는 반쪽입니다. 첫 주에 바로 부딪히는 것들만 모았습니다.';
-  $('#learnIntro').dataset.prep = '0';
+        items: [{ k: 'cover', d: { t: '베트남 문화',
+                                   b: '말만 배워서는 반쪽입니다. 첫 주에 바로 부딪히는 것들만 모았습니다.' } },
+                ...CULTURE.map(c => ({ k: 'cult', d: c }))], i: 0, cult: true };
   drawCard();
   show('learn', '베트남 문화', true);
 }
@@ -3766,6 +3820,7 @@ $('#bkReset').onclick = () => {
 
 $('#voice').onclick = () => {
   S.voice = S.voice === 'f' ? 'm' : 'f'; save(); drawVoiceBtn();
+  if (!$('#learn').hidden && L) drawCard();
 };
 
 /* 북부(하노이) ↔ 남부(호찌민) 소리 전환. 남부 목소리는 여성 하나뿐이다. */
@@ -3776,6 +3831,8 @@ function drawRegion() {
 }
 $('#region').onclick = () => {
   S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion();
+  // 남부와 북부는 높낮이가 다르다 — 보고 있던 카드의 원어민 곡선도 다시 그린다
+  if (!$('#learn').hidden && L) drawCard();
 };
 
 /* ---------- 앱 전체 순위와 평균 ----------
@@ -3801,36 +3858,23 @@ function drawRank(host) {
   host.append(el('div', 'rhead', '<b>전체 순위</b>'));
   const body = el('div', 'rbody', '불러오는 중…');
   host.append(body);
-  if (S.norank) {                                  // 순위에 안 나오기로 한 사람
-    body.textContent = '순위에 올리지 않고 있습니다.';
-    const on = el('button', 'ghost sm', '순위에 참여하기');
-    on.onclick = () => { S.norank = 0; save(); drawRank(host); };
-    host.append(on);
-    return;
-  }
   const again = el('button', 'ghost sm', '새로고침');
   again.onclick = () => drawRank(host);
-  const off = el('button', 'ghost sm', '순위에서 빼기');
-  off.onclick = () => {
-    if (!confirm('내 별명과 점수를 순위에서 지울까요?\n(공부 기록은 그대로 남습니다)')) return;
-    S.norank = 1; save();
-    cCall({ act: 'unrank', uid: myUid() }).catch(() => { });
-    drawRank(host);
-  };
   cCall({ act: 'rank', uid: myUid(), score: weekReport(S.wk && S.wk.base).score,
           memo: Object.values(S.srs).filter(v => v.lv >= 2).length, pct: myPcts() })
     .then(j => {
       body.textContent = '';
       if (j.total < 3) {
         body.innerHTML = '아직 사람이 적어 순위를 매기지 않습니다 (지금 ' + j.total + '명). 3명부터 나옵니다.';
-        host.append(again, off); return;
+        host.append(again); return;
       }
+      // 남의 등수도 이름도 보여주지 않는다 — 누구나 자기 자리만 안다
       body.innerHTML =
-        (j.rank <= 5 ? `<b>나는 ${j.rank}위</b> (${j.total}명 중)`
-                     : `<b>나는 상위 ${j.pct}%</b> (${j.total}명 중 · 등수는 나만 봅니다)`) +
-        `<br><span class="dimtxt">내 점수 ${j.myScore} · 전체 평균 ${j.avgScore}</span><br><br>` +
-        j.top.map((t, i) => `${i + 1}위 ${esc(t.nick)} — ${t.score}점`).join('<br>') +
-        '<br><br><span class="dimtxt">점수 = 새로 외운 단어×3 + 푼 문제 + 소리 낸 횟수÷2 + 공부한 날×5</span>';
+        `<b>${j.total}명 중 ${j.rank}위</b> · 상위 ${j.pct}%` +
+        `<br><span class="dimtxt">내 점수 ${j.myScore} · 전체 평균 ${j.avgScore}</span>` +
+        `<br><span class="dimtxt">외운 단어 나 ${j.myMemo} · 전체 평균 ${j.avgMemo}</span>` +
+        '<br><br><span class="dimtxt">점수 = 새로 외운 단어×3 + 푼 문제 + 소리 낸 횟수÷2 + 공부한 날×5' +
+        '<br>내 등수는 나만 봅니다. 다른 사람의 등수와 이름은 아무에게도 보이지 않습니다.</span>';
       // 항목별로 전체 평균과 내 자리를 나란히
       const rows = RANKKEY.map(k => [RANKNM[k], j.avg[k], (j.myPct || {})[k]])
                           .filter(r => typeof r[1] === 'number');
@@ -3858,9 +3902,9 @@ function drawRank(host) {
         host.append(box);
         host.append(el('p', 'note', '굵은 막대가 전체 평균, 세로 선이 나입니다. 열 문제를 넘긴 항목만 나옵니다.'));
       }
-      host.append(again, off);
+      host.append(again);
     })
-    .catch(() => { body.textContent = '순위를 불러오지 못했습니다.'; host.append(again, off); });
+    .catch(() => { body.textContent = '순위를 불러오지 못했습니다.'; host.append(again); });
 }
 
 /* ---------- 동아리 ----------

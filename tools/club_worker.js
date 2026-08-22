@@ -9,7 +9,8 @@
    v3: 순위는 동아리 안이 아니라 **앱 전체**다 (act:'rank'). 전체 평균과 내 자리도 함께 준다.
        동아리는 이제 '이번 주 출석판'만 맡는다.
    v4: 순위는 별명이 아니라 기기마다 다른 표(uid)로 구분한다 — 같은 별명을 쓰는 두 사람이
-       서로의 기록을 덮어쓰지 않게. act:'unrank' 로 내 기록을 순위에서 지울 수 있다.
+       서로의 기록을 덮어쓰지 않게. 남의 등수와 이름은 아무에게도 보내지 않는다
+       (누구나 자기 자리만 안다).
    개인정보는 별명과 진도 숫자뿐이다. */
 const CORS = o => ({
   'Access-Control-Allow-Origin': o, 'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -56,15 +57,8 @@ export default {
       return send({ id, name });
     }
 
-    const GKEY = `g:${week()}`, TTL = { expirationTtl: 60 * 60 * 24 * 30 };
+    const GKEY = `r:${week()}`, TTL = { expirationTtl: 60 * 60 * 24 * 30 };
     const FIELDS = ['say', 'ear', 'read', 'spell', 'memo'];
-
-    if (act === 'unrank') {                                  // 순위에서 내 기록 지우기
-      const uid = cut(b.uid, 16);
-      const g = JSON.parse((await KV.get(GKEY)) || '{}');
-      if (g[uid]) { delete g[uid]; await KV.put(GKEY, JSON.stringify(g), TTL); }
-      return send({ ok: true });
-    }
 
     if (act === 'rank') {                                    // 앱 전체 순위 + 전체 평균
       const uid = cut(b.uid, 16);
@@ -94,10 +88,10 @@ export default {
         if (v.length >= 3) avg[k] = Math.round(v.reduce((a, x) => a + x, 0) / v.length);
       }
       const scores = list.map(([, x]) => x.s);
+      // 남의 등수도 이름도 내보내지 않는다 — 나가는 것은 내 자리와 전체 평균뿐이다
       return send({
         rank, total: list.length,
         pct: list.length >= 3 ? Math.max(1, Math.round(rank * 100 / list.length)) : 0,
-        top: list.slice(0, 5).map(([, v]) => ({ nick: v.n, score: v.s })),
         avgScore: scores.length ? Math.round(scores.reduce((a, x) => a + x, 0) / scores.length) : 0,
         avgMemo: list.length ? Math.round(list.reduce((a, [, x]) => a + x.m, 0) / list.length) : 0,
         avg, myScore: mine.s, myMemo: mine.m, myPct: mine.p,
