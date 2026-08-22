@@ -579,13 +579,38 @@ function renderAwards() {
   } else {
     sc.append(el('div', 'rbody', '아직 문제 수가 적어 판정하지 않습니다. 과목마다 10문제가 넘으면 여기에 나옵니다.'));
   }
+  // 세밀 분석 — 무엇이 약한지 콕 집어준다
+  const detail = el('div', 'rulecard');
+  detail.append(el('div', 'rhead', '<b>자세히 보기</b>'));
+  const dl = [];
+  const TN = { 'ngang': '평평(ngang)', 'huyền': '내려감(huyền)', 'sắc': '올라감(sắc)',
+               'hỏi': '내렸다 올림(hỏi)', 'ngã': '끊었다 올림(ngã)', 'nặng': '짧고 무겁게(nặng)' };
+  const tn = Object.entries(S.stats.tn || {}).filter(([, v]) => v.all >= 5)
+    .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all)]).sort((a, b) => a[1] - b[1]);
+  if (tn.length) dl.push('<b>성조별</b> — ' + tn.map(t => `${t[0]} ${t[1]}%`).join(' · '));
+  const MD = { listen: '듣고 고르기', meaning: '뜻 고르기', recall: '떠올려 말하기', dict: '받아쓰기' };
+  const md = Object.entries(S.stats.md || {}).filter(([, v]) => v.all >= 5)
+    .map(([k, v]) => [MD[k] || k, Math.round(v.ok * 100 / v.all)]).sort((a, b) => a[1] - b[1]);
+  if (md.length) dl.push('<b>문제 유형별</b> — ' + md.map(t => `${t[0]} ${t[1]}%`).join(' · '));
+  if (S.stats.msN >= 10) {
+    const sec = S.stats.ms / S.stats.msN / 1000;
+    dl.push(`<b>답하는 속도</b> — 평균 ${sec.toFixed(1)}초 ` +
+      (sec <= 3 ? '(빠릅니다 — 거의 자동으로 나옵니다)' : sec <= 6 ? '(보통입니다)'
+       : '(생각해서 꺼내는 중입니다 — 반복이 더 필요합니다)'));
+  }
+  const miss = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
+    .sort((a, b) => b[1] - a[1]).slice(0, 5);
+  if (miss.length) dl.push('<b>발목 잡는 단어</b> — ' + miss.map(m => esc(m[0])).join(' · '));
+  detail.append(el('div', 'rbody', dl.length ? dl.join('<br><br>')
+    : '아직 문제를 조금밖에 풀지 않았습니다. 며칠 하면 성조별·유형별 약점이 여기 나옵니다.'));
+
   const got = BADGES.filter(x => x.test()).length;
   const nm = el('div', 'planrow');
   nm.append(el('span', 'pk', '이름'), el('span', 'pv', esc(S.nick || '이름없음')));
   const ch = el('button', 'ghost sm', '바꾸기');
   ch.onclick = askNick;
   nm.append(ch);
-  b.append(nm, rg, sc);
+  b.append(nm, rg, sc, detail);
   const sh = el('button', 'primary big', '자랑 카드 만들기');
   sh.style.width = '100%'; sh.style.marginBottom = '14px';
   sh.onclick = shareCard;
@@ -1203,12 +1228,26 @@ function drawFlash() {
   c.append(reveal(w.kr_read));
   c.append(el('div', 'ko', esc(w.ko)));
   b.append(c);
+  const dots = el('div', 'fldots');
+  FL.list.forEach((_, i) => dots.append(el('i', i === FL.i ? 'on' : null)));
+  b.append(dots);
+  b.append(el('p', 'note', '옆으로 밀면 앞뒤로 넘어갑니다. 그냥 두면 3초마다 저절로 넘어갑니다.'));
   let moved = false;
-  const go = () => {
+  const go = (step) => {
     if (moved || $('#quiz').hidden || !FL) return;
     moved = true; clearTimeout(tm); audio.onended = null;
-    FL.i++; drawFlash();
+    FL.i = Math.max(0, FL.i + (step === undefined ? 1 : step)); drawFlash();
   };
+  // 릴스처럼 — 왼쪽으로 밀면 다음, 오른쪽으로 밀면 이전
+  let x0 = null;
+  c.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  c.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+    else go(1);
+  }, { passive: true });
   audio.pause();
   audio.src = `audio/${voiceDir()}/n/${AIDX[w.vi]}.mp3`;
   audio.currentTime = 0;
@@ -1333,6 +1372,7 @@ function drawQuiz() {
   if (Q.i >= Q.list.length) return finishQuiz();
 
   const q = Q.list[Q.i];
+  Q.t0 = Date.now();                                   // 이 문제를 언제 봤는지 (반응 속도)
   const LABEL = { listen: '듣고 고르세요', meaning: '뜻을 고르세요', recall: '소리 내어 말해 보세요', dict: '듣고 글자를 만들어 보세요' };
   body.append(el('div', 'q', LABEL[q.mode]));
 
@@ -1420,6 +1460,7 @@ function drawDict(body, q) {
   chk.onclick = () => {
     if (!picked.length) return;
     const good = picked.join(' ').toLowerCase() === q.w.vi.toLowerCase();
+    markSpeed(good, 'dict');
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
     fxTone(good);
@@ -1464,15 +1505,16 @@ function drawRecall(body, q) {
 
     const grade2 = el('div', 'opts');
     const ok = el('button', null, '✓ 맞았어요');
-    ok.onclick = () => { fxTone(true); grade(q.w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
+    ok.onclick = () => { fxTone(true); markSpeed(true, 'recall'); grade(q.w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
     const no = el('button', null, '✗ 못 맞혔어요');
-    no.onclick = () => { grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
+    no.onclick = () => { markSpeed(false, 'recall'); grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
     grade2.append(ok, no);
     body.append(grade2);
   };
 }
 
 function answer(btn, correct, w) {
+  markSpeed(correct, Q.list[Q.i].mode);
   [...btn.parentNode.children].forEach(b => b.disabled = true);
   btn.dataset.r = correct ? 'ok' : 'no';
   fxTone(correct);
@@ -1490,16 +1532,45 @@ function answer(btn, correct, w) {
 
 /* 틀린 문제를 같은 판 뒤쪽에 한 번만 다시 넣는다.
    틀린 채로 끝내면 그 기억이 남는다. 맞히고 끝내야 한다. */
+/* 얼마나 빨리 답했나 — 정답만 센다(틀린 건 고민 시간이 뒤섞인다).
+   정답률이 같아도 느리면 아직 '자동'이 안 된 것이다. */
+function markSpeed(ok, mode) {
+  bump('md', mode, ok);
+  if (!ok || !Q.t0) return;
+  const ms = Date.now() - Q.t0;
+  if (ms < 500 || ms > 20000) return;                  // 튀는 값은 버린다
+  S.stats.ms = (S.stats.ms || 0) + ms;
+  S.stats.msN = (S.stats.msN || 0) + 1;
+}
+
 function requeue(q) {
   if (q.retry) return;                          // 두 번은 안 미룬다
   Q.list.push({ ...q, retry: true });
 }
 
+/* 어떤 성조에서 자주 틀리는지 — 단어의 첫 음절 성조로 센다 */
+const toneOfWord = vi => {
+  const w = allWords().find(x => x.vi === vi);
+  return (w && (w.tones || [])[0] || {}).name || null;
+};
+function bump(box, key, ok) {
+  if (!key) return;
+  const b = S.stats[box] || (S.stats[box] = {});
+  const c = b[key] || (b[key] = { ok: 0, all: 0 });
+  c.all++; if (ok) c.ok++;
+}
 function grade(vi, ok, early) {
   touchToday();
   // 암기 점수용 계수기 — 인출 시도와 성공을 센다
   S.stats.qAll = (S.stats.qAll || 0) + 1;
   if (ok) S.stats.qOk = (S.stats.qOk || 0) + 1;
+  bump('tn', toneOfWord(vi), ok);                    // 성조별
+  if (!ok) {                                          // 자주 틀리는 단어
+    const m = S.stats.miss || (S.stats.miss = {});
+    m[vi] = (m[vi] || 0) + 1;
+  } else if (S.stats.miss && S.stats.miss[vi]) {
+    S.stats.miss[vi] = Math.max(0, S.stats.miss[vi] - 0.5);   // 맞히면 서서히 지워진다
+  }
   if (early && ok) { save(); return; }   // 예정보다 일찍 꺼내 맞힌 건 사다리를 안 올린다
   const r = S.srs[vi] || { lv: 0, first: now() };
   if (!r.first) r.first = now();

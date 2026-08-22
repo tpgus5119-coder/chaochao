@@ -671,3 +671,8 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .pickbox{display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
   border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:12px}
 .rolepick .pick{border-color:var(--ok); color:var(--fg); font-weight:700}
+
+/* 간략 복습 진행 점 */
+.fldots{display:flex; gap:4px; justify-content:center; margin:10px 0 4px; flex-wrap:wrap}
+.fldots i{width:6px; height:6px; border-radius:50%; background:var(--line)}
+.fldots i.on{background:var(--ok)}
