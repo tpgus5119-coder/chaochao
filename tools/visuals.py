@@ -71,6 +71,13 @@ V = {
  "quan trọng":("❗","thing"), "chắc chắn":("✔️","thing"),
 }
 
+# 3차 추가 (직무·확장 과정 구체어 432개) — 손으로 안 쓰고 imgnew.json에서 읽는다
+import json as _json, pathlib as _pl
+_extra = _pl.Path(__file__).parent / 'imgnew.json'
+if _extra.exists():
+    for _vi, _e in _json.loads(_extra.read_text()).items():
+        V.setdefault(_vi, (_e['emoji'], _e['kind']))
+
 def attach(word):
     hit = V.get(word["vi"])
     if hit:

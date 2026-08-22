@@ -264,6 +264,15 @@ EN = {
 }
 
 d = json.load(open('data/days.json'))
+try:                                   # 워크플로로 저작한 확장분 (파일이름 키로 합류)
+    EXTRA = json.load(open('tools/imgnew.json'))
+except FileNotFoundError:
+    EXTRA = {}
+for day in d['days']:
+    for w in day['words']:
+        if 'img' in w and w['vi'] in EXTRA:
+            EN.setdefault(w['img'][:-5], EXTRA[w['vi']]['en'])
+
 need, rows = [], []
 for day in d['days']:
     items = [(day['dialog']['img'], '오늘의 대화 — ' + day['dialog']['title'])]
@@ -276,7 +285,7 @@ extra = [k for k in EN if k not in need]
 if miss or extra:
     print("어긋남! 없음:", miss, "/ 남음:", extra); sys.exit(1)
 
-out = ["# 그림 생성 프롬프트 (전체 152장)", "",
+out = [f"# 그림 생성 프롬프트 (전체 {len(need)}장)", "",
  "**만드는 법** — 무료 이미지 AI(빙 이미지 크리에이터 copilot.microsoft.com/images, 캔바 등)에 아래 한 줄을 통째로 붙여넣는다.",
  "마음에 드는 것을 골라 저장하고, **저장한 파일 이름을 왼쪽 이름으로** 바꾼다 (확장자는 png/jpg 아무거나 — 변환은 내가 한다).",
  "만든 그림을 채팅으로 보내주면 내가 앱에 넣는다. 한 번에 다 할 필요 없다 — **Day 하나(7~11장)씩** 하면 된다.",
@@ -289,4 +298,5 @@ for day, theme, items in rows:
         out.append(f"> {EN[f[:-5]]}, {STYLE}")
         out.append("")
 open('docs/image-prompts.md', 'w').write('\n'.join(out))
-print(f"docs/image-prompts.md 기록 — {len(need)}장 (장면 20 + 단어 132)")
+scenes = sum(1 for k in need if k.endswith('-scene'))
+print(f"docs/image-prompts.md 기록 — {len(need)}장 (장면 {scenes} + 단어 {len(need) - scenes})")
