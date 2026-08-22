@@ -720,3 +720,18 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .okmsg{color:var(--ok)}
 .nomsg{color:#e0757f}
 .qmain.sent{font-size:24px; line-height:1.4}
+
+/* 홈 큰 타일 — 칸 전체가 버튼 */
+.menu{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px}
+.menu .mtile{position:relative; display:flex; flex-direction:column; gap:4px; align-items:flex-start;
+  border:1px solid var(--line); border-radius:12px; padding:12px 12px 14px; min-height:74px;
+  background:transparent; color:var(--fg); text-align:left; cursor:pointer; font:inherit}
+.menu .mtile b{font-size:15px}
+.menu .mtile .msub{font-size:11px; color:var(--dim)}
+.menu .mtile .mbadge{position:absolute; top:10px; right:10px; font-size:11px; font-weight:700;
+  color:var(--ok); border:1px solid var(--ok); border-radius:10px; padding:1px 7px}
+
+/* 하위 메뉴의 큰 버튼 */
+.bigmenu{display:block; width:100%; text-align:left; font-size:16px; font-weight:700;
+  padding:16px 18px; margin-bottom:8px; border:1px solid var(--line); border-radius:12px;
+  background:transparent; color:var(--fg); cursor:pointer}

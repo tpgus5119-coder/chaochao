@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="짜오짜오">
 <meta name="mobile-web-app-capable" content="yes">
 <title>짜오짜오 — 베트남어</title>
-<link rel="stylesheet" href="style.css?v=3632a407">
+<link rel="stylesheet" href="style.css?v=3b372a3f">
 </head>
 <body>
 
@@ -29,36 +29,7 @@
   <!-- 홈 -->
   <section id="home" class="view">
     <div id="plan" class="plan"></div>
-    <div id="progress" class="progress"></div>
-    <div class="menu">
-      <div class="mtile">
-        <b>하루 5분 베트남어</b>
-        <div class="mbtns"><button id="goDaily" class="ghost">일상</button><button id="goWork" class="ghost">직무</button></div>
-      </div>
-      <div class="mtile">
-        <b>복습</b>
-        <div class="mbtns"><button id="goReview" class="ghost">복습</button><button id="goWordRev" class="ghost">단어</button><button id="goSentRev" class="ghost">문장</button></div>
-      </div>
-      <div class="mtile">
-        <b>기본기</b>
-        <div class="mbtns"><button id="goVowelE" class="ghost">모음</button><button id="goCons" class="ghost">자음</button><button id="goTone" class="ghost">성조</button><button class="ghost" data-rule="0">호칭</button><button class="ghost" data-rule="1">어순</button><button class="ghost" data-rule="2">단위</button><button class="ghost" data-rule="3">남부 소리</button></div>
-      </div>
-      <div class="mtile">
-        <b>문법</b>
-        <div class="mbtns"><button class="ghost" data-gram="0">아니다</button><button class="ghost" data-gram="1">질문</button><button class="ghost" data-gram="2">무엇·어디</button><button class="ghost" data-gram="3">시제</button><button class="ghost" data-gram="4">부탁·금지</button><button class="ghost" data-gram="5">있다·없다</button><button class="ghost" data-gram="6">더·가장</button><button class="ghost" data-gram="7">할 수 있다</button><button class="ghost" data-gram="8">다 했다</button><button class="ghost" data-gram="9">해야 한다</button><button class="ghost" data-gram="10">고장·부상</button><button class="ghost" data-gram="11">해 주세요</button><button class="ghost" data-gram="12">어디에</button><button class="ghost" data-gram="13">언제·얼마</button></div>
-      </div>
-      <div class="mtile">
-        <b>AI 선생님</b>
-        <div class="mbtns"><button id="goChat" class="ghost">자유 대화</button><button id="goTalk" class="ghost">배운 문장으로</button></div>
-      </div>
-      <div class="mtile">
-        <b>베트남 소식</b>
-        <div class="mbtns"><button id="goNews" class="ghost">기사</button><button id="goWx" class="ghost">날씨</button><button id="goCulture" class="ghost">문화</button></div>
-      </div>
-      <div class="mtile">
-        <b>사용법</b>
-        <div class="mbtns"><button id="goGuide" class="ghost">보기</button></div>
-      </div>
+    <div class="menu" id="menu"></div>
     </div>
     <div class="backup">
       <button id="bkExport" class="ghost">진도 백업</button>
@@ -135,6 +106,16 @@
     <div id="guideBody"></div>
   </section>
 
+  <!-- 하위 메뉴 -->
+  <section id="sub" class="view" hidden>
+    <div id="subBody"></div>
+  </section>
+
+  <!-- 진도 -->
+  <section id="prog" class="view" hidden>
+    <div id="progBody"></div>
+  </section>
+
   <!-- 주간 성적표 -->
   <section id="week" class="view" hidden>
     <div id="weekBody"></div>
@@ -172,7 +153,7 @@
   </section>
 </main>
 
-<script src="pitch.js?v=3632a407"></script>
-<script src="app.js?v=3632a407"></script>
+<script src="pitch.js?v=3b372a3f"></script>
+<script src="app.js?v=3b372a3f"></script>
 </body>
 </html>

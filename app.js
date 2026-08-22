@@ -421,7 +421,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'culture', 'week', 'nick'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'culture', 'week', 'nick', 'sub', 'prog'];
 /* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
@@ -567,8 +567,7 @@ function renderAnalysis(host, mode) {
   const ok = subj.filter(x => x.n >= NEED);
   host.append(el('p', 'newsday', '과목별 정답률'));
   host.append(bars(subj.map(x => [x.name, x.pct === null ? 0 : x.pct, x.n])));
-  if (ok.length < subj.length)
-    host.append(el('p', 'note', '빈 막대는 아직 문제를 덜 푼 과목입니다. ' + NEED + '문제를 넘기면 정답률이 그려집니다.'));
+
 
   const TN = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감',
                'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
@@ -584,13 +583,7 @@ function renderAnalysis(host, mode) {
 
   // 처방 — 분석만 하고 끝내지 않는다
   if (ok.length < 2) {
-    const card0 = el('div', 'rulecard');
-    card0.append(el('div', 'rhead', '<b>조금만 더 하면 분석이 나옵니다</b>'));
-    card0.append(el('div', 'rbody', subj.map(x => x.n >= NEED
-      ? `<b>${esc(x.name)}</b> — ${x.n}문제 (준비 완료)`
-      : `<b>${esc(x.name)}</b> — ${x.n}문제 · <b>${NEED - x.n}문제</b> 더`).join('<br>') +
-      '<br><br>두 과목이 넘어가면 강점·약점과 처방이 자동으로 나옵니다.'));
-    host.append(card0);
+    host.append(el('p', 'note', '두 과목이 10문제를 넘으면 강점·약점과 처방이 나옵니다.'));
     return;
   }
   const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
@@ -752,7 +745,12 @@ function renderAwards() {
   const ch = el('button', 'ghost sm', '바꾸기');
   ch.onclick = askNick;
   nm.append(ch);
-  b.append(nm, rg);
+  const pc = el('div', 'planrow');
+  pc.append(el('span', 'pk', '하루'), el('span', 'pv', (S.pace || 1) + '세트' + ((S.pace || 1) > 1 ? ' (일상+직무)' : '')));
+  const pb = el('button', 'ghost sm', '바꾸기');
+  pb.onclick = () => { S.pace = (S.pace || 1) >= 2 ? 1 : 2; save(); renderAwards(); };
+  pc.append(pb);
+  b.append(nm, rg, pc);
   const ana = el('div');
   renderAnalysis(ana, 'week');
   b.append(ana);
@@ -772,8 +770,8 @@ function renderAwards() {
   show('award', '내 정보', true);
 }
 
-function renderProgress() {
-  const box = $('#progress');
+function renderProgress(host) {
+  const box = host || $('#progress');
   box.textContent = '';
 
   const dots = weekDots();
@@ -829,7 +827,6 @@ function weekWords() {
   return learned.map(v => allWords().find(w => w.vi === v)).filter(Boolean);
 }
 
-function renderWeekly() { }
 
 
 /* ---------- 주간 성적표 ----------
@@ -948,6 +945,69 @@ function askNick() {
   show('nick', '짜오짜오', false);
 }
 
+
+/* ---------- 홈 메뉴 ----------
+   첫 화면은 큰 칸 여덟 개뿐이다. 칸을 누르면 그 안에서 고른다 —
+   첫 화면에 버튼이 많을수록 고르는 데 힘이 들고, 결국 아무것도 안 누르게 된다. */
+const MENUS = {
+  day:   { name: '하루 5분 베트남어', sub: '오늘 배울 것', items: () => [
+            ['일상 과정', () => renderDays('daily')], ['직무 과정', () => renderDays('work')]] },
+  rev:   { name: '복습', sub: '다시 볼 때가 된 것', items: () => [
+            ['전부 섞어서' + (dueWords().length ? ' (' + dueWords().length + ')' : ''), () => reviewStart()],
+            ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
+  basic: { name: '기본기', sub: '소리와 규칙', items: () => [
+            ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
+            ['성조', toneEntry], ['호칭', () => startRule(0)], ['어순', () => startRule(1)],
+            ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
+  gram:  { name: '문법', sub: '문장을 만드는 뼈대', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
+  ai:    { name: 'AI 선생님', sub: '말이 트이는 자리', items: () => [
+            ['자유 대화', startChat], ['배운 문장으로', startTalk]] },
+  news:  { name: '베트남 소식', sub: '오늘의 베트남', items: () => [
+            ['기사', showNews], ['날씨', () => showWx()], ['문화', showCulture]] },
+  guide: { name: '사용법', sub: '이 앱을 쓰는 법', items: () => [['보기', showGuide]] },
+  prog:  { name: '진도', sub: '얼마나 왔는가', items: () => [['보기', showProgress]] },
+};
+function renderMenu(id) {
+  const m = MENUS[id];
+  const b = $('#subBody');
+  b.textContent = '';
+  m.items().forEach(([label, fn]) => {
+    const btn = el('button', 'bigmenu');
+    btn.textContent = label;
+    btn.onclick = fn;
+    b.append(btn);
+  });
+  show('sub', m.name, true);
+}
+function drawMenu() {
+  const box = $('#menu');
+  box.textContent = '';
+  Object.entries(MENUS).forEach(([id, m]) => {
+    const t = el('button', 'mtile');
+    t.append(el('b', null, m.name), el('span', 'msub', m.sub));
+    if (id === 'rev') {
+      const n = dueWords().length;
+      if (n) t.append(el('span', 'mbadge', String(n)));
+    }
+    t.onclick = () => {
+      const items = m.items();
+      if (items.length === 1) return items[0][1]();     // 하나뿐이면 바로 연다
+      renderMenu(id);
+    };
+    box.append(t);
+  });
+}
+
+/* 진도 — 이번 주 도장·통계·업적을 한자리에 (첫 화면에서 빼서 여기로) */
+function showProgress() {
+  const b = $('#progBody');
+  b.textContent = '';
+  const holder = el('div', 'progress');
+  b.append(holder);
+  renderProgress(holder);
+  show('prog', '진도', true);
+}
+
 /* ---------- 홈 ---------- */
 const allWords = () => ALL.flatMap(d => d.words || []);
 /* 끝낸 세트의 대화 문장 — 복습에서 단어와 같이 다룬다 */
@@ -1004,11 +1064,9 @@ function nextDay() {
 }
 
 function renderHome() {
-  renderProgress();
-  renderWeekly();
+  drawMenu();
   const nx = nextDay();
   const due = dueWords();
-  $('#goReview').textContent = due.length ? '복습 ' + due.length : '복습';
 
   // 오늘·내일 일정판 — 뭘 하게 될지 미리 보이고, 버튼 하나로 바로 들어간다
   const plan = $('#plan');
@@ -1020,10 +1078,12 @@ function renderHome() {
     if (fn) r.onclick = fn;
     plan.append(r);
   };
-  const doneToday = Object.entries(S.done)
-    .some(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd());   // 세트(Day)만 센다
+  const todayCnt = Object.entries(S.done)
+    .filter(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd()).length;
+  const pace = S.pace || 1;                       // 하루에 몇 세트 할 것인가 (내 정보에서 바꾼다)
+  const doneToday = todayCnt >= pace;
   // 오늘 학습
-  if (doneToday) prow('오늘 학습', '완료', 'done', null);
+  if (doneToday) prow('오늘 학습', pace > 1 ? todayCnt + '세트 완료' : '완료', 'done', null);
   else if (nx) prow('오늘 학습', trackName(nx) + label(nx) + '\n' + nx.theme, 'todo', () => startLearn(nx));
   else prow('오늘 학습', '전 과정 완료', 'none', null);
   // 오늘 복습
@@ -3267,14 +3327,6 @@ camIn.onchange = async () => {
 /* ---------- 시작 ---------- */
 $('#back').onclick = renderHome;
 $('#goMe').onclick = renderAwards;
-$('#goChat').onclick = startChat;
-$('#goVowelE').onclick = vowelEntry;
-$('#goCons').onclick = () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); };
-$('#goDaily').onclick = () => renderDays('daily');
-$('#goWork').onclick = () => renderDays('work');
-$('#goNews').onclick = showNews;
-document.querySelectorAll('[data-rule]').forEach(b => b.onclick = () => startRule(+b.dataset.rule));
-document.querySelectorAll('[data-gram]').forEach(b => b.onclick = () => startRule('G' + b.dataset.gram));
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.
    무료 기상 서비스(Open-Meteo, 키·가입 불필요)라 운영비 0원 원칙에 맞다. */
@@ -3501,14 +3553,6 @@ $('#chatForm').onsubmit = e => {
   $('#chatText').value = '';
   chatSend(v);
 };
-$('#goReview').onclick = () => reviewStart();
-$('#goWordRev').onclick = () => reviewMenu('word');
-$('#goSentRev').onclick = () => reviewMenu('sent');
-$('#goTone').onclick = toneEntry;
-$('#goWx').onclick = () => showWx();
-$('#goCulture').onclick = showCulture;
-$('#goGuide').onclick = showGuide;
-$('#goTalk').onclick = startTalk;
 /* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
    200단어가 다 쌓이면 원본이 7.5KB라 압축해서 내보낸다 (10,600자 → 2,900자). */
 const b64 = u8 => { let s = ''; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
