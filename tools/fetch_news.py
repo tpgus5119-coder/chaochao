@@ -20,7 +20,7 @@ R = pathlib.Path(__file__).resolve().parent.parent
 KST = timezone(timedelta(hours=9))
 # 인사이드비나(한국어, 베트남 전문)만 쓴다 — 영어 국제면은 베트남 무관 기사가 섞여서 뺐다.
 FEEDS = [
-    ('인사이드비나', 'https://www.insidevina.com/rss/allArticle.xml', 5,
+    ('인사이드비나', 'https://www.insidevina.com/rss/allArticle.xml', 3,
      ['제조', '공장', '투자', '노동', '근로', '임금', '비자', '수출', '산업',
       '전자', '봉제', '섬유', '삼성', '채용', '경제', '한국']),
 ]
@@ -61,11 +61,11 @@ for src, url, n, kws in FEEDS:
         picked.add(u)
         items.append({'s': src, 't': t, 'u': u,
                       'd': k.strftime('%m월 %d일'), 'ts': k.strftime('%Y-%m-%d')})
-    # 문화 읽을거리 2개 — 문화 화면에 실린다
+    # 문화 읽을거리 1개 — 문화 화면에 실린다
     cult = [(s, d, t, u) for s, d, t, u in cand
             if u not in picked and any(kw in t for kw in CULT_KW)]
     cult.sort(key=lambda x: -x[1].timestamp())
-    for score, d, t, u in cult[:2]:
+    for score, d, t, u in cult[:1]:
         k = d.astimezone(KST)
         items.append({'s': src, 't': t, 'u': u, 'cat': '문화',
                       'd': k.strftime('%m월 %d일'), 'ts': k.strftime('%Y-%m-%d')})
