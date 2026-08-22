@@ -284,24 +284,17 @@ async function aiListen(text, blobUrl, box) {
   box.append(note);
   try {
     const b64 = await recToWav(blobUrl);
-    const r = await fetch(GURL(), {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [
-          { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
-          { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-        generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
-      })
-    });
-    if (!r.ok) throw new Error(r.status === 429 ? '요청이 잠깐 몰렸습니다 — 1분 뒤 다시 해 보세요' : '연결 실패 (' + r.status + ')');
-    const j = await r.json();
-    const heard = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
-    if (!heard) throw new Error('빈 답이 왔습니다');
-    const clean = s => s.toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
-    const bare = s => stripTone(clean(s));
+    const heard = await gCall({
+      contents: [{ role: 'user', parts: [
+        { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
+        { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+      generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
+    }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
+    const clean = x => x.toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+    const bare = x => stripTone(clean(x));
     const exact = clean(heard) === clean(text);
     const close = bare(heard) === bare(text);
-    S.stats.pronAll = (S.stats.pronAll || 0) + 1;   // 발음 점수용 — AI가 알아들었는가
+    S.stats.pronAll = (S.stats.pronAll || 0) + 1;
     if (exact || close) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
     save();
     note.innerHTML = (exact
@@ -309,7 +302,7 @@ async function aiListen(text, blobUrl, box) {
       : close
         ? '<b>AI가 "' + esc(heard) + '" 로 들었습니다.</b> 글자는 맞게 들립니다 — 성조는 위 곡선으로 확인하세요.'
         : 'AI에게는 "<b>' + esc(heard) + '</b>" 로 들렸습니다 (목표: ' + esc(text) + '). 조금 크게, 또박또박 다시 해 보세요.') +
-      '<br><span class="dimtxt">참고용 — AI도 성조 구별은 잘 못합니다 (원어민 소리로 실험해 확인했습니다).</span>';
+      '<br><span class="dimtxt">참고용 — AI도 성조 구별은 잘 못합니다.</span>';
   } catch (e) { note.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
 }
 
@@ -792,9 +785,13 @@ function askNick() {
 
 /* ---------- 홈 ---------- */
 const allWords = () => ALL.flatMap(d => d.words || []);
+/* 복습에 꺼낼 단어 — 최근에 배운 것일수록 앞에 오되 ±3일 흔들림을 줘서
+   같은 시기 단어끼리는 매번 순서가 바뀐다(무조건 최신순은 아니다). */
 function dueWords() {
   const n = now();
-  return Object.entries(S.srs).filter(([, v]) => v.due <= n).map(([k]) => k);
+  return Object.entries(S.srs).filter(([, v]) => v.due <= n)
+    .map(([k, v]) => [k, (v.first || 0) + (Math.random() - .5) * 6 * DAY])
+    .sort((a, b) => b[1] - a[1]).map(x => x[0]);
 }
 
 const GROUPS = [
@@ -851,7 +848,7 @@ function renderHome() {
   const prow = (k, v, act, fn) => {
     const r = el('div', 'planrow' + (fn ? ' go' : ''));
     r.append(el('span', 'pk', k), el('span', 'pv', esc(v)));
-    if (fn) { r.append(el('span', 'parrow', act + ' ›')); r.onclick = fn; }
+    if (fn) { r.append(el('span', 'parrow', '›')); r.onclick = fn; }
     plan.append(r);
   };
   const doneToday = Object.entries(S.done)
@@ -1980,7 +1977,7 @@ function startType() {
   if (!ws.length) return;
   TY = { list: ws, i: 0, txt: '' };
   drawType();
-  show('type', '자판 연습', true);
+  show('type', '타이핑', true);
 }
 function drawType() {
   const b = $('#typeBody'); b.textContent = '';
@@ -2185,47 +2182,31 @@ function drawWrite() {
 
 /* AI가 손글씨를 읽고 선생님처럼 짚어준다 — 무슨 글자로 읽히는지, 빠진 부호, 조언 한 줄.
    요청이 몰려 막히면(분당 한도) 30초 세고 한 번은 스스로 다시 시도한다. */
-async function aiRead(target, cv, box, retried) {
+async function aiRead(target, cv, box) {
   const note = el('div', 'cmpnote ainote', 'AI 선생님이 보는 중…');
   box.querySelector('.ainote')?.remove();
   box.append(note);
   try {
     const b64 = cv.toDataURL('image/png').split(',')[1];
-    const r = await fetch(GURL(), {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts: [
-          { text: '사진은 한국인 학습자가 손으로 쓴 베트남어다. 목표 단어는 "' + target + '".\n' +
-                  '딱 세 줄로, 한국어로 답한다:\n1) 읽힘: (손글씨가 읽히는 그대로)\n' +
-                  '2) 짚기: 목표와 다른 글자나 빠진·잘못 붙인 성조 부호. 없으면 "잘 썼습니다"\n' +
-                  '3) 조언: 글씨 모양이나 부호 위치에 대한 한 줄 조언' },
-          { inline_data: { mime_type: 'image/png', data: b64 } }] }],
-        generationConfig: { maxOutputTokens: 250, thinkingConfig: { thinkingBudget: 0 } }
-      })
-    });
-    if (!r.ok) throw new Error(r.status === 429 ? '요청이 잠깐 몰렸습니다 — 1분 뒤 다시 해 보세요' : '연결 실패 (' + r.status + ')');
-    const j = await r.json();
-    const t = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
-    if (!t) throw new Error('빈 답이 왔습니다');
+    const t = await gCall({
+      contents: [{ role: 'user', parts: [
+        { text: '사진은 한국인 학습자가 손으로 쓴 베트남어다. 목표 단어는 "' + target + '".\n' +
+                '딱 세 줄로, 한국어로 답한다:\n1) 읽힘: (손글씨가 읽히는 그대로)\n' +
+                '2) 짚기: 목표와 다른 글자나 빠진·잘못 붙인 성조 부호. 없으면 "잘 썼습니다"\n' +
+                '3) 조언: 글씨 모양이나 부호 위치에 대한 한 줄 조언' },
+        { inline_data: { mime_type: 'image/png', data: b64 } }] }],
+      generationConfig: { maxOutputTokens: 250, thinkingConfig: { thinkingBudget: 0 } }
+    }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     note.innerHTML = esc(t).replace(/\n/g, '<br>') +
       '<br><span class="dimtxt">참고용 — 흘려 쓰면 AI도 잘못 읽습니다. 기본은 정답 보기로 직접 비교.</span>';
-  } catch (e) {
-    if (!retried && /몰렸/.test(e.message || '')) {
-      let s = 30;
-      const iv = setInterval(() => {
-        if (!note.isConnected) { clearInterval(iv); return; }   // 화면을 떠났으면 그만둔다
-        note.textContent = `지금 요청이 몰려 있습니다 — ${s}초 뒤 자동으로 다시 시도합니다`;
-        if (s-- <= 0) { clearInterval(iv); aiRead(target, cv, box, true); }
-      }, 1000);
-    } else note.textContent = 'AI 점검 실패: ' + (e.message || '');
-  }
+  } catch (e) { note.textContent = 'AI 점검 실패: ' + (e.message || ''); }
 }
 
 /* ---------- AI 대화 ----------
    대화 시스템으로 연습하면 말하기가 는다는 메타분석이 있다(말하기 d=0.84).
    단, 왕초보에게는 자유대화보다 '배운 단어 안의 제한 대화'가 낫다 —
    그래서 지금까지 배운 단어 목록을 매번 같이 보낸다.
-   키는 이 기기에만 저장되고 백업에는 안 들어간다. 대화 내용은 구글 서버로 간다. */
+   대화 내용은 구글 서버로 간다. */
 let CH = null;
 /* AI 중계 서버 — 키를 서버가 숨겨 들고 있어서 누구나 키 없이 쓴다.
    (2026-08-22 개통. 비우면 예전 방식(각자 키)으로 돌아간다) */
@@ -2233,6 +2214,26 @@ const PROXY = 'https://viet-ai.chaochao-app.workers.dev';
 /* 순위 서버 — 주소를 채우면 주간 순위가 켜진다 (비면 개인 성적표만) */
 const RANKURL = '';
 const aiReady = () => !!(PROXY || S.gkey);
+/* AI 호출 한 군데로 모은다 — 구글이 붐비는 날(429·503)에도 앱이 스스로 버틴다.
+   서버도 재시도하지만, 서버가 옛 코드여도 여기서 한 번 더 막아준다. */
+async function gCall(payload, onWait) {
+  let last = 0;
+  for (let i = 0; i < 3; i++) {
+    const r = await fetch(GURL(), { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(payload) });
+    if (r.ok) {
+      const j = await r.json();
+      const t = ((j.candidates?.[0]?.content?.parts || []).map(x => x.text || '').join('')).trim();
+      if (t) return t;
+      last = 0;
+    } else last = r.status;
+    if (last === 400 || last === 403) throw new Error(
+      PROXY ? '서버 연결에 문제가 있습니다' : '키가 잘못됐거나 만료됐습니다');
+    if (i < 2) { onWait && onWait(i); await new Promise(res => setTimeout(res, 4000 + i * 4000)); }
+  }
+  throw new Error(last === 429 ? '요청이 몰려 있습니다 — 잠시 뒤 다시 해 보세요'
+    : last ? '지금 AI가 붐빕니다 — 잠시 뒤 다시 해 보세요' : '빈 답이 왔습니다');
+}
 const GURL = () => PROXY ||
   ('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(S.gkey));
 
@@ -2349,23 +2350,11 @@ async function chatSend(userText) {
   if (userText) { CH.hist.push({ role: 'user', parts: [{ text: userText }] }); bubble('me', userText); }
   const wait = bubble('ai wait', '…');
   try {
-    const r = await fetch(GURL(), {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: CH.sys }] },
-        contents: CH.hist.slice(-12),          // 최근 12마디만 보낸다 (무료 한도 아끼기)
-        generationConfig: { maxOutputTokens: 800, temperature: .6, thinkingConfig: { thinkingBudget: 0 } }
-      })
-    });
-    if (!r.ok) throw new Error(
-      r.status === 400 || r.status === 403
-        ? (PROXY ? '서버 연결에 문제가 있습니다. 잠시 뒤 다시 해 보세요'
-                 : '키가 잘못됐거나 만료됐습니다. 아래에서 키를 지우고 다시 넣어 보세요')
-        : r.status === 429 ? '요청이 잠깐 몰렸습니다 — 1분 뒤 다시 보내 보세요. 계속 그러면 오늘 무료 한도가 끝난 것입니다'
-        : '연결이 안 됩니다 (' + r.status + ')');
-    const j = await r.json();
-    const text = (j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('');
-    if (!text) throw new Error('빈 답이 왔습니다. 한 번 더 보내 보세요');
+    const text = await gCall({
+      system_instruction: { parts: [{ text: CH.sys }] },
+      contents: CH.hist.slice(-12),          // 최근 12마디만 보낸다 (무료 한도 아끼기)
+      generationConfig: { maxOutputTokens: 800, temperature: .6, thinkingConfig: { thinkingBudget: 0 } }
+    }, i => { wait.textContent = `붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     CH.hist.push({ role: 'model', parts: [{ text }] });
     wait.remove();
     aiBubble(text);
@@ -2543,20 +2532,14 @@ $('#chatMic').onclick = async () => {
       const url = URL.createObjectURL(new Blob(chunks));
       try {
         const b64 = await recToWav(url);
-        const r = await fetch(GURL(), {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ role: 'user', parts: [
-              { text: '녹음은 한국인이 베트남어(또는 한국어)로 말한 것이다. 들린 그대로만 받아 적어라. 다른 말 금지.' },
-              { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-            generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
-          })
+        const heard = await gCall({
+          contents: [{ role: 'user', parts: [
+            { text: '녹음은 한국인이 베트남어(또는 한국어)로 말한 것이다. 들린 그대로만 받아 적어라. 다른 말 금지.' },
+            { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+          generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
         });
-        const j = await r.json();
-        const heard = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
-        if (heard) chatSend(heard);
-        else bubble('ai err', '⚠ 못 알아들었습니다. 다시 말해 보세요');
-      } catch (e) { bubble('ai err', '⚠ 듣기 실패 — 다시 해 보세요'); }
+        chatSend(heard);
+      } catch (e) { bubble('ai err', '⚠ ' + (e.message || '듣기 실패')); }
       URL.revokeObjectURL(url);
       btn.disabled = false;
     };
