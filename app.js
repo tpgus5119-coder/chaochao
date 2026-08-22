@@ -676,10 +676,14 @@ const GROUPS = [
   [d => d.track === 'work', '창고·물류 (공통)']
 ];
 
+/* 내 업종이 아닌 직무 묶음은 가릴 수 있다 — 가린 것은 목록·일정·추천에서 빠진다 */
+const hiddenCats = () => S.hide || [];
+const visibleDay = d => !(d.track === 'work' && hiddenCats().includes(d.cat));
+
 /* 오늘 할 세트 — 일상·직무를 번갈아 추천. 기본기(모음·성조 등)는 일정에 안 넣는다(각자 알아서). */
 function nextDay() {
   const daily = ALL.find(d => typeof d.day === 'number' && !d.track && !S.done[d.day]);
-  const work = ALL.find(d => d.track === 'work' && !S.done[d.day]);
+  const work = ALL.find(d => d.track === 'work' && !S.done[d.day] && visibleDay(d));
   if (daily && work) {
     const nd = ALL.filter(d => typeof d.day === 'number' && !d.track && S.done[d.day]).length;
     const nw = ALL.filter(d => d.track === 'work' && S.done[d.day]).length;
@@ -730,7 +734,7 @@ function renderHome() {
 function nextAfter(nx) {
   if (!nx) return null;
   const first = t => ALL.find(d => typeof d.day === 'number'
-    && (t === 'work' ? d.track === 'work' : !d.track) && !S.done[d.day] && d !== nx);
+    && (t === 'work' ? d.track === 'work' : !d.track) && !S.done[d.day] && d !== nx && visibleDay(d));
   if (typeof nx.day === 'string') {
     return ALL.find(d => typeof d.day === 'string' && !S.done[d.day] && d !== nx)
       || first('daily') || first('work');
@@ -745,8 +749,25 @@ function renderDays(track) {
   const list = $('#dayList');
   list.textContent = '';
   const days = ALL.filter(d =>
-    track === 'work' ? d.track === 'work'
-    : (typeof d.day === 'number' && !d.track));
+    (track === 'work' ? d.track === 'work'
+    : (typeof d.day === 'number' && !d.track)) && visibleDay(d));
+
+  if (track === 'work') {              // 내 업종만 남기기 — 끈 업종은 학습·일정에서도 빠진다
+    const li = el('li', 'catpick');
+    li.append(el('span', null, '내 업종만 보기 '));
+    ['봉제', '전자', '사무'].forEach(c => {
+      const on = !hiddenCats().includes(c);
+      const bb = el('button', 'ghost sm' + (on ? ' pick' : ''), c);
+      bb.onclick = () => {
+        const h = new Set(hiddenCats());
+        on ? h.add(c) : h.delete(c);
+        S.hide = [...h]; save();
+        renderDays('work');
+      };
+      li.append(bb);
+    });
+    list.append(li);
+  }
   let g = -1;
   days.forEach(d => {
     const gi = GROUPS.findIndex(([f]) => f(d));
