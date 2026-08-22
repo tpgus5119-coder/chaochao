@@ -669,24 +669,6 @@ function renderAnalysis(host, mode) {
                    .filter(r => r[2].length);
   const more = el('details', 'moreana');
   more.append(el('summary', null, '자세히'));
-  /* 접속 — 요일별로 며칠 중 며칠 왔는가. 정답률이 아니라 '온 날 / 지난 날' 비율이라
-     다른 막대와 뜻이 다르다. 그래서 표본 부족 표시(NEED)를 쓰지 않고 따로 그린다. */
-  const first = Object.keys(S.act || {}).sort()[0];
-  if (first) {
-    const d0 = new Date(first + 'T00:00:00'), today = new Date();
-    const cnt = [0, 0, 0, 0, 0, 0, 0], came = [0, 0, 0, 0, 0, 0, 0];
-    for (let d = new Date(d0); d <= today; d.setDate(d.getDate() + 1)) {
-      const w = (d.getDay() + 6) % 7;                      // 월=0
-      cnt[w]++; if (S.act[ymd(d)]) came[w]++;
-    }
-    const rows2 = '월화수목금토일'.split('').map((nm, i) =>
-      [nm + '요일', cnt[i] ? Math.round(came[i] * 100 / cnt[i]) : 0, cnt[i] ? NEED : 0]);
-    more.append(el('p', 'newsday', '요일별 출석'));
-    more.append(bars(rows2));
-    const tot = cnt.reduce((a, x) => a + x, 0), got = came.reduce((a, x) => a + x, 0);
-    more.append(el('p', 'dimtxt', `첫날부터 ${tot}일 중 <b>${got}일</b> 왔습니다 (${Math.round(got * 100 / tot)}%).`));
-  }
-
   const conf = Object.entries(S.stats.conf || {})
     .map(([k, v]) => [k, v.all]).sort((a, b) => b[1] - a[1]).slice(0, 6);
   {
@@ -870,10 +852,10 @@ function renderAwards() {
   ch.onclick = askNick;
   nm.append(ch);
   const pc = el('div', 'planrow');
-  const PACEN = { 1: '', 2: ' (일상+직무)', 3: ' (일상+직무+기사)' };
-  pc.append(el('span', 'pk', '하루'), el('span', 'pv', (S.pace || 1) + '세트' + PACEN[S.pace || 1]));
+  pc.append(el('span', 'pk', '하루'),
+             el('span', 'pv', (S.pace || 1) + '세트' + ((S.pace || 1) > 1 ? ' (일상+직무)' : '')));
   const pb = el('button', 'ghost sm', '바꾸기');
-  pb.onclick = () => { S.pace = ((S.pace || 1) % 3) + 1; save(); renderAwards(); };
+  pb.onclick = () => { S.pace = (S.pace || 1) >= 2 ? 1 : 2; save(); renderAwards(); };
   pc.append(pb);
   b.append(nm, rg, pc);
   const ana = el('div');
@@ -3811,7 +3793,7 @@ function showGuide() {
 
   sec('③', '오늘·내일 일정은 이렇게 짜입니다', [
     '일정판은 <b>일상 한 세트 · 직무 한 세트</b>를 번갈아 내줍니다 — 한쪽만 몰아 하는 것보다 기억에 유리합니다. 기본기는 일정에 안 넣습니다(각자 짬 날 때).',
-    '더 하고 싶으면 <b>내 정보 → 하루</b>에서 1 → 2 → 3세트로 올리세요.',
+    '더 하고 싶으면 <b>내 정보 → 하루</b>에서 2세트로 올리세요 — 일상과 직무를 같은 날 줍니다.',
     '오른쪽 두 칸은 <b>내일</b>입니다. [내일 학습]을 누르면 내일 단어가 3초에 한 장씩 소리와 함께 넘어갑니다(예습이라 채점 없음). [내일 복습]은 내일 몇 장이 쌓이는지 보는 칸입니다.',
     '순서를 건너뛰고 직접 고르려면 <b>하루 5분 베트남어 → 일상 / 직무</b>. 주제 묶음별로 늘어서 있고 다음에 할 세트에 표가 붙습니다.',
     '직무 목록 맨 위 <b>업종 칩</b>(봉제·전자·사무)을 끄면 그 세트가 목록에서도 일정에서도 사라집니다. 잘못 완료된 세트는 옆 <b>[미완으로]</b>로 되돌립니다.',
