@@ -523,17 +523,23 @@ const BADGES = [
 /* ---------- 실력 분석 ----------
    숫자를 눈에 보이게 그린다. 다만 표본이 적으면 그리지 않는다 —
    10문제로 "약점"을 말하면 그건 분석이 아니라 점(占)이다. */
+const NEED = 10;                       // 이만큼 풀어야 판정한다
 function bars(rows) {
   const box = el('div', 'bars');
   rows.forEach(([name, pct, n]) => {
-    const r = el('div', 'barrow');
+    const thin = n < NEED;
+    const r = el('div', 'barrow' + (thin ? ' thin' : ''));
     r.append(el('span', 'bname', name));
     const bar = el('span', 'bbar');
-    const fill = el('i');
-    fill.style.width = Math.max(2, pct) + '%';
-    fill.className = pct >= 80 ? 'hi' : pct >= 60 ? 'mid' : 'lo';
-    bar.append(fill);
-    r.append(bar, el('span', 'bpct', pct + '%'), el('span', 'bn', n + '문제'));
+    if (!thin) {
+      const fill = el('i');
+      fill.style.width = Math.max(2, pct) + '%';
+      fill.className = pct >= 80 ? 'hi' : pct >= 60 ? 'mid' : 'lo';
+      bar.append(fill);
+    }
+    r.append(bar);
+    r.append(el('span', 'bpct', thin ? '—' : pct + '%'));
+    r.append(el('span', 'bn', thin ? (NEED - n) + '문제 더' : n + '문제'));
     box.append(r);
   });
   return box;
@@ -555,32 +561,38 @@ function renderAnalysis(host, mode) {
     tab.append(bb);
   });
   host.append(el('p', 'anahead', '실력 분석'));
-  host.append(el('p', 'note', '앱이 <b>직접 채점한 기록</b>만으로 계산합니다. 어림짐작이나 AI 판정은 섞지 않습니다.<br>' +
-    '표본이 적은 항목(문제 10개 미만)은 <b>아예 그리지 않습니다</b> — 적은 수로는 약점을 말할 수 없습니다.'));
   host.append(tab);
 
   const subj = analysisData(mode);
-  const ok = subj.filter(x => x.n >= 10);
-  if (!ok.length) {
-    host.append(el('p', 'note', '아직 문제 수가 적어 그래프를 그리지 않습니다. 과목마다 10문제가 넘으면 여기에 나옵니다.'));
-    return;
-  }
+  const ok = subj.filter(x => x.n >= NEED);
   host.append(el('p', 'newsday', '과목별 정답률'));
-  host.append(bars(ok.map(x => [x.name, x.pct, x.n])));
+  host.append(bars(subj.map(x => [x.name, x.pct === null ? 0 : x.pct, x.n])));
+  if (ok.length < subj.length)
+    host.append(el('p', 'note', '빈 막대는 아직 문제를 덜 푼 과목입니다. ' + NEED + '문제를 넘기면 정답률이 그려집니다.'));
 
   const TN = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감',
                'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
-  const tn = Object.entries(S.stats.tn || {}).filter(([, v]) => v.all >= 5)
+  const tn = Object.entries(S.stats.tn || {})
     .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
   if (tn.length) { host.append(el('p', 'newsday', '성조별 정답률 (누적)')); host.append(bars(tn)); }
 
   const MD = { listen: '듣고 고르기', meaning: '뜻 고르기', recall: '떠올려 말하기', dict: '받아쓰기',
                say: '따라 말하기', type: '타이핑', hand: '손글씨' };
-  const md = Object.entries(S.stats.md || {}).filter(([, v]) => v.all >= 5)
+  const md = Object.entries(S.stats.md || {})
     .map(([k, v]) => [MD[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
   if (md.length) { host.append(el('p', 'newsday', '문제 유형별 정답률 (누적)')); host.append(bars(md)); }
 
   // 처방 — 분석만 하고 끝내지 않는다
+  if (ok.length < 2) {
+    const card0 = el('div', 'rulecard');
+    card0.append(el('div', 'rhead', '<b>조금만 더 하면 분석이 나옵니다</b>'));
+    card0.append(el('div', 'rbody', subj.map(x => x.n >= NEED
+      ? `<b>${esc(x.name)}</b> — ${x.n}문제 (준비 완료)`
+      : `<b>${esc(x.name)}</b> — ${x.n}문제 · <b>${NEED - x.n}문제</b> 더`).join('<br>') +
+      '<br><br>두 과목이 넘어가면 강점·약점과 처방이 자동으로 나옵니다.'));
+    host.append(card0);
+    return;
+  }
   const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
   const best = ok.reduce((a, x) => x.pct > a.pct ? x : a);
   const RX = {
@@ -744,7 +756,7 @@ function renderAwards() {
   const ana = el('div');
   renderAnalysis(ana, 'week');
   b.append(ana);
-  b.append(el('p', 'lede', `딴 업적 <b>${got}</b> / ${BADGES.length}`));
+  b.append(el('p', 'lede', `업적 <b>${got}</b> / ${BADGES.length}`));
   BADGES.forEach(bg => {
     const on = bg.test();
     const row = el('div', 'awrow' + (on ? ' on' : ''));
@@ -1531,9 +1543,10 @@ function drawQuiz() {
     play(q.w.vi, false);
   } else {
     body.append(el('div', 'qmain', esc(q.w.vi)));
-    const sr = soundRow(q.w.vi, true);   // 복습에서도 글자만 보지 말고 소리를 같이 듣는다
+    const sr = soundRow(q.w.vi, true);   // 글자만 보지 말고 소리도 같이 — 눈과 귀를 함께 묶는다
     sr.classList.add('mid');
     body.append(sr);
+    play(q.w.vi, false);
   }
 
   const opts = el('div', 'opts');
@@ -1779,6 +1792,11 @@ function answer(btn, correct, w) {
   if (correct) Q.ok++;
   else requeue(Q.list[Q.i]);        // 틀린 건 이번 판 끝에 한 번 더
   grade(w.vi, correct, Q.early);
+  // 답한 뒤에는 글자·성조·발음·뜻을 한 번에 보여준다 (맞았든 틀렸든)
+  const ans = el('div', 'ansbox');
+  ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(w.kr_read),
+             el('div', 'ko', esc(w.ko)));
+  btn.parentNode.after(ans);
   if (correct) setTimeout(() => { Q.i++; drawQuiz(); }, 450);
   else nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
 }

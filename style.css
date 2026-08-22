@@ -710,3 +710,7 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 /* 타일 내용은 위로 붙인다 */
 .mtile{justify-content:flex-start}
 .mtile .mbtns{margin-top:8px}
+
+/* 표본이 모자란 막대 */
+.barrow.thin .bbar{background:repeating-linear-gradient(90deg,var(--line),var(--line) 6px,transparent 6px,transparent 12px)}
+.barrow.thin .bpct,.barrow.thin .bn{color:var(--dim)}
