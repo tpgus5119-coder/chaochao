@@ -24,12 +24,15 @@ W_BASE   = [21, 26,27,28,29,30, 35, 37,38,39,40]   # 공장 기초 (공통)
 W_SEW    = [22,23,24,25, 31,32,33,34, 36]          # 봉제 기초
 WORK_ORDER = (W_BASE + W_SEW + list(range(51,61))  # 전자·사무
               + list(range(61,71))                 # 문화·행정 (공통)
-              + list(range(81,101)))               # 관리자·심화·창고
+              + list(range(81,86)) + list(range(96,101))   # 관리자·창고 (공통)
+              + list(range(86,96)))                # 봉제·전자 심화
 by = {d["day"]: d for d in days}
 days = ([by[k] for k in range(1, 21)]
         + [by[k] for k in W_BASE] + [by[k] for k in W_SEW]
         + [by[k] for k in range(41, 51)] + [by[k] for k in range(51, 71)]
-        + [by[k] for k in range(71, 81)] + [by[k] for k in range(81, 101)])
+        + [by[k] for k in range(71, 81)]
+        + [by[k] for k in range(81, 86)] + [by[k] for k in range(96, 101)]
+        + [by[k] for k in range(86, 96)])
 
 out = {"meta": {"version":"v4",
                 "voices":{"f":"vi-VN-HoaiMyNeural","m":"vi-VN-NamMinhNeural"},

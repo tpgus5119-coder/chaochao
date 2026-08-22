@@ -425,7 +425,7 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'culture'];
 /* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
@@ -562,7 +562,7 @@ function renderAwards() {
   const b = $('#awardBody');
   b.textContent = '';
   const got = BADGES.filter(x => x.test()).length;
-  const sh = el('button', 'primary big', '자랑 카드 만들기 — 단톡방에 공유');
+  const sh = el('button', 'primary big', '자랑 카드 만들기');
   sh.style.width = '100%'; sh.style.marginBottom = '14px';
   sh.onclick = shareCard;
   b.append(sh);
@@ -600,8 +600,9 @@ function renderProgress() {
 
   const st = el('div', 'stats');
   const words = Object.keys(S.srs).length;
+  const memo = Object.values(S.srs).filter(v => v.lv >= 2).length;   // 간격을 두고 두 번 맞힌 단어
   const days = Object.keys(S.done).filter(k => +k >= 1).length;
-  [['배운 단어', words], ['끝낸 날', days + '일'], ['소리 낸 횟수', S.stats.said || 0]]
+  [['배운 단어', words], ['외운 단어', memo], ['끝낸 세트', days], ['소리 낸 횟수', S.stats.said || 0]]
     .forEach(([k, v]) => {
       const c = el('div', 'stat');
       c.append(el('b', null, String(v)), el('span', null, k));
@@ -649,14 +650,16 @@ function dueWords() {
 }
 
 const GROUPS = [
-  [d => d.day >= 1 && d.day <= 5, '파트 1 · 사람과 인사'],
-  [d => d.day >= 6 && d.day <= 10, '파트 2 · 숫자와 시간'],
-  [d => d.day >= 11 && d.day <= 15, '파트 3 · 일과·음식·시장'],
-  [d => d.day >= 16 && d.day <= 20, '파트 4 · 아플 때·부탁·약속'],
-  [d => !d.track && d.day >= 41 && d.day <= 45, '파트 5 · 날씨·교통·색·마음'],
-  [d => !d.track && d.day >= 46 && d.day <= 50, '파트 6 · 모임·건강·베트남 생활'],
-  [d => !d.track && d.day >= 71 && d.day <= 75, '파트 7 · 스몰토크'],
-  [d => !d.track && d.day >= 76, '파트 8 · 생활 심화'],
+  // 일상 — 5일 창이 아니라 실제 주제 흐름대로 묶는다
+  [d => d.day >= 1 && d.day <= 6, '만나고 헤어지기'],
+  [d => d.day >= 7 && d.day <= 10, '숫자 · 시간 · 요일'],
+  [d => d.day >= 11 && d.day <= 14, '먹고 사고 길 찾기'],
+  [d => d.day >= 15 && d.day <= 17, '가족 · 아플 때 · 부탁'],
+  [d => d.day >= 18 && d.day <= 20, '평가와 약속'],
+  [d => !d.track && d.day >= 41 && d.day <= 45, '날씨 · 교통 · 기분'],
+  [d => !d.track && d.day >= 46 && d.day <= 50, '베트남 생활'],
+  [d => !d.track && d.day >= 71 && d.day <= 75, '스몰토크'],
+  [d => !d.track && d.day >= 76, '동네 생활 (카페 · 주문 · 심부름)'],
   // 직무 — 취업 여정 순서: 기초(공통) → 업종 기초 → 회사 생활 → 관리자 말 → 심화 → 출하
   [d => d.track === 'work' && d.day <= 40 && d.cat === '공통', '공장 기초 (공통)'],
   [d => d.track === 'work' && d.day <= 40, '봉제 기초'],
@@ -670,10 +673,8 @@ const GROUPS = [
   [d => d.track === 'work', '창고·물류 (공통)']
 ];
 
-/* 오늘 할 세트 — 준비 먼저, 그다음 일상·직무 번갈아 추천 */
+/* 오늘 할 세트 — 일상·직무를 번갈아 추천. 기본기(모음·성조 등)는 일정에 안 넣는다(각자 알아서). */
 function nextDay() {
-  const prep = ALL.find(d => typeof d.day === 'string' && !S.done[d.day]);
-  if (prep) return prep;
   const daily = ALL.find(d => typeof d.day === 'number' && !d.track && !S.done[d.day]);
   const work = ALL.find(d => d.track === 'work' && !S.done[d.day]);
   if (daily && work) {
@@ -688,24 +689,17 @@ function renderHome() {
   renderProgress();
   renderWeekly();
   const nx = nextDay();
-  const hero = $('#heroGo');
-  hero.hidden = !nx;
-  if (nx) {
-    hero.innerHTML = `<b>▶ 오늘 학습 시작</b><span>${esc(trackName(nx) + label(nx) + ' · ' + nx.theme)}</span>`;
-    hero.onclick = () => startLearn(nx);
-  }
-  // 성조 훈련 시점: 저녁에 하면 자는 동안 '성조 범주'로 정리된다는 실험이 있다.
-  // (아침에 훈련한 집단은 하루가 지나며 오히려 정확도가 떨어졌다)
   const due = dueWords();
-  $('#goReview').textContent = due.length ? '전부 ' + due.length : '전부';
+  $('#goReview').textContent = due.length ? '복습 ' + due.length : '복습';
 
   // 오늘·내일 일정판 — 뭘 하게 될지 미리 보이고, 버튼 하나로 바로 들어간다
   const plan = $('#plan');
   plan.textContent = '';
+  // 행 자체를 누르면 바로 실행된다
   const prow = (k, v, act, fn) => {
-    const r = el('div', 'planrow');
+    const r = el('div', 'planrow' + (fn ? ' go' : ''));
     r.append(el('span', 'pk', k), el('span', 'pv', esc(v)));
-    if (fn) { const bb = el('button', 'ghost sm', act); bb.onclick = fn; r.append(bb); }
+    if (fn) { r.append(el('span', 'parrow', act + ' ›')); r.onclick = fn; }
     plan.append(r);
   };
   const doneToday = Object.entries(S.done)
@@ -722,9 +716,9 @@ function renderHome() {
   if (tset) prow('내일 학습', trackName(tset) + label(tset) + ' · ' + tset.theme,
     (tset.words || []).length ? '예습 10초' : null,
     (tset.words || []).length ? () => flashRun(tset.words, '예습 · ' + trackName(tset) + label(tset)) : null);
-  // 내일 복습
+  // 내일 복습 — 내일 새로 나올(만기되는) 카드 수
   const tmr = Object.values(S.srs).filter(v => v.due > now() && v.due <= now() + DAY).length;
-  prow('내일 복습', tmr ? '+' + tmr + '장 예정' : '없음', null, null);
+  prow('내일 복습', tmr ? tmr + '장 예정' : '없음', null, null);
 
   show('home', '짜오짜오', false);
 }
@@ -767,7 +761,13 @@ function renderDays(track) {
       el('span', 'st', done ? '완료 ✔' : n + '단어 + 대화')
     );
     b.onclick = () => startLearn(d);
-    const li = el('li'); li.append(b); list.append(li);
+    const li = el('li'); li.append(b);
+    if (done) {                          // 완료 표시는 유저가 되돌릴 수 있다
+      const u = el('button', 'ghost sm undo', '미완으로');
+      u.onclick = () => { delete S.done[d.day]; save(); renderDays(track); };
+      li.append(u);
+    }
+    list.append(li);
   });
   show('course', track === 'work' ? '직무 과정' : '일상 과정', true);
 }
@@ -788,6 +788,19 @@ function startLearn(d) {
   drawCard();
   // 제목은 버튼 이름과 같게 — 준비 날들은 주제만 (준비 N 표기는 뺀다)
   show('learn', typeof d.day === 'string' ? d.theme : label(d) + ' · ' + d.theme, true);
+}
+
+/* 단어의 예문 — 새로 짓지 않고 그날 대화·바꿔말하기에서 그 단어가 든 문장을 꺼내 쓴다.
+   (모든 단어가 그날 문장 어딘가에 나오는 것은 조립 검증기가 보장한다. 음원도 이미 있다.) */
+function exampleFor(day, w) {
+  const nm = s => s.toLowerCase().replace(/[.,!?;:]/g, ' ').replace(/\s+/g, ' ').trim();
+  const target = nm(w.vi);
+  const hitLine = (day.dialog?.lines || []).find(l => (' ' + nm(l.vi) + ' ').includes(' ' + target + ' '));
+  if (hitLine) return { vi: hitLine.vi, ko: hitLine.ko, kr: hitLine.kr_read };
+  const hitEx = (day.dialog?.extra || []).map(t => typeof t === 'string' ? { vi: t } : t)
+    .find(o => (' ' + nm(o.vi) + ' ').includes(' ' + target + ' '));
+  if (hitEx) return { vi: hitEx.vi, ko: hitEx.ko, kr: hitEx.kr_read };
+  return null;
 }
 
 /* 한글 독음: 기본 숨김. 시작 14일 뒤에는 아예 안 나온다 */
@@ -842,7 +855,7 @@ function drawCard() {
   }
 
   if (it.k === 'word') {
-    // 순서 통일: 그림 → 단어 → 성조 화살표 → 한글 발음 → 뜻 → (한자·남부) → 소리 줄
+    // 순서 통일: 그림 → 단어 → 성조 화살표 → 한글 발음 → 뜻 → (한자·남부) → 예문 → 소리 줄
     const p = pic(x, 'pic'); if (p) c.append(p);
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(toneRow(x.tones));
@@ -850,6 +863,17 @@ function drawCard() {
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
     if (x.south) c.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
+    const exm = exampleFor(L.day, x);
+    if (exm) {
+      const eb = el('div', 'wex');
+      eb.append(el('div', 'wexvi', esc(exm.vi)));
+      if (exm.kr) eb.append(el('div', 'wexkr', '[' + esc(exm.kr) + ']'));
+      if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
+      const pb = el('button', 'ghost sm', '예문 듣기');
+      pb.onclick = () => play(exm.vi, false);
+      eb.append(pb);
+      c.append(eb);
+    }
     c.append(speakRow(x.vi, true));
   }
 
@@ -2022,8 +2046,8 @@ function learnedVi() {
 }
 const todayDay = () => ALL.find(d => typeof d.day === 'number' && !S.done[d.day]) || ALL[ALL.length - 1];
 
-function chatSys(mode, myRole) {
-  const t = todayDay();
+function chatSys(mode, myRole, day) {
+  const t = day || todayDay();
   const dlg = (t.dialog?.lines || []).map(l => l.who + ': ' + l.vi).join(' / ');
   return '당신은 베트남어를 처음 배우는 한국인의 대화 상대다. 북부(하노이) 표준을 쓴다.\n' +
     '반드시 이 형식으로만 답한다. 다른 말은 붙이지 않는다:\n' +
@@ -2218,7 +2242,7 @@ function renderChatModes() {
   }
 }
 
-function beginChat(mode, myRole) {
+function beginChat(mode, myRole, day) {
   S.stats.chat = (S.stats.chat || 0) + 1; touchToday(); save();
   $('#chatSetup').hidden = true;
   $('#chatForm').hidden = false;
@@ -2228,9 +2252,81 @@ function beginChat(mode, myRole) {
     camIn.click();
     return;
   }
-  CH = { mode, sys: chatSys(mode, myRole), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
+  CH = { mode, sys: chatSys(mode, myRole, day), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
   chatSend(null);
 }
+
+/* 복습 [대화] — 끝낸 세트의 문장으로 AI 선생님과 역할극 (오늘 것뿐 아니라 지난 것도) */
+function startTalk() {
+  if (!aiReady()) { startChat(); return; }
+  $('#chatLog').textContent = '';
+  $('#chatForm').hidden = true;
+  $('#tch').hidden = true;
+  CH = null;
+  const s = $('#chatSetup');
+  s.hidden = false; s.textContent = '';
+  const list = ALL.filter(d => typeof d.day === 'number' && S.done[d.day] && d.dialog);
+  if (!list.length) {
+    s.append(el('p', 'note', '아직 끝낸 세트가 없습니다. 오늘 세트를 먼저 끝내면 그 문장으로 역할극할 수 있습니다.'));
+  } else {
+    s.append(el('p', 'lede', '끝낸 세트의 문장으로 역할극합니다. 세트와 역할을 고르세요.'));
+    list.reverse().forEach(d => {
+      const m = el('div', 'chatmode on');
+      m.innerHTML = '<b>' + esc(trackName(d) + label(d) + ' · ' + (d.dialog.title || d.theme)) + '</b>';
+      const rr = el('div', 'rolepick');
+      [['A', '내가 A'], ['B', '내가 B']].forEach(([k, txt]) => {
+        const bb = el('button', 'ghost sm', txt);
+        bb.onclick = () => beginChat('today', k, d);
+        rr.append(bb);
+      });
+      m.append(rr);
+      s.append(m);
+    });
+  }
+  show('chat', '대화 복습', true);
+}
+
+/* 말로 대화 — 녹음한 말을 AI가 받아 적어 그대로 보낸다 (타자 없이 입으로) */
+let MIC = null;
+$('#chatMic').onclick = async () => {
+  if (!CH) return;
+  const btn = $('#chatMic');
+  if (MIC) { MIC.stop(); return; }
+  if (!canRecord()) { bubble('ai err', '⚠ 이 기기에서는 녹음이 안 됩니다'); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const chunks = [];
+    MIC = new MediaRecorder(stream);
+    MIC.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+    MIC.onstop = async () => {
+      stream.getTracks().forEach(t => t.stop());
+      MIC = null;
+      btn.textContent = '말로'; btn.disabled = true;
+      const url = URL.createObjectURL(new Blob(chunks));
+      try {
+        const b64 = await recToWav(url);
+        const r = await fetch(GURL(), {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [
+              { text: '녹음은 한국인이 베트남어(또는 한국어)로 말한 것이다. 들린 그대로만 받아 적어라. 다른 말 금지.' },
+              { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+            generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
+          })
+        });
+        const j = await r.json();
+        const heard = ((j.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('')).trim();
+        if (heard) chatSend(heard);
+        else bubble('ai err', '⚠ 못 알아들었습니다. 다시 말해 보세요');
+      } catch (e) { bubble('ai err', '⚠ 듣기 실패 — 다시 해 보세요'); }
+      URL.revokeObjectURL(url);
+      btn.disabled = false;
+    };
+    MIC.start();
+    btn.textContent = '멈추기';
+    setTimeout(() => { if (MIC && MIC.state === 'recording') MIC.stop(); }, 8000);
+  } catch (e) { bubble('ai err', '⚠ 마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요'); }
+};
 
 /* 사진 보며 대화 — 폰 카메라로 찍은 사진을 줄여서(512px) 대화에 붙인다.
    실시간 영상은 무료 한도로 무리지만, 사진 한 장씩은 같은 무료 호출에 들어간다. */
@@ -2346,6 +2442,60 @@ function wxSeason(city) {
     : '11~4월 호찌민은 건기 — 비 없이 덥고 맑습니다';
 }
 
+/* 사용법 — 이 앱이 왜 이렇게 생겼는지, 어떻게 쓰면 가장 남는지 (근거 요약) */
+function showGuide() {
+  const b = $('#guideBody');
+  b.textContent = '';
+  const card = (t, body) => {
+    const c = el('div', 'rulecard');
+    c.append(el('div', 'rhead', '<b>' + t + '</b>'), el('div', 'rbody', body));
+    b.append(c);
+  };
+  card('하루 5분, 이 순서로',
+    '<b>단어 카드 → 확인 문제 → 문장으로 써먹기 → (원하면) AI 역할극.</b><br>' +
+    '외운 것을 마지막에 입으로 말해야 하루가 완성됩니다 — 소리 내어 말한 것이 눈으로만 본 것보다 훨씬 오래 남습니다(산출 효과). ' +
+    '일상과 직무는 하루씩 번갈아 나옵니다 — 섞어 배우는 쪽이 몰아 배우기보다 기억에 유리합니다(교차 학습).')
+  card('복습이 이 앱의 심장입니다',
+    '맞힌 단어는 <b>1 → 3 → 7 → 14 → 30 → 60일</b> 뒤에 다시 나오고, 틀리면 두 계단 내려옵니다. ' +
+    '잊기 직전에 꺼내 보는 간격 반복은 기억 연구에서 가장 근거가 단단한 방법입니다.<br>' +
+    '<b>복습</b> = 정식(문제 풀기). <b>3분만</b> = 같은 문제를 10개만. <b>훑기</b> = 자동 넘김 구경(바쁜 날용, 효과 약함). ' +
+    '<b>따라 말하기</b> = 입으로, <b>손글씨</b> = 손으로(낯선 글자는 써야 남습니다), <b>자판</b> = 철자로, <b>대화</b> = 배운 문장으로 역할극.')
+  card('시험은 일부러 어렵게 되어 있습니다',
+    '익숙해진 단어는 4지선다가 아니라 <b>보기 없이 직접 떠올리게</b> 바뀝니다. ' +
+    '4지선다는 실력을 약 20% 부풀려 보여주기 때문입니다. 틀리는 것은 실패가 아니라 기억이 강해지는 순간입니다.')
+  card('성조·모음은 귀 근육 운동입니다',
+    '성조·모음 훈련은 며칠 만에 끝나는 게 아니라 틈틈이 평생 돌리는 것입니다. ' +
+    '저녁에 하면 자는 동안 소리 범주가 정리된다는 실험도 있습니다. ' +
+    '자음 구별 훈련이 없는 것은 일부러입니다 — 북부 발음에서 tr=ch, s=x, d=gi=r은 같은 소리입니다.')
+  card('소리는 진짜 사람처럼',
+    '위의 <b>북부|남부</b>로 전 지역 소리를 바꿀 수 있습니다. 성조 채점 AI는 일부러 없습니다 — ' +
+    '실험해 보니 AI도 성조는 못 믿게 틀려서, 대신 원어민 높낮이 곡선과 내 곡선을 겹쳐 보여줍니다. 눈으로 비교하는 것이 정직한 방법입니다.')
+  card('제일 중요한 한 가지',
+    '완벽한 하루보다 <b>돌아오는 것</b>이 중요합니다. 그래서 목표가 연속 기록이 아니라 <b>한 주 5일</b>입니다 — 이틀은 쉬어도 됩니다. ' +
+    '5분이 없는 날은 훑기 한 번이라도 하세요.')
+  show('guide', '사용법', true);
+}
+
+/* 베트남 문화 — 출근 첫 주에 바로 부딪히는 것들 */
+function showCulture() {
+  const b = $('#cultureBody');
+  b.textContent = '';
+  const card = (t, body) => {
+    const c = el('div', 'rulecard');
+    c.append(el('div', 'rhead', '<b>' + t + '</b>'), el('div', 'rbody', body));
+    b.append(c);
+  };
+  card('호칭이 예의의 절반', '나이를 물어보는 건 실례가 아니라 <b>당신을 뭐라고 부를지 정하려는 것</b>입니다. anh/chị/em만 잘 써도 예의 바른 사람이 됩니다. 규칙의 [호칭] 수업과 이어집니다.');
+  card('회식은 "못 하이 바, 요!"', '건배 구호는 <b>Một, hai, ba, dô!</b>(하나, 둘, 셋, 야!). 잔을 부딪칠 때 손윗사람보다 잔을 살짝 낮게 대면 아주 좋아합니다.');
+  card('점심 후 낮잠', '많은 공장·사무실이 점심 후 20~30분 불을 끄고 낮잠을 잡니다. 놀라지 말고 같이 쉬면 됩니다.');
+  card('오토바이가 다리', '출퇴근·배달·이사까지 오토바이로 합니다. 길 건널 때는 <b>일정한 속도로 천천히</b> — 멈칫하거나 뛰면 더 위험합니다. 그랩(Grab) 앱이 택시입니다.');
+  card('커피의 나라', '연유 넣은 진한 커피(cà phê sữa đá)가 국민 음료. 커피숍에서 몇 시간 앉아 있는 게 일상 문화입니다.');
+  card('설(Tết)이 일 년의 중심', '음력 설 전후 일주일은 나라가 멈춥니다. 공장도 길게 쉬고, 보너스(13월 월급)가 관례입니다. 이때 귀향 인사 li xì(세뱃돈) 문화도 있습니다.');
+  card('하지 말 것', '어른 머리를 만지지 않기, 밥에 젓가락 꽂지 않기(제사 연상), 사람을 손가락으로 가리키지 않기, 국기·호찌민 주석 험담은 절대 금물(법적 문제).');
+  card('팁은 기본 아님', '식당·카페에서 팁은 의무가 아닙니다. 시장에서는 흥정이 자연스럽습니다 — [사고 팔기] 세트의 표현을 쓰면 됩니다.');
+  show('culture', '베트남 문화', true);
+}
+
 /* 오늘 기사 — 깃허브 로봇이 아침마다 골라둔 것을 보여준다 (data/news.json) */
 function showNews() {
   const b = $('#newsBody');
@@ -2380,6 +2530,9 @@ $('#goHow').onclick = () => drawRevInfo();
 $('#goTone').onclick = toneEntry;
 $('#goWx').onclick = showWx;
 $('#goTime').onclick = showTime;
+$('#goCulture').onclick = showCulture;
+$('#goGuide').onclick = showGuide;
+$('#goTalk').onclick = startTalk;
 $('#goWeekly').onclick = () => {
   const ws = weekWords();
   if (!ws.length) return;
