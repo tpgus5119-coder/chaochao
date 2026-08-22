@@ -699,7 +699,7 @@ function renderHome() {
   const due = dueWords();
   $('#goReview').textContent = due.length ? '전부 ' + due.length : '전부';
 
-  // 오늘·다음 일정 — 뭘 하게 될지 미리 보이고, 버튼 하나로 바로 들어간다
+  // 오늘·내일 일정판 — 뭘 하게 될지 미리 보이고, 버튼 하나로 바로 들어간다
   const plan = $('#plan');
   plan.textContent = '';
   const prow = (k, v, act, fn) => {
@@ -708,12 +708,23 @@ function renderHome() {
     if (fn) { const bb = el('button', 'ghost sm', act); bb.onclick = fn; r.append(bb); }
     plan.append(r);
   };
-  prow('오늘 복습', due.length ? due.length + '장 밀림' : '없음 — 정상입니다',
-       due.length ? '시작' : null, due.length ? () => reviewStart() : null);
-  const nx2 = nextAfter(nx);
-  if (nx2) prow('다음 학습', trackName(nx2) + label(nx2) + ' · ' + nx2.theme, null, null);
+  const doneToday = Object.entries(S.done)
+    .some(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd());   // 세트(Day)만 센다
+  // 오늘 학습
+  if (doneToday) prow('오늘 학습', '완료', null, null);
+  else if (nx) prow('오늘 학습', trackName(nx) + label(nx) + ' · ' + nx.theme + ' — 미완', '시작', () => startLearn(nx));
+  else prow('오늘 학습', '없음 — 전 과정 완료', null, null);
+  // 오늘 복습
+  if (due.length) prow('오늘 복습', due.length + '장 — 미완', '시작', () => reviewStart());
+  else prow('오늘 복습', S.revDay === ymd() ? '완료' : '없음', null, null);
+  // 내일 학습 (+예습)
+  const tset = doneToday ? nx : nextAfter(nx);
+  if (tset) prow('내일 학습', trackName(tset) + label(tset) + ' · ' + tset.theme,
+    (tset.words || []).length ? '예습 10초' : null,
+    (tset.words || []).length ? () => flashRun(tset.words, '예습 · ' + trackName(tset) + label(tset)) : null);
+  // 내일 복습
   const tmr = Object.values(S.srs).filter(v => v.due > now() && v.due <= now() + DAY).length;
-  if (tmr) prow('내일 복습', '+' + tmr + '장 예정', null, null);
+  prow('내일 복습', tmr ? '+' + tmr + '장 예정' : '없음', null, null);
 
   show('home', '짜오짜오', false);
 }
@@ -765,11 +776,12 @@ function renderDays(track) {
 let L = null;
 
 function startLearn(d) {
+  // 순서: 단어 카드 → 확인 문제(암기 다지기) → 오늘의 대화(문장으로 써먹기).
+  // 문장이 마무리인 이유: 외운 것을 산출(말하기)로 끝내야 하루가 완성된다.
   const items = [];
   (d.letters || []).forEach(x => items.push({ k: 'letter', d: x }));
   (d.tones || []).forEach(x => items.push({ k: 'tone', d: x }));
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
-  if (d.dialog) items.push({ k: 'dialog', d: d.dialog });
   L = { day: d, items, i: 0 };
   $('#learnIntro').textContent = d.intro || '';
   $('#learnIntro').dataset.prep = (d.words || []).length ? '0' : '1';
@@ -941,6 +953,11 @@ $('#next').onclick = () => {
   // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
+  if (L.dlg) {                         // 대화(써먹기)까지 끝나면 오늘 완료
+    S.done[L.day.day] = now(); touchToday(); save();
+    finishDay(L.day);
+    return;
+  }
   if ((L.day.words || []).length) { startQuiz(L.day.words, L.day); return; }
   if (L.day.rule) {                    // 규칙 카드가 끝나면 연습 문제로
     RL = { r: L.day.rule, i: 0, ok: 0 };
@@ -948,12 +965,92 @@ $('#next').onclick = () => {
     show('rules', L.day.rule.title, true);
     return;
   }
-  S.done[L.day.day] = true; touchToday(); save();
+  S.done[L.day.day] = now(); touchToday(); save();
   // 소개가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
   if (L.day.day === 'P1') startVowel();
   else if (L.day.day === 'P2') startTone();
   else renderHome();
 };
+
+/* ---------- 훑기 엔진 (예습·간략 복습) ----------
+   카드가 소리와 함께 저절로 넘어간다 — 인출이 없어 외우는 효과는 약하지만,
+   내일 것을 미리 눈에 발라두거나(예습) 바쁜 날 밀린 카드를 훑는(간략) 용도.
+   카드를 누르면 바로 다음으로 넘어간다. */
+let FL = null;
+function flashRun(words, title) {
+  const ws = (words || []).filter(w => AIDX[w.vi]);
+  if (!ws.length) return;
+  FL = { list: ws, i: 0 };
+  show('quiz', title, true);
+  drawFlash();
+}
+function drawFlash() {
+  const b = $('#quizBody');
+  b.textContent = '';
+  audio.onended = null;
+  if (!FL || FL.i >= FL.list.length) {
+    $('#quizFill').style.width = '100%';
+    const r = el('div', 'result');
+    r.append(el('div', 'n', (FL ? FL.list.length : 0) + '개'));
+    r.append(el('div', null, '눈과 귀로 훑었습니다 — 외우는 건 퀴즈가 합니다'));
+    const hm = el('button', 'primary big', '홈으로');
+    hm.style.marginTop = '20px'; hm.onclick = renderHome;
+    r.append(hm); b.append(r);
+    touchToday();
+    return;
+  }
+  $('#quizFill').style.width = (FL.i / FL.list.length * 100) + '%';
+  const w = FL.list[FL.i];
+  const c = el('div', 'card');
+  const p = pic(w, 'pic'); if (p) c.append(p);
+  c.append(el('div', 'vi', esc(w.vi)));
+  c.append(toneRow(w.tones));
+  c.append(reveal(w.kr_read));
+  c.append(el('div', 'ko', esc(w.ko)));
+  b.append(c);
+  let moved = false;
+  const go = () => {
+    if (moved || $('#quiz').hidden || !FL) return;
+    moved = true; clearTimeout(tm); audio.onended = null;
+    FL.i++; drawFlash();
+  };
+  audio.pause();
+  audio.src = `audio/${voiceDir()}/n/${AIDX[w.vi]}.mp3`;
+  audio.currentTime = 0;
+  audio.onended = () => setTimeout(go, 300);
+  audio.play().catch(() => { });
+  const tm = setTimeout(go, 3000);       // 소리가 안 나도 멈추지 않게
+  c.onclick = go;                        // 급하면 눌러서 바로 다음
+}
+
+/* 확인 문제 뒤의 마무리 — 오늘 배운 문장을 실제로 써먹는다 */
+function startDialog(d) {
+  L = { day: d, items: [{ k: 'dialog', d: d.dialog }], i: 0, dlg: true };
+  $('#learnIntro').textContent = '외운 단어를 문장으로 써먹을 차례입니다. 한 줄씩 따라 말해 보세요.';
+  $('#learnIntro').dataset.prep = '0';
+  drawCard();
+  show('learn', label(d) + ' · 문장으로 써먹기', true);
+}
+function finishDay(d) {
+  const b = $('#quizBody');
+  b.textContent = '';
+  $('#quizFill').style.width = '100%';
+  const r = el('div', 'result perfect');
+  r.append(el('div', 'n', '오늘 완료'));
+  r.append(el('div', null, '단어 → 확인 문제 → 문장까지, 한 세트를 다 했습니다'));
+  if (aiReady() && d.dialog) {
+    const c = el('button', 'primary big', '이 대화로 AI 선생님과 역할극 ›');
+    c.style.marginTop = '20px';
+    c.onclick = startChat;
+    r.append(c);
+  }
+  const hm = el('button', 'ghost big', '홈으로');
+  hm.style.marginTop = '10px';
+  hm.onclick = renderHome;
+  r.append(hm);
+  b.append(r);
+  show('quiz', '오늘 완료', true);
+}
 
 /* ---------- 퀴즈 ---------- */
 let Q = null;
@@ -1001,7 +1098,9 @@ function drawRevInfo(cap) {
     '학습에서 만난 단어는 전부 복습 창고에 들어갑니다. 문제를 <b>맞힐 때마다</b> 그 단어는 더 나중에 나옵니다 — ' +
     '<b>1일 → 3일 → 7일 → 14일 → 30일 → 60일</b>. 틀리면 두 계단 내려와 곧 다시 나옵니다.<br><br>' +
     '잊어버리기 <b>직전에</b> 꺼내 보는 것이 기억을 가장 오래 남깁니다(간격 반복 — 기억 연구에서 가장 근거가 단단한 방법입니다). ' +
-    '그래서 복습할 카드가 <b>있는 날도, 없는 날도</b> 있습니다. 없는 날은 정상입니다.'));
+    '그래서 복습할 카드가 <b>있는 날도, 없는 날도</b> 있습니다. 없는 날은 정상입니다.<br><br>' +
+    '<b>[전부]</b>가 곧 공부법 책들이 말하는 그 복습입니다 — 간격 반복 + 직접 떠올리기 + 즉시 피드백. ' +
+    '<b>[간략]</b>은 바쁜 날용 훑기(자동 넘김)라 효과는 약하고, <b>따라 말하기·손글씨·자판</b>은 같은 단어를 입·손으로 복습하는 다른 방식입니다.'));
   b.append(c);
 
   const learned = Object.keys(S.srs).length;
@@ -1212,7 +1311,11 @@ function grade(vi, ok, early) {
 
 function finishQuiz() {
   $('#quizFill').style.width = '100%';
-  if (!Q.day) { S.stats.rev = (S.stats.rev || 0) + 1; save(); }   // 복습 판 수 (업적용)
+  if (!Q.day) {
+    S.stats.rev = (S.stats.rev || 0) + 1;                          // 복습 판 수 (업적용)
+    if (!Q.early) S.revDay = ymd();                                // 오늘 복습을 끝냈다는 도장
+    save();
+  }
   const n = Q.ok, t = Q.total;
   const again = Q.list.length - Q.total;
   const r = el('div', 'result');
@@ -1233,9 +1336,14 @@ function finishQuiz() {
     const days = Math.max(1, Math.round((soon - now()) / DAY));
     r.append(el('p', 'note', `다음 복습은 ${days}일 뒤입니다. 잊기 직전에 다시 꺼내야 오래 남습니다.`));
   }
-  const b = el('button', 'primary big', Q.day ? '오늘 완료' : '홈으로');
+  const hasDlg = Q.day && Q.day.dialog;
+  const b = el('button', 'primary big', hasDlg ? '문장으로 써먹기 ›' : Q.day ? '오늘 완료' : '홈으로');
   b.style.marginTop = '24px';
-  b.onclick = () => { if (Q.day) { S.done[Q.day.day] = true; touchToday(); save(); } renderHome(); };
+  b.onclick = () => {
+    if (hasDlg) { startDialog(Q.day); return; }
+    if (Q.day) { S.done[Q.day.day] = now(); touchToday(); save(); }
+    renderHome();
+  };
   r.append(b);
   $('#quizBody').textContent = '';
   $('#quizBody').append(r);
@@ -1589,7 +1697,7 @@ function drawRule() {
   const r = RL.r;
 
   if (RL.i >= r.quiz.length) {          // 결과
-    S.done[r.key] = true; touchToday(); save();
+    S.done[r.key] = now(); touchToday(); save();
     const res = el('div', 'result');
     res.append(el('div', 'n', RL.ok + ' / ' + r.quiz.length));
     res.append(el('div', null, RL.ok === r.quiz.length ? '규칙이 손에 붙었습니다'
@@ -2207,7 +2315,8 @@ function showWx() {
       ['하노이 (북부)', '호찌민 (남부)'].forEach((name, i) => {
         const d = arr[i] && arr[i].daily;
         if (!d) return;
-        box.append(el('p', 'newsday', name + ' — 한 주'));
+        box.append(el('p', 'newsday', name));
+        box.append(el('p', 'note', wxSeason(i === 0 ? 'n' : 's')));
         const row = el('div', 'wxrow');
         d.time.forEach((t, k) => {
           const day = new Date(t + 'T00:00');
@@ -2220,8 +2329,21 @@ function showWx() {
         });
         box.append(row);
       });
-      box.append(el('p', 'note', '배치가 어느 쪽이든 볼 수 있게 두 도시를 같이 보여줍니다. 8~9월 남부는 우기입니다 — 소나기 표시가 많은 게 정상입니다.'));
     }).catch(() => { box.textContent = '날씨를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'; });
+}
+
+/* 절기 특징 — 이맘때 그 도시 날씨가 원래 어떤지 */
+function wxSeason(city) {
+  const m = new Date().getMonth() + 1;
+  if (city === 'n') {
+    if (m >= 5 && m <= 8) return '5~8월 하노이는 한여름 — 무덥고 소나기가 잦습니다';
+    if (m >= 9 && m <= 11) return '9~11월 하노이는 가을 — 맑고 선선한 최고의 계절입니다';
+    if (m >= 2 && m <= 4) return '2~4월 하노이는 봄 — 흐리고 이슬비가 잦습니다';
+    return '12~1월 하노이는 겨울 — 15도 안팎, 난방이 없어 체감은 더 춥습니다';
+  }
+  return m >= 5 && m <= 10
+    ? '5~10월 호찌민은 우기 — 오후 한때 소나기가 거의 매일 옵니다'
+    : '11~4월 호찌민은 건기 — 비 없이 덥고 맑습니다';
 }
 
 /* 오늘 기사 — 깃허브 로봇이 아침마다 골라둔 것을 보여준다 (data/news.json) */
@@ -2250,6 +2372,10 @@ $('#chatForm').onsubmit = e => {
 };
 $('#goReview').onclick = () => reviewStart();
 $('#goQuick').onclick = () => reviewStart(10);
+$('#goFlash').onclick = () => {          // 간략 복습 — 밀린 카드를 자동 훑기
+  const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
+  flashRun(due.length ? due.slice(0, 20) : practiceWords(15), '간략 복습');
+};
 $('#goHow').onclick = () => drawRevInfo();
 $('#goTone').onclick = toneEntry;
 $('#goWx').onclick = showWx;
