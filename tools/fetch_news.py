@@ -18,14 +18,13 @@ def get(url):
 
 R = pathlib.Path(__file__).resolve().parent.parent
 KST = timezone(timedelta(hours=9))
+# 인사이드비나(한국어, 베트남 전문)만 쓴다 — 영어 국제면은 베트남 무관 기사가 섞여서 뺐다.
 FEEDS = [
-    ('인사이드비나', 'https://www.insidevina.com/rss/allArticle.xml', 3,
+    ('인사이드비나', 'https://www.insidevina.com/rss/allArticle.xml', 5,
      ['제조', '공장', '투자', '노동', '근로', '임금', '비자', '수출', '산업',
       '전자', '봉제', '섬유', '삼성', '채용', '경제', '한국']),
-    ('VnExpress', 'https://e.vnexpress.net/rss/business.rss', 2,
-     ['manufactur', 'factory', 'invest', 'labor', 'labour', 'wage', 'export',
-      'industr', 'electronics', 'garment', 'textile', 'samsung', 'korea']),
 ]
+CULT_KW = ['문화', '여행', '음식', '축제', '명절', '풍습', '관광', '요리', '전통', '맛']
 
 def when(s):
     """RSS 날짜가 RFC 형식일 수도, '2026-08-21 17:15:00' 꼴일 수도 있다."""
@@ -56,9 +55,19 @@ for src, url, n, kws in FEEDS:
         score = sum(1 for k in kws if k.lower() in t.lower())
         cand.append((score, d or now, t, u))
     cand.sort(key=lambda x: (-x[0], -x[1].timestamp()))
+    picked = set()
     for score, d, t, u in cand[:n]:
         k = d.astimezone(KST)
+        picked.add(u)
         items.append({'s': src, 't': t, 'u': u,
+                      'd': k.strftime('%m월 %d일'), 'ts': k.strftime('%Y-%m-%d')})
+    # 문화 읽을거리 2개 — 문화 화면에 실린다
+    cult = [(s, d, t, u) for s, d, t, u in cand
+            if u not in picked and any(kw in t for kw in CULT_KW)]
+    cult.sort(key=lambda x: -x[1].timestamp())
+    for score, d, t, u in cult[:2]:
+        k = d.astimezone(KST)
+        items.append({'s': src, 't': t, 'u': u, 'cat': '문화',
                       'd': k.strftime('%m월 %d일'), 'ts': k.strftime('%Y-%m-%d')})
 
 # 이전 기사는 3일치까지만 남긴다 — 그 이상은 지운다
@@ -70,7 +79,7 @@ except Exception:
 cutoff = (datetime.now(KST) - timedelta(days=3)).strftime('%Y-%m-%d')
 seen = {it['u'] for it in items}
 for it in old:
-    if it['u'] not in seen and it.get('ts', '') >= cutoff:
+    if it['u'] not in seen and it.get('ts', '') >= cutoff and it.get('s') == '인사이드비나':
         items.append(it)
         seen.add(it['u'])
 

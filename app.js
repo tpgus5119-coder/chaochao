@@ -301,6 +301,9 @@ async function aiListen(text, blobUrl, box) {
     const bare = s => stripTone(clean(s));
     const exact = clean(heard) === clean(text);
     const close = bare(heard) === bare(text);
+    S.stats.pronAll = (S.stats.pronAll || 0) + 1;   // 발음 점수용 — AI가 알아들었는가
+    if (exact || close) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
+    save();
     note.innerHTML = (exact
       ? '<b>AI가 정확히 "' + esc(heard) + '" 로 받아 적었습니다.</b> 알아들을 수 있는 발음입니다.'
       : close
@@ -1249,6 +1252,8 @@ function drawDict(body, q) {
   chk.onclick = () => {
     if (!picked.length) return;
     const good = picked.join(' ').toLowerCase() === q.w.vi.toLowerCase();
+    S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+    if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
     fxTone(good);
     chk.disabled = undo.disabled = true;
     [...tiles.children].forEach(t => t.disabled = true);
@@ -1324,7 +1329,10 @@ function requeue(q) {
 
 function grade(vi, ok, early) {
   touchToday();
-  if (early && ok) return;   // 예정보다 일찍 꺼내 맞힌 건 사다리를 안 올린다 (틀린 건 내린다)
+  // 암기 점수용 계수기 — 인출 시도와 성공을 센다
+  S.stats.qAll = (S.stats.qAll || 0) + 1;
+  if (ok) S.stats.qOk = (S.stats.qOk || 0) + 1;
+  if (early && ok) { save(); return; }   // 예정보다 일찍 꺼내 맞힌 건 사다리를 안 올린다
   const r = S.srs[vi] || { lv: 0, first: now() };
   if (!r.first) r.first = now();
   r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : Math.max(0, r.lv - 2);
@@ -1426,6 +1434,9 @@ function drawVowel() {
       if (!good) [...opts.children].forEach(x => {
         if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
       });
+      S.stats.earAll = (S.stats.earAll || 0) + 1;
+      if (good) S.stats.earOk = (S.stats.earOk || 0) + 1;
+      save();
       if (good) { VD.ok++; setTimeout(() => { VD.i++; drawVowel(); }, 500); }
       else nextBtn(body, () => { VD.i++; drawVowel(); });
     };
@@ -1498,6 +1509,9 @@ function drawTone() {
       if (!good) [...opts.children].forEach(x => {
         if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
       });
+      S.stats.earAll = (S.stats.earAll || 0) + 1;
+      if (good) S.stats.earOk = (S.stats.earOk || 0) + 1;
+      save();
       if (good) { T.ok++; setTimeout(() => { T.i++; drawTone(); }, 500); }
       else nextBtn(body, () => { T.i++; drawTone(); });
     };
@@ -1544,7 +1558,8 @@ function drawToneMark(body, w) {
       if (!good) [...opts.children].forEach(x => {
         if (x.dataset.tone === want) x.dataset.r = 'ok';
       });
-      if (good) T.ok++;
+      S.stats.earAll = (S.stats.earAll || 0) + 1;
+      if (good) { T.ok++; S.stats.earOk = (S.stats.earOk || 0) + 1; }
       grade(w.vi, good);
       if (good) setTimeout(() => { T.i++; drawTone(); }, 500);
       else nextBtn(body, () => { T.i++; drawTone(); });
@@ -1846,6 +1861,8 @@ function drawType() {
     key('확인', () => {
       if (!TY.txt.trim()) return;
       const good = TY.txt.trim().toLowerCase() === w.vi.toLowerCase();
+      S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+      if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
       fxTone(good);
       out.dataset.r = good ? 'ok' : 'no';
       if (!good) out.textContent = TY.txt.trim() + '  →  ' + w.vi;
@@ -2507,6 +2524,18 @@ function showCulture() {
   card('설(Tết)이 일 년의 중심', '음력 설 전후 일주일은 나라가 멈춥니다. 공장도 길게 쉬고, 보너스(13월 월급)가 관례입니다. 이때 귀향 인사 li xì(세뱃돈) 문화도 있습니다.');
   card('하지 말 것', '어른 머리를 만지지 않기, 밥에 젓가락 꽂지 않기(제사 연상), 사람을 손가락으로 가리키지 않기, 국기·호찌민 주석 험담은 절대 금물(법적 문제).');
   card('팁은 기본 아님', '식당·카페에서 팁은 의무가 아닙니다. 시장에서는 흥정이 자연스럽습니다 — [사고 팔기] 세트의 표현을 쓰면 됩니다.');
+  // 이번 주 문화 읽을거리 — 기사 로봇이 골라둔 문화 기사
+  fetch('data/news.json', { cache: 'no-cache' }).then(r => r.json()).then(n => {
+    const cult = (n.items || []).filter(it => it.cat === '문화');
+    if (!cult.length) return;
+    b.append(el('p', 'newsday', '이번 주 문화 읽을거리'));
+    cult.forEach(it => {
+      const a = el('a', 'newsrow');
+      a.href = it.u; a.target = '_blank'; a.rel = 'noopener';
+      a.append(el('b', null, esc(it.t)), el('span', null, esc(it.s)));
+      b.append(a);
+    });
+  }).catch(() => { });
   show('culture', '베트남 문화', true);
 }
 
@@ -2516,14 +2545,14 @@ function showNews() {
   b.textContent = '';
   fetch('data/news.json', { cache: 'no-cache' }).then(r => r.json()).then(n => {
     let last = null;
-    (n.items || []).forEach(it => {
+    (n.items || []).filter(it => it.cat !== '문화').forEach(it => {
       if (it.d !== last) { b.append(el('p', 'newsday', esc(it.d))); last = it.d; }
       const a = el('a', 'newsrow');
       a.href = it.u; a.target = '_blank'; a.rel = 'noopener';
       a.append(el('b', null, esc(it.t)), el('span', null, esc(it.s)));
       b.append(a);
     });
-    b.append(el('p', 'note', '매일 아침 6시 30분(한국시간)에 업데이트됩니다. 최근 3일치만 남고 오래된 기사는 지워집니다.'));
+    b.append(el('p', 'note', '베트남 전문지(인사이드비나, 한국어)에서 제조·경제 기사를 골라 매일 아침 6시 30분에 업데이트됩니다. 최근 3일치만 남습니다.'));
   }).catch(() => b.append(el('p', 'note', '기사를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.')));
   show('news', '베트남 소식', true);
 }
