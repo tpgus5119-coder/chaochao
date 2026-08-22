@@ -421,16 +421,19 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'culture', 'week', 'nick', 'sub', 'prog', 'club'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'week', 'nick', 'sub', 'prog', 'club'];
 /* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
+const NAV = [];                      // 뒤로가기 발자국 (홈에 오면 비운다)
+const dive = fn => { NAV.push(fn); };
 function topBtns() {
   const need = SNDV.includes(CURV);
   $('#region').hidden = !need;
   $('#voice').hidden = !need;
 }
 function show(v, title, canBack) {
+  if (v === 'home') NAV.length = 0;
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
@@ -575,7 +578,8 @@ function renderAnalysis(host, mode) {
     .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
   if (tn.length) { host.append(el('p', 'newsday', '성조별 정답률 (누적)')); host.append(bars(tn)); }
 
-  const MD = { listen: '듣고 고르기', meaning: '뜻 고르기', recall: '떠올려 말하기', dict: '받아쓰기',
+  const MD = { listen: '듣고 고르기', read: '읽고 고르기', meaning: '뜻 고르기',
+               recall: '떠올려 말하기', dict: '받아쓰기',
                say: '따라 말하기', type: '타이핑', hand: '손글씨' };
   const md = Object.entries(S.stats.md || {})
     .map(([k, v]) => [MD[k] || k, Math.round(v.ok * 100 / v.all), v.all]).sort((a, b) => a[1] - b[1]);
@@ -589,8 +593,10 @@ function renderAnalysis(host, mode) {
   const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
   const best = ok.reduce((a, x) => x.pct > a.pct ? x : a);
   const RX = {
-    '단어': ['<b>복습</b>을 하루도 밀리지 마세요 — 밀린 카드가 쌓이면 정답률이 먼저 떨어집니다.',
+    '암기': ['<b>복습</b>을 하루도 밀리지 마세요 — 밀린 카드가 쌓이면 정답률이 먼저 떨어집니다.',
              '틀린 단어는 그 자리에서 한 번 더 나옵니다. 그때 <b>소리 내어</b> 말하면 다음 판에서 살아납니다.'],
+    '읽기': ['글자를 <b>소리로 바꿔 읽는</b> 연습이 모자란 것입니다 — 복습의 [읽기]를 며칠 이어서 해 보세요.',
+             '뜻이 안 떠오르면 그 단어의 <b>그림</b>을 한 번 보고 넘어가세요. 그림이 붙은 단어가 더 오래 남습니다.'],
     '듣기': ['기본기의 <b>성조</b>와 <b>모음</b>을 하루 한 판씩. 저녁에 하면 자는 동안 소리가 정리됩니다.',
            '<b>느리게 듣기</b>로 먼저 듣고, 그다음 보통 속도로 한 번 더 들어 보세요.'],
     '쓰기': ['<b>손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.',
@@ -605,7 +611,8 @@ function renderAnalysis(host, mode) {
     ? `<b>모두 좋습니다.</b> 더 올릴 곳 — <b>${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`
     : `<b>약한 곳 — ${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`,
     ...(RX[worst.name] || []).map(t => '· ' + t)];
-  if (tn.length && tn[0][1] < 70) lines.push(`· 성조 중에서는 <b>${tn[0][0]}</b>이 ${tn[0][1]}%로 가장 약합니다 — 기본기 성조에서 그 소리만 골라 들어 보세요.`);
+  const tnOk = tn.filter(t => t[2] >= NEED);        // 열 문제를 넘긴 성조만 말한다
+  if (tnOk.length && tnOk[0][1] < 70) lines.push(`· 성조 중에서는 <b>${tnOk[0][0]}</b>이 ${tnOk[0][1]}%로 가장 약합니다 — 기본기 성조에서 그 소리만 골라 들어 보세요.`);
   const miss = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
     .sort((a, b) => b[1] - a[1]).slice(0, 5);
   if (miss.length) lines.push('· <b>발목 잡는 단어</b>(두 번 이상 틀린 것) — ' + miss.map(m => esc(m[0])).join(' · ') +
@@ -754,6 +761,10 @@ function renderAwards() {
   const ana = el('div');
   renderAnalysis(ana, 'week');
   b.append(ana);
+  const rk = el('div', 'rulecard');
+  b.append(rk);
+  if (S.nick && S.nick !== '이름없음') drawRank(rk);
+  else rk.append(el('div', 'rbody', '별명을 정하면 전체 순위가 나옵니다.'));
   b.append(el('p', 'lede', `업적 <b>${got}</b> / ${BADGES.length}`));
   BADGES.forEach(bg => {
     const on = bg.test();
@@ -831,20 +842,24 @@ function weekWords() {
 
 /* ---------- 주간 성적표 ----------
    점수는 지어내지 않는다. 앱이 직접 채점한 것만 센다:
-   암기=인출 정답률, 귀=성조·모음 구별, 철자=받아쓰기·자판, 발음=AI가 알아들은 비율.
+   말하기=AI가 알아들은 비율, 듣기=소리로 가린 정답률, 읽기=글자 보고 뜻,
+   쓰기=받아쓰기·타이핑, 암기=전체 인출 정답률.
    문제 수가 적으면(10문제 미만) 판정하지 않는다 — 적은 표본으로 강점·약점을 말하면 거짓이 된다. */
 const weekKey = t => { const d = t ? new Date(t) : new Date();
   d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return ymd(d); };   // 그 주 월요일
+/* 네 가지 힘을 말하기 → 듣기 → 읽기 → 쓰기 순으로 본다(입 → 귀 → 눈 → 손).
+   맨 아래 '암기'는 넷을 통틀어 "배운 것이 실제로 남아 있는가"만 따로 센다. */
 const SUBJ = [
-  { k: '단어', ok: 'qOk', all: 'qAll', tip: '배운 단어를 기억해 내기' },
-  { k: '듣기', ok: 'earOk', all: 'earAll', tip: '성조·모음을 소리로 가리기' },
-  { k: '쓰기', ok: 'spellOk', all: 'spellAll', tip: '받아쓰기·타이핑으로 철자 맞히기' },
   { k: '말하기', ok: 'pronOk', all: 'pronAll', tip: '내 발음을 AI가 알아듣는 비율' },
+  { k: '듣기', ok: 'earOk', all: 'earAll', tip: '소리만 듣고 뜻·성조를 가리기' },
+  { k: '읽기', ok: 'readOk', all: 'readAll', tip: '글자를 보고 뜻을 바로 떠올리기' },
+  { k: '쓰기', ok: 'spellOk', all: 'spellAll', tip: '받아쓰기·타이핑으로 철자 맞히기' },
+  { k: '암기', ok: 'qOk', all: 'qAll', tip: '배운 것이 얼마나 남아 있는가 (전체 정답률)' },
 ];
 function snapshot() {
   const t = S.stats || {};
   const o = { memo: Object.values(S.srs).filter(v => v.lv >= 2).length,
-              days: Object.keys(S.act).length,
+              days: Object.keys(S.act).length, drill: t.drill || 0,
               sets: Object.keys(S.done).filter(k => +k >= 1).length, said: t.said || 0 };
   SUBJ.forEach(x => { o[x.ok] = t[x.ok] || 0; o[x.all] = t[x.all] || 0; });
   return o;
@@ -858,7 +873,9 @@ function weekReport(base) {
   const d = k => (cur[k] || 0) - (b[k] || 0);
   const r = { subj, memo: d('memo'), days: d('days'), sets: d('sets'), said: d('said') };
   // 순위 점수 — 성과(외운 단어)와 노력(문제·발화·출석)을 함께 센다
-  const solved = subj.reduce((a, x) => a + x.n, 0);
+  // 한 문제는 한 번만 센다 — 복습 문제는 '암기'에 모두 쌓이고, 기본기 드릴만 따로 센다.
+  // (전에는 과목별 문제 수를 그냥 더해서 같은 문제가 두세 번 세어졌다)
+  const solved = d('qAll') + d('drill');
   r.score = r.memo * 3 + solved + Math.round(r.said * .5) + r.days * 5;
   return r;
 }
@@ -893,27 +910,19 @@ function showWeek(rep) {
       `<b>강점 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}<br>` +
       `<b>약점 — ${esc(worst.name)} ${worst.pct}%</b> · ${esc(worst.tip)}<br><br>` +
       (worst.name === '듣기' ? '이번 주는 기본기의 <b>성조·모음</b>을 자기 전에 한 번씩 돌려 보세요. 자는 동안 소리가 정리됩니다.'
-       : worst.name === '쓰기' ? '<b>자판·손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.'
-       : worst.name === '말하기' ? '<b>따라 말하기</b>에서 AI가 듣기를 눌러 보세요. 알아듣는 발음인지가 바로 나옵니다.'
+       : worst.name === '쓰기' ? '<b>복습 → 쓰기</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.'
+       : worst.name === '말하기' ? '<b>복습 → 말하기</b>를 눌러 보세요. 알아듣는 발음인지가 바로 나옵니다.'
+       : worst.name === '읽기' ? '<b>복습 → 읽기</b>를 며칠 이어서. 글자를 보고 뜻이 바로 떠오를 때까지가 목표입니다.'
        : '<b>복습</b>을 밀리지 않게 하는 것이 제일 빠릅니다 — 잊기 직전에 꺼내야 오래 남습니다.')));
     b.append(c);
   } else {
     b.append(el('p', 'note', '아직 문제 수가 적어 강점·약점을 말할 수 없습니다. 한 주만 더 해 보세요 — 과목마다 10문제가 넘으면 판정합니다.'));
   }
 
-  if (RANKURL && S.nick) {
+  if (S.nick && S.nick !== '이름없음') {
     const box = el('div', 'rulecard');
-    box.append(el('div', 'rhead', '<b>이번 주 순위</b>'), el('div', 'rbody', '불러오는 중…'));
     b.append(box);
-    fetch(RANKURL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nick: S.nick, week: weekKey(), score: rep.score }) })
-      .then(r => r.json()).then(j => {
-        const top = (j.top || []).map((t, i) => `${i + 1}위 ${esc(t.nick)} — ${t.score}점`).join('<br>');
-        box.querySelector('.rbody').innerHTML =
-          (j.rank <= 5 ? `<b>당신은 ${j.rank}위입니다 (${j.total}명 중)</b><br><br>` + top
-           : `<b>당신은 상위 ${j.pct}% 입니다</b> (등수는 본인만 봅니다)<br><br>` + top) +
-          '<br><br><span class="dimtxt">점수 = 새로 외운 단어×3 + 푼 문제 + 소리 낸 횟수÷2 + 공부한 날×5</span>';
-      }).catch(() => { box.querySelector('.rbody').textContent = '순위를 불러오지 못했습니다.'; });
+    drawRank(box);
   }
 
   const go = el('button', 'primary big', '이번 주 시작하기');
@@ -953,7 +962,6 @@ const MENUS = {
   day:   { name: '하루 5분 베트남어', sub: '오늘 배울 것', items: () => [
             ['일상 과정', () => renderDays('daily')], ['직무 과정', () => renderDays('work')]] },
   rev:   { name: '복습', sub: '다시 볼 때가 된 것', items: () => [
-            ['전부 섞어서' + (dueWords().length ? ' (' + dueWords().length + ')' : ''), () => reviewStart()],
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
   basic: { name: '기본기', sub: '소리와 규칙', items: () => [
             ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
@@ -975,7 +983,7 @@ function renderMenu(id) {
   m.items().forEach(([label, fn]) => {
     const btn = el('button', 'bigmenu');
     btn.textContent = label;
-    btn.onclick = fn;
+    btn.onclick = () => { dive(() => renderMenu(id)); fn(); };
     b.append(btn);
   });
   show('sub', m.name, true);
@@ -1019,12 +1027,13 @@ const lessonSents = () => [...(typeof RULES === 'undefined' ? [] : RULES),
   .flatMap(r => (r.cards || []).map(c => ({ vi: c.vi, ko: c.ko, kr_read: c.kr, tones: c.tones, sent: true })));
 const findItem = vi => allWords().find(w => w.vi === vi)
   || allSents().find(x => x.vi === vi) || lessonSents().find(x => x.vi === vi);
-/* 복습에 꺼낼 단어 — 최근에 배운 것일수록 앞에 오되 ±3일 흔들림을 줘서
-   같은 시기 단어끼리는 매번 순서가 바뀐다(무조건 최신순은 아니다). */
+/* 오늘 꺼낼 카드 차례. 최근에 배운 것일수록 먼저 — 갓 배운 것이 가장 빨리 샌다.
+   다만 오래 밀린 카드도 같이 올라와야 한다(2주까지). 안 그러면 밀린 카드가 영영 뒤에 남는다.
+   ±3일 흔들기를 섞어 매번 같은 순서로 나오지 않게 한다. */
 function dueWords() {
   const n = now();
   return Object.entries(S.srs).filter(([, v]) => v.due <= n)
-    .map(([k, v]) => [k, (v.first || 0) + (Math.random() - .5) * 6 * DAY])
+    .map(([k, v]) => [k, (v.first || 0) + Math.min(n - v.due, 14 * DAY) + (Math.random() - .5) * 6 * DAY])
     .sort((a, b) => b[1] - a[1]).map(x => x[0]);
 }
 
@@ -1068,8 +1077,47 @@ function nextDay() {
   return daily || work;
 }
 
+/* 며칠 이어서 왔는가. 끊기면 0이 되지만 '최고 기록'은 남는다 —
+   0으로 되돌아가는 것만 보이면 한 번 빠진 날 그만두게 된다. */
+function streak() {
+  let n = 0;
+  const d = new Date();
+  if (!S.act[ymd(d)]) d.setDate(d.getDate() - 1);      // 오늘 아직 안 했으면 어제부터 센다
+  while (S.act[ymd(d)]) { n++; d.setDate(d.getDate() - 1); }
+  if (n > (S.best || 0)) { S.best = n; save(); }
+  return n;
+}
+
+/* 첫 화면 맨 위 세 칸. 셋을 고른 이유는 서로 다른 질문에 답하기 때문이다:
+   ① 연속 — "계속 하고 있나" (돌아오게 만드는 힘. 간격 반복은 돌아와야만 돌아간다)
+   ② 진도 — "얼마나 왔나" (끝이 보일수록 속도가 붙는다)
+   ③ 외운 단어 — "무엇을 얻었나" (노력이 아니라 성과. 이게 있어야 '늘고 있다'는 실감이 난다)
+   넷째를 더하면 숫자끼리 눈길을 뺏어서 셋 다 안 보게 된다. */
+function drawDash() {
+  const box = $('#dash');
+  box.textContent = '';
+  const total = ALL.filter(d => typeof d.day === 'number' && visibleDay(d)).length;
+  const done = ALL.filter(d => typeof d.day === 'number' && visibleDay(d) && S.done[d.day]).length;
+  const memo = Object.values(S.srs).filter(v => v.lv >= 2).length;
+  const st = streak();
+  const cell = (v, k, sub, fn) => {
+    const c = el('button', 'dcell');
+    c.append(el('b', null, v), el('span', 'dk', k));
+    if (sub) c.append(el('span', 'dsub', sub));
+    c.onclick = fn;
+    box.append(c);
+  };
+  const doneT = !!S.act[ymd()];
+  cell(st + '일', '연속', doneT ? '오늘 완료 ✔' : st ? '오늘도 오세요' : S.best ? '최고 ' + S.best + '일' : '오늘 시작하세요',
+       showProgress);
+  cell(total ? Math.round(done * 100 / total) + '%' : '0%', '진도', done + ' / ' + total + '세트',
+       () => renderMenu('day'));
+  cell(String(memo), '외운 단어', '두 번 이상 맞힌 것', renderAwards);
+}
+
 function renderHome() {
   drawMenu();
+  drawDash();
   const nx = nextDay();
   const due = dueWords();
 
@@ -1091,8 +1139,11 @@ function renderHome() {
   if (doneToday) prow('오늘 학습', pace > 1 ? todayCnt + '세트 완료' : '완료', 'done', null);
   else if (nx) prow('오늘 학습', trackName(nx) + label(nx) + '\n' + nx.theme, 'todo', () => startLearn(nx));
   else prow('오늘 학습', '전 과정 완료', 'none', null);
-  // 오늘 복습
-  if (due.length) prow('오늘 복습', '단어 ' + due.length + '개', 'todo', () => reviewStart());
+  // 오늘 복습 — 문장도 같이 나오므로 뭉뚱그려 '단어'라고 하지 않는다
+  const dueW = due.map(findItem).filter(Boolean);
+  const ns = dueW.filter(x => x.sent).length, nw = dueW.length - ns;
+  if (due.length) prow('오늘 복습', ns ? `단어 ${nw} · 문장 ${ns}` : '단어 ' + nw + '개',
+                       'todo', () => reviewStart());
   else prow('오늘 복습', S.revDay === ymd() ? '완료' : '없음', S.revDay === ymd() ? 'done' : 'none', null);
   // 내일 학습 (+예습)
   const tset = doneToday ? nx : nextAfter(nx);
@@ -1100,8 +1151,11 @@ function renderHome() {
     (tset.words || []).length ? () => flashRun(tset.words, '예습 · ' + trackName(tset) + label(tset)) : null);
   else prow('내일 학습', '없음', 'none', null);
   // 내일 복습 — 내일 새로 나올(만기되는) 카드 수
-  const tmr = Object.values(S.srs).filter(v => v.due > now() && v.due <= now() + DAY).length;
-  prow('내일 복습', tmr ? '단어 ' + tmr + '개' : '없음', tmr ? 'next' : 'none', null);
+  const tmr = Object.entries(S.srs).filter(([, v]) => v.due > now() && v.due <= now() + DAY)
+    .map(([k]) => findItem(k)).filter(Boolean);
+  const ts = tmr.filter(x => x.sent).length, tw = tmr.length - ts;
+  prow('내일 복습', !tmr.length ? '없음' : ts ? `단어 ${tw} · 문장 ${ts}` : '단어 ' + tw + '개',
+       tmr.length ? 'next' : 'none', null);
 
   show('home', '짜오짜오', false);
 }
@@ -1160,7 +1214,7 @@ function renderDays(track) {
       nm,
       el('span', 'st', done ? '완료 ✔' : n + '단어 + 대화')
     );
-    b.onclick = () => startLearn(d);
+    b.onclick = () => { dive(() => renderDays(track)); startLearn(d); };
     const li = el('li'); li.append(b);
     if (done) {                          // 완료 표시는 유저가 되돌릴 수 있다
       const u = el('button', 'ghost sm undo', '미완으로');
@@ -1525,12 +1579,19 @@ function pickMode(w, lv) {
 }
 function buildQuestions(words, forced) {
   const pool = allWords();
+  // 오답 보기는 같은 종류에서 고른다 — 문장 문제에 단어 뜻을 섞으면
+  // 길이만 보고 정답을 찍을 수 있어 문제가 문제 구실을 못 한다.
+  const spool = [...allSents(), ...lessonSents()];
   return words.map(w => {
     const lv = (S.srs[w.vi] || {}).lv || 0;
     let mode = forced === 'write' ? (!w.sent && Math.random() < .35 ? 'hand' : 'type')
              : forced || pickMode(w, lv);
     if ((mode === 'listen' || mode === 'type') && !AIDX[w.vi]) mode = 'read';   // 소리가 없으면 눈으로
-    const others = pool.filter(x => x.vi !== w.vi).sort(() => Math.random() - .5).slice(0, 3);
+    let src = w.sent ? spool : pool;
+    if (src.length < 4) src = [...src, ...(w.sent ? pool : spool)];             // 모자라면 채운다
+    const seen = new Set([w.vi]);
+    const others = src.filter(x => !seen.has(x.vi) && seen.add(x.vi))
+      .sort(() => Math.random() - .5).slice(0, 3);
     return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
   }).sort(() => Math.random() - .5);
 }
@@ -1571,19 +1632,20 @@ function reviewMenu(kind) {
   $('#quizFill').style.width = '0%';
   const due = dueWords().map(findItem).filter(Boolean).filter(x => kind === 'sent' ? x.sent : !x.sent);
   b.append(el('p', 'lede', (kind === 'sent' ? '문장' : '단어') + ' 복습 — ' + due.length + '개 대기'));
+  const back = () => reviewMenu(kind);
   const all = el('button', 'primary big', '랜덤');
   all.style.width = '100%'; all.style.marginBottom = '12px';
-  all.onclick = () => startQuiz(null, null, null, false, { kind });
+  all.onclick = () => { dive(back); startQuiz(null, null, null, false, { kind }); };
   b.append(all);
   SKILLS.forEach(sk => {
     const btn = el('button', 'chatmode');
     btn.innerHTML = `<b>${sk.name}</b><span>${sk.how}</span>`;
-    btn.onclick = () => startQuiz(null, null, null, false, { kind, skill: sk.k });
+    btn.onclick = () => { dive(back); startQuiz(null, null, null, false, { kind, skill: sk.k }); };
     b.append(btn);
   });
   const quick = el('button', 'chatmode');
-  quick.innerHTML = '<b>간략</b><span>카드가 3초에 한 장씩 — 눈과 귀로만 훑기 (채점 없음)</span>';
-  quick.onclick = () => flashRun(due.slice(0, 20), (kind === 'sent' ? '문장' : '단어') + ' 간략');
+  quick.innerHTML = '<b>3분만</b><span>카드가 3초에 한 장씩 — 눈과 귀로만 훑기 (채점 없음)</span>';
+  quick.onclick = () => { dive(back); flashRun(due.slice(0, 20), (kind === 'sent' ? '문장' : '단어') + ' 3분만'); };
   b.append(quick);
   show('quiz', (kind === 'sent' ? '문장' : '단어') + ' 복습', true);
 }
@@ -1608,8 +1670,9 @@ function drawRevInfo(cap) {
     '<b>1일 → 3일 → 7일 → 14일 → 30일 → 60일</b>. 틀리면 두 계단 내려와 곧 다시 나옵니다.<br><br>' +
     '잊어버리기 <b>직전에</b> 꺼내 보는 것이 기억을 가장 오래 남깁니다(간격 반복 — 기억 연구에서 가장 근거가 단단한 방법입니다). ' +
     '그래서 복습할 카드가 <b>있는 날도, 없는 날도</b> 있습니다. 없는 날은 정상입니다.<br><br>' +
-    '<b>[전부]</b>가 곧 공부법 책들이 말하는 그 복습입니다 — 간격 반복 + 직접 떠올리기 + 즉시 피드백. ' +
-    '<b>[간략]</b>은 바쁜 날용 훑기(자동 넘김)라 효과는 약하고, <b>따라 말하기·손글씨·자판</b>은 같은 단어를 입·손으로 복습하는 다른 방식입니다.'));
+    '<b>[랜덤]</b>이 곧 공부법 책들이 말하는 그 복습입니다 — 간격 반복 + 직접 떠올리기 + 즉시 피드백. ' +
+    '<b>[말하기·듣기·읽기·쓰기]</b>는 같은 단어를 한 가지 방식으로만 몰아서 볼 때, ' +
+    '<b>[3분만]</b>은 바쁜 날 훑고 지나갈 때 씁니다(자동 넘김이라 효과는 약합니다).'));
   b.append(c);
 
   const learned = Object.keys(S.srs).length;
@@ -1984,7 +2047,12 @@ function drawRecall(body, q) {
 }
 
 function answer(btn, correct, w) {
-  markSpeed(correct, Q.list[Q.i].mode);
+  const md = Q.list[Q.i].mode;
+  markSpeed(correct, md);
+  // 눈으로 푼 것은 읽기, 귀로 푼 것은 듣기로 센다 (전에는 둘 다 '암기'에만 쌓였다)
+  const bx = md === 'read' ? 'read' : md === 'listen' ? 'ear' : null;
+  if (bx) { S.stats[bx + 'All'] = (S.stats[bx + 'All'] || 0) + 1;
+            if (correct) S.stats[bx + 'Ok'] = (S.stats[bx + 'Ok'] || 0) + 1; }
   [...btn.parentNode.children].forEach(b => b.disabled = true);
   btn.dataset.r = correct ? 'ok' : 'no';
   fxTone(correct);
@@ -2157,6 +2225,7 @@ function drawVowel() {
         if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
       });
       S.stats.earAll = (S.stats.earAll || 0) + 1;
+      S.stats.drill = (S.stats.drill || 0) + 1;
       if (good) S.stats.earOk = (S.stats.earOk || 0) + 1;
       save();
       if (good) { VD.ok++; setTimeout(() => { VD.i++; drawVowel(); }, 500); }
@@ -2232,6 +2301,7 @@ function drawTone() {
         if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
       });
       S.stats.earAll = (S.stats.earAll || 0) + 1;
+      S.stats.drill = (S.stats.drill || 0) + 1;
       if (good) S.stats.earOk = (S.stats.earOk || 0) + 1;
       save();
       if (good) { T.ok++; setTimeout(() => { T.i++; drawTone(); }, 500); }
@@ -2281,6 +2351,7 @@ function drawToneMark(body, w) {
         if (x.dataset.tone === want) x.dataset.r = 'ok';
       });
       S.stats.earAll = (S.stats.earAll || 0) + 1;
+      S.stats.drill = (S.stats.drill || 0) + 1;
       if (good) { T.ok++; S.stats.earOk = (S.stats.earOk || 0) + 1; }
       grade(w.vi, good);
       if (good) setTimeout(() => { T.i++; drawTone(); }, 500);
@@ -2605,7 +2676,7 @@ function startRule(i) {
   // 다른 학습과 같은 카드 화면으로 가르친다 — 카드가 끝나면 연습 문제
   L = { day: { day: r.key, theme: r.title, intro: r.intro, words: [], rule: r },
         items: r.cards.map(c => ({ k: 'rule', d: c })), i: 0 };
-  $('#learnIntro').textContent = r.intro;
+  $('#learnIntro').innerHTML = r.intro;   // 규칙·문법 머리글은 우리가 쓴 글이라 굵게 표시를 살린다
   $('#learnIntro').dataset.prep = '0';
   drawCard();
   show('learn', r.title, true);
@@ -2965,7 +3036,6 @@ let CH = null;
    (2026-08-22 개통. 비우면 예전 방식(각자 키)으로 돌아간다) */
 const PROXY = 'https://viet-ai.chaochao-app.workers.dev';
 /* 순위 서버 — 주소를 채우면 주간 순위가 켜진다 (비면 개인 성적표만) */
-const RANKURL = '';
 const aiReady = () => !!(PROXY || S.gkey);
 /* AI 호출 한 군데로 모은다 — 구글이 붐비는 날(429·503)에도 앱이 스스로 버틴다.
    서버도 재시도하지만, 서버가 옛 코드여도 여기서 한 번 더 막아준다. */
@@ -3415,7 +3485,9 @@ camIn.onchange = async () => {
 };
 
 /* ---------- 시작 ---------- */
-$('#back').onclick = renderHome;
+/* 뒤로가기 — 한 단계씩. 전에는 어디서 눌러도 홈으로 튀어서,
+   복습 안에서 방식만 바꾸려 해도 처음부터 다시 들어가야 했다. */
+$('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
 $('#goMe').onclick = renderAwards;
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.
@@ -3525,12 +3597,13 @@ function showGuide() {
     '홈의 <b>외운 단어</b>는 하루 이상 간격을 두고 두 번 이상 맞힌 단어입니다 — 이게 진짜 실력입니다.',
   ]);
   sec('④', '복습 — 무엇을 어떻게', [
-    '<b>복습</b> — 오늘 꺼낼 것을 <b>20개씩</b>, 단어와 문장을 섞어서. 이것만 해도 됩니다.',
-    '<b>단어</b> / <b>문장</b> — 한 가지만 골라서. 들어가면 다시 <b>듣기 · 읽기 · 말하기 · 쓰기</b> 중 고를 수 있습니다.',
-    '<b>듣기</b> = 소리 듣고 뜻 고르기 · <b>읽기</b> = 글자 보고 뜻 고르기',
+    '홈의 <b>오늘 복습</b>을 누르면 오늘 꺼낼 것을 <b>20개씩</b> 섞어서 줍니다. 이것만 해도 됩니다.',
+    '골라서 하고 싶으면 <b>복습 → 단어</b> 또는 <b>문장</b>으로 들어갑니다.',
+    '<b>랜덤</b> — 그 안에서 네 방식을 섞어 줍니다. 평소엔 이걸 쓰세요.',
     '<b>말하기</b> = 한국어 뜻만 보고 베트남어로 말하기 (AI가 받아 적어 채점)',
-    '<b>쓰기</b> = 소리 듣고 자판으로 쓰기 (듣기와 철자를 한 번에 시험합니다)',
-    '<b>3분만</b> — 섞어서 10개만. <b>대화</b> — 끝낸 세트 문장으로 AI와 역할극.',
+    '<b>듣기</b> = 소리 듣고 뜻 고르기 · <b>읽기</b> = 글자 보고 뜻 고르기',
+    '<b>쓰기</b> = 소리 듣고 자판으로 · 가끔 손으로 쓰기 (듣기와 철자를 한 번에)',
+    '<b>3분만</b> — 바쁜 날 훑기. 3초에 한 장씩 자동으로 넘어갑니다(채점 없음).',
     '모두 <b>같은 창고</b>에서 꺼냅니다 — 60일 전 단어도 때가 되면 나옵니다.',
   ]);
   sec('⑤', '왜 이렇게 나누었나', [
@@ -3599,24 +3672,6 @@ function showCulture() {
   $('#learnIntro').dataset.prep = '0';
   drawCard();
   show('learn', '베트남 문화', true);
-}
-function _oldCulture() {
-  const b = $('#cultureBody');
-  b.textContent = '';
-  const card = (t, body) => {
-    const c = el('div', 'rulecard');
-    c.append(el('div', 'rhead', '<b>' + t + '</b>'), el('div', 'rbody', body));
-    b.append(c);
-  };
-  card('호칭이 예의의 절반', '나이를 물어보는 건 실례가 아니라 <b>당신을 뭐라고 부를지 정하려는 것</b>입니다. anh/chị/em만 잘 써도 예의 바른 사람이 됩니다. 규칙의 [호칭] 수업과 이어집니다.');
-  card('회식은 "못 하이 바, 요!"', '건배 구호는 <b>Một, hai, ba, dô!</b>(하나, 둘, 셋, 야!). 잔을 부딪칠 때 손윗사람보다 잔을 살짝 낮게 대면 아주 좋아합니다.');
-  card('점심 후 낮잠', '많은 공장·사무실이 점심 후 20~30분 불을 끄고 낮잠을 잡니다. 놀라지 말고 같이 쉬면 됩니다.');
-  card('오토바이가 다리', '출퇴근·배달·이사까지 오토바이로 합니다. 길 건널 때는 <b>일정한 속도로 천천히</b> — 멈칫하거나 뛰면 더 위험합니다. 그랩(Grab) 앱이 택시입니다.');
-  card('커피의 나라', '연유 넣은 진한 커피(cà phê sữa đá)가 국민 음료. 커피숍에서 몇 시간 앉아 있는 게 일상 문화입니다.');
-  card('설(Tết)이 일 년의 중심', '음력 설 전후 일주일은 나라가 멈춥니다. 공장도 길게 쉬고, 보너스(13월 월급)가 관례입니다. 이때 귀향 인사 li xì(세뱃돈) 문화도 있습니다.');
-  card('하지 말 것', '어른 머리를 만지지 않기, 밥에 젓가락 꽂지 않기(제사 연상), 사람을 손가락으로 가리키지 않기, 국기·호찌민 주석 험담은 절대 금물(법적 문제).');
-  card('팁은 기본 아님', '식당·카페에서 팁은 의무가 아닙니다. 시장에서는 흥정이 자연스럽습니다 — [사고 팔기] 세트의 표현을 쓰면 됩니다.');
-  show('culture', '베트남 문화', true);
 }
 
 /* 오늘 기사 — 깃허브 로봇이 아침마다 골라둔 것을 보여준다 (data/news.json) */
@@ -3722,6 +3777,91 @@ function drawRegion() {
 $('#region').onclick = () => {
   S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion();
 };
+
+/* ---------- 앱 전체 순위와 평균 ----------
+   왜 동아리 안이 아니라 전체인가: 동아리는 두세 명이라 등수가 뜻을 못 가진다.
+   전체라야 "나는 보통보다 잘하고 있나"에 답이 된다. 동아리는 출석만 맡는다.
+   부를 때만 부른다 — 화면을 열 때 한 번, 그리고 [새로고침]을 누를 때.
+   AI를 쓰지 않으므로 이 기능은 AI 사용량과 무관하다. */
+const RANKKEY = ['say', 'ear', 'read', 'spell', 'memo'];
+/* 순위표의 자리표. 별명은 겹칠 수 있어서 기기마다 다른 표를 하나 만들어 쓴다.
+   이 표에는 아무 뜻이 없다 — 누구인지 알 수 있는 정보가 아니다. */
+const myUid = () => S.uid || (S.uid = Math.random().toString(36).slice(2, 10), save(), S.uid);
+const RANKNM = { say: '말하기', ear: '듣기', read: '읽기', spell: '쓰기', memo: '암기' };
+function myPcts() {
+  const cur = snapshot(), o = {};
+  SUBJ.forEach((x, i) => {
+    const n = cur[x.all] || 0;
+    if (n >= NEED) o[RANKKEY[i]] = Math.round((cur[x.ok] || 0) * 100 / n);
+  });
+  return o;
+}
+function drawRank(host) {
+  host.textContent = '';
+  host.append(el('div', 'rhead', '<b>전체 순위</b>'));
+  const body = el('div', 'rbody', '불러오는 중…');
+  host.append(body);
+  if (S.norank) {                                  // 순위에 안 나오기로 한 사람
+    body.textContent = '순위에 올리지 않고 있습니다.';
+    const on = el('button', 'ghost sm', '순위에 참여하기');
+    on.onclick = () => { S.norank = 0; save(); drawRank(host); };
+    host.append(on);
+    return;
+  }
+  const again = el('button', 'ghost sm', '새로고침');
+  again.onclick = () => drawRank(host);
+  const off = el('button', 'ghost sm', '순위에서 빼기');
+  off.onclick = () => {
+    if (!confirm('내 별명과 점수를 순위에서 지울까요?\n(공부 기록은 그대로 남습니다)')) return;
+    S.norank = 1; save();
+    cCall({ act: 'unrank', uid: myUid() }).catch(() => { });
+    drawRank(host);
+  };
+  cCall({ act: 'rank', uid: myUid(), score: weekReport(S.wk && S.wk.base).score,
+          memo: Object.values(S.srs).filter(v => v.lv >= 2).length, pct: myPcts() })
+    .then(j => {
+      body.textContent = '';
+      if (j.total < 3) {
+        body.innerHTML = '아직 사람이 적어 순위를 매기지 않습니다 (지금 ' + j.total + '명). 3명부터 나옵니다.';
+        host.append(again, off); return;
+      }
+      body.innerHTML =
+        (j.rank <= 5 ? `<b>나는 ${j.rank}위</b> (${j.total}명 중)`
+                     : `<b>나는 상위 ${j.pct}%</b> (${j.total}명 중 · 등수는 나만 봅니다)`) +
+        `<br><span class="dimtxt">내 점수 ${j.myScore} · 전체 평균 ${j.avgScore}</span><br><br>` +
+        j.top.map((t, i) => `${i + 1}위 ${esc(t.nick)} — ${t.score}점`).join('<br>') +
+        '<br><br><span class="dimtxt">점수 = 새로 외운 단어×3 + 푼 문제 + 소리 낸 횟수÷2 + 공부한 날×5</span>';
+      // 항목별로 전체 평균과 내 자리를 나란히
+      const rows = RANKKEY.map(k => [RANKNM[k], j.avg[k], (j.myPct || {})[k]])
+                          .filter(r => typeof r[1] === 'number');
+      if (rows.length) {
+        host.append(el('div', 'anahead', '전체 평균과 나'));
+        const box = el('div', 'bars');
+        rows.forEach(([nm, av, me]) => {
+          const r = el('div', 'barrow');
+          r.append(el('span', 'bname', nm));
+          const bar = el('span', 'bbar avg');
+          const fill = el('i');
+          fill.style.width = Math.max(2, av) + '%';
+          fill.className = 'avgfill';
+          bar.append(fill);
+          if (typeof me === 'number') {                 // 내 자리를 세로 눈금으로 찍는다
+            const pin = el('u');
+            pin.style.left = Math.min(99, Math.max(1, me)) + '%';
+            bar.append(pin);
+          }
+          r.append(bar);
+          r.append(el('span', 'bpct', typeof me === 'number' ? me + '%' : '—'));
+          r.append(el('span', 'bn', '평균 ' + av + '%'));
+          box.append(r);
+        });
+        host.append(box);
+        host.append(el('p', 'note', '굵은 막대가 전체 평균, 세로 선이 나입니다. 열 문제를 넘긴 항목만 나옵니다.'));
+      }
+      host.append(again, off);
+    })
+    .catch(() => { body.textContent = '순위를 불러오지 못했습니다.'; host.append(again, off); });
+}
 
 /* ---------- 동아리 ----------
    왜 있는가: 혼자 하는 공부는 3주를 못 넘긴다. 사람은 "나만 안 하고 있다"는
@@ -3842,19 +3982,6 @@ function clubHome(j) {
     row.append(dd, el('span', 'cw', (m.memo || 0) + '단어'));
     b.append(row);
   });
-
-  // 순위 — 곁다리. 등수는 본인에게만 보인다
-  if (j.total >= 2) {
-    const c = el('div', 'rulecard');
-    c.append(el('div', 'rhead', '<b>이번 주 순위</b>'));
-    const top = j.top.map((t, i) => `${i + 1}위 ${esc(t.nick)} — ${t.score}점`).join('<br>');
-    c.append(el('div', 'rbody',
-      (j.rank <= 5 ? `<b>나는 ${j.rank}위</b> (${j.total}명 중)` :
-       j.pct ? `<b>나는 상위 ${j.pct}%</b> (등수는 나만 봅니다)` : '') +
-      '<br><br>' + top +
-      '<br><br><span class="dimtxt">점수 = 새로 외운 단어×3 + 푼 문제 + 소리 낸 횟수÷2 + 공부한 날×5</span>'));
-    b.append(c);
-  }
 
   b.append(el('p', 'note', '올라가는 것은 별명과 위 숫자뿐입니다. 배운 내용이나 기록은 올라가지 않습니다.'));
   const others = el('button', 'ghost sm', '다른 동아리 보기');

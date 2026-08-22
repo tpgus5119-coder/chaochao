@@ -8,9 +8,12 @@ def h8(*paths):
     m = hashlib.sha1()
     for p in paths:
         m.update(pathlib.Path(p).read_bytes())
-    # 음성 파일이 바뀌어도 판이 바뀌어야 한다 — 안 그러면 폰 캐시의 옛 소리가 안 지워진다.
+    # 음성·그림이 바뀌어도 판이 바뀌어야 한다 — 안 그러면 폰 캐시의 옛것이 안 지워진다.
     # 내용 대신 파일 크기 목록만 해시한다(2천 개를 다 읽으면 느리다).
     for p in sorted(pathlib.Path('audio').rglob('*.mp3')):
+        m.update(f'{p}:{p.stat().st_size}'.encode())
+    # 그림도 같은 이유로 (파일 크기만 본다)
+    for p in sorted(pathlib.Path('img').glob('*.webp')):
         m.update(f'{p}:{p.stat().st_size}'.encode())
     return m.hexdigest()[:8]
 

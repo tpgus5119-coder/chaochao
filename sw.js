@@ -1,7 +1,7 @@
 /* 오프라인 캐시.
    앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
    음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
-const V = 'vn-ea8e36da';
+const V = 'vn-697d3cb3';
 const SHELL = ['./', './index.html', './app.js', './pitch.js', './style.css',
                './manifest.json', './icon.png',
                './data/days.json', './data/audio_index.json'];
@@ -20,8 +20,9 @@ self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
 
-  // 음성: 캐시에 있으면 캐시, 없으면 받아서 캐시에 넣는다
-  if (url.pathname.endsWith('.mp3')) {
+  // 음성·그림: 캐시에 있으면 캐시, 없으면 받아서 캐시에 넣는다.
+  // (판번호가 바뀌면 캐시를 통째로 버리므로 옛 파일이 남을 일은 없다)
+  if (url.pathname.endsWith('.mp3') || url.pathname.endsWith('.webp')) {
     e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(r => {
       if (r.ok) { const cp = r.clone(); caches.open(V).then(c => c.put(e.request, cp)); }
       return r;

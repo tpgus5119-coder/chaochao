@@ -6,6 +6,10 @@
    · 이번 주 도장(월~일)과 외운 단어 수를 동아리원끼리 공유
    · 주간 순위 — 상위 5명만 이름 공개, 내 등수는 나에게만
    v2: 사람이 다 나간 동아리는 스스로 지워진다 / 바뀐 게 없으면 저장하지 않는다
+   v3: 순위는 동아리 안이 아니라 **앱 전체**다 (act:'rank'). 전체 평균과 내 자리도 함께 준다.
+       동아리는 이제 '이번 주 출석판'만 맡는다.
+   v4: 순위는 별명이 아니라 기기마다 다른 표(uid)로 구분한다 — 같은 별명을 쓰는 두 사람이
+       서로의 기록을 덮어쓰지 않게. act:'unrank' 로 내 기록을 순위에서 지울 수 있다.
    개인정보는 별명과 진도 숫자뿐이다. */
 const CORS = o => ({
   'Access-Control-Allow-Origin': o, 'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -52,6 +56,54 @@ export default {
       return send({ id, name });
     }
 
+    const GKEY = `g:${week()}`, TTL = { expirationTtl: 60 * 60 * 24 * 30 };
+    const FIELDS = ['say', 'ear', 'read', 'spell', 'memo'];
+
+    if (act === 'unrank') {                                  // 순위에서 내 기록 지우기
+      const uid = cut(b.uid, 16);
+      const g = JSON.parse((await KV.get(GKEY)) || '{}');
+      if (g[uid]) { delete g[uid]; await KV.put(GKEY, JSON.stringify(g), TTL); }
+      return send({ ok: true });
+    }
+
+    if (act === 'rank') {                                    // 앱 전체 순위 + 전체 평균
+      const uid = cut(b.uid, 16);
+      if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
+      const g = JSON.parse((await KV.get(GKEY)) || '{}');
+      const p = b.pct && typeof b.pct === 'object' ? b.pct : {};
+      const mine = { n: nick, s: num(b.score, 999999), m: num(b.memo, 99999), p: {} };
+      for (const k of FIELDS) if (typeof p[k] === 'number') mine.p[k] = num(p[k], 100);
+      const was = g[uid];
+      if (!was || was.n !== mine.n || was.s !== mine.s || was.m !== mine.m
+          || JSON.stringify(was.p) !== JSON.stringify(mine.p)) {   // 바뀐 게 없으면 저장하지 않는다
+        g[uid] = mine;
+        let ent = Object.entries(g);
+        if (ent.length > 2000) {                             // 너무 커지면 점수 낮은 쪽부터 잘라낸다
+          ent = ent.sort((x, y) => y[1].s - x[1].s).slice(0, 2000);
+          for (const k of Object.keys(g)) delete g[k];
+          for (const [k, v] of ent) g[k] = v;
+          g[uid] = mine;
+        }
+        await KV.put(GKEY, JSON.stringify(g), TTL);
+      }
+      const list = Object.entries(g).sort((x, y) => y[1].s - x[1].s);
+      const rank = list.findIndex(([k]) => k === uid) + 1;
+      const avg = {};
+      for (const k of FIELDS) {
+        const v = list.map(([, x]) => x.p[k]).filter(x => typeof x === 'number');
+        if (v.length >= 3) avg[k] = Math.round(v.reduce((a, x) => a + x, 0) / v.length);
+      }
+      const scores = list.map(([, x]) => x.s);
+      return send({
+        rank, total: list.length,
+        pct: list.length >= 3 ? Math.max(1, Math.round(rank * 100 / list.length)) : 0,
+        top: list.slice(0, 5).map(([, v]) => ({ nick: v.n, score: v.s })),
+        avgScore: scores.length ? Math.round(scores.reduce((a, x) => a + x, 0) / scores.length) : 0,
+        avgMemo: list.length ? Math.round(list.reduce((a, [, x]) => a + x.m, 0) / list.length) : 0,
+        avg, myScore: mine.s, myMemo: mine.m, myPct: mine.p,
+      });
+    }
+
     const id = cut(b.id, 12), c = clubs[id];
     if (!c) return send({ error: 'gone' });                  // 사라진 동아리
     c.wait = c.wait || [];
@@ -94,13 +146,14 @@ export default {
         await KV.put(key, JSON.stringify(board), { expirationTtl: 60 * 60 * 24 * 60 });
       }
       for (const n of Object.keys(board)) if (!c.members.includes(n)) delete board[n];
-      const list = Object.entries(board).sort((x, y) => y[1].score - x[1].score);
-      const rank = list.findIndex(([n]) => n === nick) + 1;
+      // 동아리는 출석판만 맡는다 — 순위는 앱 전체(act:'rank')로 뺐다.
+      // 많이 나온 사람 순. 같으면 외운 단어가 많은 쪽.
+      const list = Object.entries(board).sort((x, y) =>
+        (y[1].days || []).reduce((a, v) => a + v, 0) - (x[1].days || []).reduce((a, v) => a + v, 0)
+        || y[1].memo - x[1].memo);
       return send({
         name: c.name, owner: c.owner, wait: c.owner === nick ? c.wait : undefined,
-        rank, total: list.length,
-        pct: list.length >= 3 ? Math.max(1, Math.round(rank * 100 / list.length)) : 0,
-        top: list.slice(0, 5).map(([n, v]) => ({ nick: n, score: v.score })),
+        total: list.length,
         members: list.map(([n, v]) => ({ nick: n, days: v.days, memo: v.memo })),
       });
     }
