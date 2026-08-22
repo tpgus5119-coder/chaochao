@@ -30,7 +30,7 @@ const STEPS = [1, 3, 7, 14, 30, 60];   // 일 단위. 반년~1년 기억을 목�
 const now = () => Date.now();
 
 /* ---------- 데이터 ---------- */
-let ALL = [], AIDX = {}, DRILL = [];
+let ALL = [], AIDX = {}, DRILL = [], VDRILL = [];
 const SONG = {};   // 노래 파일 있는지 확인한 결과
 const $ = s => document.querySelector(s);
 const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
@@ -595,21 +595,10 @@ function renderHome() {
   }
   // 성조 훈련 시점: 저녁에 하면 자는 동안 '성조 범주'로 정리된다는 실험이 있다.
   // (아침에 훈련한 집단은 하루가 지나며 오히려 정확도가 떨어졌다)
-  const h = new Date().getHours();
-  const night = h >= 19 || h < 3;
-  $('#toneWhy').textContent = night
-    ? '지금이 좋은 때 — 자는 동안 소리가 정리됩니다'
-    : '소리만 듣고 6성조 구별';
-
   const due = dueWords();
-  $('#revNote').textContent = due.length ? due.length + '개가 복습할 때가 됐어요' : '지금은 밀린 복습이 없어요';
+  $('#goReview').textContent = due.length ? '전부 ' + due.length : '전부';
 
   // 학습 과정 타일 밑줄 — 두 트랙의 진행 상황
-  const nd = ALL.filter(d => typeof d.day === 'number' && !d.track && S.done[d.day]).length;
-  const nw = ALL.filter(d => d.track === 'work' && S.done[d.day]).length;
-  const td = ALL.filter(d => typeof d.day === 'number' && !d.track).length;
-  const tw = ALL.filter(d => d.track === 'work').length;
-  $('#courseNote').textContent = `일상 ${nd}/${td} · 직무 ${nw}/${tw} — 하루 한 세트, 번갈아`;
   show('home', '베트남어 스터디', false);
 }
 
@@ -1029,6 +1018,54 @@ function finishQuiz() {
    성조만 다르고 나머지는 같은 단어를 소리로만 구별시킨다.
    시판 앱 대부분이 빠뜨린 부분이고, 성조 습득 연구가 가리키는 표준 훈련법이다. */
 let T = null;
+
+/* 모음 구별 듣기 — 한국인이 가장 오래 헷갈리는 o/ô/ơ · u/ư · a/ă 를 귀로 가른다 */
+let VD = null;
+function startVowel() {
+  const qs = [];
+  VDRILL.forEach(g => g.items.forEach(it => qs.push({ g, it })));
+  VD = { list: qs.sort(() => Math.random() - .5).slice(0, 10), i: 0, ok: 0 };
+  drawVowel();
+  show('tone', '모음 듣기', true);
+}
+function drawVowel() {
+  const body = $('#toneBody');
+  body.textContent = '';
+  if (VD.i >= VD.list.length) {
+    const r = el('div', 'result');
+    r.append(el('div', 'n', VD.ok + ' / ' + VD.list.length));
+    r.append(el('div', null, VD.ok >= 7 ? '모음이 귀에 들어오고 있습니다' : '괜찮습니다. u와 ư는 원래 오래 걸립니다'));
+    const b2 = el('button', 'primary big', '다시 하기'); b2.style.marginTop = '16px'; b2.onclick = startVowel;
+    const h2 = el('button', 'ghost big', '홈으로'); h2.style.marginLeft = '8px'; h2.onclick = renderHome;
+    r.append(b2, h2); body.append(r); return;
+  }
+  const { g, it } = VD.list[VD.i];
+  body.append(el('div', 'q', `${VD.i + 1} / ${VD.list.length} · 소리를 듣고 고르세요`));
+  body.append(el('div', 'tonehint', esc(g.base) + ' — ' + esc(g.note)));
+  const wrap = el('div', 'qplay');
+  const b = el('button', 'primary big', '듣기'); b.onclick = () => play(it.vi, false);
+  const sl = el('button', 'ghost', '느리게 듣기'); sl.onclick = () => play(it.vi, true);
+  wrap.append(b, sl); body.append(wrap);
+  play(it.vi, false);
+  const opts = el('div', 'opts tonelist');
+  g.items.forEach(o => {
+    const btn = el('button');
+    btn.append(el('span', 'tvi', esc(o.vi)), el('span', 'tko', esc(o.ko)));
+    btn.onclick = () => {
+      [...opts.children].forEach(x => x.disabled = true);
+      const good = o.vi === it.vi;
+      btn.dataset.r = good ? 'ok' : 'no';
+      fxTone(good);
+      if (!good) [...opts.children].forEach(x => {
+        if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
+      });
+      if (good) VD.ok++;
+      setTimeout(() => { VD.i++; drawVowel(); }, good ? 500 : 1600);
+    };
+    opts.append(btn);
+  });
+  body.append(opts);
+}
 
 function startTone() {
   const qs = [];
@@ -1626,6 +1663,7 @@ $('#chatForm').onsubmit = e => {
 $('#goReview').onclick = () => startQuiz(null, null);
 $('#goQuick').onclick = () => startQuiz(null, null, 10);
 $('#goTone').onclick = startTone;
+$('#goVowel').onclick = startVowel;
 $('#goMark').onclick = startMarks;
 $('#goRules').onclick = showRules;
 $('#goWeekly').onclick = () => {
@@ -1707,6 +1745,7 @@ Promise.all([
 ]).then(([d, a]) => {
   ALL = [...(d.prep || []), ...d.days];
   DRILL = d.tonedrill || [];
+  VDRILL = d.voweldrill || [];
   AIDX = a;
   $('#voice').textContent = S.voice === 'f' ? '여' : '남';
   drawRegion();

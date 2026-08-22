@@ -19,7 +19,7 @@ def collect(data):
             out[l["ex"]] = "word"          # 글자는 예시 단어로 듣는다
         for t in pr.get("tones", []):
             out[t["vi"]] = "tone"
-    for g in data.get("tonedrill", []):
+    for g in data.get("tonedrill", []) + data.get("voweldrill", []):
         for it in g["items"]:
             out[it["vi"]] = "tone"
     for d in data["days"]:
