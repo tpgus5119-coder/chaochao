@@ -593,16 +593,22 @@ const BADGES = [
 const NEED = 10;                       // 이만큼 풀어야 판정한다
 function bars(rows) {
   const box = el('div', 'bars');
-  rows.forEach(([name, pct, n]) => {
+  rows.forEach(([name, pct, n, avg]) => {
     const thin = n < NEED;
     const r = el('div', 'barrow' + (thin ? ' thin' : ''));
     r.append(el('span', 'bname', name));
-    const bar = el('span', 'bbar');
+    const bar = el('span', 'bbar' + (typeof avg === 'number' ? ' avg' : ''));
     if (!thin) {
       const fill = el('i');
       fill.style.width = Math.max(2, pct) + '%';
       fill.className = pct >= 80 ? 'hi' : pct >= 60 ? 'mid' : 'lo';
       bar.append(fill);
+    }
+    if (typeof avg === 'number') {          // 다른 사람들의 평균 자리를 세로 눈금으로
+      const pin = el('u');
+      pin.style.left = Math.min(99, Math.max(1, avg)) + '%';
+      pin.title = '전체 평균 ' + avg + '%';
+      bar.append(pin);
     }
     r.append(bar);
     r.append(el('span', 'bpct', thin ? '—' : pct + '%'));
@@ -633,7 +639,32 @@ function renderAnalysis(host, mode) {
   const subj = analysisData(mode);
   const ok = subj.filter(x => x.n >= NEED);
   host.append(el('p', 'newsday', '과목별 정답률'));
-  host.append(bars(subj.map(x => [x.name, x.pct === null ? 0 : x.pct, x.n])));
+  const sbox = el('div');
+  const drawSubj = avg => {
+    sbox.textContent = '';
+    sbox.append(bars(subj.map((x, i) => [x.name, x.pct === null ? 0 : x.pct, x.n,
+                                         avg ? avg[RANKKEY[i]] : undefined])));
+    sbox.append(el('p', 'dimtxt', avg
+      ? '막대는 나, 세로 선은 <b>다른 사람들의 평균</b>입니다. 열 문제를 넘긴 과목만 비교합니다.'
+      : '아직 견줄 사람이 적어 평균이 안 나옵니다 — 세 명부터 나옵니다.'));
+  };
+  drawSubj(null);
+  host.append(sbox);
+  // 다른 사람들의 평균을 받아 와 눈금으로 얹는다 (등수는 보여주지 않는다 — 견줄 것은 실력이지 자리가 아니다)
+  if (S.nick && S.nick !== '이름없음') {
+    const sk = skillScore();
+    cCall({ act: 'rank', uid: myUid(), score: sk.score, memo: sk.memo, pct: myPcts(),
+            days: weekDots().map(d => d.done ? 1 : 0),
+            f: (Object.keys(S.act || {}).sort()[0] || ''),
+            l: (Object.keys(S.act || {}).sort().pop() || ''),
+            dd: Object.keys(S.act || {}).length,
+            st: Object.keys(S.done).filter(k => +k >= 1).length,
+            tr: Object.values(S.stats.od || {}).reduce((a, v) => [a[0] + v.ok, a[1] + v.all], [0, 0]),
+            ms: Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
+                  .sort((a, b) => b[1] - a[1]).slice(0, 8).map(x => x[0]) })
+      .then(j => { if (j && j.avg && Object.keys(j.avg).length) drawSubj(j.avg); })
+      .catch(() => { });
+  }
 
 
   const TN = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감',
@@ -667,8 +698,7 @@ function renderAnalysis(host, mode) {
   ];
   const rows = MORE.map(([box, map, title, note]) => [title, note, named(box, map)])
                    .filter(r => r[2].length);
-  const more = el('details', 'moreana');
-  more.append(el('summary', null, '자세히'));
+  const more = host;                        // 접지 않는다 — 분석은 다 보여야 분석이다
   const conf = Object.entries(S.stats.conf || {})
     .map(([k, v]) => [k, v.all]).sort((a, b) => b[1] - a[1]).slice(0, 6);
   {
@@ -681,7 +711,6 @@ function renderAnalysis(host, mode) {
       more.append(el('p', 'newsday', '자주 헷갈리는 짝 (귀 훈련)'));
       more.append(el('p', 'dimtxt', conf.map(c => esc(c[0]) + ' ' + c[1] + '번').join('<br>')));
     }
-    host.append(more);
   }
 
   // 처방 — 분석만 하고 끝내지 않는다
@@ -861,10 +890,6 @@ function renderAwards() {
   const ana = el('div');
   renderAnalysis(ana, 'week');
   b.append(ana);
-  const rk = el('div', 'rulecard');
-  b.append(rk);
-  if (S.nick && S.nick !== '이름없음') drawRank(rk);
-  else rk.append(el('div', 'rbody', '별명을 정하면 전체 순위가 나옵니다.'));
   b.append(el('p', 'lede', `업적 <b>${got}</b> / ${BADGES.length}`));
   BADGES.forEach(bg => {
     const on = bg.test();
@@ -1046,12 +1071,6 @@ function showWeek(rep) {
     b.append(c);
   } else {
     b.append(el('p', 'note', '아직 문제 수가 적어 강점·약점을 말할 수 없습니다. 한 주만 더 해 보세요 — 과목마다 10문제가 넘으면 판정합니다.'));
-  }
-
-  if (S.nick && S.nick !== '이름없음') {
-    const box = el('div', 'rulecard');
-    b.append(box);
-    drawRank(box);
   }
 
   const go = el('button', 'primary big', '이번 주 시작하기');
@@ -4069,11 +4088,10 @@ $('#region').onclick = () => {
   if (!$('#learn').hidden && L) drawCard();
 };
 
-/* ---------- 앱 전체 순위와 평균 ----------
-   왜 동아리 안이 아니라 전체인가: 동아리는 두세 명이라 등수가 뜻을 못 가진다.
-   전체라야 "나는 보통보다 잘하고 있나"에 답이 된다. 동아리는 출석만 맡는다.
-   부를 때만 부른다 — 화면을 열 때 한 번, 그리고 [새로고침]을 누를 때.
-   AI를 쓰지 않으므로 이 기능은 AI 사용량과 무관하다. */
+/* ---------- 다른 사람들의 평균 ----------
+   등수는 보여주지 않는다. 견줄 것은 '내가 몇 등이냐'가 아니라
+   '내 듣기가 남들보다 약한가'다 — 그래야 무엇을 더 할지가 나온다.
+   서버는 과목별 평균만 돌려준다. AI를 안 쓰므로 사용량과 무관하다. */
 const RANKKEY = ['say', 'ear', 'read', 'spell', 'memo'];
 /* 순위표의 자리표. 별명은 겹칠 수 있어서 기기마다 다른 표를 하나 만들어 쓴다.
    이 표에는 아무 뜻이 없다 — 누구인지 알 수 있는 정보가 아니다. */
@@ -4086,82 +4104,6 @@ function myPcts() {
     if (n >= NEED) o[RANKKEY[i]] = Math.round((cur[x.ok] || 0) * 100 / n);
   });
   return o;
-}
-function drawRank(host) {
-  host.textContent = '';
-  host.append(el('div', 'rhead', '<b>전체 순위</b>'));
-  const body = el('div', 'rbody', '불러오는 중…');
-  host.append(body);
-  const again = el('button', 'ghost sm', '새로고침');
-  again.onclick = () => drawRank(host);
-  const sk = skillScore();
-  /* 운영에 필요한 숫자를 함께 보낸다. 전부 '내 진도의 요약'이고 개인을 가리키지 않는다.
-     f  첫날      — 시작한 지 며칠 된 사람인지 (코호트)
-     l  마지막 날 — 아직 하고 있는지
-     dd 공부한 날 · st 끝낸 세트 — 어디까지 갔는지 (어디서 그만두는지 알려면 필요하다)
-     tr 만기 지난 카드의 첫 시도 정답률 — **진짜로 기억에 남았는가**. 간격 반복의 핵심 지표다
-     ms 두 번 이상 틀린 단어 몇 개 — 어느 단어가 어려운지(커리큘럼을 고칠 근거) */
-  const acts = Object.keys(S.act || {}).sort();
-  const od = S.stats.od || {};
-  const tr = Object.values(od).reduce((a, v) => [a[0] + v.ok, a[1] + v.all], [0, 0]);
-  const ms = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
-    .sort((a, b) => b[1] - a[1]).slice(0, 8).map(x => x[0]);
-  cCall({ act: 'rank', uid: myUid(), score: sk.score, memo: sk.memo, pct: myPcts(),
-          days: weekDots().map(d => d.done ? 1 : 0),
-          f: acts[0] || '', l: acts[acts.length - 1] || '', dd: acts.length,
-          st: Object.keys(S.done).filter(k => +k >= 1).length, tr, ms })
-    .then(j => {
-      body.textContent = '';
-      if (j.total < 3) {
-        body.innerHTML = '아직 사람이 적어 순위를 매기지 않습니다 (지금 ' + j.total + '명). 3명부터 나옵니다.';
-        host.append(again); return;
-      }
-      // 남의 등수도 이름도 보여주지 않는다 — 누구나 자기 자리만 안다
-      if (!sk.score) {
-        body.innerHTML = '아직 순위를 매길 수 없습니다.<br>' +
-          '<span class="dimtxt">과목 하나가 10문제를 넘으면 점수가 나옵니다. ' +
-          '못 잰 것을 재었다고 하지 않기 위해서입니다.</span>';
-        host.append(again); return;
-      }
-      body.innerHTML =
-        `<b>${j.total}명 중 ${j.rank}위</b> · 상위 ${j.pct}%` +
-        `<br><span class="dimtxt">내 실력 점수 ${j.myScore} · 전체 평균 ${j.avgScore}</span>` +
-        `<br><span class="dimtxt">외운 단어 나 ${j.myMemo} · 전체 평균 ${j.avgMemo}</span>` +
-        `<br><br><span class="dimtxt">실력 점수 = <b>외운 단어 ${sk.memo}개 × 평균 정답률 ${sk.acc}%</b>` +
-        `<br>= 믿을 만하게 아는 단어 ${sk.score}개. 위의 실력 분석에서 그대로 나온 값입니다` +
-        `(10문제를 넘긴 ${sk.subjects}개 과목만 셉니다).` +
-        '<br>많이 누른 사람이 아니라 잘 아는 사람이 위로 갑니다.' +
-        '<br>내 등수는 나만 봅니다. 다른 사람의 등수와 이름은 아무에게도 보이지 않습니다.</span>';
-      // 항목별로 전체 평균과 내 자리를 나란히
-      const rows = RANKKEY.map(k => [RANKNM[k], j.avg[k], (j.myPct || {})[k]])
-                          .filter(r => typeof r[1] === 'number');
-      if (rows.length) {
-        host.append(el('div', 'anahead', '전체 평균과 나'));
-        const box = el('div', 'bars');
-        rows.forEach(([nm, av, me]) => {
-          const r = el('div', 'barrow');
-          r.append(el('span', 'bname', nm));
-          const bar = el('span', 'bbar avg');
-          const fill = el('i');
-          fill.style.width = Math.max(2, av) + '%';
-          fill.className = 'avgfill';
-          bar.append(fill);
-          if (typeof me === 'number') {                 // 내 자리를 세로 눈금으로 찍는다
-            const pin = el('u');
-            pin.style.left = Math.min(99, Math.max(1, me)) + '%';
-            bar.append(pin);
-          }
-          r.append(bar);
-          r.append(el('span', 'bpct', typeof me === 'number' ? me + '%' : '—'));
-          r.append(el('span', 'bn', '평균 ' + av + '%'));
-          box.append(r);
-        });
-        host.append(box);
-        host.append(el('p', 'note', '굵은 막대가 전체 평균, 세로 선이 나입니다. 열 문제를 넘긴 항목만 나옵니다.'));
-      }
-      host.append(again);
-    })
-    .catch(() => { body.textContent = '순위를 불러오지 못했습니다.'; host.append(again); });
 }
 
 /* ---------- 운영 현황 (운영자만) ----------
