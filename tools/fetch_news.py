@@ -57,10 +57,27 @@ for src, url, n, kws in FEEDS:
         cand.append((score, d or now, t, u))
     cand.sort(key=lambda x: (-x[0], -x[1].timestamp()))
     for score, d, t, u in cand[:n]:
-        items.append({'s': src, 't': t, 'u': u, 'd': d.astimezone(KST).strftime('%m월 %d일')})
+        k = d.astimezone(KST)
+        items.append({'s': src, 't': t, 'u': u,
+                      'd': k.strftime('%m월 %d일'), 'ts': k.strftime('%Y-%m-%d')})
+
+# 이전 기사는 3일치까지만 남긴다 — 그 이상은 지운다
+out_p = R / 'data' / 'news.json'
+try:
+    old = json.loads(out_p.read_text())['items']
+except Exception:
+    old = []
+cutoff = (datetime.now(KST) - timedelta(days=3)).strftime('%Y-%m-%d')
+seen = {it['u'] for it in items}
+for it in old:
+    if it['u'] not in seen and it.get('ts', '') >= cutoff:
+        items.append(it)
+        seen.add(it['u'])
+
+items.sort(key=lambda x: x.get('ts', ''), reverse=True)   # 날짜별로 묶여 보이게
 
 if items:                                    # 두 곳 다 죽은 날은 어제 것을 그대로 둔다
-    (R / 'data' / 'news.json').write_text(json.dumps(
+    out_p.write_text(json.dumps(
         {'updated': datetime.now(KST).strftime('%Y-%m-%d %H:%M'), 'items': items},
         ensure_ascii=False, indent=1))
 print(f'기사 {len(items)}개 기록')

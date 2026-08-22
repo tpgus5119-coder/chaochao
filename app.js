@@ -776,6 +776,15 @@ function drawCard() {
     c.append(reveal(x.kr));
     c.append(el('div', 'ko', esc(x.ko)));
     c.append(el('div', 'rulenote', esc(x.note)));
+    if (L.day.day === 'R4') {          // 남부 소리 수업은 카드에서 바로 남북을 맞대 듣는다
+      const cmp = el('div', 'sound');
+      const bn = el('button', 'ghost', '북부 소리');
+      bn.onclick = () => play(x.vi, false, S.voice);
+      const bs = el('button', 'ghost', '남부 소리');
+      bs.onclick = () => play(x.vi, false, 'sf');
+      cmp.append(bn, bs);
+      c.append(cmp);
+    }
     c.append(speakRow(x.vi, true));
   }
 
@@ -895,7 +904,7 @@ $('#next').onclick = () => {
   if (L.day.rule) {                    // 규칙 카드가 끝나면 연습 문제로
     RL = { r: L.day.rule, i: 0, ok: 0 };
     drawRule();
-    show('rules', '규칙 · ' + L.day.rule.title, true);
+    show('rules', L.day.rule.title, true);
     return;
   }
   S.done[L.day.day] = true; touchToday(); save();
@@ -931,11 +940,15 @@ function startQuiz(words, day, cap, early) {
 }
 
 /* 복습 입구 — 처음이거나 꺼낼 카드가 없으면 방식부터 설명한다.
-   전에는 카드가 없으면 말없이 홈으로 돌아가서 버튼이 죽은 것처럼 보였다. */
+   전에는 카드가 없으면 말없이 홈으로 돌아가서 버튼이 죽은 것처럼 보였다.
+   설명은 홈의 [방식] 버튼으로 언제든 다시 볼 수 있다. */
 function reviewStart(cap) {
   const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
   if (S.revSeen && due.length) { startQuiz(due, null, cap); return; }
-
+  drawRevInfo(cap);
+}
+function drawRevInfo(cap) {
+  const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
   const b = $('#quizBody');
   b.textContent = '';
   $('#quizFill').style.width = '0%';
@@ -1198,6 +1211,8 @@ function drawVowel() {
     r.append(b2, h2); body.append(r); return;
   }
   const { g, it } = VD.list[VD.i];
+  if (VD.i === 0) body.append(el('div', 'intro',
+    "글자는 아는데 소리가 다른 모음들입니다. o 입 크게 '오' · ô 오므린 '오' · ơ '어' · ư 입 벌린 '으' — 귀에만 익히면 됩니다."));
   body.append(el('div', 'q', `${VD.i + 1} / ${VD.list.length} · 소리를 듣고 고르세요`));
   body.append(el('div', 'tonehint', esc(g.note)));
   const wrap = el('div', 'qplay');
@@ -1249,6 +1264,8 @@ function drawTone() {
   body.textContent = '';
   if (T.i >= T.list.length) return finishTone();
   const item = T.list[T.i];
+  if (T.i === 0) body.append(el('div', 'intro',
+    '같은 글자에 성조만 다른 단어들입니다. 높낮이만 귀로 가립니다 — 부호 붙이기 문제도 섞여 나옵니다.'));
   if (item.kind === 'mark') return drawToneMark(body, item.w);
   const { g, it } = item;
 
@@ -1490,9 +1507,9 @@ function startRule(i) {
   L = { day: { day: r.key, theme: r.title, intro: r.intro, words: [], rule: r },
         items: r.cards.map(c => ({ k: 'rule', d: c })), i: 0 };
   $('#learnIntro').textContent = r.intro;
-  $('#learnIntro').dataset.prep = '1';
+  $('#learnIntro').dataset.prep = '0';
   drawCard();
-  show('learn', '규칙 · ' + r.title, true);
+  show('learn', r.title, true);
 }
 function drawRule() {
   const b = $('#rulesBody');
@@ -2064,15 +2081,15 @@ function showNews() {
   const b = $('#newsBody');
   b.textContent = '';
   fetch('data/news.json', { cache: 'no-cache' }).then(r => r.json()).then(n => {
-    b.append(el('p', 'lede', '제조·경제 위주로 아침마다 자동으로 고른 기사입니다. 누르면 원문이 열립니다.'));
+    let last = null;
     (n.items || []).forEach(it => {
+      if (it.d !== last) { b.append(el('p', 'newsday', esc(it.d))); last = it.d; }
       const a = el('a', 'newsrow');
       a.href = it.u; a.target = '_blank'; a.rel = 'noopener';
-      a.append(el('b', null, esc(it.t)), el('span', null, esc(it.s + (it.d ? ' · ' + it.d : ''))));
+      a.append(el('b', null, esc(it.t)), el('span', null, esc(it.s)));
       b.append(a);
     });
-    b.append(el('p', 'note', '고르는 기준: 최근 이틀 기사 중 제목에 제조·투자·노동·수출 같은 낱말이 있는 것을 먼저, ' +
-      '나머지는 최신순. 인사이드비나(한국어) 3개 + VnExpress(영어) 2개. 매일 아침 7시(한국시간)에 자동 갱신됩니다.'));
+    b.append(el('p', 'note', '매일 아침 6시 30분(한국시간)에 업데이트됩니다. 최근 3일치만 남고 오래된 기사는 지워집니다.'));
   }).catch(() => b.append(el('p', 'note', '기사를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.')));
   show('news', '베트남 소식', true);
 }
@@ -2085,6 +2102,7 @@ $('#chatForm').onsubmit = e => {
 };
 $('#goReview').onclick = () => reviewStart();
 $('#goQuick').onclick = () => reviewStart(10);
+$('#goHow').onclick = () => drawRevInfo();
 $('#goTone').onclick = toneEntry;
 $('#goVowel').onclick = startVowel;
 $('#goWeekly').onclick = () => {
@@ -2142,15 +2160,22 @@ $('#bkImport').onclick = async () => {
 };
 
 
+/* 위 토글 두 개 — 두 값이 다 보이고 지금 켜진 쪽만 진하게 (현재 상태가 헷갈리지 않게) */
+function seg(a, b, first) {
+  return `<i${first ? ' class="on"' : ''}>${a}</i><i${first ? '' : ' class="on"'}>${b}</i>`;
+}
+function drawVoiceBtn() {
+  $('#voice').innerHTML = seg('여', '남', S.voice === 'f');
+}
 $('#voice').onclick = () => {
-  S.voice = S.voice === 'f' ? 'm' : 'f'; save();
-  $('#voice').textContent = S.voice === 'f' ? '여' : '남';
+  S.voice = S.voice === 'f' ? 'm' : 'f'; save(); drawVoiceBtn();
 };
 
 /* 북부(하노이) ↔ 남부(호찌민) 소리 전환. 남부 목소리는 여성 하나뿐이다. */
 function drawRegion() {
-  $('#region').textContent = S.region === 's' ? '남부' : '북부';
+  $('#region').innerHTML = seg('북부', '남부', S.region !== 's');
   $('#voice').hidden = S.region === 's';
+  drawVoiceBtn();
 }
 $('#region').onclick = () => {
   S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion();
@@ -2168,7 +2193,6 @@ Promise.all([
   DRILL = d.tonedrill || [];
   VDRILL = d.voweldrill || [];
   AIDX = a;
-  $('#voice').textContent = S.voice === 'f' ? '여' : '남';
   drawRegion();
   renderHome();
 }).catch(e => { $('#title').textContent = '불러오기 실패'; console.error(e); });

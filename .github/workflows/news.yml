@@ -1,7 +1,7 @@
 name: 오늘의 기사
 on:
   schedule:
-    - cron: '0 22 * * *'   # 한국 아침 7시
+    - cron: '30 21 * * *'   # 한국 아침 6시 30분
   workflow_dispatch:
 permissions:
   contents: write

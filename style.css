@@ -312,7 +312,7 @@ button.song{
 /* 준비일 안내에 표시 */
 .intro[data-prep="1"]{border-left:3.5mm solid var(--warn)}
 .intro[data-prep="1"]::before{
-  content:"준비 단계 · 외울 단어 없이 소리만 익힙니다";
+  content:"준비 단계 · 소리만 익힙니다";
   display:block; font-size:12px; font-weight:800; color:var(--warn); margin-bottom:6px;
 }
 
@@ -563,3 +563,10 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 
 /* 자랑 카드 (공유 창이 없는 기기용 미리보기) */
 .cardimg{width:100%; max-width:420px; display:block; margin:0 auto 14px; border-radius:14px}
+
+/* 위 토글의 켜진 쪽 표시 */
+#region i,#voice i{font-style:normal; opacity:.38; padding:0 3px}
+#region i.on,#voice i.on{opacity:1; font-weight:700}
+
+/* 기사 날짜 머리글 */
+.newsday{font-size:13px; color:var(--dim); font-weight:700; margin:14px 2px 8px}
