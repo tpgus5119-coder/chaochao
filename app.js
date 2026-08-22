@@ -57,8 +57,8 @@ const trackName = d => (typeof d.day === 'string' ? '' : d.track === 'work' ? '�
 const audio = new Audio();
 const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 둔다)
 
-/* 지역(북부/남부)에 따른 소리 폴더. 남부는 여성(lannhi) 하나뿐이다. */
-const voiceDir = () => S.region === 's' ? 'sf' : S.voice;
+/* 지역(북부/남부) × 목소리(여/남) 에 따른 소리 폴더. 남부도 여·남 둘 다 있다. */
+const voiceDir = () => S.region === 's' ? (S.voice === 'm' ? 'sm' : 'sf') : S.voice;
 
 function play(text, slow, dir) {
   const h = AIDX[text];
@@ -68,7 +68,7 @@ function play(text, slow, dir) {
   audio.onerror = null;
   audio.src = `audio/${d}/${slow ? 'slow' : 'n'}/${h}.mp3`;
   // 남부 파일이 아직 없으면 북부로라도 들려준다
-  if (d === 'sf') audio.onerror = () => {
+  if (d === 'sf' || d === 'sm') audio.onerror = () => {
     audio.onerror = null;
     audio.src = `audio/${S.voice}/${slow ? 'slow' : 'n'}/${h}.mp3`;
     audio.play().catch(() => { });
@@ -360,7 +360,7 @@ async function nativeCurve(text) {
   if (!h) return (nativeCache[key] = null);
   try {
     let r = await fetch(`audio/${voiceDir()}/slow/${h}.mp3`);
-    if (!r.ok && voiceDir() === 'sf') r = await fetch(`audio/${S.voice}/slow/${h}.mp3`);
+    if (!r.ok && S.region === 's') r = await fetch(`audio/${S.voice}/slow/${h}.mp3`);
     const c = await PITCH.analyze(await r.arrayBuffer(), getCtx());
     return (nativeCache[key] = c);
   } catch (e) { return (nativeCache[key] = null); }
@@ -435,7 +435,7 @@ let CURV = 'home';
 function topBtns() {
   const need = SNDV.includes(CURV);
   $('#region').hidden = !need;
-  $('#voice').hidden = !need || S.region === 's';
+  $('#voice').hidden = !need;
 }
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
