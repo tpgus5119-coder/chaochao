@@ -14,7 +14,7 @@ IMG.mkdir(exist_ok=True)
 pairs = []
 name = None
 for line in (R / 'docs' / 'image-prompts.md').read_text().splitlines():
-    m = re.match(r'\*\*(d\d+-[\w-]+)\.webp\*\*', line)
+    m = re.match(r'\*\*([\w-]+)\.webp\*\*', line)      # d01- 뿐 아니라 x-(추상어)·n-(기사)도
     if m: name = m.group(1)
     elif name and line.startswith('> '):
         pairs.append((name, line[2:].strip()))

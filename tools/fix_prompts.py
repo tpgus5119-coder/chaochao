@@ -49,7 +49,7 @@ def main():
     bad = {x['name']: x for x in QA['bad'] if (x.get('kind') or 'G')[0] != 'E'}
     fixed, missing = 0, []
     for i, ln in enumerate(lines):
-        m = re.match(r'\*\*(d\d+-[\w-]+)\.webp\*\*', ln)
+        m = re.match(r'\*\*([\w-]+)\.webp\*\*', ln)
         if not m or m.group(1) not in bad:
             continue
         nm = m.group(1)

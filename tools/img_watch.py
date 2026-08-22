@@ -64,7 +64,7 @@ def slug(vi):
 def prompts_from_doc():
     pairs, name = {}, None
     for line in (R / 'docs' / 'image-prompts.md').read_text().splitlines():
-        m = re.match(r'\*\*(d\d+-[\w-]+)\.webp\*\*', line)
+        m = re.match(r'\*\*([\w-]+)\.webp\*\*', line)   # d01- 뿐 아니라 x-(추상어)·n-(기사)도
         if m: name = m.group(1)
         elif name and line.startswith('> '):
             pairs[name] = line[2:].strip(); name = None
@@ -93,7 +93,7 @@ def main():
     if not alive():
         print(f'빠진 그림 {len(todo)}장 — Draw Things 가 꺼져 있어 다음에'); return 0
     made = 0
-    for n, p in todo[:60]:                                     # 한 번에 60장까지만
+    for n, p in todo[:150]:                                    # 한 번에 150장까지만
         try:
             bake(n, p); made += 1
         except Exception as e:
