@@ -423,13 +423,23 @@ async function showTone(text, blobUrl, box) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx'];
+/* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
+const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
+let CURV = 'home';
+function topBtns() {
+  const need = SNDV.includes(CURV);
+  $('#region').hidden = !need;
+  $('#voice').hidden = !need || S.region === 's';
+}
 function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
   $('#title').textContent = title;
   $('#back').hidden = !canBack;
+  CURV = v;
+  topBtns();
   window.scrollTo(0, 0);
 }
 
@@ -891,6 +901,8 @@ function drawCard() {
   const last = L.i === L.items.length - 1;
   $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
+    : L.day.day === 'P1' ? '자음 소리 ›'
+    : L.day.day === 'P3' ? '모음 귀로 구별하기 ›'
     : L.day.day === 'P2' ? '귀로 구별하기 ›' : '오늘 완료 ›') : '다음 ›';
 }
 
@@ -908,8 +920,11 @@ $('#next').onclick = () => {
     return;
   }
   S.done[L.day.day] = true; touchToday(); save();
-  // 성조 소개(준비 2)가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
-  if (L.day.day === 'P2') startTone(); else renderHome();
+  // 소개가 끝나면 바로 다음 단계로 이어진다 — 배우기와 시험하기가 한 흐름
+  if (L.day.day === 'P1') startLearn(ALL.find(d => d.day === 'P3'));
+  else if (L.day.day === 'P3') startVowel();
+  else if (L.day.day === 'P2') startTone();
+  else renderHome();
 };
 
 /* ---------- 퀴즈 ---------- */
@@ -1211,8 +1226,13 @@ function drawVowel() {
     r.append(b2, h2); body.append(r); return;
   }
   const { g, it } = VD.list[VD.i];
-  if (VD.i === 0) body.append(el('div', 'intro',
-    "글자는 아는데 소리가 다른 모음들입니다. o 입 크게 '오' · ô 오므린 '오' · ơ '어' · ư 입 벌린 '으' — 귀에만 익히면 됩니다."));
+  if (VD.i === 0) {
+    body.append(el('div', 'intro',
+      "글자는 아는데 소리가 다른 모음들입니다. o 입 크게 '오' · ô 오므린 '오' · ơ '어' · ư 입 벌린 '으' — 귀에만 익히면 됩니다."));
+    const rb = el('button', 'ghost sm', '글자 소개 다시 보기');
+    rb.onclick = () => startLearn(ALL.find(d => d.day === 'P1'));
+    body.append(rb);
+  }
   body.append(el('div', 'q', `${VD.i + 1} / ${VD.list.length} · 소리를 듣고 고르세요`));
   body.append(el('div', 'tonehint', esc(g.note)));
   const wrap = el('div', 'qplay');
@@ -1245,6 +1265,17 @@ function toneEntry() {
   const p2 = ALL.find(d => d.day === 'P2');
   if (p2 && !S.done['P2']) { startLearn(p2); return; }
   startTone();
+}
+
+/* 글자도 버튼 하나 — 모음 카드(준비 1) → 자음 카드(준비 3) → 모음 구별 훈련이 한 흐름.
+   자음 '구별 훈련'이 없는 것은 의도다: 북부 표준에서 tr=ch, s=x, d=gi=r이
+   같은 소리로 합쳐져 귀로 가르는 훈련 자체가 성립하지 않는다. */
+function letterEntry() {
+  const p1 = ALL.find(d => d.day === 'P1');
+  const p3 = ALL.find(d => d.day === 'P3');
+  if (p1 && !S.done['P1']) { startLearn(p1); return; }
+  if (p3 && !S.done['P3']) { startLearn(p3); return; }
+  startVowel();
 }
 
 /* 한 세션 = 듣고 구별 6문제 + 들은 소리에 부호 붙이기 4문제 (같은 귀의 두 얼굴) */
@@ -1472,7 +1503,7 @@ const RULES = [
     quiz: [{ q: '"좋은 사람"은?', opts: ['người tốt', 'tốt người'], a: 0, say: 'người tốt' },
            { q: '"내 이름"은?', opts: ['tên của tôi', 'tôi của tên'], a: 0, say: 'tên của tôi' },
            { q: '"이 상자"는?', opts: ['hộp này', 'này hộp'], a: 0, say: 'hộp này' }] },
-  { key: 'R3', title: '단위사',
+  { key: 'R3', title: '단위',
     intro: '숫자 뒤에는 단위가 붙습니다. 한국어의 개·마리·대와 같습니다 — 세 개면 초급은 넘어갑니다.',
     cards: [
       { vi: 'hai cái', ko: '두 개 (물건)', kr: '하이 까이',
@@ -2067,14 +2098,60 @@ camIn.onchange = async () => {
 $('#back').onclick = renderHome;
 $('#goChat').onclick = startChat;
 $('#goSpeak').onclick = startSpeak;
-$('#goP1').onclick = () => { const d = ALL.find(x => x.day === 'P1'); if (d) startLearn(d); };
-$('#goP3').onclick = () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); };
+$('#goLetter').onclick = letterEntry;
 $('#goDaily').onclick = () => renderDays('daily');
 $('#goWork').onclick = () => renderDays('work');
 $('#goWrite').onclick = startWrite;
 $('#goType').onclick = startType;
 $('#goNews').onclick = showNews;
 document.querySelectorAll('[data-rule]').forEach(b => b.onclick = () => startRule(+b.dataset.rule));
+
+/* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.
+   무료 기상 서비스(Open-Meteo, 키·가입 불필요)라 운영비 0원 원칙에 맞다. */
+const WXICON = { 0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️', 48: '🌫️',
+  51: '🌦️', 53: '🌦️', 55: '🌦️', 61: '🌧️', 63: '🌧️', 65: '🌧️', 66: '🌧️', 67: '🌧️',
+  80: '🌧️', 81: '🌧️', 82: '⛈️', 95: '⛈️', 96: '⛈️', 99: '⛈️' };
+let WXI = null;
+function showWx() {
+  show('wx', '날씨 · 시간', true);     // 시계가 화면 표시 여부로 스스로 꺼지므로 먼저 보여준다
+  const b = $('#wxBody');
+  b.textContent = '';
+  b.append(el('p', 'newsday', '베트남 시각 — 한국보다 2시간 늦습니다'));
+  const clock = el('div', 'wxclock');
+  b.append(clock);
+  const tick = () => {
+    if ($('#wx').hidden) { clearInterval(WXI); return; }
+    clock.textContent = new Intl.DateTimeFormat('ko-KR',
+      { timeZone: 'Asia/Ho_Chi_Minh', dateStyle: 'full', timeStyle: 'medium' }).format(new Date());
+  };
+  clearInterval(WXI); WXI = setInterval(tick, 1000); tick();
+
+  const box = el('div', null, '날씨를 불러오는 중…');
+  b.append(box);
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=21.03,10.82&longitude=105.85,106.63' +
+        '&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia%2FBangkok')
+    .then(r => r.json()).then(js => {
+      box.textContent = '';
+      const arr = Array.isArray(js) ? js : [js];
+      ['하노이 (북부)', '호찌민 (남부)'].forEach((name, i) => {
+        const d = arr[i] && arr[i].daily;
+        if (!d) return;
+        box.append(el('p', 'newsday', name + ' — 한 주'));
+        const row = el('div', 'wxrow');
+        d.time.forEach((t, k) => {
+          const day = new Date(t + 'T00:00');
+          const cell = el('div', 'wxday' + (k === 0 ? ' today' : ''));
+          cell.append(el('span', null, k === 0 ? '오늘' : ['일', '월', '화', '수', '목', '금', '토'][day.getDay()]),
+                      el('i', null, WXICON[d.weather_code[k]] || '☁️'),
+                      el('b', null, Math.round(d.temperature_2m_max[k]) + '°'),
+                      el('em', null, Math.round(d.temperature_2m_min[k]) + '°'));
+          row.append(cell);
+        });
+        box.append(row);
+      });
+      box.append(el('p', 'note', '배치가 어느 쪽이든 볼 수 있게 두 도시를 같이 보여줍니다. 8~9월 남부는 우기입니다 — 소나기 표시가 많은 게 정상입니다.'));
+    }).catch(() => { box.textContent = '날씨를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'; });
+}
 
 /* 오늘 기사 — 깃허브 로봇이 아침마다 골라둔 것을 보여준다 (data/news.json) */
 function showNews() {
@@ -2104,7 +2181,7 @@ $('#goReview').onclick = () => reviewStart();
 $('#goQuick').onclick = () => reviewStart(10);
 $('#goHow').onclick = () => drawRevInfo();
 $('#goTone').onclick = toneEntry;
-$('#goVowel').onclick = startVowel;
+$('#goWx').onclick = showWx;
 $('#goWeekly').onclick = () => {
   const ws = weekWords();
   if (!ws.length) return;
@@ -2174,8 +2251,8 @@ $('#voice').onclick = () => {
 /* 북부(하노이) ↔ 남부(호찌민) 소리 전환. 남부 목소리는 여성 하나뿐이다. */
 function drawRegion() {
   $('#region').innerHTML = seg('북부', '남부', S.region !== 's');
-  $('#voice').hidden = S.region === 's';
   drawVoiceBtn();
+  topBtns();
 }
 $('#region').onclick = () => {
   S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion();
