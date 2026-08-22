@@ -477,14 +477,17 @@ function weekDots() {
 
 const doneCount = () => Object.keys(S.done).filter(k => +k >= 1).length;
 const BADGES = [
-  { icon: '🔤', name: '글자를 뗐다',   how: '기초 훈련 3개(글자·성조·자음) 완료', test: () => ['P1','P2','P3'].every(k => S.done[k]) },
-  { icon: '📐', name: '규칙을 뗐다',   how: '규칙 수업 4개 완료',            test: () => ['R1','R2','R3','R4'].every(k => S.done[k]) },
+  // ① 기초 — 시작을 뗐는가
+  { icon: '🔤', name: '기본기를 뗐다', how: '모음·자음·성조 + 규칙 4개 모두 완료',
+    test: () => ['P1','P2','P3','R1','R2','R3','R4'].every(k => S.done[k]) },
   { icon: '👋', name: '첫 5일',        how: '일상 Day 1~5 완료',             test: () => [1,2,3,4,5].every(k => S.done[k]) },
   { icon: '🏭', name: '출근 첫날',     how: '직무 세트 1개 완료',            test: () => ALL.some(d => d.track === 'work' && S.done[d.day]) },
+  // ② 진도 — 얼마나 걸어왔는가
   { icon: '🌓', name: '10세트',        how: '아무 세트나 10개 완료',         test: () => doneCount() >= 10 },
   { icon: '🏔️', name: '25세트',        how: '세트 25개 완료',                test: () => doneCount() >= 25 },
   { icon: '🎖️', name: '50세트',        how: '세트 50개 완료',                test: () => doneCount() >= 50 },
   { icon: '🏁', name: '전 과정 완주',  how: '100세트 전부 완료',             test: () => doneCount() >= 100 },
+  // ③ 어휘 — 만난 단어와 실제로 남은 단어
   { icon: '🔠', name: '단어 50',       how: '복습 창고에 단어 50개',         test: () => Object.keys(S.srs).length >= 50 },
   { icon: '💯', name: '단어 100',      how: '복습 창고에 단어 100개',        test: () => Object.keys(S.srs).length >= 100 },
   { icon: '📗', name: '단어 200',      how: '복습 창고에 단어 200개',        test: () => Object.keys(S.srs).length >= 200 },
@@ -492,24 +495,29 @@ const BADGES = [
   { icon: '📖', name: '단어 450',      how: '복습 창고에 단어 450개',        test: () => Object.keys(S.srs).length >= 450 },
   { icon: '🚀', name: '단어 600',      how: '복습 창고에 단어 600개',        test: () => Object.keys(S.srs).length >= 600 },
   { icon: '🏆', name: '단어 1000',     how: '전 과정 단어 1000개',           test: () => Object.keys(S.srs).length >= 1000 },
-  { icon: '🧠', name: '외운 단어 100', how: '두 번 이상 맞힌 단어 100개',    test: () => Object.values(S.srs).filter(v => v.lv >= 2).length >= 100 },
-  { icon: '🧩', name: '외운 단어 300', how: '두 번 이상 맞힌 단어 300개',    test: () => Object.values(S.srs).filter(v => v.lv >= 2).length >= 300 },
+  { icon: '🧠', name: '외운 단어 100', how: '간격을 두고 두 번 이상 맞힌 단어 100개',
+    test: () => Object.values(S.srs).filter(v => v.lv >= 2).length >= 100 },
+  { icon: '🧩', name: '외운 단어 300', how: '간격을 두고 두 번 이상 맞힌 단어 300개',
+    test: () => Object.values(S.srs).filter(v => v.lv >= 2).length >= 300 },
+  // ④ 훈련 — 귀와 입
   { icon: '👂', name: '성조 8/10',     how: '성조 훈련에서 8점',             test: () => (S.stats.toneBest || 0) >= 8 },
   { icon: '🎯', name: '성조 만점',     how: '성조 훈련에서 10점',            test: () => (S.stats.toneBest || 0) >= 10 },
   { icon: '🗣️', name: '50번 말했다',   how: '소리 내어 50번',                test: () => (S.stats.said || 0) >= 50 },
   { icon: '🎙️', name: '120번 말했다',  how: '소리 내어 120번',               test: () => (S.stats.said || 0) >= 120 },
   { icon: '📢', name: '300번 말했다',  how: '소리 내어 300번',               test: () => (S.stats.said || 0) >= 300 },
   { icon: '🔊', name: '600번 말했다',  how: '소리 내어 600번',               test: () => (S.stats.said || 0) >= 600 },
+  { icon: '💬', name: 'AI와 첫 대화',  how: 'AI 대화 한 번 시작',            test: () => (S.stats.chat || 0) >= 1 },
+  // ⑤ 꾸준함 — 돌아오는 힘
   { icon: '📅', name: '한 주 5일',     how: '이번 주 5일 공부',              test: () => weekDots().filter(d => d.done).length >= 5 },
-  { icon: '📆', name: '10일 출석',     how: '지금까지 총 10일 공부',         test: () => Object.keys(S.act).length >= 10 },
-  { icon: '🗓️', name: '30일 출석',     how: '지금까지 총 30일 공부',         test: () => Object.keys(S.act).length >= 30 },
-  { icon: '📅', name: '60일 출석',     how: '지금까지 총 60일 공부',         test: () => Object.keys(S.act).length >= 60 },
-  { icon: '💎', name: '100일 출석',    how: '지금까지 총 100일 공부',        test: () => Object.keys(S.act).length >= 100 },
   { icon: '🔁', name: '복습 10판',     how: '복습 퀴즈 10번 완료',           test: () => (S.stats.rev || 0) >= 10 },
   { icon: '♻️', name: '복습 30판',     how: '복습 퀴즈 30번 완료',           test: () => (S.stats.rev || 0) >= 30 },
   { icon: '🔄', name: '복습 80판',     how: '복습 퀴즈 80번 완료',           test: () => (S.stats.rev || 0) >= 80 },
-  { icon: '💬', name: 'AI와 첫 대화',  how: 'AI 대화 한 번 시작',            test: () => (S.stats.chat || 0) >= 1 }
+  { icon: '📆', name: '10일 출석',     how: '지금까지 총 10일 공부',         test: () => Object.keys(S.act).length >= 10 },
+  { icon: '🗓️', name: '30일 출석',     how: '지금까지 총 30일 공부',         test: () => Object.keys(S.act).length >= 30 },
+  { icon: '📔', name: '60일 출석',     how: '지금까지 총 60일 공부',         test: () => Object.keys(S.act).length >= 60 },
+  { icon: '💎', name: '100일 출석',    how: '지금까지 총 100일 공부',        test: () => Object.keys(S.act).length >= 100 },
 ];
+
 
 
 /* ---------- 실력 분석 ----------
@@ -546,6 +554,9 @@ function renderAnalysis(host, mode) {
     bb.onclick = () => renderAnalysis(host, k);
     tab.append(bb);
   });
+  host.append(el('p', 'anahead', '실력 분석'));
+  host.append(el('p', 'note', '앱이 <b>직접 채점한 기록</b>만으로 계산합니다. 어림짐작이나 AI 판정은 섞지 않습니다.<br>' +
+    '표본이 적은 항목(문제 10개 미만)은 <b>아예 그리지 않습니다</b> — 적은 수로는 약점을 말할 수 없습니다.'));
   host.append(tab);
 
   const subj = analysisData(mode);
@@ -586,19 +597,70 @@ function renderAnalysis(host, mode) {
   const lines = [`<b>약한 곳 — ${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`,
                  ...(RX[worst.name] || []).map(t => '· ' + t)];
   if (tn.length && tn[0][1] < 70) lines.push(`· 성조 중에서는 <b>${tn[0][0]}</b>이 ${tn[0][1]}%로 가장 약합니다 — 기본기 성조에서 그 소리만 골라 들어 보세요.`);
-  if (S.stats.msN >= 10) {
-    const sec = S.stats.ms / S.stats.msN / 1000;
-    lines.push(`· 답하는 속도 <b>평균 ${sec.toFixed(1)}초</b> — ` +
-      (sec <= 3 ? '거의 자동으로 나옵니다. 새 세트를 늘려도 좋습니다.'
-       : sec <= 6 ? '보통입니다. 지금 속도를 유지하세요.'
-       : '아직 생각해서 꺼내는 중입니다. 새 단어보다 <b>복습</b>을 늘리세요.'));
-  }
   const miss = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
     .sort((a, b) => b[1] - a[1]).slice(0, 5);
-  if (miss.length) lines.push('· <b>발목 잡는 단어</b> — ' + miss.map(m => esc(m[0])).join(' · ') + ' (이 단어만 따로 소리 내어 다섯 번씩)');
+  if (miss.length) lines.push('· <b>발목 잡는 단어</b>(두 번 이상 틀린 것) — ' + miss.map(m => esc(m[0])).join(' · ') +
+    '<br>&nbsp;&nbsp;이 단어만 따로 소리 내어 다섯 번씩. 맞히기 시작하면 목록에서 서서히 사라집니다.');
   lines.push(`<br><b>잘하는 곳 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}`);
   card.append(el('div', 'rbody', lines.join('<br>')));
   host.append(card);
+  const dl = el('button', 'ghost', '분석 결과 그림으로 저장');
+  dl.style.width = '100%'; dl.style.marginBottom = '14px';
+  dl.onclick = () => analysisCard(mode);
+  host.append(dl);
+}
+
+
+/* 분석 결과를 그림 한 장으로 — 폰 갤러리에 저장하거나 단톡방에 보낼 수 있다 */
+async function analysisCard(mode) {
+  const subj = analysisData(mode).filter(x => x.n >= 10);
+  const TN = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감',
+               'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
+  const tn = Object.entries(S.stats.tn || {}).filter(([, v]) => v.all >= 5)
+    .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all)]).sort((a, b) => a[1] - b[1]);
+  const H = 300 + subj.length * 46 + (tn.length ? 60 + tn.length * 34 : 0);
+  const c = document.createElement('canvas');
+  c.width = 720; c.height = H;
+  const x = c.getContext('2d');
+  x.fillStyle = '#0f1115'; x.fillRect(0, 0, 720, H);
+  x.strokeStyle = '#2a3040'; x.lineWidth = 2; x.strokeRect(20, 20, 680, H - 40);
+  x.fillStyle = '#7aa2ff'; x.font = 'bold 40px sans-serif'; x.textAlign = 'left';
+  x.fillText('실력 분석', 52, 84);
+  x.fillStyle = '#8b93a7'; x.font = '22px sans-serif';
+  x.fillText((S.nick ? S.nick + ' · ' : '') + (mode === 'week' ? '이번 주' : '누적') + ' · ' + ymd(), 52, 118);
+  let y = 176;
+  const drawBars = (title, rows) => {
+    x.fillStyle = '#e7ebf4'; x.font = 'bold 24px sans-serif';
+    x.fillText(title, 52, y); y += 30;
+    rows.forEach(([name, pct]) => {
+      x.fillStyle = '#8b93a7'; x.font = '20px sans-serif';
+      x.fillText(name, 52, y + 16);
+      x.fillStyle = '#1a1f2b'; x.fillRect(210, y, 380, 18);
+      x.fillStyle = pct >= 80 ? '#2f9e63' : pct >= 60 ? '#d8a13c' : '#d1555f';
+      x.fillRect(210, y, Math.max(6, 380 * pct / 100), 18);
+      x.fillStyle = '#e7ebf4'; x.font = 'bold 20px sans-serif';
+      x.fillText(pct + '%', 606, y + 16);
+      y += 34;
+    });
+    y += 18;
+  };
+  drawBars('과목별 정답률', subj.map(v => [v.name, v.pct]));
+  if (tn.length) drawBars('성조별 정답률 (누적)', tn);
+  if (subj.length) {
+    const worst = subj.reduce((a, v) => v.pct < a.pct ? v : a);
+    x.fillStyle = '#8b93a7'; x.font = '20px sans-serif';
+    x.fillText('가장 약한 곳: ' + worst.name + ' ' + worst.pct + '%', 52, H - 78);
+  }
+  x.fillStyle = '#5a6273'; x.font = '19px sans-serif';
+  x.fillText('짜오짜오 · tpgus5119-coder.github.io/chaochao', 52, H - 44);
+
+  const blob = await new Promise(r => c.toBlob(r, 'image/png'));
+  const file = new File([blob], 'chaochao-analysis.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file] }); return; } catch (e) { }
+  }
+  const a = document.createElement('a');
+  a.href = c.toDataURL('image/png'); a.download = 'chaochao-analysis.png'; a.click();
 }
 
 /* 자랑 카드 — 내 진행 상황을 그림 한 장으로 만들어 단톡방에 공유한다.
@@ -2838,9 +2900,8 @@ function showGuide() {
   sec('④', '복습 네 가지', [
     '<b>복습</b> — 오늘 꺼낼 단어를 <b>20개씩</b> 문제로. 다 풀면 남은 개수와 함께 이어서 하기가 나옵니다.',
     '<b>3분만</b> — 같은 문제를 <b>10개만</b>. 딱 그만큼만 하고 끝내고 싶을 때.',
-    '<b>간략</b> — 문제 없이 카드가 <b>3초에 한 장씩</b> 저절로 넘어갑니다. 눈과 귀로 훑는 것이라 효과는 약합니다.',
-    '셋 다 <b>같은 창고</b>에서 꺼냅니다 — 오늘 것만이 아니라 <b>60일 전 단어도</b> 때가 되면 나옵니다.',
-    '다만 <b>간략</b>은 채점이 없어 다음 복습 날짜가 <b>안 밀립니다</b>. 그래서 효과가 약합니다.',
+    '둘 다 <b>같은 창고</b>에서 꺼냅니다 — 오늘 것만이 아니라 <b>60일 전 단어도</b> 때가 되면 나옵니다.',
+    '카드가 저절로 넘어가는 <b>훑어보기</b>는 복습이 아니라 <b>예습</b>에만 남겼습니다 — 채점이 없어 기억에는 약하기 때문입니다.',
   ]);
   sec('⑤', '연습 도구 네 가지 — 무엇으로, 왜', [
     '모두 <b>복습할 때가 된 단어</b>를 먼저, 모자라면 최근 배운 단어로 채웁니다.',
@@ -2864,7 +2925,7 @@ function showGuide() {
   sec('⑧', '제일 중요한 한 가지', [
     '완벽한 하루보다 <b>돌아오는 것</b>이 중요합니다.',
     '<b>매일</b> 오는 것이 목표입니다. 다만 하루 빠졌다고 처음부터가 아닙니다 — 연속 기록은 세지 않습니다.',
-    '바쁜 날은 <b>간략</b> 한 번이라도 하세요.',
+    '바쁜 날은 <b>3분만</b>이라도 하세요.',
   ]);
   show('guide', '사용법', true);
 }
@@ -2954,10 +3015,6 @@ $('#chatForm').onsubmit = e => {
 };
 $('#goReview').onclick = () => reviewStart();
 $('#goQuick').onclick = () => reviewStart(10);
-$('#goFlash').onclick = () => {          // 간략 복습 — 밀린 카드를 자동 훑기
-  const due = dueWords().map(v => allWords().find(w => w.vi === v)).filter(Boolean);
-  flashRun(due.length ? due.slice(0, 20) : practiceWords(15), '간략 복습');
-};
 $('#goTone').onclick = toneEntry;
 $('#goWx').onclick = () => showWx();
 $('#goCulture').onclick = showCulture;
