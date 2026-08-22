@@ -2,11 +2,15 @@
 """'오늘의 기사' 학습 세트를 만든다 — 깃허브 액션이 매일 아침 fetch_news.py 다음에 돌린다.
 
 하는 일
-  ① data/news_body.json 에서 오늘 고른 기사 중 **관심사 점수 1등** 하나를 집는다
-  ② 제미나이에게 본문을 주고 요약 2줄 + 베트남어 단어 10개 + 문장 2개를 받는다
-  ③ 성조를 자동으로 붙이고(tools/tone.py), 이미 배운 단어는 걸러 새 단어만 남긴다
-  ④ data/news_days.json 에 하루치 세트를 쌓는다 (최근 30일치만 남긴다)
-  ⑤ 새로 생긴 베트남어의 북부 음성을 edge-tts 로 뽑고 audio_index 에 등록한다
+  ① data/news_body.json 의 어제 기사 5개를 **전부** 재료로 쓴다
+  ② 기사마다 제미나이에게 요약 2줄 + 베트남어 단어 10개 + 대화 2줄을 받는다
+  ③ 성조를 자동으로 붙인다(tools/tone.py)
+  ④ data/news_days.json 에 그날치를 쌓는다 (일주일치만 남기고 지운다)
+
+**이미 배운 단어를 일부러 빼지 않는다.** 아는 말이 새 문맥에서 다시 나오는 것이
+기억에는 오히려 이롭고, 음성도 이미 있어서 새로 만들 것이 줄어든다.
+기사 학습은 복습 창고에 넣지 않는다 — 어제 베트남에서 무슨 일이 있었는지 알면서
+겸사겸사 말도 익히는 자리다.
 
 노트북과 무관하다 — 깃허브 서버에서 돈다. 다만 남부 음성과 그림은 여기서 못 만든다.
   · 남부 음성이 없으면 앱이 북부 소리로 대신 낸다(있는 것만 골라 쓴다)
@@ -23,7 +27,7 @@ from tone import word_tones                      # 글자에서 성조를 자동
 
 R = pathlib.Path(__file__).resolve().parent.parent
 KST = timezone(timedelta(hours=9))
-KEEP_DAYS = 30                                   # 기사 세트는 30일치만 남긴다 (저장소가 커지지 않게)
+KEEP_DAYS = 7                                    # 일주일치만 남긴다 (저장소가 커지지 않게)
 MODELS = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite']
 
 def ask(prompt, key):
@@ -74,6 +78,7 @@ PROMPT = """너는 한국인에게 베트남어를 가르친다. 배우는 사�
    한 낱말은 3음절을 넘기지 마라.
    **낱말은 그 자체로 뜻이 통하는 완전한 말이어야 한다.** 긴 낱말을 잘라 쓰지 마라
    (bệnh viện=병원 을 viện 으로 자르면 뜻이 달라진다. 자를 바에는 통째로 넣어라).
+   흔한 쉬운 낱말을 피하려 애쓰지 마라 — 아는 말이 다시 나오는 것도 좋은 일이다.
  · lines 는 정확히 2개, **주고받는 대화 두 줄**로 만들어라 (A가 묻고 B가 답한다).
    기사 내용을 배우는 사람이 실제로 겪을 상황으로 옮겨라 — 기사 문장을 옮겨 적지 마라.
    (예: 버스 무료 운행 기사 → "이 버스 무료인가요?" / "네, 지금 무료예요.")
@@ -97,69 +102,59 @@ def main():
     picked = [p for p in picked if len(p.get('body', '')) > 200]
     if not picked:
         print('본문이 있는 기사가 없다'); return 0
-    art = max(picked, key=lambda p: p.get('care', 0))     # 관심사 1등 하나만
 
     out_p = R / 'data' / 'news_days.json'
     try:
         store = json.loads(out_p.read_text())
     except Exception:
         store = {'days': []}
-    today = datetime.now(KST).strftime('%Y-%m-%d')
-    if any(d['ts'] == today for d in store['days']):
-        print('오늘 세트가 이미 있다'); return 0
-    if any(d.get('u') == art['u'] for d in store['days']):
-        print('이미 쓴 기사다 — 다음 기사로');
-        rest = [p for p in picked if p['u'] != art['u']]
-        if not rest: return 0
-        art = max(rest, key=lambda p: p.get('care', 0))
-
-    got = ask(PROMPT.format(title=art['t'], body=art['body'][:4000]), key)
-
-    # 이미 가르치는 단어는 뺀다 — 새 단어만 남겨야 배울 것이 있다
-    days = json.loads((R / 'data' / 'days.json').read_text())
-    known = {w['vi'].lower() for d in days['days'] for w in d['words']}
-    words, seen = [], set()
-    for w in got.get('words', []):
-        vi = (w.get('vi') or '').strip()
-        if not vi or vi.lower() in known or vi.lower() in seen:
+    have = {d.get('u') for d in store['days']}
+    made = 0
+    for art in picked:
+        if art['u'] in have:
             continue
-        if re.search(r'\d', vi) or vi[:1].isupper():      # 숫자·고유명사 제외
-            continue
-        seen.add(vi.lower())
-        words.append({'vi': vi, 'ko': (w.get('ko') or '').strip(),
-                      'kr_read': (w.get('kr') or '').strip(),
-                      'emoji': (w.get('emoji') or '').strip(),
-                      'tones': word_tones(vi)})
-    lines = [{'vi': (l.get('vi') or '').strip(), 'ko': (l.get('ko') or '').strip(),
-              'kr_read': (l.get('kr') or '').strip(), 'who': (l.get('who') or 'AB'[i % 2]),
-              'tones': word_tones((l.get('vi') or '').strip()),
-              'gloss': []}
-             for i, l in enumerate(got.get('lines', [])) if (l.get('vi') or '').strip()]
-    if len(words) < 4 or not lines:
-        print(f'재료가 모자라다 (단어 {len(words)} · 문장 {len(lines)}) — 오늘은 세트를 안 만든다')
-        return 0
+        try:
+            got = ask(PROMPT.format(title=art['t'], body=art['body'][:4000]), key)
+        except Exception as e:
+            print(f"실패 {art['t'][:30]}: {e}"); continue
+        words, seen = [], set()
+        for w in got.get('words', []):
+            vi = (w.get('vi') or '').strip()
+            if not vi or vi.lower() in seen:
+                continue
+            if re.search(r'\d', vi) or vi[:1].isupper():      # 숫자·고유명사 제외
+                continue
+            seen.add(vi.lower())
+            words.append({'vi': vi, 'ko': (w.get('ko') or '').strip(),
+                          'kr_read': (w.get('kr') or '').strip(),
+                          'emoji': (w.get('emoji') or '').strip(),
+                          'tones': word_tones(vi)})
+        lines = [{'vi': (l.get('vi') or '').strip(), 'ko': (l.get('ko') or '').strip(),
+                  'kr_read': (l.get('kr') or '').strip(), 'who': (l.get('who') or 'AB'[i % 2]),
+                  'tones': word_tones((l.get('vi') or '').strip()),
+                  'gloss': []}
+                 for i, l in enumerate(got.get('lines', [])) if (l.get('vi') or '').strip()]
+        if len(words) < 4 or not lines:
+            print(f"재료가 모자라다 — 건너뜀: {art['t'][:30]}"); continue
+        theme = (got.get('theme') or '기사')[:12]
+        store['days'].append({
+            'ts': art['ts'], 'day': 'N' + art['u'][-8:], 'track': 'news',
+            'theme': theme, 'title': art['t'], 'u': art['u'], 'cat': art.get('cat'),
+            'intro': ' '.join(got.get('summary', []))[:140],
+            'words': words[:10],
+            'dialog': {'title': theme, 'emoji': '📰', 'lines': lines[:2], 'extra': []},
+        })
+        have.add(art['u']); made += 1
+        print(f"  세트: {theme} · 단어 {len(words)} · 대화 {len(lines)} · {art['t'][:34]}")
 
-    day = {
-        'ts': today, 'day': 'N' + today.replace('-', ''), 'track': 'news',
-        'theme': (got.get('theme') or '오늘의 기사')[:12],
-        'title': art['t'], 'u': art['u'],
-        'intro': ' '.join(got.get('summary', []))[:120],
-        'words': words[:10],
-        'dialog': {'title': (got.get('theme') or '오늘의 기사')[:12],
-                   'emoji': '📰', 'lines': lines[:2], 'extra': []},
-    }
-    store['days'] = [d for d in store['days'] if d['ts'] > (
-        datetime.now(KST) - timedelta(days=KEEP_DAYS)).strftime('%Y-%m-%d')]
-    store['days'].append(day)
-    store['days'].sort(key=lambda d: d['ts'], reverse=True)
+    cut = (datetime.now(KST) - timedelta(days=KEEP_DAYS)).strftime('%Y-%m-%d')
+    store['days'] = [d for d in store['days'] if d['ts'] >= cut]   # 일주일 지난 것은 지운다
+    store['days'].sort(key=lambda d: (d['ts'], d['theme']), reverse=True)
     for i, d in enumerate(store['days']):
         d['n'] = len(store['days']) - i
     store['updated'] = datetime.now(KST).strftime('%Y-%m-%d %H:%M')
     out_p.write_text(json.dumps(store, ensure_ascii=False, indent=1))
-    print(f"세트 만듦: {day['theme']} · 단어 {len(day['words'])} · 문장 {len(lines)}")
-    print('  ' + day['intro'])
-    for w in day['words']:
-        print(f"   {w['vi']} = {w['ko']}")
+    print(f'기사 세트 {made}개 새로 만듦 · 보관 {len(store["days"])}개')
     return 0
 
 if __name__ == '__main__':

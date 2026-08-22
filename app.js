@@ -641,30 +641,51 @@ function renderAnalysis(host, mode) {
 
   const MD = { listen: '듣고 고르기', read: '읽고 고르기', meaning: '뜻 고르기',
                recall: '떠올려 말하기', dict: '받아쓰기',
-               say: '말하기', type: '타이핑', hand: '손글씨 (스스로 매김)' };
+               say: '말하기 (AI 채점)', sayself: '말하기 (스스로 매김)',
+               type: '타이핑', hand: '손글씨 (스스로 매김)' };
+  // 스스로 매긴 것과 AI가 매긴 것을 한 막대에 섞으면 그 막대는 아무것도 뜻하지 않게 된다
   const md = named('md', MD);
   if (md.length) { host.append(el('p', 'newsday', '문제 유형별 정답률 (누적)')); host.append(bars(md)); }
 
   /* 나머지 갈래는 [자세히] 안에 접어 둔다 — 다 펼치면 화면이 두 배가 되어
      정작 중요한 다섯 과목이 안 보인다. */
+  /* 남긴 것은 셋뿐이다 — 재는 대상이 분명하고, 결과가 처방으로 이어지는 것만.
+     뺀 것: 시간대별(매일 같은 시간에 해서 비교군이 없다) · 그림 있음/없음과 한자어
+     (그림이 붙는 단어는 원래 구체어라 쉽다 — 그림 효과가 아니라 단어 난이도를 잰 것이다)
+     · 첫 시도/두 번째(답을 보고 다시 푸는 것이라 높은 게 당연하다). */
   const MORE = [
-    ['sy' + 'l', null, '단어 길이별', '긴 단어일수록 떨어지면 소리 덩어리를 아직 못 묶은 것입니다'],
     ['ltr', null, '어려운 글자가 든 단어', 'ư ơ ă â ê ô đ 가 든 단어만 따로 셉니다'],
+    ['sy' + 'l', null, '단어 길이별', '긴 단어에서 떨어지면 소리 덩어리를 아직 못 묶은 것입니다'],
     ['lv', null, '복습 사다리 단계별', '뒷단(30·60일)이 낮으면 간격이 너무 벌어진 것입니다'],
-    ['od', null, '얼마나 밀렸을 때 풀었나', '밀릴수록 떨어지는 폭이 곧 손실입니다'],
-    ['try', null, '첫 시도 / 두 번째', '두 번째가 훨씬 높으면 아직 기억이 아니라 눈치입니다'],
-    ['hr', null, '시간대별', '나에게 잘 되는 시간이 언제인지'],
-    ['pic', null, '그림이 있는 단어 / 없는 단어', '그림이 정말 도움이 되는지 확인합니다'],
-    ['han', null, '한자어', '한국어 한자음과 짝인 단어가 실제로 쉬운지'],
+    ['od', null, '얼마나 밀렸을 때 풀었나', '밀릴수록 떨어지는 폭이 곧 밀린 값입니다'],
     ['serr', null, '쓰기 오답의 종류', '성조만 흘렸는지, 글자를 틀렸는지'],
   ];
   const rows = MORE.map(([box, map, title, note]) => [title, note, named(box, map)])
                    .filter(r => r[2].length);
+  const more = el('details', 'moreana');
+  more.append(el('summary', null, '자세히 — 갈래별로 더 쪼개 보기'));
+  /* 접속 — 요일별로 며칠 중 며칠 왔는가. 정답률이 아니라 '온 날 / 지난 날' 비율이라
+     다른 막대와 뜻이 다르다. 그래서 표본 부족 표시(NEED)를 쓰지 않고 따로 그린다. */
+  const first = Object.keys(S.act || {}).sort()[0];
+  if (first) {
+    const d0 = new Date(first + 'T00:00:00'), today = new Date();
+    const cnt = [0, 0, 0, 0, 0, 0, 0], came = [0, 0, 0, 0, 0, 0, 0];
+    for (let d = new Date(d0); d <= today; d.setDate(d.getDate() + 1)) {
+      const w = (d.getDay() + 6) % 7;                      // 월=0
+      cnt[w]++; if (S.act[ymd(d)]) came[w]++;
+    }
+    const rows2 = '월화수목금토일'.split('').map((nm, i) =>
+      [nm + '요일', cnt[i] ? Math.round(came[i] * 100 / cnt[i]) : 0, cnt[i] ? NEED : 0]);
+    more.append(el('p', 'newsday', '요일별 출석'));
+    more.append(bars(rows2));
+    const tot = cnt.reduce((a, x) => a + x, 0), got = came.reduce((a, x) => a + x, 0);
+    more.append(el('p', 'dimtxt', `첫날부터 ${tot}일 중 <b>${got}일</b> 왔습니다 (${Math.round(got * 100 / tot)}%). ` +
+      '가장 낮은 요일이 곧 무너지는 자리입니다.'));
+  }
+
   const conf = Object.entries(S.stats.conf || {})
     .map(([k, v]) => [k, v.all]).sort((a, b) => b[1] - a[1]).slice(0, 6);
-  if (rows.length || conf.length) {
-    const more = el('details', 'moreana');
-    more.append(el('summary', null, '자세히 — 갈래별로 더 쪼개 보기'));
+  {
     rows.forEach(([title, note, data]) => {
       more.append(el('p', 'newsday', esc(title)));
       more.append(bars(data));
@@ -1052,21 +1073,21 @@ function askNick() {
    첫 화면은 큰 칸 여덟 개뿐이다. 칸을 누르면 그 안에서 고른다 —
    첫 화면에 버튼이 많을수록 고르는 데 힘이 들고, 결국 아무것도 안 누르게 된다. */
 const MENUS = {
-  day:   { name: '하루 5분 베트남어', sub: '오늘 배울 것', items: () => [
+  day:   { name: '하루 5분', items: () => [
             ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')]] },
-  rev:   { name: '복습', sub: '다시 볼 때가 된 것', items: () => [
+  rev:   { name: '복습', items: () => [
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
-  basic: { name: '기본기', sub: '소리와 규칙', items: () => [
+  basic: { name: '기본기', items: () => [
             ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
             ['성조', toneEntry], ['호칭', () => startRule(0)], ['어순', () => startRule(1)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
-  gram:  { name: '문법', sub: '문장을 만드는 뼈대', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
-  ai:    { name: 'AI 선생님', sub: '말이 트이는 자리', items: () => [
+  gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
+  ai:    { name: 'AI 선생님', items: () => [
             ['자유 대화', startChat], ['배운 문장으로', startTalk]] },
-  club:  { name: '동아리', sub: '같이 하는 사람들', items: () => [['보기', showClub]] },
-  news:  { name: '베트남 소식', sub: '오늘의 베트남', items: () => [
-            ['기사', showNews], ['날씨', () => showWx()], ['문화', showCulture]] },
-  guide: { name: '사용법', sub: '이 앱을 쓰는 법', items: () => [['보기', showGuide]] },
+  club:  { name: '동아리', items: () => [['보기', showClub]] },
+  news:  { name: '베트남 소식', items: () => [
+            ['기사', showNews], ['기사로 배우기', showNewsLearn], ['날씨', () => showWx()]] },
+  guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
 function renderMenu(id) {
   const m = MENUS[id];
@@ -1085,7 +1106,7 @@ function drawMenu() {
   box.textContent = '';
   Object.entries(MENUS).forEach(([id, m]) => {
     const t = el('button', 'mtile');
-    t.append(el('b', null, m.name), el('span', 'msub', m.sub));
+    t.append(el('b', null, m.name));
     if (id === 'rev') {
       const n = dueWords().length;
       if (n) t.append(el('span', 'mbadge', String(n)));
@@ -1192,9 +1213,8 @@ function renderHome() {
   if (doneToday) prow('오늘 학습', pace > 1 ? todayCnt + '세트 완료' : '완료', 'done', null);
   else if (queue.length) {
     const t = queue.slice(0, left);
-    prow('오늘 학습',
-      t.map(nm).join(' · ') + '\n' + (t.length > 1 ? t.length + '세트' : t[0].theme),
-      'todo', () => startLearn(t[0]));
+    prow('오늘 학습', t.map(nm).join(' · ') + (t.length > 1 ? '' : '\n' + t[0].theme),
+         'todo', () => startLearn(t[0]));
   } else prow('오늘 학습', '전 과정 완료', 'none', null);
   // 오늘 복습 — 문장도 같이 나오므로 뭉뚱그려 '단어'라고 하지 않는다
   const dueW = due.map(findItem).filter(Boolean);
@@ -1206,9 +1226,8 @@ function renderHome() {
   const tset = queue.slice(left, left + pace);
   if (tset.length) {
     const words = tset.flatMap(d => d.words || []);
-    prow('내일 학습',
-      tset.map(nm).join(' · ') + '\n' + (tset.length > 1 ? tset.length + '세트' : tset[0].theme),
-      'next', words.length ? () => flashRun(words, '예습 · ' + tset.map(nm).join(' · ')) : null);
+    prow('내일 학습', tset.map(nm).join(' · ') + (tset.length > 1 ? '' : '\n' + tset[0].theme),
+         'next', words.length ? () => flashRun(words, '예습 · ' + tset.map(nm).join(' · ')) : null);
   } else prow('내일 학습', '없음', 'none', null);
   // 내일 복습 — 내일 새로 나올(만기되는) 카드 수
   const tmr = Object.entries(S.srs).filter(([, v]) => v.due > now() && v.due <= now() + DAY)
@@ -1281,7 +1300,9 @@ function startLearn(d) {
   // 문장이 마무리인 이유: 외운 것을 산출(말하기)로 끝내야 하루가 완성된다.
   const items = [];
   // 설명은 책 표지처럼 맨 앞 한 장으로. 단어 화면에서는 사라져서 그림 자리를 벌어 준다.
-  if (d.intro) items.push({ k: 'cover', d: { t: label(d) + ' · ' + d.theme, b: d.intro } });
+  const ci = cultureFor(d);
+  if (d.intro) items.push({ k: 'cover', d: { t: label(d) + ' · ' + d.theme, b: d.intro,
+                                             cult: ci != null ? CULTURE[ci] : null } });
   (d.letters || []).forEach(x => items.push({ k: 'letter', d: x }));
   (d.tones || []).forEach(x => items.push({ k: 'tone', d: x }));
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
@@ -1326,6 +1347,45 @@ function reveal(txt) {
   return txt ? el('div', 'krline', '[' + esc(txt) + ']') : el('span');
 }
 
+/* 예문의 낱말마다 뜻을 붙인다 — 문장만 던져 주면 어느 조각이 어느 뜻인지 알 수가 없다.
+   우리가 가르친 1,020개 사전에서 **긴 낱말부터** 맞춘다
+   (bao nhiêu 를 bao / nhiêu 로 쪼개면 뜻이 안 나온다).
+   그래도 안 잡히는 몇 개만 아래에 따로 적어 둔다. */
+const EXTRAG = { 'để': '~하도록·두다', 'dạ': '네 (공손)', 'mắc': '비싸다',
+                 'ngàn': '천 (1,000)', 'nhất': '가장', 'bàn': '탁자' };
+let GVOC = null;
+function glossOf(vi) {
+  if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
+                                                    if (!GVOC[k]) GVOC[k] = w.ko; }); }
+  const toks = vi.replace(/[,.!?;:]/g, ' ').split(/\s+/).filter(Boolean);
+  const out = [];
+  for (let i = 0; i < toks.length;) {
+    let hit = null;
+    for (let n = 3; n >= 1 && !hit; n--) {
+      if (i + n > toks.length) continue;
+      const ph = toks.slice(i, i + n).join(' ').toLowerCase();
+      const m = GVOC[ph] || EXTRAG[ph];
+      if (m) hit = { w: toks.slice(i, i + n).join(' '), m, n };
+    }
+    if (hit) { out.push(hit); i += hit.n; }
+    else { out.push({ w: toks[i], m: null, n: 1 }); i += 1; }
+  }
+  return out.filter(x => x.m);
+}
+/* 낱말 뜻 줄 — 대화 화면의 gloss 와 같은 차림새 */
+function glossRow(vi) {
+  const list = glossOf(vi);
+  if (!list.length) return null;
+  const g = el('div', 'gloss');
+  list.forEach(x => {
+    const cell = el('div', 'gcell');
+    cell.append(el('span', 'gtop').appendChild(el('span', 'gw', esc(x.w))).parentNode,
+                el('span', 'gm', esc(x.m)));
+    g.append(cell);
+  });
+  return g;
+}
+
 function drawCard() {
   resetRec();
   const c = $('#card');
@@ -1335,6 +1395,17 @@ function drawCard() {
   if (it.k === 'cover') {
     c.append(el('div', 'covert', esc(x.t)));
     c.append(el('div', 'coverb', x.b));       // 우리가 쓴 글이라 굵게 표시를 살린다
+    if (x.src) {                              // 기사 세트 — 원문으로 가는 길
+      const a = el('a', 'srclink', '원문 기사 보기 ›');
+      a.href = x.src; a.target = '_blank'; a.rel = 'noopener';
+      c.append(a);
+    }
+    if (x.cult) {                             // 이 주제에 붙는 베트남 문화 한 조각
+      const k = el('div', 'cultbox');
+      k.append(el('div', 'cultt', x.cult.e + ' ' + esc(x.cult.t)));
+      k.append(el('div', 'cultb', x.cult.b));
+      c.append(k);
+    }
   }
 
   if (it.k === 'letter') {
@@ -1377,6 +1448,7 @@ function drawCard() {
     }
     c.append(row);
     c.append(el('div', 'ko', esc(x.ko)));
+    const gr = glossRow(x.vi); if (gr) c.append(gr);      // 낱말마다 뜻
     c.append(el('div', 'rulenote', esc(x.note)));
     if (L.day.day === 'R4') {          // 남부 소리 수업은 카드에서 바로 남북을 맞대 듣는다
       const cmp = el('div', 'sound');
@@ -1517,6 +1589,11 @@ $('#next').onclick = () => {
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
   if (L.cult) { renderHome(); return; }
+  if (L.news) {                        // 기사 세트 — 대화 두 줄을 보고 끝. 채점도 복습도 없다
+    if (!L.dlg && L.day.dialog) { L.items = [{ k: 'dialog', d: L.day.dialog }]; L.i = 0; L.dlg = true;
+                                  drawCard(); show('learn', L.day.theme, true); return; }
+    renderHome(); return;
+  }
   if (L.dlg) {                         // 대화(써먹기)까지 끝나면 오늘 완료
     S.done[L.day.day] = now();
     (L.day.dialog?.lines || []).forEach(l => {          // 그날 문장도 복습 창고로
@@ -1710,19 +1787,16 @@ function reviewMenu(kind) {
   const due = dueWords().map(findItem).filter(Boolean).filter(x => kind === 'sent' ? x.sent : !x.sent);
   b.append(el('p', 'lede', (kind === 'sent' ? '문장' : '단어') + ' 복습 — ' + due.length + '개 대기'));
   const back = () => reviewMenu(kind);
-  const all = el('button', 'primary big', '랜덤');
-  all.style.width = '100%'; all.style.marginBottom = '12px';
+  const all = el('button', 'bigmenu', '랜덤');
   all.onclick = () => { dive(back); startQuiz(null, null, null, false, { kind }); };
   b.append(all);
   SKILLS.forEach(sk => {
-    const btn = el('button', 'chatmode');
-    btn.innerHTML = `<b>${sk.name}</b><span>${sk.how}</span>`;
+    const btn = el('button', 'bigmenu', esc(sk.name));
     btn.onclick = () => { dive(back); startQuiz(null, null, null, false, { kind, skill: sk.k }); };
     b.append(btn);
   });
-  const quick = el('button', 'chatmode');
-  quick.innerHTML = '<b>3분만</b><span>카드가 3초에 한 장씩 — 눈과 귀로만 훑기 (채점 없음)</span>';
-  quick.onclick = () => { dive(back); flashRun(due.slice(0, 20), (kind === 'sent' ? '문장' : '단어') + ' 3분만'); };
+  const quick = el('button', 'bigmenu', '3분');
+  quick.onclick = () => { dive(back); flashRun(due.slice(0, 20), (kind === 'sent' ? '문장' : '단어') + ' 3분'); };
   b.append(quick);
   show('quiz', (kind === 'sent' ? '문장' : '단어') + ' 복습', true);
 }
@@ -1749,7 +1823,7 @@ function drawRevInfo(cap) {
     '그래서 복습할 카드가 <b>있는 날도, 없는 날도</b> 있습니다. 없는 날은 정상입니다.<br><br>' +
     '<b>[랜덤]</b>이 곧 공부법 책들이 말하는 그 복습입니다 — 간격 반복 + 직접 떠올리기 + 즉시 피드백. ' +
     '<b>[말하기·듣기·읽기·쓰기]</b>는 같은 단어를 한 가지 방식으로만 몰아서 볼 때, ' +
-    '<b>[3분만]</b>은 바쁜 날 훑고 지나갈 때 씁니다(자동 넘김이라 효과는 약합니다).'));
+    '<b>[3분]</b>은 바쁜 날 훑고 지나갈 때 씁니다(자동 넘김이라 효과는 약합니다).'));
   b.append(c);
 
   const learned = Object.keys(S.srs).length;
@@ -1901,8 +1975,9 @@ function drawSay(body, q) {
   body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.ko)));
   const jbox = el('div', 'cmpnote judge');
   let done = false;
-  const finish = ok => {
+  const finish = (ok, judged) => {
     if (done) return; done = true;
+    markSpeed(ok, judged ? 'say' : 'sayself');
     grade(w.vi, ok, Q.early);
     if (ok) Q.ok++; else requeue(q);
     const ans = el('div', 'ansbox');
@@ -1916,7 +1991,7 @@ function drawSay(body, q) {
   const row = el('div', 'qplay');
   if (jb) row.append(jb);
   const showA = el('button', jb ? 'ghost' : 'primary big', jb ? '모르겠어요' : '말했어요 · 정답 보기');
-  showA.onclick = () => { bumpSaid(); finish(!jb ? true : false); };
+  showA.onclick = () => { bumpSaid(); finish(!jb ? true : false, false); };
   row.append(showA);
   body.append(row, jbox);
 }
@@ -2072,7 +2147,7 @@ function judgeBtn(target, box, onDone) {
             ? '<b class="okmsg">알아들었습니다 — "' + esc(heard) + '".</b> 성조는 아래 곡선으로 확인하세요.'
             : '<b class="nomsg">AI에게는 "' + esc(heard) + '"로 들렸습니다.</b> 목표는 <b>' + esc(target) + '</b> — 조금 크게, 또박또박 다시 해 보세요.';
         fxTone(exact || close);
-        onDone && onDone(exact || close);
+        onDone && onDone(exact || close, true);   // AI가 매긴 것임을 알린다
       } catch (e) { box.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
     };
     mr.start();
@@ -2118,9 +2193,9 @@ function drawRecall(body, q) {
 
     const grade2 = el('div', 'opts');
     const ok = el('button', null, '✓ 맞았어요');
-    ok.onclick = () => { fxTone(true); markSpeed(true, 'say'); grade(q.w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
+    ok.onclick = () => { fxTone(true); markSpeed(true, 'sayself'); grade(q.w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
     const no = el('button', null, '✗ 못 맞혔어요');
-    no.onclick = () => { markSpeed(false, 'say'); grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
+    no.onclick = () => { markSpeed(false, 'sayself'); grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
     grade2.append(ok, no);
     body.append(grade2);
   };
@@ -2159,7 +2234,6 @@ function answer(btn, correct, w) {
    정답률이 같아도 느리면 아직 '자동'이 안 된 것이다. */
 function markSpeed(ok, mode) {
   bump('md', mode, ok);
-  bump('try', (Q.list[Q.i] || {}).retry ? '두 번째' : '첫 시도', ok);   // 그 판에서 다시 나온 문제인가
   if (!ok || !Q.t0) return;
   const ms = Date.now() - Q.t0;
   if (ms < 500 || ms > 20000) return;                  // 튀는 값은 버린다
@@ -2199,9 +2273,6 @@ function grade(vi, ok, early) {
   const syl = vi.trim().split(/\s+/).length;
   bump('syl', syl === 1 ? '1음절' : syl === 2 ? '2음절' : '3음절+', ok);   // 길이별
   if (HARDLTR.some(c => vi.includes(c))) bump('ltr', '어려운 모음·đ', ok); // ư ơ ă â ê ô đ 가 든 단어
-  if (w) bump('pic', w.img ? '그림 있음' : '그림 없음', ok);               // 그림이 기억을 돕는가
-  if (w && w.hanja) bump('han', '한자어', ok);                            // 한자어가 정말 쉬운가
-  bump('hr', ['새벽', '아침', '낮', '저녁', '밤'][Math.min(4, Math.floor(new Date().getHours() / 5))], ok);
   const r0 = S.srs[vi];
   if (!early && r0) {
     bump('lv', '사다리 ' + (r0.lv || 0) + '단', ok);                      // 복습 단계별
@@ -2568,11 +2639,11 @@ const RULES = [
     intro: '한국어처럼 호칭이 있습니다. 다만 한 걸음 더 — 상대가 바뀌면 "나"를 가리키는 말도 바뀝니다.',
     cards: [
       { vi: 'Em chào anh.', ko: '(손위 남자에게) 안녕하세요', kr: '앰 짜오 아잉',
-        tones: tns('Em:ngang, chào:huyền, anh:ngang'), note: '상대가 손위 남자(anh)면, 나는 em' },
+        tones: tns('Em:ngang, chào:huyền, anh:ngang'), note: '상대가 anh 손위 남자면, 나는 em' },
       { vi: 'Anh chào em.', ko: '(손아래에게) 안녕', kr: '아잉 짜오 앰',
-        tones: tns('Anh:ngang, chào:huyền, em:ngang'), note: '상대가 손아래(em)면, 이번엔 내가 anh' },
+        tones: tns('Anh:ngang, chào:huyền, em:ngang'), note: '상대가 em 손아래면, 이번엔 내가 anh' },
       { vi: 'tôi', ko: '나 (누구에게나)', kr: '또이',
-        tones: tns('tôi:ngang'), note: '상대를 잘 모를 땐 tôi — 실례가 아니다' }],
+        tones: tns('tôi:ngang'), note: 'tôi 저 — 잘 모르는 상대에게. 실례가 아니다' }],
     quiz: [{ q: '손위 남자에게 인사합니다. "나"는?', opts: ['em', 'anh'], a: 0, say: 'Em chào anh.' },
            { q: '손아래 직원에게 인사합니다. 이번엔 "나"는?', opts: ['anh', 'em'], a: 0, say: 'Anh chào em.' },
            { q: '처음 보는 사람 앞에서 실례 없는 "나"는?', opts: ['tôi', 'em'], a: 0 }] },
@@ -2580,11 +2651,11 @@ const RULES = [
     intro: '꾸미는 말이 뒤에 옵니다. 한국어와 정반대 — 이것 하나만 뒤집으면 문장이 만들어집니다.',
     cards: [
       { vi: 'người tốt', ko: '좋은 사람', kr: '응으어이 똣',
-        tones: tns('người:huyền, tốt:sắc'), note: '사람(người) + 좋은(tốt) — 꾸미는 말이 뒤' },
+        tones: tns('người:huyền, tốt:sắc'), note: 'người 사람 + tốt 좋은 — 꾸미는 말이 뒤' },
       { vi: 'tên của tôi', ko: '내 이름', kr: '뗀 꾸어 또이',
-        tones: tns('tên:ngang, của:hỏi, tôi:ngang'), note: '이름(tên) + 의(của) + 나(tôi)' },
+        tones: tns('tên:ngang, của:hỏi, tôi:ngang'), note: 'tên 이름 + của ~의 + tôi 나' },
       { vi: 'hộp này', ko: '이 상자', kr: '홉 나이',
-        tones: tns('hộp:nặng, này:huyền'), note: '상자(hộp) + 이(này)' }],
+        tones: tns('hộp:nặng, này:huyền'), note: 'hộp 상자 + này 이' }],
     quiz: [{ q: '"좋은 사람"은?', opts: ['người tốt', 'tốt người'], a: 0, say: 'người tốt' },
            { q: '"내 이름"은?', opts: ['tên của tôi', 'tôi của tên'], a: 0, say: 'tên của tôi' },
            { q: '"이 상자"는?', opts: ['hộp này', 'này hộp'], a: 0, say: 'hộp này' }] },
@@ -2592,11 +2663,11 @@ const RULES = [
     intro: '숫자 뒤에는 단위가 붙습니다. 한국어의 개·마리·대와 같습니다 — 세 개면 초급은 넘어갑니다.',
     cards: [
       { vi: 'hai cái', ko: '두 개 (물건)', kr: '하이 까이',
-        tones: tns('hai:ngang, cái:sắc'), note: '물건은 cái' },
+        tones: tns('hai:ngang, cái:sắc'), note: 'cái 물건' },
       { vi: 'ba con', ko: '세 마리 (동물)', kr: '바 껀',
-        tones: tns('ba:ngang, con:ngang'), note: '동물은 con' },
+        tones: tns('ba:ngang, con:ngang'), note: 'con 동물' },
       { vi: 'một chiếc', ko: '한 대 (기계·탈것)', kr: '못 찌엑',
-        tones: tns('một:nặng, chiếc:sắc'), note: '기계·탈것은 chiếc' }],
+        tones: tns('một:nặng, chiếc:sắc'), note: 'chiếc 기계·탈것' }],
     quiz: [{ q: '물건 두 개 — 알맞은 쪽은?', opts: ['hai cái', 'hai con'], a: 0, say: 'hai cái' },
            { q: '동물 세 마리는?', opts: ['ba con', 'ba cái'], a: 0, say: 'ba con' },
            { q: '기계 한 대는?', opts: ['một chiếc', 'một cái'], a: 0, say: 'một chiếc' }] },
@@ -2604,7 +2675,7 @@ const RULES = [
     intro: '남부(호찌민 쪽)는 글은 완전히 같고 소리가 다릅니다. 위의 북부 버튼을 눌러 남부 소리로 바꿔 비교하며 들어 보세요.',
     cards: [
       { vi: 'dạ', ko: '네 (공손)', kr: '북부 자 → 남부 야',
-        tones: tns('dạ:nặng'), note: 'd·gi·v가 남부에서 "이(y)" 소리가 된다' },
+        tones: tns('dạ:nặng'), note: 'd · gi · v 가 남부에서 y 이 소리가 된다' },
       { vi: 'ba', ko: '아빠 (남부)', kr: '바',
         tones: tns('ba:ngang'), note: '북부 bố → 남부 ba. 엄마도 mẹ → má' },
       { vi: 'mắc', ko: '비싸다 (남부)', kr: '막',
@@ -2626,7 +2697,7 @@ const GRAMMAR = [
     cards: [
       { vi: 'không', ko: '아니다·안', kr: '콩', tones: tns('không:ngang'), note: '무엇이든 그 앞에 붙인다' },
       { vi: 'Tôi không hiểu.', ko: '저는 이해 못 해요', kr: '또이 콩 히에우',
-        tones: tns('Tôi:ngang, không:ngang, hiểu:hỏi'), note: '나 + 안 + 이해하다' },
+        tones: tns('Tôi:ngang, không:ngang, hiểu:hỏi'), note: 'tôi 나 + không 안 + hiểu 이해하다' },
       { vi: 'Cái này không đắt.', ko: '이건 안 비싸요', kr: '까이 나이 콩 닷',
         tones: tns('Cái:sắc, này:huyền, không:ngang, đắt:sắc'), note: '형용사 앞에도 똑같이' }],
     quiz: [{ q: '"저는 안 가요"는?', opts: ['Tôi không đi', 'Tôi đi không'], a: 0, say: 'Tôi không đi.' },
@@ -2635,8 +2706,8 @@ const GRAMMAR = [
   { key: 'G2', title: '예/아니오 질문', intro: '문장 끝에 không? 을 붙이면 "~해요?"가 됩니다. 대답은 có(네) / không(아니오).',
     cards: [
       { vi: 'Anh khỏe không?', ko: '잘 지내세요?', kr: '아인 쾌 콩',
-        tones: tns('Anh:ngang, khỏe:hỏi, không:ngang'), note: '문장 + không? = 물음' },
-      { vi: 'Có.', ko: '네 (있어요·그래요)', kr: '꼬', tones: tns('Có:sắc'), note: '짧게 có 하나로 충분' },
+        tones: tns('Anh:ngang, khỏe:hỏi, không:ngang'), note: '문장 + không? 물음' },
+      { vi: 'Có.', ko: '네 (있어요·그래요)', kr: '꼬', tones: tns('Có:sắc'), note: 'có 네 — 한 마디로 충분' },
       { vi: 'Anh có bận không?', ko: '바쁘세요?', kr: '아인 꼬 번 콩',
         tones: tns('Anh:ngang, có:sắc, bận:nặng, không:ngang'), note: 'có ~ không 으로 감싸도 된다' }],
     quiz: [{ q: '"밥 먹었어요?"에 가까운 형태는?', opts: ['Anh ăn cơm không?', 'Không anh ăn cơm?'], a: 0 },
@@ -2681,16 +2752,16 @@ const GRAMMAR = [
         tones: tns('Tôi:ngang, có:sắc, tiền:huyền'), note: 'có = 있다·가지다' },
       { vi: 'Không có.', ko: '없어요', kr: '콩 꼬', tones: tns('Không:ngang, có:sắc'), note: '가장 많이 쓰는 두 마디' },
       { vi: 'Ở đây có nhà vệ sinh không?', ko: '여기 화장실 있어요?', kr: '어 더이 꼬 냐 베 신 콩',
-        tones: tns('Ở:hỏi, đây:ngang, có:sắc, nhà:huyền, vệ:nặng, sinh:ngang, không:ngang'), note: '있다 + 물음' }],
+        tones: tns('Ở:hỏi, đây:ngang, có:sắc, nhà:huyền, vệ:nặng, sinh:ngang, không:ngang'), note: 'có 있다 + không 물음' }],
     quiz: [{ q: '"없어요"는?', opts: ['Không có', 'Có không'], a: 0, say: 'Không có.' },
            { q: '"돈 있어요"는?', opts: ['Tôi có tiền', 'Tôi tiền có'], a: 0 },
            { q: 'có 의 뜻은?', opts: ['있다·가지다', '하지 마라'], a: 0 }] },
   { key: 'G7', title: '더 · 가장', intro: '비교는 <b>hơn</b>(더), 최고는 <b>nhất</b>(가장). 형용사 <b>뒤</b>에 붙습니다.',
     cards: [
       { vi: 'Cái này rẻ hơn.', ko: '이게 더 싸요', kr: '까이 나이 재 헌',
-        tones: tns('Cái:sắc, này:huyền, rẻ:hỏi, hơn:ngang'), note: '싸다 + 더' },
+        tones: tns('Cái:sắc, này:huyền, rẻ:hỏi, hơn:ngang'), note: 'rẻ 싸다 + hơn 더' },
       { vi: 'Cái này tốt nhất.', ko: '이게 가장 좋아요', kr: '까이 나이 똣 녓',
-        tones: tns('Cái:sắc, này:huyền, tốt:sắc, nhất:sắc'), note: '좋다 + 가장' },
+        tones: tns('Cái:sắc, này:huyền, tốt:sắc, nhất:sắc'), note: 'tốt 좋다 + nhất 가장' },
       { vi: 'Nhanh hơn nhé.', ko: '더 빨리요', kr: '냐인 헌 녜',
         tones: tns('Nhanh:ngang, hơn:ngang, nhé:sắc'), note: '현장에서 매일 듣는 말' }],
     quiz: [{ q: '"더 싸요"는?', opts: ['rẻ hơn', 'hơn rẻ'], a: 0, say: 'Cái này rẻ hơn.' },
@@ -2700,7 +2771,7 @@ const GRAMMAR = [
     cards: [
       { vi: 'Được.', ko: '돼요·괜찮아요', kr: '드억', tones: tns('Được:nặng'), note: '한 마디로 승낙' },
       { vi: 'Tôi làm được.', ko: '저 할 수 있어요', kr: '또이 람 드억',
-        tones: tns('Tôi:ngang, làm:huyền, được:nặng'), note: '동사 + được' },
+        tones: tns('Tôi:ngang, làm:huyền, được:nặng'), note: '동사 + được ~할 수 있다' },
       { vi: 'Sửa được không?', ko: '고칠 수 있어요?', kr: '스어 드억 콩',
         tones: tns('Sửa:hỏi, được:nặng, không:ngang'), note: '가능한지 묻기' }],
     quiz: [{ q: '"할 수 있어요"는?', opts: ['làm được', 'được làm'], a: 0, say: 'Tôi làm được.' },
@@ -2709,11 +2780,11 @@ const GRAMMAR = [
   { key: 'G9', title: '다 했다 · 아직', intro: '끝났는지 묻고 답하는 말. 공장에서 하루에도 수십 번 씁니다. <b>rồi</b>=했다, <b>chưa</b>=아직/했어요?',
     cards: [
       { vi: 'Xong chưa?', ko: '다 됐어요?', kr: '쏭 쯔어',
-        tones: tns('Xong:ngang, chưa:ngang'), note: '문장 끝 chưa? = "했어요?"' },
+        tones: tns('Xong:ngang, chưa:ngang'), note: '문장 끝 chưa? 했어요?' },
       { vi: 'Làm xong rồi.', ko: '다 했어요', kr: '람 쏭 조이',
         tones: tns('Làm:huyền, xong:ngang, rồi:huyền'), note: 'rồi = 이미 그렇게 됐다' },
       { vi: 'Em chưa làm.', ko: '아직 안 했어요', kr: '앰 쯔어 람',
-        tones: tns('Em:ngang, chưa:ngang, làm:huyền'), note: '동사 앞 chưa = 아직 안 했다' }],
+        tones: tns('Em:ngang, chưa:ngang, làm:huyền'), note: '동사 앞 chưa 아직 안 했다' }],
     quiz: [{ q: '"다 했어요"는?', opts: ['Làm xong rồi', 'Làm xong chưa'], a: 0, say: 'Làm xong rồi.' },
            { q: '"아직 안 했어요"는?', opts: ['Em chưa làm', 'Em làm rồi'], a: 0, say: 'Em chưa làm.' },
            { q: '끝났는지 물으려면 문장 끝에?', opts: ['chưa?', 'rồi?'], a: 0 }] },
@@ -2731,18 +2802,18 @@ const GRAMMAR = [
   { key: 'G11', title: '고장났다 · 다쳤다', intro: '나쁜 일을 당했을 때는 <b>bị</b>, 좋은 일을 받았을 때는 <b>được</b>. 사고·고장 신고에 꼭 필요합니다.',
     cards: [
       { vi: 'Máy bị hỏng rồi.', ko: '기계 고장났어요', kr: '마이 비 홍 조이',
-        tones: tns('Máy:sắc, bị:nặng, hỏng:hỏi, rồi:huyền'), note: 'bị + 나쁜 일' },
+        tones: tns('Máy:sắc, bị:nặng, hỏng:hỏi, rồi:huyền'), note: 'bị 당하다 + 나쁜 일' },
       { vi: 'Em bị đau tay.', ko: '손을 다쳤어요', kr: '앰 비 다우 따이',
-        tones: tns('Em:ngang, bị:nặng, đau:ngang, tay:ngang'), note: '아플 때도 bị' },
+        tones: tns('Em:ngang, bị:nặng, đau:ngang, tay:ngang'), note: 'bị 당하다 — 아플 때도' },
       { vi: 'Em được nghỉ.', ko: '쉬게 됐어요 (허락받았어요)', kr: '앰 드억 응이',
-        tones: tns('Em:ngang, được:nặng, nghỉ:hỏi'), note: 'được + 좋은 일' }],
+        tones: tns('Em:ngang, được:nặng, nghỉ:hỏi'), note: 'được 받다 + 좋은 일' }],
     quiz: [{ q: '"기계 고장났어요"는?', opts: ['Máy bị hỏng', 'Máy được hỏng'], a: 0, say: 'Máy bị hỏng rồi.' },
            { q: '다쳤을 때 쓰는 말은?', opts: ['bị', 'được'], a: 0 },
            { q: '"쉬게 됐어요"는?', opts: ['Em được nghỉ', 'Em bị nghỉ'], a: 0, say: 'Em được nghỉ.' }] },
   { key: 'G12', title: '~해 주세요', intro: '부탁의 만능 열쇠 <b>cho</b>. "Cho + 사람 + 무엇/동사" 로 말하면 됩니다.',
     cards: [
       { vi: 'Cho em nghỉ năm phút.', ko: '5분만 쉬게 해 주세요', kr: '쪼 앰 응이 남 풋',
-        tones: tns('Cho:ngang, em:ngang, nghỉ:hỏi, năm:ngang, phút:sắc'), note: 'cho + 나 + 동사' },
+        tones: tns('Cho:ngang, em:ngang, nghỉ:hỏi, năm:ngang, phút:sắc'), note: 'cho ~해 주세요 + tôi 나 + 동사' },
       { vi: 'Cho tôi cái này.', ko: '이거 주세요', kr: '쪼 또이 까이 나이',
         tones: tns('Cho:ngang, tôi:ngang, cái:sắc, này:huyền'), note: '가게·식당에서 그대로' },
       { vi: 'Cho em hỏi.', ko: '뭐 좀 여쭐게요', kr: '쪼 앰 호이',
@@ -2753,7 +2824,7 @@ const GRAMMAR = [
   { key: 'G13', title: '어디에 있어요', intro: '<b>ở</b> 뒤에 방향 말을 붙입니다 — trong(안) · trên(위) · dưới(아래) · ngoài(밖) · cạnh(옆).',
     cards: [
       { vi: 'Ở trong kho.', ko: '창고 안에요', kr: '어 쫑 코',
-        tones: tns('Ở:hỏi, trong:ngang, kho:ngang'), note: 'ở + trong + 장소' },
+        tones: tns('Ở:hỏi, trong:ngang, kho:ngang'), note: 'ở ~에 + trong 안 + 장소' },
       { vi: 'Để ở trên bàn.', ko: '탁자 위에 두세요', kr: '데 어 쩬 반',
         tones: tns('Để:hỏi, ở:hỏi, trên:ngang, bàn:huyền'), note: '물건 놓을 자리 말하기' },
       { vi: 'Cái này để ở đâu?', ko: '이건 어디에 둬요?', kr: '까이 나이 데 어 더우',
@@ -2768,7 +2839,7 @@ const GRAMMAR = [
       { vi: 'Bao nhiêu tiền?', ko: '얼마예요?', kr: '바오 니에우 띠엔',
         tones: tns('Bao:ngang, nhiêu:ngang, tiền:huyền'), note: 'bao nhiêu = 얼마·몇 (큰 수)' },
       { vi: 'Anh là quản lý, phải không?', ko: '관리자님 맞죠?', kr: '아인 라 꽌 리 파이 콩',
-        tones: tns('Anh:ngang, là:huyền, quản:hỏi, lý:sắc, phải:hỏi, không:ngang'), note: '문장 끝 phải không? = 맞죠?' }],
+        tones: tns('Anh:ngang, là:huyền, quản:hỏi, lý:sắc, phải:hỏi, không:ngang'), note: '문장 끝 phải không? 맞죠?' }],
     quiz: [{ q: '"언제 끝나요?"는?', opts: ['Bao giờ xong?', 'Bao nhiêu xong?'], a: 0, say: 'Bao giờ xong?' },
            { q: '"얼마예요?"는?', opts: ['Bao nhiêu tiền?', 'Bao giờ tiền?'], a: 0, say: 'Bao nhiêu tiền?' },
            { q: '"맞죠?"라고 확인할 때는?', opts: ['phải không?', 'chưa?'], a: 0 }] },
@@ -3687,7 +3758,7 @@ function showGuide() {
     '<b>단어 10개 → 확인 문제 → 오늘의 대화</b> 순서로 저절로 이어집니다.',
     '대화가 마지막인 이유 — 외운 것을 <b>입으로 말해서</b> 끝내야 하루가 완성되기 때문입니다.',
     '<b>오늘 복습</b> 칸도 떠 있으면 같이 하세요. 실력의 90%는 여기서 나옵니다.',
-    '바쁜 날은 <b>3분만</b>이라도. 완벽한 하루보다 <b>내일 또 오는 것</b>이 중요합니다.',
+    '바쁜 날은 <b>3분</b>이라도. 완벽한 하루보다 <b>내일 또 오는 것</b>이 중요합니다.',
   ]);
 
   sec('②', '화면 읽는 법 — 어디에 뭐가 있나', [
@@ -3725,7 +3796,7 @@ function showGuide() {
     '골라서 하려면 <b>복습 → 단어 / 문장</b>. 평소엔 <b>[랜덤]</b>만 누르면 됩니다 — 익숙해질수록 어려운 방식이 많이 나옵니다. 끝낸 세트의 대화 문장과 기본기·문법 예문도 같은 창고에서 나옵니다.',
     '<b>말하기</b> 뜻만 보고 말하기(AI가 받아 적어 채점) · <b>듣기</b> 소리 듣고 뜻 고르기 · <b>읽기</b> 글자 보고 뜻 고르기 · ' +
       '<b>쓰기</b> 소리 듣고 화면 자판으로(낱말을 친 뒤 성조 화살표를 누르면 부호가 제자리에 붙습니다). ' +
-      '쓰기에는 <b>손가락으로 쓰는 문제</b>가 가끔 섞이고, [AI 선생님 점검]이 읽힘·짚기·조언 세 줄을 붙여 줍니다. <b>3분만</b>은 바쁜 날 자동 훑기입니다.',
+      '쓰기에는 <b>손가락으로 쓰는 문제</b>가 가끔 섞이고, [AI 선생님 점검]이 읽힘·짚기·조언 세 줄을 붙여 줍니다. <b>3분</b>은 바쁜 날 자동 훑기입니다.',
     '틀린 문제는 <b>그 판 뒤쪽에 한 번 더</b> 나옵니다 — 틀린 채로 끝내면 그 기억이 남으니까요. 카드가 없는 날 더 하고 싶으면 [그래도 최근 단어 다시 보기](미리 본 것은 다음 복습 날짜를 안 밀립니다).',
   ]);
 
@@ -3801,13 +3872,74 @@ const CULTURE = [
   { e: '🗣️', t: '남과 북은 말이 다르다', b: '글은 완전히 같고 <b>소리와 몇몇 단어</b>가 다릅니다 — 아빠는 북부 <b>bố</b>, 남부 <b>ba</b>. "네"는 북부 <b>vâng</b>, 남부 <b>dạ</b>.<br>' +
       '이 앱 위쪽 <b>북부 | 남부</b> 버튼으로 소리를 바꿔 들어 보세요.' },
 ];
-function showCulture() {
-  L = { day: { day: 'CULT', theme: '베트남 문화', words: [] },
-        items: [{ k: 'cover', d: { t: '베트남 문화',
-                                   b: '말만 배워서는 반쪽입니다. 첫 주에 바로 부딪히는 것들만 모았습니다.' } },
-                ...CULTURE.map(c => ({ k: 'cult', d: c }))], i: 0, cult: true };
+/* 세트 번호 → 그 자리에 어울리는 문화 이야기. 표지에 한 조각씩 얹는다.
+   따로 모아 둔 '문화' 화면은 없앴다 — 호칭을 배우는 날 호칭 문화가 나와야
+   말과 문화가 한 덩어리로 붙는다. 키는 '일상 N' 또는 '직무 N'. */
+const CULTAT = {
+  '일상 1': 0,   // 인사와 호칭      → 호칭이 예의의 절반
+  '일상 2': 1,   // 이름 묻고 답하기 → 이름은 뒤에서 부른다
+  '일상 3': 15,  // 어느 나라        → 남과 북은 말이 다르다
+  '일상 4': 7,   // 반갑습니다       → 차부터 한 잔
+  '일상 6': 2,   // 헤어질 때        → 두 손으로
+  '일상 10': 9,  // 나이와 시간      → 쉬는 날
+  '일상 11': 4,  // 요일             → 점심 후 낮잠
+  '일상 12': 5,  // 하루 일과        → 오토바이가 다리
+  '일상 13': 6,  // 먹고 마시기      → 커피의 나라
+  '일상 14': 10, // 사고 팔기        → 돈 다루기
+  '일상 15': 8,  // 숫자와 돈        → 설(Tết)이 일 년의 중심
+  '일상 16': 13, // 어디에 있어요    → 신발과 집
+  '일상 17': 12, // 가족             → 가족이 먼저
+  '일상 19': 11, // 부탁하기         → 하지 않는 것이 좋은 일
+  '일상 20': 14, // 어떤가요         → 북부는 사계절, 남부는 두 계절
+  '직무 5': 3,   // 회사 생활        → 회식과 건배
+};
+const cultureFor = d => CULTAT[(trackName(d) || '') + label(d).replace('Day ', '')] ??
+                        CULTAT[(d.track === 'work' ? '직무 ' : '일상 ') + (d.n || d.day)];
+
+
+/* ---------- 기사 학습 ----------
+   어제 베트남에서 무슨 일이 있었는지 읽으면서 겸사겸사 말도 익히는 자리다.
+   **복습 창고에 넣지 않는다** — 여기 단어는 외우라고 있는 게 아니라 스치라고 있다.
+   그래서 채점도, 사다리도 없다. 일주일치만 남고 지난 것은 사라진다. */
+let NEWSD = null;
+function newsSets() {
+  if (NEWSD) return Promise.resolve(NEWSD);
+  return fetch('data/news_days.json', { cache: 'no-cache' })
+    .then(r => r.ok ? r.json() : { days: [] })
+    .then(j => (NEWSD = j.days || []))
+    .catch(() => (NEWSD = []));
+}
+function showNewsLearn() {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '불러오는 중…'));
+  show('sub', '기사로 배우기', true);
+  newsSets().then(days => {
+    b.textContent = '';
+    if (!days.length) {
+      b.append(el('p', 'lede', '아직 기사 세트가 없습니다'));
+      b.append(el('p', 'note', '매일 새벽 6시 30분에 어제 기사 다섯 편으로 만들어집니다.'));
+      return;
+    }
+    b.append(el('p', 'note', '어제 베트남 소식을 읽으면서 말도 익힙니다. ' +
+      '여기 단어는 <b>복습에 안 들어갑니다</b> — 외우는 자리가 아니라 스치는 자리입니다. 일주일치만 남습니다.'));
+    let last = null;
+    days.forEach(d => {
+      if (d.ts !== last) { b.append(el('p', 'newsday', esc(d.ts.slice(5).replace('-', '월 ') + '일'))); last = d.ts; }
+      const btn = el('button', 'bigmenu');
+      btn.append(el('b', null, esc(d.theme)), el('span', 'msub', esc(d.title)));
+      btn.onclick = () => { dive(showNewsLearn); startNews(d); };
+      b.append(btn);
+    });
+  });
+}
+function startNews(d) {
+  const items = [{ k: 'cover', d: { t: '📰 ' + d.theme, b: esc(d.intro), src: d.u, title: d.title } }];
+  (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
+  L = { day: { day: d.day, theme: d.theme, words: d.words, dialog: d.dialog, news: true },
+        items, i: 0, news: true };
   drawCard();
-  show('learn', '베트남 문화', true);
+  show('learn', d.theme, true);
 }
 
 /* 오늘 기사 — 깃허브 로봇이 아침마다 골라둔 것을 보여준다 (data/news.json) */

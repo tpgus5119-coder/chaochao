@@ -824,3 +824,40 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .moreana[open] summary{color:var(--fg); border-bottom:1px solid var(--line); margin-bottom:8px}
 .moreana .newsday{margin-top:12px}
 .moreana .dimtxt{margin:-4px 0 6px; line-height:1.6}
+
+/* ── 글자 키우기 (가독성) ────────────────────────────────
+   폰에서 읽는 앱이다. 작은 글씨는 멋져 보이지만 매일 5분씩 보는 사람에게는 피로다. */
+.menu .mtile b{font-size:19px}
+.menu .mtile{min-height:66px; justify-content:center; padding:16px 14px}
+.bigmenu{font-size:19px; padding:19px 20px}
+.plancell .pk{font-size:13px}
+.plancell .pv{font-size:16px}
+.gsec li{font-size:15px}
+.gsec .ghead{font-size:17px}
+.lede{font-size:16px}
+.note{font-size:14px}
+.days button .nm{font-size:16px}
+.days button .num{font-size:14px}
+.days button .st{font-size:13px}
+.opts button{font-size:17px}
+.q{font-size:17px}
+.ko{font-size:21px}
+.wex .wexvi{font-size:19px}
+.wex .wexko{font-size:15px}
+.wex .wexkr{font-size:13px}
+.rulecard .rbody{font-size:15px}
+.rulenote{font-size:15px}
+.awrow .awn{font-size:15px}
+.stat b{font-size:22px}
+.stat span{font-size:12px}
+.phead strong{font-size:19px}
+
+/* 표지에 얹는 문화 한 조각 */
+.cultbox{margin-top:16px; border-top:1px solid var(--line); padding-top:14px; text-align:left}
+.cultt{font-size:16px; font-weight:800; margin-bottom:6px}
+.cultb{font-size:14px; line-height:1.75; color:var(--dim)}
+.cultb b{color:var(--fg)}
+
+/* 기사 원문 링크 */
+.srclink{display:inline-block; margin-top:14px; font-size:14px; color:var(--accent); text-decoration:none}
+.bigmenu .msub{display:block; font-size:13px; font-weight:400; color:var(--dim); margin-top:4px; line-height:1.5}

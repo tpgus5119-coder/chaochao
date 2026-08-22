@@ -24,18 +24,18 @@
 > a younger person, small and cheerful, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d01-ban.webp** · 너·친구 (동갑) (bạn)
-> two friends of the same age standing side by side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two friends of the same age standing side by side, simple flat illustration, soft pastel colors, thick outlines, plain white background, simple clear face with two eyes, small nose and mouth, symmetrical, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d01-cam-on.webp** · 고맙습니다 (cảm ơn)
-> a person bowing slightly with both hands together in thanks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person bowing slightly with both hands together in thanks, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 ## Day 2 — 이름 묻고 답하기
 
 **d02-scene.webp** · 오늘의 대화 — 이름 묻고 답하기
-> two people introducing themselves, both wearing blank name tags, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people introducing themselves, both wearing blank name tags, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d02-nguoi.webp** · 사람 (người)
-> a single standing person, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a single standing person, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d02-xin-loi.webp** · 미안합니다·실례합니다 (xin lỗi)
 > a person bowing deeply in apology, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -52,10 +52,10 @@
 > a globe showing continents, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d03-han-quoc.webp** · 한국 (Hàn Quốc)
-> the flag of South Korea on a flagpole, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> the flag of South Korea on a flagpole, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no national flag
 
 **d03-viet-nam.webp** · 베트남 (Việt Nam)
-> the flag of Vietnam on a flagpole, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> the flag of Vietnam on a flagpole, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no national flag
 
 **d03-song.webp** · 살다 (sống)
 > a cozy house with a person standing at the door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -69,7 +69,7 @@
 ## Day 4 — 반갑습니다 / 잘 지내세요
 
 **d04-scene.webp** · 오늘의 대화 — 만나서 안부 주고받기
-> two people meeting and shaking hands warmly, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people meeting and shaking hands warmly, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d04-gap.webp** · 만나다 (gặp)
 > two people shaking hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -78,7 +78,7 @@
 > a strong arm flexing its biceps, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d04-met.webp** · 피곤하다 (mệt)
-> a tired person slumped over with drooping shoulders, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a tired person slumped over with drooping shoulders, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d04-hom-nay.webp** · 오늘 (hôm nay)
 > a desk calendar with today circled in red, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -86,7 +86,7 @@
 ## Day 5 — 못 알아들었을 때
 
 **d05-scene.webp** · 오늘의 대화 — 못 알아들었다고 말하기
-> one person confused with question marks above the head, the other speaking slowly, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> one person confused with question marks above the head, the other speaking slowly, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d05-hieu.webp** · 이해하다 (hiểu)
 > a bright lightbulb glowing above a person's head, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -95,10 +95,10 @@
 > a person speaking with a speech bubble, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d05-nghe.webp** · 듣다 (nghe)
-> a person cupping a hand behind the ear to listen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person cupping a hand behind the ear to listen, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d05-lai.webp** · 다시 (lại)
-> a circular repeat arrow going around, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a circular repeat arrow going around, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d05-tu-tu.webp** · 천천히 (từ từ)
 > a turtle walking slowly, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -107,7 +107,7 @@
 > a speech bubble colored like the Vietnamese flag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d05-tieng-han.webp** · 한국어 (tiếng Hàn)
-> a speech bubble colored like the South Korean flag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a speech bubble colored like the South Korean flag, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no national flag
 
 ## Day 6 — 헤어질 때
 
@@ -118,7 +118,7 @@
 > a person waving goodbye with a big arm wave, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d06-mai.webp** · 내일 (mai)
-> a calendar page with a rising sun, meaning tomorrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a calendar page with a rising sun, meaning tomorrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no calendar, no grid of dates
 
 **d06-di.webp** · 가다 (đi)
 > a person walking away, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -159,15 +159,15 @@
 > a tired worker wiping sweat from the forehead after hard work, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d101-tuyen.webp** · 뽑다·채용하다 (tuyển)
-> a hiring notice board with a megaphone, people applying for jobs, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hiring notice board with a megaphone, people applying for jobs, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 7 — 숫자 1~10
 
 **d07-scene.webp** · 오늘의 대화 — 몇 명인지 묻고 답하기
-> two people counting red apples on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people counting red apples on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d07-mot.webp** · 1 (một)
-> one red apple, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> one red apple, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d07-hai.webp** · 2 (hai)
 > two red apples in a row, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -199,7 +199,7 @@
 ## Day 8 — 개수 세기
 
 **d08-scene.webp** · 오늘의 대화 — 몇 개인지 묻고 답하기
-> two warehouse workers counting cardboard boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two warehouse workers counting cardboard boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d08-cai.webp** · 개 (물건 단위) (cái)
 > one simple cup on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -211,7 +211,7 @@
 > one small dog, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d08-hop.webp** · 갑·통 (hộp)
-> a small carton box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a small carton box, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d08-thung.webp** · 상자·박스 (thùng)
 > a large cardboard box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -219,7 +219,7 @@
 ## Day 9 — 나이와 시간
 
 **d09-scene.webp** · 오늘의 대화 — 나이와 시간 묻기
-> one person pointing at a wall clock, the other holding a birthday cake, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> one person pointing at a wall clock, the other holding a birthday cake, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, clock face without any numbers, plain tick marks only
 
 **d09-tuoi.webp** · 살·나이 (tuổi)
 > a birthday cake with lit candles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -228,13 +228,13 @@
 > a round wall clock, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d09-phut.webp** · 분 (phút)
-> a stopwatch, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a stopwatch, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, clock face without any numbers, plain tick marks only
 
 **d09-bay-gio.webp** · 지금 (bây giờ)
 > an alarm clock ringing right now, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d09-ruoi.webp** · 반 (30분) (rưỡi)
-> a clock showing half past nine, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a clock showing half past nine, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, clock face without any numbers, plain tick marks only
 
 **d09-sang.webp** · 아침·오전 (sáng)
 > a sunrise over hills, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -243,29 +243,29 @@
 > an afternoon sun low in the sky, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d09-toi.webp** · 저녁·밤 (tối)
-> a night sky with moon and stars, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a night sky with moon and stars, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 10 — 요일
 
 **d10-scene.webp** · 오늘의 대화 — 요일 묻고 답하기
-> two people looking at a big wall calendar together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people looking at a big wall calendar together, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no calendar, no grid of dates, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d10-thu-hai.webp** · 월요일 (thứ hai)
-> a weekly calendar with the first weekday circled, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a weekly calendar with the first weekday circled, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no calendar, no grid of dates
 
 **d10-chu-nhat.webp** · 일요일 (chủ nhật)
-> a weekly calendar with the red sunday column circled, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a weekly calendar with the red sunday column circled, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no calendar, no grid of dates
 
 **d10-hom-qua.webp** · 어제 (hôm qua)
 > a calendar with an arrow pointing back one day, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d10-tuan.webp** · 주 (tuần)
-> a strip of seven calendar days in a row, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a strip of seven calendar days in a row, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no calendar, no grid of dates
 
 ## Day 11 — 하루 일과
 
 **d11-scene.webp** · 오늘의 대화 — 하루 일과 묻기
-> one person stretching awake in bed, a clock and sunrise outside the window, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> one person stretching awake in bed, a clock and sunrise outside the window, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d11-day.webp** · 일어나다 (dậy)
 > a person stretching arms wide, waking up in bed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -291,13 +291,13 @@
 ## Day 12 — 먹고 마시기
 
 **d12-scene.webp** · 오늘의 대화 — 뭘 먹을지 정하기
-> two people happily eating noodle soup together at a restaurant table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people happily eating noodle soup together at a restaurant table, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d12-an.webp** · 먹다 (ăn)
-> a person eating a bowl of rice with chopsticks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person eating a bowl of rice with chopsticks, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d12-uong.webp** · 마시다 (uống)
-> a person drinking a glass of water, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person drinking a glass of water, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d12-com.webp** · 밥 (cơm)
 > a bowl of steamed white rice, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -326,7 +326,7 @@
 ## Day 13 — 사고 팔기
 
 **d13-scene.webp** · 오늘의 대화 — 값 묻고 흥정하기
-> a buyer and a market vendor bargaining over fruit at a stall, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a buyer and a market vendor bargaining over fruit at a stall, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d13-tien.webp** · 돈 (tiền)
 > banknotes and coins, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -338,16 +338,16 @@
 > a discount price tag with an arrow pointing down, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d13-mua.webp** · 사다 (mua)
-> a person handing money and receiving a shopping bag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person handing money and receiving a shopping bag, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d13-ban.webp** · 팔다 (bán)
-> a vendor handing goods over a counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a vendor handing goods over a counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d13-nghin.webp** · 천 (1000) (nghìn)
 > a tall pile of gold coins, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d13-dong.webp** · 동 (베트남 돈) (đồng)
-> a single shiny copper coin, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a single shiny copper coin, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 ## Day 102 — 숫자와 돈 계산
 
@@ -367,22 +367,22 @@
 > a price tag hanging on a product, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d102-tinh.webp** · 계산하다 (tính)
-> hands using a calculator to add up numbers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> hands using a calculator to add up numbers, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d102-cong.webp** · 더하다 (cộng)
 > a large plus sign with two groups of apples joining together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d102-tru.webp** · 빼다 (trừ)
-> a large minus sign with apples being taken away from a group, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a large minus sign with apples being taken away from a group, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d102-bang.webp** · 같다 (=) (bằng)
 > a large equals sign between two identical groups of apples, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d102-tien-le.webp** · 잔돈 (tiền lẻ)
-> a small handful of coins and small banknotes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a small handful of coins and small banknotes, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d102-tien-thua.webp** · 거스름돈 (tiền thừa)
-> a cashier handing change back to a customer's open hand, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a cashier handing change back to a customer's open hand, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 14 — 어디에 있어요
 
@@ -399,7 +399,7 @@
 > a cat inside an open box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d14-ngoai.webp** · 밖 (ngoài)
-> a cat standing outside next to a closed box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a cat standing outside next to a closed box, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d14-ben-canh.webp** · 옆 (bên cạnh)
 > a cat sitting right beside a box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -422,10 +422,10 @@
 ## Day 15 — 가족
 
 **d15-scene.webp** · 오늘의 대화 — 가족에 대해 묻기
-> a person showing a framed family photo to a friend, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person showing a framed family photo to a friend, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d15-gia-dinh.webp** · 가족 (gia đình)
-> a family of four holding hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a family of four holding hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, simple clear face with two eyes, small nose and mouth, symmetrical, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d15-bo.webp** · 아버지 (bố)
 > a kind father figure, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -440,7 +440,7 @@
 > a wife showing a wedding ring, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d15-chong.webp** · 남편 (chồng)
-> a husband showing a wedding ring, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a husband showing a wedding ring, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d15-em-gai.webp** · 여동생 (em gái)
 > a little girl, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -448,7 +448,7 @@
 ## Day 16 — 아플 때
 
 **d16-scene.webp** · 오늘의 대화 — 아프다고 말하기
-> a friend handing medicine to a sick person lying in bed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a friend handing medicine to a sick person lying in bed, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d16-bi.webp** · (나쁜 일을) 당하다 (bị)
 > a person standing under a small personal rain cloud, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -457,7 +457,7 @@
 > a person wincing and holding an aching arm, pain marks around it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d16-om.webp** · 아프다 (병나다) (ốm)
-> a sick person in bed with a thermometer in the mouth, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a sick person in bed with a thermometer in the mouth, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d16-benh-vien.webp** · 병원 (bệnh viện)
 > a hospital building with a red cross sign, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -509,7 +509,7 @@
 > a big thumbs up, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d18-xau.webp** · 나쁘다 (xấu)
-> a big thumbs down, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a big thumbs down, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d18-dep.webp** · 예쁘다·아름답다 (đẹp)
 > a beautiful blooming flower with sparkles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -538,7 +538,7 @@
 ## Day 19 — 했다 / 할 것이다
 
 **d19-scene.webp** · 오늘의 대화 — 시제로 묻고 답하기
-> one person still eating a meal while the other points at a wristwatch, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> one person still eating a meal while the other points at a wristwatch, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, clock face without any numbers, plain tick marks only
 
 **d19-chua.webp** · 아직 (안) (chưa)
 > an hourglass still running, sand halfway, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -552,13 +552,13 @@
 ## Day 20 — 약속하고 마무리
 
 **d20-scene.webp** · 오늘의 대화 — 다음 약속 잡기
-> two people making a pinky promise, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people making a pinky promise, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d20-nho.webp** · 기억하다·그립다 (nhớ)
 > a person with a photo of a friend inside a thought bubble, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d20-quen.webp** · 잊다 (quên)
-> a person scratching the head, an empty thought bubble with a question mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person scratching the head, an empty thought bubble with a question mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, simple clear face with two eyes, small nose and mouth, symmetrical, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d20-hua.webp** · 약속하다 (hứa)
 > two hands making a pinky promise, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -572,13 +572,13 @@
 ## Day 21 — 회사와 사람들
 
 **d21-scene.webp** · 오늘의 대화 — 첫 출근 인사
-> a new worker greeting colleagues at a garment factory entrance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a new worker greeting colleagues at a garment factory entrance, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d21-xuong.webp** · 작업장·현장 (xưởng)
 > the interior of a garment workshop with rows of sewing machines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d21-to-truong.webp** · 조장 (tổ trưởng)
-> a team leader holding a clipboard instructing seated sewing workers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a team leader holding a clipboard instructing seated sewing workers, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d21-quan-ly.webp** · 관리자 (quản lý)
 > a manager in a dress shirt overseeing a garment factory floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -612,7 +612,7 @@
 > a supervisor showing safety gloves and a mask to a worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d27-tai-nan.webp** · 사고 (tai nạn)
-> a worker slipping and falling beside fallen boxes on a factory floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker slipping and falling beside fallen boxes on a factory floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, simple clear face with two eyes, small nose and mouth, symmetrical, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d27-bao-ho.webp** · 보호구·보호 (bảo hộ)
 > a safety helmet, goggles and reflective vest displayed together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -631,7 +631,7 @@
 ## Day 29 — 기계와 전기
 
 **d29-scene.webp** · 오늘의 대화 — 기계 고장
-> a worker looking at a stopped conveyor machine with warning light, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker looking at a stopped conveyor machine with warning light, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d29-nut.webp** · 버튼 (nút)
 > a large round push button on a machine control panel, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -646,7 +646,7 @@
 > a conveyor belt carrying folded garments through a factory, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d29-dao.webp** · 칼 (dao)
-> a fabric cutting knife on a work table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a fabric cutting knife on a work table, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d29-ban-ui.webp** · 다리미 (bàn ủi)
 > a clothes iron standing upright on an ironing board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -692,7 +692,7 @@
 > an employee ID badge with a blank photo area hanging on a lanyard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d35-ky.webp** · 서명하다 (ký)
-> a hand with a pen signing a scribbled signature at the bottom of a paper, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand with a pen signing a scribbled signature at the bottom of a paper, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d35-kho.webp** · 창고 (kho)
 > a warehouse interior with tall shelves stacked with cardboard boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -703,7 +703,7 @@
 ## Day 37 — 식당과 기숙사
 
 **d37-scene.webp** · 오늘의 대화 — 식당 찾기
-> workers eating lunch together at a factory canteen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> workers eating lunch together at a factory canteen, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d37-nha-an.webp** · 구내식당 (nhà ăn)
 > a factory canteen with long tables, benches and food trays, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -735,7 +735,7 @@
 > a hand receiving an envelope of money in advance from an employer, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d38-khoang.webp** · 약·쯤 (khoảng)
-> a scale with a wavy approximate mark, showing about how much, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a scale with a wavy approximate mark, showing about how much, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d38-ngan-hang.webp** · 은행 (ngân hàng)
 > a bank building facade with columns and glass doors, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -743,7 +743,7 @@
 ## Day 39 — 공장 안 길찾기
 
 **d39-scene.webp** · 오늘의 대화 — 창고 찾아가기
-> a worker pointing directions in a factory corridor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker pointing directions in a factory corridor, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d39-loi-di.webp** · 통로 (lối đi)
 > a clear walkway between factory shelves marked with painted floor lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -772,16 +772,16 @@
 > a worker talking on the phone while noting a message, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d40-goi-dien.webp** · 전화를 걸다 (gọi điện)
-> a person holding a smartphone to their ear making a call, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person holding a smartphone to their ear making a call, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d40-nghe-may.webp** · 전화를 받다 (nghe máy)
-> a hand reaching to pick up a ringing smartphone with sound lines around it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand reaching to pick up a ringing smartphone with sound lines around it, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d40-tin-nhan.webp** · 문자 메시지 (tin nhắn)
 > a smartphone screen showing empty chat message bubbles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d40-cho.webp** · 잠깐 기다리다 (chờ)
-> a person holding up one open palm in a wait gesture, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person holding up one open palm in a wait gesture, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d40-sac.webp** · 충전하다 (sạc)
 > a smartphone plugged into a charging cable, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -798,7 +798,7 @@
 > spools of sewing thread in several colors, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d22-kim.webp** · 바늘 (kim)
-> a sewing needle close up with thread through its eye, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a sewing needle close up with thread through its eye, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d22-keo.webp** · 가위 (kéo)
 > a pair of tailor scissors on a cutting table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -807,7 +807,7 @@
 > an industrial sewing machine on a work table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d22-cuc.webp** · 단추 (cúc)
-> several round shirt buttons scattered close up, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> several round shirt buttons scattered close up, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d22-day-keo.webp** · 지퍼 (dây kéo)
 > a close-up of a metal zipper on a jacket, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -836,7 +836,7 @@
 > a close-up of a patch pocket sewn on a shirt, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d23-duong-may.webp** · 솔기·박은 선 (đường may)
-> a close-up of a straight stitched seam line on fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a close-up of a straight stitched seam line on fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 24 — 동작 — 자르고 박고
 
@@ -847,7 +847,7 @@
 > hands cutting fabric with scissors on a cutting table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d24-may.webp** · 박다·재봉하다 (may)
-> hands guiding fabric under the needle of a sewing machine, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> hands guiding fabric under the needle of a sewing machine, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d24-ui.webp** · 다림질하다 (ủi)
 > a hand pressing a shirt with an iron on an ironing board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -856,7 +856,7 @@
 > hands folding a shirt neatly on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d24-dong-goi.webp** · 포장하다 (đóng gói)
-> a worker packing folded shirts into a cardboard box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker packing folded shirts into a cardboard box, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d24-dinh.webp** · 달다·붙이다 (đính)
 > hands sewing a button onto a shirt with needle and thread, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -876,7 +876,7 @@
 > an inspector examining a shirt closely with a magnifying glass, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d25-sua.webp** · 고치다·수선하다 (sửa)
-> a technician repairing a sewing machine with a screwdriver, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a technician repairing a sewing machine with a screwdriver, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d25-vet.webp** · 자국·흠 (vết)
 > a close-up of a dark stain mark on white fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -893,7 +893,7 @@
 > an industrial sewing machine with the thread snapped and dangling loose from the needle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d31-thay-kim.webp** · 바늘을 갈다 (thay kim)
-> hands replacing the needle on an industrial sewing machine, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> hands replacing the needle on an industrial sewing machine, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d31-gay-kim.webp** · 바늘이 부러지다 (gãy kim)
 > a sewing machine needle snapped into two pieces on the machine plate, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -904,7 +904,7 @@
 ## Day 32 — 재단실
 
 **d32-scene.webp** · 오늘의 대화 — 몇 겹 펴는지 묻기
-> workers spreading fabric layers on a long cutting table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> workers spreading fabric layers on a long cutting table, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d32-trai-vai.webp** · 원단을 펴다·연단 (trải vải)
 > two workers spreading a long layer of fabric flat across a wide cutting table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -913,7 +913,7 @@
 > a cardboard garment pattern template shaped like a shirt panel lying on fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d32-phan.webp** · 초크·분필 (phấn)
-> a flat triangle of tailor's chalk lying on dark fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a flat triangle of tailor's chalk lying on dark fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d32-thuoc.webp** · 자(잣대) (thước)
 > a long straight ruler lying on a cutting table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -922,7 +922,7 @@
 > hands measuring a piece of fabric with a measuring tape, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d32-ve.webp** · 긋다·그리다 (vẽ)
-> a hand drawing a chalk line along a pattern template on fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand drawing a chalk line along a pattern template on fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d32-ep-mex.webp** · 심지를 붙이다 (ép mex)
 > a worker pressing white interlining onto fabric with a flat heat press, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -933,7 +933,7 @@
 ## Day 33 — 부자재
 
 **d33-scene.webp** · 오늘의 대화 — 부자재가 떨어졌을 때
-> boxes of labels, zippers and sewing accessories on shelves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> boxes of labels, zippers and sewing accessories on shelves, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d33-nhan.webp** · 라벨·상표 (nhãn)
 > a small blank woven clothing label sewn inside a shirt collar, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -959,7 +959,7 @@
 > an inspector marking defects on a garment with red tags, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d34-nhan.webp** · 주름지다·퍼커링 (nhăn)
-> a seam on fabric that is puckered and wrinkled along the stitch line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a seam on fabric that is puckered and wrinkled along the stitch line, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d34-lech.webp** · 비뚤다·어긋나다 (lệch)
 > a shirt with one chest pocket sewn visibly crooked and tilted, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1003,7 +1003,7 @@
 > a worker packing folded garments into an open cardboard box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d36-xep.webp** · 개켜 쌓다·정리하다 (xếp)
-> hands folding a shirt on a table next to a neat stack of folded shirts, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> hands folding a shirt on a table next to a neat stack of folded shirts, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 41 — 날씨
 
@@ -1037,7 +1037,7 @@
 ## Day 42 — 타고 다니기
 
 **d42-scene.webp** · 오늘의 대화 — 출근 수단 묻기
-> a person waiting at a bus stop, motorbikes passing by, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person waiting at a bus stop, motorbikes passing by, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d42-xe-may.webp** · 오토바이 (xe máy)
 > a motorbike scooter parked on a city street, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1156,13 +1156,13 @@
 > a person washing dishes at a kitchen sink with a sponge and soap bubbles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d46-phoi.webp** · 널다·말리다 (phơi)
-> a person pinning wet clothes on a clothesline in the sun, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person pinning wet clothes on a clothesline in the sun, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d46-quet.webp** · 쓸다 (quét)
 > a person sweeping the floor with a broom, a small pile of dust, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d46-lau.webp** · 닦다 (lau)
-> a person wiping a table with a cloth, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person wiping a table with a cloth, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d46-rac.webp** · 쓰레기 (rác)
 > a full tied trash bag next to a trash bin, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1188,7 +1188,7 @@
 > a close-up of a human mouth with lips slightly open, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d47-rang.webp** · 이·치아 (răng)
-> a large white tooth beside a smiling mouth showing teeth, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a large white tooth beside a smiling mouth showing teeth, simple flat illustration, soft pastel colors, thick outlines, plain white background, simple clear face with two eyes, small nose and mouth, symmetrical, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d47-sot.webp** · 열나다 (sốt)
 > a person lying in bed with red cheeks, a thermometer in their mouth and an ice pack on their forehead, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1197,7 +1197,7 @@
 > a person coughing into their fist with small droplets in the air, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d47-chong-mat.webp** · 어지럽다 (chóng mặt)
-> a dizzy person swaying with swirls and stars circling their head, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a dizzy person swaying with swirls and stars circling their head, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d47-hieu-thuoc.webp** · 약국 (hiệu thuốc)
 > a pharmacy counter with shelves of medicine boxes and a pharmacist in a white coat, a green cross sign, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1208,13 +1208,13 @@
 ## Day 48 — 만나서 한잔
 
 **d48-scene.webp** · 오늘의 대화 — 저녁 약속 잡기
-> friends toasting with drinks at a small restaurant table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> friends toasting with drinks at a small restaurant table, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d48-gap-nhau.webp** · 서로 만나다 (gặp nhau)
 > two people greeting each other with a handshake and smiles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d48-quan.webp** · 가게·식당 (quán)
-> a small street-side eatery with low plastic tables and stools, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a small street-side eatery with low plastic tables and stools, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d48-tra.webp** · 차(마시는) (trà)
 > a steaming cup of tea next to a teapot, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1226,7 +1226,7 @@
 > a drunk person with a flushed face staggering and holding a bottle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d48-karaoke.webp** · 노래방 (karaoke)
-> friends singing with microphones in a karaoke room with a screen and colorful lights, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> friends singing with microphones in a karaoke room with a screen and colorful lights, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 49 — 축하와 명절
 
@@ -1260,7 +1260,7 @@
 > a newcomer with a passport and suitcase in a vietnamese street, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d50-ho-chieu.webp** · 여권 (hộ chiếu)
-> a closed passport booklet with a gold emblem next to a small airplane, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a closed passport booklet with a gold emblem next to a small airplane, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d50-cho-dem.webp** · 야시장 (chợ đêm)
 > a busy night market with glowing lantern-lit food stalls in the dark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1283,13 +1283,13 @@
 > a flat smartphone display screen panel lying on an assembly table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d51-pin.webp** · 배터리 (pin)
-> a rectangular smartphone battery on an electronics workbench, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a rectangular smartphone battery on an electronics workbench, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d51-mach.webp** · 회로 (mạch)
 > a green printed circuit board with traces and small mounted components, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d51-chip.webp** · 칩 (chip)
-> a small black square microchip with metal pins held on a fingertip, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a small black square microchip with metal pins held on a fingertip, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d51-day-dien.webp** · 전선 (dây điện)
 > colored electrical wires coiled on a factory workbench, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1298,7 +1298,7 @@
 > small metal screws scattered next to a screwdriver, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d51-keo.webp** · 접착제·본드 (keo)
-> a tube of glue squeezing a drop onto a phone part, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a tube of glue squeezing a drop onto a phone part, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d51-kinh.webp** · 유리·렌즈 (kính)
 > a clear rectangular glass panel for a phone screen held by gloved hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1306,19 +1306,19 @@
 ## Day 52 — 조립 동작
 
 **d52-scene.webp** · 오늘의 대화 — 조립 후 시운전
-> a worker assembling a device with a screwdriver on a line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker assembling a device with a screwdriver on a line, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d52-lap-rap.webp** · 조립하다 (lắp ráp)
 > a worker assembling smartphone parts together at a factory assembly line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d52-gan.webp** · 장착하다·붙이다 (gắn)
-> gloved hands attaching a small component onto a phone frame, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> gloved hands attaching a small component onto a phone frame, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d52-van.webp** · 돌려 조이다 (vặn)
-> a hand turning a screwdriver to drive a screw into a device, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand turning a screwdriver to drive a screw into a device, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d52-siet.webp** · 꽉 조이다 (siết)
-> a hand tightening a bolt firmly with a wrench, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand tightening a bolt firmly with a wrench, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d52-cam.webp** · 꽂다 (cắm)
 > a hand plugging a cable into a power socket, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1364,7 +1364,7 @@
 ## Day 54 — 확대해서 검사
 
 **d54-scene.webp** · 오늘의 대화 — 화면 검사
-> an inspector examining a screen through a magnifying camera, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> an inspector examining a screen through a magnifying camera, simple flat illustration, soft pastel colors, thick outlines, plain white background, simple clear face with two eyes, small nose and mouth, symmetrical, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d54-may-do.webp** · 측정기 (máy đo)
 > a digital caliper measuring a small metal part, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1384,7 +1384,7 @@
 ## Day 55 — 라인 돌리기
 
 **d55-scene.webp** · 오늘의 대화 — 라인이 섰을 때
-> a supervisor pointing at a production dashboard beside a conveyor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a supervisor pointing at a production dashboard beside a conveyor, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d55-day-chuyen.webp** · 생산 라인(전체) (dây chuyền)
 > a long factory conveyor belt line with workers assembling products along it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1396,7 +1396,7 @@
 > a machine conveyor belt running with motion lines after a green button is pressed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d55-doi-ca.webp** · 교대를 바꾸다 (đổi ca)
-> two factory workers in different colored uniforms swapping places at a workstation, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two factory workers in different colored uniforms swapping places at a workstation, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 ## Day 56 — 사무실
 
@@ -1422,7 +1422,7 @@
 > file folders with tabs stacked in an office document tray, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d56-lich.webp** · 일정·달력 (lịch)
-> a wall calendar grid with one day circled in red, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a wall calendar grid with one day circled in red, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, no calendar, no grid of dates
 
 **d56-cuoc-hop.webp** · 회의 (cuộc họp)
 > several office workers sitting around a conference table in a meeting, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1430,7 +1430,7 @@
 ## Day 57 — 손님 응대
 
 **d57-scene.webp** · 오늘의 대화 — 주문과 계산
-> a staff member serving a customer at a shop counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a staff member serving a customer at a shop counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d57-khach-hang.webp** · 고객 (khách hàng)
 > a customer holding a shopping bag standing at a store counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1439,10 +1439,10 @@
 > a waiter carrying a tray of food to serve a seated customer, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d57-thuc-don.webp** · 메뉴판 (thực đơn)
-> an open restaurant menu with small food pictures and price lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> an open restaurant menu with small food pictures and price lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d57-goi.webp** · 포장하다·싸다 (gói)
-> hands packing food into a takeout box and tying a bag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> hands packing food into a takeout box and tying a bag, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d57-mang-ve.webp** · 가져가다·포장 판매 (mang về)
 > a customer walking out of a shop carrying a takeout bag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1451,13 +1451,13 @@
 > a cashier at a register taking payment from a customer, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d57-tien-mat.webp** · 현금 (tiền mặt)
-> paper banknotes and coins lying on a counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> paper banknotes and coins lying on a counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d57-giam-gia.webp** · 할인하다 (giảm giá)
-> a shopkeeper placing a red percent discount tag on a product, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a shopkeeper placing a red percent discount tag on a product, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d57-hoa-don.webp** · 영수증 (hóa đơn)
-> a paper receipt with item lines printing out of a register, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a paper receipt with item lines printing out of a register, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 58 — 통역 첫걸음
 
@@ -1484,7 +1484,7 @@
 ## Day 60 — 은행과 서류
 
 **d60-scene.webp** · 오늘의 대화 — 환전하기
-> a person exchanging money at a bank counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person exchanging money at a bank counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, simple clear face with two eyes, small nose and mouth, symmetrical, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d60-chuyen-tien.webp** · 송금하다 (chuyển tiền)
 > banknotes flying along an arrow from one smartphone to another, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1493,7 +1493,7 @@
 > a hand taking banknotes out of an ATM cash slot, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d60-doi-tien.webp** · 환전하다 (đổi tiền)
-> hands exchanging two different colored currencies over a bank counter with swap arrows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> hands exchanging two different colored currencies over a bank counter with swap arrows, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d60-mat-khau.webp** · 비밀번호 (mật khẩu)
 > a smartphone screen showing a padlock above a row of hidden password dots, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1502,18 +1502,18 @@
 > a hand with a pen filling in a paper form with empty boxes and checkboxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d60-nop.webp** · 제출하다·내다 (nộp)
-> a person handing a document across a counter to a bank clerk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person handing a document across a counter to a bank clerk, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 61 — 복장과 태도
 
 **d61-scene.webp** · 오늘의 대화 — 작업복 입기
-> a worker in uniform with id badge checking a rules board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker in uniform with id badge checking a rules board, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d61-mac.webp** · 입다 (mặc)
 > a worker putting on a factory uniform shirt, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d61-deo.webp** · 차다·착용하다 (đeo)
-> a person putting on eyeglasses with both hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person putting on eyeglasses with both hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d61-luoi.webp** · 게으르다 (lười)
 > a worker slumped asleep at a factory workbench during the workday, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1544,7 +1544,7 @@
 > coworkers toasting glasses at a company dinner party, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d63-lien-hoan.webp** · 회식·파티 (liên hoan)
-> coworkers gathered around a table full of food raising glasses at a celebration dinner, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> coworkers gathered around a table full of food raising glasses at a celebration dinner, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d63-rot.webp** · 따르다 (rót)
 > a hand pouring a drink from a bottle into a small glass, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1553,10 +1553,10 @@
 > two people clinking their glasses together in a toast, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d63-gap.webp** · (음식을) 집다·집어 주다 (gắp)
-> chopsticks picking up a piece of food from a shared plate at a dinner table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> chopsticks picking up a piece of food from a shared plate at a dinner table, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d63-tu-choi.webp** · 거절하다 (từ chối)
-> a person holding up a flat hand to politely refuse a drink being offered, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person holding up a flat hand to politely refuse a drink being offered, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 64 — 휴가와 근태 심화
 
@@ -1570,7 +1570,7 @@
 > a worker with a bag walking out of the factory door while coworkers still work at sewing machines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d64-thong-bao.webp** · 공지하다·알리다 (thông báo)
-> a manager speaking through a megaphone to a group of factory workers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a manager speaking through a megaphone to a group of factory workers, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 65 — 실수했을 때
 
@@ -1580,24 +1580,24 @@
 ## Day 66 — 근로계약
 
 **d66-scene.webp** · 오늘의 대화 — 계약서 읽기
-> two people reviewing a contract document with a pen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people reviewing a contract document with a pen, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d66-hop-dong.webp** · 계약(서) (hợp đồng)
-> two hands shaking over a contract document with a pen resting on it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two hands shaking over a contract document with a pen resting on it, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 67 — 급여명세 읽기
 
 **d67-scene.webp** · 오늘의 대화 — 명세서 확인
-> a person reading a payslip with a calculator, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person reading a payslip with a calculator, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d67-bang-luong.webp** · 급여명세서 (bảng lương)
-> a payslip document lying beside a small stack of coins, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a payslip document lying beside a small stack of coins, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d67-lam-them.webp** · 추가 근무하다 (làm thêm)
 > a worker sewing at a machine at night with a moon visible through the window, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d67-nhan.webp** · 곱하다 (nhân)
-> a large multiplication sign with rows and columns of apples, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a large multiplication sign with rows and columns of apples, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d67-chia.webp** · 나누다 (chia)
 > a large division sign with apples split into equal groups, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1611,10 +1611,10 @@
 ## Day 68 — 비자와 체류
 
 **d68-scene.webp** · 오늘의 대화 — 허가증 연장
-> a person at an immigration counter with passport and photos, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person at an immigration counter with passport and photos, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d68-giay-phep.webp** · 허가증 (giấy phép)
-> an official permit document with a red seal stamp, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> an official permit document with a red seal stamp, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d68-the-tam-tru.webp** · 임시거주증 (thẻ tạm trú)
 > a plastic identity card with a person's photo portrait on it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1623,7 +1623,7 @@
 > a stately government building with columns and a flag on the roof, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d68-khai.webp** · 기입하다·신고하다 (khai)
-> a hand holding a pen filling out a paper form on a desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand holding a pen filling out a paper form on a desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d68-anh.webp** · 사진 (ảnh)
 > small printed identity photos of a person's face on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1637,7 +1637,7 @@
 > a nurse guiding a worker at a company clinic, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d69-kham-suc-khoe.webp** · 건강검진 (khám sức khỏe)
-> a doctor examining a patient's chest with a stethoscope, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a doctor examining a patient's chest with a stethoscope, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d69-don-thuoc.webp** · 처방전 (đơn thuốc)
 > a prescription paper next to a bottle of pills, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1652,7 +1652,7 @@
 > a patient lying in a hospital bed connected to an IV drip, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d69-xuat-vien.webp** · 퇴원하다 (xuất viện)
-> a smiling patient with a small bag walking out of a hospital entrance waving goodbye, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a smiling patient with a small bag walking out of a hospital entrance waving goodbye, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d69-met-moi.webp** · 피로하다 (mệt mỏi)
 > an exhausted worker with drooping shoulders wiping sweat from the forehead, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1660,7 +1660,7 @@
 ## Day 70 — 잃어버렸을 때
 
 **d70-scene.webp** · 오늘의 대화 — 지갑을 잃었다
-> a person reporting a lost wallet at a police desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person reporting a lost wallet at a police desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d70-mat.webp** · 잃어버리다 (mất)
 > a worried person with both trouser pockets pulled out empty, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1672,7 +1672,7 @@
 > a wallet falling out of a person's back pocket as they walk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d70-trom.webp** · 도둑·도난 (trộm)
-> a masked thief sneaking on tiptoe carrying a bag over the shoulder, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a masked thief sneaking on tiptoe carrying a bag over the shoulder, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d70-cong-an.webp** · 경찰(공안) (công an)
 > a police officer in uniform and cap standing upright, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1686,7 +1686,7 @@
 ## Day 71 — 고향과 나이
 
 **d71-scene.webp** · 오늘의 대화 — 고향 묻기
-> two coworkers chatting about hometowns over a map of vietnam, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two coworkers chatting about hometowns over a map of vietnam, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d71-que.webp** · 고향 (quê)
 > a small rural Vietnamese village with rice paddies, palm trees and simple houses, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1695,10 +1695,10 @@
 > a bride in a white dress and a groom in a suit holding hands at their wedding, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d71-nguoi-yeu.webp** · 애인 (người yêu)
-> a young couple holding hands with a heart floating above them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a young couple holding hands with a heart floating above them, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d71-co-con.webp** · 자녀가 있다 (có con)
-> a smiling mother and father holding their small child between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a smiling mother and father holding their small child between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 72 — 가족 자랑과 반려동물
 
@@ -1706,7 +1706,7 @@
 > a person showing family photos on a phone to a colleague, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d72-cao.webp** · (키가) 크다 (cao)
-> a very tall man standing beside a door frame, his head reaching above the top of it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a very tall man standing beside a door frame, his head reaching above the top of it, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d72-thap.webp** · (키가) 작다 (thấp)
 > a short man standing on tiptoes reaching up toward a high shelf he cannot touch, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1735,16 +1735,16 @@
 > dejected soccer players hanging their heads and slumping their shoulders on the field, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d73-cau-thu.webp** · 선수 (cầu thủ)
-> a soccer player in uniform standing with one foot resting on a soccer ball, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a soccer player in uniform standing with one foot resting on a soccer ball, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d73-da.webp** · (공을) 차다 (đá)
-> a soccer player kicking a ball hard with a swinging leg, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a soccer player kicking a ball hard with a swinging leg, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d73-co-vu.webp** · 응원하다 (cổ vũ)
 > excited fans in stadium stands cheering with raised arms and waving scarves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d73-vo-dich.webp** · 우승하다 (vô địch)
-> a team captain lifting a golden trophy overhead while confetti falls, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a team captain lifting a golden trophy overhead while confetti falls, simple flat illustration, soft pastel colors, thick outlines, plain white background, simple clear face with two eyes, small nose and mouth, symmetrical, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 74 — 주말 이야기
 
@@ -1752,16 +1752,16 @@
 > two people chatting happily on monday morning at lockers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d74-ve-que.webp** · 고향에 다녀오다 (về quê)
-> a traveler with a bag riding a bus on a road toward a rural village with rice fields, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a traveler with a bag riding a bus on a road toward a rural village with rice fields, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d74-mot-minh.webp** · 혼자 (một mình)
 > a single person sitting alone at a small table in an otherwise empty room, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d74-ban-be.webp** · 친구들 (bạn bè)
-> a group of friends laughing together with arms around each other's shoulders, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a group of friends laughing together with arms around each other's shoulders, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d74-hen-ho.webp** · 데이트하다 (hẹn hò)
-> a young couple on a dinner date at a cafe table with a rose between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a young couple on a dinner date at a cafe table with a rose between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d74-nghi-ngoi.webp** · 푹 쉬다 (nghỉ ngơi)
 > a person relaxing in a hammock with eyes closed and hands behind their head, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1772,7 +1772,7 @@
 ## Day 75 — 맞장구와 리액션
 
 **d75-scene.webp** · 오늘의 대화 — 칭찬 주고받기
-> coworkers clapping and giving thumbs up to a shy colleague, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> coworkers clapping and giving thumbs up to a shy colleague, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d75-vo-tay.webp** · 박수 치다 (vỗ tay)
 > a smiling person clapping their hands with small motion lines around the palms, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1801,7 +1801,7 @@
 > a glass of pale green sugarcane juice beside fresh sugarcane stalks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d76-ong-hut.webp** · 빨대 (ống hút)
-> a striped drinking straw standing in a clear glass of water, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a striped drinking straw standing in a clear glass of water, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d76-coc.webp** · 잔·컵 (cốc)
 > a plain empty drinking cup on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1838,7 +1838,7 @@
 ## Day 78 — 유심과 휴대폰
 
 **d78-scene.webp** · 오늘의 대화 — 유심 사기
-> a phone shop clerk handing a sim card to a customer, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a phone shop clerk handing a sim card to a customer, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d78-sim.webp** · 유심 (sim)
 > a small SIM card held between two fingers with its gold chip visible, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1847,7 +1847,7 @@
 > a wifi router with curved signal waves rising from its antennas, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d78-cuoc-goi.webp** · 통화 (cuộc gọi)
-> a person talking on a mobile phone held to their ear, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person talking on a mobile phone held to their ear, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d78-quet-ma.webp** · 코드를 찍다(QR) (quét mã)
 > a hand holding a smartphone up to scan a QR code displayed on a small counter stand, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1861,7 +1861,7 @@
 > a small laundry shop interior with washing machines and clothes hanging on a rack, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d79-khau.webp** · 꿰매다 (khâu)
-> a hand sewing fabric with a needle and thread, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand sewing fabric with a needle and thread, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d79-va.webp** · 깁다·때우다 (vá)
 > hands sewing a square fabric patch over a hole in a pair of jeans, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1884,13 +1884,13 @@
 ## Day 80 — 택배와 그랩
 
 **d80-scene.webp** · 오늘의 대화 — 배달 주소 알려주기
-> a delivery rider checking an address in a narrow alley, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a delivery rider checking an address in a narrow alley, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d80-ship.webp** · 배달 (ship)
 > a delivery driver on a motorbike with a stack of parcels strapped on the back, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d80-app.webp** · 앱 (app)
-> a hand holding a smartphone showing a grid of colorful app icons, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand holding a smartphone showing a grid of colorful app icons, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d80-ngo.webp** · 골목 (ngõ)
 > a narrow alley between old houses with a motorbike parked to one side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1899,18 +1899,18 @@
 > a person holding up a phone as a motorbike taxi pulls up to the curb, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d80-gui-hang.webp** · 물건을 부치다 (gửi hàng)
-> a customer handing a taped cardboard parcel across a shipping counter to a clerk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a customer handing a taped cardboard parcel across a shipping counter to a clerk, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d80-giao-hang.webp** · 배달하다 (giao hàng)
-> a courier handing a cardboard box to a customer at their front door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a courier handing a cardboard box to a customer at their front door, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 81 — 지시하기
 
 **d81-scene.webp** · 오늘의 대화 — 순서대로 지시하기
-> a team leader explaining steps one by one to a worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a team leader explaining steps one by one to a worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d81-lam-theo.webp** · 따라 하다 (làm theo)
-> a trainee worker copying the exact hand motions of a supervisor demonstrating at a sewing station, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a trainee worker copying the exact hand motions of a supervisor demonstrating at a sewing station, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 82 — 진행 확인
 
@@ -1926,7 +1926,7 @@
 > a supervisor and a worker talking quietly one-on-one in a corner, away from a group visible in the background, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d83-tranh.webp** · 피하다 (tránh)
-> a worker stepping aside to avoid a rolling cart in a factory aisle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker stepping aside to avoid a rolling cart in a factory aisle, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d83-xau-ho.webp** · 창피하다 (xấu hổ)
 > a blushing person covering their cheeks with both hands, looking embarrassed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1943,27 +1943,27 @@
 > a small team of factory workers standing together in matching uniforms, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d84-nu-cuoi.webp** · 미소 (nụ cười)
-> a close-up of a person's face with a warm smile, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a close-up of a person's face with a warm smile, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 85 — 회의 진행
 
 **d85-scene.webp** · 오늘의 대화 — 조회 진행하기
-> a short morning meeting with raised hands and a whiteboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a short morning meeting with raised hands and a whiteboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d85-phat-bieu.webp** · 발언하다 (phát biểu)
 > a person standing up and speaking at a meeting table while seated colleagues listen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d85-phan-doi.webp** · 반대하다 (phản đối)
-> a person at a meeting crossing both forearms in an X gesture, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person at a meeting crossing both forearms in an X gesture, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d85-ghi-chep.webp** · 기록하다·메모하다 (ghi chép)
-> a hand writing notes in an open notebook with a pen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand writing notes in an open notebook with a pen, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d85-thu-ky.webp** · 서기·비서 (thư ký)
 > a secretary sitting beside a meeting table taking notes on a notepad, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d85-bieu-quyet.webp** · 표결하다 (biểu quyết)
-> several people around a meeting table raising their hands to vote, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> several people around a meeting table raising their hands to vote, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 96 — 지게차와 안전거리
 
@@ -1994,7 +1994,7 @@
 ## Day 97 — 입고와 출고
 
 **d97-scene.webp** · 오늘의 대화 — 입고 처리
-> warehouse shelves with labeled bins and a receiving slip, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> warehouse shelves with labeled bins and a receiving slip, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d97-nhap-kho.webp** · 입고하다 (nhập kho)
 > a worker wheeling a hand truck of boxes in through a warehouse door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2017,7 +2017,7 @@
 ## Day 98 — 재고 조사
 
 **d98-scene.webp** · 오늘의 대화 — 장부 맞추기
-> a stocktake with a clipboard comparing ledger and shelves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a stocktake with a clipboard comparing ledger and shelves, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d98-kiem-ke.webp** · 재고 조사하다 (kiểm kê)
 > a worker counting stacked boxes on shelves while marking a checklist on a clipboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2029,7 +2029,7 @@
 > a box in which red parts and blue parts are jumbled together in a mix, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d98-cat.webp** · 간수하다·넣어 두다 (cất)
-> a worker putting a tool away into a storage cabinet, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker putting a tool away into a storage cabinet, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 99 — 상차와 하차
 
@@ -2061,12 +2061,12 @@
 > a tall crane lifting a shipping container, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d99-chat-len.webp** · 쌓아 올리다 (chất lên)
-> a worker stacking boxes one on top of another into a tall pile, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker stacking boxes one on top of another into a tall pile, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 100 — 인수인계와 클레임
 
 **d100-scene.webp** · 오늘의 대화 — 파손 클레임
-> a courier and receiver signing a delivery report over a damaged box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a courier and receiver signing a delivery report over a damaged box, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d100-giao-nhan.webp** · 인수인계·배송 수령 (giao nhận)
 > a delivery driver handing a package to a receiving worker at a warehouse door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2075,18 +2075,18 @@
 > a person with open arms receiving a delivered package, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d100-nguoi-gui.webp** · 발송인 (người gửi)
-> a person handing a parcel over a counter to send it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person handing a parcel over a counter to send it, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d100-hu-hong.webp** · 파손되다 (hư hỏng)
 > a dented, crushed cardboard parcel with a torn corner, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d100-chup-lai.webp** · 찍어 두다 (chụp lại)
-> a worker photographing a damaged box with a smartphone, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker photographing a damaged box with a smartphone, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 86 — 공정 흐름
 
 **d86-scene.webp** · 오늘의 대화 — 공정 순서 설명
-> a flow diagram of cutting, sewing and finishing stations, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a flow diagram of cutting, sewing and finishing stations, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d86-ban-thanh-pham.webp** · 반제품 (bán thành phẩm)
 > a half-sewn shirt with loose unfinished edges and pins, lying on a factory sewing table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2095,18 +2095,18 @@
 > a finished shirt neatly folded in clear packaging on a factory table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d86-ban-giao.webp** · 인계하다 (bàn giao)
-> one worker handing over a stack of folded garments to another worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> one worker handing over a stack of folded garments to another worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, full body in natural proportion, both legs attached at the hips, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 87 — 규격 지시
 
 **d87-scene.webp** · 오늘의 대화 — 시접 지시
-> a ruler measuring seam width on fabric with chalk marks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a ruler measuring seam width on fabric with chalk marks, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d87-khop.webp** · 맞물리다·일치하다 (khớp)
 > two hands pushing two puzzle pieces together so they fit perfectly, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d87-thang-hang.webp** · 줄이 맞다 (thẳng hàng)
-> a row of buttons sewn in a perfectly straight line on a shirt, a ruler lying beside them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a row of buttons sewn in a perfectly straight line on a shirt, a ruler lying beside them, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d87-bang-mau.webp** · 컬러표 (bảng màu)
 > a fan deck of fabric color swatches spread out showing many colors, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2117,7 +2117,7 @@
 ## Day 88 — 검사 합불
 
 **d88-scene.webp** · 오늘의 대화 — 합불 나누기
-> sorted garment piles with green pass and red fail tags, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> sorted garment piles with green pass and red fail tags, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d88-phan-loai.webp** · 분류하다 (phân loại)
 > a worker sorting shirts into two separate bins on a factory table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2129,7 +2129,7 @@
 > a wrinkled shirt with a visible stain and a red X tag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d88-danh-dau.webp** · 표시하다 (đánh dấu)
-> a hand drawing a chalk mark on fabric to flag a spot, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand drawing a chalk mark on fabric to flag a spot, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d88-tem.webp** · 스티커·태그 (tem)
 > a roll of small round colored stickers next to a folded garment, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2143,13 +2143,13 @@
 > a person walking out through an open door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d89-thao-ra.webp** · 뜯어내다 (tháo ra)
-> hands using a small ripping tool to undo the stitches of a garment seam, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> hands using a small ripping tool to undo the stitches of a garment seam, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d89-thay-the.webp** · 교체하다 (thay thế)
 > hands swapping a broken zipper for a new one on a jacket, the old zipper set aside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d89-tay.webp** · 지우다·얼룩 빼다 (tẩy)
-> a hand scrubbing a stain on fabric, the stain half removed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a hand scrubbing a stain on fabric, the stain half removed, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d89-xuoc.webp** · 긁히다 (xước)
 > a close-up of a long scratch mark on a smooth product surface, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2163,24 +2163,24 @@
 ## Day 90 — 작업 표준서 읽기
 
 **d90-scene.webp** · 오늘의 대화 — 표준서 보기
-> a worker reading an illustrated work-standard sheet, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker reading an illustrated work-standard sheet, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d90-ban-ve.webp** · 도면 (bản vẽ)
 > a technical drawing of a shirt with dimension arrow lines on a large sheet of paper, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d90-ky-hieu.webp** · 기호 (ký hiệu)
-> a garment care label showing washing symbols such as a tub and an iron icon, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a garment care label showing washing symbols such as a tub and an iron icon, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 91 — 납땜
 
 **d91-scene.webp** · 오늘의 대화 — 납땜 지시
-> a worker soldering a chip on a circuit board with smoke wisps, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker soldering a chip on a circuit board with smoke wisps, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d91-han.webp** · 납땜하다 (hàn)
-> a worker soldering a component onto a circuit board with a soldering iron in an electronics factory, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker soldering a component onto a circuit board with a soldering iron in an electronics factory, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown
 
 **d91-moi-han.webp** · 납땜부·땜점 (mối hàn)
-> a close-up of shiny silver solder joints on a green circuit board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a close-up of shiny silver solder joints on a green circuit board, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d91-thiec.webp** · 땜납·주석 (thiếc)
 > a spool of thin silver solder wire on a workbench, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2192,7 +2192,7 @@
 > a thin wisp of gray smoke rising from a soldering iron tip, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d91-bo-mach.webp** · 회로 기판 (bo mạch)
-> a green circuit board covered with small electronic components, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a green circuit board covered with small electronic components, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d91-kep.webp** · 집게·클립 (kẹp)
 > a metal clamp holding a small circuit board on a workbench, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2200,7 +2200,7 @@
 ## Day 92 — 장비 다루기
 
 **d92-scene.webp** · 오늘의 대화 — 장비 켜기
-> an inspection machine booting up with data on screen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> an inspection machine booting up with data on screen, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d92-nguon.webp** · 전원 (nguồn)
 > a power plug being inserted into a wall outlet, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2237,7 +2237,7 @@
 ## Day 94 — 온도·습도·접지
 
 **d94-scene.webp** · 오늘의 대화 — 환경 점검
-> a thermometer and hygrometer on a cleanroom wall, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a thermometer and hygrometer on a cleanroom wall, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d94-noi.webp** · 잇다·연결하다 (nối)
 > two electrical wire ends being twisted together to join them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2255,7 +2255,7 @@
 > a pleated white air filter panel held in two hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d94-bui-min.webp** · 미세먼지 (bụi mịn)
-> a gray haze of tiny fine dust particles floating in the air, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a gray haze of tiny fine dust particles floating in the air, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 ## Day 95 — 출하 전 검수
 
@@ -2266,10 +2266,10 @@
 > a wooden pallet stacked with cardboard boxes in a warehouse, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d95-niem-phong.webp** · 봉인하다 (niêm phong)
-> a worker sealing a cardboard box shut with packing tape, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a worker sealing a cardboard box shut with packing tape, simple flat illustration, soft pastel colors, thick outlines, plain white background, hands not visible, arms relaxed and out of frame or fully behind the object, no fingers shown, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d95-can-nang.webp** · 무게 (cân nặng)
-> a cardboard box sitting on a platform weighing scale, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a cardboard box sitting on a platform weighing scale, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
 
 **d95-danh-sach.webp** · 목록·리스트 (danh sách)
 > a clipboard holding a paper with rows of blank list lines and checkboxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters

@@ -2,12 +2,13 @@
 """오늘의 베트남 기사 수집 — 깃허브 액션이 매일 아침 돌린다 (표준 라이브러리만).
 
 고르는 기준은 하나뿐이다: **베트남에 일하러 가는 한국인에게 쓸모 있는가.**
-글자 수나 최신순이 아니라 관심사 점수가 먼저다. 순서는 이렇다.
-   ① 오늘 기사 중 관심사 점수가 있는 것
-   ② 없으면 어제 기사 중 관심사 점수가 있는 것
-   ③ 없으면 오늘 기사 중 일상어가 많은 것
-   ④ 없으면 어제 기사 중 일상어가 많은 것
-하루 2개를 싣는다. 그중 1등이 '오늘의 기사' 학습 세트 재료가 된다(tools/news_lesson.py).
+글자 수나 최신순이 아니라 관심사 점수가 먼저다.
+새벽 6시 30분에 도니 그 시각에 완성돼 있는 것은 **어제 하루치**다(기사 사이트는
+오전 9시~오후 6시에 올린다).
+다만 **주말에는 기사가 한 건도 안 올라온다**(실측: 토·일 0건, 월요일도 3건뿐).
+그래서 '어제'가 아니라 **기사가 있는 가장 최근 날**을 통째로 쓴다 —
+월요일 아침이면 금요일 기사가 나온다.
+하루 5개를 싣고, 그 다섯 개 전부가 학습 세트가 된다(tools/news_lesson.py).
 결과는 data/news.json — 앱의 '베트남 소식' 화면이 읽는다."""
 import json, pathlib, subprocess, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
@@ -24,8 +25,8 @@ def get(url):
 
 R = pathlib.Path(__file__).resolve().parent.parent
 KST = timezone(timedelta(hours=9))
-PER_DAY = 2                       # 하루에 싣는 기사 수 (경제·문화 다 합쳐서)
-KEEP_DAYS = 3                     # 화면에 남기는 날수
+PER_DAY = 5                       # 하루에 싣는 기사 수 (경제·문화 다 합쳐서)
+KEEP_DAYS = 7                     # 화면에 남기는 날수 (일주일치)
 
 # 인사이드비나(한국어, 베트남 전문)만 쓴다 — 영어 국제면은 베트남 무관 기사가 섞여서 뺐다.
 FEED = ('인사이드비나', 'https://www.insidevina.com/rss/allArticle.xml')
@@ -102,28 +103,31 @@ for it in root.iter('item'):
     if not t or not u or not d:
         continue
     day = d.astimezone(KST).date()
-    if (today - day).days > 1:              # 오늘과 어제만 본다
+    gap = (today - day).days
+    if gap < 1 or gap > 6:                  # 오늘 것은 아직 안 올라왔고, 일주일 넘은 건 안 쓴다
         continue
     cand.append({'t': t, 'u': u, 'when': d.astimezone(KST), 'day': day,
                  'care': care_score(t), 'daily': daily_score(t), 'body': ''})
 
 # 제목 점수로 후보를 좁힌 뒤, 그 후보들만 본문을 읽어 다시 점수를 매긴다.
 # (모든 기사의 본문을 받으면 느리고, 제목만 보면 숫자 기사가 뽑힌다)
+if cand:
+    newest0 = max(c['day'] for c in cand)
+    cand = [c for c in cand if c['day'] == newest0]      # 먼저 날짜를 좁히고
 cand.sort(key=lambda c: (-c['care'], -c['daily'], -c['when'].timestamp()))
-for c in cand[:10]:
+for c in cand[:12]:                                      # 그 날의 후보만 본문을 받는다
     c['body'] = body_of(c['u'])
     if c['body']:
         c['care'] += min(care_score(c['body']), 12)     # 본문 점수는 12점까지만 (긴 기사 특혜 방지)
         c['daily'] += min(daily_score(c['body']), 8)
 
-# 사용자가 정한 순서대로 고른다.
-#   ① 오늘의 관심사 기사 → ② 어제의 관심사 기사 → ③ 오늘의 일상어 기사 → ④ 어제의 일상어 기사
-def bucket(c):
-    fresh = 0 if c['day'] == today else 1            # 오늘이 어제보다 먼저
-    kind = 0 if c['care'] > 0 else 1                 # 관심사가 일상어보다 먼저
-    return (kind, fresh)                             # (0,0) → (0,1) → (1,0) → (1,1)
-
-cand.sort(key=lambda c: (bucket(c), -c['care'], -c['daily'], -c['when'].timestamp()))
+# 기사가 있는 가장 최근 날 하루치만 쓴다 (주말을 건너뛰기 위해).
+if not cand:
+    print('가져올 기사가 없다'); raise SystemExit(0)
+newest = max(c['day'] for c in cand)
+cand = [c for c in cand if c['day'] == newest]
+# 그 안에서 관심사가 있는 기사가 먼저, 없으면 일상어가 많은 기사로 채운다.
+cand.sort(key=lambda c: (0 if c['care'] > 0 else 1, -c['care'], -c['daily'], -c['when'].timestamp()))
 picked = cand[:PER_DAY]
 
 items = []
@@ -161,7 +165,7 @@ if items:                                    # 피드가 죽은 날은 어제 �
 (R / 'data' / 'news_body.json').write_text(json.dumps(
     {'when': datetime.now(KST).strftime('%Y-%m-%d %H:%M'),
      'picked': [{'t': c['t'], 'u': c['u'], 'ts': c['when'].strftime('%Y-%m-%d'),
-                 'care': c['care'], 'body': c['body'][:6000]} for c in picked]},
+                 'care': c['care'], 'cat': c.get('cat'), 'body': c['body'][:5000]} for c in picked]},
     ensure_ascii=False, indent=1))
 
 for c in picked:
