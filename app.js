@@ -19,6 +19,11 @@ function save() {
 
 /* 단톡방 공유용 키 링크: 주소 뒤 #k=... 를 한 번 읽어 저장하고 지운다.
    #(해시) 부분은 서버로 전송되지 않아 어디에도 기록이 안 남는다. */
+if (location.hash === '#admin') {          // 운영자 화면 켜기 (이 폰에만 남는다)
+  S.admin = 1;
+  localStorage.setItem(KEY, JSON.stringify(S));
+  history.replaceState(null, '', location.pathname + location.search);
+}
 if (location.hash.startsWith('#k=')) {
   S.gkey = decodeURIComponent(location.hash.slice(3));
   save();
@@ -887,6 +892,12 @@ function renderAwards() {
                el('span', 'awh', on ? '달성 ✔' : esc(bg.how)));
     b.append(row);
   });
+  if (S.admin) {
+    const ad = el('button', 'ghost', '운영 현황 보기');
+    ad.style.width = '100%'; ad.style.marginTop = '10px';
+    ad.onclick = () => { dive(renderAwards); showAdmin(); };
+    b.append(ad);
+  }
   const sh = el('button', 'primary big', '자랑 카드 만들기');
   sh.style.width = '100%'; sh.style.marginTop = '16px';
   sh.onclick = shareCard;
@@ -4102,7 +4113,21 @@ function drawRank(host) {
   const again = el('button', 'ghost sm', '새로고침');
   again.onclick = () => drawRank(host);
   const sk = skillScore();
-  cCall({ act: 'rank', uid: myUid(), score: sk.score, memo: sk.memo, pct: myPcts() })
+  /* 운영에 필요한 숫자를 함께 보낸다. 전부 '내 진도의 요약'이고 개인을 가리키지 않는다.
+     f  첫날      — 시작한 지 며칠 된 사람인지 (코호트)
+     l  마지막 날 — 아직 하고 있는지
+     dd 공부한 날 · st 끝낸 세트 — 어디까지 갔는지 (어디서 그만두는지 알려면 필요하다)
+     tr 만기 지난 카드의 첫 시도 정답률 — **진짜로 기억에 남았는가**. 간격 반복의 핵심 지표다
+     ms 두 번 이상 틀린 단어 몇 개 — 어느 단어가 어려운지(커리큘럼을 고칠 근거) */
+  const acts = Object.keys(S.act || {}).sort();
+  const od = S.stats.od || {};
+  const tr = Object.values(od).reduce((a, v) => [a[0] + v.ok, a[1] + v.all], [0, 0]);
+  const ms = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
+    .sort((a, b) => b[1] - a[1]).slice(0, 8).map(x => x[0]);
+  cCall({ act: 'rank', uid: myUid(), score: sk.score, memo: sk.memo, pct: myPcts(),
+          days: weekDots().map(d => d.done ? 1 : 0),
+          f: acts[0] || '', l: acts[acts.length - 1] || '', dd: acts.length,
+          st: Object.keys(S.done).filter(k => +k >= 1).length, tr, ms })
     .then(j => {
       body.textContent = '';
       if (j.total < 3) {
@@ -4155,6 +4180,69 @@ function drawRank(host) {
       host.append(again);
     })
     .catch(() => { body.textContent = '순위를 불러오지 못했습니다.'; host.append(again); });
+}
+
+/* ---------- 운영 현황 (운영자만) ----------
+   운영을 하려면 몇 명이 쓰는지, 언제 오는지는 알아야 한다.
+   그러나 그걸 알기 위해 **누구인지를 알 필요는 없다** — 서버는 별명조차 안 내보낸다.
+   주소 뒤에 #admin 을 한 번 붙여 열면 이 화면이 켜진다(그 표시는 이 폰에만 남는다). */
+function showAdmin() {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '불러오는 중…'));
+  show('sub', '운영 현황', true);
+  cCall({ act: 'stats' }).then(j => {
+    b.textContent = '';
+    b.append(el('p', 'lede', '이번 주 (' + j.week + ' 시작)'));
+    const st = el('div', 'stats');
+    [['쓴 사람', j.people], ['공부한 사람', j.active], ['단어를 외운 사람', j.started]]
+      .forEach(([k, v]) => { const c = el('div', 'stat');
+        c.append(el('b', null, String(v)), el('span', null, k)); st.append(c); });
+    b.append(st);
+
+    b.append(el('p', 'newsday', '요일별 접속자'));
+    const rows = '월화수목금토일'.split('').map((nm, i) =>
+      [nm + '요일', j.people ? Math.round(j.byDay[i] * 100 / j.people) : 0, NEED]);
+    b.append(bars(rows));
+    b.append(el('p', 'dimtxt', j.byDay.map((n, i) => '월화수목금토일'[i] + ' ' + n + '명').join(' · ')));
+
+    // 어디까지 갔다가 그만두는가 — 앱을 고칠 자리를 알려주는 가장 중요한 그림
+    if (j.funnel) {
+      b.append(el('p', 'newsday', '끝낸 세트 (어디서 멈추는가)'));
+      const F = ['0개', '1~2', '3~5', '6~10', '11~20', '21+'];
+      b.append(bars(F.map((nm, i) => [nm, j.people ? Math.round(j.funnel[i] * 100 / j.people) : 0, NEED])));
+      b.append(el('p', 'dimtxt', j.funnel.map((n, i) => F[i] + ' ' + n + '명').join(' · ')));
+    }
+    // 아직 하고 있는가 — 시작한 지 오래된 사람 중 최근 사흘 안에 공부한 비율
+    if (j.cohort) {
+      b.append(el('p', 'newsday', '얼마나 남아 있는가'));
+      const C = [['1일 뒤', 0], ['3일 뒤', 1], ['7일 뒤', 2], ['14일 뒤', 3], ['30일 뒤', 4]];
+      b.append(bars(C.map(([nm, i]) => [nm, j.cohort[i] ? Math.round(j.alive[i] * 100 / j.cohort[i]) : 0,
+                                        j.cohort[i] ? NEED : 0])));
+      b.append(el('p', 'dimtxt', C.map(([nm, i]) => nm + ' ' + j.alive[i] + '/' + j.cohort[i]).join(' · ') +
+        '<br>시작한 지 그만큼 지난 사람 중, 최근 사흘 안에 공부한 사람 수입니다.'));
+    }
+    const st2 = el('div', 'stats');
+    [['평균 실력 점수', j.avgScore], ['가운뎃값', j.midScore], ['평균 외운 단어', j.avgMemo],
+     ['진짜 기억률', (j.trueRet || 0) + '%']]
+      .forEach(([k, v]) => { const c = el('div', 'stat');
+        c.append(el('b', null, String(v)), el('span', null, k)); st2.append(c); });
+    b.append(st2);
+    b.append(el('p', 'dimtxt', '<b>진짜 기억률</b> = 다시 볼 때가 된 카드를 첫 시도에 맞힌 비율. ' +
+      '간격 반복에서 <b>85~90%</b>가 목표입니다. 낮으면 간격이 너무 벌어진 것이고, ' +
+      '너무 높으면 필요 없는 복습을 시키고 있는 것입니다.'));
+    // 어느 단어가 발목을 잡는가 — 커리큘럼을 고칠 직접 근거
+    if ((j.hardWords || []).length) {
+      b.append(el('p', 'newsday', '많은 사람이 틀리는 단어'));
+      b.append(el('p', 'dimtxt', j.hardWords.map(w => esc(w[0]) + ' <b>' + w[1] + '명</b>').join(' · ')));
+      b.append(el('p', 'dimtxt', '이 단어들은 그림·예문·나오는 순서를 손봐야 할 자리입니다.'));
+    }
+    b.append(el('p', 'note', '이름도 기기도 알 수 없습니다 — 서버가 숫자만 셉니다. ' +
+      '순위판은 주 단위라 월요일 새벽에 0부터 다시 셉니다.'));
+    const again = el('button', 'ghost sm', '새로고침');
+    again.onclick = showAdmin;
+    b.append(again);
+  }).catch(e => { b.textContent = ''; b.append(el('p', 'lede', '불러오지 못했습니다')); });
 }
 
 /* ---------- 동아리 ----------

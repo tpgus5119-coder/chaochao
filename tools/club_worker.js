@@ -11,6 +11,11 @@
    v4: 순위는 별명이 아니라 기기마다 다른 표(uid)로 구분한다 — 같은 별명을 쓰는 두 사람이
        서로의 기록을 덮어쓰지 않게. 남의 등수와 이름은 아무에게도 보내지 않는다
        (누구나 자기 자리만 안다).
+   v5: 운영자용 act:'stats' — **이름 없이 숫자만.** 누가 누구인지는 서버도 모른다.
+       운영을 하려면 규모와 흐름은 알아야 하는데, 그걸 알기 위해 개인을 알 필요는 없다.
+       재는 것: 몇 명 · 요일별 접속 · **어디까지 갔다 그만두는가(깔때기)** ·
+       **얼마나 남아 있는가(코호트)** · **진짜 기억률** · **많은 사람이 틀리는 단어**.
+       뒤의 넷이 앱을 어디서 고쳐야 하는지 알려주는 숫자다.
    개인정보는 별명과 진도 숫자뿐이다. */
 const CORS = o => ({
   'Access-Control-Allow-Origin': o, 'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -60,6 +65,56 @@ export default {
     const GKEY = `r:${week()}`, TTL = { expirationTtl: 60 * 60 * 24 * 30 };
     const FIELDS = ['say', 'ear', 'read', 'spell', 'memo'];
 
+    if (act === 'stats') {                                   // 운영 현황 — 숫자만, 이름 없음
+      const g = JSON.parse((await KV.get(GKEY)) || '{}');
+      const list = Object.values(g);
+      const byDay = [0, 0, 0, 0, 0, 0, 0];
+      list.forEach(v => (v.w || []).forEach((x, i) => { if (x) byDay[i]++; }));
+      const s2 = list.map(v => v.s).sort((a, b) => a - b);
+      const mid = s2.length ? s2[Math.floor(s2.length / 2)] : 0;
+      const clubs2 = Object.values(clubs);
+
+      // 깔때기 — 끝낸 세트가 몇 개인 사람이 몇 명인가. 사람들이 어디서 멈추는지 보인다.
+      const FB = [0, 1, 3, 6, 11, 21];
+      const funnel = [0, 0, 0, 0, 0, 0];
+      list.forEach(v => {
+        const n = v.st || 0;
+        let i = 0; while (i + 1 < FB.length && n >= FB[i + 1]) i++;
+        funnel[i]++;
+      });
+
+      // 코호트 — 시작한 지 N일 지난 사람 중 최근 사흘 안에 공부한 사람
+      const DAY = 86400000, now = Date.now();
+      const MARK = [1, 3, 7, 14, 30];
+      const cohort = [0, 0, 0, 0, 0], alive = [0, 0, 0, 0, 0];
+      list.forEach(v => {
+        if (!v.f) return;
+        const age = Math.floor((now - Date.parse(v.f + 'T00:00:00Z')) / DAY);
+        const idle = v.l ? Math.floor((now - Date.parse(v.l + 'T00:00:00Z')) / DAY) : 999;
+        MARK.forEach((m, i) => { if (age >= m) { cohort[i]++; if (idle <= 3) alive[i]++; } });
+      });
+
+      // 진짜 기억률 — 다시 볼 때가 된 카드를 첫 시도에 맞힌 비율 (간격 반복의 핵심 지표)
+      const tr = list.reduce((a, v) => v.tr ? [a[0] + v.tr[0], a[1] + v.tr[1]] : a, [0, 0]);
+
+      // 많은 사람이 틀리는 단어 — 커리큘럼을 고칠 직접 근거 (누가 틀렸는지는 안 남는다)
+      const hard = {};
+      list.forEach(v => (v.ms || []).forEach(w => { hard[w] = (hard[w] || 0) + 1; }));
+      const hardWords = Object.entries(hard).filter(([, n]) => n >= 2)
+        .sort((a, b) => b[1] - a[1]).slice(0, 15);
+      return send({
+        week: week(), people: list.length, byDay,
+        active: list.filter(v => (v.w || []).reduce((a, x) => a + x, 0) > 0).length,
+        started: list.filter(v => v.m > 0).length,          // 단어를 하나라도 외운 사람
+        avgScore: s2.length ? Math.round(s2.reduce((a, x) => a + x, 0) / s2.length) : 0,
+        midScore: mid,
+        avgMemo: list.length ? Math.round(list.reduce((a, v) => a + v.m, 0) / list.length) : 0,
+        clubs: clubs2.length, clubMembers: clubs2.reduce((a, c) => a + c.members.length, 0),
+        funnel, cohort, alive, hardWords,
+        trueRet: tr[1] ? Math.round(tr[0] * 100 / tr[1]) : 0, trueN: tr[1],
+      });
+    }
+
     if (act === 'rank') {                                    // 앱 전체 순위 + 전체 평균
       const uid = cut(b.uid, 16);
       if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
@@ -67,8 +122,15 @@ export default {
       const p = b.pct && typeof b.pct === 'object' ? b.pct : {};
       const mine = { n: nick, s: num(b.score, 999999), m: num(b.memo, 99999), p: {} };
       for (const k of FIELDS) if (typeof p[k] === 'number') mine.p[k] = num(p[k], 100);
+      mine.w = (Array.isArray(b.days) ? b.days : []).slice(0, 7).map(x => x ? 1 : 0);
+      mine.f = cut(b.f, 10); mine.l = cut(b.l, 10);          // 첫날 · 마지막 날
+      mine.dd = num(b.dd, 9999); mine.st = num(b.st, 9999);  // 공부한 날 · 끝낸 세트
+      if (Array.isArray(b.tr)) mine.tr = [num(b.tr[0], 99999), num(b.tr[1], 99999)];
+      mine.ms = (Array.isArray(b.ms) ? b.ms : []).slice(0, 8).map(x => cut(x, 24));
       const was = g[uid];
+      if (was && was.w) for (let i = 0; i < 7; i++) mine.w[i] = mine.w[i] || was.w[i] || 0;
       if (!was || was.n !== mine.n || was.s !== mine.s || was.m !== mine.m
+          || String(was.w) !== String(mine.w)
           || JSON.stringify(was.p) !== JSON.stringify(mine.p)) {   // 바뀐 게 없으면 저장하지 않는다
         g[uid] = mine;
         let ent = Object.entries(g);
