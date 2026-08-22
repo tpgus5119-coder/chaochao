@@ -19,7 +19,7 @@
 
 환경변수 GEMINI_KEY 필요 (깃허브 저장소 Settings → Secrets → Actions 에 넣는다).
 """
-import json, os, pathlib, sys, urllib.request, hashlib, re, unicodedata as ud
+import json, os, pathlib, sys, time, urllib.request, urllib.error, hashlib, re, unicodedata as ud
 from datetime import datetime, timezone, timedelta
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -44,18 +44,27 @@ def ask(prompt, key):
                              'responseMimeType': 'application/json',
                              'thinkingConfig': {'thinkingBudget': 0}},
     }).encode()
-    last = None
-    for m in MODELS:
-        url = (f'https://generativelanguage.googleapis.com/v1beta/models/{m}'
-               f':generateContent?key={key}')
-        try:
-            req = urllib.request.Request(url, data=body,
-                                         headers={'Content-Type': 'application/json'})
-            r = json.loads(urllib.request.urlopen(req, timeout=120).read())
-            return json.loads(r['candidates'][0]['content']['parts'][0]['text'])
-        except Exception as e:
-            last = f'{m}: {e}'
-    raise RuntimeError(f'제미나이 실패 — {last}')
+    import time
+    errs = []
+    for round_ in range(2):                       # 다 막히면 20초 쉬고 한 바퀴 더
+        for m in MODELS:
+            url = (f'https://generativelanguage.googleapis.com/v1beta/models/{m}'
+                   f':generateContent?key={key}')
+            try:
+                req = urllib.request.Request(url, data=body,
+                                             headers={'Content-Type': 'application/json'})
+                r = json.loads(urllib.request.urlopen(req, timeout=120).read())
+                return json.loads(r['candidates'][0]['content']['parts'][0]['text'])
+            except urllib.error.HTTPError as e:
+                # 몸통에 진짜 이유가 들어 있다. 마지막 것만 남기면 원인을 못 찾는다
+                try: why = e.read().decode()[:180]
+                except Exception: why = ''
+                errs.append(f'{m} {e.code} {why}')
+            except Exception as e:
+                errs.append(f'{m} {e}')
+        if round_ == 0:
+            time.sleep(20)
+    raise RuntimeError('제미나이 실패 — ' + ' | '.join(errs[:6]))
 
 PROMPT = """너는 한국인에게 베트남어를 가르친다. 배우는 사람은 곧 베트남 공장·사무실에 일하러 갈
 완전 초보 한국인이다. 아래는 오늘 베트남 소식 기사다.
@@ -122,6 +131,8 @@ def main():
             got = ask(PROMPT.format(title=art['t'], body=art['body'][:4000]), key)
         except Exception as e:
             print(f"실패 {art['t'][:30]}: {e}"); continue
+        finally:
+            time.sleep(6)                          # 다섯 번을 몰아치면 분당 한도에 걸린다
         words, seen = [], set()
         for w in got.get('words', []):
             vi = (w.get('vi') or '').strip()
