@@ -19,11 +19,16 @@
 
 환경변수 GEMINI_KEY 필요 (깃허브 저장소 Settings → Secrets → Actions 에 넣는다).
 """
-import json, os, pathlib, sys, urllib.request, hashlib, re
+import json, os, pathlib, sys, urllib.request, hashlib, re, unicodedata as ud
 from datetime import datetime, timezone, timedelta
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from tone import word_tones                      # 글자에서 성조를 자동으로 읽어낸다
+
+def slug(vi):
+    """베트남어 → 부호 없는 파일이름 (cảm ơn → cam-on). 그림 파일 이름에 쓴다."""
+    t = ''.join(c for c in ud.normalize('NFD', vi) if not ud.combining(c))
+    return re.sub(r'[^a-z0-9]+', '-', t.replace('đ', 'd').lower()).strip('-')
 
 R = pathlib.Path(__file__).resolve().parent.parent
 KST = timezone(timedelta(hours=9))
@@ -125,10 +130,14 @@ def main():
             if re.search(r'\d', vi) or vi[:1].isupper():      # 숫자·고유명사 제외
                 continue
             seen.add(vi.lower())
-            words.append({'vi': vi, 'ko': (w.get('ko') or '').strip(),
-                          'kr_read': (w.get('kr') or '').strip(),
-                          'emoji': (w.get('emoji') or '').strip(),
-                          'tones': word_tones(vi)})
+            emo = (w.get('emoji') or '').strip()
+            item = {'vi': vi, 'ko': (w.get('ko') or '').strip(),
+                    'kr_read': (w.get('kr') or '').strip(),
+                    'emoji': emo, 'tones': word_tones(vi)}
+            # 눈에 보이는 말에만 그림 자리를 준다. 그림은 개발자 맥의 '그림 지킴이'가 뒤따라 채운다
+            # (깃허브 서버에는 그래픽 카드가 없어 그림만은 거기서 못 만든다).
+            if emo: item['img'] = 'n-' + slug(vi) + '.webp'
+            words.append(item)
         lines = [{'vi': (l.get('vi') or '').strip(), 'ko': (l.get('ko') or '').strip(),
                   'kr_read': (l.get('kr') or '').strip(), 'who': (l.get('who') or 'AB'[i % 2]),
                   'tones': word_tones((l.get('vi') or '').strip()),

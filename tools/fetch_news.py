@@ -25,7 +25,9 @@ def get(url):
 
 R = pathlib.Path(__file__).resolve().parent.parent
 KST = timezone(timedelta(hours=9))
-PER_DAY = 5                       # 하루에 싣는 기사 수 (경제·문화 다 합쳐서)
+PER_DAY = 5                       # 하루에 싣는 기사 수 (있는 만큼. 월요일은 원래 3건뿐이다)
+MUST = 3                          # 이만큼은 점수와 무관하게 싣는다
+FLOOR = 8                         # 4·5번째는 관심사 점수가 이만큼은 돼야 싣는다
 KEEP_DAYS = 7                     # 화면에 남기는 날수 (일주일치)
 
 # 인사이드비나(한국어, 베트남 전문)만 쓴다 — 영어 국제면은 베트남 무관 기사가 섞여서 뺐다.
@@ -128,7 +130,9 @@ newest = max(c['day'] for c in cand)
 cand = [c for c in cand if c['day'] == newest]
 # 그 안에서 관심사가 있는 기사가 먼저, 없으면 일상어가 많은 기사로 채운다.
 cand.sort(key=lambda c: (0 if c['care'] > 0 else 1, -c['care'], -c['daily'], -c['when'].timestamp()))
-picked = cand[:PER_DAY]
+# 다섯 개를 억지로 채우지 않는다 — 앞의 셋은 무조건, 나머지는 쓸모가 있을 때만.
+# (기사가 3건뿐인 날에 억지로 5건을 만들 수 없고, 11건인 날에 5번째가 시원찮으면 안 싣는 게 낫다)
+picked = cand[:MUST] + [c for c in cand[MUST:PER_DAY] if c['care'] >= FLOOR]
 
 items = []
 for c in picked:
