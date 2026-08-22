@@ -46,8 +46,10 @@ const pic = (x, cls) => {
   return d;
 };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// 번호는 두 과정 다 Day N 으로 통일. 트랙 구분은 앞에 붙는 '일상/직무' 말이 한다.
 const label = d => (typeof d.day === 'string' ? '준비 ' + d.day.slice(1)
-  : d.track === 'work' ? '직무 ' + (d.n || d.day - 20) : 'Day ' + (d.n || d.day));
+  : 'Day ' + (d.n || d.day));
+const trackName = d => (typeof d.day === 'string' ? '' : d.track === 'work' ? '직무 ' : '일상 ');
 
 /* ---------- 소리 ---------- */
 /* 아이폰 사파리는 '사용자가 방금 누른 것'이 아니면 새 Audio 재생을 막는다.
@@ -655,17 +657,17 @@ const GROUPS = [
   [d => !d.track && d.day >= 46 && d.day <= 50, '파트 6 · 모임·건강·베트남 생활'],
   [d => !d.track && d.day >= 71 && d.day <= 75, '파트 7 · 스몰토크'],
   [d => !d.track && d.day >= 76, '파트 8 · 생활 심화'],
-  [d => d.track === 'work' && d.day === 21, '직무 · 공장 첫날 (공통)'],
-  [d => d.track === 'work' && d.day >= 81 && d.day <= 85, '직무 · 관리자 화법 (공통)'],
-  [d => d.track === 'work' && d.day >= 86 && d.day <= 90, '직무 · 봉제 심화'],
-  [d => d.track === 'work' && d.day >= 91 && d.day <= 95, '직무 · 전자 심화'],
-  [d => d.track === 'work' && d.day >= 96, '직무 · 창고·물류 (공통)'],
-  [d => d.track === 'work' && d.cat === '봉제', '직무 · 봉제'],
-  [d => d.track === 'work' && d.day >= 61 && d.day <= 65, '직무 · 직장 문화 (공통)'],
-  [d => d.track === 'work' && d.day >= 66, '직무 · 계약·행정 (공통)'],
-  [d => d.track === 'work' && d.cat === '전자', '직무 · 전자·디스플레이'],
-  [d => d.track === 'work' && d.cat === '사무', '직무 · 사무·서비스 (시티잡)'],
-  [d => d.track === 'work', '직무 · 공장 공통']
+  // 직무 — 취업 여정 순서: 기초(공통) → 업종 기초 → 회사 생활 → 관리자 말 → 심화 → 출하
+  [d => d.track === 'work' && d.day <= 40 && d.cat === '공통', '공장 기초 (공통)'],
+  [d => d.track === 'work' && d.day <= 40, '봉제 기초'],
+  [d => d.track === 'work' && d.day >= 51 && d.day <= 55, '전자·디스플레이 기초'],
+  [d => d.track === 'work' && d.day >= 56 && d.day <= 60, '사무·서비스 (시티잡)'],
+  [d => d.track === 'work' && d.day >= 61 && d.day <= 65, '직장 문화 (공통)'],
+  [d => d.track === 'work' && d.day >= 66 && d.day <= 70, '계약·행정 (공통)'],
+  [d => d.track === 'work' && d.day >= 81 && d.day <= 85, '관리자 화법 (공통)'],
+  [d => d.track === 'work' && d.day >= 86 && d.day <= 90, '봉제 심화'],
+  [d => d.track === 'work' && d.day >= 91 && d.day <= 95, '전자 심화'],
+  [d => d.track === 'work', '창고·물류 (공통)']
 ];
 
 /* 오늘 할 세트 — 준비 먼저, 그다음 일상·직무 번갈아 추천 */
@@ -689,7 +691,7 @@ function renderHome() {
   const hero = $('#heroGo');
   hero.hidden = !nx;
   if (nx) {
-    hero.innerHTML = `<b>▶ 오늘 학습 시작</b><span>${esc(label(nx) + ' · ' + nx.theme)}</span>`;
+    hero.innerHTML = `<b>▶ 오늘 학습 시작</b><span>${esc(trackName(nx) + label(nx) + ' · ' + nx.theme)}</span>`;
     hero.onclick = () => startLearn(nx);
   }
   // 성조 훈련 시점: 저녁에 하면 자는 동안 '성조 범주'로 정리된다는 실험이 있다.

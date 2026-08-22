@@ -2688,15 +2688,15 @@
     ],
     "extra": [
      {
-      "vi": "Chỉ hết rồi, cho thêm nhé.",
-      "ko": "실이 다 떨어졌어요, 더 주세요",
-      "kr_read": "찌 혯 조이 쪼 템 녜",
+      "vi": "Hộp hết rồi, cho thêm nhé.",
+      "ko": "상자가 다 떨어졌어요, 더 주세요",
+      "kr_read": "홉 혯 조이 쪼 템 녜",
       "tones": [
        {
-        "syl": "Chỉ",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
+        "syl": "Hộp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
        },
        {
         "syl": "hết",
@@ -2793,9 +2793,9 @@
       ]
      },
      {
-      "vi": "Gửi mẫu cho quản lý nhé.",
-      "ko": "샘플을 관리자에게 보내요",
-      "kr_read": "그이 머우 쪼 꽌 리 녜",
+      "vi": "Gửi hàng cho quản lý nhé.",
+      "ko": "물건을 관리자에게 보내요",
+      "kr_read": "그이 항 쪼 꽌 리 녜",
       "tones": [
        {
         "syl": "Gửi",
@@ -2804,10 +2804,10 @@
         "shape": "∨"
        },
        {
-        "syl": "mẫu",
-        "name": "ngã",
-        "ko": "끊었다 올림",
-        "shape": "∿"
+        "syl": "hàng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
        },
        {
         "syl": "cho",
@@ -3664,9 +3664,9 @@
       ]
      },
      {
-      "vi": "Làm giống mẫu nhé.",
-      "ko": "샘플과 똑같이 하세요",
-      "kr_read": "람 종 머우 녜",
+      "vi": "Làm giống cái này nhé.",
+      "ko": "이것과 똑같이 하세요",
+      "kr_read": "람 종 까이 나이 녜",
       "tones": [
        {
         "syl": "Làm",
@@ -3681,10 +3681,16 @@
         "shape": "／"
        },
        {
-        "syl": "mẫu",
-        "name": "ngã",
-        "ko": "끊었다 올림",
-        "shape": "∿"
+        "syl": "cái",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
        },
        {
         "syl": "nhé.",
@@ -3897,17 +3903,17 @@
     "lines": [
      {
       "who": "A",
-      "vi": "Máy này bị hỏng rồi.",
-      "ko": "이 기계 고장났어요.",
-      "kr_read": "마이 나이 비 홍 조이",
+      "vi": "Máy này bị lỗi rồi.",
+      "ko": "이 기계에 문제 생겼어요.",
+      "kr_read": "마이 나이 비 로이 조이",
       "gloss": [
        {
         "w": "máy",
         "m": "기계"
        },
        {
-        "w": "bị hỏng",
-        "m": "고장나다"
+        "w": "bị lỗi",
+        "m": "문제가 생기다"
        },
        {
         "w": "rồi",
@@ -3934,10 +3940,10 @@
         "shape": "↓"
        },
        {
-        "syl": "hỏng",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
+        "syl": "lỗi",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
        },
        {
         "syl": "rồi.",
@@ -4147,9 +4153,9 @@
       ]
      },
      {
-      "vi": "Dao với kéo ở hộp dụng cụ.",
-      "ko": "칼과 가위는 공구함에 있어요",
-      "kr_read": "자오 버이 깨오 어 홉 중 꾸",
+      "vi": "Dao ở trong hộp dụng cụ.",
+      "ko": "칼은 공구함 안에 있어요",
+      "kr_read": "자오 어 쫑 홉 중 꾸",
       "tones": [
        {
         "syl": "Dao",
@@ -4158,22 +4164,16 @@
         "shape": "—"
        },
        {
-        "syl": "với",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "kéo",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
         "syl": "ở",
         "name": "hỏi",
         "ko": "내렸다 올림",
         "shape": "∨"
+       },
+       {
+        "syl": "trong",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        },
        {
         "syl": "hộp",

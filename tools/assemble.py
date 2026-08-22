@@ -16,10 +16,18 @@ days = []
 for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6']:
     days += json.loads((R/f'data/{f}.json').read_text())['days']
 
-# 직무 재배열 — 봉제는 봉제끼리. 문장의 '배운 단어만' 규칙이 지켜지는지는 아래 검증이 확인한다.
-WORK_ORDER = [21, 22,23,24,25, 31,32,33,34,36, 26,27,28,29,30, 35,37,38,39,40]
+# 직무 재배열 — 취업 여정 순서: ①공장 기초(공통, 첫 주에 모두 필요) ②자기 업종 기초
+# (봉제→전자→사무) ③직장 문화·계약·행정(공통) ④관리자 화법(공통) ⑤업종 심화
+# ⑥창고·물류(공통, 출하는 모든 공장의 마지막 공정). 각 묶음 안은 원래 설계 순서 유지.
+# 문장의 '배운 단어만' 규칙이 지켜지는지는 아래 검증이 확인한다.
+W_BASE   = [21, 26,27,28,29,30, 35, 37,38,39,40]   # 공장 기초 (공통)
+W_SEW    = [22,23,24,25, 31,32,33,34, 36]          # 봉제 기초
+WORK_ORDER = (W_BASE + W_SEW + list(range(51,61))  # 전자·사무
+              + list(range(61,71))                 # 문화·행정 (공통)
+              + list(range(81,101)))               # 관리자·심화·창고
 by = {d["day"]: d for d in days}
-days = ([by[k] for k in range(1, 21)] + [by[k] for k in WORK_ORDER]
+days = ([by[k] for k in range(1, 21)]
+        + [by[k] for k in W_BASE] + [by[k] for k in W_SEW]
         + [by[k] for k in range(41, 51)] + [by[k] for k in range(51, 71)]
         + [by[k] for k in range(71, 81)] + [by[k] for k in range(81, 101)])
 
@@ -56,6 +64,7 @@ for d in out["days"]:
     dd = d["day"]
     if dd in CAT: d["cat"] = CAT[dd]
     if 41 <= dd <= 50: d["n"] = dd - 20          # 일상 Day 21~30
+    if 71 <= dd <= 80: d["n"] = dd - 40          # 일상 Day 31~40
 wn = 0
 for d in out["days"]:
     if d.get("track") == "work":
