@@ -8,6 +8,10 @@ def h8(*paths):
     m = hashlib.sha1()
     for p in paths:
         m.update(pathlib.Path(p).read_bytes())
+    # 음성 파일이 바뀌어도 판이 바뀌어야 한다 — 안 그러면 폰 캐시의 옛 소리가 안 지워진다.
+    # 내용 대신 파일 크기 목록만 해시한다(2천 개를 다 읽으면 느리다).
+    for p in sorted(pathlib.Path('audio').rglob('*.mp3')):
+        m.update(f'{p}:{p.stat().st_size}'.encode())
     return m.hexdigest()[:8]
 
 ver = h8('style.css', 'app.js', 'pitch.js', 'data/days.json')
