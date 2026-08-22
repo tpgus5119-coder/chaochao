@@ -699,8 +699,36 @@ function renderHome() {
   const due = dueWords();
   $('#goReview').textContent = due.length ? '전부 ' + due.length : '전부';
 
-  // 학습 과정 타일 밑줄 — 두 트랙의 진행 상황
+  // 오늘·다음 일정 — 뭘 하게 될지 미리 보이고, 버튼 하나로 바로 들어간다
+  const plan = $('#plan');
+  plan.textContent = '';
+  const prow = (k, v, act, fn) => {
+    const r = el('div', 'planrow');
+    r.append(el('span', 'pk', k), el('span', 'pv', esc(v)));
+    if (fn) { const bb = el('button', 'ghost sm', act); bb.onclick = fn; r.append(bb); }
+    plan.append(r);
+  };
+  prow('오늘 복습', due.length ? due.length + '장 밀림' : '없음 — 정상입니다',
+       due.length ? '시작' : null, due.length ? () => reviewStart() : null);
+  const nx2 = nextAfter(nx);
+  if (nx2) prow('다음 학습', trackName(nx2) + label(nx2) + ' · ' + nx2.theme, null, null);
+  const tmr = Object.values(S.srs).filter(v => v.due > now() && v.due <= now() + DAY).length;
+  if (tmr) prow('내일 복습', '+' + tmr + '장 예정', null, null);
+
   show('home', '짜오짜오', false);
+}
+
+/* 오늘 것 다음에 올 세트 — 일상·직무를 번갈아 추천하는 규칙 그대로 한 걸음 앞을 본다 */
+function nextAfter(nx) {
+  if (!nx) return null;
+  const first = t => ALL.find(d => typeof d.day === 'number'
+    && (t === 'work' ? d.track === 'work' : !d.track) && !S.done[d.day] && d !== nx);
+  if (typeof nx.day === 'string') {
+    return ALL.find(d => typeof d.day === 'string' && !S.done[d.day] && d !== nx)
+      || first('daily') || first('work');
+  }
+  return (nx.track === 'work' ? first('daily') : first('work'))
+    || first(nx.track === 'work' ? 'work' : 'daily');
 }
 
 /* 학습 과정 목록 — 트랙별로 보여준다 */
@@ -746,7 +774,8 @@ function startLearn(d) {
   $('#learnIntro').textContent = d.intro || '';
   $('#learnIntro').dataset.prep = (d.words || []).length ? '0' : '1';
   drawCard();
-  show('learn', label(d) + ' · ' + d.theme, true);
+  // 제목은 버튼 이름과 같게 — 준비 날들은 주제만 (준비 N 표기는 뺀다)
+  show('learn', typeof d.day === 'string' ? d.theme : label(d) + ' · ' + d.theme, true);
 }
 
 /* 한글 독음: 기본 숨김. 시작 14일 뒤에는 아예 안 나온다 */
@@ -903,9 +932,7 @@ function drawCard() {
   const last = L.i === L.items.length - 1;
   $('#next').textContent = last ? ((L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
-    : L.day.day === 'P1' ? '자음 소리 ›'
-    : L.day.day === 'P3' ? '모음 귀로 구별하기 ›'
-    : L.day.day === 'P2' ? '귀로 구별하기 ›' : '오늘 완료 ›') : '다음 ›';
+    : L.day.day === 'P1' || L.day.day === 'P2' ? '귀로 구별하기 ›' : '완료 ›') : '다음 ›';
 }
 
 $('#prev').onclick = () => { if (!$('#learn').hidden && L.i > 0) { L.i--; drawCard(); } };
@@ -922,9 +949,8 @@ $('#next').onclick = () => {
     return;
   }
   S.done[L.day.day] = true; touchToday(); save();
-  // 소개가 끝나면 바로 다음 단계로 이어진다 — 배우기와 시험하기가 한 흐름
-  if (L.day.day === 'P1') startLearn(ALL.find(d => d.day === 'P3'));
-  else if (L.day.day === 'P3') startVowel();
+  // 소개가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
+  if (L.day.day === 'P1') startVowel();
   else if (L.day.day === 'P2') startTone();
   else renderHome();
 };
@@ -1037,11 +1063,23 @@ function drawQuiz() {
 
   const opts = el('div', 'opts');
   q.opts.forEach(o => {
-    const b = el('button', null, esc(q.mode === 'listen' ? o.vi : o.ko));
+    const b = el('button');
+    b.dataset.vi = o.vi;
+    if (q.mode === 'listen') {          // 단어만 덜렁 있지 않게 — 뜻도 같이
+      b.append(el('span', 'ovi', esc(o.vi)), el('span', 'oko', esc(o.ko)));
+    } else b.textContent = o.ko;
     b.onclick = () => answer(b, o.vi === q.w.vi, q.w);
     opts.append(b);
   });
   body.append(opts);
+}
+
+/* 오답 뒤에는 스스로 넘긴다 — 틀린 걸 볼 시간이 필요하다. 정답은 자동으로 넘어간다. */
+function nextBtn(box, fn) {
+  const b = el('button', 'primary big', '다음 ›');
+  b.style.width = '100%'; b.style.marginTop = '14px';
+  b.onclick = fn;
+  box.append(b);
 }
 
 
@@ -1095,7 +1133,8 @@ function drawDict(body, q) {
     if (!good) ans.textContent = picked.join(' ') + '  →  ' + q.w.vi;
     if (good) Q.ok++; else requeue(Q.list[Q.i]);
     grade(q.w.vi, good, Q.early);
-    setTimeout(() => { Q.i++; drawQuiz(); }, good ? 600 : 1900);
+    if (good) setTimeout(() => { Q.i++; drawQuiz(); }, 600);
+    else nextBtn(body, () => { Q.i++; drawQuiz(); });
   };
   const row = el('div', 'qplay'); row.append(undo, chk);
   body.append(ans, tiles, row);
@@ -1143,13 +1182,14 @@ function answer(btn, correct, w) {
   fxTone(correct);
   if (!correct) {
     [...btn.parentNode.children].forEach(b => {
-      if (b.textContent === w.vi || b.textContent === w.ko) b.dataset.r = 'ok';
+      if (b.dataset.vi === w.vi || b.textContent === w.ko) b.dataset.r = 'ok';
     });
   }
   if (correct) Q.ok++;
   else requeue(Q.list[Q.i]);        // 틀린 건 이번 판 끝에 한 번 더
   grade(w.vi, correct, Q.early);
-  setTimeout(() => { Q.i++; drawQuiz(); }, correct ? 450 : 1400);
+  if (correct) setTimeout(() => { Q.i++; drawQuiz(); }, 450);
+  else nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
 }
 
 /* 틀린 문제를 같은 판 뒤쪽에 한 번만 다시 넣는다.
@@ -1214,7 +1254,7 @@ function startVowel() {
   VDRILL.forEach(g => g.items.forEach(it => qs.push({ g, it })));
   VD = { list: qs.sort(() => Math.random() - .5).slice(0, 10), i: 0, ok: 0 };
   drawVowel();
-  show('tone', '모음 듣기', true);
+  show('tone', '모음', true);
 }
 function drawVowel() {
   const body = $('#toneBody');
@@ -1231,7 +1271,7 @@ function drawVowel() {
   if (VD.i === 0) {
     body.append(el('div', 'intro',
       "글자는 아는데 소리가 다른 모음들입니다. o 입 크게 '오' · ô 오므린 '오' · ơ '어' · ư 입 벌린 '으' — 귀에만 익히면 됩니다."));
-    const rb = el('button', 'ghost sm', '글자 소개 다시 보기');
+    const rb = el('button', 'ghost sm', '모음 소개 다시 보기');
     rb.onclick = () => startLearn(ALL.find(d => d.day === 'P1'));
     body.append(rb);
   }
@@ -1254,8 +1294,8 @@ function drawVowel() {
       if (!good) [...opts.children].forEach(x => {
         if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
       });
-      if (good) VD.ok++;
-      setTimeout(() => { VD.i++; drawVowel(); }, good ? 500 : 1600);
+      if (good) { VD.ok++; setTimeout(() => { VD.i++; drawVowel(); }, 500); }
+      else nextBtn(body, () => { VD.i++; drawVowel(); });
     };
     opts.append(btn);
   });
@@ -1269,14 +1309,12 @@ function toneEntry() {
   startTone();
 }
 
-/* 글자도 버튼 하나 — 모음 카드(준비 1) → 자음 카드(준비 3) → 모음 구별 훈련이 한 흐름.
-   자음 '구별 훈련'이 없는 것은 의도다: 북부 표준에서 tr=ch, s=x, d=gi=r이
-   같은 소리로 합쳐져 귀로 가르는 훈련 자체가 성립하지 않는다. */
-function letterEntry() {
+/* 모음도 버튼 하나 — 처음이면 모음 카드(준비 1)부터, 그 뒤로는 바로 구별 훈련.
+   자음은 카드만 있고 '구별 훈련'이 없는 것은 의도다: 북부 표준에서
+   tr=ch, s=x, d=gi=r이 같은 소리로 합쳐져 귀로 가르는 훈련이 성립하지 않는다. */
+function vowelEntry() {
   const p1 = ALL.find(d => d.day === 'P1');
-  const p3 = ALL.find(d => d.day === 'P3');
   if (p1 && !S.done['P1']) { startLearn(p1); return; }
-  if (p3 && !S.done['P3']) { startLearn(p3); return; }
   startVowel();
 }
 
@@ -1328,8 +1366,8 @@ function drawTone() {
       if (!good) [...opts.children].forEach(x => {
         if (x.querySelector('.tvi').textContent === it.vi) x.dataset.r = 'ok';
       });
-      if (good) T.ok++;
-      setTimeout(() => { T.i++; drawTone(); }, good ? 500 : 1600);
+      if (good) { T.ok++; setTimeout(() => { T.i++; drawTone(); }, 500); }
+      else nextBtn(body, () => { T.i++; drawTone(); });
     };
     opts.append(btn);
   });
@@ -1376,7 +1414,8 @@ function drawToneMark(body, w) {
       });
       if (good) T.ok++;
       grade(w.vi, good);
-      setTimeout(() => { T.i++; drawTone(); }, good ? 500 : 1500);
+      if (good) setTimeout(() => { T.i++; drawTone(); }, 500);
+      else nextBtn(body, () => { T.i++; drawTone(); });
     };
     opts.append(btn);
   });
@@ -1582,7 +1621,8 @@ function drawRule() {
       });
       if (good) RL.ok++;
       if (q.say && AIDX[q.say]) play(q.say, false);   // 정답 소리를 바로 들려준다
-      setTimeout(() => { RL.i++; drawRule(); }, good ? 900 : 1800);
+      if (good) setTimeout(() => { RL.i++; drawRule(); }, 900);
+      else nextBtn(b, () => { RL.i++; drawRule(); });
     };
     opts.append(btn);
   });
@@ -1790,20 +1830,32 @@ function drawWrite() {
     ans.append(toneRow(w.tones));
     ans.append(reveal(w.kr_read));
     b.insertBefore(ans, box);
-    const g = el('div', 'opts');
-    const ok = el('button', null, '✓ 맞게 썼어요');
+    // 자가 채점 — AI와 무관하게, 이 단어를 복습에 언제 다시 낼지 정하는 용도
+    const g = el('div', 'qplay');
+    const ok = el('button', 'ghost sm', '맞게 썼어요');
     ok.onclick = () => { fxTone(true); grade(w.vi, true); WR.i++; drawWrite(); };
-    const no = el('button', null, '✗ 틀렸어요');
+    const no = el('button', 'ghost sm', '틀렸어요 (곧 다시 나옴)');
     no.onclick = () => { grade(w.vi, false); WR.i++; drawWrite(); };
     g.append(ok, no);
-    b.append(g);
+    b.insertBefore(g, box);
   };
   row.append(showA);
   b.append(row, box);
+
+  // 채점 없이도 오갈 수 있어야 한다
+  const nav = el('div', 'pager');
+  const pv = el('button', 'ghost big', '‹');
+  pv.disabled = WR.i === 0;
+  pv.onclick = () => { WR.i--; drawWrite(); };
+  const nx = el('button', 'primary big', '다음 ›');
+  nx.onclick = () => { WR.i++; drawWrite(); };
+  nav.append(pv, el('span', null, `${WR.i + 1} / ${WR.list.length}`), nx);
+  b.append(nav);
 }
 
-/* AI가 손글씨를 읽고 선생님처럼 짚어준다 — 무슨 글자로 읽히는지, 빠진 부호, 조언 한 줄 */
-async function aiRead(target, cv, box) {
+/* AI가 손글씨를 읽고 선생님처럼 짚어준다 — 무슨 글자로 읽히는지, 빠진 부호, 조언 한 줄.
+   요청이 몰려 막히면(분당 한도) 30초 세고 한 번은 스스로 다시 시도한다. */
+async function aiRead(target, cv, box, retried) {
   const note = el('div', 'cmpnote ainote', 'AI 선생님이 보는 중…');
   box.querySelector('.ainote')?.remove();
   box.append(note);
@@ -1827,7 +1879,16 @@ async function aiRead(target, cv, box) {
     if (!t) throw new Error('빈 답이 왔습니다');
     note.innerHTML = esc(t).replace(/\n/g, '<br>') +
       '<br><span class="dimtxt">참고용 — 흘려 쓰면 AI도 잘못 읽습니다. 기본은 정답 보기로 직접 비교.</span>';
-  } catch (e) { note.textContent = 'AI 점검 실패: ' + (e.message || ''); }
+  } catch (e) {
+    if (!retried && /몰렸/.test(e.message || '')) {
+      let s = 30;
+      const iv = setInterval(() => {
+        if (!note.isConnected) { clearInterval(iv); return; }   // 화면을 떠났으면 그만둔다
+        note.textContent = `지금 요청이 몰려 있습니다 — ${s}초 뒤 자동으로 다시 시도합니다`;
+        if (s-- <= 0) { clearInterval(iv); aiRead(target, cv, box, true); }
+      }, 1000);
+    } else note.textContent = 'AI 점검 실패: ' + (e.message || '');
+  }
 }
 
 /* ---------- AI 대화 ----------
@@ -2100,7 +2161,8 @@ camIn.onchange = async () => {
 $('#back').onclick = renderHome;
 $('#goChat').onclick = startChat;
 $('#goSpeak').onclick = startSpeak;
-$('#goLetter').onclick = letterEntry;
+$('#goVowelE').onclick = vowelEntry;
+$('#goCons').onclick = () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); };
 $('#goDaily').onclick = () => renderDays('daily');
 $('#goWork').onclick = () => renderDays('work');
 $('#goWrite').onclick = startWrite;
@@ -2114,20 +2176,27 @@ const WXICON = { 0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️', 45: '🌫️'
   51: '🌦️', 53: '🌦️', 55: '🌦️', 61: '🌧️', 63: '🌧️', 65: '🌧️', 66: '🌧️', 67: '🌧️',
   80: '🌧️', 81: '🌧️', 82: '⛈️', 95: '⛈️', 96: '⛈️', 99: '⛈️' };
 let WXI = null;
-function showWx() {
-  show('wx', '날씨 · 시간', true);     // 시계가 화면 표시 여부로 스스로 꺼지므로 먼저 보여준다
+function showTime() {
+  show('wx', '시간', true);            // 시계가 화면 표시 여부로 스스로 꺼지므로 먼저 보여준다
   const b = $('#wxBody');
   b.textContent = '';
   b.append(el('p', 'newsday', '베트남 시각 — 한국보다 2시간 늦습니다'));
   const clock = el('div', 'wxclock');
-  b.append(clock);
+  const kr = el('p', 'note');
+  b.append(clock, kr);
   const tick = () => {
     if ($('#wx').hidden) { clearInterval(WXI); return; }
     clock.textContent = new Intl.DateTimeFormat('ko-KR',
       { timeZone: 'Asia/Ho_Chi_Minh', dateStyle: 'full', timeStyle: 'medium' }).format(new Date());
+    kr.textContent = '한국 지금: ' + new Intl.DateTimeFormat('ko-KR',
+      { timeStyle: 'short' }).format(new Date());
   };
   clearInterval(WXI); WXI = setInterval(tick, 1000); tick();
-
+}
+function showWx() {
+  show('wx', '날씨', true);
+  const b = $('#wxBody');
+  b.textContent = '';
   const box = el('div', null, '날씨를 불러오는 중…');
   b.append(box);
   fetch('https://api.open-meteo.com/v1/forecast?latitude=21.03,10.82&longitude=105.85,106.63' +
@@ -2184,6 +2253,7 @@ $('#goQuick').onclick = () => reviewStart(10);
 $('#goHow').onclick = () => drawRevInfo();
 $('#goTone').onclick = toneEntry;
 $('#goWx').onclick = showWx;
+$('#goTime').onclick = showTime;
 $('#goWeekly').onclick = () => {
   const ws = weekWords();
   if (!ws.length) return;

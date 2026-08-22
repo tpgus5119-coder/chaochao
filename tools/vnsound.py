@@ -36,17 +36,19 @@ def speech_span(path):
     return (segs[-1][1] - segs[0][0]) / sr if segs else None
 
 def cut(y, sr, ref, tokens=2):
-    """뒤 덧말을 자른다. 한 음절(tokens=1)은 첫 말 덩어리 하나만 남긴다 —
-    0.15초 이상 떨어진 뒷소리는 전부 덧말이다. 여러 음절은 북부 말 길이
-    ref(초)의 1.45배+0.3초를 잣대로 그 안까지만 남긴다.
-    돌려주기: (자른 소리, 잘랐는가, 덧말이 본말에 붙어 못 자르는가)"""
-    segs = segments(y, sr)
+    """뒤 덧말을 자른다. 단어(3음절 이하)는 '첫 소리 덩어리 하나'만 남긴다 —
+    1음절은 0.06초, 2~3음절은 0.18초 넘게 쉬면 그 뒤는 전부 덧말이다
+    (베트남어 낱말 안에는 그만한 침묵이 없다. 끝 파열음도 불파음이라 안전).
+    문장은 북부 말 길이 ref(초)의 1.45배+0.3초 잣대로 그 안까지만 남긴다.
+    돌려주기: (자른 소리, 잘랐는가, 덧말이 본말에 붙어 못 자르는가=다시 구울 것)"""
+    gap = 0.06 if tokens == 1 else 0.18 if tokens <= 3 else 0.15
+    segs = segments(y, sr, merge_gap=gap)
     if not segs: return y, False, False
-    limit = 0.85 if tokens == 1 else ref * 1.45 + 0.30
+    limit = 0.85 if tokens == 1 else (ref * 1.6 + 0.35 if tokens <= 3 else ref * 1.45 + 0.30)
     if (segs[0][1] - segs[0][0]) / sr > limit:
         return y, False, True                        # 첫 덩어리부터 초과 — 다시 구워야
     keep = segs[0][1]
-    if tokens > 1:
+    if tokens > 3:
         for s, e in segs[1:]:
             if (e - segs[0][0]) / sr > limit: break
             keep = e

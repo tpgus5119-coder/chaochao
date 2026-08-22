@@ -582,3 +582,15 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .wxday i{font-style:normal; font-size:20px}
 .wxday b{font-size:14px}
 .wxday em{font-style:normal; font-size:11px; color:var(--dim)}
+
+/* 홈 일정 미리보기 */
+.plan{margin:10px 0 4px}
+.planrow{display:flex; align-items:center; gap:10px; padding:7px 12px;
+  border:1px solid var(--line); border-radius:10px; margin-bottom:6px}
+.planrow .pk{font-size:12px; color:var(--dim); flex:0 0 60px}
+.planrow .pv{font-size:14px; flex:1}
+.planrow button{margin-left:auto}
+
+/* 듣기 문제 보기: 단어 + 뜻 */
+.opts .ovi{display:block; font-weight:700}
+.opts .oko{display:block; font-size:12px; color:var(--dim); margin-top:2px}
