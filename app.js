@@ -511,7 +511,7 @@ function drawWxNow() {
   const hh = String(vn.getHours()).padStart(2, '0') + ':' + String(vn.getMinutes()).padStart(2, '0');
   const icon = WXNOW.city === c && WXNOW.code != null ? (WXICON[WXNOW.code] || '·') : '';
   const temp = WXNOW.city === c && WXNOW.t != null ? Math.round(WXNOW.t) + '°' : '';
-  b.innerHTML = `<span class="wxt">${hh}</span><span class="wxd">${icon} ${temp}</span>`;
+  b.innerHTML = `<span class="wxt">${hh}</span><span class="wxd">${icon}<b>${temp}</b></span>`;
   b.onclick = () => { dive(renderHome); showWx(c); };
   if (WXNOW.city !== c || Date.now() - WXNOW.at > 30 * 60e3) {   // 30분에 한 번만 묻는다
     const q = WXCITY[c];
@@ -1150,12 +1150,14 @@ const MENUS = {
             ['성조', toneEntry], ['호칭', () => startRule(0)], ['어순', () => startRule(1)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
-  ai:    { name: 'AI 선생님', items: () => [
+  ai:    { name: '메신저', items: () => [
             ['자유 대화', startChat], ['배운 문장으로', startTalk]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
   keep:  { name: '진도', items: () => [
-            ['진도 백업', doExport], ['백업 불러오기', doImport], ['진도 초기화', doReset]] },
+            ['진도 백업', doExport], ['백업 불러오기', doImport], ['진도 초기화', doReset]],
+           foot: '하루 학습이 끝나면 <b>진도 백업</b>을 한 번 눌러 두세요. ' +
+                 '글자 뭉치가 복사되니 메모 앱에 붙여 두면 폰을 바꿔도 되살아납니다.' },
 };
 function renderMenu(id) {
   const m = MENUS[id];
@@ -1167,6 +1169,7 @@ function renderMenu(id) {
     btn.onclick = () => { dive(() => renderMenu(id)); fn(); };
     b.append(btn);
   });
+  if (m.foot) b.append(el('p', 'note', m.foot));
   show('sub', m.name, true);
 }
 function drawMenu() {
@@ -1178,6 +1181,10 @@ function drawMenu() {
     if (id === 'rev') {
       const n = dueWords().length;
       if (n) t.append(el('span', 'mbadge', String(n)));
+    }
+    if (id === 'ai') {                        // 안 읽은 메시지 — 메신저처럼 빨갛게
+      const n = Object.values(S.room || {}).reduce((a, r) => a + (r.unread || 0), 0);
+      if (n) t.append(el('span', 'mbadge red', String(n)));
     }
     t.onclick = () => {
       const items = m.items();
@@ -1255,6 +1262,7 @@ function upcoming(n) {
 const nextDay = () => upcoming(1)[0] || null;
 
 function renderHome() {
+  pingRooms();                              // 하루 이상 조용하면 먼저 말을 걸어 둔다
   drawMenu();
   drawWxNow();
   renderProgress($('#progress'));      // 이번 주 도장·통계·업적 (첫 화면 일정판 아래)
@@ -3392,13 +3400,12 @@ function tchSvg() {
 function drawTch() {
   const p = $('#tch');
   p.hidden = false;
-  const male = (S.tch || 'f') === 'm';
-  const im = new Image();               // 사진이 있으면 사진으로 바꿔 단다
-  im.src = 'img/teacher-' + (male ? 'm' : 'f') + '.webp';
+  const w = who(S.region === 's' ? 's' : 'n', S.tch || 'f');
+  const im = new Image();               // 사진이 있으면 그림 대신 사진을 단다
+  im.src = 'img/' + w.img + '.webp';
   im.alt = ''; im.className = 'tchface';
   im.onload = () => { const svg = p.querySelector('.tchsvg'); if (svg) svg.replaceWith(im); };
-  p.innerHTML = tchSvg() +
-    `<span class="tchname">${(S.tch || 'f') === 'm' ? 'Thầy Nam · 터이 남 (남 선생님)' : 'Cô Linh · 꼬 린 (여 선생님)'}</span>`;
+  p.innerHTML = tchSvg() + `<span class="tchname">${esc(w.name)} · ${esc(w.kr)}</span>`;
 }
 
 function aiBubble(text) {
@@ -3529,8 +3536,66 @@ function renderChatKey() {
 /* 대화방 — 지역×성별로 넷. 나가도 지난 대화가 남는다(카톡처럼).
    방마다 선생님이 다르니 말투도 소리도 달라진다. 방 비우기로 처음부터 다시 할 수 있다. */
 const ROOMS = [['n', 'f'], ['n', 'm'], ['s', 'f'], ['s', 'm']];
+/* 이름은 베트남에서 실제로 가장 흔한 것들에서 골랐다 (forebears 통계 기준).
+   Linh 2위·75%가 여자 · Tuấn 5위·94%가 남자 · Thảo 13위·84%가 여자 · Huy 14위·92%가 남자.
+   북부/남부로 이름이 갈리는 통계는 못 찾았다 — 흔한 이름 넷을 지역에 나눠 붙였다. */
+const PEOPLE = {
+  nf: { name: 'Thùy Linh', kr: '투이 린', img: 'tch-nf' },
+  nm: { name: 'Anh Tuấn',  kr: '아인 뚜언', img: 'tch-nm' },
+  sf: { name: 'Ngọc Thảo', kr: '응옥 타오', img: 'tch-sf' },
+  sm: { name: 'Quang Huy', kr: '꽝 후이', img: 'tch-sm' },
+};
 const roomKey = (rg, tc) => rg + tc;
-const roomName = (rg, tc) => (rg === 's' ? '남부' : '북부') + ' · ' + (tc === 'm' ? 'Thầy Nam (남)' : 'Cô Linh (여)');
+const who = (rg, tc) => PEOPLE[roomKey(rg, tc)] || PEOPLE.nf;
+const roomName = (rg, tc) => who(rg, tc).name;
+/* 하루 넘게 조용하면 먼저 말을 걸어 둔다 — 다음에 앱을 열면 메시지가 와 있다.
+   폰 알림까지는 아직 아니다(그건 푸시 서버가 따로 있어야 한다). 앱 안에서 보이는 데까지다. */
+const PING = {
+  nf: ['Chào bạn! Hôm nay bạn khỏe không?', 'Bạn đã ăn cơm chưa?', 'Lâu rồi không gặp!'],
+  nm: ['Chào bạn! Hôm nay bạn làm gì?', 'Bạn đang bận không?', 'Hôm nay trời đẹp nhỉ!'],
+  sf: ['Chào bạn! Bạn khỏe không?', 'Bạn ăn gì chưa?', 'Hôm nay bạn thế nào?'],
+  sm: ['Chào bạn! Bạn có rảnh không?', 'Dạo này bạn sao rồi?', 'Hôm nay bạn đi làm à?'],
+};
+const PINGKO = {
+  'Chào bạn! Hôm nay bạn khỏe không?': '안녕! 오늘 잘 지내?',
+  'Bạn đã ăn cơm chưa?': '밥은 먹었어?',
+  'Lâu rồi không gặp!': '오랜만이야!',
+  'Chào bạn! Hôm nay bạn làm gì?': '안녕! 오늘 뭐 해?',
+  'Bạn đang bận không?': '지금 바빠?',
+  'Hôm nay trời đẹp nhỉ!': '오늘 날씨 좋다, 그치?',
+  'Chào bạn! Bạn khỏe không?': '안녕! 잘 지내?',
+  'Bạn ăn gì chưa?': '뭐 좀 먹었어?',
+  'Hôm nay bạn thế nào?': '오늘 어때?',
+  'Chào bạn! Bạn có rảnh không?': '안녕! 시간 있어?',
+  'Dạo này bạn sao rồi?': '요즘 어떻게 지내?',
+  'Hôm nay bạn đi làm à?': '오늘 일하러 가?',
+};
+function pingRooms() {
+  if (!S.room) return;
+  let sent = false;
+  Object.entries(S.room).forEach(([k, r]) => {
+    if (!r.hist || !r.hist.length) return;                 // 한 번도 안 연 방은 건드리지 않는다
+    if (r.unread) return;
+    if (r.at && Date.now() - r.at < DAY) return;           // 하루는 기다린다
+    const list = PING[k] || PING.nf;
+    const t = list[Math.floor(Math.random() * list.length)];
+    r.hist.push({ role: 'model', parts: [{ text: 'VI: ' + t + '\nKO: ' + (PINGKO[t] || '') }] });
+    r.unread = (r.unread || 0) + 1;
+    r.at = Date.now();
+    sent = true;
+  });
+  if (sent) save();
+}
+
+/* 일주일이 지난 대화는 저절로 지워진다 — 손으로 비울 일이 없게. */
+function sweepRooms() {
+  const cut = Date.now() - 7 * DAY;
+  let hit = 0;
+  Object.values(S.room || {}).forEach(r => {
+    if (r.at && r.at < cut && r.hist.length) { r.hist = []; r.at = 0; hit++; }
+  });
+  if (hit) save();
+}
 function roomOf(k) { S.room = S.room || {}; return (S.room[k] = S.room[k] || { hist: [] }); }
 function renderRooms() {
   const s = $('#chatSetup');
@@ -3539,16 +3604,27 @@ function renderRooms() {
   $('#chatForm').hidden = true;
   $('#chatKeys').hidden = true;
   $('#tch').hidden = true;
-  s.append(el('p', 'lede', '누구와 이야기할까요?'));
+  sweepRooms();
   ROOMS.forEach(([rg, tc]) => {
-    const k = roomKey(rg, tc), r = (S.room || {})[k];
-    const last = r && r.hist.length ? (r.hist[r.hist.length - 1].parts || []).map(x => x.text || '').join('').split('\n')[0].replace(/^VI:\s*/, '') : '';
-    const btn = el('button', 'chatmode');
-    btn.innerHTML = `<b>${esc(roomName(rg, tc))}</b><span>${esc(last ? last.slice(0, 30) : '아직 대화 없음')}</span>`;
+    const k = roomKey(rg, tc), r = (S.room || {})[k], p = who(rg, tc);
+    const last = r && r.hist.length
+      ? (r.hist[r.hist.length - 1].parts || []).map(x => x.text || '').join('')
+          .split('\n')[0].replace(/^VI:\s*/, '') : '';
+    const btn = el('button', 'msgrow');
+    const av = el('span', 'msgav');
+    const im = new Image();
+    im.src = 'img/' + p.img + '.webp'; im.alt = '';
+    im.onload = () => { av.textContent = ''; av.append(im); };
+    av.textContent = p.name[0];
+    const mid = el('span', 'msgmid');
+    mid.append(el('b', null, esc(p.name) + '  <i>' + (rg === 's' ? '남부' : '북부') + '</i>'),
+               el('span', 'msglast', esc(last ? last.slice(0, 34) : '대화를 시작해 보세요')));
+    btn.append(av, mid);
+    if (r && r.unread) btn.append(el('span', 'msgbadge', String(r.unread)));
     btn.onclick = () => openRoom(rg, tc);
     s.append(btn);
   });
-  show('chat', 'AI 선생님', true);
+  show('chat', '메신저', true);
 }
 function openRoom(rg, tc) {
   S.region = rg; S.tch = tc; save(); drawRegion();
@@ -3566,13 +3642,7 @@ function openRoom(rg, tc) {
     if (m.role === 'user') { if (t !== '(대화를 시작해 주세요)') bubble('me', t); }
     else aiBubble(t);
   });
-  const tools = el('div', 'qplay');
-  const clr = el('button', 'ghost sm', '방 비우기');
-  clr.onclick = () => { if (confirm('이 방의 대화를 모두 지울까요?')) { r.hist = []; save(); openRoom(rg, tc); } };
-  const out = el('button', 'ghost sm', '방 나가기');
-  out.onclick = () => { save(); renderRooms(); };
-  tools.append(clr, out);
-  $('#chatLog').prepend(tools);
+  r.unread = 0; r.at = Date.now(); save();     // 들어오면 읽음 · 마지막 시각 기록
   if (!r.hist.length) {
     CH.hist.push({ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] });
     chatSend(null);
@@ -3631,7 +3701,7 @@ function startTalk() {
   $('#chatForm').hidden = true;
   $('#chatKeys').hidden = true;
   $('#chatKb').classList.remove('pick');
-  $('#tch').hidden = true;
+  drawTch();                                 // 역할극에서도 상대 얼굴이 보여야 말이 나온다
   CH = null;
   const s = $('#chatSetup');
   s.hidden = false; s.textContent = '';
@@ -3885,12 +3955,13 @@ function showGuide() {
   ]);
 
   sec('⑦', 'AI 선생님과 실제로 말해 보기', [
-    '<b>자유 대화</b>는 북부/남부 × 여/남 <b>네 방</b>입니다. 방마다 말투와 소리가 다르고, 나갔다 와도 지난 대화가 남습니다.',
+    '<b>메신저</b>에는 네 사람이 있습니다 — 북부의 Thùy Linh·Anh Tuấn, 남부의 Ngọc Thảo·Quang Huy. 사람마다 말투와 소리가 다릅니다.',
     '지금까지 배운 단어를 매번 같이 보내므로 <b>내가 아는 단어 안에서</b> 말을 걸어옵니다 — 왕초보에게는 완전한 자유 대화보다 이쪽이 낫습니다. 답은 베트남어 · 발음 · 뜻 세 줄로 옵니다.',
     '내 베트남어에 실수가 있으면 <b>✎</b>로 시작하는 교정 줄이 붙습니다. [다시 듣기]로 문장을 한 번 더 들을 수 있습니다.',
     '입력칸 왼쪽 <b>마이크</b>는 말한 것을 받아 적어 칸에 넣어 줍니다(바로 안 보냅니다 — 고칠 기회를 줍니다). ' +
       '<b>카메라</b>는 눈앞의 물건을 찍으면 그 이름으로 말을 걸어옵니다. 오른쪽 <b>자판</b>에는 ă â ê ô ơ ư đ 와 성조 글쇠가 있습니다.',
-    '<b>[방 비우기]</b>로 그 방을 처음부터, <b>[방 나가기]</b>로 목록으로. <b>배운 문장으로</b>에서는 끝낸 세트의 대화를 골라 <b>[내가 A] / [내가 B]</b>로 역할극을 합니다.',
+    '지난 대화는 <b>일주일이 지나면 저절로 지워집니다</b> — 손으로 비울 일이 없습니다. 하루 넘게 조용하면 상대가 먼저 말을 걸어 둡니다(빨간 숫자로 표시됩니다).',
+    '<b>배운 문장으로</b>에서는 끝낸 세트의 대화를 골라 <b>[내가 A] / [내가 B]</b>로 역할극을 합니다.',
   ]);
 
   sec('⑧', '내 실력을 재는 법 — 채점과 분석', [
