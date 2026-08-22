@@ -2411,8 +2411,9 @@ function showWx() {
       ['하노이 (북부)', '호찌민 (남부)'].forEach((name, i) => {
         const d = arr[i] && arr[i].daily;
         if (!d) return;
+        const cty = i === 0 ? 'n' : 's';
         box.append(el('p', 'newsday', name));
-        box.append(el('p', 'note', wxSeason(i === 0 ? 'n' : 's')));
+        box.append(el('p', 'note', wxSeason(cty)));
         const row = el('div', 'wxrow');
         d.time.forEach((t, k) => {
           const day = new Date(t + 'T00:00');
@@ -2424,22 +2425,35 @@ function showWx() {
           row.append(cell);
         });
         box.append(row);
+        box.append(el('p', 'newsday', '월별 평균 기온 · 강수량'));
+        box.append(wxTable(cty));
       });
     }).catch(() => { box.textContent = '날씨를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'; });
 }
 
-/* 절기 특징 — 이맘때 그 도시 날씨가 원래 어떤지 */
+/* 기후 특징 — 달과 무관하게 항상 다 보여준다 + 월별 평균 기온·강수량 */
 function wxSeason(city) {
-  const m = new Date().getMonth() + 1;
-  if (city === 'n') {
-    if (m >= 5 && m <= 8) return '5~8월 하노이는 한여름 — 무덥고 소나기가 잦습니다';
-    if (m >= 9 && m <= 11) return '9~11월 하노이는 가을 — 맑고 선선한 최고의 계절입니다';
-    if (m >= 2 && m <= 4) return '2~4월 하노이는 봄 — 흐리고 이슬비가 잦습니다';
-    return '12~1월 하노이는 겨울 — 15도 안팎, 난방이 없어 체감은 더 춥습니다';
-  }
-  return m >= 5 && m <= 10
-    ? '5~10월 호찌민은 우기 — 오후 한때 소나기가 거의 매일 옵니다'
-    : '11~4월 호찌민은 건기 — 비 없이 덥고 맑습니다';
+  return city === 'n'
+    ? '사계절: 봄(2~4월) 흐리고 이슬비 · 여름(5~8월) 무덥고 소나기 · 가을(9~11월) 맑고 선선 · 겨울(12~1월) 15도 안팎, 난방 없어 체감 추움'
+    : '연중 더움(27도 안팎): 우기(5~10월) 오후 한때 소나기 매일 · 건기(11~4월) 비 없이 맑음';
+}
+const WXCLIMATE = {   // 월별 평균 기온(도) / 강수량(mm) — 기상 평년값 기준
+  n: [[17, 18], [18, 26], [20, 44], [24, 90], [28, 189], [30, 240], [30, 288], [29, 318], [28, 265], [26, 131], [22, 43], [18, 23]],
+  s: [[26, 14], [27, 4], [28, 10], [30, 50], [29, 218], [28, 312], [28, 294], [28, 270], [27, 327], [27, 267], [27, 117], [26, 48]],
+};
+function wxTable(city) {
+  const cur = new Date().getMonth();
+  const wrap = el('div', 'wxscroll');
+  const row = el('div', 'wxrow wxclim');
+  WXCLIMATE[city].forEach(([t, r], i) => {
+    const cell = el('div', 'wxday' + (i === cur ? ' today' : ''));
+    cell.append(el('span', null, (i + 1) + '월'),
+                el('b', null, t + '°'),
+                el('em', null, r + 'mm'));
+    row.append(cell);
+  });
+  wrap.append(row);
+  return wrap;
 }
 
 /* 사용법 — 이 앱이 왜 이렇게 생겼는지, 어떻게 쓰면 가장 남는지 (근거 요약) */

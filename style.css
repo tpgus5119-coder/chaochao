@@ -613,3 +613,7 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 
 /* 통계 4칸 */
 .stats{flex-wrap:wrap}
+
+/* 월별 기후표 — 옆으로 민다 */
+.wxscroll{overflow-x:auto; margin-bottom:10px}
+.wxclim{min-width:640px}
