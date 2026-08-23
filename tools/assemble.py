@@ -30,6 +30,7 @@ def telex(vi):
 sys.path.insert(0,'tools')
 from visuals import attach
 from polite import polite      # 앱 글은 모두 존댓말 (사용자 지시)
+from hanviet import HANVIET    # 한자어 힌트 — 한 곳에 모아 두고 여기서 채운다
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days = []
@@ -135,6 +136,9 @@ for d in out["days"]:
     used = set()
     for w in d["words"]:
         attach(w)
+        # 한자어 힌트 — 낱말 파일에 없으면 표에서 채운다 (표에 있는 것이 우선하지 않는다)
+        if not w.get("hanja") and w["vi"] in HANVIET:
+            w["hanja"] = HANVIET[w["vi"]]
         # 구체어(이모지가 붙는 단어)만 그림 파일 자리를 준다. img/ 에 파일을 넣으면 그걸 보여준다.
         if w.get("emoji"):
             s = slug(w["vi"])                      # 부호를 떼면 겹칠 수 있다 (đau/đầu → dau)
