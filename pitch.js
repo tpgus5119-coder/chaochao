@@ -258,6 +258,16 @@ const PITCH = (() => {
        miss  목표가 뚜렷하게 멀다                    → X + 무엇이 다른지
        unsure 그 사이 — 못 가리겠다                  → 다시 한 번
      '모르겠다'를 말할 수 있어야 잘못된 지적이 줄어든다. */
+  /* hỏi·ngã(내렸다 올라감)는 **틀렸다고 하지 않는다.**
+       ① 남부 베트남어에서는 이 둘이 아예 하나로 합쳐졌다 — 남부는 실질적으로 5성조다.
+          중부도 잘 안 가른다. 남부·중부 사람이 맞춤법에서 가장 많이 틀리는 것이 이 둘이다.
+          원어민 상당수가 안 하는 구별로 배우는 사람을 판정할 수는 없다.
+       ② 기계도 이 무리가 제일 약하다(52%).
+       ③ 실측: 목표가 이 무리일 때 **잘못된 지적이 17.8%** 였다.
+          같은 문턱에서 내려감은 0.8%, 올라감은 3.3% 였으니 여기만 5~20배다.
+     그래서 이 무리는 O 아니면 '가려내기 어렵다'만 낸다. 곡선은 그대로 보여준다. */
+  const SOFT = { dip: 1 };
+
   function judge(A, wantFam) {
     if (!A || !A.curve || !TPL[wantFam]) return null;
     const ds = {};
@@ -265,8 +275,10 @@ const PITCH = (() => {
     for (const k in TPL) { const d = dist(A, k); ds[k] = d; if (d < bd) { bd = d; best = k; } }
     const gap = ds[wantFam] - bd;
     if (gap < SURE) return { v: 'ok', fam: wantFam, ko: FAMKO[wantFam] };
-    if (gap >= WRONG) return { v: 'miss', fam: best, ko: FAMKO[best], want: wantFam, wantKo: FAMKO[wantFam] };
-    return { v: 'unsure', fam: best, ko: FAMKO[best], want: wantFam, wantKo: FAMKO[wantFam] };
+    const out = { fam: best, ko: FAMKO[best], want: wantFam, wantKo: FAMKO[wantFam] };
+    if (SOFT[wantFam]) return Object.assign(out, { v: 'soft' });
+    if (gap >= WRONG) return Object.assign(out, { v: 'miss' });
+    return Object.assign(out, { v: 'unsure' });
   }
 
   /* 곡선의 '방향'만 뽑는다 (그림 밑 설명용). */
