@@ -3597,7 +3597,14 @@ async function aiRead(target, cv, box, onGrade) {
       generationConfig: { maxOutputTokens: 300, thinkingConfig: { thinkingBudget: 0 } }
     }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     const r = parseHand(t);
-    const v = r['판정'] || '모르겠음';
+    let v = r['판정'] || '모르겠음';
+    // AI 가 제 입으로 정답과 똑같이 읽어 놓고 '틀림'이라 하는 일이 있다(실측 40장 중 4장).
+    // 제가 읽은 것이 정답이면 틀렸다고 할 수 없다 — 그건 판정이 아니라 자기모순이다.
+    const bare = x => String(x || '').replace(/\(.*?\)/g, '').toLowerCase()
+                      .replace(/[.,!?"'\u201c\u201d]/g, '').replace(/\s+/g, ' ').trim();
+    if (/틀림/.test(v) && bare(r['읽힘']) && bare(r['읽힘']) === bare(target)) {
+      v = '맞음'; r['판정'] = '맞음';
+    }
     const ok = /맞음/.test(v), no = /틀림/.test(v);
     note.className = 'cmpnote ainote ' + (ok ? 'ok' : no ? 'no' : '');
     const chip = k => {
