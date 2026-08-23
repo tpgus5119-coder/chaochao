@@ -821,7 +821,7 @@
 > two workers examining parts of a shirt on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d23-ao.webp** · 윗옷 (áo)
-> a plain short-sleeved shirt laid flat, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a short-sleeved t-shirt laid flat, colored light blue with clear dark outlines, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **d23-quan.webp** · 바지 (quần)
 > a pair of trousers laid flat, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -2252,7 +2252,7 @@
 > liquid being poured through a paper filter in a funnel, dripping out clean below, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d94-mang-loc.webp** · 필터 (màng lọc)
-> a pleated white air filter panel held in two hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a pleated accordion-style air filter panel standing upright by itself, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **d94-bui-min.webp** · 미세먼지 (bụi mịn)
 > a hazy gray city street full of thick smog, a person in a white face mask in the foreground, full figure, simple flat illustration, soft pastel colors, thick outlines, plain white background, absolutely no text, no letters, no numbers, no words, no logo, no label, no signage, blank surfaces
@@ -2305,10 +2305,10 @@
 > a bar graph with a full bar, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-nao.webp** · nào
-> three identical objects, with one highlighted in a darker color and the others in light gray, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+> three plain boxes of different colors standing in a row, a large question mark floating above the middle box, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-o.webp** · ở
-> a small circle inside a larger square, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+> a cat sitting inside an open cardboard box, only its head and shoulders above the rim, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-dau.webp** · đâu
 > a thought bubble with a question mark and a map pin inside, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
@@ -2440,7 +2440,7 @@
 > A person pointing forward with a large clear arrow, simple friendly face with two dot eyes and a small smile, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-da.webp** · đã
-> A person walking away with a backward-pointing arrow, simple friendly face with two dot eyes and a small smile, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+> an hourglass that has finished, the top bulb completely empty, the entire pile of sand resting in the bottom bulb, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-dang.webp** · đang
 > A person in motion with a forward-pointing arrow, simple friendly face with two dot eyes and a small smile, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
@@ -2449,7 +2449,7 @@
 > A person looking forward with a forward-pointing arrow, simple friendly face with two dot eyes and a small smile, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-voi.webp** · với
-> two stick figures standing side by side, a double-headed arrow connecting them, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+> two friends standing side by side holding hands, full body, simple friendly faces with two dot eyes, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-hom-kia.webp** · hôm kia
 > a calendar with three days marked, the day before yesterday highlighted in a dark color, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
@@ -2491,7 +2491,7 @@
 > a calculator screen showing a sum, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-nhan.webp** · nhận
-> a large clear arrow pointing towards a person, simple friendly face with two dot eyes and a small smile, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+> a smiling person hugging a delivery parcel against their chest, full body, simple friendly face with two dot eyes, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-gui.webp** · gửi
 > a large clear arrow pointing away from a person, simple friendly face with two dot eyes and a small smile, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
@@ -3259,7 +3259,7 @@
 > an hourglass with a question mark inside a thought bubble, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-con-lai.webp** · còn lại
-> a group of items where only one is colored and the rest are grey, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+> a large round plate that is mostly empty, with only two small cookies left near one edge and scattered crumbs where the rest were eaten, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-van-de.webp** · vấn đề
 > a large red exclamation mark inside a triangle, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
@@ -3427,7 +3427,7 @@
 > a container with a small amount of extra liquid spilling over the top, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-chua.webp** · chừa
-> a plate with a portion of food left behind, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+> a single large empty square outline drawn with a thick line, completely blank inside, nothing drawn within the square, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-tieu-chuan.webp** · tiêu chuẩn
 > a ruler and a checkmark, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
@@ -3688,7 +3688,7 @@
 > A person in motion with a forward-pointing arrow, simple friendly face with two dot eyes and a small smile, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-moaix.webp** · mỗi
-> Three identical objects, one of them highlighted in dark color, the others in light gray, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+> a row of five identical apples, each apple with its own small green check mark above it, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
 
 **x-thuwowngf.webp** · thường
 > A person walking on a path with a circular arrow indicating repetition, simple friendly face with two dot eyes and a small smile, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
