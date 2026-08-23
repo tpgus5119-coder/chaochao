@@ -2454,6 +2454,21 @@ function drawTypeQ(body, q) {
 /* 말한 것을 AI가 받아 적어 맞는지 본다.
    성조는 채점하지 않는다(AI도 성조는 틀린다). 글자가 맞으면 정답으로 친다 —
    "알아들을 수 있게 말했는가"가 이 단계의 목표다. */
+/* 말하기 보기 넷 만들기 — 목표 + 헷갈릴 낱말 셋.
+   성조만 다른 낱말을 먼저 넣는다(sữa/sửa). 그래야 성조가 어설플 때 그쪽이 골라져
+   '고르기'가 봐주기로 흐르지 않는다. 문장은 보기를 만들 수 없으니 받아쓰기로 간다. */
+function sayOpts(target) {
+  const it = findItem(target);
+  if (!it || it.sent || !target || target.length > 20) return null;
+  const pool = allWords().map(w => w.vi).filter(v => v && v !== target);
+  if (pool.length < 3) return null;
+  const near = pool.filter(v => stripTone(v.toLowerCase()) === stripTone(target.toLowerCase()));
+  const rest = pool.filter(v => !near.includes(v) && Math.abs(v.length - target.length) <= 2);
+  const pick = [...new Set([...near.slice(0, 2), ...rest.sort(() => Math.random() - .5)])].slice(0, 3);
+  while (pick.length < 3) { const v = pool[Math.floor(Math.random() * pool.length)];
+                            if (!pick.includes(v)) pick.push(v); }
+  return [target, ...pick].sort(() => Math.random() - .5);
+}
 function judgeBtn(target, box, onDone) {
   if (!canRecord() || !aiReady()) return null;
   const b = el('button', 'rec', '🎤 말하고 채점받기');
@@ -2476,27 +2491,49 @@ function judgeBtn(target, box, onDone) {
       bumpSaid();
       try {
         const b64 = await recToWav(url);
-        const heard = await gCall({
-          contents: [{ role: 'user', parts: [
-            { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
-            { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-          generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
-        }, i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
-        const clean = x => x.toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+        const opts = sayOpts(target);
+        const clean = x => String(x || '').toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
         const bare = x => stripTone(clean(x));
-        const exact = clean(heard) === clean(target);
-        const close = bare(heard) === bare(target);
+        let ok, heard;
+        if (opts) {
+          /* 받아쓰기 대신 **넷 중 고르기**. 원어민 녹음 60개로 재서 정한 방식이다:
+             받아쓰기 60.0% → 고르기 91.7%. 베트남어는 한 음절짜리 낱말이 많아
+             앞뒤 말 없이 하나만 들으면 AI 가 엉뚱하게 받아 적는다(tha lỗi → "Hà Nội").
+             봐주기가 아니라는 것도 쟀다 — 일부러 다른 낱말 소리를 넣은 60번 중
+             목표라고 답한 적이 **0번**, 실제로 말한 낱말을 맞힌 것이 98.3% 였다.
+             보기에는 성조만 다른 낱말을 먼저 넣는다 — 그래야 성조가 어설프면 그쪽이 골라진다. */
+          const t = await gCall({
+            contents: [{ role: 'user', parts: [
+              { text: '이 녹음은 베트남어 낱말 하나를 읽은 것이다. 아래 보기 가운데 **무엇을 말했는지** 하나만 고르라.\n'
+                      + opts.map((o, i) => (i + 1) + '. ' + o).join('\n')
+                      + '\n보기에 없으면 0 이라고 답하라. 숫자 하나만 답하고 다른 말은 붙이지 마라.' },
+              { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+            generationConfig: { maxOutputTokens: 10, thinkingConfig: { thinkingBudget: 0 } }
+          }, i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
+          const m = /\d/.exec(t || ''), k = m ? +m[0] : 0;
+          heard = k >= 1 && k <= opts.length ? opts[k - 1] : null;
+          ok = heard === target;
+        } else {
+          heard = await gCall({
+            contents: [{ role: 'user', parts: [
+              { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
+              { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+            generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
+          }, i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
+          ok = clean(heard) === clean(target) || bare(heard) === bare(target);
+        }
         S.stats.pronAll = (S.stats.pronAll || 0) + 1;
-        if (exact || close) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
+        if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
         save();
-        // AI 는 **글자(음절)만** 판정한다. 성조 부호는 AI 가 지어낸 것이라 떼고 보여준다.
-        box.innerHTML = (exact || close
-          ? '<b class="okmsg">알아들었습니다 — 글자로는 "' + esc(stripTone(heard)) + '".</b>'
-          : '<b class="nomsg">글자가 다르게 들립니다 — "' + esc(stripTone(heard)) + '".</b> 목표는 <b>'
-            + esc(stripTone(target)) + '</b> — 조금 크게, 또박또박 다시 해 보세요.')
-          + '<span class="tonenote">AI는 <b>높낮이(성조)를 가리지 못합니다</b> — 아래 곡선이 그 몫입니다.</span>';
-        fxTone(exact || close);
-        onDone && onDone(exact || close, true);   // AI가 매긴 것임을 알린다
+        box.innerHTML = (ok
+          ? '<b class="okmsg">알아들었습니다.</b>'
+          : heard
+            ? '<b class="nomsg">「' + esc(heard) + '」처럼 들립니다.</b> 목표는 <b>' + esc(target)
+              + '</b> — 조금 크게, 또박또박 다시 해 보세요.'
+            : '<b class="nomsg">무슨 낱말인지 가려내지 못했습니다.</b> 폰을 입 가까이 대고 다시 해 보세요.')
+          + (opts ? '' : '<span class="tonenote">AI는 <b>높낮이(성조)를 가리지 못합니다</b> — 아래 곡선이 그 몫입니다.</span>');
+        fxTone(ok);
+        onDone && onDone(ok, true);   // AI가 매긴 것임을 알린다
       } catch (e) { box.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
     };
     const kill = liveRec(box, REC.stream, RECSEC(target),
