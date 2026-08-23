@@ -2328,27 +2328,46 @@ function drawHandQ(body, q) {
   const tools = el('div', 'qplay');
   const cl = el('button', 'ghost', '지우기'); cl.onclick = paper;
   tools.append(cl);
-  if (aiReady()) {
-    const ai = el('button', 'ghost', 'AI 선생님 점검');
-    ai.onclick = () => { ai.disabled = true; aiRead(w.vi, cv, box).finally(() => { ai.disabled = false; }); };
-    tools.append(ai);
-  }
-  const show = el('button', 'primary', '정답 보기');
-  show.onclick = () => {
-    show.disabled = true;
+  /* 채점은 AI가 한다. 다만 **확신이 없으면 점수를 매기지 않고** 본인에게 넘긴다 —
+     틀리지 않은 글씨를 틀렸다고 하는 것이 가장 나쁘다.
+     AI가 틀렸다고 했을 때도 되돌릴 단추를 둔다(기계는 열에 하나쯤 틀린다). */
+  const answer = () => {
     const ans = el('div', 'ansbox');
     ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(w.kr_read));
     body.insertBefore(ans, box);
-    const g = el('div', 'opts');
-    const ok = el('button', null, '✓ 맞게 썼어요');
-    ok.onclick = () => { fxTone(true); markSpeed(true, 'hand'); S.stats.spellAll = (S.stats.spellAll || 0) + 1;
-      S.stats.spellOk = (S.stats.spellOk || 0) + 1; grade(w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
-    const no = el('button', null, '✗ 틀렸어요');
-    no.onclick = () => { markSpeed(false, 'hand'); S.stats.spellAll = (S.stats.spellAll || 0) + 1;
-      grade(w.vi, false); requeue(q); Q.i++; drawQuiz(); };
-    g.append(ok, no);
-    body.append(g);
   };
+  const mark = good => {
+    markSpeed(good, 'hand');
+    S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+    if (good) { S.stats.spellOk = (S.stats.spellOk || 0) + 1; fxTone(true); grade(w.vi, true, Q.early); Q.ok++; }
+    else { grade(w.vi, false); requeue(q); }
+    Q.i++; drawQuiz();
+  };
+  const byHand = () => {                      // AI가 못 가릴 때만 — 본인이 판단
+    const g = el('div', 'opts');
+    const ok = el('button', null, '✓ 맞게 썼어요'); ok.onclick = () => mark(true);
+    const no = el('button', null, '✗ 틀렸어요');   no.onclick = () => mark(false);
+    g.append(ok, no); body.append(g);
+  };
+  if (aiReady()) {
+    const ai = el('button', 'primary', '채점받기');
+    ai.onclick = () => {
+      ai.disabled = true;
+      aiRead(w.vi, cv, box, v => {
+        answer();
+        if (v === null) { byHand(); return; }                 // 모르겠음 → 점수 안 매김
+        const nx = el('div', 'opts');
+        const go = el('button', 'primary', v ? '다음 ›' : '다음 ›');
+        go.onclick = () => mark(v);
+        const undo = el('button', 'ghost', v ? '아니에요, 틀렸어요' : '아니에요, 맞게 썼어요');
+        undo.onclick = () => mark(!v);
+        nx.append(go, undo); body.append(nx);
+      }).finally(() => { ai.disabled = false; });
+    };
+    tools.append(ai);
+  }
+  const show = el('button', aiReady() ? 'ghost' : 'primary', '정답 보기');
+  show.onclick = () => { show.disabled = true; answer(); byHand(); };
   tools.append(show);
   body.append(tools, box);
   play(w.vi, false);
@@ -3492,34 +3511,88 @@ function inkCrop(cv) {
   return o.toDataURL('image/jpeg', .8).split(',')[1];
 }
 
-async function aiRead(target, cv, box) {
+/* ---------- 손글씨 채점 ----------
+   조사해서 알게 된 것: 이 일은 **인식(recognition)이 아니라 대조(verification)** 다.
+   "이게 뭐라고 쓰였나"는 어렵고(일반 손글씨 85~92%, 학습에 안 쓰인 언어는 더 떨어진다),
+   "이게 chào 라고 쓰인 게 맞나"는 훨씬 쉽다. 우리는 정답을 알고 있으니 뒤쪽만 물으면 된다.
+   그래서 **정답을 글씨로 그려서 손글씨와 나란히 보여준다** — 읽으라고 하지 않고 견주라고 시킨다.
+   그리고 볼 곳을 딱 정해 준다: 알파벳 차례 · 성조 부호 · 모자(ă â ê ô ơ ư đ).
+   마지막으로 **확신이 없으면 "모르겠음"이라고 답하게** 한다 — 틀리지 않은 글씨를 틀렸다고
+   하는 것이 가장 나쁘다. 그때는 점수를 매기지 않는다. */
+function targetCard(text) {
+  const c = document.createElement('canvas');
+  c.width = 720; c.height = 240;
+  const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+  g.fillStyle = '#000';
+  let px = 150;
+  do { g.font = `700 ${px}px "Times New Roman", Georgia, serif`; px -= 6; }
+  while (g.measureText(text).width > c.width - 60 && px > 30);
+  g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText(text, c.width / 2, c.height / 2);
+  return c.toDataURL('image/jpeg', .9).split(',')[1];
+}
+
+const HANDQ = ['글자', '성조', '모자'];
+function parseHand(t) {
+  const o = {};
+  t.split('\n').forEach(l => {
+    const m = l.match(/^\s*[-*]?\s*(읽힘|글자|성조|모자|판정|조언)\s*[:：]\s*(.+)$/);
+    if (m) o[m[1]] = m[2].trim();
+  });
+  return o;
+}
+
+async function aiRead(target, cv, box, onGrade) {
   const note = el('div', 'cmpnote ainote', 'AI 선생님이 보는 중…');
   box.querySelector('.ainote')?.remove();
   box.append(note);
   try {
-    const b64 = inkCrop(cv);
+    const mine = inkCrop(cv), want = targetCard(target);
     const t = await gCall({
       contents: [{ role: 'user', parts: [
-        /* 손글씨 읽기는 기계가 잘하는 일이 아니다 — 일반 손글씨에서 85~92%이고,
-           학습에 안 쓰인 언어에서는 더 떨어진다. 베트남어는 성조 부호가 붙어 더 위험하다.
-           그래서 **확신을 먼저 묻고, 확신이 없으면 지적하지 말라**고 시킨다.
-           틀리지 않은 글씨를 틀렸다고 하는 것이 가장 나쁘다. (채점은 어차피 본인이 한다) */
-        { text: '사진은 한국인 학습자가 손으로 쓴 베트남어다. 목표 단어는 "' + target + '".\n' +
-                '**중요**: 손글씨를 잘못 읽는 일이 잦다. 흐리거나 흘려 썼거나 부호가 애매하면\n' +
-                '지적하지 말고 "잘 모르겠습니다"라고 답하라. 틀리지 않은 것을 틀렸다고 하면 안 된다.\n' +
-                '딱 네 줄로, 한국어로 답한다:\n' +
-                '1) 확신: 또렷함 / 보통 / 흐림  (사진이 얼마나 또렷한가)\n' +
-                '2) 읽힘: (손글씨가 읽히는 그대로. 확신이 흐림이면 "잘 모르겠습니다")\n' +
-                '3) 짚기: **확실히 보이는 것만**. 목표와 다른 글자나 빠진 성조 부호.\n' +
-                '   확실하지 않으면 "확실하지 않아 짚지 않겠습니다". 문제없으면 "잘 썼습니다"\n' +
-                '4) 조언: 글씨 모양이나 부호 위치에 대한 한 줄 조언' },
-        { inline_data: { mime_type: 'image/jpeg', data: b64 } }] }],
-      generationConfig: { maxOutputTokens: 250, thinkingConfig: { thinkingBudget: 0 } }
+        { text: '사진 두 장이다. **첫째**는 인쇄된 정답 "' + target + '", ' +
+                '**둘째**는 한국인 학습자가 손으로 쓴 것이다.\n' +
+                '읽어내려 하지 말고 **두 장을 견주어라.** 둘째가 첫째와 같은 낱말인가?\n\n' +
+                '볼 곳은 셋이다:\n' +
+                ' · 글자 — 알파벳이 빠짐없이 같은 차례로 있는가\n' +
+                ' · 성조 — 성조 부호(◌́ ◌̀ ◌̉ ◌̃ ◌̣)가 맞는 글자 위(아래)에 맞는 모양으로 있는가\n' +
+                ' · 모자 — ă â ê ô ơ ư đ 의 모자·갈고리·가로줄이 제대로 붙었는가\n\n' +
+                '**흐리거나 흘려 써서 확실하지 않으면 "모르겠음"이라고 답하라.** ' +
+                '틀리지 않은 글씨를 틀렸다고 하면 안 된다.\n\n' +
+                '아래 형식 그대로, 한국어로:\n' +
+                '읽힘: (둘째 사진이 읽히는 그대로)\n' +
+                '글자: 맞음 | 틀림 | 모르겠음\n' +
+                '성조: 맞음 | 틀림 | 없음 | 모르겠음\n' +
+                '모자: 맞음 | 틀림 | 해당없음 | 모르겠음\n' +
+                '판정: 맞음 | 틀림 | 모르겠음\n' +
+                '조언: (한 줄. 무엇을 어떻게 고칠지)' },
+        { inline_data: { mime_type: 'image/jpeg', data: want } },
+        { inline_data: { mime_type: 'image/jpeg', data: mine } }] }],
+      generationConfig: { maxOutputTokens: 300, thinkingConfig: { thinkingBudget: 0 } }
     }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
-    note.innerHTML = esc(t).replace(/\n/g, '<br>') +
-      '<br><span class="dimtxt">참고용입니다 — 손글씨 읽기는 기계가 <b>10에 1~2는 틀립니다.</b> ' +
-      '채점은 정답을 직접 보고 하세요.</span>';
-  } catch (e) { note.textContent = 'AI 점검 실패: ' + (e.message || ''); }
+    const r = parseHand(t);
+    const v = r['판정'] || '모르겠음';
+    const ok = /맞음/.test(v), no = /틀림/.test(v);
+    note.className = 'cmpnote ainote ' + (ok ? 'ok' : no ? 'no' : '');
+    const chip = k => {
+      const x = r[k] || '모르겠음';
+      const c = /맞음|해당없음/.test(x) ? 'ok' : /틀림/.test(x) ? 'no' : '';
+      return `<span class="hchip ${c}">${k} ${esc(x)}</span>`;
+    };
+    note.innerHTML =
+      '<b>' + (ok ? '맞게 썼습니다' : no ? '다르게 쓰였습니다' : '가려내기 어렵습니다') + '</b>' +
+      '<span class="hrow">' + HANDQ.map(chip).join('') + '</span>' +
+      (r['조언'] ? '<span>' + esc(r['조언']) + '</span>' : '') +
+      (no || ok ? '' : '<span class="dimtxt">흐리거나 흘려 써서 확실하지 않습니다 — ' +
+        '<b>틀렸다고 하지 않겠습니다.</b> 조금 크고 또박또박 다시 써 보세요.</span>');
+    onGrade && onGrade(ok ? true : no ? false : null, r);
+    return ok ? true : no ? false : null;
+  } catch (e) {
+    note.textContent = 'AI 점검 실패: ' + (e.message || '');
+    onGrade && onGrade(null, {});
+    return null;
+  }
 }
 
 /* ---------- AI 대화 ----------

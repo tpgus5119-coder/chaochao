@@ -1038,3 +1038,9 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .livecv{width:100%; height:150px; display:block}
 .livetip{font-size:13px; color:var(--dim); text-align:center; word-break:keep-all}
 .livetip b{color:var(--fg)}
+/* 손글씨 채점 — 볼 곳 셋을 따로 보여준다 */
+.hrow{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 2px}
+.hchip{font-size:12px; padding:3px 9px; border-radius:999px;
+  border:1px solid var(--line); color:var(--dim); white-space:nowrap}
+.hchip.ok{border-color:var(--ok); color:var(--ok)}
+.hchip.no{border-color:var(--bad); color:var(--bad)}

@@ -225,12 +225,18 @@ const PITCH = (() => {
      그리고 X 라고 해도 '틀렸다'가 아니라 **'다르게 들린다'**고 말한다 — 잰 것을 말할 뿐이다. */
   const SURE = 0.35, WRONG = 0.80;
 
+  /* 길이를 얼마나 볼 것인가 — **상한을 둔다**. 이게 없으면 천천히 말하는 사람이 손해를 본다.
+     실측: 말을 두 배 느리게 하면 길이 가중치 ×4 에서 정확도가 86.8%→84.8% 로 떨어지고
+     판정이 한쪽(내려감)으로 쏠렸다. 가중치를 ×8 로 올리면 이 코퍼스에서는 88.1% 로 제일 좋지만
+     느린 사람에게는 84.6% 로 제일 나빠진다 — **기준 음성이 TTS 라 길이가 고른 탓에 생기는 착시**다.
+     상한 0.05초를 두면 보통 속도 86.5% · 두 배 느려도 85.9% 로 속도에 흔들리지 않는다. */
+  const SECCAP = 0.05;
   function dist(A, k) {
     const t = TPL[k], a = A.curve;
     let s = 0;
     for (let i = 0; i < 20; i++) { const v = a[i] - t.c[i]; s += v * v; }
     let d = Math.sqrt(s / 20);
-    if (A.sec) d += Math.abs(A.sec - t.s) * 4;
+    if (A.sec) d += Math.min(Math.abs(A.sec - t.s), SECCAP) * 4;
     if (A.en) {
       let e = 0;
       for (let i = 0; i < 20; i++) { const v = A.en[i] - t.e[i]; e += v * v; }
