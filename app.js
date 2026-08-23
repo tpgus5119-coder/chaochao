@@ -3963,6 +3963,45 @@ const NUMROWS = [
   ['.',',','?','!','\'','%','+'],
 ];
 
+/* ── 텔렉스 ──────────────────────────────────────────────────
+   베트남 사람들이 실제로 치는 방식. 글자를 치고 뒤에 열쇠 글자를 붙인다.
+     aa→â  ee→ê  oo→ô  aw→ă  ow→ơ  uw→ư  dd→đ
+     s→´(sắc)  f→`(huyền)  r→̉(hỏi)  x→~(ngã)  j→.(nặng)  z→부호 지움
+   같은 열쇠를 한 번 더 치면 되돌아간다 (chaoff → chaof 가 아니라 chaof→chào, 한 번 더 f → chaof).
+   폰에서는 텔렉스가 압도적이고, 데스크탑에서는 VNI(숫자)도 쓴다. 우리는 폰이라 텔렉스다. */
+const TLXTONE = { s: '́', f: '̀', r: '̉', x: '̃', j: '̣' };
+const TLXHAT = { aa: 'â', ee: 'ê', oo: 'ô', aw: 'ă', ow: 'ơ', uw: 'ư', dd: 'đ' };
+const TLXBASE = Object.fromEntries(Object.entries(TLXHAT).map(([k, v]) => [v, k]));
+const curTone = w => {
+  const m = w.normalize('NFD').match(/[̣̀́̃̉]/);
+  return m ? m[0] : '';
+};
+/* 낱말 뒤에 ch 를 쳤을 때 텔렉스가 만드는 낱말. 바꿀 것이 없으면 null. */
+function telex(word, ch) {
+  const up = ch !== ch.toLowerCase(), c = ch.toLowerCase();
+  if (!word) return null;
+  // ① 성조 열쇠
+  if (TLXTONE[c] || c === 'z') {
+    const bare = stripTone(word);
+    if (!/[aăâeêioôơuưy]/i.test(bare)) return null;      // 모음이 없으면 그냥 글자
+    const cur = curTone(word);
+    if (c === 'z') return cur ? bare : null;
+    if (cur === TLXTONE[c]) return bare + ch;            // 한 번 더 → 되돌리고 글자를 남긴다
+    return withMark(bare, TLXTONE[c], tonePos(bare));
+  }
+  // ② 모자 열쇠 — 마지막 글자와 짝을 이룰 때만
+  const last = word[word.length - 1], lastLow = last.toLowerCase();
+  const made = TLXHAT[lastLow + c];
+  if (made) return word.slice(0, -1) + (up || last !== lastLow ? made.toUpperCase() : made);
+  const code = TLXBASE[stripTone(lastLow)];              // 이미 모자가 있으면 되돌린다
+  if (code && code[1] === c) {
+    const tone = curTone(word);
+    const back = code[0] + ch;
+    return word.slice(0, -1) + (tone ? withMark(back[0], tone, 0) + ch : back);
+  }
+  return null;
+}
+
 /* ── 한글 조합 ────────────────────────────────────────────────
    낱자를 눌러 글자를 만든다. ㄱ+ㅏ+ㅁ → 감. 실제 자판이 하는 일을 그대로 한다. */
 const HCHO  = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
@@ -4087,8 +4126,20 @@ function drawChatTone() {
   LETROW.forEach(([ch, base]) => r0.append(key(ch, () => hatOn(ch, base), 'hat')));
 
   // ② 베트남어 글자 · ③ 한글 낱자 · ④ 숫자와 기호
-  letters(KBROWS, 'vi', c => { put(KBUP ? c.toUpperCase() : c);
-                               if (KBUP) { KBUP = 0; bar.classList.remove('caps'); } });
+  /* 베트남어 글쇠 — 텔렉스로 친다 */
+  letters(KBROWS, 'vi', c => {
+    const ch = KBUP ? c.toUpperCase() : c;
+    const a = at(), head = inp.value.slice(0, a);
+    const cut = Math.max(head.lastIndexOf(' '), head.lastIndexOf('\n')) + 1;
+    const word = head.slice(cut);
+    const made = telex(word, ch);
+    if (made === null) put(ch);
+    else {
+      inp.value = head.slice(0, cut) + made + inp.value.slice(a);
+      const p = cut + made.length; inp.setSelectionRange(p, p);
+    }
+    if (KBUP) { KBUP = 0; bar.classList.remove('caps'); }
+  });
   letters(KOROWS, 'ko', c => { hgKey(KBUP && KOSHIFT[c] ? KOSHIFT[c] : c);
                                if (KBUP) { KBUP = 0; bar.classList.remove('caps'); } });
   letters(NUMROWS, 'num', c => { hgDone(); put(c); });
