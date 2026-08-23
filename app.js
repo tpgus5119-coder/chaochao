@@ -3696,7 +3696,9 @@ async function aiRead(target, cv, box, onGrade) {
                 '조언: (한 줄. 무엇을 어떻게 고칠지)' },
         { inline_data: { mime_type: 'image/jpeg', data: want } },
         { inline_data: { mime_type: 'image/jpeg', data: mine } }] }],
-      generationConfig: { maxOutputTokens: 300, thinkingConfig: { thinkingBudget: 0 } }
+      // 답은 여섯 줄(읽힘·글자·성조·모자·판정·조언)이라 160이면 넉넉하다.
+      // 나온 토큰은 들어간 토큰보다 여덟 배 비싸므로 상한을 낮춰 둔다.
+      generationConfig: { maxOutputTokens: 160, thinkingConfig: { thinkingBudget: 0 } }
     }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     const r = parseHand(t);
     /* 판정은 **코드가** 짓는다. AI 의 '판정' 한 줄만 믿으면 안 된다는 것을 손글씨 119장으로 재서 알았다.
@@ -3825,7 +3827,8 @@ function chatSys(mode, myRole, day) {
        ③ 이따금 현지 표현: 책에 없는 줄임말·입말은 여기서만 만난다.
           정석을 먼저 주고 REAL 줄에 곁들인다 — 순서가 바뀌면 초보가 혼란스럽다. */
     '어휘는 이렇게 고른다:\n' +
-    ' · 뼈대는 학습자가 이미 배운 말로 쓴다: ' + learnedVi().join(', ') + '\n' +
+    // 쉼표 대신 빈칸 하나 — 뜻은 그대로인데 이 줄이 가장 큰 덩어리라 14% 줄어든다
+    ' · 뼈대는 학습자가 이미 배운 말로 쓴다: ' + learnedVi().join(' ') + '\n' +
     ' · 한 마디에 새 단어는 많아야 한둘만 섞는다. 섞었으면 "NEW: 단어=뜻" 줄을 덧붙인다.\n' +
     ' · 서너 마디에 한 번쯤, 같은 뜻을 현지 사람들이 실제로 쓰는 짧은 말·줄임말로도 알려준다:\n' +
     '   "REAL: 현지 표현 = 한국어 뜻" 줄로. 매번 붙이지는 마라.\n' +
@@ -4562,7 +4565,7 @@ $('#chatMic').onclick = async () => {
             { text: '녹음은 한국인이 베트남어를 말한 것이다. 들린 대로 <베트남어 철자>로만 적어라. ' +
                     '한글이나 영어로 적지 마라. 설명·따옴표 없이 문장만 적어라.' },
             { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-          generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
+          generationConfig: { maxOutputTokens: 60, thinkingConfig: { thinkingBudget: 0 } }
         });
         const inp = $('#chatText');
         inp.value = heard;                       // 바로 보내지 않는다 — 고쳐 쓸 기회를 준다
