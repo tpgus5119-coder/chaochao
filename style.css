@@ -23,7 +23,10 @@ header{
   padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;
   background:var(--bg); border-bottom:1px solid var(--line);
 }
-header h1{flex:1; margin:0; font-size:16px; font-weight:650; text-align:center}
+/* 제목이 길어도 줄이 늘어나면 안 된다 — min-width:0 이 없으면 flex 칸이 글자만큼 벌어진다 */
+header h1{flex:1 1 0; min-width:0; margin:0; font-size:16px; font-weight:650; text-align:center;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+header > button{flex:0 0 auto; white-space:nowrap}
 main{max-width:640px; margin:0 auto; padding:16px 14px 48px}
 button{font:inherit; cursor:pointer; border-radius:10px; border:1px solid var(--line); transition:.12s}
 button:active{transform:scale(.98)}
@@ -985,3 +988,12 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .cmem .mav{width:30px; height:30px}
 .cb .dmt{display:block; margin-top:3px; font-size:11px; opacity:.65}
 .dmwarn{border:1px solid var(--line); border-radius:10px; padding:9px 12px; margin-bottom:4px}
+/* 같은 갈래 — 표지 아래에 붙는 이어가기 단추들 */
+.kinbox{margin-top:14px; padding-top:12px; border-top:1px solid var(--line);
+  display:flex; flex-wrap:wrap; gap:6px}
+.kint{width:100%; font-size:13px; color:var(--dim); margin-bottom:2px}
+.kinbox .ghost.sm{font-size:13px; padding:6px 10px}
+
+/* 머리말과 번호는 줄이 늘어나면 안 된다 ('보기'가 '보/기'로 쪼개지던 자리) */
+.catpick > span{white-space:nowrap; flex:0 0 auto}
+.days .num{white-space:nowrap}
