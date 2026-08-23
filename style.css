@@ -430,7 +430,7 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .cb .ghost.sm{margin-top:6px; padding:4px 10px; font-size:13px}
 .chatin{
   position:sticky; bottom:0; display:flex; gap:8px; align-items:flex-end;
-  padding:10px 0 calc(env(safe-area-inset-bottom) + 12px); background:var(--bg);
+  padding:10px 0; background:var(--bg);
 }
 /* 입력칸은 쓴 글을 따라 세로로 자란다 (최대 다섯 줄, 그 뒤로는 칸 안에서 스크롤).
    높이를 재서 맞추면 사파리에서 어긋난다 — 보이지 않는 쌍둥이 글을 겹쳐 두고
@@ -675,9 +675,12 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 /* 성조 줄 — 입력칸 바로 위에 붙는 얇은 한 줄. 폰 자판을 막지 않는다. */
 /* ── 화면 자판 — 베트남어 · 한글 ────────────────────────────────
    글자 배열은 베트남 사람들이 실제로 쓰는 QWERTY 그대로. 한글은 두벌식. */
+/* 입력 막대 **아래**에 붙는다. 위에 있으면 화면 밖으로 밀려 아래 줄이 잘렸다. */
 .tonebar{
-  position:sticky; bottom:0; padding:6px 0 4px; background:var(--bg);
+  position:sticky; bottom:0; z-index:40;
+  padding:6px 0 calc(env(safe-area-inset-bottom) + 6px); background:var(--bg);
   display:none; flex-direction:column; gap:5px;
+  border-top:1px solid var(--line);
 }
 .tonebar.up{display:flex}
 .kbrow{display:flex; gap:4px; justify-content:center}
@@ -691,6 +694,8 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .tonebar.num .kbrow.num{display:flex}
 .tk{
   flex:1 1 0; min-width:0; padding:11px 0; font-size:17px; line-height:1.1;
+  touch-action:manipulation;                 /* 빠르게 두 번 눌러도 확대되지 않는다 */
+  -webkit-user-select:none; user-select:none; -webkit-tap-highlight-color:transparent;
   background:var(--card); color:var(--fg); border:1px solid var(--line);
   border-radius:7px; text-align:center;
 }

@@ -4059,12 +4059,18 @@ function drawChatTone() {
     put(ch);
   };
 
+  /* 누름은 pointerdown 하나로 끝낸다.
+     touchstart 에서 preventDefault 를 하면 아이폰이 click 을 아예 만들지 않아
+     글쇠를 눌러도 아무것도 입력되지 않았다. 그리고 pointerdown 으로 처리하면
+     자판처럼 즉각 반응하고, 빠르게 두 번 눌러도 화면이 확대되지 않는다. */
   const key = (label, fn, cls) => {
     const k = el('button', 'tk' + (cls ? ' ' + cls : ''), label);
     k.type = 'button';
-    k.addEventListener('mousedown', e => e.preventDefault());
-    k.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
-    k.onclick = () => { fn(); chatGrow(); inp.focus({ preventScroll: true }); };
+    k.addEventListener('pointerdown', e => {
+      e.preventDefault();                       // 입력칸이 포커스를 잃지 않게
+      fn(); chatGrow(); inp.focus({ preventScroll: true });
+    });
+    k.addEventListener('click', e => e.preventDefault());
     return k;
   };
   const row = cls => { const r = el('div', 'kbrow ' + cls); bar.append(r); return r; };
