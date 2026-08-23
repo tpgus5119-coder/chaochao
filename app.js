@@ -2512,7 +2512,9 @@ function judgeBtn(target, box, onDone) {
           }, i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
           const m = /\d/.exec(t || ''), k = m ? +m[0] : 0;
           heard = k >= 1 && k <= opts.length ? opts[k - 1] : null;
-          ok = heard === target;
+          // 0(보기에 없음)은 **틀림이 아니라 모르겠음**이다. 실측 203번 중 29번이 여기였는데
+          // 그동안 전부 틀림으로 세고 있었다. 잘못 짚은 것은 12번(5.9%)뿐이다.
+          ok = heard ? heard === target : null;
         } else {
           heard = await gCall({
             contents: [{ role: 'user', parts: [
@@ -2522,18 +2524,20 @@ function judgeBtn(target, box, onDone) {
           }, i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
           ok = clean(heard) === clean(target) || bare(heard) === bare(target);
         }
-        S.stats.pronAll = (S.stats.pronAll || 0) + 1;
-        if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
+        if (ok !== null) {                       // 판정을 미룬 것은 성적에 넣지 않는다
+          S.stats.pronAll = (S.stats.pronAll || 0) + 1;
+          if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
+        }
         save();
-        box.innerHTML = (ok
+        box.innerHTML = (ok === true
           ? '<b class="okmsg">알아들었습니다.</b>'
           : heard
             ? '<b class="nomsg">「' + esc(heard) + '」처럼 들립니다.</b> 목표는 <b>' + esc(target)
               + '</b> — 조금 크게, 또박또박 다시 해 보세요.'
-            : '<b class="nomsg">무슨 낱말인지 가려내지 못했습니다.</b> 폰을 입 가까이 대고 다시 해 보세요.')
+            : '<b>가려내기 어렵습니다 — <b>틀렸다고 하지 않겠습니다.</b></b> 폰을 입 가까이 대고 조금 크게 다시 해 보세요.')
           + (opts ? '' : '<span class="tonenote">AI는 <b>높낮이(성조)를 가리지 못합니다</b> — 아래 곡선이 그 몫입니다.</span>');
-        fxTone(ok);
-        onDone && onDone(ok, true);   // AI가 매긴 것임을 알린다
+        fxTone(ok === true);
+        onDone && onDone(ok, true);   // null 이면 점수 없음   // AI가 매긴 것임을 알린다
       } catch (e) { box.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
     };
     const kill = liveRec(box, REC.stream, RECSEC(target),
