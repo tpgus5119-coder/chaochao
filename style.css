@@ -1139,3 +1139,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .gcell{cursor:pointer; border-radius:8px; transition:.12s}
 .gcell:active{transform:scale(.97)}
 .gcell:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+/* 시험 화면의 '따라 말하기' — 누를 사람만 누르는 작은 자리 */
+.qsay:empty{display:none}
+.qsay{margin:10px 0 0}
+.qplay .ibtn.mic{flex:0 0 auto}

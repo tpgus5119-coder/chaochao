@@ -2294,6 +2294,16 @@ function drawQuiz() {
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
 
+  /* 소리를 듣는 자리에는 **말하는 길**도 같이 둔다. 듣기만 하면 입이 안 열린다.
+     시험 흐름을 흐트러뜨리지 않게, 누를 사람만 누르는 작은 마이크로 둔다.
+     누르면 하루 5분 카드와 똑같이 발음·높낮이를 짚어 준다. */
+  const sayBox = el('div', 'qsay');
+  const addMic = () => {
+    if (!canRecord()) return;
+    const mic = iconBtn('mic', '따라 말하기', null);
+    mic.onclick = () => toggleRec(q.w.vi, mic, sayBox);
+    return mic;
+  };
   if (q.mode === 'listen') {           // 귀로만 — 글자는 답한 뒤에 보여준다
     const wrap = el('div', 'qplay');
     const b = el('button', 'primary big', '듣기');
@@ -2301,10 +2311,18 @@ function drawQuiz() {
     const sl = el('button', 'ghost', '느리게 듣기');
     sl.onclick = () => play(q.w.vi, true);
     wrap.append(b, sl);
-    body.append(wrap);
+    const m = addMic(); if (m) wrap.append(m);
+    body.append(wrap, sayBox);
     play(q.w.vi, false);
   } else {                             // 눈으로 — 글자를 보여주고 뜻을 고른다
-    body.append(el('div', 'qmain' + (q.w.sent ? ' sent' : ''), esc(q.w.vi)));
+    const main = el('div', 'qmain' + (q.w.sent ? ' sent' : ''), esc(q.w.vi));
+    body.append(main);
+    const wrap = el('div', 'qplay');
+    const b = el('button', 'ghost', '듣기');
+    b.onclick = () => play(q.w.vi, false);
+    wrap.append(b);
+    const m = addMic(); if (m) wrap.append(m);
+    body.append(wrap, sayBox);
   }
 
   const opts = el('div', 'opts');
