@@ -3548,3 +3548,120 @@
 
 **n-benh-vien.webp** · 병원 (bệnh viện)
 > a hospital building with a large red cross on the front, ambulance parked outside, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-bac-si.webp** · 의사 (bác sĩ)
+> a friendly doctor in a white coat with a stethoscope, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-thuoc.webp** · 약 (thuốc)
+> a bottle of pills next to loose tablets, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-dau.webp** · 아프다 (đau)
+> a person holding their arm with a pained expression, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-kham.webp** · 진찰하다 (khám)
+> a doctor examining a patient with a stethoscope, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-rang.webp** · 치아 (răng)
+> a bright smile showing a row of white teeth, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-dep.webp** · 예쁘다 (đẹp)
+> a single blooming pink flower, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-tien.webp** · 돈 (tiền)
+> a small fan of colourful paper banknotes, no dollar sign, no currency symbol, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-tot.webp** · 좋다 (tốt)
+> a big green check mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-du-lich.webp** · 여행 (du lịch)
+> a suitcase with a sun hat and a camera, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-thue.webp** · 세금 (thuế)
+> a stamped official document with a red seal, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-giam.webp** · 줄이다 (giảm)
+> a red arrow pointing down beside a small stack of coins, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-cong-ty.webp** · 회사 (công ty)
+> a modern glass office building, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-lam.webp** · 일하다 (làm)
+> a worker in overalls tightening a bolt with a wrench, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-nam.webp** · 해 (năm)
+> a wall calendar showing a full year grid, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-ho-tro.webp** · 지원 (hỗ trợ)
+> one person helping another person up by the arm, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-mua.webp** · 사다 (mua)
+> a shopper carrying two paper shopping bags, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-xe.webp** · 차/오토바이 (xe)
+> a small motorbike scooter seen from the side, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-ao.webp** · 옷 (áo)
+> a folded shirt on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-hen.webp** · 약속 (hẹn)
+> two people shaking hands beside a calendar with a circled date, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-nhanh.webp** · 빠르다 (nhanh)
+> a running person with speed lines behind them, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-duong.webp** · 길 (đường)
+> a straight road stretching to the horizon, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-quan.webp** · 가게/식당 (quán)
+> a small street food shop with a striped awning and plastic stools, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-nghi.webp** · 쉬다 (nghỉ)
+> a person resting in a hammock under a palm tree, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-com.webp** · 밥 (cơm)
+> a bowl of white steamed rice, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-pho.webp** · 쌀국수 (phở)
+> a bowl of Vietnamese noodle soup with herbs and beef slices, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-ngon.webp** · 맛있다 (ngon)
+> a person smiling with delight while eating from a bowl, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-nuoc.webp** · 물 (nước)
+> a clear glass of water, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-thit.webp** · 고기 (thịt)
+> slices of raw red meat on a wooden board, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-rau.webp** · 채소 (rau)
+> a bundle of fresh green leafy vegetables, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-an.webp** · 먹다 (ăn)
+> a person eating from a bowl with chopsticks, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-che.webp** · 차 (chè)
+> a tall glass of Vietnamese sweet dessert soup with colourful layers, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-bun.webp** · 가는 면 (bún)
+> a bowl of white rice vermicelli noodles, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-bien.webp** · 바다 (biển)
+> a sandy beach with blue sea and a palm tree, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-ve.webp** · 표 (vé)
+> a paper ticket, completely blank with no writing, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-gia.webp** · 가격 (giá)
+> a blank paper price tag tied to an item, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-re.webp** · 싸다 (rẻ)
+> a smiling person pointing at a small blank price tag, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-di.webp** · 가다 (đi)
+> a person walking with a bag over the shoulder, side view, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-khach.webp** · 손님 (khách)
+> a customer being served at a shop counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo
+
+**n-dong.webp** · 많다 (đông)
+> a busy crowd of many people in a market street, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo

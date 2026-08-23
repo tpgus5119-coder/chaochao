@@ -26,6 +26,7 @@
        숨기지 않을 것: 쪽지 글과 사진은 **이 서버에 그대로 저장된다**(30일·사진은 바꿀 때까지).
        암호화하지 않으므로 운영자는 마음먹으면 볼 수 있다. 앱 화면에도 그렇게 적어 둔다.
        막는 것은 Origin 허용목록 하나뿐이다 — 비밀 이야기를 할 자리가 아니다.
+   v8: 별명은 먼저 쓴 사람이 임자(act:'nick') · 동아리는 **하나만** 들어간다.
    개인정보는 별명·진도 숫자·본인이 올린 사진·본인이 쓴 쪽지뿐이다. 실명은 받지 않는다. */
 const CORS = o => ({
   'Access-Control-Allow-Origin': o, 'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -108,6 +109,21 @@ export default {
     const act = cut(b.act, 20), nick = cut(b.nick, 10);
     const clubs = JSON.parse((await KV.get('clubs')) || '{}');
     const save = () => KV.put('clubs', JSON.stringify(clubs));
+
+    /* ── 별명 자리 잡기 ─────────────────────────────────
+       같은 별명이 둘이면 동아리 출석판에서 누가 누구인지 알 수 없다.
+       그래서 먼저 쓴 사람이 임자다. 기기표(uid)가 같으면 자기 것이니 그냥 통과. */
+    const NKEY = 'nicks';
+    if (act === 'nick') {
+      const uid = cut(b.uid, 16);
+      if (!nick || !uid) return send({ error: '별명과 기기 표가 있어야 합니다' });
+      const nicks = JSON.parse((await KV.get(NKEY)) || '{}');
+      const low = nick.toLowerCase();
+      if (nicks[low] && nicks[low] !== uid) return send({ error: '이미 쓰는 사람이 있습니다' });
+      for (const k of Object.keys(nicks)) if (nicks[k] === uid && k !== low) delete nicks[k];
+      if (nicks[low] !== uid) { nicks[low] = uid; await KV.put(NKEY, JSON.stringify(nicks)); }
+      return send({ ok: true });
+    }
 
     if (act === 'clubs')                                     // 목록 (사람 많은 순)
       return send({ clubs: Object.entries(clubs)
@@ -289,6 +305,10 @@ export default {
 
     if (act === 'join') {
       if (c.members.includes(nick)) return send({ ok: true, state: 'member' });
+      // 동아리는 하나만. 이미 다른 데 들어가 있으면 거기서 먼저 나가야 한다.
+      for (const [oid, oc] of Object.entries(clubs))
+        if (oid !== id && oc.members.includes(nick))
+          return send({ error: `이미 '${oc.name}' 에 들어가 있습니다. 먼저 탈퇴해 주세요.` });
       if (c.members.length >= 100) return send({ error: '정원이 찼습니다 (100명)' });
       if (c.approve) { if (!c.wait.includes(nick)) { c.wait.push(nick); await save(); } }
       else { c.members.push(nick); await save(); }

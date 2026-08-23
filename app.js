@@ -1321,17 +1321,31 @@ function askNick() {
   b.textContent = '';
   b.append(el('p', 'lede', '이름이 뭐예요?'));
   b.append(el('p', 'vi mid', 'Tên bạn là gì?'));
-  b.append(el('p', 'note', '언제든 바꿀 수 있습니다.'));
+  b.append(el('p', 'note', '언제든 바꿀 수 있습니다. <b>먼저 쓴 사람이 임자</b>라 겹치는 별명은 못 씁니다.'));
   const inp = el('input', 'keyin'); inp.type = 'text'; inp.placeholder = '별명 (2~10글자)'; inp.maxLength = 10;
   const go = el('button', 'primary big', '시작하기');
   go.style.width = '100%';
-  go.onclick = () => {
+  const err = el('p', 'note nickerr');
+  err.hidden = true;
+  go.onclick = async () => {
     const v = inp.value.trim();
     if (v.length < 2) { inp.focus(); return; }
-    S.nick = v; S.wk = { k: weekKey(), base: snapshot() }; save();
+    // 같은 별명이 둘이면 동아리 출석판에서 누가 누구인지 알 수 없다 — 먼저 쓴 사람이 임자다
+    go.disabled = true; err.hidden = true;
+    const old = S.nick;
+    S.nick = v;
+    try {
+      await cCall({ act: 'nick' });
+    } catch (e) {
+      S.nick = old;
+      err.textContent = '「' + v + '」는 ' + (e.message || '쓸 수 없습니다') + ' — 다른 별명을 지어 주세요.';
+      err.hidden = false; go.disabled = false; inp.focus(); inp.select();
+      return;
+    }
+    S.wk = { k: weekKey(), base: snapshot() }; save();
     renderHome();
   };
-  b.append(inp, go);
+  b.append(inp, err, go);
   // 위쪽 뒤로가기로 그냥 나갈 수 있다. 처음이라 이름이 없으면 '이름없음'으로 두고 나간다.
   const had = !!S.nick;
   dive(() => {
@@ -4404,7 +4418,7 @@ function showGuide() {
   ]);
 
   sec('⑧', '내 실력을 재는 법 — 채점과 분석', [
-    '오른쪽 위 <b>사람 아이콘</b> → 이름 · 지역 · 하루 학습량을 [바꾸기]로 고칩니다. 별명은 2~10글자, 서버에 올라가는 것은 별명 · 도장 · 외운 단어 수뿐입니다.',
+    '오른쪽 위 <b>사람 아이콘</b> → 이름 · 지역 · 하루 학습량 · 사진 · 분석 공개를 고칩니다.',
     '<b>실력 분석</b>은 <b>말하기 · 듣기 · 읽기 · 쓰기 · 암기</b> 다섯 과목을 막대로 보여줍니다. [이번 주]와 [누적]을 눌러 견주세요.',
     '<b>10문제가 안 되면 일부러 판정하지 않습니다</b> — 적은 표본으로 약점을 말하면 그건 분석이 아니라 점(占)입니다.',
     '[자세히]를 열면 <b>성조별 · 문제 유형별 · 복습 단계별 · 단어 길이별 · 시간대별</b>까지 나옵니다. 아래 <b>이렇게 하면 올라갑니다</b> 칸에 처방과 <b>발목 잡는 단어</b>(두 번 이상 틀린 것)가 나옵니다.',
@@ -5082,19 +5096,17 @@ function clubHome(j) {
     b.append(row);
   });
 
-  b.append(el('p', 'note', '사람을 누르면 <b>엄지척</b>과 <b>쪽지</b>를 보낼 수 있습니다.<br>' +
-    '올라가는 것은 별명·위 숫자·본인이 올린 사진과 쪽지뿐입니다. 배운 내용과 기록은 올라가지 않습니다.'));
-  const others = el('button', 'ghost sm', '다른 동아리 보기');
-  others.onclick = clubList;
-  const out = el('button', 'ghost sm', '나가기');
+  b.append(el('p', 'note', '사람을 누르면 <b>엄지척</b>과 <b>쪽지</b>를 보낼 수 있습니다.'));
+  // 동아리는 하나만 — '다른 동아리 보기'는 없앴다. 옮기려면 먼저 탈퇴한다.
+  const out = el('button', 'ghost sm', '동아리 탈퇴');
   out.onclick = () => {
-    if (!confirm(j.name + ' 에서 나갈까요?')) return;
-    clubBusy('나가는 중…');
+    if (!confirm(j.name + ' 에서 탈퇴할까요?\n한 번에 한 동아리만 들어갈 수 있습니다.')) return;
+    clubBusy('탈퇴하는 중…');
     cCall({ act: 'leave', id: S.club.id })
       .then(() => { S.club = null; save(); clubList(); }).catch(clubFail);
   };
   const row = el('div', 'rolepick');
-  row.append(others, out);
+  row.append(out);
   b.append(row);
   show('club', '동아리', true);
 }
