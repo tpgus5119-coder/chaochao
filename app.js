@@ -3698,21 +3698,39 @@ const PROXY = 'https://viet-ai.chaochao-app.workers.dev';
 const aiReady = () => !!(PROXY || S.gkey);
 /* AI 호출 한 군데로 모은다 — 구글이 붐비는 날(429·503)에도 앱이 스스로 버틴다.
    서버도 재시도하지만, 서버가 옛 코드여도 여기서 한 번 더 막아준다. */
+/* 하루 몫이 바닥난 것과 잠깐 몰린 것은 **다른 일**이다.
+   전자는 잠시 뒤에도 안 되는데 "잠시 뒤 다시"라고 안내하면 계속 헛손질하게 된다.
+   구글이 보내는 글에 PerDay/per day 가 들어 있으면 하루치가 끝난 것이다. */
+let AIOUT = 0;                                   // 하루치가 끝난 시각(밀리초). 한동안 아예 안 부른다
+const AIOUT_MS = 30 * 60 * 1000;
+const aiOut = () => AIOUT && Date.now() - AIOUT < AIOUT_MS;
+const OUTMSG = '오늘 AI 몫을 다 썼습니다 — 내일 다시 됩니다.\n' +
+               '그동안 듣기·읽기·자판 쓰기로는 그대로 공부하실 수 있습니다.';
+
 async function gCall(payload, onWait) {
-  let last = 0;
+  if (aiOut()) throw new Error(OUTMSG);
+  let last = 0, perDay = false;
   for (let i = 0; i < 3; i++) {
     const r = await fetch(GURL(), { method: 'POST', headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify(payload) });
     if (r.ok) {
       const j = await r.json();
       const t = ((j.candidates?.[0]?.content?.parts || []).map(x => x.text || '').join('')).trim();
-      if (t) return t;
+      if (t) { AIOUT = 0; return t; }
       last = 0;
-    } else last = r.status;
+    } else {
+      last = r.status;
+      if (last === 429) {
+        const body = await r.text().catch(() => '');
+        if (/PerDay|per day|일일/i.test(body)) perDay = true;
+      }
+    }
     if (last === 400 || last === 403) throw new Error(
       PROXY ? '서버 연결에 문제가 있습니다' : '키가 잘못됐거나 만료됐습니다');
+    if (perDay) break;                           // 하루치가 끝났으면 더 두드려 봐야 소용없다
     if (i < 2) { onWait && onWait(i); await new Promise(res => setTimeout(res, 4000 + i * 4000)); }
   }
+  if (perDay) { AIOUT = Date.now(); throw new Error(OUTMSG); }
   throw new Error(last === 429 ? '요청이 몰려 있습니다 — 잠시 뒤 다시 해 보세요'
     : last ? '지금 AI가 붐빕니다 — 잠시 뒤 다시 해 보세요' : '빈 답이 왔습니다');
 }
