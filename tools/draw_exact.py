@@ -8,7 +8,7 @@ chín=9인데 14개). 국기도 4괘가 엉터리였다. 생성 모델은 '정�
 사용: python3 tools/draw_exact.py
 """
 import math, pathlib
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 R = pathlib.Path(__file__).resolve().parent.parent
 IMG = R / 'img'
@@ -44,7 +44,7 @@ def count_sheet(n, path):
     im.save(path, 'WEBP', quality=88)
 
 NUM = {'d07-mot': 1, 'd07-hai': 2, 'd07-ba': 3, 'd07-bon': 4, 'd07-nam': 5,
-       'd07-sau': 6, 'd07-bay': 7, 'd07-tam': 8, 'd07-chin': 9, 'd07-muoi': 10}
+       'd07-sau': 6, 'd07-bay': 7, 'd07-tam': 8, 'd07-chin': 9, 'd07-muoi': 10, 'd102-chuc': 10}
 
 def flag_vn(path):
     """베트남 국기 — 빨강 바탕에 한가운데 노란 오각별."""
@@ -105,6 +105,162 @@ def flag_kr(path):
     im = big.resize((S, S), Image.LANCZOS)
     im.save(path, 'WEBP', quality=90)
 
+
+# ── 달력 ───────────────────────────────────────────────────────────
+# AI 가 그린 달력은 요일 칸에 "SON FUN TUU WEIE" 같은 없는 글자를 박아 놓는다.
+# 열세 장이 전부 그랬다. 그래서 직접 그린다 — 깨질 글자가 아예 없어진다.
+# 요일 머리글은 **베트남 달력이 실제로 쓰는 표기**를 그대로 쓴다:
+#   T2 T3 T4 T5 T6 T7 CN  (thứ hai … thứ bảy, chủ nhật). 배우는 사람이 현지 달력을 읽게 된다.
+CAL_H = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']
+
+def _font(sz):
+    for f in ('/System/Library/Fonts/Supplemental/Arial Bold.ttf',
+              '/System/Library/Fonts/Supplemental/Arial.ttf',
+              '/System/Library/Fonts/Helvetica.ttc'):
+        try: return ImageFont.truetype(f, sz)
+        except Exception: pass
+    return ImageFont.load_default()
+
+def calendar(path, cols=(), cells=(), rows=(), dim=()):
+    """cols/rows/cells 를 붉게 표시한 달력. dim 은 흐리게. 좌표는 (열,행) 0부터."""
+    S, B = 640, 4
+    big = Image.new('RGB', (S * B, S * B), 'white')
+    d = ImageDraw.Draw(big)
+    L, T = int(S * .07) * B, int(S * .17) * B
+    CW, CH = int(S * .123) * B, int(S * .108) * B
+    RED, GREY, INK, SOFT = (214, 62, 74), (150, 152, 160), (34, 36, 42), (246, 232, 233)
+    fh, fn = _font(int(CW * .38)), _font(int(CW * .42))
+    # 위쪽 붉은 띠 — 달 이름 대신 글자 없는 고리 두 개 (글자를 안 쓰면 깨질 것도 없다)
+    d.rounded_rectangle([L - CW // 3, T - int(CH * 1.45), L + CW * 7 + CW // 3, T - int(CH * .35)],
+                        radius=CH // 3, fill=RED)
+    for i in (2, 5):
+        cx = L + CW * i + CW // 2
+        d.ellipse([cx - CW // 8, T - int(CH * 1.95), cx + CW // 8, T - int(CH * 1.25)],
+                  outline=(120, 130, 145), width=B * 3)
+    for c in range(7):                                     # 요일 머리글
+        x = L + CW * c
+        col = RED if c >= 5 else GREY
+        w = d.textlength(CAL_H[c], font=fh)
+        d.text((x + (CW - w) / 2, T - int(CH * 1.12)), CAL_H[c], font=fh, fill=(255, 255, 255)
+               if True else col)
+    n = 1
+    for r in range(5):
+        for c in range(7):
+            x, y = L + CW * c, T + CH * r
+            on = (c in cols) or (r in rows) or ((c, r) in cells)
+            off = (c, r) in dim
+            if on:
+                d.rounded_rectangle([x + B, y + B, x + CW - B, y + CH - B], radius=CH // 4, fill=SOFT)
+            t = str(n)
+            w = d.textlength(t, font=fn)
+            fill = RED if on else (200, 202, 208) if off else (INK if c < 5 else (120, 122, 130))
+            d.text((x + (CW - w) / 2, y + CH * .28), t, font=fn, fill=fill)
+            n += 1
+    for c in cols:                                         # 세로줄 통째 표시
+        d.rounded_rectangle([L + CW * c + B, T + B, L + CW * (c + 1) - B, T + CH * 5 - B],
+                            radius=CH // 4, outline=RED, width=B * 3)
+    for r in rows:
+        d.rounded_rectangle([L + B, T + CH * r + B, L + CW * 7 - B, T + CH * (r + 1) - B],
+                            radius=CH // 4, outline=RED, width=B * 3)
+    for (c, r) in cells:
+        d.ellipse([L + CW * c + CW * .12, T + CH * r + CH * .02,
+                   L + CW * c + CW * .88, T + CH * r + CH * .96], outline=RED, width=B * 4)
+    big.resize((S, S), Image.LANCZOS).save(path, 'WEBP', quality=90)
+
+# 어느 그림을 어떻게 그릴지 (열은 0=월 … 5=토, 6=일)
+CAL = {
+    'd56-lich':    {},                                     # 달력 그 자체
+    'd04-hom-nay': {'cells': [(2, 2)]},                     # 오늘 — 가운데 한 칸에 동그라미
+    'd06-mai':     {'cells': [(3, 2)], 'dim': [(2, 2)]},    # 내일 — 오늘은 흐리게, 다음 칸에 동그라미
+    'd10-hom-qua': {'cells': [(1, 2)], 'dim': [(2, 2)]},    # 어제
+    'd10-tuan':    {'rows': [2]},                           # 주 — 한 줄 통째
+    'x-cuoi-tuan': {'cols': [5, 6]},                        # 주말 — 토·일 두 줄
+    'd10-thu-hai': {'cols': [0]}, 'x-thu-ba': {'cols': [1]}, 'x-thu-tu': {'cols': [2]},
+    'x-thu-nam':   {'cols': [3]}, 'x-thu-sau': {'cols': [4]}, 'x-thu-bay': {'cols': [5]},
+    'd10-chu-nhat': {'cols': [6]},
+    'x-thang':     {'rows': [0, 1, 2, 3, 4]},              # 달 — 한 달 통째
+    'x-hom-kia':   {'cells': [(0, 2)], 'dim': [(1, 2), (2, 2)]},   # 그저께
+    'x-ngay-cong': {'cells': [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1),
+                              (0, 2), (1, 2), (2, 2)]},    # 근무일수 — 나온 날들
+    'x-dat-phong': {'cells': [(4, 3)]},                     # 예약 — 앞날 하나
+    'x-nam-moi':   {'cells': [(0, 0)]},                     # 새해 — 첫 칸
+}
+
+
+# ── 셈 기호 ─────────────────────────────────────────────────────────
+# 더하기·빼기·곱하기·나누기·같다. 생성 모델은 기호와 개수를 늘 틀린다
+# (곱하기 그림에 "1:1==4·=" 같은 것이 박혀 나왔다). 그래서 직접 그린다.
+def _sym(d, kind, cx, cy, r, col=(214, 62, 74)):
+    t = max(6, r // 3)
+    if kind in '+x=':
+        pass
+    if kind == '+':
+        d.rectangle([cx - r, cy - t, cx + r, cy + t], fill=col)
+        d.rectangle([cx - t, cy - r, cx + t, cy + r], fill=col)
+    elif kind == '-':
+        d.rectangle([cx - r, cy - t, cx + r, cy + t], fill=col)
+    elif kind == 'x':
+        for a in (45, -45):
+            import math as _m
+            dx, dy = _m.cos(_m.radians(a)) * r, _m.sin(_m.radians(a)) * r
+            d.line([cx - dx, cy - dy, cx + dx, cy + dy], fill=col, width=t * 2)
+    elif kind == '/':                       # 나누기 — 점이 막대에 붙으면 더하기처럼 보인다
+        t2 = int(t * .72)
+        d.rectangle([cx - r, cy - t2, cx + r, cy + t2], fill=col)
+        for k in (-1, 1):
+            cy2 = cy + k * r * .78
+            d.ellipse([cx - t2, cy2 - t2, cx + t2, cy2 + t2], fill=col)
+    elif kind == '=':
+        for k in (-1, 1):
+            d.rectangle([cx - r, cy + k * r * .45 - t, cx + r, cy + k * r * .45 + t], fill=col)
+
+def math_sheet(path, left, kind, right, cross=0):
+    """왼쪽 사과 n개 · 기호 · 오른쪽 사과 m개. cross 개는 오른쪽에서 X 표시(빼기)."""
+    S, B = 640, 4
+    big = Image.new('RGB', (S * B, S * B), 'white')
+    d = ImageDraw.Draw(big)
+    RB = int(S * .058) * B
+    def group(n, cx, cy, xed=0):
+        per = 3 if n > 4 else 2
+        rows = (n + per - 1) // per
+        R = int(RB * (0.78 if n > 4 else 1))       # 많으면 조금 작게 — 기호와 겹치지 않게
+        for i in range(n):
+            r_, c_ = i // per, i % per
+            inrow = min(per, n - r_ * per)
+            x = cx + (c_ - (inrow - 1) / 2) * R * 2.4
+            y = cy + (r_ - (rows - 1) / 2) * R * 2.4
+            apple(d, x, y, R)
+            if i >= n - xed:
+                w = R // 3
+                for a in (1, -1):
+                    d.line([x - R * .8, y - a * R * .8, x + R * .8, y + a * R * .8],
+                           fill=(120, 122, 130), width=w)
+    cy = S * B // 2
+    group(left, S * B * .26, cy)
+    _sym(d, kind, S * B * .5, cy, int(S * .052) * B)
+    group(right, S * B * .74, cy, cross)
+    big.resize((S, S), Image.LANCZOS).save(path, 'WEBP', quality=90)
+
+def grid_sheet(path, cols, rows):
+    """작은 사과를 cols×rows 로 빽빽하게 (백 = 10×10)."""
+    S, B = 640, 4
+    big = Image.new('RGB', (S * B, S * B), 'white')
+    d = ImageDraw.Draw(big)
+    R = int(S * .9 / max(cols, rows) / 2.35) * B
+    w, h = (cols - 1) * R * 2.35, (rows - 1) * R * 2.35
+    for r_ in range(rows):
+        for c_ in range(cols):
+            apple(d, S * B / 2 - w / 2 + c_ * R * 2.35, S * B / 2 - h / 2 + r_ * R * 2.35, R)
+    big.resize((S, S), Image.LANCZOS).save(path, 'WEBP', quality=90)
+
+MATH = {
+    'd102-cong': dict(left=3, kind='+', right=2),        # 더하다
+    'd102-tru':  dict(left=5, kind='-', right=2, cross=2),   # 빼다 — 빠지는 둘에 X
+    'd67-nhan':  dict(left=3, kind='x', right=4),        # 곱하다
+    'd67-chia':  dict(left=6, kind='/', right=2),        # 나누다
+    'd102-bang': dict(left=3, kind='=', right=3),        # 같다
+}
+
 if __name__ == '__main__':
     made = 0
     for name, n in NUM.items():
@@ -115,4 +271,9 @@ if __name__ == '__main__':
     for name in ['d03-han-quoc', 'd05-tieng-han']:
         p = IMG / f'{name}.webp'
         if p.exists() or name == 'd03-han-quoc': flag_kr(p); made += 1
+    for name, how in CAL.items():
+        calendar(IMG / f'{name}.webp', **how); made += 1
+    for name, how in MATH.items():
+        math_sheet(IMG / f'{name}.webp', **how); made += 1
+    grid_sheet(IMG / 'd102-tram.webp', 10, 10); made += 1      # 백 = 열 줄 열 개
     print(f'직접 그린 그림 {made}장')
