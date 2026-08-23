@@ -937,3 +937,14 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 표지 그림 — 글보다 먼저 눈에 들어오되 주인공은 아니다 */
 .pic.cover img{max-width:100%; max-height:170px; width:auto; border-radius:14px}
 .pic.cover{margin-bottom:14px; font-size:52px}
+
+/* 머리 메신저 단추 — 안 읽은 것이 있으면 빨간 점 */
+#goChat{padding:7px; line-height:0; position:relative}
+#goChat svg{width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linejoin:round}
+#goChat .chatdot{position:absolute; top:4px; right:4px; width:9px; height:9px; border-radius:50%;
+  background:#e0384a; border:2px solid var(--bg)}
+
+/* 표지의 짧은 사용법 */
+.coverhow{margin-top:14px; border:1px dashed var(--line); border-radius:12px; padding:11px 13px;
+  font-size:13px; line-height:1.7; color:var(--dim); text-align:left}
+.coverhow b{color:var(--fg)}
