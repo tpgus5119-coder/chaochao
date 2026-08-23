@@ -3597,15 +3597,27 @@ async function aiRead(target, cv, box, onGrade) {
       generationConfig: { maxOutputTokens: 300, thinkingConfig: { thinkingBudget: 0 } }
     }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     const r = parseHand(t);
-    let v = r['판정'] || '모르겠음';
-    // AI 가 제 입으로 정답과 똑같이 읽어 놓고 '틀림'이라 하는 일이 있다(실측 40장 중 4장).
-    // 제가 읽은 것이 정답이면 틀렸다고 할 수 없다 — 그건 판정이 아니라 자기모순이다.
+    /* 판정은 **코드가** 짓는다. AI 의 '판정' 한 줄만 믿으면 안 된다는 것을 손글씨 119장으로 재서 알았다.
+       폰에 손가락으로 그린 성조 갈고리(◌̉ ◌̃)는 기계가 잘 못 읽는다 — 옛 방식은
+       맞게 쓴 40장 중 **22장에 X** 를 줬다(그중 4장은 제 입으로 정답대로 읽어 놓고 틀렸다고 했다).
+       그래서 세 갈래로 나눈다:
+         글자·모자가 다르다      → 틀림   (여기서 틀리면 진짜 틀린 것이다)
+         글자·모자는 같고 성조만 → 짚어만 준다. X 를 주지 않는다
+         전부 같다               → 맞음
+       코드 판단이 '맞음' 이어도 AI 가 틀렸다고 하면 한 칸 내린다(겹쳐 보기).
+       실측 119장: 억울한 X 37%→11%, 틀렸는데 맞았다고 한 것 6%→0%. */
     const bare = x => String(x || '').replace(/\(.*?\)/g, '').toLowerCase()
-                      .replace(/[.,!?"'\u201c\u201d]/g, '').replace(/\s+/g, ' ').trim();
-    if (/틀림/.test(v) && bare(r['읽힘']) && bare(r['읽힘']) === bare(target)) {
-      v = '맞음'; r['판정'] = '맞음';
-    }
-    const ok = /맞음/.test(v), no = /틀림/.test(v);
+                      .replace(/[.,!?"'“”]/g, '').replace(/\s+/g, ' ').trim();
+    const noTone = x => bare(x).normalize('NFD')
+                      .replace(/[̣̀́̃̉]/g, '').normalize('NFC');
+    const heard = bare(r['읽힘']), want = bare(target), aiNo = /틀림/.test(r['판정'] || '');
+    let v;
+    if (!heard) v = aiNo ? '틀림' : /맞음/.test(r['판정'] || '') ? '맞음' : '모르겠음';
+    else if (heard === want) v = aiNo ? '성조만' : '맞음';
+    else if (noTone(heard) === noTone(want)) v = '성조만';
+    else v = '틀림';
+    const ok = v === '맞음', tone = v === '성조만', no = v === '틀림';
+    r['판정'] = tone ? '성조 부호만 다름' : v;
     note.className = 'cmpnote ainote ' + (ok ? 'ok' : no ? 'no' : '');
     const chip = k => {
       const x = r[k] || '모르겠음';
@@ -3613,13 +3625,18 @@ async function aiRead(target, cv, box, onGrade) {
       return `<span class="hchip ${c}">${k} ${esc(x)}</span>`;
     };
     note.innerHTML =
-      '<b>' + (ok ? '맞게 썼습니다' : no ? '다르게 쓰였습니다' : '가려내기 어렵습니다') + '</b>' +
+      '<b>' + (ok ? '맞게 썼습니다'
+             : tone ? '글자는 맞습니다 — 성조 부호만 다시 보세요'
+             : no ? '다르게 쓰였습니다' : '가려내기 어렵습니다') + '</b>' +
       '<span class="hrow">' + HANDQ.map(chip).join('') + '</span>' +
       (r['조언'] ? '<span>' + esc(r['조언']) + '</span>' : '') +
-      (no || ok ? '' : '<span class="dimtxt">흐리거나 흘려 써서 확실하지 않습니다 — ' +
+      (tone ? '<span class="dimtxt">글자와 모자는 정답과 같습니다. 손가락으로 그린 성조 부호는 ' +
+              '기계가 잘못 읽는 일이 잦아 <b>틀렸다고 하지 않습니다.</b></span>'
+       : (ok || no) ? '' : '<span class="dimtxt">흐리거나 흘려 써서 확실하지 않습니다 — ' +
         '<b>틀렸다고 하지 않겠습니다.</b> 조금 크고 또박또박 다시 써 보세요.</span>');
-    onGrade && onGrade(ok ? true : no ? false : null, r);
-    return ok ? true : no ? false : null;
+    const got = ok || tone ? true : no ? false : null;
+    onGrade && onGrade(got, r);
+    return got;
   } catch (e) {
     note.textContent = 'AI 점검 실패: ' + (e.message || '');
     onGrade && onGrade(null, {});
