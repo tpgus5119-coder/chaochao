@@ -673,8 +673,8 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .chatin .icon.pick{border-color:var(--ok); color:var(--fg)}
 .chatin .icon.rec{border-color:#e05561; color:#e05561}
 /* 성조 줄 — 입력칸 바로 위에 붙는 얇은 한 줄. 폰 자판을 막지 않는다. */
-/* ── 가상 베트남 자판 ──────────────────────────────────────────
-   폰 자판으로는 성조를 못 친다. 입력칸을 누르면 이것이 올라오고 폰 자판은 안 뜬다. */
+/* ── 화면 자판 — 베트남어 · 한글 ────────────────────────────────
+   글자 배열은 베트남 사람들이 실제로 쓰는 QWERTY 그대로. 한글은 두벌식. */
 .tonebar{
   position:sticky; bottom:0; padding:6px 0 4px; background:var(--bg);
   display:none; flex-direction:column; gap:5px;
@@ -683,22 +683,25 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .kbrow{display:flex; gap:4px; justify-content:center}
 .kbrow.r1{padding:0 4%}
 .kbrow.r2{padding:0 1%}
+/* 어느 자판을 보일지 — 베트남어 / 한글 / 숫자 */
+.kbrow.ko,.kbrow.num{display:none}
+.tonebar.koma .kbrow.vi,.tonebar.koma .kbrow.marks{display:none}
+.tonebar.koma .kbrow.ko{display:flex}
+.tonebar.num .kbrow.vi,.tonebar.num .kbrow.ko,.tonebar.num .kbrow.marks{display:none}
+.tonebar.num .kbrow.num{display:flex}
 .tk{
   flex:1 1 0; min-width:0; padding:11px 0; font-size:17px; line-height:1.1;
   background:var(--card); color:var(--fg); border:1px solid var(--line);
   border-radius:7px; text-align:center;
 }
 .kbrow.marks .tk{padding:8px 0; font-size:15px}
-.tk.wide{flex:1.5 1 0; font-size:15px}
-.tk.space{flex:4 1 0}
+.tk.wide{flex:1.4 1 0; font-size:14px}
+.tk.space{flex:3.6 1 0}
 .tk.punc{flex:.7 1 0}
 .tk.lang{background:var(--accent); color:var(--accent-fg); border-color:transparent; font-weight:700}
+.tonebar.num .tk.numk{background:var(--fg); color:var(--bg)}
 .tk.del,.tk.down{color:var(--dim)}
-.kbrow.back{display:none}
-.tonebar.phone .kbrow{display:none}
-.tonebar.phone .kbrow.back{display:flex}
-.tk.toviet{flex:1 1 auto; font-size:15px; color:var(--accent); font-weight:600}
-.tonebar.caps .tk.let{text-transform:uppercase}
+.tonebar.caps .kbrow.vi .tk.let{text-transform:uppercase}
 .tonebar.caps .tk.shift{background:var(--fg); color:var(--bg)}
 .tk.tonek .tarr{width:15px; height:15px; vertical-align:-3px}
 .tk.tonek.ngang{color:var(--dim)}
