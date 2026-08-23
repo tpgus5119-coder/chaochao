@@ -157,6 +157,7 @@ function bigWord(vi, tones) {
   return b;
 }
 const ICON = {
+  play: '<svg viewBox="0 0 24 24"><path d="M9 6.5 17 12 9 17.5Z"/></svg>',
   slow: '<svg viewBox="0 0 24 24"><path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="8.5"/></svg>',
   mic: '<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3"/></svg>',
 };
@@ -1835,13 +1836,17 @@ function drawCard() {
       const row = el('div', 'line ' + (l.who === 'A' ? 'a' : 'b'));
       const head = el('div', 'lhead');
       head.append(el('span', 'who', l.who));
-      const bt = el('button', 'ghost', '듣기');
-      bt.onclick = () => play(l.vi, false);
-      const bs = el('button', 'ghost', '느리게');
-      bs.onclick = () => play(l.vi, true);
-      head.append(bt, bs);
       row.append(head);
-      row.append(el('div', 'lvi', esc(l.vi)));
+      /* 문장 줄 — 듣기 단추는 **문장 오른쪽**에 붙인다. 왼쪽 머리에 있으면
+         문장을 읽기 전에 단추부터 보게 되어 순서가 거꾸로다. */
+      const lrow = el('div', 'lrow');
+      lrow.append(el('div', 'lvi', esc(l.vi)));
+      const bt = iconBtn('slow', '듣기', () => play(l.vi, false));
+      bt.classList.remove('slow'); bt.classList.add('playi');
+      bt.innerHTML = ICON.play;
+      const bs = iconBtn('slow', '느리게 듣기', () => play(l.vi, true));
+      lrow.append(bt, bs);
+      row.append(lrow);
       row.append(reveal(l.kr_read));
       row.append(el('div', 'lko', esc(l.ko)));
       // 단어별 풀이 + 그 단어의 성조를 한 칸에
@@ -1860,6 +1865,10 @@ function drawCard() {
           top.append(ch);
         }
         cell.append(top, el('span', 'gm', esc(pp.m)));
+        /* 낱말 칸을 누르면 그 낱말 소리가 난다 — 우리 음원이 없으면 기계 목소리로라도 */
+        cell.setAttribute('role', 'button'); cell.tabIndex = 0;
+        cell.onclick = () => (AIDX[pp.w] ? play(pp.w, false) : speakVi(pp.w));
+        cell.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); cell.onclick(); } };
         g.append(cell);
       });
       row.append(g);

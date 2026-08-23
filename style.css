@@ -1129,3 +1129,13 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .kbtr .kbt{flex:0 0 92px; color:var(--dim); font-size:14px}
 .kbtr .kbm{flex:0 0 54px; font-size:20px; font-weight:700}
 .kbtr .kbko{flex:1; color:var(--dim); font-size:13px}
+
+/* 문장 줄 — 듣기 단추는 문장 오른쪽 */
+.lrow{display:flex; align-items:flex-start; gap:8px}
+.lrow .lvi{flex:1; min-width:0}
+.lrow .ibtn{flex:0 0 auto; margin-top:2px}
+.ibtn.playi svg{fill:currentColor; stroke:none}
+/* 낱말 칸 — 누르면 소리가 난다 */
+.gcell{cursor:pointer; border-radius:8px; transition:.12s}
+.gcell:active{transform:scale(.97)}
+.gcell:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
