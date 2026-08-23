@@ -3797,12 +3797,33 @@ function bubble(cls, text) {
   return b;
 }
 
-/* 기기에 베트남어 음성이 깔려 있을 때만 AI 문장을 소리로 들려줄 수 있다 */
-function viVoices() {
-  const vs = window.speechSynthesis ? speechSynthesis.getVoices() : [];
-  return vs.filter(v => (v.lang || '').toLowerCase().startsWith('vi'));
+/* 기기에 베트남어 음성이 깔려 있을 때만 AI 문장을 소리로 들려줄 수 있다.
+   조심할 것: **아이폰은 목록을 늦게 준다.** 처음 물으면 빈 배열이 오고
+   voiceschanged 가 온 뒤라야 채워진다. 그것을 안 기다려서
+   베트남어를 이미 깔아 둔 아이폰에도 '목소리가 없다'고 잘못 알렸다. */
+let VOICES = null;                                  // null = 아직 못 받음, [] = 정말 없음
+function loadVoices() {
+  if (!window.speechSynthesis) { VOICES = []; return; }
+  const v = speechSynthesis.getVoices();
+  if (v && v.length) VOICES = v;
 }
+if (window.speechSynthesis) {
+  loadVoices();
+  speechSynthesis.onvoiceschanged = () => {
+    loadVoices();
+    if (viVoices().length && S.novoice) { S.novoice = 0; save(); }   // 나중에 깔았으면 잔소리를 거둔다
+  };
+  setTimeout(loadVoices, 400);
+  setTimeout(loadVoices, 1500);
+}
+const viVoices = () => (VOICES || []).filter(v => (v.lang || '').toLowerCase().startsWith('vi'));
 const viVoice = () => viVoices()[0] || null;
+/* 선생님 목소리 방향 — 머리의 여/남 단추가 아니라 **선생님의 성별·지역**을 따른다.
+   남자 선생님인데 여자 목소리가 나던 원인이 이것이었다. */
+const tchDir = () => {
+  const m = (S.tch || 'f') === 'm' ? 'm' : 'f';
+  return S.region === 's' ? (m === 'm' ? 'sm' : 'sf') : m;
+};
 /* 폰마다 받는 길이 다르다 — 아이폰과 안드로이드를 구별해서 알려준다.
    (기종·버전마다 메뉴 이름이 조금씩 달라서 '비슷한 이름'이라고 밝혀 둔다) */
 const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) ||
@@ -3816,7 +3837,7 @@ function voiceHowTo() {
 }
 
 function speakVi(t, retry) {
-  if (AIDX[t]) { play(t, false); return; }        // 우리 음원이 있으면 그게 낫다 (원어민 녹음)
+  if (AIDX[t]) { play(t, false, tchDir()); return; }   // 우리 음원이 있으면 그게 낫다 (선생님 성별·지역으로)
   const u = new SpeechSynthesisUtterance(t);
   const vs = viVoices();
   const male = (S.tch || 'f') === 'm';
@@ -3898,7 +3919,8 @@ function aiBubble(text) {
   const bt = el('button', 'ghost sm', '다시 듣기');
   bt.onclick = () => speakVi(m.VI);
   b.append(bt);
-  if (!AIDX[m.VI] && !viVoice() && !S.novoice) {   // 한 번만 알린다
+  // VOICES 가 null 이면 아직 목록을 못 받은 것이다 — 그때는 없다고 단정하지 않는다
+  if (!AIDX[m.VI] && VOICES && !viVoice() && !S.novoice) {   // 한 번만 알린다
     S.novoice = 1; save();
     bubble('note wide', '이 폰에는 베트남어 목소리가 없어 이 문장은 소리가 안 납니다.\n' + voiceHowTo());
   }
