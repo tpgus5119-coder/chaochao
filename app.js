@@ -3904,7 +3904,9 @@ async function chatSend(userText) {
     const text = await gCall({
       system_instruction: { parts: [{ text: CH.sys }] },
       contents: CH.hist.slice(-12),          // 최근 12마디만 보낸다 (무료 한도 아끼기)
-      generationConfig: { maxOutputTokens: 800, temperature: .6, thinkingConfig: { thinkingBudget: 0 } }
+      // 답은 최대 일곱 줄(VI/KR/KO/FIX/NEW/REAL/SAY)이라 320 이면 넉넉하다.
+      // 800 은 닿을 일이 없고, 모델이 한 번 폭주하면 그 값이 그대로 청구된다(나온 토큰이 여덟 배 비싸다).
+      generationConfig: { maxOutputTokens: 320, temperature: .6, thinkingConfig: { thinkingBudget: 0 } }
     }, i => { wait.textContent = `붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     CH.hist.push({ role: 'model', parts: [{ text }] });
     if (CH.room) { if (CH.hist.length > 40) CH.hist.splice(0, CH.hist.length - 40); save(); }
