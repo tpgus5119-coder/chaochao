@@ -261,6 +261,26 @@ MATH = {
     'd102-bang': dict(left=3, kind='=', right=3),        # 같다
 }
 
+
+# ── 방향 화살표 ────────────────────────────────────────────────
+# 확산 모델은 좌우를 못 가린다. "pointing to the LEFT" 이라고 못 박아도 오른쪽을 그렸다.
+# 개수·국기와 같은 부류다 — 정확해야 하는 것은 코드로 그린다.
+ARROW = {'d39-ben-trai': 'left', 'd39-ben-phai': 'right',
+         'x-tren': 'up', 'x-duoi': 'down'}
+
+def arrow(path, way):
+    """굵은 파스텔 화살표 하나. 앱의 다른 그림과 같은 결로, 배경과 확실히 구분되게."""
+    im = Image.new('RGB', (S, S), BG)
+    d = ImageDraw.Draw(im)
+    fill, line = (108, 164, 214), (52, 96, 142)
+    c, L, hw, sw = S / 2, S * .34, S * .20, S * .105       # 길이·머리폭·자루폭
+    pts = [(c + L, c), (c + L - hw, c - hw), (c + L - hw, c - sw),
+           (c - L, c - sw), (c - L, c + sw), (c + L - hw, c + sw), (c + L - hw, c + hw)]
+    if way in ('left', 'up'):  pts = [(2 * c - x, y) for x, y in pts]
+    if way in ('up', 'down'):  pts = [(c + (y - c), c + (x - c)) for x, y in pts]
+    d.polygon(pts, fill=fill, outline=line, width=max(4, int(S * .012)))
+    im.save(path, 'WEBP', quality=88)
+
 if __name__ == '__main__':
     made = 0
     for name, n in NUM.items():
@@ -276,4 +296,6 @@ if __name__ == '__main__':
     for name, how in MATH.items():
         math_sheet(IMG / f'{name}.webp', **how); made += 1
     grid_sheet(IMG / 'd102-tram.webp', 10, 10); made += 1      # 백 = 열 줄 열 개
+    for name, way in ARROW.items():
+        if (IMG / f'{name}.webp').exists(): arrow(IMG / f'{name}.webp', way); made += 1
     print(f'직접 그린 그림 {made}장')

@@ -8,6 +8,25 @@ def slug(vi):
     s = unicodedata.normalize('NFD', vi)
     s = ''.join(c for c in s if not unicodedata.combining(c))
     return s.replace('đ','d').replace('Đ','d').lower().replace(' ','-')
+
+# 부호를 그냥 떼면 tăng 과 tầng 이 똑같이 'tang' 이 된다 — 그림 하나를 두 낱말이 나눠 쓰게 되고
+# 둘 중 하나는 반드시 엉뚱한 그림을 보게 된다(실제로 19쌍이 그랬다).
+# 겹치는 낱말만 텔렉스로 적는다. 베트남 사람이 자판으로 성조를 치는 그 방식이라 규칙이 명확하다.
+TELEX_TONE = {'\u0301':'s', '\u0300':'f', '\u0309':'r', '\u0303':'x', '\u0323':'j'}
+TELEX_HAT  = {'\u0302':'a', '\u0306':'w', '\u031b':'w'}   # â→aa ă→aw ơ/ư→ow/uw
+
+def telex(vi):
+    """cảm ơn → carm own, tăng → tawng, tầng → taafng. 겹칠 때만 쓴다."""
+    out = []
+    for syl in vi.split():
+        body, tone = [], ''
+        for c in unicodedata.normalize('NFD', syl):
+            if c in TELEX_TONE: tone = TELEX_TONE[c]
+            elif c in TELEX_HAT: body.append(TELEX_HAT[c])
+            elif c in 'đĐ': body.append('dd')
+            elif not unicodedata.combining(c): body.append(c)
+        out.append((''.join(body) + tone).lower())
+    return '-'.join(out)
 sys.path.insert(0,'tools')
 from visuals import attach
 from polite import polite      # 앱 글은 모두 존댓말 (사용자 지시)
@@ -104,6 +123,14 @@ for d in out["days"] + out["prep"]:
         for k in ("say", "note", "tip"):
             if isinstance(x, dict) and x.get(k): x[k] = polite(x[k])
 
+# 그림 이름을 붙이기 전에, 부호를 떼면 겹치는 낱말들을 먼저 찾아 둔다
+_plain = collections.Counter()
+for d in out["days"]:
+    for w in d["words"]:
+        if not w.get("emoji") and (REST.get(w["vi"]) or {}).get("k") == "draw":
+            _plain[slug(w["vi"])] += 1
+CLASH = {s for s, n in _plain.items() if n > 1}
+
 for d in out["days"]:
     used = set()
     for w in d["words"]:
@@ -117,7 +144,8 @@ for d in out["days"]:
         else:
             r = REST.get(w["vi"])
             if r and r.get("k") == "draw":
-                w["img"] = "x-" + slug(w["vi"]) + ".webp"
+                base = slug(w["vi"])
+                w["img"] = "x-" + (telex(w["vi"]) if base in CLASH else base) + ".webp"
             elif r and r.get("k") == "form":
                 w["form"] = r.get("f", "")
                 if r.get("e"): w["fex"] = r["e"]
