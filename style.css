@@ -1027,3 +1027,14 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   background:var(--card); border:1px solid var(--line); font-size:13px; line-height:1.6;
   color:var(--fg); word-break:keep-all}
 .fixtip i{font-style:normal; color:var(--dim)}
+/* 녹음 중 실시간 표시 */
+.livebox{display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:10px;
+  padding:12px; border:1px solid var(--line); border-radius:14px; background:var(--card)}
+.livehead{display:flex; align-items:center; gap:8px; font-size:14px; color:var(--dim)}
+.livehead b{color:var(--fg); font-variant-numeric:tabular-nums; font-size:15px}
+.livedot{width:10px; height:10px; border-radius:50%; background:#e0384a; animation:blip 1s infinite}
+@keyframes blip{0%,100%{opacity:1}50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.livedot{animation:none}}
+.livecv{width:100%; height:150px; display:block}
+.livetip{font-size:13px; color:var(--dim); text-align:center; word-break:keep-all}
+.livetip b{color:var(--fg)}

@@ -229,6 +229,15 @@ const canRecord = () => !!(navigator.mediaDevices?.getUserMedia && window.MediaR
 
 async function toggleRec(text, btn, box) {
   if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
+  if (!S.rectold) {                      // 처음 한 번만 — 녹음이 어디로 가고 어디에 남는지
+    S.rectold = 1; save();
+    popup('<b>녹음은 어디에 남나요</b><br>' +
+      '· 우리 서버에는 <b>저장하지 않습니다.</b> 저장소 자체가 붙어 있지 않습니다.<br>' +
+      '· 폰 안에서만 잠깐 들고 있다가 <b>다음 녹음 때 지웁니다.</b> 앱을 닫으면 사라집니다.<br>' +
+      '· 발음을 받아 적는 일은 <b>구글(제미나이)</b>이 합니다 — 소리가 구글로 갑니다. ' +
+      '구글이 그것을 얼마나 두는지는 <b>우리가 정하지 못합니다.</b><br>' +
+      '· 높낮이 판정은 <b>폰 안에서</b> 합니다. 아무 데도 안 보냅니다.');
+  }
   try {
     if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   } catch (e) {
@@ -248,11 +257,85 @@ async function toggleRec(text, btn, box) {
     bumpSaid();
     drawCompare(text, box);
   };
+  const secs = RECSEC(text);
+  const kill = liveRec(box, REC.stream, secs, () => { if (mr.state === 'recording') mr.stop(); });
+  const oldStop = mr.onstop;
+  mr.onstop = e => { kill(); oldStop(e); };
   mr.start();
   btn.dataset.on = '1';
   btn.classList.add('rec-on');       // 이름은 그대로, 녹음 중은 색으로만 알린다
+  setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, secs * 1000);
+}
+
+
+/* ---------- 녹음 중 실시간 표시 ----------
+   말하는 동안 음높이가 그려진다. 끝나고 나서야 보는 것보다, 말하면서 보는 쪽이
+   자기 소리를 고치는 데 낫다. 45ms 창으로 60ms마다 한 점 — 폰에서도 가볍다.
+   함께 하는 일: 남은 시간 표시 · **폰을 입 가까이 대라**는 안내 · 너무 작으면 알려 주기. */
+const RECSEC = t => (String(t || '').trim().split(/\s+/).length > 1 ? 7 : 3.5);   // 문장 7초 · 낱말 3.5초
+
+function liveRec(box, stream, secs, onStop) {
   box.textContent = '';
-  setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, 8000);
+  const wrap = el('div', 'livebox');
+  const head = el('div', 'livehead');
+  const dot = el('span', 'livedot');
+  const left = el('b', null, secs.toFixed(1) + '초');
+  head.append(dot, el('span', null, '녹음 중'), left);
+  const cv = el('canvas', 'livecv'); cv.width = 640; cv.height = 150;
+  const tip = el('div', 'livetip', '<b>폰을 입 가까이</b> 대고 또박또박 말하세요');
+  const stop = el('button', 'ghost sm', '■ 끝내기');
+  stop.onclick = () => onStop && onStop();
+  wrap.append(head, cv, tip, stop);
+  box.append(wrap);
+
+  const ctx = getCtx();
+  const src = ctx.createMediaStreamSource(stream);
+  const an = ctx.createAnalyser(); an.fftSize = 2048;
+  src.connect(an);
+  const buf = new Float32Array(an.fftSize);
+  const pts = [];
+  const t0 = performance.now();
+  let quiet = 0, raf = 0, last = 0, dead = false;
+
+  const draw = () => {
+    const g = cv.getContext('2d');
+    g.clearRect(0, 0, cv.width, cv.height);
+    const v = pts.filter(p => p !== null);
+    if (v.length > 2) {
+      const lo = Math.min(...v), hi = Math.max(...v), sp = Math.max(4, hi - lo);
+      g.strokeStyle = getComputedStyle(document.body).getPropertyValue('--accent') || '#3b6ef6';
+      g.lineWidth = 5; g.lineJoin = 'round'; g.lineCap = 'round';
+      g.beginPath();
+      let started = false;
+      pts.forEach((p, i) => {
+        if (p === null) { started = false; return; }
+        const x = i / Math.max(1, secs * 1000 / 60) * cv.width;
+        const y = cv.height - 18 - ((p - lo) / sp) * (cv.height - 36);
+        started ? g.lineTo(x, y) : g.moveTo(x, y);
+        started = true;
+      });
+      g.stroke();
+    }
+  };
+  const tick = () => {
+    if (dead) return;
+    raf = requestAnimationFrame(tick);
+    const now = performance.now();
+    const el0 = (now - t0) / 1000;
+    left.textContent = Math.max(0, secs - el0).toFixed(1) + '초';
+    if (now - last < 60) return;
+    last = now;
+    an.getFloatTimeDomainData(buf);
+    let rms = 0;
+    for (let i = 0; i < buf.length; i++) rms += buf[i] * buf[i];
+    rms = Math.sqrt(rms / buf.length);
+    if (rms < 0.012) { pts.push(null); quiet++; }
+    else { quiet = 0; pts.push(PITCH.yin(buf, ctx.sampleRate) || null); }
+    if (quiet === 25) tip.innerHTML = '<b>소리가 잘 안 들립니다</b> — 폰을 더 가까이 대고 조금 크게';
+    draw();
+  };
+  tick();
+  return () => { dead = true; cancelAnimationFrame(raf); try { src.disconnect(); } catch (e) { } };
 }
 
 function drawCompare(text, box) {
@@ -480,16 +563,21 @@ async function showTone(text, blobUrl, box) {
   /* 판정은 '끝이 어디냐'가 아니라 **곡선 모양 전체**로 한다.
      예전에는 앞뒤 삼분의 일만 견줘서, 가운데가 푹 꺼져도 끝만 맞으면 통과였다.
      이제 원어민 1,151개로 뽑은 본보기와 견준다. */
-  const my = PITCH.classify(mine);
+  /* 판정은 셋 중 하나다 — 맞음 / 틀림 / **못 가리겠음**.
+     '모르겠다'가 없으면 제대로 낸 발음의 13%를 틀렸다고 하게 된다(실측). */
   const want = targetFam(text) || (nat && PITCH.classify(nat) && PITCH.classify(nat).fam);
-  if (my && want) {
-    const ok = my.fam === want;
-    verdict(box.parentElement, 1, ok, '높낮이',
-      ok ? `${PITCH.FAMKO[want]} — 모양이 맞습니다`
-         : `${PITCH.FAMKO[want]}이어야 하는데 <b>${my.ko}</b>으로 들립니다`);
-    if (!ok) toneTip(box.parentElement, want, my.fam, text);
-  } else if (my) {
-    verdict(box.parentElement, 1, null, '높낮이', my.ko + ' 모양입니다');
+  const j = want && PITCH.judge(mine, want);
+  const host = box.parentElement;
+  if (!j) { verdict(host, 1, null, '높낮이', '이번엔 높낮이를 못 읽었습니다'); return; }
+  if (j.v === 'ok') {
+    verdict(host, 1, true, '높낮이', `${j.ko} — 모양이 맞습니다`);
+  } else if (j.v === 'miss') {
+    verdict(host, 1, false, '높낮이', `${j.wantKo}이어야 하는데 <b>${j.ko}</b>으로 들립니다`);
+    toneTip(host, j.want, j.fam, text);
+  } else {
+    verdict(host, 1, null, '높낮이', '가려내기 어렵습니다');
+    host.append(el('div', 'fixtip', '↳ 소리가 짧거나 흐려서 <b>확실하게 가릴 수 없습니다.</b> ' +
+      '틀렸다고 하지 않겠습니다 — <b>폰을 입 가까이</b> 대고 한 번 더 또박또박 말해 보세요.'));
   }
 }
 
@@ -2367,9 +2455,13 @@ function judgeBtn(target, box, onDone) {
         onDone && onDone(exact || close, true);   // AI가 매긴 것임을 알린다
       } catch (e) { box.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
     };
+    const kill = liveRec(box, REC.stream, RECSEC(target),
+                         () => { if (mr.state === 'recording') mr.stop(); });
+    const prevStop = mr.onstop;
+    mr.onstop = async e => { kill(); await prevStop(e); };
     mr.start();
     b.textContent = '■ 멈추기';
-    setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, 8000);
+    setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, RECSEC(target) * 1000);
   };
   return b;
 }
@@ -3408,15 +3500,25 @@ async function aiRead(target, cv, box) {
     const b64 = inkCrop(cv);
     const t = await gCall({
       contents: [{ role: 'user', parts: [
+        /* 손글씨 읽기는 기계가 잘하는 일이 아니다 — 일반 손글씨에서 85~92%이고,
+           학습에 안 쓰인 언어에서는 더 떨어진다. 베트남어는 성조 부호가 붙어 더 위험하다.
+           그래서 **확신을 먼저 묻고, 확신이 없으면 지적하지 말라**고 시킨다.
+           틀리지 않은 글씨를 틀렸다고 하는 것이 가장 나쁘다. (채점은 어차피 본인이 한다) */
         { text: '사진은 한국인 학습자가 손으로 쓴 베트남어다. 목표 단어는 "' + target + '".\n' +
-                '딱 세 줄로, 한국어로 답한다:\n1) 읽힘: (손글씨가 읽히는 그대로)\n' +
-                '2) 짚기: 목표와 다른 글자나 빠진·잘못 붙인 성조 부호. 없으면 "잘 썼습니다"\n' +
-                '3) 조언: 글씨 모양이나 부호 위치에 대한 한 줄 조언' },
+                '**중요**: 손글씨를 잘못 읽는 일이 잦다. 흐리거나 흘려 썼거나 부호가 애매하면\n' +
+                '지적하지 말고 "잘 모르겠습니다"라고 답하라. 틀리지 않은 것을 틀렸다고 하면 안 된다.\n' +
+                '딱 네 줄로, 한국어로 답한다:\n' +
+                '1) 확신: 또렷함 / 보통 / 흐림  (사진이 얼마나 또렷한가)\n' +
+                '2) 읽힘: (손글씨가 읽히는 그대로. 확신이 흐림이면 "잘 모르겠습니다")\n' +
+                '3) 짚기: **확실히 보이는 것만**. 목표와 다른 글자나 빠진 성조 부호.\n' +
+                '   확실하지 않으면 "확실하지 않아 짚지 않겠습니다". 문제없으면 "잘 썼습니다"\n' +
+                '4) 조언: 글씨 모양이나 부호 위치에 대한 한 줄 조언' },
         { inline_data: { mime_type: 'image/jpeg', data: b64 } }] }],
       generationConfig: { maxOutputTokens: 250, thinkingConfig: { thinkingBudget: 0 } }
     }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
     note.innerHTML = esc(t).replace(/\n/g, '<br>') +
-      '<br><span class="dimtxt">참고용 — 흘려 쓰면 AI도 잘못 읽습니다. 기본은 정답 보기로 직접 비교.</span>';
+      '<br><span class="dimtxt">참고용입니다 — 손글씨 읽기는 기계가 <b>10에 1~2는 틀립니다.</b> ' +
+      '채점은 정답을 직접 보고 하세요.</span>';
   } catch (e) { note.textContent = 'AI 점검 실패: ' + (e.message || ''); }
 }
 
@@ -4000,7 +4102,7 @@ $('#chatMic').onclick = async () => {
     };
     MIC.start();
     btn.classList.add('rec');
-    setTimeout(() => { if (MIC && MIC.state === 'recording') MIC.stop(); }, 8000);
+    setTimeout(() => { if (MIC && MIC.state === 'recording') MIC.stop(); }, 7000);   // 메신저는 문장이라 7초
   } catch (e) { bubble('ai err', '⚠ 마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요'); }
 };
 
@@ -4169,9 +4271,14 @@ function showGuide() {
   sec('④', '카드 한 장 안의 모든 것', [
     '<b>큰 베트남어 글자를 누르면 소리가 납니다</b> — 듣기 단추를 찾지 마세요(그림을 크게 두려고 없앴습니다). 글자 위 화살표가 성조가 오르내리는 방향입니다.',
     '<b>그림은 눈에 보이는 단어에만</b> 붙습니다. 눈에 안 보이는 말에 억지로 붙이면 오히려 방해가 됩니다. 아래 <b>예문 칸도 누르면</b> 소리가 납니다.',
-    '글자 옆 <b>시계</b>는 느리게 듣기, <b>마이크</b>는 따라 말하기입니다. 녹음하면 [원어민][내 소리][번갈아 듣기]가 생기고 ' +
-      '<b>원어민 높낮이 곡선과 내 곡선이 겹쳐</b> 그려집니다. 맞다·틀리다로 판정하지 않습니다 — 모양이 보이면 스스로 고칠 수 있습니다.',
-    '<b>[AI가 듣기]</b>는 내 발음이 어떤 철자로 들렸는지 알려줍니다. 성조는 AI도 잘 못 가리므로 위의 곡선이 맡습니다 — 둘을 합쳐야 온전한 피드백입니다.',
+    '글자 옆 <b>시계</b>는 느리게 듣기, <b>마이크</b>는 따라 말하기입니다. 녹음하는 동안 <b>내 높낮이가 실시간으로 그려지고</b>, ' +
+      '끝나면 <b>원어민 곡선과 겹쳐</b> 보여줍니다. 낱말은 3.5초, 문장은 7초까지 열렸다 저절로 닫힙니다.',
+    '<b>판정은 두 가지를 따로 봅니다.</b> <b>발음</b>은 AI가 받아 적어서, <b>높낮이</b>는 곡선을 원어민 본보기와 견줘서 봅니다. ' +
+      '본보기는 원어민 음성 <b>1,151개</b>를 재서 만들었습니다.',
+    '<b>기계는 완벽하지 않습니다.</b> 높낮이를 가리는 정확도는 <b>10에 8~9</b>입니다. 그래서 <b>확실할 때만 O나 X를 냅니다</b> — ' +
+      '애매하면 "가려내기 어렵습니다"라고 하고 <b>틀렸다고 하지 않습니다.</b> 손글씨는 아예 AI가 채점하지 않습니다(본인이 ✔/✘를 누릅니다).',
+    '<b>녹음은 우리 서버에 저장되지 않습니다.</b> 폰 안에서만 잠깐 들고 있다가 다음 녹음 때 지웁니다. ' +
+      '다만 발음을 받아 적는 일은 <b>구글</b>이 하므로 소리가 구글로 갑니다. <b>높낮이 판정은 폰 안에서</b> 하고 아무 데도 안 보냅니다.',
     '카드에 <b>🔑 한자어</b> 줄이 있으면 한국어 한자음과 짝이라 외울 것이 거의 없고, <b>남부에서는 …</b> 줄이 있으면 호찌민 쪽에서 다르게 씁니다. ' +
       '카드를 다 넘기면 <b>확인 문제 → 오늘의 대화</b>로 이어집니다. 대화는 [▶ 전체 듣기] 뒤 줄마다 연습하고, 맨 아래 <b>이렇게도 말합니다</b>가 같은 뜻의 다른 문장입니다.',
   ]);

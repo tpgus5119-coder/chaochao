@@ -147,6 +147,33 @@ const PITCH = (() => {
     return n * hop / rate;
   }
 
+  /* 에너지 곡선 — 소리가 난 구간만, 로그 뒤 표준화해서 20점.
+     연구 권고대로 로그 변환 + 평균·편차 정규화를 쓴다(목소리 크기 차이를 없앤다). */
+  function energy(samples, rate, hz) {
+    const win = Math.round(rate * 0.045), hop = Math.round(rate * 0.010);
+    let a = hz.findIndex(x => x), b = hz.length - 1;
+    while (b >= 0 && !hz[b]) b--;
+    if (a < 0 || b <= a) return null;
+    const raw = [];
+    for (let i = a; i <= b; i++) {
+      const s0 = i * hop;
+      if (s0 + win >= samples.length) break;
+      let e = 0;
+      for (let k = s0; k < s0 + win; k++) e += samples[k] * samples[k];
+      raw.push(Math.log(Math.sqrt(e / win) + 1e-9));
+    }
+    if (raw.length < 4) return null;
+    const m = raw.reduce((s, v) => s + v, 0) / raw.length;
+    const sd = Math.sqrt(raw.reduce((s, v) => s + (v - m) ** 2, 0) / raw.length) || 1;
+    const z = raw.map(v => (v - m) / sd);
+    const out = [];
+    for (let k = 0; k < 20; k++) {
+      const t = k / 19 * (z.length - 1), j = Math.floor(t), f = t - j;
+      out.push(z[j] + (z[Math.min(j + 1, z.length - 1)] - z[j]) * f);
+    }
+    return out;
+  }
+
   async function analyze(arrayBuffer, ctx, checkSpeech) {
     const buf = await ctx.decodeAudioData(arrayBuffer.slice(0));
     const ch = buf.getChannelData(0);
@@ -157,7 +184,8 @@ const PITCH = (() => {
       if (!g.ok) return { reject: g.why };
     }
     const curve = resample(clean(normalize(hz)));
-    return curve ? { curve, sec: voicedSec(hz, rate, Math.round(rate * 0.010)) } : null;
+    if (!curve) return null;
+    return { curve, en: energy(ch, rate, hz), sec: voicedSec(hz, rate, Math.round(rate * 0.010)) };
   }
 
   /* 두 곡선의 '모양'이 얼마나 닮았나 (0~100).
@@ -169,36 +197,70 @@ const PITCH = (() => {
     return sd < 0.25 ? a.map(() => 0) : a.map(v => (v - m) / sd);
   }
 
-  /* ── 성조 본보기 ──────────────────────────────────────────────
-     원어민 음성 **1,151개**(한 음절 낱말, 북부 남녀 두 목소리)를 이 파일과 **같은 방법**으로
-     재서 뽑은 평균 곡선이다(tools/tone_corpus.py). 재는 잣대가 다르면 결론이 쓸모없다.
+  /* ── 성조 본보기와 판정 ────────────────────────────────────
+     원어민 음성 **1,151개**(한 음절 낱말, 북부 남녀)를 이 파일과 같은 방법으로 재서 뽑았다
+     (tools/tone_corpus.py · tools/tone_feat.py).
 
-     여섯 성조를 그대로 가르려 하면 63%밖에 안 맞는다 — 홑음절에서는
-     ngang·huyền·nặng 이 소리로는 거의 같은 '내려감'이고, hỏi·ngã 도 서로 닮았다.
-     그래서 **소리로 실제 갈리는 세 무리**로 묶었다. 그러면 86.5% 다.
-       flat 내려감 (ngang·huyền·nặng) 97% · rise 올라감 (sắc) 85% · dip 내렸다 올라감 (hỏi·ngã) 50%
-     못 가르는 것을 가른다고 하지 않는다. */
-  const TPL = {flat: { c: [1.522, 1.269, 1.039, 0.895, 0.797, 0.683, 0.544, 0.401, 0.251, 0.098, -0.071, -0.246, -0.409, -0.551, -0.675, -0.786, -0.886, -1.021, -1.198, -1.423], s: 0.219 }, rise: { c: [-0.528, -0.751, -0.923, -0.977, -0.979, -0.923, -0.847, -0.729, -0.573, -0.364, -0.106, 0.208, 0.569, 0.963, 1.375, 1.779, 2.153, 2.479, 2.733, 2.915], s: 0.186 }, dip: { c: [2.129, 1.541, 1.083, 0.73, 0.479, 0.167, -0.23, -0.66, -0.996, -1.252, -1.395, -1.37, -1.162, -0.774, -0.247, 0.412, 1.073, 1.715, 2.201, 2.476], s: 0.253 } };
+     조사해서 알게 된 것 — 베트남어 성조는 **F0만으로는 안 된다.**
+     하노이 말은 성조와 발성이 붙어 있어 ngã·nặng 은 삐걱거리고(creaky) hỏi 는 성문이 조인다.
+     연구들은 "높이보다 삐걱거림·숨소리가 주된 지각 단서"라고 한다.
+     그래서 삐걱거림(F0 흔들림)도 재 봤는데 **우리 기준 음성이 TTS 라 삐걱거림이 거의 없었다** —
+     넣으니 오히려 나빠졌다(86.5%→83.9%). 그래서 안 쓴다. 에너지 곡선은 조금 도움이 됐다(86.8%).
+
+     여섯 성조를 그대로 가르면 58%뿐이다. 소리로 실제 갈리는 **세 무리**로 묶으면 87%다.
+       flat 내려감(ngang·huyền·nặng) · rise 올라감(sắc) · dip 내렸다 올라감(hỏi·ngã)
+
+     **가장 크게 좋아진 것은 특징을 늘린 것이 아니라 '모르면 모른다'고 한 것이다.**
+     원어민 녹음은 전부 제대로 낸 것이므로 거기서 나오는 X 는 곧 잘못된 지적이다. 실측:
+       바로 가장 가까운 것을 고르면 → 제대로 낸 것의 13.2% 를 틀렸다고 한다
+       아래 문턱을 두면       → 1.9% 로 줄고, 틀린 것은 60% 를 잡고 28% 는 '다시 하라'고 한다
+     사람을 잘못 판정하지 않는 쪽을 택했다. */
+  const TPL = {"flat": {"c": [1.522, 1.269, 1.039, 0.895, 0.797, 0.683, 0.544, 0.401, 0.251, 0.098, -0.071, -0.246, -0.409, -0.551, -0.675, -0.786, -0.886, -1.021, -1.198, -1.423], "e": [-1.69, -0.534, 0.165, 0.602, 0.838, 0.923, 0.93, 0.88, 0.8, 0.688, 0.574, 0.45, 0.309, 0.144, -0.03, -0.23, -0.5, -0.888, -1.443, -2.23], "s": 0.219}, "rise": {"c": [-0.528, -0.751, -0.923, -0.977, -0.979, -0.923, -0.847, -0.729, -0.573, -0.364, -0.106, 0.208, 0.569, 0.963, 1.375, 1.779, 2.153, 2.479, 2.733, 2.915], "e": [-1.665, -0.583, 0.109, 0.542, 0.775, 0.847, 0.833, 0.765, 0.685, 0.607, 0.55, 0.5, 0.442, 0.356, 0.204, -0.03, -0.37, -0.818, -1.416, -2.18], "s": 0.186}, "dip": {"c": [2.129, 1.541, 1.083, 0.73, 0.479, 0.167, -0.23, -0.66, -0.996, -1.252, -1.395, -1.37, -1.162, -0.774, -0.247, 0.412, 1.073, 1.715, 2.201, 2.476], "e": [-1.608, -0.172, 0.617, 1.001, 1.087, 1.019, 0.868, 0.695, 0.516, 0.314, 0.108, -0.047, -0.13, -0.151, -0.146, -0.171, -0.309, -0.64, -1.253, -2.234], "s": 0.253}};
   const FAM = { 'ngang': 'flat', 'huyền': 'flat', 'nặng': 'flat',
                 'sắc': 'rise', 'hỏi': 'dip', 'ngã': 'dip' };
   const FAMKO = { flat: '내려감', rise: '올라감', dip: '내렸다 올라감' };
+  /* 두 문턱은 실측으로 골랐다. 문턱을 아주 높이면 잘못된 지적은 1.9%까지 줄지만
+     **진짜 틀린 것의 40%를 맞다고 하게 된다** — 그것도 잘못된 판정이다. 둘을 함께 보고 골랐다.
+       O<0.35 · X≥0.80  →  잘못된 지적 3.9% · 틀린 것 79% 잡음 · 나머지는 '다시 한 번'
+     그리고 X 라고 해도 '틀렸다'가 아니라 **'다르게 들린다'**고 말한다 — 잰 것을 말할 뿐이다. */
+  const SURE = 0.35, WRONG = 0.80;
 
-  /* 곡선이 세 무리 중 어디에 가장 가까운가.
-     길이도 함께 본다 — nặng 처럼 뚝 끊기는 성조는 모양만으로는 안 갈린다. */
-  function classify(A) {
-    const a = A && (A.curve || A);
-    if (!a || a.length !== 20) return null;
-    let best = null, bd = 1e9, second = 1e9;
-    for (const k in TPL) {
-      const t = TPL[k];
-      let s = 0;
-      for (let i = 0; i < 20; i++) { const v = a[i] - t.c[i]; s += v * v; }
-      let d = Math.sqrt(s / 20);
-      if (A && A.sec) d += Math.abs(A.sec - t.s) * 4;
-      if (d < bd) { second = bd; bd = d; best = k; }
-      else if (d < second) second = d;
+  function dist(A, k) {
+    const t = TPL[k], a = A.curve;
+    let s = 0;
+    for (let i = 0; i < 20; i++) { const v = a[i] - t.c[i]; s += v * v; }
+    let d = Math.sqrt(s / 20);
+    if (A.sec) d += Math.abs(A.sec - t.s) * 4;
+    if (A.en) {
+      let e = 0;
+      for (let i = 0; i < 20; i++) { const v = A.en[i] - t.e[i]; e += v * v; }
+      d += Math.sqrt(e / 20) * 0.5;
     }
-    return { fam: best, ko: FAMKO[best], dist: bd, margin: second - bd };
+    return d;
+  }
+
+  /* 어느 무리에 가장 가까운가 (설명용). */
+  function classify(A) {
+    if (!A || !A.curve || A.curve.length !== 20) return null;
+    let best = null, bd = 1e9;
+    for (const k in TPL) { const d = dist(A, k); if (d < bd) { bd = d; best = k; } }
+    return { fam: best, ko: FAMKO[best], dist: bd };
+  }
+
+  /* **목표 성조를 아는 상태에서** 맞았는지 본다. 셋 중 하나로만 답한다.
+       ok    목표가 가장 가깝다 (또는 거의)          → O
+       miss  목표가 뚜렷하게 멀다                    → X + 무엇이 다른지
+       unsure 그 사이 — 못 가리겠다                  → 다시 한 번
+     '모르겠다'를 말할 수 있어야 잘못된 지적이 줄어든다. */
+  function judge(A, wantFam) {
+    if (!A || !A.curve || !TPL[wantFam]) return null;
+    const ds = {};
+    let bd = 1e9, best = null;
+    for (const k in TPL) { const d = dist(A, k); ds[k] = d; if (d < bd) { bd = d; best = k; } }
+    const gap = ds[wantFam] - bd;
+    if (gap < SURE) return { v: 'ok', fam: wantFam, ko: FAMKO[wantFam] };
+    if (gap >= WRONG) return { v: 'miss', fam: best, ko: FAMKO[best], want: wantFam, wantKo: FAMKO[wantFam] };
+    return { v: 'unsure', fam: best, ko: FAMKO[best], want: wantFam, wantKo: FAMKO[wantFam] };
   }
 
   /* 곡선의 '방향'만 뽑는다 (그림 밑 설명용). */
@@ -237,5 +299,6 @@ const PITCH = (() => {
     return Math.max(0, Math.min(100, Math.round(sc)));
   }
 
-  return { analyze, similarity, direction, classify, FAM, FAMKO };
+  /* 녹음 중에 실시간으로 쓰려고 밖에 내놓는다 (한 조각에서 음높이 하나) */
+  return { analyze, similarity, direction, classify, judge, yin, FAM, FAMKO };
 })();
