@@ -1201,6 +1201,7 @@ const MENUS = {
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
+  vn:    { name: '베트남 알기', items: () => [['보기', showVN]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 
 };
@@ -3427,7 +3428,12 @@ function chatSys(mode, myRole, day) {
     ' · 서너 마디에 한 번쯤, 같은 뜻을 현지 사람들이 실제로 쓰는 짧은 말·줄임말로도 알려준다:\n' +
     '   "REAL: 현지 표현 = 한국어 뜻" 줄로. 매번 붙이지는 마라.\n' +
     ' · NEW·REAL 은 없으면 그 줄을 아예 쓰지 않는다.\n' +
-    '한 번에 한 문장. 쉬운 질문으로 대화를 이어간다. 학습자가 한국어로 쓰면 그 말을 베트남어로 어떻게 하는지 알려주고 따라 하게 한다.\n' +
+    '한 번에 한 문장. 쉬운 질문으로 대화를 이어간다.\n' +
+    /* 한국어를 막지 않는다. 초보에게 '목표어만' 을 강요하면 할 말이 없어 대화가 끊긴다.
+       대신 한국어로 쓴 그 말을 **베트남어로 어떻게 하는지 크게 돌려준다** —
+       도피구가 아니라 발판이 되게. 알아채지 못한 것은 배워지지 않는다. */
+    '학습자가 **한국어로 썼으면**, 그 말을 학습자가 베트남어로 어떻게 말했어야 하는지\n' +
+    '   "SAY: 베트남어문장 | 한글발음" 줄로 반드시 덧붙인다. 베트남어로 썼으면 이 줄은 쓰지 않는다.\n' +
     '학습자가 사진을 보내면, 사진에 보이는 것을 주제로 아주 쉬운 베트남어 문장으로 대화를 이어간다.\n' +
     (mode === 'today'
       ? `역할극: 오늘의 대화(${dlg})에서 학습자가 ${myRole} 역할, 당신이 ${myRole === 'A' ? 'B' : 'A'} 역할이다. ` +
@@ -3519,7 +3525,7 @@ function drawTch() {
 function aiBubble(text) {
   const m = {};
   text.split('\n').forEach(l => {
-    const mt = l.match(/^\s*(VI|KR|KO|FIX|NEW|REAL)\s*:\s*(.+)/i);
+    const mt = l.match(/^\s*(VI|KR|KO|FIX|NEW|REAL|SAY)\s*:\s*(.+)/i);
     if (mt) { const k = mt[1].toUpperCase(); m[k] = m[k] ? m[k] + ' ' + mt[2].trim() : mt[2].trim(); }
   });
   const b = bubble('ai');
@@ -3528,6 +3534,17 @@ function aiBubble(text) {
   if (m.KR) b.append(el('div', 'ckr', '[' + esc(m.KR) + ']'));
   if (m.KO) b.append(el('div', 'cko', esc(m.KO)));
   if (m.FIX) b.append(el('div', 'cfix', '✎ ' + esc(m.FIX)));
+  if (m.SAY) {                          // 한국어로 썼을 때 — 베트남어로는 이렇게
+    const [vi, kr] = m.SAY.split('|').map(x => x.trim());
+    const sb = el('div', 'csay');
+    sb.append(el('span', 'csayh', '한국어로 쓰셨네요 — 베트남어로는'),
+              el('b', null, esc(vi)));
+    if (kr) sb.append(el('span', 'csaykr', '[' + esc(kr) + ']'));
+    const pb = el('button', 'ghost sm', '들어보기');
+    pb.onclick = () => speakVi(vi);
+    sb.append(pb);
+    b.append(sb);
+  }
   if (m.NEW) b.append(el('div', 'cnew', '＋ 새 단어 · ' + esc(m.NEW)));
   if (m.REAL) b.append(el('div', 'creal', '💬 현지에서는 · ' + esc(m.REAL)));
   speakVi(m.VI);                       // 오면 바로 읽어준다 (입도 같이 움직인다)
@@ -4952,6 +4969,51 @@ function saveFace(d, after) {
     if (S.club) mateSync().catch(() => { });
     after && after();
   }).catch(e => alert('사진을 올리지 못했습니다 — ' + (e.message || '')));
+}
+
+/* ---------- 베트남 알기 ----------
+   말만 배워서는 못 사는 것들 — 은행·병원·긴급전화·지하철·집·학교·도시·나라·축구.
+   글이 길어서 앱을 열 때마다 들고 있지 않고, **이 화면을 누를 때만 받아 온다**(data/vietnam.json). */
+let VND = null;
+function showVN() {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '불러오는 중…'));
+  show('sub', '베트남 알기', true);
+  const draw = list => {
+    b.textContent = '';
+    b.append(el('p', 'note', '베트남에 살면서 바로 걸리는 것들입니다. 숫자는 출처를 확인한 것만 적었습니다.'));
+    list.forEach((x, i) => {
+      const btn = el('button', 'bigmenu');
+      btn.append(el('b', null, x.e + '  ' + esc(x.t)));
+      btn.onclick = () => { dive(showVN); showVNOne(i); };
+      b.append(btn);
+    });
+  };
+  if (VND) { draw(VND); return; }
+  fetch('data/vietnam.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { VND = j.sections || []; draw(VND); })
+    .catch(() => { b.textContent = ''; b.append(el('p', 'lede', '불러오지 못했습니다')); });
+}
+function showVNOne(i) {
+  const x = (VND || [])[i];
+  const b = $('#subBody');
+  b.textContent = '';
+  if (!x) { b.append(el('p', 'lede', '없는 항목입니다')); show('sub', '베트남 알기', true); return; }
+  const k = el('div', 'cultbox vnbox');
+  k.append(el('div', 'cultt', x.e + ' ' + esc(x.t)));
+  k.append(el('div', 'cultb', x.b));
+  b.append(k);
+  const near = (VND || []).map((y, j) => [y, j]).filter(([, j]) => j !== i).slice(0, 3);
+  b.append(el('div', 'phead', '<strong>이어서 보기</strong>'));
+  near.forEach(([y, j]) => {
+    const btn = el('button', 'ghost sm');
+    btn.textContent = y.e + ' ' + y.t;
+    btn.style.margin = '0 6px 6px 0';
+    btn.onclick = () => showVNOne(j);
+    b.append(btn);
+  });
+  show('sub', x.t, true);
 }
 
 /* ---------- 폰 알림 ----------

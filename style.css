@@ -1002,3 +1002,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   border-radius:8px; padding:5px 9px}
 .prew b{font-weight:700}
 .cb .tonenote{display:block; margin-top:5px; font-size:12px; opacity:.8}
+.vnbox .cultb{font-size:15px; line-height:1.75}
+/* 한국어로 썼을 때 — 베트남어로 어떻게 말하는지 발판을 준다 */
+.csay{margin-top:8px; padding:9px 12px; border-radius:10px; background:var(--bg);
+  border:1px solid var(--accent); display:flex; flex-direction:column; gap:3px; align-items:flex-start}
+.csayh{font-size:12px; color:var(--dim)}
+.csay b{font-size:17px}
+.csaykr{font-size:13px; color:var(--dim)}
