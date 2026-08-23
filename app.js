@@ -3610,11 +3610,11 @@ async function aiRead(target, cv, box, onGrade) {
                       .replace(/[.,!?"'“”]/g, '').replace(/\s+/g, ' ').trim();
     const noTone = x => bare(x).normalize('NFD')
                       .replace(/[̣̀́̃̉]/g, '').normalize('NFC');
-    const heard = bare(r['읽힘']), want = bare(target), aiNo = /틀림/.test(r['판정'] || '');
+    const heard = bare(r['읽힘']), tgt = bare(target), aiNo = /틀림/.test(r['판정'] || '');
     let v;
     if (!heard) v = aiNo ? '틀림' : /맞음/.test(r['판정'] || '') ? '맞음' : '모르겠음';
-    else if (heard === want) v = aiNo ? '성조만' : '맞음';
-    else if (noTone(heard) === noTone(want)) v = '성조만';
+    else if (heard === tgt) v = aiNo ? '성조만' : '맞음';
+    else if (noTone(heard) === noTone(tgt)) v = '성조만';
     else v = '틀림';
     const ok = v === '맞음', tone = v === '성조만', no = v === '틀림';
     r['판정'] = tone ? '성조 부호만 다름' : v;
