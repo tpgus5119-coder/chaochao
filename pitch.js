@@ -258,15 +258,16 @@ const PITCH = (() => {
        miss  목표가 뚜렷하게 멀다                    → X + 무엇이 다른지
        unsure 그 사이 — 못 가리겠다                  → 다시 한 번
      '모르겠다'를 말할 수 있어야 잘못된 지적이 줄어든다. */
-  /* hỏi·ngã(내렸다 올라감)는 **틀렸다고 하지 않는다.**
-       ① 남부 베트남어에서는 이 둘이 아예 하나로 합쳐졌다 — 남부는 실질적으로 5성조다.
-          중부도 잘 안 가른다. 남부·중부 사람이 맞춤법에서 가장 많이 틀리는 것이 이 둘이다.
-          원어민 상당수가 안 하는 구별로 배우는 사람을 판정할 수는 없다.
-       ② 기계도 이 무리가 제일 약하다(52%).
-       ③ 실측: 목표가 이 무리일 때 **잘못된 지적이 17.8%** 였다.
-          같은 문턱에서 내려감은 0.8%, 올라감은 3.3% 였으니 여기만 5~20배다.
-     그래서 이 무리는 O 아니면 '가려내기 어렵다'만 낸다. 곡선은 그대로 보여준다. */
-  const SOFT = { dip: 1 };
+  /* hỏi·ngã(내렸다 올라감)도 **채점한다.** 다만 문턱을 조금 높이고 안내를 붙인다.
+     처음에는 아예 채점을 안 하려 했는데, 다시 재보니 그럴 이유가 없었다:
+       '52%' 는 여섯 성조를 그대로 가를 때의 숫자이고,
+       **목표를 아는 채점**으로 보면 판정한 것 중 89.2% 가 맞는다 —
+       내려감 88.3% · 올라감 93.9% 와 거의 같다.
+     다만 제대로 낸 것에 X 를 주는 비율이 문턱 0.80 에서 17.8% 로 다른 성조(0.8%·3.3%)보다 높다.
+     문턱을 1.00 으로 올리면 정확도는 88.6% 로 거의 그대로인데 잘못된 지적이 10.6% 로 준다.
+     그래서 이 무리만 문턱을 1.00 으로 두고, 화면에 **남부·중부는 이 둘을 하나로 합쳐 쓴다**는
+     사실을 함께 알려 준다 (북부는 또렷이 가른다 — '현지인이 다 못 한다'는 말은 사실이 아니다). */
+  const HARD = { dip: 1.00 };
 
   function judge(A, wantFam) {
     if (!A || !A.curve || !TPL[wantFam]) return null;
@@ -275,9 +276,9 @@ const PITCH = (() => {
     for (const k in TPL) { const d = dist(A, k); ds[k] = d; if (d < bd) { bd = d; best = k; } }
     const gap = ds[wantFam] - bd;
     if (gap < SURE) return { v: 'ok', fam: wantFam, ko: FAMKO[wantFam] };
-    const out = { fam: best, ko: FAMKO[best], want: wantFam, wantKo: FAMKO[wantFam] };
-    if (SOFT[wantFam]) return Object.assign(out, { v: 'soft' });
-    if (gap >= WRONG) return Object.assign(out, { v: 'miss' });
+    const out = { fam: best, ko: FAMKO[best], want: wantFam, wantKo: FAMKO[wantFam],
+                  note: !!HARD[wantFam] };
+    if (gap >= (HARD[wantFam] || WRONG)) return Object.assign(out, { v: 'miss' });
     return Object.assign(out, { v: 'unsure' });
   }
 

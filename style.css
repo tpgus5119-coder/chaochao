@@ -1044,3 +1044,5 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   border:1px solid var(--line); color:var(--dim); white-space:nowrap}
 .hchip.ok{border-color:var(--ok); color:var(--ok)}
 .hchip.no{border-color:var(--bad); color:var(--bad)}
+.fixtip.soft{background:transparent; border-style:dashed; color:var(--dim)}
+.fixtip.soft b{color:var(--fg)}
