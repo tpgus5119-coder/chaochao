@@ -78,7 +78,8 @@ PROMPT = """너는 한국인에게 베트남어를 가르친다. 배우는 사�
  "summary": ["기사를 한국어 한 줄로", "두 번째 줄"],
  "theme": "이 세트의 주제 (한국어 6자 이내, 예: 공장 임금)",
  "words": [
-   {{"vi":"베트남어 단어", "ko":"한국어 뜻", "kr":"한글 발음", "emoji":"관련 이모지 1개"}}
+   {{"vi":"베트남어 단어", "ko":"한국어 뜻", "kr":"한글 발음", "emoji":"관련 이모지 1개",
+    "en":"그림으로 그릴 영어 한 마디 (예: a hospital building with a red cross)"}}
  ],
  "lines": [
    {{"who":"A", "vi":"베트남어 문장", "ko":"한국어 뜻", "kr":"한글 발음"}}
@@ -101,6 +102,9 @@ PROMPT = """너는 한국인에게 베트남어를 가르친다. 배우는 사�
    한 문장은 8낱말을 넘기지 마라. 첫 줄의 who 는 "A", 둘째 줄은 "B".
  · kr 은 한국인이 소리 내기 쉽게 한글로 적는다 (예: cảm ơn → 깜 언).
  · emoji 는 눈에 보이는 것에만 붙여라. 추상어면 빈 문자열 "" 로 둬라.
+ · en 은 **영어로만** 쓴다. 그림 생성기가 영어만 알아듣는다 —
+   한국어나 베트남어를 넣으면 없는 글자를 그려 넣는다(실제로 '병원'에 가짜 한자가 그려졌다).
+   눈에 보이는 장면 하나를 짧게: "a hospital building with a red cross" 처럼. 추상어면 "" 로 둬라.
  · 베트남어 철자는 성조 부호까지 정확히. 북부(하노이) 표준을 쓴다.
 """
 
@@ -142,12 +146,13 @@ def main():
                 continue
             seen.add(vi.lower())
             emo = (w.get('emoji') or '').strip()
+            en = (w.get('en') or '').strip()
             item = {'vi': vi, 'ko': (w.get('ko') or '').strip(),
                     'kr_read': (w.get('kr') or '').strip(),
-                    'emoji': emo, 'tones': word_tones(vi)}
+                    'emoji': emo, 'en': en, 'tones': word_tones(vi)}
             # 눈에 보이는 말에만 그림 자리를 준다. 그림은 개발자 맥의 '그림 지킴이'가 뒤따라 채운다
             # (깃허브 서버에는 그래픽 카드가 없어 그림만은 거기서 못 만든다).
-            if emo: item['img'] = 'n-' + slug(vi) + '.webp'
+            if emo and en: item['img'] = 'n-' + slug(vi) + '.webp'   # 영어 그림말이 있어야 그림을 건다
             words.append(item)
         lines = [{'vi': (l.get('vi') or '').strip(), 'ko': (l.get('ko') or '').strip(),
                   'kr_read': (l.get('kr') or '').strip(), 'who': (l.get('who') or 'AB'[i % 2]),

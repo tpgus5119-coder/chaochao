@@ -1004,7 +1004,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 
 /* 판정 칸 — 그래프 아래. 발음(AI가 글자를)과 높낮이(곡선이 성조를)는 서로 다른 것을 본다.
    색만으로 가르지 않는다: O/X 모양과 테두리가 함께 말해 준다. */
-.saidbox{display:flex; gap:10px; margin-top:12px}
+.saidbox{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
 .vrow{
   flex:1 1 0; min-width:0; display:grid; grid-template-columns:auto auto;
   justify-content:center; align-items:baseline; column-gap:8px; row-gap:3px;
@@ -1022,3 +1022,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 한글 ↔ 베트남어 바꿈 글쇠 — 실제 자판의 한/영 키 자리 */
 .tk.lang{flex:0 0 auto; min-width:46px; font-weight:700; background:var(--bg)}
 .tk.lang.vi{border-color:var(--accent); color:var(--accent)}
+/* 틀렸을 때 어떻게 하라는 한 줄 */
+.fixtip{flex-basis:100%; margin-top:8px; padding:9px 12px; border-radius:10px;
+  background:var(--card); border:1px solid var(--line); font-size:13px; line-height:1.6;
+  color:var(--fg); word-break:keep-all}
+.fixtip i{font-style:normal; color:var(--dim)}

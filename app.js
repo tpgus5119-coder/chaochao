@@ -332,6 +332,7 @@ async function aiListen(text, blobUrl, box) {
             exact || close
               ? esc(stripTone(heard)) + ' 로 들렸습니다'
               : esc(stripTone(heard)) + ' 로 들렸습니다 (목표 ' + esc(stripTone(text)) + ')');
+    if (!(exact || close)) box.append(el('div', 'fixtip', '↳ ' + sayTip(text, heard)));
   } catch (e) { verdict(box, 0, null, '발음', 'AI가 듣지 못했습니다'); }
 }
 
@@ -476,10 +477,65 @@ async function showTone(text, blobUrl, box) {
   /* 점수를 매기지 않는다.
      음높이만 보는 방식은 성조를 세밀하게 가려내지 못한다(문헌상 72~75%).
      그래서 '오르내리는 방향'이 같았는지만 말해주고, 나머지는 눈으로 보게 한다. */
-  const DIR = { up: '↗', down: '↘', dip: '↘↗', flat: '→' };
-  const dm = PITCH.direction(mine), dn = nat && PITCH.direction(nat);
-  if (dn) verdict(box.parentElement, 1, dm === dn, '높낮이',
-                  `원어민 ${DIR[dn]} · 나 ${DIR[dm] || '?'}`);
+  /* 판정은 '끝이 어디냐'가 아니라 **곡선 모양 전체**로 한다.
+     예전에는 앞뒤 삼분의 일만 견줘서, 가운데가 푹 꺼져도 끝만 맞으면 통과였다.
+     이제 원어민 1,151개로 뽑은 본보기와 견준다. */
+  const my = PITCH.classify(mine);
+  const want = targetFam(text) || (nat && PITCH.classify(nat) && PITCH.classify(nat).fam);
+  if (my && want) {
+    const ok = my.fam === want;
+    verdict(box.parentElement, 1, ok, '높낮이',
+      ok ? `${PITCH.FAMKO[want]} — 모양이 맞습니다`
+         : `${PITCH.FAMKO[want]}이어야 하는데 <b>${my.ko}</b>으로 들립니다`);
+    if (!ok) toneTip(box.parentElement, want, my.fam, text);
+  } else if (my) {
+    verdict(box.parentElement, 1, null, '높낮이', my.ko + ' 모양입니다');
+  }
+}
+
+/* 이 낱말이 내야 할 성조 무리. 한 음절짜리는 데이터에 적힌 성조를 그대로 쓴다
+   (원어민 녹음을 다시 재는 것보다 정확하다). 여러 음절이면 원어민 녹음으로 견준다. */
+function targetFam(text) {
+  const it = findItem(text);
+  const t = it && it.tones;
+  if (!t || t.length !== 1) return null;
+  return PITCH.FAM[t[0].name] || null;
+}
+
+/* 틀렸을 때 **무엇을 어떻게** 고칠지 한 줄. 이름만 말해 주면 고칠 수가 없다. */
+const TONETIP = {
+  'flat>rise': '끝을 올리셨습니다 — <b>올리지 말고 그대로 내려 놓으세요.</b>',
+  'flat>dip':  '가운데가 푹 꺼졌습니다 — <b>한 번에 쭉 내리세요.</b> 중간에 다시 올리지 마세요.',
+  'rise>flat': '내리기만 했습니다 — <b>끝을 위로 치켜올리세요.</b>',
+  'rise>dip':  '내렸다 올리셨습니다 — <b>처음부터 곧장 올리세요.</b>',
+  'dip>flat':  '내리기만 했습니다 — <b>내렸다가 다시 올리세요.</b>',
+  'dip>rise':  '올리기만 했습니다 — <b>먼저 내렸다가 올리세요.</b>',
+};
+const TONEHINT = {
+  'ngang': '평평하게, 높이를 그대로 유지합니다.',
+  'huyền': '낮게 시작해 천천히 더 내립니다.',
+  'sắc':   '짧고 날카롭게 위로 올립니다.',
+  'hỏi':   '내렸다가 다시 올립니다.',
+  'ngã':   '가운데를 한 번 끊었다가 올립니다.',
+  'nặng':  '짧고 무겁게 뚝 끊습니다.',
+};
+function toneTip(host, want, got, text) {
+  const t = TONETIP[want + '>' + got];
+  if (!t) return;
+  const it = findItem(text), nm = it && it.tones && it.tones.length === 1 && it.tones[0].name;
+  const d = el('div', 'fixtip', '↳ ' + t + (nm && TONEHINT[nm] ? ' <i>' + esc(text) + '는 ' + TONEHINT[nm] + '</i>' : ''));
+  host.append(d);
+}
+
+/* 글자가 다르게 들렸을 때의 한 줄. */
+function sayTip(target, heard) {
+  const a = stripTone(target).toLowerCase().replace(/\s+/g, ' ').trim();
+  const b = stripTone(heard).toLowerCase().replace(/\s+/g, ' ').trim();
+  if (b.split(' ').length < a.split(' ').length) return '음절이 빠졌습니다 — <b>한 음절씩 끊어서</b> 말해 보세요.';
+  if (b.split(' ').length > a.split(' ').length) return '음절이 늘었습니다 — <b>붙여서 한 번에</b> 말해 보세요.';
+  if (a[0] !== b[0]) return '<b>첫소리</b>가 다르게 들립니다 — 입 모양을 먼저 만들고 시작하세요.';
+  if (a.slice(-1) !== b.slice(-1)) return '<b>끝소리</b>가 다르게 들립니다 — 끝까지 소리를 내세요.';
+  return '<b>입을 조금 더 크게</b> 벌리고 천천히 말해 보세요.';
 }
 
 /* ---------- 화면 ---------- */

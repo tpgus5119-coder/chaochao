@@ -3545,3 +3545,6 @@
 
 **x-du-so.webp** · đủ số
 > a checklist with all items marked with a checkmark, simple flat icon illustration, soft pastel colors, thick outlines, plain white background, minimal detail, isolated object only, nothing else in the frame, absolutely no text, no letters, no numbers, no logo
+
+**n-benh-vien.webp** · 병원 (bệnh viện)
+> a hospital building with a large red cross on the front, ambulance parked outside, simple flat illustration, soft pastel colors, thick outlines, plain white background, isolated subject only, nothing else in the frame, absolutely no text, no letters, no numbers, no words, no logo

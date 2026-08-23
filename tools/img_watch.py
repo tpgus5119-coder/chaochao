@@ -58,12 +58,16 @@ def wanted():
         n = json.loads((R / 'data' / 'news_days.json').read_text())
         for x in n.get('days', []):
             for w in x.get('words', []):
-                if not w.get('emoji'):                         # 이모지도 없는 추상어는 건너뛴다
+                # 프롬프트는 **영어로만** 쓴다. 한국어·베트남어를 넣으면 모델이 없는 글자를 그려 넣는다
+                # (실제로 '병원 (bệnh viện)' 에 가짜 한자가 그려졌다).
+                # 'hands not visible' 도 쓰지 않는다 — 부정어가 오히려 손을 불러온다(실험으로 확인).
+                en = (w.get('en') or '').strip()
+                if not w.get('emoji') or not en:
                     continue
                 nm = 'n-' + re.sub(r'[^a-z0-9]+', '-', slug(w['vi'])).strip('-')
-                out[nm] = f"{w['ko']} ({w['vi']}), simple flat illustration, soft pastel colors, " \
-                          "thick outlines, plain white background, hands not visible, " \
-                          "absolutely no text, no letters, no numbers, no logo"
+                out[nm] = (f"{en}, simple flat illustration, soft pastel colors, thick outlines, "
+                           "plain white background, isolated subject only, nothing else in the frame, "
+                           "absolutely no text, no letters, no numbers, no words, no logo")
                 w['_img'] = nm + '.webp'
     except Exception:
         pass
@@ -99,7 +103,7 @@ def main():
     sh('git', 'pull', '--rebase', '--quiet')
     want = wanted()
     doc = prompts_from_doc()
-    todo = [(n, want[n] or doc.get(n)) for n in want
+    todo = [(n, doc.get(n) or want[n]) for n in want
             if n not in EXACT and not (IMG / f'{n}.webp').exists()]
     todo = [(n, p) for n, p in todo if p]
     if not todo:

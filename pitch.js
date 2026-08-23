@@ -169,8 +169,39 @@ const PITCH = (() => {
     return sd < 0.25 ? a.map(() => 0) : a.map(v => (v - m) / sd);
   }
 
-  /* 곡선의 '방향'만 뽑는다. 숫자 점수보다 이쪽이 정직하다.
-     문헌상 F0 단독 성조 분류는 72~75%밖에 안 된다 — 세밀한 판정은 하지 않는다. */
+  /* ── 성조 본보기 ──────────────────────────────────────────────
+     원어민 음성 **1,151개**(한 음절 낱말, 북부 남녀 두 목소리)를 이 파일과 **같은 방법**으로
+     재서 뽑은 평균 곡선이다(tools/tone_corpus.py). 재는 잣대가 다르면 결론이 쓸모없다.
+
+     여섯 성조를 그대로 가르려 하면 63%밖에 안 맞는다 — 홑음절에서는
+     ngang·huyền·nặng 이 소리로는 거의 같은 '내려감'이고, hỏi·ngã 도 서로 닮았다.
+     그래서 **소리로 실제 갈리는 세 무리**로 묶었다. 그러면 86.5% 다.
+       flat 내려감 (ngang·huyền·nặng) 97% · rise 올라감 (sắc) 85% · dip 내렸다 올라감 (hỏi·ngã) 50%
+     못 가르는 것을 가른다고 하지 않는다. */
+  const TPL = {flat: { c: [1.522, 1.269, 1.039, 0.895, 0.797, 0.683, 0.544, 0.401, 0.251, 0.098, -0.071, -0.246, -0.409, -0.551, -0.675, -0.786, -0.886, -1.021, -1.198, -1.423], s: 0.219 }, rise: { c: [-0.528, -0.751, -0.923, -0.977, -0.979, -0.923, -0.847, -0.729, -0.573, -0.364, -0.106, 0.208, 0.569, 0.963, 1.375, 1.779, 2.153, 2.479, 2.733, 2.915], s: 0.186 }, dip: { c: [2.129, 1.541, 1.083, 0.73, 0.479, 0.167, -0.23, -0.66, -0.996, -1.252, -1.395, -1.37, -1.162, -0.774, -0.247, 0.412, 1.073, 1.715, 2.201, 2.476], s: 0.253 } };
+  const FAM = { 'ngang': 'flat', 'huyền': 'flat', 'nặng': 'flat',
+                'sắc': 'rise', 'hỏi': 'dip', 'ngã': 'dip' };
+  const FAMKO = { flat: '내려감', rise: '올라감', dip: '내렸다 올라감' };
+
+  /* 곡선이 세 무리 중 어디에 가장 가까운가.
+     길이도 함께 본다 — nặng 처럼 뚝 끊기는 성조는 모양만으로는 안 갈린다. */
+  function classify(A) {
+    const a = A && (A.curve || A);
+    if (!a || a.length !== 20) return null;
+    let best = null, bd = 1e9, second = 1e9;
+    for (const k in TPL) {
+      const t = TPL[k];
+      let s = 0;
+      for (let i = 0; i < 20; i++) { const v = a[i] - t.c[i]; s += v * v; }
+      let d = Math.sqrt(s / 20);
+      if (A && A.sec) d += Math.abs(A.sec - t.s) * 4;
+      if (d < bd) { second = bd; bd = d; best = k; }
+      else if (d < second) second = d;
+    }
+    return { fam: best, ko: FAMKO[best], dist: bd, margin: second - bd };
+  }
+
+  /* 곡선의 '방향'만 뽑는다 (그림 밑 설명용). */
   function direction(A) {
     const a = A && (A.curve || A);
     if (!a) return null;
@@ -206,5 +237,5 @@ const PITCH = (() => {
     return Math.max(0, Math.min(100, Math.round(sc)));
   }
 
-  return { analyze, similarity, direction };
+  return { analyze, similarity, direction, classify, FAM, FAMKO };
 })();
