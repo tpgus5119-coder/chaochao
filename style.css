@@ -1144,3 +1144,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .qsay:empty{display:none}
 .qsay{margin:10px 0 0}
 .qplay .ibtn.mic{flex:0 0 auto}
+
+/* 기본기·문법 문제의 정답 줄 — 하루 5분 카드와 같은 틀 */
+.rsay{margin:14px 0 0; padding-top:12px; border-top:1px solid var(--line)}
+.rsay .wrow{justify-content:center}

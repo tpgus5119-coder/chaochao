@@ -3374,8 +3374,23 @@ function drawRule() {
         if (x.textContent === q.opts[q.a]) x.dataset.r = 'ok';
       });
       if (good) RL.ok++;
-      if (q.say && AIDX[q.say]) play(q.say, false);   // 정답 소리를 바로 들려준다
-      if (good) setTimeout(() => { RL.i++; drawRule(); }, 900);
+      if (q.say) play(q.say, false);                 // 정답 소리를 바로 들려준다
+      /* 소리를 들려주는 자리에는 **말하는 길**도 같이 둔다 — 기본기·문법도 하루 5분과 같은 틀이다.
+         정답을 크게 보여 주고, 듣기와 따라 말하기를 붙인다(발음·높낮이까지 짚어 준다). */
+      if (q.say) {
+        const box = el('div', 'rsay');
+        const row = el('div', 'wrow');
+        row.append(bigWord(q.say, (findItem(q.say) || {}).tones));
+        row.append(iconBtn('slow', '느리게 듣기', () => play(q.say, true)));
+        if (canRecord()) {
+          const mic = iconBtn('mic', '따라 말하기', null);
+          mic.onclick = () => toggleRec(q.say, mic, box);
+          row.append(mic);
+        }
+        box.append(row);
+        b.append(box);
+      }
+      if (good) setTimeout(() => { RL.i++; drawRule(); }, q.say ? 2200 : 900);
       else nextBtn(b, () => { RL.i++; drawRule(); });
     };
     opts.append(btn);
