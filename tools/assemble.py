@@ -10,6 +10,7 @@ def slug(vi):
     return s.replace('đ','d').replace('Đ','d').lower().replace(' ','-')
 sys.path.insert(0,'tools')
 from visuals import attach
+from polite import polite      # 앱 글은 모두 존댓말 (사용자 지시)
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days = []
@@ -78,6 +79,15 @@ try:
     REST = json.loads((R/'tools/imgrest.json').read_text())
 except Exception:
     REST = {}
+
+# 표지 설명·목표를 존댓말로. 원본(tools/b*.py)은 평서체로 두고 여기서 한 번에 바꾼다 —
+# 백 몇 줄을 손으로 고치면 다음에 문장을 더할 때 또 섞인다.
+for d in out["days"] + out["prep"]:
+    for k in ("intro", "goal", "how"):
+        if d.get(k): d[k] = polite(d[k])
+    for x in d.get("rules", []) or []:
+        for k in ("say", "note", "tip"):
+            if isinstance(x, dict) and x.get(k): x[k] = polite(x[k])
 
 for d in out["days"]:
     used = set()
