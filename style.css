@@ -606,10 +606,15 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .planrow .parrow{margin-left:auto; font-size:13px; color:var(--ok); font-weight:700; flex:0 0 auto}
 .planrow .pk{flex:0 0 64px}
 
-/* 완료 취소 */
-.days li{display:flex; gap:6px}
-.days li > button:first-child{flex:1}
-.days .undo{flex:0 0 auto; align-self:center}
+/* 완료 취소 — 위의 .days button{width:100%} 가 이 작은 단추에도 걸려서
+   줄을 반씩 갈라 먹었다. 날짜 제목이 한 글자씩 세로로 쌓이던 원인이다. */
+.days li{display:flex; gap:6px; align-items:stretch}
+.days li > button:first-child{flex:1 1 auto; min-width:0}
+.days .nm{min-width:0}
+.days .undo{
+  flex:0 0 auto; width:auto; display:inline-flex; align-items:center; justify-content:center;
+  padding:6px 10px; font-size:12px; white-space:nowrap; align-self:center;
+}
 
 /* 단어 예문 */
 .wex{border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin:8px 0; text-align:center}
@@ -668,16 +673,29 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .chatin .icon.pick{border-color:var(--ok); color:var(--fg)}
 .chatin .icon.rec{border-color:#e05561; color:#e05561}
 /* 성조 줄 — 입력칸 바로 위에 붙는 얇은 한 줄. 폰 자판을 막지 않는다. */
+/* ── 가상 베트남 자판 ──────────────────────────────────────────
+   폰 자판으로는 성조를 못 친다. 입력칸을 누르면 이것이 올라오고 폰 자판은 안 뜬다. */
 .tonebar{
-  position:sticky; bottom:0; display:flex; gap:3px; padding:6px 0 0;
-  background:var(--bg);
+  position:sticky; bottom:0; padding:6px 0 4px; background:var(--bg);
+  display:none; flex-direction:column; gap:5px;
 }
-/* 열세 글쇠가 한 줄에 다 들어가야 한다 — 밀어서 찾게 하면 ơ·ư·đ 를 아무도 못 쓴다 */
+.tonebar.up{display:flex}
+.kbrow{display:flex; gap:4px; justify-content:center}
+.kbrow.r1{padding:0 4%}
+.kbrow.r2{padding:0 1%}
 .tk{
-  flex:1 1 0; min-width:0; padding:8px 0; font-size:16px; line-height:1.1;
+  flex:1 1 0; min-width:0; padding:11px 0; font-size:17px; line-height:1.1;
   background:var(--card); color:var(--fg); border:1px solid var(--line);
-  border-radius:8px; text-align:center;
+  border-radius:7px; text-align:center;
 }
+.kbrow.marks .tk{padding:8px 0; font-size:15px}
+.tk.wide{flex:1.5 1 0; font-size:15px}
+.tk.space{flex:4 1 0}
+.tk.punc{flex:.7 1 0}
+.tk.lang{background:var(--accent); color:var(--accent-fg); border-color:transparent; font-weight:700}
+.tk.del,.tk.down{color:var(--dim)}
+.tonebar.caps .tk.let{text-transform:uppercase}
+.tonebar.caps .tk.shift{background:var(--fg); color:var(--bg)}
 .tk.tonek .tarr{width:15px; height:15px; vertical-align:-3px}
 .tk.tonek.ngang{color:var(--dim)}
 .tk.tonek.huyền,.tk.tonek.nặng{color:var(--accent)}

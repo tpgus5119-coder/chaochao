@@ -3930,66 +3930,124 @@ const TONEROW = [['', 'ngang'], ['\u0300', 'huyền'], ['\u0301', 'sắc'],
 const HORN = { 'ă': 'a', 'â': 'a', 'ê': 'e', 'ô': 'o', 'ơ': 'o', 'ư': 'u', 'đ': 'd' };
 const plainLetter = c => { const b = stripTone(c).toLowerCase(); return HORN[b] || b; };
 const LETROW = [['ă', 'a'], ['â', 'a'], ['ê', 'e'], ['ô', 'o'], ['ơ', 'o'], ['ư', 'u'], ['đ', 'd']];
+/* ── 가상 베트남 자판 ────────────────────────────────────────────────
+   폰 자판으로는 성조를 못 친다. 그래서 화면 안에 자판을 통째로 그린다.
+   입력칸을 누르면 이 자판이 올라오고, **폰 자판은 뜨지 않는다**(inputmode=none).
+   한글이 필요하면 [한] 글쇠를 누른다 — 그때만 폰 자판을 부른다.
+   솔직히: 폰 자판이 한글로 열릴지 영어로 열릴지는 폰이 정한다. 우리가 못 정한다. */
+const KBROWS = [
+  ['q','w','e','r','t','y','u','i','o','p'],
+  ['a','s','d','f','g','h','j','k','l'],
+  ['z','x','c','v','b','n','m'],
+];
+let KBUP = 0;                                        // 대문자 한 번
+
+function kbShow(on) {
+  const bar = $('#chatTone');
+  if (!bar) return;
+  const inp = $('#chatText');
+  bar.classList.toggle('up', !!on);
+  if (on) { drawChatTone(); inp.setAttribute('inputmode', 'none'); }
+}
+/* 폰 자판을 부른다 — 우리 자판은 내리고, 입력칸을 평범한 칸으로 되돌린 뒤 다시 누른다 */
+function kbPhone() {
+  const inp = $('#chatText');
+  kbShow(false);
+  inp.removeAttribute('inputmode');
+  inp.setAttribute('lang', 'ko');
+  inp.blur(); inp.focus({ preventScroll: true });
+  if (!S.langtip) {
+    S.langtip = 1; save();
+    popup('<b>폰 자판이 올라옵니다.</b><br>한글이 아니면 자판의 <b>🌐 지구본</b> 키로 바꾸세요 — ' +
+          '자판의 언어는 폰이 정합니다.<br>다시 베트남어로 치려면 <b>입력칸</b>을 누르세요.');
+  }
+}
+
 function drawChatTone() {
   const bar = $('#chatTone');
-  if (bar.dataset.on) return;                       // 한 번만 그린다
+  if (bar.dataset.on) return;                        // 한 번만 그린다
   bar.dataset.on = '1';
   const inp = $('#chatText');
-  /* 한글 ↔ 베트남어 — 실제 자판의 한/영 키처럼.
-     솔직히: **폰 자판 자체의 언어는 웹 화면이 바꾸지 못합니다.** 그건 자판의 지구본 키가 합니다.
-     여기서 하는 일은 ① 성조 글쇠를 켜고 끄고 ② 자판에 어느 말인지 알려 주는 것(lang)입니다.
-     그래도 '지금 무슨 말을 치는 중인지'가 눈에 보여서 헷갈리지 않습니다. */
-  const lang = el('button', 'tk lang vi', 'ă');
-  lang.type = 'button';
-  lang.addEventListener('mousedown', e => e.preventDefault());
-  const setLang = vi => {
-    S.chatvi = vi ? 1 : 0; save();
-    lang.textContent = vi ? 'ă' : '가';
-    lang.title = vi ? '베트남어 — 눌러서 한글로' : '한글 — 눌러서 베트남어로';
-    lang.classList.toggle('vi', vi);
-    inp.setAttribute('lang', vi ? 'vi' : 'ko');
-    inp.placeholder = vi ? 'Tiếng Việt…' : '한국어로 써도 됩니다…';
-    bar.querySelectorAll('.tk:not(.lang)').forEach(k => { k.hidden = !vi; });
-    if (!vi && !S.langtip) {                        // 딱 한 번만 알려 준다
-      S.langtip = 1; save();
-      popup('<b>폰 자판의 언어는 자판이 바꿉니다</b><br>' +
-            '자판 아래 <b>🌐 지구본</b> 키(안드로이드) 또는 <b>띄어쓰기 옆 지구본</b>(아이폰)을 누르세요.<br>' +
-            '이 단추는 <b>성조 글쇠를 켜고 끄는 것</b>입니다.');
-    }
-  };
-  lang.onclick = () => setLang(!(S.chatvi !== 0));
-  bar.append(lang);
+
+  /* 글쇠 하나. 눌러도 입력칸이 포커스를 잃지 않게 mousedown 을 막는다 */
   const key = (label, fn, cls) => {
     const k = el('button', 'tk' + (cls ? ' ' + cls : ''), label);
     k.type = 'button';
-    k.addEventListener('mousedown', e => e.preventDefault());   // 눌러도 자판이 안 내려가게
+    k.addEventListener('mousedown', e => e.preventDefault());
+    k.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
     k.onclick = () => { fn(); chatGrow(); inp.focus({ preventScroll: true }); };
     return k;
   };
-  TONEROW.forEach(([mk, name]) => bar.append(key(toneArrow(name), () => {
-    const parts = inp.value.split(' ');
-    const last = parts.pop();
-    if (!last) return;
-    const bare = stripTone(last);
-    parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
-    inp.value = parts.join(' ');
-  }, 'tonek ' + name)));
-  LETROW.forEach(([ch, base]) => bar.append(key(ch, () => {
-    // 마지막 낱말 안에서 그 밑글자를 **뒤에서부터** 찾아 바꾼다 (com + ơ → cơm).
-    // 실제 베트남 자판(텔렉스)도 이렇게 움직인다 — 글자를 다 치고 부호를 얹는다.
-    const v = inp.value, cut = v.lastIndexOf(' ') + 1, word = v.slice(cut);
+  const row = cls => { const r = el('div', 'kbrow' + (cls ? ' ' + cls : '')); bar.append(r); return r; };
+
+  /* 커서 자리에 글자를 넣는다 */
+  const put = t => {
+    const a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
+    inp.value = inp.value.slice(0, a) + t + inp.value.slice(b);
+    const c = a + t.length; inp.setSelectionRange(c, c);
+  };
+  const back = () => {
+    const a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
+    if (b > a) { inp.value = inp.value.slice(0, a) + inp.value.slice(b); inp.setSelectionRange(a, a); return; }
+    if (!a) return;
+    inp.value = inp.value.slice(0, a - 1) + inp.value.slice(a);
+    inp.setSelectionRange(a - 1, a - 1);
+  };
+  /* 커서 앞의 낱말에 성조를 얹는다 (글자를 다 치고 부호를 얹는 텔렉스 방식) */
+  const toneOn = mk => {
+    const a = inp.selectionStart ?? inp.value.length;
+    const head = inp.value.slice(0, a), cut = head.lastIndexOf(' ') + 1, word = head.slice(cut);
+    if (!word) return;
+    const bare = stripTone(word);
+    const made = mk ? withMark(bare, mk, tonePos(bare)) : bare;
+    inp.value = head.slice(0, cut) + made + inp.value.slice(a);
+    const c = cut + made.length; inp.setSelectionRange(c, c);
+  };
+  /* 모자 글쇠 — 앞 낱말에서 그 밑글자를 뒤에서부터 찾아 바꾼다 (com + ơ → cơm) */
+  const hatOn = (ch, base) => {
+    const a = inp.selectionStart ?? inp.value.length;
+    const head = inp.value.slice(0, a), cut = head.lastIndexOf(' ') + 1, word = head.slice(cut);
     for (let i = word.length - 1; i >= 0; i--) {
-      if (plainLetter(word[i]) === base)
-        { inp.value = v.slice(0, cut) + word.slice(0, i) + ch + word.slice(i + 1); return; }
+      if (plainLetter(word[i]) === base) {
+        inp.value = head.slice(0, cut) + word.slice(0, i) + ch + word.slice(i + 1) + inp.value.slice(a);
+        inp.setSelectionRange(a, a); return;
+      }
     }
-    inp.value = v + ch;
-  })));
-  setLang(S.chatvi !== 0);                          // 처음에는 베트남어
+    put(ch);
+  };
+
+  // ① 성조 여섯 + 모자 일곱
+  const r0 = row('marks');
+  TONEROW.forEach(([mk, name]) => r0.append(key(toneArrow(name), () => toneOn(mk), 'tonek ' + name)));
+  LETROW.forEach(([ch, base]) => r0.append(key(ch, () => hatOn(ch, base), 'hat')));
+
+  // ② 글자 세 줄
+  KBROWS.forEach((chars, n) => {
+    const r = row('r' + n);
+    if (n === 2) r.append(key('⇧', () => { KBUP = KBUP ? 0 : 1; bar.classList.toggle('caps', !!KBUP); }, 'wide shift'));
+    chars.forEach(c => r.append(key(c, () => { put(KBUP ? c.toUpperCase() : c);
+                                               if (KBUP) { KBUP = 0; bar.classList.remove('caps'); } }, 'let')));
+    if (n === 2) r.append(key('⌫', back, 'wide del'));
+  });
+
+  // ③ 아래 줄 — 한글 전환 · 쉼표 · 띄어쓰기 · 마침표 · 내리기
+  const r3 = row('r3');
+  r3.append(key('한', kbPhone, 'wide lang'));
+  r3.append(key(',', () => put(','), 'punc'));
+  r3.append(key('space', () => put(' '), 'space'));
+  r3.append(key('.', () => put('.'), 'punc'));
+  r3.append(key('▾', () => { kbShow(false); inp.blur(); }, 'wide down'));
 }
 /* 대화 내용을 누르면 자판이 내려간다. 입력칸을 누르면 다시 올라온다(폰이 알아서 한다). */
 $('#chatLog').addEventListener('pointerdown', e => {
-  if (!e.target.closest('button, a, input, textarea')) $('#chatText').blur();
+  if (!e.target.closest('button, a, input, textarea')) { kbShow(false); $('#chatText').blur(); }
 });
+/* 가로로 긴 입력칸을 누르면 **우리 자판**이 올라온다. 폰 자판은 [한] 을 눌러야 나온다. */
+$('#chatText').addEventListener('pointerdown', () => {
+  $('#chatText').setAttribute('inputmode', 'none');   // 눌리기 전에 막아야 폰 자판이 안 뜬다
+  kbShow(true);
+});
+$('#chatText').addEventListener('focus', () => { if (S.chatvi !== 0) kbShow(true); });
 
 /* 입력칸은 글이 길어지면 세로로 자란다 — 한 줄에 가려 뭘 썼는지 안 보이면 고칠 수가 없다.
    최대 다섯 줄까지 늘고 그 뒤로는 칸 안에서 스크롤된다. */
