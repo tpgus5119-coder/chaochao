@@ -1373,7 +1373,7 @@ const MENUS = {
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
   basic: { name: '기본기', items: () => [
             ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
-            ['성조', toneEntry], ['호칭', () => startRule(0)], ['어순', () => startRule(1)],
+            ['성조', toneEntry], ['자판 쓰는 법', kbGuide], ['호칭', () => startRule(0)], ['어순', () => startRule(1)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
@@ -3781,7 +3781,6 @@ function chatSys(mode, myRole, day) {
        도피구가 아니라 발판이 되게. 알아채지 못한 것은 배워지지 않는다. */
     '학습자가 **한국어로 썼으면**, 그 말을 학습자가 베트남어로 어떻게 말했어야 하는지\n' +
     '   "SAY: 베트남어문장 | 한글발음" 줄로 반드시 덧붙인다. 베트남어로 썼으면 이 줄은 쓰지 않는다.\n' +
-    '학습자가 사진을 보내면, 사진에 보이는 것을 주제로 아주 쉬운 베트남어 문장으로 대화를 이어간다.\n' +
     (mode === 'today'
       ? `역할극: 오늘의 대화(${dlg})에서 학습자가 ${myRole} 역할, 당신이 ${myRole === 'A' ? 'B' : 'A'} 역할이다. ` +
         (myRole === 'B' ? '당신(A)의 첫 대사로 시작한다.' : '학습자(A)가 먼저 말하도록 짧게 유도한다.') +
@@ -3985,6 +3984,50 @@ const NUMROWS = [
   ['.',',','?','!','\'','%','+'],
 ];
 
+
+/* ── 자판 쓰는 법 ────────────────────────────────────────────────
+   베트남 자판에는 성조 글쇠가 없다. 글자를 다 치고 **열쇠 글자**를 뒤에 붙인다(텔렉스).
+   베트남 사람 대다수가 이렇게 친다 — 우리 자판도 똑같이 만들었다. */
+const TLXHELP = [
+  ['성조 여섯', [['(그대로)', 'ma', 'ma', '평평하게'], ['f', 'maf', 'mà', '낮게 내려감'],
+                 ['s', 'mas', 'má', '짧게 올라감'], ['r', 'mar', 'mả', '내렸다 올림'],
+                 ['x', 'max', 'mã', '흔들며 올림'], ['j', 'maj', 'mạ', '뚝 떨어짐']]],
+  ['모자 일곱', [['aa', 'aa', 'â', ''], ['aw', 'aw', 'ă', ''], ['ee', 'ee', 'ê', ''],
+                 ['oo', 'oo', 'ô', ''], ['ow', 'ow', 'ơ', ''], ['uw', 'uw', 'ư', ''],
+                 ['dd', 'dd', 'đ', '']]],
+];
+function kbGuide() {
+  const b = $('#rulesBody');
+  b.textContent = '';
+  b.append(el('h2', null, '자판 쓰는 법'));
+  b.append(el('p', 'lede', '베트남 자판에는 <b>성조 글쇠가 없습니다.</b> 글자를 다 치고 ' +
+    '<b>열쇠 글자</b>를 뒤에 붙이면 부호가 얹힙니다. 베트남 사람 대다수가 이렇게 칩니다(텔렉스).'));
+  const demo = el('div', 'kbdemo');
+  demo.innerHTML = '<b>chao</b> 치고 <b>f</b> → <b class="big">chào</b>' +
+                   '<br><b>chi</b> 치고 <b>j</b> → <b class="big">chị</b>' +
+                   '<br><b>com</b> 치고 <b>ow</b> → <b class="big">cơm</b>';
+  b.append(demo);
+  TLXHELP.forEach(([title, rows]) => {
+    b.append(el('div', 'grp', title));
+    const t = el('div', 'kbtab');
+    rows.forEach(([k, typed, made, ko]) => {
+      const r = el('div', 'kbtr');
+      r.append(el('span', 'kbk', esc(k)), el('span', 'kbt', esc(typed) + ' →'),
+               el('span', 'kbm', esc(made)), el('span', 'kbko', esc(ko)));
+      const say = el('button', 'ibtn slow', ICON.slow);
+      say.type = 'button'; say.title = '들어 보기';
+      say.onclick = () => speakVi(made);
+      r.append(say);
+      t.append(r);
+    });
+    b.append(t);
+  });
+  b.append(el('p', 'note', '부호를 지우려면 <b>z</b> 를 칩니다. 같은 열쇠를 한 번 더 치면 되돌아갑니다 ' +
+    '— <b>chaof</b> 를 한 번 더 치면 <b>chaof</b> 그대로 남습니다.'));
+  b.append(el('p', 'note', '숫자와 기호는 자판의 <b>123</b>, 한글은 <b>베/한</b> 을 누르세요.'));
+  show('rules', '자판 쓰는 법', true);
+}
+
 /* ── 텔렉스 ──────────────────────────────────────────────────
    베트남 사람들이 실제로 치는 방식. 글자를 치고 뒤에 열쇠 글자를 붙인다.
      aa→â  ee→ê  oo→ô  aw→ă  ow→ơ  uw→ư  dd→đ
@@ -4099,27 +4142,6 @@ function drawChatTone() {
     hgDone(); HG = { cho: j, jung: '', jong: '' }; paint(0, j);
   };
 
-  /* 커서 앞 낱말에 성조를 얹는다 — 글자를 다 치고 부호를 얹는 텔렉스 방식 */
-  const toneOn = mk => {
-    const a = at(), head = inp.value.slice(0, a);
-    const cut = head.lastIndexOf(' ') + 1, word = head.slice(cut);
-    if (!word) return;
-    const bare = stripTone(word), made = mk ? withMark(bare, mk, tonePos(bare)) : bare;
-    inp.value = head.slice(0, cut) + made + inp.value.slice(a);
-    const c = cut + made.length; inp.setSelectionRange(c, c);
-  };
-  const hatOn = (ch, base) => {
-    const a = at(), head = inp.value.slice(0, a);
-    const cut = head.lastIndexOf(' ') + 1, word = head.slice(cut);
-    for (let i = word.length - 1; i >= 0; i--) {
-      if (plainLetter(word[i]) === base) {
-        inp.value = head.slice(0, cut) + word.slice(0, i) + ch + word.slice(i + 1) + inp.value.slice(a);
-        inp.setSelectionRange(a, a); return;
-      }
-    }
-    put(ch);
-  };
-
   /* 누름은 pointerdown 하나로 끝낸다.
      touchstart 에서 preventDefault 를 하면 아이폰이 click 을 아예 만들지 않아
      글쇠를 눌러도 아무것도 입력되지 않았다. 그리고 pointerdown 으로 처리하면
@@ -4142,10 +4164,7 @@ function drawChatTone() {
     if (n === 2) r.append(key('⌫', () => { hgDone(); back(); }, 'wide del'));
   });
 
-  // ① 성조와 모자 (베트남어일 때만)
-  const r0 = row('marks');
-  TONEROW.forEach(([mk, name]) => r0.append(key(toneArrow(name), () => toneOn(mk), 'tonek ' + name)));
-  LETROW.forEach(([ch, base]) => r0.append(key(ch, () => hatOn(ch, base), 'hat')));
+  /* 성조 글쇠는 두지 않는다 — 진짜 베트남 자판에는 없다. 텔렉스로 친다. */
 
   // ② 베트남어 글자 · ③ 한글 낱자 · ④ 숫자와 기호
   /* 베트남어 글쇠 — 텔렉스로 친다 */
@@ -4396,7 +4415,7 @@ function openRoom(rg, tc) {
   $('#chatSetup').hidden = true;
   $('#chatForm').hidden = false;
   $('#chatTone').hidden = false; drawChatTone();
-  $('#chatCam').hidden = false; $('#chatMic').hidden = false;
+  $('#chatMic').hidden = false;
   drawTch();
   $('#chatLog').textContent = '';
   CH = { mode: 'free', room: k, sys: chatSys('free'), hist: r.hist };
@@ -4456,7 +4475,7 @@ function beginChat(mode, myRole, day) {
   $('#chatSetup').hidden = true;
   $('#chatForm').hidden = false;
   $('#chatTone').hidden = false; drawChatTone();
-  $('#chatCam').hidden = false; $('#chatMic').hidden = false;
+  $('#chatMic').hidden = false;
   drawTch();
   CH = { mode, sys: chatSys(mode, myRole, day), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
   chatSend(null);
@@ -4509,37 +4528,7 @@ $('#chatMic').onclick = async () => {
 
 /* 사진 보며 대화 — 폰 카메라로 찍은 사진을 줄여서(512px) 대화에 붙인다.
    실시간 영상은 무료 한도로 무리지만, 사진 한 장씩은 같은 무료 호출에 들어간다. */
-function shrinkImg(file) {
-  return new Promise(res => {
-    const img = new Image();
-    img.onload = () => {
-      const k = Math.min(1, 384 / Math.max(img.width, img.height));   // 작을수록 빨리 읽는다
-      const c = document.createElement('canvas');
-      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
-      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-      URL.revokeObjectURL(img.src);
-      res(c.toDataURL('image/jpeg', .72).split(',')[1]);
-    };
-    img.src = URL.createObjectURL(file);
-  });
-}
-const camIn = document.createElement('input');
-camIn.type = 'file'; camIn.accept = 'image/*'; camIn.capture = 'environment';
-$('#chatCam').onclick = () => camIn.click();
-camIn.onchange = async () => {
-  const f = camIn.files[0]; camIn.value = '';
-  if (!f || !CH) return;
-  const b64 = await shrinkImg(f);
-  const bub = bubble('me');
-  const im = new Image();
-  im.src = 'data:image/jpeg;base64,' + b64; im.className = 'camth'; im.alt = '';
-  bub.append(im);
-  CH.hist.push({ role: 'user', parts: [
-    { text: '학습자가 지금 눈앞의 것을 사진으로 보여준다. 사진에서 가장 눈에 띄는 것 하나를 골라, ' +
-            '그 이름을 넣은 아주 쉬운 베트남어 한 문장으로 말을 걸어라. 사진 설명을 길게 하지 마라.' },
-    { inline_data: { mime_type: 'image/jpeg', data: b64 } }] });
-  chatSend(null);
-};
+/* 사진 보내기는 뺐다 — AI 몫을 크게 먹는데(사진 한 장이 낱말 채점 두 번 값) 학습에 꼭 필요하진 않다 */
 
 /* ---------- 시작 ---------- */
 /* 뒤로가기 — 한 단계씩. 전에는 어디서 눌러도 홈으로 튀어서,
@@ -5541,7 +5530,7 @@ function openDm(u) {
   $('#tch').hidden = true;
   $('#chatForm').hidden = false;
   $('#chatTone').hidden = false; drawChatTone();
-  $('#chatCam').hidden = true; $('#chatMic').hidden = true;   // 사람끼리는 글로만
+ $('#chatMic').hidden = true;   // 사람끼리는 글로만
   $('#chatLog').textContent = '';
   $('#chatLog').append(el('p', 'note dmwarn',
     '쪽지는 <b>암호가 걸려 있지 않습니다</b>. 서버에 30일 남고, 운영자는 마음먹으면 볼 수 있습니다.<br>' +
