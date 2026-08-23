@@ -27,11 +27,36 @@ WORK_ORDER = (W_BASE + W_SEW + list(range(51,61))  # 전자·사무
               + list(range(81,86)) + list(range(96,101))   # 관리자·창고 (공통)
               + list(range(86,96)))                # 봉제·전자 심화
 by = {d["day"]: d for d in days}
-DAILY_HEAD = list(range(1, 7)) + [101] + list(range(7, 14)) + [102] + list(range(14, 21))
+# ── 일상 차례 — **같은 주제끼리 붙여 놓는다** ──────────────────────
+# 교재·어플이 주제별로 묶는 데에는 이유가 있다. 상황이 같으면 문장 틀이 같아서
+# 열 낱말을 따로 외우는 대신 한 장면을 통째로 익히게 된다.
+# 다만 우리 문장은 '그날까지 배운 낱말로만' 쓰도록 만들어져 있어서, 주제를 모으면
+# 몇몇 낱말이 제 차례보다 먼저 나온다. 그 낱말들은 표지에 '미리 만나는 말'로 적어 준다
+# (17개뿐이고, 문장 밑 뜻풀이에도 그대로 나온다).
+# 묶음 차례는 위반이 가장 적게 나오도록 골랐다 (25건 → 미리 만나는 말로 처리).
+DAILY_HEAD = [1,2,3,4,5,6,            # 만나고 인사하기
+              12,                     # 먹고 마시기 (기초) — 첫 주에 제일 급한 말
+              16,                     # 아플 때 (기초)
+              7,8,13,102,             # 숫자와 돈
+              14,                     # 어디에 있어요 (기초)
+              9,10,19,                # 때와 날짜
+              101,11,                 # 일과 직업
+              17,18,20,               # 부탁 · 약속 · 평가
+              15]                     # 가족 (기초)
+DAILY_MID  = [41,43,                  # 날씨와 색
+              45,                     # 쉬는 날
+              47,                     # 아플 때 (심화)
+              48,76,77,               # 먹고 마시기 (심화)
+              71,72,                  # 가족과 고향 (심화)
+              42]                     # 길과 탈것 (여기서 시작)
+DAILY_TAIL = [80,                     # 길과 탈것 (이어서)
+              44,74,75,               # 마음과 맞장구
+              46,50,78,79,            # 생활 살림
+              49,73]                  # 명절과 스포츠
 days = ([by[k] for k in DAILY_HEAD]
         + [by[k] for k in W_BASE] + [by[k] for k in W_SEW]
-        + [by[k] for k in range(41, 51)] + [by[k] for k in range(51, 71)]
-        + [by[k] for k in range(71, 81)]
+        + [by[k] for k in DAILY_MID] + [by[k] for k in range(51, 71)]
+        + [by[k] for k in DAILY_TAIL]
         + [by[k] for k in range(81, 86)] + [by[k] for k in range(96, 101)]
         + [by[k] for k in range(86, 96)])
 
@@ -96,7 +121,7 @@ dups = {k:v for k,v in seen.items() if len(v)>1}
 PROPER = {"hàn","quốc","việt","nam","minsu","nguyễn","văn","hùng","trần","thị","lan",
           "hà","nội","busan","nghệ"}
 toks = lambda s: [t for t in re.split(r"[\s,.!?]+", s) if t]
-vocab, bad = set(), []
+vocab, bad, PRE = set(), [], {}
 for d in out["days"]:
     for w in d["words"]: vocab.update(t.lower() for t in w["vi"].split())
     texts = [l["vi"] for l in d["dialog"]["lines"]] + [x["vi"] for x in d["dialog"]["extra"]]
@@ -105,6 +130,26 @@ for d in out["days"]:
             lt=t.lower()
             if lt in PROPER or lt in vocab: continue
             bad.append((d["day"], txt, t))
+            PRE.setdefault(d["day"], {})[lt] = None
+
+# 제 차례보다 먼저 나오는 낱말 → 표지의 '미리 만나는 말'. 뜻은 그 낱말을 가르치는 날에서 가져온다.
+MEAN = {}
+for d in out["days"]:
+    for w in d["words"]:
+        MEAN.setdefault(w["vi"].lower(), (w["vi"], w["ko"]))
+        if len(w["vi"].split()) > 1:
+            for t in w["vi"].split(): MEAN.setdefault(t.lower(), (w["vi"], w["ko"]))
+lost = []
+for d in out["days"]:
+    ts = PRE.get(d["day"])
+    if not ts: continue
+    pre = []
+    for t in sorted(ts):
+        m = MEAN.get(t)
+        if m: pre.append({"vi": m[0], "ko": m[1]})
+        else: lost.append((d["day"], t))
+    seen_vi = set(); d["pre"] = [x for x in pre if not (x["vi"] in seen_vi or seen_vi.add(x["vi"]))]
+print(f"미리 만나는 말 {sum(len(d.get('pre',[])) for d in out['days'])}개 / 어디에도 없는 낱말 {len(lost)}건 {lost}")
 
 # 모든 단어가 어딘가 문장에 나오는가
 unused=[]
@@ -123,7 +168,7 @@ for a in bad: print('   Day%-3s "%s"  ←  %s' % a)
 print(f"\n문장에 안 나오는 단어 {len(unused)}건:")
 for a in unused: print('   Day%-3s %s' % a)
 
-if "--write" in sys.argv and not bad and not dups:
+if "--write" in sys.argv and not lost and not dups:
     (R/'data/days.json').write_text(json.dumps(out, ensure_ascii=False, indent=1))
     print("\n→ days.json 기록")
 elif "--write" in sys.argv:

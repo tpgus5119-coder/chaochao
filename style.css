@@ -997,3 +997,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 머리말과 번호는 줄이 늘어나면 안 된다 ('보기'가 '보/기'로 쪼개지던 자리) */
 .catpick > span{white-space:nowrap; flex:0 0 auto}
 .days .num{white-space:nowrap}
+/* 미리 나오는 말 — 표지 아래 */
+.prew{font-size:13px; background:var(--card); border:1px solid var(--line);
+  border-radius:8px; padding:5px 9px}
+.prew b{font-weight:700}
+.cb .tonenote{display:block; margin-top:5px; font-size:12px; opacity:.8}
