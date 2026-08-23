@@ -527,6 +527,8 @@ function show(v, title, canBack) {
   resetRec();
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
   $('#title').textContent = title;
+  if (DMT) { clearInterval(DMT); DMT = 0; }
+  if (v !== 'chat') DM = null;
   $('#back').hidden = !canBack;
   CURV = v;
   topBtns();
@@ -618,7 +620,7 @@ const BADGES = [
 const NEED = 10;                       // 이만큼 풀어야 판정한다
 function bars(rows) {
   const box = el('div', 'bars');
-  rows.forEach(([name, pct, n, avg]) => {
+  rows.forEach(([name, pct, n, avg, nlabel]) => {
     const thin = n < NEED;
     const r = el('div', 'barrow' + (thin ? ' thin' : ''));
     r.append(el('span', 'bname', name));
@@ -637,7 +639,8 @@ function bars(rows) {
     }
     r.append(bar);
     r.append(el('span', 'bpct', thin ? '—' : pct + '%'));
-    r.append(el('span', 'bn', thin ? (NEED - n) + '문제 더' : n + '문제'));
+    r.append(el('span', 'bn', nlabel != null ? nlabel
+                                    : thin ? (NEED - n) + '문제 더' : n + '문제'));
     box.append(r);
   });
   return box;
@@ -924,6 +927,41 @@ function renderAwards() {
   pb.onclick = () => { S.pace = (S.pace || 1) >= 2 ? 1 : 2; save(); renderAwards(); };
   pc.append(pb);
   b.append(nm, rg, pc);
+
+  // 프로필 사진 — 동아리 사람들에게만 보인다. 안 정하면 실루엣.
+  const fr = el('div', 'planrow');
+  fr.append(el('span', 'pk', '사진'));
+  const pv = el('span', 'pv');
+  pv.append(faceEl(myUid()));
+  fr.append(pv);
+  const fb = el('button', 'ghost sm', (FACE[myUid()] || {}).d ? '바꾸기' : '올리기');
+  fb.onclick = () => pickFace(renderAwards);
+  fr.append(fb);
+  if ((FACE[myUid()] || {}).d) {
+    const fd = el('button', 'ghost sm', '지우기');
+    fd.onclick = () => { FACE[myUid()] = { v: 0, d: '' }; faceSave(); S.avv = 0; save();
+                         cCall({ act: 'setface', img: '' }).catch(() => { }); renderAwards(); };
+    fr.append(fd);
+  }
+  b.append(fr);
+
+  // 분석 공개 — 끄면 남에게 숫자가 하나도 안 나간다
+  const op = el('div', 'planrow');
+  op.append(el('span', 'pk', '분석 공개'), el('span', 'pv', S.open ? '동아리에 공개' : '나만 보기'));
+  const ob = el('button', 'ghost sm', S.open ? '끄기' : '켜기');
+  ob.onclick = () => { S.open = S.open ? 0 : 1; save();
+                       if (S.club) mateSync().catch(() => { }); renderAwards(); };
+  op.append(ob);
+  b.append(op);
+  b.append(el('p', 'note', '사진과 분석은 <b>같은 동아리 사람에게만</b> 보입니다. ' +
+    '사진과 쪽지는 서버에 그대로 저장되며 암호가 걸려 있지 않습니다.'));
+
+  const st = el('div', 'stats mine');
+  [['연속', streakDays() + '일'], ['모두', totalDays() + '일']].forEach(([k, v]) => {
+    const c = el('div', 'stat'); c.append(el('b', null, v), el('span', null, k)); st.append(c);
+  });
+  b.append(st);
+
   const ana = el('div');
   renderAnalysis(ana, 'week');
   b.append(ana);
@@ -3502,42 +3540,54 @@ async function chatSend(userText) {
   }
 }
 
-/* 대화창의 베트남어 자판 — 실제 베트남 사람들이 쓰는 방식 그대로.
-   자판 자체는 우리와 같은 QWERTY이고, 부호는 '텔렉스' 규칙(aa→â, dd→đ, 성조는 낱말 뒤에)으로 얹는다.
-   여기서는 텔렉스를 외우지 않아도 되게 부호 글쇠를 따로 뒀다 — 결과는 같은 글자다. */
-function drawChatKeys() {
-  const kb = $('#chatKeys');
-  kb.textContent = '';
+/* 대화창의 성조 줄 — 입력칸 바로 위에 늘 붙어 있는 얇은 한 줄.
+   폰 자신의 자판으로 한글도 베트남어도 치고, 이 줄로 부호만 얹는다.
+   (예전에는 우리 자판을 통째로 띄웠는데, 그러면 폰 자판이 막혀 **한글을 못 쳤다**.)
+   · 성조 여섯 — 마지막 낱말의 주모음에 얹는다
+   · ă â ê ô ơ ư đ — 방금 친 글자가 그 밑글자면 바꿔치고, 아니면 그냥 붙인다
+     (com 치고 ơ 를 누르면 cơm 이 된다) */
+const TONEROW = [['', 'ngang'], ['\u0300', 'huyền'], ['\u0301', 'sắc'],
+                 ['\u0309', 'hỏi'], ['\u0303', 'ngã'], ['\u0323', 'nặng']];
+/* 'ơ' 도 'ắ' 도 결국 밑글자는 a·o 다. 부호를 두 겹(모자+성조) 벗겨 밑글자만 남긴다. */
+const HORN = { 'ă': 'a', 'â': 'a', 'ê': 'e', 'ô': 'o', 'ơ': 'o', 'ư': 'u', 'đ': 'd' };
+const plainLetter = c => { const b = stripTone(c).toLowerCase(); return HORN[b] || b; };
+const LETROW = [['ă', 'a'], ['â', 'a'], ['ê', 'e'], ['ô', 'o'], ['ơ', 'o'], ['ư', 'u'], ['đ', 'd']];
+function drawChatTone() {
+  const bar = $('#chatTone');
+  if (bar.dataset.on) return;                       // 한 번만 그린다
+  bar.dataset.on = '1';
   const inp = $('#chatText');
-  const put = ch => { inp.value += ch; chatGrow(); inp.focus({ preventScroll: true }); };
-  const key = (label, fn, cls) => { const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label);
-    k.type = 'button'; k.onclick = fn; return k; };
-  ['q w e r t y u i o p', 'a s d f g h j k l', 'z x c v b n m', 'ă â ê ô ơ ư đ'].forEach(r => {
-    const row = el('div', 'vkrow');
-    r.split(' ').forEach(ch => row.append(key(ch, () => put(ch))));
-    kb.append(row);
-  });
-  const trow = el('div', 'vkrow');
-  [['ngang', ''], ['huyền', '\u0300'], ['sắc', '\u0301'], ['hỏi', '\u0309'], ['ngã', '\u0303'], ['nặng', '\u0323']]
-    .forEach(([name, mk]) => {
-      trow.append(key(toneArrow(name), () => {          // 마지막 낱말의 주모음에 부호를 얹는다
-        const parts = inp.value.split(' ');
-        const last = parts.pop();
-        if (!last) return;
-        const bare = stripTone(last);
-        parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
-        inp.value = parts.join(' ');
-        chatGrow();
-        inp.focus({ preventScroll: true });
-      }, 'tonek ' + name));
-    });
-  kb.append(trow);
-  const brow = el('div', 'vkrow');
-  brow.append(key('띄어쓰기', () => put(' '), 'wide'),
-              key('⌫', () => { inp.value = inp.value.slice(0, -1); chatGrow(); inp.focus({ preventScroll: true }); }, 'wide'),
-              key('보내기', () => $('#chatForm').requestSubmit(), 'go wide'));
-  kb.append(brow);
+  const key = (label, fn, cls) => {
+    const k = el('button', 'tk' + (cls ? ' ' + cls : ''), label);
+    k.type = 'button';
+    k.addEventListener('mousedown', e => e.preventDefault());   // 눌러도 자판이 안 내려가게
+    k.onclick = () => { fn(); chatGrow(); inp.focus({ preventScroll: true }); };
+    return k;
+  };
+  TONEROW.forEach(([mk, name]) => bar.append(key(toneArrow(name), () => {
+    const parts = inp.value.split(' ');
+    const last = parts.pop();
+    if (!last) return;
+    const bare = stripTone(last);
+    parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
+    inp.value = parts.join(' ');
+  }, 'tonek ' + name)));
+  LETROW.forEach(([ch, base]) => bar.append(key(ch, () => {
+    // 마지막 낱말 안에서 그 밑글자를 **뒤에서부터** 찾아 바꾼다 (com + ơ → cơm).
+    // 실제 베트남 자판(텔렉스)도 이렇게 움직인다 — 글자를 다 치고 부호를 얹는다.
+    const v = inp.value, cut = v.lastIndexOf(' ') + 1, word = v.slice(cut);
+    for (let i = word.length - 1; i >= 0; i--) {
+      if (plainLetter(word[i]) === base)
+        { inp.value = v.slice(0, cut) + word.slice(0, i) + ch + word.slice(i + 1); return; }
+    }
+    inp.value = v + ch;
+  })));
 }
+/* 대화 내용을 누르면 자판이 내려간다. 입력칸을 누르면 다시 올라온다(폰이 알아서 한다). */
+$('#chatLog').addEventListener('pointerdown', e => {
+  if (!e.target.closest('button, a, input, textarea')) $('#chatText').blur();
+});
+
 /* 입력칸은 글이 길어지면 세로로 자란다 — 한 줄에 가려 뭘 썼는지 안 보이면 고칠 수가 없다.
    최대 다섯 줄까지 늘고 그 뒤로는 칸 안에서 스크롤된다. */
 function chatGrow() {
@@ -3548,15 +3598,8 @@ $('#chatText').addEventListener('input', chatGrow);
 $('#chatText').addEventListener('keydown', e => {          // 컴퓨터 자판: 엔터는 보내기, 시프트+엔터는 줄바꿈
   if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('#chatForm').requestSubmit(); }
 });
-$('#chatText').onclick = () => { if ($('#chatKeys').hidden) $('#chatKb').click(); };
-$('#chatKb').onclick = () => {
-  const kb = $('#chatKeys');
-  if (kb.hidden) { drawChatKeys(); kb.hidden = false; $('#chatKb').classList.add('pick'); }
-  else { kb.hidden = true; $('#chatKb').classList.remove('pick'); }
-};
 
 function startChat() {
-  $('#chatKb').classList.remove('pick');
   CH = null;
   if (!aiReady()) {
     $('#chatLog').textContent = ''; $('#chatForm').hidden = true; $('#tch').hidden = true;
@@ -3665,7 +3708,7 @@ function renderRooms() {
   s.hidden = false; s.textContent = '';
   $('#chatLog').textContent = '';
   $('#chatForm').hidden = true;
-  $('#chatKeys').hidden = true;
+  $('#chatTone').hidden = true;
   $('#tch').hidden = true;
   sweepRooms();
   ROOMS.forEach(([rg, tc]) => {
@@ -3687,7 +3730,43 @@ function renderRooms() {
     btn.onclick = () => { dive(renderRooms); openRoom(rg, tc); };
     s.append(btn);
   });
+  drawMateRows(s);
   show('chat', '메신저', true);
+}
+
+/* 쌤 넷 밑에 같은 동아리 사람들을 잇대어 붙인다 — 메신저 하나로 다 되게. */
+function drawMateRows(s) {
+  const head = el('div', 'phead');
+  head.append(el('strong', null, '동아리 사람들'));
+  s.append(head);
+  if (!S.club) {
+    const go = el('button', 'bigmenu');
+    go.append(el('b', null, '동아리에 들어가기'),
+              el('span', 'msub', '같은 동아리 사람끼리 엄지척과 쪽지를 주고받습니다'));
+    go.onclick = () => { dive(renderRooms); showClub(); };
+    s.append(go);
+    return;
+  }
+  const wait = el('p', 'note', '불러오는 중…');
+  s.append(wait);
+  const paint = () => {
+    wait.remove();
+    const list = ((MATES || {}).people || []).filter(x => x.uid !== myUid());
+    if (!list.length) { s.append(el('p', 'note', '아직 다른 사람이 없습니다.')); return; }
+    list.forEach(m => {
+      const btn = el('button', 'msgrow');
+      btn.append(faceEl(m.uid, 'row'));
+      const mid = el('span', 'msgmid');
+      mid.append(el('b', null, esc(m.nick) + '  <i>연속 ' + m.st + '일</i>'),
+                 el('span', 'msglast', `모두 ${m.td}일 · 외운 단어 ${m.memo} · 엄지 ${m.th}`));
+      btn.append(mid);
+      if (mateNew(m)) btn.append(el('span', 'msgbadge', '새'));
+      btn.onclick = () => { dive(renderRooms); showMate(m.uid); };
+      s.append(btn);
+    });
+  };
+  if (MATES) paint();
+  mateSync().then(paint).catch(() => { wait.textContent = '사람 목록을 불러오지 못했습니다.'; });
 }
 function openRoom(rg, tc) {
   S.region = rg; S.tch = tc; save(); drawRegion();
@@ -3695,6 +3774,8 @@ function openRoom(rg, tc) {
   S.stats.chat = (S.stats.chat || 0) + 1; touchToday(); save();
   $('#chatSetup').hidden = true;
   $('#chatForm').hidden = false;
+  $('#chatTone').hidden = false; drawChatTone();
+  $('#chatCam').hidden = false; $('#chatMic').hidden = false;
   drawTch();
   $('#chatLog').textContent = '';
   CH = { mode: 'free', room: k, sys: chatSys('free'), hist: r.hist };
@@ -3753,6 +3834,8 @@ function beginChat(mode, myRole, day) {
   S.stats.chat = (S.stats.chat || 0) + 1; touchToday(); save();
   $('#chatSetup').hidden = true;
   $('#chatForm').hidden = false;
+  $('#chatTone').hidden = false; drawChatTone();
+  $('#chatCam').hidden = false; $('#chatMic').hidden = false;
   drawTch();
   CH = { mode, sys: chatSys(mode, myRole, day), hist: [{ role: 'user', parts: [{ text: '(대화를 시작해 주세요)' }] }] };
   chatSend(null);
@@ -3845,7 +3928,8 @@ $('#goMe').onclick = renderAwards;
 $('#goChat').onclick = () => { dive(renderHome); startChat(); };
 /* 머리 메신저 단추 — 안 읽은 것이 있으면 빨간 점. 진짜 메신저처럼 어디서나 보인다 */
 function drawChatDot() {
-  const n = Object.values(S.room || {}).reduce((a, r) => a + (r.unread || 0), 0);
+  const n = Object.values(S.room || {}).reduce((a, r) => a + (r.unread || 0), 0)
+          + (((MATES || {}).people) || []).filter(mateNew).length;
   $('#goChat').querySelector('.chatdot').hidden = !n;
 }
 
@@ -4183,10 +4267,11 @@ function showNews() {
 $('#chatForm').onsubmit = e => {
   e.preventDefault();
   const v = $('#chatText').value.trim();
-  if (!v || !CH) return;
+  if (!v) return;
   $('#chatText').value = '';
   chatGrow();
-  chatSend(v);
+  if (DM) { dmSay(v); return; }
+  if (CH) chatSend(v);
 };
 /* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
    단추는 홈 아래가 아니라 '진도' 타일 안에 있다 — 첫 화면은 학습만 남긴다.
@@ -4363,7 +4448,7 @@ function showAdmin() {
 const CLUBURL = 'https://viet-club.chaochao-app.workers.dev';
 async function cCall(o) {
   const r = await fetch(CLUBURL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-                                   body: JSON.stringify(Object.assign({ nick: S.nick }, o)) });
+                                   body: JSON.stringify(Object.assign({ nick: S.nick, uid: myUid() }, o)) });
   const j = await r.json();
   if (j.error === 'gone') { S.club = null; save(); throw new Error('이 동아리는 사라졌습니다.'); }
   if (j.error) throw new Error(j.error);
@@ -4380,10 +4465,7 @@ function showClub() {
   if (!S.nick || S.nick === '이름없음') { askNick(); return; }
   clubBusy('불러오는 중…');
   if (S.club) {
-    const dots = weekDots();
-    cCall({ act: 'report', id: S.club.id, days: dots.map(d => d.done ? 1 : 0),
-            memo: skillScore().memo, score: 0 })   // 동아리는 출석만 본다 — 점수는 안 쓴다
-      .then(clubHome).catch(e => { if (!S.club) clubList(); else clubFail(e); });
+    mateSync().then(() => clubHome(MATES)).catch(e => { if (!S.club) clubList(); else clubFail(e); });
   } else clubList();
 }
 
@@ -4464,16 +4546,19 @@ function clubHome(j) {
   head.append(el('strong', null, '이번 주 출석'));
   head.append(el('span', 'dimtxt', '월 화 수 목 금 토 일'));
   b.append(head);
-  j.members.forEach(m => {
-    const row = el('div', 'cmem' + (m.nick === S.nick ? ' me' : ''));
-    row.append(el('span', 'cn', esc(m.nick)));
+  (j.people || []).forEach(m => {
+    const row = el('button', 'cmem' + (m.uid === myUid() ? ' me' : ''));
+    row.append(faceEl(m.uid), el('span', 'cn', esc(m.nick)));
     const dd = el('span', 'dots');
     for (let i = 0; i < 7; i++) dd.append(el('i', 'dot' + ((m.days || [])[i] ? ' on' : '')));
     row.append(dd, el('span', 'cw', (m.memo || 0) + '단어'));
+    if (mateNew(m)) row.append(el('i', 'newdot'));
+    row.onclick = () => { dive(showClub); showMate(m.uid); };
     b.append(row);
   });
 
-  b.append(el('p', 'note', '올라가는 것은 별명과 위 숫자뿐입니다. 배운 내용이나 기록은 올라가지 않습니다.'));
+  b.append(el('p', 'note', '사람을 누르면 <b>엄지척</b>과 <b>쪽지</b>를 보낼 수 있습니다.<br>' +
+    '올라가는 것은 별명·위 숫자·본인이 올린 사진과 쪽지뿐입니다. 배운 내용과 기록은 올라가지 않습니다.'));
   const others = el('button', 'ghost sm', '다른 동아리 보기');
   others.onclick = clubList;
   const out = el('button', 'ghost sm', '나가기');
@@ -4487,6 +4572,239 @@ function clubHome(j) {
   row.append(others, out);
   b.append(row);
   show('club', '동아리', true);
+}
+
+
+/* ---------- 동아리 사람들 ----------
+   같은 동아리 안에서만 서로 보이고 서로 말을 건다. 서버에 올라가는 것은
+   별명·진도 숫자·본인이 올린 사진·본인이 쓴 쪽지뿐이고, 실명은 애초에 받지 않는다.
+   **쪽지와 사진은 암호화되지 않는다** — 그 사실을 앱 화면에도 그대로 적어 둔다.
+   사람은 별명이 아니라 uid(기기마다 다른 표)로 구분한다. 별명은 바뀌고 겹치니까. */
+let MATES = null;                       // 마지막으로 받아 온 사람 목록
+let DM = null, DMT = 0;                 // 지금 열려 있는 쪽지방 · 새로고침 시계
+
+/* 사진은 본체(S)와 따로 둔다 — S 는 저장할 때마다 통째로 다시 쓰이는데,
+   거기에 사진 스무 장이 끼면 진도를 저장할 때마다 수백 KB를 쓰게 된다. */
+const FKEY = 'cc_face';
+let FACE = (() => { try { return JSON.parse(localStorage.getItem(FKEY) || '{}'); } catch (e) { return {}; } })();
+const faceSave = () => { try { localStorage.setItem(FKEY, JSON.stringify(FACE)); } catch (e) { } };
+
+/* 온 날 세기.
+   솔직히: 연속 기록은 하루 끊기면 그만두게 만든다는 걱정이 있어 일부러 안 세고 있었다.
+   이제 세되 **끊긴 것을 벌하지 않는다** — 빨간 글씨도, 잃는다는 말도 쓰지 않는다.
+   그리고 '모두 며칠'을 나란히 둔다. 연속이 0이 돼도 모두 며칠은 줄지 않는다. */
+const totalDays = () => Object.keys(S.act || {}).length;
+function streakDays() {
+  const d = new Date();
+  if (!S.act[ymd(d)]) d.setDate(d.getDate() - 1);      // 오늘 아직 안 했으면 어제부터 센다
+  let n = 0;
+  while (S.act[ymd(d)] && n < 4000) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+
+const SILH = '<svg viewBox="0 0 40 40" class="silh"><circle cx="20" cy="15.2" r="7.6"/>' +
+             '<path d="M5.6 38a14.4 14.4 0 0 1 28.8 0Z"/></svg>';
+function faceEl(uid, cls) {
+  const s = el('span', 'mav' + (cls ? ' ' + cls : ''));
+  const d = (FACE[uid] || {}).d;
+  if (d) { const im = new Image(); im.src = d; im.alt = ''; s.append(im); }
+  else s.innerHTML = SILH;
+  return s;
+}
+
+/* 내 현황을 올리고 사람 목록을 받아 온다 (한 번 오가며 둘 다 한다).
+   서버는 바뀐 것이 없으면 저장하지 않는다 — KV 는 하루 쓰기가 1000번뿐이다. */
+function mateSync() {
+  if (!S.club) return Promise.resolve(null);
+  const dots = weekDots(), sk = skillScore();
+  return cCall({ act: 'report', id: S.club.id, days: dots.map(d => d.done ? 1 : 0),
+                 memo: sk.memo, score: sk.score, st: streakDays(), td: totalDays(),
+                 op: S.open ? 1 : 0, av: S.avv || 0, bl: S.block || [], pct: myPcts() })
+    .then(j => { MATES = j; return pullFaces(j.people || []); });
+}
+/* 사진은 판 번호가 달라진 사람 것만 새로 받는다. 나머지는 폰에 남은 것을 쓴다. */
+function pullFaces(people) {
+  const need = people.filter(p => (p.av || 0) !== ((FACE[p.uid] || {}).v || 0)).map(p => p.uid);
+  if (!need.length) return MATES;
+  return cCall({ act: 'face', id: S.club.id, uids: need }).then(r => {
+    need.forEach(u => {
+      const p = people.find(x => x.uid === u);
+      FACE[u] = { v: p.av || 0, d: (r.face || {})[u] || '' };
+    });
+    faceSave();
+    return MATES;
+  }).catch(() => MATES);
+}
+const mateNew = p => MATES && MATES.inbox && MATES.inbox[p.uid] > ((S.seen || {})[p.uid] || 0);
+
+/* 사람 한 명 — 사진·온 날·엄지척·분석·쪽지 */
+function showMate(u) {
+  const p = ((MATES || {}).people || []).find(x => x.uid === u);
+  const b = $('#subBody');
+  b.textContent = '';
+  if (!p) { b.append(el('p', 'lede', '이 사람을 찾지 못했습니다')); show('sub', '사람', true); return; }
+  const me = u === myUid();
+
+  const head = el('div', 'mhead');
+  head.append(faceEl(u, 'big'));
+  const nm = el('div', 'mname');
+  nm.append(el('b', null, esc(p.nick) + (me ? ' <i>(나)</i>' : '')),
+            el('span', 'msub', `연속 ${p.st}일 · 모두 ${p.td}일`),
+            el('span', 'msub', `외운 단어 ${p.memo}개 · 받은 엄지 ${p.th}`));
+  head.append(nm);
+  b.append(head);
+
+  const dots = el('div', 'dots wk');
+  '월화수목금토일'.split('').forEach((lb, i) => {
+    const s = el('span', 'dot' + ((p.days || [])[i] ? ' on' : ''));
+    s.textContent = lb; dots.append(s);
+  });
+  b.append(el('p', 'note', '이번 주'), dots);
+
+  if (!me) {
+    const blocked = (S.block || []).includes(u);
+    const tb = el('button', 'primary big', p.thToday ? '👍 오늘 눌렀습니다' : '👍 엄지척');
+    tb.style.width = '100%'; tb.style.marginTop = '14px';
+    tb.disabled = !!p.thToday;
+    tb.onclick = () => {
+      tb.disabled = true;
+      cCall({ act: 'thumb', id: S.club.id, to: u })
+        .then(r => { p.th = r.th; p.thToday = true; showMate(u); })
+        .catch(e => { tb.textContent = '👍 ' + (e.message || '안 됐습니다'); });
+    };
+    const dm = el('button', 'ghost big', blocked ? '차단한 사람입니다' : '쪽지 보내기');
+    dm.style.width = '100%'; dm.style.marginTop = '8px';
+    dm.disabled = blocked;
+    dm.onclick = () => { dive(() => showMate(u)); openDm(u); };
+    b.append(tb, dm);
+  }
+
+  // 분석 — 본인이 켠 사람만 보인다
+  b.append(el('div', 'phead', '<strong>실력 분석</strong>'));
+  if (p.pct) {
+    const my = myPcts();
+    b.append(bars(SUBJ.map((x, i) => {
+      const k = RANKKEY[i], v = p.pct[k];
+      const has = typeof v === 'number';
+      return [x.k, has ? v : 0, has ? NEED : 0,
+              typeof my[k] === 'number' ? my[k] : undefined,
+              has ? '' : '아직'];        // 문제 수는 서버가 안 보낸다 — 지어내지 않는다
+    })));
+    b.append(el('p', 'note', '세로 눈금은 <b>내 정답률</b>입니다.'));
+  } else {
+    b.append(el('p', 'note', me ? '내 정보에서 <b>분석 공개</b>를 켜면 동아리 사람들에게 보입니다.'
+                                : '이 사람은 분석을 공개하지 않았습니다.'));
+  }
+
+  if (!me) {
+    const blocked = (S.block || []).includes(u);
+    const bl = el('button', 'ghost sm', blocked ? '차단 풀기' : '차단하기');
+    bl.style.marginTop = '16px';
+    bl.onclick = () => {
+      S.block = (S.block || []).filter(x => x !== u);
+      if (!blocked) S.block.push(u);
+      save();
+      mateSync().then(() => showMate(u)).catch(() => showMate(u));
+    };
+    b.append(bl);
+    b.append(el('p', 'note', '차단하면 그 사람의 쪽지가 들어오지 않습니다.'));
+  }
+  show('sub', p.nick, true);
+}
+
+/* ---------- 쪽지방 ----------
+   대화창(AI 방)의 틀을 그대로 쓴다 — 말풍선도 입력칸도 성조 줄도 이미 있다.
+   다른 점은 보내기가 AI 가 아니라 사람에게 간다는 것뿐이다.
+   서버는 최근 60줄만 들고 있고 30일이 지나면 지운다. */
+function openDm(u) {
+  const p = ((MATES || {}).people || []).find(x => x.uid === u);
+  if (!p) return;
+  CH = null;
+  DM = { uid: u, nick: p.nick, n: -1 };
+  $('#chatSetup').hidden = true;
+  $('#tch').hidden = true;
+  $('#chatForm').hidden = false;
+  $('#chatTone').hidden = false; drawChatTone();
+  $('#chatCam').hidden = true; $('#chatMic').hidden = true;   // 사람끼리는 글로만
+  $('#chatLog').textContent = '';
+  $('#chatLog').append(el('p', 'note dmwarn',
+    '쪽지는 <b>암호가 걸려 있지 않습니다</b>. 서버에 30일 남고, 운영자는 마음먹으면 볼 수 있습니다.<br>' +
+    '비밀번호·계좌·주소 같은 것은 여기에 쓰지 마세요.'));
+  show('chat', p.nick, true);
+  dmPull(true);
+  DMT = setInterval(() => dmPull(false), 15000);
+}
+function dmPull(first) {
+  if (!DM || !S.club) return;   // 동아리가 사라지면 조용히 멈춘다
+  const u = DM.uid;
+  cCall({ act: 'dm', id: S.club.id, to: u }).then(j => {
+    if (!DM || DM.uid !== u) return;
+    const msgs = j.msgs || [];
+    if (!first && msgs.length === DM.n) return;               // 바뀐 게 없으면 그냥 둔다
+    DM.n = msgs.length;
+    const warn = $('#chatLog').firstChild;
+    $('#chatLog').textContent = '';
+    if (warn) $('#chatLog').append(warn);
+    if (!msgs.length) $('#chatLog').append(el('p', 'lede', '첫 마디를 걸어 보세요'));
+    msgs.forEach(m => {
+      const mine = m.f === myUid();
+      const bb = bubble(mine ? 'me' : 'ai', m.x);
+      bb.append(el('span', 'dmt', dmWhen(m.t)));
+    });
+    S.seen = S.seen || {}; S.seen[u] = Date.now(); save();
+    drawChatDot();
+  }).catch(() => { });
+}
+const dmWhen = t => {
+  const d = new Date(t), n = new Date();
+  const hm = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  return ymd(d) === ymd(n) ? hm : `${d.getMonth() + 1}/${d.getDate()} ${hm}`;
+};
+function dmSay(text) {
+  if (!DM || !S.club) return;
+  const u = DM.uid;
+  const bb = bubble('me', text);
+  bb.append(el('span', 'dmt', '보내는 중…'));
+  cCall({ act: 'say', id: S.club.id, to: u, x: text })
+    .then(() => { DM.n = -1; dmPull(true); })
+    .catch(e => { bb.className = 'cb err'; bb.textContent = '⚠ ' + (e.message || '못 보냈습니다'); });
+}
+
+/* ---------- 프로필 사진 ----------
+   폰에서 고른 사진을 **160×160 으로 줄여서** 올린다. 원본은 올리지 않는다 —
+   서버 한 칸에 담을 크기(≒10KB)로 맞추고, 남들이 목록을 볼 때 무겁지 않게 하려는 것이다. */
+function pickFace(after) {
+  const f = el('input'); f.type = 'file'; f.accept = 'image/*';
+  f.onchange = () => {
+    const file = f.files && f.files[0];
+    if (!file) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      const im = new Image();
+      im.onload = () => {
+        const c = document.createElement('canvas');
+        c.width = c.height = 160;
+        const s = Math.min(im.width, im.height);
+        c.getContext('2d').drawImage(im, (im.width - s) / 2, (im.height - s) / 2, s, s, 0, 0, 160, 160);
+        let d = c.toDataURL('image/jpeg', .72);
+        if (d.length > 15000) d = c.toDataURL('image/jpeg', .55);
+        if (d.length > 15000) d = c.toDataURL('image/jpeg', .4);
+        saveFace(d, after);
+      };
+      im.onerror = () => alert('사진을 열지 못했습니다');
+      im.src = rd.result;
+    };
+    rd.readAsDataURL(file);
+  };
+  f.click();
+}
+function saveFace(d, after) {
+  cCall({ act: 'setface', img: d }).then(() => {
+    S.avv = (S.avv || 0) + 1; save();
+    FACE[myUid()] = { v: S.avv, d }; faceSave();
+    if (S.club) mateSync().catch(() => { });
+    after && after();
+  }).catch(e => alert('사진을 올리지 못했습니다 — ' + (e.message || '')));
 }
 
 /* ---------- 폰 알림 ----------

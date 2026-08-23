@@ -672,7 +672,22 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
   stroke-linecap:round; stroke-linejoin:round}
 .chatin .icon.pick{border-color:var(--ok); color:var(--fg)}
 .chatin .icon.rec{border-color:#e05561; color:#e05561}
-.chatkb{margin-top:8px}
+/* 성조 줄 — 입력칸 바로 위에 붙는 얇은 한 줄. 폰 자판을 막지 않는다. */
+.tonebar{
+  position:sticky; bottom:0; display:flex; gap:3px; padding:6px 0 0;
+  background:var(--bg);
+}
+/* 열세 글쇠가 한 줄에 다 들어가야 한다 — 밀어서 찾게 하면 ơ·ư·đ 를 아무도 못 쓴다 */
+.tk{
+  flex:1 1 0; min-width:0; padding:8px 0; font-size:16px; line-height:1.1;
+  background:var(--card); color:var(--fg); border:1px solid var(--line);
+  border-radius:8px; text-align:center;
+}
+.tk.tonek .tarr{width:15px; height:15px; vertical-align:-3px}
+.tk.tonek.ngang{color:var(--dim)}
+.tk.tonek.huyền,.tk.tonek.nặng{color:var(--accent)}
+.tk.tonek.sắc,.tk.tonek.ngã{color:var(--warn)}
+.tk.tonek.hỏi{color:var(--bad)}
 
 /* 헤더 프로필 아이콘 */
 #goMe{padding:7px; line-height:0}
@@ -948,3 +963,25 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .coverhow{margin-top:14px; border:1px dashed var(--line); border-radius:12px; padding:11px 13px;
   font-size:13px; line-height:1.7; color:var(--dim); text-align:left}
 .coverhow b{color:var(--fg)}
+
+/* ---------- 동아리 사람들 ----------
+   사진을 안 올린 사람은 실루엣. 색 하나로만 구별하지 않게 테두리도 함께 준다. */
+.mav{flex:0 0 auto; width:44px; height:44px; border-radius:50%; overflow:hidden;
+  background:var(--card); border:1px solid var(--line); display:inline-flex;
+  align-items:center; justify-content:center; vertical-align:middle}
+.mav img{width:100%; height:100%; object-fit:cover}
+.mav .silh{width:100%; height:100%; fill:var(--line); display:block}
+.mav.row{width:54px; height:54px}
+.mav.big{width:88px; height:88px}
+.mhead{display:flex; align-items:center; gap:14px; margin:6px 0 12px}
+.mname{display:flex; flex-direction:column; gap:3px; min-width:0}
+.mname b{font-size:20px}
+.mname b i{font-style:normal; font-size:12px; color:var(--dim)}
+.mname .msub{font-size:13px; color:var(--dim)}
+.dots.wk{margin:4px 0 6px}
+.stats.mine{margin:10px 0 4px}
+.newdot{flex:0 0 auto; width:9px; height:9px; border-radius:50%; background:#e0384a}
+.cmem{width:100%; text-align:left; color:var(--fg)}
+.cmem .mav{width:30px; height:30px}
+.cb .dmt{display:block; margin-top:3px; font-size:11px; opacity:.65}
+.dmwarn{border:1px solid var(--line); border-radius:10px; padding:9px 12px; margin-bottom:4px}

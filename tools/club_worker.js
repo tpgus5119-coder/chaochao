@@ -20,7 +20,13 @@
        재는 것: 몇 명 · 요일별 접속 · **어디까지 갔다 그만두는가(깔때기)** ·
        **얼마나 남아 있는가(코호트)** · **진짜 기억률** · **많은 사람이 틀리는 단어**.
        뒤의 넷이 앱을 어디서 고쳐야 하는지 알려주는 숫자다.
-   개인정보는 별명과 진도 숫자뿐이다. */
+   v7: **사람끼리** — 같은 동아리 안에서만.
+       · 사람 목록(uid 로 구분) · 엄지척 하루 한 번 · 쪽지 · 프로필 사진 · 분석 공개 여부
+       · 차단하면 그 사람 쪽지는 아예 안 들어온다
+       숨기지 않을 것: 쪽지 글과 사진은 **이 서버에 그대로 저장된다**(30일·사진은 바꿀 때까지).
+       암호화하지 않으므로 운영자는 마음먹으면 볼 수 있다. 앱 화면에도 그렇게 적어 둔다.
+       막는 것은 Origin 허용목록 하나뿐이다 — 비밀 이야기를 할 자리가 아니다.
+   개인정보는 별명·진도 숫자·본인이 올린 사진·본인이 쓴 쪽지뿐이다. 실명은 받지 않는다. */
 const CORS = o => ({
   'Access-Control-Allow-Origin': o, 'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type', 'Content-Type': 'application/json',
@@ -57,6 +63,33 @@ async function webpush(endpoint, privB64) {
     method: 'POST',
     headers: { 'TTL': '86400', 'Authorization': `vapid t=${jwt}, k=${pub}` },
   });
+}
+
+const today = () => new Date().toISOString().slice(0, 10);
+
+/* 동아리 사람 목록 — 남에게 나가는 것만 골라 담는다.
+   분석(정답률·점수)은 **본인이 공개로 켠 사람 것만** 나간다. 사진은 판 번호만 나가고
+   그림 자체는 따로 받아 간다(목록이 무거워지지 않게). */
+function dirOf(cu, c, me) {
+  const people = Object.entries(cu)
+    .filter(([u, v]) => v && v.n)
+    .map(([u, v]) => {
+      const o = { uid: u, nick: v.n, days: v.wk === week() ? (v.w || []) : [],
+                  memo: v.m || 0, st: v.st || 0, td: v.td || 0,
+                  th: v.th || 0, av: v.av || 0, at: v.at || '',
+                  thToday: !!(v.tb && v.tb[me] === today()) };
+      if (v.op) { o.score = v.s || 0; o.pct = v.p || {}; }
+      return o;
+    })
+    .sort((x, y) => (y.days || []).reduce((a, n) => a + n, 0) - (x.days || []).reduce((a, n) => a + n, 0)
+                    || y.memo - x.memo);
+  return { name: c.name, owner: c.owner, wait: c.owner === cu[me]?.n ? c.wait : undefined,
+           total: people.length, people, members: people.map(p => ({ nick: p.nick, days: p.days, memo: p.memo })),
+           block: (cu[me] && cu[me].bl) || [] };
+}
+async function inboxOf(KV, uid) {
+  if (!uid) return {};
+  return JSON.parse((await KV.get(`mb:${uid}`)) || '{}');
 }
 
 export default {
@@ -233,6 +266,23 @@ export default {
       });
     }
 
+    /* ── 프로필 사진 ──────────────────────────────────────
+       작게 줄여 온 것만 받는다(글자 16000개 ≒ 12KB). 사람마다 키 하나. */
+    if (act === 'setface') {
+      const img = cut(b.img, 16000), uid = cut(b.uid, 16);
+      if (!uid) return send({ error: 'no uid' });
+      if (!img) { await KV.delete(`av:${uid}`); return send({ ok: true }); }
+      if (!img.startsWith('data:image/')) return send({ error: '사진이 아닙니다' });
+      await KV.put(`av:${uid}`, img);
+      return send({ ok: true });
+    }
+    if (act === 'face') {                                    // 남의 사진 받아 오기 (한 번에 여럿)
+      const want = (Array.isArray(b.uids) ? b.uids : []).slice(0, 30).map(x => cut(x, 16));
+      const out = {};
+      for (const u of want) out[u] = (await KV.get(`av:${u}`)) || '';
+      return send({ face: out });
+    }
+
     const id = cut(b.id, 12), c = clubs[id];
     if (!c) return send({ error: 'gone' });                  // 사라진 동아리
     c.wait = c.wait || [];
@@ -262,30 +312,85 @@ export default {
       return send({ ok: true });
     }
 
-    if (act === 'report') {                                  // 내 현황 올리고 동아리 현황 받기
+    /* ── 동아리 사람들 ────────────────────────────────────
+       예전에는 별명으로 줄을 세웠는데, 별명은 바뀌고 겹친다.
+       이제 사람은 uid(기기마다 다른 표)로 구분하고 별명은 얼굴 이름일 뿐이다.
+       한 동아리의 사람들을 **키 하나**에 모아 둔다 — KV 는 하루 쓰기 1000번뿐이라
+       사람마다 키를 따로 두면 금방 바닥난다. */
+    const CUK = `cu:${id}`, CTTL = { expirationTtl: 60 * 60 * 24 * 90 };
+    const readCu = async () => JSON.parse((await KV.get(CUK)) || '{}');
+    const uid = cut(b.uid, 16);
+
+    if (act === 'report') {                                  // 내 현황 올리고 사람 목록 받기
       if (!c.members.includes(nick)) return send({ error: 'gone' });
-      const key = `w:${week()}:${id}`;
-      const board = JSON.parse((await KV.get(key)) || '{}');
-      const mine = { days: (Array.isArray(b.days) ? b.days : []).slice(0, 7).map(x => x ? 1 : 0),
-                     memo: num(b.memo, 99999), score: num(b.score, 99999) };
-      const old = board[nick];
-      if (!old || old.memo !== mine.memo || old.score !== mine.score
-          || String(old.days) !== String(mine.days)) {       // 바뀐 게 없으면 저장하지 않는다
-        board[nick] = mine;
-        await KV.put(key, JSON.stringify(board), { expirationTtl: 60 * 60 * 24 * 60 });
-      }
-      for (const n of Object.keys(board)) if (!c.members.includes(n)) delete board[n];
-      // 동아리는 출석판만 맡는다 — 순위는 앱 전체(act:'rank')로 뺐다.
-      // 많이 나온 사람 순. 같으면 외운 단어가 많은 쪽.
-      const list = Object.entries(board).sort((x, y) =>
-        (y[1].days || []).reduce((a, v) => a + v, 0) - (x[1].days || []).reduce((a, v) => a + v, 0)
-        || y[1].memo - x[1].memo);
-      return send({
-        name: c.name, owner: c.owner, wait: c.owner === nick ? c.wait : undefined,
-        total: list.length,
-        members: list.map(([n, v]) => ({ nick: n, days: v.days, memo: v.memo })),
-      });
+      if (!uid) return send({ error: 'no uid' });
+      const cu = await readCu();
+      const was = cu[uid] || {};
+      const mine = {
+        n: nick,
+        w: (Array.isArray(b.days) ? b.days : []).slice(0, 7).map(x => x ? 1 : 0),
+        wk: week(),                                          // 지난주 도장은 저절로 지워진다
+        m: num(b.memo, 99999), s: num(b.score, 999999),
+        st: num(b.st, 9999), td: num(b.td, 99999),           // 연속으로 온 날 · 온 날 모두
+        op: b.op ? 1 : 0,                                    // 분석을 남에게 보일지
+        av: num(b.av, 9999),                                 // 사진 판 번호 (남이 다시 받을지 판단)
+        th: was.th || 0, tb: was.tb || {},                   // 받은 엄지 · 누가 언제 눌렀나
+        bl: (Array.isArray(b.bl) ? b.bl : (was.bl || [])).slice(0, 50).map(x => cut(x, 16)),
+        at: today(),
+      };
+      const p = b.pct && typeof b.pct === 'object' ? b.pct : {};
+      mine.p = {};
+      for (const k of FIELDS) if (typeof p[k] === 'number') mine.p[k] = num(p[k], 100);
+      cu[uid] = mine;
+      for (const k of Object.keys(cu)) if (!c.members.includes(cu[k].n)) delete cu[k];
+      // 바뀐 게 없으면 저장하지 않는다 (하루 쓰기 1000번을 아낀다)
+      if (JSON.stringify(was) !== JSON.stringify(mine)) await KV.put(CUK, JSON.stringify(cu), CTTL);
+      return send(Object.assign(dirOf(cu, c, uid), { inbox: await inboxOf(KV, uid) }));
     }
+
+    if (act === 'dir') {                                     // 목록만 다시 받기 (안 쓰고 읽기만)
+      const cu = await readCu();
+      return send(Object.assign(dirOf(cu, c, uid), { inbox: await inboxOf(KV, uid) }));
+    }
+
+    if (act === 'thumb') {                                   // 엄지척 — 한 사람에게 하루 한 번
+      const to = cut(b.to, 16);
+      const cu = await readCu();
+      if (!cu[uid] || !cu[to] || to === uid) return send({ error: '없는 사람입니다' });
+      cu[to].tb = cu[to].tb || {};
+      if (cu[to].tb[uid] === today()) return send({ error: '오늘은 이미 눌렀습니다', th: cu[to].th || 0 });
+      cu[to].tb[uid] = today();
+      cu[to].th = (cu[to].th || 0) + 1;
+      await KV.put(CUK, JSON.stringify(cu), CTTL);
+      return send({ ok: true, th: cu[to].th });
+    }
+
+    /* ── 쪽지 ────────────────────────────────────────────
+       같은 동아리 사람끼리만. 한 짝의 대화가 키 하나이고 최근 60줄만 남는다.
+       받는 쪽에게는 '누구한테 뭔가 왔다'는 표시만 따로 적어 둔다(mb:) —
+       그래야 방을 안 열어 봐도 빨간 표가 뜬다. */
+    const pairKey = (x, y) => 'dm:' + [x, y].sort().join('~');
+    if (act === 'dm') {
+      const to = cut(b.to, 16);
+      const list = JSON.parse((await KV.get(pairKey(uid, to))) || '[]');
+      return send({ msgs: list });
+    }
+    if (act === 'say') {
+      const to = cut(b.to, 16), x = cut(b.x, 300).trim();
+      if (!x) return send({ error: '빈 쪽지' });
+      const cu = await readCu();
+      if (!cu[uid] || !cu[to]) return send({ error: '같은 동아리 사람에게만 보낼 수 있습니다' });
+      if ((cu[to].bl || []).includes(uid)) return send({ error: '이 사람에게는 보낼 수 없습니다' });
+      const k = pairKey(uid, to);
+      const list = JSON.parse((await KV.get(k)) || '[]');
+      list.push({ f: uid, t: Date.now(), x });
+      await KV.put(k, JSON.stringify(list.slice(-60)), { expirationTtl: 60 * 60 * 24 * 30 });
+      const mb = JSON.parse((await KV.get(`mb:${to}`)) || '{}');
+      mb[uid] = Date.now();
+      await KV.put(`mb:${to}`, JSON.stringify(mb), { expirationTtl: 60 * 60 * 24 * 30 });
+      return send({ ok: true, msgs: list.slice(-60) });
+    }
+
     return send({ error: 'bad act' });
   },
 };
