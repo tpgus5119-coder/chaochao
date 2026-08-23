@@ -3942,25 +3942,39 @@ const KBROWS = [
 ];
 let KBUP = 0;                                        // 대문자 한 번
 
+/* S.chatvi : 1 = 우리 베트남 자판, 0 = 폰 자판(한글). 앱을 껐다 켜도 기억한다. */
 function kbShow(on) {
   const bar = $('#chatTone');
   if (!bar) return;
   const inp = $('#chatText');
-  bar.classList.toggle('up', !!on);
-  if (on) { drawChatTone(); inp.setAttribute('inputmode', 'none'); }
+  drawChatTone();
+  const vi = S.chatvi !== 0;
+  bar.classList.toggle('up', !!on || !vi);          // 폰 자판일 때는 '돌아가기' 한 줄만 남긴다
+  bar.classList.toggle('phone', !vi);
+  if (vi) inp.setAttribute('inputmode', 'none');    // 폰 자판이 못 올라오게
+  else inp.removeAttribute('inputmode');
+  inp.setAttribute('lang', vi ? 'vi' : 'ko');
+  inp.placeholder = vi ? 'Tiếng Việt…' : '한국어로 써도 됩니다…';
 }
-/* 폰 자판을 부른다 — 우리 자판은 내리고, 입력칸을 평범한 칸으로 되돌린 뒤 다시 누른다 */
+/* 폰 자판으로 넘긴다 — 입력칸을 평범한 칸으로 되돌리고 다시 눌러 준다 */
 function kbPhone() {
   const inp = $('#chatText');
+  S.chatvi = 0; save();
   kbShow(false);
-  inp.removeAttribute('inputmode');
-  inp.setAttribute('lang', 'ko');
-  inp.blur(); inp.focus({ preventScroll: true });
+  inp.blur(); setTimeout(() => inp.focus({ preventScroll: true }), 0);
   if (!S.langtip) {
     S.langtip = 1; save();
     popup('<b>폰 자판이 올라옵니다.</b><br>한글이 아니면 자판의 <b>🌐 지구본</b> 키로 바꾸세요 — ' +
-          '자판의 언어는 폰이 정합니다.<br>다시 베트남어로 치려면 <b>입력칸</b>을 누르세요.');
+          '자판의 언어는 폰이 정합니다.<br>베트남어로 돌아오려면 아래 <b>ă</b> 단추를 누르세요.');
   }
+}
+/* 다시 우리 자판으로 */
+function kbViet() {
+  S.chatvi = 1; save();
+  const inp = $('#chatText');
+  inp.blur();
+  kbShow(true);
+  inp.focus({ preventScroll: true });
 }
 
 function drawChatTone() {
@@ -4031,6 +4045,10 @@ function drawChatTone() {
   });
 
   // ③ 아래 줄 — 한글 전환 · 쉼표 · 띄어쓰기 · 마침표 · 내리기
+  // 폰 자판을 쓰는 동안 보이는 줄 — 이것만 남는다
+  const rb = row('back');
+  rb.append(key('ă  베트남어 자판으로', kbViet, 'toviet'));
+
   const r3 = row('r3');
   r3.append(key('한', kbPhone, 'wide lang'));
   r3.append(key(',', () => put(','), 'punc'));
@@ -4044,6 +4062,7 @@ $('#chatLog').addEventListener('pointerdown', e => {
 });
 /* 가로로 긴 입력칸을 누르면 **우리 자판**이 올라온다. 폰 자판은 [한] 을 눌러야 나온다. */
 $('#chatText').addEventListener('pointerdown', () => {
+  if (S.chatvi === 0) return;                         // 폰 자판을 쓰는 중이면 그대로 둔다
   $('#chatText').setAttribute('inputmode', 'none');   // 눌리기 전에 막아야 폰 자판이 안 뜬다
   kbShow(true);
 });

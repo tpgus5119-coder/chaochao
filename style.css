@@ -694,6 +694,10 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .tk.punc{flex:.7 1 0}
 .tk.lang{background:var(--accent); color:var(--accent-fg); border-color:transparent; font-weight:700}
 .tk.del,.tk.down{color:var(--dim)}
+.kbrow.back{display:none}
+.tonebar.phone .kbrow{display:none}
+.tonebar.phone .kbrow.back{display:flex}
+.tk.toviet{flex:1 1 auto; font-size:15px; color:var(--accent); font-weight:600}
 .tonebar.caps .tk.let{text-transform:uppercase}
 .tonebar.caps .tk.shift{background:var(--fg); color:var(--bg)}
 .tk.tonek .tarr{width:15px; height:15px; vertical-align:-3px}
