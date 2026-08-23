@@ -4112,10 +4112,48 @@ function telex(word, ch) {
     if (cur === TLXTONE[c]) return bare + ch;            // 한 번 더 → 되돌리고 글자를 남긴다
     return withMark(bare, TLXTONE[c], tonePos(bare));
   }
-  // ② 모자 열쇠 — 마지막 글자와 짝을 이룰 때만
+  // ② 모자 열쇠
   const last = word[word.length - 1], lastLow = last.toLowerCase();
-  const made = TLXHAT[lastLow + c];
+  // w 는 아래 '모음 덩어리' 규칙이 맡는다 — 여기서 가로채면 muaw 가 muă 가 된다
+  const made = c === 'w' ? null : TLXHAT[lastLow + c];
   if (made) return word.slice(0, -1) + (up || last !== lastLow ? made.toUpperCase() : made);
+  /* w 는 바로 앞 글자가 아니라 **낱말의 모음 덩어리**를 찾아간다 — 진짜 텔렉스가 그렇다.
+     comw → cơm, muaw → mưa, duongw → dương. 앞 글자만 보면 comw·muă·duơng 이 되어 버린다.
+     덩어리 안에서 uo 가 있으면 둘 다, 없으면 u > o > a 차례로 하나만 바꾼다. */
+  if (c === 'w') {
+    const V = 'aăâeêioôơuưy';
+    const bare = stripTone(word).toLowerCase();
+    let e = -1;
+    for (let i = word.length - 1; i >= 0; i--) if (V.includes(bare[i])) { e = i; break; }
+    if (e >= 0) {
+      let b0 = e; while (b0 > 0 && V.includes(bare[b0 - 1])) b0--;
+      const setAt = (str, i, ch2) => {
+        const t = curTone(str[i]);
+        const put2 = t ? withMark(ch2, t, 0) : ch2;
+        const upC = str[i] === str[i].toUpperCase() && str[i] !== stripTone(str[i]).toLowerCase();
+        return str.slice(0, i) + (upC ? put2.toUpperCase() : put2) + str.slice(i + 1);
+      };
+      for (let i = b0; i < e; i++)                       // uo → ươ (둘 다)
+        if (bare[i] === 'u' && bare[i + 1] === 'o')
+          return setAt(setAt(word, i, 'ư'), i + 1, 'ơ');
+      for (const want of ['u', 'o', 'a'])                // 없으면 u > o > a 차례로 하나만
+        for (let i = b0; i <= e; i++)
+          if (bare[i] === want) return setAt(word, i, TLXHAT[want + 'w']);
+    }
+  }
+  /* aa·ee·oo·dd 도 붙어 있지 않아도 된다 — banw 가 아니라 bana 로 쳐도 bân 이 된다.
+     낱말 안에서 같은 밑글자를 뒤에서부터 찾아 모자를 씌운다. 진짜 텔렉스가 그렇다. */
+  if (TLXHAT[c + c]) {
+    const bare2 = stripTone(word).toLowerCase();
+    for (let i = word.length - 1; i >= 0; i--) {
+      if (bare2[i] !== c) continue;
+      if (TLXBASE[stripTone(word[i]).toLowerCase()]) break;   // 이미 모자가 있으면 되돌리기 쪽으로
+      const t = curTone(word[i]);
+      const ch2 = t ? withMark(TLXHAT[c + c], t, 0) : TLXHAT[c + c];
+      const upC = word[i] === word[i].toUpperCase() && word[i] !== bare2[i];
+      return word.slice(0, i) + (upC ? ch2.toUpperCase() : ch2) + word.slice(i + 1);
+    }
+  }
   const code = TLXBASE[stripTone(lastLow)];              // 이미 모자가 있으면 되돌린다
   if (code && code[1] === c) {
     const tone = curTone(word);
