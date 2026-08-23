@@ -1371,6 +1371,7 @@ const MENUS = {
             ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')],
             ['기사', showNewsLearn]] },
   rev:   { name: '복습', items: () => [
+            ['방금 배운 것', () => freshMenu('word')],
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
   basic: { name: '기본기', items: () => [
             ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
@@ -2124,6 +2125,61 @@ function noItems(o) {
 }
 
 /* 복습 고르기 — 단어냐 문장이냐, 그리고 네 가지 힘 중 무엇이냐 */
+
+/* ── 방금 배운 것 ────────────────────────────────────────────────
+   보통 복습은 **때가 되어야** 나온다(1·3·7·14·30·60일). 그래서 오늘 막 배운 것을
+   지금 한 번 더 보고 싶어도 볼 수가 없었다. 이 문은 그 때를 무시하고
+   **가장 마지막에 끝낸 세트**를 바로 꺼낸다. 성적은 그대로 쌓인다.
+   하위 구성은 기존 복습과 똑같이 둔다 — 화면마다 다르면 헷갈린다. */
+function freshDay() {
+  const done = ALL.filter(d => typeof d.day === 'number' && S.done[d.day]);
+  return done.length ? done[done.length - 1] : null;
+}
+function freshItems(kind) {
+  const d = freshDay();
+  if (!d) return [];
+  const ws = (d.words || []).slice();
+  // 그 세트의 문장 = 그날 대화 줄
+  const ss = (d.dialog?.lines || []).map(l =>
+    ({ vi: l.vi, ko: l.ko, kr_read: l.kr_read, tones: l.tones, sent: true }));
+  return kind === 'sent' ? ss : kind === 'word' ? ws : [...ws, ...ss];
+}
+function freshMenu(kind) {
+  const b = $('#quizBody');
+  b.textContent = '';
+  $('#quizFill').style.width = '0%';
+  const d = freshDay();
+  if (!d) {
+    b.append(el('p', 'lede', '아직 끝낸 세트가 없습니다'));
+    b.append(el('p', 'note', '하루 5분에서 한 세트를 끝내면 여기서 바로 다시 볼 수 있습니다.'));
+    const h = el('button', 'primary big', '홈으로'); h.style.width = '100%'; h.onclick = renderHome;
+    b.append(h);
+    show('quiz', '방금 배운 것', true); return;
+  }
+  const src = freshItems(kind);
+  b.append(el('p', 'lede', esc(label(d)) + ' · ' + esc(d.theme) + ' — ' +
+    (kind === 'sent' ? '문장' : '단어') + ' ' + src.length + '개'));
+  b.append(el('p', 'note', '복습 때가 아니어도 <b>언제든</b> 다시 볼 수 있습니다.'));
+  const back = () => freshMenu(kind);
+  const go = (opt, list) => { dive(back); startQuiz(list || src, null, null, false, opt); };
+  const all = el('button', 'bigmenu', '랜덤');
+  all.onclick = () => go({ kind });
+  b.append(all);
+  SKILLS.forEach(sk => {
+    const btn = el('button', 'bigmenu', esc(sk.name));
+    btn.onclick = () => go({ kind, skill: sk.k });
+    b.append(btn);
+  });
+  const quick = el('button', 'bigmenu', '3분');
+  quick.onclick = () => { dive(back); flashRun(src.slice(0, 20), '방금 배운 것 3분'); };
+  b.append(quick);
+  const other = el('button', 'ghost', kind === 'sent' ? '단어로 보기' : '문장으로 보기');
+  other.style.width = '100%'; other.style.marginTop = '10px';
+  other.onclick = () => freshMenu(kind === 'sent' ? 'word' : 'sent');
+  b.append(other);
+  show('quiz', '방금 배운 것', true);
+}
+
 function reviewMenu(kind) {
   const b = $('#quizBody');
   b.textContent = '';
