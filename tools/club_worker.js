@@ -122,7 +122,28 @@ export default {
       if (nicks[low] && nicks[low] !== uid) return send({ error: '이미 쓰는 사람이 있습니다' });
       for (const k of Object.keys(nicks)) if (nicks[k] === uid && k !== low) delete nicks[k];
       if (nicks[low] !== uid) { nicks[low] = uid; await KV.put(NKEY, JSON.stringify(nicks)); }
+      // 별명을 바꿨는데 동아리 명단은 옛 이름 그대로면, 다음 접속에 '너는 회원이 아니다'가 되어
+      // 앱이 동아리를 지워 버린다. 실제로 그 사고가 났다 — 이름을 바꿀 때 명단도 같이 고친다.
+      let moved = false;
+      for (const c of Object.values(clubs)) {
+        const was = (c.uids || {})[uid];
+        if (!was || was === nick) continue;
+        c.uids[uid] = nick;
+        c.members = c.members.map(x => (x === was ? nick : x));
+        c.wait = (c.wait || []).map(x => (x === was ? nick : x));
+        if (c.owner === was) c.owner = nick;
+        moved = true;
+      }
+      if (moved) await save();
       return send({ ok: true });
+    }
+
+    if (act === 'wipe') {                                    // 관리자만 — 동아리를 전부 비운다
+      if (!env.PUSH_KEY || cut(b.key, 64) !== env.PUSH_KEY) return send({ error: 'no' });
+      const ids = Object.keys(clubs);
+      for (const id of ids) await KV.delete(`cu:${id}`);
+      await KV.put('clubs', '{}');
+      return send({ ok: true, wiped: ids.length });
     }
 
     if (act === 'clubs')                                     // 목록 (사람 많은 순)
@@ -137,7 +158,8 @@ export default {
       if (!name) return send({ error: '이름을 적어 주세요' });
       if (Object.values(clubs).some(c => c.name === name)) return send({ error: '같은 이름이 이미 있습니다' });
       const id = Math.random().toString(36).slice(2, 8);
-      clubs[id] = { name, owner: nick, approve: !!b.approve, members: [nick], wait: [] };
+      clubs[id] = { name, owner: nick, approve: !!b.approve, members: [nick], wait: [],
+                    uids: cut(b.uid, 16) ? { [cut(b.uid, 16)]: nick } : {} };
       await save();
       return send({ id, name });
     }
@@ -300,8 +322,20 @@ export default {
     }
 
     const id = cut(b.id, 12), c = clubs[id];
-    if (!c) return send({ error: 'gone' });                  // 사라진 동아리
+    if (!c) return send({ error: 'gone' });                  // 정말로 사라진 동아리 (이때만 'gone')
     c.wait = c.wait || [];
+    c.uids = c.uids || {};
+    /* 사람을 붙드는 것은 **기기 표(uid)** 다. 별명은 얼굴 이름일 뿐이라 바뀐다.
+       명단에 옛 이름이 남아 있으면 여기서 조용히 고쳐 준다. */
+    const myUid = cut(b.uid, 16);
+    if (myUid && c.uids[myUid] && c.uids[myUid] !== nick && nick) {
+      const was = c.uids[myUid];
+      c.uids[myUid] = nick;
+      c.members = c.members.map(x => (x === was ? nick : x));
+      c.wait = c.wait.map(x => (x === was ? nick : x));
+      if (c.owner === was) c.owner = nick;
+      await save();
+    }
 
     if (act === 'join') {
       if (c.members.includes(nick)) return send({ ok: true, state: 'member' });
@@ -310,7 +344,8 @@ export default {
         if (oid !== id && oc.members.includes(nick))
           return send({ error: `이미 '${oc.name}' 에 들어가 있습니다. 먼저 탈퇴해 주세요.` });
       if (c.members.length >= 100) return send({ error: '정원이 찼습니다 (100명)' });
-      if (c.approve) { if (!c.wait.includes(nick)) { c.wait.push(nick); await save(); } }
+      if (myUid) c.uids[myUid] = nick;
+      if (c.approve) { if (!c.wait.includes(nick)) { c.wait.push(nick); } await save(); }
       else { c.members.push(nick); await save(); }
       return send({ ok: true, state: c.approve ? 'wait' : 'member' });
     }
@@ -324,6 +359,7 @@ export default {
     }
 
     if (act === 'leave') {
+      if (myUid) delete c.uids[myUid];
       c.members = c.members.filter(x => x !== nick);
       c.wait = c.wait.filter(x => x !== nick);
       if (!c.members.length) delete clubs[id];               // 아무도 없으면 동아리를 지운다
@@ -342,7 +378,11 @@ export default {
     const uid = cut(b.uid, 16);
 
     if (act === 'report') {                                  // 내 현황 올리고 사람 목록 받기
-      if (!c.members.includes(nick)) return send({ error: 'gone' });
+      // 기기 표가 명단에 있으면 회원이다. 이름이 어긋난 것만으로 내보내지 않는다.
+      if (!c.members.includes(nick)) {
+        if (myUid && c.uids[myUid]) { c.members.push(nick); c.uids[myUid] = nick; await save(); }
+        else return send({ error: 'notmember' });            // 'gone' 이 아니다 — 동아리는 살아 있다
+      }
       if (!uid) return send({ error: 'no uid' });
       const cu = await readCu();
       const was = cu[uid] || {};
