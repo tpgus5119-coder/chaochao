@@ -35,21 +35,20 @@ export default {
 
     const keys = env.GEMINI_KEY.split(',').map(k => k.trim()).filter(Boolean);
     const start = Math.floor(Math.random() * keys.length);   // 첫 키를 무작위로 골라 분산
+    /* 한 바퀴만 돈다. 예전에는 두 바퀴를 돌았는데, 앱도 세 번 재시도하고 있어서
+       **한 번 누를 때 구글로 최대 18번**이 나갔다. 무료 몫이 분당 10~20번이라
+       한 사람이 한 번 누르는 것만으로 바닥나곤 했다. 이제 최대 (모델 3 × 키 수) 다. */
     let r = null, first = null;
-    for (let round = 0; round < 2; round++) {
-      for (const model of MODELS) {
-        for (let k = 0; k < keys.length; k++) {
-          r = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=`
-              + keys[(start + k) % keys.length],
-            { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
-          if (!r.ok && !first) first = { status: r.status, text: await r.clone().text() };
-          if (!BUSY.includes(r.status)) break;   // 이 키·모델이 막혔으면 다음으로
-        }
-        if (!BUSY.includes(r.status)) break;
+    for (const model of MODELS) {
+      for (let k = 0; k < keys.length; k++) {
+        r = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=`
+            + keys[(start + k) % keys.length],
+          { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+        if (!r.ok && !first) first = { status: r.status, text: await r.clone().text() };
+        if (!BUSY.includes(r.status)) break;     // 이 키·모델이 막혔으면 다음으로
       }
-      if (!BUSY.includes(r.status) || round === 1) break;
-      await new Promise(res => setTimeout(res, 5000));       // 다 붐비면 5초 쉬고 한 바퀴 더
+      if (!BUSY.includes(r.status)) break;
     }
     // 끝내 실패했으면 **맨 처음** 에러를 돌려준다.
     // 마지막 예비 모델이 뱉은 엉뚱한 말보다 첫 모델의 답이 원인에 가깝다.

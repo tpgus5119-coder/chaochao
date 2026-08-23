@@ -275,18 +275,23 @@ async function toggleRec(text, btn, box) {
 const RECSEC = t => (String(t || '').trim().split(/\s+/).length > 1 ? 7 : 3.5);   // 문장 7초 · 낱말 3.5초
 
 function liveRec(box, stream, secs, onStop) {
+  /* 녹음은 **화면 전체**로 알린다. 작은 상자 안에서 하니 사람들이
+     지금 녹음 중인지, 어디를 눌러야 끝나는지 몰라 헤맸다.
+     한가운데 빨간 네모 하나 — 그것만 누르면 끝나고 원래 화면으로 돌아온다. */
   box.textContent = '';
-  const wrap = el('div', 'livebox');
-  const head = el('div', 'livehead');
-  const dot = el('span', 'livedot');
-  const left = el('b', null, secs.toFixed(1) + '초');
-  head.append(dot, el('span', null, '녹음 중'), left);
+  const wrap = el('div', 'recfull');
+  const left = el('b', 'recleft', secs.toFixed(1));
+  const head = el('div', 'rechead');
+  head.append(el('span', 'livedot'), el('span', null, '녹음 중'), left, el('span', 'recsec', '초'));
+  const stop = el('button', 'recstop', '');
+  stop.setAttribute('aria-label', '녹음 끝내기');
+  stop.append(el('i', 'recsq'));
+  stop.onclick = () => onStop && onStop();
   const cv = el('canvas', 'livecv'); cv.width = 640; cv.height = 150;
   const tip = el('div', 'livetip', '<b>폰을 입 가까이</b> 대고 또박또박 말하세요');
-  const stop = el('button', 'ghost sm', '■ 끝내기');
-  stop.onclick = () => onStop && onStop();
-  wrap.append(head, cv, tip, stop);
-  box.append(wrap);
+  const hint = el('div', 'rechint', '다 말했으면 <b>가운데 빨간 네모</b>를 누르세요');
+  wrap.append(head, stop, cv, tip, hint);
+  document.body.append(wrap);
 
   const ctx = getCtx();
   const src = ctx.createMediaStreamSource(stream);
@@ -335,7 +340,8 @@ function liveRec(box, stream, secs, onStop) {
     draw();
   };
   tick();
-  return () => { dead = true; cancelAnimationFrame(raf); try { src.disconnect(); } catch (e) { } };
+  return () => { dead = true; cancelAnimationFrame(raf); wrap.remove();
+                 try { src.disconnect(); } catch (e) { } };
 }
 
 function drawCompare(text, box) {
@@ -3728,6 +3734,9 @@ async function gCall(payload, onWait) {
     if (last === 400 || last === 403) throw new Error(
       PROXY ? '서버 연결에 문제가 있습니다' : '키가 잘못됐거나 만료됐습니다');
     if (perDay) break;                           // 하루치가 끝났으면 더 두드려 봐야 소용없다
+    // 429(몰림)에는 **다시 두드리지 않는다.** 서버가 이미 모델을 돌아가며 다 해 봤다.
+    // 여기서 또 세 번 두드리면 한 번 누를 때 구글로 열여덟 번이 나가 몫이 순식간에 사라진다.
+    if (last === 429) break;
     if (i < 2) { onWait && onWait(i); await new Promise(res => setTimeout(res, 4000 + i * 4000)); }
   }
   if (perDay) { AIOUT = Date.now(); throw new Error(OUTMSG); }
