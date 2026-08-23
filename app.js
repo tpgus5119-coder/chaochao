@@ -398,31 +398,52 @@ async function recToWav(blobUrl) {
    성조는 위의 높낮이 곡선이 담당한다 — 둘이 합쳐야 온전한 피드백이 된다. */
 /* 발음(글자)은 AI가 받아 적어 보고, 성조는 아래 높낮이 곡선이 본다.
    둘이 하는 일이 다르다 — 합쳐야 '무슨 소리를, 어떤 높낮이로' 냈는지가 다 보인다. */
+/* 말소리 하나를 AI에게 묻는다 — 퀴즈든 따라 말하기든 **같은 방식**을 쓴다.
+   낱말이면 헷갈리는 넷 중에서 고르게 하고(실측 92%), 문장이면 받아쓰게 한다.
+   예전에는 따라 말하기만 옛 받아쓰기(60%)를 쓰고 있었다 — 같은 소리에 다른 점수가 나왔다. */
+async function askSpeech(text, b64, onWait) {
+  const opts = sayOpts(text);
+  if (opts) {
+    const t = await gCall({
+      contents: [{ role: 'user', parts: [
+        { text: '이 녹음은 베트남어 낱말 하나를 읽은 것이다. 아래 보기 가운데 **무엇을 말했는지** 하나만 고르라.\n'
+                + opts.map((o, i) => (i + 1) + '. ' + o).join('\n')
+                + '\n보기에 없으면 0 이라고 답하라. 숫자 하나만 답하고 다른 말은 붙이지 마라.' },
+        { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+      generationConfig: { maxOutputTokens: 6, thinkingConfig: { thinkingBudget: 0 } }
+    }, onWait);
+    const m = /\d/.exec(t || ''), k = m ? +m[0] : 0;
+    const heard = k >= 1 && k <= opts.length ? opts[k - 1] : null;
+    return { heard, ok: heard ? heard === text : null, pick: true };
+  }
+  const heard = await gCall({
+    contents: [{ role: 'user', parts: [
+      { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
+      { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+    generationConfig: { maxOutputTokens: 60, thinkingConfig: { thinkingBudget: 0 } }
+  }, onWait);
+  const clean = x => String(x || '').toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+  const ok = clean(heard) === clean(text) || stripTone(clean(heard)) === stripTone(clean(text));
+  return { heard, ok, pick: false };
+}
+
 async function aiListen(text, blobUrl, box) {
-  const note = { textContent: '' };            // 진행 문구는 판정 칸 자리를 쓰지 않는다
   try {
     const b64 = await recToWav(blobUrl);
-    const heard = await gCall({
-      contents: [{ role: 'user', parts: [
-        { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
-        { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-      generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
-    }, i => { note.textContent = `지금 AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
-    const clean = x => x.toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
-    const bare = x => stripTone(clean(x));
-    const exact = clean(heard) === clean(text);
-    const close = bare(heard) === bare(text);
-    S.stats.pronAll = (S.stats.pronAll || 0) + 1;
-    if (exact || close) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
-    save();
-    // **성조 부호는 떼고 보여준다.** AI는 실제로 낸 높낮이가 아니라
+    const { heard, ok, pick } = await askSpeech(text, b64);
+    if (ok !== null) {
+      S.stats.pronAll = (S.stats.pronAll || 0) + 1;
+      if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
+      save();
+    }
+    // 받아쓰기일 때는 **성조 부호를 떼고** 보여준다. AI는 실제로 낸 높낮이가 아니라
     // '그런 낱말이 있으니까'로 부호를 채워 넣는다 — chao 를 평평하게 읽어도 chào 라고 적는다.
-    // 그 글자를 그대로 띄우면 "성조까지 맞았다"는 거짓말이 된다.
-    verdict(box, 0, exact || close, '발음',
-            exact || close
-              ? esc(stripTone(heard)) + ' 로 들렸습니다'
-              : esc(stripTone(heard)) + ' 로 들렸습니다 (목표 ' + esc(stripTone(text)) + ')');
-    if (!(exact || close)) box.append(el('div', 'fixtip', '↳ ' + sayTip(text, heard)));
+    const show = x => esc(pick ? x : stripTone(x));
+    if (ok === null) { verdict(box, 0, null, '발음', '가려내기 어렵습니다 — 조금 크게 다시'); return; }
+    verdict(box, 0, ok, '발음',
+      ok ? (pick ? '알아들었습니다' : show(heard) + ' 로 들렸습니다')
+         : show(heard) + ' 처럼 들립니다 (목표 ' + show(text) + ')');
+    if (!ok) box.append(el('div', 'fixtip', '↳ ' + sayTip(text, heard)));
   } catch (e) { verdict(box, 0, null, '발음', 'AI가 듣지 못했습니다'); }
 }
 
@@ -2562,53 +2583,22 @@ function judgeBtn(target, box, onDone) {
       bumpSaid();
       try {
         const b64 = await recToWav(url);
-        const opts = sayOpts(target);
-        const clean = x => String(x || '').toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
-        const bare = x => stripTone(clean(x));
-        let ok, heard;
-        if (opts) {
-          /* 받아쓰기 대신 **넷 중 고르기**. 원어민 녹음 60개로 재서 정한 방식이다:
-             받아쓰기 60.0% → 고르기 91.7%. 베트남어는 한 음절짜리 낱말이 많아
-             앞뒤 말 없이 하나만 들으면 AI 가 엉뚱하게 받아 적는다(tha lỗi → "Hà Nội").
-             봐주기가 아니라는 것도 쟀다 — 일부러 다른 낱말 소리를 넣은 60번 중
-             목표라고 답한 적이 **0번**, 실제로 말한 낱말을 맞힌 것이 98.3% 였다.
-             보기에는 성조만 다른 낱말을 먼저 넣는다 — 그래야 성조가 어설프면 그쪽이 골라진다. */
-          const t = await gCall({
-            contents: [{ role: 'user', parts: [
-              { text: '이 녹음은 베트남어 낱말 하나를 읽은 것이다. 아래 보기 가운데 **무엇을 말했는지** 하나만 고르라.\n'
-                      + opts.map((o, i) => (i + 1) + '. ' + o).join('\n')
-                      + '\n보기에 없으면 0 이라고 답하라. 숫자 하나만 답하고 다른 말은 붙이지 마라.' },
-              { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-            generationConfig: { maxOutputTokens: 10, thinkingConfig: { thinkingBudget: 0 } }
-          }, i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
-          const m = /\d/.exec(t || ''), k = m ? +m[0] : 0;
-          heard = k >= 1 && k <= opts.length ? opts[k - 1] : null;
-          // 0(보기에 없음)은 **틀림이 아니라 모르겠음**이다. 실측 203번 중 29번이 여기였는데
-          // 그동안 전부 틀림으로 세고 있었다. 잘못 짚은 것은 12번(5.9%)뿐이다.
-          ok = heard ? heard === target : null;
-        } else {
-          heard = await gCall({
-            contents: [{ role: 'user', parts: [
-              { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
-              { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-            generationConfig: { maxOutputTokens: 100, thinkingConfig: { thinkingBudget: 0 } }
-          }, i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
-          ok = clean(heard) === clean(target) || bare(heard) === bare(target);
-        }
-        if (ok !== null) {                       // 판정을 미룬 것은 성적에 넣지 않는다
+        const { heard, ok } = await askSpeech(target, b64,
+          i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
+        if (ok !== null) {                    // 판정을 미룬 것은 성적에 넣지 않는다
           S.stats.pronAll = (S.stats.pronAll || 0) + 1;
           if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
+          save();
         }
-        save();
         box.innerHTML = (ok === true
           ? '<b class="okmsg">알아들었습니다.</b>'
           : heard
             ? '<b class="nomsg">「' + esc(heard) + '」처럼 들립니다.</b> 목표는 <b>' + esc(target)
               + '</b> — 조금 크게, 또박또박 다시 해 보세요.'
             : '<b>가려내기 어렵습니다 — <b>틀렸다고 하지 않겠습니다.</b></b> 폰을 입 가까이 대고 조금 크게 다시 해 보세요.')
-          + (opts ? '' : '<span class="tonenote">AI는 <b>높낮이(성조)를 가리지 못합니다</b> — 아래 곡선이 그 몫입니다.</span>');
+          + '<span class="tonenote">높낮이는 아래 곡선이 봅니다.</span>';
         fxTone(ok === true);
-        onDone && onDone(ok, true);   // null 이면 점수 없음   // AI가 매긴 것임을 알린다
+        onDone && onDone(ok, true);   // null 이면 점수 없음 (AI가 매긴 것임을 알린다)
       } catch (e) { box.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
     };
     const kill = liveRec(box, REC.stream, RECSEC(target),
