@@ -2315,14 +2315,16 @@ function drawQuiz() {
     body.append(wrap, sayBox);
     play(q.w.vi, false);
   } else {                             // 눈으로 — 글자를 보여주고 뜻을 고른다
-    const main = el('div', 'qmain' + (q.w.sent ? ' sent' : ''), esc(q.w.vi));
+    /* 글자를 **누르면 소리**가 난다. 따로 '듣기' 단추를 두지 않는다 —
+       앱 어디서나 낱말은 누르면 들리는 것으로 통일한다. */
+    const main = el('button', 'qmain qtap' + (q.w.sent ? ' sent' : ''), esc(q.w.vi));
+    main.type = 'button';
+    main.onclick = () => (AIDX[q.w.vi] ? play(q.w.vi, false) : speakVi(q.w.vi));
     body.append(main);
     const wrap = el('div', 'qplay');
-    const b = el('button', 'ghost', '듣기');
-    b.onclick = () => play(q.w.vi, false);
-    wrap.append(b);
     const m = addMic(); if (m) wrap.append(m);
-    body.append(wrap, sayBox);
+    if (wrap.children.length) body.append(wrap);
+    body.append(sayBox);
   }
 
   const opts = el('div', 'opts');

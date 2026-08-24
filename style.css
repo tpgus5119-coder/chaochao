@@ -1148,3 +1148,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 기본기·문법 문제의 정답 줄 — 하루 5분 카드와 같은 틀 */
 .rsay{margin:14px 0 0; padding-top:12px; border-top:1px solid var(--line)}
 .rsay .wrow{justify-content:center}
+
+/* 시험의 낱말 — 누르면 소리가 난다 (따로 듣기 단추를 두지 않는다) */
+.qmain.qtap{
+  display:block; width:100%; background:transparent; border:1px dashed var(--line);
+  color:var(--fg); cursor:pointer; padding:14px 10px; border-radius:12px;
+}
+.qmain.qtap:active{transform:scale(.99)}
