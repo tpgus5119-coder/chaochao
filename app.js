@@ -1396,7 +1396,8 @@ const MENUS = {
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
   basic: { name: '기본기', items: () => [
             ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
-            ['성조', toneEntry], ['자판 쓰는 법', kbGuide], ['호칭', () => startRule(0)], ['어순', () => startRule(1)],
+            ['성조', toneEntry], ['겹모음', () => startRule(4)], ['자판 쓰는 법', kbGuide],
+            ['호칭', () => startRule(0)], ['어순', () => startRule(1)], ['숫자 읽는 법', () => startRule(5)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
@@ -3166,7 +3167,48 @@ const RULES = [
         tones: tns('ngàn:huyền'), note: '북부 nghìn → 남부 ngàn. 성조도 hỏi·ngã가 하나로 합쳐진다' }],
     quiz: [{ q: '남부에서 "아빠"는?', opts: ['ba', 'bố'], a: 0, say: 'ba' },
            { q: '남부에서 "비싸다"는?', opts: ['mắc', 'đắt'], a: 0, say: 'mắc' },
-           { q: '남부에서 "천(1000)"은?', opts: ['ngàn', 'nghìn'], a: 0, say: 'ngàn' }] }
+           { q: '남부에서 "천(1000)"은?', opts: ['ngàn', 'nghìn'], a: 0, say: 'ngàn' }] },
+
+  /* 겹모음 — 학원 1강에서 다룬 것. 모음 두셋이 붙어 한 덩어리로 소리 난다.
+     낱글자만 알면 mưa 를 '므+아'로 끊어 읽게 된다. */
+  { key: 'R5', title: '겹모음',
+    intro: '모음이 둘·셋 붙어 <b>한 덩어리</b>로 소리 납니다. 끊어 읽으면 다른 말이 됩니다.',
+    cards: [
+      { vi: 'mưa', ko: '비 (ư+a)', kr: '므어',
+        tones: tns('mưa:ngang'), note: 'ư + a → ưa. 「므아」가 아니라 한 덩어리 「므어」' },
+      { vi: 'yêu', ko: '사랑하다 (y+ê+u)', kr: '이에우',
+        tones: tns('yêu:ngang'), note: '모음 셋이 한 덩어리. người yêu 애인' },
+      { vi: 'xoài', ko: '망고 (o+a+i)', kr: '쏘아이',
+        tones: tns('xoài:huyền'), note: 'o + a + i → oai' },
+      { vi: 'hươu', ko: '사슴 (ư+ơ+u)', kr: '흐어우',
+        tones: tns('hươu:ngang'), note: 'ư + ơ + u → ươu. 가장 긴 덩어리' }],
+    quiz: [{ q: 'mưa 는 어떻게 읽나요?', opts: ['한 덩어리로 「므어」', '끊어서 「므·아」'], a: 0, say: 'mưa' },
+           { q: '「사랑하다」는?', opts: ['yêu', 'yiêu'], a: 0, say: 'yêu' },
+           { q: 'xoài 의 겹모음은?', opts: ['oai', 'oài 는 겹모음이 아니다'], a: 0, say: 'xoài' }] },
+
+  /* 숫자 예외 — 학원 4강. 21·24·25 는 규칙대로 읽지 않는다.
+     돈을 세고 수량을 말할 때 매일 걸리는 대목이라 따로 세운다. */
+  { key: 'R6', title: '숫자 읽는 법',
+    intro: '10까지는 그대로인데 <b>21·24·25에서 말이 바뀝니다.</b> 시장과 월급에서 매일 쓰는 대목입니다.',
+    cards: [
+      { vi: 'hai mốt', ko: '21 — một 이 mốt 으로', kr: '하이 못',
+        tones: tns('hai:ngang, mốt:sắc'), note: '21·31·41… 끝의 1은 <b>mốt</b>. hai một 이 아니다' },
+      { vi: 'hai tư', ko: '24 — bốn 이 tư 로', kr: '하이 뜨',
+        tones: tns('hai:ngang, tư:ngang'), note: '24·34… 끝의 4는 <b>tư</b> 가 더 흔하다' },
+      { vi: 'mười lăm', ko: '15 — năm 이 lăm 으로', kr: '므어이 람',
+        tones: tns('mười:huyền, lăm:ngang'), note: '15·25·35… 끝의 5는 <b>lăm</b>. mười năm 이 아니다' },
+      { vi: 'hai mươi', ko: '20 — mười 이 아니라 mươi', kr: '하이 므어이',
+        tones: tns('hai:ngang, mươi:ngang'), note: '10은 mười, 20·30·40은 <b>mươi</b> (성조가 없다)' },
+      { vi: 'một trăm', ko: '100', kr: '못 짬',
+        tones: tns('một:nặng, trăm:ngang'), note: '111 = một trăm mười một' },
+      { vi: 'một nghìn', ko: '1,000 (돈)', kr: '못 응인',
+        tones: tns('một:nặng, nghìn:huyền'), note: '100만은 một triệu. 값을 말할 때 늘 쓴다' }],
+    quiz: [{ q: '21 을 말하면?', opts: ['hai mốt', 'hai một'], a: 0, say: 'hai mốt' },
+           { q: '15 는?', opts: ['mười lăm', 'mười năm'], a: 0, say: 'mười lăm' },
+           { q: '24 는? (더 흔한 쪽)', opts: ['hai tư', 'hai bốn'], a: 0, say: 'hai tư' },
+           { q: '20 은?', opts: ['hai mươi', 'hai mười'], a: 0, say: 'hai mươi' },
+           { q: '1,000,000 동은?', opts: ['một triệu', 'một nghìn nghìn'], a: 0, say: 'một triệu' }] },
+
 ];
 
 

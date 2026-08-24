@@ -11,8 +11,8 @@
  "prep": [
   {
    "day": "P1",
-   "theme": "모음",
-   "intro": "베트남어는 우리가 아는 알파벳을 씁니다. 한자도 히라가나도 없습니다. 다만 모자를 쓴 모음이 더 있습니다 — ă â ê ô ơ ư. 오늘은 모음만 눈에 익힙니다.",
+   "theme": "글자와 모음",
+   "intro": "베트남어는 우리가 아는 알파벳을 씁니다. 한자도 히라가나도 없습니다. 다만 모자를 쓴 글자가 더 있습니다 — ă â ê ô ơ ư, 그리고 đ. 오늘은 이것만 눈에 익힙니다.",
    "letters": [
     {
      "vi": "a",
@@ -90,6 +90,13 @@
      "kr_read": "으",
      "ex": "từ",
      "ex_ko": "~부터"
+    },
+    {
+     "vi": "đ",
+     "ko": "ㄷ — d가 아니다! 줄 그은 đ만 'ㄷ'",
+     "kr_read": "드",
+     "ex": "đi",
+     "ex_ko": "가다"
     }
    ],
    "mission": {
@@ -101,7 +108,7 @@
   },
   {
    "day": "P2",
-   "theme": "성조",
+   "theme": "성조 6개",
    "intro": "여기가 베트남어의 진짜 관문입니다. 같은 '마'라도 소리의 높낮이가 다르면 완전히 다른 단어가 됩니다. 오늘은 외우지 말고 귀로 구분하는 것만 합니다.",
    "tones": [
     {
@@ -156,7 +163,7 @@
   },
   {
    "day": "P3",
-   "theme": "자음",
+   "theme": "헷갈리는 자음",
    "intro": "글자는 아는데 소리가 다른 것들입니다. 특히 d는 'ㄷ'이 아니라 'ㅈ/ㅇ' 소리입니다. 이거 하나만 알아도 첫 주가 편해집니다.",
    "letters": [
     {
@@ -242,6 +249,27 @@
      "kr_read": "트",
      "ex": "thùng",
      "ex_ko": "상자"
+    },
+    {
+     "vi": "gh",
+     "ko": "ㄱ — i·e·ê 앞에서만 이렇게 쓴다",
+     "kr_read": "그",
+     "ex": "ghế",
+     "ex_ko": "의자"
+    },
+    {
+     "vi": "ngh",
+     "ko": "응 — i·e·ê 앞에서만 이렇게 쓴다",
+     "kr_read": "응",
+     "ex": "nghỉ",
+     "ex_ko": "쉬다"
+    },
+    {
+     "vi": "qu",
+     "ko": "꾸 (q 는 늘 u 와 붙어 다닌다)",
+     "kr_read": "꾸",
+     "ex": "quả",
+     "ex_ko": "과일"
     }
    ],
    "mission": {
@@ -388,141 +416,8 @@
    ]
   }
  ],
- "voweldrill": [
-  {
-   "base": "t + o / ô / ơ",
-   "note": "o 입 크게 '오' / ô 오므린 '오' / ơ '어'",
-   "items": [
-    {
-     "vi": "to",
-     "ko": "크다",
-     "mark": "o"
-    },
-    {
-     "vi": "tô",
-     "ko": "큰 그릇",
-     "mark": "ô"
-    },
-    {
-     "vi": "tơ",
-     "ko": "명주실",
-     "mark": "ơ"
-    }
-   ]
-  },
-  {
-   "base": "m + e / ê",
-   "note": "e '애' / ê '에'",
-   "items": [
-    {
-     "vi": "me",
-     "ko": "타마린드 열매",
-     "mark": "e"
-    },
-    {
-     "vi": "mê",
-     "ko": "푹 빠지다",
-     "mark": "ê"
-    }
-   ]
-  },
-  {
-   "base": "th + u / ư",
-   "note": "u '우' / ư 입 벌린 '으'",
-   "items": [
-    {
-     "vi": "thu",
-     "ko": "가을",
-     "mark": "u"
-    },
-    {
-     "vi": "thư",
-     "ko": "편지",
-     "mark": "ư"
-    }
-   ]
-  },
-  {
-   "base": "l + an / ăn / ang",
-   "note": "a 길게 / ă 짧게 뚝 / -ng 받침 'ㅇ'",
-   "items": [
-    {
-     "vi": "lan",
-     "ko": "난초",
-     "mark": "an"
-    },
-    {
-     "vi": "lăn",
-     "ko": "구르다",
-     "mark": "ăn"
-    },
-    {
-     "vi": "lang",
-     "ko": "떠돌다",
-     "mark": "ang"
-    }
-   ]
-  }
- ],
- "ruledrill": [
-  "Anh chào em.",
-  "Anh có bận không?",
-  "Anh khỏe không?",
-  "Anh là quản lý, phải không?",
-  "Anh phải đeo găng tay.",
-  "Anh ở đâu?",
-  "Bao giờ xong?",
-  "Bao nhiêu tiền?",
-  "Cho em hỏi.",
-  "Cho em nghỉ năm phút.",
-  "Cho tôi cái này.",
-  "Cái này không đắt.",
-  "Cái này là gì?",
-  "Cái này rẻ hơn.",
-  "Cái này tốt nhất.",
-  "Cái này để ở đâu?",
-  "Có.",
-  "Em bị đau tay.",
-  "Em chào anh.",
-  "Em chưa làm.",
-  "Em cần cái này.",
-  "Em muốn nghỉ.",
-  "Em được nghỉ.",
-  "Không có.",
-  "Làm lại nhé.",
-  "Làm xong rồi.",
-  "Làm ơn giúp tôi.",
-  "Máy bị hỏng rồi.",
-  "Mấy giờ?",
-  "Nhanh hơn nhé.",
-  "Sửa được không?",
-  "Tên anh là gì?",
-  "Tôi có tiền.",
-  "Tôi không hiểu.",
-  "Tôi không đi.",
-  "Tôi làm được.",
-  "Tôi sẽ về.",
-  "Tôi đang làm.",
-  "Tôi đang ăn.",
-  "Tôi đã ăn.",
-  "Xong chưa?",
-  "ba con",
-  "dạ",
-  "hai cái",
-  "hộp này",
-  "không",
-  "mắc",
-  "một chiếc",
-  "ngàn",
-  "người tốt",
-  "trễ",
-  "tên của tôi",
-  "Được.",
-  "Để ở trên bàn.",
-  "Đừng bấm nút.",
-  "Ở trong kho.",
-  "Ở đây có nhà vệ sinh không?"
- ],
+ "voweldrill": [],
+ "ruledrill": [],
  "days": [
   {
    "day": 1,
