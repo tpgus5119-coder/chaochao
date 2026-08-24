@@ -2508,6 +2508,36 @@ function drawHandQ(body, q) {
   play(w.vi, false);
 }
 
+/* 연습용 화면 자판 — 대화 자판과 **같은 텔렉스**를 쓴다.
+   예전에는 여기만 모자 글쇠(ă â ê…)와 성조 화살표가 따로 붙어 있었다.
+   대화에서 익힌 방식이 시험에서 안 통하면 두 번 배우는 셈이다. */
+function viKeypad(get, set, onGo) {
+  const kb = el('div', 'vkb');
+  const key = (label, fn, cls) => {
+    const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label);
+    k.type = 'button'; k.onclick = fn; return k;
+  };
+  const tap = ch => {
+    const t = get();
+    const cut = Math.max(t.lastIndexOf(' '), t.lastIndexOf('\n')) + 1;
+    const made = telex(t.slice(cut), ch);
+    set(made === null ? t + ch : t.slice(0, cut) + made);
+  };
+  KBROWS.forEach(chars => {
+    const row = el('div', 'vkrow');
+    chars.forEach(ch => row.append(key(ch, () => tap(ch))));
+    kb.append(row);
+  });
+  const brow = el('div', 'vkrow');
+  brow.append(key('띄어쓰기', () => set(get() + ' '), 'wide'),
+              key('⌫', () => set(get().slice(0, -1)), 'wide'),
+              key('확인', onGo, 'go wide'));
+  kb.append(brow);
+  kb.append(el('p', 'note', '성조는 낱말 뒤에 <b>f s r x j</b> 를 붙여 찍습니다 (chao+f → chào). ' +
+    '모자는 <b>aa ee oo aw ow uw dd</b>. 실제 베트남 자판과 같은 방식입니다.'));
+  return kb;
+}
+
 /* 자판으로 — 철자와 부호 위치를 정확히 (복습 안에서) */
 function drawTypeQ(body, q) {
   const w = q.w;
@@ -2521,43 +2551,20 @@ function drawTypeQ(body, q) {
   const out = el('div', 'dictans');
   const draw = () => { out.textContent = txt || '· · ·'; };
   draw(); body.append(out);
-  const kb = el('div', 'vkb');
-  const key = (label, fn, cls) => { const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label); k.onclick = fn; return k; };
-  const add = ch => { txt += ch; draw(); };
-  ['q w e r t y u i o p', 'a s d f g h j k l', 'z x c v b n m', 'ă â ê ô ơ ư đ'].forEach(r => {
-    const rw = el('div', 'vkrow');
-    r.split(' ').forEach(ch => rw.append(key(ch, () => add(ch))));
-    kb.append(rw);
-  });
-  const trow = el('div', 'vkrow');
-  [['ngang', ''], ['huyền', '\u0300'], ['sắc', '\u0301'], ['hỏi', '\u0309'], ['ngã', '\u0303'], ['nặng', '\u0323']]
-    .forEach(([name, mk]) => trow.append(key(toneArrow(name), () => {
-      const parts = txt.split(' '); const last = parts.pop();
-      if (!last) return;
-      const bare = stripTone(last);
-      parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
-      txt = parts.join(' '); draw();
-    }, 'tonek ' + name)));
-  kb.append(trow);
-  const brow = el('div', 'vkrow');
-  brow.append(key('띄어쓰기', () => add(' '), 'wide'),
-              key('⌫', () => { txt = txt.slice(0, -1); draw(); }, 'wide'),
-              key('확인', () => {
-                if (!txt.trim()) return;
-                const good = txt.trim().toLowerCase() === w.vi.toLowerCase();
-                markSpeed(good, 'type');
-                fxTone(good);
-                S.stats.spellAll = (S.stats.spellAll || 0) + 1;
-                if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
-                if (!good) bump('serr', bare(txt) === bare(w.vi) ? '성조만 틀림' : '글자를 틀림', false);
-                out.dataset.r = good ? 'ok' : 'no';
-                if (!good) out.textContent = txt.trim() + '  →  ' + w.vi;
-                grade(w.vi, good, Q.early);
-                if (good) { Q.ok++; setTimeout(() => { Q.i++; drawQuiz(); }, 700); }
-                else { requeue(q); nextBtn(body, () => { Q.i++; drawQuiz(); }); }
-              }, 'go wide'));
-  kb.append(brow);
-  body.append(kb);
+  body.append(viKeypad(() => txt, v => { txt = v; draw(); }, () => {
+    if (!txt.trim()) return;
+    const good = txt.trim().toLowerCase() === w.vi.toLowerCase();
+    markSpeed(good, 'type');
+    fxTone(good);
+    S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+    if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
+    if (!good) bump('serr', bare(txt) === bare(w.vi) ? '성조만 틀림' : '글자를 틀림', false);
+    out.dataset.r = good ? 'ok' : 'no';
+    if (!good) out.textContent = txt.trim() + '  →  ' + w.vi;
+    grade(w.vi, good, Q.early);
+    if (good) { Q.ok++; setTimeout(() => { Q.i++; drawQuiz(); }, 700); }
+    else { requeue(q); nextBtn(body, () => { Q.i++; drawQuiz(); }); }
+  }));
 }
 
 
@@ -3453,47 +3460,17 @@ function drawType() {
   const draw = () => { out.textContent = TY.txt || '· · ·'; };
   draw(); b.append(out);
 
-  const kb = el('div', 'vkb');
-  const key = (label, fn, cls) => { const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label); k.onclick = fn; return k; };
-  const add = ch => { TY.txt += ch; draw(); };
-  ['q w e r t y u i o p', 'a s d f g h j k l', 'z x c v b n m đ', 'ă â ê ô ơ ư'].forEach(r => {
-    const row = el('div', 'vkrow');
-    r.split(' ').forEach(ch => row.append(key(ch, () => add(ch))));
-    kb.append(row);
-  });
-  const trow = el('div', 'vkrow');   // 성조 줄 — 마지막 음절의 주모음에 붙는다
-  [['ngang', ''], ['huyền', '\u0300'], ['sắc', '\u0301'], ['hỏi', '\u0309'], ['ngã', '\u0303'], ['nặng', '\u0323']]
-    .forEach(([name, mk]) => {
-      const k = key(toneArrow(name), () => {
-        const parts = TY.txt.split(' ');
-        const last = parts.pop();
-        if (!last) return;
-        const bare = stripTone(last);
-        parts.push(mk ? withMark(bare, mk, tonePos(bare)) : bare);
-        TY.txt = parts.join(' ');
-        draw();
-      }, 'tonek ' + name);
-      trow.append(k);
-    });
-  kb.append(trow);
-  const brow = el('div', 'vkrow');
-  brow.append(
-    key('띄어쓰기', () => add(' '), 'wide'),
-    key('⌫', () => { TY.txt = TY.txt.slice(0, -1); draw(); }, 'wide'),
-    key('확인', () => {
-      if (!TY.txt.trim()) return;
-      const good = TY.txt.trim().toLowerCase() === w.vi.toLowerCase();
-      S.stats.spellAll = (S.stats.spellAll || 0) + 1;
-      if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
-      fxTone(good);
-      out.dataset.r = good ? 'ok' : 'no';
-      if (!good) out.textContent = TY.txt.trim() + '  →  ' + w.vi;
-      if (!good || !hinted) grade(w.vi, good);   // 보고 친 성공은 사다리에 반영 안 함
-      setTimeout(() => { TY.i++; drawType(); }, good ? 600 : 1900);
-    }, 'go wide')
-  );
-  kb.append(brow);
-  b.append(kb);
+  b.append(viKeypad(() => TY.txt, v => { TY.txt = v; draw(); }, () => {
+    if (!TY.txt.trim()) return;
+    const good = TY.txt.trim().toLowerCase() === w.vi.toLowerCase();
+    S.stats.spellAll = (S.stats.spellAll || 0) + 1;
+    if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
+    fxTone(good);
+    out.dataset.r = good ? 'ok' : 'no';
+    if (!good) out.textContent = TY.txt.trim() + '  →  ' + w.vi;
+    if (!good || !hinted) grade(w.vi, good);   // 보고 친 성공은 사다리에 반영 안 함
+    setTimeout(() => { TY.i++; drawType(); }, good ? 600 : 1900);
+  }));
   b.append(el('p', 'note', '실제 폰·컴퓨터의 베트남어 자판도 설정에서 추가하는 내장 기능입니다(다운로드 아님). ' +
     '둘 다 영어 자판에 텔렉스 규칙(aa→â, dd→đ, 낱말 끝 s→´ …)을 얹는 같은 방식이라, 여기서 익힌 글자 그대로 쓸 수 있습니다.'));
 }
