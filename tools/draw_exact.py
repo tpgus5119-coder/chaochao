@@ -281,6 +281,53 @@ def arrow(path, way):
     d.polygon(pts, fill=fill, outline=line, width=max(4, int(S * .012)))
     im.save(path, 'WEBP', quality=88)
 
+
+# ── 베트남 지도 ────────────────────────────────────────────────
+# 생성 모델에 맡겼더니 넷 다 **떠 있는 손**이 지도를 붙잡고 있었다(북부·남부·지방·성).
+# 좌우 화살표와 같은 부류다 — 어디가 위고 어디가 아래인지가 뜻의 전부인데
+# 모델은 그것을 못 지킨다. 그래서 코드로 그린다.
+# 실제 국경선을 그대로 옮긴 것은 아니고, 남북이 한눈에 갈리는 **약식 지도**다.
+VN_OUTLINE = [
+    (.30,.06),(.44,.02),(.56,.05),(.62,.12),(.58,.19),(.50,.23),   # 북부 (홍강 삼각주)
+    (.52,.30),(.58,.40),(.64,.49),(.70,.57),                        # 중부 (좁은 허리)
+    (.74,.65),(.70,.74),(.58,.82),(.44,.86),(.32,.82),(.28,.74),    # 남부 (메콩 삼각주)
+    (.34,.68),(.40,.60),(.38,.50),(.32,.40),(.28,.30),(.24,.18),(.24,.10),
+]
+NORTH = 8      # 이 점까지가 북부, 그 뒤가 남부 (허리에서 가른다)
+
+def _vn_pts(sc=1.0, dx=0.0, dy=0.0):
+    return [((x * sc + dx) * S, (y * sc + dy) * S) for x, y in VN_OUTLINE]
+
+def vn_map(path, mode):
+    """mode: 'three'(남북을 두 빛깔로) · 'north' · 'south' · 'one'(성 하나)"""
+    im = Image.new('RGB', (S, S), BG)
+    d = ImageDraw.Draw(im)
+    pts = _vn_pts(.92, .04, .04)
+    dim, hot, line = (214, 219, 224), (108, 164, 214), (70, 92, 112)
+    d.polygon(pts, fill=dim, outline=line, width=max(3, int(S * .008)))
+    n = len(pts)
+    if mode in ('north', 'south', 'three'):
+        # 허리(가운데)를 가로지르는 선으로 남북을 가른다
+        cut = (pts[NORTH][1] + pts[n - NORTH][1]) / 2
+        box_n = [(0, 0), (S, 0), (S, cut), (0, cut)]
+        box_s = [(0, cut), (S, cut), (S, S), (0, S)]
+        for which, box, col in (('north', box_n, hot), ('south', box_s, hot)):
+            if mode == which or mode == 'three':
+                lay = Image.new('RGB', (S, S), BG)
+                ld = ImageDraw.Draw(lay)
+                ld.polygon(pts, fill=col if mode != 'three' else
+                           ((124, 178, 224) if which == 'north' else (236, 160, 120)))
+                msk = Image.new('L', (S, S), 0)
+                ImageDraw.Draw(msk).polygon(box, fill=255)
+                im.paste(lay, (0, 0), msk)
+        d.polygon(pts, outline=line, width=max(3, int(S * .008)))
+    if mode == 'one':                                  # 성 하나만 콕
+        cx, cy, r = S * .46, S * .30, S * .075
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=hot, outline=line, width=4)
+    im.save(path, 'WEBP', quality=88)
+
+VNMAP = {'x-mien': 'three', 'x-mien-bac': 'north', 'x-mien-nam': 'south', 'x-tinh': 'one'}
+
 if __name__ == '__main__':
     made = 0
     for name, n in NUM.items():
@@ -296,6 +343,8 @@ if __name__ == '__main__':
     for name, how in MATH.items():
         math_sheet(IMG / f'{name}.webp', **how); made += 1
     grid_sheet(IMG / 'd102-tram.webp', 10, 10); made += 1      # 백 = 열 줄 열 개
+    for name, mode in VNMAP.items():
+        vn_map(IMG / f'{name}.webp', mode); made += 1
     for name, way in ARROW.items():
         if (IMG / f'{name}.webp').exists(): arrow(IMG / f'{name}.webp', way); made += 1
     print(f'직접 그린 그림 {made}장')

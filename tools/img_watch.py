@@ -24,7 +24,7 @@ EXACT = set()
 try:
     import draw_exact as _de
     EXACT = set(_de.NUM) | set(_de.CAL) | set(_de.MATH) | {
-        'd03-viet-nam', 'd03-tieng-viet', 'd03-han-quoc', 'd05-tieng-han', 'd102-tram'} | set(_de.ARROW)
+        'd03-viet-nam', 'd03-tieng-viet', 'd03-han-quoc', 'd05-tieng-han', 'd102-tram'} | set(_de.ARROW) | set(_de.VNMAP)
 except Exception:
     pass
 
