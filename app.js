@@ -37,7 +37,42 @@ const now = () => Date.now();
 /* ---------- 데이터 ---------- */
 let ALL = [], AIDX = {}, DRILL = [], VDRILL = [];
 const $ = s => document.querySelector(s);
-const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
+/* ── 화면 언어 (1단계) ────────────────────────────────────────────
+   베트남 사용자를 위해 화면 문구를 베트남어로. 6천 줄의 한국어를 다 뜯지 않고,
+   글자가 화면에 놓이는 길목(el·show)에서 **문구를 통째로 맞바꾼다.**
+   표에 있는 문구만 바뀐다 — 아직 없는 문구는 한국어로 남고, 표를 채우면 늘어난다. */
+const UIVI = {
+  '하루 5분': 'Học 5 phút', '복습': 'Ôn tập', '기본기': 'Cơ bản', '문법': 'Ngữ pháp',
+  '동아리': 'Câu lạc bộ', '사용법': 'Hướng dẫn', '일상': 'Hằng ngày', '직무': 'Công việc',
+  '기사': 'Bản tin', '단어': 'Từ vựng', '문장': 'Câu', '방금 배운 것': 'Vừa học xong',
+  '오늘 학습': 'Bài hôm nay', '오늘 복습': 'Ôn hôm nay', '내일 학습': 'Bài ngày mai',
+  '내일 복습': 'Ôn ngày mai', '없음': 'Không có', '배운 단어': 'Từ đã học',
+  '외운 단어': 'Từ đã thuộc', '끝낸 세트': 'Bài đã xong',
+  '진도 백업': 'Sao lưu', '백업 불러오기': 'Khôi phục', '진도 초기화': 'Xóa tiến độ',
+  '다음 ›': 'Tiếp ›', '확인 문제 ›': 'Kiểm tra ›', '완료 ›': 'Xong ›', '홈으로': 'Về trang chính',
+  '듣기': 'Nghe', '느리게 듣기': 'Nghe chậm', '느리게': 'Chậm', '따라 말하기': 'Nói theo',
+  '말하기': 'Nói', '읽기': 'Đọc', '쓰기': 'Viết', '암기': 'Ghi nhớ', '랜덤': 'Ngẫu nhiên',
+  '3분': '3 phút', '오늘 완료': 'Xong hôm nay', '지우기': 'Xóa', '채점받기': 'Chấm điểm',
+  '정답 보기': 'Xem đáp án', '보내기': 'Gửi', '만들기': 'Tạo', '올리기': 'Đăng',
+  '번역': 'Dịch', '바꾸기': 'Đổi', '보기': 'Xem', '받기': 'Nhận',
+  '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
+  '계정': 'Tài khoản', '로그인': 'Đăng nhập', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
+  '로그인·가입': 'Đăng nhập / Đăng ký', '배울 언어': 'Ngôn ngữ học', '보호권': 'Khiên bảo vệ',
+  '서버 진도': 'Tiến độ trên máy chủ', '지금 올리기': 'Lưu ngay', '뭐예요?': 'Là gì?',
+  '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
+  '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
+  '주간 성적표': 'Bảng điểm tuần', '이름없음': 'Chưa có tên',
+  '모음': 'Nguyên âm', '자음': 'Phụ âm', '성조': 'Thanh điệu', '호칭': 'Xưng hô',
+  '어순': 'Trật tự từ', '단위': 'Đơn vị', '남부 소리': 'Giọng Nam', '겹모음': 'Nguyên âm đôi',
+  '자판 쓰는 법': 'Cách gõ phím', '숫자 읽는 법': 'Cách đọc số',
+  '듣고 뜻을 고르세요': 'Nghe và chọn nghĩa', '뜻을 고르세요': 'Chọn nghĩa',
+  '베트남어로 말해 보세요': 'Hãy nói bằng tiếng Việt', '듣고 자판으로 쳐 보세요': 'Nghe và gõ lại',
+  '듣고 손으로 써 보세요': 'Nghe và viết tay', '모르겠어요': 'Không biết',
+  '원어민': 'Người bản xứ', '나': 'Tôi', '번갈아 듣기': 'Nghe lần lượt',
+  '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
+};
+const tr = h => (S && S.ui === 'vi' && typeof h === 'string' && UIVI[h]) ? UIVI[h] : h;
+const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = tr(h); return n; };
 // 그림: img/ 폴더에 파일이 있으면 그걸, 없으면 이모지를 보여준다 (파일 확인은 브라우저가 알아서)
 const pic = (x, cls) => {
   if (!x.emoji && !x.img) return null;
@@ -714,7 +749,7 @@ function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
-  $('#title').textContent = title;
+  $('#title').textContent = tr(title);
   if (DMT) { clearInterval(DMT); DMT = 0; }
   if (v !== 'chat') DM = null;
   $('#back').hidden = !canBack;
@@ -1187,7 +1222,9 @@ function acctForm() {
         ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '' } : {};
       const j = await cCall(Object.assign({ act, id: i, pw: p }, prof));
       if (act === 'signup' && prof.reg) { S.region = prof.reg; drawRegion(); }
-      if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn; }
+      if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn;
+        if (prof.nat === 'vn') S.ui = 'vi';       // 베트남 분은 화면도 베트남어로
+      }
       if (act === 'login' && j.prof) {
         S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
         if (j.prof.reg) S.region = j.prof.reg;
@@ -1248,6 +1285,13 @@ function renderAwards() {
     cl.append(cb2);
     b.append(cl);
   }
+
+  const ui = el('div', 'planrow');
+  ui.append(el('span', 'pk', '화면 언어'), el('span', 'pv', S.ui === 'vi' ? 'Tiếng Việt' : '한국어'));
+  const ub = el('button', 'ghost sm', S.ui === 'vi' ? '한국어로' : 'Tiếng Việt');
+  ub.onclick = () => { S.ui = S.ui === 'vi' ? 'ko' : 'vi'; save(); renderAwards(); drawMenu(); };
+  ui.append(ub);
+  b.append(ui);
 
   const shrow = el('div', 'planrow');
   shrow.append(el('span', 'pk', '보호권'), el('span', 'pv', '🛡️ ' + (S.shield || 0) + '개'));
