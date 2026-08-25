@@ -1,14 +1,18 @@
+/* 페이스북식 배색 — 회색 바탕에 흰 카드, 파란 강조 (사용자 지시).
+   바탕과 카드를 뒤집은 것이 핵심이다: 예전엔 흰 바탕에 회색 카드였다. */
 :root{
-  --bg:#ffffff; --fg:#16181d; --dim:#5f6672; --line:#e3e6ea;
-  --card:#f6f7f9; --accent:#1f6feb; --accent-fg:#fff;
-  --ok:#137a4a; --bad:#b3261e; --warn:#8a5a00;
-  --radius:14px;
+  --bg:#f0f2f5; --fg:#050505; --dim:#65676b; --line:#dadde1;
+  --card:#ffffff; --accent:#1877f2; --accent-fg:#fff;
+  --ok:#31a24c; --bad:#e41e3f; --warn:#8a5a00;
+  --radius:12px;
+  --shadow:0 1px 2px rgba(0,0,0,.1);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme=light]){
-    --bg:#0f1115; --fg:#e8eaee; --dim:#98a0ad; --line:#262a31;
-    --card:#171a20; --accent:#4c8dff; --accent-fg:#08121f;
-    --ok:#4ade80; --bad:#ff7b72; --warn:#e3b341;
+    --bg:#18191a; --fg:#e4e6e9; --dim:#b0b3b8; --line:#3e4042;
+    --card:#242526; --accent:#2374e1; --accent-fg:#fff;
+    --ok:#45bd62; --bad:#f02849; --warn:#e3b341;
+    --shadow:0 1px 2px rgba(0,0,0,.35);
   }
 }
 *{box-sizing:border-box}
@@ -21,8 +25,10 @@ body{
 header{
   position:sticky; top:0; z-index:10; display:flex; align-items:center; gap:8px;
   padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;
-  background:var(--bg); border-bottom:1px solid var(--line);
+  background:var(--card); border-bottom:1px solid var(--line);
+  box-shadow:var(--shadow);
 }
+header h1{color:var(--accent); font-weight:800}
 /* 제목이 길어도 줄이 늘어나면 안 된다 — min-width:0 이 없으면 flex 칸이 글자만큼 벌어진다 */
 header h1{flex:1 1 0; min-width:0; margin:0; font-size:16px; font-weight:650; text-align:center;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
@@ -1155,3 +1161,33 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   color:var(--fg); cursor:pointer; padding:14px 10px; border-radius:12px;
 }
 .qmain.qtap:active{transform:scale(.99)}
+
+/* 계정 화면 */
+.row2{display:flex; gap:8px; margin-top:12px}
+.row2 .primary{flex:2} .row2 .ghost{flex:1}
+#subBody .keyin{width:100%; margin-top:8px; padding:12px 14px; font:inherit;
+  border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--fg)}
+/* 쪽지방 프로필 줄 */
+.dmprof{align-self:center; margin-bottom:4px}
+
+/* ── 페이스북식 카드 느낌 ── */
+.card,.bigmenu,.days button,.msgrow,.cmem,.result,.wex,.kbtr,.planrow,.q{
+  background:var(--card); box-shadow:var(--shadow); border-color:transparent;
+}
+.banner{background:var(--card); box-shadow:var(--shadow)}
+.opts button{background:var(--card); box-shadow:var(--shadow)}
+.tk{box-shadow:var(--shadow)}
+/* 자판 눌림 반응 */
+.tk.hit{background:var(--accent); color:var(--accent-fg)}
+.tk{position:relative}
+.kpop{
+  position:absolute; left:50%; top:-44px; transform:translateX(-50%);
+  min-width:40px; padding:8px 6px; border-radius:9px; font-style:normal;
+  background:var(--card); color:var(--fg); font-size:24px; font-weight:700;
+  box-shadow:0 3px 12px rgba(0,0,0,.3); pointer-events:none; z-index:50;
+}
+/* 폰 자판 모드 — 돌아오는 한 줄만 남는다 */
+.kbrow.nat{display:none}
+.tonebar.natmode .kbrow{display:none}
+.tonebar.natmode .kbrow.nat{display:flex}
+.tk.natk{color:var(--dim)}

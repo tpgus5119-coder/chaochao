@@ -1078,6 +1078,51 @@ async function shareCard() {
 }
 
 /* 업적 전체 화면 — 홈에는 딴 것 몇 개만 보이고, 나머지는 여기서 */
+
+/* ── 계정 로그인·가입 ────────────────────────────────────────────
+   이메일이 없어서 비밀번호를 잊으면 되찾을 길이 없다 — 화면에 그대로 밝힌다.
+   서버에는 비밀번호의 으깬 값(해시)만 남는다. */
+function acctForm() {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '아이디로 어느 폰에서든 <b>내 별명·동아리</b>가 따라옵니다.'));
+  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = '아이디 (영문·숫자 4~20자)';
+  id.autocapitalize = 'none'; id.maxLength = 20;
+  const pw = el('input', 'keyin'); pw.type = 'password'; pw.placeholder = '비밀번호 (4자 이상)'; pw.maxLength = 64;
+  const err = el('p', 'note nickerr'); err.hidden = true;
+  const oops = m => { err.textContent = m; err.hidden = false; };
+  const go = (act) => async () => {
+    err.hidden = true;
+    const i = id.value.trim().toLowerCase(), p = pw.value;
+    if (!/^[a-z0-9_]{4,20}$/.test(i)) return oops('아이디는 영문·숫자 4~20자입니다.');
+    if (p.length < 4) return oops('비밀번호는 4자 이상입니다.');
+    try {
+      const j = await cCall({ act, id: i, pw: p });
+      if (act === 'login') {
+        // 계정의 기기표를 이 기기에 입힌다 — 이제 서버가 보기에 같은 사람이다
+        S.uid = j.uid;
+        if (j.nick) S.nick = j.nick;
+        if (j.club) S.club = { id: j.club.id, name: j.club.name };
+        MATES = null;
+      }
+      S.acct = { id: i }; save();
+      popup(act === 'signup'
+        ? '<b>가입됐습니다.</b><br>비밀번호를 잊으면 <b>되찾을 길이 없습니다</b> — 적어 두세요.<br>다른 폰에서 로그인하면 지금 별명·동아리가 따라옵니다.'
+        : '<b>로그인됐습니다.</b> 별명·동아리가 이 기기로 따라왔습니다.<br>학습 진도는 기기마다 따로입니다 — 옮기려면 진도 백업을 쓰세요.');
+      renderAwards();
+    } catch (e) { oops(e.message || '안 됐습니다'); }
+  };
+  const bs = el('div', 'row2');
+  const bi = el('button', 'primary big', '로그인'); bi.onclick = go('login');
+  const bu = el('button', 'ghost big', '가입'); bu.onclick = go('signup');
+  bs.append(bi, bu);
+  b.append(id, pw, err, bs);
+  b.append(el('p', 'note', '· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.<br>' +
+    '· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b><br>' +
+    '· 학습 진도는 기기 안에 있습니다 — 폰을 바꿀 때는 <b>진도 백업</b>을 같이 쓰세요.'));
+  show('sub', '계정', true);
+}
+
 function renderAwards() {
   const b = $('#awardBody');
   b.textContent = '';
@@ -1088,6 +1133,19 @@ function renderAwards() {
   const rb = el('button', 'ghost sm', '바꾸기');
   rb.onclick = () => { S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion(); renderAwards(); };
   rg.append(rb);
+
+  /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
+     핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
+  const ac = el('div', 'planrow');
+  ac.append(el('span', 'pk', '계정'),
+            el('span', 'pv', S.acct ? esc(S.acct.id) : '없음 (이 기기에만 저장)'));
+  const ab = el('button', 'ghost sm', S.acct ? '로그아웃' : '로그인·가입');
+  ab.onclick = () => {
+    if (S.acct) { if (confirm('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.')) { S.acct = null; save(); renderAwards(); } }
+    else acctForm();
+  };
+  ac.append(ab);
+  b.append(ac);
 
   const got = BADGES.filter(x => x.test()).length;
   const nm = el('div', 'planrow');
@@ -4284,11 +4342,22 @@ function drawChatTone() {
      touchstart 에서 preventDefault 를 하면 아이폰이 click 을 아예 만들지 않아
      글쇠를 눌러도 아무것도 입력되지 않았다. 그리고 pointerdown 으로 처리하면
      자판처럼 즉각 반응하고, 빠르게 두 번 눌러도 화면이 확대되지 않는다. */
+  /* 누른 것이 **보여야** 자판이다: 손가락이 글쇠를 가리니
+     ① 글쇠 위로 풍선을 띄워 방금 누른 글자를 보여주고 ② 눌림 색을 주고
+     ③ 진동을 울린다(안드로이드만 — 아이폰 웹은 진동을 막아 둔 것이라 우리가 못 연다). */
   const key = (label, fn, cls) => {
     const k = el('button', 'tk' + (cls ? ' ' + cls : ''), label);
     k.type = 'button';
     k.addEventListener('pointerdown', e => {
       e.preventDefault();                       // 입력칸이 포커스를 잃지 않게
+      try { navigator.vibrate && navigator.vibrate(8); } catch (x) { }
+      k.classList.add('hit');
+      if (label.length <= 2) {                  // 글자 글쇠만 풍선 (space·베/한 은 뺀다)
+        const pop = el('i', 'kpop', label);
+        k.append(pop);
+        setTimeout(() => pop.remove(), 260);
+      }
+      setTimeout(() => k.classList.remove('hit'), 140);
       fn(); chatGrow(); inp.focus({ preventScroll: true });
     });
     k.addEventListener('click', e => e.preventDefault());
@@ -4329,8 +4398,41 @@ function drawChatTone() {
   r3.append(key('123', () => { bar.classList.toggle('num'); }, 'wide numk'));
   r3.append(key('space', () => { hgDone(); put(' '); }, 'space'));
   r3.append(key('.', () => { hgDone(); put('.'); }, 'punc'));
+  r3.append(key('⌨', kbNative, 'wide natk'));
   r3.append(key('▾', () => { hgDone(); kbShow(false); inp.blur(); }, 'wide down'));
+
+  // 폰 자판을 쓰는 동안 보이는 한 줄 — 돌아오는 문
+  const rn = row('nat');
+  rn.append(key('ă  화면 자판으로', kbVirt, 'toviet'));
   kbPaint();
+}
+
+/* 폰에 깔린 진짜 자판으로 — 햅틱도 있고 손에 익어 좋다.
+   다만 웹은 폰 자판의 **언어를 못 바꾼다.** 베트남어 자판(텔렉스 내장)을
+   설정에서 한 번 추가해야 하고, 그 안내를 딱 한 번 띄운다. */
+function kbNative() {
+  S.kbnat = 1; save();
+  const inp = $('#chatText');
+  inp.removeAttribute('inputmode');
+  kbShow(true);
+  inp.blur(); setTimeout(() => inp.focus({ preventScroll: true }), 0);
+  if (!S.natTip) {
+    S.natTip = 1; save();
+    popup('<b>폰의 베트남어 자판을 한 번만 추가해 주세요.</b><br>' +
+      (isIOS()
+        ? '아이폰: 설정 → 일반 → 키보드 → 키보드 → 새로운 키보드 추가 → <b>베트남어</b> (Telex 선택)'
+        : '안드로이드: Gboard(자판) 설정 → 언어 → <b>베트남어</b> 추가 (Telex 선택)') +
+      '<br>그다음 자판의 <b>🌐 지구본</b> 키로 바꿔 씁니다.<br>' +
+      '성조는 우리 자판과 똑같이 <b>chao+f → chào</b> 식으로 칩니다.');
+  }
+}
+function kbVirt() {
+  S.kbnat = 0; save();
+  const inp = $('#chatText');
+  inp.setAttribute('inputmode', 'none');
+  inp.blur();
+  kbShow(true);
+  inp.focus({ preventScroll: true });
 }
 let KBUP = 0;
 
@@ -4349,8 +4451,11 @@ function kbShow(on) {
   const bar = $('#chatTone');
   if (!bar) return;
   drawChatTone();
+  const nat = !!S.kbnat;                              // 폰 자판을 쓰기로 한 사람
   bar.classList.toggle('up', !!on);
-  $('#chatText').setAttribute('inputmode', 'none');   // 폰 자판은 뜨지 않는다
+  bar.classList.toggle('natmode', nat);
+  if (nat) $('#chatText').removeAttribute('inputmode');
+  else $('#chatText').setAttribute('inputmode', 'none');   // 우리 자판일 때만 폰 자판을 막는다
   kbPaint();
   if (!on) HG = null;
 }
@@ -4529,7 +4634,11 @@ function drawMateRows(s) {
   s.append(wait);
   const paint = () => {
     wait.remove();
-    const list = ((MATES || {}).people || []).filter(x => x.uid !== myUid());
+    /* 같은 별명이 기기 두 대로 들어오면 두 줄로 떴다 — 별명으로 걸러 하나만 남긴다 */
+    const seen = {};
+    ((MATES || {}).people || []).filter(x => x.uid !== myUid())
+      .forEach(m => { const k = m.nick; if (!seen[k] || (m.td || 0) > (seen[k].td || 0)) seen[k] = m; });
+    const list = Object.values(seen);
     if (!list.length) { s.append(el('p', 'note', '아직 다른 사람이 없습니다.')); return; }
     list.forEach(m => {
       const btn = el('button', 'msgrow');
@@ -4539,7 +4648,8 @@ function drawMateRows(s) {
                  el('span', 'msglast', `모두 ${m.td}일 · 외운 단어 ${m.memo} · 엄지 ${m.th}`));
       btn.append(mid);
       if (mateNew(m)) btn.append(el('span', 'msgbadge', '새'));
-      btn.onclick = () => { dive(renderRooms); showMate(m.uid); };
+      // 메신저답게 누르면 **바로 쪽지방**으로 — 프로필은 쪽지방 위의 이름을 누르면 나온다
+      btn.onclick = () => { dive(renderRooms); openDm(m.uid); };
       s.append(btn);
     });
   };
@@ -5491,7 +5601,10 @@ function clubHome(j) {
   head.append(el('strong', null, '이번 주 출석'));
   head.append(el('span', 'dimtxt', '월 화 수 목 금 토 일'));
   b.append(head);
-  (j.people || []).forEach(m => {
+  // 같은 별명(같은 사람의 다른 기기)은 하나만 — 메신저와 같은 규칙
+  const uniq = {};
+  (j.people || []).forEach(m => { if (!uniq[m.nick] || (m.td || 0) > (uniq[m.nick].td || 0)) uniq[m.nick] = m; });
+  Object.values(uniq).forEach(m => {
     const row = el('button', 'cmem' + (m.uid === myUid() ? ' me' : ''));
     row.append(faceEl(m.uid), el('span', 'cn', esc(m.nick)));
     const dd = el('span', 'dots');
@@ -5504,9 +5617,12 @@ function clubHome(j) {
 
   b.append(el('p', 'note', '사람을 누르면 <b>엄지척</b>과 <b>쪽지</b>를 보낼 수 있습니다.'));
   // 동아리는 하나만 — '다른 동아리 보기'는 없앴다. 옮기려면 먼저 탈퇴한다.
+  const more = el('button', 'ghost sm', '다른 동아리 보기');
+  more.onclick = () => { dive(showClub); clubList(); };
+  b.append(more);
   const out = el('button', 'ghost sm', '동아리 탈퇴');
   out.onclick = () => {
-    if (!confirm(j.name + ' 에서 탈퇴할까요?\n한 번에 한 동아리만 들어갈 수 있습니다.')) return;
+    if (!confirm(j.name + ' 에서 탈퇴할까요?')) return;
     clubBusy('탈퇴하는 중…');
     cCall({ act: 'leave', id: S.club.id })
       .then(() => { S.club = null; save(); clubList(); }).catch(clubFail);
@@ -5670,6 +5786,9 @@ function openDm(u) {
   $('#chatTone').hidden = false; drawChatTone();
  $('#chatMic').hidden = true;   // 사람끼리는 글로만
   $('#chatLog').textContent = '';
+  const prow = el('button', 'ghost sm dmprof', '👤 ' + esc(p.nick) + ' 프로필 · 엄지척');
+  prow.onclick = () => { dive(() => openDm(u)); showMate(u); };
+  $('#chatLog').append(prow);
   $('#chatLog').append(el('p', 'note dmwarn',
     '쪽지는 <b>암호가 걸려 있지 않습니다</b>. 서버에 30일 남고, 운영자는 마음먹으면 볼 수 있습니다.<br>' +
     '비밀번호·계좌·주소 같은 것은 여기에 쓰지 마세요.'));

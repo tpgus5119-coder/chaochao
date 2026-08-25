@@ -146,6 +146,42 @@ export default {
       return send({ ok: true, wiped: ids.length });
     }
 
+    /* ── 계정 ─────────────────────────────────────────
+       아이디+비밀번호로 어느 기기서든 같은 별명·같은 기록(동아리·엄지·사진)이 따라온다.
+       비밀번호는 소금을 쳐서 으깬 값(해시)만 저장한다 — 원문은 어디에도 안 남는다.
+       이메일이 없으므로 비밀번호를 잊으면 되찾을 길이 없다(가입 화면에 밝힌다). */
+    const hashPw = async (salt, pw) => {
+      const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + '\u0001' + pw));
+      return [...new Uint8Array(d)].map(x => x.toString(16).padStart(2, '0')).join('');
+    };
+    if (act === 'signup' || act === 'login') {
+      const id = cut(b.id, 20).toLowerCase().trim();
+      const pw = String(b.pw || '').slice(0, 64);
+      if (!/^[a-z0-9_]{4,20}$/.test(id)) return send({ error: '아이디는 영문·숫자 4~20자입니다' });
+      if (pw.length < 4) return send({ error: '비밀번호는 4자 이상입니다' });
+      const AK = 'acct:' + id;
+      const acct = JSON.parse((await KV.get(AK)) || 'null');
+      if (act === 'signup') {
+        if (acct) return send({ error: '이미 있는 아이디입니다' });
+        const uid = cut(b.uid, 16);
+        if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
+        const salt = Math.random().toString(36).slice(2, 12);
+        await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid }));
+        return send({ ok: true, uid, nick });
+      }
+      if (!acct) return send({ error: '없는 아이디입니다' });
+      if (await hashPw(acct.s, pw) !== acct.h) return send({ error: '비밀번호가 다릅니다' });
+      // 이 계정(uid)의 지금 별명을 찾아 준다
+      const nicks = JSON.parse((await KV.get(NKEY)) || '{}');
+      let myNick = '';
+      for (const [k, v] of Object.entries(nicks)) if (v === acct.u) { myNick = k; break; }
+      // 이 uid 가 들어 있는 동아리도 알려 준다 (기기를 바꿔도 동아리가 따라온다)
+      let myClub = null;
+      for (const [cid, cc] of Object.entries(clubs))
+        if (cc.uids && cc.uids[acct.u]) { myClub = { id: cid, name: cc.name, nick: cc.uids[acct.u] }; break; }
+      return send({ ok: true, uid: acct.u, nick: myNick || (myClub && myClub.nick) || '', club: myClub });
+    }
+
     if (act === 'clubs')                                     // 목록 (사람 많은 순)
       return send({ clubs: Object.entries(clubs)
         .map(([id, c]) => ({ id, name: c.name, n: c.members.length, approve: !!c.approve }))
@@ -339,10 +375,7 @@ export default {
 
     if (act === 'join') {
       if (c.members.includes(nick)) return send({ ok: true, state: 'member' });
-      // 동아리는 하나만. 이미 다른 데 들어가 있으면 거기서 먼저 나가야 한다.
-      for (const [oid, oc] of Object.entries(clubs))
-        if (oid !== id && oc.members.includes(nick))
-          return send({ error: `이미 '${oc.name}' 에 들어가 있습니다. 먼저 탈퇴해 주세요.` });
+      // 여러 동아리에 겹쳐 들어갈 수 있다 (사용자 지시로 하나 제한을 풀었다)
       if (c.members.length >= 100) return send({ error: '정원이 찼습니다 (100명)' });
       if (myUid) c.uids[myUid] = nick;
       if (c.approve) { if (!c.wait.includes(nick)) { c.wait.push(nick); } await save(); }
@@ -402,6 +435,9 @@ export default {
       mine.p = {};
       for (const k of FIELDS) if (typeof p[k] === 'number') mine.p[k] = num(p[k], 100);
       cu[uid] = mine;
+      // 같은 사람이 폰·컴퓨터 두 대로 들어오면 기기표(uid)가 둘이라 명단에 두 번 떴다.
+      // 별명이 같으면 같은 사람이다 — 방금 온 기기만 남긴다.
+      for (const k of Object.keys(cu)) if (k !== uid && cu[k].n === nick) delete cu[k];
       for (const k of Object.keys(cu)) if (!c.members.includes(cu[k].n)) delete cu[k];
       // 바뀐 게 없으면 저장하지 않는다 (하루 쓰기 1000번을 아낀다)
       if (JSON.stringify(was) !== JSON.stringify(mine)) await KV.put(CUK, JSON.stringify(cu), CTTL);
