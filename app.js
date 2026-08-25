@@ -5501,9 +5501,10 @@ async function cCall(o) {
   const r = await fetch(CLUBURL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
                                    body: JSON.stringify(Object.assign({ nick: S.nick, uid: myUid() }, o)) });
   const j = await r.json();
-  // 'gone' 은 동아리가 정말 없어졌을 때만 온다. 그 밖의 어떤 오류로도 동아리를 놓지 않는다 —
-  // 예전에는 이름이 잠깐 어긋난 것만으로 동아리가 통째로 사라졌다.
-  if (j.error === 'gone') { S.club = null; save(); throw new Error('이 동아리는 사라졌습니다.'); }
+  // 'gone' 은 **동아리를 물어본 요청**(id 포함)에만 뜻이 있다. 계정 같은 다른 요청이
+  // 옛 서버에 떨어져 gone 을 받아도 동아리를 지우면 안 된다.
+  if (j.error === 'gone' && o.id) { S.club = null; save(); throw new Error('이 동아리는 사라졌습니다.'); }
+  if (j.error === 'gone') throw new Error('서버가 아직 옛 판입니다 — 관리자에게 알려 주세요.');
   if (j.error === 'notmember') { S.club = null; save();
     throw new Error('이 동아리의 회원이 아닙니다 — 다시 가입해 주세요.'); }
   if (j.error) throw new Error(j.error);
