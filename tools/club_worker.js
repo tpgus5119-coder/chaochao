@@ -399,6 +399,24 @@ export default {
       return send({ ok: true });
     }
 
+    /* ── 오늘 한 줄 (동아리 담벼락) ─────────────────────
+       쪽지(1:1)보다 커뮤니티를 만드는 것은 담벼락이다. 최근 50개, 30일 뒤 삭제.
+       글 하나 = KV 쓰기 1번이라 무료 한도 안에서 넉넉하다. */
+    const FDK = 'fd:' + id, FTTL = { expirationTtl: 60 * 60 * 24 * 30 };
+    if (act === 'feed') {
+      if (!c.members.includes(nick)) return send({ error: 'notmember' });
+      return send({ posts: JSON.parse((await KV.get(FDK)) || '[]') });
+    }
+    if (act === 'post') {
+      if (!c.members.includes(nick)) return send({ error: 'notmember' });
+      const x = cut(b.x, 200).trim();
+      if (!x) return send({ error: '내용이 없습니다' });
+      const posts = JSON.parse((await KV.get(FDK)) || '[]');
+      posts.push({ f: cut(b.uid, 16), n: nick, x, t: Date.now() });
+      await KV.put(FDK, JSON.stringify(posts.slice(-50)), FTTL);
+      return send({ ok: true, posts: posts.slice(-50) });
+    }
+
     if (act === 'leave') {
       if (myUid) delete c.uids[myUid];
       c.members = c.members.filter(x => x !== nick);

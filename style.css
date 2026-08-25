@@ -1199,3 +1199,16 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .catchipbtn.on{background:var(--accent); color:var(--accent-fg); font-weight:700}
 .clubrow .minechip{font-style:normal; font-size:11px; color:var(--accent); margin-left:6px}
 .profbox{margin:10px 0}
+
+/* 동아리 담벼락 */
+.feedin{display:flex; gap:8px; margin:6px 0 12px}
+.feedin .keyin{flex:1; min-width:0}
+.feedlist{display:flex; flex-direction:column; gap:8px}
+.feedcard{background:var(--card); box-shadow:var(--shadow); border-radius:var(--radius); padding:10px 12px}
+.feedhd{display:flex; align-items:center; gap:8px; margin-bottom:4px}
+.feedhd .dmt{margin-left:auto}
+.feedtx{white-space:pre-wrap; overflow-wrap:anywhere}
+/* 쪽지 번역·교정 */
+.dmtools{display:flex; gap:6px; margin-top:6px}
+.dmtrans{display:block; margin-top:6px; padding-top:6px; border-top:1px dashed var(--line);
+  color:var(--dim); font-size:14px}

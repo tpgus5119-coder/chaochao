@@ -738,7 +738,25 @@ const ymd = t => {
 
 function touchToday() {
   const k = ymd();
-  if (!S.act[k]) { S.act[k] = 1; save(); }
+  if (!S.act[k]) {
+    S.act[k] = 1;
+    /* 연속 보호권 — 듀오링고의 streak freeze 를 우리 식으로.
+       ① 어제 하루만 비었고 그제는 했으면, 보호권이 있을 때 어제를 메운다(값 2 = 보호권 자국).
+       ② 보호권은 한 주에 5일 이상 공부하면 1개 (최대 2개). 사는 게 아니라 버는 것이다. */
+    const y = new Date(); y.setDate(y.getDate() - 1);
+    const y2 = new Date(); y2.setDate(y2.getDate() - 2);
+    if (!S.act[ymd(y)] && S.act[ymd(y2)] && (S.shield || 0) > 0) {
+      S.act[ymd(y)] = 2; S.shield--;
+      popup('🛡️ <b>연속 보호권</b>이 어제 하루를 메웠습니다.<br>연속 기록이 이어집니다. (남은 보호권 ' + S.shield + '개)');
+    }
+    const wk = weekKey();
+    if (S.shieldWk !== wk) {
+      const n7 = Object.keys(S.act).filter(d => weekKey(new Date(d)) === wk).length;
+      if (n7 >= 5) { S.shield = Math.min(2, (S.shield || 0) + 1); S.shieldWk = wk;
+                     popup('🛡️ 이번 주 5일을 채워 <b>연속 보호권</b>을 받았습니다. (' + S.shield + '개)<br>하루 빠져도 연속이 이어집니다.'); }
+    }
+    save();
+  }
 }
 function bumpSaid(n) {
   S.stats.said = (S.stats.said || 0) + (n || 1);
@@ -1189,6 +1207,14 @@ function renderAwards() {
 
   /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
      핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
+  const shrow = el('div', 'planrow');
+  shrow.append(el('span', 'pk', '보호권'), el('span', 'pv', '🛡️ ' + (S.shield || 0) + '개'));
+  const shhow = el('button', 'ghost sm', '뭐예요?');
+  shhow.onclick = () => popup('한 주에 <b>5일</b> 공부하면 🛡️ 1개를 받습니다 (최대 2개).<br>' +
+    '하루를 빠지면 보호권이 <b>알아서</b> 그날을 메워 연속 기록이 이어집니다.<br>돈으로는 못 삽니다 — 공부로만 법니다.');
+  shrow.append(shhow);
+  b.append(shrow);
+
   const LEARNNM = { vi: '베트남어', en: '영어', ko: '한국어' };
   const ln = el('div', 'planrow');
   ln.append(el('span', 'pk', '배울 언어'), el('span', 'pv', LEARNNM[S.learn] || '베트남어'));
@@ -5712,6 +5738,40 @@ function clubHome(j) {
 
   b.append(el('p', 'note', '사람을 누르면 <b>엄지척</b>과 <b>쪽지</b>를 보낼 수 있습니다.'));
   // 동아리는 하나만 — '다른 동아리 보기'는 없앴다. 옮기려면 먼저 탈퇴한다.
+  /* 오늘 한 줄 — 동아리 담벼락. 쪽지(1:1)보다 커뮤니티를 만드는 것은 담이다. */
+  const fh = el('div', 'phead');
+  fh.append(el('strong', null, '오늘 한 줄'), el('span', 'dimtxt', '최근 50개 · 30일 뒤 사라짐'));
+  b.append(fh);
+  const fin = el('div', 'feedin');
+  const ftxt = el('input', 'keyin'); ftxt.type = 'text'; ftxt.maxLength = 200;
+  ftxt.placeholder = '오늘 배운 것, 한 마디… (베트남어 환영)';
+  const fgo = el('button', 'primary', '올리기');
+  fin.append(ftxt, fgo);
+  b.append(fin);
+  const flist = el('div', 'feedlist');
+  b.append(flist);
+  const drawFeed = posts => {
+    flist.textContent = '';
+    if (!posts.length) { flist.append(el('p', 'note', '아직 글이 없습니다 — 첫 줄을 남겨 보세요.')); return; }
+    posts.slice().reverse().forEach(pp => {
+      const card = el('div', 'feedcard');
+      const hd = el('div', 'feedhd');
+      hd.append(faceEl(pp.f, 'row'), el('b', null, esc(pp.n)), el('span', 'dmt', dmWhen(pp.t)));
+      card.append(hd, el('div', 'feedtx', esc(pp.x)));
+      flist.append(card);
+    });
+  };
+  cCall({ act: 'feed', id: S.club.id }).then(r => drawFeed(r.posts || []))
+    .catch(() => flist.append(el('p', 'note', '담벼락은 서버가 새 판이어야 보입니다.')));
+  fgo.onclick = () => {
+    const x = ftxt.value.trim();
+    if (!x) { ftxt.focus(); return; }
+    fgo.disabled = true;
+    cCall({ act: 'post', id: S.club.id, x })
+      .then(r => { ftxt.value = ''; fgo.disabled = false; drawFeed(r.posts || []); })
+      .catch(e => { fgo.disabled = false; alert(e.message || '안 올라갔습니다'); });
+  };
+
   const more = el('button', 'ghost sm', '다른 동아리 보기');
   more.onclick = () => { dive(showClub); clubList(); };
   b.append(more);
@@ -5907,6 +5967,31 @@ function dmPull(first) {
       const mine = m.f === myUid();
       const bb = bubble(mine ? 'me' : 'ai', m.x);
       bb.append(el('span', 'dmt', dmWhen(m.t)));
+      if (!mine) {
+        /* 받은 말에만: [번역]은 누를 때만 AI를 부른다(자동이면 몫이 샌다).
+           [✏️]는 헬로톡의 문장 고쳐 주기 — 상대 글을 따와서 고쳐 보내게 한다. */
+        const tools = el('span', 'dmtools');
+        const tr = el('button', 'ghost sm', '번역');
+        tr.onclick = async () => {
+          tr.disabled = true; tr.textContent = '…';
+          const to = S.nat === 'vn' ? '베트남어' : S.nat === 'etc' ? '영어' : '한국어';
+          try {
+            const t = await gCall({ contents: [{ role: 'user', parts: [
+              { text: '다음 문장을 자연스러운 ' + to + '로 번역하라. 번역문만 답하라.\n' + m.x }] }],
+              generationConfig: { maxOutputTokens: 80, thinkingConfig: { thinkingBudget: 0 } } });
+            tr.replaceWith(el('span', 'dmtrans', esc(t.trim())));
+          } catch (e) { tr.textContent = '번역 실패'; tr.disabled = false; }
+        };
+        const fx = el('button', 'ghost sm', '✏️');
+        fx.title = '문장 고쳐 주기';
+        fx.onclick = () => {
+          const inp2 = $('#chatText');
+          inp2.value = '"' + m.x + '" → ';
+          chatGrow(); inp2.focus({ preventScroll: true });
+        };
+        tools.append(tr, fx);
+        bb.append(tools);
+      }
     });
     S.seen = S.seen || {}; S.seen[u] = Date.now(); save();
     drawChatDot();
