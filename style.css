@@ -1191,3 +1191,11 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .tonebar.natmode .kbrow{display:none}
 .tonebar.natmode .kbrow.nat{display:flex}
 .tk.natk{color:var(--dim)}
+
+/* 동아리 갈래 고르기·가입 프로필 */
+.catpick{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 12px}
+.catchipbtn{background:var(--card); box-shadow:var(--shadow); border-color:transparent;
+  padding:8px 12px; border-radius:999px; font-size:14px; color:var(--fg)}
+.catchipbtn.on{background:var(--accent); color:var(--accent-fg); font-weight:700}
+.clubrow .minechip{font-style:normal; font-size:11px; color:var(--accent); margin-left:6px}
+.profbox{margin:10px 0}

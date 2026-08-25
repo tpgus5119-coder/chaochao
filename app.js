@@ -1088,7 +1088,50 @@ function acctForm() {
   b.append(el('p', 'lede', '아이디로 어느 폰에서든 <b>내 별명·동아리</b>가 따라옵니다.'));
   const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = '아이디 (영문·숫자 4~20자)';
   id.autocapitalize = 'none'; id.maxLength = 20;
-  const pw = el('input', 'keyin'); pw.type = 'password'; pw.placeholder = '비밀번호 (4자 이상)'; pw.maxLength = 64;
+  const pw = el('input', 'keyin'); pw.type = 'password';
+  // 비밀번호 규칙은 NIST 지침대로: 길이만 본다(8자+). 특수문자 강제는 뻔한 변형만 낳는다.
+  pw.placeholder = '비밀번호 (8자 이상)'; pw.maxLength = 64;
+
+  /* 가입할 때만 적는 것들 — 국적과 배울 언어. 로그인은 아이디·비번만으로 된다. */
+  const profBox = el('div', 'profbox');
+  profBox.append(el('p', 'note', '<b>가입할 때만</b> 아래를 고릅니다:'));
+  const mkSel = (opts) => {
+    const w = el('div', 'catpick'); let cur = opts[0][0];
+    opts.forEach(([k, nm], i) => {
+      const c = el('button', 'catchipbtn' + (i === 0 ? ' on' : ''), nm);
+      c.type = 'button';
+      c.onclick = () => { cur = k; [...w.children].forEach(x => x.classList.remove('on')); c.classList.add('on'); w.dispatchEvent(new Event('pick')); };
+      w.append(c);
+    });
+    w.val = () => cur;
+    return w;
+  };
+  const natW = mkSel([['kr', '🇰🇷 한국'], ['vn', '🇻🇳 베트남'], ['etc', '🌏 그 외']]);
+  const lrnW = el('div');
+  const regW = el('div');
+  const drawLearn = () => {
+    lrnW.textContent = ''; regW.textContent = '';
+    const nat = natW.val();
+    // 지금 있는 과정은 베트남어(한국인용)뿐이다 — 나머지는 준비 중이라고 정직하게 밝힌다
+    const opts = nat === 'kr' ? [['vi', '베트남어'], ['en', '영어 (준비 중)']]
+               : nat === 'vn' ? [['ko', '한국어 (준비 중)'], ['en', '영어 (준비 중)']]
+               : [['vi', '베트남어'], ['ko', '한국어 (준비 중)'], ['en', '영어 (준비 중)']];
+    lrnW.sel = mkSel(opts);
+    lrnW.append(el('p', 'note', '배울 언어'), lrnW.sel);
+    const drawReg = () => {
+      regW.textContent = '';
+      if (lrnW.sel.val() === 'vi') {                 // 남북은 베트남어를 배울 때만 뜻이 있다
+        regW.sel = mkSel([['n', '북부 (하노이)'], ['s', '남부 (호찌민)']]);
+        regW.append(el('p', 'note', '배울 말씨'), regW.sel);
+      }
+    };
+    lrnW.sel.addEventListener('pick', drawReg);
+    drawReg();
+  };
+  natW.addEventListener('pick', drawLearn);
+  drawLearn();
+  profBox.append(el('p', 'note', '국적'), natW, lrnW, regW);
+
   const err = el('p', 'note nickerr'); err.hidden = true;
   const oops = m => { err.textContent = m; err.hidden = false; };
   const go = (act) => async () => {
@@ -1096,8 +1139,18 @@ function acctForm() {
     const i = id.value.trim().toLowerCase(), p = pw.value;
     if (!/^[a-z0-9_]{4,20}$/.test(i)) return oops('아이디는 영문·숫자 4~20자입니다.');
     if (p.length < 4) return oops('비밀번호는 4자 이상입니다.');
+    if (act === 'signup' && p.length < 8) return oops('비밀번호는 8자 이상입니다.');
     try {
-      const j = await cCall({ act, id: i, pw: p });
+      const prof = act === 'signup'
+        ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '' } : {};
+      const j = await cCall(Object.assign({ act, id: i, pw: p }, prof));
+      if (act === 'signup' && prof.reg) { S.region = prof.reg; drawRegion(); }
+      if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn; }
+      if (act === 'login' && j.prof) {
+        S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
+        if (j.prof.reg) S.region = j.prof.reg;
+        drawRegion();
+      }
       if (act === 'login') {
         // 계정의 기기표를 이 기기에 입힌다 — 이제 서버가 보기에 같은 사람이다
         S.uid = j.uid;
@@ -1116,7 +1169,7 @@ function acctForm() {
   const bi = el('button', 'primary big', '로그인'); bi.onclick = go('login');
   const bu = el('button', 'ghost big', '가입'); bu.onclick = go('signup');
   bs.append(bi, bu);
-  b.append(id, pw, err, bs);
+  b.append(id, pw, profBox, err, bs);
   b.append(el('p', 'note', '· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.<br>' +
     '· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b><br>' +
     '· 학습 진도는 기기 안에 있습니다 — 폰을 바꿀 때는 <b>진도 백업</b>을 같이 쓰세요.'));
@@ -1136,6 +1189,16 @@ function renderAwards() {
 
   /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
      핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
+  const LEARNNM = { vi: '베트남어', en: '영어', ko: '한국어' };
+  const ln = el('div', 'planrow');
+  ln.append(el('span', 'pk', '배울 언어'), el('span', 'pv', LEARNNM[S.learn] || '베트남어'));
+  const lb = el('button', 'ghost sm', '바꾸기');
+  lb.onclick = () => popup('지금 있는 과정은 <b>베트남어(한국인용)</b>뿐입니다.<br>' +
+    '<b>영어 과정</b>과 <b>베트남 분들을 위한 한국어 과정</b>은 준비 중입니다 — ' +
+    '만들어지면 여기서 바꿀 수 있습니다.<br>거짓 선택지를 두지 않으려고 미리 밝혀 둡니다.');
+  ln.append(lb);
+  b.append(ln);
+
   const ac = el('div', 'planrow');
   ac.append(el('span', 'pk', '계정'),
             el('span', 'pv', S.acct ? esc(S.acct.id) : '없음 (이 기기에만 저장)'));
@@ -5525,6 +5588,13 @@ function showClub() {
   } else clubList();
 }
 
+/* 동아리 갈래 — 목록에서 한눈에 구분되게 이모지와 함께 */
+const CLUBCATS = [
+  ['study', '📚', '공부'], ['sport', '⚽', '운동'], ['work', '🏭', '일·회사'],
+  ['hobby', '🎨', '취미'], ['food', '🍜', '밥·모임'], ['talk', '💬', '수다'],
+  ['local', '📍', '지역'], ['etc', '🌱', '기타']];
+const catOf = k => CLUBCATS.find(c => c[0] === k);
+
 function clubList() {
   clubBusy('불러오는 중…');
   cCall({ act: 'clubs' }).then(j => {
@@ -5536,10 +5606,21 @@ function clubList() {
     mk.onclick = clubCreate;
     b.append(mk);
     if (!j.clubs.length) b.append(el('p', 'note', '아직 만들어진 동아리가 없습니다. 첫 번째로 만들어 보세요.'));
-    j.clubs.forEach(c => {
-      const row = el('button', 'bigmenu');
-      row.append(el('b', null, esc(c.name)),
-                 el('span', 'msub', ` ${c.n}명` + (c.approve ? ' · 승인제' : '')));
+    /* 갈래별로 묶어 보여준다 — 이모지가 갈래 표다 */
+    const groups = {};
+    j.clubs.forEach(c => { (groups[c.cat || 'etc'] = groups[c.cat || 'etc'] || []).push(c); });
+    const order = CLUBCATS.map(x => x[0]).filter(k => groups[k]);
+    Object.keys(groups).forEach(k => { if (!order.includes(k)) order.push(k); });
+    order.forEach(k => {
+      const cat = catOf(k) || catOf('etc');
+      if (j.clubs.length > 3) b.append(el('div', 'grp', cat[1] + ' ' + cat[2]));
+      groups[k].forEach(c => {
+      const row = el('button', 'bigmenu clubrow');
+      const mine = S.club && S.club.id === c.id;
+      row.append(el('b', null, (catOf(c.cat) || catOf('etc'))[1] + ' ' + esc(c.name)
+                   + (mine ? ' <i class="minechip">내 동아리</i>' : '')),
+                 el('span', 'msub', esc(c.desc || '') + (c.desc ? ' · ' : '')
+                   + `${c.n}명` + (c.approve ? ' · 승인제' : '')));
       row.onclick = () => {
         clubBusy('들어가는 중…');
         cCall({ act: 'join', id: c.id }).then(r => {
@@ -5550,6 +5631,7 @@ function clubList() {
         }).catch(clubFail);
       };
       b.append(row);
+      });
     });
     show('club', '동아리', true);
   }).catch(clubFail);
@@ -5561,6 +5643,18 @@ function clubCreate() {
   b.append(el('p', 'lede', '어떤 동아리인가요?'));
   const inp = el('input', 'keyin'); inp.type = 'text'; inp.maxLength = 20;
   inp.placeholder = '이름 (예: 빈즈엉 3공장)';
+  const de = el('input', 'keyin'); de.type = 'text'; de.maxLength = 60;
+  de.placeholder = '한 줄 소개 (60자 — 예: 퇴근 후 풋살, 초보 환영)';
+  // 갈래 — 하나 고른다. 이모지가 목록에서 이 동아리의 표가 된다.
+  let cat = 'etc';
+  const cw = el('div', 'catpick');
+  CLUBCATS.forEach(([k, emo, nm]) => {
+    const c2 = el('button', 'catchipbtn', emo + ' ' + nm);
+    c2.type = 'button';
+    if (k === cat) c2.classList.add('on');
+    c2.onclick = () => { cat = k; [...cw.children].forEach(x => x.classList.remove('on')); c2.classList.add('on'); };
+    cw.append(c2);
+  });
   const ap = el('label', 'chk');
   const cb = el('input'); cb.type = 'checkbox';
   ap.append(cb, el('span', null, '아무나 못 들어오게 (내가 받아 줘야 가입)'));
@@ -5570,11 +5664,11 @@ function clubCreate() {
     const v = inp.value.trim();
     if (v.length < 2) { inp.focus(); return; }
     clubBusy('만드는 중…');
-    cCall({ act: 'create', name: v, approve: cb.checked })
+    cCall({ act: 'create', name: v, approve: cb.checked, desc: de.value.trim(), cat })
       .then(j => { S.club = { id: j.id, name: j.name }; save(); showClub(); })
       .catch(clubFail);
   };
-  b.append(inp, ap, go);
+  b.append(inp, de, el('p', 'note', '갈래를 고르세요'), cw, ap, go);
   dive(clubList);                       // 위쪽 뒤로가기로 목록으로 돌아간다
   show('club', '동아리 만들기', true);
   inp.focus();

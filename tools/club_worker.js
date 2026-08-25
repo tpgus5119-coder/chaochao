@@ -158,7 +158,10 @@ export default {
       const id = cut(b.id, 20).toLowerCase().trim();
       const pw = String(b.pw || '').slice(0, 64);
       if (!/^[a-z0-9_]{4,20}$/.test(id)) return send({ error: '아이디는 영문·숫자 4~20자입니다' });
-      if (pw.length < 4) return send({ error: '비밀번호는 4자 이상입니다' });
+      // 비밀번호 규칙은 NIST 지침을 따른다: 길이 8자 이상, 특수문자 강제는 하지 않는다
+      // (강제 규칙은 오히려 뻔한 변형을 만든다는 것이 지침의 근거다). 기존 가입자는 그대로 들어온다.
+      if (act === 'signup' && pw.length < 8) return send({ error: '비밀번호는 8자 이상입니다' });
+      if (pw.length < 4) return send({ error: '비밀번호가 너무 짧습니다' });
       const AK = 'acct:' + id;
       const acct = JSON.parse((await KV.get(AK)) || 'null');
       if (act === 'signup') {
@@ -166,8 +169,9 @@ export default {
         const uid = cut(b.uid, 16);
         if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
         const salt = Math.random().toString(36).slice(2, 12);
-        await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid }));
-        return send({ ok: true, uid, nick });
+        const prof = { nat: cut(b.nat, 4), learn: cut(b.learn, 4), reg: cut(b.reg, 2) };
+        await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid, p: prof }));
+        return send({ ok: true, uid, nick, prof });
       }
       if (!acct) return send({ error: '없는 아이디입니다' });
       if (await hashPw(acct.s, pw) !== acct.h) return send({ error: '비밀번호가 다릅니다' });
@@ -179,12 +183,14 @@ export default {
       let myClub = null;
       for (const [cid, cc] of Object.entries(clubs))
         if (cc.uids && cc.uids[acct.u]) { myClub = { id: cid, name: cc.name, nick: cc.uids[acct.u] }; break; }
-      return send({ ok: true, uid: acct.u, nick: myNick || (myClub && myClub.nick) || '', club: myClub });
+      return send({ ok: true, uid: acct.u, nick: myNick || (myClub && myClub.nick) || '',
+                    club: myClub, prof: acct.p || null });
     }
 
     if (act === 'clubs')                                     // 목록 (사람 많은 순)
       return send({ clubs: Object.entries(clubs)
-        .map(([id, c]) => ({ id, name: c.name, n: c.members.length, approve: !!c.approve }))
+        .map(([id, c]) => ({ id, name: c.name, n: c.members.length, approve: !!c.approve,
+                             desc: c.desc || '', cat: c.cat || '' }))
         .sort((x, y) => y.n - x.n) });
 
     if (act === 'create') {                                  // 만들기
@@ -195,6 +201,8 @@ export default {
       if (Object.values(clubs).some(c => c.name === name)) return send({ error: '같은 이름이 이미 있습니다' });
       const id = Math.random().toString(36).slice(2, 8);
       clubs[id] = { name, owner: nick, approve: !!b.approve, members: [nick], wait: [],
+                    desc: cut(b.desc, 60).trim(),            // 한 줄 소개 (60자)
+                    cat: cut(b.cat, 10),                     // 갈래 (앱이 정한 목록 중 하나)
                     uids: cut(b.uid, 16) ? { [cut(b.uid, 16)]: nick } : {} };
       await save();
       return send({ id, name });
