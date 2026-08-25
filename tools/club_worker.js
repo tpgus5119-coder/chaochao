@@ -170,8 +170,11 @@ export default {
         if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
         const salt = Math.random().toString(36).slice(2, 12);
         const prof = { nat: cut(b.nat, 4), learn: cut(b.learn, 4), reg: cut(b.reg, 2) };
-        await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid, p: prof }));
-        return send({ ok: true, uid, nick, prof });
+        // 증표(token): 로그인한 사람만 자기 진도를 읽고 쓸 수 있게 하는 문패.
+        // 비밀번호를 매번 보내지 않으려고 따로 둔다.
+        const tok = [...crypto.getRandomValues(new Uint8Array(16))].map(x => x.toString(16).padStart(2, '0')).join('');
+        await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid, p: prof, t: tok }));
+        return send({ ok: true, uid, nick, prof, tok });
       }
       if (!acct) return send({ error: '없는 아이디입니다' });
       if (await hashPw(acct.s, pw) !== acct.h) return send({ error: '비밀번호가 다릅니다' });
@@ -183,8 +186,31 @@ export default {
       let myClub = null;
       for (const [cid, cc] of Object.entries(clubs))
         if (cc.uids && cc.uids[acct.u]) { myClub = { id: cid, name: cc.name, nick: cc.uids[acct.u] }; break; }
+      if (!acct.t) {                                        // 옛 가입자에게도 증표를 만들어 준다
+        acct.t = [...crypto.getRandomValues(new Uint8Array(16))].map(x => x.toString(16).padStart(2, '0')).join('');
+        await KV.put(AK, JSON.stringify(acct));
+      }
+      const hasProg = !!(await KV.get('prog:' + id, { type: 'text' }));
       return send({ ok: true, uid: acct.u, nick: myNick || (myClub && myClub.nick) || '',
-                    club: myClub, prof: acct.p || null });
+                    club: myClub, prof: acct.p || null, tok: acct.t, hasProg });
+    }
+
+    /* ── 진도 서버 저장 ──────────────────────────────
+       로그인한 사람만. 하루 한두 번 쓰기라 20~100명 규모는 무료 한도(쓰기 1,000/일) 안이다.
+       더 커지면 D1 로 옮긴다 — 그때까지의 다리다. */
+    if (act === 'save' || act === 'load') {
+      const id = cut(b.id, 20).toLowerCase().trim();
+      const acct = JSON.parse((await KV.get('acct:' + id)) || 'null');
+      if (!acct || !acct.t || cut(b.tok, 40) !== acct.t) return send({ error: '로그인이 필요합니다' });
+      const PK = 'prog:' + id;
+      if (act === 'load') {
+        const raw = await KV.get(PK, { type: 'text' });
+        return send(raw ? JSON.parse(raw) : { data: null });
+      }
+      const body2 = JSON.stringify({ data: b.data || null, at: Date.now() });
+      if (body2.length > 400000) return send({ error: '진도가 너무 큽니다' });
+      await KV.put(PK, body2);
+      return send({ ok: true, at: Date.now() });
     }
 
     if (act === 'clubs')                                     // 목록 (사람 많은 순)

@@ -1097,6 +1097,30 @@ async function shareCard() {
 
 /* 업적 전체 화면 — 홈에는 딴 것 몇 개만 보이고, 나머지는 여기서 */
 
+
+/* ── 진도 서버 저장 ──────────────────────────────────────────
+   로그인한 사람만. 하루 한 번 + 세트를 끝낼 때 올린다.
+   서버 쓰기 한도(무료 1,000/일)를 아끼려고 그 이상은 안 올린다. */
+const PROGKEYS = ['done', 'srs', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick'];
+function cloudSave(force) {
+  if (!S.acct || !S.acct.tok) return Promise.resolve();
+  const today = ymd();
+  if (!force && S.cloudAt === today) return Promise.resolve();
+  const data = {};
+  PROGKEYS.forEach(k => { if (S[k] !== undefined) data[k] = S[k]; });
+  return cCall({ act: 'save', id: S.acct.id, tok: S.acct.tok, data })
+    .then(() => { S.cloudAt = today; save(); })
+    .catch(() => { });                     // 안 되면 조용히 — 다음 기회에 또 올린다
+}
+async function cloudLoad() {
+  const j = await cCall({ act: 'load', id: S.acct.id, tok: S.acct.tok });
+  if (!j.data) return false;
+  PROGKEYS.forEach(k => { if (j.data[k] !== undefined) S[k] = j.data[k]; });
+  save();
+  popup('<b>진도를 불러왔습니다.</b> 화면을 새로 그립니다.');
+  setTimeout(() => location.reload(), 900);
+  return true;
+}
 /* ── 계정 로그인·가입 ────────────────────────────────────────────
    이메일이 없어서 비밀번호를 잊으면 되찾을 길이 없다 — 화면에 그대로 밝힌다.
    서버에는 비밀번호의 으깬 값(해시)만 남는다. */
@@ -1176,7 +1200,14 @@ function acctForm() {
         if (j.club) S.club = { id: j.club.id, name: j.club.name };
         MATES = null;
       }
-      S.acct = { id: i }; save();
+      S.acct = { id: i, tok: j.tok || '' }; save();
+      if (act === 'login' && j.hasProg) {
+        // 서버에 진도가 있다 — 새 기기라면 그대로 받고, 이미 공부한 기기라면 물어본다
+        const mine = Object.keys(S.done || {}).length;
+        if (mine === 0 || confirm('서버에 저장된 진도가 있습니다.\n이 기기로 불러올까요? 지금 기기의 진도는 덮어써집니다.')) {
+          try { await cloudLoad(); } catch (e) { }
+        }
+      }
       popup(act === 'signup'
         ? '<b>가입됐습니다.</b><br>비밀번호를 잊으면 <b>되찾을 길이 없습니다</b> — 적어 두세요.<br>다른 폰에서 로그인하면 지금 별명·동아리가 따라옵니다.'
         : '<b>로그인됐습니다.</b> 별명·동아리가 이 기기로 따라왔습니다.<br>학습 진도는 기기마다 따로입니다 — 옮기려면 진도 백업을 쓰세요.');
@@ -1207,6 +1238,17 @@ function renderAwards() {
 
   /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
      핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
+  if (S.acct && S.acct.tok) {
+    const cl = el('div', 'planrow');
+    cl.append(el('span', 'pk', '서버 진도'),
+              el('span', 'pv', S.cloudAt ? S.cloudAt + ' 저장됨' : '아직 안 올림'));
+    const cb2 = el('button', 'ghost sm', '지금 올리기');
+    cb2.onclick = () => { cb2.disabled = true; cb2.textContent = '올리는 중…';
+      cloudSave(true).then(() => { cb2.textContent = '올렸습니다'; renderAwards(); }); };
+    cl.append(cb2);
+    b.append(cl);
+  }
+
   const shrow = el('div', 'planrow');
   shrow.append(el('span', 'pk', '보호권'), el('span', 'pv', '🛡️ ' + (S.shield || 0) + '개'));
   const shhow = el('button', 'ghost sm', '뭐예요?');
@@ -1659,6 +1701,7 @@ function upcoming(n) {
 const nextDay = () => upcoming(1)[0] || null;
 
 function renderHome() {
+  cloudSave();                           // 로그인한 사람은 하루 한 번 서버에 진도를 남긴다
   pingRooms();                              // 하루 이상 조용하면 먼저 말을 걸어 둔다
   drawMenu();
   drawWxNow();
@@ -2105,6 +2148,7 @@ $('#next').onclick = () => {
       if (!S.srs[l.vi]) S.srs[l.vi] = { lv: 0, first: now(), due: now() + STEPS[0] * DAY };
     });
     touchToday(); save();
+    cloudSave(true);                        // 세트를 끝냈으니 서버에도 남긴다
     finishDay(L.day);
     return;
   }
