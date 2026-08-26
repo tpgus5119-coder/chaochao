@@ -13,7 +13,7 @@ import json, pathlib, random
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CLUBURL = 'https://viet-club.chaochao-app.workers.dev'
-VOICES = ['A', 'B']                 # A=Edge(현행) B=Supertonic  (C=Chirp 예정)
+VOICES = ['A', 'B', 'C']        # A=Edge(현행) B=Supertonic C=Chirp3 HD
 EXT = {'A': 'mp3', 'B': 'm4a', 'C': 'mp3'}
 NAME = {'A': 'Edge (현행)', 'B': 'Supertonic', 'C': 'Chirp 3 HD'}
 
