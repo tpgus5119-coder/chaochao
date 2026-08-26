@@ -1658,7 +1658,8 @@ function drawMenu() {
     t.append(el('b', null, m.name));
     if (id === 'rev') {
       const n = dueWords().length;
-      if (n) t.append(el('span', 'mbadge', String(n)));
+      // 쪽지 알림과 같은 빨간 동그라미로 — 알림은 앱 안에서 한 가지 모양이어야 눈에 익는다
+      if (n) t.append(el('span', 'mbadge red', String(n)));
     }
     t.onclick = () => {
       const items = m.items();
