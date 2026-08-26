@@ -94,14 +94,14 @@ document.getElementById('done').onclick = async () => {{
 
 UI_VI = dict(
   title="Giọng nào nghe giống người thật hơn?",
-  intro="Nghe 2 giọng đọc cho mỗi câu rồi chọn giọng tự nhiên hơn (8 câu, ~2 phút). "
+  intro="Nghe 3 giọng đọc cho mỗi câu rồi chọn giọng tự nhiên hơn (8 câu, ~3 phút). "
         "Khảo sát cho một ứng dụng học tiếng Hàn – tiếng Việt miễn phí. Cảm ơn bạn! 🙏",
   pick="Giọng {n} nghe thật hơn", btn="Xong — Gửi kết quả", none="Bạn chưa chọn câu nào.",
   yours="Kết quả của bạn:", skip="Bỏ qua", sentok="✅ Đã gửi kết quả. Cảm ơn bạn rất nhiều!",
   sendfail="⚠️ Không gửi được — vẫn cảm ơn bạn đã tham gia!", dup="(Đã gửi trước đó — không gửi lại)")
 UI_KO = dict(
   title="어느 쪽이 더 사람 같나요?",
-  intro="문장마다 두 소리를 듣고 더 자연스러운 쪽을 고르세요 (베트남어 8 + 한국어 4문장, 약 3분). "
+  intro="문장마다 세 소리를 듣고 더 자연스러운 쪽을 고르세요 (베트남어 8 + 한국어 4문장, 약 4분). "
         "무료 한–베 학습앱의 목소리 선정 설문입니다. 감사합니다! 🙏",
   pick="소리 {n}이 더 사람 같다", btn="다 골랐어요 — 결과 보내기", none="아직 고른 문장이 없습니다.",
   yours="당신의 선택:", skip="건너뜀", sentok="✅ 결과가 전송됐습니다. 감사합니다!",
