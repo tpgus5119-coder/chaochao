@@ -1626,9 +1626,12 @@ const MENUS = {
   day:   { name: '하루 5분', items: () => [
             ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')],
             ['기사', showNewsLearn]] },
-  rev:   { name: '복습', items: () => [
-            ['방금 배운 것', () => freshMenu('word')],
-            ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
+  rev:   { name: '복습', items: () => {
+            const it = [['방금 배운 것', () => freshMenu('word')],
+                        ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]];
+            const n = missWords().length;
+            if (n >= 3) it.push(['📕 오답노트 (' + n + ')', missQuiz]);
+            return it; } },
   basic: { name: '기본기', items: () => [
             ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
             ['성조', toneEntry], ['겹모음', () => startRule(4)], ['자판 쓰는 법', kbGuide],
@@ -2524,18 +2527,18 @@ function drawRevInfo(cap) {
     go.onclick = () => nx && startLearn(nx);
   }
   b.append(go);
-
-  /* 오답노트 — 두 번 이상 틀린 단어만 골라 다시 푼다.
-     맞히기 시작하면 miss 가 깎여서 목록에서 스스로 사라진다(비우는 재미). */
-  const missW = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
-    .sort((x, y) => y[1] - x[1]).map(([vi]) => findItem(vi)).filter(Boolean);
-  if (missW.length >= 3) {
-    const mb = el('button', 'ghost big', `📕 오답노트 — 발목 잡는 단어만 (${missW.length})`);
-    mb.style.width = '100%'; mb.style.marginTop = '10px';
-    mb.onclick = () => { S.revSeen = 1; save(); startQuiz(missW.slice(0, 20), null, null, true); };
-    b.append(mb);
-  }
   show('quiz', '복습', true);
+}
+
+/* 오답노트 — 두 번 이상 틀린 단어만 골라 다시 푼다.
+   맞히면 miss 가 깎여 목록에서 스스로 사라진다(비우는 재미). 셋 미만이면 메뉴에 안 보인다. */
+function missWords() {
+  return Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
+    .sort((x, y) => y[1] - x[1]).map(([vi]) => findItem(vi)).filter(Boolean);
+}
+function missQuiz() {
+  S.revSeen = 1; save();
+  startQuiz(missWords().slice(0, 20), null, null, true);   // 예정 밖 훈련 — 간격은 안 늘린다
 }
 
 function drawQuiz() {
