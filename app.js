@@ -63,7 +63,7 @@ const UIVI = {
   '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
   '계정': 'Tài khoản', '로그인': 'Đăng nhập', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
   '로그인·가입': 'Đăng nhập / Đăng ký', '배울 언어': 'Ngôn ngữ học', '보호권': 'Khiên bảo vệ',
-  '서버 진도': 'Tiến độ trên máy chủ', '지금 올리기': 'Lưu ngay', '뭐예요?': 'Là gì?',
+  '서버 진도': 'Tiến độ trên máy chủ', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
   '주간 성적표': 'Bảng điểm tuần', '이름없음': 'Chưa có tên',
@@ -1281,13 +1281,10 @@ function renderAwards() {
   /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
      핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
   if (S.acct && S.acct.tok) {
+    // 올리기 단추는 없앴다 — 학습·복습을 마칠 때마다 알아서 올라간다 (사용자 지시)
     const cl = el('div', 'planrow');
     cl.append(el('span', 'pk', '서버 진도'),
-              el('span', 'pv', S.cloudAt ? S.cloudAt + ' 저장됨' : '아직 안 올림'));
-    const cb2 = el('button', 'ghost sm', '지금 올리기');
-    cb2.onclick = () => { cb2.disabled = true; cb2.textContent = '올리는 중…';
-      cloudSave(true).then(() => { cb2.textContent = '올렸습니다'; renderAwards(); }); };
-    cl.append(cb2);
+              el('span', 'pv', S.cloudAt ? S.cloudAt + ' 자동 저장됨' : '학습을 마치면 자동 저장됩니다'));
     b.append(cl);
   }
 
@@ -3038,6 +3035,7 @@ function finishQuiz() {
     S.stats.rev = (S.stats.rev || 0) + 1;                          // 복습 판 수 (업적용)
     if (!Q.early) S.revDay = ymd();                                // 오늘 복습을 끝냈다는 도장
     save();
+    cloudSave(true);                       // 복습을 마쳤으니 서버에도 남긴다 (버튼 없이 자동)
   }
   const n = Q.ok, t = Q.total;
   const again = Q.list.length - Q.total;
