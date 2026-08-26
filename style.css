@@ -145,7 +145,12 @@ button:active{transform:scale(.98)}
   padding:6px 10px; min-width:56px;
 }
 .gcell .gw{font-size:15px; font-weight:700}
-.gcell .gm{font-size:12px; color:var(--dim); white-space:nowrap}
+/* 확대·축소 금지 — 두 손가락 벌리기와 더블탭 확대를 막는다 (meta만으론 iOS가 무시) */
+html{touch-action:pan-x pan-y}
+
+/* 뜻이 길면 두 줄로 접는다 — 한 줄 고집(nowrap)이 화면 밖으로 밀어내던 원인 */
+.gcell{max-width:100%}
+.gcell .gm{font-size:12px; color:var(--dim); text-align:center; overflow-wrap:anywhere}
 
 .exline{font-size:15px; color:var(--dim)}
 .exline b{color:var(--fg); font-size:18px}

@@ -1,5 +1,10 @@
 'use strict';
 
+/* 확대·축소 원천 봉쇄 — iOS 사파리는 meta의 user-scalable=no 를 무시할 수 있어
+   집게 확대(gesturestart)를 코드로 막는다. 더블탭 확대는 CSS touch-action이 막는다 —
+   touchend 를 건드리면 빠른 연타 클릭이 죽으므로(전에 겪은 사고) 절대 손대지 않는다. */
+document.addEventListener('gesturestart', e => e.preventDefault());
+
 /* ---------- 저장 ---------- */
 const KEY = 'vnstudy.v2';
 const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', done: {}, srs: {}, act: {}, stats: {} },
@@ -2334,6 +2339,13 @@ function pickMode(w, lv) {
   if (lv >= 1) return r < .22 ? 'say' : r < .45 ? 'type' : r < .75 ? 'listen' : 'read';
   return r < .55 ? 'listen' : 'read';
 }
+/* 낱말 → 속한 세트 색인. 오답 보기를 같은 세트에서 뽑기 위한 것 —
+   엉뚱한 세트의 단어가 보기로 나오면 뜻만 슬쩍 봐도 답이 티가 난다. */
+let CHAPIX = null;
+function chapOf(vi) {
+  if (!CHAPIX) { CHAPIX = {}; ALL.forEach(d => (d.words || []).forEach(w => { CHAPIX[w.vi] = d.day; })); }
+  return CHAPIX[vi];
+}
 function buildQuestions(words, forced) {
   const pool = allWords();
   // 오답 보기는 같은 종류에서 고른다 — 문장 문제에 단어 뜻을 섞으면
@@ -2347,8 +2359,14 @@ function buildQuestions(words, forced) {
     let src = w.sent ? spool : pool;
     if (src.length < 4) src = [...src, ...(w.sent ? pool : spool)];             // 모자라면 채운다
     const seen = new Set([w.vi]);
-    const others = src.filter(x => !seen.has(x.vi) && seen.add(x.vi))
-      .sort(() => Math.random() - .5).slice(0, 3);
+    // 같은 세트 이웃부터 — 주제가 같아야 헷갈리는 진짜 보기가 된다. 모자라면 전체에서 채운다.
+    const home = w.sent ? undefined : chapOf(w.vi);
+    const near = home === undefined ? []
+      : src.filter(x => !seen.has(x.vi) && chapOf(x.vi) === home && seen.add(x.vi))
+           .sort(() => Math.random() - .5).slice(0, 3);
+    const others = near.concat(
+      src.filter(x => !seen.has(x.vi) && seen.add(x.vi))
+         .sort(() => Math.random() - .5).slice(0, 3 - near.length));
     return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
   }).sort(() => Math.random() - .5);
 }
