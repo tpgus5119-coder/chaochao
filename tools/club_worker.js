@@ -107,6 +107,40 @@ export default {
 
     const b = await req.json().catch(() => ({}));
     const act = cut(b.act, 20), nick = cut(b.nick, 10);
+
+    /* ── 목소리 블라인드 설문 (v13) ────────────────────
+       표 하나 = KV 글 하나(동시 제출이 서로를 덮어쓸 일이 없다). 90일 보관.
+       개인정보 없음 — 어느 소리를 골랐는지 뿐. 풀은 둘: vi(베트남인) / ko(한국인). */
+    if (act === 'vote') {
+      const pool = b.pool === 'vi' ? 'vi' : 'ko';
+      const clean = {};
+      for (const [k, v] of Object.entries(b.picks || {}).slice(0, 30))
+        if (/^[a-z]\d{1,2}$/.test(k) && /^[A-C]$/.test(String(v))) clean[k] = String(v);
+      if (!Object.keys(clean).length) return send({ error: 'empty' });
+      await KV.put(`sv:${pool}:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
+        JSON.stringify({ p: clean, t: cut(b.test, 12) }), { expirationTtl: 60 * 60 * 24 * 90 });
+      return send({ ok: true });
+    }
+    if (act === 'votes') {                                   // 집계 — 이름 없는 숫자만
+      const out = {};
+      for (const pool of ['vi', 'ko']) {
+        const agg = {}; let n = 0, cursor;
+        do {
+          const l = await KV.list({ prefix: `sv:${pool}:`, cursor });
+          for (const k of l.keys) {
+            const v = JSON.parse((await KV.get(k.name)) || 'null');
+            if (!v) continue;
+            n++;
+            for (const [q, c] of Object.entries(v.p || {}))
+              (agg[q] = agg[q] || {})[c] = (agg[q][c] || 0) + 1;
+          }
+          cursor = l.list_complete ? undefined : l.cursor;
+        } while (cursor);
+        out[pool] = { n, agg };
+      }
+      return send(out);
+    }
+
     const clubs = JSON.parse((await KV.get('clubs')) || '{}');
     const save = () => KV.put('clubs', JSON.stringify(clubs));
 
