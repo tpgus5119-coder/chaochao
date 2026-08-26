@@ -74,7 +74,7 @@ def pick(word, pos_short, hanja, xml):
             tc = (tag(it, "target_code") or [""])[0]
             if tc and view_origin(tc) == hanja:
                 return it, "hanja"
-            time.sleep(0.1)
+            time.sleep(0.4)
     return cand[0], "first"                     # 못 가르면 첫 후보(가장 흔한 뜻)
 
 def sense_of(it):
@@ -109,7 +109,9 @@ def main():
         if (len(done)) % 100 == 0:
             OUT.write_text(json.dumps(done, ensure_ascii=False, separators=(",", ":")))
             print(f"{len(done)}/{len(rows)}  붙음 {n_ok}  못찾음 {n_miss}", flush=True)
-        time.sleep(0.12)
+            time.sleep(30)
+        # 함정: 초당 여러 건 연타(0.12초 간격, 434건)에 방화벽이 IP를 하루쯤 차단했다(2026-08 실측)
+        time.sleep(1.0)
     OUT.write_text(json.dumps(done, ensure_ascii=False, separators=(",", ":")))
     total_ok = sum(1 for v in done.values() if "vi" in v)
     print(f"끝. 전체 {len(done)}  베트남어 뜻 {total_ok} ({total_ok*100//len(done)}%)", flush=True)
