@@ -63,7 +63,7 @@ const UIVI = {
   '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
   '계정': 'Tài khoản', '로그인': 'Đăng nhập', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
   '로그인·가입': 'Đăng nhập / Đăng ký', '배울 언어': 'Ngôn ngữ học', '보호권': 'Khiên bảo vệ',
-  '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '뭐예요?': 'Là gì?',
+  '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '처음이세요? 가입하기': 'Lần đầu? Đăng ký', '이미 계정이 있어요 — 로그인': 'Đã có tài khoản — Đăng nhập', '가입하기': 'Đăng ký', '로그인': 'Đăng nhập', '회원가입': 'Đăng ký', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
   '주간 성적표': 'Bảng điểm tuần', '이름없음': 'Chưa có tên',
@@ -1164,10 +1164,13 @@ async function cloudLoad() {
 /* ── 계정 로그인·가입 ────────────────────────────────────────────
    이메일이 없어서 비밀번호를 잊으면 되찾을 길이 없다 — 화면에 그대로 밝힌다.
    서버에는 비밀번호의 으깬 값(해시)만 남는다. */
-function acctForm(gate) {
+function acctForm(gate, mode) {
+  mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '아이디로 어느 폰에서든 <b>내 별명·동아리</b>가 따라옵니다.'));
+  b.append(el('p', 'lede', mode === 'login'
+    ? '아이디로 어느 폰에서든 <b>내 별명·동아리</b>가 따라옵니다.'
+    : '<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.'));
   // 별명이 아직 없으면(첫 방문 가입) 여기서 같이 정한다 — 가입에 별명이 필요해서다
   const nickIn = el('input', 'keyin'); nickIn.type = 'text'; nickIn.maxLength = 10;
   nickIn.placeholder = '별명 (2~10자) — 순위·동아리에 보입니다';
@@ -1177,9 +1180,8 @@ function acctForm(gate) {
   // 비밀번호 규칙은 NIST 지침대로: 길이만 본다(8자+). 특수문자 강제는 뻔한 변형만 낳는다.
   pw.placeholder = '비밀번호 (8자 이상)'; pw.maxLength = 64;
 
-  /* 가입할 때만 적는 것들 — 국적과 배울 언어. 로그인은 아이디·비번만으로 된다. */
+  /* 가입 화면에만 나오는 것들 — 국적과 배울 언어 */
   const profBox = el('div', 'profbox');
-  profBox.append(el('p', 'note', '<b>가입할 때만</b> 아래를 고릅니다:'));
   const mkSel = (opts) => {
     const w = el('div', 'catpick'); let cur = opts[0][0];
     opts.forEach(([k, nm], i) => {
@@ -1265,12 +1267,20 @@ function acctForm(gate) {
       if (gate) renderHome(); else renderAwards();
     } catch (e) { oops(e.message || '안 됐습니다'); }
   };
-  const bs = el('div', 'row2');
-  const bi = el('button', 'primary big', '로그인'); bi.onclick = go('login');
-  const bu = el('button', 'ghost big', '가입'); bu.onclick = go('signup');
-  bs.append(bi, bu);
+  const bs = el('div');
+  const main = el('button', 'primary big', mode === 'login' ? tr('로그인') : tr('가입하기'));
+  main.style.width = '100%';
+  main.onclick = go(mode === 'login' ? 'login' : 'signup');
+  bs.append(main);
   if (!S.nick) profBox.append(el('p', 'note', '별명'), nickIn);
-  b.append(id, pw, profBox, err, bs);
+  if (mode === 'login') b.append(id, pw, err, bs);
+  else b.append(profBox, id, pw, err, bs);
+  // 두 화면 사이를 오가는 문
+  const sw = el('button', 'ghost');
+  sw.style.width = '100%'; sw.style.marginTop = '10px';
+  sw.textContent = mode === 'login' ? tr('처음이세요? 가입하기') : tr('이미 계정이 있어요 — 로그인');
+  sw.onclick = () => acctForm(gate, mode === 'login' ? 'signup' : 'login');
+  b.append(sw);
   if (gate) {
     // 관문 모드 — 로그인 전에는 열 때마다 이 화면이 먼저다. '나중에'는 이번 접속만 통과.
     const later = el('button', 'ghost', tr('나중에 둘러보기'));
@@ -1282,7 +1292,7 @@ function acctForm(gate) {
   b.append(el('p', 'note', '· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.<br>' +
     '· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b><br>' +
     '· 학습 진도는 기기 안에 있습니다 — 폰을 바꿀 때는 <b>진도 백업</b>을 같이 쓰세요.'));
-  show('sub', '계정', true);
+  show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), true);
 }
 
 function renderAwards() {
@@ -6261,7 +6271,7 @@ Promise.all([
   // 로그인 관문 — 안 되어 있으면 어느 기기든 열자마자 계정 화면부터 (사용자 지시).
   // 로그인된 기기는 로그아웃 전까지 그대로 유지된다(S.acct 가 기기에 남는다).
   let skip = false; try { skip = !!sessionStorage.getItem('gateSkip'); } catch (e) {}
-  if ((!S.acct || !S.acct.tok) && !skip) { acctForm(true); return; }
+  if ((!S.acct || !S.acct.tok) && !skip) { acctForm(true, 'login'); return; }
   if (!S.nick) { askNick(); return; }                 // 최초 1회
   if (S.wk && S.wk.k !== weekKey()) { showWeek(weekReport(S.wk.base)); return; }
   renderHome();
