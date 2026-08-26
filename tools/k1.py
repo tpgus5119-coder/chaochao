@@ -42,6 +42,9 @@ def build():
     # k2가 만든 베트남어 뜻(원어 표기 열쇠) — 있으면 붙인다
     gpath = ROOT / "data" / "_ko_vi_gloss.json"
     gloss = json.loads(gpath.read_text()) if gpath.exists() else {}
+    # 한월 다리(검증본) — Unihan 읽기가 krdict 뜻의 토큰과 연속 일치할 때만 인정한 735쌍
+    bpath = ROOT / "tools" / "hanviet_bridge_ko.json"
+    bridge = json.loads(bpath.read_text()) if bpath.exists() else {}
     # HANVIET 뒤집기: 한자 → 베트남어 낱말 (괄호 속 음독은 떼어낸다)
     h2v = {}
     for vi, tag in HANVIET.items():
@@ -63,6 +66,8 @@ def build():
         g = gloss.get(r["raw"])
         if g and "vi" in g:
             item["vi"] = g["vi"]
+        if word in bridge:
+            item["vih"] = bridge[word]          # 같은 한자를 쓰는 베트남어 (한월 짝)
         if hanja:
             item["hanja"] = hanja
             vi = h2v.get(hanja)
