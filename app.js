@@ -49,7 +49,7 @@ const $ = s => document.querySelector(s);
 const UIVI = {
   '하루 5분': 'Học 5 phút', '복습': 'Ôn tập', '기본기': 'Cơ bản', '문법': 'Ngữ pháp',
   '동아리': 'Câu lạc bộ', '사용법': 'Hướng dẫn', '일상': 'Hằng ngày', '직무': 'Công việc',
-  '기사': 'Bản tin', '단어': 'Từ vựng', '문장': 'Câu', '방금 배운 것': 'Vừa học xong',
+  '기사': 'Bản tin', '단어': 'Từ vựng', '문장': 'Câu', '최근 학습': 'Bài vừa học', '오답노트': 'Sổ lỗi sai',
   '오늘 학습': 'Bài hôm nay', '오늘 복습': 'Ôn hôm nay', '내일 학습': 'Bài ngày mai',
   '내일 복습': 'Ôn ngày mai', '없음': 'Không có', '배운 단어': 'Từ đã học',
   '외운 단어': 'Từ đã thuộc', '끝낸 세트': 'Bài đã xong',
@@ -1626,12 +1626,9 @@ const MENUS = {
   day:   { name: '하루 5분', items: () => [
             ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')],
             ['기사', showNewsLearn]] },
-  rev:   { name: '복습', items: () => {
-            const it = [['방금 배운 것', () => freshMenu('word')],
-                        ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]];
-            const n = missWords().length;
-            if (n >= 3) it.push(['📕 오답노트 (' + n + ')', missQuiz]);
-            return it; } },
+  rev:   { name: '복습', items: () => [
+            ['최근 학습', () => freshMenu('word')],
+            ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
   basic: { name: '기본기', items: () => [
             ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
             ['성조', toneEntry], ['겹모음', () => startRule(4)], ['자판 쓰는 법', kbGuide],
@@ -2430,7 +2427,7 @@ function freshMenu(kind) {
     b.append(el('p', 'note', '하루 5분에서 한 세트를 끝내면 여기서 바로 다시 볼 수 있습니다.'));
     const h = el('button', 'primary big', '홈으로'); h.style.width = '100%'; h.onclick = renderHome;
     b.append(h);
-    show('quiz', '방금 배운 것', true); return;
+    show('quiz', '최근 학습', true); return;
   }
   const src = freshItems(kind);
   b.append(el('p', 'lede', esc(label(d)) + ' · ' + esc(d.theme) + ' — ' +
@@ -2447,13 +2444,15 @@ function freshMenu(kind) {
     b.append(btn);
   });
   const quick = el('button', 'bigmenu', '3분');
-  quick.onclick = () => { dive(back); flashRun(src.slice(0, 20), '방금 배운 것 3분'); };
+  quick.onclick = () => { dive(back); flashRun(src.slice(0, 20), '최근 학습 3분'); };
   b.append(quick);
+  const mr = missRow(src.filter(x => (S.stats.miss || {})[x.vi] >= 2), back);
+  if (mr) b.append(mr);
   const other = el('button', 'ghost', kind === 'sent' ? '단어로 보기' : '문장으로 보기');
   other.style.width = '100%'; other.style.marginTop = '10px';
   other.onclick = () => freshMenu(kind === 'sent' ? 'word' : 'sent');
   b.append(other);
-  show('quiz', '방금 배운 것', true);
+  show('quiz', '최근 학습', true);
 }
 
 function reviewMenu(kind) {
@@ -2474,6 +2473,8 @@ function reviewMenu(kind) {
   const quick = el('button', 'bigmenu', '3분');
   quick.onclick = () => { dive(back); flashRun(due.slice(0, 20), (kind === 'sent' ? '문장' : '단어') + ' 3분'); };
   b.append(quick);
+  const mr = missRow(missWords(kind), back);
+  if (mr) b.append(mr);
   show('quiz', (kind === 'sent' ? '문장' : '단어') + ' 복습', true);
 }
 
@@ -2532,13 +2533,18 @@ function drawRevInfo(cap) {
 
 /* 오답노트 — 두 번 이상 틀린 단어만 골라 다시 푼다.
    맞히면 miss 가 깎여 목록에서 스스로 사라진다(비우는 재미). 셋 미만이면 메뉴에 안 보인다. */
-function missWords() {
+function missWords(kind) {
   return Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
-    .sort((x, y) => y[1] - x[1]).map(([vi]) => findItem(vi)).filter(Boolean);
+    .sort((x, y) => y[1] - x[1]).map(([vi]) => findItem(vi)).filter(Boolean)
+    .filter(x => kind === 'sent' ? x.sent : kind === 'word' ? !x.sent : true);
 }
-function missQuiz() {
-  S.revSeen = 1; save();
-  startQuiz(missWords().slice(0, 20), null, null, true);   // 예정 밖 훈련 — 간격은 안 늘린다
+/* 명단은 하나다 — 단어·문장·최근 학습 어디서 맞혀도 같은 miss 가 깎여서 다 같이 지워진다 */
+function missRow(list, back) {
+  if (!list.length) return null;
+  const mb = el('button', 'bigmenu', '📕 오답노트 (' + list.length + ')');
+  mb.onclick = () => { dive(back); S.revSeen = 1; save();
+                       startQuiz(list.slice(0, 20), null, null, true); };  // 예정 밖 — 간격은 안 늘린다
+  return mb;
 }
 
 function drawQuiz() {
