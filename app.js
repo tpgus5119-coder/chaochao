@@ -2524,6 +2524,17 @@ function drawRevInfo(cap) {
     go.onclick = () => nx && startLearn(nx);
   }
   b.append(go);
+
+  /* 오답노트 — 두 번 이상 틀린 단어만 골라 다시 푼다.
+     맞히기 시작하면 miss 가 깎여서 목록에서 스스로 사라진다(비우는 재미). */
+  const missW = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
+    .sort((x, y) => y[1] - x[1]).map(([vi]) => findItem(vi)).filter(Boolean);
+  if (missW.length >= 3) {
+    const mb = el('button', 'ghost big', `📕 오답노트 — 발목 잡는 단어만 (${missW.length})`);
+    mb.style.width = '100%'; mb.style.marginTop = '10px';
+    mb.onclick = () => { S.revSeen = 1; save(); startQuiz(missW.slice(0, 20), null, null, true); };
+    b.append(mb);
+  }
   show('quiz', '복습', true);
 }
 
