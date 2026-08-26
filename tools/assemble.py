@@ -34,7 +34,7 @@ from hanviet import HANVIET    # 한자어 힌트 — 한 곳에 모아 두고 �
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days = []
-for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6','_b7']:
+for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6','_b7','_b8']:
     days += json.loads((R/f'data/{f}.json').read_text())['days']
 
 # ── 덜어낸 세트 ────────────────────────────────────────────────
@@ -94,7 +94,10 @@ days = ([by[k] for k in DAILY_HEAD]
         + [by[k] for k in DAILY_MID] + [by[k] for k in range(51, 71) if k not in DROP]
         + [by[k] for k in DAILY_TAIL]
         + [by[k] for k in range(81, 86)] + [by[k] for k in range(96, 101) if k not in DROP]
-        + [by[k] for k in range(86, 96) if k not in DROP])
+        + [by[k] for k in range(86, 96) if k not in DROP]
+        # 학원 나란히(103~108) — 훈련기관 수업 5~10강과 같은 차례. 한 덩어리로 둔다:
+        # 수업 전 '찍어보기'(사전시험)용이라 흩어 놓으면 못 찾는다.
+        + [by[k] for k in range(103, 109)])
 
 out = {"meta": {"version":"v4",
                 "voices":{"f":"vi-VN-HoaiMyNeural","m":"vi-VN-NamMinhNeural"},
