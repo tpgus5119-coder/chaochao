@@ -63,7 +63,7 @@ const UIVI = {
   '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
   '계정': 'Tài khoản', '로그인': 'Đăng nhập', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
   '로그인·가입': 'Đăng nhập / Đăng ký', '배울 언어': 'Ngôn ngữ học', '보호권': 'Khiên bảo vệ',
-  '서버 진도': 'Tiến độ trên máy chủ', '뭐예요?': 'Là gì?',
+  '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
   '주간 성적표': 'Bảng điểm tuần', '이름없음': 'Chưa có tên',
@@ -1164,10 +1164,13 @@ async function cloudLoad() {
 /* ── 계정 로그인·가입 ────────────────────────────────────────────
    이메일이 없어서 비밀번호를 잊으면 되찾을 길이 없다 — 화면에 그대로 밝힌다.
    서버에는 비밀번호의 으깬 값(해시)만 남는다. */
-function acctForm() {
+function acctForm(gate) {
   const b = $('#subBody');
   b.textContent = '';
   b.append(el('p', 'lede', '아이디로 어느 폰에서든 <b>내 별명·동아리</b>가 따라옵니다.'));
+  // 별명이 아직 없으면(첫 방문 가입) 여기서 같이 정한다 — 가입에 별명이 필요해서다
+  const nickIn = el('input', 'keyin'); nickIn.type = 'text'; nickIn.maxLength = 10;
+  nickIn.placeholder = '별명 (2~10자) — 순위·동아리에 보입니다';
   const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = '아이디 (영문·숫자 4~20자)';
   id.autocapitalize = 'none'; id.maxLength = 20;
   const pw = el('input', 'keyin'); pw.type = 'password';
@@ -1223,6 +1226,12 @@ function acctForm() {
     if (p.length < 4) return oops('비밀번호는 4자 이상입니다.');
     if (act === 'signup' && p.length < 8) return oops('비밀번호는 8자 이상입니다.');
     try {
+      if (act === 'signup' && !S.nick) {
+        const v = nickIn.value.trim();
+        if (v.length < 2) return oops('별명을 2자 이상 적어 주세요.');
+        await cCall({ act: 'nick', nick: v });        // 먼저 쓴 사람이 임자 — 겹치면 여기서 걸린다
+        S.nick = v; save();
+      }
       const prof = act === 'signup'
         ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '' } : {};
       const j = await cCall(Object.assign({ act, id: i, pw: p }, prof));
@@ -1252,15 +1261,24 @@ function acctForm() {
       }
       popup(act === 'signup'
         ? '<b>가입됐습니다.</b><br>비밀번호를 잊으면 <b>되찾을 길이 없습니다</b> — 적어 두세요.<br>다른 폰에서 로그인하면 지금 별명·동아리가 따라옵니다.'
-        : '<b>로그인됐습니다.</b> 별명·동아리가 이 기기로 따라왔습니다.<br>학습 진도는 기기마다 따로입니다 — 옮기려면 진도 백업을 쓰세요.');
-      renderAwards();
+        : '<b>로그인됐습니다.</b> 별명·동아리가 이 기기로 따라왔습니다.');
+      if (gate) renderHome(); else renderAwards();
     } catch (e) { oops(e.message || '안 됐습니다'); }
   };
   const bs = el('div', 'row2');
   const bi = el('button', 'primary big', '로그인'); bi.onclick = go('login');
   const bu = el('button', 'ghost big', '가입'); bu.onclick = go('signup');
   bs.append(bi, bu);
+  if (!S.nick) profBox.append(el('p', 'note', '별명'), nickIn);
   b.append(id, pw, profBox, err, bs);
+  if (gate) {
+    // 관문 모드 — 로그인 전에는 열 때마다 이 화면이 먼저다. '나중에'는 이번 접속만 통과.
+    const later = el('button', 'ghost', tr('나중에 둘러보기'));
+    later.style.width = '100%'; later.style.marginTop = '10px';
+    later.onclick = () => { try { sessionStorage.setItem('gateSkip', '1'); } catch (e) {}
+                            if (!S.nick) { askNick(); return; } renderHome(); };
+    b.append(later);
+  }
   b.append(el('p', 'note', '· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.<br>' +
     '· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b><br>' +
     '· 학습 진도는 기기 안에 있습니다 — 폰을 바꿀 때는 <b>진도 백업</b>을 같이 쓰세요.'));
@@ -6240,6 +6258,10 @@ Promise.all([
   VDRILL = d.voweldrill || [];
   AIDX = a;
   drawRegion();
+  // 로그인 관문 — 안 되어 있으면 어느 기기든 열자마자 계정 화면부터 (사용자 지시).
+  // 로그인된 기기는 로그아웃 전까지 그대로 유지된다(S.acct 가 기기에 남는다).
+  let skip = false; try { skip = !!sessionStorage.getItem('gateSkip'); } catch (e) {}
+  if ((!S.acct || !S.acct.tok) && !skip) { acctForm(true); return; }
   if (!S.nick) { askNick(); return; }                 // 최초 1회
   if (S.wk && S.wk.k !== weekKey()) { showWeek(weekReport(S.wk.base)); return; }
   renderHome();
