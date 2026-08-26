@@ -1189,10 +1189,10 @@ function acctForm() {
   const drawLearn = () => {
     lrnW.textContent = ''; regW.textContent = '';
     const nat = natW.val();
-    // 지금 있는 과정은 베트남어(한국인용)뿐이다 — 나머지는 준비 중이라고 정직하게 밝힌다
-    const opts = nat === 'kr' ? [['vi', '베트남어'], ['en', '영어 (준비 중)']]
-               : nat === 'vn' ? [['ko', '한국어 (준비 중)'], ['en', '영어 (준비 중)']]
-               : [['vi', '베트남어'], ['ko', '한국어 (준비 중)'], ['en', '영어 (준비 중)']];
+    // 지금 있는 과정은 베트남어(한국인용)뿐이다 — 한국어는 준비 중이라고 정직하게 밝힌다
+    const opts = nat === 'kr' ? [['vi', '베트남어']]
+               : nat === 'vn' ? [['ko', '한국어 (준비 중)']]
+               : [['vi', '베트남어'], ['ko', '한국어 (준비 중)']];
     lrnW.sel = mkSel(opts);
     lrnW.append(el('p', 'note', '배울 언어'), lrnW.sel);
     const drawReg = () => {
@@ -1301,12 +1301,12 @@ function renderAwards() {
   shrow.append(shhow);
   b.append(shrow);
 
-  const LEARNNM = { vi: '베트남어', en: '영어', ko: '한국어' };
+  const LEARNNM = { vi: '베트남어', ko: '한국어' };
   const ln = el('div', 'planrow');
   ln.append(el('span', 'pk', '배울 언어'), el('span', 'pv', LEARNNM[S.learn] || '베트남어'));
   const lb = el('button', 'ghost sm', '바꾸기');
   lb.onclick = () => popup('지금 있는 과정은 <b>베트남어(한국인용)</b>뿐입니다.<br>' +
-    '<b>영어 과정</b>과 <b>베트남 분들을 위한 한국어 과정</b>은 준비 중입니다 — ' +
+    '<b>베트남 분들을 위한 한국어 과정</b>은 준비 중입니다 — ' +
     '만들어지면 여기서 바꿀 수 있습니다.<br>거짓 선택지를 두지 않으려고 미리 밝혀 둡니다.');
   ln.append(lb);
   b.append(ln);
@@ -5710,25 +5710,33 @@ const CLUBCATS = [
   ['local', '📍', '지역'], ['etc', '🌱', '기타']];
 const catOf = k => CLUBCATS.find(c => c[0] === k);
 
+/* 어느 땅에서 만나는가 — 갈래보다 이게 먼저다.
+   한국에서 만든 동아리에는 베트남 사람이 못 온다. '하노이 탁구'라야 둘 다 온다. */
+const CLUBCITY = [
+  ['hn', '하노이'], ['bn', '박닌·타이응우옌'], ['hp', '하이퐁·꽝닌'],
+  ['dn', '다낭·후에'], ['hcm', '호찌민'], ['bd', '빈즈엉·동나이'],
+  ['vn', '베트남 그 밖'], ['kr', '한국'], ['on', '온라인 (어디서든)']];
+const cityOf = k => CLUBCITY.find(c => c[0] === k);
+const cityNm = k => (cityOf(k) || ['', '온라인 (어디서든)'])[1];
+
 function clubList() {
   clubBusy('불러오는 중…');
   cCall({ act: 'clubs' }).then(j => {
     const b = $('#clubBody');
     b.textContent = '';
-    b.append(el('p', 'lede', '같이 하면 오래 갑니다. 이번 주 누가 며칠 나왔는지 서로 보입니다.'));
+    b.append(el('p', 'lede', '만나는 땅으로 묶여 있습니다. 같은 도시면 한국인도 베트남인도 함께 옵니다.'));
     const mk = el('button', 'primary big', '동아리 만들기');
     mk.style.width = '100%'; mk.style.marginBottom = '14px';
     mk.onclick = clubCreate;
     b.append(mk);
     if (!j.clubs.length) b.append(el('p', 'note', '아직 만들어진 동아리가 없습니다. 첫 번째로 만들어 보세요.'));
-    /* 갈래별로 묶어 보여준다 — 이모지가 갈래 표다 */
+    /* 도시별로 묶어 보여준다 — 갈래는 줄 앞 이모지로 남는다 */
     const groups = {};
-    j.clubs.forEach(c => { (groups[c.cat || 'etc'] = groups[c.cat || 'etc'] || []).push(c); });
-    const order = CLUBCATS.map(x => x[0]).filter(k => groups[k]);
-    Object.keys(groups).forEach(k => { if (!order.includes(k)) order.push(k); });
+    j.clubs.forEach(c => { const k = cityOf(c.city) ? c.city : 'on';
+                           (groups[k] = groups[k] || []).push(c); });
+    const order = CLUBCITY.map(x => x[0]).filter(k => groups[k]);
     order.forEach(k => {
-      const cat = catOf(k) || catOf('etc');
-      if (j.clubs.length > 3) b.append(el('div', 'grp', cat[1] + ' ' + cat[2]));
+      if (j.clubs.length > 3) b.append(el('div', 'grp', '📍 ' + cityNm(k)));
       groups[k].forEach(c => {
       const row = el('button', 'bigmenu clubrow');
       const mine = S.club && S.club.id === c.id;
@@ -5757,7 +5765,7 @@ function clubCreate() {
   b.textContent = '';
   b.append(el('p', 'lede', '어떤 동아리인가요?'));
   const inp = el('input', 'keyin'); inp.type = 'text'; inp.maxLength = 20;
-  inp.placeholder = '이름 (예: 빈즈엉 3공장)';
+  inp.placeholder = '이름 (예: 하노이 탁구, 빈즈엉 3공장)';
   const de = el('input', 'keyin'); de.type = 'text'; de.maxLength = 60;
   de.placeholder = '한 줄 소개 (60자 — 예: 퇴근 후 풋살, 초보 환영)';
   // 갈래 — 하나 고른다. 이모지가 목록에서 이 동아리의 표가 된다.
@@ -5770,6 +5778,16 @@ function clubCreate() {
     c2.onclick = () => { cat = k; [...cw.children].forEach(x => x.classList.remove('on')); c2.classList.add('on'); };
     cw.append(c2);
   });
+  // 어디서 만나는가 — 기본값은 배우는 말씨를 따른다(북부→하노이, 남부→호찌민)
+  let city = S.region === 's' ? 'hcm' : 'hn';
+  const vw = el('div', 'catpick');
+  CLUBCITY.forEach(([k, nm]) => {
+    const c3 = el('button', 'catchipbtn', nm);
+    c3.type = 'button';
+    if (k === city) c3.classList.add('on');
+    c3.onclick = () => { city = k; [...vw.children].forEach(x => x.classList.remove('on')); c3.classList.add('on'); };
+    vw.append(c3);
+  });
   const ap = el('label', 'chk');
   const cb = el('input'); cb.type = 'checkbox';
   ap.append(cb, el('span', null, '아무나 못 들어오게 (내가 받아 줘야 가입)'));
@@ -5779,11 +5797,13 @@ function clubCreate() {
     const v = inp.value.trim();
     if (v.length < 2) { inp.focus(); return; }
     clubBusy('만드는 중…');
-    cCall({ act: 'create', name: v, approve: cb.checked, desc: de.value.trim(), cat })
+    cCall({ act: 'create', name: v, approve: cb.checked, desc: de.value.trim(), cat, city })
       .then(j => { S.club = { id: j.id, name: j.name }; save(); showClub(); })
       .catch(clubFail);
   };
-  b.append(inp, de, el('p', 'note', '갈래를 고르세요'), cw, ap, go);
+  b.append(inp, de,
+    el('p', 'note', '어디서 만나나요 — 같은 도시라야 실제로 모입니다'), vw,
+    el('p', 'note', '갈래를 고르세요'), cw, ap, go);
   dive(clubList);                       // 위쪽 뒤로가기로 목록으로 돌아간다
   show('club', '동아리 만들기', true);
   inp.focus();

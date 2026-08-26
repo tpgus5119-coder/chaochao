@@ -216,7 +216,7 @@ export default {
     if (act === 'clubs')                                     // 목록 (사람 많은 순)
       return send({ clubs: Object.entries(clubs)
         .map(([id, c]) => ({ id, name: c.name, n: c.members.length, approve: !!c.approve,
-                             desc: c.desc || '', cat: c.cat || '' }))
+                             desc: c.desc || '', cat: c.cat || '', city: c.city || '' }))
         .sort((x, y) => y.n - x.n) });
 
     if (act === 'create') {                                  // 만들기
@@ -229,6 +229,7 @@ export default {
       clubs[id] = { name, owner: nick, approve: !!b.approve, members: [nick], wait: [],
                     desc: cut(b.desc, 60).trim(),            // 한 줄 소개 (60자)
                     cat: cut(b.cat, 10),                     // 갈래 (앱이 정한 목록 중 하나)
+                    city: cut(b.city, 6),                    // 만나는 도시 — 갈래보다 이게 먼저다
                     uids: cut(b.uid, 16) ? { [cut(b.uid, 16)]: nick } : {} };
       await save();
       return send({ id, name });
