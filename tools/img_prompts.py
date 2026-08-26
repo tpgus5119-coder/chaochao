@@ -211,22 +211,18 @@ EN = {
  "d69-scene":"a nurse guiding a worker at a company clinic",
  "d70-scene":"a person reporting a lost wallet at a police desk",
  "d71-scene":"two coworkers chatting about hometowns over a map of vietnam",
- "d72-scene":"a person showing family photos on a phone to a colleague",
  "d73-scene":"friends cheering at a football match on tv with vietnam flags",
  "d74-scene":"two people chatting happily on monday morning at lockers",
  "d75-scene":"coworkers clapping and giving thumbs up to a shy colleague",
  "d76-scene":"a vietnamese cafe with iced milk coffee and tea glasses",
  "d77-scene":"a steaming bowl of pho with herbs, lime and chili on the side",
  "d78-scene":"a phone shop clerk handing a sim card to a customer",
- "d79-scene":"a tailor mending trousers at a small alteration shop",
  "d80-scene":"a delivery rider checking an address in a narrow alley",
  "d81-scene":"a team leader explaining steps one by one to a worker",
  "d82-scene":"a manager checking progress on a clipboard beside a line",
  "d83-scene":"a manager talking privately and kindly with one worker aside",
  "d84-scene":"a manager praising a smiling worker in front of the team",
  "d85-scene":"a short morning meeting with raised hands and a whiteboard",
- "d86-scene":"a flow diagram of cutting, sewing and finishing stations",
- "d87-scene":"a ruler measuring seam width on fabric with chalk marks",
  "d88-scene":"sorted garment piles with green pass and red fail tags",
  "d89-scene":"a worker unpicking stitches and replacing a button",
  "d90-scene":"a worker reading an illustrated work-standard sheet",
@@ -237,8 +233,6 @@ EN = {
  "d95-scene":"sealed boxes on a pallet being checked against a list",
  "d96-scene":"a forklift reversing with warning light while workers step aside",
  "d97-scene":"warehouse shelves with labeled bins and a receiving slip",
- "d98-scene":"a stocktake with a clipboard comparing ledger and shelves",
- "d99-scene":"workers loading tied boxes onto a truck with a crane nearby",
  "d100-scene":"a courier and receiver signing a delivery report over a damaged box",
  # 일상 확장 + 전자·사무 — 장면만
  "d41-scene":"two people talking about weather, one holding an umbrella, rain outside",
@@ -254,26 +248,33 @@ EN = {
  "d51-scene":"a worker examining electronic parts on a workbench",
  "d52-scene":"a worker assembling a device with a screwdriver on a line",
  "d53-scene":"workers in cleanroom suits and caps entering a clean room",
- "d54-scene":"an inspector examining a screen through a magnifying camera",
  "d55-scene":"a supervisor pointing at a production dashboard beside a conveyor",
  "d56-scene":"an office desk with a computer, printer and documents",
  "d57-scene":"a staff member serving a customer at a shop counter",
- "d58-scene":"an interpreter standing between two people talking",
  "d59-scene":"a traveler with a suitcase at an airport departure board",
  "d60-scene":"a person exchanging money at a bank counter",
  "d101-scene":"two coworkers chatting, one pointing at a factory and the other at an office building",
  "d102-scene":"a shopper and a vendor counting banknotes and coins at a market stall",
+ "d103-scene":"a passenger in the back seat talking to a taxi driver, city street ahead",
+ "d104-scene":"a customer ordering a drink at a cafe counter, barista holding a cup",
+ "d105-scene":"a waiter with a notepad taking an order from a customer holding a menu",
+ "d106-scene":"a shopper with a basket choosing vegetables at a busy market stall",
+ "d107-scene":"two people looking at t-shirts of many colors on a clothes rack",
+ "d108-scene":"two people meeting for the first time, smiling and shaking hands politely",
 }
 
 d = json.load(open('data/days.json'))
-try:                                   # 워크플로로 저작한 확장분 (파일이름 키로 합류)
-    EXTRA = json.load(open('tools/imgnew.json'))
-except FileNotFoundError:
-    EXTRA = {}
+EXTRA = {}                             # 워크플로로 저작한 확장분 (vi 키로 합류, imgrest는 p에 화풍 꼬리 포함)
+for _f in ('tools/imgnew.json', 'tools/imgrest.json'):
+    try: EXTRA.update(json.load(open(_f)))
+    except FileNotFoundError: pass
 for day in d['days']:
     for w in day['words']:
-        if 'img' in w and w['vi'] in EXTRA:
-            EN.setdefault(w['img'][:-5], EXTRA[w['vi']]['en'])
+        e = EXTRA.get(w.get('vi'))
+        if 'img' in w and e:
+            p = e.get('en') or e.get('p', '')
+            if p:
+                EN.setdefault(w['img'][:-5], p.split(', simple flat')[0])
 
 need, rows = [], []
 for day in d['days']:
