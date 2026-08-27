@@ -47,6 +47,235 @@ const $ = s => document.querySelector(s);
    글자가 화면에 놓이는 길목(el·show)에서 **문구를 통째로 맞바꾼다.**
    표에 있는 문구만 바뀐다 — 아직 없는 문구는 한국어로 남고, 표를 채우면 늘어난다. */
 const UIVI = {
+  /* ── 2026-08 대량 보강: 화면 문구 베트남어 ── */
+  '<b>✍️ 일주일에 한 번은 손으로 써보세요.</b><br>': '<b>✍️ Mỗi tuần hãy viết tay một lần.</b><br>',
+  '<b>글자를 누르면 소리가 납니다</b><br>': '<b>Bấm vào chữ sẽ phát ra âm thanh</b><br>',
+  '<b>녹음은 어디에 남나요</b><br>': '<b>Bản ghi âm được lưu ở đâu</b><br>',
+  '<b>이렇게 하면 올라갑니다</b>': '<b>Làm thế này thì sẽ tiến bộ</b>',
+  '<b>이번 주 강점과 약점</b>': '<b>Điểm mạnh và điểm yếu tuần này</b>',
+  '<b>진도를 불러왔습니다.</b> 화면을 새로 그립니다.': '<b>Đã tải tiến độ.</b> Màn hình sẽ được vẽ lại.',
+  '<b>진짜 기억률</b> = 다시 볼 때가 된 카드를 첫 시도에 맞힌 비율.': '<b>Tỷ lệ nhớ thật</b> = tỷ lệ trả lời đúng ngay lần đầu với thẻ đã đến hạn ôn.',
+  '<b>폰을 입 가까이</b> 대고 또박또박 말하세요': '<b>Đưa điện thoại gần miệng</b> và nói thật rõ ràng',
+  '<b>폰의 베트남어 자판을 한 번만 추가해 주세요.</b><br>': '<b>Hãy thêm bàn phím tiếng Việt vào điện thoại một lần.</b><br>',
+  '<span class="ri">🔁</span><b>복습은 이렇게 돌아갑니다</b>': '<span class="ri">🔁</span><b>Ôn tập vận hành như thế này</b>',
+  '<span class="vname">높낮이</span><span class="vmark">…</span>': '<span class="vname">Cao độ</span><span class="vmark">…</span>',
+  '<span class="vname">발음</span><span class="vmark">…</span>': '<span class="vname">Phát âm</span><span class="vmark">…</span>',
+  '<strong>실력 분석</strong>': '<strong>Phân tích năng lực</strong>',
+  'AI 대화': 'Trò chuyện với AI',
+  'AI 듣기 실패:': 'AI nghe thất bại:',
+  'AI 선생님 점검': 'Thầy AI kiểm tra',
+  'AI 선생님이 보는 중…': 'Thầy AI đang xem…',
+  'AI 점검 실패:': 'Kiểm tra AI thất bại:',
+  'AI 채점 실패:': 'Chấm điểm AI thất bại:',
+  'AI 채점을 쓰려면 <b>내 정보</b>에서 구글 무료 키를 한 번 넣어 주세요.': 'Để dùng chấm điểm AI, hãy nhập khóa miễn phí của Google một lần trong <b>Thông tin của tôi</b>.',
+  'AI 키가 필요합니다 — 내 정보에서 넣어 주세요.': 'Cần khóa AI — hãy nhập trong Thông tin của tôi.',
+  'AIza… 로 시작하는 키': 'Khóa bắt đầu bằng AIza…',
+  'AI가 듣는 중…': 'AI đang nghe…',
+  'AI가 읽는 중…': 'AI đang đọc…',
+  'AI와 베트남어로 대화하려면 <b>구글 무료 키</b>가 한 번 필요합니다.<br>': 'Để trò chuyện với AI bằng tiếng Việt, cần <b>khóa miễn phí của Google</b> một lần.<br>',
+  'KIIP 구술시험과 작문시험 형식 · AI가 읽고 고칠 점을 알려 줍니다.': 'Định dạng thi vấn đáp và thi viết của KIIP · AI đọc và chỉ ra chỗ cần sửa.',
+  '· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.<br>': '· Máy chủ chỉ lưu <b>giá trị băm (hash)</b> của mật khẩu — không lưu mật khẩu gốc.<br>',
+  '· 이 두 성조(<b>hỏi</b> 와 <b>ngã</b>)는 <b>남부·중부에서 하나로 합쳐져</b> 현지 사람들도 잘 가르지 않습니다 —': '· Hai thanh này (<b>hỏi</b> và <b>ngã</b>) <b>nhập làm một ở miền Nam và miền Trung</b> nên người bản xứ cũng ít phân biệt —',
+  '‹ 다른 제목 고르기': '‹ Chọn đề khác',
+  '‹ 이전': '‹ Trước',
+  '↳ 소리가 짧거나 흐려서 <b>확실하게 가릴 수 없습니다.</b>': '↳ Âm thanh quá ngắn hoặc không rõ nên <b>không thể phân biệt chắc chắn.</b>',
+  '⌫ 지우기': '⌫ Xóa',
+  '⏹ 다 말했어요': '⏹ Tôi đã nói xong',
+  '■ 멈추기': '■ Dừng',
+  '▶ 대화 전체 듣기': '▶ Nghe toàn bộ hội thoại',
+  '✓ 맞게 썼어요': '✓ Bạn viết đúng',
+  '✓ 맞았어요': '✓ Đúng rồi',
+  '✗ 못 맞혔어요': '✗ Chưa đúng',
+  '✗ 틀렸어요': '✗ Sai rồi',
+  '가장 어려운 건 hỏi(내렸다 올림)와 ngã(끊었다 올림)입니다. 이 둘은 원어민도 지역에 따라 섞어 씁니다.': 'Khó nhất là hỏi và ngã. Ngay cả người bản xứ cũng dùng lẫn tùy theo vùng miền.',
+  '갈래를 고르세요': 'Hãy chọn nhóm',
+  '같은 글자에 성조만 다른 단어들입니다. 높낮이만 귀로 가립니다 — 부호 붙이기 문제도 섞여 나옵니다.': 'Đây là những từ viết giống nhau, chỉ khác thanh điệu. Chỉ phân biệt bằng tai — có xen cả bài đánh dấu thanh.',
+  '같은 동아리 사람끼리 엄지척과 쪽지를 주고받습니다': 'Các thành viên cùng câu lạc bộ có thể gửi lượt thích và tin nhắn cho nhau',
+  '고른 문장으로 상대가 말을 겁니다. <b>·</b> 표가 붙은 것은 오늘 꺼낼 때가 된 문장입니다.': 'Đối phương sẽ bắt chuyện bằng câu bạn chọn. Câu có dấu <b>·</b> là câu đến hạn ôn hôm nay.',
+  '과목별 정답률': 'Tỷ lệ đúng theo kỹ năng',
+  '국적': 'Quốc tịch',
+  '그래도 최근 단어 다시 보기': 'Vẫn xem lại các từ gần đây',
+  '글자 보기': 'Xem chữ',
+  '기사를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.': 'Không tải được bài báo. Hãy kiểm tra kết nối mạng.',
+  '끝낸 세트 (어디서 멈추는가)': 'Phần đã hoàn thành (dừng ở đâu)',
+  '날씨': 'Thời tiết',
+  '날씨를 불러오는 중…': 'Đang tải thời tiết…',
+  '날씨를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.': 'Không tải được thời tiết. Hãy kiểm tra kết nối mạng.',
+  '남부에서는': 'Ở miền Nam thì',
+  '남은 복습': 'Còn phải ôn',
+  '녹음 중': 'Đang ghi âm',
+  '눈과 귀로 훑었습니다 — 외우는 건 퀴즈가 합니다': 'Bạn đã xem và nghe qua — phần ghi nhớ để bài kiểm tra lo',
+  '다 말했으면 <b>가운데 빨간 네모</b>를 누르세요': 'Nói xong hãy bấm <b>ô vuông đỏ ở giữa</b>',
+  '다 맞았습니다.': 'Bạn đã trả lời đúng tất cả.',
+  '다른 시험 고르기': 'Chọn đề khác',
+  '다시': 'Lại',
+  '다시 듣기': 'Nghe lại',
+  '다시 풀기': 'Làm lại',
+  '다시 하기': 'Làm lại',
+  '단어 → 확인 문제 → 문장까지, 한 세트를 다 했습니다': 'Từ vựng → bài kiểm tra → câu nói: bạn đã hoàn thành một phần trọn vẹn',
+  '담벼락은 서버가 새 판이어야 보입니다.': 'Bảng tin chỉ hiện khi máy chủ đã cập nhật bản mới.',
+  '대화 내용은 구글 서버로 전송됩니다. 개인정보(실명 전체·주소·사번)는 쓰지 마세요.': 'Nội dung trò chuyện được gửi tới máy chủ Google. Đừng nhập thông tin cá nhân (họ tên đầy đủ, địa chỉ, mã nhân viên).',
+  '동아리에 들어가기': 'Tham gia câu lạc bộ',
+  '되돌릴 수 없습니다. 정말 지울까요?\n(백업해 둔 글자가 있으면 나중에 되살릴 수 있습니다)': 'Không thể hoàn tác. Bạn thực sự muốn xóa?\n(Nếu đã sao lưu thì sau này vẫn khôi phục được)',
+  '두 과목이 10문제를 넘으면 강점·약점과 처방이 나옵니다.': 'Khi hai kỹ năng vượt 10 câu, sẽ hiện điểm mạnh, điểm yếu và lời khuyên.',
+  '듣고 있습니다… 다 말하면 위 단추를 누르세요.': 'Đang nghe… Nói xong hãy bấm nút phía trên.',
+  '들어 보기': 'Nghe thử',
+  '들어보기': 'Nghe thử',
+  '로그아웃할까요? 진도는 이 기기에 그대로 남습니다.': 'Bạn muốn đăng xuất? Tiến độ học vẫn được giữ trên thiết bị này.',
+  '마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.': 'Không dùng được micro. Hãy cho phép trong cài đặt trình duyệt.',
+  '막대는 나, 세로 선은 <b>다른 사람들의 평균</b>입니다.': 'Cột là bạn, đường dọc là <b>mức trung bình của người khác</b>.',
+  '만나는 땅으로 묶여 있습니다. 같은 도시면 한국인도 베트남인도 함께 옵니다.': 'Nhóm theo nơi gặp mặt. Cùng thành phố thì cả người Hàn và người Việt đều đến.',
+  '많은 사람이 틀리는 단어': 'Những từ nhiều người hay sai',
+  '말하기 (구술시험)': 'Nói (thi vấn đáp)',
+  '말하기 · 쓰기': 'Nói · Viết',
+  '말하기 · 쓰기 연습': 'Luyện nói · viết',
+  '맞게 썼어요': 'Bạn viết đúng',
+  '매일 새벽 6시 30분에 어제 기사 다섯 편으로 만들어집니다.': 'Được tạo lúc 6 giờ 30 sáng mỗi ngày từ năm bài báo của hôm trước.',
+  '매일 아침 6시 30분에 업데이트됩니다. 최근 3일치만 남습니다.<br>기사 출처 — 인사이드비나': 'Cập nhật lúc 6 giờ 30 sáng mỗi ngày. Chỉ giữ lại 3 ngày gần nhất.<br>Nguồn bài báo — Inside Vina',
+  '모음 소개 다시 보기': 'Xem lại phần giới thiệu nguyên âm',
+  '모의고사': 'Thi thử',
+  /* ── 베트남인용 한국어 과정 홈 화면 ── */
+  '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
+  'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
+  '응시': 'Đã thi', '회': ' lần', '평균': 'Trung bình', '점': ' điểm',
+  '지금 있는 것 — 모의고사, AI 채점 말하기·쓰기': 'Hiện đã có — đề thi thử, luyện nói·viết có AI chấm',
+  '아직 없는 것 — 날마다 배우는 과정': 'Chưa có — khóa học theo từng ngày',
+  '목록으로': 'Về danh sách',
+  '문장 고르기': 'Chọn câu',
+  '문장 고쳐 주기': 'Sửa câu giúp tôi',
+  '문제 유형별 정답률 (누적)': 'Tỷ lệ đúng theo dạng bài (cộng dồn)',
+  '미완으로': 'Để chưa xong',
+  '배운 기록을 모두 지우고 처음부터 다시 시작할까요?': 'Bạn muốn xóa toàn bộ ghi chép đã học và bắt đầu lại từ đầu?',
+  '배운 문장으로 말 걸기': 'Bắt chuyện bằng câu đã học',
+  '배울 말씨': 'Giọng muốn học',
+  '번역 실패': 'Dịch thất bại',
+  '베트남 소식': 'Tin tức Việt Nam',
+  '베트남 자판에는 <b>성조 글쇠가 없습니다.</b> 글자를 다 치고': 'Bàn phím tiếng Việt <b>không có phím thanh điệu.</b> Hãy gõ hết chữ rồi',
+  '베트남어로 <b>입 밖에 내어</b> 말해 보세요. 속으로만 생각하면 효과가 절반입니다.': 'Hãy <b>nói thành tiếng</b> bằng tiếng Việt. Chỉ nghĩ trong đầu thì hiệu quả giảm một nửa.',
+  '별명': 'Biệt danh',
+  '별명 (2~10글자)': 'Biệt danh (2~10 ký tự)',
+  '별명 (2~10자) — 순위·동아리에 보입니다': 'Biệt danh (2~10 ký tự) — hiển thị ở bảng xếp hạng và câu lạc bộ',
+  '보내는 중…': 'Đang gửi…',
+  '복습 때가 아니어도 <b>언제든</b> 다시 볼 수 있습니다.': 'Bạn có thể xem lại <b>bất cứ lúc nào</b>, kể cả chưa đến hạn ôn.',
+  '복습 시작 (': 'Bắt đầu ôn (',
+  '부호를 지우려면 <b>z</b> 를 칩니다. 같은 열쇠를 한 번 더 치면 되돌아갑니다': 'Gõ <b>z</b> để xóa dấu. Gõ lại cùng phím đó sẽ quay về như cũ',
+  '북부 소리': 'Giọng miền Bắc',
+  '분석 결과 그림으로 저장': 'Lưu kết quả phân tích thành ảnh',
+  '분석 공개': 'Công khai phân tích',
+  '불러오기 실패': 'Tải thất bại',
+  '불러오는 중…': 'Đang tải…',
+  '불러오지 못했습니다': 'Không tải được',
+  '비밀번호 (8자 이상)': 'Mật khẩu (từ 8 ký tự)',
+  '사람': 'người',
+  '사람 목록을 불러오지 못했습니다.': 'Không tải được danh sách thành viên.',
+  '사람을 누르면 <b>엄지척</b>과 <b>쪽지</b>를 보낼 수 있습니다.': 'Bấm vào một người để gửi <b>lượt thích</b> và <b>tin nhắn</b>.',
+  '사진': 'Ảnh',
+  '사진과 분석은 <b>같은 동아리 사람에게만</b> 보입니다.': 'Ảnh và phân tích <b>chỉ hiển thị với người cùng câu lạc bộ</b>.',
+  '새': 'Mới',
+  '새로고침': 'Tải lại',
+  '서버에 저장된 진도가 있습니다.\n이 기기로 불러올까요? 지금 기기의 진도는 덮어써집니다.': 'Có tiến độ đã lưu trên máy chủ.\nBạn muốn tải về thiết bị này? Tiến độ hiện tại trên máy sẽ bị ghi đè.',
+  '성조 6개 소개 다시 보기': 'Xem lại phần giới thiệu 6 thanh điệu',
+  '성조는 낱말 뒤에 <b>f s r x j</b> 를 붙여 찍습니다 (chao+f → chào).': 'Thanh điệu được gõ bằng cách thêm <b>f s r x j</b> sau từ (chao+f → chào).',
+  '성조별 정답률 (누적)': 'Tỷ lệ đúng theo thanh điệu (cộng dồn)',
+  '세로 눈금은 <b>내 정답률</b>입니다.': 'Trục dọc là <b>tỷ lệ đúng của bạn</b>.',
+  '소리 내어 따라 말해 보세요. 속으로 읽는 것보다 훨씬 잘 남습니다.': 'Hãy nói to theo. Cách này nhớ lâu hơn nhiều so với đọc thầm.',
+  '소리 내어 말한 만큼 입이 기억합니다': 'Nói ra miệng bao nhiêu thì miệng nhớ bấy nhiêu',
+  '소리 높낮이를 재는 중…': 'Đang đo cao độ giọng nói…',
+  '소리로만 나옵니다 — 몇 번이든 다시 들을 수 있습니다.': 'Chỉ phát bằng âm thanh — bạn có thể nghe lại bao nhiêu lần cũng được.',
+  '손글씨': 'Viết tay',
+  '손으로 쓴 글자는 눈으로만 본 것보다 오래 남습니다': 'Chữ viết tay sẽ nhớ lâu hơn chữ chỉ nhìn bằng mắt',
+  '숫자와 기호는 자판의 <b>123</b>, 한글은 <b>베/한</b> 을 누르세요.': 'Số và ký hiệu bấm <b>123</b>, tiếng Hàn bấm <b>Việt/Hàn</b> trên bàn phím.',
+  '시작하기': 'Bắt đầu',
+  '시험지 받는 중…': 'Đang tải đề thi…',
+  '시험지를 받지 못했습니다. 인터넷을 확인하고 다시 열어 주세요.': 'Không tải được đề thi. Hãy kiểm tra kết nối mạng rồi mở lại.',
+  '신청': 'Đăng ký',
+  '실력 분석': 'Phân tích năng lực',
+  '실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.<br>': 'Làm bài theo <b>đúng định dạng</b> của kỳ thi thật.<br>',
+  '실제 폰·컴퓨터의 베트남어 자판도 설정에서 추가하는 내장 기능입니다(다운로드 아님).': 'Bàn phím tiếng Việt trên điện thoại và máy tính cũng là chức năng có sẵn, chỉ cần thêm trong cài đặt (không phải tải về).',
+  '쓰기 (작문시험)': 'Viết (thi viết)',
+  '아무나 못 들어오게 (내가 받아 줘야 가입)': 'Không cho ai cũng vào được (tôi duyệt thì mới được tham gia)',
+  '아이디 (영문·숫자 4~20자)': 'Tên đăng nhập (chữ và số, 4~20 ký tự)',
+  '아주 좋습니다 ✔': 'Rất tốt ✔',
+  '아직 글이 없습니다 — 첫 줄을 남겨 보세요.': 'Chưa có bài viết nào — hãy để lại dòng đầu tiên.',
+  '아직 기사 세트가 없습니다': 'Chưa có phần bài báo nào',
+  '아직 끝낸 세트가 없습니다': 'Bạn chưa hoàn thành phần nào',
+  '아직 다른 사람이 없습니다.': 'Chưa có ai khác.',
+  '아직 만들어진 동아리가 없습니다. 첫 번째로 만들어 보세요.': 'Chưa có câu lạc bộ nào. Hãy là người đầu tiên tạo nhé.',
+  '아직 문제 수가 적어 강점·약점을 말할 수 없습니다. 한 주만 더 해 보세요 — 과목마다 10문제가 넘으면 판정합니다.': 'Số câu còn ít nên chưa thể nói về điểm mạnh, điểm yếu. Hãy học thêm một tuần — mỗi kỹ năng vượt 10 câu là sẽ đánh giá được.',
+  '아직 배운 단어가 없습니다. 먼저 오늘 학습을 시작해 보세요.': 'Bạn chưa học từ nào. Hãy bắt đầu bài học hôm nay trước.',
+  '아직 배운 문장이 없습니다': 'Bạn chưa học câu nào',
+  '알겠어요': 'Đã hiểu',
+  '알림': 'Thông báo',
+  '어디서 만나나요 — 같은 도시라야 실제로 모입니다': 'Gặp nhau ở đâu — phải cùng thành phố mới gặp được thật',
+  '어떤 동아리인가요?': 'Câu lạc bộ như thế nào?',
+  '어제 베트남 소식을 읽으면서 말도 익힙니다. 여기 단어는 <b>복습에 안 들어갑니다</b>.': 'Vừa đọc tin Việt Nam hôm qua vừa học tiếng. Từ ở đây <b>không vào phần ôn tập</b>.',
+  '언제든 바꿀 수 있습니다. <b>먼저 쓴 사람이 임자</b>라 겹치는 별명은 못 씁니다.': 'Bạn có thể đổi bất cứ lúc nào. <b>Ai dùng trước thì thuộc về người đó</b> nên không dùng được biệt danh trùng.',
+  '얼마나 남아 있는가': 'Còn nhớ được bao nhiêu',
+  '업종': 'Ngành nghề',
+  '여기에 쓰세요…': 'Viết vào đây…',
+  '옆으로 밀면 앞뒤로 넘어갑니다. 그냥 두면 3초마다 저절로 넘어갑니다.': 'Vuốt sang ngang để chuyển thẻ. Nếu để yên, cứ 3 giây sẽ tự chuyển.',
+  '예: <b>': 'Ví dụ: <b>',
+  '예보 출처 — Open-Meteo (무료 기상 자료)': 'Nguồn dự báo — Open-Meteo (dữ liệu khí tượng miễn phí)',
+  '오늘 배운 것, 한 마디… (베트남어 환영)': 'Hôm nay học được gì, viết một câu… (rất hoan nghênh tiếng Việt)',
+  '오늘 학습 시작': 'Bắt đầu học hôm nay',
+  '오늘의 대화': 'Hội thoại hôm nay',
+  '오늘의 대화 ·': 'Hội thoại hôm nay ·',
+  '왜 이렇게 만들었나': 'Vì sao lại làm như vậy',
+  '요일별 접속자': 'Người truy cập theo ngày trong tuần',
+  '운영 현황': 'Tình hình vận hành',
+  '운영 현황 보기': 'Xem tình hình vận hành',
+  '원문 기사 보기 ›': 'Xem bài báo gốc ›',
+  '월 화 수 목 금 토 일': 'T2 T3 T4 T5 T6 T7 CN',
+  '월평균 기온 · 강수량': 'Nhiệt độ và lượng mưa trung bình tháng',
+  '이 기기에서는 녹음을 쓸 수 없습니다.': 'Thiết bị này không dùng được chức năng ghi âm.',
+  '이 단어들은 그림·예문·나오는 순서를 손봐야 할 자리입니다.': 'Đây là những từ cần chỉnh lại hình, câu ví dụ hoặc thứ tự xuất hiện.',
+  '이 대화로 AI 선생님과 역할극 ›': 'Đóng vai với thầy AI bằng hội thoại này ›',
+  '이 사람을 찾지 못했습니다': 'Không tìm thấy người này',
+  '이 세트에 <b>미리 나오는 말</b> — 정식으로는 뒤에서 배웁니다': '<b>Từ xuất hiện trước</b> trong phần này — sẽ học kỹ ở bài sau',
+  '이렇게도 말합니다': 'Cũng có thể nói như thế này',
+  '이름 (예: 하노이 탁구, 빈즈엉 3공장)': 'Tên (ví dụ: Bóng bàn Hà Nội, Nhà máy 3 Bình Dương)',
+  '이름도 기기도 알 수 없습니다 — 서버가 숫자만 셉니다.': 'Không biết được tên hay thiết bị — máy chủ chỉ đếm số lượng.',
+  '이름이 뭐예요?': 'Tên bạn là gì?',
+  '이번 주': 'Tuần này',
+  '이번 주 (': 'Tuần này (',
+  '이번 주 시작하기': 'Bắt đầu tuần này',
+  '이어서': 'Tiếp tục',
+  '읽기 + 질문 5개': 'Đọc to + 5 câu hỏi',
+  '자랑 카드 만들기': 'Tạo thẻ khoe thành tích',
+  '자주 헷갈리는 짝 (귀 훈련)': 'Cặp hay nhầm (luyện tai)',
+  '자판으로 친 단어는 철자까지 정확해집니다': 'Từ gõ bằng bàn phím sẽ chính xác đến từng chữ cái',
+  '저장하고 시작': 'Lưu và bắt đầu',
+  '전체 평균': 'Trung bình toàn bộ',
+  '정답이 하나가 아닌 문제입니다 — <b>AI가 읽고 고칠 점을 알려 줍니다.</b>': 'Đây là dạng bài không chỉ có một đáp án — <b>AI sẽ đọc và chỉ ra chỗ cần sửa.</b>',
+  '조금 더 써 주세요 (스무 자 이상).': 'Hãy viết thêm một chút (từ 20 chữ trở lên).',
+  '지금 있는 과정은 <b>베트남어(한국인용)</b>뿐입니다.<br>': 'Hiện chỉ có khóa <b>tiếng Việt (dành cho người Hàn)</b>.<br>',
+  '지난주 성적표': 'Bảng điểm tuần trước',
+  '짜오짜오': 'Chào Chào',
+  '쪽지는 <b>암호가 걸려 있지 않습니다</b>. 서버에 30일 남고, 운영자는 마음먹으면 볼 수 있습니다.<br>': 'Tin nhắn <b>không được mã hóa</b>. Lưu trên máy chủ 30 ngày, và quản trị viên có thể xem nếu muốn.<br>',
+  '차단하면 그 사람의 쪽지가 들어오지 않습니다.': 'Nếu chặn thì tin nhắn của người đó sẽ không vào nữa.',
+  '채점 결과': 'Kết quả chấm',
+  '첫 마디를 걸어 보세요': 'Hãy nói câu đầu tiên',
+  '초': ' giây',
+  '최근 50개 · 30일 뒤 사라짐': '50 bài gần nhất · sẽ mất sau 30 ngày',
+  '출처 · Cepeda, Pashler, Vul, Wixted &amp; Rohrer (2006) <i>Psychological Bulletin</i> 132, 354–380 ·': 'Nguồn · Cepeda, Pashler, Vul, Wixted &amp; Rohrer (2006) <i>Psychological Bulletin</i> 132, 354–380 ·',
+  '타이핑': 'Gõ phím',
+  '틀렸어요 (곧 다시 나옴)': 'Sai rồi (sẽ sớm hiện lại)',
+  '하루': 'Một ngày',
+  '하루 5분에서 한 세트를 끝내면 여기서 바로 다시 볼 수 있습니다.': 'Khi hoàn thành một phần trong mục 5 phút mỗi ngày, bạn có thể xem lại ngay tại đây.',
+  '하루 학습을 한 세트 끝내면 그날 대화 문장이 여기에 들어옵니다.': 'Hoàn thành một phần học trong ngày thì câu hội thoại hôm đó sẽ vào đây.',
+  '학습에서 만난 단어는 전부 복습 창고에 들어갑니다. 문제를 <b>맞힐 때마다</b> 그 단어는 더 나중에 나옵니다 —': 'Mọi từ bạn gặp khi học đều vào kho ôn tập. <b>Mỗi lần trả lời đúng</b>, từ đó sẽ xuất hiện lại muộn hơn —',
+  '한 주에 <b>5일</b> 공부하면 🛡️ 1개를 받습니다 (최대 2개).<br>': 'Học <b>5 ngày</b> một tuần thì được 1 chiếc 🛡️ (tối đa 2 chiếc).<br>',
+  '한 줄 소개 (60자 — 예: 퇴근 후 풋살, 초보 환영)': 'Giới thiệu một dòng (60 ký tự — ví dụ: Đá futsal sau giờ làm, hoan nghênh người mới)',
+  '한국어로 쓰셨네요 — 베트남어로는': 'Bạn đã viết bằng tiếng Hàn — trong tiếng Việt là',
+  '화면 언어': 'Ngôn ngữ màn hình',
+  '＋ 새 단어 ·': '＋ Từ mới ·',
+  '🎤 말하고 채점받기': '🎤 Nói và nhận chấm điểm',
+  '💬 현지에서는 ·': '💬 Người bản xứ nói ·',
+  '📕 오답노트 (': '📕 Sổ lỗi sai (',
+  '🔊 다시 듣기': '🔊 Nghe lại',
+  '🔑 한자어': '🔑 Từ Hán Việt',
+  '🛡️ <b>연속 보호권</b>이 어제 하루를 메웠습니다.<br>연속 기록이 이어집니다. (남은 보호권': '🛡️ <b>Quyền bảo vệ chuỗi ngày</b> đã bù cho ngày hôm qua.<br>Chuỗi ngày học vẫn tiếp tục. (Còn lại',
+  '🛡️ 이번 주 5일을 채워 <b>연속 보호권</b>을 받았습니다. (': '🛡️ Bạn đã học đủ 5 ngày tuần này và nhận được <b>quyền bảo vệ chuỗi ngày</b>. (',
   '하루 5분': 'Học 5 phút', '복습': 'Ôn tập', '기본기': 'Cơ bản', '문법': 'Ngữ pháp',
   '동아리': 'Câu lạc bộ', '사용법': 'Hướng dẫn', '일상': 'Hằng ngày', '직무': 'Công việc',
   '기사': 'Bản tin', '단어': 'Từ vựng', '문장': 'Câu', '최근 학습': 'Bài vừa học', '오답노트': 'Sổ lỗi sai',
@@ -76,7 +305,17 @@ const UIVI = {
   '원어민': 'Người bản xứ', '나': 'Tôi', '번갈아 듣기': 'Nghe lần lượt',
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
 };
-const tr = h => (S && S.ui === 'vi' && typeof h === 'string' && UIVI[h]) ? UIVI[h] : h;
+/* 화면 글을 베트남어로 바꾼다.
+   'dev' 는 만드는 사람용 — 베트남어 뒤에 한국어 원문을 ⟨ ⟩ 로 같이 붙인다.
+   태그(<span>)가 아니라 그냥 글자로 붙이는 이유: 이 함수의 결과가
+   innerHTML 로도 가고 textContent 로도 가기 때문이다. 태그를 쓰면 한쪽에서 글자로 새어 나온다. */
+const tr = h => {
+  if (!S || typeof h !== 'string') return h;
+  const v = UIVI[h];
+  if (S.ui === 'vi') return v || h;
+  if (S.ui === 'dev') return v ? v + ' ⟨' + h + '⟩' : h;
+  return h;
+};
 const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = tr(h); return n; };
 // 그림: img/ 폴더에 파일이 있으면 그걸, 없으면 이모지를 보여준다 (파일 확인은 브라우저가 알아서)
 const pic = (x, cls) => {
@@ -1316,10 +1555,15 @@ function renderAwards() {
     b.append(cl);
   }
 
+  /* 화면 언어 — 한국어 → Tiếng Việt → 나란히(개발용) 로 돌아간다.
+     '나란히'는 만드는 사람용이다. 베트남어 옆에 한국어 원문을 같이 띄워
+     "이 화면이 무엇이고 번역이 맞게 붙었는가"를 눈으로 대조하려고 둔다. */
+  const UINAME = { ko: '한국어', vi: 'Tiếng Việt', dev: 'Việt + 한국어 (개발용)' };
+  const NEXTUI = { ko: 'vi', vi: 'dev', dev: 'ko' };
   const ui = el('div', 'planrow');
-  ui.append(el('span', 'pk', '화면 언어'), el('span', 'pv', S.ui === 'vi' ? 'Tiếng Việt' : '한국어'));
-  const ub = el('button', 'ghost sm', S.ui === 'vi' ? '한국어로' : 'Tiếng Việt');
-  ub.onclick = () => { S.ui = S.ui === 'vi' ? 'ko' : 'vi'; save(); renderAwards(); drawMenu(); };
+  ui.append(el('span', 'pk', '화면 언어'), el('span', 'pv', UINAME[S.ui] || '한국어'));
+  const ub = el('button', 'ghost sm', UINAME[NEXTUI[S.ui] || 'vi'] + ' →');
+  ub.onclick = () => { S.ui = NEXTUI[S.ui] || 'vi'; save(); renderAwards(); drawMenu(); };
   ui.append(ub);
   b.append(ui);
 
@@ -1650,7 +1894,53 @@ function askNick() {
 /* ---------- 홈 메뉴 ----------
    첫 화면은 큰 칸 여덟 개뿐이다. 칸을 누르면 그 안에서 고른다 —
    첫 화면에 버튼이 많을수록 고르는 데 힘이 들고, 결국 아무것도 안 누르게 된다. */
-const MENUS = {
+/* 한국어를 배우는 사람의 첫 화면.
+   베트남어 과정은 '오늘 배울 세트'가 중심이지만, 여기는 아직 날마다 배우는 과정이 없다.
+   그래서 있는 것만 정직하게 보여 준다 — 모의고사 성적과, 아직 없는 것에 대한 안내.
+   없는 것을 있는 척 채워 두면 눌러 보고 실망한다. */
+function drawKoHome() {
+  const plan = $('#plan');
+  plan.textContent = '';
+  $('#progress').textContent = '';
+
+  // el() 은 셋째 인자를 자동으로 tr() 에 태운다 — 'vi' 면 베트남어만, 'dev' 면 한국어를 ⟨ ⟩ 로 덧붙인다.
+  // 실제 베트남 이용자(vi)는 절대로 한글 원문을 보면 안 된다 — 개발용 대조는 dev 모드에서만.
+  const head = el('div', 'kohead');
+  head.append(el('div', 'kohtit', '베트남인을 위한 한국어'));
+  head.append(el('div', 'kohsub', 'EPS-TOPIK · KIIP · TOPIK I 시험 대비'));
+  plan.append(head);
+
+  // 모의고사 성적 요약 — 본 적이 있으면 최근 점수, 없으면 시작 안내.
+  // 숫자가 낀 문장이라 el() 통짜 번역을 못 쓴다 — 낱말만 tr() 로 옮기고 숫자를 직접 끼운다.
+  const scores = Object.entries(S.exam || {});
+  const row = el('div', 'plancell go');
+  const pk = el('span', 'pk'), pv = el('span', 'pv');
+  if (scores.length) {
+    const best = scores.map(([, v]) => Math.round(v.score / v.total * 100));
+    const avg = Math.round(best.reduce((a, c) => a + c, 0) / best.length);
+    pk.textContent = tr('응시') + ' ' + scores.length + tr('회');
+    pv.textContent = tr('평균') + ' ' + avg + tr('점');
+  } else {
+    pk.textContent = tr('모의고사'); pv.textContent = tr('시작하기');
+  }
+  row.append(pk, pv);
+  row.onclick = examEntry;
+  plan.append(row);
+
+  const note = el('p', 'note');
+  note.append(el('b', null, '지금 있는 것 — 모의고사, AI 채점 말하기·쓰기'));
+  note.append(document.createElement('br'));
+  note.append(document.createTextNode(tr('아직 없는 것 — 날마다 배우는 과정')));
+  plan.append(note);
+}
+
+/* 무엇을 배우는 사람인가 — 이 한 줄이 앱의 절반을 가른다.
+   베트남 사람이 한국어를 배우러 온 것과, 한국 사람이 베트남어를 배우러 온 것은
+   같은 앱이 아니다. 성조 훈련·베트남어 자판은 앞사람에게 아무 쓸모가 없고,
+   모의고사(EPS·TOPIK·KIIP)는 뒷사람에게 아무 쓸모가 없다. */
+const learnKo = () => S.learn === 'ko';
+
+const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까지의 앱)
   day:   { name: '하루 5분', items: () => [
             ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')],
             ['기사', showNewsLearn]] },
@@ -1663,11 +1953,26 @@ const MENUS = {
             ['호칭', () => startRule(0)], ['어순', () => startRule(1)], ['숫자 읽는 법', () => startRule(5)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
+  club:  { name: '동아리', items: () => [['보기', showClub]] },
+  guide: { name: '사용법', items: () => [['보기', showGuide]] },
+};
+
+const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   exam:  { name: '모의고사', items: () => [['보기', examEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
-
 };
+
+// drawMenu 등이 그대로 쓸 수 있도록, 고른 쪽을 MENUS 라는 이름으로 내놓는다
+const MENUS = new Proxy({}, {
+  get: (_, k) => (learnKo() ? MENUS_KO : MENUS_VI)[k],
+  has: (_, k) => k in (learnKo() ? MENUS_KO : MENUS_VI),
+  ownKeys: () => Reflect.ownKeys(learnKo() ? MENUS_KO : MENUS_VI),
+  getOwnPropertyDescriptor: (_, k) => {
+    const m = learnKo() ? MENUS_KO : MENUS_VI;
+    return k in m ? { value: m[k], enumerable: true, configurable: true } : undefined;
+  },
+});
 /* ---------- 모의고사 ----------
    연습 퀴즈와는 딴판으로 굴러야 한다. 연습은 한 문제 풀 때마다 맞았는지 알려주지만,
    시험은 끝날 때까지 안 알려준다 — 실제 시험장이 그렇고, 중간에 알려주면
@@ -2251,6 +2556,8 @@ function renderHome() {
   pingRooms();                              // 하루 이상 조용하면 먼저 말을 걸어 둔다
   drawMenu();
   drawWxNow();
+  // 한국어를 배우는 사람에게는 베트남어 일정판이 아무 뜻이 없다 — 딴 판을 그린다
+  if (learnKo()) { drawKoHome(); show('home', '짜오짜오', false); return; }
   renderProgress($('#progress'));      // 이번 주 도장·통계·업적 (첫 화면 일정판 아래)
   const nx = nextDay();
   const due = dueWords();
