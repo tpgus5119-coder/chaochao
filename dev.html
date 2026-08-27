@@ -119,7 +119,11 @@ function row(title, sub, val, tag) {
     const w = days.days.reduce((a, d) => a + d.words.length, 0);
     const l = days.days.reduce((a, d) => a + d.dialog.lines.length, 0);
     const brk = gram ? days.days.filter(d => !gram.items.some(g => g.pattern === d.grammar)).length : 0;
-    r1.append(row('날마다 배우기', '단어 ' + w + ' · 대화 ' + l + '줄 · 초급1만',
+    // 어느 단계까지 왔는지는 문법 자료에서 세어 적는다 — 손으로 적으면 늘 옛말이 된다
+    const lv = gram ? [...new Set(days.days.map(d =>
+      (gram.items.find(g => g.pattern === d.grammar) || {}).level).filter(Boolean))] : [];
+    r1.append(row('날마다 배우기', '단어 ' + w + ' · 대화 ' + l + '줄'
+                  + (lv.length ? ' · ' + lv.join('·') : ''),
                   days.days.length + '일',
                   brk ? ['문법 연결 ' + brk + '건 끊김', 'bad'] : ['문법 연결 정상', 'ok']));
   }
@@ -149,7 +153,8 @@ function row(title, sub, val, tag) {
     exams.exams.forEach(e => e.questions.forEach(q => {
       (q.audio || []).forEach(a => { if (!have(typeof a === 'string' ? a : a.t)) audioMiss++; });
       if (q.img) imgMiss.push('img/' + q.img);
-      if (!q.why) noWhy++;                       // 해설이 붙었는지
+      // 해설은 보기마다 한 줄씩 붙는다(q.exp). 넷이 다 차 있어야 '붙었다'고 친다.
+      if (!(q.exp && q.exp.length === 4 && q.exp.every(Boolean))) noWhy++;
     }));
     Object.values(byId).forEach(list => {
       const e = list[0];
@@ -159,7 +164,8 @@ function row(title, sub, val, tag) {
                   exams.extra.speak.length + '세트 · ' + exams.extra.write.length + '제목'));
     r2.append(row('듣기 음원', '없으면 그 문항은 아예 못 푼다', '',
                   audioMiss ? [audioMiss + '개 빠짐', 'bad'] : ['전부 소리 남', 'ok']));
-    r2.append(row('오답 해설', '왜 그게 답인지 베트남어 설명', noWhy + '문항 없음',
+    r2.append(row('오답 해설', '정답이 왜 맞는지 + 오답 셋이 각각 왜 틀렸는지',
+                  noWhy ? noWhy + '문항 없음' : '전 문항',
                   noWhy ? ['아직 없음', 'warn'] : ['다 붙음', 'ok']));
     // 그림은 실제로 두드려 본다
     const uniq = [...new Set(imgMiss)];
