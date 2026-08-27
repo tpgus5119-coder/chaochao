@@ -50,6 +50,14 @@ const $ = s => document.querySelector(s);
    글자가 화면에 놓이는 길목(el·show)에서 **문구를 통째로 맞바꾼다.**
    표에 있는 문구만 바뀐다 — 아직 없는 문구는 한국어로 남고, 표를 채우면 늘어난다. */
 const UIVI = {
+  '빈칸 채우기': 'Điền vào chỗ trống', '㉠ ㉡ 두 자리': 'Hai chỗ ㉠ ㉡',
+  '논술 (54번 꼴)': 'Bài luận (dạng câu 54)', '자료 설명 (53번 꼴)': 'Mô tả dữ liệu (dạng câu 53)',
+  'N자 정도': 'Khoảng N chữ', '여기에 쓰세요…': 'Viết vào đây…',
+  '모범답 보기': 'Xem đáp án mẫu', 'AI에게 봐 달라기': 'Nhờ AI xem giúp',
+  '먼저 써 보세요.': 'Hãy thử viết trước đã.', '조금 더 써 주세요.': 'Hãy viết thêm một chút.',
+  'TOPIK II 쓰기': 'Viết TOPIK II',
+  '51·52번은 빈칸 채우기, 53·54번은 긴 글입니다. 실제 시험과 같은 꼴입니다.':
+    'Câu 51·52 là điền chỗ trống, câu 53·54 là bài viết dài. Đúng dạng của kỳ thi thật.',
   '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.':
     'Học mỗi ngày — 78 ngày từ Sơ cấp 1 đến Trung cấp 2. Mỗi ngày một ngữ pháp, mười từ, một đoạn hội thoại.',
   '지금 있는 것 — 날마다 배우기 78일, 모의고사 34벌(해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
@@ -2815,7 +2823,140 @@ function examExtra() {
     btn.onclick = () => examWrite(i);
     b.append(btn);
   });
+
+  /* TOPIK II 쓰기는 꼴이 둘이다 — 51·52번은 빈칸 두 개, 53·54번은 긴 글.
+     빈칸형은 모범답이 있어 AI 없이도 스스로 맞춰 볼 수 있게 했다(크레딧이 없어도 쓸 수 있게). */
+  const bl = (EXDATA.extra || {}).t2_blank || [];
+  const lg = (EXDATA.extra || {}).t2_long || [];
+  if (bl.length || lg.length) {
+    b.append(el('h3', 'exhead', 'TOPIK II 쓰기'));
+    b.append(el('p', 'note', '51·52번은 빈칸 채우기, 53·54번은 긴 글입니다. 실제 시험과 같은 꼴입니다.'));
+    bl.forEach((w, i) => {
+      const btn = el('button', 'bigmenu');
+      btn.append(el('b', null, tr('빈칸 채우기') + ' · ' + esc(w.title)));
+      btn.append(el('span', 'exmeta', tr('㉠ ㉡ 두 자리')));
+      btn.onclick = () => examT2Blank(i);
+      b.append(btn);
+    });
+    lg.forEach((w, i) => {
+      const btn = el('button', 'bigmenu');
+      btn.append(el('b', null, (w.chars > 400 ? tr('논술 (54번 꼴)') : tr('자료 설명 (53번 꼴)'))));
+      btn.append(el('span', 'exmeta', tr('N자 정도').replace('N', w.chars)));
+      btn.onclick = () => examWriteLong(i);
+      b.append(btn);
+    });
+  }
   show('exam', '말하기 · 쓰기', true);
+}
+
+/* 51·52번 꼴 — 빈칸 둘. 채점 기준이 뚜렷해서 모범답을 보여 주는 것만으로도 배운다.
+   AI 키가 있으면 내 답을 봐 주고, 없으면 모범답과 견주게 한다. */
+function examT2Blank(i) {
+  const w = EXDATA.extra.t2_blank[i];
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'exsec', tr('TOPIK II 쓰기') + ' · ' + tr('빈칸 채우기')));
+  const card = el('div', 'excard');
+  card.append(el('div', 'exask', esc(w.title)));
+  const pw = el('div', 'expass');
+  w.text.split('\n').forEach(l => pw.append(el('div', null, esc(l))));
+  card.append(pw);
+
+  const ins = [];
+  ['㉠', '㉡'].forEach(mark => {
+    const row = el('div', 'blankrow');
+    row.append(el('span', 'blankno', mark));
+    const t = el('input', 'keyin'); t.type = 'text'; t.maxLength = 60;
+    t.placeholder = tr('여기에 쓰세요…');
+    row.append(t); ins.push(t);
+    card.append(row);
+  });
+
+  const out = el('div', 'exgrade');
+  const see = el('button', 'ghost', tr('모범답 보기'));
+  see.onclick = () => {
+    out.textContent = '';
+    w.model.forEach(m => out.append(el('div', 'exgline', esc(m))));
+    out.append(el('div', 'exgline dim', esc(w.how)));
+    see.disabled = true;
+  };
+  const go = el('button', 'explay', tr('AI에게 봐 달라기'));
+  go.onclick = async () => {
+    const mine = ins.map(x => x.value.trim());
+    if (mine.every(x => !x)) { out.textContent = tr('먼저 써 보세요.'); return; }
+    if (!aiReady()) { out.textContent = 'AI 키가 필요합니다 — 내 정보에서 넣어 주세요.'; return; }
+    if (!aiPay(out)) return;
+    out.textContent = 'AI가 읽는 중…';
+    try {
+      const t = await gCall({
+        contents: [{ role: 'user', parts: [{ text:
+          'TOPIK II 쓰기 51·52번 채점자다. 아래 글의 빈칸 ㉠㉡에 응시자가 쓴 답이 '
+          + '문맥과 문법에 맞는지 각각 한 줄로 평하고, 틀렸으면 고쳐 준다. 한국어로 짧게.\n\n'
+          + '[글]\n' + w.text + '\n\n[채점 요령]\n' + w.how
+          + '\n\n[응시자 답]\n㉠ ' + mine[0] + '\n㉡ ' + mine[1] }] }],
+        generationConfig: { maxOutputTokens: 400 }
+      }, n => { out.textContent = `AI가 붐빕니다 — 다시 시도 중 (${n + 2}/3)…`; });
+      out.textContent = '';
+      String(t).split('\n').filter(x => x.trim())
+        .forEach(line => out.append(el('div', 'exgline', esc(line))));
+      touchToday(); save();
+    } catch (e) { out.textContent = 'AI 채점 실패: ' + (e.message || ''); }
+  };
+  card.append(go, see, out);
+  b.append(card);
+  const back = el('button', 'ghost big', '‹ 다른 제목 고르기');
+  back.style.marginTop = '12px';
+  back.onclick = examExtra;
+  b.append(back);
+  show('exam', 'TOPIK II 쓰기', true);
+}
+
+/* 53·54번 꼴 — 긴 글. 채점 요령을 AI에게 같이 넘긴다.
+   "잘 썼나요"라고만 물으면 채점이 그때그때 달라진다 — 무엇을 볼지 정해 줘야 한다. */
+function examWriteLong(i) {
+  const w = EXDATA.extra.t2_long[i];
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'exsec', tr('TOPIK II 쓰기') + ' · ' + tr('N자 정도').replace('N', w.chars)));
+  const card = el('div', 'excard');
+  w.title.split('\n').forEach(l => card.append(el('div', 'exask', esc(l))));
+  const ta = el('textarea', 'exwrite');
+  ta.placeholder = tr('여기에 쓰세요…');
+  ta.rows = 14;
+  const cnt = el('p', 'note', `0 / ${w.chars}자`);
+  ta.oninput = () => { cnt.textContent = `${ta.value.length} / ${w.chars}자`; };
+  card.append(ta, cnt);
+
+  const out = el('div', 'exgrade');
+  const go = el('button', 'explay', '채점받기');
+  go.onclick = async () => {
+    const text = ta.value.trim();
+    if (text.length < 80) { out.textContent = tr('조금 더 써 주세요.'); return; }
+    if (!aiReady()) { out.textContent = 'AI 키가 필요합니다 — 내 정보에서 넣어 주세요.'; return; }
+    if (!aiPay(out)) return;
+    out.textContent = 'AI가 읽는 중…';
+    try {
+      const t = await gCall({
+        contents: [{ role: 'user', parts: [{ text:
+          'TOPIK II 쓰기 채점자다. 아래 채점 요령의 항목마다 O/X와 한 줄 이유를 적고, '
+          + '마지막에 고칠 곳 세 가지를 짚어 준다. 점수는 매기지 말고 무엇을 고치면 되는지만 말한다. '
+          + '한국어로 짧게.\n\n[문제]\n' + w.title + '\n\n[채점 요령]\n' + w.how
+          + '\n\n[응시자 글]\n' + text }] }],
+        generationConfig: { maxOutputTokens: 800 }
+      }, n => { out.textContent = `AI가 붐빕니다 — 다시 시도 중 (${n + 2}/3)…`; });
+      out.textContent = '';
+      String(t).split('\n').filter(x => x.trim())
+        .forEach(line => out.append(el('div', 'exgline', esc(line))));
+      touchToday(); save();
+    } catch (e) { out.textContent = 'AI 채점 실패: ' + (e.message || ''); }
+  };
+  card.append(go, out);
+  b.append(card);
+  const back = el('button', 'ghost big', '‹ 다른 제목 고르기');
+  back.style.marginTop = '12px';
+  back.onclick = examExtra;
+  b.append(back);
+  show('exam', 'TOPIK II 쓰기', true);
 }
 
 function examSpeak(si, qi) {

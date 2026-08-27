@@ -13,6 +13,7 @@
 """
 import json, os, random, sys, unicodedata
 import ko_content
+import ko_content_t2
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data")
 
@@ -298,6 +299,51 @@ def q_listen_pic(rng, w, pics, pic_pool):
             "exp": [(f"맞습니다. 들려준 말은 {gl(w)}입니다." if x is w
                      else f"이 그림은 {gl(x)}입니다.") for x in picked]}
 
+# ── TOPIK II 듣기 ────────────────────────────────────────────
+# 중급은 대사가 길고(중앙값 35자) 대화가 여러 턴이다. 유형도 초급과 다르다 —
+# '이어질 말', '이어서 할 행동', '중심 생각'은 TOPIK II 에만 있는 꼴이다.
+def _voiced(lines):
+    return [{"v": "m" if who == "남" else "f", "t": t} for who, t in lines]
+
+
+def q_t2_reply(rng, idx):
+    lines, ans, wrong, why, bad = ko_content_t2.T2_REPLY[idx]
+    return {"type": "t2_reply", "stem": "다음 대화를 잘 듣고 이어질 수 있는 말을 고르십시오.",
+            "audio": _voiced(lines), "script": [f"{w}: {t}" for w, t in lines],
+            **shuffled(rng, ans, wrong, why, bad)}
+
+
+def q_t2_act(rng, idx):
+    lines, q, ans, wrong, why, bad = ko_content_t2.T2_ACT[idx]
+    return {"type": "t2_act", "stem": f"다음 대화를 잘 듣고 물음에 답하십시오.\n{q}",
+            "audio": _voiced(lines), "script": [f"{w}: {t}" for w, t in lines],
+            **shuffled(rng, ans, wrong, why, bad)}
+
+
+def q_t2_same(rng, idx):
+    lines, ans, wrong, why, bad = ko_content_t2.T2_SAME[idx]
+    return {"type": "t2_same", "stem": "다음을 듣고 내용과 같은 것을 고르십시오.",
+            "audio": _voiced(lines), "script": [t for _, t in lines],
+            **shuffled(rng, ans, wrong, why, bad)}
+
+
+def q_t2_idea(rng, idx):
+    lines, ans, wrong, why, bad = ko_content_t2.T2_IDEA[idx]
+    who = "남자" if lines[0][0] == "남" else "여자"
+    return {"type": "t2_idea", "stem": f"다음을 듣고 {who}의 중심 생각을 고르십시오.",
+            "audio": _voiced(lines), "script": [t for _, t in lines],
+            **shuffled(rng, ans, wrong, why, bad)}
+
+
+def q_t2_long(rng, pidx, qidx):
+    title, lines, qs = ko_content_t2.T2_LONG[pidx]
+    q, ans, wrong, why, bad = qs[qidx]
+    return {"type": "t2_long", "stem": f"다음을 듣고 물음에 답하십시오.\n{q}",
+            "ptitle": title, "audio": _voiced(lines),
+            "script": [f"{w}: {t}" if len(lines) > 1 else t for w, t in lines],
+            **shuffled(rng, ans, wrong, why, bad)}
+
+
 def q_read(rng, pidx, qidx):
     """지문을 읽고 물음에 답한다."""
     title, passage, qs = ko_content.READ_BANK[pidx]
@@ -370,6 +416,26 @@ BLUEPRINTS = {
             {"label": "[13~28] 다음 설명에 맞는 단어를 고르십시오.", "kind": "dfn2word", "n": 16},
             {"label": "[29~38] 뜻이 알맞은 것을 고르십시오.", "kind": "word2vi", "n": 10},
             {"label": "[39~50] 다음을 읽고 물음에 답하십시오.", "kind": "read", "n": 12},
+        ],
+    },
+    # TOPIK II 듣기 50문항. 유형 배열은 기출의 발문 차례를 그대로 따랐다.
+    # 재료가 한 벌치뿐이라 회차는 1회만 낸다 — 없는 것을 있는 척하지 않는다.
+    "topik-2-listen": {
+        "name": "TOPIK II 듣기 모의고사",
+        "desc": "TOPIK II 1교시 듣기 형식 · 50문항 (지금은 1회분)",
+        "minutes": 60,
+        "grades": ["B", "C"],
+        "sections": [
+            {"label": "[1~12] 다음 대화를 잘 듣고 이어질 수 있는 말을 고르십시오.",
+             "kind": "t2_reply", "n": 12},
+            {"label": "[13~22] 다음 대화를 잘 듣고 이어서 할 행동을 고르십시오.",
+             "kind": "t2_act", "n": 10},
+            {"label": "[23~34] 다음을 듣고 내용과 같은 것을 고르십시오.",
+             "kind": "t2_same", "n": 12},
+            {"label": "[35~44] 다음을 듣고 중심 생각을 고르십시오.",
+             "kind": "t2_idea", "n": 10},
+            {"label": "[45~50] 다음을 듣고 물음에 답하십시오.",
+             "kind": "t2_long", "n": 6},
         ],
     },
 }
@@ -479,6 +545,13 @@ def build(exam_id, seed, words, gloss, pics, state):
             state[name] = left
         return left
     p_left = take("particles", len(PARTICLE_BANK))
+    t2 = {k: take("t2_" + k, len(getattr(ko_content_t2, "T2_" + k.upper())))
+          for k in ("reply", "act", "same", "idea")}
+    t2_long = state.get("t2_long")
+    if t2_long is None:
+        t2_long = [(pi, qi) for pi, p in enumerate(ko_content_t2.T2_LONG)
+                   for qi in range(len(p[2]))]
+        state["t2_long"] = t2_long
     lr_left = take("listen_reply", len(ko_content.LISTEN_REPLY))
     ld_left = take("listen_dialog", len(ko_content.LISTEN_DIALOG))
     # 읽기는 (지문번호, 그 지문의 몇째 문항)이 한 짝이다
@@ -511,6 +584,16 @@ def build(exam_id, seed, words, gloss, pics, state):
                 if not rd_left:
                     break
                 q = q_read(rng, *rd_left.pop(0))
+            elif sec["kind"] in ("t2_reply", "t2_act", "t2_same", "t2_idea"):
+                k = sec["kind"][3:]
+                if not t2[k]:
+                    break
+                q = {"reply": q_t2_reply, "act": q_t2_act,
+                     "same": q_t2_same, "idea": q_t2_idea}[k](rng, t2[k].pop(0))
+            elif sec["kind"] == "t2_long":
+                if not t2_long:
+                    break
+                q = q_t2_long(rng, *t2_long.pop(0))
             elif sec["kind"] == "job":
                 q = q_job(rng, bp["industry"], made, used)
                 if not q:
@@ -578,11 +661,18 @@ if __name__ == "__main__":
            "extra": {
                "speak": [{"passage": p, "questions": qs} for p, qs in ko_content.SPEAK_BANK],
                "write": [{"title": t, "chars": n} for t, n in ko_content.WRITE_BANK],
+               # TOPIK II 쓰기 — 51·52(빈칸 둘) / 53·54(긴 글). 채점 요령을 같이 실어
+               # AI 가 무엇을 볼지 정해 준다(그냥 "잘 썼나요"라고 물으면 채점이 흔들린다).
+               "t2_blank": [{"title": t, "text": x, "model": m, "how": h}
+                            for t, x, m, h in ko_content_t2.T2_WRITE_BLANK],
+               "t2_long": [{"title": t, "chars": n, "how": h}
+                           for t, n, h in ko_content_t2.T2_WRITE_LONG],
            }}
     for exam_id in BLUEPRINTS:
         state = {}                     # 시험 종류마다 따로 — EPS와 KIIP는 서로 겹쳐도 된다
         # 직무 어휘는 낱말이 정해져 있어 회차를 나눌 수 없다 — 한 벌만 낸다
-        for seed in ((1,) if exam_id.startswith("eps-job-") else (1, 2, 3)):
+        one = exam_id.startswith("eps-job-") or exam_id == "topik-2-listen"
+        for seed in ((1,) if one else (1, 2, 3)):
             e = build(exam_id, seed, words, gloss, pics, state)
             out["exams"].append(e)
             print(f"{exam_id} {seed}회차: {e['total']}문항 (부족 {e['shortfall']})", file=sys.stderr)
