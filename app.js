@@ -148,7 +148,7 @@ const UIVI = {
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
   '응시': 'Đã thi', '회': ' lần', '평균': 'Trung bình', '점': ' điểm',
-  '지금 있는 것 — 모의고사, AI 채점 말하기·쓰기': 'Hiện đã có — đề thi thử, luyện nói·viết có AI chấm',
+  '지금 있는 것 — 모의고사, 기본기, 문법 68개, AI 채점 말하기·쓰기': 'Hiện đã có — đề thi thử, kiến thức nền tảng, 68 điểm ngữ pháp, luyện nói·viết có AI chấm',
   '아직 없는 것 — 날마다 배우는 과정': 'Chưa có — khóa học theo từng ngày',
   '목록으로': 'Về danh sách',
   '문장 고르기': 'Chọn câu',
@@ -1938,7 +1938,7 @@ function drawKoHome() {
   plan.append(row);
 
   const note = el('p', 'note');
-  note.append(el('b', null, '지금 있는 것 — 모의고사, AI 채점 말하기·쓰기'));
+  note.append(el('b', null, '지금 있는 것 — 모의고사, 기본기, 문법 68개, AI 채점 말하기·쓰기'));
   note.append(document.createElement('br'));
   note.append(document.createTextNode(tr('아직 없는 것 — 날마다 배우는 과정')));
   plan.append(note);
