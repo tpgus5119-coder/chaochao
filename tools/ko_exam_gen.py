@@ -17,7 +17,9 @@ import ko_content_t2
 import ko_society
 import ko_t1_listen as L1
 import ko_t1_read as R1
+import ko_t2_listen as L2
 import topik_blueprint as BP
+import gen_charts
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data")
 
@@ -455,6 +457,18 @@ def q_pic_dlg(rng, stem, item, pics, pic_pool):
                      else f"이 그림은 '{n}'입니다.") for n in names]}
 
 
+def q_chart(rng, stem, idx):
+    """도표 고르기 — 들려준 수치대로 그린 그래프 하나와 차례만 바꾼 것 셋."""
+    title, lines, items, right, wrongs, why = L2.T2_CHART[idx]
+    files = gen_charts.names(idx)
+    order = list(range(4))
+    rng.shuffle(order)
+    return {"type": "t2_pic", "stem": stem, "optkind": "img", "ptitle": title,
+            "options": [files[p] for p in order], "answer": order.index(0),
+            **_dlg(lines),
+            "exp": [(why if p == 0 else "값의 차례가 들려준 것과 다릅니다.") for p in order]}
+
+
 TAG4 = ["(가)", "(나)", "(다)", "(라)"]
 
 
@@ -525,8 +539,31 @@ PAIRS = {
     "pair_purpose": (R1.PAIR_PURPOSE, False),
 }
 # 낱개로 세어 쓰는 나머지 뭉치들
+PAIRS.update({
+    "t2p_dlg_idea": (L2.DLG_IDEA, True), "t2p_dlg_act": (L2.DLG_ACT, True),
+    "t2p_itv_idea": (L2.ITV_IDEA, True), "t2p_dlg_intent": (L2.DLG_INTENT, True),
+    "t2p_itv_who": (L2.ITV_WHO, True), "t2p_debate": (L2.DEBATE, True),
+    "t2p_lec_topic": (L2.LEC_TOPIC, True), "t2p_speech": (L2.SPEECH, True),
+    "t2p_show_idea": (L2.SHOW_IDEA, True), "t2p_talk_before": (L2.TALK_BEFORE, True),
+    "t2p_lec_main": (L2.LEC_MAIN, True), "t2p_doc": (L2.DOC, True),
+    "t2p_lec_att": (L2.LEC_ATT, True), "t2p_talk_att": (L2.TALK_ATT, True),
+    "t2p_lec_att2": (L2.LEC_ATT2, True),
+})
 SOLO = {"read_notice": R1.READ_NOTICE, "read_order": R1.READ_ORDER,
-        "listen_pic_dlg": L1.LISTEN_PIC_DLG, "pair_pos": R1.PAIR_POS}
+        "listen_pic_dlg": L1.LISTEN_PIC_DLG, "pair_pos": R1.PAIR_POS,
+        "t2_picdlg": L2.T2_PICDLG, "t2_chart": L2.T2_CHART}
+
+# 설계도의 [1~3]은 '그림 **또는** 그래프'다 — 실제 시험은 1·2번이 그림, 3번이 그래프다.
+# 뭉치가 둘이라 한 자리로는 못 세고, 출제기에서 앞 둘·뒤 하나로 갈라 쓴다.
+# 아래는 '한 회분에 몇 개가 드는가'를 세는 데만 쓴다.
+T2PIC_SPLIT = 2
+
+# 설계도의 [17~20]은 **남자의** 중심 생각만 묻고, [9~12]는 **여자가** 이어서 할 행동만 묻는다.
+# 우리 뭉치에는 남녀가 섞여 있다 — 발문과 화자가 어긋나면 답이 없는 문항이 된다.
+T2_IDEA_M = [i for i, it in enumerate(ko_content_t2.T2_IDEA) if it[0][0][0] == "남"]
+T2_ACT_F = [i for i, it in enumerate(ko_content_t2.T2_ACT) if "여자" in it[1]]
+# 발문이 물음까지 통째로 담고 있는 유형 — 뭉치에 딸린 물음을 지우고 공식 발문만 쓴다
+STEM_ONLY = {"t2_act"}
 # 설계도의 'listen_pic'은 TOPIK I 에서 **대화를 듣고** 그림을 고르는 꼴이다.
 # EPS·KIIP 에 쓰던 '낱말 하나를 듣고 그림 고르기'와 재료가 다르므로 따로 잇는다.
 ALIAS = {"listen_pic": "listen_pic_dlg"}
@@ -552,13 +589,21 @@ def bp_sets(areas):
     need = {}
     for sec in bp_sections(areas):
         k = ALIAS.get(sec["kind"], sec["kind"])
-        if k in PAIRS or k == "pair_pos":
+        if k == "t2_pic":                          # 그림 둘 + 그래프 하나로 갈린다
+            need["t2_picdlg"] = need.get("t2_picdlg", 0) + T2PIC_SPLIT
+            need["t2_chart"] = need.get("t2_chart", 0) + sec["n"] - T2PIC_SPLIT
+        elif k in PAIRS or k == "pair_pos":
             need[k] = need.get(k, 0) + 1          # 묶음은 지문 하나로 여러 문항
         elif k in BANKS or k in SOLO:
             need[k] = need.get(k, 0) + sec["n"]
+        elif k == "t2_idea":
+            need["t2_idea_m"] = need.get("t2_idea_m", 0) + sec["n"]
+        elif k == "t2_act":
+            need["t2_act_f"] = need.get("t2_act_f", 0) + sec["n"]
     have = {**{k: len(v) for k, v in BANKS.items()},
             **{k: len(v) for k, v in SOLO.items()},
-            **{k: len(v) for k, (v, _) in PAIRS.items()}}
+            **{k: len(v) for k, (v, _) in PAIRS.items()},
+            "t2_idea_m": len(T2_IDEA_M), "t2_act_f": len(T2_ACT_F)}
     return min([have[k] // n for k, n in need.items() if n] or [1])
 
 
@@ -619,25 +664,14 @@ BLUEPRINTS = {
             {"label": "[39~50] 다음을 읽고 물음에 답하십시오.", "kind": "t2_read", "n": 12},
         ],
     },
-    # TOPIK II 듣기 50문항. 유형 배열은 기출의 발문 차례를 그대로 따랐다.
-    # 재료가 한 벌치뿐이라 회차는 1회만 낸다 — 없는 것을 있는 척하지 않는다.
+    # TOPIK II 듣기 — 구간표를 손으로 쓰지 않는다. 21번부터 끝까지가 전부 묶음 문항이고
+    # 담화의 갈래(대화·인터뷰·토론·강연·대담·다큐·인사말·교양)까지 번호마다 정해져 있다.
     "topik-2-listen": {
         "name": "TOPIK II 듣기 모의고사",
-        "desc": "TOPIK II 1교시 듣기 형식 · 50문항 (지금은 2회분)",
+        "desc": "TOPIK II 1교시 듣기 · 50문항 — 공식 평가틀의 문항 차례와 발문을 그대로 따랐다",
         "minutes": 60,
         "grades": ["B", "C"],
-        "sections": [
-            {"label": "[1~12] 다음 대화를 잘 듣고 이어질 수 있는 말을 고르십시오.",
-             "kind": "t2_reply", "n": 12},
-            {"label": "[13~22] 다음 대화를 잘 듣고 이어서 할 행동을 고르십시오.",
-             "kind": "t2_act", "n": 10},
-            {"label": "[23~34] 다음을 듣고 내용과 같은 것을 고르십시오.",
-             "kind": "t2_same", "n": 12},
-            {"label": "[35~44] 다음을 듣고 중심 생각을 고르십시오.",
-             "kind": "t2_idea", "n": 10},
-            {"label": "[45~50] 다음을 듣고 물음에 답하십시오.",
-             "kind": "t2_long", "n": 6},
-        ],
+        "sections": bp_sections(["TOPIK II 듣기"]),
     },
 }
 
@@ -790,6 +824,8 @@ def build(exam_id, seed, words, gloss, pics, state):
     bp_left = {k: take("bp_" + k, len(v))
                for k, v in list(BANKS.items()) + list(SOLO.items())}
     bp_left.update({k: take("bp_" + k, len(v)) for k, (v, _) in PAIRS.items()})
+    bp_left["t2_idea_m"] = take("bp_t2_idea_m", len(T2_IDEA_M))
+    bp_left["t2_act_f"] = take("bp_t2_act_f", len(T2_ACT_F))
     # 읽기는 (지문번호, 그 지문의 몇째 문항)이 한 짝이다
     rd_left = state.get("read")
     if rd_left is None:
@@ -842,6 +878,26 @@ def build(exam_id, seed, words, gloss, pics, state):
                               pics, pic_pool)
                 if not q:
                     continue
+            elif bpsec and kind == "t2_pic":
+                # 실제 시험처럼 앞 둘은 그림, 마지막 하나는 그래프
+                if made < T2PIC_SPLIT:
+                    if not bp_left["t2_picdlg"]:
+                        break
+                    q = q_pic_dlg(rng, head, L2.T2_PICDLG[bp_left["t2_picdlg"].pop(0)],
+                                  pics, pic_pool)
+                    if not q:
+                        continue
+                    q["type"] = "t2_pic"
+                else:
+                    if not bp_left["t2_chart"]:
+                        break
+                    q = q_chart(rng, head, bp_left["t2_chart"].pop(0))
+            elif bpsec and kind in ("t2_idea", "t2_act"):
+                key, src, fn = (("t2_idea_m", T2_IDEA_M, q_t2_idea) if kind == "t2_idea"
+                                else ("t2_act_f", T2_ACT_F, q_t2_act))
+                if not bp_left[key]:
+                    break
+                q = fn(rng, src[bp_left[key].pop(0)])
             elif sec["kind"] == "particle":
                 if not p_left:
                     break
@@ -912,8 +968,11 @@ def build(exam_id, seed, words, gloss, pics, state):
                 made += len(q)
                 continue
             # 설계도 구간인데 옛 유형(조사·대답 고르기)이 들어왔으면 발문만 공식 문구로 바꾼다
-            if bpsec and head and q["stem"].split("\n")[0] != head:
-                restem(q, head)
+            if bpsec and head:
+                if kind in STEM_ONLY:
+                    q["stem"] = head          # 뭉치에 딸린 물음이 공식 발문과 겹친다
+                elif q["stem"].split("\n")[0] != head:
+                    restem(q, head)
             q["section"] = sec["label"]
             q["no"] = len(qs) + 1
             qs.append(q)
@@ -972,7 +1031,7 @@ if __name__ == "__main__":
         if exam_id.startswith("eps-job-") or exam_id == "kiip-5":
             n_sets = 1
         elif exam_id == "topik-2-listen":
-            n_sets = 2          # 듣기 재료가 두 벌치다 — 없는 것을 있는 척하지 않는다
+            n_sets = bp_sets(["TOPIK II 듣기"])
         elif exam_id == "topik-1":
             # 설계도가 모는 시험은 재료가 몇 회분인지 세어서 정한다
             n_sets = bp_sets(["TOPIK I 듣기", "TOPIK I 읽기"])
