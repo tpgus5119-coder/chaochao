@@ -352,6 +352,14 @@ def q_society(rng, idx):
             **shuffled(rng, ans, wrong, why, bad)}
 
 
+def q_t2_read(rng, pidx, qidx):
+    """TOPIK II 읽기 — 중급 지문. 초급 지문(READ_BANK)을 쓰면 난이도가 안 맞는다."""
+    title, passage, qs = ko_content_t2.T2_READ[pidx]
+    q, ans, wrong, why, bad = qs[qidx]
+    return {"type": "t2_read", "stem": q, "passage": passage, "ptitle": title,
+            **shuffled(rng, ans, wrong, why, bad)}
+
+
 def q_read(rng, pidx, qidx):
     """지문을 읽고 물음에 답한다."""
     title, passage, qs = ko_content.READ_BANK[pidx]
@@ -416,14 +424,14 @@ BLUEPRINTS = {
     # 쓰기는 정답이 하나가 아니라 extra.write 쪽에서 AI가 채점한다.
     "topik-2-read": {
         "name": "TOPIK II 읽기 모의고사",
-        "desc": "TOPIK II 2교시 읽기 형식 · 50문항 (듣기·쓰기는 따로)",
+        "desc": "TOPIK II 2교시 읽기 형식 · 50문항 (지문은 중급 · 지금은 2회분)",
         "minutes": 70,
         "grades": ["B", "C"],
         "sections": [
             {"label": "[1~12] ( )에 들어갈 가장 알맞은 것을 고르십시오.", "kind": "particle", "n": 12},
             {"label": "[13~28] 다음 설명에 맞는 단어를 고르십시오.", "kind": "dfn2word", "n": 16},
             {"label": "[29~38] 뜻이 알맞은 것을 고르십시오.", "kind": "word2vi", "n": 10},
-            {"label": "[39~50] 다음을 읽고 물음에 답하십시오.", "kind": "read", "n": 12},
+            {"label": "[39~50] 다음을 읽고 물음에 답하십시오.", "kind": "t2_read", "n": 12},
         ],
     },
     # TOPIK II 듣기 50문항. 유형 배열은 기출의 발문 차례를 그대로 따랐다.
@@ -567,6 +575,12 @@ def build(exam_id, seed, words, gloss, pics, state):
     t2 = {k: take("t2_" + k, len(getattr(ko_content_t2, "T2_" + k.upper())))
           for k in ("reply", "act", "same", "idea")}
     soc_left = take("society", len(ko_society.SOCIETY))
+    t2_read = state.get("t2_read")
+    if t2_read is None:
+        t2_read = [(pi, qi) for pi, p in enumerate(ko_content_t2.T2_READ)
+                   for qi in range(len(p[2]))]
+        random.Random(f"{exam_id}-t2read").shuffle(t2_read)
+        state["t2_read"] = t2_read
     t2_long = state.get("t2_long")
     if t2_long is None:
         t2_long = [(pi, qi) for pi, p in enumerate(ko_content_t2.T2_LONG)
@@ -610,6 +624,10 @@ def build(exam_id, seed, words, gloss, pics, state):
                     break
                 q = {"reply": q_t2_reply, "act": q_t2_act,
                      "same": q_t2_same, "idea": q_t2_idea}[k](rng, t2[k].pop(0))
+            elif sec["kind"] == "t2_read":
+                if not t2_read:
+                    break
+                q = q_t2_read(rng, *t2_read.pop(0))
             elif sec["kind"] == "society":
                 if not soc_left:
                     break
@@ -695,9 +713,13 @@ if __name__ == "__main__":
     for exam_id in BLUEPRINTS:
         state = {}                     # 시험 종류마다 따로 — EPS와 KIIP는 서로 겹쳐도 된다
         # 직무 어휘는 낱말이 정해져 있어 회차를 나눌 수 없다 — 한 벌만 낸다
-        one = (exam_id.startswith("eps-job-")
-               or exam_id in ("topik-2-listen", "kiip-5"))
-        for seed in ((1,) if one else (1, 2, 3)):
+        # 재료가 몇 벌치인지에 따라 회차 수가 다르다 — 없는 것을 있는 척하지 않는다.
+        n_sets = 3
+        if exam_id.startswith("eps-job-") or exam_id in ("topik-2-listen", "kiip-5"):
+            n_sets = 1
+        elif exam_id == "topik-2-read":
+            n_sets = 2          # 중급 지문이 24문항뿐이라 한 벌에 12씩 두 벌
+        for seed in range(1, n_sets + 1):
             e = build(exam_id, seed, words, gloss, pics, state)
             out["exams"].append(e)
             print(f"{exam_id} {seed}회차: {e['total']}문항 (부족 {e['shortfall']})", file=sys.stderr)
