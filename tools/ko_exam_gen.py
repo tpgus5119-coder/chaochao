@@ -15,6 +15,9 @@ import json, os, random, sys, unicodedata
 import ko_content
 import ko_content_t2
 import ko_society
+import ko_t1_listen as L1
+import ko_t1_read as R1
+import topik_blueprint as BP
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data")
 
@@ -403,6 +406,162 @@ def q_read(rng, pidx, qidx):
     return {"type": "read", "stem": q, "passage": passage, "ptitle": title,
             **shuffled(rng, ans, wrong, why, bad)}
 
+# ── 설계도가 직접 모는 문항들 ────────────────────────────────
+# 여기서부터는 **발문도 차례도 우리가 정하지 않는다.** tools/topik_blueprint.py 에
+# 옮겨 둔 국립국제교육원 평가틀·발문 안내가 그대로 내려온다. 이 파일은 재료만 감싼다.
+#
+# 왜 이렇게 바꿨나: 예전에는 문항 수만 70개로 맞추고 유형은 우리 마음대로 늘어놓았다.
+# 실제 시험지와 문항 번호별로 맞대 보니 자리가 맞는 것이 70개 중 3개뿐이었다(4%).
+# '같은 문항 수'는 같은 시험이 아니다 — 몇 번에 무엇이 나오는지가 같아야 같은 시험이다.
+
+def _dlg(lines):
+    """대본줄 → 소리(남녀 목소리)와 글로 된 대본."""
+    return {"audio": _voiced(lines), "script": [f"{w}: {t}" for w, t in lines]}
+
+
+def _mk(rng, kind, stem, ans, wrong, why, bad, **extra):
+    return {"type": kind, "stem": stem, **extra, **shuffled(rng, ans, wrong, why, bad)}
+
+
+def q_bank_listen(rng, kind, stem, item):
+    lines, ans, wrong, why, bad = item
+    return _mk(rng, kind, stem, ans, wrong, why, bad, **_dlg(lines))
+
+
+def q_bank_read(rng, kind, stem, item):
+    text, ans, wrong, why, bad = item
+    return _mk(rng, kind, stem, ans, wrong, why, bad, passage=text)
+
+
+def q_notice(rng, stem, item):
+    title, text, ans, wrong, why, bad = item
+    return _mk(rng, "read_notice", stem, ans, wrong, why, bad, passage=text, ptitle=title)
+
+
+def q_pic_dlg(rng, stem, item, pics, pic_pool):
+    """대화를 듣고 알맞은 그림 — 보기 넷이 다 그림이다."""
+    lines, ko = item
+    if ko not in pics:
+        return None
+    cands = [x for x in pic_pool if x["ko"].split("(")[0].strip() != ko]
+    if len(cands) < 3:
+        return None
+    names = [ko] + [x["ko"].split("(")[0].strip() for x in rng.sample(cands, 3)]
+    rng.shuffle(names)
+    return {"type": "listen_pic", "stem": stem, "optkind": "img",
+            "options": [pics[n] for n in names], "answer": names.index(ko),
+            "word": ko, **_dlg(lines),
+            "exp": [(f"맞습니다. 대화에서 말한 것은 '{n}'입니다." if n == ko
+                     else f"이 그림은 '{n}'입니다.") for n in names]}
+
+
+TAG4 = ["(가)", "(나)", "(다)", "(라)"]
+
+
+def q_order(rng, stem, item):
+    """순서 배열 — 문장 넷에 (가)~(라)를 섞어 붙이고 바른 차례를 답으로 만든다.
+
+    보기는 모두 (가) 아니면 (나)로 시작한다. 실제 시험이 그렇고, 그래야
+    '앞에 오는 말'을 골라내는 힘을 재게 된다(아무 차례나 늘어놓으면 찍기가 쉬워진다).
+    """
+    sents, why = item
+    while True:
+        perm = list(range(4))
+        rng.shuffle(perm)                    # perm[j] = j번째 줄에 놓을 문장 번호
+        # 첫 문장은 (가)나 (나)를 받고, 인쇄된 차례가 곧 정답이 되면 안 된다
+        # (그대로 인쇄되면 읽지 않고 ①번을 찍어 맞힌다)
+        if perm.index(0) < 2 and perm != [0, 1, 2, 3]:
+            break
+    body = "\n".join(f"{TAG4[j]} {sents[perm[j]]}" for j in range(4))
+    at = {perm[j]: j for j in range(4)}      # 문장 번호 → 붙은 이름표 자리
+    right = "-".join(TAG4[at[k]] for k in range(4))
+    seen, wrong = {right}, []
+    for _ in range(200):
+        if len(wrong) == 3:
+            break
+        cand = list(range(4))
+        rng.shuffle(cand)
+        if cand[0] > 1:
+            continue
+        s = "-".join(TAG4[i] for i in cand)
+        if s not in seen:
+            seen.add(s)
+            wrong.append(s)
+    return _mk(rng, "read_order", stem, right, wrong, why,
+               ["앞뒤가 이어지지 않는 차례입니다."] * 3, passage=body)
+
+
+def q_pair(rng, kind, subs, title, body, qs, listen=False, n=None):
+    """묶음 문항 — 지문(대본) 하나에 소문항 여럿. **발문은 설계도의 sub 에서 온다.**"""
+    out = []
+    for i, (ans, wrong, why, bad) in enumerate(qs[:n or len(qs)]):
+        q = _mk(rng, kind, (subs[i] if subs and i < len(subs) else ""),
+                ans, wrong, why, bad, ptitle=title)
+        q.update(_dlg(body) if listen else {"passage": body})
+        out.append(q)
+    return out
+
+
+def restem(q, head):
+    """물음 첫 줄을 공식 발문으로 갈아 끼운다(둘째 줄 — 문장·물음 — 은 그대로 둔다)."""
+    rest = q["stem"].split("\n")[1:]
+    q["stem"] = "\n".join([head] + rest)
+    return q
+
+
+# 유형 이름 → 재료 뭉치. 설계도의 ours 값이 이 열쇠다.
+BANKS = {
+    "listen_next": L1.LISTEN_NEXT, "listen_place": L1.LISTEN_PLACE,
+    "listen_topic": L1.LISTEN_TOPIC, "listen_idea": L1.LISTEN_IDEA,
+    "listen_same": L1.LISTEN_SAME,
+    "read_topic": R1.READ_TOPIC, "read_idea": R1.READ_IDEA, "read_same": R1.READ_SAME,
+}
+LISTENY = {"listen_next", "listen_place", "listen_topic", "listen_idea", "listen_same"}
+# 묶음 유형 → (재료 뭉치, 듣기인가)
+PAIRS = {
+    "pair_why": (L1.PAIR_WHY, True), "pair_what": (L1.PAIR_WHAT, True),
+    "pair_reason": (L1.PAIR_REASON, True),
+    "read_pair": (R1.READ_PAIR, False), "pair_topic": (R1.PAIR_TOPIC, False),
+    "pair_purpose": (R1.PAIR_PURPOSE, False),
+}
+# 낱개로 세어 쓰는 나머지 뭉치들
+SOLO = {"read_notice": R1.READ_NOTICE, "read_order": R1.READ_ORDER,
+        "listen_pic_dlg": L1.LISTEN_PIC_DLG, "pair_pos": R1.PAIR_POS}
+# 설계도의 'listen_pic'은 TOPIK I 에서 **대화를 듣고** 그림을 고르는 꼴이다.
+# EPS·KIIP 에 쓰던 '낱말 하나를 듣고 그림 고르기'와 재료가 다르므로 따로 잇는다.
+ALIAS = {"listen_pic": "listen_pic_dlg"}
+
+
+def bp_sections(areas):
+    """공식 설계도 → 우리 구간표. 문항 번호·발문·묶음 여부가 그대로 내려온다."""
+    out = []
+    for name in areas:
+        for b in BP.FORMS[name]["items"]:
+            a, z = b["block"]          # 설계도의 번호가 이미 절대번호다(읽기는 31~70)
+            out.append({"label": f"[{a}~{z}] {b['stem']}",
+                        "kind": b["ours"], "n": z - a + 1,
+                        "stem": b["stem"], "sub": b.get("sub"), "bp": True})
+    return out
+
+
+def bp_sets(areas):
+    """재료가 몇 회분인가 — 가장 모자란 유형이 회차 수를 정한다.
+
+    없는 것을 있는 척하지 않기 위해서다. 한 유형이라도 동나면 그 회차는 구멍이 난다.
+    """
+    need = {}
+    for sec in bp_sections(areas):
+        k = ALIAS.get(sec["kind"], sec["kind"])
+        if k in PAIRS or k == "pair_pos":
+            need[k] = need.get(k, 0) + 1          # 묶음은 지문 하나로 여러 문항
+        elif k in BANKS or k in SOLO:
+            need[k] = need.get(k, 0) + sec["n"]
+    have = {**{k: len(v) for k, v in BANKS.items()},
+            **{k: len(v) for k, v in SOLO.items()},
+            **{k: len(v) for k, (v, _) in PAIRS.items()}}
+    return min([have[k] // n for k, n in need.items() if n] or [1])
+
+
 # ── 시험 설계도 ──────────────────────────────────────────────
 # 문항 수·시간·유형 배열은 실제 시험을 그대로 따랐다(형식은 사실이라 따라도 된다).
 BLUEPRINTS = {
@@ -436,22 +595,14 @@ BLUEPRINTS = {
             {"label": "[33~40] 다음 글을 읽고 물음에 답하십시오.", "kind": "read", "n": 8},
         ],
     },
-    # TOPIK I은 듣기 30 + 읽기 40 = 70문항이다(12회차 내내 그대로였다).
-    # 유형 배열도 공개 기출의 발문 순서를 따랐다.
+    # TOPIK I — 구간표를 손으로 쓰지 않는다. 공식 평가틀·발문 안내가 그대로 내려온다.
+    # (듣기 30 + 읽기 40 = 70문항, 묶음 26개)
     "topik-1": {
         "name": "TOPIK I 모의고사",
-        "desc": "TOPIK I · 듣기 30 + 읽기 40 (실제 시험과 같은 문항 수)",
+        "desc": "TOPIK I · 듣기 30 + 읽기 40 — 공식 평가틀의 문항 차례와 발문을 그대로 따랐다",
         "minutes": 100,
         "grades": ["A", "B"],
-        "sections": [
-            {"label": "[1~6] 잘 듣고 알맞은 그림을 고르십시오.", "kind": "listen_pic", "n": 6},
-            {"label": "[7~18] 잘 듣고 알맞은 대답을 고르십시오.", "kind": "listen_reply", "n": 12},
-            {"label": "[19~30] 잘 듣고 물음에 답하십시오.", "kind": "listen_dialog", "n": 12},
-            {"label": "[31~42] 다음 설명에 맞는 단어는?", "kind": "dfn2word", "n": 12},
-            {"label": "[43~54] ( )에 알맞은 것을 고르십시오.", "kind": "particle", "n": 12},
-            {"label": "[55~60] 한국어로 알맞은 것을 고르십시오.", "kind": "vi2word", "n": 6},
-            {"label": "[61~70] 다음을 읽고 물음에 답하십시오.", "kind": "read", "n": 10},
-        ],
+        "sections": bp_sections(["TOPIK I 듣기", "TOPIK I 읽기"]),
     },
     # TOPIK II는 듣기 50 + 쓰기 4 + 읽기 50이다. 우리가 지금 감당할 수 있는 것은
     # '읽기 50'뿐이라, 듣기·쓰기를 있는 척하지 않고 읽기만 따로 낸다.
@@ -635,6 +786,10 @@ def build(exam_id, seed, words, gloss, pics, state):
         state["t2_long"] = t2_long
     lr_left = take("listen_reply", len(ko_content.LISTEN_REPLY))
     ld_left = take("listen_dialog", len(ko_content.LISTEN_DIALOG))
+    # 설계도가 모는 유형들 — 재료 뭉치마다 회차를 넘어 이어지는 대기줄을 둔다
+    bp_left = {k: take("bp_" + k, len(v))
+               for k, v in list(BANKS.items()) + list(SOLO.items())}
+    bp_left.update({k: take("bp_" + k, len(v)) for k, (v, _) in PAIRS.items()})
     # 읽기는 (지문번호, 그 지문의 몇째 문항)이 한 짝이다
     rd_left = state.get("read")
     if rd_left is None:
@@ -649,7 +804,45 @@ def build(exam_id, seed, words, gloss, pics, state):
         tries = 0
         while made < sec["n"] and tries < 4000:
             tries += 1
-            if sec["kind"] == "particle":
+            # 설계도가 모는 구간이면 유형 이름과 공식 발문이 여기서 내려온다
+            bpsec = sec.get("bp")
+            kind = ALIAS.get(sec["kind"], sec["kind"]) if bpsec else sec["kind"]
+            head = sec.get("stem")
+            if bpsec and (kind in PAIRS or kind == "pair_pos"):
+                pool = bp_left[kind]
+                if not pool:
+                    break
+                idx = pool.pop(0)
+                if kind == "pair_pos":
+                    title, body, ins, subqs = R1.PAIR_POS[idx]
+                    q = q_pair(rng, kind, sec["sub"], title, body, subqs, n=sec["n"])
+                    q[0]["stem"] += "\n〈보기〉 " + ins    # 넣을 문장은 첫 물음에 붙인다
+                else:
+                    bank, listen = PAIRS[kind]
+                    title, body, subqs = bank[idx]
+                    q = q_pair(rng, kind, sec["sub"], title, body, subqs, listen, n=sec["n"])
+            elif bpsec and kind in BANKS:
+                pool = bp_left[kind]
+                if not pool:
+                    break
+                item = BANKS[kind][pool.pop(0)]
+                q = (q_bank_listen if kind in LISTENY else q_bank_read)(rng, kind, head, item)
+            elif bpsec and kind == "read_notice":
+                if not bp_left[kind]:
+                    break
+                q = q_notice(rng, head, R1.READ_NOTICE[bp_left[kind].pop(0)])
+            elif bpsec and kind == "read_order":
+                if not bp_left[kind]:
+                    break
+                q = q_order(rng, head, R1.READ_ORDER[bp_left[kind].pop(0)])
+            elif bpsec and kind == "listen_pic_dlg":
+                if not bp_left[kind]:
+                    break
+                q = q_pic_dlg(rng, head, L1.LISTEN_PIC_DLG[bp_left[kind].pop(0)],
+                              pics, pic_pool)
+                if not q:
+                    continue
+            elif sec["kind"] == "particle":
                 if not p_left:
                     break
                 q = q_particle(rng, p_left.pop(0))
@@ -710,6 +903,17 @@ def build(exam_id, seed, words, gloss, pics, state):
                 if not q:
                     continue
                 used.add(w["ko"])
+            # 묶음 문항은 지문 하나에서 여럿이 한꺼번에 나온다
+            if isinstance(q, list):
+                for one in q:
+                    one["section"] = sec["label"]
+                    one["no"] = len(qs) + 1
+                    qs.append(one)
+                made += len(q)
+                continue
+            # 설계도 구간인데 옛 유형(조사·대답 고르기)이 들어왔으면 발문만 공식 문구로 바꾼다
+            if bpsec and head and q["stem"].split("\n")[0] != head:
+                restem(q, head)
             q["section"] = sec["label"]
             q["no"] = len(qs) + 1
             qs.append(q)
@@ -769,6 +973,9 @@ if __name__ == "__main__":
             n_sets = 1
         elif exam_id == "topik-2-listen":
             n_sets = 2          # 듣기 재료가 두 벌치다 — 없는 것을 있는 척하지 않는다
+        elif exam_id == "topik-1":
+            # 설계도가 모는 시험은 재료가 몇 회분인지 세어서 정한다
+            n_sets = bp_sets(["TOPIK I 듣기", "TOPIK I 읽기"])
         for seed in range(1, n_sets + 1):
             e = build(exam_id, seed, words, gloss, pics, state)
             out["exams"].append(e)

@@ -55,13 +55,12 @@ def main():
         sets = [e for e in ex["exams"] if e["id"] == eid]
         if not sets:
             continue
-        # 설계도를 이어 붙인다 (TOPIK I 은 듣기 30 + 읽기 40 = 70번까지)
-        plan, off = {}, 0
+        # 설계도를 이어 붙인다. TOPIK I 읽기 묶음은 이미 31~70 으로 매겨져 있으므로
+        # 오프셋을 더하면 안 된다 — 더했다가 61~100 이 되어 40문항이 통째로 어긋났다.
+        plan = {}
         for a in areas:
-            f = FORMS[a]
-            for n, b in spread(f["items"]).items():
-                plan[n + off] = dict(b, area=a)
-            off += f["n"]
+            for n, b in spread(FORMS[a]["items"]).items():
+                plan[n] = dict(b, area=a)
 
         e = sets[0]                       # 회차는 구조가 같으니 1회차로 본다
         qs = {q["no"]: q for q in e["questions"]}
