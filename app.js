@@ -50,6 +50,36 @@ const $ = s => document.querySelector(s);
    글자가 화면에 놓이는 길목(el·show)에서 **문구를 통째로 맞바꾼다.**
    표에 있는 문구만 바뀐다 — 아직 없는 문구는 한국어로 남고, 표를 채우면 늘어난다. */
 const UIVI = {
+  '‹ 돌아가기': '‹ Quay lại',
+  '시험 보고 오셨나요?': 'Bạn vừa đi thi về?',
+  '무엇이 나왔는지 알려 주기': 'Cho biết đề có gì',
+  '1분 · 이름 안 받습니다': '1 phút · Không hỏi tên',
+  '어떤 시험이었나요?': 'Bạn thi kỳ nào?',
+  '어떤 소재가 나왔나요? (여러 개 고를 수 있습니다)': 'Đề nói về chủ đề gì? (chọn nhiều được)',
+  '기억나는 낱말이 있으면 적어 주세요 (쉼표로 나눠서, 낱말만)':
+    'Nhớ từ nào thì ghi lại (ngăn bằng dấu phẩy, chỉ từ thôi)',
+  '예: 환승, 계약서, 분리배출': 'Ví dụ: 환승, 계약서, 분리배출',
+  '많이 어려웠나요?': 'Đề có khó không?',
+  '아주 쉬움': 'Rất dễ', '쉬움': 'Dễ', '보통': 'Bình thường',
+  '어려움': 'Khó', '아주 어려움': 'Rất khó',
+  '보내기': 'Gửi', '보내는 중…': 'Đang gửi…', '보내지 못했습니다': 'Không gửi được',
+  '소재를 하나 이상 골라 주세요.': 'Hãy chọn ít nhất một chủ đề.',
+  '고맙습니다. 다음 사람에게 큰 도움이 됩니다.': 'Cảm ơn bạn. Điều này giúp ích rất nhiều cho người sau.',
+  '문장처럼 긴 것 N개는 보내지 않았습니다.': 'N mục quá dài (giống câu văn) đã không được gửi.',
+  '다른 사람이 적은 것 보기': 'Xem người khác đã ghi gì',
+  '시험을 보고 온 사람들이 적어 준 것입니다.': 'Đây là những gì người vừa đi thi ghi lại.',
+  '두 사람 이상이 적은 낱말만 보여 줍니다 — 한 사람 기억은 틀릴 수 있습니다.':
+    'Chỉ hiện từ có từ hai người trở lên ghi — trí nhớ một người có thể sai.',
+  '제보 N건': 'N lượt báo', '체감 난이도 N/5': 'Độ khó cảm nhận N/5',
+  '여러 사람이 적은 낱말': 'Từ nhiều người cùng ghi',
+  '아직 제보가 없습니다. 첫 번째로 알려 주세요.': 'Chưa có báo cáo nào. Bạn hãy là người đầu tiên.',
+  '나도 알려 주기': 'Tôi cũng muốn báo', '무엇이 나왔나': 'Đề có gì',
+  '서버가 아직 새 판이 아닙니다 — 잠시 뒤에 다시 해 주세요.':
+    'Máy chủ chưa cập nhật bản mới — hãy thử lại sau.',
+  '시험에서 <b>어떤 소재가 나왔는지</b>만 알려 주세요.<br><b>문제를 그대로 옮겨 적으면 안 됩니다</b> — 남의 저작물이라 우리도 못 받습니다.':
+    'Chỉ cho biết <b>đề nói về chủ đề gì</b>.<br><b>Đừng chép nguyên văn câu hỏi</b> — đó là tác phẩm của người khác, chúng tôi không nhận.',
+  '어떤 <b>소재</b>가 나왔는지 알려 주시면 다음 사람이 준비하기 쉬워집니다. <b>문제를 그대로 옮겨 적지는 마세요</b> — 소재와 낱말만 받습니다.':
+    'Cho biết đề về <b>chủ đề</b> gì sẽ giúp người sau ôn dễ hơn. <b>Đừng chép nguyên văn câu hỏi</b> — chỉ nhận chủ đề và từ vựng.',
   '빈칸 채우기': 'Điền vào chỗ trống', '㉠ ㉡ 두 자리': 'Hai chỗ ㉠ ㉡',
   '논술 (54번 꼴)': 'Bài luận (dạng câu 54)', '자료 설명 (53번 꼴)': 'Mô tả dữ liệu (dạng câu 53)',
   'N자 정도': 'Khoảng N chữ', '여기에 쓰세요…': 'Viết vào đây…',
@@ -2195,6 +2225,18 @@ function drawExamList() {
   // 말하기·쓰기는 정답이 하나가 아니라 시험지에 못 넣는다 — 따로 둔다
   b.append(el('h3', 'exhead', '말하기 · 쓰기'));
   b.append(el('p', 'note', 'KIIP 구술시험과 작문시험 형식 · AI가 읽고 고칠 점을 알려 줍니다.'));
+  /* 시험 보고 온 사람이 "뭐가 나왔다"를 적는 자리.
+     경쟁 앱이 커진 방식이 이것이다 — 다만 우리는 **문항 본문은 받지 않는다.**
+     소재·유형·기억나는 낱말만 받는다. 문항을 그대로 모으면 그건 남의 저작물을
+     모으는 창구가 되고, 우리가 지켜 온 선을 우리 손으로 넘는 일이 된다. */
+  b.append(el('h3', 'exhead', tr('시험 보고 오셨나요?')));
+  b.append(el('p', 'note', '어떤 <b>소재</b>가 나왔는지 알려 주시면 다음 사람이 준비하기 쉬워집니다. <b>문제를 그대로 옮겨 적지는 마세요</b> — 소재와 낱말만 받습니다.'));
+  const sg = el('button', 'bigmenu');
+  sg.append(el('b', null, tr('무엇이 나왔는지 알려 주기')));
+  sg.append(el('span', 'exmeta', tr('1분 · 이름 안 받습니다')));
+  sg.onclick = examSight;
+  b.append(sg);
+
   const x = el('button', 'bigmenu');
   x.append(el('b', null, '말하기 · 쓰기 연습'));
   x.append(el('span', 'exmeta', `구술 ${EXDATA.extra.speak.length}세트 · 작문 ${EXDATA.extra.write.length}제목`));
@@ -2847,6 +2889,140 @@ function examExtra() {
     });
   }
   show('exam', '말하기 · 쓰기', true);
+}
+
+/* ---------- 시험 보고 온 사람의 제보 ----------
+   받는 것: 시험 종류 · 소재 · 기억나는 낱말 · 체감 난이도. 그게 전부다.
+   안 받는 것: 문항 본문. 화면에도 그렇게 적어 두고, 서버도 긴 글은 잘라 버린다.
+   모인 것은 이름 없이 숫자로만 되돌려 준다 — "요즘 이런 소재가 많이 나왔다". */
+const SIGHT_KIND = [['eps', 'EPS-TOPIK'], ['topik1', 'TOPIK I'],
+                    ['topik2', 'TOPIK II'], ['kiip', 'KIIP']];
+const SIGHT_TOPIC = ['관계·감정', '경제·사회', '문화·여가', '학교·공부', '환경·과학',
+                     '일·직장', '생활·집', '건강·병원', '교통·이동'];
+
+function examSight() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '시험에서 <b>어떤 소재가 나왔는지</b>만 알려 주세요.<br><b>문제를 그대로 옮겨 적으면 안 됩니다</b> — 남의 저작물이라 우리도 못 받습니다.'));
+
+  let kind = 'eps', hard = 3;
+  const picked = new Set();
+  b.append(el('p', 'note', tr('어떤 시험이었나요?')));
+  const kindBox = el('div');
+  const drawKind = () => {
+    kindBox.textContent = '';
+    kindBox.append(chipRow(SIGHT_KIND, kind, k => { kind = k; drawKind(); }));
+  };
+  drawKind();
+  b.append(kindBox);
+
+  b.append(el('p', 'note', tr('어떤 소재가 나왔나요? (여러 개 고를 수 있습니다)')));
+  const tw = el('div', 'catpick');
+  SIGHT_TOPIC.forEach(t => {
+    const c = el('button', 'catchipbtn', esc(t));
+    c.type = 'button';
+    c.onclick = () => {
+      if (picked.has(t)) { picked.delete(t); c.classList.remove('on'); }
+      else { picked.add(t); c.classList.add('on'); }
+    };
+    tw.append(c);
+  });
+  b.append(tw);
+
+  b.append(el('p', 'note', tr('기억나는 낱말이 있으면 적어 주세요 (쉼표로 나눠서, 낱말만)')));
+  const wi = el('input', 'keyin'); wi.type = 'text'; wi.maxLength = 140;
+  wi.placeholder = tr('예: 환승, 계약서, 분리배출');
+  b.append(wi);
+
+  b.append(el('p', 'note', tr('많이 어려웠나요?')));
+  const hardBox = el('div');
+  const HARD = [[1, tr('아주 쉬움')], [2, tr('쉬움')], [3, tr('보통')],
+                [4, tr('어려움')], [5, tr('아주 어려움')]];
+  const drawHard = () => {
+    hardBox.textContent = '';
+    hardBox.append(chipRow(HARD, hard, k => { hard = k; drawHard(); }));
+  };
+  drawHard();
+  b.append(hardBox);
+
+  const out = el('div', 'exgrade');
+  const go = el('button', 'primary big', tr('보내기'));
+  go.style.width = '100%'; go.style.marginTop = '14px';
+  go.onclick = () => {
+    // 문장을 적어 보낸 경우를 걸러 낸다 — 문항 본문이 흘러 들어오는 통로가 되면 안 된다
+    const words = wi.value.split(/[,·\n]/).map(x => x.trim())
+      .filter(x => x && x.length <= 12 && !/[.!?]/.test(x)).slice(0, 10);
+    const dropped = wi.value.split(/[,·\n]/).map(x => x.trim()).filter(x => x).length - words.length;
+    if (!picked.size && !words.length) { out.textContent = tr('소재를 하나 이상 골라 주세요.'); return; }
+    go.disabled = true;
+    out.textContent = tr('보내는 중…');
+    cCall({ act: 'sight', kind, topics: [...picked], words, hard })
+      .then(() => {
+        out.textContent = tr('고맙습니다. 다음 사람에게 큰 도움이 됩니다.')
+          + (dropped ? ' ' + tr('문장처럼 긴 것 N개는 보내지 않았습니다.').replace('N', dropped) : '');
+        setTimeout(examSightBoard, 900);
+      })
+      .catch(e => { go.disabled = false;
+        out.textContent = /gone|옛 판/.test(e.message || '')
+          ? tr('서버가 아직 새 판이 아닙니다 — 잠시 뒤에 다시 해 주세요.')
+          : (e.message || tr('보내지 못했습니다')); });
+  };
+  const see = el('button', 'ghost big', tr('다른 사람이 적은 것 보기'));
+  see.style.width = '100%'; see.style.marginTop = '8px';
+  see.onclick = examSightBoard;
+  b.append(go, see, out);
+  const back = el('button', 'ghost sm', '‹ 돌아가기');
+  back.style.marginTop = '12px';
+  back.onclick = examExtra;
+  b.append(back);
+  show('exam', tr('시험 보고 오셨나요?'), true);
+}
+
+function examSightBoard() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', tr('시험을 보고 온 사람들이 적어 준 것입니다.') + ' '
+    + tr('두 사람 이상이 적은 낱말만 보여 줍니다 — 한 사람 기억은 틀릴 수 있습니다.')));
+  const box = el('div');
+  box.append(el('p', 'note', tr('불러오는 중…')));
+  b.append(box);
+  cCall({ act: 'sights' }).then(j => {
+    box.textContent = '';
+    let any = false;
+    SIGHT_KIND.forEach(([k, nm]) => {
+      const v = j[k] || {};
+      if (!v.n) return;
+      any = true;
+      box.append(el('h3', 'exhead', nm + ' · ' + tr('제보 N건').replace('N', v.n)
+        + (v.hard ? ' · ' + tr('체감 난이도 N/5').replace('N', v.hard) : '')));
+      const tops = Object.entries(v.topics || {}).sort((a, c) => c[1] - a[1]);
+      if (tops.length) {
+        const top = tops[0][1] || 1;
+        const bars = el('div', 'crclub');
+        tops.forEach(([t, n], i) => bars.append(rankRow(i, t, n, top, false)));
+        box.append(bars);
+      }
+      const ws = Object.entries(v.words || {});
+      if (ws.length) {
+        box.append(el('p', 'note', tr('여러 사람이 적은 낱말')));
+        const wrap = el('div', 'ctags');
+        ws.forEach(([w, n]) => wrap.append(el('i', 'ctag', esc(w) + ' ×' + n)));
+        box.append(wrap);
+      }
+    });
+    if (!any) box.append(el('p', 'note', tr('아직 제보가 없습니다. 첫 번째로 알려 주세요.')));
+  }).catch(() => {
+    box.textContent = '';
+    box.append(el('p', 'note', tr('서버가 아직 새 판이 아닙니다 — 잠시 뒤에 다시 해 주세요.')));
+  });
+  const again = el('button', 'primary big', tr('나도 알려 주기'));
+  again.style.width = '100%'; again.style.marginTop = '14px';
+  again.onclick = examSight;
+  const back = el('button', 'ghost sm', '‹ 돌아가기');
+  back.style.marginTop = '8px';
+  back.onclick = examExtra;
+  b.append(again, back);
+  show('exam', tr('무엇이 나왔나'), true);
 }
 
 /* 51·52번 꼴 — 빈칸 둘. 채점 기준이 뚜렷해서 모범답을 보여 주는 것만으로도 배운다.

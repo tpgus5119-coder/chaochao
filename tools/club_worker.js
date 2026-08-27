@@ -135,6 +135,49 @@ export default {
         JSON.stringify({ p: clean, t: cut(b.test, 12), rg }), { expirationTtl: 60 * 60 * 24 * 90 });
       return send({ ok: true });
     }
+    /* ── 시험 보고 온 사람의 제보 (v14) ─────────────────────
+       미기가 커진 방식이 이것이다 — 시험을 본 사람에게 "어떤 게 나왔어?"를 묻는 것.
+       **문항 본문은 받지 않는다.** 소재·유형·기억나는 낱말만 받는다.
+       문항을 그대로 받으면 그건 우리가 남의 저작물을 모으는 창구가 된다.
+       앱 화면에도 "문제 그대로 적지 마세요"라고 적어 둔다.
+       개인정보 없음. 90일 보관. 제보 하나 = KV 글 하나(동시 제보가 서로 안 덮는다). */
+    if (act === 'sight') {
+      const kind = /^(eps|topik1|topik2|kiip)$/.test(String(b.kind || '')) ? String(b.kind) : '';
+      if (!kind) return send({ error: 'kind' });
+      const topics = (Array.isArray(b.topics) ? b.topics : []).slice(0, 10).map(x => cut(x, 12));
+      // 낱말은 짧은 것만, 열 개까지 — 문장을 못 넣게 길이를 막는다
+      const words = (Array.isArray(b.words) ? b.words : []).slice(0, 10)
+        .map(x => cut(x, 12).trim()).filter(x => x && x.length <= 12 && !/[.!?]/.test(x));
+      const hard = num(b.hard, 5);
+      if (!topics.length && !words.length) return send({ error: 'empty' });
+      await KV.put(`sg:${kind}:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
+        JSON.stringify({ t: topics, w: words, h: hard, d: cut(b.when, 10), at: today() }),
+        { expirationTtl: 60 * 60 * 24 * 90 });
+      return send({ ok: true });
+    }
+    if (act === 'sights') {                                  // 모아 보기 — 이름 없는 숫자만
+      const out = {};
+      for (const kind of ['eps', 'topik1', 'topik2', 'kiip']) {
+        const T = {}, W = {}; let n = 0, hs = 0, cursor;
+        do {
+          const l = await KV.list({ prefix: `sg:${kind}:`, cursor });
+          for (const k of l.keys) {
+            const v = JSON.parse((await KV.get(k.name)) || 'null');
+            if (!v) continue;
+            n++; hs += v.h || 0;
+            for (const t of v.t || []) T[t] = (T[t] || 0) + 1;
+            for (const w of v.w || []) W[w] = (W[w] || 0) + 1;
+          }
+          cursor = l.list_complete ? undefined : l.cursor;
+        } while (cursor);
+        out[kind] = { n, hard: n ? Math.round(hs / n * 10) / 10 : 0,
+                      topics: T,
+                      // 두 사람 이상이 적은 낱말만 내보낸다 — 한 사람 기억은 틀릴 수 있다
+                      words: Object.fromEntries(Object.entries(W).filter(([, c]) => c >= 2)
+                        .sort((a, b2) => b2[1] - a[1]).slice(0, 60)) };
+      }
+      return send(out);
+    }
     if (act === 'votes') {                                   // 집계 — 이름 없는 숫자만
       const out = {};
       for (const pool of ['vi', 'ko']) {
