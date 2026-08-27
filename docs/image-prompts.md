@@ -1,4 +1,4 @@
-# 그림 생성 프롬프트 (전체 1029장)
+# 그림 생성 프롬프트 (전체 1072장)
 
 **만드는 법** — 무료 이미지 AI(빙 이미지 크리에이터 copilot.microsoft.com/images, 캔바 등)에 아래 한 줄을 통째로 붙여넣는다.
 마음에 드는 것을 골라 저장하고, **저장한 파일 이름을 왼쪽 이름으로** 바꾼다 (확장자는 png/jpg 아무거나 — 변환은 내가 한다).
@@ -37,6 +37,9 @@
 
 **d01-cam-on.webp** · 고맙습니다 (cảm ơn)
 > a person bowing slightly with both hands together in thanks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d01-co-giao.webp** · 여자 선생님 (cô giáo)
+> a friendly female teacher holding a book, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 2 — 이름 묻고 답하기
 
@@ -274,6 +277,24 @@
 **x-thieu.webp** · 부족하다 (thiếu)
 > A box with an X mark over an empty space, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
+**x-cai-ban.webp** · 책상·탁자 (cái bàn)
+> a simple wooden table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d08-cai-ghe.webp** · 의자 (cái ghế)
+> a wooden chair, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d08-quyen-sach.webp** · 책 한 권 (quyển sách)
+> an open book, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d08-con-meo.webp** · 고양이 (con mèo)
+> a cute cat sitting, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d08-con-cho.webp** · 개 (con chó)
+> a friendly dog sitting, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d08-dong-vat.webp** · 동물 (động vật)
+> a cat, a dog and a bird together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
 ## Day 9 — 나이와 시간
 
 **d09-scene.webp** · 오늘의 대화 — 나이와 시간 묻기
@@ -413,6 +434,9 @@
 
 **d101-tuyen.webp** · 뽑다·채용하다 (tuyển)
 > a hiring notice board with a megaphone, people applying for jobs, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d101-trung-tam.webp** · 센터·학원 (trung tâm)
+> a small school building, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 11 — 하루 일과
 
@@ -1295,7 +1319,7 @@
 > close-up of a neat row of machine stitches on a piece of fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **x-lai-mui.webp** · 되박음질하다 (lại mũi)
-> a sewing line with a back-and-forth arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a needle sewing a short line of stitches then a few stitches going back over the same spot, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **x-bo-mui.webp** · 땀이 빠지다·스킵 (bỏ mũi)
 > a sewing line with a visible gap in the stitches, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -1592,6 +1616,73 @@
 **d12-thich.webp** · 좋아하다 (thích)
 > a person hugging a big heart, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
+## Day 106 — 장보기
+
+**d106-scene.webp** · 오늘의 대화 — 시장에서
+> a shopper with a basket choosing vegetables at a busy market stall, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-lon.webp** · 돼지(고기) (lợn)
+> a pink pig, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-trung.webp** · 달걀 (trứng)
+> a basket of plain white and brown chicken eggs, realistic egg shape and color, not colorful or painted, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**x-dau-phu.webp** · 두부 (đậu phụ)
+> white tofu blocks on a small plate, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-rau-muong.webp** · 모닝글로리(공심채) (rau muống)
+> a bundle of water spinach with long hollow stems, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-toi.webp** · 마늘 (tỏi)
+> garlic bulbs and cloves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-khoai-tay.webp** · 감자 (khoai tây)
+> three potatoes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-dua-chuot.webp** · 오이 (dưa chuột)
+> two cucumbers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-ca-rot.webp** · 당근 (cà rốt)
+> carrots with green tops, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-ca-chua.webp** · 토마토 (cà chua)
+> red tomatoes on the vine, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d106-ot-tay.webp** · 피망·파프리카 (ớt tây)
+> red yellow and green bell peppers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 104 — 과일
+
+**d104-scene.webp** · 오늘의 대화 — 과일 가게에서
+> a fruit stall with bananas, mangoes and watermelons on display, a vendor weighing fruit, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d104-chuoi.webp** · 바나나 (chuối)
+> a bunch of ripe yellow bananas, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d104-xoai.webp** · 망고 (xoài)
+> a whole ripe mango with a cut half showing yellow flesh, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d104-dua.webp** · 파인애플 (dứa)
+> a pineapple, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d104-dua2.webp** · 코코넛 (dừa)
+> a green coconut with a straw, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d104-tao.webp** · 사과 (táo)
+> a red apple, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d104-dua-hau.webp** · 수박 (dưa hấu)
+> a watermelon with one cut wedge, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d104-dau-tay.webp** · 딸기 (dâu tây)
+> three red strawberries, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d104-dao.webp** · 복숭아 (đào)
+> a peach with a small leaf, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**x-mang-cut.webp** · 망고스틴 (măng cụt)
+> a purple mangosteen fruit with one cut open showing white segments, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
 ## Day 48 — 만나서 한잔
 
 **d48-scene.webp** · 오늘의 대화 — 저녁 약속 잡기
@@ -1662,6 +1753,21 @@
 **d76-coc.webp** · 잔·컵 (cốc)
 > a plain empty drinking cup on a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
+**x-sua-chua.webp** · 요거트 (sữa chua)
+> a glass jar of white yogurt with a spoon, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d76-sua-tuoi.webp** · 생우유 (sữa tươi)
+> a glass of fresh milk beside a milk bottle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d76-ruou.webp** · 술 (rượu)
+> a plain green glass bottle with a blank label and a small cup of pale yellow liquid, no text, no writing, no characters on the label, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d76-nuoc-hoa-qua.webp** · 과일 주스 (nước hoa quả)
+> a tall glass of fruit juice with orange slices, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d76-kem.webp** · 아이스크림 (kem)
+> an ice cream cone with two scoops, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
 ## Day 77 — 쌀국수 주문 심화
 
 **d77-scene.webp** · 오늘의 대화 — 쌀국수 주문
@@ -1696,6 +1802,30 @@
 
 **x-thom.webp** · 향긋하다 (thơm)
 > a flower with wavy lines rising from it to represent scent, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**x-com-rang.webp** · 볶음밥 (cơm rang)
+> a plate of golden fried rice with egg and scallions, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**x-bun-cha.webp** · 분짜(석쇠구이 국수) (bún chả)
+> grilled pork patties in a bowl of dipping sauce beside white rice noodles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**x-nem-ran.webp** · 튀김 스프링롤 (nem rán)
+> golden fried spring rolls on a plate, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d77-banh-mi.webp** · 바게트 샌드위치 (bánh mì)
+> a vietnamese baguette sandwich filled with vegetables and meat, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d77-my-xao.webp** · 볶음면 (mỳ xào)
+> a plate of stir-fried yellow noodles with vegetables, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d77-doi-dua.webp** · 젓가락 한 벌 (đôi đũa)
+> a pair of wooden chopsticks on a chopstick rest, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d77-cai-thia.webp** · 숟가락 (cái thìa)
+> a metal spoon, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**x-tawm.webp** · 이쑤시개 (tăm)
+> a small cup holding wooden toothpicks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 14 — 어디에 있어요
 
@@ -1766,6 +1896,27 @@
 
 **d42-tac-duong.webp** · 길이 막히다 (tắc đường)
 > a traffic jam of cars and motorbikes packed in a row on a road, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d42-di-thang.webp** · 직진하다 (đi thẳng)
+> an arrow pointing straight up, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d42-re-trai.webp** · 좌회전하다 (rẽ trái)
+> a turn-left arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d42-re-phai.webp** · 우회전하다 (rẽ phải)
+> a turn-right arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d42-cham-lai.webp** · 속도를 줄이다 (chậm lại)
+> a snail on a road, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d42-dung-lai.webp** · 멈추다·세우다 (dừng lại)
+> a red octagon stop sign shape with a blank face, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d42-nhanh-len.webp** · 서두르다·빨리 (nhanh lên)
+> a person running fast with speed lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d42-xe-taxi.webp** · 택시 (xe taxi)
+> a yellow taxi cab, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 80 — 택배와 그랩
 
@@ -2773,7 +2924,7 @@
 **x-on.webp** · 괜찮다·안정되다 (ổn)
 > a smiling face with a calm expression, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
-**x-tam.webp** · 일단·임시로 (tạm)
+**x-tamj.webp** · 일단·임시로 (tạm)
 > a temporary tent icon, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 83 — 지적은 따로, 부드럽게
@@ -3262,33 +3413,3 @@
 
 **x-du-so.webp** · 수량이 맞다 (đủ số)
 > a checklist with all items marked with a checkmark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 103 — 학원 5강 · 길 가리키기
-
-**d103-scene.webp** · 오늘의 대화 — 택시에서
-> a passenger in the back seat talking to a taxi driver, city street ahead, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 104 — 학원 6강 · 마실 것과 과일
-
-**d104-scene.webp** · 오늘의 대화 — 카페에서
-> a customer ordering a drink at a cafe counter, barista holding a cup, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 105 — 학원 7강 · 밥집 주문
-
-**d105-scene.webp** · 오늘의 대화 — 식당에서
-> a waiter with a notepad taking an order from a customer holding a menu, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 106 — 학원 8강 · 시장과 흥정
-
-**d106-scene.webp** · 오늘의 대화 — 시장에서
-> a shopper with a basket choosing vegetables at a busy market stall, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 107 — 학원 9강 · 색깔
-
-**d107-scene.webp** · 오늘의 대화 — 무슨 색이에요?
-> two people looking at t-shirts of many colors on a clothes rack, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
-## Day 108 — 학원 10강 · 이름과 나이
-
-**d108-scene.webp** · 오늘의 대화 — 처음 만나서
-> two people meeting for the first time, smiling and shaking hands politely, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
