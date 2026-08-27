@@ -144,11 +144,14 @@ const UIVI = {
     'Kiến thức nền tảng — từ nguyên âm, phụ âm đến số đếm, câu chào.',
   '자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
     'Không tải được tài liệu. Hãy kiểm tra kết nối mạng.',
+  '한국 문화': 'Văn hóa Hàn Quốc',
+  '한국 생활 문화 — 직장 예절부터 위급 상황까지.':
+    'Văn hóa sinh hoạt Hàn Quốc — từ phép tắc nơi làm việc đến tình huống khẩn cấp.',
   /* ── 베트남인용 한국어 과정 홈 화면 ── */
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
   '응시': 'Đã thi', '회': ' lần', '평균': 'Trung bình', '점': ' điểm',
-  '지금 있는 것 — 모의고사, 기본기, 문법 68개, AI 채점 말하기·쓰기': 'Hiện đã có — đề thi thử, kiến thức nền tảng, 68 điểm ngữ pháp, luyện nói·viết có AI chấm',
+  '지금 있는 것 — 모의고사, 기본기, 문법 68개, 한국 문화, AI 채점 말하기·쓰기': 'Hiện đã có — đề thi thử, kiến thức nền tảng, 68 điểm ngữ pháp, văn hóa Hàn Quốc, luyện nói·viết có AI chấm',
   '아직 없는 것 — 날마다 배우는 과정': 'Chưa có — khóa học theo từng ngày',
   '목록으로': 'Về danh sách',
   '문장 고르기': 'Chọn câu',
@@ -1938,7 +1941,7 @@ function drawKoHome() {
   plan.append(row);
 
   const note = el('p', 'note');
-  note.append(el('b', null, '지금 있는 것 — 모의고사, 기본기, 문법 68개, AI 채점 말하기·쓰기'));
+  note.append(el('b', null, '지금 있는 것 — 모의고사, 기본기, 문법 68개, 한국 문화, AI 채점 말하기·쓰기'));
   note.append(document.createElement('br'));
   note.append(document.createTextNode(tr('아직 없는 것 — 날마다 배우는 과정')));
   plan.append(note);
@@ -1971,6 +1974,7 @@ const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   exam:   { name: '모의고사', items: () => [['보기', examEntry]] },
   basic2: { name: '기본기', items: () => [['보기', koBasicEntry]] },
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
+  culture:{ name: '한국 문화', items: () => [['보기', koCultureEntry]] },
   club:   { name: '동아리', items: () => [['보기', showClub]] },
   guide:  { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -2184,6 +2188,72 @@ function drawBasicCard(i) {
   nav.append(prev, next);
   b.append(nav);
   show('exam', '기본기', true);
+}
+
+/* ---------- 한국 문화 ----------
+   기본기와 뼈대가 완전히 같다(제목·설명·표). 특정 교재를 안 보고
+   공휴일 날짜·신고 전화번호 같은 공공 상식만 적었다 — tools/ko_culture.py 참고. */
+let KCDATA = null, KC = null;
+
+function koCultureEntry() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '한국 생활 문화 — 직장 예절부터 위급 상황까지.'));
+  show('exam', '한국 문화', true);
+  if (KCDATA) return drawCultureList();
+  fetch('data/ko_culture.json', { cache: 'no-cache' })
+    .then(r => r.json()).then(j => { KCDATA = j.items; drawCultureList(); })
+    .catch(() => b.append(el('p', 'lede', '자료를 받지 못했습니다. 인터넷을 확인해 주세요.')));
+}
+
+function drawCultureList() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '한국 생활 문화 — 직장 예절부터 위급 상황까지.'));
+  KCDATA.forEach((it, i) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, `${it.n}. ${it.title_ko}`));
+    btn.append(el('span', 'exmeta', it.title_vi));
+    btn.onclick = () => drawCultureCard(i);
+    b.append(btn);
+  });
+}
+
+function drawCultureCard(i) {
+  KC = i;
+  const it = KCDATA[i];
+  const b = $('#examBody');
+  b.textContent = '';
+
+  const head = el('div', 'exbar');
+  head.append(el('span', 'expos', `${i + 1} / ${KCDATA.length}`));
+  b.append(head);
+
+  const card = el('div', 'excard');
+  card.append(el('div', 'exask', esc(it.title_ko)));
+  card.append(el('div', 'exbody', esc(it.title_vi)));
+  if (S.ui !== 'vi') card.append(el('div', 'gexp', esc(it.explain_ko)));
+  card.append(el('div', 'gexp vi', esc(it.explain_vi)));
+
+  it.table.forEach(row => {
+    const r = el('div', 'gex');
+    const line = el('div', 'gexko');
+    line.append(el('span', null, esc(row.ko)));
+    line.append(el('span', 'exmeta', esc(row.read)));
+    r.append(line, el('div', 'gexvi', esc(row.vi)));
+    card.append(r);
+  });
+  b.append(card);
+
+  const nav = el('div', 'exnav');
+  const prev = el('button', 'ghost big', '‹ 이전');
+  prev.disabled = i === 0;
+  prev.onclick = () => drawCultureCard(i - 1);
+  const next = el('button', 'primary big', i === KCDATA.length - 1 ? '목록으로' : '다음 ›');
+  next.onclick = () => i === KCDATA.length - 1 ? drawCultureList() : drawCultureCard(i + 1);
+  nav.append(prev, next);
+  b.append(nav);
+  show('exam', '한국 문화', true);
 }
 
 function startExam(e) {
