@@ -77,6 +77,8 @@ function dirOf(cu, c, me) {
     .map(([u, v]) => {
       const o = { uid: u, nick: v.n, days: v.wk === week() ? (v.w || []) : [],
                   memo: v.m || 0, st: v.st || 0, td: v.td || 0,
+                  cr: v.crw === week() ? (v.cr || 0) : 0,    // 주가 바뀌면 순위판이 새로 시작된다
+
                   th: v.th || 0, av: v.av || 0, at: v.at || '',
                   thToday: !!(v.tb && v.tb[me] === today()) };
       if (v.op) { o.score = v.s || 0; o.pct = v.p || {}; }
@@ -511,6 +513,7 @@ export default {
         w: (Array.isArray(b.days) ? b.days : []).slice(0, 7).map(x => x ? 1 : 0),
         wk: week(),                                          // 지난주 도장은 저절로 지워진다
         m: num(b.memo, 99999), s: num(b.score, 999999),
+        cr: num(b.cr, 999999), crw: week(),                  // 이번 주 크레딧 (지난주 것은 저절로 0이 된다)
         st: num(b.st, 9999), td: num(b.td, 99999),           // 연속으로 온 날 · 온 날 모두
         op: b.op ? 1 : 0,                                    // 분석을 남에게 보일지
         av: num(b.av, 9999),                                 // 사진 판 번호 (남이 다시 받을지 판단)

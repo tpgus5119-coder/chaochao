@@ -1351,3 +1351,18 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .crrow:first-child { border-top:0; }
 .crplus { flex:0 0 62px; font-weight:900; font-size:19px; color:var(--accent,#1877F2); }
 .crwhy { flex:1; font-size:15px; color:var(--fg); text-align:left; }
+/* 이번 주 순위판 — 월요일마다 초기화되므로 '영영 꼴찌'가 없다 */
+.crreset { float:right; font-size:11px; font-weight:600; color:var(--dim); }
+.crank { display:flex; align-items:center; gap:10px; padding:9px 2px;
+  border-top:1px solid var(--line); }
+.crank:first-of-type { border-top:0; }
+.crank.me { background:var(--bg); border-radius:10px; padding-left:8px; padding-right:8px; }
+.crno { flex:0 0 22px; font-weight:900; font-size:15px; color:var(--dim); text-align:center; }
+.crno.hi { color:var(--accent); }
+.crmine { font-weight:400; color:var(--dim); font-size:12px; margin-left:4px; }
+.crnick { flex:0 0 100px; font-size:14px; font-weight:700; overflow:hidden;
+  text-overflow:ellipsis; white-space:nowrap; }
+.crbar { flex:1; height:8px; background:var(--bg); border-radius:99px; overflow:hidden; }
+.crbar i { display:block; height:100%; background:var(--accent); border-radius:99px; }
+.crval { flex:0 0 42px; text-align:right; font-weight:800; font-size:14px;
+  font-variant-numeric:tabular-nums; }

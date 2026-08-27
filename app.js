@@ -151,6 +151,10 @@ const UIVI = {
   '자주 틀리던 단어 5개를 잡았습니다': 'Bạn đã khắc phục 5 từ hay sai',
   '지금까지 모두': 'Tổng cộng đã tích', '이번 주': 'Tuần này', '지난주': 'Tuần trước',
   '우리 동아리, 이번 주 다 같이': 'Câu lạc bộ của chúng ta, tuần này cùng nhau',
+  '이번 주 순위': 'Xếp hạng tuần này', '월요일마다 초기화': 'Đặt lại mỗi thứ Hai',
+  '나': 'bạn',
+  '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 크레딧 순위로 바뀝니다.':
+    'Hiện đang xếp hạng theo <b>dấu điểm danh tuần này</b> — khi máy chủ cập nhật sẽ chuyển sang xếp hạng theo điểm thưởng.',
   '명': 'người', '출석 도장': 'dấu điểm danh', '외운 단어': 'từ đã thuộc',
   '이렇게 모입니다': 'Tích điểm như thế này',
   '하루 한 번이라도 공부하면': 'Học dù chỉ một lần trong ngày',
@@ -3326,6 +3330,53 @@ function earnAttend() {
   else if (st >= 3 && c.d3 !== ymd()) { c.d3 = ymd(); earn(CRD.d3, tr('연속 3일')); }
 }
 
+const weekCredits = () => (credits().wk || {})[weekKey()] || 0;
+
+/* ---------- 이번 주 순위판 ----------
+   ⚠ 앞의 주석에 적어 둔 대로, 연구는 '전체 등수가 다 보이는 순위표'가 하위권의
+   의욕을 꺾는다고 본다(Li 외 2024). 그래도 순위를 넣는 것은 사용자의 결정이다.
+   대신 해악을 줄이면서 겨루는 재미는 그대로 두는 장치를 하나 넣었다 —
+   **월요일마다 0으로 초기화**된다(듀오링고 리그와 같은 방식).
+   그래서 한 주 밀려도 다음 주 월요일이면 모두가 같은 자리에서 다시 시작한다.
+   '영영 꼴찌'가 없으면 포기할 이유도 없다. 서버도 주가 바뀌면 크레딧을 0으로 준다.
+
+   서버가 옛 판(크레딧 필드 없음)이면 순위를 지어내지 않고, 이번 주 출석 도장으로
+   대신 매기고 그 사실을 화면에 밝힌다 — 없는 숫자로 등수를 만들면 안 된다. */
+function rankBoard(ppl) {
+  const box = el('div', 'crclub');
+  const hasCr = ppl.some(m => typeof m.cr === 'number');
+  const key = m => (hasCr ? (m.cr || 0) : (m.days || []).filter(Boolean).length);
+  const list = ppl.slice().sort((a, b) => key(b) - key(a) || (b.memo || 0) - (a.memo || 0));
+
+  const head = el('div', 'crct');
+  head.append(document.createTextNode(tr('이번 주 순위')));
+  head.append(el('span', 'crreset', tr('월요일마다 초기화')));
+  box.append(head);
+
+  const me = myUid();
+  const top = key(list[0]) || 1;
+  list.forEach((m, i) => {
+    const mine = m.uid === me;
+    const r = el('div', 'crank' + (mine ? ' me' : ''));
+    r.append(el('span', 'crno' + (i < 3 ? ' hi' : ''), String(i + 1)));
+    const nk = el('span', 'crnick');
+    nk.append(document.createTextNode(m.nick));
+    if (mine) nk.append(el('span', 'crmine', tr('나')));   // CSS 에 한글을 박으면 베트남어 화면에 샌다
+    r.append(nk);
+    const bar = el('span', 'crbar');
+    const fill = el('i');
+    fill.style.width = Math.max(4, Math.round(key(m) / top * 100)) + '%';
+    bar.append(fill);
+    r.append(bar);
+    r.append(el('span', 'crval', String(key(m))));
+    box.append(r);
+  });
+  if (!hasCr) {
+    box.append(el('p', 'note', '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 크레딧 순위로 바뀝니다.'));
+  }
+  return box;
+}
+
 function creditEntry() { drawCredit(); }
 function drawCredit() {
   const ko = learnKo();
@@ -3351,7 +3402,7 @@ function drawCredit() {
   host.append(cmp);
   host.append(el('p', 'note', '남과 견주지 않습니다 — <b>지난주의 나</b>와만 견줍니다.'));
 
-  // 동아리는 등수가 아니라 합계로 — 같이 하는 느낌은 주되 서열은 안 만든다
+  // 동아리 — 합계(같이 하는 느낌)와 순위(겨루는 재미)를 나란히 둔다
   if (S.club && MATES && (MATES.people || []).length) {
     const seen = {};
     MATES.people.forEach(m => { if (!seen[m.nick] || (m.td || 0) > (seen[m.nick].td || 0)) seen[m.nick] = m; });
@@ -3366,6 +3417,7 @@ function drawCredit() {
     g.append(cell(ppl.length, '명'), cell(dots, '출석 도장'), cell(memo, '외운 단어'));
     box.append(g);
     host.append(box);
+    host.append(rankBoard(ppl));
   }
 
   host.append(el('h3', 'exhead', tr('이렇게 모입니다')));
@@ -7510,6 +7562,7 @@ function mateSync() {
   const dots = weekDots(), sk = skillScore();
   return cCall({ act: 'report', id: S.club.id, days: dots.map(d => d.done ? 1 : 0),
                  memo: sk.memo, score: sk.score, st: streakDays(), td: totalDays(),
+                 cr: weekCredits(),                          // 이번 주 크레딧 — 순위판 재료
                  op: S.open ? 1 : 0, av: S.avv || 0, bl: S.block || [], pct: myPcts() })
     .then(j => { MATES = j; return pullFaces(j.people || []); });
 }
