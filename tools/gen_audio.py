@@ -29,7 +29,7 @@ def collect(data):
             out[w["vi"]] = "word"
         for l in d["dialog"]["lines"]:
             out[l["vi"]] = "sent"          # 대화 문장은 느린 버전도
-        for t in d["dialog"]["extra"]:
+        for t in d["dialog"].get("extra", []):
             out.setdefault(t["vi"] if isinstance(t, dict) else t, "ex")
     return out
 
