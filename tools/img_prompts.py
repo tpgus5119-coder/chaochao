@@ -255,12 +255,8 @@ EN = {
  "d60-scene":"a person exchanging money at a bank counter",
  "d101-scene":"two coworkers chatting, one pointing at a factory and the other at an office building",
  "d102-scene":"a shopper and a vendor counting banknotes and coins at a market stall",
- "d103-scene":"a passenger in the back seat talking to a taxi driver, city street ahead",
- "d104-scene":"a customer ordering a drink at a cafe counter, barista holding a cup",
- "d105-scene":"a waiter with a notepad taking an order from a customer holding a menu",
+ "d104-scene":"a fruit stall with bananas, mangoes and watermelons on display, a vendor weighing fruit",
  "d106-scene":"a shopper with a basket choosing vegetables at a busy market stall",
- "d107-scene":"two people looking at t-shirts of many colors on a clothes rack",
- "d108-scene":"two people meeting for the first time, smiling and shaking hands politely",
 }
 
 d = json.load(open('data/days.json'))

@@ -135,8 +135,8 @@ const UIVI = {
   '모음 소개 다시 보기': 'Xem lại phần giới thiệu nguyên âm',
   '모의고사': 'Thi thử',
   '기초 문법': 'Ngữ pháp cơ bản',
-  '한국어 기초 문법 68개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.':
-    '68 điểm ngữ pháp tiếng Hàn — từ Sơ cấp 1 đến Trung cấp 2, đúng theo thứ tự học.',
+  '한국어 기초 문법 78개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.':
+    '78 điểm ngữ pháp tiếng Hàn — từ Sơ cấp 1 đến Trung cấp 2, đúng theo thứ tự học.',
   '문법 자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
     'Không tải được tài liệu ngữ pháp. Hãy kiểm tra kết nối mạng.',
   '초급1': 'Sơ cấp 1', '초급2': 'Sơ cấp 2', '중급1': 'Trung cấp 1', '중급2': 'Trung cấp 2',
@@ -144,6 +144,19 @@ const UIVI = {
     'Kiến thức nền tảng — từ nguyên âm, phụ âm đến số đếm, câu chào.',
   '자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
     'Không tải được tài liệu. Hãy kiểm tra kết nối mạng.',
+  /* ── 나만의 단어장 ── */
+  '나만의 단어장': 'Sổ từ của tôi',
+  '나만의 단어장에 담기': 'Lưu vào sổ từ của tôi',
+  '★ 내가 담은 것': '★ Tôi đã lưu',
+  '⚠ 자주 틀린 것': '⚠ Hay sai',
+  '틀림': 'Sai', '번': 'lần',
+  '아직 뜻이 없는 낱말입니다': 'Từ này chưa có nghĩa trong từ điển',
+  '아직 담은 낱말이 없습니다. 배우는 화면에서 낱말 옆 <b>☆</b>를 누르면 여기에 모입니다.':
+    'Chưa có từ nào được lưu. Nhấn <b>☆</b> bên cạnh từ ở màn hình học để lưu vào đây.',
+  '아직 자주 틀린 낱말이 없습니다. 퀴즈에서 틀린 낱말이 여기에 저절로 모입니다.':
+    'Chưa có từ nào hay sai. Những từ bạn làm sai trong bài kiểm tra sẽ tự động vào đây.',
+  '퀴즈에서 <b>맞힐 때마다 횟수가 줄어</b> 저절로 사라집니다 — 지울 필요가 없습니다.':
+    'Mỗi lần bạn trả lời đúng, <b>số lần sai sẽ giảm</b> và từ đó tự biến mất — không cần xóa.',
   '한국 문화': 'Văn hóa Hàn Quốc',
   '한국 생활 문화 — 직장 예절부터 위급 상황까지.':
     'Văn hóa sinh hoạt Hàn Quốc — từ phép tắc nơi làm việc đến tình huống khẩn cấp.',
@@ -157,8 +170,8 @@ const UIVI = {
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
   '응시': 'Đã thi', '회': ' lần', '평균': 'Trung bình', '점': ' điểm',
-  '지금 있는 것 — 날마다 배우기(초급1 18일), 모의고사, 기본기, 문법 68개, 한국 문화, AI 채점 말하기·쓰기':
-    'Hiện đã có — Học mỗi ngày (Sơ cấp 1, 18 ngày), đề thi thử, kiến thức nền tảng, 68 điểm ngữ pháp, văn hóa Hàn Quốc, luyện nói·viết có AI chấm',
+  '지금 있는 것 — 날마다 배우기(초급1 18일), 모의고사, 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
+    'Hiện đã có — Học mỗi ngày (Sơ cấp 1, 18 ngày), đề thi thử, kiến thức nền tảng, 78 điểm ngữ pháp, văn hóa Hàn Quốc, luyện nói·viết có AI chấm',
   '아직 없는 것 — 초급2·중급1·중급2 날짜별 과정(문법·단어는 이미 있어서 곧 늘어납니다)':
     'Chưa có — khóa học theo ngày cho Sơ cấp 2, Trung cấp 1, Trung cấp 2 (ngữ pháp và từ vựng đã có sẵn nên sẽ sớm bổ sung)',
   '목록으로': 'Về danh sách',
@@ -1959,7 +1972,7 @@ function drawKoHome() {
   plan.append(row);
 
   const note = el('p', 'note');
-  note.append(el('b', null, '지금 있는 것 — 날마다 배우기(초급1 18일), 모의고사, 기본기, 문법 68개, 한국 문화, AI 채점 말하기·쓰기'));
+  note.append(el('b', null, '지금 있는 것 — 날마다 배우기(초급1 18일), 모의고사, 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기'));
   note.append(document.createElement('br'));
   note.append(document.createTextNode(tr('아직 없는 것 — 초급2·중급1·중급2 날짜별 과정(문법·단어는 이미 있어서 곧 늘어납니다)')));
   plan.append(note);
@@ -1984,6 +1997,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
             ['호칭', () => startRule(0)], ['어순', () => startRule(1)], ['숫자 읽는 법', () => startRule(5)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
+  book:  { name: '나만의 단어장', items: () => [['보기', wordbookEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -1994,6 +2008,7 @@ const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   basic2: { name: '기본기', items: () => [['보기', koBasicEntry]] },
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
   culture:{ name: '한국 문화', items: () => [['보기', koCultureEntry]] },
+  book:   { name: '나만의 단어장', items: () => [['보기', wordbookEntry]] },
   club:   { name: '동아리', items: () => [['보기', showClub]] },
   guide:  { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -2076,7 +2091,7 @@ let KGDATA = null, KG = null;
 function koGramEntry() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '한국어 기초 문법 68개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.'));
+  b.append(el('p', 'lede', '한국어 기초 문법 78개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.'));
   show('exam', '기초 문법', true);
   if (KGDATA) return drawGramList();
   fetch('data/ko_grammar.json', { cache: 'no-cache' })
@@ -2087,7 +2102,7 @@ function koGramEntry() {
 function drawGramList() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '한국어 기초 문법 68개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.'));
+  b.append(el('p', 'lede', '한국어 기초 문법 78개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.'));
   let lastLevel = null;
   KGDATA.forEach((g, i) => {
     if (g.level !== lastLevel) { lastLevel = g.level; b.append(el('h3', 'exhead', tr(g.level))); }
@@ -2115,7 +2130,13 @@ function drawGramCard(i) {
   // vi 모드에서는 베트남어 설명만, dev 모드에서만 한글 설명을 같이 보여준다.
   const card = el('div', 'excard');
   card.append(el('div', 'gpat', g.pattern));
-  card.append(el('div', 'exask', esc(g.title_ko)));
+  // 목표 문장에도 소리를 붙인다 — 예문에만 있고 정작 제목 문장에는 없었다
+  const tline = el('div', 'exask');
+  tline.append(el('span', null, esc(g.title_ko)));
+  const tsay = el('button', 'iconbtn', '🔊');
+  tsay.onclick = () => speakKo(g.title_ko);
+  tline.append(tsay);
+  card.append(tline);
   card.append(el('div', 'exbody', esc(g.title_vi)));
   if (S.ui !== 'vi') card.append(el('div', 'gexp', esc(g.explain_ko)));
   card.append(el('div', 'gexp vi', esc(g.explain_vi)));
@@ -2138,6 +2159,7 @@ function drawGramCard(i) {
   prev.onclick = () => drawGramCard(i - 1);
   const next = el('button', 'primary big', i === KGDATA.length - 1 ? '목록으로' : '다음 ›');
   next.onclick = () => i === KGDATA.length - 1 ? drawGramList() : drawGramCard(i + 1);
+  swipeNav(b, () => i > 0 && drawGramCard(i - 1), () => i < KGDATA.length - 1 && drawGramCard(i + 1));
   nav.append(prev, next);
   b.append(nav);
   show('exam', '기초 문법', true);
@@ -2193,6 +2215,14 @@ function drawBasicCard(i) {
     const line = el('div', 'gexko');
     line.append(el('span', null, esc(row.ko)));
     line.append(el('span', 'exmeta', esc(row.read)));
+    /* 소리 — 'ㅏ'·'ㄱ' 같은 홀자모는 그대로는 못 읽으니 say('아'·'가')를 대신 읽는다.
+       전에는 이 표에 소리 단추가 아예 없었다 — 발음을 배우는 자리인데 소리가 없었다. */
+    const say = row.say || row.ko;
+    if (KOIDX === null || KOIDX[say]) {
+      const p = el('button', 'iconbtn', '🔊');
+      p.onclick = () => speakKo(say);
+      line.append(p);
+    }
     r.append(line, el('div', 'gexvi', esc(row.vi)));
     card.append(r);
   });
@@ -2204,6 +2234,7 @@ function drawBasicCard(i) {
   prev.onclick = () => drawBasicCard(i - 1);
   const next = el('button', 'primary big', i === KBDATA.length - 1 ? '목록으로' : '다음 ›');
   next.onclick = () => i === KBDATA.length - 1 ? drawBasicList() : drawBasicCard(i + 1);
+  swipeNav(b, () => i > 0 && drawBasicCard(i - 1), () => i < KBDATA.length - 1 && drawBasicCard(i + 1));
   nav.append(prev, next);
   b.append(nav);
   show('exam', '기본기', true);
@@ -2259,6 +2290,14 @@ function drawCultureCard(i) {
     const line = el('div', 'gexko');
     line.append(el('span', null, esc(row.ko)));
     line.append(el('span', 'exmeta', esc(row.read)));
+    /* 소리 — 'ㅏ'·'ㄱ' 같은 홀자모는 그대로는 못 읽으니 say('아'·'가')를 대신 읽는다.
+       전에는 이 표에 소리 단추가 아예 없었다 — 발음을 배우는 자리인데 소리가 없었다. */
+    const say = row.say || row.ko;
+    if (KOIDX === null || KOIDX[say]) {
+      const p = el('button', 'iconbtn', '🔊');
+      p.onclick = () => speakKo(say);
+      line.append(p);
+    }
     r.append(line, el('div', 'gexvi', esc(row.vi)));
     card.append(r);
   });
@@ -2270,13 +2309,14 @@ function drawCultureCard(i) {
   prev.onclick = () => drawCultureCard(i - 1);
   const next = el('button', 'primary big', i === KCDATA.length - 1 ? '목록으로' : '다음 ›');
   next.onclick = () => i === KCDATA.length - 1 ? drawCultureList() : drawCultureCard(i + 1);
+  swipeNav(b, () => i > 0 && drawCultureCard(i - 1), () => i < KCDATA.length - 1 && drawCultureCard(i + 1));
   nav.append(prev, next);
   b.append(nav);
   show('exam', '한국 문화', true);
 }
 
 /* ---------- 날마다 배우기 ----------
-   1차분: 초급1 18일. 그날의 문법(ko_grammar.json, grammar_n으로 연결)·단어·대화·
+   1차분: 초급1 18일. 그날의 문법(ko_grammar.json, 문법 '이름'으로 연결)·단어·대화·
    미션을 한 화면에 묶는다. 단어·대화는 문법 카드와 같은 행 모양(gex)을 그대로 쓴다 —
    문법 카드에서 이미 검증된 모양이라 새 스타일을 안 만들어도 된다. */
 let KDDATA = null, KD = null;
@@ -2305,7 +2345,7 @@ function drawDayList() {
   });
 }
 
-function dayWordRow(host, ko, vi, prefix) {
+function dayWordRow(host, ko, vi, prefix, star) {
   const row = el('div', 'gex');
   const line = el('div', 'gexko');
   if (prefix) line.append(el('b', null, prefix));
@@ -2313,6 +2353,7 @@ function dayWordRow(host, ko, vi, prefix) {
   const p = el('button', 'iconbtn', '🔊');
   p.onclick = () => speakKo(ko);
   line.append(p);
+  if (star) line.append(starBtn(ko, ko, vi));   // 낱말만 담는다(대화 줄은 담지 않는다)
   row.append(line, el('div', 'gexvi', esc(vi)));
   host.append(row);
 }
@@ -2331,19 +2372,20 @@ function drawDayCard(i) {
   const top = el('div', 'excard');
   top.append(el('div', 'exask', esc(d.theme.ko)));
   top.append(el('div', 'exbody', esc(d.theme.vi)));
-  const gi = KGDATA ? KGDATA.findIndex(g => g.level === '초급1' && g.n === d.grammar_n) : -1;
+  const findG = list => list.findIndex(g => g.pattern === d.grammar);   // 번호 아닌 이름으로 찾는다
+  const gi = KGDATA ? findG(KGDATA) : -1;
   const gbtn = el('button', 'ghost', tr('오늘의 문법 보기'));
   gbtn.onclick = () => {
     if (gi >= 0) return drawGramCard(gi);
     fetch('data/ko_grammar.json', { cache: 'no-cache' }).then(r => r.json())
-      .then(j => { KGDATA = j.items; drawGramCard(KGDATA.findIndex(g => g.level === '초급1' && g.n === d.grammar_n)); });
+      .then(j => { KGDATA = j.items; drawGramCard(findG(KGDATA)); });
   };
   top.append(gbtn);
   b.append(top);
 
   const wcard = el('div', 'excard');
   wcard.append(el('h3', 'exhead', tr('오늘의 단어')));
-  d.words.forEach(w => dayWordRow(wcard, w.ko, w.vi));
+  d.words.forEach(w => dayWordRow(wcard, w.ko, w.vi, null, true));
   b.append(wcard);
 
   const dcard = el('div', 'excard');
@@ -2363,6 +2405,7 @@ function drawDayCard(i) {
   prev.onclick = () => drawDayCard(i - 1);
   const next = el('button', 'primary big', i === KDDATA.length - 1 ? '목록으로' : '다음 ›');
   next.onclick = () => i === KDDATA.length - 1 ? drawDayList() : drawDayCard(i + 1);
+  swipeNav(b, () => i > 0 && drawDayCard(i - 1), () => i < KDDATA.length - 1 && drawDayCard(i + 1));
   nav.append(prev, next);
   b.append(nav);
   show('exam', `Day ${d.day}`, true);
@@ -3086,7 +3129,72 @@ function glossOf(vi) {
   }
   return out.filter(x => x.m);
 }
-/* 낱말 뜻 줄 — 대화 화면의 gloss 와 같은 차림새 */
+/* 뜻이 없는 낱말까지 **하나도 안 빼고** 돌려준다.
+   glossOf 는 뜻을 못 찾은 낱말을 버리는데(.filter), 그러면 문장 밑 뜻줄에서
+   낱말이 통째로 사라져 "왜 이건 없지?" 하게 된다. 문장을 누를 수 있게 만들 때는
+   빠짐없이 다 있어야 하므로 이쪽을 쓴다. */
+function glossAll(vi, extra) {
+  if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
+                                                    if (!GVOC[k]) GVOC[k] = w.ko; }); }
+  const look = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph];
+  const toks = vi.split(/(\s+)/);        // 공백도 남겨 문장 모양 그대로 다시 그린다
+  const out = [];
+  for (let i = 0; i < toks.length;) {
+    if (/^\s+$/.test(toks[i])) { out.push({ sp: toks[i] }); i++; continue; }
+    let hit = null;
+    for (let n = 5; n >= 1 && !hit; n -= 2) {          // 낱말·공백·낱말… 이라 2칸씩
+      const slice = toks.slice(i, i + n);
+      if (slice.length < n) continue;
+      const ph = slice.join('').replace(/[,.!?;:]/g, '').toLowerCase().trim();
+      const m = ph && look(ph);
+      if (m) hit = { w: slice.join(''), m, n };
+    }
+    if (hit) { out.push({ w: hit.w, m: hit.m }); i += hit.n; }
+    else { out.push({ w: toks[i], m: null }); i += 1; }
+  }
+  return out;
+}
+
+/* 문장을 낱말 단위로 눌러볼 수 있게 만든다.
+   예전에는 문장 **밑에** 낱말 뜻을 줄줄이 깔았다. 두 가지가 문제였다 —
+   ① 사전에 없는 낱말은 뜻줄에서 아예 빠져 학습자가 "이 낱말은 왜 없지?" 하게 된다
+   ② 뜻줄이 길어 정작 문장 자체가 화면에서 밀려난다.
+   이제 문장 속 낱말을 직접 누르면 그 자리에서 소리가 나고 뜻이 뜬다.
+   빠지는 낱말이 없고(모든 낱말이 눌린다), 화면도 문장 하나로 짧아진다. */
+function tapLine(vi, cls, o) {
+  const opt = o || {};
+  const wrap = el('div', 'tapwrap');
+  const line = el('div', cls || 'tapline');
+  const info = el('div', 'tapinfo');
+  let on = null;
+  glossAll(vi, opt.dict).forEach(t => {
+    if (t.sp !== undefined) { line.append(document.createTextNode(t.sp)); return; }
+    const w = el('button', 'tapw' + (t.m ? '' : ' nom'));
+    w.type = 'button';
+    w.textContent = t.w;
+    w.onclick = () => {
+      if (on) on.classList.remove('on');
+      on = w; w.classList.add('on');
+      const bare = t.w.replace(/[,.!?;:]/g, '').trim();
+      AIDX[bare] ? play(bare, false) : speakVi(bare);
+      info.textContent = '';
+      info.append(el('b', null, esc(bare)));
+      // 성조 — 대화 화면에서는 낱말마다 성조 모양도 같이 보여 준다
+      const tn = opt.tones && opt.tones[bare.toLowerCase().split(' ')[0]];
+      if (tn) {
+        const ch = el('span', 'gt ' + tn.name, toneArrow(tn.name));
+        ch.title = tn.name + ' · ' + tn.ko;
+        info.append(ch);
+      }
+      info.append(document.createTextNode(t.m ? ' — ' + t.m : ' — ' + tr('아직 뜻이 없는 낱말입니다')));
+    };
+    line.append(w);
+  });
+  wrap.append(line, info);
+  return wrap;
+}
+
+/* 낱말 뜻 줄 — 대화 화면의 gloss 와 같은 차림새 (아직 쓰는 곳이 있어 남겨 둔다) */
 function glossRow(vi) {
   const list = glossOf(vi);
   if (!list.length) return null;
@@ -3098,6 +3206,111 @@ function glossRow(vi) {
     g.append(cell);
   });
   return g;
+}
+
+/* ---------- 나만의 단어장 ----------
+   ① 별표 — 배우다가 "이건 따로 챙기자" 싶은 낱말을 그 자리에서 담는다.
+   ② 오답노트 — 퀴즈에서 자주 틀린 낱말(S.stats.miss)이 저절로 모인다.
+   두 과정(베트남어·한국어)이 한 단어장을 같이 쓴다. 열쇠는 배우는 말 쪽 글자다. */
+function starOf() { return S.star || (S.star = {}); }
+function isStar(k) { return !!starOf()[k]; }
+function toggleStar(k, ko, vi) {
+  const st = starOf();
+  if (st[k]) delete st[k];
+  else st[k] = { ko, vi, t: now() };
+  save();
+  return !!st[k];
+}
+/* 별 단추 — 학습 화면 어디서든 낱말 옆에 붙인다 */
+function starBtn(k, ko, vi) {
+  const b = el('button', 'starb' + (isStar(k) ? ' on' : ''));
+  b.type = 'button';
+  b.textContent = isStar(k) ? '★' : '☆';
+  b.title = tr('나만의 단어장에 담기');
+  b.onclick = e => {
+    e.stopPropagation();
+    const onNow = toggleStar(k, ko, vi);
+    b.textContent = onNow ? '★' : '☆';
+    b.classList.toggle('on', onNow);
+  };
+  return b;
+}
+
+/* 좌우로 밀어 이전·다음 — 사진첩과 같은 방향(왼쪽으로 밀면 다음).
+   한국어 과정 카드들(날마다·문법·기본기·문화)은 '‹이전 / 다음›' 단추만 있었는데,
+   폰에서는 미는 게 훨씬 빠르다. 단추를 누르는 동작과 안 겹치도록 40px 넘게
+   민 것만 넘긴다(가벼운 탭은 무시). */
+function swipeNav(host, prev, next) {
+  let x0 = null, y0 = null;
+  host.addEventListener('touchstart', e => {
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+  }, { passive: true });
+  host.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    const dy = e.changedTouches[0].clientY - y0;
+    x0 = null;
+    // 세로로 더 많이 움직였으면 그건 스크롤이다 — 넘기지 않는다
+    if (Math.abs(dx) < 40 || Math.abs(dy) > Math.abs(dx)) return;
+    (dx < 0 ? next : prev)();
+  }, { passive: true });
+}
+
+let WB = 'star';                       // 단어장에서 보고 있는 칸
+function wordbookEntry() { WB = 'star'; drawWordbook(); }
+function drawWordbook() {
+  const ko = learnKo();
+  const host = ko ? $('#examBody') : $('#subBody');
+  host.textContent = '';
+
+  const tabs = el('div', 'wbtabs');
+  const mk = (k, label) => {
+    const t = el('button', 'wbtab' + (WB === k ? ' on' : ''), label);
+    t.onclick = () => { WB = k; drawWordbook(); };
+    return t;
+  };
+  const misses = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1);
+  tabs.append(mk('star', tr('★ 내가 담은 것') + ' ' + Object.keys(starOf()).length),
+              mk('miss', tr('⚠ 자주 틀린 것') + ' ' + misses.length));
+  host.append(tabs);
+
+  if (WB === 'star') {
+    const list = Object.entries(starOf()).sort((a, b) => b[1].t - a[1].t);
+    if (!list.length) {
+      host.append(el('p', 'note', '아직 담은 낱말이 없습니다. 배우는 화면에서 낱말 옆 <b>☆</b>를 누르면 여기에 모입니다.'));
+    }
+    list.forEach(([k, v]) => {
+      const r = el('div', 'gex');
+      const line = el('div', 'gexko');
+      line.append(el('span', null, esc(v.ko && ko ? v.ko : v.vi || v.ko)));
+      const p = el('button', 'iconbtn', '🔊');
+      p.onclick = () => (ko ? speakKo(v.ko) : (AIDX[v.vi] ? play(v.vi, false) : speakVi(v.vi)));
+      line.append(p, starBtn(k, v.ko, v.vi));
+      r.append(line, el('div', 'gexvi', esc(ko ? v.vi : v.ko)));
+      host.append(r);
+    });
+  } else {
+    if (!misses.length) {
+      host.append(el('p', 'note', '아직 자주 틀린 낱말이 없습니다. 퀴즈에서 틀린 낱말이 여기에 저절로 모입니다.'));
+    }
+    // 많이 틀린 것부터 — 맞히면 점수가 깎여 스스로 사라진다
+    misses.sort((a, b) => b[1] - a[1]).forEach(([vi, n]) => {
+      const w = allWords().find(x => x.vi === vi);
+      const r = el('div', 'gex');
+      const line = el('div', 'gexko');
+      line.append(el('span', null, esc(vi)));
+      line.append(el('span', 'exmeta', tr('틀림') + ' ' + Math.round(n) + tr('번')));
+      const p = el('button', 'iconbtn', '🔊');
+      p.onclick = () => (AIDX[vi] ? play(vi, false) : speakVi(vi));
+      line.append(p, starBtn(vi, w ? w.ko : '', vi));
+      r.append(line, el('div', 'gexvi', esc(w ? w.ko : '')));
+      host.append(r);
+    });
+    if (misses.length) {
+      host.append(el('p', 'note', '퀴즈에서 <b>맞힐 때마다 횟수가 줄어</b> 저절로 사라집니다 — 지울 필요가 없습니다.'));
+    }
+  }
+  show(ko ? 'exam' : 'sub', '나만의 단어장', true);
 }
 
 function drawCard() {
@@ -3170,7 +3383,7 @@ function drawCard() {
     }
     c.append(row);
     c.append(el('div', 'ko', esc(x.ko)));
-    const gr = glossRow(x.vi); if (gr) c.append(gr);      // 낱말마다 뜻
+    c.append(tapLine(x.vi));                 // 낱말을 누르면 소리 + 뜻
     c.append(el('div', 'rulenote', esc(x.note)));
     if (L.day.day === 'R4') {          // 남부 소리 수업은 카드에서 바로 남북을 맞대 듣는다
       const cmp = el('div', 'sound');
@@ -3204,6 +3417,7 @@ function drawCard() {
       mic.onclick = () => toggleRec(x.vi, mic, box);
       row.append(mic);
     }
+    row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
     c.append(row);
     c.append(el('div', 'ko', esc(x.ko)));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
@@ -3241,7 +3455,14 @@ function drawCard() {
       /* 문장 줄 — 듣기 단추는 **문장 오른쪽**에 붙인다. 왼쪽 머리에 있으면
          문장을 읽기 전에 단추부터 보게 되어 순서가 거꾸로다. */
       const lrow = el('div', 'lrow');
-      lrow.append(el('div', 'lvi', esc(l.vi)));
+      /* 문장 자체를 눌러볼 수 있게 — 밑에 낱말 뜻줄을 따로 깔지 않는다.
+         뜻은 이 대화가 들고 있는 gloss(사람이 붙인 것)를 먼저 쓰고, 없으면 사전을 본다.
+         그래서 gloss 에 없던 낱말도 이제 빠지지 않는다. */
+      const dict = {};
+      (l.gloss || []).forEach(pp => { dict[pp.w.toLowerCase().replace(/[,.!?;:]/g, '')] = pp.m; });
+      const tmap0 = {};
+      (l.tones || []).forEach(t => { tmap0[t.syl.toLowerCase().replace(/[.,!?;:'"]/g, '')] = t; });
+      lrow.append(tapLine(l.vi, 'lvi', { dict, tones: tmap0 }));
       const bt = iconBtn('slow', '듣기', () => play(l.vi, false));
       bt.classList.remove('slow'); bt.classList.add('playi');
       bt.innerHTML = ICON.play;
@@ -3250,29 +3471,7 @@ function drawCard() {
       row.append(lrow);
       row.append(reveal(l.kr_read));
       row.append(el('div', 'lko', esc(l.ko)));
-      // 단어별 풀이 + 그 단어의 성조를 한 칸에
-      const norm = x => x.toLowerCase().replace(/[.,!?;:'"]/g, '');
-      const tmap = {};
-      (l.tones || []).forEach(t => { tmap[norm(t.syl)] = t; });
-      const g = el('div', 'gloss');
-      l.gloss.forEach(pp => {
-        const cell = el('div', 'gcell');
-        const top = el('span', 'gtop');
-        top.append(el('span', 'gw', esc(pp.w)));
-        const t = tmap[norm(pp.w.split(' ')[0])];
-        if (t) {
-          const ch = el('span', 'gt ' + t.name, toneArrow(t.name));
-          ch.title = t.name + ' · ' + t.ko;
-          top.append(ch);
-        }
-        cell.append(top, el('span', 'gm', esc(pp.m)));
-        /* 낱말 칸을 누르면 그 낱말 소리가 난다 — 우리 음원이 없으면 기계 목소리로라도 */
-        cell.setAttribute('role', 'button'); cell.tabIndex = 0;
-        cell.onclick = () => (AIDX[pp.w] ? play(pp.w, false) : speakVi(pp.w));
-        cell.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); cell.onclick(); } };
-        g.append(cell);
-      });
-      row.append(g);
+      // 낱말 뜻줄은 없앴다 — 위 문장의 낱말을 직접 누르면 소리와 뜻이 그 자리에 뜬다.
       row.append(speakRow(l.vi));
       lineEls.push(row);
       c.append(row);
@@ -6009,14 +6208,21 @@ function drawMateRows(s) {
   }
   const wait = el('p', 'note', '불러오는 중…');
   s.append(wait);
+  /* 사람 줄은 이 상자 안에만 그린다.
+     ⚠ 전에는 s 에 바로 붙였는데, 캐시가 있으면 paint() 를 두 번 부르는 구조라
+     (아래 `if (MATES) paint(); mateSync().then(paint)`) 두 번째 그리기가 첫 번째를
+     안 지우고 덧붙여서 **명단이 사람마다 두 줄씩 보였다.** 상자를 두고 매번 비운다. */
+  const box = el('div', 'matebox');
+  s.append(box);
   const paint = () => {
     wait.remove();
+    box.textContent = '';
     /* 같은 별명이 기기 두 대로 들어오면 두 줄로 떴다 — 별명으로 걸러 하나만 남긴다 */
     const seen = {};
     ((MATES || {}).people || []).filter(x => x.uid !== myUid())
       .forEach(m => { const k = m.nick; if (!seen[k] || (m.td || 0) > (seen[k].td || 0)) seen[k] = m; });
     const list = Object.values(seen);
-    if (!list.length) { s.append(el('p', 'note', '아직 다른 사람이 없습니다.')); return; }
+    if (!list.length) { box.append(el('p', 'note', '아직 다른 사람이 없습니다.')); return; }
     list.forEach(m => {
       const btn = el('button', 'msgrow');
       btn.append(faceEl(m.uid, 'row'));
@@ -6027,7 +6233,7 @@ function drawMateRows(s) {
       if (mateNew(m)) btn.append(el('span', 'msgbadge', '새'));
       // 메신저답게 누르면 **바로 쪽지방**으로 — 프로필은 쪽지방 위의 이름을 누르면 나온다
       btn.onclick = () => { dive(renderRooms); openDm(m.uid); };
-      s.append(btn);
+      box.append(btn);
     });
   };
   if (MATES) paint();

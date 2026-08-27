@@ -33,9 +33,11 @@ from polite import polite      # 앱 글은 모두 존댓말 (사용자 지시)
 from hanviet import HANVIET    # 한자어 힌트 — 한 곳에 모아 두고 여기서 채운다
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
-days = []
+days, patches = [], []
 for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6','_b7','_b8']:
-    days += json.loads((R/f'data/{f}.json').read_text())['days']
+    j = json.loads((R/f'data/{f}.json').read_text())
+    days += j['days']
+    patches += j.get('patch', [])
 
 # ── 덜어낸 세트 ────────────────────────────────────────────────
 # 억지로 늘린 것들을 도로 뺐다. 기준은 '중간관리자가 실제로 쓰는가' 와 '이미 다른 세트에 있는가'.
@@ -61,6 +63,11 @@ WORK_ORDER = (W_BASE + W_SEW + [k for k in range(51,61) if k not in DROP]  # 전
               + list(range(81,86)) + [k for k in range(96,101) if k not in DROP]   # 관리자·창고
               + [k for k in range(86,96) if k not in DROP])   # 봉제·전자 심화
 by = {d["day"]: d for d in days}
+# 보강 패치 — 딴 소스가 만든 day 에 단어·문장을 덧붙인다 (b8: 수업 5~10강을 흩어 넣기)
+for p in patches:
+    t = by[p["day"]]
+    t["words"] += p.get("words", [])
+    t["dialog"]["extra"] += p.get("extra", [])
 # ── 일상 차례 — **같은 주제끼리 붙여 놓는다** ──────────────────────
 # 교재·어플이 주제별로 묶는 데에는 이유가 있다. 상황이 같으면 문장 틀이 같아서
 # 열 낱말을 따로 외우는 대신 한 장면을 통째로 익히게 된다.
@@ -84,7 +91,7 @@ DAILY_HEAD = [1,2,3,4,5,6,         # 첫 인사와 자기소개
               13,102]              # 시장에서 — 사고 팔기
 DAILY_MID  = [43,                  # 시장에서 — 사고 팔기
               44,75,               # 마음과 맞장구
-              12,48,76,77,         # 식당과 카페에서
+              12,106,104,48,76,77, # 식당에서 — 장보기·과일은 먹고 마시기 바로 뒤
               14,42,80]            # 길과 교통
 DAILY_TAIL = [46,50,78,            # 집과 살림 (79 세탁소와 수선집은 뺐다)
               15,71,               # 가족과 고향 (72 반려동물은 뺐다)
@@ -94,10 +101,7 @@ days = ([by[k] for k in DAILY_HEAD]
         + [by[k] for k in DAILY_MID] + [by[k] for k in range(51, 71) if k not in DROP]
         + [by[k] for k in DAILY_TAIL]
         + [by[k] for k in range(81, 86)] + [by[k] for k in range(96, 101) if k not in DROP]
-        + [by[k] for k in range(86, 96) if k not in DROP]
-        # 학원 나란히(103~108) — 훈련기관 수업 5~10강과 같은 차례. 한 덩어리로 둔다:
-        # 수업 전 '찍어보기'(사전시험)용이라 흩어 놓으면 못 찾는다.
-        + [by[k] for k in range(103, 109)])
+        + [by[k] for k in range(86, 96) if k not in DROP])
 
 out = {"meta": {"version":"v4",
                 "voices":{"f":"vi-VN-HoaiMyNeural","m":"vi-VN-NamMinhNeural"},

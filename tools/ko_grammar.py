@@ -50,6 +50,22 @@ GRAMMAR = [
     {"ko": "저는 매일 한국어를 배워요.", "vi": "Tôi học tiếng Hàn mỗi ngày."},
     {"ko": "친구가 밥을 먹어요.", "vi": "Bạn tôi đang ăn cơm."},
   ]},
+ {"level": "초급1", "n": 0, "pattern": "안 / 못 (부정)",
+  "title_ko": "저는 오늘 안 가요.", "title_vi": "Hôm nay tôi không đi.",
+  "explain_ko": "'안'은 하고 싶지 않아서 안 하는 것, '못'은 하고 싶어도 할 수 없는 것입니다. 동사 앞에 놓습니다.",
+  "explain_vi": "'안' là không làm vì không muốn, '못' là muốn nhưng không thể. Đặt trước động từ.",
+  "examples": [
+    {"ko": "저는 커피를 안 마셔요.", "vi": "Tôi không uống cà phê."},
+    {"ko": "오늘은 일이 많아요. 그래서 못 가요.", "vi": "Hôm nay tôi nhiều việc. Vì vậy tôi không đi được."},
+  ]},
+ {"level": "초급1", "n": 0, "pattern": "불규칙 활용 (ㅂ·ㄷ·르·ㅡ)",
+  "title_ko": "오늘은 날씨가 더워요.", "title_vi": "Hôm nay trời nóng.",
+  "explain_ko": "'덥다'가 '더워요'로 바뀌듯, 어떤 말은 아요/어요를 붙일 때 모양이 바뀝니다. ㅂ→우, ㄷ→ㄹ, 르→ㄹㄹ, ㅡ는 사라집니다.",
+  "explain_vi": "Một số từ đổi dạng khi thêm 아요/어요: 덥다 → 더워요. ㅂ→우, ㄷ→ㄹ, 르→ㄹㄹ, còn ㅡ thì biến mất.",
+  "examples": [
+    {"ko": "음악을 들어요.", "vi": "Tôi nghe nhạc."},
+    {"ko": "오늘은 바빠요.", "vi": "Hôm nay tôi bận."},
+  ]},
  {"level": "초급1", "n": 4, "pattern": "에 가다/오다",
   "title_ko": "저는 오늘 도서관에 가요.", "title_vi": "Hôm nay tôi đi đến thư viện.",
   "explain_ko": "어디로 가는지 말할 때 장소 뒤에 '에'를 붙입니다.",
@@ -98,6 +114,22 @@ GRAMMAR = [
     {"ko": "어제 영화를 봤어요.", "vi": "Hôm qua tôi đã xem phim."},
     {"ko": "지난주에 고향에 갔어요.", "vi": "Tuần trước tôi đã về quê."},
   ]},
+ {"level": "초급1", "n": 0, "pattern": "고 (나열·순서)",
+  "title_ko": "저는 밥을 먹고 회사에 가요.", "title_vi": "Tôi ăn cơm rồi đi công ty.",
+  "explain_ko": "두 가지를 나란히 잇거나, 앞의 일을 하고 나서 뒤의 일을 할 때 씁니다.",
+  "explain_vi": "Dùng để nối hai việc, hoặc làm việc trước rồi làm việc sau.",
+  "examples": [
+    {"ko": "이 옷은 싸고 좋아요.", "vi": "Cái áo này vừa rẻ vừa đẹp."},
+    {"ko": "손을 씻고 밥을 먹어요.", "vi": "Tôi rửa tay rồi ăn cơm."},
+  ]},
+ {"level": "초급1", "n": 0, "pattern": "고 싶다 (희망)",
+  "title_ko": "저는 고향에 가고 싶어요.", "title_vi": "Tôi muốn về quê.",
+  "explain_ko": "하고 싶은 것을 말할 때 씁니다. 남의 마음을 말할 때는 '고 싶어 해요'로 바꿉니다.",
+  "explain_vi": "Dùng để nói điều mình muốn làm. Khi nói về người khác thì đổi thành '고 싶어 해요'.",
+  "examples": [
+    {"ko": "한국어를 잘하고 싶어요.", "vi": "Tôi muốn giỏi tiếng Hàn."},
+    {"ko": "오늘은 쉬고 싶어요.", "vi": "Hôm nay tôi muốn nghỉ."},
+  ]},
  {"level": "초급1", "n": 10, "pattern": "(으)시- (높임)",
   "title_ko": "할머니는 매일 산책하세요.", "title_vi": "Bà tôi đi dạo mỗi ngày.",
   "explain_ko": "나보다 나이 많거나 윗사람의 행동을 말할 때 동사에 '(으)시'를 넣어 높입니다.",
@@ -129,6 +161,14 @@ GRAMMAR = [
   "examples": [
     {"ko": "지하철로 회사에 가요.", "vi": "Tôi đi công ty bằng tàu điện ngầm."},
     {"ko": "한국어로 이야기해요.", "vi": "Chúng tôi nói chuyện bằng tiếng Hàn."},
+  ]},
+ {"level": "초급1", "n": 0, "pattern": "보다 더 / 제일 (비교·최상)",
+  "title_ko": "오늘이 어제보다 더 추워요.", "title_vi": "Hôm nay lạnh hơn hôm qua.",
+  "explain_ko": "둘을 견줄 때는 '보다 더', 여럿 중 으뜸은 '제일(가장)'을 씁니다.",
+  "explain_vi": "So sánh hai thứ dùng '보다 더', nhất trong nhiều thứ dùng '제일(가장)'.",
+  "examples": [
+    {"ko": "버스가 택시보다 더 싸요.", "vi": "Xe buýt rẻ hơn taxi."},
+    {"ko": "저는 김치찌개가 제일 맛있어요.", "vi": "Với tôi canh kimchi ngon nhất."},
   ]},
  {"level": "초급1", "n": 14, "pattern": "(으)ㄹ까요? (제안)",
   "title_ko": "우리 같이 저녁 먹을까요?", "title_vi": "Chúng ta cùng ăn tối nhé?",
@@ -196,6 +236,14 @@ GRAMMAR = [
     {"ko": "이 음식을 먹어 보세요.", "vi": "Hãy thử ăn món này."},
     {"ko": "한국 노래를 들어 봤어요.", "vi": "Tôi đã thử nghe nhạc Hàn Quốc."},
   ]},
+ {"level": "초급2", "n": 0, "pattern": "(으)러 가다/오다 (목적)",
+  "title_ko": "저는 밥을 먹으러 식당에 가요.", "title_vi": "Tôi đến nhà hàng để ăn cơm.",
+  "explain_ko": "무엇을 하려고 어디에 가는지 말할 때 씁니다. 뒤에는 가다·오다·다니다만 옵니다.",
+  "explain_vi": "Dùng để nói đi đâu nhằm làm gì. Phía sau chỉ dùng 가다·오다·다니다.",
+  "examples": [
+    {"ko": "돈을 찾으러 은행에 가요.", "vi": "Tôi đến ngân hàng để rút tiền."},
+    {"ko": "친구를 만나러 왔어요.", "vi": "Tôi đến để gặp bạn."},
+  ]},
  {"level": "초급2", "n": 4, "pattern": "(으)ㄹ 수 있다/없다 (가능)",
   "title_ko": "저는 김치를 만들 수 있어요.", "title_vi": "Tôi có thể làm kim chi.",
   "explain_ko": "무엇을 할 수 있는지 없는지 말할 때 씁니다. 받침 있으면 '을 수', 없으면 'ㄹ 수'.",
@@ -219,6 +267,14 @@ GRAMMAR = [
   "examples": [
     {"ko": "밥을 먹을 때 텔레비전을 봐요.", "vi": "Khi ăn cơm tôi xem ti vi."},
     {"ko": "고향에 갈 때 기분이 좋아요.", "vi": "Khi về quê tôi thấy vui."},
+  ]},
+ {"level": "초급2", "n": 0, "pattern": "기 전에 / (으)ㄴ 후에 (전후)",
+  "title_ko": "밥을 먹기 전에 손을 씻어요.", "title_vi": "Trước khi ăn cơm tôi rửa tay.",
+  "explain_ko": "'기 전에'는 그 일을 하기 앞서, '(으)ㄴ 후에'는 그 일을 끝낸 뒤를 뜻합니다.",
+  "explain_vi": "'기 전에' là trước khi làm việc đó, '(으)ㄴ 후에' là sau khi làm xong việc đó.",
+  "examples": [
+    {"ko": "자기 전에 이를 닦아요.", "vi": "Trước khi ngủ tôi đánh răng."},
+    {"ko": "일이 끝난 후에 전화할게요.", "vi": "Sau khi xong việc tôi sẽ gọi điện."},
   ]},
  {"level": "초급2", "n": 7, "pattern": "(이)니까 (이유·근거)",
   "title_ko": "오늘은 제 생일이니까 기분이 좋아요.", "title_vi": "Hôm nay là sinh nhật tôi nên tôi vui.",
@@ -284,6 +340,14 @@ GRAMMAR = [
     {"ko": "아홉 시까지 회사에 가야 돼요.", "vi": "Tôi phải đến công ty trước 9 giờ."},
     {"ko": "운전할 때는 안전벨트를 매야 해요.", "vi": "Khi lái xe phải thắt dây an toàn."},
   ]},
+ {"level": "초급2", "n": 0, "pattern": "아/어 주다 (남을 위해)",
+  "title_ko": "이것 좀 도와주세요.", "title_vi": "Xin hãy giúp tôi việc này.",
+  "explain_ko": "남을 위해 무엇을 해 줄 때 씁니다. 부탁할 때는 '아/어 주세요'로 씁니다.",
+  "explain_vi": "Dùng khi làm gì đó cho người khác. Khi nhờ vả thì dùng '아/어 주세요'.",
+  "examples": [
+    {"ko": "천천히 말해 주세요.", "vi": "Xin nói chậm lại giúp tôi."},
+    {"ko": "친구가 짐을 들어 줬어요.", "vi": "Bạn tôi đã xách hành lý giúp."},
+  ]},
  {"level": "초급2", "n": 15, "pattern": "고 있다 (진행)",
   "title_ko": "저는 지금 사무실에서 일하고 있어요.", "title_vi": "Bây giờ tôi đang làm việc ở văn phòng.",
   "explain_ko": "지금 하고 있는 동작을 말할 때 씁니다.",
@@ -292,6 +356,14 @@ GRAMMAR = [
     {"ko": "아이가 방에서 자고 있어요.", "vi": "Đứa trẻ đang ngủ trong phòng."},
     {"ko": "지금 밥을 먹고 있어요.", "vi": "Bây giờ tôi đang ăn cơm."},
   ]},
+ {"level": "초급2", "n": 0, "pattern": "지 않다 (부정, 서술)",
+  "title_ko": "저는 매운 음식을 먹지 않아요.", "title_vi": "Tôi không ăn đồ cay.",
+  "explain_ko": "'안'과 뜻은 같지만 글이나 격식 있는 자리에서 더 많이 씁니다. 동사·형용사 뒤에 붙입니다.",
+  "explain_vi": "Nghĩa giống '안' nhưng hay dùng hơn trong văn viết và nơi trang trọng.",
+  "examples": [
+    {"ko": "이 기계는 위험하지 않아요.", "vi": "Máy này không nguy hiểm."},
+    {"ko": "저는 담배를 피우지 않습니다.", "vi": "Tôi không hút thuốc."},
+  ]},
  {"level": "초급2", "n": 16, "pattern": "아/어도 되다 (허락)",
   "title_ko": "여기에 자전거를 세워도 돼요?", "title_vi": "Tôi để xe đạp ở đây được không?",
   "explain_ko": "허락을 구하거나 허락할 때 씁니다.",
@@ -299,6 +371,14 @@ GRAMMAR = [
   "examples": [
     {"ko": "창문을 열어도 돼요.", "vi": "Mở cửa sổ cũng được."},
     {"ko": "여기에서 사진을 찍어도 돼요?", "vi": "Ở đây chụp ảnh được không?"},
+  ]},
+ {"level": "초급2", "n": 0, "pattern": "지요? / 죠? (확인)",
+  "title_ko": "오늘 많이 바쁘지요?", "title_vi": "Hôm nay bạn bận lắm phải không?",
+  "explain_ko": "이미 아는 것을 상대에게 확인할 때 씁니다. 말할 때는 '죠?'로 줄입니다.",
+  "explain_vi": "Dùng khi xác nhận điều mình đã biết với đối phương. Khi nói rút gọn thành '죠?'.",
+  "examples": [
+    {"ko": "여기가 사무실이지요?", "vi": "Đây là văn phòng phải không?"},
+    {"ko": "한국 생활이 힘들지요?", "vi": "Cuộc sống ở Hàn Quốc vất vả nhỉ?"},
   ]},
  {"level": "초급2", "n": 17, "pattern": "(으)면 좋겠다 (희망)",
   "title_ko": "월급이 좀 더 많으면 좋겠어요.", "title_vi": "Giá mà lương nhiều hơn một chút thì tốt.",
@@ -581,6 +661,16 @@ GRAMMAR = [
 # 각 패턴이 실제 문장에 나타날 만한 대표 조각 — 이보다 뒤(나중에 배우는) 패턴이
 # 앞(먼저 배우는) 문법의 title_ko/examples에 섞여 있으면 순서 위반이다.
 MARKERS = {
+  "안 / 못 (부정)": ['안 ', '못 '],
+  "불규칙 활용 (ㅂ·ㄷ·르·ㅡ)": ['더워', '들어요', '바빠'],
+  "고 (나열·순서)": ['고 '],
+  "고 싶다 (희망)": ['고 싶'],
+  "보다 더 / 제일 (비교·최상)": ['보다 더', '제일'],
+  "(으)러 가다/오다 (목적)": ['으러 ', '러 가', '러 왔'],
+  "기 전에 / (으)ㄴ 후에 (전후)": ['기 전에', 'ㄴ 후에', '은 후에'],
+  "아/어 주다 (남을 위해)": ['아 주', '어 주', '와주', '워 주', '해 주'],
+  "지 않다 (부정, 서술)": ['지 않'],
+  "지요? / 죠? (확인)": ['지요?', '죠?'],
   "이에요/예요": ["이에요", "예요"], "이/가 있다·없다": ["가 있어요", "가 없어요", "이 있어요", "이 없어요"],
   "아요/어요 (현재)": [], "에 가다/오다": [], "이다 + 날짜": [], "부터 ~까지": ["부터"],
   "(으)세요 (요청)": ["으세요", "세요"], "-습니다/ㅂ니다 (격식체)": ["습니다", "ㅂ니다", "됩니다", "합니다"],
@@ -630,8 +720,20 @@ def scan_forward_ref():
     return hits
 
 
+def renumber():
+    """급수 안에서 자리 순서대로 n 을 다시 매긴다.
+    문법을 중간에 끼워 넣을 때 손으로 번호를 고치면 반드시 어긋난다 — 자리로 정한다.
+    날마다 배우기(ko_days.py)는 번호가 아니라 pattern 글자로 문법을 찾으므로,
+    여기서 번호가 바뀌어도 연결이 끊기지 않는다."""
+    cnt = {}
+    for g in GRAMMAR:
+        cnt[g["level"]] = cnt.get(g["level"], 0) + 1
+        g["n"] = cnt[g["level"]]
+
+
 if __name__ == "__main__":
     import json, os
+    renumber()
     n_ex = sum(len(g["examples"]) for g in GRAMMAR)
     print(f"문법 {len(GRAMMAR)}개 · 예문 {n_ex}개")
     bad = scan_forward_ref()

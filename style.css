@@ -1307,3 +1307,23 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .gexvi{font-size:15px; color:var(--dim); margin-top:6px}
 .iconbtn{flex-shrink:0; width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
   background:var(--card); font-size:16px; cursor:pointer}
+
+/* ---------- 나만의 단어장 · 문장 눌러보기 (2026-08) ---------- */
+.starb { background:none; border:0; font-size:22px; line-height:1; padding:2px 6px;
+  color:var(--dim,#9aa0a6); cursor:pointer; }
+.starb.on { color:#f5a623; }
+.wbtabs { display:flex; gap:8px; margin-bottom:14px; }
+.wbtab { flex:1; padding:12px 8px; border-radius:12px; border:1px solid var(--line,#e4e6eb);
+  background:var(--card,#fff); font-weight:700; font-size:15px; cursor:pointer; }
+.wbtab.on { background:var(--accent,#1877F2); color:#fff; border-color:var(--accent,#1877F2); }
+
+/* 문장 속 낱말 — 누르면 소리와 뜻 */
+.tapwrap { margin:6px 0; }
+.tapline { line-height:2; }
+.tapw { background:none; border:0; border-bottom:1px dashed var(--line,#cbd2db);
+  font:inherit; color:inherit; padding:0 1px; cursor:pointer; border-radius:4px; }
+.tapw.nom { border-bottom-style:dotted; opacity:.75; }
+.tapw.on { background:var(--accent,#1877F2); color:#fff; border-bottom-color:transparent; }
+.tapinfo { min-height:1.4em; margin-top:4px; font-size:14px; color:var(--dim,#65676B); }
+.tapinfo b { color:var(--fg,#050505); }
+.lvi .tapw { font-size:inherit; }

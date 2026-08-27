@@ -266,7 +266,23 @@ MATH = {
 # 확산 모델은 좌우를 못 가린다. "pointing to the LEFT" 이라고 못 박아도 오른쪽을 그렸다.
 # 개수·국기와 같은 부류다 — 정확해야 하는 것은 코드로 그린다.
 ARROW = {'d39-ben-trai': 'left', 'd39-ben-phai': 'right',
-         'x-tren': 'up', 'x-duoi': 'down'}
+         'x-tren': 'up', 'x-duoi': 'down', 'd42-di-thang': 'up'}
+TURN = {'d42-re-trai': 'left', 'd42-re-phai': 'right'}   # 좌회전·우회전 — 좌우가 뜻의 전부
+
+def turn(path, side):
+    """ㄱ자로 꺾이는 회전 화살표 — 아래에서 올라와 옆으로 꺾인다."""
+    im = Image.new('RGB', (S, S), BG)
+    d = ImageDraw.Draw(im)
+    fill, line = (108, 164, 214), (52, 96, 142)
+    sw, hw = S * .105, S * .20
+    cx, ty, by, hx = S * .60, S * .34, S * .84, S * .14
+    pts = [(hx, ty), (hx + hw, ty - hw), (hx + hw, ty - sw),
+           (cx + sw, ty - sw), (cx + sw, by), (cx - sw, by),
+           (cx - sw, ty + sw), (hx + hw, ty + sw), (hx + hw, ty + hw)]
+    if side == 'right':
+        pts = [(S - x, y) for x, y in pts]
+    d.polygon(pts, fill=fill, outline=line, width=max(4, int(S * .012)))
+    im.save(path, 'WEBP', quality=88)
 
 def arrow(path, way):
     """굵은 파스텔 화살표 하나. 앱의 다른 그림과 같은 결로, 배경과 확실히 구분되게."""
@@ -346,5 +362,7 @@ if __name__ == '__main__':
     for name, mode in VNMAP.items():
         vn_map(IMG / f'{name}.webp', mode); made += 1
     for name, way in ARROW.items():
-        if (IMG / f'{name}.webp').exists(): arrow(IMG / f'{name}.webp', way); made += 1
+        arrow(IMG / f'{name}.webp', way); made += 1
+    for name, side in TURN.items():
+        turn(IMG / f'{name}.webp', side); made += 1
     print(f'직접 그린 그림 {made}장')

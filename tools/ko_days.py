@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """날마다 배우는 과정 — 1차분: 초급1, 18일치.
 
-각 날은 ko_grammar.json의 초급1 문법(같은 순서, grammar_n으로 연결)과 짝짓는다.
+각 날은 ko_grammar.json의 초급1 문법과 짝짓는다 — 연결 열쇠는 번호가 아니라
+문법 이름(grammar)이다. 문법책 중간에 새 항목을 끼워 넣어 번호가 밀려도 안 끊긴다.
 단어는 KIIP 초급1 단원 어휘 목록(kiip_beginner1_vocab.json, 순서=사실이라 참고)에서
 골랐지만, 뜻은 kr_vi_vocab_bridge.json을 그대로 믿지 않았다 — 대조하다가
 
@@ -21,7 +22,7 @@ scan_forward_ref()로 다시 훑는다(ko_grammar.py의 방식과 같다).
 """
 
 DAYS = [
- {"day": 1, "grammar_n": 1, "theme": {"ko": "자기소개", "vi": "Tự giới thiệu"},
+ {"day": 1, "grammar": "이에요/예요", "theme": {"ko": "자기소개", "vi": "Tự giới thiệu"},
   "words": [
     {"ko": "이름", "vi": "tên"}, {"ko": "직업", "vi": "nghề nghiệp"}, {"ko": "국적", "vi": "quốc tịch"},
     {"ko": "나라", "vi": "đất nước"}, {"ko": "사람", "vi": "người"}, {"ko": "선생님", "vi": "giáo viên"},
@@ -36,7 +37,7 @@ DAYS = [
   ]},
   "mission": {"ko": "새로 만난 사람에게 이름과 국적을 소개해 보세요.",
               "vi": "Hãy giới thiệu tên và quốc tịch của bạn với người mới gặp."}},
- {"day": 2, "grammar_n": 2, "theme": {"ko": "교실 사물", "vi": "Đồ vật trong lớp học"},
+ {"day": 2, "grammar": "이/가 있다·없다", "theme": {"ko": "교실 사물", "vi": "Đồ vật trong lớp học"},
   "words": [
     {"ko": "책상", "vi": "bàn học"}, {"ko": "의자", "vi": "ghế"}, {"ko": "침대", "vi": "giường"},
     {"ko": "컴퓨터", "vi": "máy vi tính"}, {"ko": "휴대 전화", "vi": "điện thoại di động"},
@@ -51,7 +52,7 @@ DAYS = [
   ]},
   "mission": {"ko": "내 방에 무엇이 있는지 말해 보세요.",
               "vi": "Hãy nói xem trong phòng của bạn có gì."}},
- {"day": 3, "grammar_n": 3, "theme": {"ko": "기분과 상태", "vi": "Cảm giác và trạng thái"},
+ {"day": 3, "grammar": "아요/어요 (현재)", "theme": {"ko": "기분과 상태", "vi": "Cảm giác và trạng thái"},
   "words": [
     {"ko": "많다", "vi": "nhiều"}, {"ko": "크다", "vi": "lớn"}, {"ko": "작다", "vi": "nhỏ"},
     {"ko": "맛있다", "vi": "ngon"}, {"ko": "어렵다", "vi": "khó"}, {"ko": "쉽다", "vi": "dễ"},
@@ -65,7 +66,7 @@ DAYS = [
   ]},
   "mission": {"ko": "오늘 기분이 어떤지 형용사로 말해 보세요.",
               "vi": "Hãy dùng tính từ để nói hôm nay bạn cảm thấy thế nào."}},
- {"day": 4, "grammar_n": 4, "theme": {"ko": "장소", "vi": "Địa điểm"},
+ {"day": 4, "grammar": "에 가다/오다", "theme": {"ko": "장소", "vi": "Địa điểm"},
   "words": [
     {"ko": "학교", "vi": "trường học"}, {"ko": "편의점", "vi": "cửa hàng tiện lợi"},
     {"ko": "은행", "vi": "ngân hàng"}, {"ko": "집", "vi": "nhà"}, {"ko": "식당", "vi": "nhà hàng"},
@@ -79,7 +80,7 @@ DAYS = [
   ]},
   "mission": {"ko": "오늘 어디에 가는지 '~에 가요'로 말해 보세요.",
               "vi": "Hãy dùng '~에 가요' để nói hôm nay bạn đi đâu."}},
- {"day": 5, "grammar_n": 5, "theme": {"ko": "숫자(한자어)와 날짜", "vi": "Số Hán-Hàn và ngày tháng"},
+ {"day": 5, "grammar": "이다 + 날짜", "theme": {"ko": "숫자(한자어)와 날짜", "vi": "Số Hán-Hàn và ngày tháng"},
   "words": [
     {"ko": "일", "vi": "một"}, {"ko": "이", "vi": "hai"}, {"ko": "삼", "vi": "ba"},
     {"ko": "사", "vi": "bốn"}, {"ko": "오", "vi": "năm"}, {"ko": "육", "vi": "sáu"},
@@ -94,7 +95,7 @@ DAYS = [
   ]},
   "mission": {"ko": "내 생일을 한국어 숫자로 말해 보세요.",
               "vi": "Hãy nói sinh nhật của bạn bằng số tiếng Hàn."}},
- {"day": 6, "grammar_n": 6, "theme": {"ko": "숫자(고유어)와 시간", "vi": "Số thuần Hàn và thời gian"},
+ {"day": 6, "grammar": "부터 ~까지", "theme": {"ko": "숫자(고유어)와 시간", "vi": "Số thuần Hàn và thời gian"},
   "words": [
     {"ko": "하나", "vi": "một"}, {"ko": "둘", "vi": "hai"}, {"ko": "셋", "vi": "ba"},
     {"ko": "넷", "vi": "bốn"}, {"ko": "다섯", "vi": "năm"}, {"ko": "여섯", "vi": "sáu"},
@@ -109,7 +110,7 @@ DAYS = [
   ]},
   "mission": {"ko": "오늘 몇 시부터 몇 시까지 일하는지 말해 보세요.",
               "vi": "Hãy nói hôm nay bạn làm việc từ mấy giờ đến mấy giờ."}},
- {"day": 7, "grammar_n": 7, "theme": {"ko": "식당에서 주문", "vi": "Gọi món ở nhà hàng"},
+ {"day": 7, "grammar": "(으)세요 (요청)", "theme": {"ko": "식당에서 주문", "vi": "Gọi món ở nhà hàng"},
   "words": [
     {"ko": "김치찌개", "vi": "canh kimchi"}, {"ko": "비빔밥", "vi": "cơm trộn"},
     {"ko": "불고기", "vi": "thịt nướng"}, {"ko": "삼겹살", "vi": "thịt ba chỉ"},
@@ -124,7 +125,7 @@ DAYS = [
   ]},
   "mission": {"ko": "식당에서 음식을 주문하는 문장을 만들어 보세요.",
               "vi": "Hãy tạo câu gọi món ở nhà hàng."}},
- {"day": 8, "grammar_n": 8, "theme": {"ko": "회사 물건", "vi": "Đồ dùng công ty"},
+ {"day": 8, "grammar": "-습니다/ㅂ니다 (격식체)", "theme": {"ko": "회사 물건", "vi": "Đồ dùng công ty"},
   "words": [
     {"ko": "물", "vi": "nước"}, {"ko": "커피", "vi": "cà phê"}, {"ko": "강아지", "vi": "chó con"},
     {"ko": "잡지", "vi": "tạp chí"}, {"ko": "사진", "vi": "bức ảnh"}, {"ko": "노트북", "vi": "máy tính xách tay"},
@@ -138,7 +139,7 @@ DAYS = [
   ]},
   "mission": {"ko": "처음 만난 회사 사람에게 격식체로 인사해 보세요.",
               "vi": "Hãy chào người mới gặp ở công ty bằng thể trang trọng."}},
- {"day": 9, "grammar_n": 9, "theme": {"ko": "주말 활동", "vi": "Hoạt động cuối tuần"},
+ {"day": 9, "grammar": "았/었어요 (과거)", "theme": {"ko": "주말 활동", "vi": "Hoạt động cuối tuần"},
   "words": [
     {"ko": "산책하다", "vi": "đi dạo"}, {"ko": "쇼핑하다", "vi": "mua sắm"},
     {"ko": "백화점", "vi": "trung tâm mua sắm"}, {"ko": "즐겁다", "vi": "vui vẻ"},
@@ -151,7 +152,7 @@ DAYS = [
   ]},
   "mission": {"ko": "지난 주말에 무엇을 했는지 과거형으로 말해 보세요.",
               "vi": "Hãy dùng thì quá khứ để nói bạn đã làm gì cuối tuần trước."}},
- {"day": 10, "grammar_n": 10, "theme": {"ko": "가족", "vi": "Gia đình"},
+ {"day": 10, "grammar": "(으)시- (높임)", "theme": {"ko": "가족", "vi": "Gia đình"},
   "words": [
     {"ko": "할머니", "vi": "bà"}, {"ko": "할아버지", "vi": "ông"}, {"ko": "어머니", "vi": "mẹ"},
     {"ko": "아버지", "vi": "bố"}, {"ko": "언니", "vi": "chị"}, {"ko": "오빠", "vi": "anh"},
@@ -166,7 +167,7 @@ DAYS = [
   ]},
   "mission": {"ko": "부모님이 지금 무엇을 하시는지 높임말로 말해 보세요.",
               "vi": "Hãy dùng kính ngữ để nói bố mẹ bạn đang làm gì."}},
- {"day": 11, "grammar_n": 11, "theme": {"ko": "선물과 행사", "vi": "Quà tặng và sự kiện"},
+ {"day": 11, "grammar": "께 / 드리다 (높임)", "theme": {"ko": "선물과 행사", "vi": "Quà tặng và sự kiện"},
   "words": [
     {"ko": "주다", "vi": "cho"}, {"ko": "보내다", "vi": "gửi"}, {"ko": "받다", "vi": "nhận"},
     {"ko": "선물", "vi": "quà"}, {"ko": "초대장", "vi": "thư mời"}, {"ko": "축하하다", "vi": "chúc mừng"},
@@ -180,7 +181,7 @@ DAYS = [
   ]},
   "mission": {"ko": "특별한 날에 누구에게 무엇을 드렸는지 말해 보세요.",
               "vi": "Hãy nói bạn đã tặng gì cho ai vào ngày đặc biệt."}},
- {"day": 12, "grammar_n": 12, "theme": {"ko": "휴가 계획", "vi": "Kế hoạch nghỉ phép"},
+ {"day": 12, "grammar": "(으)ㄹ 거예요 (미래)", "theme": {"ko": "휴가 계획", "vi": "Kế hoạch nghỉ phép"},
   "words": [
     {"ko": "휴가", "vi": "kỳ nghỉ"}, {"ko": "친척", "vi": "họ hàng"}, {"ko": "화장품", "vi": "mỹ phẩm"},
     {"ko": "빨리", "vi": "nhanh"}, {"ko": "휴일", "vi": "ngày nghỉ"},
@@ -192,7 +193,7 @@ DAYS = [
   ]},
   "mission": {"ko": "다음 휴가 계획을 '~ㄹ 거예요'로 말해 보세요.",
               "vi": "Hãy dùng '~ㄹ 거예요' để nói kế hoạch kỳ nghỉ tới."}},
- {"day": 13, "grammar_n": 13, "theme": {"ko": "교통수단", "vi": "Phương tiện giao thông"},
+ {"day": 13, "grammar": "(으)로 (수단)", "theme": {"ko": "교통수단", "vi": "Phương tiện giao thông"},
   "words": [
     {"ko": "자동차", "vi": "xe ô tô"}, {"ko": "버스", "vi": "xe buýt"}, {"ko": "택시", "vi": "xe taxi"},
     {"ko": "자전거", "vi": "xe đạp"}, {"ko": "지하철", "vi": "tàu điện ngầm"}, {"ko": "오토바이", "vi": "xe máy"},
@@ -206,7 +207,7 @@ DAYS = [
   ]},
   "mission": {"ko": "회사나 학교에 어떤 교통수단으로 가는지 말해 보세요.",
               "vi": "Hãy nói bạn đi công ty hoặc trường học bằng phương tiện gì."}},
- {"day": 14, "grammar_n": 14, "theme": {"ko": "약속 잡기", "vi": "Hẹn gặp"},
+ {"day": 14, "grammar": "(으)ㄹ까요? (제안)", "theme": {"ko": "약속 잡기", "vi": "Hẹn gặp"},
   "words": [
     {"ko": "모임", "vi": "cuộc họp"}, {"ko": "약속하다", "vi": "hứa hẹn"}, {"ko": "답장하다", "vi": "hồi đáp"},
     {"ko": "만나다", "vi": "gặp"}, {"ko": "시간", "vi": "thời gian"}, {"ko": "장소", "vi": "địa điểm"},
@@ -219,7 +220,7 @@ DAYS = [
   ]},
   "mission": {"ko": "친구에게 '~ㄹ까요?'로 약속을 제안해 보세요.",
               "vi": "Hãy dùng '~ㄹ까요?' để rủ bạn hẹn gặp."}},
- {"day": 15, "grammar_n": 15, "theme": {"ko": "날씨와 계절", "vi": "Thời tiết và mùa"},
+ {"day": 15, "grammar": "네요 (감탄)", "theme": {"ko": "날씨와 계절", "vi": "Thời tiết và mùa"},
   "words": [
     {"ko": "날씨", "vi": "thời tiết"}, {"ko": "계절", "vi": "mùa"}, {"ko": "봄", "vi": "mùa xuân"},
     {"ko": "여름", "vi": "mùa hè"}, {"ko": "가을", "vi": "mùa thu"}, {"ko": "겨울", "vi": "mùa đông"},
@@ -233,7 +234,7 @@ DAYS = [
   ]},
   "mission": {"ko": "지금 날씨가 어떤지 '~네요'로 감탄해 보세요.",
               "vi": "Hãy dùng '~네요' để cảm thán về thời tiết bây giờ."}},
- {"day": 16, "grammar_n": 16, "theme": {"ko": "몸과 병원", "vi": "Cơ thể và bệnh viện"},
+ {"day": 16, "grammar": "아/어서 (이유)", "theme": {"ko": "몸과 병원", "vi": "Cơ thể và bệnh viện"},
   "words": [
     {"ko": "눈", "vi": "mắt"}, {"ko": "코", "vi": "mũi"}, {"ko": "귀", "vi": "tai"}, {"ko": "목", "vi": "cổ"},
     {"ko": "팔", "vi": "cánh tay"}, {"ko": "배", "vi": "bụng"}, {"ko": "손", "vi": "bàn tay"},
@@ -246,7 +247,7 @@ DAYS = [
   ]},
   "mission": {"ko": "아픈 곳을 말하고 '~아서/어서'로 이유를 설명해 보세요.",
               "vi": "Hãy nói chỗ đau và dùng '~아서/어서' để giải thích lý do."}},
- {"day": 17, "grammar_n": 17, "theme": {"ko": "공공장소 예절", "vi": "Phép tắc nơi công cộng"},
+ {"day": 17, "grammar": "지 마세요 (금지)", "theme": {"ko": "공공장소 예절", "vi": "Phép tắc nơi công cộng"},
   "words": [
     {"ko": "환전하다", "vi": "đổi tiền"}, {"ko": "주차장", "vi": "bãi đỗ xe"}, {"ko": "주차하다", "vi": "đỗ xe"},
     {"ko": "박물관", "vi": "viện bảo tàng"}, {"ko": "경찰서", "vi": "đồn cảnh sát"}, {"ko": "등록하다", "vi": "đăng ký"},
@@ -260,7 +261,7 @@ DAYS = [
   ]},
   "mission": {"ko": "공공장소에서 하지 말아야 할 행동을 '~지 마세요'로 말해 보세요.",
               "vi": "Hãy dùng '~지 마세요' để nói hành động không nên làm ở nơi công cộng."}},
- {"day": 18, "grammar_n": 18, "theme": {"ko": "한국 생활 적응", "vi": "Thích nghi cuộc sống Hàn Quốc"},
+ {"day": 18, "grammar": "는데/(으)ㄴ데 (배경·대조)", "theme": {"ko": "한국 생활 적응", "vi": "Thích nghi cuộc sống Hàn Quốc"},
   "words": [
     {"ko": "편하다", "vi": "thoải mái"}, {"ko": "졸업하다", "vi": "tốt nghiệp"}, {"ko": "입학하다", "vi": "nhập học"},
     {"ko": "점심시간", "vi": "giờ ăn trưa"}, {"ko": "의식주", "vi": "ăn mặc ở"}, {"ko": "결혼하다", "vi": "kết hôn"},
@@ -277,6 +278,7 @@ DAYS = [
 ]
 
 # 뒤에서 배우는 문법 표지가 앞 날짜의 대화에 새는지 훑는다(ko_grammar.py와 같은 원리).
+# 열쇠는 **날짜**다 — 문법책에 새 항목을 끼워 넣어 번호가 밀려도 여기는 안 흔들린다.
 _MARKERS_AFTER = {
   1: ["가 있어요", "가 없어요", "이 있어요", "이 없어요", "부터", "으세요", "세요", "습니다", "ㅂ니다",
       "았어요", "었어요", "께", "드렸", "거예요", "으로", "까요", "네요", "아서", "어서", "마세요", "는데"],
@@ -314,7 +316,7 @@ def scan_forward_ref():
     hits = []
     for d in DAYS:
         texts = [(f"L{i}", l["ko"].replace("안녕하세요", "")) for i, l in enumerate(d["dialog"]["lines"])]
-        for marker in _MARKERS_AFTER.get(d["grammar_n"], []):
+        for marker in _MARKERS_AFTER.get(d["day"], []):
             for field, text in texts:
                 if marker in text:
                     hits.append((d["day"], d["theme"]["ko"], field, text, marker))
