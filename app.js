@@ -20,6 +20,9 @@ function save() {
       alert('이 브라우저에서는 진도가 저장되지 않습니다.\n시크릿 모드를 끄거나 다른 브라우저로 열어 주세요.\n(학습은 그대로 하실 수 있습니다)');
     }
   }
+  // 로그인한 사람은 진도가 저절로 서버에도 올라간다 (단추를 누를 필요가 없다).
+  // cloudSoon 은 아래에서 정의되지만 save() 는 늘 나중에 불리므로 문제없다.
+  if (typeof cloudSoon === 'function') cloudSoon();
 }
 
 /* 단톡방 공유용 키 링크: 주소 뒤 #k=... 를 한 번 읽어 저장하고 지운다.
@@ -151,7 +154,27 @@ const UIVI = {
   '자주 틀리던 단어 5개를 잡았습니다': 'Bạn đã khắc phục 5 từ hay sai',
   '지금까지 모두': 'Tổng cộng đã tích', '이번 주': 'Tuần này', '지난주': 'Tuần trước',
   '우리 동아리, 이번 주 다 같이': 'Câu lạc bộ của chúng ta, tuần này cùng nhau',
-  '이번 주 순위': 'Xếp hạng tuần này', '월요일마다 초기화': 'Đặt lại mỗi thứ Hai',
+  '순위': 'Xếp hạng', '이번 주 순위': 'Xếp hạng tuần này',
+  '복습을 끝냈습니다': 'Bạn đã hoàn thành ôn tập', '오늘 세트를 끝냈습니다': 'Bạn đã hoàn thành bài hôm nay',
+  '자주 틀리던 단어를 잡았습니다': 'Bạn đã khắc phục một từ hay sai',
+  '복습을 끝내면': 'Hoàn thành ôn tập', '오늘 세트를 끝내면': 'Hoàn thành bài hôm nay',
+  '그날 처음 앱을 열면': 'Mở ứng dụng lần đầu trong ngày',
+  '자주 틀리던 낱말을 하나 잡을 때마다': 'Mỗi lần khắc phục một từ hay sai',
+  '모의고사 한 회를 끝내면': 'Hoàn thành một đề thi thử',
+  '문법·기본기·문화 카드를 처음 볼 때마다': 'Mỗi thẻ ngữ pháp·nền tảng·văn hóa xem lần đầu',
+  '따라 말하기를 AI가 알아들으면': 'Khi AI nghe hiểu phần bạn nói theo',
+  '받아쓰기·타이핑 한 판': 'Một lượt chép chính tả·gõ phím',
+  '가장 높습니다 — 복습이 무너지면 나머지가 다 무너집니다':
+    'Cao nhất — nếu bỏ ôn tập thì mọi thứ khác sụp theo',
+  '틀린 걸 고친 순간이 가장 값집니다': 'Khoảnh khắc sửa được lỗi là quý nhất',
+  '오는 것 자체에 주는 몫이라 작습니다': 'Phần thưởng cho việc ghé vào nên nhỏ',
+  '어려운 것일수록 높습니다 — 점수를 좇는 것과 실제로 느는 것이 같은 방향이 되게 했습니다.':
+    'Càng khó điểm càng cao — để việc săn điểm và việc thật sự tiến bộ đi cùng một hướng.',
+  '최근 한 달 점수 <b>N점</b> — 최근 주에 더 무게를 줍니다(이번 주 1.0 · 1주 전 0.7 · 2주 전 0.5 · 3주 전 0.3).':
+    'Điểm một tháng gần đây <b>N điểm</b> — tuần gần hơn được tính nặng hơn (tuần này 1.0 · 1 tuần trước 0.7 · 2 tuần trước 0.5 · 3 tuần trước 0.3).',
+  '지역': 'Khu vực', '북부 (하노이)': 'Miền Bắc (Hà Nội)', '남부 (호찌민)': 'Miền Nam (TP.HCM)',
+  '나란히 (개발용)': 'Song song (cho nhà phát triển)',
+  '하루 분량': 'Lượng mỗi ngày', '10단어 + 2문장': '10 từ + 2 câu', '20단어 + 4문장': '20 từ + 4 câu', '월요일마다 초기화': 'Đặt lại mỗi thứ Hai',
   'N위': 'Hạng N', 'N명 중': 'trong N người', '이번 주 점수': 'Điểm tuần này', 'N점': 'N điểm',
   '우리 동아리': 'Câu lạc bộ của ta',
   'N점만 더 하면 위 사람을 따라잡습니다.': 'Chỉ cần thêm N điểm là bắt kịp người trên.',
@@ -177,11 +200,9 @@ const UIVI = {
     'Học tiếp sẽ tích lại. Nhập khóa Google trong Thông tin của tôi thì dùng được mà không tốn điểm.',
   '남과 견주지 않습니다 — <b>지난주의 나</b>와만 견줍니다.':
     'Không so với người khác — chỉ so với <b>chính bạn tuần trước</b>.',
-  '하루 빠져도 <b>연속 보호권</b>이 메워 줍니다 — 바쁜 날이 있어도 괜찮습니다.':
-    'Nghỉ một ngày cũng có <b>quyền bảo vệ chuỗi ngày</b> bù lại — có ngày bận cũng không sao.',
   /* ── 나만의 단어장 ── */
-  '나만의 단어장': 'Sổ từ của tôi',
-  '나만의 단어장에 담기': 'Lưu vào sổ từ của tôi',
+  '단어장': 'Sổ từ của tôi',
+  '단어장에 담기': 'Lưu vào sổ từ của tôi',
   '★ 내가 담은 것': '★ Tôi đã lưu',
   '⚠ 자주 틀린 것': '⚠ Hay sai',
   '틀림': 'Sai', '번': 'lần',
@@ -343,8 +364,6 @@ const UIVI = {
   '📕 오답노트 (': '📕 Sổ lỗi sai (',
   '🔊 다시 듣기': '🔊 Nghe lại',
   '🔑 한자어': '🔑 Từ Hán Việt',
-  '🛡️ <b>연속 보호권</b>이 어제 하루를 메웠습니다.<br>연속 기록이 이어집니다. (남은 보호권': '🛡️ <b>Quyền bảo vệ chuỗi ngày</b> đã bù cho ngày hôm qua.<br>Chuỗi ngày học vẫn tiếp tục. (Còn lại',
-  '🛡️ 이번 주 5일을 채워 <b>연속 보호권</b>을 받았습니다. (': '🛡️ Bạn đã học đủ 5 ngày tuần này và nhận được <b>quyền bảo vệ chuỗi ngày</b>. (',
   '하루 5분': 'Học 5 phút', '복습': 'Ôn tập', '기본기': 'Cơ bản', '문법': 'Ngữ pháp',
   '동아리': 'Câu lạc bộ', '사용법': 'Hướng dẫn', '일상': 'Hằng ngày', '직무': 'Công việc',
   '기사': 'Bản tin', '단어': 'Từ vựng', '문장': 'Câu', '최근 학습': 'Bài vừa học', '오답노트': 'Sổ lỗi sai',
@@ -1088,22 +1107,8 @@ function touchToday() {
   const k = ymd();
   if (!S.act[k]) {
     S.act[k] = 1;
-    /* 연속 보호권 — 듀오링고의 streak freeze 를 우리 식으로.
-       ① 어제 하루만 비었고 그제는 했으면, 보호권이 있을 때 어제를 메운다(값 2 = 보호권 자국).
-       ② 보호권은 한 주에 5일 이상 공부하면 1개 (최대 2개). 사는 게 아니라 버는 것이다. */
-    const y = new Date(); y.setDate(y.getDate() - 1);
-    const y2 = new Date(); y2.setDate(y2.getDate() - 2);
-    if (!S.act[ymd(y)] && S.act[ymd(y2)] && (S.shield || 0) > 0) {
-      S.act[ymd(y)] = 2; S.shield--;
-      popup('🛡️ <b>연속 보호권</b>이 어제 하루를 메웠습니다.<br>연속 기록이 이어집니다. (남은 보호권 ' + S.shield + '개)');
-    }
-    earnAttend();                       // 출석 크레딧 (오늘 처음 공부한 순간에만)
-    const wk = weekKey();
-    if (S.shieldWk !== wk) {
-      const n7 = Object.keys(S.act).filter(d => weekKey(new Date(d)) === wk).length;
-      if (n7 >= 5) { S.shield = Math.min(2, (S.shield || 0) + 1); S.shieldWk = wk;
-                     popup('🛡️ 이번 주 5일을 채워 <b>연속 보호권</b>을 받았습니다. (' + S.shield + '개)<br>하루 빠져도 연속이 이어집니다.'); }
-    }
+    // 연속 보호권은 없앴다 (사용자 지시). 빠진 날을 가짜로 메우면 기록이 사실이 아니게 된다.
+    earnAttend();                       // 출석 점수 (오늘 처음 공부한 순간에만)
     save();
   }
 }
@@ -1451,8 +1456,20 @@ async function shareCard() {
    로그인한 사람만. 하루 한 번 + 세트를 끝낼 때 올린다.
    서버 쓰기 한도(무료 1,000/일)를 아끼려고 그 이상은 안 올린다. */
 const PROGKEYS = ['done', 'srs', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick'];
+/* 자동 진도 백업.
+   예전에는 '하루 한 번'이라 오늘 공부한 것이 밤에 폰을 잃으면 통째로 날아갔다.
+   이제 학습이 끝날 때마다 올리되, 8초 안에 여러 번 불려도 **한 번만** 보낸다
+   (문제를 연달아 풀면 mark() 가 초당 몇 번씩 불린다 — 그때마다 보내면 안 된다).
+   보내는 것은 진도(PROGKEYS)뿐이고 글자로 치면 몇 KB라 데이터 요금도 무시할 만하다. */
+let cloudTimer = 0;
+function cloudSoon() {
+  if (!S.acct || !S.acct.tok) return;
+  clearTimeout(cloudTimer);
+  cloudTimer = setTimeout(() => cloudSave(true), 8000);
+}
 function cloudSave(force) {
   if (!S.acct || !S.acct.tok) return Promise.resolve();
+  clearTimeout(cloudTimer);
   const today = ymd();
   if (!force && S.cloudAt === today) return Promise.resolve();
   const data = {};
@@ -1604,16 +1621,31 @@ function acctForm(gate, mode) {
   show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), true);
 }
 
+/* 직접 고르는 줄 — 예전에는 '바꾸기' 단추를 눌러야 다음 값으로 넘어갔다.
+   그러면 ①지금 무엇을 고를 수 있는지 안 보이고 ②원하는 값까지 여러 번 눌러야 했다.
+   이제 값을 모두 늘어놓고 **누른 것이 곧 선택**이다 (사용자 지시). */
+function pickRow(label, opts, cur, onPick) {
+  const row = el('div', 'pickrow');
+  row.append(el('div', 'pklab', tr(label)));
+  const box = el('div', 'pkopts');
+  opts.forEach(([val, name]) => {
+    const b = el('button', 'pkopt' + (val === cur ? ' on' : ''));
+    b.type = 'button';
+    b.textContent = tr(name);
+    b.onclick = () => { if (val !== cur) onPick(val); };
+    box.append(b);
+  });
+  row.append(box);
+  return row;
+}
+
 function renderAwards() {
   const b = $('#awardBody');
   b.textContent = '';
 
-  // 지역 설정 — 배치가 정해지면 여기서 바꾼다
-  const rg = el('div', 'planrow');
-  rg.append(el('span', 'pk', '지역'), el('span', 'pv', S.region === 's' ? '남부 (호찌민)' : '북부 (하노이)'));
-  const rb = el('button', 'ghost sm', '바꾸기');
-  rb.onclick = () => { S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion(); renderAwards(); };
-  rg.append(rb);
+  // 지역 — 배치가 정해지면 여기서 바꾼다
+  const rg = pickRow('지역', [['n', '북부 (하노이)'], ['s', '남부 (호찌민)']], S.region || 'n',
+    v => { S.region = v; save(); drawRegion(); renderAwards(); });
 
   /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
      핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
@@ -1628,32 +1660,13 @@ function renderAwards() {
   /* 화면 언어 — 한국어 → Tiếng Việt → 나란히(개발용) 로 돌아간다.
      '나란히'는 만드는 사람용이다. 베트남어 옆에 한국어 원문을 같이 띄워
      "이 화면이 무엇이고 번역이 맞게 붙었는가"를 눈으로 대조하려고 둔다. */
-  const UINAME = { ko: '한국어', vi: 'Tiếng Việt', dev: 'Việt + 한국어 (개발용)' };
-  const NEXTUI = { ko: 'vi', vi: 'dev', dev: 'ko' };
-  const ui = el('div', 'planrow');
-  ui.append(el('span', 'pk', '화면 언어'), el('span', 'pv', UINAME[S.ui] || '한국어'));
-  const ub = el('button', 'ghost sm', UINAME[NEXTUI[S.ui] || 'vi'] + ' →');
-  ub.onclick = () => { S.ui = NEXTUI[S.ui] || 'vi'; save(); renderAwards(); drawMenu(); };
-  ui.append(ub);
-  b.append(ui);
+  b.append(pickRow('화면 언어',
+    [['ko', '한국어'], ['vi', 'Tiếng Việt'], ['dev', '나란히 (개발용)']], S.ui || 'ko',
+    v => { S.ui = v; save(); renderAwards(); drawMenu(); }));
 
-  const shrow = el('div', 'planrow');
-  shrow.append(el('span', 'pk', '보호권'), el('span', 'pv', '🛡️ ' + (S.shield || 0) + '개'));
-  const shhow = el('button', 'ghost sm', '뭐예요?');
-  shhow.onclick = () => popup('한 주에 <b>5일</b> 공부하면 🛡️ 1개를 받습니다 (최대 2개).<br>' +
-    '하루를 빠지면 보호권이 <b>알아서</b> 그날을 메워 연속 기록이 이어집니다.<br>돈으로는 못 삽니다 — 공부로만 법니다.');
-  shrow.append(shhow);
-  b.append(shrow);
-
-  const LEARNNM = { vi: '베트남어', ko: '한국어' };
-  const ln = el('div', 'planrow');
-  ln.append(el('span', 'pk', '배울 언어'), el('span', 'pv', LEARNNM[S.learn] || '베트남어'));
-  const lb = el('button', 'ghost sm', '바꾸기');
-  lb.onclick = () => popup('지금 있는 과정은 <b>베트남어(한국인용)</b>뿐입니다.<br>' +
-    '<b>베트남 분들을 위한 한국어 과정</b>은 준비 중입니다 — ' +
-    '만들어지면 여기서 바꿀 수 있습니다.<br>거짓 선택지를 두지 않으려고 미리 밝혀 둡니다.');
-  ln.append(lb);
-  b.append(ln);
+  // 배울 언어 — 두 과정이 다 생겼으므로 진짜로 고를 수 있다
+  b.append(pickRow('배울 언어', [['vi', '베트남어'], ['ko', '한국어']], S.learn || 'vi',
+    v => { S.learn = v; save(); renderAwards(); drawMenu(); }));
 
   const ac = el('div', 'planrow');
   ac.append(el('span', 'pk', '계정'),
@@ -1685,13 +1698,10 @@ function renderAwards() {
     nr.append(nb);
     b.append(nr);
   }
-  const pc = el('div', 'planrow');
-  pc.append(el('span', 'pk', '하루'),
-             el('span', 'pv', (S.pace || 1) + '세트' + ((S.pace || 1) > 1 ? ' (일상+직무)' : '')));
-  const pb = el('button', 'ghost sm', '바꾸기');
-  pb.onclick = () => { S.pace = (S.pace || 1) >= 2 ? 1 : 2; save(); renderAwards(); };
-  pc.append(pb);
-  b.append(nm, rg, pc);
+  b.append(nm, rg);
+  b.append(pickRow('하루 분량',
+    [[1, '10단어 + 2문장'], [2, '20단어 + 4문장']], S.pace || 1,
+    v => { S.pace = v; save(); renderAwards(); }));
 
   // 프로필 사진 — 동아리 사람들에게만 보인다. 안 정하면 실루엣.
   const fr = el('div', 'planrow');
@@ -2033,8 +2043,8 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
             ['호칭', () => startRule(0)], ['어순', () => startRule(1)], ['숫자 읽는 법', () => startRule(5)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
-  book:  { name: '나만의 단어장', items: () => [['보기', wordbookEntry]] },
-  cred:  { name: '이번 주 순위', items: () => [['보기', creditEntry]] },
+  book:  { name: '단어장', items: () => [['보기', wordbookEntry]] },
+  cred:  { name: '순위', items: () => [['보기', creditEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -2045,8 +2055,8 @@ const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   basic2: { name: '기본기', items: () => [['보기', koBasicEntry]] },
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
   culture:{ name: '한국 문화', items: () => [['보기', koCultureEntry]] },
-  book:   { name: '나만의 단어장', items: () => [['보기', wordbookEntry]] },
-  cred:   { name: '이번 주 순위', items: () => [['보기', creditEntry]] },
+  book:   { name: '단어장', items: () => [['보기', wordbookEntry]] },
+  cred:   { name: '순위', items: () => [['보기', creditEntry]] },
   club:   { name: '동아리', items: () => [['보기', showClub]] },
   guide:  { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -2581,7 +2591,7 @@ function finishExam(timeUp) {
   S.exam = S.exam || {};
   const key = e.id + '-' + e.set;
   const prev = S.exam[key];
-  if (!prev) earn(CRD.exam, tr('모의고사를 끝냈습니다'));   // 회차당 한 번만 (다시 풀어도 또 주지 않는다)
+  if (!prev) earn(CRD.exam, tr('모의고사를 끝냈습니다'));   // 회차당 한 번만   // 회차당 한 번만 (다시 풀어도 또 주지 않는다)
   if (!prev || score > prev.score) S.exam[key] = { score, total: e.questions.length, at: now() };
   touchToday(); save();
 
@@ -3279,7 +3289,7 @@ function starBtn(k, ko, vi) {
   const b = el('button', 'starb' + (isStar(k) ? ' on' : ''));
   b.type = 'button';
   b.textContent = isStar(k) ? '★' : '☆';
-  b.title = tr('나만의 단어장에 담기');
+  b.title = tr('단어장에 담기');
   b.onclick = e => {
     e.stopPropagation();
     const onNow = toggleStar(k, ko, vi);
@@ -3303,7 +3313,23 @@ function starBtn(k, ko, vi) {
 
    쓰는 곳: AI 채점. 단, **앱이 내주는 열쇠로 돌 때만** 깎는다 — 내 열쇠(내 정보에
    넣은 구글 키)로 쓰는 사람은 자기 돈으로 쓰는 것이라 깎을 이유가 없다. */
-const CRD = { day: 10, d3: 20, d7: 50, exam: 30, fix: 15 };
+/* 점수를 무엇에 주는가 — 규칙을 눈에 보이게 늘어놓는다.
+   원칙 하나: **어려운 것일수록, 오래 남는 것일수록 높게.** 그래야 점수를 좇는 것과
+   실제로 느는 것이 같은 방향이 된다. 그래서 '복습'이 가장 높다 — 이 앱은 복습이
+   무너지면 나머지가 다 무너지는 구조이기 때문이다(새 단어는 복습이 받쳐야 남는다).
+   과정마다 있는 기능이 다르므로 규칙도 갈린다 — 베트남어 과정에는 모의고사가 없는데
+   '모의고사 +30'을 적어 두면 얻을 수 없는 점수를 걸어 둔 셈이 된다(사용자 지적). */
+const CRD = {
+  day: 5,      // 그날 처음 앱을 연 것 — 오는 것 자체에 주는 몫이라 작게
+  set: 15,     // 오늘 세트를 끝냄
+  rev: 25,     // 복습을 끝냄 — 가장 높다
+  fix: 3,      // 자주 틀리던 낱말 하나를 오답노트에서 지움
+  say: 5,      // 따라 말하기를 AI가 알아들음
+  write: 5,    // 받아쓰기·타이핑 한 판
+  d3: 20, d7: 50,   // 연속 3일 · 7일
+  exam: 30,    // 모의고사 한 회 (한국어 과정만)
+  card: 2,     // 문법·기본기·문화 카드를 처음 봄 (한국어 과정만)
+};
 const AI_COST = 5;
 function credits() {
   if (!S.cr) S.cr = { bal: 0, sum: 0, wk: {} };     // 남은 것 · 모두 번 것 · 주별 적립
@@ -3338,8 +3364,45 @@ function earnAttend() {
   if (st >= 7 && c.d7 !== ymd()) { c.d7 = ymd(); earn(CRD.d7, tr('연속 7일')); }
   else if (st >= 3 && c.d3 !== ymd()) { c.d3 = ymd(); earn(CRD.d3, tr('연속 3일')); }
 }
+/* 하루에 한 번만 주는 몫 — 같은 일을 반복해서 점수를 긁는 것을 막는다 */
+function earnOnce(key, n, why) {
+  const c = credits();
+  c.once = c.once || {};
+  if (c.once[key] === ymd()) return;
+  c.once[key] = ymd();
+  earn(n, why);
+}
+
+/* 이 과정에서 실제로 얻을 수 있는 점수만 보여 준다 */
+function earnRules() {
+  const common = [
+    [CRD.rev, '복습을 끝내면', '가장 높습니다 — 복습이 무너지면 나머지가 다 무너집니다'],
+    [CRD.set, '오늘 세트를 끝내면', ''],
+    [CRD.day, '그날 처음 앱을 열면', '오는 것 자체에 주는 몫이라 작습니다'],
+    [CRD.fix, '자주 틀리던 낱말을 하나 잡을 때마다', '틀린 걸 고친 순간이 가장 값집니다'],
+    [CRD.d3, '연속 3일', ''], [CRD.d7, '연속 7일', ''],
+  ];
+  return learnKo()
+    ? common.concat([[CRD.exam, '모의고사 한 회를 끝내면', ''],
+                     [CRD.card, '문법·기본기·문화 카드를 처음 볼 때마다', '']])
+    : common.concat([[CRD.say, '따라 말하기를 AI가 알아들으면', ''],
+                     [CRD.write, '받아쓰기·타이핑 한 판', '']]);
+}
 
 const weekCredits = () => (credits().wk || {})[weekKey()] || 0;
+/* 한 달 점수 — 최근 주에 더 무게를 준다.
+   지난달에 몰아서 하고 이번 달 내내 논 사람이 위에 있으면 순위가 거짓말이 된다.
+   이번 주 1.0 · 1주 전 0.7 · 2주 전 0.5 · 3주 전 0.3 으로 접는다. */
+const MONTH_W = [1, 0.7, 0.5, 0.3];
+function monthCredits() {
+  const wk = credits().wk || {};
+  let sum = 0;
+  MONTH_W.forEach((w, i) => {
+    const d = new Date(); d.setDate(d.getDate() - i * 7);
+    sum += (wk[weekKey(d)] || 0) * w;
+  });
+  return Math.round(sum);
+}
 
 /* ---------- 이번 주 순위판 ----------
    ⚠ 앞의 주석에 적어 둔 대로, 연구는 '전체 등수가 다 보이는 순위표'가 하위권의
@@ -3358,7 +3421,10 @@ function clubPeople() {
   MATES.people.forEach(m => { if (!seen[m.nick] || (m.td || 0) > (seen[m.nick].td || 0)) seen[m.nick] = m; });
   return Object.values(seen);
 }
-/* 순위를 무엇으로 매기는가 — 서버가 점수를 알면 점수로, 아직 옛 판이면 출석 도장으로 */
+/* 순위를 무엇으로 매기는가 — 서버가 점수를 알면 점수로, 아직 옛 판이면 출석 도장으로.
+   한 달 순위는 서버가 주별로 갖고 있어야 접을 수 있는데 지금은 이번 주치만 온다.
+   그래서 한 달은 **내 것만** 정확히 접어 보여주고, 남과의 줄 세우기는 이번 주로 한다 —
+   없는 숫자로 등수를 만들지 않는다. */
 function rankKey(ppl) {
   const hasCr = ppl.some(m => typeof m.cr === 'number');
   return m => (hasCr ? (m.cr || 0) : (m.days || []).filter(Boolean).length);
@@ -3455,6 +3521,10 @@ function drawCredit() {
   cmp.append(el('span', 'crdiff' + (diff >= 0 ? ' up' : ''),
                 (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(diff)));
   host.append(cmp);
+  const mo = el('p', 'note');
+  mo.innerHTML = tr('최근 한 달 점수 <b>N점</b> — 최근 주에 더 무게를 줍니다(이번 주 1.0 · 1주 전 0.7 · 2주 전 0.5 · 3주 전 0.3).')
+    .replace('N', monthCredits());
+  host.append(mo);
 
   // ── 4. 동아리 합계
   if (ppl.length) {
@@ -3473,15 +3543,16 @@ function drawCredit() {
   // ── 5. 점수 버는 법
   host.append(el('h3', 'exhead', tr('점수 올리는 법')));
   const table = el('div', 'crearn');
-  [[CRD.day, '하루 한 번이라도 공부하면'], [CRD.d3, '연속 3일'], [CRD.d7, '연속 7일'],
-   [CRD.exam, '모의고사 한 회 끝내면'], [CRD.fix, '자주 틀린 단어 5개를 잡으면']]
-    .forEach(([n, why]) => {
-      const r = el('div', 'crrow');
-      r.append(el('span', 'crplus', '+' + n), el('span', 'crwhy', tr(why)));
-      table.append(r);
-    });
+  earnRules().forEach(([n, why, note]) => {
+    const r = el('div', 'crrow');
+    const w = el('span', 'crwhy');
+    w.append(document.createTextNode(tr(why)));
+    if (note) w.append(el('span', 'crnote', tr(note)));
+    r.append(el('span', 'crplus', '+' + n), w);
+    table.append(r);
+  });
   host.append(table);
-  host.append(el('p', 'note', '하루 빠져도 <b>연속 보호권</b>이 메워 줍니다 — 바쁜 날이 있어도 괜찮습니다.'));
+  host.append(el('p', 'note', '어려운 것일수록 높습니다 — 점수를 좇는 것과 실제로 느는 것이 같은 방향이 되게 했습니다.'));
 
   // ── 6. 크레딧(AI 채점 몫)은 순위와 다른 숫자라 따로 떼어 놓는다
   const wal = el('div', 'crwallet');
@@ -3499,7 +3570,7 @@ function drawCredit() {
   wal.append(cost);
   host.append(wal);
 
-  show(ko ? 'exam' : 'sub', '이번 주 순위', true);
+  show(ko ? 'exam' : 'sub', '순위', true);
 }
 
 /* 좌우로 밀어 이전·다음 — 사진첩과 같은 방향(왼쪽으로 밀면 다음).
@@ -3522,6 +3593,7 @@ function swipeNav(host, prev, next) {
   }, { passive: true });
 }
 
+let RKP = 'w';        // 순위 기간: w=이번 주, m=최근 한 달
 let WB = 'star';                       // 단어장에서 보고 있는 칸
 function wordbookEntry() { WB = 'star'; drawWordbook(); }
 function drawWordbook() {
@@ -3576,7 +3648,7 @@ function drawWordbook() {
       host.append(el('p', 'note', '퀴즈에서 <b>맞힐 때마다 횟수가 줄어</b> 저절로 사라집니다 — 지울 필요가 없습니다.'));
     }
   }
-  show(ko ? 'exam' : 'sub', '나만의 단어장', true);
+  show(ko ? 'exam' : 'sub', '단어장', true);
 }
 
 function drawCard() {
@@ -3801,6 +3873,7 @@ $('#next').onclick = () => {
       if (!S.srs[l.vi]) S.srs[l.vi] = { lv: 0, first: now(), due: now() + STEPS[0] * DAY };
     });
     touchToday(); save();
+    earnOnce('set', CRD.set, tr('오늘 세트를 끝냈습니다'));
     cloudSave(true);                        // 세트를 끝냈으니 서버에도 남긴다
     finishDay(L.day);
     return;
@@ -4671,10 +4744,7 @@ function grade(vi, ok, early) {
     /* 오답노트에서 완전히 빠지는 순간을 센다 — 5개를 잡을 때마다 크레딧.
        '틀린 걸 고쳤다'는 게 크레딧을 주기에 가장 옳은 순간이다(그냥 많이 푸는 것보다). */
     if (was > 0 && S.stats.miss[vi] === 0) {
-      const c = credits();
-      c.fixed = (c.fixed || 0) + 1;
-      if (c.fixed % 5 === 0) earn(CRD.fix, tr('자주 틀리던 단어 5개를 잡았습니다'));
-      else save();
+      earn(CRD.fix, tr('자주 틀리던 단어를 잡았습니다'));
     }
   }
   if (early && ok) { save(); return; }   // 예정보다 일찍 꺼내 맞힌 건 사다리를 안 올린다
@@ -4690,6 +4760,7 @@ function finishQuiz() {
   $('#quizFill').style.width = '100%';
   if (!Q.day) {
     S.stats.rev = (S.stats.rev || 0) + 1;                          // 복습 판 수 (업적용)
+    earnOnce('rev', CRD.rev, tr('복습을 끝냈습니다'));
     if (!Q.early) S.revDay = ymd();                                // 오늘 복습을 끝냈다는 도장
     save();
     cloudSave(true);                       // 복습을 마쳤으니 서버에도 남긴다 (버튼 없이 자동)
@@ -7206,9 +7277,8 @@ async function readBackup(v) {
   throw new Error('형식 아님');
 }
 
-$('#bkExport').onclick = () => doExport();
-$('#bkImport').onclick = () => doImport();
-$('#bkReset').onclick = () => doReset();
+/* 진도 단추(백업·불러오기·초기화)는 화면에서 뺐다 — 진도는 이제 저절로 서버에 올라간다.
+   함수는 남겨 둔다: doReset 은 '내 정보'에서 아직 쓰고, 나머지는 서버가 죽었을 때의 대비책이다. */
 async function doExport() {
   const blob = await makeBackup();
   let copied = false;
