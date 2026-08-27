@@ -2848,6 +2848,8 @@ const SPEAK_RUBRIC =
   + '설명은 쉬운 한국어로 짧게 쓴다.';
 
 function examExtra() {
+  // 시험지를 아직 못 받았으면 먼저 받아 온다 — 여기로 곧장 들어오는 길이 생겨도 안 깨지게
+  if (!EXDATA) { examEntry(); return; }
   const b = $('#examBody');
   b.textContent = '';
   b.append(el('p', 'lede', '정답이 하나가 아닌 문제입니다 — <b>AI가 읽고 고칠 점을 알려 줍니다.</b>'));
