@@ -424,7 +424,7 @@ BLUEPRINTS = {
     # 쓰기는 정답이 하나가 아니라 extra.write 쪽에서 AI가 채점한다.
     "topik-2-read": {
         "name": "TOPIK II 읽기 모의고사",
-        "desc": "TOPIK II 2교시 읽기 형식 · 50문항 (지문은 중급 · 지금은 2회분)",
+        "desc": "TOPIK II 2교시 읽기 형식 · 50문항 (지문은 중급 · 3회분)",
         "minutes": 70,
         "grades": ["B", "C"],
         "sections": [
@@ -717,8 +717,8 @@ if __name__ == "__main__":
         n_sets = 3
         if exam_id.startswith("eps-job-") or exam_id == "kiip-5":
             n_sets = 1
-        elif exam_id in ("topik-2-read", "topik-2-listen"):
-            n_sets = 2          # 중급 재료가 두 벌치다 — 없는 것을 있는 척하지 않는다
+        elif exam_id == "topik-2-listen":
+            n_sets = 2          # 듣기 재료가 두 벌치다 — 없는 것을 있는 척하지 않는다
         for seed in range(1, n_sets + 1):
             e = build(exam_id, seed, words, gloss, pics, state)
             out["exams"].append(e)
