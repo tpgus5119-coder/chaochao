@@ -140,6 +140,10 @@ const UIVI = {
   '문법 자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
     'Không tải được tài liệu ngữ pháp. Hãy kiểm tra kết nối mạng.',
   '초급1': 'Sơ cấp 1', '초급2': 'Sơ cấp 2', '중급1': 'Trung cấp 1', '중급2': 'Trung cấp 2',
+  '한글 기본기 — 모음·자음부터 숫자·인사말까지.':
+    'Kiến thức nền tảng — từ nguyên âm, phụ âm đến số đếm, câu chào.',
+  '자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
+    'Không tải được tài liệu. Hãy kiểm tra kết nối mạng.',
   /* ── 베트남인용 한국어 과정 홈 화면 ── */
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
@@ -1964,10 +1968,11 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
 };
 
 const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
-  exam:  { name: '모의고사', items: () => [['보기', examEntry]] },
-  gram2: { name: '기초 문법', items: () => [['보기', koGramEntry]] },
-  club:  { name: '동아리', items: () => [['보기', showClub]] },
-  guide: { name: '사용법', items: () => [['보기', showGuide]] },
+  exam:   { name: '모의고사', items: () => [['보기', examEntry]] },
+  basic2: { name: '기본기', items: () => [['보기', koBasicEntry]] },
+  gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
+  club:   { name: '동아리', items: () => [['보기', showClub]] },
+  guide:  { name: '사용법', items: () => [['보기', showGuide]] },
 };
 
 // drawMenu 등이 그대로 쓸 수 있도록, 고른 쪽을 MENUS 라는 이름으로 내놓는다
@@ -2113,6 +2118,72 @@ function drawGramCard(i) {
   nav.append(prev, next);
   b.append(nav);
   show('exam', '기초 문법', true);
+}
+
+/* ---------- 한글 기본기 ----------
+   모음·자음·받침·숫자 같은 표(table) 형태 자료 — 문법 카드와 뼈대는 같지만
+   examples(문장 쌍) 대신 table(글자·읽기·설명 세 칸) 행을 그린다. */
+let KBDATA = null, KB = null;
+
+function koBasicEntry() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '한글 기본기 — 모음·자음부터 숫자·인사말까지.'));
+  show('exam', '기본기', true);
+  if (KBDATA) return drawBasicList();
+  fetch('data/ko_basics.json', { cache: 'no-cache' })
+    .then(r => r.json()).then(j => { KBDATA = j.items; drawBasicList(); })
+    .catch(() => b.append(el('p', 'lede', '자료를 받지 못했습니다. 인터넷을 확인해 주세요.')));
+}
+
+function drawBasicList() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '한글 기본기 — 모음·자음부터 숫자·인사말까지.'));
+  KBDATA.forEach((it, i) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, `${it.n}. ${it.title_ko}`));
+    btn.append(el('span', 'exmeta', it.title_vi));
+    btn.onclick = () => drawBasicCard(i);
+    b.append(btn);
+  });
+}
+
+function drawBasicCard(i) {
+  KB = i;
+  const it = KBDATA[i];
+  const b = $('#examBody');
+  b.textContent = '';
+
+  const head = el('div', 'exbar');
+  head.append(el('span', 'expos', `${i + 1} / ${KBDATA.length}`));
+  b.append(head);
+
+  const card = el('div', 'excard');
+  card.append(el('div', 'exask', esc(it.title_ko)));
+  card.append(el('div', 'exbody', esc(it.title_vi)));
+  if (S.ui !== 'vi') card.append(el('div', 'gexp', esc(it.explain_ko)));
+  card.append(el('div', 'gexp vi', esc(it.explain_vi)));
+
+  it.table.forEach(row => {
+    const r = el('div', 'gex');
+    const line = el('div', 'gexko');
+    line.append(el('span', null, esc(row.ko)));
+    line.append(el('span', 'exmeta', esc(row.read)));
+    r.append(line, el('div', 'gexvi', esc(row.vi)));
+    card.append(r);
+  });
+  b.append(card);
+
+  const nav = el('div', 'exnav');
+  const prev = el('button', 'ghost big', '‹ 이전');
+  prev.disabled = i === 0;
+  prev.onclick = () => drawBasicCard(i - 1);
+  const next = el('button', 'primary big', i === KBDATA.length - 1 ? '목록으로' : '다음 ›');
+  next.onclick = () => i === KBDATA.length - 1 ? drawBasicList() : drawBasicCard(i + 1);
+  nav.append(prev, next);
+  b.append(nav);
+  show('exam', '기본기', true);
 }
 
 function startExam(e) {
