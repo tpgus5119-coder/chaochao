@@ -1366,3 +1366,12 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .crbar i { display:block; height:100%; background:var(--accent); border-radius:99px; }
 .crval { flex:0 0 42px; text-align:right; font-weight:800; font-size:14px;
   font-variant-numeric:tabular-nums; }
+/* 순위 화면 — 등수가 주인공, 크레딧 지갑은 아래로 */
+.crgap { margin-top:10px; font-size:14px; color:var(--accent); font-weight:700; }
+.crgap.top { color:var(--ok); }
+.crwallet { margin-top:26px; padding:16px; border:1px dashed var(--line);
+  border-radius:14px; background:var(--card); }
+.crwline { display:flex; align-items:baseline; gap:12px; margin:8px 0 2px; }
+.crwline b { font-size:24px; font-weight:900; color:var(--accent); }
+.crwline span { font-size:13px; color:var(--dim); }
+.crwallet .note { margin-top:8px; }

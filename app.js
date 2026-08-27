@@ -152,6 +152,15 @@ const UIVI = {
   '지금까지 모두': 'Tổng cộng đã tích', '이번 주': 'Tuần này', '지난주': 'Tuần trước',
   '우리 동아리, 이번 주 다 같이': 'Câu lạc bộ của chúng ta, tuần này cùng nhau',
   '이번 주 순위': 'Xếp hạng tuần này', '월요일마다 초기화': 'Đặt lại mỗi thứ Hai',
+  'N위': 'Hạng N', 'N명 중': 'trong N người', '이번 주 점수': 'Điểm tuần này', 'N점': 'N điểm',
+  '우리 동아리': 'Câu lạc bộ của ta',
+  'N점만 더 하면 위 사람을 따라잡습니다.': 'Chỉ cần thêm N điểm là bắt kịp người trên.',
+  '지금 1위입니다. 월요일까지 지켜 보세요.': 'Bạn đang hạng 1. Hãy giữ vững đến thứ Hai.',
+  '동아리에 들어가면 순위가 생깁니다': 'Tham gia câu lạc bộ để có bảng xếp hạng',
+  '점수 올리는 법': 'Cách tăng điểm',
+  'AI 채점에 쓰는 크레딧': 'Điểm thưởng dùng cho AI chấm',
+  'AI 채점 한 번에 <b>N크레딧</b>을 씁니다. 크레딧을 써도 <b>순위는 안 내려갑니다</b>.':
+    'Mỗi lần AI chấm dùng <b>N điểm thưởng</b>. Dùng điểm thưởng <b>không làm tụt hạng</b>.',
   '나': 'bạn',
   '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 크레딧 순위로 바뀝니다.':
     'Hiện đang xếp hạng theo <b>dấu điểm danh tuần này</b> — khi máy chủ cập nhật sẽ chuyển sang xếp hạng theo điểm thưởng.',
@@ -2025,7 +2034,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
   book:  { name: '나만의 단어장', items: () => [['보기', wordbookEntry]] },
-  cred:  { name: '크레딧', items: () => [['보기', creditEntry]] },
+  cred:  { name: '이번 주 순위', items: () => [['보기', creditEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -2037,7 +2046,7 @@ const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
   culture:{ name: '한국 문화', items: () => [['보기', koCultureEntry]] },
   book:   { name: '나만의 단어장', items: () => [['보기', wordbookEntry]] },
-  cred:   { name: '크레딧', items: () => [['보기', creditEntry]] },
+  cred:   { name: '이번 주 순위', items: () => [['보기', creditEntry]] },
   club:   { name: '동아리', items: () => [['보기', showClub]] },
   guide:  { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -3342,10 +3351,23 @@ const weekCredits = () => (credits().wk || {})[weekKey()] || 0;
 
    서버가 옛 판(크레딧 필드 없음)이면 순위를 지어내지 않고, 이번 주 출석 도장으로
    대신 매기고 그 사실을 화면에 밝힌다 — 없는 숫자로 등수를 만들면 안 된다. */
+/* 같은 사람이 기기 두 대로 들어오면 두 줄이 되므로 별명으로 하나만 남긴다 */
+function clubPeople() {
+  if (!S.club || !MATES || !(MATES.people || []).length) return [];
+  const seen = {};
+  MATES.people.forEach(m => { if (!seen[m.nick] || (m.td || 0) > (seen[m.nick].td || 0)) seen[m.nick] = m; });
+  return Object.values(seen);
+}
+/* 순위를 무엇으로 매기는가 — 서버가 점수를 알면 점수로, 아직 옛 판이면 출석 도장으로 */
+function rankKey(ppl) {
+  const hasCr = ppl.some(m => typeof m.cr === 'number');
+  return m => (hasCr ? (m.cr || 0) : (m.days || []).filter(Boolean).length);
+}
+
 function rankBoard(ppl) {
   const box = el('div', 'crclub');
   const hasCr = ppl.some(m => typeof m.cr === 'number');
-  const key = m => (hasCr ? (m.cr || 0) : (m.days || []).filter(Boolean).length);
+  const key = rankKey(ppl);
   const list = ppl.slice().sort((a, b) => key(b) - key(a) || (b.memo || 0) - (a.memo || 0));
 
   const head = el('div', 'crct');
@@ -3378,19 +3400,52 @@ function rankBoard(ppl) {
 }
 
 function creditEntry() { drawCredit(); }
+/* 이 화면의 주인공은 **순위**다. 점수는 순위를 매기기 위한 재료로 뒤에 놓는다.
+   숫자는 둘이고 하는 일이 다르다 — 헷갈리면 안 되므로 화면에서도 갈라 놓는다.
+     · 이번 주 점수 : 순위용. 월요일마다 0으로 초기화된다.
+     · 모은 크레딧 : AI 채점에 쓰는 몫. 계속 쌓이고, **써도 순위는 안 내려간다**
+       (순위는 '번 것'으로 매기지 '남은 것'으로 매기지 않는다 — 안 그러면
+        AI 채점을 쓸수록 등수가 떨어져서, 좋은 기능을 쓰지 말라는 말이 된다). */
 function drawCredit() {
   const ko = learnKo();
   const host = ko ? $('#examBody') : $('#subBody');
   host.textContent = '';
   const c = credits();
+  const thisW = c.wk[weekKey()] || 0;
 
+  // ── 1. 내 등수 — 맨 위, 가장 크게
+  const ppl = clubPeople();
   const big = el('div', 'crbig');
-  big.append(el('div', 'crnum', '🪙 ' + c.bal));
-  big.append(el('div', 'crsub', tr('지금까지 모두') + ' ' + c.sum));
+  if (ppl.length) {
+    const key = rankKey(ppl);
+    const sorted = ppl.slice().sort((a, b) => key(b) - key(a) || (b.memo || 0) - (a.memo || 0));
+    const me = myUid();
+    const at = sorted.findIndex(m => m.uid === me);
+    const rank = at < 0 ? sorted.length : at + 1;
+    /* 빈 문자열로는 번역이 안 된다(tr 이 `v || h` 라 빈 값이면 한국어로 되돌아온다).
+       자리표 N 을 넣은 통짜 문장을 사전에 두고 숫자를 끼운다. */
+    big.append(el('div', 'crnum', tr('N위').replace('N', rank)));
+    big.append(el('div', 'crsub', tr('N명 중').replace('N', sorted.length)
+                                  + '  ·  ' + tr('이번 주 점수') + ' ' + thisW));
+    // 바로 위 사람과의 차이 — 겨루는 맛은 여기서 난다
+    if (at > 0) {
+      const gap = key(sorted[at - 1]) - key(sorted[at]);
+      const up = el('div', 'crgap');
+      up.innerHTML = tr('N점만 더 하면 위 사람을 따라잡습니다.').replace('N', Math.max(1, gap));
+      big.append(up);
+    } else if (at === 0) {
+      big.append(el('div', 'crgap top', tr('지금 1위입니다. 월요일까지 지켜 보세요.')));
+    }
+  } else {
+    big.append(el('div', 'crnum', tr('N점').replace('N', thisW)));
+    big.append(el('div', 'crsub', tr('동아리에 들어가면 순위가 생깁니다')));
+  }
   host.append(big);
 
-  // 지난주의 나와만 견준다 — 남과의 등수는 만들지 않는다
-  const thisW = c.wk[weekKey()] || 0;
+  // ── 2. 순위판
+  if (ppl.length) host.append(rankBoard(ppl));
+
+  // ── 3. 지난주의 나 (순위와 별개로, 내 흐름은 내가 본다)
   const d = new Date(); d.setDate(d.getDate() - 7);
   const lastW = c.wk[weekKey(d)] || 0;
   const diff = thisW - lastW;
@@ -3400,13 +3455,9 @@ function drawCredit() {
   cmp.append(el('span', 'crdiff' + (diff >= 0 ? ' up' : ''),
                 (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(diff)));
   host.append(cmp);
-  host.append(el('p', 'note', '남과 견주지 않습니다 — <b>지난주의 나</b>와만 견줍니다.'));
 
-  // 동아리 — 합계(같이 하는 느낌)와 순위(겨루는 재미)를 나란히 둔다
-  if (S.club && MATES && (MATES.people || []).length) {
-    const seen = {};
-    MATES.people.forEach(m => { if (!seen[m.nick] || (m.td || 0) > (seen[m.nick].td || 0)) seen[m.nick] = m; });
-    const ppl = Object.values(seen);
+  // ── 4. 동아리 합계
+  if (ppl.length) {
     const dots = ppl.reduce((a, m) => a + (m.days || []).filter(Boolean).length, 0);
     const memo = ppl.reduce((a, m) => a + (m.memo || 0), 0);
     const box = el('div', 'crclub');
@@ -3417,10 +3468,10 @@ function drawCredit() {
     g.append(cell(ppl.length, '명'), cell(dots, '출석 도장'), cell(memo, '외운 단어'));
     box.append(g);
     host.append(box);
-    host.append(rankBoard(ppl));
   }
 
-  host.append(el('h3', 'exhead', tr('이렇게 모입니다')));
+  // ── 5. 점수 버는 법
+  host.append(el('h3', 'exhead', tr('점수 올리는 법')));
   const table = el('div', 'crearn');
   [[CRD.day, '하루 한 번이라도 공부하면'], [CRD.d3, '연속 3일'], [CRD.d7, '연속 7일'],
    [CRD.exam, '모의고사 한 회 끝내면'], [CRD.fix, '자주 틀린 단어 5개를 잡으면']]
@@ -3430,16 +3481,25 @@ function drawCredit() {
       table.append(r);
     });
   host.append(table);
+  host.append(el('p', 'note', '하루 빠져도 <b>연속 보호권</b>이 메워 줍니다 — 바쁜 날이 있어도 괜찮습니다.'));
 
+  // ── 6. 크레딧(AI 채점 몫)은 순위와 다른 숫자라 따로 떼어 놓는다
+  const wal = el('div', 'crwallet');
+  wal.append(el('div', 'crct', tr('AI 채점에 쓰는 크레딧')));
+  const line = el('div', 'crwline');
+  line.append(el('b', null, '🪙 ' + c.bal));
+  line.append(el('span', null, tr('지금까지 모두') + ' ' + c.sum));
+  wal.append(line);
   /* 숫자가 낀 문장은 el() 통짜 번역이 안 된다(사전 열쇠가 안 맞는다).
      자리표 N 을 넣은 문장을 사전에 두고, 옮긴 뒤에 숫자를 끼운다. */
   const cost = el('p', 'note');
   cost.innerHTML = onAppKey()
-    ? tr('AI 채점 한 번에 <b>N크레딧</b>을 씁니다.').replace('N', AI_COST)
+    ? tr('AI 채점 한 번에 <b>N크레딧</b>을 씁니다. 크레딧을 써도 <b>순위는 안 내려갑니다</b>.').replace('N', AI_COST)
     : tr('<b>내 정보</b>에 내 구글 키를 넣어 두셨으므로 AI 채점은 크레딧을 쓰지 않습니다.');
-  host.append(cost);
-  host.append(el('p', 'note', '하루 빠져도 <b>연속 보호권</b>이 메워 줍니다 — 바쁜 날이 있어도 괜찮습니다.'));
-  show(ko ? 'exam' : 'sub', '크레딧', true);
+  wal.append(cost);
+  host.append(wal);
+
+  show(ko ? 'exam' : 'sub', '이번 주 순위', true);
 }
 
 /* 좌우로 밀어 이전·다음 — 사진첩과 같은 방향(왼쪽으로 밀면 다음).
