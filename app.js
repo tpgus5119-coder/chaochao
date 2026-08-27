@@ -147,12 +147,20 @@ const UIVI = {
   '한국 문화': 'Văn hóa Hàn Quốc',
   '한국 생활 문화 — 직장 예절부터 위급 상황까지.':
     'Văn hóa sinh hoạt Hàn Quốc — từ phép tắc nơi làm việc đến tình huống khẩn cấp.',
+  '날마다 배우기': 'Học mỗi ngày',
+  '날마다 배우기 — 1차분 초급1 18일. 문법·단어·대화·미션을 함께 배웁니다.':
+    'Học mỗi ngày — đợt 1: Sơ cấp 1, 18 ngày. Học cùng lúc ngữ pháp, từ vựng, hội thoại và nhiệm vụ.',
+  '오늘의 문법 보기': 'Xem ngữ pháp hôm nay',
+  '오늘의 단어': 'Từ vựng hôm nay',
+  '오늘의 미션': 'Nhiệm vụ hôm nay',
   /* ── 베트남인용 한국어 과정 홈 화면 ── */
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
   '응시': 'Đã thi', '회': ' lần', '평균': 'Trung bình', '점': ' điểm',
-  '지금 있는 것 — 모의고사, 기본기, 문법 68개, 한국 문화, AI 채점 말하기·쓰기': 'Hiện đã có — đề thi thử, kiến thức nền tảng, 68 điểm ngữ pháp, văn hóa Hàn Quốc, luyện nói·viết có AI chấm',
-  '아직 없는 것 — 날마다 배우는 과정': 'Chưa có — khóa học theo từng ngày',
+  '지금 있는 것 — 날마다 배우기(초급1 18일), 모의고사, 기본기, 문법 68개, 한국 문화, AI 채점 말하기·쓰기':
+    'Hiện đã có — Học mỗi ngày (Sơ cấp 1, 18 ngày), đề thi thử, kiến thức nền tảng, 68 điểm ngữ pháp, văn hóa Hàn Quốc, luyện nói·viết có AI chấm',
+  '아직 없는 것 — 초급2·중급1·중급2 날짜별 과정(문법·단어는 이미 있어서 곧 늘어납니다)':
+    'Chưa có — khóa học theo ngày cho Sơ cấp 2, Trung cấp 1, Trung cấp 2 (ngữ pháp và từ vựng đã có sẵn nên sẽ sớm bổ sung)',
   '목록으로': 'Về danh sách',
   '문장 고르기': 'Chọn câu',
   '문장 고쳐 주기': 'Sửa câu giúp tôi',
@@ -1908,8 +1916,9 @@ function askNick() {
    첫 화면은 큰 칸 여덟 개뿐이다. 칸을 누르면 그 안에서 고른다 —
    첫 화면에 버튼이 많을수록 고르는 데 힘이 들고, 결국 아무것도 안 누르게 된다. */
 /* 한국어를 배우는 사람의 첫 화면.
-   베트남어 과정은 '오늘 배울 세트'가 중심이지만, 여기는 아직 날마다 배우는 과정이 없다.
-   그래서 있는 것만 정직하게 보여 준다 — 모의고사 성적과, 아직 없는 것에 대한 안내.
+   '날마다 배우기'가 생겨서(1차분 초급1 18일) 맨 위 큰 카드로 올렸다 —
+   베트남어 과정이 '오늘 배울 세트'를 첫 화면 중심에 두는 것과 같은 자리다.
+   그 아래는 모의고사 성적과, 아직 없는 것에 대한 정직한 안내.
    없는 것을 있는 척 채워 두면 눌러 보고 실망한다. */
 function drawKoHome() {
   const plan = $('#plan');
@@ -1922,6 +1931,15 @@ function drawKoHome() {
   head.append(el('div', 'kohtit', '베트남인을 위한 한국어'));
   head.append(el('div', 'kohsub', 'EPS-TOPIK · KIIP · TOPIK I 시험 대비'));
   plan.append(head);
+
+  // 날마다 배우기 — 오늘 화면 첫 자리. 진도는 S.kday(마지막으로 본 날, 없으면 1일차부터).
+  const dayRow = el('div', 'plancell go');
+  const dk = el('span', 'pk'), dv = el('span', 'pv');
+  dk.textContent = tr('날마다 배우기');
+  dv.textContent = 'Day ' + (S.kday || 1) + ' · ' + tr('초급1');
+  dayRow.append(dk, dv);
+  dayRow.onclick = koDayEntry;
+  plan.append(dayRow);
 
   // 모의고사 성적 요약 — 본 적이 있으면 최근 점수, 없으면 시작 안내.
   // 숫자가 낀 문장이라 el() 통짜 번역을 못 쓴다 — 낱말만 tr() 로 옮기고 숫자를 직접 끼운다.
@@ -1941,9 +1959,9 @@ function drawKoHome() {
   plan.append(row);
 
   const note = el('p', 'note');
-  note.append(el('b', null, '지금 있는 것 — 모의고사, 기본기, 문법 68개, 한국 문화, AI 채점 말하기·쓰기'));
+  note.append(el('b', null, '지금 있는 것 — 날마다 배우기(초급1 18일), 모의고사, 기본기, 문법 68개, 한국 문화, AI 채점 말하기·쓰기'));
   note.append(document.createElement('br'));
-  note.append(document.createTextNode(tr('아직 없는 것 — 날마다 배우는 과정')));
+  note.append(document.createTextNode(tr('아직 없는 것 — 초급2·중급1·중급2 날짜별 과정(문법·단어는 이미 있어서 곧 늘어납니다)')));
   plan.append(note);
 }
 
@@ -1971,6 +1989,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
 };
 
 const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
+  day:    { name: '날마다 배우기', items: () => [['보기', koDayEntry]] },
   exam:   { name: '모의고사', items: () => [['보기', examEntry]] },
   basic2: { name: '기본기', items: () => [['보기', koBasicEntry]] },
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
@@ -2254,6 +2273,99 @@ function drawCultureCard(i) {
   nav.append(prev, next);
   b.append(nav);
   show('exam', '한국 문화', true);
+}
+
+/* ---------- 날마다 배우기 ----------
+   1차분: 초급1 18일. 그날의 문법(ko_grammar.json, grammar_n으로 연결)·단어·대화·
+   미션을 한 화면에 묶는다. 단어·대화는 문법 카드와 같은 행 모양(gex)을 그대로 쓴다 —
+   문법 카드에서 이미 검증된 모양이라 새 스타일을 안 만들어도 된다. */
+let KDDATA = null, KD = null;
+
+function koDayEntry() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '날마다 배우기 — 1차분 초급1 18일. 문법·단어·대화·미션을 함께 배웁니다.'));
+  show('exam', '날마다 배우기', true);
+  if (KDDATA) return drawDayList();
+  fetch('data/ko_days.json', { cache: 'no-cache' })
+    .then(r => r.json()).then(j => { KDDATA = j.days; drawDayList(); })
+    .catch(() => b.append(el('p', 'lede', '자료를 받지 못했습니다. 인터넷을 확인해 주세요.')));
+}
+
+function drawDayList() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '날마다 배우기 — 1차분 초급1 18일. 문법·단어·대화·미션을 함께 배웁니다.'));
+  KDDATA.forEach((d, i) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, `Day ${d.day}. ${d.theme.ko}`));
+    btn.append(el('span', 'exmeta', d.theme.vi));
+    btn.onclick = () => drawDayCard(i);
+    b.append(btn);
+  });
+}
+
+function dayWordRow(host, ko, vi, prefix) {
+  const row = el('div', 'gex');
+  const line = el('div', 'gexko');
+  if (prefix) line.append(el('b', null, prefix));
+  line.append(el('span', null, esc(ko)));
+  const p = el('button', 'iconbtn', '🔊');
+  p.onclick = () => speakKo(ko);
+  line.append(p);
+  row.append(line, el('div', 'gexvi', esc(vi)));
+  host.append(row);
+}
+
+function drawDayCard(i) {
+  KD = i;
+  const d = KDDATA[i];
+  S.kday = d.day; touchToday(); save();
+  const b = $('#examBody');
+  b.textContent = '';
+
+  const head = el('div', 'exbar');
+  head.append(el('span', 'expos', `Day ${d.day} / ${KDDATA.length}`));
+  b.append(head);
+
+  const top = el('div', 'excard');
+  top.append(el('div', 'exask', esc(d.theme.ko)));
+  top.append(el('div', 'exbody', esc(d.theme.vi)));
+  const gi = KGDATA ? KGDATA.findIndex(g => g.level === '초급1' && g.n === d.grammar_n) : -1;
+  const gbtn = el('button', 'ghost', tr('오늘의 문법 보기'));
+  gbtn.onclick = () => {
+    if (gi >= 0) return drawGramCard(gi);
+    fetch('data/ko_grammar.json', { cache: 'no-cache' }).then(r => r.json())
+      .then(j => { KGDATA = j.items; drawGramCard(KGDATA.findIndex(g => g.level === '초급1' && g.n === d.grammar_n)); });
+  };
+  top.append(gbtn);
+  b.append(top);
+
+  const wcard = el('div', 'excard');
+  wcard.append(el('h3', 'exhead', tr('오늘의 단어')));
+  d.words.forEach(w => dayWordRow(wcard, w.ko, w.vi));
+  b.append(wcard);
+
+  const dcard = el('div', 'excard');
+  dcard.append(el('h3', 'exhead', esc(d.dialog.title)));
+  d.dialog.lines.forEach(l => dayWordRow(dcard, l.ko, l.vi, l.who + '. '));
+  b.append(dcard);
+
+  const mcard = el('div', 'excard');
+  mcard.append(el('h3', 'exhead', tr('오늘의 미션')));
+  if (S.ui !== 'vi') mcard.append(el('div', 'gexp', esc(d.mission.ko)));
+  mcard.append(el('div', 'gexp vi', esc(d.mission.vi)));
+  b.append(mcard);
+
+  const nav = el('div', 'exnav');
+  const prev = el('button', 'ghost big', '‹ 이전');
+  prev.disabled = i === 0;
+  prev.onclick = () => drawDayCard(i - 1);
+  const next = el('button', 'primary big', i === KDDATA.length - 1 ? '목록으로' : '다음 ›');
+  next.onclick = () => i === KDDATA.length - 1 ? drawDayList() : drawDayCard(i + 1);
+  nav.append(prev, next);
+  b.append(nav);
+  show('exam', `Day ${d.day}`, true);
 }
 
 function startExam(e) {

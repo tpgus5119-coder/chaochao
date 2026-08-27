@@ -51,6 +51,18 @@ def collect():
                 if ex.get("ko"):
                     need.setdefault(ex["ko"], "sent")
 
+    # 1.7) 날마다 배우는 과정 — 단어와 대화 줄
+    p = ROOT / "data" / "ko_days.json"
+    if p.exists():
+        dj = json.loads(p.read_text(encoding="utf-8"))
+        for day in dj["days"]:
+            for w in day.get("words", []):
+                if w.get("ko"):
+                    need.setdefault(w["ko"], "word")
+            for line in day.get("dialog", {}).get("lines", []):
+                if line.get("ko"):
+                    need.setdefault(line["ko"], "sent")
+
     # 2) 한국어 과정 어휘 — 등급 A·B (기초부터. C까지 한 번에 구우면 파일이 너무 많다)
     p = ROOT / "data" / "_ko_words.json"
     if p.exists():
