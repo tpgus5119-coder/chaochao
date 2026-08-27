@@ -50,6 +50,10 @@ const $ = s => document.querySelector(s);
    글자가 화면에 놓이는 길목(el·show)에서 **문구를 통째로 맞바꾼다.**
    표에 있는 문구만 바뀐다 — 아직 없는 문구는 한국어로 남고, 표를 채우면 늘어난다. */
 const UIVI = {
+  '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.':
+    'Học mỗi ngày — 78 ngày từ Sơ cấp 1 đến Trung cấp 2. Mỗi ngày một ngữ pháp, mười từ, một đoạn hội thoại.',
+  '지금 있는 것 — 날마다 배우기 78일, 모의고사 34벌(해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
+    'Hiện có — Học mỗi ngày 78 ngày, 34 bộ đề thi thử (kèm giải thích), Nền tảng, 78 ngữ pháp, Văn hóa Hàn, Nói·Viết chấm bằng AI',
   '· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.':
     '· Tiến độ học <b>tự động lưu lên máy chủ</b> — đổi điện thoại chỉ cần đăng nhập là học tiếp.',
   '고른 조건에 맞는 동아리가 없습니다.': 'Không có câu lạc bộ nào khớp với điều kiện đã chọn.',
@@ -250,7 +254,7 @@ const UIVI = {
   '한국 생활 문화 — 직장 예절부터 위급 상황까지.':
     'Văn hóa sinh hoạt Hàn Quốc — từ phép tắc nơi làm việc đến tình huống khẩn cấp.',
   '날마다 배우기': 'Học mỗi ngày',
-  '날마다 배우기 — 1차분 초급1 18일. 문법·단어·대화·미션을 함께 배웁니다.':
+  '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.':
     'Học mỗi ngày — đợt 1: Sơ cấp 1, 18 ngày. Học cùng lúc ngữ pháp, từ vựng, hội thoại và nhiệm vụ.',
   '오늘의 문법 보기': 'Xem ngữ pháp hôm nay',
   '오늘의 단어': 'Từ vựng hôm nay',
@@ -259,7 +263,7 @@ const UIVI = {
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
   '응시': 'Đã thi', '회': ' lần', '평균': 'Trung bình', '점': ' điểm',
-  '지금 있는 것 — 날마다 배우기(초급1 18일), 모의고사, 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
+  '지금 있는 것 — 날마다 배우기 78일, 모의고사 34벌(해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
     'Hiện đã có — Học mỗi ngày (Sơ cấp 1, 18 ngày), đề thi thử, kiến thức nền tảng, 78 điểm ngữ pháp, văn hóa Hàn Quốc, luyện nói·viết có AI chấm',
   '아직 없는 것 — 초급2·중급1·중급2 날짜별 과정(문법·단어는 이미 있어서 곧 늘어납니다)':
     'Chưa có — khóa học theo ngày cho Sơ cấp 2, Trung cấp 1, Trung cấp 2 (ngữ pháp và từ vựng đã có sẵn nên sẽ sớm bổ sung)',
@@ -2008,7 +2012,7 @@ function askNick() {
    첫 화면은 큰 칸 여덟 개뿐이다. 칸을 누르면 그 안에서 고른다 —
    첫 화면에 버튼이 많을수록 고르는 데 힘이 들고, 결국 아무것도 안 누르게 된다. */
 /* 한국어를 배우는 사람의 첫 화면.
-   '날마다 배우기'가 생겨서(1차분 초급1 18일) 맨 위 큰 카드로 올렸다 —
+   '날마다 배우기'가 생겨서(초급1~중급2 78일) 맨 위 큰 카드로 올렸다 —
    베트남어 과정이 '오늘 배울 세트'를 첫 화면 중심에 두는 것과 같은 자리다.
    그 아래는 모의고사 성적과, 아직 없는 것에 대한 정직한 안내.
    없는 것을 있는 척 채워 두면 눌러 보고 실망한다. */
@@ -2051,7 +2055,7 @@ function drawKoHome() {
   plan.append(row);
 
   const note = el('p', 'note');
-  note.append(el('b', null, '지금 있는 것 — 날마다 배우기(초급1 18일), 모의고사, 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기'));
+  note.append(el('b', null, '지금 있는 것 — 날마다 배우기 78일, 모의고사 34벌(해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기'));
   note.append(document.createElement('br'));
   note.append(document.createTextNode(tr('아직 없는 것 — 초급2·중급1·중급2 날짜별 과정(문법·단어는 이미 있어서 곧 늘어납니다)')));
   plan.append(note);
@@ -2423,7 +2427,7 @@ function drawCultureCard(i) {
 }
 
 /* ---------- 날마다 배우기 ----------
-   1차분: 초급1 18일. 그날의 문법(ko_grammar.json, 문법 '이름'으로 연결)·단어·대화·
+   78일: 초급1~중급2. 그날의 문법(ko_grammar.json, 문법 '이름'으로 연결)·단어·대화·
    미션을 한 화면에 묶는다. 단어·대화는 문법 카드와 같은 행 모양(gex)을 그대로 쓴다 —
    문법 카드에서 이미 검증된 모양이라 새 스타일을 안 만들어도 된다. */
 let KDDATA = null, KD = null;
@@ -2431,7 +2435,7 @@ let KDDATA = null, KD = null;
 function koDayEntry() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '날마다 배우기 — 1차분 초급1 18일. 문법·단어·대화·미션을 함께 배웁니다.'));
+  b.append(el('p', 'lede', '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.'));
   show('exam', '날마다 배우기', true);
   if (KDDATA) return drawDayList();
   fetch('data/ko_days.json', { cache: 'no-cache' })
@@ -2442,7 +2446,7 @@ function koDayEntry() {
 function drawDayList() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '날마다 배우기 — 1차분 초급1 18일. 문법·단어·대화·미션을 함께 배웁니다.'));
+  b.append(el('p', 'lede', '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.'));
   KDDATA.forEach((d, i) => {
     const btn = el('button', 'bigmenu');
     btn.append(el('b', null, `Day ${d.day}. ${d.theme.ko}`));

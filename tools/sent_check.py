@@ -34,7 +34,8 @@ def norm(s):
 
 
 def toks(s):
-    return [t for t in norm(s).split() if t]
+    # 숫자는 낱말 카드로 안 가르쳐도 대화에 나온다 (시각·값·개수)
+    return [t for t in norm(s).split() if t and not t.isdigit()]
 
 
 def check(path, key_words="words", key_dialog="dialog", lang="vi"):
