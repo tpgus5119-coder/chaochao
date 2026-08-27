@@ -2614,8 +2614,13 @@ function drawExamQ() {
     card.append(pw);
   }
 
+  /* 구간 이름과 물음이 똑같은 유형이 있다(듣기의 고정 발문). 두 번 적으면
+     화면만 길어지고 읽는 사람은 같은 줄을 두 번 읽는다 — 겹치면 한 번만 적는다. */
   const lines = q.stem.split('\n');
-  card.append(el('div', 'exask', esc(lines[0])));
+  const flat = x => String(x || '').replace(/\s|\[|\]|[0-9~]/g, '');
+  if (!flat(q.section).includes(flat(lines[0]))) {
+    card.append(el('div', 'exask', esc(lines[0])));
+  }
   if (lines[1]) card.append(el('div', 'exbody', esc(lines[1])));
 
   // 듣기 — 문제가 소리로만 나간다. 몇 번이든 다시 들을 수 있게 둔다
