@@ -38,6 +38,14 @@ const cut = (s, n) => String(s == null ? '' : s).slice(0, n);
 const num = (v, hi) => Math.max(0, Math.min(hi, ~~v));
 const week = () => { const d = new Date(); d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
                      return d.toISOString().slice(0, 10); };
+/* 지난 몇 주의 월요일 날짜 — 한 달 순위를 접을 때 쓴다. */
+const weekBack = k => { const d = new Date();
+                        d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7) - k * 7);
+                        return d.toISOString().slice(0, 10); };
+/* 한 달 점수 = 최근 주에 더 무게. 앱(app.js MONTH_W)과 같은 저울이어야 한다 —
+   서버와 앱이 다른 저울을 쓰면 같은 사람이 화면마다 다른 점수로 보인다. */
+const MONTH_W = [1, 0.7, 0.5, 0.3];
+const monthOf = v => MONTH_W.reduce((s, w, i) => s + w * (((v && v.c4) || {})[weekBack(i)] || 0), 0);
 
 /* 웹 푸시 — 내용 없는 신호만 보낸다.
    VAPID 는 '이 서버가 보낸 게 맞다'는 서명이다. 내용을 안 실으므로 암호화는 필요 없다. */
@@ -78,6 +86,7 @@ function dirOf(cu, c, me) {
       const o = { uid: u, nick: v.n, days: v.wk === week() ? (v.w || []) : [],
                   memo: v.m || 0, st: v.st || 0, td: v.td || 0,
                   cr: v.crw === week() ? (v.cr || 0) : 0,    // 주가 바뀌면 순위판이 새로 시작된다
+                  crm: Math.round(monthOf(v)),               // 한 달 점수 (최근 주에 더 무게)
 
                   th: v.th || 0, av: v.av || 0, at: v.at || '',
                   thToday: !!(v.tb && v.tb[me] === today()) };
@@ -254,6 +263,37 @@ export default {
         .map(([id, c]) => ({ id, name: c.name, n: c.members.length, approve: !!c.approve,
                              desc: c.desc || '', cat: c.cat || '', city: c.city || '' }))
         .sort((x, y) => y.n - x.n) });
+
+    /* ── 동아리끼리 겨루기 ────────────────────────────────
+       사람 순위는 같은 동아리 안에서만 매긴다(남의 동아리 사람은 애초에 안 보인다).
+       동아리 순위는 그 위층이다 — 어느 동아리가 이번 주에 제일 많이 했나.
+       값은 10분 동안 우려 쓴다. 동아리마다 KV 를 한 번씩 읽어야 해서,
+       화면을 열 때마다 다 읽으면 읽기 한도를 금방 태운다.
+       사람 수가 다르니 '합계'와 '한 사람 평균'을 같이 준다 — 큰 동아리만 이기면 재미없다. */
+    if (act === 'ranks') {
+      const CK = 'rk:' + week();
+      const hit = await KV.get(CK, 'json');
+      if (hit && Date.now() - hit.at < 10 * 60 * 1000) return send(hit);
+      const ids = Object.entries(clubs)
+        .sort((x, y) => y[1].members.length - x[1].members.length).slice(0, 40);
+      const out = [];
+      for (const [cid, cc] of ids) {
+        const cu = JSON.parse((await KV.get(`cu:${cid}`)) || '{}');
+        let wk = 0, mo = 0, n = 0;
+        for (const v of Object.values(cu)) {
+          if (!v || !v.n) continue;
+          n++;
+          if (v.crw === week()) wk += v.cr || 0;
+          mo += monthOf(v);
+        }
+        if (n) out.push({ id: cid, name: cc.name, city: cc.city || '', cat: cc.cat || '',
+                          n, wk, mo: Math.round(mo),
+                          awk: Math.round(wk / n), amo: Math.round(mo / n) });
+      }
+      const body = { at: Date.now(), clubs: out.sort((x, y) => y.wk - x.wk) };
+      await KV.put(CK, JSON.stringify(body), { expirationTtl: 60 * 60 * 24 * 14 });
+      return send(body);
+    }
 
     if (act === 'create') {                                  // 만들기
       if (!nick) return send({ error: '별명을 먼저 정해 주세요' });
@@ -473,11 +513,28 @@ export default {
     if (act === 'post') {
       if (!c.members.includes(nick)) return send({ error: 'notmember' });
       const x = cut(b.x, 200).trim();
-      if (!x) return send({ error: '내용이 없습니다' });
+      const img = cut(b.img, 60000);                          // 줄여 온 사진 ≒ 45KB
+      if (!x && !img) return send({ error: '내용이 없습니다' });
+      if (img && !img.startsWith('data:image/')) return send({ error: '사진이 아닙니다' });
       const posts = JSON.parse((await KV.get(FDK)) || '[]');
-      posts.push({ f: cut(b.uid, 16), n: nick, x, t: Date.now() });
-      await KV.put(FDK, JSON.stringify(posts.slice(-50)), FTTL);
-      return send({ ok: true, posts: posts.slice(-50) });
+      const post = { f: cut(b.uid, 16), n: nick, x, t: Date.now() };
+      /* 사진은 글과 따로 둔다. 담벼락 한 덩어리에 사진을 같이 넣으면
+         글만 보려고 열 때도 사진 쉰 장을 통째로 내려받게 된다. */
+      if (img) {
+        post.p = `${id}-${post.t}`;
+        await KV.put(`fp:${post.p}`, img, FTTL);
+      }
+      posts.push(post);
+      const keep = posts.slice(-50);
+      await KV.put(FDK, JSON.stringify(keep), FTTL);
+      return send({ ok: true, posts: keep });
+    }
+    if (act === 'photo') {                                    // 담벼락 사진 받아 오기
+      if (!c.members.includes(nick)) return send({ error: 'notmember' });
+      const want = (Array.isArray(b.ps) ? b.ps : []).slice(0, 12).map(x => cut(x, 40));
+      const out = {};
+      for (const p of want) out[p] = (await KV.get(`fp:${p}`)) || '';
+      return send({ photo: out });
     }
 
     if (act === 'leave') {
@@ -514,6 +571,12 @@ export default {
         wk: week(),                                          // 지난주 도장은 저절로 지워진다
         m: num(b.memo, 99999), s: num(b.score, 999999),
         cr: num(b.cr, 999999), crw: week(),                  // 이번 주 크레딧 (지난주 것은 저절로 0이 된다)
+        // 최근 네 주치만 남긴다 — 한 달 순위 재료. 오래된 주는 저절로 떨어져 나간다.
+        c4: (() => { const o = Object.assign({}, was.c4 || {});
+                     o[week()] = num(b.cr, 999999);
+                     const keep = {}; for (let i = 0; i < 4; i++)
+                       if (o[weekBack(i)] != null) keep[weekBack(i)] = o[weekBack(i)];
+                     return keep; })(),
         st: num(b.st, 9999), td: num(b.td, 99999),           // 연속으로 온 날 · 온 날 모두
         op: b.op ? 1 : 0,                                    // 분석을 남에게 보일지
         av: num(b.av, 9999),                                 // 사진 판 번호 (남이 다시 받을지 판단)

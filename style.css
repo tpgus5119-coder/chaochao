@@ -1416,3 +1416,52 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .excat>*:not(summary){margin-left:16px;margin-right:16px}
 .excat>*:last-child{margin-bottom:14px}
 .excat .exhead{margin-top:14px}
+
+/* ── 동아리 목록: 고르는 재미가 절반이다 ───────────────────── */
+.chiprow{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none}
+.chiprow::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--fg);
+  border-radius:99px;padding:6px 12px;font-size:13px;cursor:pointer;white-space:nowrap}
+.chip:hover{border-color:var(--dim)}
+.chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+.grp.sub{font-size:12px;color:var(--dim);margin-top:14px}
+
+.clubcard{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:13px 14px;margin-bottom:8px;cursor:pointer;color:var(--fg)}
+.clubcard:hover{border-color:var(--dim)}
+.clubcard.mine{border-color:var(--accent);border-width:2px;
+  background:color-mix(in srgb,var(--accent) 7%,var(--card))}
+.clubcard.big{padding:16px}
+.ccat{flex:0 0 auto;font-size:26px;line-height:1.1;width:34px;text-align:center}
+.clubcard.big .ccat{font-size:34px;width:42px}
+.cmid{flex:1 1 auto;min-width:0}
+.ctitle{display:block;font-weight:700;font-size:16px;line-height:1.35}
+.clubcard.big .ctitle{font-size:18px}
+.ctitle .minechip{display:inline-block;margin-left:6px;font-size:11px;font-style:normal;
+  padding:1px 7px;border-radius:99px;background:var(--accent);color:#fff;vertical-align:2px}
+.cdesc{display:block;font-size:13px;color:var(--dim);margin-top:3px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ctags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.ctag{font-style:normal;font-size:11.5px;padding:2px 8px;border-radius:99px;
+  background:color-mix(in srgb,var(--fg) 7%,transparent);color:var(--dim)}
+.ctag.num{font-variant-numeric:tabular-nums}
+.ctag.warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.cgo{flex:0 0 auto;color:var(--dim);font-size:20px;align-self:center}
+.clubcard.mine .cgo{color:var(--accent)}
+
+/* ── 담벼락 사진 ───────────────────────────────────────────── */
+.camb{flex:0 0 auto;padding:0 12px;font-size:18px;line-height:1}
+.feedprev{position:relative;display:inline-block;margin:4px 0 2px}
+.feedprev img{max-width:170px;max-height:130px;border-radius:10px;display:block}
+.prevx{position:absolute;top:-7px;right:-7px;width:24px;height:24px;border-radius:50%;
+  border:none;background:var(--fg);color:var(--bg);font-size:13px;line-height:24px;
+  padding:0;cursor:pointer}
+.feedimg{margin-top:8px}
+.feedimg img{width:100%;max-width:420px;border-radius:10px;display:block}
+.imgwait{font-size:12px;color:var(--dim);padding:14px 0}
+
+/* ── 순위: 메달과 딸림글 ───────────────────────────────────── */
+.crno.hi{font-size:17px}
+.cnsub{display:block;font-style:normal;font-size:11.5px;color:var(--dim);margin-top:1px}

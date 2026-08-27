@@ -50,6 +50,29 @@ const $ = s => document.querySelector(s);
    글자가 화면에 놓이는 길목(el·show)에서 **문구를 통째로 맞바꾼다.**
    표에 있는 문구만 바뀐다 — 아직 없는 문구는 한국어로 남고, 표를 채우면 늘어난다. */
 const UIVI = {
+  '· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.':
+    '· Tiến độ học <b>tự động lưu lên máy chủ</b> — đổi điện thoại chỉ cần đăng nhập là học tiếp.',
+  '고른 조건에 맞는 동아리가 없습니다.': 'Không có câu lạc bộ nào khớp với điều kiện đã chọn.',
+  '동아리에 들어가면 같은 동아리 사람들과 줄을 섭니다.': 'Vào câu lạc bộ rồi bạn sẽ được xếp hạng cùng các thành viên.',
+  '사진은 서버에 <b>그대로</b> 저장됩니다 — 남에게 보이면 안 될 것은 올리지 마세요.':
+    'Ảnh được lưu <b>nguyên vẹn</b> trên máy chủ — đừng đăng thứ không muốn người khác thấy.',
+  '아직 겨룰 동아리가 없습니다. 동아리를 만들면 여기에 올라옵니다.':
+    'Chưa có câu lạc bộ nào để so kè. Tạo một câu lạc bộ là nó sẽ xuất hiện ở đây.',
+  '한 달 순위는 서버가 새 판이어야 나옵니다 — 지금은 이번 주만 줄을 세웁니다.':
+    'Bảng xếp hạng tháng cần máy chủ bản mới — hiện chỉ xếp hạng theo tuần này.',
+  '사람 순위': 'Xếp hạng cá nhân', '동아리 순위': 'Xếp hạng câu lạc bộ',
+  '동아리끼리 겨루기': 'Các câu lạc bộ so kè', '한 달 순위': 'Xếp hạng tháng',
+  '한 달': 'Tháng', '한 달 점수': 'Điểm tháng', '최근 주에 더 무게': 'Tuần gần hơn tính nặng hơn',
+  '동아리 합계': 'Tổng câu lạc bộ', '한 사람 평균': 'Trung bình mỗi người',
+  '찾아보기': 'Tìm quanh', '어디든': 'Bất kỳ đâu', '무엇이든': 'Bất kỳ chủ đề',
+  'N명': 'N người', '승인제': 'Cần duyệt', '사진 넣기': 'Thêm ảnh',
+  '사진 받는 중…': 'Đang tải ảnh…',
+  '사진이 너무 큽니다 — 더 작은 사진을 골라 주세요.': 'Ảnh quá lớn — hãy chọn ảnh nhỏ hơn.',
+  '먼저 지금 동아리에서 나와야 다른 동아리에 들어갈 수 있습니다.':
+    'Phải rời câu lạc bộ hiện tại thì mới vào được câu lạc bộ khác.',
+  '목록으로': 'Về danh sách', '들어가는 중…': 'Đang vào…',
+  '가입 신청했습니다. 개설자가 받아 주면 들어갑니다.':
+    'Đã gửi đơn. Bạn sẽ vào khi người lập duyệt.',
   '취업 (EPS)': 'Việc làm (EPS)', '체류·귀화 (KIIP)': 'Cư trú·nhập tịch (KIIP)',
   '유학·자격 (TOPIK)': 'Du học·chứng chỉ (TOPIK)',
   '한국에서 일하려면 보는 시험입니다.': 'Kỳ thi cần có để đi làm ở Hàn Quốc.',
@@ -1627,7 +1650,7 @@ function acctForm(gate, mode) {
   }
   b.append(el('p', 'note', '· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.<br>' +
     '· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b><br>' +
-    '· 학습 진도는 기기 안에 있습니다 — 폰을 바꿀 때는 <b>진도 백업</b>을 같이 쓰세요.'));
+    '· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.'));
   show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), true);
 }
 
@@ -3513,43 +3536,69 @@ function clubPeople() {
    한 달 순위는 서버가 주별로 갖고 있어야 접을 수 있는데 지금은 이번 주치만 온다.
    그래서 한 달은 **내 것만** 정확히 접어 보여주고, 남과의 줄 세우기는 이번 주로 한다 —
    없는 숫자로 등수를 만들지 않는다. */
-function rankKey(ppl) {
+/* 순위 재료를 고르는 자리. 주간이냐 한 달이냐, 서버가 새 판이냐 옛 판이냐에 따라 다르다.
+   없는 숫자로 등수를 만들지 않는다 — 서버가 한 달치를 안 주면 주간만 보여준다. */
+function rankKey(ppl, span) {
+  if (span === 'month' && ppl.some(m => typeof m.crm === 'number'))
+    return m => (m.crm || 0);
   const hasCr = ppl.some(m => typeof m.cr === 'number');
   return m => (hasCr ? (m.cr || 0) : (m.days || []).filter(Boolean).length);
 }
+const hasMonth = ppl => ppl.some(m => typeof m.crm === 'number');
 
-function rankBoard(ppl) {
+/* 순위 한 줄 — 사람이든 동아리든 같은 모양으로 그린다.
+   1·2·3등은 메달을 달아 준다. 숫자만 다르면 눈이 등수를 못 읽는다(색만으로도 안 된다). */
+const MEDAL = ['🥇', '🥈', '🥉'];
+function rankRow(i, name, val, top, mine, sub) {
+  const r = el('div', 'crank' + (mine ? ' me' : ''));
+  r.append(el('span', 'crno' + (i < 3 ? ' hi' : ''), i < 3 ? MEDAL[i] : String(i + 1)));
+  const nk = el('span', 'crnick');
+  nk.append(document.createTextNode(name));
+  if (mine) nk.append(el('span', 'crmine', tr('나')));   // CSS 에 한글을 박으면 베트남어 화면에 샌다
+  if (sub) nk.append(el('i', 'cnsub', sub));
+  r.append(nk);
+  const bar = el('span', 'crbar');
+  const fill = el('i');
+  fill.style.width = Math.max(4, Math.round(val / (top || 1) * 100)) + '%';
+  bar.append(fill);
+  r.append(bar, el('span', 'crval', String(val)));
+  return r;
+}
+
+function rankBoard(ppl, span) {
   const box = el('div', 'crclub');
   const hasCr = ppl.some(m => typeof m.cr === 'number');
-  const key = rankKey(ppl);
+  const key = rankKey(ppl, span);
   const list = ppl.slice().sort((a, b) => key(b) - key(a) || (b.memo || 0) - (a.memo || 0));
-
-  const head = el('div', 'crct');
-  head.append(document.createTextNode(tr('이번 주 순위')));
-  head.append(el('span', 'crreset', tr('월요일마다 초기화')));
-  box.append(head);
-
   const me = myUid();
   const top = key(list[0]) || 1;
-  list.forEach((m, i) => {
-    const mine = m.uid === me;
-    const r = el('div', 'crank' + (mine ? ' me' : ''));
-    r.append(el('span', 'crno' + (i < 3 ? ' hi' : ''), String(i + 1)));
-    const nk = el('span', 'crnick');
-    nk.append(document.createTextNode(m.nick));
-    if (mine) nk.append(el('span', 'crmine', tr('나')));   // CSS 에 한글을 박으면 베트남어 화면에 샌다
-    r.append(nk);
-    const bar = el('span', 'crbar');
-    const fill = el('i');
-    fill.style.width = Math.max(4, Math.round(key(m) / top * 100)) + '%';
-    bar.append(fill);
-    r.append(bar);
-    r.append(el('span', 'crval', String(key(m))));
-    box.append(r);
-  });
+  list.forEach((m, i) => box.append(rankRow(i, m.nick, key(m), top, m.uid === me)));
   if (!hasCr) {
     box.append(el('p', 'note', '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 크레딧 순위로 바뀝니다.'));
   }
+  return box;
+}
+
+/* 동아리끼리 겨루기. 사람 수가 다르니 합계만 보면 큰 동아리가 늘 이긴다 —
+   '한 사람 평균'을 나란히 두어 작은 동아리도 이길 자리를 만든다. */
+let CLRANK = null;
+function clubRankBoard(span, mode, onMode) {
+  const box = el('div', 'crclub');
+  if (!CLRANK) { box.append(el('p', 'note', tr('불러오는 중…'))); return box; }
+  if (!CLRANK.clubs || !CLRANK.clubs.length) {
+    box.append(el('p', 'note', '아직 겨룰 동아리가 없습니다. 동아리를 만들면 여기에 올라옵니다.'));
+    return box;
+  }
+  box.append(chipRow([['sum', tr('동아리 합계')], ['avg', tr('한 사람 평균')]], mode, onMode));
+  const f = c => span === 'month' ? (mode === 'avg' ? c.amo : c.mo)
+                                  : (mode === 'avg' ? c.awk : c.wk);
+  const list = CLRANK.clubs.slice().sort((a, b) => f(b) - f(a));
+  const top = f(list[0]) || 1;
+  list.slice(0, 20).forEach((c, i) => {
+    const mine = S.club && S.club.id === c.id;
+    box.append(rankRow(i, c.name, f(c), top, mine,
+                       tr('N명').replace('N', c.n) + ' · ' + tr(cityNm(c.city))));
+  });
   return box;
 }
 
@@ -3569,9 +3618,11 @@ function drawCredit() {
 
   // ── 1. 내 등수 — 맨 위, 가장 크게
   const ppl = clubPeople();
+  const span = RKP.span, monthOK = hasMonth(ppl);
+  const useSpan = (span === 'month' && !monthOK) ? 'week' : span;
   const big = el('div', 'crbig');
   if (ppl.length) {
-    const key = rankKey(ppl);
+    const key = rankKey(ppl, useSpan);
     const sorted = ppl.slice().sort((a, b) => key(b) - key(a) || (b.memo || 0) - (a.memo || 0));
     const me = myUid();
     const at = sorted.findIndex(m => m.uid === me);
@@ -3579,8 +3630,9 @@ function drawCredit() {
     /* 빈 문자열로는 번역이 안 된다(tr 이 `v || h` 라 빈 값이면 한국어로 되돌아온다).
        자리표 N 을 넣은 통짜 문장을 사전에 두고 숫자를 끼운다. */
     big.append(el('div', 'crnum', tr('N위').replace('N', rank)));
-    big.append(el('div', 'crsub', tr('N명 중').replace('N', sorted.length)
-                                  + '  ·  ' + tr('이번 주 점수') + ' ' + thisW));
+    big.append(el('div', 'crsub', tr('N명 중').replace('N', sorted.length) + '  ·  '
+      + (useSpan === 'month' ? tr('한 달 점수') + ' ' + monthCredits()
+                             : tr('이번 주 점수') + ' ' + thisW)));
     // 바로 위 사람과의 차이 — 겨루는 맛은 여기서 난다
     if (at > 0) {
       const gap = key(sorted[at - 1]) - key(sorted[at]);
@@ -3596,8 +3648,31 @@ function drawCredit() {
   }
   host.append(big);
 
-  // ── 2. 순위판
-  if (ppl.length) host.append(rankBoard(ppl));
+  // ── 2. 순위판 — 누구끼리(사람/동아리) × 언제까지(주/달)
+  host.append(chipRow([['me', tr('사람 순위')], ['club', tr('동아리 순위')]],
+                      RKP.who, k => { RKP.who = k; drawCredit(); }));
+  const spans = [['week', tr('이번 주')]].concat(monthOK || RKP.who === 'club'
+    ? [['month', tr('한 달')]] : []);
+  host.append(chipRow(spans, useSpan, k => { RKP.span = k; drawCredit(); }));
+  const head = el('div', 'crct');
+  head.append(document.createTextNode(RKP.who === 'club'
+    ? tr('동아리끼리 겨루기') : (useSpan === 'month' ? tr('한 달 순위') : tr('이번 주 순위'))));
+  head.append(el('span', 'crreset', useSpan === 'month'
+    ? tr('최근 주에 더 무게') : tr('월요일마다 초기화')));
+  host.append(head);
+
+  if (RKP.who === 'club') {
+    host.append(clubRankBoard(useSpan, RKP.mode, k => { RKP.mode = k; drawCredit(); }));
+    if (!CLRANK) cCall({ act: 'ranks' })
+      .then(r => { CLRANK = r; drawCredit(); })
+      .catch(() => { CLRANK = { clubs: [] }; drawCredit(); });
+  } else if (ppl.length) {
+    host.append(rankBoard(ppl, useSpan));
+    if (!monthOK) host.append(el('p', 'note',
+      '한 달 순위는 서버가 새 판이어야 나옵니다 — 지금은 이번 주만 줄을 세웁니다.'));
+  } else {
+    host.append(el('p', 'note', '동아리에 들어가면 같은 동아리 사람들과 줄을 섭니다.'));
+  }
 
   // ── 3. 지난주의 나 (순위와 별개로, 내 흐름은 내가 본다)
   const d = new Date(); d.setDate(d.getDate() - 7);
@@ -3681,7 +3756,11 @@ function swipeNav(host, prev, next) {
   }, { passive: true });
 }
 
-let RKP = 'w';        // 순위 기간: w=이번 주, m=최근 한 달
+/* 순위판이 지금 무엇을 보여 주는가 — 화면을 다시 그려도 고른 것이 남는다.
+   who  : 사람끼리(me) / 동아리끼리(club)
+   span : 이번 주(week) / 한 달(month)
+   mode : 동아리 순위에서 합계(sum) / 한 사람 평균(avg) */
+let RKP = { who: 'me', span: 'week', mode: 'sum' };
 let WB = 'star';                       // 단어장에서 보고 있는 칸
 function wordbookEntry() { WB = 'star'; drawWordbook(); }
 function drawWordbook() {
@@ -7533,12 +7612,13 @@ const clubFail = e => { const b = $('#clubBody'); b.textContent = '';
   const again = el('button', 'primary big', '다시'); again.style.width = '100%';
   again.onclick = showClub; b.append(again); show('club', '동아리', true); };
 
+/* 동아리 단추를 누르면 **목록**이 먼저 나온다 (사용자 지시).
+   내 동아리로 곧장 들어가 버리면 다른 동아리가 있다는 것조차 모르게 된다 —
+   동아리는 고르는 재미가 절반이다. 내 동아리는 목록 맨 위에 크게 붙여 둔다. */
 function showClub() {
   if (!S.nick || S.nick === '이름없음') { askNick(); return; }
-  clubBusy('불러오는 중…');
-  if (S.club) {
-    mateSync().then(() => clubHome(MATES)).catch(e => { if (!S.club) clubList(); else clubFail(e); });
-  } else clubList();
+  clubList();
+  if (S.club) mateSync().catch(() => { });      // 목록을 보는 동안 뒤에서 내 동아리 현황을 받아 둔다
 }
 
 /* 동아리 갈래 — 목록에서 한눈에 구분되게 이모지와 함께 */
@@ -7557,43 +7637,114 @@ const CLUBCITY = [
 const cityOf = k => CLUBCITY.find(c => c[0] === k);
 const cityNm = k => (cityOf(k) || ['', '온라인 (어디서든)'])[1];
 
+/* 목록에서 걸러 보는 조건 — 화면을 떠나도 그대로 있게 밖에 둔다 */
+let CLFILT = { city: '', cat: '' };
+
+function clubCard(c, opts) {
+  const cat = catOf(c.cat) || catOf('etc');
+  const mine = S.club && S.club.id === c.id;
+  const row = el('button', 'clubcard' + (mine ? ' mine' : '') + (opts && opts.big ? ' big' : ''));
+  const ic = el('span', 'ccat'); ic.textContent = cat[1]; row.append(ic);
+  const mid = el('span', 'cmid');
+  const t = el('span', 'ctitle');
+  t.append(document.createTextNode(c.name));
+  if (mine) t.append(el('i', 'minechip', tr('내 동아리')));
+  mid.append(t);
+  if (c.desc) mid.append(el('span', 'cdesc', esc(c.desc)));
+  const tags = el('span', 'ctags');
+  tags.append(el('i', 'ctag', '📍 ' + tr(cityNm(c.city))));
+  tags.append(el('i', 'ctag', cat[1] + ' ' + tr(cat[2])));
+  tags.append(el('i', 'ctag num', tr('N명').replace('N', c.n)));
+  if (c.approve) tags.append(el('i', 'ctag warn', tr('승인제')));
+  mid.append(tags);
+  row.append(mid);
+  row.append(el('span', 'cgo', mine ? '→' : '＋'));
+  row.onclick = () => {
+    if (mine) { dive(clubList); clubBusy(tr('불러오는 중…'));
+                mateSync().then(() => clubHome(MATES)).catch(clubFail); return; }
+    if (S.club) { alert(tr('먼저 지금 동아리에서 나와야 다른 동아리에 들어갈 수 있습니다.')); return; }
+    clubBusy(tr('들어가는 중…'));
+    cCall({ act: 'join', id: c.id }).then(r => {
+      if (r.state === 'wait') {
+        clubBusy(tr('가입 신청했습니다. 개설자가 받아 주면 들어갑니다.'));
+        const bk = el('button', 'ghost', tr('목록으로')); bk.onclick = clubList;
+        $('#clubBody').append(bk); return;
+      }
+      S.club = { id: c.id, name: c.name }; save();
+      dive(clubList); mateSync().then(() => clubHome(MATES)).catch(clubFail);
+    }).catch(clubFail);
+  };
+  return row;
+}
+
+function chipRow(items, cur, onPick) {
+  const w = el('div', 'chiprow');
+  items.forEach(([k, label]) => {
+    const c = el('button', 'chip' + (k === cur ? ' on' : ''), esc(label));
+    c.type = 'button';
+    c.onclick = () => onPick(k);
+    w.append(c);
+  });
+  return w;
+}
+
 function clubList() {
-  clubBusy('불러오는 중…');
+  clubBusy(tr('불러오는 중…'));
   cCall({ act: 'clubs' }).then(j => {
     const b = $('#clubBody');
     b.textContent = '';
-    b.append(el('p', 'lede', '만나는 땅으로 묶여 있습니다. 같은 도시면 한국인도 베트남인도 함께 옵니다.'));
-    const mk = el('button', 'primary big', '동아리 만들기');
-    mk.style.width = '100%'; mk.style.marginBottom = '14px';
+    const all = j.clubs || [];
+
+    // 내 동아리는 맨 위에 크게 — 목록을 먼저 보여 주되 내 자리는 한눈에 보이게
+    const mine = S.club && all.find(c => c.id === S.club.id);
+    if (mine) {
+      b.append(el('div', 'grp', tr('내 동아리')));
+      b.append(clubCard(mine, { big: true }));
+    }
+
+    const mk = el('button', S.club ? 'ghost big' : 'primary big', tr('동아리 만들기'));
+    mk.style.width = '100%'; mk.style.margin = '12px 0 6px';
     mk.onclick = clubCreate;
     b.append(mk);
-    if (!j.clubs.length) b.append(el('p', 'note', '아직 만들어진 동아리가 없습니다. 첫 번째로 만들어 보세요.'));
-    /* 도시별로 묶어 보여준다 — 갈래는 줄 앞 이모지로 남는다 */
-    const groups = {};
-    j.clubs.forEach(c => { const k = cityOf(c.city) ? c.city : 'on';
-                           (groups[k] = groups[k] || []).push(c); });
-    const order = CLUBCITY.map(x => x[0]).filter(k => groups[k]);
-    order.forEach(k => {
-      if (j.clubs.length > 3) b.append(el('div', 'grp', '📍 ' + cityNm(k)));
-      groups[k].forEach(c => {
-      const row = el('button', 'bigmenu clubrow');
-      const mine = S.club && S.club.id === c.id;
-      row.append(el('b', null, (catOf(c.cat) || catOf('etc'))[1] + ' ' + esc(c.name)
-                   + (mine ? ' <i class="minechip">내 동아리</i>' : '')),
-                 el('span', 'msub', esc(c.desc || '') + (c.desc ? ' · ' : '')
-                   + `${c.n}명` + (c.approve ? ' · 승인제' : '')));
-      row.onclick = () => {
-        clubBusy('들어가는 중…');
-        cCall({ act: 'join', id: c.id }).then(r => {
-          if (r.state === 'wait') { clubBusy('가입 신청했습니다. 개설자가 받아 주면 들어갑니다.');
-                                    const bk = el('button', 'ghost', '목록으로'); bk.onclick = clubList;
-                                    $('#clubBody').append(bk); return; }
-          S.club = { id: c.id, name: c.name }; save(); showClub();
-        }).catch(clubFail);
-      };
-      b.append(row);
-      });
-    });
+
+    if (!all.length) {
+      b.append(el('p', 'note', '아직 만들어진 동아리가 없습니다. 첫 번째로 만들어 보세요.'));
+      show('club', '동아리', true); return;
+    }
+
+    // ── 걸러 보기: 어디서 만나나 / 무엇을 하나
+    b.append(el('div', 'grp', tr('찾아보기')));
+    const cityCount = {}, catCount = {};
+    all.forEach(c => { const ck = cityOf(c.city) ? c.city : 'on';
+                       cityCount[ck] = (cityCount[ck] || 0) + 1;
+                       const gk = catOf(c.cat) ? c.cat : 'etc';
+                       catCount[gk] = (catCount[gk] || 0) + 1; });
+    const listBox = el('div');
+    const redraw = () => {
+      listBox.textContent = '';
+      const hit = all.filter(c => (!CLFILT.city || (cityOf(c.city) ? c.city : 'on') === CLFILT.city)
+                               && (!CLFILT.cat || (catOf(c.cat) ? c.cat : 'etc') === CLFILT.cat));
+      if (!hit.length) { listBox.append(el('p', 'note', '고른 조건에 맞는 동아리가 없습니다.')); return; }
+      // 조건을 안 걸었으면 도시별로 묶어 보여준다 — 걸었으면 그냥 죽 나열
+      if (!CLFILT.city && hit.length > 4) {
+        const g = {};
+        hit.forEach(c => { const k = cityOf(c.city) ? c.city : 'on'; (g[k] = g[k] || []).push(c); });
+        CLUBCITY.map(x => x[0]).filter(k => g[k]).forEach(k => {
+          listBox.append(el('div', 'grp sub', '📍 ' + tr(cityNm(k))));
+          g[k].sort((x, y) => y.n - x.n).forEach(c => listBox.append(clubCard(c)));
+        });
+      } else {
+        hit.sort((x, y) => y.n - x.n).forEach(c => listBox.append(clubCard(c)));
+      }
+    };
+    b.append(chipRow([['', tr('어디든') + ` (${all.length})`]].concat(
+        CLUBCITY.filter(x => cityCount[x[0]]).map(x => [x[0], tr(x[1]) + ` (${cityCount[x[0]]})`])),
+      CLFILT.city, k => { CLFILT.city = k; clubList(); }));
+    b.append(chipRow([['', tr('무엇이든')]].concat(
+        CLUBCATS.filter(x => catCount[x[0]]).map(x => [x[0], x[1] + ' ' + tr(x[2])])),
+      CLFILT.cat, k => { CLFILT.cat = k; clubList(); }));
+    b.append(listBox);
+    redraw();
     show('club', '동아리', true);
   }).catch(clubFail);
 }
@@ -7692,11 +7843,28 @@ function clubHome(j) {
   const fin = el('div', 'feedin');
   const ftxt = el('input', 'keyin'); ftxt.type = 'text'; ftxt.maxLength = 200;
   ftxt.placeholder = '오늘 배운 것, 한 마디… (베트남어 환영)';
+  const cam = el('button', 'ghost camb', '📷'); cam.title = tr('사진 넣기');
   const fgo = el('button', 'primary', '올리기');
-  fin.append(ftxt, fgo);
+  fin.append(ftxt, cam, fgo);
   b.append(fin);
+  // 고른 사진은 올리기 전에 여기서 미리 보인다 — 잘못 고르면 X 로 뺀다
+  let pending = '';
+  const prev = el('div', 'feedprev');
+  b.append(prev);
+  const showPrev = () => {
+    prev.textContent = '';
+    if (!pending) return;
+    const im = new Image(); im.src = pending; im.alt = '';
+    const x = el('button', 'prevx', '✕');
+    x.onclick = () => { pending = ''; showPrev(); };
+    prev.append(im, x);
+  };
+  cam.onclick = () => pickPhoto(d => { pending = d; showPrev(); });
+
+  b.append(el('p', 'note', '사진은 서버에 <b>그대로</b> 저장됩니다 — 남에게 보이면 안 될 것은 올리지 마세요.'));
   const flist = el('div', 'feedlist');
   b.append(flist);
+  const PIMG = {};                       // 받아 둔 담벼락 사진 (화면을 떠나면 사라진다)
   const drawFeed = posts => {
     flist.textContent = '';
     if (!posts.length) { flist.append(el('p', 'note', '아직 글이 없습니다 — 첫 줄을 남겨 보세요.')); return; }
@@ -7704,23 +7872,38 @@ function clubHome(j) {
       const card = el('div', 'feedcard');
       const hd = el('div', 'feedhd');
       hd.append(faceEl(pp.f, 'row'), el('b', null, esc(pp.n)), el('span', 'dmt', dmWhen(pp.t)));
-      card.append(hd, el('div', 'feedtx', esc(pp.x)));
+      card.append(hd);
+      if (pp.x) card.append(el('div', 'feedtx', esc(pp.x)));
+      if (pp.p) {
+        const holder = el('div', 'feedimg');
+        if (PIMG[pp.p]) { const im = new Image(); im.src = PIMG[pp.p]; im.alt = ''; holder.append(im); }
+        else holder.append(el('div', 'imgwait', tr('사진 받는 중…')));
+        card.append(holder);
+      }
       flist.append(card);
     });
+    // 아직 못 받은 사진만 한 번에 받아 온다 (한 번에 열두 장까지)
+    const want = posts.filter(p => p.p && !PIMG[p.p]).slice(-12).map(p => p.p);
+    if (want.length) {
+      cCall({ act: 'photo', id: S.club.id, ps: want }).then(r => {
+        Object.assign(PIMG, r.photo || {});
+        drawFeed(posts);
+      }).catch(() => { });
+    }
   };
   cCall({ act: 'feed', id: S.club.id }).then(r => drawFeed(r.posts || []))
     .catch(() => flist.append(el('p', 'note', '담벼락은 서버가 새 판이어야 보입니다.')));
   fgo.onclick = () => {
     const x = ftxt.value.trim();
-    if (!x) { ftxt.focus(); return; }
+    if (!x && !pending) { ftxt.focus(); return; }
     fgo.disabled = true;
-    cCall({ act: 'post', id: S.club.id, x })
-      .then(r => { ftxt.value = ''; fgo.disabled = false; drawFeed(r.posts || []); })
+    cCall({ act: 'post', id: S.club.id, x, img: pending })
+      .then(r => { ftxt.value = ''; pending = ''; showPrev(); fgo.disabled = false; drawFeed(r.posts || []); })
       .catch(e => { fgo.disabled = false; alert(e.message || '안 올라갔습니다'); });
   };
 
   const more = el('button', 'ghost sm', '다른 동아리 보기');
-  more.onclick = () => { dive(showClub); clubList(); };
+  more.onclick = clubList;
   b.append(more);
   const out = el('button', 'ghost sm', '동아리 탈퇴');
   out.onclick = () => {
@@ -7988,6 +8171,34 @@ function pickFace(after) {
   };
   f.click();
 }
+/* 담벼락 사진 — 얼굴 사진보다 크게(가로 720) 두되, 서버 한 칸(≒45KB)에 들어가게 줄인다.
+   원본을 그대로 올리면 3~5MB짜리가 오가서 데이터 요금이 나간다. */
+function pickPhoto(after) {
+  const f = el('input'); f.type = 'file'; f.accept = 'image/*';
+  f.onchange = () => {
+    const file = f.files && f.files[0];
+    if (!file) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      const im = new Image();
+      im.onload = () => {
+        const W = Math.min(720, im.width);
+        const c = document.createElement('canvas');
+        c.width = W; c.height = Math.round(im.height * W / im.width);
+        c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+        let d = c.toDataURL('image/jpeg', .78);
+        for (const q of [.6, .45, .32]) { if (d.length <= 58000) break; d = c.toDataURL('image/jpeg', q); }
+        if (d.length > 58000) { alert(tr('사진이 너무 큽니다 — 더 작은 사진을 골라 주세요.')); return; }
+        after(d);
+      };
+      im.onerror = () => alert('사진을 열지 못했습니다');
+      im.src = rd.result;
+    };
+    rd.readAsDataURL(file);
+  };
+  f.click();
+}
+
 function saveFace(d, after) {
   cCall({ act: 'setface', img: d }).then(() => {
     S.avv = (S.avv || 0) + 1; save();
