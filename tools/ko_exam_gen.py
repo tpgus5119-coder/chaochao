@@ -438,7 +438,7 @@ BLUEPRINTS = {
     # 재료가 한 벌치뿐이라 회차는 1회만 낸다 — 없는 것을 있는 척하지 않는다.
     "topik-2-listen": {
         "name": "TOPIK II 듣기 모의고사",
-        "desc": "TOPIK II 1교시 듣기 형식 · 50문항 (지금은 1회분)",
+        "desc": "TOPIK II 1교시 듣기 형식 · 50문항 (지금은 2회분)",
         "minutes": 60,
         "grades": ["B", "C"],
         "sections": [
@@ -715,10 +715,10 @@ if __name__ == "__main__":
         # 직무 어휘는 낱말이 정해져 있어 회차를 나눌 수 없다 — 한 벌만 낸다
         # 재료가 몇 벌치인지에 따라 회차 수가 다르다 — 없는 것을 있는 척하지 않는다.
         n_sets = 3
-        if exam_id.startswith("eps-job-") or exam_id in ("topik-2-listen", "kiip-5"):
+        if exam_id.startswith("eps-job-") or exam_id == "kiip-5":
             n_sets = 1
-        elif exam_id == "topik-2-read":
-            n_sets = 2          # 중급 지문이 24문항뿐이라 한 벌에 12씩 두 벌
+        elif exam_id in ("topik-2-read", "topik-2-listen"):
+            n_sets = 2          # 중급 재료가 두 벌치다 — 없는 것을 있는 척하지 않는다
         for seed in range(1, n_sets + 1):
             e = build(exam_id, seed, words, gloss, pics, state)
             out["exams"].append(e)
