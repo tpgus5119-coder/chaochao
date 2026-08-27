@@ -38,29 +38,48 @@ def vi_tokens(s):
     """'y tá, bác sĩ' → {'y tá','bác sĩ'}. 뜻이 겹치는 보기를 걸러내는 데 쓴다."""
     return {t.strip().lower() for t in str(s or "").split(",") if t.strip()}
 
-def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False):
+def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show=None):
     """오답은 같은 등급·같은 품사에서만 뽑는다.
 
     distinct_vi=True 면 보기끼리 베트남어 뜻이 한 조각도 겹치지 않게 한다 —
     보기 넷의 뜻이 겹치면 정답이 둘이 되어 문제가 깨진다.
+
+    show 를 주면 **화면에 보이는 글자 길이**까지 맞춘다. 왜 필요한가:
+    뜻이 'sự nghèo khó, cái nghèo' 처럼 길게 적힌 낱말이 정답이고 오답은 한 낱말뿐이면,
+    한국어를 몰라도 '제일 긴 것'을 찍어 맞힌다. 실제로 만들어 놓고 세어 보니
+    1,274문항 가운데 118개가 그렇게 찍히는 문항이었다.
     """
     pool = pool_by_key.get(key, [])
     cands = [w for w in pool if w["ko"] != answer["ko"]]
     if len(cands) < n:
         return None
-    if not distinct_vi:
-        return rng.sample(cands, n)
 
-    for _ in range(30):                       # 겹치지 않는 조합이 나올 때까지 몇 번 다시 뽑는다
+    alen = len(str(show(answer))) if show else 0
+
+    def len_ok(pick):
+        """정답이 가장 길거나 가장 짧은 쪽으로 튀지 않게."""
+        if not show:
+            return True
+        L = [alen] + [len(str(show(w))) for w in pick]
+        mx, mn = max(L), min(L)
+        if mx - mn < 12:                      # 고만고만하면 통과
+            return True
+        return not (alen == mx or alen == mn)
+
+    best = None
+    for _ in range(60):
         pick = rng.sample(cands, n)
-        sets = [vi_tokens(answer.get("vi"))] + [vi_tokens(w.get("vi")) for w in pick]
-        if any(not s for s in sets):
-            continue
-        ok = all(not (sets[i] & sets[j])
-                 for i in range(len(sets)) for j in range(i + 1, len(sets)))
-        if ok:
+        if distinct_vi:
+            sets = [vi_tokens(answer.get("vi"))] + [vi_tokens(w.get("vi")) for w in pick]
+            if any(not s for s in sets):
+                continue
+            if any(sets[i] & sets[j]
+                   for i in range(len(sets)) for j in range(i + 1, len(sets))):
+                continue
+        best = best or pick                   # 뜻은 맞았으니 최소한 이건 쓸 수 있다
+        if len_ok(pick):
             return pick
-    return None
+    return best
 
 def mk_choice_q(rng, answer, distractors, stem, show, qtype, extra=None, note=None):
     """note(보기, 정답인가) → 그 보기 한 줄 해설. 보기 순서가 바뀌어도 같이 따라간다."""
@@ -80,6 +99,18 @@ def mk_choice_q(rng, answer, distractors, stem, show, qtype, extra=None, note=No
     return q
 
 
+def one_sense(v):
+    """보기에는 뜻을 하나만 보여 준다.
+
+    사전에 뜻이 여럿 달린 낱말('sự ghi chép, sự ghi hình, bản ghi')이 정답이고
+    오답은 한 낱말짜리면, 뜻을 몰라도 '제일 긴 것'을 찍어 맞힌다.
+    그렇다고 뜻을 지어낼 수는 없으니, **첫 번째 뜻만** 보여 준다 —
+    틀린 말이 아니고, 보기 넷의 길이도 고만고만해진다.
+    (겹침 검사는 여전히 뜻 전체로 한다 — 정답이 둘이 되는 것은 막아야 하니까)
+    """
+    return str(v or "").split(",")[0].strip() or str(v or "")
+
+
 def gl(w):
     """'낱말(뜻)' 한 덩어리 — 해설에서 되풀이해 쓴다."""
     v = (w.get("vi") or "").split(",")[0].strip()
@@ -92,7 +123,8 @@ def q_dfn2word(rng, w, gloss, pool_by_key):
     dfn = clean_dfn(g.get("ko_dfn"))
     if not dfn or w["ko"] in dfn:
         return None
-    d = pick_distractors(rng, w, pool_by_key, (w["grade"], w["pos"]), distinct_vi=True)
+    d = pick_distractors(rng, w, pool_by_key, (w["grade"], w["pos"]),
+                         distinct_vi=True, show=lambda o: o["ko"])
     if not d:
         return None
     return mk_choice_q(rng, w, d, f"다음 설명에 맞는 단어는?\n{dfn}",
@@ -104,11 +136,12 @@ def q_word2vi(rng, w, gloss, pool_by_key):
     """단어를 주고 베트남어 뜻을 고르게 한다 (학습자 자가 점검용)."""
     if not w.get("vi"):
         return None
-    d = pick_distractors(rng, w, pool_by_key, (w["grade"], w["pos"]), distinct_vi=True)
+    d = pick_distractors(rng, w, pool_by_key, (w["grade"], w["pos"]),
+                         distinct_vi=True, show=lambda o: one_sense(o["vi"]))
     if not d:
         return None
     return mk_choice_q(rng, w, d, f"'{w['ko']}'의 뜻으로 알맞은 것은?",
-                       lambda o: o["vi"], "word2vi",
+                       lambda o: one_sense(o["vi"]), "word2vi",
                        note=lambda o, a: (f"맞습니다. {gl(w)}."
                                           if a else f"이 뜻은 '{o['ko']}'입니다."))
 
@@ -116,7 +149,8 @@ def q_vi2word(rng, w, gloss, pool_by_key):
     """베트남어 뜻을 주고 한국어 단어를 고르게 한다 (산출 방향 — 더 어렵다)."""
     if not w.get("vi"):
         return None
-    d = pick_distractors(rng, w, pool_by_key, (w["grade"], w["pos"]), distinct_vi=True)
+    d = pick_distractors(rng, w, pool_by_key, (w["grade"], w["pos"]),
+                         distinct_vi=True, show=lambda o: o["ko"])
     if not d:
         return None
     return mk_choice_q(rng, w, d, f"'{w['vi']}'에 해당하는 한국어는?",
@@ -523,7 +557,9 @@ for _ind, _ws in JOB_VOCAB.items():
         "name": f"EPS 직무 어휘 · {_ind}",
         "desc": f"{_ind} 업종에서 실제로 쓰이는 말 {_n}개",
         "minutes": 20, "grades": ["A", "B", "C"], "industry": _ind,
-        "sections": numbered([("job", _n)]),
+        # 뜻 길이가 안 맞는 낱말은 건너뛰므로 실제 문항 수가 한둘 적을 수 있다.
+        # 그래서 구간 이름에 [1~20] 같은 번호를 안 붙인다 — 안 맞으면 더 이상하다.
+        "sections": [{"label": LABEL["job"], "kind": "job", "n": _n}],
     }
 
 
@@ -538,10 +574,21 @@ def q_job(rng, industry, idx, used):
     cands = [x for x in pool if x["ko"] != w["ko"] and x["vi"] != w["vi"]]
     if len(cands) < 3:
         return None
-    d = rng.sample(cands, 3)
+    # 뜻 길이가 고만고만한 것끼리 — 길이로 찍히지 않게
+    al = len(one_sense(w["vi"]))
+    d = None
+    for _ in range(40):
+        p = rng.sample(cands, 3)
+        L = [al] + [len(one_sense(x["vi"])) for x in p]
+        if max(L) - min(L) < 12 or (al != max(L) and al != min(L)):
+            d = p; break
+    if d is None:
+        # 뜻 길이가 비슷한 짝을 못 찾으면 이 낱말은 안 낸다.
+        # 억지로 내면 '제일 긴 것'을 찍어 맞히는 문항이 된다 — 문항 수보다 질이 먼저다.
+        return None
     used.add(w["ko"])
     return mk_choice_q(rng, w, d, f"'{w['ko']}'의 뜻으로 알맞은 것은?",
-                       lambda o: o["vi"], "job",
+                       lambda o: one_sense(o["vi"]), "job",
                        extra={"industry": industry},
                        note=lambda o, a: (f"맞습니다. {industry} 일터에서 {gl(w)}."
                                           if a else f"이 뜻은 '{o['ko']}'입니다."))
@@ -595,7 +642,7 @@ def build(exam_id, seed, words, gloss, pics, state):
         random.Random(f"{exam_id}-read").shuffle(rd_left)
         state["read"] = rd_left
 
-    qs, skipped = [], 0
+    qs, skipped, job_at = [], 0, 0
 
     for sec in bp["sections"]:
         made = 0
@@ -637,9 +684,12 @@ def build(exam_id, seed, words, gloss, pics, state):
                     break
                 q = q_t2_long(rng, *t2_long.pop(0))
             elif sec["kind"] == "job":
-                q = q_job(rng, bp["industry"], made, used)
-                if not q:
+                if job_at >= len(JOB_VOCAB.get(bp["industry"], [])):
                     break
+                q = q_job(rng, bp["industry"], job_at, used)
+                job_at += 1
+                if not q:
+                    continue          # 이 낱말은 건너뛰고 다음 낱말로
             elif sec["kind"] == "listen_pic":
                 w = rng.choice(pic_pool) if pic_pool else None
                 if not w or w["ko"] in used:

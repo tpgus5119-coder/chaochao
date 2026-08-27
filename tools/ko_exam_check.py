@@ -73,6 +73,16 @@ def main():
             skew.append(f"{e['id']} {e['set']}회: {dict(sorted(c.items()))} (최다 {worst:.0%})")
 
     total_q = sum(len(e["questions"]) for e in d["exams"])
+    # 정답만 유난히 길거나 짧으면 뜻을 몰라도 찍힌다 — 실제로 118문항이 그랬다.
+    for e in d["exams"]:
+        for q in e["questions"]:
+            if q.get("optkind") == "img":
+                continue
+            L = [len(str(x)) for x in q["options"]]
+            if max(L) - min(L) >= 12 and L[q["answer"]] in (max(L), min(L)):
+                problems.append(("길이로 찍힘", f"{e['id']} {e['set']}회 {q['no']}번",
+                                 f"보기 길이 {min(L)}~{max(L)}자 — 정답이 끝값이라 읽지 않고도 찍힌다"))
+
     print(f"검사 대상: {len(d['exams'])}개 세트 · {total_q}문항")
     if problems:
         by_kind = Counter(p[0] for p in problems)
