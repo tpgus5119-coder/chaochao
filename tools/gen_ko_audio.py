@@ -42,6 +42,15 @@ def collect():
                     else:
                         need.setdefault(str(a), "word")
 
+    # 1.5) 기초 문법 예문 — 낱말이 아니라 문장 전체를 통으로 읽어야 자연스럽다
+    p = ROOT / "data" / "ko_grammar.json"
+    if p.exists():
+        g = json.loads(p.read_text(encoding="utf-8"))
+        for item in g["items"]:
+            for ex in item["examples"]:
+                if ex.get("ko"):
+                    need.setdefault(ex["ko"], "sent")
+
     # 2) 한국어 과정 어휘 — 등급 A·B (기초부터. C까지 한 번에 구우면 파일이 너무 많다)
     p = ROOT / "data" / "_ko_words.json"
     if p.exists():

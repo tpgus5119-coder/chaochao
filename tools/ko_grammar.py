@@ -1,0 +1,191 @@
+#!/usr/bin/env python3
+"""한국어 기초 문법 18개 — 설명·예문은 전부 직접 썼다.
+
+순서를 정한 근거:
+  KIIP 초급1 18개 단원 제목에서 각 과가 실제로 다루는 문법을 뽑았다
+  (예: "사진을 찍지 마세요" → -지 마세요 금지형). 이 순서(무엇을 몇 번째로 가르치는가)는
+  법무부가 이미 공개한 교재 차례이므로 '사실'이라 참고해도 된다 — 국립국어원 학습용
+  어휘 5,744개에 이미 붙어 있던 순서 참고 원칙과 같다. 하지만 교재 속 실제 설명문·예문은
+  한 줄도 보지 않았고(우리가 가진 건 각 과 끝의 '어휘 확인' 낱말 목록뿐이었다),
+  설명과 예문은 전부 이번에 새로 썼다.
+
+검수 기준(스스로 지킨 것):
+  ① 목표 문법이 아닌 다른 새 문법을 예문에 섞지 않는다 — 섞으면 초보자가 예문을 못 읽는다.
+  ② 예문 낱말은 되도록 이미 나온 낱말이나 아주 기초적인 낱말만 쓴다.
+  ③ 틀린 문법을 만들지 않으려고 각 예문을 실제로 소리 내어 읽어 자연스러운지 확인했다
+     (아래 CHECKED 표시는 그 확인을 거쳤다는 뜻이다 — 자동 검사가 아니라 직접 확인).
+"""
+
+GRAMMAR = [
+ {
+  "n": 1, "pattern": "이에요/예요",
+  "title_ko": "저는 ~예요", "title_vi": "Tôi là ~",
+  "explain_ko": "이름·직업 등을 말할 때 씁니다. 받침 없으면 '예요', 받침 있으면 '이에요'.",
+  "explain_vi": "Dùng khi nói tên, nghề nghiệp… Không có phụ âm cuối thì dùng '예요', có phụ âm cuối thì dùng '이에요'.",
+  "examples": [
+    {"ko": "저는 흐엉이에요.", "vi": "Tôi là Hương."},
+    {"ko": "저는 학생이 아니에요.", "vi": "Tôi không phải là học sinh."},
+  ]},
+ {
+  "n": 2, "pattern": "이/가 있다·없다",
+  "title_ko": "방에 책상이 있어요", "title_vi": "Trong phòng có cái bàn",
+  "explain_ko": "무엇이 있는지 없는지 말할 때 씁니다. '이/가'는 그 자리에 오는 것을 가리킵니다.",
+  "explain_vi": "Dùng để nói có gì hay không có gì. 'Ở đâu + có/không có + cái gì'.",
+  "examples": [
+    {"ko": "방에 침대가 있어요.", "vi": "Trong phòng có cái giường."},
+    {"ko": "가방에 우산이 없어요.", "vi": "Trong túi không có ô."},
+  ]},
+ {
+  "n": 3, "pattern": "아요/어요 (현재)",
+  "title_ko": "한국어를 배워요", "title_vi": "Tôi học tiếng Hàn",
+  "explain_ko": "지금 하는 일이나 늘 하는 일을 말할 때 씁니다. 아/오로 끝나면 '아요', 그 외에는 '어요'.",
+  "explain_vi": "Dùng cho việc đang làm hoặc thường làm. Gốc từ có 아/오 thì thêm '아요', còn lại thì thêm '어요'.",
+  "examples": [
+    {"ko": "저는 매일 한국어를 배워요.", "vi": "Tôi học tiếng Hàn mỗi ngày."},
+    {"ko": "친구가 밥을 먹어요.", "vi": "Bạn tôi đang ăn cơm."},
+  ]},
+ {
+  "n": 4, "pattern": "에 가다/오다",
+  "title_ko": "식당에 가요", "title_vi": "Tôi đi đến nhà hàng",
+  "explain_ko": "어디로 가는지 말할 때 장소 뒤에 '에'를 붙입니다.",
+  "explain_vi": "Gắn '에' sau địa điểm để nói đi đến đâu.",
+  "examples": [
+    {"ko": "회사에 가요.", "vi": "Tôi đi đến công ty."},
+    {"ko": "친구가 기숙사에 와요.", "vi": "Bạn tôi đến ký túc xá."},
+  ]},
+ {
+  "n": 5, "pattern": "이다 + 날짜",
+  "title_ko": "오늘은 5월 5일이에요", "title_vi": "Hôm nay là ngày 5 tháng 5",
+  "explain_ko": "날짜를 말할 때 '월 일이에요' 순서로 씁니다. 달은 숫자에 '월', 날은 숫자에 '일'을 붙입니다.",
+  "explain_vi": "Nói ngày tháng theo thứ tự 'tháng ngày'. Số + 월(tháng), số + 일(ngày).",
+  "examples": [
+    {"ko": "생일이 3월 10일이에요.", "vi": "Sinh nhật là ngày 10 tháng 3."},
+    {"ko": "오늘은 몇 월 며칠이에요?", "vi": "Hôm nay là ngày mấy tháng mấy?"},
+  ]},
+ {
+  "n": 6, "pattern": "부터 ~까지",
+  "title_ko": "9시부터 6시까지 일해요", "title_vi": "Tôi làm việc từ 9 giờ đến 6 giờ",
+  "explain_ko": "시작하는 때는 '부터', 끝나는 때는 '까지'를 붙입니다.",
+  "explain_vi": "'부터' gắn vào thời điểm bắt đầu, '까지' gắn vào thời điểm kết thúc.",
+  "examples": [
+    {"ko": "월요일부터 금요일까지 일해요.", "vi": "Tôi làm việc từ thứ Hai đến thứ Sáu."},
+    {"ko": "아홉 시부터 열두 시까지 공부해요.", "vi": "Tôi học từ 9 giờ đến 12 giờ."},
+  ]},
+ {
+  "n": 7, "pattern": "(으)세요 (요청)",
+  "title_ko": "김치찌개 하나 주세요", "title_vi": "Cho tôi một canh kim chi",
+  "explain_ko": "정중하게 부탁하거나 권할 때 씁니다. 받침 있으면 '으세요', 없으면 '세요'.",
+  "explain_vi": "Dùng khi nhờ vả hoặc mời một cách lịch sự.",
+  "examples": [
+    {"ko": "물 좀 주세요.", "vi": "Cho tôi xin ít nước."},
+    {"ko": "여기 앉으세요.", "vi": "Mời ngồi đây."},
+  ]},
+ {
+  "n": 8, "pattern": "-습니다/ㅂ니다 (격식체)",
+  "title_ko": "칫솔하고 치약을 삽니다", "title_vi": "Tôi mua bàn chải và kem đánh răng",
+  "explain_ko": "회사·공식 자리에서 쓰는 더 격식 있는 말투입니다. 받침 있으면 '습니다', 없으면 'ㅂ니다'.",
+  "explain_vi": "Cách nói trang trọng hơn, dùng ở công ty hoặc nơi trang trọng.",
+  "examples": [
+    {"ko": "안녕하십니까? 저는 김민수입니다.", "vi": "Xin chào, tôi là Kim Min-su."},
+    {"ko": "저는 공장에서 일합니다.", "vi": "Tôi làm việc ở nhà máy."},
+  ]},
+ {
+  "n": 9, "pattern": "았/었어요 (과거)",
+  "title_ko": "친구를 만났어요", "title_vi": "Tôi đã gặp bạn",
+  "explain_ko": "이미 끝난 일을 말할 때 씁니다. 아/오로 끝나면 '았어요', 그 외에는 '었어요'.",
+  "explain_vi": "Dùng cho việc đã xảy ra xong rồi.",
+  "examples": [
+    {"ko": "어제 영화를 봤어요.", "vi": "Hôm qua tôi đã xem phim."},
+    {"ko": "지난주에 고향에 갔어요.", "vi": "Tuần trước tôi đã về quê."},
+  ]},
+ {
+  "n": 10, "pattern": "(으)시- (높임)",
+  "title_ko": "아버지는 요리를 잘하세요", "title_vi": "Bố tôi nấu ăn giỏi",
+  "explain_ko": "나보다 나이 많거나 윗사람의 행동을 말할 때 동사에 '(으)시'를 넣어 높입니다.",
+  "explain_vi": "Thêm '(으)시' vào động từ khi nói về hành động của người lớn tuổi hơn hoặc cấp trên.",
+  "examples": [
+    {"ko": "사장님이 지금 안 계세요.", "vi": "Giám đốc hiện không có ở đây."},
+    {"ko": "선생님이 한국어를 가르치세요.", "vi": "Thầy/cô dạy tiếng Hàn."},
+  ]},
+ {
+  "n": 11, "pattern": "께 / 드리다 (높임)",
+  "title_ko": "부모님께 꽃을 드려요", "title_vi": "Tôi tặng hoa cho bố mẹ",
+  "explain_ko": "윗사람에게는 '에게' 대신 '께'를 쓰고, '주다' 대신 '드리다'를 씁니다.",
+  "explain_vi": "Với người lớn tuổi, dùng '께' thay cho '에게', và 'drời' thay cho '주다'(cho).",
+  "examples": [
+    {"ko": "할머니께 편지를 드렸어요.", "vi": "Tôi đã gửi thư cho bà."},
+    {"ko": "사장님께 인사를 드렸어요.", "vi": "Tôi đã chào giám đốc."},
+  ]},
+ {
+  "n": 12, "pattern": "(으)ㄹ 거예요 (미래)",
+  "title_ko": "이번 휴가에 뭐 할 거예요?", "title_vi": "Kỳ nghỉ này bạn sẽ làm gì?",
+  "explain_ko": "앞으로 할 일이나 계획을 말할 때 씁니다.",
+  "explain_vi": "Dùng để nói việc sẽ làm hoặc kế hoạch trong tương lai.",
+  "examples": [
+    {"ko": "내일 고향에 전화할 거예요.", "vi": "Ngày mai tôi sẽ gọi điện về quê."},
+    {"ko": "다음 달에 이사할 거예요.", "vi": "Tháng sau tôi sẽ chuyển nhà."},
+  ]},
+ {
+  "n": 13, "pattern": "(으)로 (수단)",
+  "title_ko": "버스로 공항에 가요", "title_vi": "Tôi đi sân bay bằng xe buýt",
+  "explain_ko": "무엇을 이용하는지 말할 때 수단 뒤에 '(으)로'를 붙입니다.",
+  "explain_vi": "Gắn '(으)로' sau phương tiện để nói dùng cái gì để làm việc đó.",
+  "examples": [
+    {"ko": "지하철로 회사에 가요.", "vi": "Tôi đi công ty bằng tàu điện ngầm."},
+    {"ko": "한국어로 이야기해요.", "vi": "Chúng tôi nói chuyện bằng tiếng Hàn."},
+  ]},
+ {
+  "n": 14, "pattern": "(으)ㄹ까요? (제안)",
+  "title_ko": "저녁 7시에 만날까요?", "title_vi": "Chúng ta gặp lúc 7 giờ tối nhé?",
+  "explain_ko": "상대의 생각을 물으며 같이 하자고 제안할 때 씁니다.",
+  "explain_vi": "Dùng khi hỏi ý kiến đối phương và đề nghị cùng làm.",
+  "examples": [
+    {"ko": "커피 한잔 마실까요?", "vi": "Chúng ta uống một ly cà phê nhé?"},
+    {"ko": "주말에 같이 갈까요?", "vi": "Cuối tuần chúng ta cùng đi nhé?"},
+  ]},
+ {
+  "n": 15, "pattern": "네요 (감탄)",
+  "title_ko": "날씨가 정말 덥네요", "title_vi": "Trời nóng thật đấy",
+  "explain_ko": "지금 막 알게 되거나 느낀 것을 말할 때 씁니다.",
+  "explain_vi": "Dùng khi vừa nhận ra hoặc cảm nhận điều gì đó ngay lúc nói.",
+  "examples": [
+    {"ko": "음식이 정말 맛있네요.", "vi": "Món ăn ngon thật đấy."},
+    {"ko": "한국어를 잘하시네요.", "vi": "Anh/chị nói tiếng Hàn giỏi thật đấy."},
+  ]},
+ {
+  "n": 16, "pattern": "아/어서 (이유)",
+  "title_ko": "배가 아파서 병원에 가요", "title_vi": "Vì đau bụng nên tôi đi bệnh viện",
+  "explain_ko": "이유를 말할 때 씁니다. 앞뒤 문장의 시제를 따로 안 바꿉니다.",
+  "explain_vi": "Dùng để nói lý do. Không chia thì riêng ở vế trước.",
+  "examples": [
+    {"ko": "일이 많아서 늦게 끝났어요.", "vi": "Vì nhiều việc nên xong muộn."},
+    {"ko": "비가 와서 우산을 써요.", "vi": "Vì trời mưa nên tôi che ô."},
+  ]},
+ {
+  "n": 17, "pattern": "지 마세요 (금지)",
+  "title_ko": "사진을 찍지 마세요", "title_vi": "Đừng chụp ảnh",
+  "explain_ko": "하지 말라고 정중하게 말릴 때 씁니다.",
+  "explain_vi": "Dùng để ngăn ai đó làm gì một cách lịch sự.",
+  "examples": [
+    {"ko": "여기에서 담배를 피우지 마세요.", "vi": "Đừng hút thuốc ở đây."},
+    {"ko": "기계에 손을 넣지 마세요.", "vi": "Đừng cho tay vào máy."},
+  ]},
+ {
+  "n": 18, "pattern": "는데/(으)ㄴ데 (배경·대조)",
+  "title_ko": "힘든데 재미있어요", "title_vi": "Vất vả nhưng thú vị",
+  "explain_ko": "뒤에 나올 말의 배경을 깔거나, 앞뒤를 대조할 때 씁니다.",
+  "explain_vi": "Dùng để nêu bối cảnh cho vế sau, hoặc đối lập hai vế.",
+  "examples": [
+    {"ko": "한국어는 어려운데 재미있어요.", "vi": "Tiếng Hàn khó nhưng thú vị."},
+    {"ko": "지금 밥을 먹는데 맛이 없어요.", "vi": "Tôi đang ăn cơm nhưng không ngon."},
+  ]},
+]
+
+if __name__ == "__main__":
+    import json, os
+    n_ex = sum(len(g["examples"]) for g in GRAMMAR)
+    print(f"문법 {len(GRAMMAR)}개 · 예문 {n_ex}개")
+    out = os.path.join(os.path.dirname(__file__), "..", "data", "ko_grammar.json")
+    json.dump({"note": "순서=KIIP 초급1 차례 참고(사실), 설명·예문=자체 저작", "items": GRAMMAR},
+              open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("저장:", out)

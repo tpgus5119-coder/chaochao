@@ -134,6 +134,11 @@ const UIVI = {
   '매일 아침 6시 30분에 업데이트됩니다. 최근 3일치만 남습니다.<br>기사 출처 — 인사이드비나': 'Cập nhật lúc 6 giờ 30 sáng mỗi ngày. Chỉ giữ lại 3 ngày gần nhất.<br>Nguồn bài báo — Inside Vina',
   '모음 소개 다시 보기': 'Xem lại phần giới thiệu nguyên âm',
   '모의고사': 'Thi thử',
+  '기초 문법': 'Ngữ pháp cơ bản',
+  '한국어 기초 문법 18개 — 배우는 순서 그대로입니다.':
+    '18 điểm ngữ pháp cơ bản tiếng Hàn — đúng theo thứ tự học.',
+  '문법 자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
+    'Không tải được tài liệu ngữ pháp. Hãy kiểm tra kết nối mạng.',
   /* ── 베트남인용 한국어 과정 홈 화면 ── */
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
@@ -1959,6 +1964,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
 
 const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   exam:  { name: '모의고사', items: () => [['보기', examEntry]] },
+  gram2: { name: '기초 문법', items: () => [['보기', koGramEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -2031,6 +2037,79 @@ function drawExamList() {
   x.append(el('span', 'exmeta', `구술 ${EXDATA.extra.speak.length}세트 · 작문 ${EXDATA.extra.write.length}제목`));
   x.onclick = examExtra;
   b.append(x);
+}
+
+/* ---------- 한국어 기초 문법 ----------
+   시험 문제(모의고사)와 다르다 — 여기는 맞히는 게 아니라 배우는 자리다.
+   그래서 채점도 타이머도 없고, 화살표로 앞뒤 문법을 자유롭게 오간다. */
+let KGDATA = null, KG = null;
+
+function koGramEntry() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '한국어 기초 문법 18개 — 배우는 순서 그대로입니다.'));
+  show('exam', '기초 문법', true);
+  if (KGDATA) return drawGramList();
+  fetch('data/ko_grammar.json', { cache: 'no-cache' })
+    .then(r => r.json()).then(j => { KGDATA = j.items; drawGramList(); })
+    .catch(() => b.append(el('p', 'lede', '문법 자료를 받지 못했습니다. 인터넷을 확인해 주세요.')));
+}
+
+function drawGramList() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '한국어 기초 문법 18개 — 배우는 순서 그대로입니다.'));
+  KGDATA.forEach((g, i) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, `${g.n}. ${g.pattern}`));
+    btn.append(el('span', 'exmeta', g.title_ko));
+    btn.onclick = () => drawGramCard(i);
+    b.append(btn);
+  });
+}
+
+function drawGramCard(i) {
+  KG = i;
+  const g = KGDATA[i];
+  const b = $('#examBody');
+  b.textContent = '';
+
+  const head = el('div', 'exbar');
+  head.append(el('span', 'expos', `${i + 1} / ${KGDATA.length}`));
+  b.append(head);
+
+  // 목표 문장(title_ko)과 그 뜻(title_vi)은 베트남어 화면에서도 늘 같이 보여야 한다 —
+  // 배우는 대상이 한국어 자체이기 때문이다(베트남어 과정에서 vi+ko를 늘 같이 보여주는 것과 같다).
+  // 하지만 '설명글'은 다르다 — 베트남 사람에게 한글 설명은 못 읽는 글자일 뿐이라,
+  // vi 모드에서는 베트남어 설명만, dev 모드에서만 한글 설명을 같이 보여준다.
+  const card = el('div', 'excard');
+  card.append(el('div', 'gpat', g.pattern));
+  card.append(el('div', 'exask', esc(g.title_ko)));
+  card.append(el('div', 'exbody', esc(g.title_vi)));
+  if (S.ui !== 'vi') card.append(el('div', 'gexp', esc(g.explain_ko)));
+  card.append(el('div', 'gexp vi', esc(g.explain_vi)));
+
+  g.examples.forEach(ex => {
+    const row = el('div', 'gex');
+    const line = el('div', 'gexko');
+    line.append(el('span', null, esc(ex.ko)));
+    const p = el('button', 'iconbtn', '🔊');
+    p.onclick = () => speakKo(ex.ko);
+    line.append(p);
+    row.append(line, el('div', 'gexvi', esc(ex.vi)));
+    card.append(row);
+  });
+  b.append(card);
+
+  const nav = el('div', 'exnav');
+  const prev = el('button', 'ghost big', '‹ 이전');
+  prev.disabled = i === 0;
+  prev.onclick = () => drawGramCard(i - 1);
+  const next = el('button', 'primary big', i === KGDATA.length - 1 ? '목록으로' : '다음 ›');
+  next.onclick = () => i === KGDATA.length - 1 ? drawGramList() : drawGramCard(i + 1);
+  nav.append(prev, next);
+  b.append(nav);
+  show('exam', '기초 문법', true);
 }
 
 function startExam(e) {

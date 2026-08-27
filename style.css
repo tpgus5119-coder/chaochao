@@ -1293,3 +1293,17 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   border:1px solid var(--line); font-size:15px; line-height:1.6}
 .exgline:first-child{background:color-mix(in srgb,var(--accent) 12%,transparent);
   border-color:var(--accent); font-weight:700}
+
+/* ---------- 기초 문법 카드 ---------- */
+.gpat{display:inline-block; font-size:15px; font-weight:700; color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 12%,transparent); border-radius:999px;
+  padding:4px 14px; margin-bottom:10px}
+.gexp{font-size:15px; line-height:1.6; color:var(--dim); margin-top:10px}
+.gexp.vi{border-top:1px dashed var(--line); padding-top:10px; margin-top:10px}
+.gex{background:var(--bg); border:1px solid var(--line); border-radius:12px;
+  padding:14px 16px; margin-top:14px}
+.gexko{display:flex; align-items:center; justify-content:space-between; gap:10px;
+  font-size:17px; font-weight:700}
+.gexvi{font-size:15px; color:var(--dim); margin-top:6px}
+.iconbtn{flex-shrink:0; width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+  background:var(--card); font-size:16px; cursor:pointer}
