@@ -144,6 +144,28 @@ const UIVI = {
     'Kiến thức nền tảng — từ nguyên âm, phụ âm đến số đếm, câu chào.',
   '자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
     'Không tải được tài liệu. Hãy kiểm tra kết nối mạng.',
+  /* ── 크레딧 ── */
+  '크레딧': 'Điểm thưởng',
+  '오늘 출석': 'Điểm danh hôm nay', '연속 3일': 'Liên tục 3 ngày', '연속 7일': 'Liên tục 7 ngày',
+  '모의고사를 끝냈습니다': 'Bạn đã hoàn thành một đề thi thử',
+  '자주 틀리던 단어 5개를 잡았습니다': 'Bạn đã khắc phục 5 từ hay sai',
+  '지금까지 모두': 'Tổng cộng đã tích', '이번 주': 'Tuần này', '지난주': 'Tuần trước',
+  '우리 동아리, 이번 주 다 같이': 'Câu lạc bộ của chúng ta, tuần này cùng nhau',
+  '명': 'người', '출석 도장': 'dấu điểm danh', '외운 단어': 'từ đã thuộc',
+  '이렇게 모입니다': 'Tích điểm như thế này',
+  '하루 한 번이라도 공부하면': 'Học dù chỉ một lần trong ngày',
+  '모의고사 한 회 끝내면': 'Hoàn thành một đề thi thử',
+  '자주 틀린 단어 5개를 잡으면': 'Khắc phục 5 từ hay sai',
+  '크레딧이 모자랍니다': 'Không đủ điểm thưởng', '필요': 'Cần', '남음': 'Còn lại',
+  'AI 채점 한 번에 <b>N크레딧</b>을 씁니다.': 'Mỗi lần AI chấm điểm sẽ dùng <b>N điểm thưởng</b>.',
+  '<b>내 정보</b>에 내 구글 키를 넣어 두셨으므로 AI 채점은 크레딧을 쓰지 않습니다.':
+    'Vì bạn đã nhập khóa Google trong <b>Thông tin của tôi</b> nên AI chấm điểm không tốn điểm thưởng.',
+  '공부하면 다시 쌓입니다. 내 정보에 구글 키를 넣으면 크레딧 없이 쓸 수 있습니다.':
+    'Học tiếp sẽ tích lại. Nhập khóa Google trong Thông tin của tôi thì dùng được mà không tốn điểm.',
+  '남과 견주지 않습니다 — <b>지난주의 나</b>와만 견줍니다.':
+    'Không so với người khác — chỉ so với <b>chính bạn tuần trước</b>.',
+  '하루 빠져도 <b>연속 보호권</b>이 메워 줍니다 — 바쁜 날이 있어도 괜찮습니다.':
+    'Nghỉ một ngày cũng có <b>quyền bảo vệ chuỗi ngày</b> bù lại — có ngày bận cũng không sao.',
   /* ── 나만의 단어장 ── */
   '나만의 단어장': 'Sổ từ của tôi',
   '나만의 단어장에 담기': 'Lưu vào sổ từ của tôi',
@@ -1062,6 +1084,7 @@ function touchToday() {
       S.act[ymd(y)] = 2; S.shield--;
       popup('🛡️ <b>연속 보호권</b>이 어제 하루를 메웠습니다.<br>연속 기록이 이어집니다. (남은 보호권 ' + S.shield + '개)');
     }
+    earnAttend();                       // 출석 크레딧 (오늘 처음 공부한 순간에만)
     const wk = weekKey();
     if (S.shieldWk !== wk) {
       const n7 = Object.keys(S.act).filter(d => weekKey(new Date(d)) === wk).length;
@@ -1998,6 +2021,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
   book:  { name: '나만의 단어장', items: () => [['보기', wordbookEntry]] },
+  cred:  { name: '크레딧', items: () => [['보기', creditEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -2009,6 +2033,7 @@ const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
   culture:{ name: '한국 문화', items: () => [['보기', koCultureEntry]] },
   book:   { name: '나만의 단어장', items: () => [['보기', wordbookEntry]] },
+  cred:   { name: '크레딧', items: () => [['보기', creditEntry]] },
   club:   { name: '동아리', items: () => [['보기', showClub]] },
   guide:  { name: '사용법', items: () => [['보기', showGuide]] },
 };
@@ -2543,6 +2568,7 @@ function finishExam(timeUp) {
   S.exam = S.exam || {};
   const key = e.id + '-' + e.set;
   const prev = S.exam[key];
+  if (!prev) earn(CRD.exam, tr('모의고사를 끝냈습니다'));   // 회차당 한 번만 (다시 풀어도 또 주지 않는다)
   if (!prev || score > prev.score) S.exam[key] = { score, total: e.questions.length, at: now() };
   touchToday(); save();
 
@@ -2686,9 +2712,22 @@ function examSpeak(si, qi) {
   show('exam', '말하기', true);
 }
 
+/* AI 채점을 시작해도 되는가 — 앱이 내주는 열쇠로 돌 때만 크레딧을 본다.
+   내 구글 키를 넣은 사람은 자기 몫으로 쓰는 것이라 크레딧과 무관하다. */
+function aiPay(out) {
+  if (!onAppKey()) return true;
+  if (spend(AI_COST)) return true;
+  out.textContent = '';
+  out.append(el('div', 'exgline', tr('크레딧이 모자랍니다') + ' — ' + tr('필요') + ' ' + AI_COST
+    + ' · ' + tr('남음') + ' ' + credits().bal));
+  out.append(el('div', 'exgline', tr('공부하면 다시 쌓입니다. 내 정보에 구글 키를 넣으면 크레딧 없이 쓸 수 있습니다.')));
+  return false;
+}
+
 async function recordAndGrade(question, passage, out, btn) {
   if (!aiReady()) { out.textContent = 'AI 키가 필요합니다 — 내 정보에서 넣어 주세요.'; return; }
   if (!canRecord()) { out.textContent = '이 기기에서는 녹음을 쓸 수 없습니다.'; return; }
+  if (!aiPay(out)) return;
   if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
   try {
     if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -2745,6 +2784,7 @@ function examWrite(wi) {
     const text = ta.value.trim();
     if (text.length < 20) { out.textContent = '조금 더 써 주세요 (스무 자 이상).'; return; }
     if (!aiReady()) { out.textContent = 'AI 키가 필요합니다 — 내 정보에서 넣어 주세요.'; return; }
+    if (!aiPay(out)) return;
     out.textContent = 'AI가 읽는 중…';
     try {
       const t = await gCall({
@@ -3234,6 +3274,120 @@ function starBtn(k, ko, vi) {
     b.classList.toggle('on', onNow);
   };
   return b;
+}
+
+/* ---------- 출석 크레딧 ----------
+   왜 '순위표'가 아니라 '크레딧'인가 — 근거를 남겨 둔다.
+   ① Hanus & Fox(2015, Computers & Education) 16주 실험: 같은 수업을 두 반으로 나눠
+      한쪽에만 순위표·배지를 넣었더니 그 반이 동기·만족도가 갈수록 떨어지고
+      **기말 점수까지 낮았다**. 순위표가 '배우려는 마음'을 '이기려는 마음'으로 바꿨다.
+   ② Li 외(2024, JCAL) 리뷰: 순위표는 '내 주변만 보이는' 상대형은 도움이 되지만,
+      **전체 등수가 다 보이는 절대형은 하위권의 의욕을 꺾는다.** 우리 동아리는
+      서로 아는 열댓 명이라 무조건 절대형이 된다 — 꼴찌가 누군지 다 안다.
+   ③ 메타분석들은 게임화가 흥미·자율성은 올려도 **실력 자체에는 효과가 거의 없다**고 본다.
+   그래서 개인 순위표는 만들지 않는다. 대신 (가) 크레딧은 '내가 쌓은 노력의 기록'이고
+   (나) 비교는 '지난주의 나'와만 하며 (다) 동아리는 등수가 아니라 **합계**로 뭉친다.
+
+   쓰는 곳: AI 채점. 단, **앱이 내주는 열쇠로 돌 때만** 깎는다 — 내 열쇠(내 정보에
+   넣은 구글 키)로 쓰는 사람은 자기 돈으로 쓰는 것이라 깎을 이유가 없다. */
+const CRD = { day: 10, d3: 20, d7: 50, exam: 30, fix: 15 };
+const AI_COST = 5;
+function credits() {
+  if (!S.cr) S.cr = { bal: 0, sum: 0, wk: {} };     // 남은 것 · 모두 번 것 · 주별 적립
+  return S.cr;
+}
+function earn(n, why) {
+  if (!(n > 0)) return;
+  const c = credits();
+  c.bal += n; c.sum += n;
+  const w = weekKey();
+  c.wk[w] = (c.wk[w] || 0) + n;
+  // 주 기록은 8주만 남긴다 — 저장 공간을 계속 먹으면 안 된다
+  const keep = Object.keys(c.wk).sort().slice(-8);
+  Object.keys(c.wk).forEach(k => { if (!keep.includes(k)) delete c.wk[k]; });
+  save();
+  if (why) popup(`🪙 <b>+${n} 크레딧</b><br>${why}`);
+}
+function spend(n) {
+  const c = credits();
+  if (c.bal < n) return false;
+  c.bal -= n; save();
+  return true;
+}
+/* 앱이 내주는 열쇠로 도는가(=우리가 돈을 내는가). 내 키가 있으면 크레딧과 무관하다. */
+const onAppKey = () => !S.gkey && !!PROXY;
+
+/* 출석·연속 보너스 — touchToday 가 '오늘 처음'일 때만 부른다 */
+function earnAttend() {
+  earn(CRD.day, tr('오늘 출석'));
+  const st = streakDays();
+  const c = credits();
+  if (st >= 7 && c.d7 !== ymd()) { c.d7 = ymd(); earn(CRD.d7, tr('연속 7일')); }
+  else if (st >= 3 && c.d3 !== ymd()) { c.d3 = ymd(); earn(CRD.d3, tr('연속 3일')); }
+}
+
+function creditEntry() { drawCredit(); }
+function drawCredit() {
+  const ko = learnKo();
+  const host = ko ? $('#examBody') : $('#subBody');
+  host.textContent = '';
+  const c = credits();
+
+  const big = el('div', 'crbig');
+  big.append(el('div', 'crnum', '🪙 ' + c.bal));
+  big.append(el('div', 'crsub', tr('지금까지 모두') + ' ' + c.sum));
+  host.append(big);
+
+  // 지난주의 나와만 견준다 — 남과의 등수는 만들지 않는다
+  const thisW = c.wk[weekKey()] || 0;
+  const d = new Date(); d.setDate(d.getDate() - 7);
+  const lastW = c.wk[weekKey(d)] || 0;
+  const diff = thisW - lastW;
+  const cmp = el('div', 'crcmp');
+  cmp.append(el('b', null, tr('이번 주') + ' ' + thisW));
+  cmp.append(document.createTextNode('  ·  ' + tr('지난주') + ' ' + lastW));
+  cmp.append(el('span', 'crdiff' + (diff >= 0 ? ' up' : ''),
+                (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(diff)));
+  host.append(cmp);
+  host.append(el('p', 'note', '남과 견주지 않습니다 — <b>지난주의 나</b>와만 견줍니다.'));
+
+  // 동아리는 등수가 아니라 합계로 — 같이 하는 느낌은 주되 서열은 안 만든다
+  if (S.club && MATES && (MATES.people || []).length) {
+    const seen = {};
+    MATES.people.forEach(m => { if (!seen[m.nick] || (m.td || 0) > (seen[m.nick].td || 0)) seen[m.nick] = m; });
+    const ppl = Object.values(seen);
+    const dots = ppl.reduce((a, m) => a + (m.days || []).filter(Boolean).length, 0);
+    const memo = ppl.reduce((a, m) => a + (m.memo || 0), 0);
+    const box = el('div', 'crclub');
+    box.append(el('div', 'crct', tr('우리 동아리, 이번 주 다 같이')));
+    const g = el('div', 'crgrid');
+    const cell = (n, k) => { const x = el('div', 'crcell');
+      x.append(el('b', null, String(n)), el('span', null, tr(k))); return x; };
+    g.append(cell(ppl.length, '명'), cell(dots, '출석 도장'), cell(memo, '외운 단어'));
+    box.append(g);
+    host.append(box);
+  }
+
+  host.append(el('h3', 'exhead', tr('이렇게 모입니다')));
+  const table = el('div', 'crearn');
+  [[CRD.day, '하루 한 번이라도 공부하면'], [CRD.d3, '연속 3일'], [CRD.d7, '연속 7일'],
+   [CRD.exam, '모의고사 한 회 끝내면'], [CRD.fix, '자주 틀린 단어 5개를 잡으면']]
+    .forEach(([n, why]) => {
+      const r = el('div', 'crrow');
+      r.append(el('span', 'crplus', '+' + n), el('span', 'crwhy', tr(why)));
+      table.append(r);
+    });
+  host.append(table);
+
+  /* 숫자가 낀 문장은 el() 통짜 번역이 안 된다(사전 열쇠가 안 맞는다).
+     자리표 N 을 넣은 문장을 사전에 두고, 옮긴 뒤에 숫자를 끼운다. */
+  const cost = el('p', 'note');
+  cost.innerHTML = onAppKey()
+    ? tr('AI 채점 한 번에 <b>N크레딧</b>을 씁니다.').replace('N', AI_COST)
+    : tr('<b>내 정보</b>에 내 구글 키를 넣어 두셨으므로 AI 채점은 크레딧을 쓰지 않습니다.');
+  host.append(cost);
+  host.append(el('p', 'note', '하루 빠져도 <b>연속 보호권</b>이 메워 줍니다 — 바쁜 날이 있어도 괜찮습니다.'));
+  show(ko ? 'exam' : 'sub', '크레딧', true);
 }
 
 /* 좌우로 밀어 이전·다음 — 사진첩과 같은 방향(왼쪽으로 밀면 다음).
@@ -4400,7 +4554,16 @@ function grade(vi, ok, early) {
     const m = S.stats.miss || (S.stats.miss = {});
     m[vi] = (m[vi] || 0) + 1;
   } else if (S.stats.miss && S.stats.miss[vi]) {
-    S.stats.miss[vi] = Math.max(0, S.stats.miss[vi] - 0.5);   // 맞히면 서서히 지워진다
+    const was = S.stats.miss[vi];
+    S.stats.miss[vi] = Math.max(0, was - 0.5);                // 맞히면 서서히 지워진다
+    /* 오답노트에서 완전히 빠지는 순간을 센다 — 5개를 잡을 때마다 크레딧.
+       '틀린 걸 고쳤다'는 게 크레딧을 주기에 가장 옳은 순간이다(그냥 많이 푸는 것보다). */
+    if (was > 0 && S.stats.miss[vi] === 0) {
+      const c = credits();
+      c.fixed = (c.fixed || 0) + 1;
+      if (c.fixed % 5 === 0) earn(CRD.fix, tr('자주 틀리던 단어 5개를 잡았습니다'));
+      else save();
+    }
   }
   if (early && ok) { save(); return; }   // 예정보다 일찍 꺼내 맞힌 건 사다리를 안 올린다
   const r = S.srs[vi] || { lv: 0, first: now() };

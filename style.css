@@ -1327,3 +1327,27 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .tapinfo { min-height:1.4em; margin-top:4px; font-size:14px; color:var(--dim,#65676B); }
 .tapinfo b { color:var(--fg,#050505); }
 .lvi .tapw { font-size:inherit; }
+
+/* ---------- 출석 크레딧 ---------- */
+.crbig { text-align:center; padding:22px 0 6px; }
+.crnum { font-size:52px; font-weight:900; color:var(--accent,#1877F2); line-height:1; }
+.crsub { font-size:15px; color:var(--dim,#65676B); margin-top:8px; font-weight:500; }
+.crcmp { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
+  background:var(--card,#fff); border:1px solid var(--line,#E4E6EB); border-radius:14px;
+  padding:14px 16px; margin:14px 0 6px; font-size:16px; }
+.crdiff { font-weight:800; color:#D93025; }
+.crdiff.up { color:#1E8E3E; }
+.crclub { background:var(--card,#fff); border:1px solid var(--line,#E4E6EB);
+  border-radius:16px; padding:16px; margin:14px 0; }
+.crct { font-weight:800; margin-bottom:12px; font-size:16px; }
+.crgrid { display:flex; gap:10px; }
+.crcell { flex:1; text-align:center; background:var(--bg); border-radius:12px; padding:12px 6px; }
+.crcell b { display:block; font-size:26px; font-weight:900; color:var(--accent,#1877F2); }
+.crcell span { font-size:13px; color:var(--dim,#65676B); }
+.crearn { background:var(--card,#fff); border:1px solid var(--line,#E4E6EB);
+  border-radius:16px; overflow:hidden; }
+.crrow { display:flex; align-items:center; gap:14px; padding:14px 16px;
+  border-top:1px solid var(--line,#E4E6EB); }
+.crrow:first-child { border-top:0; }
+.crplus { flex:0 0 62px; font-weight:900; font-size:19px; color:var(--accent,#1877F2); }
+.crwhy { flex:1; font-size:15px; color:var(--fg); text-align:left; }
