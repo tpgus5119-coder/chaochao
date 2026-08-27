@@ -14,6 +14,7 @@
 import json, os, random, sys, unicodedata
 import ko_content
 import ko_content_t2
+import ko_society
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data")
 
@@ -344,6 +345,13 @@ def q_t2_long(rng, pidx, qidx):
             **shuffled(rng, ans, wrong, why, bad)}
 
 
+def q_society(rng, idx):
+    """KIIP 5단계 '한국사회이해' — 어휘가 아니라 사실을 묻는다."""
+    q, ans, wrong, cat, why, bad = ko_society.SOCIETY[idx]
+    return {"type": "society", "stem": q, "cat": cat,
+            **shuffled(rng, ans, wrong, why, bad)}
+
+
 def q_read(rng, pidx, qidx):
     """지문을 읽고 물음에 답한다."""
     title, passage, qs = ko_content.READ_BANK[pidx]
@@ -451,7 +459,8 @@ KIIP_STAGES = [
     (3, "중급 1", ["B"], [("dfn2word", 12), ("particle", 8), ("word2vi", 4), ("read", 8)]),
     (4, "중급 2", ["B", "C"], [("dfn2word", 12), ("particle", 8), ("vi2word", 4), ("read", 8)]),
 ]
-LABEL = {"pic2word": "그림을 보고 알맞은 것을 고르십시오.",
+LABEL = {"society": "다음 물음에 알맞은 답을 고르십시오.",
+         "pic2word": "그림을 보고 알맞은 것을 고르십시오.",
          "dfn2word": "다음 설명에 맞는 단어를 고르십시오.",
          "particle": "( )에 알맞은 것을 고르십시오.",
          "word2vi": "뜻이 알맞은 것을 고르십시오.",
@@ -471,6 +480,16 @@ def numbered(mix):
         at += n
     return out
 
+
+# 5단계는 앞의 단계와 성격이 다르다 — 한국어 실력이 아니라 '한국 사회를 아는가'를 본다.
+# 그래서 어휘 문항을 섞지 않고 사회·제도·역사·문화만 낸다.
+BLUEPRINTS["kiip-5"] = {
+    "name": "KIIP 5단계 한국사회이해 모의고사",
+    "desc": "사회통합프로그램 5단계 · 사회·제도·역사·문화 40문항",
+    "minutes": 40, "grades": ["A", "B", "C"],
+    "sections": [{"label": "[1~40] 다음 물음에 알맞은 답을 고르십시오.",
+                  "kind": "society", "n": 40}],
+}
 
 for st, nm, grades, mix in KIIP_STAGES:
     BLUEPRINTS[f"kiip-{st}"] = {
@@ -547,6 +566,7 @@ def build(exam_id, seed, words, gloss, pics, state):
     p_left = take("particles", len(PARTICLE_BANK))
     t2 = {k: take("t2_" + k, len(getattr(ko_content_t2, "T2_" + k.upper())))
           for k in ("reply", "act", "same", "idea")}
+    soc_left = take("society", len(ko_society.SOCIETY))
     t2_long = state.get("t2_long")
     if t2_long is None:
         t2_long = [(pi, qi) for pi, p in enumerate(ko_content_t2.T2_LONG)
@@ -590,6 +610,10 @@ def build(exam_id, seed, words, gloss, pics, state):
                     break
                 q = {"reply": q_t2_reply, "act": q_t2_act,
                      "same": q_t2_same, "idea": q_t2_idea}[k](rng, t2[k].pop(0))
+            elif sec["kind"] == "society":
+                if not soc_left:
+                    break
+                q = q_society(rng, soc_left.pop(0))
             elif sec["kind"] == "t2_long":
                 if not t2_long:
                     break
@@ -671,7 +695,8 @@ if __name__ == "__main__":
     for exam_id in BLUEPRINTS:
         state = {}                     # 시험 종류마다 따로 — EPS와 KIIP는 서로 겹쳐도 된다
         # 직무 어휘는 낱말이 정해져 있어 회차를 나눌 수 없다 — 한 벌만 낸다
-        one = exam_id.startswith("eps-job-") or exam_id == "topik-2-listen"
+        one = (exam_id.startswith("eps-job-")
+               or exam_id in ("topik-2-listen", "kiip-5"))
         for seed in ((1,) if one else (1, 2, 3)):
             e = build(exam_id, seed, words, gloss, pics, state)
             out["exams"].append(e)
