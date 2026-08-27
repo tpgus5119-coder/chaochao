@@ -135,10 +135,11 @@ const UIVI = {
   '모음 소개 다시 보기': 'Xem lại phần giới thiệu nguyên âm',
   '모의고사': 'Thi thử',
   '기초 문법': 'Ngữ pháp cơ bản',
-  '한국어 기초 문법 18개 — 배우는 순서 그대로입니다.':
-    '18 điểm ngữ pháp cơ bản tiếng Hàn — đúng theo thứ tự học.',
+  '한국어 기초 문법 68개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.':
+    '68 điểm ngữ pháp tiếng Hàn — từ Sơ cấp 1 đến Trung cấp 2, đúng theo thứ tự học.',
   '문법 자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
     'Không tải được tài liệu ngữ pháp. Hãy kiểm tra kết nối mạng.',
+  '초급1': 'Sơ cấp 1', '초급2': 'Sơ cấp 2', '중급1': 'Trung cấp 1', '중급2': 'Trung cấp 2',
   /* ── 베트남인용 한국어 과정 홈 화면 ── */
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
@@ -2047,7 +2048,7 @@ let KGDATA = null, KG = null;
 function koGramEntry() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '한국어 기초 문법 18개 — 배우는 순서 그대로입니다.'));
+  b.append(el('p', 'lede', '한국어 기초 문법 68개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.'));
   show('exam', '기초 문법', true);
   if (KGDATA) return drawGramList();
   fetch('data/ko_grammar.json', { cache: 'no-cache' })
@@ -2058,8 +2059,10 @@ function koGramEntry() {
 function drawGramList() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '한국어 기초 문법 18개 — 배우는 순서 그대로입니다.'));
+  b.append(el('p', 'lede', '한국어 기초 문법 68개 — 초급1부터 중급2까지, 배우는 순서 그대로입니다.'));
+  let lastLevel = null;
   KGDATA.forEach((g, i) => {
+    if (g.level !== lastLevel) { lastLevel = g.level; b.append(el('h3', 'exhead', tr(g.level))); }
     const btn = el('button', 'bigmenu');
     btn.append(el('b', null, `${g.n}. ${g.pattern}`));
     btn.append(el('span', 'exmeta', g.title_ko));
