@@ -128,8 +128,11 @@ export default {
       for (const [k, v] of Object.entries(b.picks || {}).slice(0, 30))
         if (/^[a-z]\d{1,2}$/.test(k) && /^[A-C]$/.test(String(v))) clean[k] = String(v);
       if (!Object.keys(clean).length) return send({ error: 'empty' });
+      // 어느 지방 말씨를 쓰는 사람의 답인지 같이 받는다.
+      // 이게 없으면 "북부 목소리가 낫다"인지 "이 목소리가 낫다"인지 갈라 볼 수 없다.
+      const rg = /^(bac|trung|nam)$/.test(String(b.rg || '')) ? String(b.rg) : '';
       await KV.put(`sv:${pool}:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
-        JSON.stringify({ p: clean, t: cut(b.test, 12) }), { expirationTtl: 60 * 60 * 24 * 90 });
+        JSON.stringify({ p: clean, t: cut(b.test, 12), rg }), { expirationTtl: 60 * 60 * 24 * 90 });
       return send({ ok: true });
     }
     if (act === 'votes') {                                   // 집계 — 이름 없는 숫자만
@@ -142,8 +145,14 @@ export default {
             const v = JSON.parse((await KV.get(k.name)) || 'null');
             if (!v) continue;
             n++;
-            for (const [q, c] of Object.entries(v.p || {}))
+            for (const [q, c] of Object.entries(v.p || {})) {
               (agg[q] = agg[q] || {})[c] = (agg[q][c] || 0) + 1;
+              // 지방별로도 따로 센다 — 같은 목소리가 지방에 따라 갈리는지 보려는 것
+              if (v.rg) {
+                const rk = `${v.rg}:${q}`;
+                (agg[rk] = agg[rk] || {})[c] = (agg[rk][c] || 0) + 1;
+              }
+            }
           }
           cursor = l.list_complete ? undefined : l.cursor;
         } while (cursor);

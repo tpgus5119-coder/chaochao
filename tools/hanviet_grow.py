@@ -24,9 +24,14 @@
   글자는 맞는데 뜻이 어긋난다 — 학습자에게 가장 나쁜 종류의 틀림이다.
   그래서 자동 확장은 **하지 않는다.** 후보만 뽑아 두고 사람이 확인한 것만 넣는다.
 
+그래도 자동으로 받는 자리가 하나 있다 — **①과 ②가 맞을 때.**
+  이건 '지어낸 것'이 아니라 '서로 모르는 두 곳이 같은 말을 한 것'이다.
+  성조 부호 자리(hoá/hóa)와 맞춤법(lí/lý, kĩ/kỹ) 차이는 같은 말로 친다.
+  받은 예: 규모 規模 quy mô · 기술 技術 kỹ thuật · 미술 美術 mỹ thuật · 물리학 物理學 vật lý học
+
 쓰기:  python3 tools/hanviet_grow.py         # 보기만
-       python3 tools/hanviet_grow.py --save  # 확인 목록(hanviet_review.json)만 저장
-                                             # 다리 파일은 사람이 확인한 것만 손으로 넣는다
+       python3 tools/hanviet_grow.py --save  # 맞은 것만 다리에 넣고, 어긋난 것은
+                                             # hanviet_review.json 에 적어 둔다(기출 빈도순)
 """
 import csv, json, os, re, sys, unicodedata
 
@@ -39,6 +44,13 @@ def norm(s):
     s = unicodedata.normalize("NFD", str(s or "").lower())
     s = "".join(c for c in s if unicodedata.category(c) != "Mn")   # 성조 떼기
     return re.sub(r"\s+", " ", s).strip()
+
+
+def norm2(s):
+    """lí/lý, kĩ/kỹ — 베트남어 맞춤법이 둘 다 쓰는 자리다. 그 차이까지 지운다.
+    여기까지 지워서 같으면 '같은 말을 달리 적은 것'이므로 사람 손 없이 받아도 된다.
+    (뜻이 다른데 우연히 같아지는 일은 같은 한국어 낱말끼리 견주므로 사실상 없다)"""
+    return norm(s).replace("y", "i")
 
 
 def main():
@@ -75,7 +87,7 @@ def main():
             cant += 1; continue
         # 뜻이 여럿이면(‘hội thoại, đối thoại’) 하나만 맞아도 된다
         for part in [p.strip() for p in got.split(",")]:
-            if norm(part) == norm(guess):
+            if norm2(part) == norm2(guess):
                 take[w] = part                        # 검증된 쪽 글자를 쓴다
                 break
         else:
@@ -106,8 +118,13 @@ def main():
         rows.sort(key=lambda r: -ev.get(r["ko"], 0))
         json.dump(rows, open(f"{T}/hanviet_review.json", "w", encoding="utf-8"),
                   ensure_ascii=False, indent=1)
-        print(f"\n저장: hanviet_review.json ({len(rows)}줄) — 다리 파일은 손대지 않았습니다.")
-        print("확인한 것만 tools/hanviet_bridge_ko.json 에 손으로 넣으세요.")
+        # 두 곳이 맞은 것만 다리에 넣는다 — 이건 '같은 말을 달리 적은 것'이라 안전하다.
+        # 어긋난 것은 절대 안 넣는다(가짜 친구가 섞인다. 파일 맨 위 설명 참고).
+        bridge.update(take)
+        json.dump(bridge, open(f"{T}/hanviet_bridge_ko.json", "w", encoding="utf-8"),
+                  ensure_ascii=False, indent=0, sort_keys=True)
+        print(f"\n다리에 넣음: {len(take)}개 (두 곳이 맞은 것만)")
+        print(f"저장: hanviet_review.json ({len(rows)}줄) — 어긋난 것은 사람이 볼 몫입니다.")
 
 
 if __name__ == "__main__":
