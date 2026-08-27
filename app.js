@@ -706,7 +706,7 @@ function sayTip(target, heard) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'week', 'nick', 'sub', 'club'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'chat', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'week', 'nick', 'sub', 'club', 'exam'];
 /* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
@@ -1663,10 +1663,481 @@ const MENUS = {
             ['호칭', () => startRule(0)], ['어순', () => startRule(1)], ['숫자 읽는 법', () => startRule(5)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
+  exam:  { name: '모의고사', items: () => [['보기', examEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 
 };
+/* ---------- 모의고사 ----------
+   연습 퀴즈와는 딴판으로 굴러야 한다. 연습은 한 문제 풀 때마다 맞았는지 알려주지만,
+   시험은 끝날 때까지 안 알려준다 — 실제 시험장이 그렇고, 중간에 알려주면
+   "내가 지금 몇 개 틀렸지" 하는 딴생각이 붙어 시험 연습이 안 된다.
+   그래서 ① 채점은 제출한 뒤 한 번에 ② 시간은 계속 흐르고 ③ 아무 문항이나 오갈 수 있고
+   ④ 안 푼 문항이 몇 개인지 늘 보인다. */
+let EX = null;                      // {exam, at, marks[], t0, timer}
+let EXDATA = null;                  // ko_exams.json (한 번만 받아 둔다)
+
+function examEntry() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.<br>'
+    + '문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.'));
+  show('exam', '모의고사', true);
+  if (EXDATA) return drawExamList();
+  b.append(el('p', 'note', '시험지 받는 중…'));
+  fetch('data/ko_exams.json', { cache: 'no-cache' })
+    .then(r => r.json())
+    .then(j => { EXDATA = j; drawExamList(); })
+    .catch(() => {
+      b.textContent = '';
+      b.append(el('p', 'lede', '시험지를 받지 못했습니다. 인터넷을 확인하고 다시 열어 주세요.'));
+    });
+}
+
+function drawExamList() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.<br>'
+    + '문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.'));
+  // 같은 시험은 회차끼리 묶어 보여준다
+  const byId = {};
+  EXDATA.exams.forEach(e => (byId[e.id] = byId[e.id] || []).push(e));
+  Object.values(byId).forEach(list => {
+    b.append(el('h3', 'exhead', esc(list[0].name)));
+    b.append(el('p', 'note', esc(list[0].desc)));
+    list.forEach(e => {
+      const best = (S.exam || {})[e.id + '-' + e.set];
+      const btn = el('button', 'bigmenu');
+      btn.append(el('b', null, `${e.set}회차`));
+      btn.append(el('span', 'exmeta', `${e.total}문항 · ${e.minutes}분`));
+      if (best) {                    // 전에 본 적이 있으면 점수를 같이 보여준다
+        const pct = Math.round(best.score / best.total * 100);
+        btn.append(el('span', 'mbadge' + (pct >= 60 ? '' : ' red'), `${pct}점`));
+      }
+      btn.onclick = () => startExam(e);
+      b.append(btn);
+    });
+  });
+  // 말하기·쓰기는 정답이 하나가 아니라 시험지에 못 넣는다 — 따로 둔다
+  b.append(el('h3', 'exhead', '말하기 · 쓰기'));
+  b.append(el('p', 'note', 'KIIP 구술시험과 작문시험 형식 · AI가 읽고 고칠 점을 알려 줍니다.'));
+  const x = el('button', 'bigmenu');
+  x.append(el('b', null, '말하기 · 쓰기 연습'));
+  x.append(el('span', 'exmeta', `구술 ${EXDATA.extra.speak.length}세트 · 작문 ${EXDATA.extra.write.length}제목`));
+  x.onclick = examExtra;
+  b.append(x);
+}
+
+function startExam(e) {
+  EX = { exam: e, at: 0, marks: new Array(e.questions.length).fill(-1),
+         left: e.minutes * 60 };
+  if (EX.timer) clearInterval(EX.timer);
+  EX.timer = setInterval(() => {
+    if ($('#exam').hidden || !EX) return;      // 다른 화면에 가 있으면 시계도 멈춘다
+    EX.left--;
+    if (EX.left <= 0) { finishExam(true); return; }
+    const t = $('#extime');
+    if (t) { t.textContent = fmtLeft(EX.left); t.className = 'extime' + (EX.left <= 60 ? ' hot' : ''); }
+  }, 1000);
+  drawExamQ();
+}
+
+const fmtLeft = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+
+function drawExamQ() {
+  if (!EX) return;
+  const e = EX.exam, q = e.questions[EX.at];
+  const b = $('#examBody');
+  b.textContent = '';
+
+  // 머리줄 — 남은 시간과 진행 상황
+  const head = el('div', 'exbar');
+  head.append(el('span', 'expos', `${EX.at + 1} / ${e.questions.length}`));
+  const t = el('span', 'extime' + (EX.left <= 60 ? ' hot' : ''));
+  t.id = 'extime'; t.textContent = fmtLeft(EX.left);
+  head.append(t);
+  b.append(head);
+
+  b.append(el('p', 'exsec', esc(q.section)));
+
+  const card = el('div', 'excard');
+
+  // 읽기 지문은 물음보다 **먼저** 와야 한다 — 실제 시험지가 그렇고, 물음부터 보면 지문을 훑게 된다
+  if (q.passage) {
+    const pw = el('div', 'expass');
+    if (q.ptitle) pw.append(el('div', 'exptit', esc(q.ptitle)));
+    q.passage.split('\n').forEach(line => pw.append(el('div', null, esc(line))));
+    card.append(pw);
+  }
+
+  const lines = q.stem.split('\n');
+  card.append(el('div', 'exask', esc(lines[0])));
+  if (lines[1]) card.append(el('div', 'exbody', esc(lines[1])));
+
+  // 듣기 — 문제가 소리로만 나간다. 몇 번이든 다시 들을 수 있게 둔다
+  // (실제 시험은 두 번까지지만, 연습에서까지 막으면 틀린 이유를 못 짚는다).
+  if (q.audio && q.audio.length) {
+    const pb = el('button', 'explay');
+    const paint = () => { pb.textContent = EX.playing ? '⏸ 멈추기' : '▶ 듣기'; };
+    pb.onclick = () => {
+      if (EX.playing) { audio.pause(); audio.onended = null; EX.playing = false; paint(); return; }
+      EX.playing = true; paint();
+      playKoSeq(q.audio, () => { EX.playing = false; paint(); });
+    };
+    paint();
+    card.append(pb);
+    card.append(el('p', 'note', '소리로만 나옵니다 — 몇 번이든 다시 들을 수 있습니다.'));
+  }
+
+  if (q.img) {
+    const im = new Image();
+    im.className = 'expic'; im.alt = ''; im.src = 'img/' + q.img;
+    card.append(im);
+  }
+
+  const CIRC = '①②③④';
+  // 보기가 그림인 문항(듣고 그림 고르기)은 두 칸씩 늘어놓는다 — 글 보기와 모양이 달라야 헷갈리지 않는다
+  const box = q.optkind === 'img' ? el('div', 'exgrid') : card;
+  q.options.forEach((o, i) => {
+    const on = EX.marks[EX.at] === i;
+    const opt = el('button', (q.optkind === 'img' ? 'exopti' : 'exopt') + (on ? ' on' : ''));
+    if (q.optkind === 'img') {
+      const im = new Image(); im.alt = ''; im.src = 'img/' + o;
+      opt.append(im, el('span', 'exnum', CIRC[i]));
+    } else {
+      opt.append(el('span', 'exnum', CIRC[i]), el('span', null, esc(String(o))));
+    }
+    opt.onclick = () => {
+      // 같은 것을 다시 누르면 고른 것을 지운다 — 실제 시험지에서 지우개 쓰는 것과 같다
+      EX.marks[EX.at] = on ? -1 : i;
+      drawExamQ();
+    };
+    box.append(opt);
+  });
+  if (box !== card) card.append(box);
+  b.append(card);
+
+  // 앞뒤 이동
+  const nav = el('div', 'exnav');
+  const prev = el('button', 'ghost big', '‹ 이전');
+  prev.disabled = EX.at === 0;
+  prev.onclick = () => { EX.at--; drawExamQ(); };
+  const next = el('button', 'primary big', EX.at === e.questions.length - 1 ? '제출하기' : '다음 ›');
+  next.onclick = () => {
+    if (EX.at < e.questions.length - 1) { EX.at++; drawExamQ(); return; }
+    const blank = EX.marks.filter(m => m < 0).length;
+    if (blank && !confirm(`아직 ${blank}문항이 비어 있습니다. 그대로 제출할까요?`)) return;
+    finishExam(false);
+  };
+  nav.append(prev, next);
+  b.append(nav);
+
+  // 번호판 — 어디를 안 풀었는지 한눈에 보이고, 눌러서 바로 건너뛴다
+  const pad = el('div', 'expad');
+  e.questions.forEach((_, i) => {
+    const n = el('button', 'expn' + (EX.marks[i] >= 0 ? ' done' : '') + (i === EX.at ? ' cur' : ''));
+    n.textContent = String(i + 1);
+    n.onclick = () => { EX.at = i; drawExamQ(); };
+    pad.append(n);
+  });
+  b.append(pad);
+
+  show('exam', e.name, true);
+}
+
+function finishExam(timeUp) {
+  if (!EX) return;
+  if (EX.timer) { clearInterval(EX.timer); EX.timer = 0; }
+  const e = EX.exam, marks = EX.marks;
+  const wrong = [];
+  let score = 0;
+  e.questions.forEach((q, i) => {
+    if (marks[i] === q.answer) score++;
+    else wrong.push({ q, picked: marks[i] });
+  });
+
+  // 점수를 남긴다 — 다음에 목록에서 바로 보인다
+  S.exam = S.exam || {};
+  const key = e.id + '-' + e.set;
+  const prev = S.exam[key];
+  if (!prev || score > prev.score) S.exam[key] = { score, total: e.questions.length, at: now() };
+  touchToday(); save();
+
+  const b = $('#examBody');
+  b.textContent = '';
+  const pct = Math.round(score / e.questions.length * 100);
+  const r = el('div', 'result' + (pct >= 60 ? ' perfect' : ''));
+  r.append(el('div', 'n', `${score} / ${e.questions.length}`));
+  r.append(el('div', null, timeUp ? `시간이 다 됐습니다 · ${pct}점` : `${pct}점`));
+  b.append(r);
+
+  if (wrong.length) {
+    b.append(el('h3', 'exhead', `틀린 문항 ${wrong.length}개`));
+    const CIRC = '①②③④';
+    wrong.forEach(({ q, picked }) => {
+      const c = el('div', 'excard wrong');
+      if (q.passage) {
+        const pw = el('div', 'expass');
+        if (q.ptitle) pw.append(el('div', 'exptit', esc(q.ptitle)));
+        q.passage.split('\n').forEach(line => pw.append(el('div', null, esc(line))));
+        c.append(pw);
+      }
+      const lines = q.stem.split('\n');
+      c.append(el('div', 'exask', `${q.no}. ` + esc(lines[0])));
+      if (lines[1]) c.append(el('div', 'exbody', esc(lines[1])));
+      // 듣기는 채점 뒤에 **대본을 글로 보여 준다** — 못 알아들은 이유를 눈으로 확인해야 는다
+      if (q.audio && q.audio.length) {
+        const sc = el('div', 'exscript');
+        q.audio.forEach(a => {
+          const who = typeof a === 'string' ? '' : (a.v === 'm' ? '남: ' : '여: ');
+          sc.append(el('div', null, esc(who + (typeof a === 'string' ? a : a.t))));
+        });
+        c.append(sc);
+        const rp = el('button', 'ghost sm', '🔊 다시 듣기');
+        rp.onclick = () => playKoSeq(q.audio);
+        c.append(rp);
+      }
+      if (q.img) {
+        const im = new Image(); im.className = 'expic'; im.alt = ''; im.src = 'img/' + q.img;
+        c.append(im);
+      }
+      const shown = o => q.optkind === 'img' ? '(그림)' : String(o);
+      c.append(el('div', 'exans', `정답 ${CIRC[q.answer]} <b>${esc(shown(q.options[q.answer]))}</b>`
+        + (picked >= 0 ? ` · 고른 답 ${CIRC[picked]} ${esc(shown(q.options[picked]))}` : ' · 비워 둠')));
+      // 그림 보기 문항은 정답 그림을 다시 보여 준다 — 글로 '(그림)'만 봐서는 뭘 틀렸는지 모른다
+      if (q.optkind === 'img') {
+        const im = new Image(); im.className = 'expic'; im.alt = '';
+        im.src = 'img/' + q.options[q.answer];
+        c.append(im);
+      }
+      // 틀린 낱말은 소리로 한 번 더 — 눈으로만 보면 발음이 안 붙는다
+      if (q.word && q.word.length > 1 && !(q.audio && q.audio.length)) {
+        const p = el('button', 'ghost sm', '🔊 ' + esc(q.word));
+        p.onclick = () => speakKo(q.word);
+        c.append(p);
+      }
+      b.append(c);
+    });
+  } else {
+    b.append(el('p', 'lede', '다 맞았습니다.'));
+  }
+
+  const again = el('button', 'primary big', '다시 풀기');
+  again.style.marginTop = '18px';
+  again.onclick = () => startExam(e);
+  const list = el('button', 'ghost big', '다른 시험 고르기');
+  list.style.marginTop = '8px';
+  list.onclick = () => { EX = null; drawExamList(); };
+  b.append(again, list);
+  show('exam', '채점 결과', true);
+}
+
+/* ---------- 구술·작문 (AI가 채점한다) ----------
+   객관식은 정답이 하나라 기계가 채점하지만, 말하기·쓰기는 정답이 여럿이다.
+   그래서 점수 하나만 던지지 않고 **뭘 고치면 되는지**를 같이 준다 —
+   "3점"만 보면 다음에 뭘 해야 할지 모른다.
+   AI가 매긴 점수는 성적으로 저장하지 않는다. 사람마다 다르게 나오는 것을 기록으로 남기면 잘못된 믿음이 생긴다. */
+const SPEAK_RUBRIC =
+  '너는 한국어 말하기 시험 채점관이다. 응시자는 한국에서 일하는 외국인 노동자다.\n'
+  + '아래 형식으로만 답한다. 다른 말은 붙이지 않는다:\n'
+  + '점수: (1~5 중 하나)\n좋은 점: (한 문장)\n고칠 점: (한 문장, 구체적으로)\n이렇게 말해 보세요: (더 나은 예시 한 문장)\n'
+  + '채점 기준: 질문에 맞는 답을 했는가 > 알아들을 수 있는가 > 문법·어휘. \n'
+  + '발음이 조금 서툴러도 뜻이 통하면 깎지 않는다. 응시자는 배우는 사람이니 말은 따뜻하게 한다.\n'
+  + '설명은 쉬운 한국어로 짧게 쓴다.';
+
+function examExtra() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '정답이 하나가 아닌 문제입니다 — <b>AI가 읽고 고칠 점을 알려 줍니다.</b>'));
+  if (!aiReady()) {
+    b.append(el('p', 'note', 'AI 채점을 쓰려면 <b>내 정보</b>에서 구글 무료 키를 한 번 넣어 주세요.'));
+  }
+  b.append(el('h3', 'exhead', '말하기 (구술시험)'));
+  EXDATA.extra.speak.forEach((s, i) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, `${i + 1}번 세트`));
+    btn.append(el('span', 'exmeta', '읽기 + 질문 5개'));
+    btn.onclick = () => examSpeak(i, 0);
+    b.append(btn);
+  });
+  b.append(el('h3', 'exhead', '쓰기 (작문시험)'));
+  EXDATA.extra.write.forEach((w, i) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, esc(w.title)));
+    btn.append(el('span', 'exmeta', `${w.chars}자 정도`));
+    btn.onclick = () => examWrite(i);
+    b.append(btn);
+  });
+  show('exam', '말하기 · 쓰기', true);
+}
+
+function examSpeak(si, qi) {
+  const set = EXDATA.extra.speak[si], q = set.questions[qi];
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'exsec', `말하기 ${si + 1}번 세트 · 질문 ${qi + 1} / ${set.questions.length}`));
+
+  const card = el('div', 'excard');
+  // 지문은 첫 질문(낭독)에서만 크게 보여 준다. 뒤 질문에서도 남겨 두면 보고 읽게 된다
+  if (qi === 0) {
+    const pw = el('div', 'expass');
+    set.passage.split('\n').forEach(l => pw.append(el('div', null, esc(l))));
+    card.append(pw);
+  }
+  card.append(el('div', 'exask', esc(q)));
+
+  const out = el('div', 'exgrade');
+  const mic = el('button', 'explay', '🎤 말하고 채점받기');
+  mic.onclick = () => recordAndGrade(q, set.passage, out, mic);
+  card.append(mic, out);
+  b.append(card);
+
+  const nav = el('div', 'exnav');
+  const prev = el('button', 'ghost big', '‹ 이전');
+  prev.disabled = qi === 0;
+  prev.onclick = () => examSpeak(si, qi - 1);
+  const next = el('button', 'primary big', qi === set.questions.length - 1 ? '끝내기' : '다음 ›');
+  next.onclick = () => qi === set.questions.length - 1 ? examExtra() : examSpeak(si, qi + 1);
+  nav.append(prev, next);
+  b.append(nav);
+  show('exam', '말하기', true);
+}
+
+async function recordAndGrade(question, passage, out, btn) {
+  if (!aiReady()) { out.textContent = 'AI 키가 필요합니다 — 내 정보에서 넣어 주세요.'; return; }
+  if (!canRecord()) { out.textContent = '이 기기에서는 녹음을 쓸 수 없습니다.'; return; }
+  if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
+  try {
+    if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (e) { out.textContent = '마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.'; return; }
+  const chunks = [];
+  const mr = new MediaRecorder(REC.stream);
+  REC.mr = mr;
+  mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+  mr.onstop = async () => {
+    releaseMic();
+    btn.textContent = '🎤 말하고 채점받기';
+    out.textContent = 'AI가 듣는 중…';
+    try {
+      const url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
+      if (REC.url) URL.revokeObjectURL(REC.url);
+      REC.url = url;
+      const b64 = await recToWav(url);
+      const t = await gCall({
+        contents: [{ role: 'user', parts: [
+          { text: SPEAK_RUBRIC + '\n\n[읽기 지문]\n' + passage + '\n\n[질문]\n' + question
+                  + '\n\n아래 녹음이 응시자의 답이다.' },
+          { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+        generationConfig: { maxOutputTokens: 400 }
+      }, i => { out.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
+      out.textContent = '';
+      String(t).split('\n').filter(x => x.trim())
+        .forEach(line => out.append(el('div', 'exgline', esc(line))));
+      touchToday(); save();
+    } catch (e) { out.textContent = 'AI 채점 실패: ' + (e.message || ''); }
+  };
+  mr.start();
+  btn.textContent = '⏹ 다 말했어요';
+  out.textContent = '듣고 있습니다… 다 말하면 위 단추를 누르세요.';
+}
+
+function examWrite(wi) {
+  const w = EXDATA.extra.write[wi];
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'exsec', `쓰기 · ${w.chars}자 정도`));
+  const card = el('div', 'excard');
+  card.append(el('div', 'exask', esc(w.title)));
+
+  const ta = el('textarea', 'exwrite');
+  ta.placeholder = '여기에 쓰세요…';
+  ta.rows = 10;
+  const cnt = el('p', 'note', `0 / ${w.chars}자`);
+  ta.oninput = () => { cnt.textContent = `${ta.value.length} / ${w.chars}자`; };
+  card.append(ta, cnt);
+
+  const out = el('div', 'exgrade');
+  const go = el('button', 'explay', '채점받기');
+  go.onclick = async () => {
+    const text = ta.value.trim();
+    if (text.length < 20) { out.textContent = '조금 더 써 주세요 (스무 자 이상).'; return; }
+    if (!aiReady()) { out.textContent = 'AI 키가 필요합니다 — 내 정보에서 넣어 주세요.'; return; }
+    out.textContent = 'AI가 읽는 중…';
+    try {
+      const t = await gCall({
+        contents: [{ role: 'user', parts: [{ text:
+          SPEAK_RUBRIC.replace('말하기', '쓰기').replace('아래 녹음이', '아래 글이')
+          + '\n마지막에 "고쳐 쓴 글:" 줄을 붙이고, 틀린 곳만 고친 전체 글을 한 번 더 쓴다.\n\n'
+          + '[제목]\n' + w.title + '\n\n[응시자가 쓴 글]\n' + text }] }],
+        generationConfig: { maxOutputTokens: 700 }
+      }, i => { out.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
+      out.textContent = '';
+      String(t).split('\n').filter(x => x.trim())
+        .forEach(line => out.append(el('div', 'exgline', esc(line))));
+      touchToday(); save();
+    } catch (e) { out.textContent = 'AI 채점 실패: ' + (e.message || ''); }
+  };
+  card.append(go, out);
+  b.append(card);
+
+  const back = el('button', 'ghost big', '‹ 다른 제목 고르기');
+  back.style.marginTop = '12px';
+  back.onclick = examExtra;
+  b.append(back);
+  show('exam', '쓰기', true);
+}
+
+/* 듣기 대본을 차례로 들려준다.
+   대화는 남녀가 갈리므로 목소리를 줄마다 바꿔 준다 — 한 목소리로 읽으면 누가 한 말인지 모른다.
+   줄 사이는 잠깐 쉰다. 붙여 놓으면 두 사람 말이 한 덩어리로 들린다. */
+function playKoSeq(items, done) {
+  let i = 0;
+  const step = () => {
+    if (i >= items.length) { audio.onended = null; done && done(); return; }
+    const it = items[i++];
+    const text = typeof it === 'string' ? it : it.t;
+    const v = typeof it === 'string' ? (S.voice === 'm' ? 'm' : 'f') : it.v;
+    koSrc(text, v, src => {
+      if (!src) { step(); return; }               // 소리가 없으면 그 줄은 건너뛴다
+      audio.pause(); audio.src = src; audio.currentTime = 0;
+      audio.onended = () => setTimeout(step, 450);
+      audio.play().catch(() => { audio.onended = null; done && done(); });
+    });
+  };
+  step();
+}
+/* 글자 → 미리 구워 둔 mp3 주소. 색인에 없으면 null(그때는 폰 목소리로 읽는다) */
+function koSrc(text, v, cb) {
+  const make = () => cb(KOIDX[text] ? `audio/ko-${v}/n/${KOIDX[text]}.mp3` : null);
+  if (KOIDX) return make();
+  fetch('data/ko_audio_index.json', { cache: 'no-cache' })
+    .then(r => r.json()).then(j => { KOIDX = j; make(); })
+    .catch(() => { KOIDX = {}; cb(null); });
+}
+
+/* 한국어 소리 — 미리 구워 둔 mp3가 있으면 그걸 쓰고, 없으면 폰의 목소리로 읽는다 */
+let KOIDX = null;
+function speakKo(text) {
+  const play = id => {
+    audio.pause();
+    audio.src = `audio/ko-${S.voice === 'm' ? 'm' : 'f'}/n/${id}.mp3`;
+    audio.currentTime = 0;
+    audio.play().catch(() => sysSpeakKo(text));
+  };
+  if (KOIDX) { KOIDX[text] ? play(KOIDX[text]) : sysSpeakKo(text); return; }
+  fetch('data/ko_audio_index.json', { cache: 'no-cache' })
+    .then(r => r.json())
+    .then(j => { KOIDX = j; KOIDX[text] ? play(KOIDX[text]) : sysSpeakKo(text); })
+    .catch(() => { KOIDX = {}; sysSpeakKo(text); });
+}
+function sysSpeakKo(text) {
+  try {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ko-KR';
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  } catch (e) { /* 목소리가 없는 기기도 있다 — 조용히 넘긴다 */ }
+}
+
 function renderMenu(id) {
   const m = MENUS[id];
   const b = $('#subBody');
@@ -2249,6 +2720,28 @@ $('#next').onclick = () => {
   else if (L.day.day === 'P2') { dive(backToCards); startTone(); }
   else renderHome();
 };
+
+/* 사진첩처럼 — 카드를 왼쪽으로 밀면 다음, 오른쪽으로 밀면 이전.
+   버튼(마이크·소리·예문)을 누르는 동작과 헷갈리지 않도록 스와이프(드래그)만 반응하고,
+   가벼운 탭은 무시한다 — 카드 위 아무 데나 눌러도 화면이 넘어가면 글을 읽다가도 실수로 넘어간다.
+   마지막 카드에서 다음으로 넘기는 건('확인 문제로 가기' 같은 진도 확정) 여기서 다루지 않는다 —
+   그건 실수로 밀려서 넘어가면 안 되는 결정이라 '다음 ›' 버튼을 눌러야만 넘어간다. */
+(() => {
+  const card = $('#card');
+  let x0 = null;
+  const goto = dir => {                       // dir: -1 이전, +1 다음
+    if ($('#learn').hidden) return;
+    if (dir < 0 && L.i > 0) { L.i--; drawCard(); }
+    else if (dir > 0 && L.i < L.items.length - 1) { L.i++; drawCard(); }
+  };
+  card.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  card.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 40) goto(dx < 0 ? 1 : -1);   // 왼쪽으로 밀면 다음(+1), 오른쪽으로 밀면 이전(-1)
+  }, { passive: true });
+})();
 
 /* ---------- 훑기 엔진 (예습·간략 복습) ----------
    카드가 소리와 함께 저절로 넘어간다 — 인출이 없어 외우는 효과는 약하지만,
