@@ -60,7 +60,8 @@ def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False):
             return pick
     return None
 
-def mk_choice_q(rng, answer, distractors, stem, show, qtype, extra=None):
+def mk_choice_q(rng, answer, distractors, stem, show, qtype, extra=None, note=None):
+    """note(보기, 정답인가) → 그 보기 한 줄 해설. 보기 순서가 바뀌어도 같이 따라간다."""
     opts = distractors + [answer]
     rng.shuffle(opts)
     q = {
@@ -70,9 +71,17 @@ def mk_choice_q(rng, answer, distractors, stem, show, qtype, extra=None):
         "answer": opts.index(answer),
         "word": answer["ko"],
     }
+    if note:
+        q["exp"] = [note(o, o is answer) for o in opts]
     if extra:
         q.update(extra)
     return q
+
+
+def gl(w):
+    """'낱말(뜻)' 한 덩어리 — 해설에서 되풀이해 쓴다."""
+    v = (w.get("vi") or "").split(",")[0].strip()
+    return f"'{w['ko']}'" + (f"({v})" if v else "")
 
 # ── 문항 유형 ────────────────────────────────────────────────
 def q_dfn2word(rng, w, gloss, pool_by_key):
@@ -85,7 +94,9 @@ def q_dfn2word(rng, w, gloss, pool_by_key):
     if not d:
         return None
     return mk_choice_q(rng, w, d, f"다음 설명에 맞는 단어는?\n{dfn}",
-                       lambda o: o["ko"], "dfn2word")
+                       lambda o: o["ko"], "dfn2word",
+                       note=lambda o, a: (f"맞습니다. 설명이 가리키는 말이 {gl(w)}입니다."
+                                          if a else f"{gl(o)}. 설명과 뜻이 다릅니다."))
 
 def q_word2vi(rng, w, gloss, pool_by_key):
     """단어를 주고 베트남어 뜻을 고르게 한다 (학습자 자가 점검용)."""
@@ -95,7 +106,9 @@ def q_word2vi(rng, w, gloss, pool_by_key):
     if not d:
         return None
     return mk_choice_q(rng, w, d, f"'{w['ko']}'의 뜻으로 알맞은 것은?",
-                       lambda o: o["vi"], "word2vi")
+                       lambda o: o["vi"], "word2vi",
+                       note=lambda o, a: (f"맞습니다. {gl(w)}."
+                                          if a else f"이 뜻은 '{o['ko']}'입니다."))
 
 def q_vi2word(rng, w, gloss, pool_by_key):
     """베트남어 뜻을 주고 한국어 단어를 고르게 한다 (산출 방향 — 더 어렵다)."""
@@ -105,7 +118,9 @@ def q_vi2word(rng, w, gloss, pool_by_key):
     if not d:
         return None
     return mk_choice_q(rng, w, d, f"'{w['vi']}'에 해당하는 한국어는?",
-                       lambda o: o["ko"], "vi2word")
+                       lambda o: o["ko"], "vi2word",
+                       note=lambda o, a: (f"맞습니다. {gl(w)}."
+                                          if a else f"{gl(o)}. 물어본 뜻이 아닙니다."))
 
 # 그림 문항에 쓸 수 있는 낱말 — 그림 하나만 보고 그 말이 딱 떠오르는 것만 손으로 골랐다.
 #
@@ -144,7 +159,9 @@ def q_pic2word(rng, w, gloss, pool_by_key, pics, pic_pool):
         return None
     d = rng.sample(cands, 3)
     return mk_choice_q(rng, w, d, "그림에 맞는 것을 고르십시오.",
-                       lambda o: o["ko"], "pic2word", extra={"img": img})
+                       lambda o: o["ko"], "pic2word", extra={"img": img},
+                       note=lambda o, a: (f"맞습니다. 그림은 {gl(w)}입니다."
+                                          if a else f"{gl(o)}. 그림과 다릅니다."))
 
 # 조사 문항 — 문틀은 직접 썼다(기출 전재 아님).
 # 고르는 규칙: **주어진 보기 넷 중 하나만** 말이 되어야 한다.
@@ -187,33 +204,81 @@ PARTICLE_BANK = [
     ("날씨(   ) 좋습니다.", "가", ["를", "에게", "에서"]),
     ("은행(   ) 갔다 왔습니다.", "에", ["를", "처럼", "마다"]),
     ("연필(   ) 이름을 씁니다.", "로", ["에게", "마다", "보다"]),
-]
+] + ko_content.PARTICLE_EXTRA
+
+def shuffled(rng, ans, wrong, why=None, bad=None):
+    """정답 하나 + 오답 셋을 섞고, 해설도 같은 자리로 따라가게 한다."""
+    pairs = [(ans, why or "")] + [(w, (bad or {}).get(w, "") if isinstance(bad, dict)
+                                     else (bad[i] if bad and i < len(bad) else ""))
+                                  for i, w in enumerate(wrong)]
+    rng.shuffle(pairs)
+    opts = [p[0] for p in pairs]
+    out = {"options": opts, "answer": opts.index(ans)}
+    if why or bad:
+        out["exp"] = [p[1] for p in pairs]
+    return out
+
+
+# 조사·어미가 하는 일. 해설은 이 표에서 자동으로 나온다 —
+# 기능이 고정된 말이라 문항마다 따로 쓸 필요가 없고, 새 문항을 넣어도 해설이 저절로 붙는다.
+PARTICLE_FN = {
+    "이": "주어 자리를 표시합니다(받침 있는 말 뒤)", "가": "주어 자리를 표시합니다(받침 없는 말 뒤)",
+    "은": "무엇에 대해 말하는지 주제를 세웁니다(받침 있는 말 뒤)",
+    "는": "무엇에 대해 말하는지 주제를 세웁니다(받침 없는 말 뒤)",
+    "을": "동작을 받는 대상을 표시합니다(받침 있는 말 뒤)",
+    "를": "동작을 받는 대상을 표시합니다(받침 없는 말 뒤)",
+    "에": "장소로 가거나, 무엇이 있는 곳이나, 시각을 나타냅니다",
+    "에서": "어떤 일이 벌어지는 장소, 또는 출발점을 나타냅니다",
+    "에게": "사람이나 동물에게 무엇을 줄 때 그 상대를 나타냅니다",
+    "께": "'에게'의 높임말입니다 — 웃어른에게 쓸 때", "께서": "'이/가'의 높임말입니다 — 웃어른이 주어일 때",
+    "에게서": "사람에게서 받아 올 때 그 출처를 나타냅니다",
+    "와": "'…와 함께/…과 …'로 둘을 잇습니다(받침 없는 말 뒤)",
+    "과": "'…과 함께/…와 …'로 둘을 잇습니다(받침 있는 말 뒤)",
+    "도": "'또한'의 뜻으로 덧붙입니다", "만": "'그것 하나뿐'이라는 뜻입니다",
+    "부터": "시작하는 지점을 나타냅니다", "까지": "끝나는 지점을 나타냅니다",
+    "보다": "두 가지를 견줍니다", "처럼": "무엇과 닮았다고 비유합니다",
+    "마다": "'하나하나 빠짐없이'라는 뜻입니다", "씩": "같은 몫으로 나눠 되풀이함을 나타냅니다",
+    "로": "도구·수단, 또는 방향을 나타냅니다(받침 없는 말 뒤)",
+    "으로": "도구·수단, 또는 방향을 나타냅니다(받침 있는 말 뒤)",
+    "의": "앞말이 뒷말의 것임을 나타냅니다", "이나": "여럿 가운데 아무거나 고를 때 씁니다",
+    "밖에": "'그것 말고는 없다'는 뜻이라 뒤에 부정이 옵니다",
+}
+
+
+def fn_note(tok, right):
+    f = PARTICLE_FN.get(tok)
+    if right:
+        return f"맞습니다. '{tok}'는 {f}." if f else "맞습니다."
+    return f"'{tok}'는 {f}. 이 문장에는 맞지 않습니다." if f else f"'{tok}'는 이 문장에 맞지 않습니다."
+
 
 def q_particle(rng, idx):
-    stem, ans, wrong = PARTICLE_BANK[idx]
-    opts = wrong + [ans]
-    rng.shuffle(opts)
+    stem, ans, wrong, *rest = PARTICLE_BANK[idx]
+    why = rest[0] if rest else fn_note(ans, True)
+    bad = rest[1] if len(rest) > 1 else [fn_note(w, False) for w in wrong]
     return {"type": "particle", "stem": f"( )에 알맞은 것을 고르십시오.\n{stem}",
-            "options": opts, "answer": opts.index(ans), "word": ans}
+            "word": ans, **shuffled(rng, ans, wrong, why, bad)}
 
 # ── 듣기·읽기 (직접 쓴 재료를 문항으로 감싼다) ────────────────
 def q_listen_reply(rng, idx):
     """질문을 듣고 알맞은 대답을 고른다. 문제는 소리로만 나가고 화면엔 안 적힌다."""
-    heard, ans, wrong = ko_content.LISTEN_REPLY[idx]
-    opts = wrong + [ans]
-    rng.shuffle(opts)
+    heard, ans, wrong, *rest = ko_content.LISTEN_REPLY[idx]
+    why = rest[0] if rest else f"들려준 말은 “{heard}”입니다. 이 물음에 맞는 대답입니다."
+    bad = rest[1] if len(rest) > 1 else ["들려준 물음에 맞지 않는 대답입니다."] * 3
     return {"type": "listen_reply", "stem": "잘 듣고 알맞은 대답을 고르십시오.",
-            "audio": [heard], "options": opts, "answer": opts.index(ans)}
+            "audio": [heard], "heard": heard,
+            **shuffled(rng, ans, wrong, why, bad)}
 
 def q_listen_dialog(rng, idx):
     """짧은 대화를 듣고 물음에 답한다. 질문은 글로 보여 준다(실제 시험도 그렇다)."""
-    lines, q, ans, wrong = ko_content.LISTEN_DIALOG[idx]
-    opts = wrong + [ans]
-    rng.shuffle(opts)
+    lines, q, ans, wrong, *rest = ko_content.LISTEN_DIALOG[idx]
+    why = rest[0] if rest else "대화에서 그렇게 말했습니다."
+    bad = rest[1] if len(rest) > 1 else ["대화에 나오지 않았거나 대화와 다른 내용입니다."] * 3
     return {"type": "listen_dialog", "stem": f"잘 듣고 물음에 답하십시오.\n{q}",
             # 남녀가 번갈아 말하도록 목소리를 같이 실어 보낸다
             "audio": [{"v": "m" if who == "남" else "f", "t": text} for who, text in lines],
-            "options": opts, "answer": opts.index(ans)}
+            "script": [f"{who}: {text}" for who, text in lines],
+            **shuffled(rng, ans, wrong, why, bad)}
 
 def q_listen_pic(rng, w, pics, pic_pool):
     """낱말을 듣고 맞는 그림을 고른다 — 보기가 넷 다 그림이다."""
@@ -229,16 +294,18 @@ def q_listen_pic(rng, w, pics, pic_pool):
     return {"type": "listen_pic", "stem": "잘 듣고 알맞은 그림을 고르십시오.",
             "audio": [w["ko"]],
             "options": [pics[x["ko"].split("(")[0].strip()] for x in picked],
-            "answer": picked.index(w), "word": w["ko"], "optkind": "img"}
+            "answer": picked.index(w), "word": w["ko"], "optkind": "img",
+            "exp": [(f"맞습니다. 들려준 말은 {gl(w)}입니다." if x is w
+                     else f"이 그림은 {gl(x)}입니다.") for x in picked]}
 
 def q_read(rng, pidx, qidx):
     """지문을 읽고 물음에 답한다."""
     title, passage, qs = ko_content.READ_BANK[pidx]
-    q, ans, wrong = qs[qidx]
-    opts = wrong + [ans]
-    rng.shuffle(opts)
+    q, ans, wrong, *rest = qs[qidx]
+    why = rest[0] if rest else "지문에 그대로 나와 있습니다."
+    bad = rest[1] if len(rest) > 1 else ["지문에 없거나 지문과 다른 내용입니다."] * 3
     return {"type": "read", "stem": q, "passage": passage, "ptitle": title,
-            "options": opts, "answer": opts.index(ans)}
+            **shuffled(rng, ans, wrong, why, bad)}
 
 # ── 시험 설계도 ──────────────────────────────────────────────
 # 문항 수·시간·유형 배열은 실제 시험을 그대로 따랐다(형식은 사실이라 따라도 된다).
@@ -273,20 +340,118 @@ BLUEPRINTS = {
             {"label": "[33~40] 다음 글을 읽고 물음에 답하십시오.", "kind": "read", "n": 8},
         ],
     },
+    # TOPIK I은 듣기 30 + 읽기 40 = 70문항이다(12회차 내내 그대로였다).
+    # 유형 배열도 공개 기출의 발문 순서를 따랐다.
     "topik-1": {
         "name": "TOPIK I 모의고사",
-        "desc": "TOPIK I · 듣기 10 + 읽기 20",
-        "minutes": 45,
+        "desc": "TOPIK I · 듣기 30 + 읽기 40 (실제 시험과 같은 문항 수)",
+        "minutes": 100,
         "grades": ["A", "B"],
         "sections": [
-            {"label": "[1~4] 잘 듣고 알맞은 그림을 고르십시오.", "kind": "listen_pic", "n": 4},
-            {"label": "[5~10] 잘 듣고 알맞은 대답을 고르십시오.", "kind": "listen_reply", "n": 6},
-            {"label": "[11~18] 다음 설명에 맞는 단어는?", "kind": "dfn2word", "n": 8},
-            {"label": "[19~24] ( )에 알맞은 것을 고르십시오.", "kind": "particle", "n": 6},
-            {"label": "[25~30] 한국어로 알맞은 것을 고르십시오.", "kind": "vi2word", "n": 6},
+            {"label": "[1~6] 잘 듣고 알맞은 그림을 고르십시오.", "kind": "listen_pic", "n": 6},
+            {"label": "[7~18] 잘 듣고 알맞은 대답을 고르십시오.", "kind": "listen_reply", "n": 12},
+            {"label": "[19~30] 잘 듣고 물음에 답하십시오.", "kind": "listen_dialog", "n": 12},
+            {"label": "[31~42] 다음 설명에 맞는 단어는?", "kind": "dfn2word", "n": 12},
+            {"label": "[43~54] ( )에 알맞은 것을 고르십시오.", "kind": "particle", "n": 12},
+            {"label": "[55~60] 한국어로 알맞은 것을 고르십시오.", "kind": "vi2word", "n": 6},
+            {"label": "[61~70] 다음을 읽고 물음에 답하십시오.", "kind": "read", "n": 10},
+        ],
+    },
+    # TOPIK II는 듣기 50 + 쓰기 4 + 읽기 50이다. 우리가 지금 감당할 수 있는 것은
+    # '읽기 50'뿐이라, 듣기·쓰기를 있는 척하지 않고 읽기만 따로 낸다.
+    # 쓰기는 정답이 하나가 아니라 extra.write 쪽에서 AI가 채점한다.
+    "topik-2-read": {
+        "name": "TOPIK II 읽기 모의고사",
+        "desc": "TOPIK II 2교시 읽기 형식 · 50문항 (듣기·쓰기는 따로)",
+        "minutes": 70,
+        "grades": ["B", "C"],
+        "sections": [
+            {"label": "[1~12] ( )에 들어갈 가장 알맞은 것을 고르십시오.", "kind": "particle", "n": 12},
+            {"label": "[13~28] 다음 설명에 맞는 단어를 고르십시오.", "kind": "dfn2word", "n": 16},
+            {"label": "[29~38] 뜻이 알맞은 것을 고르십시오.", "kind": "word2vi", "n": 10},
+            {"label": "[39~50] 다음을 읽고 물음에 답하십시오.", "kind": "read", "n": 12},
         ],
     },
 }
+
+# ── KIIP 단계평가 — 0단계부터 4단계까지 (사용자 지시: 전 단계 확장) ────────
+# 사회통합프로그램은 0단계(기초)~4단계(한국어와 한국문화) + 5단계(한국사회이해)다.
+# 단계가 오를수록 (a)어려운 등급 어휘를 쓰고 (b)읽기 비중이 커진다.
+# 5단계는 어휘 시험이 아니라 '한국사회이해'라 우리 문화 자료(ko_culture)로 따로 낸다.
+KIIP_STAGES = [
+    (0, "기초", ["A"], [("pic2word", 8), ("dfn2word", 8), ("particle", 4)]),
+    (1, "초급 1", ["A"], [("pic2word", 4), ("dfn2word", 10), ("particle", 6), ("read", 4)]),
+    (2, "초급 2", ["A", "B"], [("pic2word", 2), ("dfn2word", 10), ("particle", 8), ("read", 6)]),
+    (3, "중급 1", ["B"], [("dfn2word", 12), ("particle", 8), ("word2vi", 4), ("read", 8)]),
+    (4, "중급 2", ["B", "C"], [("dfn2word", 12), ("particle", 8), ("vi2word", 4), ("read", 8)]),
+]
+LABEL = {"pic2word": "그림을 보고 알맞은 것을 고르십시오.",
+         "dfn2word": "다음 설명에 맞는 단어를 고르십시오.",
+         "particle": "( )에 알맞은 것을 고르십시오.",
+         "word2vi": "뜻이 알맞은 것을 고르십시오.",
+         "vi2word": "한국어로 알맞은 것을 고르십시오.",
+         "read": "다음을 읽고 물음에 답하십시오.",
+         "listen_pic": "잘 듣고 알맞은 그림을 고르십시오.",
+         "listen_reply": "잘 듣고 알맞은 대답을 고르십시오.",
+         "listen_dialog": "잘 듣고 물음에 답하십시오.",
+         "job": "일터에서 쓰는 말입니다. 뜻이 알맞은 것을 고르십시오."}
+
+
+def numbered(mix):
+    """[(유형, 개수)] → 문항 번호가 매겨진 구간표. [1~4] 처럼 실제 시험처럼 보이게."""
+    out, at = [], 1
+    for kind, n in mix:
+        out.append({"label": f"[{at}~{at + n - 1}] {LABEL[kind]}", "kind": kind, "n": n})
+        at += n
+    return out
+
+
+for st, nm, grades, mix in KIIP_STAGES:
+    BLUEPRINTS[f"kiip-{st}"] = {
+        "name": f"KIIP {st}단계 평가 모의고사",
+        "desc": f"사회통합프로그램 {st}단계({nm}) 단계평가 형식 · {sum(n for _, n in mix)}문항",
+        "minutes": 30 + st * 5, "grades": grades, "sections": numbered(mix),
+    }
+
+# ── EPS 직무 어휘 — 8개 업종 (사용자 지시: EPS 확장) ──────────────────
+# 공개 직무문항(산업인력공단)에 실제로 나오는 말 가운데, 그 업종에만 몰려 나오고
+# 우리 사전에 뜻이 있는 것만 골라 뽑았다(tools 밖 분석 → data/_job_vocab.json).
+# 뜻을 모르는 말은 지어내지 않고 그냥 뺐다 — 그래서 업종마다 문항 수가 다르다.
+JOB_MIN = 12
+try:
+    JOB_VOCAB = json.load(open(os.path.join(DATA, "_job_vocab.json"), encoding="utf-8"))
+except Exception:
+    JOB_VOCAB = {}
+for _ind, _ws in JOB_VOCAB.items():
+    if len(_ws) < JOB_MIN:
+        continue
+    _n = min(20, len(_ws))
+    BLUEPRINTS[f"eps-job-{_ind}"] = {
+        "name": f"EPS 직무 어휘 · {_ind}",
+        "desc": f"{_ind} 업종에서 실제로 쓰이는 말 {_n}개",
+        "minutes": 20, "grades": ["A", "B", "C"], "industry": _ind,
+        "sections": numbered([("job", _n)]),
+    }
+
+
+def q_job(rng, industry, idx, used):
+    """업종 낱말의 뜻 고르기. 오답도 같은 업종에서 뽑아 '분야로 찍기'를 막는다."""
+    pool = JOB_VOCAB.get(industry) or []
+    if len(pool) < 4 or idx >= len(pool):
+        return None
+    w = pool[idx]
+    if w["ko"] in used:
+        return None
+    cands = [x for x in pool if x["ko"] != w["ko"] and x["vi"] != w["vi"]]
+    if len(cands) < 3:
+        return None
+    d = rng.sample(cands, 3)
+    used.add(w["ko"])
+    return mk_choice_q(rng, w, d, f"'{w['ko']}'의 뜻으로 알맞은 것은?",
+                       lambda o: o["vi"], "job",
+                       extra={"industry": industry},
+                       note=lambda o, a: (f"맞습니다. {industry} 일터에서 {gl(w)}."
+                                          if a else f"이 뜻은 '{o['ko']}'입니다."))
 
 def build(exam_id, seed, words, gloss, pics, state):
     bp = BLUEPRINTS[exam_id]
@@ -346,6 +511,10 @@ def build(exam_id, seed, words, gloss, pics, state):
                 if not rd_left:
                     break
                 q = q_read(rng, *rd_left.pop(0))
+            elif sec["kind"] == "job":
+                q = q_job(rng, bp["industry"], made, used)
+                if not q:
+                    break
             elif sec["kind"] == "listen_pic":
                 w = rng.choice(pic_pool) if pic_pool else None
                 if not w or w["ko"] in used:
@@ -397,6 +566,8 @@ def rebalance(rng, qs):
         if a == t:
             continue
         q["options"][a], q["options"][t] = q["options"][t], q["options"][a]
+        if q.get("exp"):
+            q["exp"][a], q["exp"][t] = q["exp"][t], q["exp"][a]
         q["answer"] = t
 
 if __name__ == "__main__":
@@ -410,7 +581,8 @@ if __name__ == "__main__":
            }}
     for exam_id in BLUEPRINTS:
         state = {}                     # 시험 종류마다 따로 — EPS와 KIIP는 서로 겹쳐도 된다
-        for seed in (1, 2, 3):
+        # 직무 어휘는 낱말이 정해져 있어 회차를 나눌 수 없다 — 한 벌만 낸다
+        for seed in ((1,) if exam_id.startswith("eps-job-") else (1, 2, 3)):
             e = build(exam_id, seed, words, gloss, pics, state)
             out["exams"].append(e)
             print(f"{exam_id} {seed}회차: {e['total']}문항 (부족 {e['shortfall']})", file=sys.stderr)

@@ -316,3 +316,23 @@ WRITE_BANK = [
     ("한국에서 일하면서 배운 것을 쓰십시오.", 150),
     ("앞으로 이루고 싶은 목표와 그 이유를 쓰십시오.", 150),
 ]
+
+
+# ── 증보판 이어 붙이기 ───────────────────────────────────────
+# ko_content_more.py 는 해설까지 달린 새 재료다. 여기서 합쳐 두면
+# 출제기(ko_exam_gen.py)는 고칠 것 없이 늘어난 재료를 그대로 쓴다.
+from ko_content_more import (LISTEN_REPLY_EXTRA, LISTEN_DIALOG_EXTRA,
+                             READ_EXTRA, PARTICLE_EXTRA)
+
+def _merge(old, new, key):
+    """같은 문항이 두 벌 있으면 해설이 달린 쪽(원소가 더 많은 쪽)을 남긴다."""
+    best = {}
+    for x in old + new:
+        k = key(x)
+        if k not in best or len(x) > len(best[k]):
+            best[k] = x
+    return list(best.values())
+
+LISTEN_REPLY = _merge(LISTEN_REPLY, LISTEN_REPLY_EXTRA, lambda x: x[0])
+LISTEN_DIALOG = _merge(LISTEN_DIALOG, LISTEN_DIALOG_EXTRA, lambda x: x[1])
+READ_BANK = _merge(READ_BANK, READ_EXTRA, lambda x: x[0])

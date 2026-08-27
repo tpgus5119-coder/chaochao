@@ -50,6 +50,16 @@ const $ = s => document.querySelector(s);
    글자가 화면에 놓이는 길목(el·show)에서 **문구를 통째로 맞바꾼다.**
    표에 있는 문구만 바뀐다 — 아직 없는 문구는 한국어로 남고, 표를 채우면 늘어난다. */
 const UIVI = {
+  '취업 (EPS)': 'Việc làm (EPS)', '체류·귀화 (KIIP)': 'Cư trú·nhập tịch (KIIP)',
+  '유학·자격 (TOPIK)': 'Du học·chứng chỉ (TOPIK)',
+  '한국에서 일하려면 보는 시험입니다.': 'Kỳ thi cần có để đi làm ở Hàn Quốc.',
+  '사회통합프로그램 사전평가와 단계평가입니다.': 'Đánh giá đầu vào và đánh giá từng cấp của KIIP.',
+  '한국어능력시험 형식 그대로입니다.': 'Đúng theo định dạng kỳ thi TOPIK.',
+  'N벌': 'N bộ', 'N회차': 'Lần N', '풀어 보기': 'Làm thử', '문항': ' câu', '분': ' phút', 'N점': 'N điểm',
+  '해설': 'Giải thích', '해설이 아직 없습니다.': 'Chưa có giải thích.',
+  '내가 고른 답': 'Bạn đã chọn', '(그림)': '(hình)',
+  '맞힌 문항 해설': 'Giải thích câu đúng', '맞힌 문항 해설도 보기': 'Xem giải thích câu đúng',
+  '일터 낱말': 'Từ nơi làm việc',
   /* ── 2026-08 대량 보강: 화면 문구 베트남어 ── */
   '<b>✍️ 일주일에 한 번은 손으로 써보세요.</b><br>': '<b>✍️ Mỗi tuần hãy viết tay một lần.</b><br>',
   '<b>글자를 누르면 소리가 납니다</b><br>': '<b>Bấm vào chữ sẽ phát ra âm thanh</b><br>',
@@ -2097,30 +2107,56 @@ function examEntry() {
     });
 }
 
+function examGroup(host, list) {
+  host.append(el('h3', 'exhead', esc(list[0].name)));
+  host.append(el('p', 'note', esc(list[0].desc)));
+  list.forEach(e => {
+    const best = (S.exam || {})[e.id + '-' + e.set];
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, list.length > 1 ? tr('N회차').replace('N', e.set) : tr('풀어 보기')));
+    btn.append(el('span', 'exmeta', `${e.total}${tr('문항')} · ${e.minutes}${tr('분')}`));
+    if (best) {                    // 전에 본 적이 있으면 점수를 같이 보여준다
+      const pct = Math.round(best.score / best.total * 100);
+      btn.append(el('span', 'mbadge' + (pct >= 60 ? '' : ' red'), tr('N점').replace('N', pct)));
+    }
+    btn.onclick = () => startExam(e);
+    host.append(btn);
+  });
+}
+
 function drawExamList() {
   const b = $('#examBody');
   b.textContent = '';
   b.append(el('p', 'lede', '실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.<br>'
     + '문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.'));
-  // 같은 시험은 회차끼리 묶어 보여준다
+  // 시험이 서른 벌이 넘는다. 한 줄로 늘어놓으면 못 찾으니 목적별로 접어 둔다.
   const byId = {};
   EXDATA.exams.forEach(e => (byId[e.id] = byId[e.id] || []).push(e));
-  Object.values(byId).forEach(list => {
-    b.append(el('h3', 'exhead', esc(list[0].name)));
-    b.append(el('p', 'note', esc(list[0].desc)));
-    list.forEach(e => {
-      const best = (S.exam || {})[e.id + '-' + e.set];
-      const btn = el('button', 'bigmenu');
-      btn.append(el('b', null, `${e.set}회차`));
-      btn.append(el('span', 'exmeta', `${e.total}문항 · ${e.minutes}분`));
-      if (best) {                    // 전에 본 적이 있으면 점수를 같이 보여준다
-        const pct = Math.round(best.score / best.total * 100);
-        btn.append(el('span', 'mbadge' + (pct >= 60 ? '' : ' red'), `${pct}점`));
-      }
-      btn.onclick = () => startExam(e);
-      b.append(btn);
-    });
+  const CATS = [
+    ['🏭', '취업 (EPS)', '한국에서 일하려면 보는 시험입니다.',
+      id => id === 'eps-topik' || id.startsWith('eps-job-')],
+    ['🏛️', '체류·귀화 (KIIP)', '사회통합프로그램 사전평가와 단계평가입니다.',
+      id => id.startsWith('kiip-')],
+    ['🎓', '유학·자격 (TOPIK)', '한국어능력시험 형식 그대로입니다.',
+      id => id.startsWith('topik-')],
+  ];
+  const shown = new Set();
+  CATS.forEach(([icon, title, note, match]) => {
+    const ids = Object.keys(byId).filter(match);
+    if (!ids.length) return;
+    ids.forEach(i => shown.add(i));
+    const n = ids.reduce((s, i) => s + byId[i].length, 0);
+    const wrap = el('details', 'excat');
+    const sum = el('summary');
+    sum.append(el('span', 'exicon', icon));
+    sum.append(el('b', null, tr(title)));
+    sum.append(el('span', 'exmeta', tr('N벌').replace('N', n)));
+    wrap.append(sum);
+    wrap.append(el('p', 'note', tr(note)));
+    ids.forEach(id => examGroup(wrap, byId[id]));
+    b.append(wrap);
   });
+  Object.keys(byId).filter(i => !shown.has(i)).forEach(id => examGroup(b, byId[id]));
   // 말하기·쓰기는 정답이 하나가 아니라 시험지에 못 넣는다 — 따로 둔다
   b.append(el('h3', 'exhead', '말하기 · 쓰기'));
   b.append(el('p', 'note', 'KIIP 구술시험과 작문시험 형식 · AI가 읽고 고칠 점을 알려 줍니다.'));
@@ -2598,6 +2634,8 @@ function finishExam(timeUp) {
   const b = $('#examBody');
   b.textContent = '';
   const pct = Math.round(score / e.questions.length * 100);
+  // 앞에서 만든 뒤 아래에서 붙인다 — '맞힌 문항 해설' 단추가 이 자리 앞에 끼워 넣는다
+  var again, list;
   const r = el('div', 'result' + (pct >= 60 ? ' perfect' : ''));
   r.append(el('div', 'n', `${score} / ${e.questions.length}`));
   r.append(el('div', null, timeUp ? `시간이 다 됐습니다 · ${pct}점` : `${pct}점`));
@@ -2648,20 +2686,70 @@ function finishExam(timeUp) {
         p.onclick = () => speakKo(q.word);
         c.append(p);
       }
+      c.append(expBlock(q, picked));
       b.append(c);
     });
   } else {
     b.append(el('p', 'lede', '다 맞았습니다.'));
   }
 
-  const again = el('button', 'primary big', '다시 풀기');
+  // 맞힌 문항도 해설을 볼 수 있게 — 찍어서 맞힌 것은 다음에 틀린다
+  if (wrong.length < e.questions.length) {
+    const all = el('button', 'ghost big', '맞힌 문항 해설도 보기');
+    all.style.marginTop = '14px';
+    all.onclick = () => {
+      all.remove();
+      b.insertBefore(el('h3', 'exhead', '맞힌 문항 해설'), again);
+      e.questions.forEach((q, i) => {
+        if (marks[i] !== q.answer) return;
+        const c = el('div', 'excard');
+        c.append(el('div', 'exask', `${q.no}. ` + esc(q.stem.split('\n')[0])));
+        c.append(el('div', 'exans', `정답 ${'①②③④'[q.answer]} <b>`
+          + esc(q.optkind === 'img' ? '(그림)' : String(q.options[q.answer])) + '</b>'));
+        c.append(expBlock(q, q.answer));
+        b.insertBefore(c, again);
+      });
+    };
+    b.append(all);
+  }
+
+  again = el('button', 'primary big', '다시 풀기');
   again.style.marginTop = '18px';
   again.onclick = () => startExam(e);
-  const list = el('button', 'ghost big', '다른 시험 고르기');
+  list = el('button', 'ghost big', '다른 시험 고르기');
   list.style.marginTop = '8px';
   list.onclick = () => { EX = null; drawExamList(); };
+
   b.append(again, list);
   show('exam', '채점 결과', true);
+}
+
+/* ---------- 해설 ----------
+   문항마다 보기 넷의 해설이 같은 차례로 들어 있다(ko_exam_gen.py 가 만든다).
+   정답 줄은 '왜 맞는지', 나머지는 '왜 틀렸는지'. 내가 고른 오답은 따로 표시해
+   눈이 먼저 가게 한다 — 사람은 자기가 틀린 이유부터 알고 싶어 한다. */
+function expBlock(q, picked) {
+  const box = el('div', 'exwhy');
+  if (!q.exp || !q.exp.length) {
+    box.append(el('div', 'exnote', tr('해설이 아직 없습니다.')));
+    return box;
+  }
+  box.append(el('div', 'exwhead', tr('해설')));
+  const shown = o => q.optkind === 'img' ? tr('(그림)') : String(o);
+  q.exp.forEach((t, i) => {
+    if (!t) return;
+    const right = i === q.answer;
+    const mine = i === picked && !right;
+    const row = el('div', 'exwrow' + (right ? ' ok' : mine ? ' mine' : ''));
+    row.append(el('span', 'exwno', '①②③④'[i]));
+    const s = el('span', 'exwtx');
+    s.append(el('b', null, esc(shown(q.options[i]))));
+    s.append(document.createTextNode(' — ' + t));
+    if (mine) s.append(el('span', 'exwtag', tr('내가 고른 답')));
+    row.append(s);
+    box.append(row);
+  });
+  return box;
 }
 
 /* ---------- 구술·작문 (AI가 채점한다) ----------
