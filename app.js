@@ -267,6 +267,14 @@ const UIVI = {
   '남은 점수에 따라 갈립니다': 'Tùy điểm còn lại',
   // 문항 되풀이 창고 — 한 번 맞혔다고 빼지 않는다
   '다시 풀 문항': 'Câu cần làm lại',
+  // 듣기 규칙 — 실제 시험이 막는 것을 우리도 막는다
+  '다 들었습니다': 'Đã nghe hết',
+  '실제 시험처럼 정해진 횟수만 들려줍니다.': 'Chỉ phát đúng số lần như thi thật.',
+  'N번 더 들을 수 있습니다.': 'Còn nghe được N lần.',
+  '소리로만 나옵니다 — 몇 번이든 다시 들을 수 있습니다.':
+    'Chỉ có âm thanh — bạn nghe lại bao nhiêu lần cũng được.',
+  '지나간 듣기 문항으로는 돌아갈 수 없습니다.':
+    'Không thể quay lại câu nghe đã qua.',
   '세 번 맞히면 쉽니다. 지금 창고에 N개.':
     'Đúng ba lần thì câu đó nghỉ. Hiện có N câu trong kho.',
   // TOPIK 말하기 — 시간표가 이 시험의 핵심이라 화면 문구도 시간을 앞세운다
@@ -2726,19 +2734,35 @@ function drawExamQ() {
   }
   if (lines[1]) card.append(el('div', 'exbody', esc(lines[1])));
 
-  // 듣기 — 문제가 소리로만 나간다. 몇 번이든 다시 들을 수 있게 둔다
-  // (실제 시험은 두 번까지지만, 연습에서까지 막으면 틀린 이유를 못 짚는다).
+  /* 듣기 — 실제 시험은 **정해진 횟수만** 들려준다.
+     TOPIK I 은 두 번이다(102회 1번 음원의 말한 시간 4.2초 ÷ '우산이 있어요?' 7자 →
+     한 번이면 1.67 글자/초로 실측 속도의 절반이라 말이 안 되고, 두 번이면 3.33 으로
+     실측과 맞는다). TOPIK II 는 한 번이다.
+     몇 번이든 듣게 두면 열 번 들어 맞히므로 듣기 연습이 되지 않는다.
+     다만 **오답 다시 풀기(sub)** 에서는 막지 않는다 — 거기서는 틀린 이유를 짚어야 한다. */
   if (q.audio && q.audio.length) {
+    const cap = e.sub ? 0 : (e.plays || 0);          // 0 = 제한 없음
+    EX.plays = EX.plays || {};
+    const used = () => EX.plays[EX.at] || 0;
     const pb = el('button', 'explay');
-    const paint = () => { pb.textContent = EX.playing ? '⏸ 멈추기' : '▶ 듣기'; };
+    const left = el('p', 'note');
+    const paint = () => {
+      const over = cap && used() >= cap;
+      pb.disabled = !!over && !EX.playing;
+      pb.textContent = EX.playing ? '⏸ 멈추기' : (over ? '▶ ' + tr('다 들었습니다') : '▶ 듣기');
+      left.textContent = !cap ? tr('소리로만 나옵니다 — 몇 번이든 다시 들을 수 있습니다.')
+        : over ? tr('실제 시험처럼 정해진 횟수만 들려줍니다.')
+        : tr('N번 더 들을 수 있습니다.').replace('N', cap - used());
+    };
     pb.onclick = () => {
       if (EX.playing) { audio.pause(); audio.onended = null; EX.playing = false; paint(); return; }
+      if (cap && used() >= cap) return;
+      EX.plays[EX.at] = used() + 1;
       EX.playing = true; paint();
       playKoSeq(q.audio, () => { EX.playing = false; paint(); });
     };
     paint();
-    card.append(pb);
-    card.append(el('p', 'note', '소리로만 나옵니다 — 몇 번이든 다시 들을 수 있습니다.'));
+    card.append(pb, left);
   }
 
   if (q.img) {
@@ -2781,10 +2805,19 @@ function drawExamQ() {
   b.append(card);
   }
 
+  /* 되돌아가기 차단 — 실제 듣기는 소리가 흘러가면 끝이다. 3번을 풀다가
+     1번으로 돌아갈 수 없다. 지금까지는 아래 번호판으로 아무 데나 오갈 수 있어
+     실제보다 쉬웠다. 지나온 **듣기** 문항만 잠근다 — 읽기는 실제 시험에서도
+     자유롭게 오간다. 오답 다시 풀기(sub)에서는 잠그지 않는다. */
+  const lockable = i => e.lockback && !e.sub
+    && (e.questions[i].audio || []).length && (EX.seen || {})[i];
+  EX.seen = EX.seen || {};
+  if ((q.audio || []).length) EX.seen[EX.at] = 1;   // 이 문항은 이제 '지나간' 것이 된다
+
   // 앞뒤 이동
   const nav = el('div', 'exnav');
   const prev = el('button', 'ghost big', '‹ 이전');
-  prev.disabled = EX.at === 0;
+  prev.disabled = EX.at === 0 || lockable(EX.at - 1);
   prev.onclick = () => { EX.at--; drawExamQ(); };
   const next = el('button', 'primary big', EX.at === e.questions.length - 1 ? '제출하기' : '다음 ›');
   next.onclick = () => {
@@ -2799,8 +2832,12 @@ function drawExamQ() {
   // 번호판 — 어디를 안 풀었는지 한눈에 보이고, 눌러서 바로 건너뛴다
   const pad = el('div', 'expad');
   e.questions.forEach((_, i) => {
-    const n = el('button', 'expn' + (answered(EX.marks[i]) ? ' done' : '') + (i === EX.at ? ' cur' : ''));
+    const shut = lockable(i) && i !== EX.at;
+    const n = el('button', 'expn' + (answered(EX.marks[i]) ? ' done' : '')
+      + (i === EX.at ? ' cur' : '') + (shut ? ' shut' : ''));
     n.textContent = String(i + 1);
+    n.disabled = shut;                     // 지나간 듣기 문항으로는 못 돌아간다
+    if (shut) n.title = tr('지나간 듣기 문항으로는 돌아갈 수 없습니다.');
     n.onclick = () => { EX.at = i; drawExamQ(); };
     pad.append(n);
   });

@@ -1496,3 +1496,6 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .blankno{flex:0 0 auto;font-size:19px;font-weight:700;color:var(--accent);width:26px;text-align:center}
 .blankrow .keyin{flex:1 1 auto;margin:0}
 .exgline.dim{color:var(--dim);font-size:13px;margin-top:8px;border-top:1px solid var(--line);padding-top:8px}
+/* 지나간 듣기 문항 — 실제 시험처럼 되돌아갈 수 없다.
+   색만으로 알리지 않는다: 흐리게 + 빗금 테두리로 '닫혔다'를 함께 보인다. */
+.expn.shut{opacity:.35; border-style:dashed; cursor:not-allowed}
