@@ -23,6 +23,12 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import baseline_check as B                                       # noqa: E402
 
+# 잣대는 **공식 두 가지를 함께** 쓴다. 공개문항만 쓰면 낱말 1,033개짜리 자라 흔들린다.
+#  · 공개문항 30문항(2025)              — 시험이 어떻게 생겼는가
+#  · EPS 표준교재 1권 388쪽             — 시험이 **어디서 나오는가**
+#    공단이 직접 밝힌다: "100% 비공개 출제되며 「한국어표준교재」를 바탕으로 한다."
+#    두 자료가 따로 재도 38.9% / 39.5% 로 맞아떨어진다.
+ARCHIVE = pathlib.Path.home() / "Documents" / "시험기출자료고" / "글자화-텍스트"
 OFF = pathlib.Path.home() / "eps-공개문제"
 BOILER = re.compile(r"^(=====.*|고용허가제.*|\d{4} - \d+ -.*|읽기 \(\d+문항\)|"
                     r"듣기 \(\d+문항\)|\[?\d+~\d+\]?.*고르십시오\.?|정답|번호|문항|"
@@ -49,7 +55,9 @@ def main():
     ap.add_argument("--list", type=int, default=30, help="빠진 한자어 몇 개까지 보일까")
     a = ap.parse_args()
 
-    files = sorted(glob.glob(str(OFF / "*.txt")))
+    files = sorted(glob.glob(str(OFF / "*.txt"))) + \
+        [p for p in glob.glob(str(ARCHIVE / "EPS표준교재*.txt"))
+         if len(re.findall(r"[가-힣]", open(p, encoding="utf-8").read(200000))) > 1000]
     if not files:
         sys.exit(f"잣대가 없다: {OFF} 에 *.txt 가 없다.\n"
                  "  공개문제 자료실에서 hwp 를 받아 tools/hwp_text.py 로 뽑아 둘 것.")
