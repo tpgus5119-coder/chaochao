@@ -1,0 +1,264 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Giọng Bắc hay giọng Nam?</title>
+<style>
+:root{--bg:#fff;--ink:#1a1a1a;--dim:#666;--line:#d8d8d8;--card:#fafafa;--dan:#c0392b}
+@media (prefers-color-scheme:dark){:root{--bg:#161616;--ink:#eee;--dim:#aaa;
+ --line:#3a3a3a;--card:#1f1f1f;--dan:#e05c4a}}
+*{box-sizing:border-box}
+body{margin:0;padding:18px 14px 60px;background:var(--bg);color:var(--ink);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+ line-height:1.6;max-width:640px;margin-inline:auto}
+h1{font-size:22px;margin:0 0 6px}
+.note{color:var(--dim);font-size:14px;margin:0 0 16px}
+.rg{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:20px;
+ background:var(--card)}
+.rg p{margin:0 0 10px;font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row button{flex:1 1 22%;padding:10px 6px;border:1px solid var(--line);
+ background:var(--bg);color:var(--ink);border-radius:8px;font-size:15px;cursor:pointer}
+.row button.on{border:3px solid var(--dan);font-weight:800;
+ background:color-mix(in srgb,var(--dan) 12%,transparent)}
+.q{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:18px}
+.sent{font-size:18px;font-weight:700;margin:0 0 4px}
+.why{font-size:12px;color:var(--dim);margin:0 0 12px}
+.v{border-top:1px dashed var(--line);padding-top:12px;margin-top:12px}
+.v:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.vn{font-weight:700;margin-bottom:6px}
+.eng{font-weight:400;font-size:12px;color:var(--dim)}
+audio{width:100%;height:36px;margin-bottom:8px}
+#send{width:100%;padding:16px;font-size:17px;font-weight:800;border:0;border-radius:10px;
+ background:var(--dan);color:#fff;cursor:pointer}
+#send:disabled{opacity:.5}
+#out{margin-top:14px;white-space:pre-line;font-size:15px}
+</style></head><body>
+<h1>🎧 Giọng này là giọng Bắc hay giọng Nam?</h1>
+<p class="note">Mỗi câu có 4 giọng máy đọc. Hãy nghe rồi đánh dấu mỗi giọng là <b>Bắc</b>, <b>Trung</b> hay <b>Nam</b>. Nếu không chắc, chọn <b>Không rõ</b> — đừng đoán bừa.<br>Đây <b>không phải</b> khảo sát “giọng nào hay hơn”. Chúng tôi chỉ muốn biết mỗi giọng thuộc vùng nào. Khảo sát cho một ứng dụng học tiếng Hàn – tiếng Việt miễn phí. Cảm ơn bạn! 🙏</p>
+<div class="rg"><p>Bạn nói giọng vùng nào?</p><div class="row">
+<button type="button" data-v="bac">Miền Bắc</button>
+<button type="button" data-v="trung">Miền Trung</button>
+<button type="button" data-v="nam">Miền Nam</button>
+</div><p class="note" style="margin:10px 0 0">Không hỏi tên, không hỏi tuổi.</p></div>
+<div class="q">
+<p class="sent">1. Em hai mươi tuổi. Bây giờ chín giờ rưỡi sáng.</p>
+<div class="v">
+<div class="vn">Giọng A <span class="eng">Microsoft Edge</span></div>
+<audio controls preload="none" src="dtest/1_A.mp3"></audio>
+<div class="row">
+<button type="button" data-k="1A" data-v="bac">Bắc</button>
+<button type="button" data-k="1A" data-v="trung">Trung</button>
+<button type="button" data-k="1A" data-v="nam">Nam</button>
+<button type="button" data-k="1A" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng B <span class="eng">Supertonic 3</span></div>
+<audio controls preload="none" src="dtest/1_B.mp3"></audio>
+<div class="row">
+<button type="button" data-k="1B" data-v="bac">Bắc</button>
+<button type="button" data-k="1B" data-v="trung">Trung</button>
+<button type="button" data-k="1B" data-v="nam">Nam</button>
+<button type="button" data-k="1B" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng C <span class="eng">Google Chirp 3 HD</span></div>
+<audio controls preload="none" src="dtest/1_C.mp3"></audio>
+<div class="row">
+<button type="button" data-k="1C" data-v="bac">Bắc</button>
+<button type="button" data-k="1C" data-v="trung">Trung</button>
+<button type="button" data-k="1C" data-v="nam">Nam</button>
+<button type="button" data-k="1C" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng D <span class="eng">Giọng Nam của ứng dụng</span></div>
+<audio controls preload="none" src="dtest/1_D.mp3"></audio>
+<div class="row">
+<button type="button" data-k="1D" data-v="bac">Bắc</button>
+<button type="button" data-k="1D" data-v="trung">Trung</button>
+<button type="button" data-k="1D" data-v="nam">Nam</button>
+<button type="button" data-k="1D" data-v="?">Không rõ</button>
+</div></div>
+</div>
+<div class="q">
+<p class="sent">2. Xin lỗi, nhà vệ sinh ở đâu? Có gần đây không?</p>
+<div class="v">
+<div class="vn">Giọng A <span class="eng">Microsoft Edge</span></div>
+<audio controls preload="none" src="dtest/2_A.mp3"></audio>
+<div class="row">
+<button type="button" data-k="2A" data-v="bac">Bắc</button>
+<button type="button" data-k="2A" data-v="trung">Trung</button>
+<button type="button" data-k="2A" data-v="nam">Nam</button>
+<button type="button" data-k="2A" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng B <span class="eng">Supertonic 3</span></div>
+<audio controls preload="none" src="dtest/2_B.mp3"></audio>
+<div class="row">
+<button type="button" data-k="2B" data-v="bac">Bắc</button>
+<button type="button" data-k="2B" data-v="trung">Trung</button>
+<button type="button" data-k="2B" data-v="nam">Nam</button>
+<button type="button" data-k="2B" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng C <span class="eng">Google Chirp 3 HD</span></div>
+<audio controls preload="none" src="dtest/2_C.mp3"></audio>
+<div class="row">
+<button type="button" data-k="2C" data-v="bac">Bắc</button>
+<button type="button" data-k="2C" data-v="trung">Trung</button>
+<button type="button" data-k="2C" data-v="nam">Nam</button>
+<button type="button" data-k="2C" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng D <span class="eng">Giọng Nam của ứng dụng</span></div>
+<audio controls preload="none" src="dtest/2_D.mp3"></audio>
+<div class="row">
+<button type="button" data-k="2D" data-v="bac">Bắc</button>
+<button type="button" data-k="2D" data-v="trung">Trung</button>
+<button type="button" data-k="2D" data-v="nam">Nam</button>
+<button type="button" data-k="2D" data-v="?">Không rõ</button>
+</div></div>
+</div>
+<div class="q">
+<p class="sent">3. Đỏ, xanh và trắng. Màu đỏ đẹp lắm.</p>
+<div class="v">
+<div class="vn">Giọng A <span class="eng">Microsoft Edge</span></div>
+<audio controls preload="none" src="dtest/3_A.mp3"></audio>
+<div class="row">
+<button type="button" data-k="3A" data-v="bac">Bắc</button>
+<button type="button" data-k="3A" data-v="trung">Trung</button>
+<button type="button" data-k="3A" data-v="nam">Nam</button>
+<button type="button" data-k="3A" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng B <span class="eng">Supertonic 3</span></div>
+<audio controls preload="none" src="dtest/3_B.mp3"></audio>
+<div class="row">
+<button type="button" data-k="3B" data-v="bac">Bắc</button>
+<button type="button" data-k="3B" data-v="trung">Trung</button>
+<button type="button" data-k="3B" data-v="nam">Nam</button>
+<button type="button" data-k="3B" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng C <span class="eng">Google Chirp 3 HD</span></div>
+<audio controls preload="none" src="dtest/3_C.mp3"></audio>
+<div class="row">
+<button type="button" data-k="3C" data-v="bac">Bắc</button>
+<button type="button" data-k="3C" data-v="trung">Trung</button>
+<button type="button" data-k="3C" data-v="nam">Nam</button>
+<button type="button" data-k="3C" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng D <span class="eng">Giọng Nam của ứng dụng</span></div>
+<audio controls preload="none" src="dtest/3_D.mp3"></audio>
+<div class="row">
+<button type="button" data-k="3D" data-v="bac">Bắc</button>
+<button type="button" data-k="3D" data-v="trung">Trung</button>
+<button type="button" data-k="3D" data-v="nam">Nam</button>
+<button type="button" data-k="3D" data-v="?">Không rõ</button>
+</div></div>
+</div>
+<div class="q">
+<p class="sent">4. Ở trong hộp kia. Kim cũng ở đây.</p>
+<div class="v">
+<div class="vn">Giọng A <span class="eng">Microsoft Edge</span></div>
+<audio controls preload="none" src="dtest/4_A.mp3"></audio>
+<div class="row">
+<button type="button" data-k="4A" data-v="bac">Bắc</button>
+<button type="button" data-k="4A" data-v="trung">Trung</button>
+<button type="button" data-k="4A" data-v="nam">Nam</button>
+<button type="button" data-k="4A" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng B <span class="eng">Supertonic 3</span></div>
+<audio controls preload="none" src="dtest/4_B.mp3"></audio>
+<div class="row">
+<button type="button" data-k="4B" data-v="bac">Bắc</button>
+<button type="button" data-k="4B" data-v="trung">Trung</button>
+<button type="button" data-k="4B" data-v="nam">Nam</button>
+<button type="button" data-k="4B" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng C <span class="eng">Google Chirp 3 HD</span></div>
+<audio controls preload="none" src="dtest/4_C.mp3"></audio>
+<div class="row">
+<button type="button" data-k="4C" data-v="bac">Bắc</button>
+<button type="button" data-k="4C" data-v="trung">Trung</button>
+<button type="button" data-k="4C" data-v="nam">Nam</button>
+<button type="button" data-k="4C" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng D <span class="eng">Giọng Nam của ứng dụng</span></div>
+<audio controls preload="none" src="dtest/4_D.mp3"></audio>
+<div class="row">
+<button type="button" data-k="4D" data-v="bac">Bắc</button>
+<button type="button" data-k="4D" data-v="trung">Trung</button>
+<button type="button" data-k="4D" data-v="nam">Nam</button>
+<button type="button" data-k="4D" data-v="?">Không rõ</button>
+</div></div>
+</div>
+<div class="q">
+<p class="sent">5. Có, chính phủ hỗ trợ rất tốt.</p>
+<div class="v">
+<div class="vn">Giọng A <span class="eng">Microsoft Edge</span></div>
+<audio controls preload="none" src="dtest/5_A.mp3"></audio>
+<div class="row">
+<button type="button" data-k="5A" data-v="bac">Bắc</button>
+<button type="button" data-k="5A" data-v="trung">Trung</button>
+<button type="button" data-k="5A" data-v="nam">Nam</button>
+<button type="button" data-k="5A" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng B <span class="eng">Supertonic 3</span></div>
+<audio controls preload="none" src="dtest/5_B.mp3"></audio>
+<div class="row">
+<button type="button" data-k="5B" data-v="bac">Bắc</button>
+<button type="button" data-k="5B" data-v="trung">Trung</button>
+<button type="button" data-k="5B" data-v="nam">Nam</button>
+<button type="button" data-k="5B" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng C <span class="eng">Google Chirp 3 HD</span></div>
+<audio controls preload="none" src="dtest/5_C.mp3"></audio>
+<div class="row">
+<button type="button" data-k="5C" data-v="bac">Bắc</button>
+<button type="button" data-k="5C" data-v="trung">Trung</button>
+<button type="button" data-k="5C" data-v="nam">Nam</button>
+<button type="button" data-k="5C" data-v="?">Không rõ</button>
+</div></div>
+<div class="v">
+<div class="vn">Giọng D <span class="eng">Giọng Nam của ứng dụng</span></div>
+<audio controls preload="none" src="dtest/5_D.mp3"></audio>
+<div class="row">
+<button type="button" data-k="5D" data-v="bac">Bắc</button>
+<button type="button" data-k="5D" data-v="trung">Trung</button>
+<button type="button" data-k="5D" data-v="nam">Nam</button>
+<button type="button" data-k="5D" data-v="?">Không rõ</button>
+</div></div>
+</div>
+<button id="send">Gửi kết quả</button><div id="out"></div>
+<script>
+const API='https://viet-club.chaochao-app.workers.dev';
+let RG='';
+document.querySelectorAll('.rg .row button').forEach(b=>{b.onclick=()=>{
+  RG=b.dataset.v;
+  b.parentNode.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');};});
+const picks={};
+document.querySelectorAll('.q .row button').forEach(b=>{b.onclick=()=>{
+  picks[b.dataset.k]=b.dataset.v;
+  b.parentNode.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');};});
+document.getElementById('send').onclick=async()=>{
+  const n=Object.keys(picks).length;
+  if(!RG){alert('Hãy chọn vùng giọng của bạn trước.');return;}
+  if(!n){alert('Bạn chưa chọn câu nào.');return;}
+  const btn=document.getElementById('send');btn.disabled=true;
+  let msg='⚠️ Không gửi được — vẫn cảm ơn bạn!';
+  try{
+    const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({act:'dialect',rg:RG,picks})});
+    if((await r.json()).ok) msg='✅ Đã gửi. Cảm ơn bạn rất nhiều!';
+  }catch(e){}
+  document.getElementById('out').textContent=
+    `Bạn đã đánh dấu ${n} mục.\n${msg}`;
+};
+</script></body></html>

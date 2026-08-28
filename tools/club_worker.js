@@ -26,6 +26,7 @@
        숨기지 않을 것: 쪽지 글과 사진은 **이 서버에 그대로 저장된다**(30일·사진은 바꿀 때까지).
        암호화하지 않으므로 운영자는 마음먹으면 볼 수 있다. 앱 화면에도 그렇게 적어 둔다.
        막는 것은 Origin 허용목록 하나뿐이다 — 비밀 이야기를 할 자리가 아니다.
+   v14: 남·북 말씨 확인 설문(act:'dialect'/'dialects') 추가 — giong.html 이 쓴다.
    v14: 목소리 설문에 **응답자 지방(북/중/남)** 을 같이 남긴다. 화면은 처음부터
         물어서 보내고 있었는데 서버가 버리고 있었다. 집계도 지방별로 나눠 준다 —
         '남부 사람은 어느 소리를 골랐나'가 이 설문에서 가장 알고 싶은 것이라서.
@@ -130,6 +131,40 @@ export default {
         JSON.stringify({ p: clean, r: rg, t: cut(b.test, 12) }),
         { expirationTtl: 60 * 60 * 24 * 90 });
       return send({ ok: true });
+    }
+    /* ── 남·북 말씨 확인 (v14) ─────────────────────
+       블라인드 설문과 다른 것이다. 저것은 '어느 쪽이 더 사람 같은가',
+       이것은 '이 목소리가 어느 지방 말씨인가'를 이름을 보여 주고 묻는다.
+       열쇠는 '1A'·'5D' 꼴(문장번호 + 목소리), 값은 bac/trung/nam/?. */
+    if (act === 'dialect') {
+      const rg = ['bac', 'trung', 'nam'].includes(b.rg) ? b.rg : '';
+      const clean = {};
+      for (const [k, v] of Object.entries(b.picks || {}).slice(0, 40))
+        if (/^\d{1,2}[A-D]$/.test(k) && /^(bac|trung|nam|\?)$/.test(String(v)))
+          clean[k] = String(v);
+      if (!Object.keys(clean).length) return send({ error: 'empty' });
+      await KV.put(`dl:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
+        JSON.stringify({ p: clean, r: rg }), { expirationTtl: 60 * 60 * 24 * 90 });
+      return send({ ok: true });
+    }
+    if (act === 'dialects') {                    // 집계 — 이름 없는 숫자만
+      const agg = {}, byrg = {}; let n = 0, cursor;
+      do {
+        const l = await KV.list({ prefix: 'dl:', cursor });
+        for (const k of l.keys) {
+          const v = JSON.parse((await KV.get(k.name)) || 'null');
+          if (!v) continue;
+          n++;
+          for (const [q, c] of Object.entries(v.p || {})) {
+            (agg[q] = agg[q] || {})[c] = (agg[q][c] || 0) + 1;
+            if (!v.r) continue;
+            const m = byrg[v.r] = byrg[v.r] || {};
+            (m[q] = m[q] || {})[c] = (m[q][c] || 0) + 1;
+          }
+        }
+        cursor = l.list_complete ? undefined : l.cursor;
+      } while (cursor);
+      return send({ n, agg, byrg });
     }
     if (act === 'votes') {                                   // 집계 — 이름 없는 숫자만
       const out = {};
