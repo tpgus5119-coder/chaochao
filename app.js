@@ -10,6 +10,19 @@ const KEY = 'vnstudy.v2';
 const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', done: {}, srs: {},
                           qbank: {}, act: {}, stats: {} },
   JSON.parse(localStorage.getItem(KEY) || '{}'));
+
+/* 처음 여는 사람의 화면 말을 **폰 언어로** 정한다.
+   이걸 안 하면 베트남 사람이 앱을 열자마자 만나는 것이 한국어 로그인 화면이다 —
+   아이디도 비밀번호도 '나중에 둘러보기'도 다 한국어라 **한 글자도 못 읽는다.**
+   한국어를 배우러 온 사람에게 한국어로 문을 잠가 놓은 셈이었다.
+   번역은 이미 다 있었고, S.ui 가 'ko' 로 시작하는 것만 문제였다.
+   한 번 정해 두면 그다음부터는 본인이 고른 값을 따른다(설정에서 바꿀 수 있다). */
+if (!S.ui) {
+  const langs = (navigator.languages && navigator.languages.length
+    ? navigator.languages : [navigator.language || '']).join(',').toLowerCase();
+  S.ui = /(^|,)vi\b/.test(langs) ? 'vi' : 'ko';
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { }
+}
 let saveWarned = false;
 function save() {
   try {
@@ -492,6 +505,18 @@ const UIVI = {
   '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
   '계정': 'Tài khoản', '로그인': 'Đăng nhập', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
   '로그인·가입': 'Đăng nhập / Đăng ký', '배울 언어': 'Ngôn ngữ học', '보호권': 'Khiên bảo vệ',
+  '아이디로 어느 폰에서든 <b>내 별명·동아리</b>가 따라옵니다.':
+    'Đăng nhập để <b>biệt danh và câu lạc bộ</b> của bạn theo bạn trên mọi điện thoại.',
+  '<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.':
+    '<b>Chào bạn mới!</b> Chỉ mất 1 phút — chọn biệt danh và tên đăng nhập là xong.',
+  '· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.':
+    '· Máy chủ chỉ lưu <b>bản mã hóa</b> của mật khẩu — không lưu mật khẩu gốc.',
+  '· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b>':
+    '· Không có email nên nếu quên mật khẩu thì <b>không lấy lại được.</b>',
+  '· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.':
+    '· Tiến độ học <b>tự động lưu lên máy chủ</b> — đổi điện thoại vẫn học tiếp được.',
+  '비밀번호 (8자 이상)': 'Mật khẩu (từ 8 ký tự)',
+  '별명': 'Biệt danh',
   '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '처음이세요? 가입하기': 'Lần đầu? Đăng ký', '이미 계정이 있어요 — 로그인': 'Đã có tài khoản — Đăng nhập', '가입하기': 'Đăng ký', '로그인': 'Đăng nhập', '회원가입': 'Đăng ký', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
@@ -1606,17 +1631,29 @@ function acctForm(gate, mode) {
   mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
   b.textContent = '';
-  b.append(el('p', 'lede', mode === 'login'
+  /* 말 고르기 — **이 화면에만** 둔다.
+     여기가 앱의 문이다. 폰 언어로 짐작해 두긴 하지만(위 S.ui 기본값) 베트남 사람이
+     영어 폰이나 한국어 폰을 쓸 수도 있다. 그러면 한국어를 배우러 온 사람이
+     한국어로 잠긴 문 앞에 선다. 그래서 여기서만은 **읽지 못해도 누를 수 있게**
+     두 나라 말을 나란히 놓는다(설정 안에 숨겨 두면 못 찾는다). */
+  const langRow = el('div', 'langpick');
+  [['ko', '한국어'], ['vi', 'Tiếng Việt']].forEach(([v, name]) => {
+    const t = el('button', 'langbtn' + (S.ui === v ? ' on' : ''), esc(name));
+    t.onclick = () => { S.ui = v; save(); acctForm(gate, mode); };
+    langRow.append(t);
+  });
+  b.append(langRow);
+  b.append(el('p', 'lede', tr(mode === 'login'
     ? '아이디로 어느 폰에서든 <b>내 별명·동아리</b>가 따라옵니다.'
-    : '<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.'));
+    : '<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.')));
   // 별명이 아직 없으면(첫 방문 가입) 여기서 같이 정한다 — 가입에 별명이 필요해서다
   const nickIn = el('input', 'keyin'); nickIn.type = 'text'; nickIn.maxLength = 10;
   nickIn.placeholder = '별명 (2~10자) — 순위·동아리에 보입니다';
-  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = '아이디 (영문·숫자 4~20자)';
+  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = tr('아이디 (영문·숫자 4~20자)');
   id.autocapitalize = 'none'; id.maxLength = 20;
   const pw = el('input', 'keyin'); pw.type = 'password';
   // 비밀번호 규칙은 NIST 지침대로: 길이만 본다(8자+). 특수문자 강제는 뻔한 변형만 낳는다.
-  pw.placeholder = '비밀번호 (8자 이상)'; pw.maxLength = 64;
+  pw.placeholder = tr('비밀번호 (8자 이상)'); pw.maxLength = 64;
 
   /* 가입 화면에만 나오는 것들 — 국적과 배울 언어 */
   const profBox = el('div', 'profbox');
@@ -1710,7 +1747,7 @@ function acctForm(gate, mode) {
   main.style.width = '100%';
   main.onclick = go(mode === 'login' ? 'login' : 'signup');
   bs.append(main);
-  if (!S.nick) profBox.append(el('p', 'note', '별명'), nickIn);
+  if (!S.nick) profBox.append(el('p', 'note', tr('별명')), nickIn);
   if (mode === 'login') b.append(id, pw, err, bs);
   else b.append(profBox, id, pw, err, bs);
   // 두 화면 사이를 오가는 문
@@ -1727,9 +1764,9 @@ function acctForm(gate, mode) {
                             if (!S.nick) { askNick(); return; } renderHome(); };
     b.append(later);
   }
-  b.append(el('p', 'note', '· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.<br>' +
-    '· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b><br>' +
-    '· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.'));
+  b.append(el('p', 'note', tr('· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.') + '<br>' +
+    tr('· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b>') + '<br>' +
+    tr('· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.')));
   show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), true);
 }
 

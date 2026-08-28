@@ -1546,3 +1546,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 공통문항 — 회차끼리 견줄 수 있는 유일한 숫자라 눈에 띄어야 한다 */
 .anchor{border-left:3px solid var(--accent); margin-top:14px}
 .anch{font-size:19px; font-weight:800}
+
+/* 로그인 화면의 말 고르기 — 여기가 앱의 문이다. 읽지 못해도 누를 수 있어야 한다. */
+.langpick{display:flex; gap:8px; justify-content:center; margin:0 0 16px}
+.langbtn{padding:7px 16px; border-radius:999px; border:1px solid var(--line);
+  background:var(--bg); color:var(--dim); font-size:14px; cursor:pointer}
+.langbtn.on{border:2px solid var(--accent); color:var(--ink); font-weight:700;
+  background:color-mix(in srgb,var(--accent) 10%,transparent)}
