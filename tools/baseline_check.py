@@ -51,9 +51,21 @@ def nikl():
 
 
 def words(text, kiwi):
-    """뜻을 지닌 낱말만 남긴다 — 조사·어미·기호는 난이도와 상관이 없다."""
-    keep = ("NNG", "NNP", "VV", "VA", "MAG", "XR")
-    return [t.form for t in kiwi.tokenize(text) if t.tag in keep]
+    """뜻을 지닌 낱말만 남긴다 — 조사·어미·기호는 난이도와 상관이 없다.
+
+    동사·형용사는 **사전형으로 되돌린다.** 형태소 분석기는 어간만 준다('읽', '좋', '고르')
+    는데 국립국어원 표는 사전형('읽다', '좋다', '고르다')으로 적혀 있다.
+    이걸 안 맞추면 동사·형용사가 통째로 '목록 밖'으로 떨어진다 —
+    처음에 '목록 밖' 1위가 있·고르·읽이었고, 그래서 등급 분포가 전부 어긋나 있었다.
+    """
+    keep = {"NNG", "NNP", "MAG", "XR"}
+    out = []
+    for t in kiwi.tokenize(text):
+        if t.tag in keep:
+            out.append(t.form)
+        elif t.tag in ("VV", "VA"):
+            out.append(t.form + "다")
+    return out
 
 
 def profile(texts, kiwi, lex):
