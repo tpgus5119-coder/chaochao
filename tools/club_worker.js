@@ -26,6 +26,9 @@
        숨기지 않을 것: 쪽지 글과 사진은 **이 서버에 그대로 저장된다**(30일·사진은 바꿀 때까지).
        암호화하지 않으므로 운영자는 마음먹으면 볼 수 있다. 앱 화면에도 그렇게 적어 둔다.
        막는 것은 Origin 허용목록 하나뿐이다 — 비밀 이야기를 할 자리가 아니다.
+   v14: 목소리 설문에 **응답자 지방(북/중/남)** 을 같이 남긴다. 화면은 처음부터
+        물어서 보내고 있었는데 서버가 버리고 있었다. 집계도 지방별로 나눠 준다 —
+        '남부 사람은 어느 소리를 골랐나'가 이 설문에서 가장 알고 싶은 것이라서.
    v8: 별명은 먼저 쓴 사람이 임자(act:'nick') · 동아리는 **하나만** 들어간다.
    개인정보는 별명·진도 숫자·본인이 올린 사진·본인이 쓴 쪽지뿐이다. 실명은 받지 않는다. */
 const CORS = o => ({
@@ -38,14 +41,6 @@ const cut = (s, n) => String(s == null ? '' : s).slice(0, n);
 const num = (v, hi) => Math.max(0, Math.min(hi, ~~v));
 const week = () => { const d = new Date(); d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
                      return d.toISOString().slice(0, 10); };
-/* 지난 몇 주의 월요일 날짜 — 한 달 순위를 접을 때 쓴다. */
-const weekBack = k => { const d = new Date();
-                        d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7) - k * 7);
-                        return d.toISOString().slice(0, 10); };
-/* 한 달 점수 = 최근 주에 더 무게. 앱(app.js MONTH_W)과 같은 저울이어야 한다 —
-   서버와 앱이 다른 저울을 쓰면 같은 사람이 화면마다 다른 점수로 보인다. */
-const MONTH_W = [1, 0.7, 0.5, 0.3];
-const monthOf = v => MONTH_W.reduce((s, w, i) => s + w * (((v && v.c4) || {})[weekBack(i)] || 0), 0);
 
 /* 웹 푸시 — 내용 없는 신호만 보낸다.
    VAPID 는 '이 서버가 보낸 게 맞다'는 서명이다. 내용을 안 실으므로 암호화는 필요 없다. */
@@ -85,9 +80,6 @@ function dirOf(cu, c, me) {
     .map(([u, v]) => {
       const o = { uid: u, nick: v.n, days: v.wk === week() ? (v.w || []) : [],
                   memo: v.m || 0, st: v.st || 0, td: v.td || 0,
-                  cr: v.crw === week() ? (v.cr || 0) : 0,    // 주가 바뀌면 순위판이 새로 시작된다
-                  crm: Math.round(monthOf(v)),               // 한 달 점수 (최근 주에 더 무게)
-
                   th: v.th || 0, av: v.av || 0, at: v.at || '',
                   thToday: !!(v.tb && v.tb[me] === today()) };
       if (v.op) { o.score = v.s || 0; o.pct = v.p || {}; }
@@ -128,78 +120,40 @@ export default {
       for (const [k, v] of Object.entries(b.picks || {}).slice(0, 30))
         if (/^[a-z]\d{1,2}$/.test(k) && /^[A-C]$/.test(String(v))) clean[k] = String(v);
       if (!Object.keys(clean).length) return send({ error: 'empty' });
-      // 어느 지방 말씨를 쓰는 사람의 답인지 같이 받는다.
-      // 이게 없으면 "북부 목소리가 낫다"인지 "이 목소리가 낫다"인지 갈라 볼 수 없다.
-      const rg = /^(bac|trung|nam)$/.test(String(b.rg || '')) ? String(b.rg) : '';
+      /* v14: **응답자 지방(rg)도 남긴다.**
+         설문 화면은 처음부터 '당신은 어느 지방 말씨입니까(북/중/남)'를 묻고 보내 왔는데,
+         서버가 그 칸을 그냥 버리고 있었다. 그래서 "남부 사람은 어느 소리를 골랐나"를
+         물을 수가 없었다 — 목소리 고르기에서 가장 알고 싶은 것이 그건데도.
+         지방은 개인을 가리키지 않는다(셋 중 하나). */
+      const rg = ['bac', 'trung', 'nam'].includes(b.rg) ? b.rg : '';
       await KV.put(`sv:${pool}:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
-        JSON.stringify({ p: clean, t: cut(b.test, 12), rg }), { expirationTtl: 60 * 60 * 24 * 90 });
-      return send({ ok: true });
-    }
-    /* ── 시험 보고 온 사람의 제보 (v14) ─────────────────────
-       미기가 커진 방식이 이것이다 — 시험을 본 사람에게 "어떤 게 나왔어?"를 묻는 것.
-       **문항 본문은 받지 않는다.** 소재·유형·기억나는 낱말만 받는다.
-       문항을 그대로 받으면 그건 우리가 남의 저작물을 모으는 창구가 된다.
-       앱 화면에도 "문제 그대로 적지 마세요"라고 적어 둔다.
-       개인정보 없음. 90일 보관. 제보 하나 = KV 글 하나(동시 제보가 서로 안 덮는다). */
-    if (act === 'sight') {
-      const kind = /^(eps|topik1|topik2|kiip)$/.test(String(b.kind || '')) ? String(b.kind) : '';
-      if (!kind) return send({ error: 'kind' });
-      const topics = (Array.isArray(b.topics) ? b.topics : []).slice(0, 10).map(x => cut(x, 12));
-      // 낱말은 짧은 것만, 열 개까지 — 문장을 못 넣게 길이를 막는다
-      const words = (Array.isArray(b.words) ? b.words : []).slice(0, 10)
-        .map(x => cut(x, 12).trim()).filter(x => x && x.length <= 12 && !/[.!?]/.test(x));
-      const hard = num(b.hard, 5);
-      if (!topics.length && !words.length) return send({ error: 'empty' });
-      await KV.put(`sg:${kind}:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
-        JSON.stringify({ t: topics, w: words, h: hard, d: cut(b.when, 10), at: today() }),
+        JSON.stringify({ p: clean, r: rg, t: cut(b.test, 12) }),
         { expirationTtl: 60 * 60 * 24 * 90 });
       return send({ ok: true });
-    }
-    if (act === 'sights') {                                  // 모아 보기 — 이름 없는 숫자만
-      const out = {};
-      for (const kind of ['eps', 'topik1', 'topik2', 'kiip']) {
-        const T = {}, W = {}; let n = 0, hs = 0, cursor;
-        do {
-          const l = await KV.list({ prefix: `sg:${kind}:`, cursor });
-          for (const k of l.keys) {
-            const v = JSON.parse((await KV.get(k.name)) || 'null');
-            if (!v) continue;
-            n++; hs += v.h || 0;
-            for (const t of v.t || []) T[t] = (T[t] || 0) + 1;
-            for (const w of v.w || []) W[w] = (W[w] || 0) + 1;
-          }
-          cursor = l.list_complete ? undefined : l.cursor;
-        } while (cursor);
-        out[kind] = { n, hard: n ? Math.round(hs / n * 10) / 10 : 0,
-                      topics: T,
-                      // 두 사람 이상이 적은 낱말만 내보낸다 — 한 사람 기억은 틀릴 수 있다
-                      words: Object.fromEntries(Object.entries(W).filter(([, c]) => c >= 2)
-                        .sort((a, b2) => b2[1] - a[1]).slice(0, 60)) };
-      }
-      return send(out);
     }
     if (act === 'votes') {                                   // 집계 — 이름 없는 숫자만
       const out = {};
       for (const pool of ['vi', 'ko']) {
-        const agg = {}; let n = 0, cursor;
+        const agg = {}, byrg = {}; let n = 0, norg = 0, cursor;
         do {
           const l = await KV.list({ prefix: `sv:${pool}:`, cursor });
           for (const k of l.keys) {
             const v = JSON.parse((await KV.get(k.name)) || 'null');
             if (!v) continue;
             n++;
-            for (const [q, c] of Object.entries(v.p || {})) {
+            for (const [q, c] of Object.entries(v.p || {}))
               (agg[q] = agg[q] || {})[c] = (agg[q][c] || 0) + 1;
-              // 지방별로도 따로 센다 — 같은 목소리가 지방에 따라 갈리는지 보려는 것
-              if (v.rg) {
-                const rk = `${v.rg}:${q}`;
-                (agg[rk] = agg[rk] || {})[c] = (agg[rk][c] || 0) + 1;
-              }
-            }
+            // 지방별 집계. v13 이전 표에는 지방이 없다 — 그 수는 norg 로 따로 알린다.
+            const rg = v.r || '';
+            if (!rg) { norg++; continue; }
+            const m = byrg[rg] = byrg[rg] || { n: 0, agg: {} };
+            m.n++;
+            for (const [q, c] of Object.entries(v.p || {}))
+              (m.agg[q] = m.agg[q] || {})[c] = (m.agg[q][c] || 0) + 1;
           }
           cursor = l.list_complete ? undefined : l.cursor;
         } while (cursor);
-        out[pool] = { n, agg };
+        out[pool] = { n, norg, agg, byrg };
       }
       return send(out);
     }
@@ -315,37 +269,6 @@ export default {
         .map(([id, c]) => ({ id, name: c.name, n: c.members.length, approve: !!c.approve,
                              desc: c.desc || '', cat: c.cat || '', city: c.city || '' }))
         .sort((x, y) => y.n - x.n) });
-
-    /* ── 동아리끼리 겨루기 ────────────────────────────────
-       사람 순위는 같은 동아리 안에서만 매긴다(남의 동아리 사람은 애초에 안 보인다).
-       동아리 순위는 그 위층이다 — 어느 동아리가 이번 주에 제일 많이 했나.
-       값은 10분 동안 우려 쓴다. 동아리마다 KV 를 한 번씩 읽어야 해서,
-       화면을 열 때마다 다 읽으면 읽기 한도를 금방 태운다.
-       사람 수가 다르니 '합계'와 '한 사람 평균'을 같이 준다 — 큰 동아리만 이기면 재미없다. */
-    if (act === 'ranks') {
-      const CK = 'rk:' + week();
-      const hit = await KV.get(CK, 'json');
-      if (hit && Date.now() - hit.at < 10 * 60 * 1000) return send(hit);
-      const ids = Object.entries(clubs)
-        .sort((x, y) => y[1].members.length - x[1].members.length).slice(0, 40);
-      const out = [];
-      for (const [cid, cc] of ids) {
-        const cu = JSON.parse((await KV.get(`cu:${cid}`)) || '{}');
-        let wk = 0, mo = 0, n = 0;
-        for (const v of Object.values(cu)) {
-          if (!v || !v.n) continue;
-          n++;
-          if (v.crw === week()) wk += v.cr || 0;
-          mo += monthOf(v);
-        }
-        if (n) out.push({ id: cid, name: cc.name, city: cc.city || '', cat: cc.cat || '',
-                          n, wk, mo: Math.round(mo),
-                          awk: Math.round(wk / n), amo: Math.round(mo / n) });
-      }
-      const body = { at: Date.now(), clubs: out.sort((x, y) => y.wk - x.wk) };
-      await KV.put(CK, JSON.stringify(body), { expirationTtl: 60 * 60 * 24 * 14 });
-      return send(body);
-    }
 
     if (act === 'create') {                                  // 만들기
       if (!nick) return send({ error: '별명을 먼저 정해 주세요' });
@@ -565,28 +488,11 @@ export default {
     if (act === 'post') {
       if (!c.members.includes(nick)) return send({ error: 'notmember' });
       const x = cut(b.x, 200).trim();
-      const img = cut(b.img, 60000);                          // 줄여 온 사진 ≒ 45KB
-      if (!x && !img) return send({ error: '내용이 없습니다' });
-      if (img && !img.startsWith('data:image/')) return send({ error: '사진이 아닙니다' });
+      if (!x) return send({ error: '내용이 없습니다' });
       const posts = JSON.parse((await KV.get(FDK)) || '[]');
-      const post = { f: cut(b.uid, 16), n: nick, x, t: Date.now() };
-      /* 사진은 글과 따로 둔다. 담벼락 한 덩어리에 사진을 같이 넣으면
-         글만 보려고 열 때도 사진 쉰 장을 통째로 내려받게 된다. */
-      if (img) {
-        post.p = `${id}-${post.t}`;
-        await KV.put(`fp:${post.p}`, img, FTTL);
-      }
-      posts.push(post);
-      const keep = posts.slice(-50);
-      await KV.put(FDK, JSON.stringify(keep), FTTL);
-      return send({ ok: true, posts: keep });
-    }
-    if (act === 'photo') {                                    // 담벼락 사진 받아 오기
-      if (!c.members.includes(nick)) return send({ error: 'notmember' });
-      const want = (Array.isArray(b.ps) ? b.ps : []).slice(0, 12).map(x => cut(x, 40));
-      const out = {};
-      for (const p of want) out[p] = (await KV.get(`fp:${p}`)) || '';
-      return send({ photo: out });
+      posts.push({ f: cut(b.uid, 16), n: nick, x, t: Date.now() });
+      await KV.put(FDK, JSON.stringify(posts.slice(-50)), FTTL);
+      return send({ ok: true, posts: posts.slice(-50) });
     }
 
     if (act === 'leave') {
@@ -622,13 +528,6 @@ export default {
         w: (Array.isArray(b.days) ? b.days : []).slice(0, 7).map(x => x ? 1 : 0),
         wk: week(),                                          // 지난주 도장은 저절로 지워진다
         m: num(b.memo, 99999), s: num(b.score, 999999),
-        cr: num(b.cr, 999999), crw: week(),                  // 이번 주 크레딧 (지난주 것은 저절로 0이 된다)
-        // 최근 네 주치만 남긴다 — 한 달 순위 재료. 오래된 주는 저절로 떨어져 나간다.
-        c4: (() => { const o = Object.assign({}, was.c4 || {});
-                     o[week()] = num(b.cr, 999999);
-                     const keep = {}; for (let i = 0; i < 4; i++)
-                       if (o[weekBack(i)] != null) keep[weekBack(i)] = o[weekBack(i)];
-                     return keep; })(),
         st: num(b.st, 9999), td: num(b.td, 99999),           // 연속으로 온 날 · 온 날 모두
         op: b.op ? 1 : 0,                                    // 분석을 남에게 보일지
         av: num(b.av, 9999),                                 // 사진 판 번호 (남이 다시 받을지 판단)
