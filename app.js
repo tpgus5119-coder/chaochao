@@ -2565,7 +2565,9 @@ function drawDayList() {
   });
 }
 
-function dayWordRow(host, ko, vi, prefix, star) {
+/* w 를 주면 그림(또는 이모지)을 왼쪽에 붙인다. 대화 줄은 w 없이 부르므로
+   예전 모양 그대로 남는다 — 대화에 그림을 붙이면 줄마다 그림이 달려 어지럽다. */
+function dayWordRow(host, ko, vi, prefix, star, w) {
   const row = el('div', 'gex');
   const line = el('div', 'gexko');
   if (prefix) line.append(el('b', null, prefix));
@@ -2574,7 +2576,11 @@ function dayWordRow(host, ko, vi, prefix, star) {
   p.onclick = () => speakKo(ko);
   line.append(p);
   if (star) line.append(starBtn(ko, ko, vi));   // 낱말만 담는다(대화 줄은 담지 않는다)
-  row.append(line, el('div', 'gexvi', esc(vi)));
+  const txt = el('div', 'gextxt');
+  txt.append(line, el('div', 'gexvi', esc(vi)));
+  const im = w && pic(w, 'gexpic');
+  if (im) { const wrap = el('div', 'gexwrap'); wrap.append(im, txt); row.append(wrap); }
+  else row.append(txt);
   host.append(row);
 }
 
@@ -2605,7 +2611,7 @@ function drawDayCard(i) {
 
   const wcard = el('div', 'excard');
   wcard.append(el('h3', 'exhead', tr('오늘의 단어')));
-  d.words.forEach(w => dayWordRow(wcard, w.ko, w.vi, null, true));
+  d.words.forEach(w => dayWordRow(wcard, w.ko, w.vi, null, true, w));
   b.append(wcard);
 
   const dcard = el('div', 'excard');
