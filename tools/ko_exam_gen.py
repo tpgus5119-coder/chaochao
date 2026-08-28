@@ -769,11 +769,22 @@ BLUEPRINTS = {
         "name": "EPS-TOPIK 모의고사",
         "desc": "고용허가제 한국어능력시험 · 읽기 20 + 듣기 20",
         "minutes": 50,
-        # 두 번. EPS 는 CBT/UBT 라 안내 방송이 음원에 없다(문항마다 파일이 따로다).
-        # 그래서 TOPIK 처럼 음원으로 못 짚었다. 제3자 안내(Seoulstart 2026)가
-        # '각 듣기 항목은 두 번 재생'이라고 적고 있어 그 값을 쓴다.
-        # **공식 문서로는 확인하지 못했다** — 공단 안내에서 확인되면 고친다.
+        # 두 번 — **공식 프로그램에서 확정했다**(2026-08-29).
+        # epstopik.hrdkorea.or.kr → 「체험하기 · 평가프로그램 체험」 은 설명 글이 아니라
+        # 실제 CBT 프로그램이다. 그 안내문에 "Listening test will be played two times."
+        # 가 있고, 연습 음원 q6~q10 을 받아 적으니 소리 자체가 이랬다:
+        #     "6번 문제입니다." → [지문] → "다시 들으십시오." → [지문]
+        # <audio time="13000"> 값이 음원 길이(12.75초)와 같다 → 프로그램은 한 번 튼다.
+        # **반복은 음원 안에 있다.** TOPIK 은 맨 앞에서 "두 번씩 읽겠습니다"라고
+        # 한 번 알리고 지나가는데, EPS 는 문항마다 그 자리에서 넣는다 — 소리를 구울 때
+        # 이 차이를 지켜야 한다(다시 듣기 단추가 아니라 소리 안에).
         "plays": 2,
+        # 답을 한 번 고르면 **못 바꾼다.** 같은 체험 프로그램에서 ①을 고른 뒤 ②를
+        # 눌러 봤는데 바뀌지 않았고, 안내문에도 그대로 적혀 있다:
+        #     "Once you choose an answer, you can`t change the answer."
+        # TOPIK IBT 는 정반대다("문제 번호를 클릭하면 … 선택 번호를 수정할 수 있습니다").
+        # 그래서 **EPS 에만** 건다.
+        "lock": True,
         "grades": ["A", "B"],
         "sections": [
             {"label": "[1~4] 그림을 보고 맞는 것을 고르십시오.", "kind": "pic2word", "n": 4},
@@ -1239,9 +1250,11 @@ def build(exam_id, seed, words, gloss, pics, state):
     for k in ("oral", "essay", "pass_at", "place_at"):
         if bp.get(k):
             out[k] = list(bp[k]) if isinstance(bp[k], tuple) else bp[k]
-    # 듣기 재생 횟수 — 실제 시험이 막는 것을 우리도 막는다
+    # 듣기 재생 횟수 · 답 잠금 — 실제 시험이 막는 것을 우리도 막는다
     if bp.get("plays"):
         out["plays"] = bp["plays"]
+    if bp.get("lock"):
+        out["lock"] = True
     return out
 
 def rebalance(rng, qs):

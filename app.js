@@ -2638,6 +2638,12 @@ function drawDayCard(i) {
 }
 
 function startExam(e) {
+  /* 답이 잠기는 시험은 **시작 전에** 알린다. 실제 시험도 시작 전 안내 화면에서
+     알려 주고 들어간다 — 문항을 만난 뒤에 알면 그건 함정이지 연습이 아니다. */
+  if (e.lock && !confirm(tr(
+      '이 시험은 실제 시험과 같이 한 번 고른 답을 바꿀 수 없습니다.\n\n'
+      + '고용허가제 한국어능력시험(EPS-TOPIK) 공식 프로그램이 그렇게 동작합니다.\n'
+      + '시작할까요?'))) return;
   EX = { exam: e, at: 0, marks: new Array(e.questions.length).fill(-1),
          left: e.minutes * 60 };
   if (EX.timer) clearInterval(EX.timer);
@@ -2789,16 +2795,24 @@ function drawExamQ() {
   } else {
   // 보기가 그림인 문항(듣고 그림 고르기)은 두 칸씩 늘어놓는다 — 글 보기와 모양이 달라야 헷갈리지 않는다
   const box = q.optkind === 'img' ? el('div', 'exgrid') : card;
+  /* 답 잠금 — **EPS 에만** 건다.
+     공식 CBT 체험 프로그램에서 ①을 고른 뒤 ②를 눌러 봤는데 바뀌지 않았고,
+     안내문도 "Once you choose an answer, you can`t change the answer." 다.
+     TOPIK IBT 는 정반대라("선택 번호를 수정할 수 있습니다") 거기엔 걸면 안 된다.
+     시험이 잔인해서가 아니라 **실제와 같아야** 연습이 연습 노릇을 하기 때문이다. */
+  const locked = e.lock && answered(EX.marks[EX.at]);
   q.options.forEach((o, i) => {
     const on = EX.marks[EX.at] === i;
-    const opt = el('button', (q.optkind === 'img' ? 'exopti' : 'exopt') + (on ? ' on' : ''));
+    const opt = el('button', (q.optkind === 'img' ? 'exopti' : 'exopt')
+      + (on ? ' on' : '') + (locked ? ' lockd' : ''));
     if (q.optkind === 'img') {
       const im = new Image(); im.alt = ''; im.src = 'img/' + o;
       opt.append(im, el('span', 'exnum', CIRC[i]));
     } else {
       opt.append(el('span', 'exnum', CIRC[i]), el('span', null, esc(String(o))));
     }
-    opt.onclick = () => {
+    if (locked) opt.disabled = true;
+    else opt.onclick = () => {
       // 같은 것을 다시 누르면 고른 것을 지운다 — 실제 시험지에서 지우개 쓰는 것과 같다
       EX.marks[EX.at] = on ? -1 : i;
       drawExamQ();
@@ -2806,6 +2820,8 @@ function drawExamQ() {
     box.append(opt);
   });
   if (box !== card) card.append(box);
+  if (locked) card.append(el('p', 'note lockmsg',
+    tr('실제 시험과 같이, 한 번 고른 답은 바꿀 수 없습니다.')));
   b.append(card);
   }
 

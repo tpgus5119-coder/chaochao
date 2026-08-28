@@ -1274,6 +1274,12 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   font-weight:700; padding:12px 14px}
 .exnum{color:var(--dim); font-weight:700; flex-shrink:0}
 .exopt.on .exnum{color:var(--accent)}
+/* 답이 잠긴 상태(EPS) — 색만으로 알리지 않는다. 고르지 않은 보기는 흐려지고,
+   고른 보기는 자물쇠가 붙어 '못 누르는' 것이 아니라 '정해진' 것으로 읽힌다. */
+.exopt.lockd,.exopti.lockd{cursor:default; opacity:.45}
+.exopt.lockd.on,.exopti.lockd.on{opacity:1}
+.exopt.lockd.on::after{content:"🔒"; margin-left:auto; font-size:15px}
+.lockmsg{margin-top:10px; padding-top:9px; border-top:1px dashed var(--line)}
 /* 단답형(KIIP 사전평가) — 보기 대신 직접 써 넣는 칸. 보기와 같은 크기·모서리로 맞춘다 */
 .exshort{width:100%; font-size:18px; padding:14px 15px; margin-top:10px;
   background:transparent; color:var(--fg); border:2px solid var(--line); border-radius:10px}
