@@ -5056,10 +5056,13 @@ function finishDay(d) {
 function missionCard(host, d) {
   const m = d && d.mission;
   if (!m || !m.goal) return;
+  /* 미션 글에서 **이렇게** 강조한 곳만 굵게 한다.
+     먼저 통째로 escape 한 **뒤에** 바꾸므로, 글에 <나 &가 있어도 태그가 되지 않는다. */
+  const bold = s => esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
   const c = el('div', 'excard mission');
   c.append(el('h3', 'exhead', '🤝 ' + tr('짝과 함께')));
-  c.append(el('div', 'msgoal', esc(m.goal)));
-  if (m.how) c.append(el('div', 'gexp', esc(m.how)));
+  c.append(el('div', 'msgoal', bold(m.goal)));
+  if (m.how) c.append(el('div', 'gexp', bold(m.how)));
   if (m.a || m.b) {
     c.append(el('p', 'note', tr('자기 것만 여십시오 — 서로 보면 물어볼 것이 없어집니다.')));
     const row = el('div', 'msrow');
