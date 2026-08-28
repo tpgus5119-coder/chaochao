@@ -5284,3 +5284,48 @@
 
 **n-ve.webp**
 > a torn paper ticket stub with a punched hole and a dashed tear line, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-di.webp**
+> a pair of walking legs mid-stride with a motion arrow pointing forward, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-kinh-te.webp**
+> a rising bar chart with three bars and an upward arrow above them, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-xa.webp**
+> a tiny house on the far horizon with a long winding road leading to it, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-khong.webp**
+> a large red X mark crossing out an empty grey circle, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-muon.webp**
+> a hand reaching toward a glowing star just out of reach, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-nho.webp**
+> a tiny cube next to a much larger cube, showing size difference, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-lon.webp**
+> a large cube next to a much smaller cube, showing size difference, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-luong.webp**
+> an open envelope with banknotes coming out of it, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-o.webp**
+> a person sitting comfortably inside a small house, staying put, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-gui.webp**
+> a hand dropping a parcel into a postbox, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-de.webp**
+> a hand lifting a feather with one finger, effortless, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-lai.webp**
+> a stack of coins growing taller with a small upward arrow beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-co.webp**
+> an open hand holding a small round object on the palm, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-vui.webp**
+> a smiling face with arms raised in the air, cheerful, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-kho.webp**
+> rows of stacked cardboard boxes on warehouse shelves, simple flat illustration, soft pastel colors, thick outlines, plain white background
