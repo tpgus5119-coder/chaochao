@@ -3413,3 +3413,1805 @@
 
 **x-du-so.webp** · 수량이 맞다 (đủ số)
 > a checklist with all items marked with a checkmark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## 낱말마다 한 장 — 채워 넣은 자리
+
+한 챕터는 낱말 열 개다. 그림도 열 장이어야 한다. 아래는 비어 있던 자리를 채우려고 새로 적은 것이다.
+
+
+### 한국어 Day 1 — 자기소개
+
+**k-gukjeok.webp** · 국적 (quốc tịch)
+> a passport next to a globe, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-seonsaengnim.webp** · 선생님 (giáo viên)
+> a teacher standing beside a blackboard, pointing, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hoesawon.webp** · 회사원 (nhân viên công ty)
+> an office worker in a suit holding a briefcase, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-haksaeng.webp** · 학생 (học sinh)
+> a student with a backpack holding a notebook, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 2 — 교실 사물
+
+**k-chimdae.webp** · 침대 (giường)
+> a bed with a pillow and folded blanket, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hyudae-jeonhwa.webp** · 휴대 전화 (điện thoại di động)
+> a smartphone held in one hand, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sigye.webp** · 시계 (đồng hồ)
+> a round wall clock, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hakgyo.webp** · 학교 (trường học)
+> a school building with a flag pole and a wide entrance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyosil.webp** · 교실 (phòng học)
+> a classroom with rows of desks facing a blackboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-chaek.webp** · 책 (sách)
+> an open book, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 3 — 기분과 상태
+
+**k-keuda.webp** · 크다 (lớn)
+> a big elephant standing beside a tiny mouse, elephant emphasized, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jakda.webp** · 작다 (nhỏ)
+> a tiny mouse standing beside a big elephant, mouse emphasized, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 4 — 안 되는 일 말하기
+
+**k-mianhada.webp** · 미안하다 (áy náy)
+> a person bowing slightly with an apologetic expression, hand on chest, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gayo.webp** · 가요 (bài hát đại chúng, ca khúc được yêu thíc)
+> a microphone with music notes floating around it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geuraeseo.webp** · 그래서 (vì vậy, vì thế, cho nên, thế nên)
+> two boxes joined by a thick arrow pointing from cause to result, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-uri.webp** · 우리 (chúng ta)
+> a group of people standing together in a circle, arms around shoulders, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 5 — 날씨와 몸 상태
+
+**k-eumak.webp** · 음악 (âm nhạc)
+> music notes and a pair of headphones, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ttaemun.webp** · 때문 (tại vì, vì)
+> a falling domino knocking over the next one, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geureona.webp** · 그러나 (nhưng..., thế nhưng...)
+> two arrows turning away from each other in opposite directions, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 6 — 장소
+
+**k-pyeonuijeom.webp** · 편의점 (cửa hàng tiện lợi)
+> a small convenience store front at night with bright windows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sikdang.webp** · 식당 (nhà hàng)
+> a restaurant table set with dishes and chairs, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-kape.webp** · 카페 (quán cà phê)
+> a coffee cup on a saucer beside a small cafe table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gongwon.webp** · 공원 (công viên)
+> a park with a bench, a tree and a walking path, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 9 — 식당에서 주문
+
+**k-gimchijjigae.webp** · 김치찌개 (canh kimchi)
+> a bubbling red stew in a black stone pot, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bibimbap.webp** · 비빔밥 (cơm trộn)
+> a bowl of rice topped with colorful vegetables arranged in sections, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bulgogi.webp** · 불고기 (thịt nướng)
+> thin marinated beef slices grilling on a domed pan, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-samgyeopsal.webp** · 삼겹살 (thịt ba chỉ)
+> thick strips of pork belly grilling on a griddle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ramyeon.webp** · 라면 (mì ăn liền)
+> a pot of instant noodles with a lid and chopsticks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gimbap.webp** · 김밥 (cơm cuộn rong biển)
+> sliced seaweed rice rolls arranged on a plate, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-banchan.webp** · 반찬 (món ăn kèm)
+> several small side dishes in little bowls around a table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeotgarak.webp** · 젓가락 (đũa)
+> a pair of chopsticks resting on a chopstick rest, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 10 — 회사 물건
+
+**k-gangaji.webp** · 강아지 (chó con)
+> a small puppy sitting and wagging its tail, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-japji.webp** · 잡지 (tạp chí)
+> a glossy magazine lying open, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-noteubuk.webp** · 노트북 (máy tính xách tay)
+> an open laptop computer, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-nokcha.webp** · 녹차 (trà xanh)
+> a cup of green tea with tea leaves beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-cheongsogi.webp** · 청소기 (máy hút bụi)
+> an upright vacuum cleaner, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeran.webp** · 계란 (trứng gà)
+> two chicken eggs, one whole and one cracked into a bowl, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 11 — 주말 활동
+
+**k-syopinghada.webp** · 쇼핑하다 (mua sắm)
+> a person pushing a shopping cart with bags inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-baekhwajeom.webp** · 백화점 (trung tâm mua sắm)
+> a tall department store building with big display windows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jinandal.webp** · 지난달 (tháng rồi, tháng trước)
+> a wall calendar with the previous month's page flipped back, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-isa.webp** · 이사 (sự chuyển chỗ ở, sự chuyển nhà)
+> a moving truck with cardboard boxes being carried into a house, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeonghwa.webp** · 영화 (điện ảnh, phim)
+> a movie screen with two cinema seats and a film reel, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-doeda.webp** · 되다 (trở thành)
+> a caterpillar transforming into a butterfly with an arrow between, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 12 — 하루 차례대로 말하기
+
+**k-chulgeun.webp** · 출근 (sự đi làm)
+> a person in work clothes leaving home in the morning, sun rising, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-toegeun.webp** · 퇴근 (sự tan sở)
+> a person leaving an office building in the evening, sun setting, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geureotda.webp** · 그렇다 (cũng vậy, cũng thế, như vậy, như thế)
+> a person nodding with a checkmark in a speech bubble, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 13 — 하고 싶은 것
+
+**k-jalhada.webp** · 잘하다 (giỏi giang, làm tốt)
+> a person giving a thumbs up beside a high score board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-mothada.webp** · 못하다 (làm không được, không làm được)
+> a person shrugging with an X mark in a speech bubble, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 14 — 가족
+
+**k-halmeoni.webp** · 할머니 (bà)
+> a kind elderly woman with grey hair, smiling, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-halabeoji.webp** · 할아버지 (ông)
+> a kind elderly man with grey hair, smiling, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bumonim.webp** · 부모님 (bố mẹ)
+> a mother and father standing side by side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 15 — 선물과 행사
+
+**k-chodaejang.webp** · 초대장 (thư mời)
+> an invitation card in an envelope with a ribbon, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-keikeu.webp** · 케이크 (bánh kem)
+> a layered birthday cake with candles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeolhonsik.webp** · 결혼식 (lễ cưới)
+> a bride and groom under a wedding arch, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-joleopsik.webp** · 졸업식 (lễ tốt nghiệp)
+> a graduate in cap and gown holding a diploma, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eobeoinal.webp** · 어버이날 (ngày cha mẹ)
+> a child giving a red carnation flower to parents, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 16 — 휴가 계획
+
+**k-hyuga.webp** · 휴가 (kỳ nghỉ)
+> a beach chair with a parasol and a suitcase, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-chincheok.webp** · 친척 (họ hàng)
+> a family tree chart with several relatives' portraits, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hwajangpum.webp** · 화장품 (mỹ phẩm)
+> cosmetic bottles, a lipstick and a cream jar on a shelf, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hyuil.webp** · 휴일 (ngày nghỉ)
+> a calendar page with one day circled in red and a hammock, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geogi.webp** · 거기 (nơi đó)
+> a person pointing at a spot far away with a location pin there, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 17 — 교통수단
+
+**k-jadongcha.webp** · 자동차 (xe ô tô)
+> a small car seen from the side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jajeongeo.webp** · 자전거 (xe đạp)
+> a bicycle seen from the side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jihacheol.webp** · 지하철 (tàu điện ngầm)
+> a subway train arriving at an underground platform, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gicha.webp** · 기차 (tàu hỏa)
+> a train travelling on rails through countryside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 18 — 견주어 말하기
+
+**k-himdeulda.webp** · 힘들다 (mất sức, mệt mỏi)
+> a person straining to push a heavy boulder, sweat drops, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gajang.webp** · 가장 (người chủ gia đình)
+> three podium blocks with a trophy on the tallest one, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeil.webp** · 제일 (đầu tiên, trước tiên, trước hết)
+> a first place ribbon with the number one shape as a shining star, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-saenggakhada.webp** · 생각하다 (nghĩ, suy nghĩ)
+> a person with a thought bubble containing gears, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-moreuda.webp** · 모르다 (không biết)
+> a person with an empty question mark thought bubble, palms up, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-mandeulda.webp** · 만들다 (làm ra, tạo ra, chế tạo)
+> hands shaping clay into a pot on a workbench with tools, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eotteon.webp** · 어떤 (như thế nào)
+> a row of identical boxes with one marked by a question mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 19 — 약속 잡기
+
+**k-dapjanghada.webp** · 답장하다 (hồi đáp)
+> an envelope flying back with a reply arrow curving to sender, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sigan.webp** · 시간 (thời gian)
+> an hourglass beside a clock face, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jangso.webp** · 장소 (địa điểm)
+> a map with a location pin planted on it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hanjan.webp** · 한잔 (việc làm một ly, việc uống một chén)
+> two glasses clinking together in a toast, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 20 — 날씨와 계절
+
+**k-nalssi.webp** · 날씨 (thời tiết)
+> a sky showing sun, cloud and rain drops side by side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bom.webp** · 봄 (mùa xuân)
+> cherry blossom branches with new green sprouts, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeoreum.webp** · 여름 (mùa hè)
+> a bright sun over a beach with an ice cream cone, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gaeul.webp** · 가을 (mùa thu)
+> falling red and yellow maple leaves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeoul.webp** · 겨울 (mùa đông)
+> a snowman with falling snowflakes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ttatteuthada.webp** · 따뜻하다 (ấm áp)
+> a person warming hands on a steaming mug, soft sun glow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-malda.webp** · 맑다 (trong xanh)
+> a clear blue sky with a bright sun and no clouds, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-heurida.webp** · 흐리다 (nhiều mây)
+> a sky fully covered by thick grey clouds, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eopda.webp** · 없다 (không có, không tồn tại)
+> an empty open box with a dashed outline where an object was, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 21 — 몸과 병원
+
+**k-gwi.webp** · 귀 (tai)
+> a human ear seen from the side, sound waves beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-mok.webp** · 목 (cổ)
+> a neck and shoulders outline with the neck highlighted, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-pal.webp** · 팔 (cánh tay)
+> a bare human arm bent at the elbow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-mureup.webp** · 무릎 (đầu gối)
+> a bent leg with the knee joint highlighted, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bal.webp** · 발 (bàn chân)
+> a bare human foot seen from the side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 22 — 공공장소 예절
+
+**k-juchajang.webp** · 주차장 (bãi đỗ xe)
+> a parking lot with painted lines and a few parked cars, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-juchahada.webp** · 주차하다 (đỗ xe)
+> a car backing into a marked parking space, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bakmulgwan.webp** · 박물관 (viện bảo tàng)
+> a museum building with tall columns and a display vase, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeongchalseo.webp** · 경찰서 (đồn cảnh sát)
+> a police station building with a blue lamp at the door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-dongmulwon.webp** · 동물원 (sở thú)
+> a zoo entrance gate with a giraffe and an elephant behind, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-kaemping.webp** · 캠핑 (cắm trại)
+> a tent beside a campfire under trees, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 23 — 한국 생활 적응
+
+**k-joleophada.webp** · 졸업하다 (tốt nghiệp)
+> a graduate tossing a graduation cap into the air, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-iphakhada.webp** · 입학하다 (nhập học)
+> a child with a backpack walking through a school gate, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeomsimsigan.webp** · 점심시간 (giờ ăn trưa)
+> a clock at noon beside a lunch tray, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-uisikju.webp** · 의식주 (ăn mặc ở)
+> three icons side by side, clothing, a bowl of food, a house, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-pyeongil.webp** · 평일 (ngày thường)
+> a calendar week with the five weekdays shaded, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyotong-kadeu.webp** · 교통 카드 (thẻ giao thông)
+> a transit card being tapped on a bus card reader, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-patbingsu.webp** · 팥빙수 (chè đậu đỏ đá bào)
+> a tall bowl of shaved ice topped with red bean and fruit, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 24 — 어떤 것인지 꾸며 말하기
+
+**k-joyonghada.webp** · 조용하다 (yên tĩnh, tĩnh mịch, im ắng)
+> a person holding one finger to their lips, quiet room, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sikkeureopda.webp** · 시끄럽다 (ồn)
+> a person covering their ears, loud jagged sound lines around, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-neolda.webp** · 넓다 (rộng)
+> a wide open empty room with arrows pushing the walls outward, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jopda.webp** · 좁다 (hẹp)
+> a narrow corridor with walls close on both sides, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gabang.webp** · 가방 (túi xách, giỏ xách, ba lô)
+> a shoulder bag with a zipper and a strap, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-haru.webp** · 하루 (một ngày)
+> a sun and a moon on a single arc from sunrise to night, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daehada.webp** · 대하다 (đối diện)
+> two people sitting face to face across a small table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-wihada.webp** · 위하다 (vì, để, cho)
+> a person holding a gift out toward another person, heart above, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sahoe.webp** · 사회 (xã hội, cộng đồng)
+> many small human figures connected by lines into a network, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 25 — 내가 하겠다고 말하기
+
+**k-olgida.webp** · 옮기다 (chuyển)
+> a person lifting a box and setting it down in a new place, arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ittaga.webp** · 이따가 (lát nữa, chút nữa, chốc nữa)
+> a clock with an arrow sweeping a short way forward, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeonhwa.webp** · 전화 (cuộc điện thoại, cú điện thoại, cuộc nói)
+> a telephone handset with sound waves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geureon.webp** · 그런 (như vậy)
+> a hand pointing at a distant object with a dotted line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeongu.webp** · 경우 (đạo lý, sự phải đạo)
+> a path splitting into three branches, each with a different sign, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 26 — 한번 해 보기
+
+**k-sinda.webp** · 신다 (mang)
+> a person pulling a shoe onto their foot, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hanbeon.webp** · 한번 (có lần)
+> a single tally mark on a slate with one finger raised, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eumsik.webp** · 음식 (thức ăn, đồ ăn)
+> a plate with rice, soup and side dishes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-norae.webp** · 노래 (bài hát, ca khúc, việc ca hát)
+> a person singing into a microphone, music notes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jasin.webp** · 자신 (tự thân, chính mình, tự mình)
+> a person looking at their own reflection in a mirror, confident, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-saenggak.webp** · 생각 (sự suy nghĩ)
+> a head silhouette with a lightbulb inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 27 — 무엇 하러 가는지
+
+**k-tonghada.webp** · 통하다 (thông)
+> a tunnel with a road passing straight through a hill, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sori.webp** · 소리 (tiếng, âm thanh)
+> concentric sound wave rings spreading from a small speaker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ireon.webp** · 이런 (như thế này)
+> a hand pointing at a nearby object with a short dotted line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeoja.webp** · 여자 (con gái, phụ nữ)
+> a woman standing, simple portrait, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeongdo.webp** · 정도 (mức độ, độ, mức)
+> a measuring gauge with a needle pointing partway along a scale, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 28 — 할 수 있는 일
+
+**k-gimchi.webp** · 김치 (kimchi)
+> a bowl of red napa cabbage kimchi, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-boida.webp** · 보이다 (được thấy, được trông thấy)
+> an eye with light rays coming from an object toward it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gajida.webp** · 가지다 (mang, cầm)
+> a person holding an object close with both hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 29 — 이러면 저렇다
+
+**k-bi.webp** · 비 (hạt mưa)
+> raindrops falling from a cloud onto an umbrella, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gajyeooda.webp** · 가져오다 (mang đến, đem đến)
+> a person carrying a box toward the viewer, forward arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ai.webp** · 아이 (trẻ em, trẻ nhỏ, đứa trẻ, đứa bé, em bé)
+> a small child standing and smiling, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jinada.webp** · 지나다 (qua, trôi qua)
+> a figure walking past a signpost, arrow continuing beyond, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ingan.webp** · 인간 (con người)
+> a human figure silhouette standing alone, simple and dignified, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sasil.webp** · 사실 (sự thật, sự thực)
+> a magnifying glass over a document with a checkmark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-nada.webp** · 나다 (nhú, mọc, ló)
+> a green sprout pushing up out of soil, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 30 — 그럴 때는
+
+**k-oeropda.webp** · 외롭다 (cô độc, đơn độc)
+> a single person sitting alone on a bench in a wide empty space, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-telrebijeon.webp** · 텔레비전 (ti vi, máy vô tuyến truyền hình)
+> a television set on a stand, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gibun.webp** · 기분 (tâm trạng)
+> a face with a smile and a face with a frown side by side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ireotda.webp** · 이렇다 (như thế này)
+> a hand presenting a nearby object on an open palm, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-uihada.webp** · 의하다 (dựa vào, theo)
+> an arrow leaning on a solid pillar for support, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sidae.webp** · 시대 (thời đại)
+> a long horizontal timeline with era markers along it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ireohada.webp** · 이러하다 (như thế này)
+> a hand gesturing toward a nearby scene, dotted outline, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 31 — 앞뒤 차례
+
+**k-jam.webp** · 잠 (giấc ngủ, sự ngủ)
+> a person sleeping in bed with Z shapes floating, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jagi.webp** · 자기 (chính mình, tự mình, bản thân mình)
+> a person pointing at their own chest with a thumb, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-segye.webp** · 세계 (thế giới)
+> a globe of the earth with continents, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daetongryeong.webp** · 대통령 (tổng thống)
+> a speaker at a podium with a national emblem and flags behind, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gaji.webp** · 가지 (thứ, kiểu)
+> three different objects lined up, each in its own bracket, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 32 — 그러니까
+
+**k-eolgul.webp** · 얼굴 (mặt)
+> a simple human face, front view, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 33 — 마음먹은 일
+
+**k-maeil.webp** · 매일 (mỗi ngày)
+> a calendar with a check mark in every single square, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gongbu.webp** · 공부 (việc học, sự học)
+> a student at a desk reading with a pencil and open books, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yaksok.webp** · 약속 (sự hứa hẹn, lời hứa)
+> two hands linking little fingers, a calendar behind, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-undonghada.webp** · 운동하다 (tập luyện thể thao)
+> a person jogging in sportswear, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-olhae.webp** · 올해 (năm nay)
+> a calendar showing a whole year with the current year highlighted, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-kkeungida.webp** · 끊기다 (bị đứt, bị cắt đứt)
+> a rope snapped in two with the broken ends apart, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geugeo.webp** · 그거 (cái đó, cái đấy)
+> a hand pointing at one object among several, that one glowing, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gukga.webp** · 국가 (quốc gia)
+> a map outline with a flag planted at its center, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geureonde.webp** · 그런데 (nhưng mà, thế nhưng)
+> a straight road with a sudden fork turning aside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 34 — 무엇 하는 사람·것
+
+**k-yori.webp** · 요리 (nấu ăn, nấu nướng)
+> hands cooking at a stove with a frying pan and vegetables, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gareuchida.webp** · 가르치다 (dạy)
+> a teacher pointing at a board while a student watches, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-chinjeol.webp** · 친절 (sự tử tế, sự niềm nở)
+> a person helping an elderly person carry a bag, warm smile, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeoseong.webp** · 여성 (phụ nữ, giới nữ)
+> an adult woman standing, professional and calm, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-maeum.webp** · 마음 (tâm tính, tính tình)
+> a heart shape inside a chest outline with soft glow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 35 — 어디에 있는지
+
+**k-geuncheo.webp** · 근처 (nơi gần)
+> a house with a small circle drawn around the nearby area, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gwangye.webp** · 관계 (quan hệ)
+> two circles overlapping with a line connecting their centers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-namja.webp** · 남자 (nam giới)
+> an adult man standing, simple portrait, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-natanada.webp** · 나타나다 (xuất hiện, lộ ra)
+> a figure stepping out from behind a curtain into light, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jiyeok.webp** · 지역 (vùng, khu vực)
+> a map with one region shaded and outlined, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 36 — 두 가지를 한꺼번에
+
+**k-cheongso.webp** · 청소 (việc quét dọn, việc lau chùi, việc dọn d)
+> hands sweeping with a broom and a dustpan, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-iyagi.webp** · 이야기 (câu chuyện)
+> two people talking with a large speech bubble between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-moseup.webp** · 모습 (hình dáng, hình dạng)
+> a person's silhouette outline seen clearly against light, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-naeda.webp** · 내다 (mở ra, thông, trổ)
+> a hand pushing a document out through a window slot, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eopi.webp** · 없이 (không có)
+> an empty hand with a crossed out object beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ibeon.webp** · 이번 (lần này)
+> a calendar with the current week circled, arrow pointing at it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-saenghwal.webp** · 생활 (sự sinh sống, cuộc sống)
+> a day in a home, cooking, cleaning and resting shown in one scene, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 37 — 대체로 그런 편
+
+**k-seonggyeok.webp** · 성격 (tính cách, tính nết)
+> three faces showing calm, cheerful and stubborn expressions, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sai.webp** · 사이 (khoảng cách, cự li)
+> two objects with a measured gap and arrows between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-urinara.webp** · 우리나라 (nước ta, Hàn Quốc)
+> a country map with a flag and small houses on it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-anda.webp** · 앉다 (ngồi)
+> a person sitting down on a chair, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-cheoeum.webp** · 처음 (đầu tiên; lần đầu tiên)
+> a starting line with a runner at the very first step, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geuttae.webp** · 그때 (lúc đó, khi đó)
+> a clock with a marked point in the past, arrow pointing back, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gatda.webp** · 갖다 (mang, cầm)
+> a person carrying an object in their hands, holding it close, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-teukhi.webp** · 특히 (một cách đặc biệt)
+> a row of identical shapes with one highlighted by a spotlight, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 38 — 그러려고 합니다
+
+**k-naenyeon.webp** · 내년 (năm tới, năm sau)
+> a calendar page turning forward to the next year, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeolsimhi.webp** · 열심히 (một cách chăm chỉ, một cách cần mẫn, một)
+> a person studying hard with sweat drops and a burning focus, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-moeuda.webp** · 모으다 (gom, gộp, chắp, chụm)
+> hands gathering scattered coins into one pile, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-isang.webp** · 이상 (trở lên)
+> a bar rising above a marked threshold line, arrow pointing up, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyoyuk.webp** · 교육 (sự giáo dục)
+> a teacher, a book and a graduation cap arranged together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeongje.webp** · 경제 (kinh tế, nền kinh tế)
+> coins, a rising graph line and a shopping bag together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 39 — 꼭 해야 하는 것
+
+**k-oegukin.webp** · 외국인 (người ngoại quốc, người nước ngoài)
+> a traveler with a passport and a suitcase at an airport, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-deungrokjeung.webp** · 등록증 (chứng nhận đăng kí, giấy đăng kí)
+> an identification card with a photo and a chip, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-unjeon.webp** · 운전 (sự lái xe)
+> hands on a steering wheel seen from the driver's seat, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-japda.webp** · 잡다 (nắm, cầm)
+> a hand gripping a handle firmly, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yesul.webp** · 예술 (nghệ thuật)
+> a painter's palette, a brush and a framed canvas, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 40 — 도와 달라고 말하기
+
+**k-gomapda.webp** · 고맙다 (cảm  ơn, biết ơn)
+> a person bowing with hands together, warm grateful expression, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeoksa.webp** · 역사 (lịch sử, tiến trình lịch sử)
+> an old scroll, a ruin column and an hourglass together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ilda.webp** · 읽다 (đọc)
+> a person reading a book with eyes following the lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeolgwa.webp** · 결과 (kết quả)
+> a finish line with a scoreboard showing a final total, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-naeyong.webp** · 내용 (cái bên trong)
+> an open box showing the items packed inside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-mulron.webp** · 물론 (tất nhiên, đương nhiên)
+> a person nodding firmly with a large checkmark beside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 41 — 지금 하는 중
+
+**k-dangsin.webp** · 당신 (ông, bà, anh, chị)
+> a hand pointing forward at the viewer politely, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-neotda.webp** · 넣다 (đặt vào, để vào)
+> a hand dropping a coin into a slot in a box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-neukkida.webp** · 느끼다 (cảm thấy)
+> a hand touching a surface with small sensation lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 42 — 그렇지 않습니다
+
+**k-maepda.webp** · 맵다 (cay)
+> a red chili pepper with flames and a sweating face, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-dambae.webp** · 담배 (cây thuốc lá)
+> a single cigarette with a thin curl of smoke, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-piuda.webp** · 피우다 (làm nở, làm trổ)
+> a flower bud opening into a full bloom, arrow between, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-uimi.webp** · 의미 (ý nghĩa, nghĩa)
+> a word card with an arrow pointing to a picture of its meaning, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-balhida.webp** · 밝히다 (chiếu sáng)
+> a lantern lighting up a dark corner, beam of light, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jukda.webp** · 죽다 (chết)
+> a wilted flower drooping beside a fallen petal, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 43 — 해도 되는지 묻기
+
+**k-seuda.webp** · 세우다 (dựng đứng)
+> a fallen post being raised upright by hands, arrow upward, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jucha.webp** · 주차 ((sự) đỗ xe, đậu xe)
+> a car parked inside painted parking lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-changmun.webp** · 창문 (cửa sổ)
+> an open window with curtains and daylight outside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeongchi.webp** · 정치 (chính trị)
+> a podium with a microphone, a ballot box beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gukmin.webp** · 국민 (quốc dân, nhân dân)
+> a crowd of people standing together beneath a flag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yaegi.webp** · 얘기 (câu chuyện)
+> two friends chatting casually with speech bubbles, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeongu.webp** · 연구 (sự nghiên cứu)
+> a microscope, a notebook and test tubes on a lab bench, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 44 — 맞지요? 하고 되묻기
+
+**k-jumun.webp** · 주문 (câu thần chú)
+> a customer pointing at a menu while a waiter writes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ttohan.webp** · 또한 (cũng thế)
+> two identical items with a plus sign added beside them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ttoneun.webp** · 또는 (hoặc, hay, hay là)
+> a path forking into two, with a choice mark at the fork, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-saenggida.webp** · 생기다 (sinh ra, nảy sinh)
+> a small sprout appearing where nothing was, sparkle above, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sayonghada.webp** · 사용하다 (sử dụng)
+> a hand using a tool to do a task, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-deuleooda.webp** · 들어오다 (đi vào, tiến vào)
+> a figure stepping in through an open doorway, inward arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 45 — 이랬으면 좋겠다
+
+**k-barada.webp** · 바라다 (mong, mong cầu)
+> a person with hands clasped looking up at a shooting star, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-neulda.webp** · 늘다 (giãn ra, phình ra, nở ra)
+> a short bar growing into a longer bar, arrow showing growth, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sesang.webp** · 세상 (thế gian)
+> a globe surrounded by small houses and people, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daehak.webp** · 대학 (đại học)
+> a university building with columns and a graduation cap, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gaunde.webp** · 가운데 (phần giữa, chỗ giữa)
+> a row of five circles with the middle one highlighted, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ihu.webp** · 이후 (sau này, mai đây, mai sau)
+> a timeline with a marked point and the part after it shaded, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 46 — 이렇게 하는 게 어때요
+
+**k-deungsan.webp** · 등산 (việc leo núi, môn leo núi)
+> a hiker with a backpack climbing a mountain trail, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eottae.webp** · 어때 (như thế nào)
+> a person tilting their head with a question mark, palms open, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-baeu.webp** · 배우 (diễn viên)
+> an actor on a stage under a spotlight with theater masks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-munhak.webp** · 문학 (văn học)
+> a stack of novels with a quill pen resting on top, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-nopda.webp** · 높다 (cao)
+> a tall tower next to a short one, upward arrow along the tall one, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-choegeun.webp** · 최근 (Gần đây)
+> a calendar with the last few days marked, arrow to today, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hwangyeong.webp** · 환경 (môi trường)
+> a green earth with trees, clean water and a leaf, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 47 — 들은 말 옮기기
+
+**k-jeonhada.webp** · 전하다 (truyền lại, lưu truyền)
+> a hand passing a letter into another waiting hand, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-malsseum.webp** · 말씀 (lời)
+> an elder speaking with a respectful speech bubble, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jisi.webp** · 지시 (sự cho xem)
+> a supervisor pointing while a worker looks in that direction, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yojeum.webp** · 요즘 (gần đây, dạo gần đây, dạo này)
+> a calendar with the recent days shaded and a clock beside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeolhon.webp** · 결혼 (việc kết hôn)
+> two wedding rings side by side with a bouquet, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jache.webp** · 자체 (tự thể)
+> an object with a circle drawn tightly around only itself, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 48 — 아마 그런 것 같다
+
+**k-hwaksilhada.webp** · 확실하다 (xác thực, chắc chắn)
+> a large firm checkmark stamped on a document, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bubun.webp** · 부분 (bộ phận, phần)
+> a pie chart with one slice pulled out from the whole, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-byeonhwa.webp** · 변화 (sự biến hóa, sự biến đổi, sự thay đổi)
+> a shape morphing into a different shape with an arrow between, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gwanhada.webp** · 관하다 (liên quan đến)
+> two circles joined by a bracket linking them together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geunyang.webp** · 그냥 (cứ, chỉ)
+> a person standing still with relaxed shoulders, hands in pockets, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-iyonghada.webp** · 이용하다 (sử dụng, tận dụng)
+> a person tapping a card to use a machine, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geoui.webp** · 거의 (hầu hết, hầu như)
+> a jar filled almost to the very top, small gap left, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 49 — 무엇을 하려고
+
+**k-siheom.webp** · 시험 (sự thi cử, sự kiểm tra, sự sát hạch)
+> a desk with an exam paper, a pencil and a clock, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-mokjeok.webp** · 목적 (mục đích)
+> an arrow hitting the center of a target, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-areubaiteu.webp** · 아르바이트 (việc làm thêm, việc làm ngoài giờ, việc )
+> a young person working part time behind a shop counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sijak.webp** · 시작 (sự bắt đầu, bước đầu)
+> a starting pistol and a starting line with a runner crouched, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hapgyeokhada.webp** · 합격하다 (đỗ, đạt (tiêu chuẩn, qui định))
+> a person cheering while holding a paper with a pass stamp, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jungsim.webp** · 중심 (trung tâm)
+> concentric circles with a bold dot at the very center, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hwaldong.webp** · 활동 (hoạt động)
+> several people doing different activities in one lively scene, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 50 — 해 봤더니 이렇더라
+
+**k-murihada.webp** · 무리하다 (vô lí)
+> a person lifting far too many boxes, wobbling, strain lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-siwonhada.webp** · 시원하다 (mát mẻ)
+> a person drinking cold water with a refreshed expression, cool air, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gwansim.webp** · 관심 (mối quan tâm)
+> an eye looking closely at an object with a magnifying glass, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeoksi.webp** · 역시 (quả là, đúng là)
+> a person nodding knowingly with a checkmark, as expected, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gwanggo.webp** · 광고 (sự quảng bá, sự quảng cáo)
+> a billboard with a bright frame and a megaphone beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeongsin.webp** · 정신 (tinh thần, tâm trí, tâm linh)
+> a head silhouette with a bright glowing core inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-iruda.webp** · 이루다 (thực hiện)
+> hands placing the final block on top of a finished tower, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 51 — 이것 말고 저것으로
+
+**k-daesin.webp** · 대신 (sự thay thế)
+> one object being swapped for another, two curving arrows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daesinhada.webp** · 대신하다 (thay thế)
+> a person stepping into another person's place, swap arrows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-cheongsohada.webp** · 청소하다 (quét dọn, lau chùi, dọn dẹp)
+> a person mopping a floor with a bucket beside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gisul.webp** · 기술 (kỹ thuật)
+> gears, a wrench and a circuit board together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeonche.webp** · 전체 (toàn thể)
+> a full pie chart shown complete with a circle around it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eotda.webp** · 얻다 (nhận được, có được)
+> an open hand receiving an object being placed into it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-minjok.webp** · 민족 (dân tộc)
+> a group of people in traditional dress standing together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-josa.webp** · 조사 (sự điều tra)
+> a magnifying glass over a clipboard with a survey checklist, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 52 — 게다가 또
+
+**k-gap.webp** · 값 (giá cả)
+> a price tag hanging from an object, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geudaero.webp** · 그대로 (y vậy, y nguyên)
+> an object and its exact copy side by side, equals sign between, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-nyeondae.webp** · 년대 (thập niên, thập kỷ)
+> a timeline divided into decade blocks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gwahak.webp** · 과학 (khoa học)
+> a beaker, an atom symbol and a microscope together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jayeon.webp** · 자연 (tự nhiên, thiên nhiên)
+> a forest with a mountain, a river and birds, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyeolguk.webp** · 결국 (đoạn kết, phần kết, sự kết thúc)
+> a winding path ending at a final flag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 53 — 하자마자 바로
+
+**k-irueojida.webp** · 이루어지다 (được thực hiện)
+> scattered pieces coming together into a finished shape, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geolrida.webp** · 걸리다 (được mắc, được treo)
+> a coat hooked and hanging on a peg, caught, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-baraboda.webp** · 바라보다 (nhìn thẳng)
+> a person gazing into the distance, hand shading their eyes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daebubun.webp** · 대부분 (đại bộ phận, đại đa số)
+> a pie chart with a large majority slice shaded, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-pyojeong.webp** · 표정 (sự biểu lộ, vẻ mặt)
+> four faces showing happy, sad, angry and surprised, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ilbu.webp** · 일부 (một phần)
+> a pie chart with one small slice shaded, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-neukkim.webp** · 느낌 (cảm giác, sự cảm nhận)
+> a hand touching a surface with a heart and sensation lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 54 — 먼저 하고 그다음
+
+**k-naseoda.webp** · 나서다 (đứng ra, xuất hiện)
+> a person stepping forward out of a line of people, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yangpa.webp** · 양파 (hành Tây)
+> a whole onion with papery skin beside a cut half, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gogi.webp** · 고기 (thịt)
+> a raw cut of meat on a wooden board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeonrak.webp** · 연락 (sự liên lạc)
+> a phone with a message bubble and a signal arc, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gogae.webp** · 고개 (cổ, gáy)
+> a person tilting their head and neck forward in a nod, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-segi.webp** · 세기 (thế kỷ)
+> a long timeline marked into hundred year blocks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hyeonjae.webp** · 현재 (hiện tại)
+> a timeline with a bright marker on the present point, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 55 — 어느새 그렇게 되다
+
+**k-dalrajida.webp** · 달라지다 (trở nên khác, khác đi, đổi khác)
+> the same object shown before and after, clearly changed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sogae.webp** · 소개 (sự giới thiệu)
+> one person introducing two others to each other with a gesture, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-danida.webp** · 다니다 (lui tới)
+> a person walking back and forth between home and a building, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeonseup.webp** · 연습 (luyện tập, thực tập, thực hành, rèn luyệ)
+> a person repeating a task with repeat arrows around them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-baljeon.webp** · 발전 (sự phát triển)
+> a small seedling growing into a tall tree, upward stages, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hyanghada.webp** · 향하다 (hướng về, nhìn về)
+> a compass needle and a person facing the same direction, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gwanryeon.webp** · 관련 (sự liên quan)
+> two boxes joined by a chain link, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bunwigi.webp** · 분위기 (bầu không khí)
+> a cozy room with warm light and people relaxed, soft mood, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geureohada.webp** · 그러하다 (như thế, như vậy)
+> a hand gesturing at a distant scene, dotted line to it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 56 — 그러려면 이게 필요하다
+
+**k-junbihada.webp** · 준비하다 (chuẩn bị)
+> a person packing a bag with items laid out ready, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeonjang.webp** · 연장 (sự gia hạn, sự thêm, sự tăng cường thêm)
+> a bar being extended longer with an arrow at its end, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-pilyo.webp** · 필요 (sự tất yếu)
+> a hand reaching for a needed item with an exclamation mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-kkujunhi.webp** · 꾸준히 (đều đặn)
+> footprints in an even steady line across the ground, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-mitda.webp** · 믿다 (tin)
+> two hands shaking firmly with a heart above, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-natda.webp** · 낳다 (sinh, đẻ)
+> a mother holding a newborn baby, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeongbo.webp** · 정보 (thông tin)
+> a document, a folder and data lines flowing into a screen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 57 — 한쪽은 이렇고 다른 쪽은
+
+**k-banmyeon.webp** · 반면 (ngược lại, trái lại)
+> two arrows pointing in exactly opposite directions, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-himdeuleohada.webp** · 힘들어하다 (cảm thấy vất vả, tỏ ra mệt mỏi)
+> a person slumped with a heavy weight on their shoulders, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-dongne.webp** · 동네 (làng xóm, thôn xóm, khu phố)
+> a small neighborhood of houses along a lane with a shop, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyotong.webp** · 교통 (giao thông)
+> a street with cars, a bus and a traffic light, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bulpyeon.webp** · 불편 (sự bất tiện)
+> a person frowning at a broken chair with a jagged mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hwalbalhada.webp** · 활발하다 (hoạt bát)
+> a lively person moving energetically with motion lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeokhal.webp** · 역할 (vai trò, nhiệm vụ)
+> an actor's mask beside a name badge and a job tool, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-haengdong.webp** · 행동 ((sự) hành động)
+> a person striding forward taking a decisive action, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-guknae.webp** · 국내 (quốc nội, trong nước, nội địa)
+> a country map with everything inside its border shaded, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 58 — 예전에 그랬던
+
+**k-geuripda.webp** · 그립다 (mong nhớ, nhớ nhung)
+> a person looking at a photograph with a longing expression, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eorida.webp** · 어리다 (ngấn)
+> a very young child holding a toy, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gwaja.webp** · 과자 (bánh ngọt, bánh quy)
+> cookies and a bag of snacks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jaknyeon.webp** · 작년 (năm rồi, năm ngoái, năm trước)
+> a calendar page for the previous year lying behind this year's, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gipda.webp** · 깊다 (sâu)
+> a cross section of deep water with the bottom far below, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-moyang.webp** · 모양 (hình ảnh, bóng dáng)
+> a circle, a triangle and a square lined up, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jogeon.webp** · 조건 (điều kiện)
+> a checklist with boxes that must be ticked before a gate opens, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-neomda.webp** · 넘다 (qua, vượt qua)
+> a person stepping over a low fence, arc arrow above it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 59 — 가는 김에 하나 더
+
+**k-pyeonji.webp** · 편지 (bức thư)
+> a handwritten letter beside an open envelope, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-maeul.webp** · 마을 (làng)
+> a small village of houses among fields and a stream, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daepyo.webp** · 대표 (cái tiêu biểu)
+> one figure standing in front of a group, pointed out, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ganeungseong.webp** · 가능성 (tính khả thi)
+> a branching path with several possible routes, one glowing, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-banghyang.webp** · 방향 (phương hướng)
+> a compass rose with an arrow pointing one way, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daehoe.webp** · 대회 (đại hội)
+> a stadium with competitors and a trophy on a podium, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-moksori.webp** · 목소리 (giọng nói, tiếng nói)
+> a mouth with sound waves coming out of it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 60 — 그뿐 아니라 또
+
+**k-gwail.webp** · 과일 (trái cây, hoa quả)
+> an apple, a banana and grapes together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-mom.webp** · 몸 (cơ thể, thân thể)
+> a full human body outline standing, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeongeo.webp** · 영어 (tiếng Anh)
+> an open English alphabet chart with letter blocks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-teunteunhada.webp** · 튼튼하다 (rắn chắc, vững chắc)
+> a strong person flexing an arm beside a solid brick pillar, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-umjikida.webp** · 움직이다 (động đậy, cựa quậy, nhúc nhích)
+> an object shifting position with motion lines and an arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-noryeok.webp** · 노력 (sự cố gắng, sự nỗ lực)
+> a person pushing a heavy rock uphill with determination, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeonhyeo.webp** · 전혀 (hoàn toàn)
+> a completely empty container with a large X mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-danche.webp** · 단체 (tổ chức)
+> many people grouped inside one large circle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 61 — 그럴까 봐 걱정
+
+**k-makhida.webp** · 막히다 (bị chặn, bị ngăn, bị bịt)
+> a pipe blocked by an obstruction, flow stopped, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geokjeong.webp** · 걱정 (nỗi lo)
+> a person biting their lip with a worried cloud above their head, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gili.webp** · 길이 (chiều dài)
+> a ruler measuring a bar from end to end with arrows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-chulbal.webp** · 출발 (sự khởi hành)
+> a train leaving a platform, departure arrow forward, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-alryeojida.webp** · 알려지다 (được biết)
+> a megaphone spreading waves to many small listening figures, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ganeunghada.webp** · 가능하다 (khả dĩ, có thể)
+> a door standing open with a green checkmark beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-neungryeok.webp** · 능력 (khả năng, năng lực)
+> a flexed arm beside a rising skill meter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jujanghada.webp** · 주장하다 (chủ trương, khẳng định)
+> a person raising a hand and speaking firmly with a bold bubble, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 62 — 할수록 더
+
+**k-dolrida.webp** · 돌리다 (xoay)
+> a wheel turning with circular rotation arrows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-saeop.webp** · 사업 (việc làm ăn kinh doanh)
+> a handshake over a desk with a chart and a briefcase, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jinanhae.webp** · 지난해 (năm rồi, năm ngoái, năm trước)
+> last year's calendar page falling away behind this year's, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-pyohyeon.webp** · 표현 (sự biểu hiện, sự thể hiện)
+> a person gesturing while a picture forms in a speech bubble, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeolda.webp** · 젊다 (trẻ)
+> a young person standing energetically, fresh and upright, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-dongsi.webp** · 동시 (đồng thời, cùng một lúc)
+> two clocks showing exactly the same time side by side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sungan.webp** · 순간 (khoảnh khắc, thoáng chốc, chốc lát)
+> a camera shutter freezing a single instant, flash burst, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeonjaeng.webp** · 전쟁 (chiến tranh)
+> a broken wall and a helmet on a scorched field, sombre, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 63 — 조금씩 되어 가는 중
+
+**k-jeokeunghada.webp** · 적응하다 (thích ứng)
+> a plant reshaping itself to fit a new pot, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeokeung.webp** · 적응 (sự thích ứng)
+> a key being reshaped to fit a different lock, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-silryeok.webp** · 실력 (thực lực)
+> a filled skill meter beside a person standing confidently, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeomjeom.webp** · 점점 (dần dần, dần)
+> a series of bars each slightly taller than the last, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geunyeo.webp** · 그녀 (cô ấy, bà ấy)
+> a woman seen from behind being pointed at from a distance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geureoda.webp** · 그러다 (làm như vậy thì)
+> a person doing an action while a dotted arrow shows the result, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeongbu.webp** · 정부 (chính phủ)
+> a government building with columns and a flag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gwajeong.webp** · 과정 (quá trình)
+> a row of stepping stones from a start point to an end point, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-saengmyeong.webp** · 생명 (sinh mệnh, sinh mạng, mạng sống)
+> a small sprout cupped in two protecting hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 64 — 그럴수록 이렇게
+
+**k-mulga.webp** · 물가 (vật giá)
+> price tags rising along an upward graph line above a shopping cart, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jeochuk.webp** · 저축 (sự tiết kiệm)
+> coins dropping into a piggy bank, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-julida.webp** · 줄이다 (làm giảm, rút ngắn, thu nhỏ)
+> a tall bar shrinking to a shorter bar with a downward arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-suip.webp** · 수입 (thu nhập)
+> money flowing into a wallet with an inward arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sageon.webp** · 사건 (sự kiện)
+> a marked spot with tape and a magnifying glass over it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jakpum.webp** · 작품 (tác phẩm)
+> a framed painting on a gallery wall with a small plaque, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sanghwang.webp** · 상황 (tình hình, tình huống, hoàn cảnh)
+> a person standing on a map looking at what surrounds them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ttaraseo.webp** · 따라서 (theo đó, do đó)
+> footprints following a dotted trail that leads to a result, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sangtae.webp** · 상태 (trạng thái, tình hình, hiện trạng)
+> a gauge dial showing a needle at a certain level, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 65 — 남을 그렇게 만들다
+
+**k-sikida.webp** · 시키다 (bắt, sai khiến, sai bảo)
+> one person pointing an order while another begins the task, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yuhak.webp** · 유학 (sự du học)
+> a student with a suitcase and a passport before a foreign campus, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-dangsi.webp** · 당시 (lúc đó, thời đó, đương thời)
+> a clock with a marker set back in the past, sepia tone, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-deouk.webp** · 더욱 (hơn nữa, càng)
+> a bar growing even taller with a double upward arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hyeonsil.webp** · 현실 (hiện thực)
+> a person stepping out of a dream cloud onto solid ground, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gieop.webp** · 기업 (doanh nghiệp)
+> an office tower with a company sign and workers entering, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-seongeo.webp** · 선거 (cuộc tuyển cử, cuộc bầu cử)
+> a hand dropping a ballot into a ballot box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hyeonsang.webp** · 현상 (hiện tượng)
+> a magnifying glass over a curious repeating pattern in nature, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-deuthada.webp** · 듯하다 (chắc, có lẽ)
+> a hazy outline of an object with a question mark, uncertain, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 66 — 원래 그런 법
+
+**k-silsu.webp** · 실수 (sự sai sót, sự sơ xuất, sự sai lầm)
+> a spilled cup with a person clapping a hand to their forehead, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-silsuhada.webp** · 실수하다 (sai sót, sơ xuất)
+> a person knocking over a glass by accident, surprised, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-maryeon.webp** · 마련 (đương nhiên, hiển nhiên)
+> a table set with everything laid out ready in advance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-maryeonhada.webp** · 마련하다 (chuẩn bị)
+> hands laying out tools and supplies neatly before a task, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gujo.webp** · 구조 (cơ cấu, cấu tạo)
+> a building's steel frame skeleton showing its structure, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ohiryeo.webp** · 오히려 (ngược lại, trái lại)
+> an arrow bending back the opposite way from expected, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-uisik.webp** · 의식 (sự ý thức)
+> a head silhouette with an open eye glowing inside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-saneop.webp** · 산업 (công nghiệp)
+> a factory with smokestacks, gears and shipping crates, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 67 — 누가 했는지보다 무엇이 되었는지
+
+**k-hyeongtae.webp** · 형태 (hình thức, hình dáng, kiểu dáng)
+> the same volume shown as a cube, a sphere and a pyramid, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jakeop.webp** · 작업 (sự tác nghiệp)
+> workers at a workbench doing a task with tools, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bihada.webp** · 비하다 (so sánh)
+> two objects on a balance scale being compared, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gigwan.webp** · 기관 (động cơ, máy)
+> an institutional building with a formal sign board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ipjang.webp** · 입장 (lập trường)
+> a person standing firmly on one side of a line, arms crossed, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-manhada.webp** · 만하다 (đáng, đáng để)
+> a thumbs up beside an object marked as worthwhile, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bangsik.webp** · 방식 (phương thức)
+> three different tools each doing the same job, arranged in a row, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeonghyang.webp** · 영향 (sự ảnh hưởng)
+> a stone dropped in water sending ripples outward to objects, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 68 — 공식 문서의 이유
+
+**k-haengsa.webp** · 행사 (sự kiện, buổi lễ, việc tổ chức sự kiện)
+> a stage with banners, an audience and a ribbon cutting, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-chwisohada.webp** · 취소하다 (hủy bỏ)
+> a hand crossing out a booking on a calendar with a red X, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-annae.webp** · 안내 (sự hướng dẫn)
+> a guide pointing the way beside an information sign, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-chwiso.webp** · 취소 (sự hủy bỏ)
+> a ticket stamped with a large red cancellation X, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bujakyong.webp** · 부작용 (tác dụng phụ, hệ quả không mong muốn)
+> a pill bottle with an unexpected side arrow and a warning mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sincheong.webp** · 신청 (việc đăng kí)
+> a hand submitting an application form at a counter, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-dangye.webp** · 단계 (bước, giai đoạn)
+> a staircase of steps each numbered by height, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-olrida.webp** · 올리다 (đưa lên, nâng lên, tăng lên)
+> hands lifting a box onto a high shelf, upward arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 69 — 자칫하면 그리 된다
+
+**k-chehada.webp** · 체하다 (đầy bụng, khó tiêu)
+> a person pretending to read while peeking over the book, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geureotge.webp** · 그렇게 (như thế, như vậy)
+> a hand demonstrating a way of doing something, dotted motion, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-muri.webp** · 무리 (sự quá sức, sự quá mức)
+> a person carrying far more than they can, buckling under it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-nungil.webp** · 눈길 (ánh mắt)
+> an eye with a beam of attention aimed at a distant object, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-neomeojida.webp** · 넘어지다 (ngã, đổ)
+> a person tripping and falling forward, motion lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gyosa.webp** · 교사 (giáo viên)
+> a teacher with a pointer standing beside a whiteboard, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jinida.webp** · 지니다 (giữ gìn, bảo quản)
+> a person keeping a small treasured object in their pocket, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-uiwon.webp** · 의원 (nghị sĩ, đại biểu Quốc hội)
+> a legislator at a parliament seat with a microphone, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jumin.webp** · 주민 (cư dân)
+> residents standing together in front of their apartment block, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 70 — 그렇게 하라는 말
+
+**k-gyuchik.webp** · 규칙 (quy tắc)
+> a rulebook open beside a whistle and a signpost, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jonjae.webp** · 존재 (sự tồn tại, đối tượng)
+> a solid figure standing with a soft glow marking it as present, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bunya.webp** · 분야 (lĩnh vực)
+> a field divided into labeled plots, each with a different tool, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-haengwi.webp** · 행위 (hành vi)
+> a hand carrying out a deliberate action, motion arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sujun.webp** · 수준 (trình độ, tiêu chuẩn)
+> a horizontal level line across a scale with a marker on it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bangsong.webp** · 방송 (việc phát sóng)
+> a broadcast tower sending waves to a television set, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yeongeuk.webp** · 연극 (sự diễn kịch)
+> actors performing on a stage with curtains and footlights, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-machangaji.webp** · 마찬가지 (sự giống nhau)
+> two identical objects with an equals sign between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 71 — 그 바람에 일이 틀어졌다
+
+**k-seolmyeonghada.webp** · 설명하다 (giải thích)
+> a person pointing at a diagram while explaining to a listener, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gapjagi.webp** · 갑자기 (đột ngột, bất thình lình, bỗng nhiên)
+> a sudden burst mark appearing with a startled figure, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gachi.webp** · 가치 (giá trị)
+> a gem on a balance scale outweighing coins, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jipdan.webp** · 집단 (tập đoàn, nhóm, bầy đàn)
+> a tight cluster of many identical figures grouped together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hyeondae.webp** · 현대 (hiện đại)
+> a modern city skyline with glass towers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-salpyeoboda.webp** · 살펴보다 (soi xét)
+> a person carefully examining an object with a magnifying glass, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-janggwan.webp** · 장관 (bộ trưởng)
+> an official at a government desk with a nameplate and flag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-chai.webp** · 차이 (sư khác biệt; độ chênh lệch)
+> two bars of different heights with the gap marked between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-pulda.webp** · 풀다 (cởi, tháo, mở)
+> hands untying a knot in a rope, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sijeol.webp** · 시절 (thời, thời kỳ)
+> an old photo album open to a page of younger days, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 72 — 따지고 보면
+
+**k-gosaenghada.webp** · 고생하다 (khổ sở, vất vả, nhọc công)
+> a person trudging through hardship with a heavy load, weary, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jaju.webp** · 자주 (thường xuyên, hay)
+> a calendar with many days marked by repeated checkmarks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jikjeop.webp** · 직접 (trực tiếp)
+> one hand handing an object straight to another hand, no middle, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gaein.webp** · 개인 (cá nhân)
+> one single figure standing apart from a group, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-geunde.webp** · 근데 (thế nhưng)
+> a straight arrow with a small hook turning aside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jakga.webp** · 작가 (tác giả)
+> a writer at a desk with a pen and stacked manuscript pages, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hyogwa.webp** · 효과 (hiệu quả)
+> a before and after pair with a bright arrow showing improvement, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bulgyo.webp** · 불교 (Phật giáo)
+> a seated buddha statue with a lotus flower, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-kkeulda.webp** · 끌다 (lê, lết, kéo lê)
+> a person pulling a heavy cart by a rope, drag lines behind, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daero.webp** · 대로 (giống như)
+> a template shape and a copy made exactly to match it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 73 — 그렇게 함으로써
+
+**k-seoro.webp** · 서로 (nhau, lẫn nhau)
+> two people facing each other, arrows pointing both ways, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-daehwa.webp** · 대화 (sự đối thoại, cuộc đối thoại)
+> two people talking with two speech bubbles overlapping, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ohae.webp** · 오해 (sự hiểu lầm, sự hiểu sai)
+> two people with mismatched thought bubbles and a tangled line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-uju.webp** · 우주 (vũ trụ)
+> planets and stars in dark space with a comet, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-machi.webp** · 마치 (hệt như)
+> an object beside its look alike with a wavy similarity mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-saengsan.webp** · 생산 (việc sản xuất)
+> a factory conveyor belt producing finished goods, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-ganghada.webp** · 강하다 (cứng, rắn, chắc)
+> a strong arm bending a thick metal bar, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 74 — 그런 한에서는
+
+**k-hangye.webp** · 한계 (sự giới hạn, hạn mức)
+> a bar stopping firmly at a marked red limit line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-choego.webp** · 최고 (tối cao)
+> a trophy at the very top of a podium with a crown, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-natanaeda.webp** · 나타내다 (xuất hiện, thể hiện)
+> a hand pulling back a cloth to reveal the object beneath, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-dayanghada.webp** · 다양하다 (đa dạng)
+> many different shapes and objects arranged in variety, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-nongmin.webp** · 농민 (nông dân)
+> a farmer with a hoe standing in a rice field, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-deureonada.webp** · 드러나다 (hiện ra, thể hiện)
+> an object emerging from behind a lifting fog, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-soseol.webp** · 소설 (tiểu thuyết)
+> a thick novel open with a bookmark ribbon, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jilseo.webp** · 질서 (trật tự)
+> objects arranged in a neat orderly row, all aligned, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-damda.webp** · 담다 (đựng, chứa)
+> hands placing fruit into a basket, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 75 — 반드시 해야 한다
+
+**k-naeji.webp** · 내지 (khoảng… đến)
+> a range shown on a number line with brackets at both ends, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-moida.webp** · 모이다 (tập hợp, gom lại)
+> many small figures converging toward one central point, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-simin.webp** · 시민 (thị dân, dân thành thị)
+> citizens walking together on a city street, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hoejang.webp** · 회장 (chủ tịch hội, hội trưởng)
+> a chairperson at the head of a meeting table, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-seuseuro.webp** · 스스로 (tự mình)
+> a person doing a task alone with no help, self reliant, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-inal.webp** · 이날 (ngày này)
+> a calendar with one specific day circled and marked, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jedaero.webp** · 제대로 (đúng mực, đúng chuẩn, đúng kiểu)
+> a task done neatly and correctly with a checkmark beside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-deonjida.webp** · 던지다 (ném)
+> a person throwing a ball, arc trajectory line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gonggan.webp** · 공간 (không gian)
+> an empty room shown with depth arrows measuring its space, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 76 — 이런 것도 저런 것도
+
+**k-beolida.webp** · 벌이다 (vào việc, bắt đầu)
+> a person setting out tools and starting a project spread wide, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jase.webp** · 자세 (tư thế)
+> a figure shown sitting upright with good posture, guide lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gangjohada.webp** · 강조하다 (khẳng định, nhấn mạnh)
+> a word underlined boldly with an exclamation mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-matda.webp** · 맡다 (đảm nhiệm, đảm đương)
+> a person accepting a folder handed to them, taking responsibility, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hanpyeon.webp** · 한편 (mặt khác)
+> a scene split in two halves showing two things at once, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gija.webp** · 기자 (ký giả, nhà báo, phóng viên)
+> a reporter with a notepad and a microphone, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-juro.webp** · 주로 (chủ yếu)
+> a pie chart with the dominant slice clearly the largest, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-hwolssin.webp** · 훨씬 (hơn hẳn, rất)
+> one bar towering far above a much shorter bar, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 77 — 그럴 바에는 차라리
+
+**k-charari.webp** · 차라리 (thà rằng~ còn hơn)
+> a balance scale tipping clearly toward the better of two options, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-bokjaphada.webp** · 복잡하다 (phức tạp, rắc rối)
+> a tangle of many crossing lines and knots, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-tongil.webp** · 통일 (sự thống nhất)
+> two separated pieces joining into one whole, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-deuleoseoda.webp** · 들어서다 (bước vào)
+> a person stepping across a threshold into a building, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-siseol.webp** · 시설 (công trình, trang thiết bị, việc lắp đặt)
+> a public facility building with benches and equipment outside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jubyeon.webp** · 주변 (xung quanh)
+> a central object with a dotted circle of items around it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-wonin.webp** · 원인 (nguyên nhân)
+> an arrow pointing back from a result to its starting cause, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-charye.webp** · 차례 (Cha-re; thứ tự, lượt)
+> people standing in a numbered queue one after another, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 한국어 Day 78 — 끝내 해내겠다
+
+**k-seonggonghada.webp** · 성공하다 (thành công)
+> a person raising both arms at a mountain summit with a flag, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-sosik.webp** · 소식 (tin tức)
+> a newspaper and a message arriving with a notification mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-jaesan.webp** · 재산 (tài sản)
+> a house, a car and stacked coins together, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yakgan.webp** · 약간 (hơi, chút ít, chút đỉnh)
+> a measuring cup filled only a small amount at the bottom, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-eoneo.webp** · 언어 (ngôn ngữ)
+> speech bubbles with different scripts and a globe behind, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-yoguhada.webp** · 요구하다 (yêu cầu)
+> a person holding out a hand firmly asking, with a document, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gamdok.webp** · 감독 (sự giám sát)
+> a supervisor with a clipboard watching work being done, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-samda.webp** · 삼다 (lấy làm)
+> an object being picked up and set as a marker on a base, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**k-gigan.webp** · 기간 (thời gian, khoảng thời gian)
+> a calendar with a span of days bracketed from start to end, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 1 — 인사와 호칭
+
+**d1-a.webp** · (공손하게) (ạ)
+> a person bowing politely with a small heart, respectful gesture, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 2 — 이름 묻고 답하기
+
+**d2-la.webp** · ~이다 (là)
+> an equals sign between a photo of a person and a name badge, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d2-cua.webp** · ~의 (của)
+> a hand holding a key with an ownership tag attached, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 6 — 헤어질 때
+
+**d6-nhe.webp** · ~할게요 (부드럽게) (nhé)
+> a person waving goodbye softly with a gentle smile, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 8.5 — 세는 말과 물건
+
+**d85-gang-tay.webp** · 장갑 (găng tay)
+> a pair of gloves, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 27 — 안전
+
+**d27-phai.webp** · ~해야 한다 (phải)
+> an exclamation mark beside a checklist item that must be done, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 75 — 맞장구와 리액션
+
+**d75-a.webp** · 아하·~예요? (à)
+> a person with a raised eyebrow and a small lightbulb, realizing, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d75-u.webp** · 응 (반말 — 손윗사람에겐 금물) (ừ)
+> a casual person nodding with a relaxed shrug, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d75-nhi.webp** · ~네요·그렇죠 (nhỉ)
+> two people nodding at each other in agreement, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 104 — 과일
+
+**d104-tuoi.webp** · 신선하다 (tươi)
+> a crisp fresh apple with dew drops and a bright green leaf, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 42.5 — 길 안내하기
+
+**d425-ban-do.webp** · 지도 (bản đồ)
+> a folded paper map spread open, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d425-den-giao-thong.webp** · 신호등 (đèn giao thông)
+> a traffic light with red, yellow and green lamps, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d425-con-hem.webp** · 골목 (con hẻm)
+> a narrow alley between two close houses, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 59 — 일정과 출장
+
+**d59-cuoc-hen.webp** · 약속(공식) (cuộc hẹn)
+> a formal appointment written in a diary with a pen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d59-chuyen.webp** · 편(교통편) (chuyến)
+> a departure board with one flight row highlighted, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+
+### 베트남어 Day 84 — 칭찬과 격려
+
+**d84-nho-co.webp** · ~덕분에 (nhờ có)
+> a person standing on a helping hand that lifts them up, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## 낱말마다 한 장 — 채워 넣은 자리
+
+한 챕터는 낱말 열 개다. 그림도 열 장이어야 한다. 아래는 비어 있던 자리를 채우려고 새로 적은 것이다.
+
+
+### 한국어 Day 50 — 해 봤더니 이렇더라
+
+**k-dahaeng.webp** · 다행 (sự may mắn bất ngờ)
+> a person wiping their brow in relief beside an avoided pitfall, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
