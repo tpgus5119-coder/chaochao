@@ -63,17 +63,32 @@ def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show
     alen = len(str(show(answer))) if show else 0
 
     def len_ok(pick):
-        """정답이 가장 길거나 가장 짧은 쪽으로 튀지 않게."""
+        """정답이 **유일하게** 가장 길거나 짧으면 안 된다.
+
+        예전 규칙은 길이 차가 12자 이상일 때만 봤다. 그랬더니 몇 자 차이가
+        문항마다 쌓여, 시험 전체로는 '긴 보기 찍기'가 57.8% 맞는 시험이 됐다
+        (우연 25%). 이제 차이가 작아도 정답이 홀로 끝값이면 다시 뽑는다."""
         if not show:
             return True
         L = [alen] + [len(str(show(w))) for w in pick]
         mx, mn = max(L), min(L)
-        if mx - mn < 12:                      # 고만고만하면 통과
-            return True
-        return not (alen == mx or alen == mn)
+        if alen == mx and L.count(mx) == 1:
+            # 아예 금지하면 반대 단서가 생긴다("긴 것은 답이 아니다" — 실측 7.3%까지
+            # 떨어졌다). 우연과 같은 4분의 1 확률로는 정답이 가장 길어도 둔다.
+            return rng.random() < 0.25
+        if alen == mn and L.count(mn) == 1:
+            return rng.random() < 0.25
+        return True
+
+    def extreme(pick):
+        """정답이 홀로 끝값이고 차이도 큰가 — 대체 후보로도 못 쓸 만큼 나쁜 조합."""
+        if not show:
+            return False
+        L = [alen] + [len(str(show(w))) for w in pick]
+        return (max(L) - min(L) >= 12) and (alen in (max(L), min(L)))
 
     best = None
-    for _ in range(60):
+    for _ in range(120):
         pick = rng.sample(cands, n)
         if distinct_vi:
             sets = [vi_tokens(answer.get("vi"))] + [vi_tokens(w.get("vi")) for w in pick]
@@ -82,7 +97,9 @@ def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show
             if any(sets[i] & sets[j]
                    for i in range(len(sets)) for j in range(i + 1, len(sets))):
                 continue
-        best = best or pick                   # 뜻은 맞았으니 최소한 이건 쓸 수 있다
+        # 대체 후보도 골라 둔다 — 극단 조합은 마지막의 마지막에만 쓴다
+        if best is None or (extreme(best) and not extreme(pick)):
+            best = pick
         if len_ok(pick):
             return pick
     return best
