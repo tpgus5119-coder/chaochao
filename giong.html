@@ -311,12 +311,15 @@ document.getElementById('send').onclick=async()=>{
   if(!Object.keys(dia).length&&!Object.keys(nat).length){
     alert('Bạn chưa chọn mục nào.');return;}
   const btn=document.getElementById('send');btn.disabled=true;
+  const post=b=>fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(b)}).then(r=>r.json()).catch(()=>({}));
   let msg='⚠️ Không gửi được — nhưng vẫn cảm ơn bạn!';
-  try{
-    const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({act:'giong',rg:RG,dia,nat})});
-    if((await r.json()).ok) msg='✅ Đã gửi. Cảm ơn bạn rất nhiều! 🙏';
-  }catch(e){}
+  /* 서버가 아직 옛 판이면 'giong'을 모르고 통째로 버린다. 그때는 지방 표만이라도
+     옛 칸('dialect')에 넣는다 — 이 설문에서 가장 알고 싶은 것이 그것이고,
+     열쇠 꼴이 같아 나중에 그대로 합산된다. 집계의 nOld 가 이렇게 들어온 수다. */
+  if((await post({act:'giong',rg:RG,dia,nat})).ok
+   ||(await post({act:'dialect',rg:RG,picks:dia})).ok)
+    msg='✅ Đã gửi. Cảm ơn bạn rất nhiều! 🙏';
   document.getElementById('out').textContent=
     `Vùng: ${RG} · Đã đánh dấu ${Object.keys(dia).length} + ${Object.keys(nat).length} mục.\n${msg}`;
 };
