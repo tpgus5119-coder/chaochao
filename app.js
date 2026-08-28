@@ -523,6 +523,26 @@ const UIVI = {
   '이름 (예: 하노이 탁구, 빈즈엉 3공장)': 'Tên nhóm (ví dụ: Bóng bàn Hà Nội, Nhà máy 3 Bình Dương)',
   '한 줄 소개 (60자 — 예: 퇴근 후 풋살, 초보 환영)': 'Giới thiệu một dòng (60 ký tự — ví dụ: Đá bóng sau giờ làm, chào người mới)',
   '오늘 배운 것, 한 마디… (베트남어 환영)': 'Hôm nay bạn học được gì? Viết một câu… (tiếng Việt cũng được)',
+  '실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.':
+    'Làm bài với <b>đúng định dạng</b> của kỳ thi thật.',
+  '문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.':
+    'Câu hỏi do chúng tôi tự soạn — không phải đề thi thật.',
+  '공통문항': 'Câu hỏi chung', '회차': ' lượt',
+  '지난 회차보다 늘었습니다.': 'Bạn đã tiến bộ so với lượt trước.',
+  '지난 회차와 같습니다.': 'Bằng với lượt trước.',
+  '지난 회차보다 줄었습니다.': 'Thấp hơn lượt trước.',
+  '이 여섯 문항은 모든 회차에 똑같이 들어 있습니다. 회차마다 문제가 달라 총점은 흔들릴 수 있지만, 여기 숫자는 회차끼리 그대로 견줄 수 있습니다.':
+    'Sáu câu này giống nhau ở mọi lượt thi. Tổng điểm có thể thay đổi vì đề khác nhau, '
+    + 'nhưng con số ở đây thì so sánh được giữa các lượt.',
+  '짝과 함께': 'Cùng bạn học',
+  '자기 것만 여십시오 — 서로 보면 물어볼 것이 없어집니다.':
+    'Chỉ mở phần của mình — nếu xem của nhau thì không còn gì để hỏi.',
+  '눌러서 보기': 'Nhấn để xem',
+  '실제 시험과 같이, 한 번 고른 답은 바꿀 수 없습니다.':
+    'Giống kỳ thi thật: đã chọn đáp án thì không đổi được.',
+  '말하기 · 쓰기 연습': 'Luyện nói · viết',
+  '구술 N세트 · 작문 M제목': 'N bộ nói · M đề viết',
+  '틀린 문항 N개': 'N câu sai', '나는 W': 'Tôi là W',
   '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '처음이세요? 가입하기': 'Lần đầu? Đăng ký', '이미 계정이 있어요 — 로그인': 'Đã có tài khoản — Đăng nhập', '가입하기': 'Đăng ký', '로그인': 'Đăng nhập', '회원가입': 'Đăng ký', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
@@ -2364,11 +2384,17 @@ const MENUS = new Proxy({}, {
 let EX = null;                      // {exam, at, marks[], t0, timer}
 let EXDATA = null;                  // ko_exams.json (한 번만 받아 둔다)
 
+/* 시험 이름·설명은 tr() 사전이 아니라 **데이터에** 두 나라 말이 다 있다
+   (ko_exam_gen 이 name_vi·desc_vi 를 같이 낸다). 문항 수가 바뀌어도 어긋나지 않게
+   생성기 쪽에 둔 것이다. 여기서는 화면 말에 맞춰 고르기만 한다. */
+const exName = e => (S.ui === 'vi' && e.name_vi) ? e.name_vi : e.name;
+const exDesc = e => (S.ui === 'vi' && e.desc_vi) ? e.desc_vi : e.desc;
+
 function examEntry() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.<br>'
-    + '문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.'));
+  b.append(el('p', 'lede', tr('실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.') + '<br>'
+    + tr('문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.')));
   show('exam', '모의고사', true);
   if (EXDATA) return drawExamList();
   b.append(el('p', 'note', '시험지 받는 중…'));
@@ -2382,8 +2408,8 @@ function examEntry() {
 }
 
 function examGroup(host, list) {
-  host.append(el('h3', 'exhead', esc(list[0].name)));
-  host.append(el('p', 'note', esc(list[0].desc)));
+  host.append(el('h3', 'exhead', esc(exName(list[0]))));
+  host.append(el('p', 'note', esc(exDesc(list[0]))));
   list.forEach(e => {
     const best = (S.exam || {})[e.id + '-' + e.set];
     const btn = el('button', 'bigmenu');
@@ -2422,8 +2448,8 @@ function drawRedoRow(host) {
 function drawExamList() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.<br>'
-    + '문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.'));
+  b.append(el('p', 'lede', tr('실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.') + '<br>'
+    + tr('문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.')));
   drawRedoRow(b);
   // 시험이 서른 벌이 넘는다. 한 줄로 늘어놓으면 못 찾으니 목적별로 접어 둔다.
   const byId = {};
@@ -2469,8 +2495,9 @@ function drawExamList() {
   b.append(sg);
 
   const x = el('button', 'bigmenu');
-  x.append(el('b', null, '말하기 · 쓰기 연습'));
-  x.append(el('span', 'exmeta', `구술 ${EXDATA.extra.speak.length}세트 · 작문 ${EXDATA.extra.write.length}제목`));
+  x.append(el('b', null, tr('말하기 · 쓰기 연습')));
+  x.append(el('span', 'exmeta', tr('구술 N세트 · 작문 M제목')
+    .replace('N', EXDATA.extra.speak.length).replace('M', EXDATA.extra.write.length)));
   x.onclick = examExtra;
   b.append(x);
 }
@@ -3032,7 +3059,7 @@ function drawExamQ() {
   });
   b.append(pad);
 
-  show('exam', e.name, true);
+  show('exam', exName(e), true);
 }
 
 /* ── 공통문항 ────────────────────────────────────────────────────
@@ -3153,7 +3180,7 @@ function finishExam(timeUp) {
   anchorPanel(b, e, marks);
 
   if (wrong.length) {
-    b.append(el('h3', 'exhead', `틀린 문항 ${wrong.length}개`));
+    b.append(el('h3', 'exhead', tr('틀린 문항 N개').replace('N', wrong.length)));
     const CIRC = '①②③④';
     wrong.forEach(({ q, picked }) => {
       const c = el('div', 'excard wrong');
@@ -3240,7 +3267,7 @@ function finishExam(timeUp) {
     const redo = el('button', 'primary big', `${tr('틀린 문항만 다시 풀기')} (${wrong.length})`);
     redo.style.marginTop = '18px';
     redo.onclick = () => startExam({
-      ...e, sub: true, full: 0, grades_at: null, name: e.name + ' · ' + tr('오답'),
+      ...e, sub: true, full: 0, grades_at: null, name: exName(e) + ' · ' + tr('오답'),
       minutes: Math.max(5, Math.round(e.minutes * wrong.length / e.questions.length)),
       questions: wrong.map(w => w.q),
     });
@@ -3353,7 +3380,7 @@ function examExtra() {
   const lg = (EXDATA.extra || {}).t2_long || [];
   if (bl.length || lg.length) {
     b.append(el('h3', 'exhead', 'TOPIK II 쓰기'));
-    b.append(el('p', 'note', '51·52번은 빈칸 채우기, 53·54번은 긴 글입니다. 실제 시험과 같은 꼴입니다.'));
+    b.append(el('p', 'note', tr('51·52번은 빈칸 채우기, 53·54번은 긴 글입니다. 실제 시험과 같은 꼴입니다.')));
     bl.forEach((w, i) => {
       const btn = el('button', 'bigmenu');
       btn.append(el('b', null, tr('빈칸 채우기') + ' · ' + esc(w.title)));
@@ -5181,7 +5208,7 @@ function missionCard(host, d) {
     [['A', m.a], ['B', m.b]].forEach(([who, txt]) => {
       if (!txt) return;
       const btn = el('button', 'msrole');
-      btn.append(el('b', null, '나는 ' + who), el('span', null, tr('눌러서 보기')));
+      btn.append(el('b', null, tr('나는 W').replace('W', who)), el('span', null, tr('눌러서 보기')));
       btn.onclick = () => {
         btn.textContent = '';
         btn.className = 'msrole open';

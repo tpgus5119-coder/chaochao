@@ -763,10 +763,18 @@ def bp_sets(areas):
 
 # ── 시험 설계도 ──────────────────────────────────────────────
 # 문항 수·시간·유형 배열은 실제 시험을 그대로 따랐다(형식은 사실이라 따라도 된다).
+# 업종 이름 — 베트남 사람이 고르는 자리라 베트남어가 있어야 한다
+IND_VI = {"고무·플라스틱": "Cao su · Nhựa", "기계·금형": "Cơ khí · Khuôn mẫu",
+          "섬유·의복": "Dệt may", "식품": "Thực phẩm", "전자·전기": "Điện tử · Điện",
+          "펄프·제지·목재": "Bột giấy · Giấy · Gỗ", "화학": "Hóa chất",
+          "금속": "Kim loại"}
+
 BLUEPRINTS = {
     # EPS-TOPIK은 읽기 20 + 듣기 20 = 40문항이다. 그 비율을 그대로 지켰다.
     "eps-topik": {
         "name": "EPS-TOPIK 모의고사",
+        "name_vi": 'Đề thi thử EPS-TOPIK',
+        "desc_vi": 'Kỳ thi năng lực tiếng Hàn EPS · Đọc 20 + Nghe 20',
         "desc": "고용허가제 한국어능력시험 · 읽기 20 + 듣기 20",
         "minutes": 50,
         # 두 번 — **공식 프로그램에서 확정했다**(2026-08-29).
@@ -804,6 +812,8 @@ BLUEPRINTS = {
     # 필기에 듣기가 없는 것은 맞다(듣기 대신 구술이 따로 있다).
     "kiip-pre": {
         "name": "KIIP 사전평가 모의고사",
+        "name_vi": 'Đề thi thử KIIP — Sơ khảo',
+        "desc_vi": 'Bài viết sơ khảo KIIP · 50 câu 60 phút (48 trắc nghiệm + 2 câu tự luận ngắn)',
         "desc": "사회통합프로그램 기본소양 사전평가 필기 · 50문항 60분 (객관식 48 + 단답형 2)",
         "minutes": 60,
         "grades": ["A", "B", "C"],
@@ -827,6 +837,8 @@ BLUEPRINTS = {
     #   필기 50분(객관식 40분 + 작문 10분) + 구술 10분 · 합격 60점
     "kiip-mid": {
         "name": "KIIP 중간평가 모의고사",
+        "name_vi": 'Đề thi thử KIIP — Giữa kỳ',
+        "desc_vi": 'Trắc nghiệm giữa kỳ KIIP · 28 câu 40 phút (viết 2 · vấn đáp 5 tính riêng)',
         "desc": "사회통합프로그램 중간평가 객관식 · 28문항 40분 (작문 2·구술 5는 따로)",
         "minutes": 40,
         "grades": ["A", "B"],
@@ -856,6 +868,8 @@ KIIP_COMP = [
 for _sfx, _nm, _abbr, _pts in KIIP_COMP:
     BLUEPRINTS[f"kiip-{_sfx}"] = {
         "name": f"KIIP {_nm} 종합평가 모의고사",
+        "name_vi": f"Đề thi thử KIIP — Tổng hợp ({'thường trú' if _sfx == 'perm' else 'nhập tịch'})",
+        "desc_vi": "Trắc nghiệm tổng hợp KIIP · 36 câu 60 phút (viết 4 · vấn đáp 5 tính riêng)",
         "desc": f"사회통합프로그램 {_nm} 종합평가({_abbr}) 객관식 · 36문항 60분 "
                 f"(작문 4·구술 5는 따로)",
         "minutes": 60,
@@ -877,6 +891,8 @@ BLUEPRINTS.update({
     # (듣기 30 + 읽기 40 = 70문항, 묶음 26개)
     "topik-1": {
         "name": "TOPIK I 모의고사",
+        "name_vi": 'Đề thi thử TOPIK I',
+        "desc_vi": 'TOPIK I · Nghe 30 + Đọc 40 — theo đúng thứ tự câu hỏi và câu lệnh của khung đề chính thức',
         "desc": "TOPIK I · 듣기 30 + 읽기 40 — 공식 평가틀의 문항 차례와 발문을 그대로 따랐다",
         "minutes": 100,
         "grades": ["A", "B"],
@@ -892,6 +908,8 @@ BLUEPRINTS.update({
     # 쓰기는 정답이 하나가 아니라 extra.write 쪽에서 AI가 채점한다.
     "topik-2-read": {
         "name": "TOPIK II 읽기 모의고사",
+        "name_vi": 'Đề thi thử TOPIK II — Đọc',
+        "desc_vi": 'TOPIK II ca 2 Đọc · 50 câu — theo đúng khung đề chính thức',
         "desc": "TOPIK II 2교시 읽기 · 50문항 — 공식 평가틀의 문항 차례와 발문을 그대로 따랐다",
         "minutes": 70,
         "grades": ["B", "C"],
@@ -901,6 +919,8 @@ BLUEPRINTS.update({
     # 담화의 갈래(대화·인터뷰·토론·강연·대담·다큐·인사말·교양)까지 번호마다 정해져 있다.
     "topik-2-listen": {
         "name": "TOPIK II 듣기 모의고사",
+        "name_vi": 'Đề thi thử TOPIK II — Nghe',
+        "desc_vi": 'TOPIK II ca 1 Nghe · 50 câu — theo đúng khung đề chính thức',
         "desc": "TOPIK II 1교시 듣기 · 50문항 — 공식 평가틀의 문항 차례와 발문을 그대로 따랐다",
         "minutes": 60,
         "grades": ["B", "C"],
@@ -949,6 +969,8 @@ def numbered(mix):
 # 그래서 어휘 문항을 섞지 않고 사회·제도·역사·문화만 낸다.
 BLUEPRINTS["kiip-5"] = {
     "name": "KIIP 5단계 한국사회이해 모의고사",
+        "name_vi": 'Đề thi thử KIIP bậc 5 — Hiểu biết xã hội Hàn Quốc',
+        "desc_vi": 'KIIP bậc 5 · xã hội · thể chế · lịch sử · văn hóa, 40 câu',
     "desc": "사회통합프로그램 5단계 · 사회·제도·역사·문화 40문항",
     "minutes": 40, "grades": ["A", "B", "C"],
     "sections": [{"label": "[1~40] 다음 물음에 알맞은 답을 고르십시오.",
@@ -958,6 +980,8 @@ BLUEPRINTS["kiip-5"] = {
 for st, nm, grades, mix in KIIP_STAGES:
     BLUEPRINTS[f"kiip-{st}"] = {
         "name": f"KIIP {st}단계 평가 모의고사",
+        "name_vi": f"Đề thi thử KIIP — bậc {st}",
+        "desc_vi": f"Dạng bài đánh giá bậc {st} của KIIP",
         "desc": f"사회통합프로그램 {st}단계({nm}) 단계평가 형식 · {sum(n for _, n in mix)}문항",
         "minutes": 30 + st * 5, "grades": grades, "sections": numbered(mix),
     }
@@ -977,6 +1001,8 @@ for _ind, _ws in JOB_VOCAB.items():
     _n = min(20, len(_ws))
     BLUEPRINTS[f"eps-job-{_ind}"] = {
         "name": f"EPS 직무 어휘 · {_ind}",
+        "name_vi": f"Từ vựng nghề EPS · {IND_VI.get(_ind, _ind)}",
+        "desc_vi": f"{IND_VI.get(_ind, _ind)} — từ thực dùng tại nơi làm việc",
         "desc": f"{_ind} 업종에서 실제로 쓰이는 말 {_n}개",
         "minutes": 20, "grades": ["A", "B", "C"], "industry": _ind,
         # 뜻 길이가 안 맞는 낱말은 건너뛰므로 실제 문항 수가 한둘 적을 수 있다.
@@ -1232,6 +1258,7 @@ def build(exam_id, seed, words, gloss, pics, state):
 
     out = {
         "id": exam_id, "set": seed, "name": bp["name"], "desc": bp["desc"],
+        "name_vi": bp.get("name_vi", ""), "desc_vi": bp.get("desc_vi", ""),
         "minutes": bp["minutes"], "total": len(qs), "shortfall": skipped,
         "questions": qs,
     }
