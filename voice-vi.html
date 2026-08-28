@@ -1,74 +1,18 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Giọng nào nghe giống người thật hơn?</title><style>
-:root{--bg:#f5f6f4;--card:#fff;--ink:#16181c;--dim:#5c6470;--line:#dde1dd;--dan:#0e6f62;--soft:#e4efec}
-@media(prefers-color-scheme:dark){:root{--bg:#101316;--card:#171b1f;--ink:#e9ecea;--dim:#98a2ae;--line:#2a3138;--dan:#4fbfa8;--soft:#12312c}}
-*{box-sizing:border-box}
-body{font-family:-apple-system,'Apple SD Gothic Neo','Segoe UI',Roboto,sans-serif;max-width:640px;margin:0 auto;
- padding:24px 16px 80px;background:var(--bg);color:var(--ink);line-height:1.6}
-h1{font-size:21px}.note{color:var(--dim);font-size:14px}
-.q{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0}
-.sent{font-weight:600;margin:0 0 10px}
-label{display:flex;flex-direction:column;gap:6px;margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:6px}
-audio{width:100%}span{font-size:14px}
-#done{width:100%;padding:14px;font-size:17px;font-weight:700;background:var(--dan);color:#fff;border:0;border-radius:8px;margin-top:18px;cursor:pointer}
-#done:disabled{opacity:.55}
-#result{display:none;background:var(--soft);border:1px solid var(--dan);border-radius:8px;padding:16px;margin-top:16px;white-space:pre-line;font-size:15px}
-.rg{background:var(--soft);border:1px solid var(--dan);border-radius:8px;padding:14px 16px;margin:14px 0}
-.rg p{margin:0 0 10px;font-weight:700}
-.rgpick{display:flex;gap:8px;flex-wrap:wrap}
-.rgpick button{flex:1 1 30%;padding:11px 8px;border:1px solid var(--line);background:var(--card);
- color:var(--ink);border-radius:6px;font-size:15px;cursor:pointer}
-.rgpick button.on{background:var(--dan);color:#fff;border-color:var(--dan);font-weight:700}
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khảo sát giọng đọc — đã chuyển sang trang mới</title>
+<!-- 설문을 giong.html 한 장으로 합쳤다(2026-08-29). 이 주소는 이미 남에게
+     보낸 뒤라 죽이지 않고 새 주소로 보낸다. 지금까지 모은 표는 그대로 있다. -->
+<meta http-equiv="refresh" content="0; url=giong.html">
+<link rel="canonical" href="giong.html">
+<style>
+:root{--bg:#fff;--ink:#1a1a1a;--dan:#c0392b}
+@media (prefers-color-scheme:dark){:root{--bg:#161616;--ink:#eee;--dan:#e05c4a}}
+body{margin:0;padding:60px 20px;background:var(--bg);color:var(--ink);text-align:center;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.7}
+a{display:inline-block;margin-top:18px;padding:14px 24px;background:var(--dan);color:#fff;
+ border-radius:10px;text-decoration:none;font-weight:800}
 </style></head><body>
-<h1>🎧 Giọng nào nghe giống người thật hơn?</h1>
-<p class="note">Nghe 3 giọng đọc cho mỗi câu rồi chọn giọng tự nhiên hơn (8 câu, ~3 phút). Khảo sát cho một ứng dụng học tiếng Hàn – tiếng Việt miễn phí. Cảm ơn bạn! 🙏</p>
-<div class="rg"><p>Bạn nói giọng vùng nào?</p>
-<div class="rgpick">
-<button type="button" data-rg="bac">Miền Bắc<br><small>Hà Nội…</small></button>
-<button type="button" data-rg="trung">Miền Trung<br><small>Huế, Đà Nẵng…</small></button>
-<button type="button" data-rg="nam">Miền Nam<br><small>TP.HCM…</small></button>
-</div>
-<p class="note" style="margin:10px 0 0;font-weight:400">Không hỏi tên, không hỏi tuổi. Chỉ cần biết vùng giọng để so sánh cho đúng.</p></div>
-<div class="q" data-k="v1"><p class="sent">1. Xin chào, tôi là nhân viên mới.</p><label><audio controls preload="none" src="vtest/v1_A.mp3"></audio><span><input type="radio" name="q0" value="A"> Giọng 1 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v1_C.mp3"></audio><span><input type="radio" name="q0" value="C"> Giọng 2 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v1_B.m4a"></audio><span><input type="radio" name="q0" value="B"> Giọng 3 nghe thật hơn</span></label></div><div class="q" data-k="v2"><p class="sent">2. Hôm nay trời mưa nên đường rất trơn.</p><label><audio controls preload="none" src="vtest/v2_C.mp3"></audio><span><input type="radio" name="q1" value="C"> Giọng 1 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v2_A.mp3"></audio><span><input type="radio" name="q1" value="A"> Giọng 2 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v2_B.m4a"></audio><span><input type="radio" name="q1" value="B"> Giọng 3 nghe thật hơn</span></label></div><div class="q" data-k="v3"><p class="sent">3. Xin hãy đội mũ bảo hộ trước khi vào xưởng.</p><label><audio controls preload="none" src="vtest/v3_C.mp3"></audio><span><input type="radio" name="q2" value="C"> Giọng 1 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v3_B.m4a"></audio><span><input type="radio" name="q2" value="B"> Giọng 2 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v3_A.mp3"></audio><span><input type="radio" name="q2" value="A"> Giọng 3 nghe thật hơn</span></label></div><div class="q" data-k="v4"><p class="sent">4. Cái này bao nhiêu tiền một cân?</p><label><audio controls preload="none" src="vtest/v4_B.m4a"></audio><span><input type="radio" name="q3" value="B"> Giọng 1 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v4_A.mp3"></audio><span><input type="radio" name="q3" value="A"> Giọng 2 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v4_C.mp3"></audio><span><input type="radio" name="q3" value="C"> Giọng 3 nghe thật hơn</span></label></div><div class="q" data-k="v5"><p class="sent">5. Tôi muốn đổi tiền Việt sang tiền Hàn.</p><label><audio controls preload="none" src="vtest/v5_C.mp3"></audio><span><input type="radio" name="q4" value="C"> Giọng 1 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v5_B.m4a"></audio><span><input type="radio" name="q4" value="B"> Giọng 2 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v5_A.mp3"></audio><span><input type="radio" name="q4" value="A"> Giọng 3 nghe thật hơn</span></label></div><div class="q" data-k="v6"><p class="sent">6. Máy này bị hỏng rồi, đừng chạm vào.</p><label><audio controls preload="none" src="vtest/v6_C.mp3"></audio><span><input type="radio" name="q5" value="C"> Giọng 1 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v6_A.mp3"></audio><span><input type="radio" name="q5" value="A"> Giọng 2 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v6_B.m4a"></audio><span><input type="radio" name="q5" value="B"> Giọng 3 nghe thật hơn</span></label></div><div class="q" data-k="v7"><p class="sent">7. Cuối tuần chúng ta đi ăn phở nhé.</p><label><audio controls preload="none" src="vtest/v7_B.m4a"></audio><span><input type="radio" name="q6" value="B"> Giọng 1 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v7_C.mp3"></audio><span><input type="radio" name="q6" value="C"> Giọng 2 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v7_A.mp3"></audio><span><input type="radio" name="q6" value="A"> Giọng 3 nghe thật hơn</span></label></div><div class="q" data-k="v8"><p class="sent">8. Kiểm tra chất lượng xong thì đóng gói ngay.</p><label><audio controls preload="none" src="vtest/v8_A.mp3"></audio><span><input type="radio" name="q7" value="A"> Giọng 1 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v8_B.m4a"></audio><span><input type="radio" name="q7" value="B"> Giọng 2 nghe thật hơn</span></label><label><audio controls preload="none" src="vtest/v8_C.mp3"></audio><span><input type="radio" name="q7" value="C"> Giọng 3 nghe thật hơn</span></label></div>
-<button id="done">Xong — Gửi kết quả</button>
-<div id="result"></div>
-<script>
-/* 지방을 안 물으면 "이 목소리가 낫다"인지 "내 지방 말씨가 낫다"인지 갈라 볼 수 없다.
-   앞선 답들이 한 번 뒤집혔던 것도 이걸 안 물어서였다. 그래서 고르기 전에는 못 보낸다. */
-let RG = '';
-document.querySelectorAll('.rgpick button').forEach(x => {
-  x.onclick = () => {
-    RG = x.dataset.rg;
-    document.querySelectorAll('.rgpick button').forEach(y => y.classList.remove('on'));
-    x.classList.add('on');
-  };
-});
-
-const NAME = {"A": "Edge (현행)", "B": "Supertonic", "C": "Chirp 3 HD"};
-document.getElementById('done').onclick = async () => {
-  const picks = {}; let skip = 0;
-  document.querySelectorAll('.q').forEach(q => {
-    const s = q.querySelector('input:checked');
-    if (!s) { skip++; return; }
-    picks[q.dataset.k] = s.value;
-  });
-  if (!Object.keys(picks).length) { alert('Bạn chưa chọn câu nào.'); return; }
-  if (!RG) { alert("Hãy chọn vùng giọng của bạn trước."); return; }
-  const btn = document.getElementById('done'); btn.disabled = true;
-  const tally = {};
-  Object.values(picks).forEach(v => tally[v] = (tally[v] || 0) + 1);
-  let sent = '⚠️ Không gửi được — vẫn cảm ơn bạn đã tham gia!';
-  if (!localStorage.getItem('voted_vi')) {
-    try {
-      const r = await fetch('https://viet-club.chaochao-app.workers.dev', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ act: 'vote', pool: 'vi', test: 'ab1', picks, rg: RG }) });
-      if ((await r.json()).ok) { sent = '✅ Đã gửi kết quả. Cảm ơn bạn rất nhiều!'; localStorage.setItem('voted_vi', '1'); }
-    } catch (e) {}
-  } else sent = '(Đã gửi trước đó — không gửi lại)';
-  const lines = Object.entries(tally).map(([v, n]) => `${NAME[v] || v}: ${n}`).join('\n');
-  const r = document.getElementById('result');
-  r.style.display = 'block';
-  r.textContent = `Kết quả của bạn:\n\n${lines}` + (skip ? `\nBỏ qua: ${skip}` : '') + `\n\n${sent}`;
-};
-</script></body></html>
+<p>Khảo sát đã chuyển sang trang mới.</p>
+<a href="giong.html">Mở khảo sát →</a>
+</body></html>

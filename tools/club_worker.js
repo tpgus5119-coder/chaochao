@@ -27,6 +27,11 @@
        암호화하지 않으므로 운영자는 마음먹으면 볼 수 있다. 앱 화면에도 그렇게 적어 둔다.
        막는 것은 Origin 허용목록 하나뿐이다 — 비밀 이야기를 할 자리가 아니다.
    v14: 남·북 말씨 확인 설문(act:'dialect'/'dialects') 추가 — giong.html 이 쓴다.
+   v15: 설문 **하나로 합침**(act:'giong'/'giongs'). 링크 두 개를 사람에게 부탁하면
+        둘째 것은 거의 안 온다 — 한 화면에서 두 가지를 함께 묻는다.
+        · 문장마다 '어느 소리가 사람 같은가' **하나만** (nat)
+        · 그 문장의 네 소리 **각각** 어느 지방인가 (dia) — 열쇠는 옛 'dialect'와 같은
+          '1A'·'5D' 꼴이라 지금까지 모은 표와 그대로 합산된다.
    v14: 목소리 설문에 **응답자 지방(북/중/남)** 을 같이 남긴다. 화면은 처음부터
         물어서 보내고 있었는데 서버가 버리고 있었다. 집계도 지방별로 나눠 준다 —
         '남부 사람은 어느 소리를 골랐나'가 이 설문에서 가장 알고 싶은 것이라서.
@@ -146,6 +151,50 @@ export default {
       await KV.put(`dl:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
         JSON.stringify({ p: clean, r: rg }), { expirationTtl: 60 * 60 * 24 * 90 });
       return send({ ok: true });
+    }
+    /* ── 합친 설문 (v15) ──────────────────────────
+       한 사람이 한 번에 두 가지를 답한다. 표 하나 = KV 글 하나.
+       dia 열쇠는 'dialect'와 같은 꼴이라 옛 표와 같이 셀 수 있고,
+       nat 열쇠는 문장 번호, 값은 그 사람이 고른 소리 하나(A~D)다. */
+    if (act === 'giong') {
+      const rg = ['bac', 'trung', 'nam'].includes(b.rg) ? b.rg : '';
+      const dia = {}, nat = {};
+      for (const [k, v] of Object.entries(b.dia || {}).slice(0, 40))
+        if (/^\d{1,2}[A-D]$/.test(k) && /^(bac|trung|nam|\?)$/.test(String(v)))
+          dia[k] = String(v);
+      for (const [k, v] of Object.entries(b.nat || {}).slice(0, 20))
+        if (/^\d{1,2}$/.test(k) && /^[A-D]$/.test(String(v))) nat[k] = String(v);
+      if (!Object.keys(dia).length && !Object.keys(nat).length)
+        return send({ error: 'empty' });
+      await KV.put(`gs:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
+        JSON.stringify({ d: dia, v: nat, r: rg }), { expirationTtl: 60 * 60 * 24 * 90 });
+      return send({ ok: true });
+    }
+    if (act === 'giongs') {                      // 집계 — 이름 없는 숫자만
+      /* 지방(dia)은 옛 'dl:' 표까지 함께 센다. 같은 열쇠 꼴이라 합쳐도 된다. */
+      const dia = {}, nat = {}, byrg = {}; let n = 0, nOld = 0, cursor;
+      const add = (m, q, c) => { (m[q] = m[q] || {})[c] = (m[q][c] || 0) + 1; };
+      for (const [pre, isNew] of [['gs:', true], ['dl:', false]]) {
+        cursor = undefined;
+        do {
+          const l = await KV.list({ prefix: pre, cursor });
+          for (const k of l.keys) {
+            const v = JSON.parse((await KV.get(k.name)) || 'null');
+            if (!v) continue;
+            isNew ? n++ : nOld++;
+            const rg = v.r || '', m = rg ? (byrg[rg] = byrg[rg] || { n: 0, dia: {}, nat: {} }) : null;
+            if (m) m.n++;
+            for (const [q, c] of Object.entries(v.d || v.p || {})) {
+              add(dia, q, c); if (m) add(m.dia, q, c);
+            }
+            for (const [q, c] of Object.entries(v.v || {})) {
+              add(nat, q, c); if (m) add(m.nat, q, c);
+            }
+          }
+          cursor = l.list_complete ? undefined : l.cursor;
+        } while (cursor);
+      }
+      return send({ n, nOld, dia, nat, byrg });
     }
     if (act === 'dialects') {                    // 집계 — 이름 없는 숫자만
       const agg = {}, byrg = {}; let n = 0, cursor;
