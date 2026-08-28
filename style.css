@@ -1259,6 +1259,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   font-weight:700; padding:12px 14px}
 .exnum{color:var(--dim); font-weight:700; flex-shrink:0}
 .exopt.on .exnum{color:var(--accent)}
+/* 단답형(KIIP 사전평가) — 보기 대신 직접 써 넣는 칸. 보기와 같은 크기·모서리로 맞춘다 */
+.exshort{width:100%; font-size:18px; padding:14px 15px; margin-top:10px;
+  background:transparent; color:var(--fg); border:2px solid var(--line); border-radius:10px}
+.exshort:focus{outline:none; border-color:var(--accent)}
 .exnav{display:flex; gap:8px; margin:14px 0}
 .exnav button{flex:1}
 .expad{display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; padding-top:14px;

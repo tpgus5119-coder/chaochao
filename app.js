@@ -256,6 +256,14 @@ const UIVI = {
   '틀린 문항만 다시 풀기': 'Làm lại các câu sai', '오답': 'Câu sai',
   '급은 듣기·쓰기·읽기를 합쳐야 나옵니다.': 'Cấp bậc chỉ có khi cộng cả Nghe · Viết · Đọc.',
   'N급 수준입니다': 'Tương đương cấp N', '아직 급이 나오지 않습니다': 'Chưa đạt cấp nào',
+  // KIIP — 우리가 채점하는 것은 필기 객관식뿐이라, 그 사실을 화면에 적어 둔다
+  '여기에 쓰십시오': 'Viết vào đây', '쓴 답': 'Câu trả lời đã viết',
+  '띄어쓰기는 채점에 영향을 주지 않습니다.': 'Khoảng trắng không ảnh hưởng đến chấm điểm.',
+  '여기는 필기 객관식만 채점했습니다.': 'Ở đây chỉ chấm phần trắc nghiệm viết.',
+  '작문 N문항 M점': 'Viết luận N câu M điểm', '구술 N문항 M점': 'Vấn đáp N câu M điểm',
+  '합격은 100점 만점에 60점입니다.': 'Đạt là 60/100 điểm.',
+  '합격선을 넘었습니다': 'Đã vượt điểm đạt', '합격선에 모자랍니다': 'Chưa đủ điểm đạt',
+  '남은 점수에 따라 갈립니다': 'Tùy điểm còn lại',
   '우리 동아리': 'Câu lạc bộ của ta',
   'N점만 더 하면 위 사람을 따라잡습니다.': 'Chỉ cần thêm N điểm là bắt kịp người trên.',
   '지금 1위입니다. 월요일까지 지켜 보세요.': 'Bạn đang hạng 1. Hãy giữ vững đến thứ Hai.',
@@ -2593,6 +2601,14 @@ function startExam(e) {
 
 const fmtLeft = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 
+/* 답을 골랐는가 / 맞았는가 — 객관식은 번호, 단답형(KIIP)은 써 넣은 글이라 함께 못 센다.
+   단답형 채점은 띄어쓰기와 문장부호를 지우고 견준다. 사람이 '근로 계약서'라고 써도
+   '근로계약서'와 같게 본다 — 맞춤법 시험이 아니라 낱말을 아는지 보는 것이라서. */
+const answered = m => typeof m === 'string' ? m.trim() !== '' : m >= 0;
+const normShort = s => String(s == null ? '' : s).replace(/[\s.,!?·'"]/g, '').toLowerCase();
+const isRight = (q, m) => q.short ? (answered(m) && normShort(m) === normShort(q.answerText))
+                                  : m === q.answer;
+
 function drawExamQ() {
   if (!EX) return;
   const e = EX.exam, q = e.questions[EX.at];
@@ -2650,6 +2666,17 @@ function drawExamQ() {
   }
 
   const CIRC = '①②③④';
+  // 단답형(KIIP 사전평가 49·50번) — 보기가 없다. 직접 써 넣는다.
+  if (q.short) {
+    const inp = el('input', 'exshort');
+    inp.type = 'text'; inp.autocomplete = 'off'; inp.placeholder = tr('여기에 쓰십시오');
+    inp.value = typeof EX.marks[EX.at] === 'string' ? EX.marks[EX.at] : '';
+    // 글자마다 다시 그리면 글쇠가 튄다 — 값만 담아 둔다
+    inp.oninput = () => { EX.marks[EX.at] = inp.value; };
+    card.append(inp);
+    card.append(el('p', 'note', tr('띄어쓰기는 채점에 영향을 주지 않습니다.')));
+    b.append(card);
+  } else {
   // 보기가 그림인 문항(듣고 그림 고르기)은 두 칸씩 늘어놓는다 — 글 보기와 모양이 달라야 헷갈리지 않는다
   const box = q.optkind === 'img' ? el('div', 'exgrid') : card;
   q.options.forEach((o, i) => {
@@ -2670,6 +2697,7 @@ function drawExamQ() {
   });
   if (box !== card) card.append(box);
   b.append(card);
+  }
 
   // 앞뒤 이동
   const nav = el('div', 'exnav');
@@ -2679,7 +2707,7 @@ function drawExamQ() {
   const next = el('button', 'primary big', EX.at === e.questions.length - 1 ? '제출하기' : '다음 ›');
   next.onclick = () => {
     if (EX.at < e.questions.length - 1) { EX.at++; drawExamQ(); return; }
-    const blank = EX.marks.filter(m => m < 0).length;
+    const blank = EX.marks.filter((m, i) => !answered(m)).length;
     if (blank && !confirm(`아직 ${blank}문항이 비어 있습니다. 그대로 제출할까요?`)) return;
     finishExam(false);
   };
@@ -2689,7 +2717,7 @@ function drawExamQ() {
   // 번호판 — 어디를 안 풀었는지 한눈에 보이고, 눌러서 바로 건너뛴다
   const pad = el('div', 'expad');
   e.questions.forEach((_, i) => {
-    const n = el('button', 'expn' + (EX.marks[i] >= 0 ? ' done' : '') + (i === EX.at ? ' cur' : ''));
+    const n = el('button', 'expn' + (answered(EX.marks[i]) ? ' done' : '') + (i === EX.at ? ' cur' : ''));
     n.textContent = String(i + 1);
     n.onclick = () => { EX.at = i; drawExamQ(); };
     pad.append(n);
@@ -2706,7 +2734,7 @@ function finishExam(timeUp) {
   const wrong = [];
   let score = 0;
   e.questions.forEach((q, i) => {
-    if (marks[i] === q.answer) score++;
+    if (isRight(q, marks[i])) score++;
     else wrong.push({ q, picked: marks[i] });
   });
 
@@ -2734,13 +2762,37 @@ function finishExam(timeUp) {
      배점은 기출 24회차에서 문항 번호별로 세어 확인한 것이다(tools/topik_blueprint.py). */
   if (e.full) {
     let got = 0;
-    e.questions.forEach((q, i) => { if (marks[i] === q.answer) got += (q.pt || 0); });
+    e.questions.forEach((q, i) => { if (isRight(q, marks[i])) got += (q.pt || 0); });
+    got = Math.round(got * 10) / 10;                 // 1.5점짜리(KIIP)는 소수가 나온다
     r.append(el('div', 'exscore', `${got}점 / ${e.full}점`));
     const cuts = (e.grades_at || []).filter(g => got >= g[0]);
     if (e.grades_at) {
       r.append(el('div', 'exgrade', cuts.length
         ? tr('N급 수준입니다').replace('N', cuts[cuts.length - 1][1].replace('급', ''))
         : tr('아직 급이 나오지 않습니다')));
+    } else if (e.place_at || e.pass_at) {
+      /* KIIP — 우리가 채점한 것은 **필기 객관식뿐**이다. 작문·구술 점수가 더해져야
+         진짜 결과가 나온다. 그래서 하나로 딱 잘라 말하지 않고 **폭**으로 말한다.
+         구술을 0점 받으면 지금 점수가 그대로 총점이고, 다 맞으면 그만큼 올라간다.
+         (없는 점수를 평균값으로 채워 넣으면 그건 지어낸 성적이다.) */
+      const add = ((e.oral || [0, 0])[1] || 0) + ((e.essay || [0, 0])[1] || 0);
+      const name = v => {
+        const c = (e.place_at || []).filter(g => v >= g[0]);
+        return c.length ? c[c.length - 1][1] : (e.place_at ? '0단계' : null);
+      };
+      if (e.place_at) {
+        const lo = name(got), hi = name(got + add);
+        r.append(el('div', 'exgrade', lo === hi ? lo : `${lo} ~ ${hi}`));
+      } else {
+        const lo = got >= e.pass_at, hi = got + add >= e.pass_at;
+        r.append(el('div', 'exgrade', lo ? tr('합격선을 넘었습니다')
+          : hi ? tr('남은 점수에 따라 갈립니다') : tr('합격선에 모자랍니다')));
+      }
+      const parts = [];
+      if (e.essay) parts.push(tr('작문 N문항 M점').replace('N', e.essay[0]).replace('M', e.essay[1]));
+      if (e.oral) parts.push(tr('구술 N문항 M점').replace('N', e.oral[0]).replace('M', e.oral[1]));
+      r.append(el('div', 'note', tr('여기는 필기 객관식만 채점했습니다.') + ' ' + parts.join(' · ')
+        + (e.pass_at ? ` · ${tr('합격은 100점 만점에 60점입니다.')}` : '')));
     } else {
       // 한 영역만으로는 급이 안 나온다 — 있는 척하지 않는다
       r.append(el('div', 'note', tr('급은 듣기·쓰기·읽기를 합쳐야 나옵니다.')));
@@ -2782,8 +2834,14 @@ function finishExam(timeUp) {
         c.append(im);
       }
       const shown = o => q.optkind === 'img' ? '(그림)' : String(o);
+      if (q.short) {
+        // 단답형은 보기가 없다 — 쓴 글을 그대로 되비춰 준다
+        c.append(el('div', 'exans', `정답 <b>${esc(q.answerText)}</b>`
+          + (answered(picked) ? ` · ${tr('쓴 답')} ${esc(picked)}` : ' · 비워 둠')));
+      } else {
       c.append(el('div', 'exans', `정답 ${CIRC[q.answer]} <b>${esc(shown(q.options[q.answer]))}</b>`
         + (picked >= 0 ? ` · 고른 답 ${CIRC[picked]} ${esc(shown(q.options[picked]))}` : ' · 비워 둠')));
+      }
       // 그림 보기 문항은 정답 그림을 다시 보여 준다 — 글로 '(그림)'만 봐서는 뭘 틀렸는지 모른다
       if (q.optkind === 'img') {
         const im = new Image(); im.className = 'expic'; im.alt = '';
@@ -2811,11 +2869,13 @@ function finishExam(timeUp) {
       all.remove();
       b.insertBefore(el('h3', 'exhead', '맞힌 문항 해설'), again);
       e.questions.forEach((q, i) => {
-        if (marks[i] !== q.answer) return;
+        if (!isRight(q, marks[i])) return;
         const c = el('div', 'excard');
         c.append(el('div', 'exask', `${q.no}. ` + esc(q.stem.split('\n')[0])));
-        c.append(el('div', 'exans', `정답 ${'①②③④'[q.answer]} <b>`
-          + esc(q.optkind === 'img' ? '(그림)' : String(q.options[q.answer])) + '</b>'));
+        c.append(el('div', 'exans', q.short
+          ? `정답 <b>${esc(q.answerText)}</b>`
+          : `정답 ${'①②③④'[q.answer]} <b>`
+            + esc(q.optkind === 'img' ? '(그림)' : String(q.options[q.answer])) + '</b>'));
         c.append(expBlock(q, q.answer));
         b.insertBefore(c, again);
       });
@@ -2857,6 +2917,12 @@ function expBlock(q, picked) {
   const box = el('div', 'exwhy');
   if (!q.exp || !q.exp.length) {
     box.append(el('div', 'exnote', tr('해설이 아직 없습니다.')));
+    return box;
+  }
+  // 단답형은 보기별 해설이 아니라 한 줄짜리 글이다 — 아래 보기 훑기를 돌리면 깨진다
+  if (q.short || typeof q.exp === 'string') {
+    box.append(el('div', 'exwhead', tr('해설')));
+    box.append(el('div', 'exnote', esc(q.exp)));
     return box;
   }
   box.append(el('div', 'exwhead', tr('해설')));

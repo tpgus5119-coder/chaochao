@@ -31,6 +31,8 @@ def length_cue(d):
     uni = Counter(); hit = Counter()
     for e in d["exams"]:
         for q in e["questions"]:
+            if q.get("short"):        # 보기가 없으니 '긴 보기 찍기'가 아예 성립하지 않는다
+                continue
             L = [len(str(o)) for o in q["options"]]
             mx = max(L)
             if L.count(mx) == 1:
@@ -54,6 +56,16 @@ def main():
         seen = seen_by_exam.setdefault(key, {})
         for q in e["questions"]:
             where = f"{e['id']} {e['set']}회 {q['no']}번"
+            # 단답형(KIIP)은 보기가 없다 — 아래 검사는 전부 보기에 대한 것이라 따로 본다.
+            # 대신 이쪽에서만 생기는 사고를 본다: 답이 뜻풀이 안에 그대로 있으면 거저 준 문항이다.
+            if q.get("short"):
+                ans = str(q.get("answerText") or "")
+                body = q["stem"].split("\n", 1)[-1]
+                if not ans:
+                    problems.append(("단답형 정답 없음", where, q["stem"][:30]))
+                elif ans in body:
+                    problems.append(("정답누설", where, f"'{ans}' in 뜻풀이"))
+                continue
             opts = [str(o) for o in q["options"]]
 
             # 1) 보기 중복
@@ -93,8 +105,10 @@ def main():
     # 5) 정답 쏠림 — 시험별 정답 번호 분포
     skew = []
     for e in d["exams"]:
-        c = Counter(q["answer"] for q in e["questions"])
-        n = len(e["questions"])
+        # 단답형은 고를 번호가 없다 — 쏠림을 셀 대상이 아니다
+        picks = [q for q in e["questions"] if not q.get("short")]
+        c = Counter(q["answer"] for q in picks)
+        n = len(picks)
         worst = max(c.values()) / n if n else 0
         if worst > 0.45:
             skew.append(f"{e['id']} {e['set']}회: {dict(sorted(c.items()))} (최다 {worst:.0%})")
@@ -103,7 +117,7 @@ def main():
     # 정답만 유난히 길거나 짧으면 뜻을 몰라도 찍힌다 — 실제로 118문항이 그랬다.
     for e in d["exams"]:
         for q in e["questions"]:
-            if q.get("optkind") == "img":
+            if q.get("optkind") == "img" or q.get("short"):
                 continue
             L = [len(str(x)) for x in q["options"]]
             if max(L) - min(L) >= 12 and L[q["answer"]] in (max(L), min(L)):

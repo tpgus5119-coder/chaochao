@@ -75,9 +75,11 @@ def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show
         if alen == mx and L.count(mx) == 1:
             # 아예 금지하면 반대 단서가 생긴다("긴 것은 답이 아니다" — 실측 7.3%까지
             # 떨어졌다). 우연과 같은 4분의 1 확률로는 정답이 가장 길어도 둔다.
-            return rng.random() < 0.25
+            # 단, **차이가 클 때는 안 된다.** 이 4분의 1 허용이 26자 대 8자짜리까지
+            # 통과시켜, 뜻을 몰라도 눈으로 찍히는 문항 다섯 개를 흘려보냈다.
+            return mx - mn < 12 and rng.random() < 0.25
         if alen == mn and L.count(mn) == 1:
-            return rng.random() < 0.25
+            return mx - mn < 12 and rng.random() < 0.25
         return True
 
     def extreme(pick):
@@ -102,7 +104,12 @@ def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show
             best = pick
         if len_ok(pick):
             return pick
-    return best
+    # 120번을 뽑아도 전부 극단이면 **그 낱말은 포기한다.**
+    # 뜻이 'trường trung học phổ thông'(26자)처럼 유난히 긴 낱말은 같은 등급·품사
+    # 안에 길이가 맞는 짝이 아예 없다. 그런 낱말로 문항을 만들면 한국어를 몰라도
+    # 제일 긴 것을 찍어 맞는다. 없는 낱말을 억지로 쓰느니 다른 낱말을 고르는 게 낫다
+    # (바깥 고리가 4,000번까지 다른 낱말로 다시 시도한다).
+    return None if best is not None and extreme(best) else best
 
 def mk_choice_q(rng, answer, distractors, stem, show, qtype, extra=None, note=None):
     """note(보기, 정답인가) → 그 보기 한 줄 해설. 보기 순서가 바뀌어도 같이 따라간다."""
@@ -409,6 +416,25 @@ def q_society(rng, idx):
             **shuffled(rng, ans, wrong, why, bad)}
 
 
+def q_short(rng, w, gloss, pool_by_key):
+    """단답형 주관식 — 보기를 주지 않고 **직접 써 넣게** 한다.
+
+    KIIP 사전평가 필기 50문항 가운데 2문항이 이 꼴이다(나머지 48은 객관식).
+    객관식만 내면 실제 시험과 다르고, 찍기가 통하는 쉬운 시험이 된다.
+
+    채점은 띄어쓰기·문장부호를 지우고 견준다. 사람이 '근로 계약서'라고 써도
+    '근로계약서'와 같게 본다 — 맞춤법 시험이 아니라 낱말을 아는지 보는 것이라서.
+    """
+    g = gloss.get(w["ko"]) or {}
+    dfn = clean_dfn(g.get("ko_dfn"))
+    if not dfn or w["ko"] in dfn:
+        return None
+    return {"type": "short", "short": True,
+            "stem": f"다음 설명에 맞는 말을 쓰십시오.\n{dfn}",
+            "answerText": w["ko"], "vi": (g.get("vi") or w.get("vi") or ""),
+            "exp": f"{gl(w)} — 설명이 가리키는 말입니다."}
+
+
 def q_t2_read(rng, pidx, qidx):
     """TOPIK II 읽기 — 중급 지문. 초급 지문(READ_BANK)을 쓰면 난이도가 안 맞는다."""
     title, passage, qs = ko_content_t2.T2_READ[pidx]
@@ -668,20 +694,83 @@ BLUEPRINTS = {
             {"label": "[35~40] 대화를 듣고 물음에 답하십시오.", "kind": "listen_dialog", "n": 6},
         ],
     },
-    # KIIP 사전평가 필기에는 듣기가 없다(듣기 대신 구술이 따로 있다). 그래서 여기도 안 넣었다.
+    # KIIP 사전평가 — 공식 규격(kiiptest.org 사전평가 안내)을 그대로 맞췄다.
+    #   필기 50문항 / 60분 = 객관식 48(한국어 38 + 문화 10) + 단답형 주관식 2
+    #   배점 필기 75점(문항당 1.5점) + 구술 5문항 25점(문항당 5점) = 100점
+    # 전에는 40문항 50분에 균등 배점이었다 — 문항 수도 시간도 배점도 다 틀렸고,
+    # 단답형이 아예 없어서 "찍으면 되는 시험"이 되어 있었다.
+    # 필기에 듣기가 없는 것은 맞다(듣기 대신 구술이 따로 있다).
     "kiip-pre": {
         "name": "KIIP 사전평가 모의고사",
-        "desc": "사회통합프로그램 기본소양 사전평가 필기 형식",
-        "minutes": 50,
+        "desc": "사회통합프로그램 기본소양 사전평가 필기 · 50문항 60분 (객관식 48 + 단답형 2)",
+        "minutes": 60,
         "grades": ["A", "B", "C"],
+        "pt": 1.5,                      # 필기는 문항마다 1.5점 — 50문항이면 75점
+        "oral": (5, 25),                # 구술 5문항 25점은 우리가 채점할 수 없다
+        # 총점(필기 75 + 구술 25)으로 배정 단계가 정해진다. 소수점 버림.
+        "place_at": [[3, "1단계"], [21, "2단계"], [41, "3단계"],
+                     [61, "4단계"], [81, "5단계"]],
         "sections": [
-            {"label": "[1~2] 그림을 보고 알맞은 것을 고르십시오.", "kind": "pic2word", "n": 2},
-            {"label": "[3~8] ( )에 알맞은 것을 고르십시오.", "kind": "particle", "n": 6},
-            {"label": "[9~20] 다음 설명에 맞는 단어는?", "kind": "dfn2word", "n": 12},
-            {"label": "[21~32] 뜻이 맞는 것을 고르십시오.", "kind": "word2vi", "n": 12},
-            {"label": "[33~40] 다음 글을 읽고 물음에 답하십시오.", "kind": "read", "n": 8},
+            {"label": "[1~4] 그림을 보고 알맞은 것을 고르십시오.", "kind": "pic2word", "n": 4},
+            {"label": "[5~14] ( )에 알맞은 것을 고르십시오.", "kind": "particle", "n": 10},
+            {"label": "[15~26] 다음 설명에 맞는 단어는?", "kind": "dfn2word", "n": 12},
+            {"label": "[27~32] 뜻이 맞는 것을 고르십시오.", "kind": "word2vi", "n": 6},
+            {"label": "[33~38] 다음 글을 읽고 물음에 답하십시오.", "kind": "read", "n": 6},
+            {"label": "[39~48] 한국 사회와 문화에 대한 물음입니다.", "kind": "society", "n": 10},
+            {"label": "[49~50] 다음 설명에 맞는 말을 쓰십시오. (단답형)", "kind": "short", "n": 2},
         ],
     },
+    # KIIP 중간평가 — 1~4단계를 마치고 다음 단계로 오를 때 본다.
+    #   객관식 28문(2.5점 = 70점) + 작문형 2문(2.5점 = 5점) + 구술 5문(5점 = 25점)
+    #   필기 50분(객관식 40분 + 작문 10분) + 구술 10분 · 합격 60점
+    "kiip-mid": {
+        "name": "KIIP 중간평가 모의고사",
+        "desc": "사회통합프로그램 중간평가 객관식 · 28문항 40분 (작문 2·구술 5는 따로)",
+        "minutes": 40,
+        "grades": ["A", "B"],
+        "pt": 2.5,
+        "essay": (2, 5), "oral": (5, 25),
+        "pass_at": 60,
+        "sections": [
+            {"label": "[1~8] 다음 설명에 맞는 단어는?", "kind": "dfn2word", "n": 8},
+            {"label": "[9~16] ( )에 알맞은 것을 고르십시오.", "kind": "particle", "n": 8},
+            {"label": "[17~20] 뜻이 맞는 것을 고르십시오.", "kind": "word2vi", "n": 4},
+            {"label": "[21~24] 다음 글을 읽고 물음에 답하십시오.", "kind": "read", "n": 4},
+            {"label": "[25~28] 한국 사회와 문화에 대한 물음입니다.", "kind": "society", "n": 4},
+        ],
+    },
+}
+
+# ── KIIP 종합평가 — 영주용(KIPRAT)·귀화용(KINAT) ───────────────────
+# 둘 다 객관식 36문 65점 + 작문 4문 10점 + 구술 5문 25점 = 100점, 합격 60점.
+# 다른 것은 **객관식 배점 배열뿐**이다(공식 안내 그대로):
+#   영주용 14문×1.5 + 22문×2 = 65     귀화용 7문×1 + 29문×2 = 65
+# 어떤 문항이 몇 점인지는 공개돼 있지 않다. 그래서 주제로 나누지 않고
+# 공개된 배열 그대로 앞에서부터 붙인다 — 없는 규칙을 지어내지 않는다.
+KIIP_COMP = [
+    ("perm", "영주용", "KIPRAT", [1.5] * 14 + [2.0] * 22),
+    ("nat", "귀화용", "KINAT", [1.0] * 7 + [2.0] * 29),
+]
+for _sfx, _nm, _abbr, _pts in KIIP_COMP:
+    BLUEPRINTS[f"kiip-{_sfx}"] = {
+        "name": f"KIIP {_nm} 종합평가 모의고사",
+        "desc": f"사회통합프로그램 {_nm} 종합평가({_abbr}) 객관식 · 36문항 60분 "
+                f"(작문 4·구술 5는 따로)",
+        "minutes": 60,
+        "grades": ["B", "C"],
+        "essay": (4, 10), "oral": (5, 25),
+        "pass_at": 60,
+        "sections": [
+            {"label": "[1~24] 한국 사회와 문화에 대한 물음입니다.",
+             "kind": "society", "n": 24, "pts": _pts[:24]},
+            {"label": "[25~30] 다음 설명에 맞는 단어는?",
+             "kind": "dfn2word", "n": 6, "pts": _pts[24:30]},
+            {"label": "[31~36] 다음 글을 읽고 물음에 답하십시오.",
+             "kind": "read", "n": 6, "pts": _pts[30:36]},
+        ],
+    }
+
+BLUEPRINTS.update({
     # TOPIK I — 구간표를 손으로 쓰지 않는다. 공식 평가틀·발문 안내가 그대로 내려온다.
     # (듣기 30 + 읽기 40 = 70문항, 묶음 26개)
     "topik-1": {
@@ -710,7 +799,7 @@ BLUEPRINTS = {
         "grades": ["B", "C"],
         "sections": bp_sections(["TOPIK II 듣기"]),
     },
-}
+})
 
 # ── KIIP 단계평가 — 0단계부터 4단계까지 (사용자 지시: 전 단계 확장) ────────
 # 사회통합프로그램은 0단계(기초)~4단계(한국어와 한국문화) + 5단계(한국사회이해)다.
@@ -730,6 +819,7 @@ LABEL = {"society": "다음 물음에 알맞은 답을 고르십시오.",
          "word2vi": "뜻이 알맞은 것을 고르십시오.",
          "vi2word": "한국어로 알맞은 것을 고르십시오.",
          "read": "다음을 읽고 물음에 답하십시오.",
+         "short": "다음 설명에 맞는 말을 쓰십시오.",
          "listen_pic": "잘 듣고 알맞은 그림을 고르십시오.",
          "listen_reply": "잘 듣고 알맞은 대답을 고르십시오.",
          "listen_dialog": "잘 듣고 물음에 답하십시오.",
@@ -993,7 +1083,8 @@ def build(exam_id, seed, words, gloss, pics, state):
                 w = rng.choice(pic_pool if sec["kind"] == "pic2word" and pic_pool else usable)
                 if w["ko"] in used:
                     continue
-                fn = {"dfn2word": q_dfn2word, "word2vi": q_word2vi, "vi2word": q_vi2word}.get(sec["kind"])
+                fn = {"dfn2word": q_dfn2word, "word2vi": q_word2vi,
+                      "vi2word": q_vi2word, "short": q_short}.get(sec["kind"])
                 if fn:
                     q = fn(rng, w, gloss, pool_by_key)
                 else:
@@ -1034,12 +1125,21 @@ def build(exam_id, seed, words, gloss, pics, state):
         "minutes": bp["minutes"], "total": len(qs), "shortfall": skipped,
         "questions": qs,
     }
-    # 배점이 있는 시험(TOPIK)은 만점과 급 기준을 같이 실어 보낸다 — 화면에서 다시 세지 않게
+    # 문항마다 같은 배점인 시험(KIIP)은 설계도에 한 값으로 적혀 있다
+    if bp.get("pt"):
+        for q in qs:
+            q["pt"] = bp["pt"]
+    # 배점이 있는 시험은 만점과 급/합격 기준을 같이 실어 보낸다 — 화면에서 다시 세지 않게
     if any(q.get("pt") for q in qs):
-        out["full"] = sum(q.get("pt", 0) for q in qs)
+        out["full"] = round(sum(q.get("pt", 0) for q in qs), 1)
         if exam_id == "topik-1":
             # 듣기+읽기 200점 만점. 국립국제교육원 공고 기준: 1급 80점 · 2급 140점
             out["grades_at"] = [[80, "1급"], [140, "2급"]]
+    # KIIP은 우리가 채점할 수 없는 몫(작문·구술)이 따로 있다. 그 사실을 숨기지 않고
+    # 같이 실어 보내서, 화면이 "이 점수가 전부"인 것처럼 보이지 않게 한다.
+    for k in ("oral", "essay", "pass_at", "place_at"):
+        if bp.get(k):
+            out[k] = list(bp[k]) if isinstance(bp[k], tuple) else bp[k]
     return out
 
 def rebalance(rng, qs):
@@ -1050,9 +1150,11 @@ def rebalance(rng, qs):
     운에 맡기지 말고, 각 번호가 전체의 1/4씩 되도록 정답과 그 자리의 보기를 맞바꾼다.
     보기 내용은 그대로고 자리만 바뀌므로 문제의 뜻은 달라지지 않는다.
     """
-    targets = [i % 4 for i in range(len(qs))]
+    # 단답형은 보기가 없다 — 섞을 자리도 없으니 빼고 센다
+    pick = [q for q in qs if not q.get("short")]
+    targets = [i % 4 for i in range(len(pick))]
     rng.shuffle(targets)
-    for q, t in zip(qs, targets):
+    for q, t in zip(pick, targets):
         a = q["answer"]
         if a == t:
             continue
