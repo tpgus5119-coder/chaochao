@@ -6,7 +6,7 @@ import json, io, base64, zlib, urllib.request, re, pathlib, subprocess, sys
 from PIL import Image
 R = pathlib.Path(__file__).resolve().parent.parent
 IMG = R/'img'; API = 'http://127.0.0.1:7860/sdapi/v1/txt2img'
-OCR = '/private/tmp/claude-501/-Users-leesehyeon-my-game/e87f65d0-8749-40f1-9c2e-03d1387ef650/scratchpad/ocr/ocr'
+OCR = str(R/'tools'/'bin'/'ocr')
 TMP = pathlib.Path('/tmp/txtfix'); TMP.mkdir(exist_ok=True)
 
 pairs, name = {}, None
@@ -19,10 +19,10 @@ def ocr_text(p):
     r = subprocess.run([OCR, str(p)], capture_output=True, text=True, timeout=90)
     if r.returncode != 0:
         raise RuntimeError('OCR 실행 실패 — 조용히 통과시키면 가짜 합격이 된다: ' + r.stderr[:100])
-    out = []
-    for ln in r.stdout.splitlines():
-        q = ln.split('\t')
-        if len(q) > 1 and q[1].strip(): out.append(q[1].strip())
+    # tools/ocr.swift 는 "=== 경로" 머리줄 뒤에 맨글을 낸다 — 탭 형식을 기대하면
+    # 전부 버려져 '글자 없음'으로 오판한다 (img_audit.py 에서 실제로 겪은 함정).
+    out = [ln.strip() for ln in r.stdout.splitlines()
+           if ln.strip() and not ln.startswith('===')]
     return ' '.join(out)
 
 for n in sys.argv[1].split(','):
