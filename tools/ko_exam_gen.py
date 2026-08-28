@@ -769,8 +769,10 @@ BLUEPRINTS = {
         "name": "EPS-TOPIK 모의고사",
         "desc": "고용허가제 한국어능력시험 · 읽기 20 + 듣기 20",
         "minutes": 50,
-        # 초급 수준이라 TOPIK I 과 같이 두 번으로 둔다. **재 보고 정한 값이 아니다** —
-        # EPS 는 CBT/UBT 라 공개 음원이 없어 확인하지 못했다. 확인되면 고친다.
+        # 두 번. EPS 는 CBT/UBT 라 안내 방송이 음원에 없다(문항마다 파일이 따로다).
+        # 그래서 TOPIK 처럼 음원으로 못 짚었다. 제3자 안내(Seoulstart 2026)가
+        # '각 듣기 항목은 두 번 재생'이라고 적고 있어 그 값을 쓴다.
+        # **공식 문서로는 확인하지 못했다** — 공단 안내에서 확인되면 고친다.
         "plays": 2,
         "grades": ["A", "B"],
         "sections": [
@@ -867,9 +869,10 @@ BLUEPRINTS.update({
         "desc": "TOPIK I · 듣기 30 + 읽기 40 — 공식 평가틀의 문항 차례와 발문을 그대로 따랐다",
         "minutes": 100,
         "grades": ["A", "B"],
-        # 두 번 들려준다. 근거: 102회 1번 음원의 말한 시간 4.2초 ÷ '우산이 있어요?' 7자.
-        # 한 번이면 1.67 글자/초로 실측 속도(2.97~3.33)의 절반이라 말이 안 되고,
-        # 두 번이면 3.33 으로 실측과 맞는다(tools/listen_rate.py).
+        # 두 번. **공식 안내 방송을 그대로 옮겨 확인했다**(102회 음원 1-01.mp3):
+        #   "아래 1번부터 30번까지는 듣기 문제입니다. 문제를 잘 듣고 질문에 맞는
+        #    답을 고르십시오. **두 번씩 읽겠습니다.**"
+        # 실제로 이어지는 1번 '우산이 있어요?' 도 두 번 읽는다.
         "plays": 2,
         "sections": bp_sections(["TOPIK I 듣기", "TOPIK I 읽기"]),
     },
@@ -890,7 +893,8 @@ BLUEPRINTS.update({
         "desc": "TOPIK II 1교시 듣기 · 50문항 — 공식 평가틀의 문항 차례와 발문을 그대로 따랐다",
         "minutes": 60,
         "grades": ["B", "C"],
-        # 한 번이다. 대본 글자 수 대비 말한 시간이 한 번 기준으로 맞게 나온다.
+        # 한 번. **공식 안내 방송 그대로**(102회 음원 2-01.mp3):
+        #   "아래 1번부터 50번까지는 듣기 문제입니다. … **한 번 읽겠습니다.**"
         "plays": 1,
         "sections": bp_sections(["TOPIK II 듣기"]),
     },
@@ -1235,11 +1239,9 @@ def build(exam_id, seed, words, gloss, pics, state):
     for k in ("oral", "essay", "pass_at", "place_at"):
         if bp.get(k):
             out[k] = list(bp[k]) if isinstance(bp[k], tuple) else bp[k]
-    # 듣기 규칙 — 실제 시험이 막는 것을 우리도 막는다
+    # 듣기 재생 횟수 — 실제 시험이 막는 것을 우리도 막는다
     if bp.get("plays"):
         out["plays"] = bp["plays"]
-    if any(q.get("audio") for q in qs):
-        out["lockback"] = True          # 지나간 듣기 문항으로 돌아갈 수 없다
     return out
 
 def rebalance(rng, qs):

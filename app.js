@@ -273,8 +273,6 @@ const UIVI = {
   'N번 더 들을 수 있습니다.': 'Còn nghe được N lần.',
   '소리로만 나옵니다 — 몇 번이든 다시 들을 수 있습니다.':
     'Chỉ có âm thanh — bạn nghe lại bao nhiêu lần cũng được.',
-  '지나간 듣기 문항으로는 돌아갈 수 없습니다.':
-    'Không thể quay lại câu nghe đã qua.',
   '세 번 맞히면 쉽니다. 지금 창고에 N개.':
     'Đúng ba lần thì câu đó nghỉ. Hiện có N câu trong kho.',
   // TOPIK 말하기 — 시간표가 이 시험의 핵심이라 화면 문구도 시간을 앞세운다
@@ -2805,19 +2803,18 @@ function drawExamQ() {
   b.append(card);
   }
 
-  /* 되돌아가기 차단 — 실제 듣기는 소리가 흘러가면 끝이다. 3번을 풀다가
-     1번으로 돌아갈 수 없다. 지금까지는 아래 번호판으로 아무 데나 오갈 수 있어
-     실제보다 쉬웠다. 지나온 **듣기** 문항만 잠근다 — 읽기는 실제 시험에서도
-     자유롭게 오간다. 오답 다시 풀기(sub)에서는 잠그지 않는다. */
-  const lockable = i => e.lockback && !e.sub
-    && (e.questions[i].audio || []).length && (EX.seen || {})[i];
-  EX.seen = EX.seen || {};
-  if ((q.audio || []).length) EX.seen[EX.at] = 1;   // 이 문항은 이제 '지나간' 것이 된다
+  /* 문항 사이 이동은 **막지 않는다.**
+     한때 '지나온 듣기 문항으로 못 돌아가게' 막았는데 그건 실제와 달랐다.
+     공식 기출 풀어보기 화면을 열어 보니 문항이 한 쪽에 다 펼쳐져 있고
+     (최상단으로 ▲ / 최하단으로 ▼) 듣기는 **하나의 방송**으로 흐른다.
+     종이 시험도 마찬가지다 — 시험지가 앞에 있으니 앞 문항으로 돌아가
+     답을 고칠 수 있다. 되돌아갈 수 없는 것은 **소리**지 문항이 아니다.
+     그 '소리는 정해진 횟수만'은 아래 재생 횟수 제한이 이미 맡고 있다. */
 
   // 앞뒤 이동
   const nav = el('div', 'exnav');
   const prev = el('button', 'ghost big', '‹ 이전');
-  prev.disabled = EX.at === 0 || lockable(EX.at - 1);
+  prev.disabled = EX.at === 0;
   prev.onclick = () => { EX.at--; drawExamQ(); };
   const next = el('button', 'primary big', EX.at === e.questions.length - 1 ? '제출하기' : '다음 ›');
   next.onclick = () => {
@@ -2832,12 +2829,8 @@ function drawExamQ() {
   // 번호판 — 어디를 안 풀었는지 한눈에 보이고, 눌러서 바로 건너뛴다
   const pad = el('div', 'expad');
   e.questions.forEach((_, i) => {
-    const shut = lockable(i) && i !== EX.at;
-    const n = el('button', 'expn' + (answered(EX.marks[i]) ? ' done' : '')
-      + (i === EX.at ? ' cur' : '') + (shut ? ' shut' : ''));
+    const n = el('button', 'expn' + (answered(EX.marks[i]) ? ' done' : '') + (i === EX.at ? ' cur' : ''));
     n.textContent = String(i + 1);
-    n.disabled = shut;                     // 지나간 듣기 문항으로는 못 돌아간다
-    if (shut) n.title = tr('지나간 듣기 문항으로는 돌아갈 수 없습니다.');
     n.onclick = () => { EX.at = i; drawExamQ(); };
     pad.append(n);
   });
