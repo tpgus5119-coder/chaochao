@@ -3466,16 +3466,32 @@ function playKoSeq(items, done) {
     const v = typeof it === 'string' ? (S.voice === 'm' ? 'm' : 'f') : it.v;
     koSrc(text, v, src => {
       if (!src) { step(); return; }               // 소리가 없으면 그 줄은 건너뛴다
+      // 시험 속도판('x')이 아직 안 구워진 말이면 기본 속도판으로 물러난다.
+      // 새 문항을 넣고 tools/gen_exam_audio.py 를 안 돌린 사이에 소리가 통째로
+      // 안 나는 일을 막는다.
+      let fell = false;
       audio.pause(); audio.src = src; audio.currentTime = 0;
       audio.onended = () => setTimeout(step, 450);
+      audio.onerror = () => {
+        if (fell) { audio.onerror = null; step(); return; }
+        fell = true;
+        audio.src = src.replace('/x/', '/n/');
+        audio.play().catch(() => step());
+      };
       audio.play().catch(() => { audio.onended = null; done && done(); });
     });
   };
   step();
 }
-/* 글자 → 미리 구워 둔 mp3 주소. 색인에 없으면 null(그때는 폰 목소리로 읽는다) */
+/* 글자 → 미리 구워 둔 mp3 주소. 색인에 없으면 null(그때는 폰 목소리로 읽는다)
+
+   시험 중에는 'x' 갈래를 쓴다 — **실제 시험 속도로 구워 둔 소리**다.
+   실측(tools/listen_rate.py): 공식 102회 TOPIK I 듣기가 2.97~3.33 글자/초인데
+   우리 기본 소리는 5.62 글자/초로 **1.78배 빨랐다**. 시험보다 빠른 소리로
+   연습하면 연습이 시험보다 어려워지고 자기 실력을 가늠할 수 없다.
+   낱말 소리는 그대로 둔다 — 외울 때는 또박또박 빠른 편이 낫다. */
 function koSrc(text, v, cb) {
-  const make = () => cb(KOIDX[text] ? `audio/ko-${v}/n/${KOIDX[text]}.mp3` : null);
+  const make = () => cb(KOIDX[text] ? `audio/ko-${v}/x/${KOIDX[text]}.mp3` : null);
   if (KOIDX) return make();
   fetch('data/ko_audio_index.json', { cache: 'no-cache' })
     .then(r => r.json()).then(j => { KOIDX = j; make(); })
