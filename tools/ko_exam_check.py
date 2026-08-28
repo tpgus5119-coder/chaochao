@@ -17,6 +17,33 @@ def vi_tokens(s):
     """'y tá, bác sĩ' → {'y tá','bác sĩ'} — 쉼표로 갈라 낱낱이 비교한다."""
     return {t.strip().lower() for t in str(s).split(",") if t.strip()}
 
+
+def length_cue(d):
+    """유일하게 가장 긴 보기가 정답인 비율 — 우연이면 25%다.
+
+    왜 따로 재나: 기존 검사(길이 차 12자 이상 + 정답이 끝값)는 극단만 잡는다.
+    그런데 정답을 '정확하고 완전하게' 쓰다 보면 오답보다 조금씩 길어져,
+    한 문항으로는 안 보여도 시험 전체로는 '긴 것 찍기'가 통하게 된다.
+    실측 57.8%(2026-08-28, z=21.1)가 그렇게 나왔다. 목표 30% 이하.
+    (문항 작성 지침의 고전적 결함이다 — Haladyna 외 2002, 지침 24·28)
+    """
+    from collections import Counter
+    uni = Counter(); hit = Counter()
+    for e in d["exams"]:
+        for q in e["questions"]:
+            L = [len(str(o)) for o in q["options"]]
+            mx = max(L)
+            if L.count(mx) == 1:
+                uni[q["type"]] += 1
+                if L.index(mx) == q["answer"]:
+                    hit[q["type"]] += 1
+    U, H = sum(uni.values()), sum(hit.values())
+    pct = 100 * H / max(1, U)
+    print(f"\n긴 보기 = 정답: {H}/{U} = {pct:.1f}%  (우연 25% · 목표 30% 이하)")
+    bad = [(t, hit[t], n) for t, n in uni.items() if n >= 8 and hit[t] / n > 0.5]
+    for t, h, n in sorted(bad, key=lambda x: -x[1] / x[2]):
+        print(f"   ! {t:<16} {h}/{n} = {100*h/n:.0f}%  — 오답을 늘리거나 정답을 줄여야 한다")
+
 def main():
     d = json.load(open(os.path.join(DATA, "ko_exams.json"), encoding="utf-8"))
     problems = []
@@ -99,7 +126,8 @@ def main():
         for s in skew:
             print("  " + s)
     else:
-        print("정답 번호 분포 고름")
+        length_cue(d)
+    print("정답 번호 분포 고름")
 
     return 1 if problems else 0
 
