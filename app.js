@@ -7,7 +7,8 @@ document.addEventListener('gesturestart', e => e.preventDefault());
 
 /* ---------- 저장 ---------- */
 const KEY = 'vnstudy.v2';
-const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', done: {}, srs: {}, act: {}, stats: {} },
+const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', done: {}, srs: {},
+                          qbank: {}, act: {}, stats: {} },
   JSON.parse(localStorage.getItem(KEY) || '{}'));
 let saveWarned = false;
 function save() {
@@ -264,6 +265,10 @@ const UIVI = {
   '합격은 100점 만점에 60점입니다.': 'Đạt là 60/100 điểm.',
   '합격선을 넘었습니다': 'Đã vượt điểm đạt', '합격선에 모자랍니다': 'Chưa đủ điểm đạt',
   '남은 점수에 따라 갈립니다': 'Tùy điểm còn lại',
+  // 문항 되풀이 창고 — 한 번 맞혔다고 빼지 않는다
+  '다시 풀 문항': 'Câu cần làm lại',
+  '세 번 맞히면 쉽니다. 지금 창고에 N개.':
+    'Đúng ba lần thì câu đó nghỉ. Hiện có N câu trong kho.',
   '우리 동아리': 'Câu lạc bộ của ta',
   'N점만 더 하면 위 사람을 따라잡습니다.': 'Chỉ cần thêm N điểm là bắt kịp người trên.',
   '지금 1위입니다. 월요일까지 지켜 보세요.': 'Bạn đang hạng 1. Hãy giữ vững đến thứ Hai.',
@@ -2202,11 +2207,33 @@ function examGroup(host, list) {
   });
 }
 
+/* 다시 풀 문항이 밀려 있으면 목록 맨 위에 내놓는다.
+   새 회차를 한 벌 더 푸는 것보다 **틀렸던 것을 다시 꺼내는 편**이 훨씬 남는다.
+   그래서 자리도 맨 위다. 세 번 맞힐 때까지 사라지지 않는다. */
+function drawRedoRow(host) {
+  const due = qbankDue(EXDATA);
+  if (!due.length) return;
+  const bank = S.qbank || {};
+  const total = Object.values(bank).filter(r => r.ok < QGOAL).length;
+  const btn = el('button', 'bigmenu redo');
+  btn.append(el('b', null, `${tr('다시 풀 문항')} ${due.length}`));
+  btn.append(el('span', 'exmeta',
+    tr('세 번 맞히면 쉽니다. 지금 창고에 N개.').replace('N', total)));
+  btn.onclick = () => startExam({
+    id: 'redo', set: 0, sub: true, name: tr('다시 풀 문항'),
+    desc: '', minutes: Math.max(5, Math.ceil(due.length * 0.75)),
+    total: due.length, full: 0, grades_at: null,
+    questions: due.map(({ q }, i) => ({ ...q, no: i + 1 })),
+  });
+  host.append(btn);
+}
+
 function drawExamList() {
   const b = $('#examBody');
   b.textContent = '';
   b.append(el('p', 'lede', '실제 시험과 <b>같은 형식</b>으로 풀어 봅니다.<br>'
     + '문항은 우리가 직접 만든 것입니다 — 기출 문제가 아닙니다.'));
+  drawRedoRow(b);
   // 시험이 서른 벌이 넘는다. 한 줄로 늘어놓으면 못 찾으니 목적별로 접어 둔다.
   const byId = {};
   EXDATA.exams.forEach(e => (byId[e.id] = byId[e.id] || []).push(e));
@@ -2604,6 +2631,48 @@ const fmtLeft = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s 
 /* 답을 골랐는가 / 맞았는가 — 객관식은 번호, 단답형(KIIP)은 써 넣은 글이라 함께 못 센다.
    단답형 채점은 띄어쓰기와 문장부호를 지우고 견준다. 사람이 '근로 계약서'라고 써도
    '근로계약서'와 같게 본다 — 맞춤법 시험이 아니라 낱말을 아는지 보는 것이라서. */
+/* ── 문항 되풀이 창고 ─────────────────────────────────────────────
+   틀린 문항은 **은퇴하지 않는다.** 한 번 맞혔다고 빼면 안 된다 —
+   '한 번 도달'과 '기억에 남음'은 다른 일이다(인출 연습). 간격을 두고
+   **세 번** 맞힐 때까지 다시 낸다. 틀리면 횟수가 뒤로 두 칸 물러난다.
+
+   낱말 창고(S.srs)와 따로 두는 까닭: 낱말은 뜻 하나를 아는 것이고,
+   문항은 '그 형식으로 물었을 때 답할 수 있는가'라서 잊는 속도가 다르다. */
+const QSTEPS = [0, 1, 3, 7];        // 맞힌 횟수별 다음 출제까지 일수 (3번 맞히면 7일 뒤)
+const QGOAL = 3;                    // 세 번 맞히면 창고에서 쉰다 — 지우지는 않는다
+/* 문항 이름표 — 시험지를 다시 찍어도 같은 문항이면 같아야 한다.
+   번호(1번·2번)로 잡으면 문항 순서가 바뀔 때 전부 어긋난다. 그래서 내용으로 잡는다. */
+const qkey = q => [q.type, (q.stem || '').slice(0, 70), q.img || '', q.word || ''].join('|');
+
+function qbankMark(q, ok, e) {
+  const bank = S.qbank || (S.qbank = {});
+  const k = qkey(q);
+  const r = bank[k] || { ok: 0, seen: 0, e: e.id, s: e.set };
+  r.seen++;
+  r.ok = ok ? r.ok + 1 : Math.max(0, r.ok - 2);   // 틀리면 두 칸 물러난다
+  // '다시 풀 문항' 묶음에서 풀었을 때는 출처를 덮어쓰지 않는다 — 원래 시험이 어디였는지 잃는다
+  if (e.id !== 'redo') { r.e = e.id; r.s = e.set; }
+  r.due = now() + QSTEPS[Math.min(r.ok, QSTEPS.length - 1)] * DAY;
+  bank[k] = r;
+}
+
+/* 지금 다시 내야 할 문항 수 — 아직 세 번을 못 맞혔고 때가 된 것 */
+function qbankDue(exdata) {
+  const bank = S.qbank || {};
+  const out = [], taken = {};
+  (exdata ? exdata.exams : []).forEach(e => {
+    e.questions.forEach(q => {
+      const k = qkey(q);
+      // 같은 문항이 여러 시험지에 들어 있다(회차끼리 겹치는 유형). 창고에서는 하나다 —
+      // 안 거르면 창고 10개가 '낼 것 15개'로 부풀어 보인다.
+      if (taken[k]) return;
+      const r = bank[k];
+      if (r && r.ok < QGOAL && (r.due || 0) <= now()) { taken[k] = 1; out.push({ q, e }); }
+    });
+  });
+  return out;
+}
+
 const answered = m => typeof m === 'string' ? m.trim() !== '' : m >= 0;
 const normShort = s => String(s == null ? '' : s).replace(/[\s.,!?·'"]/g, '').toLowerCase();
 const isRight = (q, m) => q.short ? (answered(m) && normShort(m) === normShort(q.answerText))
@@ -2734,8 +2803,12 @@ function finishExam(timeUp) {
   const wrong = [];
   let score = 0;
   e.questions.forEach((q, i) => {
-    if (isRight(q, marks[i])) score++;
+    const ok = isRight(q, marks[i]);
+    if (ok) score++;
     else wrong.push({ q, picked: marks[i] });
+    /* 창고에 넣고 세기. 틀린 것은 새로 담고, 이미 담긴 것은 맞혔을 때 한 칸 올린다.
+       맞힌 것을 새로 담지는 않는다 — 처음부터 맞힌 문항까지 다시 낼 이유는 없다. */
+    if (!ok || (S.qbank || {})[qkey(q)]) qbankMark(q, ok, e);
   });
 
   // 점수를 남긴다 — 다음에 목록에서 바로 보인다.

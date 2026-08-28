@@ -803,6 +803,9 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .bigmenu{display:block; width:100%; text-align:left; font-size:16px; font-weight:700;
   padding:16px 18px; margin-bottom:8px; border:1px solid var(--line); border-radius:12px;
   background:transparent; color:var(--fg); cursor:pointer}
+/* 다시 풀 문항 — 목록 맨 위. 색만으로 알리지 않고 왼쪽 굵은 띠를 같이 둔다(색각 배려) */
+.bigmenu.redo{border-color:var(--accent); border-left:5px solid var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent)}
 .cb.note{background:transparent; border:1px dashed var(--line); color:var(--dim); font-size:13px; white-space:pre-line}
 
 /* 동아리 — 이번 주 출석판 */
