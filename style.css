@@ -1553,3 +1553,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   background:var(--bg); color:var(--dim); font-size:14px; cursor:pointer}
 .langbtn.on{border:2px solid var(--accent); color:var(--ink); font-weight:700;
   background:color-mix(in srgb,var(--accent) 10%,transparent)}
+
+/* 과정 고르기 — 앱에서 가장 중요한 한 번의 선택. 두 말을 나란히 보여 준다. */
+.learnpick{display:flex; flex-direction:column; align-items:flex-start; gap:3px;
+  text-align:left; padding:18px 20px}
+.learnpick b{font-size:20px}
+.learnpick span{font-size:16px; color:var(--accent); font-weight:600}
+.learnpick i{font-style:normal; font-size:13px; color:var(--dim)}

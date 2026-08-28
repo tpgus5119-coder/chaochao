@@ -104,7 +104,7 @@ const UIVI = {
     'Câu 51·52 là điền chỗ trống, câu 53·54 là bài viết dài. Đúng dạng của kỳ thi thật.',
   '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.':
     'Học mỗi ngày — 78 ngày từ Sơ cấp 1 đến Trung cấp 2. Mỗi ngày một ngữ pháp, mười từ, một đoạn hội thoại.',
-  '지금 있는 것 — 날마다 배우기 78일, 모의고사 34벌(해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
+  '지금 있는 것 — 날마다 배우기 78일, 모의고사 45벌(보기별 해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
     'Hiện có — Học mỗi ngày 78 ngày, 34 bộ đề thi thử (kèm giải thích), Nền tảng, 78 ngữ pháp, Văn hóa Hàn, Nói·Viết chấm bằng AI',
   '· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.':
     '· Tiến độ học <b>tự động lưu lên máy chủ</b> — đổi điện thoại chỉ cần đăng nhập là học tiếp.',
@@ -343,7 +343,7 @@ const UIVI = {
     'Văn hóa sinh hoạt Hàn Quốc — từ phép tắc nơi làm việc đến tình huống khẩn cấp.',
   '날마다 배우기': 'Học mỗi ngày',
   '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.':
-    'Học mỗi ngày — đợt 1: Sơ cấp 1, 18 ngày. Học cùng lúc ngữ pháp, từ vựng, hội thoại và nhiệm vụ.',
+    'Học mỗi ngày — 78 ngày, từ Sơ cấp 1 đến Trung cấp 2. Mỗi ngày một điểm ngữ pháp, mười từ và một đoạn hội thoại.',
   '오늘의 문법 보기': 'Xem ngữ pháp hôm nay',
   '오늘의 단어': 'Từ vựng hôm nay',
   '오늘의 미션': 'Nhiệm vụ hôm nay',
@@ -351,10 +351,10 @@ const UIVI = {
   '베트남인을 위한 한국어': 'Tiếng Hàn cho người Việt',
   'EPS-TOPIK · KIIP · TOPIK I 시험 대비': 'Luyện thi EPS-TOPIK · KIIP · TOPIK I',
   '응시': 'Đã thi', '회': ' lần', '평균': 'Trung bình', '점': ' điểm',
-  '지금 있는 것 — 날마다 배우기 78일, 모의고사 34벌(해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
-    'Hiện đã có — Học mỗi ngày (Sơ cấp 1, 18 ngày), đề thi thử, kiến thức nền tảng, 78 điểm ngữ pháp, văn hóa Hàn Quốc, luyện nói·viết có AI chấm',
-  '아직 없는 것 — 초급2·중급1·중급2 날짜별 과정(문법·단어는 이미 있어서 곧 늘어납니다)':
-    'Chưa có — khóa học theo ngày cho Sơ cấp 2, Trung cấp 1, Trung cấp 2 (ngữ pháp và từ vựng đã có sẵn nên sẽ sớm bổ sung)',
+  '지금 있는 것 — 날마다 배우기 78일, 모의고사 45벌(보기별 해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
+    'Hiện đã có — Học mỗi ngày 78 ngày, 45 đề thi thử (kèm giải thích từng phương án), kiến thức nền tảng, 78 điểm ngữ pháp, văn hóa Hàn Quốc, luyện nói·viết có AI chấm',
+  '아직 없는 것 — TOPIK II 쓰기 연습 회차, 공식 기출 풀이(공식 자료실로 안내합니다)':
+    'Chưa có — thêm đề luyện viết TOPIK II, và giải đề thi thật (chúng tôi dẫn bạn tới trang chính thức)',
   '목록으로': 'Về danh sách',
   '문장 고르기': 'Chọn câu',
   '문장 고쳐 주기': 'Sửa câu giúp tôi',
@@ -517,6 +517,12 @@ const UIVI = {
     '· Tiến độ học <b>tự động lưu lên máy chủ</b> — đổi điện thoại vẫn học tiếp được.',
   '비밀번호 (8자 이상)': 'Mật khẩu (từ 8 ký tự)',
   '별명': 'Biệt danh',
+  '별명 (2~10자) — 순위·동아리에 보입니다': 'Biệt danh (2~10 ký tự) — hiện ở bảng xếp hạng và câu lạc bộ',
+  '별명 (2~10글자)': 'Biệt danh (2~10 ký tự)',
+  '여기에 쓰세요…': 'Viết vào đây…',
+  '이름 (예: 하노이 탁구, 빈즈엉 3공장)': 'Tên nhóm (ví dụ: Bóng bàn Hà Nội, Nhà máy 3 Bình Dương)',
+  '한 줄 소개 (60자 — 예: 퇴근 후 풋살, 초보 환영)': 'Giới thiệu một dòng (60 ký tự — ví dụ: Đá bóng sau giờ làm, chào người mới)',
+  '오늘 배운 것, 한 마디… (베트남어 환영)': 'Hôm nay bạn học được gì? Viết một câu… (tiếng Việt cũng được)',
   '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '처음이세요? 가입하기': 'Lần đầu? Đăng ký', '이미 계정이 있어요 — 로그인': 'Đã có tài khoản — Đăng nhập', '가입하기': 'Đăng ký', '로그인': 'Đăng nhập', '회원가입': 'Đăng ký', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
@@ -1648,7 +1654,7 @@ function acctForm(gate, mode) {
     : '<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.')));
   // 별명이 아직 없으면(첫 방문 가입) 여기서 같이 정한다 — 가입에 별명이 필요해서다
   const nickIn = el('input', 'keyin'); nickIn.type = 'text'; nickIn.maxLength = 10;
-  nickIn.placeholder = '별명 (2~10자) — 순위·동아리에 보입니다';
+  nickIn.placeholder = tr('별명 (2~10자) — 순위·동아리에 보입니다');
   const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = tr('아이디 (영문·숫자 4~20자)');
   id.autocapitalize = 'none'; id.maxLength = 20;
   const pw = el('input', 'keyin'); pw.type = 'password';
@@ -2080,13 +2086,45 @@ function showWeek(rep) {
 }
 
 /* 닉네임 — 최초 한 번. 서버에 저장되지 않고, 순위에만 쓰인다 */
+/* 무엇을 배우러 왔는가 — **앱에서 가장 중요한 한 번의 선택**이다.
+   지금까지 이걸 가입할 때만 물었다. 그래서 로그인을 건너뛴 사람은 아무것도 고르지
+   않은 채 기본값(한국인용 베트남어 과정)에 떨어졌다. 베트남 사람이 한국어를 배우러
+   왔다가 베트남어 교재를 받는 셈이다. 그 사람은 앱이 고장 난 줄 알고 나간다.
+
+   두 말을 나란히 적는다. 아직 아무것도 못 읽는 사람이 고르는 자리라서,
+   글자를 못 읽어도 자기 나라 말을 알아보고 누를 수 있어야 한다. */
+function askLearn() {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '무엇을 배우시겠습니까?'));
+  b.append(el('p', 'vi mid', 'Bạn muốn học gì?'));
+  const pick = (learn, ui, ko, vi, sub) => {
+    const c = el('button', 'bigmenu learnpick');
+    c.append(el('b', null, ko), el('span', null, vi), el('i', null, sub));
+    c.onclick = () => {
+      S.learn = learn;
+      if (ui) S.ui = ui;                  // 한국어를 배우러 온 사람은 화면도 베트남어로
+      save();
+      renderHome();
+    };
+    b.append(c);
+  };
+  pick('ko', 'vi', '한국어', 'Tiếng Hàn Quốc',
+       'TOPIK · EPS-TOPIK · KIIP — dành cho người Việt');
+  pick('vi', 'ko', '베트남어', 'Tiếng Việt',
+       '한국 사람이 베트남어를 배웁니다');
+  b.append(el('p', 'note', '나중에 설정에서 바꿀 수 있습니다 · '
+    + 'Có thể đổi lại trong phần cài đặt.'));
+  show('sub', '짜오짜오', true);
+}
+
 function askNick() {
   const b = $('#nickBody');
   b.textContent = '';
   b.append(el('p', 'lede', '이름이 뭐예요?'));
   b.append(el('p', 'vi mid', 'Tên bạn là gì?'));
   b.append(el('p', 'note', '언제든 바꿀 수 있습니다. <b>먼저 쓴 사람이 임자</b>라 겹치는 별명은 못 씁니다.'));
-  const inp = el('input', 'keyin'); inp.type = 'text'; inp.placeholder = '별명 (2~10글자)'; inp.maxLength = 10;
+  const inp = el('input', 'keyin'); inp.type = 'text'; inp.placeholder = tr('별명 (2~10글자)'); inp.maxLength = 10;
   const go = el('button', 'primary big', '시작하기');
   go.style.width = '100%';
   const err = el('p', 'note nickerr');
@@ -2107,14 +2145,14 @@ function askNick() {
       return;
     }
     S.wk = { k: weekKey(), base: snapshot() }; save();
-    renderHome();
+    S.learn ? renderHome() : askLearn();
   };
   b.append(inp, err, go);
   // 위쪽 뒤로가기로 그냥 나갈 수 있다. 처음이라 이름이 없으면 '이름없음'으로 두고 나간다.
   const had = !!S.nick;
   dive(() => {
     if (!S.nick) { S.nick = '이름없음'; S.wk = { k: weekKey(), base: snapshot() }; save(); }
-    had ? renderAwards() : renderHome();
+    had ? renderAwards() : (S.learn ? renderHome() : askLearn());
   });
   show('nick', '이름', true);
 }
@@ -2167,9 +2205,9 @@ function drawKoHome() {
   plan.append(row);
 
   const note = el('p', 'note');
-  note.append(el('b', null, '지금 있는 것 — 날마다 배우기 78일, 모의고사 34벌(해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기'));
+  note.append(el('b', null, '지금 있는 것 — 날마다 배우기 78일, 모의고사 45벌(보기별 해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기'));
   note.append(document.createElement('br'));
-  note.append(document.createTextNode(tr('아직 없는 것 — 초급2·중급1·중급2 날짜별 과정(문법·단어는 이미 있어서 곧 늘어납니다)')));
+  note.append(document.createTextNode(tr('아직 없는 것 — TOPIK II 쓰기 연습 회차, 공식 기출 풀이(공식 자료실로 안내합니다)')));
   plan.append(note);
 }
 
@@ -3829,7 +3867,7 @@ function examWrite(wi) {
   card.append(el('div', 'exask', esc(w.title)));
 
   const ta = el('textarea', 'exwrite');
-  ta.placeholder = '여기에 쓰세요…';
+  ta.placeholder = tr('여기에 쓰세요…');
   ta.rows = 10;
   const cnt = el('p', 'note', `0 / ${w.chars}자`);
   ta.oninput = () => { cnt.textContent = `${ta.value.length} / ${w.chars}자`; };
@@ -8737,9 +8775,9 @@ function clubCreate() {
   b.textContent = '';
   b.append(el('p', 'lede', '어떤 동아리인가요?'));
   const inp = el('input', 'keyin'); inp.type = 'text'; inp.maxLength = 20;
-  inp.placeholder = '이름 (예: 하노이 탁구, 빈즈엉 3공장)';
+  inp.placeholder = tr('이름 (예: 하노이 탁구, 빈즈엉 3공장)');
   const de = el('input', 'keyin'); de.type = 'text'; de.maxLength = 60;
-  de.placeholder = '한 줄 소개 (60자 — 예: 퇴근 후 풋살, 초보 환영)';
+  de.placeholder = tr('한 줄 소개 (60자 — 예: 퇴근 후 풋살, 초보 환영)');
   // 갈래 — 하나 고른다. 이모지가 목록에서 이 동아리의 표가 된다.
   let cat = 'etc';
   const cw = el('div', 'catpick');
@@ -8825,7 +8863,7 @@ function clubHome(j) {
   b.append(fh);
   const fin = el('div', 'feedin');
   const ftxt = el('input', 'keyin'); ftxt.type = 'text'; ftxt.maxLength = 200;
-  ftxt.placeholder = '오늘 배운 것, 한 마디… (베트남어 환영)';
+  ftxt.placeholder = tr('오늘 배운 것, 한 마디… (베트남어 환영)');
   const cam = el('button', 'ghost camb', '📷'); cam.title = tr('사진 넣기');
   const fgo = el('button', 'primary', '올리기');
   fin.append(ftxt, cam, fgo);
