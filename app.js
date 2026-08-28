@@ -465,7 +465,7 @@ const UIVI = {
   '📕 오답노트 (': '📕 Sổ lỗi sai (',
   '🔊 다시 듣기': '🔊 Nghe lại',
   '🔑 한자어': '🔑 Từ Hán Việt',
-  '하루 5분': 'Học 5 phút', '복습': 'Ôn tập', '기본기': 'Cơ bản', '문법': 'Ngữ pháp',
+  '하루 5분': 'Học 5 phút', '기본기': 'Cơ bản', '문법': 'Ngữ pháp',
   '동아리': 'Câu lạc bộ', '사용법': 'Hướng dẫn', '일상': 'Hằng ngày', '직무': 'Công việc',
   '기사': 'Bản tin', '단어': 'Từ vựng', '문장': 'Câu', '최근 학습': 'Bài vừa học', '오답노트': 'Sổ lỗi sai',
   '오늘 학습': 'Bài hôm nay', '오늘 복습': 'Ôn hôm nay', '내일 학습': 'Bài ngày mai',
@@ -520,6 +520,11 @@ const UIVI = {
   '구술 N세트 · 작문 M제목': 'N bộ nói · M đề viết',
   '틀린 문항 N개': 'N câu sai', '나는 W': 'Tôi là W',
   '멈추기': 'Dừng', '듣기': 'Nghe',
+  '오늘 확인 문제': 'Kiểm tra hôm nay', '잘 듣고 알맞은 것을 고르십시오.': 'Nghe kỹ và chọn đáp án đúng.',
+  '다시 꺼낼 낱말 N개': 'N từ cần ôn lại',
+  '세 번 맞히면 쉽니다. 틀리면 되돌아옵니다.':
+    'Đúng ba lần thì từ đó nghỉ. Sai thì quay lại.',
+  '복습': 'Ôn tập',
   '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '처음이세요? 가입하기': 'Lần đầu? Đăng ký', '이미 계정이 있어요 — 로그인': 'Đã có tài khoản — Đăng nhập', '가입하기': 'Đăng ký', '로그인': 'Đăng nhập', '회원가입': 'Đăng ký', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
@@ -2743,7 +2748,24 @@ function koDayEntry() {
 function drawDayList() {
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.'));
+  b.append(el('p', 'lede', tr('날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.')));
+
+  /* 오늘 다시 꺼낼 낱말 — **맨 위에** 둔다.
+     새 날을 하나 더 배우는 것보다 지난 낱말을 다시 꺼내는 편이 남는다(d=4.03).
+     여기 없으면 복습이 저절로 돌아오지 않는다 — 사람이 스스로 옛 날을 찾아
+     들어가야 하는데, 아무도 그러지 않는다. */
+  const due = kdue();
+  if (due.length) {
+    const r = el('button', 'bigmenu redo');
+    r.append(el('b', null, '🔁 ' + tr('다시 꺼낼 낱말 N개').replace('N', due.length)));
+    r.append(el('span', 'exmeta', tr('세 번 맞히면 쉽니다. 틀리면 되돌아옵니다.')));
+    r.onclick = () => {
+      const ws = due.slice(0, 12).map(x => x.w);
+      startExam(koDayQuiz({ day: tr('복습'), words: ws }, ws));
+    };
+    b.append(r);
+  }
+
   KDDATA.forEach((d, i) => {
     const btn = el('button', 'bigmenu');
     btn.append(el('b', null, `Day ${d.day}. ${d.theme.ko}`));
@@ -2770,6 +2792,66 @@ function dayWordRow(host, ko, vi, prefix, star, w) {
   if (im) { const wrap = el('div', 'gexwrap'); wrap.append(im, txt); row.append(wrap); }
   else row.append(txt);
   host.append(row);
+}
+
+/* ── 한국어 과정 · 하루 확인 문제 ──────────────────────────────────
+   이 과정에는 **꺼내기가 아예 없었다.** 낱말을 읽고, 대화를 읽고, 미션을 읽고
+   다음 날로 넘어갈 뿐이었다. 우리가 모아 둔 근거가 한목소리로 말하는 것이
+   "다시 읽기는 공부가 아니다"인데, 정작 주 과정이 읽기만 시키고 있었다.
+
+   시험 엔진을 그대로 쓴다 — 보기·그림·소리·채점·해설이 이미 다 되어 있다.
+   따로 만들면 같은 것을 두 벌 갖게 된다.
+
+   묻는 방식 셋을 돌려 가며 쓴다. 알아보기(한국어→뜻)만 시키면 시험장에서
+   막힌다 — 골라내는 것과 떠올리는 것은 다른 힘이다.
+     ① 한국어 → 뜻 (그림과 함께)   ② 뜻 → 한국어   ③ 소리 → 한국어
+   오답은 **같은 날 낱말에서** 뽑는다. 엉뚱한 날에서 뽑으면 뜻만 슬쩍 봐도 티가 난다. */
+const KSTEPS = [0, 1, 3, 7];        // 맞힌 횟수별 다음까지 일수 — 시험 창고와 같은 결
+const KGOAL = 3;
+
+function kmark(ko, ok) {
+  S.kbank = S.kbank || {};
+  const r = S.kbank[ko] || { ok: 0 };
+  r.ok = ok ? Math.min(KGOAL, r.ok + 1) : Math.max(0, r.ok - 2);
+  r.due = now() + KSTEPS[Math.min(r.ok, KSTEPS.length - 1)] * DAY;
+  S.kbank[ko] = r; save();
+}
+const kdue = () => {
+  const b = S.kbank || {};
+  return (KDDATA || []).flatMap(d => (d.words || []).map(w => ({ w, d })))
+    .filter(x => { const r = b[x.w.ko]; return r && r.ok < KGOAL && (r.due || 0) <= now(); });
+};
+
+function koDayQuiz(d, words) {
+  const pool = words || d.words;
+  const others = w => (d.words.filter(x => x.ko !== w.ko))
+    .sort(() => Math.random() - .5).slice(0, 3);
+  const qs = pool.map((w, i) => {
+    const o = others(w);
+    const kind = i % 3;
+    if (kind === 0) {
+      const opts = [w, ...o].sort(() => Math.random() - .5);
+      return { type: 'kday_meaning', stem: w.ko, img: w.img,
+               options: opts.map(x => x.vi), answer: opts.indexOf(w),
+               exp: opts.map(x => x.ko + ' = ' + x.vi), word: w.ko };
+    }
+    if (kind === 1) {
+      const opts = [w, ...o].sort(() => Math.random() - .5);
+      return { type: 'kday_word', stem: w.vi,
+               options: opts.map(x => x.ko), answer: opts.indexOf(w),
+               exp: opts.map(x => x.ko + ' = ' + x.vi), word: w.ko };
+    }
+    const opts = [w, ...o].sort(() => Math.random() - .5);
+    return { type: 'kday_listen', stem: tr('잘 듣고 알맞은 것을 고르십시오.'),
+             audio: [{ v: S.voice === 'm' ? 'm' : 'f', t: w.ko }],
+             options: opts.map(x => x.ko), answer: opts.indexOf(w),
+             exp: opts.map(x => x.ko + ' = ' + x.vi), word: w.ko };
+  }).sort(() => Math.random() - .5);
+  qs.forEach((q, i) => { q.no = i + 1; q.section = ''; });
+  return { id: 'kday-' + d.day, set: 1, day: true, sub: true, plays: 0,
+           name: `Day ${d.day} ` + tr('확인'), name_vi: `Day ${d.day} — Kiểm tra`,
+           desc: '', desc_vi: '', minutes: Math.max(4, qs.length),
+           total: qs.length, questions: qs };
 }
 
 function drawDayCard(i) {
@@ -2817,7 +2899,12 @@ function drawDayCard(i) {
   const prev = el('button', 'ghost big', '‹ 이전');
   prev.disabled = i === 0;
   prev.onclick = () => drawDayCard(i - 1);
-  const next = el('button', 'primary big', i === KDDATA.length - 1 ? '목록으로' : '다음 ›');
+  const qz = el('button', 'primary big', '✍️ ' + tr('오늘 확인 문제'));
+  qz.style.width = '100%'; qz.style.marginTop = '6px';
+  qz.onclick = () => startExam(koDayQuiz(d));
+  b.append(qz);
+
+  const next = el('button', 'ghost big', i === KDDATA.length - 1 ? '목록으로' : '다음 ›');
   next.onclick = () => i === KDDATA.length - 1 ? drawDayList() : drawDayCard(i + 1);
   swipeNav(b, () => i > 0 && drawDayCard(i - 1), () => i < KDDATA.length - 1 && drawDayCard(i + 1));
   nav.append(prev, next);
@@ -3100,7 +3187,8 @@ function finishExam(timeUp) {
     else wrong.push({ q, picked: marks[i] });
     /* 창고에 넣고 세기. 틀린 것은 새로 담고, 이미 담긴 것은 맞혔을 때 한 칸 올린다.
        맞힌 것을 새로 담지는 않는다 — 처음부터 맞힌 문항까지 다시 낼 이유는 없다. */
-    if (!ok || (S.qbank || {})[qkey(q)]) qbankMark(q, ok, e);
+    if (e.day) kmark(q.word, ok);              // 하루 확인 문제는 낱말 단위로 센다
+    else if (!ok || (S.qbank || {})[qkey(q)]) qbankMark(q, ok, e);
   });
 
   // 점수를 남긴다 — 다음에 목록에서 바로 보인다.
