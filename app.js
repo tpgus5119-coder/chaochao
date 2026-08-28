@@ -4938,14 +4938,21 @@ function buildQuestions(words, forced) {
     let src = w.sent ? spool : pool;
     if (src.length < 4) src = [...src, ...(w.sent ? pool : spool)];             // 모자라면 채운다
     const seen = new Set([w.vi]);
+    /* 뜻이 같은 낱말은 오답이 될 수 없다 — 그건 틀린 보기가 아니라 **또 하나의 정답**이다.
+       실제로 Day 16 의 đau 와 ốm 이 둘 다 '아프다'였고, 둘이 한 문제에 나오면
+       어느 쪽을 골라도 맞는 문항이 됐다(1,000문항을 만들어 세어 보니 판마다 0~2건).
+       뜻풀이 자체도 갈라 적었지만(days.json), 앞으로 또 겹칠 수 있으니 여기서도 막는다.
+       괄호 앞의 알맹이로 견준다 — '아프다 (병이 나다)' 와 '아프다' 는 같은 말이다. */
+    const stem = s => String(s || '').split(/[,;(·]/)[0].trim();
+    const mine = stem(w.ko);
+    const okOpt = x => !seen.has(x.vi) && stem(x.ko) !== mine && seen.add(x.vi);
     // 같은 세트 이웃부터 — 주제가 같아야 헷갈리는 진짜 보기가 된다. 모자라면 전체에서 채운다.
     const home = w.sent ? undefined : chapOf(w.vi);
     const near = home === undefined ? []
-      : src.filter(x => !seen.has(x.vi) && chapOf(x.vi) === home && seen.add(x.vi))
+      : src.filter(x => chapOf(x.vi) === home && okOpt(x))
            .sort(() => Math.random() - .5).slice(0, 3);
     const others = near.concat(
-      src.filter(x => !seen.has(x.vi) && seen.add(x.vi))
-         .sort(() => Math.random() - .5).slice(0, 3 - near.length));
+      src.filter(okOpt).sort(() => Math.random() - .5).slice(0, 3 - near.length));
     return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
   }).sort(() => Math.random() - .5);
 }
