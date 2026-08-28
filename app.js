@@ -2960,6 +2960,42 @@ function drawExamQ() {
   show('exam', e.name, true);
 }
 
+/* ── 공통문항 ────────────────────────────────────────────────────
+   회차마다 문항이 전부 다르면 1회차 70점과 2회차 70점을 **견줄 수 없다** —
+   점수가 오른 것이 실력인지 문제가 쉬웠던 것인지 가릴 방법이 없기 때문이다.
+   그래서 회차에 걸쳐 **같은 문항 여섯 개**를 심어 두고(ko_exam_gen.add_anchors),
+   그 여섯 개만 따로 세어 회차끼리 견준다. 시험을 여러 벌 만드는 곳은 다 이렇게 한다.
+
+   전체 점수는 여전히 회차마다 흔들릴 수 있다. 여기 숫자만 흔들리지 않는다 —
+   그러니 "정말 늘었나"는 여기를 봐야 한다. 그 말을 화면에도 적어 둔다. */
+function anchorScore(e, marks) {
+  let n = 0, ok = 0;
+  e.questions.forEach((q, i) => { if (q.anchor) { n++; if (isRight(q, marks[i])) ok++; } });
+  return n ? { n, ok } : null;
+}
+function anchorPanel(host, e, marks) {
+  if (e.sub) return;                       // 오답만 다시 푼 판은 눈금이 될 수 없다
+  const a = anchorScore(e, marks);
+  if (!a) return;
+  S.anchor = S.anchor || {};
+  const hist = S.anchor[e.id] = S.anchor[e.id] || {};
+  hist[e.set] = a.ok;
+  save();
+  const c = el('div', 'excard anchor');
+  c.append(el('div', 'anch', `📏 ${tr('공통문항')} ${a.ok} / ${a.n}`));
+  const other = Object.entries(hist).filter(([k]) => String(k) !== String(e.set));
+  if (other.length) {
+    c.append(el('div', 'gexp', other
+      .map(([k, v]) => `${k}${tr('회차')} ${v}/${a.n}`).join(' · ')));
+    const best = Math.max(...other.map(([, v]) => v));
+    c.append(el('div', 'gexp vi', a.ok > best ? tr('지난 회차보다 늘었습니다.')
+      : a.ok === best ? tr('지난 회차와 같습니다.') : tr('지난 회차보다 줄었습니다.')));
+  }
+  c.append(el('p', 'note', tr('이 여섯 문항은 모든 회차에 똑같이 들어 있습니다. '
+    + '회차마다 문제가 달라 총점은 흔들릴 수 있지만, 여기 숫자는 회차끼리 그대로 견줄 수 있습니다.')));
+  host.append(c);
+}
+
 function finishExam(timeUp) {
   if (!EX) return;
   if (EX.timer) { clearInterval(EX.timer); EX.timer = 0; }
@@ -3039,6 +3075,7 @@ function finishExam(timeUp) {
   const tail = e.full ? `${tr('맞힌 비율')} ${pct}%` : `${pct}점`;
   r.append(el('div', null, timeUp ? `${tr('시간이 다 됐습니다')} · ${tail}` : tail));
   b.append(r);
+  anchorPanel(b, e, marks);
 
   if (wrong.length) {
     b.append(el('h3', 'exhead', `틀린 문항 ${wrong.length}개`));

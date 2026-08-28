@@ -1257,6 +1257,58 @@ def build(exam_id, seed, words, gloss, pics, state):
         out["lock"] = True
     return out
 
+ANCHOR_N = 6          # 한 시험 종류당 공통문항 수
+
+
+def add_anchors(exams, per_type=ANCHOR_N):
+    """회차마다 **같은 문항 몇 개**를 심는다 — 공통문항(anchor).
+
+    왜 필요한가. 지금까지 회차마다 문항이 전부 달랐다. 그러면 1회차 70점과
+    2회차 70점을 **견줄 수가 없다** — 점수 차이가 실력이 는 것인지 문제가 쉬웠던
+    것인지 가릴 방법이 없기 때문이다. 시험을 여러 벌 만드는 곳은 어디나
+    회차에 걸쳐 같은 문항 몇 개를 두고 그것으로 눈금을 맞춘다.
+
+    우리는 여섯 개를 둔다(TOPIK I 70문항 기준 8.6%). 자리는 시험 전체에
+    고르게 흩어 놓는다 — 앞쪽에 몰면 쉬운 문항만 공통이 되어 눈금이 한쪽으로 쏠린다.
+
+    같은 구간(section)일 때만 바꿔 넣는다. 구간이 다르면 배점과 발문이 어긋난다.
+    ko_exam_check 의 '회차중복'은 anchor 를 건너뛴다 — 일부러 넣은 것이라서.
+    """
+    by = {}
+    for e in exams:
+        by.setdefault(e["id"], []).append(e)
+    n_marked = 0
+    for eid, sets in by.items():
+        if len(sets) < 2:
+            continue                      # 한 벌뿐이면 견줄 상대가 없다
+        base, rest = sets[0], sets[1:]
+        n = min(len(s["questions"]) for s in sets)
+        if n < per_type * 2:
+            continue
+        step = n // per_type
+        idxs = [i * step + step // 2 for i in range(per_type)]   # 고르게 흩는다
+        for i in idxs:
+            src = base["questions"][i]
+            if src.get("short"):
+                continue                  # 단답형은 채점이 글자 대조라 눈금으로 안 쓴다
+            ok = [s for s in rest
+                  if s["questions"][i].get("section") == src.get("section")
+                  and not s["questions"][i].get("short")]
+            if not ok:
+                continue
+            src["anchor"] = True
+            n_marked += 1
+            for s in ok:
+                old = s["questions"][i]
+                q = json.loads(json.dumps(src))
+                q["no"] = old["no"]
+                if "pt" in old:
+                    q["pt"] = old["pt"]
+                q["anchor"] = True
+                s["questions"][i] = q
+    print(f"공통문항: {n_marked}자리 × 회차 (시험 {len(by)}종)", file=sys.stderr)
+
+
 def rebalance(rng, qs):
     """정답 번호를 네 자리에 고르게 흩는다.
 
@@ -1314,6 +1366,7 @@ if __name__ == "__main__":
             e = build(exam_id, seed, words, gloss, pics, state)
             out["exams"].append(e)
             print(f"{exam_id} {seed}회차: {e['total']}문항 (부족 {e['shortfall']})", file=sys.stderr)
+    add_anchors(out["exams"])
     path = os.path.join(DATA, "ko_exams.json")
     json.dump(out, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print("저장:", path, file=sys.stderr)

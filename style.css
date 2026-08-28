@@ -1542,3 +1542,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .msrole span{color:var(--dim)}
 .msrole.open{border-style:solid; border-color:var(--accent); cursor:default}
 .msrole.open span{color:var(--ink)}
+
+/* 공통문항 — 회차끼리 견줄 수 있는 유일한 숫자라 눈에 띄어야 한다 */
+.anchor{border-left:3px solid var(--accent); margin-top:14px}
+.anch{font-size:19px; font-weight:800}
