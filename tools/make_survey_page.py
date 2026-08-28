@@ -101,11 +101,19 @@ document.getElementById('send').onclick=async()=>{
   const post=b=>fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify(b)}).then(r=>r.json()).catch(()=>({}));
   let msg='⚠️ Không gửi được — nhưng vẫn cảm ơn bạn!';
-  /* 서버가 아직 옛 판이면 'giong'을 모르고 통째로 버린다. 그때는 지방 표만이라도
-     옛 칸('dialect')에 넣는다 — 이 설문에서 가장 알고 싶은 것이 그것이고,
-     열쇠 꼴이 같아 나중에 그대로 합산된다. 집계의 nOld 가 이렇게 들어온 수다. */
+  /* 서버가 옛 판이면 'giong'을 모르고 답을 통째로 버린다 — 실제로 그랬고,
+     페이스북에서 답해 준 사람들의 표가 그렇게 사라졌다. 그래서 **옛 판에서도
+     두 답이 다 남게** 한다. 옛 'dialect' 칸은 열쇠가 '숫자1~2 + A~D',
+     값이 bac/trung/nam/? 라야 통과한다. 그 틀 안에서:
+       · 지방 표  = '3C'  (문장3의 소리C)        — 본디 쓰임 그대로
+       · 사람 같다 = '13D' (앞의 1은 표시, 문장3에서 D를 골랐다). 값은 안 쓴다.
+     한 번에 보내니 한 사람의 두 답이 갈라져 반만 남는 일이 없다.
+     읽는 쪽은 tools/survey_read.py 하나뿐이고 거기서 되돌린다.
+     ※ 문장이 9개를 넘으면 이 표시가 겹친다. 그때는 짜임을 바꿔야 한다. */
+  const old=Object.assign({},dia);
+  for(const[n,v]of Object.entries(nat)) old['1'+n+v]='?';
   if((await post({act:'giong',rg:RG,dia,nat})).ok
-   ||(await post({act:'dialect',rg:RG,picks:dia})).ok)
+   ||(await post({act:'dialect',rg:RG,picks:old})).ok)
     msg='✅ Đã gửi. Cảm ơn bạn rất nhiều! 🙏';
   document.getElementById('out').textContent=
     `Vùng: ${RG} · Đã đánh dấu ${Object.keys(dia).length} + ${Object.keys(nat).length} mục.\\n${msg}`;

@@ -45,15 +45,35 @@ def tally(agg, keys, names):
     return dict(sorted(t.items(), key=lambda x: -x[1]))
 
 
+def unpack(agg):
+    """옛 칸에 실려 온 표를 되돌린다 — giong.html 의 보내는 쪽과 짝이다.
+
+    '3C'  → 문장3의 소리C 를 어느 지방으로 들었나 (지방 표)
+    '13D' → 문장3에서 D 를 가장 사람 같다고 골랐다 (값은 쓰지 않는다)
+    """
+    dia, nat = {}, {}
+    for k, cnt in agg.items():
+        if len(k) == 2:                       # 1A ~ 9D — 본디 쓰임
+            dia[k] = cnt
+        elif len(k) == 3 and k[0] == "1":     # 11A ~ 19D — 얹어 보낸 '사람 같다'
+            q, v = k[1], k[2]
+            nat.setdefault(q, {})[v] = nat.get(q, {}).get(v, 0) + sum(cnt.values())
+    return dia, nat
+
+
 def show_giong(d):
     n, nOld = d.get("n", 0), d.get("nOld", 0)
-    print(f"\n■ 합친 설문 — 온전한 답 {n}명"
-          + (f" · 지방 표만 온 것 {nOld}명(서버가 옛 판이던 때)" if nOld else ""))
+    print(f"\n■ 합친 설문 — 새 칸으로 온 답 {n}명"
+          + (f" · 옛 칸으로 온 답 {nOld}명" if nOld else ""))
     if not (n or nOld):
         return print("  아직 한 명도 없다.")
 
+    dia, nat = unpack(d.get("dia", {}))
+    for q, m in d.get("nat", {}).items():          # 새 칸으로 온 것과 합친다
+        for v, c in m.items():
+            nat.setdefault(q, {})[v] = nat.get(q, {}).get(v, 0) + c
+
     print("\n  [1] 이 소리가 어느 지방으로 들리나 — 소리마다 5문장")
-    dia = d.get("dia", {})
     for v, name in GIONG.items():
         t = tally(dia, [k for k in dia if k.endswith(v)], None)
         tot = sum(t.values())
@@ -63,7 +83,6 @@ def show_giong(d):
         q = t.get("?", 0)
         print(f"   {v} {name:<16} {say}" + (f" · 모름 {q}" if q else ""))
 
-    nat = d.get("nat", {})
     if nat:
         print("\n  [2] 가장 사람 같은 소리 — 한 문장에 하나만")
         t = tally(nat, list(nat), None)
@@ -80,12 +99,16 @@ def show_giong(d):
     if byrg:
         print("\n  [3] 답한 사람의 지방별 — 남부 사람도 A를 남부라 하는가")
         for rg, m in byrg.items():
+            rdia, rnat = unpack(m["dia"])
             line = []
             for v in GIONG:
-                t = tally(m["dia"], [k for k in m["dia"] if k.endswith(v)], None)
+                t = tally(rdia, [k for k in rdia if k.endswith(v)], None)
                 top = max(t.items(), key=lambda x: x[1])[0] if t else "?"
                 line.append(f"{v}={RGNAME.get(top, '모름')}")
-            print(f"   {RGNAME.get(rg, rg)} 사람 → " + " · ".join(line))
+            best = tally(rnat, list(rnat), None)
+            pick = next(iter(best), None)
+            print(f"   {RGNAME.get(rg, rg)} 사람 → " + " · ".join(line)
+                  + (f"  |  사람 같다: {pick}" if pick else ""))
 
 
 def show_vote(d):
@@ -112,8 +135,8 @@ if __name__ == "__main__":
     d = ask("giongs")
     if d.get("error"):                # 'gone' = 워커가 아직 옛 판이라 이름을 모른다
         print(f"\n⚠️ 워커가 합친 설문을 모른다(error: {d['error']}).")
-        print("   tools/club_worker.js 를 Cloudflare 에 다시 올려야 한다(v15).")
-        print("   그때까지 giong.html 은 지방 표만 옛 칸에 넣는다.")
+        print("   tools/club_worker.js 를 Cloudflare 에 다시 올리면 깔끔해진다(v15).")
+        print("   그때까지도 답은 안 잃는다 — giong.html 이 옛 칸에 실어 보낸다.")
         o = ask("dialects")
         d = {"n": 0, "nOld": o["n"], "dia": o["agg"], "nat": {},
              "byrg": {k: {"n": 0, "dia": v, "nat": {}} for k, v in o["byrg"].items()}}
