@@ -34,10 +34,12 @@ import subprocess
 
 R = pathlib.Path(__file__).resolve().parent.parent
 IMG = R / "img"
-# 그림 옆에 둔다 — file:// 절대경로를 박으면 HTTP 로 열 때 브라우저가 막고,
-# 폴더를 옮기면 통째로 깨진다. 상대경로가 어디서 열든 산다.
-OUT = IMG / "_그림검수.html"
-LINK = pathlib.Path.home() / "Documents" / "시험기출자료고" / "그림검수.html"
+# 그림 **옆에** 둔다. 그림을 `src="이름.webp"` 로 부르므로 이 파일이 img/ 밖으로
+# 나가는 순간 1,800장이 전부 깨진다 — 실제로 한 번 옮겼다가 그렇게 됐다.
+# 이름은 ASCII 로 둔다. 한글 파일명은 주소에서 %EA%B7%B8... 로 바뀌어
+# 사람이 손으로 옮겨 적을 수 없고, 어떤 브라우저는 그대로 열지 못한다.
+OUT = IMG / "review.html"
+URL = "https://tpgus5119-coder.github.io/chaochao/img/review.html"
 
 
 def words_and_order():
@@ -258,13 +260,9 @@ function clearPicked(){{S.clear();document.querySelectorAll('figure.on').forEach
  document.getElementById('cnt').textContent=0;document.getElementById('out').textContent='';}}
 </script>"""
     OUT.write_text(page, encoding="utf-8")
-    LINK.parent.mkdir(parents=True, exist_ok=True)
-    LINK.write_text(
-        f'<!doctype html><meta charset="utf-8">'
-        f'<meta http-equiv="refresh" content="0; url=file://{OUT}">'
-        f'<p>그림 검수판으로 갑니다 — <a href="file://{OUT}">여기</a></p>', encoding="utf-8")
-    print(f"그림 {total}장 전량 · 낱말 붙은 것 {named}장 → {OUT}")
-    print(f"   묶음 {len(sections)}개 · 바로가기 {LINK}")
+    print(f"그림 {total}장 전량 · 낱말 붙은 것 {named}장 · 묶음 {len(sections)}개")
+    print(f"   {OUT}")
+    print(f"   올린 뒤 열 곳: {URL}")
 
 
 if __name__ == "__main__":

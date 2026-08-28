@@ -5215,3 +5215,33 @@
 
 **k-dahaeng.webp** · 다행 (sự may mắn bất ngờ)
 > a person wiping their brow in relief beside an avoided pitfall, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d085-kich-thuoc.webp**
+> a vernier caliper gripping a small grey metal block, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-chieu-dai.webp**
+> a long wooden plank lying flat, a yellow tape measure stretched along its length, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-chieu-rong.webp**
+> a rectangular board seen from above, a tape measure laid across its short side, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-chieu-cao.webp**
+> a tall stack of cardboard boxes beside a plain vertical measuring pole, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-do-day.webp**
+> side view of a thick stack of fabric layers, a caliper pinching the edge, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-met.webp**
+> a yellow folding carpenter ruler unfolded into a zigzag shape, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-phan.webp**
+> a hand pinching a small gap between thumb and index finger above a plain ruler edge, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-mi-li-met.webp**
+> tweezers holding a very thin metal sheet by its edge, close up, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-ki-lo.webp**
+> an old two-pan balance scale with a round metal weight block on one pan, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**d085-gam.webp**
+> a single feather resting on a small empty balance pan, simple flat illustration, soft pastel colors, thick outlines, plain white background
