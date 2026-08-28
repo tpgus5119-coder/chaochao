@@ -18,6 +18,7 @@ import ko_society
 import ko_t1_listen as L1
 import ko_t1_read as R1
 import ko_t2_listen as L2
+import ko_t2_read as R2
 import topik_blueprint as BP
 import gen_charts
 
@@ -435,9 +436,17 @@ def q_bank_read(rng, kind, stem, item):
     return _mk(rng, kind, stem, ans, wrong, why, bad, passage=text)
 
 
-def q_notice(rng, stem, item):
+def q_titled(rng, kind, stem, item):
+    """제목이 붙은 지문 하나에 물음 하나 — 실용문·기사·도표·글."""
     title, text, ans, wrong, why, bad = item
-    return _mk(rng, "read_notice", stem, ans, wrong, why, bad, passage=text, ptitle=title)
+    return _mk(rng, kind, stem, ans, wrong, why, bad, passage=text, ptitle=title)
+
+
+def q_pos(rng, kind, stem, item):
+    """주어진 문장이 들어갈 곳 — 넣을 문장은 물음 아래 〈보기〉로 붙인다."""
+    title, text, ins, ans, wrong, why, bad = item
+    return _mk(rng, kind, f"{stem}\n〈보기〉 {ins}", ans, wrong, why, bad,
+               passage=text, ptitle=title)
 
 
 def q_pic_dlg(rng, stem, item, pics, pic_pool):
@@ -472,7 +481,7 @@ def q_chart(rng, stem, idx):
 TAG4 = ["(가)", "(나)", "(다)", "(라)"]
 
 
-def q_order(rng, stem, item):
+def q_order(rng, kind, stem, item):
     """순서 배열 — 문장 넷에 (가)~(라)를 섞어 붙이고 바른 차례를 답으로 만든다.
 
     보기는 모두 (가) 아니면 (나)로 시작한다. 실제 시험이 그렇고, 그래야
@@ -501,7 +510,7 @@ def q_order(rng, stem, item):
         if s not in seen:
             seen.add(s)
             wrong.append(s)
-    return _mk(rng, "read_order", stem, right, wrong, why,
+    return _mk(rng, kind, stem, right, wrong, why,
                ["앞뒤가 이어지지 않는 차례입니다."] * 3, passage=body)
 
 
@@ -549,7 +558,19 @@ PAIRS.update({
     "t2p_lec_att": (L2.LEC_ATT, True), "t2p_talk_att": (L2.TALK_ATT, True),
     "t2p_lec_att2": (L2.LEC_ATT2, True),
 })
+PAIRS.update({
+    "t2rp_blank_theme": (R2.BLANK_THEME, False), "t2rp_blank_same": (R2.BLANK_SAME, False),
+    "t2rp_feel_i": (R2.FEEL_I, False), "t2rp_feel_he": (R2.FEEL_HE, False),
+    "t2rp_att": (R2.ATT, False), "t2rp_purpose3": (R2.PURPOSE3, False),
+})
+BANKS.update({"t2r_gram": R2.GRAM, "t2r_similar": R2.SIMILAR,
+              "t2r_ad": R2.AD, "t2r_blank": R2.BLANK, "t2r_head": R2.HEAD})
+# 제목이 붙은 지문(실용문·기사·도표·글) — 뭉치 모양이 (제목, 지문, …)로 하나 더 길다
+TITLED = {"read_notice": R1.READ_NOTICE, "t2r_fact": R2.FACT,
+          "t2r_same": R2.SAME, "t2r_theme": R2.THEME}
 SOLO = {"read_notice": R1.READ_NOTICE, "read_order": R1.READ_ORDER,
+        "t2r_fact": R2.FACT, "t2r_same": R2.SAME, "t2r_theme": R2.THEME,
+        "t2r_order": R2.ORDER, "t2r_pos": R2.POS,
         "listen_pic_dlg": L1.LISTEN_PIC_DLG, "pair_pos": R1.PAIR_POS,
         "t2_picdlg": L2.T2_PICDLG, "t2_chart": L2.T2_CHART}
 
@@ -649,20 +670,15 @@ BLUEPRINTS = {
         "grades": ["A", "B"],
         "sections": bp_sections(["TOPIK I 듣기", "TOPIK I 읽기"]),
     },
-    # TOPIK II는 듣기 50 + 쓰기 4 + 읽기 50이다. 우리가 지금 감당할 수 있는 것은
-    # '읽기 50'뿐이라, 듣기·쓰기를 있는 척하지 않고 읽기만 따로 낸다.
+    # TOPIK II 읽기 — 구간표를 손으로 쓰지 않는다. [9~12]와 [32~34]는 발문이 비슷해 보여도
+    # 글의 갈래가 다르다(앞은 실용문·기사·도표, 뒤는 글) — 설계도가 그것까지 정해 준다.
     # 쓰기는 정답이 하나가 아니라 extra.write 쪽에서 AI가 채점한다.
     "topik-2-read": {
         "name": "TOPIK II 읽기 모의고사",
-        "desc": "TOPIK II 2교시 읽기 형식 · 50문항 (지문은 중급 · 3회분)",
+        "desc": "TOPIK II 2교시 읽기 · 50문항 — 공식 평가틀의 문항 차례와 발문을 그대로 따랐다",
         "minutes": 70,
         "grades": ["B", "C"],
-        "sections": [
-            {"label": "[1~12] ( )에 들어갈 가장 알맞은 것을 고르십시오.", "kind": "particle", "n": 12},
-            {"label": "[13~28] 다음 설명에 맞는 단어를 고르십시오.", "kind": "dfn2word", "n": 16},
-            {"label": "[29~38] 뜻이 알맞은 것을 고르십시오.", "kind": "word2vi", "n": 10},
-            {"label": "[39~50] 다음을 읽고 물음에 답하십시오.", "kind": "t2_read", "n": 12},
-        ],
+        "sections": bp_sections(["TOPIK II 읽기"]),
     },
     # TOPIK II 듣기 — 구간표를 손으로 쓰지 않는다. 21번부터 끝까지가 전부 묶음 문항이고
     # 담화의 갈래(대화·인터뷰·토론·강연·대담·다큐·인사말·교양)까지 번호마다 정해져 있다.
@@ -863,14 +879,19 @@ def build(exam_id, seed, words, gloss, pics, state):
                     break
                 item = BANKS[kind][pool.pop(0)]
                 q = (q_bank_listen if kind in LISTENY else q_bank_read)(rng, kind, head, item)
-            elif bpsec and kind == "read_notice":
+            elif bpsec and kind in TITLED:
                 if not bp_left[kind]:
                     break
-                q = q_notice(rng, head, R1.READ_NOTICE[bp_left[kind].pop(0)])
-            elif bpsec and kind == "read_order":
+                q = q_titled(rng, kind, head, TITLED[kind][bp_left[kind].pop(0)])
+            elif bpsec and kind in ("read_order", "t2r_order"):
                 if not bp_left[kind]:
                     break
-                q = q_order(rng, head, R1.READ_ORDER[bp_left[kind].pop(0)])
+                src = R1.READ_ORDER if kind == "read_order" else R2.ORDER
+                q = q_order(rng, kind, head, src[bp_left[kind].pop(0)])
+            elif bpsec and kind == "t2r_pos":
+                if not bp_left[kind]:
+                    break
+                q = q_pos(rng, kind, head, R2.POS[bp_left[kind].pop(0)])
             elif bpsec and kind == "listen_pic_dlg":
                 if not bp_left[kind]:
                     break
@@ -1032,6 +1053,8 @@ if __name__ == "__main__":
             n_sets = 1
         elif exam_id == "topik-2-listen":
             n_sets = bp_sets(["TOPIK II 듣기"])
+        elif exam_id == "topik-2-read":
+            n_sets = bp_sets(["TOPIK II 읽기"])
         elif exam_id == "topik-1":
             # 설계도가 모는 시험은 재료가 몇 회분인지 세어서 정한다
             n_sets = bp_sets(["TOPIK I 듣기", "TOPIK I 읽기"])
