@@ -112,6 +112,12 @@ button:active{transform:scale(.98)}
 .opts button[data-r="no"]{border-color:var(--bad); color:var(--bad)}
 .result{text-align:center; padding:30px 0}
 .result .n{font-size:44px; font-weight:700}
+/* 실제 시험 점수와 급 — 맞힌 개수(.n)보다 이쪽이 학습자에게 더 중요한 숫자다.
+   색만으로 구분하지 않는다: 굵기와 크기로도 갈린다(색각 배려). */
+.result .exscore{font-size:22px; font-weight:700; margin-top:8px}
+.result .exgrade{display:inline-block; margin-top:8px; padding:4px 12px;
+  border:1.5px solid var(--accent); border-radius:999px;
+  font-size:14px; font-weight:700; color:var(--accent)}
 
 /* 미션 */
 .mgoal{font-size:22px; font-weight:700; margin:0 0 10px; word-break:keep-all}

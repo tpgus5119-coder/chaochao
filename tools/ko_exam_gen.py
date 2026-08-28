@@ -596,8 +596,11 @@ def bp_sections(areas):
     for name in areas:
         for b in BP.FORMS[name]["items"]:
             a, z = b["block"]          # 설계도의 번호가 이미 절대번호다(읽기는 31~70)
+            n = z - a + 1
+            # 배점 — TOPIK I 은 문항마다 다르고(4·3점 / 2·3점), TOPIK II 는 전 문항 2점이다.
+            pts = b.get("pts") or ([2] * n if name.startswith("TOPIK II") else [1] * n)
             out.append({"label": f"[{a}~{z}] {b['stem']}",
-                        "kind": b["ours"], "n": z - a + 1,
+                        "kind": b["ours"], "n": n, "pts": pts,
                         "stem": b["stem"], "sub": b.get("sub"), "bp": True})
     return out
 
@@ -982,9 +985,11 @@ def build(exam_id, seed, words, gloss, pics, state):
                 used.add(w["ko"])
             # 묶음 문항은 지문 하나에서 여럿이 한꺼번에 나온다
             if isinstance(q, list):
-                for one in q:
+                for k, one in enumerate(q):
                     one["section"] = sec["label"]
                     one["no"] = len(qs) + 1
+                    if sec.get("pts"):
+                        one["pt"] = sec["pts"][min(made + k, len(sec["pts"]) - 1)]
                     qs.append(one)
                 made += len(q)
                 continue
@@ -996,6 +1001,8 @@ def build(exam_id, seed, words, gloss, pics, state):
                     restem(q, head)
             q["section"] = sec["label"]
             q["no"] = len(qs) + 1
+            if sec.get("pts"):
+                q["pt"] = sec["pts"][min(made, len(sec["pts"]) - 1)]
             qs.append(q)
             made += 1
         if made < sec["n"]:
@@ -1004,11 +1011,18 @@ def build(exam_id, seed, words, gloss, pics, state):
 
     rebalance(rng, qs)
 
-    return {
+    out = {
         "id": exam_id, "set": seed, "name": bp["name"], "desc": bp["desc"],
         "minutes": bp["minutes"], "total": len(qs), "shortfall": skipped,
         "questions": qs,
     }
+    # 배점이 있는 시험(TOPIK)은 만점과 급 기준을 같이 실어 보낸다 — 화면에서 다시 세지 않게
+    if any(q.get("pt") for q in qs):
+        out["full"] = sum(q.get("pt", 0) for q in qs)
+        if exam_id == "topik-1":
+            # 듣기+읽기 200점 만점. 국립국제교육원 공고 기준: 1급 80점 · 2급 140점
+            out["grades_at"] = [[80, "1급"], [140, "2급"]]
+    return out
 
 def rebalance(rng, qs):
     """정답 번호를 네 자리에 고르게 흩는다.

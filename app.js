@@ -251,6 +251,10 @@ const UIVI = {
   '나란히 (개발용)': 'Song song (cho nhà phát triển)',
   '하루 분량': 'Lượng mỗi ngày', '10단어 + 2문장': '10 từ + 2 câu', '20단어 + 4문장': '20 từ + 4 câu', '월요일마다 초기화': 'Đặt lại mỗi thứ Hai',
   'N위': 'Hạng N', 'N명 중': 'trong N người', '이번 주 점수': 'Điểm tuần này', 'N점': 'N điểm',
+  // 모의고사 채점 — TOPIK 은 문항마다 배점이 달라 '맞힌 개수'와 '점수'가 다른 숫자다
+  '맞힌 비율': 'Tỉ lệ đúng', '시간이 다 됐습니다': 'Đã hết giờ',
+  '급은 듣기·쓰기·읽기를 합쳐야 나옵니다.': 'Cấp bậc chỉ có khi cộng cả Nghe · Viết · Đọc.',
+  'N급 수준입니다': 'Tương đương cấp N', '아직 급이 나오지 않습니다': 'Chưa đạt cấp nào',
   '우리 동아리': 'Câu lạc bộ của ta',
   'N점만 더 하면 위 사람을 따라잡습니다.': 'Chỉ cần thêm N điểm là bắt kịp người trên.',
   '지금 1위입니다. 월요일까지 지켜 보세요.': 'Bạn đang hạng 1. Hãy giữ vững đến thứ Hai.',
@@ -2720,7 +2724,27 @@ function finishExam(timeUp) {
   var again, list;
   const r = el('div', 'result' + (pct >= 60 ? ' perfect' : ''));
   r.append(el('div', 'n', `${score} / ${e.questions.length}`));
-  r.append(el('div', null, timeUp ? `시간이 다 됐습니다 · ${pct}점` : `${pct}점`));
+
+  /* 실제 시험 점수 — TOPIK은 문항마다 배점이 다르다(듣기 4·3점, 읽기 2·3점).
+     맞힌 개수만 세면 실제 성적과 다른 숫자가 나와서, 급을 가늠하는 데 못 쓴다.
+     배점은 기출 24회차에서 문항 번호별로 세어 확인한 것이다(tools/topik_blueprint.py). */
+  if (e.full) {
+    let got = 0;
+    e.questions.forEach((q, i) => { if (marks[i] === q.answer) got += (q.pt || 0); });
+    r.append(el('div', 'exscore', `${got}점 / ${e.full}점`));
+    const cuts = (e.grades_at || []).filter(g => got >= g[0]);
+    if (e.grades_at) {
+      r.append(el('div', 'exgrade', cuts.length
+        ? tr('N급 수준입니다').replace('N', cuts[cuts.length - 1][1].replace('급', ''))
+        : tr('아직 급이 나오지 않습니다')));
+    } else {
+      // 한 영역만으로는 급이 안 나온다 — 있는 척하지 않는다
+      r.append(el('div', 'note', tr('급은 듣기·쓰기·읽기를 합쳐야 나옵니다.')));
+    }
+  }
+  // 배점이 있는 시험에서는 '점'을 두 뜻으로 쓰면 안 된다 — 여기서는 맞힌 비율만 말한다
+  const tail = e.full ? `${tr('맞힌 비율')} ${pct}%` : `${pct}점`;
+  r.append(el('div', null, timeUp ? `${tr('시간이 다 됐습니다')} · ${tail}` : tail));
   b.append(r);
 
   if (wrong.length) {
