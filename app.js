@@ -5043,7 +5043,41 @@ function finishDay(d) {
   hm.onclick = renderHome;
   r.append(hm);
   b.append(r);
+  missionCard(b, d);
   show('quiz', '오늘 완료', true);
+}
+
+/* 짝 미션 — 세트를 다 한 **뒤에** 나온다. 오늘 배운 것으로 실제로 말을 주고받는 자리다.
+   효과크기가 이 앱에서 가장 큰 활동이다(짝 대화 g=1.09) — 그런데 지금까지
+   23강에 써 놓고 **어디에도 그리지 않고 있었다.** 자료만 있고 화면이 없었다.
+
+   두 사람 카드(a·b)는 **각자 자기 것만** 연다. 서로 보면 물어볼 것이 없어져
+   '정보 차이'가 사라지고, 그러면 그냥 낭독이 된다 — 미션이 미션이 아니게 된다. */
+function missionCard(host, d) {
+  const m = d && d.mission;
+  if (!m || !m.goal) return;
+  const c = el('div', 'excard mission');
+  c.append(el('h3', 'exhead', '🤝 ' + tr('짝과 함께')));
+  c.append(el('div', 'msgoal', esc(m.goal)));
+  if (m.how) c.append(el('div', 'gexp', esc(m.how)));
+  if (m.a || m.b) {
+    c.append(el('p', 'note', tr('자기 것만 여십시오 — 서로 보면 물어볼 것이 없어집니다.')));
+    const row = el('div', 'msrow');
+    [['A', m.a], ['B', m.b]].forEach(([who, txt]) => {
+      if (!txt) return;
+      const btn = el('button', 'msrole');
+      btn.append(el('b', null, '나는 ' + who), el('span', null, tr('눌러서 보기')));
+      btn.onclick = () => {
+        btn.textContent = '';
+        btn.className = 'msrole open';
+        btn.append(el('b', null, who), el('span', null, esc(txt)));
+        btn.onclick = null;
+      };
+      row.append(btn);
+    });
+    c.append(row);
+  }
+  host.append(c);
 }
 
 /* ---------- 퀴즈 ---------- */

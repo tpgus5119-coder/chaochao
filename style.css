@@ -1529,3 +1529,16 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   border-radius:8px; text-decoration:none; word-break:break-all}
 .morelink::after{content:" ↗"}
 .morelink:hover,.morelink:focus-visible{border-color:var(--accent); outline:none}
+
+/* 짝 미션 — 세트를 끝낸 뒤에 나온다. 카드 두 장은 각자 자기 것만 연다. */
+.mission{margin-top:18px; border-left:3px solid var(--accent)}
+.msgoal{font-size:17px; font-weight:700; line-height:1.5}
+.msrow{display:flex; gap:10px; margin-top:10px; flex-wrap:wrap}
+.msrole{flex:1 1 46%; min-width:150px; display:flex; flex-direction:column; gap:5px;
+  align-items:flex-start; text-align:left; padding:13px 15px; border-radius:12px;
+  border:1px dashed var(--line); background:var(--bg); color:var(--ink);
+  font-size:14px; line-height:1.55; cursor:pointer}
+.msrole b{font-size:15px}
+.msrole span{color:var(--dim)}
+.msrole.open{border-style:solid; border-color:var(--accent); cursor:default}
+.msrole.open span{color:var(--ink)}
