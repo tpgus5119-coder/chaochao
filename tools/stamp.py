@@ -28,4 +28,26 @@ f.write_text(s)
 w = pathlib.Path('sw.js'); t = w.read_text()
 t = re.sub(r"const V = '[^']*';", f"const V = 'vn-{ver}';", t)
 w.write_text(t)
+def check_uivi():
+    """번역 사전에 같은 열쇠가 두 번 있으면 알린다.
+
+    JS 객체는 같은 열쇠가 두 번 있으면 **뒤엣것이 이긴다.** 그래서 앞에 적어 둔 번역이
+    조용히 묻힌다 — 화면에는 아무 표시도 안 나서 눈으로는 절대 못 찾는다.
+    실제로 26개가 쌓여 있었고, 그중 '나'가 'bạn'(너)으로 잡혀 있었다(순위표의 '나'인데).
+    배포 직전마다 여기서 잡는다."""
+    import collections, re
+    s = pathlib.Path('app.js').read_text(encoding='utf-8')
+    i = s.find('const UIVI = {')
+    if i < 0:
+        return
+    seg = s[i:s.find('\n};', i)]
+    ks = re.findall(r"'((?:[^'\\]|\\.)*?)':\s*\n?\s*'", seg)
+    dup = [k for k, c in collections.Counter(ks).items() if c > 1]
+    if dup:
+        print(f'  ⚠️ 번역 사전 중복 열쇠 {len(dup)}개 — 앞엣것이 묻힙니다: {dup[:6]}')
+    else:
+        print(f'  번역 사전 {len(ks)}개 · 중복 없음')
+
+
+check_uivi()
 print('판번호', ver)
