@@ -98,9 +98,19 @@ def bake(name, prompt):
     im.save(IMG / f'{name}.webp', 'WEBP', quality=82)
 
 def main():
-    if sh('git', 'diff', '--quiet').returncode != 0:
-        print('작업 중인 변경이 있어 건너뛴다'); return 0        # 사람이 고치는 중이면 손대지 않는다
-    sh('git', 'pull', '--rebase', '--quiet')
+    # 사람이 고치는 중이면 손대지 않는다.
+    # `git diff --quiet` 는 **추적 중인 파일만** 본다. 갓 구운 그림은 아직 추적 밖이라
+    # 이 검사를 그냥 통과했고, 그 상태로 아래 pull --rebase 가 돌다 충돌에 걸려
+    # 리베이스가 중간에 멈춰 버렸다(판번호 파일이 늘 겹친다). 그 사이 작업 트리는
+    # 옛 커밋 지점에 가 있어서 **방금 구운 그림 스무 장이 사라진 것처럼 보였다.**
+    # 그래서 추적 밖 파일까지 포함해 통째로 본다.
+    if sh('git', 'status', '--porcelain').stdout.strip():
+        print('작업 중인 변경이 있어 건너뛴다'); return 0
+    if (R / '.git' / 'rebase-merge').exists() or (R / '.git' / 'rebase-apply').exists():
+        print('리베이스가 멈춰 있다 — 사람이 풀어야 한다'); return 0
+    if sh('git', 'pull', '--rebase', '--quiet').returncode != 0:
+        sh('git', 'rebase', '--abort')          # 멈춘 채로 두지 않는다
+        print('내려받기 실패 — 되돌리고 다음에'); return 0
     want = wanted()
     doc = prompts_from_doc()
     todo = [(n, doc.get(n) or want[n]) for n in want
