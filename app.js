@@ -253,6 +253,7 @@ const UIVI = {
   'N위': 'Hạng N', 'N명 중': 'trong N người', '이번 주 점수': 'Điểm tuần này', 'N점': 'N điểm',
   // 모의고사 채점 — TOPIK 은 문항마다 배점이 달라 '맞힌 개수'와 '점수'가 다른 숫자다
   '맞힌 비율': 'Tỉ lệ đúng', '시간이 다 됐습니다': 'Đã hết giờ',
+  '틀린 문항만 다시 풀기': 'Làm lại các câu sai', '오답': 'Câu sai',
   '급은 듣기·쓰기·읽기를 합쳐야 나옵니다.': 'Cấp bậc chỉ có khi cộng cả Nghe · Viết · Đọc.',
   'N급 수준입니다': 'Tương đương cấp N', '아직 급이 나오지 않습니다': 'Chưa đạt cấp nào',
   '우리 동아리': 'Câu lạc bộ của ta',
@@ -2709,12 +2710,15 @@ function finishExam(timeUp) {
     else wrong.push({ q, picked: marks[i] });
   });
 
-  // 점수를 남긴다 — 다음에 목록에서 바로 보인다
+  // 점수를 남긴다 — 다음에 목록에서 바로 보인다.
+  // 오답만 다시 푼 것(sub)은 기록하지 않는다 — 부분 풀이가 회차 성적을 덮으면 안 된다.
   S.exam = S.exam || {};
   const key = e.id + '-' + e.set;
   const prev = S.exam[key];
-  if (!prev) earn(CRD.exam, tr('모의고사를 끝냈습니다'));   // 회차당 한 번만   // 회차당 한 번만 (다시 풀어도 또 주지 않는다)
-  if (!prev || score > prev.score) S.exam[key] = { score, total: e.questions.length, at: now() };
+  if (!e.sub) {
+    if (!prev) earn(CRD.exam, tr('모의고사를 끝냈습니다'));   // 회차당 한 번만 (다시 풀어도 또 주지 않는다)
+    if (!prev || score > prev.score) S.exam[key] = { score, total: e.questions.length, at: now() };
+  }
   touchToday(); save();
 
   const b = $('#examBody');
@@ -2819,8 +2823,23 @@ function finishExam(timeUp) {
     b.append(all);
   }
 
-  again = el('button', 'primary big', '다시 풀기');
-  again.style.marginTop = '18px';
+  /* 틀린 문항만 다시 풀기 — 통째 재응시보다 이게 먼저다.
+     맞힌 53문항을 또 푸는 건 시간 낭비고, 틀린 것을 **떠올려서 다시 답하는 것**이
+     해설을 다시 읽는 것보다 오래 남는다(인출 연습 — 시험 효과).
+     원래 회차의 기록(S.exam)은 건드리지 않는다 — 부분 풀이는 성적이 아니다. */
+  if (wrong.length && wrong.length < e.questions.length) {
+    const redo = el('button', 'primary big', `${tr('틀린 문항만 다시 풀기')} (${wrong.length})`);
+    redo.style.marginTop = '18px';
+    redo.onclick = () => startExam({
+      ...e, sub: true, full: 0, grades_at: null, name: e.name + ' · ' + tr('오답'),
+      minutes: Math.max(5, Math.round(e.minutes * wrong.length / e.questions.length)),
+      questions: wrong.map(w => w.q),
+    });
+    b.append(redo);
+  }
+  again = el('button', wrong.length && wrong.length < e.questions.length ? 'ghost big' : 'primary big',
+             '다시 풀기');
+  again.style.marginTop = wrong.length && wrong.length < e.questions.length ? '8px' : '18px';
   again.onclick = () => startExam(e);
   list = el('button', 'ghost big', '다른 시험 고르기');
   list.style.marginTop = '8px';
