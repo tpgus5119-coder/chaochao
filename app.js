@@ -2829,7 +2829,9 @@ function drawExamQ() {
   // 번호판 — 어디를 안 풀었는지 한눈에 보이고, 눌러서 바로 건너뛴다
   const pad = el('div', 'expad');
   e.questions.forEach((_, i) => {
-    const n = el('button', 'expn' + (answered(EX.marks[i]) ? ' done' : '') + (i === EX.at ? ' cur' : ''));
+    // 공식 IBT 는 **안 푼 문제**를 붉게 표시한다. 우리도 그렇게 한다 —
+    // 푼 것을 세는 것보다 남은 것을 보는 편이 시험장에서 쓸모 있다.
+    const n = el('button', 'expn' + (answered(EX.marks[i]) ? ' done' : ' todo') + (i === EX.at ? ' cur' : ''));
     n.textContent = String(i + 1);
     n.onclick = () => { EX.at = i; drawExamQ(); };
     pad.append(n);

@@ -1287,6 +1287,13 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 푼 문항은 채워서, 지금 문항은 테두리로 — 두 가지를 다른 방식으로 표시해야 겹쳐 보이지 않는다 */
 .expn.done{background:var(--accent); color:var(--accent-fg); border-color:var(--accent); font-weight:700}
 .expn.cur{outline:2px solid var(--fg); outline-offset:1px}
+/* 안 푼 문제 — 공식 IBT 가 붉은색으로 표시한다("붉은색 표시는 안 푼 문제입니다").
+   푼 것을 칠하는 것보다 **안 푼 것을 드러내는 것**이 실제 시험의 방식이다.
+   색만으로 알리지 않는다: 테두리를 굵게 하고 아래에 점을 하나 찍는다(색각 배려). */
+.expn.todo{border:2px solid var(--bad); color:var(--bad); font-weight:700;
+  position:relative}
+.expn.todo::after{content:""; position:absolute; left:50%; bottom:3px; transform:translateX(-50%);
+  width:4px; height:4px; border-radius:50%; background:var(--bad)}
 .exans{margin-top:10px; padding-top:9px; border-top:1px dashed var(--line);
   font-size:14px; color:var(--dim)}
 @media (max-width:400px){ .expn{width:34px; height:34px; font-size:13px} }
