@@ -11,7 +11,7 @@
   같은 등급(A/B/C) + 같은 품사에서만 뽑는다. 등급이 섞이면 난이도가 튀고,
   품사가 섞이면 뜻을 몰라도 형태만 보고 답이 찍힌다.
 """
-import json, os, random, sys, unicodedata
+import json, os, random, re, sys, unicodedata
 import ko_content
 import ko_content_t2
 import ko_society
@@ -24,6 +24,7 @@ import topik_blueprint as BP
 import gen_charts
 
 DATA = os.path.join(os.path.dirname(__file__), "..", "data")
+TOOLS = os.path.dirname(os.path.abspath(__file__))
 
 def load():
     words = json.load(open(os.path.join(DATA, "_ko_words.json"), encoding="utf-8"))
@@ -45,6 +46,66 @@ def vi_tokens(s):
     """'y tá, bác sĩ' → {'y tá','bác sĩ'}. 뜻이 겹치는 보기를 걸러내는 데 쓴다."""
     return {t.strip().lower() for t in str(s or "").split(",") if t.strip()}
 
+
+# ── 유의어·반의어·의미범주 (국립국어원 등급별 어휘 12,010) ───────────
+# 왜 필요했나 — 두 가지다.
+#  ① **정답이 둘이 되는 문항을 막는다.** 오답을 '같은 등급·같은 품사'에서만 뽑았더니
+#     정답의 유의어가 오답 자리에 앉는 일이 생겼다. '가격'을 묻는데 보기에 '값'이 있으면
+#     그건 틀린 보기가 아니라 또 하나의 정답이다. 뜻풀이형(dfn2word)과
+#     뜻→낱말형(vi2word)에서 특히 그렇다.
+#  ② **오답을 그럴듯하게 만든다.** 반의어와 같은 의미범주의 낱말은 뜻이 가깝되
+#     분명히 답이 아니라서, 뜻을 정확히 아는 사람만 가려낸다.
+#     지금은 '같은 등급·같은 품사'뿐이라 뜻이 아주 먼 낱말이 보기에 섞인다.
+def _load_lex():
+    syn, ant, cat = {}, {}, {}
+    p = os.path.join(TOOLS, "nikl_12019.tsv")
+    if not os.path.exists(p):
+        return syn, ant, cat
+    def heads(v):
+        # '가급적01/가급적' · '증속00' · '가뜩|가뜩이00' → {'가급적','증속','가뜩','가뜩이'}
+        out = set()
+        for chunk in re.split(r"[|/]", v or ""):
+            w = re.sub(r"\d+$", "", chunk.strip().lstrip("-")).strip()
+            if w:
+                out.add(w)
+        return out
+    with open(p, encoding="utf-8") as f:
+        head = f.readline().rstrip("\n").split("\t")
+        wi, si, ai = head.index("어휘"), head.index("유의어"), head.index("반의어")
+        bi, mi = head.index("대범주"), head.index("소범주")
+        for line in f:
+            c = line.rstrip("\n").split("\t")
+            if len(c) <= mi:
+                continue
+            for w in heads(c[wi]):
+                if c[si]:
+                    syn.setdefault(w, set()).update(heads(c[si]))
+                if c[ai]:
+                    ant.setdefault(w, set()).update(heads(c[ai]))
+                if c[bi] or c[mi]:
+                    cat.setdefault(w, set()).add((c[bi], c[mi]))
+    # 유의어는 서로를 가리켜야 한다 — 한쪽에만 적혀 있는 짝이 많다
+    for a, bs in list(syn.items()):
+        for b in bs:
+            syn.setdefault(b, set()).add(a)
+    return syn, ant, cat
+
+
+SYN, ANT, CAT = _load_lex()
+
+
+def is_syn(a, b):
+    """둘이 서로 유의어인가 — 오답으로 쓰면 정답이 둘이 된다."""
+    return b in SYN.get(a, ()) or a in SYN.get(b, ())
+
+
+def close_to(a, b):
+    """뜻이 가까운가 — 반의어이거나 의미범주가 같으면 그럴듯한 오답이 된다."""
+    if b in ANT.get(a, ()) or a in ANT.get(b, ()):
+        return True
+    ca, cb = CAT.get(a), CAT.get(b)
+    return bool(ca and cb and (ca & cb))
+
 def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show=None):
     """오답은 같은 등급·같은 품사에서만 뽑는다.
 
@@ -58,8 +119,16 @@ def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show
     """
     pool = pool_by_key.get(key, [])
     cands = [w for w in pool if w["ko"] != answer["ko"]]
+    # ① 정답의 **유의어는 오답이 될 수 없다** — 그건 틀린 보기가 아니라 또 하나의 정답이다.
+    #    '가격'을 묻는데 보기에 '값'이 있으면 문항이 깨진다.
+    kept = [w for w in cands if not is_syn(answer["ko"], w["ko"])]
+    if len(kept) >= n:
+        cands = kept
     if len(cands) < n:
         return None
+    # ② 뜻이 가까운 것(반의어·같은 의미범주)을 **먼저** 쓴다. 뜻이 아주 먼 낱말이
+    #    보기에 섞이면 한국어를 몰라도 어울리지 않는 것을 지워 가며 맞힌다.
+    near = [w for w in cands if close_to(answer["ko"], w["ko"])]
 
     alen = len(str(show(answer))) if show else 0
 
@@ -81,6 +150,11 @@ def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show
             return mx - mn < 12 and rng.random() < 0.25
         if alen == mn and L.count(mn) == 1:
             return mx - mn < 12 and rng.random() < 0.25
+        # 정답이 최장(또는 최단)을 다른 보기와 **나눠 가져도** 차이가 크면 안 된다.
+        # '홀로 끝값'만 막았더니, 5자와 17자가 섞인 판에서 정답이 17자 쪽에 동률로
+        # 앉는 문항이 새어 나왔다. 둘 중 하나를 찍으면 절반이라 여전히 단서다.
+        if alen in (mx, mn) and mx - mn >= 12:
+            return False
         return True
 
     def extreme(pick):
@@ -91,8 +165,19 @@ def pick_distractors(rng, answer, pool_by_key, key, n=3, distinct_vi=False, show
         return (max(L) - min(L) >= 12) and (alen in (max(L), min(L)))
 
     best = None
-    for _ in range(120):
-        pick = rng.sample(cands, n)
+    for t in range(120):
+        # 앞쪽 시도에서는 뜻이 가까운 것을 섞어 뽑는다. 다 가까운 것으로만 채우면
+        # 매번 같은 보기가 나와 회차끼리 겹치므로, 가까운 것 한둘 + 나머지로 짠다.
+        if t < 80 and len(near) >= 2:
+            k = min(len(near), 2 if n >= 3 else 1)
+            head = rng.sample(near, k)
+            rest = [w for w in cands if w not in head]
+            if len(rest) < n - k:
+                continue
+            pick = head + rng.sample(rest, n - k)
+            rng.shuffle(pick)
+        else:
+            pick = rng.sample(cands, n)
         if distinct_vi:
             sets = [vi_tokens(answer.get("vi"))] + [vi_tokens(w.get("vi")) for w in pick]
             if any(not s for s in sets):
