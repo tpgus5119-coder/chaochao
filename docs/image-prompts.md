@@ -5245,3 +5245,42 @@
 
 **d085-gam.webp**
 > a single feather resting on a small empty balance pan, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-ga-chicken.webp**
+> a plump brown hen standing on grass, side view, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-mua-rain.webp**
+> rain falling from a grey cloud onto a puddle, with an umbrella below, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-kho-hard.webp**
+> a person pushing a large heavy boulder uphill, sweat drops, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-dung-stop.webp**
+> a raised open palm facing forward, gesture meaning stop, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-ve-return.webp**
+> a curved arrow looping back toward a small house, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-nuoc-country.webp**
+> a globe showing continents, with a small flag pin on one country, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-cua-hang.webp**
+> small neighbourhood shop front with a striped awning and crates of fruit outside, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-ga.webp**
+> a train arriving at a platform under a canopy, seen from the side, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-hop-dong.webp**
+> two hands shaking above a blank sheet of paper and a pen, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-nam.webp**
+> four seasons arranged around a circle: blossom, sun, falling leaf, snowflake, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-nay.webp**
+> a hand pointing at one highlighted square on a plain empty grid, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-thang.webp**
+> a row of moon phases from thin crescent to full moon, simple flat illustration, soft pastel colors, thick outlines, plain white background
+
+**n-ve.webp**
+> a torn paper ticket stub with a punched hole and a dashed tear line, simple flat illustration, soft pastel colors, thick outlines, plain white background
