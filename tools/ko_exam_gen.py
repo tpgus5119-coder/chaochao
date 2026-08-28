@@ -539,7 +539,8 @@ BANKS = {
     "listen_same": L1.LISTEN_SAME,
     "read_topic": R1.READ_TOPIC, "read_idea": R1.READ_IDEA, "read_same": R1.READ_SAME,
 }
-LISTENY = {"listen_next", "listen_place", "listen_topic", "listen_idea", "listen_same"}
+LISTENY = {"listen_next", "listen_place", "listen_topic", "listen_idea",
+           "listen_same", "t2_idea_dlg"}
 # 묶음 유형 → (재료 뭉치, 듣기인가)
 PAIRS = {
     "pair_why": (L1.PAIR_WHY, True), "pair_what": (L1.PAIR_WHAT, True),
@@ -563,7 +564,7 @@ PAIRS.update({
     "t2rp_feel_i": (R2.FEEL_I, False), "t2rp_feel_he": (R2.FEEL_HE, False),
     "t2rp_att": (R2.ATT, False), "t2rp_purpose3": (R2.PURPOSE3, False),
 })
-BANKS.update({"t2r_gram": R2.GRAM, "t2r_similar": R2.SIMILAR,
+BANKS.update({"t2_idea_dlg": L2.T2_IDEA_DLG, "t2r_gram": R2.GRAM, "t2r_similar": R2.SIMILAR,
               "t2r_ad": R2.AD, "t2r_blank": R2.BLANK, "t2r_head": R2.HEAD})
 # 제목이 붙은 지문(실용문·기사·도표·글) — 뭉치 모양이 (제목, 지문, …)로 하나 더 길다
 TITLED = {"read_notice": R1.READ_NOTICE, "t2r_fact": R2.FACT,

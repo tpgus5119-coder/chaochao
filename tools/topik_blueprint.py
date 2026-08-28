@@ -156,7 +156,7 @@ T2_LISTEN = [
          qtype="일치하는 내용 고르기", ours="t2_same"),
     dict(block=(17, 20), stem="다음을 듣고 남자의 중심 생각으로 가장 알맞은 것을 고르십시오.",
          goal="대화·인터뷰를 듣고 중심 생각을 추론할 수 있다.",
-         qtype="중심 생각 고르기", ours="t2_idea"),
+         qtype="중심 생각 고르기", ours="t2_idea_dlg"),
     dict(block=(21, 22), paired=True, stem="다음을 듣고 물음에 답하십시오.",
          sub=["남자의 중심 생각으로 가장 알맞은 것을 고르십시오.", "들은 내용과 같은 것을 고르십시오."],
          goal="대화를 듣고 중심 생각 추론 / 세부 내용 파악", qtype="중심 생각 + 일치", ours="t2p_dlg_idea"),
