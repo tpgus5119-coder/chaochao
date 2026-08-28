@@ -90,3 +90,30 @@ def render_all(quiet=True):
 
 if __name__ == "__main__":
     render_all(quiet=False)
+
+
+# ── 말하기 5번(자료 해석하기)에 쓰는 도표 ────────────────────────
+# 여기는 보기 넷이 아니라 **한 장**이다. 응시자가 도표를 보고 말로 설명하는 문항이라
+# 고를 것이 없다. 수치는 문항 재료(tools/ko_speak_topik.py)의 data 칸과 같아야 한다 —
+# 도표를 못 읽는 사람도 글로 읽고 답할 수 있어야 하기 때문이다(색각·저시력 배려).
+SPEAK_CHART = [
+    ("chart-speak-1.svg", "외국인 근로자의 한국어 공부 방법",
+     ["휴대전화 앱", "회사 교실", "학원", "혼자 책으로"], [46, 27, 18, 9]),
+    ("chart-speak-2.svg", "한국에 사는 외국인이 어려워하는 것",
+     ["언어", "문화 차이", "병원 이용", "집 구하기"], [41, 24, 20, 15]),
+]
+
+
+def render_speak(quiet=True):
+    os.makedirs(IMG, exist_ok=True)
+    made = 0
+    for name, title, items, vals in SPEAK_CHART:
+        path = os.path.join(IMG, name)
+        body = svg(title, items, vals)
+        old = open(path, encoding="utf-8").read() if os.path.exists(path) else None
+        if old != body:
+            open(path, "w", encoding="utf-8").write(body)
+            made += 1
+    if not quiet:
+        print(f"말하기 도표 {len(SPEAK_CHART)}장 (새로 쓴 것 {made}장)")
+    return made

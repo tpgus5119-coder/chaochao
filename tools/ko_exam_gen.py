@@ -15,6 +15,7 @@ import json, os, random, sys, unicodedata
 import ko_content
 import ko_content_t2
 import ko_society
+import ko_speak_topik
 import ko_t1_listen as L1
 import ko_t1_read as R1
 import ko_t2_listen as L2
@@ -1177,6 +1178,9 @@ if __name__ == "__main__":
                             for t, x, m, h in ko_content_t2.T2_WRITE_BLANK],
                "t2_long": [{"title": t, "chars": n, "how": h}
                            for t, n, h in ko_content_t2.T2_WRITE_LONG],
+               # TOPIK 말하기 — 유형마다 준비·응답 시간이 다르다. 그 시간표가 이 시험의 핵심이라
+               # 문항과 함께 그대로 실어 보낸다(화면에서 다시 정하지 않게).
+               "topik_speak": ko_speak_topik.build(),
            }}
     for exam_id in BLUEPRINTS:
         state = {}                     # 시험 종류마다 따로 — EPS와 KIIP는 서로 겹쳐도 된다

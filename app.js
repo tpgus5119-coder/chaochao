@@ -269,6 +269,19 @@ const UIVI = {
   '다시 풀 문항': 'Câu cần làm lại',
   '세 번 맞히면 쉽니다. 지금 창고에 N개.':
     'Đúng ba lần thì câu đó nghỉ. Hiện có N câu trong kho.',
+  // TOPIK 말하기 — 시간표가 이 시험의 핵심이라 화면 문구도 시간을 앞세운다
+  '6문항 · 유형마다 준비·응답 시간이 다릅니다. 실제 시험처럼 시간이 흐릅니다.':
+    '6 câu · Mỗi dạng có thời gian chuẩn bị và trả lời khác nhau. Đồng hồ chạy như thi thật.',
+  '시작 (시간이 흐릅니다)': 'Bắt đầu (đồng hồ sẽ chạy)',
+  '준비하세요': 'Hãy chuẩn bị', '말하세요': 'Hãy nói',
+  '준비 N초': 'Chuẩn bị N giây', '응답 N초': 'Trả lời N giây',
+  '그만두기': 'Dừng lại', '다 말했어요': 'Tôi nói xong rồi',
+  '이 기기에서는 녹음을 쓸 수 없습니다.': 'Thiết bị này không ghi âm được.',
+  '마이크를 쓸 수 없습니다.': 'Không dùng được micro.',
+  '녹음했습니다. AI 채점을 쓰려면 내 정보에서 키를 넣어 주세요.':
+    'Đã ghi âm. Để AI chấm, hãy nhập khóa ở mục Thông tin của tôi.',
+  'AI가 듣는 중…': 'AI đang nghe…', 'AI가 붐빕니다 — 다시 시도 중': 'AI đang bận — đang thử lại',
+  'AI 채점 실패': 'AI chấm thất bại',
   '우리 동아리': 'Câu lạc bộ của ta',
   'N점만 더 하면 위 사람을 따라잡습니다.': 'Chỉ cần thêm N điểm là bắt kịp người trên.',
   '지금 1위입니다. 월요일까지 지켜 보세요.': 'Bạn đang hạng 1. Hãy giữ vững đến thứ Hai.',
@@ -3038,7 +3051,23 @@ function examExtra() {
   if (!aiReady()) {
     b.append(el('p', 'note', 'AI 채점을 쓰려면 <b>내 정보</b>에서 구글 무료 키를 한 번 넣어 주세요.'));
   }
-  b.append(el('h3', 'exhead', '말하기 (구술시험)'));
+  /* TOPIK 말하기는 KIIP 구술과 다른 시험이다 — 유형마다 준비·응답 시간이 정해져 있고
+     그 시간표를 지키는 것이 시험의 핵심이다. 그래서 묶음을 따로 둔다. */
+  const ts = (EXDATA.extra || {}).topik_speak || [];
+  if (ts.length) {
+    b.append(el('h3', 'exhead', 'TOPIK ' + tr('말하기') + ' (IBT)'));
+    b.append(el('p', 'note', tr('6문항 · 유형마다 준비·응답 시간이 다릅니다. 실제 시험처럼 시간이 흐릅니다.')));
+    ts.forEach((s, i) => {
+      const btn = el('button', 'bigmenu');
+      btn.append(el('b', null, tr('N회차').replace('N', s.set)));
+      btn.append(el('span', 'exmeta',
+        s.questions.map(q => `${q.prep}/${q.resp}${tr('초')}`).join(' · ')));
+      btn.onclick = () => examT2Speak(i, 0);
+      b.append(btn);
+    });
+  }
+
+  b.append(el('h3', 'exhead', 'KIIP ' + tr('말하기 (구술시험)')));
   EXDATA.extra.speak.forEach((s, i) => {
     const btn = el('button', 'bigmenu');
     btn.append(el('b', null, `${i + 1}번 세트`));
@@ -3405,6 +3434,165 @@ async function recordAndGrade(question, passage, out, btn) {
   mr.start();
   btn.textContent = '⏹ 다 말했어요';
   out.textContent = '듣고 있습니다… 다 말하면 위 단추를 누르세요.';
+}
+
+/* ---------- TOPIK 말하기 평가 (IBT) ----------
+   이 시험의 핵심은 **시간표**다. 준비 20초에 30초를 말하는 것(1번)과
+   준비 70초에 80초를 말하는 것(5·6번)은 아주 다른 일이다. 그래서 화면이
+   공식 시간표대로 흐른다 — 준비 시간이 끝나면 "삐" 소리가 나고 그때부터
+   녹음이 저절로 시작되며, 응답 시간이 끝나면 저절로 멈춘다.
+   시간을 스스로 재게 하면 이 시험을 연습하는 뜻이 없다.
+
+   채점은 공식 평가요소 셋으로 나눠 준다 — 점수 하나만 주면 뭘 고칠지 모른다. */
+const T2SPEAK_RUBRIC =
+  '너는 한국어능력시험(TOPIK) 말하기 평가 채점관이다.\n'
+  + '공식 평가요소 세 가지로만 나눠서, 아래 형식 그대로 답한다. 다른 말은 붙이지 않는다:\n'
+  + '내용 및 과제 수행: (상/중/하 중 하나) — (한 문장)\n'
+  + '언어 사용: (상/중/하 중 하나) — (한 문장)\n'
+  + '발화 전달력: (상/중/하 중 하나) — (한 문장)\n'
+  + '이렇게 말해 보세요: (더 나은 표현 한두 문장)\n'
+  + '기준: 과제에 맞는 내용인가 · 담화 구성이 조직적인가 · 상황에 맞는 어휘와 문법인가 · '
+  + '발음과 억양이 이해 가능하고 속도가 자연스러운가.\n'
+  + '응시자는 한국에서 일하거나 공부하는 베트남 사람이다. 배우는 사람이니 말은 따뜻하게 하고, '
+  + '설명은 쉬운 한국어로 짧게 쓴다.';
+
+/** 준비 → "삐" → 녹음 → 자동 정지. 시간은 문항이 들고 있는 공식 값을 쓴다. */
+function t2SpeakRun(q, host, out) {
+  host.textContent = '';
+  const bar = el('div', 'spkbar');
+  const lab = el('div', 'spklab');
+  const num = el('div', 'spknum');
+  bar.append(lab, num);
+  host.append(bar);
+  const stopBtn = el('button', 'ghost sm', tr('그만두기'));
+  host.append(stopBtn);
+
+  let timer = 0, mr = null;
+  const clear = () => { if (timer) clearInterval(timer); timer = 0; };
+  const bail = () => { clear(); if (mr && mr.state === 'recording') mr.stop(); else releaseMic(); host.textContent = ''; };
+  stopBtn.onclick = bail;
+
+  const countdown = (secs, label, cls, done) => {
+    let left = secs;
+    lab.textContent = tr(label);
+    bar.className = 'spkbar ' + cls;
+    num.textContent = left;
+    clear();
+    timer = setInterval(() => {
+      num.textContent = --left;
+      if (left <= 0) { clear(); done(); }
+    }, 1000);
+  };
+
+  countdown(q.prep, '준비하세요', 'prep', async () => {
+    beep();                                  // 공식 시험의 "삐" 신호
+    if (!canRecord()) { out.textContent = tr('이 기기에서는 녹음을 쓸 수 없습니다.'); host.textContent = ''; return; }
+    try {
+      if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) { out.textContent = tr('마이크를 쓸 수 없습니다.'); host.textContent = ''; return; }
+    const chunks = [];
+    mr = new MediaRecorder(REC.stream);
+    REC.mr = mr;
+    mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+    mr.onstop = async () => {
+      clear(); releaseMic(); host.textContent = '';
+      if (!aiReady()) { out.textContent = tr('녹음했습니다. AI 채점을 쓰려면 내 정보에서 키를 넣어 주세요.'); return; }
+      if (!aiPay(out)) return;
+      out.textContent = tr('AI가 듣는 중…');
+      try {
+        const url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
+        if (REC.url) URL.revokeObjectURL(REC.url);
+        REC.url = url;
+        const b64 = await recToWav(url);
+        const ctx = [`[문항 유형] ${q.kind} (${q.level})`, `[문제] ${q.ask}`];
+        if (q.partner) ctx.push(`[들려준 말]\n${q.partner}`);
+        if (q.scene) ctx.push(`[그림 내용]\n${q.scene.join('\n')}`);
+        if (q.data) ctx.push(`[자료]\n${q.data}`);
+        ctx.push(`[응답 시간] ${q.resp}초`);
+        const t = await gCall({
+          contents: [{ role: 'user', parts: [
+            { text: T2SPEAK_RUBRIC + '\n\n' + ctx.join('\n') + '\n\n아래 녹음이 응시자의 답이다.' },
+            { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
+          generationConfig: { maxOutputTokens: 420 }
+        }, i => { out.textContent = `${tr('AI가 붐빕니다 — 다시 시도 중')} (${i + 2}/3)…`; });
+        out.textContent = '';
+        String(t).split('\n').filter(x => x.trim())
+          .forEach(line => out.append(el('div', 'exgline', esc(line))));
+        touchToday(); save();
+      } catch (e) { out.textContent = tr('AI 채점 실패') + ': ' + (e.message || ''); }
+    };
+    mr.start();
+    stopBtn.textContent = tr('다 말했어요');
+    stopBtn.onclick = () => { if (mr.state === 'recording') mr.stop(); };
+    countdown(q.resp, '말하세요', 'resp', () => { if (mr.state === 'recording') mr.stop(); });
+  });
+}
+
+/* "삐" — 공식 시험이 응답 시작을 알리는 신호. 소리 파일을 두지 않고 바로 만든다(용량 0). */
+function beep() {
+  try {
+    const C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return;
+    const ac = new C(), o = ac.createOscillator(), g = ac.createGain();
+    o.type = 'sine'; o.frequency.value = 880;
+    g.gain.setValueAtTime(0.18, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.35);
+    o.connect(g); g.connect(ac.destination);
+    o.start(); o.stop(ac.currentTime + 0.35);
+    setTimeout(() => ac.close(), 600);
+  } catch (e) { /* 소리가 안 나도 시험은 굴러가야 한다 */ }
+}
+
+function examT2Speak(si, qi) {
+  const set = EXDATA.extra.topik_speak[si], q = set.questions[qi];
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'exsec',
+    `${tr('말하기')} ${set.set}${tr('회차')} · ${qi + 1} / ${set.questions.length} · ${esc(q.kind)}`));
+
+  const card = el('div', 'excard');
+  card.append(el('div', 'spkmeta',
+    `${q.level} · ${tr('준비 N초').replace('N', q.prep)} · ${tr('응답 N초').replace('N', q.resp)}`));
+  if (q.img) {
+    const im = new Image(); im.className = 'expic'; im.alt = ''; im.src = 'img/' + q.img;
+    card.append(im);
+  }
+  if (q.chart) {
+    const im = new Image(); im.className = 'expic'; im.alt = ''; im.src = 'img/' + q.chart;
+    card.append(im);
+    // 도표를 못 읽는 사람도 답할 수 있어야 한다 — 값을 글로도 준다
+    if (q.data) card.append(el('div', 'exbody', esc(q.data)));
+  }
+  if (q.scene) {
+    // 네 컷 그림 대신 장면을 글로 준다. 없는 그림을 있는 척하지 않는다.
+    const sc = el('div', 'expass');
+    q.scene.forEach((s, i) => sc.append(el('div', null, `${i + 1}. ${esc(s)}`)));
+    card.append(sc);
+  }
+  if (q.partner) {
+    const pw = el('div', 'exscript');
+    q.partner.split('\n').forEach(l => pw.append(el('div', null, esc(l))));
+    card.append(pw);
+  }
+  card.append(el('div', 'exask', esc(q.ask)));
+  if (q.guide) card.append(el('div', 'note', `💡 ${esc(q.guide)}`));
+
+  const stage = el('div', 'spkstage');
+  const out = el('div', 'exgrade');
+  const go = el('button', 'explay', '▶ ' + tr('시작 (시간이 흐릅니다)'));
+  go.onclick = () => { out.textContent = ''; t2SpeakRun(q, stage, out); };
+  card.append(go, stage, out);
+  b.append(card);
+
+  const nav = el('div', 'exnav');
+  const prev = el('button', 'ghost big', '‹ 이전');
+  prev.disabled = qi === 0;
+  prev.onclick = () => examT2Speak(si, qi - 1);
+  const next = el('button', 'primary big', qi === set.questions.length - 1 ? '끝내기' : '다음 ›');
+  next.onclick = () => qi === set.questions.length - 1 ? examExtra() : examT2Speak(si, qi + 1);
+  nav.append(prev, next);
+  b.append(nav);
+  show('exam', 'TOPIK ' + tr('말하기'), true);
 }
 
 function examWrite(wi) {
