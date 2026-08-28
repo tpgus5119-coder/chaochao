@@ -129,15 +129,15 @@ T1_READ = [
     dict(block=(65, 66), pts=[2, 3], paired=True, stem="다음을 읽고 물음에 답하십시오.",
          sub=["㉠에 들어갈 말로 가장 알맞은 것을 고르십시오.", "윗글의 내용과 같은 것을 고르십시오."],
          goal="설명문을 읽고 문맥 / 세부 내용을 파악할 수 있다.",
-         qtype="빈칸 + 일치하는 내용", ours="read_pair"),
+         qtype="빈칸 + 일치하는 내용", ours="read_pair_long"),
     dict(block=(67, 68), pts=[2, 3], paired=True, stem="다음을 읽고 물음에 답하십시오.",
          sub=["㉠에 들어갈 말로 가장 알맞은 것을 고르십시오.", "윗글의 내용과 같은 것을 고르십시오."],
          goal="설명문을 읽고 문맥 / 세부 내용을 파악할 수 있다.",
-         qtype="빈칸 + 일치하는 내용", ours="read_pair"),
+         qtype="빈칸 + 일치하는 내용", ours="read_pair_long"),
     dict(block=(69, 70), pts=[2, 3], paired=True, stem="다음을 읽고 물음에 답하십시오.",
          sub=["㉠에 들어갈 말로 가장 알맞은 것을 고르십시오.", "윗글의 내용으로 알 수 있는 것을 고르십시오."],
          goal="간단한 수필을 읽고 문맥 / 세부 내용을 추론할 수 있다.",
-         qtype="빈칸 + 일치하는 내용", ours="read_pair"),
+         qtype="빈칸 + 일치하는 내용", ours="read_pair_long"),
 ]
 
 # ── TOPIK II 듣기 (1~50, 모두 2점, 100점) ───────────────────

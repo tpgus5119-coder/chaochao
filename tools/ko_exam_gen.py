@@ -545,7 +545,7 @@ LISTENY = {"listen_next", "listen_place", "listen_topic", "listen_idea",
 PAIRS = {
     "pair_why": (L1.PAIR_WHY, True), "pair_what": (L1.PAIR_WHAT, True),
     "pair_reason": (L1.PAIR_REASON, True),
-    "read_pair": (R1.READ_PAIR, False), "pair_topic": (R1.PAIR_TOPIC, False),
+    "read_pair": (R1.READ_PAIR, False), "read_pair_long": (R1.READ_PAIR_LONG, False), "pair_topic": (R1.PAIR_TOPIC, False),
     "pair_purpose": (R1.PAIR_PURPOSE, False),
 }
 # 낱개로 세어 쓰는 나머지 뭉치들

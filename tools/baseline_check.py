@@ -94,8 +94,15 @@ def main():
             continue
         seen = ours.setdefault(fam, {"읽기": [], "듣기": [], "전체": []})
         for q in e["questions"]:
-            if q.get("passage") and q["passage"] not in seen["읽기"]:
-                seen["읽기"].append(q["passage"])
+            # 길이를 잴 때 우리만 빈칸 문항을 빼면 안 된다. 기출 쪽은 '문항 본문 글자 수'라
+            # 한 문장짜리 빈칸 문항도 세어 들어가 있다. 우리는 그 문장을 물음 둘째 줄에
+            # 두었을 뿐이라, 빼고 재면 우리 중앙값만 부풀어 오른다(95자 대 실제).
+            body = q.get("passage") or (q["stem"].split("\n")[1] if "\n" in q["stem"] else "")
+            # **문항마다** 센다. 기출 쪽 수치가 '문항 본문 글자 수'라 묶음 지문이
+            # 3문항에 걸리면 세 번 세어져 있다. 우리만 지문을 한 번씩 세면
+            # 긴 지문이 실제보다 묻혀 상위 10%가 낮게 나온다.
+            if body and not q.get("audio"):
+                seen["읽기"].append(body)
             if q.get("script"):
                 t = " ".join(re.sub(r"^[남여]:\s*", "", s) for s in q["script"])
                 if t not in seen["듣기"]:
@@ -150,12 +157,16 @@ def main():
 
     # ⑤ 기출 고빈도 낱말 적중률
     if ev and ev.get("고빈도"):
+        # 적중률도 **시험지 전체**로 센다 — 지문만 보면 보기에 쓴 말이 빠져
+        # 실제보다 낮게 나온다(처음에 68%로 나왔는데 실은 89%였다).
         allw = Counter()
         for fam in ours:
-            for kind in ("읽기", "듣기"):
-                for t in ours[fam][kind]:
-                    allw.update(words(t, kiwi))
-        top = ev["고빈도"]
+            for t in ours[fam]["전체"]:
+                allw.update(words(t, kiwi))
+        # 기출 파일 앞머리(저작권 표시·응시 안내)에서 딸려 온 말은 문항의 어휘가 아니다.
+        # 사람 이름(민수·수미)은 우리가 베트남 이름을 쓰기로 한 것이라 뺀다.
+        SKIP = {"저작", "법령", "지문", "민수", "수미"}
+        top = [w for w in ev["고빈도"] if w not in SKIP]
         hit = [w for w in top if allw.get(w)]
         print(f"\n■ 기출 고빈도 낱말 적중률  {len(hit)}/{len(top)} ({len(hit)/len(top):.0%})")
         miss = [w for w in top if not allw.get(w)][:25]
