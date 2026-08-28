@@ -76,7 +76,7 @@ const UIVI = {
   '많이 어려웠나요?': 'Đề có khó không?',
   '아주 쉬움': 'Rất dễ', '쉬움': 'Dễ', '보통': 'Bình thường',
   '어려움': 'Khó', '아주 어려움': 'Rất khó',
-  '보내기': 'Gửi', '보내는 중…': 'Đang gửi…', '보내지 못했습니다': 'Không gửi được',
+  '보내지 못했습니다': 'Không gửi được',
   '소재를 하나 이상 골라 주세요.': 'Hãy chọn ít nhất một chủ đề.',
   '고맙습니다. 다음 사람에게 큰 도움이 됩니다.': 'Cảm ơn bạn. Điều này giúp ích rất nhiều cho người sau.',
   '문장처럼 긴 것 N개는 보내지 않았습니다.': 'N mục quá dài (giống câu văn) đã không được gửi.',
@@ -96,18 +96,11 @@ const UIVI = {
     'Cho biết đề về <b>chủ đề</b> gì sẽ giúp người sau ôn dễ hơn. <b>Đừng chép nguyên văn câu hỏi</b> — chỉ nhận chủ đề và từ vựng.',
   '빈칸 채우기': 'Điền vào chỗ trống', '㉠ ㉡ 두 자리': 'Hai chỗ ㉠ ㉡',
   '논술 (54번 꼴)': 'Bài luận (dạng câu 54)', '자료 설명 (53번 꼴)': 'Mô tả dữ liệu (dạng câu 53)',
-  'N자 정도': 'Khoảng N chữ', '여기에 쓰세요…': 'Viết vào đây…',
-  '모범답 보기': 'Xem đáp án mẫu', 'AI에게 봐 달라기': 'Nhờ AI xem giúp',
+  'N자 정도': 'Khoảng N chữ', '모범답 보기': 'Xem đáp án mẫu', 'AI에게 봐 달라기': 'Nhờ AI xem giúp',
   '먼저 써 보세요.': 'Hãy thử viết trước đã.', '조금 더 써 주세요.': 'Hãy viết thêm một chút.',
   'TOPIK II 쓰기': 'Viết TOPIK II',
   '51·52번은 빈칸 채우기, 53·54번은 긴 글입니다. 실제 시험과 같은 꼴입니다.':
     'Câu 51·52 là điền chỗ trống, câu 53·54 là bài viết dài. Đúng dạng của kỳ thi thật.',
-  '날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 낱말 열 개, 대화 한 편입니다.':
-    'Học mỗi ngày — 78 ngày từ Sơ cấp 1 đến Trung cấp 2. Mỗi ngày một ngữ pháp, mười từ, một đoạn hội thoại.',
-  '지금 있는 것 — 날마다 배우기 78일, 모의고사 45벌(보기별 해설 포함), 기본기, 문법 78개, 한국 문화, AI 채점 말하기·쓰기':
-    'Hiện có — Học mỗi ngày 78 ngày, 34 bộ đề thi thử (kèm giải thích), Nền tảng, 78 ngữ pháp, Văn hóa Hàn, Nói·Viết chấm bằng AI',
-  '· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.':
-    '· Tiến độ học <b>tự động lưu lên máy chủ</b> — đổi điện thoại chỉ cần đăng nhập là học tiếp.',
   '고른 조건에 맞는 동아리가 없습니다.': 'Không có câu lạc bộ nào khớp với điều kiện đã chọn.',
   '동아리에 들어가면 같은 동아리 사람들과 줄을 섭니다.': 'Vào câu lạc bộ rồi bạn sẽ được xếp hạng cùng các thành viên.',
   '사진은 서버에 <b>그대로</b> 저장됩니다 — 남에게 보이면 안 될 것은 올리지 마세요.':
@@ -125,8 +118,7 @@ const UIVI = {
   '사진 받는 중…': 'Đang tải ảnh…',
   '사진이 너무 큽니다 — 더 작은 사진을 골라 주세요.': 'Ảnh quá lớn — hãy chọn ảnh nhỏ hơn.',
   '먼저 지금 동아리에서 나와야 다른 동아리에 들어갈 수 있습니다.':
-    'Phải rời câu lạc bộ hiện tại thì mới vào được câu lạc bộ khác.',
-  '목록으로': 'Về danh sách', '들어가는 중…': 'Đang vào…',
+    'Phải rời câu lạc bộ hiện tại thì mới vào được câu lạc bộ khác.', '들어가는 중…': 'Đang vào…',
   '가입 신청했습니다. 개설자가 받아 주면 들어갑니다.':
     'Đã gửi đơn. Bạn sẽ vào khi người lập duyệt.',
   '취업 (EPS)': 'Việc làm (EPS)', '체류·귀화 (KIIP)': 'Cư trú·nhập tịch (KIIP)',
@@ -134,8 +126,7 @@ const UIVI = {
   '한국에서 일하려면 보는 시험입니다.': 'Kỳ thi cần có để đi làm ở Hàn Quốc.',
   '사회통합프로그램 사전평가와 단계평가입니다.': 'Đánh giá đầu vào và đánh giá từng cấp của KIIP.',
   '한국어능력시험 형식 그대로입니다.': 'Đúng theo định dạng kỳ thi TOPIK.',
-  'N벌': 'N bộ', 'N회차': 'Lần N', '풀어 보기': 'Làm thử', '문항': ' câu', '분': ' phút', 'N점': 'N điểm',
-  '해설': 'Giải thích', '해설이 아직 없습니다.': 'Chưa có giải thích.',
+  'N벌': 'N bộ', 'N회차': 'Lần N', '풀어 보기': 'Làm thử', '문항': ' câu', '분': ' phút', '해설': 'Giải thích', '해설이 아직 없습니다.': 'Chưa có giải thích.',
   '내가 고른 답': 'Bạn đã chọn', '(그림)': '(hình)',
   '맞힌 문항 해설': 'Giải thích câu đúng', '맞힌 문항 해설도 보기': 'Xem giải thích câu đúng',
   '일터 낱말': 'Từ nơi làm việc',
@@ -162,7 +153,6 @@ const UIVI = {
   'AI 채점을 쓰려면 <b>내 정보</b>에서 구글 무료 키를 한 번 넣어 주세요.': 'Để dùng chấm điểm AI, hãy nhập khóa miễn phí của Google một lần trong <b>Thông tin của tôi</b>.',
   'AI 키가 필요합니다 — 내 정보에서 넣어 주세요.': 'Cần khóa AI — hãy nhập trong Thông tin của tôi.',
   'AIza… 로 시작하는 키': 'Khóa bắt đầu bằng AIza…',
-  'AI가 듣는 중…': 'AI đang nghe…',
   'AI가 읽는 중…': 'AI đang đọc…',
   'AI와 베트남어로 대화하려면 <b>구글 무료 키</b>가 한 번 필요합니다.<br>': 'Để trò chuyện với AI bằng tiếng Việt, cần <b>khóa miễn phí của Google</b> một lần.<br>',
   'KIIP 구술시험과 작문시험 형식 · AI가 읽고 고칠 점을 알려 줍니다.': 'Định dạng thi vấn đáp và thi viết của KIIP · AI đọc và chỉ ra chỗ cần sửa.',
@@ -220,7 +210,6 @@ const UIVI = {
   '많은 사람이 틀리는 단어': 'Những từ nhiều người hay sai',
   '말하기 (구술시험)': 'Nói (thi vấn đáp)',
   '말하기 · 쓰기': 'Nói · Viết',
-  '말하기 · 쓰기 연습': 'Luyện nói · viết',
   '맞게 썼어요': 'Bạn viết đúng',
   '매일 새벽 6시 30분에 어제 기사 다섯 편으로 만들어집니다.': 'Được tạo lúc 6 giờ 30 sáng mỗi ngày từ năm bài báo của hôm trước.',
   '매일 아침 6시 30분에 업데이트됩니다. 최근 3일치만 남습니다.<br>기사 출처 — 인사이드비나': 'Cập nhật lúc 6 giờ 30 sáng mỗi ngày. Chỉ giữ lại 3 ngày gần nhất.<br>Nguồn bài báo — Inside Vina',
@@ -241,7 +230,7 @@ const UIVI = {
   '오늘 출석': 'Điểm danh hôm nay', '연속 3일': 'Liên tục 3 ngày', '연속 7일': 'Liên tục 7 ngày',
   '모의고사를 끝냈습니다': 'Bạn đã hoàn thành một đề thi thử',
   '자주 틀리던 단어 5개를 잡았습니다': 'Bạn đã khắc phục 5 từ hay sai',
-  '지금까지 모두': 'Tổng cộng đã tích', '이번 주': 'Tuần này', '지난주': 'Tuần trước',
+  '지금까지 모두': 'Tổng cộng đã tích', '지난주': 'Tuần trước',
   '우리 동아리, 이번 주 다 같이': 'Câu lạc bộ của chúng ta, tuần này cùng nhau',
   '순위': 'Xếp hạng', '이번 주 순위': 'Xếp hạng tuần này',
   '복습을 끝냈습니다': 'Bạn đã hoàn thành ôn tập', '오늘 세트를 끝냈습니다': 'Bạn đã hoàn thành bài hôm nay',
@@ -261,7 +250,7 @@ const UIVI = {
     'Càng khó điểm càng cao — để việc săn điểm và việc thật sự tiến bộ đi cùng một hướng.',
   '최근 한 달 점수 <b>N점</b> — 최근 주에 더 무게를 줍니다(이번 주 1.0 · 1주 전 0.7 · 2주 전 0.5 · 3주 전 0.3).':
     'Điểm một tháng gần đây <b>N điểm</b> — tuần gần hơn được tính nặng hơn (tuần này 1.0 · 1 tuần trước 0.7 · 2 tuần trước 0.5 · 3 tuần trước 0.3).',
-  '지역': 'Khu vực', '북부 (하노이)': 'Miền Bắc (Hà Nội)', '남부 (호찌민)': 'Miền Nam (TP.HCM)',
+  '북부 (하노이)': 'Miền Bắc (Hà Nội)', '남부 (호찌민)': 'Miền Nam (TP.HCM)',
   '나란히 (개발용)': 'Song song (cho nhà phát triển)',
   '하루 분량': 'Lượng mỗi ngày', '10단어 + 2문장': '10 từ + 2 câu', '20단어 + 4문장': '20 từ + 4 câu', '월요일마다 초기화': 'Đặt lại mỗi thứ Hai',
   'N위': 'Hạng N', 'N명 중': 'trong N người', '이번 주 점수': 'Điểm tuần này', 'N점': 'N điểm',
@@ -284,8 +273,6 @@ const UIVI = {
   '다 들었습니다': 'Đã nghe hết',
   '실제 시험처럼 정해진 횟수만 들려줍니다.': 'Chỉ phát đúng số lần như thi thật.',
   'N번 더 들을 수 있습니다.': 'Còn nghe được N lần.',
-  '소리로만 나옵니다 — 몇 번이든 다시 들을 수 있습니다.':
-    'Chỉ có âm thanh — bạn nghe lại bao nhiêu lần cũng được.',
   '세 번 맞히면 쉽니다. 지금 창고에 N개.':
     'Đúng ba lần thì câu đó nghỉ. Hiện có N câu trong kho.',
   // TOPIK 말하기 — 시간표가 이 시험의 핵심이라 화면 문구도 시간을 앞세운다
@@ -295,7 +282,6 @@ const UIVI = {
   '준비하세요': 'Hãy chuẩn bị', '말하세요': 'Hãy nói',
   '준비 N초': 'Chuẩn bị N giây', '응답 N초': 'Trả lời N giây',
   '그만두기': 'Dừng lại', '다 말했어요': 'Tôi nói xong rồi',
-  '이 기기에서는 녹음을 쓸 수 없습니다.': 'Thiết bị này không ghi âm được.',
   '마이크를 쓸 수 없습니다.': 'Không dùng được micro.',
   '녹음했습니다. AI 채점을 쓰려면 내 정보에서 키를 넣어 주세요.':
     'Đã ghi âm. Để AI chấm, hãy nhập khóa ở mục Thông tin của tôi.',
@@ -309,11 +295,9 @@ const UIVI = {
   'AI 채점에 쓰는 크레딧': 'Điểm thưởng dùng cho AI chấm',
   'AI 채점 한 번에 <b>N크레딧</b>을 씁니다. 크레딧을 써도 <b>순위는 안 내려갑니다</b>.':
     'Mỗi lần AI chấm dùng <b>N điểm thưởng</b>. Dùng điểm thưởng <b>không làm tụt hạng</b>.',
-  '나': 'bạn',
   '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 크레딧 순위로 바뀝니다.':
     'Hiện đang xếp hạng theo <b>dấu điểm danh tuần này</b> — khi máy chủ cập nhật sẽ chuyển sang xếp hạng theo điểm thưởng.',
-  '명': 'người', '출석 도장': 'dấu điểm danh', '외운 단어': 'từ đã thuộc',
-  '이렇게 모입니다': 'Tích điểm như thế này',
+  '명': 'người', '출석 도장': 'dấu điểm danh', '이렇게 모입니다': 'Tích điểm như thế này',
   '하루 한 번이라도 공부하면': 'Học dù chỉ một lần trong ngày',
   '모의고사 한 회 끝내면': 'Hoàn thành một đề thi thử',
   '자주 틀린 단어 5개를 잡으면': 'Khắc phục 5 từ hay sai',
@@ -367,9 +351,6 @@ const UIVI = {
   '베트남 소식': 'Tin tức Việt Nam',
   '베트남 자판에는 <b>성조 글쇠가 없습니다.</b> 글자를 다 치고': 'Bàn phím tiếng Việt <b>không có phím thanh điệu.</b> Hãy gõ hết chữ rồi',
   '베트남어로 <b>입 밖에 내어</b> 말해 보세요. 속으로만 생각하면 효과가 절반입니다.': 'Hãy <b>nói thành tiếng</b> bằng tiếng Việt. Chỉ nghĩ trong đầu thì hiệu quả giảm một nửa.',
-  '별명': 'Biệt danh',
-  '별명 (2~10글자)': 'Biệt danh (2~10 ký tự)',
-  '별명 (2~10자) — 순위·동아리에 보입니다': 'Biệt danh (2~10 ký tự) — hiển thị ở bảng xếp hạng và câu lạc bộ',
   '보내는 중…': 'Đang gửi…',
   '복습 때가 아니어도 <b>언제든</b> 다시 볼 수 있습니다.': 'Bạn có thể xem lại <b>bất cứ lúc nào</b>, kể cả chưa đến hạn ôn.',
   '복습 시작 (': 'Bắt đầu ôn (',
@@ -380,7 +361,6 @@ const UIVI = {
   '불러오기 실패': 'Tải thất bại',
   '불러오는 중…': 'Đang tải…',
   '불러오지 못했습니다': 'Không tải được',
-  '비밀번호 (8자 이상)': 'Mật khẩu (từ 8 ký tự)',
   '사람': 'người',
   '사람 목록을 불러오지 못했습니다.': 'Không tải được danh sách thành viên.',
   '사람을 누르면 <b>엄지척</b>과 <b>쪽지</b>를 보낼 수 있습니다.': 'Bấm vào một người để gửi <b>lượt thích</b> và <b>tin nhắn</b>.',
@@ -427,11 +407,9 @@ const UIVI = {
   '언제든 바꿀 수 있습니다. <b>먼저 쓴 사람이 임자</b>라 겹치는 별명은 못 씁니다.': 'Bạn có thể đổi bất cứ lúc nào. <b>Ai dùng trước thì thuộc về người đó</b> nên không dùng được biệt danh trùng.',
   '얼마나 남아 있는가': 'Còn nhớ được bao nhiêu',
   '업종': 'Ngành nghề',
-  '여기에 쓰세요…': 'Viết vào đây…',
   '옆으로 밀면 앞뒤로 넘어갑니다. 그냥 두면 3초마다 저절로 넘어갑니다.': 'Vuốt sang ngang để chuyển thẻ. Nếu để yên, cứ 3 giây sẽ tự chuyển.',
   '예: <b>': 'Ví dụ: <b>',
   '예보 출처 — Open-Meteo (무료 기상 자료)': 'Nguồn dự báo — Open-Meteo (dữ liệu khí tượng miễn phí)',
-  '오늘 배운 것, 한 마디… (베트남어 환영)': 'Hôm nay học được gì, viết một câu… (rất hoan nghênh tiếng Việt)',
   '오늘 학습 시작': 'Bắt đầu học hôm nay',
   '오늘의 대화': 'Hội thoại hôm nay',
   '오늘의 대화 ·': 'Hội thoại hôm nay ·',
@@ -448,7 +426,6 @@ const UIVI = {
   '이 사람을 찾지 못했습니다': 'Không tìm thấy người này',
   '이 세트에 <b>미리 나오는 말</b> — 정식으로는 뒤에서 배웁니다': '<b>Từ xuất hiện trước</b> trong phần này — sẽ học kỹ ở bài sau',
   '이렇게도 말합니다': 'Cũng có thể nói như thế này',
-  '이름 (예: 하노이 탁구, 빈즈엉 3공장)': 'Tên (ví dụ: Bóng bàn Hà Nội, Nhà máy 3 Bình Dương)',
   '이름도 기기도 알 수 없습니다 — 서버가 숫자만 셉니다.': 'Không biết được tên hay thiết bị — máy chủ chỉ đếm số lượng.',
   '이름이 뭐예요?': 'Tên bạn là gì?',
   '이번 주': 'Tuần này',
@@ -480,7 +457,6 @@ const UIVI = {
   '하루 학습을 한 세트 끝내면 그날 대화 문장이 여기에 들어옵니다.': 'Hoàn thành một phần học trong ngày thì câu hội thoại hôm đó sẽ vào đây.',
   '학습에서 만난 단어는 전부 복습 창고에 들어갑니다. 문제를 <b>맞힐 때마다</b> 그 단어는 더 나중에 나옵니다 —': 'Mọi từ bạn gặp khi học đều vào kho ôn tập. <b>Mỗi lần trả lời đúng</b>, từ đó sẽ xuất hiện lại muộn hơn —',
   '한 주에 <b>5일</b> 공부하면 🛡️ 1개를 받습니다 (최대 2개).<br>': 'Học <b>5 ngày</b> một tuần thì được 1 chiếc 🛡️ (tối đa 2 chiếc).<br>',
-  '한 줄 소개 (60자 — 예: 퇴근 후 풋살, 초보 환영)': 'Giới thiệu một dòng (60 ký tự — ví dụ: Đá futsal sau giờ làm, hoan nghênh người mới)',
   '한국어로 쓰셨네요 — 베트남어로는': 'Bạn đã viết bằng tiếng Hàn — trong tiếng Việt là',
   '화면 언어': 'Ngôn ngữ màn hình',
   '＋ 새 단어 ·': '＋ Từ mới ·',
@@ -497,13 +473,13 @@ const UIVI = {
   '외운 단어': 'Từ đã thuộc', '끝낸 세트': 'Bài đã xong',
   '진도 백업': 'Sao lưu', '백업 불러오기': 'Khôi phục', '진도 초기화': 'Xóa tiến độ',
   '다음 ›': 'Tiếp ›', '확인 문제 ›': 'Kiểm tra ›', '완료 ›': 'Xong ›', '홈으로': 'Về trang chính',
-  '듣기': 'Nghe', '느리게 듣기': 'Nghe chậm', '느리게': 'Chậm', '따라 말하기': 'Nói theo',
+  '느리게 듣기': 'Nghe chậm', '느리게': 'Chậm', '따라 말하기': 'Nói theo',
   '말하기': 'Nói', '읽기': 'Đọc', '쓰기': 'Viết', '암기': 'Ghi nhớ', '랜덤': 'Ngẫu nhiên',
   '3분': '3 phút', '오늘 완료': 'Xong hôm nay', '지우기': 'Xóa', '채점받기': 'Chấm điểm',
   '정답 보기': 'Xem đáp án', '보내기': 'Gửi', '만들기': 'Tạo', '올리기': 'Đăng',
   '번역': 'Dịch', '바꾸기': 'Đổi', '보기': 'Xem', '받기': 'Nhận',
   '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
-  '계정': 'Tài khoản', '로그인': 'Đăng nhập', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
+  '계정': 'Tài khoản', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
   '로그인·가입': 'Đăng nhập / Đăng ký', '배울 언어': 'Ngôn ngữ học', '보호권': 'Khiên bảo vệ',
   '아이디로 어느 폰에서든 <b>내 별명·동아리</b>가 따라옵니다.':
     'Đăng nhập để <b>biệt danh và câu lạc bộ</b> của bạn theo bạn trên mọi điện thoại.',
@@ -543,6 +519,7 @@ const UIVI = {
   '말하기 · 쓰기 연습': 'Luyện nói · viết',
   '구술 N세트 · 작문 M제목': 'N bộ nói · M đề viết',
   '틀린 문항 N개': 'N câu sai', '나는 W': 'Tôi là W',
+  '멈추기': 'Dừng', '듣기': 'Nghe',
   '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '처음이세요? 가입하기': 'Lần đầu? Đăng ký', '이미 계정이 있어요 — 로그인': 'Đã có tài khoản — Đăng nhập', '가입하기': 'Đăng ký', '로그인': 'Đăng nhập', '회원가입': 'Đăng ký', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
@@ -2970,7 +2947,8 @@ function drawExamQ() {
     const paint = () => {
       const over = cap && used() >= cap;
       pb.disabled = !!over && !EX.playing;
-      pb.textContent = EX.playing ? '⏸ 멈추기' : (over ? '▶ ' + tr('다 들었습니다') : '▶ 듣기');
+      pb.textContent = EX.playing ? '⏸ ' + tr('멈추기')
+        : '▶ ' + tr(over ? '다 들었습니다' : '듣기');
       left.textContent = !cap ? tr('소리로만 나옵니다 — 몇 번이든 다시 들을 수 있습니다.')
         : over ? tr('실제 시험처럼 정해진 횟수만 들려줍니다.')
         : tr('N번 더 들을 수 있습니다.').replace('N', cap - used());
