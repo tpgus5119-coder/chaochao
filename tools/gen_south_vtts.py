@@ -9,7 +9,13 @@ import json, pathlib, sys
 import numpy as np, soundfile as sf
 
 R = pathlib.Path(__file__).resolve().parent.parent
-S = '/private/tmp/claude-501/-Users-leesehyeon-my-game/48709c5f-7b4e-44e6-89dc-2e3f9b91ea4b/scratchpad'
+# 모델 자리 — **임시 폴더에 두지 않는다.** (2026-08-29)
+# 전에는 대화 상자의 scratchpad 에 받아 뒀는데, 그 폴더는 상자가 닫히면 지워진다.
+# 그래서 남부 소리를 더 못 굽는 상태로 몇 주를 보냈다. 이제 집 아래에 둔다.
+#   코드: github.com/tronghieuit/v-tts  →  deployments/edge/inference.py
+#   모델: huggingface.co/v-tts/v-tts-onnx  (첫 실행 때 스스로 받는다)
+#   목소리: 0=NF(북부여) 1=SF(남부여) 2=NM1(북부남) 3=SM(남부남) 4=NM2
+S = str(pathlib.Path.home() / 'vtts-edge')
 sys.path.insert(0, str(R / 'tools'))
 from vnsound import segments, f0_trend, tone_of, tone_ok, speech_span, cut
 
@@ -25,7 +31,7 @@ sys.modules['imp'] = shim
 import viphoneme
 viphoneme.TTSnorm = lambda t, **k: t
 
-sys.path.insert(0, S + '/vtts2')
+sys.path.insert(0, S)
 from inference import VietnameTTSEdge
 
 VOICE = {'sf': 1, 'sm': 3}          # SF=남부 여성, SM=남부 남성
@@ -40,7 +46,7 @@ IDX = json.loads((R / 'data' / 'audio_index.json').read_text())
 for sub in ('n', 'slow'):
     (R / f'audio/{voice}/{sub}').mkdir(parents=True, exist_ok=True)
 
-tts = VietnameTTSEdge(model_dir=S + '/vtts2/model')
+tts = VietnameTTSEdge(model_dir=S + '/model')   # ~/vtts-edge/model — 안 지워지는 곳
 SR = 24000
 made = fail = healed = 0
 bad = []
