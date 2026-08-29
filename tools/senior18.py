@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""18기 단어시험을 읽는다 → data/_senior_words-18.json
+"""17·18기 단어시험을 읽는다 → data/_senior_words-{기수}.json
 
 19·20기와 다른 점 (2026-08-30)
   · **PDF가 221개**다. 19·20기는 엑셀·워드뿐이었다.
@@ -12,12 +12,15 @@
   · 같은 회차가 pdf·xlsx 로 두 번 있다 — 회차별로 하나만 남긴다.
 
 인도네시아어 섞임: 19기에서 겪은 일이라 여기서도 본다(성조 부호 비율로).
-쓰기: python3 tools/senior18.py [--report]
+쓰기: python3 tools/senior18.py --gi 18 [--report]
+
+19·20기는 tools/senior_words.py 가 읽는다(엑셀·워드만이라 짜임이 다르다).
 """
 import argparse, json, os, pathlib, re, unicodedata, collections
 
 R = pathlib.Path(__file__).resolve().parent.parent
-D = pathlib.Path(os.path.expanduser("~/Downloads/베트남어 학습자료/선배 자료/18기"))
+BASE = pathlib.Path(os.path.expanduser("~/Downloads/베트남어 학습자료/선배 자료"))
+D = None                    # --gi 로 정한다
 KO = re.compile(r"[가-힣]")
 VI = re.compile(r"[ăâđêôơưàáảãạằắẳẵặầấẩẫậèéẻẽẹềếểễệìíỉĩịòóỏõọồốổỗộờớởỡợùúủũụừứửữựỳýỷỹỵ]", re.I)
 # 빈 시험지 — 괄호 없이 적힌 것도 있고 베트남어로 câu hỏi 라 적힌 것도 있다
@@ -85,8 +88,13 @@ def label(name):
 
 
 def main():
+    global D
     ap = argparse.ArgumentParser(); ap.add_argument("--report", action="store_true")
+    ap.add_argument("--gi", default="18")
     a = ap.parse_args()
+    cands = [x for x in BASE.iterdir() if x.is_dir() and x.name.startswith(a.gi)]
+    if not cands: raise SystemExit(f"{a.gi}기 폴더를 못 찾음")
+    D = cands[0]
     seen, sets, skip, noviet = {}, [], collections.Counter(), []
     for f in sorted(os.listdir(D)):
         if f.startswith("."): continue
@@ -112,12 +120,12 @@ def main():
     for (kind, no), (f, ws) in sorted(seen.items(), key=lambda x: (x[0][0] != "일일", x[0][1])):
         sets.append({"kind": kind, "no": no, "src": f,
                      "words": [{"vi": v, "ko": k} for v, k in ws]})
-    out = {"note": "18기 단어시험. 빈 시험지((문제)·(공란))는 뺐고, 회차마다 낱말이 가장 많은 판 하나만 남겼다.",
+    out = {"note": f"{a.gi}기 단어시험. 빈 시험지((문제)·(공란))는 뺐고, 회차마다 낱말이 가장 많은 판 하나만 남겼다.",
            "sets": sets}
-    (R / "data" / "_senior_words-18.json").write_text(
+    (R / "data" / f"_senior_words-{a.gi}.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     tot = sum(len(s["words"]) for s in sets)
-    print(f"18기 — 묶음 {len(sets)}개 · 낱말 자리 {tot}")
+    print(f"{a.gi}기 — 묶음 {len(sets)}개 · 낱말 자리 {tot}")
     print("  갈래:", dict(collections.Counter(s['kind'] for s in sets)))
     print("  건너뛴 파일:", dict(skip))
     if noviet: print("  베트남어가 아니라 뺀 파일:", [x[:40] for x in noviet])
