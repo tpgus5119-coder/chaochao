@@ -4419,7 +4419,11 @@ function drawMenu() {
 
 
 /* ---------- 홈 ---------- */
-const allWords = () => ALL.flatMap(d => d.words || []);
+/* 낱말 창고 — 옛 days.json 것 + **새 과정(일곱 권)** 것.
+   복습·오답노트·문장 속 낱말 풀이가 모두 이 창고를 본다.
+   과정 낱말이 여기 없으면 복습 카드가 빈칸으로 뜬다(2026-08-30). */
+let CWORDS = [];
+const allWords = () => ALL.flatMap(d => d.words || []).concat(CWORDS);
 /* 끝낸 세트의 대화 문장 — 복습에서 단어와 같이 다룬다 */
 const allSents = () => ALL.flatMap(d => (d.dialog?.lines || []).map(l =>
   ({ vi: l.vi, ko: l.ko, kr_read: l.kr_read, tones: l.tones, sent: true })));
@@ -4844,6 +4848,23 @@ const gkey = (bi, ni) => 'G' + bi + '-' + ni;
 let COURSE = null;
 const ckey = (vi, ui, ci) => 'C' + vi + '.' + ui + '.' + ci;
 
+/* 과정을 받으면 낱말을 창고에 붓는다 — 복습이 이 낱말들을 찾을 수 있어야 한다. */
+function loadCWords() {
+  if (!COURSE || CWORDS.length) return;
+  const out = [];
+  COURSE.vols.forEach(v => v.units.forEach(u => u.chapters.forEach(c =>
+    c.words.forEach(w => out.push(w)))));
+  CWORDS = out;
+  GVOC = null; GKR = null; LEARNT = null;       // 찾기표를 다시 만들게 한다
+}
+
+/* 앱이 켜질 때 조용히 받아 둔다 — 복습을 먼저 눌러도 낱말을 찾을 수 있게. */
+addEventListener('load', () => {
+  if (COURSE) return;
+  fetch('data/course.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; loadCWords(); }).catch(() => { });
+});
+
 
 /* ---------- 핵심만 (급할 때 가는 길) ----------
    대표님 걱정: "학습량이 너무 많다". 전부 416강이다 — 하루 하나면 열네 달.
@@ -4900,7 +4921,7 @@ function courseEntryThen(then) {
   list.append(el('li', 'catpick', tr('불러오는 중…')));
   show('course', '과정', true);
   fetch('data/course.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { COURSE = j; then(); })
+    .then(j => { COURSE = j; loadCWords(); then(); })
     .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
 }
 function coreList() {
@@ -4939,7 +4960,7 @@ function courseEntry() {
   list.append(el('li', 'catpick', tr('불러오는 중…')));
   show('course', '과정', true);
   fetch('data/course.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { COURSE = j; drawCourse(); })
+    .then(j => { COURSE = j; loadCWords(); drawCourse(); })
     .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
 }
 
