@@ -4409,6 +4409,12 @@ const findItem = vi => (SBOX === 'ssrs' ? seniorItems().find(w => w.vi === vi) :
    진도(S.done)도 따로 둔다(S.sdone) — 안 그러면 '오늘 몇 강 했나'가 부풀어 순위까지 어긋난다. */
 let SBOX = 'srs';
 const srsBox = () => (S[SBOX] = S[SBOX] || {});
+/* 오답노트도 창고별이다. 한 통에 담으면 하루 5분 오답노트에 실전 낱말이 섞인다
+   — 대표님 지시(복습은 섞이지 않게)가 여기까지 걸린다. */
+const missBox = () => {
+  const k = SBOX === 'ssrs' ? 'smiss' : 'miss';
+  return (S.stats[k] = S.stats[k] || {});
+};
 function dueWords() {
   const n = now();
   return Object.entries(srsBox()).filter(([, v]) => v.due <= n)
@@ -5712,7 +5718,10 @@ function buildQuestions(words, forced) {
     const lv = (srsBox()[w.vi] || {}).lv || 0;   // 실전 단어는 제 창고(S.ssrs)를 봐야 한다
     let mode = forced === 'write' ? (!w.sent && Math.random() < .35 ? 'hand' : 'type')
              : forced || pickMode(w, lv);
-    if ((mode === 'listen' || mode === 'type') && !AIDX[w.vi]) mode = 'read';   // 소리가 없으면 눈으로
+    // 녹음이 없어도 **기기 목소리**가 있으면 듣기·자판 쓰기를 낸다.
+    // 실전 단어 2,078개에는 녹음이 없다. 그것 때문에 문제 유형이 '읽기' 하나로
+    // 쪼그라들면 기존 복습과 다른 물건이 된다(대표님 지시: 틀을 그대로 가져와라).
+    if ((mode === 'listen' || mode === 'type') && !AIDX[w.vi] && !viVoice()) mode = 'read';
     let src = w.sent ? spool : pool;
     if (src.length < 4) src = [...src, ...(w.sent ? pool : spool)];             // 모자라면 채운다
     const seen = new Set([w.vi]);
@@ -5827,7 +5836,8 @@ function reviewMenu(kind) {
   b.textContent = '';
   $('#quizFill').style.width = '0%';
   const due = dueWords().map(findItem).filter(Boolean).filter(x => kind === 'sent' ? x.sent : !x.sent);
-  b.append(el('p', 'lede', (kind === 'sent' ? '문장' : '단어') + ' 복습 — ' + due.length + '개 대기'));
+  const nm = SBOX === 'ssrs' ? '실전 단어' : kind === 'sent' ? '문장' : '단어';
+  b.append(el('p', 'lede', nm + ' 복습 — ' + due.length + '개 대기'));
   const back = () => reviewMenu(kind);
   const all = el('button', 'bigmenu', '랜덤');
   all.onclick = () => { dive(back); startQuiz(null, null, null, false, { kind }); };
@@ -5838,11 +5848,11 @@ function reviewMenu(kind) {
     b.append(btn);
   });
   const quick = el('button', 'bigmenu', '3분');
-  quick.onclick = () => { dive(back); flashRun(due.slice(0, 20), (kind === 'sent' ? '문장' : '단어') + ' 3분'); };
+  quick.onclick = () => { dive(back); flashRun(due.slice(0, 20), nm + ' 3분'); };
   b.append(quick);
   const mr = missRow(missWords(kind), back);
   if (mr) b.append(mr);
-  show('quiz', (kind === 'sent' ? '문장' : '단어') + ' 복습', true);
+  show('quiz', nm + ' 복습', true);
 }
 
 /* 복습 입구 — 처음이거나 꺼낼 카드가 없으면 방식부터 설명한다.
@@ -5901,7 +5911,7 @@ function drawRevInfo(cap) {
 /* 오답노트 — 두 번 이상 틀린 단어만 골라 다시 푼다.
    맞히면 miss 가 깎여 목록에서 스스로 사라진다(비우는 재미). 셋 미만이면 메뉴에 안 보인다. */
 function missWords(kind) {
-  return Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2)
+  return Object.entries(missBox()).filter(([, n]) => n >= 2)
     .sort((x, y) => y[1] - x[1]).map(([vi]) => findItem(vi)).filter(Boolean)
     .filter(x => kind === 'sent' ? x.sent : kind === 'word' ? !x.sent : true);
 }
@@ -5946,19 +5956,19 @@ function drawQuiz() {
   if (q.mode === 'listen') {           // 귀로만 — 글자는 답한 뒤에 보여준다
     const wrap = el('div', 'qplay');
     const b = el('button', 'primary big', '듣기');
-    b.onclick = () => play(q.w.vi, false);
+    b.onclick = () => sound(q.w.vi);
     const sl = el('button', 'ghost', '느리게 듣기');
-    sl.onclick = () => play(q.w.vi, true);
+    sl.onclick = () => sound(q.w.vi, true);
     wrap.append(b, sl);
     const m = addMic(); if (m) wrap.append(m);
     body.append(wrap, sayBox);
-    play(q.w.vi, false);
+    sound(q.w.vi);
   } else {                             // 눈으로 — 글자를 보여주고 뜻을 고른다
     /* 글자를 **누르면 소리**가 난다. 따로 '듣기' 단추를 두지 않는다 —
        앱 어디서나 낱말은 누르면 들리는 것으로 통일한다. */
     const main = el('button', 'qmain qtap' + (q.w.sent ? ' sent' : ''), esc(q.w.vi));
     main.type = 'button';
-    main.onclick = () => (AIDX[q.w.vi] ? play(q.w.vi, false) : speakVi(q.w.vi));
+    main.onclick = () => sound(q.w.vi);
     body.append(main);
     const wrap = el('div', 'qplay');
     const m = addMic(); if (m) wrap.append(m);
@@ -5991,12 +6001,12 @@ function nextBtn(box, fn) {
 function drawDict(body, q) {
   const wrap = el('div', 'qplay');
   const b = el('button', 'primary big', '듣기');
-  b.onclick = () => play(q.w.vi, false);
+  b.onclick = () => sound(q.w.vi);
   const sl = el('button', 'ghost', '느리게 듣기');
-  sl.onclick = () => play(q.w.vi, true);
+  sl.onclick = () => sound(q.w.vi, true);
   wrap.append(b, sl);
   body.append(wrap);
-  play(q.w.vi, false);
+  sound(q.w.vi);
   body.append(el('div', 'q mid', esc(q.w.ko)));   // 뜻은 보여준다 — 철자와 성조를 시험하는 것이니까
 
   const syls = q.w.vi.split(' ');
@@ -6402,14 +6412,14 @@ function grade(vi, ok, early) {
                           : od < 8 * DAY ? '4~7일 밀림' : '8일 넘게 밀림', ok);
   }
   if (!ok) {                                          // 자주 틀리는 단어
-    const m = S.stats.miss || (S.stats.miss = {});
+    const m = missBox();
     m[vi] = (m[vi] || 0) + 1;
-  } else if (S.stats.miss && S.stats.miss[vi]) {
-    const was = S.stats.miss[vi];
-    S.stats.miss[vi] = Math.max(0, was - 0.5);                // 맞히면 서서히 지워진다
+  } else if (missBox()[vi]) {
+    const m = missBox(), was = m[vi];
+    m[vi] = Math.max(0, was - 0.5);                           // 맞히면 서서히 지워진다
     /* 오답노트에서 완전히 빠지는 순간을 센다 — 5개를 잡을 때마다 점수.
        '틀린 걸 고쳤다'는 게 점수를 주기에 가장 옳은 순간이다(그냥 많이 푸는 것보다). */
-    if (was > 0 && S.stats.miss[vi] === 0) {
+    if (was > 0 && m[vi] === 0) {
       earn(CRD.fix, tr('자주 틀리던 단어를 잡았습니다'));
     }
   }
@@ -6502,7 +6512,9 @@ function drawSenior() {
   const rev = el('li', 'catpick');
   const due = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
   const rb = el('button', 'primary sm', tr('실전 단어 복습') + (due ? ' (' + due + ')' : ''));
-  rb.onclick = () => { SBOX = 'ssrs'; dive(drawSenior); startQuiz(null, null); };
+  /* 복습은 **기존 틀 그대로** 쓴다 (대표님 지시): 랜덤 · 말하기 · 듣기 · 읽기 · 쓰기 · 3분 · 오답노트.
+     따로 만들면 화면이 둘로 갈라지고, 한쪽만 고쳐지는 일이 생긴다. */
+  rb.onclick = () => { SBOX = 'ssrs'; dive(drawSenior); reviewMenu('word'); };
   rev.append(rb);
   rev.append(el('span', 'msub', tr('하루 5분 복습과 섞이지 않습니다')));
   list.append(rev);
@@ -7679,7 +7691,13 @@ function voiceHowTo() {
       '구글 TTS 설정 → 음성 데이터 설치 → 베트남어\n(기종마다 메뉴 이름이 조금 다릅니다)';
 }
 
-function speakVi(t, retry) {
+/* 소리 한 군데로 — 녹음이 있으면 녹음, 없으면 기기 목소리.
+   전에는 문제 화면이 play() 를 바로 불러서, 녹음 없는 낱말은 **아무 소리도 안 났다**. */
+function sound(t, slow) {
+  if (AIDX[t]) { play(t, !!slow); return; }
+  speakVi(t, false, slow ? .55 : 0);
+}
+function speakVi(t, retry, rate) {
   if (AIDX[t]) { play(t, false, tchDir()); return; }   // 우리 음원이 있으면 그게 낫다 (선생님 성별·지역으로)
   const u = new SpeechSynthesisUtterance(t);
   const vs = viVoices();
@@ -7690,13 +7708,13 @@ function speakVi(t, retry) {
   if (pick) u.voice = pick;
   else if (vs.length) { u.voice = vs[0]; u.pitch = male ? .65 : 1.15; }
   if (pick && vs.length === 1) u.pitch = male ? .65 : 1.15;
-  u.lang = 'vi-VN'; u.rate = .85;
+  u.lang = 'vi-VN'; u.rate = rate || .85;
   let started = false;
   u.onstart = () => { started = true; $('#tch').classList.add('talk'); };
   u.onend = u.onerror = () => $('#tch').classList.remove('talk');
   speechSynthesis.cancel(); speechSynthesis.speak(u);
   // 크롬·사파리에서 첫 호출이 조용히 씹히는 일이 있다 — 안 시작하면 한 번만 다시
-  if (!retry) setTimeout(() => { if (!started) speakVi(t, true); }, 450);
+  if (!retry) setTimeout(() => { if (!started) speakVi(t, true, rate); }, 450);
 }
 
 /* ---------- AI 선생님 캐릭터 ----------
