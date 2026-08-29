@@ -487,6 +487,25 @@ const UIVI = {
   '정답 보기': 'Xem đáp án', '보내기': 'Gửi', '만들기': 'Tạo', '올리기': 'Đăng',
   '번역': 'Dịch', '바꾸기': 'Đổi', '보기': 'Xem', '받기': 'Nhận',
   '🔔 쌤 쪽지 알림 받기': '🔔 Nhận thông báo tin nhắn của thầy cô',
+  /* ── 선배 시험 · 앱 전체 순위 ── */
+  '선배 시험': 'Bài thi khóa trước',
+  '선배 시험 자료를 받는 중…': 'Đang tải dữ liệu bài thi khóa trước…',
+  '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
+  '20기가 실제로 본 시험 차례 그대로입니다. ': 'Đúng theo thứ tự các bài thi mà khóa 20 đã làm. ',
+  ' 표시는 19기도 같은 말을 시험 봤다는 뜻입니다': ' nghĩa là khóa 19 cũng đã thi từ đó',
+  '중요': 'Quan trọng', '낱말': 'từ', '개': 'từ', '완료 ✔': 'Hoàn thành ✔',
+  '선배 낱말 복습': 'Ôn từ vựng khóa trước',
+  '하루 5분 복습과 섞이지 않습니다': 'Không trộn với phần ôn tập 5 phút mỗi ngày',
+  '이 회차 시험 보기': 'Làm bài thi đợt này',
+  '앱 전체 N명 가운데': 'Trong tổng số N người dùng',
+  '앱 전체 N명 중': 'Trong tổng số N người',
+  '우리 동아리 안에서': 'Trong câu lạc bộ của tôi',
+  '내 동아리': 'Câu lạc bộ của tôi',
+  '아직 줄을 세울 만큼 사람이 없습니다.': 'Chưa đủ người để xếp hạng.',
+  '아직 이번 판 점수가 없습니다 — 오늘 공부하면 줄에 섭니다.':
+    'Chưa có điểm trong đợt này — học hôm nay là bạn sẽ vào bảng.',
+  '순위 서버에 못 닿았습니다 — 잠시 뒤 다시 열어 보세요.':
+    'Không kết nối được máy chủ xếp hạng — hãy mở lại sau.',
   '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
   '계정': 'Tài khoản', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
   '로그인·가입': 'Đăng nhập / Đăng ký', '배울 언어': 'Ngôn ngữ học', '보호권': 'Khiên bảo vệ',
@@ -1325,7 +1344,8 @@ function drawWxNow() {
 }
 setInterval(() => { if (CURV === 'home') drawWxNow(); }, 60e3);
 function show(v, title, canBack) {
-  if (v === 'home') NAV.length = 0;
+  if (v === 'home') { NAV.length = 0; SBOX = 'srs'; }   // 홈에 서면 복습 창고는 늘 하루 5분 것
+
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
@@ -1492,6 +1512,7 @@ function renderAnalysis(host, mode) {
   if (S.nick && S.nick !== '이름없음') {
     const sk = skillScore();
     cCall({ act: 'rank', uid: myUid(), score: sk.score, memo: sk.memo, pct: myPcts(),
+            cr: weekCredits(), crm: monthCredits(),
             days: weekDots().map(d => d.done ? 1 : 0),
             f: (Object.keys(S.act || {}).sort()[0] || ''),
             l: (Object.keys(S.act || {}).sort().pop() || ''),
@@ -2410,6 +2431,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
   day:   { name: '하루 5분', items: () => [
             ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')],
             ['기사', showNewsLearn]] },
+  senior:{ name: '선배 시험', items: () => [['보기', seniorEntry]] },
   rev:   { name: '복습', items: () => [
             ['최근 학습', () => freshMenu('word')],
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
@@ -4375,14 +4397,22 @@ const allSents = () => ALL.flatMap(d => (d.dialog?.lines || []).map(l =>
 const lessonSents = () => [...(typeof RULES === 'undefined' ? [] : RULES),
                            ...(typeof GRAMMAR === 'undefined' ? [] : GRAMMAR)]
   .flatMap(r => (r.cards || []).map(c => ({ vi: c.vi, ko: c.ko, kr_read: c.kr, tones: c.tones, sent: true })));
-const findItem = vi => allWords().find(w => w.vi === vi)
+const seniorItems = () => SENIOR ? SENIOR.words.map(w => ({ vi: w[0], ko: w[1], imp: !!(w[2] & 1) })) : [];
+const findItem = vi => (SBOX === 'ssrs' ? seniorItems().find(w => w.vi === vi) : null)
+  || allWords().find(w => w.vi === vi)
   || allSents().find(x => x.vi === vi) || lessonSents().find(x => x.vi === vi);
 /* 오늘 꺼낼 카드 차례. 최근에 배운 것일수록 먼저 — 갓 배운 것이 가장 빨리 샌다.
    다만 오래 밀린 카드도 같이 올라와야 한다(2주까지). 안 그러면 밀린 카드가 영영 뒤에 남는다.
    ±3일 흔들기를 섞어 매번 같은 순서로 나오지 않게 한다. */
+/* 복습 창고가 **둘**이다 — 하루 5분 것(S.srs)과 선배 시험 것(S.ssrs).
+   대표님 지시: "복습은 이 테스트들은 다른거랑 섞이지 않게해주고".
+   한 창고에 담으면 하루 5분 복습에 선배 낱말 4,655개가 쏟아져 원래 공부가 묻힌다.
+   진도(S.done)도 따로 둔다(S.sdone) — 안 그러면 '오늘 몇 강 했나'가 부풀어 순위까지 어긋난다. */
+let SBOX = 'srs';
+const srsBox = () => (S[SBOX] = S[SBOX] || {});
 function dueWords() {
   const n = now();
-  return Object.entries(S.srs).filter(([, v]) => v.due <= n)
+  return Object.entries(srsBox()).filter(([, v]) => v.due <= n)
     .map(([k, v]) => [k, (v.first || 0) + Math.min(n - v.due, 14 * DAY) + (Math.random() - .5) * 6 * DAY])
     .sort((a, b) => b[1] - a[1]).map(x => x[0]);
 }
@@ -4927,6 +4957,42 @@ function rankRow(i, name, val, top, mine, sub) {
    연구가 말하는 해악(전체 등수 공개가 하위권 의욕을 꺾는다, Li 외 2024)을
    피하면서 겨루는 재미는 위 세 자리에 남긴다. */
 const TOP_N = 3;
+/* 개인 순위 = **앱 전체 사람 중에서** (대표님 지시, 2026-08-29).
+   전에는 같은 동아리 사람끼리만 줄을 세웠다. 동아리가 셋뿐이라 그건 순위가 아니라 방 안 겨루기였다.
+   서버가 내주는 것은 **맨 위 셋의 별명·점수**와 **내 자리**뿐이다 —
+   4등 아래는 이름도 등수도 오지 않는다. 자기 등수는 자기만 본다. */
+let GRANK = null, GRANKQ = 0;
+function loadGRank(then) {
+  if (GRANKQ) return;                       // 한 번에 한 번만 — 그리기가 여러 번 불려도 서버는 한 번
+  GRANKQ = 1;
+  const sk = skillScore();
+  cCall({ act: 'rank', uid: myUid(), score: sk.score, memo: sk.memo, pct: myPcts(),
+          cr: weekCredits(), crm: monthCredits(),
+          days: weekDots().map(d => d.done ? 1 : 0) })
+    .then(j => { GRANK = j || {}; GRANKQ = 0; then && then(); })
+    .catch(() => { GRANK = { off: 1 }; GRANKQ = 0; then && then(); });
+}
+function globalBoard(span) {
+  const box = el('div', 'crclub');
+  if (!GRANK) { box.append(el('p', 'note', tr('불러오는 중…'))); return box; }
+  const b = GRANK[span === 'month' ? 'month' : 'week'];
+  if (!b || !b.top || !b.top.length) {
+    box.append(el('p', 'note', GRANK.off ? tr('순위 서버에 못 닿았습니다 — 잠시 뒤 다시 열어 보세요.')
+      : tr('아직 줄을 세울 만큼 사람이 없습니다.')));
+    return box;
+  }
+  const me = (S.nick || '').trim();
+  const top = b.top[0].v || 1;
+  b.top.forEach((x, i) => box.append(rankRow(i, x.n, x.v, top, x.n === me)));
+  if (b.rank > TOP_N) {
+    box.append(el('p', 'note', tr('내 자리는 N위입니다 — 나만 보입니다.').replace('N', b.rank)));
+  } else if (!b.rank) {
+    box.append(el('p', 'note', tr('아직 이번 판 점수가 없습니다 — 오늘 공부하면 줄에 섭니다.')));
+  }
+  box.append(el('p', 'note', tr('앱 전체 N명 가운데').replace('N', b.total)));
+  return box;
+}
+
 function rankBoard(ppl, span) {
   const box = el('div', 'crclub');
   const hasCr = ppl.some(m => typeof m.cr === 'number');
@@ -4991,7 +5057,17 @@ function drawCredit() {
   const span = RKP.span, monthOK = hasMonth(ppl);
   const useSpan = (span === 'month' && !monthOK) ? 'week' : span;
   const big = el('div', 'crbig');
-  if (ppl.length) {
+  const gb = GRANK && GRANK[RKP.span === 'month' ? 'month' : 'week'];
+  if (gb && gb.rank) {
+    big.append(el('div', 'crnum', tr('N위').replace('N', gb.rank)));
+    big.append(el('div', 'crsub', tr('앱 전체 N명 중').replace('N', gb.total) + '  ·  '
+      + (RKP.span === 'month' ? tr('한 달 점수') + ' ' + monthCredits()
+                              : tr('이번 주 점수') + ' ' + thisW)));
+    const above = (gb.top.filter(x => x.v > gb.mine).slice(-1)[0] || {}).v;
+    if (gb.rank === 1) big.append(el('div', 'crgap top', tr('지금 1위입니다. 월요일까지 지켜 보세요.')));
+    else if (above) big.append(el('div', 'crgap',
+      tr('N점만 더 하면 위 사람을 따라잡습니다.').replace('N', Math.max(1, above - gb.mine))));
+  } else if (ppl.length) {
     const key = rankKey(ppl, useSpan);
     const sorted = ppl.slice().sort((a, b) => key(b) - key(a) || (b.memo || 0) - (a.memo || 0));
     const me = myUid();
@@ -5021,8 +5097,10 @@ function drawCredit() {
   // ── 2. 순위판 — 누구끼리(사람/동아리) × 언제까지(주/달)
   host.append(chipRow([['me', tr('개인 순위')], ['club', tr('동아리 순위')]],
                       RKP.who, k => { RKP.who = k; drawCredit(); }));
-  const spans = [['week', tr('이번 주')]].concat(monthOK || RKP.who === 'club'
-    ? [['month', tr('한 달')]] : []);
+  /* 한 달 칸은 **늘** 보여준다. 개인 순위는 앱 전체(서버가 한 달치를 준다)이고,
+     동아리도 마찬가지다. 예전에는 서버가 한 달치를 안 줘서 칸을 숨겼는데,
+     이제 준다 — 숨길 이유가 없어졌다 (대표님 지적). */
+  const spans = [['week', tr('이번 주')], ['month', tr('한 달')]];
   host.append(chipRow(spans, useSpan, k => { RKP.span = k; drawCredit(); }));
   const head = el('div', 'crct');
   head.append(document.createTextNode(RKP.who === 'club'
@@ -5037,12 +5115,13 @@ function drawCredit() {
     if (!CLRANK) cCall({ act: 'ranks' })
       .then(r => { CLRANK = r; drawCredit(); })
       .catch(() => { CLRANK = { clubs: [] }; drawCredit(); });
-  } else if (ppl.length) {
-    host.append(rankBoard(ppl, useSpan));
-    if (!monthOK) host.append(el('p', 'note',
-      '한 달 순위는 서버가 새 판이어야 나옵니다 — 지금은 이번 주만 줄을 세웁니다.'));
   } else {
-    host.append(el('p', 'note', '동아리에 들어가면 같은 동아리 사람들과 줄을 섭니다.'));
+    host.append(globalBoard(RKP.span));                 // 개인 순위 = 앱 전체
+    if (!GRANK) loadGRank(drawCredit);
+    if (ppl.length) {
+      host.append(el('div', 'crct', tr('우리 동아리 안에서')));
+      host.append(rankBoard(ppl, useSpan));
+    }
   }
 
   // ── 3. 지난주의 나 (순위와 별개로, 내 흐름은 내가 본다)
@@ -5790,7 +5869,7 @@ function drawRevInfo(cap) {
   const st = el('p', 'note');
   if (due.length) st.innerHTML = `오늘 꺼낼 카드: <b>${due.length}장</b> · 창고에 ${learned}단어`;
   else if (learned) {
-    const soon = Object.values(S.srs).map(v => v.due).filter(d => d > now()).sort((x, y) => x - y)[0];
+    const soon = Object.values(srsBox()).map(v => v.due).filter(d => d > now()).sort((x, y) => x - y)[0];
     st.innerHTML = `지금은 꺼낼 카드가 없습니다 (창고에 ${learned}단어).` +
       (soon ? ` 다음 카드는 <b>${Math.max(1, Math.round((soon - now()) / DAY))}일 뒤</b>에 나옵니다.` : '');
   } else st.textContent = '아직 배운 단어가 없습니다. 먼저 오늘 학습을 시작해 보세요.';
@@ -6310,7 +6389,7 @@ function grade(vi, ok, early) {
   const syl = vi.trim().split(/\s+/).length;
   bump('syl', syl === 1 ? '1음절' : syl === 2 ? '2음절' : '3음절+', ok);   // 길이별
   if (HARDLTR.some(c => vi.includes(c))) bump('ltr', '어려운 모음·đ', ok); // ư ơ ă â ê ô đ 가 든 단어
-  const r0 = S.srs[vi];
+  const r0 = srsBox()[vi];
   if (!early && r0) {
     bump('lv', '사다리 ' + (r0.lv || 0) + '단', ok);                      // 복습 단계별
     const od = r0.due ? now() - r0.due : -1;
@@ -6330,11 +6409,11 @@ function grade(vi, ok, early) {
     }
   }
   if (early && ok) { save(); return; }   // 예정보다 일찍 꺼내 맞힌 건 사다리를 안 올린다
-  const r = S.srs[vi] || { lv: 0, first: now() };
+  const r = srsBox()[vi] || { lv: 0, first: now() };
   if (!r.first) r.first = now();
   r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : Math.max(0, r.lv - 2);
   r.due = now() + STEPS[r.lv] * DAY;
-  S.srs[vi] = r;
+  srsBox()[vi] = r;
   save();
 }
 
@@ -6362,7 +6441,7 @@ function finishQuiz() {
   r.append(el('div', null, n === t ? '전부 맞혔습니다' :
     n >= t * .7 ? '좋습니다. 틀린 건 내일 다시 나옵니다' :
       '틀린 건 내일 다시 나옵니다. 처음엔 다 그렇습니다'));
-  const soon = Object.values(S.srs).map(v => v.due).filter(d => d > now()).sort((a, b) => a - b)[0];
+  const soon = Object.values(srsBox()).map(v => v.due).filter(d => d > now()).sort((a, b) => a - b)[0];
   if (soon) {
     const days = Math.max(1, Math.round((soon - now()) / DAY));
     r.append(el('p', 'note', `다음 복습은 ${days}일 뒤입니다. 잊기 직전에 다시 꺼내야 오래 남습니다.`));
@@ -6380,7 +6459,8 @@ function finishQuiz() {
   b.style.marginTop = '24px';
   b.onclick = () => {
     if (hasDlg) { startDialog(Q.day); return; }
-    if (Q.day) { S.done[Q.day.day] = now(); touchToday(); save(); }
+    if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : S.done)[Q.day.day] = now();
+                 touchToday(); save(); }
     renderHome();
   };
   r.append(b);
@@ -6388,6 +6468,98 @@ function finishQuiz() {
   $('#quizBody').append(r);
 }
 
+
+/* ---------- 선배 시험 (GYBM 20기가 실제로 본 시험) ----------
+   왜 하루 5분 밑이 아니라 **따로**인가 (대표님 지시): 복습이 섞이면 안 된다.
+   창고도 따로(S.ssrs), 진도도 따로(S.sdone)다 — 위 SBOX 주석을 보라.
+   자료는 228KB 라 **누를 때 받는다.** 홈 화면을 늦추면 안 된다. */
+let SENIOR = null;
+const SKIND = { d: '일일', w: '주간', x: '모음' };
+function seniorEntry() {
+  SBOX = 'ssrs';
+  if (SENIOR) return drawSenior();
+  const list = $('#dayList');
+  list.textContent = '';
+  list.append(el('li', 'lede', tr('선배 시험 자료를 받는 중…')));
+  show('course', '선배 시험', true);
+  fetch('data/senior.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { SENIOR = j; drawSenior(); })
+    .catch(() => { list.textContent = ''; list.append(el('li', 'lede', tr('자료를 못 받았습니다 — 잠시 뒤 다시'))); });
+}
+const sdone = () => (S.sdone = S.sdone || {});
+const skey = t => 'S:' + t.k + t.no;
+function drawSenior() {
+  SBOX = 'ssrs';
+  const list = $('#dayList');
+  list.textContent = '';
+
+  /* 머리말 — 이 자료가 무엇이고 「중요」가 무슨 뜻인지 한 번은 말해 줘야 한다.
+     '중요'를 내가 매긴 등급으로 오해하면 안 된다. 19기도 같은 말을 시험 봤다는 **사실**이다. */
+  const imp = SENIOR.words.filter(w => w[2] & 1).length;
+  const hd = el('li', 'catpick');
+  hd.append(el('span', null, tr('20기가 실제로 본 시험 차례 그대로입니다. ') +
+    '<b>' + tr('중요') + '</b>' + tr(' 표시는 19기도 같은 말을 시험 봤다는 뜻입니다') +
+    ' (' + imp + tr('개') + ').'));
+  list.append(hd);
+
+  const rev = el('li', 'catpick');
+  const due = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
+  const rb = el('button', 'primary sm', tr('선배 낱말 복습') + (due ? ' (' + due + ')' : ''));
+  rb.onclick = () => { SBOX = 'ssrs'; dive(drawSenior); startQuiz(null, null); };
+  rev.append(rb);
+  rev.append(el('span', 'msub', tr('하루 5분 복습과 섞이지 않습니다')));
+  list.append(rev);
+
+  SENIOR.sets.forEach(t => {
+    const k = skey(t), done = !!sdone()[k];
+    const ni = t.w.filter(i => SENIOR.words[i][2] & 1).length;
+    const b = el('button');
+    b.dataset.done = done ? '1' : '0';
+    b.append(el('span', 'num', SKIND[t.k] + ' ' + t.no),
+             el('span', 'nm', t.w.length + tr('낱말') +
+                (ni ? '<i class="catchip">' + tr('중요') + ' ' + ni + '</i>' : '')),
+             el('span', 'st', done ? tr('완료 ✔') : tr('보기')));
+    b.onclick = () => { dive(drawSenior); drawSeniorSet(t); };
+    const li = el('li'); li.append(b);
+    if (done) {
+      const u = el('button', 'ghost sm undo', tr('미완으로'));
+      u.onclick = () => { delete sdone()[k]; save(); drawSenior(); };
+      li.append(u);
+    }
+    list.append(li);
+  });
+  show('course', '선배 시험', true);
+}
+/* 한 회차 — 낱말을 먼저 훑고 나서 시험을 본다.
+   먼저 보여주는 이유: 선배 시험은 '배운 것을 확인'하는 자리가 아니라 처음 보는 말이 대부분이다.
+   아무것도 안 보여주고 물으면 그냥 다 틀리고, 그건 배움이 아니라 좌절이다. */
+function drawSeniorSet(t) {
+  SBOX = 'ssrs';
+  const list = $('#dayList');
+  list.textContent = '';
+  const ws = t.w.map(i => SENIOR.words[i]);
+  const go = el('li', 'catpick');
+  const gb = el('button', 'primary sm', tr('이 회차 시험 보기'));
+  gb.onclick = () => {
+    SBOX = 'ssrs';
+    dive(() => drawSeniorSet(t));
+    startQuiz(ws.map(w => ({ vi: w[0], ko: w[1] })), { day: skey(t), senior: 1 }, null, false, { kind: 'word' });
+  };
+  go.append(gb);
+  go.append(el('span', 'msub', ws.length + tr('낱말')));
+  list.append(go);
+  ws.forEach(w => {
+    const li = el('li');
+    const b = el('button');
+    b.append(el('span', 'nm', esc(w[0])), el('span', 'st', esc(w[1])));
+    if (w[2] & 1) b.querySelector('.nm').append(el('i', 'catchip', tr('중요')));
+    if (w[2] & 2) b.dataset.done = '1';                 // 앱에서 이미 배운 말
+    b.onclick = () => say(w[0]);
+    li.append(b);
+    list.append(li);
+  });
+  show('course', SKIND[t.k] + ' ' + t.no, true);
+}
 
 /* ---------- 성조 훈련 (미니멀 페어) ----------
    성조만 다르고 나머지는 같은 단어를 소리로만 구별시킨다.

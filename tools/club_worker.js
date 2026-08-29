@@ -85,6 +85,8 @@ function dirOf(cu, c, me) {
     .filter(([u, v]) => v && v.n)
     .map(([u, v]) => {
       const o = { uid: u, nick: v.n, days: v.wk === week() ? (v.w || []) : [],
+                  cr: v.wk === week() ? (v.cr || 0) : 0,     // 주가 바뀌면 0 — 월요일 초기화
+                  crm: v.crm || 0,                            // 한 달치는 주가 바뀌어도 이어진다
                   memo: v.m || 0, st: v.st || 0, td: v.td || 0,
                   th: v.th || 0, av: v.av || 0, at: v.at || '',
                   thToday: !!(v.tb && v.tb[me] === today()) };
@@ -541,7 +543,11 @@ export default {
       if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
       const g = JSON.parse((await KV.get(GKEY)) || '{}');
       const p = b.pct && typeof b.pct === 'object' ? b.pct : {};
-      const mine = { n: nick, s: num(b.score, 999999), m: num(b.memo, 99999), p: {} };
+      const mine = { n: nick, s: num(b.score, 999999), m: num(b.memo, 99999), p: {},
+                     /* 앱 전체 순위의 재료 — 이번 주 점수와 한 달 점수.
+                        전에는 실력 점수(s)로만 줄을 세웠다. 그건 '얼마나 잘하나'지
+                        '얼마나 했나'가 아니다. 순위는 노력으로 매긴다(대표님 지시). */
+                     cr: num(b.cr, 9999999), crm: num(b.crm, 9999999) };
       for (const k of FIELDS) if (typeof p[k] === 'number') mine.p[k] = num(p[k], 100);
       mine.w = (Array.isArray(b.days) ? b.days : []).slice(0, 7).map(x => x ? 1 : 0);
       mine.f = cut(b.f, 10); mine.l = cut(b.l, 10);          // 첫날 · 마지막 날
@@ -551,6 +557,7 @@ export default {
       const was = g[uid];
       if (was && was.w) for (let i = 0; i < 7; i++) mine.w[i] = mine.w[i] || was.w[i] || 0;
       if (!was || was.n !== mine.n || was.s !== mine.s || was.m !== mine.m
+          || was.cr !== mine.cr || was.crm !== mine.crm
           || String(was.w) !== String(mine.w)
           || JSON.stringify(was.p) !== JSON.stringify(mine.p)) {   // 바뀐 게 없으면 저장하지 않는다
         g[uid] = mine;
@@ -565,6 +572,17 @@ export default {
       }
       const list = Object.entries(g).sort((x, y) => y[1].s - x[1].s);
       const rank = list.findIndex(([k]) => k === uid) + 1;
+      /* 앱 전체에서 점수로 줄 세운다 — 이번 주와 한 달, 따로.
+         내보내는 것은 **맨 위 셋의 별명·점수**와 **내 자리**뿐이다.
+         4등 아래는 이름도 등수도 내보내지 않는다 — 자기 등수는 자기만 본다. */
+      const board = f => {
+        const L = Object.entries(g).filter(([, x]) => typeof x[f] === 'number' && x[f] > 0)
+                        .sort((x, y) => y[1][f] - x[1][f]);
+        const at = L.findIndex(([k]) => k === uid);
+        return { top: L.slice(0, 3).map(([, x]) => ({ n: x.n, v: x[f] })),
+                 rank: at < 0 ? 0 : at + 1, total: L.length,
+                 mine: (g[uid] || {})[f] || 0 };
+      };
       const avg = {};
       for (const k of FIELDS) {
         const v = list.map(([, x]) => x.p[k]).filter(x => typeof x === 'number');
@@ -578,6 +596,7 @@ export default {
         avgScore: scores.length ? Math.round(scores.reduce((a, x) => a + x, 0) / scores.length) : 0,
         avgMemo: list.length ? Math.round(list.reduce((a, [, x]) => a + x.m, 0) / list.length) : 0,
         avg, myScore: mine.s, myMemo: mine.m, myPct: mine.p,
+        week: board('cr'), month: board('crm'),        // 앱 전체 점수 순위
       });
     }
 
@@ -683,6 +702,10 @@ export default {
         w: (Array.isArray(b.days) ? b.days : []).slice(0, 7).map(x => x ? 1 : 0),
         wk: week(),                                          // 지난주 도장은 저절로 지워진다
         m: num(b.memo, 99999), s: num(b.score, 999999),
+        /* 점수를 저장한다. 앱은 진작부터 보내고 있었는데 여기서 버리고 있었다 —
+           그래서 순위가 점수가 아니라 '이번 주 출석 도장'으로 매겨졌고,
+           한 달 순위는 재료가 없어 아예 안 나왔다 (대표님 지적, 2026-08-29). */
+        cr: num(b.cr, 9999999), crm: num(b.crm, 9999999),
         st: num(b.st, 9999), td: num(b.td, 99999),           // 연속으로 온 날 · 온 날 모두
         op: b.op ? 1 : 0,                                    // 분석을 남에게 보일지
         av: num(b.av, 9999),                                 // 사진 판 번호 (남이 다시 받을지 판단)
