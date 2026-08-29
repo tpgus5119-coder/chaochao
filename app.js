@@ -2257,107 +2257,15 @@ const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
   culture:{ name: '한국 문화', items: () => [['보기', koCultureEntry]] },
   book:   { name: '단어장', items: () => [['보기', wordbookEntry]] },
-  more:   { name: '더 공부할 곳', items: () => [['보기', showMore]] },
   cred:   { name: '순위', items: () => [['보기', creditEntry]] },
   club:   { name: '동아리', items: () => [['보기', showClub]] },
   guide:  { name: '사용법', items: () => [['보기', showGuide]] },
 };
 
-/* ── 더 공부할 곳 ────────────────────────────────────────────────
-   우리가 못 만드는 것을 남이 이미 무료로 만들어 두었다 —
-   시험을 주관하는 기관이 직접, 베트남어로.
-   저 자료들은 공공누리 제3·4유형이라 **가져다 쓸 수는 없다.**
-   그러나 링크로 보내는 것은 막지 않는다. 그래서 링크로 보낸다.
-
-   유료 앱은 이걸 못 한다. 사람을 자기 앱 안에 잡아 둬야 돈이 되니까.
-   우리는 무료라서 "우리 앱 + 공식 무료 자료"를 한 묶음으로 안내할 수 있다.
-   이것이 무료 제품의 이점이고, 우리가 이 자리를 비워 두면 아무 이득이 없다.
-
-   모든 항목을 직접 열어 확인했다(2026-08-29). 확인 안 한 것은 넣지 않는다.
-   특히 유튜브에서 검색으로 뜨는 'EPS-TOPIK 표준교재 2022'(59편)는
-   개인 채널이라 **일부러 뺐다.** */
-const MORE_LINKS = [
-  { ko: 'TOPIK 공식 강의 — 베트남어 해설 28강',
-    vi: 'Bài giảng TOPIK chính thức bằng tiếng Việt (28 bài)',
-    note_ko: '시험을 주관하는 국립국제교육원이 직접 올린 것입니다. 호찌민 인문사회과학대 '
-           + 'Hương Sen 강사가 기출 35·36·37·41회를 전 문항 풀어 줍니다. 약 17시간.',
-    note_vi: 'Do NIIED — chính đơn vị tổ chức kỳ thi — đăng. Cô Hương Sen (ĐH KHXH&NV '
-           + 'TP.HCM) giải toàn bộ 4 đề thi thật: kỳ 35, 36, 37, 41. Khoảng 17 tiếng.',
-    how_ko: '유튜브에서 «국립국제교육원토픽» 을 찾아 «TK VT 01»~«TK VT 28» 을 보십시오.',
-    how_vi: 'Tìm «국립국제교육원토픽» trên YouTube → xem «TK VT 01» đến «TK VT 28».',
-    url: 'https://www.youtube.com/channel/UCvdUU31r26SVSskRlU_m7Dw' },
-  { ko: 'TOPIK 공식 홈페이지',
-    vi: 'Trang chủ TOPIK chính thức',
-    note_ko: '공개 기출 12회차와 IBT 체험 프로그램이 있습니다. 실제 시험에서 쓰는 것과 '
-           + '같은 화면이라, 시험장에서 처음 보지 않게 됩니다.',
-    note_vi: '12 đề thi thật đã công bố và chương trình thi thử IBT — cùng giao diện với '
-           + 'kỳ thi thật, để bạn không lần đầu nhìn thấy nó trong phòng thi.',
-    url: 'https://www.topik.go.kr' },
-  { ko: 'EPS-TOPIK 공식 홈페이지',
-    vi: 'Trang chủ EPS-TOPIK chính thức',
-    note_ko: '「베트남인을 위한 한국어」 1·2권을 PDF와 음원으로 무료로 내려받을 수 있고, '
-           + '실제 시험 프로그램을 미리 만져 볼 수 있습니다(평가프로그램 체험).',
-    note_vi: 'Tải miễn phí «Tiếng Hàn cho người Việt» tập 1·2 (PDF + file nghe), và thử '
-           + 'trước chính chương trình thi thật (mục 체험하기).',
-    url: 'https://epstopik.hrdkorea.or.kr' },
-  { ko: 'EPS 공식 유튜브 — 베트남어 안내',
-    vi: 'YouTube chính thức EPS — hướng dẫn tiếng Việt',
-    note_ko: '수험자 유의사항과 업종별 기능시험(2차) 안내 영상이 베트남어로 있습니다.',
-    note_vi: 'Thông tin cho thí sinh và video hướng dẫn bài thi kỹ năng (vòng 2) theo '
-           + 'từng ngành nghề, bằng tiếng Việt.',
-    url: 'https://www.youtube.com/channel/UCTC3dFip7410Ci7XQODgXCA' },
-  { ko: '베트남 해외노동센터 (COLAB)',
-    vi: 'Trung tâm Lao động Ngoài nước (COLAB)',
-    note_ko: '베트남 정부의 EPS 공식 창구입니다. 선발 공고·접수 일정·성적 조회가 여기 있습니다.',
-    note_vi: 'Cơ quan EPS chính thức của Việt Nam. Thông báo tuyển chọn, lịch đăng ký và '
-           + 'tra cứu điểm thi đều ở đây.',
-    url: 'https://colab.moha.gov.vn' },
-  { ko: 'KIIP 사회통합프로그램 평가',
-    vi: 'Đánh giá Chương trình Hội nhập Xã hội (KIIP)',
-    note_ko: '사전·중간·종합 평가 안내와 접수. 화면이 베트남어를 지원합니다.',
-    note_vi: 'Hướng dẫn và đăng ký thi sơ cấp·giữa kỳ·tổng hợp. Trang có tiếng Việt.',
-    url: 'https://www.kiiptest.org' },
-  { ko: 'EBS 두리안 — 베트남어판',
-    vi: 'EBS Durian — bản tiếng Việt',
-    note_ko: '한국 공영방송이 만든 무료 한국어 강의 7과정 139강이 베트남어로 있습니다. '
-           + '회원가입과 강좌 신청이 필요하지만 돈은 들지 않습니다.',
-    note_vi: '139 bài trong 7 khóa tiếng Hàn miễn phí do đài truyền hình quốc gia Hàn Quốc '
-           + 'làm, có tiếng Việt. Cần đăng ký tài khoản nhưng hoàn toàn miễn phí.',
-    url: 'https://www.ebs.co.kr/durian/link/vn' },
-  { ko: '온라인 세종학당',
-    vi: 'Sejong Institute Online',
-    note_ko: '입문·초급 사이버 과정과 1:1 첨삭. 문화체육관광부 산하 세종학당재단이 운영합니다.',
-    note_vi: 'Khóa học trực tuyến sơ cấp và chấm bài 1:1. Do Quỹ Sejong (Bộ Văn hóa Hàn Quốc) '
-           + 'vận hành.',
-    url: 'https://www.iksi.or.kr' },
-];
-
-function showMore() {
-  const b = $('#examBody');
-  b.textContent = '';
-  const vi = S.ui === 'vi';
-  b.append(el('p', 'lede', vi
-    ? 'Những nơi này <b>miễn phí</b> và <b>chính thức</b> — do chính các cơ quan tổ chức '
-      + 'kỳ thi làm ra, và có tiếng Việt. Chúng tôi không sao chép của họ; chúng tôi chỉ '
-      + 'dẫn bạn tới. Học ở đó cùng với ứng dụng này. 🙏'
-    : '전부 <b>무료</b>이고 <b>공식</b>입니다 — 시험을 주관하는 기관이 직접 만들었고 '
-      + '베트남어를 지원합니다. 우리는 이 자료를 베끼지 않고 <b>보내 드리기만</b> 합니다.'));
-  MORE_LINKS.forEach(x => {
-    const c = el('div', 'excard morecard');
-    c.append(el('div', 'moreti', esc(vi ? x.vi : x.ko)));
-    if (!vi) c.append(el('div', 'moresub', esc(x.vi)));
-    c.append(el('div', 'gexp', esc(vi ? x.note_vi : x.note_ko)));
-    if (x.how_ko) c.append(el('div', 'gexp vi', esc(vi ? x.how_vi : x.how_ko)));
-    const a = el('a', 'morelink', esc(x.url.replace(/^https?:\/\//, '')));
-    a.href = x.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
-    c.append(a);
-    b.append(c);
-  });
-  b.append(el('p', 'note', vi
-    ? 'Các trang trên thuộc về cơ quan của họ. Chúng tôi chỉ đặt liên kết.'
-    : '위 자료의 저작권은 각 기관에 있습니다. 우리는 링크만 겁니다.'));
-  show('exam', vi ? 'Học thêm ở đâu' : '더 공부할 곳', true);
-}
+/* '더 공부할 곳'을 뺐다 (2026-08-29, 사용자 지시).
+   무료였을 때는 "우리 앱 + 공식 무료 자료"를 한 묶음으로 안내하는 것이 이점이었다.
+   유료로 가면 그 논리가 사라진다 — 돈을 받으면서 남의 무료 자료로 보내는 꼴이다.
+   지운 것이 아니라 접은 것이다. 되살리려면 git 이력에 그대로 있다. */
 
 // drawMenu 등이 그대로 쓸 수 있도록, 고른 쪽을 MENUS 라는 이름으로 내놓는다
 const MENUS = new Proxy({}, {
