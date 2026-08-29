@@ -79,14 +79,26 @@ git add -A && git commit -m "..." && git push
 커리큘럼 원본은 `tools/build_*.py` 다. `data/days.json` 을 직접 고치지 말 것.
 
 ```
-python3 tools/build_days.py       # 준비 3일 + 성조 드릴
-python3 tools/build_daily.py      # Day 1~10
-python3 tools/build_daily2.py     # Day 11~20
-python3 tools/assemble.py          # 검증만
-python3 tools/assemble.py --write  # 검증 통과 시 days.json 기록
-python3 tools/gen_audio.py         # 새로 늘어난 것만 음성 생성
-python3 tools/stamp.py             # 판번호 (배포 전 필수)
+sh tools/build_all.sh              # 전부 — 차례가 중요하다(아래 참고)
+python3 tools/assemble.py          # 검증만 하고 싶을 때
 ```
+
+`build_all.sh` 가 도는 차례. **이 차례를 지켜야 한다** — 뒤 도구가 앞 도구 결과를
+쓰고, 순서를 어기면 조용히 사라지는 것이 생긴다(실제로 8.5강이 통째로 되돌아갔다).
+
+| 차례 | 도구 | 하는 일 |
+|---|---|---|
+| 1 | `b9.py` 등 `b*.py`·`w*.py` | 커리큘럼 원본 → `data/_b*.json` |
+| 2 | `assemble.py --write` | 합치고 검증하고 `days.json` 기록 |
+| 3 | `fix10.py` | 한 강 = 낱말 10개로 맞춤 (넘치면 ②강으로 쪼갬) |
+| 4 | `img_relink.py` | 이미 구운 그림을 다시 이어 붙임 |
+| 5 | `new_dialogs.py` | 쪼개진 강에 대화문 + 강 번호 다시 매김 |
+| 6 | `fill_missions.py` | 빈 미션 채움 |
+| 7 | `apply_patches.py` | **맨 마지막** — days.json 에만 살아 있던 사용자 지시 수정 되돌림 |
+| 8 | `hanja_attach.py` → `gen_covers.py` → `gen_audio.py` → `stamp.py` | 한자·표지·음성·판번호 |
+
+점수와 크레딧 값은 `tools/pricing.py` 가 계산한다 → `docs/scoring-basis.md`.
+손으로 고치지 말고 그 파일을 고쳐라.
 
 `assemble.py` 가 막아주는 것: 단어 중복, **아직 안 배운 낱말이 문장에 섞이는 것**.
 둘 중 하나라도 걸리면 days.json 을 쓰지 않는다.
