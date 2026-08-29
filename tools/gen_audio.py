@@ -89,11 +89,12 @@ async def main():
     data = json.loads((ROOT / "data" / "days.json").read_text())
     items = collect(data)
     jobs = []
+    # 느린 판은 **더 만들지 않는다** (2026-08-30) — 저장소가 1GB 가까워졌다.
+    #   앱이 느린 파일이 없으면 보통 소리를 0.6배로 늘려 튼다(높낮이는 지켜진다).
+    #   이미 만들어 둔 것은 그대로 쓴다 — 지우면 그만큼 소리가 더 자연스러웠던 것을 잃는다.
     for text, kind in items.items():
         for vid, vname in VOICES.items():
             jobs.append(guarded(text, vid, vname, False))
-            if kind in ("tone", "word", "sent"):
-                jobs.append(guarded(text, vid, vname, True))
     made = sum(1 for r in await asyncio.gather(*jobs) if r)
     # 파일명 대조표 (앱이 읽는다)
     idx = {t: key(t) for t in items}
