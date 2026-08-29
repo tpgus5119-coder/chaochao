@@ -100,6 +100,37 @@ def words_and_order():
     return word, order, theme, home, {k for k, v in hits.items() if v > 1}
 
 
+def day_entries():
+    """**낱말 차례대로** 훑는다 — 그림이 없어도, 겹쳐도 다 낸다 (대표님 지시, 2026-08-29).
+
+    전에는 img/ 폴더의 **파일**을 훑었다. 그래서 두 가지가 안 보였다:
+      · 그림이 없는 낱말은 화면에 아예 안 나왔다 — 빠진 것을 알 길이 없었다
+      · 여러 날이 같이 쓰는 그림은 **처음 나오는 날 한 곳에만** 떴다
+    이 판은 그림 검수뿐 아니라 **어떤 낱말이 들어 있는지 점검하는 자리**이기도 하다.
+    그러니 낱말을 기준으로 훑고, 그림은 있으면 얹고 없으면 글자만 낸다.
+
+    돌려주는 것: [(과정번호, Day, 주제, [(그림파일|None, 이름표, 낱말키), …]), …]
+    """
+    out = []
+    for ci, f in enumerate(("days.json", "ko_days.json", "news_days.json")):
+        p = R / "data" / f
+        if not p.exists():
+            continue
+        j = json.loads(p.read_text(encoding="utf-8"))
+        for d in j.get("days", []):
+            th = d.get("theme") or d.get("title") or ""
+            items = []
+            dl = d.get("dialog") or {}
+            if dl.get("img"):
+                items.append((dl["img"], f"{th} — 오늘의 대화", "scene:" + str(d.get("day"))))
+            for w in d.get("words") or []:
+                ko, vi = (w.get("ko") or "").strip(), (w.get("vi") or "").strip()
+                items.append((w.get("img") or None, f"{ko} · {vi}", vi or ko))
+            if items:
+                out.append((ci, d.get("day"), th, items))
+    return out
+
+
 def refs():
     used = set()
     for f in (R / "data").glob("*.json"):
@@ -170,60 +201,65 @@ def main():
                 return m.group(1)
         return ""
 
-    # 배우는 차례대로 — 같은 날 안에서는 데이터에 적힌 순서, 없으면 이름순
-    files.sort(key=lambda k: (group_of(k, home)[0], order.get(k, 10 ** 6), k))
+    # 낱말 차례대로. 마지막에 '어디에도 안 쓰이는 그림' 묶음을 붙인다.
+    days = day_entries()
+    seen_img = {im for _, _, _, its in days for im, _, _ in its if im}
+    sections = [((1, ci, day), th, its) for ci, day, th, its in days]
+    orphan = sorted(k for k in files if k not in seen_img)
+    if orphan:
+        sections.append((None, "그 밖 — 어느 낱말도 안 쓰는 그림 (지우지 않습니다)",
+                         [(k, word.get(k, ""), k) for k in orphan]))
 
-    sections, cur, curkey = [], [], None
-    for k in files:
-        gk, name = group_of(k, home)
-        key = gk if name is None else name
-        if key != curkey:
-            if cur:
-                sections.append((curkey, cur))
-            cur, curkey = [], key
-        cur.append(k)
-    if cur:
-        sections.append((curkey, cur))
+    total = sum(len(its) for _, _, its in sections)
+    n = [0]
 
-    total, n = len(files), [0]
-
-    def card(k):
+    def card(item):
+        """한 칸 — 그림이 없으면 글자만 낸다."""
+        k, label, wkey = item
         n[0] += 1
         tags = []
-        if k in exams:
-            tags.append('<i class="t x">🎯 시험</i>')
-        if k in fresh:
-            tags.append('<i class="t f">♻︎ 교체됨</i>')
-        if k not in used:
-            tags.append('<i class="t o">🗂 안 쓰임</i>')
-        if k in shared:
-            tags.append('<i class="t s">🔗 여러 날이 같이 씀</i>')
-        t = ocr_of(k)
-        if t:
-            tags.append(f'<i class="t c">🔤 {html.escape(t[:30])}</i>')
-        w = word.get(k)
-        wline = (f'<b class="w">{html.escape(w)}</b>' if w
+        if k:
+            if k in exams:
+                tags.append('<i class="t x">🎯 시험</i>')
+            if k in fresh:
+                tags.append('<i class="t f">♻︎ 교체됨</i>')
+            if k not in used:
+                tags.append('<i class="t o">🗂 안 쓰임</i>')
+            if k in shared:
+                tags.append('<i class="t s">🔗 여러 날이 같이 씀</i>')
+            t = ocr_of(k)
+            if t:
+                tags.append(f'<i class="t c">🔤 {html.escape(t[:30])}</i>')
+        else:
+            tags.append('<i class="t g">🚫 그림 없음</i>')
+        lab = label or word.get(k, "")
+        wline = (f'<b class="w">{html.escape(lab)}</b>' if lab
                  else '<b class="w none">데이터에 낱말 없음</b>')
-        return (f'<figure data-n="{html.escape(k)}" onclick="pick(this)">'
+        pick_id = k or ("낱말:" + wkey)
+        pic = (f'<img loading="lazy" src="{html.escape(k)}" alt="">' if k
+               else '<span class="nopic">그림 없음</span>')
+        return (f'<figure class="{"" if k else "nofig"}" data-n="{html.escape(pick_id)}" onclick="pick(this)">'
                 f'<span class="idx">{n[0]}</span>'
-                f'<img loading="lazy" src="{html.escape(k)}" alt="">'
-                f'<figcaption>{wline}<span class="fn">{html.escape(k)}</span>'
+                f'{pic}'
+                f'<figcaption>{wline}'
+                f'<span class="fn">{html.escape(k or "—")}</span>'
                 f'{"".join(tags)}</figcaption></figure>')
 
     body = []
-    for key, keys in sections:
-        if isinstance(key, tuple):
+    for key, th, items in sections:
+        if key is None:
+            title = th
+        else:
             ci, day = key[1], key[2]
             head = ("", "[한국어 과정] ", "[뉴스] ")[ci if ci < 3 else 0]
-            th = theme.get((ci, day))
             title = f"{head}Day {day}" + (f" · {th}" if th else "")
-        else:
-            title = key
-        body.append(f'<section><h2>{html.escape(title)} <span class="n">{len(keys)}장</span></h2>'
-                    f'<div class="grid">{"".join(card(k) for k in keys)}</div></section>')
+        miss = sum(1 for im, _, _ in items if not im)
+        cnt = f'{len(items)}개' + (f' · 그림 없음 {miss}' if miss else '')
+        body.append(f'<section><h2>{html.escape(title)} <span class="n">{cnt}</span></h2>'
+                    f'<div class="grid">{"".join(card(it) for it in items)}</div></section>')
 
     assert n[0] == total, f"번호 {n[0]} ≠ 그림 {total}"
-    named = sum(1 for k in files if word.get(k))
+    named = sum(1 for _, _, its in sections for im, lb, _ in its if lb)
 
     page = f"""<!doctype html><meta charset="utf-8"><title>그림 검수 — 짜오짜오</title>
 <style>
@@ -251,6 +287,13 @@ figcaption{{font-size:11px;padding:4px 2px;line-height:1.55}}
 .t{{display:inline-block;font-style:normal;font-size:10px;border-radius:4px;padding:0 4px;margin:3px 3px 0 0}}
 .t.x{{background:#fbe4d8;color:#a8501c}} .t.f{{background:#ddebe7;color:#0e6f62}}
 .t.o{{background:#eee;color:#666}} .t.c{{background:#fff3cd;color:#7a5c00}}
+.t.g{{background:#f6e2e4;color:#a02b39}}
+/* 그림이 없는 낱말도 낸다 — 이 판은 그림 검수이자 **낱말 점검**이다(대표님 지시).
+   테두리를 점선으로 두어 '빈 것'이 눈에 띄게 한다. 색만으로 알리지 않는다. */
+figure.nofig{{border-style:dashed;border-color:#e0b7bc;background:#fffafa}}
+.nopic{{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:1;
+ color:#c9a0a6;font-size:12px;border-radius:6px;background:
+ repeating-linear-gradient(45deg,#fff,#fff 7px,#fdf3f4 7px,#fdf3f4 14px)}}
 .note{{background:#fff;border-left:4px solid #0e6f62;padding:12px 16px;border-radius:6px;max-width:74ch}}
 #bar{{position:fixed;left:0;right:0;bottom:0;background:#1a211e;color:#fff;padding:11px 18px;
  display:flex;gap:12px;align-items:center;font-size:14px;z-index:5}}
@@ -258,7 +301,7 @@ figcaption{{font-size:11px;padding:4px 2px;line-height:1.55}}
 #cp{{background:#0e6f62;color:#fff}} #cl{{background:#3a4440;color:#fff}}
 #out{{flex:1;color:#9fb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 </style>
-<h1>그림 검수 — 전체 {total}장을 배우는 차례대로</h1>
+<h1>그림·낱말 검수 — 전체 {total}개를 배우는 차례대로</h1>
 <p class="note"><b>쓰는 법</b> — 마음에 안 드는 그림을 눌러 고른 뒤 아래 <b>고른 것 복사</b>를 누르고
 채팅에 붙여 넣어 주세요. 그대로 처리하겠습니다.<br>
 그림 아래 <b>굵은 글씨가 그 그림의 낱말</b>입니다({named}장). 데이터에 낱말이 없는 그림은
@@ -270,7 +313,8 @@ figcaption{{font-size:11px;padding:4px 2px;line-height:1.55}}
 그림에 글자가 박힌 것은 대개 잘못 만들어진 것입니다.<br>
 <i class="t s">🔗 여러 날이 같이 씀</i> 여러 날이 함께 쓰는 그림입니다. 고치면 <b>그 날들이 전부 바뀝니다.</b><br>
 <i class="t f">♻︎ 교체됨</i> 최근에 다시 구운 것입니다. 제대로 바뀌었는지 봐 주세요.<br>
-<i class="t o">🗂 안 쓰임</i> 지금은 어디서도 안 쓰는 그림입니다. <b>지우지 않고 남겨 둡니다.</b></p>
+<i class="t o">🗂 안 쓰임</i> 지금은 어디서도 안 쓰는 그림입니다. <b>지우지 않고 남겨 둡니다.</b><br>
+<i class="t g">🚫 그림 없음</i> 그 낱말에 아직 그림이 없습니다. <b>추상적인 말이면 없어도 됩니다.</b></p>
 {''.join(body)}
 <div id="bar"><b><span id="cnt">0</span>장 고름</b>
 <button id="cp" onclick="copyPicked()">고른 것 복사</button>
