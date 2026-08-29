@@ -350,7 +350,6 @@ const UIVI = {
     'Hết giờ phần đọc. Bắt đầu phần nghe.',
   '문장 고르기': 'Chọn câu',
   '문장 고쳐 주기': 'Sửa câu giúp tôi',
-  '문제 유형별 정답률 (누적)': 'Tỷ lệ đúng theo dạng bài (cộng dồn)',
   '미완으로': 'Để chưa xong',
   '배운 기록을 모두 지우고 처음부터 다시 시작할까요?': 'Bạn muốn xóa toàn bộ ghi chép đã học và bắt đầu lại từ đầu?',
   '배운 문장으로 말 걸기': 'Bắt chuyện bằng câu đã học',
@@ -379,7 +378,7 @@ const UIVI = {
   '서버에 저장된 진도가 있습니다.\n이 기기로 불러올까요? 지금 기기의 진도는 덮어써집니다.': 'Có tiến độ đã lưu trên máy chủ.\nBạn muốn tải về thiết bị này? Tiến độ hiện tại trên máy sẽ bị ghi đè.',
   '성조 6개 소개 다시 보기': 'Xem lại phần giới thiệu 6 thanh điệu',
   '성조는 낱말 뒤에 <b>f s r x j</b> 를 붙여 찍습니다 (chao+f → chào).': 'Thanh điệu được gõ bằng cách thêm <b>f s r x j</b> sau từ (chao+f → chào).',
-  '성조별 정답률 (누적)': 'Tỷ lệ đúng theo thanh điệu (cộng dồn)',
+  '성조별 정답률': 'Tỷ lệ đúng theo thanh điệu (cộng dồn)',
   '세로 눈금은 <b>내 정답률</b>입니다.': 'Trục dọc là <b>tỷ lệ đúng của bạn</b>.',
   '소리 내어 따라 말해 보세요. 속으로 읽는 것보다 훨씬 잘 남습니다.': 'Hãy nói to theo. Cách này nhớ lâu hơn nhiều so với đọc thầm.',
   '소리 내어 말한 만큼 입이 기억합니다': 'Nói ra miệng bao nhiêu thì miệng nhớ bấy nhiêu',
@@ -1536,15 +1535,12 @@ function renderAnalysis(host, mode) {
     .map(([k, v]) => [(map && map[k]) || k, Math.round(v.ok * 100 / v.all), v.all])
     .sort((a, b) => a[1] - b[1]);
   const tn = named('tn', TN);
-  if (tn.length) { host.append(el('p', 'newsday', '성조별 정답률 (누적)')); host.append(bars(tn)); }
+  if (tn.length) { host.append(el('p', 'newsday', '성조별 정답률')); host.append(bars(tn)); }
 
-  const MD = { listen: '듣고 고르기', read: '읽고 고르기', meaning: '뜻 고르기',
-               recall: '떠올려 말하기', dict: '받아쓰기',
-               say: '말하기 (AI 채점)', sayself: '말하기 (스스로 매김)',
-               type: '타이핑', hand: '손글씨 (스스로 매김)' };
-  // 스스로 매긴 것과 AI가 매긴 것을 한 막대에 섞으면 그 막대는 아무것도 뜻하지 않게 된다
-  const md = named('md', MD);
-  if (md.length) { host.append(el('p', 'newsday', '문제 유형별 정답률 (누적)')); host.append(bars(md)); }
+  /* '문제 유형별 정답률'을 뺐다 (대표님 지적, 2026-08-29).
+     위의 **과목별 정답률**(말하기·듣기·읽기·쓰기)과 같은 것을 두 번 보여 주고 있었다.
+     '듣고 고르기'는 듣기고 '타이핑'은 쓰기다 — 이름만 달랐다.
+     같은 값을 두 곳에 두면 둘이 어긋날 때 어느 쪽을 믿어야 할지 알 수 없다. */
 
   /* 나머지 갈래는 [자세히] 안에 접어 둔다 — 다 펼치면 화면이 두 배가 되어
      정작 중요한 다섯 과목이 안 보인다. */
@@ -1554,8 +1550,6 @@ function renderAnalysis(host, mode) {
      · 첫 시도/두 번째(답을 보고 다시 푸는 것이라 높은 게 당연하다). */
   const MORE = [
     ['ltr', null, '어려운 글자가 든 단어', 'ư ơ ă â ê ô đ 가 든 단어만 따로 셉니다'],
-    ['sy' + 'l', null, '단어 길이별', '긴 단어에서 떨어지면 소리 덩어리를 아직 못 묶은 것입니다'],
-    ['lv', null, '복습 사다리 단계별', '뒷단(30·60일)이 낮으면 간격이 너무 벌어진 것입니다'],
     ['od', null, '얼마나 밀렸을 때 풀었나', '밀릴수록 떨어지는 폭이 곧 밀린 값입니다'],
     ['serr', null, '쓰기 오답의 종류', '성조만 흘렸는지, 글자를 틀렸는지'],
   ];
@@ -1652,7 +1646,7 @@ async function analysisCard(mode) {
     y += 18;
   };
   drawBars('과목별 정답률', subj.map(v => [v.name, v.pct]));
-  if (tn.length) drawBars('성조별 정답률 (누적)', tn);
+  if (tn.length) drawBars('성조별 정답률', tn);
   if (subj.length) {
     const worst = subj.reduce((a, v) => v.pct < a.pct ? v : a);
     x.fillStyle = '#8b93a7'; x.font = '20px sans-serif';
@@ -5688,12 +5682,18 @@ const SKILLS = [
   { k: 'read',   name: '읽기', how: '글자 보고 뜻 고르기' },
   { k: 'write',  name: '쓰기', how: '소리 듣고 자판으로 · 가끔 손으로 쓰기' },
 ];
+/* 문제 유형을 고른다 — **네 가지가 처음부터 다 나온다** (대표님 지적, 2026-08-29).
+   전에는 사다리 0단(처음 만난 낱말)에서 '듣고 고르기'와 '읽고 고르기' 둘뿐이었다.
+   그래서 실전 단어처럼 다 새 낱말인 곳에서는 **말하기·쓰기가 아예 안 나왔다.**
+   이제 0단에도 말하기·타이핑을 섞는다. 다만 처음에는 알아보기(듣기·읽기) 쪽이 두텁다 —
+   한 번도 못 본 낱말을 곧바로 쓰라고 하면 틀리는 것 말고 배우는 게 없다.
+   손글씨는 1단부터 — 글자 모양을 한 번은 본 뒤라야 손이 따라간다. */
 function pickMode(w, lv) {
   const r = Math.random();
   if (w.sent) return r < .5 ? 'listen' : 'say';          // 문장은 알아듣기와 말하기 위주
-  if (lv >= 2) return r < .35 ? 'say' : r < .52 ? 'type' : r < .60 ? 'hand' : r < .80 ? 'listen' : 'read';
-  if (lv >= 1) return r < .22 ? 'say' : r < .45 ? 'type' : r < .75 ? 'listen' : 'read';
-  return r < .55 ? 'listen' : 'read';
+  if (lv >= 2) return r < .30 ? 'say' : r < .48 ? 'type' : r < .60 ? 'hand' : r < .80 ? 'listen' : 'read';
+  if (lv >= 1) return r < .22 ? 'say' : r < .42 ? 'type' : r < .50 ? 'hand' : r < .75 ? 'listen' : 'read';
+  return r < .15 ? 'say' : r < .30 ? 'type' : r < .65 ? 'listen' : 'read';
 }
 /* 낱말 → 속한 세트 색인. 오답 보기를 같은 세트에서 뽑기 위한 것 —
    엉뚱한 세트의 단어가 보기로 나오면 뜻만 슬쩍 봐도 답이 티가 난다. */
