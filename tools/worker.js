@@ -62,39 +62,48 @@ export default {
         note: '무료 몫은 프로젝트마다 따로 걸린다. 열쇠 수 × 모델 수 = 하루 한도 배수.' }),
         { headers: { 'Content-Type': 'application/json' } });
     }
-    /* **실제로 살아 있는지** 재 본다. 열쇠 × 모델을 하나씩 눌러 보고 결과만 돌려준다.
-       왜 필요한가: ?keys=1 은 '몇 개 꽂혔나'만 안다. 하나가 폐기됐어도 개수는 그대로다.
-       '5개 다 작동하니?'에 짐작으로 답하지 않으려면 눌러 보는 수밖에 없다.
-       비용: 열쇠 수 × 모델 수 만큼 아주 작은 요청이 나간다(각 1토큰). 손으로 부를 때만 돈다.
-       열쇠는 안 내보낸다 — 몇 번째 열쇠인지만 번호로 말한다.
+    /* **실제로 살아 있는지** 확인한다 — 찔러 보지 말고 **물어본다.**
+       처음엔 모델마다 1토큰짜리 생성 요청을 보냈다. 서른 개가 전부 400 이 났다.
+       열쇠가 죽었으면 403, 없는 모델이면 404 가 나야 하는데 전부 400 이라는 것은
+       **내 시험 요청이 잘못됐다**는 뜻이었다(maxOutputTokens:1 이 너무 작았다).
+       그래서 방식을 바꿨다: 구글에 '이 열쇠로 쓸 수 있는 모델을 다 대라'고 묻는다.
+         · 열쇠가 살았는지 안다 (죽었으면 400/403 이 여기서 난다)
+         · 우리가 적어 둔 이름이 진짜 있는지 안다
+         · **생성 몫을 한 개도 안 쓴다** — 목록 조회는 공짜다
        주소: https://viet-ai.chaochao-app.workers.dev/?health=1 */
     if (new URL(req.url).searchParams.get('health') === '1') {
       const ks = (env.GEMINI_KEY || '').split(',').map(k => k.trim()).filter(Boolean);
-      const tiny = JSON.stringify({
-        contents: [{ role: 'user', parts: [{ text: 'hi' }] }],
-        generationConfig: { maxOutputTokens: 1, thinkingConfig: { thinkingBudget: 0 } } });
-      const out = [];
-      for (const model of MODELS) {
-        const row = { model, ok: [], bad: [] };
-        for (let i = 0; i < ks.length; i++) {
-          let st = 0;
-          try {
-            const rr = await fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=` + ks[i],
-              { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: tiny });
-            st = rr.status;
-          } catch (e) { st = 0; }
-          (st === 200 ? row.ok : row.bad).push(st === 200 ? i + 1 : `${i + 1}:${st}`);
-        }
-        out.push(row);
+      const keyRows = [], seen = new Set();
+      for (let i = 0; i < ks.length; i++) {
+        let st = 0, names = [], why = '';
+        try {
+          const rr = await fetch(
+            'https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key=' + ks[i]);
+          st = rr.status;
+          if (rr.ok) {
+            const j2 = await rr.json();
+            names = (j2.models || [])
+              .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
+              .map(m => m.name.replace('models/', ''));
+            names.forEach(n => seen.add(n));
+          } else {
+            why = ((await rr.json()).error || {}).message || '';
+          }
+        } catch (e) { st = 0; why = String(e); }
+        keyRows.push({ 열쇠: i + 1, 살았나: st === 200, 상태: st,
+                       쓸수있는모델: names.length, 까닭: why.slice(0, 120) });
       }
-      const live = out.filter(r => r.ok.length);
+      const have = MODELS.filter(m => seen.has(m));
+      const gone = MODELS.filter(m => !seen.has(m));
       return new Response(JSON.stringify({
-        keys: ks.length, cloudflare: !!env.AI,
-        살아있는모델: live.map(r => r.model),
-        죽은모델: out.filter(r => !r.ok.length).map(r => r.model),
-        모델별: out,
-        읽는법: '숫자는 열쇠 번호. 429=오늘 몫 다 씀, 404=없는 모델, 400=요청을 안 받음.',
+        열쇠: keyRows,
+        살아있는열쇠: keyRows.filter(r => r.살았나).length + '/' + ks.length,
+        우리목록중_있는모델: have,
+        우리목록중_없는모델: gone,
+        구글이_주는_모델전부: [...seen].sort(),
+        cloudflare: !!env.AI,
+        읽는법: '상태 200=열쇠 살아 있음, 400/403=열쇠가 잘못됨. '
+              + '없는모델은 MODELS 에서 빼면 되고, 구글이_주는_모델전부 에서 골라 넣으면 된다.',
       }, null, 1), { headers: { 'Content-Type': 'application/json; charset=utf-8' } });
     }
 
