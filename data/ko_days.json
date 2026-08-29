@@ -6,7 +6,8 @@
    "grammar": "이에요/예요",
    "theme": {
     "ko": "자기소개",
-    "vi": "Tự giới thiệu"
+    "vi": "Tự giới thiệu",
+    "han": "自己紹介"
    },
    "words": [
     {
@@ -17,12 +18,14 @@
     {
      "ko": "직업",
      "vi": "nghề nghiệp",
-     "img": "d101-nghe.webp"
+     "img": "d101-nghe.webp",
+     "han": "職業"
     },
     {
      "ko": "국적",
      "vi": "quốc tịch",
-     "img": "k-gukjeok.webp"
+     "img": "k-gukjeok.webp",
+     "han": "國籍"
     },
     {
      "ko": "나라",
@@ -37,27 +40,32 @@
     {
      "ko": "선생님",
      "vi": "giáo viên",
-     "img": "k-seonsaengnim.webp"
+     "img": "k-seonsaengnim.webp",
+     "han": "先生"
     },
     {
      "ko": "회사원",
      "vi": "nhân viên công ty",
-     "img": "k-hoesawon.webp"
+     "img": "k-hoesawon.webp",
+     "han": "會社員"
     },
     {
      "ko": "학생",
      "vi": "học sinh",
-     "img": "k-haksaeng.webp"
+     "img": "k-haksaeng.webp",
+     "han": "學生"
     },
     {
      "ko": "전화번호",
      "vi": "số điện thoại",
-     "img": "x-so-dien-thoai.webp"
+     "img": "x-so-dien-thoai.webp",
+     "han": "電話番號"
     },
     {
      "ko": "한국어",
      "vi": "tiếng Hàn",
-     "img": "d05-tieng-han.webp"
+     "img": "d05-tieng-han.webp",
+     "han": "韓國語"
     }
    ],
    "dialog": {
@@ -101,17 +109,20 @@
     {
      "ko": "책상",
      "vi": "bàn học",
-     "img": "x-cai-ban.webp"
+     "img": "x-cai-ban.webp",
+     "han": "冊床"
     },
     {
      "ko": "의자",
      "vi": "ghế",
-     "img": "d08-cai-ghe.webp"
+     "img": "d08-cai-ghe.webp",
+     "han": "椅子"
     },
     {
      "ko": "침대",
      "vi": "giường",
-     "img": "k-chimdae.webp"
+     "img": "k-chimdae.webp",
+     "han": "寢臺"
     },
     {
      "ko": "컴퓨터",
@@ -121,32 +132,38 @@
     {
      "ko": "휴대 전화",
      "vi": "điện thoại di động",
-     "img": "k-hyudae-jeonhwa.webp"
+     "img": "k-hyudae-jeonhwa.webp",
+     "han": "携帶電話"
     },
     {
      "ko": "시계",
      "vi": "đồng hồ",
-     "img": "k-sigye.webp"
+     "img": "k-sigye.webp",
+     "han": "時計"
     },
     {
      "ko": "학교",
      "vi": "trường học",
-     "img": "k-hakgyo.webp"
+     "img": "k-hakgyo.webp",
+     "han": "學校"
     },
     {
      "ko": "교실",
      "vi": "phòng học",
-     "img": "k-gyosil.webp"
+     "img": "k-gyosil.webp",
+     "han": "敎室"
     },
     {
      "ko": "책",
      "vi": "sách",
-     "img": "k-chaek.webp"
+     "img": "k-chaek.webp",
+     "han": "冊"
     },
     {
      "ko": "화장실",
      "vi": "nhà vệ sinh",
-     "img": "d14-nha-ve-sinh.webp"
+     "img": "d14-nha-ve-sinh.webp",
+     "han": "化粧室"
     }
    ],
    "dialog": {
@@ -274,12 +291,14 @@
     {
      "ko": "축구",
      "vi": "bóng đá",
-     "img": "d45-bong-da.webp"
+     "img": "d45-bong-da.webp",
+     "han": "蹴球"
     },
     {
      "ko": "미안하다",
      "vi": "áy náy",
-     "img": "k-mianhada.webp"
+     "img": "k-mianhada.webp",
+     "han": "未安"
     },
     {
      "ko": "끝나다",
@@ -289,7 +308,8 @@
     {
      "ko": "일요일",
      "vi": "ngày chủ nhật",
-     "img": "d10-chu-nhat.webp"
+     "img": "d10-chu-nhat.webp",
+     "han": "日曜日"
     },
     {
      "ko": "오늘",
@@ -299,7 +319,8 @@
     {
      "ko": "가요",
      "vi": "bài hát đại chúng, ca khúc được yêu thích",
-     "img": "k-gayo.webp"
+     "img": "k-gayo.webp",
+     "han": "歌謠"
     },
     {
      "ko": "그래서",
@@ -373,7 +394,8 @@
     {
      "ko": "음악",
      "vi": "âm nhạc",
-     "img": "k-eumak.webp"
+     "img": "k-eumak.webp",
+     "han": "音樂"
     },
     {
      "ko": "보다",
@@ -436,28 +458,33 @@
    "grammar": "에 가다/오다",
    "theme": {
     "ko": "장소",
-    "vi": "Địa điểm"
+    "vi": "Địa điểm",
+    "han": "場所"
    },
    "words": [
     {
      "ko": "편의점",
      "vi": "cửa hàng tiện lợi",
-     "img": "k-pyeonuijeom.webp"
+     "img": "k-pyeonuijeom.webp",
+     "han": "便宜店"
     },
     {
      "ko": "은행",
      "vi": "ngân hàng",
-     "img": "d38-ngan-hang.webp"
+     "img": "d38-ngan-hang.webp",
+     "han": "銀行"
     },
     {
      "ko": "집",
      "vi": "nhà",
-     "img": "d06-nha.webp"
+     "img": "d06-nha.webp",
+     "han": "輯"
     },
     {
      "ko": "식당",
      "vi": "nhà hàng",
-     "img": "k-sikdang.webp"
+     "img": "k-sikdang.webp",
+     "han": "食堂"
     },
     {
      "ko": "카페",
@@ -467,22 +494,26 @@
     {
      "ko": "병원",
      "vi": "bệnh viện",
-     "img": "d16-benh-vien.webp"
+     "img": "d16-benh-vien.webp",
+     "han": "病院"
     },
     {
      "ko": "약국",
      "vi": "nhà thuốc",
-     "img": "d47-hieu-thuoc.webp"
+     "img": "d47-hieu-thuoc.webp",
+     "han": "藥局"
     },
     {
      "ko": "시장",
      "vi": "chợ",
-     "img": "d14-cho.webp"
+     "img": "d14-cho.webp",
+     "han": "市場"
     },
     {
      "ko": "공원",
      "vi": "công viên",
-     "img": "k-gongwon.webp"
+     "img": "k-gongwon.webp",
+     "han": "公園"
     },
     {
      "ko": "하다",
@@ -531,7 +562,8 @@
     {
      "ko": "이",
      "vi": "hai",
-     "img": "d07-hai.webp"
+     "img": "d07-hai.webp",
+     "han": "二貳"
     },
     {
      "ko": "삼",
@@ -546,12 +578,14 @@
     {
      "ko": "오",
      "vi": "năm",
-     "img": "d07-nam.webp"
+     "img": "d07-nam.webp",
+     "han": "五"
     },
     {
      "ko": "육",
      "vi": "sáu",
-     "img": "d07-sau.webp"
+     "img": "d07-sau.webp",
+     "han": "六"
     },
     {
      "ko": "칠",
@@ -561,7 +595,8 @@
     {
      "ko": "팔",
      "vi": "tám (số 8)",
-     "img": "d07-tam.webp"
+     "img": "d07-tam.webp",
+     "han": "八"
     },
     {
      "ko": "구",
@@ -571,7 +606,8 @@
     {
      "ko": "십",
      "vi": "mười",
-     "img": "d07-muoi.webp"
+     "img": "d07-muoi.webp",
+     "han": "十"
     }
    ],
    "dialog": {
@@ -719,7 +755,8 @@
     {
      "ko": "삼겹살",
      "vi": "thịt ba chỉ",
-     "img": "k-samgyeopsal.webp"
+     "img": "k-samgyeopsal.webp",
+     "han": "三"
     },
     {
      "ko": "라면",
@@ -734,7 +771,8 @@
     {
      "ko": "반찬",
      "vi": "món ăn kèm",
-     "img": "k-banchan.webp"
+     "img": "k-banchan.webp",
+     "han": "飯饌"
     },
     {
      "ko": "숟가락",
@@ -803,12 +841,14 @@
     {
      "ko": "잡지",
      "vi": "tạp chí",
-     "img": "k-japji.webp"
+     "img": "k-japji.webp",
+     "han": "雜誌"
     },
     {
      "ko": "사진",
      "vi": "bức ảnh",
-     "img": "d68-anh.webp"
+     "img": "d68-anh.webp",
+     "han": "寫眞"
     },
     {
      "ko": "노트북",
@@ -818,12 +858,14 @@
     {
      "ko": "녹차",
      "vi": "trà xanh",
-     "img": "k-nokcha.webp"
+     "img": "k-nokcha.webp",
+     "han": "綠"
     },
     {
      "ko": "청소기",
      "vi": "máy hút bụi",
-     "img": "k-cheongsogi.webp"
+     "img": "k-cheongsogi.webp",
+     "han": "淸掃機"
     },
     {
      "ko": "닭고기",
@@ -833,7 +875,8 @@
     {
      "ko": "계란",
      "vi": "trứng gà",
-     "img": "k-gyeran.webp"
+     "img": "k-gyeran.webp",
+     "han": "鷄卵"
     }
    ],
    "dialog": {
@@ -872,7 +915,8 @@
     {
      "ko": "산책하다",
      "vi": "đi dạo",
-     "img": "d74-di-dao.webp"
+     "img": "d74-di-dao.webp",
+     "han": "散策"
     },
     {
      "ko": "쇼핑하다",
@@ -882,7 +926,8 @@
     {
      "ko": "백화점",
      "vi": "trung tâm mua sắm",
-     "img": "k-baekhwajeom.webp"
+     "img": "k-baekhwajeom.webp",
+     "han": "百貨店"
     },
     {
      "ko": "즐겁다",
@@ -902,12 +947,14 @@
     {
      "ko": "이사",
      "vi": "sự chuyển chỗ ở, sự chuyển nhà",
-     "img": "k-isa.webp"
+     "img": "k-isa.webp",
+     "han": "移徙"
     },
     {
      "ko": "영화",
      "vi": "điện ảnh, phim",
-     "img": "k-yeonghwa.webp"
+     "img": "k-yeonghwa.webp",
+     "han": "映畫"
     },
     {
      "ko": "있다",
@@ -966,17 +1013,20 @@
     {
      "ko": "회사",
      "vi": "công ty",
-     "img": "d101-cong-ty.webp"
+     "img": "d101-cong-ty.webp",
+     "han": "會社"
     },
     {
      "ko": "출근",
      "vi": "sự đi làm",
-     "img": "k-chulgeun.webp"
+     "img": "k-chulgeun.webp",
+     "han": "出勤"
     },
     {
      "ko": "퇴근",
      "vi": "sự tan sở",
-     "img": "k-toegeun.webp"
+     "img": "k-toegeun.webp",
+     "han": "退勤"
     },
     {
      "ko": "좋아",
@@ -1040,12 +1090,14 @@
     {
      "ko": "고향",
      "vi": "quê hương",
-     "img": "d71-que.webp"
+     "img": "d71-que.webp",
+     "han": "故鄕"
     },
     {
      "ko": "가족",
      "vi": "gia đình",
-     "img": "d15-gia-dinh.webp"
+     "img": "d15-gia-dinh.webp",
+     "han": "家族"
     },
     {
      "ko": "쉬다",
@@ -1075,7 +1127,8 @@
     {
      "ko": "문제",
      "vi": "vấn đề, câu hỏi",
-     "img": "x-van-de.webp"
+     "img": "x-van-de.webp",
+     "han": "問題"
     },
     {
      "ko": "살다",
@@ -1118,7 +1171,8 @@
    "grammar": "(으)시- (높임)",
    "theme": {
     "ko": "가족",
-    "vi": "Gia đình"
+    "vi": "Gia đình",
+    "han": "家族"
    },
    "words": [
     {
@@ -1154,12 +1208,14 @@
     {
      "ko": "여동생",
      "vi": "em gái",
-     "img": "d15-em-gai.webp"
+     "img": "d15-em-gai.webp",
+     "han": "女"
     },
     {
      "ko": "남동생",
      "vi": "em trai",
-     "img": "x-em-trai.webp"
+     "img": "x-em-trai.webp",
+     "han": "男"
     },
     {
      "ko": "누나",
@@ -1169,7 +1225,8 @@
     {
      "ko": "부모님",
      "vi": "bố mẹ",
-     "img": "k-bumonim.webp"
+     "img": "k-bumonim.webp",
+     "han": "父母"
     }
    ],
    "dialog": {
@@ -1228,17 +1285,20 @@
     {
      "ko": "선물",
      "vi": "quà",
-     "img": "d49-qua.webp"
+     "img": "d49-qua.webp",
+     "han": "膳物"
     },
     {
      "ko": "초대장",
      "vi": "thư mời",
-     "img": "k-chodaejang.webp"
+     "img": "k-chodaejang.webp",
+     "han": "招待狀"
     },
     {
      "ko": "축하하다",
      "vi": "chúc mừng",
-     "img": "d49-chuc-mung.webp"
+     "img": "d49-chuc-mung.webp",
+     "han": "祝賀"
     },
     {
      "ko": "케이크",
@@ -1248,12 +1308,14 @@
     {
      "ko": "결혼식",
      "vi": "lễ cưới",
-     "img": "k-gyeolhonsik.webp"
+     "img": "k-gyeolhonsik.webp",
+     "han": "結婚式"
     },
     {
      "ko": "졸업식",
      "vi": "lễ tốt nghiệp",
-     "img": "k-joleopsik.webp"
+     "img": "k-joleopsik.webp",
+     "han": "卒業式"
     },
     {
      "ko": "어버이날",
@@ -1297,17 +1359,20 @@
     {
      "ko": "휴가",
      "vi": "kỳ nghỉ",
-     "img": "k-hyuga.webp"
+     "img": "k-hyuga.webp",
+     "han": "休暇"
     },
     {
      "ko": "친척",
      "vi": "họ hàng",
-     "img": "k-chincheok.webp"
+     "img": "k-chincheok.webp",
+     "han": "親戚"
     },
     {
      "ko": "화장품",
      "vi": "mỹ phẩm",
-     "img": "k-hwajangpum.webp"
+     "img": "k-hwajangpum.webp",
+     "han": "化粧品"
     },
     {
      "ko": "빨리",
@@ -1317,7 +1382,8 @@
     {
      "ko": "휴일",
      "vi": "ngày nghỉ",
-     "img": "k-hyuil.webp"
+     "img": "k-hyuil.webp",
+     "han": "休日"
     },
     {
      "ko": "얼마나",
@@ -1375,13 +1441,15 @@
    "grammar": "(으)로 (수단)",
    "theme": {
     "ko": "교통수단",
-    "vi": "Phương tiện giao thông"
+    "vi": "Phương tiện giao thông",
+    "han": "交通手段"
    },
    "words": [
     {
      "ko": "자동차",
      "vi": "xe ô tô",
-     "img": "k-jadongcha.webp"
+     "img": "k-jadongcha.webp",
+     "han": "自動車"
     },
     {
      "ko": "버스",
@@ -1396,12 +1464,14 @@
     {
      "ko": "자전거",
      "vi": "xe đạp",
-     "img": "k-jajeongeo.webp"
+     "img": "k-jajeongeo.webp",
+     "han": "自轉車"
     },
     {
      "ko": "지하철",
      "vi": "tàu điện ngầm",
-     "img": "k-jihacheol.webp"
+     "img": "k-jihacheol.webp",
+     "han": "地下鐵"
     },
     {
      "ko": "오토바이",
@@ -1411,22 +1481,26 @@
     {
      "ko": "공항",
      "vi": "sân bay",
-     "img": "d59-san-bay.webp"
+     "img": "d59-san-bay.webp",
+     "han": "空港"
     },
     {
      "ko": "비행기",
      "vi": "máy bay",
-     "img": "d59-may-bay.webp"
+     "img": "d59-may-bay.webp",
+     "han": "飛行機"
     },
     {
      "ko": "기차",
      "vi": "tàu hỏa",
-     "img": "k-gicha.webp"
+     "img": "k-gicha.webp",
+     "han": "汽車"
     },
     {
      "ko": "정류장",
      "vi": "trạm xe buýt",
-     "img": "d42-ben.webp"
+     "img": "d42-ben.webp",
+     "han": "停留場"
     }
    ],
    "dialog": {
@@ -1485,7 +1559,8 @@
     {
      "ko": "제일",
      "vi": "đầu tiên, trước tiên, trước hết",
-     "img": "k-jeil.webp"
+     "img": "k-jeil.webp",
+     "han": "第一"
     },
     {
      "ko": "더",
@@ -1554,12 +1629,14 @@
     {
      "ko": "약속하다",
      "vi": "hứa hẹn",
-     "img": "d20-hua.webp"
+     "img": "d20-hua.webp",
+     "han": "約束"
     },
     {
      "ko": "답장하다",
      "vi": "hồi đáp",
-     "img": "k-dapjanghada.webp"
+     "img": "k-dapjanghada.webp",
+     "han": "答狀"
     },
     {
      "ko": "만나다",
@@ -1569,17 +1646,20 @@
     {
      "ko": "시간",
      "vi": "thời gian",
-     "img": "k-sigan.webp"
+     "img": "k-sigan.webp",
+     "han": "時間"
     },
     {
      "ko": "장소",
      "vi": "địa điểm",
-     "img": "k-jangso.webp"
+     "img": "k-jangso.webp",
+     "han": "場所"
     },
     {
      "ko": "한잔",
      "vi": "việc làm một ly, việc uống một chén",
-     "img": "k-hanjan.webp"
+     "img": "k-hanjan.webp",
+     "han": "盞"
     },
     {
      "ko": "같이하다",
@@ -1643,7 +1723,8 @@
     {
      "ko": "계절",
      "vi": "mùa",
-     "img": "x-mua.webp"
+     "img": "x-mua.webp",
+     "han": "季節"
     },
     {
      "ko": "봄",
@@ -1732,17 +1813,20 @@
     {
      "ko": "귀",
      "vi": "tai",
-     "img": "k-gwi.webp"
+     "img": "k-gwi.webp",
+     "han": "貴"
     },
     {
      "ko": "목",
      "vi": "cổ",
-     "img": "k-mok.webp"
+     "img": "k-mok.webp",
+     "han": "木"
     },
     {
      "ko": "팔",
      "vi": "cánh tay",
-     "img": "k-pal.webp"
+     "img": "k-pal.webp",
+     "han": "八"
     },
     {
      "ko": "배",
@@ -1752,7 +1836,8 @@
     {
      "ko": "손",
      "vi": "bàn tay",
-     "img": "d16-tay.webp"
+     "img": "d16-tay.webp",
+     "han": "孫"
     },
     {
      "ko": "다리",
@@ -1767,7 +1852,8 @@
     {
      "ko": "발",
      "vi": "bàn chân",
-     "img": "k-bal.webp"
+     "img": "k-bal.webp",
+     "han": "發"
     }
    ],
    "dialog": {
@@ -1806,32 +1892,38 @@
     {
      "ko": "환전하다",
      "vi": "đổi tiền",
-     "img": "d60-doi-tien.webp"
+     "img": "d60-doi-tien.webp",
+     "han": "換錢"
     },
     {
      "ko": "주차장",
      "vi": "bãi đỗ xe",
-     "img": "k-juchajang.webp"
+     "img": "k-juchajang.webp",
+     "han": "駐車場"
     },
     {
      "ko": "주차하다",
      "vi": "đỗ xe",
-     "img": "k-juchahada.webp"
+     "img": "k-juchahada.webp",
+     "han": "駐車"
     },
     {
      "ko": "박물관",
      "vi": "viện bảo tàng",
-     "img": "k-bakmulgwan.webp"
+     "img": "k-bakmulgwan.webp",
+     "han": "博物館"
     },
     {
      "ko": "경찰서",
      "vi": "đồn cảnh sát",
-     "img": "k-gyeongchalseo.webp"
+     "img": "k-gyeongchalseo.webp",
+     "han": "警察署"
     },
     {
      "ko": "등록하다",
      "vi": "đăng ký",
-     "img": "x-dang-ky.webp"
+     "img": "x-dang-ky.webp",
+     "han": "登錄"
     },
     {
      "ko": "오른쪽",
@@ -1846,7 +1938,8 @@
     {
      "ko": "동물원",
      "vi": "sở thú",
-     "img": "k-dongmulwon.webp"
+     "img": "k-dongmulwon.webp",
+     "han": "動物園"
     },
     {
      "ko": "캠핑",
@@ -1890,37 +1983,44 @@
     {
      "ko": "편하다",
      "vi": "thoải mái",
-     "img": "x-thoai-mai.webp"
+     "img": "x-thoai-mai.webp",
+     "han": "便"
     },
     {
      "ko": "졸업하다",
      "vi": "tốt nghiệp",
-     "img": "k-joleophada.webp"
+     "img": "k-joleophada.webp",
+     "han": "卒業"
     },
     {
      "ko": "입학하다",
      "vi": "nhập học",
-     "img": "k-iphakhada.webp"
+     "img": "k-iphakhada.webp",
+     "han": "入學"
     },
     {
      "ko": "점심시간",
      "vi": "giờ ăn trưa",
-     "img": "k-jeomsimsigan.webp"
+     "img": "k-jeomsimsigan.webp",
+     "han": "點心時間"
     },
     {
      "ko": "의식주",
      "vi": "ăn mặc ở",
-     "img": "k-uisikju.webp"
+     "img": "k-uisikju.webp",
+     "han": "衣食住"
     },
     {
      "ko": "결혼하다",
      "vi": "kết hôn",
-     "img": "d71-ket-hon.webp"
+     "img": "d71-ket-hon.webp",
+     "han": "結婚"
     },
     {
      "ko": "평일",
      "vi": "ngày thường",
-     "img": "k-pyeongil.webp"
+     "img": "k-pyeongil.webp",
+     "han": "平日"
     },
     {
      "ko": "익숙하다",
@@ -1930,12 +2030,14 @@
     {
      "ko": "교통 카드",
      "vi": "thẻ giao thông",
-     "img": "k-gyotong-kadeu.webp"
+     "img": "k-gyotong-kadeu.webp",
+     "han": "交通"
     },
     {
      "ko": "팥빙수",
      "vi": "chè đậu đỏ đá bào",
-     "img": "k-patbingsu.webp"
+     "img": "k-patbingsu.webp",
+     "han": "氷水"
     }
    ],
    "dialog": {
@@ -2009,17 +2111,20 @@
     {
      "ko": "대하다",
      "vi": "đối diện",
-     "img": "k-daehada.webp"
+     "img": "k-daehada.webp",
+     "han": "對"
     },
     {
      "ko": "위하다",
      "vi": "vì, để, cho",
-     "img": "k-wihada.webp"
+     "img": "k-wihada.webp",
+     "han": "爲"
     },
     {
      "ko": "사회",
      "vi": "xã hội, cộng đồng",
-     "img": "k-sahoe.webp"
+     "img": "k-sahoe.webp",
+     "han": "社會"
     }
    ],
    "dialog": {
@@ -2058,7 +2163,8 @@
     {
      "ko": "상자",
      "vi": "hộp, hòm, thùng, tráp",
-     "img": "d08-hop.webp"
+     "img": "d08-hop.webp",
+     "han": "箱子"
     },
     {
      "ko": "옮기다",
@@ -2068,7 +2174,8 @@
     {
      "ko": "조심하다",
      "vi": "thận trọng, cẩn thận",
-     "img": "x-can-than.webp"
+     "img": "x-can-than.webp",
+     "han": "操心"
     },
     {
      "ko": "돕다",
@@ -2088,7 +2195,8 @@
     {
      "ko": "전화",
      "vi": "cuộc điện thoại, cú điện thoại, cuộc nói chuyện điện thoại",
-     "img": "k-jeonhwa.webp"
+     "img": "k-jeonhwa.webp",
+     "han": "電話"
     },
     {
      "ko": "따르다",
@@ -2103,7 +2211,8 @@
     {
      "ko": "경우",
      "vi": "đạo lý, sự phải đạo",
-     "img": "k-gyeongu.webp"
+     "img": "k-gyeongu.webp",
+     "han": "境遇"
     }
    ],
    "dialog": {
@@ -2152,17 +2261,20 @@
     {
      "ko": "한번",
      "vi": "có lần",
-     "img": "k-hanbeon.webp"
+     "img": "k-hanbeon.webp",
+     "han": "番"
     },
     {
      "ko": "음식",
      "vi": "thức ăn, đồ ăn",
-     "img": "k-eumsik.webp"
+     "img": "k-eumsik.webp",
+     "han": "飮食"
     },
     {
      "ko": "한국",
      "vi": "Hàn Quốc",
-     "img": "d03-han-quoc.webp"
+     "img": "d03-han-quoc.webp",
+     "han": "韓國"
     },
     {
      "ko": "노래",
@@ -2172,12 +2284,14 @@
     {
      "ko": "자신",
      "vi": "tự thân, chính mình, tự mình",
-     "img": "k-jasin.webp"
+     "img": "k-jasin.webp",
+     "han": "自身"
     },
     {
      "ko": "문화",
      "vi": "văn hóa",
-     "img": "x-van-hoa.webp"
+     "img": "x-van-hoa.webp",
+     "han": "文化"
     },
     {
      "ko": "생각",
@@ -2226,7 +2340,8 @@
     {
      "ko": "약",
      "vi": "thuốc",
-     "img": "d16-thuoc.webp"
+     "img": "d16-thuoc.webp",
+     "han": "藥"
     },
     {
      "ko": "사다",
@@ -2241,12 +2356,14 @@
     {
      "ko": "친구",
      "vi": "bạn",
-     "img": "d01-ban.webp"
+     "img": "d01-ban.webp",
+     "han": "親舊"
     },
     {
      "ko": "통하다",
      "vi": "thông",
-     "img": "k-tonghada.webp"
+     "img": "k-tonghada.webp",
+     "han": "通"
     },
     {
      "ko": "소리",
@@ -2266,12 +2383,14 @@
     {
      "ko": "여자",
      "vi": "con gái, phụ nữ",
-     "img": "k-yeoja.webp"
+     "img": "k-yeoja.webp",
+     "han": "女子"
     },
     {
      "ko": "정도",
      "vi": "mức độ, độ, mức",
-     "img": "k-jeongdo.webp"
+     "img": "k-jeongdo.webp",
+     "han": "程度"
     }
    ],
    "dialog": {
@@ -2310,7 +2429,8 @@
     {
      "ko": "기계",
      "vi": "máy",
-     "img": "x-mays.webp"
+     "img": "x-mays.webp",
+     "han": "機械"
     },
     {
      "ko": "배우다",
@@ -2399,7 +2519,8 @@
     {
      "ko": "우산",
      "vi": "ô",
-     "img": "d41-o.webp"
+     "img": "d41-o.webp",
+     "han": "雨傘"
     },
     {
      "ko": "가져오다",
@@ -2429,12 +2550,14 @@
     {
      "ko": "인간",
      "vi": "con người",
-     "img": "k-ingan.webp"
+     "img": "k-ingan.webp",
+     "han": "人間"
     },
     {
      "ko": "사실",
      "vi": "sự thật, sự thực",
-     "img": "k-sasil.webp"
+     "img": "k-sasil.webp",
+     "han": "事實"
     },
     {
      "ko": "나다",
@@ -2488,7 +2611,8 @@
     {
      "ko": "기분",
      "vi": "tâm trạng",
-     "img": "k-gibun.webp"
+     "img": "k-gibun.webp",
+     "han": "氣分"
     },
     {
      "ko": "이렇다",
@@ -2498,12 +2622,14 @@
     {
      "ko": "의하다",
      "vi": "dựa vào, theo",
-     "img": "k-uihada.webp"
+     "img": "k-uihada.webp",
+     "han": "依"
     },
     {
      "ko": "시대",
      "vi": "thời đại",
-     "img": "k-sidae.webp"
+     "img": "k-sidae.webp",
+     "han": "時代"
     },
     {
      "ko": "다음",
@@ -2562,7 +2688,8 @@
     {
      "ko": "장갑",
      "vi": "bao tay, găng tay",
-     "img": "d27-gang-tay.webp"
+     "img": "d27-gang-tay.webp",
+     "han": "掌匣掌甲"
     },
     {
      "ko": "씻다",
@@ -2577,12 +2704,14 @@
     {
      "ko": "자기",
      "vi": "chính mình, tự mình, bản thân mình",
-     "img": "k-jagi.webp"
+     "img": "k-jagi.webp",
+     "han": "自己"
     },
     {
      "ko": "세계",
      "vi": "thế giới",
-     "img": "k-segye.webp"
+     "img": "k-segye.webp",
+     "han": "世界"
     },
     {
      "ko": "버리다",
@@ -2592,7 +2721,8 @@
     {
      "ko": "운동",
      "vi": "sự tập luyện thể thao",
-     "img": "x-the-thao.webp"
+     "img": "x-the-thao.webp",
+     "han": "運動"
     },
     {
      "ko": "퍼센트",
@@ -2602,7 +2732,8 @@
     {
      "ko": "대통령",
      "vi": "tổng thống",
-     "img": "k-daetongryeong.webp"
+     "img": "k-daetongryeong.webp",
+     "han": "大統領"
     },
     {
      "ko": "가지",
@@ -2646,7 +2777,8 @@
     {
      "ko": "감기",
      "vi": "bệnh cảm",
-     "img": "d16-cam.webp"
+     "img": "d16-cam.webp",
+     "han": "感氣"
     },
     {
      "ko": "얼굴",
@@ -2661,7 +2793,8 @@
     {
      "ko": "생일",
      "vi": "sinh nhật",
-     "img": "d49-sinh-nhat.webp"
+     "img": "d49-sinh-nhat.webp",
+     "han": "生日"
     },
     {
      "ko": "가져가다",
@@ -2671,7 +2804,8 @@
     {
      "ko": "시작하다",
      "vi": "bắt đầu",
-     "img": "d11-bat-dau.webp"
+     "img": "d11-bat-dau.webp",
+     "han": "始作"
     },
     {
      "ko": "바로",
@@ -2730,22 +2864,26 @@
     {
      "ko": "매일",
      "vi": "mỗi ngày",
-     "img": "k-maeil.webp"
+     "img": "k-maeil.webp",
+     "han": "每日"
     },
     {
      "ko": "공부",
      "vi": "việc học, sự học",
-     "img": "k-gongbu.webp"
+     "img": "k-gongbu.webp",
+     "han": "工夫"
     },
     {
      "ko": "약속",
      "vi": "sự hứa hẹn, lời hứa",
-     "img": "k-yaksok.webp"
+     "img": "k-yaksok.webp",
+     "han": "約束"
     },
     {
      "ko": "운동하다",
      "vi": "tập luyện thể thao",
-     "img": "k-undonghada.webp"
+     "img": "k-undonghada.webp",
+     "han": "運動"
     },
     {
      "ko": "올해",
@@ -2765,7 +2903,8 @@
     {
      "ko": "국가",
      "vi": "quốc gia",
-     "img": "k-gukga.webp"
+     "img": "k-gukga.webp",
+     "han": "國家"
     },
     {
      "ko": "그런데",
@@ -2819,7 +2958,8 @@
     {
      "ko": "요리",
      "vi": "nấu ăn, nấu nướng",
-     "img": "k-yori.webp"
+     "img": "k-yori.webp",
+     "han": "料理"
     },
     {
      "ko": "일하다",
@@ -2829,7 +2969,8 @@
     {
      "ko": "요리하다",
      "vi": "nấu ăn, nấu nướng",
-     "img": "d46-nau.webp"
+     "img": "d46-nau.webp",
+     "han": "料理"
     },
     {
      "ko": "가르치다",
@@ -2839,7 +2980,8 @@
     {
      "ko": "친절",
      "vi": "sự tử tế, sự niềm nở",
-     "img": "k-chinjeol.webp"
+     "img": "k-chinjeol.webp",
+     "han": "親切"
     },
     {
      "ko": "모두",
@@ -2849,7 +2991,8 @@
     {
      "ko": "여성",
      "vi": "phụ nữ, giới nữ",
-     "img": "k-yeoseong.webp"
+     "img": "k-yeoseong.webp",
+     "han": "女性"
     },
     {
      "ko": "마음",
@@ -2898,7 +3041,8 @@
     {
      "ko": "근처",
      "vi": "nơi gần",
-     "img": "k-geuncheo.webp"
+     "img": "k-geuncheo.webp",
+     "han": "近處"
     },
     {
      "ko": "저기",
@@ -2908,12 +3052,14 @@
     {
      "ko": "관계",
      "vi": "quan hệ",
-     "img": "k-gwangye.webp"
+     "img": "k-gwangye.webp",
+     "han": "關係"
     },
     {
      "ko": "남자",
      "vi": "nam giới",
-     "img": "k-namja.webp"
+     "img": "k-namja.webp",
+     "han": "男子"
     },
     {
      "ko": "어디",
@@ -2938,7 +3084,8 @@
     {
      "ko": "지역",
      "vi": "vùng, khu vực",
-     "img": "k-jiyeok.webp"
+     "img": "k-jiyeok.webp",
+     "han": "地域"
     },
     {
      "ko": "다르다",
@@ -2987,7 +3134,8 @@
     {
      "ko": "청소",
      "vi": "việc quét dọn, việc lau chùi, việc dọn dẹp",
-     "img": "k-cheongso.webp"
+     "img": "k-cheongso.webp",
+     "han": "淸掃"
     },
     {
      "ko": "이야기",
@@ -3017,17 +3165,20 @@
     {
      "ko": "이번",
      "vi": "lần này",
-     "img": "k-ibeon.webp"
+     "img": "k-ibeon.webp",
+     "han": "番"
     },
     {
      "ko": "생활",
      "vi": "sự sinh sống, cuộc sống",
-     "img": "k-saenghwal.webp"
+     "img": "k-saenghwal.webp",
+     "han": "生活"
     },
     {
      "ko": "지금",
      "vi": "bây giờ",
-     "img": "d09-bay-gio.webp"
+     "img": "d09-bay-gio.webp",
+     "han": "只今"
     }
    ],
    "dialog": {
@@ -3066,7 +3217,8 @@
     {
      "ko": "성격",
      "vi": "tính cách, tính nết",
-     "img": "k-seonggyeok.webp"
+     "img": "k-seonggyeok.webp",
+     "han": "性格"
     },
     {
      "ko": "사이",
@@ -3076,7 +3228,8 @@
     {
      "ko": "방법",
      "vi": "phương pháp",
-     "img": "x-cach.webp"
+     "img": "x-cach.webp",
+     "han": "方法"
     },
     {
      "ko": "우리나라",
@@ -3111,7 +3264,8 @@
     {
      "ko": "특히",
      "vi": "một cách đặc biệt",
-     "img": "k-teukhi.webp"
+     "img": "k-teukhi.webp",
+     "han": "特"
     }
    ],
    "dialog": {
@@ -3150,7 +3304,8 @@
     {
      "ko": "내년",
      "vi": "năm tới, năm sau",
-     "img": "k-naenyeon.webp"
+     "img": "k-naenyeon.webp",
+     "han": "來年"
     },
     {
      "ko": "돌아가다",
@@ -3160,7 +3315,8 @@
     {
      "ko": "열심히",
      "vi": "một cách chăm chỉ, một cách cần mẫn, một cách miệt mài",
-     "img": "k-yeolsimhi.webp"
+     "img": "k-yeolsimhi.webp",
+     "han": "熱心"
     },
     {
      "ko": "모으다",
@@ -3170,12 +3326,14 @@
     {
      "ko": "전화하다",
      "vi": "điện thoại, gọi điện",
-     "img": "d70-dien-thoai.webp"
+     "img": "d70-dien-thoai.webp",
+     "han": "電話"
     },
     {
      "ko": "이상",
      "vi": "trở lên",
-     "img": "k-isang.webp"
+     "img": "k-isang.webp",
+     "han": "以上"
     },
     {
      "ko": "나가다",
@@ -3185,12 +3343,14 @@
     {
      "ko": "교육",
      "vi": "sự giáo dục",
-     "img": "k-gyoyuk.webp"
+     "img": "k-gyoyuk.webp",
+     "han": "敎育"
     },
     {
      "ko": "경제",
      "vi": "kinh tế, nền kinh tế",
-     "img": "k-gyeongje.webp"
+     "img": "k-gyeongje.webp",
+     "han": "經濟"
     },
     {
      "ko": "아직",
@@ -3234,12 +3394,14 @@
     {
      "ko": "통장",
      "vi": "sổ tài khoản, sổ ngân hàng",
-     "img": "d67-so.webp"
+     "img": "d67-so.webp",
+     "han": "通帳"
     },
     {
      "ko": "필요하다",
      "vi": "tất yếu, thiết yếu, cần thiết",
-     "img": "x-can.webp"
+     "img": "x-can.webp",
+     "han": "必要"
     },
     {
      "ko": "챙기다",
@@ -3249,27 +3411,32 @@
     {
      "ko": "서류",
      "vi": "tài liệu, hồ sơ, giấy tờ",
-     "img": "x-tai-lieu.webp"
+     "img": "x-tai-lieu.webp",
+     "han": "書類"
     },
     {
      "ko": "외국인",
      "vi": "người ngoại quốc, người nước ngoài",
-     "img": "k-oegukin.webp"
+     "img": "k-oegukin.webp",
+     "han": "外國人"
     },
     {
      "ko": "등록증",
      "vi": "chứng nhận đăng kí, giấy đăng kí",
-     "img": "k-deungrokjeung.webp"
+     "img": "k-deungrokjeung.webp",
+     "han": "登錄證"
     },
     {
      "ko": "운전",
      "vi": "sự lái xe",
-     "img": "k-unjeon.webp"
+     "img": "k-unjeon.webp",
+     "han": "運轉"
     },
     {
      "ko": "안전",
      "vi": "sự an toàn",
-     "img": "x-an-toan.webp"
+     "img": "x-an-toan.webp",
+     "han": "安全"
     },
     {
      "ko": "잡다",
@@ -3279,7 +3446,8 @@
     {
      "ko": "예술",
      "vi": "nghệ thuật",
-     "img": "k-yesul.webp"
+     "img": "k-yesul.webp",
+     "han": "藝術"
     }
    ],
    "dialog": {
@@ -3338,7 +3506,8 @@
     {
      "ko": "역사",
      "vi": "lịch sử, tiến trình lịch sử",
-     "img": "k-yeoksa.webp"
+     "img": "k-yeoksa.webp",
+     "han": "歷史"
     },
     {
      "ko": "읽다",
@@ -3353,17 +3522,20 @@
     {
      "ko": "결과",
      "vi": "kết quả",
-     "img": "k-gyeolgwa.webp"
+     "img": "k-gyeolgwa.webp",
+     "han": "結果"
     },
     {
      "ko": "내용",
      "vi": "cái bên trong",
-     "img": "k-naeyong.webp"
+     "img": "k-naeyong.webp",
+     "han": "內容"
     },
     {
      "ko": "물론",
      "vi": "tất nhiên, đương nhiên",
-     "img": "k-mulron.webp"
+     "img": "k-mulron.webp",
+     "han": "勿論"
     }
    ],
    "dialog": {
@@ -3402,7 +3574,8 @@
     {
      "ko": "사무실",
      "vi": "văn phòng",
-     "img": "d101-van-phong.webp"
+     "img": "d101-van-phong.webp",
+     "han": "事務室"
     },
     {
      "ko": "끝내다",
@@ -3412,7 +3585,8 @@
     {
      "ko": "동안",
      "vi": "trong, trong suốt, trong khoảng",
-     "img": "d14-trong.webp"
+     "img": "d14-trong.webp",
+     "han": "童顔"
     },
     {
      "ko": "일어나다",
@@ -3422,7 +3596,8 @@
     {
      "ko": "당신",
      "vi": "ông, bà, anh, chị",
-     "img": "k-dangsin.webp"
+     "img": "k-dangsin.webp",
+     "han": "當身"
     },
     {
      "ko": "넣다",
@@ -3432,7 +3607,8 @@
     {
      "ko": "중요하다",
      "vi": "cần thiết, quan trọng, trọng yếu, cần yếu",
-     "img": "d20-quan-trong.webp"
+     "img": "d20-quan-trong.webp",
+     "han": "重要"
     },
     {
      "ko": "무슨",
@@ -3496,7 +3672,8 @@
     {
      "ko": "위험하다",
      "vi": "nguy hiểm",
-     "img": "x-nguy-hiem.webp"
+     "img": "x-nguy-hiem.webp",
+     "han": "危險"
     },
     {
      "ko": "담배",
@@ -3516,7 +3693,8 @@
     {
      "ko": "의미",
      "vi": "ý nghĩa, nghĩa",
-     "img": "k-uimi.webp"
+     "img": "k-uimi.webp",
+     "han": "意味"
     },
     {
      "ko": "자리",
@@ -3575,12 +3753,14 @@
     {
      "ko": "주차",
      "vi": "(sự) đỗ xe, đậu xe",
-     "img": "k-jucha.webp"
+     "img": "k-jucha.webp",
+     "han": "駐車"
     },
     {
      "ko": "창문",
      "vi": "cửa sổ",
-     "img": "k-changmun.webp"
+     "img": "k-changmun.webp",
+     "han": "窓門"
     },
     {
      "ko": "여기다",
@@ -3595,12 +3775,14 @@
     {
      "ko": "정치",
      "vi": "chính trị",
-     "img": "k-jeongchi.webp"
+     "img": "k-jeongchi.webp",
+     "han": "政治"
     },
     {
      "ko": "국민",
      "vi": "quốc dân, nhân dân",
-     "img": "k-gukmin.webp"
+     "img": "k-gukmin.webp",
+     "han": "國民"
     },
     {
      "ko": "얘기",
@@ -3610,7 +3792,8 @@
     {
      "ko": "연구",
      "vi": "sự nghiên cứu",
-     "img": "k-yeongu.webp"
+     "img": "k-yeongu.webp",
+     "han": "硏究"
     },
     {
      "ko": "엄마",
@@ -3654,7 +3837,8 @@
     {
      "ko": "주문",
      "vi": "sự đặt hàng",
-     "img": "k-jumun.webp"
+     "img": "k-jumun.webp",
+     "han": "注文"
     },
     {
      "ko": "내리다",
@@ -3674,7 +3858,8 @@
     {
      "ko": "이유",
      "vi": "lý do",
-     "img": "x-ly-do.webp"
+     "img": "x-ly-do.webp",
+     "han": "理由"
     },
     {
      "ko": "또는",
@@ -3689,12 +3874,14 @@
     {
      "ko": "사용하다",
      "vi": "sử dụng",
-     "img": "k-sayonghada.webp"
+     "img": "k-sayonghada.webp",
+     "han": "使用"
     },
     {
      "ko": "남편",
      "vi": "chồng",
-     "img": "d15-chong.webp"
+     "img": "d15-chong.webp",
+     "han": "男便"
     },
     {
      "ko": "들어오다",
@@ -3738,7 +3925,8 @@
     {
      "ko": "월급",
      "vi": "lương tháng",
-     "img": "d30-luong.webp"
+     "img": "d30-luong.webp",
+     "han": "月給"
     },
     {
      "ko": "바라다",
@@ -3753,22 +3941,26 @@
     {
      "ko": "주말",
      "vi": "cuối tuần",
-     "img": "x-cuoi-tuan.webp"
+     "img": "x-cuoi-tuan.webp",
+     "han": "週末"
     },
     {
      "ko": "건강하다",
      "vi": "khỏe mạnh, khỏe khoắn",
-     "img": "d04-khoe.webp"
+     "img": "d04-khoe.webp",
+     "han": "健康"
     },
     {
      "ko": "세상",
      "vi": "thế gian",
-     "img": "k-sesang.webp"
+     "img": "k-sesang.webp",
+     "han": "世上"
     },
     {
      "ko": "대학",
      "vi": "đại học",
-     "img": "k-daehak.webp"
+     "img": "k-daehak.webp",
+     "han": "大學"
     },
     {
      "ko": "가운데",
@@ -3783,7 +3975,8 @@
     {
      "ko": "이후",
      "vi": "sau này, mai đây, mai sau",
-     "img": "k-ihu.webp"
+     "img": "k-ihu.webp",
+     "han": "以後"
     }
    ],
    "dialog": {
@@ -3822,7 +4015,8 @@
     {
      "ko": "등산",
      "vi": "việc leo núi, môn leo núi",
-     "img": "k-deungsan.webp"
+     "img": "k-deungsan.webp",
+     "han": "登山"
     },
     {
      "ko": "어때",
@@ -3832,12 +4026,14 @@
     {
      "ko": "배우",
      "vi": "diễn viên",
-     "img": "k-baeu.webp"
+     "img": "k-baeu.webp",
+     "han": "俳優"
     },
     {
      "ko": "문학",
      "vi": "văn học",
-     "img": "k-munhak.webp"
+     "img": "k-munhak.webp",
+     "han": "文學"
     },
     {
      "ko": "아주",
@@ -3847,7 +4043,8 @@
     {
      "ko": "지방",
      "vi": "địa phương, địa bàn khu vực",
-     "img": "x-mien.webp"
+     "img": "x-mien.webp",
+     "han": "地方"
     },
     {
      "ko": "높다",
@@ -3857,12 +4054,14 @@
     {
      "ko": "최근",
      "vi": "Gần đây",
-     "img": "k-choegeun.webp"
+     "img": "k-choegeun.webp",
+     "han": "最近"
     },
     {
      "ko": "환경",
      "vi": "môi trường",
-     "img": "k-hwangyeong.webp"
+     "img": "k-hwangyeong.webp",
+     "han": "環境"
     },
     {
      "ko": "먼저",
@@ -3906,7 +4105,8 @@
     {
      "ko": "전하다",
      "vi": "truyền lại, lưu truyền",
-     "img": "k-jeonhada.webp"
+     "img": "k-jeonhada.webp",
+     "han": "傳"
     },
     {
      "ko": "말씀",
@@ -3916,7 +4116,8 @@
     {
      "ko": "지시",
      "vi": "sự cho xem",
-     "img": "k-jisi.webp"
+     "img": "k-jisi.webp",
+     "han": "指示"
     },
     {
      "ko": "요즘",
@@ -3931,22 +4132,26 @@
     {
      "ko": "결혼",
      "vi": "việc kết hôn",
-     "img": "k-gyeolhon.webp"
+     "img": "k-gyeolhon.webp",
+     "han": "結婚"
     },
     {
      "ko": "사장",
      "vi": "giám đốc",
-     "img": "d21-giam-doc.webp"
+     "img": "d21-giam-doc.webp",
+     "han": "社長"
     },
     {
      "ko": "내일",
      "vi": "ngày mai",
-     "img": "d06-mai.webp"
+     "img": "d06-mai.webp",
+     "han": "來日"
     },
     {
      "ko": "자체",
      "vi": "tự thể",
-     "img": "k-jache.webp"
+     "img": "k-jache.webp",
+     "han": "自體"
     },
     {
      "ko": "남다",
@@ -3995,17 +4200,20 @@
     {
      "ko": "확실하다",
      "vi": "xác thực, chắc chắn",
-     "img": "k-hwaksilhada.webp"
+     "img": "k-hwaksilhada.webp",
+     "han": "確實"
     },
     {
      "ko": "부분",
      "vi": "bộ phận, phần",
-     "img": "k-bubun.webp"
+     "img": "k-bubun.webp",
+     "han": "部分"
     },
     {
      "ko": "변화",
      "vi": "sự biến hóa, sự biến đổi, sự thay đổi",
-     "img": "k-byeonhwa.webp"
+     "img": "k-byeonhwa.webp",
+     "han": "變化"
     },
     {
      "ko": "떨어지다",
@@ -4015,7 +4223,8 @@
     {
      "ko": "관하다",
      "vi": "liên quan đến",
-     "img": "k-gwanhada.webp"
+     "img": "k-gwanhada.webp",
+     "han": "關"
     },
     {
      "ko": "그냥",
@@ -4030,7 +4239,8 @@
     {
      "ko": "이용하다",
      "vi": "sử dụng, tận dụng",
-     "img": "k-iyonghada.webp"
+     "img": "k-iyonghada.webp",
+     "han": "利用"
     },
     {
      "ko": "거의",
@@ -4074,17 +4284,20 @@
     {
      "ko": "시험",
      "vi": "sự thi cử, sự kiểm tra, sự sát hạch",
-     "img": "k-siheom.webp"
+     "img": "k-siheom.webp",
+     "han": "試驗"
     },
     {
      "ko": "목적",
      "vi": "mục đích",
-     "img": "k-mokjeok.webp"
+     "img": "k-mokjeok.webp",
+     "han": "目的"
     },
     {
      "ko": "건강",
      "vi": "sự khỏe mạnh, sức khỏe",
-     "img": "x-suc-khoe.webp"
+     "img": "x-suc-khoe.webp",
+     "han": "健康"
     },
     {
      "ko": "지키다",
@@ -4099,27 +4312,32 @@
     {
      "ko": "시작",
      "vi": "sự bắt đầu, bước đầu",
-     "img": "k-sijak.webp"
+     "img": "k-sijak.webp",
+     "han": "始作"
     },
     {
      "ko": "합격하다",
      "vi": "đỗ, đạt (tiêu chuẩn, qui định)",
-     "img": "k-hapgyeokhada.webp"
+     "img": "k-hapgyeokhada.webp",
+     "han": "合格"
     },
     {
      "ko": "공부하다",
      "vi": "học, học tập, học hành",
-     "img": "d101-hoc.webp"
+     "img": "d101-hoc.webp",
+     "han": "工夫"
     },
     {
      "ko": "중심",
      "vi": "trung tâm",
-     "img": "k-jungsim.webp"
+     "img": "k-jungsim.webp",
+     "han": "中心"
     },
     {
      "ko": "활동",
      "vi": "hoạt động",
-     "img": "k-hwaldong.webp"
+     "img": "k-hwaldong.webp",
+     "han": "活動"
     }
    ],
    "dialog": {
@@ -4158,12 +4376,14 @@
     {
      "ko": "무리하다",
      "vi": "vô lí",
-     "img": "k-murihada.webp"
+     "img": "k-murihada.webp",
+     "han": "無理"
     },
     {
      "ko": "다행",
      "vi": "sự may mắn bất ngờ",
-     "img": "k-dahaeng.webp"
+     "img": "k-dahaeng.webp",
+     "han": "多幸"
     },
     {
      "ko": "시원하다",
@@ -4178,22 +4398,26 @@
     {
      "ko": "관심",
      "vi": "mối quan tâm",
-     "img": "k-gwansim.webp"
+     "img": "k-gwansim.webp",
+     "han": "關心"
     },
     {
      "ko": "역시",
      "vi": "quả là, đúng là",
-     "img": "k-yeoksi.webp"
+     "img": "k-yeoksi.webp",
+     "han": "亦是"
     },
     {
      "ko": "광고",
      "vi": "sự quảng bá, sự quảng cáo",
-     "img": "k-gwanggo.webp"
+     "img": "k-gwanggo.webp",
+     "han": "廣告"
     },
     {
      "ko": "정신",
      "vi": "tinh thần, tâm trí, tâm linh",
-     "img": "k-jeongsin.webp"
+     "img": "k-jeongsin.webp",
+     "han": "精神"
     },
     {
      "ko": "이르다",
@@ -4242,7 +4466,8 @@
     {
      "ko": "대신",
      "vi": "sự thay thế",
-     "img": "k-daesin.webp"
+     "img": "k-daesin.webp",
+     "han": "代身"
     },
     {
      "ko": "바꾸다",
@@ -4257,22 +4482,26 @@
     {
      "ko": "대신하다",
      "vi": "thay thế",
-     "img": "k-daesinhada.webp"
+     "img": "k-daesinhada.webp",
+     "han": "代身"
     },
     {
      "ko": "청소하다",
      "vi": "quét dọn, lau chùi, dọn dẹp",
-     "img": "k-cheongsohada.webp"
+     "img": "k-cheongsohada.webp",
+     "han": "淸掃"
     },
     {
      "ko": "기술",
      "vi": "kỹ thuật",
-     "img": "k-gisul.webp"
+     "img": "k-gisul.webp",
+     "han": "技術"
     },
     {
      "ko": "전체",
      "vi": "toàn thể",
-     "img": "k-jeonche.webp"
+     "img": "k-jeonche.webp",
+     "han": "全體"
     },
     {
      "ko": "얻다",
@@ -4282,12 +4511,14 @@
     {
      "ko": "민족",
      "vi": "dân tộc",
-     "img": "k-minjok.webp"
+     "img": "k-minjok.webp",
+     "han": "民族"
     },
     {
      "ko": "조사",
      "vi": "sự điều tra",
-     "img": "k-josa.webp"
+     "img": "k-josa.webp",
+     "han": "調査"
     }
    ],
    "dialog": {
@@ -4341,7 +4572,8 @@
     {
      "ko": "동료",
      "vi": "đồng liêu, đồng nghiệp",
-     "img": "d21-dong-nghiep.webp"
+     "img": "d21-dong-nghiep.webp",
+     "han": "同僚"
     },
     {
      "ko": "그대로",
@@ -4351,22 +4583,26 @@
     {
      "ko": "년대",
      "vi": "thập niên, thập kỷ",
-     "img": "k-nyeondae.webp"
+     "img": "k-nyeondae.webp",
+     "han": "年代"
     },
     {
      "ko": "과학",
      "vi": "khoa học",
-     "img": "k-gwahak.webp"
+     "img": "k-gwahak.webp",
+     "han": "科學"
     },
     {
      "ko": "자연",
      "vi": "tự nhiên, thiên nhiên",
-     "img": "k-jayeon.webp"
+     "img": "k-jayeon.webp",
+     "han": "自然"
     },
     {
      "ko": "결국",
      "vi": "đoạn kết, phần kết, sự kết thúc",
-     "img": "k-gyeolguk.webp"
+     "img": "k-gyeolguk.webp",
+     "han": "結局"
     },
     {
      "ko": "프로그램",
@@ -4410,12 +4646,14 @@
     {
      "ko": "도착하다",
      "vi": "đến nơi",
-     "img": "x-den-noi.webp"
+     "img": "x-den-noi.webp",
+     "han": "到着"
     },
     {
      "ko": "습관",
      "vi": "thói quen, tập quán",
-     "img": "x-thoi-quen.webp"
+     "img": "x-thoi-quen.webp",
+     "han": "習慣"
     },
     {
      "ko": "이루어지다",
@@ -4440,17 +4678,20 @@
     {
      "ko": "대부분",
      "vi": "đại bộ phận, đại đa số",
-     "img": "k-daebubun.webp"
+     "img": "k-daebubun.webp",
+     "han": "大部分"
     },
     {
      "ko": "표정",
      "vi": "sự biểu lộ, vẻ mặt",
-     "img": "k-pyojeong.webp"
+     "img": "k-pyojeong.webp",
+     "han": "表情"
     },
     {
      "ko": "일부",
      "vi": "một phần",
-     "img": "k-ilbu.webp"
+     "img": "k-ilbu.webp",
+     "han": "一部"
     },
     {
      "ko": "느낌",
@@ -4494,7 +4735,8 @@
     {
      "ko": "순서",
      "vi": "thứ tự",
-     "img": "x-chuong-trinh.webp"
+     "img": "x-chuong-trinh.webp",
+     "han": "順序"
     },
     {
      "ko": "마치다",
@@ -4509,7 +4751,8 @@
     {
      "ko": "양파",
      "vi": "hành Tây",
-     "img": "k-yangpa.webp"
+     "img": "k-yangpa.webp",
+     "han": "洋"
     },
     {
      "ko": "고기",
@@ -4519,12 +4762,14 @@
     {
      "ko": "회의",
      "vi": "sự hội ý, sự bàn bạc, cuộc họp",
-     "img": "d56-cuoc-hop.webp"
+     "img": "d56-cuoc-hop.webp",
+     "han": "會議"
     },
     {
      "ko": "연락",
      "vi": "sự liên lạc",
-     "img": "k-yeonrak.webp"
+     "img": "k-yeonrak.webp",
+     "han": "連絡聯絡"
     },
     {
      "ko": "고개",
@@ -4534,12 +4779,14 @@
     {
      "ko": "세기",
      "vi": "thế kỷ",
-     "img": "k-segi.webp"
+     "img": "k-segi.webp",
+     "han": "世紀"
     },
     {
      "ko": "현재",
      "vi": "hiện tại",
-     "img": "k-hyeonjae.webp"
+     "img": "k-hyeonjae.webp",
+     "han": "現在"
     }
    ],
    "dialog": {
@@ -4583,7 +4830,8 @@
     {
      "ko": "소개",
      "vi": "sự giới thiệu",
-     "img": "k-sogae.webp"
+     "img": "k-sogae.webp",
+     "han": "紹介"
     },
     {
      "ko": "다니다",
@@ -4593,27 +4841,32 @@
     {
      "ko": "연습",
      "vi": "luyện tập, thực tập, thực hành, rèn luyện",
-     "img": "k-yeonseup.webp"
+     "img": "k-yeonseup.webp",
+     "han": "演習"
     },
     {
      "ko": "발전",
      "vi": "sự phát triển",
-     "img": "k-baljeon.webp"
+     "img": "k-baljeon.webp",
+     "han": "發展"
     },
     {
      "ko": "향하다",
      "vi": "hướng về, nhìn về",
-     "img": "k-hyanghada.webp"
+     "img": "k-hyanghada.webp",
+     "han": "向"
     },
     {
      "ko": "관련",
      "vi": "sự liên quan",
-     "img": "k-gwanryeon.webp"
+     "img": "k-gwanryeon.webp",
+     "han": "關聯關連"
     },
     {
      "ko": "분위기",
      "vi": "bầu không khí",
-     "img": "k-bunwigi.webp"
+     "img": "k-bunwigi.webp",
+     "han": "雰圍氣"
     },
     {
      "ko": "그러하다",
@@ -4623,7 +4876,8 @@
     {
      "ko": "우선",
      "vi": "trước tiên, trước hết, đầu tiên",
-     "img": "x-truoc-het.webp"
+     "img": "x-truoc-het.webp",
+     "han": "于先"
     }
    ],
    "dialog": {
@@ -4662,7 +4916,8 @@
     {
      "ko": "준비하다",
      "vi": "chuẩn bị",
-     "img": "k-junbihada.webp"
+     "img": "k-junbihada.webp",
+     "han": "準備"
     },
     {
      "ko": "미리",
@@ -4672,12 +4927,14 @@
     {
      "ko": "연장",
      "vi": "sự gia hạn, sự thêm, sự tăng cường thêm",
-     "img": "k-yeonjang.webp"
+     "img": "k-yeonjang.webp",
+     "han": "延長"
     },
     {
      "ko": "필요",
      "vi": "sự tất yếu",
-     "img": "k-pilyo.webp"
+     "img": "k-pilyo.webp",
+     "han": "必要"
     },
     {
      "ko": "기다리다",
@@ -4702,7 +4959,8 @@
     {
      "ko": "정보",
      "vi": "thông tin",
-     "img": "k-jeongbo.webp"
+     "img": "k-jeongbo.webp",
+     "han": "情報"
     },
     {
      "ko": "만큼",
@@ -4746,7 +5004,8 @@
     {
      "ko": "반면",
      "vi": "ngược lại, trái lại",
-     "img": "k-banmyeon.webp"
+     "img": "k-banmyeon.webp",
+     "han": "反面"
     },
     {
      "ko": "힘들어하다",
@@ -4756,37 +5015,44 @@
     {
      "ko": "동네",
      "vi": "làng xóm, thôn xóm, khu phố",
-     "img": "k-dongne.webp"
+     "img": "k-dongne.webp",
+     "han": "洞"
     },
     {
      "ko": "교통",
      "vi": "giao thông",
-     "img": "k-gyotong.webp"
+     "img": "k-gyotong.webp",
+     "han": "交通"
     },
     {
      "ko": "불편",
      "vi": "sự bất tiện",
-     "img": "k-bulpyeon.webp"
+     "img": "k-bulpyeon.webp",
+     "han": "不便"
     },
     {
      "ko": "활발하다",
      "vi": "hoạt bát",
-     "img": "k-hwalbalhada.webp"
+     "img": "k-hwalbalhada.webp",
+     "han": "活潑"
     },
     {
      "ko": "역할",
      "vi": "vai trò, nhiệm vụ",
-     "img": "k-yeokhal.webp"
+     "img": "k-yeokhal.webp",
+     "han": "役割"
     },
     {
      "ko": "행동",
      "vi": "(sự) hành động",
-     "img": "k-haengdong.webp"
+     "img": "k-haengdong.webp",
+     "han": "行動"
     },
     {
      "ko": "국내",
      "vi": "quốc nội, trong nước, nội địa",
-     "img": "k-guknae.webp"
+     "img": "k-guknae.webp",
+     "han": "國內"
     },
     {
      "ko": "흐르다",
@@ -4845,12 +5111,14 @@
     {
      "ko": "과자",
      "vi": "bánh ngọt, bánh quy",
-     "img": "k-gwaja.webp"
+     "img": "k-gwaja.webp",
+     "han": "菓子"
     },
     {
      "ko": "작년",
      "vi": "năm rồi, năm ngoái, năm trước",
-     "img": "k-jaknyeon.webp"
+     "img": "k-jaknyeon.webp",
+     "han": "昨年"
     },
     {
      "ko": "그만",
@@ -4865,12 +5133,14 @@
     {
      "ko": "모양",
      "vi": "hình ảnh, bóng dáng",
-     "img": "k-moyang.webp"
+     "img": "k-moyang.webp",
+     "han": "模樣"
     },
     {
      "ko": "조건",
      "vi": "điều kiện",
-     "img": "k-jogeon.webp"
+     "img": "k-jogeon.webp",
+     "han": "條件"
     },
     {
      "ko": "넘다",
@@ -4914,17 +5184,20 @@
     {
      "ko": "우유",
      "vi": "sữa bò",
-     "img": "d76-sua.webp"
+     "img": "d76-sua.webp",
+     "han": "牛乳"
     },
     {
      "ko": "부탁하다",
      "vi": "nhờ, phó thác",
-     "img": "x-nho.webp"
+     "img": "x-nho.webp",
+     "han": "付託"
     },
     {
      "ko": "편지",
      "vi": "bức thư",
-     "img": "k-pyeonji.webp"
+     "img": "k-pyeonji.webp",
+     "han": "便紙片紙"
     },
     {
      "ko": "부치다",
@@ -4939,22 +5212,26 @@
     {
      "ko": "대표",
      "vi": "cái tiêu biểu",
-     "img": "k-daepyo.webp"
+     "img": "k-daepyo.webp",
+     "han": "代表"
     },
     {
      "ko": "가능성",
      "vi": "tính khả thi",
-     "img": "k-ganeungseong.webp"
+     "img": "k-ganeungseong.webp",
+     "han": "可能性"
     },
     {
      "ko": "방향",
      "vi": "phương hướng",
-     "img": "k-banghyang.webp"
+     "img": "k-banghyang.webp",
+     "han": "方向"
     },
     {
      "ko": "대회",
      "vi": "đại hội",
-     "img": "k-daehoe.webp"
+     "img": "k-daehoe.webp",
+     "han": "大會"
     },
     {
      "ko": "목소리",
@@ -5013,7 +5290,8 @@
     {
      "ko": "영어",
      "vi": "tiếng Anh",
-     "img": "k-yeongeo.webp"
+     "img": "k-yeongeo.webp",
+     "han": "英語"
     },
     {
      "ko": "아니하다",
@@ -5033,17 +5311,20 @@
     {
      "ko": "노력",
      "vi": "sự cố gắng, sự nỗ lực",
-     "img": "k-noryeok.webp"
+     "img": "k-noryeok.webp",
+     "han": "努力"
     },
     {
      "ko": "전혀",
      "vi": "hoàn toàn",
-     "img": "k-jeonhyeo.webp"
+     "img": "k-jeonhyeo.webp",
+     "han": "全"
     },
     {
      "ko": "단체",
      "vi": "tổ chức",
-     "img": "k-danche.webp"
+     "img": "k-danche.webp",
+     "han": "團體"
     }
    ],
    "dialog": {
@@ -5102,7 +5383,8 @@
     {
      "ko": "출발",
      "vi": "sự khởi hành",
-     "img": "k-chulbal.webp"
+     "img": "k-chulbal.webp",
+     "han": "出發"
     },
     {
      "ko": "알려지다",
@@ -5112,22 +5394,26 @@
     {
      "ko": "가능하다",
      "vi": "khả dĩ, có thể",
-     "img": "k-ganeunghada.webp"
+     "img": "k-ganeunghada.webp",
+     "han": "可能"
     },
     {
      "ko": "능력",
      "vi": "khả năng, năng lực",
-     "img": "k-neungryeok.webp"
+     "img": "k-neungryeok.webp",
+     "han": "能力"
     },
     {
      "ko": "주장하다",
      "vi": "chủ trương, khẳng định",
-     "img": "k-jujanghada.webp"
+     "img": "k-jujanghada.webp",
+     "han": "主張"
     },
     {
      "ko": "자식",
      "vi": "con, con cái",
-     "img": "d08-con.webp"
+     "img": "d08-con.webp",
+     "han": "子息"
     }
    ],
    "dialog": {
@@ -5171,17 +5457,20 @@
     {
      "ko": "자료",
      "vi": "tài liệu",
-     "img": "x-tai-lieu.webp"
+     "img": "x-tai-lieu.webp",
+     "han": "資料"
     },
     {
      "ko": "제품",
      "vi": "sự chế phẩm, sản phẩm, chế phẩm",
-     "img": "x-san-pham.webp"
+     "img": "x-san-pham.webp",
+     "han": "製品"
     },
     {
      "ko": "사업",
      "vi": "việc làm ăn kinh doanh",
-     "img": "k-saeop.webp"
+     "img": "k-saeop.webp",
+     "han": "事業"
     },
     {
      "ko": "지난해",
@@ -5191,7 +5480,8 @@
     {
      "ko": "표현",
      "vi": "sự biểu hiện, sự thể hiện",
-     "img": "k-pyohyeon.webp"
+     "img": "k-pyohyeon.webp",
+     "han": "表現"
     },
     {
      "ko": "젊다",
@@ -5201,17 +5491,20 @@
     {
      "ko": "동시",
      "vi": "đồng thời, cùng một lúc",
-     "img": "k-dongsi.webp"
+     "img": "k-dongsi.webp",
+     "han": "同時"
     },
     {
      "ko": "순간",
      "vi": "khoảnh khắc, thoáng chốc, chốc lát",
-     "img": "k-sungan.webp"
+     "img": "k-sungan.webp",
+     "han": "瞬間"
     },
     {
      "ko": "전쟁",
      "vi": "chiến tranh",
-     "img": "k-jeonjaeng.webp"
+     "img": "k-jeonjaeng.webp",
+     "han": "戰爭"
     }
    ],
    "dialog": {
@@ -5250,27 +5543,32 @@
     {
      "ko": "적응하다",
      "vi": "thích ứng",
-     "img": "k-jeokeunghada.webp"
+     "img": "k-jeokeunghada.webp",
+     "han": "適應"
     },
     {
      "ko": "적응",
      "vi": "sự thích ứng",
-     "img": "k-jeokeung.webp"
+     "img": "k-jeokeung.webp",
+     "han": "適應"
     },
     {
      "ko": "실력",
      "vi": "thực lực",
-     "img": "k-silryeok.webp"
+     "img": "k-silryeok.webp",
+     "han": "實力"
     },
     {
      "ko": "점점",
      "vi": "dần dần, dần",
-     "img": "k-jeomjeom.webp"
+     "img": "k-jeomjeom.webp",
+     "han": "漸漸"
     },
     {
      "ko": "그녀",
      "vi": "cô ấy, bà ấy",
-     "img": "k-geunyeo.webp"
+     "img": "k-geunyeo.webp",
+     "han": "女"
     },
     {
      "ko": "그러다",
@@ -5280,7 +5578,8 @@
     {
      "ko": "정부",
      "vi": "chính phủ",
-     "img": "k-jeongbu.webp"
+     "img": "k-jeongbu.webp",
+     "han": "政府"
     },
     {
      "ko": "새롭다",
@@ -5290,12 +5589,14 @@
     {
      "ko": "과정",
      "vi": "quá trình",
-     "img": "k-gwajeong.webp"
+     "img": "k-gwajeong.webp",
+     "han": "過程"
     },
     {
      "ko": "생명",
      "vi": "sinh mệnh, sinh mạng, mạng sống",
-     "img": "k-saengmyeong.webp"
+     "img": "k-saengmyeong.webp",
+     "han": "生命"
     }
    ],
    "dialog": {
@@ -5334,12 +5635,14 @@
     {
      "ko": "물가",
      "vi": "vật giá",
-     "img": "k-mulga.webp"
+     "img": "k-mulga.webp",
+     "han": "物價"
     },
     {
      "ko": "저축",
      "vi": "sự tiết kiệm",
-     "img": "k-jeochuk.webp"
+     "img": "k-jeochuk.webp",
+     "han": "貯蓄"
     },
     {
      "ko": "줄이다",
@@ -5354,22 +5657,26 @@
     {
      "ko": "수입",
      "vi": "thu nhập",
-     "img": "k-suip.webp"
+     "img": "k-suip.webp",
+     "han": "收入"
     },
     {
      "ko": "사건",
      "vi": "sự kiện",
-     "img": "k-sageon.webp"
+     "img": "k-sageon.webp",
+     "han": "事件"
     },
     {
      "ko": "작품",
      "vi": "tác phẩm",
-     "img": "k-jakpum.webp"
+     "img": "k-jakpum.webp",
+     "han": "作品"
     },
     {
      "ko": "상황",
      "vi": "tình hình, tình huống, hoàn cảnh",
-     "img": "k-sanghwang.webp"
+     "img": "k-sanghwang.webp",
+     "han": "狀況"
     },
     {
      "ko": "따라서",
@@ -5379,7 +5686,8 @@
     {
      "ko": "상태",
      "vi": "trạng thái, tình hình, hiện trạng",
-     "img": "k-sangtae.webp"
+     "img": "k-sangtae.webp",
+     "han": "狀態"
     }
    ],
    "dialog": {
@@ -5423,7 +5731,8 @@
     {
      "ko": "유학",
      "vi": "sự du học",
-     "img": "k-yuhak.webp"
+     "img": "k-yuhak.webp",
+     "han": "留學"
     },
     {
      "ko": "가게",
@@ -5433,7 +5742,8 @@
     {
      "ko": "당시",
      "vi": "lúc đó, thời đó, đương thời",
-     "img": "k-dangsi.webp"
+     "img": "k-dangsi.webp",
+     "han": "當時"
     },
     {
      "ko": "더욱",
@@ -5443,22 +5753,26 @@
     {
      "ko": "현실",
      "vi": "hiện thực",
-     "img": "k-hyeonsil.webp"
+     "img": "k-hyeonsil.webp",
+     "han": "現實"
     },
     {
      "ko": "기업",
      "vi": "doanh nghiệp",
-     "img": "k-gieop.webp"
+     "img": "k-gieop.webp",
+     "han": "企業"
     },
     {
      "ko": "선거",
      "vi": "cuộc tuyển cử, cuộc bầu cử",
-     "img": "k-seongeo.webp"
+     "img": "k-seongeo.webp",
+     "han": "選擧"
     },
     {
      "ko": "현상",
      "vi": "hiện tượng",
-     "img": "k-hyeonsang.webp"
+     "img": "k-hyeonsang.webp",
+     "han": "現象"
     },
     {
      "ko": "듯하다",
@@ -5502,17 +5816,20 @@
     {
      "ko": "실수",
      "vi": "sự sai sót, sự sơ xuất, sự sai lầm",
-     "img": "k-silsu.webp"
+     "img": "k-silsu.webp",
+     "han": "失手"
     },
     {
      "ko": "죄송하다",
      "vi": "xin lỗi, cảm thấy có lỗi",
-     "img": "d02-xin-loi.webp"
+     "img": "d02-xin-loi.webp",
+     "han": "罪悚"
     },
     {
      "ko": "실수하다",
      "vi": "sai sót, sơ xuất",
-     "img": "k-silsuhada.webp"
+     "img": "k-silsuhada.webp",
+     "han": "失手"
     },
     {
      "ko": "마련",
@@ -5527,7 +5844,8 @@
     {
      "ko": "구조",
      "vi": "cơ cấu, cấu tạo",
-     "img": "k-gujo.webp"
+     "img": "k-gujo.webp",
+     "han": "構造"
     },
     {
      "ko": "오히려",
@@ -5547,7 +5865,8 @@
     {
      "ko": "산업",
      "vi": "công nghiệp",
-     "img": "k-saneop.webp"
+     "img": "k-saneop.webp",
+     "han": "産業"
     }
    ],
    "dialog": {
@@ -5596,27 +5915,32 @@
     {
      "ko": "형태",
      "vi": "hình thức, hình dáng, kiểu dáng",
-     "img": "k-hyeongtae.webp"
+     "img": "k-hyeongtae.webp",
+     "han": "形態"
     },
     {
      "ko": "작업",
      "vi": "sự tác nghiệp",
-     "img": "k-jakeop.webp"
+     "img": "k-jakeop.webp",
+     "han": "作業"
     },
     {
      "ko": "비하다",
      "vi": "so sánh",
-     "img": "k-bihada.webp"
+     "img": "k-bihada.webp",
+     "han": "比"
     },
     {
      "ko": "기관",
      "vi": "động cơ, máy",
-     "img": "k-gigwan.webp"
+     "img": "k-gigwan.webp",
+     "han": "機關"
     },
     {
      "ko": "입장",
      "vi": "lập trường",
-     "img": "k-ipjang.webp"
+     "img": "k-ipjang.webp",
+     "han": "立場"
     },
     {
      "ko": "만하다",
@@ -5626,12 +5950,14 @@
     {
      "ko": "방식",
      "vi": "phương thức",
-     "img": "k-bangsik.webp"
+     "img": "k-bangsik.webp",
+     "han": "方式"
     },
     {
      "ko": "영향",
      "vi": "sự ảnh hưởng",
-     "img": "k-yeonghyang.webp"
+     "img": "k-yeonghyang.webp",
+     "han": "影響"
     }
    ],
    "dialog": {
@@ -5670,47 +5996,56 @@
     {
      "ko": "행사",
      "vi": "sự kiện, buổi lễ, việc tổ chức sự kiện",
-     "img": "k-haengsa.webp"
+     "img": "k-haengsa.webp",
+     "han": "行事"
     },
     {
      "ko": "취소하다",
      "vi": "hủy bỏ",
-     "img": "k-chwisohada.webp"
+     "img": "k-chwisohada.webp",
+     "han": "取消"
     },
     {
      "ko": "안내",
      "vi": "sự hướng dẫn",
-     "img": "k-annae.webp"
+     "img": "k-annae.webp",
+     "han": "案內"
     },
     {
      "ko": "취소",
      "vi": "sự hủy bỏ",
-     "img": "k-chwiso.webp"
+     "img": "k-chwiso.webp",
+     "han": "取消"
     },
     {
      "ko": "부작용",
      "vi": "tác dụng phụ, hệ quả không mong muốn",
-     "img": "k-bujakyong.webp"
+     "img": "k-bujakyong.webp",
+     "han": "副作用"
     },
     {
      "ko": "주의하다",
      "vi": "chú ý",
-     "img": "x-chu-y.webp"
+     "img": "x-chu-y.webp",
+     "han": "注意"
     },
     {
      "ko": "부족하다",
      "vi": "thiếu, thiếu hụt, thiếu thốn",
-     "img": "x-thieu.webp"
+     "img": "x-thieu.webp",
+     "han": "不足"
     },
     {
      "ko": "신청",
      "vi": "việc đăng kí",
-     "img": "k-sincheong.webp"
+     "img": "k-sincheong.webp",
+     "han": "申請"
     },
     {
      "ko": "단계",
      "vi": "bước, giai đoạn",
-     "img": "k-dangye.webp"
+     "img": "k-dangye.webp",
+     "han": "段階"
     },
     {
      "ko": "올리다",
@@ -5754,12 +6089,14 @@
     {
      "ko": "급하다",
      "vi": "gấp, khẩn cấp",
-     "img": "d24-gap.webp"
+     "img": "d24-gap.webp",
+     "han": "急"
     },
     {
      "ko": "체하다",
      "vi": "đầy bụng, khó tiêu",
-     "img": "k-chehada.webp"
+     "img": "k-chehada.webp",
+     "han": "滯"
     },
     {
      "ko": "그렇게",
@@ -5769,7 +6106,8 @@
     {
      "ko": "무리",
      "vi": "sự quá sức, sự quá mức",
-     "img": "k-muri.webp"
+     "img": "k-muri.webp",
+     "han": "無理"
     },
     {
      "ko": "눈길",
@@ -5784,7 +6122,8 @@
     {
      "ko": "교사",
      "vi": "giáo viên",
-     "img": "k-gyosa.webp"
+     "img": "k-gyosa.webp",
+     "han": "敎師"
     },
     {
      "ko": "지니다",
@@ -5794,12 +6133,14 @@
     {
      "ko": "의원",
      "vi": "nghị sĩ, đại biểu Quốc hội",
-     "img": "k-uiwon.webp"
+     "img": "k-uiwon.webp",
+     "han": "議員"
     },
     {
      "ko": "주민",
      "vi": "cư dân",
-     "img": "k-jumin.webp"
+     "img": "k-jumin.webp",
+     "han": "住民"
     }
    ],
    "dialog": {
@@ -5838,7 +6179,8 @@
     {
      "ko": "규칙",
      "vi": "quy tắc",
-     "img": "k-gyuchik.webp"
+     "img": "k-gyuchik.webp",
+     "han": "規則"
     },
     {
      "ko": "늦다",
@@ -5848,32 +6190,38 @@
     {
      "ko": "존재",
      "vi": "sự tồn tại, đối tượng",
-     "img": "k-jonjae.webp"
+     "img": "k-jonjae.webp",
+     "han": "存在"
     },
     {
      "ko": "분야",
      "vi": "lĩnh vực",
-     "img": "k-bunya.webp"
+     "img": "k-bunya.webp",
+     "han": "分野"
     },
     {
      "ko": "행위",
      "vi": "hành vi",
-     "img": "k-haengwi.webp"
+     "img": "k-haengwi.webp",
+     "han": "行爲"
     },
     {
      "ko": "수준",
      "vi": "trình độ, tiêu chuẩn",
-     "img": "k-sujun.webp"
+     "img": "k-sujun.webp",
+     "han": "水準"
     },
     {
      "ko": "방송",
      "vi": "việc phát sóng",
-     "img": "k-bangsong.webp"
+     "img": "k-bangsong.webp",
+     "han": "放送"
     },
     {
      "ko": "연극",
      "vi": "sự diễn kịch",
-     "img": "k-yeongeuk.webp"
+     "img": "k-yeongeuk.webp",
+     "han": "演劇"
     },
     {
      "ko": "마찬가지",
@@ -5883,7 +6231,8 @@
     {
      "ko": "노동",
      "vi": "sự lao động",
-     "img": "x-lao-dong.webp"
+     "img": "x-lao-dong.webp",
+     "han": "勞動"
     }
    ],
    "dialog": {
@@ -5922,7 +6271,8 @@
     {
      "ko": "설명하다",
      "vi": "giải thích",
-     "img": "k-seolmyeonghada.webp"
+     "img": "k-seolmyeonghada.webp",
+     "han": "說明"
     },
     {
      "ko": "갑자기",
@@ -5932,17 +6282,20 @@
     {
      "ko": "가치",
      "vi": "giá trị",
-     "img": "k-gachi.webp"
+     "img": "k-gachi.webp",
+     "han": "價値"
     },
     {
      "ko": "집단",
      "vi": "tập đoàn, nhóm, bầy đàn",
-     "img": "k-jipdan.webp"
+     "img": "k-jipdan.webp",
+     "han": "集團"
     },
     {
      "ko": "현대",
      "vi": "hiện đại",
-     "img": "k-hyeondae.webp"
+     "img": "k-hyeondae.webp",
+     "han": "現代"
     },
     {
      "ko": "살펴보다",
@@ -5952,12 +6305,14 @@
     {
      "ko": "장관",
      "vi": "bộ trưởng",
-     "img": "k-janggwan.webp"
+     "img": "k-janggwan.webp",
+     "han": "長官"
     },
     {
      "ko": "차이",
      "vi": "sư khác biệt; độ chênh lệch",
-     "img": "k-chai.webp"
+     "img": "k-chai.webp",
+     "han": "差異"
     },
     {
      "ko": "풀다",
@@ -5967,7 +6322,8 @@
     {
      "ko": "시절",
      "vi": "thời, thời kỳ",
-     "img": "k-sijeol.webp"
+     "img": "k-sijeol.webp",
+     "han": "時節"
     }
    ],
    "dialog": {
@@ -6006,7 +6362,8 @@
     {
      "ko": "고생하다",
      "vi": "khổ sở, vất vả, nhọc công",
-     "img": "k-gosaenghada.webp"
+     "img": "k-gosaenghada.webp",
+     "han": "苦生"
     },
     {
      "ko": "자주",
@@ -6016,12 +6373,14 @@
     {
      "ko": "직접",
      "vi": "trực tiếp",
-     "img": "k-jikjeop.webp"
+     "img": "k-jikjeop.webp",
+     "han": "直接"
     },
     {
      "ko": "개인",
      "vi": "cá nhân",
-     "img": "k-gaein.webp"
+     "img": "k-gaein.webp",
+     "han": "個人"
     },
     {
      "ko": "근데",
@@ -6031,17 +6390,20 @@
     {
      "ko": "작가",
      "vi": "tác giả",
-     "img": "k-jakga.webp"
+     "img": "k-jakga.webp",
+     "han": "作家"
     },
     {
      "ko": "효과",
      "vi": "hiệu quả",
-     "img": "k-hyogwa.webp"
+     "img": "k-hyogwa.webp",
+     "han": "效果"
     },
     {
      "ko": "불교",
      "vi": "Phật giáo",
-     "img": "k-bulgyo.webp"
+     "img": "k-bulgyo.webp",
+     "han": "佛敎"
     },
     {
      "ko": "끌다",
@@ -6051,7 +6413,8 @@
     {
      "ko": "대로",
      "vi": "giống như",
-     "img": "k-daero.webp"
+     "img": "k-daero.webp",
+     "han": "大路"
     }
    ],
    "dialog": {
@@ -6090,12 +6453,14 @@
     {
      "ko": "목표",
      "vi": "mục tiêu",
-     "img": "x-muc-tieu.webp"
+     "img": "x-muc-tieu.webp",
+     "han": "目標"
     },
     {
      "ko": "사고",
      "vi": "sự cố, tai nạn",
-     "img": "d27-tai-nan.webp"
+     "img": "d27-tai-nan.webp",
+     "han": "事故"
     },
     {
      "ko": "서로",
@@ -6105,17 +6470,20 @@
     {
      "ko": "대화",
      "vi": "sự đối thoại, cuộc đối thoại",
-     "img": "k-daehwa.webp"
+     "img": "k-daehwa.webp",
+     "han": "對話"
     },
     {
      "ko": "오해",
      "vi": "sự hiểu lầm, sự hiểu sai",
-     "img": "k-ohae.webp"
+     "img": "k-ohae.webp",
+     "han": "誤解"
     },
     {
      "ko": "우주",
      "vi": "vũ trụ",
-     "img": "k-uju.webp"
+     "img": "k-uju.webp",
+     "han": "宇宙"
     },
     {
      "ko": "마치",
@@ -6125,17 +6493,20 @@
     {
      "ko": "생산",
      "vi": "việc sản xuất",
-     "img": "k-saengsan.webp"
+     "img": "k-saengsan.webp",
+     "han": "生産"
     },
     {
      "ko": "강하다",
      "vi": "cứng, rắn, chắc",
-     "img": "k-ganghada.webp"
+     "img": "k-ganghada.webp",
+     "han": "剛"
     },
     {
      "ko": "경험",
      "vi": "kinh nghiệm",
-     "img": "x-kinh-nghiem.webp"
+     "img": "x-kinh-nghiem.webp",
+     "han": "經驗"
     }
    ],
    "dialog": {
@@ -6174,7 +6545,8 @@
     {
      "ko": "한계",
      "vi": "sự giới hạn, hạn mức",
-     "img": "k-hangye.webp"
+     "img": "k-hangye.webp",
+     "han": "限界"
     },
     {
      "ko": "걱정하다",
@@ -6184,7 +6556,8 @@
     {
      "ko": "최고",
      "vi": "tối cao",
-     "img": "k-choego.webp"
+     "img": "k-choego.webp",
+     "han": "最高"
     },
     {
      "ko": "나타내다",
@@ -6194,12 +6567,14 @@
     {
      "ko": "다양하다",
      "vi": "đa dạng",
-     "img": "k-dayanghada.webp"
+     "img": "k-dayanghada.webp",
+     "han": "多樣"
     },
     {
      "ko": "농민",
      "vi": "nông dân",
-     "img": "k-nongmin.webp"
+     "img": "k-nongmin.webp",
+     "han": "農民"
     },
     {
      "ko": "드러나다",
@@ -6209,12 +6584,14 @@
     {
      "ko": "소설",
      "vi": "tiểu thuyết",
-     "img": "k-soseol.webp"
+     "img": "k-soseol.webp",
+     "han": "小說"
     },
     {
      "ko": "질서",
      "vi": "trật tự",
-     "img": "k-jilseo.webp"
+     "img": "k-jilseo.webp",
+     "han": "秩序"
     },
     {
      "ko": "담다",
@@ -6258,12 +6635,14 @@
     {
      "ko": "제출하다",
      "vi": "nộp, trình, đệ trình",
-     "img": "d60-nop.webp"
+     "img": "d60-nop.webp",
+     "han": "提出"
     },
     {
      "ko": "내지",
      "vi": "khoảng… đến",
-     "img": "k-naeji.webp"
+     "img": "k-naeji.webp",
+     "han": "乃至"
     },
     {
      "ko": "모이다",
@@ -6273,12 +6652,14 @@
     {
      "ko": "시민",
      "vi": "thị dân, dân thành thị",
-     "img": "k-simin.webp"
+     "img": "k-simin.webp",
+     "han": "市民"
     },
     {
      "ko": "회장",
      "vi": "chủ tịch hội, hội trưởng",
-     "img": "k-hoejang.webp"
+     "img": "k-hoejang.webp",
+     "han": "會長"
     },
     {
      "ko": "스스로",
@@ -6303,7 +6684,8 @@
     {
      "ko": "공간",
      "vi": "không gian",
-     "img": "k-gonggan.webp"
+     "img": "k-gonggan.webp",
+     "han": "空間"
     }
    ],
    "dialog": {
@@ -6342,7 +6724,8 @@
     {
      "ko": "물건",
      "vi": "đồ vật, đồ",
-     "img": "d26-hang.webp"
+     "img": "d26-hang.webp",
+     "han": "物件"
     },
     {
      "ko": "고르다",
@@ -6357,12 +6740,14 @@
     {
      "ko": "자세",
      "vi": "tư thế",
-     "img": "k-jase.webp"
+     "img": "k-jase.webp",
+     "han": "姿勢"
     },
     {
      "ko": "강조하다",
      "vi": "khẳng định, nhấn mạnh",
-     "img": "k-gangjohada.webp"
+     "img": "k-gangjohada.webp",
+     "han": "強調"
     },
     {
      "ko": "맡다",
@@ -6372,17 +6757,20 @@
     {
      "ko": "한편",
      "vi": "mặt khác",
-     "img": "k-hanpyeon.webp"
+     "img": "k-hanpyeon.webp",
+     "han": "便"
     },
     {
      "ko": "기자",
      "vi": "ký giả, nhà báo, phóng viên",
-     "img": "k-gija.webp"
+     "img": "k-gija.webp",
+     "han": "記者"
     },
     {
      "ko": "주로",
      "vi": "chủ yếu",
-     "img": "k-juro.webp"
+     "img": "k-juro.webp",
+     "han": "主"
     },
     {
      "ko": "훨씬",
@@ -6436,7 +6824,8 @@
     {
      "ko": "복잡하다",
      "vi": "phức tạp, rắc rối",
-     "img": "k-bokjaphada.webp"
+     "img": "k-bokjaphada.webp",
+     "han": "複雜"
     },
     {
      "ko": "이렇게",
@@ -6446,7 +6835,8 @@
     {
      "ko": "통일",
      "vi": "sự thống nhất",
-     "img": "k-tongil.webp"
+     "img": "k-tongil.webp",
+     "han": "統一"
     },
     {
      "ko": "들어서다",
@@ -6456,22 +6846,26 @@
     {
      "ko": "시설",
      "vi": "công trình, trang thiết bị, việc lắp đặt công trình, việc xây dựng công trình",
-     "img": "k-siseol.webp"
+     "img": "k-siseol.webp",
+     "han": "施設"
     },
     {
      "ko": "주변",
      "vi": "xung quanh",
-     "img": "k-jubyeon.webp"
+     "img": "k-jubyeon.webp",
+     "han": "周邊"
     },
     {
      "ko": "원인",
      "vi": "nguyên nhân",
-     "img": "k-wonin.webp"
+     "img": "k-wonin.webp",
+     "han": "原因"
     },
     {
      "ko": "차례",
      "vi": "Cha-re; thứ tự, lượt",
-     "img": "k-charye.webp"
+     "img": "k-charye.webp",
+     "han": "次例"
     }
    ],
    "dialog": {
@@ -6510,42 +6904,50 @@
     {
      "ko": "성공하다",
      "vi": "thành công",
-     "img": "k-seonggonghada.webp"
+     "img": "k-seonggonghada.webp",
+     "han": "成功"
     },
     {
      "ko": "소식",
      "vi": "tin tức",
-     "img": "k-sosik.webp"
+     "img": "k-sosik.webp",
+     "han": "消息"
     },
     {
      "ko": "재산",
      "vi": "tài sản",
-     "img": "k-jaesan.webp"
+     "img": "k-jaesan.webp",
+     "han": "財産"
     },
     {
      "ko": "약간",
      "vi": "hơi, chút ít, chút đỉnh",
-     "img": "k-yakgan.webp"
+     "img": "k-yakgan.webp",
+     "han": "若干"
     },
     {
      "ko": "언어",
      "vi": "ngôn ngữ",
-     "img": "k-eoneo.webp"
+     "img": "k-eoneo.webp",
+     "han": "言語"
     },
     {
      "ko": "요구하다",
      "vi": "yêu cầu",
-     "img": "k-yoguhada.webp"
+     "img": "k-yoguhada.webp",
+     "han": "要求"
     },
     {
      "ko": "감독",
      "vi": "sự giám sát",
-     "img": "k-gamdok.webp"
+     "img": "k-gamdok.webp",
+     "han": "監督"
     },
     {
      "ko": "당하다",
      "vi": "bị, bị thiệt hại, bị lừa",
-     "img": "d16-bi.webp"
+     "img": "d16-bi.webp",
+     "han": "當"
     },
     {
      "ko": "삼다",
@@ -6555,7 +6957,8 @@
     {
      "ko": "기간",
      "vi": "thời gian, khoảng thời gian",
-     "img": "k-gigan.webp"
+     "img": "k-gigan.webp",
+     "han": "期間"
     }
    ],
    "dialog": {

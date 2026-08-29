@@ -54,7 +54,8 @@
      "ko": "이",
      "kr_read": "이",
      "ex": "kim",
-     "ex_ko": "바늘"
+     "ex_ko": "바늘",
+     "han": "二貳"
     },
     {
      "vi": "o",
@@ -68,7 +69,8 @@
      "ko": "오",
      "kr_read": "오",
      "ex": "tôi",
-     "ex_ko": "나"
+     "ex_ko": "나",
+     "han": "五"
     },
     {
      "vi": "ơ",
@@ -116,7 +118,8 @@
      "mark": "ngang (표시 없음)",
      "ko": "귀신",
      "kr_read": "마",
-     "shape": "평평하게 그대로 —"
+     "shape": "평평하게 그대로 —",
+     "han": "鬼神"
     },
     {
      "vi": "mà",
@@ -288,7 +291,8 @@
     {
      "vi": "ma",
      "ko": "귀신",
-     "mark": "ngang"
+     "mark": "ngang",
+     "han": "鬼神"
     },
     {
      "vi": "mà",
@@ -324,12 +328,14 @@
     {
      "vi": "ban",
      "ko": "부서",
-     "mark": "ngang"
+     "mark": "ngang",
+     "han": "部署"
     },
     {
      "vi": "bàn",
      "ko": "책상",
-     "mark": "huyền"
+     "mark": "huyền",
+     "han": "冊床"
     },
     {
      "vi": "bán",
@@ -344,7 +350,8 @@
     {
      "vi": "bạn",
      "ko": "친구",
-     "mark": "nặng"
+     "mark": "nặng",
+     "han": "親舊"
     }
    ]
   },
@@ -1358,7 +1365,8 @@
      "hanja": "韓國 (한국)",
      "emoji": "🇰🇷",
      "vkind": "thing",
-     "img": "d03-han-quoc.webp"
+     "img": "d03-han-quoc.webp",
+     "han": "韓國"
     },
     {
      "vi": "Việt Nam",
@@ -1478,7 +1486,8 @@
      "hanja": "城鋪 (성포)",
      "emoji": "🏙️",
      "vkind": "thing",
-     "img": "d03-thanh-pho.webp"
+     "img": "d03-thanh-pho.webp",
+     "han": "都市"
     }
    ],
    "dialog": {
@@ -1897,7 +1906,8 @@
      ],
      "emoji": "😩",
      "vkind": "thing",
-     "img": "d04-met.webp"
+     "img": "d04-met.webp",
+     "han": "疲困"
     },
     {
      "vi": "hôm nay",
@@ -2336,7 +2346,8 @@
      "emoji": "💡",
      "vkind": "thing",
      "hanja": "曉 (효)",
-     "img": "d05-hieu.webp"
+     "img": "d05-hieu.webp",
+     "han": "理解"
     },
     {
      "vi": "biết",
@@ -2457,7 +2468,8 @@
      "emoji": "🇻🇳",
      "vkind": "thing",
      "hanja": "越 (월)",
-     "img": "d05-tieng-viet.webp"
+     "img": "d05-tieng-viet.webp",
+     "han": "語"
     },
     {
      "vi": "tiếng Hàn",
@@ -2480,7 +2492,8 @@
      "hanja": "韓 (한)",
      "emoji": "🇰🇷",
      "vkind": "thing",
-     "img": "d05-tieng-han.webp"
+     "img": "d05-tieng-han.webp",
+     "han": "韓國語"
     },
     {
      "vi": "một chút",
@@ -2888,7 +2901,8 @@
      ],
      "emoji": "📆",
      "vkind": "thing",
-     "img": "d06-mai.webp"
+     "img": "d06-mai.webp",
+     "han": "來日"
     },
     {
      "vi": "nhé",
@@ -2952,7 +2966,8 @@
      ],
      "emoji": "🏠",
      "vkind": "thing",
-     "img": "d06-nha.webp"
+     "img": "d06-nha.webp",
+     "han": "輯"
     },
     {
      "vi": "sau",
@@ -3904,7 +3919,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-thieu.webp"
+     "img": "x-thieu.webp",
+     "han": "不足"
     }
    ],
    "dialog": {
@@ -4888,7 +4904,8 @@
      ],
      "emoji": "⏱️",
      "vkind": "thing",
-     "img": "d09-phut.webp"
+     "img": "d09-phut.webp",
+     "han": "分"
     },
     {
      "vi": "bây giờ",
@@ -4910,7 +4927,8 @@
      ],
      "emoji": "⏰",
      "vkind": "thing",
-     "img": "d09-bay-gio.webp"
+     "img": "d09-bay-gio.webp",
+     "han": "只今"
     },
     {
      "vi": "rưỡi",
@@ -4958,7 +4976,8 @@
      ],
      "emoji": "🌇",
      "vkind": "thing",
-     "img": "d09-chieu.webp"
+     "img": "d09-chieu.webp",
+     "han": "午後"
     },
     {
      "vi": "tối",
@@ -5344,7 +5363,8 @@
      "emoji": "1️⃣",
      "vkind": "thing",
      "hanja": "次二 (차이)",
-     "img": "d10-thu-hai.webp"
+     "img": "d10-thu-hai.webp",
+     "han": "月曜日"
     },
     {
      "vi": "thứ ba",
@@ -5365,7 +5385,8 @@
       }
      ],
      "hanja": "次三 (차삼)",
-     "img": "x-thu-ba.webp"
+     "img": "x-thu-ba.webp",
+     "han": "火曜日"
     },
     {
      "vi": "thứ tư",
@@ -5386,7 +5407,8 @@
       }
      ],
      "hanja": "次四 (차사)",
-     "img": "x-thu-tu.webp"
+     "img": "x-thu-tu.webp",
+     "han": "水曜日"
     },
     {
      "vi": "thứ năm",
@@ -5407,7 +5429,8 @@
       }
      ],
      "hanja": "次五 (차오)",
-     "img": "x-thu-nam.webp"
+     "img": "x-thu-nam.webp",
+     "han": "木曜日"
     },
     {
      "vi": "thứ sáu",
@@ -5428,7 +5451,8 @@
       }
      ],
      "hanja": "次六 (차륙)",
-     "img": "x-thu-sau.webp"
+     "img": "x-thu-sau.webp",
+     "han": "金曜日"
     },
     {
      "vi": "thứ bảy",
@@ -5449,7 +5473,8 @@
       }
      ],
      "hanja": "次七 (차칠)",
-     "img": "x-thu-bay.webp"
+     "img": "x-thu-bay.webp",
+     "han": "土曜日"
     },
     {
      "vi": "chủ nhật",
@@ -5472,7 +5497,8 @@
      "hanja": "主日 (주일)",
      "emoji": "🛌",
      "vkind": "thing",
-     "img": "d10-chu-nhat.webp"
+     "img": "d10-chu-nhat.webp",
+     "han": "日曜日"
     },
     {
      "vi": "hôm qua",
@@ -6501,7 +6527,8 @@
      ],
      "emoji": "🏪",
      "vkind": "thing",
-     "img": "d14-cho.webp"
+     "img": "d14-cho.webp",
+     "han": "市場"
     },
     {
      "vi": "nhà vệ sinh",
@@ -6530,7 +6557,8 @@
      "hanja": "衛生 (위생)",
      "emoji": "🚻",
      "vkind": "thing",
-     "img": "d14-nha-ve-sinh.webp"
+     "img": "d14-nha-ve-sinh.webp",
+     "han": "化粧室"
     }
    ],
    "dialog": {
@@ -7347,11 +7375,13 @@
    "pre": [
     {
      "vi": "chợ",
-     "ko": "시장"
+     "ko": "시장",
+     "han": "市場"
     },
     {
      "vi": "cơm trưa",
-     "ko": "점심밥"
+     "ko": "점심밥",
+     "han": "點心"
     },
     {
      "vi": "muộn",
@@ -7359,7 +7389,8 @@
     },
     {
      "vi": "nhà ăn",
-     "ko": "구내식당"
+     "ko": "구내식당",
+     "han": "構內食堂"
     }
    ]
   },
@@ -7426,7 +7457,8 @@
      "hanja": "公司 (공사)",
      "emoji": "🏢",
      "vkind": "thing",
-     "img": "d101-cong-ty.webp"
+     "img": "d101-cong-ty.webp",
+     "han": "會社"
     },
     {
      "vi": "nhà máy",
@@ -7448,7 +7480,8 @@
      ],
      "emoji": "🏭",
      "vkind": "thing",
-     "img": "d101-nha-may.webp"
+     "img": "d101-nha-may.webp",
+     "han": "工場"
     },
     {
      "vi": "công nhân",
@@ -7494,7 +7527,8 @@
      "hanja": "人員 (인원)",
      "emoji": "👔",
      "vkind": "thing",
-     "img": "d101-nhan-vien.webp"
+     "img": "d101-nhan-vien.webp",
+     "han": "職員"
     },
     {
      "vi": "văn phòng",
@@ -7517,7 +7551,8 @@
      "hanja": "文房 (문방)",
      "emoji": "🏢",
      "vkind": "thing",
-     "img": "d101-van-phong.webp"
+     "img": "d101-van-phong.webp",
+     "han": "事務室"
     },
     {
      "vi": "học",
@@ -7949,7 +7984,8 @@
      ],
      "emoji": "▶️",
      "vkind": "action",
-     "img": "d11-bat-dau.webp"
+     "img": "d11-bat-dau.webp",
+     "han": "始作"
     },
     {
      "vi": "kết thúc",
@@ -8520,7 +8556,8 @@
        "shape": "＼"
       }
      ],
-     "img": "x-can.webp"
+     "img": "x-can.webp",
+     "han": "必要"
     },
     {
      "vi": "hỏi",
@@ -9505,7 +9542,8 @@
      ],
      "emoji": "✔️",
      "vkind": "thing",
-     "img": "d20-chac-chan.webp"
+     "img": "d20-chac-chan.webp",
+     "han": "確實"
     },
     {
      "vi": "hẹn",
@@ -9604,7 +9642,8 @@
      "emoji": "❗",
      "vkind": "thing",
      "hanja": "關重 (관중)",
-     "img": "d20-quan-trong.webp"
+     "img": "d20-quan-trong.webp",
+     "han": "重要"
     }
    ],
    "dialog": {
@@ -9939,7 +9978,8 @@
      ],
      "emoji": "⚽",
      "vkind": "thing",
-     "img": "d45-bong-da.webp"
+     "img": "d45-bong-da.webp",
+     "han": "蹴球"
     },
     {
      "vi": "xem phim",
@@ -10044,7 +10084,8 @@
      "hanja": "遊歷 (유력 — 여행)",
      "emoji": "✈️",
      "vkind": "action",
-     "img": "d45-du-lich.webp"
+     "img": "d45-du-lich.webp",
+     "han": "旅行"
     },
     {
      "vi": "bơi",
@@ -10060,7 +10101,8 @@
      ],
      "emoji": "🏊",
      "vkind": "action",
-     "img": "d45-boi.webp"
+     "img": "d45-boi.webp",
+     "han": "水泳"
     },
     {
      "vi": "đọc sách",
@@ -10460,7 +10502,8 @@
      "emoji": "🎉",
      "vkind": "action",
      "hanja": "祝 (축)",
-     "img": "d49-chuc-mung.webp"
+     "img": "d49-chuc-mung.webp",
+     "han": "祝賀"
     },
     {
      "vi": "sinh nhật",
@@ -10483,7 +10526,8 @@
      "hanja": "生日 (생일)",
      "emoji": "🎂",
      "vkind": "thing",
-     "img": "d49-sinh-nhat.webp"
+     "img": "d49-sinh-nhat.webp",
+     "han": "生日"
     },
     {
      "vi": "quà",
@@ -10499,7 +10543,8 @@
      ],
      "emoji": "🎁",
      "vkind": "thing",
-     "img": "d49-qua.webp"
+     "img": "d49-qua.webp",
+     "han": "膳物"
     },
     {
      "vi": "Tết",
@@ -10557,7 +10602,8 @@
       }
      ],
      "hanja": "幸福 (행복)",
-     "img": "x-hanh-phuc.webp"
+     "img": "x-hanh-phuc.webp",
+     "han": "幸福"
     },
     {
      "vi": "sức khỏe",
@@ -10577,7 +10623,8 @@
        "shape": "∨"
       }
      ],
-     "img": "x-suc-khoe.webp"
+     "img": "x-suc-khoe.webp",
+     "han": "健康"
     },
     {
      "vi": "lì xì",
@@ -10600,7 +10647,8 @@
      "emoji": "🧧",
      "vkind": "thing",
      "hanja": "利市 (이시)",
-     "img": "d49-li-xi.webp"
+     "img": "d49-li-xi.webp",
+     "han": "歲拜"
     },
     {
      "vi": "bánh",
@@ -10632,7 +10680,8 @@
      ],
      "emoji": "🍬",
      "vkind": "thing",
-     "img": "d49-keo.webp"
+     "img": "d49-keo.webp",
+     "han": "沙糖砂糖"
     }
    ],
    "dialog": {
@@ -10938,7 +10987,8 @@
    "pre": [
     {
      "vi": "nhà ăn",
-     "ko": "구내식당"
+     "ko": "구내식당",
+     "han": "構內食堂"
     }
    ]
   },
@@ -11018,7 +11068,8 @@
      "hanja": "病院 (병원)",
      "emoji": "🏥",
      "vkind": "thing",
-     "img": "d16-benh-vien.webp"
+     "img": "d16-benh-vien.webp",
+     "han": "病院"
     },
     {
      "vi": "thuốc",
@@ -11034,7 +11085,8 @@
      ],
      "emoji": "💊",
      "vkind": "thing",
-     "img": "d16-thuoc.webp"
+     "img": "d16-thuoc.webp",
+     "han": "藥"
     },
     {
      "vi": "đầu",
@@ -11080,7 +11132,8 @@
      ],
      "emoji": "🤚",
      "vkind": "thing",
-     "img": "d16-tay.webp"
+     "img": "d16-tay.webp",
+     "han": "孫"
     },
     {
      "vi": "chân",
@@ -11113,7 +11166,8 @@
      "hanja": "感 (감)",
      "emoji": "🤧",
      "vkind": "thing",
-     "img": "d16-cam.webp"
+     "img": "d16-cam.webp",
+     "han": "感氣"
     }
    ],
    "dialog": {
@@ -11548,7 +11602,8 @@
      ],
      "emoji": "🤒",
      "vkind": "action",
-     "img": "d47-sot.webp"
+     "img": "d47-sot.webp",
+     "han": "熱"
     },
     {
      "vi": "ho",
@@ -11609,7 +11664,8 @@
      "emoji": "💊",
      "vkind": "thing",
      "hanja": "號 (호)",
-     "img": "d47-hieu-thuoc.webp"
+     "img": "d47-hieu-thuoc.webp",
+     "han": "藥局"
     },
     {
      "vi": "khám",
@@ -12468,7 +12524,8 @@
      "emoji": "💰",
      "vkind": "thing",
      "hanja": "兆 (조)",
-     "img": "d102-trieu.webp"
+     "img": "d102-trieu.webp",
+     "han": "百萬"
     },
     {
      "vi": "giá",
@@ -12485,7 +12542,8 @@
      "emoji": "🏷️",
      "vkind": "thing",
      "hanja": "價 (가)",
-     "img": "d102-gia.webp"
+     "img": "d102-gia.webp",
+     "han": "價格"
     },
     {
      "vi": "tính",
@@ -12501,7 +12559,8 @@
      ],
      "emoji": "🧮",
      "vkind": "action",
-     "img": "d102-tinh.webp"
+     "img": "d102-tinh.webp",
+     "han": "計算"
     },
     {
      "vi": "cộng",
@@ -12573,7 +12632,8 @@
      ],
      "emoji": "🪙",
      "vkind": "thing",
-     "img": "d102-tien-le.webp"
+     "img": "d102-tien-le.webp",
+     "han": "殘"
     },
     {
      "vi": "tiền thừa",
@@ -12986,7 +13046,8 @@
      "hanja": "組長 (조장)",
      "emoji": "📋",
      "vkind": "thing",
-     "img": "d21-to-truong.webp"
+     "img": "d21-to-truong.webp",
+     "han": "組長"
     },
     {
      "vi": "quản lý",
@@ -13009,7 +13070,8 @@
      "hanja": "管理 (관리)",
      "emoji": "👨‍💼",
      "vkind": "thing",
-     "img": "d21-quan-ly.webp"
+     "img": "d21-quan-ly.webp",
+     "han": "管理者"
     },
     {
      "vi": "giám đốc",
@@ -13078,7 +13140,8 @@
      "hanja": "保衛 (보위)",
      "emoji": "💂",
      "vkind": "thing",
-     "img": "d21-bao-ve.webp"
+     "img": "d21-bao-ve.webp",
+     "han": "警備員"
     },
     {
      "vi": "đồng nghiệp",
@@ -13101,7 +13164,8 @@
      "emoji": "👥",
      "vkind": "thing",
      "hanja": "同業 (동업)",
-     "img": "d21-dong-nghiep.webp"
+     "img": "d21-dong-nghiep.webp",
+     "han": "同僚"
     },
     {
      "vi": "ca",
@@ -13682,7 +13746,8 @@
       }
      ],
      "hanja": "數量 (수량)",
-     "img": "x-so-luong.webp"
+     "img": "x-so-luong.webp",
+     "han": "數量"
     },
     {
      "vi": "tổng",
@@ -13788,7 +13853,8 @@
        "shape": "∨"
       }
      ],
-     "img": "x-du.webp"
+     "img": "x-du.webp",
+     "han": "充分"
     },
     {
      "vi": "thêm",
@@ -14136,7 +14202,8 @@
       }
      ],
      "hanja": "安全 (안전)",
-     "img": "x-an-toan.webp"
+     "img": "x-an-toan.webp",
+     "han": "安全"
     },
     {
      "vi": "nguy hiểm",
@@ -14157,7 +14224,8 @@
       }
      ],
      "hanja": "危險 (위험)",
-     "img": "x-nguy-hiem.webp"
+     "img": "x-nguy-hiem.webp",
+     "han": "危險"
     },
     {
      "vi": "cẩn thận",
@@ -14178,7 +14246,8 @@
       }
      ],
      "hanja": "謹愼 (근신)",
-     "img": "x-can-than.webp"
+     "img": "x-can-than.webp",
+     "han": "操心"
     },
     {
      "vi": "tai nạn",
@@ -14201,7 +14270,8 @@
      "hanja": "災難 (재난)",
      "emoji": "🤕",
      "vkind": "action",
-     "img": "d27-tai-nan.webp"
+     "img": "d27-tai-nan.webp",
+     "han": "事故"
     },
     {
      "vi": "cấm",
@@ -14216,7 +14286,8 @@
       }
      ],
      "hanja": "禁 (금)",
-     "img": "x-cam.webp"
+     "img": "x-cam.webp",
+     "han": "禁止"
     },
     {
      "vi": "chú ý",
@@ -14237,7 +14308,8 @@
       }
      ],
      "hanja": "注意 (주의)",
-     "img": "x-chu-y.webp"
+     "img": "x-chu-y.webp",
+     "han": "注意"
     },
     {
      "vi": "bảo hộ",
@@ -14282,7 +14354,8 @@
      ],
      "emoji": "🧤",
      "vkind": "thing",
-     "img": "d27-gang-tay.webp"
+     "img": "d27-gang-tay.webp",
+     "han": "掌匣掌甲"
     },
     {
      "vi": "khẩu trang",
@@ -14621,7 +14694,8 @@
    "pre": [
     {
      "vi": "nhà ăn",
-     "ko": "구내식당"
+     "ko": "구내식당",
+     "han": "構內食堂"
     }
    ]
   },
@@ -15072,7 +15146,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-mays.webp"
+     "img": "x-mays.webp",
+     "han": "機械"
     },
     {
      "vi": "điện",
@@ -15087,7 +15162,8 @@
       }
      ],
      "hanja": "電 (전)",
-     "img": "x-dien.webp"
+     "img": "x-dien.webp",
+     "han": "電氣"
     },
     {
      "vi": "nút",
@@ -15588,7 +15664,8 @@
       }
      ],
      "hanja": "報告 (보고)",
-     "img": "x-bao-cao.webp"
+     "img": "x-bao-cao.webp",
+     "han": "報告"
     },
     {
      "vi": "đi làm",
@@ -15610,7 +15687,8 @@
      ],
      "emoji": "🚶",
      "vkind": "action",
-     "img": "d30-di-lam.webp"
+     "img": "d30-di-lam.webp",
+     "han": "出勤"
     },
     {
      "vi": "đến",
@@ -15624,7 +15702,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-ddeans.webp"
+     "img": "x-ddeans.webp",
+     "han": "到着"
     },
     {
      "vi": "họp",
@@ -15641,7 +15720,8 @@
      "emoji": "🗣️",
      "vkind": "action",
      "hanja": "合 (합)",
-     "img": "d30-hop.webp"
+     "img": "d30-hop.webp",
+     "han": "會議"
     },
     {
      "vi": "nghỉ phép",
@@ -15702,7 +15782,8 @@
      "emoji": "💰",
      "vkind": "thing",
      "hanja": "糧 (량)",
-     "img": "d30-luong.webp"
+     "img": "d30-luong.webp",
+     "han": "月給"
     },
     {
      "vi": "đúng giờ",
@@ -16175,7 +16256,8 @@
      "hanja": "記 (기)",
      "emoji": "✍️",
      "vkind": "action",
-     "img": "d35-ky.webp"
+     "img": "d35-ky.webp",
+     "han": "署名"
     },
     {
      "vi": "đơn",
@@ -16207,7 +16289,8 @@
      "hanja": "庫 (고)",
      "emoji": "🗄️",
      "vkind": "thing",
-     "img": "d35-kho.webp"
+     "img": "d35-kho.webp",
+     "han": "倉庫"
     },
     {
      "vi": "xuất",
@@ -16563,7 +16646,8 @@
      ],
      "emoji": "🍽️",
      "vkind": "thing",
-     "img": "d37-nha-an.webp"
+     "img": "d37-nha-an.webp",
+     "han": "構內食堂"
     },
     {
      "vi": "cơm trưa",
@@ -16585,7 +16669,8 @@
      ],
      "emoji": "🍱",
      "vkind": "thing",
-     "img": "d37-com-trua.webp"
+     "img": "d37-com-trua.webp",
+     "han": "點心"
     },
     {
      "vi": "nghỉ trưa",
@@ -16634,7 +16719,8 @@
      "hanja": "寄宿舍 (기숙사)",
      "emoji": "🛏️",
      "vkind": "thing",
-     "img": "d37-ky-tuc-xa.webp"
+     "img": "d37-ky-tuc-xa.webp",
+     "han": "寄宿舍"
     },
     {
      "vi": "đồng phục",
@@ -16704,7 +16790,8 @@
       }
      ],
      "hanja": "房 (방)",
-     "img": "x-phong.webp"
+     "img": "x-phong.webp",
+     "han": "房"
     },
     {
      "vi": "tầng",
@@ -16719,7 +16806,8 @@
       }
      ],
      "hanja": "層 (층)",
-     "img": "x-taangf.webp"
+     "img": "x-taangf.webp",
+     "han": "層"
     },
     {
      "vi": "thang máy",
@@ -17250,7 +17338,8 @@
       }
      ],
      "hanja": "保險 (보험)",
-     "img": "x-bao-hiem.webp"
+     "img": "x-bao-hiem.webp",
+     "han": "保險"
     },
     {
      "vi": "thuế",
@@ -17265,7 +17354,8 @@
       }
      ],
      "hanja": "稅 (세)",
-     "img": "x-thueas.webp"
+     "img": "x-thueas.webp",
+     "han": "稅金"
     },
     {
      "vi": "ngân hàng",
@@ -17288,7 +17378,8 @@
      "hanja": "銀行 (은행)",
      "emoji": "🏦",
      "vkind": "thing",
-     "img": "d38-ngan-hang.webp"
+     "img": "d38-ngan-hang.webp",
+     "han": "銀行"
     }
    ],
    "track": "work",
@@ -17696,7 +17787,8 @@
       }
      ],
      "hanja": "區 (구)",
-     "img": "x-khu.webp"
+     "img": "x-khu.webp",
+     "han": "區域"
     },
     {
      "vi": "lối đi",
@@ -17718,7 +17810,8 @@
      ],
      "emoji": "🚶",
      "vkind": "thing",
-     "img": "d39-loi-di.webp"
+     "img": "d39-loi-di.webp",
+     "han": "通路"
     },
     {
      "vi": "cửa",
@@ -17734,7 +17827,8 @@
      ],
      "emoji": "🚪",
      "vkind": "thing",
-     "img": "d39-cua.webp"
+     "img": "d39-cua.webp",
+     "han": "門"
     },
     {
      "vi": "cầu thang",
@@ -17756,7 +17850,8 @@
      ],
      "emoji": "🪜",
      "vkind": "thing",
-     "img": "d39-cau-thang.webp"
+     "img": "d39-cau-thang.webp",
+     "han": "階段"
     },
     {
      "vi": "bên phải",
@@ -18264,7 +18359,8 @@
       }
      ],
      "hanja": "電話 (전화)",
-     "img": "x-so-dien-thoai.webp"
+     "img": "x-so-dien-thoai.webp",
+     "han": "電話番號"
     },
     {
      "vi": "alô",
@@ -18306,7 +18402,8 @@
        "shape": "∨"
       }
      ],
-     "img": "x-ranh.webp"
+     "img": "x-ranh.webp",
+     "han": "閑暇"
     },
     {
      "vi": "chờ",
@@ -18343,7 +18440,8 @@
       }
      ],
      "hanja": "連絡 (연락)",
-     "img": "x-lien-lac.webp"
+     "img": "x-lien-lac.webp",
+     "han": "連絡聯絡"
     },
     {
      "vi": "sạc",
@@ -18359,7 +18457,8 @@
      ],
      "emoji": "🔌",
      "vkind": "action",
-     "img": "d40-sac.webp"
+     "img": "d40-sac.webp",
+     "han": "充電"
     }
    ],
    "track": "work",
@@ -18739,7 +18838,8 @@
      ],
      "emoji": "✂️",
      "vkind": "thing",
-     "img": "d22-keo.webp"
+     "img": "d22-keo.webp",
+     "han": "可謂"
     },
     {
      "vi": "máy may",
@@ -18761,7 +18861,8 @@
      ],
      "emoji": "⚙️",
      "vkind": "thing",
-     "img": "d22-may-may.webp"
+     "img": "d22-may-may.webp",
+     "han": "裁縫"
     },
     {
      "vi": "cúc",
@@ -18845,7 +18946,8 @@
      ],
      "emoji": "🎨",
      "vkind": "thing",
-     "img": "d22-mau.webp"
+     "img": "d22-mau.webp",
+     "han": "色"
     }
    ],
    "track": "work",
@@ -19224,7 +19326,8 @@
      ],
      "emoji": "🧥",
      "vkind": "thing",
-     "img": "d23-tay-ao.webp"
+     "img": "d23-tay-ao.webp",
+     "han": "小賣"
     },
     {
      "vi": "cổ áo",
@@ -19298,7 +19401,8 @@
       }
      ],
      "hanja": "身 (신)",
-     "img": "x-than-truoc.webp"
+     "img": "x-than-truoc.webp",
+     "han": "板"
     },
     {
      "vi": "thân sau",
@@ -19758,7 +19862,8 @@
      ],
      "emoji": "📦",
      "vkind": "action",
-     "img": "d24-dong-goi.webp"
+     "img": "d24-dong-goi.webp",
+     "han": "包裝"
     },
     {
      "vi": "đính",
@@ -20192,7 +20297,8 @@
      "hanja": "檢查 (검사)",
      "emoji": "🔍",
      "vkind": "action",
-     "img": "d25-kiem-tra.webp"
+     "img": "d25-kiem-tra.webp",
+     "han": "檢査"
     },
     {
      "vi": "chất lượng",
@@ -20213,7 +20319,8 @@
       }
      ],
      "hanja": "質量 (질량)",
-     "img": "x-chat-luong.webp"
+     "img": "x-chat-luong.webp",
+     "han": "品質"
     },
     {
      "vi": "sản phẩm",
@@ -20234,7 +20341,8 @@
       }
      ],
      "hanja": "產品 (산품)",
-     "img": "x-san-pham.webp"
+     "img": "x-san-pham.webp",
+     "han": "製品"
     },
     {
      "vi": "sửa",
@@ -20805,7 +20913,8 @@
       }
      ],
      "hanja": "整 (정)",
-     "img": "x-chinh.webp"
+     "img": "x-chinh.webp",
+     "han": "調整"
     },
     {
      "vi": "đều",
@@ -22247,7 +22356,8 @@
      "hanja": "毀 (훼)",
      "emoji": "🗑️",
      "vkind": "action",
-     "img": "d34-huy.webp"
+     "img": "d34-huy.webp",
+     "han": "廢棄"
     }
    ],
    "track": "work",
@@ -22585,7 +22695,8 @@
       }
      ],
      "hanja": "完成 (완성)",
-     "img": "x-hoan-thanh.webp"
+     "img": "x-hoan-thanh.webp",
+     "han": "完成"
     },
     {
      "vi": "lộn",
@@ -22691,7 +22802,8 @@
      ],
      "emoji": "🛍️",
      "vkind": "thing",
-     "img": "d36-tui-nilon.webp"
+     "img": "d36-tui-nilon.webp",
+     "han": "封紙"
     },
     {
      "vi": "đóng thùng",
@@ -23175,7 +23287,8 @@
        "shape": "↓"
       }
      ],
-     "img": "x-dam.webp"
+     "img": "x-dam.webp",
+     "han": "津"
     },
     {
      "vi": "nhạt",
@@ -23189,7 +23302,8 @@
        "shape": "↓"
       }
      ],
-     "img": "x-nhat.webp"
+     "img": "x-nhat.webp",
+     "han": "軟"
     }
    ],
    "dialog": {
@@ -23734,7 +23848,8 @@
        "shape": "＼"
       }
      ],
-     "img": "d435-xanh-da-troi.webp"
+     "img": "d435-xanh-da-troi.webp",
+     "han": "色"
     },
     {
      "vi": "xanh nước biển",
@@ -23786,7 +23901,8 @@
        "shape": "—"
       }
      ],
-     "img": "d435-xanh-la-cay.webp"
+     "img": "d435-xanh-la-cay.webp",
+     "han": "草綠色"
     },
     {
      "vi": "da cam",
@@ -23807,7 +23923,8 @@
       }
      ],
      "south": "màu cam",
-     "img": "d435-da-cam.webp"
+     "img": "d435-da-cam.webp",
+     "han": "朱黃色"
     },
     {
      "vi": "xám",
@@ -23821,7 +23938,8 @@
        "shape": "／"
       }
      ],
-     "img": "d435-xam.webp"
+     "img": "d435-xam.webp",
+     "han": "灰色"
     },
     {
      "vi": "màu sắc",
@@ -23843,7 +23961,8 @@
      ],
      "emoji": "🎨",
      "vkind": "thing",
-     "img": "d435-mau-sac.webp"
+     "img": "d435-mau-sac.webp",
+     "han": "色"
     },
     {
      "vi": "hoa văn",
@@ -23909,7 +24028,8 @@
      ],
      "emoji": "🫧",
      "vkind": "thing",
-     "img": "d435-trong-suot.webp"
+     "img": "d435-trong-suot.webp",
+     "han": "透明"
     },
     {
      "vi": "hình tròn",
@@ -24224,7 +24344,8 @@
      ],
      "emoji": "😠",
      "vkind": "action",
-     "img": "d44-gian.webp"
+     "img": "d44-gian.webp",
+     "han": "火"
     },
     {
      "vi": "chán",
@@ -24290,7 +24411,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-thoai-mai.webp"
+     "img": "x-thoai-mai.webp",
+     "han": "便安"
     },
     {
      "vi": "căng thẳng",
@@ -25123,7 +25245,8 @@
       }
      ],
      "hanja": "豆腐 (두부)",
-     "img": "x-dau-phu.webp"
+     "img": "x-dau-phu.webp",
+     "han": "豆腐"
     },
     {
      "vi": "rau muống",
@@ -25183,7 +25306,8 @@
      ],
      "emoji": "🥔",
      "vkind": "thing",
-     "img": "d106-khoai-tay.webp"
+     "img": "d106-khoai-tay.webp",
+     "han": "減資"
     },
     {
      "vi": "dưa chuột",
@@ -25729,7 +25853,8 @@
      ],
      "emoji": "🍎",
      "vkind": "thing",
-     "img": "d104-tao.webp"
+     "img": "d104-tao.webp",
+     "han": "沙果砂果"
     },
     {
      "vi": "dưa hấu",
@@ -25823,7 +25948,8 @@
        "shape": "—"
       }
      ],
-     "img": "d104-tuoi.webp"
+     "img": "d104-tuoi.webp",
+     "han": "新鮮"
     }
    ],
    "dialog": {
@@ -26277,7 +26403,8 @@
      ],
      "emoji": "🍺",
      "vkind": "thing",
-     "img": "d48-bia.webp"
+     "img": "d48-bia.webp",
+     "han": "麥酒"
     },
     {
      "vi": "say",
@@ -26293,7 +26420,8 @@
      ],
      "emoji": "🥴",
      "vkind": "action",
-     "img": "d48-say.webp"
+     "img": "d48-say.webp",
+     "han": "醉"
     },
     {
      "vi": "vui vẻ",
@@ -26329,7 +26457,8 @@
      ],
      "emoji": "🎙️",
      "vkind": "thing",
-     "img": "d48-karaoke.webp"
+     "img": "d48-karaoke.webp",
+     "han": "房"
     }
    ],
    "dialog": {
@@ -27342,7 +27471,8 @@
      ],
      "emoji": "🥬",
      "vkind": "thing",
-     "img": "d77-rau.webp"
+     "img": "d77-rau.webp",
+     "han": "野菜"
     },
     {
      "vi": "chanh",
@@ -27390,7 +27520,8 @@
      ],
      "emoji": "🧅",
      "vkind": "thing",
-     "img": "d77-hanh.webp"
+     "img": "d77-hanh.webp",
+     "han": "派"
     },
     {
      "vi": "nước dùng",
@@ -27412,7 +27543,8 @@
      ],
      "emoji": "🍲",
      "vkind": "thing",
-     "img": "d77-nuoc-dung.webp"
+     "img": "d77-nuoc-dung.webp",
+     "han": "肉水"
     },
     {
      "vi": "thơm",
@@ -28558,7 +28690,8 @@
      ],
      "emoji": "🚏",
      "vkind": "thing",
-     "img": "d42-ben.webp"
+     "img": "d42-ben.webp",
+     "han": "停留場"
     },
     {
      "vi": "vé",
@@ -28596,7 +28729,8 @@
      ],
      "emoji": "🚗",
      "vkind": "action",
-     "img": "d42-lai-xe.webp"
+     "img": "d42-lai-xe.webp",
+     "han": "運轉"
     },
     {
      "vi": "xăng",
@@ -29161,7 +29295,8 @@
      ],
      "emoji": "⬆️",
      "vkind": "action",
-     "img": "d42-di-thang.webp"
+     "img": "d42-di-thang.webp",
+     "han": "直進"
     },
     {
      "vi": "rẽ trái",
@@ -29183,7 +29318,8 @@
      ],
      "emoji": "↩️",
      "vkind": "action",
-     "img": "d42-re-trai.webp"
+     "img": "d42-re-trai.webp",
+     "han": "左回轉"
     },
     {
      "vi": "rẽ phải",
@@ -29205,7 +29341,8 @@
      ],
      "emoji": "↪️",
      "vkind": "action",
-     "img": "d42-re-phai.webp"
+     "img": "d42-re-phai.webp",
+     "han": "右回轉"
     },
     {
      "vi": "chậm lại",
@@ -29315,7 +29452,8 @@
      ],
      "emoji": "🗺️",
      "vkind": "thing",
-     "img": "d425-ban-do.webp"
+     "img": "d425-ban-do.webp",
+     "han": "地圖"
     },
     {
      "vi": "đèn giao thông",
@@ -29343,7 +29481,8 @@
      ],
      "emoji": "🚦",
      "vkind": "thing",
-     "img": "d425-den-giao-thong.webp"
+     "img": "d425-den-giao-thong.webp",
+     "han": "信號燈"
     },
     {
      "vi": "con hẻm",
@@ -29652,7 +29791,8 @@
      ],
      "emoji": "🛵",
      "vkind": "thing",
-     "img": "d80-ship.webp"
+     "img": "d80-ship.webp",
+     "han": "配達"
     },
     {
      "vi": "app",
@@ -29689,7 +29829,8 @@
       }
      ],
      "hanja": "地址 (지지 — 주소)",
-     "img": "x-dia-chi.webp"
+     "img": "x-dia-chi.webp",
+     "han": "住所"
     },
     {
      "vi": "số nhà",
@@ -29761,7 +29902,8 @@
        "shape": "—"
       }
      ],
-     "img": "x-den-noi.webp"
+     "img": "x-den-noi.webp",
+     "han": "到着"
     },
     {
      "vi": "đặt xe",
@@ -29827,7 +29969,8 @@
      ],
      "emoji": "🚚",
      "vkind": "action",
-     "img": "d80-giao-hang.webp"
+     "img": "d80-giao-hang.webp",
+     "han": "配達"
     }
    ],
    "dialog": {
@@ -30145,7 +30288,8 @@
    "pre": [
     {
      "vi": "phí",
-     "ko": "수수료"
+     "ko": "수수료",
+     "han": "手數料"
     },
     {
      "vi": "quá",
@@ -30183,7 +30327,8 @@
      "hanja": "零件 (영건 — 부품)",
      "emoji": "⚙️",
      "vkind": "thing",
-     "img": "d51-linh-kien.webp"
+     "img": "d51-linh-kien.webp",
+     "han": "部品"
     },
     {
      "vi": "màn hình",
@@ -30239,7 +30384,8 @@
      "emoji": "📟",
      "vkind": "thing",
      "hanja": "脈 (맥)",
-     "img": "d51-mach.webp"
+     "img": "d51-mach.webp",
+     "han": "回路"
     },
     {
      "vi": "chip",
@@ -30278,7 +30424,8 @@
      "emoji": "🔌",
      "vkind": "thing",
      "hanja": "電 (전)",
-     "img": "d51-day-dien.webp"
+     "img": "d51-day-dien.webp",
+     "han": "電線"
     },
     {
      "vi": "ốc vít",
@@ -30300,7 +30447,8 @@
      ],
      "emoji": "🔩",
      "vkind": "thing",
-     "img": "d51-oc-vit.webp"
+     "img": "d51-oc-vit.webp",
+     "han": "螺絲"
     },
     {
      "vi": "keo",
@@ -30679,7 +30827,8 @@
      ],
      "emoji": "🛠️",
      "vkind": "action",
-     "img": "d52-lap-rap.webp"
+     "img": "d52-lap-rap.webp",
+     "han": "組立"
     },
     {
      "vi": "gắn",
@@ -31186,7 +31335,8 @@
       }
      ],
      "hanja": "靜電 (정전)",
-     "img": "x-tinh-dien.webp"
+     "img": "x-tinh-dien.webp",
+     "han": "正電氣"
     },
     {
      "vi": "vòng tay",
@@ -31284,7 +31434,8 @@
        "shape": "∨"
       }
      ],
-     "img": "x-am.webp"
+     "img": "x-am.webp",
+     "han": "濕"
     },
     {
      "vi": "vào",
@@ -31641,7 +31792,8 @@
       }
      ],
      "hanja": "速度 (속도)",
-     "img": "x-toc-do.webp"
+     "img": "x-toc-do.webp",
+     "han": "速度"
     },
     {
      "vi": "mục tiêu",
@@ -31662,7 +31814,8 @@
       }
      ],
      "hanja": "目標 (목표)",
-     "img": "x-muc-tieu.webp"
+     "img": "x-muc-tieu.webp",
+     "han": "目標"
     },
     {
      "vi": "sản lượng",
@@ -31683,7 +31836,8 @@
       }
      ],
      "hanja": "產量 (산량)",
-     "img": "x-san-luong.webp"
+     "img": "x-san-luong.webp",
+     "han": "生産量"
     },
     {
      "vi": "ngừng",
@@ -31736,7 +31890,8 @@
       }
      ],
      "hanja": "繼續 (계속)",
-     "img": "x-tiep-tuc.webp"
+     "img": "x-tiep-tuc.webp",
+     "han": "繼續"
     },
     {
      "vi": "kế hoạch",
@@ -31757,7 +31912,8 @@
       }
      ],
      "hanja": "計劃 (계획)",
-     "img": "x-ke-hoach.webp"
+     "img": "x-ke-hoach.webp",
+     "han": "計劃計畫"
     },
     {
      "vi": "báo",
@@ -32174,7 +32330,8 @@
      "hanja": "印 (인)",
      "emoji": "🖨️",
      "vkind": "action",
-     "img": "d56-in.webp"
+     "img": "d56-in.webp",
+     "han": "印刷"
     },
     {
      "vi": "giấy",
@@ -32228,7 +32385,8 @@
       }
      ],
      "hanja": "材料 (재료 — 자료)",
-     "img": "x-tai-lieu.webp"
+     "img": "x-tai-lieu.webp",
+     "han": "資料"
     },
     {
      "vi": "hồ sơ",
@@ -32265,7 +32423,8 @@
       }
      ],
      "hanja": "字 (자)",
-     "img": "x-chu.webp"
+     "img": "x-chu.webp",
+     "han": "字"
     },
     {
      "vi": "lịch",
@@ -32305,7 +32464,8 @@
      "emoji": "👥",
      "vkind": "thing",
      "hanja": "合 (합)",
-     "img": "d56-cuoc-hop.webp"
+     "img": "d56-cuoc-hop.webp",
+     "han": "會議"
     }
    ],
    "track": "work",
@@ -32645,7 +32805,8 @@
      "hanja": "客 (객)+hàng",
      "emoji": "🛍️",
      "vkind": "thing",
-     "img": "d57-khach-hang.webp"
+     "img": "d57-khach-hang.webp",
+     "han": "顧客"
     },
     {
      "vi": "phục vụ",
@@ -32705,7 +32866,8 @@
      "hanja": "食單 (식단 — 메뉴)",
      "emoji": "📖",
      "vkind": "thing",
-     "img": "d57-thuc-don.webp"
+     "img": "d57-thuc-don.webp",
+     "han": "板"
     },
     {
      "vi": "gói",
@@ -32765,7 +32927,8 @@
      ],
      "emoji": "💳",
      "vkind": "action",
-     "img": "d57-tinh-tien.webp"
+     "img": "d57-tinh-tien.webp",
+     "han": "計算"
     },
     {
      "vi": "tiền mặt",
@@ -32788,7 +32951,8 @@
      "emoji": "💵",
      "vkind": "thing",
      "hanja": "錢 (전)",
-     "img": "d57-tien-mat.webp"
+     "img": "d57-tien-mat.webp",
+     "han": "現金"
     },
     {
      "vi": "giảm giá",
@@ -32811,7 +32975,8 @@
      "emoji": "🏷️",
      "vkind": "action",
      "hanja": "減價 (감가)",
-     "img": "d57-giam-gia.webp"
+     "img": "d57-giam-gia.webp",
+     "han": "割引"
     },
     {
      "vi": "hóa đơn",
@@ -32834,7 +32999,8 @@
      "emoji": "🧾",
      "vkind": "thing",
      "hanja": "貨單 (화단)",
-     "img": "d57-hoa-don.webp"
+     "img": "d57-hoa-don.webp",
+     "han": "領收證"
     }
    ],
    "track": "work",
@@ -33198,7 +33364,8 @@
       }
      ],
      "hanja": "工作 (공작 — 출장)",
-     "img": "x-cong-tac.webp"
+     "img": "x-cong-tac.webp",
+     "han": "出張"
     },
     {
      "vi": "sân bay",
@@ -33220,7 +33387,8 @@
      ],
      "emoji": "🛫",
      "vkind": "thing",
-     "img": "d59-san-bay.webp"
+     "img": "d59-san-bay.webp",
+     "han": "空港"
     },
     {
      "vi": "máy bay",
@@ -33242,7 +33410,8 @@
      ],
      "emoji": "✈️",
      "vkind": "thing",
-     "img": "d59-may-bay.webp"
+     "img": "d59-may-bay.webp",
+     "han": "飛行機"
     },
     {
      "vi": "khách sạn",
@@ -33308,7 +33477,8 @@
      ],
      "emoji": "📃",
      "vkind": "thing",
-     "img": "d59-giay-to.webp"
+     "img": "d59-giay-to.webp",
+     "han": "書類"
     },
     {
      "vi": "hoãn",
@@ -33679,7 +33849,8 @@
       }
      ],
      "hanja": "財款 (재관)",
-     "img": "x-tai-khoan.webp"
+     "img": "x-tai-khoan.webp",
+     "han": "計座"
     },
     {
      "vi": "chuyển tiền",
@@ -33702,7 +33873,8 @@
      "emoji": "💸",
      "vkind": "action",
      "hanja": "轉錢 (전전)",
-     "img": "d60-chuyen-tien.webp"
+     "img": "d60-chuyen-tien.webp",
+     "han": "送金"
     },
     {
      "vi": "rút tiền",
@@ -33725,7 +33897,8 @@
      "emoji": "🏧",
      "vkind": "action",
      "hanja": "錢 (전)",
-     "img": "d60-rut-tien.webp"
+     "img": "d60-rut-tien.webp",
+     "han": "出金"
     },
     {
      "vi": "đổi tiền",
@@ -33748,7 +33921,8 @@
      "emoji": "💱",
      "vkind": "action",
      "hanja": "錢 (전)",
-     "img": "d60-doi-tien.webp"
+     "img": "d60-doi-tien.webp",
+     "han": "換錢"
     },
     {
      "vi": "tỷ giá",
@@ -33769,7 +33943,8 @@
       }
      ],
      "hanja": "比價 (비가)",
-     "img": "x-ty-gia.webp"
+     "img": "x-ty-gia.webp",
+     "han": "換率"
     },
     {
      "vi": "phí",
@@ -33784,7 +33959,8 @@
       }
      ],
      "hanja": "費 (비)",
-     "img": "x-phi.webp"
+     "img": "x-phi.webp",
+     "han": "手數料"
     },
     {
      "vi": "mật khẩu",
@@ -33807,7 +33983,8 @@
      "hanja": "密 (밀)+口",
      "emoji": "🔒",
      "vkind": "thing",
-     "img": "d60-mat-khau.webp"
+     "img": "d60-mat-khau.webp",
+     "han": "秘密番號"
     },
     {
      "vi": "đăng ký",
@@ -34304,7 +34481,8 @@
       }
      ],
      "hanja": "態度 (태도)",
-     "img": "x-thai-do.webp"
+     "img": "x-thai-do.webp",
+     "han": "態度"
     },
     {
      "vi": "nghiêm túc",
@@ -34682,7 +34860,8 @@
        "shape": "＼"
       }
      ],
-     "img": "x-nho.webp"
+     "img": "x-nho.webp",
+     "han": "付託"
     },
     {
      "vi": "giúp đỡ",
@@ -34747,7 +34926,8 @@
       }
      ],
      "hanja": "尊重 (존중)",
-     "img": "x-ton-trong.webp"
+     "img": "x-ton-trong.webp",
+     "han": "尊重"
     },
     {
      "vi": "hỏi thăm",
@@ -34783,7 +34963,8 @@
      ],
      "emoji": "👍",
      "vkind": "action",
-     "img": "d62-khen.webp"
+     "img": "d62-khen.webp",
+     "han": "稱讚"
     },
     {
      "vi": "chê",
@@ -34833,7 +35014,8 @@
        "shape": "＼"
       }
      ],
-     "img": "x-dua.webp"
+     "img": "x-dua.webp",
+     "han": "弄談"
     },
     {
      "vi": "thân",
@@ -34848,7 +35030,8 @@
       }
      ],
      "hanja": "親 (친)",
-     "img": "x-than.webp"
+     "img": "x-than.webp",
+     "han": "親"
     }
    ],
    "track": "work",
@@ -35261,7 +35444,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-ep.webp"
+     "img": "x-ep.webp",
+     "han": "強要"
     },
     {
      "vi": "từ chối",
@@ -35284,7 +35468,8 @@
      "emoji": "🙅",
      "vkind": "action",
      "hanja": "辭 (사)",
-     "img": "d63-tu-choi.webp"
+     "img": "d63-tu-choi.webp",
+     "han": "拒絕"
     },
     {
      "vi": "tăng hai",
@@ -35728,7 +35913,8 @@
       }
      ],
      "hanja": "法 (법)",
-     "img": "x-phep-nam.webp"
+     "img": "x-phep-nam.webp",
+     "han": "年次"
     },
     {
      "vi": "lý do",
@@ -35749,7 +35935,8 @@
       }
      ],
      "hanja": "理由 (이유)",
-     "img": "x-ly-do.webp"
+     "img": "x-ly-do.webp",
+     "han": "理由"
     },
     {
      "vi": "việc gấp",
@@ -35792,7 +35979,8 @@
      ],
      "emoji": "🚪",
      "vkind": "action",
-     "img": "d64-ve-som.webp"
+     "img": "d64-ve-som.webp",
+     "han": "早退"
     },
     {
      "vi": "đổi lịch",
@@ -36307,7 +36495,8 @@
        "shape": "∿"
       }
      ],
-     "img": "x-tha-loi.webp"
+     "img": "x-tha-loi.webp",
+     "han": "容恕"
     },
     {
      "vi": "lần",
@@ -36363,7 +36552,8 @@
       }
      ],
      "hanja": "經驗 (경험)",
-     "img": "x-kinh-nghiem.webp"
+     "img": "x-kinh-nghiem.webp",
+     "han": "經驗"
     },
     {
      "vi": "bỏ qua",
@@ -36837,7 +37027,8 @@
       }
      ],
      "hanja": "基本 (기본)",
-     "img": "x-luong-co-ban.webp"
+     "img": "x-luong-co-ban.webp",
+     "han": "基本給"
     },
     {
      "vi": "thời hạn",
@@ -36858,7 +37049,8 @@
       }
      ],
      "hanja": "時限 (시한)",
-     "img": "x-thoi-han.webp"
+     "img": "x-thoi-han.webp",
+     "han": "期限"
     },
     {
      "vi": "gia hạn",
@@ -36879,7 +37071,8 @@
       }
      ],
      "hanja": "加限 (가한)",
-     "img": "x-gia-han.webp"
+     "img": "x-gia-han.webp",
+     "han": "延長"
     },
     {
      "vi": "điều khoản",
@@ -36900,7 +37093,8 @@
       }
      ],
      "hanja": "條款 (조관 — 조항)",
-     "img": "x-dieu-khoan.webp"
+     "img": "x-dieu-khoan.webp",
+     "han": "條項"
     },
     {
      "vi": "quyền lợi",
@@ -36942,7 +37136,8 @@
       }
      ],
      "hanja": "義務 (의무)",
-     "img": "x-nghia-vu.webp"
+     "img": "x-nghia-vu.webp",
+     "han": "義務"
     },
     {
      "vi": "kỹ",
@@ -37353,7 +37548,8 @@
       }
      ],
      "hanja": "附給 (부급 — 수당)",
-     "img": "x-phu-cap.webp"
+     "img": "x-phu-cap.webp",
+     "han": "手當"
     },
     {
      "vi": "làm thêm",
@@ -37945,7 +38141,8 @@
      "emoji": "📃",
      "vkind": "thing",
      "hanja": "法 (법)",
-     "img": "d68-giay-phep.webp"
+     "img": "d68-giay-phep.webp",
+     "han": "許可證"
     },
     {
      "vi": "lao động",
@@ -37966,7 +38163,8 @@
       }
      ],
      "hanja": "勞動 (노동)",
-     "img": "x-lao-dong.webp"
+     "img": "x-lao-dong.webp",
+     "han": "勞動"
     },
     {
      "vi": "thẻ tạm trú",
@@ -38024,7 +38222,8 @@
      "hanja": "大使館 (대사관)",
      "emoji": "🏛️",
      "vkind": "thing",
-     "img": "d68-dai-su-quan.webp"
+     "img": "d68-dai-su-quan.webp",
+     "han": "大使館"
     },
     {
      "vi": "lãnh sự quán",
@@ -38051,7 +38250,8 @@
       }
      ],
      "hanja": "領事館 (영사관)",
-     "img": "x-lanh-su-quan.webp"
+     "img": "x-lanh-su-quan.webp",
+     "han": "領事館"
     },
     {
      "vi": "khai",
@@ -38083,7 +38283,8 @@
       }
      ],
      "hanja": "限 (한)",
-     "img": "x-han.webp"
+     "img": "x-han.webp",
+     "han": "期限"
     },
     {
      "vi": "quá hạn",
@@ -38121,7 +38322,8 @@
      "emoji": "🖼️",
      "vkind": "thing",
      "hanja": "影 (영)",
-     "img": "d68-anh.webp"
+     "img": "d68-anh.webp",
+     "han": "寫眞"
     },
     {
      "vi": "bản sao",
@@ -38144,7 +38346,8 @@
      "emoji": "📑",
      "vkind": "thing",
      "hanja": "本抄 (본초)",
-     "img": "d68-ban-sao.webp"
+     "img": "d68-ban-sao.webp",
+     "han": "寫本"
     }
    ],
    "track": "work",
@@ -38494,7 +38697,8 @@
    "pre": [
     {
      "vi": "hộ chiếu",
-     "ko": "여권"
+     "ko": "여권",
+     "han": "旅券"
     }
    ]
   },
@@ -38522,7 +38726,8 @@
       }
      ],
      "hanja": "醫 (의)",
-     "img": "x-y-te.webp"
+     "img": "x-y-te.webp",
+     "han": "醫療"
     },
     {
      "vi": "khám sức khỏe",
@@ -38573,7 +38778,8 @@
      "emoji": "💊",
      "vkind": "thing",
      "hanja": "單 (단)",
-     "img": "d69-don-thuoc.webp"
+     "img": "d69-don-thuoc.webp",
+     "han": "處方箋"
     },
     {
      "vi": "cấp cứu",
@@ -38594,7 +38800,8 @@
       }
      ],
      "hanja": "急救 (급구 — 응급)",
-     "img": "x-cap-cuu.webp"
+     "img": "x-cap-cuu.webp",
+     "han": "應急"
     },
     {
      "vi": "xe cấp cứu",
@@ -38623,7 +38830,8 @@
      "emoji": "🚑",
      "vkind": "thing",
      "hanja": "急救 (급구)",
-     "img": "d69-xe-cap-cuu.webp"
+     "img": "d69-xe-cap-cuu.webp",
+     "han": "救急車"
     },
     {
      "vi": "nằm",
@@ -38662,7 +38870,8 @@
      "emoji": "🏥",
      "vkind": "action",
      "hanja": "院 (원)",
-     "img": "d69-nam-vien.webp"
+     "img": "d69-nam-vien.webp",
+     "han": "入院"
     },
     {
      "vi": "xuất viện",
@@ -38685,7 +38894,8 @@
      "hanja": "出院 (출원 — 퇴원)",
      "emoji": "🚶",
      "vkind": "action",
-     "img": "d69-xuat-vien.webp"
+     "img": "d69-xuat-vien.webp",
+     "han": "退院"
     },
     {
      "vi": "khỏi",
@@ -38721,7 +38931,8 @@
      ],
      "emoji": "😮‍💨",
      "vkind": "action",
-     "img": "d69-met-moi.webp"
+     "img": "d69-met-moi.webp",
+     "han": "疲勞"
     }
    ],
    "track": "work",
@@ -39204,7 +39415,8 @@
      ],
      "emoji": "👛",
      "vkind": "thing",
-     "img": "d70-vi.webp"
+     "img": "d70-vi.webp",
+     "han": "紙匣"
     },
     {
      "vi": "điện thoại",
@@ -39248,7 +39460,8 @@
       }
      ],
      "hanja": "平靜 (평정 — 침착)",
-     "img": "x-binh-tinh.webp"
+     "img": "x-binh-tinh.webp",
+     "han": "沈着"
     }
    ],
    "track": "work",
@@ -40082,7 +40295,8 @@
        "shape": "＼"
       }
      ],
-     "img": "x-nuoc-ngoai.webp"
+     "img": "x-nuoc-ngoai.webp",
+     "han": "外國"
     },
     {
      "vi": "visa",
@@ -40119,7 +40333,8 @@
      "hanja": "護照 (호조 — 여권)",
      "emoji": "🛂",
      "vkind": "thing",
-     "img": "d50-ho-chieu.webp"
+     "img": "d50-ho-chieu.webp",
+     "han": "旅券"
     },
     {
      "vi": "thuê",
@@ -40154,7 +40369,8 @@
       }
      ],
      "hanja": "文化 (문화)",
-     "img": "x-van-hoa.webp"
+     "img": "x-van-hoa.webp",
+     "han": "文化"
     },
     {
      "vi": "thói quen",
@@ -40174,7 +40390,8 @@
        "shape": "—"
       }
      ],
-     "img": "x-thoi-quen.webp"
+     "img": "x-thoi-quen.webp",
+     "han": "習慣"
     },
     {
      "vi": "chợ đêm",
@@ -40196,7 +40413,8 @@
      ],
      "emoji": "🏮",
      "vkind": "thing",
-     "img": "d50-cho-dem.webp"
+     "img": "d50-cho-dem.webp",
+     "han": "夜市場"
     },
     {
      "vi": "đêm",
@@ -40630,7 +40848,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-cuoc.webp"
+     "img": "x-cuoc.webp",
+     "han": "料金"
     },
     {
      "vi": "gói cước",
@@ -40650,7 +40869,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-goi-cuoc.webp"
+     "img": "x-goi-cuoc.webp",
+     "han": "制"
     },
     {
      "vi": "nạp tiền",
@@ -40713,7 +40933,8 @@
       }
      ],
      "hanja": "免費 (면비 — 무료)",
-     "img": "x-mien-phi.webp"
+     "img": "x-mien-phi.webp",
+     "han": "無料"
     },
     {
      "vi": "mã",
@@ -41071,7 +41292,8 @@
      "hanja": "家庭 (가정)",
      "emoji": "👨‍👩‍👧",
      "vkind": "thing",
-     "img": "d15-gia-dinh.webp"
+     "img": "d15-gia-dinh.webp",
+     "han": "家族"
     },
     {
      "vi": "bố",
@@ -41159,7 +41381,8 @@
      ],
      "emoji": "🤵",
      "vkind": "thing",
-     "img": "d15-chong.webp"
+     "img": "d15-chong.webp",
+     "han": "男便"
     },
     {
      "vi": "anh trai",
@@ -41219,7 +41442,8 @@
        "shape": "—"
       }
      ],
-     "img": "x-em-trai.webp"
+     "img": "x-em-trai.webp",
+     "han": "男"
     },
     {
      "vi": "em gái",
@@ -41241,7 +41465,8 @@
      ],
      "emoji": "👧",
      "vkind": "thing",
-     "img": "d15-em-gai.webp"
+     "img": "d15-em-gai.webp",
+     "han": "女"
     }
    ],
    "dialog": {
@@ -41638,7 +41863,8 @@
      ],
      "emoji": "🏞️",
      "vkind": "thing",
-     "img": "d71-que.webp"
+     "img": "d71-que.webp",
+     "han": "故鄕"
     },
     {
      "vi": "tỉnh",
@@ -41688,7 +41914,8 @@
       }
      ],
      "hanja": "北 (북)",
-     "img": "x-mien-bac.webp"
+     "img": "x-mien-bac.webp",
+     "han": "北部"
     },
     {
      "vi": "miền Nam",
@@ -41709,7 +41936,8 @@
       }
      ],
      "hanja": "南 (남)",
-     "img": "x-mien-nam.webp"
+     "img": "x-mien-nam.webp",
+     "han": "南部"
     },
     {
      "vi": "sinh năm",
@@ -41753,7 +41981,8 @@
      "hanja": "結婚 (결혼)",
      "emoji": "💒",
      "vkind": "action",
-     "img": "d71-ket-hon.webp"
+     "img": "d71-ket-hon.webp",
+     "han": "結婚"
     },
     {
      "vi": "độc thân",
@@ -41796,7 +42025,8 @@
      ],
      "emoji": "💑",
      "vkind": "thing",
-     "img": "d71-nguoi-yeu.webp"
+     "img": "d71-nguoi-yeu.webp",
+     "han": "愛人"
     },
     {
      "vi": "có con",
@@ -42284,7 +42514,8 @@
      "south": "dù [주]",
      "emoji": "☂️",
      "vkind": "thing",
-     "img": "d41-o.webp"
+     "img": "d41-o.webp",
+     "han": "雨傘"
     },
     {
      "vi": "mùa",
@@ -42616,7 +42847,8 @@
       }
      ],
      "hanja": "旬 (순)",
-     "img": "x-cuoi-tuan.webp"
+     "img": "x-cuoi-tuan.webp",
+     "han": "週末"
     },
     {
      "vi": "kể",
@@ -42782,7 +43014,8 @@
      ],
      "emoji": "🚶",
      "vkind": "action",
-     "img": "d74-di-dao.webp"
+     "img": "d74-di-dao.webp",
+     "han": "散策"
     }
    ],
    "dialog": {
@@ -43221,7 +43454,8 @@
      "hanja": "球手 (구수 — 선수)",
      "emoji": "⛹️",
      "vkind": "thing",
-     "img": "d73-cau-thu.webp"
+     "img": "d73-cau-thu.webp",
+     "han": "選手"
     },
     {
      "vi": "đá",
@@ -43260,7 +43494,8 @@
      "hanja": "鼓舞 (고무 — 응원)",
      "emoji": "📣",
      "vkind": "action",
-     "img": "d73-co-vu.webp"
+     "img": "d73-co-vu.webp",
+     "han": "應援"
     },
     {
      "vi": "vô địch",
@@ -43283,7 +43518,8 @@
      "hanja": "無敵 (무적 — 우승)",
      "emoji": "🏆",
      "vkind": "action",
-     "img": "d73-vo-dich.webp"
+     "img": "d73-vo-dich.webp",
+     "han": "優勝"
     }
    ],
    "dialog": {
@@ -43711,7 +43947,8 @@
       }
      ],
      "hanja": "格 (격)",
-     "img": "x-cach.webp"
+     "img": "x-cach.webp",
+     "han": "方法"
     },
     {
      "vi": "đúng cách",
@@ -44153,7 +44390,8 @@
       }
      ],
      "hanja": "問題 (문제)",
-     "img": "x-van-de.webp"
+     "img": "x-van-de.webp",
+     "han": "問題"
     },
     {
      "vi": "giải quyết",
@@ -44174,7 +44412,8 @@
       }
      ],
      "hanja": "解決 (해결)",
-     "img": "x-giai-quyet.webp"
+     "img": "x-giai-quyet.webp",
+     "han": "解決"
     },
     {
      "vi": "ngay",
@@ -44685,7 +44924,8 @@
      ],
      "emoji": "🏃",
      "vkind": "action",
-     "img": "d83-tranh.webp"
+     "img": "d83-tranh.webp",
+     "han": "避"
     },
     {
      "vi": "xấu hổ",
@@ -44707,7 +44947,8 @@
      ],
      "emoji": "😳",
      "vkind": "action",
-     "img": "d83-xau-ho.webp"
+     "img": "d83-xau-ho.webp",
+     "han": "猖披"
     },
     {
      "vi": "mất mặt",
@@ -45119,7 +45360,8 @@
      "emoji": "💪",
      "vkind": "action",
      "hanja": "動員 (동원)",
-     "img": "d84-dong-vien.webp"
+     "img": "d84-dong-vien.webp",
+     "han": "激勵"
     },
     {
      "vi": "tin tưởng",
@@ -45140,7 +45382,8 @@
       }
      ],
      "hanja": "信 (신)",
-     "img": "x-tin-tuong.webp"
+     "img": "x-tin-tuong.webp",
+     "han": "信賴"
     },
     {
      "vi": "tự hào",
@@ -45282,7 +45525,8 @@
       }
      ],
      "hanja": "發揮 (발휘)",
-     "img": "x-phat-huy.webp"
+     "img": "x-phat-huy.webp",
+     "han": "發揮"
     },
     {
      "vi": "nụ cười",
@@ -45304,7 +45548,8 @@
      ],
      "emoji": "😊",
      "vkind": "thing",
-     "img": "d84-nu-cuoi.webp"
+     "img": "d84-nu-cuoi.webp",
+     "han": "微笑"
     }
    ],
    "track": "work",
@@ -45657,7 +45902,8 @@
       }
      ],
      "hanja": "意見 (의견)",
-     "img": "x-y-kien.webp"
+     "img": "x-y-kien.webp",
+     "han": "意見"
     },
     {
      "vi": "phát biểu",
@@ -45680,7 +45926,8 @@
      "hanja": "發表 (발표)",
      "emoji": "🎤",
      "vkind": "action",
-     "img": "d85-phat-bieu.webp"
+     "img": "d85-phat-bieu.webp",
+     "han": "發言"
     },
     {
      "vi": "đồng ý",
@@ -45701,7 +45948,8 @@
       }
      ],
      "hanja": "同意 (동의)",
-     "img": "x-dong-y.webp"
+     "img": "x-dong-y.webp",
+     "han": "同意"
     },
     {
      "vi": "phản đối",
@@ -45724,7 +45972,8 @@
      "hanja": "反對 (반대)",
      "emoji": "🙅",
      "vkind": "action",
-     "img": "d85-phan-doi.webp"
+     "img": "d85-phan-doi.webp",
+     "han": "反對"
     },
     {
      "vi": "quyết định",
@@ -45745,7 +45994,8 @@
       }
      ],
      "hanja": "決定 (결정)",
-     "img": "x-quyet-dinh.webp"
+     "img": "x-quyet-dinh.webp",
+     "han": "決定"
     },
     {
      "vi": "ghi chép",
@@ -45812,7 +46062,8 @@
       }
      ],
      "hanja": "結論 (결론)",
-     "img": "x-ket-luan.webp"
+     "img": "x-ket-luan.webp",
+     "han": "結論"
     },
     {
      "vi": "biểu quyết",
@@ -45835,7 +46086,8 @@
      "hanja": "表決 (표결)",
      "emoji": "🙋",
      "vkind": "action",
-     "img": "d85-bieu-quyet.webp"
+     "img": "d85-bieu-quyet.webp",
+     "han": "票決"
     }
    ],
    "track": "work",
@@ -46192,7 +46444,8 @@
      ],
      "emoji": "🚜",
      "vkind": "thing",
-     "img": "d96-xe-nang.webp"
+     "img": "d96-xe-nang.webp",
+     "han": "車"
     },
     {
      "vi": "nâng",
@@ -46241,7 +46494,8 @@
      ],
      "emoji": "◀️",
      "vkind": "action",
-     "img": "d96-lui.webp"
+     "img": "d96-lui.webp",
+     "han": "後進"
     },
     {
      "vi": "còi",
@@ -46255,7 +46509,8 @@
        "shape": "＼"
       }
      ],
-     "img": "x-coi.webp"
+     "img": "x-coi.webp",
+     "han": "警笛"
     },
     {
      "vi": "đứng",
@@ -46312,7 +46567,8 @@
       }
      ],
      "hanja": "區域 (구역)",
-     "img": "x-khu-vuc.webp"
+     "img": "x-khu-vuc.webp",
+     "han": "區域"
     },
     {
      "vi": "nặng",
@@ -46685,7 +46941,8 @@
      "emoji": "📥",
      "vkind": "action",
      "hanja": "入庫 (입고)",
-     "img": "d97-nhap-kho.webp"
+     "img": "d97-nhap-kho.webp",
+     "han": "入庫"
     },
     {
      "vi": "xuất kho",
@@ -46708,7 +46965,8 @@
      "emoji": "📤",
      "vkind": "action",
      "hanja": "出庫 (출고)",
-     "img": "d97-xuat-kho.webp"
+     "img": "d97-xuat-kho.webp",
+     "han": "出庫"
     },
     {
      "vi": "phiếu",
@@ -46744,7 +47002,8 @@
       }
      ],
      "hanja": "存庫 (존고 — 재고)",
-     "img": "x-ton-kho.webp"
+     "img": "x-ton-kho.webp",
+     "han": "在庫"
     },
     {
      "vi": "kệ",
@@ -46803,7 +47062,8 @@
       }
      ],
      "hanja": "位置 (위치)",
-     "img": "x-vi-tri.webp"
+     "img": "x-vi-tri.webp",
+     "han": "位置"
     },
     {
      "vi": "trống",
@@ -47237,7 +47497,8 @@
      "emoji": "🤲",
      "vkind": "thing",
      "hanja": "認 (인)",
-     "img": "d100-nguoi-nhan.webp"
+     "img": "d100-nguoi-nhan.webp",
+     "han": "受領人"
     },
     {
      "vi": "người gửi",
@@ -47317,7 +47578,8 @@
      ],
      "emoji": "💔",
      "vkind": "thing",
-     "img": "d100-hu-hong.webp"
+     "img": "d100-hu-hong.webp",
+     "han": "破損"
     },
     {
      "vi": "đền",
@@ -47331,7 +47593,8 @@
        "shape": "＼"
       }
      ],
-     "img": "x-ddeanf.webp"
+     "img": "x-ddeanf.webp",
+     "han": "賠償"
     },
     {
      "vi": "khiếu nại",
@@ -47744,7 +48007,8 @@
      "emoji": "🗂️",
      "vkind": "action",
      "hanja": "分類 (분류)",
-     "img": "d88-phan-loai.webp"
+     "img": "d88-phan-loai.webp",
+     "han": "分類"
     },
     {
      "vi": "hàng đạt",
@@ -47789,7 +48053,8 @@
      ],
      "emoji": "❌",
      "vkind": "thing",
-     "img": "d88-hang-loi.webp"
+     "img": "d88-hang-loi.webp",
+     "han": "不良品"
     },
     {
      "vi": "tách",
@@ -47803,7 +48068,8 @@
        "shape": "／"
       }
      ],
-     "img": "x-tach.webp"
+     "img": "x-tach.webp",
+     "han": "分離"
     },
     {
      "vi": "tách riêng",
@@ -48279,7 +48545,8 @@
      "hanja": "替 (체)",
      "emoji": "🔄",
      "vkind": "action",
-     "img": "d89-thay-the.webp"
+     "img": "d89-thay-the.webp",
+     "han": "交替交遞"
     },
     {
      "vi": "nguyên",
@@ -48728,7 +48995,8 @@
      "emoji": "📐",
      "vkind": "thing",
      "hanja": "本 (본)",
-     "img": "d90-ban-ve.webp"
+     "img": "d90-ban-ve.webp",
+     "han": "圖面"
     },
     {
      "vi": "hướng dẫn",
@@ -48772,7 +49040,8 @@
      "hanja": "記號 (기호)",
      "emoji": "🔣",
      "vkind": "thing",
-     "img": "d90-ky-hieu.webp"
+     "img": "d90-ky-hieu.webp",
+     "han": "記號"
     },
     {
      "vi": "chú thích",
@@ -48837,7 +49106,8 @@
       }
      ],
      "hanja": "目 (목)",
-     "img": "x-muc.webp"
+     "img": "x-muc.webp",
+     "han": "項目"
     },
     {
      "vi": "tìm hiểu",
@@ -49333,7 +49603,8 @@
      ],
      "emoji": "💨",
      "vkind": "thing",
-     "img": "d91-khoi.webp"
+     "img": "d91-khoi.webp",
+     "han": "煙氣"
     },
     {
      "vi": "chảy",
@@ -49764,7 +50035,8 @@
      "hanja": "源 (원)",
      "emoji": "🔌",
      "vkind": "thing",
-     "img": "d92-nguon.webp"
+     "img": "d92-nguon.webp",
+     "han": "電源"
     },
     {
      "vi": "khởi động",
@@ -49886,7 +50158,8 @@
      "hanja": "結 (결)",
      "emoji": "🔗",
      "vkind": "action",
-     "img": "d92-ket-noi.webp"
+     "img": "d92-ket-noi.webp",
+     "han": "連結"
     },
     {
      "vi": "dữ liệu",
@@ -49922,7 +50195,8 @@
       }
      ],
      "hanja": "留 (류)",
-     "img": "x-luu.webp"
+     "img": "x-luu.webp",
+     "han": "貯藏"
     },
     {
      "vi": "khởi động lại",
@@ -50775,7 +51049,8 @@
       }
      ],
      "hanja": "熱 (열)",
-     "img": "x-nhiet.webp"
+     "img": "x-nhiet.webp",
+     "han": "熱"
     },
     {
      "vi": "nhiệt độ",
@@ -50798,7 +51073,8 @@
      "hanja": "熱度 (열도 — 온도)",
      "emoji": "🌡️",
      "vkind": "thing",
-     "img": "d94-nhiet-do.webp"
+     "img": "d94-nhiet-do.webp",
+     "han": "溫度"
     },
     {
      "vi": "độ ẩm",
@@ -50819,7 +51095,8 @@
       }
      ],
      "hanja": "度 (도)",
-     "img": "x-do-am.webp"
+     "img": "x-do-am.webp",
+     "han": "濕度"
     },
     {
      "vi": "quạt",
@@ -50916,7 +51193,8 @@
       }
      ],
      "hanja": "隔電 (격전)",
-     "img": "x-cach-dien.webp"
+     "img": "x-cach-dien.webp",
+     "han": "絕緣"
     }
    ],
    "track": "work",
@@ -51283,7 +51561,8 @@
      "hanja": "封 (봉)",
      "emoji": "🔏",
      "vkind": "action",
-     "img": "d95-niem-phong.webp"
+     "img": "d95-niem-phong.webp",
+     "han": "封印"
     },
     {
      "vi": "cân nặng",
@@ -51350,7 +51629,8 @@
       }
      ],
      "hanja": "對照 (대조)",
-     "img": "x-doi-chieu.webp"
+     "img": "x-doi-chieu.webp",
+     "han": "對照"
     },
     {
      "vi": "chống",
