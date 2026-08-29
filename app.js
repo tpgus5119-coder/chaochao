@@ -486,6 +486,7 @@ const UIVI = {
   '3분': '3 phút', '오늘 완료': 'Xong hôm nay', '지우기': 'Xóa', '채점받기': 'Chấm điểm',
   '정답 보기': 'Xem đáp án', '보내기': 'Gửi', '만들기': 'Tạo', '올리기': 'Đăng',
   '번역': 'Dịch', '바꾸기': 'Đổi', '보기': 'Xem', '받기': 'Nhận',
+  '🔔 쌤 쪽지 알림 받기': '🔔 Nhận thông báo tin nhắn của thầy cô',
   '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
   '계정': 'Tài khoản', '가입': 'Đăng ký', '로그아웃': 'Đăng xuất',
   '로그인·가입': 'Đăng nhập / Đăng ký', '배울 언어': 'Ngôn ngữ học', '보호권': 'Khiên bảo vệ',
@@ -4444,6 +4445,11 @@ const nextDay = () => upcoming(1)[0] || null;
 function renderHome() {
   cloudSave();                           // 로그인한 사람은 하루 한 번 서버에 진도를 남긴다
   pingRooms();                              // 하루 이상 조용하면 먼저 말을 걸어 둔다
+  /* 앱을 켜 둔 채 다른 일을 하는 동안에도 쌤이 말을 걸 수 있게 30분마다 살핀다.
+     pingRooms 자체가 '하루는 기다린다'로 스스로 막으므로 자주 살펴도 말이 잦아지지 않는다.
+     앱이 **완전히 닫히면** 못 한다 — 그건 밀어 넣기 서버가 있어야 하고 돈이 든다. */
+  if (!window.PINGT) window.PINGT = setInterval(() => { pingRooms(); drawChatDot(); }, 30 * 60 * 1000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) drawChatDot(); });
   drawMenu();
   drawWxNow();
   // 한국어를 배우는 사람에게는 베트남어 일정판이 아무 뜻이 없다 — 딴 판을 그린다
@@ -7431,19 +7437,18 @@ function chatSys(mode, myRole, day) {
     '반드시 이 형식으로만 답한다. 다른 말은 붙이지 않는다:\n' +
     'VI: 베트남어 한 문장 (최대 7단어)\nKR: 그 발음의 한글 표기\nKO: 한국어 뜻\n' +
     '학습자의 베트남어에 성조나 단어 실수가 있으면 넷째 줄 "FIX: 짧은 교정"으로 알려준다.\n' +
-    /* 어휘 정책 — 세 층으로 나눈다.
-       ① 뼈대는 배운 말: 알아들어야 대화가 되고, 다시 만나야 복습이 된다.
-       ② 한 마디에 새 단어 한둘: 지금 수준보다 아주 조금 위여야 는다(이해 가능한 입력).
-          새 단어는 NEW 줄로 밝힌다 — 알아채지 못한 것은 배워지지 않는다.
-       ③ 이따금 현지 표현: 책에 없는 줄임말·입말은 여기서만 만난다.
-          정석을 먼저 주고 REAL 줄에 곁들인다 — 순서가 바뀌면 초보가 혼란스럽다. */
-    '어휘는 이렇게 고른다:\n' +
+    /* 어휘 정책 — **배운 말만.** (2026-08-29, 대표님 지시)
+       전에는 '한 마디에 새 단어 한둘'을 허용했다. 이해 가능한 입력(i+1) 이론을 따른 것이다.
+       그런데 실제로 쓰는 사람에게는 그것이 **모르는 말이 섞여 오는 것**으로 느껴졌다.
+       배우는 사람이 답답하면 안 쓴다 — 안 쓰면 이론이 맞아도 소용이 없다.
+       그래서 새 단어와 현지 표현(NEW·REAL)을 쌤의 말에서 빼고, 배운 말 안에서만 짓게 한다.
+       FIX·SAY 는 남긴다 — 그건 쌤이 꺼내는 말이 아니라 **학습자가 쓴 것에 대한 답**이다. */
+    '어휘 규칙 — 이것을 어기면 안 된다:\n' +
     // 쉼표 대신 빈칸 하나 — 뜻은 그대로인데 이 줄이 가장 큰 덩어리라 14% 줄어든다
-    ' · 뼈대는 학습자가 이미 배운 말로 쓴다: ' + learnedVi().join(' ') + '\n' +
-    ' · 한 마디에 새 단어는 많아야 한둘만 섞는다. 섞었으면 "NEW: 단어=뜻" 줄을 덧붙인다.\n' +
-    ' · 서너 마디에 한 번쯤, 같은 뜻을 현지 사람들이 실제로 쓰는 짧은 말·줄임말로도 알려준다:\n' +
-    '   "REAL: 현지 표현 = 한국어 뜻" 줄로. 매번 붙이지는 마라.\n' +
-    ' · NEW·REAL 은 없으면 그 줄을 아예 쓰지 않는다.\n' +
+    ' · 아래 목록에 **있는 말만** 쓴다. 목록에 없는 단어는 한 개도 쓰지 마라:\n' +
+    '   ' + learnedVi().join(' ') + '\n' +
+    ' · 목록에 없는 말로밖에 표현할 수 없으면, 그 말을 하지 말고 **더 쉬운 다른 말**을 골라라.\n' +
+    ' · 줄임말·속어·현지 입말은 쓰지 않는다.\n' +
     '한 번에 한 문장. 쉬운 질문으로 대화를 이어간다.\n' +
     /* 한국어를 막지 않는다. 초보에게 '목표어만' 을 강요하면 할 말이 없어 대화가 끊긴다.
        대신 한국어로 쓴 그 말을 **베트남어로 어떻게 하는지 크게 돌려준다** —
@@ -8055,6 +8060,17 @@ function dueSentence() {
   const d = dueWords().map(findItem).filter(x => x && x.sent);
   return d.length ? d[0] : null;
 }
+/* 끝낸 날의 대화 문장만 모은다 — 쌤이 먼저 거는 말의 재료.
+   왜 문장인가(대표님): 메신저는 대화라서 낱말 하나를 던지면 말이 안 된다.
+   왜 끝낸 날만인가: 아직 안 배운 날의 문장을 던지면 그게 곧 '어려운 말'이다. */
+function learnedSents() {
+  const out = [];
+  for (const d of ALL) {
+    if (typeof d.day === 'number' && !S.done[d.day]) break;
+    (d.dialog?.lines || []).forEach(l => { if (l.vi && l.ko) out.push({ vi: l.vi, ko: l.ko }); });
+  }
+  return out;
+}
 function pingRooms() {
   if (!S.room) return;
   let sent = false;
@@ -8062,17 +8078,27 @@ function pingRooms() {
     if (!r.hist || !r.hist.length) return;                 // 한 번도 안 연 방은 건드리지 않는다
     if (r.unread) return;
     if (r.at && Date.now() - r.at < DAY) return;           // 하루는 기다린다
+    /* 무엇으로 말을 거나 — **배운 것 안에서만** (대표님 지시).
+         ① 복습할 때가 된 문장 (한 방에만 — 네 방이 같은 말을 하면 이상하다)
+         ② 끝낸 날의 대화 문장 아무거나
+         ③ 아직 아무것도 안 끝냈으면 인사말 — 첫날부터 배우는 말이라 안전하다 */
     const q = dueSentence();
     let vi, ko;
-    if (q && !sent) { vi = q.vi; ko = q.ko; }              // 복습 문장은 한 방에만
-    else { const list = PING[k] || PING.nf;
-           vi = list[Math.floor(Math.random() * list.length)]; ko = PINGKO[vi] || ''; }
+    if (q && !sent) { vi = q.vi; ko = q.ko; }
+    else {
+      const ls = learnedSents();
+      if (ls.length) { const x = ls[Math.floor(Math.random() * ls.length)]; vi = x.vi; ko = x.ko; }
+      else { const list = PING[k] || PING.nf;
+             vi = list[Math.floor(Math.random() * list.length)]; ko = PINGKO[vi] || ''; }
+    }
     r.hist.push({ role: 'model', parts: [{ text: 'VI: ' + vi + '\nKO: ' + ko }] });
     r.unread = (r.unread || 0) + 1;
     r.at = Date.now();
     sent = true;
+    const pp = PEOPLE[k];
+    notify((pp ? pp.name : '쌤') + ' 쌤', vi + (ko ? ' — ' + ko : ''));
   });
-  if (sent) save();
+  if (sent) { save(); drawChatDot(); }
 }
 
 /* 일주일이 지난 대화는 저절로 지워진다 — 손으로 비울 일이 없게. */
@@ -8093,6 +8119,11 @@ function renderRooms() {
   $('#chatTone').hidden = true;
   $('#tch').hidden = true;
   sweepRooms();
+  if ('Notification' in window && Notification.permission === 'default') {
+    const nb = el('button', 'ghost wide', tr('🔔 쌤 쪽지 알림 받기'));
+    nb.onclick = askNotify;
+    s.append(nb);
+  }
   ROOMS.forEach(([rg, tc]) => {
     const k = roomKey(rg, tc), r = (S.room || {})[k], p = who(rg, tc);
     const last = r && r.hist.length
@@ -8290,11 +8321,37 @@ $('#chatMic').onclick = async () => {
 $('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
 $('#goMe').onclick = renderAwards;
 $('#goChat').onclick = () => { dive(renderHome); startChat(); };
-/* 머리 메신저 단추 — 안 읽은 것이 있으면 빨간 점. 진짜 메신저처럼 어디서나 보인다 */
+/* 머리 메신저 단추 — 안 읽은 **개수**를 적는다. 진짜 메신저처럼 어디서나 보인다.
+   점 하나였던 것을 숫자로 바꿨다(대표님 지시) — '뭔가 왔다'와 '몇 개 왔다'는 다른 정보다. */
+function unreadCount() {
+  return Object.values(S.room || {}).reduce((a, r) => a + (r.unread || 0), 0)
+       + (((MATES || {}).people) || []).filter(mateNew).length;
+}
 function drawChatDot() {
-  const n = Object.values(S.room || {}).reduce((a, r) => a + (r.unread || 0), 0)
-          + (((MATES || {}).people) || []).filter(mateNew).length;
-  $('#goChat').querySelector('.chatdot').hidden = !n;
+  const n = unreadCount(), d = $('#goChat').querySelector('.chatdot');
+  d.hidden = !n;
+  d.textContent = n > 9 ? '9+' : (n || '');
+  /* 홈 화면 아이콘의 숫자 — 폰 바탕화면에 깔아 둔 사람에게만 보인다.
+     못 쓰는 기기가 많아서 있으면 쓰고 없으면 조용히 넘어간다. */
+  try { if (navigator.setAppBadge) n ? navigator.setAppBadge(n) : navigator.clearAppBadge(); }
+  catch (e) { /* 안 되는 기기 */ }
+}
+
+/* 기기 알림 — 허락한 사람에게만.
+   **솔직히 적어 둔다:** 밀어 넣기(push) 서버가 없어서 앱이 **닫혀 있는 동안에는 안 온다.**
+   앱을 열거나 화면으로 돌아왔을 때 뜬다. 진짜 배경 알림을 하려면 서버가 필요하고
+   그만큼 돈이 든다 — 운영비 0원이 먼저다(대표님 지시). */
+function notify(title, body) {
+  try {
+    if (!('Notification' in window) || Notification.permission !== 'granted' ) return;
+    if (!document.hidden) return;              // 보고 있는 화면에 또 띄우면 성가시다
+    new Notification(title, { body: (body || '').slice(0, 80), icon: 'icon-192.png',
+                              tag: 'chaochao-msg', renotify: true });
+  } catch (e) { /* 아이폰 사파리처럼 못 하는 기기 */ }
+}
+function askNotify() {
+  if (!('Notification' in window)) return;
+  Notification.requestPermission().then(() => { if (typeof renderRooms === 'function') renderRooms(); });
 }
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.

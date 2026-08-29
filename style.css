@@ -1019,8 +1019,12 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 머리 메신저 단추 — 안 읽은 것이 있으면 빨간 점 */
 #goChat{padding:7px; line-height:0; position:relative}
 #goChat svg{width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linejoin:round}
-#goChat .chatdot{position:absolute; top:4px; right:4px; width:9px; height:9px; border-radius:50%;
-  background:#e0384a; border:2px solid var(--bg)}
+/* 안 읽은 **개수**를 적는다(점 하나였던 것을 바꿈 — '몇 개 왔나'가 다른 정보다).
+   색만으로 알리지 않는다: 숫자와 흰 테두리를 같이 둬서 색을 못 가리는 눈에도 보이게 한다. */
+#goChat .chatdot{position:absolute; top:1px; right:1px; min-width:16px; height:16px; padding:0 4px;
+  border-radius:9px; background:#e0384a; border:2px solid var(--bg); box-sizing:border-box;
+  color:#fff; font:700 10px/12px -apple-system,sans-serif; font-style:normal;
+  text-align:center; letter-spacing:-.3px}
 
 /* 표지의 짧은 사용법 */
 .coverhow{margin-top:14px; border:1px dashed var(--line); border-radius:12px; padding:11px 13px;
