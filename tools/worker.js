@@ -80,8 +80,11 @@ const ALT = [
   { env: 'OPENROUTER_KEY', url: 'https://openrouter.ai/api/v1/chat/completions',
     ms: ['meta-llama/llama-3.3-70b-instruct:free', 'google/gemma-2-9b-it:free'] },
 ];
-// 마지막 자리 — 이 서버가 도는 그 계정. 가입도 카드도 필요 없다.
-const CF = ['@cf/meta/llama-3.3-70b-instruct-fp8-fast', '@cf/meta/llama-3.1-8b-instruct'];
+/* 마지막 자리 — 이 서버가 도는 그 계정. 가입도 카드도 필요 없다.
+   **작은 것을 앞에 둔다.** 여기가 하는 일은 잘 채점하는 게 아니라 앱이 안 죽게 하는 것이다.
+   하루 몫(뉴런)이 하나로 묶여 있어서, 큰 모델을 앞에 두면 같은 몫으로 받는 사람이 확 준다.
+   8b 로 하루 약 2,700번(들어감 400·나옴 150 토큰 기준). 큰 모델은 그보다 훨씬 적다. */
+const CF = ['@cf/meta/llama-3.1-8b-instruct', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 
 /* '이 모델로는 안 된다' 는 신호 — 전부 '다음으로' 가 정답이다.
      429·5xx = 붐빔   404 = 없는 모델   403 = 이 열쇠로는 못 씀
