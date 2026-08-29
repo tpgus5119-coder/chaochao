@@ -793,6 +793,15 @@ BLUEPRINTS = {
         # TOPIK IBT 는 정반대다("문제 번호를 클릭하면 … 선택 번호를 수정할 수 있습니다").
         # 그래서 **EPS 에만** 건다.
         "lock": True,
+        # **베트남은 CBT 다** — 공단 시험일정 표기(2026). UBT(태블릿)를 쓰는 나라와
+        # 조작 규칙이 정반대에 가까우므로 우리는 CBT 규칙으로 흉내 낸다.
+        # 공식 체험 프로그램의 타이머 코드(timer_script)를 직접 읽어 확인한 것:
+        #   · 읽기·듣기 타이머가 **따로** 돈다(t_left_time / t_right_time)
+        #   · 읽기 시간이 0이 되면 examTestNext() 로 **듣기 첫 문항에 강제 이동**
+        #   · 듣기 구간에서는 앞뒤 이동 단추가 **사라진다**(되돌아갈 수 없다)
+        #   · 번호판 칸에는 onclick 이 없다 — **상태 표시 전용**
+        # 그래서 읽기에 남긴 시간은 듣기로 넘어가지 않고, 안 푼 읽기 문항은 사라진다.
+        "cbt": {"read": 25, "listen": 25},
         "grades": ["A", "B"],
         "sections": [
             {"label": "[1~4] 그림을 보고 맞는 것을 고르십시오.", "kind": "pic2word", "n": 4},
@@ -1282,6 +1291,14 @@ def build(exam_id, seed, words, gloss, pics, state):
         out["plays"] = bp["plays"]
     if bp.get("lock"):
         out["lock"] = True
+    # CBT 규칙 — 읽기·듣기를 나눠 세고, 듣기로 넘어가면 되돌아갈 수 없다.
+    # 경계는 문항에 소리가 붙는 자리에서 스스로 찾는다(청사진 순서가 바뀌어도 안 어긋나게).
+    if bp.get("cbt"):
+        qs = out["questions"]
+        first_listen = next((i for i, q in enumerate(qs)
+                             if q.get("audio") or q.get("heard") or q.get("script")), len(qs))
+        out["cbt"] = {"split": first_listen,
+                      "read": bp["cbt"]["read"], "listen": bp["cbt"]["listen"]}
     return out
 
 ANCHOR_N = 6          # 한 시험 종류당 공통문항 수

@@ -956,7 +956,12 @@
     }
    ],
    "plays": 2,
-   "lock": true
+   "lock": true,
+   "cbt": {
+    "split": 20,
+    "read": 25,
+    "listen": 25
+   }
   },
   {
    "id": "eps-topik",
@@ -1918,7 +1923,12 @@
     }
    ],
    "plays": 2,
-   "lock": true
+   "lock": true,
+   "cbt": {
+    "split": 20,
+    "read": 25,
+    "listen": 25
+   }
   },
   {
    "id": "eps-topik",
@@ -2875,7 +2885,12 @@
     }
    ],
    "plays": 2,
-   "lock": true
+   "lock": true,
+   "cbt": {
+    "split": 20,
+    "read": 25,
+    "listen": 25
+   }
   },
   {
    "id": "kiip-pre",

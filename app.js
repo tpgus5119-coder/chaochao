@@ -2833,16 +2833,45 @@ function startExam(e) {
       '이 시험은 실제 시험과 같이 한 번 고른 답을 바꿀 수 없습니다.\n\n'
       + '고용허가제 한국어능력시험(EPS-TOPIK) 공식 프로그램이 그렇게 동작합니다.\n'
       + '시작할까요?'))) return;
+  /* CBT 흉내 — 공식 체험 프로그램의 타이머 코드를 읽어 확인한 규칙 그대로.
+     읽기·듣기 시계가 **따로** 돌고, 읽기 시계가 0이 되면 듣기로 **강제 이동**하며,
+     듣기에 들어가면 **되돌아갈 수 없다**. 읽기에 남긴 시간은 이월되지 않는다.
+     그래서 안 푼 읽기 문항을 남기고 넘어가면 그대로 잃는다 — 이게 이 시험의 급소다. */
+  const cbt = e.cbt && !e.sub ? e.cbt : null;
+  if (cbt && !confirm(tr(
+      '실제 시험처럼 읽기와 듣기의 시간이 따로 갑니다.\n\n'
+      + '· 읽기 25분이 끝나면 자동으로 듣기로 넘어갑니다\n'
+      + '· 듣기에 들어가면 읽기로 돌아갈 수 없습니다\n'
+      + '· 읽기에 남은 시간은 듣기로 넘어가지 않습니다\n\n'
+      + '안 푼 읽기 문항은 그대로 0점이 됩니다. 시작할까요?'))) return;
   EX = { exam: e, at: 0, marks: new Array(e.questions.length).fill(-1),
-         left: e.minutes * 60 };
+         left: cbt ? cbt.read * 60 : e.minutes * 60,
+         cbt, part: cbt ? 'read' : null };
   if (EX.timer) clearInterval(EX.timer);
   EX.timer = setInterval(() => {
     if ($('#exam').hidden || !EX) return;      // 다른 화면에 가 있으면 시계도 멈춘다
     EX.left--;
-    if (EX.left <= 0) { finishExam(true); return; }
+    if (EX.left <= 0) {
+      // 읽기 시간이 끝났다 — 실제 프로그램처럼 듣기 첫 문항으로 끌고 간다
+      if (EX.cbt && EX.part === 'read') { enterListening(true); return; }
+      finishExam(true); return;
+    }
     const t = $('#extime');
     if (t) { t.textContent = fmtLeft(EX.left); t.className = 'extime' + (EX.left <= 60 ? ' hot' : ''); }
   }, 1000);
+  drawExamQ();
+}
+
+/* 읽기 → 듣기. 한 번 넘어가면 끝이다. 남은 읽기 시간은 버린다(실제와 같게). */
+function enterListening(auto) {
+  const blank = EX.marks.slice(0, EX.cbt.split).filter(m => !answered(m)).length;
+  if (!auto && !confirm(tr(
+      blank ? '읽기에 안 푼 문항이 N개 있습니다.\n듣기로 넘어가면 다시 돌아올 수 없고 그대로 0점이 됩니다.\n넘어갈까요?'
+            : '듣기로 넘어가면 읽기로 다시 돌아올 수 없습니다.\n넘어갈까요?').replace('N', blank))) return;
+  EX.part = 'listen';
+  EX.left = EX.cbt.listen * 60;                  // 남은 읽기 시간은 이월하지 않는다
+  EX.at = EX.cbt.split;
+  if (auto) alert(tr('읽기 시간이 끝났습니다. 듣기를 시작합니다.'));
   drawExamQ();
 }
 
@@ -2906,7 +2935,13 @@ function drawExamQ() {
 
   // 머리줄 — 남은 시간과 진행 상황
   const head = el('div', 'exbar');
-  head.append(el('span', 'expos', `${EX.at + 1} / ${e.questions.length}`));
+  if (EX.cbt) {
+    // 실제 화면처럼 지금이 읽기인지 듣기인지 늘 보인다
+    const r = EX.part === 'read';
+    const a = r ? 0 : EX.cbt.split, z = r ? EX.cbt.split : e.questions.length;
+    head.append(el('span', 'expart', tr(r ? '읽기' : '듣기')));
+    head.append(el('span', 'expos', `${EX.at + 1 - a} / ${z - a}`));
+  } else head.append(el('span', 'expos', `${EX.at + 1} / ${e.questions.length}`));
   const t = el('span', 'extime' + (EX.left <= 60 ? ' hot' : ''));
   t.id = 'extime'; t.textContent = fmtLeft(EX.left);
   head.append(t);
@@ -2940,6 +2975,7 @@ function drawExamQ() {
      몇 번이든 듣게 두면 열 번 들어 맞히므로 듣기 연습이 되지 않는다.
      다만 **오답 다시 풀기(sub)** 에서는 막지 않는다 — 거기서는 틀린 이유를 짚어야 한다. */
   if (q.audio && q.audio.length) {
+    const at0 = EX.at;                               // 늦게 도착한 재생이 남의 문항을 덮지 않게
     const cap = e.sub ? 0 : (e.plays || 0);          // 0 = 제한 없음
     EX.plays = EX.plays || {};
     const used = () => EX.plays[EX.at] || 0;
@@ -2954,15 +2990,27 @@ function drawExamQ() {
         : over ? tr('실제 시험처럼 정해진 횟수만 들려줍니다.')
         : tr('N번 더 들을 수 있습니다.').replace('N', cap - used());
     };
-    pb.onclick = () => {
-      if (EX.playing) { audio.pause(); audio.onended = null; EX.playing = false; paint(); return; }
+    const run = () => {
       if (cap && used() >= cap) return;
       EX.plays[EX.at] = used() + 1;
       EX.playing = true; paint();
       playKoSeq(q.audio, () => { EX.playing = false; paint(); });
     };
+    pb.onclick = () => {
+      if (EX.playing) { audio.pause(); audio.onended = null; EX.playing = false; paint(); return; }
+      run();
+    };
     paint();
     card.append(pb, left);
+    /* CBT 듣기는 **자동 진행**이다 — 문항이 뜨면 바로 소리가 나고, 내가 누를 것이 없다.
+       공식 체험 프로그램이 그렇게 돈다(듣기 문항 표시와 동시에 재생, 이동 단추 없음).
+       그래서 여기서는 재생 단추를 숨기고 스스로 튼다. 실제 시험에서 "준비되면 누르지"
+       하다가 시간을 흘리는 사람이 없도록, 손이 그 리듬에 익어야 한다. */
+    if (EX.cbt && EX.part === 'listen' && !used()) {
+      pb.hidden = true;
+      left.textContent = tr('실제 시험처럼 자동으로 나옵니다. 두 번 들려줍니다.');
+      setTimeout(() => { if (EX && EX.at === at0) run(); }, 700);
+    }
   }
 
   if (q.img) {
@@ -3025,12 +3073,20 @@ function drawExamQ() {
 
   // 앞뒤 이동
   const nav = el('div', 'exnav');
+  // CBT 는 구간 안에서만 오간다 — 듣기에서 읽기로 넘어가는 길은 없다.
+  const lo = EX.cbt ? (EX.part === 'read' ? 0 : EX.cbt.split) : 0;
+  const hi = EX.cbt ? (EX.part === 'read' ? EX.cbt.split : e.questions.length)
+                    : e.questions.length;
   const prev = el('button', 'ghost big', '‹ 이전');
-  prev.disabled = EX.at === 0;
+  prev.disabled = EX.at === lo;
   prev.onclick = () => { EX.at--; drawExamQ(); };
-  const next = el('button', 'primary big', EX.at === e.questions.length - 1 ? '제출하기' : '다음 ›');
+  const last = EX.at === hi - 1;
+  const toListen = EX.cbt && EX.part === 'read' && last;
+  const next = el('button', 'primary big',
+    toListen ? tr('듣기로 넘어가기 ›') : last ? '제출하기' : '다음 ›');
   next.onclick = () => {
-    if (EX.at < e.questions.length - 1) { EX.at++; drawExamQ(); return; }
+    if (toListen) { enterListening(false); return; }
+    if (EX.at < hi - 1) { EX.at++; drawExamQ(); return; }
     const blank = EX.marks.filter((m, i) => !answered(m)).length;
     if (blank && !confirm(`아직 ${blank}문항이 비어 있습니다. 그대로 제출할까요?`)) return;
     finishExam(false);
@@ -3041,11 +3097,15 @@ function drawExamQ() {
   // 번호판 — 어디를 안 풀었는지 한눈에 보이고, 눌러서 바로 건너뛴다
   const pad = el('div', 'expad');
   e.questions.forEach((_, i) => {
+    if (EX.cbt && (i < lo || i >= hi)) return;   // 지금 구간만 보인다
     // 공식 IBT 는 **안 푼 문제**를 붉게 표시한다. 우리도 그렇게 한다 —
     // 푼 것을 세는 것보다 남은 것을 보는 편이 시험장에서 쓸모 있다.
     const n = el('button', 'expn' + (answered(EX.marks[i]) ? ' done' : ' todo') + (i === EX.at ? ' cur' : ''));
     n.textContent = String(i + 1);
-    n.onclick = () => { EX.at = i; drawExamQ(); };
+    // 공식 CBT 의 번호판에는 onclick 이 없다(DOM 으로 확인) — 상태 표시 전용이다.
+    // 우리도 그렇게 둔다. 이동은 이전/다음으로만.
+    if (!EX.cbt) n.onclick = () => { EX.at = i; drawExamQ(); };
+    else n.disabled = true;
     pad.append(n);
   });
   b.append(pad);
