@@ -493,6 +493,7 @@ const UIVI = {
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
   '실전 단어 복습': 'Ôn từ vựng thực chiến',
+  '초록 = 앱에서 이미 배운 말': 'Xanh lá = từ đã học trong ứng dụng',
   '하루 5분 복습과 섞이지 않습니다': 'Không trộn với phần ôn tập 5 phút mỗi ngày',
   '이 회차 시험 보기': 'Làm bài thi đợt này',
   '앱 전체 N명 가운데': 'Trong tổng số N người dùng',
@@ -5697,12 +5698,18 @@ function chapOf(vi) {
   return CHAPIX[vi];
 }
 function buildQuestions(words, forced) {
-  const pool = allWords();
+  /* 오답 보기를 어디서 뽑나 — **지금 공부하는 묶음 안에서**.
+     실전 단어를 앱 낱말(1,080개)로 둘러싸면 문제가 쉬워진다: 시험 낱말 하나에
+     엉뚱한 주제의 보기 셋이 붙어 눈에 띄기 때문이다. 같은 회차 30개 안에서 뽑아야
+     진짜로 헷갈린다. 실전 단어 화면에서만 그렇게 하고, 나머지는 그대로 둔다. */
+  const pool = SBOX === 'ssrs' && SENIOR
+    ? (words.length >= 4 ? words : seniorItems())
+    : allWords();
   // 오답 보기는 같은 종류에서 고른다 — 문장 문제에 단어 뜻을 섞으면
   // 길이만 보고 정답을 찍을 수 있어 문제가 문제 구실을 못 한다.
   const spool = [...allSents(), ...lessonSents()];
   return words.map(w => {
-    const lv = (S.srs[w.vi] || {}).lv || 0;
+    const lv = (srsBox()[w.vi] || {}).lv || 0;   // 실전 단어는 제 창고(S.ssrs)를 봐야 한다
     let mode = forced === 'write' ? (!w.sent && Math.random() < .35 ? 'hand' : 'type')
              : forced || pickMode(w, lv);
     if ((mode === 'listen' || mode === 'type') && !AIDX[w.vi]) mode = 'read';   // 소리가 없으면 눈으로
@@ -6536,7 +6543,9 @@ function drawSeniorSet(t) {
     startQuiz(ws.map(w => ({ vi: w[0], ko: w[1] })), { day: skey(t), senior: 1 }, null, false, { kind: 'word' });
   };
   go.append(gb);
-  go.append(el('span', 'msub', ws.length + tr('낱말')));
+  /* 색이 무슨 뜻인지 한 줄로 적는다 (대표님 물음, 2026-08-29).
+     색만으로 알리지 않는다 — 초록 줄에는 왼쪽에 굵은 띠도 같이 붙는다(색각 배려). */
+  go.append(el('span', 'msub', ws.length + tr('낱말') + ' · ' + tr('초록 = 앱에서 이미 배운 말')));
   list.append(go);
   ws.forEach(w => {
     const li = el('li');
