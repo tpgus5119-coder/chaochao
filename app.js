@@ -347,6 +347,11 @@ const UIVI = {
   '이전': 'Trước',
   '다음': 'Sau',
   '낱말 N개쯤 외운 뒤에 보면 더 잘 듣습니다': 'Học khoảng N từ rồi xem sẽ hiểu hơn',
+  '듣기로 넘어가기 ›': 'Sang phần nghe ›',
+  '실제 시험처럼 자동으로 나옵니다. 두 번 들려줍니다.':
+    'Âm thanh tự phát như thi thật. Sẽ cho nghe hai lần.',
+  '읽기 시간이 끝났습니다. 듣기를 시작합니다.':
+    'Hết giờ phần đọc. Bắt đầu phần nghe.',
   '문장 고르기': 'Chọn câu',
   '문장 고쳐 주기': 'Sửa câu giúp tôi',
   '문제 유형별 정답률 (누적)': 'Tỷ lệ đúng theo dạng bài (cộng dồn)',
