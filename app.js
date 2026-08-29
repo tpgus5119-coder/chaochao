@@ -340,6 +340,13 @@ const UIVI = {
   '아직 없는 것 — TOPIK II 쓰기 연습 회차, 공식 기출 풀이(공식 자료실로 안내합니다)':
     'Chưa có — thêm đề luyện viết TOPIK II, và giải đề thi thật (chúng tôi dẫn bạn tới trang chính thức)',
   '목록으로': 'Về danh sách',
+  '풀이 전략': 'Mẹo làm bài',
+  '왜': 'Vì sao',
+  '어떻게': 'Làm thế nào',
+  '오늘 해볼 것': 'Hôm nay hãy thử',
+  '이전': 'Trước',
+  '다음': 'Sau',
+  '낱말 N개쯤 외운 뒤에 보면 더 잘 듣습니다': 'Học khoảng N từ rồi xem sẽ hiểu hơn',
   '문장 고르기': 'Chọn câu',
   '문장 고쳐 주기': 'Sửa câu giúp tôi',
   '문제 유형별 정답률 (누적)': 'Tỷ lệ đúng theo dạng bài (cộng dồn)',
@@ -2253,6 +2260,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
 const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   day:    { name: '날마다 배우기', items: () => [['보기', koDayEntry]] },
   exam:   { name: '모의고사', items: () => [['보기', examEntry]] },
+  strat:  { name: '풀이 전략', items: () => [['보기', koStrategyEntry]] },
   basic2: { name: '기본기', items: () => [['보기', koBasicEntry]] },
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
   culture:{ name: '한국 문화', items: () => [['보기', koCultureEntry]] },
@@ -2565,6 +2573,109 @@ function drawBasicCard(i) {
    기본기와 뼈대가 완전히 같다(제목·설명·표). 특정 교재를 안 보고
    공휴일 날짜·신고 전화번호 같은 공공 상식만 적었다 — tools/ko_culture.py 참고. */
 let KCDATA = null, KC = null;
+
+/* ── 풀이 전략 ───────────────────────────────────────────────────
+   토익에는 '몇 초에 무엇을, 어디를 먼저 보고, 어느 유형을 뒤로 미루는지'가 촘촘히
+   정리돼 있는데 EPS 에는 그게 없다. 조사해 보니 한국어로 된 EPS 풀이 전략 강의가
+   **아예 없고**(시판 교재 4권 전부 품절, 공단 E-Class 는 회화 강의), 베트남어로
+   유형별 전략을 세운 곳도 없었다. 그 빈자리를 여기서 채운다.
+
+   **모의고사에는 이 내용을 절대 띄우지 않는다**(사용자 지시). 실제 시험에 없는
+   도움말을 켜 놓고 연습하면 실전과 다른 환경에서 훈련하는 것이라서다.
+
+   차시마다 need(권장 선행 낱말 수)가 있다 — Paton(2018)에서 왕초보에게 전략부터
+   가르쳤더니 오히려 점수가 떨어졌다(인지 과부하). 그래서 아직 이르면 말린다.
+   막지는 않는다. 말리되 본인이 원하면 연다. */
+let KSDATA = null;
+// **로 감싼 곳을 굵게. esc() 를 먼저 걸어야 남의 태그가 안 들어온다.
+const stBold = s => esc(s).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+
+function koStrategyEntry() {
+  const b = $('#examBody');
+  b.textContent = '';
+  show('exam', '풀이 전략', true);
+  if (KSDATA) return drawStratList();
+  fetch('data/ko_strategy.json', { cache: 'no-cache' })
+    .then(r => r.json()).then(j => { KSDATA = j.items; drawStratList(); })
+    .catch(() => b.append(el('p', 'lede', tr('자료를 받지 못했습니다. 인터넷을 확인해 주세요.'))));
+}
+
+// 내가 아는 낱말 수 — 전략을 열 때가 됐는지 재는 잣대
+const kWordsKnown = () => Object.keys(S.kbank || {}).length;
+
+function drawStratList() {
+  const b = $('#examBody');
+  b.textContent = '';
+  const vi = S.ui === 'vi';
+  b.append(el('p', 'lede', esc(vi
+    ? 'Mẹo làm bài EPS-TOPIK. Đây là chỗ học cách làm — trong bài thi thử sẽ không hiện gì cả, giống hệt phòng thi.'
+    : 'EPS-TOPIK 을 어떻게 푸는가. 요령은 여기서 배웁니다 — 모의고사에는 아무것도 뜨지 않습니다. 실제 시험과 같게.')));
+  const known = kWordsKnown();
+  KSDATA.forEach((it, i) => {
+    const btn = el('button', 'bigmenu');
+    const early = it.need && known < it.need;
+    btn.append(el('b', null, `${it.n}. ${esc(vi ? it.vi : it.ko)}`));
+    btn.append(el('span', 'exmeta', esc(vi ? it.ko : it.vi)));
+    if (early) btn.append(el('span', 'exmeta', esc(tr('낱말 N개쯤 외운 뒤에 보면 더 잘 듣습니다')
+      .replace('N', it.need))));
+    btn.onclick = () => drawStratCard(i);
+    b.append(btn);
+  });
+}
+
+function drawStratCard(i) {
+  const it = KSDATA[i];
+  const b = $('#examBody');
+  b.textContent = '';
+  const vi = S.ui === 'vi';
+
+  const head = el('div', 'exbar');
+  head.append(el('span', 'expart', esc(it.tag)));
+  head.append(el('span', 'expos', `${i + 1} / ${KSDATA.length}`));
+  b.append(head);
+
+  const card = el('div', 'excard');
+  card.append(el('div', 'exask', esc(vi ? it.vi : it.ko)));
+  card.append(el('div', 'exbody', esc(vi ? it.ko : it.vi)));
+  b.append(card);
+
+  // 왜 — 근거를 먼저 준다. 까닭을 모르면 요령은 미신이 된다.
+  const why = el('div', 'excard');
+  why.append(el('h3', 'exhead', tr('왜')));
+  if (!vi) why.append(el('div', 'gexp', esc(it.why_ko)));
+  why.append(el('div', 'gexp vi', esc(it.why_vi)));
+  b.append(why);
+
+  // 어떻게 — 손이 따라 할 수 있는 순서
+  const how = el('div', 'excard');
+  how.append(el('h3', 'exhead', tr('어떻게')));
+  (vi ? it.how_vi : it.how_ko).forEach((s, k) => {
+    const r = el('div', 'gex');
+    const line = el('div', 'gexko');
+    line.append(el('b', null, String(k + 1) + '.'));
+    line.append(el('span', null, stBold(s)));
+    r.append(line);
+    if (!vi && it.how_vi[k]) r.append(el('div', 'gexvi', stBold(it.how_vi[k])));
+    how.append(r);
+  });
+  b.append(how);
+
+  const doo = el('div', 'excard');
+  doo.append(el('h3', 'exhead', tr('오늘 해볼 것')));
+  if (!vi) doo.append(el('div', 'gexp', esc(it.do_ko)));
+  doo.append(el('div', 'gexp vi', esc(it.do_vi)));
+  b.append(doo);
+
+  const nav = el('div', 'exnav');
+  const prev = el('button', 'ghost big', '‹ ' + tr('이전'));
+  prev.disabled = i === 0; prev.onclick = () => drawStratCard(i - 1);
+  const next = el('button', 'primary big', i === KSDATA.length - 1
+    ? tr('목록으로') : tr('다음') + ' ›');
+  next.onclick = () => (i === KSDATA.length - 1 ? drawStratList() : drawStratCard(i + 1));
+  nav.append(prev, next);
+  b.append(nav);
+  show('exam', (vi ? it.vi : it.ko), true);
+}
 
 function koCultureEntry() {
   const b = $('#examBody');
