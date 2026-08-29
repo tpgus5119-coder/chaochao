@@ -500,9 +500,7 @@ const UIVI = {
   '앱 전체 N명 중': 'Trong tổng số N người',
   '우리 동아리 안에서': 'Trong câu lạc bộ của tôi',
   '내 동아리': 'Câu lạc bộ của tôi',
-  '아직 줄을 세울 만큼 사람이 없습니다.': 'Chưa đủ người để xếp hạng.',
-  '아직 이번 판 점수가 없습니다 — 오늘 공부하면 줄에 섭니다.':
-    'Chưa có điểm trong đợt này — học hôm nay là bạn sẽ vào bảng.',
+  '오늘 공부하면 줄에 섭니다.': 'Học hôm nay là bạn sẽ vào bảng.',
   '순위 서버에 못 닿았습니다 — 잠시 뒤 다시 열어 보세요.':
     'Không kết nối được máy chủ xếp hạng — hãy mở lại sau.',
   '메신저': 'Tin nhắn', '내 정보': 'Của tôi', '이름': 'Tên', '지역': 'Vùng miền',
@@ -918,7 +916,7 @@ function liveRec(box, stream, secs, onStop) {
   const buf = new Float32Array(an.fftSize);
   const pts = [];
   const t0 = performance.now();
-  let quiet = 0, raf = 0, last = 0, dead = false;
+  let quiet = 0, raf = 0, last = 0, dead = false, spoke = false;   // spoke: 한 번이라도 소리를 냈나
 
   const draw = () => {
     const g = cv.getContext('2d');
@@ -953,8 +951,14 @@ function liveRec(box, stream, secs, onStop) {
     for (let i = 0; i < buf.length; i++) rms += buf[i] * buf[i];
     rms = Math.sqrt(rms / buf.length);
     if (rms < 0.012) { pts.push(null); quiet++; }
-    else { quiet = 0; pts.push(PITCH.yin(buf, ctx.sampleRate) || null); }
-    if (quiet === 25) tip.innerHTML = '<b>소리가 잘 안 들립니다</b> — 폰을 더 가까이 대고 조금 크게';
+    else { quiet = 0; spoke = true; pts.push(PITCH.yin(buf, ctx.sampleRate) || null); }
+    if (quiet === 25 && !spoke) tip.innerHTML = '<b>소리가 잘 안 들립니다</b> — 폰을 더 가까이 대고 조금 크게';
+    /* **말이 끝나면 바로 멈춘다** (대표님 지적: 인식이 느리다, 2026-08-29).
+       전에는 낱말도 무조건 3.5초, 문장은 7초를 채웠다. 0.8초 만에 말하고도
+       2.7초를 멍하니 기다린 것이다 — 그 기다림이 곧 '느리다'였다.
+       한 번이라도 소리를 낸 뒤 0.66초(11틱 × 60ms) 조용하면 끝낸 것으로 본다.
+       0.66초는 낱말 사이 숨보다 길고 '다 말했다'보다 짧은 자리다. */
+    if (spoke && quiet >= 11) { onStop && onStop(); return; }
     draw();
   };
   tick();
@@ -2671,15 +2675,16 @@ function drawGramCard(i) {
   });
   b.append(card);
 
-  const nav = el('div', 'exnav');
-  const prev = el('button', 'ghost big', '‹ 이전');
-  prev.disabled = i === 0;
-  prev.onclick = () => drawGramCard(i - 1);
-  const next = el('button', 'primary big', i === KGDATA.length - 1 ? '목록으로' : '다음 ›');
-  next.onclick = () => i === KGDATA.length - 1 ? drawGramList() : drawGramCard(i + 1);
+  /* '‹ 이전 / 다음 ›' 단추를 뺐다 (대표님 지시) — **밀어서 넘긴다.**
+     맨 끝 장에서만 '목록으로'를 남긴다. 안 그러면 나갈 길이 없다. */
   swipeNav(b, () => i > 0 && drawGramCard(i - 1), () => i < KGDATA.length - 1 && drawGramCard(i + 1));
-  nav.append(prev, next);
-  b.append(nav);
+  if (i === KGDATA.length - 1) {
+    const nav = el('div', 'exnav');
+    const done = el('button', 'primary big', tr('목록으로'));
+    done.onclick = drawGramList;
+    nav.append(done);
+    b.append(nav);
+  }
   show('exam', '기초 문법', true);
 }
 
@@ -2746,15 +2751,16 @@ function drawBasicCard(i) {
   });
   b.append(card);
 
-  const nav = el('div', 'exnav');
-  const prev = el('button', 'ghost big', '‹ 이전');
-  prev.disabled = i === 0;
-  prev.onclick = () => drawBasicCard(i - 1);
-  const next = el('button', 'primary big', i === KBDATA.length - 1 ? '목록으로' : '다음 ›');
-  next.onclick = () => i === KBDATA.length - 1 ? drawBasicList() : drawBasicCard(i + 1);
+  /* '‹ 이전 / 다음 ›' 단추를 뺐다 (대표님 지시) — **밀어서 넘긴다.**
+     맨 끝 장에서만 '목록으로'를 남긴다. 안 그러면 나갈 길이 없다. */
   swipeNav(b, () => i > 0 && drawBasicCard(i - 1), () => i < KBDATA.length - 1 && drawBasicCard(i + 1));
-  nav.append(prev, next);
-  b.append(nav);
+  if (i === KBDATA.length - 1) {
+    const nav = el('div', 'exnav');
+    const done = el('button', 'primary big', tr('목록으로'));
+    done.onclick = drawBasicList;
+    nav.append(done);
+    b.append(nav);
+  }
   show('exam', '기본기', true);
 }
 
@@ -2924,15 +2930,16 @@ function drawCultureCard(i) {
   });
   b.append(card);
 
-  const nav = el('div', 'exnav');
-  const prev = el('button', 'ghost big', '‹ 이전');
-  prev.disabled = i === 0;
-  prev.onclick = () => drawCultureCard(i - 1);
-  const next = el('button', 'primary big', i === KCDATA.length - 1 ? '목록으로' : '다음 ›');
-  next.onclick = () => i === KCDATA.length - 1 ? drawCultureList() : drawCultureCard(i + 1);
+  /* '‹ 이전 / 다음 ›' 단추를 뺐다 (대표님 지시) — **밀어서 넘긴다.**
+     맨 끝 장에서만 '목록으로'를 남긴다. 안 그러면 나갈 길이 없다. */
   swipeNav(b, () => i > 0 && drawCultureCard(i - 1), () => i < KCDATA.length - 1 && drawCultureCard(i + 1));
-  nav.append(prev, next);
-  b.append(nav);
+  if (i === KCDATA.length - 1) {
+    const nav = el('div', 'exnav');
+    const done = el('button', 'primary big', tr('목록으로'));
+    done.onclick = drawCultureList;
+    nav.append(done);
+    b.append(nav);
+  }
   show('exam', '한국 문화', true);
 }
 
@@ -3112,19 +3119,19 @@ function drawDayCard(i) {
   mcard.append(el('div', 'gexp vi', esc(d.mission.vi)));
   b.append(mcard);
 
-  const nav = el('div', 'exnav');
-  const prev = el('button', 'ghost big', '‹ 이전');
-  prev.disabled = i === 0;
-  prev.onclick = () => drawDayCard(i - 1);
+  /* '‹ 이전 / 다음 ›' 을 뺐다 (대표님 지시) — **밀어서 넘긴다.** */
   const qz = el('button', 'primary big', '✍️ ' + tr('오늘 확인 문제'));
   qz.style.width = '100%'; qz.style.marginTop = '6px';
   qz.onclick = () => startExam(koDayQuiz(d));
   b.append(qz);
 
-  const next = el('button', 'ghost big', i === KDDATA.length - 1 ? '목록으로' : '다음 ›');
-  next.onclick = () => i === KDDATA.length - 1 ? drawDayList() : drawDayCard(i + 1);
   swipeNav(b, () => i > 0 && drawDayCard(i - 1), () => i < KDDATA.length - 1 && drawDayCard(i + 1));
-  nav.append(prev, next);
+  const nav = el('div', 'exnav');
+  if (i === KDDATA.length - 1) {
+    const done = el('button', 'ghost big', tr('목록으로'));
+    done.onclick = drawDayList;
+    nav.append(done);
+  }
   b.append(nav);
   show('exam', `Day ${d.day}`, true);
 }
@@ -4586,11 +4593,6 @@ function renderDays(track) {
              el('span', 'st', done ? '완료 ✔' : (d.words || []).length + '단어 + 대화'));
     b.onclick = () => { dive(() => renderDays(track)); startLearn(d); };
     const li = el('li'); li.append(b);
-    if (done) {
-      const u = el('button', 'ghost sm undo', '미완으로');
-      u.onclick = () => { delete S.done[d.day]; LEARNT = null; save(); renderDays(track); };
-      li.append(u);
-    }
     return li;
   };
 
@@ -4992,9 +4994,12 @@ function globalBoard(span) {
   const box = el('div', 'crclub');
   if (!GRANK) { box.append(el('p', 'note', tr('불러오는 중…'))); return box; }
   const b = GRANK[span === 'month' ? 'month' : 'week'];
+  /* 사람이 적어도 **있는 만큼 바로 세운다** (대표님 지시: 수가 부족하다고 하지 마라).
+     한 명이면 한 명만 나온다 — 그게 사실이고, 기다리라는 말보다 낫다. */
   if (!b || !b.top || !b.top.length) {
-    box.append(el('p', 'note', GRANK.off ? tr('순위 서버에 못 닿았습니다 — 잠시 뒤 다시 열어 보세요.')
-      : tr('아직 줄을 세울 만큼 사람이 없습니다.')));
+    box.append(el('p', 'note', GRANK.off
+      ? tr('순위 서버에 못 닿았습니다 — 잠시 뒤 다시 열어 보세요.')
+      : tr('오늘 공부하면 줄에 섭니다.')));
     return box;
   }
   const me = (S.nick || '').trim();
@@ -5003,7 +5008,7 @@ function globalBoard(span) {
   if (b.rank > TOP_N) {
     box.append(el('p', 'note', tr('내 자리는 N위입니다 — 나만 보입니다.').replace('N', b.rank)));
   } else if (!b.rank) {
-    box.append(el('p', 'note', tr('아직 이번 판 점수가 없습니다 — 오늘 공부하면 줄에 섭니다.')));
+    box.append(el('p', 'note', tr('오늘 공부하면 줄에 섭니다.')));
   }
   box.append(el('p', 'note', tr('앱 전체 N명 가운데').replace('N', b.total)));
   return box;
@@ -5132,12 +5137,11 @@ function drawCredit() {
       .then(r => { CLRANK = r; drawCredit(); })
       .catch(() => { CLRANK = { clubs: [] }; drawCredit(); });
   } else {
-    host.append(globalBoard(RKP.span));                 // 개인 순위 = 앱 전체
+    /* 개인 순위는 **앱 전체 사람 중에서**다 (대표님 지시).
+       아래에 '우리 동아리 안에서'를 또 붙이던 것을 뺐다 — 그게 붙어 있으면
+       어느 쪽이 진짜 내 등수인지 헷갈리고, 동아리가 셋뿐이라 방 안 겨루기가 된다. */
+    host.append(globalBoard(RKP.span));
     if (!GRANK) loadGRank(drawCredit);
-    if (ppl.length) {
-      host.append(el('div', 'crct', tr('우리 동아리 안에서')));
-      host.append(rankBoard(ppl, useSpan));
-    }
   }
 
   // ── 3. 지난주의 나 (순위와 별개로, 내 흐름은 내가 본다)
@@ -5150,24 +5154,6 @@ function drawCredit() {
   cmp.append(el('span', 'crdiff' + (diff >= 0 ? ' up' : ''),
                 (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(diff)));
   host.append(cmp);
-  const mo = el('p', 'note');
-  mo.innerHTML = tr('최근 한 달 점수 <b>N점</b> — 최근 주에 더 무게를 줍니다(이번 주 1.0 · 1주 전 0.7 · 2주 전 0.5 · 3주 전 0.3).')
-    .replace('N', monthCredits());
-  host.append(mo);
-
-  // ── 4. 동아리 합계
-  if (ppl.length) {
-    const dots = ppl.reduce((a, m) => a + (m.days || []).filter(Boolean).length, 0);
-    const memo = ppl.reduce((a, m) => a + (m.memo || 0), 0);
-    const box = el('div', 'crclub');
-    box.append(el('div', 'crct', tr('우리 동아리, 이번 주 다 같이')));
-    const g = el('div', 'crgrid');
-    const cell = (n, k) => { const x = el('div', 'crcell');
-      x.append(el('b', null, String(n)), el('span', null, tr(k))); return x; };
-    g.append(cell(ppl.length, '명'), cell(dots, '출석 도장'), cell(memo, '외운 단어'));
-    box.append(g);
-    host.append(box);
-  }
 
   // ── 5. 점수 버는 법
   host.append(el('h3', 'exhead', tr('점수 올리는 법')));
@@ -5181,7 +5167,6 @@ function drawCredit() {
     table.append(r);
   });
   host.append(table);
-  host.append(el('p', 'note', '점수는 <b>효과크기 × 걸리는 시간</b>으로 정했습니다 — 연구가 잰 "얼마나 남는가"에 그 활동에 드는 시간을 곱한 값입니다. 그래서 점수를 좇는 것과 실제로 느는 것이 같은 방향이 됩니다.'));
 
   // ── 6. 점수(AI 채점 몫)는 순위와 다른 숫자라 따로 떼어 놓는다
   const wal = el('div', 'crwallet');
@@ -5363,7 +5348,7 @@ function drawCard() {
       const bn = el('button', 'ghost', '북부 소리');
       bn.onclick = () => play(x.vi, false, S.voice);
       const bs = el('button', 'ghost', '남부 소리');
-      bs.onclick = () => play(x.vi, false, 'sf');
+      bs.onclick = () => play(x.vi, false, S.voice === 'm' ? 'sm' : 'sf');
       cmp.append(bn, bs);
       c.append(cmp);
     }
@@ -6543,11 +6528,6 @@ function drawSenior() {
              el('span', 'st', done ? tr('완료 ✔') : tr('보기')));
     b.onclick = () => { dive(drawSenior); drawSeniorSet(t); };
     const li = el('li'); li.append(b);
-    if (done) {
-      const u = el('button', 'ghost sm undo', tr('미완으로'));
-      u.onclick = () => { delete sdone()[k]; save(); drawSenior(); };
-      li.append(u);
-    }
     list.append(li);
   });
   show('course', '실전 단어', true);
@@ -7710,11 +7690,19 @@ function sound(t, slow) {
   if (AIDX[t]) { play(t, !!slow); return; }
   speakVi(t, false, slow ? .55 : 0);
 }
-function speakVi(t, retry, rate) {
-  if (AIDX[t]) { play(t, false, tchDir()); return; }   // 우리 음원이 있으면 그게 낫다 (선생님 성별·지역으로)
+/* 목소리는 **대표님이 고른 것 하나**로 (대표님 지적, 2026-08-29).
+   전에는 기본이 메신저 쌤 성별(S.tch)이었다. 그래서 같은 문장 안에서도
+   녹음이 있는 낱말은 고른 목소리로, 없는 낱말은 쌤 목소리로 나서 남녀가 오갔다.
+   메신저에서만 쌤 목소리를 쓰고(who='m'/'f' 를 넘긴다), 나머지는 고른 목소리다. */
+function speakVi(t, retry, rate, who) {
+  const g = who === 'm' || who === 'f' ? who : (S.voice === 'm' ? 'm' : 'f');
+  if (AIDX[t]) {                                       // 우리 음원이 있으면 그게 낫다
+    play(t, false, S.region === 's' ? (g === 'm' ? 'sm' : 'sf') : g);
+    return;
+  }
   const u = new SpeechSynthesisUtterance(t);
   const vs = viVoices();
-  const male = (S.tch || 'f') === 'm';
+  const male = g === 'm';
   // 폰마다 목소리 이름이 다르다 — 이름으로 남녀를 찾고, 못 찾으면 높낮이로 흉내 낸다
   const M = /male|nam\b|vim|minh|_m|-m\b/i, F = /female|linh|hoai|my|vif|_f|-f\b/i;
   const pick = vs.find(v => (male ? M : F).test(v.name || ''));
@@ -7727,7 +7715,7 @@ function speakVi(t, retry, rate) {
   u.onend = u.onerror = () => $('#tch').classList.remove('talk');
   speechSynthesis.cancel(); speechSynthesis.speak(u);
   // 크롬·사파리에서 첫 호출이 조용히 씹히는 일이 있다 — 안 시작하면 한 번만 다시
-  if (!retry) setTimeout(() => { if (!started) speakVi(t, true, rate); }, 450);
+  if (!retry) setTimeout(() => { if (!started) speakVi(t, true, rate, who); }, 450);
 }
 
 /* ---------- AI 선생님 캐릭터 ----------
@@ -7783,15 +7771,15 @@ function aiBubble(text) {
               el('b', null, esc(vi)));
     if (kr) sb.append(el('span', 'csaykr', '[' + esc(kr) + ']'));
     const pb = el('button', 'ghost sm', '들어보기');
-    pb.onclick = () => speakVi(vi);
+    pb.onclick = () => speakVi(vi, false, 0, S.tch);
     sb.append(pb);
     b.append(sb);
   }
   if (m.NEW) b.append(el('div', 'cnew', '＋ 새 단어 · ' + esc(m.NEW)));
   if (m.REAL) b.append(el('div', 'creal', '💬 현지에서는 · ' + esc(m.REAL)));
-  speakVi(m.VI);                       // 오면 바로 읽어준다 (입도 같이 움직인다)
+  speakVi(m.VI, false, 0, S.tch);      // 오면 바로 읽어준다 (메신저는 쌤 목소리)
   const bt = el('button', 'ghost sm', '다시 듣기');
-  bt.onclick = () => speakVi(m.VI);
+  bt.onclick = () => speakVi(m.VI, false, 0, S.tch);
   b.append(bt);
   // VOICES 가 null 이면 아직 목록을 못 받은 것이다 — 그때는 없다고 단정하지 않는다
   if (!AIDX[m.VI] && VOICES && !viVoice() && !S.novoice) {   // 한 번만 알린다
@@ -7879,7 +7867,7 @@ function kbGuide() {
                el('span', 'kbm', esc(made)), el('span', 'kbko', esc(ko)));
       const say = el('button', 'ibtn slow', ICON.slow);
       say.type = 'button'; say.title = '들어 보기';
-      say.onclick = () => speakVi(made);
+      say.onclick = () => speakVi(made, false, 0, S.tch);
       r.append(say);
       t.append(r);
     });
