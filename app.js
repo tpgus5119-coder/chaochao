@@ -493,6 +493,7 @@ const UIVI = {
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
   '실전 단어 복습': 'Ôn từ vựng thực chiến',
+  '익힌 낱말': 'Từ đã luyện',
   '초록 = 앱에서 이미 배운 말': 'Xanh lá = từ đã học trong ứng dụng',
   '하루 5분 복습과 섞이지 않습니다': 'Không trộn với phần ôn tập 5 phút mỗi ngày',
   '이 회차 시험 보기': 'Làm bài thi đợt này',
@@ -6509,6 +6510,8 @@ function drawSenior() {
   // 머리말은 뺐다 (2026-08-29, 대표님 지시) — 목록 위에 설명이 길게 붙어 있으면 눈이 먼저 지친다.
   const rev = el('li', 'catpick');
   const due = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
+  const all = SENIOR.words.length, met = Object.keys(S.ssrs || {}).length;
+  rev.append(el('span', 'msub', tr('익힌 낱말') + ' ' + met + '/' + all + '  ·  '));
   const rb = el('button', 'primary sm', tr('실전 단어 복습') + (due ? ' (' + due + ')' : ''));
   /* 복습은 **기존 틀 그대로** 쓴다 (대표님 지시): 랜덤 · 말하기 · 듣기 · 읽기 · 쓰기 · 3분 · 오답노트.
      따로 만들면 화면이 둘로 갈라지고, 한쪽만 고쳐지는 일이 생긴다. */
@@ -6517,15 +6520,22 @@ function drawSenior() {
   rev.append(el('span', 'msub', tr('하루 5분 복습과 섞이지 않습니다')));
   list.append(rev);
 
+  /* 진행이 **보여야** 한다 (대표님 지적, 2026-08-29).
+     전에는 서른 문제를 다 끝내야만 '완료'가 떴다. 열 개쯤 풀고 나가면 아무 표시가 없어
+     '아예 진행이 안 된다'로 보였다. 이제 회차마다 **몇 개를 익혔는지** 적는다.
+     기준은 복습 창고(S.ssrs)에 들어간 낱말 수다 — 한 번이라도 답한 것. */
+  const box = S.ssrs || {};
   SENIOR.sets.forEach(t => {
     const k = skey(t), done = !!sdone()[k];
     const ni = t.w.filter(i => SENIOR.words[i][2] & 1).length;
+    const got = t.w.filter(i => box[SENIOR.words[i][0]]).length;
     const b = el('button');
     b.dataset.done = done ? '1' : '0';
     b.append(el('span', 'num', SKIND[t.k] + ' ' + t.no),
              el('span', 'nm', t.w.length + tr('낱말') +
                 (ni ? '<i class="catchip">' + tr('중요') + ' ' + ni + '</i>' : '')),
-             el('span', 'st', done ? tr('완료 ✔') : tr('보기')));
+             el('span', 'st', done ? tr('완료 ✔')
+                : got ? got + '/' + t.w.length : tr('보기')));
     b.onclick = () => { dive(drawSenior); drawSeniorSet(t); };
     const li = el('li'); li.append(b);
     list.append(li);
