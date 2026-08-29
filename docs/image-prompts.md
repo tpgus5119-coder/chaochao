@@ -155,7 +155,7 @@
 > a person speaking with a speech bubble, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d05-nghe.webp** · 듣다 (nghe)
-> a person cupping a hand behind the ear to listen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a single large human ear seen from the side, filling most of the frame, with three curved sound wave arcs coming toward it from the left, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d05-lai.webp** · 다시 (lại)
 > a circular repeat arrow going around, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters

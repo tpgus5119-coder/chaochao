@@ -390,6 +390,77 @@ def question_mark(path, col=(58, 68, 64)):
 
 # x-nao(어느)·x-the-nao(어떻다)는 x-gi(무엇)의 말풍선 물음표를 **같이 쓴다** (대표님 지시).
 # x-gi 는 손대지 않는다 — 이미 좋은 그림이다. question_mark 는 이제 안 쓰지만 남겨 둔다.
+def bars(path, hi):
+    """정도를 나타내는 막대 — **한 칸만 색을 넣는다** (대표님 지시, 2026-08-29).
+
+    hi='max' 면 가장 높은 칸에, hi='min' 이면 가장 낮은 칸에 색을 넣는다.
+    나머지는 모두 같은 회색이다. 전에는 네 칸이 다 다른 색이라 **무엇을 가리키는지**
+    가 안 보였다. 색은 뜻을 나르는 자리에만 쓴다.
+    '매우(rất)'와 '조금(một chút)'이 같은 그림에 색만 다른 짝이 되게 했다 —
+    두 낱말이 같은 잣대의 양 끝이라는 것이 한눈에 보인다."""
+    im = Image.new('RGB', (S, S), BG)
+    big = Image.new('RGB', (S * 3, S * 3), BG)
+    dr = ImageDraw.Draw(big)
+    W = S * 3
+    n, gap = 4, W * 0.035
+    bw = (W * 0.52 - gap * (n - 1)) / n
+    x0, base = W * 0.24, W * 0.72
+    heights = [0.13, 0.22, 0.31, 0.40]
+    pick = n - 1 if hi == 'max' else 0
+    ON, OFF = (94, 178, 166), (214, 219, 215)
+    for i, h in enumerate(heights):
+        x, top = x0 + i * (bw + gap), base - W * h
+        dr.rounded_rectangle([x, top, x + bw, base], radius=W * 0.012,
+                             fill=ON if i == pick else OFF)
+    dr.line([x0 - gap, base, x0 + n * (bw + gap), base], fill=(150, 158, 152), width=int(W * 0.008))
+    big.resize((S, S), Image.LANCZOS).save(path, 'WEBP', quality=92)
+
+
+def kr_bubble(path):
+    """한국어 — 태극과 4괘를 **말풍선 안에** (대표님 지시).
+       베트남어 그림(d05-tieng-viet)이 '국기 = 말풍선' 꼴이라 짝을 맞춘다."""
+    im = Image.new('RGB', (S, S), BG)
+    big = Image.new('RGB', (S * 3, S * 3), BG)
+    dr = ImageDraw.Draw(big)
+    W = S * 3
+    L, T, R, B = W * 0.13, W * 0.17, W * 0.87, W * 0.70
+    dr.rounded_rectangle([L, T, R, B], radius=W * 0.13, fill=(255, 255, 255),
+                         outline=(58, 68, 64), width=int(W * 0.022))
+    tx = W * 0.34                                  # 꼬리
+    dr.polygon([(tx, B - W * 0.01), (tx + W * 0.10, B - W * 0.01), (tx + W * 0.02, B + W * 0.13)],
+               fill=(255, 255, 255), outline=(58, 68, 64))
+    dr.polygon([(tx + W * 0.008, B - W * 0.03), (tx + W * 0.092, B - W * 0.03),
+                (tx + W * 0.02, B + W * 0.10)], fill=(255, 255, 255))
+    cx, cy, r = (L + R) / 2, (T + B) / 2, (B - T) * 0.30
+    dr.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(0, 71, 160))
+    dr.pieslice([cx - r, cy - r, cx + r, cy + r], 33.69 - 180, 33.69, fill=(205, 46, 58))
+    a = math.radians(33.69)
+    hx, hy = math.cos(a) * r / 2, math.sin(a) * r / 2
+    dr.ellipse([cx - hx - r / 2, cy - hy - r / 2, cx - hx + r / 2, cy - hy + r / 2], fill=(205, 46, 58))
+    dr.ellipse([cx + hx - r / 2, cy + hy - r / 2, cx + hx + r / 2, cy + hy + r / 2], fill=(0, 71, 160))
+    BARS = {'건': [1, 1, 1], '곤': [0, 0, 0], '감': [0, 1, 0], '이': [1, 0, 1]}
+    bl, bw2, gp = r * 0.75, r * 0.13, r * 0.07
+    def gua(name, ang):
+        rad = math.radians(ang)
+        ox, oy = cx + math.cos(rad) * r * 1.75, cy + math.sin(rad) * r * 1.75
+        for i, solid in enumerate(BARS[name]):
+            off = (i - 1) * (bw2 + gp)
+            px, py = ox + math.cos(rad) * off, oy + math.sin(rad) * off
+            dx, dy = -math.sin(rad), math.cos(rad)
+            def seg(t0, t1):
+                dr.polygon([(px + dx * t0 - math.cos(rad) * bw2 / 2, py + dy * t0 - math.sin(rad) * bw2 / 2),
+                            (px + dx * t1 - math.cos(rad) * bw2 / 2, py + dy * t1 - math.sin(rad) * bw2 / 2),
+                            (px + dx * t1 + math.cos(rad) * bw2 / 2, py + dy * t1 + math.sin(rad) * bw2 / 2),
+                            (px + dx * t0 + math.cos(rad) * bw2 / 2, py + dy * t0 + math.sin(rad) * bw2 / 2)],
+                           fill=(0, 0, 0))
+            if solid: seg(-bl / 2, bl / 2)
+            else: seg(-bl / 2, -bl * 0.09); seg(bl * 0.09, bl / 2)
+    gua('건', 180 + 33.69); gua('감', -33.69); gua('이', 180 - 33.69); gua('곤', 33.69)
+    big.resize((S, S), Image.LANCZOS).save(path, 'WEBP', quality=92)
+
+
+BARS_IMG = {'x-rat': 'max', 'x-mot-chut': 'min'}   # 매우 · 조금
+
 SYM = {'x-khong': cross_mark}
 
 
@@ -413,8 +484,8 @@ def word_mark(path, text, col=(58, 68, 64)):
 
 
 # 기능어 — 짧은 영어 한 낱말로 (대표님 지시)
-WORDMK = {'x-va': 'and', 'x-cung': 'also', 'x-lam': 'very',
-          'd2-cua': 'of', 'x-o': 'at'}   # ~의 · ~에(있다)
+# x-lam(아주)은 x-rat(매우)의 막대를 같이 쓴다 — 같은 뜻이라 글자보다 그림이 낫다
+WORDMK = {'x-va': 'and', 'x-cung': 'also', 'd2-cua': 'of', 'x-o': 'at'}
 
 if __name__ == '__main__':
     made = 0
@@ -425,7 +496,7 @@ if __name__ == '__main__':
         if p.exists() or name == 'd03-viet-nam': flag_vn(p); made += 1
     for name in ['d03-han-quoc', 'd05-tieng-han']:
         p = IMG / f'{name}.webp'
-        if p.exists() or name == 'd03-han-quoc': flag_kr(p); made += 1
+        if name == 'd03-han-quoc': flag_kr(p); made += 1   # d05-tieng-han 은 말풍선판을 따로 그린다
     for name, how in CAL.items():
         calendar(IMG / f'{name}.webp', **how); made += 1
     for name, how in MATH.items():
@@ -439,6 +510,9 @@ if __name__ == '__main__':
         turn(IMG / f'{name}.webp', side); made += 1
     for name, fn in SYM.items():
         fn(IMG / f'{name}.webp'); made += 1
+    for name, hi in BARS_IMG.items():
+        bars(IMG / f'{name}.webp', hi); made += 1
+    kr_bubble(IMG / 'd05-tieng-han.webp'); made += 1
     for name, txt in WORDMK.items():
         word_mark(IMG / f'{name}.webp', txt); made += 1
     print(f'직접 그린 그림 {made}장')
