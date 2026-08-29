@@ -2455,7 +2455,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
   /* 문화는 **한 권**으로 모았다 (대표님 지시, 2026-08-30).
      전에는 세트 표지에 한 조각씩 붙어 있었다 — 읽고 싶을 때 찾아갈 길이 없었다. */
   cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
-                                      ['베트남 바로알기', () => startCulture()]] },
+                                      ['베트남 바로알기', knowEntry]] },
   book:  { name: '단어장', items: () => [['보기', wordbookEntry]] },
   cred:  { name: '순위', items: () => [['보기', creditEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
@@ -4840,6 +4840,46 @@ const ckey = (vi, ui, ci) => 'C' + vi + '.' + ui + '.' + ci;
    한 기수에만 나온 말은 그 해 교재 사정일 수 있지만, 두 해 넘게 나온 말은
    그 과정의 뼈대다. 급하면 이 길만 걸어도 된다. */
 let CORE = null;
+
+/* ---------- 7권 베트남 바로알기 ----------
+   교육기관 강의자료 12강을 요약해 담았다. 한 강 = 요약 + 낱말 20 + 문장 4.
+   외우는 자리가 아니라 **알고 가는 자리**라 복습 창고에는 넣지 않는다. */
+let KNOW = null;
+function knowEntry() {
+  if (KNOW) return drawKnow();
+  const list = $('#dayList'); list.textContent = '';
+  list.append(el('li', 'catpick', tr('불러오는 중…')));
+  show('course', '베트남 바로알기', true);
+  fetch('data/know.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { KNOW = j; drawKnow(); })
+    .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
+}
+function drawKnow() {
+  const list = $('#dayList'); list.textContent = '';
+  const h = el('li', 'catpick');
+  h.append(el('span', 'msub', tr('강의자료 12강 · 강마다 낱말 20개와 문장 4개')));
+  list.append(h);
+  KNOW.lec.forEach((x, i) => {
+    const k = 'N' + x.no, fin = !!S.done[k];
+    const b = el('button');
+    b.dataset.done = fin ? '1' : '0';
+    b.append(el('span', 'num', x.no + tr('강')), el('span', 'nm', esc(x.t)),
+             el('span', 'st', fin ? tr('완료 ✔') : tr('보기')));
+    b.onclick = () => { dive(drawKnow); startKnow(i); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  show('course', '베트남 바로알기', true);
+}
+function startKnow(i) {
+  const x = KNOW.lec[i];
+  const items = [{ k: 'know', d: x }];
+  x.words.forEach(w => items.push({ k: 'word', d: w }));
+  x.sents.forEach(t => items.push({ k: 'ksent', d: t }));
+  L = { day: { day: 'N' + x.no, theme: x.t, know: 1 }, i: 0, items };
+  drawCard();
+  show('learn', x.no + '강 · ' + x.t, true);
+}
+
 function coreEntry() {
   if (COURSE) return drawCore();
   courseEntryThen(drawCore);
@@ -4925,9 +4965,22 @@ function drawCourse() {
   const c7 = el('button');
   c7.append(el('span', 'num', '7권'), el('span', 'nm', tr('문화 · 베트남 바로알기')),
             el('span', 'st', tr('보기')));
-  c7.onclick = () => { dive(drawCourse); startCulture(); };
+  c7.onclick = () => { dive(drawCourse); draw7(); };
   const li7 = el('li'); li7.append(c7); list.append(li7);
   show('course', '과정', true);
+}
+
+/* 7권은 두 갈래다 — 짧은 문화 조각(59개)과 강의자료 12강. */
+function draw7() {
+  const list = $('#dayList'); list.textContent = '';
+  [[tr('베트남 문화'), '59', startCulture], [tr('베트남 바로알기'), '12', knowEntry]]
+    .forEach(([nm, n, fn]) => {
+      const b = el('button');
+      b.append(el('span', 'nm', nm + '<i class="catchip">' + n + '</i>'), el('span', 'st', tr('보기')));
+      b.onclick = () => { dive(draw7); fn(); };
+      const li = el('li'); li.append(b); list.append(li);
+    });
+  show('course', '7권 · 문화와 베트남 바로알기', true);
 }
 
 function drawVol(vi) {
@@ -5558,6 +5611,26 @@ function drawCard() {
     c.append(speakRow(x.vi, true));         // 듣기·느리게 + 따라 말하기 + 곡선 비교
   }
 
+  if (it.k === 'know') {
+    c.append(el('div', 'gramt', esc(x.t)));
+    const ul = el('div', 'knowsum');
+    x.sum.forEach(t => ul.append(el('p', 'knowli', t)));
+    c.append(ul);
+    c.append(el('p', 'note', tr('밀어서 넘기면 이 강의 낱말 20개와 문장 4개가 나옵니다.')));
+  }
+
+  if (it.k === 'ksent') {
+    const box = el('div', 'wex');
+    const top = el('div', 'wextop');
+    const all = iconBtn('sound', '문장 전체 듣기', () => speakVi(x.vi));
+    all.classList.add('wexall'); top.append(all);
+    box.append(top);
+    box.append(tapLine(x.vi, 'wexvi tapline'));
+    box.append(el('div', 'wexko', esc(x.ko)));
+    box.append(el('div', 'wexkr', '[' + esc(S.region === 's' ? (x.krs || x.kr) : x.kr) + ']'));
+    c.append(box);
+  }
+
   if (it.k === 'gram') {
     c.append(el('div', 'gramt', esc(x.t)));
     c.append(el('div', 'gramk', esc(x.k)));
@@ -5738,7 +5811,7 @@ function drawCard() {
      마지막 장의 단추는 '다음'이 아니라 진도를 확정하는 자리라 남긴다. */
   const last = L.i === L.items.length - 1;
   $('#next').hidden = !last;
-  $('#next').textContent = L.cult || L.day.gram ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
+  $('#next').textContent = L.cult || L.day.gram || L.day.know ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
     : L.day.day === 'P1' || L.day.day === 'P2' ? '귀로 구별하기 ›' : '완료 ›';
 }
@@ -5748,7 +5821,7 @@ $('#next').onclick = () => {
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
   if (L.cult) { renderHome(); return; }
-  if (L.day.gram) { S.done[L.day.day] = now(); save(); renderHome(); return; }
+  if (L.day.gram || L.day.know) { S.done[L.day.day] = now(); save(); renderHome(); return; }
   if (L.news) {                        // 기사 세트 — 대화 두 줄을 보고 끝. 채점도 복습도 없다
     if (!L.dlg && L.day.dialog) { L.items = [{ k: 'dialog', d: L.day.dialog }]; L.i = 0; L.dlg = true;
                                   drawCard(); show('learn', L.day.theme, true); return; }

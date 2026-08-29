@@ -1591,3 +1591,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   border:1px dashed var(--line); background:var(--card); color:var(--muted);
   font-size:.88rem; font-weight:600}
 .wex .wexkr{margin-top:2px; color:var(--muted); font-size:.82rem}
+
+/* 7권 베트남 바로알기 — 요약 카드 */
+.knowsum{margin:10px 0; display:flex; flex-direction:column; gap:10px}
+.knowli{margin:0; padding:10px 12px; border-radius:10px; line-height:1.65;
+  border:1px solid var(--line); background:var(--card)}
