@@ -81,7 +81,7 @@ def clean(words):
         out.append((vi, ko))
     return out
 
-daily, weekly, extra = [], [], []
+daily, weekly = [], []
 for st in load("_senior_words.json"):
     ws = clean(st["words"])
     if len(ws) < 5:
@@ -94,8 +94,12 @@ for st in load("_senior_words.json"):
             if c: daily.append((st["no"], c))
     elif st["kind"] == "주간":
         weekly.append((st["no"], ws))
-    else:
-        extra.append(ws)                  # 모음 — 시험지가 아니라 그 기수의 낱말장 전체
+    # `4권 베트남어 교재_단어.xlsx` 는 담지 않는다 (2026-08-29, 대표님 지시).
+    # 시험지가 아니라 **시판 교재의 단어장**을 가나다순 그대로 옮긴 파일이다.
+    #   ① 유료 앱에 시판 교재의 목록을 순서까지 그대로 싣는 것은 위험하다
+    #   ② "1년 과정이 실제로 시험 본 낱말" 이라는 명분이 깨진다 — 시험에 안 나온 말이다
+    #   ③ 가나다순 30개 묶음은 학습 단위가 못 된다(모음 1 = A로 시작하는 말 30개)
+    # 원본 파일은 그대로 두므로 필요하면 되살릴 수 있다.
 daily.sort(key=lambda x: x[0])
 weekly.sort(key=lambda x: x[0])
 
@@ -110,25 +114,6 @@ while wi < len(weekly):                   # 남은 주간시험은 뒤에 이어
     wi += 1
     raw.append({"k": "w", "no": wi, "ws": weekly[wi - 1][1]})
 
-# 모음 — 시험지에 안 실린 낱말이 여기 있다. 빠뜨리면 722개가 통째로 사라진다
-#    (실제로 한 번 빠뜨렸다, 2026-08-29 대표님 지적). 시험지에 이미 나온 말은 빼고
-#    남은 것만 30개씩 끊어 뒤에 붙인다 — 앞의 회차들과 같은 크기여야 규칙적이다.
-seen_all = {low(v) for r in raw for v, _ in r["ws"]}
-rest = []
-for ws in extra:
-    for v, k in ws:
-        if low(v) not in seen_all:
-            seen_all.add(low(v))
-            rest.append((v, k))
-# 꼬리가 짧으면 앞 조각에 붙인다 — 낱말을 **한 개도 버리지 않는다.**
-# (전에 5개 미만이라고 버렸다가 두 개가 사라졌다, 2026-08-29 검산에서 잡음)
-mo = [rest[k:k + PER] for k in range(0, len(rest), PER)]
-if len(mo) > 1 and len(mo[-1]) < 5:
-    tail = mo.pop(); mo[-1] += tail
-for n, ws in enumerate(mo, 1):
-    if ws:
-        raw.append({"k": "x", "no": n, "ws": ws})
-
 # ── 낱말 한 벌 + 번호로 가리키기
 words, idx, sets = [], {}, []
 for r in raw:
@@ -141,7 +126,7 @@ for r in raw:
         ns.append(idx[k])
     sets.append({"k": r["k"], "no": r["no"], "w": ns})
 
-out = {"note": "GYBM 20기가 실제로 본 시험 낱말. 하루 30낱말 · 다섯 번마다 주간시험. "
+out = {"note": "20기가 1년 동안 실제로 시험 본 낱말만. 하루 30낱말 · 다섯 번마다 주간시험. "
                "표 t: 1=19기에도 나옴(중요) · 2=앱에서 이미 배움 · 3=둘 다.",
        "words": words, "sets": sets}
 p = D / "senior.json"
@@ -149,15 +134,15 @@ p.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encodin
 # ── 검산 — 숫자를 눈으로 믿지 않는다 (2026-08-29 대표님 지적 뒤에 박아 둠)
 #    두 번 틀렸다: ① 모음 묶음을 통째로 빠뜨려 722개가 사라졌고
 #                 ② 꼬리 조각을 버려 2개가 더 사라졌다. 둘 다 화면에는 안 보였다.
-src20 = {low(w["vi"]) for st in load("_senior_words.json") for w in st["words"]
-         if (w.get("vi") or "").strip() and (w.get("ko") or "").strip()}
+src20 = {low(w["vi"]) for st in load("_senior_words.json") if st["kind"] in ("일일", "주간")
+         for w in st["words"] if (w.get("vi") or "").strip() and (w.get("ko") or "").strip()}
 got = {low(w[0]) for w in words}
 gotimp = {low(w[0]) for w in words if w[2] & 1}
 lost = src20 - got
-assert not lost, f"낱말 {len(lost)}개를 빠뜨렸다: {sorted(lost)[:8]}"
+assert not lost, f"시험에 나온 낱말 {len(lost)}개를 빠뜨렸다: {sorted(lost)[:8]}"
 want = src20 & vi19
 assert gotimp == want, f"「중요」가 안 맞는다 — 있어야 {len(want)}, 붙은 것 {len(gotimp)}"
-print(f"검산 통과 — 20기 낱말 {len(got)}개 모두 담김 · 「중요」 {len(gotimp)}개 = 19기와 겹치는 말 그대로")
+print(f"검산 통과 — 20기가 **시험 본** 낱말 {len(got)}개 모두 담김 · 「중요」 {len(gotimp)}개 = 19기와 겹치는 말 그대로")
 
 imp = sum(1 for w in words if w[2] & 1)
 kno = sum(1 for w in words if w[2] & 2)
