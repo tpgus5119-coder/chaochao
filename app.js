@@ -4856,12 +4856,11 @@ function drawCourse() {
   top.append(el('span', 'msub', tr('한 강 15낱말 · 복습은 따로 있습니다')));
   list.append(top);
   /* 1권과 7권은 낱말이 아니라 규칙과 이야기다 — 같은 줄에 두되 가는 곳이 다르다 */
-  [['📗 1권 기본기·문법', gramEntry], ].forEach(([nm, fn]) => {
-    const b = el('button');
-    b.append(el('span', 'num', '1권'), el('span', 'nm', nm.slice(3)), el('span', 'st', tr('보기')));
-    b.onclick = () => { dive(drawCourse); fn(); };
-    const li = el('li'); li.append(b); list.append(li);
-  });
+  const c1 = el('button');
+  c1.append(el('span', 'num', '1권'), el('span', 'nm', tr('기본기 · 문법') +
+            '<i class="catchip">' + tr('문법') + ' 175</i>'), el('span', 'st', tr('보기')));
+  c1.onclick = () => { dive(drawCourse); gramEntry(); };
+  const li1 = el('li'); li1.append(c1); list.append(li1);
   COURSE.vols.forEach((v, vi) => {
     const [n, all] = volDone(vi);
     const b = el('button');

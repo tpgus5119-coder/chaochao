@@ -48,6 +48,9 @@ def norm_sent(t):
 def main():
     toc = json.loads((R / "data" / "_toc.json").read_text(encoding="utf-8"))
     ex, sents = app_extras()
+    # AI 가 만든 예문 — 앱 대화에 없는 낱말을 메운다 (tools/gen_examples.py)
+    exf = R / "data" / "_examples.json"
+    made = json.loads(exf.read_text(encoding="utf-8")) if exf.exists() else {}
     holds = [norm_sent(s["vi"]) for s in sents]
     used = set()
 
@@ -75,8 +78,12 @@ def main():
                 e = example(vi)
                 if e:
                     w["ex"] = {"vi": e["vi"], "ko": e["ko"],
-                               "kr": e["kr"] or vi_kr.word(e["vi"])}
-                    stat["예문 있음"] += 1
+                               "kr": e["kr"] or vi_kr.word(e["vi"]),
+                               "krs": vi_kr.word(e["vi"], True)}
+                    stat["예문 — 앱 대화에서"] += 1
+                elif k in made:
+                    w["ex"] = made[k]
+                    stat["예문 — 새로 만든 것"] += 1
                 else: stat["예문 없음"] += 1
                 if w.get("img"): stat["그림 있음"] += 1
                 ws.append(w)
