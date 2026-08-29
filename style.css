@@ -1576,3 +1576,11 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   font-size:.72em; font-style:normal; font-weight:700; letter-spacing:.02em;
   padding:.08em .45em .12em; border-radius:999px; vertical-align:middle;
   border:1px solid var(--line); background:var(--card); color:var(--muted)}
+
+/* 예문 — 통째 단추에서 낱말마다 누르는 줄로 (2026-08-30) */
+.wex{margin-top:12px; padding:10px 12px; border-radius:12px;
+  border:1px solid var(--line); background:var(--card)}
+.wex .wextop{display:flex; justify-content:flex-end; margin-bottom:2px}
+.wex .wexvi{font-size:1.05rem; line-height:1.9}
+.wex .wexko{margin-top:4px; color:var(--muted); font-size:.9rem}
+.tapinfo .gkr{margin:0 .35em 0 .2em; color:var(--muted); font-size:.9em}

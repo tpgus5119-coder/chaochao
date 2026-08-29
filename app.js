@@ -2445,6 +2445,10 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
             ['호칭', () => startRule(0)], ['어순', () => startRule(1)], ['숫자 읽는 법', () => startRule(5)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
   gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
+  /* 문화는 **한 권**으로 모았다 (대표님 지시, 2026-08-30).
+     전에는 세트 표지에 한 조각씩 붙어 있었다 — 읽고 싶을 때 찾아갈 길이 없었다. */
+  cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
+                                      ['베트남 바로알기', () => startCulture()]] },
   book:  { name: '단어장', items: () => [['보기', wordbookEntry]] },
   cred:  { name: '순위', items: () => [['보기', creditEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
@@ -4614,7 +4618,6 @@ function startLearn(d) {
   // 문장이 마무리인 이유: 외운 것을 산출(말하기)로 끝내야 하루가 완성된다.
   const items = [];
   // 설명은 책 표지처럼 맨 앞 한 장으로. 단어 화면에서는 사라져서 그림 자리를 벌어 준다.
-  const ci = cultureFor(d);
   if (d.intro) items.push({ k: 'cover', d: {
     t: label(d) + ' · ' + d.theme, b: d.intro,
     // 표지 그림은 **그 과의 표지판**(cover). 그날 낱말 그림 셋에 제목을 얹어 만든 것이라
@@ -4626,7 +4629,9 @@ function startLearn(d) {
       ? '<b>베트남어 글자를 누르면 소리가 납니다.</b> 예문 칸도 누르면 들립니다.<br>' +
         '🕐 느리게 듣기 · 🎤 따라 말하기 — 녹음하면 원어민과 높낮이를 겹쳐 보여줍니다.'
       : '',
-    cult: ci, pre: d.pre || [] } });
+    /* 문화 조각은 표지에서 뺐다 (대표님 지시, 2026-08-30) — 문화는 따로 한 권으로 모은다.
+       표지는 그 과가 무엇인지만 말하면 된다. */
+    pre: d.pre || [] } });
   (d.letters || []).forEach(x => items.push({ k: 'letter', d: x }));
   (d.tones || []).forEach(x => items.push({ k: 'tone', d: x }));
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
@@ -4700,6 +4705,15 @@ function glossOf(vi) {
    glossOf 는 뜻을 못 찾은 낱말을 버리는데(.filter), 그러면 문장 밑 뜻줄에서
    낱말이 통째로 사라져 "왜 이건 없지?" 하게 된다. 문장을 누를 수 있게 만들 때는
    빠짐없이 다 있어야 하므로 이쪽을 쓴다. */
+/* 낱말 → 한글 소리(kr_read) 찾기표. 예문 안의 낱말을 눌렀을 때
+   뜻만이 아니라 **어떻게 읽는지**도 같이 보여 주려고 만든다 (대표님 지시, 2026-08-30). */
+let GKR = null;
+function krOf(w) {
+  if (!GKR) { GKR = {}; allWords().forEach(x => { const k = x.vi.toLowerCase();
+    if (x.kr_read && !GKR[k]) GKR[k] = x.kr_read; }); }
+  return GKR[String(w).toLowerCase().replace(/[,.!?;:]/g, '').trim()];
+}
+
 function glossAll(vi, extra) {
   if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
                                                     if (!GVOC[k]) GVOC[k] = w.ko; }); }
@@ -4753,6 +4767,8 @@ function tapLine(vi, cls, o) {
         ch.title = tn.name + ' · ' + tn.ko;
         info.append(ch);
       }
+      const kr = krOf(bare);
+      if (kr) info.append(el('span', 'gkr', '[' + esc(kr) + ']'));
       info.append(document.createTextNode(t.m ? ' — ' + t.m : ' — ' + tr('아직 뜻이 없는 낱말입니다')));
     };
     line.append(w);
@@ -5393,16 +5409,19 @@ function drawCard() {
     c.append(kob);
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
     if (x.south) c.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
+    /* 예문 — 통째로 누르던 단추를 **낱말마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
+       낱말을 누르면 그 낱말만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
+       문장 전체를 듣는 길은 오른쪽 작은 단추로 남겨 둔다. */
     const exm = exampleFor(L.day, x);
     if (exm) {
-      const eb = el('button', 'wex');
-      eb.type = 'button';
+      const eb = el('div', 'wex');
       const top = el('div', 'wextop');
-      top.append(el('span', 'wexvi', esc(exm.vi)));
-      if (exm.kr) top.append(el('span', 'wexkr', '[' + esc(exm.kr) + ']'));
+      const all = iconBtn('sound', '문장 전체 듣기', () => play(exm.vi, false));
+      all.classList.add('wexall');
+      top.append(all);
       eb.append(top);
+      eb.append(tapLine(exm.vi, 'wexvi tapline'));
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
-      eb.onclick = () => play(exm.vi, false);
       c.append(eb);
     }
     c.append(curveArea(x.vi, box));
@@ -9049,6 +9068,14 @@ const CULTAT = {
   '직무 — 지게차와 안전거리': '안전은 서류가 아니라 습관',
   '직무 — 입고와 출고': '현금 대신 QR',
 };
+/* 문화 카드 한 벌 — 표지에서 뺀 조각들을 죽 넘겨 볼 수 있게. */
+function startCulture() {
+  L = { day: { day: 'CULT', theme: '베트남 문화' }, cult: 1, i: 0,
+        items: CULTURE.map(c => ({ k: 'cult', d: c })) };
+  drawCard();
+  show('learn', '베트남 문화', true);
+}
+
 const CULTBY = {};
 CULTURE.forEach(c => { CULTBY[c.t] = c; });
 const cultureFor = d =>
