@@ -90,7 +90,16 @@ export default {
             why = ((await rr.json()).error || {}).message || '';
           }
         } catch (e) { st = 0; why = String(e); }
+        /* 열쇠 **모양**도 같이 본다 — 키 자체는 안 내보낸다.
+           왜: 화면에 키가 `...uMQA` 로 가려져 있어서, 그 가려진 글자를 그대로
+           복사해 넣기 쉽다. 그러면 다섯 개가 모두 'API key not valid' 가 된다.
+           길이와 앞글자만 보면 그 실수가 그 자리에서 보인다.
+           진짜 열쇠는 `AIza` 로 시작하고 서른아홉 글자다. */
+        const k = ks[i];
         keyRows.push({ 열쇠: i + 1, 살았나: st === 200, 상태: st,
+                       글자수: k.length, AIza로시작: k.startsWith('AIza'),
+                       점이섞임: k.includes('.'),
+                       모양: k.length === 39 && k.startsWith('AIza') ? '정상' : '이상',
                        쓸수있는모델: names.length, 까닭: why.slice(0, 120) });
       }
       const have = MODELS.filter(m => seen.has(m));
