@@ -31,6 +31,13 @@ def collect(data):
             out[l["vi"]] = "sent"          # 대화 문장은 느린 버전도
         for t in d["dialog"].get("extra", []):
             out.setdefault(t["vi"] if isinstance(t, dict) else t, "ex")
+    # 실전 단어(선배 시험)도 소리를 만든다 (대표님 지시, 2026-08-29).
+    #    없으면 듣기·자판 쓰기 문제가 아예 안 나오고 '읽기' 하나로 쪼그라든다.
+    #    기기 목소리로 때울 수도 있지만, 베트남어 목소리가 없는 폰이 많다.
+    sp = ROOT / "data" / "senior.json"
+    if sp.exists():
+        for w in json.loads(sp.read_text(encoding="utf-8"))["words"]:
+            out.setdefault(w[0], "word")
     return out
 
 async def one(text, voice_id, voice_name, rate):

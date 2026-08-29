@@ -344,6 +344,36 @@ def vn_map(path, mode):
 
 VNMAP = {'x-mien': 'three', 'x-mien-bac': 'north', 'x-mien-nam': 'south', 'x-tinh': 'one'}
 
+
+# ── 기호 하나짜리 ─────────────────────────────────────────────────
+# 확산 모델은 X 와 물음표를 붓으로 문지른 것처럼 그린다(획이 굽고 굵기가 들쭉날쭉하다).
+# 뜻이 **모양 자체**인 그림은 자로 그어야 한다 (대표님 지적, 2026-08-29).
+def cross_mark(path, col=(214, 62, 74)):
+    """없다·아니다 — 굵기가 고른 곧은 X."""
+    im = Image.new('RGB', (S, S), BG)
+    big = Image.new('RGB', (S * 3, S * 3), BG)
+    dr = ImageDraw.Draw(big)
+    c, r, w = S * 3 // 2, S * 0.9, S * 0.42
+    for a, b in (((-1, -1), (1, 1)), ((-1, 1), (1, -1))):
+        dr.line([c + a[0] * r, c + a[1] * r, c + b[0] * r, c + b[1] * r], fill=col, width=int(w))
+    big.resize((S, S), Image.LANCZOS).save(path, 'WEBP', quality=92)
+
+
+def question_mark(path, col=(58, 68, 64)):
+    """어느·무엇 — 물음표 하나. 진짜 글꼴로 찍는다(모델이 그리면 늘 뭉개진다)."""
+    im = Image.new('RGB', (S, S), BG)
+    dr = ImageDraw.Draw(im)
+    f = _font(int(S * 0.72))
+    try:
+        l, t, rr, b = dr.textbbox((0, 0), '?', font=f)
+        dr.text(((S - (rr - l)) / 2 - l, (S - (b - t)) / 2 - t), '?', font=f, fill=col)
+    except Exception:
+        dr.text((S * 0.36, S * 0.12), '?', fill=col)
+    im.save(path, 'WEBP', quality=92)
+
+
+SYM = {'x-khong': cross_mark, 'x-nao': question_mark}
+
 if __name__ == '__main__':
     made = 0
     for name, n in NUM.items():
@@ -365,4 +395,6 @@ if __name__ == '__main__':
         arrow(IMG / f'{name}.webp', way); made += 1
     for name, side in TURN.items():
         turn(IMG / f'{name}.webp', side); made += 1
+    for name, fn in SYM.items():
+        fn(IMG / f'{name}.webp'); made += 1
     print(f'직접 그린 그림 {made}장')

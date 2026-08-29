@@ -15,7 +15,7 @@
 > a smiling person waving hello, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **x-xin-chao.webp** · 안녕하세요 (정중) (xin chào)
-> a speech bubble with a friendly waving hand inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person standing and bowing politely, both hands folded together resting in front of the waist, side view, full body, calm friendly face, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d01-anh.webp** · 형·오빠 (손위 남자) (anh)
 > a young man, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -36,7 +36,7 @@
 > a speech bubble with a checkmark inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d01-cam-on.webp** · 고맙습니다 (cảm ơn)
-> a person bowing slightly with both hands together in thanks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people facing each other, one handing over a small gift box and the other receiving it with a happy smile and a slight bow, full body, seen from a distance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d01-co-giao.webp** · 여자 선생님 (cô giáo)
 > a friendly female teacher holding a book, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -91,7 +91,7 @@
 > a cozy house with a person standing at the door, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **x-o.webp** · ~에 (있다) (ở)
-> a small circle inside a larger square, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a small house with one person standing in the open doorway waving, a location pin above the roof, seen from a distance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **x-ddaau.webp** · 어디 (đâu)
 > a thought bubble with a question mark and a map pin inside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -5141,7 +5141,7 @@
 > an equals sign between a photo of a person and a name badge, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d2-cua.webp** · ~의 (của)
-> a hand holding a key with an ownership tag attached, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a person standing beside their own backpack with a curved arrow pointing from the person to the backpack, full body, seen from a distance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 
 ### 베트남어 Day 6 — 헤어질 때

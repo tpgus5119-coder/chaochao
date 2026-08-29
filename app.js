@@ -5217,7 +5217,9 @@ function swipeNav(host, prev, next) {
    mode : 동아리 순위에서 합계(sum) / 한 사람 평균(avg) */
 let RKP = { who: 'me', span: 'week', mode: 'sum' };
 let WB = 'star';                       // 단어장에서 보고 있는 칸
-function wordbookEntry() { WB = 'star'; drawWordbook(); }
+/* 단어장은 **하루 5분 것만** 담는다 (대표님 지시: 섞지 마라).
+   실전 단어는 제 화면에서 회차별로 보므로 여기 섞으면 목록만 길어진다. */
+function wordbookEntry() { SBOX = 'srs'; WB = 'star'; drawWordbook(); }
 function drawWordbook() {
   const ko = learnKo();
   const host = ko ? $('#examBody') : $('#subBody');
@@ -5229,7 +5231,7 @@ function drawWordbook() {
     t.onclick = () => { WB = k; drawWordbook(); };
     return t;
   };
-  const misses = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1);
+  const misses = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1);  // 하루 5분 것만
   tabs.append(mk('star', tr('★ 내가 담은 것') + ' ' + Object.keys(starOf()).length),
               mk('miss', tr('⚠ 자주 틀린 것') + ' ' + misses.length));
   host.append(tabs);
