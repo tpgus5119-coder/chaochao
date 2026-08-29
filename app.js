@@ -491,6 +491,7 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
+  '선배': 'Khoá trước', '선배 기수가 실제로 시험 본 낱말': 'Từ các khoá trước đã thi thật',
   '실전 단어 복습': 'Ôn từ vựng thực chiến',
   '익힌 낱말': 'Từ đã luyện',
   '초록 = 앱에서 이미 배운 말': 'Xanh lá = từ đã học trong ứng dụng',
@@ -4783,6 +4784,13 @@ function toggleStar(k, ko, vi) {
   return !!st[k];
 }
 /* 별 단추 — 학습 화면 어디서든 낱말 옆에 붙인다 */
+/* 선배 별표 — 네 기수(17·18·19·20)가 실제로 시험 본 낱말이라는 표시.
+   색만으로 구분하지 않는다(테두리 + 글자 + 모양). */
+function seniorStar() {
+  const i = el('i', 'srstar', '⭐ ' + tr('선배'));
+  i.title = tr('선배 기수가 실제로 시험 본 낱말');
+  return i;
+}
 function starBtn(k, ko, vi) {
   const b = el('button', 'starb' + (isStar(k) ? ' on' : ''));
   b.type = 'button';
@@ -5372,7 +5380,12 @@ function drawCard() {
     }
     row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
     c.append(row);
-    c.append(el('div', 'ko', esc(x.ko)));
+    /* 선배 시험에 나온 낱말이면 별표 (대표님 지시, 2026-08-30).
+       한 기수에만 나왔어도 별표를 준다 — 기수 수는 안 따진다.
+       ☆/★ 단추(나만의 단어장)와 헷갈리지 않게 **모양이 다른 별**과 글자를 같이 쓴다. */
+    const kob = el('div', 'ko', esc(x.ko));
+    if (x.sr) kob.append(seniorStar());
+    c.append(kob);
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
     if (x.south) c.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     const exm = exampleFor(L.day, x);

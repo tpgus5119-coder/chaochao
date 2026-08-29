@@ -14,6 +14,7 @@ python3 tools/fill_missions.py       # 빈 미션 채움
 python3 tools/place_b9.py            # 생산현장어 8강을 직무 차례 제자리에
 # **맨 마지막에** 되돌린다 — new_dialogs 가 8.5강 대화를 옛것으로 덮어쓰기 때문이다
 python3 tools/apply_patches.py       # days.json 에만 살아 있던 사용자 지시 수정 되돌림
+python3 tools/star_mark.py           # 선배 시험에 나온 낱말에 별표(sr)
 python3 tools/hanja_attach.py        # 한자 다리
 python3 tools/gen_covers.py          # 챕터 표지
 python3 tools/gen_audio.py           # 새로 늘어난 것만 음성

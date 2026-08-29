@@ -1570,3 +1570,9 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
    손이 먼저 나간다. 색만으로 가르지 않고 테두리도 함께 준다(색각 배려, 프로젝트 규칙). */
 .danger{background:var(--bad); border-color:var(--bad); color:#fff}
 .danger.ghost{background:transparent; color:var(--bad); border:1.5px solid var(--bad)}
+
+/* 선배 별표 — 뜻 줄 끝에 붙는 작은 표. 색만으로 구분하지 않는다(테두리+글자). */
+.srstar{display:inline-flex; align-items:center; gap:.18em; margin-left:.5em;
+  font-size:.72em; font-style:normal; font-weight:700; letter-spacing:.02em;
+  padding:.08em .45em .12em; border-radius:999px; vertical-align:middle;
+  border:1px solid var(--line); background:var(--card); color:var(--muted)}
