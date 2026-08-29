@@ -1556,3 +1556,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 과 표지 — 가로로 넓은 한 장. 낱말 그림(정사각)과 달라 보여야 장이 바뀐 것이 보인다. */
 .kcover{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;
   border-radius:10px;margin:-4px 0 12px;background:var(--soft)}
+
+/* 시험 구간 표시 — 지금이 읽기인지 듣기인지 늘 보여야 한다(실제 화면과 같게) */
+.expart{font-weight:800; font-size:12.5px; letter-spacing:.02em; padding:2px 8px;
+  border-radius:999px; background:var(--soft); color:var(--accent); margin-right:8px}
+.expn:disabled{opacity:1; cursor:default}
