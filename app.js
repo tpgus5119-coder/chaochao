@@ -108,9 +108,7 @@ const UIVI = {
   '아직 겨룰 동아리가 없습니다. 동아리를 만들면 여기에 올라옵니다.':
     'Chưa có câu lạc bộ nào để so kè. Tạo một câu lạc bộ là nó sẽ xuất hiện ở đây.',
   '한 달 순위는 서버가 새 판이어야 나옵니다 — 지금은 이번 주만 줄을 세웁니다.':
-    'Bảng xếp hạng tháng cần máy chủ bản mới — hiện chỉ xếp hạng theo tuần này.',
-  '사람 순위': 'Xếp hạng cá nhân', '동아리 순위': 'Xếp hạng câu lạc bộ',
-  '동아리끼리 겨루기': 'Các câu lạc bộ so kè', '한 달 순위': 'Xếp hạng tháng',
+    'Bảng xếp hạng tháng cần máy chủ bản mới — hiện chỉ xếp hạng theo tuần này.', '동아리 순위': 'Xếp hạng câu lạc bộ', '한 달 순위': 'Xếp hạng tháng',
   '한 달': 'Tháng', '한 달 점수': 'Điểm tháng', '최근 주에 더 무게': 'Tuần gần hơn tính nặng hơn',
   '동아리 합계': 'Tổng câu lạc bộ', '한 사람 평균': 'Trung bình mỗi người',
   '찾아보기': 'Tìm quanh', '어디든': 'Bất kỳ đâu', '무엇이든': 'Bất kỳ chủ đề',
@@ -237,10 +235,8 @@ const UIVI = {
   '자주 틀리던 단어를 잡았습니다': 'Bạn đã khắc phục một từ hay sai',
   '복습을 끝내면': 'Hoàn thành ôn tập', '오늘 세트를 끝내면': 'Hoàn thành bài hôm nay',
   '그날 처음 앱을 열면': 'Mở ứng dụng lần đầu trong ngày',
-  '자주 틀리던 낱말을 하나 잡을 때마다': 'Mỗi lần khắc phục một từ hay sai',
   '모의고사 한 회를 끝내면': 'Hoàn thành một đề thi thử',
   '문법·기본기·문화 카드를 처음 볼 때마다': 'Mỗi thẻ ngữ pháp·nền tảng·văn hóa xem lần đầu',
-  '따라 말하기를 AI가 알아들으면': 'Khi AI nghe hiểu phần bạn nói theo',
   '받아쓰기·타이핑 한 판': 'Một lượt chép chính tả·gõ phím',
   '가장 높습니다 — 복습이 무너지면 나머지가 다 무너집니다':
     'Cao nhất — nếu bỏ ôn tập thì mọi thứ khác sụp theo',
@@ -501,8 +497,6 @@ const UIVI = {
     '· Máy chủ chỉ lưu <b>bản mã hóa</b> của mật khẩu — không lưu mật khẩu gốc.',
   '· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b>':
     '· Không có email nên nếu quên mật khẩu thì <b>không lấy lại được.</b>',
-  '· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.':
-    '· Tiến độ học <b>tự động lưu lên máy chủ</b> — đổi điện thoại vẫn học tiếp được.',
   '비밀번호 (8자 이상)': 'Mật khẩu (từ 8 ký tự)',
   '별명': 'Biệt danh',
   '별명 (2~10자) — 순위·동아리에 보입니다': 'Biệt danh (2~10 ký tự) — hiện ở bảng xếp hạng và câu lạc bộ',
@@ -549,11 +543,77 @@ const UIVI = {
   '듣고 손으로 써 보세요': 'Nghe và viết tay', '모르겠어요': 'Không biết',
   '원어민': 'Người bản xứ', '나': 'Tôi', '번갈아 듣기': 'Nghe lần lượt',
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
+  /* 탈퇴 · 순위 · 가입 화면 (2026-08-29 대표님 지시) */
+  '내 말 (화면에 나올 말)':
+    'Ngôn ngữ của tôi (hiện trên màn hình)',
+  '탈퇴':
+    'Xóa tài khoản',
+  '계정과 진도를 지웁니다':
+    'Xóa tài khoản và tiến độ',
+  '탈퇴하기':
+    'Xóa tài khoản',
+  '정말 떠나시겠습니까?':
+    'Bạn thực sự muốn rời đi?',
+  '계정·별명·진도가 <b>모두 지워지고 되돌릴 수 없습니다.</b> 같은 아이디를 다시 쓸 수 없습니다.':
+    'Tài khoản, biệt danh và tiến độ sẽ <b>bị xóa hoàn toàn, không thể khôi phục.</b> Bạn không thể dùng lại ID này.',
+  '떠나시는 까닭을 알려 주시면 고치겠습니다. 안 고르셔도 나가실 수 있습니다.':
+    'Cho chúng tôi biết lý do để cải thiện. Bạn vẫn rời đi được dù không chọn.',
+  '너무 어렵습니다':
+    'Quá khó',
+  '너무 쉽습니다':
+    'Quá dễ',
+  '시간이 없습니다':
+    'Không có thời gian',
+  '고장이 잦습니다':
+    'Hay bị lỗi',
+  '필요한 것이 없습니다':
+    'Không có thứ tôi cần',
+  '그 밖의 까닭':
+    'Lý do khác',
+  '더 하실 말씀 (안 쓰셔도 됩니다)':
+    'Góp ý thêm (không bắt buộc)',
+  '비밀번호를 한 번 더':
+    'Nhập lại mật khẩu',
+  '비밀번호를 적어 주세요.':
+    'Vui lòng nhập mật khẩu.',
+  '영영 지우기':
+    'Xóa vĩnh viễn',
+  '마지막 확인입니다. 지우면 되돌릴 수 없습니다.':
+    'Xác nhận lần cuối. Đã xóa thì không khôi phục được.',
+  '개인 순위':
+    'Xếp hạng cá nhân',
+  '동아리 한 달 순위':
+    'Xếp hạng câu lạc bộ tháng',
+  '동아리 이번 주 순위':
+    'Xếp hạng câu lạc bộ tuần này',
+  '내 자리는 N위입니다 — 나만 보입니다.':
+    'Bạn đang ở hạng N — chỉ mình bạn thấy.',
+  '우리 동아리는 N위입니다 — 나만 보입니다.':
+    'Câu lạc bộ của bạn ở hạng N — chỉ mình bạn thấy.',
+  '아직 동아리 순위가 없습니다.':
+    'Chưa có xếp hạng câu lạc bộ.',
+  '발음과 높낮이 모두 통과':
+    'Đạt cả phát âm và thanh điệu',
+  '따라 말하기에서 발음과 높낮이가 모두 통과되면':
+    'Khi nói theo đạt cả phát âm và thanh điệu',
+  '둘 중 하나만 맞아서는 안 됩니다':
+    'Chỉ đúng một trong hai thì chưa được',
+  '자주 틀리던 낱말을 하나 외울 때마다':
+    'Mỗi khi thuộc được một từ hay sai',
+  '틀린 것을 고친 순간이 가장 값집니다':
+    'Khoảnh khắc sửa được lỗi là quý nhất',
 };
 /* 화면 글을 베트남어로 바꾼다.
    'dev' 는 만드는 사람용 — 베트남어 뒤에 한국어 원문을 ⟨ ⟩ 로 같이 붙인다.
    태그(<span>)가 아니라 그냥 글자로 붙이는 이유: 이 함수의 결과가
    innerHTML 로도 가고 textContent 로도 가기 때문이다. 태그를 쓰면 한쪽에서 글자로 새어 나온다. */
+/* 만든 사람 아이디 — 개발용 칸('나란히')은 이 아이디로 들어왔을 때만 보인다.
+   막는 장치가 아니라 **화면을 깨끗하게 두려는 것**이다: 손님이 개발용 칸을 눌러
+   글자가 겹쳐 나오면 앱이 고장 난 줄 안다.
+   쓰이는 자리(설정 화면)보다 **앞에** 두어야 한다 — const 는 끌어올려지지만
+   선언 전에 읽으면 터진다. */
+const DEV_ID = 'tpgus5119';
+
 const tr = h => {
   if (!S || typeof h !== 'string') return h;
   const v = UIVI[h];
@@ -992,6 +1052,22 @@ function verdict(box, i, ok, name, sub) {
   r.innerHTML = '<span class="vname">' + name + '</span>' +
     '<span class="vmark">' + (ok === null ? '—' : ok ? 'O' : 'X') + '</span>' +
     '<span class="vsub">' + sub + '</span>';
+  sayCredit(box);
+}
+
+/* 따라 말하기 점수 — **발음과 높낮이가 둘 다 O 일 때만** 준다 (사용자 지시).
+   전에는 규칙표에 '+5 따라 말하기를 AI가 알아들으면'이라고 적어 두고 실제로는
+   한 번도 주지 않았다. 못 받는 점수를 걸어 둔 셈이었다.
+   둘 중 하나만 맞아서는 안 된다 — 글자를 맞게 읽어도 성조가 틀리면 딴 낱말이 되고,
+   성조가 맞아도 자음·모음이 틀리면 알아듣지 못한다. */
+function sayCredit(box) {
+  if (!box) return;
+  const rows = box.querySelectorAll('.vrow');
+  if (rows.length < 2) return;
+  const pass = [...rows].every(r => r.classList.contains('ok'));
+  if (!pass || box.dataset.paid) return;
+  box.dataset.paid = '1';                     // 한 번 녹음에 한 번만
+  earn(CRD.say, tr('발음과 높낮이 모두 통과'));
 }
 
 /* 첫 단어에서 한 번만 — 눌러서 소리 듣는 법을 모르면 이 앱의 절반이 안 보인다 */
@@ -1368,8 +1444,12 @@ function bars(rows) {
     }
     r.append(bar);
     r.append(el('span', 'bpct', thin ? '—' : pct + '%'));
+    // 'N문제 더'만 적으면 몇 개를 이미 했는지 알 수 없다 — 여덟 개를 풀고도
+    // '10문제 더'로 보이는 일이 생긴다(주간 성적표는 이번 주 것만 세기 때문이다).
+    // 그래서 **한 자리에 둘 다** 적는다: 8/10 · 2문제 더 (사용자 지적)
     r.append(el('span', 'bn', nlabel != null ? nlabel
-                                    : thin ? (NEED - n) + '문제 더' : n + '문제'));
+                                    : thin ? n + '/' + NEED + ' · ' + (NEED - n) + '문제 더'
+                                           : n + '문제'));
     box.append(r);
   });
   return box;
@@ -1659,6 +1739,65 @@ async function cloudLoad() {
 /* ── 계정 로그인·가입 ────────────────────────────────────────────
    이메일이 없어서 비밀번호를 잊으면 되찾을 길이 없다 — 화면에 그대로 밝힌다.
    서버에는 비밀번호의 으깬 값(해시)만 남는다. */
+/* 탈퇴 — 지우기 전에 **왜 떠나는지 묻는다** (사용자 지시).
+   붙잡으려고 묻는 것이 아니다. 떠나는 까닭은 앱을 고칠 유일한 단서다.
+   다만 **답하지 않아도 나갈 수 있어야 한다** — 답을 강요하면 그것이 또 하나의 벽이 된다.
+   지우는 것은 되돌릴 수 없으므로 비밀번호를 한 번 더 받는다. */
+const QUIT_WHY = [
+  ['hard', '너무 어렵습니다'],
+  ['easy', '너무 쉽습니다'],
+  ['busy', '시간이 없습니다'],
+  ['bug', '고장이 잦습니다'],
+  ['need', '필요한 것이 없습니다'],
+  ['other', '그 밖의 까닭'],
+];
+function quitForm() {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', tr('정말 떠나시겠습니까?')));
+  b.append(el('p', 'note', tr('계정·별명·진도가 <b>모두 지워지고 되돌릴 수 없습니다.</b> 같은 아이디를 다시 쓸 수 없습니다.')));
+  b.append(el('p', 'note', tr('떠나시는 까닭을 알려 주시면 고치겠습니다. 안 고르셔도 나가실 수 있습니다.')));
+  let why = '';
+  const pick = el('div', 'catpick');
+  QUIT_WHY.forEach(([k, nm]) => {
+    const c = el('button', 'catchipbtn', tr(nm));
+    c.type = 'button';
+    c.onclick = () => { why = k; [...pick.children].forEach(x => x.classList.remove('on')); c.classList.add('on'); };
+    pick.append(c);
+  });
+  b.append(pick);
+  const memo = el('textarea', 'keyin');
+  memo.placeholder = tr('더 하실 말씀 (안 쓰셔도 됩니다)');
+  memo.maxLength = 200; memo.rows = 3;
+  b.append(memo);
+  const pw = el('input', 'keyin'); pw.type = 'password';
+  pw.placeholder = tr('비밀번호를 한 번 더');
+  b.append(pw);
+  const err = el('p', 'note nickerr'); err.hidden = true;
+  const go = el('button', 'primary big danger', tr('영영 지우기'));
+  go.style.width = '100%';
+  go.onclick = async () => {
+    err.hidden = true;
+    if (!pw.value) { err.textContent = tr('비밀번호를 적어 주세요.'); err.hidden = false; return; }
+    if (!confirm(tr('마지막 확인입니다. 지우면 되돌릴 수 없습니다.'))) return;
+    go.disabled = true;
+    try {
+      await cCall({ act: 'quit', id: S.acct.id, pw: pw.value,
+                    why, memo: memo.value.trim().slice(0, 200) });
+    } catch (e) {
+      // 서버가 못 지워도 이 기기에서는 지운다 — 사용자를 붙잡아 두면 안 된다
+    }
+    localStorage.removeItem('vnstudy.v2');
+    location.reload();
+  };
+  b.append(go, err);
+  const back = el('button', 'ghost big', tr('그만두기'));
+  back.style.width = '100%'; back.style.marginTop = '8px';
+  back.onclick = () => renderAwards();
+  b.append(back);
+  show('sub', tr('탈퇴'), true);
+}
+
 function acctForm(gate, mode) {
   mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
@@ -1706,10 +1845,11 @@ function acctForm(gate, mode) {
   const drawLearn = () => {
     lrnW.textContent = ''; regW.textContent = '';
     const nat = natW.val();
-    // 지금 있는 과정은 베트남어(한국인용)뿐이다 — 한국어는 준비 중이라고 정직하게 밝힌다
+    // 두 과정 다 있다 — 베트남어 108강, 한국어 78강 + 모의고사 45벌.
+    // 전에 붙여 둔 '(준비 중)' 딱지를 뗐다. 있는 것을 없다고 하면 베트남 분이 문 앞에서 돌아선다.
     const opts = nat === 'kr' ? [['vi', '베트남어']]
-               : nat === 'vn' ? [['ko', '한국어 (준비 중)']]
-               : [['vi', '베트남어'], ['ko', '한국어 (준비 중)']];
+               : nat === 'vn' ? [['ko', '한국어']]
+               : [['vi', '베트남어'], ['ko', '한국어']];
     lrnW.sel = mkSel(opts);
     lrnW.append(el('p', 'note', '배울 언어'), lrnW.sel);
     const drawReg = () => {
@@ -1724,7 +1864,19 @@ function acctForm(gate, mode) {
   };
   natW.addEventListener('pick', drawLearn);
   drawLearn();
-  profBox.append(el('p', 'note', '국적'), natW, lrnW, regW);
+  /* 모국어(화면 언어) — 가입할 때 **직접 고르게** 한다 (사용자 지시).
+     전에는 국적으로 짐작했다(베트남 국적이면 화면도 베트남어). 그런데 국적과
+     읽을 수 있는 말은 다른 것이다 — 한국에 오래 산 베트남 분은 한국어 화면이 편하고,
+     베트남에 사는 한국 사람이 베트남어 화면을 쓰고 싶을 수도 있다. */
+  const uiW = mkSel([['ko', '한국어'], ['vi', 'Tiếng Việt']]);
+  natW.addEventListener('pick', () => {          // 국적을 고르면 기본값만 옮겨 준다
+    // **누른 것처럼** 처리해야 한다. 처음엔 켜진 표시(class)만 바꿨더니 화면에는
+    // Tiếng Việt 가 켜져 보이는데 실제 값은 'ko' 로 남아, 베트남 분이 가입하면
+    // 한국어 화면을 받게 됐다.
+    uiW.children[natW.val() === 'vn' ? 1 : 0].click();
+  });
+  profBox.append(el('p', 'note', '국적'), natW,
+                 el('p', 'note', '내 말 (화면에 나올 말)'), uiW, lrnW, regW);
 
   const err = el('p', 'note nickerr'); err.hidden = true;
   const oops = m => { err.textContent = m; err.hidden = false; };
@@ -1742,14 +1894,16 @@ function acctForm(gate, mode) {
         S.nick = v; save();
       }
       const prof = act === 'signup'
-        ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '' } : {};
+        ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '',
+            ui: uiW.val() } : {};
       const j = await cCall(Object.assign({ act, id: i, pw: p }, prof));
       if (act === 'signup' && prof.reg) { S.region = prof.reg; drawRegion(); }
       if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn;
-        if (prof.nat === 'vn') S.ui = 'vi';       // 베트남 분은 화면도 베트남어로
+        if (prof.ui) S.ui = prof.ui;              // 고른 대로 — 국적으로 짐작하지 않는다
       }
       if (act === 'login' && j.prof) {
         S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
+        if (j.prof.ui) S.ui = j.prof.ui;
         if (j.prof.reg) S.region = j.prof.reg;
         drawRegion();
       }
@@ -1798,7 +1952,7 @@ function acctForm(gate, mode) {
   }
   b.append(el('p', 'note', tr('· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.') + '<br>' +
     tr('· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b>') + '<br>' +
-    tr('· 학습 진도는 <b>자동으로 서버에 저장</b>됩니다 — 폰을 바꿔도 아이디로 들어오면 이어집니다.')));
+    ''));   // 서버 저장 안내는 뺐다 (사용자 지시)
   show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), true);
 }
 
@@ -1830,19 +1984,18 @@ function renderAwards() {
 
   /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
      핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
-  if (S.acct && S.acct.tok) {
-    // 올리기 단추는 없앴다 — 학습·복습을 마칠 때마다 알아서 올라간다 (사용자 지시)
-    const cl = el('div', 'planrow');
-    cl.append(el('span', 'pk', '서버 진도'),
-              el('span', 'pv', S.cloudAt ? S.cloudAt + ' 자동 저장됨' : '학습을 마치면 자동 저장됩니다'));
-    b.append(cl);
-  }
+  // '서버 진도' 줄은 없앴다 (사용자 지시, 여러 번). 저장은 알아서 되는 일이라
+  // 화면에 적어 둘 까닭이 없다 — 적어 두면 '내가 뭘 해야 하나' 하고 눈길만 끈다.
 
   /* 화면 언어 — 한국어 → Tiếng Việt → 나란히(개발용) 로 돌아간다.
      '나란히'는 만드는 사람용이다. 베트남어 옆에 한국어 원문을 같이 띄워
      "이 화면이 무엇이고 번역이 맞게 붙었는가"를 눈으로 대조하려고 둔다. */
-  b.append(pickRow('화면 언어',
-    [['ko', '한국어'], ['vi', 'Tiếng Việt'], ['dev', '나란히 (개발용)']], S.ui || 'ko',
+  // '나란히'는 번역 대조용이라 **만든 사람에게만** 보인다 (사용자 지시).
+  // 손님 화면에 개발용 칸이 있으면 눌러 보고 글자가 겹쳐 나와 고장으로 읽는다.
+  const uiOpts = [['ko', '한국어'], ['vi', 'Tiếng Việt']];
+  if (S.acct && S.acct.id === DEV_ID) uiOpts.push(['dev', '나란히 (개발용)']);
+  if (S.ui === 'dev' && !(S.acct && S.acct.id === DEV_ID)) { S.ui = 'ko'; save(); }
+  b.append(pickRow('화면 언어', uiOpts, S.ui || 'ko',
     v => { S.ui = v; save(); renderAwards(); drawMenu(); }));
 
   // 배울 언어 — 두 과정이 다 생겼으므로 진짜로 고를 수 있다
@@ -1854,11 +2007,19 @@ function renderAwards() {
             el('span', 'pv', S.acct ? esc(S.acct.id) : '없음 (이 기기에만 저장)'));
   const ab = el('button', 'ghost sm', S.acct ? '로그아웃' : '로그인·가입');
   ab.onclick = () => {
-    if (S.acct) { if (confirm('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.')) { S.acct = null; save(); renderAwards(); } }
+    if (S.acct) { if (confirm(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'))) { S.acct = null; save(); renderAwards(); } }
     else acctForm();
   };
   ac.append(ab);
   b.append(ac);
+  if (S.acct) {
+    const qb = el('div', 'planrow');
+    qb.append(el('span', 'pk', tr('탈퇴')), el('span', 'pv', tr('계정과 진도를 지웁니다')));
+    const qq = el('button', 'ghost sm danger', tr('탈퇴하기'));
+    qq.onclick = quitForm;
+    qb.append(qq);
+    b.append(qb);
+  }
 
   const got = BADGES.filter(x => x.test()).length;
   const nm = el('div', 'planrow');
@@ -4610,8 +4771,8 @@ const CRD = {
   day: 5,      // 그날 처음 앱을 연 것 — 오는 것 자체에 주는 몫이라 작게
   set: 15,     // 오늘 세트를 끝냄
   rev: 25,     // 복습을 끝냄 — 가장 높다
-  fix: 3,      // 자주 틀리던 낱말 하나를 오답노트에서 지움
-  say: 5,      // 따라 말하기를 AI가 알아들음
+  fix: 3,      // 자주 틀리던 낱말 하나를 오답노트에서 지움 (다 외웠다는 뜻)
+  say: 5,      // 따라 말하기 — 발음(AI)과 높낮이(곡선)를 **둘 다** 통과했을 때만
   write: 5,    // 받아쓰기·타이핑 한 판
   d3: 20, d7: 50,   // 연속 3일 · 7일
   exam: 30,    // 모의고사 한 회 (한국어 과정만)
@@ -4666,13 +4827,14 @@ function earnRules() {
     [CRD.rev, '복습을 끝내면', '가장 높습니다 — 복습이 무너지면 나머지가 다 무너집니다'],
     [CRD.set, '오늘 세트를 끝내면', ''],
     [CRD.day, '그날 처음 앱을 열면', '오는 것 자체에 주는 몫이라 작습니다'],
-    [CRD.fix, '자주 틀리던 낱말을 하나 잡을 때마다', '틀린 걸 고친 순간이 가장 값집니다'],
+    [CRD.fix, '자주 틀리던 낱말을 하나 외울 때마다', '틀린 것을 고친 순간이 가장 값집니다'],
     [CRD.d3, '연속 3일', ''], [CRD.d7, '연속 7일', ''],
   ];
   return learnKo()
     ? common.concat([[CRD.exam, '모의고사 한 회를 끝내면', ''],
                      [CRD.card, '문법·기본기·문화 카드를 처음 볼 때마다', '']])
-    : common.concat([[CRD.say, '따라 말하기를 AI가 알아들으면', ''],
+    : common.concat([[CRD.say, '따라 말하기에서 발음과 높낮이가 모두 통과되면',
+                      '둘 중 하나만 맞아서는 안 됩니다'],
                      [CRD.write, '받아쓰기·타이핑 한 판', '']]);
 }
 
@@ -4741,6 +4903,11 @@ function rankRow(i, name, val, top, mine, sub) {
   return r;
 }
 
+/* 순위판은 **1~3위만** 내건다 (사용자 지시).
+   4위 아래는 이름을 걸지 않는다 — 내 등수는 화면 맨 위 '내 자리'에서 나만 본다.
+   연구가 말하는 해악(전체 등수 공개가 하위권 의욕을 꺾는다, Li 외 2024)을
+   피하면서 겨루는 재미는 위 세 자리에 남긴다. */
+const TOP_N = 3;
 function rankBoard(ppl, span) {
   const box = el('div', 'crclub');
   const hasCr = ppl.some(m => typeof m.cr === 'number');
@@ -4748,33 +4915,41 @@ function rankBoard(ppl, span) {
   const list = ppl.slice().sort((a, b) => key(b) - key(a) || (b.memo || 0) - (a.memo || 0));
   const me = myUid();
   const top = key(list[0]) || 1;
-  list.forEach((m, i) => box.append(rankRow(i, m.nick, key(m), top, m.uid === me)));
+  list.slice(0, TOP_N).forEach((m, i) => box.append(rankRow(i, m.nick, key(m), top, m.uid === me)));
+  const at = list.findIndex(m => m.uid === me);
+  if (at >= TOP_N) {
+    // 내 자리는 나만 본다 — 남에게는 안 보이는 줄이다
+    box.append(el('p', 'note', tr('내 자리는 N위입니다 — 나만 보입니다.').replace('N', at + 1)));
+  }
   if (!hasCr) {
     box.append(el('p', 'note', '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 크레딧 순위로 바뀝니다.'));
   }
   return box;
 }
 
-/* 동아리끼리 겨루기. 사람 수가 다르니 합계만 보면 큰 동아리가 늘 이긴다 —
-   '한 사람 평균'을 나란히 두어 작은 동아리도 이길 자리를 만든다. */
+/* 동아리 순위 = **구성원 개인 점수를 다 더한 값** (사용자 지시).
+   '한 사람 평균'을 고르는 칸은 없앴다 — 잣대가 둘이면 어느 쪽이 진짜 순위인지
+   알 수 없고, 화면에 고를 것이 하나 더 늘 뿐이다.
+   여기도 **1~3위만** 내건다. */
 let CLRANK = null;
-function clubRankBoard(span, mode, onMode) {
+function clubRankBoard(span) {
   const box = el('div', 'crclub');
   if (!CLRANK) { box.append(el('p', 'note', tr('불러오는 중…'))); return box; }
   if (!CLRANK.clubs || !CLRANK.clubs.length) {
-    box.append(el('p', 'note', '아직 겨룰 동아리가 없습니다. 동아리를 만들면 여기에 올라옵니다.'));
+    box.append(el('p', 'note', tr('아직 동아리 순위가 없습니다.')));
     return box;
   }
-  box.append(chipRow([['sum', tr('동아리 합계')], ['avg', tr('한 사람 평균')]], mode, onMode));
-  const f = c => span === 'month' ? (mode === 'avg' ? c.amo : c.mo)
-                                  : (mode === 'avg' ? c.awk : c.wk);
+  const f = c => span === 'month' ? (c.mo || 0) : (c.wk || 0);
   const list = CLRANK.clubs.slice().sort((a, b) => f(b) - f(a));
   const top = f(list[0]) || 1;
-  list.slice(0, 20).forEach((c, i) => {
+  list.slice(0, TOP_N).forEach((c, i) => {
     const mine = S.club && S.club.id === c.id;
-    box.append(rankRow(i, c.name, f(c), top, mine,
-                       tr('N명').replace('N', c.n) + ' · ' + tr(cityNm(c.city))));
+    box.append(rankRow(i, c.name, f(c), top, mine, tr('N명').replace('N', c.n)));
   });
+  const at = list.findIndex(c => S.club && S.club.id === c.id);
+  if (at >= TOP_N) {
+    box.append(el('p', 'note', tr('우리 동아리는 N위입니다 — 나만 보입니다.').replace('N', at + 1)));
+  }
   return box;
 }
 
@@ -4825,20 +5000,21 @@ function drawCredit() {
   host.append(big);
 
   // ── 2. 순위판 — 누구끼리(사람/동아리) × 언제까지(주/달)
-  host.append(chipRow([['me', tr('사람 순위')], ['club', tr('동아리 순위')]],
+  host.append(chipRow([['me', tr('개인 순위')], ['club', tr('동아리 순위')]],
                       RKP.who, k => { RKP.who = k; drawCredit(); }));
   const spans = [['week', tr('이번 주')]].concat(monthOK || RKP.who === 'club'
     ? [['month', tr('한 달')]] : []);
   host.append(chipRow(spans, useSpan, k => { RKP.span = k; drawCredit(); }));
   const head = el('div', 'crct');
   head.append(document.createTextNode(RKP.who === 'club'
-    ? tr('동아리끼리 겨루기') : (useSpan === 'month' ? tr('한 달 순위') : tr('이번 주 순위'))));
+    ? (useSpan === 'month' ? tr('동아리 한 달 순위') : tr('동아리 이번 주 순위'))
+    : (useSpan === 'month' ? tr('한 달 순위') : tr('이번 주 순위'))));
   head.append(el('span', 'crreset', useSpan === 'month'
     ? tr('최근 주에 더 무게') : tr('월요일마다 초기화')));
   host.append(head);
 
   if (RKP.who === 'club') {
-    host.append(clubRankBoard(useSpan, RKP.mode, k => { RKP.mode = k; drawCredit(); }));
+    host.append(clubRankBoard(useSpan));
     if (!CLRANK) cCall({ act: 'ranks' })
       .then(r => { CLRANK = r; drawCredit(); })
       .catch(() => { CLRANK = { clubs: [] }; drawCredit(); });

@@ -304,7 +304,9 @@ export default {
         const uid = cut(b.uid, 16);
         if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
         const salt = Math.random().toString(36).slice(2, 12);
-        const prof = { nat: cut(b.nat, 4), learn: cut(b.learn, 4), reg: cut(b.reg, 2) };
+        // ui = 화면에 나올 말. 국적으로 짐작하지 않고 가입할 때 고른 것을 그대로 받는다
+        const prof = { nat: cut(b.nat, 4), learn: cut(b.learn, 4), reg: cut(b.reg, 2),
+                       ui: cut(b.ui, 4) };
         // 증표(token): 로그인한 사람만 자기 진도를 읽고 쓸 수 있게 하는 문패.
         // 비밀번호를 매번 보내지 않으려고 따로 둔다.
         const tok = [...crypto.getRandomValues(new Uint8Array(16))].map(x => x.toString(16).padStart(2, '0')).join('');
@@ -328,6 +330,75 @@ export default {
       const hasProg = !!(await KV.get('prog:' + id, { type: 'text' }));
       return send({ ok: true, uid: acct.u, nick: myNick || (myClub && myClub.nick) || '',
                     club: myClub, prof: acct.p || null, tok: acct.t, hasProg });
+    }
+
+    /* ── 탈퇴 ────────────────────────────────────────
+       비밀번호를 한 번 더 받고, **계정·진도·별명·동아리 자리를 모두 지운다.**
+       떠나는 까닭은 이름 없이 세기만 한다 — 누가 왜 나갔는지가 아니라
+       '무엇 때문에 나가는가'만 알면 고칠 수 있다. */
+    if (act === 'quit') {
+      const id = cut(b.id, 20).toLowerCase().trim();
+      const pw = String(b.pw || '').slice(0, 64);
+      const AK = 'acct:' + id;
+      const acct = JSON.parse((await KV.get(AK)) || 'null');
+      if (!acct) return send({ error: '없는 아이디입니다' });
+      if (await hashPw(acct.s, pw) !== acct.h) return send({ error: '비밀번호가 다릅니다' });
+
+      // 까닭 세기 — 이름도 아이디도 남기지 않는다
+      const WHY = ['hard', 'easy', 'busy', 'bug', 'need', 'other'];
+      const why = WHY.includes(b.why) ? b.why : '';
+      if (why || b.memo) {
+        const q = JSON.parse((await KV.get('quitwhy')) || '{"n":{},"memo":[]}');
+        if (why) q.n[why] = (q.n[why] || 0) + 1;
+        const memo = cut(b.memo, 200);
+        if (memo) { q.memo.unshift({ w: why, m: memo, at: Date.now() }); q.memo = q.memo.slice(0, 200); }
+        await KV.put('quitwhy', JSON.stringify(q));
+      }
+
+      // 별명 자리를 비운다 (다른 사람이 그 별명을 쓸 수 있게)
+      const nicks = JSON.parse((await KV.get(NKEY)) || '{}');
+      for (const [k, v] of Object.entries(nicks)) if (v === acct.u) delete nicks[k];
+      await KV.put(NKEY, JSON.stringify(nicks));
+      // 동아리에서 뺀다
+      let touched = false;
+      for (const cc of Object.values(clubs)) {
+        if (cc.uids && cc.uids[acct.u]) {
+          const nk = cc.uids[acct.u];
+          delete cc.uids[acct.u];
+          cc.members = (cc.members || []).filter(m => m !== nk);
+          touched = true;
+        }
+      }
+      if (touched) await KV.put(CKEY, JSON.stringify(clubs));
+      // 전체 순위판에서도 지운다
+      const g = JSON.parse((await KV.get(GKEY)) || '{}');
+      if (g[acct.u]) { delete g[acct.u]; await KV.put(GKEY, JSON.stringify(g), TTL); }
+      await KV.delete('prog:' + id);
+      await KV.delete(AK);
+      return send({ ok: true });
+    }
+
+    /* ── 동아리 순위 ─────────────────────────────────
+       **구성원 개인 점수를 다 더한 값**이다 (사용자 지시).
+       한 사람 평균은 내보내지 않는다 — 잣대가 둘이면 어느 쪽이 진짜 순위인지 알 수 없다.
+       개인 점수는 전체 순위판(GKEY)에 uid 로 쌓여 있으므로, 동아리의 uid 목록으로 더한다. */
+    if (act === 'ranks') {
+      const g = JSON.parse((await KV.get(GKEY)) || '{}');
+      const out = [];
+      for (const [cid, cc] of Object.entries(clubs)) {
+        const uids = Object.keys(cc.uids || {});
+        let wk = 0, mo = 0;
+        for (const u of uids) {
+          const m = g[u];
+          if (!m) continue;
+          wk += num(m.s, 999999);                    // 이번 주 점수
+          mo += num(m.mo, 999999) || num(m.s, 999999);
+        }
+        out.push({ id: cid, name: cc.name, n: uids.length || (cc.members || []).length,
+                   city: cc.city || '', wk, mo });
+      }
+      out.sort((x, y) => y.wk - x.wk);
+      return send({ clubs: out.slice(0, 50) });
     }
 
     /* ── 진도 서버 저장 ──────────────────────────────
