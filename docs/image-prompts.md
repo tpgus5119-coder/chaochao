@@ -5354,9 +5354,8 @@
 **d110-chat-lieu.webp** · 재질·소재 (chất liệu)
 > three material swatches side by side, shiny metal, smooth plastic and woven fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
-**d110-vit.webp** · 나사 (vít)
-> a screwdriver turning a screw into a metal plate with a few loose screws beside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
-
+**d110-nhua.webp** · 플라스틱 (nhựa)
+> a stack of colorful plastic sheets and a plastic container part, smooth glossy surface, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 **d110-muc.webp** · 잉크 (mực)
 > an open ink bottle with a drop falling and a printed mark on paper below, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 

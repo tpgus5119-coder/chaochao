@@ -7,8 +7,11 @@ python3 tools/b9.py                  # 새 챕터 원본 → data/_b9.json
 python3 tools/assemble.py --write    # 합치고 검증하고 days.json 기록
 python3 tools/fix10.py               # 한 강 = 낱말 10개로 맞춤 (넘치면 ②강으로 쪼갬)
 python3 tools/img_relink.py          # 이미 구운 그림을 다시 이어 붙임
+python3 tools/img_share.py --write   # 뜻이 같으면 두 과정이 그림을 나눠 쓴다
 python3 tools/new_dialogs.py         # 쪼개진 강에 대화문 + 강 번호 다시 매김
 python3 tools/fill_missions.py       # 빈 미션 채움
+# place_b9 는 **new_dialogs 뒤**여야 한다 — 거기서 강 번호를 다시 매기기 때문이다
+python3 tools/place_b9.py            # 생산현장어 8강을 직무 차례 제자리에
 # **맨 마지막에** 되돌린다 — new_dialogs 가 8.5강 대화를 옛것으로 덮어쓰기 때문이다
 python3 tools/apply_patches.py       # days.json 에만 살아 있던 사용자 지시 수정 되돌림
 python3 tools/hanja_attach.py        # 한자 다리
