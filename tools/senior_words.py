@@ -102,6 +102,54 @@ def header_map(rows):
 TITLE_NO = re.compile(r"(\d+)\s*회차\s*단어")
 
 
+def sheets_of(f):
+    """엑셀 한 권을 **시트마다 따로** 읽는다 — 한 권에 여러 회차가 들어 있기 때문.
+
+    처음에 한 권을 한 덩어리로 뭉쳐 읽어 8·9·10회차를 '없다'고 잘못 보고했다.
+    실제로는 `8주차 단어시험.xlsx` 시트가 ['4회차'..'8회차'] 다섯 장이었고,
+    `9주차`·`10주차` 파일은 이름만 주차일 뿐 시트 첫 줄이 '9회차'·'10회차'였다.
+    시트 이름과 시트 첫 줄에서 회차를 읽고, 없으면 파일 이름을 따른다.
+    """
+    try:
+        wb = openpyxl.load_workbook(f, data_only=True, read_only=True)
+    except Exception as e:
+        return [], f"못 열었다: {e}"
+    out = []
+    for ws in wb.worksheets:
+        rows = rows_of(ws)
+        if not rows:
+            continue
+        no = None
+        m = TITLE_NO.search(ws.title) or re.search(r"(\d+)\s*회차", ws.title)
+        if m:
+            no = int(m.group(1))
+        if no is None:
+            for r in rows[:3]:
+                for v in r:
+                    mm = TITLE_NO.search(v or "")
+                    if mm:
+                        no = int(mm.group(1))
+                        break
+                if no:
+                    break
+        hi, j = header_map(rows)
+        if hi < 0:
+            continue
+        got = []
+        for r in rows[hi + 1:]:
+            cell = lambda k: (r[j[k]] if k in j and j[k] < len(r) else "")
+            ko, vi = cell("ko"), cell("vi")
+            if blank(ko):
+                continue
+            if not KO.search(ko) and not re.search(r"[A-Za-z]", ko):
+                continue
+            got.append((ko.strip(), (vi or "").strip(), ""))
+        if got:
+            out.append((no, got, ws.title))
+    wb.close()
+    return out, ""
+
+
 def from_xlsx(f):
     """엑셀 한 권에서 (한국어, 베트남어, 유형) 목록을 뽑는다. 모든 시트를 본다.
 
@@ -183,6 +231,31 @@ def from_docx(f):
             else ([], "표는 있는데 낱말을 못 찾았다", None))
 
 
+def from_pdf(f):
+    """PDF 시험지에서 낱말을 뽑는다.
+
+    처음엔 PDF 를 아예 안 읽었다 — 그 바람에 **2회차를 통째로 놓쳤다**(PDF 로만 있다).
+    꼴: `1 일본어 japanese language` 처럼 번호 + 한국어 + 영어. 답(베트남어)은
+    문제지 PDF 에 없으므로 한국어만 건진다.
+    """
+    try:
+        from pypdf import PdfReader
+        r = PdfReader(f)
+        txt = "\n".join((pg.extract_text() or "") for pg in r.pages)
+    except Exception as e:
+        return [], f"못 열었다: {e}", None
+    got = []
+    for line in txt.split("\n"):
+        m = re.match(r"^\s*(\d{1,3})[.)]?\s+(.+)$", line.strip())
+        if not m:
+            continue
+        no, rest = int(m.group(1)), m.group(2).strip()
+        if not (1 <= no <= 200) or not KO.search(rest):
+            continue
+        got.append((rest, "", ""))
+    return (got, "PDF", None) if got else ([], "PDF 인데 낱말 줄을 못 찾았다", None)
+
+
 def label(name):
     """파일 이름에서 (갈래, 번호) 를 읽는다.
 
@@ -219,12 +292,43 @@ def main():
         raise SystemExit(f"자료가 없다: {SRC}")
 
     files = sorted(p for p in SRC.iterdir()
-                   if p.suffix.lower() in (".xlsx", ".docx") and not p.name.startswith("~$"))
+                   if p.suffix.lower() in (".xlsx", ".docx", ".pdf")
+                   and not p.name.startswith("~$"))
     recs = {}                                   # (갈래, 번호) → {ko: vi}
     per_file, fails, conflicts = [], [], []
     for f in files:
-        got, note, said = (from_xlsx(f) if f.suffix.lower() == ".xlsx" else from_docx(f))
+        ext = f.suffix.lower()
         kind, no = label(f.name)
+        if ext == ".xlsx":
+            # 시트마다 회차가 다를 수 있다 — 시트 단위로 담는다
+            sh, err = sheets_of(f)
+            if not sh:
+                fails.append((f.name, err or "시트에서 낱말을 못 찾았다"))
+                continue
+            # 시트가 저마다 다른 회차를 대면 '한 권에 여러 회차'인 파일이다
+            nos = {s[0] for s in sh if s[0]}
+            multi = len(nos) > 1
+            for sno, got, title in sh:
+                # 파일 이름이 'N주차'라도 시트가 'N회차 단어 테스트'라고 밝히면 일일이다.
+                # `9주차 단어시험.xlsx` 의 시트 첫 줄이 '9회차 단어 테스트' 였다 —
+                # 이름만 주차일 뿐 내용은 일일 시험이라, 이름만 믿어 주간으로 넣었던 것을
+                # 바로잡는다. (주간은 100낱말, 일일은 30낱말이라 크기로도 갈린다.)
+                if multi and sno:
+                    k2 = ("일일", sno)
+                elif kind == "주간" and sno and len(got) <= 45:
+                    k2 = ("일일", sno)
+                else:
+                    k2 = (kind, no)
+                if not multi and sno and sno != no and kind == "일일":
+                    conflicts.append((f.name, no, sno))
+                bag = recs.setdefault(k2, {})
+                for ko, vi, _ in got:
+                    if ko not in bag or (vi and not bag[ko]):
+                        bag[ko] = vi
+                per_file.append((f.name, k2[0], k2[1], len(got),
+                                 sum(1 for _, v, _ in got if v), title))
+            continue
+        got, note, said = (from_docx(f) if ext == ".docx" else from_pdf(f))
         # 시트 첫 줄의 'N회차'는 **믿지 않는다.** 7개 파일에서 파일 이름과 어긋났는데,
         # 지난 회차 파일을 복사해 제목만 안 고친 흔적이다(`7회차` 파일에 `81회차`라고
         # 적혀 있고, 한 파일 안에서 문제 시트와 답안 시트가 서로 다른 번호를 대기도 한다).
@@ -246,7 +350,8 @@ def main():
     L.append("# GYBM 선배 단어시험 — 전수 정리")
     L.append("")
     L.append(f"자료: `{SRC}` · 파일 {len(files)}개(xlsx {sum(1 for f in files if f.suffix=='.xlsx')} ·"
-             f" docx {sum(1 for f in files if f.suffix=='.docx')})")
+             f" docx {sum(1 for f in files if f.suffix=='.docx')} ·"
+             f" pdf {sum(1 for f in files if f.suffix=='.pdf')})")
     L.append("")
     L.append("> 아직 앱에 넣지 않았다. 정리만 한 것이다.")
     L.append("")

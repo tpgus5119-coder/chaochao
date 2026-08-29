@@ -4,7 +4,7 @@ import Foundation
 import Vision
 import AppKit
 
-let langs = ["ko-KR", "en-US"]
+let langs = ["ko-KR", "vi-VN", "en-US"]
 for path in CommandLine.arguments.dropFirst() {
     guard let img = NSImage(contentsOfFile: path),
           let cg = img.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
