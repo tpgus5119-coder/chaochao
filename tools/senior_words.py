@@ -35,8 +35,8 @@ import zipfile
 
 import openpyxl
 
-SRC = pathlib.Path(os.path.expanduser(
-    "~/Downloads/베트남어 학습자료/선배 자료/베트남어 단어 자료"))
+BASE = pathlib.Path(os.path.expanduser("~/Downloads/베트남어 학습자료/선배 자료"))
+GI = {"20": BASE / "20기 베트남어 단어 자료", "19": BASE / "19기 베트남어 단어 자료"}
 R = pathlib.Path(__file__).resolve().parent.parent
 W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
 
@@ -78,25 +78,70 @@ def rows_of(ws, cap_blank=30):
 
 
 def header_map(rows):
-    """머리글 행을 찾아 {열이름: 열번호} 를 만든다. 파일마다 열 자리가 다르다."""
+    """머리글 행을 찾아 **표 한 벌마다** {열이름: 열번호} 를 만들어 목록으로 돌려준다.
+
+    한 줄에 표가 여러 벌 나란히 놓인 것이 있다 — 19기 토요시험이 그렇다:
+        No.|단어|뜻 | No.|단어|뜻 | No.|단어|뜻 | No.|단어|뜻
+    'No.' 가 새로 나오면 새 표가 시작된 것으로 본다. 한 벌만 읽으면 100낱말 중
+    25개만 건진다.
+    """
     for i, r in enumerate(rows[:12]):
-        j = {}
+        blocks, cur = [], {}
         for c, v in enumerate(r):
             s = v.replace(" ", "")
-            if s.startswith("No") or s == "번호":
-                j["no"] = c
+            if s.lower().startswith("no") or s == "번호":
+                if cur:
+                    blocks.append(cur)
+                cur = {"no": c}
             elif "한글" in s or "한국" in s or s == "뜻":
                 # 3·4회차 답안 시트는 열이 뒤집혀 있다:
                 #   No. | 유형 | 베트남어 | 영어 | 뜻   ← 한국어가 '뜻' 이라는 이름으로 맨 끝
                 # '한글' 만 찾다가 이 두 회차의 답을 통째로 놓쳤다.
-                j["ko"] = c
-            elif "베트남" in s:
-                j["vi"] = c
+                # **먼저 나온 것을 잡는다**(setdefault) — 19기 94회차 머리글은
+                #   No. | 유형 | 한글 (영어) | 베트남어 | | 한국어 | 영어
+                # 처럼 한국어 이름이 둘이라, 나중 것으로 덮으면 빈 열을 가리켜
+                # 그 회차 낱말을 통째로 잃는다.
+                cur.setdefault("ko", c)
+            elif "베트남" in s or s == "단어":
+                # 19기는 열 이름이 `No.|뜻|단어` 다 — '단어' 가 곧 베트남어 칸이다.
+                # 이걸 안 넣으면 19기 파일 절반에서 답이 통째로 빠진다.
+                cur.setdefault("vi", c)
             elif "유형" in s:
-                j["kind"] = c
-        if "ko" in j:
-            return i, j
-    return -1, {}
+                cur["kind"] = c
+        if cur:
+            blocks.append(cur)
+        blocks = [b for b in blocks if "ko" in b]
+        if blocks:
+            return i, blocks
+    return -1, []
+
+
+def not_viet(got, need=20, floor=.25):
+    """답이 채워져 있는데 **베트남어가 아닌** 시트인가.
+
+    베트남어는 성조·모음 부호가 촘촘해 낱말 스무 개 중 넷도 안 걸리는 일이 없다.
+    """
+    ans = [v for _, v, _ in got if v]
+    return len(ans) >= need and sum(1 for v in ans if VI.search(v)) / len(ans) < floor
+
+
+def harvest(rows, hi, blocks):
+    """머리글 아래를 훑어 (한국어, 베트남어, 유형) 을 모은다.
+
+    표가 여러 벌이면 **한 벌씩 차례로** 읽는다 — 줄을 가로질러 읽으면
+    1·26·51·76 순서가 되어 원래 번호 차례가 흐트러진다.
+    """
+    got = []
+    for j in blocks:
+        for r in rows[hi + 1:]:
+            cell = lambda k: (r[j[k]] if k in j and j[k] < len(r) else "")   # noqa: B023
+            ko, vi, kind = cell("ko"), cell("vi"), cell("kind")
+            if blank(ko):
+                continue
+            if not KO.search(ko) and not re.search(r"[A-Za-z]", ko):
+                continue                       # 안내문·빈 서식 줄
+            got.append((ko.strip(), (vi or "").strip(), (kind or "").strip()))
+    return got
 
 
 TITLE_NO = re.compile(r"(\d+)\s*회차\s*단어")
@@ -132,18 +177,16 @@ def sheets_of(f):
                         break
                 if no:
                     break
-        hi, j = header_map(rows)
+        hi, blocks = header_map(rows)
         if hi < 0:
             continue
-        got = []
-        for r in rows[hi + 1:]:
-            cell = lambda k: (r[j[k]] if k in j and j[k] < len(r) else "")
-            ko, vi = cell("ko"), cell("vi")
-            if blank(ko):
-                continue
-            if not KO.search(ko) and not re.search(r"[A-Za-z]", ko):
-                continue
-            got.append((ko.strip(), (vi or "").strip(), ""))
+        got = harvest(rows, hi, blocks)
+        if not_viet(got):
+            # 19기 토요시험 서식은 **인도네시아 GYBM 것을 가져다 쓴 것**이라
+            # `Sheet1_입력` 시트에 인도네시아어 보기가 그대로 남아 있다
+            # (`소비재 → barang konsumsi`, `표현하다 → Ungkapkan`).
+            # 이걸 안 걸러내면 주간 시험 낱말이 곱절로 부풀고 절반이 딴 나라 말이 된다.
+            continue
         if got:
             out.append((no, got, ws.title))
     wb.close()
@@ -168,19 +211,10 @@ def from_xlsx(f):
                 m = TITLE_NO.search(v or "")
                 if m and said_no is None:
                     said_no = int(m.group(1))
-        hi, j = header_map(rows)
+        hi, blocks = header_map(rows)
         if hi < 0:
             continue
-        got = []
-        for r in rows[hi + 1:]:
-            # 없는 열은 -1 로 잡아 두고 빈 값으로 흘린다(파일마다 열 구성이 다르다)
-            cell = lambda k: (r[j[k]] if k in j and j[k] < len(r) else "")
-            ko, vi, kind = cell("ko"), cell("vi"), cell("kind")
-            if blank(ko):
-                continue
-            if not KO.search(ko) and not re.search(r"[A-Za-z]", ko):
-                continue                       # 안내문·빈 서식 줄
-            got.append((ko.strip(), (vi or "").strip(), (kind or "").strip()))
+        got = harvest(rows, hi, blocks)
         # 베트남어가 채워진 시트가 답안지다 — 그쪽을 택한다
         score = sum(1 for _, v, _ in got if v)
         if score > sum(1 for _, v, _ in best if v) or (not best and got):
@@ -205,15 +239,9 @@ def from_docx(f):
             cells.append(txt)
         if len(cells) >= 2:
             out.append(cells)
-    hi, j = header_map(out)
+    hi, blocks = header_map(out)
     if hi >= 0:
-        got = []
-        for r in out[hi + 1:]:
-            cell = lambda k: (r[j[k]] if k in j and j[k] < len(r) else "")
-            ko, vi = cell("ko"), cell("vi")
-            if ko and (KO.search(ko) or re.search(r"[A-Za-z]", ko)):
-                got.append((ko.strip(), (vi or "").strip(), ""))
-        return got, "머리글 있는 표", None
+        return harvest(out, hi, blocks), "머리글 있는 표", None
 
     # 주차 테스트 docx 는 **머리글이 아예 없다.** 한 줄에 낱말이 넷씩 나란히 들어 있다:
     # [한국어, 베트남어, 한국어, 베트남어, 한국어, 베트남어, 한국어, 베트남어]
@@ -266,9 +294,15 @@ def label(name):
         — 이 묶음은 1~15는 '주차', 16~20은 '회차'로 이름이 바뀌었을 뿐 한 줄기다.
       · `N주차 단어시험.xlsx`   = 주마다 보는 시험(엑셀판)
     """
-    n = name
-    if n.startswith("20기"):
-        m = re.search(r"\(?\s*(\d+)\s*\)?\s*회차", n) or re.search(r"(\d+)\s*회차", n)
+    n = re.sub(r"^TalkFile_", "", name).replace(".xlsx.xlsx", ".xlsx")
+    # 19기는 토요일에 주간 시험을 봤다: `토요시험단어 1회차 250627` · `250712 3차 주간단어`.
+    # 날짜(6/27 → 7/5 → 7/12)가 한 주 간격이라 한 줄기다.
+    if "토요시험" in n or "주간단어" in n:
+        m = re.search(r"(\d+)\s*회?차", n)
+        return ("주간", int(m.group(1))) if m else ("기타", 0)
+    if re.match(r"\s*\d+\s*기", n):            # `19기 …` `20기 …` = 날마다 보는 시험
+        # `20기 ( 5 )회차` 처럼 괄호에 싸인 것 · 19기 `단어시험24회차` 처럼 붙여 쓴 것 둘 다
+        m = re.search(r"\(?\s*(\d+)\s*\)?\s*회차", n)
         if m:
             return "일일", int(m.group(1))
         m = re.search(r"단어시험\s*(\d+)", n)
@@ -287,7 +321,10 @@ def label(name):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--gi", default="20", choices=sorted(GI), help="기수 (20 또는 19)")
     a = ap.parse_args()
+    SRC = GI[a.gi]
+    suffix = "" if a.gi == "20" else f"-{a.gi}"
     if not SRC.exists():
         raise SystemExit(f"자료가 없다: {SRC}")
 
@@ -347,7 +384,7 @@ def main():
         per_file.append((f.name, kind, no, len(got), sum(1 for _, v, _ in got if v), note))
 
     L = []
-    L.append("# GYBM 선배 단어시험 — 전수 정리")
+    L.append(f"# GYBM {a.gi}기 선배 단어시험 — 전수 정리")
     L.append("")
     L.append(f"자료: `{SRC}` · 파일 {len(files)}개(xlsx {sum(1 for f in files if f.suffix=='.xlsx')} ·"
              f" docx {sum(1 for f in files if f.suffix=='.docx')} ·"
@@ -450,16 +487,16 @@ def main():
         L.append("")
 
     out = "\n".join(L)
-    (R / "docs" / "senior-words.md").write_text(out + "\n", encoding="utf-8")
+    (R / "docs" / f"senior-words{suffix}.md").write_text(out + "\n", encoding="utf-8")
     print(out)
-    print(f"\n→ docs/senior-words.md")
+    print(f"\n→ docs/senior-words{suffix}.md")
 
     if a.json:
-        j = {"note": "GYBM 선배 단어시험 전수. 앱에 아직 안 넣음.",
+        j = {"note": f"GYBM {a.gi}기 선배 단어시험 전수. 앱에 아직 안 넣음.",
              "sets": [{"kind": k[0], "no": k[1],
                        "words": [{"ko": ko, "vi": vi} for ko, vi in recs[k].items()]}
                       for k in sorted(recs)]}
-        p = R / "data" / "_senior_words.json"
+        p = R / "data" / f"_senior_words{suffix}.json"
         p.write_text(json.dumps(j, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"→ {p}")
 
