@@ -26,6 +26,19 @@ export default {
       'Access-Control-Allow-Headers': 'Content-Type',
     };
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
+
+    /* 열쇠가 **몇 개** 꽂혀 있는지만 알려 준다. 열쇠도, 그 조각도 내보내지 않는다.
+       왜 필요한가: Cloudflare 는 Secret 을 다시 보여주지 않는다(암호화). 그래서
+       '지금 열쇠가 하나인가 다섯인가'를 알 길이 없어 짐작으로 답하게 된다.
+       무료 몫은 **프로젝트마다 따로** 걸리므로 열쇠 수가 곧 하루 한도 배수다.
+       주소창에서 바로 보려고 GET 도 받고 출처도 안 따진다 — 숫자 하나뿐이라 안전하다.
+       주소: https://viet-ai.chaochao-app.workers.dev/?keys=1 */
+    if (new URL(req.url).searchParams.get('keys') === '1') {
+      const n = (env.GEMINI_KEY || '').split(',').map(k => k.trim()).filter(Boolean).length;
+      return new Response(JSON.stringify({ keys: n, models: MODELS.length,
+        note: '무료 몫은 프로젝트마다 따로 걸린다. 열쇠 수 = 하루 한도 배수.' }),
+        { headers: { 'Content-Type': 'application/json' } });
+    }
     if (req.method !== 'POST' || !allowed)
       return new Response('{"error":"blocked"}', { status: 403, headers: cors });
 
