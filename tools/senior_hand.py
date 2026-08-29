@@ -34,6 +34,42 @@ KEEP = {
  "A Lô ạ":"여보세요", "nâng cốc":"건배하다", "đạo":"따르다, 종교",
  "ấn":"누르다", "dê":"염소", "bàn":"책상, 탁자",
 }
+# 베트남어가 아닌 글자와 끝소리 — **모양으로** 가른다.
+#   f·j·w·z 는 베트남어에 없다. 끝소리는 c·ch·m·n·ng·nh·p·t 와 모음뿐이다.
+#   이 잣대여야 nghe·mua·cao·xem 같은 **성조 부호 없는 진짜 베트남어**를 안 버린다.
+#   (한때 '알파벳만 있으면 영어'로 쳐서 295개를 통째로 버릴 뻔했다.)
+NOTVI = re.compile(r"[fjwzFJWZ]")
+CODA_OK = re.compile(r"(?:[aeiouyàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵ]"
+                     r"|ch|ng|nh|[cmnpt])$", re.I)
+
+# 베트남어가 빌려 쓰는 말 — 모양은 베트남어가 아니지만 진짜 쓰는 낱말이다
+LOAN = {"web", "inox", "email", "video", "internet", "wifi", "taxi", "logo", "menu",
+        "shop", "sales", "marketing", "container", "pallet", "sample", "size"}
+
+def not_viet(v):
+    for tok in v.split():
+        if tok.lower().strip(".,;:!?()") in LOAN: continue
+        t = tok.strip(".,;:!?()'\"")
+        if not t: continue
+        if NOTVI.search(t): return True
+        if not CODA_OK.search(t): return True
+    return False
+
+def junk(vi, ko):
+    """칸이 어긋나 붙어 버린 것·오타·영어 찌꺼기를 가려낸다 (2026-08-30).
+       기계로 예문을 만들어 보니 **문장이 안 만들어지는 것들**이 있었다.
+       들여다보니 낱말이 아니었다 — 'viện nhóm ô'(기관/무리/우산)처럼 세 낱말이 붙은 것,
+       '(I'm' 처럼 괄호가 깨진 것, 'Menerapkan'(인도네시아어) 같은 것들이다."""
+    v = vi.strip()
+    if v.count("(") != v.count(")"): return "괄호 깨짐"
+    if re.match(r"^[A-Za-z][A-Za-z .,'\-]*$", v) and not_viet(v): return "베트남어 아님"
+    # 뜻이 '기관 / 무리 / 우산' 처럼 두 번 넘게 갈라져 있으면 칸이 붙은 것이다
+    if ko.count("/") >= 2 and len(v.split()) >= 2: return "칸이 붙음"
+    if len(v.split()) >= 3 and ko.count("/") >= 1: return "칸이 붙음"
+    if re.search(r"[a-z][A-ZĐ]", v): return "붙어 버림"          # mởcửa
+    return None
+
+
 def bare(v):
     """성조·모자·괄호·대소문자를 다 벗긴 뼈대. 겹침을 찾을 때만 쓴다."""
     s = U.normalize("NFD", v.lower())
@@ -71,6 +107,13 @@ def main():
         if not ko: dropped += 1; continue          # 남은 것은 문장 토막이다 — 버린다
         w = dict(w); w["ko"] = ko; w.pop("en", None)
         out.append(w); kept += 1
+    junked = collections.Counter()
+    keep = []
+    for w in out:
+        why = junk(w["vi"], w["ko"])
+        if why: junked[why] += 1
+        else: keep.append(w)
+    out = keep
     out, gone = dedupe(out)
     out.sort(key=lambda w: (w.get("pos") is None, w.get("pos") or 0, -w["n"]))
     d["words"] = out
@@ -78,4 +121,8 @@ def main():
                  "pos = 배운 차례 0~1. gi = 나온 기수.")
     p.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"손으로 뜻 채운 것 {kept} · 토막이라 버린 것 {dropped} · 겹쳐서 합친 것 {gone} · 남은 낱말 {len(out)}")
-main()
+    if junked: print("  낱말이 아니라 버린 것:", dict(junked))
+
+
+if __name__ == "__main__":
+    main()
