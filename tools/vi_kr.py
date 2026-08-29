@@ -89,7 +89,7 @@ def one(syl, south=False):
     if not rest and cho in ("ㅈ", "y"): rest = "i"
     glide = ""
     if cho != "꾸" and rest[:2] in GLIDE:
-        glide, rest = rest[0], rest[1:]
+        glide, rest = rest[0], rest[1:]      # 'o' 인지 'u' 인지 그대로 남긴다 — 소리가 다르다
     nuc = ""
     for k in sorted(NUC, key=len, reverse=True):
         if rest.startswith(k): nuc, rest = NUC[k], rest[len(k):]; break
@@ -110,10 +110,13 @@ def build(cho, glide, nuc, cod):
     elif cho == "꾸": cho, nuc = "ㄲ", WOD.get(nuc, "우" + nuc)   # qu 만 합친다 (꽈·꽝)
     elif cho == "y":  cho, nuc = "ㅇ", YOD.get(nuc, nuc)
     if glide:
-        # 미끄럼소리는 **따로 한 글자**로 — 표기법의 Nguyên 응우옌 이 그 꼴이다
-        pre = pre + (jamo(cho or "ㅇ", "ㅜ") or "우"); cho = ""
-        # 표기법 3항 — y(이)는 뒤 모음과 **한 음절로 합친다**: 우 + 이에 + n → 우 + 옌
-        if nuc in ("이에", "이어"): nuc = "여"
+        # 미끄럼소리는 **따로 한 글자**로 — 표기법의 Nguyên 응우옌 · Hòa Bình 호아빈 이 그 꼴이다.
+        # **글자가 o 면 '오', u 면 '우'** 다. 늘 '우'로 적으면 hoa 가 '후아'가 된다(2026-08-30).
+        gv = "ㅗ" if glide == "o" else "ㅜ"
+        pre = pre + (jamo(cho or "ㅇ", gv) or ("오" if glide == "o" else "우")); cho = ""
+        # 표기법 3항 — 미끄럼소리 뒤의 이에는 **한 음절로 합친다**: 우 + 이에 + n → 우 + 옌
+        if nuc == "이에": nuc = "예"
+        elif nuc == "이어": nuc = "여"
     if len(nuc) > 1:
         v0 = VOW.get(nuc[0]); v1 = VOW.get(nuc[-1])
         first = jamo(cho or "ㅇ", v0) if v0 else nuc[0]
@@ -132,7 +135,9 @@ TEST = [("Bao","바오"),("cao","까오"),("cha","짜"),("bach","박"),("đan","
         ("nhât","녓"),("put","뿟"),("chap","짭"),("Pham","팜"),("tam","땀"),("hat","핫"),
         ("thao","타오"),("Trân","쩐"),("vai","바이"),("Quang","꽝"),("kia","끼어"),("chiêng","찌엥"),
         ("buôn","부온"),("cưa","끄어"),("anh","아인"),("xanh","싸인"),("Nguyên","응우옌"),
-        ("của","꾸어"),("vui","부이"),("nói","노이"),("tuân","뚜언"),("ki-lô","끼 로")]
+        ("của","꾸어"),("vui","부이"),("nói","노이"),("tuân","뚜언"),("ki-lô","끼 로"),
+        # 미끄럼소리 o/u 를 가려 적는지 (2026-08-30에 여기서 hoa 가 '후아'로 나왔다)
+        ("hoa","호아"),("hoang","호앙"),("toan","또안"),("khoe","코애"),("xoay","쏘아이")]
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--diff", action="store_true")

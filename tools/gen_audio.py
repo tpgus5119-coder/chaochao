@@ -47,6 +47,12 @@ def collect(data):
                     for w in ch["words"]:
                         out.setdefault(w["vi"], "word")
                         if w.get("ex"): out.setdefault(w["ex"]["vi"], "sent")
+    # 7권 베트남 바로알기 — 낱말과 문장
+    kp = ROOT / "data" / "know.json"
+    if kp.exists():
+        for x in json.loads(kp.read_text(encoding="utf-8"))["lec"]:
+            for w in x["words"]: out.setdefault(w["vi"], "word")
+            for t in x["sents"]: out.setdefault(t["vi"], "sent")
     # 1권 문법 예문
     gp = ROOT / "data" / "grammar.json"
     if gp.exists():
