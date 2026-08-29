@@ -2434,10 +2434,10 @@ function drawKoHome() {
 const learnKo = () => S.learn === 'ko';
 
 const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까지의 앱)
-  day:   { name: '하루 5분', items: () => [
-            ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')],
-            ['기사', showNewsLearn]] },
-  senior:{ name: '실전 단어', items: () => [['보기', seniorEntry]] },
+  /* 과정 = **일곱 권 하나로** (대표님 결정, 2026-08-30).
+     '하루 5분'과 '실전 단어'로 갈라져 있던 것을 합쳤다 — 같은 낱말을 두 군데서
+     따로 외우게 하던 짜임이었다. 한 강 15낱말, 복습 강은 없다(복습 기능이 따로 있다). */
+  day:   { name: '과정', items: () => [['보기', courseEntry], ['기사', showNewsLearn]] },
   rev:   { name: '복습', items: () => [
             ['최근 학습', () => freshMenu('word')],
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
@@ -4825,6 +4825,101 @@ function seniorStar() {
 let GRAM = null;
 const gkey = (bi, ni) => 'G' + bi + '-' + ni;
 
+
+/* ---------- 하나로 합친 과정 (2~6권) ----------
+   1권(기본기·문법)과 7권(문화)은 따로 단추가 있다. 여기서는 낱말 권만 다룬다.
+   권 → 과 → 강. 한 강 15낱말. */
+let COURSE = null;
+const ckey = (vi, ui, ci) => 'C' + vi + '.' + ui + '.' + ci;
+
+function courseEntry() {
+  if (COURSE) return drawCourse();
+  const list = $('#dayList'); list.textContent = '';
+  list.append(el('li', 'catpick', tr('불러오는 중…')));
+  show('course', '과정', true);
+  fetch('data/course.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; drawCourse(); })
+    .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
+}
+
+/* 한 권이 끝난 강 수 — 진도는 **강 단위**로만 센다(낱말 하나하나는 복습이 맡는다) */
+function volDone(vi) {
+  let n = 0, all = 0;
+  COURSE.vols[vi].units.forEach((u, ui) => u.chapters.forEach((c, ci) => {
+    all++; if (S.done[ckey(vi, ui, ci)]) n++; }));
+  return [n, all];
+}
+
+function drawCourse() {
+  const list = $('#dayList'); list.textContent = '';
+  const top = el('li', 'catpick');
+  top.append(el('span', 'msub', tr('한 강 15낱말 · 복습은 따로 있습니다')));
+  list.append(top);
+  /* 1권과 7권은 낱말이 아니라 규칙과 이야기다 — 같은 줄에 두되 가는 곳이 다르다 */
+  [['📗 1권 기본기·문법', gramEntry], ].forEach(([nm, fn]) => {
+    const b = el('button');
+    b.append(el('span', 'num', '1권'), el('span', 'nm', nm.slice(3)), el('span', 'st', tr('보기')));
+    b.onclick = () => { dive(drawCourse); fn(); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  COURSE.vols.forEach((v, vi) => {
+    const [n, all] = volDone(vi);
+    const b = el('button');
+    b.dataset.done = n >= all ? '1' : '0';
+    b.append(el('span', 'num', v.vol.split(' ')[0]),
+             el('span', 'nm', v.vol.split(' ').slice(1).join(' ') +
+                '<i class="catchip">' + v.words + tr('낱말') + '</i>'),
+             el('span', 'st', n + '/' + all));
+    b.onclick = () => { dive(drawCourse); drawVol(vi); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  const c7 = el('button');
+  c7.append(el('span', 'num', '7권'), el('span', 'nm', tr('문화 · 베트남 바로알기')),
+            el('span', 'st', tr('보기')));
+  c7.onclick = () => { dive(drawCourse); startCulture(); };
+  const li7 = el('li'); li7.append(c7); list.append(li7);
+  show('course', '과정', true);
+}
+
+function drawVol(vi) {
+  const v = COURSE.vols[vi];
+  const list = $('#dayList'); list.textContent = '';
+  v.units.forEach((u, ui) => {
+    const done = u.chapters.filter((c, ci) => S.done[ckey(vi, ui, ci)]).length;
+    const b = el('button');
+    b.dataset.done = done >= u.chapters.length ? '1' : '0';
+    b.append(el('span', 'num', (ui + 1) + tr('과')),
+             el('span', 'nm', esc(u.unit)),
+             el('span', 'st', done + '/' + u.chapters.length));
+    b.onclick = () => { dive(() => drawVol(vi)); drawUnit(vi, ui); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  show('course', v.vol, true);
+}
+
+function drawUnit(vi, ui) {
+  const v = COURSE.vols[vi], u = v.units[ui];
+  const list = $('#dayList'); list.textContent = '';
+  u.chapters.forEach((c, ci) => {
+    const k = ckey(vi, ui, ci), fin = !!S.done[k];
+    const star = c.words.filter(w => w.sr).length;
+    const b = el('button');
+    b.dataset.done = fin ? '1' : '0';
+    b.append(el('span', 'num', (ci + 1) + tr('강')),
+             el('span', 'nm', c.words.slice(0, 3).map(w => esc(w.ko.split('/')[0].trim())).join(' · ') +
+                (star ? '<i class="catchip">⭐' + star + '</i>' : '')),
+             el('span', 'st', fin ? tr('완료 ✔') : c.words.length + tr('낱말')));
+    b.onclick = () => { dive(() => drawUnit(vi, ui)); startChapter(vi, ui, ci); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  show('course', u.unit, true);
+}
+
+function startChapter(vi, ui, ci) {
+  const v = COURSE.vols[vi], u = v.units[ui], c = u.chapters[ci];
+  startLearn({ day: ckey(vi, ui, ci), theme: u.unit + ' ' + (ci + 1), words: c.words, course: 1 });
+}
+
 function gramEntry() {
   if (GRAM) return drawGramList();
   const list = $('#dayList'); list.textContent = '';
@@ -5498,7 +5593,9 @@ function drawCard() {
     /* 예문 — 통째로 누르던 단추를 **낱말마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
        낱말을 누르면 그 낱말만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
        문장 전체를 듣는 길은 오른쪽 작은 단추로 남겨 둔다. */
-    const exm = exampleFor(L.day, x);
+    /* 새 짜임에서는 예문이 **낱말 안에** 들어 있다(course.json). 없으면 옛 방식대로
+       그날 대화에서 그 낱말이 든 문장을 찾아 쓴다. */
+    const exm = x.ex || exampleFor(L.day, x);
     if (exm) {
       const eb = el('div', 'wex');
       const top = el('div', 'wextop');
@@ -5508,6 +5605,8 @@ function drawCard() {
       eb.append(top);
       eb.append(tapLine(exm.vi, 'wexvi tapline'));
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
+      const ekr = S.region === 's' ? (exm.krs || exm.kr) : exm.kr;
+      if (ekr) eb.append(el('div', 'wexkr', '[' + esc(ekr) + ']'));
       c.append(eb);
     }
     c.append(curveArea(x.vi, box));
