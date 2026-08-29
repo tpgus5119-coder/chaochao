@@ -1584,3 +1584,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .wex .wexvi{font-size:1.05rem; line-height:1.9}
 .wex .wexko{margin-top:4px; color:var(--muted); font-size:.9rem}
 .tapinfo .gkr{margin:0 .35em 0 .2em; color:var(--muted); font-size:.9em}
+
+/* 교재 문법 카드 (1권) */
+.gramt{font-size:1.22rem; font-weight:800; line-height:1.4; margin-bottom:6px}
+.gramk{display:inline-block; padding:.28em .7em; border-radius:8px; margin-bottom:10px;
+  border:1px dashed var(--line); background:var(--card); color:var(--muted);
+  font-size:.88rem; font-weight:600}
+.wex .wexkr{margin-top:2px; color:var(--muted); font-size:.82rem}

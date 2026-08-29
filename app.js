@@ -491,7 +491,9 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '선배': 'Khoá trước',
+  '선배': 'Khoá trước', '과': ' bài', '끝낸 과': 'Bài đã xong', '문법': 'Ngữ pháp',
+  '교재 문법 175': '175 ngữ pháp giáo trình', '빠른 문법 14': '14 ngữ pháp nhanh',
+  '다 봤어요': 'Đã xem xong',
   '풀던 문제를 그만두고 홈으로 갈까요?': 'Dừng bài đang làm và về trang chính?', '선배 기수가 실제로 시험 본 낱말': 'Từ các khoá trước đã thi thật',
   '실전 단어 복습': 'Ôn từ vựng thực chiến',
   '익힌 낱말': 'Từ đã luyện',
@@ -2444,7 +2446,11 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
             ['성조', toneEntry], ['겹모음', () => startRule(4)], ['자판 쓰는 법', kbGuide],
             ['호칭', () => startRule(0)], ['어순', () => startRule(1)], ['숫자 읽는 법', () => startRule(5)],
             ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
-  gram:  { name: '문법', items: () => GRAMMAR.map((g, i) => [g.title, () => startRule('G' + i)]) },
+  /* 문법 = **교재 세 권의 과별 문법 175개** (2026-08-30).
+     선배 네 기수가 실제로 쓴 책(NGUYỄN VIỆT HƯƠNG)의 차례 그대로다 — 내가 고른 것이 아니다.
+     앱이 원래 갖고 있던 14개는 '빠른 문법'으로 남겨 둔다(짧게 훑기 좋다). */
+  gram:  { name: '문법', items: () => [['교재 문법 175', gramEntry],
+                                      ['빠른 문법 14', quickGramEntry]] },
   /* 문화는 **한 권**으로 모았다 (대표님 지시, 2026-08-30).
      전에는 세트 표지에 한 조각씩 붙어 있었다 — 읽고 싶을 때 찾아갈 길이 없었다. */
   cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
@@ -4812,6 +4818,69 @@ function seniorStar() {
   i.title = tr('선배 기수가 실제로 시험 본 낱말');
   return i;
 }
+
+/* ---------- 교재 문법 (1권) ----------
+   책 → 과 → 문법 카드. 한 과가 곧 한 강이다(문법 5~8개).
+   예문은 낱말마다 눌러 소리·발음·뜻을 볼 수 있다 — 낱말 카드와 같은 방식이다. */
+let GRAM = null;
+const gkey = (bi, ni) => 'G' + bi + '-' + ni;
+
+function gramEntry() {
+  if (GRAM) return drawGramList();
+  const list = $('#dayList'); list.textContent = '';
+  list.append(el('li', 'catpick', tr('불러오는 중…')));
+  show('course', '문법', true);
+  fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { GRAM = j; drawGramList(); })
+    .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
+}
+
+function drawGramList() {
+  const list = $('#dayList'); list.textContent = '';
+  const tot = GRAM.books.reduce((a, b) => a + b.bai.reduce((c, x) => c + x.g.length, 0), 0);
+  const done = GRAM.books.reduce((a, b, bi) =>
+    a + b.bai.filter((x, ni) => S.done[gkey(bi, ni)]).length, 0);
+  const head = el('li', 'catpick');
+  head.append(el('span', 'msub', tr('문법') + ' ' + tot + ' · ' + tr('끝낸 과') + ' ' + done + '/30'));
+  list.append(head);
+  GRAM.books.forEach((b, bi) => {
+    const sec = el('li', 'catpick');
+    sec.append(el('span', 'msub', '📘 ' + esc(b.book)));
+    list.append(sec);
+    b.bai.forEach((x, ni) => {
+      const k = gkey(bi, ni), fin = !!S.done[k];
+      const btn = el('button');
+      btn.dataset.done = fin ? '1' : '0';
+      btn.append(el('span', 'num', x.no + tr('과')),
+                 el('span', 'nm', esc(x.t) + '<i class="catchip">' + x.g.length + '</i>'),
+                 el('span', 'st', fin ? tr('완료 ✔') : tr('보기')));
+      btn.onclick = () => { dive(drawGramList); startGram(bi, ni); };
+      const li = el('li'); li.append(btn); list.append(li);
+    });
+  });
+  show('course', '문법', true);
+}
+
+function startGram(bi, ni) {
+  const b = GRAM.books[bi], x = b.bai[ni];
+  L = { day: { day: gkey(bi, ni), theme: x.t, gram: 1 }, i: 0,
+        items: x.g.map(g => ({ k: 'gram', d: g })) };
+  drawCard();
+  show('learn', b.book + ' ' + x.no + '과 · ' + x.t, true);
+}
+
+/* 앱이 원래 갖고 있던 짧은 문법 14개 — 없애지 않는다. 급할 때 훑기 좋다. */
+function quickGramEntry() {
+  const list = $('#dayList'); list.textContent = '';
+  GRAMMAR.forEach((g, i) => {
+    const btn = el('button');
+    btn.append(el('span', 'nm', esc(g.title)), el('span', 'st', tr('보기')));
+    btn.onclick = () => { dive(quickGramEntry); startRule('G' + i); };
+    const li = el('li'); li.append(btn); list.append(li);
+  });
+  show('course', '빠른 문법', true);
+}
+
 function starBtn(k, ko, vi) {
   const b = el('button', 'starb' + (isStar(k) ? ' on' : ''));
   b.type = 'button';
@@ -5345,6 +5414,23 @@ function drawCard() {
     c.append(speakRow(x.vi, true));         // 듣기·느리게 + 따라 말하기 + 곡선 비교
   }
 
+  if (it.k === 'gram') {
+    c.append(el('div', 'gramt', esc(x.t)));
+    c.append(el('div', 'gramk', esc(x.k)));
+    c.append(el('div', 'rulenote', x.b));
+    x.ex.forEach(e => {
+      const box = el('div', 'wex');
+      const top = el('div', 'wextop');
+      const all = iconBtn('sound', '문장 전체 듣기', () => speakVi(e.vi));
+      all.classList.add('wexall'); top.append(all);
+      box.append(top);
+      box.append(tapLine(e.vi, 'wexvi tapline'));
+      box.append(el('div', 'wexko', esc(e.ko)));
+      box.append(el('div', 'wexkr', '[' + esc(S.region === 's' ? (e.krs || e.kr) : e.kr) + ']'));
+      c.append(box);
+    });
+  }
+
   if (it.k === 'cult') {
     c.append(el('div', 'cultemo', esc(x.e)));
     c.append(el('div', 'ko', esc(x.t)));
@@ -5504,7 +5590,7 @@ function drawCard() {
      마지막 장의 단추는 '다음'이 아니라 진도를 확정하는 자리라 남긴다. */
   const last = L.i === L.items.length - 1;
   $('#next').hidden = !last;
-  $('#next').textContent = L.cult ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
+  $('#next').textContent = L.cult || L.day.gram ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
     : L.day.day === 'P1' || L.day.day === 'P2' ? '귀로 구별하기 ›' : '완료 ›';
 }
@@ -5514,6 +5600,7 @@ $('#next').onclick = () => {
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
   if (L.cult) { renderHome(); return; }
+  if (L.day.gram) { S.done[L.day.day] = now(); save(); renderHome(); return; }
   if (L.news) {                        // 기사 세트 — 대화 두 줄을 보고 끝. 채점도 복습도 없다
     if (!L.dlg && L.day.dialog) { L.items = [{ k: 'dialog', d: L.day.dialog }]; L.i = 0; L.dlg = true;
                                   drawCard(); show('learn', L.day.theme, true); return; }
