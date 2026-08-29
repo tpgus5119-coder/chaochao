@@ -107,6 +107,19 @@ def pct(a, b):
     return f"{len(a) / max(1, b) * 100:.0f}%"
 
 
+SENT = re.compile(r"[.?!]\s*$|[.?!]\s")
+
+
+def issent(ko, vi):
+    """낱말인가 문장인가.
+
+    갈라야 하는 까닭: 19기 시험은 낱말 20개 + **문장 10개**로 짜여 있고
+    20기는 거의 낱말뿐이다. 섞어 세면 19기 쪽만 문장으로 부풀어
+    '안 겹친다'는 잘못된 결론이 나온다 — 문장이 낱말과 겹칠 리 없다.
+    """
+    return bool(SENT.search(ko) or SENT.search(vi) or len(viof(vi).split()) >= 5)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", action="store_true")
@@ -140,8 +153,26 @@ def main():
 
     # ── 겹침 ────────────────────────────────────────────────────────────
     K = {g: {w[0] for w in bag[(g, "전체")] if w[0]} for g in ("19", "20")}
-    V = {g: {w[1] for w in bag[(g, "전체")] if w[1]} for g in ("19", "20")}
+    V = {g: {w[1] for w in bag[(g, "전체")] if w[1] and not issent(w[2], w[3])}
+         for g in ("19", "20")}
+    SEN = {g: {w[1] for w in bag[(g, "전체")] if w[1] and issent(w[2], w[3])}
+           for g in ("19", "20")}
     both_k, both_v = K["19"] & K["20"], V["19"] & V["20"]
+    BOOK = {w[1] for (k, _), v in G["20"].items() if k == "기타" for w in v
+            if w[1] and not issent(w[2], w[3])}
+
+    L.append("### 먼저 — 낱말과 문장을 갈랐다")
+    L.append("")
+    L.append("19기 시험은 **낱말 20개 + 문장 10개**로 짜여 있다. 20기는 거의 낱말뿐이다.")
+    L.append("섞어 세면 19기만 문장으로 부풀어 겹침이 낮게 나온다.")
+    L.append("")
+    L.append("| 기수 | 낱말 | 문장 |")
+    L.append("|---|---:|---:|")
+    for g in ("19", "20"):
+        L.append(f"| {g}기 | {len(V[g]):,} | {len(SEN[g]):,} |")
+    L.append("")
+    L.append(f"문장끼리는 **{len(SEN['19'] & SEN['20'])}개** 겹친다. 아래 겹침은 모두 **낱말만** 센 것이다.")
+    L.append("")
 
     L.append("## 답: **낱말 못은 절반쯤 같고, 시험 자체는 다르다**")
     L.append("")
@@ -193,8 +224,69 @@ def main():
         L.append(f"| {n} | {a1} | {b1} | {ov * 100:.0f}% |")
     L.append("")
     L.append("**회차 번호는 해마다 새로 짜인다.** 19기 30회차와 20기 30회차는 딴 시험이다.")
-    L.append("그러니 22기 시험 문제를 미리 아는 것은 아니다. 다만 **낱말 못은 겹친다** —")
-    L.append("두 기수를 합친 3,194낱말 안에서 나올 가능성이 높다는 뜻이다.")
+    L.append("")
+
+    # ── 번호 말고 **내용**으로 짝을 찾으면 줄기가 보인다 ──────────────────
+    RD = {}
+    for g in ("19", "20"):
+        RD[g] = {n: {w[1] for w in G[g][("일일", n)] if w[1] and not issent(w[2], w[3])}
+                 for (k, n) in G[g] if k == "일일"}
+        RD[g] = {n: s for n, s in RD[g].items() if len(s) >= 10}
+    best = []
+    for n, x in sorted(RD["19"].items()):
+        s, m = max(((len(x & y) / min(len(x), len(y)), m) for m, y in RD["20"].items()),
+                   default=(0, 0))
+        best.append((n, m, s))
+
+    L.append("### 그런데 **번호 말고 내용으로** 짝을 찾으면 줄기가 보인다")
+    L.append("")
+    L.append("19기 회차마다 '20기 어느 회차와 가장 닮았나'를 찾아봤다.")
+    L.append("")
+    L.append("| 19기 회차 | 가장 닮은 20기 회차 | 겹침 | 번호 차이 |")
+    L.append("|---:|---:|---:|---:|")
+    for n, m, s in sorted(sorted(best, key=lambda b: -b[2])[:9]):
+        L.append(f"| {n} | {m} | {s * 100:.0f}% | {m - n:+d} |")
+    L.append("")
+    L.append("**번호 차이가 들쭉날쭉이 아니라 뒤로 갈수록 고르게 벌어진다.**")
+    L.append("두 기수가 **같은 교재를 같은 차례로** 따라갔다는 뜻이다. 20기는 같은 데를")
+    L.append("가는 데 회차를 더 썼다 — 낱말을 더 촘촘히 냈다.")
+    L.append("")
+
+    # ── 45% 가 왜 낮지 않은가 ────────────────────────────────────────────
+    a, b, ov = len(V["19"]), len(V["20"]), len(both_v)
+    n_est = round(a * b / max(1, ov))
+    inA, inB, inAB = len(V["19"] & BOOK), len(V["20"] & BOOK), len(V["19"] & V["20"] & BOOK)
+    exp = inA * inB / max(1, len(BOOK))
+    oa, ob = V["19"] - BOOK, V["20"] - BOOK
+
+    L.append("## 45%가 낮은 게 아니다 — **딱 이만큼 나와야 맞다**")
+    L.append("")
+    L.append("같은 교재를 쓴 두 기수인데 절반도 안 겹치는 게 이상해 보인다. 재 봤다.")
+    L.append("")
+    L.append("선생님 두 분이 **같은 낱말 못에서 저마다 골라** 시험을 냈다면, 겹침은")
+    L.append("`19기 수 × 20기 수 ÷ 못의 크기` 다. 거꾸로 풀면 못의 크기가 나온다:")
+    L.append("")
+    L.append(f"    {ov} = {a:,} × {b:,} ÷ N   →   N ≈ **{n_est:,}낱말**")
+    L.append("")
+    L.append(f"우리가 가진 `4권 베트남어 교재_단어.xlsx` 는 **한 권치 {len(BOOK):,}낱말**이다.")
+    L.append(f"기초 베트남어는 1~4권이니 네 권이면 대략 {len(BOOK) * 4:,}낱말 —")
+    L.append(f"**추정한 못 {n_est:,}과 거의 같다.**")
+    L.append("")
+    L.append("> 이건 '네 권이 비슷한 분량'이라는 어림이다. 1~3권 낱말 목록은 우리에게 없다.")
+    L.append("")
+    L.append("교재 안팎으로 갈라 보면 더 뚜렷하다:")
+    L.append("")
+    L.append("| 어디 | 19기 | 20기 | 둘 다 | 우연이라면 |")
+    L.append("|---|---:|---:|---:|---:|")
+    L.append(f"| 교재 낱말 목록 **안** | {inA} | {inB} | **{inAB}** | {exp:.0f} |")
+    L.append(f"| 교재 목록 **밖** | {len(oa):,} | {len(ob):,} | {len(oa & ob):,} | — |")
+    L.append("")
+    L.append(f"**교재 안에서는 우연보다 {inAB / max(1, exp):.1f}배 더 겹친다.** 함께 교재를 따라간 증거다.")
+    L.append("교재 밖 낱말은 선생님이 그때그때 더한 것이라 겹칠 까닭이 없다.")
+    L.append("")
+    L.append("정리 — **낱말 못은 같고, 거기서 고른 것이 다르다.** 22기도 이 못에서 나온다.")
+    L.append(f"두 기수를 합친 {len(V['19'] | V['20']):,}낱말이 교재 못({n_est:,})의 "
+             f"**{len(V['19'] | V['20']) / n_est * 100:.0f}%** 를 덮는다.")
     L.append("")
 
     # 19기에만 있는 낱말 맛보기 — 뜻이 아니라 **말**로 골라야 한다

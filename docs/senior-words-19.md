@@ -9,9 +9,9 @@
 | 갈래 | 몇 개 | 번호 범위 | 낱말(중복 포함) | 낱말(서로 다른 것) |
 |---|---:|---|---:|---:|
 | 주간 시험 | 3 | 1~3 | 238 | 234 |
-| 일일 시험 | 99 | 1~110 | 3,862 | 3,176 |
+| 일일 시험 | 99 | 1~110 | 3,389 | 2,714 |
 | 그 밖 | 1 | -~- | 80 | 80 |
-| **합** | 103 | | **4,180** | **3,190** |
+| **합** | 103 | | **3,707** | **2,728** |
 
 ## 주간 시험 (100낱말)
 
@@ -25,56 +25,56 @@
 
 | 번호 | 낱말 수 | 답 있는 것 | 첫 낱말 다섯 |
 |---:|---:|---:|---|
-| 1 | 40 | 20 | 건강한 · 매우 좋지 않은 · 그저 그래 · 피곤한 · 또한 |
-| 2 | 40 | 20 | 경찰관 · 요리사 · 직원 · 의사 · 화가 |
-| 3 | 40 | 20 | 표, 판 · 보다 · 남성 · 모음 · 읽다 |
+| 1 | 31 | 29 | 건강한 · 매우 좋지 않은 · 그저 그래 · 피곤한 · 또한 |
+| 2 | 30 | 30 | 경찰관 · 요리사 · 직원 · 의사 · 화가 |
+| 3 | 30 | 30 | 표, 판 · 보다 · 남성 · 모음 · 읽다 |
 | 4 | 20 | 0 | 밥 cơm · 먹다 ăn · 실례합니다 Xin lỗi · 오늘 Hôm nay · 내일 Ngày mai |
-| 5 | 70 | 20 | 밥 · 먹다 · 실례합니다 · 오늘 · 내일 |
-| 6 | 40 | 20 | 감자 · 개 · 계란 · 계란 후라이 · 고양이 |
-| 7 | 42 | 20 | 비싼 · 싼 · 맛있는 · 맛없는 · 아름다운 |
-| 8 | 46 | 20 | 약한 · 독일 · 빠른 · 반말(YES) · 어린 |
-| 9 | 41 | 20 | 유쾌한,재미있는 · 얌전한 · 어려운 · 쉬운 · 성격이 급한 |
-| 10 | 42 | 20 | 긍정적인 · 구두쇠 · 국제적인 · 가을 · 봄 |
-| 11 | 40 | 20 | to eat · to drink · to sleep · to get up · to work |
-| 12 | 41 | 20 | to paint · to live · to send · to buy · to like |
-| 13 | 31 | 11 | 동일한 · ~보다 · 가장 · 위에 · 앞에 |
-| 14 | 41 | 20 | ~부터 ~까지 · 질린다 · 블루베리 · 밀크티 · 카메라 |
-| 15 | 41 | 20 | 알다 · 그저그래 / 어중간해 · 요리하다 · 희망하다 · 문법 |
-| 16 | 40 | 20 | volley ball · heavy/strong · close friend · hard · several/some |
-| 17 | 40 | 20 | [classifier]musical instrument · clever · special · weak/bad at/poor · |
-| 18 | 41 | 20 | To go · To arrive · To enter · To go up · To go down |
-| 19 | 70 | 20 | 밥 · 먹다 · 실례합니다 · 오늘 · 내일 |
-| 20 | 40 | 20 | (stronger negative)NO · a pair · be well-versed · blue · candy |
+| 5 | 60 | 30 | 밥 · 먹다 · 실례합니다 · 오늘 · 내일 |
+| 6 | 30 | 30 | 감자 · 개 · 계란 · 계란 후라이 · 고양이 |
+| 7 | 32 | 30 | 비싼 · 싼 · 맛있는 · 맛없는 · 아름다운 |
+| 8 | 37 | 29 | 약한 · 독일 · 빠른 · 반말(YES) · 어린 |
+| 9 | 32 | 29 | 유쾌한,재미있는 · 얌전한 · 어려운 · 쉬운 · 성격이 급한 |
+| 10 | 32 | 30 | 긍정적인 · 구두쇠 · 국제적인 · 가을 · 봄 |
+| 11 | 30 | 30 | to eat · to drink · to sleep · to get up · to work |
+| 12 | 31 | 30 | to paint · to live · to send · to buy · to like |
+| 13 | 22 | 20 | 동일한 · ~보다 · 가장 · 위에 · 앞에 |
+| 14 | 31 | 30 | ~부터 ~까지 · 질린다 · 블루베리 · 밀크티 · 카메라 |
+| 15 | 31 | 30 | 알다 · 그저그래 / 어중간해 · 요리하다 · 희망하다 · 문법 |
+| 16 | 30 | 30 | volley ball · heavy/strong · close friend · hard · several/some |
+| 17 | 30 | 30 | [classifier]musical instrument · clever · special · weak/bad at/poor · |
+| 18 | 31 | 30 | To go · To arrive · To enter · To go up · To go down |
+| 19 | 60 | 30 | 밥 · 먹다 · 실례합니다 · 오늘 · 내일 |
+| 20 | 30 | 30 | (stronger negative)NO · a pair · be well-versed · blue · candy |
 | 21 | 40 | 20 | relatives · before · poor · living · to graduate |
-| 22 | 40 | 20 | Three-ways crossroad · bamboo bridge · to miss an appointment · to sho |
-| 23 | 40 | 20 | to send · center · To · to continue · about (amounts or time) |
-| 24 | 40 | 20 | humid · dirty · to be sure · degree · give |
-| 25 | 39 | 19 | time · to depart (meaning in the lesson) · only · a.m · in the morning |
-| 26 | 40 | 20 | to return · conference · business trip · a moment ago · story / tale / |
-| 27 | 40 | 20 | Monday · Tuesday · Wednesday · Thursday · Friday |
-| 28 | 40 | 20 | midnight · decade · century · appointment · a movie being shown |
-| 29 | 40 | 20 | sunny · dirty · in fact · dry season · raining season |
-| 31 | 40 | 20 | sit · stand · open · close · start |
+| 22 | 31 | 29 | Three-ways crossroad · bamboo bridge · to miss an appointment · to sho |
+| 23 | 30 | 30 | to send · center · To · to continue · about (amounts or time) |
+| 24 | 30 | 30 | humid · dirty · to be sure · degree · give |
+| 25 | 29 | 29 | time · to depart (meaning in the lesson) · only · a.m · in the morning |
+| 26 | 30 | 30 | to return · conference · business trip · a moment ago · story / tale / |
+| 27 | 30 | 30 | Monday · Tuesday · Wednesday · Thursday · Friday |
+| 28 | 30 | 30 | midnight · decade · century · appointment · a movie being shown |
+| 29 | 30 | 30 | sunny · dirty · in fact · dry season · raining season |
+| 31 | 30 | 30 | sit · stand · open · close · start |
 | 32 | 40 | 20 | East · West · South · North · Hello |
-| 33 | 40 | 20 | society · urban / city · to become (a state / quality) · popular · rar |
-| 34 | 40 | 20 | procedure · accommodation · visa · for rent · to contact |
-| 35 | 40 | 20 | purpose · border checkpoint · form (document to be filled) · signature |
-| 36 | 40 | 20 | reception room(접대실) · elevator · money exchange counter(환전소) · large b |
-| 37 | 40 | 20 | menu(메뉴) · bowl · plate · dessert · choose |
-| 38 | 60 | 20 | Rolled pho · Hue beef noodle soup · Banana blossom salad · Thang noodl |
-| 39 | 40 | 20 | regulations / 규정 · level / 한도 · turning into / ~이 되다 · represents / 대표 |
-| 40 | 80 | 40 | to repair / 수리하다 · to hole / 구멍나다 · wheel / 바퀴 · or / 또는 · half an hou |
-| 41 | 42 | 20 | item / product (상품, 품목) · handmade / manual (수공, 손으로 하는) · all night l |
-| 42 | 40 | 20 | 양, 수량(quantity, amount) · –집을 빌리다 / 세를 얻다( to rent a house) · 다양하다(to  |
-| 43 | 41 | 20 | group (그룹) · special subject (특정 주제) · power (힘) · tuituion fees (수업료, |
-| 44 | 40 | 20 | even number (짝수) · rich (부자, 부유한) · ready-made (기성품, 이미 만들어진) · transp |
-| 46 | 40 | 20 | according to / ~에 따라 · escape / 탈출하다, 벗어나다 · crab / 게 · to clean up /  |
-| 47 | 40 | 20 | adverb(부사) · remember,miss(기억하다,그리워하다) · sometimes(가끔) · preposition(전 |
-| 49 | 40 | 20 | chance (기회) · area (지역 / 구역) · point of view (관점 / 시각) · way of thinki |
-| 50 | 42 | 20 | wet(젖다) · to criticize(비평하다) · bestseller(베스트셀러) · to exercise(운동하다) · |
-| 51 | 40 | 20 | hair · eyebrow · nose · lips · chin(턱) |
-| 53 | 40 | 20 | standard 기준 · difference 구별하다 · spoken language 구어 · negative 부정하다 · m |
-| 54 | 40 | 20 | local, 지역, 현지 · to talk, 말을 걸다 · to enjoy, 즐기다 · even, 심지어, ~조차 · to r |
+| 33 | 30 | 30 | society · urban / city · to become (a state / quality) · popular · rar |
+| 34 | 30 | 30 | procedure · accommodation · visa · for rent · to contact |
+| 35 | 30 | 30 | purpose · border checkpoint · form (document to be filled) · signature |
+| 36 | 30 | 30 | reception room(접대실) · elevator · money exchange counter(환전소) · large b |
+| 37 | 30 | 30 | menu(메뉴) · bowl · plate · dessert · choose |
+| 38 | 50 | 30 | Rolled pho · Hue beef noodle soup · Banana blossom salad · Thang noodl |
+| 39 | 30 | 30 | regulations / 규정 · level / 한도 · turning into / ~이 되다 · represents / 대표 |
+| 40 | 61 | 59 | to repair / 수리하다 · to hole / 구멍나다 · wheel / 바퀴 · or / 또는 · half an hou |
+| 41 | 33 | 29 | item / product (상품, 품목) · handmade / manual (수공, 손으로 하는) · all night l |
+| 42 | 30 | 30 | 양, 수량(quantity, amount) · –집을 빌리다 / 세를 얻다( to rent a house) · 다양하다(to  |
+| 43 | 31 | 30 | group (그룹) · special subject (특정 주제) · power (힘) · tuituion fees (수업료, |
+| 44 | 30 | 30 | even number (짝수) · rich (부자, 부유한) · ready-made (기성품, 이미 만들어진) · transp |
+| 46 | 30 | 30 | according to / ~에 따라 · escape / 탈출하다, 벗어나다 · crab / 게 · to clean up /  |
+| 47 | 30 | 30 | adverb(부사) · remember,miss(기억하다,그리워하다) · sometimes(가끔) · preposition(전 |
+| 49 | 30 | 30 | chance (기회) · area (지역 / 구역) · point of view (관점 / 시각) · way of thinki |
+| 50 | 32 | 30 | wet(젖다) · to criticize(비평하다) · bestseller(베스트셀러) · to exercise(운동하다) · |
+| 51 | 30 | 30 | hair · eyebrow · nose · lips · chin(턱) |
+| 53 | 30 | 30 | standard 기준 · difference 구별하다 · spoken language 구어 · negative 부정하다 · m |
+| 54 | 30 | 30 | local, 지역, 현지 · to talk, 말을 걸다 · to enjoy, 즐기다 · even, 심지어, ~조차 · to r |
 | 55 | 29 | 29 | 선풍기를 켜다 (turn on the fan) · 서명 (signature) · ~인 것 같다 (seem, appear) ·  |
 | 56 | 33 | 30 | blank – 빈칸 · commune – 촌, 마을 공동체 · to equip – 장비를 갖추다, 마련하다 · practice |
 | 57 | 30 | 30 | to swell 붓다, 부어오르다 · to try 노력하다 · to take exam 시험을 보다 · to leave mess |
@@ -166,7 +166,7 @@
 
 주간에 묶인 일일 회차 12개 / 일일 시험 99개. 주간 시험 하나가 **일일 4~5회차**를 담는다 — **일일은 날마다, 주간은 그 주 몰아서**다.
 
-정규화해서 세면 서로 다른 낱말은 **1,739개**(글자 그대로 세면 3,190개로 부풀어 보인다).
+정규화해서 세면 서로 다른 낱말은 **1,739개**(글자 그대로 세면 2,728개로 부풀어 보인다).
 
 ## 여러 번 나온 낱말 (반복 출제)
 

@@ -133,14 +133,28 @@ def harvest(rows, hi, blocks):
     """
     got = []
     for j in blocks:
+        prev = None                            # 바로 앞에 넣은 것의 자리
         for r in rows[hi + 1:]:
             cell = lambda k: (r[j[k]] if k in j and j[k] < len(r) else "")   # noqa: B023
             ko, vi, kind = cell("ko"), cell("vi"), cell("kind")
             if blank(ko):
                 continue
+            ko = ko.strip()
+            # **문장 부분은 두 줄에 하나다.** 번호 있는 줄에 한국어를 적고,
+            # 바로 아래 번호 없는 줄에 베트남어를 **같은 칸으로** 내려 적었다:
+            #     21 | 내 소개를 할게요.
+            #        | Xin tự giới thiệu.
+            # 이걸 못 보면 문장 열 개가 '답 없는 낱말' 스무 개로 흩어진다 —
+            # 19기 1회차가 20낱말인데 40으로 부풀어 있던 까닭이다.
+            if (prev is not None and not got[prev][1] and blank(cell("no"))
+                    and not KO.search(ko) and VI.search(ko)):
+                got[prev] = (got[prev][0], ko, got[prev][2])
+                prev = None
+                continue
             if not KO.search(ko) and not re.search(r"[A-Za-z]", ko):
                 continue                       # 안내문·빈 서식 줄
-            got.append((ko.strip(), (vi or "").strip(), (kind or "").strip()))
+            got.append((ko, (vi or "").strip(), (kind or "").strip()))
+            prev = len(got) - 1
     return got
 
 
