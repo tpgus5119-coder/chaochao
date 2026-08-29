@@ -2915,7 +2915,10 @@ function drawDayCard(i) {
   b.append(wcard);
 
   const dcard = el('div', 'excard');
-  dcard.append(el('h3', 'exhead', esc(d.dialog.title)));
+  // 대화 제목은 한국어로만 나오던 자리다 — 베트남 분에겐 뜻 모를 글자였다.
+  // 주제와 같은 꼴로 두 말을 나란히 둔다(한국어를 배우러 왔으니 한국어도 남긴다).
+  dcard.append(el('h3', 'exhead', esc(d.dialog.title)
+    + (d.dialog.title_vi ? '<span class="exmeta">' + esc(d.dialog.title_vi) + '</span>' : '')));
   d.dialog.lines.forEach(l => dayWordRow(dcard, l.ko, l.vi, l.who + '. '));
   b.append(dcard);
 

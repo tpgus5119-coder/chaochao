@@ -40,6 +40,36 @@ def viof(s):
     return re.sub(r"\s+", " ", s).strip()
 
 
+def venn3(A, B, C, names=("A", "B", "C")):
+    """세 뭉치를 일곱 칸으로 가르고 **스스로 검산한다.**
+
+    왜 검산을 도구에 박아 넣나: 이 표를 처음 냈을 때 '19기+앱 165' 처럼
+    **껍데기 조각**을 교집합인 양 늘어놓아 '둘 겹침이 셋 겹침보다 작다'는
+    말이 안 되는 그림이 나왔다. 숫자는 맞았고 이름이 틀렸다.
+    이제 조각과 교집합을 따로 돌려주고, 어긋나면 그 자리에서 멈춘다.
+    """
+    a, b, c = names
+    only = {f"{a}만": A - B - C, f"{b}만": B - A - C, f"{c}만": C - A - B,
+            f"{a}∩{b}만": (A & B) - C, f"{a}∩{c}만": (A & C) - B,
+            f"{b}∩{c}만": (B & C) - A, f"{a}∩{b}∩{c}": A & B & C}
+    pair = {f"{a}∩{b}": A & B, f"{a}∩{c}": A & C, f"{b}∩{c}": B & C}
+    tri = A & B & C
+
+    ks = list(only)
+    for i, x in enumerate(ks):                       # ① 칸끼리 겹치면 안 된다
+        for y in ks[i + 1:]:
+            assert not (only[x] & only[y]), f"칸이 겹친다: {x} × {y}"
+    assert sum(len(v) for v in only.values()) == len(A | B | C), "칸 합이 합집합과 다르다"
+    for nm, S_ in ((a, A), (b, B), (c, C)):          # ② 칸을 도로 모으면 원래 크기
+        got = sum(len(v) for k, v in only.items() if nm in k)
+        assert got == len(S_), f"{nm} 복원 실패 {got} ≠ {len(S_)}"
+    ie = (len(A) + len(B) + len(C) - len(A & B) - len(A & C) - len(B & C) + len(tri))
+    assert ie == len(A | B | C), "포함배제가 안 맞는다"
+    for nm, v in pair.items():                       # ③ 쌍 ≥ 삼중 (이게 깨지면 계산이 틀린 것)
+        assert len(v) >= len(tri), f"{nm}({len(v)}) < 삼중({len(tri)}) — 있을 수 없다"
+    return only, pair, tri
+
+
 def load(gi):
     """기수 하나를 {(갈래, 번호): [(뜻열쇠, 말열쇠, 원래한국어, 원래베트남어)]} 로."""
     suffix = "" if gi == "20" else f"-{gi}"
@@ -334,6 +364,38 @@ def main():
     allnew = (V["19"] | V["20"] | kv) - av
     L.append(f"| **셋 다 합쳐** | {len(V['19'] | V['20'] | kv):,} | "
              f"{len((V['19'] | V['20'] | kv) & av):,} | **{len(allnew):,}** |")
+    L.append("")
+
+    # ── 19기 × 20기 × 앱, 세 뭉치 ────────────────────────────────────────
+    only, pair, tri = venn3(V["19"], V["20"], av, ("19기", "20기", "앱"))
+    L.append("### 세 뭉치를 한꺼번에")
+    L.append("")
+    L.append("**먼저 진짜 교집합.** (아래 '조각' 표와 헷갈리면 안 된다 —")
+    L.append("처음에 조각을 교집합인 양 늘어놨다가 '둘 겹침이 셋 겹침보다 작다'는")
+    L.append("있을 수 없는 그림이 나왔다. 숫자는 맞았고 이름이 틀렸다.)")
+    L.append("")
+    L.append("| 교집합 | 크기 | 그중 셋 다 | 그 쌍에만 |")
+    L.append("|---|---:|---:|---:|")
+    for nm, v in pair.items():
+        L.append(f"| {nm} | **{len(v):,}** | {len(tri):,} | {len(v - tri):,} |")
+    L.append("")
+    L.append(f"세 교집합 모두 삼중교집합 {len(tri):,} 보다 크다 — 도구가 이걸 어기면 그 자리에서 멈춘다.")
+    L.append("")
+    L.append("**칸으로 가르면** (일곱 칸은 서로 안 겹치고, 다 더하면 합집합이다)")
+    L.append("")
+    L.append("| 어디에만 있나 | 낱말 |")
+    L.append("|---|---:|")
+    for nm, v in only.items():
+        L.append(f"| {nm} | {len(v):,} |")
+    L.append(f"| **합** | **{sum(len(v) for v in only.values()):,}** |")
+    L.append("")
+    L.append("가운데(셋 다)가 두꺼운 것은 이상한 일이 아니다. 앱에도 있는 낱말은")
+    L.append("**흔한 기본 낱말**이라 두 기수 모두가 낸다:")
+    L.append("")
+    L.append(f"- 19기 낱말 전체 중 20기에도 있는 비율 — {len(V['19'] & V['20']) / len(V['19']) * 100:.0f}%")
+    L.append(f"- 그런데 `19기 ∩ 앱` 중 20기에도 있는 비율 — **{len(tri) / len(pair['19기∩앱']) * 100:.0f}%**")
+    L.append("")
+    L.append("가운데 낱말 보기: " + " · ".join(sorted(tri)[:16]))
     L.append("")
 
     # ── 낱말 못 ─────────────────────────────────────────────────────────
