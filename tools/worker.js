@@ -62,6 +62,42 @@ export default {
         note: '무료 몫은 프로젝트마다 따로 걸린다. 열쇠 수 × 모델 수 = 하루 한도 배수.' }),
         { headers: { 'Content-Type': 'application/json' } });
     }
+    /* **실제로 살아 있는지** 재 본다. 열쇠 × 모델을 하나씩 눌러 보고 결과만 돌려준다.
+       왜 필요한가: ?keys=1 은 '몇 개 꽂혔나'만 안다. 하나가 폐기됐어도 개수는 그대로다.
+       '5개 다 작동하니?'에 짐작으로 답하지 않으려면 눌러 보는 수밖에 없다.
+       비용: 열쇠 수 × 모델 수 만큼 아주 작은 요청이 나간다(각 1토큰). 손으로 부를 때만 돈다.
+       열쇠는 안 내보낸다 — 몇 번째 열쇠인지만 번호로 말한다.
+       주소: https://viet-ai.chaochao-app.workers.dev/?health=1 */
+    if (new URL(req.url).searchParams.get('health') === '1') {
+      const ks = (env.GEMINI_KEY || '').split(',').map(k => k.trim()).filter(Boolean);
+      const tiny = JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: 'hi' }] }],
+        generationConfig: { maxOutputTokens: 1, thinkingConfig: { thinkingBudget: 0 } } });
+      const out = [];
+      for (const model of MODELS) {
+        const row = { model, ok: [], bad: [] };
+        for (let i = 0; i < ks.length; i++) {
+          let st = 0;
+          try {
+            const rr = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=` + ks[i],
+              { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: tiny });
+            st = rr.status;
+          } catch (e) { st = 0; }
+          (st === 200 ? row.ok : row.bad).push(st === 200 ? i + 1 : `${i + 1}:${st}`);
+        }
+        out.push(row);
+      }
+      const live = out.filter(r => r.ok.length);
+      return new Response(JSON.stringify({
+        keys: ks.length, cloudflare: !!env.AI,
+        살아있는모델: live.map(r => r.model),
+        죽은모델: out.filter(r => !r.ok.length).map(r => r.model),
+        모델별: out,
+        읽는법: '숫자는 열쇠 번호. 429=오늘 몫 다 씀, 404=없는 모델, 400=요청을 안 받음.',
+      }, null, 1), { headers: { 'Content-Type': 'application/json; charset=utf-8' } });
+    }
+
     if (req.method !== 'POST' || !allowed)
       return new Response('{"error":"blocked"}', { status: 403, headers: cors });
 
