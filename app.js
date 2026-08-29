@@ -2866,6 +2866,12 @@ function drawDayCard(i) {
   b.append(head);
 
   const top = el('div', 'excard');
+  // 표지 — 그 과가 무엇에 대한 것인지 한 장으로. 글은 이미 그림 안에 박혀 있다.
+  if (d.cover) {
+    const cv = el('img', 'kcover');
+    cv.src = 'img/' + d.cover; cv.alt = d.theme.ko; cv.loading = 'lazy';
+    top.append(cv);
+  }
   top.append(el('div', 'exask', esc(d.theme.ko)));
   top.append(el('div', 'exbody', esc(d.theme.vi)));
   const findG = list => list.findIndex(g => g.pattern === d.grammar);   // 번호 아닌 이름으로 찾는다
@@ -4307,8 +4313,9 @@ function startLearn(d) {
   const ci = cultureFor(d);
   if (d.intro) items.push({ k: 'cover', d: {
     t: label(d) + ' · ' + d.theme, b: d.intro,
-    // 표지 그림은 그날 대화 장면 그림. 이미 만들어 둔 것이라 새로 뽑을 것이 없다.
-    img: (d.dialog && d.dialog.img) || (d.words || []).map(w => w.img).find(Boolean),
+    // 표지 그림은 **그 과의 표지판**(cover). 그날 낱말 그림 셋에 제목을 얹어 만든 것이라
+    // 새로 뽑을 것이 없고, 제목이 진짜 글꼴로 박혀 있어 추상적인 주제도 알아본다.
+    img: d.cover || (d.dialog && d.dialog.img) || (d.words || []).map(w => w.img).find(Boolean),
     emoji: (d.dialog && d.dialog.emoji) || '',
     // 사용법은 처음 세 세트에만. 그 뒤엔 손이 기억한다 — 계속 띄우면 잔소리가 된다.
     how: (Object.keys(S.done).filter(k => +k >= 1).length < 3)

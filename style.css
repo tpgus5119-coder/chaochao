@@ -1560,3 +1560,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .learnpick b{font-size:20px}
 .learnpick span{font-size:16px; color:var(--accent); font-weight:600}
 .learnpick i{font-style:normal; font-size:13px; color:var(--dim)}
+
+/* 과 표지 — 가로로 넓은 한 장. 낱말 그림(정사각)과 달라 보여야 장이 바뀐 것이 보인다. */
+.kcover{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;
+  border-radius:10px;margin:-4px 0 12px;background:var(--soft)}
