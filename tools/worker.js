@@ -25,10 +25,19 @@
 let CACHE = { at: 0, list: [] };
 const TTL = 30 * 60 * 1000;
 
-// 말을 주고받는 모델만 남긴다. 그림 그리기·음성 합성·임베딩은 뺀다.
-// gemma 는 남긴다 — 같은 열쇠로 공짜고, 하루 몫이 **따로** 걸린다(글 작업에 큰 보탬).
-// 대신 귀가 없어서 소리를 보내면 400 을 뱉는데, BUSY 에 400 이 있으니 알아서 넘어간다.
-const SKIP = /embedding|aqa|imagen|veo|tts|image-generation/i;
+/* 말을 주고받는 모델만 남긴다.
+   실제 목록(36개)을 받아 보고 정한 것이다 — 짐작이 아니다. 걸러 내는 것들:
+     -image · nano-banana · lyria  → 그림·음악을 만드는 모델. 글을 못 준다.
+     transcribe                    → 받아 적기만 한다. 채점 지시를 안 따른다.
+     deep-research · antigravity   → 오래 걸리는 조사용. 채점 한 줄에 쓸 것이 아니다.
+     computer-use · robotics       → 화면·로봇 조종용.
+     customtools                   → 도구 호출 전용 변종.
+   gemma 는 남긴다 — 같은 열쇠로 공짜고 하루 몫이 **따로** 걸린다(글 작업에 큰 보탬).
+   대신 귀가 없어서 소리를 보내면 400 을 뱉는데, BUSY 에 400 이 있으니 알아서 넘어간다. */
+const SKIP = /embedding|aqa|imagen|veo|tts|image|lyria|nano-banana|deep-research|computer-use|robotics|antigravity|transcribe|customtools/i;
+/* 한 번 부를 때 최대 몇 모델까지 훑나. 목록이 18개인데 다 훑으면 앱이 기다리다 지친다.
+   막힌 모델은 빨리 답하므로(429·400) 열둘이면 몫 큰 lite 까지 닿는다. 그 뒤는 예비가 받는다. */
+const MAX_TRY = 12;
 /* 차례: 좋은 것 먼저. 앞엣것이 붐빌 때만 뒤로 밀린다.
    점수가 낮을수록 먼저 간다.
      · flash → flash-lite → 나머지 → gemma → pro
@@ -41,8 +50,8 @@ function rank(n) {
   else if (/gemma/.test(n)) tier = 5;   // 몫은 크지만 글솜씨가 아래다 — pro 앞
   else if (/flash-lite/.test(n)) tier = 1;
   else if (/flash/.test(n)) tier = 0;
-  const raw = /preview|exp/.test(n) ? 0.5 : 0;      // 정식판을 살짝 앞에
-  return tier * 100 + raw * 10 - ver;
+  const raw = /preview|exp/.test(n) ? 5 : 0;       // 정식판을 앞에, 미리보기는 그 뒤
+  return tier * 100 + raw - ver;
 }
 async function models(key) {
   if (CACHE.list.length && Date.now() - CACHE.at < TTL) return CACHE.list;
@@ -225,7 +234,7 @@ export default {
 
     /* ① 구글 — 열쇠로 쓸 수 있는 모델을 좋은 것부터 훑는다.
        한 바퀴만 돈다. 앱도 세 번 재시도하므로 여기서 더 돌면 몫이 순식간에 바닥난다. */
-    const list = await models(keys[0]);
+    const list = (await models(keys[0])).slice(0, MAX_TRY);
     let r = null, first = null;
     for (const model of list) {
       for (let k = 0; k < keys.length; k++) {
