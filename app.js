@@ -491,9 +491,7 @@ const UIVI = {
   '실전 단어': 'Từ vựng thực chiến',
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
-  'GYBM 20기가 실제로 본 시험입니다 — 하루 30낱말, 다섯 번마다 주간시험. ': 'Đây là bài thi thật của khóa GYBM 20 — mỗi ngày 30 từ, cứ 5 lần thì có bài thi tuần. ',
-  ' 표시는 19기도 같은 말을 시험 봤다는 뜻입니다': ' nghĩa là khóa 19 cũng đã thi từ đó',
-  '중요': 'Quan trọng', '낱말': 'từ', '개': 'từ', '완료 ✔': 'Hoàn thành ✔',
+  '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
   '실전 단어 복습': 'Ôn từ vựng thực chiến',
   '하루 5분 복습과 섞이지 않습니다': 'Không trộn với phần ôn tập 5 phút mỗi ngày',
   '이 회차 시험 보기': 'Làm bài thi đợt này',
@@ -6493,15 +6491,7 @@ function drawSenior() {
   const list = $('#dayList');
   list.textContent = '';
 
-  /* 머리말 — 이 자료가 무엇이고 「중요」가 무슨 뜻인지 한 번은 말해 줘야 한다.
-     '중요'를 내가 매긴 등급으로 오해하면 안 된다. 19기도 같은 말을 시험 봤다는 **사실**이다. */
-  const imp = SENIOR.words.filter(w => w[2] & 1).length;
-  const hd = el('li', 'catpick');
-  hd.append(el('span', null, tr('GYBM 20기가 실제로 본 시험입니다 — 하루 30낱말, 다섯 번마다 주간시험. ') +
-    '<b>' + tr('중요') + '</b>' + tr(' 표시는 19기도 같은 말을 시험 봤다는 뜻입니다') +
-    ' (' + imp + tr('개') + ').'));
-  list.append(hd);
-
+  // 머리말은 뺐다 (2026-08-29, 대표님 지시) — 목록 위에 설명이 길게 붙어 있으면 눈이 먼저 지친다.
   const rev = el('li', 'catpick');
   const due = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
   const rb = el('button', 'primary sm', tr('실전 단어 복습') + (due ? ' (' + due + ')' : ''));
