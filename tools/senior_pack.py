@@ -59,8 +59,8 @@ def load(f):
     return json.loads((D / f).read_text(encoding="utf-8"))["sets"]
 
 # 19기에 나온 낱말 — 「중요」 표를 붙일 근거
-vi19 = {low(w["vi"]) for s in load("_senior_words-19.json")
-        for w in s["words"] if w.get("vi")}
+vi19 = {low(w["vi"]) for s in load("_senior_words-19.json") for w in s["words"]
+        if (w.get("vi") or "").strip() and (w.get("ko") or "").strip()}
 # 앱이 이미 가르치는 낱말 — 새로 외울 것이 몇인지 학습자가 알게
 taught = {low(w["vi"]) for d in json.loads((D / "days.json").read_text(encoding="utf-8"))["days"]
           for w in (d.get("words") or []) if w.get("vi")}
@@ -81,17 +81,21 @@ def clean(words):
         out.append((vi, ko))
     return out
 
-daily, weekly = [], []
+daily, weekly, extra = [], [], []
 for st in load("_senior_words.json"):
     ws = clean(st["words"])
     if len(ws) < 5:
         continue
     if st["kind"] == "일일":
-        for k in range(0, len(ws), PER):  # 한 파일에 두 회가 들었으면 쪼갠다
-            if len(ws[k:k + PER]) >= 5:
-                daily.append((st["no"], ws[k:k + PER]))
+        ch = [ws[k:k + PER] for k in range(0, len(ws), PER)]   # 한 파일에 두 회가 들었으면 쪼갠다
+        if len(ch) > 1 and len(ch[-1]) < 5:
+            tail = ch.pop(); ch[-1] += tail   # 짧은 꼬리는 앞에 붙인다 — 낱말을 안 버린다
+        for c in ch:
+            if c: daily.append((st["no"], c))
     elif st["kind"] == "주간":
         weekly.append((st["no"], ws))
+    else:
+        extra.append(ws)                  # 모음 — 시험지가 아니라 그 기수의 낱말장 전체
 daily.sort(key=lambda x: x[0])
 weekly.sort(key=lambda x: x[0])
 
@@ -105,6 +109,25 @@ for n, (_, ws) in enumerate(daily, 1):
 while wi < len(weekly):                   # 남은 주간시험은 뒤에 이어 붙인다
     wi += 1
     raw.append({"k": "w", "no": wi, "ws": weekly[wi - 1][1]})
+
+# 모음 — 시험지에 안 실린 낱말이 여기 있다. 빠뜨리면 722개가 통째로 사라진다
+#    (실제로 한 번 빠뜨렸다, 2026-08-29 대표님 지적). 시험지에 이미 나온 말은 빼고
+#    남은 것만 30개씩 끊어 뒤에 붙인다 — 앞의 회차들과 같은 크기여야 규칙적이다.
+seen_all = {low(v) for r in raw for v, _ in r["ws"]}
+rest = []
+for ws in extra:
+    for v, k in ws:
+        if low(v) not in seen_all:
+            seen_all.add(low(v))
+            rest.append((v, k))
+# 꼬리가 짧으면 앞 조각에 붙인다 — 낱말을 **한 개도 버리지 않는다.**
+# (전에 5개 미만이라고 버렸다가 두 개가 사라졌다, 2026-08-29 검산에서 잡음)
+mo = [rest[k:k + PER] for k in range(0, len(rest), PER)]
+if len(mo) > 1 and len(mo[-1]) < 5:
+    tail = mo.pop(); mo[-1] += tail
+for n, ws in enumerate(mo, 1):
+    if ws:
+        raw.append({"k": "x", "no": n, "ws": ws})
 
 # ── 낱말 한 벌 + 번호로 가리키기
 words, idx, sets = [], {}, []
@@ -123,6 +146,19 @@ out = {"note": "GYBM 20기가 실제로 본 시험 낱말. 하루 30낱말 · �
        "words": words, "sets": sets}
 p = D / "senior.json"
 p.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+# ── 검산 — 숫자를 눈으로 믿지 않는다 (2026-08-29 대표님 지적 뒤에 박아 둠)
+#    두 번 틀렸다: ① 모음 묶음을 통째로 빠뜨려 722개가 사라졌고
+#                 ② 꼬리 조각을 버려 2개가 더 사라졌다. 둘 다 화면에는 안 보였다.
+src20 = {low(w["vi"]) for st in load("_senior_words.json") for w in st["words"]
+         if (w.get("vi") or "").strip() and (w.get("ko") or "").strip()}
+got = {low(w[0]) for w in words}
+gotimp = {low(w[0]) for w in words if w[2] & 1}
+lost = src20 - got
+assert not lost, f"낱말 {len(lost)}개를 빠뜨렸다: {sorted(lost)[:8]}"
+want = src20 & vi19
+assert gotimp == want, f"「중요」가 안 맞는다 — 있어야 {len(want)}, 붙은 것 {len(gotimp)}"
+print(f"검산 통과 — 20기 낱말 {len(got)}개 모두 담김 · 「중요」 {len(gotimp)}개 = 19기와 겹치는 말 그대로")
+
 imp = sum(1 for w in words if w[2] & 1)
 kno = sum(1 for w in words if w[2] & 2)
 print(f"낱말 {len(words)}개 · 「중요」 {imp}개 · 앱에서 이미 배운 것 {kno}개")
