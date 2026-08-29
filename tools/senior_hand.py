@@ -70,6 +70,21 @@ def junk(vi, ko):
     return None
 
 
+def head(vi):
+    """낱말 하나로 다듬는다 — 시험지에는 '보기'가 여럿 적힌 칸이 많다.
+       'bố / ba' → bố · 'bến xe (buýt)' → bến xe · 'anh/chị/em họ' → anh họ.
+       예문을 만들 때도, 소리를 만들 때도 **낱말 하나**여야 한다."""
+    v = U.normalize("NFC", str(vi)).strip()
+    v = re.sub(r"\s*\([^)]*\)\s*", " ", v)          # 괄호 안은 곁들이 설명이다
+    if "/" in v:
+        parts = [x.strip() for x in v.split("/") if x.strip()]
+        if parts:
+            # 'anh/chị/em họ' 처럼 뒤에 공통 꼬리가 붙는 꼴을 살린다
+            tail = parts[-1].split()
+            v = parts[0] + (" " + " ".join(tail[1:]) if len(tail) > 1 and len(parts[0].split()) == 1 else "")
+    return re.sub(r"\s+", " ", v).strip(" ,.;:")
+
+
 def bare(v):
     """성조·모자·괄호·대소문자를 다 벗긴 뼈대. 겹침을 찾을 때만 쓴다."""
     s = U.normalize("NFD", v.lower())
@@ -107,6 +122,9 @@ def main():
         if not ko: dropped += 1; continue          # 남은 것은 문장 토막이다 — 버린다
         w = dict(w); w["ko"] = ko; w.pop("en", None)
         out.append(w); kept += 1
+    for w in out:                       # 낱말 하나로 다듬기
+        h = head(w["vi"])
+        if h and h != w["vi"]: w["vi"] = h
     junked = collections.Counter()
     keep = []
     for w in out:

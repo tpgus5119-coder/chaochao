@@ -87,13 +87,20 @@ def main():
                 elif k in made:
                     w["ex"] = made[k]
                     stat["예문 — 새로 만든 것"] += 1
-                else: stat["예문 없음"] += 1
+                else:
+                    # 예문을 끝내 못 만든 낱말은 **낱말이 아니다**. 두 번 넘게 부탁했는데도
+                    # 그 낱말이 든 문장이 안 나온다면 오타이거나 칸이 붙은 찌꺼기다.
+                    # (Bà ầy · ngưởi · mởcửa · bạn tari …)
+                    stat["예문을 못 만들어 뺌"] += 1
+                    continue
                 if w.get("img"): stat["그림 있음"] += 1
                 ws.append(w)
             ch = [ws[i:i + PER] for i in range(0, len(ws), PER)]
+            if not ws: continue
             units.append({"unit": u["unit"], "chapters": [{"n": i + 1, "words": c} for i, c in enumerate(ch)]})
         vols.append({"vol": v["vol"], "units": units,
-                     "words": v["words"], "chapters": sum(len(u["chapters"]) for u in units)})
+                     "words": sum(len(c["words"]) for u in units for c in u["chapters"]),
+                     "chapters": sum(len(u["chapters"]) for u in units)})
 
     out = {"note": "일곱 권으로 합친 과정. 한 강 15낱말. 복습 강 없음.", "vols": vols}
     (R / "data" / "course.json").write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")),
