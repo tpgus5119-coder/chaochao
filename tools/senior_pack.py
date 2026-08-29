@@ -18,11 +18,39 @@
 낱말은 한 벌만 두고 번호로 가리킨다 — 같은 낱말이 일일과 주간에 거듭 나오므로,
 그대로 담으면 내려받는 양이 두 배가 된다.
 """
-import json, pathlib, unicodedata
+import json, pathlib, re, unicodedata
 
 R = pathlib.Path(__file__).resolve().parent.parent
 D = R / "data"
 nf = lambda t: unicodedata.normalize("NFC", t.strip())
+
+HAN = re.compile(r"[가-힣]")
+ASCII = re.compile(r"[A-Za-z][A-Za-z0-9 .,\'’\-]*")
+def kor(t):
+    """뜻에서 영어를 걷어낸다 — 한국어만 남긴다.
+
+    왜: 선배 자료의 뜻은 'cell phone/ 휴대폰', '주소 address', '아내 – wife' 처럼
+    영어가 섞여 있는데 **일부만** 그렇다. 그러면 보기 넷 중 하나만 영어가 붙어
+    뜻을 몰라도 답이 보인다. 시험 화면을 실제로 열어 보고 알았다(2026-08-29):
+    'điện thoại di động' 문제의 보기가 [회의하다 / cell phone/ 휴대폰 / 가게·식당 / 권리·복리]
+    였고 영어가 붙은 것이 곧 정답이었다.
+
+    한국어가 하나도 없는 뜻(고유명사 등)은 손대지 않는다 — 지우면 뜻이 사라진다.
+    괄호는 안에 한국어가 있으면 그대로 둔다('반꼼 (베트남 떡)').
+    잃는 것: 'manteau' 같은 외래어 어원 표기. 답이 새는 것보다는 낫다."""
+    parts = [x.strip() for x in t.split("/")]
+    keep = [x for x in parts if HAN.search(x)]
+    s = " / ".join(keep) if keep else t
+    if not HAN.search(s):
+        return t.strip()
+    s = re.sub(r"\(([^)]*)\)", lambda m: m.group(0) if HAN.search(m.group(1)) else "", s)
+    s = ASCII.sub("", s)
+    if s.count("(") != s.count(")"):          # 짝 잃은 괄호만 턴다
+        s = re.sub(r"[()]", "", s)
+    s = re.sub(r"\s*[–\-]\s*$", "", s)
+    s = re.sub(r"\s*\(\s*\)", "", s)
+    s = re.sub(r"\s{2,}", " ", s).strip(" ,/–-")
+    return s if HAN.search(s) else t.strip()
 low = lambda t: nf(t).lower()
 
 def load(f):
@@ -38,7 +66,7 @@ taught = {low(w["vi"]) for d in json.loads((D / "days.json").read_text(encoding=
 KIND = {"일일": "d", "주간": "w", "기타": "x"}
 raw = []
 for s in load("_senior_words.json"):
-    ws = [(nf(w["vi"]), nf(w["ko"])) for w in s["words"] if w.get("vi") and w.get("ko")]
+    ws = [(nf(w["vi"]), kor(nf(w["ko"]))) for w in s["words"] if w.get("vi") and w.get("ko")]
     if len(ws) >= 5:
         raw.append({"k": KIND.get(s["kind"], "x"), "no": s["no"], "ws": ws})
 
