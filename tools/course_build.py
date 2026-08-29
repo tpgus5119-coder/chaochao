@@ -74,6 +74,9 @@ def main():
                 k = key(vi)
                 w = {"vi": vi, "ko": ko, "kr": vi_kr.word(vi), "krs": vi_kr.word(vi, True)}
                 if n: w["sr"] = 1                    # 선배 시험에 나온 낱말 = 별표
+                # **두 기수 이상**에 나온 낱말은 '핵심'이다. 한 기수에만 나온 말은 그 해
+                # 교재 사정일 수 있지만, 두 해 넘게 나온 말은 그 과정의 뼈대다.
+                if n >= 2: w["core"] = n
                 w.update(ex.get(k, {}))
                 e = example(vi)
                 if e:

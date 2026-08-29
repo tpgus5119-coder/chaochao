@@ -2437,7 +2437,8 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
   /* 과정 = **일곱 권 하나로** (대표님 결정, 2026-08-30).
      '하루 5분'과 '실전 단어'로 갈라져 있던 것을 합쳤다 — 같은 낱말을 두 군데서
      따로 외우게 하던 짜임이었다. 한 강 15낱말, 복습 강은 없다(복습 기능이 따로 있다). */
-  day:   { name: '과정', items: () => [['보기', courseEntry], ['기사', showNewsLearn]] },
+  day:   { name: '과정', items: () => [['전체 보기', courseEntry], ['핵심만', coreEntry],
+                                      ['기사', showNewsLearn]] },
   rev:   { name: '복습', items: () => [
             ['최근 학습', () => freshMenu('word')],
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
@@ -4831,6 +4832,55 @@ const gkey = (bi, ni) => 'G' + bi + '-' + ni;
    권 → 과 → 강. 한 강 15낱말. */
 let COURSE = null;
 const ckey = (vi, ui, ci) => 'C' + vi + '.' + ui + '.' + ci;
+
+
+/* ---------- 핵심만 (급할 때 가는 길) ----------
+   대표님 걱정: "학습량이 너무 많다". 전부 416강이다 — 하루 하나면 열네 달.
+   그래서 **두 기수 이상에 나온 낱말**만 뽑은 길을 따로 둔다(1,765낱말 · 118강).
+   한 기수에만 나온 말은 그 해 교재 사정일 수 있지만, 두 해 넘게 나온 말은
+   그 과정의 뼈대다. 급하면 이 길만 걸어도 된다. */
+let CORE = null;
+function coreEntry() {
+  if (COURSE) return drawCore();
+  courseEntryThen(drawCore);
+}
+function courseEntryThen(then) {
+  const list = $('#dayList'); list.textContent = '';
+  list.append(el('li', 'catpick', tr('불러오는 중…')));
+  show('course', '과정', true);
+  fetch('data/course.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; then(); })
+    .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
+}
+function coreList() {
+  if (CORE) return CORE;
+  const ws = [];
+  COURSE.vols.forEach(v => v.units.forEach(u => u.chapters.forEach(c =>
+    c.words.forEach(w => { if (w.core) ws.push(w); }))));
+  CORE = [];
+  for (let i = 0; i < ws.length; i += 15) CORE.push(ws.slice(i, i + 15));
+  return CORE;
+}
+function drawCore() {
+  const ch = coreList();
+  const list = $('#dayList'); list.textContent = '';
+  const head = el('li', 'catpick');
+  head.append(el('span', 'msub',
+    tr('네 기수 중 두 기수 이상에 나온 낱말만 모았습니다 — 급할 때는 이 길만 걸어도 됩니다.')));
+  list.append(head);
+  ch.forEach((c, i) => {
+    const k = 'K' + i, fin = !!S.done[k];
+    const b = el('button');
+    b.dataset.done = fin ? '1' : '0';
+    b.append(el('span', 'num', (i + 1) + tr('강')),
+             el('span', 'nm', c.slice(0, 3).map(w => esc(w.ko.split('/')[0].trim())).join(' · ')),
+             el('span', 'st', fin ? tr('완료 ✔') : c.length + tr('낱말')));
+    b.onclick = () => { dive(drawCore);
+      startLearn({ day: k, theme: tr('핵심') + ' ' + (i + 1), words: c, course: 1 }); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  show('course', '핵심만', true);
+}
 
 function courseEntry() {
   if (COURSE) return drawCourse();

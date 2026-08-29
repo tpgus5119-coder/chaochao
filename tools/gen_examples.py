@@ -51,7 +51,12 @@ def ask(words):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--limit", type=int, default=0)
+    # 여러 개를 한꺼번에 돌리려고 나눈다 — 한 판이 4천 개를 혼자 하면 일곱 시간이 걸린다.
+    ap.add_argument("--part", type=int, default=0)
+    ap.add_argument("--of", type=int, default=1)
     a = ap.parse_args()
+    global OUT
+    if a.of > 1: OUT = R / "data" / f"_examples-{a.part}.json"
     course = json.loads((R / "data" / "course.json").read_text(encoding="utf-8"))
     need = []
     for v in course["vols"]:
@@ -60,7 +65,14 @@ def main():
                 for w in c["words"]:
                     if not w.get("ex"): need.append({"vi": w["vi"], "ko": w["ko"]})
     have = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
-    need = [w for w in need if norm(w["vi"]) not in have]
+    # 다른 판이 이미 만든 것도 건너뛴다
+    done = dict(have)
+    for f in sorted((R / "data").glob("_examples*.json")):
+        if f != OUT:
+            try: done.update(json.loads(f.read_text(encoding="utf-8")))
+            except Exception: pass
+    need = [w for w in need if norm(w["vi"]) not in done]
+    if a.of > 1: need = need[a.part::a.of]
     if a.limit: need = need[:a.limit]
     print(f"예문이 필요한 낱말 {len(need)}개 · 이미 만든 것 {len(have)}개", flush=True)
     bad = 0

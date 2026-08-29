@@ -38,6 +38,22 @@ def collect(data):
     if sp.exists():
         for w in json.loads(sp.read_text(encoding="utf-8"))["words"]:
             out.setdefault(w[0], "word")
+    # 새 짜임(일곱 권) — 낱말과 그 낱말의 예문 (2026-08-30)
+    cp = ROOT / "data" / "course.json"
+    if cp.exists():
+        for v in json.loads(cp.read_text(encoding="utf-8"))["vols"]:
+            for u in v["units"]:
+                for ch in u["chapters"]:
+                    for w in ch["words"]:
+                        out.setdefault(w["vi"], "word")
+                        if w.get("ex"): out.setdefault(w["ex"]["vi"], "sent")
+    # 1권 문법 예문
+    gp = ROOT / "data" / "grammar.json"
+    if gp.exists():
+        for b in json.loads(gp.read_text(encoding="utf-8"))["books"]:
+            for bai in b["bai"]:
+                for g in bai["g"]:
+                    for e in g["ex"]: out.setdefault(e["vi"], "sent")
     return out
 
 async def one(text, voice_id, voice_name, rate):
