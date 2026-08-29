@@ -43,8 +43,16 @@ URL = "https://tpgus5119-coder.github.io/chaochao/img/review.html"
 
 
 def words_and_order():
-    """{파일: 낱말}, {파일: 배우는 차례}, {Day: 주제}"""
+    """{파일: 낱말}, {파일: 차례}, {(과정,Day): 주제}, {파일: (과정,Day)}, 여러 날이 쓰는 파일
+
+    **왜 '어느 날 것'인지를 따로 모으나** (2026-08-29, 대표님 지적)
+    예전에는 파일 이름 앞머리(d01-)로만 묶었다. 그런데 여러 날이 함께 쓰는 낱말
+    (있다·없다·아주 같은 것)은 이름이 `x-` 로 시작해서 392장이 자기 날 칸에 안 들어갔다.
+    그래서 낱말이 10개인 Day 2 가 검수판에서는 6장으로 보였다 — 챕터가 빈 것처럼.
+    이제는 **데이터가 말하는 날**로 묶는다. 여러 날이 쓰는 그림은 처음 배우는 날에 놓고
+    🔗 딱지를 붙인다(같은 그림을 여러 칸에 늘어놓으면 검수하는 사람이 두 번 본다)."""
     word, order, theme = {}, {}, {}
+    home, hits = {}, {}
     seq = [0]
 
     def put(k, v):
@@ -58,7 +66,12 @@ def words_and_order():
             order[k] = seq[0]
             seq[0] += 1
 
-    for f in ("data/days.json", "data/ko_days.json", "data/news_days.json"):
+    def claim(k, ci, n):                        # 이 그림은 어느 날 것인가 (처음 배우는 날)
+        if isinstance(k, str) and k.endswith((".webp", ".svg")):
+            home.setdefault(k, (ci, n))
+            hits[k] = hits.get(k, 0) + 1
+
+    for ci, f in enumerate(("data/days.json", "data/ko_days.json", "data/news_days.json")):
         p = R / f
         if not p.exists():
             continue
@@ -66,23 +79,25 @@ def words_and_order():
         for d in j.get("days", []):
             n = d.get("day")
             th = d.get("theme") or d.get("title") or ""
-            if isinstance(n, int):
-                theme.setdefault(n, th)
+            if isinstance(n, (int, float)):         # Day 8.5 도 있다
+                theme.setdefault((ci, n), th)
             dl = d.get("dialog") or {}
             if dl.get("img"):                       # 장면 그림이 그날의 첫 장
                 take(dl["img"])
                 put(dl["img"], f"{th} — 오늘의 대화")
+                claim(dl["img"], ci, n)
             for w in d.get("words") or []:
                 if w.get("img"):
                     take(w["img"])
                     put(w["img"], f"{w.get('ko','')} · {w.get('vi','')}")
+                    claim(w["img"], ci, n)
 
     # 그림말 대장 — 데이터에 없는 그림의 이름표가 여기 남아 있다
     for line in (R / "docs" / "image-prompts.md").read_text(encoding="utf-8").splitlines():
         m = re.match(r"\*\*([\w\-]+\.webp)\*\*\s*·?\s*(.*)", line)
         if m:
             put(m.group(1), m.group(2))
-    return word, order, theme
+    return word, order, theme, home, {k for k, v in hits.items() if v > 1}
 
 
 def refs():
@@ -127,22 +142,24 @@ def changed_now():
     return {p.split("/")[-1] for p in r.stdout.split() if p.endswith((".webp", ".svg"))}
 
 
-def group_of(k):
-    """어느 묶음인가 — (정렬키, 묶음 이름). Day 는 이름이 None(날마다 따로)."""
-    m = re.match(r"d(\d+)-", k)
-    if m:
-        return (1, int(m.group(1))), None
+def group_of(k, home):
+    """어느 묶음인가 — (정렬키, 묶음 이름). Day 는 이름이 None(날마다 따로).
+       데이터에 '이 그림은 며칟날 것'이라고 적혀 있으면 그 말을 따른다.
+       어디에도 안 쓰이는 그림만 파일 이름으로 짐작한다."""
+    if k in home:
+        ci, n = home[k]
+        return (1, ci, n), None
     if k.startswith("n-"):
-        return (2, 0), "뉴스에서 뽑은 낱말"
+        return (2, 0, 0), "뉴스에서 뽑은 낱말 (데이터에 안 쓰임)"
     if k.startswith("x-"):
-        return (3, 0), "낱말장 — 여러 날에 걸쳐 쓰는 말"
-    return (4, 0), "그 밖 — 아이콘·도표·선생님 얼굴"
+        return (3, 0, 0), "낱말장 — 어느 날에도 안 걸린 그림"
+    return (4, 0, 0), "그 밖 — 아이콘·도표·선생님 얼굴"
 
 
 def main():
     audp = R / "data" / "_img_audit.json"
     aud = json.loads(audp.read_text(encoding="utf-8")) if audp.exists() else {}
-    word, order, theme = words_and_order()
+    word, order, theme, home, shared = words_and_order()
     used, exams, fresh = refs(), exam_files(), changed_now()
     files = [p.name for p in IMG.iterdir() if not p.name.startswith(("_", "."))]
 
@@ -154,11 +171,11 @@ def main():
         return ""
 
     # 배우는 차례대로 — 같은 날 안에서는 데이터에 적힌 순서, 없으면 이름순
-    files.sort(key=lambda k: (group_of(k)[0], order.get(k, 10 ** 6), k))
+    files.sort(key=lambda k: (group_of(k, home)[0], order.get(k, 10 ** 6), k))
 
     sections, cur, curkey = [], [], None
     for k in files:
-        gk, name = group_of(k)
+        gk, name = group_of(k, home)
         key = gk if name is None else name
         if key != curkey:
             if cur:
@@ -179,6 +196,8 @@ def main():
             tags.append('<i class="t f">♻︎ 교체됨</i>')
         if k not in used:
             tags.append('<i class="t o">🗂 안 쓰임</i>')
+        if k in shared:
+            tags.append('<i class="t s">🔗 여러 날이 같이 씀</i>')
         t = ocr_of(k)
         if t:
             tags.append(f'<i class="t c">🔤 {html.escape(t[:30])}</i>')
@@ -194,8 +213,10 @@ def main():
     body = []
     for key, keys in sections:
         if isinstance(key, tuple):
-            day = key[1]
-            title = f"Day {day}" + (f" · {theme[day]}" if theme.get(day) else "")
+            ci, day = key[1], key[2]
+            head = ("", "[한국어 과정] ", "[뉴스] ")[ci if ci < 3 else 0]
+            th = theme.get((ci, day))
+            title = f"{head}Day {day}" + (f" · {th}" if th else "")
         else:
             title = key
         body.append(f'<section><h2>{html.escape(title)} <span class="n">{len(keys)}장</span></h2>'

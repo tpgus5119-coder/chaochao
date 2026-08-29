@@ -5246,6 +5246,245 @@
 **d085-gam.webp**
 > a single feather resting on a small empty balance pan, simple flat illustration, soft pastel colors, thick outlines, plain white background
 
+
+## Day 107 — 공정과 작업 흐름
+
+**d107-thao-tac.webp** · 작업 동작·조작 (thao tác)
+> a pair of hands operating a lever and buttons on a machine control panel, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d107-van-hanh.webp** · 가동하다·운영하다 (vận hành)
+> a factory machine running with its green power lamp lit and belts turning, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d107-boc.webp** · 떼다·벗기다 (bóc)
+> a hand peeling a protective film off the corner of a flat panel, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d107-dong-hang.webp** · 포장하다·출하 준비하다 (đóng hàng)
+> a worker sealing a cardboard box with tape, stacked boxes ready for shipping behind, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d107-khay.webp** · 트레이·받침 (khay)
+> a shallow rectangular tray holding small parts arranged in neat rows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d107-tham.webp** · 매트·바닥 시트 (thảm)
+> a rubber floor mat rolled out on a factory floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d107-bo-phan.webp** · 부서·부품 (bộ phận)
+> a single mechanical gear component in front and a small group of workers standing together behind it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 108 — 외관 검사
+
+**d108-ngoai-quan.webp** · 외관·외관 검사 (ngoại quan)
+> an inspector holding a magnifying glass over the outer surface of a finished product, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-di-vat.webp** · 이물 (dị vật)
+> a magnified circle showing one tiny dark speck on a clean smooth white surface, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-be-mat.webp** · 표면 (bề mặt)
+> a flat hand gliding across the smooth top face of a panel with shine lines along it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-tham-my.webp** · 미관·보기 좋음 (thẩm mỹ)
+> two identical products side by side, the left one glossy and neat, the right one dull and scratched, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-ty-le.webp** · 비율·불량률 (tỷ lệ)
+> a row of ten identical product icons, two of them marked with red crosses, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-ket-qua.webp** · 결과 (kết quả)
+> a clipboard held up with a large green check mark at the bottom of a list of ticked rows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-hang-muc.webp** · 항목 (hạng mục)
+> a checklist board with four separate boxed rows, each holding a small different icon, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-loai-hinh.webp** · 유형 (loại hình)
+> three differently shaped parts, a circle a square and a triangle, sorted into three separate bins, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-kiem-soat.webp** · 관리하다·통제하다 (kiểm soát)
+> a supervisor standing at a control desk watching round gauges and switches, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d108-cam-giac.webp** · 느낌 (cảm giác)
+> a fingertip touching a surface with small wavy sensation lines radiating from the contact point, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 109 — 원인과 대책
+
+**d109-nguyen-nhan.webp** · 원인 (nguyên nhân)
+> a magnifying glass focused on one cracked gear at the start of a row of connected gears, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-bien-phap.webp** · 대책·방안 (biện pháp)
+> a hand fitting the last puzzle piece into a gap to complete a picture, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-doi-sach.webp** · 대책 (đối sách)
+> a worker setting up a safety barrier in front of a hazard on the factory floor, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-phat-sinh.webp** · 발생하다 (phát sinh)
+> a warning triangle popping up above a machine with a small spark and motion lines, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-cai-thien.webp** · 개선하다 (cải thiện)
+> two products side by side, the left rough and dented, the right smooth and clean, a rising arrow between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-triet-de.webp** · 철저히 (triệt để)
+> a worker scrubbing every corner of a machine with a brush, sparkles on the cleaned parts, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-tuan-thu.webp** · 준수하다·지키다 (tuân thủ)
+> a worker carefully putting on a helmet, goggles and gloves before entering the work area, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-dam-bao.webp** · 보장하다 (đảm bảo)
+> a large protective hand cupped over a finished product with a shield and a check mark, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-lap-lai.webp** · 반복하다·되풀이되다 (lặp lại)
+> a circular loop arrow going around the same defective part shown twice, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d109-anh-huong.webp** · 영향을 주다 (ảnh hưởng)
+> a row of dominoes, the first one tipping and knocking into the next, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 110 — 설비와 재료
+
+**d110-ky-thuat.webp** · 기술 (kỹ thuật)
+> an engineer measuring a machine part with a caliper at a workbench full of tools, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d110-luc-ep.webp** · 압력·프레스 힘 (lực ép)
+> a press machine pressing down onto a metal plate with thick downward force arrows, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d110-dien-tro.webp** · 저항 (điện trở)
+> a small resistor component with colored bands sitting on a green circuit board, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d110-kim-loai.webp** · 금속 (kim loại)
+> a stack of shiny silver metal sheets and bars with a metallic sheen, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d110-tiep-xuc.webp** · 접촉하다 (tiếp xúc)
+> two metal surfaces meeting at one point with a small spark at the contact, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d110-chat-lieu.webp** · 재질·소재 (chất liệu)
+> three material swatches side by side, shiny metal, smooth plastic and woven fabric, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d110-vit.webp** · 나사 (vít)
+> a screwdriver turning a screw into a metal plate with a few loose screws beside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d110-muc.webp** · 잉크 (mực)
+> an open ink bottle with a drop falling and a printed mark on paper below, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 111 — 사람 뽑고 가르치기
+
+**d111-sep.webp** · 상사·관리자 (sếp)
+> a manager in a shirt and tie standing with arms crossed in front of a team of workers, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-nhan-luc.webp** · 인력 (nhân lực)
+> a row of five workers in uniform standing side by side, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-tuyen-dung.webp** · 채용하다 (tuyển dụng)
+> a manager shaking hands with a new applicant who is holding a folder, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-dao-tao.webp** · 교육하다·양성하다 (đào tạo)
+> an instructor demonstrating a machine to two attentive trainees, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-nhan-tai.webp** · 인재 (nhân tài)
+> one worker standing out from a group with a bright star glowing above their head, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-dam-nhan.webp** · 맡다·담당하다 (đảm nhận)
+> a worker receiving a toolbox handed over by another worker, both hands on it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-duyet.webp** · 승인하다·결재하다 (duyệt)
+> a hand pressing an approval stamp down onto a document, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-thoi-vu.webp** · 단기·계절 (근로) (thời vụ)
+> several extra workers in orange vests joining a line of blue vest workers with an hourglass beside, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-nghi-viec.webp** · 퇴사하다 (nghỉ việc)
+> a worker walking out through a factory gate carrying a personal box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d111-dai-ngo.webp** · 처우·대우 (đãi ngộ)
+> a hand offering a pay envelope and a small gift box to a smiling worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 112 — 일이 벅찰 때
+
+**d112-qua-tai.webp** · 과부하·벅차다 (quá tải)
+> a worker wobbling under a tall leaning stack of boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-ganh-nang.webp** · 부담 (gánh nặng)
+> a person bent over carrying a heavy weight on their shoulders, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-khoi-luong.webp** · 업무량·분량 (khối lượng)
+> a large pile of work order papers stacked high on a desk, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-thieu-hut.webp** · 부족하다 (thiếu hụt)
+> an almost empty parts bin with a single item left at the bottom, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-bien-dong.webp** · 변동 (biến động)
+> a wavy zigzag line rising and falling above a production line, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-tinh-trang.webp** · 상태·상황 (tình trạng)
+> a status tower lamp with three lights, green yellow and red, the yellow one lit, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-kho-khan.webp** · 어려움·힘들다 (khó khăn)
+> a worker pushing a heavy cart up a steep slope, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-ho-tro.webp** · 지원하다·돕다 (hỗ trợ)
+> two workers lifting one heavy box together, one helping the other, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-uu-tien.webp** · 우선하다 (ưu tiên)
+> a hand moving one box to the very front of a queue of boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d112-ung-ho.webp** · 지지하다·밀어주다 (ủng hộ)
+> a group of coworkers clapping and cheering for one colleague, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 113 — 작업 표준서 읽기
+
+**d113-qua-trinh.webp** · 과정 (quá trình)
+> three workstations connected by flowing arrows with a part moving through them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-thuc-hien.webp** · 수행하다·실행하다 (thực hiện)
+> a worker actively doing a task at a workbench with busy hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-noi-dung.webp** · 내용 (nội dung)
+> an open box with its contents laid out neatly beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-thu-tu.webp** · 순서 (thứ tự)
+> three boxes of increasing size lined up left to right with arrows between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-nhiem-vu.webp** · 임무·맡은 일 (nhiệm vụ)
+> a worker holding up a task card with a single tool icon on it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-phuong-phap.webp** · 방법·방식 (phương pháp)
+> a path splitting into two routes, a wrench on one and a screwdriver on the other, both reaching the same goal, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-ghi-chu.webp** · 비고·메모 (ghi chú)
+> a hand pinning a small blank sticky note onto a board with a pencil beside it, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-co-ban.webp** · 기본적인 (cơ bản)
+> a wide solid foundation block at the base of a stack of smaller blocks, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-thuan-tien.webp** · 편리하다 (thuận tiện)
+> a worker easily reaching a tool from a neatly organized wall rack, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d113-hieu-qua.webp** · 효율·효과 (hiệu quả)
+> a small gear turning a very large wheel, showing small effort and big result, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+## Day 114 — 앞을 내다보기
+
+**d114-co-cau.webp** · 구조·체계 (cơ cấu)
+> an organization tree of connected boxes branching downward from one top box, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d114-xay-dung.webp** · 세우다·구축하다 (xây dựng)
+> workers assembling a structure with scaffolding and a crane, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d114-phat-trien.webp** · 키우다·발전하다 (phát triển)
+> a small sprout growing into a medium plant then a tall tree in three stages, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d114-vai-tro.webp** · 역할 (vai trò)
+> three workers wearing different colored helmets each doing a different job, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d114-lau-dai.webp** · 오래가는·장기의 (lâu dài)
+> a long winding road stretching far to the horizon with a sunrise, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d114-lien-tuc.webp** · 계속·잇달아 (liên tục)
+> a conveyor belt carrying an unbroken line of identical boxes, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d114-nhac-nho.webp** · 주의를 주다·일러두다 (nhắc nhở)
+> a supervisor gently raising one finger while speaking to a listening worker, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d114-dai-hoi.webp** · 대회 (đại hội)
+> a large crowd of people seated in an assembly hall facing a stage, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
+**d114-lich-su.webp** · 이력·기록 (lịch sử)
+> a shelf of stacked archive folders with a timeline arrow running along in front, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+
 **n-ga-chicken.webp**
 > a plump brown hen standing on grass, side view, simple flat illustration, soft pastel colors, thick outlines, plain white background
 
