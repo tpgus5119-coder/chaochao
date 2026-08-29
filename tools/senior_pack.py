@@ -8,15 +8,17 @@
     자료가 스스로 말하는 증거다.
   · 19기에만 있는 낱말은 넣지 않는다.
 
-차례는 어떻게 정했나 — **짐작하지 않고 자료에서 찾아냈다.**
-  주간시험(토요시험)은 그 주의 일일시험 낱말을 다시 낸다. 그래서 주간시험 낱말이
-  어느 일일시험 구간과 가장 많이 맞물리는지 전수로 훑어 그 구간 끝에 꽂았다.
-  맞물림은 대개 95~100%였다(가장 낮은 것이 74%). 처음엔 '주간 N = 일일 4N' 으로
-  가정했는데 주간 10부터 0~5%로 어긋났다 — 번호 매기는 방식이 중간에 바뀐 것이다.
-  가정을 버리고 찾아낸 값을 쓴다.
+차례는 어떻게 정했나 — **5일 + 주간 1** (대표님 지시, 자료가 그렇다고 말한다)
+  일일시험은 하루 30낱말이고 다섯 번마다 토요일에 주간시험을 본다.
+  겹친 것을 걷어내니 일일 94회 · 주간 19회 = 4.9 : 1 로, 5:1 이 맞았다.
 
-낱말은 한 벌만 두고 번호로 가리킨다 — 같은 낱말이 일일과 주간에 거듭 나오므로,
-그대로 담으면 내려받는 양이 두 배가 된다.
+왜 처음에는 60·90 낱말짜리 회차가 나왔나 — **내가 두 번 담았다.**
+  시험 파일은 시트가 둘이다: 문제지(Kiểm tra)와 정답지(Đáp án).
+  둘 다 읽어서 한 회차에 겹쳐 담았다. 낱말(vi)로 겹침을 걷어내면 75회가 정확히 30개다.
+  그래도 30을 넘는 회차는 한 파일에 두 회가 든 것이라 **30개씩 쪼갠다.**
+  쪼갠 뒤 번호를 1부터 다시 매긴다 — 원래 번호에는 빠진 것(63·65·76 …)이 있어 들쭉날쭉했다.
+
+낱말은 한 벌만 두고 번호로 가리킨다 — 같은 낱말이 일일과 주간에 거듭 나온다.
 """
 import json, pathlib, re, unicodedata
 
@@ -63,33 +65,46 @@ vi19 = {low(w["vi"]) for s in load("_senior_words-19.json")
 taught = {low(w["vi"]) for d in json.loads((D / "days.json").read_text(encoding="utf-8"))["days"]
           for w in (d.get("words") or []) if w.get("vi")}
 
-KIND = {"일일": "d", "주간": "w", "기타": "x"}
-raw = []
-for s in load("_senior_words.json"):
-    ws = [(nf(w["vi"]), kor(nf(w["ko"]))) for w in s["words"] if w.get("vi") and w.get("ko")]
-    if len(ws) >= 5:
-        raw.append({"k": KIND.get(s["kind"], "x"), "no": s["no"], "ws": ws})
+PER = 30                                  # 하루 30낱말 — 자료의 75회가 정확히 이 값이다
+EVERY = 5                                 # 다섯 번마다 주간시험
 
-# ── 주간시험 자리 찾기: 가장 잘 맞물리는 일일시험 구간의 **끝** 뒤에 선다
-dset = {r["no"]: {low(v) for v, _ in r["ws"]} for r in raw if r["k"] == "d"}
-ks = sorted(dset)
-def seat(words):
-    best = (0, ks[-1] if ks else 0)
-    for a in range(len(ks)):
-        pool = set()
-        for b in range(a, min(a + 8, len(ks))):
-            pool |= dset[ks[b]]
-            r = len(words & pool) / len(words)
-            if r > best[0]: best = (r, ks[b])
-    return best                                    # (맞물림, 그 구간의 끝 회차)
+def clean(words):
+    """한 회차의 낱말 — 답이 빈 줄과 겹친 줄을 걷어낸다."""
+    seen, out = set(), []
+    for w in words:
+        vi, ko = nf(w.get("vi") or ""), kor(nf(w.get("ko") or ""))
+        if not vi or not ko:
+            continue                      # 문제지 쪽은 답이 비어 있다
+        if low(vi) in seen:
+            continue                      # 정답지와 겹치는 줄
+        seen.add(low(vi))
+        out.append((vi, ko))
+    return out
 
-for r in raw:
-    if r["k"] == "d":   r["at"], r["fit"] = (r["no"], 0), None
-    elif r["k"] == "w":
-        fit, end = seat({low(v) for v, _ in r["ws"]})
-        r["at"], r["fit"] = (end, 1), round(fit * 100)
-    else:               r["at"], r["fit"] = (10 ** 6, 2), None
-raw.sort(key=lambda r: r["at"])
+daily, weekly = [], []
+for st in load("_senior_words.json"):
+    ws = clean(st["words"])
+    if len(ws) < 5:
+        continue
+    if st["kind"] == "일일":
+        for k in range(0, len(ws), PER):  # 한 파일에 두 회가 들었으면 쪼갠다
+            if len(ws[k:k + PER]) >= 5:
+                daily.append((st["no"], ws[k:k + PER]))
+    elif st["kind"] == "주간":
+        weekly.append((st["no"], ws))
+daily.sort(key=lambda x: x[0])
+weekly.sort(key=lambda x: x[0])
+
+# 5일 + 주간 1 로 규칙적으로 섞는다. 번호는 1부터 새로 매긴다.
+raw, wi = [], 0
+for n, (_, ws) in enumerate(daily, 1):
+    raw.append({"k": "d", "no": n, "ws": ws})
+    if n % EVERY == 0 and wi < len(weekly):
+        wi += 1
+        raw.append({"k": "w", "no": wi, "ws": weekly[wi - 1][1]})
+while wi < len(weekly):                   # 남은 주간시험은 뒤에 이어 붙인다
+    wi += 1
+    raw.append({"k": "w", "no": wi, "ws": weekly[wi - 1][1]})
 
 # ── 낱말 한 벌 + 번호로 가리키기
 words, idx, sets = [], {}, []
@@ -101,9 +116,9 @@ for r in raw:
             idx[k] = len(words)
             words.append([vi, ko, (1 if low(vi) in vi19 else 0) + (2 if low(vi) in taught else 0)])
         ns.append(idx[k])
-    sets.append({"k": r["k"], "no": r["no"], "w": ns, **({"fit": r["fit"]} if r["fit"] else {})})
+    sets.append({"k": r["k"], "no": r["no"], "w": ns})
 
-out = {"note": "GYBM 20기가 실제로 본 시험 낱말. 차례는 실제 시험 차수 순서. "
+out = {"note": "GYBM 20기가 실제로 본 시험 낱말. 하루 30낱말 · 다섯 번마다 주간시험. "
                "표 t: 1=19기에도 나옴(중요) · 2=앱에서 이미 배움 · 3=둘 다.",
        "words": words, "sets": sets}
 p = D / "senior.json"
@@ -114,4 +129,4 @@ print(f"낱말 {len(words)}개 · 「중요」 {imp}개 · 앱에서 이미 배�
 print(f"묶음 {len(sets)}개 (일일 {sum(1 for s in sets if s['k']=='d')} · "
       f"주간 {sum(1 for s in sets if s['k']=='w')} · 모음 {sum(1 for s in sets if s['k']=='x')})")
 print(f"파일 {p.stat().st_size/1024:.0f}KB")
-print("\n차례 앞 12개:", [f"{'일일' if s['k']=='d' else '주간' if s['k']=='w' else '모음'}{s['no']}" for s in sets[:12]])
+print("\n차례 앞 14개:", [f"{'일일' if s['k']=='d' else '주간'}{s['no']}({len(s['w'])})" for s in sets[:14]])

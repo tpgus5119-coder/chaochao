@@ -487,14 +487,14 @@ const UIVI = {
   '정답 보기': 'Xem đáp án', '보내기': 'Gửi', '만들기': 'Tạo', '올리기': 'Đăng',
   '번역': 'Dịch', '바꾸기': 'Đổi', '보기': 'Xem', '받기': 'Nhận',
   '🔔 쌤 쪽지 알림 받기': '🔔 Nhận thông báo tin nhắn của thầy cô',
-  /* ── 선배 시험 · 앱 전체 순위 ── */
-  '선배 시험': 'Bài thi khóa trước',
-  '선배 시험 자료를 받는 중…': 'Đang tải dữ liệu bài thi khóa trước…',
+  /* ── 실전 단어 · 앱 전체 순위 ── */
+  '실전 단어': 'Từ vựng thực chiến',
+  '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
-  '20기가 실제로 본 시험 차례 그대로입니다. ': 'Đúng theo thứ tự các bài thi mà khóa 20 đã làm. ',
+  'GYBM 20기가 실제로 본 시험입니다 — 하루 30낱말, 다섯 번마다 주간시험. ': 'Đây là bài thi thật của khóa GYBM 20 — mỗi ngày 30 từ, cứ 5 lần thì có bài thi tuần. ',
   ' 표시는 19기도 같은 말을 시험 봤다는 뜻입니다': ' nghĩa là khóa 19 cũng đã thi từ đó',
   '중요': 'Quan trọng', '낱말': 'từ', '개': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '선배 낱말 복습': 'Ôn từ vựng khóa trước',
+  '실전 단어 복습': 'Ôn từ vựng thực chiến',
   '하루 5분 복습과 섞이지 않습니다': 'Không trộn với phần ôn tập 5 phút mỗi ngày',
   '이 회차 시험 보기': 'Làm bài thi đợt này',
   '앱 전체 N명 가운데': 'Trong tổng số N người dùng',
@@ -2431,7 +2431,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
   day:   { name: '하루 5분', items: () => [
             ['일상', () => renderDays('daily')], ['직무', () => renderDays('work')],
             ['기사', showNewsLearn]] },
-  senior:{ name: '선배 시험', items: () => [['보기', seniorEntry]] },
+  senior:{ name: '실전 단어', items: () => [['보기', seniorEntry]] },
   rev:   { name: '복습', items: () => [
             ['최근 학습', () => freshMenu('word')],
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
@@ -4404,9 +4404,9 @@ const findItem = vi => (SBOX === 'ssrs' ? seniorItems().find(w => w.vi === vi) :
 /* 오늘 꺼낼 카드 차례. 최근에 배운 것일수록 먼저 — 갓 배운 것이 가장 빨리 샌다.
    다만 오래 밀린 카드도 같이 올라와야 한다(2주까지). 안 그러면 밀린 카드가 영영 뒤에 남는다.
    ±3일 흔들기를 섞어 매번 같은 순서로 나오지 않게 한다. */
-/* 복습 창고가 **둘**이다 — 하루 5분 것(S.srs)과 선배 시험 것(S.ssrs).
+/* 복습 창고가 **둘**이다 — 하루 5분 것(S.srs)과 실전 단어 것(S.ssrs).
    대표님 지시: "복습은 이 테스트들은 다른거랑 섞이지 않게해주고".
-   한 창고에 담으면 하루 5분 복습에 선배 낱말 4,655개가 쏟아져 원래 공부가 묻힌다.
+   한 창고에 담으면 하루 5분 복습에 실전 낱말 2,622개가 쏟아져 원래 공부가 묻힌다.
    진도(S.done)도 따로 둔다(S.sdone) — 안 그러면 '오늘 몇 강 했나'가 부풀어 순위까지 어긋난다. */
 let SBOX = 'srs';
 const srsBox = () => (S[SBOX] = S[SBOX] || {});
@@ -6469,7 +6469,7 @@ function finishQuiz() {
 }
 
 
-/* ---------- 선배 시험 (GYBM 20기가 실제로 본 시험) ----------
+/* ---------- 실전 단어 (GYBM 20기가 실제로 본 시험) ----------
    왜 하루 5분 밑이 아니라 **따로**인가 (대표님 지시): 복습이 섞이면 안 된다.
    창고도 따로(S.ssrs), 진도도 따로(S.sdone)다 — 위 SBOX 주석을 보라.
    자료는 228KB 라 **누를 때 받는다.** 홈 화면을 늦추면 안 된다. */
@@ -6480,8 +6480,8 @@ function seniorEntry() {
   if (SENIOR) return drawSenior();
   const list = $('#dayList');
   list.textContent = '';
-  list.append(el('li', 'lede', tr('선배 시험 자료를 받는 중…')));
-  show('course', '선배 시험', true);
+  list.append(el('li', 'lede', tr('실전 단어를 받는 중…')));
+  show('course', '실전 단어', true);
   fetch('data/senior.json', { cache: 'no-cache' }).then(r => r.json())
     .then(j => { SENIOR = j; drawSenior(); })
     .catch(() => { list.textContent = ''; list.append(el('li', 'lede', tr('자료를 못 받았습니다 — 잠시 뒤 다시'))); });
@@ -6497,14 +6497,14 @@ function drawSenior() {
      '중요'를 내가 매긴 등급으로 오해하면 안 된다. 19기도 같은 말을 시험 봤다는 **사실**이다. */
   const imp = SENIOR.words.filter(w => w[2] & 1).length;
   const hd = el('li', 'catpick');
-  hd.append(el('span', null, tr('20기가 실제로 본 시험 차례 그대로입니다. ') +
+  hd.append(el('span', null, tr('GYBM 20기가 실제로 본 시험입니다 — 하루 30낱말, 다섯 번마다 주간시험. ') +
     '<b>' + tr('중요') + '</b>' + tr(' 표시는 19기도 같은 말을 시험 봤다는 뜻입니다') +
     ' (' + imp + tr('개') + ').'));
   list.append(hd);
 
   const rev = el('li', 'catpick');
   const due = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
-  const rb = el('button', 'primary sm', tr('선배 낱말 복습') + (due ? ' (' + due + ')' : ''));
+  const rb = el('button', 'primary sm', tr('실전 단어 복습') + (due ? ' (' + due + ')' : ''));
   rb.onclick = () => { SBOX = 'ssrs'; dive(drawSenior); startQuiz(null, null); };
   rev.append(rb);
   rev.append(el('span', 'msub', tr('하루 5분 복습과 섞이지 않습니다')));
@@ -6528,10 +6528,10 @@ function drawSenior() {
     }
     list.append(li);
   });
-  show('course', '선배 시험', true);
+  show('course', '실전 단어', true);
 }
 /* 한 회차 — 낱말을 먼저 훑고 나서 시험을 본다.
-   먼저 보여주는 이유: 선배 시험은 '배운 것을 확인'하는 자리가 아니라 처음 보는 말이 대부분이다.
+   먼저 보여주는 이유: 실전 단어은 '배운 것을 확인'하는 자리가 아니라 처음 보는 말이 대부분이다.
    아무것도 안 보여주고 물으면 그냥 다 틀리고, 그건 배움이 아니라 좌절이다. */
 function drawSeniorSet(t) {
   SBOX = 'ssrs';
