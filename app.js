@@ -694,18 +694,36 @@ const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 
 /* 지역(북부/남부) × 목소리(여/남) 에 따른 소리 폴더. 남부도 여·남 둘 다 있다. */
 const voiceDir = () => S.region === 's' ? (S.voice === 'm' ? 'sm' : 'sf') : S.voice;
 
+/* 느린 소리 — 파일이 있으면 그것을, 없으면 **보통 소리를 늘려서** 들려준다.
+   늘리기(playbackRate)는 높낮이를 지켜 주므로 성조가 뭉개지지 않는다.
+   느린 파일만 16,000개라 저장소가 1GB에 가까워졌다 — 앞으로 늘 것은 늘리기로 받는다. */
+const SLOW_RATE = 0.6;
 function play(text, slow, dir) {
   const h = AIDX[text];
   if (!h) return;
   const d = dir || voiceDir();
   audio.pause();
   audio.onerror = null;
-  audio.src = `audio/${d}/${slow ? 'slow' : 'n'}/${h}.mp3`;
-  // 남부 파일이 아직 없으면 북부로라도 들려준다
-  if (d === 'sf' || d === 'sm') audio.onerror = () => {
+  const setRate = r => {
+    audio.playbackRate = r;
+    audio.preservesPitch = true;
+    audio.mozPreservesPitch = true; audio.webkitPreservesPitch = true;
+  };
+  const stretch = vd => {                    // 느린 파일이 없을 때 — 보통 것을 늘린다
     audio.onerror = null;
-    audio.src = `audio/${S.voice}/${slow ? 'slow' : 'n'}/${h}.mp3`;
-    audio.play().catch(() => { });
+    audio.src = `audio/${vd}/n/${h}.mp3`;
+    setRate(SLOW_RATE);
+    audio.currentTime = 0; audio.play().catch(() => { });
+  };
+  audio.src = `audio/${d}/${slow ? 'slow' : 'n'}/${h}.mp3`;
+  setRate(1);                                // 느린 파일은 이미 느리니 그대로 튼다
+  audio.onerror = () => {
+    if (slow) return stretch(d === 'sf' || d === 'sm' ? S.voice : d);
+    if (d === 'sf' || d === 'sm') {          // 남부 파일이 아직 없으면 북부로라도
+      audio.onerror = null;
+      audio.src = `audio/${S.voice}/n/${h}.mp3`;
+      audio.currentTime = 0; audio.play().catch(() => { });
+    }
   };
   audio.currentTime = 0;
   audio.play().catch(() => { });
@@ -820,6 +838,7 @@ async function playSeq(list, rows) {
     if (!h) continue;
     audio.pause();
     audio.src = `audio/${voiceDir()}/n/${h}.mp3`;
+    audio.playbackRate = 1;
     audio.currentTime = 0;
     await new Promise(res => {
       audio.onended = audio.onerror = res;
@@ -4337,11 +4356,13 @@ function playKoSeq(items, done) {
       // 안 나는 일을 막는다.
       let fell = false;
       audio.pause(); audio.src = src; audio.currentTime = 0;
+    audio.playbackRate = 1;
       audio.onended = () => setTimeout(step, 450);
       audio.onerror = () => {
         if (fell) { audio.onerror = null; step(); return; }
         fell = true;
         audio.src = src.replace('/x/', '/n/');
+        audio.playbackRate = 1;
         audio.play().catch(() => step());
       };
       audio.play().catch(() => { audio.onended = null; done && done(); });
@@ -4370,6 +4391,7 @@ function speakKo(text) {
   const play = id => {
     audio.pause();
     audio.src = `audio/ko-${S.voice === 'm' ? 'm' : 'f'}/n/${id}.mp3`;
+    audio.playbackRate = 1;
     audio.currentTime = 0;
     audio.play().catch(() => sysSpeakKo(text));
   };
@@ -5994,6 +6016,7 @@ function drawFlash() {
   }, { passive: true });
   audio.pause();
   audio.src = `audio/${voiceDir()}/n/${AIDX[w.vi]}.mp3`;
+  audio.playbackRate = 1;
   audio.currentTime = 0;
   audio.play().catch(() => { });
   const tm = setTimeout(go, 3000);       // 한 장에 3초 — 소리가 끝나도 남은 시간은 눈으로 본다
