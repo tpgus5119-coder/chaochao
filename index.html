@@ -11,12 +11,15 @@
 <meta name="apple-mobile-web-app-title" content="짜오짜오">
 <meta name="mobile-web-app-capable" content="yes">
 <title>짜오짜오 — 베트남어</title>
-<link rel="stylesheet" href="style.css?v=e520d8f4">
+<link rel="stylesheet" href="style.css?v=bf447db3">
 </head>
 <body>
 
 <header id="top">
   <button id="back" class="ghost" hidden>‹</button>
+  <button id="goHome" class="ghost icon" title="홈으로" aria-label="홈으로" hidden>
+    <svg viewBox="0 0 24 24"><path d="M3.6 11.4 12 4.2l8.4 7.2"/><path d="M5.8 10.6V19a1 1 0 0 0 1 1h3.4v-4.6h3.6V20h3.4a1 1 0 0 0 1-1v-8.4"/></svg>
+  </button>
   <button id="wxnow" class="ghost wxnow" title="베트남 날씨와 시각" aria-label="날씨와 시각" hidden></button>
   <h1 id="title">짜오짜오</h1>
   <button id="goChat" class="ghost icon" title="메신저" aria-label="메신저">
@@ -41,10 +44,11 @@
   <!-- 학습 -->
   <section id="learn" class="view" hidden>
     <div id="card" class="card"></div>
+    <!-- '‹ 이전 / 다음 ›' 을 뺐다 (대표님 지시) — **밀어서 넘긴다**.
+         마지막 장에서만 단추가 나온다. 진도를 확정하는 자리라 실수로 밀려 넘어가면 안 된다. -->
     <div class="pager">
-      <button id="prev" class="ghost big">‹</button>
       <span id="pos"></span>
-      <button id="next" class="primary big">다음 ›</button>
+      <button id="next" class="primary big" hidden>다음 ›</button>
     </div>
   </section>
 
@@ -145,7 +149,7 @@
   </section>
 </main>
 
-<script src="pitch.js?v=e520d8f4"></script>
-<script src="app.js?v=e520d8f4"></script>
+<script src="pitch.js?v=bf447db3"></script>
+<script src="app.js?v=bf447db3"></script>
 </body>
 </html>

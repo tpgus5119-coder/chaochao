@@ -491,7 +491,8 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '선배': 'Khoá trước', '선배 기수가 실제로 시험 본 낱말': 'Từ các khoá trước đã thi thật',
+  '선배': 'Khoá trước',
+  '풀던 문제를 그만두고 홈으로 갈까요?': 'Dừng bài đang làm và về trang chính?', '선배 기수가 실제로 시험 본 낱말': 'Từ các khoá trước đã thi thật',
   '실전 단어 복습': 'Ôn từ vựng thực chiến',
   '익힌 낱말': 'Từ đã luyện',
   '초록 = 앱에서 이미 배운 말': 'Xanh lá = từ đã học trong ứng dụng',
@@ -1357,6 +1358,10 @@ function show(v, title, canBack) {
   if (DMT) { clearInterval(DMT); DMT = 0; }
   if (v !== 'chat') DM = null;
   $('#back').hidden = !canBack;
+  /* 홈 단추 — 홈이 아닐 때는 늘 보인다 (대표님 지시, 2026-08-30).
+     뒤로(‹)는 한 칸씩 돌아가지만, 깊이 들어간 자리에서는 몇 번을 눌러야 하는지 알 수 없다.
+     어디서든 한 번에 나가는 길이 있어야 한다. */
+  $('#goHome').hidden = v === 'home';
   CURV = v;
   topBtns();
   window.scrollTo(0, 0);
@@ -5476,14 +5481,14 @@ function drawCard() {
     const nth = kinds.slice(0, L.i + 1).filter(k => k === it.k).length;
     $('#pos').textContent = `${KIND[it.k] || ''} ${nth} / ${same}`;
   }
-  $('#prev').disabled = L.i === 0;
+  /* 단추는 **마지막 장에서만** 나온다 (대표님 지시) — 그 사이는 밀어서 넘긴다.
+     마지막 장의 단추는 '다음'이 아니라 진도를 확정하는 자리라 남긴다. */
   const last = L.i === L.items.length - 1;
-  $('#next').textContent = last ? (L.cult ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
+  $('#next').hidden = !last;
+  $('#next').textContent = L.cult ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
-    : L.day.day === 'P1' || L.day.day === 'P2' ? '귀로 구별하기 ›' : '완료 ›') : '다음 ›';
+    : L.day.day === 'P1' || L.day.day === 'P2' ? '귀로 구별하기 ›' : '완료 ›';
 }
-
-$('#prev').onclick = () => { if (!$('#learn').hidden && L.i > 0) { L.i--; drawCard(); } };
 $('#next').onclick = () => {
   // 연타 방지는 시간이 아니라 '아직 이 화면에 있는가'로 판단한다.
   // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
@@ -5549,6 +5554,24 @@ $('#next').onclick = () => {
     x0 = null;
     if (Math.abs(dx) > 40) goto(dx < 0 ? 1 : -1);   // 왼쪽으로 밀면 다음(+1), 오른쪽으로 밀면 이전(-1)
   }, { passive: true });
+  /* 컴퓨터에서도 넘어가야 한다 — 손가락만 받으면 마우스로는 아무 일도 안 일어난다.
+     단추·입력칸 위에서 시작한 끌기는 무시한다(마이크 단추를 끌다가 넘어가면 안 된다). */
+  let m0 = null;
+  card.addEventListener('mousedown', e => {
+    m0 = e.target.closest('button, input, textarea, a') ? null : e.clientX;
+  });
+  window.addEventListener('mouseup', e => {
+    if (m0 === null) return;
+    const dx = e.clientX - m0; m0 = null;
+    if (Math.abs(dx) > 40) goto(dx < 0 ? 1 : -1);
+  });
+  // 화살표 키로도 — 글자를 쓰는 중이면 건드리지 않는다
+  window.addEventListener('keydown', e => {
+    if ($('#learn').hidden) return;
+    if (/^(INPUT|TEXTAREA)$/.test(document.activeElement?.tagName || '')) return;
+    if (e.key === 'ArrowLeft') goto(-1);
+    else if (e.key === 'ArrowRight') goto(1);
+  });
 })();
 
 /* ---------- 훑기 엔진 (예습·간략 복습) ----------
@@ -8532,6 +8555,11 @@ $('#chatMic').onclick = async () => {
    복습 안에서 방식만 바꾸려 해도 처음부터 다시 들어가야 했다. */
 $('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
 $('#goMe').onclick = renderAwards;
+$('#goHome').onclick = () => {
+  // 시험·퀴즈 도중이면 한 번 묻는다 — 눌러 놓고 답이 날아가면 그게 더 나쁘다
+  if (!$('#quiz').hidden && Q && Q.i > 0 && !confirm(tr('풀던 문제를 그만두고 홈으로 갈까요?'))) return;
+  renderHome();
+};
 $('#goChat').onclick = () => { dive(renderHome); startChat(); };
 /* 머리 메신저 단추 — 안 읽은 **개수**를 적는다. 진짜 메신저처럼 어디서나 보인다.
    점 하나였던 것을 숫자로 바꿨다(대표님 지시) — '뭔가 왔다'와 '몇 개 왔다'는 다른 정보다. */
