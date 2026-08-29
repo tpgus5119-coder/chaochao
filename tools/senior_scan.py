@@ -29,19 +29,33 @@ def rows_xlsx_lean(p):
     return out
 
 
+W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+
+
+def rows_docx(p):
+    """docx 를 **덧붙인 꾸러미 없이** 읽는다 — docx 는 그냥 zip 안의 XML이다.
+       (python-docx 를 안 깐 컴퓨터에서 38개가 통째로 조용히 빠졌었다. 2026-08-30)"""
+    import zipfile, xml.etree.ElementTree as ET
+    out = []
+    with zipfile.ZipFile(p) as z:
+        root = ET.fromstring(z.read("word/document.xml"))
+    def txt(node):
+        return "".join(t.text or "" for t in node.iter(W + "t")).strip()
+    for tbl in root.iter(W + "tbl"):
+        for tr in tbl.iter(W + "tr"):
+            cells = [txt(tc) for tc in tr.iter(W + "tc")]
+            if any(cells): out.append(cells)
+    if not out:                      # 표가 없으면 문단이라도
+        for pr in root.iter(W + "p"):
+            t = txt(pr)
+            if t: out.append([t])
+    return out
+
+
 def cells_of(p):
     f = p.name.lower()
     if f.endswith((".xlsx", ".xls")): return rows_xlsx_lean(p)
-    if f.endswith(".docx"):
-        import docx
-        out = []
-        d = docx.Document(str(p))
-        for t in d.tables:
-            for row in t.rows:
-                out.append([c.text.strip() for c in row.cells])
-        for para in d.paragraphs:
-            if para.text.strip(): out.append([para.text.strip()])
-        return out
+    if f.endswith(".docx"): return rows_docx(p)
     return S.rows_pdf(p)
 
 def split(rows):
@@ -89,3 +103,12 @@ def main():
         print("   못 쓴 파일:", dict(why))
 
 main()
+
+# 남은 빠짐 (2026-08-30, 확인 끝)
+#  · 17기 41·46·49·57·63·85회차 — **공란본밖에 없다**. 뜻만 있고 베트남어 칸이 비었다.
+#    답안본이 폴더에 없다 → 되살릴 방법이 없다. (뜻만으로 낱말을 지어내지 않는다)
+#  · 20기 2회차 — 베트남어 칸이 영어로 된 판만 있다.
+#  · 18기 '단어 총합 정답지.xlsx' · '05.23 주간복습' — **인도네시아어**다(da-da·ubi·singkong).
+#  · 19기 'Tiếng Việt CS Q3·Q4.pdf' — 교재 스캔이라 글자층이 없다.
+#    다만 **목차는 눈으로 읽어 두었다** (Nguyễn Việt Hương, 각 권 12과 = 5과+복습 두 묶음).
+#  · 그 밖의 안 쓴 공란본은 같은 회차 답안본이 있어서 안 쓴 것 — 빠진 게 아니다.

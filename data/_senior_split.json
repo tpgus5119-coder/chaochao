@@ -3601,6 +3601,15 @@
    "field": "일상"
   },
   {
+   "vi": "ung thư giữ",
+   "key": "ung thư giữ",
+   "ko": "심장 / 암 / 확인하다, 살펴보다 / 유지하다",
+   "gi": "20",
+   "n": 1,
+   "pos": 0.1098,
+   "field": "일상"
+  },
+  {
    "vi": "tất cả mọi",
    "key": "tất cả mọi",
    "ko": "모든",
@@ -4200,6 +4209,24 @@
    "ko": "지금",
    "gi": "171820",
    "n": 3,
+   "pos": 0.1341,
+   "field": "일상"
+  },
+  {
+   "vi": "đua xe làng giếng",
+   "key": "đua xe làng giếng",
+   "ko": "레이싱, 경주 / 귀신, 유령 / 마을 / 우물",
+   "gi": "20",
+   "n": 1,
+   "pos": 0.1341,
+   "field": "일상"
+  },
+  {
+   "vi": "trường đua kiến sâu",
+   "key": "trường đua kiến sâu",
+   "ko": "경주장, 트랙 / 개미 / 소풍 / 깊다",
+   "gi": "20",
+   "n": 1,
    "pos": 0.1341,
    "field": "일상"
   },
@@ -6528,7 +6555,7 @@
   {
    "vi": "đói (bụng)",
    "key": "đói (bụng",
-   "ko": "배고픈 / 배고픈 / )",
+   "ko": "배고픈",
    "gi": "19",
    "n": 1,
    "pos": 0.202,
@@ -6844,15 +6871,6 @@
    "vi": "đối diện (với)",
    "key": "đối diện (với",
    "ko": "반대편",
-   "gi": "18",
-   "n": 1,
-   "pos": 0.2111,
-   "field": "일상"
-  },
-  {
-   "vi": "xa",
-   "key": "xa",
-   "ko": "멀다",
    "gi": "18",
    "n": 1,
    "pos": 0.2111,
@@ -19420,6 +19438,15 @@
    "gi": "18",
    "n": 1,
    "pos": 0.5444,
+   "field": "일상"
+  },
+  {
+   "vi": "xa",
+   "key": "xa",
+   "ko": "멀다",
+   "gi": "1819",
+   "n": 2,
+   "pos": 0.5449,
    "field": "일상"
   },
   {
@@ -33580,9 +33607,144 @@
    "field": "일상"
   },
   {
+   "vi": "đôi đôi",
+   "key": "đôi đôi",
+   "ko": "한 쌍, 둘 / 한 쌍, 둘",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "cỡ cỡ",
+   "key": "cỡ cỡ",
+   "ko": "사이즈, 크기 / 사이즈, 크기",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "cần cần",
+   "key": "cần cần",
+   "ko": "필요로 하다 / 필요로 하다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "gói gói",
+   "key": "gói gói",
+   "ko": "싸다, 포장하다 / 싸다, 포장하다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "생산·현장"
+  },
+  {
+   "vi": "áo khoác áo khoác",
+   "key": "áo khoác áo khoác",
+   "ko": "코트, 자켓, 겉옷 / 코트, 자켓, 겉옷",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "khăn quàng khăn quàng",
+   "key": "khăn quàng khăn quàng",
+   "ko": "목도리, 스카프 / 목도리, 스카프",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "hàng hóa hàng hóa",
+   "key": "hàng hóa hàng hóa",
+   "ko": "물건, 상품 / 물건, 상품",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "kẹo kẹo",
+   "key": "kẹo kẹo",
+   "ko": "사탕, 캔디 / 사탕, 캔디",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "mặc cả mặc cả",
+   "key": "mặc cả mặc cả",
+   "ko": "흥정하다, 값을 깎다 / 흥정하다, 값을 깎다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "thạo thạo",
+   "key": "thạo thạo",
+   "ko": "능숙하다, 잘하다 / 능숙하다, 잘하다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "quầy quầy",
+   "key": "quầy quầy",
+   "ko": "카운터, 매대 / ) / 카운터, 매대",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "đồng ý đồng ý",
+   "key": "đồng ý đồng ý",
+   "ko": "동의하다, 찬성하다 / 동의하다, 찬성하다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "hôn hôn",
+   "key": "hôn hôn",
+   "ko": "키스하다, 입맞추다 / 키스하다, 입맞추다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "mùi mùi",
+   "key": "mùi mùi",
+   "ko": "냄새, 향기 / 냄새, 향기",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
    "vi": "họ hàng họ hàng",
    "key": "họ hàng họ hàng",
-   "ko": "친척, 일가 / 친척, 일가 / 친척, 일가",
+   "ko": "친척, 일가 / 친척, 일가",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "trước đây trước đây",
+   "key": "trước đây trước đây",
+   "ko": "이전에, 예전에 / 이전에, 예전에",
    "gi": "19",
    "n": 1,
    "pos": 0.8687,
@@ -33591,7 +33753,16 @@
   {
    "vi": "nghèo nghèo",
    "key": "nghèo nghèo",
-   "ko": "가난한 / 가난한 / 가난한",
+   "ko": "가난한 / 가난한",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "cuộc sống cuộc sống",
+   "key": "cuộc sống cuộc sống",
+   "ko": "삶, 인생, 생활 / 삶, 인생, 생활",
    "gi": "19",
    "n": 1,
    "pos": 0.8687,
@@ -33600,7 +33771,16 @@
   {
    "vi": "tốt nghiệp tốt nghiệp",
    "key": "tốt nghiệp tốt nghiệp",
-   "ko": "졸업하다 / 졸업하다 / 졸업하다",
+   "ko": "졸업하다 / 졸업하다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8687,
+   "field": "일상"
+  },
+  {
+   "vi": "độc thân độc thân",
+   "key": "độc thân độc thân",
+   "ko": "독신, 미혼 / ) / 독신, 미혼",
    "gi": "19",
    "n": 1,
    "pos": 0.8687,
@@ -33609,7 +33789,7 @@
   {
    "vi": "chồng chồng",
    "key": "chồng chồng",
-   "ko": "남편 / 남편 / 남편",
+   "ko": "남편 / 남편",
    "gi": "19",
    "n": 1,
    "pos": 0.8687,
@@ -33949,9 +34129,90 @@
    "field": "일상"
   },
   {
-   "vi": "xám xám xám",
-   "key": "xám xám xám",
-   "ko": "회색 / 회색 / 회색 / 회색",
+   "vi": "đói (bụng) đói (bụng)",
+   "key": "đói (bụng) đói (bụng",
+   "ko": "배고픈 / ) / 배고픈 / 배고픈 / )",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "kinh nghiệm kinh nghiệm",
+   "key": "kinh nghiệm kinh nghiệm",
+   "ko": "경험 / 경험 / 경험",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "xám xám",
+   "key": "xám xám",
+   "ko": "회색 / 회색 / 회색",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "máy bay máy bay",
+   "key": "máy bay máy bay",
+   "ko": "비행기 / 비행기 / 비행기",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "bên trái bên trái",
+   "key": "bên trái bên trái",
+   "ko": "왼쪽, 왼편 / 왼쪽, 왼편 / 왼쪽, 왼편",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "cầu tre cầu tre",
+   "key": "cầu tre cầu tre",
+   "ko": "대나무 다리 / 대나무 다리 / 대나무 다리",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "đi chậm đi chậm",
+   "key": "đi chậm đi chậm",
+   "ko": "천천히 가다 / 천천히 가다 / 천천히 가다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "ngã ba ngã ba",
+   "key": "ngã ba ngã ba",
+   "ko": "삼거리 / 삼거리 / 삼거리",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "ngã năm ngã năm",
+   "key": "ngã năm ngã năm",
+   "ko": "오거리 / 오거리 / 오거리",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8788,
+   "field": "일상"
+  },
+  {
+   "vi": "tàu thuỷ tàu thuỷ",
+   "key": "tàu thuỷ tàu thuỷ",
+   "ko": "배, 선박 / 배, 선박 / 배, 선박",
    "gi": "19",
    "n": 1,
    "pos": 0.8788,
@@ -34111,9 +34372,90 @@
    "field": "일상"
   },
   {
-   "vi": "bẩn bẩn bẩn",
-   "key": "bẩn bẩn bẩn",
-   "ko": "더러운 / 더러운 / 더러운 / 더러운",
+   "vi": "bẩn bẩn",
+   "key": "bẩn bẩn",
+   "ko": "더러운 / 더러운 / 더러운",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "cấp cấp",
+   "key": "cấp cấp",
+   "ko": "단계, 급 / 단계, 급 / 단계, 급",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "khí hậu khí hậu",
+   "key": "khí hậu khí hậu",
+   "ko": "기후 / 기후 / 기후",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "khởi hành khởi hành",
+   "key": "khởi hành khởi hành",
+   "ko": "출발하다 / 출발하다 / 출발하다",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "khu vực khu vực",
+   "key": "khu vực khu vực",
+   "ko": "지역, 구역 / 지역, 구역 / 지역, 구역",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "lúc đó lúc đó",
+   "key": "lúc đó lúc đó",
+   "ko": "그때 / 그때 / 그때",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "nhiệt độ nhiệt độ",
+   "key": "nhiệt độ nhiệt độ",
+   "ko": "온도 / 온도 / 온도",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "sáng sáng",
+   "key": "sáng sáng",
+   "ko": "아침, 밝은 / 아침, 밝은 / 아침, 밝은",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "thời gian thời gian",
+   "key": "thời gian thời gian",
+   "ko": "시간, 기간 / 시간, 기간 / 시간, 기간",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.8889,
+   "field": "일상"
+  },
+  {
+   "vi": "thực sự thực sự",
+   "key": "thực sự thực sự",
+   "ko": "정말, 진짜 / 정말, 진짜 / 정말, 진짜",
    "gi": "19",
    "n": 1,
    "pos": 0.8889,
@@ -37414,6 +37756,15 @@
    "field": "일상"
   },
   {
+   "vi": "trách nhiệm trách nhiệm",
+   "key": "trách nhiệm trách nhiệm",
+   "ko": "책임감 / 책임감 / 책임감",
+   "gi": "19",
+   "n": 1,
+   "pos": 0.9798,
+   "field": "일상"
+  },
+  {
    "vi": "bền vững",
    "key": "bền vững",
    "ko": "지속 / 가능한, / 지탱하다, / 오래가다",
@@ -39457,6 +39808,42 @@
    "field": "일상"
   },
   {
+   "vi": "ở lại trán kiếm",
+   "key": "ở lại trán kiếm",
+   "ko": "머물다 / 이마 / 돈을 벌다,얻다 / 수집하다",
+   "gi": "18",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "chợ tình thành công",
+   "key": "chợ tình thành công",
+   "ko": "(전통 시장) / 귀 / 성공 / 코미디",
+   "gi": "18",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "thăm má đám đông",
+   "key": "thăm má đám đông",
+   "ko": "방문하다 / 볼, 뺨 / 대중,군중 / 활동",
+   "gi": "18",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "chè cằm mũi",
+   "key": "chè cằm mũi",
+   "ko": "달달한 차 / 턱 / 코 / 축구선수",
+   "gi": "18",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
    "vi": "ắng",
    "key": "ắng",
    "ko": "조용하다",
@@ -39691,8 +40078,8 @@
    "field": "일상"
   },
   {
-   "vi": "nhạt tốt vẽ ăn",
-   "key": "nhạt tốt vẽ ăn",
+   "vi": "nhạt tốt vẽ",
+   "key": "nhạt tốt vẽ",
    "ko": "재미없는 / 착한",
    "gi": "19",
    "n": 1,
@@ -39700,8 +40087,8 @@
    "field": "일상"
   },
   {
-   "vi": "keo kiệt sống uống",
-   "key": "keo kiệt sống uống",
+   "vi": "keo kiệt sống",
+   "key": "keo kiệt sống",
    "ko": "구두쇠 / 얌전한",
    "gi": "19",
    "n": 1,
@@ -39709,8 +40096,8 @@
    "field": "일상"
   },
   {
-   "vi": "ích kỷ gửi ngủ",
-   "key": "ích kỷ gửi ngủ",
+   "vi": "ích kỷ gửi",
+   "key": "ích kỷ gửi",
    "ko": "이기적인 성격 / 즐거운",
    "gi": "19",
    "n": 1,
@@ -39718,9 +40105,36 @@
    "field": "일상"
   },
   {
-   "vi": "kín đáo buồn dậy",
-   "key": "kín đáo buồn dậy",
+   "vi": "kín đáo buồn",
+   "key": "kín đáo buồn",
    "ko": "신중한 성격 / 슬픈",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "ngại thân thiết thích",
+   "key": "ngại thân thiết thích",
+   "ko": "수줍은 성격 / 친한",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "khó tính lười hút",
+   "key": "khó tính lười hút",
+   "ko": "까다로운 성격 / 게으른",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "tụ ti ngốc đoán",
+   "key": "tụ ti ngốc đoán",
+   "ko": "자신감 없는 성격 / 멍청한",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -39736,9 +40150,45 @@
    "field": "일상"
   },
   {
-   "vi": "tích cực gặp viết",
-   "key": "tích cực gặp viết",
+   "vi": "buồn ngủ chậm dịch",
+   "key": "buồn ngủ chậm dịch",
+   "ko": "졸린 / 느린",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "tích cực gặp",
+   "key": "tích cực gặp",
    "ko": "긍정적인 / 빠른",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "lãng mạn lạnh rút",
+   "key": "lãng mạn lạnh rút",
+   "ko": "낭만적인 / 차가운",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "quốc tế dễ khám",
+   "key": "quốc tế dễ khám",
+   "ko": "국제적인 / 쉬운",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "mùa xuân khó cắt",
+   "key": "mùa xuân khó cắt",
+   "ko": "봄 / 어려운",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41214,7 +41664,7 @@
   {
    "vi": "còn cô đầu bếp",
    "key": "còn cô đầu bếp",
-   "ko": "반면에 / 여자 선생님 / 손 / 요리사",
+   "ko": "반면에 / 여자 선생님 / 손",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41223,7 +41673,7 @@
   {
    "vi": "nội trợ tốt Thích",
    "key": "nội trợ tốt thích",
-   "ko": "꿰매다 / 주부 / 좋아요 / 좋아하다",
+   "ko": "꿰매다 / 주부 / 좋아요",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41232,7 +41682,7 @@
   {
    "vi": "gặp bình thường Nước",
    "key": "gặp bình thường nước",
-   "ko": "만나다 / 그저 그래 / 물 / 역, 정거장",
+   "ko": "만나다 / 그저 그래 / 물",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41241,7 +41691,7 @@
   {
    "vi": "ăn với tự được",
    "key": "ăn với tự được",
-   "ko": "먹다 / 와 함께 / 스스로 / 이 되다",
+   "ko": "먹다 / 와 함께 / 스스로",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41250,7 +41700,7 @@
   {
    "vi": "nguyên âm áo",
    "key": "nguyên âm áo",
-   "ko": "모음 / 기쁜 / 보다 / 옷",
+   "ko": "모음 / 기쁜 / 보다",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41259,7 +41709,7 @@
   {
    "vi": "luật sư Phở",
    "key": "luật sư phở",
-   "ko": "변호사 / 귀 / 듣다 / 쌀국수",
+   "ko": "변호사 / 귀 / 듣다",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41268,7 +41718,7 @@
   {
    "vi": "cơm nông dân",
    "key": "cơm nông dân",
-   "ko": "밥 / 청하다 / 남성 / 농부",
+   "ko": "밥 / 청하다 / 남성",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41277,7 +41727,7 @@
   {
    "vi": "Nhà công nhân nữ",
    "key": "nhà công nhân nữ",
-   "ko": "보다 / 집 / 노동자 / 여성",
+   "ko": "보다 / 집 / 노동자",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41320,8 +41770,8 @@
    "field": "일상"
   },
   {
-   "vi": "Trứng ốp la dở",
-   "key": "trứng ốp la dở",
+   "vi": "Trứng ốp la",
+   "key": "trứng ốp la",
    "ko": "캐나다 / 큰 / 계란 후라이 / 맛없는",
    "gi": "19",
    "n": 1,
@@ -41338,9 +41788,45 @@
    "field": "일상"
   },
   {
-   "vi": "Ý mới Cái bảng",
-   "key": "ý mới cái bảng",
+   "vi": "xấu Cái kính Đức",
+   "key": "xấu cái kính đức",
+   "ko": "못생긴 / 안경 / 독일 / 말",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "Cái ví dễ",
+   "key": "cái ví dễ",
+   "ko": "맛있는 / 지갑 / 쉬운 / 파인애플",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "con tôm Mỹ",
+   "key": "con tôm mỹ",
+   "ko": "새우 / 영국 / 미국 / 사과",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "Ý mới",
+   "key": "ý mới",
    "ko": "이탈리아 / 빠른 / 새로운 / 칠판",
+   "gi": "19",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "Nhật dày mỏng",
+   "key": "nhật dày mỏng",
+   "ko": "일본 / 두꺼운 / 얇은 / 두리안",
    "gi": "19",
    "n": 1,
    "pos": null,
@@ -41386,6 +41872,132 @@
    "vi": "chơi trống",
    "key": "chơi trống",
    "ko": "드럼을 치다",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "hơi dễ sâu",
+   "key": "hơi dễ sâu",
+   "ko": "조금 / 쉽다 / 깊은",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "gà con mét chật",
+   "key": "gà con mét chật",
+   "ko": "병아리 / 미터 / (면적이) 좁다",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "phát triển chỉ hẹp",
+   "key": "phát triển chỉ hẹp",
+   "ko": "발전하다 / 단지 / (폭, 범위가) 좁다",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "nhà riȇng dày nhẹ",
+   "key": "nhà riȇng dày nhẹ",
+   "ko": "개인 주택 / 두껍다 / 가볍다",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "bao nhiêu mỏng bằng",
+   "key": "bao nhiêu mỏng bằng",
+   "ko": "얼마나 / 얇다 / 같다(측정 가능한 것)",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "mấy nhưng như",
+   "key": "mấy nhưng như",
+   "ko": "몇 / 하지만 / 같다, / 처럼",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "tớ bố",
+   "key": "tớ bố",
+   "ko": "(친숙한 관계) 나 / 아빠 / 서로",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "viện nhóm ô",
+   "key": "viện nhóm ô",
+   "ko": "기관 / 무리 / 우산",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "số uống bánh",
+   "key": "số uống bánh",
+   "ko": "숫자 / 마시다 / 케이크, 빵",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "một triệu rộng thỏ",
+   "key": "một triệu rộng thỏ",
+   "ko": "백만 / 넓다 / 토끼",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "câu hỏi nặng",
+   "key": "câu hỏi nặng",
+   "ko": "질문 / 안에 / 무거운",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "tiếng Nhật danh từ",
+   "key": "tiếng nhật danh từ",
+   "ko": "일본어 / 명사",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "khó tính từ",
+   "key": "khó tính từ",
+   "ko": "어렵다 / 형용사",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "tiếng Anh động từ",
+   "key": "tiếng anh động từ",
+   "ko": "영어 / 동사",
    "gi": "20",
    "n": 1,
    "pos": null,
@@ -41534,6 +42146,24 @@
    "n": 1,
    "pos": null,
    "field": "일상"
+  },
+  {
+   "vi": "chỉ (thôi) chữ trông",
+   "key": "chỉ (thôi) chữ trông",
+   "ko": "오직 / 뒤, 후 / 글자 / 처럼 보이다",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "cốc phức tạp hết",
+   "key": "cốc phức tạp hết",
+   "ko": "컵 / 재봉 / 복잡한 / 다 떨어지다",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "봉제·섬유"
   },
   {
    "vi": "Ai Cập",
@@ -45193,6 +45823,42 @@
    "vi": "yêu thích",
    "key": "yêu thích",
    "ko": "좋아하다, 선호하다",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "loại dép chồng đỗ",
+   "key": "loại dép chồng đỗ",
+   "ko": "종류, 유형 / 샌들 / 남편 / 합격하다",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "ra đời tháng tư",
+   "key": "ra đời tháng tư",
+   "ko": "태어나다 / 탄생하다 / 날다 / 4월",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "trừ thường sinh nhật",
+   "key": "trừ thường sinh nhật",
+   "ko": "을 제외하고 / 보통 / 생일 (일상회화사용)",
+   "gi": "20",
+   "n": 1,
+   "pos": null,
+   "field": "일상"
+  },
+  {
+   "vi": "ban đêm quý báo",
+   "key": "ban đêm quý báo",
+   "ko": "밤에 / 야간에 / 분기(3개월) / 신문",
    "gi": "20",
    "n": 1,
    "pos": null,
