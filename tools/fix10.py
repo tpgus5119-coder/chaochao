@@ -108,6 +108,19 @@ def main():
     print(f"\n강 {len(out)}개 · 낱말 {tot}개 · 10개 아닌 강 {bad}")
     if bad:
         raise SystemExit("아직 안 맞음 — 저장하지 않았습니다")
+
+    # 대화도 **정확히 두 줄**이다 (2026-08-29, 대표님 지시: 10낱말 + 2문장).
+    # 네 강(8.5·42.5·43.5·77.5)이 넉 줄·닷 줄이었다. 잘라도 사라지는 말이 없는 것을
+    # 미리 확인했다 — 셋째 줄부터 쓰인 낱말은 그 강의 10낱말이나 앞서 배운 말 안에 다 있었다.
+    # 자를 때는 앞 두 줄을 남긴다: A가 묻고 B가 답하는 한 번 주고받기가 그대로 남는다.
+    trim = [(x["day"], len(x["dialog"]["lines"])) for x in out
+            if (x.get("dialog") or {}).get("lines") and len(x["dialog"]["lines"]) > 2]
+    for x in out:
+        dl = x.get("dialog") or {}
+        if dl.get("lines") and len(dl["lines"]) > 2:
+            dl["lines"] = dl["lines"][:2]
+    if trim:
+        print("대화를 두 줄로 줄인 강:", trim)
     json.dump(d, open(P, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
     print("저장 완료:", P)
 
