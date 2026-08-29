@@ -374,6 +374,29 @@ def question_mark(path, col=(58, 68, 64)):
 
 SYM = {'x-khong': cross_mark, 'x-nao': question_mark}
 
+
+def word_mark(path, text, col=(58, 68, 64)):
+    """뜻이 **낱말 하나**인 기능어 — 글자를 진짜 글꼴로 찍는다.
+
+    '그리고 · ~도 · 아주' 같은 말은 그림으로 만들면 억지가 된다(대표님 지시:
+    억지로 만들 필요 없다, 심플하고 직관적이면 된다). 짧은 영어 한 낱말이
+    한국인에게 가장 빨리 읽힌다. 확산 모델은 글자를 늘 뭉개므로 여기서 찍는다."""
+    im = Image.new('RGB', (S, S), BG)
+    dr = ImageDraw.Draw(im)
+    sz = int(S * 0.40)
+    while sz > 10:
+        f = _font(sz)
+        l, t, r, b = dr.textbbox((0, 0), text, font=f)
+        if r - l <= S * 0.78:
+            break
+        sz -= 6
+    dr.text(((S - (r - l)) / 2 - l, (S - (b - t)) / 2 - t), text, font=f, fill=col)
+    im.save(path, 'WEBP', quality=92)
+
+
+# 기능어 — 짧은 영어 한 낱말로 (대표님 지시)
+WORDMK = {'x-va': 'and', 'x-cung': 'also', 'x-lam': 'very'}
+
 if __name__ == '__main__':
     made = 0
     for name, n in NUM.items():
@@ -397,4 +420,6 @@ if __name__ == '__main__':
         turn(IMG / f'{name}.webp', side); made += 1
     for name, fn in SYM.items():
         fn(IMG / f'{name}.webp'); made += 1
+    for name, txt in WORDMK.items():
+        word_mark(IMG / f'{name}.webp', txt); made += 1
     print(f'직접 그린 그림 {made}장')

@@ -114,7 +114,7 @@
 > two distinct objects connected by a plus sign, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d04-gap.webp** · 만나다 (gặp)
-> two people shaking hands, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> two people shaking hands and smiling at each other, full body, seen from a distance, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **x-duoc.webp** · ~하게 되다·할 수 있다 (được)
 > a person successfully reaching for an object with an upward arrow, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
@@ -138,7 +138,7 @@
 > two identical objects with an equals sign between them, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **x-binh-thuong.webp** · 보통이다 (bình thường)
-> a person with a neutral facial expression and relaxed posture, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+> a crowd of many similar ordinary people standing together in rows, seen from a distance, nobody standing out, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 ## Day 5 — 못 알아들었을 때
 
