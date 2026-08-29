@@ -121,6 +121,16 @@ def main():
                     tot += 1
                     if o.get("han"):
                         n_before += 1
+                    if o.get("hanja"):
+                        # 손으로 적어 둔 한자가 있으면 건드리지 않는다.
+                        # 그 칸은 **베트남어 낱말의 어원**이고(thứ hai = 次二),
+                        # 여기서 붙이는 han 은 **한국어 뜻의 한자**다(월요일 = 月曜日).
+                        # 둘을 한 카드에 같이 두면 배우는 사람이 어느 쪽이 그 낱말의
+                        # 한자인지 알 수 없다 — 실제로 118개가 어긋나 있었다.
+                        plain += 1
+                        for v in o.values():
+                            walk(v)
+                        return
                     c = D.get(o["ko"].strip())
                     if not c:
                         plain += 1

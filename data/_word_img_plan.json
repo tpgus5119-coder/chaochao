@@ -312,7 +312,7 @@
    "course": "ko",
    "day": 7,
    "ko": "팔",
-   "vi": "tám",
+   "vi": "tám (số 8)",
    "img": "d07-tam.webp"
   },
   {
@@ -752,9 +752,9 @@
   {
    "course": "ko",
    "day": 18,
-   "ko": "문제",
-   "vi": "vấn đề, câu hỏi",
-   "img": "x-van-de.webp"
+   "ko": "더",
+   "vi": "hơn, thêm",
+   "img": "x-hon.webp"
   },
   {
    "course": "ko",
@@ -1978,8 +1978,8 @@
    "course": "ko",
    "day": 77,
    "ko": "낫다",
-   "vi": "khỏi",
-   "img": "x-khoi.webp"
+   "vi": "hơn, khá hơn, tốt hơn",
+   "img": "x-hon.webp"
   },
   {
    "course": "ko",
@@ -1987,6 +1987,13 @@
    "ko": "이렇게",
    "vi": "như thế này",
    "img": "x-the-nay.webp"
+  },
+  {
+   "course": "ko",
+   "day": 78,
+   "ko": "요구하다",
+   "vi": "yêu cầu",
+   "img": "x-yeu-cau.webp"
   },
   {
    "course": "ko",
@@ -2004,7 +2011,7 @@
    "ko": "국적",
    "vi": "quốc tịch",
    "name": "k-gukjeok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2013,7 +2020,7 @@
    "ko": "선생님",
    "vi": "giáo viên",
    "name": "k-seonsaengnim",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2022,7 +2029,7 @@
    "ko": "회사원",
    "vi": "nhân viên công ty",
    "name": "k-hoesawon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2031,7 +2038,7 @@
    "ko": "학생",
    "vi": "học sinh",
    "name": "k-haksaeng",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2040,7 +2047,7 @@
    "ko": "침대",
    "vi": "giường",
    "name": "k-chimdae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2049,7 +2056,7 @@
    "ko": "휴대 전화",
    "vi": "điện thoại di động",
    "name": "k-hyudae-jeonhwa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2058,7 +2065,7 @@
    "ko": "시계",
    "vi": "đồng hồ",
    "name": "k-sigye",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2067,7 +2074,7 @@
    "ko": "학교",
    "vi": "trường học",
    "name": "k-hakgyo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2076,7 +2083,7 @@
    "ko": "교실",
    "vi": "phòng học",
    "name": "k-gyosil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2085,7 +2092,7 @@
    "ko": "책",
    "vi": "sách",
    "name": "k-chaek",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2094,7 +2101,7 @@
    "ko": "크다",
    "vi": "lớn",
    "name": "k-keuda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2103,7 +2110,7 @@
    "ko": "작다",
    "vi": "nhỏ",
    "name": "k-jakda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2112,7 +2119,7 @@
    "ko": "미안하다",
    "vi": "áy náy",
    "name": "k-mianhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2121,7 +2128,7 @@
    "ko": "가요",
    "vi": "bài hát đại chúng, ca khúc được yêu thích",
    "name": "k-gayo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2130,7 +2137,7 @@
    "ko": "그래서",
    "vi": "vì vậy, vì thế, cho nên, thế nên",
    "name": "k-geuraeseo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2139,7 +2146,7 @@
    "ko": "우리",
    "vi": "chúng ta",
    "name": "k-uri",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2148,7 +2155,7 @@
    "ko": "음악",
    "vi": "âm nhạc",
    "name": "k-eumak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2157,7 +2164,7 @@
    "ko": "때문",
    "vi": "tại vì, vì",
    "name": "k-ttaemun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2166,7 +2173,7 @@
    "ko": "그러나",
    "vi": "nhưng..., thế nhưng...",
    "name": "k-geureona",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2175,7 +2182,7 @@
    "ko": "편의점",
    "vi": "cửa hàng tiện lợi",
    "name": "k-pyeonuijeom",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2184,7 +2191,7 @@
    "ko": "식당",
    "vi": "nhà hàng",
    "name": "k-sikdang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2193,7 +2200,7 @@
    "ko": "카페",
    "vi": "quán cà phê",
    "name": "k-kape",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2202,7 +2209,7 @@
    "ko": "공원",
    "vi": "công viên",
    "name": "k-gongwon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2211,7 +2218,7 @@
    "ko": "김치찌개",
    "vi": "canh kimchi",
    "name": "k-gimchijjigae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2220,7 +2227,7 @@
    "ko": "비빔밥",
    "vi": "cơm trộn",
    "name": "k-bibimbap",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2229,7 +2236,7 @@
    "ko": "불고기",
    "vi": "thịt nướng",
    "name": "k-bulgogi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2238,7 +2245,7 @@
    "ko": "삼겹살",
    "vi": "thịt ba chỉ",
    "name": "k-samgyeopsal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2247,7 +2254,7 @@
    "ko": "라면",
    "vi": "mì ăn liền",
    "name": "k-ramyeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2256,7 +2263,7 @@
    "ko": "김밥",
    "vi": "cơm cuộn rong biển",
    "name": "k-gimbap",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2265,7 +2272,7 @@
    "ko": "반찬",
    "vi": "món ăn kèm",
    "name": "k-banchan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2274,7 +2281,7 @@
    "ko": "젓가락",
    "vi": "đũa",
    "name": "k-jeotgarak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2283,7 +2290,7 @@
    "ko": "강아지",
    "vi": "chó con",
    "name": "k-gangaji",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2292,7 +2299,7 @@
    "ko": "잡지",
    "vi": "tạp chí",
    "name": "k-japji",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2301,7 +2308,7 @@
    "ko": "노트북",
    "vi": "máy tính xách tay",
    "name": "k-noteubuk",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2310,7 +2317,7 @@
    "ko": "녹차",
    "vi": "trà xanh",
    "name": "k-nokcha",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2319,7 +2326,7 @@
    "ko": "청소기",
    "vi": "máy hút bụi",
    "name": "k-cheongsogi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2328,7 +2335,7 @@
    "ko": "계란",
    "vi": "trứng gà",
    "name": "k-gyeran",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2337,7 +2344,7 @@
    "ko": "쇼핑하다",
    "vi": "mua sắm",
    "name": "k-syopinghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2346,7 +2353,7 @@
    "ko": "백화점",
    "vi": "trung tâm mua sắm",
    "name": "k-baekhwajeom",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2355,7 +2362,7 @@
    "ko": "지난달",
    "vi": "tháng rồi, tháng trước",
    "name": "k-jinandal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2364,7 +2371,7 @@
    "ko": "이사",
    "vi": "sự chuyển chỗ ở, sự chuyển nhà",
    "name": "k-isa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2373,7 +2380,7 @@
    "ko": "영화",
    "vi": "điện ảnh, phim",
    "name": "k-yeonghwa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2382,7 +2389,7 @@
    "ko": "되다",
    "vi": "trở thành",
    "name": "k-doeda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2391,7 +2398,7 @@
    "ko": "출근",
    "vi": "sự đi làm",
    "name": "k-chulgeun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2400,7 +2407,7 @@
    "ko": "퇴근",
    "vi": "sự tan sở",
    "name": "k-toegeun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2409,7 +2416,7 @@
    "ko": "그렇다",
    "vi": "cũng vậy, cũng thế, như vậy, như thế",
    "name": "k-geureotda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2418,7 +2425,7 @@
    "ko": "잘하다",
    "vi": "giỏi giang, làm tốt",
    "name": "k-jalhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2427,7 +2434,7 @@
    "ko": "못하다",
    "vi": "làm không được, không làm được",
    "name": "k-mothada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2436,7 +2443,7 @@
    "ko": "할머니",
    "vi": "bà",
    "name": "k-halmeoni",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2445,7 +2452,7 @@
    "ko": "할아버지",
    "vi": "ông",
    "name": "k-halabeoji",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2454,7 +2461,7 @@
    "ko": "부모님",
    "vi": "bố mẹ",
    "name": "k-bumonim",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2463,7 +2470,7 @@
    "ko": "초대장",
    "vi": "thư mời",
    "name": "k-chodaejang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2472,7 +2479,7 @@
    "ko": "케이크",
    "vi": "bánh kem",
    "name": "k-keikeu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2481,7 +2488,7 @@
    "ko": "결혼식",
    "vi": "lễ cưới",
    "name": "k-gyeolhonsik",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2490,7 +2497,7 @@
    "ko": "졸업식",
    "vi": "lễ tốt nghiệp",
    "name": "k-joleopsik",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2499,7 +2506,7 @@
    "ko": "어버이날",
    "vi": "ngày cha mẹ",
    "name": "k-eobeoinal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2508,7 +2515,7 @@
    "ko": "휴가",
    "vi": "kỳ nghỉ",
    "name": "k-hyuga",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2517,7 +2524,7 @@
    "ko": "친척",
    "vi": "họ hàng",
    "name": "k-chincheok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2526,7 +2533,7 @@
    "ko": "화장품",
    "vi": "mỹ phẩm",
    "name": "k-hwajangpum",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2535,7 +2542,7 @@
    "ko": "휴일",
    "vi": "ngày nghỉ",
    "name": "k-hyuil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2544,7 +2551,7 @@
    "ko": "거기",
    "vi": "nơi đó",
    "name": "k-geogi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2553,7 +2560,7 @@
    "ko": "자동차",
    "vi": "xe ô tô",
    "name": "k-jadongcha",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2562,7 +2569,7 @@
    "ko": "자전거",
    "vi": "xe đạp",
    "name": "k-jajeongeo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2571,7 +2578,7 @@
    "ko": "지하철",
    "vi": "tàu điện ngầm",
    "name": "k-jihacheol",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2580,7 +2587,7 @@
    "ko": "기차",
    "vi": "tàu hỏa",
    "name": "k-gicha",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2589,16 +2596,16 @@
    "ko": "힘들다",
    "vi": "mất sức, mệt mỏi",
    "name": "k-himdeulda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
    "day": 18,
    "theme": "견주어 말하기",
    "ko": "가장",
-   "vi": "người chủ gia đình",
+   "vi": "nhất",
    "name": "k-gajang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2607,7 +2614,7 @@
    "ko": "제일",
    "vi": "đầu tiên, trước tiên, trước hết",
    "name": "k-jeil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2616,7 +2623,7 @@
    "ko": "생각하다",
    "vi": "nghĩ, suy nghĩ",
    "name": "k-saenggakhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2625,7 +2632,7 @@
    "ko": "모르다",
    "vi": "không biết",
    "name": "k-moreuda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2634,7 +2641,7 @@
    "ko": "만들다",
    "vi": "làm ra, tạo ra, chế tạo",
    "name": "k-mandeulda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2643,7 +2650,7 @@
    "ko": "어떤",
    "vi": "như thế nào",
    "name": "k-eotteon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2652,7 +2659,7 @@
    "ko": "답장하다",
    "vi": "hồi đáp",
    "name": "k-dapjanghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2661,7 +2668,7 @@
    "ko": "시간",
    "vi": "thời gian",
    "name": "k-sigan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2670,7 +2677,7 @@
    "ko": "장소",
    "vi": "địa điểm",
    "name": "k-jangso",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2679,7 +2686,7 @@
    "ko": "한잔",
    "vi": "việc làm một ly, việc uống một chén",
    "name": "k-hanjan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2688,7 +2695,7 @@
    "ko": "날씨",
    "vi": "thời tiết",
    "name": "k-nalssi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2697,7 +2704,7 @@
    "ko": "봄",
    "vi": "mùa xuân",
    "name": "k-bom",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2706,7 +2713,7 @@
    "ko": "여름",
    "vi": "mùa hè",
    "name": "k-yeoreum",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2715,7 +2722,7 @@
    "ko": "가을",
    "vi": "mùa thu",
    "name": "k-gaeul",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2724,7 +2731,7 @@
    "ko": "겨울",
    "vi": "mùa đông",
    "name": "k-gyeoul",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2733,7 +2740,7 @@
    "ko": "따뜻하다",
    "vi": "ấm áp",
    "name": "k-ttatteuthada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2742,7 +2749,7 @@
    "ko": "맑다",
    "vi": "trong xanh",
    "name": "k-malda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2751,7 +2758,7 @@
    "ko": "흐리다",
    "vi": "nhiều mây",
    "name": "k-heurida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2760,7 +2767,7 @@
    "ko": "없다",
    "vi": "không có, không tồn tại",
    "name": "k-eopda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2769,7 +2776,7 @@
    "ko": "귀",
    "vi": "tai",
    "name": "k-gwi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2778,7 +2785,7 @@
    "ko": "목",
    "vi": "cổ",
    "name": "k-mok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2787,7 +2794,7 @@
    "ko": "팔",
    "vi": "cánh tay",
    "name": "k-pal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2796,7 +2803,7 @@
    "ko": "무릎",
    "vi": "đầu gối",
    "name": "k-mureup",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2805,7 +2812,7 @@
    "ko": "발",
    "vi": "bàn chân",
    "name": "k-bal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2814,7 +2821,7 @@
    "ko": "주차장",
    "vi": "bãi đỗ xe",
    "name": "k-juchajang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2823,7 +2830,7 @@
    "ko": "주차하다",
    "vi": "đỗ xe",
    "name": "k-juchahada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2832,7 +2839,7 @@
    "ko": "박물관",
    "vi": "viện bảo tàng",
    "name": "k-bakmulgwan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2841,7 +2848,7 @@
    "ko": "경찰서",
    "vi": "đồn cảnh sát",
    "name": "k-gyeongchalseo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2850,7 +2857,7 @@
    "ko": "동물원",
    "vi": "sở thú",
    "name": "k-dongmulwon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2859,7 +2866,7 @@
    "ko": "캠핑",
    "vi": "cắm trại",
    "name": "k-kaemping",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2868,7 +2875,7 @@
    "ko": "졸업하다",
    "vi": "tốt nghiệp",
    "name": "k-joleophada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2877,7 +2884,7 @@
    "ko": "입학하다",
    "vi": "nhập học",
    "name": "k-iphakhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2886,7 +2893,7 @@
    "ko": "점심시간",
    "vi": "giờ ăn trưa",
    "name": "k-jeomsimsigan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2895,7 +2902,7 @@
    "ko": "의식주",
    "vi": "ăn mặc ở",
    "name": "k-uisikju",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2904,7 +2911,7 @@
    "ko": "평일",
    "vi": "ngày thường",
    "name": "k-pyeongil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2913,7 +2920,7 @@
    "ko": "교통 카드",
    "vi": "thẻ giao thông",
    "name": "k-gyotong-kadeu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2922,7 +2929,7 @@
    "ko": "팥빙수",
    "vi": "chè đậu đỏ đá bào",
    "name": "k-patbingsu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2931,7 +2938,7 @@
    "ko": "조용하다",
    "vi": "yên tĩnh, tĩnh mịch, im ắng",
    "name": "k-joyonghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2940,7 +2947,7 @@
    "ko": "시끄럽다",
    "vi": "ồn",
    "name": "k-sikkeureopda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2949,7 +2956,7 @@
    "ko": "넓다",
    "vi": "rộng",
    "name": "k-neolda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2958,7 +2965,7 @@
    "ko": "좁다",
    "vi": "hẹp",
    "name": "k-jopda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2967,7 +2974,7 @@
    "ko": "가방",
    "vi": "túi xách, giỏ xách, ba lô",
    "name": "k-gabang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2976,7 +2983,7 @@
    "ko": "하루",
    "vi": "một ngày",
    "name": "k-haru",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2985,7 +2992,7 @@
    "ko": "대하다",
    "vi": "đối diện",
    "name": "k-daehada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -2994,7 +3001,7 @@
    "ko": "위하다",
    "vi": "vì, để, cho",
    "name": "k-wihada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3003,7 +3010,7 @@
    "ko": "사회",
    "vi": "xã hội, cộng đồng",
    "name": "k-sahoe",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3012,7 +3019,7 @@
    "ko": "옮기다",
    "vi": "chuyển",
    "name": "k-olgida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3021,7 +3028,7 @@
    "ko": "이따가",
    "vi": "lát nữa, chút nữa, chốc nữa",
    "name": "k-ittaga",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3030,7 +3037,7 @@
    "ko": "전화",
    "vi": "cuộc điện thoại, cú điện thoại, cuộc nói chuyện điện thoại",
    "name": "k-jeonhwa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3039,7 +3046,7 @@
    "ko": "그런",
    "vi": "như vậy",
    "name": "k-geureon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3048,7 +3055,7 @@
    "ko": "경우",
    "vi": "đạo lý, sự phải đạo",
    "name": "k-gyeongu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3057,7 +3064,7 @@
    "ko": "신다",
    "vi": "mang",
    "name": "k-sinda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3066,7 +3073,7 @@
    "ko": "한번",
    "vi": "có lần",
    "name": "k-hanbeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3075,7 +3082,7 @@
    "ko": "음식",
    "vi": "thức ăn, đồ ăn",
    "name": "k-eumsik",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3084,7 +3091,7 @@
    "ko": "노래",
    "vi": "bài hát, ca khúc, việc ca hát",
    "name": "k-norae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3093,7 +3100,7 @@
    "ko": "자신",
    "vi": "tự thân, chính mình, tự mình",
    "name": "k-jasin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3102,7 +3109,7 @@
    "ko": "생각",
    "vi": "sự suy nghĩ",
    "name": "k-saenggak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3111,7 +3118,7 @@
    "ko": "통하다",
    "vi": "thông",
    "name": "k-tonghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3120,7 +3127,7 @@
    "ko": "소리",
    "vi": "tiếng, âm thanh",
    "name": "k-sori",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3129,7 +3136,7 @@
    "ko": "이런",
    "vi": "như thế này",
    "name": "k-ireon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3138,7 +3145,7 @@
    "ko": "여자",
    "vi": "con gái, phụ nữ",
    "name": "k-yeoja",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3147,7 +3154,7 @@
    "ko": "정도",
    "vi": "mức độ, độ, mức",
    "name": "k-jeongdo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3156,7 +3163,7 @@
    "ko": "김치",
    "vi": "kimchi",
    "name": "k-gimchi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3165,7 +3172,7 @@
    "ko": "보이다",
    "vi": "được thấy, được trông thấy",
    "name": "k-boida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3174,7 +3181,7 @@
    "ko": "가지다",
    "vi": "mang, cầm",
    "name": "k-gajida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3183,7 +3190,7 @@
    "ko": "비",
    "vi": "hạt mưa",
    "name": "k-bi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3192,7 +3199,7 @@
    "ko": "가져오다",
    "vi": "mang đến, đem đến",
    "name": "k-gajyeooda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3201,7 +3208,7 @@
    "ko": "아이",
    "vi": "trẻ em, trẻ nhỏ, đứa trẻ, đứa bé, em bé",
    "name": "k-ai",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3210,7 +3217,7 @@
    "ko": "지나다",
    "vi": "qua, trôi qua",
    "name": "k-jinada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3219,7 +3226,7 @@
    "ko": "인간",
    "vi": "con người",
    "name": "k-ingan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3228,7 +3235,7 @@
    "ko": "사실",
    "vi": "sự thật, sự thực",
    "name": "k-sasil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3237,7 +3244,7 @@
    "ko": "나다",
    "vi": "nhú, mọc, ló",
    "name": "k-nada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3246,7 +3253,7 @@
    "ko": "외롭다",
    "vi": "cô độc, đơn độc",
    "name": "k-oeropda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3255,7 +3262,7 @@
    "ko": "텔레비전",
    "vi": "ti vi, máy vô tuyến truyền hình",
    "name": "k-telrebijeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3264,7 +3271,7 @@
    "ko": "기분",
    "vi": "tâm trạng",
    "name": "k-gibun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3273,7 +3280,7 @@
    "ko": "이렇다",
    "vi": "như thế này",
    "name": "k-ireotda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3282,7 +3289,7 @@
    "ko": "의하다",
    "vi": "dựa vào, theo",
    "name": "k-uihada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3291,7 +3298,7 @@
    "ko": "시대",
    "vi": "thời đại",
    "name": "k-sidae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3300,7 +3307,7 @@
    "ko": "이러하다",
    "vi": "như thế này",
    "name": "k-ireohada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3309,7 +3316,7 @@
    "ko": "잠",
    "vi": "giấc ngủ, sự ngủ",
    "name": "k-jam",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3318,7 +3325,7 @@
    "ko": "자기",
    "vi": "chính mình, tự mình, bản thân mình",
    "name": "k-jagi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3327,7 +3334,7 @@
    "ko": "세계",
    "vi": "thế giới",
    "name": "k-segye",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3336,7 +3343,7 @@
    "ko": "대통령",
    "vi": "tổng thống",
    "name": "k-daetongryeong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3345,7 +3352,7 @@
    "ko": "가지",
    "vi": "thứ, kiểu",
    "name": "k-gaji",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3354,7 +3361,7 @@
    "ko": "얼굴",
    "vi": "mặt",
    "name": "k-eolgul",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3363,7 +3370,7 @@
    "ko": "매일",
    "vi": "mỗi ngày",
    "name": "k-maeil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3372,7 +3379,7 @@
    "ko": "공부",
    "vi": "việc học, sự học",
    "name": "k-gongbu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3381,7 +3388,7 @@
    "ko": "약속",
    "vi": "sự hứa hẹn, lời hứa",
    "name": "k-yaksok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3390,7 +3397,7 @@
    "ko": "운동하다",
    "vi": "tập luyện thể thao",
    "name": "k-undonghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3399,7 +3406,7 @@
    "ko": "올해",
    "vi": "năm nay",
    "name": "k-olhae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3408,7 +3415,7 @@
    "ko": "끊기다",
    "vi": "bị đứt, bị cắt đứt",
    "name": "k-kkeungida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3417,7 +3424,7 @@
    "ko": "그거",
    "vi": "cái đó, cái đấy",
    "name": "k-geugeo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3426,7 +3433,7 @@
    "ko": "국가",
    "vi": "quốc gia",
    "name": "k-gukga",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3435,7 +3442,7 @@
    "ko": "그런데",
    "vi": "nhưng mà, thế nhưng",
    "name": "k-geureonde",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3444,7 +3451,7 @@
    "ko": "요리",
    "vi": "nấu ăn, nấu nướng",
    "name": "k-yori",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3453,7 +3460,7 @@
    "ko": "가르치다",
    "vi": "dạy",
    "name": "k-gareuchida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3462,7 +3469,7 @@
    "ko": "친절",
    "vi": "sự tử tế, sự niềm nở",
    "name": "k-chinjeol",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3471,7 +3478,7 @@
    "ko": "여성",
    "vi": "phụ nữ, giới nữ",
    "name": "k-yeoseong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3480,7 +3487,7 @@
    "ko": "마음",
    "vi": "tâm tính, tính tình",
    "name": "k-maeum",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3489,7 +3496,7 @@
    "ko": "근처",
    "vi": "nơi gần",
    "name": "k-geuncheo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3498,7 +3505,7 @@
    "ko": "관계",
    "vi": "quan hệ",
    "name": "k-gwangye",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3507,7 +3514,7 @@
    "ko": "남자",
    "vi": "nam giới",
    "name": "k-namja",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3516,7 +3523,7 @@
    "ko": "나타나다",
    "vi": "xuất hiện, lộ ra",
    "name": "k-natanada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3525,7 +3532,7 @@
    "ko": "지역",
    "vi": "vùng, khu vực",
    "name": "k-jiyeok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3534,7 +3541,7 @@
    "ko": "청소",
    "vi": "việc quét dọn, việc lau chùi, việc dọn dẹp",
    "name": "k-cheongso",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3543,7 +3550,7 @@
    "ko": "이야기",
    "vi": "câu chuyện",
    "name": "k-iyagi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3552,7 +3559,7 @@
    "ko": "모습",
    "vi": "hình dáng, hình dạng",
    "name": "k-moseup",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3561,7 +3568,7 @@
    "ko": "내다",
    "vi": "mở ra, thông, trổ",
    "name": "k-naeda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3570,7 +3577,7 @@
    "ko": "없이",
    "vi": "không có",
    "name": "k-eopi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3579,7 +3586,7 @@
    "ko": "이번",
    "vi": "lần này",
    "name": "k-ibeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3588,7 +3595,7 @@
    "ko": "생활",
    "vi": "sự sinh sống, cuộc sống",
    "name": "k-saenghwal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3597,7 +3604,7 @@
    "ko": "성격",
    "vi": "tính cách, tính nết",
    "name": "k-seonggyeok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3606,7 +3613,7 @@
    "ko": "사이",
    "vi": "khoảng cách, cự li",
    "name": "k-sai",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3615,7 +3622,7 @@
    "ko": "우리나라",
    "vi": "nước ta, Hàn Quốc",
    "name": "k-urinara",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3624,7 +3631,7 @@
    "ko": "앉다",
    "vi": "ngồi",
    "name": "k-anda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3633,7 +3640,7 @@
    "ko": "처음",
    "vi": "đầu tiên; lần đầu tiên",
    "name": "k-cheoeum",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3642,7 +3649,7 @@
    "ko": "그때",
    "vi": "lúc đó, khi đó",
    "name": "k-geuttae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3651,7 +3658,7 @@
    "ko": "갖다",
    "vi": "mang, cầm",
    "name": "k-gatda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3660,7 +3667,7 @@
    "ko": "특히",
    "vi": "một cách đặc biệt",
    "name": "k-teukhi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3669,7 +3676,7 @@
    "ko": "내년",
    "vi": "năm tới, năm sau",
    "name": "k-naenyeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3678,7 +3685,7 @@
    "ko": "열심히",
    "vi": "một cách chăm chỉ, một cách cần mẫn, một cách miệt mài",
    "name": "k-yeolsimhi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3687,7 +3694,7 @@
    "ko": "모으다",
    "vi": "gom, gộp, chắp, chụm",
    "name": "k-moeuda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3696,7 +3703,7 @@
    "ko": "이상",
    "vi": "trở lên",
    "name": "k-isang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3705,7 +3712,7 @@
    "ko": "교육",
    "vi": "sự giáo dục",
    "name": "k-gyoyuk",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3714,7 +3721,7 @@
    "ko": "경제",
    "vi": "kinh tế, nền kinh tế",
    "name": "k-gyeongje",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3723,7 +3730,7 @@
    "ko": "외국인",
    "vi": "người ngoại quốc, người nước ngoài",
    "name": "k-oegukin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3732,7 +3739,7 @@
    "ko": "등록증",
    "vi": "chứng nhận đăng kí, giấy đăng kí",
    "name": "k-deungrokjeung",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3741,7 +3748,7 @@
    "ko": "운전",
    "vi": "sự lái xe",
    "name": "k-unjeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3750,7 +3757,7 @@
    "ko": "잡다",
    "vi": "nắm, cầm",
    "name": "k-japda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3759,7 +3766,7 @@
    "ko": "예술",
    "vi": "nghệ thuật",
    "name": "k-yesul",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3768,7 +3775,7 @@
    "ko": "고맙다",
    "vi": "cảm  ơn, biết ơn",
    "name": "k-gomapda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3777,7 +3784,7 @@
    "ko": "역사",
    "vi": "lịch sử, tiến trình lịch sử",
    "name": "k-yeoksa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3786,7 +3793,7 @@
    "ko": "읽다",
    "vi": "đọc",
    "name": "k-ilda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3795,7 +3802,7 @@
    "ko": "결과",
    "vi": "kết quả",
    "name": "k-gyeolgwa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3804,7 +3811,7 @@
    "ko": "내용",
    "vi": "cái bên trong",
    "name": "k-naeyong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3813,7 +3820,7 @@
    "ko": "물론",
    "vi": "tất nhiên, đương nhiên",
    "name": "k-mulron",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3822,7 +3829,7 @@
    "ko": "당신",
    "vi": "ông, bà, anh, chị",
    "name": "k-dangsin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3831,7 +3838,7 @@
    "ko": "넣다",
    "vi": "đặt vào, để vào",
    "name": "k-neotda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3840,7 +3847,7 @@
    "ko": "느끼다",
    "vi": "cảm thấy",
    "name": "k-neukkida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3849,7 +3856,7 @@
    "ko": "맵다",
    "vi": "cay",
    "name": "k-maepda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3858,7 +3865,7 @@
    "ko": "담배",
    "vi": "cây thuốc lá",
    "name": "k-dambae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3867,7 +3874,7 @@
    "ko": "피우다",
    "vi": "làm nở, làm trổ",
    "name": "k-piuda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3876,7 +3883,7 @@
    "ko": "의미",
    "vi": "ý nghĩa, nghĩa",
    "name": "k-uimi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3885,7 +3892,7 @@
    "ko": "밝히다",
    "vi": "chiếu sáng",
    "name": "k-balhida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3894,7 +3901,7 @@
    "ko": "죽다",
    "vi": "chết",
    "name": "k-jukda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3903,7 +3910,7 @@
    "ko": "세우다",
    "vi": "dựng đứng",
    "name": "k-seuda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3912,7 +3919,7 @@
    "ko": "주차",
    "vi": "(sự) đỗ xe, đậu xe",
    "name": "k-jucha",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3921,7 +3928,7 @@
    "ko": "창문",
    "vi": "cửa sổ",
    "name": "k-changmun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3930,7 +3937,7 @@
    "ko": "정치",
    "vi": "chính trị",
    "name": "k-jeongchi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3939,7 +3946,7 @@
    "ko": "국민",
    "vi": "quốc dân, nhân dân",
    "name": "k-gukmin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3948,7 +3955,7 @@
    "ko": "얘기",
    "vi": "câu chuyện",
    "name": "k-yaegi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3957,16 +3964,16 @@
    "ko": "연구",
    "vi": "sự nghiên cứu",
    "name": "k-yeongu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
    "day": 44,
    "theme": "맞지요? 하고 되묻기",
    "ko": "주문",
-   "vi": "câu thần chú",
+   "vi": "sự đặt hàng",
    "name": "k-jumun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3975,7 +3982,7 @@
    "ko": "또한",
    "vi": "cũng thế",
    "name": "k-ttohan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3984,7 +3991,7 @@
    "ko": "또는",
    "vi": "hoặc, hay, hay là",
    "name": "k-ttoneun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -3993,7 +4000,7 @@
    "ko": "생기다",
    "vi": "sinh ra, nảy sinh",
    "name": "k-saenggida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4002,7 +4009,7 @@
    "ko": "사용하다",
    "vi": "sử dụng",
    "name": "k-sayonghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4011,7 +4018,7 @@
    "ko": "들어오다",
    "vi": "đi vào, tiến vào",
    "name": "k-deuleooda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4020,7 +4027,7 @@
    "ko": "바라다",
    "vi": "mong, mong cầu",
    "name": "k-barada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4029,7 +4036,7 @@
    "ko": "늘다",
    "vi": "giãn ra, phình ra, nở ra",
    "name": "k-neulda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4038,7 +4045,7 @@
    "ko": "세상",
    "vi": "thế gian",
    "name": "k-sesang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4047,7 +4054,7 @@
    "ko": "대학",
    "vi": "đại học",
    "name": "k-daehak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4056,7 +4063,7 @@
    "ko": "가운데",
    "vi": "phần giữa, chỗ giữa",
    "name": "k-gaunde",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4065,7 +4072,7 @@
    "ko": "이후",
    "vi": "sau này, mai đây, mai sau",
    "name": "k-ihu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4074,7 +4081,7 @@
    "ko": "등산",
    "vi": "việc leo núi, môn leo núi",
    "name": "k-deungsan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4083,7 +4090,7 @@
    "ko": "어때",
    "vi": "như thế nào",
    "name": "k-eottae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4092,7 +4099,7 @@
    "ko": "배우",
    "vi": "diễn viên",
    "name": "k-baeu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4101,7 +4108,7 @@
    "ko": "문학",
    "vi": "văn học",
    "name": "k-munhak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4110,7 +4117,7 @@
    "ko": "높다",
    "vi": "cao",
    "name": "k-nopda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4119,7 +4126,7 @@
    "ko": "최근",
    "vi": "Gần đây",
    "name": "k-choegeun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4128,7 +4135,7 @@
    "ko": "환경",
    "vi": "môi trường",
    "name": "k-hwangyeong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4137,7 +4144,7 @@
    "ko": "전하다",
    "vi": "truyền lại, lưu truyền",
    "name": "k-jeonhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4146,7 +4153,7 @@
    "ko": "말씀",
    "vi": "lời",
    "name": "k-malsseum",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4155,7 +4162,7 @@
    "ko": "지시",
    "vi": "sự cho xem",
    "name": "k-jisi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4164,7 +4171,7 @@
    "ko": "요즘",
    "vi": "gần đây, dạo gần đây, dạo này",
    "name": "k-yojeum",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4173,7 +4180,7 @@
    "ko": "결혼",
    "vi": "việc kết hôn",
    "name": "k-gyeolhon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4182,7 +4189,7 @@
    "ko": "자체",
    "vi": "tự thể",
    "name": "k-jache",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4191,7 +4198,7 @@
    "ko": "확실하다",
    "vi": "xác thực, chắc chắn",
    "name": "k-hwaksilhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4200,7 +4207,7 @@
    "ko": "부분",
    "vi": "bộ phận, phần",
    "name": "k-bubun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4209,7 +4216,7 @@
    "ko": "변화",
    "vi": "sự biến hóa, sự biến đổi, sự thay đổi",
    "name": "k-byeonhwa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4218,7 +4225,7 @@
    "ko": "관하다",
    "vi": "liên quan đến",
    "name": "k-gwanhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4227,7 +4234,7 @@
    "ko": "그냥",
    "vi": "cứ, chỉ",
    "name": "k-geunyang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4236,7 +4243,7 @@
    "ko": "이용하다",
    "vi": "sử dụng, tận dụng",
    "name": "k-iyonghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4245,7 +4252,7 @@
    "ko": "거의",
    "vi": "hầu hết, hầu như",
    "name": "k-geoui",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4254,7 +4261,7 @@
    "ko": "시험",
    "vi": "sự thi cử, sự kiểm tra, sự sát hạch",
    "name": "k-siheom",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4263,7 +4270,7 @@
    "ko": "목적",
    "vi": "mục đích",
    "name": "k-mokjeok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4272,7 +4279,7 @@
    "ko": "아르바이트",
    "vi": "việc làm thêm, việc làm ngoài giờ, việc làm bán thời gian",
    "name": "k-areubaiteu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4281,7 +4288,7 @@
    "ko": "시작",
    "vi": "sự bắt đầu, bước đầu",
    "name": "k-sijak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4290,7 +4297,7 @@
    "ko": "합격하다",
    "vi": "đỗ, đạt (tiêu chuẩn, qui định)",
    "name": "k-hapgyeokhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4299,7 +4306,7 @@
    "ko": "중심",
    "vi": "trung tâm",
    "name": "k-jungsim",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4308,7 +4315,7 @@
    "ko": "활동",
    "vi": "hoạt động",
    "name": "k-hwaldong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4317,7 +4324,7 @@
    "ko": "무리하다",
    "vi": "vô lí",
    "name": "k-murihada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4326,7 +4333,7 @@
    "ko": "다행",
    "vi": "sự may mắn bất ngờ",
    "name": "k-dahaeng",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4335,7 +4342,7 @@
    "ko": "시원하다",
    "vi": "mát mẻ",
    "name": "k-siwonhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4344,7 +4351,7 @@
    "ko": "관심",
    "vi": "mối quan tâm",
    "name": "k-gwansim",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4353,7 +4360,7 @@
    "ko": "역시",
    "vi": "quả là, đúng là",
    "name": "k-yeoksi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4362,7 +4369,7 @@
    "ko": "광고",
    "vi": "sự quảng bá, sự quảng cáo",
    "name": "k-gwanggo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4371,7 +4378,7 @@
    "ko": "정신",
    "vi": "tinh thần, tâm trí, tâm linh",
    "name": "k-jeongsin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4380,7 +4387,7 @@
    "ko": "이루다",
    "vi": "thực hiện",
    "name": "k-iruda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4389,7 +4396,7 @@
    "ko": "대신",
    "vi": "sự thay thế",
    "name": "k-daesin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4398,7 +4405,7 @@
    "ko": "대신하다",
    "vi": "thay thế",
    "name": "k-daesinhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4407,7 +4414,7 @@
    "ko": "청소하다",
    "vi": "quét dọn, lau chùi, dọn dẹp",
    "name": "k-cheongsohada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4416,7 +4423,7 @@
    "ko": "기술",
    "vi": "kỹ thuật",
    "name": "k-gisul",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4425,7 +4432,7 @@
    "ko": "전체",
    "vi": "toàn thể",
    "name": "k-jeonche",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4434,7 +4441,7 @@
    "ko": "얻다",
    "vi": "nhận được, có được",
    "name": "k-eotda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4443,7 +4450,7 @@
    "ko": "민족",
    "vi": "dân tộc",
    "name": "k-minjok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4452,7 +4459,7 @@
    "ko": "조사",
    "vi": "sự điều tra",
    "name": "k-josa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4461,7 +4468,7 @@
    "ko": "값",
    "vi": "giá cả",
    "name": "k-gap",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4470,7 +4477,7 @@
    "ko": "그대로",
    "vi": "y vậy, y nguyên",
    "name": "k-geudaero",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4479,7 +4486,7 @@
    "ko": "년대",
    "vi": "thập niên, thập kỷ",
    "name": "k-nyeondae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4488,7 +4495,7 @@
    "ko": "과학",
    "vi": "khoa học",
    "name": "k-gwahak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4497,7 +4504,7 @@
    "ko": "자연",
    "vi": "tự nhiên, thiên nhiên",
    "name": "k-jayeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4506,7 +4513,7 @@
    "ko": "결국",
    "vi": "đoạn kết, phần kết, sự kết thúc",
    "name": "k-gyeolguk",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4515,7 +4522,7 @@
    "ko": "이루어지다",
    "vi": "được thực hiện",
    "name": "k-irueojida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4524,7 +4531,7 @@
    "ko": "걸리다",
    "vi": "được mắc, được treo",
    "name": "k-geolrida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4533,7 +4540,7 @@
    "ko": "바라보다",
    "vi": "nhìn thẳng",
    "name": "k-baraboda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4542,7 +4549,7 @@
    "ko": "대부분",
    "vi": "đại bộ phận, đại đa số",
    "name": "k-daebubun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4551,7 +4558,7 @@
    "ko": "표정",
    "vi": "sự biểu lộ, vẻ mặt",
    "name": "k-pyojeong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4560,7 +4567,7 @@
    "ko": "일부",
    "vi": "một phần",
    "name": "k-ilbu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4569,7 +4576,7 @@
    "ko": "느낌",
    "vi": "cảm giác, sự cảm nhận",
    "name": "k-neukkim",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4578,7 +4585,7 @@
    "ko": "나서다",
    "vi": "đứng ra, xuất hiện",
    "name": "k-naseoda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4587,7 +4594,7 @@
    "ko": "양파",
    "vi": "hành Tây",
    "name": "k-yangpa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4596,7 +4603,7 @@
    "ko": "고기",
    "vi": "thịt",
    "name": "k-gogi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4605,7 +4612,7 @@
    "ko": "연락",
    "vi": "sự liên lạc",
    "name": "k-yeonrak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4614,7 +4621,7 @@
    "ko": "고개",
    "vi": "cổ, gáy",
    "name": "k-gogae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4623,7 +4630,7 @@
    "ko": "세기",
    "vi": "thế kỷ",
    "name": "k-segi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4632,7 +4639,7 @@
    "ko": "현재",
    "vi": "hiện tại",
    "name": "k-hyeonjae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4641,7 +4648,7 @@
    "ko": "달라지다",
    "vi": "trở nên khác, khác đi, đổi khác",
    "name": "k-dalrajida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4650,7 +4657,7 @@
    "ko": "소개",
    "vi": "sự giới thiệu",
    "name": "k-sogae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4659,7 +4666,7 @@
    "ko": "다니다",
    "vi": "lui tới",
    "name": "k-danida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4668,7 +4675,7 @@
    "ko": "연습",
    "vi": "luyện tập, thực tập, thực hành, rèn luyện",
    "name": "k-yeonseup",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4677,7 +4684,7 @@
    "ko": "발전",
    "vi": "sự phát triển",
    "name": "k-baljeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4686,7 +4693,7 @@
    "ko": "향하다",
    "vi": "hướng về, nhìn về",
    "name": "k-hyanghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4695,7 +4702,7 @@
    "ko": "관련",
    "vi": "sự liên quan",
    "name": "k-gwanryeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4704,7 +4711,7 @@
    "ko": "분위기",
    "vi": "bầu không khí",
    "name": "k-bunwigi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4713,7 +4720,7 @@
    "ko": "그러하다",
    "vi": "như thế, như vậy",
    "name": "k-geureohada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4722,7 +4729,7 @@
    "ko": "준비하다",
    "vi": "chuẩn bị",
    "name": "k-junbihada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4731,7 +4738,7 @@
    "ko": "연장",
    "vi": "sự gia hạn, sự thêm, sự tăng cường thêm",
    "name": "k-yeonjang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4740,7 +4747,7 @@
    "ko": "필요",
    "vi": "sự tất yếu",
    "name": "k-pilyo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4749,7 +4756,7 @@
    "ko": "꾸준히",
    "vi": "đều đặn",
    "name": "k-kkujunhi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4758,7 +4765,7 @@
    "ko": "믿다",
    "vi": "tin",
    "name": "k-mitda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4767,7 +4774,7 @@
    "ko": "낳다",
    "vi": "sinh, đẻ",
    "name": "k-natda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4776,7 +4783,7 @@
    "ko": "정보",
    "vi": "thông tin",
    "name": "k-jeongbo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4785,7 +4792,7 @@
    "ko": "반면",
    "vi": "ngược lại, trái lại",
    "name": "k-banmyeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4794,7 +4801,7 @@
    "ko": "힘들어하다",
    "vi": "cảm thấy vất vả, tỏ ra mệt mỏi",
    "name": "k-himdeuleohada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4803,7 +4810,7 @@
    "ko": "동네",
    "vi": "làng xóm, thôn xóm, khu phố",
    "name": "k-dongne",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4812,7 +4819,7 @@
    "ko": "교통",
    "vi": "giao thông",
    "name": "k-gyotong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4821,7 +4828,7 @@
    "ko": "불편",
    "vi": "sự bất tiện",
    "name": "k-bulpyeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4830,7 +4837,7 @@
    "ko": "활발하다",
    "vi": "hoạt bát",
    "name": "k-hwalbalhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4839,7 +4846,7 @@
    "ko": "역할",
    "vi": "vai trò, nhiệm vụ",
    "name": "k-yeokhal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4848,7 +4855,7 @@
    "ko": "행동",
    "vi": "(sự) hành động",
    "name": "k-haengdong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4857,7 +4864,7 @@
    "ko": "국내",
    "vi": "quốc nội, trong nước, nội địa",
    "name": "k-guknae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4866,16 +4873,16 @@
    "ko": "그립다",
    "vi": "mong nhớ, nhớ nhung",
    "name": "k-geuripda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
    "day": 58,
    "theme": "예전에 그랬던",
    "ko": "어리다",
-   "vi": "ngấn",
+   "vi": "nhỏ tuổi, ít tuổi, trẻ",
    "name": "k-eorida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4884,7 +4891,7 @@
    "ko": "과자",
    "vi": "bánh ngọt, bánh quy",
    "name": "k-gwaja",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4893,7 +4900,7 @@
    "ko": "작년",
    "vi": "năm rồi, năm ngoái, năm trước",
    "name": "k-jaknyeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4902,7 +4909,7 @@
    "ko": "깊다",
    "vi": "sâu",
    "name": "k-gipda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4911,7 +4918,7 @@
    "ko": "모양",
    "vi": "hình ảnh, bóng dáng",
    "name": "k-moyang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4920,7 +4927,7 @@
    "ko": "조건",
    "vi": "điều kiện",
    "name": "k-jogeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4929,7 +4936,7 @@
    "ko": "넘다",
    "vi": "qua, vượt qua",
    "name": "k-neomda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4938,7 +4945,7 @@
    "ko": "편지",
    "vi": "bức thư",
    "name": "k-pyeonji",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4947,7 +4954,7 @@
    "ko": "마을",
    "vi": "làng",
    "name": "k-maeul",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4956,7 +4963,7 @@
    "ko": "대표",
    "vi": "cái tiêu biểu",
    "name": "k-daepyo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4965,7 +4972,7 @@
    "ko": "가능성",
    "vi": "tính khả thi",
    "name": "k-ganeungseong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4974,7 +4981,7 @@
    "ko": "방향",
    "vi": "phương hướng",
    "name": "k-banghyang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4983,7 +4990,7 @@
    "ko": "대회",
    "vi": "đại hội",
    "name": "k-daehoe",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -4992,7 +4999,7 @@
    "ko": "목소리",
    "vi": "giọng nói, tiếng nói",
    "name": "k-moksori",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5001,7 +5008,7 @@
    "ko": "과일",
    "vi": "trái cây, hoa quả",
    "name": "k-gwail",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5010,7 +5017,7 @@
    "ko": "몸",
    "vi": "cơ thể, thân thể",
    "name": "k-mom",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5019,7 +5026,7 @@
    "ko": "영어",
    "vi": "tiếng Anh",
    "name": "k-yeongeo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5028,7 +5035,7 @@
    "ko": "튼튼하다",
    "vi": "rắn chắc, vững chắc",
    "name": "k-teunteunhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5037,7 +5044,7 @@
    "ko": "움직이다",
    "vi": "động đậy, cựa quậy, nhúc nhích",
    "name": "k-umjikida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5046,7 +5053,7 @@
    "ko": "노력",
    "vi": "sự cố gắng, sự nỗ lực",
    "name": "k-noryeok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5055,7 +5062,7 @@
    "ko": "전혀",
    "vi": "hoàn toàn",
    "name": "k-jeonhyeo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5064,7 +5071,7 @@
    "ko": "단체",
    "vi": "tổ chức",
    "name": "k-danche",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5073,7 +5080,7 @@
    "ko": "막히다",
    "vi": "bị chặn, bị ngăn, bị bịt",
    "name": "k-makhida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5082,7 +5089,7 @@
    "ko": "걱정",
    "vi": "nỗi lo",
    "name": "k-geokjeong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5091,7 +5098,7 @@
    "ko": "길이",
    "vi": "chiều dài",
    "name": "k-gili",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5100,7 +5107,7 @@
    "ko": "출발",
    "vi": "sự khởi hành",
    "name": "k-chulbal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5109,7 +5116,7 @@
    "ko": "알려지다",
    "vi": "được biết",
    "name": "k-alryeojida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5118,7 +5125,7 @@
    "ko": "가능하다",
    "vi": "khả dĩ, có thể",
    "name": "k-ganeunghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5127,7 +5134,7 @@
    "ko": "능력",
    "vi": "khả năng, năng lực",
    "name": "k-neungryeok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5136,7 +5143,7 @@
    "ko": "주장하다",
    "vi": "chủ trương, khẳng định",
    "name": "k-jujanghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5145,7 +5152,7 @@
    "ko": "돌리다",
    "vi": "xoay",
    "name": "k-dolrida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5154,7 +5161,7 @@
    "ko": "사업",
    "vi": "việc làm ăn kinh doanh",
    "name": "k-saeop",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5163,7 +5170,7 @@
    "ko": "지난해",
    "vi": "năm rồi, năm ngoái, năm trước",
    "name": "k-jinanhae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5172,7 +5179,7 @@
    "ko": "표현",
    "vi": "sự biểu hiện, sự thể hiện",
    "name": "k-pyohyeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5181,7 +5188,7 @@
    "ko": "젊다",
    "vi": "trẻ",
    "name": "k-jeolda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5190,7 +5197,7 @@
    "ko": "동시",
    "vi": "đồng thời, cùng một lúc",
    "name": "k-dongsi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5199,7 +5206,7 @@
    "ko": "순간",
    "vi": "khoảnh khắc, thoáng chốc, chốc lát",
    "name": "k-sungan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5208,7 +5215,7 @@
    "ko": "전쟁",
    "vi": "chiến tranh",
    "name": "k-jeonjaeng",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5217,7 +5224,7 @@
    "ko": "적응하다",
    "vi": "thích ứng",
    "name": "k-jeokeunghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5226,7 +5233,7 @@
    "ko": "적응",
    "vi": "sự thích ứng",
    "name": "k-jeokeung",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5235,7 +5242,7 @@
    "ko": "실력",
    "vi": "thực lực",
    "name": "k-silryeok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5244,7 +5251,7 @@
    "ko": "점점",
    "vi": "dần dần, dần",
    "name": "k-jeomjeom",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5253,7 +5260,7 @@
    "ko": "그녀",
    "vi": "cô ấy, bà ấy",
    "name": "k-geunyeo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5262,7 +5269,7 @@
    "ko": "그러다",
    "vi": "làm như vậy thì",
    "name": "k-geureoda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5271,7 +5278,7 @@
    "ko": "정부",
    "vi": "chính phủ",
    "name": "k-jeongbu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5280,7 +5287,7 @@
    "ko": "과정",
    "vi": "quá trình",
    "name": "k-gwajeong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5289,7 +5296,7 @@
    "ko": "생명",
    "vi": "sinh mệnh, sinh mạng, mạng sống",
    "name": "k-saengmyeong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5298,7 +5305,7 @@
    "ko": "물가",
    "vi": "vật giá",
    "name": "k-mulga",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5307,7 +5314,7 @@
    "ko": "저축",
    "vi": "sự tiết kiệm",
    "name": "k-jeochuk",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5316,7 +5323,7 @@
    "ko": "줄이다",
    "vi": "làm giảm, rút ngắn, thu nhỏ",
    "name": "k-julida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5325,7 +5332,7 @@
    "ko": "수입",
    "vi": "thu nhập",
    "name": "k-suip",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5334,7 +5341,7 @@
    "ko": "사건",
    "vi": "sự kiện",
    "name": "k-sageon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5343,7 +5350,7 @@
    "ko": "작품",
    "vi": "tác phẩm",
    "name": "k-jakpum",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5352,7 +5359,7 @@
    "ko": "상황",
    "vi": "tình hình, tình huống, hoàn cảnh",
    "name": "k-sanghwang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5361,7 +5368,7 @@
    "ko": "따라서",
    "vi": "theo đó, do đó",
    "name": "k-ttaraseo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5370,7 +5377,7 @@
    "ko": "상태",
    "vi": "trạng thái, tình hình, hiện trạng",
    "name": "k-sangtae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5379,7 +5386,7 @@
    "ko": "시키다",
    "vi": "bắt, sai khiến, sai bảo",
    "name": "k-sikida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5388,7 +5395,7 @@
    "ko": "유학",
    "vi": "sự du học",
    "name": "k-yuhak",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5397,7 +5404,7 @@
    "ko": "당시",
    "vi": "lúc đó, thời đó, đương thời",
    "name": "k-dangsi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5406,7 +5413,7 @@
    "ko": "더욱",
    "vi": "hơn nữa, càng",
    "name": "k-deouk",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5415,7 +5422,7 @@
    "ko": "현실",
    "vi": "hiện thực",
    "name": "k-hyeonsil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5424,7 +5431,7 @@
    "ko": "기업",
    "vi": "doanh nghiệp",
    "name": "k-gieop",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5433,7 +5440,7 @@
    "ko": "선거",
    "vi": "cuộc tuyển cử, cuộc bầu cử",
    "name": "k-seongeo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5442,7 +5449,7 @@
    "ko": "현상",
    "vi": "hiện tượng",
    "name": "k-hyeonsang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5451,7 +5458,7 @@
    "ko": "듯하다",
    "vi": "chắc, có lẽ",
    "name": "k-deuthada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5460,7 +5467,7 @@
    "ko": "실수",
    "vi": "sự sai sót, sự sơ xuất, sự sai lầm",
    "name": "k-silsu",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5469,7 +5476,7 @@
    "ko": "실수하다",
    "vi": "sai sót, sơ xuất",
    "name": "k-silsuhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5478,7 +5485,7 @@
    "ko": "마련",
    "vi": "đương nhiên, hiển nhiên",
    "name": "k-maryeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5487,7 +5494,7 @@
    "ko": "마련하다",
    "vi": "chuẩn bị",
    "name": "k-maryeonhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5496,7 +5503,7 @@
    "ko": "구조",
    "vi": "cơ cấu, cấu tạo",
    "name": "k-gujo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5505,7 +5512,7 @@
    "ko": "오히려",
    "vi": "ngược lại, trái lại",
    "name": "k-ohiryeo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5514,7 +5521,7 @@
    "ko": "의식",
    "vi": "sự ý thức",
    "name": "k-uisik",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5523,7 +5530,7 @@
    "ko": "산업",
    "vi": "công nghiệp",
    "name": "k-saneop",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5532,7 +5539,7 @@
    "ko": "형태",
    "vi": "hình thức, hình dáng, kiểu dáng",
    "name": "k-hyeongtae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5541,7 +5548,7 @@
    "ko": "작업",
    "vi": "sự tác nghiệp",
    "name": "k-jakeop",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5550,7 +5557,7 @@
    "ko": "비하다",
    "vi": "so sánh",
    "name": "k-bihada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5559,7 +5566,7 @@
    "ko": "기관",
    "vi": "động cơ, máy",
    "name": "k-gigwan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5568,7 +5575,7 @@
    "ko": "입장",
    "vi": "lập trường",
    "name": "k-ipjang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5577,7 +5584,7 @@
    "ko": "만하다",
    "vi": "đáng, đáng để",
    "name": "k-manhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5586,7 +5593,7 @@
    "ko": "방식",
    "vi": "phương thức",
    "name": "k-bangsik",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5595,7 +5602,7 @@
    "ko": "영향",
    "vi": "sự ảnh hưởng",
    "name": "k-yeonghyang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5604,7 +5611,7 @@
    "ko": "행사",
    "vi": "sự kiện, buổi lễ, việc tổ chức sự kiện",
    "name": "k-haengsa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5613,7 +5620,7 @@
    "ko": "취소하다",
    "vi": "hủy bỏ",
    "name": "k-chwisohada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5622,7 +5629,7 @@
    "ko": "안내",
    "vi": "sự hướng dẫn",
    "name": "k-annae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5631,7 +5638,7 @@
    "ko": "취소",
    "vi": "sự hủy bỏ",
    "name": "k-chwiso",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5640,7 +5647,7 @@
    "ko": "부작용",
    "vi": "tác dụng phụ, hệ quả không mong muốn",
    "name": "k-bujakyong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5649,7 +5656,7 @@
    "ko": "신청",
    "vi": "việc đăng kí",
    "name": "k-sincheong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5658,7 +5665,7 @@
    "ko": "단계",
    "vi": "bước, giai đoạn",
    "name": "k-dangye",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5667,7 +5674,7 @@
    "ko": "올리다",
    "vi": "đưa lên, nâng lên, tăng lên",
    "name": "k-olrida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5676,7 +5683,7 @@
    "ko": "체하다",
    "vi": "đầy bụng, khó tiêu",
    "name": "k-chehada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5685,7 +5692,7 @@
    "ko": "그렇게",
    "vi": "như thế, như vậy",
    "name": "k-geureotge",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5694,7 +5701,7 @@
    "ko": "무리",
    "vi": "sự quá sức, sự quá mức",
    "name": "k-muri",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5703,7 +5710,7 @@
    "ko": "눈길",
    "vi": "ánh mắt",
    "name": "k-nungil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5712,7 +5719,7 @@
    "ko": "넘어지다",
    "vi": "ngã, đổ",
    "name": "k-neomeojida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5721,7 +5728,7 @@
    "ko": "교사",
    "vi": "giáo viên",
    "name": "k-gyosa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5730,7 +5737,7 @@
    "ko": "지니다",
    "vi": "giữ gìn, bảo quản",
    "name": "k-jinida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5739,7 +5746,7 @@
    "ko": "의원",
    "vi": "nghị sĩ, đại biểu Quốc hội",
    "name": "k-uiwon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5748,7 +5755,7 @@
    "ko": "주민",
    "vi": "cư dân",
    "name": "k-jumin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5757,7 +5764,7 @@
    "ko": "규칙",
    "vi": "quy tắc",
    "name": "k-gyuchik",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5766,7 +5773,7 @@
    "ko": "존재",
    "vi": "sự tồn tại, đối tượng",
    "name": "k-jonjae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5775,7 +5782,7 @@
    "ko": "분야",
    "vi": "lĩnh vực",
    "name": "k-bunya",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5784,7 +5791,7 @@
    "ko": "행위",
    "vi": "hành vi",
    "name": "k-haengwi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5793,7 +5800,7 @@
    "ko": "수준",
    "vi": "trình độ, tiêu chuẩn",
    "name": "k-sujun",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5802,7 +5809,7 @@
    "ko": "방송",
    "vi": "việc phát sóng",
    "name": "k-bangsong",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5811,7 +5818,7 @@
    "ko": "연극",
    "vi": "sự diễn kịch",
    "name": "k-yeongeuk",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5820,7 +5827,7 @@
    "ko": "마찬가지",
    "vi": "sự giống nhau",
    "name": "k-machangaji",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5829,7 +5836,7 @@
    "ko": "설명하다",
    "vi": "giải thích",
    "name": "k-seolmyeonghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5838,7 +5845,7 @@
    "ko": "갑자기",
    "vi": "đột ngột, bất thình lình, bỗng nhiên",
    "name": "k-gapjagi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5847,7 +5854,7 @@
    "ko": "가치",
    "vi": "giá trị",
    "name": "k-gachi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5856,7 +5863,7 @@
    "ko": "집단",
    "vi": "tập đoàn, nhóm, bầy đàn",
    "name": "k-jipdan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5865,7 +5872,7 @@
    "ko": "현대",
    "vi": "hiện đại",
    "name": "k-hyeondae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5874,7 +5881,7 @@
    "ko": "살펴보다",
    "vi": "soi xét",
    "name": "k-salpyeoboda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5883,7 +5890,7 @@
    "ko": "장관",
    "vi": "bộ trưởng",
    "name": "k-janggwan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5892,7 +5899,7 @@
    "ko": "차이",
    "vi": "sư khác biệt; độ chênh lệch",
    "name": "k-chai",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5901,7 +5908,7 @@
    "ko": "풀다",
    "vi": "cởi, tháo, mở",
    "name": "k-pulda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5910,7 +5917,7 @@
    "ko": "시절",
    "vi": "thời, thời kỳ",
    "name": "k-sijeol",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5919,7 +5926,7 @@
    "ko": "고생하다",
    "vi": "khổ sở, vất vả, nhọc công",
    "name": "k-gosaenghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5928,7 +5935,7 @@
    "ko": "자주",
    "vi": "thường xuyên, hay",
    "name": "k-jaju",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5937,7 +5944,7 @@
    "ko": "직접",
    "vi": "trực tiếp",
    "name": "k-jikjeop",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5946,7 +5953,7 @@
    "ko": "개인",
    "vi": "cá nhân",
    "name": "k-gaein",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5955,7 +5962,7 @@
    "ko": "근데",
    "vi": "thế nhưng",
    "name": "k-geunde",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5964,7 +5971,7 @@
    "ko": "작가",
    "vi": "tác giả",
    "name": "k-jakga",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5973,7 +5980,7 @@
    "ko": "효과",
    "vi": "hiệu quả",
    "name": "k-hyogwa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5982,7 +5989,7 @@
    "ko": "불교",
    "vi": "Phật giáo",
    "name": "k-bulgyo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -5991,7 +5998,7 @@
    "ko": "끌다",
    "vi": "lê, lết, kéo lê",
    "name": "k-kkeulda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6000,7 +6007,7 @@
    "ko": "대로",
    "vi": "giống như",
    "name": "k-daero",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6009,7 +6016,7 @@
    "ko": "서로",
    "vi": "nhau, lẫn nhau",
    "name": "k-seoro",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6018,7 +6025,7 @@
    "ko": "대화",
    "vi": "sự đối thoại, cuộc đối thoại",
    "name": "k-daehwa",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6027,7 +6034,7 @@
    "ko": "오해",
    "vi": "sự hiểu lầm, sự hiểu sai",
    "name": "k-ohae",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6036,7 +6043,7 @@
    "ko": "우주",
    "vi": "vũ trụ",
    "name": "k-uju",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6045,7 +6052,7 @@
    "ko": "마치",
    "vi": "hệt như",
    "name": "k-machi",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6054,7 +6061,7 @@
    "ko": "생산",
    "vi": "việc sản xuất",
    "name": "k-saengsan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6063,7 +6070,7 @@
    "ko": "강하다",
    "vi": "cứng, rắn, chắc",
    "name": "k-ganghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6072,7 +6079,7 @@
    "ko": "한계",
    "vi": "sự giới hạn, hạn mức",
    "name": "k-hangye",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6081,7 +6088,7 @@
    "ko": "최고",
    "vi": "tối cao",
    "name": "k-choego",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6090,7 +6097,7 @@
    "ko": "나타내다",
    "vi": "xuất hiện, thể hiện",
    "name": "k-natanaeda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6099,7 +6106,7 @@
    "ko": "다양하다",
    "vi": "đa dạng",
    "name": "k-dayanghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6108,7 +6115,7 @@
    "ko": "농민",
    "vi": "nông dân",
    "name": "k-nongmin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6117,7 +6124,7 @@
    "ko": "드러나다",
    "vi": "hiện ra, thể hiện",
    "name": "k-deureonada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6126,7 +6133,7 @@
    "ko": "소설",
    "vi": "tiểu thuyết",
    "name": "k-soseol",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6135,7 +6142,7 @@
    "ko": "질서",
    "vi": "trật tự",
    "name": "k-jilseo",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6144,7 +6151,7 @@
    "ko": "담다",
    "vi": "đựng, chứa",
    "name": "k-damda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6153,7 +6160,7 @@
    "ko": "내지",
    "vi": "khoảng… đến",
    "name": "k-naeji",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6162,7 +6169,7 @@
    "ko": "모이다",
    "vi": "tập hợp, gom lại",
    "name": "k-moida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6171,7 +6178,7 @@
    "ko": "시민",
    "vi": "thị dân, dân thành thị",
    "name": "k-simin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6180,7 +6187,7 @@
    "ko": "회장",
    "vi": "chủ tịch hội, hội trưởng",
    "name": "k-hoejang",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6189,7 +6196,7 @@
    "ko": "스스로",
    "vi": "tự mình",
    "name": "k-seuseuro",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6198,7 +6205,7 @@
    "ko": "이날",
    "vi": "ngày này",
    "name": "k-inal",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6207,7 +6214,7 @@
    "ko": "제대로",
    "vi": "đúng mực, đúng chuẩn, đúng kiểu",
    "name": "k-jedaero",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6216,7 +6223,7 @@
    "ko": "던지다",
    "vi": "ném",
    "name": "k-deonjida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6225,7 +6232,7 @@
    "ko": "공간",
    "vi": "không gian",
    "name": "k-gonggan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6234,7 +6241,7 @@
    "ko": "벌이다",
    "vi": "vào việc, bắt đầu",
    "name": "k-beolida",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6243,7 +6250,7 @@
    "ko": "자세",
    "vi": "tư thế",
    "name": "k-jase",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6252,7 +6259,7 @@
    "ko": "강조하다",
    "vi": "khẳng định, nhấn mạnh",
    "name": "k-gangjohada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6261,7 +6268,7 @@
    "ko": "맡다",
    "vi": "đảm nhiệm, đảm đương",
    "name": "k-matda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6270,7 +6277,7 @@
    "ko": "한편",
    "vi": "mặt khác",
    "name": "k-hanpyeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6279,7 +6286,7 @@
    "ko": "기자",
    "vi": "ký giả, nhà báo, phóng viên",
    "name": "k-gija",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6288,7 +6295,7 @@
    "ko": "주로",
    "vi": "chủ yếu",
    "name": "k-juro",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6297,7 +6304,7 @@
    "ko": "훨씬",
    "vi": "hơn hẳn, rất",
    "name": "k-hwolssin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6306,7 +6313,7 @@
    "ko": "차라리",
    "vi": "thà rằng~ còn hơn",
    "name": "k-charari",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6315,7 +6322,7 @@
    "ko": "복잡하다",
    "vi": "phức tạp, rắc rối",
    "name": "k-bokjaphada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6324,7 +6331,7 @@
    "ko": "통일",
    "vi": "sự thống nhất",
    "name": "k-tongil",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6333,7 +6340,7 @@
    "ko": "들어서다",
    "vi": "bước vào",
    "name": "k-deuleoseoda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6342,7 +6349,7 @@
    "ko": "시설",
    "vi": "công trình, trang thiết bị, việc lắp đặt công trình, việc xây dựng công trình",
    "name": "k-siseol",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6351,7 +6358,7 @@
    "ko": "주변",
    "vi": "xung quanh",
    "name": "k-jubyeon",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6360,7 +6367,7 @@
    "ko": "원인",
    "vi": "nguyên nhân",
    "name": "k-wonin",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6369,7 +6376,7 @@
    "ko": "차례",
    "vi": "Cha-re; thứ tự, lượt",
    "name": "k-charye",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6378,7 +6385,7 @@
    "ko": "성공하다",
    "vi": "thành công",
    "name": "k-seonggonghada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6387,7 +6394,7 @@
    "ko": "소식",
    "vi": "tin tức",
    "name": "k-sosik",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6396,7 +6403,7 @@
    "ko": "재산",
    "vi": "tài sản",
    "name": "k-jaesan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6405,7 +6412,7 @@
    "ko": "약간",
    "vi": "hơi, chút ít, chút đỉnh",
    "name": "k-yakgan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6414,16 +6421,7 @@
    "ko": "언어",
    "vi": "ngôn ngữ",
    "name": "k-eoneo",
-   "exists": false
-  },
-  {
-   "course": "ko",
-   "day": 78,
-   "theme": "끝내 해내겠다",
-   "ko": "요구하다",
-   "vi": "yêu cầu",
-   "name": "k-yoguhada",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6432,7 +6430,7 @@
    "ko": "감독",
    "vi": "sự giám sát",
    "name": "k-gamdok",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6441,7 +6439,7 @@
    "ko": "삼다",
    "vi": "lấy làm",
    "name": "k-samda",
-   "exists": false
+   "exists": true
   },
   {
    "course": "ko",
@@ -6450,7 +6448,7 @@
    "ko": "기간",
    "vi": "thời gian, khoảng thời gian",
    "name": "k-gigan",
-   "exists": false
+   "exists": true
   },
   {
    "course": "vi",
@@ -6458,7 +6456,7 @@
    "theme": "인사와 호칭",
    "ko": "(공손하게)",
    "vi": "ạ",
-   "name": "d1-a",
+   "name": "x-a",
    "exists": false
   },
   {
@@ -6467,7 +6465,7 @@
    "theme": "이름 묻고 답하기",
    "ko": "~이다",
    "vi": "là",
-   "name": "d2-la",
+   "name": "x-la",
    "exists": false
   },
   {
@@ -6476,7 +6474,7 @@
    "theme": "이름 묻고 답하기",
    "ko": "~의",
    "vi": "của",
-   "name": "d2-cua",
+   "name": "x-cua",
    "exists": false
   },
   {
@@ -6485,7 +6483,7 @@
    "theme": "헤어질 때",
    "ko": "~할게요 (부드럽게)",
    "vi": "nhé",
-   "name": "d6-nhe",
+   "name": "x-nhe",
    "exists": false
   },
   {
@@ -6494,7 +6492,7 @@
    "theme": "세는 말과 물건",
    "ko": "장갑",
    "vi": "găng tay",
-   "name": "d85-gang-tay",
+   "name": "x-gang-tay",
    "exists": false
   },
   {
@@ -6503,7 +6501,7 @@
    "theme": "안전",
    "ko": "~해야 한다",
    "vi": "phải",
-   "name": "d27-phai",
+   "name": "x-phai",
    "exists": false
   },
   {
@@ -6512,7 +6510,7 @@
    "theme": "색과 무늬",
    "ko": "하늘색",
    "vi": "xanh da trời",
-   "name": "d435-xanh-da-troi",
+   "name": "x-xanh-da-troi",
    "exists": false
   },
   {
@@ -6521,7 +6519,7 @@
    "theme": "색과 무늬",
    "ko": "바다색·남색",
    "vi": "xanh nước biển",
-   "name": "d435-xanh-nuoc-bien",
+   "name": "x-xanh-nuoc-bien",
    "exists": false
   },
   {
@@ -6530,7 +6528,7 @@
    "theme": "색과 무늬",
    "ko": "초록색",
    "vi": "xanh lá cây",
-   "name": "d435-xanh-la-cay",
+   "name": "x-xanh-la-cay",
    "exists": false
   },
   {
@@ -6539,7 +6537,7 @@
    "theme": "색과 무늬",
    "ko": "주황색",
    "vi": "da cam",
-   "name": "d435-da-cam",
+   "name": "x-da-cam",
    "exists": false
   },
   {
@@ -6548,7 +6546,7 @@
    "theme": "색과 무늬",
    "ko": "회색",
    "vi": "xám",
-   "name": "d435-xam",
+   "name": "x-xam",
    "exists": false
   },
   {
@@ -6557,7 +6555,7 @@
    "theme": "색과 무늬",
    "ko": "색깔",
    "vi": "màu sắc",
-   "name": "d435-mau-sac",
+   "name": "x-mau-sac",
    "exists": false
   },
   {
@@ -6566,7 +6564,7 @@
    "theme": "색과 무늬",
    "ko": "무늬",
    "vi": "hoa văn",
-   "name": "d435-hoa-van",
+   "name": "x-hoa-van",
    "exists": false
   },
   {
@@ -6575,7 +6573,7 @@
    "theme": "색과 무늬",
    "ko": "줄무늬",
    "vi": "kẻ sọc",
-   "name": "d435-ke-soc",
+   "name": "x-ke-soc",
    "exists": false
   },
   {
@@ -6584,7 +6582,7 @@
    "theme": "색과 무늬",
    "ko": "투명하다",
    "vi": "trong suốt",
-   "name": "d435-trong-suot",
+   "name": "x-trong-suot",
    "exists": false
   },
   {
@@ -6593,7 +6591,7 @@
    "theme": "색과 무늬",
    "ko": "동그라미·원",
    "vi": "hình tròn",
-   "name": "d435-hinh-tron",
+   "name": "x-hinh-tron",
    "exists": false
   },
   {
@@ -6602,7 +6600,7 @@
    "theme": "맞장구와 리액션",
    "ko": "아하·~예요?",
    "vi": "à",
-   "name": "d75-a",
+   "name": "x-a-2",
    "exists": false
   },
   {
@@ -6611,7 +6609,7 @@
    "theme": "맞장구와 리액션",
    "ko": "응 (반말 — 손윗사람에겐 금물)",
    "vi": "ừ",
-   "name": "d75-u",
+   "name": "x-u",
    "exists": false
   },
   {
@@ -6620,7 +6618,7 @@
    "theme": "맞장구와 리액션",
    "ko": "~네요·그렇죠",
    "vi": "nhỉ",
-   "name": "d75-nhi",
+   "name": "x-nhi",
    "exists": false
   },
   {
@@ -6629,7 +6627,7 @@
    "theme": "과일",
    "ko": "신선하다",
    "vi": "tươi",
-   "name": "d104-tuoi",
+   "name": "x-tuoi",
    "exists": false
   },
   {
@@ -6638,7 +6636,7 @@
    "theme": "길 안내하기",
    "ko": "지도",
    "vi": "bản đồ",
-   "name": "d425-ban-do",
+   "name": "x-ban-do",
    "exists": false
   },
   {
@@ -6647,7 +6645,7 @@
    "theme": "길 안내하기",
    "ko": "신호등",
    "vi": "đèn giao thông",
-   "name": "d425-den-giao-thong",
+   "name": "x-den-giao-thong",
    "exists": false
   },
   {
@@ -6656,7 +6654,7 @@
    "theme": "길 안내하기",
    "ko": "골목",
    "vi": "con hẻm",
-   "name": "d425-con-hem",
+   "name": "x-con-hem",
    "exists": false
   },
   {
@@ -6665,7 +6663,7 @@
    "theme": "일정과 출장",
    "ko": "약속(공식)",
    "vi": "cuộc hẹn",
-   "name": "d59-cuoc-hen",
+   "name": "x-cuoc-hen",
    "exists": false
   },
   {
@@ -6674,8 +6672,8 @@
    "theme": "일정과 출장",
    "ko": "편(교통편)",
    "vi": "chuyến",
-   "name": "d59-chuyen",
-   "exists": false
+   "name": "x-chuyen",
+   "exists": true
   },
   {
    "course": "vi",
@@ -6683,7 +6681,673 @@
    "theme": "칭찬과 격려",
    "ko": "~덕분에",
    "vi": "nhờ có",
-   "name": "d84-nho-co",
+   "name": "x-nho-co",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 107,
+   "theme": "공정과 작업 흐름",
+   "ko": "작업 동작·조작",
+   "vi": "thao tác",
+   "name": "d107-thao-tac",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 107,
+   "theme": "공정과 작업 흐름",
+   "ko": "가동하다·운영하다",
+   "vi": "vận hành",
+   "name": "d107-van-hanh",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 107,
+   "theme": "공정과 작업 흐름",
+   "ko": "떼다·벗기다",
+   "vi": "bóc",
+   "name": "d107-boc",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 107,
+   "theme": "공정과 작업 흐름",
+   "ko": "포장하다·출하 준비하다",
+   "vi": "đóng hàng",
+   "name": "d107-dong-hang",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 107,
+   "theme": "공정과 작업 흐름",
+   "ko": "트레이·받침",
+   "vi": "khay",
+   "name": "d107-khay",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 107,
+   "theme": "공정과 작업 흐름",
+   "ko": "매트·바닥 시트",
+   "vi": "thảm",
+   "name": "d107-tham",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 107,
+   "theme": "공정과 작업 흐름",
+   "ko": "부서·부품",
+   "vi": "bộ phận",
+   "name": "d107-bo-phan",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "외관·외관 검사",
+   "vi": "ngoại quan",
+   "name": "d108-ngoai-quan",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "이물",
+   "vi": "dị vật",
+   "name": "d108-di-vat",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "표면",
+   "vi": "bề mặt",
+   "name": "d108-be-mat",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "미관·보기 좋음",
+   "vi": "thẩm mỹ",
+   "name": "d108-tham-my",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "비율·불량률",
+   "vi": "tỷ lệ",
+   "name": "d108-ty-le",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "결과",
+   "vi": "kết quả",
+   "name": "d108-ket-qua",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "항목",
+   "vi": "hạng mục",
+   "name": "d108-hang-muc",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "유형",
+   "vi": "loại hình",
+   "name": "d108-loai-hinh",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "관리하다·통제하다",
+   "vi": "kiểm soát",
+   "name": "d108-kiem-soat",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 108,
+   "theme": "외관 검사",
+   "ko": "느낌",
+   "vi": "cảm giác",
+   "name": "d108-cam-giac",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "원인",
+   "vi": "nguyên nhân",
+   "name": "d109-nguyen-nhan",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "대책·방안",
+   "vi": "biện pháp",
+   "name": "d109-bien-phap",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "대책",
+   "vi": "đối sách",
+   "name": "d109-doi-sach",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "발생하다",
+   "vi": "phát sinh",
+   "name": "d109-phat-sinh",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "개선하다",
+   "vi": "cải thiện",
+   "name": "d109-cai-thien",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "철저히",
+   "vi": "triệt để",
+   "name": "d109-triet-de",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "준수하다·지키다",
+   "vi": "tuân thủ",
+   "name": "d109-tuan-thu",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "보장하다",
+   "vi": "đảm bảo",
+   "name": "d109-dam-bao",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "반복하다·되풀이되다",
+   "vi": "lặp lại",
+   "name": "d109-lap-lai",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 109,
+   "theme": "원인과 대책",
+   "ko": "영향을 주다",
+   "vi": "ảnh hưởng",
+   "name": "d109-anh-huong",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 110,
+   "theme": "설비와 재료",
+   "ko": "기술",
+   "vi": "kỹ thuật",
+   "name": "d110-ky-thuat",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 110,
+   "theme": "설비와 재료",
+   "ko": "압력·프레스 힘",
+   "vi": "lực ép",
+   "name": "d110-luc-ep",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 110,
+   "theme": "설비와 재료",
+   "ko": "저항",
+   "vi": "điện trở",
+   "name": "d110-dien-tro",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 110,
+   "theme": "설비와 재료",
+   "ko": "금속",
+   "vi": "kim loại",
+   "name": "d110-kim-loai",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 110,
+   "theme": "설비와 재료",
+   "ko": "접촉하다",
+   "vi": "tiếp xúc",
+   "name": "d110-tiep-xuc",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 110,
+   "theme": "설비와 재료",
+   "ko": "재질·소재",
+   "vi": "chất liệu",
+   "name": "d110-chat-lieu",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 110,
+   "theme": "설비와 재료",
+   "ko": "나사",
+   "vi": "vít",
+   "name": "d110-vit",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 110,
+   "theme": "설비와 재료",
+   "ko": "잉크",
+   "vi": "mực",
+   "name": "d110-muc",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "상사·관리자",
+   "vi": "sếp",
+   "name": "d111-sep",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "인력",
+   "vi": "nhân lực",
+   "name": "d111-nhan-luc",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "채용하다",
+   "vi": "tuyển dụng",
+   "name": "d111-tuyen-dung",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "교육하다·양성하다",
+   "vi": "đào tạo",
+   "name": "d111-dao-tao",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "인재",
+   "vi": "nhân tài",
+   "name": "d111-nhan-tai",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "맡다·담당하다",
+   "vi": "đảm nhận",
+   "name": "d111-dam-nhan",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "승인하다·결재하다",
+   "vi": "duyệt",
+   "name": "d111-duyet",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "단기·계절 (근로)",
+   "vi": "thời vụ",
+   "name": "d111-thoi-vu",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "퇴사하다",
+   "vi": "nghỉ việc",
+   "name": "d111-nghi-viec",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 111,
+   "theme": "사람 뽑고 가르치기",
+   "ko": "처우·대우",
+   "vi": "đãi ngộ",
+   "name": "d111-dai-ngo",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "과부하·벅차다",
+   "vi": "quá tải",
+   "name": "d112-qua-tai",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "부담",
+   "vi": "gánh nặng",
+   "name": "d112-ganh-nang",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "업무량·분량",
+   "vi": "khối lượng",
+   "name": "d112-khoi-luong",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "부족하다",
+   "vi": "thiếu hụt",
+   "name": "d112-thieu-hut",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "변동",
+   "vi": "biến động",
+   "name": "d112-bien-dong",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "상태·상황",
+   "vi": "tình trạng",
+   "name": "d112-tinh-trang",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "어려움·힘들다",
+   "vi": "khó khăn",
+   "name": "d112-kho-khan",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "지원하다·돕다",
+   "vi": "hỗ trợ",
+   "name": "d112-ho-tro",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "우선하다",
+   "vi": "ưu tiên",
+   "name": "d112-uu-tien",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 112,
+   "theme": "일이 벅찰 때",
+   "ko": "지지하다·밀어주다",
+   "vi": "ủng hộ",
+   "name": "d112-ung-ho",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "과정",
+   "vi": "quá trình",
+   "name": "d113-qua-trinh",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "수행하다·실행하다",
+   "vi": "thực hiện",
+   "name": "d113-thuc-hien",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "내용",
+   "vi": "nội dung",
+   "name": "d113-noi-dung",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "순서",
+   "vi": "thứ tự",
+   "name": "d113-thu-tu",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "임무·맡은 일",
+   "vi": "nhiệm vụ",
+   "name": "d113-nhiem-vu",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "방법·방식",
+   "vi": "phương pháp",
+   "name": "d113-phuong-phap",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "비고·메모",
+   "vi": "ghi chú",
+   "name": "d113-ghi-chu",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "기본적인",
+   "vi": "cơ bản",
+   "name": "d113-co-ban",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "편리하다",
+   "vi": "thuận tiện",
+   "name": "d113-thuan-tien",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 113,
+   "theme": "작업 표준서 읽기",
+   "ko": "효율·효과",
+   "vi": "hiệu quả",
+   "name": "d113-hieu-qua",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "구조·체계",
+   "vi": "cơ cấu",
+   "name": "d114-co-cau",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "세우다·구축하다",
+   "vi": "xây dựng",
+   "name": "d114-xay-dung",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "키우다·발전하다",
+   "vi": "phát triển",
+   "name": "d114-phat-trien",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "역할",
+   "vi": "vai trò",
+   "name": "d114-vai-tro",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "오래가는·장기의",
+   "vi": "lâu dài",
+   "name": "d114-lau-dai",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "계속·잇달아",
+   "vi": "liên tục",
+   "name": "d114-lien-tuc",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "주의를 주다·일러두다",
+   "vi": "nhắc nhở",
+   "name": "d114-nhac-nho",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "대회",
+   "vi": "đại hội",
+   "name": "d114-dai-hoi",
+   "exists": false
+  },
+  {
+   "course": "vi",
+   "day": 114,
+   "theme": "앞을 내다보기",
+   "ko": "이력·기록",
+   "vi": "lịch sử",
+   "name": "d114-lich-su",
    "exists": false
   }
  ]

@@ -34,7 +34,7 @@ from hanviet import HANVIET    # 한자어 힌트 — 한 곳에 모아 두고 �
 R = pathlib.Path('.')
 p1 = json.loads((R/'data/_part1.json').read_text())
 days, patches = [], []
-for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6','_b7','_b8']:
+for f in ['_b1','_b2','_b3','_b4','_w1','_w2','_b5','_w3','_w4','_b6','_w5','_w6','_b7','_b8','_b9']:
     j = json.loads((R/f'data/{f}.json').read_text())
     days += j['days']
     patches += j.get('patch', [])
@@ -61,7 +61,8 @@ W_SEW    = [22,23,24,25, 31,32,33,34, 36]          # 봉제 기초
 WORK_ORDER = (W_BASE + W_SEW + [k for k in range(51,61) if k not in DROP]  # 전자·사무
               + list(range(61,71))                 # 문화·행정 (공통)
               + list(range(81,86)) + [k for k in range(96,101) if k not in DROP]   # 관리자·창고
-              + [k for k in range(86,96) if k not in DROP])   # 봉제·전자 심화
+              + [k for k in range(86,96) if k not in DROP]    # 봉제·전자 심화
+              + list(range(107,115)))                # 생산관리 현장어 (관리자 말)
 by = {d["day"]: d for d in days}
 # 보강 패치 — 딴 소스가 만든 day 에 단어·문장을 덧붙인다 (b8: 수업 5~10강을 흩어 넣기)
 for p in patches:
@@ -101,7 +102,9 @@ days = ([by[k] for k in DAILY_HEAD]
         + [by[k] for k in DAILY_MID] + [by[k] for k in range(51, 71) if k not in DROP]
         + [by[k] for k in DAILY_TAIL]
         + [by[k] for k in range(81, 86)] + [by[k] for k in range(96, 101) if k not in DROP]
-        + [by[k] for k in range(86, 96) if k not in DROP])
+        + [by[k] for k in range(86, 96) if k not in DROP]
+        # 생산관리 현장어 — 라인 작업자 말이 아니라 **관리자 말**이라 맨 끝에 둔다
+        + [by[k] for k in range(107, 115)])
 
 out = {"meta": {"version":"v4",
                 "voices":{"f":"vi-VN-HoaiMyNeural","m":"vi-VN-NamMinhNeural"},
