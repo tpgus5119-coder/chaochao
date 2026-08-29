@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""베트남어 → 한글 발음 표기. **북부·남부 두 벌**을 짓는다.
+
+왜 만드나 (대표님 지시, 2026-08-29)
+  지금 앱의 발음 표기(kr_read) 1,080개는 **내가 손으로 타이핑한 것**이다.
+  사전에서 온 것도 아니고 검증도 안 됐고, **남부판은 아예 없다.**
+  소리 파일은 북부·남부가 다 있는데 글자는 북부 것만 보여 주고 있었다.
+
+무엇을 기준으로 하나
+  뼈대는 **국립국어원 외래어 표기법**(문화관광부 고시 2004-11호)을 따른다 —
+  음절 쪼개기·받침·꽈/응우옌 같은 규칙이 거기 정해져 있고, 예시가 있어 검산이 된다.
+  다만 **소리가 어긋나는 자리는 소리를 따른다** (대표님: 최대한 소리나는 대로):
+    · r  표기법은 ㄹ. 그런데 북부는 /z/ 다 → 북 ㅈ · 남 ㄹ
+    · d, gi  둘 다 표기법은 ㅈ. 북부 /z/ → ㅈ, **남부 /j/ → 야·여** 로 갈린다
+    · v  표기법은 ㅂ. 북부 /v/ → ㅂ, **남부 /j/ → 야·여**
+    · s  표기법은 ㅅ. 북부는 x와 같은 /s/ → ㅆ, 남부는 혀 마는 /ʂ/ → ㅅ
+    · tr 표기법은 ㅉ. 북부는 ch와 같은 /tɕ/, 남부는 혀 마는 /ʈ/ — 한글로는 둘 다 ㅉ
+  이 여섯 자리가 북부·남부가 갈리는 거의 전부다(앱 낱말에서 285음절).
+
+검산: 표기법 문서에 실린 예시 낱말로 시험한다(맨 아래 TEST). 하나라도 어긋나면 멈춘다.
+쓰기:  python3 tools/vi_kr.py            → 검산만
+      python3 tools/vi_kr.py --diff     → 지금 표기와 어긋나는 것 목록
+      python3 tools/vi_kr.py --write    → days.json 에 kr_read(북)·kr_south(남) 기록
+"""
+import argparse, json, pathlib, re, sys, unicodedata
+
+R = pathlib.Path(__file__).resolve().parent.parent
+
+# ── 첫소리 (긴 것부터 봐야 ng 가 n 으로 잘리지 않는다)
+ONSET_N = [("ngh","응"),("ng","응"),("nh","니"),("gh","ㄱ"),("gi","ㅈ"),("kh","ㅋ"),("ph","ㅍ"),
+           ("th","ㅌ"),("tr","ㅉ"),("ch","ㅉ"),("qu","꾸"),("b","ㅂ"),("c","ㄲ"),("d","ㅈ"),
+           ("đ","ㄷ"),("g","ㄱ"),("h","ㅎ"),("k","ㄲ"),("l","ㄹ"),("m","ㅁ"),("n","ㄴ"),
+           ("p","ㅃ"),("q","ㄲ"),("r","ㅈ"),("s","ㅆ"),("t","ㄸ"),("v","ㅂ"),("x","ㅆ")]
+# 남부에서 달라지는 것만 덮어쓴다
+ONSET_S = {"r":"ㄹ", "s":"ㅅ", "d":"y", "gi":"y", "v":"y"}   # y = 반모음 /j/ (야·여로 붙는다)
+
+# ── 가운뎃소리
+NUC = {"iê":"이에","yê":"이에","ia":"이어","ya":"이어","ưa":"으어","ươ":"으어","ua":"우어","uô":"우오",
+       "oo":"오","ôô":"오","a":"아","ă":"아","â":"어","e":"애","ê":"에","i":"이","y":"이",
+       "o":"오","ô":"오","ơ":"어","u":"우","ư":"으"}
+# ── 끝소리
+COD_N = {"ch":"ㄱ","nh":"ㄴ","ng":"ㅇ","c":"ㄱ","m":"ㅁ","n":"ㄴ","p":"ㅂ","t":"ㅅ","i":"이","y":"이","o":"오","u":"우"}
+COD_S = dict(COD_N)          # 남부 받침 합침은 규칙이 흔들려서 손대지 않는다(지어내지 않는다)
+
+TONE = "\u0300\u0301\u0303\u0309\u0323"        # 성조 부호 다섯만 (모자 ˆ ˘ ̛ 는 글자의 일부다)
+nfc = lambda s: unicodedata.normalize("NFC", s)
+def strip_tone(s):
+    """성조만 뗀다. **모자는 남긴다** — ă â ê ô ơ ư 는 다른 글자다.
+       전에 여기서 모자까지 날려서 lâu 가 '라우', cưa 가 '꽈'로 나왔다."""
+    return nfc("".join(c for c in unicodedata.normalize("NFD", s) if c not in TONE))
+
+# 끝소리가 **모음**이면 받침이 아니라 뒤에 붙는 글자다 (bao 바오 · gai 가이 · lâu 러우)
+VCOD = {"i": "이", "y": "이", "o": "오", "u": "우"}
+VOW = {"아":"ㅏ","애":"ㅐ","에":"ㅔ","어":"ㅓ","오":"ㅗ","우":"ㅜ","으":"ㅡ","이":"ㅣ",
+       "야":"ㅑ","여":"ㅕ","요":"ㅛ","유":"ㅠ","얘":"ㅒ","예":"ㅖ",
+       "와":"ㅘ","왜":"ㅙ","위":"ㅟ","웨":"ㅞ","워":"ㅝ"}
+
+def jamo(cho, jung, jong=""):
+    CHO = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"
+    JUNG = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ"
+    JONG = " ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ"
+    i, j = CHO.find(cho or "ㅇ"), JUNG.find(jung)
+    k = JONG.find(jong) if jong else 0
+    if i < 0 or j < 0 or k < 0: return None
+    return chr(0xAC00 + (i * 21 + j) * 28 + k)
+
+# 첫소리가 붙으면 가운뎃소리가 바뀌는 것들
+YOD = {"아":"야","어":"여","오":"요","우":"유","애":"얘","에":"예","이":"이","으":"으"}
+WOD = {"아":"와","애":"왜","에":"웨","이":"위","어":"워","오":"오","으":"우으"}
+
+# 미끄럼소리(glide)로 볼 짝만 딱 정한다.
+#   ua·uô·ưa·ươ·ui·oi 는 **겹모음**이지 미끄럼소리가 아니다.
+#   전에 이걸 안 갈라 của 가 '꽈', vui 가 '뷔', nói 가 '뉘' 로 나왔다.
+GLIDE = ("oa", "oă", "oe", "uâ", "uê", "uy", "uơ")
+
+def one(syl, south=False):
+    """음절 하나 → 한글."""
+    s = strip_tone(nfc(syl).lower())
+    s = "".join(c for c in s if c in "abcdeghiklmnopqrstuvxyăâđêôơư")
+    if not s: return ""
+    cho, rest = "", s
+    for a, b in ONSET_N:
+        if s.startswith(a):
+            if south and a in ONSET_S: b = ONSET_S[a]
+            cho, rest = b, s[len(a):]
+            break
+    # gì·gia 처럼 gi 가 첫소리를 다 먹어 남는 게 없으면 i 를 가운뎃소리로 돌려준다
+    if not rest and cho in ("ㅈ", "y"): rest = "i"
+    glide = ""
+    if cho != "꾸" and rest[:2] in GLIDE:
+        glide, rest = rest[0], rest[1:]
+    nuc = ""
+    for k in sorted(NUC, key=len, reverse=True):
+        if rest.startswith(k): nuc, rest = NUC[k], rest[len(k):]; break
+    if not nuc: return ""
+    tail, cod = "", ""
+    if rest in VCOD: tail = VCOD[rest]
+    elif rest:
+        for k in sorted(COD_N, key=len, reverse=True):
+            if rest == k: cod = (COD_S if south else COD_N)[k]; break
+    # 표기법 1항 — 어말 nh 앞 모음이 a 면 a 와 합쳐 '아인'
+    if rest == "nh" and nuc == "아": nuc, cod = "아이", "ㄴ"
+    return build(cho, glide, nuc, cod) + tail
+
+def build(cho, glide, nuc, cod):
+    pre = ""
+    if cho == "응": pre, cho = "응", ""
+    elif cho == "니": cho, nuc = "ㄴ", YOD.get(nuc, nuc)
+    elif cho == "꾸": cho, nuc = "ㄲ", WOD.get(nuc, "우" + nuc)   # qu 만 합친다 (꽈·꽝)
+    elif cho == "y":  cho, nuc = "ㅇ", YOD.get(nuc, nuc)
+    if glide:
+        # 미끄럼소리는 **따로 한 글자**로 — 표기법의 Nguyên 응우옌 이 그 꼴이다
+        pre = pre + (jamo(cho or "ㅇ", "ㅜ") or "우"); cho = ""
+        # 표기법 3항 — y(이)는 뒤 모음과 **한 음절로 합친다**: 우 + 이에 + n → 우 + 옌
+        if nuc in ("이에", "이어"): nuc = "여"
+    if len(nuc) > 1:
+        v0 = VOW.get(nuc[0]); v1 = VOW.get(nuc[-1])
+        first = jamo(cho or "ㅇ", v0) if v0 else nuc[0]
+        last = jamo("ㅇ", v1, cod) if v1 else nuc[-1]
+        return pre + (first or nuc[0]) + nuc[1:-1] + (last or nuc[-1])
+    v = VOW.get(nuc)
+    return pre + (jamo(cho or "ㅇ", v, cod) if v else nuc)
+
+def word(vi, south=False):
+    # 붙임표(ki-lô · mi-li-mét)도 음절 사이 구분이다
+    return " ".join(x for x in (one(t, south) for t in re.split(r"[\s\-]+", nfc(vi)) if t) if x)
+
+TEST = [("Bao","바오"),("cao","까오"),("cha","짜"),("bach","박"),("đan","단"),("Đinh","딘"),
+        ("gai","가이"),("ghe","개"),("hai","하이"),("Khai","카이"),("lâu","러우"),("long","롱"),
+        ("minh","민"),("tôm","똠"),("Nam","남"),("bun","분"),("ngo","응오"),("đông","동"),
+        ("nhât","녓"),("put","뿟"),("chap","짭"),("Pham","팜"),("tam","땀"),("hat","핫"),
+        ("thao","타오"),("Trân","쩐"),("vai","바이"),("Quang","꽝"),("kia","끼어"),("chiêng","찌엥"),
+        ("buôn","부온"),("cưa","끄어"),("anh","아인"),("xanh","싸인"),("Nguyên","응우옌"),
+        ("của","꾸어"),("vui","부이"),("nói","노이"),("tuân","뚜언"),("ki-lô","끼 로")]
+
+def main():
+    ap = argparse.ArgumentParser(); ap.add_argument("--diff", action="store_true")
+    ap.add_argument("--write", action="store_true"); a = ap.parse_args()
+    bad = [(v, k, word(v)) for v, k in TEST if word(v) != k]
+    print(f"검산 {len(TEST)}개 중 어긋남 {len(bad)}개")
+    for v, want, got in bad: print(f"   {v:<10} 있어야 {want:<8} 나온 것 {got}")
+    if bad and not a.diff: return
+    P = R / "data" / "days.json"
+    d = json.loads(P.read_text(encoding="utf-8"))
+    ws = [w for x in d["days"] for w in x.get("words", [])]
+    if a.diff:
+        n = 0
+        for w in ws:
+            got = word(w["vi"])
+            if got and got.replace(" ", "") != (w.get("kr_read") or "").replace(" ", ""):
+                n += 1
+                if n <= 40: print(f"   {w['vi']:<16} 지금 {w.get('kr_read',''):<14} → {got:<14} 남부 {word(w['vi'], True)}")
+        print(f"\n어긋나는 낱말 {n} / {len(ws)}")
+    if a.write:
+        for w in ws:
+            n_, s_ = word(w["vi"]), word(w["vi"], True)
+            if n_: w["kr_read"] = n_
+            if s_ and s_ != n_: w["kr_south"] = s_
+            elif "kr_south" in w: del w["kr_south"]
+        P.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+        print("days.json 에 적음")
+
+if __name__ == "__main__":
+    main()
