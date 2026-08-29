@@ -74,8 +74,13 @@ def flag_kr(path):
     cx, cy = X + W / 2, Y + H / 2
     r = H / 4
     dr.ellipse([cx - r, cy - r, cx + r, cy + r], fill=(0, 71, 160))          # 아래 파랑
-    dr.pieslice([cx - r, cy - r, cx + r, cy + r], -33.69 - 180, -33.69, fill=(205, 46, 58))
-    a = math.radians(-33.69)
+    # 각도 부호가 반대였다 (2026-08-29, 대표님 지적).
+    #    -33.69 로 두니 빨강이 **왼쪽 90%** 로 몰려 좌우로 갈렸다. 태극기는 위아래다.
+    #    각도를 바꿔 가며 재서 찾았다: +33.69 에서 빨강이 위 90% · 왼 56% 로 제자리에 온다.
+    #    처음에 점 여덟 개만 찍어 보고 '맞다'고 했는데, 그 점들이 하필 두 배치에서
+    #    같은 색이 나오는 자리였다. **넓이로 재야 했다.**
+    dr.pieslice([cx - r, cy - r, cx + r, cy + r], 33.69 - 180, 33.69, fill=(205, 46, 58))
+    a = math.radians(33.69)
     hx, hy = math.cos(a) * r / 2, math.sin(a) * r / 2
     dr.ellipse([cx - hx - r / 2, cy - hy - r / 2, cx - hx + r / 2, cy - hy + r / 2], fill=(205, 46, 58))
     dr.ellipse([cx + hx - r / 2, cy + hy - r / 2, cx + hx + r / 2, cy + hy + r / 2], fill=(0, 71, 160))
@@ -349,13 +354,24 @@ VNMAP = {'x-mien': 'three', 'x-mien-bac': 'north', 'x-mien-nam': 'south', 'x-tin
 # 확산 모델은 X 와 물음표를 붓으로 문지른 것처럼 그린다(획이 굽고 굵기가 들쭉날쭉하다).
 # 뜻이 **모양 자체**인 그림은 자로 그어야 한다 (대표님 지적, 2026-08-29).
 def cross_mark(path, col=(214, 62, 74)):
-    """없다·아니다 — 굵기가 고른 곧은 X."""
+    """없다·아니다 — 곧은 X.
+
+    크기는 옆칸 '있다'(초록 체크 x-cos)에 맞춘다 (대표님 지적, 2026-08-29).
+    처음엔 그림 폭의 70%·잉크 22% 로 그려서 체크(35%·3.2%)보다 두 배 컸다.
+    같은 줄에 나란히 놓이는 그림은 크기가 비슷해야 한 벌로 보인다.
+    끝을 둥글게 하는 것도 체크와 맞춘 것이다."""
     im = Image.new('RGB', (S, S), BG)
     big = Image.new('RGB', (S * 3, S * 3), BG)
     dr = ImageDraw.Draw(big)
-    c, r, w = S * 3 // 2, S * 0.9, S * 0.42
+    c = S * 3 // 2
+    r = S * 3 * 0.175 * 0.72          # 체크와 같은 35% 크기
+    w = int(S * 3 * 0.052)            # 획 굵기도 체크와 맞춘다
     for a, b in (((-1, -1), (1, 1)), ((-1, 1), (1, -1))):
-        dr.line([c + a[0] * r, c + a[1] * r, c + b[0] * r, c + b[1] * r], fill=col, width=int(w))
+        dr.line([c + a[0] * r, c + a[1] * r, c + b[0] * r, c + b[1] * r],
+                fill=col, width=w, joint='curve')
+        for e in (a, b):              # 끝을 둥글게
+            dr.ellipse([c + e[0] * r - w / 2, c + e[1] * r - w / 2,
+                        c + e[0] * r + w / 2, c + e[1] * r + w / 2], fill=col)
     big.resize((S, S), Image.LANCZOS).save(path, 'WEBP', quality=92)
 
 
@@ -372,7 +388,9 @@ def question_mark(path, col=(58, 68, 64)):
     im.save(path, 'WEBP', quality=92)
 
 
-SYM = {'x-khong': cross_mark, 'x-nao': question_mark}
+# x-nao(어느)·x-the-nao(어떻다)는 x-gi(무엇)의 말풍선 물음표를 **같이 쓴다** (대표님 지시).
+# x-gi 는 손대지 않는다 — 이미 좋은 그림이다. question_mark 는 이제 안 쓰지만 남겨 둔다.
+SYM = {'x-khong': cross_mark}
 
 
 def word_mark(path, text, col=(58, 68, 64)):
@@ -395,7 +413,8 @@ def word_mark(path, text, col=(58, 68, 64)):
 
 
 # 기능어 — 짧은 영어 한 낱말로 (대표님 지시)
-WORDMK = {'x-va': 'and', 'x-cung': 'also', 'x-lam': 'very'}
+WORDMK = {'x-va': 'and', 'x-cung': 'also', 'x-lam': 'very',
+          'd2-cua': 'of', 'x-o': 'at'}   # ~의 · ~에(있다)
 
 if __name__ == '__main__':
     made = 0

@@ -14,8 +14,8 @@
 **d01-chao.webp** · 안녕 (인사말) (chào)
 > a smiling person waving hello, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
-**x-xin-chao.webp** · 안녕하세요 (정중) (xin chào)
-> a person standing and bowing politely, both hands folded together resting in front of the waist, side view, full body, calm friendly face, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
+**x-xin-chao.webp** · 안녕하세요 (정중) · 미안합니다 (xin chào · xin lỗi)
+> a person standing straight and bowing forward from the waist, both hands clasped together resting on the belly button, head lowered, side view, full body, polite and respectful, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
 
 **d01-anh.webp** · 형·오빠 (손위 남자) (anh)
 > a young man, simple flat illustration, soft pastel colors, thick outlines, plain white background, no text, no letters
