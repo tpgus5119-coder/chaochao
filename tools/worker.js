@@ -10,7 +10,9 @@
      ③ 소리(발음 채점)는 대체 경로에서도 산다 — 받아 적은 뒤 글 모델에게 채점시킨다.
 
    금고(Settings → Variables and Secrets)에 넣는 것
-     GEMINI_KEY     — 필수. 구글 열쇠. 여러 개면 쉼표로.
+     GEMINI_KEY     — 필수. 구글 열쇠. 여러 개면 **쉼표든 줄바꿈이든** 상관없다.
+                      (사고 이력: 화면에 `AIza...uMQA` 로 가려진 글자를 그대로 복사해 넣어
+                       열한 글자짜리 다섯 개가 들어갔다. 그래서 모양 검사에서 그것부터 본다.)
      GROQ_KEY       — 선택. https://console.groq.com  (공짜, 카드 안 걸어도 됨)
      OPENROUTER_KEY — 선택. https://openrouter.ai     (공짜 모델만 쓴다)
    바인딩(Settings → Bindings → Add → Workers AI, 이름 AI)
@@ -146,7 +148,7 @@ export default {
     };
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors });
 
-    const keys = (env.GEMINI_KEY || '').split(',').map(k => k.trim()).filter(Boolean);
+    const keys = (env.GEMINI_KEY || '').split(/[,\s]+/).map(k => k.trim()).filter(Boolean);
     const q = new URL(req.url).searchParams;
 
     /* ?health=1 — **찔러 보지 말고 물어본다.**
@@ -172,7 +174,9 @@ export default {
           } else why = (((await r.json()) || {}).error || {}).message || '';
         } catch (e) { why = String(e); }
         rows.push({ 열쇠: i + 1, 살았나: st === 200, 상태: st,
-                    글자수: k.length, 모양: k.length === 39 && k.startsWith('AIza') ? '정상' : '이상',
+                    글자수: k.length,
+                    모양: k.includes('...') ? '가림표를 복사하셨습니다 — 복사 아이콘(⧉)을 쓰세요'
+                        : k.length < 20 ? '너무 짧습니다 — 잘려서 붙은 것 같습니다' : '길이는 괜찮습니다',
                     쓸수있는모델: n, 까닭: why.slice(0, 140) });
       }
       return J({
