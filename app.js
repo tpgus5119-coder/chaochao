@@ -491,7 +491,7 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '선배': 'Khoá trước', '과': ' bài', '끝낸 과': 'Bài đã xong', '문법': 'Ngữ pháp',
+  '선배': 'Khoá trước', '과': ' bài', '끝낸 과': 'Bài đã xong',
   '교재 문법 175': '175 ngữ pháp giáo trình', '빠른 문법 14': '14 ngữ pháp nhanh',
   '다 봤어요': 'Đã xem xong',
   '풀던 문제를 그만두고 홈으로 갈까요?': 'Dừng bài đang làm và về trang chính?', '선배 기수가 실제로 시험 본 낱말': 'Từ các khoá trước đã thi thật',
