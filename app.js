@@ -223,8 +223,8 @@ const UIVI = {
     'Kiến thức nền tảng — từ nguyên âm, phụ âm đến số đếm, câu chào.',
   '자료를 받지 못했습니다. 인터넷을 확인해 주세요.':
     'Không tải được tài liệu. Hãy kiểm tra kết nối mạng.',
-  /* ── 크레딧 ── */
-  '크레딧': 'Điểm thưởng',
+  /* ── 점수 ── */
+  '점수': 'Điểm thưởng',
   '오늘 출석': 'Điểm danh hôm nay', '연속 3일': 'Liên tục 3 ngày', '연속 7일': 'Liên tục 7 ngày',
   '모의고사를 끝냈습니다': 'Bạn đã hoàn thành một đề thi thử',
   '자주 틀리던 단어 5개를 잡았습니다': 'Bạn đã khắc phục 5 từ hay sai',
@@ -288,20 +288,20 @@ const UIVI = {
   '지금 1위입니다. 월요일까지 지켜 보세요.': 'Bạn đang hạng 1. Hãy giữ vững đến thứ Hai.',
   '동아리에 들어가면 순위가 생깁니다': 'Tham gia câu lạc bộ để có bảng xếp hạng',
   '점수 올리는 법': 'Cách tăng điểm',
-  'AI 채점에 쓰는 크레딧': 'Điểm thưởng dùng cho AI chấm',
-  'AI 채점 한 번에 <b>N크레딧</b>을 씁니다. 크레딧을 써도 <b>순위는 안 내려갑니다</b>.':
+  'AI 채점에 쓰는 점수': 'Điểm thưởng dùng cho AI chấm',
+  'AI 채점 한 번에 <b>N점</b>을 씁니다. 점수를 써도 <b>순위는 안 내려갑니다</b>.':
     'Mỗi lần AI chấm dùng <b>N điểm thưởng</b>. Dùng điểm thưởng <b>không làm tụt hạng</b>.',
-  '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 크레딧 순위로 바뀝니다.':
+  '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 점수 순위로 바뀝니다.':
     'Hiện đang xếp hạng theo <b>dấu điểm danh tuần này</b> — khi máy chủ cập nhật sẽ chuyển sang xếp hạng theo điểm thưởng.',
   '명': 'người', '출석 도장': 'dấu điểm danh', '이렇게 모입니다': 'Tích điểm như thế này',
   '하루 한 번이라도 공부하면': 'Học dù chỉ một lần trong ngày',
   '모의고사 한 회 끝내면': 'Hoàn thành một đề thi thử',
   '자주 틀린 단어 5개를 잡으면': 'Khắc phục 5 từ hay sai',
-  '크레딧이 모자랍니다': 'Không đủ điểm thưởng', '필요': 'Cần', '남음': 'Còn lại',
-  'AI 채점 한 번에 <b>N크레딧</b>을 씁니다.': 'Mỗi lần AI chấm điểm sẽ dùng <b>N điểm thưởng</b>.',
-  '<b>내 정보</b>에 내 구글 키를 넣어 두셨으므로 AI 채점은 크레딧을 쓰지 않습니다.':
+  '점수가 모자랍니다': 'Không đủ điểm thưởng', '필요': 'Cần', '남음': 'Còn lại',
+  'AI 채점 한 번에 <b>N점</b>을 씁니다.': 'Mỗi lần AI chấm điểm sẽ dùng <b>N điểm thưởng</b>.',
+  '<b>내 정보</b>에 내 구글 키를 넣어 두셨으므로 AI 채점은 점수를 쓰지 않습니다.':
     'Vì bạn đã nhập khóa Google trong <b>Thông tin của tôi</b> nên AI chấm điểm không tốn điểm thưởng.',
-  '공부하면 다시 쌓입니다. 내 정보에 구글 키를 넣으면 크레딧 없이 쓸 수 있습니다.':
+  '공부하면 다시 쌓입니다. 내 정보에 구글 키를 넣으면 점수 없이 쓸 수 있습니다.':
     'Học tiếp sẽ tích lại. Nhập khóa Google trong Thông tin của tôi thì dùng được mà không tốn điểm.',
   '남과 견주지 않습니다 — <b>지난주의 나</b>와만 견줍니다.':
     'Không so với người khác — chỉ so với <b>chính bạn tuần trước</b>.',
@@ -3709,7 +3709,7 @@ function examExtra() {
   });
 
   /* TOPIK II 쓰기는 꼴이 둘이다 — 51·52번은 빈칸 두 개, 53·54번은 긴 글.
-     빈칸형은 모범답이 있어 AI 없이도 스스로 맞춰 볼 수 있게 했다(크레딧이 없어도 쓸 수 있게). */
+     빈칸형은 모범답이 있어 AI 없이도 스스로 맞춰 볼 수 있게 했다(점수가 없어도 쓸 수 있게). */
   const bl = (EXDATA.extra || {}).t2_blank || [];
   const lg = (EXDATA.extra || {}).t2_long || [];
   if (bl.length || lg.length) {
@@ -4009,15 +4009,15 @@ function examSpeak(si, qi) {
   show('exam', '말하기', true);
 }
 
-/* AI 채점을 시작해도 되는가 — 앱이 내주는 열쇠로 돌 때만 크레딧을 본다.
-   내 구글 키를 넣은 사람은 자기 몫으로 쓰는 것이라 크레딧과 무관하다. */
+/* AI 채점을 시작해도 되는가 — 앱이 내주는 열쇠로 돌 때만 점수를 본다.
+   내 구글 키를 넣은 사람은 자기 몫으로 쓰는 것이라 점수와 무관하다. */
 function aiPay(out) {
   if (!onAppKey()) return true;
   if (spend(AI_COST)) return true;
   out.textContent = '';
-  out.append(el('div', 'exgline', tr('크레딧이 모자랍니다') + ' — ' + tr('필요') + ' ' + AI_COST
+  out.append(el('div', 'exgline', tr('점수가 모자랍니다') + ' — ' + tr('필요') + ' ' + AI_COST
     + ' · ' + tr('남음') + ' ' + credits().bal));
-  out.append(el('div', 'exgline', tr('공부하면 다시 쌓입니다. 내 정보에 구글 키를 넣으면 크레딧 없이 쓸 수 있습니다.')));
+  out.append(el('div', 'exgline', tr('공부하면 다시 쌓입니다. 내 정보에 구글 키를 넣으면 점수 없이 쓸 수 있습니다.')));
   return false;
 }
 
@@ -4749,8 +4749,8 @@ function starBtn(k, ko, vi) {
   return b;
 }
 
-/* ---------- 출석 크레딧 ----------
-   왜 '순위표'가 아니라 '크레딧'인가 — 근거를 남겨 둔다.
+/* ---------- 출석 점수 ----------
+   왜 '순위표'가 아니라 '점수'인가 — 근거를 남겨 둔다.
    ① Hanus & Fox(2015, Computers & Education) 16주 실험: 같은 수업을 두 반으로 나눠
       한쪽에만 순위표·배지를 넣었더니 그 반이 동기·만족도가 갈수록 떨어지고
       **기말 점수까지 낮았다**. 순위표가 '배우려는 마음'을 '이기려는 마음'으로 바꿨다.
@@ -4758,7 +4758,7 @@ function starBtn(k, ko, vi) {
       **전체 등수가 다 보이는 절대형은 하위권의 의욕을 꺾는다.** 우리 동아리는
       서로 아는 열댓 명이라 무조건 절대형이 된다 — 꼴찌가 누군지 다 안다.
    ③ 메타분석들은 게임화가 흥미·자율성은 올려도 **실력 자체에는 효과가 거의 없다**고 본다.
-   그래서 개인 순위표는 만들지 않는다. 대신 (가) 크레딧은 '내가 쌓은 노력의 기록'이고
+   그래서 개인 순위표는 만들지 않는다. 대신 (가) 점수는 '내가 쌓은 노력의 기록'이고
    (나) 비교는 '지난주의 나'와만 하며 (다) 동아리는 등수가 아니라 **합계**로 뭉친다.
 
    쓰는 곳: AI 채점. 단, **앱이 내주는 열쇠로 돌 때만** 깎는다 — 내 열쇠(내 정보에
@@ -4790,8 +4790,8 @@ const CRD = {
   card: 2,     // 카드 읽기 — 인출이 아니라 g=0. 그래도 0 이면 문법 카드를 안 보므로 **바닥값**
 };
 /* AI 채점 값 — 실제 원가에서 역산했다(docs/scoring-basis.md).
-   가장 비싼 호출(쓰기 채점)이 한 번에 3.13원이다. 5크레딧이면 1크레딧 ≒ 0.63원.
-   하루 열심히 하면 50크레딧이 쌓이니 AI 채점 열 번, 한 달 원가는 사람당 600원 아래다. */
+   가장 비싼 호출(쓰기 채점)이 한 번에 3.13원이다. 5점이면 1점 ≒ 0.63원.
+   하루 열심히 하면 50점이 쌓이니 AI 채점 열 번, 한 달 원가는 사람당 600원 아래다. */
 const AI_COST = 5;
 function credits() {
   if (!S.cr) S.cr = { bal: 0, sum: 0, wk: {} };     // 남은 것 · 모두 번 것 · 주별 적립
@@ -4807,7 +4807,7 @@ function earn(n, why) {
   const keep = Object.keys(c.wk).sort().slice(-8);
   Object.keys(c.wk).forEach(k => { if (!keep.includes(k)) delete c.wk[k]; });
   save();
-  if (why) popup(`🪙 <b>+${n} 크레딧</b><br>${why}`);
+  if (why) popup(`🪙 <b>+${n}점</b><br>${why}`);
 }
 function spend(n) {
   const c = credits();
@@ -4815,7 +4815,7 @@ function spend(n) {
   c.bal -= n; save();
   return true;
 }
-/* 앱이 내주는 열쇠로 도는가(=우리가 돈을 내는가). 내 키가 있으면 크레딧과 무관하다. */
+/* 앱이 내주는 열쇠로 도는가(=우리가 돈을 내는가). 내 키가 있으면 점수와 무관하다. */
 const onAppKey = () => !S.gkey && !!PROXY;
 
 /* 출석·연속 보너스 — touchToday 가 '오늘 처음'일 때만 부른다 */
@@ -4873,9 +4873,9 @@ function monthCredits() {
    대신 해악을 줄이면서 겨루는 재미는 그대로 두는 장치를 하나 넣었다 —
    **월요일마다 0으로 초기화**된다(듀오링고 리그와 같은 방식).
    그래서 한 주 밀려도 다음 주 월요일이면 모두가 같은 자리에서 다시 시작한다.
-   '영영 꼴찌'가 없으면 포기할 이유도 없다. 서버도 주가 바뀌면 크레딧을 0으로 준다.
+   '영영 꼴찌'가 없으면 포기할 이유도 없다. 서버도 주가 바뀌면 점수를 0으로 준다.
 
-   서버가 옛 판(크레딧 필드 없음)이면 순위를 지어내지 않고, 이번 주 출석 도장으로
+   서버가 옛 판(점수 필드 없음)이면 순위를 지어내지 않고, 이번 주 출석 도장으로
    대신 매기고 그 사실을 화면에 밝힌다 — 없는 숫자로 등수를 만들면 안 된다. */
 /* 같은 사람이 기기 두 대로 들어오면 두 줄이 되므로 별명으로 하나만 남긴다 */
 function clubPeople() {
@@ -4936,7 +4936,7 @@ function rankBoard(ppl, span) {
     box.append(el('p', 'note', tr('내 자리는 N위입니다 — 나만 보입니다.').replace('N', at + 1)));
   }
   if (!hasCr) {
-    box.append(el('p', 'note', '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 크레딧 순위로 바뀝니다.'));
+    box.append(el('p', 'note', '지금은 <b>이번 주 출석 도장</b>으로 매긴 순위입니다 — 서버가 새 판으로 바뀌면 점수 순위로 바뀝니다.'));
   }
   return box;
 }
@@ -4971,7 +4971,7 @@ function creditEntry() { drawCredit(); }
 /* 이 화면의 주인공은 **순위**다. 점수는 순위를 매기기 위한 재료로 뒤에 놓는다.
    숫자는 둘이고 하는 일이 다르다 — 헷갈리면 안 되므로 화면에서도 갈라 놓는다.
      · 이번 주 점수 : 순위용. 월요일마다 0으로 초기화된다.
-     · 모은 크레딧 : AI 채점에 쓰는 몫. 계속 쌓이고, **써도 순위는 안 내려간다**
+     · 모은 점수 : AI 채점에 쓰는 몫. 계속 쌓이고, **써도 순위는 안 내려간다**
        (순위는 '번 것'으로 매기지 '남은 것'으로 매기지 않는다 — 안 그러면
         AI 채점을 쓸수록 등수가 떨어져서, 좋은 기능을 쓰지 말라는 말이 된다). */
 function drawCredit() {
@@ -5083,9 +5083,9 @@ function drawCredit() {
   host.append(table);
   host.append(el('p', 'note', '점수는 <b>효과크기 × 걸리는 시간</b>으로 정했습니다 — 연구가 잰 "얼마나 남는가"에 그 활동에 드는 시간을 곱한 값입니다. 그래서 점수를 좇는 것과 실제로 느는 것이 같은 방향이 됩니다.'));
 
-  // ── 6. 크레딧(AI 채점 몫)은 순위와 다른 숫자라 따로 떼어 놓는다
+  // ── 6. 점수(AI 채점 몫)는 순위와 다른 숫자라 따로 떼어 놓는다
   const wal = el('div', 'crwallet');
-  wal.append(el('div', 'crct', tr('AI 채점에 쓰는 크레딧')));
+  wal.append(el('div', 'crct', tr('AI 채점에 쓰는 점수')));
   const line = el('div', 'crwline');
   line.append(el('b', null, '🪙 ' + c.bal));
   line.append(el('span', null, tr('지금까지 모두') + ' ' + c.sum));
@@ -5094,8 +5094,8 @@ function drawCredit() {
      자리표 N 을 넣은 문장을 사전에 두고, 옮긴 뒤에 숫자를 끼운다. */
   const cost = el('p', 'note');
   cost.innerHTML = onAppKey()
-    ? tr('AI 채점 한 번에 <b>N크레딧</b>을 씁니다. 크레딧을 써도 <b>순위는 안 내려갑니다</b>.').replace('N', AI_COST)
-    : tr('<b>내 정보</b>에 내 구글 키를 넣어 두셨으므로 AI 채점은 크레딧을 쓰지 않습니다.');
+    ? tr('AI 채점 한 번에 <b>N점</b>을 씁니다. 점수를 써도 <b>순위는 안 내려갑니다</b>.').replace('N', AI_COST)
+    : tr('<b>내 정보</b>에 내 구글 키를 넣어 두셨으므로 AI 채점은 점수를 쓰지 않습니다.');
   wal.append(cost);
   host.append(wal);
 
@@ -6318,8 +6318,8 @@ function grade(vi, ok, early) {
   } else if (S.stats.miss && S.stats.miss[vi]) {
     const was = S.stats.miss[vi];
     S.stats.miss[vi] = Math.max(0, was - 0.5);                // 맞히면 서서히 지워진다
-    /* 오답노트에서 완전히 빠지는 순간을 센다 — 5개를 잡을 때마다 크레딧.
-       '틀린 걸 고쳤다'는 게 크레딧을 주기에 가장 옳은 순간이다(그냥 많이 푸는 것보다). */
+    /* 오답노트에서 완전히 빠지는 순간을 센다 — 5개를 잡을 때마다 점수.
+       '틀린 걸 고쳤다'는 게 점수를 주기에 가장 옳은 순간이다(그냥 많이 푸는 것보다). */
     if (was > 0 && S.stats.miss[vi] === 0) {
       earn(CRD.fix, tr('자주 틀리던 단어를 잡았습니다'));
     }
@@ -9373,7 +9373,7 @@ function mateSync() {
   const dots = weekDots(), sk = skillScore();
   return cCall({ act: 'report', id: S.club.id, days: dots.map(d => d.done ? 1 : 0),
                  memo: sk.memo, score: sk.score, st: streakDays(), td: totalDays(),
-                 cr: weekCredits(),                          // 이번 주 크레딧 — 순위판 재료
+                 cr: weekCredits(),                          // 이번 주 점수 — 순위판 재료
                  op: S.open ? 1 : 0, av: S.avv || 0, bl: S.block || [], pct: myPcts() })
     .then(j => { MATES = j; return pullFaces(j.people || []); });
 }
