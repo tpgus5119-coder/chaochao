@@ -4397,6 +4397,17 @@ const lessonSents = () => [...(typeof RULES === 'undefined' ? [] : RULES),
                            ...(typeof GRAMMAR === 'undefined' ? [] : GRAMMAR)]
   .flatMap(r => (r.cards || []).map(c => ({ vi: c.vi, ko: c.ko, kr_read: c.kr, tones: c.tones, sent: true })));
 const seniorItems = () => SENIOR ? SENIOR.words.map(w => ({ vi: w[0], ko: w[1], imp: !!(w[2] & 1) })) : [];
+/* **내가 끝낸 강**의 낱말 (2026-08-29 대표님 지적).
+   전에는 자료를 구울 때 '앱 교육과정에 있는 말'에 표를 해 두고 그걸 초록으로 칠했다.
+   그래서 Day 1 만 배운 사람에게도 실전 단어가 온통 초록이었다 — 배운 적이 없는데도.
+   '있다'와 '배웠다'는 다른 일이다. 화면에서 쓰는 것은 **배웠다** 쪽이라야 한다. */
+let LEARNT = null;
+function learntSet() {
+  if (LEARNT) return LEARNT;
+  LEARNT = new Set();
+  ALL.forEach(d => { if (S.done[d.day]) (d.words || []).forEach(w => LEARNT.add(w.vi.toLowerCase())); });
+  return LEARNT;
+}
 const findItem = vi => (SBOX === 'ssrs' ? seniorItems().find(w => w.vi === vi) : null)
   || allWords().find(w => w.vi === vi)
   || allSents().find(x => x.vi === vi) || lessonSents().find(x => x.vi === vi);
@@ -4577,7 +4588,7 @@ function renderDays(track) {
     const li = el('li'); li.append(b);
     if (done) {
       const u = el('button', 'ghost sm undo', '미완으로');
-      u.onclick = () => { delete S.done[d.day]; save(); renderDays(track); };
+      u.onclick = () => { delete S.done[d.day]; LEARNT = null; save(); renderDays(track); };
       li.append(u);
     }
     return li;
@@ -5516,7 +5527,7 @@ $('#next').onclick = () => {
     show('rules', L.day.rule.title, true);
     return;
   }
-  S.done[L.day.day] = now(); touchToday(); save();
+  S.done[L.day.day] = now(); LEARNT = null; touchToday(); save();
   // 소개가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
   const d0 = L.day, at0 = L.i;
   const backToCards = () => { startLearn(d0); L.i = Math.min(at0, L.items.length - 1); drawCard(); };
@@ -6477,7 +6488,7 @@ function finishQuiz() {
   b.onclick = () => {
     if (hasDlg) { startDialog(Q.day); return; }
     if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : S.done)[Q.day.day] = now();
-                 touchToday(); save(); }
+                 LEARNT = null; touchToday(); save(); }
     renderHome();
   };
   r.append(b);
@@ -6566,7 +6577,7 @@ function drawSeniorSet(t) {
     const b = el('button');
     b.append(el('span', 'nm', esc(w[0])), el('span', 'st', esc(w[1])));
     if (w[2] & 1) b.querySelector('.nm').append(el('i', 'catchip', tr('중요')));
-    if (w[2] & 2) b.dataset.done = '1';                 // 앱에서 이미 배운 말
+    if (learntSet().has(w[0].toLowerCase())) b.dataset.done = '1';   // **내가 끝낸 강**에서 배운 말
     b.onclick = () => say(w[0]);
     li.append(b);
     list.append(li);
