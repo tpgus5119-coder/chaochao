@@ -67,6 +67,12 @@ def main():
     for day in (d if isinstance(d, list) else d["days"]):
         for w in (day.get("words") or []):
             if w.get("vi") and w.get("ko"): need.append({"vi": w["vi"], "ko": w["ko"]})
+    # 대표님이 주신 자료 — 봉제용어.xls · 생산관리 카톡방
+    for f in ("_sewing.json", "_kakao_job.json"):
+        p2 = R / "data" / f
+        if p2.exists():
+            for w in json.loads(p2.read_text(encoding="utf-8"))["words"]:
+                need.append({"vi": w["vi"], "ko": w["ko"]})
     have = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     # 다른 판이 이미 만든 것도 건너뛴다
     done = dict(have)

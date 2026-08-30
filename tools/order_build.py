@@ -104,15 +104,8 @@ def main():
     life = sorted([w for w in sp if w["field"] == "일상"], key=rank)
     job  = sorted([w for w in sp if w["field"] != "일상"], key=rank)
     L = [x for x in (dress(w) for w in life) if x]
-    # 시험지가 아닌 모음집(교재 낱말표 등)에서 온 것은 **시험 낱말 뒤에** 붙인다.
-    # 회차가 없어 차례를 매길 수 없기 때문이다 (2026-08-30, 파일 779개를 하나씩 열어 본 결과).
-    xw = R / "data" / "_extra_words.json"
-    if xw.exists():
-        have = {key(x["vi"]) for x in L}
-        for w in json.loads(xw.read_text(encoding="utf-8"))["words"]:
-            if key(w["vi"]) in have: continue
-            x = dress(w)
-            if x: x["book"] = 1; L.append(x); have.add(key(w["vi"]))
+    # 교재 낱말표(4권 베트남어 교재_단어.xlsx)는 **안 넣는다** (대표님 지시, 2026-08-30).
+    # 1,148개 중 새로 나오는 것이 56개뿐이라 넣을 값어치가 없다 — 거의 다 시험지에 이미 있다.
     J = [x for x in (dress(w) for w in job) if x]
     seen = {key(x["vi"]) for x in J}
     # 직무 차례: 선배 시험 → 카톡방 정리 → 우리가 만든 것
@@ -122,7 +115,18 @@ def main():
             if key(w["vi"]) in seen: continue
             x = dress(w); 
             if x: x["kakao"] = 1; J.append(x); seen.add(key(w["vi"]))
-    J += [x for x in (dress(w, True) for w in appjob if key(w["vi"]) not in seen) if x]
+    # **우리가 만든 직무 낱말은 맨 뒤**다 (대표님 지시). 근거가 선배 자료가 아니라
+    # 예전에 우리가 "공장에서 쓸 만하다"고 넣은 것이라, 출처 있는 낱말 뒤에 둔다.
+    # 대표님이 주신 봉제용어.xls — 갈래를 '봉제'로 박아 둔다(뜻이 '뒤품'이라 알아보는 말로는 못 잡는다)
+    sw = R / "data" / "_sewing.json"
+    if sw.exists():
+        seen2 = {key(x["vi"]) for x in J}
+        for w in json.loads(sw.read_text(encoding="utf-8"))["words"]:
+            if key(w["vi"]) in seen2: continue
+            x = dress(w)
+            if x: x["track"] = "봉제"; J.append(x); seen2.add(key(w["vi"]))
+    seen3 = {key(x["vi"]) for x in J}
+    J += [x for x in (dress(w, True) for w in appjob if key(w["vi"]) not in seen3) if x]
 
     def cut(ws, per_ch):
         """레슨 15낱말 → 챕터 per_ch 레슨."""
@@ -139,7 +143,7 @@ def main():
                                   for ch in chs[i:i + CH_PER_VOL]]})
     # 직무는 **갈래별로** 나눈다 — 갈래는 이름을 둔다(어디로 갈지가 사람마다 다르다)
     byf = collections.OrderedDict((k, []) for k in JOBORDER)
-    for x in J: byf.setdefault(field_of(x["ko"]), []).append(x)
+    for x in J: byf.setdefault(x.get("track") or field_of(x["ko"]), []).append(x)
     tracks = []
     for k, ws in byf.items():
         if not ws: continue
