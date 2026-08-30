@@ -245,7 +245,10 @@ export default {
     }
 
     const clubs = JSON.parse((await KV.get('clubs')) || '{}');
-    const save = () => KV.put('clubs', JSON.stringify(clubs));
+    /* CKEY 가 **정의되어 있지 않았다** — quit(계정 탈퇴)이 동아리에서 뺄 때
+       KV.put(CKEY, …) 를 부르므로, 동아리에 든 사람은 탈퇴가 실패했다 (2026-08-30 검수) */
+    const CKEY = 'clubs';
+    const save = () => KV.put(CKEY, JSON.stringify(clubs));
 
     /* ── 별명 자리 잡기 ─────────────────────────────────
        같은 별명이 둘이면 동아리 출석판에서 누가 누구인지 알 수 없다.
@@ -273,6 +276,69 @@ export default {
       }
       if (moved) await save();
       return send({ ok: true });
+    }
+
+    /* ── 관리자 도구 ──────────────────────────────────
+       대표님이 아이디를 둘 쓰시던 때(로그인 붙기 전)의 자취를 정리하려면
+       **하나씩 골라** 보고 지울 수 있어야 한다. wipe 는 전부 지워서 못 쓴다.
+       열쇠는 PUSH_KEY 하나를 그대로 쓴다 (2026-08-30).
+       ※ 지우기 전에 반드시 look 으로 **누가 들어 있는지** 보고 판단한다. */
+    const admin = () => env.PUSH_KEY && cut(b.key, 64) === env.PUSH_KEY;
+
+    if (act === 'look') {                                    // 동아리 하나를 들여다본다
+      if (!admin()) return send({ error: 'no' });
+      const id = cut(b.id, 24);
+      const c = clubs[id];
+      if (!c) return send({ error: '없는 동아리입니다' });
+      const cu = JSON.parse((await KV.get(`cu:${id}`)) || '{}');
+      return send({ id, name: c.name, owner: c.owner,
+                    members: c.members || [], wait: c.wait || [],
+                    uids: Object.entries(c.uids || {}).map(([u, n]) => ({ uid: u, nick: n })),
+                    last: Object.entries(cu).map(([u, v]) => ({ uid: u, nick: v.nick || '',
+                      days: (v.days || []).filter(Boolean).length, at: v.at || 0 })) });
+    }
+
+    if (act === 'delclub') {                                 // 동아리 하나만 지운다
+      if (!admin()) return send({ error: 'no' });
+      const id = cut(b.id, 24);
+      const c = clubs[id];
+      if (!c) return send({ error: '없는 동아리입니다' });
+      const n = (c.members || []).length;
+      delete clubs[id];
+      await KV.put(CKEY, JSON.stringify(clubs));
+      await KV.delete(`cu:${id}`);
+      return send({ ok: true, name: c.name, members: n });
+    }
+
+    if (act === 'delacct') {                                 // 계정 하나만 지운다 (비밀번호 없이)
+      if (!admin()) return send({ error: 'no' });
+      const id = cut(b.id, 20).toLowerCase().trim();
+      const AK = 'acct:' + id;
+      const acct = JSON.parse((await KV.get(AK)) || 'null');
+      if (!acct) return send({ error: '없는 아이디입니다' });
+      const nicks = JSON.parse((await KV.get(NKEY)) || '{}');
+      let nick = '';
+      for (const [k, v] of Object.entries(nicks)) if (v === acct.u) { nick = k; delete nicks[k]; }
+      await KV.put(NKEY, JSON.stringify(nicks));
+      let touched = false;
+      for (const cc of Object.values(clubs)) {
+        if (cc.uids && cc.uids[acct.u]) {
+          const nk = cc.uids[acct.u];
+          delete cc.uids[acct.u];
+          cc.members = (cc.members || []).filter(m => m !== nk);
+          touched = true;
+        }
+      }
+      if (touched) await KV.put(CKEY, JSON.stringify(clubs));
+      await KV.delete('prog:' + id);
+      await KV.delete(AK);
+      return send({ ok: true, id, nick });
+    }
+
+    if (act === 'accts') {                                   // 아이디 목록 (누가 있는지 본다)
+      if (!admin()) return send({ error: 'no' });
+      const nicks = JSON.parse((await KV.get(NKEY)) || '{}');
+      return send({ nicks: Object.entries(nicks).map(([n, u]) => ({ nick: n, uid: u })) });
     }
 
     if (act === 'wipe') {                                    // 관리자만 — 동아리를 전부 비운다
