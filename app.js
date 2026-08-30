@@ -2474,8 +2474,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
        ② 자유 복습 — 내가 끝낸 레슨을 골라서 그것만 푼다
      단어·문장을 가르지 않는다 — 문장은 낱말 밑의 예문으로 이미 붙어 있다. */
   rev:   { name: '복습', items: () => [['복습', () => reviewMenu('all')],
-                                      ['자유 복습', freePickEntry],
-                                      ['최근 배운 것', () => freshMenu('all')]] },
+                                      ['자유 복습', freePickEntry]] },
   cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
                                       ['베트남 바로알기', knowEntry]] },
   news:  { name: '기사', items: () => [['보기', showNewsLearn]] },
@@ -8304,6 +8303,71 @@ function aiBubble(text) {
   b.scrollIntoView({ block: 'end', behavior: 'smooth' });
 }
 
+
+/* ---------- AI 없이 도는 대화 (기본) ----------
+   대표님 물음(2026-08-30): "이렇게 세팅 잘하면 AI 호출도 없겠네?"
+   그렇다. 쌤이 **배운 문장**만 던지고 답도 **배운 문장 중에서 고르게** 하면 AI가 낄 자리가 없다.
+     · 공짜다 — 하루 한도를 안 쓴다
+     · 빠르다 — 기다림이 없다
+     · 어긋날 일이 없다 — 안 배운 말이 튀어나올 수 없다
+     · 비행기 모드에서도 된다
+   자유롭게 쓰고 싶으면 「자유 대화」로 바꾸면 그때만 AI 를 쓴다. */
+function dlgPairs() {
+  /* 끝낸 날의 대화에서 **주고받는 짝**을 만든다 — A 가 말하면 B 가 답하는 그 짝이다. */
+  const out = [];
+  for (const d of ALL) {
+    if (typeof d.day === 'number' && !S.done[d.day]) continue;
+    const ls = (d.dialog?.lines || []).filter(l => l.vi && l.ko);
+    for (let i = 0; i + 1 < ls.length; i++)
+      out.push({ q: ls[i], a: ls[i + 1] });
+  }
+  return out;
+}
+
+function pickTurn() {
+  /* 이번에 쌤이 던질 말과, 고를 수 있는 답 셋. */
+  const ps = dlgPairs();
+  if (!ps.length) {                                   // 아직 아무것도 안 끝냈으면 인사말
+    const h = HELLO[Math.floor(Math.random() * HELLO.length)];
+    const others = HELLO.filter(x => x !== h).sort(() => Math.random() - .5).slice(0, 2);
+    return { q: { vi: h[0], ko: h[1] },
+             a: { vi: 'Vâng ạ.', ko: '네.' },
+             opts: [{ vi: 'Vâng ạ.', ko: '네.' },
+                    ...others.map(x => ({ vi: x[0], ko: x[1] }))].sort(() => Math.random() - .5) };
+  }
+  const p = ps[Math.floor(Math.random() * ps.length)];
+  const wrong = ps.filter(x => x.a.vi !== p.a.vi).sort(() => Math.random() - .5).slice(0, 2).map(x => x.a);
+  return { q: p.q, a: p.a, opts: [p.a, ...wrong].sort(() => Math.random() - .5) };
+}
+
+function chatTurnPick() {
+  const t = pickTurn();
+  CH.turn = t;
+  bubble('ai', 'VI: ' + t.q.vi + '\nKO: ' + t.q.ko);
+  speakVi(t.q.vi, false, 0, S.tch);
+  const box = el('div', 'pickrow');
+  t.opts.forEach(o => {
+    const b = el('button', 'pickopt');
+    b.type = 'button';
+    b.append(el('b', null, esc(o.vi)), el('span', 'pickko', esc(o.ko)));
+    b.onclick = () => {
+      box.remove();
+      bubble('me', o.vi);
+      speakVi(o.vi, false, 0, S.voice);
+      if (o.vi === t.a.vi) {
+        bubble('ai ok', '✔ ' + tr('맞습니다'));
+        setTimeout(chatTurnPick, 700);                 // 바로 다음 말을 건다
+      } else {
+        bubble('ai err', '↩ ' + tr('이렇게 답합니다') + '\n' + t.a.vi + '\n' + t.a.ko);
+        setTimeout(chatTurnPick, 1400);
+      }
+    };
+    box.append(b);
+  });
+  $('#chatLog').append(box);
+  box.scrollIntoView({ block: 'end', behavior: 'smooth' });
+}
+
 async function chatSend(userText) {
   if (userText) { CH.hist.push({ role: 'user', parts: [{ text: userText }] }); bubble('me', userText);
                   if (CH.room) save(); }
@@ -8691,12 +8755,25 @@ $('#chatText').addEventListener('keydown', e => {          // 컴퓨터 자판: 
 });
 
 function startChat() {
+  /* 기본은 **AI 없이 도는 「골라서 답하기」** 다 (대표님과 상의, 2026-08-30).
+     키가 없어도 열린다 — 배운 문장 안에서만 오가므로 AI 가 필요 없다. */
   CH = null;
-  if (!aiReady()) {
-    $('#chatLog').textContent = ''; $('#chatForm').hidden = true; $('#tch').hidden = true;
-    renderChatKey(); show('chat', 'AI 대화', true); return;
-  }
   renderRooms();
+}
+
+/* 대화 방식 바꾸기 — 골라서 답하기(AI 없음) ↔ 자유 대화(AI) */
+function chatModeRow() {
+  const row = el('div', 'chatmode');
+  const mk = (k, nm, note) => {
+    const b = el('button', 'chatmodeb' + (S.chatmode === k ? ' on' : ''));
+    b.type = 'button';
+    b.append(el('b', null, tr(nm)), el('span', null, tr(note)));
+    b.onclick = () => { S.chatmode = k; save(); if (CH) openRoom(CH.room); };
+    return b;
+  };
+  row.append(mk('pick', '골라서 답하기', 'AI 안 씁니다 · 배운 문장만'),
+             mk('free', '자유 대화', 'AI를 씁니다'));
+  return row;
 }
 
 function renderChatKey() {
@@ -8737,13 +8814,34 @@ const who = (rg, tc) => PEOPLE[roomKey(rg, tc)] || PEOPLE.nf;
 const roomName = (rg, tc) => who(rg, tc).name;
 /* 하루 넘게 조용하면 먼저 말을 걸어 둔다 — 다음에 앱을 열면 메시지가 와 있다.
    폰 알림까지는 아직 아니다(그건 푸시 서버가 따로 있어야 한다). 앱 안에서 보이는 데까지다. */
+/* 첫날 밑천 — **아직 아무것도 안 배운 사람에게도 오는 말** (대표님과 상의, 2026-08-30).
+   아무 말도 안 오면 앱이 죽은 것처럼 보인다. 첫인상이 거기서 갈린다.
+   대신 **1강 낱말만** 쓴다: chào · anh · chị · em · khỏe · không · cảm ơn · vâng · ạ.
+   전에는 갈래마다 셋뿐이라 금방 되풀이됐다. */
+const HELLO = [
+  ['Chào em!', '안녕!'],
+  ['Chào anh!', '안녕하세요! (손위 남자에게)'],
+  ['Chào chị!', '안녕하세요! (손위 여자에게)'],
+  ['Em khỏe không?', '잘 지내?'],
+  ['Anh khỏe không?', '형 잘 지내세요?'],
+  ['Chị khỏe không?', '누나 잘 지내세요?'],
+  ['Em có khỏe không ạ?', '잘 지내시나요?'],
+  ['Chào em, em khỏe không?', '안녕, 잘 지내?'],
+  ['Cảm ơn em!', '고마워!'],
+  ['Không có gì.', '천만에요.'],
+  ['Vâng ạ.', '네.'],
+  ['Tạm biệt em!', '잘 가!'],
+  ['Hẹn gặp lại!', '또 만나요!'],
+  ['Em tên là gì?', '이름이 뭐야?'],
+  ['Anh tên là gì ạ?', '성함이 어떻게 되세요?'],
+  ['Rất vui được gặp em.', '만나서 반가워.'],
+];
 const PING = {
-  nf: ['Chào bạn! Hôm nay bạn khỏe không?', 'Bạn đã ăn cơm chưa?', 'Lâu rồi không gặp!'],
-  nm: ['Chào bạn! Hôm nay bạn làm gì?', 'Bạn đang bận không?', 'Hôm nay trời đẹp nhỉ!'],
-  sf: ['Chào bạn! Bạn khỏe không?', 'Bạn ăn gì chưa?', 'Hôm nay bạn thế nào?'],
-  sm: ['Chào bạn! Bạn có rảnh không?', 'Dạo này bạn sao rồi?', 'Hôm nay bạn đi làm à?'],
+  nf: HELLO.map(x => x[0]), nm: HELLO.map(x => x[0]),
+  sf: HELLO.map(x => x[0]), sm: HELLO.map(x => x[0]),
 };
-const PINGKO = {
+const PINGKO = Object.fromEntries(HELLO);
+const PINGKO_OLD = {
   'Chào bạn! Hôm nay bạn khỏe không?': '안녕! 오늘 잘 지내?',
   'Bạn đã ăn cơm chưa?': '밥은 먹었어?',
   'Lâu rồi không gặp!': '오랜만이야!',
@@ -8898,6 +8996,7 @@ function drawMateRows(s) {
   mateSync().then(paint).catch(() => { wait.textContent = '사람 목록을 불러오지 못했습니다.'; });
 }
 function openRoom(rg, tc) {
+  if (typeof rg === 'string' && tc === undefined && CH) { tc = CH.tc; rg = CH.rg; }
   S.region = rg; S.tch = tc; save(); drawRegion();
   const k = roomKey(rg, tc), r = roomOf(k);
   S.stats.chat = (S.stats.chat || 0) + 1; touchToday(); save();
@@ -8907,7 +9006,18 @@ function openRoom(rg, tc) {
   $('#chatMic').hidden = false;
   drawTch();
   $('#chatLog').textContent = '';
-  CH = { mode: 'free', room: k, sys: chatSys('free'), hist: r.hist };
+  CH = { mode: 'free', room: k, rg, tc, sys: chatSys('free'), hist: r.hist };
+  S.chatmode = S.chatmode || 'pick';          // 기본은 AI 안 쓰는 '골라서 답하기'
+  $('#chatLog').append(chatModeRow());
+  if (S.chatmode === 'pick') {
+    /* AI 를 아예 부르지 않는 길 — 배운 문장을 던지고, 답도 배운 문장 중에서 고른다.
+       글자를 치는 칸과 마이크는 숨긴다(고르기만 하면 되니까). */
+    $('#chatForm').hidden = true; $('#chatMic').hidden = true; $('#chatTone').hidden = true;
+    r.unread = 0; r.at = Date.now(); save();
+    chatTurnPick();
+    show('chat', roomName(rg, tc), true);
+    return;
+  }
   // 지난 대화를 다시 그린다
   r.hist.forEach(m => {
     const t = (m.parts || []).map(x => x.text || '').join('');

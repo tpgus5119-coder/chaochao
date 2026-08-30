@@ -1627,3 +1627,16 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .freerow .freebox{font-style:normal; font-size:1.05rem}
 .freerow .freenm{flex:1}
 .freerow .freen{color:var(--muted); font-size:.84rem; font-variant-numeric:tabular-nums}
+
+/* 대화 — 골라서 답하기 (AI 안 씀) */
+.chatmode{display:flex; gap:6px; margin:0 0 10px}
+.chatmodeb{flex:1; display:flex; flex-direction:column; gap:1px; padding:.5em .6em;
+  border-radius:10px; cursor:pointer; text-align:center;
+  border:1px solid var(--line); background:var(--card)}
+.chatmodeb.on{border-color:var(--accent); font-weight:700}
+.chatmodeb span{font-size:.72rem; color:var(--muted); font-weight:400}
+.pickrow{display:flex; flex-direction:column; gap:6px; margin:10px 0 4px}
+.pickopt{display:flex; flex-direction:column; gap:1px; text-align:left; cursor:pointer;
+  padding:.55em .8em; border-radius:12px; border:1px solid var(--line); background:var(--card)}
+.pickopt .pickko{font-size:.8rem; color:var(--muted)}
+.cb.ok{border-color:var(--accent)}
