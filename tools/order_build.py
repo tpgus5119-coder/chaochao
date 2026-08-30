@@ -90,6 +90,7 @@ def main():
         if len(gis) >= 2: o["core"] = len(gis)
         if job_app: o["app"] = 1
         o.update(extra.get(k, {}))
+        if w.get("ex"): o["ex"] = w["ex"]          # 자료에 예문이 딸려 있으면 그것을 쓴다
         t = " " + k + " "
         hit = next((i for i, h in enumerate(holds) if t in h and i not in used), None)
         if hit is not None:
@@ -125,6 +126,13 @@ def main():
             if key(w["vi"]) in seen2: continue
             x = dress(w)
             if x: x["track"] = "봉제"; J.append(x); seen2.add(key(w["vi"]))
+    tw = R / "data" / "_trade.json"
+    if tw.exists():
+        seen4 = {key(x["vi"]) for x in J}
+        for w in json.loads(tw.read_text(encoding="utf-8"))["words"]:
+            if key(w["vi"]) in seen4: continue
+            x = dress(w)
+            if x: x["track"] = "공통"; J.append(x); seen4.add(key(w["vi"]))
     seen3 = {key(x["vi"]) for x in J}
     J += [x for x in (dress(w, True) for w in appjob if key(w["vi"]) not in seen3) if x]
 
@@ -147,6 +155,11 @@ def main():
     tracks = []
     for k, ws in byf.items():
         if not ws: continue
+        # 갈래 **안에서** 대표님이 정하신 차례를 지킨다 —
+        # 선배 시험(기수 합 큰 것부터) → 카톡방 → 봉제·무역 자료 → 앱이 만든 것
+        def src(x):
+            return 0 if x.get("sr") else 1 if x.get("kakao") else 2 if x.get("sew") or x.get("trade") else 3
+        ws.sort(key=lambda x: (src(x), -sum(int(g) for g in re.findall(r"\d\d", x.get("gi", "")))))
         tracks.append({"track": k, "words": len(ws),
                        "chapters": [{"lessons": [{"words": w} for w in ch]}
                                     for ch in cut(ws, LES_PER_CH)]})

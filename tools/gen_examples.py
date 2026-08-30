@@ -68,7 +68,7 @@ def main():
         for w in (day.get("words") or []):
             if w.get("vi") and w.get("ko"): need.append({"vi": w["vi"], "ko": w["ko"]})
     # 대표님이 주신 자료 — 봉제용어.xls · 생산관리 카톡방
-    for f in ("_sewing.json", "_kakao_job.json"):
+    for f in ("_sewing.json", "_kakao_job.json", "_trade.json"):
         p2 = R / "data" / f
         if p2.exists():
             for w in json.loads(p2.read_text(encoding="utf-8"))["words"]:
