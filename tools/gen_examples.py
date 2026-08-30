@@ -57,13 +57,16 @@ def main():
     a = ap.parse_args()
     global OUT
     if a.of > 1: OUT = R / "data" / f"_examples-{a.part}.json"
-    course = json.loads((R / "data" / "course.json").read_text(encoding="utf-8"))
+    # 낱말 목록은 **원천**에서 바로 가져온다 (2026-08-30).
+    #   전에는 course.json 을 봤는데 그건 이미 걸러진 뒤라, 예문이 없어 떨어진 낱말은
+    #   영영 예문을 못 받는 닭-달걀이 되었다.
     need = []
-    for v in course["vols"]:
-        for u in v["units"]:
-            for c in u["chapters"]:
-                for w in c["words"]:
-                    if not w.get("ex"): need.append({"vi": w["vi"], "ko": w["ko"]})
+    for w in json.loads((R / "data" / "_senior_split.json").read_text(encoding="utf-8"))["words"]:
+        if w.get("ko"): need.append({"vi": w["vi"], "ko": w["ko"]})
+    d = json.loads((R / "data" / "days.json").read_text(encoding="utf-8"))
+    for day in (d if isinstance(d, list) else d["days"]):
+        for w in (day.get("words") or []):
+            if w.get("vi") and w.get("ko"): need.append({"vi": w["vi"], "ko": w["ko"]})
     have = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     # 다른 판이 이미 만든 것도 건너뛴다
     done = dict(have)

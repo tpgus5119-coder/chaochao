@@ -14,6 +14,12 @@ import senior18 as S
 
 R = pathlib.Path(__file__).resolve().parent.parent
 EN = re.compile(r"^[A-Za-z][A-Za-z .,'\-/()]*$")
+# **시험지가 아닌 것** — 이름에 '단어'가 들어 있어 시험지로 찍히지만 시험지가 아니다.
+#   '생산관리 카톡방 단어 정리' 는 선배들이 일터 단톡방에서 쓴 말을 모은 표다(2026-08-30, 대표님 지적).
+#   기수·회차가 없으므로 **차례를 매기는 데 섞이면 안 된다.** 따로 표시해 둔다.
+# 파일 779개를 하나씩 열어 보고 추린 목록(2026-08-30). **시험지가 아닌 것**은
+#   회차가 없어 차례를 매길 수 없다. 기수 순서에 섞이면 순서가 거짓이 된다.
+NOTEST = re.compile(r"카톡|생산관리|용어|정리\.xlsx$|Q&A|교재_단어|함수양식|총합|자체제작")
 
 def rows_xlsx_lean(p):
     """15MB 짜리 엑셀이 있다 — 통째로 열면 메모리가 터진다. 읽기전용 + 줄 제한."""
@@ -94,6 +100,7 @@ def main():
             kind = ("한글" if nk >= len(ws) * .5 else "영어" if ne >= len(ws) * .5 else "낱말만")
             if tone < .25 and len(ws) >= 15: why["베트남어 아님"] += 1; continue
             lab = S.label(f) or ("일일", 0)
+            if NOTEST.search(f): lab = ("모음집", 0)          # 시험지가 아님
             recs.append({"src": f, "kind": lab[0], "no": lab[1], "meaning": kind,
                          "rows": [{"vi": v, "ko": k, "en": e} for v, k, e in ws]})
         (R / "data" / f"_senior_scan-{gi}.json").write_text(

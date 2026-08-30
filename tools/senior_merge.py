@@ -85,6 +85,8 @@ def positions(files):
 
 def main():
     hits = collections.defaultdict(lambda: collections.defaultdict(list))  # key -> gi -> [pos]
+    # 차례를 정하려면 **회차 번호와 그 회차 안의 자리**가 있어야 한다 (대표님 규칙, 2026-08-30)
+    rounds = collections.defaultdict(dict)     # key -> gi -> (회차, 회차 안 자리)
     ko_of = collections.defaultdict(collections.Counter)
     en_of = collections.defaultdict(collections.Counter)
     form  = {}
@@ -94,12 +96,18 @@ def main():
         P = positions([f for f in d["files"] if f["kind"] == "일일"])
         for f in d["files"]:
             pos = P.get(f["no"]) if f["kind"] == "일일" and ROUND.search(f["src"]) else None
+            note = f["kind"] == "모음집"                  # 시험지가 아닌 모음집에서 온 낱말
             for row in f["rows"]:
                 vi, ko, en = norm(row["vi"]), clean_ko(row.get("ko", "")), (row.get("en") or "").strip()
                 if not is_word(vi, ko, en, row["vi"]): stat["문장·토막 뺌"] += 1; continue
                 form.setdefault(vi, U.normalize("NFC", row["vi"]).strip())
                 if pos is not None: hits[vi][gi].append(pos)
                 else: hits[vi].setdefault(gi, [])
+                if note: hits[vi].setdefault("_note", [])
+                if f["kind"] == "일일" and ROUND.search(f["src"]):
+                    cur = rounds[vi].get(gi)
+                    cand = (f["no"], f["rows"].index(row) if row in f["rows"] else 0)
+                    if cur is None or cand < cur: rounds[vi][gi] = cand
                 if ko and KO.search(ko): ko_of[vi][ko] += 1
                 if en: en_of[vi][en] += 1
     out, nomean = [], []
@@ -108,8 +116,13 @@ def main():
         pos = statistics.median(firsts.values()) if firsts else None
         ko = ko_of[k].most_common(1)[0][0] if ko_of[k] else ""
         en = en_of[k].most_common(1)[0][0] if en_of[k] else ""
+        note = "_note" in gis
+        gis = {g: v for g, v in gis.items() if g != "_note"}
         rec = {"vi": form[k], "key": k, "ko": ko, "gi": "".join(sorted(gis)),
-               "n": len(gis), "pos": round(pos, 4) if pos is not None else None}
+               "n": len(gis), "pos": round(pos, 4) if pos is not None else None,
+               **({"note": 1} if note and not gis else {}),
+               # 기수별 (회차, 회차 안 자리) — 차례를 정하는 데 쓴다
+               "rd": {g: list(v) for g, v in sorted(rounds[k].items())}}
         if en and not ko: rec["en"] = en
         if not ko: nomean.append(rec)
         out.append(rec)

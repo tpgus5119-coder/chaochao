@@ -4867,93 +4867,183 @@ let GRAM = null;
 const gkey = (bi, ni) => 'G' + bi + '-' + ni;
 
 
-/* ---------- 하나로 합친 과정 (2~6권) ----------
-   1권(기본기·문법)과 7권(문화)은 따로 단추가 있다. 여기서는 낱말 권만 다룬다.
-   권 → 과 → 강. 한 강 15낱말. */
+/* ---------- 과정 — **이름 없는 목차** (대표님 결정, 2026-08-30) ----------
+   권 / 챕터 / 레슨 번호만 쓴다. 주제 이름을 붙이지 않는다.
+   차례는 오로지 **기수 합**이다 — 네 기수에 다 나온 말이 맨 앞, 한 기수에만 나온 말이 뒤.
+   같으면 가장 최근 기수의 회차, 그것도 같으면 회차 안의 자리. 예외 없이 정해진다.
+   1권(규칙)과 7권(문화)은 성격이 달라 따로 단추가 있다.
+   직무만 **갈래**가 있다 — 봉제로 갈 사람이 전자를 배울 까닭이 없기 때문이다. */
 let COURSE = null;
-const ckey = (vi, ui, ci) => 'C' + vi + '.' + ui + '.' + ci;
+const ckey = (v, c, l) => 'C' + v + '.' + c + '.' + l;
+const jkey = (t, c, l) => 'J' + t + '.' + c + '.' + l;
 
-/* 과정을 받으면 낱말을 창고에 붓는다 — 복습이 이 낱말들을 찾을 수 있어야 한다. */
 function loadCWords() {
   if (!COURSE || CWORDS.length) return;
   const out = [];
-  COURSE.vols.forEach(v => v.units.forEach(u => u.chapters.forEach(c =>
-    c.words.forEach(w => out.push(w)))));
+  const eat = chs => chs.forEach(c => c.lessons.forEach(l => l.words.forEach(w => out.push(w))));
+  COURSE.vols.forEach(v => v.tracks ? v.tracks.forEach(t => eat(t.chapters)) : eat(v.chapters));
   CWORDS = out;
-  GVOC = null; GKR = null; LEARNT = null;       // 찾기표를 다시 만들게 한다
+  GVOC = null; GKR = null; LEARNT = null;
 }
 
-/* 앱이 켜질 때 조용히 받아 둔다 — 복습을 먼저 눌러도 낱말을 찾을 수 있게. */
 addEventListener('load', () => {
   if (COURSE) return;
-  fetch('data/course.json', { cache: 'no-cache' }).then(r => r.json())
+  fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
     .then(j => { COURSE = j; loadCWords(); }).catch(() => { });
 });
 
-
-/* ---------- 핵심만 (급할 때 가는 길) ----------
-   대표님 걱정: "학습량이 너무 많다". 전부 416강이다 — 하루 하나면 열네 달.
-   그래서 **두 기수 이상에 나온 낱말**만 뽑은 길을 따로 둔다(1,765낱말 · 118강).
-   한 기수에만 나온 말은 그 해 교재 사정일 수 있지만, 두 해 넘게 나온 말은
-   그 과정의 뼈대다. 급하면 이 길만 걸어도 된다. */
-let CORE = null;
-
-/* ---------- 7권 베트남 바로알기 ----------
-   교육기관 강의자료 12강을 요약해 담았다. 한 강 = 요약 + 낱말 20 + 문장 4.
-   외우는 자리가 아니라 **알고 가는 자리**라 복습 창고에는 넣지 않는다. */
-let KNOW = null;
-function knowEntry() {
-  if (KNOW) return drawKnow();
-  const list = $('#dayList'); list.textContent = '';
-  list.append(el('li', 'catpick', tr('불러오는 중…')));
-  show('course', '베트남 바로알기', true);
-  fetch('data/know.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { KNOW = j; drawKnow(); })
-    .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
-}
-function drawKnow() {
-  const list = $('#dayList'); list.textContent = '';
-  const h = el('li', 'catpick');
-  h.append(el('span', 'msub', tr('강의자료 12강 · 강마다 낱말 20개와 문장 4개')));
-  list.append(h);
-  KNOW.lec.forEach((x, i) => {
-    const k = 'N' + x.no, fin = !!S.done[k];
-    const b = el('button');
-    b.dataset.done = fin ? '1' : '0';
-    b.append(el('span', 'num', x.no + tr('강')), el('span', 'nm', esc(x.t)),
-             el('span', 'st', fin ? tr('완료 ✔') : tr('보기')));
-    b.onclick = () => { dive(drawKnow); startKnow(i); };
-    const li = el('li'); li.append(b); list.append(li);
-  });
-  show('course', '베트남 바로알기', true);
-}
-function startKnow(i) {
-  const x = KNOW.lec[i];
-  const items = [{ k: 'know', d: x }];
-  x.words.forEach(w => items.push({ k: 'word', d: w }));
-  x.sents.forEach(t => items.push({ k: 'ksent', d: t }));
-  L = { day: { day: 'N' + x.no, theme: x.t, know: 1 }, i: 0, items };
-  drawCard();
-  show('learn', x.no + '강 · ' + x.t, true);
-}
-
-function coreEntry() {
-  if (COURSE) return drawCore();
-  courseEntryThen(drawCore);
-}
-function courseEntryThen(then) {
+function courseEntry() {
+  if (COURSE) return drawCourse();
   const list = $('#dayList'); list.textContent = '';
   list.append(el('li', 'catpick', tr('불러오는 중…')));
   show('course', '과정', true);
-  fetch('data/course.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { COURSE = j; loadCWords(); then(); })
+  fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; loadCWords(); drawCourse(); })
     .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
+}
+
+const lifeVols = () => COURSE.vols.filter(v => v.kind === 'life');
+const jobVol = () => COURSE.vols.find(v => v.kind === 'job');
+
+function chDone(chs, mk) {
+  let n = 0, all = 0;
+  chs.forEach((c, ci) => c.lessons.forEach((l, li) => { all++; if (S.done[mk(ci, li)]) n++; }));
+  return [n, all];
+}
+
+function drawCourse() {
+  const list = $('#dayList'); list.textContent = '';
+  const head = el('li', 'catpick');
+  head.append(el('span', 'msub', tr('한 레슨 15낱말 · 챕터마다 10레슨')));
+  list.append(head);
+
+  const row = (num, name, right, fn, done) => {
+    const b = el('button');
+    if (done !== undefined) b.dataset.done = done ? '1' : '0';
+    b.append(el('span', 'num', num), el('span', 'nm', name), el('span', 'st', right));
+    b.onclick = fn;
+    const li = el('li'); li.append(b); list.append(li);
+  };
+
+  row('1권', tr('기본기 · 문법'), tr('보기'), () => { dive(drawCourse); gramEntry(); });
+  lifeVols().forEach((v, vi) => {
+    const [n, all] = chDone(v.chapters, (c, l) => ckey(vi, c, l));
+    row((vi + 2) + '권', tr('일상'), n + '/' + all,
+        () => { dive(drawCourse); drawVol(vi); }, n >= all);
+  });
+  const jv = jobVol();
+  if (jv) row((lifeVols().length + 2) + '권', tr('직무'), tr('갈래') + ' ' + jv.tracks.length,
+              () => { dive(drawCourse); drawJob(); });
+  row((lifeVols().length + 3) + '권', tr('문화 · 베트남 바로알기'), tr('보기'),
+      () => { dive(drawCourse); draw7(); });
+  show('course', '과정', true);
+}
+
+/* 일상 한 권 — 챕터 번호만 */
+function drawVol(vi) {
+  const v = lifeVols()[vi];
+  const list = $('#dayList'); list.textContent = '';
+  v.chapters.forEach((c, ci) => {
+    const done = c.lessons.filter((l, li) => S.done[ckey(vi, ci, li)]).length;
+    const b = el('button');
+    b.dataset.done = done >= c.lessons.length ? '1' : '0';
+    const n = c.lessons.reduce((a, l) => a + l.words.length, 0);
+    b.append(el('span', 'num', tr('챕터') + ' ' + (ci + 1)),
+             el('span', 'nm', n + tr('낱말')),
+             el('span', 'st', done + '/' + c.lessons.length));
+    b.onclick = () => { dive(() => drawVol(vi)); drawCh(vi, ci); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  show('course', (vi + 2) + '권', true);
+}
+
+function drawCh(vi, ci) {
+  const c = lifeVols()[vi].chapters[ci];
+  const list = $('#dayList'); list.textContent = '';
+  c.lessons.forEach((l, li) => {
+    const k = ckey(vi, ci, li), fin = !!S.done[k];
+    const b = el('button');
+    b.dataset.done = fin ? '1' : '0';
+    b.append(el('span', 'num', tr('레슨') + ' ' + (li + 1)),
+             el('span', 'nm', l.words.slice(0, 3).map(w =>
+               esc(w.ko.split('/')[0].trim())).join(' · ')),
+             el('span', 'st', fin ? tr('완료 ✔') : l.words.length + tr('낱말')));
+    b.onclick = () => { dive(() => drawCh(vi, ci));
+      startLearn({ day: k, theme: (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
+                   words: l.words, course: 1 }); };
+    const li2 = el('li'); li2.append(b); list.append(li2);
+  });
+  show('course', (vi + 2) + '권 · ' + tr('챕터') + ' ' + (ci + 1), true);
+}
+
+/* 직무 — 갈래를 먼저 고른다. 봉제로 갈 사람은 전자를 안 배워도 된다. */
+function drawJob() {
+  const jv = jobVol();
+  const list = $('#dayList'); list.textContent = '';
+  const h = el('li', 'catpick');
+  h.append(el('span', 'msub', tr('공통은 어느 공장에서나 씁니다. 갈 곳이 정해졌으면 그 갈래만 하셔도 됩니다.')));
+  list.append(h);
+  jv.tracks.forEach((t, ti) => {
+    const [n, all] = chDone(t.chapters, (c, l) => jkey(ti, c, l));
+    const b = el('button');
+    b.dataset.done = n >= all ? '1' : '0';
+    b.append(el('span', 'num', esc(t.track)),
+             el('span', 'nm', t.words + tr('낱말') + ' · ' + t.chapters.length + tr('챕터')),
+             el('span', 'st', n + '/' + all));
+    b.onclick = () => { dive(drawJob); drawJobTrack(ti); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  show('course', '직무', true);
+}
+
+function drawJobTrack(ti) {
+  const t = jobVol().tracks[ti];
+  const list = $('#dayList'); list.textContent = '';
+  t.chapters.forEach((c, ci) => {
+    const done = c.lessons.filter((l, li) => S.done[jkey(ti, ci, li)]).length;
+    const b = el('button');
+    b.dataset.done = done >= c.lessons.length ? '1' : '0';
+    b.append(el('span', 'num', tr('챕터') + ' ' + (ci + 1)),
+             el('span', 'nm', c.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말')),
+             el('span', 'st', done + '/' + c.lessons.length));
+    b.onclick = () => { dive(() => drawJobTrack(ti)); drawJobCh(ti, ci); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  show('course', t.track, true);
+}
+
+function drawJobCh(ti, ci) {
+  const t = jobVol().tracks[ti], c = t.chapters[ci];
+  const list = $('#dayList'); list.textContent = '';
+  c.lessons.forEach((l, li) => {
+    const k = jkey(ti, ci, li), fin = !!S.done[k];
+    const b = el('button');
+    b.dataset.done = fin ? '1' : '0';
+    b.append(el('span', 'num', tr('레슨') + ' ' + (li + 1)),
+             el('span', 'nm', l.words.slice(0, 3).map(w =>
+               esc(w.ko.split('/')[0].trim())).join(' · ')),
+             el('span', 'st', fin ? tr('완료 ✔') : l.words.length + tr('낱말')));
+    b.onclick = () => { dive(() => drawJobCh(ti, ci));
+      startLearn({ day: k, theme: t.track + ' ' + (ci + 1) + '-' + (li + 1),
+                   words: l.words, course: 1 }); };
+    const li2 = el('li'); li2.append(b); list.append(li2);
+  });
+  show('course', t.track + ' · ' + tr('챕터') + ' ' + (ci + 1), true);
+}
+
+/* 핵심만 — 두 기수 이상에 나온 낱말. 급할 때 가는 길. */
+let CORE = null;
+function coreEntry() {
+  if (COURSE) return drawCore();
+  const list = $('#dayList'); list.textContent = '';
+  list.append(el('li', 'catpick', tr('불러오는 중…')));
+  show('course', '핵심만', true);
+  fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; loadCWords(); drawCore(); }).catch(() => { });
 }
 function coreList() {
   if (CORE) return CORE;
-  const ws = [];
-  COURSE.vols.forEach(v => v.units.forEach(u => u.chapters.forEach(c =>
-    c.words.forEach(w => { if (w.core) ws.push(w); }))));
+  const ws = CWORDS.filter(w => w.core);
   CORE = [];
   for (let i = 0; i < ws.length; i += 15) CORE.push(ws.slice(i, i + 15));
   return CORE;
@@ -4969,7 +5059,7 @@ function drawCore() {
     const k = 'K' + i, fin = !!S.done[k];
     const b = el('button');
     b.dataset.done = fin ? '1' : '0';
-    b.append(el('span', 'num', (i + 1) + tr('강')),
+    b.append(el('span', 'num', tr('레슨') + ' ' + (i + 1)),
              el('span', 'nm', c.slice(0, 3).map(w => esc(w.ko.split('/')[0].trim())).join(' · ')),
              el('span', 'st', fin ? tr('완료 ✔') : c.length + tr('낱말')));
     b.onclick = () => { dive(drawCore);
@@ -4977,106 +5067,6 @@ function drawCore() {
     const li = el('li'); li.append(b); list.append(li);
   });
   show('course', '핵심만', true);
-}
-
-function courseEntry() {
-  if (COURSE) return drawCourse();
-  const list = $('#dayList'); list.textContent = '';
-  list.append(el('li', 'catpick', tr('불러오는 중…')));
-  show('course', '과정', true);
-  fetch('data/course.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { COURSE = j; loadCWords(); drawCourse(); })
-    .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
-}
-
-/* 한 권이 끝난 강 수 — 진도는 **강 단위**로만 센다(낱말 하나하나는 복습이 맡는다) */
-function volDone(vi) {
-  let n = 0, all = 0;
-  COURSE.vols[vi].units.forEach((u, ui) => u.chapters.forEach((c, ci) => {
-    all++; if (S.done[ckey(vi, ui, ci)]) n++; }));
-  return [n, all];
-}
-
-function drawCourse() {
-  const list = $('#dayList'); list.textContent = '';
-  const top = el('li', 'catpick');
-  top.append(el('span', 'msub', tr('한 강 15낱말 · 복습은 따로 있습니다')));
-  list.append(top);
-  /* 1권과 7권은 낱말이 아니라 규칙과 이야기다 — 같은 줄에 두되 가는 곳이 다르다 */
-  const c1 = el('button');
-  c1.append(el('span', 'num', '1권'), el('span', 'nm', tr('기본기 · 문법') +
-            '<i class="catchip">' + tr('문법') + ' 175</i>'), el('span', 'st', tr('보기')));
-  c1.onclick = () => { dive(drawCourse); gramEntry(); };
-  const li1 = el('li'); li1.append(c1); list.append(li1);
-  COURSE.vols.forEach((v, vi) => {
-    const [n, all] = volDone(vi);
-    const b = el('button');
-    b.dataset.done = n >= all ? '1' : '0';
-    b.append(el('span', 'num', v.vol.split(' ')[0]),
-             el('span', 'nm', v.vol.split(' ').slice(1).join(' ') +
-                '<i class="catchip">' + v.words + tr('낱말') + '</i>'),
-             el('span', 'st', n + '/' + all));
-    b.onclick = () => { dive(drawCourse); drawVol(vi); };
-    const li = el('li'); li.append(b); list.append(li);
-  });
-  const c7 = el('button');
-  c7.append(el('span', 'num', '7권'), el('span', 'nm', tr('문화 · 베트남 바로알기')),
-            el('span', 'st', tr('보기')));
-  c7.onclick = () => { dive(drawCourse); draw7(); };
-  const li7 = el('li'); li7.append(c7); list.append(li7);
-  show('course', '과정', true);
-}
-
-/* 7권은 두 갈래다 — 짧은 문화 조각(59개)과 강의자료 12강. */
-function draw7() {
-  const list = $('#dayList'); list.textContent = '';
-  [[tr('베트남 문화'), '59', startCulture], [tr('베트남 바로알기'), '12', knowEntry]]
-    .forEach(([nm, n, fn]) => {
-      const b = el('button');
-      b.append(el('span', 'nm', nm + '<i class="catchip">' + n + '</i>'), el('span', 'st', tr('보기')));
-      b.onclick = () => { dive(draw7); fn(); };
-      const li = el('li'); li.append(b); list.append(li);
-    });
-  show('course', '7권 · 문화와 베트남 바로알기', true);
-}
-
-function drawVol(vi) {
-  const v = COURSE.vols[vi];
-  const list = $('#dayList'); list.textContent = '';
-  v.units.forEach((u, ui) => {
-    const done = u.chapters.filter((c, ci) => S.done[ckey(vi, ui, ci)]).length;
-    const b = el('button');
-    b.dataset.done = done >= u.chapters.length ? '1' : '0';
-    b.append(el('span', 'num', (ui + 1) + tr('과')),
-             el('span', 'nm', esc(u.unit)),
-             el('span', 'st', done + '/' + u.chapters.length));
-    b.onclick = () => { dive(() => drawVol(vi)); drawUnit(vi, ui); };
-    const li = el('li'); li.append(b); list.append(li);
-  });
-  show('course', v.vol, true);
-}
-
-function drawUnit(vi, ui) {
-  const v = COURSE.vols[vi], u = v.units[ui];
-  const list = $('#dayList'); list.textContent = '';
-  u.chapters.forEach((c, ci) => {
-    const k = ckey(vi, ui, ci), fin = !!S.done[k];
-    const star = c.words.filter(w => w.sr).length;
-    const b = el('button');
-    b.dataset.done = fin ? '1' : '0';
-    b.append(el('span', 'num', (ci + 1) + tr('강')),
-             el('span', 'nm', c.words.slice(0, 3).map(w => esc(w.ko.split('/')[0].trim())).join(' · ') +
-                (star ? '<i class="catchip">⭐' + star + '</i>' : '')),
-             el('span', 'st', fin ? tr('완료 ✔') : c.words.length + tr('낱말')));
-    b.onclick = () => { dive(() => drawUnit(vi, ui)); startChapter(vi, ui, ci); };
-    const li = el('li'); li.append(b); list.append(li);
-  });
-  show('course', u.unit, true);
-}
-
-function startChapter(vi, ui, ci) {
-  const v = COURSE.vols[vi], u = v.units[ui], c = u.chapters[ci];
-  startLearn({ day: ckey(vi, ui, ci), theme: u.unit + ' ' + (ci + 1), words: c.words, course: 1 });
 }
 
 function gramEntry() {
