@@ -12,6 +12,24 @@ import collections, json, pathlib, re, unicodedata as U
 R = pathlib.Path(__file__).resolve().parent.parent
 
 # 낱말 → 한글 뜻 (살릴 것)
+# 손으로 바로잡는 표 — 대소문자·붙여쓰기가 자료마다 어긋난 것 (2026-08-30 검수)
+SPELL = {
+ "Balan": "Ba Lan", "Căm Pu Chia": "Campuchia", "quần Jin": "quần jin",
+ "mùa Hạ": "mùa hạ", "chủ Nhật": "chủ nhật", "tháng Chạp": "tháng chạp",
+ "tháng Giêng": "tháng giêng", "hướng Nam": "hướng nam", "viễn Đông": "viễn đông",
+ "hồng Kông": "Hồng Kông", "tây Nguyên": "Tây Nguyên", "Việ T": "Việt",
+ "ngày Nhà giáo": "ngày Nhà giáo Việt Nam", "bệnh viện Đông y": "bệnh viện đông y",
+ "hội Lim": "hội Lim", "giải Nobel": "giải Nobel",
+}
+
+# 뜻이 깨져 들어온 것을 손으로 바로잡는다 — 다른 줄의 글자가 섞여 들어왔다 (2026-08-30 검수)
+FIXKO = {
+ "mũi": "코", "tiếng": "시간, 언어", "rồi": "이미, 벌써 (~했다)",
+ "chưa": "아직 ~않다 / ~했습니까?", "giàu": "넉넉한, 부자인",
+ "càng": "~할수록 더", "tuy": "비록 ~일지라도",
+ "mở trang": "(책의 ~쪽을) 펴다", "làm ăn": "사업을 하다, 생계를 꾸리다",
+}
+
 KEEP = {
  "khoẻ":"건강하다", "mọi người":"모두, 사람들", "củ hành tây":"양파", "hiền":"착하다",
  "sẽ":"~할 것이다", "Tường":"벽", "tennis":"테니스장", "núi":"산", "tối qua":"어젯밤",
@@ -67,6 +85,12 @@ def junk(vi, ko):
     if ko.count("/") >= 2 and len(v.split()) >= 2: return "칸이 붙음"
     if len(v.split()) >= 3 and ko.count("/") >= 1: return "칸이 붙음"
     if re.search(r"[a-z][A-ZĐ]", v): return "붙어 버림"          # mởcửa
+    # **문장은 낱말이 아니다** — 시험지의 '문장 번역' 문제가 낱말 칸으로 새어 들어왔다.
+    #   'Anh bị làm sao?'(어디 아프세요) · 'Ý hay đấy!'(좋은 생각이야) (2026-08-30 검수)
+    if re.search(r"[?!]", v) or ":" in v: return "문장"
+    if re.search(r"\.\.+|…", v): return "문법 틀"
+    if re.search(r"(^|\s)[ABC](\s|$)", v): return "문법 틀"      # 'tuy A nhưng B'
+    if len(v.split()) >= 6: return "문장"
     return None
 
 
@@ -85,6 +109,86 @@ def head(vi):
     return re.sub(r"\s+", " ", v).strip(" ,.;:")
 
 
+# 나라·땅·회사 이름은 베트남어에서도 **대문자가 규칙**이다. 이것만 대문자를 지킨다.
+#   Anh(영국) 과 anh(형) 은 서로 다른 낱말이다 — 소문자로 눌러 버리면 안 된다.
+PROPER = {"Anh","Mỹ","Nga","Nhật","Pháp","Đức","Ý","Úc","Canada","Lào","Huế","Việt","Tết","Noel",
+          "Trung Quốc","Hàn Quốc","Việt Nam","Thái Lan","Nhật Bản","Hà Nội","Sài Gòn","Đà Nẵng",
+          "Hải Phòng","Cần Thơ","Nha Trang","Hạ Long","Sa Pa","Hồ Chí Minh","Singapore",
+          "Tết Nguyên Đán","Tết Trung Thu","Facebook","Google","Zalo","Grab","Samsung","Hyundai"}
+# 뜻이 **나라·도시·명절 이름**이면 베트남어도 대문자가 규칙이다.
+#   시험지가 문장 첫 낱말을 대문자로 적은 것과 구별하려면 뜻을 봐야 한다 (2026-08-30).
+NAMES = (r"이집트|폴란드|캄보디아|핀란드|스웨덴|노르웨이|스위스|네덜란드|벨기에|오스트리아|"
+         r"스페인|이탈리아|포르투갈|그리스|터키|이스라엘|이란|이라크|인도|대만|말레이시아|"
+         r"인도네시아|필리핀|미얀마|싱가포르|브라질|멕시코|아르헨티나|칠레|남아프리카|뉴질랜드|"
+         r"영국|미국|중국|일본|한국|러시아|프랑스|독일|호주|캐나다|태국|라오스|베트남|"
+         r"하노이|호찌민|호치민|다낭|사이공|후에|나트랑|하롱|사파|설날|추석|중추절")
+# 뜻이 **딱 나라·도시·명절 이름 하나**일 때만 대문자로 되돌린다.
+#   '러시아워'·'베트남전통모자' 까지 나라로 읽어 Cao Điểm·Nón 이 되었다 (2026-08-30).
+KO_NAME1 = re.compile(rf"^\(?\s*(?:나라\s*)?({NAMES})\s*(?:어|인|족|사람|말)?\s*\)?$")
+# 'nước Hàn'(나라 한국)·'tiếng Nhật'(일본어) 처럼 앞머리가 보통명사면 그 머리는 소문자다.
+LEAD = re.compile(r"^(nước|tiếng|người|ngày|món|đồ|chữ|xe|bánh|phía|thành phố|dân)\b", re.I)
+
+
+# 베트남어에서 대문자로 적는 **조각**들. 이것 말고는 다 소문자다.
+#   'Bọn Anh'(우리 형들) 의 Anh 은 형이지 영국이 아니다 — 그래서 조각 판단만으로는 모자라
+#   앞머리가 bọn·người·tiếng 처럼 보통명사면 뒤 조각도 함께 본다.
+CAPS = {"Anh","Mỹ","Nga","Nhật","Bản","Pháp","Đức","Ý","Úc","Hàn","Quốc","Trung","Việt","Nam",
+        "Thái","Lan","Lào","Hán","Âu","Phi","Á","Cập","Ai","Điển","Thụy","Phần","Ba","Kông",
+        "Hồng","Khme","Canada","Singapore","Nobel","Tết","Nguyên","Đán","Thu","Campuchia",
+        "Huế","Hà","Nội","Sài","Gòn","Đà","Nẵng","Hải","Phòng","Cần","Thơ","Nha","Trang",
+        "Hạ","Long","Sa","Pa","Hồ","Chí","Minh","Bắc","Bộ","Tây","Lim","Đông","Giêng","Chạp",
+        "Facebook","Google","Zalo","Grab","Samsung","Hyundai","Noel","Jin","Nhà"}
+# 앞머리가 이것이면 **뒤가 나라 이름일 때만** 대문자다 (bọn anh · tiếng Anh)
+KIN = re.compile(r"^(bọn|chúng|các)\b", re.I)
+
+def uncap(v, ko=""):
+    """시험지가 문장 첫 낱말을 대문자로 적어 놓은 것을 되돌린다 (2026-08-30 검수, 516개).
+       조각마다 본다 — 'Bọn Anh'(우리 형들) 은 둘 다 소문자, 'tiếng Anh'(영어) 은 Anh 만 대문자."""
+    if v in PROPER: return v
+    kin = bool(KIN.match(v))
+    out = []
+    for k, t in enumerate(v.split()):
+        keep = (t in CAPS) and not kin and not (k == 0 and t not in ("Tết",) and len(v.split()) > 1
+                                                and t not in PROPER)
+        if k == 0 and t in PROPER: keep = True
+        if k == 0 and len(v.split()) == 1: keep = t in CAPS
+        out.append(t if keep else t[:1].lower() + t[1:])
+    r = SPELL.get(" ".join(out), " ".join(out))
+    if KO_NAME1.match(ko.strip()):                 # 뜻이 딱 나라 이름이면 통째로 고유명사
+        ts = r.split()
+        head = 1 if LEAD.match(r) and len(ts) > 1 else 0
+        r = " ".join([t for t in ts[:head]] + [t[:1].upper() + t[1:] for t in ts[head:]])
+    return SPELL.get(r, r)
+
+
+
+V_ = re.compile(r"[aeiouyăâêôơư]", re.I)   # 베트남어 음절엔 반드시 모음이 있다
+
+def glue(v, known=None):
+    """PDF 에서 음절 가운데 공백이 끼어 들어온 것을 도로 붙인다 (2026-08-30 검수).
+       ① 모음이 아예 없는 토막('b ệnh')은 무조건 붙인다.
+       ② 그 밖에는 **붙인 꼴이 다른 자료에도 있을 때만** 붙인다.
+          'Hàn Qu ốc' 의 'Qu' 에는 모음 u 가 있어 ①에 안 걸린다.
+          그렇다고 아무 데나 붙이면 'bà ấy'(그 사람)까지 'bày' 로 뭉갠다."""
+    ss = v.split()
+    if len(ss) < 2: return v
+    out = []
+    for t in ss:
+        if out and t not in ("A","B","C","X","Y") and re.fullmatch(r"[A-Za-zĐđ]+", t) and not V_.search(U.normalize("NFD", t)):
+            out.append(out.pop() + t)
+        elif out and not V_.search(U.normalize("NFD", out[-1])) and re.search(r"[A-Za-zĐđ]", out[-1]):
+            out[-1] = out[-1] + t
+        else:
+            out.append(t)
+    if known:                                   # ② 자료에 있는 꼴이면 붙인다
+        i = 1
+        while i < len(out):
+            cand = out[:i - 1] + [out[i - 1] + out[i]] + out[i + 1:]
+            if " ".join(cand).lower() in known: out = cand
+            else: i += 1
+    return " ".join(out)
+
+
 def bare(v):
     """성조·모자·괄호·대소문자를 다 벗긴 뼈대. 겹침을 찾을 때만 쓴다."""
     s = U.normalize("NFD", v.lower())
@@ -95,6 +199,9 @@ def bare(v):
 
 
 def dedupe(ws):
+    known = {w["vi"].lower() for w in ws if " " not in w["vi"] or "  " not in w["vi"]}
+    known |= {" ".join(w["vi"].lower().split()) for w in ws}
+    for w in ws: w["vi"] = uncap(glue(w["vi"], known), w.get("ko", ""))
     """뼈대도 같고 **뜻도 같은** 것만 하나로 합친다.
        성조가 다르면 다른 낱말이다(bạn 친구 · bán 팔다 · bận 바쁘다) — 절대 안 합친다."""
     g = collections.defaultdict(list)
@@ -171,6 +278,8 @@ def main():
         else: keep.append(w)
     out = keep
     out, gone = dedupe(out)
+    for w in out:                                   # 손으로 바로잡은 뜻 (대소문자 정리 뒤에)
+        if w["vi"] in FIXKO: w["ko"] = FIXKO[w["vi"]]
     out.sort(key=lambda w: (w.get("pos") is None, w.get("pos") or 0, -w["n"]))
     d["words"] = out
     d["note"] = ("네 기수(17·18·19·20) 단어시험. 겹침을 지웠다(뼈대와 뜻이 둘 다 같을 때만). "

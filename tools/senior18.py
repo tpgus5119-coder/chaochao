@@ -29,18 +29,34 @@ WEEK = re.compile(r"토요|주간|주차|복습")
 
 
 def rows_pdf(p):
+    """**표 칸 단위**로 읽는다. 글자 상자를 y 로 묶던 옛 방식은 낱말을 잘랐다:
+       좁은 칸에서 'phân biệt' 가 두 줄로 그려지면 'biệt' 만 남는다.
+       (2026-08-30 검수에서 an·ban·biệt·biểu 따위 토막이 무더기로 나왔다)
+       411개 중 406개에서 표가 잡힌다. 안 잡히는 것만 옛 방식으로 넘긴다."""
     import pymupdf
     out = []
     doc = pymupdf.open(p)
     for pg in doc:
-        # 표를 줄 단위로 — 글자 상자를 y 로 묶는다
-        words = pg.get_text("words")          # (x0,y0,x1,y1,word,...)
+        got = False
+        try:
+            for t in pg.find_tables().tables:
+                rows = t.extract()
+                if len(rows) < 4: continue
+                got = True
+                for r in rows:
+                    cells = [re.sub(r"\s+", " ", (c or "")).strip() for c in r]
+                    if any(cells): out.append(cells)
+        except Exception:
+            pass
+        if got: continue
+        words = pg.get_text("words")          # 표가 없는 쪽 — 글자 상자를 y 로 묶는다
         by = collections.defaultdict(list)
         for w in words:
             by[round(w[1] / 6)].append((w[0], w[4]))
         for k in sorted(by):
             line = [t for _, t in sorted(by[k])]
             if line: out.append(line)
+    doc.close()
     return out
 
 

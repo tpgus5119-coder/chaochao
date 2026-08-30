@@ -64,8 +64,55 @@ def cells_of(p):
     if f.endswith(".docx"): return rows_docx(p)
     return S.rows_pdf(p)
 
+# ── 머리글로 열 짝을 찾는다 ────────────────────────────────────────────────
+# 시험지 대부분이 「No.|단어|뜻」 묶음을 **가로로 두세 벌** 늘어놓는다.
+# 한 행을 한 낱말로 읽으면 네 낱말이 한 덩어리가 되어 뜻이 어긋난다.
+#   'còn cô tay đầu bếp | 반면에 / 여자 선생님 / 손 / 요리사'  ← 이렇게 망가졌었다 (2026-08-30 발견)
+# 열 차례도 파일마다 다르다: 「No.|단어|뜻」 과 「No.|뜻|단어」 가 섞여 있다.
+HV = re.compile(r"^(단어|베트남어|từ|tiếng việt|vietnam\w*)$", re.I)
+HK = re.compile(r"^(뜻|의미|한국어|nghĩa|korea\w*)$", re.I)
+HE = re.compile(r"^(영어|english|nghĩa tiếng anh)$", re.I)
+
+def col_pairs(cells):
+    """머리글 한 줄에서 (단어열, 뜻열, 영어열) 짝들을 낸다. 못 찾으면 빈 목록."""
+    tags = [("v" if HV.fullmatch(c) else "k" if HK.fullmatch(c) else
+             "e" if HE.fullmatch(c) else "") for c in cells]
+    if sum(1 for t in tags if t in "vk") < 2: return []
+    pairs, cur = [], {}
+    for i, t in enumerate(tags):
+        if not t: continue
+        if t in cur:                       # 같은 갈래가 또 나오면 새 묶음이다
+            if "v" in cur and "k" in cur: pairs.append(cur)
+            cur = {}
+        cur[t] = i
+    if "v" in cur and "k" in cur: pairs.append(cur)
+    return pairs
+
+def split_wide(rows):
+    """머리글이 있으면 열 짝대로, 없으면 빈 목록(= 옛 방식으로 넘긴다)."""
+    out, pairs = [], []
+    for line in rows:
+        cs = [(c or "").strip() for c in line]
+        p = col_pairs(cs)
+        if p: pairs = p; continue          # 머리글 줄 — 짝을 새로 잡고 넘어간다
+        if not pairs: continue
+        for q in pairs:
+            vi = cs[q["v"]] if q["v"] < len(cs) else ""
+            ko = cs[q["k"]] if q["k"] < len(cs) else ""
+            en = cs[q["e"]] if "e" in q and q["e"] < len(cs) else ""
+            vi = re.sub(r"\s+", " ", vi).strip()
+            if not vi or not re.search(r"[A-Za-zÀ-ỹ]", vi): continue
+            if re.fullmatch(r"[\d.\s]+", vi): continue
+            # 칸이 뒤바뀐 판이 있다 — 한글이 단어칸에 있으면 맞바꾼다
+            if S.KO.search(vi) and not S.KO.search(ko): vi, ko = ko, vi
+            if not vi: continue
+            out.append((vi, re.sub(r"\s+", " ", ko).strip(), en.strip()))
+    return out
+
 def split(rows):
     """줄마다 (베트남어, 한글뜻, 영어뜻) 을 낸다. 없으면 빈 칸."""
+    w = split_wide(rows)
+    if w: return w                          # 머리글이 있으면 열 짝대로 읽는다
     out = []
     for line in rows:
         cells = [c.strip() for c in line if c and c.strip()]
