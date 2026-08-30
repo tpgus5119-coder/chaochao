@@ -58,6 +58,10 @@ def main():
             w["spellwas"] = w["vi"]; w["vi"] = fix[k][0]; n += 1
     # 철자를 고치면 서로 같아지는 낱말이 생긴다 (aó sơ mi → áo sơ mi). 다시 합친다.
     import sys; sys.path.insert(0, str(R / "tools")); import senior_hand as H
+    # 마지막 그물 — 손질 뒤에도 낱말이 아닌 것이 남아 있었다 (괄호 깨진 줄 하나)
+    before = len(d["words"])
+    d["words"] = [w for w in d["words"] if not H.junk(w["vi"], w.get("ko", ""))]
+    if before != len(d["words"]): print(f"  마지막 그물에 걸린 것 {before - len(d['words'])}개")
     d["words"], gone = H.dedupe(d["words"])
     d["words"], g2 = H.same_word(d["words"]); gone += g2
     print(f"  철자를 고쳐 같아진 낱말 {gone}쌍을 합쳤다")

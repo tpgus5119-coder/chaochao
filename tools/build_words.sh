@@ -6,6 +6,7 @@ cd "$(dirname "$0")/.."
 python3 tools/senior_merge.py  | tail -2
 python3 tools/senior_hand.py   | tail -2
 python3 tools/spell_apply.py   | head -1
+python3 tools/clean_text.py
 python3 tools/senior_split.py  | head -1
 python3 tools/order_build.py   | tail -6
 python3 tools/img_link.py      | tail -2

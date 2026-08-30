@@ -1647,3 +1647,35 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   padding:.55em .8em; border-radius:12px; border:1px solid var(--line); background:var(--card)}
 .pickopt .pickko{font-size:.8rem; color:var(--muted)}
 .cb.ok{border-color:var(--accent)}
+
+/* 7권 바로알기의 숫자 막대 — 길이와 숫자를 함께 보인다(색만으로는 안 된다) */
+/* 카드가 flex 라 그대로 두면 막대가 내용 폭(117px)으로 쪼그라든다 */
+.nbars{display:grid; gap:8px; margin:14px 0 4px; width:100%; align-self:stretch}
+.nbar{display:grid; grid-template-columns:minmax(56px,auto) 1fr auto; align-items:center; gap:10px}
+.nbnm{color:var(--dim); font-size:13px; white-space:nowrap}
+.nbtrack{background:var(--line); border-radius:999px; height:16px; overflow:hidden}
+.nbfill{display:block; height:100%; border-radius:999px; background:var(--accent)}
+.nbfill[data-k="1"]{background:#7a5af8}
+.nbfill[data-k="2"]{background:#0f9d76; background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.35) 0 4px,transparent 4px 8px)}
+.nbfill[data-k="3"]{background:#c2410c; background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,.35) 0 4px,transparent 4px 8px)}
+.nbval{font-variant-numeric:tabular-nums; font-weight:700; font-size:14px}
+.nbunit{color:var(--dim); font-size:12px; text-align:right}
+
+/* 직무 갈래 고르기 — 체크는 색만이 아니라 **✔ 글자와 테두리 굵기**로도 갈린다(색각 배려).
+   .days button 이 width:100% 라 그대로 두면 두 단추가 겹친다 — 여기서 다시 잡는다. */
+.days li.jobhead{display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:2px 2px 8px}
+.days li.jobhead > span{flex:1 1 auto; min-width:0; white-space:normal;
+  font-size:13px; color:var(--dim); line-height:1.4}
+/* .days button 이 width:100% 라 안내 글이 0px 로 눌렸다 — 여기서 되돌린다 */
+.days li.jobhead > button{width:auto; flex:0 0 auto}
+.jsmall{padding:4px 10px; font-size:12px; min-width:0; flex:none}
+.days li.jobrow{display:flex; align-items:stretch; gap:8px; margin:0}
+.days li.jobrow > button{width:auto}
+.days li.jobrow > button.jobcb{flex:0 0 46px; display:flex; align-items:center; justify-content:center;
+  padding:0; border:2px solid var(--line); background:var(--card);
+  font-weight:800; font-size:18px; color:var(--accent); border-radius:var(--radius)}
+.days li.jobrow > button.jobcb[data-on="1"]{border-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.days li.jobrow > button:last-child{flex:1 1 auto; min-width:0}
+.days button[data-dim="1"]{opacity:.45}

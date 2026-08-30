@@ -187,15 +187,31 @@ def main():
     seen3 = {key(x["vi"]) for x in J}
     J += [x for x in (dress(w, True) for w in appjob if key(w["vi"]) not in seen3) if x]
 
+    ALTS = {}
+    _ap = R / "data" / "_altsplit.json"
+    if _ap.exists(): ALTS = json.loads(_ap.read_text(encoding="utf-8"))
+
     def pair_same(ws):
-        """뜻이 같은 **다른 낱말**은 지우지 않고 한 자리에 같이 보여 준다
-           (대표님 지시, 2026-08-30). ngang vai / rộng vai 는 둘 다 '어깨 넓이'지만
-           서로 다른 낱말이다 — 하나를 지우면 나머지 하나를 못 배운다."""
+        """뜻이 같아 보이는 **다른 낱말**을 어떻게 할지 정한다.
+
+           처음에는 무조건 한 자리에 같이 보여 줬다. 그런데 살펴보니
+           bí quyết(비결)↔bí mật(비밀) · cơ hội(기회)↔cơ(계기) · lông mày(눈썹)↔mắt(눈)
+           처럼 **아예 다른 낱말**까지 묶여 있었다 (대표님 지적, 2026-08-30).
+             · 쓰임이 다르면 → **갈라 세우고 뜻을 서로 다르게 적는다** (_altsplit.json)
+             · 정말 같은 말이면 → 지금처럼 한 자리에 같이 (quần đùi / quần soóc)
+           어느 쪽이든 **낱말을 지우지는 않는다** — 하나를 지우면 그 말을 못 배운다."""
         seen, out = {}, []
         for w in ws:
             k = re.sub(r"[\s,/()·]", "", w["ko"])
             if k and k in seen:
                 first = seen[k]
+                d = ALTS.get(f'{first["vi"]}|{w["vi"]}') or {}
+                if d and not d.get("same"):
+                    # 쓰임이 다르다 — 따로 세우고 뜻을 갈라 적는다
+                    if d.get("ka"): first["ko"] = d["ka"]
+                    if d.get("kb"): w["ko"] = d["kb"]
+                    out.append(w)
+                    continue
                 first.setdefault("alt", []).append({"vi": w["vi"], "kr": w.get("kr", ""),
                                                     "krs": w.get("krs", "")})
                 continue

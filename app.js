@@ -4718,6 +4718,11 @@ function reveal(txt) {
    그래도 안 잡히는 몇 개만 아래에 따로 적어 둔다. */
 const EXTRAG = { 'để': '~하도록·두다', 'dạ': '네 (공손)', 'mắc': '비싸다',
                  'ngàn': '천 (1,000)', 'nhất': '가장', 'bàn': '탁자' };
+/* 예문에만 나오는 낱말의 뜻 (data/exgloss.json) — này·đang·ở 처럼 과정 낱말표에 없는 말들.
+   없으면 예문 낱말을 눌렀을 때 「아직 뜻이 없는 낱말입니다」가 뜬다 (466종 3,201회였다).
+   대표님 지시(2026-08-30): 예문 낱말도 소리·발음·뜻이 다 나와야 한다. */
+let EXG = {};
+fetch('data/exgloss.json').then(r => r.json()).then(j => { EXG = j; GVOC = null; }).catch(() => {});
 let GVOC = null;
 function glossOf(vi) {
   if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
@@ -4729,7 +4734,7 @@ function glossOf(vi) {
     for (let n = 3; n >= 1 && !hit; n--) {
       if (i + n > toks.length) continue;
       const ph = toks.slice(i, i + n).join(' ').toLowerCase();
-      const m = GVOC[ph] || EXTRAG[ph];
+      const m = GVOC[ph] || EXTRAG[ph] || EXG[ph];
       if (m) hit = { w: toks.slice(i, i + n).join(' '), m, n };
     }
     if (hit) { out.push(hit); i += hit.n; }
@@ -4765,7 +4770,7 @@ function krOf(w) {
 function glossAll(vi, extra) {
   if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
                                                     if (!GVOC[k]) GVOC[k] = w.ko; }); }
-  const look = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph];
+  const look = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || EXG[ph];
   const toks = vi.split(/(\s+)/);        // 공백도 남겨 문장 모양 그대로 다시 그린다
   const out = [];
   for (let i = 0; i < toks.length;) {
@@ -4902,7 +4907,7 @@ function courseEntry() {
   if (COURSE) return drawCourse();
   const list = $('#dayList'); list.textContent = '';
   list.append(el('li', 'catpick', tr('불러오는 중…')));
-  show('course', '과정', true);
+  show('course', '학습', true);
   fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
     .then(j => { COURSE = j; loadCWords(); drawCourse(); })
     .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
@@ -4918,10 +4923,28 @@ function chDone(chs, mk) {
   return [n, all];
 }
 
+/* 목차 오른쪽 표시는 **어느 층에서나 같은 꼴**이다 (대표님 지시, 2026-08-30):
+     권 → 끝낸/전체 챕터 · 챕터 → 끝낸/전체 레슨 · 레슨 → 낱말 수.
+   전에는 권만 레슨 수를, 직무만 낱말 수를 보여 줘 층마다 잣대가 달랐다. */
+const stat = (done, all, unit) => done + '/' + all + ' ' + tr(unit);
+/* 1권(문법)도 다른 권과 **같은 꼴**로 센다 — 끝낸 과 / 전체 과 (대표님 지시, 2026-08-30).
+   전에는 문법만 목록 위에 '문법 177 · 끝낸 과 0/30' 이라는 다른 잣대를 달고 있었다. */
+function gramStat() {
+  if (!GRAM) return tr('보기');
+  let all = 0, done = 0;
+  GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
+    all++; if (S.done[gkey(bi, ni)]) done++; }));
+  return stat(done, all, '과');
+}
+
 function drawCourse() {
+  /* 1권 몫을 세려면 문법 자료가 있어야 한다 — 없으면 조용히 받아 와서 다시 그린다
+     (다른 권은 0/7 챕터인데 1권만 '보기'로 떠 잣대가 어긋나 보였다) */
+  if (!GRAM) fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { GRAM = j; if (!$('#course').hidden) drawCourse(); }).catch(() => {});
   const list = $('#dayList'); list.textContent = '';
   const head = el('li', 'catpick');
-  head.append(el('span', 'msub', tr('한 레슨 15낱말 · 챕터마다 10레슨')));
+  head.append(el('span', 'msub', tr('한 레슨 15낱말')));
   list.append(head);
 
   const row = (num, name, right, fn, done) => {
@@ -4932,21 +4955,26 @@ function drawCourse() {
     const li = el('li'); li.append(b); list.append(li);
   };
 
-  row('1권', tr('기본기 · 문법'), tr('보기'), () => { dive(drawCourse); gramEntry(); });
+  row('1권', tr('기본기 · 문법'), gramStat(), () => { dive(drawCourse); gramEntry(); });
   lifeVols().forEach((v, vi) => {
     const [n, all] = chDone(v.chapters, (c, l) => ckey(vi, c, l));
-    row((vi + 2) + '권', tr('일상'), n + '/' + all,
+    const cd = v.chapters.filter((c, ci) =>
+      c.lessons.every((l, li) => S.done[ckey(vi, ci, li)])).length;
+    row((vi + 2) + '권', tr('일상'), stat(cd, v.chapters.length, '챕터'),
         () => { dive(drawCourse); drawVol(vi); }, n >= all);
   });
   /* 직무는 **한 권**이다 (대표님 결정, 2026-08-30) — 꼭 필요한 기본 999개만.
      심화 낱말은 앱에 넣지 않는다. 현장에서 배우면 되는 말이다. */
   const jv0 = jobVol(0);
-  if (jv0) row((lifeVols().length + 2) + '권', tr('직무'),
-               jv0.tracks.reduce((a, t) => a + t.words, 0) + tr('낱말'),
-               () => { dive(drawCourse); drawJob(0); });
+  if (jv0) {
+    const td = jv0.tracks.filter((t, ti) =>
+      t.chapters.every((c, ci) => c.lessons.every((l, li) => S.done[jkey(ti, ci, li)]))).length;
+    row((lifeVols().length + 2) + '권', tr('직무'), stat(td, jv0.tracks.length, '갈래'),
+        () => { dive(drawCourse); drawJob(0); }, td >= jv0.tracks.length);
+  }
   /* 문화는 **첫 화면에 따로** 뒀다 (대표님 지시, 2026-08-30) —
      낱말을 외우는 자리가 아니라 읽는 자리라 성격이 다르다. 여기서는 뺀다. */
-  show('course', '과정', true);
+  show('course', '학습', true);
 }
 
 /* 일상 한 권 — 챕터 번호만 */
@@ -4957,10 +4985,9 @@ function drawVol(vi) {
     const done = c.lessons.filter((l, li) => S.done[ckey(vi, ci, li)]).length;
     const b = el('button');
     b.dataset.done = done >= c.lessons.length ? '1' : '0';
-    const n = c.lessons.reduce((a, l) => a + l.words.length, 0);
     b.append(el('span', 'num', tr('챕터') + ' ' + (ci + 1)),
-             el('span', 'nm', n + tr('낱말')),
-             el('span', 'st', done + '/' + c.lessons.length));
+             el('span', 'nm', c.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말')),
+             el('span', 'st', stat(done, c.lessons.length, '레슨')));
     b.onclick = () => { dive(() => drawVol(vi)); drawCh(vi, ci); };
     const li = el('li'); li.append(b); list.append(li);
   });
@@ -4977,7 +5004,7 @@ function drawCh(vi, ci) {
     b.append(el('span', 'num', tr('레슨') + ' ' + (li + 1)),
              el('span', 'nm', l.words.slice(0, 3).map(w =>
                esc(w.ko.split('/')[0].trim())).join(' · ')),
-             el('span', 'st', fin ? tr('완료 ✔') : l.words.length + tr('낱말')));
+             el('span', 'st', l.words.length + tr('낱말') + (fin ? ' ✔' : '')));
     b.onclick = () => { dive(() => drawCh(vi, ci));
       startLearn({ day: k, theme: (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
                    words: l.words, course: 1 }); };
@@ -4986,24 +5013,52 @@ function drawCh(vi, ci) {
   show('course', (vi + 2) + '권 · ' + tr('챕터') + ' ' + (ci + 1), true);
 }
 
-/* 직무 — 갈래를 먼저 고른다. 봉제로 갈 사람은 전자를 안 배워도 된다. */
+/* 직무 — 갈래를 **체크로 고른다** (대표님 지시, 2026-08-30).
+   안내 글은 뺐다. 갈 곳이 정해진 사람은 그 갈래만 고르면 된다.
+   고른 것이 없으면 다 보인다 — 처음 여는 사람이 막히지 않게. */
+const jobPick = () => (S.jobpick = S.jobpick || {});
 function drawJob(ji) {
   JOBI = ji || 0;
   const jv = jobVol(JOBI);
   const list = $('#dayList'); list.textContent = '';
-  const h = el('li', 'catpick');
-  h.append(el('span', 'msub',
-    tr('공통은 어느 공장에서나 씁니다(한국인 취업의 40%가 생산관리). 갈 곳이 정해졌으면 그 갈래만 하셔도 됩니다.')));
-  list.append(h);
+  const pick = jobPick();
+  const anyPick = jv.tracks.some((t) => pick[t.track]);
+
+  /* catpick 은 글자를 nowrap 으로 잡아 안내 글이 세로로 눌린다 — 따로 만든다 */
+  const head = el('li', 'jobhead');
+  head.append(el('span', null, tr('갈 곳이 정해졌으면 그 갈래만 고르세요')));
+  if (anyPick) {
+    const clr = el('button', 'ghost jsmall', tr('고른 것 지우기'));
+    clr.onclick = () => { S.jobpick = {}; save(); drawJob(JOBI); };
+    head.append(clr);
+  }
+  list.append(head);
+
   jv.tracks.forEach((t, ti) => {
-    const [n, all] = chDone(t.chapters, (c, l) => jkey(ti, c, l));
+    const [n, all2] = chDone(t.chapters, (c, l) => jkey(ti, c, l));
+    const row = el('li', 'jobrow');
+    const cb = el('button', 'jobcb');
+    cb.type = 'button';
+    cb.setAttribute('role', 'checkbox');
+    const on = !!pick[t.track];
+    cb.setAttribute('aria-checked', on ? 'true' : 'false');
+    cb.dataset.on = on ? '1' : '0';
+    cb.textContent = on ? '✔' : '';
+    cb.title = t.track + ' ' + tr(on ? '고름' : '고르기');
+    cb.onclick = (e) => { e.stopPropagation();
+      if (pick[t.track]) delete pick[t.track]; else pick[t.track] = 1;
+      save(); drawJob(JOBI); };
     const b = el('button');
-    b.dataset.done = n >= all ? '1' : '0';
-    b.append(el('span', 'num', esc(t.track)),
-             el('span', 'nm', t.words + tr('낱말') + ' · ' + t.chapters.length + tr('챕터')),
-             el('span', 'st', n + '/' + all));
+    b.dataset.done = n >= all2 ? '1' : '0';
+    if (anyPick && !on) b.dataset.dim = '1';
+    /* 갈래 이름은 길다 — num 칸(44px)이 아니라 이름 칸에 넣는다 */
+    b.append(el('span', 'nm', esc(t.track)),
+             el('span', 'st', t.words + tr('낱말') + ' · ' +
+               stat(t.chapters.filter((c, ci) =>
+                 c.lessons.every((l, li) => S.done[jkey(ti, ci, li)])).length,
+                 t.chapters.length, '챕터')));
     b.onclick = () => { dive(() => drawJob(JOBI)); drawJobTrack(ti); };
-    const li = el('li'); li.append(b); list.append(li);
+    row.append(cb, b); list.append(row);
   });
   show('course', '직무', true);
 }
@@ -5017,7 +5072,7 @@ function drawJobTrack(ti) {
     b.dataset.done = done >= c.lessons.length ? '1' : '0';
     b.append(el('span', 'num', tr('챕터') + ' ' + (ci + 1)),
              el('span', 'nm', c.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말')),
-             el('span', 'st', done + '/' + c.lessons.length));
+             el('span', 'st', stat(done, c.lessons.length, '레슨')));
     b.onclick = () => { dive(() => drawJobTrack(ti)); drawJobCh(ti, ci); };
     const li = el('li'); li.append(b); list.append(li);
   });
@@ -5034,7 +5089,7 @@ function drawJobCh(ti, ci) {
     b.append(el('span', 'num', tr('레슨') + ' ' + (li + 1)),
              el('span', 'nm', l.words.slice(0, 3).map(w =>
                esc(w.ko.split('/')[0].trim())).join(' · ')),
-             el('span', 'st', fin ? tr('완료 ✔') : l.words.length + tr('낱말')));
+             el('span', 'st', l.words.length + tr('낱말') + (fin ? ' ✔' : '')));
     b.onclick = () => { dive(() => drawJobCh(ti, ci));
       startLearn({ day: k, theme: t.track + ' ' + (ci + 1) + '-' + (li + 1),
                    words: l.words, course: 1 }); };
@@ -5094,12 +5149,6 @@ function gramEntry() {
 function drawGramList() {
   const list = $('#dayList'); list.textContent = '';
 
-  const tot = GRAM.books.reduce((a, b) => a + b.bai.reduce((c, x) => c + x.g.length, 0), 0);
-  const done = GRAM.books.reduce((a, b, bi) =>
-    a + b.bai.filter((x, ni) => S.done[gkey(bi, ni)]).length, 0);
-  const head = el('li', 'catpick');
-  head.append(el('span', 'msub', tr('문법') + ' ' + tot + ' · ' + tr('끝낸 과') + ' ' + done + '/30'));
-  list.append(head);
   GRAM.books.forEach((b, bi) => {
     const sec = el('li', 'catpick');
     sec.append(el('span', 'msub', '📘 ' + esc(b.book)));
@@ -5109,8 +5158,8 @@ function drawGramList() {
       const btn = el('button');
       btn.dataset.done = fin ? '1' : '0';
       btn.append(el('span', 'num', x.no + tr('과')),
-                 el('span', 'nm', esc(x.t) + '<i class="catchip">' + x.g.length + '</i>'),
-                 el('span', 'st', fin ? tr('완료 ✔') : tr('보기')));
+                 el('span', 'nm', esc(x.t)),
+                 el('span', 'st', x.g.length + tr('문법') + (fin ? ' ✔' : '')));
       btn.onclick = () => { dive(drawGramList); startGram(bi, ni); };
       const li = el('li'); li.append(btn); list.append(li);
     });
@@ -5693,7 +5742,23 @@ function drawCard() {
   if (it.k === 'gram') {
     c.append(el('div', 'gramt', esc(x.t)));
     c.append(el('div', 'gramk', esc(x.k)));
+    /* 짜임에 늘어놓은 낱말의 **뜻을 함께** 보여 준다 (대표님 지적, 2026-08-30):
+       "모르는 단어들을 나열하면서 사용하라고 하면 되냐?" — 맞는 말이었다.
+       biết một chút / khá / giỏi 를 늘어놓고 뜻은 하나도 안 적혀 있었다. */
+    if (x.kw && x.kw.length) {
+      const kb = el('div', 'gramkw');
+      x.kw.forEach(([w, m]) => {
+        const it2 = el('button', 'gkw');
+        it2.type = 'button';
+        it2.append(el('b', null, esc(w)), el('span', null, esc(m)));
+        it2.onclick = () => { const t = w.replace(/[.…]/g, '').trim();
+          if (AIDX[t]) play(t, false, voiceDir()); else speakVi(t, false, 0, S.voice); };
+        kb.append(it2);
+      });
+      c.append(kb);
+    }
     c.append(el('div', 'rulenote', x.b));
+    if (x.tip) c.append(el('div', 'gramtip', '💡 ' + esc(x.tip)));
     x.ex.forEach(e => {
       const box = el('div', 'wex');
       const top = el('div', 'wextop');
@@ -9645,6 +9710,68 @@ const CULTAT = {
   '직무 — 입고와 출고': '현금 대신 QR',
 };
 /* 문화 카드 한 벌 — 표지에서 뺀 조각들을 죽 넘겨 볼 수 있게. */
+
+/* 숫자를 막대로 — 글보다 그림이 빠르다 (7권 바로알기).
+   색만으로 크기를 알리지 않는다: **막대 길이 + 숫자**를 함께 보여 준다(색각 배려, CLAUDE.md).
+   rows = [[값, 이름], …] · unit = 단위 이름 */
+function numBars(rows, unit) {
+  const box = el('div', 'nbars');
+  const max = Math.max(...rows.map(r => Math.abs(Number(r[0])) || 0)) || 1;
+  rows.forEach(([v, name], i) => {
+    const n = Number(v) || 0;
+    const r = el('div', 'nbar');
+    r.append(el('span', 'nbnm', esc(String(name))));
+    const track = el('span', 'nbtrack');
+    const fill = el('i', 'nbfill');
+    fill.style.width = Math.max(3, Math.abs(n) / max * 100) + '%';
+    fill.dataset.k = String(i % 4);              // 무늬가 네 가지 — 색이 안 보여도 갈린다
+    track.append(fill);
+    r.append(track);
+    r.append(el('span', 'nbval', n.toLocaleString('ko-KR')));
+    box.append(r);
+  });
+  if (unit) box.append(el('div', 'nbunit', tr('단위') + ': ' + esc(unit)));
+  return box;
+}
+
+/* ---------- 7권 베트남 바로알기 ----------
+   메뉴가 knowEntry 를 부르는데 함수가 없었다 — 눌러도 아무 일이 없었다 (2026-08-30 검수).
+   강 열두 개를 고르면 그 강의 카드를 문화와 **같은 꼴**로 넘겨 본다 (대표님 지시:
+   "문화와 바로알기 ui 동일하게 해라"). 낱말·문장은 없다 — 읽는 자리다. */
+let KNOW = null;
+function knowEntry() {
+  if (KNOW) return drawKnowList();
+  const b = $('#subBody'); b.textContent = '';
+  b.append(el('p', 'lede', tr('불러오는 중…')));
+  show('sub', '베트남 바로알기', true);
+  fetch('data/know.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { KNOW = j.lec || []; drawKnowList(); })
+    .catch(() => { b.textContent = ''; b.append(el('p', 'lede', tr('불러오지 못했습니다'))); });
+}
+function drawKnowList() {
+  const b = $('#subBody'); b.textContent = '';
+  b.append(el('p', 'lede', tr('열두 강 · 그림과 숫자로 읽습니다')));
+  const list = el('ul', 'days');
+  KNOW.forEach((x, i) => {
+    const bt = el('button');
+    bt.dataset.done = S.done['KNOW' + i] ? '1' : '0';
+    bt.append(el('span', 'num', (i + 1) + tr('강')),
+              el('span', 'nm', esc(x.t)),
+              el('span', 'st', (x.c || []).length + tr('장')));
+    bt.onclick = () => { dive(drawKnowList); startKnow(i); };
+    const li = el('li'); li.append(bt); list.append(li);
+  });
+  b.append(list);
+  show('sub', '베트남 바로알기', true);
+}
+function startKnow(i) {
+  const x = KNOW[i];
+  L = { day: { day: 'KNOW' + i, theme: x.t, know: 1 }, cult: 1, i: 0,
+        items: (x.c || []).map(c => ({ k: 'know', d: c })) };
+  drawCard();
+  show('learn', x.t, true);
+}
+
 function startCulture() {
   L = { day: { day: 'CULT', theme: '베트남 문화' }, cult: 1, i: 0,
         items: CULTURE.map(c => ({ k: 'cult', d: c })) };
