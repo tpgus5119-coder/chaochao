@@ -98,7 +98,11 @@ def dedupe(ws):
     """뼈대도 같고 **뜻도 같은** 것만 하나로 합친다.
        성조가 다르면 다른 낱말이다(bạn 친구 · bán 팔다 · bận 바쁘다) — 절대 안 합친다."""
     g = collections.defaultdict(list)
-    for w in ws: g[(bare(w["vi"]), w["ko"])].append(w)
+    for w in ws:
+        # **뜻이 비어 있으면 절대 합치지 않는다** — ấn(누르다)과 ăn(먹다)이 합쳐졌었다.
+        # 뼈대가 같아도 뜻이 없으면 같은 낱말이라는 근거가 없다 (2026-08-30).
+        key = (bare(w["vi"]), w["ko"]) if w.get("ko") else ("\0" + w["vi"], "")
+        g[key].append(w)
     out, gone = [], 0
     for _, arr in g.items():
         if len(arr) == 1: out.append(arr[0]); continue
@@ -125,6 +129,33 @@ def main():
     for w in out:                       # 낱말 하나로 다듬기
         h = head(w["vi"])
         if h and h != w["vi"]: w["vi"] = h
+    # ── 칸이 붙은 줄은 **버리지 말고 쪼갠다** (2026-08-30).
+    #    'xe tải mặt trăng | 트럭 / 달' 은 xe tải(트럭) 과 mặt trăng(달) 두 낱말이
+    #    한 줄에 붙어 버린 것이다. 쪼개면 둘 다 살아난다.
+    #    쪼갤 수 있는지는 **쪼갠 조각이 다른 줄에도 낱말로 있는가**로 판단한다.
+    known = {bare(w["vi"]) for w in out}
+    split_add, split_n = [], 0
+    for w in list(out):
+        if junk(w["vi"], w["ko"]) != "칸이 붙음": continue
+        parts = [x.strip() for x in w["ko"].split("/") if x.strip()]
+        toks = w["vi"].split()
+        if len(parts) < 2 or len(toks) < len(parts): continue
+        # 앞에서부터 조각을 붙여 가며 '아는 낱말'이 되는 자리에서 끊는다
+        cut, i, ok = [], 0, True
+        for pi, part in enumerate(parts):
+            last = pi == len(parts) - 1
+            found = None
+            for j in range(len(toks), i, -1) if last else range(i + 1, len(toks) + 1):
+                cand = " ".join(toks[i:j])
+                if bare(cand) in known: found = (cand, j); break
+            if not found: ok = False; break
+            cut.append((found[0], part)); i = found[1]
+        if ok and i == len(toks) and len(cut) == len(parts):
+            for vi2, ko2 in cut:
+                split_add.append({**w, "vi": vi2, "ko": ko2, "split": 1})
+            out.remove(w); split_n += 1
+    out += split_add
+
     junked = collections.Counter()
     keep = []
     for w in out:
@@ -140,6 +171,7 @@ def main():
     p.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"손으로 뜻 채운 것 {kept} · 토막이라 버린 것 {dropped} · 겹쳐서 합친 것 {gone} · 남은 낱말 {len(out)}")
     if junked: print("  낱말이 아니라 버린 것:", dict(junked))
+    print(f"  칸이 붙은 줄을 쪼개 살린 것: {split_n}줄 → {len(split_add)}낱말")
 
 
 if __name__ == "__main__":

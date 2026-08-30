@@ -19,8 +19,13 @@ KO = re.compile(r"[가-힣]")
 SENT = re.compile(r"[.?!]|다\.$|요\.$|까\?$")
 
 def norm(v):
+    """낱말 꼴 다듬기. **앞뒤 괄호는 벗기되 안의 말은 살린다** —
+       '(một) vài' 는 '몇몇의', '(màu) xanh da trời' 는 '파란색'인 진짜 낱말인데
+       괄호로 시작한다는 이유로 통째로 버려지고 있었다 (2026-08-30)."""
     s = U.normalize("NFC", str(v)).strip().lower()
     s = re.sub(r"^[\d]+[.\)]\s*", "", s)
+    s = re.sub(r"^\(([^)]{1,12})\)\s+", r"\1 ", s)     # (một) vài → một vài
+    s = re.sub(r"\s+\(([^)]{1,12})\)$", r" \1", s)
     s = re.sub(r"\s+", " ", s)
     return s.strip(" .,;:!?~–—/\"'()")
 
@@ -33,6 +38,7 @@ def clean_ko(k):
     k = re.sub(r"[A-Za-z][A-Za-z0-9 ,'’\-]*", " ", k)          # 영어 토막 통째로
     k = re.sub(r"\s*[/=~·]\s*", " / ", k)
     k = re.sub(r"\s+", " ", k).strip(" ,/·-–—:=")
+    k = k.strip(" .?!")                     # '왜?' · '교환하다.' 는 낱말이다. 부호만 뗀다
     k = re.sub(r"^/\s*|\s*/$", "", k).strip()
     k = re.sub(r"(\s*/\s*)+", " / ", k)
     # 영어를 떼고 나면 토막만 남는 것이 있다 — '스웨터를', '이 경우에는', '4 사이즈'
@@ -60,8 +66,10 @@ def is_word(vi, ko, en="", raw=""):
     if not vi or len(vi) > 34: return False
     if len(vi.split()) > 4: return False
     if not re.search(r"[A-Za-zÀ-ỹ]", vi): return False
-    if re.search(r"[?!]", raw or vi): return False             # 물음표 = 문장 토막
-    if ko and (SENT.search(ko) or len(ko) > 26): return False
+    # 물음표가 있어도 **낱말 넷 이하면 낱말**이다 ('Chúc mừng năm mới!' 는 인사말이다)
+    if re.search(r"[?!]", raw or vi) and len((raw or vi).split()) >= 5: return False
+    if ko and len(ko) > 34: return False
+    if ko and re.search(r"(다|요|까)[.?!]\s*$", ko) and len(ko.split()) >= 4: return False
     if not ko:
         # 뜻이 없으면 **영어 낱말 하나**일 때만 살린다. 나머지는 문장 토막이다.
         # 칸이 어긋나면 '뜻' 자리에 베트남어가 들어온다(‘Bao / nhiêu vậy?’) — 그건 토막이다.
@@ -83,7 +91,16 @@ def positions(files):
     return {n: i / (len(real) - 1) for i, n in enumerate(real)}
 
 
+def filled():
+    """시험지에 뜻이 안 적혀 있던 낱말의 뜻 — tools/fill_meaning.py 가 채운 것.
+       이게 없으면 `chúc mừng năm mới`·`mùa thu` 같은 흔한 말이 통째로 버려진다."""
+    f = R / "data" / "_meanings.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+
+
 def main():
+    MK = filled()
+    mk_of = set()
     hits = collections.defaultdict(lambda: collections.defaultdict(list))  # key -> gi -> [pos]
     # 차례를 정하려면 **회차 번호와 그 회차 안의 자리**가 있어야 한다 (대표님 규칙, 2026-08-30)
     rounds = collections.defaultdict(dict)     # key -> gi -> (회차, 회차 안 자리)
@@ -99,6 +116,7 @@ def main():
             note = f["kind"] == "모음집"                  # 시험지가 아닌 모음집에서 온 낱말
             for row in f["rows"]:
                 vi, ko, en = norm(row["vi"]), clean_ko(row.get("ko", "")), (row.get("en") or "").strip()
+                if not ko and vi in MK: ko = MK[vi]          # 채워 둔 뜻을 쓴다
                 if not is_word(vi, ko, en, row["vi"]): stat["문장·토막 뺌"] += 1; continue
                 form.setdefault(vi, U.normalize("NFC", row["vi"]).strip())
                 if pos is not None: hits[vi][gi].append(pos)
@@ -109,6 +127,7 @@ def main():
                     cand = (f["no"], f["rows"].index(row) if row in f["rows"] else 0)
                     if cur is None or cand < cur: rounds[vi][gi] = cand
                 if ko and KO.search(ko): ko_of[vi][ko] += 1
+                if vi in MK: mk_of.add(vi)
                 if en: en_of[vi][en] += 1
     out, nomean = [], []
     for k, gis in hits.items():
@@ -121,6 +140,7 @@ def main():
         rec = {"vi": form[k], "key": k, "ko": ko, "gi": "".join(sorted(gis)),
                "n": len(gis), "pos": round(pos, 4) if pos is not None else None,
                **({"note": 1} if note and not gis else {}),
+               **({"mk": 1} if k in mk_of else {}),
                # 기수별 (회차, 회차 안 자리) — 차례를 정하는 데 쓴다
                "rd": {g: list(v) for g, v in sorted(rounds[k].items())}}
         if en and not ko: rec["en"] = en
@@ -133,4 +153,7 @@ def main():
     print(f"낱말 {len(out)}개 (겹침 지운 뒤) · 뜻 없는 것 {len(nomean)}개 (영어뜻만 {sum(1 for r in nomean if r.get('en'))})")
     print("  뺀 것:", dict(stat))
     print("  기수 겹침:", dict(sorted(collections.Counter(w['n'] for w in out).items())))
-main()
+
+
+if __name__ == "__main__":
+    main()
