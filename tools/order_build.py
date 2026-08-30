@@ -238,9 +238,11 @@ def main():
         if len(x["vi"].split()) <= 2 and len(ko) <= 9 and not re.search(r"[(/,·]", ko):
             return True                                        # 짧고 단순하면 기본
         return False
-    LOOKUP = [x for x in J if not is_basic(x)]
+    # 심화 낱말은 **앱에 넣지 않는다** (대표님 지시, 2026-08-30).
+    #   따로 사전으로 두지도 않는다 — 현장에서 배우면 되는 말이다.
+    n_out = sum(1 for x in J if not is_basic(x))
     J = [x for x in J if is_basic(x)]
-    print(f"   직무 기본 {len(J)} · 현장에서 배우는 말 {len(LOOKUP)}")
+    print(f"   직무 기본 {len(J)} · 현장에서 배울 말이라 넣지 않은 것 {n_out}")
     # **두 권으로 나눈다** — 공통 900 · 업종 900. 각각 900을 넘으면 출처 없는 것부터 자른다.
     J.sort(key=lambda x: (src_rank(x), -sum(int(g) for g in re.findall(r"\d\d", x.get("gi", "")))))
     def trim(ws, cap, what):
@@ -268,10 +270,7 @@ def main():
         tracks.append({"track": k, "words": len(ws),
                        "chapters": [{"lessons": [{"words": w} for w in ch]}
                                     for ch in cut(ws, LES_PER_CH)]})
-    vols.append({"kind": "job", "vol": "직무", "tracks": tracks,
-                 "lookup": {"track": "현장에서 배우는 말", "words": len(LOOKUP),
-                            "chapters": [{"lessons": [{"words": w} for w in ch]}
-                                         for ch in cut(LOOKUP, LES_PER_CH)]}})
+    vols.append({"kind": "job", "vol": "직무", "tracks": tracks})
     G = [x for x in (dress(w) for w in gramw) if x]
     (R / "data" / "order.json").write_text(json.dumps(
         {"note": "이름 없는 목차. 권/챕터/레슨 번호만. 차례는 기수 합 → 최근 기수 회차 → 회차 안 자리.",
@@ -285,8 +284,6 @@ def main():
             for t in v["tracks"]:
                 ls = sum(len(c["lessons"]) for c in t["chapters"])
                 print(f"        {t['track']:<16} {len(t['chapters'])}챕터 · {ls}레슨 · {t['words']}낱말")
-            lk = v.get("lookup")
-            if lk: print(f"      [999 밖] {lk['track']} {lk['words']}낱말 (찾아보는 사전)")
             continue
         n = sum(len(l["words"]) for c in v["chapters"] for l in c["lessons"])
         ls = sum(len(c["lessons"]) for c in v["chapters"])

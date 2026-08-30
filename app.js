@@ -4940,8 +4940,8 @@ function drawCourse() {
     row((vi + 2) + '권', tr('일상'), n + '/' + all,
         () => { dive(drawCourse); drawVol(vi); }, n >= all);
   });
-  /* 직무는 **한 권**이다 (대표님 결정, 2026-08-30) — 꼭 필요한 기본만.
-     심화는 「현장에서 배우는 말」 사전으로 뺐다. */
+  /* 직무는 **한 권**이다 (대표님 결정, 2026-08-30) — 꼭 필요한 기본 999개만.
+     심화 낱말은 앱에 넣지 않는다. 현장에서 배우면 되는 말이다. */
   const jv0 = jobVol(0);
   if (jv0) row((lifeVols().length + 2) + '권', tr('직무'),
                jv0.tracks.reduce((a, t) => a + t.words, 0) + tr('낱말'),
@@ -5007,38 +5007,7 @@ function drawJob(ji) {
     b.onclick = () => { dive(() => drawJob(JOBI)); drawJobTrack(ti); };
     const li = el('li'); li.append(b); list.append(li);
   });
-  /* 「봉제 찾아보기」 — 999 밖이다. 도면·검사표에만 있는 말이라 배우는 차례에 안 넣는다.
-     봉제 공장에 배치되면 그때 여는 사전이다 (대표님과 상의, 2026-08-30). */
-  const lk = jv.lookup;
-  if (lk && lk.words) {
-    const b = el('button');
-    b.append(el('span', 'num', '📖'),
-             el('span', 'nm', esc(lk.track) + '<i class="catchip">' + lk.words + tr('낱말') + '</i>'),
-             el('span', 'st', tr('사전')));
-    b.onclick = () => { dive(() => drawJob(JOBI)); drawLookup(); };
-    const li = el('li'); li.append(b); list.append(li);
-    list.append(el('li', 'catpick',
-      '<span class="msub">' + tr('현장에서 배우면 되는 심화 낱말입니다. 외우는 자리가 아니라 찾아보는 자리입니다.') + '</span>'));
-  }
   show('course', '직무', true);
-}
-
-function drawLookup() {
-  const lk = jobVol(JOBI).lookup;
-  const list = $('#dayList'); list.textContent = '';
-  lk.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
-    const k = 'LK' + ci + '.' + li, fin = !!S.done[k];
-    const b = el('button');
-    b.dataset.done = fin ? '1' : '0';
-    b.append(el('span', 'num', tr('레슨') + ' ' + (ci * 10 + li + 1)),
-             el('span', 'nm', l.words.slice(0, 3).map(w =>
-               esc(w.ko.split('/')[0].trim())).join(' · ')),
-             el('span', 'st', l.words.length + tr('낱말')));
-    b.onclick = () => { dive(drawLookup);
-      startLearn({ day: k, theme: tr('현장에서 배우는 말'), words: l.words, course: 1 }); };
-    const li2 = el('li'); li2.append(b); list.append(li2);
-  }));
-  show('course', '현장에서 배우는 말', true);
 }
 
 function drawJobTrack(ti) {
