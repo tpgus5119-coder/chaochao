@@ -37,7 +37,8 @@ header > button{flex:0 0 auto; white-space:nowrap}
    여백을 줄이고 '북부→북' 처럼 뒷글자를 숨긴다 (2026-08-30 검수) */
 @media (max-width:420px){
   header{gap:4px; padding-left:8px; padding-right:8px}
-  header > button.ghost{min-width:36px; padding:6px 8px}
+  /* 손가락으로 누르는 자리는 40px 밑으로 내리지 않는다 — 36×35 는 눌리지 않는다 */
+  header > button.ghost{min-width:40px; min-height:40px; padding:6px 8px}
   header .wo{display:none}
 }
 main{max-width:640px; margin:0 auto; padding:16px 14px 48px}
