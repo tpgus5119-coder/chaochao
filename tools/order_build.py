@@ -144,7 +144,10 @@ def main():
         return [les[i:i + per_ch] for i in range(0, len(les), per_ch)]
 
     # 레슨 15낱말 · 챕터 10레슨(150낱말) · 권 6챕터(900낱말)
-    LES_PER_CH, CH_PER_VOL = 10, 6
+    # 레슨 15낱말 · 챕터 10레슨(150낱말) · 권 7챕터(1,050낱말)
+    #   일상 낱말 4,019개가 **네 권에 고르게** 떨어지는 값이다.
+    #   여섯으로 잘랐더니 마지막 권이 419낱말뿐이라 모양이 안 났다.
+    LES_PER_CH, CH_PER_VOL = 10, 7
     vols = []
     chs = cut(L, LES_PER_CH)
     for i in range(0, len(chs), CH_PER_VOL):
