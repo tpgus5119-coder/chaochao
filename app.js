@@ -1174,7 +1174,7 @@ function curveArea(text, box) {
   nativeCurve(text).then(nat => {
     if (!nat || !nat.curve) return;
     pre.innerHTML = `<div class="curvebox">${curveSvg(null, nat.curve)}</div>` +
-      `<div class="curvelegend"><span class="k nat"></span>원어민 소리 높낮이 (느린 발음)</div>`;
+      `<div class="curvelegend"><span class="k nat"></span>원어민 소리 높낮이</div>`;
   });
   wrap.append(pre, box);
   return wrap;
@@ -1200,7 +1200,7 @@ function speakRow(text, withSound) {
   nativeCurve(text).then(nat => {
     if (!nat || !nat.curve) return;
     pre.innerHTML = `<div class="curvebox">${curveSvg(null, nat.curve)}</div>` +
-      `<div class="curvelegend"><span class="k nat"></span>원어민 소리 높낮이 (느린 발음)</div>`;
+      `<div class="curvelegend"><span class="k nat"></span>원어민 소리 높낮이</div>`;
   });
   wrap.append(row, pre, box);
   return wrap;
@@ -4828,10 +4828,14 @@ function glossOf(vi) {
 /* 한글 소리를 **지금 고른 지역에 맞게** 고른다 (대표님 지시, 2026-08-30).
    전에는 곳곳에서 kr_read(북부)를 그냥 썼다 — 남부를 골라도 북부 발음이 떴다.
    낱말마다 kr(북부)·krs(남부)가 붙어 있다(tools/vi_kr.py). 여기 한 곳에서만 고른다. */
+/* 지역에 맞는 발음 표기를 고르는 **한 자리**.
+   자료마다 이름이 다르다 — 새 과정은 kr/krs, 옛 days.json 은 kr_read/kr_south.
+   둘 다 보지 않으면 남부를 골라도 북부 발음이 나온다 (2026-08-30 검수에서 드러남). */
 function krShow(w) {
   if (!w) return '';
   if (typeof w === 'string') return w;
-  return (S.region === 's' ? (w.krs || w.kr_read || w.kr) : (w.kr_read || w.kr)) || '';
+  const n = w.kr_read || w.kr || '';
+  return (S.region === 's' ? (w.krs || w.kr_south || n) : n) || '';
 }
 
 /* 낱말 → 한글 소리(kr_read) 찾기표. 예문 안의 낱말을 눌렀을 때
