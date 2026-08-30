@@ -491,6 +491,12 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
+  '개 대기': ' đang chờ', '갈래': ' nhóm', '개 문법': ' ngữ pháp', '장': ' thẻ',
+  '갈 곳이 정해졌으면 그 갈래만 고르세요': 'Đã biết nơi làm thì chỉ chọn nhóm đó',
+  '고른 것 지우기': 'Bỏ chọn', '고름': 'Đã chọn', '고르기': 'Chọn',
+  '열두 강 · 그림과 숫자로 읽습니다': '12 buổi · đọc bằng hình và số',
+  '「」는 이미 쓰는 사람이 있습니다 — 다른 별명을 지어 주세요.': '「」 đã có người dùng — hãy đặt biệt danh khác.',
+  '한 레슨 15낱말': 'Mỗi bài 15 từ',
   '선배': 'Khoá trước', '과': ' bài', '끝낸 과': 'Bài đã xong',
   '강': ' buổi', '과정': 'Khoá học', '전체 보기': 'Xem toàn bộ', '핵심만': 'Chỉ phần cốt lõi',
   '핵심': 'Cốt lõi', '기본기 · 문법': 'Nền tảng · Ngữ pháp',
@@ -2385,10 +2391,19 @@ function askNick() {
     try {
       await cCall({ act: 'nick' });
     } catch (e) {
-      S.nick = old;
-      err.textContent = '「' + v + '」는 ' + (e.message || '쓸 수 없습니다') + ' — 다른 별명을 지어 주세요.';
-      err.hidden = false; go.disabled = false; inp.focus(); inp.select();
-      return;
+      /* 서버에 **못 닿은 것**과 별명이 **겹친 것**은 다르다 (2026-08-30 검수).
+         전에는 둘을 한 덩어리로 묶어 'Failed to fetch' 를 그대로 보여 주고 가입을 막았다 —
+         인터넷이 잠깐 끊기면 앱에 아예 못 들어갔다. 못 닿았으면 그냥 들여보낸다. */
+      const msg = String(e && e.message || '');
+      const dup = /겹|이미|중복|taken|exist|duplicate/i.test(msg);
+      if (dup) {
+        S.nick = old;
+        err.textContent = tr('「」는 이미 쓰는 사람이 있습니다 — 다른 별명을 지어 주세요.')
+          .replace('「」', '「' + v + '」');
+        err.hidden = false; go.disabled = false; inp.focus(); inp.select();
+        return;
+      }
+      S.nickcheck = 0;                    // 나중에 다시 확인한다
     }
     S.wk = { k: weekKey(), base: snapshot() }; save();
     S.learn ? renderHome() : askLearn();
@@ -4722,7 +4737,10 @@ const EXTRAG = { 'để': '~하도록·두다', 'dạ': '네 (공손)', 'mắc':
    없으면 예문 낱말을 눌렀을 때 「아직 뜻이 없는 낱말입니다」가 뜬다 (466종 3,201회였다).
    대표님 지시(2026-08-30): 예문 낱말도 소리·발음·뜻이 다 나와야 한다. */
 let EXG = {};
-fetch('data/exgloss.json').then(r => r.json()).then(j => { EXG = j; GVOC = null; }).catch(() => {});
+fetch('data/exgloss.json').then(r => r.json()).then(j => { EXG = j; GVOC = null; GKR = null; }).catch(() => {});
+const exgKo = k => { const v = EXG[k]; return v && (typeof v === 'string' ? v : v.ko); };
+const exgKr = k => { const v = EXG[k]; return v && typeof v === 'object'
+  ? (S.region === 's' ? (v.krs || v.kr) : v.kr) : ''; };
 let GVOC = null;
 function glossOf(vi) {
   if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
@@ -4734,7 +4752,7 @@ function glossOf(vi) {
     for (let n = 3; n >= 1 && !hit; n--) {
       if (i + n > toks.length) continue;
       const ph = toks.slice(i, i + n).join(' ').toLowerCase();
-      const m = GVOC[ph] || EXTRAG[ph] || EXG[ph];
+      const m = GVOC[ph] || EXTRAG[ph] || exgKo(ph);
       if (m) hit = { w: toks.slice(i, i + n).join(' '), m, n };
     }
     if (hit) { out.push(hit); i += hit.n; }
@@ -4764,13 +4782,32 @@ function krOf(w) {
   if (!GKR) { GKR = {}; allWords().forEach(x => { const k = x.vi.toLowerCase();
     const v = krShow(x);
     if (v && !GKR[k]) GKR[k] = v; }); }
-  return GKR[String(w).toLowerCase().replace(/[,.!?;:]/g, '').trim()];
+  const k = String(w).toLowerCase().replace(/[,.!?;:]/g, '').trim();
+  return GKR[k] || exgKr(k);
+}
+
+/* 문장 한 줄의 발음 — 낱말 발음을 이어 붙인다. 하나라도 모르면 빈 값을 낸다
+   (반쪽짜리 발음을 보여 주느니 안 보여 주는 게 낫다). 2026-08-30 */
+function krLine(vi) {
+  const ts = String(vi).split(/\s+/).filter(Boolean);
+  const out = [];
+  for (let i = 0; i < ts.length;) {
+    let hit = null;
+    for (let n = 3; n >= 1 && !hit; n--) {          // cảm ơn 처럼 두세 마디 낱말을 먼저 본다
+      if (i + n > ts.length) continue;
+      const k = krOf(ts.slice(i, i + n).join(' '));
+      if (k) hit = { k, n };
+    }
+    if (!hit) return '';
+    out.push(hit.k); i += hit.n;
+  }
+  return out.join(' ');
 }
 
 function glossAll(vi, extra) {
   if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
                                                     if (!GVOC[k]) GVOC[k] = w.ko; }); }
-  const look = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || EXG[ph];
+  const look = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || exgKo(ph);
   const toks = vi.split(/(\s+)/);        // 공백도 남겨 문장 모양 그대로 다시 그린다
   const out = [];
   for (let i = 0; i < toks.length;) {
@@ -5159,7 +5196,7 @@ function drawGramList() {
       btn.dataset.done = fin ? '1' : '0';
       btn.append(el('span', 'num', x.no + tr('과')),
                  el('span', 'nm', esc(x.t)),
-                 el('span', 'st', x.g.length + tr('문법') + (fin ? ' ✔' : '')));
+                 el('span', 'st', x.g.length + tr('개 문법') + (fin ? ' ✔' : '')));
       btn.onclick = () => { dive(drawGramList); startGram(bi, ni); };
       const li = el('li'); li.append(btn); list.append(li);
     });
@@ -6420,8 +6457,8 @@ function reviewMenu(kind) {
      문장은 낱말 밑의 예문으로 붙어 있으니 따로 나눌 까닭이 없다. */
   const due = dueWords().map(findItem).filter(Boolean)
     .filter(x => kind === 'all' ? true : kind === 'sent' ? x.sent : !x.sent);
-  const nm = kind === 'all' ? tr('복습') : kind === 'sent' ? '문장' : '단어';
-  b.append(el('p', 'lede', nm + ' 복습 — ' + due.length + '개 대기'));
+  const nm = kind === 'all' ? '' : (kind === 'sent' ? '문장' : '단어') + ' ';
+  b.append(el('p', 'lede', nm + tr('복습') + ' — ' + due.length + tr('개 대기')));
   const back = () => reviewMenu(kind);
   const all = el('button', 'bigmenu', '랜덤');
   all.onclick = () => { dive(back); startQuiz(null, null, null, false, { kind }); };
@@ -8232,6 +8269,19 @@ function chatSys(mode, myRole, day) {
       : '아주 쉬운 자유 대화. 인사로 시작한다.');
 }
 
+/* 쌤의 베트남어 말풍선 — 낱말을 눌러 소리·발음·뜻을 볼 수 있게 (2026-08-30 검수).
+   전에는 'VI: … / KO: …' 라는 날것 그대로가 화면에 나왔다. 발음 표시도 없었다. */
+function bubbleVi(cls, vi, ko) {
+  const b = el('div', 'cb ' + cls + ' cbrich');
+  b.append(tapLine(vi, 'cbvi tapline'));
+  const kr = krOf(vi) || krLine(vi);
+  if (kr) b.append(el('div', 'cbkr', '[' + esc(kr) + ']'));
+  if (ko) b.append(el('div', 'cbko', esc(ko)));
+  $('#chatLog').append(b);
+  b.scrollIntoView({ block: 'end', behavior: 'smooth' });
+  return b;
+}
+
 function bubble(cls, text) {
   const b = el('div', 'cb ' + cls);
   if (text != null) b.textContent = text;
@@ -8424,7 +8474,7 @@ function pickTurn() {
 function chatTurnPick() {
   const t = pickTurn();
   CH.turn = t;
-  bubble('ai', 'VI: ' + t.q.vi + '\nKO: ' + t.q.ko);
+  bubbleVi('ai', t.q.vi, t.q.ko);
   speakVi(t.q.vi, false, 0, S.tch);
   const box = el('div', 'pickrow');
   t.opts.forEach(o => {
@@ -8433,13 +8483,14 @@ function chatTurnPick() {
     b.append(el('b', null, esc(o.vi)), el('span', 'pickko', esc(o.ko)));
     b.onclick = () => {
       box.remove();
-      bubble('me', o.vi);
+      bubbleVi('me', o.vi, o.ko);
       speakVi(o.vi, false, 0, S.voice);
       if (o.vi === t.a.vi) {
         bubble('ai ok', '✔ ' + tr('맞습니다'));
         setTimeout(chatTurnPick, 700);                 // 바로 다음 말을 건다
       } else {
-        bubble('ai err', '↩ ' + tr('이렇게 답합니다') + '\n' + t.a.vi + '\n' + t.a.ko);
+        bubble('ai err', '↩ ' + tr('이렇게 답합니다'));
+        bubbleVi('ai', t.a.vi, t.a.ko);
         setTimeout(chatTurnPick, 1400);
       }
     };
@@ -9344,8 +9395,14 @@ function showGuide() {
 
   sec('🕐', '하루 5분', [
     '홈 맨 위 <b>오늘 학습</b>을 누르세요. 그날 할 것이 바로 열립니다.',
-    '<b>단어 10 → 확인 문제 → 오늘의 대화</b> 순서로 저절로 이어집니다.',
+    '<b>낱말 15개 → 확인 문제</b> 순서로 저절로 이어집니다. 낱말마다 예문이 하나씩 붙어 있습니다.',
     '<b>오늘 복습</b>이 떠 있으면 같이 하세요. <b>실력은 여기서 나옵니다.</b>',
+  ]);
+
+  sec('📚', '학습 짜임', [
+    '<b>1권</b> 기본기·문법 — 교재 세 권의 문법 177개를 과 차례 그대로',
+    '<b>2~5권</b> 일상 · <b>6권</b> 직무 — 한 레슨 15낱말, 챕터마다 9~10레슨',
+    '<b>직무</b>는 갈래를 골라서 합니다. 갈 곳이 정해졌으면 그 갈래만 하면 됩니다.',
   ]);
 
   sec('📱', '화면', [

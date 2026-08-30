@@ -36,13 +36,20 @@ def wash(s):
     s = "".join(c for c in s if ok(c))
     return re.sub(r"\s+", " ", s).strip()
 
+
+def wash_vi(s):
+    """낱말 칸 전용 — 꼬리의 '~' 를 뗀다.
+       'hóa ra~' 는 '뒤에 말이 이어진다'는 표시였지만 낱말로는 지저분하고,
+       예문에 그 낱말이 들었는지 재는 데도 걸림돌이 된다 (2026-08-30 검수)."""
+    return re.sub(r"[\s~\-–—]+$", "", wash(s)).strip()
+
 def main():
     n = 0
     p = R / "data" / "senior_pool.json"
     d = json.loads(p.read_text(encoding="utf-8"))
     for w in d["words"]:
         for k in ("vi", "ko"):
-            v = wash(w.get(k, ""))
+            v = (wash_vi if k == "vi" else wash)(w.get(k, ""))
             if v != w.get(k, ""): w[k] = v; n += 1
     p.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
     q = R / "data" / "_examples.json"

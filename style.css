@@ -1679,3 +1679,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .days li.jobrow > button:last-child{flex:1 1 auto; min-width:0}
 .days button[data-dim="1"]{opacity:.45}
+
+/* 메신저 말풍선 — 베트남어·발음·뜻을 층으로 */
+.cbrich{display:flex; flex-direction:column; gap:3px}
+.cbrich .cbvi{font-weight:650; font-size:16px}
+.cbrich .cbkr{font-size:12.5px; color:var(--dim)}
+.cbrich .cbko{font-size:13.5px}
+.cb.me.cbrich .cbkr, .cb.me.cbrich .cbko{color:inherit; opacity:.8}
