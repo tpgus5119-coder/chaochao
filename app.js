@@ -4929,8 +4929,8 @@ function drawCourse() {
   if (jv0) row((lifeVols().length + 2) + '권', tr('직무'),
                jv0.tracks.reduce((a, t) => a + t.words, 0) + tr('낱말'),
                () => { dive(drawCourse); drawJob(0); });
-  row((lifeVols().length + 3) + '권', tr('문화 · 베트남 바로알기'), tr('보기'),
-      () => { dive(drawCourse); draw7(); });
+  /* 문화는 **첫 화면에 따로** 뒀다 (대표님 지시, 2026-08-30) —
+     낱말을 외우는 자리가 아니라 읽는 자리라 성격이 다르다. 여기서는 뺀다. */
   show('course', '과정', true);
 }
 
