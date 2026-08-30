@@ -82,6 +82,20 @@ def key(v):
     return re.sub(r"\s+", " ", s).strip(" .,;:!?~–—/\"'")
 
 
+def cut_sent(s, vi):
+    """대화 자료에는 **두 문장이 한 줄**에 든 것이 있다 —
+       'Làm ơn giúp tôi được không? Tôi cần hỏi một chút.'
+       예문으로는 길어서 그 낱말이 든 문장만 남긴다 (2026-08-30 검수)."""
+    parts = [x.strip() for x in re.split(r"(?<=[.!?])\s+", s["vi"]) if x.strip()]
+    if len(parts) < 2 or len(s["vi"].split()) <= 10: return s
+    kos = [x.strip() for x in re.split(r"(?<=[.!?])\s+", s.get("ko", "")) if x.strip()]
+    t = U.normalize("NFC", vi).lower()
+    for i, x in enumerate(parts):
+        if t in U.normalize("NFC", x).lower():
+            return {"vi": x, "ko": kos[i] if i < len(kos) else s.get("ko", ""), "kr": ""}
+    return s
+
+
 def exkey(v):
     """예문 표(_examples.json)의 열쇠 꼴 — gen_examples.py 와 **똑같아야** 한다.
        여기서 괄호를 떼면 'bến xe (buýt)' 를 못 찾아 낱말이 통째로 떨어진다."""
@@ -134,7 +148,7 @@ def main():
         t = " " + k + " "
         hit = next((i for i, h in enumerate(holds) if t in h and i not in used), None)
         if hit is not None:
-            used.add(hit); s = sents[hit]
+            used.add(hit); s = cut_sent(sents[hit], w["vi"])
             o["ex"] = {"vi": s["vi"], "ko": s["ko"], "kr": s["kr"] or vi_kr.word(s["vi"]),
                        "krs": vi_kr.word(s["vi"], True)}
         else:
