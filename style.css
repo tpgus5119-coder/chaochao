@@ -1717,3 +1717,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .dictrow .dkr{font-size:12.5px; color:var(--dim); white-space:nowrap}
 .dictrow .dko{font-size:14px}
 .dictrow .dex{grid-column:1/-1; font-size:12.5px; color:var(--dim); line-height:1.45; margin-top:2px}
+
+/* 카드뉴스 */
+.cardbtn{margin:-6px 0 12px; align-self:flex-start}
+.cardbox{display:grid; gap:14px}
+.cardimg{width:100%; border-radius:var(--radius); border:1px solid var(--line); display:block}

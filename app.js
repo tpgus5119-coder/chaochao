@@ -491,7 +491,10 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '개 대기': ' đang chờ', '개': ' từ', '아직': 'Chưa', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi',
+  '개 대기': ' đang chờ', '개': ' từ', '아직': 'Chưa',
+  '아직 읽은 기사가 없습니다. 기사를 먼저 보세요.': 'Bạn chưa đọc bản tin nào. Hãy xem bản tin trước.', '카드뉴스': 'Thẻ tin',
+  '그림을 길게 누르면 폰에 저장됩니다.': 'Nhấn giữ ảnh để lưu vào máy.',
+  '기사 복습': 'Ôn bản tin', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi',
   '낱말 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
@@ -1222,8 +1225,9 @@ async function nativeCurve(text) {
   const h = AIDX[text];
   if (!h) return (nativeCache[key] = null);
   try {
-    let r = await fetch(`audio/${voiceDir()}/slow/${h}.mp3`);
-    if (!r.ok && S.region === 's') r = await fetch(`audio/${S.voice}/slow/${h}.mp3`);
+    /* 느린 판은 더 두지 않는다 ('느리게 듣기'를 없앴고 저장소가 1GB 에 닿았다).
+       보통 소리로도 높낮이 곡선은 그려진다 (2026-08-30). */
+    const r = await fetch(`audio/${voiceDir()}/n/${h}.mp3`);
     const c = await PITCH.analyze(await r.arrayBuffer(), getCtx());
     return (nativeCache[key] = c);
   } catch (e) { return (nativeCache[key] = null); }
@@ -2508,7 +2512,8 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
        ② 자유 복습 — 내가 끝낸 레슨을 골라서 그것만 푼다
      단어·문장을 가르지 않는다 — 문장은 낱말 밑의 예문으로 이미 붙어 있다. */
   rev:   { name: '복습', items: () => [['복습', () => reviewMenu('all')],
-                                      ['자유 복습', freePickEntry]] },
+                                      ['자유 복습', freePickEntry],
+                                      ['기사 복습', newsReviewEntry]] },
   book:  { name: '단어장', items: () => [['내 단어장', wordbookEntry],
                                         ['사전', dictEntry]] },
   cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
@@ -6629,6 +6634,35 @@ function freshMenu(kind) {
   show('quiz', '최근 학습', true);
 }
 
+/* 기사 복습 (대표님 지시, 2026-08-30): "복습에 기사 복습만 따로 만들어주고
+   (동일하게 읽기 듣기 쓰기 말하기 모두 가능하도록)".
+   기사 낱말은 간격 반복 창고에 넣지 않는다 — 스치는 자리라서다.
+   그래서 **여기서만** 따로 모아 푼다. 일주일치 기사 낱말이 대상이다. */
+function newsWords() {
+  return (NEWSD || []).flatMap(d => (d.words || []).map(w => ({ ...w, news: 1 })));
+}
+function newsReviewEntry() {
+  const go = () => {
+    const ws = newsWords();
+    if (!ws.length) { popup(tr('아직 읽은 기사가 없습니다. 기사를 먼저 보세요.')); return; }
+    const b = $('#quizBody'); b.textContent = '';
+    $('#quizFill').style.width = '0%';
+    b.append(el('p', 'lede', tr('기사 복습') + ' — ' + ws.length + tr('개')));
+    const back = () => newsReviewEntry();
+    const all = el('button', 'bigmenu', tr('랜덤'));
+    all.onclick = () => { dive(back); startQuiz(ws.slice(), null, 20, false, {}); };
+    b.append(all);
+    SKILLS.forEach(sk => {
+      const btn = el('button', 'bigmenu', esc(sk.name));
+      btn.onclick = () => { dive(back); startQuiz(ws.slice(), null, 20, false, { skill: sk.k }); };
+      b.append(btn);
+    });
+    show('quiz', '기사 복습', true);
+  };
+  if (NEWSD) return go();
+  newsSets().then(go);
+}
+
 function reviewMenu(kind) {
   const b = $('#quizBody');
   b.textContent = '';
@@ -10045,9 +10079,39 @@ function showNewsLearn() {
       btn.append(top, el('span', 'msub', esc(d.title)));
       btn.onclick = () => { dive(showNewsLearn); startNews(d); };
       b.append(btn);
+      /* 카드뉴스 — 매일 밤 만들어 둔 두 장을 보여 준다 (대표님 지시, 2026-08-30).
+         파일이 없으면 단추도 안 보인다(밤에 아직 안 만들어졌을 수 있다). */
+      const cn = el('button', 'ghost sm cardbtn', '🖼 ' + tr('카드뉴스'));
+      cn.onclick = e => { e.stopPropagation(); showCards(d); };
+      b.append(cn);
     });
   });
 }
+/* 카드뉴스 두 장 — 눌러서 크게 보고, 길게 누르면 폰에 저장된다(브라우저 기본 동작). */
+function cardName(d, n) {
+  const day = (NEWSD || []).filter(x => x.ts === d.ts);
+  const i = day.indexOf(d) + 1;
+  return `img/card/${d.ts}-${i}-${n}.webp`;
+}
+function showCards(d) {
+  const b = $('#subBody'); b.textContent = '';
+  b.append(el('p', 'lede', esc(d.title)));
+  const box = el('div', 'cardbox');
+  let got = 0;
+  [1, 2].forEach(n => {
+    const im = el('img', 'cardimg');
+    im.src = cardName(d, n);
+    im.alt = tr('카드뉴스') + ' ' + n;
+    im.loading = 'lazy';
+    im.onerror = () => im.remove();
+    im.onload = () => { got++; };
+    box.append(im);
+  });
+  b.append(box);
+  b.append(el('p', 'note', tr('그림을 길게 누르면 폰에 저장됩니다.')));
+  show('sub', '카드뉴스', true);
+}
+
 function startNews(d) {
   const items = [{ k: 'cover', d: { t: '📰 ' + d.theme, b: esc(d.intro), src: d.u, title: d.title,
                                     img: (d.words || []).map(w => w.img).find(Boolean),
