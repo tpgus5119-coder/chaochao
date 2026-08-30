@@ -500,7 +500,7 @@ const UIVI = {
   '한 강 15낱말 · 복습은 따로 있습니다': '15 từ mỗi buổi · Ôn tập ở mục riêng',
   '네 기수 중 두 기수 이상에 나온 낱말만 모았습니다 — 급할 때는 이 길만 걸어도 됩니다.':
     'Chỉ những từ xuất hiện ở từ hai khoá trở lên — khi vội, chỉ cần học phần này.',
-  '강의자료 12강 · 강마다 낱말 20개와 문장 4개': '12 bài giảng · mỗi bài 20 từ và 4 câu',
+  '강의자료 12강': '12 bài giảng',
   '밀어서 넘기면 이 강의 낱말 20개와 문장 4개가 나옵니다.':
     'Vuốt để xem 20 từ và 4 câu của bài này.',
   '교재 문법 175': '175 ngữ pháp giáo trình', '빠른 문법 14': '14 ngữ pháp nhanh',
@@ -5673,10 +5673,7 @@ function drawCard() {
 
   if (it.k === 'know') {
     c.append(el('div', 'gramt', esc(x.t)));
-    const ul = el('div', 'knowsum');
-    x.sum.forEach(t => ul.append(el('p', 'knowli', t)));
-    c.append(ul);
-    c.append(el('p', 'note', tr('밀어서 넘기면 이 강의 낱말 20개와 문장 4개가 나옵니다.')));
+    c.append(el('p', 'knowli', x.one));
   }
 
   if (it.k === 'ksent') {

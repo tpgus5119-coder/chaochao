@@ -144,16 +144,17 @@ def main():
         return [les[i:i + per_ch] for i in range(0, len(les), per_ch)]
 
     # 레슨 15낱말 · 챕터 10레슨(150낱말) · 권 6챕터(900낱말)
-    # 레슨 15낱말 · 챕터 10레슨(150낱말) · 권 7챕터(1,050낱말)
-    #   일상 낱말 4,019개가 **네 권에 고르게** 떨어지는 값이다.
-    #   여섯으로 잘랐더니 마지막 권이 419낱말뿐이라 모양이 안 났다.
-    LES_PER_CH, CH_PER_VOL = 10, 7
+    # 레슨 15낱말. **네 권이 똑같은 레슨 수**가 되게 나눈다 (대표님 지시, 2026-08-30).
+    #   챕터 수를 먼저 정하면 마지막 권만 얇아진다 — 레슨 수를 먼저 맞춘다.
+    LES_PER_CH, VOLS = 10, 4
+    les = [L[i:i + PER] for i in range(0, len(L), PER)]
+    per_vol = -(-len(les) // VOLS)                  # 올림 — 67레슨씩
     vols = []
-    chs = cut(L, LES_PER_CH)
-    for i in range(0, len(chs), CH_PER_VOL):
+    for i in range(0, len(les), per_vol):
+        part = les[i:i + per_vol]
+        chs = [part[j:j + LES_PER_CH] for j in range(0, len(part), LES_PER_CH)]
         vols.append({"kind": "life",
-                     "chapters": [{"lessons": [{"words": w} for w in ch]}
-                                  for ch in chs[i:i + CH_PER_VOL]]})
+                     "chapters": [{"lessons": [{"words": w} for w in ch]} for ch in chs]})
     # 직무는 **갈래별로** 나눈다 — 갈래는 이름을 둔다(어디로 갈지가 사람마다 다르다)
     byf = collections.OrderedDict((k, []) for k in JOBORDER)
     for x in J: byf.setdefault(x.get("track") or field_of(x["ko"]), []).append(x)
