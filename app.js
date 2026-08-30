@@ -491,7 +491,11 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '개 대기': ' đang chờ', '개': ' từ', '아직': 'Chưa', '아니요': 'Không', '네': 'Vâng',
+  '개 대기': ' đang chờ', '개': ' từ', '아직': 'Chưa', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi',
+  '낱말 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
+  '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
+  '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
+  'N개 찾음': 'Tìm thấy N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -2505,7 +2509,8 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
      단어·문장을 가르지 않는다 — 문장은 낱말 밑의 예문으로 이미 붙어 있다. */
   rev:   { name: '복습', items: () => [['복습', () => reviewMenu('all')],
                                       ['자유 복습', freePickEntry]] },
-  book:  { name: '단어장', items: () => [['보기', wordbookEntry]] },
+  book:  { name: '단어장', items: () => [['내 단어장', wordbookEntry],
+                                        ['사전', dictEntry]] },
   cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
                                       ['베트남 바로알기', knowEntry],
                                       ['오늘의 기사', showNewsLearn]] },
@@ -5760,6 +5765,77 @@ let RKP = { who: 'me', span: 'week', mode: 'sum' };
 let WB = 'star';                       // 단어장에서 보고 있는 칸
 /* 단어장은 **하루 5분 것만** 담는다 (대표님 지시: 섞지 마라).
    실전 단어는 제 화면에서 회차별로 보므로 여기 섞으면 목록만 길어진다. */
+/* ---------- 베트남어 사전 ----------
+   대표님 지시(2026-08-30): "베트남어 사전도 어플에 추가해줘."
+   따로 자료를 받지 않는다 — 앱이 이미 낱말 5,100여 개와 예문 낱말 사전을 갖고 있다.
+   베트남어로도 한국어로도 찾을 수 있고, 성조를 안 찍어도 찾아진다(뼈대로 견준다).
+   AI 를 쓰지 않으므로 돈이 들지 않는다. */
+let DICT = null;
+const dictBare = v => {
+  let t = String(v).normalize('NFD').replace(/[\u0300-\u0323]/g, '');
+  return t.normalize('NFC').toLowerCase().replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, '').trim();
+};
+function dictBuild() {
+  if (DICT) return DICT;
+  const seen = new Map();
+  const put = (vi, ko, extra) => {
+    const k = String(vi || '').trim();
+    if (!k || !ko) return;
+    const kk = k.toLowerCase();
+    if (seen.has(kk)) { const o = seen.get(kk);
+      if (!o.ko.includes(ko)) o.ko += ' / ' + ko; return; }
+    seen.set(kk, { vi: k, ko: String(ko), ...(extra || {}) });
+  };
+  allWords().forEach(w => put(w.vi, w.ko, { ex: w.ex, img: w.img }));
+  Object.entries(EXG || {}).forEach(([k, v]) => put(k, typeof v === 'string' ? v : v.ko));
+  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi) }));
+  DICT.sort((a, b) => a.b.localeCompare(b.b));
+  return DICT;
+}
+function dictEntry() {
+  const b = $('#subBody'); b.textContent = '';
+  const d = dictBuild();
+  b.append(el('p', 'lede', tr('낱말 N개 · 베트남어로도 한국어로도 찾습니다')
+    .replace('N', d.length.toLocaleString('ko-KR'))));
+  const inp = el('input', 'keyin dictin');
+  inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
+  const out = el('div', 'dictout');
+  const draw = () => {
+    const q = inp.value.trim();
+    out.textContent = '';
+    if (q.length < 1) { out.append(el('p', 'note', tr('한 글자만 넣어도 찾습니다'))); return; }
+    const qb = dictBare(q), qk = q.toLowerCase();
+    const kor = /[가-힣]/.test(q);
+    const hit = d.filter(x => kor ? x.ko.toLowerCase().includes(qk)
+                                  : (x.b.includes(qb) || x.vi.toLowerCase().includes(qk)))
+                 .sort((a, b2) => {
+                   const s = x => kor ? (x.ko.startsWith(q) ? 0 : 1)
+                                      : (x.b === qb ? 0 : x.b.startsWith(qb) ? 1 : 2);
+                   return s(a) - s(b2) || a.vi.length - b2.vi.length;
+                 });
+    if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
+    out.append(el('p', 'note', tr('N개 찾음').replace('N', hit.length)));
+    hit.slice(0, 60).forEach(x => {
+      const row = el('button', 'dictrow');
+      row.type = 'button';
+      const kr = krShow(x) || krOf(x.vi);
+      row.append(el('b', 'dvi', esc(x.vi)));
+      if (kr) row.append(el('span', 'dkr', '[' + esc(kr) + ']'));
+      row.append(el('span', 'dko', esc(x.ko)));
+      if (x.ex) row.append(el('span', 'dex', esc(x.ex.vi) + ' — ' + esc(x.ex.ko)));
+      row.onclick = () => { AIDX[x.vi] ? play(x.vi, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
+      out.append(row);
+    });
+    if (hit.length > 60) out.append(el('p', 'note', tr('앞 60개만 보입니다 — 더 적어 보세요')));
+  };
+  let tm = null;
+  inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
+  b.append(inp, out);
+  draw();
+  show('sub', '사전', true);
+  setTimeout(() => inp.focus(), 60);
+}
+
 function wordbookEntry() { SBOX = 'srs'; WB = 'star'; drawWordbook(); }
 function drawWordbook() {
   const ko = learnKo();

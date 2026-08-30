@@ -178,12 +178,14 @@ def uncap(v, ko=""):
        조각마다 본다 — 'Bọn Anh'(우리 형들) 은 둘 다 소문자, 'tiếng Anh'(영어) 은 Anh 만 대문자."""
     if v in PROPER: return v
     kin = bool(KIN.match(v))
+    one = len(v.split()) == 1
     out = []
     for k, t in enumerate(v.split()):
-        keep = (t in CAPS) and not kin and not (k == 0 and t not in ("Tết",) and len(v.split()) > 1
-                                                and t not in PROPER)
-        if k == 0 and t in PROPER: keep = True
-        if k == 0 and len(v.split()) == 1: keep = t in CAPS
+        keep = (t in CAPS) and not kin
+        # 여러 마디 낱말의 **첫 마디**는 문장 첫 글자일 뿐이다 —
+        #   'Anh họ'(사촌형)의 Anh 은 영국이 아니다 (2026-08-30 검수)
+        if k == 0 and not one and t != "Tết": keep = False
+        if one and t in PROPER: keep = True
         out.append(t if keep else t[:1].lower() + t[1:])
     r = SPELL.get(" ".join(out), " ".join(out))
     if KO_NAME1.match(ko.strip()):                 # 뜻이 딱 나라 이름이면 통째로 고유명사

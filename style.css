@@ -1706,3 +1706,14 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .newstop{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
 .newscat{font-style:normal; font-size:11.5px; font-weight:700; letter-spacing:.02em;
   padding:3px 9px; border-radius:999px; background:var(--line); color:var(--fg)}
+
+/* 사전 — 찾기 칸과 결과 줄 */
+.dictin{width:100%; margin:6px 0 12px; font-size:17px}
+.dictout{display:grid; gap:8px}
+.dictrow{display:grid; grid-template-columns:auto auto 1fr; gap:8px 10px; align-items:baseline;
+  width:100%; text-align:left; background:var(--card); border:1px solid var(--line);
+  border-radius:var(--radius); padding:12px 14px; color:var(--fg)}
+.dictrow .dvi{font-size:16px; font-weight:700}
+.dictrow .dkr{font-size:12.5px; color:var(--dim); white-space:nowrap}
+.dictrow .dko{font-size:14px}
+.dictrow .dex{grid-column:1/-1; font-size:12.5px; color:var(--dim); line-height:1.45; margin-top:2px}
