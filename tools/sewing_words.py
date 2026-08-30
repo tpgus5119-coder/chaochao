@@ -165,7 +165,7 @@ def main():
         seen.add(k)
         out.append({"vi": vi, "ko": re.sub(r"\s+", " ", ko)[:26],
                     "kr": vi_kr.word(vi), "krs": vi_kr.word(vi, True),
-                    "track": None if vi in TO_COMMON else "섬유·봉제·의류", "sew": 1})
+                    "track": None if vi in TO_COMMON else "섬유·봉제·신발", "sew": 1})
         n += 1
     stat["봉제용어"] = n
     # 무역용어 — 약자는 낱말이 아니라 '한국어 뜻'만 쓸모가 있는데 베트남어가 없다. 안 쓴다.
@@ -189,7 +189,7 @@ def main():
     nb = 0
     for w in out:
         if w["track"] is None: continue
-        if basic(w["vi"], w["ko"], seen): w["track"] = "섬유·봉제·의류"; nb += 1
+        if basic(w["vi"], w["ko"], seen): w["track"] = "섬유·봉제·신발"; nb += 1
         else: w["track"] = "봉제 찾아보기"          # 999 밖 — 공장 가면 그때 여는 사전
 
     ss = sents()

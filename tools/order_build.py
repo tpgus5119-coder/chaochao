@@ -30,10 +30,13 @@ JOBRE = [(k, re.compile(v)) for k, v in JOBPAT.items()]
 # 공장에서 쓰는 말의 대부분은 어느 공장에서나 같기 때문이다(실측: 620개 중 483개가 공통).
 # 한국인이 실제로 취업하는 순서 (KOTRA 2023) — 제조업 1위, 그중 생산관리가 40%
 # 갈래 차례 — 공통을 먼저(생산관리가 취업의 40%), 그 다음 업종을 채용 많은 순으로
+# 갈래 차례 — 공통 먼저, 그 다음 업종을 **실제 취업 비중 + 향후 전망** 순으로
+#   전자가 1순위다: 삼성이 GDP 13%(실제) · 반도체·첨단소재로 옮겨 가는 중(전망).
+#   섬유·봉제와 신발·가방은 한 묶음이다 — 노동집약 경공업이고 공정이 같다.
 JOBORDER = ["공통 · 생산과 공정", "공통 · 품질과 검사", "공통 · 자재와 창고",
             "공통 · 기계와 설비", "공통 · 안전과 환경", "공통 · 사람과 조직", "공통 · 서류와 회계",
-            "전자·반도체", "섬유·봉제·의류", "신발·가방", "자동차·기계",
-            "물류·무역", "건설·플랜트", "식품·화학", "요식·유통"]
+            "전자·반도체", "섬유·봉제·신발", "물류·무역", "자동차·기계",
+            "건설·플랜트", "식품·화학", "요식·유통"]
 # 직무는 **한 권**이다 (대표님 결정, 2026-08-30).
 #   "꼭 필요한 기본 낱말만 남기고, 진짜 심화는 현장에서 배우라고 해라."
 #   그래서 낱말마다 **기본인가 심화인가**를 가른다. 잣대는 자료다:
@@ -41,6 +44,17 @@ JOBORDER = ["공통 · 생산과 공정", "공통 · 품질과 검사", "공통 
 #     ② 내가 쓴 낱말이면 두 마디 이하 + 뜻이 짧은 것 = 기본
 #   나머지는 「현장에서 배우는 말」 사전으로 뺀다 — 지우지 않는다.
 JOB_CAP = 999
+# 갈래마다 몫 — **실제 취업 비중이 1순위, 향후 전망이 2순위** (대표님 기준, 2026-08-30).
+#   전자가 가장 크다: 삼성 하나가 GDP 13%(실제) · 반도체·첨단소재로 옮겨 가는 중(전망).
+#   섬유·봉제·신발이 그다음(노동집약 경공업 한 묶음).
+#   자를 때 뒤쪽 갈래가 통째로 사라지지 않게, 갈래별로 자른다.
+TRACK_CAP = {
+ "전자·반도체": 260, "섬유·봉제·신발": 190,
+ "공통 · 생산과 공정": 120, "공통 · 사람과 조직": 85, "공통 · 서류와 회계": 65,
+ "공통 · 안전과 환경": 50, "공통 · 품질과 검사": 45, "공통 · 자재와 창고": 40,
+ "공통 · 기계와 설비": 33,
+ "자동차·기계": 45, "물류·무역": 45, "건설·플랜트": 30, "식품·화학": 25, "요식·유통": 25,
+}
 
 
 def field_of(ko):
@@ -153,7 +167,7 @@ def main():
             if key(w["vi"]) in seen2: continue
             x = dress(w)
             # 갈래는 sewing_words.py 가 이미 정했다(기본 / 찾아보기) — 덮어쓰지 않는다
-            if x: x["track"] = w.get("track") or "섬유·봉제·의류"; J.append(x); seen2.add(key(w["vi"]))
+            if x: x["track"] = w.get("track") or "섬유·봉제·신발"; J.append(x); seen2.add(key(w["vi"]))
     # 내가 쓴 업종 낱말 — 대표님 자료에 없던 갈래를 채운 것 (tools/job_words.py)
     jw = R / "data" / "_jobwords.json"
     if jw.exists():
@@ -230,10 +244,44 @@ def main():
         print(f"   일상과 겹쳐 직무에서 뺀 낱말 {same + moved}개 "
               f"(뜻이 같은 것 {same} · 일터 뜻을 일상 카드에 붙인 것 {moved})")
 
+    # ── 직무에 들어갈 것이 아닌 것 (2026-08-30, 대표님 지시로 하나씩 읽고 골라냄)
+    #    ① 낱말이 아니라 **그날 그 대화의 문장**  ② **그 공장에서만 쓰는 약어**
+    #    ③ 일상 권에 있어야 할 말. 뺀 자리는 전자 낱말로 채운다(취업 비중 1순위).
+    JUNK_CO = re.compile(r"PP팀|WRB|CRO|SEV|UPL|R420|리리프|PQC|OQC|EQM|ME\b|Hướng dẫn")
+    JUNK_SENT = re.compile(r"(다|요|까|야|지|네|어)[.?!]?$")
+    DAILY_IN_JOB = {
+     "호치키스", "선풍기를 켜다", "점심밥", "점심 휴식", "층", "구역", "통로", "문", "계단",
+     "되돌아가다", "전화를 받다", "펜", "공항", "방을 예약하다", "환율", "수수료", "비밀번호",
+     "게으르다", "태도", "버리다", "도와주다", "존중하다", "따르다", "강요하다", "이유",
+     "이것", "저것", "이렇게", "2차", "학사일정", "제조국", "자국 / 흔적", "노선, 라인",
+     "실질적인, 현실적인", "고정된, / 일정한", "대신하다, 교대하다", "메모", "설치하다",
+     "프레젠테이션 파일", "방법 / 방식", "발생하다", "철저히 / 완전히", "계속하다", "미달",
+    }
+
+    def job_junk(x):
+        ko = x["ko"].strip()
+        if ko in DAILY_IN_JOB: return True
+        if JUNK_CO.search(ko) or JUNK_CO.search(x["vi"]): return True
+        # 뜻이 네 어절 넘고 문장처럼 끝나면 낱말이 아니다
+        if len(ko.split()) >= 4 and JUNK_SENT.search(ko): return True
+        if len(ko) > 20: return True
+        # 일터 단톡방에서 온 **세 마디 이상**은 그날 그 대화의 문장이다 —
+        #   'còn lại 4 bạn(4명 남았다)' · 'line bóc không kịp(작업이 못 따라간다)'.
+        #   두 마디 이하는 낱말이다('báo tổ trưởng 조장에게 알리다' · 'dừng chuyền 라인 정지').
+        if x.get("kakao") and len(x["vi"].split()) >= 3: return True
+        return False
+
+    n_junk = sum(1 for x in J if job_junk(x))
+    J = [x for x in J if not job_junk(x)]
+    print(f"   직무에서 뺀 것 {n_junk}개 (문장 조각·그 공장 약어·일상 낱말)")
+
     # ── 기본인가 심화인가 (대표님 지시: 심화는 현장에서 배운다)
     def is_basic(x):
         if x.get("track") == "봉제 찾아보기": return False
         if x.get("sr") or x.get("kakao"): return True          # 실제로 시험 보고 말한 낱말
+        # 내가 업종별로 **골라 쓴 낱말**은 애초에 기본만 고른 것이다(tools/job_words.py).
+        #   길이로 다시 재면 bo mạch(기판)·chất bán dẫn(반도체) 같은 알맹이가 떨어진다.
+        if x.get("made"): return True
         ko = x["ko"]
         if len(x["vi"].split()) <= 2 and len(ko) <= 9 and not re.search(r"[(/,·]", ko):
             return True                                        # 짧고 단순하면 기본
@@ -254,7 +302,15 @@ def main():
             keep.append(x)
         print(f"   {what} {cap}개로 맞추려고 앱이 만든 낱말 {dropped}개를 뺐다")
         return list(reversed(keep))
-    J = trim(J, JOB_CAP, "직무")
+    # 갈래별로 몫만큼 남긴다 — 출처가 있는 낱말이 앞이라 앱이 만든 것부터 잘린다
+    byt = collections.OrderedDict()
+    for x in J: byt.setdefault(x.get("track") or field_of(x["ko"]), []).append(x)
+    J, cutn = [], 0
+    for k, ws in byt.items():
+        cap = TRACK_CAP.get(k, 40)
+        if len(ws) > cap: cutn += len(ws) - cap
+        J += ws[:cap]
+    if cutn: print(f"   갈래 몫에 맞추려고 {cutn}개를 뺐다")
     for x in J:
         k = x.get("track") or field_of(x["ko"])
         if k == "공통": k = "공통 · 생산과 공정"

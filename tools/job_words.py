@@ -30,8 +30,11 @@ def main():
                         "track": track, "made": 1})
     for track, ws in job_common.W.items(): add(track, ws)
     add("전자·반도체", job_elec.W)
+    # 섬유·봉제·의류와 신발·가방은 **한 묶음**이다 (대표님 지적, 2026-08-30) —
+    # 둘 다 노동집약 경공업이고 공정이 같다(재단 → 봉제·접착 → 검사 → 포장).
     for track, ws in job_more.TRACKS:
-        if ws: add(track, ws)
+        if not ws: continue
+        add("섬유·봉제·신발" if track == "신발·가방" else track, ws)
     (R / "data" / "_jobwords.json").write_text(json.dumps(
         {"note": "업종별 직무 낱말. 대표님 자료에 없던 갈래(전자·신발·기계·건설·물류·식품·유통)를 채운 것.",
          "words": out}, ensure_ascii=False, indent=1), encoding="utf-8")
