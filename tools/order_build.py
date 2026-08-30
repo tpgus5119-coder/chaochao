@@ -29,7 +29,11 @@ JOBRE = [(k, re.compile(v)) for k, v in JOBPAT.items()]
 # 갈래는 **다섯**이면 된다. 공통이 대부분이고 업종 낱말은 원래 적다 —
 # 공장에서 쓰는 말의 대부분은 어느 공장에서나 같기 때문이다(실측: 620개 중 483개가 공통).
 # 한국인이 실제로 취업하는 순서 (KOTRA 2023) — 제조업 1위, 그중 생산관리가 40%
-JOBORDER = ["공통", "섬유·봉제·신발", "전자", "물류·무역", "사무·회계·영업", "건설·설비", "요식·유통"]
+# 갈래 차례 — 공통을 먼저(생산관리가 취업의 40%), 그 다음 업종을 채용 많은 순으로
+JOBORDER = ["공통 · 생산과 공정", "공통 · 품질과 검사", "공통 · 자재와 창고",
+            "공통 · 기계와 설비", "공통 · 안전과 환경", "공통 · 사람과 조직", "공통 · 서류와 회계",
+            "전자·반도체", "섬유·봉제·의류", "신발·가방", "자동차·기계",
+            "물류·무역", "건설·플랜트", "식품·화학", "요식·유통"]
 JOB_CAP = 999                 # 직무 낱말은 999개까지 (대표님 결정, 2026-08-30)
 
 
@@ -37,9 +41,9 @@ def field_of(ko):
     """직무 낱말을 갈래로 — 봉제 갈 사람은 전자를 안 배워도 된다(대표님 지시).
        업종에 안 걸리면 '공통'이다. 관리자·잔업·수량·버튼 같은 말이 그것이다."""
     for k, rx in JOBRE:
-        if k == "공통": continue
+        if k.startswith("공통"): continue
         if rx.search(ko or ""): return k
-    return "공통"
+    return "공통 · 생산과 공정"
 
 
 def src_rank(x):
@@ -102,6 +106,8 @@ def main():
         if job_app: o["app"] = 1
         for f in ("kakao", "sew", "trade", "track"):     # 출처 표시를 잃지 않는다
             if w.get(f): o[f] = w[f]
+        # 갈래는 senior_split 이 이미 정했다 — 여기서 다시 계산하면 세부 갈래가 뭉개진다
+        if w.get("field") and w["field"] != "일상": o.setdefault("track", w["field"])
         o.update(extra.get(k, {}))
         if w.get("ex"): o["ex"] = w["ex"]          # 자료에 예문이 딸려 있으면 그것을 쓴다
         t = " " + k + " "
@@ -140,7 +146,7 @@ def main():
         for w in json.loads(sw.read_text(encoding="utf-8"))["words"]:
             if key(w["vi"]) in seen2: continue
             x = dress(w)
-            if x: x["track"] = "섬유·봉제·신발"; J.append(x); seen2.add(key(w["vi"]))
+            if x: x["track"] = "섬유·봉제·의류"; J.append(x); seen2.add(key(w["vi"]))
     tw = R / "data" / "_trade.json"
     if tw.exists():
         seen4 = {key(x["vi"]) for x in J}
@@ -199,7 +205,10 @@ def main():
             keep.append(x)
         J = list(reversed(keep))
         print(f"   직무 {JOB_CAP}개로 맞추려고 **앱이 만든 낱말** {dropped}개를 뺐다")
-    for x in J: byf.setdefault(x.get("track") or field_of(x["ko"]), []).append(x)
+    for x in J:
+        k = x.get("track") or field_of(x["ko"])
+        if k == "공통": k = "공통 · 생산과 공정"
+        byf.setdefault(k, []).append(x)
     tracks = []
     for k, ws in byf.items():
         if not ws: continue
