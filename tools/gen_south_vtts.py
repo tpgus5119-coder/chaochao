@@ -54,8 +54,10 @@ items = list(IDX.items())[:limit] if limit else list(IDX.items())
 for i, (text, h) in enumerate(items):
     # 이미 있는 것은 건드리지 않는다. 다시 만들면 **검수를 통과한 음성이 검사 안 된 것으로 바뀐다.**
     # 일부러 다시 만들려면 --force 를 준다.
-    if '--force' not in sys.argv and (R / f'audio/{voice}/n/{h}.mp3').exists() \
-       and (R / f'audio/{voice}/slow/{h}.mp3').exists():
+    # 2026-08-31: 여기서 slow 까지 함께 있어야 건너뛰게 해 두었는데, 느린 판을 폐지해서
+    #   slow 는 하나도 없다 → 이 조건이 **한 번도 참이 되지 않아** 그냥 다시 돌리면
+    #   이미 있는 1만 1천 개를 처음부터 다시 굽고 검수 통과분을 덮어썼다. n 만 본다.
+    if '--force' not in sys.argv and (R / f'audio/{voice}/n/{h}.mp3').exists():
         continue
     tk = len(text.split())
     tone = tone_of(text) if tk == 1 else None
