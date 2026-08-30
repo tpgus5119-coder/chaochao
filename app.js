@@ -5761,6 +5761,22 @@ function drawCard() {
     }
     row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
     c.append(row);
+    /* 뜻이 같은 다른 낱말 — 지우지 않고 **같이 보여 준다** (대표님 지시, 2026-08-30).
+       ngang vai 와 rộng vai 는 둘 다 '어깨 넓이'다. 하나만 두면 나머지를 못 배운다. */
+    if (x.alt && x.alt.length) {
+      const box = el('div', 'altrow');
+      box.append(el('span', 'altlab', tr('같은 뜻')));
+      x.alt.forEach(a2 => {
+        const b2 = el('button', 'altw');
+        b2.type = 'button';
+        b2.append(el('b', null, esc(a2.vi)));
+        const kr = S.region === 's' ? (a2.krs || a2.kr) : a2.kr;
+        if (kr) b2.append(el('span', 'altkr', '[' + esc(kr) + ']'));
+        b2.onclick = () => { AIDX[a2.vi] ? play(a2.vi, false) : speakVi(a2.vi); };
+        box.append(b2);
+      });
+      c.append(box);
+    }
     /* 선배 시험에 나온 낱말이면 별표 (대표님 지시, 2026-08-30).
        한 기수에만 나왔어도 별표를 준다 — 기수 수는 안 따진다.
        ☆/★ 단추(나만의 단어장)와 헷갈리지 않게 **모양이 다른 별**과 글자를 같이 쓴다. */

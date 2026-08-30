@@ -138,6 +138,23 @@ def main():
     seen3 = {key(x["vi"]) for x in J}
     J += [x for x in (dress(w, True) for w in appjob if key(w["vi"]) not in seen3) if x]
 
+    def pair_same(ws):
+        """뜻이 같은 **다른 낱말**은 지우지 않고 한 자리에 같이 보여 준다
+           (대표님 지시, 2026-08-30). ngang vai / rộng vai 는 둘 다 '어깨 넓이'지만
+           서로 다른 낱말이다 — 하나를 지우면 나머지 하나를 못 배운다."""
+        seen, out = {}, []
+        for w in ws:
+            k = re.sub(r"[\s,/()·]", "", w["ko"])
+            if k and k in seen:
+                first = seen[k]
+                first.setdefault("alt", []).append({"vi": w["vi"], "kr": w.get("kr", ""),
+                                                    "krs": w.get("krs", "")})
+                continue
+            seen[k] = w
+            out.append(w)
+        return out
+
+
     def cut(ws, per_ch):
         """레슨 15낱말 → 챕터 per_ch 레슨."""
         les = [ws[i:i + PER] for i in range(0, len(ws), PER)]
@@ -147,6 +164,7 @@ def main():
     # 레슨 15낱말. **네 권이 똑같은 레슨 수**가 되게 나눈다 (대표님 지시, 2026-08-30).
     #   챕터 수를 먼저 정하면 마지막 권만 얇아진다 — 레슨 수를 먼저 맞춘다.
     LES_PER_CH, VOLS = 10, 4
+    L = pair_same(L)
     les = [L[i:i + PER] for i in range(0, len(L), PER)]
     per_vol = -(-len(les) // VOLS)                  # 올림 — 67레슨씩
     vols = []
@@ -157,6 +175,7 @@ def main():
                      "chapters": [{"lessons": [{"words": w} for w in ch]} for ch in chs]})
     # 직무는 **갈래별로** 나눈다 — 갈래는 이름을 둔다(어디로 갈지가 사람마다 다르다)
     byf = collections.OrderedDict((k, []) for k in JOBORDER)
+    J = pair_same(J)
     for x in J: byf.setdefault(x.get("track") or field_of(x["ko"]), []).append(x)
     tracks = []
     for k, ws in byf.items():

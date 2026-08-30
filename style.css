@@ -1596,3 +1596,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .knowsum{margin:10px 0; display:flex; flex-direction:column; gap:10px}
 .knowli{margin:0; padding:10px 12px; border-radius:10px; line-height:1.65;
   border:1px solid var(--line); background:var(--card)}
+
+/* 뜻이 같은 다른 낱말 — 같이 보여 준다 */
+.altrow{display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:8px}
+.altrow .altlab{font-size:.76rem; color:var(--muted); letter-spacing:.02em}
+.altrow .altw{padding:.2em .6em; border-radius:999px; font-size:.92rem;
+  border:1px solid var(--line); background:var(--card); cursor:pointer}
+.altrow .altkr{margin-left:.35em; font-size:.82em; color:var(--muted)}
