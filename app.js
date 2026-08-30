@@ -4882,7 +4882,8 @@ const gkey = (bi, ni) => 'G' + bi + '-' + ni;
    직무만 **갈래**가 있다 — 봉제로 갈 사람이 전자를 배울 까닭이 없기 때문이다. */
 let COURSE = null;
 const ckey = (v, c, l) => 'C' + v + '.' + c + '.' + l;
-const jkey = (t, c, l) => 'J' + t + '.' + c + '.' + l;
+let JOBI = 0;                                   // 지금 보고 있는 직무 권 (0 공통 · 1 업종)
+const jkey = (t, c, l) => 'J' + JOBI + '.' + t + '.' + c + '.' + l;
 
 function loadCWords() {
   if (!COURSE || CWORDS.length) return;
@@ -4910,7 +4911,8 @@ function courseEntry() {
 }
 
 const lifeVols = () => COURSE.vols.filter(v => v.kind === 'life');
-const jobVol = () => COURSE.vols.find(v => v.kind === 'job');
+const jobVols = () => COURSE.vols.filter(v => v.kind === 'job');
+const jobVol = (i) => jobVols()[i || 0];
 
 function chDone(chs, mk) {
   let n = 0, all = 0;
@@ -4938,10 +4940,14 @@ function drawCourse() {
     row((vi + 2) + '권', tr('일상'), n + '/' + all,
         () => { dive(drawCourse); drawVol(vi); }, n >= all);
   });
-  const jv = jobVol();
-  if (jv) row((lifeVols().length + 2) + '권', tr('직무'), tr('갈래') + ' ' + jv.tracks.length,
-              () => { dive(drawCourse); drawJob(); });
-  row((lifeVols().length + 3) + '권', tr('문화 · 베트남 바로알기'), tr('보기'),
+  /* 직무는 **두 권**이다 (대표님 결정) — ① 공통(어느 공장에서나) ② 업종(갈 곳이 정해지면). */
+  jobVols().forEach((jv, ji) => {
+    const n = jv.tracks.reduce((a, t) => a + t.words, 0);
+    row((lifeVols().length + 2 + ji) + '권',
+        tr('직무') + ' · ' + tr(jv.vol === '공통' ? '어느 공장에서나' : '갈 곳이 정해지면'),
+        n + tr('낱말'), () => { dive(drawCourse); drawJob(ji); });
+  });
+  row((lifeVols().length + 2 + jobVols().length) + '권', tr('문화 · 베트남 바로알기'), tr('보기'),
       () => { dive(drawCourse); draw7(); });
   show('course', '과정', true);
 }
@@ -4984,11 +4990,14 @@ function drawCh(vi, ci) {
 }
 
 /* 직무 — 갈래를 먼저 고른다. 봉제로 갈 사람은 전자를 안 배워도 된다. */
-function drawJob() {
-  const jv = jobVol();
+function drawJob(ji) {
+  JOBI = ji || 0;
+  const jv = jobVol(JOBI);
   const list = $('#dayList'); list.textContent = '';
   const h = el('li', 'catpick');
-  h.append(el('span', 'msub', tr('공통은 어느 공장에서나 씁니다. 갈 곳이 정해졌으면 그 갈래만 하셔도 됩니다.')));
+  h.append(el('span', 'msub', tr(jv.vol === '공통'
+    ? '어느 공장·회사에서나 쓰는 말입니다. 한국인 취업의 40%가 생산관리입니다.'
+    : '갈 곳이 정해졌으면 그 갈래만 하셔도 됩니다.')));
   list.append(h);
   jv.tracks.forEach((t, ti) => {
     const [n, all] = chDone(t.chapters, (c, l) => jkey(ti, c, l));
@@ -4997,7 +5006,7 @@ function drawJob() {
     b.append(el('span', 'num', esc(t.track)),
              el('span', 'nm', t.words + tr('낱말') + ' · ' + t.chapters.length + tr('챕터')),
              el('span', 'st', n + '/' + all));
-    b.onclick = () => { dive(drawJob); drawJobTrack(ti); };
+    b.onclick = () => { dive(() => drawJob(JOBI)); drawJobTrack(ti); };
     const li = el('li'); li.append(b); list.append(li);
   });
   /* 「봉제 찾아보기」 — 999 밖이다. 도면·검사표에만 있는 말이라 배우는 차례에 안 넣는다.
@@ -5008,16 +5017,16 @@ function drawJob() {
     b.append(el('span', 'num', '📖'),
              el('span', 'nm', esc(lk.track) + '<i class="catchip">' + lk.words + tr('낱말') + '</i>'),
              el('span', 'st', tr('사전')));
-    b.onclick = () => { dive(drawJob); drawLookup(); };
+    b.onclick = () => { dive(() => drawJob(JOBI)); drawLookup(); };
     const li = el('li'); li.append(b); list.append(li);
     list.append(el('li', 'catpick',
       '<span class="msub">' + tr('도면·검사표에 적힌 전문어입니다. 외우는 자리가 아니라 찾아보는 자리입니다.') + '</span>'));
   }
-  show('course', '직무', true);
+  show('course', '직무 · ' + (jv.vol === '공통' ? tr('어느 공장에서나') : tr('갈 곳이 정해지면')), true);
 }
 
 function drawLookup() {
-  const lk = jobVol().lookup;
+  const lk = jobVol(JOBI).lookup;
   const list = $('#dayList'); list.textContent = '';
   lk.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
     const k = 'LK' + ci + '.' + li, fin = !!S.done[k];
@@ -5035,7 +5044,7 @@ function drawLookup() {
 }
 
 function drawJobTrack(ti) {
-  const t = jobVol().tracks[ti];
+  const t = jobVol(JOBI).tracks[ti];
   const list = $('#dayList'); list.textContent = '';
   t.chapters.forEach((c, ci) => {
     const done = c.lessons.filter((l, li) => S.done[jkey(ti, ci, li)]).length;
@@ -5051,7 +5060,7 @@ function drawJobTrack(ti) {
 }
 
 function drawJobCh(ti, ci) {
-  const t = jobVol().tracks[ti], c = t.chapters[ci];
+  const t = jobVol(JOBI).tracks[ti], c = t.chapters[ci];
   const list = $('#dayList'); list.textContent = '';
   c.lessons.forEach((l, li) => {
     const k = jkey(ti, ci, li), fin = !!S.done[k];

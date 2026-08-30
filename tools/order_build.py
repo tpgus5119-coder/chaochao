@@ -34,7 +34,11 @@ JOBORDER = ["공통 · 생산과 공정", "공통 · 품질과 검사", "공통 
             "공통 · 기계와 설비", "공통 · 안전과 환경", "공통 · 사람과 조직", "공통 · 서류와 회계",
             "전자·반도체", "섬유·봉제·의류", "신발·가방", "자동차·기계",
             "물류·무역", "건설·플랜트", "식품·화학", "요식·유통"]
-JOB_CAP = 999                 # 직무 낱말은 999개까지 (대표님 결정, 2026-08-30)
+# 직무는 **두 권**이다 (대표님 결정, 2026-08-30) — 공통 900 + 업종 900.
+#   공통은 어느 공장에서나 쓰는 말(생산관리가 한국인 취업의 40%),
+#   업종은 갈 곳이 정해진 뒤에 하는 말이다.
+JOB_COMMON_CAP = 900
+JOB_FIELD_CAP = 900
 
 
 def field_of(ko):
@@ -148,6 +152,14 @@ def main():
             x = dress(w)
             # 갈래는 sewing_words.py 가 이미 정했다(기본 / 찾아보기) — 덮어쓰지 않는다
             if x: x["track"] = w.get("track") or "섬유·봉제·의류"; J.append(x); seen2.add(key(w["vi"]))
+    # 내가 쓴 업종 낱말 — 대표님 자료에 없던 갈래를 채운 것 (tools/job_words.py)
+    jw = R / "data" / "_jobwords.json"
+    if jw.exists():
+        seenj = {key(x["vi"]) for x in J}
+        for w in json.loads(jw.read_text(encoding="utf-8"))["words"]:
+            if key(w["vi"]) in seenj: continue
+            x = dress(w)
+            if x: x["track"] = w["track"]; x["made"] = 1; J.append(x); seenj.add(key(w["vi"]))
     tw = R / "data" / "_trade.json"
     if tw.exists():
         seen4 = {key(x["vi"]) for x in J}
@@ -200,16 +212,20 @@ def main():
     #   공장에 배치되면 그때 여는 사전이다 (대표님과 상의, 2026-08-30).
     LOOKUP = [x for x in J if x.get("track") == "봉제 찾아보기"]
     J = [x for x in J if x.get("track") != "봉제 찾아보기"]
-    # **999개로 자른다** — 출처가 있는 낱말부터 남기고, 앱이 만든 것부터 잘라 낸다
+    # **두 권으로 나눈다** — 공통 900 · 업종 900. 각각 900을 넘으면 출처 없는 것부터 자른다.
     J.sort(key=lambda x: (src_rank(x), -sum(int(g) for g in re.findall(r"\d\d", x.get("gi", "")))))
-    over = len(J) - JOB_CAP
-    if over > 0:
-        keep, dropped = [], 0                      # cut() 함수와 이름이 겹치면 안 된다
-        for x in reversed(J):
+    def trim(ws, cap, what):
+        over = len(ws) - cap
+        if over <= 0: return ws
+        keep, dropped = [], 0
+        for x in reversed(ws):
             if dropped < over and src_rank(x) == 3: dropped += 1; continue
             keep.append(x)
-        J = list(reversed(keep))
-        print(f"   직무 {JOB_CAP}개로 맞추려고 **앱이 만든 낱말** {dropped}개를 뺐다")
+        print(f"   {what} {cap}개로 맞추려고 앱이 만든 낱말 {dropped}개를 뺐다")
+        return list(reversed(keep))
+    JC = trim([x for x in J if (x.get("track") or "").startswith("공통")], JOB_COMMON_CAP, "직무① 공통")
+    JF = trim([x for x in J if not (x.get("track") or "").startswith("공통")], JOB_FIELD_CAP, "직무② 업종")
+    J = JC + JF
     for x in J:
         k = x.get("track") or field_of(x["ko"])
         if k == "공통": k = "공통 · 생산과 공정"
@@ -225,7 +241,11 @@ def main():
         tracks.append({"track": k, "words": len(ws),
                        "chapters": [{"lessons": [{"words": w} for w in ch]}
                                     for ch in cut(ws, LES_PER_CH)]})
-    vols.append({"kind": "job", "tracks": tracks,
+    # 두 권으로 나눈다 — ① 공통  ② 업종
+    tv1 = [t for t in tracks if t["track"].startswith("공통")]
+    tv2 = [t for t in tracks if not t["track"].startswith("공통")]
+    vols.append({"kind": "job", "vol": "공통", "tracks": tv1})
+    vols.append({"kind": "job", "vol": "업종", "tracks": tv2,
                  "lookup": {"track": "봉제 찾아보기", "words": len(LOOKUP),
                             "chapters": [{"lessons": [{"words": w} for w in ch]}
                                          for ch in cut(LOOKUP, LES_PER_CH)]}})
@@ -237,7 +257,8 @@ def main():
     print(f"일상(선배만) {len(L)} · 직무 {len(J)}(그중 우리가 만든 것 {sum(1 for x in J if x.get('app'))})")
     for i, v in enumerate(vols, 1):
         if v["kind"] == "job":
-            print(f"   {i}권 직무 — 갈래 {len(v['tracks'])}개")
+            print(f"   {i}권 직무 {v.get('vol','')} — 갈래 {len(v['tracks'])}개 · "
+                  f"{sum(t['words'] for t in v['tracks'])}낱말")
             for t in v["tracks"]:
                 ls = sum(len(c["lessons"]) for c in t["chapters"])
                 print(f"        {t['track']:<16} {len(t['chapters'])}챕터 · {ls}레슨 · {t['words']}낱말")

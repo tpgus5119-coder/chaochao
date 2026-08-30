@@ -1,4 +1,5184 @@
 {
+"single": {
+"vi": "Tôi vẫn đang single.",
+"ko": "나는 아직 싱글이다.",
+"kr": "또이 번 당 씨",
+"krs": "또이 연 당 시",
+"src": "ai"
+},
+"skirt": {
+"vi": "Cô ấy mặc chiếc skirt đẹp.",
+"ko": "그녀는 예쁜 치마를 입었다.",
+"kr": "꼬 어이 막 찌엑 댑",
+"krs": "꼬 어이 막 찌엑 댑",
+"src": "ai"
+},
+"stairs": {
+"vi": "Hãy đi lên stairs.",
+"ko": "계단으로 올라가세요.",
+"kr": "하이 디 렌",
+"krs": "하이 디 렌",
+"src": "ai"
+},
+"hotel": {
+"vi": "Hotel này rất tốt.",
+"ko": "이 호텔은 아주 좋다.",
+"kr": "호 나이 젓 똣",
+"krs": "호 나이 럿 똣",
+"src": "ai"
+},
+"convenient": {
+"vi": "Nhà tôi rất convenient.",
+"ko": "우리 집은 아주 편리하다.",
+"kr": "냐 또이 젓 꼬",
+"krs": "냐 또이 럿 꼬",
+"src": "ai"
+},
+"day": {
+"vi": "Hôm nay là một day đẹp.",
+"ko": "오늘은 아름다운 날이다.",
+"kr": "홈 나이 라 못 자이 댑",
+"krs": "홈 나이 라 못 야이 댑",
+"src": "ai"
+},
+"twilight": {
+"vi": "Tôi thích ngắm twilight.",
+"ko": "나는 황혼을 바라보는 것을 좋아한다.",
+"kr": "또이 틱 응암 띠",
+"krs": "또이 틱 응암 띠",
+"src": "ai"
+},
+"at night": {
+"vi": "Trời lạnh at night.",
+"ko": "밤에는 날씨가 춥다.",
+"kr": "쩌이 라인 앗 니",
+"krs": "쩌이 라인 앗 니",
+"src": "ai"
+},
+"to complain": {
+"vi": "Đừng to complain nữa.",
+"ko": "더 이상 불평하지 마세요.",
+"kr": "등 또 꼬 느어",
+"krs": "등 또 꼬 느어",
+"src": "ai"
+},
+"large size": {
+"vi": "Tôi muốn mua Large size.",
+"ko": "나는 대형 사이즈를 사고 싶다.",
+"kr": "또이 무온 무어 라 씨",
+"krs": "또이 무온 무어 라 시",
+"src": "ai"
+},
+"congratulation": {
+"vi": "Xin gửi lời congratulation.",
+"ko": "축하를 보냅니다.",
+"kr": "씬 그이 러이 꼬",
+"krs": "씬 그이 러이 꼬",
+"src": "ai"
+},
+"cosy": {
+"vi": "Phòng của tôi rất cosy.",
+"ko": "내 방은 아주 아늑하다.",
+"kr": "퐁 꾸어 또이 젓 꼬",
+"krs": "퐁 꾸어 또이 럿 꼬",
+"src": "ai"
+},
+"temporary residence": {
+"vi": "Đây là temporary residence của tôi.",
+"ko": "여기는 나의 임시 거주지이다.",
+"kr": "더이 라 때 재 꾸어 또이",
+"krs": "더이 라 때 래 꾸어 또이",
+"src": "ai"
+},
+"choose": {
+"vi": "Bạn hãy choose đi.",
+"ko": "당신이 선택하세요.",
+"kr": "반 하이 쪼 디",
+"krs": "반 하이 쪼 디",
+"src": "ai"
+},
+"vợsắp cưới": {
+"vi": "Đây là vợsắp cưới của tôi.",
+"ko": "이 사람은 나의 약혼녀이다.",
+"kr": "더이 라 버 끄어이 꾸어 또이",
+"krs": "더이 라 여 끄어이 꾸어 또이",
+"src": "ai"
+},
+"đích thân": {
+"vi": "Tôi đích thân làm việc này.",
+"ko": "내가 직접 이 일을 한다.",
+"kr": "또이 딕 턴 람 비엑 나이",
+"krs": "또이 딕 턴 람 이엑 나이",
+"src": "ai"
+},
+"đau râng": {
+"vi": "Tôi bị đau râng.",
+"ko": "나는 치통이 있다.",
+"kr": "또이 비 다우 정",
+"krs": "또이 비 다우 렁",
+"src": "ai"
+},
+"thịxã": {
+"vi": "Tôi sống ở thịxã này.",
+"ko": "나는 이 읍에 산다.",
+"kr": "또이 쏭 어 티 나이",
+"krs": "또이 송 어 티 나이",
+"src": "ai"
+},
+"special": {
+"vi": "Hôm nay là ngày special.",
+"ko": "오늘은 특별한 날이에요.",
+"kr": "홈 나이 라 응아이",
+"krs": "홈 나이 라 응아이",
+"src": "ai"
+},
+"tầm nhìn": {
+"vi": "Công ty có tầm nhìn rất xa.",
+"ko": "회사가 아주 먼 비전을 가지고 있다.",
+"kr": "꽁 띠 꼬 떰 닌 젓 싸",
+"krs": "꽁 띠 꼬 떰 닌 럿 싸",
+"src": "ai"
+},
+"trở ngại": {
+"vi": "Đừng sợ những trở ngại.",
+"ko": "장애물을 두려워하지 마세요.",
+"kr": "등 써 능 쩌 응아이",
+"krs": "등 서 능 쩌 응아이",
+"src": "ai"
+},
+"dạo này": {
+"vi": "Dạo này bạn thấy thế nào?",
+"ko": "요즘 어떻게 지내요?",
+"kr": "자오 나이 반 터이 테 나오",
+"krs": "야오 나이 반 터이 테 나오",
+"src": "ai"
+},
+"thủ tục": {
+"vi": "Thủ tục này rất đơn giản.",
+"ko": "이 절차는 아주 간단하다.",
+"kr": "투 뚝 나이 젓 던 잔",
+"krs": "투 뚝 나이 럿 던 얀",
+"src": "ai"
+},
+"lợi nhuận": {
+"vi": "Công ty có nhiều lợi nhuận.",
+"ko": "회사가 이윤을 많이 남겼어요.",
+"kr": "꽁 띠 꼬 니에우 러이 누연",
+"krs": "꽁 띠 꼬 니에우 러이 누연",
+"src": "ai"
+},
+"citadel": {
+"vi": "Chúng ta đi thăm citadel nhé.",
+"ko": "우리 성곽을 구경하러 가요.",
+"kr": "쭝 따 디 탐 끼 냬",
+"krs": "쭝 따 디 탐 끼 냬",
+"src": "ai"
+},
+"thật ra thì": {
+"vi": "Thật ra thì tôi không biết.",
+"ko": "사실은 나는 모른다.",
+"kr": "텃 자 티 또이 콩 비엣",
+"krs": "텃 라 티 또이 콩 비엣",
+"src": "ai"
+},
+"phổ biến": {
+"vi": "Món này rất phổ biến.",
+"ko": "이 음식은 아주 보급되어 있다.",
+"kr": "몬 나이 젓 포 비엔",
+"krs": "몬 나이 럿 포 비엔",
+"src": "ai"
+},
+"chăm sóc": {
+"vi": "Mẹ chăm sóc con.",
+"ko": "엄마가 아이를 돌봅니다.",
+"kr": "매 짬 쏙 꼰",
+"krs": "매 짬 속 꼰",
+"src": "ai"
+},
+"cơi túi": {
+"vi": "Thợ may đang làm cơi túi áo.",
+"ko": "재단사가 옷의 입술천을 만들고 있어요.",
+"kr": "터 마이 당 람 꺼이 뚜이 아오",
+"krs": "터 마이 당 람 꺼이 뚜이 아오",
+"src": "ai"
+},
+"đường gập cổ áo": {
+"vi": "Đường gập cổ áo rất thẳng.",
+"ko": "옷깃 꺾임선이 아주 곧아요.",
+"kr": "드엉 겁 꼬 아오 젓 탕",
+"krs": "드엉 겁 꼬 아오 럿 탕",
+"src": "ai"
+},
+"xuôi vai": {
+"vi": "Áo này có thiết kế xuôi vai.",
+"ko": "이 옷은 처진어깨 디자인이다.",
+"kr": "아오 나이 꼬 티엣 께 쑤오이 바이",
+"krs": "아오 나이 꼬 티엣 께 쑤오이 야이",
+"src": "ai"
+},
+"túi giả": {
+"vi": "Đây chỉ là túi giả.",
+"ko": "이것은 그냥 가짜 주머니야.",
+"kr": "더이 찌 라 뚜이 자",
+"krs": "더이 찌 라 뚜이 야",
+"src": "ai"
+},
+"da giả": {
+"vi": "Áo này làm bằng da giả.",
+"ko": "이 옷은 인조 가죽으로 만들었다.",
+"kr": "아오 나이 람 방 자 자",
+"krs": "아오 나이 람 방 야 야",
+"src": "ai"
+},
+"ngăn nắp": {
+"vi": "Phòng của tôi rất ngăn nắp.",
+"ko": "내 방은 아주 정돈되어 있다.",
+"kr": "퐁 꾸어 또이 젓 응안 납",
+"krs": "퐁 꾸어 또이 럿 응안 납",
+"src": "ai"
+},
+"lót túi": {
+"vi": "Lót túi này rất mềm.",
+"ko": "이 주머니감은 아주 부드럽다.",
+"kr": "롯 뚜이 나이 젓 멤",
+"krs": "롯 뚜이 나이 럿 멤",
+"src": "ai"
+},
+"gấu quần": {
+"vi": "Gấu quần này hơi dài.",
+"ko": "이 바지 밑단이 좀 길다.",
+"kr": "거우 꿘 나이 허이 자이",
+"krs": "거우 꿘 나이 허이 야이",
+"src": "ai"
+},
+"co rút": {
+"vi": "Vải này dễ bị co rút.",
+"ko": "이 천은 쉽게 줄어든다.",
+"kr": "바이 나이 제 비 꼬 줏",
+"krs": "야이 나이 예 비 꼬 룻",
+"src": "ai"
+},
+"chật": {
+"vi": "Cái áo này quá chật.",
+"ko": "이 옷은 너무 작습니다.",
+"kr": "까이 아오 나이 꽈 쩟",
+"krs": "까이 아오 나이 꽈 쩟",
+"src": "ai"
+},
+"lưng quần": {
+"vi": "Lưng quần này rất thoải mái.",
+"ko": "이 허릿단은 아주 편안하다.",
+"kr": "릉 꿘 나이 젓 토아이 마이",
+"krs": "릉 꿘 나이 럿 토아이 마이",
+"src": "ai"
+},
+"thực tế form ghi": {
+"vi": "Thực tế Form ghi 75 độ.",
+"ko": "실제 양식에는 75도로 적혀 있다.",
+"kr": "특 떼 오 기 도",
+"krs": "특 떼 오 기 도",
+"src": "ai"
+},
+"giữ hàng": {
+"vi": "Xin hãy giữ hàng cho tôi.",
+"ko": "나를 위해 보류해 주세요.",
+"kr": "씬 하이 즈 항 쪼 또이",
+"krs": "씬 하이 으 항 쪼 또이",
+"src": "ai"
+},
+"số lượng đặt": {
+"vi": "Kiểm tra số lượng đặt hôm nay.",
+"ko": "오늘 주문 수량을 확인하세요.",
+"kr": "끼엠 짜 쏘 르엉 닷 홈 나이",
+"krs": "끼엠 짜 소 르엉 닷 홈 나이",
+"src": "ai"
+},
+"hiệu suất": {
+"vi": "Hiệu suất làm việc rất cao.",
+"ko": "업무 효율이 아주 높습니다.",
+"kr": "히에우 쑤엇 람 비엑 젓 까오",
+"krs": "히에우 수엇 람 이엑 럿 까오",
+"src": "ai"
+},
+"chuyển đổi mẫu": {
+"vi": "Bắt đầu chuyển đổi mẫu lúc hai giờ.",
+"ko": "2시에 기종 전환을 시작합니다.",
+"kr": "밧 더우 쭈옌 도이 머우 룩 하이 저",
+"krs": "밧 더우 쭈옌 도이 머우 룩 하이 여",
+"src": "ai"
+},
+"giao ca": {
+"vi": "Nhớ giao ca đúng giờ nhé.",
+"ko": "시간 맞춰 교대 인수인계를 하세요.",
+"kr": "녀 자오 까 둥 저 냬",
+"krs": "녀 야오 까 둥 여 냬",
+"src": "ai"
+},
+"thợ lành nghề": {
+"vi": "Cần thêm thợ lành nghề làm việc.",
+"ko": "일할 숙련공이 더 필요합니다.",
+"kr": "껀 템 터 라인 응에 람 비엑",
+"krs": "껀 템 터 라인 응에 람 이엑",
+"src": "ai"
+},
+"đề xuất cải tiến": {
+"vi": "Viết một đề xuất cải tiến mới.",
+"ko": "새로운 개선 제안을 작성하세요.",
+"kr": "비엣 못 데 쑤엇 까이 띠엔 머이",
+"krs": "이엣 못 데 쑤엇 까이 띠엔 머이",
+"src": "ai"
+},
+"phế phẩm": {
+"vi": "Giảm thiểu phế phẩm trong ngày.",
+"ko": "당일 폐기품을 최소화하세요.",
+"kr": "잠 티에우 페 펌 쫑 응아이",
+"krs": "얌 티에우 페 펌 쫑 응아이",
+"src": "ai"
+},
+"kiểm tra cuối": {
+"vi": "Làm kiểm tra cuối trước khi xuất.",
+"ko": "출고 전에 최종 검사를 하세요.",
+"kr": "람 끼엠 짜 꾸오이 쯔억 키 쑤엇",
+"krs": "람 끼엠 짜 꾸오이 쯔억 키 쑤엇",
+"src": "ai"
+},
+"nguyên nhân gốc": {
+"vi": "Tìm nguyên nhân gốc của lỗi.",
+"ko": "불량의 근본 원인을 찾으세요.",
+"kr": "띰 응우옌 년 곡 꾸어 로이",
+"krs": "띰 응우옌 년 곡 꾸어 로이",
+"src": "ai"
+},
+"báo cáo lỗi": {
+"vi": "Gửi báo cáo lỗi cho quản lý.",
+"ko": "관리자에게 불량 보고를 보내세요.",
+"kr": "그이 바오 까오 로이 쪼 꽌 리",
+"krs": "그이 바오 까오 로이 쪼 꽌 리",
+"src": "ai"
+},
+"ổn định chất lượng": {
+"vi": "Tập trung ổn định chất lượng sản phẩm.",
+"ko": "제품 품질 안정에 집중하세요.",
+"kr": "떱 쭝 온 딘 쩟 르엉 싼 펌",
+"krs": "떱 쭝 온 딘 쩟 르엉 산 펌",
+"src": "ai"
+},
+"hàng tồn lâu": {
+"vi": "Kiểm tra lại hàng tồn lâu trong kho.",
+"ko": "창고의 장기 재고를 다시 확인하세요.",
+"kr": "끼엠 짜 라이 항 똔 러우 쫑 코",
+"krs": "끼엠 짜 라이 항 똔 러우 쫑 코",
+"src": "ai"
+},
+"mã vật tư": {
+"vi": "Nhập đúng mã vật tư vào hệ thống.",
+"ko": "시스템에 자재 코드를 정확히 입력하세요.",
+"kr": "녑 둥 마 벗 뜨 바오 헤 통",
+"krs": "녑 둥 마 엿 뜨 야오 헤 통",
+"src": "ai"
+},
+"dán nhãn vật tư": {
+"vi": "Nhớ dán nhãn vật tư cẩn thận.",
+"ko": "자재 표시를 꼼꼼히 붙이세요.",
+"kr": "녀 잔 냔 벗 뜨 껀 턴",
+"krs": "녀 얀 냔 엿 뜨 껀 턴",
+"src": "ai"
+},
+"nhật ký thiết bị": {
+"vi": "Viết nhật ký thiết bị mỗi ngày.",
+"ko": "매일 설비 일지를 작성하세요.",
+"kr": "비엣 녓 끼 티엣 비 모이 응아이",
+"krs": "이엣 녓 끼 티엣 비 모이 응아이",
+"src": "ai"
+},
+"thông số vận hành": {
+"vi": "Kiểm tra thông số vận hành máy.",
+"ko": "기계 운전 조건을 확인하세요.",
+"kr": "끼엠 짜 통 쏘 번 하인 마이",
+"krs": "끼엠 짜 통 소 연 하인 마이",
+"src": "ai"
+},
+"tuổi thọ thiết bị": {
+"vi": "Kéo dài tuổi thọ thiết bị nhà máy.",
+"ko": "공장 설비 수명을 연장하세요.",
+"kr": "깨오 자이 뚜오이 토 티엣 비 냐 마이",
+"krs": "깨오 야이 뚜오이 토 티엣 비 냐 마이",
+"src": "ai"
+},
+"bình chữa cháy": {
+"vi": "Đặt bình chữa cháy ở góc phòng.",
+"ko": "방 구석에 소화기를 두세요.",
+"kr": "닷 빈 쯔어 짜이 어 곡 퐁",
+"krs": "닷 빈 쯔어 짜이 어 곡 퐁",
+"src": "ai"
+},
+"giày bảo hộ": {
+"vi": "Luôn mang giày bảo hộ khi làm.",
+"ko": "일할 때 항상 안전화를 신으세요.",
+"kr": "루온 망 자이 바오 호 키 람",
+"krs": "루온 망 야이 바오 호 키 람",
+"src": "ai"
+},
+"lương tháng 13": {
+"vi": "Công ty trả lương tháng 13 sớm.",
+"ko": "회사가 13월 월급을 일찍 줍니다.",
+"kr": "꽁 띠 짜 르엉 탕 썸",
+"krs": "꽁 띠 짜 르엉 탕 섬",
+"src": "ai"
+},
+"đánh giá năng lực": {
+"vi": "Hôm nay có đánh giá năng lực.",
+"ko": "오늘 인사 평가가 있습니다.",
+"kr": "홈 나이 꼬 다인 자 낭 륵",
+"krs": "홈 나이 꼬 다인 야 낭 륵",
+"src": "ai"
+},
+"đình công": {
+"vi": "Công nhân tổ chức đình công lớn.",
+"ko": "근로자들이 대규모 파업을 벌였습니다.",
+"kr": "꽁 년 또 쯕 딘 꽁 런",
+"krs": "꽁 년 또 쯕 딘 꽁 런",
+"src": "ai"
+},
+"trình ký": {
+"vi": "Mang tài liệu này đi trình ký.",
+"ko": "이 서류를 들고 결재 상신하러 가세요.",
+"kr": "망 따이 리에우 나이 디 찐 끼",
+"krs": "망 따이 리에우 나이 디 찐 끼",
+"src": "ai"
+},
+"hoá đơn đỏ": {
+"vi": "Tôi cần lấy hoá đơn đỏ này.",
+"ko": "저는 이 세금계산서를 받아야 합니다.",
+"kr": "또이 껀 러이 호아 던 도 나이",
+"krs": "또이 껀 러이 호아 던 도 나이",
+"src": "ai"
+},
+"khu công nghệ cao": {
+"vi": "Công ty nằm ở khu công nghệ cao.",
+"ko": "회사는 첨단산업단지에 있습니다.",
+"kr": "꽁 띠 남 어 쿠 꽁 응에 까오",
+"krs": "꽁 띠 남 어 쿠 꽁 응에 까오",
+"src": "ai"
+},
+"chuyển giao sản xuất": {
+"vi": "Chúng ta chuyển giao sản xuất ngày mai.",
+"ko": "우리는 내일 양산 이관을 합니다.",
+"kr": "쭝 따 쭈옌 자오 싼 쑤엇 응아이 마이",
+"krs": "쭝 따 쭈옌 야오 산 쑤엇 응아이 마이",
+"src": "ai"
+},
+"máy kiểm tra tự động": {
+"vi": "Máy kiểm tra tự động đang chạy tốt.",
+"ko": "자동 검사기가 잘 작동하고 있습니다.",
+"kr": "마이 끼엠 짜 뜨 동 당 짜이 똣",
+"krs": "마이 끼엠 짜 뜨 동 당 짜이 똣",
+"src": "ai"
+},
+"nút dừng khẩn": {
+"vi": "Hãy ấn nút dừng khẩn khi nguy hiểm.",
+"ko": "위험할 때 비상 정지 버튼을 누르세요.",
+"kr": "하이 언 눗 증 컨 키 응우이 히엠",
+"krs": "하이 언 눗 응 컨 키 응우이 히엠",
+"src": "ai"
+},
+"lưu dữ liệu": {
+"vi": "Nhớ lưu dữ liệu vào máy tính.",
+"ko": "컴퓨터에 데이터를 저장하는 것을 기억하세요.",
+"kr": "녀 르우 즈 리에우 바오 마이 띤",
+"krs": "녀 르우 으 리에우 야오 마이 띤",
+"src": "ai"
+},
+"bong mối hàn": {
+"vi": "Sản phẩm này bị bong mối hàn.",
+"ko": "이 제품은 납땜 박리가 발생했습니다.",
+"kr": "싼 펌 나이 비 봉 모이 한",
+"krs": "산 펌 나이 비 봉 모이 한",
+"src": "ai"
+},
+"quá nhiệt": {
+"vi": "Động cơ bị quá nhiệt rồi.",
+"ko": "모터가 과열되었습니다.",
+"kr": "동 꺼 비 꽈 니엣 조이",
+"krs": "동 꺼 비 꽈 니엣 로이",
+"src": "ai"
+},
+"kiểm tra âm thanh": {
+"vi": "Chúng tôi kiểm tra âm thanh sản phẩm.",
+"ko": "우리는 제품 음향 검사를 합니다.",
+"kr": "쭝 또이 끼엠 짜 엄 타인 싼 펌",
+"krs": "쭝 또이 끼엠 짜 엄 타인 산 펌",
+"src": "ai"
+},
+"lau bụi": {
+"vi": "Thường xuyên lau bụi máy móc.",
+"ko": "기계의 먼지를 자주 닦으세요.",
+"kr": "트엉 쑤옌 라우 부이 마이 목",
+"krs": "트엉 쑤옌 라우 부이 마이 목",
+"src": "ai"
+},
+"lực siết": {
+"vi": "Kiểm tra lại lực siết của ốc.",
+"ko": "나사의 조임 토크를 다시 확인하세요.",
+"kr": "끼엠 짜 라이 륵 씨엣 꾸어 옥",
+"krs": "끼엠 짜 라이 륵 시엣 꾸어 옥",
+"src": "ai"
+},
+"chuyền may mũ": {
+"vi": "Cô ấy làm ở chuyền may mũ.",
+"ko": "그는 갑피 봉제 라인에서 일합니다.",
+"kr": "꼬 어이 람 어 쭈옌 마이 무",
+"krs": "꼬 어이 람 어 쭈옌 마이 무",
+"src": "ai"
+},
+"cỡ mẫu": {
+"vi": "Hãy kiểm tra cỡ mẫu trước.",
+"ko": "먼저 기준 사이즈를 확인하세요.",
+"kr": "하이 끼엠 짜 꺼 머우 쯔억",
+"krs": "하이 끼엠 짜 꺼 머우 쯔억",
+"src": "ai"
+},
+"in chuyển nhiệt": {
+"vi": "Chúng tôi dùng in chuyển nhiệt.",
+"ko": "우리는 열전사 인쇄를 사용합니다.",
+"kr": "쭝 또이 중 인 쭈옌 니엣",
+"krs": "쭝 또이 융 인 쭈옌 니엣",
+"src": "ai"
+},
+"xử lý nhiệt": {
+"vi": "Thép cần được xử lý nhiệt.",
+"ko": "철강은 열처리가 필요합니다.",
+"kr": "탭 껀 드억 쓰 리 니엣",
+"krs": "탭 껀 드억 쓰 리 니엣",
+"src": "ai"
+},
+"bẩn keo": {
+"vi": "Sản phẩm này bị bẩn keo.",
+"ko": "이 제품은 본드 오염이 되었습니다.",
+"kr": "싼 펌 나이 비 번 깨오",
+"krs": "산 펌 나이 비 번 깨오",
+"src": "ai"
+},
+"trái phải": {
+"vi": "Nhìn trái phải trước khi sang đường.",
+"ko": "길을 건너기 전에 좌우를 살피세요.",
+"kr": "닌 짜이 파이 쯔억 키 쌍 드엉",
+"krs": "닌 짜이 파이 쯔억 키 상 드엉",
+"src": "ai"
+},
+"dao cắt": {
+"vi": "Thay dao cắt mới cho máy.",
+"ko": "기계의 절삭 공구를 새것으로 교체하세요.",
+"kr": "타이 자오 깟 머이 쪼 마이",
+"krs": "타이 야오 깟 머이 쪼 마이",
+"src": "ai"
+},
+"gọt bavia": {
+"vi": "Công nhân đang gọt bavia sản phẩm.",
+"ko": "작업자들이 제품의 버 제거를 하고 있습니다.",
+"kr": "꽁 년 당 곳 바 싼 펌",
+"krs": "꽁 년 당 곳 바 산 펌",
+"src": "ai"
+},
+"kiểm tra không phá huỷ": {
+"vi": "Chúng ta cần kiểm tra không phá huỷ.",
+"ko": "우리는 비파괴 검사가 필요합니다.",
+"kr": "쭝 따 껀 끼엠 짜 콩 파 후이",
+"krs": "쭝 따 껀 끼엠 짜 콩 파 후이",
+"src": "ai"
+},
+"que hàn": {
+"vi": "Lấy thêm que hàn cho tôi.",
+"ko": "용접봉을 좀 더 가져다주세요.",
+"kr": "러이 템 꽤 한 쪼 또이",
+"krs": "러이 템 꽤 한 쪼 또이",
+"src": "ai"
+},
+"đồ gá": {
+"vi": "Đặt sản phẩm lên đồ gá.",
+"ko": "제품을 지그 위에 올려놓으세요.",
+"kr": "닷 싼 펌 렌 도 가",
+"krs": "닷 산 펌 렌 도 가",
+"src": "ai"
+},
+"tiến độ thi công": {
+"vi": "Tiến độ thi công rất nhanh.",
+"ko": "공정표 진행이 매우 빠릅니다.",
+"kr": "띠엔 도 티 꽁 젓 나인",
+"krs": "띠엔 도 티 꽁 럿 나인",
+"src": "ai"
+},
+"vật liệu xây dựng": {
+"vi": "Xe chở vật liệu xây dựng đến rồi.",
+"ko": "건설 자재를 실은 트럭이 도착했습니다.",
+"kr": "쌔 쩌 벗 리에우 써이 증 덴 조이",
+"krs": "쌔 쩌 엿 리에우 써이 응 덴 로이",
+"src": "ai"
+},
+"trát vữa": {
+"vi": "Thợ đang trát vữa tường nhà.",
+"ko": "인부들이 벽에 미장을 하고 있습니다.",
+"kr": "터 당 짯 브어 뜨엉 냐",
+"krs": "터 당 짯 으어 뜨엉 냐",
+"src": "ai"
+},
+"đầm bê tông": {
+"vi": "Công nhân đang đầm bê tông.",
+"ko": "작업자들이 콘크리트 다짐을 하고 있습니다.",
+"kr": "꽁 년 당 덤 베 똥",
+"krs": "꽁 년 당 덤 베 똥",
+"src": "ai"
+},
+"vận đơn đường biển": {
+"vi": "Gửi vận đơn đường biển cho khách.",
+"ko": "고객에게 해상 선하증권을 보내세요.",
+"kr": "그이 번 던 드엉 비엔 쪼 칵",
+"krs": "그이 연 던 드엉 비엔 쪼 칵",
+"src": "ai"
+},
+"bác dọn lại phòng": {
+"vi": "Bác dọn lại phòng giúp tôi.",
+"ko": "삼촌이 제 방을 다시 치워주세요.",
+"kr": "박 존 라이 퐁 줍 또이",
+"krs": "박 욘 라이 퐁 윱 또이",
+"src": "ai"
+},
+"sản lượng ngày": {
+"vi": "Sản lượng ngày hôm nay rất cao.",
+"ko": "오늘 일 생산량이 아주 많다.",
+"kr": "싼 르엉 응아이 홈 나이 젓 까오",
+"krs": "산 르엉 응아이 홈 나이 럿 까오",
+"src": "ai"
+},
+"thời gian chu kỳ": {
+"vi": "Thời gian chu kỳ này rất ngắn.",
+"ko": "이 사이클 타임은 매우 짧다.",
+"kr": "터이 잔 쭈 끼 나이 젓 응안",
+"krs": "터이 얀 쭈 끼 나이 럿 응안",
+"src": "ai"
+},
+"sản xuất thử": {
+"vi": "Hôm nay chúng ta sản xuất thử.",
+"ko": "오늘 우리는 시생산을 한다.",
+"kr": "홈 나이 쭝 따 싼 쑤엇 트",
+"krs": "홈 나이 쭝 따 산 쑤엇 트",
+"src": "ai"
+},
+"bảng giao ca": {
+"vi": "Hãy đọc bảng giao ca này.",
+"ko": "이 인수인계 일지를 읽어라.",
+"kr": "하이 독 방 자오 까 나이",
+"krs": "하이 독 방 야오 까 나이",
+"src": "ai"
+},
+"thợ mới": {
+"vi": "Thợ mới làm việc rất chăm chỉ.",
+"ko": "신입 작업자가 아주 열심히 일한다.",
+"kr": "터 머이 람 비엑 젓 짬 찌",
+"krs": "터 머이 람 이엑 럿 짬 찌",
+"src": "ai"
+},
+"lãng phí": {
+"vi": "Chúng ta phải giảm lãng phí.",
+"ko": "우리는 낭비를 줄여야 한다.",
+"kr": "쭝 따 파이 잠 랑 피",
+"krs": "쭝 따 파이 얌 랑 피",
+"src": "ai"
+},
+"hàng sửa": {
+"vi": "Có nhiều hàng sửa ở đây.",
+"ko": "여기 수리품이 많이 있다.",
+"kr": "꼬 니에우 항 쓰어 어 더이",
+"krs": "꼬 니에우 항 스어 어 더이",
+"src": "ai"
+},
+"phân tích nguyên nhân": {
+"vi": "Hãy phân tích nguyên nhân lỗi.",
+"ko": "불량 원인 분석을 하세요.",
+"kr": "하이 펀 띡 응우옌 년 로이",
+"krs": "하이 펀 띡 응우옌 년 로이",
+"src": "ai"
+},
+"phiếu kiểm tra": {
+"vi": "Điền vào phiếu kiểm tra này.",
+"ko": "이 검사 성적서에 기입하세요.",
+"kr": "디엔 바오 피에우 끼엠 짜 나이",
+"krs": "디엔 야오 피에우 끼엠 짜 나이",
+"src": "ai"
+},
+"truy tìm nguyên nhân": {
+"vi": "Chúng ta cần truy tìm nguyên nhân.",
+"ko": "우리는 원인 추적이 필요하다.",
+"kr": "쭝 따 껀 쭈이 띰 응우옌 년",
+"krs": "쭝 따 껀 쭈이 띰 응우옌 년",
+"src": "ai"
+},
+"hết hàng": {
+"vi": "Kho này đã hết hàng rồi.",
+"ko": "이 창고는 벌써 재고가 소진되었다.",
+"kr": "코 나이 다 헷 항 조이",
+"krs": "코 나이 다 헷 항 로이",
+"src": "ai"
+},
+"số lượng thực tế": {
+"vi": "Kiểm tra số lượng thực tế nhé.",
+"ko": "실물 수량을 확인해 주세요.",
+"kr": "끼엠 짜 쏘 르엉 특 떼 냬",
+"krs": "끼엠 짜 소 르엉 특 떼 냬",
+"src": "ai"
+},
+"đóng gói lại": {
+"vi": "Hãy đóng gói lại hàng này.",
+"ko": "이 제품을 재포장해 주세요.",
+"kr": "하이 동 고이 라이 항 나이",
+"krs": "하이 동 고이 라이 항 나이",
+"src": "ai"
+},
+"kiểm tra hằng ngày": {
+"vi": "Làm kiểm tra hằng ngày buổi sáng.",
+"ko": "아침에 일상 점검을 한다.",
+"kr": "람 끼엠 짜 항 응아이 부오이 쌍",
+"krs": "람 끼엠 짜 항 응아이 부오이 상",
+"src": "ai"
+},
+"rung lắc": {
+"vi": "Máy này có hiện tượng rung lắc.",
+"ko": "이 기계에 진동 현상이 있다.",
+"kr": "마이 나이 꼬 히엔 뜨엉 중 락",
+"krs": "마이 나이 꼬 히엔 뜨엉 룽 락",
+"src": "ai"
+},
+"nội quy an toàn": {
+"vi": "Phải nhớ nội quy an toàn nhé.",
+"ko": "안전 수칙을 꼭 기억하세요.",
+"kr": "파이 녀 노이 뀌 안 또안 냬",
+"krs": "파이 녀 노이 뀌 안 또안 냬",
+"src": "ai"
+},
+"lối thoát hiểm": {
+"vi": "Lối thoát hiểm ở bên kia.",
+"ko": "비상구는 저쪽에 있습니다.",
+"kr": "로이 토앗 히엠 어 벤 끼어",
+"krs": "로이 토앗 히엠 어 벤 끼어",
+"src": "ai"
+},
+"khu vực cấm": {
+"vi": "Đây là khu vực cấm vào.",
+"ko": "여기는 출입 금지 구역이다.",
+"kr": "더이 라 쿠 븍 껌 바오",
+"krs": "더이 라 쿠 윽 껌 야오",
+"src": "ai"
+},
+"nghỉ phép năm": {
+"vi": "Tôi muốn nghỉ phép năm nay.",
+"ko": "나는 올해 연차 휴가를 쓰고 싶다.",
+"kr": "또이 무온 응이 팹 남 나이",
+"krs": "또이 무온 응이 팹 남 나이",
+"src": "ai"
+},
+"thăng chức": {
+"vi": "Anh ấy được thăng chức rồi.",
+"ko": "그는 벌써 승진을 했다.",
+"kr": "아인 어이 드억 탕 쯕 조이",
+"krs": "아인 어이 드억 탕 쯕 로이",
+"src": "ai"
+},
+"phỏng vấn tuyển dụng": {
+"vi": "Hôm nay có phỏng vấn tuyển dụng.",
+"ko": "오늘 채용 면접이 있다.",
+"kr": "홈 나이 꼬 퐁 번 뚜옌 중",
+"krs": "홈 나이 꼬 퐁 연 뚜옌 융",
+"src": "ai"
+},
+"từ chối duyệt": {
+"vi": "Sếp đã từ chối duyệt đơn.",
+"ko": "상사분이 신청을 반려했다.",
+"kr": "쎕 다 뜨 쪼이 주옛 던",
+"krs": "셉 다 뜨 쪼이 우옛 던",
+"src": "ai"
+},
+"thuế thu nhập": {
+"vi": "Phải nộp thuế thu nhập cá nhân.",
+"ko": "소득세를 납부해야 한다.",
+"kr": "파이 놉 투에 투 녑 까 년",
+"krs": "파이 놉 투에 투 녑 까 년",
+"src": "ai"
+},
+"nhà cung cấp cấp 1": {
+"vi": "Đây là nhà cung cấp cấp 1.",
+"ko": "여기는 1차 협력사이다.",
+"kr": "더이 라 냐 꿍 껍 껍",
+"krs": "더이 라 냐 꿍 껍 껍",
+"src": "ai"
+},
+"thay đổi thiết kế": {
+"vi": "Chúng ta phải thay đổi thiết kế.",
+"ko": "우리는 설계를 변경해야 한다.",
+"kr": "쭝 따 파이 타이 도이 티엣 께",
+"krs": "쭝 따 파이 타이 도이 티엣 께",
+"src": "ai"
+},
+"đầu hút": {
+"vi": "Hãy làm sạch đầu hút này.",
+"ko": "이 노즐을 깨끗이 청소해라.",
+"kr": "하이 람 싹 더우 훗 나이",
+"krs": "하이 람 삭 더우 훗 나이",
+"src": "ai"
+},
+"nguồn điện": {
+"vi": "Hãy tắt nguồn điện trước khi đi.",
+"ko": "가기 전에 전원을 꺼라.",
+"kr": "하이 땃 응우온 디엔 쯔억 키 디",
+"krs": "하이 땃 응우온 디엔 쯔억 키 디",
+"src": "ai"
+},
+"tải chương trình": {
+"vi": "Tôi đang tải chương trình mới.",
+"ko": "나는 새 프로그램을 로딩 중이다.",
+"kr": "또이 당 따이 쯔엉 찐 머이",
+"krs": "또이 당 따이 쯔엉 찐 머이",
+"src": "ai"
+},
+"cong vênh bo": {
+"vi": "Kiểm tra lỗi cong vênh bo.",
+"ko": "기판 휨 불량을 검사해라.",
+"kr": "끼엠 짜 로이 꽁 벤 보",
+"krs": "끼엠 짜 로이 꽁 옌 보",
+"src": "ai"
+},
+"thử nghiệm rơi": {
+"vi": "Chúng ta cần thử nghiệm rơi.",
+"ko": "우리는 낙하 시험이 필요하다.",
+"kr": "쭝 따 껀 트 응이엠 저이",
+"krs": "쭝 따 껀 트 응이엠 러이",
+"src": "ai"
+},
+"kiểm tra camera": {
+"vi": "Nhớ kiểm tra camera cẩn thận.",
+"ko": "카메라 검사를 꼼꼼히 해라.",
+"kr": "녀 끼엠 짜 까 껀 턴",
+"krs": "녀 끼엠 짜 까 껀 턴",
+"src": "ai"
+},
+"khí nén thổi": {
+"vi": "Dùng khí nén thổi bụi đi.",
+"ko": "에어 블로우로 먼지를 불어내라.",
+"kr": "중 키 낸 토이 부이 디",
+"krs": "융 키 낸 토이 부이 디",
+"src": "ai"
+},
+"máy vặn vít": {
+"vi": "Đưa tôi máy vặn vít nhé.",
+"ko": "내게 전동 드라이버를 다오.",
+"kr": "드어 또이 마이 반 빗 냬",
+"krs": "드어 또이 마이 얀 잇 냬",
+"src": "ai"
+},
+"chuyền gò": {
+"vi": "Công nhân đang ở chuyền gò.",
+"ko": "작업자들이 라스팅 라인에 있다.",
+"kr": "꽁 년 당 어 쭈옌 고",
+"krs": "꽁 년 당 어 쭈옌 고",
+"src": "ai"
+},
+"bộ cỡ": {
+"vi": "Hãy chuẩn bị bộ cỡ này.",
+"ko": "이 사이즈 세트를 준비해라.",
+"kr": "하이 쭈언 비 보 꺼 나이",
+"krs": "하이 쭈언 비 보 꺼 나이",
+"src": "ai"
+},
+"thêu logo": {
+"vi": "Chúng tôi nhận thêu logo áo.",
+"ko": "우리는 옷 로고 자수를 받는다.",
+"kr": "쭝 또이 년 테우 로 아오",
+"krs": "쭝 또이 년 테우 로 아오",
+"src": "ai"
+},
+"kiểm tra keo": {
+"vi": "Hãy kiểm tra keo thật kỹ.",
+"ko": "접착 검사를 아주 꼼꼼히 해라.",
+"kr": "하이 끼엠 짜 깨오 텃 끼",
+"krs": "하이 끼엠 짜 깨오 텃 끼",
+"src": "ai"
+},
+"lệch logo": {
+"vi": "Sản phẩm này bị lệch logo.",
+"ko": "이 제품은 로고가 삐뚤어졌다.",
+"kr": "싼 펌 나이 비 렉 로",
+"krs": "산 펌 나이 비 렉 로",
+"src": "ai"
+},
+"dán mã cỡ": {
+"vi": "Nhớ dán mã cỡ lên hộp.",
+"ko": "상자에 사이즈 라벨을 부착해라.",
+"kr": "녀 잔 마 꺼 렌 홉",
+"krs": "녀 얀 마 꺼 렌 홉",
+"src": "ai"
+},
+"mũi khoan": {
+"vi": "Thay mũi khoan mới cho tôi.",
+"ko": "내게 새 드릴 비트로 바꿔다오.",
+"kr": "타이 무이 코안 머이 쪼 또이",
+"krs": "타이 무이 코안 머이 쪼 또이",
+"src": "ai"
+},
+"độ nhám bề mặt": {
+"vi": "Đo độ nhám bề mặt này.",
+"ko": "이 표면 거칠기를 측정해라.",
+"kr": "도 도 냠 베 맛 나이",
+"krs": "도 도 냠 베 맛 나이",
+"src": "ai"
+},
+"thép không gỉ": {
+"vi": "Bàn này bằng thép không gỉ.",
+"ko": "이 식탁은 스테인리스로 되었다.",
+"kr": "반 나이 방 탭 콩 지",
+"krs": "반 나이 방 탭 콩 이",
+"src": "ai"
+},
+"bàn máp": {
+"vi": "Đặt vật lên bàn máp đi.",
+"ko": "정반 위에 물건을 올려놓아라.",
+"kr": "닷 벗 렌 반 맙 디",
+"krs": "닷 엿 렌 반 맙 디",
+"src": "ai"
+},
+"nhật ký công trình": {
+"vi": "Viết nhật ký công trình mỗi ngày.",
+"ko": "매일 공사 일지를 작성해라.",
+"kr": "비엣 녓 끼 꽁 찐 모이 응아이",
+"krs": "이엣 녓 끼 꽁 찐 모이 응아이",
+"src": "ai"
+},
+"thép hình": {
+"vi": "Chúng tôi bán thép hình lớn.",
+"ko": "우리는 큰 형강을 판매한다.",
+"kr": "쭝 또이 반 탭 힌 런",
+"krs": "쭝 또이 반 탭 힌 런",
+"src": "ai"
+},
+"ốp lát": {
+"vi": "Thợ đang làm việc ốp lát.",
+"ko": "기술자가 타일 시공을 하고 있다.",
+"kr": "터 당 람 비엑 옵 랏",
+"krs": "터 당 람 이엑 옵 랏",
+"src": "ai"
+},
+"bảo dưỡng bê tông": {
+"vi": "Cần bảo dưỡng bê tông đúng cách.",
+"ko": "콘크리트 양생을 올바르게 해야 한다.",
+"kr": "껀 바오 즈엉 베 똥 둥 깍",
+"krs": "껀 바오 으엉 베 똥 둥 깍",
+"src": "ai"
+},
+"tờ khai xuất": {
+"vi": "In tờ khai xuất cho tôi.",
+"ko": "내게 수출 신고서를 출력해다오.",
+"kr": "인 떠 카이 쑤엇 쪼 또이",
+"krs": "인 떠 카이 쑤엇 쪼 또이",
+"src": "ai"
+},
+"giấy phép nhập khẩu": {
+"vi": "Tôi cần giấy phép nhập khẩu.",
+"ko": "나는 수입 허가가 필요하다.",
+"kr": "또이 껀 저이 팹 녑 커우",
+"krs": "또이 껀 여이 팹 녑 커우",
+"src": "ai"
+},
+"trọng lượng tịnh": {
+"vi": "Trọng lượng tịnh là năm ký.",
+"ko": "순중량은 5킬로그램이다.",
+"kr": "쫑 르엉 띤 라 남 끼",
+"krs": "쫑 르엉 띤 라 남 끼",
+"src": "ai"
+},
+"hàng về cảng": {
+"vi": "Hàng về cảng hôm nay.",
+"ko": "오늘 화물이 항구에 도착한다.",
+"kr": "항 베 깡 홈 나이",
+"krs": "항 예 깡 홈 나이",
+"src": "ai"
+},
+"bảng kê hàng hoá": {
+"vi": "Đây là bảng kê hàng hoá.",
+"ko": "이것은 포장 명세서이다.",
+"kr": "더이 라 방 께 항 호아",
+"krs": "더이 라 방 께 항 호아",
+"src": "ai"
+},
+"cắt gọt": {
+"vi": "Tôi cắt gọt trái cây.",
+"ko": "나는 과일을 깎는다.",
+"kr": "또이 깟 곳 짜이 꺼이",
+"krs": "또이 깟 곳 짜이 꺼이",
+"src": "ai"
+},
+"haccp": {
+"vi": "Nhà máy có chứng nhận HACCP.",
+"ko": "공장은 해썹 인증이 있다.",
+"kr": "냐 마이 꼬 쯩 년 하",
+"krs": "냐 마이 꼬 쯩 년 하",
+"src": "ai"
+},
+"in hạn dùng": {
+"vi": "Chúng ta in hạn dùng lên đây.",
+"ko": "여기에 유통기한을 인쇄한다.",
+"kr": "쭝 따 인 한 중 렌 더이",
+"krs": "쭝 따 인 한 융 렌 더이",
+"src": "ai"
+},
+"nhập hàng về": {
+"vi": "Hôm nay chúng tôi nhập hàng về.",
+"ko": "오늘 우리는 상품을 입고한다.",
+"kr": "홈 나이 쭝 또이 녑 항 베",
+"krs": "홈 나이 쭝 또이 녑 항 예",
+"src": "ai"
+},
+"kiểm kê hàng": {
+"vi": "Nhân viên kiểm kê hàng bây giờ.",
+"ko": "직원들이 지금 재고 실사를 한다.",
+"kr": "년 비엔 끼엠 께 항 버이 저",
+"krs": "년 이엔 끼엠 께 항 버이 여",
+"src": "ai"
+},
+"thanh toán qr": {
+"vi": "Tôi muốn thanh toán QR.",
+"ko": "나는 QR 결제를 하고 싶다.",
+"kr": "또이 무온 타인 또안",
+"krs": "또이 무온 타인 또안",
+"src": "ai"
+},
+"bàn ghế": {
+"vi": "Quán có nhiều bàn ghế.",
+"ko": "식당에 테이블과 의자가 많다.",
+"kr": "꽌 꼬 니에우 반 게",
+"krs": "꽌 꼬 니에우 반 게",
+"src": "ai"
+},
+"thời gian chờ món": {
+"vi": "Thời gian chờ món rất nhanh.",
+"ko": "음식 대기 시간이 아주 빠르다.",
+"kr": "터이 잔 쩌 몬 젓 나인",
+"krs": "터이 얀 쩌 몬 럿 나인",
+"src": "ai"
+},
+"mục tiêu ngày": {
+"vi": "Hôm nay đạt mục tiêu ngày.",
+"ko": "오늘 일일 목표를 달성하다.",
+"kr": "홈 나이 닷 묵 띠에우 응아이",
+"krs": "홈 나이 닷 묵 띠에우 응아이",
+"src": "ai"
+},
+"công đoạn trước": {
+"vi": "Kiểm tra công đoạn trước đi.",
+"ko": "전 공정을 확인하세요.",
+"kr": "끼엠 짜 꽁 도안 쯔억 디",
+"krs": "끼엠 짜 꽁 도안 쯔억 디",
+"src": "ai"
+},
+"sản xuất hàng loạt": {
+"vi": "Bắt đầu sản xuất hàng loạt.",
+"ko": "양산을 시작하다.",
+"kr": "밧 더우 싼 쑤엇 항 로앗",
+"krs": "밧 더우 산 쑤엇 항 로앗",
+"src": "ai"
+},
+"điểm danh": {
+"vi": "Quản lý điểm danh buổi sáng.",
+"ko": "아침 출석 점검을 하다.",
+"kr": "꽌 리 디엠 자인 부오이 쌍",
+"krs": "꽌 리 디엠 아인 부오이 상",
+"src": "ai"
+},
+"người thay ca": {
+"vi": "Chờ người thay ca đến.",
+"ko": "교대 대체 인력이 오기를 기다리다.",
+"kr": "쩌 응으어이 타이 까 덴",
+"krs": "쩌 응으어이 타이 까 덴",
+"src": "ai"
+},
+"tồn đọng": {
+"vi": "Giải quyết hàng tồn đọng.",
+"ko": "적체된 물량을 해결하다.",
+"kr": "자이 꾸이엣 항 똔 동",
+"krs": "야이 꾸이엣 항 똔 동",
+"src": "ai"
+},
+"tiêu chuẩn chất lượng": {
+"vi": "Tuân thủ tiêu chuẩn chất lượng.",
+"ko": "품질 기준을 준수하다.",
+"kr": "뚜언 투 띠에우 쭈언 쩟 르엉",
+"krs": "뚜언 투 띠에우 쭈언 쩟 르엉",
+"src": "ai"
+},
+"kiểm xác suất": {
+"vi": "Tiến hành kiểm xác suất sản phẩm.",
+"ko": "제품 샘플 검사를 진행하다.",
+"kr": "띠엔 하인 끼엠 싹 쑤엇 싼 펌",
+"krs": "띠엔 하인 끼엠 싹 수엇 산 펌",
+"src": "ai"
+},
+"biện pháp khắc phục": {
+"vi": "Tìm biện pháp khắc phục ngay.",
+"ko": "즉시 시정 조치를 찾다.",
+"kr": "띰 비엔 팝 칵 푹 응아이",
+"krs": "띰 비엔 팝 칵 푹 응아이",
+"src": "ai"
+},
+"dung sai cho phép": {
+"vi": "Nằm trong dung sai cho phép.",
+"ko": "허용 공차 내에 있다.",
+"kr": "남 쫑 중 싸이 쪼 팹",
+"krs": "남 쫑 융 사이 쪼 팹",
+"src": "ai"
+},
+"yêu cầu vật tư": {
+"vi": "Gửi phiếu yêu cầu vật tư.",
+"ko": "자재 요청서를 보내다.",
+"kr": "그이 피에우 이에우 꺼우 벗 뜨",
+"krs": "그이 피에우 이에우 꺼우 엿 뜨",
+"src": "ai"
+},
+"đặt thêm": {
+"vi": "Chúng ta cần đặt thêm.",
+"ko": "우리는 추가 발주를 해야 한다.",
+"kr": "쭝 따 껀 닷 템",
+"krs": "쭝 따 껀 닷 템",
+"src": "ai"
+},
+"thất thoát": {
+"vi": "Tránh để thất thoát hàng.",
+"ko": "물품 분실·손실을 피하다.",
+"kr": "짜인 데 텃 토앗 항",
+"krs": "짜인 데 텃 토앗 항",
+"src": "ai"
+},
+"vật tư phụ": {
+"vi": "Kho hết vật tư phụ.",
+"ko": "창고에 부자재가 떨어졌다.",
+"kr": "코 헷 벗 뜨 푸",
+"krs": "코 헷 엿 뜨 푸",
+"src": "ai"
+},
+"bôi trơn": {
+"vi": "Cần bôi trơn máy móc.",
+"ko": "기계에 급유가 필요하다.",
+"kr": "껀 보이 쩐 마이 목",
+"krs": "껀 보이 쩐 마이 목",
+"src": "ai"
+},
+"tiếng ồn bất thường": {
+"vi": "Nghe thấy tiếng ồn bất thường.",
+"ko": "이상 소음이 들린다.",
+"kr": "응애 터이 띠엥 온 벗 트엉",
+"krs": "응애 터이 띠엥 온 벗 트엉",
+"src": "ai"
+},
+"huấn luyện an toàn": {
+"vi": "Tham gia huấn luyện an toàn.",
+"ko": "안전 교육에 참가하다.",
+"kr": "탐 자 후언 루옌 안 또안",
+"krs": "탐 야 후언 루옌 안 또안",
+"src": "ai"
+},
+"diễn tập cháy nổ": {
+"vi": "Hôm nay có diễn tập cháy nổ.",
+"ko": "오늘 소방 훈련이 있다.",
+"kr": "홈 나이 꼬 지엔 떱 짜이 노",
+"krs": "홈 나이 꼬 이엔 떱 짜이 노",
+"src": "ai"
+},
+"chất thải": {
+"vi": "Phân loại chất thải đúng cách.",
+"ko": "폐기물을 올바르게 분리하다.",
+"kr": "펀 로아이 쩟 타이 둥 깍",
+"krs": "펀 로아이 쩟 타이 둥 깍",
+"src": "ai"
+},
+"nghỉ không lương": {
+"vi": "Tôi xin nghỉ không lương.",
+"ko": "저는 무급 휴가를 신청합니다.",
+"kr": "또이 씬 응이 콩 르엉",
+"krs": "또이 씬 응이 콩 르엉",
+"src": "ai"
+},
+"chuyển bộ phận": {
+"vi": "Anh ấy muốn chuyển bộ phận.",
+"ko": "그는 부서 이동을 원한다.",
+"kr": "아인 어이 무온 쭈옌 보 펀",
+"krs": "아인 어이 무온 쭈옌 보 펀",
+"src": "ai"
+},
+"báo cáo hằng ngày": {
+"vi": "Nộp báo cáo hằng ngày nhé.",
+"ko": "일일 보고를 제출하세요.",
+"kr": "놉 바오 까오 항 응아이 냬",
+"krs": "놉 바오 까오 항 응아이 냬",
+"src": "ai"
+},
+"bản gốc": {
+"vi": "Hãy giữ lại bản gốc.",
+"ko": "원본을 보관하세요.",
+"kr": "하이 즈 라이 반 곡",
+"krs": "하이 으 라이 반 곡",
+"src": "ai"
+},
+"đàm phán giá": {
+"vi": "Bắt đầu đàm phán giá.",
+"ko": "가격 협상을 시작하다.",
+"kr": "밧 더우 담 판 자",
+"krs": "밧 더우 담 판 야",
+"src": "ai"
+},
+"nhà cung cấp cấp 2": {
+"vi": "Liên hệ nhà cung cấp cấp 2.",
+"ko": "2차 협력사에 연락하다.",
+"kr": "리엔 헤 냐 꿍 껍 껍",
+"krs": "리엔 헤 냐 꿍 껍 껍",
+"src": "ai"
+},
+"model mới": {
+"vi": "Đây là model mới nhất.",
+"ko": "이것은 최신 모델입니다.",
+"kr": "더이 라 모 머이 녓",
+"krs": "더이 라 모 머이 녓",
+"src": "ai"
+},
+"khay tĩnh điện": {
+"vi": "Hãy dùng khay tĩnh điện này.",
+"ko": "이 정전기 트레이를 사용하세요.",
+"kr": "하이 중 카이 띤 디엔 나이",
+"krs": "하이 융 카이 띤 디엔 나이",
+"src": "ai"
+},
+"bảng điều khiển": {
+"vi": "Bảng điều khiển đang hoạt động.",
+"ko": "제어반이 작동 중입니다.",
+"kr": "방 디에우 키엔 당 호앗 동",
+"krs": "방 디에우 키엔 당 호앗 동",
+"src": "ai"
+},
+"phiên bản phần mềm": {
+"vi": "Kiểm tra phiên bản phần mềm đi.",
+"ko": "소프트웨어 버전을 확인하세요.",
+"kr": "끼엠 짜 피엔 반 펀 멤 디",
+"krs": "끼엠 짜 피엔 반 펀 멤 디",
+"src": "ai"
+},
+"nứt bo": {
+"vi": "Bo này bị nứt bo rồi.",
+"ko": "이 기판은 기판 균열이 생겼어요.",
+"kr": "보 나이 비 늣 보 조이",
+"krs": "보 나이 비 늣 보 로이",
+"src": "ai"
+},
+"thử nghiệm rung": {
+"vi": "Bắt đầu thử nghiệm rung đi.",
+"ko": "진동 시험을 시작하세요.",
+"kr": "밧 더우 트 응이엠 중 디",
+"krs": "밧 더우 트 응이엠 룽 디",
+"src": "ai"
+},
+"kiểm tra cảm ứng": {
+"vi": "Cần kiểm tra cảm ứng màn hình.",
+"ko": "화면 터치 검사가 필요합니다.",
+"kr": "껀 끼엠 짜 깜 응 만 힌",
+"krs": "껀 끼엠 짜 깜 응 만 힌",
+"src": "ai"
+},
+"keo tản nhiệt": {
+"vi": "Bôi keo tản nhiệt vào đây.",
+"ko": "여기에 방열 접착제를 바르세요.",
+"kr": "보이 깨오 딴 니엣 바오 더이",
+"krs": "보이 깨오 딴 니엣 야오 더이",
+"src": "ai"
+},
+"đóng gói cuối": {
+"vi": "Đang làm khâu đóng gói cuối.",
+"ko": "최종 포장 단계를 하고 있습니다.",
+"kr": "당 람 커우 동 고이 꾸오이",
+"krs": "당 람 커우 동 고이 꾸오이",
+"src": "ai"
+},
+"chuyền đế": {
+"vi": "Sản phẩm đang ở chuyền đế.",
+"ko": "제품이 밑창 라인에 있습니다.",
+"kr": "싼 펌 당 어 쭈옌 데",
+"krs": "산 펌 당 어 쭈옌 데",
+"src": "ai"
+},
+"nhảy cỡ": {
+"vi": "Hãy kiểm tra lại nhảy cỡ.",
+"ko": "사이즈 그레이딩을 다시 확인하세요.",
+"kr": "하이 끼엠 짜 라이 냐이 꺼",
+"krs": "하이 끼엠 짜 라이 냐이 꺼",
+"src": "ai"
+},
+"đục lỗ": {
+"vi": "Máy đang đục lỗ chính xác.",
+"ko": "기계가 정확하게 타공 중입니다.",
+"kr": "마이 당 둑 로 찐 싹",
+"krs": "마이 당 둑 로 찐 싹",
+"src": "ai"
+},
+"thử độ bám": {
+"vi": "Kết quả thử độ bám tốt.",
+"ko": "접착력 시험 결과가 좋습니다.",
+"kr": "껫 꽈 트 도 밤 똣",
+"krs": "껫 꽈 트 도 밤 똣",
+"src": "ai"
+},
+"nhăn mũ giày": {
+"vi": "Tránh bị nhăn mũ giày nhé.",
+"ko": "갑피 주름이 생기지 않게 하세요.",
+"kr": "짜인 비 냔 무 자이 냬",
+"krs": "짜인 비 냔 무 야이 냬",
+"src": "ai"
+},
+"gia công cơ khí": {
+"vi": "Đây là xưởng gia công cơ khí.",
+"ko": "여기는 기계 가공 공장입니다.",
+"kr": "더이 라 쓰엉 자 꽁 꺼 키",
+"krs": "더이 라 쓰엉 야 꽁 꺼 키",
+"src": "ai"
+},
+"tốc độ quay": {
+"vi": "Tăng tốc độ quay lên đi.",
+"ko": "회전 속도를 높이세요.",
+"kr": "땅 똑 도 꽈이 렌 디",
+"krs": "땅 똑 도 꽈이 렌 디",
+"src": "ai"
+},
+"độ cứng": {
+"vi": "Độ cứng của vật liệu tốt.",
+"ko": "재료의 경도가 좋습니다.",
+"kr": "도 끙 꾸어 벗 리에우 똣",
+"krs": "도 끙 꾸어 엿 리에우 똣",
+"src": "ai"
+},
+"nhôm": {
+"vi": "Cái này làm bằng nhôm.",
+"ko": "이것은 알루미늄으로 만들었어요.",
+"kr": "까이 나이 람 방 뇸",
+"krs": "까이 나이 람 방 뇸",
+"src": "ai"
+},
+"biến dạng": {
+"vi": "Sản phẩm không bị biến dạng.",
+"ko": "제품이 변형되지 않았습니다.",
+"kr": "싼 펌 콩 비 비엔 장",
+"krs": "산 펌 콩 비 비엔 양",
+"src": "ai"
+},
+"đồng hồ so": {
+"vi": "Dùng đồng hồ so đo đi.",
+"ko": "다이얼 게이지로 측정하세요.",
+"kr": "중 동 호 쏘 도 디",
+"krs": "융 동 호 소 도 디",
+"src": "ai"
+},
+"biên bản nghiệm thu": {
+"vi": "Ký biên bản nghiệm thu đi.",
+"ko": "검사 조서에 서명하세요.",
+"kr": "끼 비엔 반 응이엠 투 디",
+"krs": "끼 비엔 반 응이엠 투 디",
+"src": "ai"
+},
+"ván khuôn": {
+"vi": "Lắp đặt ván khuôn xong rồi.",
+"ko": "거푸집 설치가 끝났습니다.",
+"kr": "랍 닷 반 쿠온 쏭 조이",
+"krs": "랍 닷 얀 쿠온 쏭 로이",
+"src": "ai"
+},
+"sơn nước": {
+"vi": "Tôi đang dùng sơn nước.",
+"ko": "저는 도장(수성 페인트)을 하고 있어요.",
+"kr": "또이 당 중 썬 느억",
+"krs": "또이 당 융 선 느억",
+"src": "ai"
+},
+"máy phát điện": {
+"vi": "Máy phát điện đang chạy tốt.",
+"ko": "발전기가 잘 작동합니다.",
+"kr": "마이 팟 디엔 당 짜이 똣",
+"krs": "마이 팟 디엔 당 짜이 똣",
+"src": "ai"
+},
+"tờ khai nhập": {
+"vi": "Nộp tờ khai nhập đi.",
+"ko": "수입 신고서를 제출하세요.",
+"kr": "놉 떠 카이 녑 디",
+"krs": "놉 떠 카이 녑 디",
+"src": "ai"
+},
+"hàng mẫu": {
+"vi": "Đây là hàng mẫu mới.",
+"ko": "이것은 신상품 견본품이다.",
+"kr": "더이 라 항 머우 머이",
+"krs": "더이 라 항 머우 머이",
+"src": "ai"
+},
+"trọng lượng cả bì": {
+"vi": "Trọng lượng cả bì là năm ký.",
+"ko": "총중량은 5킬로그램이다.",
+"kr": "쫑 르엉 까 비 라 남 끼",
+"krs": "쫑 르엉 까 비 라 남 끼",
+"src": "ai"
+},
+"lấy hàng": {
+"vi": "Tôi đi lấy hàng bây giờ.",
+"ko": "나는 지금 화물 반출하러 간다.",
+"kr": "또이 디 러이 항 버이 저",
+"krs": "또이 디 러이 항 버이 여",
+"src": "ai"
+},
+"dây chuyền chế biến": {
+"vi": "Dây chuyền chế biến đang hoạt động.",
+"ko": "가공 라인이 작동 중이다.",
+"kr": "저이 쭈옌 쩨 비엔 당 호앗 동",
+"krs": "여이 쭈옌 쩨 비엔 당 호앗 동",
+"src": "ai"
+},
+"gia nhiệt": {
+"vi": "Cần gia nhiệt trước khi ăn.",
+"ko": "먹기 전에 가열이 필요하다.",
+"kr": "껀 자 니엣 쯔억 키 안",
+"krs": "껀 야 니엣 쯔억 키 안",
+"src": "ai"
+},
+"truy xuất lô": {
+"vi": "Chúng ta phải truy xuất lô này.",
+"ko": "우리는 이 로트를 추적해야 한다.",
+"kr": "쭝 따 파이 쭈이 쑤엇 로 나이",
+"krs": "쭝 따 파이 쭈이 쑤엇 로 나이",
+"src": "ai"
+},
+"kiểm nghiệm": {
+"vi": "Sản phẩm cần kiểm nghiệm an toàn.",
+"ko": "제품은 안전 시험 분석이 필요하다.",
+"kr": "싼 펌 껀 끼엠 응이엠 안 또안",
+"krs": "산 펌 껀 끼엠 응이엠 안 또안",
+"src": "ai"
+},
+"kiểm hàng nhập": {
+"vi": "Nhân viên đang kiểm hàng nhập.",
+"ko": "직원이 입고 검수를 하고 있다.",
+"kr": "년 비엔 당 끼엠 항 녑",
+"krs": "년 이엔 당 끼엠 항 녑",
+"src": "ai"
+},
+"hao hụt hàng": {
+"vi": "Hao hụt hàng tháng này rất ít.",
+"ko": "이번 달 상품 로스는 아주 적다.",
+"kr": "하오 훗 항 탕 나이 젓 잇",
+"krs": "하오 훗 항 탕 나이 럿 잇",
+"src": "ai"
+},
+"mở ca": {
+"vi": "Tôi chuẩn bị mở ca sáng.",
+"ko": "나는 아침 오픈 준비를 한다.",
+"kr": "또이 쭈언 비 머 까 쌍",
+"krs": "또이 쭈언 비 머 까 상",
+"src": "ai"
+},
+"dụng cụ bếp": {
+"vi": "Hãy rửa sạch dụng cụ bếp.",
+"ko": "주방 도구를 깨끗이 씻으세요.",
+"kr": "하이 즈어 싹 중 꾸 벱",
+"krs": "하이 르어 삭 융 꾸 벱",
+"src": "ai"
+},
+"phản hồi khách": {
+"vi": "Chúng tôi ghi nhận phản hồi khách.",
+"ko": "우리는 고객 피드백을 접수한다.",
+"kr": "쭝 또이 기 년 판 호이 칵",
+"krs": "쭝 또이 기 년 판 호이 칵",
+"src": "ai"
+},
+"dạo": {
+"vi": "Dạo này bạn thế nào?",
+"ko": "요즘 어떻게 지내세요?",
+"kr": "자오 나이 반 테 나오",
+"krs": "야오 나이 반 테 나오",
+"src": "ai"
+},
+"blue": {
+"vi": "Tôi thích màu blue này.",
+"ko": "나는 이 파란색을 좋아한다.",
+"kr": "또이 틱 마우 나이",
+"krs": "또이 틱 마우 나이",
+"src": "ai"
+},
+"monday": {
+"vi": "Hôm nay là Monday.",
+"ko": "오늘은 월요일이다.",
+"kr": "홈 나이 라 모",
+"krs": "홈 나이 라 모",
+"src": "ai"
+},
+"lastly": {
+"vi": "Lastly, tôi muốn cảm ơn.",
+"ko": "마지막으로, 나는 감사하고 싶다.",
+"kr": "라 또이 무온 깜 언",
+"krs": "라 또이 무온 깜 언",
+"src": "ai"
+},
+"explain clearly": {
+"vi": "Xin hãy explain clearly cho tôi.",
+"ko": "내게 명확하게 설명해 주세요.",
+"kr": "씬 하이 애 쪼 또이",
+"krs": "씬 하이 애 쪼 또이",
+"src": "ai"
+},
+"liệu": {
+"vi": "Liệu anh ấy có đến không?",
+"ko": "그가 과연 올까?",
+"kr": "리에우 아인 어이 꼬 덴 콩",
+"krs": "리에우 아인 어이 꼬 덴 콩",
+"src": "ai"
+},
+"máy bán vé tự động": {
+"vi": "Tôi dùng máy bán vé tự động.",
+"ko": "나는 키오스크를 사용한다.",
+"kr": "또이 중 마이 반 배 뜨 동",
+"krs": "또이 융 마이 반 얘 뜨 동",
+"src": "ai"
+},
+"schedule": {
+"vi": "Lịch schedule rất bận.",
+"ko": "일정이 아주 바쁘다.",
+"kr": "릭 젓 번",
+"krs": "릭 럿 번",
+"src": "ai"
+},
+"only": {
+"vi": "Tôi only có một cái này.",
+"ko": "저는 이것이 하나밖에 없어요.",
+"kr": "또이 오 꼬 못 까이 나이",
+"krs": "또이 오 꼬 못 까이 나이",
+"src": "ai"
+},
+"education": {
+"vi": "Education rất quan trọng.",
+"ko": "교육은 아주 중요해요.",
+"kr": "애 젓 꽌 쫑",
+"krs": "애 럿 꽌 쫑",
+"src": "ai"
+},
+"một cái tủ gương": {
+"vi": "Tôi mua một cái tủ gương.",
+"ko": "나는 거울 장식장을 샀습니다.",
+"kr": "또이 무어 못 까이 뚜 그엉",
+"krs": "또이 무어 못 까이 뚜 그엉",
+"src": "ai"
+},
+"vải da nhân tạo": {
+"vi": "Cái áo này là vải da nhân tạo.",
+"ko": "이 옷은 인조가죽 원단이에요.",
+"kr": "까이 아오 나이 라 바이 자 년 따오",
+"krs": "까이 아오 나이 라 야이 야 년 따오",
+"src": "ai"
+},
+"độ bền màu": {
+"vi": "Độ bền màu rất tốt.",
+"ko": "색 유지력이 아주 좋아요.",
+"kr": "도 벤 마우 젓 똣",
+"krs": "도 벤 마우 럿 똣",
+"src": "ai"
+},
+"chiều cao": {
+"vi": "Chiều cao của anh ấy lớn.",
+"ko": "그의 키는 큽니다.",
+"kr": "찌에우 까오 꾸어 아인 어이 런",
+"krs": "찌에우 까오 꾸어 아인 어이 런",
+"src": "ai"
+},
+"rập": {
+"vi": "Đây là rập áo sơ mi.",
+"ko": "이것은 셔츠 패턴입니다.",
+"kr": "더이 라 접 아오 써 미",
+"krs": "더이 라 럽 아오 서 미",
+"src": "ai"
+},
+"may lại": {
+"vi": "Chỗ này cần may lại.",
+"ko": "이곳은 다시 박아야 해요.",
+"kr": "쪼 나이 껀 마이 라이",
+"krs": "쪼 나이 껀 마이 라이",
+"src": "ai"
+},
+"lót túi sau": {
+"vi": "Vải lót túi sau rất mềm.",
+"ko": "뒷주머니감 원단이 아주 부드러워요.",
+"kr": "바이 롯 뚜이 싸우 젓 멤",
+"krs": "야이 롯 뚜이 사우 럿 멤",
+"src": "ai"
+},
+"nẹp đỡ": {
+"vi": "Nẹp đỡ khóa rất chắc chắn.",
+"ko": "지퍼 밑 덧단이 아주 튼튼해요.",
+"kr": "냅 더 코아 젓 짝 짠",
+"krs": "냅 더 코아 럿 짝 짠",
+"src": "ai"
+},
+"tỷ lệ đạt": {
+"vi": "Tỷ lệ đạt rất cao.",
+"ko": "달성률이 아주 높다.",
+"kr": "띠 레 닷 젓 까오",
+"krs": "띠 레 닷 럿 까오",
+"src": "ai"
+},
+"đạt kế hoạch": {
+"vi": "Chúng tôi đã đạt kế hoạch tháng.",
+"ko": "우리는 이번 달 계획을 달성했습니다.",
+"kr": "쭝 또이 다 닷 께 호악 탕",
+"krs": "쭝 또이 다 닷 께 호악 탕",
+"src": "ai"
+},
+"công đoạn sau": {
+"vi": "Hãy đưa hàng cho công đoạn sau.",
+"ko": "후 공정으로 물건을 전달하세요.",
+"kr": "하이 드어 항 쪼 꽁 도안 싸우",
+"krs": "하이 드어 항 쪼 꽁 도안 사우",
+"src": "ai"
+},
+"dừng chuyền": {
+"vi": "Máy hỏng nên phải dừng chuyền.",
+"ko": "기계가 고장 나서 라인을 정지해야 합니다.",
+"kr": "마이 홍 넨 파이 증 쭈옌",
+"krs": "마이 홍 넨 파이 응 쭈옌",
+"src": "ai"
+},
+"thao tác chuẩn": {
+"vi": "Bạn hãy làm theo thao tác chuẩn.",
+"ko": "표준 작업에 따라 하세요.",
+"kr": "반 하이 람 태오 타오 딱 쭈언",
+"krs": "반 하이 람 태오 타오 딱 쭈언",
+"src": "ai"
+},
+"thiếu người": {
+"vi": "Hôm nay xưởng đang bị thiếu người.",
+"ko": "오늘 공장에 인원이 부족합니다.",
+"kr": "홈 나이 쓰엉 당 비 티에우 응으어이",
+"krs": "홈 나이 쓰엉 당 비 티에우 응으어이",
+"src": "ai"
+},
+"hàng dở dang": {
+"vi": "Hãy kiểm tra hàng dở dang này.",
+"ko": "이 재공품들을 점검하세요.",
+"kr": "하이 끼엠 짜 항 저 장 나이",
+"krs": "하이 끼엠 짜 항 여 양 나이",
+"src": "ai"
+},
+"bảng kiểm": {
+"vi": "Bạn đã điền xong bảng kiểm chưa?",
+"ko": "점검표 작성을 다 마쳤나요?",
+"kr": "반 다 디엔 쏭 방 끼엠 쯔어",
+"krs": "반 다 디엔 쏭 방 끼엠 쯔어",
+"src": "ai"
+},
+"mẫu đối chiếu": {
+"vi": "Đây là mẫu đối chiếu tiêu chuẩn.",
+"ko": "이것이 표준 한도 견본입니다.",
+"kr": "더이 라 머우 도이 찌에우 띠에우 쭈언",
+"krs": "더이 라 머우 도이 찌에우 띠에우 쭈언",
+"src": "ai"
+},
+"biện pháp phòng ngừa": {
+"vi": "Chúng ta cần biện pháp phòng ngừa.",
+"ko": "우리는 예방 조치가 필요합니다.",
+"kr": "쭝 따 껀 비엔 팝 퐁 응으어",
+"krs": "쭝 따 껀 비엔 팝 퐁 응으어",
+"src": "ai"
+},
+"đo kích thước": {
+"vi": "Hãy đo kích thước của sản phẩm.",
+"ko": "제품의 치수를 측정하세요.",
+"kr": "하이 도 끽 트억 꾸어 싼 펌",
+"krs": "하이 도 끽 트억 꾸어 산 펌",
+"src": "ai"
+},
+"cấp phát vật tư": {
+"vi": "Bộ phận kho đang cấp phát vật tư.",
+"ko": "창고 부서에서 자재를 불출하고 있습니다.",
+"kr": "보 펀 코 당 껍 팟 벗 뜨",
+"krs": "보 펀 코 당 껍 팟 엿 뜨",
+"src": "ai"
+},
+"nhà cung cấp": {
+"vi": "Hãy gọi cho nhà cung cấp ngay.",
+"ko": "즉시 공급업체에 전화하세요.",
+"kr": "하이 고이 쪼 냐 꿍 껍 응아이",
+"krs": "하이 고이 쪼 냐 꿍 껍 응아이",
+"src": "ai"
+},
+"hạn dùng vật tư": {
+"vi": "Hãy kiểm tra hạn dùng vật tư.",
+"ko": "자재 유효기간을 확인하세요.",
+"kr": "하이 끼엠 짜 한 중 벗 뜨",
+"krs": "하이 끼엠 짜 한 융 엿 뜨",
+"src": "ai"
+},
+"bảo trì định kỳ": {
+"vi": "Hôm nay có lịch bảo trì định kỳ.",
+"ko": "오늘 정기 보전 일정이 있습니다.",
+"kr": "홈 나이 꼬 릭 바오 찌 딘 끼",
+"krs": "홈 나이 꼬 릭 바오 찌 딘 끼",
+"src": "ai"
+},
+"thay dầu": {
+"vi": "Đến lúc phải thay dầu máy.",
+"ko": "기계 오일을 교환할 시간입니다.",
+"kr": "덴 룩 파이 타이 저우 마이",
+"krs": "덴 룩 파이 타이 여우 마이",
+"src": "ai"
+},
+"rò rỉ": {
+"vi": "Máy này đang bị rò rỉ dầu.",
+"ko": "이 기계에서 오일이 누유되고 있습니다.",
+"kr": "마이 나이 당 비 조 지 저우",
+"krs": "마이 나이 당 비 로 리 여우",
+"src": "ai"
+},
+"kiểm tra an toàn": {
+"vi": "Chúng ta cần kiểm tra an toàn.",
+"ko": "우리는 안전 점검을 해야 합니다.",
+"kr": "쭝 따 껀 끼엠 짜 안 또안",
+"krs": "쭝 따 껀 끼엠 짜 안 또안",
+"src": "ai"
+},
+"đồ bảo hộ": {
+"vi": "Hãy mặc đồ bảo hộ đầy đủ.",
+"ko": "보호구를 제대로 착용하세요.",
+"kr": "하이 막 도 바오 호 더이 두",
+"krs": "하이 막 도 바오 호 더이 두",
+"src": "ai"
+},
+"phân loại rác": {
+"vi": "Hãy phân loại rác đúng quy định.",
+"ko": "규정에 맞게 쓰레기를 분리하세요.",
+"kr": "하이 펀 로아이 작 둥 뀌 딘",
+"krs": "하이 펀 로아이 락 둥 뀌 딘",
+"src": "ai"
+},
+"đơn xin nghỉ": {
+"vi": "Tôi đã nộp đơn xin nghỉ.",
+"ko": "저는 휴가 신청서를 제출했습니다.",
+"kr": "또이 다 놉 던 씬 응이",
+"krs": "또이 다 놉 던 씬 응이",
+"src": "ai"
+},
+"thôi việc": {
+"vi": "Anh ấy đã quyết định thôi việc.",
+"ko": "그는 퇴사하기로 결정했습니다.",
+"kr": "아인 어이 다 꾸이엣 딘 토이 비엑",
+"krs": "아인 어이 다 꾸이엣 딘 토이 이엑",
+"src": "ai"
+},
+"báo cáo tuần": {
+"vi": "Tôi đã làm xong báo cáo tuần.",
+"ko": "주간 보고 작성을 끝냈습니다.",
+"kr": "또이 다 람 쏭 바오 까오 뚜언",
+"krs": "또이 다 람 쏭 바오 까오 뚜언",
+"src": "ai"
+},
+"công chứng": {
+"vi": "Tôi cần đi công chứng giấy tờ.",
+"ko": "서류를 공증받으러 가야 합니다.",
+"kr": "또이 껀 디 꽁 쯩 저이 떠",
+"krs": "또이 껀 디 꽁 쯩 여이 떠",
+"src": "ai"
+},
+"ký hợp đồng": {
+"vi": "Hôm nay chúng ta ký hợp đồng.",
+"ko": "오늘 우리는 계약을 체결합니다.",
+"kr": "홈 나이 쭝 따 끼 헙 동",
+"krs": "홈 나이 쭝 따 끼 헙 동",
+"src": "ai"
+},
+"bản vẽ kỹ thuật": {
+"vi": "Hãy xem lại bản vẽ kỹ thuật.",
+"ko": "기술 도면을 다시 확인하세요.",
+"kr": "하이 쌤 라이 반 배 끼 투엇",
+"krs": "하이 쌤 라이 반 얘 끼 투엇",
+"src": "ai"
+},
+"dây chuyền tự động": {
+"vi": "Dây chuyền tự động rất nhanh.",
+"ko": "자동화 라인이 아주 빠릅니다.",
+"kr": "저이 쭈옌 뜨 동 젓 나인",
+"krs": "여이 쭈옌 뜨 동 럿 나인",
+"src": "ai"
+},
+"bàn thao tác": {
+"vi": "Đây là bàn thao tác mới.",
+"ko": "이것은 새 작업대입니다.",
+"kr": "더이 라 반 타오 딱 머이",
+"krs": "더이 라 반 타오 딱 머이",
+"src": "ai"
+},
+"màn hình cảm ứng": {
+"vi": "Màn hình cảm ứng rất tốt.",
+"ko": "터치 패널이 아주 좋습니다.",
+"kr": "만 힌 깜 응 젓 똣",
+"krs": "만 힌 깜 응 럿 똣",
+"src": "ai"
+},
+"thiếc thừa": {
+"vi": "Hãy bỏ thiếc thừa đi.",
+"ko": "솔더 볼을 버리세요.",
+"kr": "하이 보 티엑 트어 디",
+"krs": "하이 보 티엑 트어 디",
+"src": "ai"
+},
+"chập mạch": {
+"vi": "Máy bị chập mạch rồi.",
+"ko": "기계가 단락되었습니다.",
+"kr": "마이 비 쩝 막 조이",
+"krs": "마이 비 쩝 막 로이",
+"src": "ai"
+},
+"thử nghiệm nhiệt": {
+"vi": "Bắt đầu thử nghiệm nhiệt nhé.",
+"ko": "온도 시험을 시작합시다.",
+"kr": "밧 더우 트 응이엠 니엣 냬",
+"krs": "밧 더우 트 응이엠 니엣 냬",
+"src": "ai"
+},
+"kiểm tra sạc": {
+"vi": "Tôi đang kiểm tra sạc.",
+"ko": "저는 충전 검사를 하고 있습니다.",
+"kr": "또이 당 끼엠 짜 싹",
+"krs": "또이 당 끼엠 짜 삭",
+"src": "ai"
+},
+"miếng tản nhiệt": {
+"vi": "Lắp miếng tản nhiệt vào đây.",
+"ko": "여기에 방열 패드를 부착하세요.",
+"kr": "랍 미엥 딴 니엣 바오 더이",
+"krs": "랍 미엥 딴 니엣 야오 더이",
+"src": "ai"
+},
+"dán tem bảo hành": {
+"vi": "Dán tem bảo hành lên sản phẩm.",
+"ko": "제품에 보증 라벨을 부착하세요.",
+"kr": "잔 땜 바오 하인 렌 싼 펌",
+"krs": "얀 땜 바오 하인 렌 산 펌",
+"src": "ai"
+},
+"kho phom": {
+"vi": "Phom giày ở trong kho phom.",
+"ko": "라스트는 라스트 창고에 있습니다.",
+"kr": "폼 자이 어 쫑 코 폼",
+"krs": "폼 야이 어 쫑 코 폼",
+"src": "ai"
+},
+"tán khuy": {
+"vi": "Thợ đang tán khuy giày.",
+"ko": "작업자가 신발 아일릿을 박고 있습니다.",
+"kr": "터 당 딴 쿠이 자이",
+"krs": "터 당 딴 쿠이 야이",
+"src": "ai"
+},
+"thử độ mài mòn": {
+"vi": "Cần thử độ mài mòn đế.",
+"ko": "밑창 마모 시험이 필요합니다.",
+"kr": "껀 트 도 마이 몬 데",
+"krs": "껀 트 도 마이 몬 데",
+"src": "ai"
+},
+"hộp giày": {
+"vi": "Xếp giày vào hộp giày.",
+"ko": "신발을 신발 상자에 넣으세요.",
+"kr": "쎕 자이 바오 홉 자이",
+"krs": "쎕 야이 야오 홉 야이",
+"src": "ai"
+},
+"gia công chính xác": {
+"vi": "Xưởng gia công chính xác tốt.",
+"ko": "정밀 가공 공장이 좋습니다.",
+"kr": "쓰엉 자 꽁 찐 싹 똣",
+"krs": "쓰엉 야 꽁 찐 싹 똣",
+"src": "ai"
+},
+"dung dịch làm mát": {
+"vi": "Thay dung dịch làm mát mới.",
+"ko": "새 절삭유로 교체하세요.",
+"kr": "타이 중 직 람 맛 머이",
+"krs": "타이 융 익 람 맛 머이",
+"src": "ai"
+},
+"nhiệt luyện": {
+"vi": "Thép đã qua nhiệt luyện.",
+"ko": "철강이 열처리를 거쳤습니다.",
+"kr": "탭 다 꽈 니엣 루옌",
+"krs": "탭 다 꽈 니엣 루옌",
+"src": "ai"
+},
+"tôn": {
+"vi": "Tấm tôn này rất nặng.",
+"ko": "이 철판은 아주 무겁습니다.",
+"kr": "떰 똔 나이 젓 낭",
+"krs": "떰 똔 나이 럿 낭",
+"src": "ai"
+},
+"cong vênh": {
+"vi": "Sản phẩm bị cong vênh rồi.",
+"ko": "제품이 휘었습니다.",
+"kr": "싼 펌 비 꽁 벤 조이",
+"krs": "산 펌 비 꽁 옌 로이",
+"src": "ai"
+},
+"panme": {
+"vi": "Đo độ dày bằng panme.",
+"ko": "마이크로미터로 두께를 측정합니다.",
+"kr": "도 도 자이 방 빠",
+"krs": "도 도 야이 방 빠",
+"src": "ai"
+},
+"bàn giao công trình": {
+"vi": "Hôm nay bàn giao công trình.",
+"ko": "오늘 준공을 인계합니다.",
+"kr": "홈 나이 반 자오 꽁 찐",
+"krs": "홈 나이 반 야오 꽁 찐",
+"src": "ai"
+},
+"dầm": {
+"vi": "Lắp đặt dầm thép chắc chắn.",
+"ko": "철골 보를 튼튼하게 설치하세요.",
+"kr": "랍 닷 점 탭 짝 짠",
+"krs": "랍 닷 염 탭 짝 짠",
+"src": "ai"
+},
+"hàn kết cấu": {
+"vi": "Thợ đang hàn kết cấu.",
+"ko": "작업자가 철골 용접을 하고 있습니다.",
+"kr": "터 당 한 껫 꺼우",
+"krs": "터 당 한 껫 꺼우",
+"src": "ai"
+},
+"máy nén khí": {
+"vi": "Bật máy nén khí lên nhé.",
+"ko": "컴프레서를 켜세요.",
+"kr": "벗 마이 낸 키 렌 냬",
+"krs": "벗 마이 낸 키 렌 냬",
+"src": "ai"
+},
+"kiểm hoá": {
+"vi": "Hàng đang đợi kiểm hoá.",
+"ko": "화물이 세관 검사를 기다리고 있습니다.",
+"kr": "항 당 더이 끼엠 호아",
+"krs": "항 당 더이 끼엠 호아",
+"src": "ai"
+},
+"hàng phi mậu dịch": {
+"vi": "Đây là hàng phi mậu dịch.",
+"ko": "이것은 비무역 물품이다.",
+"kr": "더이 라 항 피 머우 직",
+"krs": "더이 라 항 피 머우 익",
+"src": "ai"
+},
+"kích thước kiện": {
+"vi": "Kiểm tra kích thước kiện hàng.",
+"ko": "포장 치수를 확인하세요.",
+"kr": "끼엠 짜 끽 트억 끼엔 항",
+"krs": "끼엠 짜 끽 트억 끼엔 항",
+"src": "ai"
+},
+"phí lưu kho": {
+"vi": "Phí lưu kho rất cao.",
+"ko": "보관료가 너무 비싸다.",
+"kr": "피 르우 코 젓 까오",
+"krs": "피 르우 코 럿 까오",
+"src": "ai"
+},
+"phòng chế biến": {
+"vi": "Đi vào phòng chế biến.",
+"ko": "가공실로 들어가세요.",
+"kr": "디 바오 퐁 쩨 비엔",
+"krs": "디 야오 퐁 쩨 비엔",
+"src": "ai"
+},
+"làm nguội nhanh": {
+"vi": "Cần làm nguội nhanh thực phẩm.",
+"ko": "식품을 급속 냉각해야 한다.",
+"kr": "껀 람 응우오이 나인 특 펌",
+"krs": "껀 람 응우오이 나인 특 펌",
+"src": "ai"
+},
+"kim loại lẫn": {
+"vi": "Tìm thấy kim loại lẫn.",
+"ko": "금속 혼입이 발견되었다.",
+"kr": "띰 터이 낌 로아이 런",
+"krs": "띰 터이 낌 로아이 런",
+"src": "ai"
+},
+"phòng thí nghiệm": {
+"vi": "Tôi ở phòng thí nghiệm.",
+"ko": "나는 시험실에 있다.",
+"kr": "또이 어 퐁 티 응이엠",
+"krs": "또이 어 퐁 티 응이엠",
+"src": "ai"
+},
+"dán giá": {
+"vi": "Nhớ dán giá sản phẩm.",
+"ko": "상품에 가격표 부착을 기억하세요.",
+"kr": "녀 잔 자 싼 펌",
+"krs": "녀 얀 야 산 펌",
+"src": "ai"
+},
+"camera an ninh": {
+"vi": "Camera an ninh đang hoạt động.",
+"ko": "보안 카메라가 작동 중이다.",
+"kr": "까 안 닌 당 호앗 동",
+"krs": "까 안 닌 당 호앗 동",
+"src": "ai"
+},
+"đóng ca": {
+"vi": "Bây giờ chuẩn bị đóng ca.",
+"ko": "지금 마감을 준비한다.",
+"kr": "버이 저 쭈언 비 동 까",
+"krs": "버이 여 쭈언 비 동 까",
+"src": "ai"
+},
+"nguyên liệu nấu": {
+"vi": "Mua nguyên liệu nấu ăn.",
+"ko": "조리 재료를 산다.",
+"kr": "무어 응우옌 리에우 너우 안",
+"krs": "무어 응우옌 리에우 너우 안",
+"src": "ai"
+},
+"cũng bình thường thôi": {
+"vi": "Món ăn này cũng bình thường thôi.",
+"ko": "이 음식은 그냥 평범해요.",
+"kr": "몬 안 나이 꿍 빈 트엉 토이",
+"krs": "몬 안 나이 꿍 빈 트엉 토이",
+"src": "ai"
+},
+"chỗ ngồi": {
+"vi": "Đây là chỗ ngồi của tôi.",
+"ko": "여기는 내 좌석이다.",
+"kr": "더이 라 쪼 응오이 꾸어 또이",
+"krs": "더이 라 쪼 응오이 꾸어 또이",
+"src": "ai"
+},
+"kỷ lục": {
+"vi": "Anh ấy đã phá kỷ lục.",
+"ko": "그는 기록을 깼다.",
+"kr": "아인 어이 다 파 끼 룩",
+"krs": "아인 어이 다 파 끼 룩",
+"src": "ai"
+},
+"hết giấy": {
+"vi": "Máy in hết giấy rồi.",
+"ko": "프린터 종이가 다 떨어졌어요.",
+"kr": "마이 인 헷 저이 조이",
+"krs": "마이 인 헷 여이 로이",
+"src": "ai"
+},
+"nói": {
+"vi": "Tôi nói tiếng Việt.",
+"ko": "저는 베트남어를 말해요.",
+"kr": "또이 노이 띠엥 비엣",
+"krs": "또이 노이 띠엥 이엣",
+"src": "ai"
+},
+"sao anh lại quên?": {
+"vi": "Sao anh lại quên?",
+"ko": "왜 잊었어?",
+"kr": "싸오 아인 라이 꿴",
+"krs": "사오 아인 라이 꿴",
+"src": "ai"
+},
+"port": {
+"vi": "Tàu đến port này.",
+"ko": "배가 이 항구에 온다.",
+"kr": "따우 덴 뽀 나이",
+"krs": "따우 덴 뽀 나이",
+"src": "ai"
+},
+"media": {
+"vi": "Tôi xem tin tức trên media.",
+"ko": "나는 미디어로 뉴스를 본다.",
+"kr": "또이 쌤 띤 뜩 쩬 매",
+"krs": "또이 쌤 띤 뜩 쩬 매",
+"src": "ai"
+},
+"áo phông": {
+"vi": "Tôi mặc một chiếc áo phông.",
+"ko": "나는 티셔츠 한 장을 입는다.",
+"kr": "또이 막 못 찌엑 아오 퐁",
+"krs": "또이 막 못 찌엑 아오 퐁",
+"src": "ai"
+},
+"mỹ nghệ": {
+"vi": "Đây là hàng mỹ nghệ.",
+"ko": "이것은 공예품이다.",
+"kr": "더이 라 항 미 응에",
+"krs": "더이 라 항 미 응에",
+"src": "ai"
+},
+"ăn với tự được": {
+"vi": "Bé ăn với tự được.",
+"ko": "아이가 혼자서 먹을 수 있다.",
+"kr": "배 안 버이 뜨 드억",
+"krs": "배 안 여이 뜨 드억",
+"src": "ai"
+},
+"mí lé": {
+"vi": "Đường mí lé đẹp.",
+"ko": "톱스티치 라인이 예쁘다.",
+"kr": "드엉 미 래 댑",
+"krs": "드엉 미 래 댑",
+"src": "ai"
+},
+"ngực": {
+"vi": "Tôi đau ở ngực.",
+"ko": "나는 가슴이 아프다.",
+"kr": "또이 다우 어 응윽",
+"krs": "또이 다우 어 응윽",
+"src": "ai"
+},
+"kết hợp": {
+"vi": "Hãy kết hợp hai màu này lại.",
+"ko": "이 두 색상을 결합해 보세요.",
+"kr": "하이 껫 헙 하이 마우 나이 라이",
+"krs": "하이 껫 헙 하이 마우 나이 라이",
+"src": "ai"
+},
+"hõm đầu ly": {
+"vi": "Tránh hõm đầu ly.",
+"ko": "다트 끝 보조개를 피하다.",
+"kr": "짜인 홈 더우 리",
+"krs": "짜인 홈 더우 리",
+"src": "ai"
+},
+"phần dư": {
+"vi": "Cắt bỏ phần dư.",
+"ko": "여유분을 잘라내다.",
+"kr": "깟 보 펀 즈",
+"krs": "깟 보 펀 으",
+"src": "ai"
+},
+"móc khóa": {
+"vi": "May móc khóa vào.",
+"ko": "걸고리를 달아주세요.",
+"kr": "마이 목 코아 바오",
+"krs": "마이 목 코아 야오",
+"src": "ai"
+},
+"nút áo": {
+"vi": "Đính nút áo chắc.",
+"ko": "단추를 튼튼하게 달다.",
+"kr": "딘 눗 아오 짝",
+"krs": "딘 눗 아오 짝",
+"src": "ai"
+},
+"tẩy": {
+"vi": "Dùng cái tẩy này.",
+"ko": "이 지우개를 쓰세요.",
+"kr": "중 까이 떠이 나이",
+"krs": "융 까이 떠이 나이",
+"src": "ai"
+},
+"đặt": {
+"vi": "Tôi muốn đặt một bàn.",
+"ko": "테이블 하나를 예약하고 싶다.",
+"kr": "또이 무온 닷 못 반",
+"krs": "또이 무온 닷 못 반",
+"src": "ai"
+},
+"nút dự trữ": {
+"vi": "Áo này có một nút dự trữ.",
+"ko": "이 옷에는 여유 단추가 하나 있어요.",
+"kr": "아오 나이 꼬 못 눗 즈 쯔",
+"krs": "아오 나이 꼬 못 눗 으 쯔",
+"src": "ai"
+},
+"băng dính nhám": {
+"vi": "Dùng băng dính nhám đi.",
+"ko": "찍찍이 테이프를 사용하세요.",
+"kr": "중 방 진 냠 디",
+"krs": "융 방 인 냠 디",
+"src": "ai"
+},
+"ca ngày": {
+"vi": "Tôi làm ca ngày hôm nay.",
+"ko": "나는 오늘 주간조로 일한다.",
+"kr": "또이 람 까 응아이 홈 나이",
+"krs": "또이 람 까 응아이 홈 나이",
+"src": "ai"
+},
+"nguyên vật liệu": {
+"vi": "Kho còn nhiều nguyên vật liệu.",
+"ko": "창고에 원자재가 아직 많다.",
+"kr": "코 꼰 니에우 응우연 벗 리에우",
+"krs": "코 꼰 니에우 응우연 엿 리에우",
+"src": "ai"
+},
+"chưa đạt": {
+"vi": "Sản phẩm này chưa đạt.",
+"ko": "이 제품은 미달이다.",
+"kr": "싼 펌 나이 쯔어 닷",
+"krs": "산 펌 나이 쯔어 닷",
+"src": "ai"
+},
+"nút thắt cổ chai": {
+"vi": "Đây là nút thắt cổ chai.",
+"ko": "여기가 병목 공정이다.",
+"kr": "더이 라 눗 탓 꼬 짜이",
+"krs": "더이 라 눗 탓 꼬 짜이",
+"src": "ai"
+},
+"khởi động chuyền": {
+"vi": "Bắt đầu khởi động chuyền ngay.",
+"ko": "지금 바로 라인 가동을 시작해라.",
+"kr": "밧 더우 커이 동 쭈옌 응아이",
+"krs": "밧 더우 커이 동 쭈옌 응아이",
+"src": "ai"
+},
+"hướng dẫn công việc": {
+"vi": "Hãy đọc hướng dẫn công việc.",
+"ko": "작업 표준서를 읽어라.",
+"kr": "하이 독 흐엉 전 꽁 비엑",
+"krs": "하이 독 흐엉 연 꽁 이엑",
+"src": "ai"
+},
+"bố trí nhân lực": {
+"vi": "Bố trí nhân lực rất tốt.",
+"ko": "인력 배치가 아주 좋다.",
+"kr": "보 찌 년 륵 젓 똣",
+"krs": "보 찌 년 륵 럿 똣",
+"src": "ai"
+},
+"thành phẩm": {
+"vi": "Đếm số lượng thành phẩm.",
+"ko": "완제품 수량을 세어라.",
+"kr": "뎀 쏘 르엉 타인 펌",
+"krs": "뎀 소 르엉 타인 펌",
+"src": "ai"
+},
+"kiểm tra đầu chuyền": {
+"vi": "Làm kiểm tra đầu chuyền nhé.",
+"ko": "초물 검사를 합시다.",
+"kr": "람 끼엠 짜 더우 쭈옌 냬",
+"krs": "람 끼엠 짜 더우 쭈옌 냬",
+"src": "ai"
+},
+"hàng không đạt": {
+"vi": "Loại bỏ hàng không đạt.",
+"ko": "불합격품을 제외해라.",
+"kr": "로아이 보 항 콩 닷",
+"krs": "로아이 보 항 콩 닷",
+"src": "ai"
+},
+"tái phát": {
+"vi": "Không để tái phát lỗi.",
+"ko": "불량이 재발하게 하지 마라.",
+"kr": "콩 데 따이 팟 로이",
+"krs": "콩 데 따이 팟 로이",
+"src": "ai"
+},
+"hiệu chuẩn thiết bị": {
+"vi": "Cần hiệu chuẩn thiết bị này.",
+"ko": "이 계측기 교정이 필요하다.",
+"kr": "껀 히에우 쭈언 티엣 비 나이",
+"krs": "껀 히에우 쭈언 티엣 비 나이",
+"src": "ai"
+},
+"trả lại kho": {
+"vi": "Trả lại kho hàng thừa.",
+"ko": "남은 물건을 창고에 반납해라.",
+"kr": "짜 라이 코 항 트어",
+"krs": "짜 라이 코 항 트어",
+"src": "ai"
+},
+"hàng nhập về": {
+"vi": "Kiểm tra hàng nhập về.",
+"ko": "입고품을 검사해라.",
+"kr": "끼엠 짜 항 녑 베",
+"krs": "끼엠 짜 항 녑 예",
+"src": "ai"
+},
+"bảo quản": {
+"vi": "Bảo quản hàng cẩn thận.",
+"ko": "물건을 조심히 보관하다.",
+"kr": "바오 꽌 항 껀 턴",
+"krs": "바오 꽌 항 껀 턴",
+"src": "ai"
+},
+"bảo trì phòng ngừa": {
+"vi": "Làm bảo trì phòng ngừa hôm nay.",
+"ko": "오늘 예방 보전을 한다.",
+"kr": "람 바오 찌 퐁 응으어 홈 나이",
+"krs": "람 바오 찌 퐁 응으어 홈 나이",
+"src": "ai"
+},
+"làm sạch máy": {
+"vi": "Nhớ làm sạch máy sau ca.",
+"ko": "근무 후 설비 청소를 잊지 마라.",
+"kr": "녀 람 싹 마이 싸우 까",
+"krs": "녀 람 삭 마이 사우 까",
+"src": "ai"
+},
+"khoá an toàn": {
+"vi": "Kiểm tra khoá an toàn nhé.",
+"ko": "안전 잠금을 확인하세요.",
+"kr": "끼엠 짜 코아 안 또안 냬",
+"krs": "끼엠 짜 코아 안 또안 냬",
+"src": "ai"
+},
+"suýt xảy ra tai nạn": {
+"vi": "Suýt xảy ra tai nạn ở đây.",
+"ko": "여기서 아차 사고가 날 뻔했다.",
+"kr": "쑤잇 싸이 자 따이 난 어 더이",
+"krs": "수잇 싸이 라 따이 난 어 더이",
+"src": "ai"
+},
+"kính bảo hộ": {
+"vi": "Luôn đeo kính bảo hộ.",
+"ko": "항상 보안경을 착용해라.",
+"kr": "루온 대오 낀 바오 호",
+"krs": "루온 대오 낀 바오 호",
+"src": "ai"
+},
+"tiết kiệm điện": {
+"vi": "Chúng ta phải tiết kiệm điện.",
+"ko": "우리는 전기를 절약해야 한다.",
+"kr": "쭝 따 파이 띠엣 끼엠 디엔",
+"krs": "쭝 따 파이 띠엣 끼엠 디엔",
+"src": "ai"
+},
+"tự ý nghỉ": {
+"vi": "Không được tự ý nghỉ.",
+"ko": "무단 결근하면 안 된다.",
+"kr": "콩 드억 뜨 이 응이",
+"krs": "콩 드억 뜨 이 응이",
+"src": "ai"
+},
+"bàn giao": {
+"vi": "Làm thủ tục bàn giao ca.",
+"ko": "근무 인수인계 절차를 해라.",
+"kr": "람 투 뚝 반 자오 까",
+"krs": "람 투 뚝 반 야오 까",
+"src": "ai"
+},
+"báo cáo tháng": {
+"vi": "Nộp báo cáo tháng này.",
+"ko": "이번 달 월간 보고를 제출해라.",
+"kr": "놉 바오 까오 탕 나이",
+"krs": "놉 바오 까오 탕 나이",
+"src": "ai"
+},
+"lưu hồ sơ": {
+"vi": "Lưu hồ sơ vào máy tính.",
+"ko": "서류를 컴퓨터에 보관해라.",
+"kr": "르우 호 써 바오 마이 띤",
+"krs": "르우 호 서 야오 마이 띤",
+"src": "ai"
+},
+"gia hạn hợp đồng": {
+"vi": "Tôi muốn gia hạn hợp đồng.",
+"ko": "나는 계약 연장을 원한다.",
+"kr": "또이 무온 자 한 헙 동",
+"krs": "또이 무온 야 한 헙 동",
+"src": "ai"
+},
+"mẫu thử": {
+"vi": "Làm xong mẫu thử chưa?",
+"ko": "시제품 다 만들었나요?",
+"kr": "람 쏭 머우 트 쯔어",
+"krs": "람 쏭 머우 트 쯔어",
+"src": "ai"
+},
+"robot lắp ráp": {
+"vi": "Robot lắp ráp đang làm việc.",
+"ko": "조립 로봇이 일하고 있다.",
+"kr": "조 랍 잡 당 람 비엑",
+"krs": "로 랍 랍 당 람 이엑",
+"src": "ai"
+},
+"đèn báo": {
+"vi": "Đèn báo màu đỏ sáng.",
+"ko": "빨간색 표시등이 켜진다.",
+"kr": "댄 바오 마우 도 쌍",
+"krs": "댄 바오 마우 도 상",
+"src": "ai"
+},
+"cài đặt lại": {
+"vi": "Hãy cài đặt lại máy này.",
+"ko": "이 기계를 재설정하세요.",
+"kr": "하이 까이 닷 라이 마이 나이",
+"krs": "하이 까이 닷 라이 마이 나이",
+"src": "ai"
+},
+"cầu thiếc": {
+"vi": "Có lỗi cầu thiếc ở đây.",
+"ko": "여기에 브리지 불량 오류가 있다.",
+"kr": "꼬 로이 꺼우 티엑 어 더이",
+"krs": "꼬 로이 꺼우 티엑 어 더이",
+"src": "ai"
+},
+"hở mạch": {
+"vi": "Mạch này bị hở mạch rồi.",
+"ko": "이 회로가 단선되었다.",
+"kr": "막 나이 비 허 막 조이",
+"krs": "막 나이 비 허 막 로이",
+"src": "ai"
+},
+"thử độ bền": {
+"vi": "Chúng ta thử độ bền sản phẩm.",
+"ko": "우리는 제품 내구 시험을 한다.",
+"kr": "쭝 따 트 도 벤 싼 펌",
+"krs": "쭝 따 트 도 벤 산 펌",
+"src": "ai"
+},
+"dán màng": {
+"vi": "Thợ đang dán màng bảo vệ.",
+"ko": "작업자가 보호 필름을 부착하고 있다.",
+"kr": "터 당 잔 망 바오 베",
+"krs": "터 당 얀 망 바오 예",
+"src": "ai"
+},
+"băng dính hai mặt": {
+"vi": "Tôi cần băng dính hai mặt.",
+"ko": "나는 양면 테이프가 필요하다.",
+"kr": "또이 껀 방 진 하이 맛",
+"krs": "또이 껀 방 인 하이 맛",
+"src": "ai"
+},
+"kho thành phẩm": {
+"vi": "Hàng ở trong kho thành phẩm.",
+"ko": "물건은 완제품 창고에 있다.",
+"kr": "항 어 쫑 코 타인 펌",
+"krs": "항 어 쫑 코 타인 펌",
+"src": "ai"
+},
+"mẫu giày": {
+"vi": "Đây là mẫu giày mới.",
+"ko": "이것은 신발 신제품 견본이다.",
+"kr": "더이 라 머우 자이 머이",
+"krs": "더이 라 머우 야이 머이",
+"src": "ai"
+},
+"cắt tự động": {
+"vi": "Máy cắt tự động rất nhanh.",
+"ko": "자동 재단기는 아주 빠르다.",
+"kr": "마이 깟 뜨 동 젓 나인",
+"krs": "마이 깟 뜨 동 럿 나인",
+"src": "ai"
+},
+"may lộn": {
+"vi": "Công nhân đang may lộn áo.",
+"ko": "작업자가 옷을 뒤집어 박고 있다.",
+"kr": "꽁 년 당 마이 론 아오",
+"krs": "꽁 년 당 마이 론 아오",
+"src": "ai"
+},
+"thử uốn gập": {
+"vi": "Cần thử uốn gập phần này.",
+"ko": "이 부분을 굴곡 시험해야 한다.",
+"kr": "껀 트 우온 겁 펀 나이",
+"krs": "껀 트 우온 겁 펀 나이",
+"src": "ai"
+},
+"giấy nhồi": {
+"vi": "Cho giấy nhồi vào giày.",
+"ko": "신발에 충전지를 넣으세요.",
+"kr": "쪼 저이 뇨이 바오 자이",
+"krs": "쪼 여이 뇨이 야오 야이",
+"src": "ai"
+},
+"máy cnc": {
+"vi": "Nhà xưởng có máy CNC.",
+"ko": "공장에 CNC 기계가 있다.",
+"kr": "냐 쓰엉 꼬 마이",
+"krs": "냐 쓰엉 꼬 마이",
+"src": "ai"
+},
+"phoi": {
+"vi": "Dọn sạch phoi trên bàn.",
+"ko": "책상 위의 칩을 깨끗이 치우세요.",
+"kr": "존 싹 포이 쩬 반",
+"krs": "욘 삭 포이 쩬 반",
+"src": "ai"
+},
+"tôi thép": {
+"vi": "Thợ đang tôi thép cẩn thận.",
+"ko": "작업자가 조심스럽게 담금질을 하고 있다.",
+"kr": "터 당 또이 탭 껀 턴",
+"krs": "터 당 또이 탭 껀 턴",
+"src": "ai"
+},
+"lắp lẫn": {
+"vi": "Các chi tiết này lắp lẫn.",
+"ko": "이 부품들은 호환 조립이 된다.",
+"kr": "깍 찌 띠엣 나이 랍 런",
+"krs": "깍 찌 띠엣 나이 랍 런",
+"src": "ai"
+},
+"giấy phép xây dựng": {
+"vi": "Chúng tôi có giấy phép xây dựng.",
+"ko": "우리는 건축 허가서를 가지고 있다.",
+"kr": "쭝 또이 꼬 저이 팹 써이 증",
+"krs": "쭝 또이 꼬 여이 팹 써이 응",
+"src": "ai"
+},
+"bảo hành công trình": {
+"vi": "Công ty bảo hành công trình này.",
+"ko": "회사가 이 건물의 하자 보수를 한다.",
+"kr": "꽁 띠 바오 하인 꽁 찐 나이",
+"krs": "꽁 띠 바오 하인 꽁 찐 나이",
+"src": "ai"
+},
+"móng": {
+"vi": "Thợ đang làm móng nhà.",
+"ko": "인부가 집 기초 공사를 하고 있다.",
+"kr": "터 당 람 몽 냐",
+"krs": "터 당 람 몽 냐",
+"src": "ai"
+},
+"lắp cốp pha": {
+"vi": "Đội thợ đang lắp cốp pha.",
+"ko": "인부들이 거푸집을 설치하고 있다.",
+"kr": "도이 터 당 랍 꼽 파",
+"krs": "도이 터 당 랍 꼽 파",
+"src": "ai"
+},
+"xe ben": {
+"vi": "Xe ben chở đất đi rồi.",
+"ko": "덤프트럭이 흙을 싣고 떠났다.",
+"kr": "쌔 밴 쩌 덧 디 조이",
+"krs": "쌔 밴 쩌 덧 디 로이",
+"src": "ai"
+},
+"thông quan điện tử": {
+"vi": "Chúng ta dùng thông quan điện tử.",
+"ko": "우리는 전자 통관을 사용한다.",
+"kr": "쭝 따 중 통 꽌 디엔 뜨",
+"krs": "쭝 따 융 통 꽌 디엔 뜨",
+"src": "ai"
+},
+"hàng quá cảnh": {
+"vi": "Đây là hàng quá cảnh.",
+"ko": "이것은 통과 화물이다.",
+"kr": "더이 라 항 꽈 까인",
+"krs": "더이 라 항 꽈 까인",
+"src": "ai"
+},
+"số kiện": {
+"vi": "Kiểm tra số kiện hàng.",
+"ko": "화물 포장 개수를 확인하다.",
+"kr": "끼엠 짜 쏘 끼엔 항",
+"krs": "끼엠 짜 소 끼엔 항",
+"src": "ai"
+},
+"phí lưu container": {
+"vi": "Phí lưu container rất đắt.",
+"ko": "컨테이너 체선료가 아주 비싸다.",
+"kr": "피 르우 꼬 젓 닷",
+"krs": "피 르우 꼬 럿 닷",
+"src": "ai"
+},
+"nguyên liệu tươi": {
+"vi": "Mua nguyên liệu tươi mỗi ngày.",
+"ko": "매일 신선 원료를 산다.",
+"kr": "무어 응우옌 리에우 뜨어이 모이 응아이",
+"krs": "무어 응우옌 리에우 뜨어이 모이 응아이",
+"src": "ai"
+},
+"kho lạnh": {
+"vi": "Thịt ở trong kho lạnh.",
+"ko": "고기는 냉동 창고에 있다.",
+"kr": "팃 어 쫑 코 라인",
+"krs": "팃 어 쫑 코 라인",
+"src": "ai"
+},
+"máy dò kim loại": {
+"vi": "Dùng máy dò kim loại.",
+"ko": "금속 검출기를 사용하다.",
+"kr": "중 마이 조 낌 로아이",
+"krs": "융 마이 요 낌 로아이",
+"src": "ai"
+},
+"mẫu lưu": {
+"vi": "Lưu lại mẫu lưu này.",
+"ko": "이 보관 시료를 보관하다.",
+"kr": "르우 라이 머우 르우 나이",
+"krs": "르우 라이 머우 르우 나이",
+"src": "ai"
+},
+"thay giá": {
+"vi": "Cần thay giá sản phẩm.",
+"ko": "제품 가격 변경이 필요하다.",
+"kr": "껀 타이 자 싼 펌",
+"krs": "껀 타이 야 산 펌",
+"src": "ai"
+},
+"máy quét mã": {
+"vi": "Dùng máy quét mã vạch.",
+"ko": "바코드 스캐너를 사용하다.",
+"kr": "중 마이 꽷 마 박",
+"krs": "융 마이 꽷 마 약",
+"src": "ai"
+},
+"kết ca": {
+"vi": "Bắt đầu kết ca làm việc.",
+"ko": "근무 시재 정산을 시작하다.",
+"kr": "밧 더우 껫 까 람 비엑",
+"krs": "밧 더우 껫 까 람 이엑",
+"src": "ai"
+},
+"chuẩn bị nguyên liệu": {
+"vi": "Nhanh chóng chuẩn bị nguyên liệu.",
+"ko": "빨리 재료 준비를 하다.",
+"kr": "나인 쫑 쭈언 비 응우옌 리에우",
+"krs": "나인 쫑 쭈언 비 응우옌 리에우",
+"src": "ai"
+},
+"mất mầu": {
+"vi": "Áo này bị mất mầu rồi.",
+"ko": "이 옷은 색상이 안 나온다.",
+"kr": "아오 나이 비 멋 머우 조이",
+"krs": "아오 나이 비 멋 머우 로이",
+"src": "ai"
+},
+"lệnh sản xuất": {
+"vi": "Chúng tôi đang xem lệnh sản xuất.",
+"ko": "우리는 작업 지시서를 보고 있다.",
+"kr": "쭝 또이 당 쌤 렌 싼 쑤엇",
+"krs": "쭝 또이 당 쌤 렌 산 쑤엇",
+"src": "ai"
+},
+"vượt kế hoạch": {
+"vi": "Tháng này chúng ta vượt kế hoạch.",
+"ko": "이번 달 우리는 계획을 초과 달성했다.",
+"kr": "탕 나이 쭝 따 브엇 께 호악",
+"krs": "탕 나이 쭝 따 으엇 께 호악",
+"src": "ai"
+},
+"cân bằng chuyền": {
+"vi": "Cần cân bằng chuyền sản xuất hôm nay.",
+"ko": "오늘 생산 라인 밸런싱이 필요하다.",
+"kr": "껀 껀 방 쭈옌 싼 쑤엇 홈 나이",
+"krs": "껀 껀 방 쭈옌 산 쑤엇 홈 나이",
+"src": "ai"
+},
+"ca đêm": {
+"vi": "Tôi phải làm ca đêm tối nay.",
+"ko": "나는 오늘 밤 야간조 근무를 해야 한다.",
+"kr": "또이 파이 람 까 뎀 또이 나이",
+"krs": "또이 파이 람 까 뎀 또이 나이",
+"src": "ai"
+},
+"đào tạo tay nghề": {
+"vi": "Công ty tổ chức đào tạo tay nghề.",
+"ko": "회사는 기능 교육을 조직한다.",
+"kr": "꽁 띠 또 쯕 다오 따오 따이 응에",
+"krs": "꽁 띠 또 쯕 다오 따오 따이 응에",
+"src": "ai"
+},
+"luân chuyển": {
+"vi": "Nhân viên mới cần được luân chuyển.",
+"ko": "신입 사원은 순환 배치가 필요하다.",
+"kr": "년 비엔 머이 껀 드억 루언 쭈옌",
+"krs": "년 이엔 머이 껀 드억 루언 쭈옌",
+"src": "ai"
+},
+"bán thành phẩm": {
+"vi": "Hãy mang bán thành phẩm qua đây.",
+"ko": "반제품을 이쪽으로 가져오세요.",
+"kr": "하이 망 반 타인 펌 꽈 더이",
+"krs": "하이 망 반 타인 펌 꽈 더이",
+"src": "ai"
+},
+"kiểm tra giữa chuyền": {
+"vi": "Thực hiện kiểm tra giữa chuyền cẩn thận.",
+"ko": "공정 검사를 꼼꼼히 실시하세요.",
+"kr": "특 히엔 끼엠 짜 즈어 쭈옌 껀 턴",
+"krs": "특 히엔 끼엠 짜 으어 쭈옌 껀 턴",
+"src": "ai"
+},
+"cách ly hàng lỗi": {
+"vi": "Nhớ cách ly hàng lỗi ngay lập tức.",
+"ko": "불량품을 즉시 격리하는 것을 기억하세요.",
+"kr": "녀 깍 리 항 로이 응아이 럽 뜩",
+"krs": "녀 깍 리 항 로이 응아이 럽 뜩",
+"src": "ai"
+},
+"khiếu nại khách hàng": {
+"vi": "Chúng ta nhận khiếu nại khách hàng.",
+"ko": "우리는 고객 클레임을 받았다.",
+"kr": "쭝 따 년 키에우 나이 칵 항",
+"krs": "쭝 따 년 키에우 나이 칵 항",
+"src": "ai"
+},
+"độ chính xác": {
+"vi": "Độ chính xác của máy rất cao.",
+"ko": "기계의 정밀도가 매우 높다.",
+"kr": "도 찐 싹 꾸어 마이 젓 까오",
+"krs": "도 찐 싹 꾸어 마이 럿 까오",
+"src": "ai"
+},
+"kiểm kê định kỳ": {
+"vi": "Hôm nay có kiểm kê định kỳ kho.",
+"ko": "오늘 창고 정기 재고 조사가 있다.",
+"kr": "홈 나이 꼬 끼엠 께 딘 끼 코",
+"krs": "홈 나이 꼬 끼엠 께 딘 끼 코",
+"src": "ai"
+},
+"kiểm tra hàng nhập": {
+"vi": "Tôi đang kiểm tra hàng nhập kho.",
+"ko": "나는 입고 검사를 하고 있다.",
+"kr": "또이 당 끼엠 짜 항 녑 코",
+"krs": "또이 당 끼엠 짜 항 녑 코",
+"src": "ai"
+},
+"khu vực để hàng": {
+"vi": "Để hàng đúng khu vực để hàng.",
+"ko": "물품을 적치 구역에 바르게 놓으세요.",
+"kr": "데 항 둥 쿠 븍 데 항",
+"krs": "데 항 둥 쿠 윽 데 항",
+"src": "ai"
+},
+"sửa chữa khẩn": {
+"vi": "Máy này cần sửa chữa khẩn.",
+"ko": "이 기계는 긴급 수리가 필요하다.",
+"kr": "마이 나이 껀 쓰어 쯔어 컨",
+"krs": "마이 나이 껀 스어 쯔어 컨",
+"src": "ai"
+},
+"hiệu chỉnh máy": {
+"vi": "Thợ đang hiệu chỉnh máy móc.",
+"ko": "기술자가 설비 조정을 하고 있다.",
+"kr": "터 당 히에우 찐 마이 목",
+"krs": "터 당 히에우 찐 마이 목",
+"src": "ai"
+},
+"phụ tùng dự phòng": {
+"vi": "Chúng ta còn phụ tùng dự phòng không?",
+"ko": "우리에게 예비 부품이 남아 있나요?",
+"kr": "쭝 따 꼰 푸 뚱 즈 퐁 콩",
+"krs": "쭝 따 꼰 푸 뚱 으 퐁 콩",
+"src": "ai"
+},
+"sơ cứu": {
+"vi": "Công nhân cần học sơ cứu cơ bản.",
+"ko": "근로자는 기본 응급 처치를 배워야 한다.",
+"kr": "꽁 년 껀 혹 써 끄우 꺼 반",
+"krs": "꽁 년 껀 혹 서 끄우 꺼 반",
+"src": "ai"
+},
+"nút bịt tai": {
+"vi": "Hãy đeo nút bịt tai khi làm việc.",
+"ko": "일할 때 귀마개를 착용하세요.",
+"kr": "하이 대오 눗 빗 따이 키 람 비엑",
+"krs": "하이 대오 눗 빗 따이 키 람 이엑",
+"src": "ai"
+},
+"kiểm tra sức khoẻ": {
+"vi": "Công ty tổ chức kiểm tra sức khoẻ.",
+"ko": "회사는 건강 검진을 조직한다.",
+"kr": "꽁 띠 또 쯕 끼엠 짜 쓱 코애",
+"krs": "꽁 띠 또 쯕 끼엠 짜 슥 코애",
+"src": "ai"
+},
+"kỷ luật": {
+"vi": "Nhân viên phải tuân thủ kỷ luật.",
+"ko": "직원은 규율을 준수해야 한다.",
+"kr": "년 비엔 파이 뚜언 투 끼 루엇",
+"krs": "년 이엔 파이 뚜언 투 끼 루엇",
+"src": "ai"
+},
+"đối thoại": {
+"vi": "Công ty có buổi đối thoại tốt.",
+"ko": "회사는 좋은 대화 시간을 가졌다.",
+"kr": "꽁 띠 꼬 부오이 도이 토아이 똣",
+"krs": "꽁 띠 꼬 부오이 도이 토아이 똣",
+"src": "ai"
+},
+"biên bản họp": {
+"vi": "Hãy viết biên bản họp đầy đủ.",
+"ko": "회의록을 빠짐없이 작성하세요.",
+"kr": "하이 비엣 비엔 반 홉 더이 두",
+"krs": "하이 이엣 비엔 반 홉 더이 두",
+"src": "ai"
+},
+"quyết toán": {
+"vi": "Hôm nay phòng kế toán quyết toán.",
+"ko": "오늘 경리과에서 결산을 한다.",
+"kr": "홈 나이 퐁 께 또안 꾸이엣 또안",
+"krs": "홈 나이 퐁 께 또안 꾸이엣 또안",
+"src": "ai"
+},
+"nhà máy điện tử": {
+"vi": "Tôi làm việc ở nhà máy điện tử.",
+"ko": "나는 전자 공장에서 일한다.",
+"kr": "또이 람 비엑 어 냐 마이 디엔 뜨",
+"krs": "또이 람 이엑 어 냐 마이 디엔 뜨",
+"src": "ai"
+},
+"giai đoạn phát triển": {
+"vi": "Sản phẩm đang ở giai đoạn phát triển.",
+"ko": "제품은 개발 단계에 있다.",
+"kr": "싼 펌 당 어 자이 도안 팟 찌엔",
+"krs": "산 펌 당 어 야이 도안 팟 찌엔",
+"src": "ai"
+},
+"máy in kem hàn": {
+"vi": "Máy in kem hàn đang hoạt động.",
+"ko": "솔더 프린터가 작동 중입니다.",
+"kr": "마이 인 깸 한 당 호앗 동",
+"krs": "마이 인 깸 한 당 호앗 동",
+"src": "ai"
+},
+"còi báo": {
+"vi": "Còi báo vừa mới kêu lên.",
+"ko": "경보음이 방금 울렸습니다.",
+"kr": "꼬이 바오 브어 머이 께우 렌",
+"krs": "꼬이 바오 으어 머이 께우 렌",
+"src": "ai"
+},
+"khởi tạo": {
+"vi": "Bạn hãy khởi tạo lại máy.",
+"ko": "기계를 다시 초기화하세요.",
+"kr": "반 하이 커이 따오 라이 마이",
+"krs": "반 하이 커이 따오 라이 마이",
+"src": "ai"
+},
+"hàn nguội": {
+"vi": "Sản phẩm này bị lỗi hàn nguội.",
+"ko": "이 제품은 냉납 불량이 있습니다.",
+"kr": "싼 펌 나이 비 로이 한 응우오이",
+"krs": "산 펌 나이 비 로이 한 응우오이",
+"src": "ai"
+},
+"rò điện": {
+"vi": "Máy này đang bị rò điện.",
+"ko": "이 기계는 누전되고 있습니다.",
+"kr": "마이 나이 당 비 조 디엔",
+"krs": "마이 나이 당 비 로 디엔",
+"src": "ai"
+},
+"kiểm tra chống nước": {
+"vi": "Tôi đang kiểm tra chống nước.",
+"ko": "방수 검사를 하고 있습니다.",
+"kr": "또이 당 끼엠 짜 쫑 느억",
+"krs": "또이 당 끼엠 짜 쫑 느억",
+"src": "ai"
+},
+"bóc màng": {
+"vi": "Hãy bóc màng bảo vệ ra.",
+"ko": "보호 필름을 제거하세요.",
+"kr": "하이 복 망 바오 베 자",
+"krs": "하이 복 망 바오 예 라",
+"src": "ai"
+},
+"ốc vít nhỏ": {
+"vi": "Tôi cần ốc vít nhỏ này.",
+"ko": "저는 이 소형 나사가 필요합니다.",
+"kr": "또이 껀 옥 빗 뇨 나이",
+"krs": "또이 껀 옥 잇 뇨 나이",
+"src": "ai"
+},
+"nhà máy giày": {
+"vi": "Anh ấy làm ở nhà máy giày.",
+"ko": "그는 신발 공장에서 일합니다.",
+"kr": "아인 어이 람 어 냐 마이 자이",
+"krs": "아인 어이 람 어 냐 마이 야이",
+"src": "ai"
+},
+"bảng màu": {
+"vi": "Hãy xem bảng màu này nhé.",
+"ko": "이 컬러 차트를 보세요.",
+"kr": "하이 쌤 방 마우 나이 냬",
+"krs": "하이 쌤 방 마우 나이 냬",
+"src": "ai"
+},
+"bồi vải": {
+"vi": "Công đoạn bồi vải rất quan trọng.",
+"ko": "원단 합포 공정은 매우 중요합니다.",
+"kr": "꽁 도안 보이 바이 젓 꽌 쫑",
+"krs": "꽁 도안 보이 야이 럿 꽌 쫑",
+"src": "ai"
+},
+"may diễu": {
+"vi": "Cô ấy đang may diễu viền.",
+"ko": "그녀는 테두리를 눌러 박기 하고 있습니다.",
+"kr": "꼬 어이 당 마이 지에우 비엔",
+"krs": "꼬 어이 당 마이 이에우 이엔",
+"src": "ai"
+},
+"giày lỗi": {
+"vi": "Đừng để giày lỗi ra ngoài.",
+"ko": "불량 신발을 밖으로 내보내지 마세요.",
+"kr": "등 데 자이 로이 자 응오아이",
+"krs": "등 데 야이 로이 라 응오아이",
+"src": "ai"
+},
+"túi hút ẩm": {
+"vi": "Cho túi hút ẩm vào hộp.",
+"ko": "상자에 방습제를 넣으세요.",
+"kr": "쪼 뚜이 훗 엄 바오 홉",
+"krs": "쪼 뚜이 훗 엄 야오 홉",
+"src": "ai"
+},
+"chương trình gia công": {
+"vi": "Cài đặt chương trình gia công mới.",
+"ko": "새 가공 프로그램을 설정하세요.",
+"kr": "까이 닷 쯔엉 찐 자 꽁 머이",
+"krs": "까이 닷 쯔엉 찐 야 꽁 머이",
+"src": "ai"
+},
+"bavia": {
+"vi": "Hãy loại bỏ bavia trên sản phẩm.",
+"ko": "제품의 버(거스러미)를 제거하세요.",
+"kr": "하이 로아이 보 바 쩬 싼 펌",
+"krs": "하이 로아이 보 바 쩬 산 펌",
+"src": "ai"
+},
+"ram": {
+"vi": "Thép cần được ram kỹ.",
+"ko": "철강은 뜨임 처리가 잘 되어야 합니다.",
+"kr": "탭 껀 드억 잠 끼",
+"krs": "탭 껀 드억 람 끼",
+"src": "ai"
+},
+"hàn mig": {
+"vi": "Chúng tôi sử dụng máy hàn MIG.",
+"ko": "우리는 미그 용접기를 사용합니다.",
+"kr": "쭝 또이 쓰 중 마이 한 미",
+"krs": "쭝 또이 스 융 마이 한 미",
+"src": "ai"
+},
+"kẹp chặt": {
+"vi": "Hãy kẹp chặt vật liệu lại.",
+"ko": "재료를 단단히 클램핑하세요.",
+"kr": "하이 깹 짯 벗 리에우 라이",
+"krs": "하이 깹 짯 엿 리에우 라이",
+"src": "ai"
+},
+"mặt bằng thi công": {
+"vi": "Đây là mặt bằng thi công.",
+"ko": "이것이 현장 배치도입니다.",
+"kr": "더이 라 맛 방 티 꽁",
+"krs": "더이 라 맛 방 티 꽁",
+"src": "ai"
+},
+"khối lượng thi công": {
+"vi": "Khối lượng thi công rất lớn.",
+"ko": "시공 물량이 매우 많습니다.",
+"kr": "코이 르엉 티 꽁 젓 런",
+"krs": "코이 르엉 티 꽁 럿 런",
+"src": "ai"
+},
+"mái": {
+"vi": "Mái nhà đang bị dột.",
+"ko": "지붕에서 물이 샙니다.",
+"kr": "마이 냐 당 비 좃",
+"krs": "마이 냐 당 비 욧",
+"src": "ai"
+},
+"tháo cốp pha": {
+"vi": "Hôm nay chúng tôi tháo cốp pha.",
+"ko": "오늘 우리는 거푸집을 해체합니다.",
+"kr": "홈 나이 쭝 또이 타오 꼽 파",
+"krs": "홈 나이 쭝 또이 타오 꼽 파",
+"src": "ai"
+},
+"xe trộn bê tông": {
+"vi": "Xe trộn bê tông đã đến.",
+"ko": "레미콘 차량이 도착했습니다.",
+"kr": "쌔 쫀 베 똥 다 덴",
+"krs": "쌔 쫀 베 똥 다 덴",
+"src": "ai"
+},
+"mã hs hàng hoá": {
+"vi": "Kiểm tra mã HS hàng hoá.",
+"ko": "품목 HS 코드를 확인하세요.",
+"kr": "끼엠 짜 마 항 호아",
+"krs": "끼엠 짜 마 항 호아",
+"src": "ai"
+},
+"đóng container": {
+"vi": "Hôm nay chúng ta đóng container.",
+"ko": "오늘 우리는 컨테이너를 적입한다.",
+"kr": "홈 나이 쭝 따 동 꼬",
+"krs": "홈 나이 쭝 따 동 꼬",
+"src": "ai"
+},
+"lịch tàu": {
+"vi": "Hãy xem lịch tàu mới nhất.",
+"ko": "최신 선박 스케줄을 확인하세요.",
+"kr": "하이 쌤 릭 따우 머이 녓",
+"krs": "하이 쌤 릭 따우 머이 녓",
+"src": "ai"
+},
+"giao hàng tận nơi": {
+"vi": "Cửa hàng có giao hàng tận nơi.",
+"ko": "가게는 문전 배송을 합니다.",
+"kr": "끄어 항 꼬 자오 항 떤 너이",
+"krs": "끄어 항 꼬 야오 항 떤 너이",
+"src": "ai"
+},
+"nhiệt độ bảo quản": {
+"vi": "Kiểm tra nhiệt độ bảo quản sữa.",
+"ko": "우유 보관 온도를 확인하세요.",
+"kr": "끼엠 짜 니엣 도 바오 꽌 쓰어",
+"krs": "끼엠 짜 니엣 도 바오 꽌 스어",
+"src": "ai"
+},
+"cân định lượng": {
+"vi": "Dùng cân định lượng cho bột.",
+"ko": "가루에 정량 계량을 사용하세요.",
+"kr": "중 껀 딘 르엉 쪼 봇",
+"krs": "융 껀 딘 르엉 쪼 봇",
+"src": "ai"
+},
+"găng tay dùng một lần": {
+"vi": "Nhớ đeo găng tay dùng một lần.",
+"ko": "일회용 장갑 착용을 기억하세요.",
+"kr": "녀 대오 강 따이 중 못 런",
+"krs": "녀 대오 강 따이 융 못 런",
+"src": "ai"
+},
+"hàng cận hạn": {
+"vi": "Bán giảm giá hàng cận hạn.",
+"ko": "유통기한 임박 상품을 할인 판매한다.",
+"kr": "반 잠 자 항 껀 한",
+"krs": "반 얌 야 항 껀 한",
+"src": "ai"
+},
+"máy pos": {
+"vi": "Thanh toán tiền qua máy POS.",
+"ko": "포스 단말기로 돈을 결제한다.",
+"kr": "타인 또안 띠엔 꽈 마이 뽀",
+"krs": "타인 또안 띠엔 꽈 마이 뽀",
+"src": "ai"
+},
+"báo cáo doanh thu": {
+"vi": "Tôi làm báo cáo doanh thu.",
+"ko": "나는 매출 보고를 만든다.",
+"kr": "또이 람 바오 까오 조아인 투",
+"krs": "또이 람 바오 까오 오아인 투",
+"src": "ai"
+},
+"nêm nếm": {
+"vi": "Nêm nếm lại canh cho vừa.",
+"ko": "국 간을 맞도록 다시 보시오.",
+"kr": "넴 넴 라이 까인 쪼 브어",
+"krs": "넴 넴 라이 까인 쪼 으어",
+"src": "ai"
+},
+"ninh": {
+"vi": "Đây là Ninh.",
+"ko": "여기는 닌이야.",
+"kr": "더이 라 닌",
+"krs": "더이 라 닌",
+"src": "ai"
+},
+"bạn làm nghề gì?": {
+"vi": "Bạn làm nghề gì?",
+"ko": "너는 직업이 뭐니?",
+"kr": "반 람 응에 지",
+"krs": "반 람 응에 이",
+"src": "ai"
+},
+"cái nhà đó mới": {
+"vi": "Cái nhà đó mới.",
+"ko": "저 집은 새것이다.",
+"kr": "까이 냐 도 머이",
+"krs": "까이 냐 도 머이",
+"src": "ai"
+},
+"cặp sách ở đâu?": {
+"vi": "Cặp sách ở đâu?",
+"ko": "책가방이 어디에 있나요?",
+"kr": "깝 싹 어 더우",
+"krs": "깝 삭 어 더우",
+"src": "ai"
+},
+"giờ kém": {
+"vi": "Bây giờ mười giờ kém năm.",
+"ko": "지금은 10시 5분 전이다.",
+"kr": "버이 저 므어이 저 깸 남",
+"krs": "버이 여 므어이 여 깸 남",
+"src": "ai"
+},
+"giây": {
+"vi": "Chờ tôi một giây.",
+"ko": "나를 1초만 기다려.",
+"kr": "쩌 또이 못 저이",
+"krs": "쩌 또이 못 여이",
+"src": "ai"
+},
+"bạn thích mùa nào?": {
+"vi": "Bạn thích mùa nào?",
+"ko": "너는 무슨 계절을 좋아하니?",
+"kr": "반 틱 무어 나오",
+"krs": "반 틱 무어 나오",
+"src": "ai"
+},
+"không nên": {
+"vi": "Bạn không nên ăn quá nhiều.",
+"ko": "당신은 너무 많이 먹지 않는 편이 낫다.",
+"kr": "반 콩 넨 안 꽈 니에우",
+"krs": "반 콩 넨 안 꽈 니에우",
+"src": "ai"
+},
+"lá": {
+"vi": "Cây có nhiều lá xanh.",
+"ko": "나무에 초록색 잎이 많다.",
+"kr": "꺼이 꼬 니에우 라 싸인",
+"krs": "꺼이 꼬 니에우 라 싸인",
+"src": "ai"
+},
+"david: tám tháng rồi": {
+"vi": "David: Tám tháng rồi không gặp.",
+"ko": "데이비드: 벌써 8개월이야, 못 본 지.",
+"kr": "자 땀 탕 조이 콩 갑",
+"krs": "야 땀 탕 로이 콩 갑",
+"src": "ai"
+},
+"tần số": {
+"vi": "Tần số vô tuyến rất cao.",
+"ko": "무선 주파수가 매우 높다.",
+"kr": "떤 쏘 보 뚜옌 젓 까오",
+"krs": "떤 소 요 뚜옌 럿 까오",
+"src": "ai"
+},
+"hằn là": {
+"vi": "Anh ấy hằn là rất mệt.",
+"ko": "그는 틀림없이 매우 피곤할 것이다.",
+"kr": "아인 어이 한 라 젓 멧",
+"krs": "아인 어이 한 라 럿 멧",
+"src": "ai"
+},
+"mụ": {
+"vi": "Tôi bị đau mụ đầu.",
+"ko": "나는 머리가 아프다.",
+"kr": "또이 비 다우 무 더우",
+"krs": "또이 비 다우 무 더우",
+"src": "ai"
+},
+"planning": {
+"vi": "Tôi đang làm planning.",
+"ko": "나는 기획을 하고 있다.",
+"kr": "또이 당 람",
+"krs": "또이 당 람",
+"src": "ai"
+},
+"găng tay": {
+"vi": "Hãy đeo găng tay vào.",
+"ko": "장갑을 끼세요.",
+"kr": "하이 대오 강 따이 바오",
+"krs": "하이 대오 강 따이 야오",
+"src": "ai"
+},
+"lỗi xe sợi ở vải": {
+"vi": "Áo này có lỗi xe sợi ở vải.",
+"ko": "이 옷은 원단 실 뽑힘 불량이 있다.",
+"kr": "아오 나이 꼬 로이 쌔 써이 어 바이",
+"krs": "아오 나이 꼬 로이 쌔 서이 어 야이",
+"src": "ai"
+},
+"linh kiện điện tử": {
+"vi": "Đây là linh kiện điện tử.",
+"ko": "이것은 전자부품이다.",
+"kr": "더이 라 린 끼엔 디엔 뜨",
+"krs": "더이 라 린 끼엔 디엔 뜨",
+"src": "ai"
+},
+"tụ điện": {
+"vi": "Lắp tụ điện vào bo.",
+"ko": "기판에 콘덴서를 장착한다.",
+"kr": "랍 뚜 디엔 바오 보",
+"krs": "랍 뚜 디엔 야오 보",
+"src": "ai"
+},
+"chất bán dẫn": {
+"vi": "Nhà máy sản xuất chất bán dẫn.",
+"ko": "공장에서 반도체를 생산한다.",
+"kr": "냐 마이 싼 쑤엇 쩟 반 전",
+"krs": "냐 마이 산 쑤엇 쩟 반 연",
+"src": "ai"
+},
+"dây dẫn": {
+"vi": "Nối dây dẫn vào đây.",
+"ko": "여기에 전선을 연결한다.",
+"kr": "노이 저이 전 바오 더이",
+"krs": "노이 여이 연 야오 더이",
+"src": "ai"
+},
+"hàn thiếc": {
+"vi": "Thợ đang hàn thiếc mạch.",
+"ko": "작업자가 회로를 납땜하고 있다.",
+"kr": "터 당 한 티엑 막",
+"krs": "터 당 한 티엑 막",
+"src": "ai"
+},
+"in kem hàn": {
+"vi": "Máy đang in kem hàn.",
+"ko": "기계가 솔더를 인쇄하고 있다.",
+"kr": "마이 당 인 깸 한",
+"krs": "마이 당 인 깸 한",
+"src": "ai"
+},
+"vặn ốc": {
+"vi": "Vặn ốc cho thật chặt.",
+"ko": "볼트를 아주 단단히 조인다.",
+"kr": "반 옥 쪼 텃 짯",
+"krs": "얀 옥 쪼 텃 짯",
+"src": "ai"
+},
+"làm sạch bo": {
+"vi": "Công nhân đang làm sạch bo.",
+"ko": "작업자가 기판을 세척하고 있다.",
+"kr": "꽁 년 당 람 싹 보",
+"krs": "꽁 년 당 람 삭 보",
+"src": "ai"
+},
+"máy kiểm tra quang học": {
+"vi": "Đưa bo vào máy kiểm tra quang học.",
+"ko": "기판을 광학 검사기에 넣는다.",
+"kr": "드어 보 바오 마이 끼엠 짜 꽝 혹",
+"krs": "드어 보 야오 마이 끼엠 짜 꽝 혹",
+"src": "ai"
+},
+"máy đo": {
+"vi": "Dùng máy đo kích thước này.",
+"ko": "이 측정기로 치수를 잰다.",
+"kr": "중 마이 도 끽 트억 나이",
+"krs": "융 마이 도 끽 트억 나이",
+"src": "ai"
+},
+"tỷ lệ lỗi": {
+"vi": "Tỷ lệ lỗi rất thấp.",
+"ko": "불량률이 아주 낮다.",
+"kr": "띠 레 로이 젓 텁",
+"krs": "띠 레 로이 럿 텁",
+"src": "ai"
+},
+"gắn lệch": {
+"vi": "Linh kiện này bị gắn lệch.",
+"ko": "이 부품이 삐뚤게 실장되었다.",
+"kr": "린 끼엔 나이 비 간 렉",
+"krs": "린 끼엔 나이 비 간 렉",
+"src": "ai"
+},
+"bám bụi": {
+"vi": "Bề mặt bo bị bám bụi.",
+"ko": "기판 표면에 먼지가 붙었다.",
+"kr": "베 맛 보 비 밤 부이",
+"krs": "베 맛 보 비 밤 부이",
+"src": "ai"
+},
+"vòng tay tĩnh điện": {
+"vi": "Luôn đeo vòng tay tĩnh điện.",
+"ko": "항상 정전기 손목띠를 착용한다.",
+"kr": "루온 대오 봉 따이 띤 디엔",
+"krs": "루온 대오 용 따이 띤 디엔",
+"src": "ai"
+},
+"hạt bụi": {
+"vi": "Có một hạt bụi ở đây.",
+"ko": "여기에 미세먼지 입자가 하나 있다.",
+"kr": "꼬 못 핫 부이 어 더이",
+"krs": "꼬 못 핫 부이 어 더이",
+"src": "ai"
+},
+"máy tự động": {
+"vi": "Đây là máy tự động.",
+"ko": "이것은 자동 설비이다.",
+"kr": "더이 라 마이 뜨 동",
+"krs": "더이 라 마이 뜨 동",
+"src": "ai"
+},
+"khởi động máy": {
+"vi": "Tôi khởi động máy vào buổi sáng.",
+"ko": "나는 아침에 설비를 켠다.",
+"kr": "또이 커이 동 마이 바오 부오이 쌍",
+"krs": "또이 커이 동 마이 야오 부오이 상",
+"src": "ai"
+},
+"thời gian dừng máy": {
+"vi": "Thời gian dừng máy rất ngắn.",
+"ko": "비가동 시간이 매우 짧다.",
+"kr": "터이 잔 증 마이 젓 응안",
+"krs": "터이 얀 응 마이 럿 응안",
+"src": "ai"
+},
+"dán tem": {
+"vi": "Cô ấy đang dán tem lên hộp.",
+"ko": "그녀는 상자에 라벨을 부착하고 있다.",
+"kr": "꼬 어이 당 잔 땜 렌 홉",
+"krs": "꼬 어이 당 얀 땜 렌 홉",
+"src": "ai"
+},
+"lô hàng": {
+"vi": "Lô hàng này rất đẹp.",
+"ko": "이 로트는 아주 좋다.",
+"kr": "로 항 나이 젓 댑",
+"krs": "로 항 나이 럿 댑",
+"src": "ai"
+},
+"ti vi": {
+"vi": "Tôi xem ti vi mỗi tối.",
+"ko": "나는 매일 저녁 텔레비전을 본다.",
+"kr": "또이 쌤 띠 비 모이 또이",
+"krs": "또이 쌤 띠 이 모이 또이",
+"src": "ai"
+},
+"đóng hộp": {
+"vi": "Họ đóng hộp sản phẩm nhanh chóng.",
+"ko": "그들은 제품을 빨리 박스 포장한다.",
+"kr": "호 동 홉 싼 펌 나인 쫑",
+"krs": "호 동 홉 산 펌 나인 쫑",
+"src": "ai"
+},
+"giày da": {
+"vi": "Đôi giày da này rất đắt.",
+"ko": "이 가죽 구두는 아주 비싸다.",
+"kr": "도이 자이 자 나이 젓 닷",
+"krs": "도이 야이 야 나이 럿 닷",
+"src": "ai"
+},
+"dây đeo": {
+"vi": "Dây đeo này có màu đen.",
+"ko": "이 끈은 검은색이다.",
+"kr": "저이 대오 나이 꼬 마우 댄",
+"krs": "여이 대오 나이 꼬 마우 댄",
+"src": "ai"
+},
+"đế giữa": {
+"vi": "Đế giữa rất mềm và nhẹ.",
+"ko": "미드솔이 매우 부드럽고 가볍다.",
+"kr": "데 즈어 젓 멤 바 냬",
+"krs": "데 으어 럿 멤 야 냬",
+"src": "ai"
+},
+"lỗ xỏ dây": {
+"vi": "Lỗ xỏ dây rất nhỏ.",
+"ko": "끈 구멍이 매우 작다.",
+"kr": "로 쏘 저이 젓 뇨",
+"krs": "로 쏘 여이 럿 뇨",
+"src": "ai"
+},
+"da thật": {
+"vi": "Ví này làm bằng da thật.",
+"ko": "이 지갑은 천연가죽으로 만들었다.",
+"kr": "비 나이 람 방 자 텃",
+"krs": "이 나이 람 방 야 텃",
+"src": "ai"
+},
+"nhựa eva": {
+"vi": "Đế giày dùng nhựa EVA.",
+"ko": "신발 밑창은 EVA 폼을 사용한다.",
+"kr": "데 자이 중 느어 애",
+"krs": "데 야이 융 느어 애",
+"src": "ai"
+},
+"keo dán": {
+"vi": "Tôi cần mua keo dán mới.",
+"ko": "나는 새 접착제를 사야 한다.",
+"kr": "또이 껀 무어 깨오 잔 머이",
+"krs": "또이 껀 무어 깨오 얀 머이",
+"src": "ai"
+},
+"gò giày": {
+"vi": "Công nhân đang gò giày cẩn thận.",
+"ko": "작업자들이 조심스럽게 라스팅 작업을 한다.",
+"kr": "꽁 년 당 고 자이 껀 턴",
+"krs": "꽁 년 당 고 야이 껀 턴",
+"src": "ai"
+},
+"in logo": {
+"vi": "Chúng tôi in logo lên áo.",
+"ko": "우리는 옷에 로고를 인쇄한다.",
+"kr": "쭝 또이 인 로 렌 아오",
+"krs": "쭝 또이 인 로 렌 아오",
+"src": "ai"
+},
+"hở keo": {
+"vi": "Đôi giày này bị hở keo.",
+"ko": "이 신발은 본드가 들떴다.",
+"kr": "도이 자이 나이 비 허 깨오",
+"krs": "도이 야이 나이 비 허 깨오",
+"src": "ai"
+},
+"máy tiện": {
+"vi": "Thợ đang dùng máy tiện sắt.",
+"ko": "기술자가 철 선반을 사용하고 있다.",
+"kr": "터 당 중 마이 띠엔 쌋",
+"krs": "터 당 융 마이 띠엔 삿",
+"src": "ai"
+},
+"hàn hồ quang": {
+"vi": "Anh ấy thích hàn hồ quang.",
+"ko": "그는 아크 용접을 좋아한다.",
+"kr": "아인 어이 틱 한 호 꽝",
+"krs": "아인 어이 틱 한 호 꽝",
+"src": "ai"
+},
+"mạ": {
+"vi": "Họ mạ vàng lên kim loại.",
+"ko": "그들은 금속에 금을 도금한다.",
+"kr": "호 마 방 렌 낌 로아이",
+"krs": "호 마 양 렌 낌 로아이",
+"src": "ai"
+},
+"xi lanh": {
+"vi": "Xi lanh này hoạt động tốt.",
+"ko": "이 실린더는 잘 작동한다.",
+"kr": "씨 라인 나이 호앗 동 똣",
+"krs": "씨 라인 나이 호앗 동 똣",
+"src": "ai"
+},
+"dây curoa": {
+"vi": "Máy cần thay dây curoa mới.",
+"ko": "기계는 새 벨트로 교체해야 한다.",
+"kr": "마이 껀 타이 저이 꾸 머이",
+"krs": "마이 껀 타이 여이 꾸 머이",
+"src": "ai"
+},
+"đai ốc": {
+"vi": "Tôi siết chặt đai ốc này.",
+"ko": "나는 이 너트를 단단히 조인다.",
+"kr": "또이 씨엣 짯 다이 옥 나이",
+"krs": "또이 시엣 짯 다이 옥 나이",
+"src": "ai"
+},
+"cân chỉnh": {
+"vi": "Anh ấy đang cân chỉnh máy.",
+"ko": "그는 기계를 정렬하고 있다.",
+"kr": "아인 어이 당 껀 찐 마이",
+"krs": "아인 어이 당 껀 찐 마이",
+"src": "ai"
+},
+"dây chuyền lắp ráp": {
+"vi": "Dây chuyền lắp ráp chạy rất nhanh.",
+"ko": "조립 라인이 아주 빠르게 돌아간다.",
+"kr": "저이 쭈옌 랍 잡 짜이 젓 나인",
+"krs": "여이 쭈옌 랍 랍 짜이 럿 나인",
+"src": "ai"
+},
+"thầu phụ": {
+"vi": "Công ty thuê thêm thầu phụ.",
+"ko": "회사는 하도급 업체를 더 고용했다.",
+"kr": "꽁 띠 투에 템 터우 푸",
+"krs": "꽁 띠 투에 템 터우 푸",
+"src": "ai"
+},
+"bê tông": {
+"vi": "Đổ bê tông vào đây.",
+"ko": "여기에 콘크리트를 부으세요.",
+"kr": "도 베 똥 바오 더이",
+"krs": "도 베 똥 야오 더이",
+"src": "ai"
+},
+"sỏi": {
+"vi": "Dưới đây có nhiều sỏi.",
+"ko": "아래에 자갈이 많아요.",
+"kr": "즈어이 더이 꼬 니에우 쏘이",
+"krs": "으어이 더이 꼬 니에우 소이",
+"src": "ai"
+},
+"máy trộn": {
+"vi": "Máy trộn đang hoạt động.",
+"ko": "믹서가 작동 중입니다.",
+"kr": "마이 쫀 당 호앗 동",
+"krs": "마이 쫀 당 호앗 동",
+"src": "ai"
+},
+"lắp dựng": {
+"vi": "Họ đang lắp dựng giàn giáo.",
+"ko": "그들은 비계를 설치하고 있어요.",
+"kr": "호 당 랍 증 잔 자오",
+"krs": "호 당 랍 응 얀 야오",
+"src": "ai"
+},
+"thông gió": {
+"vi": "Phòng này cần thông gió.",
+"ko": "이 방은 환기가 필요해요.",
+"kr": "퐁 나이 껀 통 조",
+"krs": "퐁 나이 껀 통 요",
+"src": "ai"
+},
+"dây an toàn": {
+"vi": "Hãy thắt dây an toàn.",
+"ko": "안전벨트를 매세요.",
+"kr": "하이 탓 저이 안 또안",
+"krs": "하이 탓 여이 안 또안",
+"src": "ai"
+},
+"kho hàng": {
+"vi": "Hàng hóa ở trong kho hàng.",
+"ko": "상품이 창고 안에 있어요.",
+"kr": "항 호아 어 쫑 코 항",
+"krs": "항 호아 어 쫑 코 항",
+"src": "ai"
+},
+"pa lét": {
+"vi": "Đặt thùng lên pa lét.",
+"ko": "상자를 팔레트 위에 놓으세요.",
+"kr": "닷 퉁 렌 빠 랫",
+"krs": "닷 퉁 렌 빠 랫",
+"src": "ai"
+},
+"bốc xếp": {
+"vi": "Công nhân đang bốc xếp hàng.",
+"ko": "작업자들이 상하차를 하고 있어요.",
+"kr": "꽁 년 당 복 쎕 항",
+"krs": "꽁 년 당 복 쎕 항",
+"src": "ai"
+},
+"tàu biển": {
+"vi": "Tàu biển đang cập cảng.",
+"ko": "선박이 항구에 들어오고 있어요.",
+"kr": "따우 비엔 당 껍 깡",
+"krs": "따우 비엔 당 껍 깡",
+"src": "ai"
+},
+"nhận hàng": {
+"vi": "Tôi đã nhận hàng rồi.",
+"ko": "저는 물건을 인수했어요.",
+"kr": "또이 다 년 항 조이",
+"krs": "또이 다 년 항 로이",
+"src": "ai"
+},
+"hàng lỗi trả về": {
+"vi": "Đây là hàng lỗi trả về.",
+"ko": "이것은 반품된 불량품입니다.",
+"kr": "더이 라 항 로이 짜 베",
+"krs": "더이 라 항 로이 짜 예",
+"src": "ai"
+},
+"phụ gia": {
+"vi": "Thêm phụ gia vào thực phẩm.",
+"ko": "식품에 첨가물을 넣으세요.",
+"kr": "템 푸 자 바오 특 펌",
+"krs": "템 푸 야 야오 특 펌",
+"src": "ai"
+},
+"tiệt trùng": {
+"vi": "Cần tiệt trùng thiết bị này.",
+"ko": "이 장비를 살균해야 해요.",
+"kr": "껀 띠엣 쭝 티엣 비 나이",
+"krs": "껀 띠엣 쭝 티엣 비 나이",
+"src": "ai"
+},
+"đóng gói chân không": {
+"vi": "Đóng gói chân không thịt này.",
+"ko": "이 고기를 진공 포장하세요.",
+"kr": "동 고이 쩐 콩 팃 나이",
+"krs": "동 고이 쩐 콩 팃 나이",
+"src": "ai"
+},
+"khử trùng": {
+"vi": "Hãy khử trùng bàn ăn.",
+"ko": "식탁을 소독하세요.",
+"kr": "하이 크 쭝 반 안",
+"krs": "하이 크 쭝 반 안",
+"src": "ai"
+},
+"pha loãng": {
+"vi": "Pha loãng dung dịch này.",
+"ko": "이 용액을 희석하세요.",
+"kr": "파 로앙 중 직 나이",
+"krs": "파 로앙 융 익 나이",
+"src": "ai"
+},
+"bình chứa": {
+"vi": "Kiểm tra bình chứa nước.",
+"ko": "저장 탱크를 점검하세요.",
+"kr": "끼엠 짜 빈 쯔어 느억",
+"krs": "끼엠 짜 빈 쯔어 느억",
+"src": "ai"
+},
+"hoá đơn bán hàng": {
+"vi": "Tôi cần hoá đơn bán hàng.",
+"ko": "판매 영수증이 필요해요.",
+"kr": "또이 껀 호아 던 반 항",
+"krs": "또이 껀 호아 던 반 항",
+"src": "ai"
+},
+"doanh số": {
+"vi": "Doanh số hôm nay rất tốt.",
+"ko": "오늘 매출액이 아주 좋아요.",
+"kr": "조아인 쏘 홈 나이 젓 똣",
+"krs": "오아인 소 홈 나이 럿 똣",
+"src": "ai"
+},
+"mang đi": {
+"vi": "Tôi muốn cà phê mang đi.",
+"ko": "커피를 포장 판매로 주세요.",
+"kr": "또이 무온 까 페 망 디",
+"krs": "또이 무온 까 페 망 디",
+"src": "ai"
+},
+"vệ sinh bếp": {
+"vi": "Luôn chú ý vệ sinh bếp.",
+"ko": "항상 주방 위생에 신경 쓰세요.",
+"kr": "루온 쭈 이 베 씬 벱",
+"krs": "루온 쭈 이 예 신 벱",
+"src": "ai"
+},
+"tôi thích bạn": {
+"vi": "Tôi thích bạn rất nhiều.",
+"ko": "나는 너를 아주 많이 좋아해.",
+"kr": "또이 틱 반 젓 니에우",
+"krs": "또이 틱 반 럿 니에우",
+"src": "ai"
+},
+"ngựa": {
+"vi": "Con ngựa chạy rất nhanh.",
+"ko": "말이 아주 빨리 달린다.",
+"kr": "꼰 응으어 짜이 젓 나인",
+"krs": "꼰 응으어 짜이 럿 나인",
+"src": "ai"
+},
+"dừng ở đây đi": {
+"vi": "Dừng ở đây đi bạn ơi.",
+"ko": "여기서 그만하자 친구야.",
+"kr": "증 어 더이 디 반 어이",
+"krs": "응 어 더이 디 반 어이",
+"src": "ai"
+},
+"cổ truyền": {
+"vi": "Đây là món ăn cổ truyền.",
+"ko": "이것은 전통 음식이다.",
+"kr": "더이 라 몬 안 꼬 쭈옌",
+"krs": "더이 라 몬 안 꼬 쭈옌",
+"src": "ai"
+},
+"đơn xin": {
+"vi": "Tôi viết đơn xin việc.",
+"ko": "나는 입사 지원서를 쓴다.",
+"kr": "또이 비엣 던 씬 비엑",
+"krs": "또이 이엣 던 씬 이엑",
+"src": "ai"
+},
+"lý lịch": {
+"vi": "Hãy viết lý lịch của bạn.",
+"ko": "당신의 이력서를 쓰세요.",
+"kr": "하이 비엣 리 릭 꾸어 반",
+"krs": "하이 이엣 리 릭 꾸어 반",
+"src": "ai"
+},
+"tới thăm": {
+"vi": "Tôi tới thăm nhà bạn.",
+"ko": "나는 너의 집을 방문한다.",
+"kr": "또이 떠이 탐 냐 반",
+"krs": "또이 떠이 탐 냐 반",
+"src": "ai"
+},
+"da số": {
+"vi": "Da số học sinh thích học tiếng Hàn.",
+"ko": "대다수의 학생이 한국어 배우기를 좋아한다.",
+"kr": "자 쏘 혹 씬 틱 혹 띠엥 한",
+"krs": "야 소 혹 신 틱 혹 띠엥 한",
+"src": "ai"
+},
+"lạnh lùng": {
+"vi": "Cô ấy rất lạnh lùng.",
+"ko": "그녀는 매우 냉정합니다.",
+"kr": "꼬 어이 젓 라인 룽",
+"krs": "꼬 어이 럿 라인 룽",
+"src": "ai"
+},
+"ghim": {
+"vi": "Dùng ghim vải nhé.",
+"ko": "천 핀을 쓰세요.",
+"kr": "중 김 바이 냬",
+"krs": "융 김 야이 냬",
+"src": "ai"
+},
+"nhúm": {
+"vi": "Tạo nhúm ở eo áo.",
+"ko": "옷 허리에 잔주름을 넣으세요.",
+"kr": "따오 늄 어 애오 아오",
+"krs": "따오 늄 어 애오 아오",
+"src": "ai"
+},
+"cúc bấm": {
+"vi": "May cúc bấm vào đây.",
+"ko": "여기에 똑딱이 단추를 달아라.",
+"kr": "마이 꾹 범 바오 더이",
+"krs": "마이 꾹 범 야오 더이",
+"src": "ai"
+},
+"gợn": {
+"vi": "Đường may bị gợn rồi.",
+"ko": "바느질이 울퉁불퉁해졌어요.",
+"kr": "드엉 마이 비 건 조이",
+"krs": "드엉 마이 비 건 로이",
+"src": "ai"
+},
+"bị trễ": {
+"vi": "Chuyến bay bị trễ rồi.",
+"ko": "비행기가 지연되었다.",
+"kr": "쭈연 바이 비 쩨 조이",
+"krs": "쭈연 바이 비 쩨 로이",
+"src": "ai"
+},
+"bảng mạch in": {
+"vi": "Kiểm tra bảng mạch in này.",
+"ko": "이 인쇄회로기판을 검사하세요.",
+"kr": "끼엠 짜 방 막 인 나이",
+"krs": "끼엠 짜 방 막 인 나이",
+"src": "ai"
+},
+"cuộn cảm": {
+"vi": "Lắp cuộn cảm vào đây.",
+"ko": "여기에 인덕터를 장착하세요.",
+"kr": "랍 꾸온 깜 바오 더이",
+"krs": "랍 꾸온 깜 야오 더이",
+"src": "ai"
+},
+"tấm wafer": {
+"vi": "Cầm tấm wafer cẩn thận.",
+"ko": "웨이퍼를 조심해서 잡으세요.",
+"kr": "껌 떰 아 껀 턴",
+"krs": "껌 떰 아 껀 턴",
+"src": "ai"
+},
+"cầu chì": {
+"vi": "Thay cầu chì mới đi.",
+"ko": "새 퓨즈로 교체하세요.",
+"kr": "타이 꺼우 찌 머이 디",
+"krs": "타이 꺼우 찌 머이 디",
+"src": "ai"
+},
+"hàn lại": {
+"vi": "Cần hàn lại điểm này.",
+"ko": "이 부분을 재납땜해야 합니다.",
+"kr": "껀 한 라이 디엠 나이",
+"krs": "껀 한 라이 디엠 나이",
+"src": "ai"
+},
+"khuôn in": {
+"vi": "Làm sạch khuôn in đi.",
+"ko": "스텐실을 깨끗이 청소하세요.",
+"kr": "람 싹 쿠온 인 디",
+"krs": "람 삭 쿠온 인 디",
+"src": "ai"
+},
+"dán keo": {
+"vi": "Dán keo vào đây nhé.",
+"ko": "여기에 접착제를 붙이세요.",
+"kr": "잔 깨오 바오 더이 냬",
+"krs": "얀 깨오 야오 더이 냬",
+"src": "ai"
+},
+"phủ sơn bảo vệ": {
+"vi": "Phủ sơn bảo vệ mạch.",
+"ko": "회판에 코팅을 하세요.",
+"kr": "푸 썬 바오 베 막",
+"krs": "푸 선 바오 예 막",
+"src": "ai"
+},
+"kiểm tra bằng tia x": {
+"vi": "Kiểm tra bằng tia X đi.",
+"ko": "엑스레이 검사를 하세요.",
+"kr": "끼엠 짜 방 띠어 디",
+"krs": "끼엠 짜 방 띠어 디",
+"src": "ai"
+},
+"hiệu chuẩn": {
+"vi": "Hiệu chuẩn máy đo ngay.",
+"ko": "측정기를 바로 교정하세요.",
+"kr": "히에우 쭈언 마이 도 응아이",
+"krs": "히에우 쭈언 마이 도 응아이",
+"src": "ai"
+},
+"lỗi hàn": {
+"vi": "Phát hiện một lỗi hàn.",
+"ko": "납땜 불량이 하나 발견되었다.",
+"kr": "팟 히엔 못 로이 한",
+"krs": "팟 히엔 못 로이 한",
+"src": "ai"
+},
+"bọt khí": {
+"vi": "Có bọt khí ở đây.",
+"ko": "여기에 기포가 있습니다.",
+"kr": "꼬 봇 키 어 더이",
+"krs": "꼬 봇 키 어 더이",
+"src": "ai"
+},
+"áo phòng sạch": {
+"vi": "Mặc áo phòng sạch vào.",
+"ko": "방진복을 입으세요.",
+"kr": "막 아오 퐁 싹 바오",
+"krs": "막 아오 퐁 삭 야오",
+"src": "ai"
+},
+"thảm tĩnh điện": {
+"vi": "Đứng lên thảm tĩnh điện.",
+"ko": "정전기 매트 위에 서세요.",
+"kr": "등 렌 탐 띤 디엔",
+"krs": "등 렌 탐 띤 디엔",
+"src": "ai"
+},
+"băng tải": {
+"vi": "Bật băng tải lên đi.",
+"ko": "컨베이어를 켜세요.",
+"kr": "벗 방 따이 렌 디",
+"krs": "벗 방 따이 렌 디",
+"src": "ai"
+},
+"cánh tay robot": {
+"vi": "Cánh tay robot đang chạy.",
+"ko": "로봇 팔이 작동 중입니다.",
+"kr": "까인 따이 조 당 짜이",
+"krs": "까인 따이 로 당 짜이",
+"src": "ai"
+},
+"dừng máy": {
+"vi": "Bạn hãy dừng máy ngay đi.",
+"ko": "당신은 즉시 설비를 멈추세요.",
+"kr": "반 하이 증 마이 응아이 디",
+"krs": "반 하이 응 마이 응아이 디",
+"src": "ai"
+},
+"năng suất máy": {
+"vi": "Năng suất máy hôm nay rất cao.",
+"ko": "오늘 설비 생산성이 매우 높습니다.",
+"kr": "낭 쑤엇 마이 홈 나이 젓 까오",
+"krs": "낭 수엇 마이 홈 나이 럿 까오",
+"src": "ai"
+},
+"in nhãn": {
+"vi": "Tôi đang in nhãn cho hàng hóa.",
+"ko": "저는 상품용 라벨을 인쇄 중입니다.",
+"kr": "또이 당 인 냔 쪼 항 호아",
+"krs": "또이 당 인 냔 쪼 항 호아",
+"src": "ai"
+},
+"mã lô": {
+"vi": "Hãy kiểm tra mã lô sản phẩm.",
+"ko": "제품의 로트 번호를 확인하세요.",
+"kr": "하이 끼엠 짜 마 로 싼 펌",
+"krs": "하이 끼엠 짜 마 로 산 펌",
+"src": "ai"
+},
+"vỏ máy": {
+"vi": "Vỏ máy này bị hỏng rồi.",
+"ko": "이 케이스가 고장 났습니다.",
+"kr": "보 마이 나이 비 홍 조이",
+"krs": "요 마이 나이 비 홍 로이",
+"src": "ai"
+},
+"màng bọc": {
+"vi": "Hãy tháo màng bọc ra nhé.",
+"ko": "보호 필름을 제거하세요.",
+"kr": "하이 타오 망 복 자 냬",
+"krs": "하이 타오 망 복 라 냬",
+"src": "ai"
+},
+"xăng đan": {
+"vi": "Đôi xăng đan này rất đẹp.",
+"ko": "이 샌들은 매우 예쁩니다.",
+"kr": "도이 쌍 단 나이 젓 댑",
+"krs": "도이 쌍 단 나이 럿 댑",
+"src": "ai"
+},
+"mũ giày": {
+"vi": "Mũ giày này làm bằng da.",
+"ko": "이 갑피는 가죽으로 만들었습니다.",
+"kr": "무 자이 나이 람 방 자",
+"krs": "무 야이 나이 람 방 야",
+"src": "ai"
+},
+"lót giày": {
+"vi": "Lót giày này rất êm.",
+"ko": "이 인솔은 매우 푹신합니다.",
+"kr": "롯 자이 나이 젓 엠",
+"krs": "롯 야이 나이 럿 엠",
+"src": "ai"
+},
+"gót giày": {
+"vi": "Gót giày này hơi cao.",
+"ko": "이 뒷굽은 약간 높습니다.",
+"kr": "곳 자이 나이 허이 까오",
+"krs": "곳 야이 나이 허이 까오",
+"src": "ai"
+},
+"da tổng hợp": {
+"vi": "Đây là da tổng hợp tốt.",
+"ko": "이것은 좋은 합성피혁입니다.",
+"kr": "더이 라 자 똥 헙 똣",
+"krs": "더이 라 야 똥 헙 똣",
+"src": "ai"
+},
+"ép đế": {
+"vi": "Công đoạn ép đế rất quan trọng.",
+"ko": "밑창 압착 공정은 매우 중요합니다.",
+"kr": "꽁 도안 앱 데 젓 꽌 쫑",
+"krs": "꽁 도안 앱 데 럿 꽌 쫑",
+"src": "ai"
+},
+"bôi keo": {
+"vi": "Anh hãy bôi keo cẩn thận.",
+"ko": "본드 칠을 조심스럽게 하세요.",
+"kr": "아인 하이 보이 깨오 껀 턴",
+"krs": "아인 하이 보이 깨오 껀 턴",
+"src": "ai"
+},
+"dập khuôn": {
+"vi": "Máy đang dập khuôn sản phẩm.",
+"ko": "기계가 제품을 금형 성형하고 있습니다.",
+"kr": "마이 당 접 쿠온 싼 펌",
+"krs": "마이 당 엽 쿠온 산 펌",
+"src": "ai"
+},
+"kiểm tra đôi": {
+"vi": "Hãy kiểm tra đôi giày này.",
+"ko": "이 신발 짝을 검사하세요.",
+"kr": "하이 끼엠 짜 도이 자이 나이",
+"krs": "하이 끼엠 짜 도이 야이 나이",
+"src": "ai"
+},
+"cỡ giày": {
+"vi": "Cỡ giày của bạn là bao nhiêu?",
+"ko": "당신의 신발 치수는 몇인가요?",
+"kr": "꺼 자이 꾸어 반 라 바오 니에우",
+"krs": "꺼 야이 꾸어 반 라 바오 니에우",
+"src": "ai"
+},
+"máy phay": {
+"vi": "Máy phay đang hoạt động tốt.",
+"ko": "밀링기가 잘 작동합니다.",
+"kr": "마이 파이 당 호앗 동 똣",
+"krs": "마이 파이 당 호앗 동 똣",
+"src": "ai"
+},
+"mài": {
+"vi": "Hãy mài bề mặt kim loại.",
+"ko": "금속 표면을 연마하세요.",
+"kr": "하이 마이 베 맛 낌 로아이",
+"krs": "하이 마이 베 맛 낌 로아이",
+"src": "ai"
+},
+"sơn tĩnh điện": {
+"vi": "Sản phẩm được sơn tĩnh điện.",
+"ko": "제품이 분체 도장되었습니다.",
+"kr": "싼 펌 드억 썬 띤 디엔",
+"krs": "산 펌 드억 선 띤 디엔",
+"src": "ai"
+},
+"thủy lực": {
+"vi": "Hệ thống thủy lực rất mạnh.",
+"ko": "유압 시스템이 매우 강합니다.",
+"kr": "헤 통 투이 륵 젓 마인",
+"krs": "헤 통 투이 륵 럿 마인",
+"src": "ai"
+},
+"bánh răng": {
+"vi": "Bánh răng này cần được bôi trơn.",
+"ko": "이 기어는 윤활이 필요합니다.",
+"kr": "바인 장 나이 껀 드억 보이 쩐",
+"krs": "바인 랑 나이 껀 드억 보이 쩐",
+"src": "ai"
+},
+"long đen": {
+"vi": "Hãy lắp thêm một cái long đen.",
+"ko": "와셔를 하나 더 끼우세요.",
+"kr": "하이 랍 템 못 까이 롱 댄",
+"krs": "하이 랍 템 못 까이 롱 댄",
+"src": "ai"
+},
+"phụ tùng": {
+"vi": "Tôi cần mua thêm phụ tùng.",
+"ko": "저는 예비 부품을 더 사야 합니다.",
+"kr": "또이 껀 무어 템 푸 뚱",
+"krs": "또이 껀 무어 템 푸 뚱",
+"src": "ai"
+},
+"thi công": {
+"vi": "Họ đang thi công tòa nhà.",
+"ko": "그들은 건물을 시공 중입니다.",
+"kr": "호 당 티 꽁 또아 냐",
+"krs": "호 당 티 꽁 또아 냐",
+"src": "ai"
+},
+"nhà thầu": {
+"vi": "Nhà thầu đang ở ngoài công trường.",
+"ko": "시공사가 공사 현장에 있습니다.",
+"kr": "냐 터우 당 어 응오아이 꽁 쯔엉",
+"krs": "냐 터우 당 어 응오아이 꽁 쯔엉",
+"src": "ai"
+},
+"cốt thép": {
+"vi": "Họ đang buộc cốt thép.",
+"ko": "그들은 철근을 묶고 있다.",
+"kr": "호 당 부옥 꼿 탭",
+"krs": "호 당 부옥 꼿 탭",
+"src": "ai"
+},
+"giàn giáo": {
+"vi": "Giàn giáo này rất cao.",
+"ko": "이 비계는 매우 높다.",
+"kr": "잔 자오 나이 젓 까오",
+"krs": "얀 야오 나이 럿 까오",
+"src": "ai"
+},
+"đổ bê tông": {
+"vi": "Họ đang đổ bê tông.",
+"ko": "그들은 콘크리트를 타설하고 있다.",
+"kr": "호 당 도 베 똥",
+"krs": "호 당 도 베 똥",
+"src": "ai"
+},
+"đường ống": {
+"vi": "Đường ống bị rò rỉ rồi.",
+"ko": "배관이 새고 있다.",
+"kr": "드엉 옹 비 조 지 조이",
+"krs": "드엉 옹 비 로 리 로이",
+"src": "ai"
+},
+"cách nhiệt": {
+"vi": "Cần thêm vật liệu cách nhiệt.",
+"ko": "단열재가 더 필요하다.",
+"kr": "껀 템 벗 리에우 깍 니엣",
+"krs": "껀 템 엿 리에우 깍 니엣",
+"src": "ai"
+},
+"lưới an toàn": {
+"vi": "Hãy lắp lưới an toàn nhé.",
+"ko": "안전망을 설치하세요.",
+"kr": "하이 랍 르어이 안 또안 냬",
+"krs": "하이 랍 르어이 안 또안 냬",
+"src": "ai"
+},
+"kiểm kê": {
+"vi": "Tôi đang kiểm kê hàng hóa.",
+"ko": "나는 재고 조사를 하고 있다.",
+"kr": "또이 당 끼엠 께 항 호아",
+"krs": "또이 당 끼엠 께 항 호아",
+"src": "ai"
+},
+"thùng carton": {
+"vi": "Hãy dùng thùng carton này.",
+"ko": "이 골판지 상자를 사용하세요.",
+"kr": "하이 중 퉁 까 나이",
+"krs": "하이 융 퉁 까 나이",
+"src": "ai"
+},
+"chất hàng": {
+"vi": "Họ đang chất hàng lên xe.",
+"ko": "그들은 차에 짐을 싣고 있다.",
+"kr": "호 당 쩟 항 렌 쌔",
+"krs": "호 당 쩟 항 렌 쌔",
+"src": "ai"
+},
+"máy bay chở hàng": {
+"vi": "Máy bay chở hàng đã đến.",
+"ko": "화물기가 도착했다.",
+"kr": "마이 바이 쩌 항 다 덴",
+"krs": "마이 바이 쩌 항 다 덴",
+"src": "ai"
+},
+"giao đúng hạn": {
+"vi": "Chúng tôi giao đúng hạn.",
+"ko": "우리는 납기를 준수한다.",
+"kr": "쭝 또이 자오 둥 한",
+"krs": "쭝 또이 야오 둥 한",
+"src": "ai"
+},
+"vận chuyển nội địa": {
+"vi": "Giá vận chuyển nội địa rẻ.",
+"ko": "내륙 운송 가격은 싸다.",
+"kr": "자 번 쭈옌 노이 디어 재",
+"krs": "야 연 쭈옌 노이 디어 래",
+"src": "ai"
+},
+"bảo quản lạnh": {
+"vi": "Cần bảo quản lạnh thực phẩm.",
+"ko": "식품은 냉장 보관해야 한다.",
+"kr": "껀 바오 꽌 라인 특 펌",
+"krs": "껀 바오 꽌 라인 특 펌",
+"src": "ai"
+},
+"lên men": {
+"vi": "Sữa chua đang lên men.",
+"ko": "요구르트가 발효되고 있다.",
+"kr": "쓰어 쭈어 당 렌 맨",
+"krs": "스어 쭈어 당 렌 맨",
+"src": "ai"
+},
+"hạn sử dụng": {
+"vi": "Kiểm tra hạn sử dụng nhé.",
+"ko": "유통기한을 확인하세요.",
+"kr": "끼엠 짜 한 쓰 중 냬",
+"krs": "끼엠 짜 한 스 융 냬",
+"src": "ai"
+},
+"hoá chất": {
+"vi": "Cẩn thận với hoá chất này.",
+"ko": "이 화학 약품을 조심하세요.",
+"kr": "껀 턴 버이 호아 쩟 나이",
+"krs": "껀 턴 여이 호아 쩟 나이",
+"src": "ai"
+},
+"trung hoà": {
+"vi": "Cần trung hoà độ axit.",
+"ko": "산도를 중화해야 한다.",
+"kr": "껀 쭝 호아 도 아",
+"krs": "껀 쭝 호아 도 아",
+"src": "ai"
+},
+"van an toàn": {
+"vi": "Hãy mở van an toàn.",
+"ko": "안전 밸브를 여세요.",
+"kr": "하이 머 반 안 또안",
+"krs": "하이 머 얀 안 또안",
+"src": "ai"
+},
+"khách quen": {
+"vi": "Anh ấy là khách quen.",
+"ko": "그는 단골손님이다.",
+"kr": "아인 어이 라 칵 꽨",
+"krs": "아인 어이 라 칵 꽨",
+"src": "ai"
+},
+"kiểm hàng": {
+"vi": "Tôi đang kiểm hàng đây.",
+"ko": "나는 지금 상품 점검 중이다.",
+"kr": "또이 당 끼엠 항 더이",
+"krs": "또이 당 끼엠 항 더이",
+"src": "ai"
+},
+"giao đồ ăn": {
+"vi": "Tôi gọi giao đồ ăn.",
+"ko": "나는 음식 배달을 시켰다.",
+"kr": "또이 고이 자오 도 안",
+"krs": "또이 고이 야오 도 안",
+"src": "ai"
+},
+"bạn đến từ đâu?": {
+"vi": "Bạn đến từ đâu?",
+"ko": "당신은 어디에서 오셨습니까?",
+"kr": "반 덴 뜨 더우",
+"krs": "반 덴 뜨 더우",
+"src": "ai"
+},
+"tôi thích phở": {
+"vi": "Tôi thích phở.",
+"ko": "나는 쌀국수를 좋아해.",
+"kr": "또이 틱 퍼",
+"krs": "또이 틱 퍼",
+"src": "ai"
+},
+"chị ấy làm gì?": {
+"vi": "Chị ấy làm gì?",
+"ko": "그 여자는 무엇을 합니까?",
+"kr": "찌 어이 람 지",
+"krs": "찌 어이 람 이",
+"src": "ai"
+},
+"lúc nào bạn rảnh?": {
+"vi": "Lúc nào bạn rảnh?",
+"ko": "언제 한가하니?",
+"kr": "룩 나오 반 자인",
+"krs": "룩 나오 반 라인",
+"src": "ai"
+},
+"nửa tiếng": {
+"vi": "Tôi chờ nửa tiếng rồi.",
+"ko": "나는 30분을 기다렸다.",
+"kr": "또이 쩌 느어 띠엥 조이",
+"krs": "또이 쩌 느어 띠엥 로이",
+"src": "ai"
+},
+"biệt": {
+"vi": "Tạm biệt bạn.",
+"ko": "잘 가요.",
+"kr": "땀 비엣 반",
+"krs": "땀 비엣 반",
+"src": "ai"
+},
+"mũ bảo hiểm": {
+"vi": "Đội mũ bảo hiểm vào.",
+"ko": "헬멧을 써라.",
+"kr": "도이 무 바오 히엠 바오",
+"krs": "도이 무 바오 히엠 야오",
+"src": "ai"
+},
+"curriculum vitae": {
+"vi": "Tôi gửi curriculum vitae cho công ty.",
+"ko": "저는 회사에 이력서를 보냅니다.",
+"kr": "또이 그이 꾸 비 쪼 꽁 띠",
+"krs": "또이 그이 꾸 이 쪼 꽁 띠",
+"src": "ai"
+},
+"hoá đơn điện": {
+"vi": "Tôi trả hoá đơn điện hôm nay.",
+"ko": "나는 오늘 전기 요금 영수증을 낸다.",
+"kr": "또이 짜 호아 던 디엔 홈 나이",
+"krs": "또이 짜 호아 던 디엔 홈 나이",
+"src": "ai"
+},
+"mùa nào thức ấy": {
+"vi": "Ăn uống theo mùa nào thức ấy.",
+"ko": "제철에 나는 것으로 먹고 마신다.",
+"kr": "안 우옹 태오 무어 나오 특 어이",
+"krs": "안 우옹 태오 무어 나오 특 어이",
+"src": "ai"
+},
+"ấy là người tốt": {
+"vi": "Ấy là người tốt với tôi.",
+"ko": "저 사람은 내게 좋은 사람이다.",
+"kr": "어이 라 응으어이 똣 버이 또이",
+"krs": "어이 라 응으어이 똣 여이 또이",
+"src": "ai"
+},
+"display": {
+"vi": "Họ đang display sản phẩm.",
+"ko": "그들은 제품을 진열하고 있다.",
+"kr": "호 당 지 싼 펌",
+"krs": "호 당 이 산 펌",
+"src": "ai"
+},
+"menerapkan": {
+"vi": "Cô ấy menerapkan cách mới.",
+"ko": "그녀는 새로운 방법을 적용한다.",
+"kr": "꼬 어이 매 깍 머이",
+"krs": "꼬 어이 매 깍 머이",
+"src": "ai"
+},
+"chợ ở đâu?": {
+"vi": "Xin hỏi, chợ ở đâu?",
+"ko": "실례합니다, 시장이 어디에 있나요?",
+"kr": "씬 호이 쩌 어 더우",
+"krs": "씬 호이 쩌 어 더우",
+"src": "ai"
+},
+"to like": {
+"vi": "Tôi rất to like bạn tôi.",
+"ko": "나는 내 친구를 아주 친하게 좋아한다.",
+"kr": "또이 젓 또 리 반 또이",
+"krs": "또이 럿 또 리 반 또이",
+"src": "ai"
+},
+"dụng": {
+"vi": "Anh ấy là dụng nổi tiếng.",
+"ko": "그는 유명한 영화감독이다.",
+"kr": "아인 어이 라 중 노이 띠엥",
+"krs": "아인 어이 라 융 노이 띠엥",
+"src": "ai"
+},
+"vải hình con sò": {
+"vi": "Gấu áo có vải hình con sò.",
+"ko": "옷 끝단에 조개 모양 장식이 있습니다.",
+"kr": "거우 아오 꼬 바이 힌 꼰 쏘",
+"krs": "거우 아오 꼬 야이 힌 꼰 소",
+"src": "ai"
+},
+"kế hoạch": {
+"vi": "Kế hoạch đã sẵn sàng.",
+"ko": "계획이 이미 준비되었다.",
+"kr": "께 호악 다 싼 쌍",
+"krs": "께 호악 다 산 상",
+"src": "ai"
+},
+"sửa": {
+"vi": "Tôi muốn sửa xe máy.",
+"ko": "저는 오토바이를 수리하고 싶어요.",
+"kr": "또이 무온 쓰어 쌔 마이",
+"krs": "또이 무온 스어 쌔 마이",
+"src": "ai"
+},
+"mạch điện": {
+"vi": "Đây là sơ đồ mạch điện.",
+"ko": "이것은 회로도입니다.",
+"kr": "더이 라 써 도 막 디엔",
+"krs": "더이 라 서 도 막 디엔",
+"src": "ai"
+},
+"đi-ốt": {
+"vi": "Đi-ốt này bị hỏng rồi.",
+"ko": "이 다이오드가 고장 났어요.",
+"kr": "디 옷 나이 비 홍 조이",
+"krs": "디 옷 나이 비 홍 로이",
+"src": "ai"
+},
+"đầu nối": {
+"vi": "Hãy cắm đầu nối vào.",
+"ko": "커넥터를 연결하세요.",
+"kr": "하이 깜 더우 노이 바오",
+"krs": "하이 깜 더우 노이 야오",
+"src": "ai"
+},
+"dán bề mặt": {
+"vi": "Công nghệ dán bề mặt rất hiện đại.",
+"ko": "표면 실장 기술은 매우 현대적이에요.",
+"kr": "꽁 응에 잔 베 맛 젓 히엔 다이",
+"krs": "꽁 응에 얀 베 맛 럿 히엔 다이",
+"src": "ai"
+},
+"lò hàn": {
+"vi": "Lò hàn đang hoạt động.",
+"ko": "리플로 오븐이 작동 중이에요.",
+"kr": "로 한 당 호앗 동",
+"krs": "로 한 당 호앗 동",
+"src": "ai"
+},
+"gắn linh kiện": {
+"vi": "Máy đang gắn linh kiện.",
+"ko": "기계가 부품을 실장하고 있어요.",
+"kr": "마이 당 간 린 끼엔",
+"krs": "마이 당 간 린 끼엔",
+"src": "ai"
+},
+"ép nóng": {
+"vi": "Sản phẩm cần được ép nóng.",
+"ko": "제품은 열압착이 필요해요.",
+"kr": "싼 펌 껀 드억 앱 농",
+"krs": "산 펌 껀 드억 앱 농",
+"src": "ai"
+},
+"kiểm tra ngoại quan": {
+"vi": "Tôi đang kiểm tra ngoại quan.",
+"ko": "저는 외관 검사를 하고 있어요.",
+"kr": "또이 당 끼엠 짜 응오아이 꽌",
+"krs": "또이 당 끼엠 짜 응오아이 꽌",
+"src": "ai"
+},
+"đo điện áp": {
+"vi": "Hãy đo điện áp ở đây.",
+"ko": "여기서 전압을 측정하세요.",
+"kr": "하이 도 디엔 압 어 더이",
+"krs": "하이 도 디엔 압 어 더이",
+"src": "ai"
+},
+"mẫu chuẩn": {
+"vi": "Đây là mẫu chuẩn.",
+"ko": "이것은 표준 견본입니다.",
+"kr": "더이 라 머우 쭈언",
+"krs": "더이 라 머우 쭈언",
+"src": "ai"
+},
+"lỗi tiếp xúc": {
+"vi": "Máy gặp lỗi tiếp xúc.",
+"ko": "기계에서 접촉 불량이 발생했어요.",
+"kr": "마이 갑 로이 띠엡 쑥",
+"krs": "마이 갑 로이 띠엡 쑥",
+"src": "ai"
+},
+"vết xước": {
+"vi": "Có vết xước trên bề mặt.",
+"ko": "표면에 스크래치가 있어요.",
+"kr": "꼬 벳 쓰억 쩬 베 맛",
+"krs": "꼬 옛 쓰억 쩬 베 맛",
+"src": "ai"
+},
+"mũ phòng sạch": {
+"vi": "Bạn nhớ đội mũ phòng sạch.",
+"ko": "방진모 쓰는 것을 잊지 마세요.",
+"kr": "반 녀 도이 무 퐁 싹",
+"krs": "반 녀 도이 무 퐁 삭",
+"src": "ai"
+},
+"tiếp đất": {
+"vi": "Dây này cần tiếp đất.",
+"ko": "이 선은 접지가 필요해요.",
+"kr": "저이 나이 껀 띠엡 덧",
+"krs": "여이 나이 껀 띠엡 덧",
+"src": "ai"
+},
+"khay linh kiện": {
+"vi": "Lấy khay linh kiện cho tôi.",
+"ko": "부품 트레이를 가져다주세요.",
+"kr": "러이 카이 린 끼엔 쪼 또이",
+"krs": "러이 카이 린 끼엔 쪼 또이",
+"src": "ai"
+},
+"chương trình máy": {
+"vi": "Tôi đã chạy chương trình máy.",
+"ko": "설비 프로그램을 실행했어요.",
+"kr": "또이 다 짜이 쯔엉 찐 마이",
+"krs": "또이 다 짜이 쯔엉 찐 마이",
+"src": "ai"
+},
+"thay linh kiện máy": {
+"vi": "Tôi cần thay linh kiện máy này.",
+"ko": "저는 이 설비 부품을 교체해야 합니다.",
+"kr": "또이 껀 타이 린 끼엔 마이 나이",
+"krs": "또이 껀 타이 린 끼엔 마이 나이",
+"src": "ai"
+},
+"mã vạch": {
+"vi": "Hãy quét mã vạch này.",
+"ko": "이 바코드를 스캔해 주세요.",
+"kr": "하이 꽷 마 박 나이",
+"krs": "하이 꽷 마 약 나이",
+"src": "ai"
+},
+"số sê-ri": {
+"vi": "Kiểm tra số sê-ri ở đây.",
+"ko": "여기서 일련번호를 확인하세요.",
+"kr": "끼엠 짜 쏘 쎄 지 어 더이",
+"krs": "끼엠 짜 소 세 리 어 더이",
+"src": "ai"
+},
+"nhật ký sản xuất": {
+"vi": "Viết nhật ký sản xuất mỗi ngày.",
+"ko": "매일 생산 일지를 작성하세요.",
+"kr": "비엣 녓 끼 싼 쑤엇 모이 응아이",
+"krs": "이엣 녓 끼 산 쑤엇 모이 응아이",
+"src": "ai"
+},
+"nắp lưng": {
+"vi": "Lắp nắp lưng vào máy.",
+"ko": "기계에 후면 커버를 조립하세요.",
+"kr": "랍 납 릉 바오 마이",
+"krs": "랍 납 릉 야오 마이",
+"src": "ai"
+},
+"xốp chống sốc": {
+"vi": "Dùng xốp chống sốc để bảo vệ.",
+"ko": "보호를 위해 완충재를 사용하세요.",
+"kr": "중 쏩 쫑 쏙 데 바오 베",
+"krs": "융 쏩 쫑 속 데 바오 예",
+"src": "ai"
+},
+"ủng": {
+"vi": "Công nhân phải đi ủng.",
+"ko": "작업자는 장화를 신어야 합니다.",
+"kr": "꽁 년 파이 디 웅",
+"krs": "꽁 년 파이 디 웅",
+"src": "ai"
+},
+"đế giày": {
+"vi": "Kiểm tra đế giày cẩn thận.",
+"ko": "밑창을 꼼꼼히 검사하세요.",
+"kr": "끼엠 짜 데 자이 껀 턴",
+"krs": "끼엠 짜 데 야이 껀 턴",
+"src": "ai"
+},
+"lưỡi gà": {
+"vi": "May lưỡi gà vào giày.",
+"ko": "신발에 설포를 박음질하세요.",
+"kr": "마이 르어이 가 바오 자이",
+"krs": "마이 르어이 가 야오 야이",
+"src": "ai"
+},
+"mũi giày": {
+"vi": "Nắn mũi giày cho đẹp.",
+"ko": "앞코를 예쁘게 다듬으세요.",
+"kr": "난 무이 자이 쪼 댑",
+"krs": "난 무이 야이 쪼 댑",
+"src": "ai"
+},
+"vải lưới": {
+"vi": "Giày này dùng vải lưới.",
+"ko": "이 신발은 메시 원단을 사용합니다.",
+"kr": "자이 나이 중 바이 르어이",
+"krs": "야이 나이 융 야이 르어이",
+"src": "ai"
+},
+"dán đế": {
+"vi": "Bắt đầu dán đế giày.",
+"ko": "신발 밑창 접착을 시작하세요.",
+"kr": "밧 더우 잔 데 자이",
+"krs": "밧 더우 얀 데 야이",
+"src": "ai"
+},
+"mài nhám": {
+"vi": "Mài nhám bề mặt da.",
+"ko": "가죽 표면을 거칠게 갈아내세요.",
+"kr": "마이 냠 베 맛 자",
+"krs": "마이 냠 베 맛 야",
+"src": "ai"
+},
+"cắt da": {
+"vi": "Thợ đang cắt da giày.",
+"ko": "작업자가 가죽을 재단하고 있습니다.",
+"kr": "터 당 깟 자 자이",
+"krs": "터 당 깟 야 야이",
+"src": "ai"
+},
+"lệch đôi": {
+"vi": "Tránh để lỗi lệch đôi.",
+"ko": "짝 불일치 불량을 피하세요.",
+"kr": "짜인 데 로이 렉 도이",
+"krs": "짜인 데 로이 렉 도이",
+"src": "ai"
+},
+"đóng hộp giày": {
+"vi": "Tiến hành đóng hộp giày.",
+"ko": "신발 박스 포장을 진행하세요.",
+"kr": "띠엔 하인 동 홉 자이",
+"krs": "띠엔 하인 동 홉 야이",
+"src": "ai"
+},
+"máy khoan": {
+"vi": "Sử dụng máy khoan này.",
+"ko": "이 드릴링기를 사용하세요.",
+"kr": "쓰 중 마이 코안 나이",
+"krs": "스 융 마이 코안 나이",
+"src": "ai"
+},
+"đúc": {
+"vi": "Khuôn này dùng để đúc.",
+"ko": "이 금형은 주조하는 데 쓰입니다.",
+"kr": "쿠온 나이 중 데 둑",
+"krs": "쿠온 나이 융 데 둑",
+"src": "ai"
+},
+"vòng bi": {
+"vi": "Thay vòng bi mới vào.",
+"ko": "새 베어링으로 교체하세요.",
+"kr": "타이 봉 비 머이 바오",
+"krs": "타이 용 비 머이 야오",
+"src": "ai"
+},
+"khí nén": {
+"vi": "Kiểm tra van khí nén.",
+"ko": "공압 밸브를 점검하세요.",
+"kr": "끼엠 짜 반 키 낸",
+"krs": "끼엠 짜 얀 키 낸",
+"src": "ai"
+},
+"trục": {
+"vi": "Trục máy đang quay.",
+"ko": "기계 축이 회전하고 있습니다.",
+"kr": "쭉 마이 당 꽈이",
+"krs": "쭉 마이 당 꽈이",
+"src": "ai"
+},
+"thước cặp": {
+"vi": "Đo kích thước bằng thước cặp.",
+"ko": "버니어 캘리퍼스로 치수를 측정하세요.",
+"kr": "도 끽 트억 방 트억 깝",
+"krs": "도 끽 트억 방 트억 깝",
+"src": "ai"
+},
+"linh kiện thay thế": {
+"vi": "Kho có linh kiện thay thế.",
+"ko": "창고에 교체 부품이 있습니다.",
+"kr": "코 꼬 린 끼엔 타이 테",
+"krs": "코 꼬 린 끼엔 타이 테",
+"src": "ai"
+},
+"bản vẽ thiết kế": {
+"vi": "Xem bản vẽ thiết kế này.",
+"ko": "이 설계도를 확인하세요.",
+"kr": "쌤 반 배 티엣 께 나이",
+"krs": "쌤 반 얘 티엣 께 나이",
+"src": "ai"
+},
+"chủ đầu tư": {
+"vi": "Chủ đầu tư đến kiểm tra.",
+"ko": "발주처에서 검하러 왔습니다.",
+"kr": "쭈 더우 뜨 덴 끼엠 짜",
+"krs": "쭈 더우 뜨 덴 끼엠 짜",
+"src": "ai"
+},
+"xi măng": {
+"vi": "Tôi mua ba bao xi măng.",
+"ko": "저는 시멘트 세 포대를 샀어요.",
+"kr": "또이 무어 바 바오 씨 망",
+"krs": "또이 무어 바 바오 씨 망",
+"src": "ai"
+},
+"cẩu": {
+"vi": "Xe cẩu đang làm việc.",
+"ko": "크레인이 작업 중이에요.",
+"kr": "쌔 꺼우 당 람 비엑",
+"krs": "쌔 꺼우 당 람 이엑",
+"src": "ai"
+},
+"đào móng": {
+"vi": "Hôm nay bắt đầu đào móng.",
+"ko": "오늘 기초 굴착을 시작해요.",
+"kr": "홈 나이 밧 더우 다오 몽",
+"krs": "홈 나이 밧 더우 다오 몽",
+"src": "ai"
+},
+"hệ thống điện": {
+"vi": "Kiểm tra lại hệ thống điện.",
+"ko": "전기 설비를 다시 확인하세요.",
+"kr": "끼엠 짜 라이 헤 통 디엔",
+"krs": "끼엠 짜 라이 헤 통 디엔",
+"src": "ai"
+},
+"chống thấm": {
+"vi": "Tường này cần chống thấm tốt.",
+"ko": "이 벽은 방수가 잘 되어야 해요.",
+"kr": "뜨엉 나이 껀 쫑 텀 똣",
+"krs": "뜨엉 나이 껀 쫑 텀 똣",
+"src": "ai"
+},
+"biển cảnh báo": {
+"vi": "Hãy đặt biển cảnh báo ở đây.",
+"ko": "여기에 경고 표지판을 놓으세요.",
+"kr": "하이 닷 비엔 까인 바오 어 더이",
+"krs": "하이 닷 비엔 까인 바오 어 더이",
+"src": "ai"
+},
+"phiếu xuất kho": {
+"vi": "Bạn đã ký phiếu xuất kho chưa?",
+"ko": "출고 전표에 서명했나요?",
+"kr": "반 다 끼 피에우 쑤엇 코 쯔어",
+"krs": "반 다 끼 피에우 쑤엇 코 쯔어",
+"src": "ai"
+},
+"băng keo": {
+"vi": "Cho tôi mượn cuộn băng keo.",
+"ko": "포장 테이프 좀 빌려주세요.",
+"kr": "쪼 또이 므언 꾸온 방 깨오",
+"krs": "쪼 또이 므언 꾸온 방 깨오",
+"src": "ai"
+},
+"xe tải": {
+"vi": "Xe tải đang chở hàng tới.",
+"ko": "트럭이 물건을 싣고 오고 있어요.",
+"kr": "쌔 따이 당 쩌 항 떠이",
+"krs": "쌔 따이 당 쩌 항 떠이",
+"src": "ai"
+},
+"cảng biển": {
+"vi": "Hàng đang ở cảng biển.",
+"ko": "화물이 항구에 있어요.",
+"kr": "항 당 어 깡 비엔",
+"krs": "항 당 어 깡 비엔",
+"src": "ai"
+},
+"trễ hàng": {
+"vi": "Chúng ta bị trễ hàng rồi.",
+"ko": "우리는 납기가 지연됐어요.",
+"kr": "쭝 따 비 쩨 항 조이",
+"krs": "쭝 따 비 쩨 항 로이",
+"src": "ai"
+},
+"bảo hiểm hàng hoá": {
+"vi": "Cần mua bảo hiểm hàng hoá không?",
+"ko": "화물 보험을 들어야 하나요?",
+"kr": "껀 무어 바오 히엠 항 호아 콩",
+"krs": "껀 무어 바오 히엠 항 호아 콩",
+"src": "ai"
+},
+"cấp đông": {
+"vi": "Thịt này cần được cấp đông.",
+"ko": "이 고기는 급속 냉동이 필요해요.",
+"kr": "팃 나이 껀 드억 껍 동",
+"krs": "팃 나이 껀 드억 껍 동",
+"src": "ai"
+},
+"nhào bột": {
+"vi": "Mẹ đang nhào bột làm bánh.",
+"ko": "어머니께서 빵 반죽을 하고 계세요.",
+"kr": "매 당 냐오 봇 람 바인",
+"krs": "매 당 냐오 봇 람 바인",
+"src": "ai"
+},
+"nhãn dinh dưỡng": {
+"vi": "Hãy xem nhãn dinh dưỡng nhé.",
+"ko": "영양 표시를 확인해 보세요.",
+"kr": "하이 쌤 냔 진 즈엉 냬",
+"krs": "하이 쌤 냔 인 으엉 냬",
+"src": "ai"
+},
+"dung dịch": {
+"vi": "Dung dịch này rất nguy hiểm.",
+"ko": "이 용액은 매우 위험해요.",
+"kr": "중 직 나이 젓 응우이 히엠",
+"krs": "융 익 나이 럿 응우이 히엠",
+"src": "ai"
+},
+"khí thải": {
+"vi": "Xe này có nhiều khí thải.",
+"ko": "이 차는 배기가스가 많이 나와요.",
+"kr": "쌔 나이 꼬 니에우 키 타이",
+"krs": "쌔 나이 꼬 니에우 키 타이",
+"src": "ai"
+},
+"quầy thu ngân": {
+"vi": "Vui lòng ra quầy thu ngân.",
+"ko": "계산대로 가 주세요.",
+"kr": "부이 롱 자 꿔이 투 응언",
+"krs": "유이 롱 라 꿔이 투 응언",
+"src": "ai"
+},
+"phục vụ khách": {
+"vi": "Anh ấy đang phục vụ khách.",
+"ko": "그는 고객 응대를 하고 있어요.",
+"kr": "아인 어이 당 푹 부 칵",
+"krs": "아인 어이 당 푹 유 칵",
+"src": "ai"
+},
+"phục vụ bàn": {
+"vi": "Cô ấy làm phục vụ bàn.",
+"ko": "그녀는 홀 서빙을 해요.",
+"kr": "꼬 어이 람 푹 부 반",
+"krs": "꼬 어이 람 푹 유 반",
+"src": "ai"
+},
+"hoá đơn": {
+"vi": "Cho tôi xin hoá đơn.",
+"ko": "계산서 주세요.",
+"kr": "쪼 또이 씬 호아 던",
+"krs": "쪼 또이 씬 호아 던",
+"src": "ai"
+},
+"chị ấy uống thuốc": {
+"vi": "Chị ấy uống thuốc rồi.",
+"ko": "그 여자가 벌써 약을 먹었어요.",
+"kr": "찌 어이 우옹 투옥 조이",
+"krs": "찌 어이 우옹 투옥 로이",
+"src": "ai"
+},
+"kim đơn": {
+"vi": "Tôi dùng máy may kim đơn.",
+"ko": "저는 단침 재봉틀을 사용해요.",
+"kr": "또이 중 마이 마이 낌 던",
+"krs": "또이 융 마이 마이 낌 던",
+"src": "ai"
+},
+"tồn lại": {
+"vi": "Còn tồn lại ít tiền.",
+"ko": "돈이 조금 남아 있다.",
+"kr": "꼰 똔 라이 잇 띠엔",
+"krs": "꼰 똔 라이 잇 띠엔",
+"src": "ai"
+},
+"chân linh kiện": {
+"vi": "Chân linh kiện bị cong rồi.",
+"ko": "부품 다리가 휘었어요.",
+"kr": "쩐 린 끼엔 비 꽁 조이",
+"krs": "쩐 린 끼엔 비 꽁 로이",
+"src": "ai"
+},
+"vi mạch": {
+"vi": "Vi mạch này rất nhỏ.",
+"ko": "이 집적회로는 아주 작아요.",
+"kr": "비 막 나이 젓 뇨",
+"krs": "이 막 나이 럿 뇨",
+"src": "ai"
+},
+"dây cáp": {
+"vi": "Hãy nối dây cáp vào đây.",
+"ko": "케이블을 여기에 연결하세요.",
+"kr": "하이 노이 저이 깝 바오 더이",
+"krs": "하이 노이 여이 깝 야오 더이",
+"src": "ai"
+},
+"kem hàn": {
+"vi": "Bôi kem hàn lên bo mạch.",
+"ko": "회로 기판에 솔더 페이스트를 바르세요.",
+"kr": "보이 깸 한 렌 보 막",
+"krs": "보이 깸 한 렌 보 막",
+"src": "ai"
+},
+"máy gắp linh kiện": {
+"vi": "Máy gắp linh kiện đang chạy.",
+"ko": "칩 마운터가 작동 중이에요.",
+"kr": "마이 갑 린 끼엔 당 짜이",
+"krs": "마이 갑 린 끼엔 당 짜이",
+"src": "ai"
+},
+"bắt vít": {
+"vi": "Hãy bắt vít vào đây nhé.",
+"ko": "여기에 나사를 조여 주세요.",
+"kr": "하이 밧 빗 바오 더이 냬",
+"krs": "하이 밧 잇 야오 더이 냬",
+"src": "ai"
+},
+"cắt chân": {
+"vi": "Cần cắt chân linh kiện ngay.",
+"ko": "부품 리드를 바로 잘라야 해요.",
+"kr": "껀 깟 쩐 린 끼엔 응아이",
+"krs": "껀 깟 쩐 린 끼엔 응아이",
+"src": "ai"
+},
+"kiểm tra chức năng": {
+"vi": "Tôi đang kiểm tra chức năng máy.",
+"ko": "저는 기기 기능을 검사 중이에요.",
+"kr": "또이 당 끼엠 짜 쯕 낭 마이",
+"krs": "또이 당 끼엠 짜 쯕 낭 마이",
+"src": "ai"
+},
+"đo dòng điện": {
+"vi": "Hãy đo dòng điện giúp tôi.",
+"ko": "전류 측정을 도와주세요.",
+"kr": "하이 도 종 디엔 줍 또이",
+"krs": "하이 도 용 디엔 윱 또이",
+"src": "ai"
+},
+"mẫu lỗi": {
+"vi": "Đây là một mẫu lỗi.",
+"ko": "이것은 불량 견본이에요.",
+"kr": "더이 라 못 머우 로이",
+"krs": "더이 라 못 머우 로이",
+"src": "ai"
+},
+"thiếu linh kiện": {
+"vi": "Sản phẩm bị thiếu linh kiện.",
+"ko": "제품에 부품이 누락되었어요.",
+"kr": "싼 펌 비 티에우 린 끼엔",
+"krs": "산 펌 비 티에우 린 끼엔",
+"src": "ai"
+},
+"trầy xước": {
+"vi": "Bề mặt máy bị trầy xước.",
+"ko": "기기 표면에 긁힘이 있어요.",
+"kr": "베 맛 마이 비 쩌이 쓰억",
+"krs": "베 맛 마이 비 쩌이 쓰억",
+"src": "ai"
+},
+"găng tay chống tĩnh điện": {
+"vi": "Hãy đeo găng tay chống tĩnh điện.",
+"ko": "정전기 방지 장갑을 끼세요.",
+"kr": "하이 대오 강 따이 쫑 띤 디엔",
+"krs": "하이 대오 강 따이 쫑 띤 디엔",
+"src": "ai"
+},
+"nhiệt độ phòng": {
+"vi": "Để ở nhiệt độ phòng nhé.",
+"ko": "실온에 보관하세요.",
+"kr": "데 어 니엣 도 퐁 냬",
+"krs": "데 어 니엣 도 퐁 냬",
+"src": "ai"
+},
+"cuộn linh kiện": {
+"vi": "Lấy cho tôi cuộn linh kiện.",
+"ko": "부품 릴을 가져다주세요.",
+"kr": "러이 쪼 또이 꾸온 린 끼엔",
+"krs": "러이 쪼 또이 꾸온 린 끼엔",
+"src": "ai"
+},
+"cài đặt thông số": {
+"vi": "Tôi đang cài đặt thông số.",
+"ko": "저는 설정값을 입력하고 있어요.",
+"kr": "또이 당 까이 닷 통 쏘",
+"krs": "또이 당 까이 닷 통 소",
+"src": "ai"
+},
+"sự cố": {
+"vi": "Máy đang gặp sự cố nhỏ.",
+"ko": "기계에 작은 사고가 생겼어요.",
+"kr": "마이 당 갑 쓰 꼬 뇨",
+"krs": "마이 당 갑 스 꼬 뇨",
+"src": "ai"
+},
+"tem nhãn": {
+"vi": "Hãy dán tem nhãn lên sản phẩm.",
+"ko": "제품에 라벨을 붙이세요.",
+"kr": "하이 잔 땜 냔 렌 싼 펌",
+"krs": "하이 얀 땜 냔 렌 산 펌",
+"src": "ai"
+},
+"truy xuất nguồn gốc": {
+"vi": "Cần truy xuất nguồn gốc sản phẩm này.",
+"ko": "이 제품의 이력 추적이 필요합니다.",
+"kr": "껀 쭈이 쑤엇 응우온 곡 싼 펌 나이",
+"krs": "껀 쭈이 쑤엇 응우온 곡 산 펌 나이",
+"src": "ai"
+},
+"máy tính bảng": {
+"vi": "Tôi đang dùng máy tính bảng mới.",
+"ko": "저는 새 태블릿을 사용 중이에요.",
+"kr": "또이 당 중 마이 띤 방 머이",
+"krs": "또이 당 융 마이 띤 방 머이",
+"src": "ai"
+},
+"phím bấm": {
+"vi": "Hãy ấn phím bấm này nhé.",
+"ko": "이 버튼을 누르세요.",
+"kr": "하이 언 핌 범 나이 냬",
+"krs": "하이 언 핌 범 나이 냬",
+"src": "ai"
+},
+"giày thể thao": {
+"vi": "Tôi thích đôi giày thể thao này.",
+"ko": "저는 이 운동화가 좋아요.",
+"kr": "또이 틱 도이 자이 테 타오 나이",
+"krs": "또이 틱 도이 야이 테 타오 나이",
+"src": "ai"
+},
+"túi xách": {
+"vi": "Túi xách này rất đẹp.",
+"ko": "이 가방은 매우 예뻐요.",
+"kr": "뚜이 싹 나이 젓 댑",
+"krs": "뚜이 싹 나이 럿 댑",
+"src": "ai"
+},
+"đế ngoài": {
+"vi": "Đế ngoài của giày rất bền.",
+"ko": "신발의 아웃솔이 매우 튼튼해요.",
+"kr": "데 응오아이 꾸어 자이 젓 벤",
+"krs": "데 응오아이 꾸어 야이 럿 벤",
+"src": "ai"
+},
+"dây giày": {
+"vi": "Dây giày của tôi bị tuột.",
+"ko": "제 신발끈이 풀렸어요.",
+"kr": "저이 자이 꾸어 또이 비 뚜옷",
+"krs": "여이 야이 꾸어 또이 비 뚜옷",
+"src": "ai"
+},
+"phom giày": {
+"vi": "Phom giày này rất thoải mái.",
+"ko": "이 신발 라스트는 매우 편해요.",
+"kr": "폼 자이 나이 젓 토아이 마이",
+"krs": "폼 야이 나이 럿 토아이 마이",
+"src": "ai"
+},
+"cao su": {
+"vi": "Đế giày làm bằng cao su.",
+"ko": "신발 밑창은 고무로 만들었어요.",
+"kr": "데 자이 람 방 까오 쑤",
+"krs": "데 야이 람 방 까오 수",
+"src": "ai"
+},
+"khâu đế": {
+"vi": "Công nhân đang khâu đế giày.",
+"ko": "작업자가 밑창을 봉합하고 있어요.",
+"kr": "꽁 년 당 커우 데 자이",
+"krs": "꽁 년 당 커우 데 야이",
+"src": "ai"
+},
+"sấy keo": {
+"vi": "Cần sấy keo cho thật khô.",
+"ko": "본드를 완전히 건조해야 해요.",
+"kr": "껀 써이 깨오 쪼 텃 코",
+"krs": "껀 서이 깨오 쪼 텃 코",
+"src": "ai"
+},
+"may mũ giày": {
+"vi": "Họ đang may mũ giày.",
+"ko": "그들은 갑피를 봉제하고 있어요.",
+"kr": "호 당 마이 무 자이",
+"krs": "호 당 마이 무 야이",
+"src": "ai"
+},
+"bong keo": {
+"vi": "Giày này bị bong keo rồi.",
+"ko": "이 신발은 본드가 벗겨졌어요.",
+"kr": "자이 나이 비 봉 깨오 조이",
+"krs": "야이 나이 비 봉 깨오 로이",
+"src": "ai"
+},
+"khuôn ép": {
+"vi": "Khuôn ép này còn tốt không?",
+"ko": "이 프레스 금형은 아직 좋은가요?",
+"kr": "쿠온 앱 나이 꼰 똣 콩",
+"krs": "쿠온 앱 나이 꼰 똣 콩",
+"src": "ai"
+},
+"máy hàn": {
+"vi": "Máy hàn đang hoạt động tốt.",
+"ko": "용접기가 잘 작동하고 있어요.",
+"kr": "마이 한 당 호앗 동 똣",
+"krs": "마이 한 당 호앗 동 똣",
+"src": "ai"
+},
+"ép nhựa": {
+"vi": "Chúng tôi làm việc tại xưởng ép nhựa.",
+"ko": "우리는 사출 성형 공장에서 일해요.",
+"kr": "쭝 또이 람 비엑 따이 쓰엉 앱 느어",
+"krs": "쭝 또이 람 이엑 따이 쓰엉 앱 느어",
+"src": "ai"
+},
+"van": {
+"vi": "Hãy đóng van nước lại.",
+"ko": "수도 밸브를 잠그세요.",
+"kr": "하이 동 반 느억 라이",
+"krs": "하이 동 얀 느억 라이",
+"src": "ai"
+},
+"dầu bôi trơn": {
+"vi": "Cần thêm dầu bôi trơn máy.",
+"ko": "기계에 윤활유가 필요해요.",
+"kr": "껀 템 저우 보이 쩐 마이",
+"krs": "껀 템 여우 보이 쩐 마이",
+"src": "ai"
+},
+"bu lông": {
+"vi": "Hãy vặn chặt bu lông này.",
+"ko": "이 볼트를 꽉 조이세요.",
+"kr": "하이 반 짯 부 롱 나이",
+"krs": "하이 얀 짯 부 롱 나이",
+"src": "ai"
+},
+"thước đo": {
+"vi": "Tôi dùng thước đo chiều dài.",
+"ko": "저는 길이를 재는 자를 써요.",
+"kr": "또이 중 트억 도 찌에우 자이",
+"krs": "또이 융 트억 도 찌에우 야이",
+"src": "ai"
+},
+"phụ tùng ô tô": {
+"vi": "Công ty bán phụ tùng ô tô.",
+"ko": "회사는 자동차 부품을 팔아요.",
+"kr": "꽁 띠 반 푸 뚱 오 또",
+"krs": "꽁 띠 반 푸 뚱 오 또",
+"src": "ai"
+},
+"nghiệm thu": {
+"vi": "Hôm nay chúng tôi đi nghiệm thu.",
+"ko": "오늘 우리는 준공 검사를 하러 가요.",
+"kr": "홈 나이 쭝 또이 디 응이엠 투",
+"krs": "홈 나이 쭝 또이 디 응이엠 투",
+"src": "ai"
+},
+"hồ sơ thi công": {
+"vi": "Hãy kiểm tra hồ sơ thi công.",
+"ko": "시공 서류를 확인하세요.",
+"kr": "하이 끼엠 짜 호 써 티 꽁",
+"krs": "하이 끼엠 짜 호 서 티 꽁",
+"src": "ai"
+},
+"gạch": {
+"vi": "Tôi cần mua thêm gạch.",
+"ko": "벽돌을 더 사야 해요.",
+"kr": "또이 껀 무어 템 각",
+"krs": "또이 껀 무어 템 각",
+"src": "ai"
+},
+"máy xúc": {
+"vi": "Máy xúc đang làm việc.",
+"ko": "굴착기가 작업 중입니다.",
+"kr": "마이 쑥 당 람 비엑",
+"krs": "마이 쑥 당 람 이엑",
+"src": "ai"
+},
+"san lấp": {
+"vi": "Họ đang san lấp mặt bằng.",
+"ko": "그들은 부지를 정지하고 있습니다.",
+"kr": "호 당 싼 럽 맛 방",
+"krs": "호 당 산 럽 맛 방",
+"src": "ai"
+},
+"hệ thống nước": {
+"vi": "Hệ thống nước bị hỏng rồi.",
+"ko": "급배수 시스템이 고장 났어요.",
+"kr": "헤 통 느억 비 홍 조이",
+"krs": "헤 통 느억 비 홍 로이",
+"src": "ai"
+},
+"mũ bảo hộ": {
+"vi": "Hãy đội mũ bảo hộ vào.",
+"ko": "안전모를 착용하세요.",
+"kr": "하이 도이 무 바오 호 바오",
+"krs": "하이 도이 무 바오 호 야오",
+"src": "ai"
+},
+"khu vực nguy hiểm": {
+"vi": "Đây là khu vực nguy hiểm.",
+"ko": "여기는 위험 구역입니다.",
+"kr": "더이 라 쿠 븍 응우이 히엠",
+"krs": "더이 라 쿠 윽 응우이 히엠",
+"src": "ai"
+},
+"phiếu nhập kho": {
+"vi": "Bạn đã ký phiếu nhập kho chưa?",
+"ko": "입고 전표에 서명했나요?",
+"kr": "반 다 끼 피에우 녑 코 쯔어",
+"krs": "반 다 끼 피에우 녑 코 쯔어",
+"src": "ai"
+},
+"màng quấn": {
+"vi": "Dùng màng quấn để đóng gói.",
+"ko": "포장을 위해 랩 필름을 쓰세요.",
+"kr": "중 망 꿘 데 동 고이",
+"krs": "융 망 꿘 데 동 고이",
+"src": "ai"
+},
+"xe container": {
+"vi": "Xe container đang ở ngoài cổng.",
+"ko": "컨테이너 차가 문 밖에 있습니다.",
+"kr": "쌔 꼬 당 어 응오아이 꽁",
+"krs": "쌔 꼬 당 어 응오아이 꽁",
+"src": "ai"
+},
+"sân bay hàng hoá": {
+"vi": "Tôi đi đến sân bay hàng hoá.",
+"ko": "저는 화물 공항으로 갑니다.",
+"kr": "또이 디 덴 썬 바이 항 호아",
+"krs": "또이 디 덴 선 바이 항 호아",
+"src": "ai"
+},
+"thiếu hàng": {
+"vi": "Chúng tôi đang bị thiếu hàng.",
+"ko": "우리는 물량이 부족합니다.",
+"kr": "쭝 또이 당 비 티에우 항",
+"krs": "쭝 또이 당 비 티에우 항",
+"src": "ai"
+},
+"nguyên liệu thực phẩm": {
+"vi": "Đây là nguyên liệu thực phẩm sạch.",
+"ko": "이것은 깨끗한 식품 원료입니다.",
+"kr": "더이 라 응우옌 리에우 특 펌 싹",
+"krs": "더이 라 응우옌 리에우 특 펌 삭",
+"src": "ai"
+},
+"rã đông": {
+"vi": "Bạn cần rã đông thịt trước.",
+"ko": "고기를 먼저 해동해야 합니다.",
+"kr": "반 껀 자 동 팃 쯔억",
+"krs": "반 껀 라 동 팃 쯔억",
+"src": "ai"
+},
+"sấy khô": {
+"vi": "Hãy sấy khô sản phẩm này.",
+"ko": "이 제품을 건조하세요.",
+"kr": "하이 써이 코 싼 펌 나이",
+"krs": "하이 서이 코 산 펌 나이",
+"src": "ai"
+},
+"vệ sinh an toàn thực phẩm": {
+"vi": "Cần chú ý vệ sinh an toàn thực phẩm.",
+"ko": "식품 위생에 주의해야 합니다.",
+"kr": "껀 쭈 이 베 씬 안 또안 특 펌",
+"krs": "껀 쭈 이 예 신 안 또안 특 펌",
+"src": "ai"
+},
+"nồng độ": {
+"vi": "Nồng độ này rất cao.",
+"ko": "이 농도는 매우 높습니다.",
+"kr": "농 도 나이 젓 까오",
+"krs": "농 도 나이 럿 까오",
+"src": "ai"
+},
+"chất độc hại": {
+"vi": "Không có chất độc hại ở đây.",
+"ko": "여기에 유해물질은 없습니다.",
+"kr": "콩 꼬 쩟 독 하이 어 더이",
+"krs": "콩 꼬 쩟 독 하이 어 더이",
+"src": "ai"
+},
+"kệ hàng": {
+"vi": "Sản phẩm ở trên kệ hàng.",
+"ko": "제품이 진열대에 있습니다.",
+"kr": "싼 펌 어 쩬 께 항",
+"krs": "산 펌 어 쩬 께 항",
+"src": "ai"
+},
+"đổi trả": {
+"vi": "Tôi muốn đổi trả sản phẩm.",
+"ko": "제품을 교환/반품하고 싶어요.",
+"kr": "또이 무온 도이 짜 싼 펌",
+"krs": "또이 무온 도이 짜 산 펌",
+"src": "ai"
+},
+"gọi món": {
+"vi": "Chúng tôi muốn gọi món ngay.",
+"ko": "저희는 지금 주문하고 싶습니다.",
+"kr": "쭝 또이 무온 고이 몬 응아이",
+"krs": "쭝 또이 무온 고이 몬 응아이",
+"src": "ai"
+},
+"tiền tip": {
+"vi": "Tôi không cần lấy tiền tip.",
+"ko": "팁은 받지 않아도 됩니다.",
+"kr": "또이 콩 껀 러이 띠엔 띱",
+"krs": "또이 콩 껀 러이 띠엔 띱",
+"src": "ai"
+},
 "chào các cháu": {
 "vi": "Chào các cháu, ông đi làm đây.",
 "ko": "얘들아 안녕, 할아버지 일하러 간다.",
@@ -328,39 +5508,11 @@
 "krs": "또이 당 밧 더우 도 안",
 "src": "ai"
 },
-"trở ngại": {
-"vi": "Đừng sợ những trở ngại.",
-"ko": "장애물을 두려워하지 마세요.",
-"kr": "등 써 능 쩌 응아이",
-"krs": "등 서 능 쩌 응아이",
-"src": "ai"
-},
-"schedule": {
-"vi": "Lịch schedule rất bận.",
-"ko": "일정이 아주 바쁘다.",
-"kr": "릭 젓 번",
-"krs": "릭 럿 번",
-"src": "ai"
-},
-"kỷ lục": {
-"vi": "Anh ấy đã phá kỷ lục.",
-"ko": "그는 기록을 깼다.",
-"kr": "아인 어이 다 파 끼 룩",
-"krs": "아인 어이 다 파 끼 룩",
-"src": "ai"
-},
 "vĩnh": {
 "vi": "Tình yêu này là Vĩnh.",
 "ko": "이 사랑은 영원하다.",
 "kr": "띤 이에우 나이 라 빈",
 "krs": "띤 이에우 나이 라 인",
-"src": "ai"
-},
-"hết giấy": {
-"vi": "Máy in hết giấy rồi.",
-"ko": "프린터 종이가 다 떨어졌어요.",
-"kr": "마이 인 헷 저이 조이",
-"krs": "마이 인 헷 여이 로이",
 "src": "ai"
 },
 "đa số": {
@@ -951,13 +6103,6 @@
 "krs": "더이 라 퍼 찐 곡 이엣 남",
 "src": "ai"
 },
-"thủ tục": {
-"vi": "Thủ tục này rất đơn giản.",
-"ko": "이 절차는 아주 간단하다.",
-"kr": "투 뚝 나이 젓 던 잔",
-"krs": "투 뚝 나이 럿 던 얀",
-"src": "ai"
-},
 "gió biển": {
 "vi": "Gió biển rất mát.",
 "ko": "바닷바람이 아주 시원합니다.",
@@ -1392,20 +6537,6 @@
 "krs": "또이 꼬 부오이 홉 꾸오이 남",
 "src": "ai"
 },
-"display": {
-"vi": "Họ đang display sản phẩm.",
-"ko": "그들은 제품을 진열하고 있다.",
-"kr": "호 당 지 싼 펌",
-"krs": "호 당 이 산 펌",
-"src": "ai"
-},
-"planning": {
-"vi": "Tôi đang làm planning.",
-"ko": "나는 기획을 하고 있다.",
-"kr": "또이 당 람",
-"krs": "또이 당 람",
-"src": "ai"
-},
 "thổ": {
 "vi": "Đây là văn hóa thổ.",
 "ko": "이것은 전통 문화예요.",
@@ -1434,25 +6565,11 @@
 "krs": "또이 쌤 으 바오 터이 띠엣",
 "src": "ai"
 },
-"áo phông": {
-"vi": "Tôi mặc một chiếc áo phông.",
-"ko": "나는 티셔츠 한 장을 입는다.",
-"kr": "또이 막 못 찌엑 아오 퐁",
-"krs": "또이 막 못 찌엑 아오 퐁",
-"src": "ai"
-},
 "tôi ngủ giờ tối": {
 "vi": "Tôi ngủ giờ tối muộn.",
 "ko": "나는 밤 늦은 시간에 자요.",
 "kr": "또이 응우 저 또이 무온",
 "krs": "또이 응우 여 또이 무온",
-"src": "ai"
-},
-"mỹ nghệ": {
-"vi": "Đây là hàng mỹ nghệ.",
-"ko": "이것은 공예품이다.",
-"kr": "더이 라 항 미 응에",
-"krs": "더이 라 항 미 응에",
 "src": "ai"
 },
 "bưu thiếp": {
@@ -1502,13 +6619,6 @@
 "ko": "저는 베트남어 문법을 공부해요.",
 "kr": "또이 혹 응으 팝 띠엥 비엣",
 "krs": "또이 혹 응으 팝 띠엥 이엣",
-"src": "ai"
-},
-"cơi túi": {
-"vi": "Thợ may đang làm cơi túi áo.",
-"ko": "재단사가 옷의 입술천을 만들고 있어요.",
-"kr": "터 마이 당 람 꺼이 뚜이 아오",
-"krs": "터 마이 당 람 꺼이 뚜이 아오",
 "src": "ai"
 },
 "da lộn": {
@@ -1861,13 +6971,6 @@
 "krs": "또이 무어 쌔 짜 곱",
 "src": "ai"
 },
-"lợi nhuận": {
-"vi": "Công ty có nhiều lợi nhuận.",
-"ko": "회사가 이윤을 많이 남겼어요.",
-"kr": "꽁 띠 꼬 니에우 러이 누연",
-"krs": "꽁 띠 꼬 니에우 러이 누연",
-"src": "ai"
-},
 "cẩm": {
 "vi": "Cô ấy mặc áo vải cẩm.",
 "ko": "그녀는 비단 옷을 입었습니다.",
@@ -1966,32 +7069,11 @@
 "krs": "또이 껀 떠이 짱 아오 나이",
 "src": "ai"
 },
-"đường gập cổ áo": {
-"vi": "Đường gập cổ áo rất thẳng.",
-"ko": "옷깃 꺾임선이 아주 곧아요.",
-"kr": "드엉 겁 꼬 아오 젓 탕",
-"krs": "드엉 겁 꼬 아오 럿 탕",
-"src": "ai"
-},
 "ma-nơ-canh to": {
 "vi": "Tôi cần một ma-nơ-canh to.",
 "ko": "큰 마네킹이 필요해요.",
 "kr": "또이 껀 못 마 너 까인 또",
 "krs": "또이 껀 못 마 너 까인 또",
-"src": "ai"
-},
-"độ bền màu": {
-"vi": "Độ bền màu rất tốt.",
-"ko": "색 유지력이 아주 좋아요.",
-"kr": "도 벤 마우 젓 똣",
-"krs": "도 벤 마우 럿 똣",
-"src": "ai"
-},
-"chiều cao": {
-"vi": "Chiều cao của anh ấy lớn.",
-"ko": "그의 키는 큽니다.",
-"kr": "찌에우 까오 꾸어 아인 어이 런",
-"krs": "찌에우 까오 꾸어 아인 어이 런",
 "src": "ai"
 },
 "bọc đường may": {
@@ -2001,32 +7083,11 @@
 "krs": "하이 복 드엉 마이 껀 턴",
 "src": "ai"
 },
-"ghim": {
-"vi": "Dùng ghim vải nhé.",
-"ko": "천 핀을 쓰세요.",
-"kr": "중 김 바이 냬",
-"krs": "융 김 야이 냬",
-"src": "ai"
-},
 "gấu": {
 "vi": "Cắt ngắn gấu quần này.",
 "ko": "이 바지 밑단을 짧게 잘라라.",
 "kr": "깟 응안 거우 꿘 나이",
 "krs": "깟 응안 거우 꿘 나이",
-"src": "ai"
-},
-"nẹp đỡ": {
-"vi": "Nẹp đỡ khóa rất chắc chắn.",
-"ko": "지퍼 밑 덧단이 아주 튼튼해요.",
-"kr": "냅 더 코아 젓 짝 짠",
-"krs": "냅 더 코아 럿 짝 짠",
-"src": "ai"
-},
-"tỷ lệ đạt": {
-"vi": "Tỷ lệ đạt rất cao.",
-"ko": "달성률이 아주 높다.",
-"kr": "띠 레 닷 젓 까오",
-"krs": "띠 레 닷 럿 까오",
 "src": "ai"
 },
 "cây bút": {
@@ -2204,13 +7265,6 @@
 "krs": "또이 넨 노이 나이 여이 반",
 "src": "ai"
 },
-"special": {
-"vi": "Hôm nay là ngày special.",
-"ko": "오늘은 특별한 날이에요.",
-"kr": "홈 나이 라 응아이",
-"krs": "홈 나이 라 응아이",
-"src": "ai"
-},
 "đứa trẻ": {
 "vi": "Đứa trẻ đang cười rất vui.",
 "ko": "아이가 아주 즐겁게 웃고 있어요.",
@@ -2244,13 +7298,6 @@
 "ko": "신체 건강은 매우 중요하다.",
 "kr": "쓱 쿠애 테 쩟 젓 꽌 쫑",
 "krs": "슥 쿠애 테 쩟 럿 꽌 쫑",
-"src": "ai"
-},
-"chỗ ngồi": {
-"vi": "Đây là chỗ ngồi của tôi.",
-"ko": "여기는 내 좌석이다.",
-"kr": "더이 라 쪼 응오이 꾸어 또이",
-"krs": "더이 라 쪼 응오이 꾸어 또이",
 "src": "ai"
 },
 "chuyên môn": {
@@ -2351,13 +7398,6 @@
 "krs": "꼰 따우 당 껍 벤 깡",
 "src": "ai"
 },
-"media": {
-"vi": "Tôi xem tin tức trên media.",
-"ko": "나는 미디어로 뉴스를 본다.",
-"kr": "또이 쌤 띤 뜩 쩬 매",
-"krs": "또이 쌤 띤 뜩 쩬 매",
-"src": "ai"
-},
 "hướng dẫn sử dụng": {
 "vi": "Hãy đọc hướng dẫn sử dụng nhé.",
 "ko": "사용 설명서를 읽어보세요.",
@@ -2377,13 +7417,6 @@
 "ko": "그는 유능한 전문가입니다.",
 "kr": "아인 어이 라 냐 쭈옌 몬 조이",
 "krs": "아인 어이 라 냐 쭈옌 몬 요이",
-"src": "ai"
-},
-"phổ biến": {
-"vi": "Món này rất phổ biến.",
-"ko": "이 음식은 아주 보급되어 있다.",
-"kr": "몬 나이 젓 포 비엔",
-"krs": "몬 나이 럿 포 비엔",
 "src": "ai"
 },
 "tôi rất mệt": {
@@ -2426,13 +7459,6 @@
 "ko": "어떤 곡을 가장 좋아하시나요?",
 "kr": "바이 나오 반 틱 녓",
 "krs": "바이 나오 반 틱 녓",
-"src": "ai"
-},
-"găng tay": {
-"vi": "Hãy đeo găng tay vào.",
-"ko": "장갑을 끼세요.",
-"kr": "하이 대오 강 따이 바오",
-"krs": "하이 대오 강 따이 야오",
 "src": "ai"
 },
 "tai": {
@@ -2785,13 +7811,6 @@
 "krs": "또이 틱 독 삭",
 "src": "ai"
 },
-"lạnh lùng": {
-"vi": "Cô ấy rất lạnh lùng.",
-"ko": "그녀는 매우 냉정합니다.",
-"kr": "꼬 어이 젓 라인 룽",
-"krs": "꼬 어이 럿 라인 룽",
-"src": "ai"
-},
 "quán bar": {
 "vi": "Họ đang ở quán bar.",
 "ko": "그들은 술집에 있습니다.",
@@ -2862,13 +7881,6 @@
 "krs": "더이 라 코아 혹 응안 한",
 "src": "ai"
 },
-"một cái tủ gương": {
-"vi": "Tôi mua một cái tủ gương.",
-"ko": "나는 거울 장식장을 샀습니다.",
-"kr": "또이 무어 못 까이 뚜 그엉",
-"krs": "또이 무어 못 까이 뚜 그엉",
-"src": "ai"
-},
 "chào cô ạ": {
 "vi": "Em chào cô ạ.",
 "ko": "선생님 안녕하세요.",
@@ -2932,13 +7944,6 @@
 "krs": "끼엠 짜 으어 다이 꿘",
 "src": "ai"
 },
-"xuôi vai": {
-"vi": "Áo này có thiết kế xuôi vai.",
-"ko": "이 옷은 처진어깨 디자인이다.",
-"kr": "아오 나이 꼬 티엣 께 쑤오이 바이",
-"krs": "아오 나이 꼬 티엣 께 쑤오이 야이",
-"src": "ai"
-},
 "mắt cáo": {
 "vi": "Mắt cáo ở đây bị hỏng.",
 "ko": "여기에 있는 아일렛(오제)이 불량입니다.",
@@ -2974,13 +7979,6 @@
 "krs": "드엉 마이 따이 라 비 로이",
 "src": "ai"
 },
-"vải hình con sò": {
-"vi": "Gấu áo có vải hình con sò.",
-"ko": "옷 끝단에 조개 모양 장식이 있습니다.",
-"kr": "거우 아오 꼬 바이 힌 꼰 쏘",
-"krs": "거우 아오 꼬 야이 힌 꼰 소",
-"src": "ai"
-},
 "diễu thành phẩm": {
 "vi": "Đường diễu thành phẩm rất thẳng.",
 "ko": "상침이 매우 곧게 되었습니다.",
@@ -3002,13 +8000,6 @@
 "krs": "따이 깨오 코아 허이 짯",
 "src": "ai"
 },
-"sửa": {
-"vi": "Tôi muốn sửa xe máy.",
-"ko": "저는 오토바이를 수리하고 싶어요.",
-"kr": "또이 무온 쓰어 쌔 마이",
-"krs": "또이 무온 스어 쌔 마이",
-"src": "ai"
-},
 "bà ấy": {
 "vi": "Bà ấy là bà ngoại tôi.",
 "ko": "그녀는 저의 외할머니입니다.",
@@ -3021,13 +8012,6 @@
 "ko": "저것은 나의 집입니다.",
 "kr": "도 라 응오이 냐 꾸어 또이",
 "krs": "도 라 응오이 냐 꾸어 또이",
-"src": "ai"
-},
-"dạo này": {
-"vi": "Dạo này bạn thấy thế nào?",
-"ko": "요즘 어떻게 지내요?",
-"kr": "자오 나이 반 터이 테 나오",
-"krs": "야오 나이 반 터이 테 나오",
 "src": "ai"
 },
 "túi": {
@@ -3296,13 +8280,6 @@
 "krs": "또이 년 띠엔 르엉 야오 응아이 마이",
 "src": "ai"
 },
-"thật ra thì": {
-"vi": "Thật ra thì tôi không biết.",
-"ko": "사실은 나는 모른다.",
-"kr": "텃 자 티 또이 콩 비엣",
-"krs": "텃 라 티 또이 콩 비엣",
-"src": "ai"
-},
 "phê chuẩn": {
 "vi": "Sếp đã phê chuẩn hợp đồng này.",
 "ko": "상사가 이 계약을 승인했다.",
@@ -3485,13 +8462,6 @@
 "krs": "아오 나이 콩 꼬 꼬",
 "src": "ai"
 },
-"kết hợp": {
-"vi": "Hãy kết hợp hai màu này lại.",
-"ko": "이 두 색상을 결합해 보세요.",
-"kr": "하이 껫 헙 하이 마우 나이 라이",
-"krs": "하이 껫 헙 하이 마우 나이 라이",
-"src": "ai"
-},
 "nhăn": {
 "vi": "Vải này dễ bị nhăn.",
 "ko": "이 원단은 주름이 잘 생겨요.",
@@ -3651,13 +8621,6 @@
 "ko": "이 영화는 좀 기괴하다.",
 "kr": "핌 나이 허이 끼 지",
 "krs": "핌 나이 허이 끼 이",
-"src": "ai"
-},
-"citadel": {
-"vi": "Chúng ta đi thăm citadel nhé.",
-"ko": "우리 성곽을 구경하러 가요.",
-"kr": "쭝 따 디 탐 끼 냬",
-"krs": "쭝 따 디 탐 끼 냬",
 "src": "ai"
 },
 "permintaan": {
@@ -4330,13 +9293,6 @@
 "ko": "나는 이 일을 신중하게 고려해야 한다.",
 "kr": "또이 껀 껀 냑 끼 비엑 나이",
 "krs": "또이 껀 껀 냑 끼 이엑 나이",
-"src": "ai"
-},
-"máy bán vé tự động": {
-"vi": "Tôi dùng máy bán vé tự động.",
-"ko": "나는 키오스크를 사용한다.",
-"kr": "또이 중 마이 반 배 뜨 동",
-"krs": "또이 융 마이 반 얘 뜨 동",
 "src": "ai"
 },
 "hóa ra": {
@@ -7601,13 +12557,6 @@
 "krs": "껀 턴 깨오 가이 낌",
 "src": "ai"
 },
-"rập": {
-"vi": "Đây là rập áo sơ mi.",
-"ko": "이것은 셔츠 패턴입니다.",
-"kr": "더이 라 접 아오 써 미",
-"krs": "더이 라 럽 아오 서 미",
-"src": "ai"
-},
 "ép mex": {
 "vi": "Cần ép mex cổ áo.",
 "ko": "깃에 심지를 붙여야 해요.",
@@ -7830,13 +12779,6 @@
 "ko": "바람이 아주 세게 분다.",
 "kr": "조 토이 젓 마인",
 "krs": "요 토이 럿 마인",
-"src": "ai"
-},
-"kế hoạch": {
-"vi": "Kế hoạch đã sẵn sàng.",
-"ko": "계획이 이미 준비되었다.",
-"kr": "께 호악 다 싼 쌍",
-"krs": "께 호악 다 산 상",
 "src": "ai"
 },
 "giấy": {
@@ -8656,13 +13598,6 @@
 "ko": "어머니가 밥을 볶고 계신다.",
 "kr": "매 당 장 껌",
 "krs": "매 당 랑 껌",
-"src": "ai"
-},
-"đặt": {
-"vi": "Tôi muốn đặt một bàn.",
-"ko": "테이블 하나를 예약하고 싶다.",
-"kr": "또이 무온 닷 못 반",
-"krs": "또이 무온 닷 못 반",
 "src": "ai"
 },
 "tuân thủ": {
@@ -10301,13 +15236,6 @@
 "ko": "이 꽃은 보라색이다.",
 "kr": "호아 나이 마우 띰",
 "krs": "호아 나이 마우 띰",
-"src": "ai"
-},
-"nói": {
-"vi": "Tôi nói tiếng Việt.",
-"ko": "저는 베트남어를 말해요.",
-"kr": "또이 노이 띠엥 비엣",
-"krs": "또이 노이 띠엥 이엣",
 "src": "ai"
 },
 "trước": {
@@ -13327,13 +18255,6 @@
 "krs": "또이 무어 못 꼰 쭈옷",
 "src": "ai"
 },
-"tẩy": {
-"vi": "Dùng cái tẩy này.",
-"ko": "이 지우개를 쓰세요.",
-"kr": "중 까이 떠이 나이",
-"krs": "융 까이 떠이 나이",
-"src": "ai"
-},
 "thư": {
 "vi": "Tôi muốn thư giãn một chút.",
 "ko": "나는 조금 휴식을 취하고 싶다.",
@@ -14825,13 +19746,6 @@
 "krs": "아인 어이 럿 히에우 타오",
 "src": "ai"
 },
-"dạo": {
-"vi": "Dạo này bạn thế nào?",
-"ko": "요즘 어떻게 지내세요?",
-"kr": "자오 나이 반 테 나오",
-"krs": "야오 나이 반 테 나오",
-"src": "ai"
-},
 "phóng to lên": {
 "vi": "Xin hãy phóng to lên.",
 "ko": "확대해 주세요.",
@@ -15000,13 +19914,6 @@
 "krs": "또이 틱 이 빼",
 "src": "ai"
 },
-"tồn lại": {
-"vi": "Còn tồn lại ít tiền.",
-"ko": "돈이 조금 남아 있다.",
-"kr": "꼰 똔 라이 잇 띠엔",
-"krs": "꼰 똔 라이 잇 띠엔",
-"src": "ai"
-},
 "phải chi": {
 "vi": "Phải chi trời đừng mưa nhỉ.",
 "ko": "비가 안 왔으면 좋았을 텐데.",
@@ -15117,13 +20024,6 @@
 "ko": "이 시스템은 아주 좋아요.",
 "kr": "헤 통 나이 젓 똣",
 "krs": "헤 통 나이 럿 똣",
-"src": "ai"
-},
-"nửa tiếng": {
-"vi": "Tôi chờ nửa tiếng rồi.",
-"ko": "나는 30분을 기다렸다.",
-"kr": "또이 쩌 느어 띠엥 조이",
-"krs": "또이 쩌 느어 띠엥 로이",
 "src": "ai"
 },
 "tích cực": {
@@ -15425,13 +20325,6 @@
 "ko": "나는 좀 쉬고 싶다.",
 "kr": "또이 무온 응이 응어이 못 쭛",
 "krs": "또이 무온 응이 응어이 못 쭛",
-"src": "ai"
-},
-"giữ hàng": {
-"vi": "Xin hãy giữ hàng cho tôi.",
-"ko": "나를 위해 보류해 주세요.",
-"kr": "씬 하이 즈 항 쪼 또이",
-"krs": "씬 하이 으 항 쪼 또이",
 "src": "ai"
 },
 "thập": {
@@ -16090,13 +20983,6 @@
 "ko": "오늘 순회 점검 감사가 있다.",
 "kr": "홈 나이 꼬 아 빠 리",
 "krs": "홈 나이 꼬 아 빠 리",
-"src": "ai"
-},
-"nguyên vật liệu": {
-"vi": "Kho còn nhiều nguyên vật liệu.",
-"ko": "창고에 원자재가 아직 많다.",
-"kr": "코 꼰 니에우 응우연 벗 리에우",
-"krs": "코 꼰 니에우 응우연 엿 리에우",
 "src": "ai"
 },
 "nguy hiểm": {
@@ -27705,13 +32591,6 @@
 "krs": "또이 틱 독 얀 혹 아인",
 "src": "ai"
 },
-"tầm nhìn": {
-"vi": "Công ty có tầm nhìn rất xa.",
-"ko": "회사가 아주 먼 비전을 가지고 있다.",
-"kr": "꽁 띠 꼬 떰 닌 젓 싸",
-"krs": "꽁 띠 꼬 떰 닌 럿 싸",
-"src": "ai"
-},
 "khai giảng": {
 "vi": "Hôm nay trường tôi khai giảng.",
 "ko": "오늘 우리 학교가 개강한다.",
@@ -28669,13 +33548,6 @@
 "ko": "이 길은 매우 좁습니다.",
 "kr": "꼰 드엉 나이 젓 햅",
 "krs": "꼰 드엉 나이 럿 햅",
-"src": "ai"
-},
-"chật": {
-"vi": "Cái áo này quá chật.",
-"ko": "이 옷은 너무 작습니다.",
-"kr": "까이 아오 나이 꽈 쩟",
-"krs": "까이 아오 나이 꽈 쩟",
 "src": "ai"
 },
 "rộng lượng": {
@@ -31520,13 +36392,6 @@
 "krs": "꺼우 어이 깜 터이 꼬 럽",
 "src": "ai"
 },
-"ngực": {
-"vi": "Tôi đau ở ngực.",
-"ko": "나는 가슴이 아프다.",
-"kr": "또이 다우 어 응윽",
-"krs": "또이 다우 어 응윽",
-"src": "ai"
-},
 "đóng các giá mới": {
 "vi": "Chúng tôi đóng các giá mới.",
 "ko": "우리는 새로운 거치대를 만든다.",
@@ -34080,13 +38945,6 @@
 "ko": "나는 노란색을 좋아한다.",
 "kr": "또이 틱 마우 방",
 "krs": "또이 틱 마우 양",
-"src": "ai"
-},
-"bị trễ": {
-"vi": "Chuyến bay bị trễ rồi.",
-"ko": "비행기가 지연되었다.",
-"kr": "쭈연 바이 비 쩨 조이",
-"krs": "쭈연 바이 비 쩨 로이",
 "src": "ai"
 },
 "cơ cấu tổ chức": {
@@ -37384,13 +42242,6 @@
 "ko": "유적을 보러 가요.",
 "kr": "디 탐 지 띡",
 "krs": "디 탐 이 띡",
-"src": "ai"
-},
-"chăm sóc": {
-"vi": "Mẹ chăm sóc con.",
-"ko": "엄마가 아이를 돌봅니다.",
-"kr": "매 짬 쏙 꼰",
-"krs": "매 짬 속 꼰",
 "src": "ai"
 },
 "suốt": {
