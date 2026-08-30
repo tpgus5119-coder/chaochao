@@ -5264,7 +5264,7 @@ const TYPEKEYS = [
   { k: 'uw', t: 'ư', ex: 'tuw', out: 'tư', ko: '넷' },
   { k: 'dd', t: 'đ', ex: 'ddi', out: 'đi', ko: '가다' },
 ];
-function startType() {
+function startKeyGuide() {          // 이름이 startType 이면 기존 '타이핑 연습'과 겹친다
   L = { day: { day: 'PTYPE', theme: '자판 치는 법', know: 1 }, cult: 1, i: 0,
         items: TYPEKEYS.map(x => ({ k: 'know', d: {
           e: '⌨️', t: x.k + '  →  ' + x.t,
@@ -5298,7 +5298,7 @@ function drawGramList() {
     b.dataset.done = fin ? '1' : '0';
     b.append(el('span', 'num', 'P4'), el('span', 'nm', tr('자판 치는 법')),
              el('span', 'st', TYPEKEYS.length + tr('개') + (fin ? ' ✔' : '')));
-    b.onclick = () => { dive(drawGramList); startType(); };
+    b.onclick = () => { dive(drawGramList); startKeyGuide(); };
     const li = el('li'); li.append(b); list.append(li);
   }
   const gs = el('li', 'catpick');
