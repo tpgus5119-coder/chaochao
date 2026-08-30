@@ -70,9 +70,19 @@ FOOD = [
  ("lên men", "발효하다"), ("trộn", "배합하다"), ("nhào bột", "반죽하다"), ("sấy khô", "건조하다"),
  ("đóng gói chân không", "진공 포장"), ("hạn sử dụng", "유통기한"), ("nhãn dinh dưỡng", "영양 표시"),
  ("vệ sinh an toàn thực phẩm", "식품 위생"), ("khử trùng", "소독하다"),
- ("hoá chất", "화학 약품"), ("dung dịch", "용액"), ("nồng độ", "농도"), ("pha loãng", "희석하다"),
- ("trung hoà", "중화하다"), ("nước thải", "폐수"), ("khí thải", "배기가스"),
- ("chất độc hại", "유해물질"), ("bình chứa", "저장 탱크"), ("van an toàn", "안전 밸브"),
+]
+
+# 화학·플라스틱 — 식품과는 다른 업종이다 (효성·LG화학·롯데케미칼)
+CHEM = [
+ ("hoá chất","화학 약품"),("dung dịch","용액"),("nồng độ","농도"),("pha loãng","희석하다"),
+ ("trung hoà","중화하다"),("nước thải","폐수"),("khí thải","배기가스"),("chất độc hại","유해물질"),
+ ("bình chứa","저장 탱크"),("van an toàn","안전 밸브"),("nhựa nguyên sinh","신재 수지"),
+ ("hạt nhựa","플라스틱 펠릿"),("ép phun","사출 성형"),("đùn nhựa","압출"),("khuôn nhựa","사출 금형"),
+ ("nhiệt độ nóng chảy","용융 온도"),("áp suất phun","사출 압력"),("thời gian làm nguội","냉각 시간"),
+ ("chất phụ gia","첨가제"),("chất tạo màu","착색제"),("xúc tác","촉매"),("lò phản ứng","반응기"),
+ ("chưng cất","증류"),("tinh chế","정제"),("độ nhớt","점도"),("đóng rắn","경화"),
+ ("bồn chứa","저장조"),("đường ống dẫn","배관"),("bơm hoá chất","약품 펌프"),
+ ("phòng thí nghiệm hoá","화학 실험실"),("mẫu phân tích","분석 시료"),("khu vực nguy hiểm cháy","화기 위험 구역"),
 ]
 
 SHOP = [
@@ -87,8 +97,7 @@ SHOP = [
  ("tiền tip", "팁"), ("vệ sinh bếp", "주방 위생"),
 ]
 
-TRACKS = [("전자·반도체", None), ("신발·가방", SHOE), ("자동차·기계", MACH),
-          ("건설·플랜트", CONS), ("물류·무역", LOGI), ("식품·화학", FOOD), ("요식·유통", SHOP)]
+
 
 # ── 더 채운 것 (2026-08-30) — 갈래마다 900을 채우려면 이만큼은 있어야 한다
 SHOE += [
@@ -161,5 +170,13 @@ SHOP += [
  ("nguyên liệu nấu","조리 재료"),("chuẩn bị nguyên liệu","재료 준비"),("nêm nếm","간 맞추기"),
  ("trình bày món","플레이팅"),("thời gian chờ món","대기 시간"),("phản hồi khách","고객 피드백"),
 ]
-TRACKS = [("전자·반도체", None), ("신발·가방", SHOE), ("자동차·기계", MACH),
-          ("건설·플랜트", CONS), ("물류·무역", LOGI), ("식품·화학", FOOD), ("요식·유통", SHOP)]
+
+# 요식과 유통도 다른 업종이다 — 갈라 둔다
+REST = [w for w in SHOP if any(k in w[1] for k in
+        ("주방","요리사","서빙","메뉴","주문","포장 판매","배달","자리 예약","계산서","팁",
+         "식음","테이블","조리","재료","간 맞추","플레이팅","대기 시간","피드백"))]
+RETAIL = [w for w in SHOP if w not in REST]
+
+TRACKS = [("전자·반도체", None), ("섬유·봉제·신발", SHOE), ("기계·금속·자동차", MACH),
+          ("건설", CONS), ("물류·무역", LOGI), ("식품", FOOD), ("화학·플라스틱", CHEM),
+          ("요식", REST), ("유통·판매", RETAIL)]
