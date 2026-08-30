@@ -18,6 +18,14 @@ def key(v):
 def kko(k):
     return re.sub(r"[\s,·]", "", U.normalize("NFC", str(k)).split("/")[0].split("(")[0]).strip()
 
+def wname(ko):
+    """뜻에서 구운 그림 파일 이름. 있으면 그 이름을, 없으면 None."""
+    import hashlib
+    k = U.normalize("NFC", str(ko)).split("/")[0].strip()
+    n = "w-" + hashlib.sha1(k.encode()).hexdigest()[:10] + ".webp"
+    return n if (R / "img" / n).exists() else None
+
+
 def main():
     have = {p.name for p in (R / "img").glob("*.webp")}
     byvi, byko = {}, {}
@@ -43,7 +51,9 @@ def main():
     for v in o["vols"]:
         for w in walk(v):
             if w.get("img") and w["img"] in have: stat["이미 있음"] += 1; continue
-            im = byvi.get(key(w["vi"])) or byko.get(kko(w["ko"]))
+            # gen_word_img 가 구운 것은 **뜻의 해시**가 파일 이름이다 (w-<sha1>.webp).
+            #   order.json 을 다시 만들면 img 가 날아가는데 여기서 되찾는다 (2026-08-30)
+            im = byvi.get(key(w["vi"])) or byko.get(kko(w["ko"])) or wname(w["ko"])
             if im: w["img"] = im; stat["새로 이어 붙임"] += 1
             else:
                 w.pop("img", None); stat["아직 그림 없음"] += 1

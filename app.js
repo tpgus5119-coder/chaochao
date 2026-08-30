@@ -491,7 +491,7 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '개 대기': ' đang chờ', '갈래': ' nhóm', '개 문법': ' ngữ pháp', '장': ' thẻ',
+  '개 대기': ' đang chờ', '개': ' từ', '자판 치는 법': 'Cách gõ bàn phím', '갈래': ' nhóm', '개 문법': ' ngữ pháp', '장': ' thẻ',
   '갈 곳이 정해졌으면 그 갈래만 고르세요': 'Đã biết nơi làm thì chỉ chọn nhóm đó',
   '고른 것 지우기': 'Bỏ chọn', '고름': 'Đã chọn', '고르기': 'Chọn',
   '열두 강 · 그림과 숫자로 읽습니다': '12 buổi · đọc bằng hình và số',
@@ -703,34 +703,19 @@ const voiceDir = () => S.region === 's' ? (S.voice === 'm' ? 'sm' : 'sf') : S.vo
 /* 느린 소리 — 파일이 있으면 그것을, 없으면 **보통 소리를 늘려서** 들려준다.
    늘리기(playbackRate)는 높낮이를 지켜 주므로 성조가 뭉개지지 않는다.
    느린 파일만 16,000개라 저장소가 1GB에 가까워졌다 — 앞으로 늘 것은 늘리기로 받는다. */
-const SLOW_RATE = 0.6;
+/* 소리 내기. **고른 목소리 말고 다른 목소리로 바꿔 틀지 않는다** (대표님 지시, 2026-08-30):
+   "남부 남자로 선택된 상태라면 예문의 단어도 모두 남부 남자가 해야지."
+   전에는 남부 파일이 없으면 북부 녹음으로 슬쩍 바꿔 틀었다 — 그래서 남녀·남북이 섞여 들렸다.
+   이제 남부 파일이 없으면 기기 목소리로 낸다(성별은 맞춘다). 없는 소리는 내지 않는다. */
 function play(text, slow, dir) {
   const h = AIDX[text];
-  if (!h) return;
   const d = dir || voiceDir();
+  if (!h) { speakVi(text, false, 0, S.voice); return; }
   audio.pause();
   audio.onerror = null;
-  const setRate = r => {
-    audio.playbackRate = r;
-    audio.preservesPitch = true;
-    audio.mozPreservesPitch = true; audio.webkitPreservesPitch = true;
-  };
-  const stretch = vd => {                    // 느린 파일이 없을 때 — 보통 것을 늘린다
-    audio.onerror = null;
-    audio.src = `audio/${vd}/n/${h}.mp3`;
-    setRate(SLOW_RATE);
-    audio.currentTime = 0; audio.play().catch(() => { });
-  };
-  audio.src = `audio/${d}/${slow ? 'slow' : 'n'}/${h}.mp3`;
-  setRate(1);                                // 느린 파일은 이미 느리니 그대로 튼다
-  audio.onerror = () => {
-    if (slow) return stretch(d === 'sf' || d === 'sm' ? S.voice : d);
-    if (d === 'sf' || d === 'sm') {          // 남부 파일이 아직 없으면 북부로라도
-      audio.onerror = null;
-      audio.src = `audio/${S.voice}/n/${h}.mp3`;
-      audio.currentTime = 0; audio.play().catch(() => { });
-    }
-  };
+  audio.playbackRate = 1;
+  audio.src = `audio/${d}/n/${h}.mp3`;
+  audio.onerror = () => { audio.onerror = null; speakVi(text, false, 0, S.voice); };
   audio.currentTime = 0;
   audio.play().catch(() => { });
 }
@@ -746,12 +731,7 @@ function soundRow(text, withSlow) {
   const a = el('button', 'ghost', '듣기');
   a.onclick = () => play(text, false);
   row.append(a);
-  if (withSlow) {
-    const b = el('button', 'ghost', '느리게 듣기');
-    b.onclick = () => play(text, true);
-    row.append(b);
-  }
-  return row;
+  return row;                    // '느리게 듣기'는 뺐다 (대표님 지시, 2026-08-30)
 }
 
 /* 정답·오답 소리 — 답한 '즉시' 오는 피드백이 늦게 오는 피드백보다 낫다.
@@ -1173,8 +1153,7 @@ function speakRow(text, withSound) {
   const row = el('div', 'qplay');
   if (withSound) {
     const s1 = el('button', 'ghost', '듣기'); s1.onclick = () => play(text, false);
-    const s2 = el('button', 'ghost', '느리게 듣기'); s2.onclick = () => play(text, true);
-    row.append(s1, s2);
+    row.append(s1);
   }
   if (!canRecord()) {
     if (withSound) wrap.append(row);
@@ -1627,7 +1606,7 @@ function renderAnalysis(host, mode) {
     '읽기': ['글자를 <b>소리로 바꿔 읽는</b> 연습이 모자란 것입니다 — 복습의 [읽기]를 며칠 이어서 해 보세요.',
              '뜻이 안 떠오르면 그 단어의 <b>그림</b>을 한 번 보고 넘어가세요. 그림이 붙은 단어가 더 오래 남습니다.'],
     '듣기': ['기본기의 <b>성조</b>와 <b>모음</b>을 하루 한 판씩. 저녁에 하면 자는 동안 소리가 정리됩니다.',
-           '<b>느리게 듣기</b>로 먼저 듣고, 그다음 보통 속도로 한 번 더 들어 보세요.'],
+           '먼저 소리를 듣고, 그다음 따라 말해 보세요.'],
     '쓰기': ['<b>손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.',
              '<b>타이핑</b>에서 글자 보기를 누르지 말고 먼저 쳐 보세요 — 보고 치면 기억에 안 남습니다.'],
     '말하기': ['<b>따라 말하기</b>에서 녹음한 뒤 원어민 곡선과 겹쳐 보세요.',
@@ -2483,19 +2462,22 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
      '학습'을 누르면 하위 메뉴 없이 곧장 권 목록이 뜬다.
      기본기·문법·문화는 첫 화면에서 뺐다 — 학습(1권)과 문화 단추 안에 이미 있다.
      대화 108·핵심만도 뺐다: 낱말은 학습으로 합쳤고, 갈래가 늘면 어디로 가야 할지 흐려진다. */
+  /* 첫 화면 차례 (대표님 지시, 2026-08-30):
+       학습 – 복습 – 단어장 – 문화 – 동아리 – 순위 – 사용법
+     기사는 문화 안으로 넣었다 — 읽는 자리끼리 모은다. */
   day:   { name: '학습', items: () => [['보기', courseEntry]] },
-  /* 복습은 둘이다 (대표님 지시):
+  /* 복습은 둘이다:
        ① 복습     — 잊을 때가 된 것을 앱이 골라 준다(간격 반복)
        ② 자유 복습 — 내가 끝낸 레슨을 골라서 그것만 푼다
      단어·문장을 가르지 않는다 — 문장은 낱말 밑의 예문으로 이미 붙어 있다. */
   rev:   { name: '복습', items: () => [['복습', () => reviewMenu('all')],
                                       ['자유 복습', freePickEntry]] },
-  cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
-                                      ['베트남 바로알기', knowEntry]] },
-  news:  { name: '기사', items: () => [['보기', showNewsLearn]] },
   book:  { name: '단어장', items: () => [['보기', wordbookEntry]] },
-  cred:  { name: '순위', items: () => [['보기', creditEntry]] },
+  cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
+                                      ['베트남 바로알기', knowEntry],
+                                      ['오늘의 기사', showNewsLearn]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
+  cred:  { name: '순위', items: () => [['보기', creditEntry]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
 
@@ -4550,6 +4532,41 @@ function upcoming(n) {
 }
 const nextDay = () => upcoming(1)[0] || null;
 
+/* **새 과정(order.json)** 에서 아직 안 끝낸 레슨을 차례로 낸다 (2026-08-30).
+   첫 화면이 옛 days.json 을 보느라 '일상 Day 3 · 직무 Day 3' 같은 지난 판 이름을 띄웠다.
+   차례: 1권 문법 → 일상과 직무를 번갈아. 직무는 **고른 갈래만** (안 골랐으면 다 본다). */
+function courseQueue(n) {
+  if (!COURSE) return [];
+  const life = [], job = [];
+  lifeVols().forEach((v, vi) => v.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+    const k = ckey(vi, ci, li);
+    if (!S.done[k]) life.push({ day: k, theme: (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
+                                words: l.words, course: 1, kind: '일상' });
+  })));
+  const jv = jobVol(0);
+  if (jv) {
+    const pick = S.jobpick || {};
+    const any = jv.tracks.some(t => pick[t.track]);
+    jv.tracks.forEach((t, ti) => {
+      if (any && !pick[t.track]) return;
+      t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+        const k = jkey(ti, ci, li);
+        if (!S.done[k]) job.push({ day: k, theme: t.track + ' ' + (ci + 1) + '-' + (li + 1),
+                                   words: l.words, course: 1, kind: '직무' });
+      }));
+    });
+  }
+  const out = [];
+  let i = 0, j = 0;
+  let nd = Object.keys(S.done).filter(k => k[0] === 'C').length;
+  let nw = Object.keys(S.done).filter(k => k[0] === 'J').length;
+  while (out.length < n && (i < life.length || j < job.length)) {
+    const useLife = j >= job.length || (i < life.length && nd <= nw * 2);   // 일상 둘에 직무 하나
+    if (useLife) { out.push(life[i++]); nd++; } else { out.push(job[j++]); nw++; }
+  }
+  return out;
+}
+
 function renderHome() {
   cloudSave();                           // 로그인한 사람은 하루 한 번 서버에 진도를 남긴다
   pingRooms();                              // 하루 이상 조용하면 먼저 말을 걸어 둔다
@@ -4562,6 +4579,9 @@ function renderHome() {
   drawWxNow();
   // 한국어를 배우는 사람에게는 베트남어 일정판이 아무 뜻이 없다 — 딴 판을 그린다
   if (learnKo()) { drawKoHome(); show('home', '짜오짜오', false); return; }
+  /* 첫 화면 일정판은 **새 과정**을 본다 — 없으면 조용히 받아 와서 다시 그린다 */
+  if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; loadCWords(); if (!$('#home').hidden) renderHome(); }).catch(() => {});
   renderProgress($('#progress'));      // 이번 주 도장·통계·업적 (첫 화면 일정판 아래)
   const nx = nextDay();
   const due = dueWords();
@@ -4581,33 +4601,31 @@ function renderHome() {
   const pace = S.pace || 1;                       // 하루에 몇 세트 할 것인가 (내 정보에서 바꾼다)
   const left = Math.max(0, pace - todayCnt);      // 오늘 남은 세트
   const doneToday = left === 0;
-  const queue = upcoming(left + pace);            // 오늘 남은 것 + 내일 것
-  const nm = d => trackName(d) + label(d);
+  const queue = courseQueue(left + pace);         // 오늘 남은 것 + 내일 것 (새 과정)
+  const nm = d => d.theme || (trackName(d) + label(d));
   // 오늘 학습
   if (doneToday) prow('오늘 학습', pace > 1 ? todayCnt + '세트 완료' : '완료', 'done', null);
   else if (queue.length) {
     const t = queue.slice(0, left);
-    prow('오늘 학습', t.map(nm).join(' · ') + (t.length > 1 ? '' : '\n' + t[0].theme),
+    prow('오늘 학습', t.map(nm).join(' · ') + (t.length > 1 ? '' :
+           '\n' + (t[0].words || []).slice(0, 3).map(w => w.ko.split('/')[0].trim()).join(' · ')),
          'todo', () => startLearn(t[0]));
   } else prow('오늘 학습', '전 과정 완료', 'none', null);
   // 오늘 복습 — 문장도 같이 나오므로 뭉뚱그려 '단어'라고 하지 않는다
-  const dueW = due.map(findItem).filter(Boolean);
-  const ns = dueW.filter(x => x.sent).length, nw = dueW.length - ns;
-  if (due.length) prow('오늘 복습', ns ? `단어 ${nw} · 문장 ${ns}` : '단어 ' + nw + '개',
-                       'todo', () => reviewStart());
+  if (due.length) prow('오늘 복습', due.length + tr('개'), 'todo', () => reviewStart());
   else prow('오늘 복습', S.revDay === ymd() ? '완료' : '없음', S.revDay === ymd() ? 'done' : 'none', null);
   // 내일 학습 (+예습)
   const tset = queue.slice(left, left + pace);
   if (tset.length) {
     const words = tset.flatMap(d => d.words || []);
-    prow('내일 학습', tset.map(nm).join(' · ') + (tset.length > 1 ? '' : '\n' + tset[0].theme),
+    prow('내일 학습', tset.map(nm).join(' · ') + (tset.length > 1 ? '' :
+           '\n' + (tset[0].words || []).slice(0, 3).map(w => w.ko.split('/')[0].trim()).join(' · ')),
          'next', words.length ? () => flashRun(words, '예습 · ' + tset.map(nm).join(' · ')) : null);
   } else prow('내일 학습', '없음', 'none', null);
   // 내일 복습 — 내일 새로 나올(만기되는) 카드 수
   const tmr = Object.entries(S.srs).filter(([, v]) => v.due > now() && v.due <= now() + DAY)
     .map(([k]) => findItem(k)).filter(Boolean);
-  const ts = tmr.filter(x => x.sent).length, tw = tmr.length - ts;
-  prow('내일 복습', !tmr.length ? '없음' : ts ? `단어 ${tw} · 문장 ${ts}` : '단어 ' + tw + '개',
+  prow('내일 복습', !tmr.length ? '없음' : tmr.length + tr('개'),
        tmr.length ? 'next' : 'none', null);
 
   show('home', '짜오짜오', false);
@@ -4678,7 +4696,7 @@ function startLearn(d) {
     // 사용법은 처음 세 세트에만. 그 뒤엔 손이 기억한다 — 계속 띄우면 잔소리가 된다.
     how: (Object.keys(S.done).filter(k => +k >= 1).length < 3)
       ? '<b>베트남어 글자를 누르면 소리가 납니다.</b> 예문 칸도 누르면 들립니다.<br>' +
-        '🕐 느리게 듣기 · 🎤 따라 말하기 — 녹음하면 원어민과 높낮이를 겹쳐 보여줍니다.'
+        '🎤 따라 말하기 — 녹음하면 원어민과 높낮이를 겹쳐 보여줍니다.'
       : '',
     /* 문화 조각은 표지에서 뺐다 (대표님 지시, 2026-08-30) — 문화는 따로 한 권으로 모은다.
        표지는 그 과가 무엇인지만 말하면 된다. */
@@ -4967,9 +4985,11 @@ const stat = (done, all, unit) => done + '/' + all + ' ' + tr(unit);
 /* 1권(문법)도 다른 권과 **같은 꼴**로 센다 — 끝낸 과 / 전체 과 (대표님 지시, 2026-08-30).
    전에는 문법만 목록 위에 '문법 177 · 끝낸 과 0/30' 이라는 다른 잣대를 달고 있었다. */
 function gramStat() {
-  if (!GRAM) return tr('보기');
   let all = 0, done = 0;
-  GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
+  ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P').forEach(d => {
+    all++; if (S.done[d.day]) done++; });
+  all++; if (S.done['PTYPE']) done++;                 // 자판 치는 법
+  if (GRAM) GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
     all++; if (S.done[gkey(bi, ni)]) done++; }));
   return stat(done, all, '과');
 }
@@ -5177,14 +5197,68 @@ function gramEntry() {
   if (GRAM) return drawGramList();
   const list = $('#dayList'); list.textContent = '';
   list.append(el('li', 'catpick', tr('불러오는 중…')));
-  show('course', '문법', true);
+  show('course', '기본기 · 문법', true);
   fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
     .then(j => { GRAM = j; drawGramList(); })
     .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
 }
 
+/* 자판 치는 법 — 성조·모자를 어떻게 찍는지. 전에는 문제 화면 밑에 잔글씨로만 있었다.
+   대표님 지적(2026-08-30): "기존의 기본기에 있던 내용 모두 들어갔니? 타이핑하는 법 등등" */
+const TYPEKEYS = [
+  { k: 'f', t: 'huyền ˋ', ex: 'chao+f', out: 'chào', ko: '안녕' },
+  { k: 's', t: 'sắc ˊ', ex: 'ca+s', out: 'cá', ko: '물고기' },
+  { k: 'r', t: 'hỏi ˀ', ex: 'hoi+r', out: 'hỏi', ko: '묻다' },
+  { k: 'x', t: 'ngã ˜', ex: 'ma+x', out: 'mã', ko: '코드' },
+  { k: 'j', t: 'nặng ˳', ex: 'ma+j', out: 'mạ', ko: '모종' },
+  { k: 'aa', t: 'â', ex: 'caan', out: 'cân', ko: '저울' },
+  { k: 'aw', t: 'ă', ex: 'nawm', out: 'năm', ko: '다섯' },
+  { k: 'ee', t: 'ê', ex: 'dees', out: 'dế', ko: '귀뚜라미' },
+  { k: 'oo', t: 'ô', ex: 'coo', out: 'cô', ko: '고모·선생님' },
+  { k: 'ow', t: 'ơ', ex: 'bow', out: 'bơ', ko: '버터' },
+  { k: 'uw', t: 'ư', ex: 'tuw', out: 'tư', ko: '넷' },
+  { k: 'dd', t: 'đ', ex: 'ddi', out: 'đi', ko: '가다' },
+];
+function startType() {
+  L = { day: { day: 'PTYPE', theme: '자판 치는 법', know: 1 }, cult: 1, i: 0,
+        items: TYPEKEYS.map(x => ({ k: 'know', d: {
+          e: '⌨️', t: x.k + '  →  ' + x.t,
+          b: `<b>${x.ex}</b> 라고 치면 <b>${x.out}</b> (${x.ko}) 가 됩니다.` +
+             ' 베트남 사람이 실제로 쓰는 자판 방식(Telex)과 같습니다.' } })) };
+  drawCard();
+  show('learn', '자판 치는 법', true);
+}
+
 function drawGramList() {
   const list = $('#dayList'); list.textContent = '';
+  /* **기본기가 1권에 들어 있어야 한다** (대표님 지적, 2026-08-30).
+     글자·모음·성조·자음·자판 — 문법보다 먼저 봐야 할 것들인데 진입점이 없었다. */
+  const bs = el('li', 'catpick');
+  bs.append(el('span', 'msub', '📗 ' + tr('기본기')));
+  list.append(bs);
+  (ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P')).forEach(d => {
+    const fin = !!S.done[d.day];
+    const b = el('button');
+    b.dataset.done = fin ? '1' : '0';
+    const n = (d.letters || d.tones || []).length;
+    b.append(el('span', 'num', esc(d.day)),
+             el('span', 'nm', esc(d.theme)),
+             el('span', 'st', n + tr('개') + (fin ? ' ✔' : '')));
+    b.onclick = () => { dive(drawGramList); startLearn(d); };
+    const li = el('li'); li.append(b); list.append(li);
+  });
+  {
+    const fin = !!S.done['PTYPE'];
+    const b = el('button');
+    b.dataset.done = fin ? '1' : '0';
+    b.append(el('span', 'num', 'P4'), el('span', 'nm', tr('자판 치는 법')),
+             el('span', 'st', TYPEKEYS.length + tr('개') + (fin ? ' ✔' : '')));
+    b.onclick = () => { dive(drawGramList); startType(); };
+    const li = el('li'); li.append(b); list.append(li);
+  }
+  const gs = el('li', 'catpick');
+  gs.append(el('span', 'msub', '📘 ' + tr('문법')));
+  list.append(gs);
 
   GRAM.books.forEach((b, bi) => {
     const sec = el('li', 'catpick');
@@ -5201,7 +5275,7 @@ function drawGramList() {
       const li = el('li'); li.append(btn); list.append(li);
     });
   });
-  show('course', '문법', true);
+  show('course', '기본기 · 문법', true);
 }
 
 function startGram(bi, ni) {
@@ -5744,8 +5818,7 @@ function drawCard() {
     // 소리는 글자가 아니라 예시 단어를 읽는다 — 버튼에 그걸 밝힌다
     const row = el('div', 'sound');
     const a = el('button', 'ghost', esc(x.ex) + ' 듣기'); a.onclick = () => play(x.ex, false);
-    const b2 = el('button', 'ghost', '느리게'); b2.onclick = () => play(x.ex, true);
-    row.append(a, b2); c.append(row);
+    row.append(a); c.append(row);
     c.append(speakRow(x.ex));               // 준비 단계부터 따라 말하기 + 곡선 비교
   }
 
@@ -5820,7 +5893,6 @@ function drawCard() {
     const row = el('div', 'wrow');
     row.append(bigWord(x.vi, x.tones));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
-    row.append(iconBtn('slow', '느리게 듣기', () => play(x.vi, true)));
     const rbox = el('div', 'cmpbox');
     if (canRecord()) {
       const mic = iconBtn('mic', '따라 말하기', null);
@@ -5856,7 +5928,6 @@ function drawCard() {
     const row = el('div', 'wrow');
     row.append(bigWord(x.vi, x.tones));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
-    row.append(iconBtn('slow', '느리게 듣기', () => play(x.vi, true)));
     const box = el('div', 'cmpbox');
     if (canRecord()) {
       const mic = iconBtn('mic', '따라 말하기', null);
@@ -5877,7 +5948,6 @@ function drawCard() {
         const kr = S.region === 's' ? (a2.krs || a2.kr) : a2.kr;
         if (kr) b2.append(el('span', 'altkr', '[' + esc(kr) + ']'));
         b2.onclick = () => { AIDX[a2.vi] ? play(a2.vi, false) : speakVi(a2.vi); };
-        box.append(b2);
       });
       c.append(box);
     }
@@ -5945,7 +6015,6 @@ function drawCard() {
       const bt = iconBtn('slow', '듣기', () => play(l.vi, false));
       bt.classList.remove('slow'); bt.classList.add('playi');
       bt.innerHTML = ICON.play;
-      const bs = iconBtn('slow', '느리게 듣기', () => play(l.vi, true));
       lrow.append(bt, bs);
       row.append(lrow);
       row.append(reveal(krShow(l)));
@@ -6578,9 +6647,7 @@ function drawQuiz() {
     const wrap = el('div', 'qplay');
     const b = el('button', 'primary big', '듣기');
     b.onclick = () => sound(q.w.vi);
-    const sl = el('button', 'ghost', '느리게 듣기');
-    sl.onclick = () => sound(q.w.vi, true);
-    wrap.append(b, sl);
+    wrap.append(b);
     const m = addMic(); if (m) wrap.append(m);
     body.append(wrap, sayBox);
     sound(q.w.vi);
@@ -6623,9 +6690,7 @@ function drawDict(body, q) {
   const wrap = el('div', 'qplay');
   const b = el('button', 'primary big', '듣기');
   b.onclick = () => sound(q.w.vi);
-  const sl = el('button', 'ghost', '느리게 듣기');
-  sl.onclick = () => sound(q.w.vi, true);
-  wrap.append(b, sl);
+  wrap.append(b);
   body.append(wrap);
   sound(q.w.vi);
   body.append(el('div', 'q mid', esc(q.w.ko)));   // 뜻은 보여준다 — 철자와 성조를 시험하는 것이니까
@@ -6816,8 +6881,7 @@ function drawTypeQ(body, q) {
   body.append(el('div', 'qmain', esc(w.ko)));
   const row = el('div', 'qplay');
   const p1 = el('button', 'ghost', '듣기'); p1.onclick = () => play(w.vi, false);
-  const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
-  row.append(p1, p2); body.append(row);
+  row.append(p1); body.append(row);
   play(w.vi, false);
   let txt = '';
   const out = el('div', 'dictans');
@@ -7234,8 +7298,7 @@ function drawVowel() {
   body.append(el('div', 'tonehint', esc(g.note)));
   const wrap = el('div', 'qplay');
   const b = el('button', 'primary big', '듣기'); b.onclick = () => play(it.vi, false);
-  const sl = el('button', 'ghost', '느리게 듣기'); sl.onclick = () => play(it.vi, true);
-  wrap.append(b, sl); body.append(wrap);
+  wrap.append(b); body.append(wrap);
   play(it.vi, false);
   const opts = el('div', 'opts tonelist');
   g.items.forEach(o => {
@@ -7306,9 +7369,7 @@ function drawTone() {
   const wrap = el('div', 'qplay');
   const b = el('button', 'primary big', '듣기');
   b.onclick = () => play(it.vi, false, S.voice);
-  const sl = el('button', 'ghost', '느리게 듣기');
-  sl.onclick = () => play(it.vi, true, S.voice);
-  wrap.append(b, sl);
+  wrap.append(b);
   body.append(wrap);
   play(it.vi, false, S.voice);
 
@@ -7356,9 +7417,7 @@ function drawToneMark(body, w) {
   const wrap = el('div', 'qplay');
   const b = el('button', 'primary big', '듣기');
   b.onclick = () => play(w.vi, false);
-  const sl = el('button', 'ghost', '느리게 듣기');
-  sl.onclick = () => play(w.vi, true);
-  wrap.append(b, sl);
+  wrap.append(b);
   body.append(wrap);
 
   const opts = el('div', 'opts markopts');
@@ -7802,7 +7861,6 @@ function drawRule() {
         const box = el('div', 'rsay');
         const row = el('div', 'wrow');
         row.append(bigWord(q.say, (findItem(q.say) || {}).tones));
-        row.append(iconBtn('slow', '느리게 듣기', () => play(q.say, true)));
         if (canRecord()) {
           const mic = iconBtn('mic', '따라 말하기', null);
           mic.onclick = () => toggleRec(q.say, mic, box);
@@ -7858,7 +7916,6 @@ function drawType() {
   b.append(el('div', 'qmain', esc(w.ko)));
   const wrap = el('div', 'qplay');
   const p1 = el('button', 'primary', '듣기'); p1.onclick = () => play(w.vi, false);
-  const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
   // 디딤돌: 먼저 기억으로 쳐 보고, 막히면 글자를 보고 따라 친다.
   // 단 보고 친 성공은 복습 사다리를 올리지 않는다 — 기억에서 꺼낸 게 아니니까.
   let hinted = false;
@@ -7867,7 +7924,7 @@ function drawType() {
     hinted = true; p3.disabled = true;
     wrap.after(el('div', 'hintvi', esc(w.vi)));
   };
-  wrap.append(p1, p2, p3); b.append(wrap);
+  wrap.append(p1, p3); b.append(wrap);
   play(w.vi, false);
 
   const out = el('div', 'dictans');
@@ -7968,8 +8025,7 @@ function drawWrite() {
   b.append(el('div', 'qmain', esc(w.ko)));
   const wrap = el('div', 'qplay');
   const p1 = el('button', 'primary', '듣기'); p1.onclick = () => play(w.vi, false);
-  const p2 = el('button', 'ghost', '느리게 듣기'); p2.onclick = () => play(w.vi, true);
-  wrap.append(p1, p2); b.append(wrap);
+  wrap.append(p1); b.append(wrap);
   play(w.vi, false);
 
   // 종이처럼 — 흰 바탕에 검은 획 (AI도 이쪽을 잘 읽는다)
@@ -8331,9 +8387,9 @@ function voiceHowTo() {
 
 /* 소리 한 군데로 — 녹음이 있으면 녹음, 없으면 기기 목소리.
    전에는 문제 화면이 play() 를 바로 불러서, 녹음 없는 낱말은 **아무 소리도 안 났다**. */
-function sound(t, slow) {
-  if (AIDX[t]) { play(t, !!slow); return; }
-  speakVi(t, false, slow ? .55 : 0);
+function sound(t) {
+  if (AIDX[t]) { play(t, false); return; }
+  speakVi(t, false, 0, S.voice);
 }
 /* 목소리는 **대표님이 고른 것 하나**로 (대표님 지적, 2026-08-29).
    전에는 기본이 메신저 쌤 성별(S.tch)이었다. 그래서 같은 문장 안에서도
@@ -8576,7 +8632,6 @@ function kbGuide() {
       const r = el('div', 'kbtr');
       r.append(el('span', 'kbk', esc(k)), el('span', 'kbt', esc(typed) + ' →'),
                el('span', 'kbm', esc(made)), el('span', 'kbko', esc(ko)));
-      const say = el('button', 'ibtn slow', ICON.slow);
       say.type = 'button'; say.title = '들어 보기';
       say.onclick = () => speakVi(made, false, 0, S.tch);
       r.append(say);

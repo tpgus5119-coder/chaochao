@@ -220,22 +220,46 @@ def main():
         return out
 
 
+    def even(ws, base=PER, lo=10, hi=19):
+        """낱말 뭉치를 **고르게** 레슨으로 나눈다 (대표님 규칙, 2026-08-30):
+             · 기본 15개, **10~19개까지 허용**
+             · 끝 레슨에 3개만 남는 꼴을 안 만든다 — 앞 레슨을 한 칸씩 늘려 흡수한다
+             · 전체가 10개 미만이면 **그냥 한 레슨**이다 (더 쪼갤 수 없다)
+           보기: 155개 → 16×5 + 15×5 (10레슨) · 20개 → 10+10 · 13개 → 13 하나 · 9개 → 9 하나"""
+        n = len(ws)
+        if n <= hi: return [ws]
+        k = max(-(-n // hi), round(n / base) or 1)     # 한 레슨이 hi 를 넘지 않게
+        k = max(1, min(k, n // lo))                    # 한 레슨이 lo 밑으로 안 내려가게
+        q, r = divmod(n, k)
+        out, i = [], 0
+        for j in range(k):
+            m = q + (1 if j < r else 0)
+            out.append(ws[i:i + m]); i += m
+        return out
+
     def cut(ws, per_ch):
-        """레슨 15낱말 → 챕터 per_ch 레슨."""
-        les = [ws[i:i + PER] for i in range(0, len(ws), PER)]
-        return [les[i:i + per_ch] for i in range(0, len(les), per_ch)]
+        """낱말 뭉치 → 챕터들. 챕터마다 per_ch 레슨, 끝 챕터도 고르게 채운다."""
+        les = even(ws)
+        if len(les) <= per_ch: return [les]
+        nc = max(1, round(len(les) / per_ch) or 1)     # 챕터 수
+        q, r = divmod(len(les), nc)
+        if q < 2: nc = max(1, len(les) // 2); q, r = divmod(len(les), nc)
+        out, i = [], 0
+        for j in range(nc):
+            m = q + (1 if j < r else 0)
+            out.append(les[i:i + m]); i += m
+        return out
 
     # 레슨 15낱말 · 챕터 10레슨(150낱말) · 권 6챕터(900낱말)
     # 레슨 15낱말. **네 권이 똑같은 레슨 수**가 되게 나눈다 (대표님 지시, 2026-08-30).
     #   챕터 수를 먼저 정하면 마지막 권만 얇아진다 — 레슨 수를 먼저 맞춘다.
     LES_PER_CH, VOLS = 10, 4
     L = pair_same(L)
-    les = [L[i:i + PER] for i in range(0, len(L), PER)]
-    per_vol = -(-len(les) // VOLS)                  # 올림 — 67레슨씩
+    per_vol_w = -(-len(L) // VOLS)                  # 권마다 낱말 수를 고르게
     vols = []
-    for i in range(0, len(les), per_vol):
-        part = les[i:i + per_vol]
-        chs = [part[j:j + LES_PER_CH] for j in range(0, len(part), LES_PER_CH)]
+    for i in range(0, len(L), per_vol_w):
+        part = L[i:i + per_vol_w]
+        chs = cut(part, LES_PER_CH)
         vols.append({"kind": "life",
                      "chapters": [{"lessons": [{"words": w} for w in ch]} for ch in chs]})
     # 직무는 **갈래별로** 나눈다 — 갈래는 이름을 둔다(어디로 갈지가 사람마다 다르다)
@@ -361,4 +385,6 @@ def main():
         n = sum(len(l["words"]) for c in v["chapters"] for l in c["lessons"])
         ls = sum(len(c["lessons"]) for c in v["chapters"])
         print(f"   {i}권 일상  {len(v['chapters'])}챕터 · {ls}레슨 · {n}낱말")
-main()
+
+if __name__ == "__main__":
+    main()

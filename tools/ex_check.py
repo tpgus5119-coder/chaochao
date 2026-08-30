@@ -107,4 +107,5 @@ def main():
     print(f"\n① 낱말 빠진 예문 {len(noself)} · ② 앱 밖 낱말이 든 예문 {len(bad)}")
     print("→ docs/ex-check.md")
 
-main()
+if __name__ == "__main__":
+    main()
