@@ -22,9 +22,35 @@ SRC = pathlib.Path(os.path.expanduser("~/Downloads/베트남어 학습자료/선
 KO = re.compile(r"[가-힣]")
 VI = re.compile(r"[ăâđêôơưÀ-ỹ]", re.I)
 
-# 원본 표의 오타 — 인터넷으로 확인하고 고친 것만 적는다 (대표님 지시: 거짓 자료 금지)
+# 낱말 432개를 **하나씩 눈으로 읽고** 고친 것 (2026-08-30, 대표님 지시).
+# 인터넷으로 확인한 것만 고쳤다 — 확인 못 한 것은 손대지 않고 그대로 둔다.
 TYPO = {"sửa chửa": "sửa chữa", "áo khoát": "áo khoác", "dđịnh mức": "định mức",
-        "lot": "lót", "manocanh": "ma-nơ-canh", "manocanh to": "ma-nơ-canh to"}
+        "lot": "lót", "manocanh": "ma-nơ-canh", "manocanh to": "ma-nơ-canh to",
+        "bà là": "bàn là",                 # 다리미 (북부 bàn là · 남부 bàn ủi)
+        "giử điểm cố định": "giữ điểm cố định",
+        "daây viền": "dây viền",
+        "tay raglăng": "tay raglan",
+        "diểu thành phẩm": "diễu thành phẩm",
+        "vòng chử D": "vòng chữ D",
+        "lệch, vếch lên, lé ra": "lệch, vênh lên, lé ra",
+        "da": "da lộn",                    # 세무가죽은 da lộn 이다 (da 는 그냥 가죽)
+        }
+
+# 뜻이 안 맞던 것 — 베트남어는 맞는데 한국어 뜻이 엉뚱했다.
+FIXKO = {"móc áo": "옷걸이", "nhuộm": "염색하다", "khóa": "지퍼·잠금장치",
+         "đội kế hoạch": "생산계획팀", "tay bị vặn": "소매가 뒤틀림",
+         "may": "박다·재봉하다", "dài áo": "옷 길이",
+         "lỗi loang nước": "물얼룩 불량", "sự nhuộm": "염색"}
+
+# 쓸 수 없는 것 — 원본이 잘못됐거나 봉제 낱말이 아니다
+DROP = {"baghết chiếc",          # 베트남어가 아니다 (baguette 를 잘못 적은 듯)
+        "theo suốt", "theo đuổi",  # '따라하기' 가 아니다 (추구하다)
+        "kiểm tra rập", "kiểm tra sọc",   # 영어 check 를 '검사'로 잘못 옮겼다(체크무늬가 맞다)
+        "ngực",                  # '여밈선'이 아니다. 가슴은 이미 따로 있다
+        "vô lý, tồi tệ", "vững vàng , chắc chắn", "rõ ràng, chính xác",
+        "kéo, giật", "nghiêng , xéo", "cắt đứt ra", "kiểm tra, kiểm định",
+        "tạo đường song song", "bất biến (không thay đổi)",   # 봉제 낱말이 아니라 사전 뜻풀이다
+        }
 
 
 def sents():
@@ -53,7 +79,9 @@ def main():
         if not (ko and vi) or not KO.search(ko): continue
         if ko in ("한국어",) or vi in ("Vietnam",): continue
         vi = re.sub(r"\s+", " ", U.normalize("NFC", vi)).strip()
+        if vi in DROP: continue
         vi = TYPO.get(vi, TYPO.get(vi.lower(), vi))
+        if vi in FIXKO: ko = FIXKO[vi]
         if len(vi.split()) > 6 or len(vi) > 40: continue
         if not re.search(r"[A-Za-zÀ-ỹ]", vi): continue
         k = vi.lower()

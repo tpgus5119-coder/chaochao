@@ -103,7 +103,9 @@ def main():
         return o if o.get("ex") else None          # 예문이 없는 것은 낱말이 아니다
 
     life = sorted([w for w in sp if w["field"] == "일상"], key=rank)
-    job  = sorted([w for w in sp if w["field"] != "일상"], key=rank)
+    job  = sorted([w for w in sp if w["field"] not in ("일상", "문법용어")], key=rank)
+    # 말에 대한 말(모음·자음·성조·명사…)은 **1권**으로 보낸다 — 일상 낱말이 아니다
+    gramw = sorted([w for w in sp if w["field"] == "문법용어"], key=rank)
     L = [x for x in (dress(w) for w in life) if x]
     # 교재 낱말표(4권 베트남어 교재_단어.xlsx)는 **안 넣는다** (대표님 지시, 2026-08-30).
     # 1,148개 중 새로 나오는 것이 56개뿐이라 넣을 값어치가 없다 — 거의 다 시험지에 이미 있다.
@@ -164,9 +166,11 @@ def main():
                        "chapters": [{"lessons": [{"words": w} for w in ch]}
                                     for ch in cut(ws, LES_PER_CH)]})
     vols.append({"kind": "job", "tracks": tracks})
+    G = [x for x in (dress(w) for w in gramw) if x]
     (R / "data" / "order.json").write_text(json.dumps(
         {"note": "이름 없는 목차. 권/챕터/레슨 번호만. 차례는 기수 합 → 최근 기수 회차 → 회차 안 자리.",
-         "vols": vols}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+         "vols": vols, "gramwords": G}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"1권으로 보낸 '말에 대한 말' {len(G)}개:", " · ".join(x["ko"][:8] for x in G[:12]))
     print(f"일상(선배만) {len(L)} · 직무 {len(J)}(그중 우리가 만든 것 {sum(1 for x in J if x.get('app'))})")
     for i, v in enumerate(vols, 1):
         if v["kind"] == "job":

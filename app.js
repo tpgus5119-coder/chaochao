@@ -5081,6 +5081,19 @@ function gramEntry() {
 
 function drawGramList() {
   const list = $('#dayList'); list.textContent = '';
+  /* 말에 대한 말(모음·자음·성조·명사·동사…)은 **1권**에 있어야 한다 (대표님 지적, 2026-08-30).
+     일상 낱말 사이에 끼어 있으면 '오늘 배울 말'이 아닌 것이 섞여 어리둥절해진다. */
+  const gw = (COURSE && COURSE.gramwords) || [];
+  if (gw.length) {
+    const b = el('button');
+    b.dataset.done = S.done['GW'] ? '1' : '0';
+    b.append(el('span', 'num', tr('말에 대한 말')),
+             el('span', 'nm', gw.slice(0, 3).map(w => esc(w.ko.split('/')[0].trim())).join(' · ')),
+             el('span', 'st', S.done['GW'] ? tr('완료 ✔') : gw.length + tr('낱말')));
+    b.onclick = () => { dive(drawGramList);
+      startLearn({ day: 'GW', theme: tr('말에 대한 말'), words: gw, course: 1 }); };
+    const li = el('li'); li.append(b); list.append(li);
+  }
   const tot = GRAM.books.reduce((a, b) => a + b.bai.reduce((c, x) => c + x.g.length, 0), 0);
   const done = GRAM.books.reduce((a, b, bi) =>
     a + b.bai.filter((x, ni) => S.done[gkey(bi, ni)]).length, 0);

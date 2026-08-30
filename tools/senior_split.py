@@ -38,6 +38,17 @@ JOB = {
 }
 LIFE_HINT = r"먹|마시|자다|놀|사랑|친구|가족|여행|날씨|과일|동물|음식|옷$|집$"
 
+# 기본기·문법에서 쓰는 **말에 대한 말** — 모음·자음·성조·명사·동사…
+# 이건 일상 낱말이 아니라 1권(기본기·문법)에 있어야 한다 (대표님 지적, 2026-08-30).
+# '조사하다(điều tra)' 처럼 글자만 겹치는 것은 빼야 해서 낱말을 하나하나 적었다.
+GRAMWORD = {
+ "nguyên âm", "phụ âm", "ngữ điệu", "giọng", "phát âm", "chính tả", "lỗi chính tả",
+ "danh từ", "động từ", "tính từ", "trạng từ", "đại từ", "giới từ", "liên từ", "thán từ",
+ "ngữ pháp", "câu trần thuật", "câu hỏi", "mẫu câu", "ví dụ", "ví dụ câu",
+ "các cấu trúc", "cấu trúc câu", "âm tiết", "dấu thanh", "bảng chữ cái", "từ vựng",
+}
+
+
 def main():
     p = R / "data" / "senior_pool.json"
     if not p.exists(): p = R / "data" / "_senior_pool3.json"
@@ -47,6 +58,9 @@ def main():
     cnt, out = collections.Counter(), []
     for w in ws:
         ko = w.get("ko", "")
+        if w["vi"].strip().lower() in GRAMWORD:
+            w2 = dict(w); w2["field"] = "문법용어"
+            cnt["문법용어"] += 1; out.append(w2); continue
         hit = next((k for k, r in pats.items() if r.search(ko)), None)
         w2 = dict(w); w2["field"] = hit or "일상"
         cnt[w2["field"]] += 1
