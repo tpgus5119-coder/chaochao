@@ -153,7 +153,7 @@ def main():
         seen.add(k)
         out.append({"vi": vi, "ko": re.sub(r"\s+", " ", ko)[:26],
                     "kr": vi_kr.word(vi), "krs": vi_kr.word(vi, True),
-                    "track": "공통" if vi in TO_COMMON else "봉제", "sew": 1})
+                    "track": "공통" if vi in TO_COMMON else "섬유·봉제·신발", "sew": 1})
         n += 1
     stat["봉제용어"] = n
     # 무역용어 — 약자는 낱말이 아니라 '한국어 뜻'만 쓸모가 있는데 베트남어가 없다. 안 쓴다.

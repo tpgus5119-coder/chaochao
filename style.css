@@ -1603,3 +1603,13 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .altrow .altw{padding:.2em .6em; border-radius:999px; font-size:.92rem;
   border:1px solid var(--line); background:var(--card); cursor:pointer}
 .altrow .altkr{margin-left:.35em; font-size:.82em; color:var(--muted)}
+
+/* 베트남 바로알기 — 숫자 막대 (글보다 길이로 보는 게 빠르다) */
+.nbars{margin-top:14px; display:flex; flex-direction:column; gap:7px}
+.nbrow{display:flex; align-items:center; gap:8px; font-size:.9rem}
+.nbrow .nblab{flex:0 0 6.5em; color:var(--muted); text-align:right}
+.nbrow .nbtrack{flex:1; height:14px; border-radius:7px; overflow:hidden;
+  border:1px solid var(--line); background:var(--card)}
+.nbrow .nbtrack i{display:block; height:100%; background:var(--accent); border-radius:7px}
+.nbrow .nbval{flex:0 0 auto; font-variant-numeric:tabular-nums; font-weight:700}
+.nbunit{text-align:right; font-size:.76rem; color:var(--muted)}

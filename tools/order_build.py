@@ -28,16 +28,27 @@ PER = 15
 JOBRE = [(k, re.compile(v)) for k, v in JOBPAT.items()]
 # 갈래는 **다섯**이면 된다. 공통이 대부분이고 업종 낱말은 원래 적다 —
 # 공장에서 쓰는 말의 대부분은 어느 공장에서나 같기 때문이다(실측: 620개 중 483개가 공통).
-JOBORDER = ["공통", "봉제", "전자", "기계·금속", "식품·화학"]
+# 한국인이 실제로 취업하는 순서 (KOTRA 2023) — 제조업 1위, 그중 생산관리가 40%
+JOBORDER = ["공통", "섬유·봉제·신발", "전자", "물류·무역", "사무·회계·영업", "건설·설비", "요식·유통"]
+JOB_CAP = 999                 # 직무 낱말은 999개까지 (대표님 결정, 2026-08-30)
 
 
 def field_of(ko):
     """직무 낱말을 갈래로 — 봉제 갈 사람은 전자를 안 배워도 된다(대표님 지시).
        업종에 안 걸리면 '공통'이다. 관리자·잔업·수량·버튼 같은 말이 그것이다."""
     for k, rx in JOBRE:
-        if k.startswith("공통"): continue
+        if k == "공통": continue
         if rx.search(ko or ""): return k
-    return "공통"                      # 한 레슨 열다섯 낱말
+    return "공통"
+
+
+def src_rank(x):
+    """출처 차례 — 선배 시험 → 카톡방 → 대표님이 주신 자료 → 앱이 만든 것.
+       999개로 자를 때 **출처 없는 것부터** 잘리게 하려는 것이다."""
+    if x.get("sr"): return 0
+    if x.get("kakao"): return 1
+    if x.get("sew") or x.get("trade"): return 2
+    return 3                      # 한 레슨 열다섯 낱말
 
 def key(v):
     """겹침을 견줄 때 쓰는 꼴 — 괄호 안은 곁들이 설명이라 뗀다."""
@@ -89,6 +100,8 @@ def main():
         if gis: o["gi"] = "".join(gis); o["sr"] = 1
         if len(gis) >= 2: o["core"] = len(gis)
         if job_app: o["app"] = 1
+        for f in ("kakao", "sew", "trade", "track"):     # 출처 표시를 잃지 않는다
+            if w.get(f): o[f] = w[f]
         o.update(extra.get(k, {}))
         if w.get("ex"): o["ex"] = w["ex"]          # 자료에 예문이 딸려 있으면 그것을 쓴다
         t = " " + k + " "
@@ -127,7 +140,7 @@ def main():
         for w in json.loads(sw.read_text(encoding="utf-8"))["words"]:
             if key(w["vi"]) in seen2: continue
             x = dress(w)
-            if x: x["track"] = "봉제"; J.append(x); seen2.add(key(w["vi"]))
+            if x: x["track"] = "섬유·봉제·신발"; J.append(x); seen2.add(key(w["vi"]))
     tw = R / "data" / "_trade.json"
     if tw.exists():
         seen4 = {key(x["vi"]) for x in J}
@@ -176,6 +189,16 @@ def main():
     # 직무는 **갈래별로** 나눈다 — 갈래는 이름을 둔다(어디로 갈지가 사람마다 다르다)
     byf = collections.OrderedDict((k, []) for k in JOBORDER)
     J = pair_same(J)
+    # **999개로 자른다** — 출처가 있는 낱말부터 남기고, 앱이 만든 것부터 잘라 낸다
+    J.sort(key=lambda x: (src_rank(x), -sum(int(g) for g in re.findall(r"\d\d", x.get("gi", "")))))
+    over = len(J) - JOB_CAP
+    if over > 0:
+        keep, dropped = [], 0                      # cut() 함수와 이름이 겹치면 안 된다
+        for x in reversed(J):
+            if dropped < over and src_rank(x) == 3: dropped += 1; continue
+            keep.append(x)
+        J = list(reversed(keep))
+        print(f"   직무 {JOB_CAP}개로 맞추려고 **앱이 만든 낱말** {dropped}개를 뺐다")
     for x in J: byf.setdefault(x.get("track") or field_of(x["ko"]), []).append(x)
     tracks = []
     for k, ws in byf.items():

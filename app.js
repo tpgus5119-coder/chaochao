@@ -503,7 +503,7 @@ const UIVI = {
   '강의자료 12강': '12 bài giảng',
   '밀어서 넘기면 이 강의 낱말 20개와 문장 4개가 나옵니다.':
     'Vuốt để xem 20 từ và 4 câu của bài này.',
-  '교재 문법 175': '175 ngữ pháp giáo trình', '빠른 문법 14': '14 ngữ pháp nhanh',
+  '교재 문법 175': '175 ngữ pháp giáo trình',
   '다 봤어요': 'Đã xem xong',
   '풀던 문제를 그만두고 홈으로 갈까요?': 'Dừng bài đang làm và về trang chính?', '선배 기수가 실제로 시험 본 낱말': 'Từ các khoá trước đã thi thật',
   '실전 단어 복습': 'Ôn từ vựng thực chiến',
@@ -2475,16 +2475,23 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
   rev:   { name: '복습', items: () => [
             ['최근 학습', () => freshMenu('word')],
             ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
+  /* 기본기 차례는 **줌 수업 자료**를 따른다 (베트남 선생님이 실제로 가르친 차례).
+     Bài 1 모음 → Bài 2 자음 → Bài 3 인칭대명사(호칭) → Bài 4 숫자와 돈 → …
+     전에는 앱을 만든 차례 그대로였다 — 근거가 없었다. (2026-08-30)
+     '말에 대한 말'(모음·자음·성조를 베트남어로 뭐라 하나)도 여기 넣는다 — 같은 이야기다. */
   basic: { name: '기본기', items: () => [
             ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
-            ['성조', toneEntry], ['겹모음', () => startRule(4)], ['자판 쓰는 법', kbGuide],
-            ['호칭', () => startRule(0)], ['어순', () => startRule(1)], ['숫자 읽는 법', () => startRule(5)],
-            ['단위', () => startRule(2)], ['남부 소리', () => startRule(3)]] },
+            ['성조', toneEntry], ['겹모음', () => startRule(4)],
+            ['호칭', () => startRule(0)], ['숫자 읽는 법', () => startRule(5)],
+            ['단위', () => startRule(2)], ['어순', () => startRule(1)],
+            ['남부 소리', () => startRule(3)], ['자판 쓰는 법', kbGuide],
+            ['말에 대한 말', gramWordsEntry]] },
   /* 문법 = **교재 세 권의 과별 문법 175개** (2026-08-30).
      선배 네 기수가 실제로 쓴 책(NGUYỄN VIỆT HƯƠNG)의 차례 그대로다 — 내가 고른 것이 아니다.
      앱이 원래 갖고 있던 14개는 '빠른 문법'으로 남겨 둔다(짧게 훑기 좋다). */
-  gram:  { name: '문법', items: () => [['교재 문법 175', gramEntry],
-                                      ['빠른 문법 14', quickGramEntry]] },
+  /* 앱이 갖고 있던 '빠른 문법 14'는 뺐다 (2026-08-30) — **열넷 다 교재 175개에 들어 있다**.
+     같은 것을 두 벌 두면 어느 쪽을 봐야 하는지 알 수 없다. */
+  gram:  { name: '문법', items: () => [['보기', gramEntry]] },
   /* 문화는 **한 권**으로 모았다 (대표님 지시, 2026-08-30).
      전에는 세트 표지에 한 조각씩 붙어 있었다 — 읽고 싶을 때 찾아갈 길이 없었다. */
   cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
@@ -5081,19 +5088,7 @@ function gramEntry() {
 
 function drawGramList() {
   const list = $('#dayList'); list.textContent = '';
-  /* 말에 대한 말(모음·자음·성조·명사·동사…)은 **1권**에 있어야 한다 (대표님 지적, 2026-08-30).
-     일상 낱말 사이에 끼어 있으면 '오늘 배울 말'이 아닌 것이 섞여 어리둥절해진다. */
-  const gw = (COURSE && COURSE.gramwords) || [];
-  if (gw.length) {
-    const b = el('button');
-    b.dataset.done = S.done['GW'] ? '1' : '0';
-    b.append(el('span', 'num', tr('말에 대한 말')),
-             el('span', 'nm', gw.slice(0, 3).map(w => esc(w.ko.split('/')[0].trim())).join(' · ')),
-             el('span', 'st', S.done['GW'] ? tr('완료 ✔') : gw.length + tr('낱말')));
-    b.onclick = () => { dive(drawGramList);
-      startLearn({ day: 'GW', theme: tr('말에 대한 말'), words: gw, course: 1 }); };
-    const li = el('li'); li.append(b); list.append(li);
-  }
+
   const tot = GRAM.books.reduce((a, b) => a + b.bai.reduce((c, x) => c + x.g.length, 0), 0);
   const done = GRAM.books.reduce((a, b, bi) =>
     a + b.bai.filter((x, ni) => S.done[gkey(bi, ni)]).length, 0);
@@ -5126,16 +5121,16 @@ function startGram(bi, ni) {
   show('learn', b.book + ' ' + x.no + '과 · ' + x.t, true);
 }
 
-/* 앱이 원래 갖고 있던 짧은 문법 14개 — 없애지 않는다. 급할 때 훑기 좋다. */
-function quickGramEntry() {
-  const list = $('#dayList'); list.textContent = '';
-  GRAMMAR.forEach((g, i) => {
-    const btn = el('button');
-    btn.append(el('span', 'nm', esc(g.title)), el('span', 'st', tr('보기')));
-    btn.onclick = () => { dive(quickGramEntry); startRule('G' + i); };
-    const li = el('li'); li.append(btn); list.append(li);
-  });
-  show('course', '빠른 문법', true);
+/* 모음·자음·성조를 **베트남어로 뭐라 하는가** — 기본기와 한 이야기다 (대표님 지적, 2026-08-30). */
+function gramWordsEntry() {
+  const go = () => {
+    const gw = (COURSE && COURSE.gramwords) || [];
+    if (!gw.length) return renderHome();
+    startLearn({ day: 'GW', theme: tr('말에 대한 말'), words: gw, course: 1 });
+  };
+  if (COURSE) return go();
+  fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; loadCWords(); go(); }).catch(() => { });
 }
 
 function starBtn(k, ko, vi) {
@@ -5672,8 +5667,10 @@ function drawCard() {
   }
 
   if (it.k === 'know') {
-    c.append(el('div', 'gramt', esc(x.t)));
-    c.append(el('p', 'knowli', x.one));
+    c.append(el('div', 'cultemo', esc(x.e || '📌')));
+    c.append(el('div', 'ko', esc(x.t)));
+    c.append(el('div', 'rulenote', x.b));
+    if (x.n && x.n.length) c.append(numBars(x.n, x.u));   // 숫자는 글보다 그림이 빠르다
   }
 
   if (it.k === 'ksent') {
