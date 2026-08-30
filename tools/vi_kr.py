@@ -143,6 +143,11 @@ FOREIGN = {
  "wifi": "와 이 파이", "logo": "로 고", "menu": "메 뉴", "video": "비 데 오",
  "email": "이 메일", "internet": "인 떠 넷", "container": "꼰 떼 너", "pallet": "빠 렛",
  "sample": "쌈 쁠", "size": "싸이", "vitamin": "비 따 민", "gam": "감",
+ # 공장에서 쓰는 **약어** — 베트남 사람도 글자 그대로 읽는다 (2026-08-30 검수)
+ "pgm": "피 지 엠", "shortage": "쇼 티 지", "ng": "엔 지",
+ "qlsx": "꾸이 에러 엣 익",          # Quản Lý Sản Xuất 의 머리글자
+ "smt": "에스 엠 티", "aoi": "에이 오 아이", "pcb": "피 씨 비", "qc": "큐 씨",
+ "iso": "아이 에스 오", "led": "엘 이 디", "usb": "유 에스 비",
 }
 
 def syllables(t, _d=0):
