@@ -1,6 +1,8 @@
 # 베트남어 스터디
 
-### 👉 https://tpgus5119-coder.github.io/vietnamese-study/
+### 👉 https://tpgus5119-coder.github.io/chaochao/
+
+> 작업을 이어받는다면 **[docs/인수인계.md](docs/인수인계.md)** 부터 읽어라.
 
 폰에서 열고 **"홈 화면에 추가"** 를 누르면 앱처럼 씁니다.
 아이폰: 공유 버튼 → 홈 화면에 추가 · 안드로이드: 메뉴 → 홈 화면에 추가
@@ -60,9 +62,12 @@
 
 ## 실행
 ```
-python3 -m http.server 5177
+python3 -m http.server 8899
 ```
-브라우저에서 http://localhost:5177 열기.
+브라우저에서 http://localhost:8899 열기.
+
+> **8899 여야 한다.** Cloudflare 워커(AI·동아리)가 허용하는 개발용 주소가 이것뿐이라,
+> 다른 번호로 띄우면 AI·로그인 기능이 403 으로 막힌다.
 
 ## 배포
 ```

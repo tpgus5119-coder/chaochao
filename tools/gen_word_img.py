@@ -13,18 +13,28 @@ R = pathlib.Path(__file__).resolve().parent.parent
 API = "http://127.0.0.1:7860/sdapi/v1/txt2img"
 IMG = R / "img"
 # 이 모델은 **FLUX.1 [schnell]** 이다 (Draw Things 설정에서 확인, 2026-08-30).
-# schnell 은 guidance-distilled 라 CFG 를 쓰지 않는다 → **negative prompt 가 아예 안 먹는다.**
+# schnell 은 **시간축 증류(timestep-distilled)** 모델이고 가이던스 임베딩이 아예 없다
+# (BFL 공식 util.py: flux-schnell 의 guidance_embed=False · cli.py: "sets the guidance (flux-dev only)").
+# 그래서 CFG 를 안 쓴다 → **negative prompt 가 아예 안 먹는다.**
 #   그래서 "글자 금지·손 금지"를 negative 에 적어 둔 것은 처음부터 무효였다.
 #   프롬프트 안의 부정어("no text")는 더 나쁘다 — 확산 모델은 토큰을 긍정으로 읽어
 #   오히려 그것을 불러온다(전에 '손 감춰라'가 손을 불렀다).
 # 확정 설정 (2026-08-30, 공식 문서 + 실측):
 #   · 모델 FLUX.1 [schnell] — Apache 2.0 이라 **상업 이용이 자유롭다**(dev 는 비상업)
-#   · steps 4      — Black Forest Labs 공식 1~4 · Draw Things 공식 1~4
+#   · steps 8      — 2026-08-31 재검증. BFL 공식 기본값은 4(cli.py: num_steps = 4 if flux-schnell)
+#                    이지만 Draw Things 공식 위키는 schnell 을 "4-8 steps" 로 적는다.
+#                    실측(같은 씨앗 3낱말 비교): 8스텝이 사람 몸·소품이 뚜렷하게 낫다
+#                    ('배를 타다'가 4스텝에선 웃통 벗은 이상한 몸, 8스텝에선 제대로 옷 입음).
+#                    값: 22초 → 35초. 품질이 우선이라 8을 쓴다.
 #   · cfg 1        — schnell 은 guidance-distilled 라 CFG 를 안 쓴다
 #   · Euler A Trailing — Draw Things 공식이 "Trailing 계열"을 권한다.
 #                        실측: 같은 그림을 39.7초에 굽는다(DPM++2M Karras 는 68.7초)
-#   · shift 1 · 512×512 — 공식 권장 범위
-STEPS, GUID, SHIFT, SAMPLER = 4, 1, 1, "Euler A Trailing"
+#   · shift 1      — BFL 공식 코드가 schnell 에서만 시프트를 끈다
+#                    (cli.py: shift=(name != "flux-schnell")). 위키의 "Shift 2.8-4" 는 dev 용이다.
+#   · 512×512      — 2026-08-31 실측으로 1024 보다 낫다고 확인. 1024 는 같은 4~8스텝을
+#                    4배 넓은 화면에 나눠 쓰느라 그림이 밋밋해진다(침대·배 그림에서 소품이 사라졌다).
+#                    최종 표시는 384×384 라 512 로 굽고 줄이는 지금 방식이 맞다.
+STEPS, GUID, SHIFT, SAMPLER = 8, 1, 1, "Euler A Trailing"
 
 def name_of(ko):
     h = hashlib.sha1(U.normalize("NFC", ko).encode()).hexdigest()[:10]
