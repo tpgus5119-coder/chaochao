@@ -98,6 +98,28 @@ DROP = {"baghết chiếc",          # 베트남어가 아니다 (baguette 를 �
         "vô lý, tồi tệ", "vững vàng , chắc chắn", "rõ ràng, chính xác",
         "kéo, giật", "nghiêng , xéo", "cắt đứt ra", "kiểm tra, kiểm định",
         "tạo đường song song", "bất biến (không thay đổi)",   # 봉제 낱말이 아니라 사전 뜻풀이다
+        # ── 봉제어가 아닌 일반 낱말·사전 뜻풀이 (2026-08-30, 하나씩 읽고 골라냄)
+        #    심화 봉제어는 **안 뺀다** — 시접·진동둘레·다트끝은 공장에서 꼭 쓰는 말이다.
+        "Thừa nhận, tán thành", "hợp thành, dung hợp, giảm bớt", "kết hợp, phối hợp",
+        "chi tiết, tỉ mỉ", "ngăn nấp, rõ ràng", "hạng mục, chủng loại", "mua / bán lẻ",
+        "mang tính tạm thời", "chiều cao (của vật)", "chất lượng, tay nghề, tài năng",
+        "Tẩy, nhặt, làm sạch", "sửa đổi, điều chỉnh", "lệch, vếch lên, lé ra",
+        "ánh ra, nhìn thấy", "đối xứng mang tính trực quan", "duyệt, xác nhận",
+        "tuân thủ", "thiệt hại", "cảnh cáo", "tiền phạt", "sự tạo hình", "chèn",
+        # ── 뜻이 겹치는 것 — 둘 중 하나만 남긴다
+        "vắt sổ 3 chỉ",              # vắt sổ 와 같다
+        "rộng vai",                  # ngang vai 어깨 넓이
+        "đường may sườn",            # Đường sườn 옆솔기
+        "túi 2 viền",                # hai cơi 쌍입술
+        "diễu cổ áo",                # Đính chân cổ 깃단 눌러박기
+        "1 kim xén",                 # máy xén 1 kim 칼 달린 본봉
+        "hoàn thành việc cắt chỉ",   # hoàn thành 끝손질
+        "nẹp trên",                  # nẹp áo 덧단
+        "gấu ( quần, áo )",          # gấu 밑단
+        "ghim (may phác thảo)",      # ghim (may một kim chống bai) 초벌박기
+        "vị trí (điểm đặt)",         # vị trí 위치
+        "nhúm / độ nhúm",            # độ nhăn, độ dúm 잔주름
+        "lót túi (bao túi)",         # bao túi 주머니감
         }
 
 
