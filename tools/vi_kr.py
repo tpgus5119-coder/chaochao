@@ -43,9 +43,14 @@ NUC = {"iê":"이에","yê":"이에","ia":"이어","ya":"이어","ưa":"으어",
        "o":"오","ô":"오","ơ":"어","u":"우","ư":"으"}
 # ── 끝소리
 COD_N = {"ch":"ㄱ","nh":"ㄴ","ng":"ㅇ","c":"ㄱ","m":"ㅁ","n":"ㄴ","p":"ㅂ","t":"ㅅ","i":"이","y":"이","o":"오","u":"우"}
-# 남부 받침. 사전 발음기호로 확인했다 (2026-08-30):
-#   -n → [ŋ] 384곳 · -t → [k] 163곳 · -ch → [t] 57곳. 짐작이 아니라 사전이 그렇다.
+# 남부 받침. 사전 발음기호 3,040개를 앞모음별로 세어 규칙을 뽑았다 (2026-08-30).
+#   -n  : i 뒤 17/17 · ê 뒤 24/24 가 [n] 그대로 · 그 밖 375곳은 모두 [ŋ]
+#   -t  : i 뒤 3/3 · ê 뒤 12/12 가 [t] 그대로 · 그 밖 144곳은 모두 [k]
+#   -ch : 앞모음과 상관없이 53/53 이 [t]
+#   **어긋나는 보기가 하나도 없다** — 짐작이 아니라 사전이 그렇다.
 COD_S = dict(COD_N, n="ㅇ", t="ㄱ", ch="ㅅ")
+KEEP_S = {"i", "ê", "y"}     # 이 모음 뒤에서는 남부도 북부와 같다 (y 는 i 와 같은 소리)
+# 남은 어긋남은 사전 쪽 quét 하나뿐이다(같은 꼴 표본이 1건). 규칙을 따른다.
 
 TONE = "\u0300\u0301\u0303\u0309\u0323"        # 성조 부호 다섯만 (모자 ˆ ˘ ̛ 는 글자의 일부다)
 nfc = lambda s: unicodedata.normalize("NFC", s)
@@ -94,15 +99,17 @@ def one(syl, south=False):
     glide = ""
     if cho != "꾸" and rest[:2] in GLIDE:
         glide, rest = rest[0], rest[1:]      # 'o' 인지 'u' 인지 그대로 남긴다 — 소리가 다르다
-    nuc = ""
+    nuc, nuc_raw = "", ""
     for k in sorted(NUC, key=len, reverse=True):
-        if rest.startswith(k): nuc, rest = NUC[k], rest[len(k):]; break
+        if rest.startswith(k): nuc, nuc_raw, rest = NUC[k], k, rest[len(k):]; break
     if not nuc: return ""
     tail, cod = "", ""
     if rest in VCOD: tail = VCOD[rest]
     elif rest:
         for k in sorted(COD_N, key=len, reverse=True):
-            if rest == k: cod = (COD_S if south else COD_N)[k]; break
+            if rest == k:
+                use_s = south and not (k in ("n", "t") and nuc_raw in KEEP_S)
+                cod = (COD_S if use_s else COD_N)[k]; break
     # 표기법 1항 — 어말 nh 앞 모음이 a 면 a 와 합쳐 '아인'
     if rest == "nh" and nuc == "아": nuc, cod = "아이", "ㄴ"
     return build(cho, glide, nuc, cod) + tail
@@ -135,7 +142,7 @@ FOREIGN = {
  "violon": "비 오 롱", "web": "웹", "bar": "바", "sofa": "쏘 파", "taxi": "딱 씨",
  "wifi": "와 이 파이", "logo": "로 고", "menu": "메 뉴", "video": "비 데 오",
  "email": "이 메일", "internet": "인 떠 넷", "container": "꼰 떼 너", "pallet": "빠 렛",
- "sample": "쌈 쁠", "size": "싸이", "vitamin": "비 따 민", "gam": "감", "mét": "맷",
+ "sample": "쌈 쁠", "size": "싸이", "vitamin": "비 따 민", "gam": "감",
 }
 
 def syllables(t, _d=0):

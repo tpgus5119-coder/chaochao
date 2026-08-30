@@ -1686,3 +1686,18 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .cbrich .cbkr{font-size:12.5px; color:var(--dim)}
 .cbrich .cbko{font-size:13.5px}
 .cb.me.cbrich .cbkr, .cb.me.cbrich .cbko{color:inherit; opacity:.8}
+
+/* 실력 분석 — 갈래 제목을 눈에 띄게 (대표님 지시, 2026-08-30) */
+.anasec{margin:22px 0 10px; font-size:17px; font-weight:800; color:var(--accent);
+  border-left:4px solid var(--accent); padding-left:10px; line-height:1.35}
+.anasec span{display:block; font-size:12.5px; font-weight:500; color:var(--dim); margin-top:2px}
+.barrow .bname .tarr{width:16px; height:16px; vertical-align:-3px; margin-left:4px}
+.barrow .bname .tarr path, .barrow .bname .tarr circle{fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.barrow .bname .tarr circle{fill:currentColor}
+.barrow.thin .bn{color:var(--dim)}
+
+/* 예/아니오 창 — 두 단추를 나란히 */
+.modalbox .rolepick{display:flex; gap:10px; margin-top:14px}
+.modalbox .rolepick button{flex:1; padding:12px 10px; font-weight:650}
+.modalbox .primary.danger{background:var(--bad,#c62828); border-color:transparent; color:#fff}

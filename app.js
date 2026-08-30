@@ -248,7 +248,7 @@ const UIVI = {
     'Điểm một tháng gần đây <b>N điểm</b> — tuần gần hơn được tính nặng hơn (tuần này 1.0 · 1 tuần trước 0.7 · 2 tuần trước 0.5 · 3 tuần trước 0.3).',
   '북부 (하노이)': 'Miền Bắc (Hà Nội)', '남부 (호찌민)': 'Miền Nam (TP.HCM)',
   '나란히 (개발용)': 'Song song (cho nhà phát triển)',
-  '하루 분량': 'Lượng mỗi ngày', '10단어 + 2문장': '10 từ + 2 câu', '20단어 + 4문장': '20 từ + 4 câu', '월요일마다 초기화': 'Đặt lại mỗi thứ Hai',
+  '하루 분량': 'Lượng mỗi ngày', '하루 한 레슨': '1 bài/ngày', '하루 두 레슨': '2 bài/ngày', '월요일마다 초기화': 'Đặt lại mỗi thứ Hai',
   'N위': 'Hạng N', 'N명 중': 'trong N người', '이번 주 점수': 'Điểm tuần này', 'N점': 'N điểm',
   // 모의고사 채점 — TOPIK 은 문항마다 배점이 달라 '맞힌 개수'와 '점수'가 다른 숫자다
   '맞힌 비율': 'Tỉ lệ đúng', '시간이 다 됐습니다': 'Đã hết giờ',
@@ -491,7 +491,12 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '개 대기': ' đang chờ', '개': ' từ', '자판 치는 법': 'Cách gõ bàn phím', '갈래': ' nhóm', '개 문법': ' ngữ pháp', '장': ' thẻ',
+  '개 대기': ' đang chờ', '개': ' từ', '아직': 'Chưa', '아니요': 'Không', '네': 'Vâng',
+  ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
+  '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
+  '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
+  '귀 훈련': 'Luyện tai', '두 영역이 10문제를 넘으면 강점·약점과 처방이 나옵니다.':
+  'Khi hai kỹ năng vượt 10 câu, bạn sẽ thấy điểm mạnh·yếu và lời khuyên.', '자판 치는 법': 'Cách gõ bàn phím', '갈래': ' nhóm', '개 문법': ' ngữ pháp', '장': ' thẻ',
   '갈 곳이 정해졌으면 그 갈래만 고르세요': 'Đã biết nơi làm thì chỉ chọn nhóm đó',
   '고른 것 지우기': 'Bỏ chọn', '고름': 'Đã chọn', '고르기': 'Chọn',
   '열두 강 · 그림과 숫자로 읽습니다': '12 buổi · đọc bằng hình và số',
@@ -1122,6 +1127,26 @@ function tutorTap() {
   popup('<b>글자를 누르면 소리가 납니다</b><br>' +
         '단어도, 아래 예문도 눌러 보세요. 시계 단추는 느리게, 마이크 단추는 따라 말하기입니다.');
 }
+/* 예/아니오 확인 창. 브라우저 confirm() 은 **홈 화면에 설치한 PWA 에서 막히는 폰이 있다** —
+   그러면 아무 일도 안 일어난다(대표님: "동아리 탈퇴 버튼 작동 안 한다", 2026-08-30).
+   그래서 앱이 그리는 창으로 바꾼다. 답을 Promise 로 돌려준다. */
+function askYN(html, yes, danger) {
+  return new Promise(res => {
+    const back = el('div', 'modalback');
+    const box = el('div', 'modalbox');
+    box.append(el('div', 'modalb', html));
+    const row = el('div', 'rolepick');
+    const no = el('button', 'ghost', tr('아니요'));
+    const y = el('button', 'primary' + (danger ? ' danger' : ''), tr(yes || '네'));
+    no.onclick = () => { back.remove(); res(false); };
+    y.onclick = () => { back.remove(); res(true); };
+    row.append(no, y); box.append(row);
+    back.append(box);
+    back.onclick = e => { if (e.target === back) { back.remove(); res(false); } };
+    document.body.append(back);
+  });
+}
+
 function popup(html) {
   const back = el('div', 'modalback');
   const box = el('div', 'modalbox');
@@ -1472,14 +1497,17 @@ const BADGES = [
    숫자를 눈에 보이게 그린다. 다만 표본이 적으면 그리지 않는다 —
    10문제로 "약점"을 말하면 그건 분석이 아니라 점(占)이다. */
 const NEED = 10;                       // 이만큼 풀어야 판정한다
+/* 막대는 **한 문제만 풀어도** 그린다 (대표님 지시, 2026-08-30):
+   "6/10 이런 식으로 남은 문제 표시 지워. 1문제만 했어도 바로 그래프."
+   오른쪽에는 **맞은 수 / 푼 수**. 아무것도 안 했으면 막대 없이 '아직'만. */
 function bars(rows) {
   const box = el('div', 'bars');
-  rows.forEach(([name, pct, n, avg, nlabel]) => {
-    const thin = n < NEED;
-    const r = el('div', 'barrow' + (thin ? ' thin' : ''));
+  rows.forEach(([name, pct, n, avg, nlabel, okn]) => {
+    const none = !n;
+    const r = el('div', 'barrow' + (none ? ' thin' : ''));
     r.append(el('span', 'bname', name));
     const bar = el('span', 'bbar' + (typeof avg === 'number' ? ' avg' : ''));
-    if (!thin) {
+    if (!none) {
       const fill = el('i');
       fill.style.width = Math.max(2, pct) + '%';
       fill.className = pct >= 80 ? 'hi' : pct >= 60 ? 'mid' : 'lo';
@@ -1492,12 +1520,10 @@ function bars(rows) {
       bar.append(pin);
     }
     r.append(bar);
-    r.append(el('span', 'bpct', thin ? '—' : pct + '%'));
-    // 'N문제 더'는 뺐다 (2026-08-29, 대표님 지시) — 8/10 이 이미 '두 개 남았다'를 말한다.
-    // 같은 뜻을 두 번 적으면 읽는 눈만 늘어난다.
+    r.append(el('span', 'bpct', none ? '' : pct + '%'));
     r.append(el('span', 'bn', nlabel != null ? nlabel
-                                    : thin ? n + '/' + NEED
-                                           : n + '문제'));
+                : none ? tr('아직')
+                       : (okn != null ? okn : Math.round(pct * n / 100)) + '/' + n));
     box.append(r);
   });
   return box;
@@ -1506,7 +1532,7 @@ function analysisData(mode) {
   const cur = snapshot(), b = (mode === 'week' && S.wk && S.wk.base) || {};
   const subj = SUBJ.map(x => {
     const n = (cur[x.all] || 0) - (b[x.all] || 0), ok = (cur[x.ok] || 0) - (b[x.ok] || 0);
-    return { name: x.k, n, pct: n ? Math.round(ok * 100 / n) : null, tip: x.tip };
+    return { name: x.k, n, ok, pct: n ? Math.round(ok * 100 / n) : null, tip: x.tip };
   });
   return subj;
 }
@@ -1523,12 +1549,12 @@ function renderAnalysis(host, mode) {
 
   const subj = analysisData(mode);
   const ok = subj.filter(x => x.n >= NEED);
-  host.append(el('p', 'newsday', '과목별 정답률'));
+  host.append(el('p', 'anasec', tr('영역별 정답률') + ' <span>' + tr('말하기·듣기·읽기·쓰기·암기') + '</span>'));
   const sbox = el('div');
   const drawSubj = avg => {
     sbox.textContent = '';
     sbox.append(bars(subj.map((x, i) => [x.name, x.pct === null ? 0 : x.pct, x.n,
-                                         avg ? avg[RANKKEY[i]] : undefined])));
+                                         avg ? avg[RANKKEY[i]] : undefined, null, x.ok])));
     if (avg) sbox.append(el('p', 'dimtxt',
       '막대는 나, 세로 선은 <b>다른 사람들의 평균</b>입니다.'));
   };
@@ -1552,13 +1578,16 @@ function renderAnalysis(host, mode) {
   }
 
 
+  /* 성조 이름 옆에 **높낮이 화살표**를 붙인다 (대표님 지시, 2026-08-30) —
+     '내렸다올림' 같은 말보다 그림이 빠르다. 카드에서 쓰는 것과 같은 그림이다. */
   const TN = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감',
                'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
+  const tnName = k => (TN[k] || k) + ' ' + toneArrow(k);
   const named = (box, map) => Object.entries(S.stats[box] || {})
-    .map(([k, v]) => [(map && map[k]) || k, Math.round(v.ok * 100 / v.all), v.all])
+    .map(([k, v]) => [(map && map[k]) || k, Math.round(v.ok * 100 / v.all), v.all, undefined, null, v.ok])
     .sort((a, b) => a[1] - b[1]);
-  const tn = named('tn', TN);
-  if (tn.length) { host.append(el('p', 'newsday', '성조별 정답률')); host.append(bars(tn)); }
+  const tn = named('tn', new Proxy({}, { get: (_, k) => tnName(k), has: () => true }));
+  if (tn.length) { host.append(el('p', 'anasec', tr('성조별 정답률') + ' <span>' + tr('모든 문제 유형을 합친 값') + '</span>')); host.append(bars(tn)); }
 
   /* '문제 유형별 정답률'을 뺐다 (대표님 지적, 2026-08-29).
      위의 **과목별 정답률**(말하기·듣기·읽기·쓰기)과 같은 것을 두 번 보여 주고 있었다.
@@ -1572,7 +1601,8 @@ function renderAnalysis(host, mode) {
      (그림이 붙는 단어는 원래 구체어라 쉽다 — 그림 효과가 아니라 단어 난이도를 잰 것이다)
      · 첫 시도/두 번째(답을 보고 다시 푸는 것이라 높은 게 당연하다). */
   const MORE = [
-    ['ltr', null, '어려운 글자가 든 단어', 'ư ơ ă â ê ô đ 가 든 단어만 따로 셉니다'],
+    /* '어려운 글자가 든 단어'는 뺐다 (대표님 지시, 2026-08-30) —
+       ư ơ ă â 가 들었다고 어려운 게 아니라 그 낱말이 낯설어서 틀리는 것이다. */
     ['od', null, '얼마나 밀렸을 때 풀었나', '밀릴수록 떨어지는 폭이 곧 밀린 값입니다'],
     ['serr', null, '쓰기 오답의 종류', '성조만 흘렸는지, 글자를 틀렸는지'],
   ];
@@ -1583,19 +1613,19 @@ function renderAnalysis(host, mode) {
     .map(([k, v]) => [k, v.all]).sort((a, b) => b[1] - a[1]).slice(0, 6);
   {
     rows.forEach(([title, note, data]) => {
-      more.append(el('p', 'newsday', esc(title)));
+      more.append(el('p', 'anasec', esc(title)));
       more.append(bars(data));
       more.append(el('p', 'dimtxt', esc(note)));
     });
     if (conf.length) {
-      more.append(el('p', 'newsday', '자주 헷갈리는 짝 (귀 훈련)'));
+      more.append(el('p', 'anasec', tr('자주 헷갈리는 짝') + ' <span>' + tr('귀 훈련') + '</span>'));
       more.append(el('p', 'dimtxt', conf.map(c => esc(c[0]) + ' ' + c[1] + '번').join('<br>')));
     }
   }
 
   // 처방 — 분석만 하고 끝내지 않는다
   if (ok.length < 2) {
-    host.append(el('p', 'note', '두 과목이 10문제를 넘으면 강점·약점과 처방이 나옵니다.'));
+    host.append(el('p', 'note', tr('두 영역이 10문제를 넘으면 강점·약점과 처방이 나옵니다.')));
     return;
   }
   const worst = ok.reduce((a, x) => x.pct < a.pct ? x : a);
@@ -1638,8 +1668,11 @@ function renderAnalysis(host, mode) {
 /* 분석 결과를 그림 한 장으로 — 폰 갤러리에 저장하거나 단톡방에 보낼 수 있다 */
 async function analysisCard(mode) {
   const subj = analysisData(mode).filter(x => x.n >= 10);
+  /* 성조 이름 옆에 **높낮이 화살표**를 붙인다 (대표님 지시, 2026-08-30) —
+     '내렸다올림' 같은 말보다 그림이 빠르다. 카드에서 쓰는 것과 같은 그림이다. */
   const TN = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감',
                'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
+  const tnName = k => (TN[k] || k) + ' ' + toneArrow(k);
   const tn = Object.entries(S.stats.tn || {}).filter(([, v]) => v.all >= 5)
     .map(([k, v]) => [TN[k] || k, Math.round(v.ok * 100 / v.all)]).sort((a, b) => a[1] - b[1]);
   const H = 300 + subj.length * 46 + (tn.length ? 60 + tn.length * 34 : 0);
@@ -1823,7 +1856,7 @@ function quitForm() {
   go.onclick = async () => {
     err.hidden = true;
     if (!pw.value) { err.textContent = tr('비밀번호를 적어 주세요.'); err.hidden = false; return; }
-    if (!confirm(tr('마지막 확인입니다. 지우면 되돌릴 수 없습니다.'))) return;
+    if (!await askYN(tr('마지막 확인입니다. 지우면 되돌릴 수 없습니다.'), '지우기', true)) return;
     go.disabled = true;
     try {
       await cCall({ act: 'quit', id: S.acct.id, pw: pw.value,
@@ -2050,8 +2083,8 @@ function renderAwards() {
   ac.append(el('span', 'pk', '계정'),
             el('span', 'pv', S.acct ? esc(S.acct.id) : '없음 (이 기기에만 저장)'));
   const ab = el('button', 'ghost sm', S.acct ? '로그아웃' : '로그인·가입');
-  ab.onclick = () => {
-    if (S.acct) { if (confirm(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'))) { S.acct = null; save(); renderAwards(); } }
+  ab.onclick = async () => {
+    if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.acct = null; save(); renderAwards(); } }
     else acctForm();
   };
   ac.append(ab);
@@ -2086,7 +2119,7 @@ function renderAwards() {
   }
   b.append(nm, rg);
   b.append(pickRow('하루 분량',
-    [[1, '10단어 + 2문장'], [2, '20단어 + 4문장']], S.pace || 1,
+    [[1, '하루 한 레슨'], [2, '하루 두 레슨']], S.pace || 1,
     v => { S.pace = v; save(); renderAwards(); }));
 
   // 프로필 사진 — 동아리 사람들에게만 보인다. 안 정하면 실루엣.
@@ -2235,7 +2268,7 @@ function weekReport(base) {
   const cur = snapshot(), b = base || {};
   const subj = SUBJ.map(x => {
     const n = (cur[x.all] || 0) - (b[x.all] || 0), ok = (cur[x.ok] || 0) - (b[x.ok] || 0);
-    return { name: x.k, n, pct: n ? Math.round(ok * 100 / n) : null, tip: x.tip };
+    return { name: x.k, n, ok, pct: n ? Math.round(ok * 100 / n) : null, tip: x.tip };
   });
   const d = k => (cur[k] || 0) - (b[k] || 0);
   const r = { subj, memo: d('memo'), days: d('days'), sets: d('sets'), said: d('said') };
@@ -10459,11 +10492,16 @@ function clubHome(j) {
   more.onclick = clubList;
   b.append(more);
   const out = el('button', 'ghost sm', '동아리 탈퇴');
-  out.onclick = () => {
-    if (!confirm(j.name + ' 에서 탈퇴할까요?')) return;
-    clubBusy('탈퇴하는 중…');
-    cCall({ act: 'leave', id: S.club.id })
-      .then(() => { S.club = null; save(); clubList(); }).catch(clubFail);
+  out.onclick = async () => {
+    if (!await askYN(esc(j.name) + tr(' 에서 탈퇴할까요?'), '탈퇴', true)) return;
+    clubBusy(tr('탈퇴하는 중…'));
+    try { await cCall({ act: 'leave', id: S.club.id }); }
+    catch (e) {
+      /* 서버에 못 닿아도 **이 기기에서는 나간다** — 안 그러면 영영 못 나간다.
+         서버 쪽 이름은 다음에 들어갈 때 정리된다. */
+      console.warn('leave', e);
+    }
+    S.club = null; save(); clubList();
   };
   const row = el('div', 'rolepick');
   row.append(out);

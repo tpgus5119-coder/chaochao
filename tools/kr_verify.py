@@ -63,6 +63,10 @@ def main():
                     tot[f"{key}·첫소리 틀림"] += 1
                     bad[f"{key} 첫소리 {o_want}≠{o_got}"].append((vi, kr, ip))
             c_want, c_got = last_coda(ip), jamo(kl)[1]
+            # 어말 nh 는 소리로는 [ŋ] 이지만 **국립국어원 표기법이 'ㄴ'** 이다
+            #   (Bình → 빈 · Thanh → 타인). 표기 관례를 따르므로 어긋남으로 세지 않는다.
+            if vi.split()[-1].lower().endswith("nh") and c_want == "ㅇ" and c_got == "ㄴ":
+                c_want = c_got
             if c_want is not None:
                 tot[f"{key}·끝소리"] += 1
                 if c_want != c_got:
