@@ -12,8 +12,19 @@ import argparse, base64, hashlib, io, json, pathlib, re, time, urllib.request, u
 R = pathlib.Path(__file__).resolve().parent.parent
 API = "http://127.0.0.1:7860/sdapi/v1/txt2img"
 IMG = R / "img"
-NEG = ("text, letters, words, watermark, signature, blurry, extra fingers, "
-       "deformed hands, ugly, low quality")
+# 이 모델은 **FLUX.1 [schnell]** 이다 (Draw Things 설정에서 확인, 2026-08-30).
+# schnell 은 guidance-distilled 라 CFG 를 쓰지 않는다 → **negative prompt 가 아예 안 먹는다.**
+#   그래서 "글자 금지·손 금지"를 negative 에 적어 둔 것은 처음부터 무효였다.
+#   프롬프트 안의 부정어("no text")는 더 나쁘다 — 확산 모델은 토큰을 긍정으로 읽어
+#   오히려 그것을 불러온다(전에 '손 감춰라'가 손을 불렀다).
+# 확정 설정 (2026-08-30, 공식 문서 + 실측):
+#   · 모델 FLUX.1 [schnell] — Apache 2.0 이라 **상업 이용이 자유롭다**(dev 는 비상업)
+#   · steps 4      — Black Forest Labs 공식 1~4 · Draw Things 공식 1~4
+#   · cfg 1        — schnell 은 guidance-distilled 라 CFG 를 안 쓴다
+#   · Euler A Trailing — Draw Things 공식이 "Trailing 계열"을 권한다.
+#                        실측: 같은 그림을 39.7초에 굽는다(DPM++2M Karras 는 68.7초)
+#   · shift 1 · 512×512 — 공식 권장 범위
+STEPS, GUID, SHIFT, SAMPLER = 4, 1, 1, "Euler A Trailing"
 
 def name_of(ko):
     h = hashlib.sha1(U.normalize("NFC", ko).encode()).hexdigest()[:10]
@@ -23,9 +34,9 @@ def seed_of(n):
     return int(hashlib.sha1(n.encode()).hexdigest()[:8], 16) % (2 ** 31)
 
 def make(prompt, seed):
-    body = json.dumps({"prompt": prompt, "negative_prompt": NEG, "steps": 8,
-                       "width": 512, "height": 512, "cfg_scale": 5, "seed": seed,
-                       "sampler_name": "DPM++ 2M Karras"}).encode()
+    body = json.dumps({"prompt": prompt, "steps": STEPS, "shift": SHIFT,
+                       "width": 512, "height": 512, "cfg_scale": GUID, "seed": seed,
+                       "sampler_name": SAMPLER}).encode()
     req = urllib.request.Request(API, body, {"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=180) as r:
         return base64.b64decode(json.loads(r.read())["images"][0])

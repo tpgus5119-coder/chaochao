@@ -5091,9 +5091,10 @@ function drawCh(vi, ci) {
     const k = ckey(vi, ci, li), fin = !!S.done[k];
     const b = el('button');
     b.dataset.done = fin ? '1' : '0';
-    b.append(el('span', 'num', tr('레슨') + ' ' + (li + 1)),
-             el('span', 'nm', l.words.slice(0, 3).map(w =>
-               esc(w.ko.split('/')[0].trim())).join(' · ')),
+    /* 레슨 이름은 **번호만** 둔다 (대표님 지시, 2026-08-30) —
+       앞 낱말 셋을 늘어놓으면 그것이 그 레슨의 주제인 줄 알게 된다. 주제가 아니다. */
+    b.append(el('span', 'num', ''),
+             el('span', 'nm', tr('레슨') + ' ' + (li + 1)),
              el('span', 'st', l.words.length + tr('낱말') + (fin ? ' ✔' : '')));
     b.onclick = () => { dive(() => drawCh(vi, ci));
       startLearn({ day: k, theme: (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
@@ -5176,9 +5177,10 @@ function drawJobCh(ti, ci) {
     const k = jkey(ti, ci, li), fin = !!S.done[k];
     const b = el('button');
     b.dataset.done = fin ? '1' : '0';
-    b.append(el('span', 'num', tr('레슨') + ' ' + (li + 1)),
-             el('span', 'nm', l.words.slice(0, 3).map(w =>
-               esc(w.ko.split('/')[0].trim())).join(' · ')),
+    /* 레슨 이름은 **번호만** 둔다 (대표님 지시, 2026-08-30) —
+       앞 낱말 셋을 늘어놓으면 그것이 그 레슨의 주제인 줄 알게 된다. 주제가 아니다. */
+    b.append(el('span', 'num', ''),
+             el('span', 'nm', tr('레슨') + ' ' + (li + 1)),
              el('span', 'st', l.words.length + tr('낱말') + (fin ? ' ✔' : '')));
     b.onclick = () => { dive(() => drawJobCh(ti, ci));
       startLearn({ day: k, theme: t.track + ' ' + (ci + 1) + '-' + (li + 1),
@@ -9959,7 +9961,12 @@ function showNewsLearn() {
     days.forEach(d => {
       if (d.ts !== last) { b.append(el('p', 'newsday', esc(d.ts.slice(5).replace('-', '월 ') + '일'))); last = d.ts; }
       const btn = el('button', 'bigmenu');
-      btn.append(el('b', null, esc(d.theme)), el('span', 'msub', esc(d.title)));
+      /* 갈래를 앞에 붙인다 (대표님 지시, 2026-08-30) — 무엇에 대한 기사인지 먼저 보인다.
+         색만으로 가르지 않는다: 글자 그대로 '경제'·'일자리'라 적는다(색각 배려). */
+      const top = el('span', 'newstop');
+      if (d.cat) top.append(el('i', 'newscat', esc(d.cat)));
+      top.append(el('b', null, esc(d.theme)));
+      btn.append(top, el('span', 'msub', esc(d.title)));
       btn.onclick = () => { dive(showNewsLearn); startNews(d); };
       b.append(btn);
     });

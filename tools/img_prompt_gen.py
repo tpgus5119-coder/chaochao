@@ -18,13 +18,23 @@ URL = "https://viet-ai.chaochao-app.workers.dev"
 ORIGIN = "https://tpgus5119-coder.github.io"
 OUT = R / "data" / "_imgprompts.json"
 CHUNK = 25
-STYLE = ("simple flat illustration, soft pastel colors, thick outlines, "
-         "plain white background, no text, no letters")
+# 화풍은 **모든 그림이 같아야** 한다 — 낱말마다 그림체가 달라지면 눈이 그림체에 끌린다
+# (Mayer 의 멀티미디어 학습 원리 중 coherence: 뜻과 상관없는 요소를 뺄수록 배운다).
+# 부정어는 넣지 않는다 — FLUX 는 negative prompt 를 쓰지 않고, 문장 속 no/without 은
+# 오히려 그 대상을 불러온다. 그래서 **긍정문으로만** 적는다.
+STYLE = ("Flat vector illustration, bold black outlines, flat pastel fill, "
+         "one centered subject, plain white background")
 
 ASK = ("아래는 베트남어를 배우는 사람이 외울 낱말의 **한국어 뜻**이다.\n"
        "낱말마다 **그림으로 그릴 장면**을 영어 한 줄로 적어라.\n"
-       "규칙: ① 사람·사물·동작이 눈에 보이게 ② 글자나 숫자가 그림에 들어가지 않게\n"
-       "③ 열 단어 안팎 ④ **그림으로 그릴 수 없는 말**(개념·정도·접속사·문법)이면 빈 문자열\n"
+       "규칙 (근거는 아래에 적어 둔다)\n"
+       " ① **한 장면에 대상 하나**. 배경·소품을 넣지 마라\n"
+       " ② 그 뜻이 **그림만 보고 떠오를** 장면이어야 한다. 상징·비유는 안 된다\n"
+       " ③ **손·손가락·사람 얼굴·글자·숫자를 장면에 넣지 마라.** 대신 사물이나 뒷모습으로 바꿔라\n"
+       "    (손가락으로 가리키기 → 화살표 팻말, 사람이 먹는 모습 → 김이 나는 밥그릇)\n"
+       " ④ **부정어를 쓰지 마라** — no·without·not 을 쓰면 그림이 오히려 그것을 그린다\n"
+       " ⑤ 열 단어 안팎, 영어 한 문장\n"
+       " ⑥ **그림으로 그릴 수 없는 말**(성질·정도·접속사·문법·마음)이면 빈 문자열\n"
        "출력은 JSON 배열만.\n"
        '형식: [{"k":"뜻","p":"english scene"}]\n\n뜻 목록:\n')
 
