@@ -17,7 +17,13 @@ def h8(*paths):
         m.update(f'{p}:{p.stat().st_size}'.encode())
     return m.hexdigest()[:8]
 
-ver = h8('style.css', 'app.js', 'pitch.js', 'data/days.json')
+# 판번호 재료는 **sw.js 가 캐시하는 것 전부**여야 한다.
+# 2026-08-31: order.json 이 빠져 있었다 — 발음 4,431곳을 고쳤는데 소리·그림이 그대로면
+#   판번호가 안 바뀌고, 서비스 워커가 옛 order.json 을 계속 내준다("고쳤는데 안 바뀐다").
+#   sw.js 의 SHELL 목록에서 자동으로 읽어 온다 — 목록이 늘면 여기도 따라 늘게.
+_shell = re.findall(r"'\./([^']+)'", pathlib.Path('sw.js').read_text())
+ver = h8('style.css', 'app.js', 'pitch.js',
+         *[f for f in _shell if f.endswith('.json') and pathlib.Path(f).exists()])
 
 f = pathlib.Path('index.html'); s = f.read_text()
 s = re.sub(r'(href="style\.css)(\?v=[^"]*)?"', rf'\1?v={ver}"', s)

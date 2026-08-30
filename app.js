@@ -587,6 +587,15 @@ const UIVI = {
   '세 번 맞히면 쉽니다. 틀리면 되돌아옵니다.':
     'Đúng ba lần thì từ đó nghỉ. Sai thì quay lại.',
   '복습': 'Ôn tập',
+  /* 2026-08-31 화면말 검수(ui_audit)에서 빠져 있던 넷 — 베트남 분 화면에 한국어가 그대로 떴다.
+     '무엇을 배우시겠습니까?' 는 베트남 분이 앱에서 **맨 처음 보는 문장**이다.
+     ui_audit 이 남기는 '나중에 설정에서 바꿀 수 있습니다 ·' 하나는 **일부러 안 넣는다** —
+     그 줄은 언어를 아직 안 고른 화면이라 한국어와 베트남어를 나란히 쓴다(app.js:2394). */
+  '학습': 'Học',
+  '문화': 'Văn hóa',
+  '이번 주 N일 공부': 'Học N ngày tuần này',
+  '자유 복습': 'Ôn tập tự do',
+  '무엇을 배우시겠습니까?': 'Bạn muốn học gì?',
   '서버 진도': 'Tiến độ trên máy chủ', '나중에 둘러보기': 'Xem sau', '처음이세요? 가입하기': 'Lần đầu? Đăng ký', '이미 계정이 있어요 — 로그인': 'Đã có tài khoản — Đăng nhập', '가입하기': 'Đăng ký', '로그인': 'Đăng nhập', '회원가입': 'Đăng ký', '뭐예요?': 'Là gì?',
   '동아리 만들기': 'Tạo câu lạc bộ', '다른 동아리 보기': 'Xem CLB khác', '동아리 탈퇴': 'Rời CLB',
   '동아리 사람들': 'Thành viên CLB', '오늘 한 줄': 'Một dòng hôm nay', '이번 주 출석': 'Điểm danh tuần này',
@@ -2202,12 +2211,16 @@ function renderProgress(host) {
   const dots = weekDots();
   const n = dots.filter(d => d.done).length;
   const head = el('div', 'phead');
-  head.append(el('strong', null, '이번 주 ' + n + '일 공부'));
+  // 숫자를 사이에 끼운 문구는 'N' 자리를 둔 본으로 옮긴다 (app.js:5574 와 같은 방식).
+  // 이렇게 안 하면 번역표에 담기지 않아 베트남 분 화면에 한국어가 그대로 뜬다 (2026-08-31).
+  head.append(el('strong', null, tr('이번 주 N일 공부').replace('N', n)));
   if (n >= 5) head.append(el('span', null, '아주 좋습니다 ✔'));
   box.append(head);
 
   const row = el('div', 'dots');
-  '월화수목금토일'.split('').forEach((label, i) => {
+  // 번역표를 거친다 (2026-08-31) — 한글 낱자를 그대로 쪼개 쓰면
+  // 베트남 분 화면에 '월화수목금토일' 이 그대로 떴다. UIVI 에 T2…CN 이 이미 있다.
+  tr('월 화 수 목 금 토 일').split(' ').forEach((label, i) => {
     const d = dots[i];
     const s = el('span', 'dot' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
     s.textContent = label;
@@ -4641,7 +4654,7 @@ function renderHome() {
   // 행 자체를 누르면 바로 실행된다
   const prow = (k, v, state, fn) => {
     const r = el('div', 'plancell ' + state + (fn ? ' go' : ''));
-    r.append(el('span', 'pk', k), el('span', 'pv', esc(v)));
+    r.append(el('span', 'pk', tr(k)), el('span', 'pv', esc(tr(v))));
     if (fn) r.onclick = fn;
     plan.append(r);
   };
@@ -5553,7 +5566,11 @@ function loadGRank(then) {
           cr: weekCredits(), crm: monthCredits(),
           days: weekDots().map(d => d.done ? 1 : 0) })
     .then(j => { GRANK = j || {}; GRANKQ = 0; then && then(); })
-    .catch(() => { GRANK = { off: 1 }; GRANKQ = 0; then && then(); });
+    /* 서버가 말해 준 까닭을 버리지 마라 (2026-08-31).
+       cCall 은 서버가 보낸 error 를 그대로 예외로 던진다. 전에는 그것을 통째로 삼키고
+       늘 '서버에 못 닿았습니다' 라고만 해서, 별명을 아직 안 정한 사람이
+       고칠 수 없는 딴소리를 보고 있었다. 진짜 못 닿은 때만 그렇게 말한다. */
+    .catch(e => { GRANK = { off: 1, why: (e && e.message) || '' }; GRANKQ = 0; then && then(); });
 }
 function globalBoard(span) {
   const box = el('div', 'crclub');
@@ -5563,7 +5580,7 @@ function globalBoard(span) {
      한 명이면 한 명만 나온다 — 그게 사실이고, 기다리라는 말보다 낫다. */
   if (!b || !b.top || !b.top.length) {
     box.append(el('p', 'note', GRANK.off
-      ? tr('순위 서버에 못 닿았습니다 — 잠시 뒤 다시 열어 보세요.')
+      ? (GRANK.why || tr('순위 서버에 못 닿았습니다 — 잠시 뒤 다시 열어 보세요.'))
       : tr('오늘 공부하면 줄에 섭니다.')));
     return box;
   }

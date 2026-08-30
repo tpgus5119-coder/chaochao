@@ -92,14 +92,20 @@ def one(syl, south=False):
     s = strip_tone(nfc(syl).lower())
     s = "".join(c for c in s if c in "abcdeghiklmnopqrstuvxyăâđêôơư")
     if not s: return ""
-    cho, rest = "", s
+    cho, rest, cho_src = "", s, ""
     for a, b in ONSET_N:
         if s.startswith(a):
             if south and a in ONSET_S: b = ONSET_S[a]
-            cho, rest = b, s[len(a):]
+            cho, rest, cho_src = b, s[len(a):], a
             break
-    # gì·gia 처럼 gi 가 첫소리를 다 먹어 남는 게 없으면 i 를 가운뎃소리로 돌려준다
-    if not rest and cho in ("ㅈ", "y"): rest = "i"
+    # gì·gia 처럼 gi 가 첫소리를 다 먹어 남는 게 없으면 i 를 가운뎃소리로 돌려준다.
+    # **받침만 남는 gìn·gin 도 같다** — 남은 것이 모음으로 시작하지 않으면 i 가 가운뎃소리다.
+    #   2026-08-31: 이것이 빠져 있어 'giữ gìn' 이 '즈' 한 덩이로 깨져 있었다
+    #   (사전 발음 zin˨˩ → 진). kr_verify 가 'ㄴ≠없음' 으로 잡아냈다.
+    #   **gi 일 때만이다** — r·d 도 북부에서 ㅈ 소리라 함께 걸리면
+    #   carton('까 지')·Purchase('뿌 지') 처럼 없는 소리가 생긴다 (2026-08-31 실측).
+    if cho_src == "gi" and (not rest or rest[0] not in "aeiouăâêôơưy"):
+        rest = "i" + rest
     glide = ""
     if cho != "꾸" and rest[:2] in GLIDE:
         glide, rest = rest[0], rest[1:]      # 'o' 인지 'u' 인지 그대로 남긴다 — 소리가 다르다
