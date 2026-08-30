@@ -2464,38 +2464,21 @@ function drawKoHome() {
 const learnKo = () => S.learn === 'ko';
 
 const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까지의 앱)
-  /* 과정 = **일곱 권 하나로** (대표님 결정, 2026-08-30).
-     '하루 5분'과 '실전 단어'로 갈라져 있던 것을 합쳤다 — 같은 낱말을 두 군데서
-     따로 외우게 하던 짜임이었다. 한 강 15낱말, 복습 강은 없다(복습 기능이 따로 있다). */
-  day:   { name: '과정', items: () => [['전체 보기', courseEntry], ['핵심만', coreEntry],
-                                      /* 낱말은 과정으로 합쳤지만 **대화 108편은 그대로 살린다** —
-                                         소리까지 다 만들어 둔 자산이고, 낱말만으로는 말이 안 는다. */
-                                      ['대화 108', () => renderDays('daily')],
-                                      ['기사', showNewsLearn]] },
-  rev:   { name: '복습', items: () => [
-            ['최근 학습', () => freshMenu('word')],
-            ['단어', () => reviewMenu('word')], ['문장', () => reviewMenu('sent')]] },
-  /* 기본기 차례는 **줌 수업 자료**를 따른다 (베트남 선생님이 실제로 가르친 차례).
-     Bài 1 모음 → Bài 2 자음 → Bài 3 인칭대명사(호칭) → Bài 4 숫자와 돈 → …
-     전에는 앱을 만든 차례 그대로였다 — 근거가 없었다. (2026-08-30)
-     '말에 대한 말'(모음·자음·성조를 베트남어로 뭐라 하나)도 여기 넣는다 — 같은 이야기다. */
-  basic: { name: '기본기', items: () => [
-            ['모음', vowelEntry], ['자음', () => { const d = ALL.find(x => x.day === 'P3'); if (d) startLearn(d); }],
-            ['성조', toneEntry], ['겹모음', () => startRule(4)],
-            ['호칭', () => startRule(0)], ['숫자 읽는 법', () => startRule(5)],
-            ['단위', () => startRule(2)], ['어순', () => startRule(1)],
-            ['남부 소리', () => startRule(3)], ['자판 쓰는 법', kbGuide],
-            ['말에 대한 말', gramWordsEntry]] },
-  /* 문법 = **교재 세 권의 과별 문법 175개** (2026-08-30).
-     선배 네 기수가 실제로 쓴 책(NGUYỄN VIỆT HƯƠNG)의 차례 그대로다 — 내가 고른 것이 아니다.
-     앱이 원래 갖고 있던 14개는 '빠른 문법'으로 남겨 둔다(짧게 훑기 좋다). */
-  /* 앱이 갖고 있던 '빠른 문법 14'는 뺐다 (2026-08-30) — **열넷 다 교재 175개에 들어 있다**.
-     같은 것을 두 벌 두면 어느 쪽을 봐야 하는지 알 수 없다. */
-  gram:  { name: '문법', items: () => [['보기', gramEntry]] },
-  /* 문화는 **한 권**으로 모았다 (대표님 지시, 2026-08-30).
-     전에는 세트 표지에 한 조각씩 붙어 있었다 — 읽고 싶을 때 찾아갈 길이 없었다. */
+  /* 첫 화면은 **누르면 바로 그것**이 나와야 한다 (대표님 지시, 2026-08-30).
+     '학습'을 누르면 하위 메뉴 없이 곧장 권 목록이 뜬다.
+     기본기·문법·문화는 첫 화면에서 뺐다 — 학습(1권)과 문화 단추 안에 이미 있다.
+     대화 108·핵심만도 뺐다: 낱말은 학습으로 합쳤고, 갈래가 늘면 어디로 가야 할지 흐려진다. */
+  day:   { name: '학습', items: () => [['보기', courseEntry]] },
+  /* 복습은 둘이다 (대표님 지시):
+       ① 복습     — 잊을 때가 된 것을 앱이 골라 준다(간격 반복)
+       ② 자유 복습 — 내가 끝낸 레슨을 골라서 그것만 푼다
+     단어·문장을 가르지 않는다 — 문장은 낱말 밑의 예문으로 이미 붙어 있다. */
+  rev:   { name: '복습', items: () => [['복습', () => reviewMenu('all')],
+                                      ['자유 복습', freePickEntry],
+                                      ['최근 배운 것', () => freshMenu('all')]] },
   cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
                                       ['베트남 바로알기', knowEntry]] },
+  news:  { name: '기사', items: () => [['보기', showNewsLearn]] },
   book:  { name: '단어장', items: () => [['보기', wordbookEntry]] },
   cred:  { name: '순위', items: () => [['보기', creditEntry]] },
   club:  { name: '동아리', items: () => [['보기', showClub]] },
@@ -6238,6 +6221,79 @@ function freshItems(kind) {
     ({ vi: l.vi, ko: l.ko, kr_read: l.kr_read, tones: l.tones, sent: true }));
   return kind === 'sent' ? ss : kind === 'word' ? ws : [...ws, ...ss];
 }
+
+/* ---------- 자유 복습 ----------
+   앱이 골라 주는 복습(간격 반복) 말고, **내가 고른 것만** 푸는 자리다 (대표님 지시, 2026-08-30).
+   끝낸 레슨을 여러 개 체크하면 그 레슨의 낱말만 모아 문제로 낸다.
+   왜 끝낸 것만 보여 주나: 안 배운 것을 풀면 그건 시험이지 복습이 아니다. */
+function freePickEntry() {
+  const go = () => drawFreePick();
+  if (COURSE) return go();
+  fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; loadCWords(); go(); }).catch(() => { });
+}
+
+let FREE = null;                                  // 체크한 레슨 열쇠들
+function freeUnits() {
+  /* [열쇠, 이름, 낱말들] — 끝낸 레슨만. */
+  const out = [];
+  lifeVols().forEach((v, vi) => v.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+    const k = ckey(vi, ci, li);
+    if (S.done[k]) out.push([k, (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1), l.words]);
+  })));
+  jobVols().forEach(jv => jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) =>
+    c.lessons.forEach((l, li) => {
+      const k = 'J0.' + ti + '.' + ci + '.' + li;
+      if (S.done[k]) out.push([k, t.track + ' ' + (ci + 1) + '-' + (li + 1), l.words]);
+    }))));
+  return out;
+}
+
+function drawFreePick() {
+  const us = freeUnits();
+  FREE = FREE || new Set();
+  const b = $('#quizBody'); b.textContent = '';
+  $('#quizFill').style.width = '0%';
+  if (!us.length) {
+    b.append(el('p', 'lede', tr('아직 끝낸 레슨이 없습니다. 학습에서 한 레슨을 끝내면 여기에 나옵니다.')));
+    show('quiz', '자유 복습', true); return;
+  }
+  b.append(el('p', 'lede', tr('풀고 싶은 레슨을 고르세요') + ' — ' + us.length + tr('개 끝냄')));
+  const list = el('div', 'freelist');
+  us.forEach(([k, nm, ws]) => {
+    const row = el('button', 'freerow' + (FREE.has(k) ? ' on' : ''));
+    row.type = 'button';
+    row.append(el('i', 'freebox', FREE.has(k) ? '☑' : '☐'),
+               el('span', 'freenm', esc(nm)),
+               el('span', 'freen', ws.length + tr('낱말')));
+    row.onclick = () => {
+      FREE.has(k) ? FREE.delete(k) : FREE.add(k);
+      drawFreePick();
+    };
+    list.append(row);
+  });
+  b.append(list);
+  const picked = us.filter(([k]) => FREE.has(k));
+  const n = picked.reduce((a, [, , ws]) => a + ws.length, 0);
+  const all = el('button', 'bigmenu', tr('모두 고르기'));
+  all.onclick = () => { us.forEach(([k]) => FREE.add(k)); drawFreePick(); };
+  const none = el('button', 'bigmenu', tr('모두 풀기(해제)'));
+  none.onclick = () => { FREE.clear(); drawFreePick(); };
+  b.append(all, none);
+  if (n) {
+    const go = el('button', 'primary big');
+    go.style.width = '100%'; go.style.marginTop = '14px';
+    go.textContent = tr('고른 것 풀기') + ' (' + n + tr('낱말') + ')';
+    go.onclick = () => {
+      const ws = picked.flatMap(([, , w]) => w);
+      dive(drawFreePick);
+      startQuiz(ws, null, null, false, { kind: 'word' });
+    };
+    b.append(go);
+  }
+  show('quiz', '자유 복습', true);
+}
+
 function freshMenu(kind) {
   const b = $('#quizBody');
   b.textContent = '';
@@ -6280,8 +6336,11 @@ function reviewMenu(kind) {
   const b = $('#quizBody');
   b.textContent = '';
   $('#quizFill').style.width = '0%';
-  const due = dueWords().map(findItem).filter(Boolean).filter(x => kind === 'sent' ? x.sent : !x.sent);
-  const nm = SBOX === 'ssrs' ? '실전 단어' : kind === 'sent' ? '문장' : '단어';
+  /* 단어·문장을 가르지 않는다 (대표님 지시, 2026-08-30) —
+     문장은 낱말 밑의 예문으로 붙어 있으니 따로 나눌 까닭이 없다. */
+  const due = dueWords().map(findItem).filter(Boolean)
+    .filter(x => kind === 'all' ? true : kind === 'sent' ? x.sent : !x.sent);
+  const nm = kind === 'all' ? tr('복습') : kind === 'sent' ? '문장' : '단어';
   b.append(el('p', 'lede', nm + ' 복습 — ' + due.length + '개 대기'));
   const back = () => reviewMenu(kind);
   const all = el('button', 'bigmenu', '랜덤');

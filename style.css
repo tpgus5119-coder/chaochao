@@ -1617,3 +1617,13 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 일터에서 뜻이 달라지는 낱말 */
 .workuse{margin-top:8px; padding:.4em .7em; border-radius:9px; font-size:.88rem;
   border:1px solid var(--line); background:var(--card); color:var(--muted)}
+
+/* 자유 복습 — 끝낸 레슨을 골라 푼다 */
+.freelist{display:flex; flex-direction:column; gap:5px; margin:12px 0}
+.freerow{display:flex; align-items:center; gap:9px; width:100%; text-align:left;
+  padding:.55em .8em; border-radius:10px; cursor:pointer;
+  border:1px solid var(--line); background:var(--card)}
+.freerow.on{border-color:var(--accent); font-weight:600}
+.freerow .freebox{font-style:normal; font-size:1.05rem}
+.freerow .freenm{flex:1}
+.freerow .freen{color:var(--muted); font-size:.84rem; font-variant-numeric:tabular-nums}
