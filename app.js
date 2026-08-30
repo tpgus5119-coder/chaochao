@@ -9784,7 +9784,10 @@ async function doImport() {
 
 /* 위 토글 두 개 — 두 값이 다 보이고 지금 켜진 쪽만 진하게 (현재 상태가 헷갈리지 않게) */
 function seg(a, b, first) {
-  return `<i${first ? ' class="on"' : ''}>${a}</i><i${first ? '' : ' class="on"'}>${b}</i>`;
+  /* 좁은 폰에서는 '북부'의 뒷글자를 CSS 로 숨긴다 — 머리띠가 22px 넘쳐
+     제목이 사라지고 화면이 옆으로 밀렸다 (2026-08-30 검수) */
+  const cut = s => s.length > 1 ? s[0] + '<span class="wo">' + s.slice(1) + '</span>' : s;
+  return `<i${first ? ' class="on"' : ''}>${cut(a)}</i><i${first ? '' : ' class="on"'}>${cut(b)}</i>`;
 }
 function drawVoiceBtn() {
   $('#voice').innerHTML = seg('여', '남', S.voice === 'f');

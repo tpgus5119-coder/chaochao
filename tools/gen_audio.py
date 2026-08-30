@@ -39,20 +39,26 @@ def collect(data):
         for w in json.loads(sp.read_text(encoding="utf-8"))["words"]:
             out.setdefault(w[0], "word")
     # 새 짜임(일곱 권) — 낱말과 그 낱말의 예문 (2026-08-30)
-    cp = ROOT / "data" / "course.json"
+    # **order.json** 이다 — 예전 course.json 을 읽고 있어서 새 낱말이 통째로 빠졌었다.
+    #   낱말 1,100개와 예문 1,763개에 소리가 없었다 (2026-08-30 검수에서 드러남)
+    cp = ROOT / "data" / "order.json"
     if cp.exists():
-        for v in json.loads(cp.read_text(encoding="utf-8"))["vols"]:
-            for u in v["units"]:
-                for ch in u["chapters"]:
-                    for w in ch["words"]:
-                        out.setdefault(w["vi"], "word")
-                        if w.get("ex"): out.setdefault(w["ex"]["vi"], "sent")
+        o = json.loads(cp.read_text(encoding="utf-8"))
+        def ws(v):
+            for t in (v.get("tracks") or [v]):
+                for c in t["chapters"]:
+                    for l in c["lessons"]:
+                        yield from l["words"]
+        for v in o["vols"]:
+            for w in ws(v):
+                out.setdefault(w["vi"], "word")
+                for a in (w.get("alt") or []): out.setdefault(a["vi"], "word")
+                if w.get("ex"): out.setdefault(w["ex"]["vi"], "sent")
+        for w in o.get("gramwords", []):
+            out.setdefault(w["vi"], "word")
+            if w.get("ex"): out.setdefault(w["ex"]["vi"], "sent")
     # 7권 베트남 바로알기 — 낱말과 문장
-    kp = ROOT / "data" / "know.json"
-    if kp.exists():
-        for x in json.loads(kp.read_text(encoding="utf-8"))["lec"]:
-            for w in x["words"]: out.setdefault(w["vi"], "word")
-            for t in x["sents"]: out.setdefault(t["vi"], "sent")
+    # 7권 바로알기에는 낱말·문장이 없다 — 읽는 자리다 (대표님 지시, 2026-08-30)
     # 1권 문법 예문
     gp = ROOT / "data" / "grammar.json"
     if gp.exists():

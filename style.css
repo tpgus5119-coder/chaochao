@@ -33,6 +33,13 @@ header h1{color:var(--accent); font-weight:800}
 header h1{flex:1 1 0; min-width:0; margin:0; font-size:16px; font-weight:650; text-align:center;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 header > button{flex:0 0 auto; white-space:nowrap}
+/* 좁은 폰(375px)에서 머리띠 단추 여섯 개가 22px 넘쳤다 — 제목 칸이 0이 되어 사라졌다.
+   여백을 줄이고 '북부→북' 처럼 뒷글자를 숨긴다 (2026-08-30 검수) */
+@media (max-width:420px){
+  header{gap:4px; padding-left:8px; padding-right:8px}
+  header > button.ghost{min-width:36px; padding:6px 8px}
+  header .wo{display:none}
+}
 main{max-width:640px; margin:0 auto; padding:16px 14px 48px}
 button{font:inherit; cursor:pointer; border-radius:10px; border:1px solid var(--line); transition:.12s}
 button:active{transform:scale(.98)}

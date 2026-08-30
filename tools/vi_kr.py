@@ -33,7 +33,9 @@ ONSET_N = [("ngh","응"),("ng","응"),("nh","니"),("gh","ㄱ"),("gi","ㅈ"),("k
            ("đ","ㄷ"),("g","ㄱ"),("h","ㅎ"),("k","ㄲ"),("l","ㄹ"),("m","ㅁ"),("n","ㄴ"),
            ("p","ㅃ"),("q","ㄲ"),("r","ㅈ"),("s","ㅆ"),("t","ㄸ"),("v","ㅂ"),("x","ㅆ")]
 # 남부에서 달라지는 것만 덮어쓴다
-ONSET_S = {"r":"ㄹ", "s":"ㅅ", "d":"y", "gi":"y", "v":"y"}   # y = 반모음 /j/ (야·여로 붙는다)
+ONSET_S = {"r": "ㄹ", "s": "ㅅ", "d": "y", "gi": "y"}   # y = 반모음 /j/ (야·여로 붙는다)
+# v 는 뺐다 — 사전(위키낱말)에서 남부 94개가 **모두 [v]** 였다. 야·여로 적던 것은 내 짐작이었다.
+#   d(97개 모두 [j]) · gi(65개 [j]) · r(48개 [ɹ]) · s(106개 [ʂ]) 는 사전과 맞아 그대로 둔다. (2026-08-30)
 
 # ── 가운뎃소리
 NUC = {"iê":"이에","yê":"이에","ia":"이어","ya":"이어","ưa":"으어","ươ":"으어","ua":"우어","uô":"우오",
@@ -41,7 +43,9 @@ NUC = {"iê":"이에","yê":"이에","ia":"이어","ya":"이어","ưa":"으어",
        "o":"오","ô":"오","ơ":"어","u":"우","ư":"으"}
 # ── 끝소리
 COD_N = {"ch":"ㄱ","nh":"ㄴ","ng":"ㅇ","c":"ㄱ","m":"ㅁ","n":"ㄴ","p":"ㅂ","t":"ㅅ","i":"이","y":"이","o":"오","u":"우"}
-COD_S = dict(COD_N)          # 남부 받침 합침은 규칙이 흔들려서 손대지 않는다(지어내지 않는다)
+# 남부 받침. 사전 발음기호로 확인했다 (2026-08-30):
+#   -n → [ŋ] 384곳 · -t → [k] 163곳 · -ch → [t] 57곳. 짐작이 아니라 사전이 그렇다.
+COD_S = dict(COD_N, n="ㅇ", t="ㄱ", ch="ㅅ")
 
 TONE = "\u0300\u0301\u0303\u0309\u0323"        # 성조 부호 다섯만 (모자 ˆ ˘ ̛ 는 글자의 일부다)
 nfc = lambda s: unicodedata.normalize("NFC", s)
@@ -125,9 +129,50 @@ def build(cho, glide, nuc, cod):
     v = VOW.get(nuc)
     return pre + (jamo(cho or "ㅇ", v, cod) if v else nuc)
 
+# 베트남어 규칙으로 읽히지 않는 **빌려 온 말**. 손으로 적는다 (2026-08-30 검수).
+FOREIGN = {
+ "complê": "꼼 쁠레", "tennis": "때 니", "nobel": "노 벤", "inox": "이 녹",
+ "violon": "비 오 롱", "web": "웹", "bar": "바", "sofa": "쏘 파", "taxi": "딱 씨",
+ "wifi": "와 이 파이", "logo": "로 고", "menu": "메 뉴", "video": "비 데 오",
+ "email": "이 메일", "internet": "인 떠 넷", "container": "꼰 떼 너", "pallet": "빠 렛",
+ "sample": "쌈 쁠", "size": "싸이", "vitamin": "비 따 민", "gam": "감", "mét": "맷",
+}
+
+def syllables(t, _d=0):
+    """붙어 있는 음절을 쪼갠다 — kilôgam · Campuchia · violon.
+       베트남어는 음절마다 띄어 쓰지만 외래어는 붙여 적는다.
+       옛 one() 은 못 읽은 글자를 **말없이 버렸다**: kilôgam 이 '끼' 하나로 줄었다 (2026-08-30).
+       왼쪽부터 「초성+모음+받침」 을 최대한 떼되, 받침은 **다음 음절이 모음으로 시작하지 않을 때만** 붙인다."""
+    s = strip_tone(nfc(t).lower())
+    s = "".join(c for c in s if c in "abcdeghiklmnopqrstuvxyăâđêôơư")
+    if not s or _d > 8: return [t]
+    i = 0
+    for a, _ in ONSET_N:
+        if s.startswith(a): i = len(a); break
+    if i >= len(s): return [t]
+    if s[i:i + 2] in GLIDE: i += 1
+    for k in sorted(NUC, key=len, reverse=True):
+        if s[i:].startswith(k): i += len(k); break
+    else: return [t]
+    rest = s[i:]
+    if not rest or rest in VCOD or rest in COD_N: return [t]
+    # 받침 후보를 떼어 본다 — 뒤에 모음이 이어지면 그 자음은 다음 음절의 첫소리다
+    for k in sorted(COD_N, key=len, reverse=True):
+        # 뒤가 h 면 그 자음은 받침이 아니라 다음 음절의 ch·kh·nh·ph·th 다 (Campuchia)
+        if rest.startswith(k) and len(rest) > len(k) and rest[len(k)] not in "aeiouyăâêôơưh":
+            i += len(k); break
+    head, tail = nfc(t)[:i], nfc(t)[i:]
+    return [head] + syllables(tail, _d + 1) if tail else [head]
+
 def word(vi, south=False):
     # 붙임표(ki-lô · mi-li-mét)도 음절 사이 구분이다
-    return " ".join(x for x in (one(t, south) for t in re.split(r"[\s\-]+", nfc(vi)) if t) if x)
+    out = []
+    for t in re.split(r"[\s\-]+", nfc(vi)):
+        if not t: continue
+        f = FOREIGN.get(t.lower().strip(".,()"))
+        if f: out.append(f); continue
+        out += [one(x, south) for x in syllables(t)]
+    return " ".join(x for x in out if x)
 
 TEST = [("Bao","바오"),("cao","까오"),("cha","짜"),("bach","박"),("đan","단"),("Đinh","딘"),
         ("gai","가이"),("ghe","개"),("hai","하이"),("Khai","카이"),("lâu","러우"),("long","롱"),

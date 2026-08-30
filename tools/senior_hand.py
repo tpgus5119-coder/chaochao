@@ -23,7 +23,22 @@ SPELL = {
 }
 
 # 뜻이 깨져 들어온 것을 손으로 바로잡는다 — 다른 줄의 글자가 섞여 들어왔다 (2026-08-30 검수)
+# AI 가 미룬 교정을 손으로 판정했다 (2026-08-30). 빈 값이면 원래대로 둔다.
+SPELL2 = {
+ "cây gia hệ": "cây phả hệ", "máy di động": "điện thoại di động",
+ "thấy thấy": "thấy", "bVđa khoa": "bệnh viện đa khoa",
+ "bVchuyên khoa": "bệnh viện chuyên khoa", "bVĐông y": "bệnh viện Đông y",
+ "đến nhau": "đến gần nhau",
+ "rộng rãi": "rộng rãi",          # 원래가 맞다 — 씀씀이가 큰 이라는 뜻으로도 쓴다
+ "trụ sở": "trụ sở",              # 낱말은 맞다. 틀린 것은 뜻이다 (아래 FIXKO)
+}
+
 FIXKO = {
+ "trụ sở": "본사, 사무소",         # '주소'로 적혀 있었다 — địa chỉ 와 헷갈린 것
+ "tự giới thiệu": "자기소개",      # '아이디어'로 적혀 있었다
+ "họa sĩ": "화가",                # '도장공'으로 적혀 있었다 — 도장공은 thợ sơn
+ "tiếng Nhật": "일본어",          # '예습 / 일본어'
+
  "mũi": "코", "tiếng": "시간, 언어", "rồi": "이미, 벌써 (~했다)",
  "chưa": "아직 ~않다 / ~했습니까?", "giàu": "넉넉한, 부자인",
  "càng": "~할수록 더", "tuy": "비록 ~일지라도",
@@ -64,6 +79,20 @@ CODA_OK = re.compile(r"(?:[aeiouyàáảãạăằắẳẵặâầấẩẫậ�
 LOAN = {"web", "inox", "email", "video", "internet", "wifi", "taxi", "logo", "menu",
         "shop", "sales", "marketing", "container", "pallet", "sample", "size"}
 
+# 베트남어 음절은 「초성 + 모음 + 종성 하나」다. 모음 뒤에 자음이 둘 넘게 오지 않는다
+#   (오는 것은 ch·ng·nh 뿐). 같은 모음이 두 번 잇달지도 않는다.
+#   인도네시아반 시험지가 섞여 들어와 konsumsi·ungkapkan 이 남아 있었다 (2026-08-30).
+BAD_SYL = re.compile(r"[aeiouy](?!ch$|ng|nh)[^aeiouy]{2,}|([aeiou])\1")
+
+def bad_syllable(t):
+    """베트남어 **한 덩어리는 한 음절**이다 — 음절마다 띄어 쓰기 때문이다.
+       그래서 모음 무리가 둘이면 베트남어가 아니다: atap(a·ta·p) · damai · seragam.
+       인도네시아반 시험지가 섞여 들어온 것을 이 잣대로 가려낸다 (2026-08-30)."""
+    b = "".join(c for c in U.normalize("NFD", t.lower()) if not U.combining(c)).replace("đ", "d")
+    if len(b) > 7 or BAD_SYL.search(b): return True
+    return len(re.findall(r"[aeiouy]+", b)) > 1
+
+
 def not_viet(v):
     for tok in v.split():
         if tok.lower().strip(".,;:!?()") in LOAN: continue
@@ -71,6 +100,7 @@ def not_viet(v):
         if not t: continue
         if NOTVI.search(t): return True
         if not CODA_OK.search(t): return True
+        if bad_syllable(t): return True
     return False
 
 def junk(vi, ko):
@@ -80,6 +110,8 @@ def junk(vi, ko):
        '(I'm' 처럼 괄호가 깨진 것, 'Menerapkan'(인도네시아어) 같은 것들이다."""
     v = vi.strip()
     if v.count("(") != v.count(")"): return "괄호 깨짐"
+    # 'tính toán (계산의 의미만 맞음, 예습은' 처럼 한글 설명이 낱말 칸에 딸려 왔다
+    if re.search(r"[가-힣]", v): return "낱말 칸에 한글"
     if re.match(r"^[A-Za-z][A-Za-z .,'\-]*$", v) and not_viet(v): return "베트남어 아님"
     # 뜻이 '기관 / 무리 / 우산' 처럼 두 번 넘게 갈라져 있으면 칸이 붙은 것이다
     if ko.count("/") >= 2 and len(v.split()) >= 2: return "칸이 붙음"
@@ -198,6 +230,29 @@ def bare(v):
     return re.sub(r"\s+", " ", s).strip()
 
 
+def merge_ko(a, b):
+    """같은 낱말의 두 뜻을 하나로 잇는다. 한쪽이 다른 쪽을 품으면 넓은 쪽만 남긴다."""
+    out = [x.strip() for x in re.split(r"[/·]", a) if x.strip()]
+    for x in [y.strip() for y in re.split(r"[/·]", b) if y.strip()]:
+        if not any(x in y or y in x for y in out): out.append(x)
+    return " / ".join(out)
+
+
+def same_word(ws):
+    """**표기가 완전히 같은** 낱말은 한 장으로 합치고 뜻을 잇는다 (2026-08-30 검수).
+       성조가 다르면 다른 낱말이다 — bạn(친구)·bán(팔다)·bận(바쁘다) 은 여기 안 걸린다.
+       'xử lý 처리하다' 와 'xử lý 다루다, 처리하다' 가 두 장으로 나뉘어 있었다(51쌍)."""
+    g = collections.OrderedDict()
+    for w in ws:
+        k = U.normalize("NFC", w["vi"])
+        if k in g:
+            g[k]["ko"] = merge_ko(g[k]["ko"], w["ko"])
+            g[k]["n"] = max(g[k].get("n", 0), w.get("n", 0))
+            g[k]["gi"] = "".join(sorted(set(re.findall(r"\d\d", g[k].get("gi", "") + w.get("gi", "")))))
+        else: g[k] = w
+    return list(g.values()), len(ws) - len(g)
+
+
 def dedupe(ws):
     known = {w["vi"].lower() for w in ws if " " not in w["vi"] or "  " not in w["vi"]}
     known |= {" ".join(w["vi"].lower().split()) for w in ws}
@@ -278,7 +333,9 @@ def main():
         else: keep.append(w)
     out = keep
     out, gone = dedupe(out)
-    for w in out:                                   # 손으로 바로잡은 뜻 (대소문자 정리 뒤에)
+    out, gone2 = same_word(out); gone += gone2
+    for w in out:                                   # 손으로 바로잡은 철자와 뜻
+        if w["vi"] in SPELL2: w["vi"] = SPELL2[w["vi"]]
         if w["vi"] in FIXKO: w["ko"] = FIXKO[w["vi"]]
     out.sort(key=lambda w: (w.get("pos") is None, w.get("pos") or 0, -w["n"]))
     d["words"] = out
