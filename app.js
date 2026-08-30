@@ -4741,12 +4741,24 @@ function glossOf(vi) {
    glossOf 는 뜻을 못 찾은 낱말을 버리는데(.filter), 그러면 문장 밑 뜻줄에서
    낱말이 통째로 사라져 "왜 이건 없지?" 하게 된다. 문장을 누를 수 있게 만들 때는
    빠짐없이 다 있어야 하므로 이쪽을 쓴다. */
+/* 한글 소리를 **지금 고른 지역에 맞게** 고른다 (대표님 지시, 2026-08-30).
+   전에는 곳곳에서 kr_read(북부)를 그냥 썼다 — 남부를 골라도 북부 발음이 떴다.
+   낱말마다 kr(북부)·krs(남부)가 붙어 있다(tools/vi_kr.py). 여기 한 곳에서만 고른다. */
+function krShow(w) {
+  if (!w) return '';
+  if (typeof w === 'string') return w;
+  return (S.region === 's' ? (w.krs || w.kr_read || w.kr) : (w.kr_read || w.kr)) || '';
+}
+
 /* 낱말 → 한글 소리(kr_read) 찾기표. 예문 안의 낱말을 눌렀을 때
    뜻만이 아니라 **어떻게 읽는지**도 같이 보여 주려고 만든다 (대표님 지시, 2026-08-30). */
-let GKR = null;
+let GKR = null, GKRR = null;
 function krOf(w) {
+  const want = S.region === 's' ? 'krs' : 'kr';
+  if (GKRR !== want) { GKR = null; GKRR = want; }        // 지역을 바꾸면 표를 다시 만든다
   if (!GKR) { GKR = {}; allWords().forEach(x => { const k = x.vi.toLowerCase();
-    if (x.kr_read && !GKR[k]) GKR[k] = x.kr_read; }); }
+    const v = krShow(x);
+    if (v && !GKR[k]) GKR[k] = v; }); }
   return GKR[String(w).toLowerCase().replace(/[,.!?;:]/g, '').trim()];
 }
 
@@ -4793,7 +4805,11 @@ function tapLine(vi, cls, o) {
       if (on) on.classList.remove('on');
       on = w; w.classList.add('on');
       const bare = t.w.replace(/[,.!?;:]/g, '').trim();
-      AIDX[bare] ? play(bare, false) : speakVi(bare);
+      /* **고른 목소리로만** 낸다 (대표님 지적, 2026-08-30) —
+         남부 남자를 골랐으면 예문 안 낱말도 남부 남자여야 한다.
+         voiceDir() 이 지역과 남녀를 함께 정한다. */
+      if (AIDX[bare]) play(bare, false, voiceDir());
+      else speakVi(bare, false, 0, S.voice);
       info.textContent = '';
       info.append(el('b', null, esc(bare)));
       // 성조 — 대화 화면에서는 낱말마다 성조 모양도 같이 보여 준다
@@ -5650,7 +5666,7 @@ function drawCard() {
   if (it.k === 'tone') {
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(el('div', 'tone-shape', toneArrow(x.mark)));
-    c.append(reveal(x.kr_read));
+    c.append(reveal(krShow(x)));
     c.append(el('div', 'ko', esc(x.ko)));
     c.append(speakRow(x.vi, true));         // 듣기·느리게 + 따라 말하기 + 곡선 비교
   }
@@ -5701,7 +5717,7 @@ function drawCard() {
     // 규칙 예문 — 단어 카드와 같은 차림새 + 규칙 설명 한 줄
     const row = el('div', 'wrow');
     row.append(bigWord(x.vi, x.tones));
-    if (x.kr) row.append(el('span', 'wkr', '[' + esc(x.kr) + ']'));
+    if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     row.append(iconBtn('slow', '느리게 듣기', () => play(x.vi, true)));
     const rbox = el('div', 'cmpbox');
     if (canRecord()) {
@@ -5737,7 +5753,7 @@ function drawCard() {
     }
     const row = el('div', 'wrow');
     row.append(bigWord(x.vi, x.tones));
-    if (x.kr_read) row.append(el('span', 'wkr', '[' + esc(x.kr_read) + ']'));
+    if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     row.append(iconBtn('slow', '느리게 듣기', () => play(x.vi, true)));
     const box = el('div', 'cmpbox');
     if (canRecord()) {
@@ -5830,7 +5846,7 @@ function drawCard() {
       const bs = iconBtn('slow', '느리게 듣기', () => play(l.vi, true));
       lrow.append(bt, bs);
       row.append(lrow);
-      row.append(reveal(l.kr_read));
+      row.append(reveal(krShow(l)));
       row.append(el('div', 'lko', esc(l.ko)));
       // 낱말 뜻줄은 없앴다 — 위 문장의 낱말을 직접 누르면 소리와 뜻이 그 자리에 뜬다.
       row.append(speakRow(l.vi));
@@ -5847,7 +5863,7 @@ function drawCard() {
         const L2 = el('span', 'exl');
         L2.append(el('span', 'exvi', esc(o.vi)));
         if (o.ko) L2.append(el('span', 'exko', esc(o.ko)));
-        if (o.kr_read) L2.append(el('span', 'exkr', '[' + esc(o.kr_read) + ']'));
+        if (krShow(o)) L2.append(el('span', 'exkr', '[' + esc(krShow(o)) + ']'));
         b.append(L2, el('span', 'exspk', '듣기'));
         b.onclick = () => play(o.vi, false);
         sw.append(b);
@@ -5998,7 +6014,7 @@ function drawFlash() {
   const p = pic(w, 'pic'); if (p) c.append(p);
   c.append(el('div', 'vi', esc(w.vi)));
   c.append(toneRow(w.tones));
-  c.append(reveal(w.kr_read));
+  c.append(reveal(krShow(w)));
   c.append(el('div', 'ko', esc(w.ko)));
   b.append(c);
   const dots = el('div', 'fldots');
@@ -6574,7 +6590,7 @@ function drawSay(body, q) {
     grade(w.vi, ok, Q.early);
     if (ok) Q.ok++; else requeue(q);
     const ans = el('div', 'ansbox');
-    ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(w.kr_read));
+    ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(krShow(w)));
     const sr = soundRow(w.vi, true); sr.classList.add('mid');
     ans.append(sr);
     body.append(ans);
@@ -6622,7 +6638,7 @@ function drawHandQ(body, q) {
      AI가 틀렸다고 했을 때도 되돌릴 단추를 둔다(기계는 열에 하나쯤 틀린다). */
   const answer = () => {
     const ans = el('div', 'ansbox');
-    ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(w.kr_read));
+    ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(krShow(w)));
     body.insertBefore(ans, box);
   };
   const mark = good => {
@@ -6819,7 +6835,7 @@ function drawRecall(body, q) {
     const ans = el('div', 'ansbox');
     ans.append(el('div', 'vi sm', esc(q.w.vi)));
     ans.append(toneRow(q.w.tones));
-    ans.append(reveal(q.w.kr_read));
+    ans.append(reveal(krShow(q.w)));
     const sr = soundRow(q.w.vi, true);
     sr.classList.add('mid');
     ans.append(sr);
@@ -9795,6 +9811,7 @@ function drawRegion() {
 }
 $('#region').onclick = () => {
   S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion();
+  GKR = null;                                   // 발음 찾기표를 다시 만들게 한다
   // 남부와 북부는 높낮이가 다르다 — 보고 있던 카드의 원어민 곡선도 다시 그린다
   if (!$('#learn').hidden && L) drawCard();
 };
