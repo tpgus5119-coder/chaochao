@@ -146,7 +146,8 @@ def main():
         for w in json.loads(sw.read_text(encoding="utf-8"))["words"]:
             if key(w["vi"]) in seen2: continue
             x = dress(w)
-            if x: x["track"] = "섬유·봉제·의류"; J.append(x); seen2.add(key(w["vi"]))
+            # 갈래는 sewing_words.py 가 이미 정했다(기본 / 찾아보기) — 덮어쓰지 않는다
+            if x: x["track"] = w.get("track") or "섬유·봉제·의류"; J.append(x); seen2.add(key(w["vi"]))
     tw = R / "data" / "_trade.json"
     if tw.exists():
         seen4 = {key(x["vi"]) for x in J}
@@ -195,6 +196,10 @@ def main():
     # 직무는 **갈래별로** 나눈다 — 갈래는 이름을 둔다(어디로 갈지가 사람마다 다르다)
     byf = collections.OrderedDict((k, []) for k in JOBORDER)
     J = pair_same(J)
+    # 「봉제 찾아보기」는 999 밖이다 — 도면·검사표에만 있는 말이라 배우는 차례에 넣지 않는다.
+    #   공장에 배치되면 그때 여는 사전이다 (대표님과 상의, 2026-08-30).
+    LOOKUP = [x for x in J if x.get("track") == "봉제 찾아보기"]
+    J = [x for x in J if x.get("track") != "봉제 찾아보기"]
     # **999개로 자른다** — 출처가 있는 낱말부터 남기고, 앱이 만든 것부터 잘라 낸다
     J.sort(key=lambda x: (src_rank(x), -sum(int(g) for g in re.findall(r"\d\d", x.get("gi", "")))))
     over = len(J) - JOB_CAP
@@ -220,7 +225,10 @@ def main():
         tracks.append({"track": k, "words": len(ws),
                        "chapters": [{"lessons": [{"words": w} for w in ch]}
                                     for ch in cut(ws, LES_PER_CH)]})
-    vols.append({"kind": "job", "tracks": tracks})
+    vols.append({"kind": "job", "tracks": tracks,
+                 "lookup": {"track": "봉제 찾아보기", "words": len(LOOKUP),
+                            "chapters": [{"lessons": [{"words": w} for w in ch]}
+                                         for ch in cut(LOOKUP, LES_PER_CH)]}})
     G = [x for x in (dress(w) for w in gramw) if x]
     (R / "data" / "order.json").write_text(json.dumps(
         {"note": "이름 없는 목차. 권/챕터/레슨 번호만. 차례는 기수 합 → 최근 기수 회차 → 회차 안 자리.",
@@ -233,6 +241,8 @@ def main():
             for t in v["tracks"]:
                 ls = sum(len(c["lessons"]) for c in t["chapters"])
                 print(f"        {t['track']:<16} {len(t['chapters'])}챕터 · {ls}레슨 · {t['words']}낱말")
+            lk = v.get("lookup")
+            if lk: print(f"      [999 밖] {lk['track']} {lk['words']}낱말 (찾아보는 사전)")
             continue
         n = sum(len(l["words"]) for c in v["chapters"] for l in c["lessons"])
         ls = sum(len(c["lessons"]) for c in v["chapters"])

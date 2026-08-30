@@ -5000,7 +5000,38 @@ function drawJob() {
     b.onclick = () => { dive(drawJob); drawJobTrack(ti); };
     const li = el('li'); li.append(b); list.append(li);
   });
+  /* 「봉제 찾아보기」 — 999 밖이다. 도면·검사표에만 있는 말이라 배우는 차례에 안 넣는다.
+     봉제 공장에 배치되면 그때 여는 사전이다 (대표님과 상의, 2026-08-30). */
+  const lk = jv.lookup;
+  if (lk && lk.words) {
+    const b = el('button');
+    b.append(el('span', 'num', '📖'),
+             el('span', 'nm', esc(lk.track) + '<i class="catchip">' + lk.words + tr('낱말') + '</i>'),
+             el('span', 'st', tr('사전')));
+    b.onclick = () => { dive(drawJob); drawLookup(); };
+    const li = el('li'); li.append(b); list.append(li);
+    list.append(el('li', 'catpick',
+      '<span class="msub">' + tr('도면·검사표에 적힌 전문어입니다. 외우는 자리가 아니라 찾아보는 자리입니다.') + '</span>'));
+  }
   show('course', '직무', true);
+}
+
+function drawLookup() {
+  const lk = jobVol().lookup;
+  const list = $('#dayList'); list.textContent = '';
+  lk.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+    const k = 'LK' + ci + '.' + li, fin = !!S.done[k];
+    const b = el('button');
+    b.dataset.done = fin ? '1' : '0';
+    b.append(el('span', 'num', tr('레슨') + ' ' + (ci * 10 + li + 1)),
+             el('span', 'nm', l.words.slice(0, 3).map(w =>
+               esc(w.ko.split('/')[0].trim())).join(' · ')),
+             el('span', 'st', l.words.length + tr('낱말')));
+    b.onclick = () => { dive(drawLookup);
+      startLearn({ day: k, theme: tr('봉제 찾아보기'), words: l.words, course: 1 }); };
+    const li2 = el('li'); li2.append(b); list.append(li2);
+  }));
+  show('course', '봉제 찾아보기', true);
 }
 
 function drawJobTrack(ti) {

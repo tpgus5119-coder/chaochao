@@ -127,6 +127,18 @@ def sents():
     return out
 
 
+def basic(vi, ko, seen):
+    """**첫날 쓰는 말**인가, 도면에 적힌 말인가 (대표님 물음, 2026-08-30).
+       잣대 두 가지 — 지어내지 않고 자료로 판단한다.
+         ① 선배 시험·일터 단톡방·앱 어디에도 나오면 = 입으로 말하는 말이다.
+         ② 낱말이 두 마디 이하이고 뜻이 짧으면 = 기본이다.
+       나머지(도면·검사표에만 있는 말)는 '찾아보기'로 뺀다."""
+    from re import search
+    if vi.lower() in seen: return True
+    if len(vi.split()) <= 2 and len(ko) <= 8 and not search(r"[(/,]", ko): return True
+    return False
+
+
 def main():
     import xlrd
     wb = xlrd.open_workbook(SRC)
@@ -157,6 +169,29 @@ def main():
         n += 1
     stat["봉제용어"] = n
     # 무역용어 — 약자는 낱말이 아니라 '한국어 뜻'만 쓸모가 있는데 베트남어가 없다. 안 쓴다.
+    # 다른 자료에도 나오는 낱말 모으기
+    import unicodedata as UU
+    def kk(v):
+        t = UU.normalize("NFC", str(v)).strip().lower()
+        t = re.sub(r"\([^)]*\)", "", t)
+        return re.sub(r"\s+", " ", t).strip(" .,;:!?~–—/\"'")
+    seen = set()
+    for f in ("senior_pool.json", "_kakao_job.json"):
+        q = R / "data" / f
+        if q.exists():
+            j = json.loads(q.read_text(encoding="utf-8"))
+            for w in j["words"]: seen.add(kk(w["vi"]))
+    dj = R / "data" / "days.json"
+    if dj.exists():
+        d = json.loads(dj.read_text(encoding="utf-8"))
+        for day in (d if isinstance(d, list) else d["days"]):
+            for w in (day.get("words") or []): seen.add(kk(w.get("vi", "")))
+    nb = 0
+    for w in out:
+        if w["track"] is None: continue
+        if basic(w["vi"], w["ko"], seen): w["track"] = "섬유·봉제·의류"; nb += 1
+        else: w["track"] = "봉제 찾아보기"          # 999 밖 — 공장 가면 그때 여는 사전
+
     ss = sents()
     # 문장에 그 낱말이 들어 있으면 **그 문장을 예문으로** 준다 (대표님 지시)
     n_ex = 0
@@ -170,7 +205,9 @@ def main():
     (R / "data" / "_sewing.json").write_text(json.dumps(
         {"note": "대표님이 주신 봉제용어.xls 의 봉제 낱말. xls 는 xlrd 로 읽는다.",
          "words": out, "sents": ss}, ensure_ascii=False, indent=1), encoding="utf-8")
+    import collections as C
     print(f"봉제 낱말 {len(out)}개 · 교육 시트 문장 {len(ss)}개 · 그중 예문으로 붙은 것 {n_ex}개")
+    print("  갈래:", dict(C.Counter(w["track"] or "공통" for w in out)))
     print("  ", dict(stat))
     for w in out[:12]: print(f"   {w['vi']:<26} {w['ko']}")
 main()
