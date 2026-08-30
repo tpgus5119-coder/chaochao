@@ -93,8 +93,20 @@ def ask_deep(w):
 
 
 def words():
-    """앱 낱말 + 선배(19·20기) 낱말 — 서로 다른 것만."""
+    """**지금 과정(order.json)의 낱말 전부** + 옛 앱 낱말 + 선배 낱말.
+       전에는 days.json 만 봐서 새 과정 낱말 2,556개가 통째로 빠졌다 (2026-08-30)."""
     seen = {}
+    op = R / "data" / "order.json"
+    if op.exists():
+        o = json.loads(op.read_text(encoding="utf-8"))
+        def ws(v):
+            for t in (v.get("tracks") or [v]):
+                for c in t["chapters"]:
+                    for l in c["lessons"]: yield from l["words"]
+        for v in o["vols"]:
+            for w in ws(v):
+                seen.setdefault(nfc(w["vi"]).lower(), nfc(w["vi"]))
+                for a in (w.get("alt") or []): seen.setdefault(nfc(a["vi"]).lower(), nfc(a["vi"]))
     for x in json.loads((R / "data" / "days.json").read_text(encoding="utf-8"))["days"]:
         for w in x.get("words") or []:
             seen.setdefault(nfc(w["vi"]).lower(), nfc(w["vi"]))

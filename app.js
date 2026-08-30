@@ -491,7 +491,13 @@ const UIVI = {
   '실전 단어를 받는 중…': 'Đang tải từ vựng thực chiến…',
   '자료를 못 받았습니다 — 잠시 뒤 다시': 'Không tải được dữ liệu — hãy thử lại sau',
   '중요': 'Quan trọng', '낱말': 'từ', '완료 ✔': 'Hoàn thành ✔',
-  '개 대기': ' đang chờ', '개': ' từ', '아직': 'Chưa',
+  '개 대기': ' đang chờ', '개': ' từ', '아직': 'Chưa', '불러오기': 'Tải về',
+  '정말 지웁니다': 'Xoá thật',
+  '서버에 저장된 진도가 있습니다. 이 기기로 불러올까요?<br>지금 기기의 진도는 덮어써집니다.':
+  'Máy chủ có tiến độ đã lưu. Tải về máy này?<br>Tiến độ hiện tại sẽ bị ghi đè.',
+  '<b>알림을 켰습니다.</b><br>하루 한 번, 그날 아직 공부 안 했을 때만 옵니다.':
+  '<b>Đã bật thông báo.</b><br>Mỗi ngày một lần, chỉ khi bạn chưa học.',
+  '안 올라갔습니다': 'Không tải lên được',
   '아직 읽은 기사가 없습니다. 기사를 먼저 보세요.': 'Bạn chưa đọc bản tin nào. Hãy xem bản tin trước.', '카드뉴스': 'Thẻ tin',
   '그림을 길게 누르면 폰에 저장됩니다.': 'Nhấn giữ ảnh để lưu vào máy.',
   '기사 복습': 'Ôn bản tin', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi',
@@ -2003,7 +2009,7 @@ function acctForm(gate, mode) {
       if (act === 'login' && j.hasProg) {
         // 서버에 진도가 있다 — 새 기기라면 그대로 받고, 이미 공부한 기기라면 물어본다
         const mine = Object.keys(S.done || {}).length;
-        if (mine === 0 || confirm('서버에 저장된 진도가 있습니다.\n이 기기로 불러올까요? 지금 기기의 진도는 덮어써집니다.')) {
+        if (mine === 0 || await askYN(tr('서버에 저장된 진도가 있습니다. 이 기기로 불러올까요?<br>지금 기기의 진도는 덮어써집니다.'), '불러오기')) {
           try { await cloudLoad(); } catch (e) { }
         }
       }
@@ -2119,7 +2125,7 @@ function renderAwards() {
     nb.onclick = async () => {
       if (S.push) { await stopPush(); renderAwards(); return; }
       const err = await askPush();
-      if (err) alert(err); else alert('알림을 켰습니다.\n하루 한 번, 그날 아직 공부 안 했을 때만 옵니다.');
+      popup(err ? esc(err) : tr('<b>알림을 켰습니다.</b><br>하루 한 번, 그날 아직 공부 안 했을 때만 옵니다.'));
       renderAwards();
     };
     nr.append(nb);
@@ -9470,9 +9476,11 @@ $('#chatMic').onclick = async () => {
    복습 안에서 방식만 바꾸려 해도 처음부터 다시 들어가야 했다. */
 $('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
 $('#goMe').onclick = renderAwards;
-$('#goHome').onclick = () => {
+$('#goHome').onclick = async () => {
   // 시험·퀴즈 도중이면 한 번 묻는다 — 눌러 놓고 답이 날아가면 그게 더 나쁘다
-  if (!$('#quiz').hidden && Q && Q.i > 0 && !confirm(tr('풀던 문제를 그만두고 홈으로 갈까요?'))) return;
+  //   브라우저 confirm 은 설치형 PWA 에서 막히는 폰이 있다 → 앱이 그리는 창으로 (2026-08-30)
+  if (!$('#quiz').hidden && Q && Q.i > 0 &&
+      !await askYN(tr('풀던 문제를 그만두고 홈으로 갈까요?'), '홈으로')) return;
   renderHome();
 };
 $('#goChat').onclick = () => { dive(renderHome); startChat(); };
@@ -10235,9 +10243,9 @@ function drawVoiceBtn() {
   $('#voice').innerHTML = seg('여', '남', S.voice === 'f');
 }
 /* 진도 초기화 — 처음부터 다시. 되돌릴 수 없어서 두 번 묻는다 */
-function doReset() {
-  if (!confirm('배운 기록을 모두 지우고 처음부터 다시 시작할까요?')) return;
-  if (!confirm('되돌릴 수 없습니다. 정말 지울까요?\n(백업해 둔 글자가 있으면 나중에 되살릴 수 있습니다)')) return;
+async function doReset() {
+  if (!await askYN(tr('배운 기록을 모두 지우고 처음부터 다시 시작할까요?'), '지우기', true)) return;
+  if (!await askYN(tr('되돌릴 수 없습니다. 정말 지울까요?'), '정말 지웁니다', true)) return;
   const nick = S.nick;
   S.done = {}; S.srs = {}; S.act = {}; S.stats = {}; S.wk = { k: weekKey(), base: snapshot() };
   S.nick = nick; save(); renderHome();
@@ -10418,7 +10426,7 @@ function clubCard(c, opts) {
   row.onclick = () => {
     if (mine) { dive(clubList); clubBusy(tr('불러오는 중…'));
                 mateSync().then(() => clubHome(MATES)).catch(clubFail); return; }
-    if (S.club) { alert(tr('먼저 지금 동아리에서 나와야 다른 동아리에 들어갈 수 있습니다.')); return; }
+    if (S.club) { popup(tr('먼저 지금 동아리에서 나와야 다른 동아리에 들어갈 수 있습니다.')); return; }
     clubBusy(tr('들어가는 중…'));
     cCall({ act: 'join', id: c.id }).then(r => {
       if (r.state === 'wait') {
@@ -10655,7 +10663,7 @@ function clubHome(j) {
     fgo.disabled = true;
     cCall({ act: 'post', id: S.club.id, x, img: pending })
       .then(r => { ftxt.value = ''; pending = ''; showPrev(); fgo.disabled = false; drawFeed(r.posts || []); })
-      .catch(e => { fgo.disabled = false; alert(e.message || '안 올라갔습니다'); });
+      .catch(e => { fgo.disabled = false; popup(esc(e.message || tr('안 올라갔습니다'))); });
   };
 
   const more = el('button', 'ghost sm', '다른 동아리 보기');
