@@ -1613,3 +1613,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .nbrow .nbtrack i{display:block; height:100%; background:var(--accent); border-radius:7px}
 .nbrow .nbval{flex:0 0 auto; font-variant-numeric:tabular-nums; font-weight:700}
 .nbunit{text-align:right; font-size:.76rem; color:var(--muted)}
+
+/* 일터에서 뜻이 달라지는 낱말 */
+.workuse{margin-top:8px; padding:.4em .7em; border-radius:9px; font-size:.88rem;
+  border:1px solid var(--line); background:var(--card); color:var(--muted)}

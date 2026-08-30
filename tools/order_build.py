@@ -34,11 +34,13 @@ JOBORDER = ["공통 · 생산과 공정", "공통 · 품질과 검사", "공통 
             "공통 · 기계와 설비", "공통 · 안전과 환경", "공통 · 사람과 조직", "공통 · 서류와 회계",
             "전자·반도체", "섬유·봉제·의류", "신발·가방", "자동차·기계",
             "물류·무역", "건설·플랜트", "식품·화학", "요식·유통"]
-# 직무는 **두 권**이다 (대표님 결정, 2026-08-30) — 공통 900 + 업종 900.
-#   공통은 어느 공장에서나 쓰는 말(생산관리가 한국인 취업의 40%),
-#   업종은 갈 곳이 정해진 뒤에 하는 말이다.
-JOB_COMMON_CAP = 900
-JOB_FIELD_CAP = 900
+# 직무는 **한 권**이다 (대표님 결정, 2026-08-30).
+#   "꼭 필요한 기본 낱말만 남기고, 진짜 심화는 현장에서 배우라고 해라."
+#   그래서 낱말마다 **기본인가 심화인가**를 가른다. 잣대는 자료다:
+#     ① 선배 시험·일터 단톡방·앱 어디에든 나오면 = 실제로 입으로 쓰는 말 = 기본
+#     ② 내가 쓴 낱말이면 두 마디 이하 + 뜻이 짧은 것 = 기본
+#   나머지는 「현장에서 배우는 말」 사전으로 뺀다 — 지우지 않는다.
+JOB_CAP = 999
 
 
 def field_of(ko):
@@ -208,10 +210,37 @@ def main():
     # 직무는 **갈래별로** 나눈다 — 갈래는 이름을 둔다(어디로 갈지가 사람마다 다르다)
     byf = collections.OrderedDict((k, []) for k in JOBORDER)
     J = pair_same(J)
-    # 「봉제 찾아보기」는 999 밖이다 — 도면·검사표에만 있는 말이라 배우는 차례에 넣지 않는다.
-    #   공장에 배치되면 그때 여는 사전이다 (대표님과 상의, 2026-08-30).
-    LOOKUP = [x for x in J if x.get("track") == "봉제 찾아보기"]
-    J = [x for x in J if x.get("track") != "봉제 찾아보기"]
+    # 일상에서 이미 배우는 낱말은 **직무에서 뺀다** (대표님 지적, 2026-08-30).
+    #   같은 낱말을 두 권에서 두 번 외우게 할 까닭이 없다. 일상을 먼저 배우니 거기 둔다.
+    #   다만 **일터에서 뜻이 달라지면**(Kế hoạch 계획→계획 수량) 일상 카드에 그 뜻을 덧붙인다.
+    lifeko = {}
+    for x in L: lifeko[key(x["vi"])] = x
+    same, moved = 0, 0
+    keepJ = []
+    for x in J:
+        y = lifeko.get(key(x["vi"]))
+        if not y: keepJ.append(x); continue
+        a = x["ko"].split("/")[0].strip(); b = y["ko"].split("/")[0].strip()
+        if a != b:
+            y.setdefault("work", []).append(x["ko"])      # 일터에서는 이런 뜻
+            moved += 1
+        else: same += 1
+    J = keepJ
+    if same or moved:
+        print(f"   일상과 겹쳐 직무에서 뺀 낱말 {same + moved}개 "
+              f"(뜻이 같은 것 {same} · 일터 뜻을 일상 카드에 붙인 것 {moved})")
+
+    # ── 기본인가 심화인가 (대표님 지시: 심화는 현장에서 배운다)
+    def is_basic(x):
+        if x.get("track") == "봉제 찾아보기": return False
+        if x.get("sr") or x.get("kakao"): return True          # 실제로 시험 보고 말한 낱말
+        ko = x["ko"]
+        if len(x["vi"].split()) <= 2 and len(ko) <= 9 and not re.search(r"[(/,·]", ko):
+            return True                                        # 짧고 단순하면 기본
+        return False
+    LOOKUP = [x for x in J if not is_basic(x)]
+    J = [x for x in J if is_basic(x)]
+    print(f"   직무 기본 {len(J)} · 현장에서 배우는 말 {len(LOOKUP)}")
     # **두 권으로 나눈다** — 공통 900 · 업종 900. 각각 900을 넘으면 출처 없는 것부터 자른다.
     J.sort(key=lambda x: (src_rank(x), -sum(int(g) for g in re.findall(r"\d\d", x.get("gi", "")))))
     def trim(ws, cap, what):
@@ -223,9 +252,7 @@ def main():
             keep.append(x)
         print(f"   {what} {cap}개로 맞추려고 앱이 만든 낱말 {dropped}개를 뺐다")
         return list(reversed(keep))
-    JC = trim([x for x in J if (x.get("track") or "").startswith("공통")], JOB_COMMON_CAP, "직무① 공통")
-    JF = trim([x for x in J if not (x.get("track") or "").startswith("공통")], JOB_FIELD_CAP, "직무② 업종")
-    J = JC + JF
+    J = trim(J, JOB_CAP, "직무")
     for x in J:
         k = x.get("track") or field_of(x["ko"])
         if k == "공통": k = "공통 · 생산과 공정"
@@ -241,12 +268,8 @@ def main():
         tracks.append({"track": k, "words": len(ws),
                        "chapters": [{"lessons": [{"words": w} for w in ch]}
                                     for ch in cut(ws, LES_PER_CH)]})
-    # 두 권으로 나눈다 — ① 공통  ② 업종
-    tv1 = [t for t in tracks if t["track"].startswith("공통")]
-    tv2 = [t for t in tracks if not t["track"].startswith("공통")]
-    vols.append({"kind": "job", "vol": "공통", "tracks": tv1})
-    vols.append({"kind": "job", "vol": "업종", "tracks": tv2,
-                 "lookup": {"track": "봉제 찾아보기", "words": len(LOOKUP),
+    vols.append({"kind": "job", "vol": "직무", "tracks": tracks,
+                 "lookup": {"track": "현장에서 배우는 말", "words": len(LOOKUP),
                             "chapters": [{"lessons": [{"words": w} for w in ch]}
                                          for ch in cut(LOOKUP, LES_PER_CH)]}})
     G = [x for x in (dress(w) for w in gramw) if x]

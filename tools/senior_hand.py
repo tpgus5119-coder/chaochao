@@ -133,25 +133,32 @@ def main():
     #    'xe tải mặt trăng | 트럭 / 달' 은 xe tải(트럭) 과 mặt trăng(달) 두 낱말이
     #    한 줄에 붙어 버린 것이다. 쪼개면 둘 다 살아난다.
     #    쪼갤 수 있는지는 **쪼갠 조각이 다른 줄에도 낱말로 있는가**로 판단한다.
+    # 쪼갠 조각이 **그 뜻 그대로** 다른 줄에도 있어야 한다.
+    #   낱말만 아는 것으로는 모자란다 — 'năm sản xuất | 제조 연도' 를 왼쪽부터 붙이면
+    #   năm=제조, sản xuất=연도 가 되어 **뒤바뀐다**(베트남어와 한국어의 어순이 반대다).
+    #   조각과 뜻이 짝으로 확인될 때만 쪼갠다. (2026-08-30)
     known = {bare(w["vi"]) for w in out}
+    pairs = {(bare(w["vi"]), w["ko"].split("/")[0].strip()) for w in out if w.get("ko")}
     split_add, split_n = [], 0
+    import itertools
     for w in list(out):
         if junk(w["vi"], w["ko"]) != "칸이 붙음": continue
         parts = [x.strip() for x in w["ko"].split("/") if x.strip()]
         toks = w["vi"].split()
-        if len(parts) < 2 or len(toks) < len(parts): continue
-        # 앞에서부터 조각을 붙여 가며 '아는 낱말'이 되는 자리에서 끊는다
-        cut, i, ok = [], 0, True
-        for pi, part in enumerate(parts):
-            last = pi == len(parts) - 1
-            found = None
-            for j in range(len(toks), i, -1) if last else range(i + 1, len(toks) + 1):
-                cand = " ".join(toks[i:j])
-                if bare(cand) in known: found = (cand, j); break
-            if not found: ok = False; break
-            cut.append((found[0], part)); i = found[1]
-        if ok and i == len(toks) and len(cut) == len(parts):
-            for vi2, ko2 in cut:
+        n = len(parts)
+        if not (2 <= n <= 4) or len(toks) < n: continue
+        # 베트남어를 n 조각으로 나누는 모든 방법 × 뜻을 붙이는 모든 차례를 다 해 본다.
+        # **모든 짝이 다른 줄에서 확인되는 경우에만** 쪼갠다 — 하나라도 확인 안 되면 안 쪼갠다.
+        best = None
+        for cuts in itertools.combinations(range(1, len(toks)), n - 1):
+            b = [0, *cuts, len(toks)]
+            chunks = [" ".join(toks[b[i]:b[i + 1]]) for i in range(n)]
+            for perm in itertools.permutations(parts):
+                if all((bare(c), p.split("/")[0].strip()) in pairs for c, p in zip(chunks, perm)):
+                    best = list(zip(chunks, perm)); break
+            if best: break
+        if best:
+            for vi2, ko2 in best:
                 split_add.append({**w, "vi": vi2, "ko": ko2, "split": 1})
             out.remove(w); split_n += 1
     out += split_add

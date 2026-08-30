@@ -4940,14 +4940,13 @@ function drawCourse() {
     row((vi + 2) + '권', tr('일상'), n + '/' + all,
         () => { dive(drawCourse); drawVol(vi); }, n >= all);
   });
-  /* 직무는 **두 권**이다 (대표님 결정) — ① 공통(어느 공장에서나) ② 업종(갈 곳이 정해지면). */
-  jobVols().forEach((jv, ji) => {
-    const n = jv.tracks.reduce((a, t) => a + t.words, 0);
-    row((lifeVols().length + 2 + ji) + '권',
-        tr('직무') + ' · ' + tr(jv.vol === '공통' ? '어느 공장에서나' : '갈 곳이 정해지면'),
-        n + tr('낱말'), () => { dive(drawCourse); drawJob(ji); });
-  });
-  row((lifeVols().length + 2 + jobVols().length) + '권', tr('문화 · 베트남 바로알기'), tr('보기'),
+  /* 직무는 **한 권**이다 (대표님 결정, 2026-08-30) — 꼭 필요한 기본만.
+     심화는 「현장에서 배우는 말」 사전으로 뺐다. */
+  const jv0 = jobVol(0);
+  if (jv0) row((lifeVols().length + 2) + '권', tr('직무'),
+               jv0.tracks.reduce((a, t) => a + t.words, 0) + tr('낱말'),
+               () => { dive(drawCourse); drawJob(0); });
+  row((lifeVols().length + 3) + '권', tr('문화 · 베트남 바로알기'), tr('보기'),
       () => { dive(drawCourse); draw7(); });
   show('course', '과정', true);
 }
@@ -4995,9 +4994,8 @@ function drawJob(ji) {
   const jv = jobVol(JOBI);
   const list = $('#dayList'); list.textContent = '';
   const h = el('li', 'catpick');
-  h.append(el('span', 'msub', tr(jv.vol === '공통'
-    ? '어느 공장·회사에서나 쓰는 말입니다. 한국인 취업의 40%가 생산관리입니다.'
-    : '갈 곳이 정해졌으면 그 갈래만 하셔도 됩니다.')));
+  h.append(el('span', 'msub',
+    tr('공통은 어느 공장에서나 씁니다(한국인 취업의 40%가 생산관리). 갈 곳이 정해졌으면 그 갈래만 하셔도 됩니다.')));
   list.append(h);
   jv.tracks.forEach((t, ti) => {
     const [n, all] = chDone(t.chapters, (c, l) => jkey(ti, c, l));
@@ -5020,9 +5018,9 @@ function drawJob(ji) {
     b.onclick = () => { dive(() => drawJob(JOBI)); drawLookup(); };
     const li = el('li'); li.append(b); list.append(li);
     list.append(el('li', 'catpick',
-      '<span class="msub">' + tr('도면·검사표에 적힌 전문어입니다. 외우는 자리가 아니라 찾아보는 자리입니다.') + '</span>'));
+      '<span class="msub">' + tr('현장에서 배우면 되는 심화 낱말입니다. 외우는 자리가 아니라 찾아보는 자리입니다.') + '</span>'));
   }
-  show('course', '직무 · ' + (jv.vol === '공통' ? tr('어느 공장에서나') : tr('갈 곳이 정해지면')), true);
+  show('course', '직무', true);
 }
 
 function drawLookup() {
@@ -5037,10 +5035,10 @@ function drawLookup() {
                esc(w.ko.split('/')[0].trim())).join(' · ')),
              el('span', 'st', l.words.length + tr('낱말')));
     b.onclick = () => { dive(drawLookup);
-      startLearn({ day: k, theme: tr('봉제 찾아보기'), words: l.words, course: 1 }); };
+      startLearn({ day: k, theme: tr('현장에서 배우는 말'), words: l.words, course: 1 }); };
     const li2 = el('li'); li2.append(b); list.append(li2);
   }));
-  show('course', '봉제 찾아보기', true);
+  show('course', '현장에서 배우는 말', true);
 }
 
 function drawJobTrack(ti) {
@@ -5820,6 +5818,11 @@ function drawCard() {
     const kob = el('div', 'ko', esc(x.ko));
     if (x.sr) kob.append(seniorStar());
     c.append(kob);
+    /* 일터에서 뜻이 달라지는 낱말 — 직무 권에 또 두지 않고 여기에 덧붙인다
+       (대표님 지적, 2026-08-30: 같은 낱말을 두 번 외우게 하지 않는다). */
+    if (x.work && x.work.length)
+      c.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
+                  x.work.map(t2 => esc(t2)).join(' · ')));
     if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
     if (x.south) c.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **낱말마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
