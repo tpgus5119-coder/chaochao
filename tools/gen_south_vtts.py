@@ -59,7 +59,10 @@ for i, (text, h) in enumerate(items):
         continue
     tk = len(text.split())
     tone = tone_of(text) if tk == 1 else None
-    ref = speech_span(R / f'audio/f/n/{h}.mp3') or 0.6
+    # 북부 파일이 없을 수도 있다(안 쓰는 소리를 정리했다) — 없으면 기본값으로 간다
+    _np = R / f'audio/f/n/{h}.mp3'
+    try: ref = (speech_span(_np) if _np.exists() else 0) or 0.6
+    except Exception: ref = 0.6
     best = None
     for attempt, ns in enumerate([0.667, 0.5, 0.8, 0.35]):
         audio, sr = tts.synthesize(text, speaker_id=sid, noise_scale=ns)
@@ -76,10 +79,8 @@ for i, (text, h) in enumerate(items):
         fail += 1; bad.append(text)
     if best is None: continue
     sf.write(R / f'audio/{voice}/n/{h}.mp3', best, SR, format='MP3')
-    slow, _ = tts.synthesize(text, speaker_id=sid, noise_scale=0.667, length_scale=1.5)
-    slow = np.asarray(slow, dtype='float32')
-    slow, _, _ = cut(slow, SR, ref * 1.6, tk)
-    sf.write(R / f'audio/{voice}/slow/{h}.mp3', slow, SR, format='MP3')
+    # 느린 판은 더 만들지 않는다 — '느리게 듣기'를 없앴고 저장소가 1GB 에 닿았다
+    #   (느린 판만 14,983개 161MB 였다. 2026-08-30)
     made += 1
     if made % 200 == 0: print(f'{made}/{len(items)} (성조 재시도 {healed} 미달 {fail})', flush=True)
 print(f'끝 [{voice}] — 만듦 {made} / 재시도로 통과 {healed} / 성조 미달 {fail}', flush=True)
