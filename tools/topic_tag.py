@@ -14,6 +14,13 @@ import argparse, json, pathlib, re, subprocess, sys, time, unicodedata as U
 
 R = pathlib.Path(__file__).resolve().parent.parent
 URL = "https://viet-ai.chaochao-app.workers.dev"
+# 이 일은 **Qwen 에게 넘겨도 되는 일**이다 — 주제 붙이기.
+#   틀려도 사람이 알아볼 수 있는 갈래라 제미나이 몫을 아끼는 편이 낫다.
+#   CHAO_LOCAL=1 로 돌리면 이 맥의 Qwen 이 한다 (tools/ai.py 참고).
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent))
+from ai import ask_text as _ask_text
+
 ORIGIN = "https://tpgus5119-coder.github.io"
 OUT = R / "data" / "_topics.json"
 CHUNK = 30
@@ -42,14 +49,9 @@ def norm(v):
     return re.sub(r"\s+", " ", U.normalize("NFC", str(v)).strip().lower())
 
 def ask(words):
-    body = json.dumps({"contents": [{"parts": [{"text":
-        ASK + " / ".join(TOPICS) + "\n\n낱말:\n" +
-        "\n".join(f"- {w['vi']} ({w['ko'][:18]})" for w in words)}]}]}, ensure_ascii=False)
-    p = subprocess.run(["curl", "-s", "-X", "POST", URL, "-m", "120",
-                        "-H", "Content-Type: application/json", "-H", "Origin: " + ORIGIN,
-                        "--data-binary", "@-"], input=body.encode(), capture_output=True)
+    t = _ask_text(ASK + " / ".join(TOPICS) + "\n\n낱말:\n" +
+                  "\n".join(f"- {w['vi']} ({w['ko'][:18]})" for w in words), max_tokens=2500)
     try:
-        t = json.loads(p.stdout.decode())["candidates"][0]["content"]["parts"][0]["text"]
         return json.loads(re.search(r"\[.*\]", t, re.S).group(0))
     except Exception:
         return []

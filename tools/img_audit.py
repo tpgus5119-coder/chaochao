@@ -13,6 +13,13 @@ import argparse, json, pathlib, re, subprocess, time
 
 R = pathlib.Path(__file__).resolve().parent.parent
 URL = "https://viet-ai.chaochao-app.workers.dev"
+# 이 일은 **Qwen 에게 넘겨도 되는 일**이다 — 그림이 뜻을 알려 주는지 판정.
+#   틀려도 사람이 알아볼 수 있는 갈래라 제미나이 몫을 아끼는 편이 낫다.
+#   CHAO_LOCAL=1 로 돌리면 이 맥의 Qwen 이 한다 (tools/ai.py 참고).
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent))
+from ai import ask_text as _ask_text
+
 ORIGIN = "https://tpgus5119-coder.github.io"
 OUT = R / "data" / "_imgok.json"
 CHUNK = 25
@@ -29,14 +36,8 @@ ASK = ("너는 낱말 카드를 만드는 편집자다. 아래는 [한국어 뜻
 
 def ask(items, tries=4):
     """대리인이 이따금 '[object Object]' 를 돌려준다 — 그러면 다시 묻는다 (2026-08-30)."""
-    body = json.dumps({"contents": [{"parts": [{"text": ASK + json.dumps(items, ensure_ascii=False)}]}]})
     for k in range(tries):
-        p = subprocess.run(["curl", "-sS", "-X", "POST", URL, "-H", "Content-Type: application/json",
-                            "-H", f"Origin: {ORIGIN}", "--data-binary", "@-"],
-                           input=body, capture_output=True, text=True, timeout=200)
-        t = p.stdout
-        try: t = json.loads(t)["candidates"][0]["content"]["parts"][0]["text"]
-        except Exception: pass
+        t = _ask_text(ASK + json.dumps(items, ensure_ascii=False), max_tokens=2500)
         if "[object Object]" in t: time.sleep(1.2 * (k + 1)); continue
         m = re.search(r"\[.*\]", t, re.S)
         if m:

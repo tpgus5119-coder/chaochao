@@ -13,6 +13,13 @@ import argparse, json, pathlib, re, subprocess, sys, time, unicodedata as U
 
 R = pathlib.Path(__file__).resolve().parent.parent
 URL = "https://viet-ai.chaochao-app.workers.dev"
+# 이 일은 **Qwen 에게 넘겨도 되는 일**이다 — 철자 검사.
+#   틀려도 사람이 알아볼 수 있는 갈래라 제미나이 몫을 아끼는 편이 낫다.
+#   CHAO_LOCAL=1 로 돌리면 이 맥의 Qwen 이 한다 (tools/ai.py 참고).
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent))
+from ai import ask_text as _ask_text
+
 ORIGIN = "https://tpgus5119-coder.github.io"
 OUT = R / "data" / "_spell.json"
 CHUNK = 20

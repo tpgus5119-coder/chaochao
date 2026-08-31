@@ -12,6 +12,13 @@ import collections, json, pathlib, re, subprocess, time, unicodedata as U
 
 R = pathlib.Path(__file__).resolve().parent.parent
 URL = "https://viet-ai.chaochao-app.workers.dev"
+# 이 일은 **Qwen 에게 넘겨도 되는 일**이다 — 예문 낱말 뜻 달기.
+#   틀려도 사람이 알아볼 수 있는 갈래라 제미나이 몫을 아끼는 편이 낫다.
+#   CHAO_LOCAL=1 로 돌리면 이 맥의 Qwen 이 한다 (tools/ai.py 참고).
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent))
+from ai import ask_text as _ask_text
+
 ORIGIN = "https://tpgus5119-coder.github.io"
 OUT = R / "data" / "exgloss.json"
 CHUNK = 30
@@ -22,13 +29,7 @@ ASK = ("너는 베트남어-한국어 사전이다. 아래 낱말의 뜻을 **�
        '출력은 JSON 배열만. [{"vi":"낱말","ko":"뜻"}]\n\n')
 
 def ask(items):
-    body = json.dumps({"contents": [{"parts": [{"text": ASK + json.dumps(items, ensure_ascii=False)}]}]})
-    p = subprocess.run(["curl", "-sS", "-X", "POST", URL, "-H", "Content-Type: application/json",
-                        "-H", f"Origin: {ORIGIN}", "--data-binary", "@-"],
-                       input=body, capture_output=True, text=True, timeout=180)
-    t = p.stdout
-    try: t = json.loads(t)["candidates"][0]["content"]["parts"][0]["text"]
-    except Exception: pass
+    t = _ask_text(ASK + json.dumps(items, ensure_ascii=False), max_tokens=2500)
     m = re.search(r"\[.*\]", t, re.S)
     return json.loads(m.group(0)) if m else []
 
