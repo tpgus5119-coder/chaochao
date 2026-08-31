@@ -759,7 +759,9 @@ function playMine() {
 }
 function soundRow(text, withSlow) {
   const row = el('div', 'sound');
-  const a = el('button', 'ghost', '듣기');
+  /* 소리 단추가 눈에 안 띈다고 하셔서 스피커 표시를 붙이고 크게 했다 (2026-08-31).
+     글자만 있으면 '듣기' 가 설명글처럼 보여 아무도 안 누른다. */
+  const a = el('button', 'ghost', '🔊 듣기');
   a.onclick = () => play(text, false);
   row.append(a);
   return row;                    // '느리게 듣기'는 뺐다 (대표님 지시, 2026-08-30)
@@ -1203,7 +1205,7 @@ function speakRow(text, withSound) {
   const wrap = el('div', 'speak');
   const row = el('div', 'qplay');
   if (withSound) {
-    const s1 = el('button', 'ghost', '듣기'); s1.onclick = () => play(text, false);
+    const s1 = el('button', 'ghost', '🔊 듣기'); s1.onclick = () => play(text, false);
     row.append(s1);
   }
   if (!canRecord()) {
@@ -6977,7 +6979,7 @@ function drawHandQ(body, q) {
   const w = q.w;
   body.append(el('div', 'qmain', esc(w.ko)));
   const row = el('div', 'qplay');
-  const p1 = el('button', 'ghost', '듣기'); p1.onclick = () => play(w.vi, false);
+  const p1 = el('button', 'ghost', '🔊 듣기'); p1.onclick = () => play(w.vi, false);
   row.append(p1); body.append(row);
   const cv = el('canvas', 'wpad');
   cv.width = 640; cv.height = 200;
@@ -7080,7 +7082,7 @@ function drawTypeQ(body, q) {
   const w = q.w;
   body.append(el('div', 'qmain', esc(w.ko)));
   const row = el('div', 'qplay');
-  const p1 = el('button', 'ghost', '듣기'); p1.onclick = () => play(w.vi, false);
+  const p1 = el('button', 'ghost', '🔊 듣기'); p1.onclick = () => play(w.vi, false);
   row.append(p1); body.append(row);
   play(w.vi, false);
   let txt = '';
