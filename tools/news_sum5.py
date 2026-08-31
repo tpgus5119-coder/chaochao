@@ -7,13 +7,22 @@
   본문(1,500~3,500자)이 data/news_body.json 에 이미 있으므로 그것을 줄여 쓴다.
 
 AI 는 중계 워커(tools/worker.js)를 부른다 — 열쇠는 스크립트가 아니라 워커 금고에 있다.
-쓰기: python3 tools/news_sum5.py [--day 2026-08-28]
+쓰기: python3 tools/news_sum5.py [--day 2026-08-28] [--local]
+      --local 은 인터넷·열쇠 없이 이 맥의 Qwen 에게 시킨다
 """
-import argparse, json, pathlib, re, subprocess, time
+import argparse, json, pathlib, re, subprocess, sys, time
 
 R = pathlib.Path(__file__).resolve().parent.parent
 URL = "https://viet-ai.chaochao-app.workers.dev"
 ORIGIN = "https://tpgus5119-coder.github.io"
+
+# --local 을 주면 이 맥의 LM Studio(Qwen)에게 시킨다. 인터넷도 열쇠도 필요 없다.
+#   먼저 서버를 켠다:  ~/.lmstudio/bin/lms server start
+#   확인:             curl http://localhost:1234/v1/models
+LOCAL_URL = "http://localhost:1234/v1/chat/completions"
+# 27B 는 이 맥(24GB)에서 스왑이 걸려 기사 하나에 10분이 넘는다(2026-08-31 실측).
+# 9B 가 이 일에는 충분하고 훨씬 빠르다. 바꾸려면 이 한 줄만 고친다.
+LOCAL_MODEL = "qwen/qwen3.5-9b"
 
 ASK = (
     "너는 베트남 소식을 **옆에서 설명해 주는 사람**이다. 신문 기사를 그대로 옮기지 마라.\n"
@@ -34,19 +43,35 @@ ASK = (
 )
 
 
+LOCAL = "--local" in sys.argv
+
+
 def ask(title, body, tries=4):
-    p = ASK + f"제목: {title}\n본문:\n{body[:3500]}"
-    req = json.dumps({"contents": [{"parts": [{"text": p}]}]})
+    # 로컬 모델은 문맥이 좁다 — 본문을 더 짧게 준다
+    p = ASK + f"제목: {title}\n본문:\n{body[:1600 if LOCAL else 3500]}"
+    if LOCAL:
+        # **max_tokens 를 넉넉히 줘야 한다.** 이 모델은 답하기 전에 길게 '생각'하는데,
+        #   그 생각도 토큰을 먹는다. 좁게 주면 생각만 하다 끝나 **답이 빈 채로** 돌아온다
+        #   (2026-08-31 실측: 200토큰을 줬더니 199가 생각, 답은 ''. 3000을 주니 제대로 답했다)
+        req = json.dumps({"model": LOCAL_MODEL, "temperature": 0.4, "max_tokens": 3000,
+                          "messages": [{"role": "user", "content": p}]})
+        cmd = ["curl", "-sS", "-X", "POST", LOCAL_URL,
+               "-H", "Content-Type: application/json", "--data-binary", "@-"]
+    else:
+        req = json.dumps({"contents": [{"parts": [{"text": p}]}]})
+        cmd = ["curl", "-sS", "-X", "POST", URL, "-H", "Content-Type: application/json",
+               "-H", f"Origin: {ORIGIN}", "--data-binary", "@-"]
     for k in range(tries):
         try:
-            r = subprocess.run(
-                ["curl", "-sS", "-X", "POST", URL, "-H", "Content-Type: application/json",
-                 "-H", f"Origin: {ORIGIN}", "--data-binary", "@-"],
-                input=req, capture_output=True, text=True, timeout=200).stdout
+            r = subprocess.run(cmd, input=req, capture_output=True, text=True,
+                               timeout=600 if LOCAL else 200).stdout
         except Exception:
             time.sleep(2 * (k + 1)); continue
         t = r
-        try: t = json.loads(r)["candidates"][0]["content"]["parts"][0]["text"]
+        try:
+            j = json.loads(r)
+            t = (j["choices"][0]["message"]["content"] if LOCAL
+                 else j["candidates"][0]["content"]["parts"][0]["text"])
         except Exception: pass
         # 로컬 모델로 바꿔 쓸 때를 대비해 생각 부분을 떼어 낸다
         t = re.sub(r"(?s)<think>.*?</think>", "", t)
@@ -64,6 +89,7 @@ def ask(title, body, tries=4):
 
 def main():
     a = argparse.ArgumentParser(); a.add_argument("--day"); a.add_argument("--force", action="store_true")
+    a.add_argument("--local", action="store_true", help="이 맥의 LM Studio(Qwen)에게 시킨다")
     a = a.parse_args()
 
     bp = R / "data" / "news_body.json"

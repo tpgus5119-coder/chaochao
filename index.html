@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="짜오짜오">
 <meta name="mobile-web-app-capable" content="yes">
 <title>짜오짜오 — 베트남어</title>
-<link rel="stylesheet" href="style.css?v=62481f9f">
+<link rel="stylesheet" href="style.css?v=42baca11">
 </head>
 <body>
 
@@ -46,6 +46,10 @@
     <div id="card" class="card"></div>
     <!-- '‹ 이전 / 다음 ›' 을 뺐다 (대표님 지시) — **밀어서 넘긴다**.
          마지막 장에서만 단추가 나온다. 진도를 확정하는 자리라 실수로 밀려 넘어가면 안 된다. -->
+    <!-- 화면 좌우에 붙박이 넘김 단추 (대표님 지시 2026-08-31).
+         밀어서 넘기기도 그대로 둔다 — 단추는 밀기를 모르는 사람을 위한 것이다. -->
+    <button id="goPrev" class="pagearrow left" type="button" aria-label="이전">‹</button>
+    <button id="goNext" class="pagearrow right" type="button" aria-label="다음">›</button>
     <div class="pager">
       <span id="pos"></span>
       <button id="next" class="primary big" hidden>다음 ›</button>
@@ -149,7 +153,7 @@
   </section>
 </main>
 
-<script src="pitch.js?v=62481f9f"></script>
-<script src="app.js?v=62481f9f"></script>
+<script src="pitch.js?v=42baca11"></script>
+<script src="app.js?v=42baca11"></script>
 </body>
 </html>

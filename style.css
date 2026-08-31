@@ -1732,3 +1732,15 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 /* 기사 세트 맨 앞 카드뉴스 — 정사각형이라 화면 폭에 맞춰 통째로 보인다 */
 .newscardimg{display:block;width:100%;max-width:520px;margin:0 auto;
   border-radius:var(--radius);box-shadow:var(--shadow)}
+
+/* 학습 화면 좌우 붙박이 넘김 단추 (2026-08-31)
+   화면 가운데 높이에 붙여 둔다. 엄지가 닿는 자리라 한 손으로 넘긴다. */
+.pagearrow{position:fixed; top:50%; transform:translateY(-50%); z-index:40;
+  width:44px; height:64px; border:1px solid var(--line); border-radius:12px;
+  background:var(--card); color:var(--dim); font-size:26px; line-height:1;
+  box-shadow:var(--shadow); cursor:pointer; padding:0;
+  display:flex; align-items:center; justify-content:center}
+.pagearrow.left{left:6px}
+.pagearrow.right{right:6px}
+.pagearrow:disabled{opacity:.28; cursor:default}
+@media (max-width:420px){ .pagearrow{width:38px; height:56px; font-size:23px} }

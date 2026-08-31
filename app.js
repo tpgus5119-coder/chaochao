@@ -723,6 +723,7 @@ const trackName = d => (typeof d.day === 'string' ? '' : d.track === 'work' ? '�
 /* 아이폰 사파리는 '사용자가 방금 누른 것'이 아니면 새 Audio 재생을 막는다.
    그래서 Audio 하나를 만들어 두고 주소만 바꿔 쓴다. 한 번 허락되면 그 뒤로는 계속 난다. */
 const audio = new Audio();
+const SLOWISH = 0.9;              // 보통 소리의 재생 속도 (1 = 원래대로)
 const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 둔다)
 
 /* 지역(북부/남부) × 목소리(여/남) 에 따른 소리 폴더. 남부도 여·남 둘 다 있다. */
@@ -741,7 +742,9 @@ function play(text, slow, dir) {
   if (!h) { speakVi(text, false, 0, S.voice); return; }
   audio.pause();
   audio.onerror = null;
-  audio.playbackRate = 1;
+  /* 조금 느리게 튼다 (대표님 지시 2026-08-31) — 원어민 속도가 초보에겐 빠르다.
+     playbackRate 는 높낮이를 지켜 주므로 성조가 뭉개지지 않는다. */
+  audio.playbackRate = SLOWISH;
   audio.src = `audio/${d}/n/${h}.mp3`;
   audio.onerror = () => { audio.onerror = null; speakVi(text, false, 0, S.voice); };
   audio.currentTime = 0;
@@ -1428,6 +1431,7 @@ function show(v, title, canBack) {
      뒤로(‹)는 한 칸씩 돌아가지만, 깊이 들어간 자리에서는 몇 번을 눌러야 하는지 알 수 없다.
      어디서든 한 번에 나가는 길이 있어야 한다. */
   $('#goHome').hidden = v === 'home';
+  if (window.cardArrows) setTimeout(window.cardArrows, 0);   // 좌우 넘김 단추는 학습 화면에서만
   CURV = v;
   topBtns();
   window.scrollTo(0, 0);
@@ -5927,6 +5931,7 @@ function drawWordbook() {
 
 function drawCard() {
   resetRec();
+  if (window.cardArrows) setTimeout(window.cardArrows, 0);
   const c = $('#card');
   c.textContent = '';
   const it = L.items[L.i], x = it.d;
@@ -6281,7 +6286,20 @@ $('#next').onclick = () => {
     if ($('#learn').hidden) return;
     if (dir < 0 && L.i > 0) { L.i--; drawCard(); }
     else if (dir > 0 && L.i < L.items.length - 1) { L.i++; drawCard(); }
+    if (window.cardArrows) window.cardArrows();
   };
+  /* 좌우 붙박이 단추 — 밀기를 모르는 사람을 위한 길 (대표님 지시 2026-08-31) */
+  const prevB = $('#goPrev'), nextB = $('#goNext');
+  window.cardArrows = () => {
+    if (!prevB || !nextB) return;
+    const on = !$('#learn').hidden && L && L.items;
+    prevB.hidden = nextB.hidden = !on;
+    if (!on) return;
+    prevB.disabled = L.i <= 0;
+    nextB.disabled = L.i >= L.items.length - 1;
+  };
+  if (prevB) prevB.onclick = () => goto(-1);
+  if (nextB) nextB.onclick = () => goto(1);
   card.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
   card.addEventListener('touchend', e => {
     if (x0 === null) return;
@@ -6387,12 +6405,7 @@ function finishDay(d) {
   const r = el('div', 'result perfect');
   r.append(el('div', 'n', '오늘 완료'));
   r.append(el('div', null, '단어 → 확인 문제 → 문장까지, 한 세트를 다 했습니다'));
-  if (aiReady() && d.dialog) {
-    const c = el('button', 'primary big', '이 대화로 AI 선생님과 역할극 ›');
-    c.style.marginTop = '20px';
-    c.onclick = startChat;
-    r.append(c);
-  }
+  /* AI 선생님과 자유 대화(역할극)는 뺐다 (대표님 지시 2026-08-31). */
   const hm = el('button', 'ghost big', '홈으로');
   hm.style.marginTop = '10px';
   hm.onclick = renderHome;
@@ -6921,8 +6934,9 @@ function drawDict(body, q) {
     if (!good) ans.textContent = picked.join(' ') + '  →  ' + q.w.vi;
     if (good) Q.ok++; else requeue(Q.list[Q.i]);
     grade(q.w.vi, good, Q.early);
-    if (good) setTimeout(() => { Q.i++; drawQuiz(); }, 600);
-    else nextBtn(body, () => { Q.i++; drawQuiz(); });
+    /* 맞아도 **저절로 넘어가지 않는다** (대표님 지시 2026-08-31).
+       맞은 답을 눈으로 확인할 틈도 없이 화면이 바뀌면 무엇을 맞혔는지 남지 않는다. */
+    nextBtn(body, () => { Q.i++; drawQuiz(); });
   };
   const row = el('div', 'qplay'); row.append(undo, chk);
   body.append(ans, tiles, row);
@@ -7084,8 +7098,8 @@ function drawTypeQ(body, q) {
     out.dataset.r = good ? 'ok' : 'no';
     if (!good) out.textContent = txt.trim() + '  →  ' + w.vi;
     grade(w.vi, good, Q.early);
-    if (good) { Q.ok++; setTimeout(() => { Q.i++; drawQuiz(); }, 700); }
-    else { requeue(q); nextBtn(body, () => { Q.i++; drawQuiz(); }); }
+    if (good) Q.ok++; else requeue(q);
+    nextBtn(body, () => { Q.i++; drawQuiz(); });
   }));
 }
 
@@ -7226,8 +7240,7 @@ function answer(btn, correct, w) {
   ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(w.kr_read),
              el('div', 'ko', esc(w.ko)));
   btn.parentNode.after(ans);
-  if (correct) setTimeout(() => { Q.i++; drawQuiz(); }, 450);
-  else nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
+  nextBtn(body, () => { Q.i++; drawQuiz(); });
 }
 
 /* 틀린 문제를 같은 판 뒤쪽에 한 번만 다시 넣는다.
@@ -7503,8 +7516,8 @@ function drawVowel() {
       if (good) S.stats.earOk = (S.stats.earOk || 0) + 1;
       else bump('conf', it.vi + ' → ' + o.vi, false);   // 무엇을 무엇으로 잘못 들었나
       save();
-      if (good) { VD.ok++; setTimeout(() => { VD.i++; drawVowel(); }, 500); }
-      else nextBtn(body, () => { VD.i++; drawVowel(); });
+      if (good) VD.ok++;
+      nextBtn(body, () => { VD.i++; drawVowel(); });
     };
     opts.append(btn);
   });
@@ -7582,8 +7595,8 @@ function drawTone() {
       if (good) S.stats.earOk = (S.stats.earOk || 0) + 1;
       else bump('conf', it.vi + ' → ' + o.vi, false);   // 무엇을 무엇으로 잘못 들었나
       save();
-      if (good) { T.ok++; setTimeout(() => { T.i++; drawTone(); }, 500); }
-      else nextBtn(body, () => { T.i++; drawTone(); });
+      if (good) T.ok++;
+      nextBtn(body, () => { T.i++; drawTone(); });
     };
     opts.append(btn);
   });
@@ -7631,8 +7644,7 @@ function drawToneMark(body, w) {
       if (good) { T.ok++; S.stats.earOk = (S.stats.earOk || 0) + 1; }
       else bump('conf', want + ' → ' + mk.name, false);
       grade(w.vi, good);
-      if (good) setTimeout(() => { T.i++; drawTone(); }, 500);
-      else nextBtn(body, () => { T.i++; drawTone(); });
+      nextBtn(body, () => { T.i++; drawTone(); });
     };
     opts.append(btn);
   });
@@ -8059,8 +8071,7 @@ function drawRule() {
         box.append(row);
         b.append(box);
       }
-      if (good) setTimeout(() => { RL.i++; drawRule(); }, q.say ? 2200 : 900);
-      else nextBtn(b, () => { RL.i++; drawRule(); });
+      nextBtn(b, () => { RL.i++; drawRule(); });
     };
     opts.append(btn);
   });
@@ -10411,8 +10422,21 @@ function showAdmin() {
    서버에 올라가는 것은 별명·도장·외운 단어 수뿐. 실명도 기록도 올리지 않는다. */
 const CLUBURL = 'https://viet-club.chaochao-app.workers.dev';
 async function cCall(o) {
-  const r = await fetch(CLUBURL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-                                   body: JSON.stringify(Object.assign({ nick: S.nick, uid: myUid() }, o)) });
+  /* 네트워크가 한 번 미끄러지면 **바로 다시 한 번** 해 본다 (2026-08-31).
+     동아리에 들어가려는데 'Failed to fetch' 만 뜨고 안 들어가지는 일이 있었다.
+     서버는 멀쩡했다 — 폰이 잠깐 끊기거나 워커가 깨어나는 사이에 걸린 것이다.
+     사람에게 '다시' 를 누르게 하지 말고 앱이 먼저 한 번 더 해 본다. */
+  let r = null;
+  for (let k = 0; k < 2; k++) {
+    try {
+      r = await fetch(CLUBURL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                                 body: JSON.stringify(Object.assign({ nick: S.nick, uid: myUid() }, o)) });
+      break;
+    } catch (e) {
+      if (k) throw new Error('연결하지 못했습니다 — 잠시 뒤 다시 해 주세요.');
+      await new Promise(z => setTimeout(z, 700));
+    }
+  }
   const j = await r.json();
   // 'gone' 은 **동아리를 물어본 요청**(id 포함)에만 뜻이 있다. 계정 같은 다른 요청이
   // 옛 서버에 떨어져 gone 을 받아도 동아리를 지우면 안 된다.
