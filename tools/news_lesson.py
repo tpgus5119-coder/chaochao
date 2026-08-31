@@ -19,7 +19,7 @@
 
 환경변수 GEMINI_KEY 필요 (깃허브 저장소 Settings → Secrets → Actions 에 넣는다).
 """
-import json, os, pathlib, sys, time, urllib.request, urllib.error, hashlib, re, unicodedata as ud
+import re, json, os, pathlib, sys, time, urllib.request, urllib.error, hashlib, re, unicodedata as ud
 from datetime import datetime, timezone, timedelta
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -35,8 +35,39 @@ KST = timezone(timedelta(hours=9))
 KEEP_DAYS = 7                                    # 일주일치만 남긴다 (저장소가 커지지 않게)
 MODELS = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite']
 
+WORKER = 'https://viet-ai.chaochao-app.workers.dev'
+ORIGIN = 'https://tpgus5119-coder.github.io'
+
+
+def ask_worker(prompt):
+    """열쇠가 없을 때는 **중계 워커**에 묻는다 (2026-08-31).
+
+    열쇠는 깃허브 Secrets 에만 있어서 이 맥에서는 못 돌렸다. 그런데 워커는
+    같은 제미나이를 자기 금고의 열쇠로 부른다 — 다른 도구 16개가 이미 그 길을 쓴다.
+    덕분에 로봇이 실패한 날도 사람이 맥에서 이어 만들 수 있다."""
+    import subprocess
+    body = json.dumps({'contents': [{'parts': [{'text': prompt}]}]})
+    for k in range(3):
+        r = subprocess.run(['curl', '-sS', '-X', 'POST', WORKER,
+                            '-H', 'Content-Type: application/json',
+                            '-H', f'Origin: {ORIGIN}', '--data-binary', '@-'],
+                           input=body, capture_output=True, text=True, timeout=240).stdout
+        try:
+            t = json.loads(r)['candidates'][0]['content']['parts'][0]['text']
+        except Exception:
+            t = r
+        m = re.search(r'[\[{].*[\]}]', t, re.S)
+        if m:
+            try: return json.loads(m.group(0))
+            except Exception: pass
+        import time as _t; _t.sleep(2 * (k + 1))
+    raise RuntimeError('워커도 실패')
+
+
 def ask(prompt, key):
     """제미나이에 물어 JSON 을 받는다. 모델이 붐비면 다음 모델로 넘어간다."""
+    if not key:
+        return ask_worker(prompt)
     body = json.dumps({
         'contents': [{'role': 'user', 'parts': [{'text': prompt}]}],
         # 생각 예산을 0으로 두지 않으면 생각에만 토큰을 다 써서 답이 잘린다 (실제로 겪었다)
@@ -111,7 +142,7 @@ PROMPT = """너는 한국인에게 베트남어를 가르친다. 배우는 사�
 def main():
     key = os.environ.get('GEMINI_KEY', '').split(',')[0].strip()
     if not key:
-        print('GEMINI_KEY 가 없다 — 건너뛴다'); return 0
+        print('GEMINI_KEY 가 없다 — 중계 워커로 간다')
 
     try:
         picked = json.loads((R / 'data' / 'news_body.json').read_text())['picked']

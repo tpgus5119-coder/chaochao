@@ -64,7 +64,10 @@ async def main():
         h = idx.get(text) or key(text)
         need = []
         for v, name in VOICES.items():
-            for kind, slow in (('n', False), ('slow', True)):
+            # 느린 판은 만들지 않는다 (2026-08-31). 다른 도구는 진작에 없앴는데
+            #   여기만 남아 매일 새 느린 파일을 쌓고 있었다(354개까지 늘었다).
+            #   앱은 느린 파일이 없으면 보통 소리를 늘려 튼다 — 성조는 안 뭉개진다.
+            for kind, slow in (('n', False),):
                 p = R / 'audio' / v / kind / f'{h}.mp3'
                 if p.exists():
                     continue
