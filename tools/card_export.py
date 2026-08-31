@@ -63,11 +63,14 @@ def main():
             continue
         # 동기들에게 보낼 쪽지 — 제목과 링크만 (대표님 지시)
         lines = [f"📰 베트남 소식 {ts.replace('-', '.')}", ""]
-        for d in arts:
+        for i, d in enumerate(arts, 1):
             if d.get("u"):
-                lines.append(f"· {d.get('title','')}\n  {d['u']}")
-        lines += ["", "짜오짜오에서 카드뉴스와 오늘의 낱말로 볼 수 있어요",
-                  "https://tpgus5119-coder.github.io/chaochao/"]
+                lines.append(f"{i}. {d.get('title','')}")
+                lines.append(f"   {d['u']}")
+                lines.append("")
+        lines += ["📱 카드뉴스와 오늘의 낱말은 짜오짜오에서",
+                  "https://tpgus5119-coder.github.io/chaochao/",
+                  "", "폰에서 열고 '홈 화면에 추가'를 누르면 앱처럼 씁니다."]
         txt = "\n".join(lines) + "\n"
         tp = out / "기사링크.txt"
         if not tp.exists() or tp.read_text(encoding="utf-8") != txt:

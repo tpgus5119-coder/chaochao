@@ -26,7 +26,17 @@ from PIL import Image, ImageDraw, ImageFont
 
 OUT = R / "img" / "card"
 API = "http://127.0.0.1:7860/sdapi/v1/txt2img"
-W, H = 1080, 1350
+W, H = 1080, 1080          # 정사각형 (대표님 지시 2026-08-31)
+
+# ── 글자 세팅 (가독성) ────────────────────────────────────────────────
+# 자간(letter-spacing): 큰 제목은 **좁히고**, 본문은 **살짝 벌린다.**
+#   큰 글씨는 글자 사이가 넓어 보이고, 작은 글씨는 붙어 보이는 착시를 되잡는 것이다.
+# 행간(line-height): 한글 본문은 글자 크기의 1.6~1.7배가 읽기 좋다.
+#   제목은 덩어리로 읽으므로 1.25~1.35배로 붙인다.
+# 장평(가로 폭)은 **건드리지 않는다** — 글꼴을 늘리거나 줄이면 획 굵기가 망가진다.
+LS_TITLE, LH_TITLE = -0.022, 1.30      # 자간 -2.2% · 행간 1.30
+LS_BODY,  LH_BODY   = 0.010, 1.66      # 자간 +1.0% · 행간 1.66
+LS_SMALL, LH_SMALL  = 0.015, 1.45
 FONT = "/System/Library/Fonts/AppleSDGothicNeo.ttc"          # 한국어
 # 베트남어는 한국어 글꼴에 성조 글자가 없다 — 'công' 이 'c□ng' 으로 나왔다 (2026-08-30).
 # 그런데 글자를 **가졌다고 제대로 그리는 것은 아니다**: Avenir 는 U+1EA5(ấ) 를 그릴 때
@@ -52,12 +62,32 @@ def font(sz, weight=0, vi=False):
 nfc = lambda s: U.normalize("NFC", str(s))
 
 
-def wrap(dr, text, f, width):
+def tw(dr, text, f, ls=0.0):
+    """자간을 넣은 글줄의 실제 폭."""
+    if not text: return 0
+    return dr.textlength(text, font=f) + ls * f.size * (len(text) - 1)
+
+
+def dtext(dr, xy, text, f, fill, ls=0.0):
+    """자간을 넣어 그린다. 자간이 0이면 한 번에 그린다(글꼴의 커닝을 살린다).
+
+    자간을 줄 때는 글자를 하나씩 찍는다. **베트남어에는 쓰지 마라** — 성조가 붙은
+    글자를 낱자로 쪼개면 부호가 어긋난다. 한국어·숫자에만 쓴다."""
+    if not ls:
+        dr.text(xy, text, font=f, fill=fill); return
+    x, y = xy
+    step = ls * f.size
+    for ch in text:
+        dr.text((x, y), ch, font=f, fill=fill)
+        x += dr.textlength(ch, font=f) + step
+
+
+def wrap(dr, text, f, width, ls=0.0):
     """글자 폭을 재서 줄을 나눈다. 한국어는 띄어쓰기가 드물어 글자 단위로도 끊는다."""
     out, line = [], ""
     for ch in text:
         t = line + ch
-        if dr.textlength(t, font=f) > width and line:
+        if tw(dr, t, f, ls) > width and line:
             out.append(line); line = ch.lstrip()
         else: line = t
     if line: out.append(line)
@@ -75,29 +105,29 @@ def bg_image(prompt, seed):
 
 
 def card1(d, bg):
-    """첫 장 — 그림을 카드 전면에 깔고 그 **위에** 갈래·제목·다섯 줄 요약을 얹는다.
+    """첫 장 — 그림을 정사각 카드 전면에 깔고 그 위에 갈래·제목·다섯 줄 요약을 얹는다.
 
-    글이 그림에 묻히지 않게, 글이 놓인 데까지만 흐린 막(그러데이션)을 씌우고
-    그 아래로 220px 에 걸쳐 걷어 낸다. 막은 완전히 덮지 않고 92% 만 덮어
-    그림이 은은히 비치게 둔다 — 글은 읽히고 그림도 살아 있다. (2026-08-31 대표님 지시)"""
+    글이 그림에 묻히지 않게, 글이 놓인 데까지만 흐린 막을 씌우고 아래로 걷어 낸다.
+    자간·행간은 위 상수(LS_*/LH_*)를 쓴다 — 큰 제목은 좁히고 본문은 살짝 벌린다."""
     im = Image.new("RGB", (W, H), BG)
-    f_cat, f_t, f_b, f_s = font(34, 1), font(60, 1), font(30), font(28)
+    f_cat, f_t, f_b, f_s = font(30, 1), font(50, 1), font(26), font(24)
+    lh_t, lh_b = int(f_t.size * LH_TITLE), int(f_b.size * LH_BODY)
+    PAD = 64
 
-    # 글이 어디까지 내려오는지 먼저 잰다 — 막의 길이를 그에 맞춰야 한다
     probe = ImageDraw.Draw(im)
-    t_lines = wrap(probe, nfc(d["title"]), f_t, W - 140)[:4]
+    t_lines = wrap(probe, nfc(d["title"]), f_t, W - PAD * 2, LS_TITLE)[:3]
     body = d.get("sum5") or [d.get("intro") or ""]
     b_lines = []
     for para in body:
-        b_lines += wrap(probe, nfc(para), f_b, W - 140)
-    b_lines = b_lines[:10]          # 다섯 문장이 한 줄에 안 들어가면 두 줄까지 봐준다
-    text_bottom = 200 + len(t_lines) * 76 + 26 + len(b_lines) * 46
+        b_lines += wrap(probe, nfc(para), f_b, W - PAD * 2, LS_BODY)
+    b_lines = b_lines[:8]   # 한 줄에 안 들어가는 문장은 두 줄로 접힌다
+    y_title = 168
+    y_body = y_title + len(t_lines) * lh_t + 22
+    text_bottom = y_body + len(b_lines) * lh_b
 
     if bg:
-        # 세로 카드를 꽉 채우되 찌그러뜨리지 않는다 — 높이에 맞춰 키우고 좌우를 잘라 낸다
-        b = bg.resize((H, H)).crop(((H - W) // 2, 0, (H - W) // 2 + W, H))
-        im.paste(b, (0, 0))
-        fade_to = min(H, text_bottom + 220)
+        im.paste(bg.resize((W, H)), (0, 0))
+        fade_to = min(H, text_bottom + 150)
         g = Image.new("L", (1, H), 0)
         for y in range(H):
             if y <= text_bottom: v = 235
@@ -105,41 +135,56 @@ def card1(d, bg):
             else:                v = int(235 * (1 - (y - text_bottom) / (fade_to - text_bottom)))
             g.putpixel((0, y), v)
         im.paste(Image.new("RGB", (W, H), BG), (0, 0), g.resize((W, H)))
-        # 맨 아래 130px 도 옅게 덮는다 — 그림이 어두우면 '짜오짜오 · 날짜' 가 안 읽힌다
+        # 맨 아래도 옅게 덮는다 — 그림이 어두우면 '짜오짜오 · 날짜' 가 안 읽힌다
         g2 = Image.new("L", (1, H), 0)
-        for y in range(H - 130, H):
-            g2.putpixel((0, y), int(215 * (y - (H - 130)) / 130))
+        for y in range(H - 110, H):
+            g2.putpixel((0, y), int(215 * (y - (H - 110)) / 110))
         im.paste(Image.new("RGB", (W, H), BG), (0, 0), g2.resize((W, H)))
 
     dr = ImageDraw.Draw(im)
     cat = d.get("cat") or "소식"
     c = CAT_COLOR.get(cat, (60, 60, 60))
-    dr.rounded_rectangle([70, 84, 70 + dr.textlength(nfc(cat), font=f_cat) + 56, 148], 32, fill=c)
-    dr.text((98, 96), nfc(cat), font=f_cat, fill=(255, 255, 255))
-    y = 200
+    cw = tw(dr, nfc(cat), f_cat, LS_SMALL)
+    dr.rounded_rectangle([PAD, 70, PAD + cw + 48, 126], 28, fill=c)
+    dtext(dr, (PAD + 24, 80), nfc(cat), f_cat, (255, 255, 255), LS_SMALL)
+    y = y_title
     for ln in t_lines:
-        dr.text((70, y), nfc(ln), font=f_t, fill=FG); y += 76
-    y += 26
+        dtext(dr, (PAD, y), nfc(ln), f_t, FG, LS_TITLE); y += lh_t
+    y = y_body
     for ln in b_lines:
-        dr.text((70, y), nfc(ln), font=f_b, fill=(52, 56, 64)); y += 46
-    dr.text((70, H - 62), "짜오짜오 · " + d.get("ts", ""), font=f_s, fill=DIM)
+        dtext(dr, (PAD, y), nfc(ln), f_b, (48, 52, 60), LS_BODY); y += lh_b
+    dtext(dr, (PAD, H - 56), "짜오짜오 · " + d.get("ts", ""), f_s, DIM, LS_SMALL)
     return im
 
 
 def card2(d):
+    """둘째 장 — 낱말 여섯. 정사각이라 세로가 좁으니 **두 줄(2열 × 3행)** 로 앉힌다.
+
+    베트남어에는 자간을 주지 않는다 — 성조 부호가 어긋난다(dtext 설명 참고)."""
     im = Image.new("RGB", (W, H), BG)
     dr = ImageDraw.Draw(im)
-    f_h, f_vi, f_kr, f_ko, f_s = font(46, 1), font(50, vi=True), font(30), font(36), font(28)
-    dr.text((70, 92), "이 기사에서 배울 말", font=f_h, fill=FG)
-    dr.line([70, 168, W - 70, 168], fill=(220, 220, 216), width=3)
-    y = 210
-    for w in (d.get("words") or [])[:6]:
+    f_h, f_vi, f_kr, f_ko, f_s = font(38, 1), font(46, vi=True), font(26), font(31), font(24)
+    PAD, COL = 64, (W - 64 * 2 - 40) // 2          # 두 칸 사이 40px
+    dtext(dr, (PAD, 74), "이 기사에서 배울 말", f_h, FG, LS_TITLE)
+    dr.line([PAD, 140, W - PAD, 140], fill=(220, 220, 216), width=3)
+
+    words = (d.get("words") or [])[:6]
+    for i, w in enumerate(words):
+        cx = PAD + (i % 2) * (COL + 40)
+        cy = 196 + (i // 2) * 252        # 세 줄이 카드 안에 고르게 앉는 간격
+        vi = nfc(w["vi"])
+        # 낱말이 칸보다 길면 글꼴을 줄여서 넣는다 (잘라 내지 않는다)
+        fv = f_vi
+        for sz in (46, 42, 38, 34, 30):
+            fv = font(sz, vi=True)
+            if dr.textlength(vi, font=fv) <= COL: break
+        dr.text((cx, cy), vi, font=fv, fill=FG)
         kr = w.get("kr_read") or vi_kr.word(w["vi"])
-        dr.text((70, y), nfc(w["vi"]), font=f_vi, fill=FG)
-        dr.text((70 + dr.textlength(nfc(w["vi"]), font=f_vi) + 20, y + 18), "[" + kr + "]", font=f_kr, fill=DIM)
-        dr.text((70, y + 66), nfc(w["ko"]), font=f_ko, fill=(70, 74, 82))
-        y += 150
-    dr.text((70, H - 62), "짜오짜오 · 오늘의 기사", font=f_s, fill=DIM)
+        dtext(dr, (cx, cy + fv.size + 12), "[" + kr + "]", f_kr, DIM, LS_SMALL)
+        for j, ln in enumerate(wrap(dr, nfc(w["ko"]), f_ko, COL, LS_BODY)[:2]):
+            dtext(dr, (cx, cy + fv.size + 60 + j * int(f_ko.size * LH_SMALL)),
+                  ln, f_ko, (48, 52, 60), LS_BODY)
+    dtext(dr, (PAD, H - 56), "짜오짜오 · " + d.get("ts", ""), f_s, DIM, LS_SMALL)
     return im
 
 
