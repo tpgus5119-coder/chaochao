@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""기사 본문에서 **다섯 줄 요약**을 만든다 → data/news_days.json 의 sum5 칸
+"""기사 본문에서 **여덟 줄 요약**을 만든다 → data/news_days.json 의 sum5 칸
 
-왜 (대표님 지시 2026-08-31): "카드뉴스에 기사내용이 너무 빈약하다. 더 추가해줘. 5줄 안팎으로"
+왜 (대표님 지시 2026-08-31): "기사내용이 너무 빈약하다"(8/31) → 다섯 줄 → **여덟 줄**로 늘렸다(같은 날 재지시)
   지금 카드에 얹히던 intro 는 두 줄뿐이라 기사를 읽은 느낌이 안 났다.
   본문(1,500~3,500자)이 data/news_body.json 에 이미 있으므로 그것을 줄여 쓴다.
 
@@ -17,14 +17,14 @@ ORIGIN = "https://tpgus5119-coder.github.io"
 
 ASK = (
     "너는 베트남에서 일하는 한국 사람들에게 뉴스를 알기 쉽게 전해 주는 편집자다.\n"
-    "아래 기사를 **다섯 줄로** 요약하라.\n"
+    "아래 기사를 **여덟 줄로** 요약하라.\n"
     "규칙\n"
-    " ① 정확히 5줄. 한 줄은 완성된 문장이고 **32자 안팎**으로 짧게\n    (카드가 정사각형이라 한 줄이 넘치면 두 줄로 접혀 답답해진다)\n"
+    " ① 정확히 8줄. 한 줄은 완성된 문장이고 **32자 안팎**으로 짧게\n    (카드가 정사각형이라 한 줄이 넘치면 두 줄로 접혀 답답해진다)\n"
     " ② 숫자·회사 이름·지역 같은 **구체적인 사실**을 살려라 (5천억 달러·2200개 공장처럼)\n"
-    " ③ 첫 줄은 무슨 일이 있었는지, 마지막 줄은 그래서 우리에게 무슨 뜻인지\n"
+    " ③ 첫 줄은 무슨 일이 있었는지, 마지막 줄은 그래서 우리에게 무슨 뜻인지\n ⑥ 가운데 줄들에는 배경·숫자·앞으로의 계획을 나눠 담아 되풀이가 없게 하라\n"
     " ④ 전문용어는 풀어서 써라. 비전공자가 한 번에 읽히게\n"
     " ⑤ 제목을 그대로 되풀이하지 마라\n"
-    ' 출력은 JSON 만: {"sum5": ["줄1","줄2","줄3","줄4","줄5"]}\n\n'
+    ' 출력은 JSON 만: {"sum5": ["줄1","줄2","줄3","줄4","줄5","줄6","줄7","줄8"]}\n\n'
 )
 
 
@@ -48,8 +48,8 @@ def ask(title, body, tries=4):
         if m:
             try:
                 got = json.loads(m.group(0)).get("sum5")
-                if isinstance(got, list) and len(got) >= 4:
-                    return [str(x).strip() for x in got[:5] if str(x).strip()]
+                if isinstance(got, list) and len(got) >= 6:
+                    return [str(x).strip() for x in got[:8] if str(x).strip()]
             except Exception:
                 pass
         time.sleep(1.5 * (k + 1))
@@ -86,7 +86,7 @@ def main():
 
     if done:
         dp.write_text(json.dumps(D, ensure_ascii=False), encoding="utf-8")
-    print(f"다섯 줄 요약 {done}편 만듦")
+    print(f"여덟 줄 요약 {done}편 만듦")
 
 
 main()

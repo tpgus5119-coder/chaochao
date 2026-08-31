@@ -82,6 +82,25 @@ def dtext(dr, xy, text, f, fill, ls=0.0):
         x += dr.textlength(ch, font=f) + step
 
 
+def wrap_balanced(dr, text, f, width, ls=0.0):
+    """줄을 **고르게** 나눈다.
+
+    그냥 나누면 마지막 줄에 서너 글자만 남는 일이 잦다('…바랍니다' 다음 줄에 '.' 하나).
+    줄 수를 그대로 둔 채 폭을 조금씩 좁혀 보고, 마지막 줄이 가장 긴 나눔을 고른다.
+    글꼴을 줄이지 않고도 외톨이 줄이 사라져 **큰 글씨를 유지**할 수 있다."""
+    base = wrap(dr, text, f, width, ls)
+    if len(base) < 2:
+        return base
+    best = base
+    for k in range(95, 74, -3):                     # 폭을 95% → 76% 로 좁혀 본다
+        got = wrap(dr, text, f, width * k / 100, ls)
+        if len(got) != len(base):                   # 줄 수가 늘면 그만
+            break
+        if len(got[-1].strip()) > len(best[-1].strip()):
+            best = got
+    return best
+
+
 def wrap(dr, text, f, width, ls=0.0):
     """글자 폭을 재서 줄을 나눈다. 한국어는 띄어쓰기가 드물어 글자 단위로도 끊는다."""
     out, line = [], ""
@@ -105,54 +124,77 @@ def bg_image(prompt, seed):
 
 
 def card1(d, bg):
-    """첫 장 — 그림을 정사각 카드 전면에 깔고 그 위에 갈래·제목·다섯 줄 요약을 얹는다.
+    """첫 장 — 본문이 **카드를 가득** 채운다. 그림은 뒤에서 은은히 받쳐 주는 바탕이다.
 
-    글이 그림에 묻히지 않게, 글이 놓인 데까지만 흐린 막을 씌우고 아래로 걷어 낸다.
-    자간·행간은 위 상수(LS_*/LH_*)를 쓴다 — 큰 제목은 좁히고 본문은 살짝 벌린다."""
+    대표님 지시 (2026-08-31): "글자는 화면 가득 채워줘야지. 8줄 내외로.
+                              배경에 글이 가려지지 않도록 잘해봐. 글배경을 넣든가"
+    그래서 그림 위에 **카드 전체를 덮는 밝은 막**(92%)을 씌운다. 그림은 무늬처럼만 남고
+    글은 어디에 놓이든 또렷하다 — 글이 그림에 걸려 안 읽히는 일이 아예 생기지 않는다.
+    줄 간격은 남는 자리를 나눠 갖도록 **늘려서** 마지막 줄이 카드 아래에 닿게 한다."""
     im = Image.new("RGB", (W, H), BG)
-    f_cat, f_t, f_b, f_s = font(30, 1), font(50, 1), font(26), font(24)
-    lh_t, lh_b = int(f_t.size * LH_TITLE), int(f_b.size * LH_BODY)
-    PAD = 64
+    f_cat, f_t, f_s = font(30, 1), font(50, 1), font(24)
+    PAD = 62
+    TOP_TITLE = 152
+    BOTTOM = H - 96                      # 만든이 줄 위까지가 글자리
 
     probe = ImageDraw.Draw(im)
-    t_lines = wrap(probe, nfc(d["title"]), f_t, W - PAD * 2, LS_TITLE)[:3]
+    t_lines = wrap_balanced(probe, nfc(d["title"]), f_t, W - PAD * 2, LS_TITLE)[:3]
+    lh_t = int(f_t.size * LH_TITLE)
+    y_body = TOP_TITLE + len(t_lines) * lh_t + 30
+    room = BOTTOM - y_body
+
+    # 본문 글꼴을 **자리에 맞춰 키운다** — 남는 자리를 줄 간격으로만 늘리면
+    # 글자는 작은데 줄만 띄엄띄엄해져 오히려 허전하다. 들어가는 한 가장 큰 글꼴을 쓴다.
     body = d.get("sum5") or [d.get("intro") or ""]
-    b_lines = []
-    for para in body:
-        b_lines += wrap(probe, nfc(para), f_b, W - PAD * 2, LS_BODY)
-    b_lines = b_lines[:8]   # 한 줄에 안 들어가는 문장은 두 줄로 접힌다
-    y_title = 168
-    y_body = y_title + len(t_lines) * lh_t + 22
-    text_bottom = y_body + len(b_lines) * lh_b
+    def lay(sz):
+        fb = font(sz)
+        lines, orphan = [], False
+        for para in body:
+            got = wrap_balanced(probe, nfc(para), fb, W - PAD * 2, LS_BODY)
+            # 외톨이 줄 — 마지막 조각이 서너 글자뿐이면 보기 흉하다('…바랍니다' 다음 줄에 '.' 하나)
+            if len(got) > 1 and len(got[-1].strip()) <= 5: orphan = True
+            # (줄, 이어지는 줄인가) — 이어지는 줄은 들여써야 새 문장으로 안 읽힌다
+            lines += [(ln, i > 0) for i, ln in enumerate(got)]
+        return fb, lines, orphan, len(lines) * int(sz * LH_BODY) <= room
+
+    SIZES = (38, 36, 34, 33, 32, 31, 30, 29, 28)
+    cands = [lay(sz) for sz in SIZES]
+    # ① 자리에 들어가고 외톨이 줄도 없는 것 중 가장 큰 것
+    pick = next((c for c in cands if c[3] and not c[2]), None)
+    # ② 없으면 자리에 들어가기만 하는 것 중 가장 큰 것
+    pick = pick or next((c for c in cands if c[3]), None)
+    # ③ 그것도 없으면 가장 작은 글꼴로 넣고 넘치는 줄은 자른다
+    if not pick:
+        fb, lines, _, _ = cands[-1]
+        pick = (fb, lines[:max(1, int(room / (fb.size * LH_BODY)))], False, True)
+    f_b, b_lines = pick[0], pick[1]
+    # 그러고도 남는 자리는 줄 사이에 고루 나눈다 (너무 벌어지지 않게 상한 1.95배)
+    lh_b = int(room / max(1, len(b_lines)))
+    lh_b = max(int(f_b.size * LH_BODY), min(lh_b, int(f_b.size * 2.10)))
 
     if bg:
         im.paste(bg.resize((W, H)), (0, 0))
-        fade_to = min(H, text_bottom + 150)
+        # 카드 전체를 덮는 밝은 막 — 그림은 무늬로 남고 글은 어디서나 읽힌다
+        veil = Image.new("RGB", (W, H), BG)
+        im.paste(veil, (0, 0), Image.new("L", (W, H), 234))
+        # 아래쪽은 조금 더 걷어 그림이 살아 있게 둔다 (막이 옅어지는 만큼 글도 아래에서 끝난다)
         g = Image.new("L", (1, H), 0)
         for y in range(H):
-            if y <= text_bottom: v = 235
-            elif y >= fade_to:   v = 0
-            else:                v = int(235 * (1 - (y - text_bottom) / (fade_to - text_bottom)))
-            g.putpixel((0, y), v)
-        im.paste(Image.new("RGB", (W, H), BG), (0, 0), g.resize((W, H)))
-        # 맨 아래도 옅게 덮는다 — 그림이 어두우면 '짜오짜오 · 날짜' 가 안 읽힌다
-        g2 = Image.new("L", (1, H), 0)
-        for y in range(H - 110, H):
-            g2.putpixel((0, y), int(215 * (y - (H - 110)) / 110))
-        im.paste(Image.new("RGB", (W, H), BG), (0, 0), g2.resize((W, H)))
+            g.putpixel((0, y), 0 if y < BOTTOM - 40 else min(60, (y - (BOTTOM - 40))))
+        im.paste(Image.new("RGB", (W, H), (255, 255, 255)), (0, 0), g.resize((W, H)))
 
     dr = ImageDraw.Draw(im)
     cat = d.get("cat") or "소식"
     c = CAT_COLOR.get(cat, (60, 60, 60))
     cw = tw(dr, nfc(cat), f_cat, LS_SMALL)
-    dr.rounded_rectangle([PAD, 70, PAD + cw + 48, 126], 28, fill=c)
-    dtext(dr, (PAD + 24, 80), nfc(cat), f_cat, (255, 255, 255), LS_SMALL)
-    y = y_title
+    dr.rounded_rectangle([PAD, 58, PAD + cw + 48, 114], 28, fill=c)
+    dtext(dr, (PAD + 24, 68), nfc(cat), f_cat, (255, 255, 255), LS_SMALL)
+    y = TOP_TITLE
     for ln in t_lines:
         dtext(dr, (PAD, y), nfc(ln), f_t, FG, LS_TITLE); y += lh_t
     y = y_body
-    for ln in b_lines:
-        dtext(dr, (PAD, y), nfc(ln), f_b, (48, 52, 60), LS_BODY); y += lh_b
+    for ln, cont in b_lines:
+        dtext(dr, (PAD + (26 if cont else 0), y), nfc(ln), f_b, (38, 42, 50), LS_BODY); y += lh_b
     dtext(dr, (PAD, H - 56), "짜오짜오 · " + d.get("ts", ""), f_s, DIM, LS_SMALL)
     return im
 
