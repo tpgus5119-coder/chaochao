@@ -123,7 +123,7 @@ def bg_image(prompt, seed):
     return Image.open(io.BytesIO(base64.b64decode(json.loads(r.read())["images"][0]))).convert("RGB")
 
 
-def card1(d, bg):
+def card1(d, bg, bgsave=None):
     """첫 장 — 본문이 **카드를 가득** 채운다. 그림은 뒤에서 은은히 받쳐 주는 바탕이다.
 
     대표님 지시 (2026-08-31): "글자는 화면 가득 채워줘야지. 8줄 내외로.
@@ -182,6 +182,12 @@ def card1(d, bg):
         for y in range(H):
             g.putpixel((0, y), 0 if y < BOTTOM - 40 else min(60, (y - (BOTTOM - 40))))
         im.paste(Image.new("RGB", (W, H), (255, 255, 255)), (0, 0), g.resize((W, H)))
+
+    # 글자를 얹기 **직전** 모습을 남긴다 — 파워포인트가 이것을 깔고 글은 글상자로 얹는다
+    # (PPT 는 webp 를 못 읽어서 png 로 쓴다). tools/card_ppt.py 참고
+    if bgsave:
+        bgsave.parent.mkdir(parents=True, exist_ok=True)
+        im.save(bgsave, "PNG")
 
     dr = ImageDraw.Draw(im)
     cat = d.get("cat") or "소식"
@@ -280,7 +286,8 @@ def main():
             try: bg = bg_image(pr, hv % 10 ** 8)
             except Exception as e: print("  배경 못 구움:", type(e).__name__)
         base = f"{d.get('ts','x')}-{i}"
-        for n, im in ((1, card1(d, bg)), (2, card2(d))):
+        bgp = OUT / "bg" / f"{d.get('ts','x')}-{i}.png"
+        for n, im in ((1, card1(d, bg, bgp)), (2, card2(d))):
             p = OUT / f"{base}-{n}.webp"
             im.save(p, "WEBP", quality=88, method=6)
             made.append(p.name)

@@ -1723,3 +1723,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .cardbtn{margin:-6px 0 12px; align-self:flex-start}
 .cardbox{display:grid; gap:14px}
 .cardimg{width:100%; border-radius:var(--radius); border:1px solid var(--line); display:block}
+
+/* 기사 세트 맨 앞 카드뉴스 — 정사각형이라 화면 폭에 맞춰 통째로 보인다 */
+.newscardimg{display:block;width:100%;max-width:520px;margin:0 auto;
+  border-radius:var(--radius);box-shadow:var(--shadow)}

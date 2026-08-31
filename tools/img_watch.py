@@ -9,7 +9,8 @@
   ① 깃허브에서 최신 내용을 받는다 (로봇이 밤새 올린 기사 세트를 포함)
   ② **카드뉴스** — 기사가 새로 들어온 날 중 카드가 없는 날을 찾아
      다섯 줄 요약(news_sum5.py) → 카드 두 장씩(card_news.py) 을 만들고,
-     바탕화면 ~/Desktop/chaochao-cardnews/<날짜>/ 로도 내보낸다(card_export.py)
+     바탕화면 ~/Desktop/chaochao-cardnews/<날짜>/ 로 내보내고(card_export.py),
+     고쳐 쓸 수 있는 파워포인트도 같이 만든다(card_ppt.py)
      — 대표님 지시(2026-08-31): "매일 기사 업데이트에서 카드뉴스가 메인이다"
   ③ days.json 과 news_days.json 이 요구하는 그림 중 **없는 것**을 찾는다
   ④ Draw Things 가 켜져 있으면 그것들만 굽는다 (꺼져 있으면 조용히 넘어간다)
@@ -123,6 +124,7 @@ def make_cards():
     need = card_days()
     if not need:
         subprocess.run([sys.executable, 'tools/card_export.py'], cwd=R)   # 폴더만 맞춰 둔다
+        subprocess.run([sys.executable, 'tools/card_ppt.py'], cwd=R)
         return 0
     if not alive():
         print(f'카드뉴스 {len(need)}일치 — Draw Things 가 꺼져 있어 다음에')
@@ -133,6 +135,7 @@ def make_cards():
         r = subprocess.run([sys.executable, 'tools/card_news.py', '--day', ts], cwd=R)
         if r.returncode == 0: done += 1
     subprocess.run([sys.executable, 'tools/card_export.py'], cwd=R)
+    subprocess.run([sys.executable, 'tools/card_ppt.py'], cwd=R)   # 고칠 수 있는 파워포인트도
     if done: print(f'카드뉴스 {done}일치 만듦')
     return done
 

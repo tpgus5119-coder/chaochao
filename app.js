@@ -5931,6 +5931,19 @@ function drawCard() {
   c.textContent = '';
   const it = L.items[L.i], x = it.d;
 
+  if (it.k === 'card') {                     // 카드뉴스 한 장 (기사 세트의 맨 앞 두 장)
+    const im = el('img', 'newscardimg');
+    im.src = x.src; im.alt = tr('카드뉴스') + ' ' + x.n; im.loading = 'eager';
+    // 아직 안 만들어진 날이면 그냥 다음 장으로 — 빈 화면을 보여 주지 않는다
+    im.onerror = () => { if (L.i < L.items.length - 1) { L.i++; drawCard(); } };
+    c.append(im);
+    if (x.n === 2 && x.u) {
+      const a = el('a', 'srclink', tr('기사 보러가기') + ' ›');
+      a.href = x.u; a.target = '_blank'; a.rel = 'noopener';
+      c.append(a);
+    }
+  }
+
   if (it.k === 'cover') {
     const cp = pic(x, 'pic cover'); if (cp) c.append(cp);
     c.append(el('div', 'covert', esc(x.t)));
@@ -10176,7 +10189,12 @@ function showCards(d) {
 }
 
 function startNews(d) {
-  const items = [{ k: 'cover', d: { t: '📰 ' + d.theme, b: esc(d.intro), src: d.u, title: d.title,
+  /* 기사를 누르면 **카드뉴스 두 장이 먼저** 나온다 (대표님 지시 2026-08-31).
+     그 뒤는 예전 그대로 — 표지 → 낱말 → 대화. 카드 파일이 아직 없는 날이면
+     그림이 안 뜨고 저절로 다음 장으로 넘어간다(drawCard 의 card 갈래). */
+  const items = [{ k: 'card', d: { src: cardName(d, 1), n: 1, u: d.u } },
+                 { k: 'card', d: { src: cardName(d, 2), n: 2, u: d.u } },
+                 { k: 'cover', d: { t: '📰 ' + d.theme, b: esc(d.intro), src: d.u, title: d.title,
                                     img: (d.words || []).map(w => w.img).find(Boolean),
                                     emoji: (d.words || []).map(w => w.emoji).find(Boolean) } }];
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
