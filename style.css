@@ -1753,3 +1753,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   background:var(--accent); color:var(--accent-fg)}
 .sound > button.ghost{background:var(--card); color:var(--accent)}
 .sound > button:active{transform:scale(.97)}
+
+/* 성조만 틀렸을 때 — 오답이지만 '거의 맞았다'는 것이 보이게 (2026-08-31) */
+.tonemiss{margin-top:8px; font-size:14px; font-weight:600; color:var(--warn)}
+[data-r=tone]{border-color:var(--warn) !important}

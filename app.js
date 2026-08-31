@@ -593,6 +593,8 @@ const UIVI = {
      그 줄은 언어를 아직 안 고른 화면이라 한국어와 베트남어를 나란히 쓴다(app.js:2394). */
   '학습': 'Học',
   '문화': 'Văn hóa',
+  '성조만 틀렸어요 — 글자는 맞았습니다': 'Chỉ sai thanh điệu — chữ thì đúng',
+  '글자가 틀렸어요': 'Sai chữ',
   '기사 보러가기': 'Xem bài gốc',
   '이번 주 N일 공부': 'Học N ngày tuần này',
   '자유 복습': 'Ôn tập tự do',
@@ -6927,7 +6929,9 @@ function drawDict(body, q) {
     markSpeed(good, 'dict');
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
-    if (!good) bump('serr', bare(picked.join(' ')) === bare(q.w.vi) ? '성조만 틀림' : '글자를 틀림', false);
+    const toneOnly2 = !good && bare(picked.join(' ')) === bare(q.w.vi);
+    if (!good) bump('serr', toneOnly2 ? '성조만 틀림' : '글자를 틀림', false);
+    if (toneOnly2) ans.append(el('div', 'tonemiss', tr('성조만 틀렸어요 — 글자는 맞았습니다')));
     fxTone(good);
     chk.disabled = undo.disabled = true;
     [...tiles.children].forEach(t => t.disabled = true);
@@ -7095,9 +7099,18 @@ function drawTypeQ(body, q) {
     fxTone(good);
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
-    if (!good) bump('serr', bare(txt) === bare(w.vi) ? '성조만 틀림' : '글자를 틀림', false);
-    out.dataset.r = good ? 'ok' : 'no';
-    if (!good) out.textContent = txt.trim() + '  →  ' + w.vi;
+    /* 성조만 틀린 것은 **오답이되 따로 알려 준다** (대표님 지시 2026-08-31).
+       ma·mà·má·mả·mã·mạ 는 서로 다른 낱말이라 성조를 봐주면 안 된다.
+       다만 '글자를 틀림' 과 한 덩어리로 묶으면 무엇을 고쳐야 할지 모른다. */
+    const toneOnly = !good && bare(txt) === bare(w.vi);
+    if (!good) bump('serr', toneOnly ? '성조만 틀림' : '글자를 틀림', false);
+    out.dataset.r = good ? 'ok' : (toneOnly ? 'tone' : 'no');
+    if (!good) {
+      out.textContent = txt.trim() + '  →  ' + w.vi;
+      body.append(el('div', 'tonemiss', toneOnly
+        ? tr('성조만 틀렸어요 — 글자는 맞았습니다')
+        : tr('글자가 틀렸어요')));
+    }
     grade(w.vi, good, Q.early);
     if (good) Q.ok++; else requeue(q);
     nextBtn(body, () => { Q.i++; drawQuiz(); });
