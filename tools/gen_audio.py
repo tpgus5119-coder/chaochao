@@ -57,6 +57,15 @@ def collect(data):
         for w in o.get("gramwords", []):
             out.setdefault(w["vi"], "word")
             if w.get("ex"): out.setdefault(w["ex"]["vi"], "sent")
+    # 예문 안에만 나오는 낱말 (data/exgloss.json) — này·đang·ở 같은 말들.
+    #   2026-08-31: 이것이 빠져 있어 681개 중 349개에 소리가 없었다.
+    #   소리가 없으면 앱이 **기기 내장 목소리**로 대신 읽는데, 그러면 골라 둔
+    #   남부 남자 대신 딴 사람 목소리가 튀어나온다("여자 남자가 섞인다").
+    ep = ROOT / "data" / "exgloss.json"
+    if ep.exists():
+        for k in json.loads(ep.read_text(encoding="utf-8")):
+            out.setdefault(k, "word")
+
     # 7권 베트남 바로알기 — 낱말과 문장
     # 7권 바로알기에는 낱말·문장이 없다 — 읽는 자리다 (대표님 지시, 2026-08-30)
     # 1권 문법 예문

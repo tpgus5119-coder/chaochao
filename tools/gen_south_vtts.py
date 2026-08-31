@@ -79,7 +79,14 @@ for i, (text, h) in enumerate(items):
         break
     else:
         fail += 1; bad.append(text)
-    if best is None: continue
+    if best is None:
+        # 네 번 다 걸렸다. 2026-08-31: 그냥 건너뛰면 **소리 파일에 구멍이 남고**,
+        #   앱은 파일이 없으면 기기 내장 목소리로 읽어 버린다 — 골라 둔 남부 남자 대신
+        #   딴 목소리가 튀어나온다. 그래서 마지막 판을 그대로라도 남긴다.
+        #   ('tv' 같은 영어 약어에서 생긴다 — 성조 잣대를 댈 수 없는 말이다)
+        audio, sr = tts.synthesize(text, speaker_id=sid, noise_scale=0.667)
+        best = np.asarray(audio, dtype='float32')
+        print('  잣대 미달이라 그대로 남김:', text, flush=True)
     sf.write(R / f'audio/{voice}/n/{h}.mp3', best, SR, format='MP3')
     # 느린 판은 더 만들지 않는다 — '느리게 듣기'를 없앴고 저장소가 1GB 에 닿았다
     #   (느린 판만 14,983개 161MB 였다. 2026-08-30)

@@ -7554,6 +7554,10 @@ function drawTone() {
 
   const wrap = el('div', 'qplay');
   const b = el('button', 'primary big', '듣기');
+  /* 성조 문제만은 **일부러 북부 소리로** 낸다 (고치지 마라).
+     남부는 hỏi 와 ngã 를 한 소리로 합쳐 버린다. 그런데 이 훈련에는 둘 다 나온다
+     (days.json tonedrill: ngang·huyền·sắc·hỏi·ngã·nặng). 남부로 내면 두 답이
+     똑같이 들려 **문제 자체가 성립하지 않는다.** 남녀는 고른 대로 따라간다. */
   b.onclick = () => play(it.vi, false, S.voice);
   wrap.append(b);
   body.append(wrap);

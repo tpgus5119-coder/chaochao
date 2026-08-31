@@ -740,6 +740,11 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .tk.tonek.hỏi{color:var(--bad)}
 
 /* 헤더 프로필 아이콘 */
+/* 홈 단추 — 메신저·내 정보와 **같은 선 아이콘**으로 그린다 (2026-08-31).
+   규칙이 없으면 svg 의 기본 채우기(검정)가 먹어 홈만 새까맣게 보였다. */
+#goHome{padding:7px; line-height:0}
+#goHome svg{width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
 #goMe{padding:7px; line-height:0}
 #goMe svg{width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round}
 
