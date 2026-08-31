@@ -12,7 +12,7 @@
   제목·요약·낱말은 파이썬(PIL)이 얹는다. 그래야 글자가 정확하다.
   카드 크기는 **1080×1350 (4:5)** — 요즘 SNS 표준이고 세로라 글자리가 넉넉하다.
 
-  ① 첫 장 = 갈래표 + 제목 + 두 줄 요약 + 배경 그림
+  ① 첫 장 = 갈래표 + 제목 + **다섯 줄 요약**(tools/news_sum5.py) + 배경 그림
   ② 둘째 장 = 그 기사에서 뽑은 낱말 여섯 개 (베트남어 · 발음 · 뜻)
 
 쓰기: python3 tools/card_news.py [--day 2026-08-28] [--limit 5]
@@ -75,26 +75,53 @@ def bg_image(prompt, seed):
 
 
 def card1(d, bg):
+    """첫 장 — 그림을 카드 전면에 깔고 그 **위에** 갈래·제목·다섯 줄 요약을 얹는다.
+
+    글이 그림에 묻히지 않게, 글이 놓인 데까지만 흐린 막(그러데이션)을 씌우고
+    그 아래로 220px 에 걸쳐 걷어 낸다. 막은 완전히 덮지 않고 92% 만 덮어
+    그림이 은은히 비치게 둔다 — 글은 읽히고 그림도 살아 있다. (2026-08-31 대표님 지시)"""
     im = Image.new("RGB", (W, H), BG)
-    dr = ImageDraw.Draw(im)
+    f_cat, f_t, f_b, f_s = font(34, 1), font(60, 1), font(30), font(28)
+
+    # 글이 어디까지 내려오는지 먼저 잰다 — 막의 길이를 그에 맞춰야 한다
+    probe = ImageDraw.Draw(im)
+    t_lines = wrap(probe, nfc(d["title"]), f_t, W - 140)[:4]
+    body = d.get("sum5") or [d.get("intro") or ""]
+    b_lines = []
+    for para in body:
+        b_lines += wrap(probe, nfc(para), f_b, W - 140)
+    b_lines = b_lines[:10]          # 다섯 문장이 한 줄에 안 들어가면 두 줄까지 봐준다
+    text_bottom = 200 + len(t_lines) * 76 + 26 + len(b_lines) * 46
+
     if bg:
-        b = bg.resize((W, W))
-        im.paste(b, (0, H - W))
-        # 아래 그림 위에 흰 그러데이션을 얹어 글자가 읽히게
-        g = Image.new("L", (1, W), 0)
-        for y in range(W): g.putpixel((0, y), int(255 * max(0, 1 - y / (W * .55))))
-        im.paste(Image.new("RGB", (W, W), BG), (0, H - W), g.resize((W, W)))
+        # 세로 카드를 꽉 채우되 찌그러뜨리지 않는다 — 높이에 맞춰 키우고 좌우를 잘라 낸다
+        b = bg.resize((H, H)).crop(((H - W) // 2, 0, (H - W) // 2 + W, H))
+        im.paste(b, (0, 0))
+        fade_to = min(H, text_bottom + 220)
+        g = Image.new("L", (1, H), 0)
+        for y in range(H):
+            if y <= text_bottom: v = 235
+            elif y >= fade_to:   v = 0
+            else:                v = int(235 * (1 - (y - text_bottom) / (fade_to - text_bottom)))
+            g.putpixel((0, y), v)
+        im.paste(Image.new("RGB", (W, H), BG), (0, 0), g.resize((W, H)))
+        # 맨 아래 130px 도 옅게 덮는다 — 그림이 어두우면 '짜오짜오 · 날짜' 가 안 읽힌다
+        g2 = Image.new("L", (1, H), 0)
+        for y in range(H - 130, H):
+            g2.putpixel((0, y), int(215 * (y - (H - 130)) / 130))
+        im.paste(Image.new("RGB", (W, H), BG), (0, 0), g2.resize((W, H)))
+
+    dr = ImageDraw.Draw(im)
     cat = d.get("cat") or "소식"
     c = CAT_COLOR.get(cat, (60, 60, 60))
-    f_cat, f_t, f_b, f_s = font(34, 1), font(62, 1), font(38), font(28)
     dr.rounded_rectangle([70, 84, 70 + dr.textlength(nfc(cat), font=f_cat) + 56, 148], 32, fill=c)
     dr.text((98, 96), nfc(cat), font=f_cat, fill=(255, 255, 255))
     y = 200
-    for ln in wrap(dr, nfc(d["title"]), f_t, W - 140)[:4]:
-        dr.text((70, y), nfc(ln), font=f_t, fill=FG); y += 78
+    for ln in t_lines:
+        dr.text((70, y), nfc(ln), font=f_t, fill=FG); y += 76
     y += 26
-    for ln in wrap(dr, nfc(d.get("intro") or ""), f_b, W - 140)[:4]:
-        dr.text((70, y), nfc(ln), font=f_b, fill=(70, 74, 82)); y += 54
+    for ln in b_lines:
+        dr.text((70, y), nfc(ln), font=f_b, fill=(52, 56, 64)); y += 46
     dr.text((70, H - 62), "짜오짜오 · " + d.get("ts", ""), font=f_s, fill=DIM)
     return im
 
@@ -134,15 +161,36 @@ def main():
         bg = None
         if not a.nobg:
             # 배경은 **사람·손·글자 없는 장면**만. 갈래에 맞춘 사물 풍경으로.
-            scene = {"일자리": "an empty office desk with a chair by a window",
-                     "공장·산업": "a factory building with tall chimneys at sunrise",
-                     "경제": "stacked coins and a rising line chart on a plain table",
-                     "사회": "a quiet city street with traffic lights",
-                     "정치": "a government building with flags",
-                     "문화·생활": "a bowl of pho and chopsticks on a wooden table",
-                     }.get(d.get("cat"), "a calm city skyline at dawn")
+            # 갈래마다 장면을 **여럿** 두고 기사별로 고른다.
+            #   2026-08-31: 장면과 씨앗을 갈래 이름 하나로만 정해서, 같은 갈래 기사 둘이
+            #   **완전히 똑같은 그림**을 썼다(삼성전자 카드와 나이키 카드의 배경이 한 장이었다).
+            #   씨앗도 기사(제목)에서 뽑아 같은 장면이라도 다른 그림이 나오게 한다.
+            SCENES = {
+              "일자리": ["an empty office desk with a chair by a window",
+                       "a row of lockers in a quiet workplace hallway",
+                       "a hard hat and gloves resting on a workbench"],
+              "공장·산업": ["a factory building with tall chimneys at sunrise",
+                        "rolls of fabric stacked in a bright warehouse",
+                        "a conveyor belt with cardboard boxes in a plant",
+                        "shipping containers stacked at a port at dawn"],
+              "경제": ["stacked coins and a rising line chart on a plain table",
+                     "a bank building facade with tall columns",
+                     "a calculator and paper documents on a desk"],
+              "사회": ["a quiet city street with traffic lights",
+                     "a modern city bus at an empty bus stop",
+                     "a pedestrian crossing on a wide avenue"],
+              "정치": ["a government building with flags",
+                     "an empty conference table with microphones"],
+              "문화·생활": ["a bowl of pho and chopsticks on a wooden table",
+                        "a street food cart under lanterns at dusk",
+                        "a traditional market stall with fresh produce"],
+            }
+            opts = SCENES.get(d.get("cat"), ["a calm city skyline at dawn"])
+            key = (d.get("title") or "") + (d.get("ts") or "")
+            hv = int(hashlib.sha1(key.encode()).hexdigest(), 16)
+            scene = opts[hv % len(opts)]
             pr = scene + ". Flat vector illustration, bold black outlines, flat pastel fill, plain background"
-            try: bg = bg_image(pr, int(hashlib.sha1(pr.encode()).hexdigest()[:8], 16) % 10 ** 8)
+            try: bg = bg_image(pr, hv % 10 ** 8)
             except Exception as e: print("  배경 못 구움:", type(e).__name__)
         base = f"{d.get('ts','x')}-{i}"
         for n, im in ((1, card1(d, bg)), (2, card2(d))):

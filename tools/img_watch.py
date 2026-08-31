@@ -7,11 +7,16 @@
 
 하는 일 (한 시간에 한 번)
   ① 깃허브에서 최신 내용을 받는다 (로봇이 밤새 올린 기사 세트를 포함)
-  ② days.json 과 news_days.json 이 요구하는 그림 중 **없는 것**을 찾는다
-  ③ Draw Things 가 켜져 있으면 그것들만 굽는다 (꺼져 있으면 조용히 넘어간다)
-  ④ 새로 만든 그림이 있으면 판번호를 찍고 커밋·푸시한다
+  ② **카드뉴스** — 기사가 새로 들어온 날 중 카드가 없는 날을 찾아
+     다섯 줄 요약(news_sum5.py) → 카드 두 장씩(card_news.py) 을 만들고,
+     바탕화면 ~/Desktop/chaochao-cardnews/<날짜>/ 로도 내보낸다(card_export.py)
+     — 대표님 지시(2026-08-31): "매일 기사 업데이트에서 카드뉴스가 메인이다"
+  ③ days.json 과 news_days.json 이 요구하는 그림 중 **없는 것**을 찾는다
+  ④ Draw Things 가 켜져 있으면 그것들만 굽는다 (꺼져 있으면 조용히 넘어간다)
+  ⑤ 새로 만든 것이 있으면 판번호를 찍고 커밋·푸시한다
 
-건드리는 것은 img/ 와 판번호(index.html·sw.js)뿐이다. 코드는 손대지 않는다.
+건드리는 것은 img/ · data/news_days.json · 판번호(index.html·sw.js)뿐이다.
+코드는 손대지 않는다.
 멈추려면: launchctl unload ~/Library/LaunchAgents/chaochao.img.plist
 """
 import json, pathlib, subprocess, sys, urllib.request, zlib, io, base64, re
@@ -97,6 +102,41 @@ def bake(name, prompt):
     im = Image.open(io.BytesIO(base64.b64decode(r['images'][0]))).convert('RGB')
     im.save(IMG / f'{name}.webp', 'WEBP', quality=82)
 
+def card_days():
+    """기사는 있는데 카드가 없는 날짜를 돌려준다. (첫 기사의 1-1 파일만 봐도 안다)"""
+    p = R / 'data' / 'news_days.json'
+    if not p.exists(): return []
+    try: days = json.loads(p.read_text(encoding='utf-8'))['days']
+    except Exception: return []
+    seen, need = set(), []
+    for d in days:
+        ts = d.get('ts')
+        if not ts or ts in seen: continue
+        seen.add(ts)
+        if not (IMG / 'card' / f'{ts}-1-1.webp').exists():
+            need.append(ts)
+    return need
+
+
+def make_cards():
+    """빠진 날짜의 카드뉴스를 만들고 바탕화면으로 내보낸다. 만든 날짜 수를 돌려준다."""
+    need = card_days()
+    if not need:
+        subprocess.run([sys.executable, 'tools/card_export.py'], cwd=R)   # 폴더만 맞춰 둔다
+        return 0
+    if not alive():
+        print(f'카드뉴스 {len(need)}일치 — Draw Things 가 꺼져 있어 다음에')
+        return 0
+    done = 0
+    for ts in need[-3:]:                       # 밀렸어도 한 번에 사흘치까지만
+        subprocess.run([sys.executable, 'tools/news_sum5.py', '--day', ts], cwd=R)
+        r = subprocess.run([sys.executable, 'tools/card_news.py', '--day', ts], cwd=R)
+        if r.returncode == 0: done += 1
+    subprocess.run([sys.executable, 'tools/card_export.py'], cwd=R)
+    if done: print(f'카드뉴스 {done}일치 만듦')
+    return done
+
+
 def main():
     # 사람이 고치는 중이면 손대지 않는다.
     # `git diff --quiet` 는 **추적 중인 파일만** 본다. 갓 구운 그림은 아직 추적 밖이라
@@ -111,29 +151,40 @@ def main():
     if sh('git', 'pull', '--rebase', '--quiet').returncode != 0:
         sh('git', 'rebase', '--abort')          # 멈춘 채로 두지 않는다
         print('내려받기 실패 — 되돌리고 다음에'); return 0
+    cards = make_cards()                       # ← 매일 일의 **본체**
     want = wanted()
     doc = prompts_from_doc()
     todo = [(n, doc.get(n) or want[n]) for n in want
             if n not in EXACT and not (IMG / f'{n}.webp').exists()]
     todo = [(n, p) for n, p in todo if p]
     if not todo:
-        print('빠진 그림 없음'); return 0
+        print('빠진 그림 없음')
+        return publish(0, cards)
     if not alive():
-        print(f'빠진 그림 {len(todo)}장 — Draw Things 가 꺼져 있어 다음에'); return 0
+        print(f'빠진 그림 {len(todo)}장 — Draw Things 가 꺼져 있어 다음에')
+        return publish(0, cards)
     made = 0
     for n, p in todo[:150]:                                    # 한 번에 150장까지만
         try:
             bake(n, p); made += 1
         except Exception as e:
             print(f'실패 {n}: {e}')
-    if not made:
+    return publish(made, cards)
+
+
+def publish(made, cards):
+    """만든 것이 있으면 판번호를 찍고 올린다. 그림만·카드만 만든 경우도 올린다."""
+    if not made and not cards:
         return 0
     subprocess.run([sys.executable, 'tools/stamp.py'], cwd=R)
-    sh('git', 'add', 'img', 'index.html', 'sw.js')
+    sh('git', 'add', 'img', 'data/news_days.json', 'index.html', 'sw.js')
     if sh('git', 'diff', '--cached', '--quiet').returncode != 0:
-        sh('git', 'commit', '-m', f'그림 {made}장 자동 생성 (그림 지킴이)')
+        what = []
+        if cards: what.append(f'카드뉴스 {cards}일치')
+        if made:  what.append(f'그림 {made}장')
+        sh('git', 'commit', '-m', ' · '.join(what) + ' 자동 생성 (지킴이)')
         sh('git', 'push', '--quiet')
-    print(f'그림 {made}장 만들어 올림')
+    print(f'올림 — 카드뉴스 {cards}일치 · 그림 {made}장')
     return 0
 
 if __name__ == '__main__':

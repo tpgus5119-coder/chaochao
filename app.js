@@ -593,6 +593,7 @@ const UIVI = {
      그 줄은 언어를 아직 안 고른 화면이라 한국어와 베트남어를 나란히 쓴다(app.js:2394). */
   '학습': 'Học',
   '문화': 'Văn hóa',
+  '기사 보러가기': 'Xem bài gốc',
   '이번 주 N일 공부': 'Học N ngày tuần này',
   '자유 복습': 'Ôn tập tự do',
   '무엇을 배우시겠습니까?': 'Bạn muốn học gì?',
@@ -10132,6 +10133,14 @@ function showNewsLearn() {
       const cn = el('button', 'ghost sm cardbtn', '🖼 ' + tr('카드뉴스'));
       cn.onclick = e => { e.stopPropagation(); showCards(d); };
       b.append(cn);
+      /* 원문 보러 가기 (대표님 지시 2026-08-31) — 요약만 보고 끝나지 않게 길을 열어 둔다.
+         새 창으로 띄우고 rel=noopener 를 준다: 그래야 원문 쪽에서 우리 창을 건드릴 수 없다. */
+      if (d.u) {
+        const go = el('a', 'ghost sm cardbtn', '🔗 ' + tr('기사 보러가기'));
+        go.href = d.u; go.target = '_blank'; go.rel = 'noopener';
+        go.onclick = e => e.stopPropagation();
+        b.append(go);
+      }
     });
   });
 }
@@ -10156,6 +10165,12 @@ function showCards(d) {
     box.append(im);
   });
   b.append(box);
+  if (d.u) {
+    const go = el('a', 'primary big', '🔗 ' + tr('기사 보러가기'));
+    go.href = d.u; go.target = '_blank'; go.rel = 'noopener';
+    go.style.display = 'block'; go.style.textAlign = 'center'; go.style.margin = '14px 0';
+    b.append(go);
+  }
   b.append(el('p', 'note', tr('그림을 길게 누르면 폰에 저장됩니다.')));
   show('sub', '카드뉴스', true);
 }
