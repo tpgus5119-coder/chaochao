@@ -509,7 +509,7 @@ const UIVI = {
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
   '귀 훈련': 'Luyện tai', '두 영역이 10문제를 넘으면 강점·약점과 처방이 나옵니다.':
-  'Khi hai kỹ năng vượt 10 câu, bạn sẽ thấy điểm mạnh·yếu và lời khuyên.', '자판 치는 법': 'Cách gõ bàn phím', '갈래': ' nhóm', '개 문법': ' ngữ pháp', '장': ' thẻ',
+  'Khi hai kỹ năng vượt 10 câu, bạn sẽ thấy điểm mạnh·yếu và lời khuyên.', '자판 치는 법': 'Cách gõ bàn phím', '갈래': ' nhóm', '챕터': ' chương', '개 문법': ' ngữ pháp', '장': ' thẻ',
   '갈 곳이 정해졌으면 그 갈래만 고르세요': 'Đã biết nơi làm thì chỉ chọn nhóm đó',
   '고른 것 지우기': 'Bỏ chọn', '고름': 'Đã chọn', '고르기': 'Chọn',
   '열두 강 · 그림과 숫자로 읽습니다': '12 buổi · đọc bằng hình và số',
@@ -5064,7 +5064,7 @@ function gramStat() {
   all++; if (S.done['PTYPE']) done++;                 // 자판 치는 법
   if (GRAM) GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
     all++; if (S.done[gkey(bi, ni)]) done++; }));
-  return stat(done, all, '과');
+  return stat(done, all, '챕터');
 }
 
 function drawCourse() {
@@ -5074,7 +5074,6 @@ function drawCourse() {
     .then(j => { GRAM = j; if (!$('#course').hidden) drawCourse(); }).catch(() => {});
   const list = $('#dayList'); list.textContent = '';
   const head = el('li', 'catpick');
-  head.append(el('span', 'msub', tr('한 레슨 15낱말')));
   list.append(head);
 
   const row = (num, name, right, fn, done) => {
@@ -5099,7 +5098,7 @@ function drawCourse() {
   if (jv0) {
     const td = jv0.tracks.filter((t, ti) =>
       t.chapters.every((c, ci) => c.lessons.every((l, li) => S.done[jkey(ti, ci, li)]))).length;
-    row((lifeVols().length + 2) + '권', tr('직무'), stat(td, jv0.tracks.length, '갈래'),
+    row((lifeVols().length + 2) + '권', tr('직무'), stat(td, jv0.tracks.length, '챕터'),
         () => { dive(drawCourse); drawJob(0); }, td >= jv0.tracks.length);
   }
   /* 문화는 **첫 화면에 따로** 뒀다 (대표님 지시, 2026-08-30) —
@@ -5343,7 +5342,7 @@ function drawGramList() {
       const k = gkey(bi, ni), fin = !!S.done[k];
       const btn = el('button');
       btn.dataset.done = fin ? '1' : '0';
-      btn.append(el('span', 'num', x.no + tr('과')),
+      btn.append(el('span', 'num', tr('챕터') + ' ' + x.no),
                  el('span', 'nm', esc(x.t)),
                  el('span', 'st', x.g.length + tr('개 문법') + (fin ? ' ✔' : '')));
       btn.onclick = () => { dive(drawGramList); startGram(bi, ni); };
