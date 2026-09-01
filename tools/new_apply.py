@@ -120,10 +120,9 @@ def main():
     job = [v for v in o["vols"] if v.get("kind") != "life"]
     # 새 과정을 앞에, 예전 낱말을 뒤에
     # 권 하나에 챕터 일곱씩 묶는다
-    vols = [{"kind": "life", "gen": "new",
-             "title": (VOL_TITLES[i // 7] if i // 7 < len(VOL_TITLES) else f"일상 {i//7+1}"),
-             "chapters": chapters[i:i + 7]}
-            for i in range(0, len(chapters), 7)]
+    # 일상은 **한 권**이다 (대표님 지시 2026-09-02 "1권 2권 나누지 마. 하나로 해").
+    # 권을 나누면 '어디까지 왔나'가 두 군데로 흩어져 오히려 안 보인다.
+    vols = [{"kind": "life", "gen": "new", "title": "일상", "chapters": chapters}]
     o["vols"] = vols + old + job
 
     print(f"넣을 낱말 {len(seq)} · 강 {len(lessons)} · 챕터 {len(chapters)} · 권 {len(vols)}")
