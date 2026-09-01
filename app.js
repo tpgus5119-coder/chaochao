@@ -5106,13 +5106,22 @@ function drawCourse() {
     row((vi + 2) + '권', v.title ? tr(v.title) : tr('일상'), stat(cd, v.chapters.length, '챕터'),
         () => { dive(drawCourse); drawVol(vi); }, n >= all);
   });
+  /* 2권은 **하루 5분**이다 (대표님 지시 2026-09-02:
+     "기본기와 문법이 1권이면 하루 5분이 2권, 직무가 3권").
+     자료를 옮겨 담지 않고 **원래 화면을 그대로 부른다** — 진도가 두 군데로 갈리면 안 된다. */
+  {
+    const ds = ALL.filter(d => typeof d.day === 'number' && !d.track && visibleDay(d));
+    const dn = ds.filter(d => S.done[d.day]).length;
+    row((lifeVols().length + 2) + '권', tr('하루 5분'), stat(dn, ds.length, '세트'),
+        () => { dive(drawCourse); renderDays('life'); }, dn >= ds.length && ds.length > 0);
+  }
   /* 직무는 **한 권**이다 (대표님 결정, 2026-08-30) — 꼭 필요한 기본 999개만.
      심화 낱말은 앱에 넣지 않는다. 현장에서 배우면 되는 말이다. */
   const jv0 = jobVol(0);
   if (jv0) {
     const td = jv0.tracks.filter((t, ti) =>
       t.chapters.every((c, ci) => c.lessons.every((l, li) => S.done[jkey(ti, ci, li)]))).length;
-    row((lifeVols().length + 2) + '권', tr('직무'), stat(td, jv0.tracks.length, '챕터'),
+    row((lifeVols().length + 3) + '권', tr('직무'), stat(td, jv0.tracks.length, '챕터'),
         () => { dive(drawCourse); drawJob(0); }, td >= jv0.tracks.length);
   }
   /* 문화는 **첫 화면에 따로** 뒀다 (대표님 지시, 2026-08-30) —
@@ -9685,10 +9694,10 @@ function showGuide() {
     '<b>오늘 복습</b>이 떠 있으면 같이 하세요. <b>실력은 여기서 나옵니다.</b>',
   ]);
 
-  sec('📚', '학습 — 두 권', [
+  sec('📚', '학습 — 세 권', [
     '<b>1권 기본기·문법</b> — 글자·모음·성조·자음·자판 치는 법, 그리고 교재 문법 177개',
-    '<b>2권 직무</b> — 갈래를 <b>체크</b>해서 고릅니다. 갈 곳이 정해졌으면 그 갈래만 하면 됩니다.',
-    '일상 낱말은 첫 화면의 <b>하루 5분</b>에서 배웁니다.',
+    '<b>2권 하루 5분</b> — 인사부터 요일·하루 일과까지. 하루 낱말 10개 + 대화 2문장',
+    '<b>3권 직무</b> — 갈래를 <b>체크</b>해서 고릅니다. 갈 곳이 정해졌으면 그 갈래만 하면 됩니다.',
   ]);
 
   sec('🔁', '복습 — 셋', [
