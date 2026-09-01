@@ -49,9 +49,17 @@ def main():
             continue
         out = DESK / ts
         made = 0
+        # 그림 파일 이름의 번호는 **기사 날짜 안에서** 매겨진다.
+        # 펴낸날로 묶으면 이틀치가 한 폴더에 오는데, 그때 번호를 이어서 세면 어긋난다
+        # (실측 2026-09-02: 카드 22장 중 14장만 나갔다).
+        cnt = {}
+        for d in arts:
+            k = d.get("ts")
+            cnt[k] = cnt.get(k, 0) + 1
+            d["_i"] = cnt[k]
         for i, d in enumerate(arts, 1):
             for n in (1, 2):
-                src = CARD / f"{d.get('ts')}-{i}-{n}.webp"
+                src = CARD / f"{d.get('ts')}-{d['_i']}-{n}.webp"
                 if not src.exists():
                     continue
                 dst = out / f"{i:02d}-{safe(d.get('theme'))}-{n}.webp"
@@ -64,6 +72,14 @@ def main():
             continue
         # 동기들에게 보낼 쪽지 — 제목과 링크만 (대표님 지시)
         lines = [f"📰 베트남 소식 {ts.replace('-', '.')}", ""]
+        # 그림 파일 이름의 번호는 **기사 날짜 안에서** 매겨진다.
+        # 펴낸날로 묶으면 이틀치가 한 폴더에 오는데, 그때 번호를 이어서 세면 어긋난다
+        # (실측 2026-09-02: 카드 22장 중 14장만 나갔다).
+        cnt = {}
+        for d in arts:
+            k = d.get("ts")
+            cnt[k] = cnt.get(k, 0) + 1
+            d["_i"] = cnt[k]
         for i, d in enumerate(arts, 1):
             if d.get("u"):
                 lines.append(f"{i}. {d.get('title','')}")

@@ -65,9 +65,25 @@ def main():
     from faster_whisper import WhisperModel
     import random
 
+    # **낱말이 사는 곳이 두 군데다** — days.json(하루 5분)과 order.json(직무).
+    # 전에는 order.json 의 'topic' 붙은 낱말만 봐서, 그 과정을 빼자 대상이 0이 됐다
+    # (2026-09-02 실측: 그림 검수도 같은 구멍이 있었다).
     o = json.loads((R / "data" / "order.json").read_text(encoding="utf-8"))
-    new = [w for v in o["vols"] if "chapters" in v for c in v["chapters"]
-           for l in c["lessons"] for w in l["words"] if w.get("topic")]
+    def _walk(v):
+        for t in (v.get("tracks") or [v]):
+            for c in t.get("chapters", []):
+                for l in c["lessons"]:
+                    yield from l["words"]
+    new = [w for v in o["vols"] for w in _walk(v)]
+    dp = R / "data" / "days.json"
+    if dp.exists():
+        dj = json.loads(dp.read_text(encoding="utf-8"))
+        new += [w for x in dj.get("days", []) for w in (x.get("words") or [])]
+    seen_v, uniq = set(), []
+    for w in new:
+        if w.get("vi") and w["vi"] not in seen_v:
+            seen_v.add(w["vi"]); uniq.append(w)
+    new = uniq
     random.seed(7)
     S = random.sample(new, min(a.n, len(new)))
     print(f"들어 볼 낱말 {len(S)} × 네 목소리 = {len(S)*4}개", flush=True)
@@ -96,6 +112,8 @@ def main():
     OUT.write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
 
     import statistics as st
+    if not res:
+        print("들어 본 낱말이 없다"); return
     print("\n목소리별 평균 닮음")
     for v, nm in VOICES.items():
         vals = [r[v]["닮음"] for r in res]
