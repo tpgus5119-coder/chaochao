@@ -31,7 +31,26 @@ QUOTA = [('일자리', 3), ('경제', 2), ('사회', 2), ('문화·생활', 2),
          ('공장·산업', 2), ('정치', 1)]
 PER_DAY = sum(n for _, n in QUOTA)   # 12
 MIN_DAY = 10                      # 모자라면 주제 상관없이 점수 높은 순으로 채워 이만큼은 맞춘다
-FLOOR = 5                         # 이 점수 미만은 자리가 비어도 안 싣는다
+FLOOR = 8                         # 이 점수 미만은 자리가 비어도 안 싣는다
+                                  # (5 로 뒀더니 7점짜리 해변 기사가 실렸다 — 2026-09-02)
+
+# **우리 낱말이 이긴다.** 사이트 갈래와 Qwen 이 둘 다 틀린 답에 동의하면
+# 우리 판정이 덮였다 — '우대비자 도입'이 문화·생활로, '아이폰18'이 일자리로 갔다.
+# 아래 낱말이 제목에 있으면 갈래를 **못 박는다.** 우리 독자에게 가장 중요한 말들이다.
+FORCE = [
+    ('일자리', ['비자', '노동허가', '체류', '채용', '구인', '취업', '최저임금', '임금',
+               '근로', '노동', '해고', '기능실습', 'visa', 'work permit', 'recruit', 'wage']),
+    ('사회',   ['사고', '전복', '화재', '단속', '벌금', '처벌', '태풍', '홍수', '범죄']),
+    ('공장·산업', ['공장', '생산라인', '봉제', '반도체', '산업단지', '공단']),
+]
+
+
+def force_cat(t):
+    low = t.lower()
+    for cat, kws in FORCE:
+        if any(k.lower() in low for k in kws):
+            return cat
+    return None
 BODY_MAX = 40                     # 본문을 읽어 볼 후보 수
 
 # 정치는 **베트남 밖 매체**에서만 (대표님 지시) — 현지 매체는 정치를 한쪽으로만 전한다
@@ -74,17 +93,29 @@ CARE = {
 }
 # 영어 기사(VnExpress)용 — 위 낱말이 다 한국어라 영어 제목은 **늘 0점**이었다.
 # 그래서 하루 36건을 받아 놓고 한 건도 안 뽑혔다 (2026-09-02 실측).
+# **한국어 낱말표를 영어로 옮긴 것.** 무게도 뜻도 똑같다 (대표님 지시 2026-09-02:
+# "기사를 번역하지 말고 선정 기준 낱말을 영어로 옮겨 같은 조건으로 넣어라").
+# 기사를 매번 옮기면 느리고 비싸다. 낱말표는 **한 번만** 옮기면 된다.
 CARE_EN = {
-    3: ['visa', 'work permit', 'wage', 'salary', 'minimum wage', 'labor', 'worker',
-        'hiring', 'recruit', 'residence', 'hospital', 'rent', 'price', 'exchange rate',
-        'traffic', 'bus', 'metro', 'motorbike', 'accident', 'safety'],
-    2: ['factory', 'manufactur', 'textile', 'garment', 'electronics', 'semiconductor',
-        'samsung', 'industrial park', 'logistics', 'insurance', 'school', 'tuition',
-        'food', 'festival', 'holiday', 'weather', 'typhoon', 'flood'],
-    1: ['economy', 'export', 'import', 'investment', 'company', 'hanoi', 'ho chi minh',
-        'tourism', 'travel', 'korea', 'vietnam', 'growth', 'market'],
+    3: ['visa', 'work permit', 'residence', 'wage', 'salary', 'minimum wage', 'pay raise',
+        'labor', 'labour', 'worker', 'employee', 'hiring', 'recruit', 'job', 'employment',
+        'layoff', 'dismissal', 'contract', 'industrial accident', 'workplace safety',
+        'overtime', 'shift', 'korean', 'expat', 'trainee',
+        'bus', 'metro', 'subway', 'motorbike', 'traffic', 'hospital', 'pharmacy',
+        'restaurant', 'market', 'rent', 'housing price', 'living cost', 'inflation',
+        'electricity bill', 'exchange rate', 'remittance', 'holiday', 'day off'],
+    2: ['manufacturing', 'factory', 'garment', 'textile', 'sewing', 'electronics',
+        'semiconductor', 'samsung', 'industrial park', 'industrial zone', 'logistics',
+        'warehouse', 'skilled', 'insurance', 'school', 'tuition', 'housing',
+        'food', 'cuisine', 'festival', 'lunar new year', 'tet', 'weather', 'heat',
+        'typhoon', 'flood', 'storm'],
+    1: ['economy', 'export', 'import', 'investment', 'invest', 'company', 'business',
+        'trade', 'growth', 'gdp', 'market', 'tax', 'accounting', 'real estate',
+        'hanoi', 'ho chi minh', 'saigon', 'binh duong', 'dong nai', 'bac ninh',
+        'da nang', 'korea', 'vietnam', 'culture', 'tourism', 'travel', 'life'],
 }
-PER_SITE_MAX = 5     # 한 사이트가 다 차지하지 못하게 (열한 건 중 열 건이 한 곳이었다)
+PER_SITE_MAX = 99    # 상한을 두지 않는다 (대표님 지시 2026-09-02) —
+                     # 점수만 제대로 매기면 저절로 골고루 뽑힌다
 # ③ 일상어가 많은가 — 관심사에 걸리는 기사가 하나도 없는 날의 차선책
 DAILY_KW = ['사람', '하루', '아침', '저녁', '집', '밥', '먹', '가게', '시장', '길',
             '가족', '아이', '학교', '돈', '값', '비', '더위', '추위', '휴일', '주말']
@@ -222,6 +253,14 @@ try:
     recat(cand[:BODY_MAX])
 except Exception as e:
     print(f'갈래 재확인 건너뜀: {e}')
+# **마지막에 우리 낱말이 이긴다** — 비자·채용·사고는 무엇보다 먼저다
+_f = 0
+for c in cand:
+    fc = force_cat(c['t'])
+    if fc and c.get('cat') != fc:
+        c['cat'] = fc; _f += 1
+if _f:
+    print(f'  우리 낱말로 갈래를 못 박은 기사 {_f}건')
 
 # 이미 실은 기사와 **내용이 겹치면** 안 싣는다 (어제 것과 같은 카드가 나왔다)
 try:
@@ -233,6 +272,26 @@ from difflib import SequenceMatcher as _SM
 def _dup(t):
     return any(_SM(None, t, o).ratio() > 0.55 for o in _old_t)
 cand = [c for c in cand if not _dup(c['t'])]
+
+# **베트남 소식이어야 한다.** 이 규칙이 없어서 네팔 홍수·한국 고궁·중국 미담이
+# 들어왔다 (2026-09-02 실측). 우리 독자는 베트남에서 사는 사람이다.
+VN = ['việt nam', 'vietnam', 'vietnamese', 'hanoi', 'ha noi', 'ho chi minh', 'hcmc',
+      'saigon', 'da nang', 'hai phong', 'can tho', 'binh duong', 'dong nai', 'bac ninh',
+      '베트남', '하노이', '호치민', '호찌민', '다낭', '빈즈엉', '동나이', '박닌', '하이퐁']
+NOT_VN = ['nepal', 'thailand', 'philippines', 'indonesia', 'malaysia', 'myanmar',
+          'cambodia', 'laos', 'india', 'pakistan', 'japan tourism']
+
+
+def about_vn(c):
+    hay = (c.get('t', '') + ' ' + (c.get('t_ko') or '') + ' ' +
+           (c.get('body') or '')[:1200] + ' ' + (c.get('body_ko') or '')).lower()
+    n_vn = sum(hay.count(k) for k in VN)
+    if n_vn == 0:
+        return False
+    # 다른 나라 이야기가 베트남보다 많이 나오면 그 나라 기사다
+    n_other = max((hay.count(k) for k in NOT_VN), default=0)
+    return n_vn >= max(2, n_other + 1)
+
 
 def _ok_src(c, cat):
     if cat != '정치':
@@ -251,6 +310,8 @@ for cat, n in QUOTA:
             continue
         if c.get('cat') != cat or c['care'] < FLOOR or not _ok_src(c, cat):
             continue
+        if not about_vn(c):
+            continue
         st = _site(c)
         if per_site.get(st, 0) >= PER_SITE_MAX:
             continue
@@ -262,11 +323,22 @@ for cat, n in QUOTA:
 for c in cand:
     if len(picked) >= MIN_DAY:
         break
-    if id(c) not in used and c['care'] >= FLOOR:
+    if id(c) not in used and c['care'] >= FLOOR and about_vn(c):
+        # 한 갈래가 자리보다 두 건 넘게 차지하지 못하게 (사회가 다섯 건이 됐다)
+        lim = dict(QUOTA).get(c.get('cat'), 2) + 1
+        if sum(1 for x in picked if x.get('cat') == c.get('cat')) >= lim:
+            continue
         picked.append(c); used.add(id(c))
 picked.sort(key=lambda c: -c['care'])
 from collections import Counter as _C
 print('갈래별로 뽑은 수:', dict(_C(c.get('cat') for c in picked)))
+
+# 펴낸날 — 낮 12시 이후면 내일, 그 전이면 오늘 (저녁에 만들어 아침에 내보낸다)
+_now = datetime.now(KST)
+PUB = (_now + timedelta(days=1) if _now.hour >= 12 else _now).strftime('%Y-%m-%d')
+for c in picked:
+    c['pub'] = PUB
+print(f'펴낸날 {PUB} 로 표시했다')
 
 items = []
 for c in picked:
@@ -303,7 +375,8 @@ if items:                                    # 피드가 죽은 날은 어제 �
 (R / 'data' / 'news_body.json').write_text(json.dumps(
     {'when': datetime.now(KST).strftime('%Y-%m-%d %H:%M'),
      'picked': [{'t': c['t'], 'u': c['u'], 'ts': c['when'].strftime('%Y-%m-%d'),
-                 'care': c['care'], 'cat': c.get('cat'), 'body': c['body'][:5000]} for c in picked]},
+                 'care': c['care'], 'cat': c.get('cat'), 'pub': c.get('pub'),
+                 'body': c['body'][:5000]} for c in picked]},
     ensure_ascii=False, indent=1))
 
 for c in picked:

@@ -128,8 +128,9 @@ def wrap(dr, text, f, width, ls=0.0):
 
 
 def wrap_sent(dr, text, f, width, ls=0.0):
-    """**문장 단위로 먼저 나눈다.** 문장이 두 줄에 걸쳐 잘리면 읽기 나쁘다
-    (대표님 지적 2026-09-02). 한 문장이 한 줄에 안 들어갈 때만 그 문장을 접는다."""
+    """**한 줄에 한 문장만.** 두 문장이 한 줄을 나눠 쓰면 어디서 끊어 읽을지 헷갈린다
+    (대표님 지시 2026-09-02: "가급적 2문장이 1줄을 공유하지 않도록").
+    문장이 한 줄에 안 들어갈 때만 그 문장 안에서 접는다."""
     import re as _r
     out = []
     for sent in [x for x in _r.split(r"(?<=[.!?…])\s+", str(text)) if x.strip()]:
@@ -220,11 +221,16 @@ def card1(d, bg, bgsave=None):
             lines += [(ln, i > 0) for i, ln in enumerate(got)]
         return fb, lines, orphan, len(lines) * int(sz * LH_BODY) <= room
 
-    SIZES = (38, 36, 34, 33, 32, 31, 30, 29, 28)
+    SIZES = (38, 36, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24)
     cands = [lay(sz) for sz in SIZES]
-    # ① 자리에 들어가고 외톨이 줄도 없는 것 중 가장 큰 것
-    pick = next((c for c in cands if c[3] and not c[2]), None)
-    # ② 없으면 자리에 들어가기만 하는 것 중 가장 큰 것
+    # ① **한 문장이 한 줄에 들어가는** 것 중 가장 큰 글꼴을 먼저 고른다
+    #    (대표님 지시 2026-09-02 "2문장이 1줄을 공유하지 않도록" — 뒤집으면
+    #     한 문장이 두 줄로 접히는 것도 읽기 나쁘다. 54줄 중 48줄이 접혔다)
+    body_n = len([x for x in body if str(x).strip()])
+    pick = next((c for c in cands if c[3] and len(c[1]) == body_n), None)
+    # ② 그것이 없으면 자리에 들어가고 외톨이 줄도 없는 것
+    pick = pick or next((c for c in cands if c[3] and not c[2]), None)
+    # ③ 없으면 자리에 들어가기만 하는 것 중 가장 큰 것
     pick = pick or next((c for c in cands if c[3]), None)
     # ③ 그것도 없으면 가장 작은 글꼴로 넣고 넘치는 줄은 자른다
     if not pick:
@@ -269,6 +275,10 @@ def card1(d, bg, bgsave=None):
     return im
 
 
+USED_W = set()      # 오늘 이미 카드에 실은 낱말 (기사끼리 겹치지 않게)
+USED_BG = set()     # 오늘 이미 쓴 배경 그림 씨앗
+
+
 def card2(d):
     """둘째 장 — 낱말 여섯 + **그 기사의 대화 두 줄.**
 
@@ -281,17 +291,24 @@ def card2(d):
     im = Image.new("RGB", (W, H), BG)
     dr = ImageDraw.Draw(im)
     f_h, f_vi, f_kr, f_ko, f_s = font(34, 1), font(44, vi=True), font(25), font(29), font(24)
-    f_dvi, f_dko, f_who = font(31, vi=True), font(27), font(23, 1)
+    f_dvi, f_dko, f_who = font(29, vi=True), font(26), font(23, 1)
+    f_dkr = font(23)          # 문장 아래 한글 발음
     PAD, GAP = 84, 56                       # 여백을 키워 덩어리를 가운데로
     COL = (W - PAD * 2 - GAP) // 2
 
     # '이 기사에서 배울 말' 제목은 뺐다 (대표님 지시 2026-09-01) —
     # 낱말과 대화를 넣을 자리를 벌기 위해. 무엇인지는 보면 안다.
 
-    words = (d.get("words") or [])[:6]
+    # 다른 기사에 이미 쓴 낱말은 **뒤로 민다** (대표님 지시 2026-09-02:
+    # "다른 기사와 낱말·문장·그림이 가급적 겹치지 않게"). 모자라면 그냥 쓴다 — 필수는 아니다.
+    ws = list(d.get("words") or [])
+    ws.sort(key=lambda w: 1 if nfc(w.get("vi", "")).lower() in USED_W else 0)
+    words = ws[:6]        # 카드에는 여섯 개만 (대표님 지시)
+    for w in words:
+        USED_W.add(nfc(w.get("vi", "")).lower())
     for i, w in enumerate(words):
         cx = PAD + (i % 2) * (COL + GAP)
-        cy = 80 + (i // 2) * 190     # 아래가 비지 않게 줄 사이를 벌렸다
+        cy = 74 + (i // 2) * 180
         vi = nfc(w["vi"])
         fv = f_vi
         for sz in (44, 40, 36, 32, 28):
@@ -312,7 +329,7 @@ def card2(d):
     # ── 대화 두 줄 — 이것만 봐도 무슨 기사인지 안다
     lines = ((d.get("dialog") or {}).get("lines") or [])[:2]
     if lines:
-        y = 700
+        y = 654
         dr.line([PAD, y - 26, W - PAD, y - 26], fill=(226, 226, 222), width=3)
         dtext(dr, (PAD, y), "이 기사로 나누는 말", f_h, FG, LS_TITLE)
         y += 62
@@ -326,10 +343,18 @@ def card2(d):
             vl = wrap(dr, nfc(ln.get("vi") or ""), f_dvi, vw)[:2]
             for k, t in enumerate(vl):
                 dr.text((tx, y + k * 38), t, font=f_dvi, fill=FG)
-            yy = y + len(vl) * 38 + 6
-            for k, t in enumerate(wrap(dr, nfc(ln.get("ko") or ""), f_dko, vw, LS_BODY)[:2]):
+            yy = y + len(vl) * 38 + 4
+            # 문장에도 **한글 발음**을 단다 (대표님 지시 2026-09-02).
+            # 늘 우리 도구가 만든다 — AI 것은 안 쓴다
+            kr = vi_kr.word(nfc(ln.get("vi") or "")) or ""
+            if kr:
+                for k, t in enumerate(wrap(dr, "[" + kr + "]", f_dkr, vw, LS_SMALL)[:2]):
+                    dtext(dr, (tx, yy + k * 30), t, f_dkr, DIM, LS_SMALL)
+                yy += 30 * min(2, len(wrap(dr, "[" + kr + "]", f_dkr, vw, LS_SMALL))) + 2
+            kol = wrap(dr, nfc(ln.get("ko") or ""), f_dko, vw, LS_BODY)[:2]
+            for k, t in enumerate(kol):
                 dtext(dr, (tx, yy + k * 34), t, f_dko, (78, 82, 90), LS_BODY)
-            y = yy + 34 * min(2, max(1, len(wrap(dr, nfc(ln.get("ko") or ""), f_dko, vw, LS_BODY)))) + 22
+            y = yy + 34 * max(1, len(kol)) + 18
 
     foot(dr, d, f_s, PAD)
     return im
@@ -348,9 +373,13 @@ def main():
         D = [d for d in D if d.get("ts") == last]
     D = D[:a.limit]
     from datetime import datetime, timezone, timedelta
-    pub = a.pub or datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+    # 자료에 이미 찍힌 펴낸날을 그대로 쓴다 (card_pick 이 찍는다).
+    # --pub 을 주면 그것이 이긴다.
+    pub = a.pub or (D[0].get("pub") if D and D[0].get("pub") else
+                    datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d"))
+    D = [d for d in D if d.get("pub")] or D
     for d in D:
-        d["pub"] = pub                        # 내보내기·파워포인트도 같은 날짜를 쓴다
+        d["pub"] = d.get("pub") or pub                        # 내보내기·파워포인트도 같은 날짜를 쓴다
     # 펴낸 날을 자료에 적어 둔다 — card_export.py 가 이 날짜로 폴더를 만든다
     _f = R / "data" / "news_days.json"
     _j = json.loads(_f.read_text(encoding="utf-8"))
@@ -393,7 +422,13 @@ def main():
             opts = SCENES.get(d.get("cat"), ["a calm city skyline at dawn"])
             key = (d.get("title") or "") + (d.get("ts") or "")
             hv = int(hashlib.sha1(key.encode()).hexdigest(), 16)
+            # 오늘 이미 쓴 장면은 피한다 (기사끼리 배경이 겹치지 않게)
             scene = opts[hv % len(opts)]
+            for k in range(len(opts)):
+                cand_s = opts[(hv + k) % len(opts)]
+                if cand_s not in USED_BG:
+                    scene = cand_s; break
+            USED_BG.add(scene)
             pr = scene + ". Flat vector illustration, bold black outlines, flat pastel fill, plain background"
             try: bg = bg_image(pr, hv % 10 ** 8)
             except Exception as e: print("  배경 못 구움:", type(e).__name__)

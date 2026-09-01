@@ -248,7 +248,7 @@ def main():
             'ts': art['ts'], 'day': 'N' + art['u'][-8:], 'track': 'news',
             'theme': theme, 'title': art['t'], 'u': art['u'], 'cat': art.get('cat'),
             'intro': ' '.join(got.get('summary', []))[:140],
-            'words': words[:10],
+            'words': words[:6],
             'dialog': {'title': theme, 'emoji': '📰', 'lines': lines[:2], 'extra': []},
         })
         have.add(art['u']); made += 1

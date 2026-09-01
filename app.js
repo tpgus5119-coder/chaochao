@@ -10190,21 +10190,11 @@ function showNewsLearn() {
       if (d.cat) top.append(el('i', 'newscat', esc(d.cat)));
       top.append(el('b', null, esc(d.theme)));
       btn.append(top, el('span', 'msub', esc(d.title)));
-      btn.onclick = () => { dive(showNewsLearn); startNews(d); };
+      /* **제목을 누르면 바로 카드뉴스**가 뜬다 (대표님 지시 2026-09-02).
+         전에는 학습으로 갔고 카드뉴스는 아래 작은 단추였다 — 그러지 말라 하셨다.
+         원문 보러 가기 단추는 **카드뉴스 화면 아래**에 있다(showCards). */
+      btn.onclick = () => showCards(d);
       b.append(btn);
-      /* 카드뉴스 — 매일 밤 만들어 둔 두 장을 보여 준다 (대표님 지시, 2026-08-30).
-         파일이 없으면 단추도 안 보인다(밤에 아직 안 만들어졌을 수 있다). */
-      const cn = el('button', 'ghost sm cardbtn', '🖼 ' + tr('카드뉴스'));
-      cn.onclick = e => { e.stopPropagation(); showCards(d); };
-      b.append(cn);
-      /* 원문 보러 가기 (대표님 지시 2026-08-31) — 요약만 보고 끝나지 않게 길을 열어 둔다.
-         새 창으로 띄우고 rel=noopener 를 준다: 그래야 원문 쪽에서 우리 창을 건드릴 수 없다. */
-      if (d.u) {
-        const go = el('a', 'ghost sm cardbtn', '🔗 ' + tr('기사 보러가기'));
-        go.href = d.u; go.target = '_blank'; go.rel = 'noopener';
-        go.onclick = e => e.stopPropagation();
-        b.append(go);
-      }
     });
   });
 }
