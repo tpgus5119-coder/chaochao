@@ -102,13 +102,27 @@ def wrap_balanced(dr, text, f, width, ls=0.0):
 
 
 def wrap(dr, text, f, width, ls=0.0):
-    """글자 폭을 재서 줄을 나눈다. 한국어는 띄어쓰기가 드물어 글자 단위로도 끊는다."""
+    """글자 폭을 재서 줄을 나눈다.
+
+    **띄어쓰기에서 끊는 것이 먼저다.** 글자 단위로만 끊으면 '늘었습니 / 다.' 처럼
+    낱말 한가운데가 갈라진다 (2026-09-02 실측, 카드에 그대로 찍혀 나갔다).
+    한 어절이 통째로 한 줄보다 길 때만 글자 단위로 쪼갠다."""
     out, line = [], ""
-    for ch in text:
-        t = line + ch
-        if tw(dr, t, f, ls) > width and line:
-            out.append(line); line = ch.lstrip()
-        else: line = t
+    for word in str(text).split(" "):
+        cand = (line + " " + word) if line else word
+        if tw(dr, cand, f, ls) <= width:
+            line = cand; continue
+        if line:
+            out.append(line); line = ""
+        # 어절 하나가 한 줄보다 길면 그때만 글자로 쪼갠다
+        if tw(dr, word, f, ls) <= width:
+            line = word; continue
+        for ch in word:
+            t = line + ch
+            if tw(dr, t, f, ls) > width and line:
+                out.append(line); line = ch
+            else:
+                line = t
     if line: out.append(line)
     return out
 
@@ -273,9 +287,10 @@ def card2(d):
         # kr_read 를 그대로 믿지 않는다 — AI 가 만든 자료라 học 의 발음에 'học' 이
         # 그대로 들어와 카드에 [học] 으로 찍힌 적이 있다 (2026-09-01 실측).
         # 한글이 아니면 우리 변환기(vi_kr)로 다시 만든다. 같은 글자면 늘 같은 결과다.
-        kr = w.get("kr_read") or ""
-        if not kr or re.search(r"[^가-힣 ·]", kr):
-            kr = vi_kr.word(w["vi"])
+        # **발음은 늘 우리 도구가 만든다.** AI 가 준 kr_read 는 쓰지 않는다 —
+        # 한글이기만 하면 통과돼 điện→[디에트]·sản xuất→[산 수트] 가 카드에 찍혔다
+        # (2026-09-02 실측). 같은 글자면 늘 같은 결과라야 검산이 된다.
+        kr = vi_kr.word(w["vi"]) or (w.get("kr_read") or "")
         dtext(dr, (cx, cy + fv.size + 10), "[" + kr + "]", f_kr, DIM, LS_SMALL)
         for j2, ln in enumerate(wrap(dr, nfc(w["ko"]), f_ko, COL, LS_BODY)[:1]):
             dtext(dr, (cx, cy + fv.size + 52), ln, f_ko, (48, 52, 60), LS_BODY)

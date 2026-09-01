@@ -46,6 +46,17 @@ ASK = (
 LOCAL = "--local" in sys.argv
 
 
+def tidy(x):
+    """숫자와 단위가 벌어지는 버릇을 고친다 — '5 억 5 천만' · '2035 년' · '40% 를' (실측).
+    붙이는 것은 **수를 이루는 말까지만**이다. '달러·원' 같은 화폐는 띄어 쓴다."""
+    t = str(x).strip()
+    t = re.sub(r"(\d)\s+(월|일|년|시|분|초|%|천|백|십|만|억|조)", r"\1\2", t)
+    t = re.sub(r"(천|백|십|만|억)\s+(만|억|조)", r"\1\2", t)
+    t = re.sub(r"(\d)\s+(명|개|원|동|대|건|배|위|차)", r"\1\2", t)
+    t = re.sub(r"(%)\s+(을|를|로|와|과|의|에|이|가)", r"\1\2", t)
+    return re.sub(r"\s{2,}", " ", t).strip()
+
+
 def ask(title, body, tries=4):
     # 로컬 모델은 문맥이 좁다 — 본문을 더 짧게 준다
     p = ASK + f"제목: {title}\n본문:\n{body[:1600 if LOCAL else 3500]}"
@@ -54,7 +65,11 @@ def ask(title, body, tries=4):
         #   그 생각도 토큰을 먹는다. 좁게 주면 생각만 하다 끝나 **답이 빈 채로** 돌아온다
         #   (2026-08-31 실측: 200토큰을 줬더니 199가 생각, 답은 ''. 3000을 주니 제대로 답했다)
         req = json.dumps({"model": LOCAL_MODEL, "temperature": 0.4, "max_tokens": 3000,
-                          "messages": [{"role": "user", "content": p}]})
+                          # 생각을 미리 닫아 둔다 — 안 그러면 3,000토큰을 생각에 다 쓰고
+                          # 답이 빈 채로 돌아온다 (tools/ai.py 의 NOTHINK 와 같은 수법)
+                          "messages": [{"role": "user", "content": p},
+                                       {"role": "assistant",
+                                        "content": "<think>\n\n</think>\n\n"}]})
         cmd = ["curl", "-sS", "-X", "POST", LOCAL_URL,
                "-H", "Content-Type: application/json", "--data-binary", "@-"]
     else:
@@ -80,7 +95,7 @@ def ask(title, body, tries=4):
             try:
                 got = json.loads(m.group(0)).get("sum5")
                 if isinstance(got, list) and len(got) >= 4:
-                    return [str(x).strip() for x in got[:6] if str(x).strip()]
+                    return [tidy(x) for x in got[:6] if str(x).strip()]
             except Exception:
                 pass
         time.sleep(1.5 * (k + 1))

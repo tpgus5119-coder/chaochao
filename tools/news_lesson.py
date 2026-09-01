@@ -211,32 +211,37 @@ def main():
             #    기사는 한국어다. 베트남어 낱말이 본문에 있을 리 없다 —
             #    전에 vi 를 본문에서 찾다가 낱말이 통째로 버려졌다 (2026-09-02 실측).
             #    그래서 **한국어 뜻**이 본문이나 제목에 나오는지를 본다.
+            #    기사에 뜻이 나오면 '이 기사의 낱말'로 표시해 둔다. 다만 **버리지는 않는다** —
+            #    nhiều(많이)·đang(하고 있다) 같은 기본 낱말은 기사에 그 글자가 안 나온다.
+            #    (버렸더니 낱말이 5개로 줄어 기사가 통째로 건너뛰어졌다, 2026-09-02 실측)
             ko_ = (w.get('ko') or '').strip()
             key_ = re.sub(r'[^가-힣]', '', ko_)[:2]
-            hay = (art['t'] + ' ' + art['body'])
-            if key_ and key_ not in hay:
-                continue
+            grounded = bool(key_) and key_ in (art['t'] + ' ' + art['body'])
             # ── 검수 ② 발음이 한글이 아니면 우리 변환기로 다시 만든다
             #    (실측: học 의 발음에 'học' 이 그대로 들어와 카드에 [học] 으로 찍혔다)
-            kr = (w.get('kr') or '').strip()
-            if not kr or re.search(r'[^가-힣 ·]', kr):
-                kr = _vi_kr.word(vi)
+            # 발음은 **늘 우리 도구**가 만든다 (AI 것은 안 쓴다)
+            kr = _vi_kr.word(vi) or (w.get('kr') or '').strip()
             item = {'vi': vi, 'ko': (w.get('ko') or '').strip(),
                     'kr_read': kr,
                     'emoji': emo, 'en': en, 'tones': word_tones(vi)}
             # 눈에 보이는 말에만 그림 자리를 준다. 그림은 개발자 맥의 '그림 지킴이'가 뒤따라 채운다
             # (깃허브 서버에는 그래픽 카드가 없어 그림만은 거기서 못 만든다).
             if emo and en: item['img'] = 'n-' + slug(vi) + '.webp'   # 영어 그림말이 있어야 그림을 건다
+            item['_g'] = 1 if grounded else 0
             words.append(item)
         def _kr(vi_, given):
-            g = (given or '').strip()
-            return g if g and not re.search(r'[^가-힣 ·]', g) else _vi_kr.word(vi_)
+            return _vi_kr.word(vi_) or (given or '').strip()
         lines = [{'vi': (l.get('vi') or '').strip(), 'ko': (l.get('ko') or '').strip(),
                   'kr_read': _kr((l.get('vi') or '').strip(), l.get('kr')), 'who': (l.get('who') or 'AB'[i % 2]),
                   'tones': word_tones((l.get('vi') or '').strip()),
                   'gloss': []}
                  for i, l in enumerate(got.get('lines', [])) if (l.get('vi') or '').strip()]
-        if len(words) < 4 or not lines:
+        # 기사에서 나온 낱말을 앞에 둔다 — 카드 둘째 장에는 앞의 여섯 개가 실린다
+        words.sort(key=lambda w: -w.pop('_g', 0))
+        # 기사와 맞는 낱말이 셋은 있어야 '이 기사의 세트'라 할 수 있다
+        n_g = sum(1 for w in got.get('words', []) if
+                  re.sub(r'[^가-힣]', '', (w.get('ko') or ''))[:2] in (art['t'] + ' ' + art['body']))
+        if len(words) < 4 or not lines or n_g < 3:
             print(f"재료가 모자라다 — 건너뜀: {art['t'][:30]}"); continue
         theme = (got.get('theme') or '기사')[:12]
         store['days'].append({
