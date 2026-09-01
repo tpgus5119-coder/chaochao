@@ -40,7 +40,8 @@ def main():
     days = json.loads((R / "data" / "news_days.json").read_text(encoding="utf-8"))["days"]
     by_ts = {}
     for d in days:
-        by_ts.setdefault(d.get("ts"), []).append(d)
+        # 폴더는 **펴낸 날**로 나눈다 — 대표님이 보시는 날짜와 맞아야 한다
+        by_ts.setdefault(d.get("pub") or d.get("ts"), []).append(d)
 
     total = 0
     for ts, arts in sorted(by_ts.items()):
@@ -50,7 +51,7 @@ def main():
         made = 0
         for i, d in enumerate(arts, 1):
             for n in (1, 2):
-                src = CARD / f"{ts}-{i}-{n}.webp"
+                src = CARD / f"{d.get('ts')}-{i}-{n}.webp"
                 if not src.exists():
                     continue
                 dst = out / f"{i:02d}-{safe(d.get('theme'))}-{n}.webp"

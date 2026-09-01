@@ -131,7 +131,7 @@ def make_cards():
         return 0
     done = 0
     for ts in need[-3:]:                       # 밀렸어도 한 번에 사흘치까지만
-        subprocess.run([sys.executable, 'tools/news_sum5.py', '--day', ts], cwd=R)
+        subprocess.run([sys.executable, 'tools/news_sum5.py', '--day', ts, '--local'], cwd=R)
         r = subprocess.run([sys.executable, 'tools/card_news.py', '--day', ts], cwd=R)
         if r.returncode == 0: done += 1
     subprocess.run([sys.executable, 'tools/card_export.py'], cwd=R)

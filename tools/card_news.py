@@ -123,6 +123,38 @@ def bg_image(prompt, seed):
     return Image.open(io.BytesIO(base64.b64decode(json.loads(r.read())["images"][0]))).convert("RGB")
 
 
+# 기사 출처 — 카드 아래에 **반드시** 적는다 (대표님 지시 2026-09-01 "출처는 아래에 표시해줘 무조건").
+# 출처를 밝힌다고 남의 글을 쓸 권리가 생기는 것은 아니다. 다만 우리는 사실만 가져와
+# 새로 쓰므로, 어디서 온 사실인지 밝히는 것이 정당한 인용의 요건에 가깝고 예의이기도 하다.
+SRC_NAME = {
+    "insidevina.com": "인사이드비나",
+    "vnexpress.net": "VnExpress",
+    "tuoitre.vn": "Tuổi Trẻ",
+    "thanhnien.vn": "Thanh Niên",
+    "vietnamnews.vn": "Vietnam News",
+    "vietnamplus.vn": "VietnamPlus",
+}
+
+
+def source_of(d):
+    """기사 주소에서 매체 이름을 뽑는다. 모르는 곳이면 주소 그대로 적는다."""
+    import urllib.parse
+    host = urllib.parse.urlparse(d.get("u") or "").netloc.lower()
+    host = host[4:] if host.startswith("www.") else host
+    return SRC_NAME.get(host, host)
+
+
+def foot(dr, d, f, pad):
+    """카드 아래 한 줄 — 만든 곳 · 날짜 · 출처"""
+    src = source_of(d)
+    # 날짜는 **기사 날짜가 아니라 카드를 펴낸 날**이다 (대표님 지시 2026-09-01
+    # "날짜는 오늘 날짜로 하고"). 아침에 도는 일은 전날 기사로 오늘 카드를 만든다 —
+    # 기사 사이트는 낮에 올리므로 아침에 완성돼 있는 것은 어제 하루치뿐이다.
+    t = "짜오짜오 · " + (d.get("pub") or d.get("ts", "")) + ("  ·  출처 " + src if src else "")
+    dtext(dr, (pad, H - 56), t, f, DIM, LS_SMALL)
+
+
+
 def card1(d, bg, bgsave=None):
     """첫 장 — 본문이 **카드를 가득** 채운다. 그림은 뒤에서 은은히 받쳐 주는 바탕이다.
 
@@ -138,7 +170,10 @@ def card1(d, bg, bgsave=None):
     BOTTOM = H - 96                      # 만든이 줄 위까지가 글자리
 
     probe = ImageDraw.Draw(im)
-    t_lines = wrap_balanced(probe, nfc(d["title"]), f_t, W - PAD * 2, LS_TITLE)[:3]
+    # 카드에 얹을 제목 — 원문이 카드에 안 들어갈 만큼 길 때만 tools/card_title.py 가
+    # 다듬어 둔 것을 쓴다. 없으면 원문 그대로다 (제목은 저작물성이 낮아 그대로 써도 된다).
+    title = d.get("title_card") or d["title"]
+    t_lines = wrap_balanced(probe, nfc(title), f_t, W - PAD * 2, LS_TITLE)[:3]
     lh_t = int(f_t.size * LH_TITLE)
     y_body = TOP_TITLE + len(t_lines) * lh_t + 30
     room = BOTTOM - y_body
@@ -170,7 +205,7 @@ def card1(d, bg, bgsave=None):
     f_b, b_lines = pick[0], pick[1]
     # 그러고도 남는 자리는 줄 사이에 고루 나눈다 (너무 벌어지지 않게 상한 1.95배)
     lh_b = int(room / max(1, len(b_lines)))
-    lh_b = max(int(f_b.size * LH_BODY), min(lh_b, int(f_b.size * 2.10)))
+    lh_b = max(int(f_b.size * LH_BODY), min(lh_b, int(f_b.size * 2.45)))
 
     if bg:
         im.paste(bg.resize((W, H)), (0, 0))
@@ -198,41 +233,76 @@ def card1(d, bg, bgsave=None):
     y = TOP_TITLE
     for ln in t_lines:
         dtext(dr, (PAD, y), nfc(ln), f_t, FG, LS_TITLE); y += lh_t
-    y = y_body
+    # 줄 간격 상한에 걸려 남은 자리는 위아래로 나눈다 — 아래가 텅 비는 것을 막는다
+    y = y_body + max(0, (room - lh_b * len(b_lines))) // 3   # 남는 자리는 아래에 더 준다
     for ln, cont in b_lines:
         dtext(dr, (PAD + (26 if cont else 0), y), nfc(ln), f_b, (38, 42, 50), LS_BODY); y += lh_b
-    dtext(dr, (PAD, H - 56), "짜오짜오 · " + d.get("ts", ""), f_s, DIM, LS_SMALL)
+    foot(dr, d, f_s, PAD)
     return im
 
 
 def card2(d):
-    """둘째 장 — 낱말 여섯. 정사각이라 세로가 좁으니 **두 줄(2열 × 3행)** 로 앉힌다.
+    """둘째 장 — 낱말 여섯 + **그 기사의 대화 두 줄.**
 
-    베트남어에는 자간을 주지 않는다 — 성조 부호가 어긋난다(dtext 설명 참고)."""
+    대표님 지시 (2026-09-01): "단어 6개 밑에 문장 2개 넣어봐. 대화가 되는 문장으로.
+    (대화만 봐도 어떤 기사 내용이구나를 대충 알 수 있도록)"
+    대화는 news_lesson.py 가 기사마다 만들어 둔 것을 그대로 쓴다.
+
+    쏠림도 고쳤다 — 오른쪽 칸 뜻이 짧아 오른쪽이 휑했다. 좌우 여백을 키우고
+    두 칸을 안쪽으로 모아 덩어리가 가운데 오게 했다."""
     im = Image.new("RGB", (W, H), BG)
     dr = ImageDraw.Draw(im)
-    f_h, f_vi, f_kr, f_ko, f_s = font(38, 1), font(46, vi=True), font(26), font(31), font(24)
-    PAD, COL = 64, (W - 64 * 2 - 40) // 2          # 두 칸 사이 40px
-    dtext(dr, (PAD, 74), "이 기사에서 배울 말", f_h, FG, LS_TITLE)
-    dr.line([PAD, 140, W - PAD, 140], fill=(220, 220, 216), width=3)
+    f_h, f_vi, f_kr, f_ko, f_s = font(34, 1), font(44, vi=True), font(25), font(29), font(24)
+    f_dvi, f_dko, f_who = font(31, vi=True), font(27), font(23, 1)
+    PAD, GAP = 84, 56                       # 여백을 키워 덩어리를 가운데로
+    COL = (W - PAD * 2 - GAP) // 2
+
+    # '이 기사에서 배울 말' 제목은 뺐다 (대표님 지시 2026-09-01) —
+    # 낱말과 대화를 넣을 자리를 벌기 위해. 무엇인지는 보면 안다.
 
     words = (d.get("words") or [])[:6]
     for i, w in enumerate(words):
-        cx = PAD + (i % 2) * (COL + 40)
-        cy = 196 + (i // 2) * 252        # 세 줄이 카드 안에 고르게 앉는 간격
+        cx = PAD + (i % 2) * (COL + GAP)
+        cy = 80 + (i // 2) * 190     # 아래가 비지 않게 줄 사이를 벌렸다
         vi = nfc(w["vi"])
-        # 낱말이 칸보다 길면 글꼴을 줄여서 넣는다 (잘라 내지 않는다)
         fv = f_vi
-        for sz in (46, 42, 38, 34, 30):
+        for sz in (44, 40, 36, 32, 28):
             fv = font(sz, vi=True)
             if dr.textlength(vi, font=fv) <= COL: break
         dr.text((cx, cy), vi, font=fv, fill=FG)
-        kr = w.get("kr_read") or vi_kr.word(w["vi"])
-        dtext(dr, (cx, cy + fv.size + 12), "[" + kr + "]", f_kr, DIM, LS_SMALL)
-        for j, ln in enumerate(wrap(dr, nfc(w["ko"]), f_ko, COL, LS_BODY)[:2]):
-            dtext(dr, (cx, cy + fv.size + 60 + j * int(f_ko.size * LH_SMALL)),
-                  ln, f_ko, (48, 52, 60), LS_BODY)
-    dtext(dr, (PAD, H - 56), "짜오짜오 · " + d.get("ts", ""), f_s, DIM, LS_SMALL)
+        # kr_read 를 그대로 믿지 않는다 — AI 가 만든 자료라 học 의 발음에 'học' 이
+        # 그대로 들어와 카드에 [học] 으로 찍힌 적이 있다 (2026-09-01 실측).
+        # 한글이 아니면 우리 변환기(vi_kr)로 다시 만든다. 같은 글자면 늘 같은 결과다.
+        kr = w.get("kr_read") or ""
+        if not kr or re.search(r"[^가-힣 ·]", kr):
+            kr = vi_kr.word(w["vi"])
+        dtext(dr, (cx, cy + fv.size + 10), "[" + kr + "]", f_kr, DIM, LS_SMALL)
+        for j2, ln in enumerate(wrap(dr, nfc(w["ko"]), f_ko, COL, LS_BODY)[:1]):
+            dtext(dr, (cx, cy + fv.size + 52), ln, f_ko, (48, 52, 60), LS_BODY)
+
+    # ── 대화 두 줄 — 이것만 봐도 무슨 기사인지 안다
+    lines = ((d.get("dialog") or {}).get("lines") or [])[:2]
+    if lines:
+        y = 700
+        dr.line([PAD, y - 26, W - PAD, y - 26], fill=(226, 226, 222), width=3)
+        dtext(dr, (PAD, y), "이 기사로 나누는 말", f_h, FG, LS_TITLE)
+        y += 62
+        for ln in lines:
+            who = (ln.get("who") or "").strip() or "A"
+            cw = dr.textlength(who, font=f_who)
+            dr.ellipse([PAD, y + 2, PAD + 38, y + 40], fill=(226, 228, 233))
+            dr.text((PAD + 19 - cw / 2, y + 9), who, font=f_who, fill=(70, 74, 82))
+            tx = PAD + 54
+            vw = W - tx - PAD
+            vl = wrap(dr, nfc(ln.get("vi") or ""), f_dvi, vw)[:2]
+            for k, t in enumerate(vl):
+                dr.text((tx, y + k * 38), t, font=f_dvi, fill=FG)
+            yy = y + len(vl) * 38 + 6
+            for k, t in enumerate(wrap(dr, nfc(ln.get("ko") or ""), f_dko, vw, LS_BODY)[:2]):
+                dtext(dr, (tx, yy + k * 34), t, f_dko, (78, 82, 90), LS_BODY)
+            y = yy + 34 * min(2, max(1, len(wrap(dr, nfc(ln.get("ko") or ""), f_dko, vw, LS_BODY)))) + 22
+
+    foot(dr, d, f_s, PAD)
     return im
 
 
@@ -240,6 +310,7 @@ def main():
     a = argparse.ArgumentParser()
     a.add_argument("--day", default=""); a.add_argument("--limit", type=int, default=5)
     a.add_argument("--nobg", action="store_true")
+    a.add_argument("--pub", default="")      # 카드에 찍을 '펴낸 날'. 안 주면 오늘
     a = a.parse_args()
     D = json.loads((R / "data" / "news_days.json").read_text(encoding="utf-8"))["days"]
     if a.day: D = [d for d in D if d.get("ts") == a.day]
@@ -247,6 +318,18 @@ def main():
         last = max((d.get("ts") or "") for d in D)
         D = [d for d in D if d.get("ts") == last]
     D = D[:a.limit]
+    from datetime import datetime, timezone, timedelta
+    pub = a.pub or datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+    for d in D:
+        d["pub"] = pub                        # 내보내기·파워포인트도 같은 날짜를 쓴다
+    # 펴낸 날을 자료에 적어 둔다 — card_export.py 가 이 날짜로 폴더를 만든다
+    _f = R / "data" / "news_days.json"
+    _j = json.loads(_f.read_text(encoding="utf-8"))
+    _by = {(x.get("ts"), x.get("title")): x for x in D}
+    for x in _j["days"]:
+        if (x.get("ts"), x.get("title")) in _by:
+            x["pub"] = pub
+    _f.write_text(json.dumps(_j, ensure_ascii=False, indent=1), encoding="utf-8")
     OUT.mkdir(parents=True, exist_ok=True)
     print(f"카드뉴스 {len(D)}편 × 2장", flush=True)
     made = []

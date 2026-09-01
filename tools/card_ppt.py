@@ -121,14 +121,17 @@ def main():
     for ts, arts in sorted(by.items()):
         if not ts or (a.day and ts != a.day): continue
         if not (CARD / f"{ts}-1-1.webp").exists(): continue
+        # 폴더·파일 이름은 **펴낸 날**로. 그림은 기사 날짜로 만들어져 있다.
+        # (아침 작업은 전날 기사로 오늘 카드를 만든다 — 대표님 지시 2026-09-01)
+        pub = arts[0].get("pub") or ts
         prs = Presentation()
         prs.slide_width, prs.slide_height = E(1080), E(1080)
         for i, d in enumerate(arts, 1):
             slide1(prs, d, ts, i)
             slide2(prs, d, ts)
-        out = DESK / ts
+        out = DESK / pub
         out.mkdir(parents=True, exist_ok=True)
-        f = out / f"카드뉴스-{ts}.pptx"
+        f = out / f"카드뉴스-{pub}.pptx"
         prs.save(str(f))
         print(f"  {ts}: 슬라이드 {len(arts) * 2}장 → {f}")
         n += 1

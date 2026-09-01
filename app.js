@@ -480,6 +480,7 @@ const UIVI = {
   '외운 단어': 'Từ đã thuộc', '끝낸 세트': 'Bài đã xong',
   '진도 백업': 'Sao lưu', '백업 불러오기': 'Khôi phục', '진도 초기화': 'Xóa tiến độ',
   '다음 ›': 'Tiếp ›', '확인 문제 ›': 'Kiểm tra ›', '완료 ›': 'Xong ›', '홈으로': 'Về trang chính',
+  '소리 속도': 'Tốc độ đọc', '보통': 'Bình thường',
   '느리게 듣기': 'Nghe chậm', '느리게': 'Chậm', '따라 말하기': 'Nói theo',
   '말하기': 'Nói', '읽기': 'Đọc', '쓰기': 'Viết', '암기': 'Ghi nhớ', '랜덤': 'Ngẫu nhiên',
   '3분': '3 phút', '오늘 완료': 'Xong hôm nay', '지우기': 'Xóa', '채점받기': 'Chấm điểm',
@@ -725,7 +726,12 @@ const trackName = d => (typeof d.day === 'string' ? '' : d.track === 'work' ? '�
 /* 아이폰 사파리는 '사용자가 방금 누른 것'이 아니면 새 Audio 재생을 막는다.
    그래서 Audio 하나를 만들어 두고 주소만 바꿔 쓴다. 한 번 허락되면 그 뒤로는 계속 난다. */
 const audio = new Audio();
-const SLOWISH = 0.9;              // 보통 소리의 재생 속도 (1 = 원래대로)
+/* 재생 속도 — 대표님 지시 (2026-09-01): "모든 tts 소리 속도 1배속과 0.7배속 정도로
+   다 해줘. 재생 가능하도록." 느린 소리를 **따로 만들지 않는다.** playbackRate 는
+   높낮이를 지켜 주므로 성조가 안 뭉개지고, 파일이 한 벌이면 저장소도 반이다
+   (전에 느린 파일 16,000개로 1GB에 닿았던 적이 있다). */
+const RATES = [['1', '보통'], ['0.7', '느리게']];
+const rate = () => Number(S.rate || 1);
 const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 둔다)
 
 /* 지역(북부/남부) × 목소리(여/남) 에 따른 소리 폴더. 남부도 여·남 둘 다 있다. */
@@ -746,7 +752,7 @@ function play(text, slow, dir) {
   audio.onerror = null;
   /* 조금 느리게 튼다 (대표님 지시 2026-08-31) — 원어민 속도가 초보에겐 빠르다.
      playbackRate 는 높낮이를 지켜 주므로 성조가 뭉개지지 않는다. */
-  audio.playbackRate = SLOWISH;
+  audio.playbackRate = rate();
   audio.src = `audio/${d}/n/${h}.mp3`;
   audio.onerror = () => { audio.onerror = null; speakVi(text, false, 0, S.voice); };
   audio.currentTime = 0;
@@ -859,7 +865,7 @@ async function playSeq(list, rows) {
     if (!h) continue;
     audio.pause();
     audio.src = `audio/${voiceDir()}/n/${h}.mp3`;
-    audio.playbackRate = 1;
+    audio.playbackRate = rate();
     audio.currentTime = 0;
     await new Promise(res => {
       audio.onended = audio.onerror = res;
@@ -2104,6 +2110,10 @@ function renderAwards() {
   const uiOpts = [['ko', '한국어'], ['vi', 'Tiếng Việt']];
   if (S.acct && S.acct.id === DEV_ID) uiOpts.push(['dev', '나란히 (개발용)']);
   if (S.ui === 'dev' && !(S.acct && S.acct.id === DEV_ID)) { S.ui = 'ko'; save(); }
+  // 소리 속도 — 원어민 속도가 초보에겐 빠르다. 파일은 한 벌이고 재생만 늘린다
+  b.append(pickRow('소리 속도', RATES, String(S.rate || 1),
+    v => { S.rate = Number(v); save(); renderAwards(); }));
+
   b.append(pickRow('화면 언어', uiOpts, S.ui || 'ko',
     v => { S.ui = v; save(); renderAwards(); drawMenu(); }));
 
@@ -4413,13 +4423,13 @@ function playKoSeq(items, done) {
       // 안 나는 일을 막는다.
       let fell = false;
       audio.pause(); audio.src = src; audio.currentTime = 0;
-    audio.playbackRate = 1;
+    audio.playbackRate = rate();
       audio.onended = () => setTimeout(step, 450);
       audio.onerror = () => {
         if (fell) { audio.onerror = null; step(); return; }
         fell = true;
         audio.src = src.replace('/x/', '/n/');
-        audio.playbackRate = 1;
+        audio.playbackRate = rate();
         audio.play().catch(() => step());
       };
       audio.play().catch(() => { audio.onended = null; done && done(); });
@@ -4448,7 +4458,7 @@ function speakKo(text) {
   const play = id => {
     audio.pause();
     audio.src = `audio/ko-${S.voice === 'm' ? 'm' : 'f'}/n/${id}.mp3`;
-    audio.playbackRate = 1;
+    audio.playbackRate = rate();
     audio.currentTime = 0;
     audio.play().catch(() => sysSpeakKo(text));
   };
@@ -6388,7 +6398,7 @@ function drawFlash() {
   }, { passive: true });
   audio.pause();
   audio.src = `audio/${voiceDir()}/n/${AIDX[w.vi]}.mp3`;
-  audio.playbackRate = 1;
+  audio.playbackRate = rate();
   audio.currentTime = 0;
   audio.play().catch(() => { });
   const tm = setTimeout(go, 3000);       // 한 장에 3초 — 소리가 끝나도 남은 시간은 눈으로 본다

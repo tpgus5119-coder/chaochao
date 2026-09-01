@@ -86,7 +86,11 @@ ASK = ("너는 베트남어 교재를 짜는 사람이다. 아래 꼭지에 넣�
        " ③ 베트남어 표준 표기로. 성조 부호를 빠뜨리지 마라\n"
        " ④ 한국어 뜻은 **12자 이내**로 짧게. 한글만 쓴다\n"
        " ⑤ 같은 말에 màu 만 붙인 것처럼 **겹치는 말을 넣지 마라**\n"
-       " ⑥ 아래 이미 나온 말은 넣지 마라\n{seen}\n"
+             " ⑥ **낱말을 기계적으로 곱해서 만들지 마라.** 실제로 나왔던 가짜들이다:\n"
+       "    đặt món ngon(맛있는 메뉴 주문하다) · hai trăm giờ(이백 시) ·\n"
+       "    Chào buổi sáng cực muộn(극히 늦은 아침 인사) · đi cầu bóng chày(야구 치다)\n"
+       "    사전에 한 낱말로 실릴 만한 것만 적어라. 네 음절을 넘기지 마라\n"
+       " ⑦ 아래 이미 나온 말은 넣지 마라\n{seen}\n"
        ' 출력은 JSON 배열만: [{{"vi":"낱말","ko":"뜻"}}]\n')
 
 
@@ -130,6 +134,8 @@ def main():
     for grp, topic, cando in TOPICS:
         if a.only and a.only != topic: continue
         have = data.get(topic, [])
+        # 손으로 쓴 체계 꼭지(숫자·시간·묻는 말…)는 AI 가 손대지 않는다 — 조합을 지어낸다
+        if have and all(w.get("src") == "손으로 씀" for w in have): continue
         if len(have) >= a.want: continue
         need = a.want - len(have)
         shown = ", ".join(sorted(list(seen))[:120])
@@ -166,4 +172,7 @@ def main():
     print(f"\n모은 낱말 {tot} · 꼭지 {len(data)}/{len(TOPICS)}")
 
 
-main()
+# 불러오기만 할 때는 돌지 않는다 — 다른 도구가 TOPICS 같은 것을
+# 가져다 쓸 때 낱말 모으기가 통째로 다시 도는 사고가 있었다 (2026-09-01).
+if __name__ == "__main__":
+    main()

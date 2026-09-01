@@ -35,6 +35,10 @@ KST = timezone(timedelta(hours=9))
 KEEP_DAYS = 7                                    # 일주일치만 남긴다 (저장소가 커지지 않게)
 MODELS = ['gemini-2.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite']
 
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent))
+import vi_kr as _vi_kr
+
 WORKER = 'https://viet-ai.chaochao-app.workers.dev'
 ORIGIN = 'https://tpgus5119-coder.github.io'
 
@@ -64,7 +68,32 @@ def ask_worker(prompt):
     raise RuntimeError('워커도 실패')
 
 
+def ask_qwen(prompt):
+    """이 맥의 Qwen 에게 묻는다 (대표님 지시 2026-09-01: 카드뉴스도 Qwen 으로).
+
+    제미나이 몫은 하루가 정해져 있고 다 쓰면 카드뉴스가 통째로 멈춘다.
+    Qwen 은 공짜라 몫이 안 든다. 대신 **결과는 반드시 검수**한다 —
+    낱말이 기사에 실제로 나오는지, 발음이 한글인지를 아래에서 규칙으로 다시 본다."""
+    import sys as _s, pathlib as _p
+    _s.path.insert(0, str(_p.Path(__file__).resolve().parent))
+    from ai import ask_text
+    t = ask_text(prompt, local=True, max_tokens=4000, timeout=600)
+    m = re.search(r'[\[{].*[\]}]', t or '', re.S)
+    if not m:
+        return None
+    try:
+        return json.loads(m.group(0))
+    except Exception:
+        return None
+
+
 def ask(prompt, key):
+    # Qwen 을 먼저 부른다. 못 하면 제미나이로 물러난다 (몫을 아낀다)
+    if os.environ.get('CHAO_LOCAL') != '0':
+        got = ask_qwen(prompt)
+        if got:
+            return got
+
     """제미나이에 물어 JSON 을 받는다. 모델이 붐비면 다음 모델로 넘어간다."""
     if not key:
         return ask_worker(prompt)
@@ -178,15 +207,27 @@ def main():
             seen.add(vi.lower())
             emo = (w.get('emoji') or '').strip()
             en = (w.get('en') or '').strip()
+            # ── Qwen 결과 검수 ① 기사에 없는 낱말은 버린다
+            #    (AI 는 그럴듯한 낱말을 지어낸다. 기사 본문에 실제로 있어야 '이 기사의 낱말'이다)
+            if vi.lower() not in art['body'].lower():
+                continue
+            # ── 검수 ② 발음이 한글이 아니면 우리 변환기로 다시 만든다
+            #    (실측: học 의 발음에 'học' 이 그대로 들어와 카드에 [học] 으로 찍혔다)
+            kr = (w.get('kr') or '').strip()
+            if not kr or re.search(r'[^가-힣 ·]', kr):
+                kr = _vi_kr.word(vi)
             item = {'vi': vi, 'ko': (w.get('ko') or '').strip(),
-                    'kr_read': (w.get('kr') or '').strip(),
+                    'kr_read': kr,
                     'emoji': emo, 'en': en, 'tones': word_tones(vi)}
             # 눈에 보이는 말에만 그림 자리를 준다. 그림은 개발자 맥의 '그림 지킴이'가 뒤따라 채운다
             # (깃허브 서버에는 그래픽 카드가 없어 그림만은 거기서 못 만든다).
             if emo and en: item['img'] = 'n-' + slug(vi) + '.webp'   # 영어 그림말이 있어야 그림을 건다
             words.append(item)
+        def _kr(vi_, given):
+            g = (given or '').strip()
+            return g if g and not re.search(r'[^가-힣 ·]', g) else _vi_kr.word(vi_)
         lines = [{'vi': (l.get('vi') or '').strip(), 'ko': (l.get('ko') or '').strip(),
-                  'kr_read': (l.get('kr') or '').strip(), 'who': (l.get('who') or 'AB'[i % 2]),
+                  'kr_read': _kr((l.get('vi') or '').strip(), l.get('kr')), 'who': (l.get('who') or 'AB'[i % 2]),
                   'tones': word_tones((l.get('vi') or '').strip()),
                   'gloss': []}
                  for i, l in enumerate(got.get('lines', [])) if (l.get('vi') or '').strip()]
