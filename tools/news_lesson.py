@@ -207,9 +207,14 @@ def main():
             seen.add(vi.lower())
             emo = (w.get('emoji') or '').strip()
             en = (w.get('en') or '').strip()
-            # ── Qwen 결과 검수 ① 기사에 없는 낱말은 버린다
-            #    (AI 는 그럴듯한 낱말을 지어낸다. 기사 본문에 실제로 있어야 '이 기사의 낱말'이다)
-            if vi.lower() not in art['body'].lower():
+            # ── Qwen 결과 검수 ① 기사와 **상관있는 낱말**인가
+            #    기사는 한국어다. 베트남어 낱말이 본문에 있을 리 없다 —
+            #    전에 vi 를 본문에서 찾다가 낱말이 통째로 버려졌다 (2026-09-02 실측).
+            #    그래서 **한국어 뜻**이 본문이나 제목에 나오는지를 본다.
+            ko_ = (w.get('ko') or '').strip()
+            key_ = re.sub(r'[^가-힣]', '', ko_)[:2]
+            hay = (art['t'] + ' ' + art['body'])
+            if key_ and key_ not in hay:
                 continue
             # ── 검수 ② 발음이 한글이 아니면 우리 변환기로 다시 만든다
             #    (실측: học 의 발음에 'học' 이 그대로 들어와 카드에 [học] 으로 찍혔다)

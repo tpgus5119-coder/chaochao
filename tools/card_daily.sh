@@ -25,8 +25,11 @@ say "학습 세트";     "$PY" tools/news_lesson.py  2>&1 | tail -3
 say "여섯 줄 풀이";   "$PY" tools/news_sum5.py --local 2>&1 | tail -2
 say "제목 다듬기";    "$PY" tools/card_title.py   2>&1 | tail -3
 
-# 펴낸날은 **내일**이다 — 오늘 기사로 만들어 내일 아침에 내보낸다
-TOMORROW=$(date -v+1d '+%Y-%m-%d')
+# 펴낸날은 **다음 아침**이다 — 오늘 기사로 만들어 내일 아침에 내보낸다.
+# 저녁(12시 이후)에 돌면 내일, 새벽·아침에 손으로 돌리면 오늘.
+# (실측 2026-09-02: 무조건 +1일로 잡아 새벽 0시 55분에 돌렸더니 9월 3일로 찍혔다)
+if [ "$(date '+%H')" -ge 12 ]; then TOMORROW=$(date -v+1d '+%Y-%m-%d')
+else TOMORROW=$(date '+%Y-%m-%d'); fi
 say "카드 두 장씩 (펴낸날 $TOMORROW)"
 "$PY" tools/card_news.py --pub "$TOMORROW" 2>&1 | tail -3
 say "소리";         "$PY" tools/gen_audio.py    2>&1 | tail -1

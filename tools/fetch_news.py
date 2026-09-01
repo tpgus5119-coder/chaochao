@@ -25,13 +25,34 @@ def get(url):
 
 R = pathlib.Path(__file__).resolve().parent.parent
 KST = timezone(timedelta(hours=9))
-PER_DAY = 5                       # 하루에 싣는 기사 수 (있는 만큼. 월요일은 원래 3건뿐이다)
-MUST = 3                          # 이만큼은 점수와 무관하게 싣는다
-FLOOR = 8                         # 4·5번째는 관심사 점수가 이만큼은 돼야 싣는다
+# 주제마다 **자리**를 잡는다 (대표님 지시 2026-09-02).
+# 점수 순으로만 자르면 경제 기사가 다 차지한다 — 8월 실측: 정치 44건이 한 번도 안 뽑혔다.
+QUOTA = [('일자리', 3), ('경제', 2), ('사회', 2), ('문화·생활', 2),
+         ('공장·산업', 2), ('정치', 1)]
+PER_DAY = sum(n for _, n in QUOTA)   # 12
+MIN_DAY = 10                      # 모자라면 주제 상관없이 점수 높은 순으로 채워 이만큼은 맞춘다
+FLOOR = 5                         # 이 점수 미만은 자리가 비어도 안 싣는다
+BODY_MAX = 40                     # 본문을 읽어 볼 후보 수
+
+# 정치는 **베트남 밖 매체**에서만 (대표님 지시) — 현지 매체는 정치를 한쪽으로만 전한다
+POLITICS_OK = ('insidevina.com', 'vietnamkoreatimes.com')
 KEEP_DAYS = 7                     # 화면에 남기는 날수 (일주일치)
 
 # 인사이드비나(한국어, 베트남 전문)만 쓴다 — 영어 국제면은 베트남 무관 기사가 섞여서 뺐다.
-FEED = ('인사이드비나', 'https://www.insidevina.com/rss/allArticle.xml')
+# 기사를 받아 오는 곳 **셋** (대표님 지시 2026-09-02). 8월 실측 발행량:
+#   인사이드비나 하루 9.3건 · VnExpress International 하루 36건 · 코리아타임즈 하루 1.1건
+# 한 곳만 쓰면 '베끼는 것'처럼 보이고, 그 곳이 멈추면 카드도 멈춘다.
+FEEDS = [
+    ('인사이드비나', 'https://www.insidevina.com/rss/allArticle.xml'),
+    ('베트남코리아타임즈', 'http://www.vietnamkoreatimes.com/rss/allArticle.xml'),
+    # VnExpress 는 갈래마다 따로 준다 (한 줄에 60건씩)
+    ('VnExpress', 'https://e.vnexpress.net/rss/news.rss'),
+    ('VnExpress', 'https://e.vnexpress.net/rss/business.rss'),
+    ('VnExpress', 'https://e.vnexpress.net/rss/travel.rss'),
+    ('VnExpress', 'https://e.vnexpress.net/rss/life.rss'),
+    ('VnExpress', 'https://e.vnexpress.net/rss/world.rss'),
+]
+FEED = FEEDS[0]        # 옛 이름을 쓰는 곳이 있어 남겨 둔다
 
 # ① 우리 관심사 — 베트남에서 일할 한국인에게 직접 걸리는 말. 가중치가 클수록 먼저 고른다.
 #
@@ -97,9 +118,18 @@ def body_of(url):
         h = get(url).decode('utf-8', 'replace')
     except Exception:
         return ''
+    # 사이트마다 본문을 담는 곳이 다르다. 차례로 맞춰 본다.
+    #   인사이드비나·코리아타임즈 = 같은 한국 기사 시스템 (article-view-content-div)
+    #   VnExpress International   = <p class="Normal"> 여러 개
     m = _re.search(r'<article[^>]*id="article-view-content-div"[^>]*>(.*?)</article>', h, _re.S)
     if not m:
         m = _re.search(r'id="article-view-content-div"[^>]*>(.*?)</div>\s*</div>', h, _re.S)
+    if not m:
+        ps = _re.findall(r'<p class="Normal"[^>]*>(.*?)</p>', h, _re.S)
+        if ps:
+            t = ' '.join(ps)
+            t = _re.sub(r'<[^>]+>', ' ', t)
+            return _html.unescape(_re.sub(r'\s+', ' ', t)).strip()
     if not m:
         return ''
     t = _re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', m.group(1), flags=_re.S)
@@ -117,36 +147,42 @@ def when(s):
             pass
     return None
 
-src, url = FEED
-try:
-    root = ET.fromstring(get(url))
-except Exception as e:
-    print(f'{src} 실패: {e}')
-    raise SystemExit(0)
-
 today = datetime.now(KST).date()
-cand = []
-for it in root.iter('item'):
-    t = (it.findtext('title') or '').strip()
-    u = (it.findtext('link') or '').strip()
-    d = when(it.findtext('pubDate'))
-    if not t or not u or not d:
+cand, seen_u = [], set()
+src = '인사이드비나'
+for feed_src, url in FEEDS:
+    try:
+        root = ET.fromstring(get(url))
+    except Exception as e:
+        print(f'  {feed_src} 실패: {e}')
         continue
-    day = d.astimezone(KST).date()
-    gap = (today - day).days
-    if gap < 1 or gap > 6:                  # 오늘 것은 아직 안 올라왔고, 일주일 넘은 건 안 쓴다
-        continue
-    cand.append({'t': t, 'u': u, 'when': d.astimezone(KST), 'day': day,
-                 'care': care_score(t), 'daily': daily_score(t), 'body': '',
-                 'cat': cat_of(t)})
+    n0 = len(cand)
+    for it in root.iter('item'):
+        t = (it.findtext('title') or '').strip()
+        u = (it.findtext('link') or '').strip()
+        d = when(it.findtext('pubDate'))
+        if not t or not u or not d or u in seen_u:
+            continue
+        day = d.astimezone(KST).date()
+        gap = (today - day).days
+        if gap < 1 or gap > 6:              # 오늘 것은 아직 안 올라왔고, 일주일 넘은 건 안 쓴다
+            continue
+        seen_u.add(u)
+        cand.append({'t': t, 'u': u, 'src': feed_src, 'when': d.astimezone(KST), 'day': day,
+                     'care': care_score(t), 'daily': daily_score(t), 'body': '',
+                     'cat': cat_of(t)})
+    print(f'  {feed_src}: {len(cand) - n0}건')
+if not cand:
+    print('가져올 기사가 없다'); raise SystemExit(0)
 
 # 제목 점수로 후보를 좁힌 뒤, 그 후보들만 본문을 읽어 다시 점수를 매긴다.
 # (모든 기사의 본문을 받으면 느리고, 제목만 보면 숫자 기사가 뽑힌다)
-if cand:
-    newest0 = max(c['day'] for c in cand)
-    cand = [c for c in cand if c['day'] == newest0]      # 먼저 날짜를 좁히고
+# 사이트마다 마지막으로 올린 날이 다르다 — 한 날로 좁히면 다른 사이트가 통째로 빠진다.
+# 가장 최근 날과 그 하루 전까지 본다.
+newest0 = max(c['day'] for c in cand)
+cand = [c for c in cand if (newest0 - c['day']).days <= 1]
 cand.sort(key=lambda c: (-c['care'], -c['daily'], -c['when'].timestamp()))
-for c in cand[:12]:                                      # 그 날의 후보만 본문을 받는다
+for c in cand[:BODY_MAX]:                                # 그 날의 후보만 본문을 받는다
     c['body'] = body_of(c['u'])
     if c['body']:
         c['cat'] = cat_of(c['t'] + ' ' + c['body'][:1200])   # 본문까지 보고 갈래를 다시 정한다
@@ -157,12 +193,48 @@ for c in cand[:12]:                                      # 그 날의 후보만 
 if not cand:
     print('가져올 기사가 없다'); raise SystemExit(0)
 newest = max(c['day'] for c in cand)
-cand = [c for c in cand if c['day'] == newest]
+cand = [c for c in cand if (newest - c['day']).days <= 1]
 # 그 안에서 관심사가 있는 기사가 먼저, 없으면 일상어가 많은 기사로 채운다.
 cand.sort(key=lambda c: (0 if c['care'] > 0 else 1, -c['care'], -c['daily'], -c['when'].timestamp()))
-# 다섯 개를 억지로 채우지 않는다 — 앞의 셋은 무조건, 나머지는 쓸모가 있을 때만.
-# (기사가 3건뿐인 날에 억지로 5건을 만들 수 없고, 11건인 날에 5번째가 시원찮으면 안 싣는 게 낫다)
-picked = cand[:MUST] + [c for c in cand[MUST:PER_DAY] if c['care'] >= FLOOR]
+
+# ── 갈래를 다시 본다: ① 기사 사이트의 자체 분류를 1차로 믿고 ② Qwen 이 검수한다
+#    (대표님 지시 2026-09-02: "기사마다 이미 자체적으로 분류되어 있지 않니? 그 분류를 1차로 믿고")
+#    낱말 맞추기만 하면 '삼성전자 수출' 기사가 '총리 회담' 때문에 정치로 간다 (실측).
+try:
+    import sys as _s, pathlib as _p
+    _s.path.insert(0, str(_p.Path(__file__).resolve().parent))
+    from news_cat import recat
+    recat(cand[:BODY_MAX])
+except Exception as e:
+    print(f'갈래 재확인 건너뜀: {e}')
+
+def _ok_src(c, cat):
+    if cat != '정치':
+        return True
+    host = c['u'].split('/')[2].lower().replace('www.', '')
+    return any(host.endswith(h) for h in POLITICS_OK)
+
+# ── 주제마다 자리만큼 뽑는다
+picked, used = [], set()
+for cat, n in QUOTA:
+    got = 0
+    for c in cand:
+        if id(c) in used or got >= n:
+            continue
+        if c.get('cat') != cat or c['care'] < FLOOR or not _ok_src(c, cat):
+            continue
+        picked.append(c); used.add(id(c)); got += 1
+    if got < n:
+        print(f"  자리 못 채움: {cat} {got}/{n}")
+# 모자라면 **주제 상관없이** 점수 높은 순으로 채워 최소치를 맞춘다 (대표님 지시)
+for c in cand:
+    if len(picked) >= MIN_DAY:
+        break
+    if id(c) not in used and c['care'] >= FLOOR:
+        picked.append(c); used.add(id(c))
+picked.sort(key=lambda c: -c['care'])
+from collections import Counter as _C
+print('갈래별로 뽑은 수:', dict(_C(c.get('cat') for c in picked)))
 
 items = []
 for c in picked:
