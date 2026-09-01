@@ -5101,7 +5101,9 @@ function drawCourse() {
     const [n, all] = chDone(v.chapters, (c, l) => ckey(vi, c, l));
     const cd = v.chapters.filter((c, ci) =>
       c.lessons.every((l, li) => S.done[ckey(vi, ci, li)])).length;
-    row((vi + 2) + '권', tr('일상'), stat(cd, v.chapters.length, '챕터'),
+    /* 제목이 있으면 제목을 쓴다 (대표님 지시 2026-09-02 "제목 안 보이잖아").
+       '일상'만 여섯 줄 늘어서면 무엇이 다른지 알 수 없다. */
+    row((vi + 2) + '권', v.title ? tr(v.title) : tr('일상'), stat(cd, v.chapters.length, '챕터'),
         () => { dive(drawCourse); drawVol(vi); }, n >= all);
   });
   /* 직무는 **한 권**이다 (대표님 결정, 2026-08-30) — 꼭 필요한 기본 999개만.
@@ -5126,13 +5128,14 @@ function drawVol(vi) {
     const done = c.lessons.filter((l, li) => S.done[ckey(vi, ci, li)]).length;
     const b = el('button');
     b.dataset.done = done >= c.lessons.length ? '1' : '0';
+    const cn = c.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말');
     b.append(el('span', 'num', tr('챕터') + ' ' + (ci + 1)),
-             el('span', 'nm', c.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말')),
+             el('span', 'nm', c.t ? tr(c.t) : cn),
              el('span', 'st', stat(done, c.lessons.length, '레슨')));
     b.onclick = () => { dive(() => drawVol(vi)); drawCh(vi, ci); };
     const li = el('li'); li.append(b); list.append(li);
   });
-  show('course', (vi + 2) + '권', true);
+  show('course', v.title ? tr(v.title) : (vi + 2) + '권', true);
 }
 
 function drawCh(vi, ci) {
@@ -5142,17 +5145,17 @@ function drawCh(vi, ci) {
     const k = ckey(vi, ci, li), fin = !!S.done[k];
     const b = el('button');
     b.dataset.done = fin ? '1' : '0';
-    /* 레슨 이름은 **번호만** 둔다 (대표님 지시, 2026-08-30) —
-       앞 낱말 셋을 늘어놓으면 그것이 그 레슨의 주제인 줄 알게 된다. 주제가 아니다. */
+    /* 낱말을 늘어놓지는 않는다 (2026-08-30) — 그것이 주제인 줄 알게 된다.
+       대신 **꼭지 제목**이 있으면 그것을 쓴다 (2026-09-02). 진짜 주제이기 때문이다. */
     b.append(el('span', 'num', ''),
-             el('span', 'nm', tr('레슨') + ' ' + (li + 1)),
+             el('span', 'nm', l.t ? tr(l.t) : tr('레슨') + ' ' + (li + 1)),
              el('span', 'st', l.words.length + tr('낱말') + (fin ? ' ✔' : '')));
     b.onclick = () => { dive(() => drawCh(vi, ci));
-      startLearn({ day: k, theme: (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
+      startLearn({ day: k, theme: l.t ? tr(l.t) : (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
                    words: l.words, course: 1 }); };
     const li2 = el('li'); li2.append(b); list.append(li2);
   });
-  show('course', (vi + 2) + '권 · ' + tr('챕터') + ' ' + (ci + 1), true);
+  show('course', c.t ? tr(c.t) : (vi + 2) + '권 · ' + tr('챕터') + ' ' + (ci + 1), true);
 }
 
 /* 직무 — 갈래를 **체크로 고른다** (대표님 지시, 2026-08-30).
@@ -5212,8 +5215,9 @@ function drawJobTrack(ti) {
     const done = c.lessons.filter((l, li) => S.done[jkey(ti, ci, li)]).length;
     const b = el('button');
     b.dataset.done = done >= c.lessons.length ? '1' : '0';
+    const cn = c.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말');
     b.append(el('span', 'num', tr('챕터') + ' ' + (ci + 1)),
-             el('span', 'nm', c.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말')),
+             el('span', 'nm', c.t ? tr(c.t) : cn),
              el('span', 'st', stat(done, c.lessons.length, '레슨')));
     b.onclick = () => { dive(() => drawJobTrack(ti)); drawJobCh(ti, ci); };
     const li = el('li'); li.append(b); list.append(li);
@@ -5228,10 +5232,10 @@ function drawJobCh(ti, ci) {
     const k = jkey(ti, ci, li), fin = !!S.done[k];
     const b = el('button');
     b.dataset.done = fin ? '1' : '0';
-    /* 레슨 이름은 **번호만** 둔다 (대표님 지시, 2026-08-30) —
-       앞 낱말 셋을 늘어놓으면 그것이 그 레슨의 주제인 줄 알게 된다. 주제가 아니다. */
+    /* 낱말을 늘어놓지는 않는다 (2026-08-30) — 그것이 주제인 줄 알게 된다.
+       대신 **꼭지 제목**이 있으면 그것을 쓴다 (2026-09-02). 진짜 주제이기 때문이다. */
     b.append(el('span', 'num', ''),
-             el('span', 'nm', tr('레슨') + ' ' + (li + 1)),
+             el('span', 'nm', l.t ? tr(l.t) : tr('레슨') + ' ' + (li + 1)),
              el('span', 'st', l.words.length + tr('낱말') + (fin ? ' ✔' : '')));
     b.onclick = () => { dive(() => drawJobCh(ti, ci));
       startLearn({ day: k, theme: t.track + ' ' + (ci + 1) + '-' + (li + 1),
@@ -9681,10 +9685,11 @@ function showGuide() {
     '<b>오늘 복습</b>이 떠 있으면 같이 하세요. <b>실력은 여기서 나옵니다.</b>',
   ]);
 
-  sec('📚', '학습 — 여섯 권', [
+  sec('📚', '학습 — 여덟 권', [
     '<b>1권 기본기·문법</b> — 글자·모음·성조·자음·자판 치는 법, 그리고 교재 문법 177개',
-    '<b>2~5권 일상</b> — 선배 네 기수가 실제로 시험 본 낱말. 한 레슨 15개',
-    '<b>6권 직무</b> — 갈래를 <b>체크</b>해서 고릅니다. 갈 곳이 정해졌으면 그 갈래만 하면 됩니다.',
+    '<b>2·3권</b> — 새로 짠 일상 과정. 인사부터 시작해 장보기·길·사람들 사이까지 차례대로 배웁니다',
+    '<b>4~7권</b> — 선배 네 기수가 실제로 시험 본 낱말. 한 레슨 15개',
+    '<b>8권 직무</b> — 갈래를 <b>체크</b>해서 고릅니다. 갈 곳이 정해졌으면 그 갈래만 하면 됩니다.',
     '⭐ 표는 선배 시험에 나왔던 낱말입니다.',
   ]);
 
