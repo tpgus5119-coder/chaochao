@@ -38,11 +38,17 @@ def main():
     o = json.loads(ORDER.read_text(encoding="utf-8"))
 
     # 목차 차례대로 낱말을 늘어놓는다 (꼭지 안의 차례는 모은 차례 그대로)
-    seq, skipped = [], {"검수못함": 0, "사전에없음": 0, "꼭지에안맞음": 0}
+    from collections import Counter
+    elsewhere = Counter(n(w["vi"]).lower() for ws in d.values() for w in ws)
+    seq, skipped = [], {"검수못함": 0, "사전에없음": 0, "다른 꼭지에 있음": 0}
     for _grp, topic, _c in TOPICS:
         for w in d.get(topic, []):
-            if w.get("fit") == "drop":
-                skipped["꼭지에안맞음"] += 1; continue
+            # 목차 적합성 판정(Qwen)은 **그대로 믿지 않는다.** 실측으로
+            # Chào buổi sáng(좋은 아침)·Chúc ngủ ngon(잘 자요)을 '인사가 아니다'라고 했다.
+            # 그래서 '안 어울린다'고 한 것 중 **다른 꼭지에 같은 낱말이 있을 때만** 뺀다 —
+            # Chào bố 를 쪼개다 생긴 bố(아버지)는 '가족'에 이미 있으니 인사 꼭지에서 뺀다.
+            if w.get("fit") == "drop" and elsewhere.get(n(w["vi"]).lower(), 0) > 1:
+                skipped["다른 꼭지에 있음"] += 1; continue
             if w.get("fin") == "none":
                 skipped["사전에없음"] += 1; continue
             if w.get("fin") != "ok":
