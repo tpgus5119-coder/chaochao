@@ -60,18 +60,44 @@ def main():
                 item["kr_read"] = n(w["kr"])
             seq.append(item)
 
-    # 15낱말씩 한 강, 7강씩 한 챕터
-    lessons = [{"words": seq[i:i + PER_LESSON]} for i in range(0, len(seq), PER_LESSON)]
-    chapters = [{"lessons": lessons[i:i + PER_CHAPTER]}
-                for i in range(0, len(lessons), PER_CHAPTER)]
+    # ── 제목을 붙인다 (대표님 지시 2026-09-01: "목차에 제목이 있잖아. 교재처럼")
+    #    한 강은 한 꼭지에서만 나오므로 그 꼭지 이름이 곧 강 제목이다.
+    #    같은 꼭지가 여러 강에 걸치면 뒤에 (2)·(3) 을 붙인다.
+    # **꼭지 경계에서 자른다.** 15개씩 기계적으로 자르면 '3과 나이와 생일'인데
+    # 첫 낱말이 호칭인 꼴이 된다 (실측). 한 강에는 한 꼭지의 낱말만 담는다.
+    lessons = []
+    for _grp, topic, _c in TOPICS:
+        ws = [w for w in seq if w.get("topic") == topic]
+        if not ws:
+            continue
+        parts = [ws[i:i + PER_LESSON] for i in range(0, len(ws), PER_LESSON)]
+        # 마지막 조각이 다섯 개도 안 되면 앞 강에 붙인다 — 토막 강을 만들지 않는다
+        if len(parts) > 1 and len(parts[-1]) < 5:
+            last = parts.pop(); parts[-1] = parts[-1] + last
+        for j, part in enumerate(parts, 1):
+            no = f" ({j})" if len(parts) > 1 else ""
+            lessons.append({"t": f"{len(lessons)+1}과 {topic}{no}",
+                            "topic": topic, "words": part})
 
-    old = [v for v in o["vols"] if v.get("kind") == "life"]
+    # 챕터 제목은 그 챕터에 든 꼭지들을 이어 붙인다 — 무엇을 배우는지 보이게
+    chapters = []
+    for i in range(0, len(lessons), PER_CHAPTER):
+        part = lessons[i:i + PER_CHAPTER]
+        tops = []
+        for l in part:
+            if l["topic"] not in tops:
+                tops.append(l["topic"])
+        head = " · ".join(tops[:3]) + ("…" if len(tops) > 3 else "")
+        chapters.append({"t": f"{len(chapters)+1}장 {head}", "lessons": part})
+
+    # **전에 넣은 새 과정은 걷어낸다.** 표를 안 달아 두면 다시 돌릴 때마다 겹쳐 쌓인다
+    # (실측: 두 번 돌리니 '예전 낱말 1권' 안에 새 꼭지가 들어가 있었다).
+    old = [v for v in o["vols"] if v.get("kind") == "life" and not v.get("gen")]
     job = [v for v in o["vols"] if v.get("kind") != "life"]
     # 새 과정을 앞에, 예전 낱말을 뒤에
-    fresh = [{"kind": "life", "title": "일상 (새 과정)", "chapters": ch}
-             for ch in [chapters[i:i + 1][0] for i in range(len(chapters))]]
     # 권 하나에 챕터 일곱씩 묶는다
-    vols = [{"kind": "life", "chapters": chapters[i:i + 7]}
+    vols = [{"kind": "life", "gen": "new", "title": f"일상 {i//7 + 1}권",
+             "chapters": chapters[i:i + 7]}
             for i in range(0, len(chapters), 7)]
     for i, v in enumerate(old, 1):
         v["title"] = f"예전 낱말 {i}권"
