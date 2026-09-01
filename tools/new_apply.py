@@ -113,7 +113,10 @@ def main():
 
     # **전에 넣은 새 과정은 걷어낸다.** 표를 안 달아 두면 다시 돌릴 때마다 겹쳐 쌓인다
     # (실측: 두 번 돌리니 '예전 낱말 1권' 안에 새 꼭지가 들어가 있었다).
-    old = [v for v in o["vols"] if v.get("kind") == "life" and not v.get("gen")]
+    # **옛 낱말은 넣지 않는다.** 대표님이 여러 번 말씀하셨다 (2026-08-31, 09-02):
+    #   "선배 단어나 과거에 있던 일상단어나 완전히 제외하고 처음부터 다시."
+    # 내가 '잃는 것이 없게' 하려고 뒤에 남겨 뒀는데, 그건 지시를 어긴 것이다.
+    old = []
     job = [v for v in o["vols"] if v.get("kind") != "life"]
     # 새 과정을 앞에, 예전 낱말을 뒤에
     # 권 하나에 챕터 일곱씩 묶는다
@@ -121,8 +124,6 @@ def main():
              "title": (VOL_TITLES[i // 7] if i // 7 < len(VOL_TITLES) else f"일상 {i//7+1}"),
              "chapters": chapters[i:i + 7]}
             for i in range(0, len(chapters), 7)]
-    for i, v in enumerate(old, 1):
-        v["title"] = f"예전 낱말 {i}권"
     o["vols"] = vols + old + job
 
     print(f"넣을 낱말 {len(seq)} · 강 {len(lessons)} · 챕터 {len(chapters)} · 권 {len(vols)}")
