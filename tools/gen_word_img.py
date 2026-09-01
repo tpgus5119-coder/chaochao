@@ -34,7 +34,9 @@ IMG = R / "img"
 #   · 512×512      — 2026-08-31 실측으로 1024 보다 낫다고 확인. 1024 는 같은 4~8스텝을
 #                    4배 넓은 화면에 나눠 쓰느라 그림이 밋밋해진다(침대·배 그림에서 소품이 사라졌다).
 #                    최종 표시는 384×384 라 512 로 굽고 줄이는 지금 방식이 맞다.
-STEPS, GUID, SHIFT, SAMPLER = 8, 1, 1, "Euler A Trailing"
+# schnell 은 **4단계로 증류된 모델**이다. 8단계로 구우면 시간만 두 배 들고 얻는 것이 없다.
+# (Black Forest Labs 공식 예제도 schnell 은 num_steps=4 다. 실측: 8단계 1.6장/분)
+STEPS, GUID, SHIFT, SAMPLER = 4, 1, 1, "Euler A Trailing"
 
 def name_of(ko):
     h = hashlib.sha1(U.normalize("NFC", ko).encode()).hexdigest()[:10]
