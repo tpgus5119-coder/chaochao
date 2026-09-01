@@ -80,33 +80,53 @@ def slide1(prs, d, ts, i):
     cr.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
 
     tf = box(s, 62, 140, 956, 200)
-    put(tf, d.get("title", ""), 50, FG, bold=True, first=True, lh=1.30)
+    # **카드 그림과 똑같은 글을 쓴다** (대표님 지적 2026-09-02 "pptx 랑 webp 랑 내용이 다르잖아").
+    put(tf, d.get("title_card") or d.get("title", ""), 50, FG, bold=True, first=True, lh=1.30)
 
     tf2 = box(s, 62, 330, 956, 640)
     lines = d.get("sum5") or [d.get("intro") or ""]
     for k, ln in enumerate(lines):
         put(tf2, ln, 30, BODY, space_after=22, first=(k == 0), lh=1.30)
 
-    tf3 = box(s, 62, 990, 600, 40)
-    put(tf3, "짜오짜오 · " + ts, 24, DIM, first=True)
+    put(box(s, 62, 990, 700, 40), foot_text(d, ts), 24, DIM, first=True)
     return s
+
+
+def foot_text(d, ts):
+    """카드 그림과 **똑같은** 아래 줄 — 펴낸 날 · 출처"""
+    import urllib.parse
+    host = urllib.parse.urlparse(d.get("u") or "").netloc.lower().replace("www.", "")
+    name = {"insidevina.com": "인사이드비나", "vnexpress.net": "VnExpress",
+            "e.vnexpress.net": "VnExpress", "vietnamkoreatimes.com": "베트남코리아타임즈",
+            "tuoitre.vn": "Tuổi Trẻ", "thanhnien.vn": "Thanh Niên"}.get(host, host)
+    return "짜오짜오 · " + (d.get("pub") or ts) + ("  ·  출처 " + name if name else "")
 
 
 def slide2(prs, d, ts):
     s = prs.slides.add_slide(prs.slide_layouts[6])
     s.background.fill.solid(); s.background.fill.fore_color.rgb = BG
-    tf = box(s, 62, 64, 956, 70)
-    put(tf, "이 기사에서 배울 말", 38, FG, bold=True, first=True)
+    # 카드 그림과 같은 짜임 — 제목 없이 낱말 여섯, 아래에 대화 두 줄
     words = (d.get("words") or [])[:6]
     for i, w in enumerate(words):
-        x = 62 + (i % 2) * 498
-        y = 190 + (i // 2) * 252
-        t = box(s, x, y, 458, 220)
-        put(t, w["vi"], 46, FG, bold=True, font=VI, first=True)
-        put(t, "[" + (w.get("kr_read") or vi_kr.word(w["vi"])) + "]", 26, DIM, space_after=12)
-        put(t, w.get("ko", ""), 31, BODY)
-    tf3 = box(s, 62, 990, 600, 40)
-    put(tf3, "짜오짜오 · " + ts, 24, DIM, first=True)
+        x = 84 + (i % 2) * 484
+        y = 80 + (i // 2) * 190
+        t = box(s, x, y, 452, 180)
+        put(t, w["vi"], 44, FG, bold=True, font=VI, first=True)
+        # 발음은 **늘 우리 도구**가 만든다 (AI 것은 안 쓴다)
+        put(t, "[" + (vi_kr.word(w["vi"]) or w.get("kr_read") or "") + "]", 25, DIM, space_after=10)
+        put(t, w.get("ko", ""), 29, BODY)
+    lines = ((d.get("dialog") or {}).get("lines") or [])[:2]
+    if lines:
+        h = box(s, 84, 700, 912, 60)
+        put(h, "이 기사로 나누는 말", 34, FG, bold=True, first=True)
+        y = 770
+        for ln in lines:
+            t = box(s, 84, y, 912, 120)
+            put(t, (ln.get("who") or "A") + ". " + (ln.get("vi") or ""), 31, FG,
+                bold=True, font=VI, first=True)
+            put(t, ln.get("ko") or "", 27, BODY, space_after=10)
+            y += 100
+    put(box(s, 84, 990, 700, 40), foot_text(d, ts), 24, DIM, first=True)
     return s
 
 

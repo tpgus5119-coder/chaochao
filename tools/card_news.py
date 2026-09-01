@@ -127,6 +127,16 @@ def wrap(dr, text, f, width, ls=0.0):
     return out
 
 
+def wrap_sent(dr, text, f, width, ls=0.0):
+    """**문장 단위로 먼저 나눈다.** 문장이 두 줄에 걸쳐 잘리면 읽기 나쁘다
+    (대표님 지적 2026-09-02). 한 문장이 한 줄에 안 들어갈 때만 그 문장을 접는다."""
+    import re as _r
+    out = []
+    for sent in [x for x in _r.split(r"(?<=[.!?…])\s+", str(text)) if x.strip()]:
+        out += wrap(dr, sent.strip(), f, width, ls)
+    return out or [""]
+
+
 def bg_image(prompt, seed):
     """배경 그림 — 사람·손·글자가 안 나오게 **긍정문으로만** 적는다."""
     body = json.dumps({"prompt": prompt, "steps": 4, "shift": 1, "cfg_scale": 1,
@@ -187,19 +197,23 @@ def card1(d, bg, bgsave=None):
     # 카드에 얹을 제목 — 원문이 카드에 안 들어갈 만큼 길 때만 tools/card_title.py 가
     # 다듬어 둔 것을 쓴다. 없으면 원문 그대로다 (제목은 저작물성이 낮아 그대로 써도 된다).
     title = d.get("title_card") or d["title"]
-    t_lines = wrap_balanced(probe, nfc(title), f_t, W - PAD * 2, LS_TITLE)[:3]
+    t_lines = wrap_sent(probe, nfc(title), f_t, W - PAD * 2, LS_TITLE)[:3]
     lh_t = int(f_t.size * LH_TITLE)
     y_body = TOP_TITLE + len(t_lines) * lh_t + 30
     room = BOTTOM - y_body
 
     # 본문 글꼴을 **자리에 맞춰 키운다** — 남는 자리를 줄 간격으로만 늘리면
     # 글자는 작은데 줄만 띄엄띄엄해져 오히려 허전하다. 들어가는 한 가장 큰 글꼴을 쓴다.
-    body = d.get("sum5") or [d.get("intro") or ""]
+    # 여섯 줄 풀이가 없으면 **카드를 만들지 않는다.** intro 로 때우면
+    # 두세 줄짜리 빈약한 카드가 나간다 (대표님 지적 2026-09-02).
+    body = d.get("sum5") or []
+    if len(body) < 4:
+        return None
     def lay(sz):
         fb = font(sz)
         lines, orphan = [], False
         for para in body:
-            got = wrap_balanced(probe, nfc(para), fb, W - PAD * 2, LS_BODY)
+            got = wrap_sent(probe, nfc(para), fb, W - PAD * 2, LS_BODY)
             # 외톨이 줄 — 마지막 조각이 서너 글자뿐이면 보기 흉하다('…바랍니다' 다음 줄에 '.' 하나)
             if len(got) > 1 and len(got[-1].strip()) <= 5: orphan = True
             # (줄, 이어지는 줄인가) — 이어지는 줄은 들여써야 새 문장으로 안 읽힌다
@@ -385,7 +399,11 @@ def main():
             except Exception as e: print("  배경 못 구움:", type(e).__name__)
         base = f"{d.get('ts','x')}-{i}"
         bgp = OUT / "bg" / f"{d.get('ts','x')}-{i}.png"
-        for n, im in ((1, card1(d, bg, bgp)), (2, card2(d))):
+        c1 = card1(d, bg, bgp)
+        if c1 is None:      # 여섯 줄 풀이가 없는 기사는 카드를 안 만든다
+            print(f"  건너뜀(풀이 없음): {(d.get('title') or '')[:26]}", flush=True)
+            continue
+        for n, im in ((1, c1), (2, card2(d))):
             p = OUT / f"{base}-{n}.webp"
             im.save(p, "WEBP", quality=88, method=6)
             made.append(p.name)

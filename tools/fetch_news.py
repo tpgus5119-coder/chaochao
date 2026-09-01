@@ -72,6 +72,19 @@ CARE = {
     1: ['경제', '한국', '베트남', '하노이', '호찌민', '빈즈엉', '동나이', '박닌',
         '문화', '관광', '여행', '생활', '수출', '투자', '진출', '기업'],
 }
+# 영어 기사(VnExpress)용 — 위 낱말이 다 한국어라 영어 제목은 **늘 0점**이었다.
+# 그래서 하루 36건을 받아 놓고 한 건도 안 뽑혔다 (2026-09-02 실측).
+CARE_EN = {
+    3: ['visa', 'work permit', 'wage', 'salary', 'minimum wage', 'labor', 'worker',
+        'hiring', 'recruit', 'residence', 'hospital', 'rent', 'price', 'exchange rate',
+        'traffic', 'bus', 'metro', 'motorbike', 'accident', 'safety'],
+    2: ['factory', 'manufactur', 'textile', 'garment', 'electronics', 'semiconductor',
+        'samsung', 'industrial park', 'logistics', 'insurance', 'school', 'tuition',
+        'food', 'festival', 'holiday', 'weather', 'typhoon', 'flood'],
+    1: ['economy', 'export', 'import', 'investment', 'company', 'hanoi', 'ho chi minh',
+        'tourism', 'travel', 'korea', 'vietnam', 'growth', 'market'],
+}
+PER_SITE_MAX = 5     # 한 사이트가 다 차지하지 못하게 (열한 건 중 열 건이 한 곳이었다)
 # ③ 일상어가 많은가 — 관심사에 걸리는 기사가 하나도 없는 날의 차선책
 DAILY_KW = ['사람', '하루', '아침', '저녁', '집', '밥', '먹', '가게', '시장', '길',
             '가족', '아이', '학교', '돈', '값', '비', '더위', '추위', '휴일', '주말']
@@ -105,7 +118,9 @@ def cat_of(t):
 
 
 def care_score(t):
-    return sum(w for w, kws in CARE.items() for k in kws if k.lower() in t.lower())
+    low = t.lower()
+    return (sum(w for w, kws in CARE.items() for k in kws if k.lower() in low)
+            + sum(w for w, kws in CARE_EN.items() for k in kws if k in low))
 
 def daily_score(t):
     return sum(1 for k in DAILY_KW if k in t)
@@ -208,6 +223,17 @@ try:
 except Exception as e:
     print(f'갈래 재확인 건너뜀: {e}')
 
+# 이미 실은 기사와 **내용이 겹치면** 안 싣는다 (어제 것과 같은 카드가 나왔다)
+try:
+    _old = json.loads((R / 'data' / 'news_days.json').read_text(encoding='utf-8'))['days']
+except Exception:
+    _old = []
+_old_t = [d.get('title', '') for d in _old]
+from difflib import SequenceMatcher as _SM
+def _dup(t):
+    return any(_SM(None, t, o).ratio() > 0.55 for o in _old_t)
+cand = [c for c in cand if not _dup(c['t'])]
+
 def _ok_src(c, cat):
     if cat != '정치':
         return True
@@ -215,7 +241,9 @@ def _ok_src(c, cat):
     return any(host.endswith(h) for h in POLITICS_OK)
 
 # ── 주제마다 자리만큼 뽑는다
-picked, used = [], set()
+picked, used, per_site = [], set(), {}
+def _site(c):
+    return c['u'].split('/')[2].lower().replace('www.', '')
 for cat, n in QUOTA:
     got = 0
     for c in cand:
@@ -223,7 +251,11 @@ for cat, n in QUOTA:
             continue
         if c.get('cat') != cat or c['care'] < FLOOR or not _ok_src(c, cat):
             continue
+        st = _site(c)
+        if per_site.get(st, 0) >= PER_SITE_MAX:
+            continue
         picked.append(c); used.add(id(c)); got += 1
+        per_site[st] = per_site.get(st, 0) + 1
     if got < n:
         print(f"  자리 못 채움: {cat} {got}/{n}")
 # 모자라면 **주제 상관없이** 점수 높은 순으로 채워 최소치를 맞춘다 (대표님 지시)
