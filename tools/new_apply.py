@@ -26,6 +26,27 @@ R = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(R / "tools"))
 from new_words import TOPICS
 
+# ── 제목은 **손으로 짓는다** (대표님 지시 2026-09-02: "1권이 목차의 제목이지 마라.
+#    제목을 글로 해줘, 그 아래의 것들도 모두").
+#    기계가 꼭지 이름을 이어 붙이면 목록이지 제목이 아니다.
+#    장 제목은 그 장에서 **할 수 있게 되는 일**을 한 줄로 적는다.
+CHAPTER_TITLES = [
+ "나를 소개합니다",           # 인사·호칭·나이·이름·나라
+ "나와 내 사람들",            # 나라·숫자·가족·직업
+ "말을 잇는 법",             # 직업·기본 동사·가리킴·접속·정도
+ "때를 말합니다",             # 정도·묻는 말·시간·요일
+ "우리 집 하루",             # 요일·하루 일과·집·살림
+ "무엇을 먹을까",            # 위치·먹을거리·마실거리·맛
+ "사고 팔기",               # 맛·식당·색깔·값·가게
+ "길을 나섭니다",            # 가게·옷·길·탈것·장소
+ "볼일을 봅니다",            # 장소·관공서·여행·아픈 곳
+ "몸과 마음",               # 병원·기분·성격·날씨
+ "함께 지내기",              # 날씨·자연·취미·친구·잡담
+ "사람들 사이에서",           # 잡담·명절·전화·직장
+ "생각을 말합니다",           # 직장·의견·도움 청하기
+]
+VOL_TITLES = ["첫마디부터 장보기까지", "길에서 사람들 사이로"]
+
 ORDER = R / "data" / "order.json"
 NEW = R / "data" / "_new_words.json"
 PER_LESSON, PER_CHAPTER = 15, 7
@@ -76,8 +97,7 @@ def main():
             last = parts.pop(); parts[-1] = parts[-1] + last
         for j, part in enumerate(parts, 1):
             no = f" ({j})" if len(parts) > 1 else ""
-            lessons.append({"t": f"{len(lessons)+1}과 {topic}{no}",
-                            "topic": topic, "words": part})
+            lessons.append({"t": f"{topic}{no}", "topic": topic, "words": part})
 
     # 챕터 제목은 그 챕터에 든 꼭지들을 이어 붙인다 — 무엇을 배우는지 보이게
     chapters = []
@@ -87,8 +107,9 @@ def main():
         for l in part:
             if l["topic"] not in tops:
                 tops.append(l["topic"])
-        head = " · ".join(tops[:3]) + ("…" if len(tops) > 3 else "")
-        chapters.append({"t": f"{len(chapters)+1}장 {head}", "lessons": part})
+        i2 = len(chapters)
+        name = CHAPTER_TITLES[i2] if i2 < len(CHAPTER_TITLES) else " · ".join(tops[:2])
+        chapters.append({"t": name, "sub": " · ".join(tops), "lessons": part})
 
     # **전에 넣은 새 과정은 걷어낸다.** 표를 안 달아 두면 다시 돌릴 때마다 겹쳐 쌓인다
     # (실측: 두 번 돌리니 '예전 낱말 1권' 안에 새 꼭지가 들어가 있었다).
@@ -96,7 +117,8 @@ def main():
     job = [v for v in o["vols"] if v.get("kind") != "life"]
     # 새 과정을 앞에, 예전 낱말을 뒤에
     # 권 하나에 챕터 일곱씩 묶는다
-    vols = [{"kind": "life", "gen": "new", "title": f"일상 {i//7 + 1}권",
+    vols = [{"kind": "life", "gen": "new",
+             "title": (VOL_TITLES[i // 7] if i // 7 < len(VOL_TITLES) else f"일상 {i//7+1}"),
              "chapters": chapters[i:i + 7]}
             for i in range(0, len(chapters), 7)]
     for i, v in enumerate(old, 1):
