@@ -101,6 +101,26 @@ def wrap_balanced(dr, text, f, width, ls=0.0):
     return best
 
 
+# 우리말에서 **앞말에 붙어야 뜻이 이어지는 말**들.
+# 이런 말 앞에서 줄을 끊으면 '좁은 집에 / 머무는' 처럼 읽는 흐름이 끊긴다.
+STICKY = ('것', '수', '때', '중', '뒤', '앞', '후', '전', '등', '및', '더', '못',
+          '있어요', '있죠', '있다', '없어요', '없다', '해요', '돼요', '거예요',
+          '한다', '된다', '위해', '통해', '대해', '따라', '보다', '만큼', '동안')
+
+
+def _stick(prev, word):
+    """앞 낱말과 붙여 두어야 읽기 좋은가"""
+    w = word.strip()
+    if not w:
+        return False
+    if w in STICKY or (len(w) <= 2 and w[-1] in "은는이가을를의에도만"):
+        return True
+    # 숫자 뒤의 단위 (5억 / 달러 처럼 끊기지 않게)
+    if prev and prev[-1].isdigit() and w[0] in "억만천원동명개년월일":
+        return True
+    return False
+
+
 def wrap(dr, text, f, width, ls=0.0):
     """글자 폭을 재서 줄을 나눈다.
 
@@ -108,10 +128,15 @@ def wrap(dr, text, f, width, ls=0.0):
     낱말 한가운데가 갈라진다 (2026-09-02 실측, 카드에 그대로 찍혀 나갔다).
     한 어절이 통째로 한 줄보다 길 때만 글자 단위로 쪼갠다."""
     out, line = [], ""
-    for word in str(text).split(" "):
+    ws2 = str(text).split(" ")
+    for wi, word in enumerate(ws2):
         cand = (line + " " + word) if line else word
         if tw(dr, cand, f, ls) <= width:
             line = cand; continue
+        # 다음 낱말이 앞말에 붙어야 하면, 앞 낱말까지 함께 다음 줄로 내린다
+        if line and _stick(line.split(" ")[-1], word) and " " in line:
+            head, _, tail = line.rpartition(" ")
+            out.append(head); line = (tail + " " + word).strip(); continue
         if line:
             out.append(line); line = ""
         # 어절 하나가 한 줄보다 길면 그때만 글자로 쪼갠다
@@ -125,6 +150,37 @@ def wrap(dr, text, f, width, ls=0.0):
                 line = t
     if line: out.append(line)
     return out
+
+
+def wrap_title(dr, text, f, width, ls=0.0):
+    """제목은 **뜻이 끊기는 곳**에서 나눈다 (대표님 지적 2026-09-02).
+
+    나쁨:  베트남 커피시장, 작년 시장 규모 5.5억
+           달러…2035년 10.3억 달러 연평균 6.5% 성장 전망
+    좋음:  베트남 커피시장, 작년 시장 규모 5.5억 달러…
+           2035년 10.3억 달러 연평균 6.5% 성장 전망
+
+    '…'·','·'·' 뒤가 끊어 읽는 자리다. 거기서 먼저 나눠 보고,
+    그래도 안 들어가면 그때 낱말 단위로 접는다."""
+    import re as _r
+    txt = str(text).strip()
+    parts = [x for x in _r.split(r"(?<=[…·,])\s*", txt) if x.strip()]
+    out, line = [], ""
+    for pt in parts:
+        cand = (line + " " + pt).strip() if line else pt
+        if tw(dr, cand, f, ls) <= width:
+            line = cand
+        else:
+            if line:
+                out.append(line)
+            if tw(dr, pt, f, ls) <= width:
+                line = pt
+            else:
+                got = wrap(dr, pt, f, width, ls)
+                out += got[:-1]; line = got[-1] if got else ""
+    if line:
+        out.append(line)
+    return out or [""]
 
 
 def wrap_sent(dr, text, f, width, ls=0.0):
@@ -158,6 +214,14 @@ SRC_NAME = {
     "thanhnien.vn": "Thanh Niên",
     "vietnamnews.vn": "Vietnam News",
     "vietnamplus.vn": "VietnamPlus",
+    # **한글로 적는다.** 아래 줄은 한국어 글꼴로 그려서 성조 글자가 깨진다
+    # ('Dân Trí' 가 'D□n Tr□' 로 찍혔다, 2026-09-02 실측)
+    "dantri.com.vn": "전찌(Dan Tri)",
+    "e.vnexpress.net": "VnExpress",
+    "vnexpress.net": "VnExpress",
+    "tuoitre.vn": "뚜오이째(Tuoi Tre)",
+    "thanhnien.vn": "타인니엔(Thanh Nien)",
+    "laodong.vn": "라오동(Lao Dong)",
 }
 
 
@@ -180,7 +244,7 @@ def foot(dr, d, f, pad):
 
 
 
-def card1(d, bg, bgsave=None):
+def card1(d, bg, bgsave=None, force_sz=None, sizeonly=False):
     """첫 장 — 본문이 **카드를 가득** 채운다. 그림은 뒤에서 은은히 받쳐 주는 바탕이다.
 
     대표님 지시 (2026-08-31): "글자는 화면 가득 채워줘야지. 8줄 내외로.
@@ -198,7 +262,7 @@ def card1(d, bg, bgsave=None):
     # 카드에 얹을 제목 — 원문이 카드에 안 들어갈 만큼 길 때만 tools/card_title.py 가
     # 다듬어 둔 것을 쓴다. 없으면 원문 그대로다 (제목은 저작물성이 낮아 그대로 써도 된다).
     title = d.get("title_card") or d["title"]
-    t_lines = wrap_sent(probe, nfc(title), f_t, W - PAD * 2, LS_TITLE)[:3]
+    t_lines = wrap_title(probe, nfc(title), f_t, W - PAD * 2, LS_TITLE)[:3]
     lh_t = int(f_t.size * LH_TITLE)
     y_body = TOP_TITLE + len(t_lines) * lh_t + 30
     room = BOTTOM - y_body
@@ -221,7 +285,10 @@ def card1(d, bg, bgsave=None):
             lines += [(ln, i > 0) for i, ln in enumerate(got)]
         return fb, lines, orphan, len(lines) * int(sz * LH_BODY) <= room
 
-    SIZES = (38, 36, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24)
+    # **하루치 카드는 모두 같은 글자 크기여야 한다** (대표님 지적 2026-09-02
+    # "글자 크기가 카드뉴스마다 다른데?"). main 이 먼저 열두 편을 재서 가장 작은 크기를
+    # 정하고, 그 크기로 다시 굽는다. force_sz 가 그 크기다.
+    SIZES = (force_sz,) if force_sz else (38, 36, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24)
     cands = [lay(sz) for sz in SIZES]
     # ① **한 문장이 한 줄에 들어가는** 것 중 가장 큰 글꼴을 먼저 고른다
     #    (대표님 지시 2026-09-02 "2문장이 1줄을 공유하지 않도록" — 뒤집으면
@@ -237,6 +304,8 @@ def card1(d, bg, bgsave=None):
         fb, lines, _, _ = cands[-1]
         pick = (fb, lines[:max(1, int(room / (fb.size * LH_BODY)))], False, True)
     f_b, b_lines = pick[0], pick[1]
+    if sizeonly:            # 재기만 하고 굽지 않는다
+        return f_b.size
     # 그러고도 남는 자리는 줄 사이에 고루 나눈다 (너무 벌어지지 않게 상한 1.95배)
     lh_b = int(room / max(1, len(b_lines)))
     lh_b = max(int(f_b.size * LH_BODY), min(lh_b, int(f_b.size * 2.45)))
@@ -245,7 +314,8 @@ def card1(d, bg, bgsave=None):
         im.paste(bg.resize((W, H)), (0, 0))
         # 카드 전체를 덮는 밝은 막 — 그림은 무늬로 남고 글은 어디서나 읽힌다
         veil = Image.new("RGB", (W, H), BG)
-        im.paste(veil, (0, 0), Image.new("L", (W, H), 234))
+        # 막을 조금 걷어 그림이 보이게 (대표님 지시 2026-09-02 '너무 희미함')
+        im.paste(veil, (0, 0), Image.new("L", (W, H), 205))
         # 아래쪽은 조금 더 걷어 그림이 살아 있게 둔다 (막이 옅어지는 만큼 글도 아래에서 끝난다)
         g = Image.new("L", (1, H), 0)
         for y in range(H):
@@ -306,55 +376,76 @@ def card2(d):
     words = ws[:6]        # 카드에는 여섯 개만 (대표님 지시)
     for w in words:
         USED_W.add(nfc(w.get("vi", "")).lower())
+    # **낱말은 위쪽에 모아 붙이고, 남는 자리는 문장에 준다**
+    # (대표님 지적 2026-09-02 "단어는 널널한데 문장은 너무 좁다").
+    ROW = 158
     for i, w in enumerate(words):
         cx = PAD + (i % 2) * (COL + GAP)
-        cy = 74 + (i // 2) * 180
+        cy = 60 + (i // 2) * ROW
         vi = nfc(w["vi"])
         fv = f_vi
         for sz in (44, 40, 36, 32, 28):
             fv = font(sz, vi=True)
             if dr.textlength(vi, font=fv) <= COL: break
         dr.text((cx, cy), vi, font=fv, fill=FG)
-        # kr_read 를 그대로 믿지 않는다 — AI 가 만든 자료라 học 의 발음에 'học' 이
-        # 그대로 들어와 카드에 [học] 으로 찍힌 적이 있다 (2026-09-01 실측).
-        # 한글이 아니면 우리 변환기(vi_kr)로 다시 만든다. 같은 글자면 늘 같은 결과다.
         # **발음은 늘 우리 도구가 만든다.** AI 가 준 kr_read 는 쓰지 않는다 —
         # 한글이기만 하면 통과돼 điện→[디에트]·sản xuất→[산 수트] 가 카드에 찍혔다
         # (2026-09-02 실측). 같은 글자면 늘 같은 결과라야 검산이 된다.
         kr = vi_kr.word(w["vi"]) or (w.get("kr_read") or "")
-        dtext(dr, (cx, cy + fv.size + 10), "[" + kr + "]", f_kr, DIM, LS_SMALL)
+        dtext(dr, (cx, cy + fv.size + 8), "[" + kr + "]", f_kr, DIM, LS_SMALL)
         for j2, ln in enumerate(wrap(dr, nfc(w["ko"]), f_ko, COL, LS_BODY)[:1]):
-            dtext(dr, (cx, cy + fv.size + 52), ln, f_ko, (48, 52, 60), LS_BODY)
+            dtext(dr, (cx, cy + fv.size + 48), ln, f_ko, (48, 52, 60), LS_BODY)
 
-    # ── 대화 두 줄 — 이것만 봐도 무슨 기사인지 안다
+    # ── 대화 두 줄 — 이것만 봐도 무슨 기사인지 안다.
+    #    자리가 모자라면 **글씨를 줄여서라도 발밑 출처와 겹치지 않게** 한다
+    #    (전에는 마지막 한글 줄이 출처 줄에 붙어 찍혔다, 2026-09-02 실측).
     lines = ((d.get("dialog") or {}).get("lines") or [])[:2]
     if lines:
-        y = 654
-        dr.line([PAD, y - 26, W - PAD, y - 26], fill=(226, 226, 222), width=3)
-        dtext(dr, (PAD, y), "이 기사로 나누는 말", f_h, FG, LS_TITLE)
-        y += 62
-        for ln in lines:
-            who = (ln.get("who") or "").strip() or "A"
-            cw = dr.textlength(who, font=f_who)
-            dr.ellipse([PAD, y + 2, PAD + 38, y + 40], fill=(226, 228, 233))
-            dr.text((PAD + 19 - cw / 2, y + 9), who, font=f_who, fill=(70, 74, 82))
-            tx = PAD + 54
-            vw = W - tx - PAD
-            vl = wrap(dr, nfc(ln.get("vi") or ""), f_dvi, vw)[:2]
-            for k, t in enumerate(vl):
-                dr.text((tx, y + k * 38), t, font=f_dvi, fill=FG)
-            yy = y + len(vl) * 38 + 4
-            # 문장에도 **한글 발음**을 단다 (대표님 지시 2026-09-02).
-            # 늘 우리 도구가 만든다 — AI 것은 안 쓴다
-            kr = vi_kr.word(nfc(ln.get("vi") or "")) or ""
-            if kr:
-                for k, t in enumerate(wrap(dr, "[" + kr + "]", f_dkr, vw, LS_SMALL)[:2]):
-                    dtext(dr, (tx, yy + k * 30), t, f_dkr, DIM, LS_SMALL)
-                yy += 30 * min(2, len(wrap(dr, "[" + kr + "]", f_dkr, vw, LS_SMALL))) + 2
-            kol = wrap(dr, nfc(ln.get("ko") or ""), f_dko, vw, LS_BODY)[:2]
-            for k, t in enumerate(kol):
-                dtext(dr, (tx, yy + k * 34), t, f_dko, (78, 82, 90), LS_BODY)
-            y = yy + 34 * max(1, len(kol)) + 18
+        TOP = 60 + ((len(words) + 1) // 2) * ROW + 26      # 낱말 아래
+        BOT = H - 108                                       # 출처 줄 위
+
+        def draw_dialog(scale, do_draw):
+            """대화를 그린다(또는 재기만 한다). 끝난 y 를 돌려준다."""
+            fv2 = font(int(29 * scale), vi=True)
+            fk2 = font(int(23 * scale))
+            fo2 = font(int(26 * scale))
+            fw2 = font(int(23 * scale), 1)
+            fh2 = font(int(34 * scale), 1)
+            lv, lk, lo = int(38 * scale), int(30 * scale), int(34 * scale)
+            y = TOP
+            if do_draw:
+                dr.line([PAD, y - 22, W - PAD, y - 22], fill=(226, 226, 222), width=3)
+                dtext(dr, (PAD, y), "이 기사로 나누는 말", fh2, FG, LS_TITLE)
+            y += int(62 * scale)
+            for ln in lines:
+                who = (ln.get("who") or "").strip() or "A"
+                tx, vw = PAD + 54, W - (PAD + 54) - PAD
+                if do_draw:
+                    cw = dr.textlength(who, font=fw2)
+                    dr.ellipse([PAD, y + 2, PAD + 38, y + 40], fill=(226, 228, 233))
+                    dr.text((PAD + 19 - cw / 2, y + 9), who, font=fw2, fill=(70, 74, 82))
+                vl = wrap(dr, nfc(ln.get("vi") or ""), fv2, vw)[:2]
+                if do_draw:
+                    for k, t in enumerate(vl):
+                        dr.text((tx, y + k * lv), t, font=fv2, fill=FG)
+                yy = y + len(vl) * lv + 4
+                kr = vi_kr.word(nfc(ln.get("vi") or "")) or ""
+                if kr:
+                    kl = wrap(dr, "[" + kr + "]", fk2, vw, LS_SMALL)[:2]
+                    if do_draw:
+                        for k, t in enumerate(kl):
+                            dtext(dr, (tx, yy + k * lk), t, fk2, DIM, LS_SMALL)
+                    yy += lk * len(kl) + 2
+                kol = wrap(dr, nfc(ln.get("ko") or ""), fo2, vw, LS_BODY)[:2]
+                if do_draw:
+                    for k, t in enumerate(kol):
+                        dtext(dr, (tx, yy + k * lo), t, fo2, (78, 82, 90), LS_BODY)
+                y = yy + lo * max(1, len(kol)) + int(20 * scale)
+            return y
+
+        sc = next((x for x in (1.0, 0.94, 0.88, 0.82, 0.76, 0.7)
+                   if draw_dialog(x, False) <= BOT), 0.7)
+        draw_dialog(sc, True)
 
     foot(dr, d, f_s, PAD)
     return im
@@ -371,13 +462,15 @@ def main():
     else:
         last = max((d.get("ts") or "") for d in D)
         D = [d for d in D if d.get("ts") == last]
+    # **펴낼 기사만 먼저 남기고** 나서 개수를 자른다.
+    # 순서가 반대라 9/1 기사 19건에서 12건을 자른 뒤 pub 을 걸러 4건만 남았다 (2026-09-02)
+    D = [d for d in D if d.get("pub")] or D
     D = D[:a.limit]
     from datetime import datetime, timezone, timedelta
     # 자료에 이미 찍힌 펴낸날을 그대로 쓴다 (card_pick 이 찍는다).
     # --pub 을 주면 그것이 이긴다.
     pub = a.pub or (D[0].get("pub") if D and D[0].get("pub") else
                     datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d"))
-    D = [d for d in D if d.get("pub")] or D
     for d in D:
         d["pub"] = d.get("pub") or pub                        # 내보내기·파워포인트도 같은 날짜를 쓴다
     # 펴낸 날을 자료에 적어 둔다 — card_export.py 가 이 날짜로 폴더를 만든다
@@ -390,6 +483,10 @@ def main():
     _f.write_text(json.dumps(_j, ensure_ascii=False, indent=1), encoding="utf-8")
     OUT.mkdir(parents=True, exist_ok=True)
     print(f"카드뉴스 {len(D)}편 × 2장", flush=True)
+    # ── 먼저 열두 편을 **재기만** 한다. 가장 작은 크기가 오늘의 크기다.
+    szs = [z for z in (card1(d, None, None, sizeonly=True) for d in D) if isinstance(z, int)]
+    DAY_SZ = min(szs) if szs else 30
+    print(f"오늘의 본문 글자 크기: {DAY_SZ} (잰 값 {sorted(set(szs))})", flush=True)
     made = []
     for i, d in enumerate(D, 1):
         bg = None
@@ -399,6 +496,48 @@ def main():
             #   2026-08-31: 장면과 씨앗을 갈래 이름 하나로만 정해서, 같은 갈래 기사 둘이
             #   **완전히 똑같은 그림**을 썼다(삼성전자 카드와 나이키 카드의 배경이 한 장이었다).
             #   씨앗도 기사(제목)에서 뽑아 같은 장면이라도 다른 그림이 나오게 한다.
+            # **소재를 먼저 본다.** 갈래로만 고르면 커피 기사에 은행 건물이 깔린다
+            # (대표님 지적 2026-09-02 "커피 기사의 뒷 배경그림은 안 맞는 듯").
+            SUBJECT = [
+              (("커피", "cà phê", "coffee", "로부스타", "아라비카"),
+               "coffee beans and a coffee cup on a wooden table"),
+              (("쌀국수", "포 ", "phở", "pho ", "국수", "식당", "먹거리", "맛집"),
+               "a bowl of pho and chopsticks on a wooden table"),
+              (("해변", "관광", "여행", "리조트", "호텔", "beach", "touris", "du lịch"),
+               "a quiet tropical beach with palm trees and a boat"),
+              (("전기차", "자동차", "도요타", "toyota", "vinfast", "ô tô", "car ", "완성차"),
+               "a car on an assembly line in a bright plant"),
+              (("오토바이", "이륜", "xe máy", "motorbike", "스쿠터"),
+               "parked motorbikes on a city street"),
+              (("반도체", "칩", "전자", "삼성", "samsung", "electronic", "휴대폰", "아이폰"),
+               "circuit boards and electronic parts on a clean bench"),
+              (("은행", "금융", "대출", "ngân hàng", "bank", "크레딧", "보험"),
+               "stacked coins and a rising line chart on a plain table"),
+              (("수출", "항만", "물류", "컨테이너", "무역", "xuất khẩu", "export", "port"),
+               "shipping containers stacked at a port at dawn"),
+              (("학교", "대학", "학생", "교육", "졸업", "trường", "school", "student"),
+               "an empty classroom with desks and a blackboard"),
+              (("병원", "의사", "의대", "환자", "건강", "bệnh viện", "hospital", "doctor"),
+               "a hospital corridor with empty chairs"),
+              (("아파트", "부동산", "주택", "집값", "건설", "bất động sản", "apartment"),
+               "apartment buildings under a clear sky"),
+              (("공항", "항공", "비행", "sân bay", "airport", "airline"),
+               "an airport terminal window with a plane outside"),
+              (("쌀", "농업", "농가", "커피 농장", "과일", "두리안", "nông", "farm", "rice"),
+               "green rice fields with a farmer hat on a fence"),
+              (("새우", "수산", "어업", "틸라피아", "생선", "thủy sản", "seafood"),
+               "fishing boats moored at a quiet harbor"),
+              (("가구", "목재", "furniture", "nội thất", "인테리어"),
+               "wooden furniture pieces in a bright showroom"),
+              (("의류", "섬유", "봉제", "신발", "dệt may", "textile", "garment"),
+               "rolls of fabric stacked in a bright warehouse"),
+              (("전투기", "군", "국방", "미사일", "무기", "military", "quân sự"),
+               "a fighter jet silhouette on an empty runway"),
+              (("임금", "월급", "최저임금", "급여", "lương", "wage", "salary"),
+               "an envelope of banknotes and a payslip on a desk"),
+              (("기숙사", "숙소", "방", "이사", "고향", "설", "명절", "tết"),
+               "a small tidy room with a bed and a suitcase"),
+            ]
             SCENES = {
               "일자리": ["an empty office desk with a chair by a window",
                        "a row of lockers in a quiet workplace hallway",
@@ -419,9 +558,14 @@ def main():
                         "a street food cart under lanterns at dusk",
                         "a traditional market stall with fresh produce"],
             }
-            opts = SCENES.get(d.get("cat"), ["a calm city skyline at dawn"])
+            hay = " ".join(str(d.get(k) or "") for k in
+                           ("title", "title_card", "theme", "intro")).lower()
+            hit = next((sc for keys, sc in SUBJECT if any(k.lower() in hay for k in keys)), None)
+            opts = ([hit] if hit else []) + SCENES.get(d.get("cat"), ["a calm city skyline at dawn"])
             key = (d.get("title") or "") + (d.get("ts") or "")
             hv = int(hashlib.sha1(key.encode()).hexdigest(), 16)
+            if hit:
+                hv = 0      # 소재가 맞으면 그것을 **먼저** 쓴다 (겹치면 다음 것으로 밀린다)
             # 오늘 이미 쓴 장면은 피한다 (기사끼리 배경이 겹치지 않게)
             scene = opts[hv % len(opts)]
             for k in range(len(opts)):
@@ -434,7 +578,7 @@ def main():
             except Exception as e: print("  배경 못 구움:", type(e).__name__)
         base = f"{d.get('ts','x')}-{i}"
         bgp = OUT / "bg" / f"{d.get('ts','x')}-{i}.png"
-        c1 = card1(d, bg, bgp)
+        c1 = card1(d, bg, bgp, force_sz=DAY_SZ)
         if c1 is None:      # 여섯 줄 풀이가 없는 기사는 카드를 안 만든다
             print(f"  건너뜀(풀이 없음): {(d.get('title') or '')[:26]}", flush=True)
             continue

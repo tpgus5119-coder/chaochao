@@ -38,10 +38,22 @@ FLOOR = 8                         # 이 점수 미만은 자리가 비어도 안
 # 우리 판정이 덮였다 — '우대비자 도입'이 문화·생활로, '아이폰18'이 일자리로 갔다.
 # 아래 낱말이 제목에 있으면 갈래를 **못 박는다.** 우리 독자에게 가장 중요한 말들이다.
 FORCE = [
+    # **경제를 먼저 본다** — '아이폰 출시국'이 일자리로, '소매금융 실적'이 공장으로
+    # 갔다 (2026-09-02 실측). 회사 실적·매출·수출은 경제다.
+    ('경제', ['실적', '매출', '순익', '영업이익', '수출', '수입', '시장 규모', '점유율',
+             '주가', '증시', '환율', '물가', '금리', '투자 유치', '출시', '판매 개시',
+             '금융', '은행', '보험사', 'revenue', 'profit', 'sales', 'market share']),
     ('일자리', ['비자', '노동허가', '체류', '채용', '구인', '취업', '최저임금', '임금',
                '근로', '노동', '해고', '기능실습', 'visa', 'work permit', 'recruit', 'wage']),
     ('사회',   ['사고', '전복', '화재', '단속', '벌금', '처벌', '태풍', '홍수', '범죄']),
-    ('공장·산업', ['공장', '생산라인', '봉제', '반도체', '산업단지', '공단']),
+    ('공장·산업', ['공장', '생산라인', '봉제', '반도체', '산업단지', '공단',
+                'factory', 'manufacturing', 'furniture', 'industrial', 'production']),
+    ('문화·생활', ['관광', '여행', '해변', '축제', '명절', '음식', '요리', '영화', '스포츠',
+                'tourism', 'travel', 'beach', 'festival', 'food', 'culture', 'sport',
+                'durian', 'cuisine', 'restaurant', 'coffee', 'movie', 'music']),
+    ('사회', ['arrested', 'police', 'theft', 'stealing', 'crime', 'court', 'fire',
+            'accident', 'crash', 'flood', 'storm', 'hospital', 'school', 'student']),
+    ('경제', ['exports reach', 'rice export', 'billion', 'trade surplus', 'fdi']),
 ]
 
 
@@ -51,6 +63,9 @@ def force_cat(t):
         if any(k.lower() in low for k in kws):
             return cat
     return None
+
+
+CATNAMES = ('일자리', '공장·산업', '경제', '사회', '정치', '문화·생활')
 BODY_MAX = 40                     # 본문을 읽어 볼 후보 수
 
 # 정치는 **베트남 밖 매체**에서만 (대표님 지시) — 현지 매체는 정치를 한쪽으로만 전한다
@@ -114,6 +129,31 @@ CARE_EN = {
         'hanoi', 'ho chi minh', 'saigon', 'binh duong', 'dong nai', 'bac ninh',
         'da nang', 'korea', 'vietnam', 'culture', 'tourism', 'travel', 'life'],
 }
+# **베트남어 낱말표.** 한국어·영어와 무게가 같다 (대표님 지시 2026-09-02:
+# 기사를 번역하지 말고 낱말표를 옮겨라). 현지 신문은 베트남어로 쓴다.
+CARE_VI = {
+    3: ['thị thực', 'visa', 'giấy phép lao động', 'cư trú', 'lương tối thiểu', 'tiền lương',
+        'lao động', 'công nhân', 'người lao động', 'tuyển dụng', 'việc làm', 'sa thải',
+        'hợp đồng lao động', 'tai nạn lao động', 'an toàn lao động', 'tăng ca', 'ca đêm',
+        'xe buýt', 'tàu điện', 'metro', 'xe máy', 'giao thông', 'bệnh viện', 'nhà thuốc',
+        'tiền thuê', 'giá nhà', 'giá cả', 'lạm phát', 'tiền điện', 'tỷ giá', 'kiều hối',
+        'người Hàn', 'Hàn Quốc', 'nghỉ lễ'],
+    2: ['nhà máy', 'sản xuất', 'may mặc', 'dệt may', 'da giày', 'điện tử', 'bán dẫn',
+        'Samsung', 'khu công nghiệp', 'logistics', 'kho', 'bảo hiểm', 'trường học',
+        'học phí', 'nhà ở', 'ẩm thực', 'lễ hội', 'Tết', 'thời tiết', 'bão', 'lũ', 'nắng nóng'],
+    1: ['kinh tế', 'xuất khẩu', 'nhập khẩu', 'đầu tư', 'doanh nghiệp', 'công ty',
+        'thương mại', 'tăng trưởng', 'GDP', 'thị trường', 'thuế', 'bất động sản',
+        'Hà Nội', 'TP.HCM', 'Hồ Chí Minh', 'Bình Dương', 'Đồng Nai', 'Bắc Ninh',
+        'Đà Nẵng', 'Việt Nam', 'du lịch', 'văn hóa'],
+}
+
+# 낱말로 시시한 기사를 막으려 했으나 **두더지잡기**였다 (대표님 지적 2026-09-02:
+# "stealing 을 막으면 수박 절도는? 그런 식으로 하면 안 되지").
+# 바른 길은 **점수를 지키는 것**이다 — 자리를 채우려고 낮은 점수 기사를 넣지 않는다.
+# 그래서 JUNK 목록은 쓰지 않는다. 아래는 흔적만 남긴다.
+JUNK, JUNK_PENALTY = [], 0
+
+HOT_BONUS = 6        # 사이트가 '많이 본 뉴스'로 골라 둔 기사 가산점
 PER_SITE_MAX = 99    # 상한을 두지 않는다 (대표님 지시 2026-09-02) —
                      # 점수만 제대로 매기면 저절로 골고루 뽑힌다
 # ③ 일상어가 많은가 — 관심사에 걸리는 기사가 하나도 없는 날의 차선책
@@ -148,10 +188,19 @@ def cat_of(t):
     return best
 
 
+def junk_score(t):
+    """시시한 기사인가 — 개인 사건·연예·잡담"""
+    low = t.lower()
+    return JUNK_PENALTY if any(k.lower() in low for k in JUNK) else 0
+
+
 def care_score(t):
+    """한국어·영어·베트남어 **세 낱말표를 똑같이** 적용한다.
+    표가 셋이어도 무게는 같다 — 어느 말로 쓰였든 같은 잣대여야 한다."""
     low = t.lower()
     return (sum(w for w, kws in CARE.items() for k in kws if k.lower() in low)
-            + sum(w for w, kws in CARE_EN.items() for k in kws if k in low))
+            + sum(w for w, kws in CARE_EN.items() for k in kws if k in low)
+            + sum(w for w, kws in CARE_VI.items() for k in kws if k.lower() in low))
 
 def daily_score(t):
     return sum(1 for k in DAILY_KW if k in t)
@@ -253,6 +302,18 @@ try:
     recat(cand[:BODY_MAX])
 except Exception as e:
     print(f'갈래 재확인 건너뜀: {e}')
+# 사이트가 '많이 본 뉴스'로 골라 둔 기사에 가산점을 준다
+try:
+    from news_hot import hot_urls
+    _hot = hot_urls()
+    _h = 0
+    for c in cand:
+        if c['u'] in _hot:
+            c['care'] += HOT_BONUS; _h += 1
+    print(f'  많이 본 기사 {len(_hot)}건 중 오늘 후보에 든 것 {_h}건 (+{HOT_BONUS}점)')
+except Exception as e:
+    print(f'  많이 본 기사 못 읽음: {e}')
+
 # **마지막에 우리 낱말이 이긴다** — 비자·채용·사고는 무엇보다 먼저다
 _f = 0
 for c in cand:
@@ -273,6 +334,10 @@ def _dup(t):
     return any(_SM(None, t, o).ratio() > 0.55 for o in _old_t)
 cand = [c for c in cand if not _dup(c['t'])]
 
+# 사이트가 **이미 골라 둔 기사**에 가산점 (대표님 물음 2026-09-02:
+# "이미 좋은 기사를 구분해 준 상태인데"). 편집자가 아니라 **독자가 많이 읽은** 것이라 낫다.
+HOT_BONUS = 6
+
 # **베트남 소식이어야 한다.** 이 규칙이 없어서 네팔 홍수·한국 고궁·중국 미담이
 # 들어왔다 (2026-09-02 실측). 우리 독자는 베트남에서 사는 사람이다.
 VN = ['việt nam', 'vietnam', 'vietnamese', 'hanoi', 'ha noi', 'ho chi minh', 'hcmc',
@@ -282,14 +347,31 @@ NOT_VN = ['nepal', 'thailand', 'philippines', 'indonesia', 'malaysia', 'myanmar'
           'cambodia', 'laos', 'india', 'pakistan', 'japan tourism']
 
 
+# 베트남에서 나오는 신문 — 여기 기사는 **기본이 베트남 소식**이다
+VN_SITES = ('insidevina.com', 'vietnamkoreatimes.com', 'vnexpress.net',
+            'tuoitre.vn', 'thanhnien.vn', 'vietnamnews.vn', 'vietnamplus.vn')
+
+
 def about_vn(c):
+    """베트남 소식인가.
+
+    **베트남 신문 기사는 기본이 '그렇다'다.** VnExpress 는 베트남 신문이라
+    기사에 '베트남'을 굳이 되풀이하지 않는다 — 독자가 다 아니까.
+    그걸 모르고 '베트남이 두 번 넘게 나와야 한다'고 했더니
+    VnExpress travel 2건·life 8건이 **전부 잘렸다** (2026-09-02 실측).
+    이제는 **다른 나라 이야기일 때만** 뺀다."""
     hay = (c.get('t', '') + ' ' + (c.get('t_ko') or '') + ' ' +
-           (c.get('body') or '')[:1200] + ' ' + (c.get('body_ko') or '')).lower()
+           (c.get('body') or '')[:1500] + ' ' + (c.get('body_ko') or '')).lower()
     n_vn = sum(hay.count(k) for k in VN)
-    if n_vn == 0:
-        return False
-    # 다른 나라 이야기가 베트남보다 많이 나오면 그 나라 기사다
     n_other = max((hay.count(k) for k in NOT_VN), default=0)
+    host = (c.get('u') or '').split('/')[2].lower().replace('www.', '') if c.get('u') else ''
+    from_vn = any(host.endswith(h) for h in VN_SITES)
+    if from_vn:
+        # 베트남 신문이라도 **베트남이 한 번도 안 나오면** 남의 나라 이야기다
+        # (한국 배우·중국 부호·다이어트 기사가 들어왔다, 2026-09-02 실측)
+        if n_vn == 0:
+            return False
+        return n_other <= n_vn * 2
     return n_vn >= max(2, n_other + 1)
 
 

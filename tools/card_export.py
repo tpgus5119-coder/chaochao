@@ -25,6 +25,24 @@ CARD = R / "img" / "card"
 DESK = pathlib.Path.home() / "Desktop" / "chaochao-cardnews"
 
 
+def ko_name(d):
+    """**한국어**로 파일 이름을 짓는다.
+
+    현지 신문 기사는 theme 이 베트남어라 '03-phongcáchn' 같은 이름이 나왔다
+    (2026-09-02 실측). 폴더만 열어서는 무슨 기사인지 알 수 없다.
+    다듬은 제목 → theme 차례로 보고, **한글이 있는 것**을 쓴다."""
+    import re as _r
+    for x in (d.get("title_card"), d.get("theme"), d.get("title")):
+        t = str(x or "").strip()
+        if _r.search(r"[가-힣]", t):
+            # 한글·숫자만 남기고 열 글자까지
+            t = _r.sub(r"[^가-힣0-9 ]", "", t).strip()
+            t = _r.sub(r"\s+", "", t)[:10]
+            if t:
+                return t
+    return safe(d.get("theme")) or "기사"
+
+
 def safe(s, n=18):
     """폴더에서 읽기 좋은 이름으로. 슬래시·따옴표처럼 탈 나는 글자를 뺀다."""
     s = re.sub(r'[\\/:*?"<>|]', "", str(s)).strip()
@@ -57,12 +75,19 @@ def main():
             k = d.get("ts")
             cnt[k] = cnt.get(k, 0) + 1
             d["_i"] = cnt[k]
+        # **주제별로 늘어놓는다** (대표님 지시 2026-09-02 "출처별로 정렬하지 말고 주제별로").
+        # 폴더를 열면 일자리 → 경제 → 사회 → 공장 → 문화 차례로 보인다.
+        ORDER = ['일자리', '경제', '사회', '공장·산업', '문화·생활', '정치']
+        arts = sorted(arts, key=lambda d: (ORDER.index(d.get('cat'))
+                                           if d.get('cat') in ORDER else len(ORDER),
+                                           d.get('ts') or ''))
         for i, d in enumerate(arts, 1):
             for n in (1, 2):
                 src = CARD / f"{d.get('ts')}-{d['_i']}-{n}.webp"
                 if not src.exists():
                     continue
-                dst = out / f"{i:02d}-{safe(d.get('theme'))}-{n}.webp"
+                cat = (d.get('cat') or '').replace('·', '')
+                dst = out / f"{i:02d}-{cat}-{ko_name(d)}-{n}.webp"
                 if dst.exists() and dst.read_bytes() == src.read_bytes():
                     continue
                 out.mkdir(parents=True, exist_ok=True)
@@ -80,6 +105,12 @@ def main():
             k = d.get("ts")
             cnt[k] = cnt.get(k, 0) + 1
             d["_i"] = cnt[k]
+        # **주제별로 늘어놓는다** (대표님 지시 2026-09-02 "출처별로 정렬하지 말고 주제별로").
+        # 폴더를 열면 일자리 → 경제 → 사회 → 공장 → 문화 차례로 보인다.
+        ORDER = ['일자리', '경제', '사회', '공장·산업', '문화·생활', '정치']
+        arts = sorted(arts, key=lambda d: (ORDER.index(d.get('cat'))
+                                           if d.get('cat') in ORDER else len(ORDER),
+                                           d.get('ts') or ''))
         for i, d in enumerate(arts, 1):
             if d.get("u"):
                 lines.append(f"{i}. {d.get('title','')}")

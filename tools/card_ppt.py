@@ -147,6 +147,9 @@ def main():
         for d in arts:
             k = d.get("ts"); cnt[k] = cnt.get(k, 0) + 1; d["_i"] = cnt[k]
         arts = [d for d in arts if (CARD / f"{d.get('ts')}-{d['_i']}-1.webp").exists()]
+        ORDER = ['일자리', '경제', '사회', '공장·산업', '문화·생활', '정치']
+        arts.sort(key=lambda d: (ORDER.index(d.get('cat')) if d.get('cat') in ORDER
+                                 else len(ORDER), d.get('ts') or ''))
         if not arts: continue
         prs = Presentation()
         prs.slide_width, prs.slide_height = E(1080), E(1080)
