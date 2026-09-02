@@ -4643,7 +4643,7 @@ function courseQueue(n) {
   const life = [], job = [];
   lifeVols().forEach((v, vi) => v.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
     const k = ckey(vi, ci, li);
-    if (!S.done[k]) life.push({ day: k, theme: (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
+    if (!S.done[k]) life.push({ day: k, theme: (v.title ? v.title + ' · ' : '') + lsName(l, li),
                                 words: l.words, course: 1, kind: '일상' });
   })));
   const jv = jobVol(0);
@@ -4654,7 +4654,7 @@ function courseQueue(n) {
       if (any && !pick[t.track]) return;
       t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
         const k = jkey(ti, ci, li);
-        if (!S.done[k]) job.push({ day: k, theme: t.track + ' ' + (ci + 1) + '-' + (li + 1),
+        if (!S.done[k]) job.push({ day: k, theme: t.track + ' · ' + lsName(l, li),
                                    words: l.words, course: 1, kind: '직무' });
       }));
     });
@@ -7117,7 +7117,10 @@ function drawPuzzle(body, q) {
   const pb2 = el('button', 'ghost slow', '🐢 느리게'); pb2.onclick = () => play(w.vi, true);
   row0.append(pb, pb2); body.append(row0);
 
-  const want = String(w.vi).trim().split(/\s+/);
+  /* 마침표\u00b7물음표는 조각에서 뗀다 — 'gỗ.' 처럼 붙어 있으면
+     그 조각이 맨 끝이라는 게 티가 나서 문제가 헐거워진다. */
+  const tail = (String(w.vi).trim().match(/[.?!]+$/) || [''])[0];
+  const want = String(w.vi).trim().replace(/[.?!]+$/, '').split(/\s+/);
   if (want.length < 3) { q.mode = 'listen'; return drawQuiz(); }   // 조각이 둘이면 퍼즐이 아니다
   const tiles = [...want].sort(() => Math.random() - .5);
 
@@ -7148,6 +7151,7 @@ function drawPuzzle(body, q) {
     if (!picked.length || ans.dataset.r) return;
     const mine = picked.map(x => x.word).join(' ');
     const good = mine.toLowerCase() === want.join(' ').toLowerCase();
+    if (good && tail) ans.dataset.tail = tail;
     markSpeed(good, 'puzzle');
     fxTone(good);
     ans.dataset.r = good ? 'ok' : 'no';

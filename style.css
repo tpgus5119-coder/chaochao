@@ -1767,7 +1767,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .wbtop .exmeta{font-size:12px; color:var(--dim)}
 .wbtop .iconbtn{margin-left:auto}
 .wbtop .iconbtn + .iconbtn{margin-left:0}
-.wbko{font-size:14.5px; margin-top:4px; color:var(--fg,#1c1e21)}
+.wbko{font-size:14.5px; margin-top:4px; color:var(--fg,#1c1e21); text-align:left}
+.wbrow{text-align:left}
 .wbtabs{flex-wrap:wrap}
 .wbtab{min-width:30%}
 
