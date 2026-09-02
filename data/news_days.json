@@ -2,6 +2,271 @@
  "days": [
   {
    "ts": "2026-09-01",
+   "day": "Nno=43945",
+   "track": "news",
+   "theme": "할부와 구매",
+   "title": "베트남 2위 소매금융社 홈크레딧, 상반기 실적 호조…순익 1.3조 동 전년동기比 15%↑",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=43945",
+   "cat": "경제",
+   "intro": "홈크레딧의 상반기 순익이 1.3조 동으로 늘었습니다. 오토바이와 가전제품 등의 할부 대출이 강세입니다.",
+   "words": [
+    {
+     "vi": "ngân hàng",
+     "ko": "은행",
+     "kr_read": "응언 항",
+     "emoji": "🏦",
+     "en": "a bank building with pillars",
+     "tones": [
+      {
+       "syl": "ngân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ngan-hang.webp"
+    },
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🛵",
+     "en": "a modern scooter motorcycle",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    },
+    {
+     "vi": "trả góp",
+     "ko": "할부하다",
+     "kr_read": "짜 곱",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "trả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "góp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "thẻ tín dụng",
+     "ko": "신용카드",
+     "kr_read": "태 띤 중",
+     "emoji": "💳",
+     "en": "a plastic credit card",
+     "tones": [
+      {
+       "syl": "thẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "tín",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "dụng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-the-tin-dung.webp"
+    },
+    {
+     "vi": "lợi nhuận",
+     "ko": "이익, 수익",
+     "kr_read": "러이 누연",
+     "emoji": "📈",
+     "en": "a rising line chart showing profit",
+     "tones": [
+      {
+       "syl": "lợi",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "nhuận",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-loi-nhuan.webp"
+    },
+    {
+     "vi": "báo cáo",
+     "ko": "보고서, 보고하다",
+     "kr_read": "바오 까오",
+     "emoji": "📄",
+     "en": "a printed financial report paper",
+     "tones": [
+      {
+       "syl": "báo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "cáo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-bao-cao.webp"
+    }
+   ],
+   "dialog": {
+    "title": "할부와 구매",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Xe máy này mua trả góp được không?",
+      "ko": "이 오토바이 할부로 살 수 있나요?",
+      "kr_read": "쌔 마이 나이 무어 짜 곱 드억 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "máy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "mua",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "trả",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "góp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Được, anh có thẻ tín dụng không?",
+      "ko": "돼요, 신용카드 있으세요?",
+      "kr_read": "드억 아인 꼬 태 띤 중 콩",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Được,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "thẻ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tín",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "dụng",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 11
+  },
+  {
+   "ts": "2026-09-01",
    "day": "Nno=43947",
    "track": "news",
    "theme": "커피 시장",
@@ -240,7 +505,7 @@
     ],
     "extra": []
    },
-   "n": 7,
+   "n": 10,
    "pub": "2026-09-03"
   },
   {
@@ -453,7 +718,7 @@
     ],
     "extra": []
    },
-   "n": 6,
+   "n": 9,
    "sum5": [
     "푸꾸옥 사오비치 해변이 세계 50대 목록에 12위로 선정됐어요",
     "유일한 베트남 해변으로 백사장과 투명한 바닷물이 매력이에요",
@@ -711,7 +976,7 @@
     ],
     "extra": []
    },
-   "n": 5,
+   "n": 8,
    "sum5": [
     "뉴질랜드로 가는 베트남 유학생 수가 급격히 늘었어요",
     "올해 유학생은 작년보다 14%나 더 많아졌다고 해요",
@@ -721,6 +986,194 @@
     "이 소식은 베트남과 뉴질랜드 교류가 활발해졌음을 알려줘요"
    ],
    "title_card": "뉴질랜드 베트남 유학생 14% 증가 비자 발급률 상승"
+  },
+  {
+   "ts": "2026-08-31",
+   "day": "Nno=43937",
+   "track": "news",
+   "theme": "영화 홍보",
+   "title": "“조인성·황정민·정호연 호치민 온다”…나홍진 ‘호프’ 내달 1~2일 베트남 프로모션",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=43937",
+   "cat": "사회",
+   "intro": "한국 배우들이 영화 홍보를 위해 호치민을 방문합니다. 9월 초에 특별 상영과 팬미팅이 열릴 예정입니다.",
+   "words": [
+    {
+     "vi": "phim",
+     "ko": "영화",
+     "kr_read": "핌",
+     "emoji": "🎬",
+     "en": "a movie reel",
+     "tones": [
+      {
+       "syl": "phim",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-phim.webp"
+    },
+    {
+     "vi": "thăm",
+     "ko": "방문하다",
+     "kr_read": "탐",
+     "emoji": "👋",
+     "en": "a hand waving",
+     "tones": [
+      {
+       "syl": "thăm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tham.webp"
+    },
+    {
+     "vi": "tháng",
+     "ko": "월",
+     "kr_read": "탕",
+     "emoji": "🗓️",
+     "en": "a calendar icon",
+     "tones": [
+      {
+       "syl": "tháng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thang.webp"
+    },
+    {
+     "vi": "gặp",
+     "ko": "만나다",
+     "kr_read": "갑",
+     "emoji": "🤝",
+     "en": "two hands shaking",
+     "tones": [
+      {
+       "syl": "gặp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-gap.webp"
+    },
+    {
+     "vi": "đến",
+     "ko": "오다",
+     "kr_read": "덴",
+     "emoji": "🚶",
+     "en": "a person walking",
+     "tones": [
+      {
+       "syl": "đến",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-den.webp"
+    },
+    {
+     "vi": "một",
+     "ko": "하나",
+     "kr_read": "못",
+     "emoji": "1️⃣",
+     "en": "number one",
+     "tones": [
+      {
+       "syl": "một",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-mot.webp"
+    }
+   ],
+   "dialog": {
+    "title": "영화 홍보",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Khi nào phim mới chiếu?",
+      "ko": "새 영화 언제 상영해요?",
+      "kr_read": "키 나오 핌 머이 찌에우",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Khi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nào",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "phim",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mới",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chiếu?",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Tháng chín, ngày một.",
+      "ko": "9월 1일이요.",
+      "kr_read": "탕 찐 응아이 못",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Tháng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chín,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngày",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "một.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 7
   },
   {
    "ts": "2026-08-31",
@@ -956,7 +1409,7 @@
     ],
     "extra": []
    },
-   "n": 4,
+   "n": 6,
    "title_card": "베트남 고지출 장기체류 외국인용 우대비자 도입 추진"
   },
   {
@@ -1229,7 +1682,7 @@
     ],
     "extra": []
    },
-   "n": 3,
+   "n": 5,
    "sum5": [
     "베트남 하노이에서 지하철과 버스를 하나로 묶는 통합 카드가 나옵니다",
     "내달부터 실물 카드나 앱으로 하루·한 달 등 다양한 요금제를 쓸 수 있어요",
@@ -1486,7 +1939,7 @@
     ],
     "extra": []
    },
-   "n": 2,
+   "n": 4,
    "sum5": [
     "국경절 연휴에 슬리핑 버스가 전복되어 큰 사고가 났어요",
     "베트남 잘라이성 도로에서 비와 안개 탓에 버스가 넘어졌죠",
@@ -1495,6 +1948,472 @@
     "연휴 기간 장거리 이동이 늘어난 만큼 교통 안전에 각별히 유의해야 해요",
     "우리도 여행 갈 때는 안전 수칙을 잘 지키고 조심스럽게 다녀오길 바랄게요"
    ]
+  },
+  {
+   "ts": "2026-08-31",
+   "day": "Nno=43932",
+   "track": "news",
+   "theme": "교통",
+   "title": "베트남, ‘호치민시 1호선↔롱탄신공항’ 연장선 긴급추진 승인",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=43932",
+   "cat": "정치",
+   "intro": "호치민시 도시철도 1호선이 롱탄신공항까지 연장됩니다. 2026년부터 2030년까지 공사가 진행될 예정입니다.",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "ga",
+     "ko": "역",
+     "kr_read": "가",
+     "emoji": "🚉",
+     "en": "a train station",
+     "tones": [
+      {
+       "syl": "ga",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ga.webp"
+    },
+    {
+     "vi": "năm",
+     "ko": "년",
+     "kr_read": "남",
+     "emoji": "🗓️",
+     "en": "a calendar",
+     "tones": [
+      {
+       "syl": "năm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nam.webp"
+    },
+    {
+     "vi": "tàu",
+     "ko": "기차",
+     "kr_read": "따우",
+     "emoji": "🚆",
+     "en": "a train",
+     "tones": [
+      {
+       "syl": "tàu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tau.webp"
+    },
+    {
+     "vi": "đường",
+     "ko": "길",
+     "kr_read": "드엉",
+     "emoji": "🛣️",
+     "en": "a road",
+     "tones": [
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-duong.webp"
+    },
+    {
+     "vi": "mới",
+     "ko": "새로운",
+     "kr_read": "머이",
+     "emoji": "✨",
+     "en": "something new",
+     "tones": [
+      {
+       "syl": "mới",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-moi.webp"
+    }
+   ],
+   "dialog": {
+    "title": "교통",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Khi nào sân bay mới mở cửa?",
+      "ko": "새 공항은 언제 문을 여나요?",
+      "kr_read": "키 나오 썬 바이 머이 머 끄어",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Khi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nào",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "sân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mới",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "cửa?",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Sân bay sẽ mở vào tháng 12 năm nay.",
+      "ko": "공항은 올해 12월에 열릴 거예요.",
+      "kr_read": "썬 바이 쌔 머 바오 탕 남 나이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Sân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sẽ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "mở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "vào",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tháng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "12",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "năm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 3
+  },
+  {
+   "ts": "2026-08-31",
+   "day": "Nno=43939",
+   "track": "news",
+   "theme": "공항 확장",
+   "title": "다낭국제공항, ‘국내선터미널’ 개보수·확장 공식 발표…사업비 9.9조 동(3.8억 달러)",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=43939",
+   "cat": "문화·생활",
+   "intro": "다낭국제공항 국내선 터미널이 확장됩니다. 2028년 완공 예정이며 사업비는 9.9조 동입니다.",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport with a plane",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "nhà ga",
+     "ko": "터미널",
+     "kr_read": "냐 가",
+     "emoji": "🚉",
+     "en": "a train station terminal",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "ga",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nha-ga.webp"
+    },
+    {
+     "vi": "mở rộng",
+     "ko": "확장하다",
+     "kr_read": "머 종",
+     "emoji": "↔️",
+     "en": "an arrow pointing left and right",
+     "tones": [
+      {
+       "syl": "mở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "rộng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-mo-rong.webp"
+    },
+    {
+     "vi": "năm",
+     "ko": "년",
+     "kr_read": "남",
+     "emoji": "🗓️",
+     "en": "a calendar icon",
+     "tones": [
+      {
+       "syl": "năm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nam.webp"
+    },
+    {
+     "vi": "tháng",
+     "ko": "월",
+     "kr_read": "탕",
+     "emoji": "📅",
+     "en": "a monthly calendar icon",
+     "tones": [
+      {
+       "syl": "tháng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thang.webp"
+    },
+    {
+     "vi": "khách",
+     "ko": "손님",
+     "kr_read": "칵",
+     "emoji": "🧍",
+     "en": "a person standing",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-khach.webp"
+    }
+   ],
+   "dialog": {
+    "title": "공항 확장",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Sân bay này có mở rộng không?",
+      "ko": "이 공항 확장하나요?",
+      "kr_read": "썬 바이 나이 꼬 머 종 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Sân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "rộng",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, nhà ga sẽ mở rộng.",
+      "ko": "네, 터미널을 확장할 거예요.",
+      "kr_read": "벙 냐 가 쌔 머 종",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ga",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sẽ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "mở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "rộng.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 2
   },
   {
    "ts": "2026-08-31",
@@ -1789,5 +2708,5 @@
    ]
   }
  ],
- "updated": "2026-09-02 20:30"
+ "updated": "2026-09-03 00:10"
 }
