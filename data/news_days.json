@@ -222,7 +222,7 @@
     ],
     "extra": []
    },
-   "n": 16
+   "n": 17
   },
   {
    "ts": "2026-09-02",
@@ -451,7 +451,7 @@
     ],
     "extra": []
    },
-   "n": 15
+   "n": 16
   },
   {
    "ts": "2026-09-02",
@@ -705,7 +705,7 @@
     ],
     "extra": []
    },
-   "n": 14
+   "n": 15
   },
   {
    "ts": "2026-09-02",
@@ -945,7 +945,7 @@
     ],
     "extra": []
    },
-   "n": 13
+   "n": 14
   },
   {
    "ts": "2026-09-02",
@@ -1195,7 +1195,7 @@
     ],
     "extra": []
    },
-   "n": 12
+   "n": 13
   },
   {
    "ts": "2026-09-01",
@@ -1460,7 +1460,7 @@
     ],
     "extra": []
    },
-   "n": 11
+   "n": 12
   },
   {
    "ts": "2026-09-01",
@@ -1702,8 +1702,217 @@
     ],
     "extra": []
    },
-   "n": 10,
+   "n": 11,
    "pub": "2026-09-03"
+  },
+  {
+   "ts": "2026-09-01",
+   "day": "Nno=43949",
+   "track": "news",
+   "theme": "수산물 가격",
+   "title": "베트남, ‘틸라피아’ 수출 호조세…7월 기준 8,000만 달러 전년동기比 55%↑",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=43949",
+   "cat": "경제",
+   "intro": "베트남의 틸라피아 수출이 크게 증가했습니다. 브라질과 일본 수출 증가로 현지 가격도 올랐습니다.",
+   "words": [
+    {
+     "vi": "chợ",
+     "ko": "시장",
+     "kr_read": "쩌",
+     "emoji": "🏪",
+     "en": "a bustling open seafood market in Vietnam",
+     "tones": [
+      {
+       "syl": "chợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-cho.webp"
+    },
+    {
+     "vi": "giá",
+     "ko": "가격",
+     "kr_read": "자",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "giá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "xuất khẩu",
+     "ko": "수출하다",
+     "kr_read": "쑤엇 커우",
+     "emoji": "🚢",
+     "en": "a large cargo ship carrying colorful containers",
+     "tones": [
+      {
+       "syl": "xuất",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "khẩu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-xuat-khau.webp"
+    },
+    {
+     "vi": "cá",
+     "ko": "생선",
+     "kr_read": "까",
+     "emoji": "🐟",
+     "en": "a fresh whole fish on ice",
+     "tones": [
+      {
+       "syl": "cá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ca.webp"
+    },
+    {
+     "vi": "tươi",
+     "ko": "신선하다",
+     "kr_read": "뜨어이",
+     "emoji": "✨",
+     "en": "",
+     "tones": [
+      {
+       "syl": "tươi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "đắt",
+     "ko": "비싸다",
+     "kr_read": "닷",
+     "emoji": "💸",
+     "en": "",
+     "tones": [
+      {
+       "syl": "đắt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "수산물 가격",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Cá này bao nhiêu một cân?",
+      "ko": "이 생선은 1킬로에 얼마예요?",
+      "kr_read": "까 나이 바오 니에우 못 껀",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Cá",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bao",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhiêu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "cân?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Ba mươi sáu nghìn một cân.",
+      "ko": "1킬로에 3만 6천 동이에요.",
+      "kr_read": "바 므어이 싸우 응인 못 껀",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Ba",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mươi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sáu",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nghìn",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "cân.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 10
   },
   {
    "ts": "2026-09-01",
@@ -3905,5 +4114,5 @@
    ]
   }
  ],
- "updated": "2026-09-03 08:35"
+ "updated": "2026-09-03 23:56"
 }
