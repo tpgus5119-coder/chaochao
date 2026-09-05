@@ -244,7 +244,7 @@
     ],
     "extra": []
    },
-   "n": 26
+   "n": 28
   },
   {
    "ts": "2026-09-04",
@@ -486,7 +486,227 @@
     ],
     "extra": []
    },
-   "n": 25
+   "n": 27
+  },
+  {
+   "ts": "2026-09-04",
+   "day": "Nno=43970",
+   "track": "news",
+   "theme": "오른 물가",
+   "title": "“고물가 장기화” 베트남, 8월 소비자물가지수 전년동월比 4.89% 올라",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=43970",
+   "cat": "경제",
+   "intro": "베트남 8월 소비자물가가 4.89% 올랐다. 특히 교통비와 교육비가 크게 상승했다.",
+   "words": [
+    {
+     "vi": "giá cả",
+     "ko": "물가",
+     "kr_read": "자 까",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "giá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "cả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "chợ",
+     "ko": "시장",
+     "kr_read": "쩌",
+     "emoji": "🏪",
+     "en": "a busy local market street",
+     "tones": [
+      {
+       "syl": "chợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-cho.webp"
+    },
+    {
+     "vi": "tiền xe",
+     "ko": "교통비",
+     "kr_read": "띠엔 쌔",
+     "emoji": "🚌",
+     "en": "a public city bus",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tien-xe.webp"
+    },
+    {
+     "vi": "đắt",
+     "ko": "비싸다",
+     "kr_read": "닷",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "đắt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "rẻ",
+     "ko": "싸다",
+     "kr_read": "재",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "rẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "tăng",
+     "ko": "오르다",
+     "kr_read": "땅",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "tăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "오른 물가",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Dạo này cái gì cũng đắt nhỉ?",
+      "ko": "요즘 뭐든 다 비싸네요, 그렇죠?",
+      "kr_read": "자오 나이 까이 지 꿍 닷 니",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Dạo",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "cái",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "gì",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "cũng",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "đắt",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhỉ?",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, tiền xe cũng tăng rồi.",
+      "ko": "네, 교통비도 올랐어요.",
+      "kr_read": "벙 띠엔 쌔 꿍 땅 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tiền",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cũng",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "tăng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 26
   },
   {
    "ts": "2026-09-04",
@@ -727,6 +947,270 @@
         "name": "sắc",
         "ko": "짧게 올라감",
         "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 25
+  },
+  {
+   "ts": "2026-09-04",
+   "day": "Nno=43975",
+   "track": "news",
+   "theme": "가전 매장 소식",
+   "title": "베트남 최대 가전유통社 디엔마이산, 캄보디아 공식 철수…해외시장 인니가 유일",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=43975",
+   "cat": "경제",
+   "intro": "베트남 가전유통사가 캄보디아 사업을 공식 철수했습니다. 해외 매장은 현재 인도네시아 1곳만 운영 중입니다.",
+   "words": [
+    {
+     "vi": "cửa hàng",
+     "ko": "매장, 가게",
+     "kr_read": "끄어 항",
+     "emoji": "🏪",
+     "en": "a retail store front with glass doors",
+     "tones": [
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-cua-hang.webp"
+    },
+    {
+     "vi": "đồ điện tử",
+     "ko": "전자제품",
+     "kr_read": "도 디엔 뜨",
+     "emoji": "📺",
+     "en": "various home electronics and appliances",
+     "tones": [
+      {
+       "syl": "đồ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "tử",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-do-dien-tu.webp"
+    },
+    {
+     "vi": "điện thoại",
+     "ko": "휴대폰",
+     "kr_read": "디엔 토아이",
+     "emoji": "📱",
+     "en": "a smartphone on a white table",
+     "tones": [
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "thoại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-dien-thoai.webp"
+    },
+    {
+     "vi": "thị trường",
+     "ko": "시장",
+     "kr_read": "티 쯔엉",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "thị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "đóng cửa",
+     "ko": "문을 닫다",
+     "kr_read": "동 끄어",
+     "emoji": "🚪",
+     "en": "a closed shop door with a closed sign",
+     "tones": [
+      {
+       "syl": "đóng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-dong-cua.webp"
+    },
+    {
+     "vi": "mở rộng",
+     "ko": "확장하다",
+     "kr_read": "머 종",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "mở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "rộng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "가전 매장 소식",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Cửa hàng đồ điện tử đóng cửa à?",
+      "ko": "전자제품 매장 문 닫았어요?",
+      "kr_read": "끄어 항 도 디엔 뜨 동 끄어 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Cửa",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "hàng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đồ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "điện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tử",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đóng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cửa",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, công ty đã đóng cửa rồi.",
+      "ko": "네, 회사에서 이미 문 닫았어요.",
+      "kr_read": "벙 꽁 띠 다 동 끄어 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đã",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "đóng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cửa",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
        }
       ],
       "gloss": []
@@ -6248,5 +6732,5 @@
    ]
   }
  ],
- "updated": "2026-09-05 08:19"
+ "updated": "2026-09-05 22:44"
 }
