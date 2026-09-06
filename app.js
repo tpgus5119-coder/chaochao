@@ -1981,14 +1981,9 @@ function acctForm(gate, mode) {
   const regW = el('div');
   const drawLearn = () => {
     lrnW.textContent = ''; regW.textContent = '';
-    const nat = natW.val();
-    // 두 과정 다 있다 — 베트남어 108강, 한국어 78강 + 모의고사 45벌.
-    // 전에 붙여 둔 '(준비 중)' 딱지를 뗐다. 있는 것을 없다고 하면 베트남 분이 문 앞에서 돌아선다.
-    const opts = nat === 'kr' ? [['vi', '베트남어']]
-               : nat === 'vn' ? [['ko', '한국어']]
-               : [['vi', '베트남어'], ['ko', '한국어']];
-    lrnW.sel = mkSel(opts);
-    lrnW.append(el('p', 'note', '배울 언어'), lrnW.sel);
+    // 이 앱은 베트남어 전용으로 고정한다(2026-09-07) — 국적과 상관없이 배울 언어는
+    // 하나뿐이라 고를 게 없다. 한국어 코스는 별개 앱으로 분리됐다.
+    lrnW.sel = mkSel([['vi', '베트남어']]);
     const drawReg = () => {
       regW.textContent = '';
       if (lrnW.sel.val() === 'vi') {                 // 남북은 베트남어를 배울 때만 뜻이 있다
@@ -2139,9 +2134,7 @@ function renderAwards() {
   b.append(pickRow('화면 언어', uiOpts, S.ui || 'ko',
     v => { S.ui = v; save(); renderAwards(); drawMenu(); }));
 
-  // 배울 언어 — 두 과정이 다 생겼으므로 진짜로 고를 수 있다
-  b.append(pickRow('배울 언어', [['vi', '베트남어'], ['ko', '한국어']], S.learn || 'vi',
-    v => { S.learn = v; save(); renderAwards(); drawMenu(); }));
+  // 배울 언어 토글 삭제됨(2026-09-07) — 이 앱은 베트남어 전용으로 고정, 고를 게 없다
 
   const ac = el('div', 'planrow');
   ac.append(el('span', 'pk', '계정'),
@@ -2426,28 +2419,12 @@ function showWeek(rep) {
    두 말을 나란히 적는다. 아직 아무것도 못 읽는 사람이 고르는 자리라서,
    글자를 못 읽어도 자기 나라 말을 알아보고 누를 수 있어야 한다. */
 function askLearn() {
-  const b = $('#subBody');
-  b.textContent = '';
-  b.append(el('p', 'lede', '무엇을 배우시겠습니까?'));
-  b.append(el('p', 'vi mid', 'Bạn muốn học gì?'));
-  const pick = (learn, ui, ko, vi, sub) => {
-    const c = el('button', 'bigmenu learnpick');
-    c.append(el('b', null, ko), el('span', null, vi), el('i', null, sub));
-    c.onclick = () => {
-      S.learn = learn;
-      if (ui) S.ui = ui;                  // 한국어를 배우러 온 사람은 화면도 베트남어로
-      save();
-      renderHome();
-    };
-    b.append(c);
-  };
-  pick('ko', 'vi', '한국어', 'Tiếng Hàn Quốc',
-       'TOPIK · EPS-TOPIK · KIIP — dành cho người Việt');
-  pick('vi', 'ko', '베트남어', 'Tiếng Việt',
-       '한국 사람이 베트남어를 배웁니다');
-  b.append(el('p', 'note', '나중에 설정에서 바꿀 수 있습니다 · '
-    + 'Có thể đổi lại trong phần cài đặt.'));
-  show('sub', '짜오짜오', true);
+  // 이 앱은 한국인이 베트남어를 배우는 전용 앱으로 고정한다(2026-09-07 대표님 지시 —
+  // 완전히 별개의 앱으로 분리, 언어 선택 화면 자체를 없앤다). 예전엔 여기서 한국어/
+  // 베트남어 중 골랐지만, 이제 고를 게 없으므로 그냥 바로 시작한다.
+  S.learn = 'vi';
+  save();
+  renderHome();
 }
 
 function askNick() {
@@ -2552,11 +2529,11 @@ function drawKoHome() {
   plan.append(note);
 }
 
-/* 무엇을 배우는 사람인가 — 이 한 줄이 앱의 절반을 가른다.
-   베트남 사람이 한국어를 배우러 온 것과, 한국 사람이 베트남어를 배우러 온 것은
-   같은 앱이 아니다. 성조 훈련·베트남어 자판은 앞사람에게 아무 쓸모가 없고,
-   모의고사(EPS·TOPIK·KIIP)는 뒷사람에게 아무 쓸모가 없다. */
-const learnKo = () => S.learn === 'ko';
+/* 이 앱은 한국인이 베트남어를 배우는 전용 앱으로 고정한다(2026-09-07 대표님 지시).
+   베트남인용 한국어 코스는 별개의 앱(저장소)으로 완전히 분리됐다. 아래 한국어 코스
+   코드(MENUS_KO, 시험 엔진, drawKoHome 등)는 이 분기 때문에 전부 도달 불가능한
+   죽은 코드다 — 다음 정리 때 통째로 들어내기 쉽도록 일부러 그대로 남겨 두었다. */
+const learnKo = () => false;
 
 const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까지의 앱)
   /* 첫 화면은 **누르면 바로 그것**이 나와야 한다 (대표님 지시, 2026-08-30).
