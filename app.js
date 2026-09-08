@@ -59,6 +59,7 @@ const now = () => Date.now();
 /* ---------- 데이터 ---------- */
 let ALL = [], AIDX = {}, DRILL = [], VDRILL = [];
 const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
 /* ── 화면 언어 (1단계) ────────────────────────────────────────────
    베트남 사용자를 위해 화면 문구를 베트남어로. 6천 줄의 한국어를 다 뜯지 않고,
    글자가 화면에 놓이는 길목(el·show)에서 **문구를 통째로 맞바꾼다.**
@@ -1371,6 +1372,29 @@ function topBtns() {
   $('#wxnow').hidden = CURV !== 'home';          // 첫 화면에서만
 }
 
+/* ---------- 아래 탭 막대 (2026-09-08 새 홈 화면 지시) ----------
+   자판·녹음·카드 넘기기처럼 화면 아래에 이미 붙박이 것이 있는 화면에서는 감춘다 —
+   겹치면 자판이나 넘김 단추를 가린다. 목록·복습 메뉴·순위처럼 훑어보는 화면에서만 켠다. */
+const TABBAR_VIEWS = ['home', 'course', 'quiz', 'sub', 'award', 'week', 'guide', 'news', 'wx'];
+let ACTIVE_TAB = 'home';
+function syncTabBar() {
+  const on = !learnKo() && TABBAR_VIEWS.includes(CURV);
+  $('#tabbar').hidden = !on;
+  document.body.classList.toggle('has-tabbar', on);
+  $$('#tabbar .tabbtn').forEach(b => b.classList.toggle('on', on && b.dataset.tab === ACTIVE_TAB));
+}
+/* 홈의 메뉴 타일과 아래 탭이 **같은 동작**을 하도록 한곳에 모은다 (중복 금지). */
+function openMenu(id) {
+  ACTIVE_TAB = ['day', 'rev', 'cred'].includes(id) ? id : null;
+  const m = MENUS[id];
+  if (!m) return;
+  const items = m.items();
+  if (items.length === 1) return items[0][1]();
+  renderMenu(id);
+}
+$$('#tabbar .tabbtn').forEach(b => b.onclick = () =>
+  b.dataset.tab === 'home' ? renderHome() : openMenu(b.dataset.tab));
+
 /* 머리 왼쪽 — 지금 베트남 시각과 날씨. 지역은 내 정보에서 고른 북부/남부를 따른다.
    출국 준비 중인 사람에게 '지금 거기 몇 시인가'는 매일 궁금한 것이고,
    날씨는 그날 뭘 입을지가 아니라 '내가 갈 곳이 어떤 곳인가'를 계속 상기시킨다. */
@@ -1413,7 +1437,9 @@ function show(v, title, canBack) {
   $('#goHome').hidden = v === 'home';
   if (window.cardArrows) setTimeout(window.cardArrows, 0);   // 좌우 넘김 단추는 학습 화면에서만
   CURV = v;
+  if (v === 'home') ACTIVE_TAB = 'home';
   topBtns();
+  syncTabBar();
   window.scrollTo(0, 0);
 }
 
@@ -2169,14 +2195,19 @@ function renderProgress(host) {
   if (n >= 5) head.append(el('span', null, '아주 좋습니다 ✔'));
   box.append(head);
 
-  const row = el('div', 'dots');
+  // 요일 글자(위) + 동그라미(아래) 한 벌. .dot/.dots 는 순위판 회원 줄(cmem)과도 이름을
+  // 같이 쓰므로, 새 모양은 이름을 갈라(.wkday/.wkcirc) 그쪽을 건드리지 않는다.
+  const row = el('div', 'wkrow');
   // 번역표를 거친다 (2026-08-31) — 한글 낱자를 그대로 쪼개 쓰면
   // 베트남 분 화면에 '월화수목금토일' 이 그대로 떴다. UIVI 에 T2…CN 이 이미 있다.
   tr('월 화 수 목 금 토 일').split(' ').forEach((label, i) => {
     const d = dots[i];
-    const s = el('span', 'dot' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
-    s.textContent = label;
-    row.append(s);
+    // 동그라미 안은 상태만 말한다 — 한 날 · 오늘 · 앞날을 색만으로 가르지 않는다
+    // (체크·자물쇠 표시를 같이 쓴다).
+    const cell = el('div', 'wkday' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
+    cell.append(el('span', 'wklabel', label));
+    cell.append(el('span', 'wkcirc', d.done ? '✔' : d.future ? '🔒' : ''));
+    row.append(cell);
   });
   box.append(row);
 
@@ -4415,11 +4446,7 @@ function drawMenu() {
       // 쪽지 알림과 같은 빨간 동그라미로 — 알림은 앱 안에서 한 가지 모양이어야 눈에 익는다
       if (n) t.append(el('span', 'mbadge red', String(n)));
     }
-    t.onclick = () => {
-      const items = m.items();
-      if (items.length === 1) return items[0][1]();     // 하나뿐이면 바로 연다
-      renderMenu(id);
-    };
+    t.onclick = () => openMenu(id);   // 아래 탭과 같은 동작 (openMenu 로 한곳에 모았다)
     box.append(t);
   });
 }
@@ -4563,6 +4590,42 @@ function courseQueue(n) {
   return out;
 }
 
+/* 홈 세로 지도(로드맵)에 보여줄 "최근에 끝낸 몇 과" — 끝낸 시각은 S.done[key] 가
+   이미 담고 있다(끝낼 때 now() 를 넣는다, app.js 학습 마침 자리 참고). 새 값을 안 만든다. */
+function recentDoneUnits(nMax) {
+  if (!COURSE) return [];
+  const out = [];
+  lifeVols().forEach((v, vi) => v.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+    const k = ckey(vi, ci, li);
+    if (S.done[k]) out.push({ key: k, title: (v.title ? v.title + ' · ' : '') + lsName(l, li), at: S.done[k], done: true });
+  })));
+  const jv = jobVol(0);
+  if (jv) jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+    const k = jkey(ti, ci, li);
+    if (S.done[k]) out.push({ key: k, title: t.track + ' · ' + lsName(l, li), at: S.done[k], done: true });
+  })));
+  return out.sort((a, b) => b.at - a.at).slice(0, nMax).reverse();      // 오래된 → 최신
+}
+
+/* 세로 지도 그리기 — 완료(체크) · 지금(고리, 누르면 학습 시작) · 다음(자물쇠) 세 상태.
+   '지금' 칸을 누르면 하는 일은 홈 일정판의 '오늘 학습' 칸과 **같아야** 한다(중복 금지) —
+   그래서 그 손잡이(curFn)를 만들어 준 renderHome() 에서 그대로 받아 쓴다. */
+function renderRoadmap(host, nodes, curKey) {
+  host.textContent = '';
+  if (!nodes.length) return;
+  nodes.forEach(nd => {
+    const state = nd.key === curKey ? 'cur' : nd.done ? 'done' : 'lock';
+    const row = el('div', 'rmnode ' + state);
+    const dot = el('span', 'rmdot', nd.done ? '✔' : state === 'cur' ? '' : '🔒');
+    const lbl = el('div', 'rmlabel');
+    lbl.append(el('b', null, esc(nd.title)));
+    if (state === 'cur') lbl.append(el('span', null, tr('지금 여기')));
+    row.append(dot, lbl);
+    if (state === 'cur' && nd.fn) row.onclick = nd.fn;
+    host.append(row);
+  });
+}
+
 function renderHome() {
   cloudSave();                           // 로그인한 사람은 하루 한 번 서버에 진도를 남긴다
   drawMenu();
@@ -4593,13 +4656,16 @@ function renderHome() {
   const doneToday = left === 0;
   const queue = courseQueue(left + pace);         // 오늘 남은 것 + 내일 것 (새 과정)
   const nm = d => d.theme || (trackName(d) + label(d));
-  // 오늘 학습
+  // 오늘 학습 — 이 손잡이(curFn)를 세로 지도의 '지금' 칸도 그대로 쓴다(중복 금지).
+  let curFn = null, curKey = null;
   if (doneToday) prow('오늘 학습', pace > 1 ? todayCnt + '세트 완료' : '완료', 'done', null);
   else if (queue.length) {
     const t = queue.slice(0, left);
+    curFn = () => startLearn(t[0]);
+    curKey = t[0].day;
     prow('오늘 학습', t.map(nm).join(' · ') + (t.length > 1 ? '' :
            '\n' + (t[0].words || []).slice(0, 3).map(w => w.ko.split('/')[0].trim()).join(' · ')),
-         'todo', () => startLearn(t[0]));
+         'todo', curFn);
   } else prow('오늘 학습', '전 과정 완료', 'none', null);
   // 오늘 복습 — 문장도 같이 나오므로 뭉뚱그려 '단어'라고 하지 않는다
   if (due.length) prow('오늘 복습', due.length + tr('개'), 'todo', () => reviewStart());
@@ -4617,6 +4683,13 @@ function renderHome() {
     .map(([k]) => findItem(k)).filter(Boolean);
   prow('내일 복습', !tmr.length ? '없음' : tmr.length + tr('개'),
        tmr.length ? 'next' : 'none', null);
+
+  // 세로 지도 — 최근 끝낸 몇 과 + 지금(또는 다음) + 그 다음 몇 과. 죄다 실제 과정 자료다.
+  const rmDone = recentDoneUnits(curFn ? 1 : 2);
+  const rmNext = queue.slice(curFn ? 1 : 0, (curFn ? 1 : 0) + 2)
+    .map(d => ({ key: d.day, title: nm(d), done: false }));
+  const rmCur = curFn ? [{ key: curKey, title: nm(queue[0]), done: false, fn: curFn }] : [];
+  renderRoadmap($('#roadmap'), [...rmDone, ...rmCur, ...rmNext], curKey);
 
   show('home', '짜오짜오', false);
 }

@@ -9,6 +9,7 @@
   --card:#ffffff; --accent:#1877f2; --accent-fg:#fff;
   --ok:#31a24c; --bad:#e41e3f; --warn:#8a5a00;
   --radius:12px;
+  --radius-lg:14px;   /* 새 홈 카드(주간 달력·세로 지도)용 — 기존 --radius 를 그대로 쓰는 자리와 안 겹치게 갈랐다 */
   --shadow:0 1px 2px rgba(0,0,0,.1);
 }
 @media (prefers-color-scheme:dark){
@@ -46,6 +47,27 @@ header > button{flex:0 0 auto; white-space:nowrap}
   header .wo{display:none}
 }
 main{max-width:640px; margin:0 auto; padding:16px 14px 48px}
+/* 아래 탭 막대가 떠 있는 화면은 내용이 그 밑에 깔리지 않게 여백을 더 준다 */
+body.has-tabbar main{padding-bottom:calc(64px + env(safe-area-inset-bottom) + 20px)}
+
+/* ── 아래 탭 막대 (2026-09-08) ──────────────────────────────────
+   목록·복습 메뉴·순위처럼 훑어보는 화면에서만 켠다(JS 가 hidden 을 넣고 뺀다) —
+   자판·녹음처럼 화면 아래에 이미 붙박이 것이 있는 학습 화면과는 겹치지 않는다. */
+.tabbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:50;
+  display:flex; justify-content:space-around;
+  height:64px; padding-bottom:env(safe-area-inset-bottom);
+  background:var(--card); border-top:1px solid var(--line);
+  box-shadow:0 -1px 4px rgba(0,0,0,.06);
+}
+.tabbtn{
+  flex:1 1 0; min-width:44px; min-height:44px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:2px;
+  background:transparent; border:none; border-radius:0; color:var(--dim); font-size:11px;
+}
+.tabbtn svg{width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.tabbtn.on{color:var(--accent); font-weight:700}
 button{font:inherit; cursor:pointer; border-radius:10px; border:1px solid var(--line); transition:.12s}
 button:active{transform:scale(.98)}
 .ghost{background:transparent; color:var(--fg); padding:6px 12px; min-width:44px}
@@ -320,6 +342,22 @@ button.song{
 .dot.on{background:var(--accent); color:var(--accent-fg); border-color:transparent}
 .dot.today{outline:2px solid var(--accent); outline-offset:1px}
 .dot.fut{opacity:.4}
+
+/* 주간 달력 — 요일 글자 + 40px 동그라미(체크·자물쇠). .dot 은 순위판 회원 줄과
+   이름이 같아 새로 갈랐다(둘 다 손대면 서로 깨진다). */
+.wkrow{display:flex; justify-content:space-between; gap:4px}
+.wkday{flex:1; display:flex; flex-direction:column; align-items:center; gap:6px}
+.wklabel{font-size:12px; color:var(--dim)}
+.wkcirc{
+  width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
+  font-size:15px; color:var(--dim); background:var(--bg); border:1.5px solid var(--line);
+}
+.wkday.on .wkcirc{background:var(--ok); border-color:var(--ok); color:#fff}
+.wkday.on .wklabel{color:var(--fg); font-weight:700}
+.wkday.today .wkcirc{outline:2px solid var(--accent); outline-offset:2px}
+.wkday.today .wklabel{color:var(--accent); font-weight:700}
+.wkday.fut .wkcirc{opacity:.5; border-style:dashed; font-size:13px}
+.wkday.fut .wklabel{opacity:.5}
 .stats{display:flex; gap:8px}
 .stat{
   flex:1; background:var(--bg); border:1px solid var(--line); border-radius:10px;
@@ -336,6 +374,41 @@ button.song{
 .badge.on{opacity:1; filter:none; border-color:var(--ok); color:var(--fg)}
 .badge i{font-style:normal; font-size:13px}
 .badge em{font-style:normal}
+
+/* 세로 지도 — 끝낸 과 · 지금 · 다음 과를 이은 세로줄 하나. 완료(체크) · 지금(고리, 크게)
+   · 다음(자물쇠, 흐리게)를 색뿐 아니라 표시·굵기로도 가른다. */
+.roadmap{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:16px; margin-bottom:14px; display:flex; flex-direction:column;
+}
+.roadmap:empty{display:none; border:none; padding:0; margin:0}
+.rmnode{position:relative; display:flex; align-items:flex-start; gap:12px; padding:0 0 22px 0}
+.rmnode:last-child{padding-bottom:0}
+/* 동그라미를 잇는 세로줄 — 마지막 칸만 뺀다 */
+.rmnode:not(:last-child)::before{
+  content:""; position:absolute; left:15px; top:32px; bottom:0; width:2px; background:var(--line);
+}
+.rmdot{
+  flex:0 0 auto; width:32px; height:32px; border-radius:50%; display:grid; place-items:center;
+  font-size:14px; background:var(--bg); border:2px solid var(--line); color:var(--dim); z-index:1;
+}
+.rmnode.done .rmdot{background:var(--ok); border-color:var(--ok); color:#fff}
+.rmnode.lock .rmdot{opacity:.6}
+.rmnode.cur .rmdot{
+  width:40px; height:40px; margin:-4px 0; border-color:var(--accent); color:var(--accent);
+  font-weight:800; box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+  animation:rmpulse 1.8s ease-in-out infinite;
+}
+@keyframes rmpulse{
+  0%,100%{box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent)}
+  50%{box-shadow:0 0 0 8px color-mix(in srgb, var(--accent) 10%, transparent)}
+}
+.rmlabel{flex:1; padding-top:4px; font-size:15px; line-height:1.35}
+.rmlabel b{display:block}
+.rmnode.lock .rmlabel b{color:var(--dim); font-weight:500}
+.rmnode.cur .rmlabel b{font-size:17px; font-weight:700}
+.rmlabel span{display:block; font-size:12px; color:var(--accent); font-weight:700; margin-top:2px}
+.rmnode.cur{cursor:pointer}
 
 .bbtns{display:flex; gap:6px; flex:none}
 .bbtns button{white-space:nowrap; padding:10px 13px; font-size:14px}
