@@ -1904,3 +1904,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .vlptcard{border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px; margin-bottom:10px}
 .vlptcard.ok{border-left:4px solid var(--ok)}
 .vlptcard.no{border-left:4px solid var(--bad)}
+
+/* ── 최상단 헤더 정리(2026-09-08 대표님 지시) — 날씨·시각·어플이름·내정보버튼 제거.
+   #title/#wxnow/#goMe는 내부 로직(show() 등)이 계속 참조하므로 DOM에서 지우면
+   앱이 깨진다 — 안 보이게만 한다(기능은 그대로 살아있고 화면에만 없음). */
+#title, #wxnow, #goMe { display: none !important; }
