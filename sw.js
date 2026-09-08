@@ -46,7 +46,7 @@ self.addEventListener('fetch', e => {
    대화 내용을 서버에 보내지 않기 위해서다. */
 self.addEventListener('push', e => {
   e.waitUntil(self.registration.showNotification('짜오짜오', {
-    body: '베트남 친구가 메시지를 보냈어요',
+    body: '오늘 아직 공부 안 하셨어요',
     icon: './icon.png', badge: './icon-180.png', tag: 'chaochao-msg',
   }));
 });
