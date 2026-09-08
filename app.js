@@ -4904,6 +4904,35 @@ function startLearn(d) {
   drawCard();
   // 제목은 버튼 이름과 같게 — 준비 날들은 주제만 (준비 N 표기는 뺀다)
   show('learn', typeof d.day === 'string' ? d.theme : label(d) + ' · ' + d.theme, true);
+  drawLessonTabs();
+}
+/* 학습 방법 탭 — 카드 학습/강의/애니메이션/노래 (2026-09-08 대표님 지시).
+   하루5분(자동 진행)에서는 고를 게 없어야 하므로 숨긴다 — ACTIVE_TAB으로 구분한다.
+   강의·애니메이션·노래는 아직 콘텐츠가 없어 "준비 중"이라고 정직하게 말한다.
+   카드 학습으로 돌아오면 이미 그려진 L을 그대로 다시 그린다(새로 안 만듦). */
+function drawLessonTabs() {
+  const bar = $('#lessonTabs');
+  $('#card').hidden = false; $('#lessonExtra').hidden = true;   // 새 레슨은 항상 카드부터
+  if (ACTIVE_TAB === 'daily') { bar.hidden = true; return; }
+  bar.hidden = false;
+  bar.textContent = '';
+  const modes = [['card', '카드 학습'], ['lecture', '강의'], ['anim', '애니메이션'], ['song', '노래']];
+  modes.forEach(([k, name]) => {
+    const b = el('button', k === 'card' ? 'on' : '', name);
+    b.onclick = () => {
+      [...bar.children].forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      const extra = $('#lessonExtra');
+      if (k === 'card') { $('#card').hidden = false; extra.hidden = true; drawCard(); }
+      else {
+        $('#card').hidden = true; extra.hidden = false;
+        extra.textContent = '';
+        extra.append(el('p', null, `${name} 학습은 아직 준비 중입니다.`));
+        extra.append(el('p', 'note', '곧 이 레슨의 단어·예문으로 만든 콘텐츠가 올라옵니다.'));
+      }
+    };
+    bar.append(b);
+  });
 }
 
 /* 단어의 예문 — 새로 짓지 않고 그날 대화·바꿔말하기에서 그 단어가 든 문장을 꺼내 쓴다.

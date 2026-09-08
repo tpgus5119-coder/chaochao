@@ -1909,3 +1909,9 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
    #title/#wxnow/#goMe는 내부 로직(show() 등)이 계속 참조하므로 DOM에서 지우면
    앱이 깨진다 — 안 보이게만 한다(기능은 그대로 살아있고 화면에만 없음). */
 #title, #wxnow, #goMe { display: none !important; }
+
+/* ── 레슨 학습방법 탭: 카드/강의/애니메이션/노래 (2026-09-08) ── */
+.lessontabs{display:flex; gap:6px; padding:8px 10px 0; overflow-x:auto}
+.lessontabs button{flex:0 0 auto; padding:8px 14px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--fg); font-size:14px; font-weight:600}
+.lessontabs button.on{background:var(--accent); color:var(--accent-fg); border-color:transparent}
+.lessonextra{padding:40px 20px; text-align:center; color:var(--dim)}
