@@ -1375,25 +1375,51 @@ function topBtns() {
 /* ---------- 아래 탭 막대 (2026-09-08 새 홈 화면 지시) ----------
    자판·녹음·카드 넘기기처럼 화면 아래에 이미 붙박이 것이 있는 화면에서는 감춘다 —
    겹치면 자판이나 넘김 단추를 가린다. 목록·복습 메뉴·순위처럼 훑어보는 화면에서만 켠다. */
-const TABBAR_VIEWS = ['home', 'course', 'quiz', 'sub', 'award', 'week', 'guide', 'news', 'wx'];
-let ACTIVE_TAB = 'home';
+const TABBAR_VIEWS = ['home', 'course', 'quiz', 'sub', 'award', 'week', 'guide', 'news', 'wx', 'exam'];
+let ACTIVE_TAB = 'daily';
 function syncTabBar() {
   const on = !learnKo() && TABBAR_VIEWS.includes(CURV);
   $('#tabbar').hidden = !on;
   document.body.classList.toggle('has-tabbar', on);
   $$('#tabbar .tabbtn').forEach(b => b.classList.toggle('on', on && b.dataset.tab === ACTIVE_TAB));
 }
-/* 홈의 메뉴 타일과 아래 탭이 **같은 동작**을 하도록 한곳에 모은다 (중복 금지). */
-function openMenu(id) {
-  ACTIVE_TAB = ['day', 'rev', 'cred'].includes(id) ? id : null;
-  const m = MENUS[id];
-  if (!m) return;
-  const items = m.items();
-  if (items.length === 1) return items[0][1]();
-  renderMenu(id);
+/* 아래 탭 4개 (2026-09-08 홈 재설계 지시): 하루5분·학습·시험·내 정보.
+   기존 기능(startLearn·courseEntry·reviewMenu·vlptEntry·renderAwards)을 그대로 잇는다 —
+   화면을 새로 짜는 게 아니라 들어가는 문만 새로 낸다. */
+const TAB_ACTIONS = { daily: dailyFlowEntry, study: studyHubEntry, exam: vlptEntry, me: renderAwards };
+$$('#tabbar .tabbtn').forEach(b => b.onclick = () => {
+  ACTIVE_TAB = b.dataset.tab;
+  (TAB_ACTIONS[b.dataset.tab] || dailyFlowEntry)();
+});
+/* 하루5분 — 오늘 레슨을 바로 시작한다. startLearn() 안에 이미 카드→테스트→오늘의 대화가
+   순서대로 들어있어 새로 안 짜도 된다. '이어하기'도 새 상태를 안 만들어도 된다 — 이미
+   S.done[k]로 끝난 세트를 표시해 두므로, courseQueue()가 중간에 나가도 같은 미완성
+   레슨을 다시 돌려준다(끝난 게 아니니까). */
+function dailyFlowEntry() {
+  if (!COURSE) { renderHome(); return; }               // 과정이 아직 안 왔으면 홈에서 받는다
+  const q = courseQueue(1);
+  if (q.length) startLearn(q[0]);
+  else renderHome();                                     // 오늘 할 게 없으면(다 끝남) 홈으로
 }
-$$('#tabbar .tabbtn').forEach(b => b.onclick = () =>
-  b.dataset.tab === 'home' ? renderHome() : openMenu(b.dataset.tab));
+/* 학습 — 회화/시험 대비/복습 세 갈래로 보낸다. 각 화면은 이미 있는 걸 그대로 쓴다
+   (courseEntry·reviewMenu 중복 금지). '시험 대비 전용 학습'은 아직 콘텐츠가 없어
+   준비 중이라고 정직하게 말한다 — 되는 척 안 한다. */
+function studyHubEntry() {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '무엇을 배울까요?'));
+  const row = (t, sub, fn) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, t), el('span', 'exmeta', sub));
+    btn.onclick = fn;
+    b.append(btn);
+  };
+  row('회화', '단어·문법·기본기 전체 목차', courseEntry);
+  row('시험 대비', '시험에 자주 나오는 표현 위주 (준비 중)', () =>
+    alert('시험 대비 전용 학습 콘텐츠는 아직 준비 중입니다. 지금은 아래 "시험" 탭에서 모의고사로 연습해 보세요.'));
+  row('복습', '잊을 때 된 것을 다시 봅니다', () => reviewMenu('all'));
+  show('sub', '학습', true);
+}
 
 /* 머리 왼쪽 — 지금 베트남 시각과 날씨. 지역은 내 정보에서 고른 북부/남부를 따른다.
    출국 준비 중인 사람에게 '지금 거기 몇 시인가'는 매일 궁금한 것이고,
