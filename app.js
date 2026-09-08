@@ -5738,6 +5738,67 @@ function startGram(bi, ni) {
   show('learn', b.book + ' ' + x.no + '과 · ' + x.t, true);
 }
 
+/* 문법·기본기 확인 문제 (2026-09-09 대표님 지시 — "기본기와 문법에도 문제 넣어줘").
+   카드로 보기만 하고 끝나던 것을, 그 과에서 배운 문형으로 만든 4지선다로 마무리한다.
+   초급(고르기)만 우선 넣는다 — 문법은 스스로 만들어 쓰는 게 아니라 알아보는 것부터라
+   타이핑 같은 산출형 문제는 아직 안 맞다고 판단했다. */
+function gramPool() {
+  // 오답 보기를 뽑을 문형 창고 — 이 책(GRAM) 전체에서 긁어온다
+  const out = [];
+  (GRAM.books || []).forEach(b => b.bai.forEach(x => x.g.forEach(g => {
+    if (g.k && g.t) out.push({ k: g.k, t: g.t });
+  })));
+  return out;
+}
+function startGramQuiz(dayKey, theme, gramItems) {
+  const pool = gramPool().filter(p => !gramItems.some(g => g.k === p.k));
+  const qs = gramItems.filter(g => g.ex && g.ex.length).map(g => {
+    const ex = g.ex[Math.floor(Math.random() * g.ex.length)];
+    const seen = new Set([g.k]);
+    const wrong = pool.filter(p => { if (seen.has(p.k)) return false; seen.add(p.k); return true; })
+      .sort(() => Math.random() - .5).slice(0, 3);
+    const opts = [{ k: g.k, t: g.t }, ...wrong].sort(() => Math.random() - .5);
+    return { ex, correct: g.k, opts };
+  });
+  if (!qs.length) { S.done[dayKey] = now(); save(); renderHome(); return; }   // 예문이 없으면 그냥 완료
+  GQ = { qs, i: 0, ok: 0, dayKey, theme };
+  drawGramQuiz();
+  show('quiz', theme + ' · 확인 문제', true);
+}
+let GQ = null;
+function drawGramQuiz() {
+  const q = GQ.qs[GQ.i];
+  const b = $('#quizBody'); b.textContent = '';
+  $('#quizFill').style.width = Math.round(GQ.i / GQ.qs.length * 100) + '%';
+  b.append(el('p', 'lede', (GQ.i + 1) + ' / ' + GQ.qs.length));
+  const box = el('div', 'wex');
+  box.append(tapLine(q.ex.vi, 'wexvi tapline'));
+  box.append(el('div', 'wexko', esc(q.ex.ko)));
+  b.append(box);
+  b.append(el('p', 'q', tr('이 문장에 쓰인 문형은?')));
+  const opts = el('div', 'opts');
+  q.opts.forEach(o => {
+    const btn = el('button', null, esc(o.k) + ' — ' + esc(o.t));
+    btn.onclick = () => {
+      [...opts.children].forEach(x => x.disabled = true);
+      const ok = o.k === q.correct;
+      btn.dataset.r = ok ? 'ok' : 'no';
+      if (!ok) [...opts.children].forEach(x => { if (x.textContent.startsWith(q.correct)) x.dataset.r = 'ok'; });
+      fxTone(ok);
+      if (ok) GQ.ok++;
+      nextBtn(b, () => {
+        GQ.i++;
+        if (GQ.i < GQ.qs.length) drawGramQuiz();
+        else { S.done[GQ.dayKey] = now(); save();
+               popup('<b>' + tr('확인 문제 끝') + '</b> — ' + GQ.ok + ' / ' + GQ.qs.length);
+               renderHome(); }
+      });
+    };
+    opts.append(btn);
+  });
+  b.append(opts);
+}
+
 /* 모음·자음·성조를 **베트남어로 뭐라 하는가** — 기본기와 한 이야기다 (대표님 지적, 2026-08-30). */
 function gramWordsEntry() {
   const go = () => {
@@ -6558,7 +6619,8 @@ function drawCard() {
      마지막 장의 단추는 '다음'이 아니라 진도를 확정하는 자리라 남긴다. */
   const last = L.i === L.items.length - 1;
   $('#next').hidden = !last;
-  $('#next').textContent = L.cult || L.day.gram || L.day.know ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
+  $('#next').textContent = L.day.gram ? '확인 문제 ›'
+    : L.cult || L.day.know ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
     : L.day.day === 'P1' || L.day.day === 'P2' ? '귀로 구별하기 ›' : '완료 ›';
 }
@@ -6568,7 +6630,8 @@ $('#next').onclick = () => {
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
   if (L.cult) { renderHome(); return; }
-  if (L.day.gram || L.day.know) { S.done[L.day.day] = now(); save(); renderHome(); return; }
+  if (L.day.gram) { startGramQuiz(L.day.day, L.day.theme, L.items.map(it => it.d)); return; }
+  if (L.day.know) { S.done[L.day.day] = now(); save(); renderHome(); return; }
   if (L.news) {                        // 기사 세트 — 대화 두 줄을 보고 끝. 채점도 복습도 없다
     if (!L.dlg && L.day.dialog) { L.items = [{ k: 'dialog', d: L.day.dialog }]; L.i = 0; L.dlg = true;
                                   drawCard(); show('learn', L.day.theme, true); return; }
