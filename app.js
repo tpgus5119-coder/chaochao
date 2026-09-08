@@ -2243,7 +2243,68 @@ function acctForm(gate, mode) {
   }
   // 보안 안내 문구 삭제 — 다른 앱엔 없는 군더더기 설명이다 (사용자 지시, 2026-09-08).
   // "이메일 없어 복구 불가"도 이제 사실이 아니다(가입 때 이메일을 받는다).
+  if (mode === 'login') {
+    const forgot = el('button', 'ghost sm', tr('아이디·비밀번호를 잊으셨나요?'));
+    forgot.style.width = '100%'; forgot.style.marginTop = '8px';
+    forgot.onclick = () => forgotForm(gate);
+    b.append(forgot);
+  }
   show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), true);
+}
+
+/* 비밀번호 찾기 — 이메일로 재설정 링크를 보낸다 (2026-09-09, 대표님 지시).
+   서버(club_worker.js)의 act:'reqreset'을 부른다. 아이디가 있든 없든
+   "보냈습니다"라고만 답한다 — 계정 훑기(존재 여부 노출)를 막기 위해서다. */
+function forgotForm(gate) {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', tr('가입할 때 적은 이메일로 재설정 링크를 보내드립니다.')));
+  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = trP('아이디');
+  id.autocapitalize = 'none'; id.maxLength = 20;
+  const err = el('p', 'note nickerr'); err.hidden = true;
+  const go = el('button', 'primary big', tr('재설정 메일 보내기'));
+  go.style.width = '100%';
+  go.onclick = async () => {
+    const i = id.value.trim().toLowerCase();
+    if (!/^[a-z0-9_]{4,20}$/.test(i)) { err.textContent = tr('아이디는 영문·숫자 4~20자입니다.'); err.hidden = false; return; }
+    go.disabled = true;
+    try {
+      await cCall({ act: 'reqreset', id: i });
+      popup('<b>' + tr('메일을 보냈습니다.') + '</b><br>' + tr('받은 편지함(스팸함도)을 확인해 주세요. 1시간 안에 링크를 눌러야 합니다.'));
+      acctForm(gate, 'login');
+    } catch (e) { err.textContent = e.message || tr('실패했습니다'); err.hidden = false; go.disabled = false; }
+  };
+  b.append(id, err, go);
+  const back = el('button', 'ghost'); back.style.width = '100%'; back.style.marginTop = '10px';
+  back.textContent = tr('‹ 돌아가기');
+  back.onclick = () => acctForm(gate, 'login');
+  b.append(back);
+  show('sub', tr('비밀번호 찾기'), true);
+}
+
+/* 새 비밀번호 정하기 — 메일 속 링크(?reset=토큰)로 들어오면 뜨는 화면.
+   토큰은 서버가 1시간만 유효하게, 한 번만 쓰게 관리한다. */
+function resetPwForm(token) {
+  const b = $('#subBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', tr('새 비밀번호를 정해 주세요.')));
+  const pw = el('input', 'keyin'); pw.type = 'password'; pw.placeholder = trP('새 비밀번호 (8자 이상)'); pw.maxLength = 64;
+  const err = el('p', 'note nickerr'); err.hidden = true;
+  const go = el('button', 'primary big', tr('바꾸기'));
+  go.style.width = '100%';
+  go.onclick = async () => {
+    if (pw.value.length < 8) { err.textContent = tr('비밀번호는 8자 이상입니다.'); err.hidden = false; return; }
+    go.disabled = true;
+    try {
+      await cCall({ act: 'resetpw', token, pw: pw.value });
+      popup('<b>' + tr('바뀌었습니다.') + '</b> ' + tr('새 비밀번호로 로그인해 주세요.'));
+      // 링크를 다시 못 쓰게 주소창의 ?reset= 을 지운다
+      history.replaceState(null, '', location.pathname);
+      acctForm(true, 'login');
+    } catch (e) { err.textContent = e.message || tr('실패했습니다'); err.hidden = false; go.disabled = false; }
+  };
+  b.append(pw, err, go);
+  show('sub', tr('새 비밀번호'), true);
 }
 
 /* 직접 고르는 줄 — 예전에는 '바꾸기' 단추를 눌러야 다음 값으로 넘어갔다.
@@ -10094,6 +10155,9 @@ Promise.all([
   VDRILL = d.voweldrill || [];
   AIDX = a;
   drawRegion();
+  // 메일 속 재설정 링크(?reset=토큰)로 들어온 경우 — 다른 무엇보다 먼저 처리한다.
+  const resetTok = new URLSearchParams(location.search).get('reset');
+  if (resetTok) { resetPwForm(resetTok); return; }
   // 로그인 관문 — 안 되어 있으면 어느 기기든 열자마자 계정 화면부터 (사용자 지시).
   // 로그인된 기기는 로그아웃 전까지 그대로 유지된다(S.acct 가 기기에 남는다).
   let skip = false; try { skip = !!sessionStorage.getItem('gateSkip'); } catch (e) {}
