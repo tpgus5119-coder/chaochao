@@ -18,14 +18,14 @@ Qwen3-TTS(알리바바, Apache 2.0 — 상업 이용 명시)를 이 맥에서 �
   (같은 세션에서 비교한 Orpheus 는 10개 중 10개가 환각 — 그래서 이 모델을 골랐다)
 
 ## 모델 자리 — **임시 폴더에 두지 않는다** (gen_south_vtts.py 와 같은 원칙)
-venv: ~/qwen-tts-env  ·  모델 캐시: ~/.cache/huggingface (첫 실행 때 자동으로 받는다, ~2GB)
+venv: ~/짜오짜오/qwen-tts-env  ·  모델 캐시: ~/.cache/huggingface (첫 실행 때 자동으로 받는다, ~2GB)
 둘 다 이 프로젝트 폴더 밖, 홈 디렉터리 아래 있어 대화 상자가 닫혀도 안 지워진다.
 
 쓰기:
     from tts_qwen import speak
     speak("면접 질문 텍스트", "out.wav")
 
-실행 확인:  ~/qwen-tts-env/bin/python tools/tts_qwen.py "테스트할 문장"
+실행 확인:  ~/짜오짜오/qwen-tts-env/bin/python tools/tts_qwen.py "테스트할 문장"
 """
 import sys
 

@@ -858,7 +858,42 @@ async function playSeq(list, rows) {
    산출 효과(production effect): 눈으로만 보는 것보다 소리 내어 말하면 기억이 크게 좋아진다.
    그리고 남이 읽어주는 걸 듣는 것보다 '내가 말한 것'이 더 잘 남는다(운동 정보 + 자기참조).
    자동 채점은 하지 않는다 — 성조 채점은 지금 기술로 못 믿는다. 나란히 듣고 사람이 판단한다. */
-let REC = { stream: null, mr: null, url: null, key: null };
+let REC = { stream: null, mr: null, url: null, key: null, localHeard: null, sr: null };
+const HAND_AI = false;   // 손글씨 AI 채점 기능 제외 (대표님 지시 2026-09-08) — 손글씨 연습·자가채점은 그대로 둔다
+/* 발음 판정을 폰 안(브라우저 내장 음성인식)에서 먼저 시도한다 (대표님 지시 2026-09-08).
+   구글 제미나이 호출을 아예 없애는 게 아니라 — 브라우저가 못 알아들으면(지원 안 하거나 결과가 비면)
+   그때만 기존 제미나이 방식으로 넘어간다. 아직 실제 폰에서 검증 전이라 폴백을 반드시 남겨둔다. */
+const SRClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+const canLocalASR = () => !!SRClass;
+function startLocalASR() {
+  REC.localHeard = null;
+  if (!SRClass) return;
+  try {
+    const r = new SRClass();
+    r.lang = learnKo() ? 'ko-KR' : 'vi-VN';
+    r.continuous = false; r.interimResults = false; r.maxAlternatives = 1;
+    r.onresult = e => { REC.localHeard = e.results[0][0].transcript || null; };
+    r.onerror = () => {};
+    r.start();
+    REC.sr = r;
+  } catch (e) { REC.sr = null; }
+}
+function stopLocalASR() {
+  try { REC.sr && REC.sr.stop(); } catch (e) { }
+}
+/* 폰 인식 결과를 기존 askSpeech()와 같은 모양({heard, ok, pick})으로 바꾼다 —
+   호출하는 쪽(aiListen 등)을 안 건드리려고 반환 형태를 맞춘다. */
+function judgeLocalHeard(text, heard) {
+  const clean = x => String(x || '').toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+  const opts = sayOpts(text);
+  if (opts) {
+    const h = clean(heard);
+    const hit = opts.find(o => clean(o) === h || (h && h.includes(clean(o))));
+    return { heard: hit || heard, ok: hit ? hit === text : null, pick: true };
+  }
+  const ok = clean(heard) === clean(text) || stripTone(clean(heard)) === stripTone(clean(text));
+  return { heard, ok, pick: false };
+}
 
 /* 카드를 넘기거나 화면을 떠나면 녹음 상태를 비운다.
    안 그러면 앞 단어의 녹음이 다음 카드에서 '내 소리'로 재생된다. */
@@ -886,8 +921,7 @@ async function toggleRec(text, btn, box) {
     popup('<b>녹음은 어디에 남나요</b><br>' +
       '· 우리 서버에는 <b>저장하지 않습니다.</b> 저장소 자체가 붙어 있지 않습니다.<br>' +
       '· 폰 안에서만 잠깐 들고 있다가 <b>다음 녹음 때 지웁니다.</b> 앱을 닫으면 사라집니다.<br>' +
-      '· 발음을 받아 적는 일은 <b>구글(제미나이)</b>이 합니다 — 소리가 구글로 갑니다. ' +
-      '구글이 그것을 얼마나 두는지는 <b>우리가 정하지 못합니다.</b><br>' +
+      '· 발음을 받아 적는 일은 <b>이 폰의 음성인식 기능</b>이 먼저 합니다(지원 안 되면 그때만 구글 제미나이로 넘어갑니다).<br>' +
       '· 높낮이 판정은 <b>폰 안에서</b> 합니다. 아무 데도 안 보냅니다.');
   }
   try {
@@ -901,6 +935,7 @@ async function toggleRec(text, btn, box) {
   REC.mr = mr; REC.key = text;
   mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
   mr.onstop = () => {
+    stopLocalASR();                    // 폰 음성인식도 같이 끝낸다
     releaseMic();                      // 녹음이 끝나면 마이크를 놓는다
     if (REC.url) URL.revokeObjectURL(REC.url);
     REC.url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
@@ -913,6 +948,7 @@ async function toggleRec(text, btn, box) {
   const kill = liveRec(box, REC.stream, secs, () => { if (mr.state === 'recording') mr.stop(); });
   const oldStop = mr.onstop;
   mr.onstop = e => { kill(); oldStop(e); };
+  startLocalASR();                     // 녹음 시작과 동시에 폰 음성인식도 같이 켠다
   mr.start();
   btn.dataset.on = '1';
   btn.classList.add('rec-on');       // 이름은 그대로, 녹음 중은 색으로만 알린다
@@ -1027,7 +1063,7 @@ function drawCompare(text, box) {
   row.append(a, b, c);
   box.append(row, curve, said);
   showTone(text, REC.url, curve);        // 녹음이 끝나면 버튼 없이 바로 그린다
-  if (aiReady()) aiListen(text, REC.url, said);   // 발음도 누를 것 없이 바로
+  if (canLocalASR() || aiReady()) aiListen(text, REC.url, said);   // 발음도 누를 것 없이 바로
 }
 
 /* 녹음을 16kHz 모노 WAV 로 바꾼다 — 폰마다 다른 녹음 형식을 AI가 다 읽지는 못해서 */
@@ -1086,8 +1122,15 @@ async function askSpeech(text, b64, onWait) {
 
 async function aiListen(text, blobUrl, box) {
   try {
-    const b64 = await recToWav(blobUrl);
-    const { heard, ok, pick } = await askSpeech(text, b64);
+    // 폰이 알아들었으면 그걸로 판정 — 구글(제미나이) 호출은 하지 않는다.
+    // 폰이 못 알아들었거나 브라우저가 지원 안 하면(REC.localHeard 없음) 예전 방식으로 넘어간다.
+    let heard, ok, pick;
+    if (REC.localHeard) {
+      ({ heard, ok, pick } = judgeLocalHeard(text, REC.localHeard));
+    } else if (aiReady()) {
+      const b64 = await recToWav(blobUrl);
+      ({ heard, ok, pick } = await askSpeech(text, b64));
+    } else return;
     if (ok !== null) {
       S.stats.pronAll = (S.stats.pronAll || 0) + 1;
       if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
@@ -7329,7 +7372,7 @@ function drawHandQ(body, q) {
     const no = el('button', null, '✗ 틀렸어요');   no.onclick = () => mark(false);
     g.append(ok, no); body.append(g);
   };
-  if (aiReady()) {
+  if (HAND_AI && aiReady()) {
     const ai = el('button', 'primary', '채점받기');
     ai.onclick = () => {
       ai.disabled = true;
@@ -7440,7 +7483,7 @@ function sayOpts(target) {
   return [target, ...pick].sort(() => Math.random() - .5);
 }
 function judgeBtn(target, box, onDone) {
-  if (!canRecord() || !aiReady()) return null;
+  if (!canRecord() || !(canLocalASR() || aiReady())) return null;
   const b = el('button', 'rec', '🎤 말하고 채점받기');
   b.onclick = async () => {
     if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
@@ -7452,6 +7495,7 @@ function judgeBtn(target, box, onDone) {
     REC.mr = mr; REC.key = target;
     mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
     mr.onstop = async () => {
+      stopLocalASR();
       releaseMic();
       b.textContent = '🎤 말하고 채점받기';
       const url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
@@ -7460,9 +7504,14 @@ function judgeBtn(target, box, onDone) {
       box.textContent = 'AI가 듣는 중…';
       bumpSaid();
       try {
-        const b64 = await recToWav(url);
-        const { heard, ok } = await askSpeech(target, b64,
-          i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; });
+        let heard, ok;
+        if (REC.localHeard) {
+          ({ heard, ok } = judgeLocalHeard(target, REC.localHeard));
+        } else {
+          const b64 = await recToWav(url);
+          ({ heard, ok } = await askSpeech(target, b64,
+            i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; }));
+        }
         if (ok !== null) {                    // 판정을 미룬 것은 성적에 넣지 않는다
           S.stats.pronAll = (S.stats.pronAll || 0) + 1;
           if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
@@ -7483,6 +7532,7 @@ function judgeBtn(target, box, onDone) {
                          () => { if (mr.state === 'recording') mr.stop(); });
     const prevStop = mr.onstop;
     mr.onstop = async e => { kill(); await prevStop(e); };
+    startLocalASR();
     mr.start();
     b.textContent = '■ 멈추기';
     setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, RECSEC(target) * 1000);
@@ -8571,7 +8621,7 @@ function drawWrite() {
   const cl = el('button', 'ghost', '지우기');
   cl.onclick = () => { paper(); ctx.strokeStyle = '#16181d'; drew = false; };
   row.append(cl);
-  if (aiReady()) {
+  if (HAND_AI && aiReady()) {
     const ai = el('button', 'ghost', 'AI 선생님 점검');
     ai.onclick = () => {
       if (!drew) return;

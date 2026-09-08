@@ -17,12 +17,12 @@ audio/ko-f, audio/ko-m 을 덮지 않는다. 다 굽고 검수 결과까지 확�
 --replace 로 실제 자리에 다시 굽는다(그때도 파일명은 같은 해시라 앱 코드는 손 안 대도 된다).
 
 사용:
-    ~/qwen-tts-env/bin/python tools/gen_ko_audio_qwen_verified.py             # 안전 모드
-    ~/qwen-tts-env/bin/python tools/gen_ko_audio_qwen_verified.py --replace   # 실제 자리
-    ~/qwen-tts-env/bin/python tools/gen_ko_audio_qwen_verified.py --limit 50  # 시간 가늠용
+    ~/짜오짜오/qwen-tts-env/bin/python tools/gen_ko_audio_qwen_verified.py             # 안전 모드
+    ~/짜오짜오/qwen-tts-env/bin/python tools/gen_ko_audio_qwen_verified.py --replace   # 실제 자리
+    ~/짜오짜오/qwen-tts-env/bin/python tools/gen_ko_audio_qwen_verified.py --limit 50  # 시간 가늠용
 
 밤새 돌리기:
-    nohup ~/qwen-tts-env/bin/python tools/gen_ko_audio_qwen_verified.py \
+    nohup ~/짜오짜오/qwen-tts-env/bin/python tools/gen_ko_audio_qwen_verified.py \
         > logs/ko_audio_qwen_verified.log 2>&1 & disown
 """
 import difflib

@@ -16,12 +16,12 @@ audio/ko-f/n/ 을 덮지 않는다. 다 굽고 들어본 다음, 정말 바꿀 �
 이미 있는 파일은 건너뛴다. 밤새 돌리다 끊겨도 이어서 하면 된다.
 
 사용:
-    ~/qwen-tts-env/bin/python tools/gen_ko_audio_qwen.py            # 안전 모드, audio/ko-qwen/
-    ~/qwen-tts-env/bin/python tools/gen_ko_audio_qwen.py --replace  # 실제 자리(audio/ko-f/)에 굽기
-    ~/qwen-tts-env/bin/python tools/gen_ko_audio_qwen.py --limit 50 # 먼저 50개만 (시간 가늠용)
+    ~/짜오짜오/qwen-tts-env/bin/python tools/gen_ko_audio_qwen.py            # 안전 모드, audio/ko-qwen/
+    ~/짜오짜오/qwen-tts-env/bin/python tools/gen_ko_audio_qwen.py --replace  # 실제 자리(audio/ko-f/)에 굽기
+    ~/짜오짜오/qwen-tts-env/bin/python tools/gen_ko_audio_qwen.py --limit 50 # 먼저 50개만 (시간 가늠용)
 
 밤새 돌리기:
-    nohup ~/qwen-tts-env/bin/python tools/gen_ko_audio_qwen.py > logs/ko_audio_qwen.log 2>&1 &
+    nohup ~/짜오짜오/qwen-tts-env/bin/python tools/gen_ko_audio_qwen.py > logs/ko_audio_qwen.log 2>&1 &
 """
 import hashlib, pathlib, subprocess, sys, tempfile, time
 
