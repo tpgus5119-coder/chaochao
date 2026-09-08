@@ -1894,31 +1894,6 @@
            }
           },
           {
-           "vi": "kim",
-           "ko": "바늘",
-           "kr": "낌",
-           "krs": "낌",
-           "app": 1,
-           "img": "d22-kim.webp",
-           "hanja": "針 (침)",
-           "tones": [
-            {
-             "syl": "kim",
-             "name": "ngang",
-             "ko": "평평하게 그대로",
-             "shape": "—"
-            }
-           ],
-           "kr_read": "낌",
-           "ex": {
-            "vi": "Cái kim rất nhỏ.",
-            "ko": "바늘이 매우 작아요.",
-            "kr": "까이 낌 젓 뇨",
-            "krs": "까이 낌 럭 뇨",
-            "src": "ai"
-           }
-          },
-          {
            "vi": "áo",
            "ko": "윗옷",
            "kr": "아오",
@@ -1993,66 +1968,6 @@
             "ko": "실 장력이 아직 안 팽팽해요.",
             "kr": "깡 찌 쯔어 짯",
             "krs": "깡 찌 쯔어 짝",
-            "src": "ai"
-           }
-          },
-          {
-           "vi": "thay kim",
-           "ko": "바늘을 갈다",
-           "kr": "타이 낌",
-           "krs": "타이 낌",
-           "app": 1,
-           "img": "d31-thay-kim.webp",
-           "tones": [
-            {
-             "syl": "thay",
-             "name": "ngang",
-             "ko": "평평하게 그대로",
-             "shape": "—"
-            },
-            {
-             "syl": "kim",
-             "name": "ngang",
-             "ko": "평평하게 그대로",
-             "shape": "—"
-            }
-           ],
-           "kr_read": "타이 낌",
-           "ex": {
-            "vi": "Tôi cần thay kim máy may.",
-            "ko": "재봉틀 바늘을 갈아야 해요.",
-            "kr": "또이 껀 타이 낌 마이 마이",
-            "krs": "또이 껑 타이 낌 마이 마이",
-            "src": "ai"
-           }
-          },
-          {
-           "vi": "gãy kim",
-           "ko": "바늘이 부러지다",
-           "kr": "가이 낌",
-           "krs": "가이 낌",
-           "app": 1,
-           "img": "d31-gay-kim.webp",
-           "tones": [
-            {
-             "syl": "gãy",
-             "name": "ngã",
-             "ko": "끊었다 올림",
-             "shape": "∿"
-            },
-            {
-             "syl": "kim",
-             "name": "ngang",
-             "ko": "평평하게 그대로",
-             "shape": "—"
-            }
-           ],
-           "kr_read": "가이 낌",
-           "ex": {
-            "vi": "Cẩn thận kẻo gãy kim.",
-            "ko": "바늘이 부러지니 조심하세요.",
-            "kr": "껀 턴 깨오 가이 낌",
-            "krs": "껑 텅 깨오 가이 낌",
             "src": "ai"
            }
           },
@@ -16215,6 +16130,91 @@
             "src": "ai"
            },
            "made": 1
+          },
+          {
+           "vi": "kim",
+           "ko": "바늘",
+           "kr": "낌",
+           "krs": "낌",
+           "app": 1,
+           "img": "d22-kim.webp",
+           "hanja": "針 (침)",
+           "tones": [
+            {
+             "syl": "kim",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "낌",
+           "ex": {
+            "vi": "Cái kim rất nhỏ.",
+            "ko": "바늘이 매우 작아요.",
+            "kr": "까이 낌 젓 뇨",
+            "krs": "까이 낌 럭 뇨",
+            "src": "ai"
+           }
+          },
+          {
+           "vi": "thay kim",
+           "ko": "바늘을 갈다",
+           "kr": "타이 낌",
+           "krs": "타이 낌",
+           "app": 1,
+           "img": "d31-thay-kim.webp",
+           "tones": [
+            {
+             "syl": "thay",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "kim",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "타이 낌",
+           "ex": {
+            "vi": "Tôi cần thay kim máy may.",
+            "ko": "재봉틀 바늘을 갈아야 해요.",
+            "kr": "또이 껀 타이 낌 마이 마이",
+            "krs": "또이 껑 타이 낌 마이 마이",
+            "src": "ai"
+           }
+          },
+          {
+           "vi": "gãy kim",
+           "ko": "바늘이 부러지다",
+           "kr": "가이 낌",
+           "krs": "가이 낌",
+           "app": 1,
+           "img": "d31-gay-kim.webp",
+           "tones": [
+            {
+             "syl": "gãy",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "kim",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "가이 낌",
+           "ex": {
+            "vi": "Cẩn thận kẻo gãy kim.",
+            "ko": "바늘이 부러지니 조심하세요.",
+            "kr": "껀 턴 깨오 가이 낌",
+            "krs": "껑 텅 깨오 가이 낌",
+            "src": "ai"
+           }
           }
          ]
         }
