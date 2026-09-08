@@ -1897,3 +1897,10 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .socialrow{display:flex; flex-direction:column; gap:8px; margin-top:10px}
 .social{display:flex; align-items:center; justify-content:center; gap:10px; width:100%}
 .socialmark{font-weight:800; font-size:18px}
+
+/* ── VLPT 능력시험 모의고사 (2026-09-08) ── */
+.vlptpassage{background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px; margin:10px 0; font-size:15px; line-height:1.6}
+.vlptq{font-size:17px; font-weight:700; margin:10px 0}
+.vlptcard{border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px; margin-bottom:10px}
+.vlptcard.ok{border-left:4px solid var(--ok)}
+.vlptcard.no{border-left:4px solid var(--bad)}

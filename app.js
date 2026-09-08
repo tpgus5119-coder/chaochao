@@ -2526,8 +2526,85 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
                                       ['베트남 바로알기', knowEntry],
                                       ['오늘의 기사', showNewsLearn]] },
   cred:  { name: '순위', items: () => [['보기', creditEntry]] },
+  vex:   { name: '능력시험', items: () => [['모의고사', vlptEntry]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
+
+/* ── 베트남어 능력시험(VLPT) 모의고사 (2026-09-08 대표님 지시) ──
+   VLPT(Vietnamese Language Proficiency Test)는 하노이 국립대(VNU-USSH)가 운영하는
+   실제 공인 시험이다(CEFR A1~C2). 여기 문항은 그 형식을 따라 **우리가 직접 만든
+   연습 문제**다 — 실제 기출문제가 아니다(사이트 exam 소개 문구와 같은 원칙).
+   기존 퀴즈 엔진(startQuiz)은 단어 복습 전용이라 그대로 못 쓴다 — 여기는
+   지문+객관식+정답풀이가 필요해서 #examBody 자리(다른 화면들과 공유)에 따로 그린다. */
+let VLPT = null;
+function vlptEntry() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', 'VLPT(베트남 국립대 하노이대 주관 베트남어 능력시험) 형식을 따른 모의고사입니다.'));
+  b.append(el('p', 'note', '문항은 우리가 직접 만든 연습 문제입니다 — 실제 기출 문제가 아닙니다.'));
+  if (!VLPT) {
+    b.append(el('p', 'note', '불러오는 중…'));
+    fetch('data/vi_exams.json', { cache: 'no-cache' })
+      .then(r => r.json()).then(j => { VLPT = j.exams; if (!$('#exam').hidden) vlptEntry(); })
+      .catch(() => { b.append(el('p', 'note', '불러오지 못했습니다.')); });
+    show('exam', '능력시험', true);
+    return;
+  }
+  VLPT.forEach(ex => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, `[${ex.level}] ${ex.title}`));
+    btn.append(el('span', 'exmeta', ex.sub + ' · ' + ex.questions.length + '문항'));
+    const done = S.vlpt && S.vlpt[ex.id];
+    if (done) btn.append(el('span', 'exmeta', `최근 점수 ${done.score}/${done.total}`));
+    btn.onclick = () => vlptStart(ex);
+    b.append(btn);
+  });
+  show('exam', '능력시험', true);
+}
+function vlptStart(ex) {
+  let i = 0, ok = 0;
+  const answers = [];
+  const draw = () => {
+    const b = $('#examBody');
+    b.textContent = '';
+    if (i >= ex.questions.length) { vlptResult(ex, ok, answers); return; }
+    const q = ex.questions[i];
+    b.append(el('p', 'note', `${ex.title} · ${i + 1}/${ex.questions.length}`));
+    if (q.passage) b.append(el('div', 'vlptpassage', esc(q.passage)));
+    b.append(el('p', 'vlptq', esc(q.q)));
+    q.options.forEach((opt, oi) => {
+      const ob = el('button', 'bigmenu');
+      ob.append(el('span', null, opt));
+      ob.onclick = () => {
+        const correct = oi === q.answer;
+        if (correct) ok++;
+        answers.push({ q, picked: oi, correct });
+        i++; draw();
+      };
+      b.append(ob);
+    });
+  };
+  draw();
+  show('exam', ex.title, true);
+}
+function vlptResult(ex, ok, answers) {
+  const b = $('#examBody');
+  b.textContent = '';
+  S.vlpt = S.vlpt || {}; S.vlpt[ex.id] = { score: ok, total: ex.questions.length, at: now() }; save();
+  b.append(el('p', 'lede', `${ok} / ${ex.questions.length} 점`));
+  answers.forEach((a, idx) => {
+    const card = el('div', 'vlptcard' + (a.correct ? ' ok' : ' no'));
+    card.append(el('p', 'vlptq', `${idx + 1}. ` + esc(a.q.q)));
+    card.append(el('p', 'note', (a.correct ? '✔ 정답: ' : '✘ 오답 — 정답: ') + a.q.options[a.q.answer]));
+    card.append(el('p', 'note', a.q.explain));
+    b.append(card);
+  });
+  const back = el('button', 'primary big', '목록으로');
+  back.style.width = '100%'; back.style.marginTop = '10px';
+  back.onclick = vlptEntry;
+  b.append(back);
+  show('exam', '결과', true);
+}
 
 const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   day:    { name: '날마다 배우기', items: () => [['보기', koDayEntry]] },
