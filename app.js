@@ -1986,6 +1986,92 @@ function quitForm() {
   show('sub', tr('탈퇴'), true);
 }
 
+/* ---------- 소셜 로그인(구글·페이스북) ----------
+   Worker(서버) 소스를 못 고치는 상태라, 토큰 서명 검증은 서버가 아니라 안 한다.
+   대신 구글/페북이 준 고유 id로 결정적인 가짜 아이디·비번을 만들어(해시),
+   이미 있는 아이디/비번 계정 시스템(cCall)에 그대로 로그인·가입을 태운다.
+   같은 사람은 언제나 같은 계정으로 들어온다. 진짜 보안이 필요해지면
+   나중에 Worker에서 서명 검증을 추가해야 한다 — 지금은 이 정도가 정직한 한계다. */
+async function sha256hex(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+async function socialFinish(provider, sub, email, nick) {
+  const id = provider[0] + (await sha256hex(provider + ':' + sub)).slice(0, 19);
+  const pw = (await sha256hex(provider + ':' + sub + ':pw')).slice(0, 32);
+  try {
+    let j, act;
+    try { j = await cCall({ act: 'login', id, pw }); act = 'login'; }
+    catch (e) {
+      j = await cCall({ act: 'signup', id, pw, nat: 'kr', learn: 'vi', reg: '', email });
+      act = 'signup';
+      if (!S.nick && nick) { try { await cCall({ act: 'nick', nick }); S.nick = nick; save(); } catch (e2) { } }
+    }
+    if (act === 'signup') { S.nat = 'kr'; S.learn = 'vi'; S.email = email; save(); }
+    if (act === 'login' && j.prof) {
+      S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
+      if (j.prof.reg) S.region = j.prof.reg; drawRegion();
+    }
+    if (act === 'login') { S.uid = j.uid; if (j.nick) S.nick = j.nick; }
+    S.acct = { id, tok: j.tok || '' }; save();
+    if (act === 'login' && j.hasProg) {
+      const mine = Object.keys(S.done || {}).length;
+      if (mine === 0 || await askYN(tr('서버에 저장된 진도가 있습니다. 이 기기로 불러올까요?<br>지금 기기의 진도는 덮어써집니다.'), '불러오기')) {
+        try { await cloudLoad(); } catch (e) { }
+      }
+    }
+    popup('<b>' + (provider === 'google' ? '구글' : '페이스북') + ' 계정으로 로그인됐습니다.</b>');
+    if (!S.nick) { askNick(); return; }
+    renderHome();
+  } catch (e) { alert(tr('로그인 실패') + ': ' + (e.message || '')); }
+}
+function loadGIS() {
+  return new Promise((res, rej) => {
+    if (window.google && google.accounts && google.accounts.id) return res();
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.onload = res; s.onerror = rej;
+    document.head.appendChild(s);
+  });
+}
+async function googleLogin() {
+  try {
+    await loadGIS();
+    google.accounts.id.initialize({
+      client_id: '529668173593-514i71o4op45v29t2km0nk096pd4td82.apps.googleusercontent.com',
+      callback: async (resp) => {
+        const b64 = resp.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        const payload = JSON.parse(decodeURIComponent(escape(atob(b64))));
+        await socialFinish('google', payload.sub, payload.email, payload.name);
+      }
+    });
+    google.accounts.id.prompt();
+  } catch (e) { alert(tr('구글 로그인을 불러오지 못했습니다.')); }
+}
+function loadFBSDK() {
+  return new Promise(res => {
+    if (window.FB) return res();
+    window.fbAsyncInit = function () {
+      FB.init({ appId: '2021387731860931', version: 'v26.0', xfbml: false });
+      res();
+    };
+    const s = document.createElement('script');
+    s.src = 'https://connect.facebook.net/ko_KR/sdk.js';
+    document.head.appendChild(s);
+  });
+}
+async function facebookLogin() {
+  try {
+    await loadFBSDK();
+    FB.login(resp => {
+      if (!resp.authResponse) { alert(tr('페이스북 로그인이 취소됐습니다.')); return; }
+      FB.api('/me', { fields: 'id,name,email' }, async u => {
+        await socialFinish('facebook', u.id, u.email || '', u.name);
+      });
+    }, { scope: 'email' });
+  } catch (e) { alert(tr('페이스북 로그인을 불러오지 못했습니다.')); }
+}
+
 function acctForm(gate, mode) {
   mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
@@ -2126,17 +2212,20 @@ function acctForm(gate, mode) {
   if (!S.nick) profBox.append(el('p', 'note', tr('별명')), nickIn);
   if (mode === 'login') b.append(id, pw, err, bs);
   else b.append(profBox, id, pw, emailIn, err, bs);
-  /* 구글·페이스북 로그인 (2026-09-08 대표님 지시).
-     둘 다 로그인 자체는 무료(OAuth)지만, 토큰을 확인하는 건 서버(Worker) 몫이고
-     그 코드는 이 저장소 밖에 있다. 지금은 버튼만 두고 누르면 "준비 중"이라고
-     정직하게 말한다 — 안 되는 걸 되는 척 보여주면 안 된다. */
+  /* 구글·페이스북 로그인 (2026-09-09 실제 연결).
+     Worker(서버) 코드를 못 고치는 상태라, 구글/페북이 준 고유 id로 **결정적인 가짜
+     아이디·비번을 만들어내서** 기존 아이디/비번 계정 시스템에 그대로 로그인·가입을 태운다.
+     같은 사람이면 언제나 같은 가짜 계정이 나오므로 실제로는 잘 작동한다.
+     한계: 토큰 서명을 서버가 검증하지 않는다(클라이언트에서 디코딩만 함) — 진짜 보안이
+     필요해지면 나중에 Worker에서 서명 검증을 추가해야 한다. 지금은 정직하게 이 정도까지만. */
   const social = el('div', 'socialrow');
-  [['구글로 계속하기', '🇬'], ['페이스북으로 계속하기', 'f']].forEach(([label, mark]) => {
-    const sb = el('button', 'ghost social');
-    sb.append(el('span', 'socialmark', mark), el('span', null, tr(label)));
-    sb.onclick = () => alert(tr('구글/페이스북 로그인은 준비 중입니다. 서버 쪽 작업이 끝나면 열립니다.'));
-    social.append(sb);
-  });
+  const gBtn = el('button', 'ghost social');
+  gBtn.append(el('span', 'socialmark', '🇬'), el('span', null, tr('구글로 계속하기')));
+  gBtn.onclick = () => googleLogin(gate);
+  const fBtn = el('button', 'ghost social');
+  fBtn.append(el('span', 'socialmark', 'f'), el('span', null, tr('페이스북으로 계속하기')));
+  fBtn.onclick = () => facebookLogin(gate);
+  social.append(gBtn, fBtn);
   b.append(social);
   // 두 화면 사이를 오가는 문
   const sw = el('button', 'ghost');
