@@ -1063,7 +1063,7 @@ function drawCompare(text, box) {
   row.append(a, b, c);
   box.append(row, curve, said);
   showTone(text, REC.url, curve);        // 녹음이 끝나면 버튼 없이 바로 그린다
-  if (canLocalASR() || aiReady()) aiListen(text, REC.url, said);   // 발음도 누를 것 없이 바로
+  if (canLocalASR()) aiListen(text, REC.url, said);   // 발음도 누를 것 없이 바로 (폰으로만 판정)
 }
 
 /* 녹음을 16kHz 모노 WAV 로 바꾼다 — 폰마다 다른 녹음 형식을 AI가 다 읽지는 못해서 */
@@ -1122,15 +1122,10 @@ async function askSpeech(text, b64, onWait) {
 
 async function aiListen(text, blobUrl, box) {
   try {
-    // 폰이 알아들었으면 그걸로 판정 — 구글(제미나이) 호출은 하지 않는다.
-    // 폰이 못 알아들었거나 브라우저가 지원 안 하면(REC.localHeard 없음) 예전 방식으로 넘어간다.
-    let heard, ok, pick;
-    if (REC.localHeard) {
-      ({ heard, ok, pick } = judgeLocalHeard(text, REC.localHeard));
-    } else if (aiReady()) {
-      const b64 = await recToWav(blobUrl);
-      ({ heard, ok, pick } = await askSpeech(text, b64));
-    } else return;
+    // 오직 폰(브라우저 내장 음성인식)으로만 판정한다 — 구글(제미나이) 호출은 절대 하지 않는다
+    // (대표님 지시 2026-09-08). 폰이 못 알아들었으면 판정을 안 한다.
+    if (!REC.localHeard) return;
+    const { heard, ok, pick } = judgeLocalHeard(text, REC.localHeard);
     if (ok !== null) {
       S.stats.pronAll = (S.stats.pronAll || 0) + 1;
       if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
@@ -7483,7 +7478,7 @@ function sayOpts(target) {
   return [target, ...pick].sort(() => Math.random() - .5);
 }
 function judgeBtn(target, box, onDone) {
-  if (!canRecord() || !(canLocalASR() || aiReady())) return null;
+  if (!canRecord() || !canLocalASR()) return null;
   const b = el('button', 'rec', '🎤 말하고 채점받기');
   b.onclick = async () => {
     if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
@@ -7501,17 +7496,17 @@ function judgeBtn(target, box, onDone) {
       const url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
       if (REC.url) URL.revokeObjectURL(REC.url);
       REC.url = url;
-      box.textContent = 'AI가 듣는 중…';
+      box.textContent = '폰이 듣는 중…';
       bumpSaid();
       try {
-        let heard, ok;
-        if (REC.localHeard) {
-          ({ heard, ok } = judgeLocalHeard(target, REC.localHeard));
-        } else {
-          const b64 = await recToWav(url);
-          ({ heard, ok } = await askSpeech(target, b64,
-            i => { box.textContent = `AI가 붐빕니다 — 다시 시도 중 (${i + 2}/3)…`; }));
+        // 오직 폰(브라우저 내장 음성인식)으로만 판정한다 — 제미나이 호출 없음 (대표님 지시 2026-09-08)
+        if (!REC.localHeard) {
+          box.innerHTML = '<b>알아듣지 못했습니다.</b> 폰을 입 가까이 대고 조금 크게, 또박또박 다시 해 보세요.'
+            + '<span class="tonenote">높낮이는 아래 곡선이 봅니다.</span>';
+          onDone && onDone(null, true);
+          return;
         }
+        const { heard, ok } = judgeLocalHeard(target, REC.localHeard);
         if (ok !== null) {                    // 판정을 미룬 것은 성적에 넣지 않는다
           S.stats.pronAll = (S.stats.pronAll || 0) + 1;
           if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
@@ -7525,8 +7520,8 @@ function judgeBtn(target, box, onDone) {
             : '<b>가려내기 어렵습니다 — <b>틀렸다고 하지 않겠습니다.</b></b> 폰을 입 가까이 대고 조금 크게 다시 해 보세요.')
           + '<span class="tonenote">높낮이는 아래 곡선이 봅니다.</span>';
         fxTone(ok === true);
-        onDone && onDone(ok, true);   // null 이면 점수 없음 (AI가 매긴 것임을 알린다)
-      } catch (e) { box.textContent = 'AI 듣기 실패: ' + (e.message || ''); }
+        onDone && onDone(ok, true);   // null 이면 점수 없음
+      } catch (e) { box.textContent = '판정 실패: ' + (e.message || ''); }
     };
     const kill = liveRec(box, REC.stream, RECSEC(target),
                          () => { if (mr.state === 'recording') mr.stop(); });
