@@ -6,19 +6,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
 :root{
   --bg:#f0f2f5; --fg:#050505; --dim:#65676b; --line:#dadde1;
-  --card:#ffffff; --accent:#1877f2; --accent-fg:#fff;
-  --ok:#31a24c; --bad:#e41e3f; --warn:#8a5a00;
+  --card:#ffffff; --accent:#0058bc; --accent-fg:#fff;
+  --accent-soft:#d8e2ff;      /* Stitch primary-fixed — 연한 배지·아이콘 배경 */
+  --tertiary:#9a4100;          /* Stitch tertiary — 스트릭/불꽃 등 보조 강조색(파랑 외 유일 허용색) */
+  --tertiary-soft:#ffdbcb;
+  --surface-2:#f6f3f2;         /* Stitch surface-container-low — 카드 안의 옅은 패널 */
+  --ok:#10b981; --bad:#e41e3f; --warn:#8a5a00;
   --radius:12px;
   --radius-lg:14px;   /* 새 홈 카드(주간 달력·세로 지도)용 — 기존 --radius 를 그대로 쓰는 자리와 안 겹치게 갈랐다 */
   --shadow:0 1px 2px rgba(0,0,0,.1);
+  /* 위 색·반경 값은 Stitch(구글 AI 디자인 도구) 시안(stitch-home.html)의 실제 토큰을 그대로 옮긴 것 — 2026-09-08 */
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme=light]){
     --bg:#18191a; --fg:#e4e6e9; --dim:#b0b3b8; --line:#3e4042;
-    --card:#242526; --accent:#2374e1; --accent-fg:#fff;
-    --ok:#45bd62; --bad:#f02849; --warn:#e3b341;
+    --card:#242526; --accent:#5a9cff; --accent-fg:#0a1a33;
+    --accent-soft:#1d3866; --tertiary:#ffb691; --tertiary-soft:#4a2410;
+    --surface-2:#2a2b2c;
+    --ok:#34d399; --bad:#f02849; --warn:#e3b341;
     --shadow:0 1px 2px rgba(0,0,0,.35);
   }
+}
+:root[data-theme=dark]{
+  --bg:#18191a; --fg:#e4e6e9; --dim:#b0b3b8; --line:#3e4042;
+  --card:#242526; --accent:#5a9cff; --accent-fg:#0a1a33;
+  --accent-soft:#1d3866; --tertiary:#ffb691; --tertiary-soft:#4a2410;
+  --surface-2:#2a2b2c;
+  --ok:#34d399; --bad:#f02849; --warn:#e3b341;
+  --shadow:0 1px 2px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
