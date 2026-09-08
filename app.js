@@ -865,18 +865,30 @@ const HAND_AI = false;   // 손글씨 AI 채점 기능 제외 (대표님 지시 
    그때만 기존 제미나이 방식으로 넘어간다. 아직 실제 폰에서 검증 전이라 폴백을 반드시 남겨둔다. */
 const SRClass = window.SpeechRecognition || window.webkitSpeechRecognition;
 const canLocalASR = () => !!SRClass;
+/* 실제 폰 테스트에서 "인식이 안 된다"고 나온 원인을 찾았다(2026-09-09):
+   음성인식 결과(onresult)는 stop() 을 부른다고 바로 오지 않고 조금 뒤에 이벤트로 온다.
+   그런데 녹음이 끝나자마자(REC.localHeard 를) 바로 읽어버려서 늘 비어 있었다 —
+   **결과를 기다리지 않고 확인한 것**이 진짜 원인이다. 그래서 startLocalASR()이
+   "결과가 오면(또는 최대 4초 안에) 끝나는 약속(Promise)"을 REC.localDone 에 남기고,
+   판정하는 쪽(aiListen 등)이 그 약속을 기다린 뒤에 REC.localHeard 를 읽도록 고쳤다. */
 function startLocalASR() {
   REC.localHeard = null;
-  if (!SRClass) return;
-  try {
-    const r = new SRClass();
-    r.lang = learnKo() ? 'ko-KR' : 'vi-VN';
-    r.continuous = false; r.interimResults = false; r.maxAlternatives = 1;
-    r.onresult = e => { REC.localHeard = e.results[0][0].transcript || null; };
-    r.onerror = () => {};
-    r.start();
-    REC.sr = r;
-  } catch (e) { REC.sr = null; }
+  if (!SRClass) { REC.localDone = Promise.resolve(); return; }
+  REC.localDone = new Promise(resolve => {
+    let done = false;
+    const finish = () => { if (!done) { done = true; resolve(); } };
+    try {
+      const r = new SRClass();
+      r.lang = learnKo() ? 'ko-KR' : 'vi-VN';
+      r.continuous = false; r.interimResults = false; r.maxAlternatives = 1;
+      r.onresult = e => { REC.localHeard = e.results[0][0].transcript || null; };
+      r.onerror = () => {};
+      r.onend = finish;      // 결과가 없어도(못 알아들어도) end 는 반드시 온다
+      r.start();
+      REC.sr = r;
+      setTimeout(finish, 4000);   // 혹시 end 도 안 오면 4초 뒤엔 그냥 넘어간다(먹통 방지)
+    } catch (e) { REC.sr = null; finish(); }
+  });
 }
 function stopLocalASR() {
   try { REC.sr && REC.sr.stop(); } catch (e) { }
@@ -1123,7 +1135,8 @@ async function askSpeech(text, b64, onWait) {
 async function aiListen(text, blobUrl, box) {
   try {
     // 오직 폰(브라우저 내장 음성인식)으로만 판정한다 — 구글(제미나이) 호출은 절대 하지 않는다
-    // (대표님 지시 2026-09-08). 폰이 못 알아들었으면 판정을 안 한다.
+    // (대표님 지시 2026-09-08). 결과가 이벤트로 늦게 오므로 반드시 먼저 기다린다(2026-09-09 수정).
+    if (REC.localDone) await REC.localDone;
     if (!REC.localHeard) return;
     const { heard, ok, pick } = judgeLocalHeard(text, REC.localHeard);
     if (ok !== null) {
@@ -7500,6 +7513,8 @@ function judgeBtn(target, box, onDone) {
       bumpSaid();
       try {
         // 오직 폰(브라우저 내장 음성인식)으로만 판정한다 — 제미나이 호출 없음 (대표님 지시 2026-09-08)
+        // 결과가 이벤트로 늦게 오므로 반드시 먼저 기다린다(2026-09-09 수정).
+        if (REC.localDone) await REC.localDone;
         if (!REC.localHeard) {
           box.innerHTML = '<b>알아듣지 못했습니다.</b> 폰을 입 가까이 대고 조금 크게, 또박또박 다시 해 보세요.'
             + '<span class="tonenote">높낮이는 아래 곡선이 봅니다.</span>';
@@ -9996,5 +10011,7 @@ Promise.all([
   if ((!S.acct || !S.acct.tok) && !skip) { acctForm(true, 'login'); return; }
   if (!S.nick) { askNick(); return; }                 // 최초 1회
   if (S.wk && S.wk.k !== weekKey()) { showWeek(weekReport(S.wk.base)); return; }
-  renderHome();
+  // 앱을 켜면 바로 '하루5분'이 뜬다 — 홈 대시보드를 한 번 더 누르게 하지 않는다 (대표님 지시 2026-09-09).
+  ACTIVE_TAB = 'daily';
+  dailyFlowEntry();
 }).catch(e => { $('#title').textContent = '불러오기 실패'; console.error(e); });
