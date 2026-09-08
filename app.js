@@ -1925,9 +1925,8 @@ function acctForm(gate, mode) {
     langRow.append(t);
   });
   b.append(langRow);
-  b.append(el('p', 'lede', tr(mode === 'login'
-    ? '아이디로 어느 폰에서든 <b>내 별명</b>이 따라옵니다.'
-    : '<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.')));
+  // 안내 문구(아이디로 어느 폰에서든...) 삭제 — 다른 앱엔 없는 군더더기 설명이다 (사용자 지시, 2026-09-08)
+  if (mode !== 'login') b.append(el('p', 'lede', tr('<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.')));
   // 별명이 아직 없으면(첫 방문 가입) 여기서 같이 정한다 — 가입에 별명이 필요해서다
   const nickIn = el('input', 'keyin'); nickIn.type = 'text'; nickIn.maxLength = 10;
   nickIn.placeholder = tr('별명 (2~10자) — 순위에 보입니다');
@@ -1936,6 +1935,14 @@ function acctForm(gate, mode) {
   const pw = el('input', 'keyin'); pw.type = 'password';
   // 비밀번호 규칙은 NIST 지침대로: 길이만 본다(8자+). 특수문자 강제는 뻔한 변형만 낳는다.
   pw.placeholder = tr('비밀번호 (8자 이상)'); pw.maxLength = 64;
+  /* 이메일 — 가입할 때 받는다(대표님 지시, 2026-09-08). 비밀번호를 잊었을 때 되찾는
+     유일한 통로다. **다만 지금은 받아서 보관만 한다** — 실제로 "이메일로 재설정 링크
+     보내기"가 되려면 계정을 처리하는 서버(Worker) 쪽에 그 기능을 새로 만들어야 하고,
+     그 코드는 이 저장소 밖에 있어서 여기서 못 넣는다. 받아두면 나중에 서버 쪽 작업만
+     하면 되니 미리 걷어 둔다. */
+  const emailIn = el('input', 'keyin'); emailIn.type = 'email';
+  emailIn.placeholder = tr('이메일 (비밀번호를 잊었을 때 되찾는 용도)');
+  emailIn.maxLength = 100;
 
   /* 가입 화면에만 나오는 것들 — 국적과 배울 언어 */
   const profBox = el('div', 'profbox');
@@ -1992,6 +1999,8 @@ function acctForm(gate, mode) {
     if (!/^[a-z0-9_]{4,20}$/.test(i)) return oops('아이디는 영문·숫자 4~20자입니다.');
     if (p.length < 4) return oops('비밀번호는 4자 이상입니다.');
     if (act === 'signup' && p.length < 8) return oops('비밀번호는 8자 이상입니다.');
+    const em = act === 'signup' ? emailIn.value.trim() : '';
+    if (act === 'signup' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return oops('이메일을 올바르게 적어 주세요.');
     try {
       if (act === 'signup' && !S.nick) {
         const v = nickIn.value.trim();
@@ -2001,10 +2010,10 @@ function acctForm(gate, mode) {
       }
       const prof = act === 'signup'
         ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '',
-            ui: uiW.val() } : {};
+            ui: uiW.val(), email: em } : {};
       const j = await cCall(Object.assign({ act, id: i, pw: p }, prof));
       if (act === 'signup' && prof.reg) { S.region = prof.reg; drawRegion(); }
-      if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn;
+      if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn; S.email = em; save();
         if (prof.ui) S.ui = prof.ui;              // 고른 대로 — 국적으로 짐작하지 않는다
       }
       if (act === 'login' && j.prof) {
@@ -2027,7 +2036,7 @@ function acctForm(gate, mode) {
         }
       }
       popup(act === 'signup'
-        ? '<b>가입됐습니다.</b><br>비밀번호를 잊으면 <b>되찾을 길이 없습니다</b> — 적어 두세요.<br>다른 폰에서 로그인하면 지금 별명이 따라옵니다.'
+        ? '<b>가입됐습니다.</b><br>다른 폰에서 로그인하면 지금 별명이 따라옵니다.'
         : '<b>로그인됐습니다.</b> 별명이 이 기기로 따라왔습니다.');
       if (gate) renderHome(); else renderAwards();
     } catch (e) { oops(e.message || '안 됐습니다'); }
@@ -2039,7 +2048,19 @@ function acctForm(gate, mode) {
   bs.append(main);
   if (!S.nick) profBox.append(el('p', 'note', tr('별명')), nickIn);
   if (mode === 'login') b.append(id, pw, err, bs);
-  else b.append(profBox, id, pw, err, bs);
+  else b.append(profBox, id, pw, emailIn, err, bs);
+  /* 구글·페이스북 로그인 (2026-09-08 대표님 지시).
+     둘 다 로그인 자체는 무료(OAuth)지만, 토큰을 확인하는 건 서버(Worker) 몫이고
+     그 코드는 이 저장소 밖에 있다. 지금은 버튼만 두고 누르면 "준비 중"이라고
+     정직하게 말한다 — 안 되는 걸 되는 척 보여주면 안 된다. */
+  const social = el('div', 'socialrow');
+  [['구글로 계속하기', '🇬'], ['페이스북으로 계속하기', 'f']].forEach(([label, mark]) => {
+    const sb = el('button', 'ghost social');
+    sb.append(el('span', 'socialmark', mark), el('span', null, tr(label)));
+    sb.onclick = () => alert(tr('구글/페이스북 로그인은 준비 중입니다. 서버 쪽 작업이 끝나면 열립니다.'));
+    social.append(sb);
+  });
+  b.append(social);
   // 두 화면 사이를 오가는 문
   const sw = el('button', 'ghost');
   sw.style.width = '100%'; sw.style.marginTop = '10px';
@@ -2054,9 +2075,8 @@ function acctForm(gate, mode) {
                             if (!S.nick) { askNick(); return; } renderHome(); };
     b.append(later);
   }
-  b.append(el('p', 'note', tr('· 서버에는 비밀번호의 <b>으깬 값(해시)</b>만 남습니다 — 원문은 저장하지 않습니다.') + '<br>' +
-    tr('· 이메일이 없어 비밀번호를 잊으면 <b>되찾을 수 없습니다.</b>') + '<br>' +
-    ''));   // 서버 저장 안내는 뺐다 (사용자 지시)
+  // 보안 안내 문구 삭제 — 다른 앱엔 없는 군더더기 설명이다 (사용자 지시, 2026-09-08).
+  // "이메일 없어 복구 불가"도 이제 사실이 아니다(가입 때 이메일을 받는다).
   show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), true);
 }
 

@@ -1892,3 +1892,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   background:color-mix(in srgb, var(--accent) 12%, var(--card));
   display:grid; place-items:center; font-size:28px;
 }
+
+/* ── 소셜 로그인 버튼(구글/페북, 2026-09-08) ── */
+.socialrow{display:flex; flex-direction:column; gap:8px; margin-top:10px}
+.social{display:flex; align-items:center; justify-content:center; gap:10px; width:100%}
+.socialmark{font-weight:800; font-size:18px}
