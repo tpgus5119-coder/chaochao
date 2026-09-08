@@ -378,7 +378,9 @@ export default {
         // 증표(token): 로그인한 사람만 자기 진도를 읽고 쓸 수 있게 하는 문패.
         // 비밀번호를 매번 보내지 않으려고 따로 둔다.
         const tok = [...crypto.getRandomValues(new Uint8Array(16))].map(x => x.toString(16).padStart(2, '0')).join('');
-        await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid, p: prof, t: tok }));
+        // 이메일 — 비밀번호를 잊었을 때 되찾는 용도로만 쓴다 (2026-09-09, 대표님 지시).
+        const email = cut(b.email, 100);
+        await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid, p: prof, t: tok, email }));
         return send({ ok: true, uid, nick, prof, tok });
       }
       if (!acct) return send({ error: '없는 아이디입니다' });
@@ -398,6 +400,52 @@ export default {
       const hasProg = !!(await KV.get('prog:' + id, { type: 'text' }));
       return send({ ok: true, uid: acct.u, nick: myNick || (myClub && myClub.nick) || '',
                     club: myClub, prof: acct.p || null, tok: acct.t, hasProg });
+    }
+
+    /* ── 이메일로 비밀번호 찾기 (2026-09-09, 대표님 지시) ──────────────────
+       가입할 때 받아 둔 이메일로 재설정 링크를 보낸다. 리센드(Resend) 써서 보낸다.
+       설정: Settings → Variables and Secrets → RESEND_KEY 를 넣어야 돈다.
+       (진짜 키 값은 절대 이 파일에 적지 않는다 — 이 파일은 공개 저장소에 있다.)
+       링크는 1시간만 유효하고, 한 번 쓰면 지운다. 아이디가 있는지 없는지는
+       화면에 그대로 알리지 않는다(있든 없든 "보냈습니다"라고만 답한다 — 계정 훑기 방지). */
+    if (act === 'reqreset') {
+      const id = cut(b.id, 20).toLowerCase().trim();
+      const acct = JSON.parse((await KV.get('acct:' + id)) || 'null');
+      if (acct && acct.email && env.RESEND_KEY) {
+        const token = [...crypto.getRandomValues(new Uint8Array(24))].map(x => x.toString(16).padStart(2, '0')).join('');
+        await KV.put('reset:' + token, id, { expirationTtl: 3600 });
+        const link = `https://tpgus5119-coder.github.io/chaochao/?reset=${token}`;
+        try {
+          await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + env.RESEND_KEY, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              from: 'Chào Chào <onboarding@resend.dev>',
+              to: acct.email,
+              subject: '짜오짜오 비밀번호 재설정',
+              html: `<p>아래 링크를 눌러 새 비밀번호를 정해 주세요(1시간 안에만 됩니다).</p>
+                     <p><a href="${link}">${link}</a></p>
+                     <p>요청하지 않으셨다면 이 메일은 무시하셔도 됩니다.</p>`,
+            }),
+          });
+        } catch (e) { /* 메일이 실패해도 아이디 존재 여부는 알리지 않는다 */ }
+      }
+      return send({ ok: true });
+    }
+    if (act === 'resetpw') {
+      const token = cut(b.token, 64);
+      const pw = String(b.pw || '').slice(0, 64);
+      if (pw.length < 8) return send({ error: '비밀번호는 8자 이상입니다' });
+      const id = await KV.get('reset:' + token);
+      if (!id) return send({ error: '링크가 만료됐거나 이미 썼습니다. 다시 요청해 주세요.' });
+      const AK = 'acct:' + id;
+      const acct = JSON.parse((await KV.get(AK)) || 'null');
+      if (!acct) return send({ error: '계정을 찾을 수 없습니다' });
+      const salt = Math.random().toString(36).slice(2, 12);
+      acct.s = salt; acct.h = await hashPw(salt, pw);
+      await KV.put(AK, JSON.stringify(acct));
+      await KV.delete('reset:' + token);
+      return send({ ok: true });
     }
 
     /* ── 탈퇴 ────────────────────────────────────────
