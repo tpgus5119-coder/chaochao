@@ -9114,8 +9114,9 @@ function kbGuide() {
       const r = el('div', 'kbtr');
       r.append(el('span', 'kbk', esc(k)), el('span', 'kbt', esc(typed) + ' →'),
                el('span', 'kbm', esc(made)), el('span', 'kbko', esc(ko)));
+      const say = el('button', 'ghost sm', '🔊');
       say.type = 'button'; say.title = '들어 보기';
-      say.onclick = () => speakVi(made, false, 0, S.tch);
+      say.onclick = () => speakVi(made, false, 0, S.voice);
       r.append(say);
       t.append(r);
     });
