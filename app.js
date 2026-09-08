@@ -4642,6 +4642,16 @@ function renderHome() {
   // 오늘·내일 일정판 — 뭘 하게 될지 미리 보이고, 버튼 하나로 바로 들어간다
   const plan = $('#plan');
   plan.textContent = '';
+  // 인사말 카드(Stitch 시안 재현) — 사진은 안 쓴다(대표님 지시), 아이콘으로 대신한다.
+  // 연속 학습일은 실제 데이터(streakDays())만 쓴다.
+  const greet = el('div', 'kogreet');
+  const gtxt = el('div', 'kogtxt');
+  const gbadge = el('div', 'kogbadge');
+  gbadge.append(el('span', 'kogdot'), el('span', null, tr('연속 학습') + ' ' + streakDays() + tr('일')));
+  gtxt.append(gbadge);
+  gtxt.append(el('div', 'kogh1', tr('안녕하세요') + ', ' + esc(S.nick || tr('학습자')) + tr('님!')));
+  greet.append(gtxt, el('div', 'kogicon', '🎓'));
+  plan.append(greet);
   // 행 자체를 누르면 바로 실행된다
   const prow = (k, v, state, fn) => {
     const r = el('div', 'plancell ' + state + (fn ? ' go' : ''));
