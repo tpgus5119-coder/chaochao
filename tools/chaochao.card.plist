@@ -9,11 +9,11 @@
   <key>ProgramArguments</key>
   <array>
     <string>/bin/sh</string>
-    <string>/Users/leesehyeon/베트남어-어플/tools/card_daily.sh</string>
+    <string>/Users/leesehyeon/짜오짜오/베트남어-어플/tools/card_daily.sh</string>
   </array>
   <key>StartCalendarInterval</key>
   <dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>20</integer></dict>
-  <key>StandardOutPath</key><string>/Users/leesehyeon/베트남어-어플/logs/card_daily.log</string>
-  <key>StandardErrorPath</key><string>/Users/leesehyeon/베트남어-어플/logs/card_daily.log</string>
+  <key>StandardOutPath</key><string>/Users/leesehyeon/짜오짜오/베트남어-어플/logs/card_daily.log</string>
+  <key>StandardErrorPath</key><string>/Users/leesehyeon/짜오짜오/베트남어-어플/logs/card_daily.log</string>
 </dict>
 </plist>
