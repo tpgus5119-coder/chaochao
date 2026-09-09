@@ -1589,7 +1589,14 @@ const BADGES = [
   { icon: '🔤', name: '기본기를 뗐다', how: '기본기 학습 완료',
     test: () => ['P1','P2','P3','R1','R2','R3','R4'].every(k => S.done[k]) },
   { icon: '👋', name: '첫 5일',        how: '일상 Day 1~5 완료',             test: () => [1,2,3,4,5].every(k => S.done[k]) },
-  { icon: '🏭', name: '출근 첫날',     how: '직무 세트 1개 완료',            test: () => ALL.some(d => d.track === 'work' && S.done[d.day]) },
+  // 옛 직무(days.json track:'work')는 2026-09-09에 order.json(J열쇠)으로 완전히
+  // 옮겨서 데이터를 지웠다 — 그래도 예전에 실제로 그 날을 끝낸 사람의 배지가
+  // 갑자기 사라지면 안 되므로 옛 날짜 번호를 그대로 남겨 같이 검사한다.
+  { icon: '🏭', name: '출근 첫날',     how: '직무 세트 1개 완료',
+    test: () => Object.keys(S.done).some(k => k[0] === 'J') ||
+      [21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,51,52,53,55,56,57,59,60,
+       61,62,63,64,65,66,67,68,69,70,81,82,83,84,85,88,89,90,91,92,93,94,95,96,97,100,
+       107,108,109,110,111,112,113,114].some(n => S.done[n]) },
   // ② 진도 — 얼마나 걸어왔는가
   { icon: '🌓', name: '10세트',        how: '아무 세트나 10개 완료',         test: () => doneCount() >= 10 },
   { icon: '🏔️', name: '25세트',        how: '세트 25개 완료',                test: () => doneCount() >= 25 },
@@ -4861,17 +4868,9 @@ const GROUPS = [
   [d => !d.track && d.n <= 35, '집과 살림'],
   [d => !d.track && d.n <= 37, '가족과 고향'],
   [d => !d.track,              '스몰토크 — 날씨 · 주말 · 축구'],
-  // 직무 — 취업 여정 순서: 기초(공통) → 업종 기초 → 회사 생활 → 관리자 말 → 심화 → 출하
-  [d => d.track === 'work' && d.day <= 40 && d.cat === '공통', '공장 기초 (공통)'],
-  [d => d.track === 'work' && d.day <= 40, '봉제 기초'],
-  [d => d.track === 'work' && d.day >= 51 && d.day <= 55, '전자·디스플레이 기초'],
-  [d => d.track === 'work' && d.day >= 56 && d.day <= 60, '사무·서비스 (시티잡)'],
-  [d => d.track === 'work' && d.day >= 61 && d.day <= 65, '직장 문화 (공통)'],
-  [d => d.track === 'work' && d.day >= 66 && d.day <= 70, '계약·행정 (공통)'],
-  [d => d.track === 'work' && d.day >= 81 && d.day <= 85, '관리자 화법 (공통)'],
-  [d => d.track === 'work' && d.day >= 86 && d.day <= 90, '봉제 심화'],
-  [d => d.track === 'work' && d.day >= 91 && d.day <= 95, '전자 심화'],
-  [d => d.track === 'work', '창고·물류 (공통)']
+  // 옛 직무(days.json track:'work') 갈래는 2026-09-09에 지웠다 — 직무는 이제
+  // order.json 16개 트랙(공통 7 + 업종 9)으로 완전히 옮겨서 여기(하루5분 일상
+  // 목록)엔 안 나온다. drawJob()이 그쪽 목차를 따로 그린다.
 ];
 
 /* 내 업종이 아닌 직무 묶음은 가릴 수 있다 — 가린 것은 목록·일정·추천에서 빠진다 */
@@ -4903,7 +4902,7 @@ function courseQueue(n) {
   const life = [], job = [];
   // 일상 쪽은 order.json 에 아직 kind:'life' 권이 없다 — COURSE(lifeVols)만 보면
   // 여기 배열이 늘 비어서 하루5분이 직무만 낸다. 옛 days.json(ALL)을 그대로 쓴다 —
-  // drawCourse()의 '일상 낱말' 줄(재생목록 renderDays('life'))과 **같은 자료·같은
+  // drawCourse()의 '일상 낱말' 줄(재생목록 renderDays())과 **같은 자료·같은
   // 완료 열쇠(S.done[d.day])**를 써야 진도가 두 군데로 안 갈린다 (2026-09-09).
   const lifeDays = ALL.filter(d => typeof d.day === 'number' && !d.track && visibleDay(d))
     .sort((a, b) => (a.n || 0) - (b.n || 0));
@@ -5047,45 +5046,28 @@ function renderHome() {
 }
 
 /* 학습 과정 목록 — 트랙별로 보여준다 */
-function renderDays(track) {
+/* 일상 낱말 목차 — 옛 직무(track:'work') 갈래는 2026-09-09에 order.json으로
+   완전히 옮기고 여기선 지웠다. drawJob()이 직무 목차를 따로 그린다. */
+function renderDays() {
   const nx = nextDay();
   const list = $('#dayList');
   list.textContent = '';
-  // n = 실제 학습 차례(기초→심화, 트랙 안에서 빈틈없이 1,2,3...). day는 예전에 쓰던
-  // 옛 번호라 뒤섞여 있어도 정상이다 — 지금까지는 자료 배열 순서가 우연히 n 순서와
-  // 같아서 문제가 없었는데, 언젠가 배열 순서가 어긋나면 목차가 조용히 뒤섞인다.
+  // n = 실제 학습 차례(기초→심화, 빈틈없이 1,2,3...). day는 예전에 쓰던 옛 번호라
+  // 뒤섞여 있어도 정상이다 — 지금까지는 자료 배열 순서가 우연히 n 순서와 같아서
+  // 문제가 없었는데, 언젠가 배열 순서가 어긋나면 목차가 조용히 뒤섞인다.
   // 그래서 n으로 직접 정렬해 확실하게 맞춘다 (2026-09-09).
-  const days = ALL.filter(d =>
-    (track === 'work' ? d.track === 'work'
-    : (typeof d.day === 'number' && !d.track)) && visibleDay(d))
+  const days = ALL.filter(d => typeof d.day === 'number' && !d.track)
     .sort((a, b) => (a.n || 0) - (b.n || 0));
 
-  if (track === 'work') {              // 내 업종만 남기기 — 끈 업종은 학습·일정에서도 빠진다
-    const li = el('li', 'catpick');
-    li.append(el('span', null, '업종 '));
-    ['봉제', '전자', '사무'].forEach(c => {
-      const on = !hiddenCats().includes(c);
-      const bb = el('button', 'ghost sm' + (on ? ' pick' : ''), (on ? '✓ ' : '') + c);
-      bb.onclick = () => {
-        const h = new Set(hiddenCats());
-        on ? h.add(c) : h.delete(c);
-        S.hide = [...h]; save();
-        renderDays('work');
-      };
-      li.append(bb);
-    });
-    list.append(li);
-  }
-  const row = d => {                       // 한 줄 그리기 (두 보기가 같은 줄을 쓴다)
+  const row = d => {                       // 한 줄 그리기
     const done = !!S.done[d.day];
     const b = el('button');
     b.dataset.done = done ? '1' : '0';
-    if (nx && d.day === nx.day && (d.track || '') === (nx.track || '')) b.dataset.next = '1';
+    if (nx && d.day === nx.day && !nx.track) b.dataset.next = '1';
     const nm2 = el('span', 'nm', esc(d.theme));
-    if (d.cat) nm2.append(el('i', 'catchip', esc(d.cat)));
     b.append(el('span', 'num', esc(label(d))), nm2,
              el('span', 'st', done ? '완료 ✔' : (d.words || []).length + '단어 + 대화'));
-    b.onclick = () => { dive(() => renderDays(track)); startLearn(d); };
+    b.onclick = () => { dive(renderDays); startLearn(d); };
     const li = el('li'); li.append(b);
     return li;
   };
@@ -5096,7 +5078,7 @@ function renderDays(track) {
     if (gi !== g) { g = gi; list.append(el('li', 'grp', esc(GROUPS[gi][1]))); }
     list.append(row(d));
   });
-  show('course', track === 'work' ? '직무 낱말' : '일상 낱말', true);
+  show('course', '일상 낱말', true);
 }
 
 /* ---------- 학습 ---------- */
@@ -5480,7 +5462,7 @@ function drawCourse() {
     const ds = ALL.filter(d => typeof d.day === 'number' && !d.track && visibleDay(d));
     const dn = ds.filter(d => S.done[d.day]).length;
     row((lifeVols().length + 2) + '권', tr('일상 낱말'), stat(dn, ds.length, '세트'),
-        () => { dive(drawCourse); renderDays('life'); }, dn >= ds.length && ds.length > 0);
+        () => { dive(drawCourse); renderDays(); }, dn >= ds.length && ds.length > 0);
   }
   /* 직무는 **한 권**이다 (대표님 결정, 2026-08-30) — 꼭 필요한 기본 999개만.
      심화 낱말은 앱에 넣지 않는다. 현장에서 배우면 되는 말이다. */

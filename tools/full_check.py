@@ -35,9 +35,12 @@ dup = [t for t, c in th.items() if c > 1]
 say(f"- 이름이 겹치는 날: **{len(dup)}**" + (f" {dup[:6]}" if dup else " ✓"))
 # 차례 — 실제 학습 순서는 day(옛 번호, 뒤섞여 있어도 정상)가 아니라 n(진짜 차례)이다.
 # app.js renderDays()/courseQueue()가 n으로 정렬해서 쓴다 (2026-09-09부터).
+# n은 옛 직무(work) 날짜와 번갈아 매긴 **전체 번호**라 지금(직무를 지운 뒤)은
+# 일상 쪽만 보면 군데군데 비어 있는 게 정상이다 — GROUPS의 문턱값(d.n <= 37 등)이
+# 이 번호를 그대로 쓰고 있어서 다시 안 채운다. 겹치지만 않으면(중복 없이 늘어나면) 된다.
 ns = [x.get("n") for x in days if isinstance(x.get("n"), (int, float))]
-say(f"- 학습 차례(n)가 1부터 빈틈없이 이어지나: "
-    + ("✓" if sorted(ns) == list(range(1, len(ns) + 1)) else "**아니오** — 빠지거나 겹친다"))
+say(f"- 학습 차례(n)가 겹치지 않고 늘어나기만 하나: "
+    + ("✓" if len(set(ns)) == len(ns) and sorted(ns) == ns else "**아니오** — 겹치거나 거꾸로 간다"))
 ds = [x.get("day") for x in days]
 num = [d for d in ds if isinstance(d, (int, float))]
 bad_seq = [(a, b) for a, b in zip(num, num[1:]) if b < a]
