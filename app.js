@@ -4901,11 +4901,14 @@ const nextDay = () => upcoming(1)[0] || null;
 function courseQueue(n) {
   if (!COURSE) return [];
   const life = [], job = [];
-  lifeVols().forEach((v, vi) => v.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
-    const k = ckey(vi, ci, li);
-    if (!S.done[k]) life.push({ day: k, theme: (v.title ? v.title + ' · ' : '') + lsName(l, li),
-                                words: l.words, course: 1, kind: '일상' });
-  })));
+  // 일상 쪽은 order.json 에 아직 kind:'life' 권이 없다 — COURSE(lifeVols)만 보면
+  // 여기 배열이 늘 비어서 하루5분이 직무만 낸다. 옛 days.json(ALL)을 그대로 쓴다 —
+  // drawCourse()의 '일상 낱말' 줄(재생목록 renderDays('life'))과 **같은 자료·같은
+  // 완료 열쇠(S.done[d.day])**를 써야 진도가 두 군데로 안 갈린다 (2026-09-09).
+  const lifeDays = ALL.filter(d => typeof d.day === 'number' && !d.track && visibleDay(d))
+    .sort((a, b) => (a.n || 0) - (b.n || 0));
+  let nd = 0;
+  lifeDays.forEach(d => { if (S.done[d.day]) nd++; else life.push(d); });
   const jv = jobVol(0);
   if (jv) {
     const pick = S.jobpick || {};
@@ -4921,7 +4924,6 @@ function courseQueue(n) {
   }
   const out = [];
   let i = 0, j = 0;
-  let nd = Object.keys(S.done).filter(k => k[0] === 'C').length;
   let nw = Object.keys(S.done).filter(k => k[0] === 'J').length;
   while (out.length < n && (i < life.length || j < job.length)) {
     const useLife = j >= job.length || (i < life.length && nd <= nw * 2);   // 일상 둘에 직무 하나
@@ -4935,10 +4937,10 @@ function courseQueue(n) {
 function recentDoneUnits(nMax) {
   if (!COURSE) return [];
   const out = [];
-  lifeVols().forEach((v, vi) => v.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
-    const k = ckey(vi, ci, li);
-    if (S.done[k]) out.push({ key: k, title: (v.title ? v.title + ' · ' : '') + lsName(l, li), at: S.done[k], done: true });
-  })));
+  // courseQueue()와 같은 이유로 일상은 order.json(lifeVols)이 아니라 days.json(ALL)을 본다.
+  ALL.filter(d => typeof d.day === 'number' && !d.track && visibleDay(d)).forEach(d => {
+    if (S.done[d.day]) out.push({ key: d.day, title: d.theme, at: S.done[d.day], done: true });
+  });
   const jv = jobVol(0);
   if (jv) jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
     const k = jkey(ti, ci, li);
@@ -5049,9 +5051,14 @@ function renderDays(track) {
   const nx = nextDay();
   const list = $('#dayList');
   list.textContent = '';
+  // n = 실제 학습 차례(기초→심화, 트랙 안에서 빈틈없이 1,2,3...). day는 예전에 쓰던
+  // 옛 번호라 뒤섞여 있어도 정상이다 — 지금까지는 자료 배열 순서가 우연히 n 순서와
+  // 같아서 문제가 없었는데, 언젠가 배열 순서가 어긋나면 목차가 조용히 뒤섞인다.
+  // 그래서 n으로 직접 정렬해 확실하게 맞춘다 (2026-09-09).
   const days = ALL.filter(d =>
     (track === 'work' ? d.track === 'work'
-    : (typeof d.day === 'number' && !d.track)) && visibleDay(d));
+    : (typeof d.day === 'number' && !d.track)) && visibleDay(d))
+    .sort((a, b) => (a.n || 0) - (b.n || 0));
 
   if (track === 'work') {              // 내 업종만 남기기 — 끈 업종은 학습·일정에서도 빠진다
     const li = el('li', 'catpick');

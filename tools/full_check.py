@@ -69,9 +69,9 @@ wrong = [(w["vi"], w.get("kr_read"), vi_kr.word(w["vi"]))
          and n(w["kr_read"]) != n(vi_kr.word(w["vi"]))]
 say(f"- 발음이 우리 도구와 다른 낱말: **{len(wrong)}**" + (f" 보기 {wrong[:5]}" if wrong else " ✓"))
 
-# ── 4. 소리
-say("\n## 4. 소리 (북부 남녀 · 남부 남녀)\n")
-V = {"f": "북부 여", "m": "북부 남", "sf": "남부 여", "sm": "남부 남"}
+# ── 4. 소리 (남부는 2026-09 에 완전히 없앴다 — 북부만 본다)
+say("\n## 4. 소리 (북부 여·남)\n")
+V = {"f": "북부 여", "m": "북부 남"}
 miss = {v: [] for v in V}
 for w in allw:
     k = key(w["vi"])
