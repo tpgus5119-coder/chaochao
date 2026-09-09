@@ -13,7 +13,7 @@
 상업 이용도 변경도 된다. 대신 이것을 바탕으로 만든 자료는 **같은 조건으로 풀어야 한다.**
 그래서 만든 파일 안에 출처와 조건을 함께 적는다 — 지우면 조건 위반이다.
 
-받는 곳: krdict.korean.go.kr → 사전 전체 내려받기 → Json (~/krdict/json/)
+받는 곳: krdict.korean.go.kr → 사전 전체 내려받기 → Json (~/짜오짜오/원본자료/krdict/json/)
 """
 import argparse
 import collections
@@ -23,7 +23,7 @@ import os
 import pathlib
 import re
 
-SRC = pathlib.Path.home() / "krdict" / "json"
+SRC = pathlib.Path.home() / "짜오짜오" / "원본자료" / "krdict" / "json"
 OUT = pathlib.Path(__file__).resolve().parent.parent / "data" / "krdict_kovi.json"
 KEEP_LEVEL = {"초급", "중급"}          # 고급 37,024개는 TOPIK Ⅱ 6급 이상 — 나중 일
 LICENSE = ("국립국어원 한국어기초사전 (krdict.korean.go.kr) · "

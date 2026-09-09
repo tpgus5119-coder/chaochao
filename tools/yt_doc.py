@@ -22,7 +22,7 @@ import re
 import subprocess
 import sys
 
-OUT = pathlib.Path.home() / "yt-조사"
+OUT = pathlib.Path.home() / "짜오짜오" / "yt-조사"
 YTDLP = ["yt-dlp", "--extractor-args", "youtube:player_client=android",
          "--no-warnings", "--ignore-errors"]
 

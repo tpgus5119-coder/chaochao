@@ -21,7 +21,7 @@ import re
 import unicodedata
 
 R = pathlib.Path(__file__).resolve().parent.parent
-SRC = pathlib.Path.home() / "krdict" / "json"
+SRC = pathlib.Path.home() / "짜오짜오" / "원본자료" / "krdict" / "json"
 FILES = ["data/ko_days.json", "data/days.json", "data/news_days.json"]
 
 

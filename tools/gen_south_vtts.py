@@ -15,7 +15,7 @@ R = pathlib.Path(__file__).resolve().parent.parent
 #   코드: github.com/tronghieuit/v-tts  →  deployments/edge/inference.py
 #   모델: huggingface.co/v-tts/v-tts-onnx  (첫 실행 때 스스로 받는다)
 #   목소리: 0=NF(북부여) 1=SF(남부여) 2=NM1(북부남) 3=SM(남부남) 4=NM2
-S = str(pathlib.Path.home() / 'vtts-edge')
+S = str(pathlib.Path.home() / '짜오짜오' / '음성-도구' / 'vtts-edge')
 sys.path.insert(0, str(R / 'tools'))
 from vnsound import segments, f0_trend, tone_of, tone_ok, speech_span, cut
 
@@ -46,7 +46,7 @@ IDX = json.loads((R / 'data' / 'audio_index.json').read_text())
 for sub in ('n', 'slow'):
     (R / f'audio/{voice}/{sub}').mkdir(parents=True, exist_ok=True)
 
-tts = VietnameTTSEdge(model_dir=S + '/model')   # ~/vtts-edge/model — 안 지워지는 곳
+tts = VietnameTTSEdge(model_dir=S + '/model')   # ~/짜오짜오/음성-도구/vtts-edge/model — 안 지워지는 곳
 SR = 24000
 made = fail = healed = 0
 bad = []

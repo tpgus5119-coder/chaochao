@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """한자어가 얼마나 모자란지 잰다.  실행: python3 tools/hanja_gap.py [--list 60]
 
-잣대는 **공단이 공개한 EPS-TOPIK 공개문항**이다(~/eps-공개문제/*.txt,
+잣대는 **공단이 공개한 EPS-TOPIK 공개문항**이다(~/짜오짜오/원본자료/eps-공개문제/*.txt,
 tools/hwp_text.py 로 hwp 에서 뽑아 둔 것). 베껴 쓰지 않는다 — 세기만 한다.
 낱말의 빈도는 사실이고, 사실에는 저작권이 없다.
 
@@ -28,8 +28,8 @@ import baseline_check as B                                       # noqa: E402
 #  · EPS 표준교재 1권 388쪽             — 시험이 **어디서 나오는가**
 #    공단이 직접 밝힌다: "100% 비공개 출제되며 「한국어표준교재」를 바탕으로 한다."
 #    두 자료가 따로 재도 38.9% / 39.5% 로 맞아떨어진다.
-ARCHIVE = pathlib.Path.home() / "Documents" / "시험기출자료고" / "글자화-텍스트"
-OFF = pathlib.Path.home() / "eps-공개문제"
+ARCHIVE = pathlib.Path.home() / "짜오짜오" / "원본자료" / "시험기출자료고" / "글자화-텍스트"
+OFF = pathlib.Path.home() / "짜오짜오" / "원본자료" / "eps-공개문제"
 BOILER = re.compile(r"^(=====.*|고용허가제.*|\d{4} - \d+ -.*|읽기 \(\d+문항\)|"
                     r"듣기 \(\d+문항\)|\[?\d+~\d+\]?.*고르십시오\.?|정답|번호|문항|"
                     r".*정답과 지문.*)$", re.M)
