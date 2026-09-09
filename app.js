@@ -723,7 +723,7 @@ function play(text, slow, dir) {
      소문자 표제어 녹음을 그대로 쓴다(2026-09-09, 위 tapLine 주석 참고). */
   const h = AIDX[text] || AIDX[text.toLowerCase()];
   const d = dir || voiceDir();
-  if (!h) { speakVi(text, false, slow ? .6 : 0, S.voice); return; }
+  if (!h) { speakVi(text, false, slow ? rate() * .7 : 0, S.voice); return; }
   audio.pause();
   audio.onerror = null;
   /* 조금 느리게 튼다 (대표님 지시 2026-08-31) — 원어민 속도가 초보에겐 빠르다.
@@ -734,7 +734,7 @@ function play(text, slow, dir) {
      설정에서 고른 속도를 바탕으로, 느리게는 거기서 한 번 더 늦춘다. */
   audio.playbackRate = slow ? Math.max(.5, rate() * .7) : rate();
   audio.src = `audio/${d}/n/${h}.mp3`;
-  audio.onerror = () => { audio.onerror = null; speakVi(text, false, slow ? .6 : 0, S.voice); };
+  audio.onerror = () => { audio.onerror = null; speakVi(text, false, slow ? rate() * .7 : 0, S.voice); };
   audio.currentTime = 0;
   audio.play().catch(() => { });
 }
@@ -5299,7 +5299,10 @@ function tapLine(vi, cls, o) {
     const w = el('button', 'tapw' + (t.m ? '' : ' nom'));
     w.type = 'button';
     w.textContent = t.w;
-    w.onclick = () => {
+    w.onclick = ev => {
+      // 상자 전체가 '문장 전체 재생' 단추가 됐다(2026-09-09) — 낱말 단추는 그걸 가리지 않게
+      // 이벤트가 상자까지 안 번지게 막는다. 안 그러면 낱말 하나 눌러도 문장 전체가 겹쳐 난다.
+      ev.stopPropagation();
       if (on) on.classList.remove('on');
       on = w; w.classList.add('on');
       const bare = t.w.replace(/[,.!?;:]/g, '').trim();
@@ -6230,7 +6233,7 @@ function wbRow(vi, ko, meta) {
   p1.onclick = () => { const k = recKey(vi); k ? play(k, false) : speakVi(vi, false, 0, S.voice); };
   const p2 = el('button', 'iconbtn', '🐢');
   p2.title = tr('느리게');
-  p2.onclick = () => { const k = recKey(vi); k ? play(k, true) : speakVi(vi, false, .6, S.voice); };
+  p2.onclick = () => { const k = recKey(vi); k ? play(k, true) : speakVi(vi, false, rate() * .7, S.voice); };
   top.append(p1, p2, starBtn(vi, ko || '', vi));
   r.append(top, el('div', 'wbko', esc(ko || '')));
   return r;
@@ -6402,17 +6405,13 @@ function drawCard() {
   }
 
   if (it.k === 'ksent') {
-    const box = el('div', 'wex');
-    const top = el('div', 'wextop');
-    /* 실제 녹음이 있으면 그걸, 없으면만 기기 목소리 — 낱말 하나하나는 녹음이 나오는데
-       '전체 듣기'만 기기 목소리로 나면 한 문장 안에서 목소리가 바뀐 것처럼 들린다
-       (대표님 지적, 2026-09-09: "예문 단어들 목소리 섞여있다"). */
-    const all = iconBtn('sound', '문장 전체 듣기', () => { AIDX[x.vi] ? play(x.vi, false) : speakVi(x.vi); });
-    all.classList.add('wexall'); top.append(all);
-    box.append(top);
+    /* 동그란 소리 단추를 없애고 상자 전체를 누르면 문장이 재생되게 (대표님 지시, 2026-09-09).
+       발음(kr)을 뜻(ko)보다 먼저 보여준다(순서도 지시하신 대로). */
+    const box = el('div', 'wex wexplay');
+    box.onclick = () => { const k = recKey(x.vi); k ? play(k, false) : speakVi(x.vi); };
     box.append(tapLine(x.vi, 'wexvi tapline'));
-    box.append(el('div', 'wexko', esc(x.ko)));
     box.append(el('div', 'wexkr', '[' + esc(x.kr) + ']'));
+    box.append(el('div', 'wexko', esc(x.ko)));
     c.append(box);
   }
 
@@ -6438,14 +6437,11 @@ function drawCard() {
     c.append(el('div', 'rulenote', x.b));
     if (x.tip) c.append(el('div', 'gramtip', '💡 ' + esc(x.tip)));
     x.ex.forEach(e => {
-      const box = el('div', 'wex');
-      const top = el('div', 'wextop');
-      const all = iconBtn('sound', '문장 전체 듣기', () => { AIDX[e.vi] ? play(e.vi, false) : speakVi(e.vi); });
-      all.classList.add('wexall'); top.append(all);
-      box.append(top);
+      const box = el('div', 'wex wexplay');
+      box.onclick = () => { const k = recKey(e.vi); k ? play(k, false) : speakVi(e.vi); };
       box.append(tapLine(e.vi, 'wexvi tapline'));
-      box.append(el('div', 'wexko', esc(e.ko)));
       box.append(el('div', 'wexkr', '[' + esc(e.kr) + ']'));
+      box.append(el('div', 'wexko', esc(e.ko)));
       c.append(box);
     });
   }
@@ -6534,16 +6530,12 @@ function drawCard() {
        그날 대화에서 그 낱말이 든 문장을 찾아 쓴다. */
     const exm = x.ex || exampleFor(L.day, x);
     if (exm) {
-      const eb = el('div', 'wex');
-      const top = el('div', 'wextop');
-      const all = iconBtn('sound', '문장 전체 듣기', () => play(exm.vi, false));
-      all.classList.add('wexall');
-      top.append(all);
-      eb.append(top);
+      const eb = el('div', 'wex wexplay');
+      eb.onclick = () => { const k = recKey(exm.vi); k ? play(k, false) : speakVi(exm.vi); };
       eb.append(tapLine(exm.vi, 'wexvi tapline'));
-      if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
       const ekr = exm.kr;
       if (ekr) eb.append(el('div', 'wexkr', '[' + esc(ekr) + ']'));
+      if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
       c.append(eb);
     }
     c.append(curveArea(x.vi, box));
@@ -9114,7 +9106,7 @@ function sound(t) {
    전에는 기본이 메신저 쌤 성별(S.tch)이었다. 그래서 같은 문장 안에서도
    녹음이 있는 낱말은 고른 목소리로, 없는 낱말은 쌤 목소리로 나서 남녀가 오갔다.
    메신저에서만 쌤 목소리를 쓰고(who='m'/'f' 를 넘긴다), 나머지는 고른 목소리다. */
-function speakVi(t, retry, rate, who) {
+function speakVi(t, retry, spd, who) {
   const g = who === 'm' || who === 'f' ? who : (S.voice === 'm' ? 'm' : 'f');
   if (AIDX[t]) {                                       // 우리 음원이 있으면 그게 낫다
     play(t, false, g);
@@ -9129,12 +9121,15 @@ function speakVi(t, retry, rate, who) {
   if (pick) u.voice = pick;
   else if (vs.length) { u.voice = vs[0]; u.pitch = male ? .65 : 1.15; }
   if (pick && vs.length === 1) u.pitch = male ? .65 : 1.15;
-  u.lang = 'vi-VN'; u.rate = rate || .85;
+  /* 기기 목소리(녹음이 없을 때 대신 쓰는 것)도 설정의 재생속도(기본 0.8배)를 그대로 따른다
+     (대표님 지시, 2026-09-09: "속도도 0.8배속 모두 다 적용했니?") — 예전엔 여기만
+     따로 .85 로 못 박혀 있어서 설정을 바꿔도 기기 목소리는 안 느려졌었다. */
+  u.lang = 'vi-VN'; u.rate = spd ? spd : rate();
   let started = false;
   u.onstart = () => { started = true; };
   speechSynthesis.cancel(); speechSynthesis.speak(u);
   // 크롬·사파리에서 첫 호출이 조용히 씹히는 일이 있다 — 안 시작하면 한 번만 다시
-  if (!retry) setTimeout(() => { if (!started) speakVi(t, true, rate, who); }, 450);
+  if (!retry) setTimeout(() => { if (!started) speakVi(t, true, spd, who); }, 450);
 }
 
 

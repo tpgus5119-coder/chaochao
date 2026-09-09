@@ -759,6 +759,11 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .wex .wexvi{font-weight:700; font-size:17px}
 .wex .wexkr{font-size:12px; color:var(--dim); margin-top:2px}
 .wex .wexko{font-size:13px; color:var(--dim); margin:2px 0 6px}
+/* 동그란 소리 단추 없애고 상자 전체를 누르면 재생되게 (대표님 지시, 2026-09-09) —
+   눌러도 되는 상자라는 걸 커서·눌림 반응으로 알려준다. 안의 낱말 단추는 각자 따로 논다
+   (tapw 자체 hover는 아래 낱말별 규칙이 이미 처리). */
+.wexplay{cursor:pointer}
+.wexplay:active{background:var(--surface-2)}
 
 /* 통계 4칸 */
 .stats{flex-wrap:wrap}
