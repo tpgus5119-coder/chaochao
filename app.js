@@ -732,8 +732,13 @@ function play(text, slow, dir) {
      "원래 속도로 재생하는 버튼과, 좀 느리게 재생하는 버튼을 만들어 주라").
      전에는 slow 를 받아 놓고 쓰지 않아 두 단추가 같은 속도로 났다.
      설정에서 고른 속도를 바탕으로, 느리게는 거기서 한 번 더 늦춘다. */
-  audio.playbackRate = slow ? Math.max(.5, rate() * .7) : rate();
+  /* **순서가 진짜 원인이었다** (대표님 지적, 2026-09-09: "0.8배속인데 존나 빠르게 느껴짐").
+     src 를 나중에 넣으면 브라우저(특히 아이폰 사파리)가 새 소리를 불러오면서
+     playbackRate 를 조용히 1배로 되돌린다 — 그래서 설정을 0.8로 바꿔도 실제로는
+     계속 1배로 나고 있었다. 이 파일 다른 다섯 곳(예: 8783줄)은 이미 src 먼저였는데
+     제일 많이 쓰이는 이 자리만 거꾸로였다. 순서만 바꾼다. */
   audio.src = `audio/${d}/n/${h}.mp3`;
+  audio.playbackRate = slow ? Math.max(.5, rate() * .7) : rate();
   audio.onerror = () => { audio.onerror = null; speakVi(text, false, slow ? rate() * .7 : 0, S.voice); };
   audio.currentTime = 0;
   audio.play().catch(() => { });
