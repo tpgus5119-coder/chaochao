@@ -33,13 +33,16 @@ say(f"- 이름 없는 날: **{len(noth)}**" + (f" {[x.get('day') for x in noth][
 th = Counter((x.get("theme") or "").strip() for x in days)
 dup = [t for t, c in th.items() if c > 1]
 say(f"- 이름이 겹치는 날: **{len(dup)}**" + (f" {dup[:6]}" if dup else " ✓"))
-# 차례 — day 값이 커지는가
+# 차례 — 실제 학습 순서는 day(옛 번호, 뒤섞여 있어도 정상)가 아니라 n(진짜 차례)이다.
+# app.js renderDays()/courseQueue()가 n으로 정렬해서 쓴다 (2026-09-09부터).
+ns = [x.get("n") for x in days if isinstance(x.get("n"), (int, float))]
+say(f"- 학습 차례(n)가 1부터 빈틈없이 이어지나: "
+    + ("✓" if sorted(ns) == list(range(1, len(ns) + 1)) else "**아니오** — 빠지거나 겹친다"))
 ds = [x.get("day") for x in days]
 num = [d for d in ds if isinstance(d, (int, float))]
-say(f"- 날 번호가 차례대로인가: {'✓' if num == sorted(num) else '**아니오** — 뒤섞여 있다'}")
 bad_seq = [(a, b) for a, b in zip(num, num[1:]) if b < a]
 if bad_seq:
-    say(f"  - 거꾸로 가는 곳 {len(bad_seq)}군데: {bad_seq[:5]}")
+    say(f"  - (참고) 옛 day 번호는 {len(bad_seq)}군데 거꾸로 간다 — n이 진짜 차례라 정상이다")
 
 # ── 2. 낱말이 제 날에 있나 (한 날 = 한 주제)
 say("\n## 2. 낱말 수와 차례\n")
@@ -62,7 +65,7 @@ say("\n## 3. 뜻과 발음\n")
 allw = [w for x in days for w in (x.get("words") or [])]
 noko = [w["vi"] for w in allw if not (w.get("ko") or "").strip()]
 say(f"- 뜻이 빈 낱말: **{len(noko)}**" + (f" {noko[:6]}" if noko else " ✓"))
-badko = [w["vi"] for w in allw if re.search(r"[^가-힣ㄱ-ㆎ0-9 ·()~,./%\-·]", w.get("ko") or "")]
+badko = [w["vi"] for w in allw if re.search(r"[^가-힣ㄱ-ㆎ0-9a-zA-Z ·()~,./%\-·?!]", w.get("ko") or "")]
 say(f"- 뜻에 한글 아닌 글자: **{len(badko)}**" + (f" {badko[:6]}" if badko else " ✓"))
 wrong = [(w["vi"], w.get("kr_read"), vi_kr.word(w["vi"]))
          for w in allw if w.get("kr_read") and vi_kr.word(w["vi"])
