@@ -417,6 +417,14 @@ button.song{
   padding:16px; margin-bottom:14px; display:flex; flex-direction:column;
 }
 .roadmap:empty{display:none; border:none; padding:0; margin:0}
+
+/* 성과·분석 — 예전엔 '내 정보' 화면 안에서만 보였다. 홈으로 옮기며(2026-09-09)
+   이웃한 .progress·.roadmap과 같은 카드 꼴로 맞춘다. */
+.achieve, .analysis{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg);
+  padding:16px; margin-bottom:14px;
+}
+.achieve:empty, .analysis:empty{display:none; border:none; padding:0; margin:0}
 .rmnode{position:relative; display:flex; align-items:flex-start; gap:12px; padding:0 0 22px 0}
 .rmnode:last-child{padding-bottom:0}
 /* 동그라미를 잇는 세로줄 — 마지막 칸만 뺀다 */

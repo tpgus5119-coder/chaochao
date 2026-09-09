@@ -2397,7 +2397,6 @@ function renderAwards() {
     b.append(qb);
   }
 
-  const got = BADGES.filter(x => x.test()).length;
   const nm = el('div', 'planrow');
   nm.append(el('span', 'pk', '이름'), el('span', 'pv', esc(S.nick || '이름없음')));
   const ch = el('button', 'ghost sm', '바꾸기');
@@ -2427,18 +2426,8 @@ function renderAwards() {
   });
   b.append(st);
 
-  const ana = el('div');
-  renderAnalysis(ana, 'week');
-  b.append(ana);
-  b.append(el('p', 'lede', `업적 <b>${got}</b> / ${BADGES.length}`));
-  BADGES.forEach(bg => {
-    const on = bg.test();
-    const row = el('div', 'awrow' + (on ? ' on' : ''));
-    row.append(el('span', 'awi', bg.icon),
-               el('span', 'awn', esc(bg.name)),
-               el('span', 'awh', on ? '달성 ✔' : esc(bg.how)));
-    b.append(row);
-  });
+  // 성과·분석은 홈으로 옮겼다(renderBadges·renderAnalysis, 2026-09-09 지시) —
+  // '내 정보'는 이제 계정·설정만 보여준다.
   if (S.admin) {
     const ad = el('button', 'ghost', '운영 현황 보기');
     ad.style.width = '100%'; ad.style.marginTop = '10px';
@@ -5035,6 +5024,11 @@ function renderHome() {
   prow('내일 복습', !tmr.length ? '없음' : tmr.length + tr('개'),
        tmr.length ? 'next' : 'none', null);
 
+  // 성과·분석 — 예전엔 '내 정보'에 묻혀 있어야 찾아 들어가야 했다. 이제 홈에 바로
+  // 보인다(대표님 지시, 2026-09-09: "성과들. 그리고 그 밑에 분석들").
+  renderBadges($('#achieve'));
+  renderAnalysis($('#analysis'), 'week');
+
   // 세로 지도 — 최근 끝낸 몇 과 + 지금(또는 다음) + 그 다음 몇 과. 죄다 실제 과정 자료다.
   const rmDone = recentDoneUnits(curFn ? 1 : 2);
   const rmNext = queue.slice(curFn ? 1 : 0, (curFn ? 1 : 0) + 2)
@@ -5043,6 +5037,22 @@ function renderHome() {
   renderRoadmap($('#roadmap'), [...rmDone, ...rmCur, ...rmNext], curKey);
 
   show('home', '짜오짜오', false);
+}
+
+/* 업적 목록 — 예전엔 '내 정보' 화면 안에서만 보였다. 홈으로 옮기면서
+   공용 함수로 뺐다(2026-09-09) — renderAwards()는 이제 이걸 안 부른다. */
+function renderBadges(host) {
+  host.textContent = '';
+  const got = BADGES.filter(x => x.test()).length;
+  host.append(el('p', 'lede', `업적 <b>${got}</b> / ${BADGES.length}`));
+  BADGES.forEach(bg => {
+    const on = bg.test();
+    const row = el('div', 'awrow' + (on ? ' on' : ''));
+    row.append(el('span', 'awi', bg.icon),
+               el('span', 'awn', esc(bg.name)),
+               el('span', 'awh', on ? '달성 ✔' : esc(bg.how)));
+    host.append(row);
+  });
 }
 
 /* 학습 과정 목록 — 트랙별로 보여준다 */
@@ -9269,12 +9279,17 @@ function telex(word, ch) {
    복습 안에서 방식만 바꾸려 해도 처음부터 다시 들어가야 했다. */
 $('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
 $('#goMe').onclick = renderAwards;
+/* 홈 단추(우측 상단 아이콘) · 뒤로가기가 끝까지 갈 때 — **늘 대시보드**를 보여준다.
+   전에는 dailyFlowEntry()를 불러 오늘 할 게 있으면 그걸로 바로 들어가 버렸다.
+   그러면 "하루5분"과 다를 게 없어서, 대표님이 뒤로가기 끝에서 만나는 대시보드를
+   "또 딴 홈화면"으로 느꼈다(2026-09-09 지적). 오늘 학습은 아래 탭 '하루5분'이
+   맡고, 이 단추·뒤로가기는 늘 renderHome()으로 고정한다. */
 $('#goHome').onclick = async () => {
   // 시험·퀴즈 도중이면 한 번 묻는다 — 눌러 놓고 답이 날아가면 그게 더 나쁘다
   //   브라우저 confirm 은 설치형 PWA 에서 막히는 폰이 있다 → 앱이 그리는 창으로 (2026-08-30)
   if (!$('#quiz').hidden && Q && Q.i > 0 &&
       !await askYN(tr('풀던 문제를 그만두고 홈으로 갈까요?'), '홈으로')) return;
-  dailyFlowEntry();
+  renderHome();
 };
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.
