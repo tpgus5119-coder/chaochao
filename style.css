@@ -1907,7 +1907,11 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .ghost.slow{margin-left:8px}
 
 /* ── 인사말 카드 (Stitch 시안 재현, 사진 대신 아이콘) ── */
+/* #plan 이 .plancell 넉 장을 2열 그리드로 놓느라 grid-template-columns:1fr 1fr 인데,
+   인사말 카드도 같은 #plan 의 자식이라 그 좁은 한 칸에 낑겨 글자가 세로로 한 자씩
+   쪼개져 나오고 있었다(2026-09-09 스크린샷 검수에서 발견) — 두 칸을 다 쓰게 편다. */
 .kogreet{
+  grid-column:1 / -1;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
   background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg,14px);
   padding:16px; margin-bottom:12px;
