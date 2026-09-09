@@ -2137,13 +2137,10 @@ function acctForm(gate, mode) {
     // 이 앱은 베트남어 전용으로 고정한다(2026-09-07) — 국적과 상관없이 배울 언어는
     // 하나뿐이라 고를 게 없다. 한국어 코스는 별개 앱으로 분리됐다.
     lrnW.sel = mkSel([['vi', '베트남어']]);
-    const drawReg = () => {
-      regW.textContent = '';
-      if (lrnW.sel.val() === 'vi') {                 // 남북은 베트남어를 배울 때만 뜻이 있다
-        regW.sel = mkSel([['n', '북부 (하노이)'], ['s', '남부 (호찌민)']]);
-        regW.append(el('p', 'note', '배울 말씨'), regW.sel);
-      }
-    };
+    // 남부 목소리를 완전히 없애서(대표님 지시 2026-09-09) 이제 고를 말씨가 하나뿐이다 —
+    // 물어볼 필요가 없어져 이 칸 자체를 지웠다. regW는 비워 둔 채 그대로 두어(위 2164줄)
+    // 다른 코드를 안 건드린다.
+    const drawReg = () => { regW.textContent = ''; };
     lrnW.sel.addEventListener('pick', drawReg);
     drawReg();
   };
@@ -2338,9 +2335,7 @@ function renderAwards() {
   const b = $('#awardBody');
   b.textContent = '';
 
-  // 지역 — 배치가 정해지면 여기서 바꾼다
-  const rg = pickRow('지역', [['n', '북부 (하노이)'], ['s', '남부 (호찌민)']], S.region || 'n',
-    v => { S.region = v; save(); drawRegion(); renderAwards(); });
+  // 지역 선택은 없앴다 (대표님 지시 2026-09-09: 남부 목소리 완전히 제거) — 북부로 고정.
 
   /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
      핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
@@ -2402,7 +2397,7 @@ function renderAwards() {
     nr.append(nb);
     b.append(nr);
   }
-  b.append(nm, rg);
+  b.append(nm);
   b.append(pickRow('하루 분량',
     [[1, '하루 한 레슨'], [2, '하루 두 레슨']], S.pace || 1,
     v => { S.pace = v; save(); renderAwards(); }));
@@ -6472,15 +6467,7 @@ function drawCard() {
     c.append(el('div', 'ko', esc(x.ko)));
     c.append(tapLine(x.vi));                 // 낱말을 누르면 소리 + 뜻
     c.append(el('div', 'rulenote', esc(x.note)));
-    if (L.day.day === 'R4') {          // 남부 소리 수업은 카드에서 바로 남북을 맞대 듣는다
-      const cmp = el('div', 'sound');
-      const bn = el('button', 'ghost', '북부 소리');
-      bn.onclick = () => play(x.vi, false, S.voice);
-      const bs = el('button', 'ghost', '남부 소리');
-      bs.onclick = () => play(x.vi, false, S.voice === 'm' ? 'sm' : 'sf');
-      cmp.append(bn, bs);
-      c.append(cmp);
-    }
+    // R4(남부 소리 비교 수업)를 없애면서 이 북부/남부 맞대 듣기 버튼도 같이 지웠다.
     c.append(curveArea(x.vi, rbox));
   }
 
@@ -8390,20 +8377,8 @@ const RULES = [
     quiz: [{ q: '물건 두 개 — 알맞은 쪽은?', opts: ['hai cái', 'hai con'], a: 0, say: 'hai cái' },
            { q: '동물 세 마리는?', opts: ['ba con', 'ba cái'], a: 0, say: 'ba con' },
            { q: '기계 한 대는?', opts: ['một chiếc', 'một cái'], a: 0, say: 'một chiếc' }] },
-  { key: 'R4', title: '남부 소리',
-    intro: '남부(호찌민 쪽)는 글은 완전히 같고 소리가 다릅니다. 위의 북부 버튼을 눌러 남부 소리로 바꿔 비교하며 들어 보세요.',
-    cards: [
-      { vi: 'dạ', ko: '네 (공손)', kr: '북부 자 → 남부 야',
-        tones: tns('dạ:nặng'), note: 'd · gi · v 가 남부에서 y 이 소리가 된다' },
-      { vi: 'ba', ko: '아빠 (남부)', kr: '바',
-        tones: tns('ba:ngang'), note: '북부 bố → 남부 ba. 엄마도 mẹ → má' },
-      { vi: 'mắc', ko: '비싸다 (남부)', kr: '막',
-        tones: tns('mắc:sắc'), note: '북부 đắt → 남부 mắc' },
-      { vi: 'ngàn', ko: '천 1,000 (남부)', kr: '응안',
-        tones: tns('ngàn:huyền'), note: '북부 nghìn → 남부 ngàn. 성조도 hỏi·ngã가 하나로 합쳐진다' }],
-    quiz: [{ q: '남부에서 "아빠"는?', opts: ['ba', 'bố'], a: 0, say: 'ba' },
-           { q: '남부에서 "비싸다"는?', opts: ['mắc', 'đắt'], a: 0, say: 'mắc' },
-           { q: '남부에서 "천(1000)"은?', opts: ['ngàn', 'nghìn'], a: 0, say: 'ngàn' }] },
+  /* R4('남부 소리' 비교 수업)는 삭제함 (대표님 지시 2026-09-09: 남부 목소리 어플에서 완전히
+     제거) — 북부/남부를 맞대 듣게 하는 게 이 수업의 전부였는데, 남부 음성 자체가 없어졌다. */
 
   /* 겹모음 — 학원 1강에서 다룬 것. 모음 두셋이 붙어 한 덩어리로 소리 난다.
      낱글자만 알면 mưa 를 '므+아'로 끊어 읽게 된다. */

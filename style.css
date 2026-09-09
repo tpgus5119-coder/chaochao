@@ -148,17 +148,23 @@ button:active{transform:scale(.98)}
 .pager{display:flex; align-items:center; gap:12px; margin-top:18px}
 .pager #pos{flex:1; text-align:center; color:var(--dim); font-size:14px; font-variant-numeric:tabular-nums}
 
-/* 퀴즈 */
-.bar{height:5px; background:var(--card); border-radius:99px; overflow:hidden; margin-bottom:20px}
-.bar div{height:100%; background:var(--accent); width:0; transition:.25s}
+/* 퀴즈 — 진행바·선택지는 스티치 디자인 시스템 실제 수치를 그대로 옮김(2026-09-09):
+   진행바 8px/선 색/4px, 선택지 최소 52px에 상태별 2px 테두리 + 옅은 배경 틴트. */
+.bar{height:8px; background:var(--line); border-radius:4px; overflow:hidden; margin-bottom:20px}
+.bar div{height:100%; background:var(--accent); width:0; border-radius:4px; transition:.25s}
 .q{font-size:15px; color:var(--dim); margin-bottom:6px}
 .qmain{font-size:30px; font-weight:700; margin:6px 0 20px; text-align:center; word-break:keep-all}
 .opts{display:grid; gap:9px}
 .opts button{
-  background:var(--card); color:var(--fg); padding:15px 16px; text-align:left; font-size:16px;
+  background:var(--card); color:var(--fg); padding:14px 16px; text-align:left; font-size:16px;
+  min-height:52px; border-radius:12px; border:1px solid var(--line);
 }
-.opts button[data-r="ok"]{border-color:var(--ok); color:var(--ok); font-weight:650}
-.opts button[data-r="no"]{border-color:var(--bad); color:var(--bad)}
+.opts button[data-s="sel"]{border-width:2px; border-color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 4%, var(--card))}
+.opts button[data-r="ok"]{border-width:2px; border-color:var(--ok); color:var(--fg); font-weight:650;
+  background:color-mix(in srgb, var(--ok) 6%, var(--card))}
+.opts button[data-r="no"]{border-width:2px; border-color:var(--bad); color:var(--fg);
+  background:color-mix(in srgb, var(--bad) 6%, var(--card))}
 .result{text-align:center; padding:30px 0}
 .result .n{font-size:44px; font-weight:700}
 /* 실제 시험 점수와 급 — 맞힌 개수(.n)보다 이쪽이 학습자에게 더 중요한 숫자다.
