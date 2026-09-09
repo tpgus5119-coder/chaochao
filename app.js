@@ -58,6 +58,10 @@ const now = () => Date.now();
 
 /* ---------- 데이터 ---------- */
 let ALL = [], AIDX = {}, DRILL = [], VDRILL = [];
+/* 녹음 찾기 — 대소문자 안 가린다. 문장 첫 낱말(Đây, Bạn...)은 대문자로 들어오는데
+   녹음은 소문자 표제어로만 있어서, 이 한 곳을 통하지 않으면 문장마다 첫 낱말만
+   기기 목소리로 나서 "목소리가 섞인다"가 된다(2026-09-09 원인 확정). */
+const recKey = t => AIDX[t] ? t : (AIDX[t.toLowerCase()] ? t.toLowerCase() : null);
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 /* ── 화면 언어 (1단계) ────────────────────────────────────────────
@@ -715,7 +719,9 @@ const voiceDir = () => S.voice;
    전에는 남부 파일이 없으면 북부 녹음으로 슬쩍 바꿔 틀었다 — 그래서 남녀·남북이 섞여 들렸다.
    이제 남부 파일이 없으면 기기 목소리로 낸다(성별은 맞춘다). 없는 소리는 내지 않는다. */
 function play(text, slow, dir) {
-  const h = AIDX[text];
+  /* 대소문자 구분 없이 찾는다 — 문장 첫머리라 대문자로 들어온 낱말(Đây, Bạn...)도
+     소문자 표제어 녹음을 그대로 쓴다(2026-09-09, 위 tapLine 주석 참고). */
+  const h = AIDX[text] || AIDX[text.toLowerCase()];
   const d = dir || voiceDir();
   if (!h) { speakVi(text, false, slow ? .6 : 0, S.voice); return; }
   audio.pause();
@@ -5297,9 +5303,14 @@ function tapLine(vi, cls, o) {
       on = w; w.classList.add('on');
       const bare = t.w.replace(/[,.!?;:]/g, '').trim();
       /* **고른 목소리로만** 낸다 (대표님 지적, 2026-08-30) —
-         남부 남자를 골랐으면 예문 안 낱말도 남부 남자여야 한다.
-         voiceDir() 이 지역과 남녀를 함께 정한다. */
-      if (AIDX[bare]) play(bare, false, voiceDir());
+         voiceDir() 이 목소리를 정한다.
+         **문장 첫 낱말은 대문자로 시작한다**(Đây, Bạn, Tôi...). 그런데 낱말 녹음은
+         전부 소문자 표제어로만 있다(AIDX['đây']는 있어도 AIDX['Đây']는 없음).
+         그래서 거의 모든 문장의 첫 낱말만 기기 목소리로 나서 "목소리가 섞인다"는
+         소리를 들었다(대표님이 여러 번 지적, 2026-09-09에 원인 확정) — 대소문자
+         구분 없이 찾는다. */
+      const key = recKey(bare);
+      if (key) play(key, false, voiceDir());
       else speakVi(bare, false, 0, S.voice);
       info.textContent = '';
       info.append(el('b', null, esc(bare)));
@@ -6195,7 +6206,7 @@ function dictEntry() {
       if (kr) row.append(el('span', 'dkr', '[' + esc(kr) + ']'));
       row.append(el('span', 'dko', esc(x.ko)));
       if (x.ex) row.append(el('span', 'dex', esc(x.ex.vi) + ' — ' + esc(x.ex.ko)));
-      row.onclick = () => { AIDX[x.vi] ? play(x.vi, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
+      row.onclick = () => { const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
       out.append(row);
     });
     if (hit.length > 60) out.append(el('p', 'note', tr('앞 60개만 보입니다 — 더 적어 보세요')));
@@ -6221,10 +6232,10 @@ function wbRow(vi, ko, meta) {
   if (meta) top.append(el('span', 'exmeta', meta));
   const p1 = el('button', 'iconbtn', '🔊');
   p1.title = tr('보통 속도');
-  p1.onclick = () => (AIDX[vi] ? play(vi, false) : speakVi(vi, false, 0, S.voice));
+  p1.onclick = () => { const k = recKey(vi); k ? play(k, false) : speakVi(vi, false, 0, S.voice); };
   const p2 = el('button', 'iconbtn', '🐢');
   p2.title = tr('느리게');
-  p2.onclick = () => (AIDX[vi] ? play(vi, true) : speakVi(vi, false, .6, S.voice));
+  p2.onclick = () => { const k = recKey(vi); k ? play(k, true) : speakVi(vi, false, .6, S.voice); };
   top.append(p1, p2, starBtn(vi, ko || '', vi));
   r.append(top, el('div', 'wbko', esc(ko || '')));
   return r;
@@ -6423,7 +6434,8 @@ function drawCard() {
         it2.type = 'button';
         it2.append(el('b', null, esc(w)), el('span', null, esc(m)));
         it2.onclick = () => { const t = w.replace(/[.…]/g, '').trim();
-          if (AIDX[t]) play(t, false, voiceDir()); else speakVi(t, false, 0, S.voice); };
+          const key = recKey(t);
+          if (key) play(key, false, voiceDir()); else speakVi(t, false, 0, S.voice); };
         kb.append(it2);
       });
       c.append(kb);
@@ -6500,7 +6512,7 @@ function drawCard() {
         b2.append(el('b', null, esc(a2.vi)));
         const kr = a2.kr;
         if (kr) b2.append(el('span', 'altkr', '[' + esc(kr) + ']'));
-        b2.onclick = () => { AIDX[a2.vi] ? play(a2.vi, false) : speakVi(a2.vi); };
+        b2.onclick = () => { const k = recKey(a2.vi); k ? play(k, false) : speakVi(a2.vi); };
       });
       c.append(box);
     }
