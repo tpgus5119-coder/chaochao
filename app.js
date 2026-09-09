@@ -697,12 +697,15 @@ const audio = new Audio();
    다 해줘. 재생 가능하도록." 느린 소리를 **따로 만들지 않는다.** playbackRate 는
    높낮이를 지켜 주므로 성조가 안 뭉개지고, 파일이 한 벌이면 저장소도 반이다
    (전에 느린 파일 16,000개로 1GB에 닿았던 적이 있다). */
-const RATES = [['1', '보통'], ['0.7', '느리게']];
-const rate = () => Number(S.rate || 1);
+/* 기본 재생 속도 자체를 0.8배로 (대표님 지시, 2026-09-09) — 원어민 속도(1배)가
+   초보에게 너무 빠르다. '느리게' 단추는 이 기본값보다 항상 더 느려야 한다
+   (아래 play()의 rate()*.7 계산이 그걸 보장한다 — 0.8*.7=0.56, 0.6*.7=0.42). */
+const RATES = [['0.8', '보통'], ['0.6', '느리게']];
+const rate = () => Number(S.rate || 0.8);
 const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 둔다)
 
-/* 지역(북부/남부) × 목소리(여/남) 에 따른 소리 폴더. 남부도 여·남 둘 다 있다. */
-const voiceDir = () => S.region === 's' ? (S.voice === 'm' ? 'sm' : 'sf') : S.voice;
+/* 목소리(여/남) 에 따른 소리 폴더. 남부는 완전히 없앴다(대표님 지시, 2026-09-09). */
+const voiceDir = () => S.voice;
 
 /* 느린 소리 — 파일이 있으면 그것을, 없으면 **보통 소리를 늘려서** 들려준다.
    늘리기(playbackRate)는 높낮이를 지켜 주므로 성조가 뭉개지지 않는다.
@@ -1411,14 +1414,14 @@ function sayTip(target, heard) {
 
 /* ---------- 화면 ---------- */
 const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'week', 'nick', 'sub', 'exam'];
-/* 위 북부남부·여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다 */
+/* 위 여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다.
+   북부/남부 토글은 없앴다(대표님 지시, 2026-09-09) — 버튼 자체를 index.html에서 지웠다. */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
 const NAV = [];                      // 뒤로가기 발자국 (홈에 오면 비운다)
 const dive = fn => { NAV.push(fn); };
 function topBtns() {
   const need = SNDV.includes(CURV);
-  $('#region').hidden = !need;
   $('#voice').hidden = !need;
   $('#wxnow').hidden = CURV !== 'home';          // 첫 화면에서만
 }
@@ -1487,7 +1490,7 @@ function studyHubEntry() {
 let WXNOW = { at: 0, t: null, code: null, city: null };
 function drawWxNow() {
   const b = $('#wxnow');
-  const c = S.region === 's' ? 's' : 'n';
+  const c = 'n';   // 남부 없앰 — 항상 북부(하노이)
   const now = new Date();
   // 베트남은 한국보다 2시간 느리다 (UTC+7 / UTC+9)
   const vn = new Date(now.getTime() - 2 * 3600e3);
@@ -2019,7 +2022,6 @@ async function socialFinish(provider, sub, email, nick) {
     if (act === 'signup') { S.nat = 'kr'; S.learn = 'vi'; S.email = email; save(); }
     if (act === 'login' && j.prof) {
       S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
-      if (j.prof.reg) S.region = j.prof.reg; drawRegion();
     }
     if (act === 'login') { S.uid = j.uid; if (j.nick) S.nick = j.nick; }
     S.acct = { id, tok: j.tok || '' }; save();
@@ -2181,14 +2183,12 @@ function acctForm(gate, mode) {
         ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '',
             ui: uiW.val(), email: em } : {};
       const j = await cCall(Object.assign({ act, id: i, pw: p }, prof));
-      if (act === 'signup' && prof.reg) { S.region = prof.reg; drawRegion(); }
       if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn; S.email = em; save();
         if (prof.ui) S.ui = prof.ui;              // 고른 대로 — 국적으로 짐작하지 않는다
       }
       if (act === 'login' && j.prof) {
         S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
         if (j.prof.ui) S.ui = j.prof.ui;
-        if (j.prof.reg) S.region = j.prof.reg;
         drawRegion();
       }
       if (act === 'login') {
@@ -5188,7 +5188,7 @@ let EXG = {};
 fetch('data/exgloss.json').then(r => r.json()).then(j => { EXG = j; GVOC = null; GKR = null; }).catch(() => {});
 const exgKo = k => { const v = EXG[k]; return v && (typeof v === 'string' ? v : v.ko); };
 const exgKr = k => { const v = EXG[k]; return v && typeof v === 'object'
-  ? (S.region === 's' ? (v.krs || v.kr) : v.kr) : ''; };
+  ? v.kr : ''; };
 let GVOC = null;
 function glossOf(vi) {
   if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
@@ -5212,24 +5212,21 @@ function glossOf(vi) {
    glossOf 는 뜻을 못 찾은 낱말을 버리는데(.filter), 그러면 문장 밑 뜻줄에서
    낱말이 통째로 사라져 "왜 이건 없지?" 하게 된다. 문장을 누를 수 있게 만들 때는
    빠짐없이 다 있어야 하므로 이쪽을 쓴다. */
-/* 한글 소리를 **지금 고른 지역에 맞게** 고른다 (대표님 지시, 2026-08-30).
-   전에는 곳곳에서 kr_read(북부)를 그냥 썼다 — 남부를 골라도 북부 발음이 떴다.
-   낱말마다 kr(북부)·krs(남부)가 붙어 있다(tools/vi_kr.py). 여기 한 곳에서만 고른다. */
-/* 지역에 맞는 발음 표기를 고르는 **한 자리**.
-   자료마다 이름이 다르다 — 새 과정은 kr/krs, 옛 days.json 은 kr_read/kr_south.
-   둘 다 보지 않으면 남부를 골라도 북부 발음이 나온다 (2026-08-30 검수에서 드러남). */
+/* 한글 발음 표기를 고르는 한 자리 — 자료마다 이름이 다르다
+   (새 과정은 kr_read, 옛 days.json은 kr). 남부(krs/kr_south)는 완전히 없앴다
+   (대표님 지시, 2026-09-09). */
 function krShow(w) {
   if (!w) return '';
   if (typeof w === 'string') return w;
   const n = w.kr_read || w.kr || '';
-  return (S.region === 's' ? (w.krs || w.kr_south || n) : n) || '';
+  return n || '';
 }
 
 /* 낱말 → 한글 소리(kr_read) 찾기표. 예문 안의 낱말을 눌렀을 때
    뜻만이 아니라 **어떻게 읽는지**도 같이 보여 주려고 만든다 (대표님 지시, 2026-08-30). */
 let GKR = null, GKRR = null;
 function krOf(w) {
-  const want = S.region === 's' ? 'krs' : 'kr';
+  const want = 'kr';
   if (GKRR !== want) { GKR = null; GKRR = want; }        // 지역을 바꾸면 표를 다시 만든다
   if (!GKR) { GKR = {}; allWords().forEach(x => { const k = x.vi.toLowerCase();
     const v = krShow(x);
@@ -6409,7 +6406,7 @@ function drawCard() {
     box.append(top);
     box.append(tapLine(x.vi, 'wexvi tapline'));
     box.append(el('div', 'wexko', esc(x.ko)));
-    box.append(el('div', 'wexkr', '[' + esc(S.region === 's' ? (x.krs || x.kr) : x.kr) + ']'));
+    box.append(el('div', 'wexkr', '[' + esc(x.kr) + ']'));
     c.append(box);
   }
 
@@ -6441,7 +6438,7 @@ function drawCard() {
       box.append(top);
       box.append(tapLine(e.vi, 'wexvi tapline'));
       box.append(el('div', 'wexko', esc(e.ko)));
-      box.append(el('div', 'wexkr', '[' + esc(S.region === 's' ? (e.krs || e.kr) : e.kr) + ']'));
+      box.append(el('div', 'wexkr', '[' + esc(e.kr) + ']'));
       c.append(box);
     });
   }
@@ -6501,7 +6498,7 @@ function drawCard() {
         const b2 = el('button', 'altw');
         b2.type = 'button';
         b2.append(el('b', null, esc(a2.vi)));
-        const kr = S.region === 's' ? (a2.krs || a2.kr) : a2.kr;
+        const kr = a2.kr;
         if (kr) b2.append(el('span', 'altkr', '[' + esc(kr) + ']'));
         b2.onclick = () => { AIDX[a2.vi] ? play(a2.vi, false) : speakVi(a2.vi); };
       });
@@ -6535,7 +6532,7 @@ function drawCard() {
       eb.append(top);
       eb.append(tapLine(exm.vi, 'wexvi tapline'));
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
-      const ekr = S.region === 's' ? (exm.krs || exm.kr) : exm.kr;
+      const ekr = exm.kr;
       if (ekr) eb.append(el('div', 'wexkr', '[' + esc(ekr) + ']'));
       c.append(eb);
     }
@@ -9110,7 +9107,7 @@ function sound(t) {
 function speakVi(t, retry, rate, who) {
   const g = who === 'm' || who === 'f' ? who : (S.voice === 'm' ? 'm' : 'f');
   if (AIDX[t]) {                                       // 우리 음원이 있으면 그게 낫다
-    play(t, false, S.region === 's' ? (g === 'm' ? 'sm' : 'sf') : g);
+    play(t, false, g);
     return;
   }
   const u = new SpeechSynthesisUtterance(t);
@@ -9306,7 +9303,7 @@ const WXCLIMATE = {   // 월별 평균 기온(도) / 강수량(mm) — 기상 �
 const WXCITY = { n: { name: '하노이 (북부)', lat: 21.03, lon: 105.85 },
                  s: { name: '호찌민 (남부)', lat: 10.82, lon: 106.63 } };
 function showWx(city) {
-  const c = (city === 'n' || city === 's') ? city : (S.region === 's' ? 's' : 'n');
+  const c = (city === 'n' || city === 's') ? city : 'n';
   show('wx', '날씨', true);
   const b = $('#wxBody');
   b.textContent = '';
@@ -10015,17 +10012,12 @@ $('#voice').onclick = () => {
   if (!$('#learn').hidden && L) drawCard();
 };
 
-/* 북부(하노이) ↔ 남부(호찌민) 소리 전환.
-   대표님 지시(2026-09-09): "남부 베트남 소리 남녀 다 없애라. 일단은 북부 남녀만 남겨라"
-   — 남부 소리 검수(tts_check)에서 닮음 점수가 크게 떨어지는 것들이 나와서, 품질을 다시
-   잡을 때까지 남부 선택 자체를 없앤다. 버튼은 index.html에서 hidden 처리했고,
-   여기서는 예전에 남부를 골라 뒀던 사람도 강제로 북부로 되돌린다. */
+/* 남부(호찌민) 소리는 완전히 없앴다 (대표님 지시, 2026-09-09) — 버튼도 index.html에서
+   지웠고 코드에서도 자리를 뺐다. 이 함수 이름만 옛 흔적으로 남아 있다. */
 function drawRegion() {
-  if (S.region === 's') { S.region = 'n'; save(); }
   drawVoiceBtn();
   topBtns();
 }
-// 남부 선택 버튼은 hidden 처리(위 drawRegion 주석 참고) — onclick 없음.
 
 /* ---------- 다른 사람들의 평균 ----------
    등수는 보여주지 않는다. 견줄 것은 '내가 몇 등이냐'가 아니라
