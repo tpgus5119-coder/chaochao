@@ -6466,6 +6466,10 @@ function drawCard() {
       const mic = iconBtn('mic', '따라 말하기', null);
       mic.onclick = () => toggleRec(x.vi, mic, rbox);
       row.append(mic);
+    } else {
+      /* 마이크 단추를 그냥 안 그리기만 하면 대표님 표현대로 "아예 반응없음"이 된다
+         — 왜 안 되는지도 안 보인다(2026-09-09 지적). 이유를 보여준다. */
+      rbox.append(el('div', 'cmpnote', '이 기기·브라우저에서는 녹음을 못 씁니다 — 소리 내어 따라 말해만 보세요.'));
     }
     c.append(row);
     c.append(el('div', 'ko', esc(x.ko)));
@@ -6493,6 +6497,8 @@ function drawCard() {
       const mic = iconBtn('mic', '따라 말하기', null);
       mic.onclick = () => toggleRec(x.vi, mic, box);
       row.append(mic);
+    } else {
+      box.append(el('div', 'cmpnote', '이 기기·브라우저에서는 녹음을 못 씁니다 — 소리 내어 따라 말해만 보세요.'));
     }
     row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
     c.append(row);
