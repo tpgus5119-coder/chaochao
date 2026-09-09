@@ -1432,16 +1432,17 @@ function topBtns() {
   $('#wxnow').hidden = CURV !== 'home';          // 첫 화면에서만
 }
 
-/* ---------- 아래 탭 막대 (2026-09-08 새 홈 화면 지시) ----------
-   자판·녹음·카드 넘기기처럼 화면 아래에 이미 붙박이 것이 있는 화면에서는 감춘다 —
-   겹치면 자판이나 넘김 단추를 가린다. 목록·복습 메뉴·순위처럼 훑어보는 화면에서만 켠다. */
-const TABBAR_VIEWS = ['home', 'course', 'quiz', 'sub', 'award', 'week', 'guide', 'news', 'wx', 'exam'];
+/* ---------- 아래 탭 막대 ----------
+   처음엔(2026-09-08) 목록류 화면에서만 켰다. 그런데 학습 중에 다른 데로 못 갔다 —
+   대표님 지시(2026-09-09): "항상 화면 하단에는 버튼 4개가 표시되도록, 학습하는
+   중에도 언제든 이동할 수 있도록." 이제 어느 화면에서든 늘 켜 둔다. 자판·채팅
+   입력칸처럼 화면 아래에 붙박이가 있는 화면은 그 붙박이를 탭 막대 위로 올렸다
+   (style.css의 --tabbar-h, .chatin/.tonebar 참고). */
 let ACTIVE_TAB = 'daily';
 function syncTabBar() {
-  const on = !learnKo() && TABBAR_VIEWS.includes(CURV);
-  $('#tabbar').hidden = !on;
-  document.body.classList.toggle('has-tabbar', on);
-  $$('#tabbar .tabbtn').forEach(b => b.classList.toggle('on', on && b.dataset.tab === ACTIVE_TAB));
+  $('#tabbar').hidden = false;
+  document.body.classList.add('has-tabbar');
+  $$('#tabbar .tabbtn').forEach(b => b.classList.toggle('on', b.dataset.tab === ACTIVE_TAB));
 }
 /* 아래 탭 4개 (2026-09-08 홈 재설계 지시): 하루5분·학습·시험·내 정보.
    기존 기능(startLearn·courseEntry·reviewMenu·vlptEntry·renderAwards)을 그대로 잇는다 —
@@ -5359,13 +5360,7 @@ function toggleStar(k, ko, vi) {
   return !!st[k];
 }
 /* 별 단추 — 학습 화면 어디서든 낱말 옆에 붙인다 */
-/* 선배 별표 — 네 기수(17·18·19·20)가 실제로 시험 본 낱말이라는 표시.
-   색만으로 구분하지 않는다(테두리 + 글자 + 모양). */
-function seniorStar() {
-  const i = el('i', 'srstar', '⭐ ' + tr('선배'));
-  i.title = tr('선배 기수가 실제로 시험 본 낱말');
-  return i;
-}
+// 선배 별표(seniorStar)는 완전히 없앴다 (대표님 지시, 2026-09-09).
 
 /* ---------- 교재 문법 (1권) ----------
    책 → 과 → 문법 카드. 한 과가 곧 한 강이다(문법 5~8개).
@@ -6516,11 +6511,8 @@ function drawCard() {
       });
       c.append(box);
     }
-    /* 선배 시험에 나온 낱말이면 별표 (대표님 지시, 2026-08-30).
-       한 기수에만 나왔어도 별표를 준다 — 기수 수는 안 따진다.
-       ☆/★ 단추(나만의 단어장)와 헷갈리지 않게 **모양이 다른 별**과 글자를 같이 쓴다. */
+    // 선배 표시(⭐)는 완전히 없앴다 (대표님 지시, 2026-09-09).
     const kob = el('div', 'ko', esc(x.ko));
-    if (x.sr) kob.append(seniorStar());
     c.append(kob);
     /* 일터에서 뜻이 달라지는 낱말 — 직무 권에 또 두지 않고 여기에 덧붙인다
        (대표님 지적, 2026-08-30: 같은 낱말을 두 번 외우게 하지 않는다). */
