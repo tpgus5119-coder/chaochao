@@ -2031,7 +2031,7 @@ async function socialFinish(provider, sub, email, nick) {
     }
     popup('<b>' + (provider === 'google' ? '구글' : '페이스북') + ' 계정으로 로그인됐습니다.</b>');
     if (!S.nick) { askNick(); return; }
-    renderHome();
+    dailyFlowEntry();
   } catch (e) { alert(tr('로그인 실패') + ': ' + (e.message || '')); }
 }
 function loadGIS() {
@@ -2207,7 +2207,7 @@ function acctForm(gate, mode) {
       popup(act === 'signup'
         ? '<b>가입됐습니다.</b><br>다른 폰에서 로그인하면 지금 별명이 따라옵니다.'
         : '<b>로그인됐습니다.</b> 별명이 이 기기로 따라왔습니다.');
-      if (gate) renderHome(); else renderAwards();
+      if (gate) dailyFlowEntry(); else renderAwards();
     } catch (e) { oops(e.message || '안 됐습니다'); }
   };
   const bs = el('div');
@@ -2244,7 +2244,7 @@ function acctForm(gate, mode) {
     const later = el('button', 'ghost', tr('나중에 둘러보기'));
     later.style.width = '100%'; later.style.marginTop = '10px';
     later.onclick = () => { try { sessionStorage.setItem('gateSkip', '1'); } catch (e) {}
-                            if (!S.nick) { askNick(); return; } renderHome(); };
+                            if (!S.nick) { askNick(); return; } dailyFlowEntry(); };
     b.append(later);
   }
   // 보안 안내 문구 삭제 — 다른 앱엔 없는 군더더기 설명이다 (사용자 지시, 2026-09-08).
@@ -2605,7 +2605,7 @@ function showWeek(rep) {
 
   const go = el('button', 'primary big', '이번 주 시작하기');
   go.style.width = '100%'; go.style.marginTop = '18px';
-  go.onclick = () => { S.wk = { k: weekKey(), base: snapshot() }; save(); renderHome(); };
+  go.onclick = () => { S.wk = { k: weekKey(), base: snapshot() }; save(); dailyFlowEntry(); };
   b.append(go);
   show('week', '주간 성적표', false);
 }
@@ -2624,7 +2624,7 @@ function askLearn() {
   // 베트남어 중 골랐지만, 이제 고를 게 없으므로 그냥 바로 시작한다.
   S.learn = 'vi';
   save();
-  renderHome();
+  dailyFlowEntry();
 }
 
 function askNick() {
@@ -2663,14 +2663,14 @@ function askNick() {
       S.nickcheck = 0;                    // 나중에 다시 확인한다
     }
     S.wk = { k: weekKey(), base: snapshot() }; save();
-    S.learn ? renderHome() : askLearn();
+    S.learn ? dailyFlowEntry() : askLearn();
   };
   b.append(inp, err, go);
   // 위쪽 뒤로가기로 그냥 나갈 수 있다. 처음이라 이름이 없으면 '이름없음'으로 두고 나간다.
   const had = !!S.nick;
   dive(() => {
     if (!S.nick) { S.nick = '이름없음'; S.wk = { k: weekKey(), base: snapshot() }; save(); }
-    had ? renderAwards() : (S.learn ? renderHome() : askLearn());
+    had ? renderAwards() : (S.learn ? dailyFlowEntry() : askLearn());
   });
   show('nick', '이름', true);
 }
@@ -4937,7 +4937,7 @@ function recentDoneUnits(nMax) {
 
 /* 세로 지도 그리기 — 완료(체크) · 지금(고리, 누르면 학습 시작) · 다음(자물쇠) 세 상태.
    '지금' 칸을 누르면 하는 일은 홈 일정판의 '오늘 학습' 칸과 **같아야** 한다(중복 금지) —
-   그래서 그 손잡이(curFn)를 만들어 준 renderHome() 에서 그대로 받아 쓴다. */
+   그래서 그 손잡이(curFn)를 만들어 준 dailyFlowEntry() 에서 그대로 받아 쓴다. */
 function renderRoadmap(host, nodes, curKey) {
   host.textContent = '';
   if (!nodes.length) return;
@@ -5764,7 +5764,7 @@ function startGramQuiz(dayKey, theme, gramItems) {
     const opts = [{ k: g.k, t: g.t }, ...wrong].sort(() => Math.random() - .5);
     return { ex, correct: g.k, opts };
   });
-  if (!qs.length) { S.done[dayKey] = now(); save(); renderHome(); return; }   // 예문이 없으면 그냥 완료
+  if (!qs.length) { S.done[dayKey] = now(); save(); dailyFlowEntry(); return; }   // 예문이 없으면 그냥 완료
   GQ = { qs, i: 0, ok: 0, dayKey, theme };
   drawGramQuiz();
   show('quiz', theme + ' · 확인 문제', true);
@@ -5795,7 +5795,7 @@ function drawGramQuiz() {
         if (GQ.i < GQ.qs.length) drawGramQuiz();
         else { S.done[GQ.dayKey] = now(); save();
                popup('<b>' + tr('확인 문제 끝') + '</b> — ' + GQ.ok + ' / ' + GQ.qs.length);
-               renderHome(); }
+               dailyFlowEntry(); }
       });
     };
     opts.append(btn);
@@ -5807,7 +5807,7 @@ function drawGramQuiz() {
 function gramWordsEntry() {
   const go = () => {
     const gw = (COURSE && COURSE.gramwords) || [];
-    if (!gw.length) return renderHome();
+    if (!gw.length) return dailyFlowEntry();
     startLearn({ day: 'GW', theme: tr('말에 대한 말'), words: gw, course: 1 });
   };
   if (COURSE) return go();
@@ -6628,13 +6628,13 @@ $('#next').onclick = () => {
   // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
-  if (L.cult) { renderHome(); return; }
+  if (L.cult) { dailyFlowEntry(); return; }
   if (L.day.gram) { startGramQuiz(L.day.day, L.day.theme, L.items.map(it => it.d)); return; }
-  if (L.day.know) { S.done[L.day.day] = now(); save(); renderHome(); return; }
+  if (L.day.know) { S.done[L.day.day] = now(); save(); dailyFlowEntry(); return; }
   if (L.news) {                        // 기사 세트 — 대화 두 줄을 보고 끝. 채점도 복습도 없다
     if (!L.dlg && L.day.dialog) { L.items = [{ k: 'dialog', d: L.day.dialog }]; L.i = 0; L.dlg = true;
                                   drawCard(); show('learn', L.day.theme, true); return; }
-    renderHome(); return;
+    dailyFlowEntry(); return;
   }
   if (L.dlg) {                         // 대화(써먹기)까지 끝나면 오늘 완료
     S.done[L.day.day] = now();
@@ -6667,7 +6667,7 @@ $('#next').onclick = () => {
   const backToCards = () => { startLearn(d0); L.i = Math.min(at0, L.items.length - 1); drawCard(); };
   if (L.day.day === 'P1') { dive(backToCards); startVowel(); }
   else if (L.day.day === 'P2') { dive(backToCards); startTone(); }
-  else renderHome();
+  else dailyFlowEntry();
 };
 
 /* 사진첩처럼 — 카드를 왼쪽으로 밀면 다음, 오른쪽으로 밀면 이전.
@@ -7952,7 +7952,7 @@ function finishQuiz() {
     if (hasDlg) { startDialog(Q.day); return; }
     if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : S.done)[Q.day.day] = now();
                  LEARNT = null; touchToday(); save(); }
-    renderHome();
+    dailyFlowEntry();
   };
   r.append(b);
   $('#quizBody').textContent = '';
@@ -9278,7 +9278,7 @@ $('#goHome').onclick = async () => {
   //   브라우저 confirm 은 설치형 PWA 에서 막히는 폰이 있다 → 앱이 그리는 창으로 (2026-08-30)
   if (!$('#quiz').hidden && Q && Q.i > 0 &&
       !await askYN(tr('풀던 문제를 그만두고 홈으로 갈까요?'), '홈으로')) return;
-  renderHome();
+  dailyFlowEntry();
 };
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.
@@ -9984,7 +9984,7 @@ async function doImport() {
     if (!confirm(`${nd}일치 진도와 단어 ${nw}개를 되살립니다.\n지금 진도는 덮어씁니다. 진행할까요?`)) return;
     S.done = o.done || {}; S.srs = o.srs || {}; S.firstDay = o.firstDay;
     S.act = o.act || {}; S.stats = o.stats || {};
-    save(); renderHome(); alert('되살렸습니다.');
+    save(); dailyFlowEntry(); alert('되살렸습니다.');
   } catch (e) {
     alert('백업 글자가 아니거나 중간이 잘렸습니다.\nVNSTUDY 로 시작하는 글자 전체를 복사해 주세요.');
   }
@@ -10007,7 +10007,7 @@ async function doReset() {
   if (!await askYN(tr('되돌릴 수 없습니다. 정말 지울까요?'), '정말 지웁니다', true)) return;
   const nick = S.nick;
   S.done = {}; S.srs = {}; S.act = {}; S.stats = {}; S.wk = { k: weekKey(), base: snapshot() };
-  S.nick = nick; save(); renderHome();
+  S.nick = nick; save(); dailyFlowEntry();
 }
 
 $('#voice').onclick = () => {
