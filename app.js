@@ -6397,7 +6397,10 @@ function drawCard() {
   if (it.k === 'ksent') {
     const box = el('div', 'wex');
     const top = el('div', 'wextop');
-    const all = iconBtn('sound', '문장 전체 듣기', () => speakVi(x.vi));
+    /* 실제 녹음이 있으면 그걸, 없으면만 기기 목소리 — 낱말 하나하나는 녹음이 나오는데
+       '전체 듣기'만 기기 목소리로 나면 한 문장 안에서 목소리가 바뀐 것처럼 들린다
+       (대표님 지적, 2026-09-09: "예문 단어들 목소리 섞여있다"). */
+    const all = iconBtn('sound', '문장 전체 듣기', () => { AIDX[x.vi] ? play(x.vi, false) : speakVi(x.vi); });
     all.classList.add('wexall'); top.append(all);
     box.append(top);
     box.append(tapLine(x.vi, 'wexvi tapline'));
@@ -6429,7 +6432,7 @@ function drawCard() {
     x.ex.forEach(e => {
       const box = el('div', 'wex');
       const top = el('div', 'wextop');
-      const all = iconBtn('sound', '문장 전체 듣기', () => speakVi(e.vi));
+      const all = iconBtn('sound', '문장 전체 듣기', () => { AIDX[e.vi] ? play(e.vi, false) : speakVi(e.vi); });
       all.classList.add('wexall'); top.append(all);
       box.append(top);
       box.append(tapLine(e.vi, 'wexvi tapline'));
