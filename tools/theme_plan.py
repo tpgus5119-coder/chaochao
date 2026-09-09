@@ -97,4 +97,5 @@ def main():
         print(f"  {code} {name:18} {c.get(code,0):4}장")
 
 
-main()
+if __name__ == "__main__":
+    main()

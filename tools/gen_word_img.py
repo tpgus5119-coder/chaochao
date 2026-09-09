@@ -89,4 +89,5 @@ def main():
             if fail <= 3: print("  실패", k, e, flush=True)
         if i % 25 == 0: print(f"  {i}/{len(need)} · 만듦 {made} · 건너뜀 {skip} · 실패 {fail}", flush=True)
     print(f"끝. 만듦 {made} · 건너뜀 {skip} · 실패 {fail}", flush=True)
-main()
+if __name__ == "__main__":
+    main()

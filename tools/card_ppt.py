@@ -165,4 +165,5 @@ def main():
     print(f"파워포인트 {n}개 만들었습니다" if n else "만들 것이 없습니다")
 
 
-main()
+if __name__ == "__main__":
+    main()

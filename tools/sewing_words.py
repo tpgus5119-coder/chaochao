@@ -210,4 +210,5 @@ def main():
     print("  갈래:", dict(C.Counter(w["track"] or "공통" for w in out)))
     print("  ", dict(stat))
     for w in out[:12]: print(f"   {w['vi']:<26} {w['ko']}")
-main()
+if __name__ == "__main__":
+    main()

@@ -49,4 +49,5 @@ def main():
     print(f"\n모두 {sum(len(v) for v in d.values())} 낱말")
 
 
-main()
+if __name__ == "__main__":
+    main()

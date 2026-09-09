@@ -61,4 +61,5 @@ def main():
         print(f"  {lo*10:>3}~{lo*10+10:<3}% ({len(chunk):>4}개): " +
               " · ".join(w["ko"].split("/")[0].split("(")[0].strip()[:6] for w in chunk[:16]))
 
-main()
+if __name__ == "__main__":
+    main()

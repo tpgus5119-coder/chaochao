@@ -91,4 +91,5 @@ def main():
         time.sleep(1.0)
     print(f"끝. 뜻 {len(have)}개", flush=True)
 
-main()
+if __name__ == "__main__":
+    main()

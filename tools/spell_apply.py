@@ -72,4 +72,5 @@ def main():
     print(f"고친 낱말 {n}개 · 미룬 것 {len(hold)}개 → docs/spell-hold.tsv")
     for a, b, k, _ in hold[:20]: print(f"   미룸  {a:<22}→ {b:<24}{k[:20]}")
 
-main()
+if __name__ == "__main__":
+    main()

@@ -39,4 +39,5 @@ def main():
         p.write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         print(f"  {f}: 별표 {on}개 · 별표 없음 {off}개")
 
-main()
+if __name__ == "__main__":
+    main()

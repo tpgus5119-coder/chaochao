@@ -52,4 +52,5 @@ def main():
          "words": out}, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"모음집에서 새로 건진 낱말 {len(out)}개")
     for k, v in src.items(): print(f"   {v:>5}  {k}")
-main()
+if __name__ == "__main__":
+    main()

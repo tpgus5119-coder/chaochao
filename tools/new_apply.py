@@ -132,4 +132,5 @@ def main():
         print("order.json 에 넣었다")
 
 
-main()
+if __name__ == "__main__":
+    main()

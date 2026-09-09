@@ -52,4 +52,5 @@ def main():
     print(f"건진 예문 {len(out)}개")
     print("  기수별:", dict(collections.Counter(x["gi"] for x in out)))
     for x in out[:8]: print("   ", x["vi"], "—", x["ko"][:26])
-main()
+if __name__ == "__main__":
+    main()

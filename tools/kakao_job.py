@@ -58,4 +58,5 @@ def main():
                     "words": out}, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"카톡방 낱말 {len(out)}개 · 낱말이 아니라 뺀 것 {drop}개")
     for w in out[:10]: print(f"   {w['vi']:<22} {w['ko'][:26]}")
-main()
+if __name__ == "__main__":
+    main()

@@ -114,4 +114,5 @@ def main():
         print(f"  {i + len(part)}/{len(need)}", flush=True)
         time.sleep(1.0)
     print(f"끝. 프롬프트 {len(have)}개", flush=True)
-main()
+if __name__ == "__main__":
+    main()

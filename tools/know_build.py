@@ -25,4 +25,5 @@ def main():
         {"note": "7권 베트남 바로알기 — 강의자료 12강 요약. 낱말·문장은 두지 않는다.", "lec": out},
         ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"강 {len(out)} · 카드 {sum(len(x['c']) for x in out)}")
-main()
+if __name__ == "__main__":
+    main()

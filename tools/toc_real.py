@@ -103,4 +103,5 @@ def main():
         print(f"\n■ {L['level']} — {L['words']}개")
         for u in L["units"]:
             print(f"    {u['words']:>4}개 {u['chapters']:>2}강  {u['unit']:<16} {' · '.join(u['sample'][:6])}")
-main()
+if __name__ == "__main__":
+    main()

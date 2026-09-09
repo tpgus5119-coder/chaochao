@@ -45,4 +45,5 @@ def main():
     print(f"책 {len(books)} · 과 {sum(len(x['bai']) for x in books)} · 문법 {n} · 예문 {ne}"
           f" · 자세히 채운 것 {nr}/{n}")
     print("강 수(문법 5개를 한 강으로):", -(-n // 5))
-main()
+if __name__ == "__main__":
+    main()

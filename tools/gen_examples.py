@@ -99,4 +99,5 @@ def main():
         print(f"  {i + len(part)}/{len(need)} · 이번에 {n}개 · 버린 것 누적 {bad}", flush=True)
         time.sleep(1.2)
     print(f"끝. 만든 예문 {len(have)}개", flush=True)
-main()
+if __name__ == "__main__":
+    main()

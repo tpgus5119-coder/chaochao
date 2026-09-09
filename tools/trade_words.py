@@ -73,4 +73,5 @@ def main():
         {"note": "무역 낱말. 원본 표에 베트남어가 없어 하나씩 확인해 붙였다.",
          "words": out}, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"무역 낱말 {len(out)}개")
-main()
+if __name__ == "__main__":
+    main()

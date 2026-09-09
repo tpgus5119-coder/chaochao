@@ -109,4 +109,5 @@ def main():
     print(f"낱말 {tot} · 강 {ch}")
     for v in vols: print(f"   {v['vol']:<14} {v['words']:>5}낱말 {v['chapters']:>4}강 {len(v['units']):>3}과")
     print("  ", dict(stat))
-main()
+if __name__ == "__main__":
+    main()

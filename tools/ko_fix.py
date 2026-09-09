@@ -89,4 +89,5 @@ def main():
         print("\n보기만 했습니다 — 쓰려면 --write")
 
 
-main()
+if __name__ == "__main__":
+    main()

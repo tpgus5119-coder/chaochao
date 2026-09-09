@@ -85,4 +85,5 @@ def main():
         print(f"  {i + len(part)}/{len(need)} · 목록 밖 누적 {bad}", flush=True)
         time.sleep(1.0)
     print(f"끝. 주제 붙인 낱말 {len(have)}개", flush=True)
-main()
+if __name__ == "__main__":
+    main()

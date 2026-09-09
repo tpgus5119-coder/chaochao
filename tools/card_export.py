@@ -131,4 +131,5 @@ def main():
           else f"새로 내보낼 것이 없습니다 → {DESK}")
 
 
-main()
+if __name__ == "__main__":
+    main()

@@ -35,4 +35,5 @@ def main():
         print(f"도구가 못 읽은 것 {len(warn)}개: {warn[:15]}")
 
 
-main()
+if __name__ == "__main__":
+    main()

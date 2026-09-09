@@ -76,4 +76,5 @@ def main():
         print(f"  {label:18} {c.get(k,0)}")
 
 
-main()
+if __name__ == "__main__":
+    main()

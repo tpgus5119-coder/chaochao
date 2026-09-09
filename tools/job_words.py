@@ -42,4 +42,5 @@ def main():
     print(f"업종 낱말 {len(out)}개")
     for k, v in collections.Counter(w["track"] for w in out).most_common():
         print(f"   {k:<12} {v}")
-main()
+if __name__ == "__main__":
+    main()

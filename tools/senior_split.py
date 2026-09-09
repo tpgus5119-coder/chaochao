@@ -117,4 +117,5 @@ def main():
     print(f"전체 {len(out)}개 → 일상 {cnt['일상']}개 · 직무 {job}개")
     for k, v in cnt.most_common():
         if k != "일상": print(f"    {v:>5}  {k}")
-main()
+if __name__ == "__main__":
+    main()

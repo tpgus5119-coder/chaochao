@@ -72,4 +72,5 @@ def main():
           ("바뀔 것이 없습니다." if not total else "보기만 했습니다 — 쓰려면 --write"))
 
 
-main()
+if __name__ == "__main__":
+    main()

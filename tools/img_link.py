@@ -84,4 +84,5 @@ def main():
     (R / "data" / "order.json").write_text(json.dumps(o, ensure_ascii=False, separators=(",", ":")),
                                            encoding="utf-8")
     print("그림 파일", len(have), "· 낱말별:", dict(stat))
-main()
+if __name__ == "__main__":
+    main()

@@ -137,4 +137,5 @@ def main():
     print(f"  하나의 용어 {c2.get('term',0)} · 구·문장 {c2.get('phrase',0)}")
 
 
-main()
+if __name__ == "__main__":
+    main()

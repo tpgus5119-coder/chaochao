@@ -229,4 +229,5 @@ def main():
             print(f"   {u['words']:>4}개 {u['chapters']:>3}강  {u['unit']:<18} {' · '.join(u['sample'][:5])}")
     print(f"\n합계: 일상 {sum(v['words'] for v in vols)}낱말 {sum(v['chapters'] for v in vols)}강 · "
           f"직무 {jobv['words']}낱말 {jobv['chapters']}강")
-main()
+if __name__ == "__main__":
+    main()

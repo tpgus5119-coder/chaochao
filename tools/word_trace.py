@@ -62,4 +62,5 @@ def main():
     print(f"  뜻은 같지만 **낱말이 다른** 무리 {len(syn)}개 · 그 안의 낱말 {sum(len(v) for v in syn.values())}개 — 이건 전부 남긴다")
     (R / "docs" / "word-trace.tsv").write_text("\n".join(lines), encoding="utf-8")
     print(f"\n낱말마다 한 줄씩 → docs/word-trace.tsv ({len(lines)-1}줄)")
-main()
+if __name__ == "__main__":
+    main()

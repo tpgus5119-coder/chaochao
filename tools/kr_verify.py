@@ -82,4 +82,5 @@ def main():
     (R / "docs" / "kr-verify.md").write_text("\n".join(out), encoding="utf-8")
     print("\n".join(out[:60]))
 
-main()
+if __name__ == "__main__":
+    main()

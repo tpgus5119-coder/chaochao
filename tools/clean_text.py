@@ -63,4 +63,5 @@ def main():
         q.write_text(json.dumps(e, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"  씻은 자리 {n}곳")
 
-main()
+if __name__ == "__main__":
+    main()
