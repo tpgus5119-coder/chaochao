@@ -1447,7 +1447,16 @@ $$('#tabbar .tabbtn').forEach(b => b.onclick = () => {
    S.done[k]로 끝난 세트를 표시해 두므로, courseQueue()가 중간에 나가도 같은 미완성
    레슨을 다시 돌려준다(끝난 게 아니니까). */
 function dailyFlowEntry() {
-  if (!COURSE) { renderHome(); return; }               // 과정이 아직 안 왔으면 홈에서 받는다
+  /* 과정이 아직 안 왔으면 — 예전엔 여기서 그냥 홈(대시보드)을 그려서, 어플을 막 켰을 때는
+     늘 COURSE 가 비어 있어 **매번** 홈 화면부터 거쳐야 했다(대표님 지적, 2026-09-09:
+     "홈버튼=하루5분이라니까? 아직도 홈화면이 따로 있냐"). 받아 온 뒤 이 함수를 다시 불러
+     바로 오늘 학습으로 들어간다 — 홈은 정말 오늘 할 게 없을 때만 보인다. */
+  if (!COURSE) {
+    fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
+      .then(j => { COURSE = j; loadCWords(); if (ACTIVE_TAB === 'daily') dailyFlowEntry(); })
+      .catch(() => { renderHome(); });
+    return;
+  }
   const q = courseQueue(1);
   if (q.length) startLearn(q[0]);
   else renderHome();                                     // 오늘 할 게 없으면(다 끝남) 홈으로
@@ -10031,18 +10040,17 @@ $('#voice').onclick = () => {
   if (!$('#learn').hidden && L) drawCard();
 };
 
-/* 북부(하노이) ↔ 남부(호찌민) 소리 전환. 남부 목소리는 여성 하나뿐이다. */
+/* 북부(하노이) ↔ 남부(호찌민) 소리 전환.
+   대표님 지시(2026-09-09): "남부 베트남 소리 남녀 다 없애라. 일단은 북부 남녀만 남겨라"
+   — 남부 소리 검수(tts_check)에서 닮음 점수가 크게 떨어지는 것들이 나와서, 품질을 다시
+   잡을 때까지 남부 선택 자체를 없앤다. 버튼은 index.html에서 hidden 처리했고,
+   여기서는 예전에 남부를 골라 뒀던 사람도 강제로 북부로 되돌린다. */
 function drawRegion() {
-  $('#region').innerHTML = seg('북부', '남부', S.region !== 's');
+  if (S.region === 's') { S.region = 'n'; save(); }
   drawVoiceBtn();
   topBtns();
 }
-$('#region').onclick = () => {
-  S.region = S.region === 's' ? 'n' : 's'; save(); drawRegion();
-  GKR = null;                                   // 발음 찾기표를 다시 만들게 한다
-  // 남부와 북부는 높낮이가 다르다 — 보고 있던 카드의 원어민 곡선도 다시 그린다
-  if (!$('#learn').hidden && L) drawCard();
-};
+// 남부 선택 버튼은 hidden 처리(위 drawRegion 주석 참고) — onclick 없음.
 
 /* ---------- 다른 사람들의 평균 ----------
    등수는 보여주지 않는다. 견줄 것은 '내가 몇 등이냐'가 아니라
