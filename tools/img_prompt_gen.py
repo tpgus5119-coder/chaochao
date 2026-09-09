@@ -95,6 +95,19 @@ def main():
             k = norm(w["ko"]).split("/")[0].split("(")[0].strip()
             if k in seen or not drawable(w["ko"]): continue
             seen.add(k); need.append(k)
+    # 일상(days.json) 낱말도 **같은 뜻이면 같은 그림을 나눠 쓰는** 이 파이프라인에
+    # 합친다 (2026-09-09) — 전에는 order.json만 봐서 일상 쪽 그림은 img_watch.py의
+    # 옛 슬러그 방식(사람이 docs/image-prompts.md에 미리 프롬프트를 적어 둬야 함)만
+    # 탔는데, _imgsee.json이 나쁘다고 지운 314개는 그 문서에 없어 안 채워졌다.
+    dj = R / "data" / "days.json"
+    if dj.exists():
+        D = json.loads(dj.read_text(encoding="utf-8"))
+        for x in D["days"]:
+            for w in x.get("words") or []:
+                if w.get("img"): continue
+                k = norm(w["ko"]).split("/")[0].split("(")[0].strip()
+                if k in seen or not drawable(w["ko"]): continue
+                seen.add(k); need.append(k)
     have = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     done = dict(have)
     for f in (R / "data").glob("_imgprompts*.json"):

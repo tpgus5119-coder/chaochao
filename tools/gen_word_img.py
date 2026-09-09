@@ -72,6 +72,16 @@ def main():
             k = re.sub(r"\s+", " ", U.normalize("NFC", w["ko"]).split("/")[0].split("(")[0]).strip()
             if k not in pr or k in seen: continue
             seen.add(k); need.append(k)
+    # 일상(days.json) 낱말도 같은 뜻이면 같은 그림을 나눠 쓰도록 합친다 (2026-09-09).
+    dj = R / "data" / "days.json"
+    if dj.exists():
+        D = json.loads(dj.read_text(encoding="utf-8"))
+        for x in D["days"]:
+            for w in x.get("words") or []:
+                if w.get("img"): continue
+                k = re.sub(r"\s+", " ", U.normalize("NFC", w["ko"]).split("/")[0].split("(")[0]).strip()
+                if k not in pr or k in seen: continue
+                seen.add(k); need.append(k)
     if a.limit: need = need[:a.limit]
     print(f"구울 그림 {len(need)}장", flush=True)
     made = skip = fail = 0

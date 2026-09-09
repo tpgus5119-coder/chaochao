@@ -84,5 +84,21 @@ def main():
     (R / "data" / "order.json").write_text(json.dumps(o, ensure_ascii=False, separators=(",", ":")),
                                            encoding="utf-8")
     print("그림 파일", len(have), "· 낱말별:", dict(stat))
+
+    # 일상(days.json) 쪽도 gen_word_img.py가 새로 구운 w-<해시>.webp를 이어 붙인다
+    # (2026-09-09) — 이 낱말들은 옛 슬러그 이름이 아니라 order.json과 같은 뜻-해시
+    # 이름으로 구웠으므로 wname()으로 바로 찾아진다.
+    dstat = collections.Counter()
+    dp = R / "data" / "days.json"
+    if dp.exists():
+        D = json.loads(dp.read_text(encoding="utf-8"))
+        for day in D["days"]:
+            for w in (day.get("words") or []):
+                if w.get("img") and w["img"] in have: dstat["이미 있음"] += 1; continue
+                im = wname(w["ko"])
+                if im: w["img"] = im; dstat["새로 이어 붙임"] += 1
+                else: dstat["아직 그림 없음"] += 1
+        dp.write_text(json.dumps(D, ensure_ascii=False, indent=1), encoding="utf-8")
+        print("일상 낱말별:", dict(dstat))
 if __name__ == "__main__":
     main()
