@@ -3499,19 +3499,24 @@ function drawDayCard(i) {
   d.words.forEach(w => dayWordRow(wcard, w.ko, w.vi, null, true, w));
   b.append(wcard);
 
-  const dcard = el('div', 'excard');
-  // 대화 제목은 한국어로만 나오던 자리다 — 베트남 분에겐 뜻 모를 글자였다.
-  // 주제와 같은 꼴로 두 말을 나란히 둔다(한국어를 배우러 왔으니 한국어도 남긴다).
-  dcard.append(el('h3', 'exhead', esc(d.dialog.title)
-    + (d.dialog.title_vi ? '<span class="exmeta">' + esc(d.dialog.title_vi) + '</span>' : '')));
-  d.dialog.lines.forEach(l => dayWordRow(dcard, l.ko, l.vi, l.who + '. '));
-  b.append(dcard);
+  // 대화·미션은 낱말책(회화책) 과정처럼 없는 날도 있다 — 있을 때만 그린다.
+  if (d.dialog) {
+    const dcard = el('div', 'excard');
+    // 대화 제목은 한국어로만 나오던 자리다 — 베트남 분에겐 뜻 모를 글자였다.
+    // 주제와 같은 꼴로 두 말을 나란히 둔다(한국어를 배우러 왔으니 한국어도 남긴다).
+    dcard.append(el('h3', 'exhead', esc(d.dialog.title)
+      + (d.dialog.title_vi ? '<span class="exmeta">' + esc(d.dialog.title_vi) + '</span>' : '')));
+    d.dialog.lines.forEach(l => dayWordRow(dcard, l.ko, l.vi, l.who + '. '));
+    b.append(dcard);
+  }
 
-  const mcard = el('div', 'excard');
-  mcard.append(el('h3', 'exhead', tr('오늘의 미션')));
-  if (S.ui !== 'vi') mcard.append(el('div', 'gexp', esc(d.mission.ko)));
-  mcard.append(el('div', 'gexp vi', esc(d.mission.vi)));
-  b.append(mcard);
+  if (d.mission) {
+    const mcard = el('div', 'excard');
+    mcard.append(el('h3', 'exhead', tr('오늘의 미션')));
+    if (S.ui !== 'vi') mcard.append(el('div', 'gexp', esc(d.mission.ko)));
+    mcard.append(el('div', 'gexp vi', esc(d.mission.vi)));
+    b.append(mcard);
+  }
 
   /* '‹ 이전 / 다음 ›' 을 뺐다 (대표님 지시) — **밀어서 넘긴다.** */
   const qz = el('button', 'primary big', '✍️ ' + tr('오늘 확인 문제'));
@@ -4841,25 +4846,28 @@ function dueWords() {
 /* 목록의 머리말 — **차례 자체가 주제별로 모여 있으니** 그 묶음을 그대로 적는다.
    (예전에는 '만든 차례'로 묶어서 같은 주제가 앞뒤로 흩어져 보였다.) */
 const GROUPS = [
-  // 일상 — 교재들처럼 '장소·상황'으로 묶고 그 이름을 그대로 머리말로 쓴다.
-  // 한 주제가 한 덩어리다 (표시 번호 n 기준. 차례를 바꾸면 여기도 같이 바꾼다).
-  [d => !d.track && d.n <= 6,  '첫 인사와 자기소개'],
-  [d => !d.track && d.n <= 8,  '숫자 세기'],
-  [d => !d.track && d.n <= 11, '시간과 요일'],
-  [d => !d.track && d.n <= 13, '일과 하루'],
-  [d => !d.track && d.n <= 16, '부탁하고 약속하기'],
-  [d => !d.track && d.n <= 18, '쉬는 날과 명절'],
-  [d => !d.track && d.n <= 20, '아플 때 — 약국과 병원'],
-  [d => !d.track && d.n <= 23, '시장에서 — 사고 팔기'],
-  [d => !d.track && d.n <= 25, '마음과 맞장구'],
-  [d => !d.track && d.n <= 29, '식당과 카페에서'],
-  [d => !d.track && d.n <= 32, '길과 교통'],
-  [d => !d.track && d.n <= 35, '집과 살림'],
-  [d => !d.track && d.n <= 37, '가족과 고향'],
-  [d => !d.track,              '스몰토크 — 날씨 · 주말 · 축구'],
-  // 옛 직무(days.json track:'work') 갈래는 2026-09-09에 지웠다 — 직무는 이제
-  // order.json 16개 트랙(공통 7 + 업종 9)으로 완전히 옮겨서 여기(하루5분 일상
-  // 목록)엔 안 나온다. drawJob()이 그쪽 목차를 따로 그린다.
+  [d => !d.track && d.n <= 2, '인사와 자기소개'],
+  [d => !d.track && d.n <= 4, '숫자 세기'],
+  [d => !d.track && d.n <= 6, '시간과 요일'],
+  [d => !d.track && d.n <= 7, '전화·인터넷 개통'],
+  [d => !d.track && d.n <= 8, '집 구하기와 이사'],
+  [d => !d.track && d.n <= 9, '은행과 관공서'],
+  [d => !d.track && d.n <= 11, '집과 살림'],
+  [d => !d.track && d.n <= 13, '길과 교통'],
+  [d => !d.track && d.n <= 15, '일과 하루'],
+  [d => !d.track && d.n <= 17, '사고 팔기'],
+  [d => !d.track && d.n <= 19, '식당과 카페'],
+  [d => !d.track && d.n <= 21, '부탁하고 약속하기'],
+  [d => !d.track && d.n <= 24, '약국과 병원'],
+  [d => !d.track && d.n <= 25, '회식과 술자리'],
+  [d => !d.track && d.n <= 26, '마음과 맞장구'],
+  [d => !d.track && d.n <= 28, '가족과 인간관계'],
+  [d => !d.track && d.n <= 29, '고향과 명절'],
+  [d => !d.track && d.n <= 30, '축하와 기념일'],
+  [d => !d.track && d.n <= 31, '날씨'],
+  [d => !d.track && d.n <= 32, '취미'],
+  [d => !d.track && d.n <= 34, '감정과 의견 표현 심화'],
+  [d => !d.track, '기타'],  // 안전망 — 위 21개에 안 걸리는 경우는 없어야 정상
 ];
 
 /* 내 업종이 아닌 직무 묶음은 가릴 수 있다 — 가린 것은 목록·일정·추천에서 빠진다 */
@@ -5076,7 +5084,7 @@ function renderDays() {
     if (nx && d.day === nx.day && !nx.track) b.dataset.next = '1';
     const nm2 = el('span', 'nm', esc(d.theme));
     b.append(el('span', 'num', esc(label(d))), nm2,
-             el('span', 'st', done ? '완료 ✔' : (d.words || []).length + '단어 + 대화'));
+             el('span', 'st', done ? '완료 ✔' : (d.words || []).length + '단어' + (d.dialog ? ' + 대화' : '')));
     b.onclick = () => { dive(renderDays); startLearn(d); };
     const li = el('li'); li.append(b);
     return li;
