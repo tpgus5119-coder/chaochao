@@ -62,6 +62,9 @@ header h1{color:var(--accent); font-weight:800}
 header h1{flex:1 1 0; min-width:0; margin:0; font-size:16px; font-weight:650; text-align:center;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 header > button{flex:0 0 auto; white-space:nowrap}
+/* #title(h1)가 display:none이라 더는 가운데 spacer 역할을 못 한다 — 내 정보를
+   우측 상단에 고정하려면 그 앞에 auto 여백을 줘야 한다 (대표님 지시, 2026-09-12). */
+header > #goMe{margin-left:auto}
 /* 좁은 폰(375px)에서 머리띠 단추 여섯 개가 22px 넘쳤다 — 제목 칸이 0이 되어 사라졌다.
    여백을 줄이고 '북부→북' 처럼 뒷글자를 숨긴다 (2026-08-30 검수) */
 @media (max-width:420px){
@@ -400,7 +403,8 @@ button.song{
 }
 .stat b{font-size:19px; font-variant-numeric:tabular-nums}
 .stat span{font-size:11px; color:var(--dim)}
-.badges{display:flex; flex-wrap:wrap; gap:5px}
+.badges{display:flex; flex-wrap:wrap; gap:5px; align-items:center}
+.badges.go{cursor:pointer}
 .badge{
   display:inline-flex; align-items:center; gap:4px; padding:4px 9px;
   border:1px solid var(--line); border-radius:99px; font-size:11px;
@@ -1955,10 +1959,11 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .vlptcard.ok{border-left:4px solid var(--ok)}
 .vlptcard.no{border-left:4px solid var(--bad)}
 
-/* ── 최상단 헤더 정리(2026-09-08 대표님 지시) — 날씨·시각·어플이름·내정보버튼 제거.
-   #title/#wxnow/#goMe는 내부 로직(show() 등)이 계속 참조하므로 DOM에서 지우면
-   앱이 깨진다 — 안 보이게만 한다(기능은 그대로 살아있고 화면에만 없음). */
-#title, #wxnow, #goMe { display: none !important; }
+/* ── 최상단 헤더 정리(2026-09-08 대표님 지시) — 날씨·시각·어플이름 제거.
+   #title/#wxnow는 내부 로직(show() 등)이 계속 참조하므로 DOM에서 지우면
+   앱이 깨진다 — 안 보이게만 한다(기능은 그대로 살아있고 화면에만 없음).
+   #goMe(내 정보)는 2026-09-12 지시로 다시 켰다 — 우측 상단 고정 자리다. */
+#title, #wxnow { display: none !important; }
 
 /* ── 레슨 학습방법 탭: 카드/강의/애니메이션/노래 (2026-09-08) ── */
 .lessontabs{display:flex; gap:6px; padding:8px 10px 0; overflow-x:auto}

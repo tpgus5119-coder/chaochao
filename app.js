@@ -11,18 +11,10 @@ const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', done: {}, srs: {}
                           qbank: {}, act: {}, stats: {} },
   JSON.parse(localStorage.getItem(KEY) || '{}'));
 
-/* 처음 여는 사람의 화면 말을 **폰 언어로** 정한다.
-   이걸 안 하면 베트남 사람이 앱을 열자마자 만나는 것이 한국어 로그인 화면이다 —
-   아이디도 비밀번호도 '나중에 둘러보기'도 다 한국어라 **한 글자도 못 읽는다.**
-   한국어를 배우러 온 사람에게 한국어로 문을 잠가 놓은 셈이었다.
-   번역은 이미 다 있었고, S.ui 가 'ko' 로 시작하는 것만 문제였다.
-   한 번 정해 두면 그다음부터는 본인이 고른 값을 따른다(설정에서 바꿀 수 있다). */
-if (!S.ui) {
-  const langs = (navigator.languages && navigator.languages.length
-    ? navigator.languages : [navigator.language || '']).join(',').toLowerCase();
-  S.ui = /(^|,)vi\b/.test(langs) ? 'vi' : 'ko';
-  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { }
-}
+/* 화면 말은 무조건 한국어다 (대표님 지시, 2026-09-12) — 이 앱은 한국인 전용.
+   베트남인용은 나중에 별개 앱으로 그대로 복붙해서 그쪽만 vi로 고정한다.
+   전에는 폰 언어로 짐작해 골랐지만(베트남어 폰이면 vi) 이제는 고를 사람 자체가 없다. */
+if (S.ui !== 'ko') { S.ui = 'ko'; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { } }
 let saveWarned = false;
 function save() {
   try {
@@ -1452,7 +1444,7 @@ function syncTabBar() {
 /* 아래 탭 4개 (2026-09-08 홈 재설계 지시): 하루5분·학습·시험·내 정보.
    기존 기능(startLearn·courseEntry·reviewMenu·vlptEntry·renderAwards)을 그대로 잇는다 —
    화면을 새로 짜는 게 아니라 들어가는 문만 새로 낸다. */
-const TAB_ACTIONS = { daily: dailyFlowEntry, study: studyHubEntry, exam: vlptEntry, me: renderAwards };
+const TAB_ACTIONS = { home: renderHome, daily: dailyFlowEntry, study: studyHubEntry, exam: vlptEntry };
 $$('#tabbar .tabbtn').forEach(b => b.onclick = () => {
   ACTIVE_TAB = b.dataset.tab;
   (TAB_ACTIONS[b.dataset.tab] || dailyFlowEntry)();
@@ -2106,18 +2098,7 @@ function acctForm(gate, mode) {
   mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
   b.textContent = '';
-  /* 말 고르기 — **이 화면에만** 둔다.
-     여기가 앱의 문이다. 폰 언어로 짐작해 두긴 하지만(위 S.ui 기본값) 베트남 사람이
-     영어 폰이나 한국어 폰을 쓸 수도 있다. 그러면 한국어를 배우러 온 사람이
-     한국어로 잠긴 문 앞에 선다. 그래서 여기서만은 **읽지 못해도 누를 수 있게**
-     두 나라 말을 나란히 놓는다(설정 안에 숨겨 두면 못 찾는다). */
-  const langRow = el('div', 'langpick');
-  [['ko', '한국어'], ['vi', 'Tiếng Việt']].forEach(([v, name]) => {
-    const t = el('button', 'langbtn' + (S.ui === v ? ' on' : ''), esc(name));
-    t.onclick = () => { S.ui = v; save(); acctForm(gate, mode); };
-    langRow.append(t);
-  });
-  b.append(langRow);
+  // 말 고르기 없앰 (대표님 지시, 2026-09-12) — 이 앱은 한국인 전용, 화면은 항상 한국어.
   // 안내 문구(아이디로 어느 폰에서든...) 삭제 — 다른 앱엔 없는 군더더기 설명이다 (사용자 지시, 2026-09-08)
   if (mode !== 'login') b.append(el('p', 'lede', tr('<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.')));
   // 별명이 아직 없으면(첫 방문 가입) 여기서 같이 정한다 — 가입에 별명이 필요해서다
@@ -2167,19 +2148,8 @@ function acctForm(gate, mode) {
   };
   natW.addEventListener('pick', drawLearn);
   drawLearn();
-  /* 모국어(화면 언어) — 가입할 때 **직접 고르게** 한다 (사용자 지시).
-     전에는 국적으로 짐작했다(베트남 국적이면 화면도 베트남어). 그런데 국적과
-     읽을 수 있는 말은 다른 것이다 — 한국에 오래 산 베트남 분은 한국어 화면이 편하고,
-     베트남에 사는 한국 사람이 베트남어 화면을 쓰고 싶을 수도 있다. */
-  const uiW = mkSel([['ko', '한국어'], ['vi', 'Tiếng Việt']]);
-  natW.addEventListener('pick', () => {          // 국적을 고르면 기본값만 옮겨 준다
-    // **누른 것처럼** 처리해야 한다. 처음엔 켜진 표시(class)만 바꿨더니 화면에는
-    // Tiếng Việt 가 켜져 보이는데 실제 값은 'ko' 로 남아, 베트남 분이 가입하면
-    // 한국어 화면을 받게 됐다.
-    uiW.children[natW.val() === 'vn' ? 1 : 0].click();
-  });
-  profBox.append(el('p', 'note', '국적'), natW,
-                 el('p', 'note', '내 말 (화면에 나올 말)'), uiW, lrnW, regW);
+  // 화면 언어 선택 없앰 (대표님 지시, 2026-09-12) — 한국인 전용 앱, 화면은 항상 한국어.
+  profBox.append(el('p', 'note', '국적'), natW, lrnW, regW);
 
   const err = el('p', 'note nickerr'); err.hidden = true;
   const oops = m => { err.textContent = m; err.hidden = false; };
@@ -2200,14 +2170,12 @@ function acctForm(gate, mode) {
       }
       const prof = act === 'signup'
         ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '',
-            ui: uiW.val(), email: em } : {};
+            ui: 'ko', email: em } : {};
       const j = await cCall(Object.assign({ act, id: i, pw: p }, prof));
-      if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn; S.email = em; save();
-        if (prof.ui) S.ui = prof.ui;              // 고른 대로 — 국적으로 짐작하지 않는다
-      }
+      if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn; S.email = em; S.ui = 'ko'; save(); }
       if (act === 'login' && j.prof) {
         S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
-        if (j.prof.ui) S.ui = j.prof.ui;
+        S.ui = 'ko';                                // 무조건 한국어 — 예전 계정 값은 무시한다
         drawRegion();
       }
       if (act === 'login') {
@@ -2258,14 +2226,8 @@ function acctForm(gate, mode) {
   sw.textContent = mode === 'login' ? tr('처음이세요? 가입하기') : tr('이미 계정이 있어요 — 로그인');
   sw.onclick = () => acctForm(gate, mode === 'login' ? 'signup' : 'login');
   b.append(sw);
-  if (gate) {
-    // 관문 모드 — 로그인 전에는 열 때마다 이 화면이 먼저다. '나중에'는 이번 접속만 통과.
-    const later = el('button', 'ghost', tr('나중에 둘러보기'));
-    later.style.width = '100%'; later.style.marginTop = '10px';
-    later.onclick = () => { try { sessionStorage.setItem('gateSkip', '1'); } catch (e) {}
-                            if (!S.nick) { askNick(); return; } dailyFlowEntry(); };
-    b.append(later);
-  }
+  // '나중에 둘러보기'는 없앴다 (대표님 지시, 2026-09-12) — 로그인 전에는
+  // 다른 화면으로 못 나간다. 관문 모드에서는 반드시 로그인·가입해야 한다.
   // 보안 안내 문구 삭제 — 다른 앱엔 없는 군더더기 설명이다 (사용자 지시, 2026-09-08).
   // "이메일 없어 복구 불가"도 이제 사실이 아니다(가입 때 이메일을 받는다).
   if (mode === 'login') {
@@ -2274,7 +2236,10 @@ function acctForm(gate, mode) {
     forgot.onclick = () => forgotForm(gate);
     b.append(forgot);
   }
-  show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), true);
+  show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), !gate);
+  /* 로그인 관문 화면에서는 다른 데로 못 나가야 한다 (대표님 지시, 2026-09-12).
+     show()가 늘 아래 탭 막대를 켜므로, 관문일 때는 그 뒤에 다시 잠근다. */
+  if (gate) { $('#tabbar').hidden = true; $('#goHome').hidden = true; $('#goMe').hidden = true; }
 }
 
 /* 비밀번호 찾기 — 이메일로 재설정 링크를 보낸다 (2026-09-09, 대표님 지시).
@@ -2304,7 +2269,8 @@ function forgotForm(gate) {
   back.textContent = tr('‹ 돌아가기');
   back.onclick = () => acctForm(gate, 'login');
   b.append(back);
-  show('sub', tr('비밀번호 찾기'), true);
+  show('sub', tr('비밀번호 찾기'), !gate);
+  if (gate) { $('#tabbar').hidden = true; $('#goHome').hidden = true; $('#goMe').hidden = true; }
 }
 
 /* 새 비밀번호 정하기 — 메일 속 링크(?reset=토큰)로 들어오면 뜨는 화면.
@@ -2329,7 +2295,8 @@ function resetPwForm(token) {
     } catch (e) { err.textContent = e.message || tr('실패했습니다'); err.hidden = false; go.disabled = false; }
   };
   b.append(pw, err, go);
-  show('sub', tr('새 비밀번호'), true);
+  show('sub', tr('새 비밀번호'), false);
+  $('#tabbar').hidden = true; $('#goHome').hidden = true; $('#goMe').hidden = true;
 }
 
 /* 직접 고르는 줄 — 예전에는 '바꾸기' 단추를 눌러야 다음 값으로 넘어갔다.
@@ -2350,34 +2317,14 @@ function pickRow(label, opts, cur, onPick) {
   return row;
 }
 
+/* 내 정보 — 계정 · 이름 · 알림 · 하루 분량 순서 (대표님 지시, 2026-09-12).
+   소리 속도·화면 언어 칸은 없앴다 — 소리는 항상 0.8배속, 화면은 항상 한국어라
+   고를 게 없다. 연속·누적 학습일도 홈에 이미 있어 여기선 뺐다(중복 금지). */
 function renderAwards() {
   const b = $('#awardBody');
   b.textContent = '';
 
-  // 지역 선택은 없앴다 (대표님 지시 2026-09-09: 남부 목소리 완전히 제거) — 북부로 고정.
-
-  /* 계정 — 아이디+비밀번호. 어느 기기서든 로그인하면 같은 사람(별명·동아리·엄지)이 된다.
-     핵심은 기기표(uid)다: 로그인하면 이 기기의 uid 를 계정의 uid 로 갈아끼운다. */
-  // '서버 진도' 줄은 없앴다 (사용자 지시, 여러 번). 저장은 알아서 되는 일이라
-  // 화면에 적어 둘 까닭이 없다 — 적어 두면 '내가 뭘 해야 하나' 하고 눈길만 끈다.
-
-  /* 화면 언어 — 한국어 → Tiếng Việt → 나란히(개발용) 로 돌아간다.
-     '나란히'는 만드는 사람용이다. 베트남어 옆에 한국어 원문을 같이 띄워
-     "이 화면이 무엇이고 번역이 맞게 붙었는가"를 눈으로 대조하려고 둔다. */
-  // '나란히'는 번역 대조용이라 **만든 사람에게만** 보인다 (사용자 지시).
-  // 손님 화면에 개발용 칸이 있으면 눌러 보고 글자가 겹쳐 나와 고장으로 읽는다.
-  const uiOpts = [['ko', '한국어'], ['vi', 'Tiếng Việt']];
-  if (S.acct && S.acct.id === DEV_ID) uiOpts.push(['dev', '나란히 (개발용)']);
-  if (S.ui === 'dev' && !(S.acct && S.acct.id === DEV_ID)) { S.ui = 'ko'; save(); }
-  // 소리 속도 — 원어민 속도가 초보에겐 빠르다. 파일은 한 벌이고 재생만 늘린다
-  b.append(pickRow('소리 속도', RATES, String(S.rate || 1),
-    v => { S.rate = Number(v); save(); renderAwards(); }));
-
-  b.append(pickRow('화면 언어', uiOpts, S.ui || 'ko',
-    v => { S.ui = v; save(); renderAwards(); drawMenu(); }));
-
-  // 배울 언어 토글 삭제됨(2026-09-07) — 이 앱은 베트남어 전용으로 고정, 고를 게 없다
-
+  // 계정
   const ac = el('div', 'planrow');
   ac.append(el('span', 'pk', '계정'),
             el('span', 'pv', S.acct ? esc(S.acct.id) : '없음 (이 기기에만 저장)'));
@@ -2397,11 +2344,15 @@ function renderAwards() {
     b.append(qb);
   }
 
+  // 이름
   const nm = el('div', 'planrow');
   nm.append(el('span', 'pk', '이름'), el('span', 'pv', esc(S.nick || '이름없음')));
   const ch = el('button', 'ghost sm', '바꾸기');
   ch.onclick = askNick;
   nm.append(ch);
+  b.append(nm);
+
+  // 알림
   if (canPush()) {
     const nr = el('div', 'planrow');
     nr.append(el('span', 'pk', '알림'), el('span', 'pv', S.push ? '켜짐' : '꺼짐'));
@@ -2415,19 +2366,32 @@ function renderAwards() {
     nr.append(nb);
     b.append(nr);
   }
-  b.append(nm);
+
+  // 하루 분량
   b.append(pickRow('하루 분량',
     [[1, '하루 한 레슨'], [2, '하루 두 레슨']], S.pace || 1,
     v => { S.pace = v; save(); renderAwards(); }));
 
-  const st = el('div', 'stats mine');
-  [['연속', streakDays() + '일'], ['모두', totalDays() + '일']].forEach(([k, v]) => {
-    const c = el('div', 'stat'); c.append(el('b', null, v), el('span', null, k)); st.append(c);
-  });
-  b.append(st);
+  // 더보기 — 예전 홈 메뉴(학습·복습단어장·문화·순위·능력시험·사용법)와
+  // 성과·분석을 여기로 모았다(대표님 지시, 2026-09-12: 홈은 비우고 여기로).
+  // 위 계정·이름·알림 줄과 같은 .planrow 결로 맞춘다 — button 태그는 자식이
+  // 여럿이면 칸이 0×0으로 찌그러지는 버릇이 있어(검수로 확인) div를 쓴다.
+  const more = el('div');
+  const moreRow = (label, fn) => {
+    const r = el('div', 'planrow go');
+    r.append(el('span', 'pv', label), el('span', 'parrow', '›'));
+    r.onclick = () => { dive(renderAwards); fn(); };
+    more.append(r);
+  };
+  moreRow('업적', renderAchievementsPage);
+  moreRow('실력 분석', renderAnalysisPage);
+  moreRow('내 단어장', wordbookEntry);
+  moreRow('사전', dictEntry);
+  moreRow('베트남 문화', () => startCulture());
+  moreRow('순위', creditEntry);
+  moreRow('사용법', showGuide);
+  b.append(more);
 
-  // 성과·분석은 홈으로 옮겼다(renderBadges·renderAnalysis, 2026-09-09 지시) —
-  // '내 정보'는 이제 계정·설정만 보여준다.
   if (S.admin) {
     const ad = el('button', 'ghost', '운영 현황 보기');
     ad.style.width = '100%'; ad.style.marginTop = '10px';
@@ -2441,34 +2405,28 @@ function renderAwards() {
   show('award', '내 정보', true);
 }
 
+/* 업적 전체 목록 — 홈에서는 요약만 보이고, 여기서 다 본다 (대표님 지시, 2026-09-12). */
+function renderAchievementsPage() {
+  const b = $('#subBody');
+  b.textContent = '';
+  renderBadges(b);
+  show('sub', '업적', true);
+}
+
+/* 실력 분석 전체 — 홈 카드는 뺐다. 여기서만 본다 (대표님 지시, 2026-09-12). */
+function renderAnalysisPage() {
+  const b = $('#subBody');
+  b.textContent = '';
+  renderAnalysis(b, 'week');
+  show('sub', '실력 분석', true);
+}
+
+/* 이번 주 며칠 공부했는지(요일 동그라미)는 뺐다 (대표님 지시, 2026-09-12) —
+   맨 위 '연속 학습' 배지와 같은 정보를 두 번 보여주는 것이었다.
+   여기는 이제 '배운/외운/끝낸' 숫자와 업적 요약만 보여준다. */
 function renderProgress(host) {
   const box = host || $('#progress');
   box.textContent = '';
-
-  const dots = weekDots();
-  const n = dots.filter(d => d.done).length;
-  const head = el('div', 'phead');
-  // 숫자를 사이에 끼운 문구는 'N' 자리를 둔 본으로 옮긴다 (app.js:5574 와 같은 방식).
-  // 이렇게 안 하면 번역표에 담기지 않아 베트남 분 화면에 한국어가 그대로 뜬다 (2026-08-31).
-  head.append(el('strong', null, tr('이번 주 N일 공부').replace('N', n)));
-  if (n >= 5) head.append(el('span', null, '아주 좋습니다 ✔'));
-  box.append(head);
-
-  // 요일 글자(위) + 동그라미(아래) 한 벌. .dot/.dots 는 순위판 회원 줄(cmem)과도 이름을
-  // 같이 쓰므로, 새 모양은 이름을 갈라(.wkday/.wkcirc) 그쪽을 건드리지 않는다.
-  const row = el('div', 'wkrow');
-  // 번역표를 거친다 (2026-08-31) — 한글 낱자를 그대로 쪼개 쓰면
-  // 베트남 분 화면에 '월화수목금토일' 이 그대로 떴다. UIVI 에 T2…CN 이 이미 있다.
-  tr('월 화 수 목 금 토 일').split(' ').forEach((label, i) => {
-    const d = dots[i];
-    // 동그라미 안은 상태만 말한다 — 한 날 · 오늘 · 앞날을 색만으로 가르지 않는다
-    // (체크·자물쇠 표시를 같이 쓴다).
-    const cell = el('div', 'wkday' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
-    cell.append(el('span', 'wklabel', label));
-    cell.append(el('span', 'wkcirc', d.done ? '✔' : d.future ? '🔒' : ''));
-    row.append(cell);
-  });
-  box.append(row);
 
   const st = el('div', 'stats');
   const words = Object.keys(S.srs).length;
@@ -2482,14 +2440,17 @@ function renderProgress(host) {
     });
   box.append(st);
 
-  // 딴 업적만 몇 개 미리 보여주고, 전체는 업적 화면에서
+  // 업적은 최근 몇 개만 미리 보여주고, 누르면 전체 목록으로 (대표님 지시, 2026-09-12:
+  // "업적은 다 나열하지말고 버튼눌러서 들어갈 수 있도록").
   const got = BADGES.filter(b => b.test());
-  const bd = el('div', 'badges');
+  const bd = el('div', 'badges go');
+  bd.append(el('span', 'lede', `업적 ${got.length}/${BADGES.length} ›`));
   got.slice(-4).forEach(b => {
     const s = el('span', 'badge on');
     s.append(el('i', null, b.icon), el('em', null, b.name));
     bd.append(s);
   });
+  bd.onclick = () => { dive(renderHome); renderAchievementsPage(); };
   box.append(bd);
 }
 
@@ -4966,7 +4927,8 @@ function renderRoadmap(host, nodes, curKey) {
 
 function renderHome() {
   cloudSave();                           // 로그인한 사람은 하루 한 번 서버에 진도를 남긴다
-  drawMenu();
+  // drawMenu() 없앰 (대표님 지시, 2026-09-12) — 옛 홈 메뉴 그리드(학습·복습단어장·
+  // 문화·순위·능력시험·사용법)는 내 정보 '더보기'로 옮겼다.
   drawWxNow();
   // 한국어를 배우는 사람에게는 베트남어 일정판이 아무 뜻이 없다 — 딴 판을 그린다
   if (learnKo()) { drawKoHome(); show('home', '짜오짜오', false); return; }
@@ -5032,18 +4994,9 @@ function renderHome() {
   prow('내일 복습', !tmr.length ? '없음' : tmr.length + tr('개'),
        tmr.length ? 'next' : 'none', null);
 
-  // 성과·분석 — 예전엔 '내 정보'에 묻혀 있어야 찾아 들어가야 했다. 이제 홈에 바로
-  // 보인다(대표님 지시, 2026-09-09: "성과들. 그리고 그 밑에 분석들").
-  renderBadges($('#achieve'));
-  renderAnalysis($('#analysis'), 'week');
-
-  // 세로 지도 — 최근 끝낸 몇 과 + 지금(또는 다음) + 그 다음 몇 과. 죄다 실제 과정 자료다.
-  const rmDone = recentDoneUnits(curFn ? 1 : 2);
-  const rmNext = queue.slice(curFn ? 1 : 0, (curFn ? 1 : 0) + 2)
-    .map(d => ({ key: d.day, title: nm(d), done: false }));
-  const rmCur = curFn ? [{ key: curKey, title: nm(queue[0]), done: false, fn: curFn }] : [];
-  renderRoadmap($('#roadmap'), [...rmDone, ...rmCur, ...rmNext], curKey);
-
+  /* 업적 전체 목록·세로 지도(로드맵)는 홈에서 뺐다 (대표님 지시, 2026-09-12) —
+     오늘·내일 학습/복습과 내용이 겹쳤다. 업적은 요약 한 줄만 아래에 남기고,
+     전체는 renderAchievementsPage()(내 정보 → 업적)에서 본다. */
   show('home', '짜오짜오', false);
 }
 
@@ -10221,10 +10174,10 @@ Promise.all([
   // 메일 속 재설정 링크(?reset=토큰)로 들어온 경우 — 다른 무엇보다 먼저 처리한다.
   const resetTok = new URLSearchParams(location.search).get('reset');
   if (resetTok) { resetPwForm(resetTok); return; }
-  // 로그인 관문 — 안 되어 있으면 어느 기기든 열자마자 계정 화면부터 (사용자 지시).
-  // 로그인된 기기는 로그아웃 전까지 그대로 유지된다(S.acct 가 기기에 남는다).
-  let skip = false; try { skip = !!sessionStorage.getItem('gateSkip'); } catch (e) {}
-  if ((!S.acct || !S.acct.tok) && !skip) { acctForm(true, 'login'); return; }
+  // 로그인 관문 — 안 되어 있으면 어느 기기든 열자마자 계정 화면부터, 다른 데로 못 나간다
+  // (대표님 지시, 2026-09-12: '나중에 둘러보기' 없앰). 로그인된 기기는 로그아웃 전까지
+  // 그대로 유지된다(S.acct 가 기기에 남는다).
+  if (!S.acct || !S.acct.tok) { acctForm(true, 'login'); return; }
   if (!S.nick) { askNick(); return; }                 // 최초 1회
   if (S.wk && S.wk.k !== weekKey()) { showWeek(weekReport(S.wk.base)); return; }
   // 앱을 켜면 바로 '하루5분'이 뜬다 — 홈 대시보드를 한 번 더 누르게 하지 않는다 (대표님 지시 2026-09-09).
