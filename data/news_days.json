@@ -2,6 +2,247 @@
  "days": [
   {
    "ts": "2026-09-11",
+   "day": "Nno=44033",
+   "track": "news",
+   "theme": "주식 계좌",
+   "title": "베트남, 8월 기준 신규 증권계좌 200만 개 순증…역대 네 번째 기록",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44033",
+   "cat": "경제",
+   "intro": "베트남 신규 증권계좌가 8월 200만 개를 돌파했습니다. 누적 계좌 수 1,390만 개로 인구의 13.6%에 달합니다.",
+   "words": [
+    {
+     "vi": "tài khoản",
+     "ko": "계좌",
+     "kr_read": "따이 코안",
+     "emoji": "💳",
+     "en": "a bank credit card",
+     "tones": [
+      {
+       "syl": "tài",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "khoản",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-tai-khoan.webp"
+    },
+    {
+     "vi": "thị trường",
+     "ko": "시장",
+     "kr_read": "티 쯔엉",
+     "emoji": "🏪",
+     "en": "a busy market stall",
+     "tones": [
+      {
+       "syl": "thị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-thi-truong.webp"
+    },
+    {
+     "vi": "đầu tư",
+     "ko": "투자하다",
+     "kr_read": "더우 뜨",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "đầu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "tư",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "ngân hàng",
+     "ko": "은행",
+     "kr_read": "응언 항",
+     "emoji": "🏦",
+     "en": "a bank building",
+     "tones": [
+      {
+       "syl": "ngân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ngan-hang.webp"
+    },
+    {
+     "vi": "tiền",
+     "ko": "돈",
+     "kr_read": "띠엔",
+     "emoji": "💵",
+     "en": "a stack of paper money",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tien.webp"
+    },
+    {
+     "vi": "chứng khoán",
+     "ko": "주식",
+     "kr_read": "쯩 코안",
+     "emoji": "📈",
+     "en": "a stock market graph going up",
+     "tones": [
+      {
+       "syl": "chứng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "khoán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-chung-khoan.webp"
+    }
+   ],
+   "dialog": {
+    "title": "주식 계좌",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Anh có tài khoản chứng khoán không?",
+      "ko": "주식 계좌 있어요?",
+      "kr_read": "아인 꼬 따이 코안 쯩 코안 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tài",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "khoản",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "chứng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "khoán",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, tôi mới mở tháng trước.",
+      "ko": "네, 저 지난달에 새로 만들었어요.",
+      "kr_read": "꼬 또이 머이 머 탕 쯔억",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mới",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tháng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "trước.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 32
+  },
+  {
+   "ts": "2026-09-11",
    "day": "Nno=44037",
    "track": "news",
    "theme": "자동차 리콜",
@@ -7428,5 +7669,5 @@
    "title_card": "베트남 당서기장 7~12일 러시아 프랑스 순방"
   }
  ],
- "updated": "2026-09-12 08:36"
+ "updated": "2026-09-12 22:53"
 }
