@@ -1941,6 +1941,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .kogbadge{display:flex; align-items:center; gap:6px; font-size:13px; color:var(--dim); margin-bottom:4px}
 .kogdot{width:8px; height:8px; border-radius:50%; background:var(--ok); flex:0 0 auto}
 .kogh1{font-size:22px; font-weight:700; line-height:1.36}     /* headline-lg 실측치 그대로 */
+.kogsub{font-size:14px; color:var(--dim); margin-top:2px}
 .kogicon{
   width:56px; height:56px; border-radius:50%; flex:0 0 auto;
   background:color-mix(in srgb, var(--accent) 12%, var(--card));

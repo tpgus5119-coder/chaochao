@@ -1444,7 +1444,11 @@ function syncTabBar() {
 /* 아래 탭 4개 (2026-09-08 홈 재설계 지시): 하루5분·학습·시험·내 정보.
    기존 기능(startLearn·courseEntry·reviewMenu·vlptEntry·renderAwards)을 그대로 잇는다 —
    화면을 새로 짜는 게 아니라 들어가는 문만 새로 낸다. */
-const TAB_ACTIONS = { home: renderHome, daily: dailyFlowEntry, study: studyHubEntry, exam: vlptEntry };
+/* 홈 = 하루5분과 같은 문 (대표님 지시, 2026-09-12: "홈버튼 눌러서 나오는 화면이랑
+   맨처음 나오는 화면이랑 동일하게"). 앱을 처음 열 때도 dailyFlowEntry() 로 들어간다
+   (10231번 줄) — 그러니 홈 단추도 그대로 그 함수를 쓴다. renderHome()의 일정판·통계
+   화면은 이제 dailyFlowEntry() 안에서 "오늘 할 게 없을 때"만 보이는 마침 화면이다. */
+const TAB_ACTIONS = { home: dailyFlowEntry, daily: dailyFlowEntry, study: studyHubEntry, exam: vlptEntry };
 $$('#tabbar .tabbtn').forEach(b => b.onclick = () => {
   ACTIVE_TAB = b.dataset.tab;
   (TAB_ACTIONS[b.dataset.tab] || dailyFlowEntry)();
@@ -1460,7 +1464,8 @@ function dailyFlowEntry() {
      바로 오늘 학습으로 들어간다 — 홈은 정말 오늘 할 게 없을 때만 보인다. */
   if (!COURSE) {
     fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
-      .then(j => { COURSE = j; loadCWords(); if (ACTIVE_TAB === 'daily') dailyFlowEntry(); })
+      .then(j => { COURSE = j; loadCWords();
+                   if (ACTIVE_TAB === 'daily' || ACTIVE_TAB === 'home') dailyFlowEntry(); })
       .catch(() => { renderHome(); });
     return;
   }
@@ -1865,8 +1870,9 @@ async function shareCard() {
   x.textAlign = 'center';
   x.fillStyle = '#7aa2ff'; x.font = 'bold 62px sans-serif';
   x.fillText('짜오짜오', 360, 128);
+  // 군더더기 날짜·소개문 대신 이름+연속학습일로 (대표님 지시, 2026-09-12)
   x.fillStyle = '#8b93a7'; x.font = '26px sans-serif';
-  x.fillText(ymd() + ' · 베트남어 공부 중', 360, 176);
+  x.fillText(`${S.nick || '학습자'}님 · ${streakDays()}일 연속 학습 중`, 360, 176);
   const dots = weekDots();
   '월화수목금토일'.split('').forEach((lb, i) => {
     const cx = 360 + (i - 3) * 88;
@@ -1877,7 +1883,7 @@ async function shareCard() {
     x.fillText(lb, cx, 287);
   });
   x.fillStyle = '#e7ebf4'; x.font = 'bold 34px sans-serif';
-  x.fillText(`이번 주 ${dots.filter(d => d.done).length} / 5일`, 360, 372);
+  x.fillText(`이번 주 ${dots.filter(d => d.done).length} / ${dots.length}일`, 360, 372);
   [['배운 단어', Object.keys(S.srs).length], ['끝낸 세트', doneCount()], ['소리 낸 횟수', S.stats.said || 0]]
     .forEach(([k, v], i) => {
       const cx = 360 + (i - 1) * 212;
@@ -1894,8 +1900,7 @@ async function shareCard() {
     x.fillStyle = '#8b93a7'; x.font = '23px sans-serif';
     x.fillText(`업적 ${got.length} / ${BADGES.length}`, 360, 802);
   }
-  x.fillStyle = '#5a6273'; x.font = '23px sans-serif';
-  x.fillText('tpgus5119-coder.github.io/chaochao', 360, 858);
+  // 링크 주소 줄 없앰 (대표님 지시, 2026-09-12) — 필요 없는 글자다.
 
   const blob = await new Promise(r => c.toBlob(r, 'image/png'));
   const file = new File([blob], 'chaochao-card.png', { type: 'image/png' });
@@ -4940,14 +4945,12 @@ function renderHome() {
   // 오늘·내일 일정판 — 뭘 하게 될지 미리 보이고, 버튼 하나로 바로 들어간다
   const plan = $('#plan');
   plan.textContent = '';
-  // 인사말 카드(Stitch 시안 재현) — 사진은 안 쓴다(대표님 지시), 아이콘으로 대신한다.
-  // 연속 학습일은 실제 데이터(streakDays())만 쓴다.
+  // 인사말 카드 — 이름+연속학습일을 한 줄로 (대표님 지시, 2026-09-12: 중복 없이 한 멘트로).
+  // 사진은 안 쓴다(대표님 지시), 아이콘으로 대신한다. 연속 학습일은 실제 데이터(streakDays())만 쓴다.
   const greet = el('div', 'kogreet');
   const gtxt = el('div', 'kogtxt');
-  const gbadge = el('div', 'kogbadge');
-  gbadge.append(el('span', 'kogdot'), el('span', null, tr('연속 학습') + ' ' + streakDays() + tr('일')));
-  gtxt.append(gbadge);
-  gtxt.append(el('div', 'kogh1', tr('안녕하세요') + ', ' + esc(S.nick || tr('학습자')) + tr('님!')));
+  gtxt.append(el('div', 'kogh1', esc(S.nick || tr('학습자')) + tr('님, 어서오세요!')));
+  gtxt.append(el('div', 'kogsub', streakDays() + tr('일 연속 학습 중이에요')));
   greet.append(gtxt, el('div', 'kogicon', '🎓'));
   plan.append(greet);
   // 행 자체를 누르면 바로 실행된다
@@ -9248,7 +9251,7 @@ $('#goHome').onclick = async () => {
   //   브라우저 confirm 은 설치형 PWA 에서 막히는 폰이 있다 → 앱이 그리는 창으로 (2026-08-30)
   if (!$('#quiz').hidden && Q && Q.i > 0 &&
       !await askYN(tr('풀던 문제를 그만두고 홈으로 갈까요?'), '홈으로')) return;
-  renderHome();
+  dailyFlowEntry();
 };
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.
