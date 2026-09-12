@@ -352,7 +352,8 @@ export default {
     /* ── 계정 ─────────────────────────────────────────
        아이디+비밀번호로 어느 기기서든 같은 별명·같은 기록(동아리·엄지·사진)이 따라온다.
        비밀번호는 소금을 쳐서 으깬 값(해시)만 저장한다 — 원문은 어디에도 안 남는다.
-       이메일이 없으므로 비밀번호를 잊으면 되찾을 길이 없다(가입 화면에 밝힌다). */
+       이메일을 가입 때 받아 두므로 비밀번호를 잊으면 이메일로 재설정 링크를 받을 수
+       있다(2026-09-09, 아래 reqreset/resetpw 참고. RESEND_KEY 금고에 넣어야 돈다). */
     const hashPw = async (salt, pw) => {
       const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + '\u0001' + pw));
       return [...new Uint8Array(d)].map(x => x.toString(16).padStart(2, '0')).join('');
@@ -371,6 +372,15 @@ export default {
         if (acct) return send({ error: '이미 있는 아이디입니다' });
         const uid = cut(b.uid, 16);
         if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
+        // 이메일도 아이디처럼 겹치면 안 된다 (대표님 지시, 2026-09-12) — 한 이메일이
+        // 여러 계정에 쓰이면 비밀번호 재설정 메일이 어느 계정 것인지 알 길이 없어진다.
+        // 별명(NKEY 'nicks')과 같은 결로 EKEY('emails')에 {이메일: 아이디} 색인을 둔다.
+        const email = cut(b.email, 100);
+        const elow = email.toLowerCase();
+        const EKEY = 'emails';
+        const emails = JSON.parse((await KV.get(EKEY)) || '{}');
+        if (elow && emails[elow] && emails[elow] !== id)
+          return send({ error: '이미 이 이메일로 가입된 아이디가 있습니다' });
         const salt = Math.random().toString(36).slice(2, 12);
         // ui = 화면에 나올 말. 국적으로 짐작하지 않고 가입할 때 고른 것을 그대로 받는다
         const prof = { nat: cut(b.nat, 4), learn: cut(b.learn, 4), reg: cut(b.reg, 2),
@@ -378,9 +388,8 @@ export default {
         // 증표(token): 로그인한 사람만 자기 진도를 읽고 쓸 수 있게 하는 문패.
         // 비밀번호를 매번 보내지 않으려고 따로 둔다.
         const tok = [...crypto.getRandomValues(new Uint8Array(16))].map(x => x.toString(16).padStart(2, '0')).join('');
-        // 이메일 — 비밀번호를 잊었을 때 되찾는 용도로만 쓴다 (2026-09-09, 대표님 지시).
-        const email = cut(b.email, 100);
         await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid, p: prof, t: tok, email }));
+        if (elow) { emails[elow] = id; await KV.put(EKEY, JSON.stringify(emails)); }
         return send({ ok: true, uid, nick, prof, tok });
       }
       if (!acct) return send({ error: '없는 아이디입니다' });
@@ -489,6 +498,12 @@ export default {
       // 전체 순위판에서도 지운다
       const g = JSON.parse((await KV.get(GKEY)) || '{}');
       if (g[acct.u]) { delete g[acct.u]; await KV.put(GKEY, JSON.stringify(g), TTL); }
+      // 이메일 자리도 비운다 (다른 사람이 같은 이메일로 다시 가입할 수 있게)
+      if (acct.email) {
+        const emails = JSON.parse((await KV.get('emails')) || '{}');
+        const elow = acct.email.toLowerCase();
+        if (emails[elow] === id) { delete emails[elow]; await KV.put('emails', JSON.stringify(emails)); }
+      }
       await KV.delete('prog:' + id);
       await KV.delete(AK);
       return send({ ok: true });

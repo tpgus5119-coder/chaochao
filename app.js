@@ -2098,9 +2098,7 @@ function acctForm(gate, mode) {
   mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
   b.textContent = '';
-  // 말 고르기 없앰 (대표님 지시, 2026-09-12) — 이 앱은 한국인 전용, 화면은 항상 한국어.
-  // 안내 문구(아이디로 어느 폰에서든...) 삭제 — 다른 앱엔 없는 군더더기 설명이다 (사용자 지시, 2026-09-08)
-  if (mode !== 'login') b.append(el('p', 'lede', tr('<b>처음 오셨군요!</b> 1분이면 됩니다 — 별명과 아이디만 정하면 끝.')));
+  // 말 고르기·안내 문구 없앰 (대표님 지시, 2026-09-08·2026-09-12) — 군더더기 글자는 안 둔다.
   // 별명이 아직 없으면(첫 방문 가입) 여기서 같이 정한다 — 가입에 별명이 필요해서다
   const nickIn = el('input', 'keyin'); nickIn.type = 'text'; nickIn.maxLength = 10;
   nickIn.placeholder = tr('별명 (2~10자) — 순위에 보입니다');
