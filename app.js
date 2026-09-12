@@ -1444,11 +1444,11 @@ function syncTabBar() {
 /* 아래 탭 4개 (2026-09-08 홈 재설계 지시): 하루5분·학습·시험·내 정보.
    기존 기능(startLearn·courseEntry·reviewMenu·vlptEntry·renderAwards)을 그대로 잇는다 —
    화면을 새로 짜는 게 아니라 들어가는 문만 새로 낸다. */
-/* 홈 = 하루5분과 같은 문 (대표님 지시, 2026-09-12: "홈버튼 눌러서 나오는 화면이랑
-   맨처음 나오는 화면이랑 동일하게"). 앱을 처음 열 때도 dailyFlowEntry() 로 들어간다
-   (10231번 줄) — 그러니 홈 단추도 그대로 그 함수를 쓴다. renderHome()의 일정판·통계
-   화면은 이제 dailyFlowEntry() 안에서 "오늘 할 게 없을 때"만 보이는 마침 화면이다. */
-const TAB_ACTIONS = { home: dailyFlowEntry, daily: dailyFlowEntry, study: studyHubEntry, exam: vlptEntry };
+/* 홈 ≠ 하루5분 (대표님 지시, 2026-09-12: "홈버튼 누르면 스티치가 디자인해준 화면을
+   보여주라고, 하루5분을 보여주지말고"). 홈 단추·탭은 renderHome()(스티치 대시보드)을
+   그대로 쓴다. 앱을 처음 켤 때만 dailyFlowEntry()(하루5분)로 바로 들어간다
+   (10241번 줄, 2026-09-09 지시는 그대로 유지) — 그 둘은 이제 서로 다른 문이다. */
+const TAB_ACTIONS = { home: renderHome, daily: dailyFlowEntry, study: studyHubEntry, exam: vlptEntry };
 $$('#tabbar .tabbtn').forEach(b => b.onclick = () => {
   ACTIVE_TAB = b.dataset.tab;
   (TAB_ACTIONS[b.dataset.tab] || dailyFlowEntry)();
@@ -1458,14 +1458,14 @@ $$('#tabbar .tabbtn').forEach(b => b.onclick = () => {
    S.done[k]로 끝난 세트를 표시해 두므로, courseQueue()가 중간에 나가도 같은 미완성
    레슨을 다시 돌려준다(끝난 게 아니니까). */
 function dailyFlowEntry() {
-  /* 과정이 아직 안 왔으면 — 예전엔 여기서 그냥 홈(대시보드)을 그려서, 어플을 막 켰을 때는
-     늘 COURSE 가 비어 있어 **매번** 홈 화면부터 거쳐야 했다(대표님 지적, 2026-09-09:
-     "홈버튼=하루5분이라니까? 아직도 홈화면이 따로 있냐"). 받아 온 뒤 이 함수를 다시 불러
-     바로 오늘 학습으로 들어간다 — 홈은 정말 오늘 할 게 없을 때만 보인다. */
+  /* 과정이 아직 안 왔으면 — 앱을 막 켰을 때는 늘 COURSE 가 비어 있으니, 받아 온 뒤
+     이 함수를 다시 불러 바로 오늘 학습으로 들어간다(2026-09-09 지시).
+     단, 그사이 사용자가 다른 탭(홈 등)으로 넘어갔으면 다시 끼어들지 않는다 —
+     ACTIVE_TAB 이 여전히 'daily'일 때만 재시도한다. */
   if (!COURSE) {
     fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
       .then(j => { COURSE = j; loadCWords();
-                   if (ACTIVE_TAB === 'daily' || ACTIVE_TAB === 'home') dailyFlowEntry(); })
+                   if (ACTIVE_TAB === 'daily') dailyFlowEntry(); })
       .catch(() => { renderHome(); });
     return;
   }
@@ -4953,13 +4953,28 @@ function renderHome() {
   gtxt.append(el('div', 'kogsub', streakDays() + tr('일 연속 학습 중이에요')));
   greet.append(gtxt, el('div', 'kogicon', '🎓'));
   plan.append(greet);
-  // 행 자체를 누르면 바로 실행된다
-  const prow = (k, v, state, fn) => {
-    const r = el('div', 'plancell ' + state + (fn ? ' go' : ''));
-    r.append(el('span', 'pk', tr(k)), el('span', 'pv', esc(tr(v))));
-    if (fn) r.onclick = fn;
-    plan.append(r);
-  };
+
+  /* 주간 스트릭 카드 — Stitch 시안의 "Weekly Streak Widget" 그대로.
+     요일 동그라미(완료·오늘·잠김)는 이미 있던 weekDots()/.wkday 결을 그대로 쓴다. */
+  const dots = weekDots();
+  const wk = el('div', 'weekcard');
+  const wkHead = el('div', 'weekcard-head');
+  const wkTitle = el('div', 'weekcard-title');
+  wkTitle.append(el('span', null, '🔥'), el('b', null, streakDays() + tr('일 연속 학습 중')));
+  wkHead.append(wkTitle, el('span', 'weekpill',
+    tr('이번 주 완료') + ' ' + dots.filter(d => d.done).length + '/' + dots.length));
+  wk.append(wkHead);
+  const wkRow = el('div', 'wkrow');
+  tr('월 화 수 목 금 토 일').split(' ').forEach((dayLabel, i) => {
+    const d = dots[i];
+    const cell = el('div', 'wkday' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
+    cell.append(el('span', 'wklabel', dayLabel));
+    cell.append(el('span', 'wkcirc', d.done ? '✔' : d.future ? '🔒' : ''));
+    wkRow.append(cell);
+  });
+  wk.append(wkRow);
+  plan.append(wk);
+
   const todayCnt = Object.entries(S.done)
     .filter(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd()).length;
   const pace = S.pace || 1;                       // 하루에 몇 세트 할 것인가 (내 정보에서 바꾼다)
@@ -4967,33 +4982,74 @@ function renderHome() {
   const doneToday = left === 0;
   const queue = courseQueue(left + pace);         // 오늘 남은 것 + 내일 것 (새 과정)
   const nm = d => d.theme || (trackName(d) + label(d));
-  // 오늘 학습 — 이 손잡이(curFn)를 세로 지도의 '지금' 칸도 그대로 쓴다(중복 금지).
+
+  /* 오늘 할 일 — Stitch 시안의 "Today's Action Cards" 그대로(학습 카드 + 복습 카드,
+     태그·아이콘·큰 버튼). 세로 지도의 '지금' 손잡이(curFn)도 여기서 만든다. */
+  const ahead = el('div', 'actionhead');
+  ahead.append(el('b', null, tr('오늘 할 일')), el('span', null, tr('필수') + ' 2' + tr('개')));
+  plan.append(ahead);
+
   let curFn = null, curKey = null;
-  if (doneToday) prow('오늘 학습', pace > 1 ? todayCnt + '세트 완료' : '완료', 'done', null);
-  else if (queue.length) {
+  const lessonCard = el('div', 'actioncard main');
+  const lrow = el('div', 'actionrow');
+  const ltxt = el('div');
+  if (doneToday) {
+    ltxt.append(el('span', 'actiontag', tr('오늘의 핵심 학습')));
+    ltxt.append(el('div', 'actiontitle', pace > 1 ? todayCnt + tr('세트 완료') : tr('완료')));
+  } else if (queue.length) {
     const t = queue.slice(0, left);
     curFn = () => startLearn(t[0]);
     curKey = t[0].day;
-    prow('오늘 학습', t.map(nm).join(' · ') + (t.length > 1 ? '' :
-           '\n' + (t[0].words || []).slice(0, 3).map(w => w.ko.split('/')[0].trim()).join(' · ')),
-         'todo', curFn);
-  } else prow('오늘 학습', '전 과정 완료', 'none', null);
+    const preview = t.length > 1 ? '' : (t[0].words || []).slice(0, 3)
+      .map(w => w.ko.split('/')[0].trim()).join(' · ');
+    ltxt.append(el('span', 'actiontag', tr('오늘의 핵심 학습')));
+    ltxt.append(el('div', 'actiontitle', esc(t.map(nm).join(' · '))));
+    if (preview) ltxt.append(el('div', 'actionsub', esc(preview)));
+  } else {
+    ltxt.append(el('span', 'actiontag', tr('오늘의 핵심 학습')));
+    ltxt.append(el('div', 'actiontitle', tr('전 과정 완료')));
+  }
+  lrow.append(ltxt, el('div', 'actionicon', '📖'));
+  lessonCard.append(lrow);
+  const lbtn = el('button', 'actionbtn primary', curFn ? tr('학습 시작하기') : tr('완료'));
+  lbtn.disabled = !curFn; if (curFn) lbtn.onclick = curFn;
+  lessonCard.append(lbtn);
+  plan.append(lessonCard);
+
   // 오늘 복습 — 문장도 같이 나오므로 뭉뚱그려 '단어'라고 하지 않는다
-  if (due.length) prow('오늘 복습', due.length + tr('개'), 'todo', () => reviewStart());
-  else prow('오늘 복습', S.revDay === ymd() ? '완료' : '없음', S.revDay === ymd() ? 'done' : 'none', null);
-  // 내일 학습 (+예습)
+  const revCard = el('div', 'actioncard tertiary');
+  const rrow = el('div', 'actionrow');
+  const rtxt = el('div');
+  rtxt.append(el('span', 'actiontag tertiary', tr('복습')));
+  rtxt.append(el('div', 'actiontitle',
+    due.length ? due.length + tr('개 복습 대기 중') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
+  rrow.append(rtxt, el('div', 'actionicon', '🔁'));
+  revCard.append(rrow);
+  const rbtn = el('button', 'actionbtn', tr('단어 복습하기'));
+  rbtn.disabled = !due.length; if (due.length) rbtn.onclick = () => reviewStart();
+  revCard.append(rbtn);
+  plan.append(revCard);
+
+  /* 내일 — Stitch 시안엔 없지만, 내일 뭘 할지 미리 보여주는 건 우리 앱 고유 기준이라
+     (대표님 지시, 여러 번) 가볍게 둔다. 오늘 카드보다 작은 두 칸으로. */
+  const tomHead = el('div', 'actionhead'); tomHead.append(el('b', null, tr('내일')));
+  plan.append(tomHead);
+  const plantom = el('div', 'plantom'); plan.append(plantom);
+  const prow = (k, v, state, fn) => {
+    const r = el('div', 'plancell ' + state + (fn ? ' go' : ''));
+    r.append(el('span', 'pk', tr(k)), el('span', 'pv', esc(tr(v))));
+    if (fn) r.onclick = fn;
+    plantom.append(r);
+  };
   const tset = queue.slice(left, left + pace);
   if (tset.length) {
     const words = tset.flatMap(d => d.words || []);
-    prow('내일 학습', tset.map(nm).join(' · ') + (tset.length > 1 ? '' :
-           '\n' + (tset[0].words || []).slice(0, 3).map(w => w.ko.split('/')[0].trim()).join(' · ')),
-         'next', words.length ? () => flashRun(words, '예습 · ' + tset.map(nm).join(' · ')) : null);
+    prow('내일 학습', tset.map(nm).join(' · '), 'next',
+         words.length ? () => flashRun(words, '예습 · ' + tset.map(nm).join(' · ')) : null);
   } else prow('내일 학습', '없음', 'none', null);
-  // 내일 복습 — 내일 새로 나올(만기되는) 카드 수
   const tmr = Object.entries(S.srs).filter(([, v]) => v.due > now() && v.due <= now() + DAY)
     .map(([k]) => findItem(k)).filter(Boolean);
-  prow('내일 복습', !tmr.length ? '없음' : tmr.length + tr('개'),
-       tmr.length ? 'next' : 'none', null);
+  prow('내일 복습', !tmr.length ? '없음' : tmr.length + tr('개'), tmr.length ? 'next' : 'none', null);
 
   /* 업적 전체 목록·세로 지도(로드맵)는 홈에서 뺐다 (대표님 지시, 2026-09-12) —
      오늘·내일 학습/복습과 내용이 겹쳤다. 업적은 요약 한 줄만 아래에 남기고,
@@ -9251,7 +9307,7 @@ $('#goHome').onclick = async () => {
   //   브라우저 confirm 은 설치형 PWA 에서 막히는 폰이 있다 → 앱이 그리는 창으로 (2026-08-30)
   if (!$('#quiz').hidden && Q && Q.i > 0 &&
       !await askYN(tr('풀던 문제를 그만두고 홈으로 갈까요?'), '홈으로')) return;
-  dailyFlowEntry();
+  renderHome();
 };
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.

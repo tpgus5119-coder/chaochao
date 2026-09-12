@@ -890,7 +890,45 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .fldots i.on{background:var(--ok)}
 
 /* 홈 일정판 2×2 */
-.plan{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0 6px}
+/* 홈 화면 — 대표님이 Stitch로 직접 만든 시안(이미지자료/디자인-소스/stitch-home.html)을
+   그대로 따른다 (대표님 지시, 2026-09-12: "스티치가 디자인해준 화면을 보여주라고").
+   색·반경 토큰은 이미 :root에 그 시안 값 그대로 있다 — 여기서는 그 시안의 짜임(인사말
+   카드 → 주간 스트릭 카드 → 오늘 할 일 카드 2장 → 내일)만 새로 만든다. */
+.plan{display:flex; flex-direction:column; gap:14px; margin:10px 0 6px}
+
+/* 주간 스트릭 카드 (시안의 "Weekly Streak Widget") */
+.weekcard{background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg,12px);
+  padding:16px; display:flex; flex-direction:column; gap:12px}
+.weekcard-head{display:flex; align-items:center; justify-content:space-between; gap:8px}
+.weekcard-title{display:flex; align-items:center; gap:8px}
+.weekcard-title b{font-size:18px; font-weight:600}
+.weekpill{font-size:13px; font-weight:600; color:var(--dim); background:var(--surface-2,var(--bg));
+  padding:5px 10px; border-radius:999px; white-space:nowrap}
+
+/* 오늘 할 일 — 섹션 머리 + 카드 2장 (시안의 "Today's Action Cards") */
+.actionhead{display:flex; align-items:baseline; justify-content:space-between; padding:0 2px}
+.actionhead b{font-size:18px; font-weight:600}
+.actionhead span{font-size:13px; color:var(--dim)}
+.actioncard{background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg,12px);
+  padding:16px; display:flex; flex-direction:column; gap:12px}
+.actioncard.main{border-width:2px; border-color:color-mix(in srgb, var(--accent) 40%, var(--line))}
+.actionrow{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+.actiontag{display:inline-block; font-size:13px; font-weight:700; padding:2px 10px; border-radius:999px;
+  background:var(--accent-soft); color:var(--accent); width:fit-content}
+.actiontag.tertiary{background:var(--tertiary-soft); color:var(--tertiary)}
+.actionmeta{font-size:13px; color:var(--dim); margin-left:8px}
+.actiontitle{font-size:18px; font-weight:600; margin-top:4px}
+.actionsub{font-size:14px; color:var(--dim); margin-top:2px}
+.actionicon{width:44px; height:44px; border-radius:50%; flex:0 0 auto;
+  background:var(--accent-soft); color:var(--accent); display:grid; place-items:center; font-size:22px}
+.actioncard.tertiary .actionicon{background:var(--tertiary-soft); color:var(--tertiary)}
+.actionbtn{width:100%; height:50px; border-radius:var(--radius-lg,12px); font-size:16px; font-weight:700;
+  border:1px solid var(--line); background:var(--card); color:var(--fg); cursor:pointer}
+.actionbtn.primary{background:var(--accent); color:var(--accent-fg); border-color:var(--accent)}
+.actionbtn:disabled{opacity:.55; cursor:default}
+
+/* 내일 — 오늘보다 가볍게, 작은 두 칸으로 (시안엔 없지만 우리 앱은 예습도 보여줘야 함) */
+.plantom{display:grid; grid-template-columns:1fr 1fr; gap:8px}
 .plancell{border:1px solid var(--line); border-radius:12px; padding:12px 12px 14px;
   min-height:74px; display:flex; flex-direction:column; gap:4px}
 .plancell.go{cursor:pointer}
