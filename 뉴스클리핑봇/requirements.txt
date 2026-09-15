@@ -1,0 +1,6 @@
+feedparser>=6.0
+anthropic>=0.40
+pywinauto>=0.6.9 ; sys_platform == "win32"
+pyperclip>=1.9
+pywin32>=306 ; sys_platform == "win32"
+requests>=2.31
