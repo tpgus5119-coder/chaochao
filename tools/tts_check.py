@@ -21,7 +21,10 @@ from difflib import SequenceMatcher
 
 R = pathlib.Path(__file__).resolve().parent.parent
 OUT = R / "data" / "_ttschk.json"
-VOICES = {"f": "북부 여", "m": "북부 남", "sf": "남부 여", "sm": "남부 남"}
+# 남부 목소리는 2026-09-09에 완전히 없앴다(audio/sf, audio/sm 폴더 자체가 없음).
+# 예전처럼 VOICES에 넣어 두면 sf/sm이 늘 "파일 없음"이 돼 worst=0이 되고 모든
+# 낱말이 거짓으로 "크게 어긋남" 처리된다 — 북부 둘만 본다.
+VOICES = {"f": "북부 여", "m": "북부 남"}
 key = lambda t: hashlib.sha1(t.encode()).hexdigest()[:12]
 
 
@@ -79,6 +82,15 @@ def main():
     if dp.exists():
         dj = json.loads(dp.read_text(encoding="utf-8"))
         new += [w for x in dj.get("days", []) for w in (x.get("words") or [])]
+    # 기초단어(GYBM 4기수, 대표님 지시 2026-09-15) — 낱말과 예문 둘 다 검수 대상.
+    #   여기 안 넣으면 order.json/days.json만 보는 예전 구멍이 그대로 반복된다.
+    bp = R / "data" / "basicwords.json"
+    if bp.exists():
+        bj = json.loads(bp.read_text(encoding="utf-8"))
+        for w in bj["words"]:
+            new.append({"vi": w["vi"], "ko": w["ko"]})
+            if w.get("ex"):
+                new.append({"vi": w["ex"]["vi"], "ko": w["ex"]["ko"]})
     seen_v, uniq = set(), []
     for w in new:
         if w.get("vi") and w["vi"] not in seen_v:

@@ -1929,6 +1929,8 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .bwstar{color:#e0a500; font-weight:700; letter-spacing:1px}
 .bwvi.weekly{text-decoration:underline; text-decoration-color:var(--bad); text-decoration-thickness:2px;
   text-underline-offset:3px}
+.dictrow .bwimg{grid-column:1/-1; width:72px; height:72px; border-radius:10px; object-fit:cover;
+  margin-bottom:2px; background:var(--surface-2,var(--bg))}
 
 /* 카드뉴스 */
 .cardbtn{margin:-6px 0 12px; align-self:flex-start}

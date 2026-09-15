@@ -27,10 +27,14 @@ def collect(data):
     for d in data["days"]:
         for w in d["words"]:
             out[w["vi"]] = "word"
-        for l in d["dialog"]["lines"]:
-            out[l["vi"]] = "sent"          # 대화 문장은 느린 버전도
-        for t in d["dialog"].get("extra", []):
-            out.setdefault(t["vi"] if isinstance(t, dict) else t, "ex")
+            if w.get("ex"): out.setdefault(w["ex"]["vi"], "sent")   # 회화책 새 짜임 — 예문이 낱말 안에 있다
+        # 예전 짜임(대화문 dialog)이 없는 날도 있다(회화책 새 짜임, 2026-09) — 있을 때만 읽는다
+        dlg = d.get("dialog")
+        if dlg:
+            for l in dlg.get("lines", []):
+                out[l["vi"]] = "sent"      # 대화 문장은 느린 버전도
+            for t in dlg.get("extra", []):
+                out.setdefault(t["vi"] if isinstance(t, dict) else t, "ex")
     # 실전 단어(선배 시험)도 소리를 만든다 (대표님 지시, 2026-08-29).
     #    없으면 듣기·자판 쓰기 문제가 아예 안 나오고 '읽기' 하나로 쪼그라든다.
     #    기기 목소리로 때울 수도 있지만, 베트남어 목소리가 없는 폰이 많다.
@@ -38,6 +42,15 @@ def collect(data):
     if sp.exists():
         for w in json.loads(sp.read_text(encoding="utf-8"))["words"]:
             out.setdefault(w[0], "word")
+    # 기초단어(GYBM 17~20기 선배 단어시험, 대표님 지시 2026-09-15) — 낱말과,
+    # 붙여 둔 예문이 있으면 그것도 같이 소리를 만든다. 북쪽 목소리만(VOICES가 이미
+    # 북쪽 남녀 둘뿐이라 손 안 댐), 예문에도 남녀 다 필요해서 words와 같은 자리에 담는다.
+    bp = ROOT / "data" / "basicwords.json"
+    if bp.exists():
+        for w in json.loads(bp.read_text(encoding="utf-8"))["words"]:
+            out.setdefault(w["vi"], "word")
+            if w.get("ex"):
+                out.setdefault(w["ex"]["vi"], "sent")
     # 새 짜임(일곱 권) — 낱말과 그 낱말의 예문 (2026-08-30)
     # **order.json** 이다 — 예전 course.json 을 읽고 있어서 새 낱말이 통째로 빠졌었다.
     #   낱말 1,100개와 예문 1,763개에 소리가 없었다 (2026-08-30 검수에서 드러남)
@@ -84,7 +97,13 @@ async def one(text, voice_id, voice_name, rate):
         return False
     path.parent.mkdir(parents=True, exist_ok=True)
     kw = {"rate": "-40%"} if rate else {}
-    await edge_tts.Communicate(text, voice_name, **kw).save(str(path))
+    try:
+        # 시간제한이 없으면 마이크로소프트 쪽이 느려질 때 8자리(SEM)가 전부 멈춰 붙어
+        # 전체가 그대로 굳는다(실측: 4만 3천개에서 몇십 분째 그대로) — 20초로 끊는다.
+        await asyncio.wait_for(edge_tts.Communicate(text, voice_name, **kw).save(str(path)), timeout=20)
+    except Exception:
+        if path.exists(): path.unlink()   # 쓰다 만 파일이 남으면 다음에 '있음'으로 착각해 건너뛴다
+        raise
     return True
 
 SEM = asyncio.Semaphore(8)

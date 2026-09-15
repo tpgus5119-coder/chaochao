@@ -6278,6 +6278,13 @@ function basicWordsBuild(cb) {
 function basicWordRow(x) {
   const row = el('button', 'dictrow basicrow');
   row.type = 'button';
+  // 그림이 있으면 맨 위 한 줄 전체를 차지한다(.dictrow의 [dvi][dkr][dko] 3칸
+  // 그리드는 그대로 두고, grid-column:1/-1로 그 위에 얹는다 — .dex와 같은 요령).
+  if (x.img) {
+    const im = new Image(); im.alt = ''; im.className = 'bwimg';
+    im.src = 'img/' + x.img;
+    row.append(im);
+  }
   // .dictrow는 [dvi][dkr][dko] 3칸 그리드다 — 별을 딴 칸으로 안 붙이고 dvi 안에
   // 같이 넣어야 기존 사전 화면 줄 짜임을 안 깬다.
   const vi = el('span', 'dvi');
@@ -6286,6 +6293,7 @@ function basicWordRow(x) {
   row.append(vi);
   if (x.kr_read) row.append(el('span', 'dkr', '[' + esc(x.kr_read) + ']'));
   row.append(el('span', 'dko', esc(x.ko)));
+  if (x.ex) row.append(el('span', 'dex', esc(x.ex.vi) + ' — ' + esc(x.ex.ko)));
   row.onclick = () => { const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
   return row;
 }
