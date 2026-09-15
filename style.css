@@ -199,6 +199,22 @@ button:active{transform:scale(.98)}
   border:1.5px solid var(--accent); border-radius:999px;
   font-size:14px; font-weight:700; color:var(--accent)}
 
+/* 정답 세리머니 — fxTone() 옆 주석 참고. 화면 위쪽 가운데 살짝 떴다 사라지는
+   배지 하나뿐이다 — 화면을 덮는 컨페티는 안 쓴다(대표님 지시 "화려하기보다는
+   절제되지 않게": 있다/없다로 갈리는 두 극단 말고 그 중간을 고른 것). */
+.celebrate{
+  position:fixed; left:50%; top:calc(env(safe-area-inset-top) + 78px);
+  transform:translate(-50%, -10px) scale(.92); opacity:0;
+  display:flex; align-items:center; gap:8px;
+  background:var(--accent); color:var(--accent-fg);
+  padding:9px 16px; border-radius:999px; font-size:15px; font-weight:700;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+  pointer-events:none; z-index:60;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1), opacity .22s;
+}
+.celebrate.on{ transform:translate(-50%, 0) scale(1); opacity:1 }
+.celeb-i{font-size:18px}
+
 /* 미션 */
 .mgoal{font-size:22px; font-weight:700; margin:0 0 10px; word-break:keep-all}
 .mhow{color:var(--dim); margin:0 0 20px}
@@ -1906,6 +1922,13 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
 .dictrow .dkr{font-size:12.5px; color:var(--dim); white-space:nowrap}
 .dictrow .dko{font-size:14px}
 .dictrow .dex{grid-column:1/-1; font-size:12.5px; color:var(--dim); line-height:1.45; margin-top:2px}
+
+/* 기초단어(선배 단어시험) — 별은 몇 기수에 겹쳐 나왔는지, 빨간 밑줄은 그중
+   '주간' 시험에 나온 적이 있다는 뜻(대표님 지시, 2026-09-15: "별만 표시하면된다",
+   "주에 한번 보는 시험은 빨간 밑줄해주면된다"). */
+.bwstar{color:#e0a500; font-weight:700; letter-spacing:1px}
+.bwvi.weekly{text-decoration:underline; text-decoration-color:var(--bad); text-decoration-thickness:2px;
+  text-underline-offset:3px}
 
 /* 카드뉴스 */
 .cardbtn{margin:-6px 0 12px; align-self:flex-start}

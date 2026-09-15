@@ -757,7 +757,12 @@ function soundRow(text, withSlow) {
 }
 
 /* 정답·오답 소리 — 답한 '즉시' 오는 피드백이 늦게 오는 피드백보다 낫다.
-   소리는 짧고 작게(0.2초), 진동은 안드로이드에서만 울린다. */
+   소리는 짧고 작게(0.2초), 진동은 안드로이드에서만 울린다.
+   이 함수는 앱 안의 모든 퀴즈 종류(단어 맞추기·성조·타이핑·문형 등, 18곳)가
+   정답 판정 직후 공통으로 부른다 — 그래서 정답 세리머니를 여기 한 곳에만 붙이면
+   어떤 퀴즈에서 풀든 똑같이 나온다(대표님 지시, 2026-09-15: "xp 마스코트 세레머니를
+   하나로 합쳐줘. 화려하기보다는 그래도 절제되지 않게" — 아이콘+글 한 덩어리로,
+   화면을 다 덮는 컨페티는 안 쓰고 짧게 뜨고 사라지는 배지 하나로 절충한다). */
 function fxTone(ok) {
   try {
     const c = getCtx(), t = c.currentTime;
@@ -779,6 +784,22 @@ function fxTone(ok) {
     }
     navigator.vibrate?.(ok ? 12 : 60);
   } catch (e) { }
+  celebrate(ok);
+}
+/* 연속 정답 — 이 세션(새로고침 전까지) 동안만 센다. 저장 안 함 —
+   진짜 실력 지표(S.stats)와 섞이면 안 되는, 그저 지금 흥이 오르고 있다는 표시일 뿐. */
+let FX_STREAK = 0;
+function celebrate(ok) {
+  if (!ok) { FX_STREAK = 0; return; }
+  FX_STREAK++;
+  const old = document.querySelector('.celebrate'); if (old) old.remove();
+  const el2 = document.createElement('div');
+  el2.className = 'celebrate';
+  el2.innerHTML = '<span class="celeb-i">🎓</span><span class="celeb-t">' +
+    (FX_STREAK >= 3 ? tr(FX_STREAK + '연속 정답!') : tr('정답이에요!')) + '</span>';
+  document.body.append(el2);
+  requestAnimationFrame(() => el2.classList.add('on'));
+  setTimeout(() => { el2.classList.remove('on'); setTimeout(() => el2.remove(), 220); }, 1100);
 }
 
 /* 성조를 화살표로 그린다 — 이름 없이 방향과 끝점만. 화살촉이 소리가 끝나는 곳이다 */
@@ -1487,6 +1508,7 @@ function studyHubEntry() {
     b.append(btn);
   };
   row('회화', '단어·문법·기본기 전체 목차', courseEntry);
+  row('기초단어', 'GYBM 선배들이 실제로 본 단어시험 낱말 모음', basicWordsEntry);
   row('시험 대비', '시험에 자주 나오는 표현 위주 (준비 중)', () =>
     alert('시험 대비 전용 학습 콘텐츠는 아직 준비 중입니다. 지금은 아래 "시험" 탭에서 모의고사로 연습해 보세요.'));
   row('복습', '잊을 때 된 것을 다시 봅니다', () => reviewMenu('all'));
@@ -6237,6 +6259,73 @@ function dictEntry() {
   draw();
   show('sub', '사전', true);
   setTimeout(() => inp.focus(), 60);
+}
+
+/* 기초단어 — GYBM 17~20기 선배들이 1년간 실제로 본 단어시험 낱말을 하나로 합친 것
+   (대표님 지시, 2026-09-15). 직무 회화(courseEntry)와는 완전히 별개 자료다.
+   별은 몇 기수 시험에 겹쳐 나왔는지(2기수=1★·3기수=2★·4기수=3★, 1기수만이면 별 없음),
+   빨간 밑줄은 그 낱말이 실린 회차 중 '주간'(매주 한 번) 시험이 있었다는 뜻 — 둘 다
+   data/basicwords.json 만들 때 실제로 센 값이다(지어낸 등급이 아니다).
+   17기 원본엔 애초에 '주간' 구분이 없다 — 그래서 17기에서만 나온 낱말은 밑줄을
+   못 그린다("안 나왔다"가 아니라 "그 기수는 기록 자체가 없다"는 뜻). */
+let BASICWORDS = null;
+function basicWordsBuild(cb) {
+  if (BASICWORDS) { cb(BASICWORDS); return; }
+  fetch('data/basicwords.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { BASICWORDS = j.words; cb(BASICWORDS); })
+    .catch(() => { BASICWORDS = []; cb(BASICWORDS); });
+}
+function basicWordRow(x) {
+  const row = el('button', 'dictrow basicrow');
+  row.type = 'button';
+  // .dictrow는 [dvi][dkr][dko] 3칸 그리드다 — 별을 딴 칸으로 안 붙이고 dvi 안에
+  // 같이 넣어야 기존 사전 화면 줄 짜임을 안 깬다.
+  const vi = el('span', 'dvi');
+  vi.append(el('span', 'bwvi' + (x.weekly ? ' weekly' : ''), esc(x.vi)));
+  if (x.star) vi.append(el('span', 'bwstar', ' ' + '★'.repeat(x.star)));
+  row.append(vi);
+  if (x.kr_read) row.append(el('span', 'dkr', '[' + esc(x.kr_read) + ']'));
+  row.append(el('span', 'dko', esc(x.ko)));
+  row.onclick = () => { const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
+  return row;
+}
+function basicWordsEntry() {
+  const b = $('#subBody'); b.textContent = '';
+  b.append(el('p', 'lede', tr('불러오는 중…')));
+  show('sub', '기초단어', true);
+  basicWordsBuild(words => {
+    b.textContent = '';
+    b.append(el('p', 'lede', tr('선배들이 실제로 본 단어시험 N개 · ★는 겹쳐 나온 기수 수 · 빨간 밑줄은 주간시험')
+      .replace('N', words.length.toLocaleString('ko-KR'))));
+    const inp = el('input', 'keyin dictin');
+    inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
+    const out = el('div', 'dictout');
+    const draw = () => {
+      const q = inp.value.trim();
+      out.textContent = '';
+      let list, note;
+      if (q.length < 1) {
+        list = words.filter(x => x.star > 0);
+        note = tr('여러 기수에 겹쳐 나온 것부터 N개 — 찾는 말을 입력하면 전체에서 찾습니다').replace('N', list.length);
+      } else {
+        const qb = dictBare(q), qk = q.toLowerCase();
+        const kor = /[가-힣]/.test(q);
+        list = words.filter(x => kor ? x.ko.toLowerCase().includes(qk)
+                                      : (dictBare(x.vi).includes(qb) || x.vi.toLowerCase().includes(qk)));
+        note = tr('N개 찾음').replace('N', list.length);
+      }
+      out.append(el('p', 'note', note));
+      list = list.slice(0, 80);
+      if (!list.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
+      list.forEach(x => out.append(basicWordRow(x)));
+      if (list.length >= 80) out.append(el('p', 'note', tr('앞 80개만 보입니다 — 더 적어 보세요')));
+    };
+    let tm = null;
+    inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
+    b.append(inp, out);
+    draw();
+    setTimeout(() => inp.focus(), 60);
+  });
 }
 
 function wordbookEntry() { SBOX = 'srs'; WB = 'star'; drawWordbook(); }
