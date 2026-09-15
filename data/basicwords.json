@@ -1,31 +1,34 @@
 {
- "note": "GYBM 17~20기 선배 단어시험 전수를 하나로 합친 것(2차, 불량 거름). 직무 회화(order.json)와는 완전히 별개 — 순수 단어시험 낱말만. 원본 스캔에 섞여 있던 문장·괄호조각·영문 전용 항목은 규칙으로 걸러냈다(거른 사유별 개수는 만든 로그에 남아 있다). star: 2기수=1·3기수=2·4기수=3(1기수만이면 0). weekly: 그 낱말이 실린 회차 중 하나라도 '주간' 시험이었던 적이 있으면 true — 17기는 원본 자체에 '주간' 표시가 하나도 없다(데이터 공백, 지어내지 않음).",
+ "note": "GYBM 17~20기 선배 단어시험 전수를 하나로 합친 것(3차, 정밀 검수 — 사전 47,341표제어와 대조 + 눈으로 358곳 확인). 직무 회화(order.json)와는 완전히 별개 — 순수 단어시험 낱말만.",
  "cohorts_included": [
   "17",
   "18",
   "19",
   "20"
  ],
- "known_gap": "17기 원본에는 '주간' 표시가 전혀 없다 — 17기에서만 나온 낱말은 주간 여부를 알 수 없어 weekly=false로 둔다(실제로 안 나왔다는 뜻이 아니라 기록이 없다는 뜻).",
+ "known_gaps": [
+  "17기 원본에는 '주간' 표시가 전혀 없다 — 17기에서만 나온 낱말은 weekly=false로 둔다.",
+  "18기 '주간' 세트 11개(368개 낱말, 인도네시아어 90여 개 포함)는 원본 자체가 손상돼 있어(서로 다른 낱말이 한 자리에 뒤섞임) 통째로 뺐다 — 그래서 18기도 17기처럼 '주간' 자료가 없다. 지어내지 않고 공백으로 정직하게 남긴다."
+ ],
  "raw_counts_by_cohort": {
   "17": {
-   "일일": 1585,
+   "일일": 1559,
    "주간": 0,
    "기타": 0
   },
   "18": {
-   "일일": 2145,
-   "주간": 168,
+   "일일": 2111,
+   "주간": 0,
    "기타": 0
   },
   "19": {
-   "일일": 2138,
-   "주간": 212,
+   "일일": 2127,
+   "주간": 209,
    "기타": 79
   },
   "20": {
-   "일일": 2731,
-   "주간": 1833,
+   "일일": 2730,
+   "주간": 1831,
    "기타": 1130
   }
  },
@@ -51,12 +54,18 @@
    "기타": 1
   }
  },
+ "excluded_corrupted_set_word_counts": {
+  "18": 459
+ },
  "drop_reasons": {
-  "ko_문장끝": 24,
-  "vi_문장끝": 457,
-  "vi_5단어+": 510,
+  "ko_문장끝": 54,
+  "vi_문장끝": 455,
+  "exact_제외": 13,
+  "vi_5단어+": 240,
   "vi_영어축약형": 1,
-  "vi_괄호안맞음": 18,
+  "손으로_제외": 5,
+  "vi_괄호안맞음": 17,
+  "ko_끊긴채끝남": 11,
   "ko_한글없음": 386
  },
  "words": [
@@ -1098,7 +1107,7 @@
     "17"
    ],
    "star": 3,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "thiết kế",
@@ -1605,7 +1614,7 @@
     "17"
    ],
    "star": 3,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "vất vả",
@@ -1823,7 +1832,7 @@
     "17"
    ],
    "star": 2,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "an toàn",
@@ -1898,6 +1907,18 @@
    "weekly": true
   },
   {
+   "vi": "bài kiểm tra",
+   "ko": "시험(test)",
+   "kr_read": "바이 끼엠 짜",
+   "cohorts": [
+    "20",
+    "18",
+    "17"
+   ],
+   "star": 2,
+   "weekly": true
+  },
+  {
    "vi": "bàn phím",
    "ko": "키보드 (keyboard)",
    "kr_read": "반 핌",
@@ -1908,18 +1929,6 @@
    ],
    "star": 2,
    "weekly": false
-  },
-  {
-   "vi": "bày",
-   "ko": "진열하다 (display)",
-   "kr_read": "바이",
-   "cohorts": [
-    "20",
-    "18",
-    "17"
-   ],
-   "star": 2,
-   "weekly": true
   },
   {
    "vi": "bán",
@@ -2159,7 +2168,7 @@
     "17"
    ],
    "star": 2,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "chia sẻ",
@@ -2277,18 +2286,6 @@
     "20",
     "19",
     "18"
-   ],
-   "star": 2,
-   "weekly": false
-  },
-  {
-   "vi": "chê",
-   "ko": "비난하다, 흉보다",
-   "kr_read": "쩨",
-   "cohorts": [
-    "20",
-    "19",
-    "17"
    ],
    "star": 2,
    "weekly": false
@@ -3263,7 +3260,7 @@
     "17"
    ],
    "star": 2,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "giải tán",
@@ -3419,7 +3416,7 @@
     "18"
    ],
    "star": 2,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "hiệu quả",
@@ -3453,18 +3450,6 @@
     "20",
     "18",
     "17"
-   ],
-   "star": 2,
-   "weekly": false
-  },
-  {
-   "vi": "huyện",
-   "ko": "현 (행정구역)",
-   "kr_read": "후옌",
-   "cohorts": [
-    "20",
-    "19",
-    "18"
    ],
    "star": 2,
    "weekly": false
@@ -3521,6 +3506,18 @@
    "vi": "hân hạnh",
    "ko": "영광이다 (pleased)",
    "kr_read": "헌 하인",
+   "cohorts": [
+    "20",
+    "19",
+    "18"
+   ],
+   "star": 2,
+   "weekly": true
+  },
+  {
+   "vi": "hãy",
+   "ko": "~하자 let's",
+   "kr_read": "하이",
    "cohorts": [
     "20",
     "19",
@@ -3605,6 +3602,18 @@
    "vi": "hầu hết",
    "ko": "대부분 (most)",
    "kr_read": "허우 헷",
+   "cohorts": [
+    "20",
+    "18",
+    "17"
+   ],
+   "star": 2,
+   "weekly": true
+  },
+  {
+   "vi": "hết",
+   "ko": "다 떨어지다 run out",
+   "kr_read": "헷",
    "cohorts": [
     "20",
     "18",
@@ -3938,18 +3947,6 @@
    "weekly": true
   },
   {
-   "vi": "là",
-   "ko": "이다(be)",
-   "kr_read": "라",
-   "cohorts": [
-    "20",
-    "18",
-    "17"
-   ],
-   "star": 2,
-   "weekly": false
-  },
-  {
    "vi": "làng",
    "ko": "마을 (village)",
    "kr_read": "랑",
@@ -4037,6 +4034,18 @@
    "vi": "lạc đường",
    "ko": "길을 잃다 get lost",
    "kr_read": "락 드엉",
+   "cohorts": [
+    "20",
+    "19",
+    "18"
+   ],
+   "star": 2,
+   "weekly": true
+  },
+  {
+   "vi": "lắng nghe",
+   "ko": "귀 기울여 듣다listen carefully",
+   "kr_read": "랑 응애",
    "cohorts": [
     "20",
     "19",
@@ -4322,6 +4331,18 @@
    "weekly": false
   },
   {
+   "vi": "một lát",
+   "ko": "잠시, 이따가a moment, later",
+   "kr_read": "못 랏",
+   "cohorts": [
+    "20",
+    "19",
+    "18"
+   ],
+   "star": 2,
+   "weekly": true
+  },
+  {
    "vi": "mục đích",
    "ko": "목적 (purpose)",
    "kr_read": "묵 딕",
@@ -4520,18 +4541,6 @@
    "cohorts": [
     "20",
     "18",
-    "17"
-   ],
-   "star": 2,
-   "weekly": true
-  },
-  {
-   "vi": "nhu cầu",
-   "ko": "수요 (demand)",
-   "kr_read": "뉴 꺼우",
-   "cohorts": [
-    "20",
-    "19",
     "17"
    ],
    "star": 2,
@@ -5102,6 +5111,18 @@
    "weekly": true
   },
   {
+   "vi": "sản phẩm",
+   "ko": "제품 product",
+   "kr_read": "싼 펌",
+   "cohorts": [
+    "20",
+    "18",
+    "17"
+   ],
+   "star": 2,
+   "weekly": true
+  },
+  {
    "vi": "sẵn sàng",
    "ko": "준비되다 (ready)",
    "kr_read": "싼 쌍",
@@ -5363,7 +5384,7 @@
     "18"
    ],
    "star": 2,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "thường",
@@ -6026,6 +6047,18 @@
    "weekly": true
   },
   {
+   "vi": "tất cả",
+   "ko": "모두 all",
+   "kr_read": "떳 까",
+   "cohorts": [
+    "20",
+    "18",
+    "17"
+   ],
+   "star": 2,
+   "weekly": true
+  },
+  {
    "vi": "tất nhiên",
    "ko": "당연히 (of course, naturally)",
    "kr_read": "떳 니엔",
@@ -6206,6 +6239,18 @@
    "weekly": true
   },
   {
+   "vi": "vì sao",
+   "ko": "왜 why",
+   "kr_read": "비 싸오",
+   "cohorts": [
+    "20",
+    "18",
+    "17"
+   ],
+   "star": 2,
+   "weekly": true
+  },
+  {
    "vi": "vòng cổ",
    "ko": "목걸이 (necklace)",
    "kr_read": "봉 꼬",
@@ -6307,18 +6352,6 @@
    "kr_read": "브어",
    "cohorts": [
     "20",
-    "18",
-    "17"
-   ],
-   "star": 2,
-   "weekly": false
-  },
-  {
-   "vi": "vững bền",
-   "ko": "견고한, 오래가는 (firm, lasting)",
-   "kr_read": "븡 벤",
-   "cohorts": [
-    "19",
     "18",
     "17"
    ],
@@ -6791,7 +6824,7 @@
     "18"
    ],
    "star": 2,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "đóng",
@@ -7738,17 +7771,6 @@
    "weekly": true
   },
   {
-   "vi": "bài kiểm tra",
-   "ko": "시험(test)",
-   "kr_read": "바이 끼엠 짜",
-   "cohorts": [
-    "20",
-    "17"
-   ],
-   "star": 1,
-   "weekly": true
-  },
-  {
    "vi": "bài phát biểu",
    "ko": "연설문 / 발표문",
    "kr_read": "바이 팟 비에우",
@@ -7782,6 +7804,17 @@
    "weekly": false
   },
   {
+   "vi": "bày",
+   "ko": "진열하다 (display)",
+   "kr_read": "바이",
+   "cohorts": [
+    "20",
+    "18"
+   ],
+   "star": 1,
+   "weekly": true
+  },
+  {
    "vi": "bán buôn",
    "ko": "도매하다(북부 표현) (to wholesale)",
    "kr_read": "반 부온",
@@ -7810,6 +7843,17 @@
    "cohorts": [
     "20",
     "17"
+   ],
+   "star": 1,
+   "weekly": true
+  },
+  {
+   "vi": "báo cáo",
+   "ko": "보고서 report",
+   "kr_read": "바오 까오",
+   "cohorts": [
+    "20",
+    "18"
    ],
    "star": 1,
    "weekly": true
@@ -8052,6 +8096,17 @@
    "cohorts": [
     "20",
     "19"
+   ],
+   "star": 1,
+   "weekly": true
+  },
+  {
+   "vi": "bắt đầu",
+   "ko": "시작하다 to begin",
+   "kr_read": "밧 더우",
+   "cohorts": [
+    "20",
+    "18"
    ],
    "star": 1,
    "weekly": true
@@ -8580,6 +8635,17 @@
    "cohorts": [
     "20",
     "17"
+   ],
+   "star": 1,
+   "weekly": false
+  },
+  {
+   "vi": "chê",
+   "ko": "비난하다, 흉보다",
+   "kr_read": "쩨",
+   "cohorts": [
+    "20",
+    "19"
    ],
    "star": 1,
    "weekly": false
@@ -9242,7 +9308,7 @@
     "17"
    ],
    "star": 1,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "căng thẳng",
@@ -9495,7 +9561,7 @@
     "18"
    ],
    "star": 1,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "cặp nhiệt độ",
@@ -10287,7 +10353,7 @@
     "17"
    ],
    "star": 1,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "giữa tháng",
@@ -10642,6 +10708,17 @@
    "weekly": false
   },
   {
+   "vi": "huyện",
+   "ko": "현 (행정구역)",
+   "kr_read": "후옌",
+   "cohorts": [
+    "20",
+    "18"
+   ],
+   "star": 1,
+   "weekly": false
+  },
+  {
    "vi": "hài kịch",
    "ko": "희극, 코미디 comedy",
    "kr_read": "하이 끽",
@@ -10717,17 +10794,6 @@
    ],
    "star": 1,
    "weekly": false
-  },
-  {
-   "vi": "hãy",
-   "ko": "~하자 let's",
-   "kr_read": "하이",
-   "cohorts": [
-    "20",
-    "19"
-   ],
-   "star": 1,
-   "weekly": true
   },
   {
    "vi": "hình dáng",
@@ -10923,17 +10989,6 @@
    "cohorts": [
     "20",
     "19"
-   ],
-   "star": 1,
-   "weekly": true
-  },
-  {
-   "vi": "hết",
-   "ko": "다 떨어지다 run out",
-   "kr_read": "헷",
-   "cohorts": [
-    "20",
-    "17"
    ],
    "star": 1,
    "weekly": true
@@ -11940,6 +11995,17 @@
    "weekly": true
   },
   {
+   "vi": "là",
+   "ko": "이다(be)",
+   "kr_read": "라",
+   "cohorts": [
+    "20",
+    "17"
+   ],
+   "star": 1,
+   "weekly": false
+  },
+  {
    "vi": "làm",
    "ko": "일하다",
    "kr_read": "람",
@@ -12149,6 +12215,17 @@
    "weekly": true
   },
   {
+   "vi": "lại",
+   "ko": "다시 - again",
+   "kr_read": "라이",
+   "cohorts": [
+    "20",
+    "18"
+   ],
+   "star": 1,
+   "weekly": true
+  },
+  {
    "vi": "lạnh run",
    "ko": "오한이 나는",
    "kr_read": "라인 준",
@@ -12202,17 +12279,6 @@
    ],
    "star": 1,
    "weekly": false
-  },
-  {
-   "vi": "lắng nghe",
-   "ko": "귀 기울여 듣다listen carefully",
-   "kr_read": "랑 응애",
-   "cohorts": [
-    "20",
-    "19"
-   ],
-   "star": 1,
-   "weekly": true
   },
   {
    "vi": "lễ hội",
@@ -12716,17 +12782,6 @@
    "cohorts": [
     "20",
     "18"
-   ],
-   "star": 1,
-   "weekly": true
-  },
-  {
-   "vi": "một lát",
-   "ko": "잠시, 이따가a moment, later",
-   "kr_read": "못 랏",
-   "cohorts": [
-    "20",
-    "19"
    ],
    "star": 1,
    "weekly": true
@@ -13260,6 +13315,17 @@
    "weekly": true
   },
   {
+   "vi": "nhu cầu",
+   "ko": "수요 (demand)",
+   "kr_read": "뉴 꺼우",
+   "cohorts": [
+    "20",
+    "19"
+   ],
+   "star": 1,
+   "weekly": true
+  },
+  {
    "vi": "nhuộm tóc",
    "ko": "머리를 염색하다 (To dye hair)",
    "kr_read": "누옴 똑",
@@ -13384,6 +13450,17 @@
    "vi": "nhận ra",
    "ko": "알아차리다 (realize)",
    "kr_read": "년 자",
+   "cohorts": [
+    "20",
+    "18"
+   ],
+   "star": 1,
+   "weekly": true
+  },
+  {
+   "vi": "nhắm",
+   "ko": "(눈을) 감다 close (eyes)",
+   "kr_read": "냠",
    "cohorts": [
     "20",
     "18"
@@ -13565,7 +13642,7 @@
     "18"
    ],
    "star": 1,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "nơi",
@@ -14294,6 +14371,17 @@
    "weekly": true
   },
   {
+   "vi": "ra ngoài",
+   "ko": "바깥쪽으로 나가다",
+   "kr_read": "자 응오아이",
+   "cohorts": [
+    "20",
+    "18"
+   ],
+   "star": 1,
+   "weekly": true
+  },
+  {
    "vi": "reo",
    "ko": "파업하다",
    "kr_read": "재오",
@@ -14380,17 +14468,6 @@
    ],
    "star": 1,
    "weekly": true
-  },
-  {
-   "vi": "rẽ phải",
-   "ko": "오른쪽으로 돌다 / ( turn right )",
-   "kr_read": "재 파이",
-   "cohorts": [
-    "19",
-    "18"
-   ],
-   "star": 1,
-   "weekly": false
   },
   {
    "vi": "rỗi",
@@ -14646,17 +14723,6 @@
    "weekly": false
   },
   {
-   "vi": "sản phẩm",
-   "ko": "제품 product",
-   "kr_read": "싼 펌",
-   "cohorts": [
-    "20",
-    "17"
-   ],
-   "star": 1,
-   "weekly": true
-  },
-  {
    "vi": "sản phụ",
    "ko": "산부 (임산부)",
    "kr_read": "싼 푸",
@@ -14852,7 +14918,7 @@
     "18"
    ],
    "star": 1,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "tham khảo",
@@ -15614,6 +15680,17 @@
    "weekly": false
   },
   {
+   "vi": "tiếp tục",
+   "ko": "계속하다 continue",
+   "kr_read": "띠엡 뚝",
+   "cohorts": [
+    "20",
+    "18"
+   ],
+   "star": 1,
+   "weekly": true
+  },
+  {
    "vi": "tiết kiệm",
    "ko": "절약하다 save money",
    "kr_read": "띠엣 끼엠",
@@ -15678,17 +15755,6 @@
    ],
    "star": 1,
    "weekly": false
-  },
-  {
-   "vi": "to",
-   "ko": "큰",
-   "kr_read": "또",
-   "cohorts": [
-    "19",
-    "18"
-   ],
-   "star": 1,
-   "weekly": true
   },
   {
    "vi": "trang hoàng",
@@ -16527,17 +16593,6 @@
    "weekly": false
   },
   {
-   "vi": "tất cả",
-   "ko": "모두 all",
-   "kr_read": "떳 까",
-   "cohorts": [
-    "20",
-    "17"
-   ],
-   "star": 1,
-   "weekly": true
-  },
-  {
    "vi": "tần suất",
    "ko": "빈도 (frequency)",
    "kr_read": "떤 쑤엇",
@@ -16857,17 +16912,6 @@
    "weekly": false
   },
   {
-   "vi": "vì sao",
-   "ko": "왜 why",
-   "kr_read": "비 싸오",
-   "cohorts": [
-    "20",
-    "17"
-   ],
-   "star": 1,
-   "weekly": true
-  },
-  {
    "vi": "vòng tay",
    "ko": "팔찌",
    "kr_read": "봉 따이",
@@ -17075,6 +17119,17 @@
    ],
    "star": 1,
    "weekly": true
+  },
+  {
+   "vi": "vững bền",
+   "ko": "견고한, 오래가는 (firm, lasting)",
+   "kr_read": "븡 벤",
+   "cohorts": [
+    "19",
+    "17"
+   ],
+   "star": 1,
+   "weekly": false
   },
   {
    "vi": "xa xỉ",
@@ -17361,17 +17416,6 @@
    ],
    "star": 1,
    "weekly": true
-  },
-  {
-   "vi": "ý nghĩa",
-   "ko": "의미 (meaning)",
-   "kr_read": "이 응이어",
-   "cohorts": [
-    "20",
-    "17"
-   ],
-   "star": 1,
-   "weekly": false
   },
   {
    "vi": "ý thức",
@@ -18185,7 +18229,7 @@
     "18"
    ],
    "star": 1,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "ảnh thẻ",
@@ -18207,7 +18251,7 @@
     "17"
    ],
    "star": 1,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "ầm ĩ",
@@ -18273,16 +18317,6 @@
     "17"
    ],
    "star": 1,
-   "weekly": false
-  },
-  {
-   "vi": "(Chứ)",
-   "ko": "아저씨 / 이름은 / 무엇인가요",
-   "kr_read": "쯔",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
    "weekly": false
   },
   {
@@ -18376,16 +18410,6 @@
    "weekly": false
   },
   {
-   "vi": "(mình, cô giáo)",
-   "ko": "나는 / 분명 / 선생님께 / 한소리(비난하다) / 듣게 / 될거야",
-   "kr_read": "민 꼬 자오",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "(một) vài",
    "ko": "약간의, 몇몇의",
    "kr_read": "못 바이",
@@ -18421,16 +18445,6 @@
    "kr_read": "따 이 싸오",
    "cohorts": [
     "20"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "1km",
-   "ko": "서점은 / 여기서 / 약 / 정도 / 떨어져 / 있다.",
-   "kr_read": "",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": false
@@ -18476,29 +18490,9 @@
    "weekly": false
   },
   {
-   "vi": "A chứ không B",
-   "ko": "A하지만 / B는 / 아니다",
-   "kr_read": "아 쯔 콩",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "A xong",
    "ko": "A를 / 끝내다",
    "kr_read": "아 쏭",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "A/S",
-   "ko": "큰 / 거리부터 / 작은 / 골목 / 곳곳에 / 크고 / 작은 / 센터가 / 생겨나고 / 있다.",
-   "kr_read": "아",
    "cohorts": [
     "17"
    ],
@@ -18556,26 +18550,6 @@
    "weekly": false
   },
   {
-   "vi": "Anna",
-   "ko": "잘가요",
-   "kr_read": "안 나",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "Atap",
-   "ko": "지붕",
-   "kr_read": "아 땁",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "B ạ n tôi",
    "ko": "내 / 친구",
    "kr_read": "아 또이",
@@ -18604,16 +18578,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Balai-balai",
-   "ko": "작은 평상",
-   "kr_read": "바 라이 바 라이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Balan",
@@ -18656,36 +18620,6 @@
    "weekly": false
   },
   {
-   "vi": "Bergerak",
-   "ko": "움직이다",
-   "kr_read": "배",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Bermanfaat",
-   "ko": "유익하다",
-   "kr_read": "배",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Bertahan",
-   "ko": "견디다, 버티다",
-   "kr_read": "배",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Biên giới",
    "ko": "국경",
    "kr_read": "비엔 저이",
@@ -18724,26 +18658,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Boyongan",
-   "ko": "이사",
-   "kr_read": "보 이오 응안",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Brutal",
-   "ko": "잔인한, 무식한",
-   "kr_read": "",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Buồn",
@@ -18866,16 +18780,6 @@
    "weekly": false
   },
   {
-   "vi": "Bé Minh rất ngoan",
-   "ko": "민이는 말을 잘들어요",
-   "kr_read": "배 민 젓 응오안",
-   "cohorts": [
-    "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "Bình",
    "ko": "보통",
    "kr_read": "빈",
@@ -18941,16 +18845,6 @@
    "kr_read": "반 또이",
    "cohorts": [
     "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "Bạn vất vả rồi",
-   "ko": "고생하셨네요",
-   "kr_read": "반 벗 바 조이",
-   "cohorts": [
-    "19"
    ],
    "star": 0,
    "weekly": false
@@ -19226,16 +19120,6 @@
    "weekly": false
   },
   {
-   "vi": "Chào buổi sáng",
-   "ko": "좋은 아침이에요",
-   "kr_read": "짜오 부오이 쌍",
-   "cohorts": [
-    "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "Chìm dần",
    "ko": "침전되다",
    "kr_read": "찜 전",
@@ -19423,7 +19307,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Chỉ thị",
@@ -19893,7 +19777,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Cảm cúm",
@@ -19911,16 +19795,6 @@
    "kr_read": "깜 응이",
    "cohorts": [
     "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "Cảm ơn",
-   "ko": "감사합니다",
-   "kr_read": "깜 언",
-   "cohorts": [
-    "17"
    ],
    "star": 0,
    "weekly": false
@@ -20016,16 +19890,6 @@
    "weekly": false
   },
   {
-   "vi": "Damai",
-   "ko": "평화, 화해",
-   "kr_read": "자 마이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Danh thiếp",
    "ko": "명함 (Name Card)",
    "kr_read": "자인 티엡",
@@ -20044,16 +19908,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Devisa negara",
-   "ko": "외환 보유고",
-   "kr_read": "재 비 싸 내 가 자",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Diểm tốt",
@@ -20246,16 +20100,6 @@
    "weekly": false
   },
   {
-   "vi": "Ekspor",
-   "ko": "수출",
-   "kr_read": "애",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Em",
    "ko": "동생",
    "kr_read": "앰",
@@ -20326,46 +20170,6 @@
    "weekly": false
   },
   {
-   "vi": "Filsafat",
-   "ko": "철학",
-   "kr_read": "이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "GYBM",
-   "ko": "17기 / 파이팅!",
-   "kr_read": "기",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "GYBM18",
-   "ko": "형은 / 제품번호 / 에어컨을 / 5대 / 구매하셨죠?",
-   "kr_read": "기",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "Garasi",
-   "ko": "차고",
-   "kr_read": "가 자 씨",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Giao dịch",
    "ko": "거래, 교류 (Transaction, dealings)",
    "kr_read": "자오 직",
@@ -20393,7 +20197,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Giày",
@@ -20486,16 +20290,6 @@
    "weekly": false
   },
   {
-   "vi": "Giúp tôi với",
-   "ko": "도와주세요",
-   "kr_read": "줍 또이 버이",
-   "cohorts": [
-    "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "Giải pháp",
    "ko": "해결책(Solution)",
    "kr_read": "자이 팝",
@@ -20563,7 +20357,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Giới thiệu",
@@ -20591,16 +20385,6 @@
    "kr_read": "저 하인 찐",
    "cohorts": [
     "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "Gybm",
-   "ko": "학교는 / 비록 / 크고 / 넓지만, / 오고 / 가기에는(왕복하기에는) / 편리하지 / 않다.",
-   "kr_read": "기",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": false
@@ -20684,16 +20468,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Harum",
-   "ko": "향기로운, 유명한",
-   "kr_read": "하 줌",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Hiền lành",
@@ -20796,16 +20570,6 @@
    "weekly": false
   },
   {
-   "vi": "Huy",
-   "ko": "저 / 아저씨 / 이름은 / 입니다저의 / 오빠요",
-   "kr_read": "후이",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "Huy chương",
    "ko": "메달",
    "kr_read": "후이 쯔엉",
@@ -20813,7 +20577,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Hy vọng",
@@ -20983,7 +20747,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Hắt xì hơi",
@@ -21116,126 +20880,6 @@
    "weekly": false
   },
   {
-   "vi": "Ilmu hitam",
-   "ko": "마법",
-   "kr_read": "이 히 땀",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Impor",
-   "ko": "수입",
-   "kr_read": "임 뽀",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Jangkung",
-   "ko": "키가 큰",
-   "kr_read": "안",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Justru",
-   "ko": "오히려",
-   "kr_read": "우",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Kasak-kusuk",
-   "ko": "쏙닥쏙닥",
-   "kr_read": "까 싸 꾸 쑤",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Kebiri",
-   "ko": "거세된, 거세당한",
-   "kr_read": "깨 비 지",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Kegiatan",
-   "ko": "활동",
-   "kr_read": "깨 자 딴",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Keharuan",
-   "ko": "감동",
-   "kr_read": "깨 하 주언",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Kejutan",
-   "ko": "놀람",
-   "kr_read": "깨 우 딴",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Kenangan",
-   "ko": "추억",
-   "kr_read": "깨 난 간",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Kerajinan",
-   "ko": "수공예, 공예",
-   "kr_read": "깨 자 이 난",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Kesuksesan",
-   "ko": "성공",
-   "kr_read": "깨 쑤",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Khai giảng",
    "ko": "개강·개학 (opening ceremony / school opening)",
    "kr_read": "카이 장",
@@ -21273,7 +20917,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Khách hàng",
@@ -21291,16 +20935,6 @@
    "kr_read": "캐오 래오",
    "cohorts": [
     "20"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "Không",
-   "ko": "틀린 / 대답아니다",
-   "kr_read": "콩",
-   "cohorts": [
-    "17"
    ],
    "star": 0,
    "weekly": false
@@ -21353,7 +20987,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Kinh đô",
@@ -21394,26 +21028,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Komoditas unggulan",
-   "ko": "주요 품목",
-   "kr_read": "꼬 모 지 따 웅 구 란",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Korban",
-   "ko": "희생자, 피해자",
-   "kr_read": "꼬",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Kí túc xá",
@@ -21524,26 +21138,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Lekat",
-   "ko": "달라붙은",
-   "kr_read": "래 깟",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Lelaki",
-   "ko": "남자",
-   "kr_read": "래 라 끼",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Liên hệ",
@@ -21726,26 +21320,6 @@
    "weekly": false
   },
   {
-   "vi": "Malaikat",
-   "ko": "천사",
-   "kr_read": "마 라이 깟",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Maling",
-   "ko": "도둑",
-   "kr_read": "마 링",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Mang",
    "ko": "가져오다, 가져가다 (to bring, carry)",
    "kr_read": "망",
@@ -21754,86 +21328,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "Memang",
-   "ko": "확실히, 정말로",
-   "kr_read": "매 망",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Memilih",
-   "ko": "선택하다",
-   "kr_read": "매 미 리",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Memperhatikan",
-   "ko": "주의를 기울이다, 관심을 두다",
-   "kr_read": "맴 빼",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Memprediksi",
-   "ko": "예측하다",
-   "kr_read": "맴",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Menerapkan",
-   "ko": "적용하다",
-   "kr_read": "매 내 잡 깐",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Menetap",
-   "ko": "정착하다",
-   "kr_read": "매 내 땁",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Mengendap-endap",
-   "ko": "숨다, 몰래 기어가다",
-   "kr_read": "맨 갠 잡 앤 잡",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Mister",
-   "ko": "Seong이 / 수리할 / 줄 / 알아요!",
-   "kr_read": "미",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "Mong đợi",
@@ -21854,16 +21348,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Mula-mula",
-   "ko": "사전에, 처음에, ~부터",
-   "kr_read": "무 라 무 라",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Màu",
@@ -22076,16 +21560,6 @@
    "weekly": false
   },
   {
-   "vi": "Mở trang",
-   "ko": "펴세요",
-   "kr_read": "머 짱",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "Mục tiêu",
    "ko": "목표(Goal)",
    "kr_read": "묵 띠에우",
@@ -22171,16 +21645,6 @@
    "kr_read": "응이엠 뚝",
    "cohorts": [
     "20"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "Nghỉ một chút",
-   "ko": "조금 쉬세요",
-   "kr_read": "응이 못 쭛",
-   "cohorts": [
-    "19"
    ],
    "star": 0,
    "weekly": false
@@ -22534,66 +21998,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Pandangan",
-   "ko": "관점",
-   "kr_read": "빤 잔 간",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Pembuangan",
-   "ko": "폐기, 버림",
-   "kr_read": "뺌 부언 간",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Penasaran",
-   "ko": "궁금하다",
-   "kr_read": "빼 나 싸 잔",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Pengusaha",
-   "ko": "사업가",
-   "kr_read": "뺀 구 싸 하",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Pentungan",
-   "ko": "방망이, 몽둥이",
-   "kr_read": "뺀 뚠 간",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Permintaan",
-   "ko": "수요, 요청",
-   "kr_read": "빼",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Phiếu mua hàng",
@@ -22976,16 +22380,6 @@
    "weekly": true
   },
   {
-   "vi": "Ragu-ragu",
-   "ko": "망설이는",
-   "kr_read": "자 구 자 구",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Rang",
    "ko": "볶다",
    "kr_read": "장",
@@ -23036,46 +22430,6 @@
    "weekly": false
   },
   {
-   "vi": "Sadis",
-   "ko": "잔인한, 포악한",
-   "kr_read": "싸 지",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Sahabat",
-   "ko": "절친한 친구",
-   "kr_read": "싸 하 밧",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Sama sekali",
-   "ko": "전혀",
-   "kr_read": "싸 마 쌔 까 리",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Sambangan",
-   "ko": "방문",
-   "kr_read": "쌈 반 간",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Sau khi",
    "ko": "~후에 (after)",
    "kr_read": "싸우 키",
@@ -23094,56 +22448,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Sekaligus",
-   "ko": "동시에",
-   "kr_read": "쌔 까 리 구",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Seni",
-   "ko": "예술",
-   "kr_read": "쌔 니",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Senter",
-   "ko": "손전등",
-   "kr_read": "쌘 때",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Seragam",
-   "ko": "교복",
-   "kr_read": "쌔 자 감",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Sumbangan",
-   "ko": "기부, 원조",
-   "kr_read": "쑴 반 간",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Suốt ngày",
@@ -23183,7 +22487,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Sản phẩm",
@@ -23293,7 +22597,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Sửa chữa",
@@ -23304,56 +22608,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Tambang",
-   "ko": "말뚝, 밧줄",
-   "kr_read": "땀 방",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Tanaman",
-   "ko": "식물, 작물",
-   "kr_read": "따 나 만",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Tembikar",
-   "ko": "도자기",
-   "kr_read": "땜 비 까",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Terjun",
-   "ko": "뛰어들다, 잠수하다",
-   "kr_read": "때 준",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Teror",
-   "ko": "테러",
-   "kr_read": "때 조",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Thanh toán",
@@ -23643,7 +22897,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Thị trường",
@@ -23724,16 +22978,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "Timbul",
-   "ko": "나타나다, 생기다",
-   "kr_read": "띰 부",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "Tin nhắn",
@@ -24003,7 +23247,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Trẻ",
@@ -24066,26 +23310,6 @@
    "weekly": true
   },
   {
-   "vi": "Tulus",
-   "ko": "진심 어린",
-   "kr_read": "뚜 루",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "Turut",
-   "ko": "따르다",
-   "kr_read": "뚜 줏",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Tuy",
    "ko": "~에도 / 불구하고 / 비록 / ~일지라도",
    "kr_read": "뚜이",
@@ -24133,7 +23357,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Tác dụng",
@@ -24186,16 +23410,6 @@
    "weekly": false
   },
   {
-   "vi": "Tôi đói quá",
-   "ko": "저는 너무 배고파요",
-   "kr_read": "또이 도이 꽈",
-   "cohorts": [
-    "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "Tùy",
    "ko": "~에 / 따라서 / 의지하다",
    "kr_read": "뚜이",
@@ -24223,7 +23437,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Tư vấn",
@@ -24383,7 +23597,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Tốt",
@@ -24466,16 +23680,6 @@
    "weekly": false
   },
   {
-   "vi": "Ungkapkan",
-   "ko": "표현하다",
-   "kr_read": "웅 깝 깐",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Uống",
    "ko": "마시다.",
    "kr_read": "우옹",
@@ -24484,16 +23688,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "VN",
-   "ko": "언니 / 뉴스(news) / 신문 / 한 / 부만 / 사주세요",
-   "kr_read": "",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "Vi rút",
@@ -24816,16 +24010,6 @@
    "weekly": false
   },
   {
-   "vi": "Xin lỗi",
-   "ko": "실례합니다",
-   "kr_read": "씬 로이",
-   "cohorts": [
-    "19"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "Xin phép",
    "ko": "(허락을)구하다",
    "kr_read": "씬 팹",
@@ -24906,61 +24090,11 @@
    "weekly": false
   },
   {
-   "vi": "Yuki",
-   "ko": "그 / (여자)선생님의 / 성함은 / 입니까?",
-   "kr_read": "이우 끼",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "Yêu cầu",
    "ko": "요청(Request)",
    "kr_read": "이에우 꺼우",
    "cohorts": [
     "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "a",
-   "ko": "lot/much/many/많은 / 춤추다(뛰다)",
-   "kr_read": "아",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "a moment một lát",
-   "ko": "잠시, / 잠깐",
-   "kr_read": "아 모 맨 못 랏",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "all, everything tất cả",
-   "ko": "모든 / 것, / 모두",
-   "kr_read": "아 애 배 지 팅 떳 까",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "always thường xuyên",
-   "ko": "자주, / (*규칙적인 / 경우)",
-   "kr_read": "아 라 이 트엉 쑤옌",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": false
@@ -25096,46 +24230,6 @@
    "weekly": false
   },
   {
-   "vi": "ba lô số đo",
-   "ko": "치수, / 사이즈",
-   "kr_read": "바 로 쏘 도",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "bahan baku",
-   "ko": "원자재",
-   "kr_read": "바 한 바 꾸",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "bahan kimia anorganik",
-   "ko": "무기화학물",
-   "kr_read": "바 한 끼 미어 아 노",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "bahan penolong",
-   "ko": "중간재",
-   "kr_read": "바 한 빼 노 롱",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "ban bảo vệ",
    "ko": "보안팀, / 경비팀",
    "kr_read": "반 바오 베",
@@ -25206,26 +24300,6 @@
    "weekly": false
   },
   {
-   "vi": "barang konsumsi",
-   "ko": "소비재",
-   "kr_read": "바 장 꼰 쑴 씨",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "barang modal",
-   "ko": "자본재",
-   "kr_read": "바 장 모 자",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "bay bướm",
    "ko": "화려하다, 현란하다 (flamboyant, fancy)",
    "kr_read": "바이 브엄",
@@ -25234,26 +24308,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "be",
-   "ko": "able/can/할 / 수 / 있",
-   "kr_read": "배",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "besi dan baja",
-   "ko": "철강",
-   "kr_read": "배 씨 잔 바 아",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "bia hơi",
@@ -25363,7 +24417,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "biển báo dừng lại",
@@ -25773,7 +24827,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "bán đảo",
@@ -25859,16 +24913,6 @@
    "vi": "báo",
    "ko": "신문 newspaper",
    "kr_read": "바오",
-   "cohorts": [
-    "20"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "báo cáo",
-   "ko": "보고서 report",
-   "kr_read": "바오 까오",
    "cohorts": [
     "20"
    ],
@@ -26336,16 +25380,6 @@
    "weekly": false
   },
   {
-   "vi": "bảo hành AS",
-   "ko": "보증,",
-   "kr_read": "바오 하인 아",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "bảo hành dài hạn",
    "ko": "장기 보증 / dài hạn: 장기",
    "kr_read": "바오 하인 자이 한",
@@ -26576,16 +25610,6 @@
    "weekly": false
   },
   {
-   "vi": "bắt chước quần bò",
-   "ko": "청바지",
-   "kr_read": "밧 쯔억 꾸언 보",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "bắt dầu",
    "ko": "시작하다",
    "kr_read": "밧 저우",
@@ -26604,16 +25628,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "bắt đầu",
-   "ko": "시작하다 to begin",
-   "kr_read": "밧 더우",
-   "cohorts": [
-    "20"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "bằng C",
@@ -26643,7 +25657,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "bếp điện",
@@ -26807,13 +25821,13 @@
   },
   {
    "vi": "bị ngã xuống hồ",
-   "ko": "호수에 빠지게 되다",
+   "ko": "호수에 / 빠지게 / 되다",
    "kr_read": "비 응아 쑤옹 호",
    "cohorts": [
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "bị thu hẹp",
@@ -27426,16 +26440,6 @@
    "weekly": false
   },
   {
-   "vi": "cho em làm cùng",
-   "ko": "저도 같이 할게요",
-   "kr_read": "쪼 앰 람 꿍",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "cho phép",
    "ko": "허락하다 (to allow / to permit)",
    "kr_read": "쪼 팹",
@@ -27697,18 +26701,8 @@
   },
   {
    "vi": "cháo",
-   "ko": "죽 / 절개(수술)",
+   "ko": "죽",
    "kr_read": "짜오",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "cháo mổ áo phông",
-   "ko": "죽 / 절개(수술) / 티셔츠",
-   "kr_read": "짜오 모 아오 퐁",
    "cohorts": [
     "18"
    ],
@@ -28226,41 +27220,11 @@
    "weekly": false
   },
   {
-   "vi": "chẩn đoán nhẫn",
-   "ko": "진단하다 / 치마/드레스 / 반지",
-   "kr_read": "쩐 도안 년",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "chẩn đoán váy nhẫn",
-   "ko": "진단하다 / 치마/드레스 / 반지",
-   "kr_read": "쩐 도안 바이 년",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "chậu cây",
    "ko": "화분 plant pot",
    "kr_read": "쩌우 꺼이",
    "cohorts": [
     "20"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "chắc hành lý",
-   "ko": "확실하다, / 분명하다 / 수하물, / 짐 / 서행 / 그다음",
-   "kr_read": "짝 하인 리",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": true
@@ -28376,16 +27340,6 @@
    "weekly": true
   },
   {
-   "vi": "chết Oh! My God",
-   "ko": "죽다,",
-   "kr_read": "쩻 오 미 고",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "chếđộim lặng",
    "ko": "무음모드",
    "kr_read": "쩨 도이 랑",
@@ -28493,7 +27447,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "chịu trách nhiệm",
@@ -28571,16 +27525,6 @@
    "kr_read": "쩝",
    "cohorts": [
     "20"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "chờ một lát",
-   "ko": "잠시만요",
-   "kr_read": "쩌 못 랏",
-   "cohorts": [
-    "17"
    ],
    "star": 0,
    "weekly": false
@@ -28856,16 +27800,6 @@
    "weekly": false
   },
   {
-   "vi": "close (eyes) nhắm",
-   "ko": "(눈을)감다",
-   "kr_read": "애 이 애 냠",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "coi là",
    "ko": "~로 여기다 (consider as)",
    "kr_read": "꼬이 라",
@@ -29041,16 +27975,6 @@
    "kr_read": "꼰 대",
    "cohorts": [
     "20"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "continue tiếp tục",
-   "ko": "계속하다",
-   "kr_read": "꼰 띠 누 애 띠엡 뚝",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": false
@@ -29957,13 +28881,13 @@
   },
   {
    "vi": "cùng chúng tôi",
-   "ko": "우리와 함께",
+   "ko": "우리와 / 함께",
    "kr_read": "꿍 쭝 또이",
    "cohorts": [
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "cùng loại",
@@ -29977,23 +28901,13 @@
   },
   {
    "vi": "cùng mục đích",
-   "ko": "같은 목적",
+   "ko": "같은 / 목적",
    "kr_read": "꿍 묵 딕",
    "cohorts": [
     "18"
    ],
    "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "cùng với nhau",
-   "ko": "함께(=với nhau, với)",
-   "kr_read": "꿍 버이 냐우",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "cúi",
@@ -30746,16 +29660,6 @@
    "weekly": true
   },
   {
-   "vi": "cố lên",
-   "ko": "힘내세요",
-   "kr_read": "꼬 렌",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "cố đô",
    "ko": "옛 수도",
    "kr_read": "꼬 도",
@@ -30973,7 +29877,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "cử",
@@ -31197,13 +30101,13 @@
   },
   {
    "vi": "diều khiển",
-   "ko": "지휘하다, 통제하다",
+   "ko": "지휘하다, / 통제하다",
    "kr_read": "지에우 키엔",
    "cohorts": [
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "diễn tả",
@@ -31371,16 +30275,6 @@
    "kr_read": "장 응으어이",
    "cohorts": [
     "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "dân ca",
-   "ko": "민요",
-   "kr_read": "전 까",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": false
@@ -31673,16 +30567,6 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "dẹp",
-   "ko": "잘생겼어요",
-   "kr_read": "잽",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
    "weekly": false
   },
   {
@@ -31924,26 +30808,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "finished, run out hết",
-   "ko": "끝나다, / 다 / 쓰다",
-   "kr_read": "이 니 준 오우 헷",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "fold, hurry gấp",
-   "ko": "접다, / 급하다",
-   "kr_read": "오 후 겁",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "gam",
@@ -32596,16 +31460,6 @@
    "weekly": true
   },
   {
-   "vi": "go outside ra ngoài",
-   "ko": "밖으로 / 나가다",
-   "kr_read": "고 오우 자 응오아이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "gà con",
    "ko": "병아리 chick",
    "kr_read": "가 꼰",
@@ -32863,7 +31717,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "gọi (món)",
@@ -32993,7 +31847,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "gừng xay",
@@ -33224,16 +32078,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "hoa mỹ quét reo",
-   "ko": "화려한 / 스캔하다",
-   "kr_read": "호아 미 꾸앳 재오",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "hoa tai",
@@ -34046,16 +32890,6 @@
    "weekly": false
   },
   {
-   "vi": "hấp tấp /nóng Hinh",
-   "ko": "제 친구는 아주 즐거운 사람이에요",
-   "kr_read": "헙 떱 농 힌",
-   "cohorts": [
-    "19"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "hấp tấp /nóng tính",
    "ko": "성격이 급한",
    "kr_read": "헙 떱 농 띤",
@@ -34416,16 +33250,6 @@
    "weekly": true
   },
   {
-   "vi": "hợp tác chỗ chạy",
-   "ko": "협력하다 / 장소 / 수상 / 인형극장 / 달리기",
-   "kr_read": "헙 딱 쪼 짜이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "hợp với",
    "ko": "적합한 suitable",
    "kr_read": "헙 버이",
@@ -34496,31 +33320,11 @@
    "weekly": false
   },
   {
-   "vi": "industri pengolahan",
-   "ko": "제조업",
-   "kr_read": "인 주 뺀 고 라 한",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "inox",
    "ko": "스테인리스",
    "kr_read": "이 녹",
    "cohorts": [
     "20"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "kamar dagang dan industri(kadin)",
-   "ko": "상공회의소",
-   "kr_read": "까 마 자 강 잔 인 주",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": true
@@ -34711,16 +33515,6 @@
    "kr_read": "코앙 깍",
    "cohorts": [
     "20"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "khoảng lô",
-   "ko": "(~밖으로) / 나가다",
-   "kr_read": "코앙 로",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": true
@@ -34936,16 +33730,6 @@
    "weekly": false
   },
   {
-   "vi": "khát chịu khó sơ",
-   "ko": "목마른 / 노력하다",
-   "kr_read": "캇 찌우 코 써",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "khéo tay",
    "ko": "솜씨 좋은/교묘한 (skillful)",
    "kr_read": "캐오 따이",
@@ -35047,13 +33831,13 @@
   },
   {
    "vi": "không còn chỗ",
-   "ko": "더 이상 자리가(공간이) 없어",
+   "ko": "더 / 이상 / 자리가(공간이) / 없어",
    "kr_read": "콩 꼰 쪼",
    "cohorts": [
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "không gian thoáng",
@@ -35124,16 +33908,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "không thích",
-   "ko": "싫어요",
-   "kr_read": "콩 틱",
-   "cohorts": [
-    "19"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "không thấy ai cả",
@@ -35626,16 +34400,6 @@
    "weekly": false
   },
   {
-   "vi": "kopi, teh, dan rempah-rempah",
-   "ko": "커피,차,향신료",
-   "kr_read": "꼬 삐 때 잔 잼 빠 잼 빠",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "kèm",
    "ko": "~에 동반하다, 딸려주다",
    "kr_read": "깸",
@@ -35926,16 +34690,6 @@
    "weekly": false
   },
   {
-   "vi": "lapangan kerja",
-   "ko": "일자리",
-   "kr_read": "라 빤 간 깨 자",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "len",
    "ko": "울, 양모",
    "kr_read": "랜",
@@ -36006,16 +34760,6 @@
    "weekly": false
   },
   {
-   "vi": "listen carefully lắng nghe",
-   "ko": "귀 / 기울여 / 듣다",
-   "kr_read": "리 까 재 우 랑 응애",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "liên minh",
    "ko": "연합, 연맹",
    "kr_read": "리엔 민",
@@ -36064,16 +34808,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "logam mulia",
-   "ko": "귀금속",
-   "kr_read": "로 감 무 리어",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "loét",
@@ -36586,16 +35320,6 @@
    "weekly": false
   },
   {
-   "vi": "lại",
-   "ko": "다시 - again",
-   "kr_read": "라이",
-   "cohorts": [
-    "20"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "lạnh giá",
    "ko": "매우 추운",
    "kr_read": "라인 자",
@@ -36877,13 +35601,13 @@
   },
   {
    "vi": "lỗi chính tả",
-   "ko": "맞춤법 오류",
+   "ko": "맞춤법 / 오류",
    "kr_read": "로이 찐 따",
    "cohorts": [
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "lộc",
@@ -37086,16 +35810,6 @@
    "weekly": false
   },
   {
-   "vi": "mid day",
-   "ko": "(아침~정오 / 전까지)",
-   "kr_read": "미 자이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "mililít",
    "ko": "밀리리터 milliliter",
    "kr_read": "미 리 릿",
@@ -37231,16 +35945,6 @@
    "kr_read": "무어 도 라",
    "cohorts": [
     "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "musical",
-   "ko": "instrument/악",
-   "kr_read": "무 씨 까",
-   "cohorts": [
-    "18"
    ],
    "star": 0,
    "weekly": false
@@ -38206,16 +36910,6 @@
    "weekly": true
   },
   {
-   "vi": "mổ áo phông",
-   "ko": "티셔츠",
-   "kr_read": "모 아오 퐁",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "mỗi A một B",
    "ko": "각각 / A는 / B이다",
    "kr_read": "모이 아 못",
@@ -38423,7 +37117,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "mời uống nước",
@@ -38824,16 +37518,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "nghỉ ngơi trèo lên",
-   "ko": "돌다 / 휴식하다 / 기어오르다 / 멀다",
-   "kr_read": "응이 응어이 째오 렌",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "nghịch",
@@ -40496,16 +39180,6 @@
    "weekly": false
   },
   {
-   "vi": "nhắm",
-   "ko": "(눈을) 감다 close (eyes)",
-   "kr_read": "냠",
-   "cohorts": [
-    "20"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "nhắm mắt vào",
    "ko": "눈을 감다 close one's eyes",
    "kr_read": "냠 맛 바오",
@@ -40593,7 +39267,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "ninh ninh",
@@ -40644,16 +39318,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "nào cả",
-   "ko": "전혀 ~없다",
-   "kr_read": "나오 까",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "nát",
@@ -41304,56 +39968,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "pangsa pasar",
-   "ko": "시장 점유율",
-   "kr_read": "빵 싸 빠 싸",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "peningkatan ekspor",
-   "ko": "수출증가",
-   "kr_read": "빼 닝 까 딴 애",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "peningkatan impor",
-   "ko": "수입증가",
-   "kr_read": "빼 닝 까 딴 임 뽀",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "perangkat optik",
-   "ko": "광학기기",
-   "kr_read": "빼 장 깟 옵 띠",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
-   "vi": "perhiasan",
-   "ko": "보석",
-   "kr_read": "빼",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "pha",
@@ -42276,36 +40890,6 @@
    "weekly": true
   },
   {
-   "vi": "please, invite, offer mời",
-   "ko": "초대하다, / 권하다",
-   "kr_read": "인 비 때 오 애 머이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "please, let hãy",
-   "ko": "~하세요, / ~합시다",
-   "kr_read": "랫 하이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "product sản phẩm",
-   "ko": "제품",
-   "kr_read": "싼 펌",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "qua đêm",
    "ko": "하룻밤 묵다 (overnight)",
    "kr_read": "꽈 뎀",
@@ -42373,7 +40957,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "quen",
@@ -42906,16 +41490,6 @@
    "weekly": false
   },
   {
-   "vi": "ra ngoài",
-   "ko": "바깥쪽으로 나가다",
-   "kr_read": "자 응오아이",
-   "cohorts": [
-    "20"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "ra viện",
    "ko": "퇴원하다",
    "kr_read": "자 비엔",
@@ -42974,16 +41548,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "report báo cáo",
-   "ko": "보고하다",
-   "kr_read": "재 뽀 바오 까오",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "riêng tư",
@@ -43216,6 +41780,16 @@
    "weekly": false
   },
   {
+   "vi": "rẽ phải",
+   "ko": "오른쪽으로 돌다 / ( turn right )",
+   "kr_read": "재 파이",
+   "cohorts": [
+    "19"
+   ],
+   "star": 0,
+   "weekly": false
+  },
+  {
    "vi": "rẽ tay phải",
    "ko": "우회전 turn right",
    "kr_read": "재 따이 파이",
@@ -43234,16 +41808,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "rẽ trái",
-   "ko": "왼쪽으로 도세요",
-   "kr_read": "재 짜이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "rễ cây",
@@ -43274,16 +41838,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "rộng bao nhiêu",
-   "ko": "얼마나 넓어요",
-   "kr_read": "종 바오 니에우",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "rộng lượng",
@@ -43396,16 +41950,6 @@
    "weekly": false
   },
   {
-   "vi": "salt muối fall ngã",
-   "ko": "소금 / 넘어지다",
-   "kr_read": "싸 무오이 아 응아",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "san vật",
    "ko": "특산물 (local produce)",
    "kr_read": "싼 벗",
@@ -43434,16 +41978,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "sau đó,",
-   "ko": "그 / 다음,",
-   "kr_read": "싸우 도",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "say",
@@ -43609,16 +42143,6 @@
    "vi": "song song",
    "ko": "평행한",
    "kr_read": "쏭 쏭",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "stay lại",
-   "ko": "머무르다, / 남다",
-   "kr_read": "라이",
    "cohorts": [
     "18"
    ],
@@ -44183,7 +42707,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "sống động",
@@ -44454,16 +42978,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "tennis",
-   "ko": "ground/테니스 / 1.~했습니까? / 2.아직~않",
-   "kr_read": "때 니",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "tennis (quần vợt)",
@@ -45353,7 +43867,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "thông minh",
@@ -45669,16 +44183,6 @@
    "vi": "thấy nóng",
    "ko": "덥다고 / 느끼다",
    "kr_read": "터이 농",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "thấy see]",
-   "ko": "보다[to",
-   "kr_read": "터이 쌔 애",
    "cohorts": [
     "17"
    ],
@@ -46466,16 +44970,6 @@
    "weekly": false
   },
   {
-   "vi": "tiếng tiếng\"",
-   "ko": "시간, / 언어 / \"1시간\")",
-   "kr_read": "띠엥 띠엥",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "tiếp cận",
    "ko": "접근하다, 가까이 하다",
    "kr_read": "띠엡 껀",
@@ -46524,16 +45018,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "tiếp tục",
-   "ko": "계속하다 continue",
-   "kr_read": "띠엡 뚝",
-   "cohorts": [
-    "20"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "tiết kiẹm tiền",
@@ -46716,44 +45200,14 @@
    "weekly": false
   },
   {
-   "vi": "to be",
-   "ko": "absent/결석한 / 약간의, / 몇몇의",
-   "kr_read": "또 배",
+   "vi": "to",
+   "ko": "큰",
+   "kr_read": "또",
    "cohorts": [
-    "18"
+    "19"
    ],
    "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "to miss",
-   "ko": "class/수업을빠",
-   "kr_read": "또 미",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "to summarize tóm tắt",
-   "ko": "요약하다",
-   "kr_read": "또 쑴 마 지 애 똠 땃",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "to try cố gắng",
-   "ko": "노력하다",
-   "kr_read": "또 찌 꼬 강",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
+   "weekly": true
   },
   {
    "vi": "toàn bộ",
@@ -48413,7 +46867,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "tấn",
@@ -48463,7 +46917,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "tầm nhìn xa",
@@ -49146,16 +47600,6 @@
    "weekly": true
   },
   {
-   "vi": "tự ĐT",
-   "ko": "스스로 / ~을 / 하다",
-   "kr_read": "뜨",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "tự động hóa",
    "ko": "자동화",
    "kr_read": "뜨 동 호아",
@@ -49533,7 +47977,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "vâng",
@@ -50176,16 +48620,6 @@
    "weekly": false
   },
   {
-   "vi": "why vì sao",
-   "ko": "왜",
-   "kr_read": "히 비 싸오",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "xanh lá (cây)",
    "ko": "초",
    "kr_read": "싸인 라 꺼이",
@@ -50364,16 +48798,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "xin cứ tự nhiên",
-   "ko": "편하게 하세요",
-   "kr_read": "씬 끄 뜨 니엔",
-   "cohorts": [
-    "20"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "xin học",
@@ -50903,7 +49327,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Ý hay đấy",
@@ -50964,16 +49388,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "áo mi",
-   "ko": "셔츠(와이셔츠)",
-   "kr_read": "아오 미",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "áo mưa",
@@ -51156,6 +49570,16 @@
    "weekly": false
   },
   {
+   "vi": "ý nghĩa",
+   "ko": "의미 (meaning)",
+   "kr_read": "이 응이어",
+   "cohorts": [
+    "20"
+   ],
+   "star": 0,
+   "weekly": false
+  },
+  {
    "vi": "Ăn",
    "ko": "먹다 to eat",
    "kr_read": "안",
@@ -51201,16 +49625,6 @@
    "kr_read": "디 방",
    "cohorts": [
     "17"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
-   "vi": "Đi cùng nhé",
-   "ko": "같이 가요",
-   "kr_read": "디 꿍 냬",
-   "cohorts": [
-    "19"
    ],
    "star": 0,
    "weekly": false
@@ -51313,7 +49727,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "Đã ... lại …",
@@ -51763,7 +50177,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "đi nhờ xe",
@@ -51834,16 +50248,6 @@
    ],
    "star": 0,
    "weekly": true
-  },
-  {
-   "vi": "đi đây đi đó",
-   "ko": "여기저기 / 다니다",
-   "kr_read": "디 더이 디 도",
-   "cohorts": [
-    "17"
-   ],
-   "star": 0,
-   "weekly": false
   },
   {
    "vi": "đi đò",
@@ -52213,7 +50617,7 @@
     "18"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "đáng quý",
@@ -52724,16 +51128,6 @@
    ],
    "star": 0,
    "weekly": false
-  },
-  {
-   "vi": "đưa thư cho ~",
-   "ko": "~에게 편지를 전달하다",
-   "kr_read": "드어 트 쪼",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
   },
   {
    "vi": "đường hầm",
@@ -53596,16 +51990,6 @@
    "weekly": false
   },
   {
-   "vi": "đối tác hợp tác",
-   "ko": "지속 / 가능한, / 지탱하다, / 오",
-   "kr_read": "도이 딱 헙 딱",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": true
-  },
-  {
    "vi": "đối xử",
    "ko": "대우하다, 다루다",
    "kr_read": "도이 쓰",
@@ -54076,16 +52460,6 @@
    "weekly": false
   },
   {
-   "vi": "đỡ rồi trình bày",
-   "ko": "이제 / 나아졌다 / 옷을 / 입다 / 19발표하다, / 제시하다, / 설명하",
-   "kr_read": "더 조이 찐 바이",
-   "cohorts": [
-    "18"
-   ],
-   "star": 0,
-   "weekly": false
-  },
-  {
    "vi": "đỡ ồn ào",
    "ko": "조용하다",
    "kr_read": "더 온 아오",
@@ -54137,13 +52511,13 @@
   },
   {
    "vi": "đừng ngại",
-   "ko": "부담 갖지 마세요",
+   "ko": "부끄러워하지 마세요 (don't be shy)",
    "kr_read": "등 응아이",
    "cohorts": [
     "20"
    ],
    "star": 0,
-   "weekly": true
+   "weekly": false
   },
   {
    "vi": "ưu tiên",
