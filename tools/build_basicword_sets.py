@@ -26,7 +26,15 @@ FILES = [
     ("20", R / "data" / "_senior_words.json"),
 ]
 EXCLUDE_SETS = {("18", "주간")}
-EXCLUDE_SET_NOS = {("18", "일일", 107), ("18", "일일", 412), ("18", "일일", 2412)}
+# 18기 '일일' 회차 번호 중 원본 스캔이 깨져 111(최대 일차)을 훌쩍 넘는 것들
+# (203·219·310·1218·2025 등 — 대표님 지적 2026-09-16). 회차 자체가 의미 없으니
+# 며칠차인지 주장하지 않고 '기타'로 돌린다 — 통째로 버리면(예전처럼 EXCLUDE) 그
+# 회차에만 있던 낱말(색깔 10개 등 18개)이 통째로 사라진다.
+CORRUPTED_DAYNO_TO_OTHER = {
+    ("18", "일일", 107), ("18", "일일", 203), ("18", "일일", 219),
+    ("18", "일일", 310), ("18", "일일", 412), ("18", "일일", 1218),
+    ("18", "일일", 2025), ("18", "일일", 2412),
+}
 BAD_VI_EXACT = {
     "gybm", "gybm18", "anna", "yuki", "mister", "no.", "1km", "a/s",
     "thấy see]", "tiếng tiếng\"", "to miss", "tự đt", "(mình, cô giáo)",
@@ -191,8 +199,10 @@ for gi, path in FILES:
     for s in d["sets"]:
         kind = s.get("kind", "기타")
         no = s.get("no")
-        if (gi, kind) in EXCLUDE_SETS or (gi, kind, no) in EXCLUDE_SET_NOS:
+        if (gi, kind) in EXCLUDE_SETS:
             continue
+        if (gi, kind, no) in CORRUPTED_DAYNO_TO_OTHER:
+            kind, no = "기타", 0  # 며칠차인지 주장하지 않고 '기타'로 합친다
         words_here = []
         for w in s.get("words", []):
             vi = (w.get("vi") or "").strip()
@@ -215,6 +225,16 @@ for gi, path in FILES:
             words_here.append(fv)
         if words_here:
             sets.append({"cohort": gi, "kind": kind, "no": no, "words": words_here})
+
+# 여러 원본 세트가 같은 자리(예: 방금 만든 18기 '기타')로 합쳐졌을 수 있다 — 하나로 묶는다
+merged = {}
+for s in sets:
+    key = (s["cohort"], s["kind"], s["no"])
+    if key in merged:
+        merged[key]["words"].extend(s["words"])
+    else:
+        merged[key] = s
+sets = list(merged.values())
 
 # 정렬: kind(일일→주간→기타) 먼저, 그 안에서 no 오름차순, 같은 no면 기수 20>19>18>17
 KIND_ORDER = {"일일": 0, "주간": 1, "기타": 2}
