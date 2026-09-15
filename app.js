@@ -4804,21 +4804,22 @@ function learntSet() {
   return LEARNT;
 }
 const findItem = vi => (SBOX === 'ssrs' ? seniorItems().find(w => w.vi === vi) : null)
+  || (SBOX === 'bsrs' ? (BASICWORDS || []).find(w => w.vi === vi) : null)
   || allWords().find(w => w.vi === vi)
   || allSents().find(x => x.vi === vi) || lessonSents().find(x => x.vi === vi);
 /* 오늘 꺼낼 카드 차례. 최근에 배운 것일수록 먼저 — 갓 배운 것이 가장 빨리 샌다.
    다만 오래 밀린 카드도 같이 올라와야 한다(2주까지). 안 그러면 밀린 카드가 영영 뒤에 남는다.
    ±3일 흔들기를 섞어 매번 같은 순서로 나오지 않게 한다. */
-/* 복습 창고가 **둘**이다 — 하루 5분 것(S.srs)과 실전 단어 것(S.ssrs).
+/* 복습 창고가 **셋**이다 — 하루 5분 것(S.srs)·실전 단어 것(S.ssrs)·기초단어 것(S.bsrs).
    대표님 지시: "복습은 이 테스트들은 다른거랑 섞이지 않게해주고".
-   한 창고에 담으면 하루 5분 복습에 실전 낱말 2,622개가 쏟아져 원래 공부가 묻힌다.
-   진도(S.done)도 따로 둔다(S.sdone) — 안 그러면 '오늘 몇 강 했나'가 부풀어 순위까지 어긋난다. */
+   한 창고에 담으면 하루 5분 복습에 실전/기초단어 낱말이 쏟아져 원래 공부가 묻힌다.
+   진도(S.done)도 따로 둔다(S.sdone·S.bdone) — 안 그러면 '오늘 몇 강 했나'가 부풀어 순위까지 어긋난다. */
 let SBOX = 'srs';
 const srsBox = () => (S[SBOX] = S[SBOX] || {});
-/* 오답노트도 창고별이다. 한 통에 담으면 하루 5분 오답노트에 실전 낱말이 섞인다
+/* 오답노트도 창고별이다. 한 통에 담으면 하루 5분 오답노트에 실전/기초단어가 섞인다
    — 대표님 지시(복습은 섞이지 않게)가 여기까지 걸린다. */
 const missBox = () => {
-  const k = SBOX === 'ssrs' ? 'smiss' : 'miss';
+  const k = SBOX === 'ssrs' ? 'smiss' : SBOX === 'bsrs' ? 'bmiss' : 'miss';
   return (S.stats[k] = S.stats[k] || {});
 };
 function dueWords() {
@@ -6297,10 +6298,96 @@ function basicWordRow(x) {
   row.onclick = () => { const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
   return row;
 }
+/* 회차 차례 — 20기 1일차 → 19기 1일차 → 18기 1일차 → 17기 1일차 → 20기 2일차 ...
+   (대표님 지시, 2026-09-15: "별표 순서로 하지말고... 가장 빠른 일차부터 순서대로").
+   원본 회차(사수·회차 번호)는 tools/build_basicword_sets.py가 4개 기수 원본 파일에서
+   되살려 data/basicword_sets.json으로 만들어 둔다 — basicwords.json은 기수를 합치며
+   회차 번호를 버렸기 때문이다(같은 낱말이 여러 기수·회차에 겹쳐 나와 번호 하나로 못 남는다).
+   별·빨간 밑줄(주간시험) 표시는 그대로 basicWordRow가 그린다 — 바뀐 건 순서뿐이다. */
+let BASICSETS = null, BW_BYVI = null;
+function basicSetsBuild(cb) {
+  if (BASICSETS) { cb(BASICSETS); return; }
+  fetch('data/basicword_sets.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { BASICSETS = j.sets; cb(BASICSETS); })
+    .catch(() => { BASICSETS = []; cb(BASICSETS); });
+}
+const bdone = () => (S.bdone = S.bdone || {});
+const bkey = t => 'B:' + t.cohort + t.kind + t.no;
+const bsetTitle = t => t.cohort + tr('기 · ') + (t.kind === '일일' ? t.no + tr('일차')
+  : t.kind === '주간' ? tr('주간 ') + t.no + tr('회') : tr('기타 모음'));
+
+/* 기초단어 학습 입구 — 다른 단어 학습과 같은 틀(회차 목록 → 배우기 → 시험 → 복습)을 쓴다
+   (대표님 지시: "그 선배 단어들도 다른 단어 학습과 동일하게 해줘. 배우고 복습하는것.").
+   창고(S.bsrs)·진도(S.bdone)·오답노트(S.stats.bmiss)를 전부 따로 두는 것은
+   실전 단어(S.ssrs)가 이미 쓰던 방식 그대로다 — 대표님 지시(복습은 안 섞이게)가 여기도 걸린다. */
 function basicWordsEntry() {
+  SBOX = 'bsrs';
   const b = $('#subBody'); b.textContent = '';
   b.append(el('p', 'lede', tr('불러오는 중…')));
   show('sub', '기초단어', true);
+  basicWordsBuild(() => basicSetsBuild(() => drawBasicSets()));
+}
+function drawBasicSets() {
+  SBOX = 'bsrs';
+  BW_BYVI = {}; BASICWORDS.forEach(w => { BW_BYVI[w.vi] = w; });
+  const b = $('#subBody'); b.textContent = '';
+
+  const head = el('div', 'catpick');
+  const due = Object.values(S.bsrs || {}).filter(v => v.due <= now()).length;
+  const met = Object.keys(S.bsrs || {}).length;
+  head.append(el('span', 'msub', tr('익힌 낱말') + ' ' + met + '/' + BASICWORDS.length + '  ·  '));
+  const rb = el('button', 'primary sm', tr('기초단어 복습') + (due ? ' (' + due + ')' : ''));
+  rb.onclick = () => { SBOX = 'bsrs'; dive(drawBasicSets); reviewMenu('word'); };
+  head.append(rb);
+  head.append(el('span', 'msub', tr('다른 복습과 섞이지 않습니다')));
+  b.append(head);
+
+  const sb = el('button', 'bigmenu');
+  sb.append(el('b', null, tr('🔍 낱말 찾기')), el('span', 'exmeta', tr('★ · 빨간 밑줄로 전체 훑어보기')));
+  sb.onclick = () => { dive(drawBasicSets); basicWordsSearch(); };
+  b.append(sb);
+
+  const box = S.bsrs || {};
+  const list = el('div', 'dictout');
+  BASICSETS.forEach(t => {
+    const k = bkey(t), done = !!bdone()[k];
+    const ws = t.words.map(v => BW_BYVI[v]).filter(Boolean);
+    if (!ws.length) return;
+    const got = ws.filter(w => box[w.vi]).length;
+    const btn = el('button', 'dictrow');
+    btn.type = 'button';
+    btn.dataset.done = done ? '1' : '0';
+    btn.append(el('span', 'dvi', esc(bsetTitle(t))),
+      el('span', 'dko', ws.length + tr('낱말')),
+      el('span', 'dkr', done ? tr('완료 ✔') : got ? got + '/' + ws.length : tr('보기')));
+    btn.onclick = () => { dive(drawBasicSets); drawBasicSet(t); };
+    list.append(btn);
+  });
+  b.append(list);
+  show('sub', '기초단어', true);
+}
+function drawBasicSet(t) {
+  SBOX = 'bsrs';
+  const b = $('#subBody'); b.textContent = '';
+  const ws = t.words.map(v => BW_BYVI[v]).filter(Boolean);
+  const go = el('div', 'catpick');
+  const gb = el('button', 'primary sm', tr('이 회차 시험 보기'));
+  gb.onclick = () => {
+    SBOX = 'bsrs';
+    dive(() => drawBasicSet(t));
+    startQuiz(ws, { day: bkey(t), basic: 1 }, null, false, { kind: 'word' });
+  };
+  go.append(gb);
+  go.append(el('span', 'msub', ws.length + tr('낱말') + ' · ' + tr('낱말을 누르면 소리가 납니다')));
+  b.append(go);
+  ws.forEach(x => b.append(basicWordRow(x)));
+  show('sub', bsetTitle(t), true);
+}
+/* 낱말 찾기 — 회차 순서로 훑는 것 말고, 특정 낱말을 바로 찾고 싶을 때 쓴다. */
+function basicWordsSearch() {
+  SBOX = 'bsrs';
+  const b = $('#subBody'); b.textContent = '';
+  show('sub', tr('기초단어 찾기'), true);
   basicWordsBuild(words => {
     b.textContent = '';
     b.append(el('p', 'lede', tr('선배들이 실제로 본 단어시험 N개 · ★는 겹쳐 나온 기수 수 · 빨간 밑줄은 주간시험')
@@ -7012,6 +7099,8 @@ function buildQuestions(words, forced) {
      진짜로 헷갈린다. 실전 단어 화면에서만 그렇게 하고, 나머지는 그대로 둔다. */
   const pool = SBOX === 'ssrs' && SENIOR
     ? (words.length >= 4 ? words : seniorItems())
+    : SBOX === 'bsrs' && BASICWORDS
+    ? (words.length >= 4 ? words : BASICWORDS)
     : allWords();
   // 오답 보기는 같은 종류에서 고른다 — 문장 문제에 단어 뜻을 섞으면
   // 길이만 보고 정답을 찍을 수 있어 문제가 문제 구실을 못 한다.
@@ -8068,7 +8157,7 @@ function finishQuiz() {
   b.style.marginTop = '24px';
   b.onclick = () => {
     if (hasDlg) { startDialog(Q.day); return; }
-    if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : S.done)[Q.day.day] = now();
+    if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : Q.day.basic ? (S.bdone = S.bdone || {}) : S.done)[Q.day.day] = now();
                  LEARNT = null; touchToday(); save(); }
     dailyFlowEntry();
   };
