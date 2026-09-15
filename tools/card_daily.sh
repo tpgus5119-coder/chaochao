@@ -1,8 +1,8 @@
 #!/bin/sh
-# 저녁에 **만들기만** 한다 (대표님 지시 2026-09-02).
+# 저녁에 **만들기만** 한다 (대표님 지시 2026-09-02, 시각은 2026-09-15 베트남시간 기준 재조정).
 #
-#   저녁 8:20  그날 기사가 다 올라온 뒤다 → 기사 받기 · 카드 만들기 (펴낸날 = 내일)
-#   아침 6:30  tools/card_ship.sh 가 바탕화면 정리 + 앱 등록
+#   저녁 10시(한국)=베트남 저녁 8시  기사 받기 · 카드 만들기 (펴낸날 = 내일)
+#   새벽 5시(한국)=베트남 새벽 3시   tools/card_ship.sh 가 바탕화면 정리 + 앱 등록
 #
 # 만드는 때와 내보내는 때를 나눈 이유: 아침에 급히 만들면 늦고, 실패해도 손쓸 틈이 없다.
 # 저녁에 미리 만들어 두면 밤 사이에 문제를 볼 수 있다.
@@ -22,7 +22,7 @@ say "쓰는 파이썬"; echo "$PY"; "$PY" -c "import PIL,pptx;print('필요한 �
 say "기사 내려받기"; git pull --rebase --autostash 2>&1 | tail -2
 say "기사 받기";     "$PY" tools/fetch_news.py   2>&1 | tail -3
 say "학습 세트";     "$PY" tools/news_lesson.py  2>&1 | tail -3
-say "여섯 줄 풀이";   "$PY" tools/news_sum5.py --local 2>&1 | tail -2
+say "열 줄 풀이";     "$PY" tools/news_sum5.py --local 2>&1 | tail -2
 say "제목 다듬기";    "$PY" tools/card_title.py   2>&1 | tail -3
 
 # 펴낸날은 **다음 아침**이다 — 오늘 기사로 만들어 내일 아침에 내보낸다.
@@ -33,4 +33,4 @@ else TOMORROW=$(date '+%Y-%m-%d'); fi
 say "카드 두 장씩 (펴낸날 $TOMORROW)"
 "$PY" tools/card_news.py --pub "$TOMORROW" 2>&1 | tail -3
 say "소리";         "$PY" tools/gen_audio.py    2>&1 | tail -1
-say "만들기 끝 — 내보내기는 아침 6시 30분"
+say "만들기 끝 — 내보내기는 한국시간 새벽 5시(베트남시간 새벽 3시)"

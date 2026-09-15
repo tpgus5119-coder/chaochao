@@ -12,7 +12,7 @@
   제목·요약·낱말은 파이썬(PIL)이 얹는다. 그래야 글자가 정확하다.
   카드 크기는 **1080×1350 (4:5)** — 요즘 SNS 표준이고 세로라 글자리가 넉넉하다.
 
-  ① 첫 장 = 갈래표 + 제목 + **다섯 줄 요약**(tools/news_sum5.py) + 배경 그림
+  ① 첫 장 = 갈래표 + 제목 + **10줄 요약**(tools/news_sum5.py, 2026-09-15에 6줄→10줄) + 배경 그림
   ② 둘째 장 = 그 기사에서 뽑은 낱말 여섯 개 (베트남어 · 발음 · 뜻)
 
 쓰기: python3 tools/card_news.py [--day 2026-08-28] [--limit 5]
@@ -269,10 +269,10 @@ def card1(d, bg, bgsave=None, force_sz=None, sizeonly=False):
 
     # 본문 글꼴을 **자리에 맞춰 키운다** — 남는 자리를 줄 간격으로만 늘리면
     # 글자는 작은데 줄만 띄엄띄엄해져 오히려 허전하다. 들어가는 한 가장 큰 글꼴을 쓴다.
-    # 여섯 줄 풀이가 없으면 **카드를 만들지 않는다.** intro 로 때우면
+    # 10줄 요약이 없으면 **카드를 만들지 않는다.** intro 로 때우면
     # 두세 줄짜리 빈약한 카드가 나간다 (대표님 지적 2026-09-02).
     body = d.get("sum5") or []
-    if len(body) < 4:
+    if len(body) < 7:  # 2026-09-15: 4→7 (10줄 기준으로 맞춤)
         return None
     def lay(sz):
         fb = font(sz)
@@ -579,7 +579,7 @@ def main():
         base = f"{d.get('ts','x')}-{i}"
         bgp = OUT / "bg" / f"{d.get('ts','x')}-{i}.png"
         c1 = card1(d, bg, bgp, force_sz=DAY_SZ)
-        if c1 is None:      # 여섯 줄 풀이가 없는 기사는 카드를 안 만든다
+        if c1 is None:      # 10줄 요약이 없는 기사는 카드를 안 만든다
             print(f"  건너뜀(풀이 없음): {(d.get('title') or '')[:26]}", flush=True)
             continue
         for n, im in ((1, c1), (2, card2(d))):

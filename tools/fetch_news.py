@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """오늘의 베트남 기사 수집 — 깃허브 액션이 매일 아침 돌린다 (표준 라이브러리만).
 
-고르는 기준은 하나뿐이다: **베트남에 일하러 가는 한국인에게 쓸모 있는가.**
+고르는 기준은 하나뿐이다: **한국인에게 쓸모 있는가.** 베트남에서 일하는 한국인뿐 아니라
+한국 기업·투자자·여행객처럼 베트남에 관심 있거나 연결된 한국인 전반을 본다(2026-09-15,
+대표님 지적 — "한국의 회사들 소식이나 베트남에 관심 가지는 이유와 관련된 기사가 많아야함").
 글자 수나 최신순이 아니라 관심사 점수가 먼저다.
 새벽 6시 30분에 도니 그 시각에 완성돼 있는 것은 **어제 하루치**다(기사 사이트는
 오전 9시~오후 6시에 올린다).
@@ -27,12 +29,19 @@ R = pathlib.Path(__file__).resolve().parent.parent
 KST = timezone(timedelta(hours=9))
 # 주제마다 **자리**를 잡는다 (대표님 지시 2026-09-02).
 # 점수 순으로만 자르면 경제 기사가 다 차지한다 — 8월 실측: 정치 44건이 한 번도 안 뽑혔다.
-QUOTA = [('일자리', 3), ('경제', 2), ('사회', 2), ('문화·생활', 2),
-         ('공장·산업', 2), ('정치', 1)]
-PER_DAY = sum(n for _, n in QUOTA)   # 12
-MIN_DAY = 10                      # 모자라면 주제 상관없이 점수 높은 순으로 채워 이만큼은 맞춘다
+# 2026-09-15: 12건→7건으로 줄였다 — 근거: 뉴스레터 실측(더스킴 5~6건), 선택과부하 연구
+# (Iyengar & Lepper 2000, 선택지 24→6개로 줄이자 전환율 3%→30%), Duolingo 연구(Sudina &
+# Plonsky 2024, 총량보다 매일 꾸준한 빈도가 실력 향상을 더 잘 예측). 자세한 근거는
+# docs/기준.md 2장 참고 — 확정치는 아니라 6~8건 사이에서 완주율 실측 후 조정한다.
+QUOTA = [('일자리', 2), ('경제', 1), ('사회', 1), ('문화·생활', 1),
+         ('공장·산업', 1), ('정치', 1)]
+PER_DAY = sum(n for _, n in QUOTA)   # 7
+MIN_DAY = 6                       # 모자라면 주제 상관없이 점수 높은 순으로 채워 이만큼은 맞춘다
 FLOOR = 8                         # 이 점수 미만은 자리가 비어도 안 싣는다
                                   # (5 로 뒀더니 7점짜리 해변 기사가 실렸다 — 2026-09-02)
+FLOOR_RELAX = 6                   # 자리를 못 채운 갈래만 점수선을 낮춰 한 번 더 찾는다
+                                  # (2026-09-15, card_pick.py 의 미채택 로직을 여기로 옮김)
+MIN_CATS = 5                      # 하루 갈래가 이보다 적으면 경고만 하고 그대로 둔다
 
 # **우리 낱말이 이긴다.** 사이트 갈래와 Qwen 이 둘 다 틀린 답에 동의하면
 # 우리 판정이 덮였다 — '우대비자 도입'이 문화·생활로, '아이폰18'이 일자리로 갔다.
@@ -88,19 +97,27 @@ FEEDS = [
 ]
 FEED = FEEDS[0]        # 옛 이름을 쓰는 곳이 있어 남겨 둔다
 
-# ① 우리 관심사 — 베트남에서 일할 한국인에게 직접 걸리는 말. 가중치가 클수록 먼저 고른다.
+# ① 우리 관심사 — 한국인에게 직접 걸리는 말. 가중치가 클수록 먼저 고른다.
 #
 # 왜 '생활'이 '기업'보다 위인가: 시험해 보니 투자·진출·기업 같은 말이 잔뜩 든 재계 기사가
 # 1등으로 뽑혔는데, 정작 거기서 나오는 베트남어는 '크다·좋다·예쁘다' 같은 맹물이었다.
 # 반대로 '시내버스 무료 운행' 기사에서는 버스·무료·손님·멈추다처럼 내일 당장 쓸 말이 나왔다.
 # 기사가 우리 이야기여야 하는 게 아니라, **거기서 나오는 말이 우리가 쓸 말**이어야 한다.
+#
+# 2026-09-15 추가: "한국인을 위한 기사"인데 정작 한국 기업·한국 연관 소식을 잡는 낱말이
+# '삼성' 하나뿐이었다(대표님 지적 — 한국 기업 소식·베트남에 관심 갖는 이유도 수요가 크다).
+# 그래서 3점 칸에 한국 대기업·투자·교역 관련 낱말을 보강했다.
 CARE = {
     3: ['공장', '근로', '노동자', '임금', '급여', '최저임금', '비자', '노동허가', '체류',
         '채용', '구인', '산업재해', '안전', '교대', '잔업', '해고', '계약',
         '한국인', '교민', '주재원', '기능실습', '근로계약',
         '버스', '지하철', '오토바이', '교통', '병원', '약국', '식당', '시장',
-        '월세', '집값', '물가', '전기요금', '환율', '송금', '휴일', '연휴'],
-    2: ['제조', '봉제', '섬유', '전자', '반도체', '삼성', '공단', '산업단지',
+        '월세', '집값', '물가', '전기요금', '환율', '송금', '휴일', '연휴',
+        '삼성', 'LG', '현대', '기아', 'SK', '롯데', '한화', '두산', '포스코', '금호',
+        'CJ', '신한', '하나은행', '우리은행', '미래에셋', '효성', '한세실업', '태광',
+        '코오롱', '한국 기업', '한국계', '한인 기업', '한국 투자', '한국 진출',
+        '한-베', '한베', '코트라', 'KOTRA', '한국 대사관'],
+    2: ['제조', '봉제', '섬유', '전자', '반도체', '공단', '산업단지',
         '물류', '창고', '취업', '인력', '숙련', '보험', '주거', '학교', '학비',
         '음식', '요리', '명절', '설', '축제', '날씨', '더위', '태풍', '홍수'],
     1: ['경제', '한국', '베트남', '하노이', '호찌민', '빈즈엉', '동나이', '박닌',
@@ -118,9 +135,12 @@ CARE_EN = {
         'overtime', 'shift', 'korean', 'expat', 'trainee',
         'bus', 'metro', 'subway', 'motorbike', 'traffic', 'hospital', 'pharmacy',
         'restaurant', 'market', 'rent', 'housing price', 'living cost', 'inflation',
-        'electricity bill', 'exchange rate', 'remittance', 'holiday', 'day off'],
+        'electricity bill', 'exchange rate', 'remittance', 'holiday', 'day off',
+        'samsung', 'lg', 'hyundai', 'kia', 'sk hynix', 'lotte', 'hanwha', 'doosan',
+        'posco', 'kumho', 'shinhan', 'korean firm', 'korean company', 'korean investor',
+        'south korean', 'korea-vietnam', 'kotra'],
     2: ['manufacturing', 'factory', 'garment', 'textile', 'sewing', 'electronics',
-        'semiconductor', 'samsung', 'industrial park', 'industrial zone', 'logistics',
+        'semiconductor', 'industrial park', 'industrial zone', 'logistics',
         'warehouse', 'skilled', 'insurance', 'school', 'tuition', 'housing',
         'food', 'cuisine', 'festival', 'lunar new year', 'tet', 'weather', 'heat',
         'typhoon', 'flood', 'storm'],
@@ -137,9 +157,12 @@ CARE_VI = {
         'hợp đồng lao động', 'tai nạn lao động', 'an toàn lao động', 'tăng ca', 'ca đêm',
         'xe buýt', 'tàu điện', 'metro', 'xe máy', 'giao thông', 'bệnh viện', 'nhà thuốc',
         'tiền thuê', 'giá nhà', 'giá cả', 'lạm phát', 'tiền điện', 'tỷ giá', 'kiều hối',
-        'người Hàn', 'Hàn Quốc', 'nghỉ lễ'],
+        'người Hàn', 'Hàn Quốc', 'nghỉ lễ',
+        'Samsung', 'LG', 'Hyundai', 'Kia', 'SK', 'Lotte', 'Hanwha', 'Doosan', 'Posco',
+        'Kumho', 'Shinhan', 'doanh nghiệp Hàn Quốc', 'nhà đầu tư Hàn Quốc',
+        'Hàn Quốc đầu tư', 'quan hệ Việt-Hàn', 'KOTRA'],
     2: ['nhà máy', 'sản xuất', 'may mặc', 'dệt may', 'da giày', 'điện tử', 'bán dẫn',
-        'Samsung', 'khu công nghiệp', 'logistics', 'kho', 'bảo hiểm', 'trường học',
+        'khu công nghiệp', 'logistics', 'kho', 'bảo hiểm', 'trường học',
         'học phí', 'nhà ở', 'ẩm thực', 'lễ hội', 'Tết', 'thời tiết', 'bão', 'lũ', 'nắng nóng'],
     1: ['kinh tế', 'xuất khẩu', 'nhập khẩu', 'đầu tư', 'doanh nghiệp', 'công ty',
         'thương mại', 'tăng trưởng', 'GDP', 'thị trường', 'thuế', 'bất động sản',
@@ -154,8 +177,9 @@ CARE_VI = {
 JUNK, JUNK_PENALTY = [], 0
 
 HOT_BONUS = 6        # 사이트가 '많이 본 뉴스'로 골라 둔 기사 가산점
-PER_SITE_MAX = 99    # 상한을 두지 않는다 (대표님 지시 2026-09-02) —
-                     # 점수만 제대로 매기면 저절로 골고루 뽑힌다
+PER_SITE_MAX = 3     # 하루 7건 기준 최대 3건(2026-09-15, 99→3 원복). "상한 없애면 저절로
+                     # 고르게 뽑힌다"던 2026-09-02 가정이 점검.md 실측으로 반증됨
+                     # (20건 중 18건이 한 사이트였던 적 있음)
 # ③ 일상어가 많은가 — 관심사에 걸리는 기사가 하나도 없는 날의 차선책
 DAILY_KW = ['사람', '하루', '아침', '저녁', '집', '밥', '먹', '가게', '시장', '길',
             '가족', '아이', '학교', '돈', '값', '비', '더위', '추위', '휴일', '주말']
@@ -401,6 +425,29 @@ for cat, n in QUOTA:
         per_site[st] = per_site.get(st, 0) + 1
     if got < n:
         print(f"  자리 못 채움: {cat} {got}/{n}")
+
+# 자리를 못 채운 갈래는 점수선을 FLOOR→FLOOR_RELAX 로 낮춰 **그 갈래만** 다시 찾는다.
+# 남는 자리를 다른 갈래로 몰지 않는다 — 몰면 한쪽 주제로 쏠린다 (2026-09-15,
+# card_pick.py 의 미채택 로직을 여기로 옮김. docs/기준.md 2장 참고).
+for cat, n in QUOTA:
+    got = sum(1 for x in picked if x.get('cat') == cat)
+    if got >= n:
+        continue
+    for c in cand:
+        if id(c) in used or got >= n:
+            continue
+        if c.get('cat') != cat or c['care'] < FLOOR_RELAX or not _ok_src(c, cat):
+            continue
+        if not about_vn(c):
+            continue
+        st = _site(c)
+        if per_site.get(st, 0) >= PER_SITE_MAX:
+            continue
+        picked.append(c); used.add(id(c)); got += 1
+        per_site[st] = per_site.get(st, 0) + 1
+    if got < n:
+        print(f"  아직 못 채움: {cat} {got}/{n}")
+
 # 모자라면 **주제 상관없이** 점수 높은 순으로 채워 최소치를 맞춘다 (대표님 지시)
 for c in cand:
     if len(picked) >= MIN_DAY:
@@ -413,7 +460,11 @@ for c in cand:
         picked.append(c); used.add(id(c))
 picked.sort(key=lambda c: -c['care'])
 from collections import Counter as _C
-print('갈래별로 뽑은 수:', dict(_C(c.get('cat') for c in picked)))
+_cat_counts = dict(_C(c.get('cat') for c in picked))
+print('갈래별로 뽑은 수:', _cat_counts)
+if len(_cat_counts) < MIN_CATS:
+    print(f"  ⚠ 갈래가 {len(_cat_counts)}가지뿐이다 (목표 {MIN_CATS}) — {_cat_counts}")
+print(f"출처별: {dict(_C(_site(c) for c in picked))}")
 
 # 펴낸날 — 낮 12시 이후면 내일, 그 전이면 오늘 (저녁에 만들어 아침에 내보낸다)
 _now = datetime.now(KST)
