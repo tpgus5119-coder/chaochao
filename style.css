@@ -214,6 +214,8 @@ button:active{transform:scale(.98)}
 }
 .celebrate.on{ transform:translate(-50%, 0) scale(1); opacity:1 }
 .celeb-i{font-size:18px}
+/* 보석 획득 — 같은 배지 안, 살짝 옅은 톤으로 붙여 정답 글자보다 튀지 않게 한다 */
+.celeb-gem{font-size:13px; font-weight:600; opacity:.85; padding-left:2px; border-left:1px solid rgba(255,255,255,.35); margin-left:2px; padding-left:8px}
 
 /* 미션 */
 .mgoal{font-size:22px; font-weight:700; margin:0 0 10px; word-break:keep-all}
@@ -2027,6 +2029,17 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   width:56px; height:56px; border-radius:50%; flex:0 0 auto;
   background:color-mix(in srgb, var(--accent) 12%, var(--card));
   display:grid; place-items:center; font-size:28px;
+}
+/* 보석 배지 — 하트보석 시스템(대표님 지시, 2026-09-15) 중 보석 쪽.
+   목숨(하트)은 실전 시험 준비 앱과 안 맞아 안 넣었다(틀렸다고 못 풀게 막으면
+   공부가 아니라 훼방이 된다) — 보석은 순수 보상이라 안전해서 이것만 넣는다.
+   화면 맨 위를 다 차지하는 상시 표시줄(듀오링고 그대로)은 안 쓰고, 인사말
+   카드 한쪽에 조용한 배지 하나로 그친다("절제되지 않게"이지 "화려하게"가 아니다). */
+.gempill{
+  flex:0 0 auto; display:flex; align-items:center; gap:4px;
+  background:var(--accent); color:var(--accent-fg);
+  font-size:14px; font-weight:700; padding:7px 12px; border-radius:999px;
+  white-space:nowrap;
 }
 
 /* ── 소셜 로그인 버튼(구글/페북, 2026-09-08) ── */

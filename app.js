@@ -789,14 +789,25 @@ function fxTone(ok) {
 /* 연속 정답 — 이 세션(새로고침 전까지) 동안만 센다. 저장 안 함 —
    진짜 실력 지표(S.stats)와 섞이면 안 되는, 그저 지금 흥이 오르고 있다는 표시일 뿐. */
 let FX_STREAK = 0;
+/* 보석 — 대표님 지시(2026-09-15): "하트보석 시스템은 좋아. 게임느낌도잇어야한다.
+   재밋어야해... 화려하기보다는 그래도 절제되지 않게... 너무 듀오링고를 카피해서
+   짝퉁 느낌이 나면 안된다." 목숨(하트)처럼 막는 장치는 안 둔다 — 이 앱은 실전
+   시험 준비용이라, 틀렸다고 더 못 풀게 막으면 공부가 아니라 훼방이 된다.
+   대신 보석은 순전히 보상(맞힐 때마다 쌓이는 것)이라 안전하다 — 정답 판정이
+   모이는 이 한 곳(celebrate)에서만 주면 18곳 호출부를 하나도 안 건드려도 된다. */
+const gems = () => (S.stats.gems = S.stats.gems || 0);
 function celebrate(ok) {
   if (!ok) { FX_STREAK = 0; return; }
   FX_STREAK++;
+  const gain = FX_STREAK >= 5 ? 3 : FX_STREAK >= 3 ? 2 : 1;   // 연속일수록 조금 더 — 화려하지 않게, 딱 이 정도만
+  S.stats.gems = gems() + gain;
+  save();
   const old = document.querySelector('.celebrate'); if (old) old.remove();
   const el2 = document.createElement('div');
   el2.className = 'celebrate';
   el2.innerHTML = '<span class="celeb-i">🎓</span><span class="celeb-t">' +
-    (FX_STREAK >= 3 ? tr(FX_STREAK + '연속 정답!') : tr('정답이에요!')) + '</span>';
+    (FX_STREAK >= 3 ? tr(FX_STREAK + '연속 정답!') : tr('정답이에요!')) +
+    '</span><span class="celeb-gem">💎+' + gain + '</span>';
   document.body.append(el2);
   requestAnimationFrame(() => el2.classList.add('on'));
   setTimeout(() => { el2.classList.remove('on'); setTimeout(() => el2.remove(), 220); }, 1100);
@@ -4974,7 +4985,12 @@ function renderHome() {
   const gtxt = el('div', 'kogtxt');
   gtxt.append(el('div', 'kogh1', esc(S.nick || tr('학습자')) + tr('님, 어서오세요!')));
   gtxt.append(el('div', 'kogsub', streakDays() + tr('일 연속 학습 중이에요')));
-  greet.append(gtxt, el('div', 'kogicon', '🎓'));
+  greet.append(gtxt);
+  /* 보석 배지 — 페북 파랑 바탕에 흰 글자, 홈 인사말 한쪽에 조용히 얹는다.
+     듀오링고처럼 화면 맨 위를 다 차지하는 상시 표시줄은 안 쓴다(대표님 지시:
+     "너무 카피해서 짝퉁 느낌이 나면 안된다") — 인사말 카드 안 배지 하나로 그친다. */
+  greet.append(el('div', 'gempill', '💎 ' + gems().toLocaleString('ko-KR')));
+  greet.append(el('div', 'kogicon', '🎓'));
   plan.append(greet);
 
   /* 주간 스트릭 카드 — Stitch 시안의 "Weekly Streak Widget" 그대로.
