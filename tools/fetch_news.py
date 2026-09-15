@@ -449,6 +449,8 @@ for cat, n in QUOTA:
         print(f"  아직 못 채움: {cat} {got}/{n}")
 
 # 모자라면 **주제 상관없이** 점수 높은 순으로 채워 최소치를 맞춘다 (대표님 지시)
+# 2026-09-15 실측: 이 자리가 PER_SITE_MAX 를 안 봐서 vnexpress 가 4건까지 올라갔다
+# (공장·산업·정치 자리가 안 채워지자 여기서 몰아 담았기 때문) — 상한 체크를 추가했다.
 for c in cand:
     if len(picked) >= MIN_DAY:
         break
@@ -457,7 +459,11 @@ for c in cand:
         lim = dict(QUOTA).get(c.get('cat'), 2) + 1
         if sum(1 for x in picked if x.get('cat') == c.get('cat')) >= lim:
             continue
+        st = _site(c)
+        if per_site.get(st, 0) >= PER_SITE_MAX:
+            continue
         picked.append(c); used.add(id(c))
+        per_site[st] = per_site.get(st, 0) + 1
 picked.sort(key=lambda c: -c['care'])
 from collections import Counter as _C
 _cat_counts = dict(_C(c.get('cat') for c in picked))
