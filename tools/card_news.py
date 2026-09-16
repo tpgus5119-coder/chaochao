@@ -453,7 +453,7 @@ def card2(d):
 
 def main():
     a = argparse.ArgumentParser()
-    a.add_argument("--day", default=""); a.add_argument("--limit", type=int, default=5)
+    a.add_argument("--day", default=""); a.add_argument("--limit", type=int, default=10)  # 2026-09-16: 5→10 (하루 목표 7건 근거로 상향)
     a.add_argument("--nobg", action="store_true")
     a.add_argument("--pub", default="")      # 카드에 찍을 '펴낸 날'. 안 주면 오늘
     a = a.parse_args()
@@ -462,9 +462,13 @@ def main():
     else:
         last = max((d.get("ts") or "") for d in D)
         D = [d for d in D if d.get("ts") == last]
-    # **펴낼 기사만 먼저 남기고** 나서 개수를 자른다.
-    # 순서가 반대라 9/1 기사 19건에서 12건을 자른 뒤 pub 을 걸러 4건만 남았다 (2026-09-02)
-    D = [d for d in D if d.get("pub")] or D
+    # 2026-09-16: "이미 pub 있는 것만 남긴다"던 줄을 없앴다 — card_pick.py(별도 재선정
+    # 도구)가 살아있던 시절엔 그게 "일부러 고른 것만 펴낸다"는 뜻이었지만, 지금 실제
+    # 파이프라인은 card_news.py 가 첫 처리 때 스스로 pub 을 찍는다. 그래서 같은 날
+    # 기사를 나눠 여러 번 돌리면(예: 열 줄 풀이가 일부만 먼저 끝났을 때) **먼저 pub
+    # 찍힌 것만 남고 방금 준비된 나머지가 통째로 빠지는** 사고가 났다(실측 확인 —
+    # 환율상승·전기차만 남고 출장준비·도시개발·공장수출이 빠짐). ts 로 이미 그 날로
+    # 좁혔으니 더 거를 이유가 없다.
     D = D[:a.limit]
     from datetime import datetime, timezone, timedelta
     # 자료에 이미 찍힌 펴낸날을 그대로 쓴다 (card_pick 이 찍는다).
