@@ -1,0 +1,5019 @@
+{
+ "note": "교재 'Tiếng Việt Cơ sở' 시리즈를 챕터(Bài)별로 OCR 추출한 데이터. 1권 Phần II(실전회화) Bài1~8 전체 + Phần I(발음) 개념어휘 + 공식 낱말장(Bảng từ, 221~229쪽) 대조로 찾은 보충 단어. 2~4권은 아직 미작업. (주의: 여기서 quyen은 물리 교재 Tiếng Việt Cơ sở의 권수(Q1~Q4)를 뜻하며, order.json의 기존 1/2/3권 커리큘럼 체계와는 무관한 별개 축이다.)",
+ "books": [
+  {
+   "title": "Tiếng Việt Cơ sở - Quyển 1",
+   "intro": {
+    "part": "Phần I",
+    "part_title": "Ngữ âm - Phát âm (발음)",
+    "pages": "7-46",
+    "title_ko": "발음 개념 용어",
+    "words": [
+     {
+      "vi": "nguyên âm",
+      "ko": "모음",
+      "en": "vowel"
+     },
+     {
+      "vi": "phụ âm",
+      "ko": "자음",
+      "en": "consonant"
+     },
+     {
+      "vi": "thanh điệu",
+      "ko": "성조",
+      "en": "tone"
+     },
+     {
+      "vi": "thanh không",
+      "ko": "타인 콩 (무형 성조, 부호 없음. thanh ngang과 같음)",
+      "en": "level tone (no diacritic mark)"
+     },
+     {
+      "vi": "thanh huyền",
+      "ko": "타인 후옌 (하강조, 부호 ` )",
+      "en": "falling tone"
+     },
+     {
+      "vi": "thanh sắc",
+      "ko": "타인 싹 (상승조, 부호 ′)",
+      "en": "rising tone"
+     },
+     {
+      "vi": "thanh hỏi",
+      "ko": "타인 호이 (내림-오름조, 부호 ̉ )",
+      "en": "dipping-rising tone"
+     },
+     {
+      "vi": "thanh ngã",
+      "ko": "타인 응아 (끊어 오름조, 부호 ~)",
+      "en": "creaky rising (glottalized) tone"
+     },
+     {
+      "vi": "thanh nặng",
+      "ko": "타인 낭 (짧고 낮은 낙하조, 부호 . )",
+      "en": "heavy/glottalized low tone"
+     },
+     {
+      "vi": "thanh ngang",
+      "ko": "평성, 무형 성조 (thanh không의 다른 이름)",
+      "en": "level tone (alternate name for thanh không)"
+     },
+     {
+      "vi": "bảng chữ cái",
+      "ko": "알파벳(표)",
+      "en": "alphabet"
+     },
+     {
+      "vi": "nguyên âm đơn",
+      "ko": "단모음",
+      "en": "monophthong / simple vowel"
+     },
+     {
+      "vi": "nguyên âm đôi",
+      "ko": "이중모음",
+      "en": "diphthong"
+     },
+     {
+      "vi": "bán nguyên âm",
+      "ko": "반모음",
+      "en": "semivowel"
+     },
+     {
+      "vi": "âm tiết",
+      "ko": "음절",
+      "en": "syllable"
+     },
+     {
+      "vi": "vần",
+      "ko": "운모 (음절에서 성모(첫 자음)를 뺀 나머지 부분)",
+      "en": "rhyme / final (of a syllable)"
+     },
+     {
+      "vi": "âm đệm",
+      "ko": "개음, 매개음 (성모와 주요모음 사이에 오는 활음 u/o)",
+      "en": "medial sound / glide"
+     },
+     {
+      "vi": "phương ngữ",
+      "ko": "방언",
+      "en": "dialect"
+     },
+     {
+      "vi": "đơn âm",
+      "ko": "단음절(의)",
+      "en": "monosyllabic"
+     },
+     {
+      "vi": "phân tiết",
+      "ko": "분절 (음절이 서로 분리되어 발음됨)",
+      "en": "articulated / segmented (syllables pronounced separately)"
+     },
+     {
+      "vi": "đa thanh điệu",
+      "ko": "다성조(의)",
+      "en": "multi-tonal"
+     },
+     {
+      "vi": "chính tả",
+      "ko": "맞춤법, 정서법",
+      "en": "spelling / orthography"
+     },
+     {
+      "vi": "viết hoa",
+      "ko": "대문자로 쓰기",
+      "en": "capitalization"
+     }
+    ]
+   },
+   "chapters": [
+    {
+     "bai": 1,
+     "title": "Chào cô ạ",
+     "title_ko": "안녕하세요 (인사)",
+     "pages": "47-60",
+     "words": [
+      {
+       "vi": "chào",
+       "ko": "안녕하세요 (만날 때·헤어질 때 인사)",
+       "en": "hello / good-bye"
+      },
+      {
+       "vi": "cháu",
+       "ko": "저 / 너 (조카·손주뻘이 웃어른에게 자신을 가리키거나, 웃어른이 손아랫사람을 가리킬 때)",
+       "en": "I / you (meaning in the lesson)"
+      },
+      {
+       "vi": "ông",
+       "ko": "할아버지 / 당신 (나이 든 남성을 부를 때)",
+       "en": "I / you (meaning in the lesson)"
+      },
+      {
+       "vi": "bà",
+       "ko": "할머니 / 당신 (나이 든 여성을 부를 때)",
+       "en": "I / you (meaning in the lesson)"
+      },
+      {
+       "vi": "em",
+       "ko": "저 / 너 (손아랫사람·학생을 가리킬 때)",
+       "en": "I / you (meaning in the lesson)"
+      },
+      {
+       "vi": "anh",
+       "ko": "형 / 오빠 / 당신 (젊은 남성을 부를 때)",
+       "en": "I / you (meaning in the lesson)"
+      },
+      {
+       "vi": "chị",
+       "ko": "누나 / 언니 / 당신 (젊은 여성을 부를 때)",
+       "en": "I / you (meaning in the lesson)"
+      },
+      {
+       "vi": "tôi",
+       "ko": "저, 나",
+       "en": "I (meaning in the lesson)"
+      },
+      {
+       "vi": "bạn",
+       "ko": "친구, 당신 (동년배를 부를 때)",
+       "en": "friend / you"
+      },
+      {
+       "vi": "thầy giáo",
+       "ko": "남자 선생님",
+       "en": "male teacher"
+      },
+      {
+       "vi": "cô giáo",
+       "ko": "여자 선생님",
+       "en": "female teacher"
+      },
+      {
+       "vi": "ạ",
+       "ko": "공손을 나타내는 문미 조사",
+       "en": "polite particle (placed at the end of sentence)"
+      },
+      {
+       "vi": "và",
+       "ko": "그리고",
+       "en": "and"
+      },
+      {
+       "vi": "khỏe",
+       "ko": "건강한, 잘 지내는",
+       "en": "well"
+      },
+      {
+       "vi": "không khỏe lắm",
+       "ko": "별로 건강하지 않은",
+       "en": "not very well"
+      },
+      {
+       "vi": "bình thường",
+       "ko": "보통이다, 그냥 그렇다",
+       "en": "so so"
+      },
+      {
+       "vi": "mệt",
+       "ko": "피곤한",
+       "en": "tired"
+      },
+      {
+       "vi": "cám ơn",
+       "ko": "감사합니다",
+       "en": "thank you"
+      },
+      {
+       "vi": "cũng",
+       "ko": "또한, ~도",
+       "en": "also"
+      },
+      {
+       "vi": "còn",
+       "ko": "그런데, ~는요?",
+       "en": "and (used to continue asking)"
+      },
+      {
+       "vi": "vẫn",
+       "ko": "여전히",
+       "en": "still"
+      },
+      {
+       "vi": "hơi",
+       "ko": "약간, 좀",
+       "en": "a little"
+      },
+      {
+       "vi": "về nhà",
+       "ko": "집에 가다",
+       "en": "to go home"
+      },
+      {
+       "vi": "tạm biệt",
+       "ko": "잘 가요, 안녕히 가세요",
+       "en": "good-bye"
+      },
+      {
+       "vi": "hẹn gặp lại",
+       "ko": "또 만나요",
+       "en": "see you again"
+      },
+      {
+       "vi": "khỏe không",
+       "ko": "건강하세요? 잘 지내세요?",
+       "en": "how are you (health)"
+      },
+      {
+       "vi": "rất vui được gặp",
+       "ko": "만나서 매우 반갑다",
+       "en": "very glad to meet"
+      },
+      {
+       "vi": "chúng tôi",
+       "ko": "저희, 우리",
+       "en": "we"
+      },
+      {
+       "vi": "các bạn",
+       "ko": "친구들, 여러분",
+       "en": "friends (plural you)"
+      }
+     ],
+     "grammar": [
+      {
+       "title_vi": "Cách chào hỏi",
+       "title_ko": "인사법",
+       "note_ko": "Chào + 호칭 형태로 만나거나 헤어질 때 모두 쓴다. 시간대를 구분하지 않는다."
+      },
+      {
+       "title_vi": "Đại từ nhân xưng ngôi I, II",
+       "title_ko": "1·2인칭 인칭대명사",
+       "note_ko": "단수: 저/나=tôi·em, 당신=ông/bà/anh/chị. 복수: chúng tôi/chúng em, các ông/các bà/các anh/các chị"
+      },
+      {
+       "title_vi": "Hệ từ \"là\"",
+       "title_ko": "계사 \"là\"(~이다)",
+       "note_ko": "주어와 명사 술어의 관계를 나타낸다. 예: Tôi là Mary. (저는 메리입니다.)"
+      },
+      {
+       "title_vi": "Thăm hỏi sức khỏe",
+       "title_ko": "안부 묻기",
+       "note_ko": "Anh/chị/ông/bà (có) khỏe không? — Cám ơn anh/chị/ông/bà. Tôi khỏe."
+      }
+     ],
+     "dialogues": [
+      {
+       "vi": "Chào cô. Em là David. / Chào em. Tôi là Hà.",
+       "ko": "안녕하세요 선생님. 저는 David입니다. / 안녕. 나는 Hà야."
+      },
+      {
+       "vi": "Chào thầy. Em là Anna. / Chào em. Tôi là Lân.",
+       "ko": "안녕하세요 선생님. 저는 Anna입니다. / 안녕. 나는 Lân이야."
+      },
+      {
+       "vi": "Chào anh. Tôi là Mary. / Chào chị. Tôi là Tom.",
+       "ko": "안녕하세요. 저는 Mary입니다. / 안녕하세요. 저는 Tom입니다."
+      },
+      {
+       "vi": "Chào ông ạ. Cháu là Linda. / Chào cháu. Ông là Lê.",
+       "ko": "안녕하세요 할아버지. 저는 Linda입니다. / 그래. 나는 Lê란다."
+      },
+      {
+       "vi": "Chào các bạn. Tôi là Ly. / Chào Ly. Chúng tôi là Mary, David, Bell và Tú.",
+       "ko": "안녕하세요 여러분. 저는 Ly입니다. / 안녕 Ly. 우리는 Mary, David, Bell 그리고 Tú예요."
+      },
+      {
+       "vi": "Chào anh. Anh khỏe không? / Chào chị. Cám ơn chị. Tôi khỏe.",
+       "ko": "안녕하세요. 잘 지내세요? / 안녕하세요. 감사합니다. 저는 잘 지내요."
+      },
+      {
+       "vi": "Chào ông. Ông khỏe không? / Chào cháu. Cám ơn cháu. Ông bình thường.",
+       "ko": "안녕하세요. 잘 지내세요? / 그래. 고맙다. 나는 그냥 그렇단다."
+      },
+      {
+       "vi": "Hải: Tạm biệt Anna. / Anna: Tạm biệt Hải. Hẹn gặp lại bạn.",
+       "ko": "Hải: 안녕 Anna. / Anna: 안녕 Hải. 또 보자."
+      }
+     ]
+    },
+    {
+     "bai": 2,
+     "title": "Tên bạn là gì?",
+     "title_ko": "이름이 뭐예요?",
+     "pages": "61-78",
+     "words": [
+      {
+       "vi": "tự",
+       "ko": "스스로, 직접",
+       "en": "by yourself"
+      },
+      {
+       "vi": "giới thiệu",
+       "ko": "소개하다",
+       "en": "to introduce"
+      },
+      {
+       "vi": "với",
+       "ko": "~와/과, ~에게",
+       "en": "to / with"
+      },
+      {
+       "vi": "đây là",
+       "ko": "이 사람은/이것은 ~이다",
+       "en": "this is"
+      },
+      {
+       "vi": "bạn tôi",
+       "ko": "내 친구",
+       "en": "my friend"
+      },
+      {
+       "vi": "rất",
+       "ko": "매우",
+       "en": "very"
+      },
+      {
+       "vi": "vui",
+       "ko": "기쁜, 즐거운",
+       "en": "glad / happy"
+      },
+      {
+       "vi": "làm quen",
+       "ko": "알게 되다, 친분을 맺다",
+       "en": "to make acquaintance"
+      },
+      {
+       "vi": "xin",
+       "ko": "청컨대, ~해 주세요 (공손히 허락·부탁을 구할 때 문두나 주어 뒤에 씀)",
+       "en": "may / please (polite request marker)"
+      },
+      {
+       "vi": "tên",
+       "ko": "이름",
+       "en": "name"
+      },
+      {
+       "vi": "xin lỗi",
+       "ko": "실례합니다, 죄송합니다",
+       "en": "excuse me / sorry"
+      },
+      {
+       "vi": "gì",
+       "ko": "무엇, 무슨",
+       "en": "what"
+      },
+      {
+       "vi": "vâng",
+       "ko": "네",
+       "en": "yes"
+      },
+      {
+       "vi": "phải",
+       "ko": "맞다, 옳다 (긍정 대답이나 부가의문 phải không?에 쓰임)",
+       "en": "yes / correct / right"
+      },
+      {
+       "vi": "không",
+       "ko": "아니요",
+       "en": "no"
+      },
+      {
+       "vi": "phải không",
+       "ko": "~맞죠?, 그렇죠? (문장 끝에 붙이는 부가의문)",
+       "en": "isn't it? / right? (tag question)"
+      },
+      {
+       "vi": "có phải là ... không",
+       "ko": "~입니까? (신원을 확인하는 의문문 패턴)",
+       "en": "is it (the case that)...?"
+      },
+      {
+       "vi": "họ",
+       "ko": "성, 성씨",
+       "en": "family name / surname"
+      },
+      {
+       "vi": "họ",
+       "ko": "그들 (3인칭 복수 대명사)",
+       "en": "they"
+      },
+      {
+       "vi": "ấy",
+       "ko": "그 (사람을 가리키는 지시사로, 명사 뒤에 붙어 3인칭 대명사를 만듦: ông ấy=그 할아버지·그분)",
+       "en": "that (forms 3rd-person pronouns)"
+      },
+      {
+       "vi": "nó",
+       "ko": "그것, 그 아이 (동물·아이나 격식 없는 3인칭을 가리킴)",
+       "en": "it / he / she (informal 3rd person)"
+      },
+      {
+       "vi": "chúng ta",
+       "ko": "우리 (듣는 사람을 포함)",
+       "en": "we (inclusive)"
+      }
+     ],
+     "grammar": [
+      {
+       "title_vi": "Cách dùng từ lịch sự \"xin\"",
+       "title_ko": "공손어 \"xin\" 쓰임",
+       "note_ko": "문장 맨 앞이나 주어 뒤에 두어, 허락을 구하거나 정중한 상황을 나타낸다. 예: Xin tự giới thiệu: Tôi là Hà. / Tôi xin tự giới thiệu: Tôi là Hà. (제 소개를 하겠습니다: 저는 Hà입니다.)"
+      },
+      {
+       "title_vi": "Cách dùng từ lịch sự \"ạ\"",
+       "title_ko": "공손어 \"ạ\" 쓰임",
+       "note_ko": "문장 맨 끝에 두어 공손·예의를 나타낸다. 예: Chào thầy ạ. (안녕하세요 선생님.) / Thầy có khỏe không ạ? (선생님 건강하세요?) / Chào ông. Cháu về ạ. (안녕히 계세요, 저는 가볼게요.)"
+      },
+      {
+       "title_vi": "Cách giới thiệu về mình",
+       "title_ko": "자기 소개하는 법",
+       "note_ko": "패턴: Xin tự giới thiệu: Tôi là .... (제 소개를 하겠습니다: 저는 ~입니다) 예: Xin tự giới thiệu: Tôi là Hà, Nguyễn Thu Hà. / Xin tự giới thiệu: Tôi là Mayu, Mayu Ino."
+      },
+      {
+       "title_vi": "Cách giới thiệu về người khác",
+       "title_ko": "다른 사람 소개하는 법",
+       "note_ko": "패턴: Xin giới thiệu với anh: Đây là Michael, bạn tôi. (소개해 드릴게요: 이쪽은 제 친구 Michael입니다) 예: Xin giới thiệu với chị: Đây là Tony, bạn tôi. / Xin giới thiệu với anh: Đây là cô Hương, cô giáo tôi."
+      },
+      {
+       "title_vi": "Cách hỏi và nói về họ và tên",
+       "title_ko": "이름(성함) 묻고 답하기",
+       "note_ko": "Tên anh là gì? (이름이 뭐예요?) — Tên tôi là Lê. (제 이름은 Lê입니다.)"
+      },
+      {
+       "title_vi": "Câu hỏi với hệ từ \"là\"",
+       "title_ko": "계사 \"là\"를 이용한 신원 확인 의문문",
+       "note_ko": "두 가지 어순 모두 가능: Anh có phải là Lê không? / Anh là Lê phải không? (당신은 Lê씨 맞나요?) 대답: Vâng. Tôi là Lê. (네, 제가 Lê예요.) / Không. Tôi không phải là Lê. Tôi là Lâm. (아니요, 저는 Lê가 아니에요. 저는 Lâm이에요.)"
+      },
+      {
+       "title_vi": "Đại từ nhân xưng (tiếp)",
+       "title_ko": "인칭대명사 (3인칭 포함, 단·복수 정리)",
+       "note_ko": "1인칭 단수: Tôi(저/나). 2인칭 단수: Ông/bà/anh/chị(당신). 3인칭 단수: Ông/bà/anh/chị 뒤에 ấy를 붙임(그분), 또는 nó(그것/그 아이). 1인칭 복수: Chúng ta, chúng tôi(우리). 2인칭 복수: Các ông/các bà/các anh/các chị(당신들). 3인칭 복수: Các ông ấy(bà ấy, anh ấy, chị ấy...), nó, họ(그들). 주의: chúng tôi는 듣는 사람을 포함하지 않고, chúng ta는 말하는 사람과 듣는 사람을 모두 포함한다."
+      }
+     ],
+     "dialogues": [
+      {
+       "vi": "Chào anh. Xin tự giới thiệu: Tôi là Hương. / Chào chị. Tôi là Bell.",
+       "ko": "안녕하세요. 제 소개를 할게요: 저는 Hương입니다. / 안녕하세요. 저는 Bell입니다."
+      },
+      {
+       "vi": "Chào chị. / Chào anh. Xin giới thiệu với anh: Đây là anh Long, bạn tôi. / Chào anh Long. Rất vui được gặp anh. / Chào anh. Tôi cũng rất vui được gặp anh.",
+       "ko": "안녕하세요. / 안녕하세요. 소개해 드릴게요: 이쪽은 제 친구 Long이에요. / 안녕하세요 Long씨. 만나서 반갑습니다. / 안녕하세요. 저도 만나서 반갑습니다."
+      },
+      {
+       "vi": "Huy: Chào chị. Xin tự giới thiệu: Tôi là Huy. / Anna: Chào anh Huy. Tôi là Anna. Rất vui được gặp anh.",
+       "ko": "Huy: 안녕하세요. 제 소개를 할게요: 저는 Huy입니다. / Anna: 안녕하세요 Huy씨. 저는 Anna예요. 만나서 반갑습니다."
+      },
+      {
+       "vi": "Huy: Chào Anna. / Anna: Chào anh Huy. Anh có khỏe không? / Huy: Cám ơn. Tôi khỏe. Còn chị? / Anna: Tôi cũng khỏe. Xin giới thiệu với anh: Đây là Mary, bạn tôi. / Huy: Chào Mary. Rất vui được gặp chị. / Mary: Chào anh. Tôi cũng rất vui được làm quen với anh.",
+       "ko": "Huy: 안녕 Anna. / Anna: 안녕하세요 Huy씨. 잘 지내세요? / Huy: 고마워요. 저는 잘 지내요. 당신은요? / Anna: 저도 잘 지내요. 소개할게요: 이쪽은 제 친구 Mary예요. / Huy: 안녕하세요 Mary씨. 만나서 반갑습니다. / Mary: 안녕하세요. 저도 알게 되어 정말 반갑습니다."
+      },
+      {
+       "vi": "Tên chị là gì? / Tên tôi là Linda.",
+       "ko": "이름이 뭐예요? / 제 이름은 Linda예요."
+      },
+      {
+       "vi": "Xin lỗi. Chị là Lan phải không? / Không. Tôi là Liên.",
+       "ko": "실례합니다. Lan씨 맞으시죠? / 아니요. 저는 Liên이에요."
+      },
+      {
+       "vi": "Xin lỗi. Chị là Mary phải không? / Vâng. Tôi là Mary. / Không. Tôi không phải là Mary. Tôi là Anna.",
+       "ko": "실례합니다. Mary씨 맞으시죠? / 네, 제가 Mary예요. / 아니요, 저는 Mary가 아니에요. 저는 Anna예요."
+      },
+      {
+       "vi": "Anbe: Chào bà. Xin lỗi, tên bà là gì ạ? / Cathy: Tôi là Cathy. Còn ông? / Anbe: Tôi là Anbe. Rất vui được làm quen với bà. / Cathy: Tôi cũng rất vui được gặp ông.",
+       "ko": "Anbe: 안녕하세요. 실례지만 성함이 어떻게 되세요? / Cathy: 저는 Cathy예요. 당신은요? / Anbe: 저는 Anbe입니다. 알게 되어 반갑습니다. / Cathy: 저도 만나서 반갑습니다."
+      },
+      {
+       "vi": "David: Xin lỗi. Chị có phải là Kim Chi không? / Kim Chi: Vâng. Tôi là Kim Chi. Còn anh, anh là Tony phải không? / David: Không. Tôi không phải là Tony. / Kim Chi: Anh tên là gì? / David: Tôi tên là David.",
+       "ko": "David: 실례합니다. Kim Chi씨 맞나요? / Kim Chi: 네, 제가 Kim Chi예요. 그런데 당신은 Tony씨 맞으시죠? / David: 아니요, 저는 Tony가 아니에요. / Kim Chi: 이름이 뭐예요? / David: 제 이름은 David예요."
+      }
+     ]
+    },
+    {
+     "bai": 3,
+     "title": "Bạn làm nghề gì?",
+     "title_ko": "직업이 뭐예요?",
+     "pages": "79-102",
+     "words": [
+      {
+       "vi": "làm",
+       "ko": "하다, ~로 일하다",
+       "en": "to do / to work as"
+      },
+      {
+       "vi": "nghề",
+       "ko": "직업",
+       "en": "job / occupation"
+      },
+      {
+       "vi": "nghề nghiệp",
+       "ko": "직업",
+       "en": "occupation"
+      },
+      {
+       "vi": "kỹ sư",
+       "ko": "엔지니어, 기술자",
+       "en": "engineer"
+      },
+      {
+       "vi": "bác sỹ",
+       "ko": "의사",
+       "en": "doctor"
+      },
+      {
+       "vi": "y tá",
+       "ko": "간호사",
+       "en": "nurse"
+      },
+      {
+       "vi": "giáo viên",
+       "ko": "교사, 선생님",
+       "en": "teacher"
+      },
+      {
+       "vi": "sinh viên",
+       "ko": "대학생",
+       "en": "student (university)"
+      },
+      {
+       "vi": "học sinh",
+       "ko": "학생 (초·중·고등학생)",
+       "en": "pupil"
+      },
+      {
+       "vi": "nhà báo",
+       "ko": "기자",
+       "en": "journalist"
+      },
+      {
+       "vi": "nông dân",
+       "ko": "농부",
+       "en": "peasant / farmer"
+      },
+      {
+       "vi": "công nhân",
+       "ko": "노동자, 근로자",
+       "en": "worker"
+      },
+      {
+       "vi": "lái xe",
+       "ko": "운전기사",
+       "en": "driver"
+      },
+      {
+       "vi": "đầu bếp",
+       "ko": "요리사",
+       "en": "cook"
+      },
+      {
+       "vi": "nội trợ",
+       "ko": "가정주부",
+       "en": "housewife"
+      },
+      {
+       "vi": "nhân viên",
+       "ko": "직원",
+       "en": "staff"
+      },
+      {
+       "vi": "thư ký",
+       "ko": "비서",
+       "en": "secretary"
+      },
+      {
+       "vi": "giám đốc",
+       "ko": "사장, 이사, 원장",
+       "en": "director"
+      },
+      {
+       "vi": "cảnh sát",
+       "ko": "경찰",
+       "en": "policeman"
+      },
+      {
+       "vi": "họa sỹ",
+       "ko": "화가",
+       "en": "painter"
+      },
+      {
+       "vi": "trợ lý",
+       "ko": "보조원, 어시스턴트",
+       "en": "assistant"
+      },
+      {
+       "vi": "người phục vụ",
+       "ko": "종업원",
+       "en": "server"
+      },
+      {
+       "vi": "luật sư",
+       "ko": "변호사",
+       "en": "lawyer"
+      },
+      {
+       "vi": "hầu bàn",
+       "ko": "(식당) 종업원, 웨이터/웨이트리스",
+       "en": "waiter / waitress"
+      },
+      {
+       "vi": "lính cứu hỏa",
+       "ko": "소방관",
+       "en": "firefighter"
+      },
+      {
+       "vi": "phóng viên",
+       "ko": "특파원, 기자",
+       "en": "correspondent / reporter"
+      },
+      {
+       "vi": "nhà văn",
+       "ko": "작가, 소설가",
+       "en": "writer / novelist"
+      },
+      {
+       "vi": "công ty",
+       "ko": "회사",
+       "en": "company"
+      },
+      {
+       "vi": "ngân hàng",
+       "ko": "은행",
+       "en": "bank"
+      },
+      {
+       "vi": "viện",
+       "ko": "원, 연구원 (기관)",
+       "en": "institute"
+      },
+      {
+       "vi": "bệnh viện",
+       "ko": "병원",
+       "en": "hospital"
+      },
+      {
+       "vi": "trường tiểu học",
+       "ko": "초등학교",
+       "en": "elementary school"
+      },
+      {
+       "vi": "đại học",
+       "ko": "대학교",
+       "en": "university"
+      },
+      {
+       "vi": "báo",
+       "ko": "신문",
+       "en": "newspaper"
+      },
+      {
+       "vi": "con",
+       "ko": "자식, 아이",
+       "en": "child"
+      },
+      {
+       "vi": "con trai",
+       "ko": "아들",
+       "en": "son"
+      },
+      {
+       "vi": "vợ",
+       "ko": "아내",
+       "en": "wife"
+      },
+      {
+       "vi": "nước",
+       "ko": "나라, 국가",
+       "en": "country"
+      },
+      {
+       "vi": "người",
+       "ko": "사람 (나라 이름과 결합해 국적을 나타냄: người + 나라이름)",
+       "en": "person"
+      },
+      {
+       "vi": "tiếng Việt",
+       "ko": "베트남어",
+       "en": "Vietnamese (language)"
+      },
+      {
+       "vi": "Việt Nam",
+       "ko": "베트남",
+       "en": "Vietnam / Vietnamese"
+      },
+      {
+       "vi": "Anh",
+       "ko": "영국",
+       "en": "England / English"
+      },
+      {
+       "vi": "Pháp",
+       "ko": "프랑스",
+       "en": "France / French"
+      },
+      {
+       "vi": "Nga",
+       "ko": "러시아",
+       "en": "Russia / Russian"
+      },
+      {
+       "vi": "Nhật",
+       "ko": "일본",
+       "en": "Japan / Japanese"
+      },
+      {
+       "vi": "Trung Quốc",
+       "ko": "중국",
+       "en": "China / Chinese"
+      },
+      {
+       "vi": "Mỹ",
+       "ko": "미국",
+       "en": "America / American"
+      },
+      {
+       "vi": "Hàn Quốc",
+       "ko": "한국",
+       "en": "Korea / Korean"
+      },
+      {
+       "vi": "Ý",
+       "ko": "이탈리아",
+       "en": "Italy / Italian"
+      },
+      {
+       "vi": "Úc",
+       "ko": "호주",
+       "en": "Australia / Australian"
+      },
+      {
+       "vi": "Đức",
+       "ko": "독일",
+       "en": "Germany / German"
+      },
+      {
+       "vi": "Hà Lan",
+       "ko": "네덜란드",
+       "en": "Netherlands / Dutch"
+      },
+      {
+       "vi": "Lào",
+       "ko": "라오스",
+       "en": "Laos / Laotian"
+      },
+      {
+       "vi": "Balan",
+       "ko": "폴란드",
+       "en": "Poland / Polish"
+      },
+      {
+       "vi": "Thái Lan",
+       "ko": "태국",
+       "en": "Thailand / Thai"
+      },
+      {
+       "vi": "Phần Lan",
+       "ko": "핀란드",
+       "en": "Finland / Finnish"
+      },
+      {
+       "vi": "Khme",
+       "ko": "크메르 (캄보디아 민족/언어)",
+       "en": "Khmer"
+      },
+      {
+       "vi": "Canada",
+       "ko": "캐나다",
+       "en": "Canada / Canadian"
+      },
+      {
+       "vi": "Philipin",
+       "ko": "필리핀",
+       "en": "Philippines / Filipino"
+      },
+      {
+       "vi": "Thụy Điển",
+       "ko": "스웨덴",
+       "en": "Sweden / Swedish"
+      },
+      {
+       "vi": "Mông Cổ",
+       "ko": "몽골",
+       "en": "Mongolia / Mongolian"
+      },
+      {
+       "vi": "Ấn Độ",
+       "ko": "인도",
+       "en": "India / Indian"
+      },
+      {
+       "vi": "nào",
+       "ko": "어느, 어떤",
+       "en": "which"
+      },
+      {
+       "vi": "đều",
+       "ko": "모두, 다같이 (복수 주어 뒤에 붙어 '다 ~하다'는 뜻)",
+       "en": "all / both / equally"
+      },
+      {
+       "vi": "thế còn",
+       "ko": "그럼 ~는요? (화제를 이어서 물을 때)",
+       "en": "so, and...?"
+      },
+      {
+       "vi": "kia",
+       "ko": "저것, 저기 (화자·청자 모두에게서 먼 대상)",
+       "en": "that (over there)"
+      },
+      {
+       "vi": "đó",
+       "ko": "그것, 그 사람",
+       "en": "that (one)"
+      },
+      {
+       "vi": "A!",
+       "ko": "아! (놀람·깨달음을 나타내는 감탄사)",
+       "en": "Oh!"
+      }
+     ],
+     "grammar": [
+      {
+       "title_vi": "Cách hỏi và nói về nghề nghiệp",
+       "title_ko": "직업 묻고 답하기",
+       "note_ko": "Anh làm (nghề) gì? (직업이 뭐예요?) — Tôi là (làm) giáo viên. (저는 교사예요/교사로 일해요.)"
+      },
+      {
+       "title_vi": "Câu hỏi với hệ từ \"là\" (nghề nghiệp)",
+       "title_ko": "계사 \"là\"를 이용한 직업 확인 의문문",
+       "note_ko": "두 어순 모두 가능: Anh có phải là giáo viên không? / Anh là giáo viên phải không? (교사 맞으세요?) 대답: Vâng, tôi là giáo viên. (네, 저는 교사예요.) / Không, tôi không phải là giáo viên. Tôi là sinh viên. (아니요, 저는 교사가 아니에요. 저는 대학생이에요.)"
+      },
+      {
+       "title_vi": "Cách hỏi và nói về quốc tịch",
+       "title_ko": "국적 묻고 답하기",
+       "note_ko": "Anh là người nước nào? (국적이 어떻게 되세요? / 어느 나라 사람이에요?) — Tôi là người Nhật. (저는 일본 사람이에요.)"
+      },
+      {
+       "title_vi": "Cấu trúc \"đều\"",
+       "title_ko": "\"đều\"(모두, 다같이) 구문",
+       "note_ko": "복수 주어 뒤에 놓여 '모두 다 ~하다'는 뜻을 나타낸다. 예: Chúng tôi đều là người Việt. (우리는 모두 베트남 사람이에요.) / Họ đều là người Nhật. (그들은 모두 일본 사람이에요.) 패턴: Tên tôi là Nga. Tên chị cũng là Nga. → Tên chúng ta đều là Nga. (제 이름도 Nga, 당신 이름도 Nga예요. → 우리 이름은 모두 Nga예요.)"
+      }
+     ],
+     "dialogues": [
+      {
+       "vi": "Huy: Xin lỗi. Chị có phải là giáo viên không? / Hằng: Vâng. Tôi là giáo viên. Còn anh, anh là nhà báo, phải không? / Huy: Không. Tôi không phải là nhà báo. / Hằng: Anh làm nghề gì? / Huy: Tôi là kỹ sư.",
+       "ko": "Huy: 실례합니다. 선생님(교사) 맞으세요? / Hằng: 네. 저는 교사예요. 그런데 당신은, 기자 맞으시죠? / Huy: 아니요. 저는 기자가 아니에요. / Hằng: 직업이 뭐예요? / Huy: 저는 엔지니어예요."
+      },
+      {
+       "vi": "Jenny: Chào bạn. Xin lỗi, bạn là Nicolas phải không? / Nicolas: Phải. Tôi là Nicolas. Còn bạn, bạn là...? / Jenny: Mình là Jenny Trần, sinh viên tiếng Việt. Bạn cũng là sinh viên phải không? / Nicolas: Phải. Tôi cũng là sinh viên.",
+       "ko": "Jenny: 안녕하세요. 실례지만 Nicolas씨 맞으시죠? / Nicolas: 맞아요. 저는 Nicolas예요. 그런데 당신은요? / Jenny: 저는 Jenny Trần이에요, 베트남어를 배우는 학생이에요. 당신도 학생 맞죠? / Nicolas: 맞아요. 저도 학생이에요."
+      },
+      {
+       "vi": "Anbe: Xin lỗi. Bà là người nước nào? / Cathy: Tôi là người Mỹ. Ông là người Anh phải không? / Anbe: Không. Tôi không phải là người Anh. Tôi là người Pháp. / Cathy: Ông làm gì ạ? / Anbe: Tôi là bác sĩ. Còn bà? / Cathy: Tôi là thư ký.",
+       "ko": "Anbe: 실례합니다. 어느 나라 분이세요? / Cathy: 저는 미국 사람이에요. 당신은 영국 사람 맞으시죠? / Anbe: 아니요. 저는 영국 사람이 아니에요. 저는 프랑스 사람이에요. / Cathy: 무슨 일을 하세요? / Anbe: 저는 의사예요. 당신은요? / Cathy: 저는 비서예요."
+      },
+      {
+       "vi": "Mary: Chào anh. Tôi là Mary. / Bell: Chào chị. Tôi là Bell. Chị là người Úc phải không? / Mary: Vâng, tôi là người Úc. Còn anh? / Bell: Tôi cũng là người Úc. / Mary: A, chúng ta đều là người Úc. / Bell: Thế còn kia là...? / Mary: A, đó là chị Kyoko và anh Nishi. / Bell: Chị ấy làm gì? / Mary: Chị ấy là y tá. / Bell: Còn anh ấy? / Mary: Anh ấy là giám đốc. / Bell: Họ là người Nhật phải không? / Mary: Vâng. Họ đều là người Nhật.",
+       "ko": "Mary: 안녕하세요. 저는 Mary예요. / Bell: 안녕하세요. 저는 Bell이에요. 호주 사람 맞으시죠? / Mary: 네, 저는 호주 사람이에요. 당신은요? / Bell: 저도 호주 사람이에요. / Mary: 아, 우리 둘 다 호주 사람이네요. / Bell: 그럼 저쪽 분들은...? / Mary: 아, 저분들은 Kyoko씨와 Nishi씨예요. / Bell: 그분은 무슨 일을 하세요? / Mary: 그분은 간호사예요. / Bell: 저분은요? / Mary: 저분은 사장님이에요. / Bell: 두 분 일본 사람 맞으시죠? / Mary: 네. 두 분 다 일본 사람이에요."
+      }
+     ]
+    },
+    {
+     "bai": 4,
+     "title": "Đây là cái gì?",
+     "title_ko": "이것은 무엇입니까?",
+     "pages": "103-132",
+     "words": [
+      {
+       "vi": "cái nhà",
+       "ko": "집",
+       "en": "house"
+      },
+      {
+       "vi": "cái bảng",
+       "ko": "칠판, 게시판",
+       "en": "board"
+      },
+      {
+       "vi": "cái đèn",
+       "ko": "램프, 등",
+       "en": "lamp"
+      },
+      {
+       "vi": "cái bàn",
+       "ko": "책상, 탁자",
+       "en": "table"
+      },
+      {
+       "vi": "cái kính",
+       "ko": "안경",
+       "en": "glasses"
+      },
+      {
+       "vi": "cái mũ",
+       "ko": "모자",
+       "en": "hat"
+      },
+      {
+       "vi": "cái bút bi",
+       "ko": "볼펜",
+       "en": "ballpoint pen"
+      },
+      {
+       "vi": "cái bút chì",
+       "ko": "연필",
+       "en": "pencil"
+      },
+      {
+       "vi": "cái cốc",
+       "ko": "컵, 잔",
+       "en": "cup"
+      },
+      {
+       "vi": "cái điện thoại",
+       "ko": "전화기",
+       "en": "telephone"
+      },
+      {
+       "vi": "cái ti vi",
+       "ko": "텔레비전",
+       "en": "television"
+      },
+      {
+       "vi": "cái ghế",
+       "ko": "의자",
+       "en": "chair"
+      },
+      {
+       "vi": "cái xe đạp",
+       "ko": "자전거",
+       "en": "bicycle"
+      },
+      {
+       "vi": "cái đồng hồ",
+       "ko": "시계",
+       "en": "clock / watch"
+      },
+      {
+       "vi": "cái ví",
+       "ko": "지갑",
+       "en": "wallet"
+      },
+      {
+       "vi": "cái chìa khóa",
+       "ko": "열쇠",
+       "en": "key"
+      },
+      {
+       "vi": "chiếc tất",
+       "ko": "양말",
+       "en": "sock"
+      },
+      {
+       "vi": "chiếc lá",
+       "ko": "나뭇잎",
+       "en": "leaf"
+      },
+      {
+       "vi": "chiếc dép",
+       "ko": "슬리퍼",
+       "en": "sandal"
+      },
+      {
+       "vi": "chiếc giầy",
+       "ko": "신발, 구두",
+       "en": "shoe"
+      },
+      {
+       "vi": "quyển từ điển",
+       "ko": "사전",
+       "en": "dictionary"
+      },
+      {
+       "vi": "quyển vở",
+       "ko": "공책",
+       "en": "notebook"
+      },
+      {
+       "vi": "cuốn tạp chí",
+       "ko": "잡지",
+       "en": "magazine"
+      },
+      {
+       "vi": "quyển lịch",
+       "ko": "달력",
+       "en": "calendar"
+      },
+      {
+       "vi": "tấm ảnh",
+       "ko": "사진",
+       "en": "photo"
+      },
+      {
+       "vi": "tấm bản đồ",
+       "ko": "지도",
+       "en": "map"
+      },
+      {
+       "vi": "tấm bưu thiếp",
+       "ko": "엽서",
+       "en": "postcard"
+      },
+      {
+       "vi": "tấm vé",
+       "ko": "표, 티켓",
+       "en": "ticket"
+      },
+      {
+       "vi": "bức tranh",
+       "ko": "그림",
+       "en": "painting"
+      },
+      {
+       "vi": "bức tường",
+       "ko": "벽",
+       "en": "wall"
+      },
+      {
+       "vi": "bức thư",
+       "ko": "편지",
+       "en": "letter"
+      },
+      {
+       "vi": "bức ảnh",
+       "ko": "사진",
+       "en": "photo / picture"
+      },
+      {
+       "vi": "tờ báo",
+       "ko": "신문",
+       "en": "newspaper"
+      },
+      {
+       "vi": "tờ giấy",
+       "ko": "종이",
+       "en": "paper"
+      },
+      {
+       "vi": "tờ lịch",
+       "ko": "일력, 달력 낱장",
+       "en": "calendar sheet"
+      },
+      {
+       "vi": "tờ hóa đơn",
+       "ko": "청구서, 영수증",
+       "en": "invoice / bill"
+      },
+      {
+       "vi": "tờ séc",
+       "ko": "수표",
+       "en": "check"
+      },
+      {
+       "vi": "quả chuối",
+       "ko": "바나나",
+       "en": "banana"
+      },
+      {
+       "vi": "quả cam",
+       "ko": "오렌지",
+       "en": "orange"
+      },
+      {
+       "vi": "quả táo",
+       "ko": "사과",
+       "en": "apple"
+      },
+      {
+       "vi": "quả dưa hấu",
+       "ko": "수박",
+       "en": "watermelon"
+      },
+      {
+       "vi": "quả dứa",
+       "ko": "파인애플",
+       "en": "pineapple"
+      },
+      {
+       "vi": "quả dừa",
+       "ko": "코코넛, 야자",
+       "en": "coconut"
+      },
+      {
+       "vi": "quả thanh long",
+       "ko": "용과",
+       "en": "dragon fruit"
+      },
+      {
+       "vi": "quả đất",
+       "ko": "지구",
+       "en": "the earth"
+      },
+      {
+       "vi": "quả bóng",
+       "ko": "공",
+       "en": "ball"
+      },
+      {
+       "vi": "quả trứng",
+       "ko": "달걀",
+       "en": "egg"
+      },
+      {
+       "vi": "bông hoa",
+       "ko": "꽃",
+       "en": "flower"
+      },
+      {
+       "vi": "bông lúa",
+       "ko": "벼 이삭",
+       "en": "rice ear"
+      },
+      {
+       "vi": "củ tỏi",
+       "ko": "마늘",
+       "en": "garlic"
+      },
+      {
+       "vi": "củ cà rốt",
+       "ko": "당근",
+       "en": "carrot"
+      },
+      {
+       "vi": "củ gừng",
+       "ko": "생강",
+       "en": "ginger"
+      },
+      {
+       "vi": "củ khoai tây",
+       "ko": "감자",
+       "en": "potato"
+      },
+      {
+       "vi": "củ khoai lang",
+       "ko": "고구마",
+       "en": "sweet potato"
+      },
+      {
+       "vi": "con gà",
+       "ko": "닭",
+       "en": "chicken"
+      },
+      {
+       "vi": "con mèo",
+       "ko": "고양이",
+       "en": "cat"
+      },
+      {
+       "vi": "con bò",
+       "ko": "소",
+       "en": "cow"
+      },
+      {
+       "vi": "con chim",
+       "ko": "새",
+       "en": "bird"
+      },
+      {
+       "vi": "con chó",
+       "ko": "개",
+       "en": "dog"
+      },
+      {
+       "vi": "con cá",
+       "ko": "물고기",
+       "en": "fish"
+      },
+      {
+       "vi": "con tôm",
+       "ko": "새우",
+       "en": "shrimp"
+      },
+      {
+       "vi": "con lợn",
+       "ko": "돼지",
+       "en": "pig"
+      },
+      {
+       "vi": "con ngựa",
+       "ko": "말",
+       "en": "horse"
+      },
+      {
+       "vi": "con voi",
+       "ko": "코끼리",
+       "en": "elephant"
+      },
+      {
+       "vi": "cái ba lô",
+       "ko": "배낭",
+       "en": "backpack"
+      },
+      {
+       "vi": "cái kéo",
+       "ko": "가위",
+       "en": "scissors"
+      },
+      {
+       "vi": "cái túi",
+       "ko": "가방, 주머니",
+       "en": "bag"
+      },
+      {
+       "vi": "chiếc xe máy",
+       "ko": "오토바이",
+       "en": "motorbike"
+      },
+      {
+       "vi": "cái ô tô",
+       "ko": "자동차",
+       "en": "car"
+      },
+      {
+       "vi": "cái điện thoại di động",
+       "ko": "휴대폰",
+       "en": "mobile phone"
+      },
+      {
+       "vi": "quyển sách",
+       "ko": "책",
+       "en": "book"
+      },
+      {
+       "vi": "cái máy vi tính",
+       "ko": "컴퓨터",
+       "en": "computer"
+      },
+      {
+       "vi": "quả ớt",
+       "ko": "고추",
+       "en": "chili pepper"
+      },
+      {
+       "vi": "củ hành",
+       "ko": "양파",
+       "en": "onion"
+      },
+      {
+       "vi": "quả dâu tây",
+       "ko": "딸기",
+       "en": "strawberry"
+      },
+      {
+       "vi": "quả nho",
+       "ko": "포도",
+       "en": "grape"
+      },
+      {
+       "vi": "quả cà chua",
+       "ko": "토마토",
+       "en": "tomato"
+      },
+      {
+       "vi": "quả khế",
+       "ko": "스타프루트(카람볼라)",
+       "en": "starfruit"
+      },
+      {
+       "vi": "quả chanh",
+       "ko": "레몬, 라임",
+       "en": "lemon / lime"
+      },
+      {
+       "vi": "quả quýt",
+       "ko": "귤",
+       "en": "mandarin / tangerine"
+      },
+      {
+       "vi": "quả nhãn",
+       "ko": "용안(룽안)",
+       "en": "longan"
+      },
+      {
+       "vi": "quả dưa chuột",
+       "ko": "오이",
+       "en": "cucumber"
+      },
+      {
+       "vi": "con gà trống",
+       "ko": "수탉",
+       "en": "rooster"
+      },
+      {
+       "vi": "con vịt",
+       "ko": "오리",
+       "en": "duck"
+      },
+      {
+       "vi": "con trâu",
+       "ko": "물소",
+       "en": "water buffalo"
+      },
+      {
+       "vi": "con chuột",
+       "ko": "쥐",
+       "en": "mouse / rat"
+      },
+      {
+       "vi": "con rắn",
+       "ko": "뱀",
+       "en": "snake"
+      },
+      {
+       "vi": "con hổ",
+       "ko": "호랑이",
+       "en": "tiger"
+      },
+      {
+       "vi": "con cá heo",
+       "ko": "돌고래",
+       "en": "dolphin"
+      },
+      {
+       "vi": "con gà mái",
+       "ko": "암탉",
+       "en": "hen"
+      },
+      {
+       "vi": "cái bàn là",
+       "ko": "다리미",
+       "en": "iron"
+      },
+      {
+       "vi": "ấm pha trà",
+       "ko": "찻주전자",
+       "en": "teapot"
+      },
+      {
+       "vi": "đây là",
+       "ko": "이것은 ~이다",
+       "en": "this is"
+      },
+      {
+       "vi": "kia là",
+       "ko": "저것은 ~이다",
+       "en": "that is"
+      },
+      {
+       "vi": "cái này",
+       "ko": "이것",
+       "en": "this (thing)"
+      },
+      {
+       "vi": "gọi",
+       "ko": "부르다, 일컫다",
+       "en": "to call"
+      },
+      {
+       "vi": "thế còn",
+       "ko": "그러면, 그런데 ~는",
+       "en": "and, what about..."
+      },
+      {
+       "vi": "tên",
+       "ko": "이름",
+       "en": "name"
+      },
+      {
+       "vi": "nón",
+       "ko": "(베트남 전통) 삿갓 모자, 논",
+       "en": "conical hat"
+      },
+      {
+       "vi": "dao",
+       "ko": "칼",
+       "en": "knife"
+      },
+      {
+       "vi": "tẩy",
+       "ko": "지우개",
+       "en": "eraser"
+      },
+      {
+       "vi": "vô tuyến",
+       "ko": "텔레비전 ('ti vi'의 동의어)",
+       "en": "television (synonym of ti vi)"
+      },
+      {
+       "vi": "bộ ấm chén",
+       "ko": "찻잔 세트, 다구 세트",
+       "en": "tea set"
+      },
+      {
+       "vi": "xoài",
+       "ko": "망고",
+       "en": "mango"
+      },
+      {
+       "vi": "đắt",
+       "ko": "비싼",
+       "en": "expensive"
+      },
+      {
+       "vi": "rẻ",
+       "ko": "싼",
+       "en": "cheap"
+      },
+      {
+       "vi": "cũ",
+       "ko": "낡은, 오래된",
+       "en": "old"
+      },
+      {
+       "vi": "mới",
+       "ko": "새로운",
+       "en": "new"
+      },
+      {
+       "vi": "ngon",
+       "ko": "맛있는",
+       "en": "delicious"
+      },
+      {
+       "vi": "dở",
+       "ko": "맛없는, 서투른",
+       "en": "bad-tasting / poor"
+      },
+      {
+       "vi": "gầy",
+       "ko": "마른",
+       "en": "thin / skinny"
+      },
+      {
+       "vi": "béo",
+       "ko": "통통한, 살찐",
+       "en": "fat"
+      },
+      {
+       "vi": "đẹp",
+       "ko": "예쁜, 아름다운",
+       "en": "beautiful"
+      },
+      {
+       "vi": "xấu",
+       "ko": "못생긴, 나쁜",
+       "en": "ugly / bad"
+      },
+      {
+       "vi": "to",
+       "ko": "큰",
+       "en": "big"
+      },
+      {
+       "vi": "nhỏ",
+       "ko": "작은",
+       "en": "small"
+      },
+      {
+       "vi": "mỏng",
+       "ko": "얇은",
+       "en": "thin (flat objects)"
+      },
+      {
+       "vi": "dày",
+       "ko": "두꺼운",
+       "en": "thick"
+      },
+      {
+       "vi": "tốt",
+       "ko": "좋은",
+       "en": "good"
+      },
+      {
+       "vi": "dễ",
+       "ko": "쉬운",
+       "en": "easy"
+      },
+      {
+       "vi": "khó",
+       "ko": "어려운",
+       "en": "difficult"
+      },
+      {
+       "vi": "bác",
+       "ko": "큰아버지/큰어머니 (손윗사람 호칭)",
+       "en": "uncle / aunt (elder)"
+      },
+      {
+       "vi": "chú",
+       "ko": "삼촌, 아저씨",
+       "en": "uncle (father's younger brother)"
+      },
+      {
+       "vi": "ngôi nhà",
+       "ko": "집 (건물을 세는 종별사 'ngôi'+nhà)",
+       "en": "house"
+      },
+      {
+       "vi": "đàn ghi ta",
+       "ko": "기타",
+       "en": "guitar"
+      },
+      {
+       "vi": "đàn piano",
+       "ko": "피아노",
+       "en": "piano"
+      },
+      {
+       "vi": "nhưng",
+       "ko": "그러나, 하지만",
+       "en": "but"
+      },
+      {
+       "vi": "chữ",
+       "ko": "글자",
+       "en": "letter / character"
+      },
+      {
+       "vi": "rất",
+       "ko": "매우, 아주",
+       "en": "very"
+      },
+      {
+       "vi": "ừ",
+       "ko": "응, 그래 (편한 대답)",
+       "en": "yeah (informal)"
+      },
+      {
+       "vi": "hơi",
+       "ko": "약간, 좀",
+       "en": "a little"
+      },
+      {
+       "vi": "máy ảnh",
+       "ko": "카메라",
+       "en": "camera"
+      },
+      {
+       "vi": "phở",
+       "ko": "퍼(베트남 쌀국수)",
+       "en": "phở (Vietnamese noodle soup)"
+      },
+      {
+       "vi": "hôm qua",
+       "ko": "어제",
+       "en": "yesterday"
+      },
+      {
+       "vi": "nóng",
+       "ko": "더운, 뜨거운",
+       "en": "hot"
+      },
+      {
+       "vi": "lớp học",
+       "ko": "교실, 수업",
+       "en": "classroom / class"
+      },
+      {
+       "vi": "khá",
+       "ko": "꽤, 제법",
+       "en": "quite / fairly"
+      },
+      {
+       "vi": "rộng",
+       "ko": "넓은",
+       "en": "spacious / wide"
+      },
+      {
+       "vi": "hay",
+       "ko": "재미있는, 좋은",
+       "en": "interesting / good"
+      },
+      {
+       "vi": "áo",
+       "ko": "옷, 상의",
+       "en": "shirt / clothes"
+      },
+      {
+       "vi": "trời",
+       "ko": "하늘, 날씨",
+       "en": "sky / weather"
+      },
+      {
+       "vi": "nem",
+       "ko": "넴 (베트남식 튀김 스프링롤)",
+       "en": "nem (fried spring roll)"
+      }
+     ],
+     "grammar": [
+      {
+       "title_vi": "Loại từ của danh từ",
+       "title_ko": "명사의 종별사(분류사)",
+       "note_ko": "종별사는 항상 보통명사 앞에 놓여 사물의 종류를 나타낸다. Cái(사물 전반: cái bàn, cái ghế), Chiếc(신발·나뭇잎처럼 낱개: chiếc giầy, chiếc lá), Quyển/Cuốn(책류: quyển từ điển, cuốn tạp chí), Tấm(사진·지도 등 평면류: tấm ảnh, tấm bản đồ), Bức(그림·편지·벽 등: bức tranh, bức thư), Tờ(신문·종이류: tờ báo, tờ giấy), Quả(과일·둥근 것: quả chuối, quả bóng), Bông(꽃: bông hoa), Củ(뿌리채소: củ khoai tây), Con(동물: con chó, con mèo). 이 중 cái와 con이 가장 흔히 쓰이는 종별사다."
+      },
+      {
+       "title_vi": "Đại từ chỉ định: Đây, Kia, Đó/Đấy",
+       "title_ko": "지시대명사 (여기·저기·거기)",
+       "note_ko": "Đây(여기, 이것) — 화자와 청자 모두에게 가까운 대상. 예: Đây là quyển sách. (이것은 책이다.) Kia(저기, 저것) — 화자와 청자 모두에게서 먼 대상. 예: Kia là cái máy tính. (저것은 컴퓨터다.) Đó/Đấy(그것) — 화자에게서는 멀지만 청자에게는 가까운 대상. 예: Đó là quyển từ điển. (그것은 사전이다.)"
+      },
+      {
+       "title_vi": "Đại từ nghi vấn \"gì?\"",
+       "title_ko": "의문대명사 \"gì\"(무엇)",
+       "note_ko": "사물이나 동물을 물을 때 쓴다. 예: Đây là cái gì? (이것은 무엇입니까?) — Đây là cái bàn. Kia là con gì? (저것은 무슨 동물입니까?) — Kia là con chó. Cái này tiếng Việt gọi là cái gì? (이것은 베트남어로 무엇이라고 부릅니까?)"
+      },
+      {
+       "title_vi": "Tính từ chỉ định: này, kia, đó, ấy",
+       "title_ko": "지시형용사 (이~/그·저~)",
+       "note_ko": "명사 뒤에 붙어 그 명사를 한정한다. Này — 화자·청자에게 가까운 것(이~). 예: Đây là cái bút. Cái bút này tốt. (이것은 펜이다. 이 펜은 좋다.) Kia/đó/ấy — 먼 것(그~/저~). 예: Kia là cái bàn. Cái bàn kia cũ. (저것은 책상이다. 저 책상은 낡았다.) Kia là con gà. Con gà đó béo. Đấy là cái ghế. Cái ghế ấy mới."
+      },
+      {
+       "title_vi": "Câu có vị ngữ là tính từ (CN + TT)",
+       "title_ko": "형용사 술어문 (주어+형용사)",
+       "note_ko": "베트남어에서 형용사는 계사 \"là\" 없이 바로 술어가 된다. 긍정문: CN+TT (Con gà béo. 닭이 살쪘다. Quyển sách mới. 책이 새것이다). 부정문: CN+không+TT (Con gà không béo. Quyển sách không mới). 의문문①: CN+thế nào? (Quyển sách thế nào? 책이 어때요? — Quyển sách mới.) 의문문②: CN+có+TT+không? (Quyển sách có mới không? — Có, quyển sách mới. / Không, quyển sách không mới.)"
+      },
+      {
+       "title_vi": "Phó từ chỉ mức độ: rất, lắm, quá",
+       "title_ko": "정도부사 rất·lắm·quá (매우/너무)",
+       "note_ko": "형용사(또는 일부 심리동사) 앞뒤에 놓여 정도가 높음을 나타낸다. Rất — 형용사 앞, 문어체·구어체 모두 사용. 예: Tiếng Việt rất hay. (베트남어는 매우 재미있다.) Cái mũ rất đẹp. Lắm — 형용사 뒤, 주로 구어체. 예: Cái nhà ấy đẹp lắm. (그 집은 정말 예쁘다.) Cái áo này đắt lắm. Quá — 형용사 뒤, 구어체, 감탄의 뉘앙스. 예: Trời nóng quá! (날씨가 너무 덥다!) Nem ngon quá! (넴이 너무 맛있다!)"
+      },
+      {
+       "title_vi": "Thán từ \"ơi\"",
+       "title_ko": "감탄사 \"ơi\" (~아/~야, 부를 때 붙이는 말)",
+       "note_ko": "고유명사나 인칭대명사 뒤에 붙여 친근하게 부르는 말. 예: Hoà ơi! (화야!) Chị ơi! (언니/누나야!) Anh ơi! (오빠/형아!) Ông ơi! (할아버지!)"
+      }
+     ],
+     "dialogues": [
+      {
+       "vi": "Anna: Thủy ơi, đây là cái gì? / Thủy: Đây là cái bàn là. / Anna: Thế còn kia là con gì? / Thủy: À, đó là con bò. / Anna: Còn đây, cái này tiếng Việt gọi là cái gì? / Thủy: Cái ấm pha trà.",
+       "ko": "Anna: Thủy야, 이건 뭐야? / Thủy: 이건 다리미야. / Anna: 그럼 저건 무슨 동물이야? / Thủy: 아, 저건 소야. / Anna: 그리고 이거, 이건 베트남어로 뭐라고 불러? / Thủy: 찻주전자야."
+      },
+      {
+       "vi": "Anna: Lan ơi! Đây là cái gì? / Lan: Đây là cái máy vi tính. / Anna: Cái máy này thế nào? / Lan: Nó cũ nhưng rất tốt. / Anna: Còn kia, kia có phải là quyển từ điển Việt-Nhật không? / Lan: Ừ. Đó là quyển từ điển Việt-Nhật. / Anna: Quyển từ điển ấy có tốt không? / Lan: Tốt, nhưng chữ hơi nhỏ. / Anna: Thế còn quyển từ điển Nhật-Việt? / Lan: Nó cũng rất tốt.",
+       "ko": "Anna: Lan아! 이건 뭐야? / Lan: 이건 컴퓨터야. / Anna: 이 컴퓨터는 어때? / Lan: 낡았지만 아주 좋아. / Anna: 그럼 저거, 저건 베트남어-일본어 사전이야? / Lan: 응. 저건 베트남어-일본어 사전이야. / Anna: 그 사전은 좋아? / Lan: 좋은데, 글자가 좀 작아. / Anna: 그럼 일본어-베트남어 사전은? / Lan: 그것도 아주 좋아."
+      }
+     ]
+    },
+    {
+     "bai": 5,
+     "title": "Đây là ai?",
+     "title_ko": "이 사람은 누구입니까?",
+     "pages": "133-156",
+     "words": [
+      {
+       "vi": "già",
+       "ko": "늙은",
+       "en": "old (person)"
+      },
+      {
+       "vi": "trẻ",
+       "ko": "젊은",
+       "en": "young"
+      },
+      {
+       "vi": "khỏe",
+       "ko": "건강한",
+       "en": "healthy"
+      },
+      {
+       "vi": "yếu",
+       "ko": "약한",
+       "en": "weak"
+      },
+      {
+       "vi": "xấu trai",
+       "ko": "못생긴 (남자)",
+       "en": "not good-looking (male)"
+      },
+      {
+       "vi": "đẹp trai",
+       "ko": "잘생긴",
+       "en": "handsome"
+      },
+      {
+       "vi": "nhanh",
+       "ko": "빠른",
+       "en": "fast"
+      },
+      {
+       "vi": "chậm",
+       "ko": "느린",
+       "en": "slow"
+      },
+      {
+       "vi": "cao",
+       "ko": "키가 큰, 높은",
+       "en": "tall / high"
+      },
+      {
+       "vi": "thấp",
+       "ko": "낮은, 키가 작은",
+       "en": "short / low"
+      },
+      {
+       "vi": "Việt kiều",
+       "ko": "재외 베트남인, 베트남 교포",
+       "en": "overseas Vietnamese"
+      },
+      {
+       "vi": "mẹ",
+       "ko": "어머니",
+       "en": "mother"
+      },
+      {
+       "vi": "anh trai",
+       "ko": "형, 오빠 (친형)",
+       "en": "older brother"
+      },
+      {
+       "vi": "giáo sư",
+       "ko": "교수",
+       "en": "professor"
+      },
+      {
+       "vi": "ca sỹ",
+       "ko": "가수",
+       "en": "singer"
+      },
+      {
+       "vi": "phát triển",
+       "ko": "발전하다, 개발하다",
+       "en": "to develop"
+      },
+      {
+       "vi": "ngôn ngữ",
+       "ko": "언어",
+       "en": "language"
+      },
+      {
+       "vi": "quốc gia",
+       "ko": "국가, 국립의",
+       "en": "nation / national"
+      },
+      {
+       "vi": "quốc tế",
+       "ko": "국제",
+       "en": "international"
+      },
+      {
+       "vi": "nông nghiệp",
+       "ko": "농업",
+       "en": "agriculture"
+      },
+      {
+       "vi": "diễn viên",
+       "ko": "배우",
+       "en": "actor / actress"
+      },
+      {
+       "vi": "điện ảnh",
+       "ko": "영화",
+       "en": "cinema / film"
+      },
+      {
+       "vi": "phải",
+       "ko": "맞다, 옳다",
+       "en": "right / correct"
+      },
+      {
+       "vi": "bố",
+       "ko": "아버지",
+       "en": "father"
+      },
+      {
+       "vi": "cậu",
+       "ko": "너, 자네 (친한 사이의 2인칭)",
+       "en": "you (casual, between friends)"
+      },
+      {
+       "vi": "em trai",
+       "ko": "남동생",
+       "en": "younger brother"
+      },
+      {
+       "vi": "lạnh",
+       "ko": "추운, 차가운",
+       "en": "cold"
+      },
+      {
+       "vi": "dữ",
+       "ko": "사나운, 거친",
+       "en": "fierce / wild"
+      },
+      {
+       "vi": "hiền",
+       "ko": "온순한, 착한",
+       "en": "gentle / kind"
+      },
+      {
+       "vi": "nhiều",
+       "ko": "많은",
+       "en": "many / much"
+      },
+      {
+       "vi": "ít",
+       "ko": "적은",
+       "en": "few / little"
+      },
+      {
+       "vi": "vui",
+       "ko": "즐거운, 기쁜",
+       "en": "happy / joyful"
+      },
+      {
+       "vi": "buồn",
+       "ko": "슬픈",
+       "en": "sad"
+      },
+      {
+       "vi": "sáng",
+       "ko": "밝은",
+       "en": "bright"
+      },
+      {
+       "vi": "tối",
+       "ko": "어두운",
+       "en": "dark"
+      },
+      {
+       "vi": "nóng",
+       "ko": "더운, 뜨거운",
+       "en": "hot"
+      },
+      {
+       "vi": "giới thiệu",
+       "ko": "소개하다",
+       "en": "to introduce"
+      },
+      {
+       "vi": "tin học",
+       "ko": "정보학, 컴퓨터공학",
+       "en": "informatics / IT"
+      },
+      {
+       "vi": "trung tâm",
+       "ko": "센터, 중심",
+       "en": "center"
+      },
+      {
+       "vi": "căn phòng",
+       "ko": "방",
+       "en": "room"
+      },
+      {
+       "vi": "bông hồng",
+       "ko": "장미(꽃)",
+       "en": "rose"
+      },
+      {
+       "vi": "con gái",
+       "ko": "딸, 여자아이",
+       "en": "daughter / girl"
+      },
+      {
+       "vi": "dễ thương",
+       "ko": "귀여운, 사랑스러운",
+       "en": "cute / lovable"
+      },
+      {
+       "vi": "vui tính",
+       "ko": "명랑한, 유쾌한 (성격)",
+       "en": "cheerful (personality)"
+      },
+      {
+       "vi": "hà tiện",
+       "ko": "인색한",
+       "en": "stingy"
+      },
+      {
+       "vi": "tự tin",
+       "ko": "자신감 있는",
+       "en": "confident"
+      },
+      {
+       "vi": "sôi nổi",
+       "ko": "활발한, 열정적인",
+       "en": "lively / enthusiastic"
+      },
+      {
+       "vi": "dễ tính",
+       "ko": "너그러운, 까다롭지 않은 (성격)",
+       "en": "easy-going"
+      },
+      {
+       "vi": "nóng tính",
+       "ko": "성격이 급한, 화를 잘 내는",
+       "en": "short-tempered"
+      },
+      {
+       "vi": "rộng rãi",
+       "ko": "너그러운, 관대한",
+       "en": "generous"
+      },
+      {
+       "vi": "tự ty",
+       "ko": "소심한, 자신감 없는",
+       "en": "insecure / timid"
+      },
+      {
+       "vi": "trầm tĩnh",
+       "ko": "차분한, 침착한",
+       "en": "calm / composed"
+      },
+      {
+       "vi": "khó tính",
+       "ko": "까다로운 (성격)",
+       "en": "difficult / fussy (personality)"
+      },
+      {
+       "vi": "ích kỷ",
+       "ko": "이기적인",
+       "en": "selfish"
+      },
+      {
+       "vi": "người tốt",
+       "ko": "좋은 사람, 착한 사람",
+       "en": "good person"
+      },
+      {
+       "vi": "bạn trai",
+       "ko": "남자친구",
+       "en": "boyfriend"
+      },
+      {
+       "vi": "thông minh",
+       "ko": "똑똑한, 영리한",
+       "en": "smart / intelligent"
+      },
+      {
+       "vi": "bún chả",
+       "ko": "분짜 (베트남 전통 음식)",
+       "en": "bún chả (Vietnamese dish)"
+      },
+      {
+       "vi": "chị gái",
+       "ko": "누나, 언니 (손위 자매)",
+       "en": "older sister"
+      },
+      {
+       "vi": "em gái",
+       "ko": "여동생",
+       "en": "younger sister"
+      },
+      {
+       "vi": "người yêu",
+       "ko": "애인, 연인",
+       "en": "lover / sweetheart"
+      },
+      {
+       "vi": "tốt bụng",
+       "ko": "마음씨 좋은, 친절한",
+       "en": "kind-hearted"
+      },
+      {
+       "vi": "hẹp",
+       "ko": "좁은",
+       "en": "narrow"
+      },
+      {
+       "vi": "sáng sủa",
+       "ko": "밝고 환한",
+       "en": "bright / well-lit"
+      },
+      {
+       "vi": "rộng lượng",
+       "ko": "마음이 너그러운, 관대한",
+       "en": "generous / big-hearted"
+      },
+      {
+       "vi": "có vẻ",
+       "ko": "~처럼 보이다, ~해 보이다",
+       "en": "to seem / look like"
+      },
+      {
+       "vi": "nghiêm khắc",
+       "ko": "엄격한",
+       "en": "strict"
+      },
+      {
+       "vi": "kín đáo",
+       "ko": "내성적인, 신중한",
+       "en": "reserved / discreet"
+      },
+      {
+       "vi": "cô gái",
+       "ko": "아가씨, 젊은 여성",
+       "en": "young woman / girl"
+      },
+      {
+       "vi": "anh ta",
+       "ko": "그 남자, 그 (3인칭 대명사)",
+       "en": "he / him"
+      },
+      {
+       "vi": "hiện đại",
+       "ko": "현대적인",
+       "en": "modern"
+      },
+      {
+       "vi": "ít nói",
+       "ko": "말수가 적은, 과묵한",
+       "en": "taciturn / quiet"
+      },
+      {
+       "vi": "thích",
+       "ko": "좋아하다",
+       "en": "to like"
+      }
+     ],
+     "grammar": [
+      {
+       "title_vi": "Đại từ nghi vấn \"Ai?\"",
+       "title_ko": "의문대명사 \"Ai\" (누구)",
+       "note_ko": "사람을 물을 때 쓰는 의문대명사. 예: Anh là ai? (당신은 누구세요?) — Tôi là Tùng. Đây là ai? (이분은 누구세요?) — Đây là cô Hà. Ai là người Nhật? (누가 일본 사람이에요?) — Chị ấy là người Nhật."
+      },
+      {
+       "title_vi": "Trợ từ \"đấy\"",
+       "title_ko": "문미 조사 \"đấy\"",
+       "note_ko": "문장 끝에 놓여 어떤 사실·정보를 강조해서 알려줄 때 쓴다. 예: Kia là cô giáo của tôi đấy. (저분이 바로 우리 선생님이야.) Bố mình đấy. (우리 아빠야.)"
+      },
+      {
+       "title_vi": "Câu có vị ngữ là tính từ (tiếp)",
+       "title_ko": "형용사 술어문 (계속 — 사람이 주어인 경우)",
+       "note_ko": "Bài 4에서 배운 형용사 술어문(CN+TT) 구조가 사람을 주어로 할 때도 똑같이 적용된다. 긍정문: Cô ấy trẻ. (그녀는 젊다.) 부정문: Cô ấy không trẻ. 의문문①: Cô ấy thế nào? — Cô ấy trẻ. 의문문②: Cô ấy có trẻ không? — Có, cô ấy rất trẻ. / Không, cô ấy không trẻ."
+      },
+      {
+       "title_vi": "Kết cấu: CN + trông + TT / Trông + CN + TT",
+       "title_ko": "구문: 주어+trông(~해 보이다)+형용사",
+       "note_ko": "말하는 사람이 주관적으로 관찰한 사람·사물의 외모·상태·성질에 대한 느낌을 나타낼 때 쓴다. 구어체에서는 형용사 앞에 \"có vẻ\"(~한 듯하다)를 덧붙이기도 한다. 의문문: CN+trông thế nào? 예: Anh ấy trông thế nào? — Anh ấy trông rất đẹp trai. (그는 아주 잘생겨 보인다.) Cái kính ấy trông có vẻ tốt. 주의: \"trông\"은 문장 맨 앞에도 올 수 있다. 예: Trông cô ấy thế nào? Trông cô ấy rất buồn. Trông con bò kia thế nào? Trông nó gầy."
+      },
+      {
+       "title_vi": "Kết cấu: CN (người) + là người + TT",
+       "title_ko": "구문: 주어(사람)+là người(~한 사람이다)+형용사",
+       "note_ko": "사람의 성격·자질을 평가해서 말할 때 쓴다. 의문문: CN(người)+là người thế nào? 예: Chị ấy là người thế nào? (그녀는 어떤 사람이에요?) — Chị ấy là người tốt. (그녀는 좋은 사람이에요.)"
+      }
+     ],
+     "dialogues": [
+      {
+       "vi": "July: Hà ơi! Đây là ai? / Hà: Bố mình đấy. / July: Còn kia, kia là mẹ cậu phải không? / Hà: Ừ. Đó là mẹ mình. / July: Mẹ cậu trẻ và đẹp quá! Còn đây có phải là em trai cậu không? / Hà: Phải. Em trai mình đấy.",
+       "ko": "July: Hà야! 이분은 누구셔? / Hà: 우리 아빠야. / July: 그럼 저분은, 저분은 네 어머니 맞지? / Hà: 응. 저분은 우리 엄마야. / July: 너희 어머니 젊고 정말 예쁘시다! 그리고 이 사람은 네 남동생 맞아? / Hà: 맞아. 우리 남동생이야."
+      },
+      {
+       "vi": "Hà: Lan ơi! Đây là anh trai cậu phải không? / Lan: Ừ. Anh trai mình đấy. / Hà: Anh cậu trông đẹp trai quá! Thế anh ấy là người thế nào? / Lan: Anh ấy là người tốt và vui tính. / Hà: Còn đây, đây là ai? / Lan: Bạn trai mình. / Hà: Anh ấy trông rất thông minh. Thế anh ấy có dễ tính không? / Lan: Không. Anh ấy khó tính lắm.",
+       "ko": "Hà: Lan아! 이 사람은 네 오빠 맞아? / Lan: 응. 우리 오빠야. / Hà: 너희 오빠 정말 잘생겼다! 그럼 오빠는 어떤 사람이야? / Lan: 우리 오빠는 착하고 유쾌한 사람이야. / Hà: 그럼 이 사람은, 이 사람은 누구야? / Lan: 내 남자친구야. / Hà: 되게 똑똑해 보인다. 그럼 성격은 너그러워? / Lan: 아니, 되게 까다로워."
+      }
+     ]
+    },
+    {
+     "bai": 6,
+     "title": "Quyển sách này của ai?",
+     "title_ko": "이 책은 누구 것입니까?",
+     "pages": "157-182",
+     "words": [
+      {
+       "vi": "không",
+       "ko": "영, 0",
+       "en": "zero"
+      },
+      {
+       "vi": "một",
+       "ko": "하나, 1",
+       "en": "one"
+      },
+      {
+       "vi": "hai",
+       "ko": "둘, 2",
+       "en": "two"
+      },
+      {
+       "vi": "ba",
+       "ko": "셋, 3",
+       "en": "three"
+      },
+      {
+       "vi": "bốn",
+       "ko": "넷, 4",
+       "en": "four"
+      },
+      {
+       "vi": "năm",
+       "ko": "다섯, 5",
+       "en": "five"
+      },
+      {
+       "vi": "sáu",
+       "ko": "여섯, 6",
+       "en": "six"
+      },
+      {
+       "vi": "bảy",
+       "ko": "일곱, 7",
+       "en": "seven"
+      },
+      {
+       "vi": "tám",
+       "ko": "여덟, 8",
+       "en": "eight"
+      },
+      {
+       "vi": "chín",
+       "ko": "아홉, 9",
+       "en": "nine"
+      },
+      {
+       "vi": "mười",
+       "ko": "열, 10",
+       "en": "ten"
+      },
+      {
+       "vi": "chiếc lá",
+       "ko": "나뭇잎",
+       "en": "leaf"
+      },
+      {
+       "vi": "có",
+       "ko": "있다, 가지고 있다",
+       "en": "to have / there is"
+      },
+      {
+       "vi": "của",
+       "ko": "~의, ~의 것 (소유를 나타냄)",
+       "en": "of / belonging to"
+      },
+      {
+       "vi": "mấy",
+       "ko": "몇 (보통 10 미만 수량을 물을 때)",
+       "en": "how many (under 10)"
+      },
+      {
+       "vi": "bao nhiêu",
+       "ko": "얼마, 몇 (보통 10 이상 수량·가격을 물을 때)",
+       "en": "how much / how many (10 or more)"
+      },
+      {
+       "vi": "đồng hồ",
+       "ko": "시계",
+       "en": "clock / watch"
+      },
+      {
+       "vi": "quyển từ điển",
+       "ko": "사전",
+       "en": "dictionary"
+      },
+      {
+       "vi": "trang",
+       "ko": "쪽, 페이지",
+       "en": "page"
+      },
+      {
+       "vi": "nhà riêng",
+       "ko": "자기 소유의 집, 개인 주택",
+       "en": "one's own house"
+      },
+      {
+       "vi": "nhiều",
+       "ko": "많은",
+       "en": "many / much"
+      },
+      {
+       "vi": "lớp",
+       "ko": "반, 교실",
+       "en": "class"
+      },
+      {
+       "vi": "ô tô",
+       "ko": "자동차",
+       "en": "car"
+      },
+      {
+       "vi": "máy tính xách tay",
+       "ko": "노트북",
+       "en": "laptop"
+      },
+      {
+       "vi": "xe đạp",
+       "ko": "자전거",
+       "en": "bicycle"
+      },
+      {
+       "vi": "điện thoại di động",
+       "ko": "휴대전화",
+       "en": "mobile phone"
+      },
+      {
+       "vi": "tầng",
+       "ko": "층",
+       "en": "floor / storey"
+      },
+      {
+       "vi": "giáo trình",
+       "ko": "교재",
+       "en": "textbook / curriculum"
+      },
+      {
+       "vi": "bài",
+       "ko": "과, 단원",
+       "en": "lesson (unit)"
+      },
+      {
+       "vi": "từ",
+       "ko": "단어",
+       "en": "word"
+      },
+      {
+       "vi": "tiền",
+       "ko": "돈",
+       "en": "money"
+      },
+      {
+       "vi": "gia đình",
+       "ko": "가족",
+       "en": "family"
+      },
+      {
+       "vi": "bàn",
+       "ko": "책상, 테이블",
+       "en": "table / desk"
+      },
+      {
+       "vi": "xe máy",
+       "ko": "오토바이",
+       "en": "motorbike"
+      },
+      {
+       "vi": "vở",
+       "ko": "공책",
+       "en": "notebook"
+      },
+      {
+       "vi": "bức tranh",
+       "ko": "그림",
+       "en": "painting / picture"
+      },
+      {
+       "vi": "vô tuyến",
+       "ko": "텔레비전",
+       "en": "television"
+      },
+      {
+       "vi": "ngôi nhà",
+       "ko": "집",
+       "en": "house"
+      },
+      {
+       "vi": "con bò",
+       "ko": "소",
+       "en": "cow"
+      },
+      {
+       "vi": "cái mũ",
+       "ko": "모자",
+       "en": "hat"
+      },
+      {
+       "vi": "phòng",
+       "ko": "방",
+       "en": "room"
+      },
+      {
+       "vi": "bên cạnh",
+       "ko": "옆에",
+       "en": "next to / beside"
+      },
+      {
+       "vi": "chà",
+       "ko": "아! (놀람을 나타내는 감탄사)",
+       "en": "Oh!"
+      },
+      {
+       "vi": "trông",
+       "ko": "~해 보이다",
+       "en": "to look / appear"
+      },
+      {
+       "vi": "rộng",
+       "ko": "넓은",
+       "en": "spacious / wide"
+      },
+      {
+       "vi": "đẹp",
+       "ko": "예쁜, 아름다운",
+       "en": "beautiful / nice"
+      },
+      {
+       "vi": "quá",
+       "ko": "너무, 매우",
+       "en": "so / very"
+      },
+      {
+       "vi": "đắt",
+       "ko": "비싼",
+       "en": "expensive"
+      },
+      {
+       "vi": "tốt",
+       "ko": "좋은",
+       "en": "good"
+      },
+      {
+       "vi": "phòng học",
+       "ko": "교실",
+       "en": "classroom"
+      },
+      {
+       "vi": "cặp sách",
+       "ko": "책가방",
+       "en": "schoolbag"
+      },
+      {
+       "vi": "lọ thuốc",
+       "ko": "약병",
+       "en": "medicine bottle"
+      },
+      {
+       "vi": "viên",
+       "ko": "알 (알약을 세는 단위)",
+       "en": "(classifier for pills/tablets)"
+      },
+      {
+       "vi": "cái đèn",
+       "ko": "등, 램프",
+       "en": "lamp / light"
+      },
+      {
+       "vi": "cuốn tiểu thuyết",
+       "ko": "소설(책)",
+       "en": "novel"
+      },
+      {
+       "vi": "máy tính",
+       "ko": "컴퓨터",
+       "en": "computer"
+      },
+      {
+       "vi": "chùm chìa khoá",
+       "ko": "열쇠 꾸러미",
+       "en": "bunch of keys"
+      },
+      {
+       "vi": "máy ảnh",
+       "ko": "카메라",
+       "en": "camera"
+      },
+      {
+       "vi": "túi",
+       "ko": "가방, 주머니",
+       "en": "bag"
+      },
+      {
+       "vi": "đôi giày",
+       "ko": "신발 한 켤레",
+       "en": "a pair of shoes"
+      },
+      {
+       "vi": "đúng",
+       "ko": "맞는, 옳은",
+       "en": "correct / right"
+      },
+      {
+       "vi": "bố",
+       "ko": "아빠",
+       "en": "father"
+      },
+      {
+       "vi": "mẹ",
+       "ko": "엄마",
+       "en": "mother"
+      },
+      {
+       "vi": "tay",
+       "ko": "손",
+       "en": "hand"
+      },
+      {
+       "vi": "đầu",
+       "ko": "머리",
+       "en": "head"
+      },
+      {
+       "vi": "bụng",
+       "ko": "배",
+       "en": "stomach"
+      },
+      {
+       "vi": "dày",
+       "ko": "두꺼운",
+       "en": "thick"
+      },
+      {
+       "vi": "triệu",
+       "ko": "백만",
+       "en": "million"
+      },
+      {
+       "vi": "cũ",
+       "ko": "오래된, 낡은",
+       "en": "old (of things)"
+      },
+      {
+       "vi": "nhà sàn",
+       "ko": "고상가옥 (수상가옥)",
+       "en": "stilt house"
+      },
+      {
+       "vi": "đồng (đ)",
+       "ko": "동 (베트남 화폐 단위)",
+       "en": "Vietnamese dong (currency unit)"
+      },
+      {
+       "vi": "bút chì",
+       "ko": "연필",
+       "en": "pencil"
+      },
+      {
+       "vi": "cao",
+       "ko": "높은, 키가 큰",
+       "en": "tall / high"
+      },
+      {
+       "vi": "thấp",
+       "ko": "낮은, 키가 작은",
+       "en": "short / low"
+      },
+      {
+       "vi": "nặng",
+       "ko": "무거운",
+       "en": "heavy"
+      },
+      {
+       "vi": "nhẹ",
+       "ko": "가벼운",
+       "en": "light (weight)"
+      },
+      {
+       "vi": "dài",
+       "ko": "긴",
+       "en": "long"
+      },
+      {
+       "vi": "ngắn",
+       "ko": "짧은",
+       "en": "short (length)"
+      },
+      {
+       "vi": "rẻ",
+       "ko": "싼",
+       "en": "cheap"
+      },
+      {
+       "vi": "mỏng",
+       "ko": "얇은",
+       "en": "thin"
+      },
+      {
+       "vi": "tuổi",
+       "ko": "나이, ~세",
+       "en": "age / years old"
+      },
+      {
+       "vi": "chỗ ngồi",
+       "ko": "좌석",
+       "en": "seat"
+      },
+      {
+       "vi": "tiếng Nhật",
+       "ko": "일본어",
+       "en": "Japanese (language)"
+      },
+      {
+       "vi": "khó",
+       "ko": "어려운",
+       "en": "difficult"
+      },
+      {
+       "vi": "tiếng Anh",
+       "ko": "영어",
+       "en": "English (language)"
+      },
+      {
+       "vi": "dễ",
+       "ko": "쉬운",
+       "en": "easy"
+      },
+      {
+       "vi": "theo mình",
+       "ko": "내 생각엔",
+       "en": "in my opinion"
+      },
+      {
+       "vi": "mét",
+       "ko": "미터",
+       "en": "metre"
+      },
+      {
+       "vi": "chỉ...(thôi)",
+       "ko": "오직 ~만",
+       "en": "only"
+      },
+      {
+       "vi": "tớ",
+       "ko": "나 (친구 사이에 쓰는 1인칭)",
+       "en": "I (informal, among friends)"
+      },
+      {
+       "vi": "thế nào",
+       "ko": "어떤가, 어때",
+       "en": "how / what ... is like"
+      },
+      {
+       "vi": "thế à",
+       "ko": "그래?",
+       "en": "is that so?"
+      },
+      {
+       "vi": "cậu",
+       "ko": "너 (친구 사이에 쓰는 2인칭)",
+       "en": "you (informal, among friends)"
+      },
+      {
+       "vi": "mình",
+       "ko": "나, 자신",
+       "en": "I / myself"
+      },
+      {
+       "vi": "ô",
+       "ko": "오! (감탄사)",
+       "en": "Oh!"
+      },
+      {
+       "vi": "ừ",
+       "ko": "응, 그래",
+       "en": "yeah / uh-huh"
+      },
+      {
+       "vi": "nhưng",
+       "ko": "그러나",
+       "en": "but"
+      },
+      {
+       "vi": "thế thì",
+       "ko": "그렇다면",
+       "en": "then / in that case"
+      },
+      {
+       "vi": "xây",
+       "ko": "짓다, 건설하다",
+       "en": "to build"
+      },
+      {
+       "vi": "trong",
+       "ko": "~안에, ~중에서",
+       "en": "in / within / among"
+      },
+      {
+       "vi": "văn phòng",
+       "ko": "사무실",
+       "en": "office"
+      },
+      {
+       "vi": "sếp",
+       "ko": "상사, 사장",
+       "en": "boss"
+      },
+      {
+       "vi": "khoa",
+       "ko": "학과, 과",
+       "en": "department / faculty"
+      },
+      {
+       "vi": "phòng ẩm thực",
+       "ko": "구내식당, 취식실",
+       "en": "dining room"
+      },
+      {
+       "vi": "phòng họp",
+       "ko": "회의실",
+       "en": "meeting room"
+      },
+      {
+       "vi": "ngày",
+       "ko": "날, 일",
+       "en": "day"
+      },
+      {
+       "vi": "trẻ",
+       "ko": "젊은, 어린",
+       "en": "young"
+      },
+      {
+       "vi": "mới",
+       "ko": "새로운",
+       "en": "new"
+      },
+      {
+       "vi": "béo",
+       "ko": "뚱뚱한",
+       "en": "fat"
+      },
+      {
+       "vi": "món",
+       "ko": "요리, 음식 (음식을 세는 단위)",
+       "en": "dish (of food)"
+      },
+      {
+       "vi": "ngon",
+       "ko": "맛있는",
+       "en": "delicious"
+      },
+      {
+       "vi": "phở",
+       "ko": "쌀국수",
+       "en": "phở (Vietnamese noodle soup)"
+      },
+      {
+       "vi": "bún chả",
+       "ko": "분짜 (베트남 음식)",
+       "en": "bún chả (grilled pork with noodles)"
+      },
+      {
+       "vi": "tháng",
+       "ko": "월, 달",
+       "en": "month"
+      },
+      {
+       "vi": "nóng",
+       "ko": "더운, 뜨거운",
+       "en": "hot"
+      },
+      {
+       "vi": "nhóm",
+       "ko": "그룹, 무리",
+       "en": "group"
+      },
+      {
+       "vi": "bút bi",
+       "ko": "볼펜",
+       "en": "ballpoint pen"
+      },
+      {
+       "vi": "tạp chí",
+       "ko": "잡지",
+       "en": "magazine"
+      },
+      {
+       "vi": "phở cuốn",
+       "ko": "쌀국수 말이 (월남쌈)",
+       "en": "phở cuốn (rice-paper noodle roll)"
+      },
+      {
+       "vi": "cơm",
+       "ko": "밥",
+       "en": "cooked rice"
+      },
+      {
+       "vi": "con rùa",
+       "ko": "거북이",
+       "en": "turtle"
+      },
+      {
+       "vi": "to",
+       "ko": "(부피·크기가) 큰",
+       "en": "big"
+      },
+      {
+       "vi": "người yêu",
+       "ko": "애인, 연인",
+       "en": "lover / sweetheart"
+      },
+      {
+       "vi": "vui tính",
+       "ko": "성격이 유쾌한, 재미있는",
+       "en": "cheerful / funny (personality)"
+      },
+      {
+       "vi": "bài học",
+       "ko": "수업, 과",
+       "en": "lesson"
+      },
+      {
+       "vi": "hôm nay",
+       "ko": "오늘",
+       "en": "today"
+      },
+      {
+       "vi": "hôm qua",
+       "ko": "어제",
+       "en": "yesterday"
+      },
+      {
+       "vi": "hôm kia",
+       "ko": "그제",
+       "en": "the day before yesterday"
+      },
+      {
+       "vi": "ơi",
+       "ko": "야, ~아 (부를 때 쓰는 호격 조사)",
+       "en": "hey (vocative particle)"
+      },
+      {
+       "vi": "đấy",
+       "ko": "그래?, ~인 거야? (강조·의문의 어조사)",
+       "en": "(emphatic / question particle)"
+      }
+     ],
+     "grammar": [
+      {
+       "title_vi": "Số đếm",
+       "title_ko": "수사 (기수)",
+       "note_ko": "0~10: không, một, hai, ba, bốn, năm, sáu, bảy, tám, chín, mười. 십단위=수+mươi(20=hai mươi), 백단위=수+trăm(100=một trăm), 천단위=수+nghìn(1000=một nghìn). 11~19=mười+수(11=mười một). 21~99=수+mươi+수: 끝자리 1→mốt(21=hai mươi mốt), 끝자리4→tư(24=hai mươi tư), 끝자리5→lăm(15=mười lăm, 25=hai mươi lăm/nhăm). 중간에 0이 오면 'không'(또는 lẻ/linh)을 넣음: 101=một trăm linh một/một trăm lẻ một, 1021=một nghìn không trăm hai mốt, 2005=hai nghìn không trăm linh(lẻ) năm."
+      },
+      {
+       "title_vi": "Động từ \"có\"",
+       "title_ko": "동사 \"có\" (있다/가지고 있다)",
+       "note_ko": "사람·사물의 존재나 소유를 나타내는 동사. VD: Anh ấy có ô tô không? — Có. Anh ấy có. / Không. Anh ấy không có."
+      },
+      {
+       "title_vi": "\"Mấy\" và \"bao nhiêu\"",
+       "title_ko": "의문사 \"mấy\"·\"bao nhiêu\" (수량을 묻는 말)",
+       "note_ko": "Mấy는 보통 10 미만 수량을 물을 때 씀: Chị có mấy quyển sách? Tôi có 6 quyển. Bao nhiêu는 보통 10 이상 수량을 물을 때 씀: Quyển sách có bao nhiêu trang? 200 trang."
+      },
+      {
+       "title_vi": "Giới từ sở hữu \"của\"",
+       "title_ko": "소유전치사 \"của\" (~의)",
+       "note_ko": "Cái bút này của ai? Của tôi. / Cái bút này của anh phải không? Không, không phải của tôi. Của anh. 'của'는 사람-사람 관계(bố tôi, mẹ tôi, cô giáo tôi), 신체부위-소유자 관계(tay tôi, đầu tôi), 사람과 친밀한 사물 관계(nhà tôi, xe tôi, lớp tôi) 앞에서는 생략 가능."
+      },
+      {
+       "title_vi": "Các phó từ so sánh: bằng, hơn, nhất",
+       "title_ko": "비교 부사: bằng(~만큼)·hơn(더~)·nhất(가장~)",
+       "note_ko": "동급 A+형용사+bằng(như)+B (~만큼 ~하다): Tôi cao bằng chị Mary. / Tôi và chị Mary cao bằng nhau(như nhau). 비교급 A+형용사+hơn+B (더~하다): Tiếng Nhật khó hơn tiếng Anh. 질문: A và B, 어느 것이 hơn? 최상급 A+형용사+nhất (가장~하다): Anna trẻ nhất. 질문: Ai/Bài nào ...nhất?"
+      },
+      {
+       "title_vi": "Từ ngữ thường dùng",
+       "title_ko": "자주 쓰는 표현",
+       "note_ko": "Chị ấy trông thế nào? (외모가 어때요? / 어떻게 생겼어요?) / Chị ấy là người thế nào? (그녀는 어떤 사람이에요? / 성격이 어때요?) / ... của ai? (~는 누구 거예요?)"
+      }
+     ],
+     "dialogues": [
+      {
+       "vi": "Huy: Ngôi nhà này của chị phải không? / Thu: Vâng. Đây là phòng của tôi. Bên cạnh là phòng của con trai tôi. / Huy: Nhà chị có mấy phòng? / Thu: 7 phòng. / Huy: Chà! Trông rộng và đẹp quá!",
+       "ko": "Huy: 이 집은 당신 거 맞죠? / Thu: 네. 여기는 제 방이에요. 옆은 제 아들 방이고요. / Huy: 집에 방이 몇 개 있어요? / Thu: 7개요. / Huy: 와! 넓고 예뻐 보이네요!"
+      },
+      {
+       "vi": "Cô giáo: Cái bút này của ai? / Lê: Dạ, của em ạ. / Cô giáo: Nó có đắt không? / Lê: Không đắt lắm cô ạ. / Cô giáo: Còn quyển từ điển kia của ai? Của Nga phải không? / Nga: Không phải của em. Của anh Nam ạ. / Cô giáo: Quyển từ điển ấy có bao nhiêu trang? / Nga: Dạ, 1000 trang ạ. / Cô giáo: Nó có tốt không? / Nga: Rất tốt ạ.",
+       "ko": "선생님: 이 펜은 누구 거니? / Lê: 네, 제 거예요. / 선생님: 그거 비싸니? / Lê: 별로 안 비싸요, 선생님. / 선생님: 그럼 저 사전은 누구 거니? Nga 거니? / Nga: 제 거 아니에요. Nam 오빠 거예요. / 선생님: 그 사전은 몇 쪽이니? / Nga: 네, 1000쪽이요. / 선생님: 좋은 사전이니? / Nga: 아주 좋아요."
+      },
+      {
+       "vi": "Anna: Mary này, tiếng Nhật có khó không? / Mary: Tiếng Nhật rất khó. / Anna: Thế còn tiếng Việt thế nào? / Mary: Tiếng Việt cũng khó nhưng tiếng Nhật khó hơn tiếng Việt. / Anna: Thế à? Thế tiếng Anh và tiếng Việt, tiếng nào dễ hơn? / Mary: Theo mình, tiếng Anh dễ hơn.",
+       "ko": "Anna: Mary야, 일본어 어려워? / Mary: 일본어 정말 어려워. / Anna: 그럼 베트남어는 어때? / Mary: 베트남어도 어려운데 일본어가 베트남어보다 더 어려워. / Anna: 그래? 그럼 영어랑 베트남어 중에 어느 게 더 쉬워? / Mary: 내 생각엔 영어가 더 쉬운 것 같아."
+      },
+      {
+       "vi": "Bell: Tomy, cậu cao bao nhiêu? / Tomy: 1m80. Còn cậu? / Bell: Mình cũng 1m80. / Tomy: Ô, chúng mình cao bằng nhau. Còn Martin cao 1m70. / Bell: Ừ. Martin thấp hơn mình và cậu.",
+       "ko": "Bell: Tomy, 너 키가 몇이야? / Tomy: 1m80이야. 너는? / Bell: 나도 1m80이야. / Tomy: 오, 우리 키가 똑같네. 그런데 Martin은 1m70이야. / Bell: 응. Martin은 나랑 너보다 작네."
+      },
+      {
+       "vi": "Bell: Quyển từ điển của cậu có bao nhiêu trang? / Tomy: 1500 trang. Còn quyển của cậu? / Bell: 1000 trang. / Tomy: Quyển của cậu mỏng hơn quyển của tớ. / Bell: Ừ. Nhưng quyển từ điển của Mary chỉ có 800 trang thôi. / Tomy: Thế thì quyển của tớ dày nhất, của Mary mỏng nhất.",
+       "ko": "Bell: 네 사전은 몇 쪽이야? / Tomy: 1500쪽이야. 네 건? / Bell: 1000쪽이야. / Tomy: 네 게 내 것보다 얇네. / Bell: 응. 근데 Mary 사전은 겨우 800쪽밖에 안 돼. / Tomy: 그럼 내 게 제일 두껍고, Mary 게 제일 얇은 거네."
+      }
+     ]
+    },
+    {
+     "bai": 7,
+     "title": "Bạn đang học ở đâu?",
+     "title_ko": "어디에서 공부하고 있습니까?",
+     "pages": "183-210",
+     "words": [
+      {
+       "vi": "ăn",
+       "ko": "먹다",
+       "en": "to eat"
+      },
+      {
+       "vi": "uống",
+       "ko": "마시다",
+       "en": "to drink"
+      },
+      {
+       "vi": "ngủ",
+       "ko": "자다",
+       "en": "to sleep"
+      },
+      {
+       "vi": "dậy",
+       "ko": "일어나다",
+       "en": "to get up"
+      },
+      {
+       "vi": "làm việc",
+       "ko": "일하다",
+       "en": "to work"
+      },
+      {
+       "vi": "nghỉ",
+       "ko": "쉬다",
+       "en": "to rest"
+      },
+      {
+       "vi": "dạy",
+       "ko": "가르치다",
+       "en": "to teach"
+      },
+      {
+       "vi": "học",
+       "ko": "공부하다, 배우다",
+       "en": "to learn / to study"
+      },
+      {
+       "vi": "nói",
+       "ko": "말하다",
+       "en": "to speak"
+      },
+      {
+       "vi": "nghe",
+       "ko": "듣다",
+       "en": "to listen"
+      },
+      {
+       "vi": "đọc",
+       "ko": "읽다",
+       "en": "to read"
+      },
+      {
+       "vi": "viết",
+       "ko": "쓰다",
+       "en": "to write"
+      },
+      {
+       "vi": "xem",
+       "ko": "보다 (TV 등을)",
+       "en": "to watch"
+      },
+      {
+       "vi": "gọi điện thoại",
+       "ko": "전화하다",
+       "en": "to phone"
+      },
+      {
+       "vi": "hỏi",
+       "ko": "묻다",
+       "en": "to ask"
+      },
+      {
+       "vi": "trả lời",
+       "ko": "대답하다",
+       "en": "to answer"
+      },
+      {
+       "vi": "nhạc",
+       "ko": "음악",
+       "en": "music"
+      },
+      {
+       "vi": "bia",
+       "ko": "맥주",
+       "en": "beer"
+      },
+      {
+       "vi": "tiếng Nga",
+       "ko": "러시아어",
+       "en": "Russian (language)"
+      },
+      {
+       "vi": "dịch",
+       "ko": "번역하다",
+       "en": "to translate"
+      },
+      {
+       "vi": "chơi",
+       "ko": "(운동·놀이를) 하다, 놀다",
+       "en": "to play"
+      },
+      {
+       "vi": "bóng đá",
+       "ko": "축구",
+       "en": "football / soccer"
+      },
+      {
+       "vi": "thư",
+       "ko": "편지",
+       "en": "letter"
+      },
+      {
+       "vi": "phim",
+       "ko": "영화",
+       "en": "movie"
+      },
+      {
+       "vi": "hoà nhạc",
+       "ko": "콘서트, 음악회",
+       "en": "concert"
+      },
+      {
+       "vi": "ngày mai",
+       "ko": "내일",
+       "en": "tomorrow"
+      },
+      {
+       "vi": "ở",
+       "ko": "~에서 (장소전치사)",
+       "en": "at / in"
+      },
+      {
+       "vi": "siêu thị",
+       "ko": "마트, 슈퍼마켓",
+       "en": "supermarket"
+      },
+      {
+       "vi": "bưu điện",
+       "ko": "우체국",
+       "en": "post office"
+      },
+      {
+       "vi": "chợ",
+       "ko": "시장",
+       "en": "market"
+      },
+      {
+       "vi": "nhà hàng",
+       "ko": "식당, 레스토랑",
+       "en": "restaurant"
+      },
+      {
+       "vi": "khách sạn",
+       "ko": "호텔",
+       "en": "hotel"
+      },
+      {
+       "vi": "nhà sách",
+       "ko": "서점",
+       "en": "bookshop"
+      },
+      {
+       "vi": "câu lạc bộ",
+       "ko": "클럽, 동아리",
+       "en": "club"
+      },
+      {
+       "vi": "thư viện",
+       "ko": "도서관",
+       "en": "library"
+      },
+      {
+       "vi": "gửi",
+       "ko": "보내다",
+       "en": "to send"
+      },
+      {
+       "vi": "cà phê",
+       "ko": "커피",
+       "en": "coffee"
+      },
+      {
+       "vi": "gặp",
+       "ko": "만나다",
+       "en": "to meet"
+      },
+      {
+       "vi": "mua",
+       "ko": "사다",
+       "en": "to buy"
+      },
+      {
+       "vi": "rút tiền",
+       "ko": "돈을 인출하다",
+       "en": "to withdraw money"
+      },
+      {
+       "vi": "sáng",
+       "ko": "아침",
+       "en": "morning"
+      },
+      {
+       "vi": "tối",
+       "ko": "저녁",
+       "en": "evening"
+      },
+      {
+       "vi": "quần áo",
+       "ko": "옷",
+       "en": "clothes"
+      },
+      {
+       "vi": "khám bệnh",
+       "ko": "진찰받다, 진료받다",
+       "en": "to have a medical examination"
+      },
+      {
+       "vi": "đồ ăn",
+       "ko": "음식",
+       "en": "food"
+      },
+      {
+       "vi": "sáng nay",
+       "ko": "오늘 아침",
+       "en": "this morning"
+      },
+      {
+       "vi": "chiều nay",
+       "ko": "오늘 오후",
+       "en": "this afternoon"
+      },
+      {
+       "vi": "vẽ",
+       "ko": "그리다",
+       "en": "to paint / to draw"
+      },
+      {
+       "vi": "trường",
+       "ko": "학교",
+       "en": "school"
+      },
+      {
+       "vi": "lâu",
+       "ko": "오랜, 오래",
+       "en": "long time"
+      },
+      {
+       "vi": "gia đình",
+       "ko": "가족",
+       "en": "family"
+      },
+      {
+       "vi": "bây giờ",
+       "ko": "지금",
+       "en": "now"
+      },
+      {
+       "vi": "sống",
+       "ko": "살다",
+       "en": "to live"
+      },
+      {
+       "vi": "nhà tôi",
+       "ko": "제 아내/남편 (관용표현, 직역은 '내 집')",
+       "en": "my wife / my husband"
+      },
+      {
+       "vi": "tại",
+       "ko": "~에서 (장소전치사)",
+       "en": "at / in"
+      },
+      {
+       "vi": "đài",
+       "ko": "라디오",
+       "en": "radio"
+      },
+      {
+       "vi": "chè",
+       "ko": "차, 녹차",
+       "en": "tea"
+      },
+      {
+       "vi": "hoa",
+       "ko": "꽃",
+       "en": "flower"
+      },
+      {
+       "vi": "rạp",
+       "ko": "극장",
+       "en": "theatre / cinema"
+      },
+      {
+       "vi": "ghi ta",
+       "ko": "기타",
+       "en": "guitar"
+      },
+      {
+       "vi": "quán cà phê",
+       "ko": "카페",
+       "en": "coffee shop"
+      },
+      {
+       "vi": "nơi",
+       "ko": "곳, 장소",
+       "en": "place"
+      },
+      {
+       "vi": "trưa",
+       "ko": "낮, 정오",
+       "en": "noon"
+      },
+      {
+       "vi": "hiện nay",
+       "ko": "현재, 요즘",
+       "en": "nowadays"
+      },
+      {
+       "vi": "bánh mì",
+       "ko": "빵",
+       "en": "bread"
+      },
+      {
+       "vi": "cho",
+       "ko": "~에게, ~을 위해 (전치사)",
+       "en": "for / to"
+      },
+      {
+       "vi": "Thứ Bảy",
+       "ko": "토요일",
+       "en": "Saturday"
+      },
+      {
+       "vi": "hút",
+       "ko": "(담배를) 피우다",
+       "en": "to smoke"
+      },
+      {
+       "vi": "thuốc",
+       "ko": "담배, 약",
+       "en": "cigarette / medicine"
+      },
+      {
+       "vi": "hiệu sách",
+       "ko": "서점",
+       "en": "bookshop"
+      },
+      {
+       "vi": "họp",
+       "ko": "회의하다, 모이다",
+       "en": "to have a meeting"
+      },
+      {
+       "vi": "đi",
+       "ko": "가다, (탈것을) 타다",
+       "en": "to go / to ride"
+      },
+      {
+       "vi": "game",
+       "ko": "게임",
+       "en": "game"
+      },
+      {
+       "vi": "câu cá",
+       "ko": "낚시하다",
+       "en": "to fish"
+      },
+      {
+       "vi": "nói chuyện",
+       "ko": "이야기하다, 대화하다",
+       "en": "to talk / to chat"
+      },
+      {
+       "vi": "nấu ăn",
+       "ko": "요리하다",
+       "en": "to cook"
+      },
+      {
+       "vi": "trên",
+       "ko": "~위에",
+       "en": "on / above"
+      },
+      {
+       "vi": "bài tập",
+       "ko": "숙제, 연습문제",
+       "en": "homework / exercise"
+      },
+      {
+       "vi": "chính tả",
+       "ko": "받아쓰기",
+       "en": "dictation"
+      },
+      {
+       "vi": "với",
+       "ko": "~와 함께",
+       "en": "with"
+      },
+      {
+       "vi": "piano",
+       "ko": "피아노",
+       "en": "piano"
+      },
+      {
+       "vi": "ghế",
+       "ko": "의자",
+       "en": "chair"
+      },
+      {
+       "vi": "tủ",
+       "ko": "장롱, 캐비닛",
+       "en": "cabinet / wardrobe"
+      },
+      {
+       "vi": "giường",
+       "ko": "침대",
+       "en": "bed"
+      },
+      {
+       "vi": "ghế sa lông",
+       "ko": "소파",
+       "en": "sofa"
+      },
+      {
+       "vi": "thông minh",
+       "ko": "똑똑한",
+       "en": "intelligent"
+      },
+      {
+       "vi": "đông",
+       "ko": "붐비는, 사람이 많은",
+       "en": "crowded"
+      },
+      {
+       "vi": "ồn ào",
+       "ko": "시끄러운",
+       "en": "noisy"
+      },
+      {
+       "vi": "đẹp trai",
+       "ko": "잘생긴",
+       "en": "handsome"
+      },
+      {
+       "vi": "đơn giản",
+       "ko": "간단한, 단순한",
+       "en": "simple"
+      },
+      {
+       "vi": "ngữ pháp",
+       "ko": "문법",
+       "en": "grammar"
+      },
+      {
+       "vi": "tìm",
+       "ko": "찾다",
+       "en": "to look for"
+      },
+      {
+       "vi": "nó",
+       "ko": "그것",
+       "en": "it"
+      },
+      {
+       "vi": "kia kìa",
+       "ko": "저기 저것 봐",
+       "en": "over there"
+      },
+      {
+       "vi": "đây rồi",
+       "ko": "여기 있다",
+       "en": "here it is"
+      },
+      {
+       "vi": "ừ nhỉ",
+       "ko": "아 그러네",
+       "en": "oh, yes"
+      },
+      {
+       "vi": "cặp sách",
+       "ko": "책가방",
+       "en": "school bag"
+      },
+      {
+       "vi": "ngồi",
+       "ko": "앉다",
+       "en": "to sit"
+      },
+      {
+       "vi": "đứng",
+       "ko": "서다",
+       "en": "to stand"
+      },
+      {
+       "vi": "dưới",
+       "ko": "~아래에",
+       "en": "under"
+      },
+      {
+       "vi": "tờ",
+       "ko": "장, 부 (신문 등을 세는 단위)",
+       "en": "(classifier for sheets/newspapers)"
+      },
+      {
+       "vi": "kính",
+       "ko": "안경",
+       "en": "glasses"
+      },
+      {
+       "vi": "bức ảnh",
+       "ko": "사진",
+       "en": "photo"
+      },
+      {
+       "vi": "cạnh",
+       "ko": "옆, 곁",
+       "en": "beside"
+      },
+      {
+       "vi": "trước",
+       "ko": "앞에",
+       "en": "in front of"
+      },
+      {
+       "vi": "giữa",
+       "ko": "사이, 가운데",
+       "en": "between"
+      },
+      {
+       "vi": "hát",
+       "ko": "노래하다",
+       "en": "to sing"
+      },
+      {
+       "vi": "hộp",
+       "ko": "상자, 케이스",
+       "en": "box / case"
+      },
+      {
+       "vi": "mèo",
+       "ko": "고양이",
+       "en": "cat"
+      },
+      {
+       "vi": "đỗ",
+       "ko": "주차하다, 서다",
+       "en": "to park"
+      },
+      {
+       "vi": "cổng",
+       "ko": "문, 입구",
+       "en": "gate"
+      },
+      {
+       "vi": "nhà hát",
+       "ko": "극장",
+       "en": "theatre"
+      },
+      {
+       "vi": "treo",
+       "ko": "걸다",
+       "en": "to hang"
+      },
+      {
+       "vi": "tường",
+       "ko": "벽",
+       "en": "wall"
+      },
+      {
+       "vi": "giá sách",
+       "ko": "책장, 책 선반",
+       "en": "bookshelf"
+      },
+      {
+       "vi": "hồ",
+       "ko": "호수",
+       "en": "lake"
+      },
+      {
+       "vi": "cửa hàng",
+       "ko": "가게",
+       "en": "shop / store"
+      },
+      {
+       "vi": "nằm",
+       "ko": "위치하다, 눕다",
+       "en": "to be located / to lie down"
+      },
+      {
+       "vi": "sáng sủa",
+       "ko": "밝고 화사한",
+       "en": "bright / well-lit"
+      },
+      {
+       "vi": "bản đồ",
+       "ko": "지도",
+       "en": "map"
+      },
+      {
+       "vi": "giảng bài",
+       "ko": "강의하다, 수업하다",
+       "en": "to lecture / to teach a class"
+      },
+      {
+       "vi": "loại",
+       "ko": "종류",
+       "en": "type / kind"
+      },
+      {
+       "vi": "kem",
+       "ko": "아이스크림",
+       "en": "ice cream"
+      },
+      {
+       "vi": "ngoài",
+       "ko": "~밖에",
+       "en": "outside"
+      },
+      {
+       "vi": "sau",
+       "ko": "~뒤에",
+       "en": "behind"
+      },
+      {
+       "vi": "chó",
+       "ko": "개",
+       "en": "dog"
+      },
+      {
+       "vi": "trời",
+       "ko": "하늘, 날씨",
+       "en": "sky / weather"
+      },
+      {
+       "vi": "xấu",
+       "ko": "못생긴, 나쁜",
+       "en": "ugly / bad"
+      },
+      {
+       "vi": "phục vụ",
+       "ko": "근무하다, 서빙하다",
+       "en": "to serve / to work (in service)"
+      },
+      {
+       "vi": "tuần",
+       "ko": "주 (기간 단위)",
+       "en": "week"
+      },
+      {
+       "vi": "trước đây",
+       "ko": "예전에",
+       "en": "previously"
+      },
+      {
+       "vi": "công viên",
+       "ko": "공원",
+       "en": "park"
+      },
+      {
+       "vi": "trẻ em",
+       "ko": "아이, 어린이",
+       "en": "child / children"
+      },
+      {
+       "vi": "giới thiệu",
+       "ko": "소개하다",
+       "en": "to introduce"
+      },
+      {
+       "vi": "làm quen",
+       "ko": "친해지다, 알게 되다",
+       "en": "to get acquainted"
+      },
+      {
+       "vi": "sạch",
+       "ko": "깨끗한",
+       "en": "clean"
+      },
+      {
+       "vi": "chăm chỉ",
+       "ko": "부지런한, 근면한",
+       "en": "diligent / hard-working"
+      },
+      {
+       "vi": "hàng ngày",
+       "ko": "매일",
+       "en": "every day"
+      },
+      {
+       "vi": "được",
+       "ko": "~할 수 있다, ~하게 되다 (가능·수동을 나타냄)",
+       "en": "to be able to / to get to"
+      }
+     ],
+     "grammar": [
+      {
+       "title_vi": "Câu có vị ngữ là động từ",
+       "title_ko": "동사 술어문",
+       "note_ko": "구조: 주어(CN)+동사(ĐT). 긍정: Tôi ngủ. Chị ấy học. 부정: Tôi không ngủ. Chị ấy không học. 동사 뒤에 목적어(보어)를 더할 수 있음: Tôi ăn cơm. Mary học tiếng Việt. Chị ấy dạy tôi tiếng Anh. 질문1: Anh làm gì (đấy)? (뭐 하세요?) 질문2: Anh (có)+동사+không?"
+      },
+      {
+       "title_vi": "Phó từ \"sẽ\"",
+       "title_ko": "미래시제 부사 \"sẽ\"",
+       "note_ko": "동사 앞에 놓여 미래의 행동·일을 나타냄(영어의 will/shall과 같음). VD: Tôi sẽ học tiếng Việt."
+      },
+      {
+       "title_vi": "Giới từ chỉ địa điểm \"ở - tại\"",
+       "title_ko": "장소전치사 \"ở - tại\" (~에서)",
+       "note_ko": "VD: Tôi sống ở Bách Khoa. Tôi dạy tại Khoa Tiếng Việt. 구문: CN+ĐT+ở/tại...(행동이 일어나는 장소 표현). 질문: CN+ĐT+ở đâu? VD: Anh sống ở đâu? Tôi sống ở Bách Khoa."
+      },
+      {
+       "title_vi": "Phó từ \"đang\"",
+       "title_ko": "현재진행 부사 \"đang\" (~하고 있다)",
+       "note_ko": "동사 앞에 놓여 현재 진행 중인 행동을 나타냄. 질문: Anh đang làm gì đấy? VD: Chị đang làm gì đấy? Tôi đang đọc sách."
+      },
+      {
+       "title_vi": "Giới từ chỉ vị trí",
+       "title_ko": "위치전치사 (trên·dưới·trong·ngoài·trước·sau·giữa·cạnh)",
+       "note_ko": "1.Trên(위,on): Cái bút ở trên bàn. 2.Dưới(아래,under): Con mèo nằm dưới ghế. 3.Trong(안,in): Cô ấy ở trong nhà. 4.Ngoài(밖,out): Con chó ở ngoài cửa. 5.Trước(앞,in front of): Anh ấy đứng trước tôi. 6.Sau(뒤,behind): Mary ngồi sau anh. 7.Giữa(사이,between): Tôi đứng giữa Mary và July. 8.Cạnh(옆,beside): Cái bàn ở cạnh cái tủ. 질문: CN+ở đâu? / Trên(trong...)+có gì?"
+      },
+      {
+       "title_vi": "Trợ từ cuối câu \"nhỉ\"",
+       "title_ko": "문미조사 \"nhỉ\"",
+       "note_ko": "문장 끝에 놓여 화자가 의견을 말하면서 청자의 동의를 구할 때 씀(~하네요?/그렇죠?). VD: Cô ấy đẹp nhỉ? Trời nóng nhỉ?"
+      },
+      {
+       "title_vi": "Từ ngữ thường dùng",
+       "title_ko": "자주 쓰는 표현",
+       "note_ko": "Em đang làm gì đấy? (뭐 하고 있어요?) / Hiện nay em sống ở đâu? (지금 어디에 살아요?) / Em sống ở... (저는 ~에 살아요) / Lâu lắm không gặp anh (오랜만이에요, 오랜만에 뵙네요)"
+      }
+     ],
+     "dialogues": [
+      {
+       "vi": "Hà: Sáng nay em có học tiếng Việt không? / Thu: Có ạ. / Hà: Còn chiều nay, em học tiếng Anh phải không? / Thu: Không. Chiều nay em học vẽ. / Hà: Em học vẽ ở đâu? / Thu: Ở trường ạ. / Hà: Thế ngày mai em sẽ làm gì? / Thu: Em đọc sách ở thư viện.",
+       "ko": "Hà: 오늘 아침에 베트남어 공부해? / Thu: 네. / Hà: 그럼 오늘 오후엔 영어 공부하지? / Thu: 아니요. 오늘 오후엔 그림 배워요. / Hà: 그림은 어디에서 배워? / Thu: 학교에서요. / Hà: 그럼 내일은 뭐 할 거야? / Thu: 도서관에서 책 읽을 거예요."
+      },
+      {
+       "vi": "Huy: Chào Mary. Lâu lắm không gặp em. Em khoẻ không? / Mary: Chào anh Huy. Em khoẻ. Anh và gia đình có khoẻ không? / Huy: Cám ơn. Chúng tôi bình thường. / Mary: Bây giờ anh chị sống ở đâu? / Huy: Chúng tôi vẫn sống ở Bách Khoa. / Mary: Chị ấy làm việc ở đâu ạ? / Huy: Nhà tôi làm việc ở Đại học Quốc gia. Còn Mary? / Mary: Em học tiếng Việt tại Viện Phát triển Ngôn ngữ.",
+       "ko": "Huy: 안녕 Mary. 오랜만이야. 잘 지내? / Mary: 안녕하세요 Huy 오빠. 저는 잘 지내요. 오빠랑 가족들도 잘 지내세요? / Huy: 고마워. 우리는 그냥 그래. / Mary: 지금 어디에 사세요? / Huy: 우리는 여전히 박콰(Bách Khoa)에 살아. / Mary: 사모님은 어디에서 일하세요? / Huy: 아내는 국립대학교에서 일해. Mary는? / Mary: 저는 어언발전원에서 베트남어를 공부해요."
+      },
+      {
+       "vi": "Thu: Hà ơi, em đang làm gì đấy? / Hà: Em đang tìm quyển sách tiếng Anh. / Thu: Nó ở trên bàn kia kìa. / Hà: Đây rồi. Còn cái bút, cái bút của em ở đâu? / Thu: Ở dưới tờ báo Người Hà Nội ấy. / Hà: Ừ nhỉ. Thế cái kính của em đâu? / Thu: Trong cặp sách em đó.",
+       "ko": "Thu: Hà야, 지금 뭐 해? / Hà: 영어책 찾고 있어. / Thu: 그거 저기 저 책상 위에 있잖아. / Hà: 아 여기 있다. 근데 내 펜, 펜은 어디 있지? / Thu: 저 '느어이 하노이' 신문 밑에 있어. / Hà: 아 그러네. 근데 네 안경은 어디 있어? / Thu: 내 책가방 안에 있어."
+      },
+      {
+       "vi": "Mary: Anna ơi, bức ảnh kia đẹp nhỉ? / Anna: Lớp mình đấy. Thầy Thành ngồi cạnh mình. Bill đứng trước Pier. Còn kia là thầy Ân. Thầy ấy đứng giữa Mary và Tina. / Mary: Thầy ấy trông đẹp trai quá nhỉ?",
+       "ko": "Mary: Anna야, 저 사진 예쁘다 그렇지? / Anna: 그거 우리 반이야. Thành 선생님이 내 옆에 앉아 계시고, Bill은 Pier 앞에 서 있어. 그리고 저쪽은 Ân 선생님이야. 그분은 Mary와 Tina 사이에 서 계시고. / Mary: 그 선생님 정말 잘생기셨다 그렇지?"
+      },
+      {
+       "vi": "Chào các bạn. Xin tự giới thiệu tôi là Araki. Tôi là người Nhật. Tôi là nhân viên công ty Mitsubishi. Tôi làm việc ở Tokyo nhưng hiện nay tôi đang ở Hà Nội. Tôi là sinh viên tiếng Việt của Viện Phát triển Ngôn ngữ và hiện sống ở Trung Hòa. Tôi rất vui được làm quen với các bạn.",
+       "ko": "안녕하세요 여러분. 제 소개를 하겠습니다, 저는 Araki입니다. 저는 일본 사람입니다. 저는 미쓰비시 회사 직원입니다. 저는 도쿄에서 일하는데 지금은 하노이에 있습니다. 저는 어언발전원에서 베트남어를 공부하는 학생이고, 지금은 쭝화에 살고 있습니다. 여러분과 알게 되어 정말 반갑습니다."
+      },
+      {
+       "vi": "Chào các bạn. Tôi là Kyoko. Tôi là sinh viên tiếng Việt của Viện Phát triển Ngôn ngữ. Lớp tôi không rộng lắm nhưng rất sạch và đẹp. Trong lớp, tôi ngồi cạnh Linda, người Mỹ và Helen, người Anh. Các bạn của tôi đều thông minh và chăm chỉ. Hàng ngày, cô giáo thường đứng trước chúng tôi để giảng bài và nói chuyện. Các thầy cô giáo ở đây dạy rất tốt. Tôi rất vui vì được học ở đây.",
+       "ko": "안녕하세요 여러분. 저는 Kyoko입니다. 저는 어언발전원에서 베트남어를 공부하는 학생입니다. 우리 반은 그리 넓지 않지만 아주 깨끗하고 예쁩니다. 교실에서 저는 미국인 Linda와 영국인 Helen 옆에 앉습니다. 제 친구들은 모두 똑똑하고 부지런합니다. 매일 선생님께서는 저희 앞에 서서 수업을 하시고 이야기를 나누십니다. 이곳 선생님들은 모두 아주 잘 가르치십니다. 저는 이곳에서 공부할 수 있어서 정말 기쁩니다."
+      }
+     ]
+    },
+    {
+     "bai": 8,
+     "title": "Ôn tập",
+     "title_ko": "복습 (Bài 1~7 총복습)",
+     "pages": "211-220",
+     "words": [
+      {
+       "vi": "phố",
+       "ko": "거리, 시가",
+       "en": "street"
+      },
+      {
+       "vi": "thú vị",
+       "ko": "재미있는, 흥미로운",
+       "en": "interesting"
+      },
+      {
+       "vi": "hoa hồng",
+       "ko": "장미",
+       "en": "rose"
+      },
+      {
+       "vi": "hiệu sách",
+       "ko": "서점",
+       "en": "bookstore"
+      },
+      {
+       "vi": "hiệu ảnh",
+       "ko": "사진관",
+       "en": "photo studio"
+      },
+      {
+       "vi": "đang",
+       "ko": "~하고 있다 (진행 표지)",
+       "en": "(progressive aspect marker)"
+      },
+      {
+       "vi": "chưa",
+       "ko": "아직 ~하지 않다",
+       "en": "not yet"
+      },
+      {
+       "vi": "hiện nay",
+       "ko": "현재, 오늘날",
+       "en": "nowadays / at present"
+      },
+      {
+       "vi": "bạn bè",
+       "ko": "친구들 (총칭)",
+       "en": "friends (collectively)"
+      },
+      {
+       "vi": "địa chỉ",
+       "ko": "주소",
+       "en": "address"
+      }
+     ],
+     "grammar": [],
+     "dialogues": []
+    }
+   ],
+   "glossary_supplement": [
+    {
+     "vi": "ai",
+     "ko": "누구",
+     "en": "who"
+    },
+    {
+     "vi": "ảnh",
+     "ko": "사진",
+     "en": "photograph / picture"
+    },
+    {
+     "vi": "anh ấy",
+     "ko": "그 (그 남자)",
+     "en": "he"
+    },
+    {
+     "vi": "ăn sáng",
+     "ko": "아침을 먹다",
+     "en": "to have breakfast"
+    },
+    {
+     "vi": "ăn trưa",
+     "ko": "점심을 먹다",
+     "en": "to have lunch"
+    },
+    {
+     "vi": "ăn tối",
+     "ko": "저녁을 먹다",
+     "en": "to have dinner"
+    },
+    {
+     "vi": "ba mươi",
+     "ko": "30, 서른",
+     "en": "thirty"
+    },
+    {
+     "vi": "bài tập về nhà",
+     "ko": "숙제",
+     "en": "homework"
+    },
+    {
+     "vi": "bàn giáo viên",
+     "ko": "교탁, 교사용 책상",
+     "en": "teacher's desk"
+    },
+    {
+     "vi": "bàn học sinh",
+     "ko": "학생용 책상",
+     "en": "student's desk"
+    },
+    {
+     "vi": "bàn là",
+     "ko": "다리미",
+     "en": "iron"
+    },
+    {
+     "vi": "bàn máy tính",
+     "ko": "컴퓨터 책상",
+     "en": "computer desk"
+    },
+    {
+     "vi": "bánh mỳ",
+     "ko": "빵",
+     "en": "bread"
+    },
+    {
+     "vi": "báo chí",
+     "ko": "언론, 신문",
+     "en": "press"
+    },
+    {
+     "vi": "bảng",
+     "ko": "칠판, 게시판",
+     "en": "board"
+    },
+    {
+     "vi": "bề ngoài",
+     "ko": "외모, 겉모습",
+     "en": "appearance"
+    },
+    {
+     "vi": "biết",
+     "ko": "알다",
+     "en": "to know"
+    },
+    {
+     "vi": "biểu thị",
+     "ko": "나타내다, 표시하다",
+     "en": "to show / to display"
+    },
+    {
+     "vi": "bò",
+     "ko": "소",
+     "en": "cow"
+    },
+    {
+     "vi": "bóng",
+     "ko": "공",
+     "en": "ball"
+    },
+    {
+     "vi": "bố mình",
+     "ko": "내 아버지",
+     "en": "my father"
+    },
+    {
+     "vi": "cà rốt",
+     "ko": "당근",
+     "en": "carrot"
+    },
+    {
+     "vi": "cá",
+     "ko": "물고기",
+     "en": "fish"
+    },
+    {
+     "vi": "các",
+     "ko": "~들 (복수 표시)",
+     "en": "every / all"
+    },
+    {
+     "vi": "các anh",
+     "ko": "당신들 (젊은 남성)",
+     "en": "you (for young men)"
+    },
+    {
+     "vi": "các bà",
+     "ko": "당신들 (나이든 여성)",
+     "en": "you (for old women)"
+    },
+    {
+     "vi": "các chị",
+     "ko": "당신들 (젊은 여성)",
+     "en": "you (for young women)"
+    },
+    {
+     "vi": "các cô",
+     "ko": "당신들 (중년 여성·여선생님)",
+     "en": "you (middle-aged women or female teachers)"
+    },
+    {
+     "vi": "các em",
+     "ko": "여러분 (학생·손아랫사람)",
+     "en": "you (young people or students)"
+    },
+    {
+     "vi": "các ông",
+     "ko": "당신들 (나이든 남성)",
+     "en": "you (for old men)"
+    },
+    {
+     "vi": "các thầy",
+     "ko": "선생님들 (남자)",
+     "en": "you (male teachers)"
+    },
+    {
+     "vi": "cách",
+     "ko": "방법, 방식",
+     "en": "way"
+    },
+    {
+     "vi": "cái",
+     "ko": "것, 개 (사물 종별사)",
+     "en": "classifier for things"
+    },
+    {
+     "vi": "cái gì",
+     "ko": "무엇",
+     "en": "what"
+    },
+    {
+     "vi": "cái kia",
+     "ko": "저것",
+     "en": "that one"
+    },
+    {
+     "vi": "cam",
+     "ko": "오렌지",
+     "en": "orange"
+    },
+    {
+     "vi": "cần",
+     "ko": "필요하다",
+     "en": "need"
+    },
+    {
+     "vi": "câu",
+     "ko": "문장",
+     "en": "sentence"
+    },
+    {
+     "vi": "câu hỏi",
+     "ko": "질문",
+     "en": "question"
+    },
+    {
+     "vi": "câu khẳng định",
+     "ko": "긍정문",
+     "en": "affirmative sentence"
+    },
+    {
+     "vi": "câu phủ định",
+     "ko": "부정문",
+     "en": "negative sentence"
+    },
+    {
+     "vi": "chia tay",
+     "ko": "헤어지다, 작별하다",
+     "en": "to say good bye"
+    },
+    {
+     "vi": "chìa khóa",
+     "ko": "열쇠",
+     "en": "key"
+    },
+    {
+     "vi": "chiếc",
+     "ko": "개, 대 (사물 종별사)",
+     "en": "classifier"
+    },
+    {
+     "vi": "chỉ",
+     "ko": "오직, ~만",
+     "en": "only"
+    },
+    {
+     "vi": "chỉ định",
+     "ko": "지정하다, 지시하다",
+     "en": "to assign / demonstrative"
+    },
+    {
+     "vi": "chim",
+     "ko": "새",
+     "en": "bird"
+    },
+    {
+     "vi": "chín mươi",
+     "ko": "90, 아흔",
+     "en": "ninety"
+    },
+    {
+     "vi": "chín trăm",
+     "ko": "900",
+     "en": "nine hundred"
+    },
+    {
+     "vi": "chị ấy",
+     "ko": "그녀 (그 여자)",
+     "en": "she"
+    },
+    {
+     "vi": "chọn",
+     "ko": "고르다, 선택하다",
+     "en": "to choose"
+    },
+    {
+     "vi": "chỗ trống",
+     "ko": "빈자리, 빈칸",
+     "en": "empty seat / blank"
+    },
+    {
+     "vi": "chủ ngữ",
+     "ko": "주어",
+     "en": "subject"
+    },
+    {
+     "vi": "chủ quan",
+     "ko": "주관적인",
+     "en": "subjective"
+    },
+    {
+     "vi": "chủ thể",
+     "ko": "주체",
+     "en": "subject"
+    },
+    {
+     "vi": "chú ý",
+     "ko": "주의하다",
+     "en": "to pay attention"
+    },
+    {
+     "vi": "chuối",
+     "ko": "바나나",
+     "en": "banana"
+    },
+    {
+     "vi": "cô",
+     "ko": "아가씨, 여선생님",
+     "en": "miss / young lady"
+    },
+    {
+     "vi": "cốc",
+     "ko": "컵, 잔",
+     "en": "glass"
+    },
+    {
+     "vi": "củ",
+     "ko": "뿌리채소 (종별사)",
+     "en": "classifier"
+    },
+    {
+     "vi": "của ai",
+     "ko": "누구의 것",
+     "en": "whose"
+    },
+    {
+     "vi": "cuối",
+     "ko": "끝, 마지막",
+     "en": "end / last"
+    },
+    {
+     "vi": "cuốn",
+     "ko": "권 (책 종별사)",
+     "en": "classifier"
+    },
+    {
+     "vi": "danh từ",
+     "ko": "명사",
+     "en": "noun"
+    },
+    {
+     "vi": "danh từ chung",
+     "ko": "보통명사",
+     "en": "common noun"
+    },
+    {
+     "vi": "danh từ riêng",
+     "ko": "고유명사",
+     "en": "proper noun"
+    },
+    {
+     "vi": "dấu",
+     "ko": "부호, 표시",
+     "en": "mark / sign"
+    },
+    {
+     "vi": "dép",
+     "ko": "슬리퍼, 샌들",
+     "en": "sandal"
+    },
+    {
+     "vi": "dưa hấu",
+     "ko": "수박",
+     "en": "water melon"
+    },
+    {
+     "vi": "dừa",
+     "ko": "코코넛",
+     "en": "coconut"
+    },
+    {
+     "vi": "dứa",
+     "ko": "파인애플",
+     "en": "pineapple"
+    },
+    {
+     "vi": "đại từ chỉ định",
+     "ko": "지시대명사",
+     "en": "demonstrative pronoun"
+    },
+    {
+     "vi": "đại từ nghi vấn",
+     "ko": "의문대명사",
+     "en": "interrogative pronoun"
+    },
+    {
+     "vi": "đại từ nhân xưng",
+     "ko": "인칭대명사",
+     "en": "personal pronoun"
+    },
+    {
+     "vi": "đàn",
+     "ko": "악기",
+     "en": "musical instrument"
+    },
+    {
+     "vi": "đau",
+     "ko": "아픈",
+     "en": "painful / sore"
+    },
+    {
+     "vi": "đặc biệt",
+     "ko": "특별한",
+     "en": "special"
+    },
+    {
+     "vi": "đặt câu hỏi",
+     "ko": "질문을 하다",
+     "en": "make question"
+    },
+    {
+     "vi": "đầu tiên",
+     "ko": "첫 번째, 처음",
+     "en": "first"
+    },
+    {
+     "vi": "đất",
+     "ko": "땅, 흙",
+     "en": "sand / soil / ground"
+    },
+    {
+     "vi": "đây",
+     "ko": "여기, 이것",
+     "en": "this / here"
+    },
+    {
+     "vi": "đấy là",
+     "ko": "저것은 ~이다",
+     "en": "that is"
+    },
+    {
+     "vi": "đèn",
+     "ko": "등, 램프",
+     "en": "lamp / light"
+    },
+    {
+     "vi": "để",
+     "ko": "~하기 위해",
+     "en": "in order to"
+    },
+    {
+     "vi": "định",
+     "ko": "~할 예정이다, 의도하다",
+     "en": "to intend / to fix"
+    },
+    {
+     "vi": "địa điểm",
+     "ko": "장소",
+     "en": "place"
+    },
+    {
+     "vi": "điền",
+     "ko": "채우다, 기입하다",
+     "en": "to fill in"
+    },
+    {
+     "vi": "điện thoại",
+     "ko": "전화(기)",
+     "en": "telephone"
+    },
+    {
+     "vi": "đoạn",
+     "ko": "단락, 구간",
+     "en": "paragraph / section"
+    },
+    {
+     "vi": "đó là",
+     "ko": "그것은 ~이다",
+     "en": "that is"
+    },
+    {
+     "vi": "đô la",
+     "ko": "달러",
+     "en": "dolla"
+    },
+    {
+     "vi": "đũa",
+     "ko": "젓가락",
+     "en": "chopstick"
+    },
+    {
+     "vi": "gà",
+     "ko": "닭",
+     "en": "chicken"
+    },
+    {
+     "vi": "gạch chân",
+     "ko": "밑줄을 긋다",
+     "en": "to underline"
+    },
+    {
+     "vi": "gần",
+     "ko": "가까운",
+     "en": "near"
+    },
+    {
+     "vi": "ghi chú",
+     "ko": "메모하다",
+     "en": "to make notes"
+    },
+    {
+     "vi": "ghép",
+     "ko": "연결하다, 결합하다",
+     "en": "to connect"
+    },
+    {
+     "vi": "giày",
+     "ko": "구두, 신발",
+     "en": "shoes"
+    },
+    {
+     "vi": "giấy",
+     "ko": "종이",
+     "en": "paper"
+    },
+    {
+     "vi": "giới từ",
+     "ko": "전치사",
+     "en": "preposition"
+    },
+    {
+     "vi": "gồm",
+     "ko": "포함하다, ~로 이루어지다",
+     "en": "to include"
+    },
+    {
+     "vi": "gừng",
+     "ko": "생강",
+     "en": "ginger"
+    },
+    {
+     "vi": "hai hai",
+     "ko": "22, 스물둘",
+     "en": "twenty two"
+    },
+    {
+     "vi": "hai mốt",
+     "ko": "21, 스물하나",
+     "en": "twenty one"
+    },
+    {
+     "vi": "hai mươi",
+     "ko": "20, 스물",
+     "en": "twenty"
+    },
+    {
+     "vi": "hai mươi hai",
+     "ko": "22, 스물둘",
+     "en": "twenty two"
+    },
+    {
+     "vi": "hai mươi mốt",
+     "ko": "21, 스물하나",
+     "en": "twenty one"
+    },
+    {
+     "vi": "hai nghìn",
+     "ko": "2000, 이천",
+     "en": "two thousands"
+    },
+    {
+     "vi": "hai trăm",
+     "ko": "200, 이백",
+     "en": "two hundreds"
+    },
+    {
+     "vi": "hãy",
+     "ko": "~하세요, ~합시다 (청유·명령)",
+     "en": "let's"
+    },
+    {
+     "vi": "hẹn",
+     "ko": "약속하다, 데이트하다",
+     "en": "to date"
+    },
+    {
+     "vi": "hệ từ",
+     "ko": "계사 (~이다)",
+     "en": "copula"
+    },
+    {
+     "vi": "hình",
+     "ko": "모양, 그림",
+     "en": "shape"
+    },
+    {
+     "vi": "hình thức",
+     "ko": "형식, 형태",
+     "en": "formal"
+    },
+    {
+     "vi": "hóa đơn",
+     "ko": "영수증, 청구서",
+     "en": "bill / receipt"
+    },
+    {
+     "vi": "hoàn thành",
+     "ko": "완성하다, 완료하다",
+     "en": "to complete"
+    },
+    {
+     "vi": "hoặc",
+     "ko": "또는, 혹은",
+     "en": "or"
+    },
+    {
+     "vi": "hỏi thăm",
+     "ko": "안부를 묻다",
+     "en": "to come to see"
+    },
+    {
+     "vi": "hòn tẩy",
+     "ko": "지우개",
+     "en": "eraser"
+    },
+    {
+     "vi": "hội thoại",
+     "ko": "대화",
+     "en": "conversation"
+    },
+    {
+     "vi": "hộp kính",
+     "ko": "안경 케이스",
+     "en": "glasses box"
+    },
+    {
+     "vi": "hơn",
+     "ko": "~보다 더",
+     "en": "more than"
+    },
+    {
+     "vi": "khẩu ngữ",
+     "ko": "구어체",
+     "en": "informal language"
+    },
+    {
+     "vi": "khi",
+     "ko": "~할 때",
+     "en": "when / while"
+    },
+    {
+     "vi": "khoai lang",
+     "ko": "고구마",
+     "en": "sweet potato"
+    },
+    {
+     "vi": "khoai tây",
+     "ko": "감자",
+     "en": "potato"
+    },
+    {
+     "vi": "không thể",
+     "ko": "불가능한, ~할 수 없다",
+     "en": "imposible"
+    },
+    {
+     "vi": "kilôgam",
+     "ko": "킬로그램",
+     "en": "kilogram"
+    },
+    {
+     "vi": "là",
+     "ko": "~이다",
+     "en": "to be"
+    },
+    {
+     "vi": "lá",
+     "ko": "잎",
+     "en": "leaf"
+    },
+    {
+     "vi": "lại",
+     "ko": "다시",
+     "en": "again"
+    },
+    {
+     "vi": "lắm",
+     "ko": "매우, 아주",
+     "en": "very"
+    },
+    {
+     "vi": "lần lượt",
+     "ko": "차례로, 순서대로",
+     "en": "in turn"
+    },
+    {
+     "vi": "lập",
+     "ko": "설립하다, 세우다",
+     "en": "to form / to establish"
+    },
+    {
+     "vi": "lễ phép",
+     "ko": "예의바름, 공손함",
+     "en": "politeness / courtesy"
+    },
+    {
+     "vi": "lịch",
+     "ko": "달력",
+     "en": "calenda"
+    },
+    {
+     "vi": "lịch sự",
+     "ko": "예의바른, 정중한",
+     "en": "polite"
+    },
+    {
+     "vi": "loại từ",
+     "ko": "종별사, 분류사",
+     "en": "classifier"
+    },
+    {
+     "vi": "lợn",
+     "ko": "돼지",
+     "en": "pig"
+    },
+    {
+     "vi": "luôn luôn",
+     "ko": "항상, 늘",
+     "en": "always"
+    },
+    {
+     "vi": "luyện tập",
+     "ko": "연습하다, 훈련하다",
+     "en": "to practice / to drill"
+    },
+    {
+     "vi": "màu sắc",
+     "ko": "색깔",
+     "en": "color"
+    },
+    {
+     "vi": "may",
+     "ko": "바느질하다, 옷을 짓다",
+     "en": "to sew / to make"
+    },
+    {
+     "vi": "máy bay",
+     "ko": "비행기",
+     "en": "plane"
+    },
+    {
+     "vi": "máy vi tính",
+     "ko": "컴퓨터",
+     "en": "computer"
+    },
+    {
+     "vi": "mặt",
+     "ko": "얼굴",
+     "en": "face"
+    },
+    {
+     "vi": "mẫu",
+     "ko": "모범, 견본, 패턴",
+     "en": "model / pattern"
+    },
+    {
+     "vi": "mẹ cậu",
+     "ko": "너의 어머니",
+     "en": "your mother"
+    },
+    {
+     "vi": "mét vuông (m²)",
+     "ko": "제곱미터",
+     "en": "square meter"
+    },
+    {
+     "vi": "mỗi",
+     "ko": "각각, 매(每)",
+     "en": "each / every"
+    },
+    {
+     "vi": "một nghìn",
+     "ko": "1000, 천",
+     "en": "one thousand"
+    },
+    {
+     "vi": "một trăm",
+     "ko": "100, 백",
+     "en": "one hundred"
+    },
+    {
+     "vi": "một trăm lẻ một",
+     "ko": "101",
+     "en": "one hundred and one"
+    },
+    {
+     "vi": "mười chín",
+     "ko": "19, 열아홉",
+     "en": "nineteen"
+    },
+    {
+     "vi": "mười hai",
+     "ko": "12, 열둘",
+     "en": "twelve"
+    },
+    {
+     "vi": "mười một",
+     "ko": "11, 열하나",
+     "en": "eleven"
+    },
+    {
+     "vi": "mũ",
+     "ko": "모자",
+     "en": "hat"
+    },
+    {
+     "vi": "mức độ",
+     "ko": "정도, 수준",
+     "en": "standard / level"
+    },
+    {
+     "vi": "muốn",
+     "ko": "원하다, ~하고 싶다",
+     "en": "to want"
+    },
+    {
+     "vi": "mối quan hệ",
+     "ko": "관계",
+     "en": "relationship"
+    },
+    {
+     "vi": "nào đó",
+     "ko": "어떤, 어느",
+     "en": "some"
+    },
+    {
+     "vi": "này",
+     "ko": "이, 이것",
+     "en": "this"
+    },
+    {
+     "vi": "nghi vấn",
+     "ko": "의문",
+     "en": "interrogative"
+    },
+    {
+     "vi": "ngoại thương",
+     "ko": "대외무역",
+     "en": "foreign trading"
+    },
+    {
+     "vi": "ngoặc",
+     "ko": "괄호",
+     "en": "blanket"
+    },
+    {
+     "vi": "ngữ điệu",
+     "ko": "억양",
+     "en": "intonation"
+    },
+    {
+     "vi": "ngựa",
+     "ko": "말",
+     "en": "horse"
+    },
+    {
+     "vi": "người Anh",
+     "ko": "영국인",
+     "en": "English"
+    },
+    {
+     "vi": "người Canada",
+     "ko": "캐나다인",
+     "en": "Canadian"
+    },
+    {
+     "vi": "người Đức",
+     "ko": "독일인",
+     "en": "German"
+    },
+    {
+     "vi": "người Hà Lan",
+     "ko": "네덜란드인",
+     "en": "Dutch"
+    },
+    {
+     "vi": "người Hàn Quốc",
+     "ko": "한국인",
+     "en": "Korean"
+    },
+    {
+     "vi": "người Khme",
+     "ko": "크메르인",
+     "en": "Khmer people"
+    },
+    {
+     "vi": "người Lào",
+     "ko": "라오스인",
+     "en": "Lao people"
+    },
+    {
+     "vi": "người Mỹ",
+     "ko": "미국인",
+     "en": "American"
+    },
+    {
+     "vi": "người Nga",
+     "ko": "러시아인",
+     "en": "Russian"
+    },
+    {
+     "vi": "người nghe",
+     "ko": "듣는 사람, 청자",
+     "en": "listener"
+    },
+    {
+     "vi": "người Nhật",
+     "ko": "일본인",
+     "en": "Japanese"
+    },
+    {
+     "vi": "người nói",
+     "ko": "말하는 사람, 화자",
+     "en": "speaker"
+    },
+    {
+     "vi": "người Pháp",
+     "ko": "프랑스인",
+     "en": "French"
+    },
+    {
+     "vi": "người Phần lan",
+     "ko": "핀란드인",
+     "en": "Finnish people"
+    },
+    {
+     "vi": "người Philipin",
+     "ko": "필리핀인",
+     "en": "Philippine people"
+    },
+    {
+     "vi": "người Thụy Điển",
+     "ko": "스웨덴인",
+     "en": "Swedish"
+    },
+    {
+     "vi": "người TrungQuốc",
+     "ko": "중국인",
+     "en": "Chinese"
+    },
+    {
+     "vi": "người Úc",
+     "ko": "호주인",
+     "en": "Australian"
+    },
+    {
+     "vi": "người Việt",
+     "ko": "베트남인",
+     "en": "Vietnamese"
+    },
+    {
+     "vi": "người Ý",
+     "ko": "이탈리아인",
+     "en": "Italian"
+    },
+    {
+     "vi": "nhà",
+     "ko": "집",
+     "en": "house"
+    },
+    {
+     "vi": "nhà rông",
+     "ko": "농롱 (중부고원 전통 공동 가옥)",
+     "en": "communal house"
+    },
+    {
+     "vi": "nhấn mạnh",
+     "ko": "강조하다",
+     "en": "to emphasize"
+    },
+    {
+     "vi": "nhận xét",
+     "ko": "평하다, 논평하다",
+     "en": "to comment"
+    },
+    {
+     "vi": "nhất",
+     "ko": "가장, 제일 (최상급)",
+     "en": "number one / first"
+    },
+    {
+     "vi": "nhìn",
+     "ko": "보다",
+     "en": "to look"
+    },
+    {
+     "vi": "nhỉ",
+     "ko": "~지요? (동의를 구하는 어미)",
+     "en": "isn't it?"
+    },
+    {
+     "vi": "như",
+     "ko": "~처럼, ~와 같이",
+     "en": "as / like"
+    },
+    {
+     "vi": "ở đâu",
+     "ko": "어디에",
+     "en": "where"
+    },
+    {
+     "vi": "phải không?",
+     "ko": "그렇죠? (부가의문)",
+     "en": "tag question"
+    },
+    {
+     "vi": "phát âm",
+     "ko": "발음하다",
+     "en": "to pronounce"
+    },
+    {
+     "vi": "phân biệt",
+     "ko": "구별하다",
+     "en": "to distinguish"
+    },
+    {
+     "vi": "phần",
+     "ko": "부분",
+     "en": "part"
+    },
+    {
+     "vi": "phó từ",
+     "ko": "부사",
+     "en": "adverb"
+    },
+    {
+     "vi": "phổ biến",
+     "ko": "보편적인, 흔한",
+     "en": "common / popular"
+    },
+    {
+     "vi": "phù hợp",
+     "ko": "적합한, 알맞은",
+     "en": "suitable / appropriate"
+    },
+    {
+     "vi": "quả",
+     "ko": "과일, 열매",
+     "en": "fruit"
+    },
+    {
+     "vi": "quốc tịch",
+     "ko": "국적",
+     "en": "nationality"
+    },
+    {
+     "vi": "quyển",
+     "ko": "권 (책 종별사)",
+     "en": "classifier"
+    },
+    {
+     "vi": "riêng lẻ",
+     "ko": "개별적으로",
+     "en": "individually"
+    },
+    {
+     "vi": "rồi",
+     "ko": "이미, 벌써",
+     "en": "already"
+    },
+    {
+     "vi": "rùa",
+     "ko": "거북이",
+     "en": "tortoise"
+    },
+    {
+     "vi": "sang",
+     "ko": "건너가다, ~로 가다",
+     "en": "to go / into"
+    },
+    {
+     "vi": "sắp xếp",
+     "ko": "정리하다, 배열하다",
+     "en": "to plan, to arrange"
+    },
+    {
+     "vi": "sẽ",
+     "ko": "~할 것이다 (미래 표지)",
+     "en": "will / shall"
+    },
+    {
+     "vi": "séc",
+     "ko": "수표",
+     "en": "cheque"
+    },
+    {
+     "vi": "so sánh",
+     "ko": "비교하다",
+     "en": "comparision"
+    },
+    {
+     "vi": "số đếm",
+     "ko": "기수",
+     "en": "number"
+    },
+    {
+     "vi": "số ít",
+     "ko": "단수",
+     "en": "singular"
+    },
+    {
+     "vi": "số lượng",
+     "ko": "수량",
+     "en": "quantity"
+    },
+    {
+     "vi": "số nhiều",
+     "ko": "복수",
+     "en": "plural"
+    },
+    {
+     "vi": "sở hữu",
+     "ko": "소유하다",
+     "en": "to own / to hold"
+    },
+    {
+     "vi": "sự vật",
+     "ko": "사물",
+     "en": "thing"
+    },
+    {
+     "vi": "sức khỏe",
+     "ko": "건강",
+     "en": "health"
+    },
+    {
+     "vi": "táo",
+     "ko": "사과",
+     "en": "apple"
+    },
+    {
+     "vi": "tấm",
+     "ko": "장 (평평한 사물 종별사)",
+     "en": "classifier"
+    },
+    {
+     "vi": "tất",
+     "ko": "양말",
+     "en": "shock / storking"
+    },
+    {
+     "vi": "tình cảm",
+     "ko": "감정, 정",
+     "en": "sentiment / affection"
+    },
+    {
+     "vi": "tình huống",
+     "ko": "상황",
+     "en": "situation"
+    },
+    {
+     "vi": "tình thái",
+     "ko": "양태, 상태",
+     "en": "state"
+    },
+    {
+     "vi": "thăm hỏi",
+     "ko": "안부를 묻다, 문안하다",
+     "en": "to give one's regards to somebody"
+    },
+    {
+     "vi": "thán từ",
+     "ko": "감탄사",
+     "en": "interjection"
+    },
+    {
+     "vi": "tháng Bảy",
+     "ko": "7월",
+     "en": "July"
+    },
+    {
+     "vi": "thanh long",
+     "ko": "용과",
+     "en": "dragon fruit"
+    },
+    {
+     "vi": "thay thế",
+     "ko": "대체하다",
+     "en": "to replace"
+    },
+    {
+     "vi": "thầy",
+     "ko": "남자 선생님",
+     "en": "male teacher"
+    },
+    {
+     "vi": "thiết bị",
+     "ko": "장비, 설비",
+     "en": "equipment"
+    },
+    {
+     "vi": "theo",
+     "ko": "따르다, ~에 따라",
+     "en": "follow"
+    },
+    {
+     "vi": "thêm",
+     "ko": "더하다, 추가하다",
+     "en": "to add"
+    },
+    {
+     "vi": "thông báo",
+     "ko": "공지하다, 알리다",
+     "en": "to announce"
+    },
+    {
+     "vi": "thông tin",
+     "ko": "정보",
+     "en": "information"
+    },
+    {
+     "vi": "thời gian",
+     "ko": "시간",
+     "en": "time"
+    },
+    {
+     "vi": "thực hành",
+     "ko": "실습하다, 연습하다",
+     "en": "to practice"
+    },
+    {
+     "vi": "thường",
+     "ko": "보통, 평소",
+     "en": "usually / normal"
+    },
+    {
+     "vi": "ti vi",
+     "ko": "텔레비전",
+     "en": "television"
+    },
+    {
+     "vi": "tính chất",
+     "ko": "성질, 속성",
+     "en": "nature / property"
+    },
+    {
+     "vi": "tính từ",
+     "ko": "형용사",
+     "en": "adjective"
+    },
+    {
+     "vi": "tính từ chỉ định",
+     "ko": "지시형용사",
+     "en": "demonstrative adjective"
+    },
+    {
+     "vi": "tỏi",
+     "ko": "마늘",
+     "en": "garlic"
+    },
+    {
+     "vi": "tồn tại",
+     "ko": "존재하다",
+     "en": "to exist"
+    },
+    {
+     "vi": "tôm",
+     "ko": "새우",
+     "en": "shrimp"
+    },
+    {
+     "vi": "trang trọng",
+     "ko": "격식 있는, 엄숙한",
+     "en": "solemn / formal"
+    },
+    {
+     "vi": "trạng thái",
+     "ko": "상태",
+     "en": "state"
+    },
+    {
+     "vi": "tranh",
+     "ko": "그림",
+     "en": "painting / picture"
+    },
+    {
+     "vi": "trật tự",
+     "ko": "순서, 질서",
+     "en": "order"
+    },
+    {
+     "vi": "trợ từ",
+     "ko": "조사, 보조사",
+     "en": "auxiliary word"
+    },
+    {
+     "vi": "trực tiếp",
+     "ko": "직접",
+     "en": "direct"
+    },
+    {
+     "vi": "trứng",
+     "ko": "달걀",
+     "en": "egg"
+    },
+    {
+     "vi": "trường hợp",
+     "ko": "경우",
+     "en": "case"
+    },
+    {
+     "vi": "tư",
+     "ko": "사적인, 개인의",
+     "en": "private / personal"
+    },
+    {
+     "vi": "tiểu học",
+     "ko": "초등교육",
+     "en": "primary education"
+    },
+    {
+     "vi": "tiểu thuyết",
+     "ko": "소설",
+     "en": "novel"
+    },
+    {
+     "vi": "tính cách",
+     "ko": "성격",
+     "en": "character"
+    },
+    {
+     "vi": "từ điển",
+     "ko": "사전",
+     "en": "dictionary"
+    },
+    {
+     "vi": "từ vựng",
+     "ko": "어휘",
+     "en": "vocabulary"
+    },
+    {
+     "vi": "vào",
+     "ko": "들어가다",
+     "en": "enter"
+    },
+    {
+     "vi": "vật",
+     "ko": "물건, 사물",
+     "en": "thing / object"
+    },
+    {
+     "vi": "vé",
+     "ko": "표, 티켓",
+     "en": "ticket"
+    },
+    {
+     "vi": "về",
+     "ko": "돌아가다, ~에 관하여",
+     "en": "to go back / to come back"
+    },
+    {
+     "vi": "ví",
+     "ko": "지갑",
+     "en": "wallet / purse"
+    },
+    {
+     "vi": "vị ngữ",
+     "ko": "술어",
+     "en": "predicative"
+    },
+    {
+     "vi": "vị trí",
+     "ko": "위치",
+     "en": "position"
+    },
+    {
+     "vi": "Việt Nam học",
+     "ko": "베트남학",
+     "en": "Vietnamese studies"
+    },
+    {
+     "vi": "voi",
+     "ko": "코끼리",
+     "en": "elephant"
+    },
+    {
+     "vi": "xa",
+     "ko": "먼",
+     "en": "far"
+    },
+    {
+     "vi": "xe ô tô",
+     "ko": "자동차",
+     "en": "car"
+    },
+    {
+     "vi": "xếp",
+     "ko": "정리하다, 배열하다",
+     "en": "to arrange"
+    },
+    {
+     "vi": "xin phép",
+     "ko": "허락을 구하다",
+     "en": "ask for permission"
+    },
+    {
+     "vi": "ý nghĩa",
+     "ko": "의미",
+     "en": "mean / sense"
+    }
+   ],
+   "quyen": 1
+  }
+ ]
+}
