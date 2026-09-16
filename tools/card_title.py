@@ -27,6 +27,30 @@ from ai import ask_text
 F = R / "data" / "news_days.json"
 LIM = 28
 
+# 2026-09-17: "지어낸 수" 검사가 **영어 기사 번역 건에서 계속 오작동**했다(대표님
+# 지적으로 발견 — 카드에 영어 제목이 그대로 남아있었음). 원인: sum5 는 "2천 3만"으로
+# 쓰고 제목은 "2300만"으로 써서, 같은 숫자인데 글자로는 안 겹쳐 매번 "지어낸 수"로
+# 반려됐다. 문자열 비교 대신 **값으로** 비교하게 바꿨다.
+_UNIT = {'십': 10, '백': 100, '천': 1000, '만': 10_000, '억': 10**8, '조': 10**12}
+
+
+def _kr_num(s):
+    """'2천 3만' '2300만' '23,000,000' 같은 걸 정수로 바꾼다. 실패하면 None."""
+    s = re.sub(r'[,\s]', '', s)
+    m = re.findall(r'(\d+)(십|백|천|만|억|조)?', s)
+    if not m:
+        return None
+    total, seg = 0, 0
+    for num, unit in m:
+        n = int(num)
+        if unit in ('만', '억', '조'):
+            total += (seg + n) * _UNIT[unit]; seg = 0
+        elif unit:
+            seg += n * _UNIT[unit]
+        else:
+            seg += n
+    return total + seg
+
 ASK = ("아래 기사 제목을 카드뉴스용으로 짧게 다듬어라.\n"
        "규칙\n"
        " ① 원문에 있는 사실만 쓴다. 없는 말을 보태지 마라\n"
@@ -65,9 +89,21 @@ def main():
         t = re.sub(r"(천|백|십|만|억)\s+(만|억|조)", r"\1\2", t)
         t = re.sub(r"(\d)\s+(명|개|원|동|대|건|배|위|차)", r"\1\2", t)
         t = re.sub(r"\s{2,}", " ", t).strip()
-        # ── 검수 ② 지어낸 숫자 — 제목에 새로 나온 수는 원문·요약에 있어야 한다
+        # ── 검수 ② 지어낸 숫자 — 제목에 새로 나온 수는 원문·요약에 있어야 한다.
+        # 글자 그대로 말고 **값으로** 비교한다(위 _kr_num 참고) — "2300만"과 "2천 3만"은
+        # 같은 값인데 문자열로는 다르다. 값이 하나도 안 맞을 때만 "지어낸 수"로 본다.
         src = d["title"] + " " + " ".join(d.get("sum5") or []) + " " + (d.get("intro") or "")
-        made_up = [x for x in re.findall(r"\d[\d,.]*", t) if x not in src]
+        src_nums = {v for x in re.findall(r"\d[\d,.]*\s*(?:십|백|천|만|억|조)?", src)
+                    if (v := _kr_num(x)) is not None}
+        made_up = []
+        for x in re.findall(r"\d[\d,.]*\s*(?:십|백|천|만|억|조)?", t):
+            v = _kr_num(x)
+            if v is None or v in src_nums:
+                continue
+            # 반올림 오차 허용 (예: 사상 수치가 3% 안팎 다르게 적히는 경우)
+            if any(abs(v - sv) <= max(v, sv) * 0.03 for sv in src_nums):
+                continue
+            made_up.append(x)
         # ── 검수 ③ 길이·글자
         if not t or len(t) > LIM + 6 or not re.search(r"[가-힣]", t) or made_up:
             why = f"지어낸 수 {made_up}" if made_up else "길거나 비었다"

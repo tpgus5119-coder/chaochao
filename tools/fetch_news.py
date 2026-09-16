@@ -30,17 +30,16 @@ KST = timezone(timedelta(hours=9))
 # 주제마다 **자리**를 잡는다 (대표님 지시 2026-09-02).
 # 점수 순으로만 자르면 경제 기사가 다 차지한다 — 8월 실측: 정치 44건이 한 번도 안 뽑혔다.
 # 2026-09-15: 12건→7건으로 줄였다 — 근거: 뉴스레터 실측(더스킴 5~6건), 선택과부하 연구
-# (Iyengar & Lepper 2000, 선택지 24→6개로 줄이자 전환율 3%→30%), Duolingo 연구(Sudina &
-# Plonsky 2024, 총량보다 매일 꾸준한 빈도가 실력 향상을 더 잘 예측). 자세한 근거는
-# docs/기준.md 2장 참고 — 확정치는 아니라 6~8건 사이에서 완주율 실측 후 조정한다.
-QUOTA = [('일자리', 2), ('경제', 1), ('사회', 1), ('문화·생활', 1),
-         ('공장·산업', 1), ('정치', 1)]
-PER_DAY = sum(n for _, n in QUOTA)   # 7
-MIN_DAY = 6                       # 모자라면 주제 상관없이 점수 높은 순으로 채워 이만큼은 맞춘다
-FLOOR = 8                         # 이 점수 미만은 자리가 비어도 안 싣는다
-                                  # (5 로 뒀더니 7점짜리 해변 기사가 실렸다 — 2026-09-02)
-FLOOR_RELAX = 6                   # 자리를 못 채운 갈래만 점수선을 낮춰 한 번 더 찾는다
-                                  # (2026-09-15, card_pick.py 의 미채택 로직을 여기로 옮김)
+# (Iyengar & Lepper 2000), Duolingo 연구(Sudina & Plonsky 2024, 총량보다 빈도가 중요).
+# 2026-09-17: 대상이 "베트남 취업 예정자"에서 **한국인 전반**으로 넓어지며 7→10건,
+# 갈래도 다시 짬(대표님 지시). **이 근거 조사와 반대 방향**이라는 점은 미리 말씀드렸고,
+# 그래도 진행하기로 하셨다 — 완주율을 실측해서 다시 조정할 여지는 남겨 둔다.
+QUOTA = [('경제', 3), ('사회', 2), ('정치', 2), ('일자리', 1),
+         ('공장·산업', 1), ('문화·생활', 1)]
+PER_DAY = sum(n for _, n in QUOTA)   # 10
+MIN_DAY = 8                       # 모자라면 주제 상관없이 점수 높은 순으로 채워 이만큼은 맞춘다
+FLOOR = 0                         # 2026-09-17: 8→0, 대표님 지시로 하한선 실험적으로 없앰
+FLOOR_RELAX = 0                   # 위와 같이 사실상 무의미해졌지만 구조는 남겨 둔다
 MIN_CATS = 5                      # 하루 갈래가 이보다 적으면 경고만 하고 그대로 둔다
 
 # **우리 낱말이 이긴다.** 사이트 갈래와 Qwen 이 둘 다 틀린 답에 동의하면
@@ -78,16 +77,22 @@ CATNAMES = ('일자리', '공장·산업', '경제', '사회', '정치', '문화
 BODY_MAX = 40                     # 본문을 읽어 볼 후보 수
 
 # 정치는 **베트남 밖 매체**에서만 (대표님 지시) — 현지 매체는 정치를 한쪽으로만 전한다
-POLITICS_OK = ('insidevina.com', 'vietnamkoreatimes.com')
+# 2026-09-17: 한국 신문사로 새로 넣은 씬짜오베트남·굿모닝베트남미디어도 같은 논리로 추가
+POLITICS_OK = ('insidevina.com', 'vietnamkoreatimes.com', 'chaovietnam.co.kr',
+                'goodmorningvietnam.co.kr')
 KEEP_DAYS = 7                     # 화면에 남기는 날수 (일주일치)
 
-# 인사이드비나(한국어, 베트남 전문)만 쓴다 — 영어 국제면은 베트남 무관 기사가 섞여서 뺐다.
-# 기사를 받아 오는 곳 **셋** (대표님 지시 2026-09-02). 8월 실측 발행량:
-#   인사이드비나 하루 9.3건 · VnExpress International 하루 36건 · 코리아타임즈 하루 1.1건
-# 한 곳만 쓰면 '베끼는 것'처럼 보이고, 그 곳이 멈추면 카드도 멈춘다.
+# 2026-09-17 대표님 지시로 확장 — "한국 신문사 4개(인사이드비나·베트남코리아타임즈·
+# 씬짜오베트남·굿모닝베트남미디어) + VnExpress" 로 소스를 다시 짰다.
+# 후보였던 vietnamnews.vn(정식 베트남 국영 매체)은 RSS 두 곳 다 빈 껍데기라 제외했고,
+# 비한뉴스(AI 재가공 매체)·베한타임즈(사이트 만료)·비나타임즈(RSS 없음)도 확인 후 뺐다.
+# RSS 주소는 각 사이트에 직접 curl 로 확인한 것만 넣었다(가짜 200 — HTML을 돌려주는
+# 것도 있었다. content-type 까지 확인해야 진짜인지 안다).
 FEEDS = [
     ('인사이드비나', 'https://www.insidevina.com/rss/allArticle.xml'),
     ('베트남코리아타임즈', 'http://www.vietnamkoreatimes.com/rss/allArticle.xml'),
+    ('씬짜오베트남', 'https://chaovietnam.co.kr/feed/'),
+    ('굿모닝베트남미디어', 'https://www.goodmorningvietnam.co.kr/data/rss/news.xml'),
     # VnExpress 는 갈래마다 따로 준다 (한 줄에 60건씩)
     ('VnExpress', 'https://e.vnexpress.net/rss/news.rss'),
     ('VnExpress', 'https://e.vnexpress.net/rss/business.rss'),
@@ -119,9 +124,13 @@ CARE = {
         '한-베', '한베', '코트라', 'KOTRA', '한국 대사관'],
     2: ['제조', '봉제', '섬유', '전자', '반도체', '공단', '산업단지',
         '물류', '창고', '취업', '인력', '숙련', '보험', '주거', '학교', '학비',
-        '음식', '요리', '명절', '설', '축제', '날씨', '더위', '태풍', '홍수'],
+        '날씨', '더위', '태풍', '홍수'],
+    # 2026-09-17: 음식·요리·명절·설·축제를 2점→1점으로 내림 (대표님 지적 "스포츠나
+    # 문화는 큰 관심 없을 것 같다·짜잘한 뉴스도" — 일반 한국인 대상으로 바뀌며
+    # 먹고사는 문제(일자리·물가·안전)가 흥밋거리(음식·축제)보다 우선하도록 조정).
     1: ['경제', '한국', '베트남', '하노이', '호찌민', '빈즈엉', '동나이', '박닌',
-        '문화', '관광', '여행', '생활', '수출', '투자', '진출', '기업'],
+        '문화', '관광', '여행', '생활', '수출', '투자', '진출', '기업',
+        '음식', '요리', '명절', '설', '축제'],
 }
 # 영어 기사(VnExpress)용 — 위 낱말이 다 한국어라 영어 제목은 **늘 0점**이었다.
 # 그래서 하루 36건을 받아 놓고 한 건도 안 뽑혔다 (2026-09-02 실측).
@@ -142,12 +151,12 @@ CARE_EN = {
     2: ['manufacturing', 'factory', 'garment', 'textile', 'sewing', 'electronics',
         'semiconductor', 'industrial park', 'industrial zone', 'logistics',
         'warehouse', 'skilled', 'insurance', 'school', 'tuition', 'housing',
-        'food', 'cuisine', 'festival', 'lunar new year', 'tet', 'weather', 'heat',
-        'typhoon', 'flood', 'storm'],
+        'weather', 'heat', 'typhoon', 'flood', 'storm'],
     1: ['economy', 'export', 'import', 'investment', 'invest', 'company', 'business',
         'trade', 'growth', 'gdp', 'market', 'tax', 'accounting', 'real estate',
         'hanoi', 'ho chi minh', 'saigon', 'binh duong', 'dong nai', 'bac ninh',
-        'da nang', 'korea', 'vietnam', 'culture', 'tourism', 'travel', 'life'],
+        'da nang', 'korea', 'vietnam', 'culture', 'tourism', 'travel', 'life',
+        'food', 'cuisine', 'festival', 'lunar new year', 'tet'],
 }
 # **베트남어 낱말표.** 한국어·영어와 무게가 같다 (대표님 지시 2026-09-02:
 # 기사를 번역하지 말고 낱말표를 옮겨라). 현지 신문은 베트남어로 쓴다.
@@ -163,11 +172,11 @@ CARE_VI = {
         'Hàn Quốc đầu tư', 'quan hệ Việt-Hàn', 'KOTRA'],
     2: ['nhà máy', 'sản xuất', 'may mặc', 'dệt may', 'da giày', 'điện tử', 'bán dẫn',
         'khu công nghiệp', 'logistics', 'kho', 'bảo hiểm', 'trường học',
-        'học phí', 'nhà ở', 'ẩm thực', 'lễ hội', 'Tết', 'thời tiết', 'bão', 'lũ', 'nắng nóng'],
+        'học phí', 'nhà ở', 'thời tiết', 'bão', 'lũ', 'nắng nóng'],
     1: ['kinh tế', 'xuất khẩu', 'nhập khẩu', 'đầu tư', 'doanh nghiệp', 'công ty',
         'thương mại', 'tăng trưởng', 'GDP', 'thị trường', 'thuế', 'bất động sản',
         'Hà Nội', 'TP.HCM', 'Hồ Chí Minh', 'Bình Dương', 'Đồng Nai', 'Bắc Ninh',
-        'Đà Nẵng', 'Việt Nam', 'du lịch', 'văn hóa'],
+        'Đà Nẵng', 'Việt Nam', 'du lịch', 'văn hóa', 'ẩm thực', 'lễ hội', 'Tết'],
 }
 
 # 낱말로 시시한 기사를 막으려 했으나 **두더지잡기**였다 (대표님 지적 2026-09-02:
@@ -371,8 +380,11 @@ NOT_VN = ['nepal', 'thailand', 'philippines', 'indonesia', 'malaysia', 'myanmar'
           'cambodia', 'laos', 'india', 'pakistan', 'japan tourism']
 
 
-# 베트남에서 나오는 신문 — 여기 기사는 **기본이 베트남 소식**이다
-VN_SITES = ('insidevina.com', 'vietnamkoreatimes.com', 'vnexpress.net',
+# 베트남 소식만 전문으로 다루는 신문 — 여기 기사는 **기본이 베트남 소식**이다
+# (한국 회사인지가 아니라 다루는 내용이 기준 — 인사이드비나도 한국 회사지만 여기 있다.
+# 2026-09-17: 씬짜오베트남·굿모닝베트남미디어 추가)
+VN_SITES = ('insidevina.com', 'vietnamkoreatimes.com', 'chaovietnam.co.kr',
+            'goodmorningvietnam.co.kr', 'vnexpress.net',
             'tuoitre.vn', 'thanhnien.vn', 'vietnamnews.vn', 'vietnamplus.vn')
 
 
@@ -410,6 +422,13 @@ def _site_of(u):
     except Exception: return ''
 
 
+# 2026-09-17: **당일 안에서도** 같은 주제가 두 번 뽑히지 않게 (대표님 지시).
+# 지금까지는 "이미 실은 과거 기사"하고만 비교했다 — 오늘 뽑는 것끼리는 안 봤다.
+# 같은 잣대(제목 유사도 55%)를 오늘 뽑힌 것들에도 그대로 적용한다.
+def _same_topic_as_picked(t, picked_list):
+    return any(_SM(None, t, x.get('t', '')).ratio() > 0.55 for x in picked_list)
+
+
 # 뽑기 전 **후보 전체**를 남겨 둔다 (2026-09-16, 대표님 지시 "후보들 다 말해봐" —
 # 전에는 뽑힌 것만 남아서 왜 떨어졌는지 되짚을 수가 없었다). 가벼운 파일이라
 # 매번 그냥 쓴다.
@@ -436,6 +455,8 @@ for cat, n in QUOTA:
             continue
         if not about_vn(c):
             continue
+        if _same_topic_as_picked(c['t'], picked):     # 2026-09-17: 당일 중복 주제 제외
+            continue
         st = _site(c)
         if per_site.get(st, 0) >= PER_SITE_MAX:
             continue
@@ -458,6 +479,8 @@ for cat, n in QUOTA:
             continue
         if not about_vn(c):
             continue
+        if _same_topic_as_picked(c['t'], picked):     # 2026-09-17: 당일 중복 주제 제외
+            continue
         st = _site(c)
         if per_site.get(st, 0) >= PER_SITE_MAX:
             continue
@@ -476,6 +499,8 @@ for c in cand:
         # 한 갈래가 자리보다 두 건 넘게 차지하지 못하게 (사회가 다섯 건이 됐다)
         lim = dict(QUOTA).get(c.get('cat'), 2) + 1
         if sum(1 for x in picked if x.get('cat') == c.get('cat')) >= lim:
+            continue
+        if _same_topic_as_picked(c['t'], picked):     # 2026-09-17: 당일 중복 주제 제외
             continue
         st = _site(c)
         if per_site.get(st, 0) >= PER_SITE_MAX:
