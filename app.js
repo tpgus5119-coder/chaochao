@@ -6365,9 +6365,24 @@ function gybmEntry() {
   const b = $('#subBody'); b.textContent = '';
   b.append(el('p', 'lede', tr('불러오는 중…')));
   show('sub', 'GYBM 시험', true);
+  // 8초 안에 안 끝나면 무한 로딩으로 안 두고 재시도 버튼을 보여준다
+  // (2026-09-17: 로딩중 멈춤 신고 이후 추가 — 캐시·네트워크 문제를 눈에 보이게 한다).
+  let loaded = false;
+  const timer = setTimeout(() => {
+    if (loaded) return;
+    b.textContent = '';
+    b.append(el('p', 'lede', tr('불러오지 못했습니다')));
+    b.append(el('p', 'note', tr('인터넷 연결을 확인하시거나, 앱을 완전히 껐다 켜 보세요(새로고침으로 안 되면 캐시 문제일 수 있습니다).')));
+    const retry = el('button', 'primary sm', tr('다시 시도'));
+    retry.onclick = gybmEntry;
+    b.append(retry);
+  }, 8000);
   basicWordsBuild(() => {
     BW_BYVI = {}; BASICWORDS.forEach(w => { BW_BYVI[w.vi] = w; });
-    realbookBuild(() => drawGybmVols());
+    realbookBuild(() => {
+      loaded = true; clearTimeout(timer);
+      drawGybmVols();
+    });
   });
 }
 function drawGybmVols() {
