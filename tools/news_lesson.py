@@ -239,9 +239,21 @@ def main():
         # 기사에서 나온 낱말을 앞에 둔다 — 카드 둘째 장에는 앞의 여섯 개가 실린다
         words.sort(key=lambda w: -w.pop('_g', 0))
         # 기사와 맞는 낱말이 셋은 있어야 '이 기사의 세트'라 할 수 있다
+        # 2026-09-16 수정: 한국어 뜻만 봐서 **영어 기사(VnExpress)가 늘 떨어졌다** —
+        # 실측: 영어 소스는 늘 n_g=0 (본문 자체가 영어라 한국어 글자가 있을 수 없음).
+        # 처음엔 en(영어 그림말)도 같이 보게 했으나 실측해보니 en 은 "a red car on the
+        # street" 식 **그림 묘사 문장**이라 이것도 본문에 나올 리 없어 효과가 없었다
+        # (words=10·lines=2 다 채워졌는데도 n_g=0으로 여전히 버려짐, 실측 확인).
+        # 근본 원인: 이 검사 자체가 "한국어 기사"를 전제로 설계된 것 — 기사 본문이
+        # 애초에 한글이 아니면 성립할 수 없는 구조다. 그래서 **기사 언어에 따라 잣대를
+        # 다르게** 둔다: 한국어 기사만 grounding(n_g>=3)으로 걸러내고, 외국어(영어 등)
+        # 기사는 words·lines 개수만 보고 통과시킨다(AI 판단을 믿는다) — 밑빠진 독처럼
+        # 걸러지던 걸 막는 게 우선이다.
+        art_ko_ratio = len(re.findall(r'[가-힣]', art['t'] + art['body'][:500])) / max(1, len(art['t']) + 500)
+        is_ko_source = art_ko_ratio > 0.05          # 5% 넘게 한글이면 한국어 기사로 본다
         n_g = sum(1 for w in got.get('words', []) if
                   re.sub(r'[^가-힣]', '', (w.get('ko') or ''))[:2] in (art['t'] + ' ' + art['body']))
-        if len(words) < 4 or not lines or n_g < 3:
+        if len(words) < 4 or not lines or (is_ko_source and n_g < 3):
             print(f"재료가 모자라다 — 건너뜀: {art['t'][:30]}"); continue
         theme = (got.get('theme') or '기사')[:12]
         store['days'].append({
