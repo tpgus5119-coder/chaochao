@@ -130,7 +130,13 @@ def make_cards():
         print(f'카드뉴스 {len(need)}일치 — Draw Things 가 꺼져 있어 다음에')
         return 0
     done = 0
-    for ts in need[-3:]:                       # 밀렸어도 한 번에 사흘치까지만
+    for ts in need[-7:]:                       # 밀렸어도 한 번에 이레치까지만 (2026-09-16:
+                                                # 3일→7일. 노트북이 꺼져 있거나 인터넷이
+                                                # 끊겨 저녁 8시 실행을 놓쳐도, 이 지킴이가
+                                                # 매시간 돌면서 "기사는 있는데 카드가 없는
+                                                # 날"을 찾아 자동으로 따라잡는다 — 이게
+                                                # 실질적인 재시도 장치다. KEEP_DAYS(7일)
+                                                # 만큼은 따라잡을 수 있어야 해서 맞춤)
         subprocess.run([sys.executable, 'tools/news_sum5.py', '--day', ts, '--local'], cwd=R)
         r = subprocess.run([sys.executable, 'tools/card_news.py', '--day', ts], cwd=R)
         if r.returncode == 0: done += 1
