@@ -1519,7 +1519,7 @@ function studyHubEntry() {
     b.append(btn);
   };
   row('회화', '단어·문법·기본기 전체 목차', courseEntry);
-  row('GYBM 시험', 'GYBM 선배들이 실제로 본 단어시험 낱말 모음', basicWordsEntry);
+  row('GYBM 시험', '교재(Tiếng Việt Cho Người Nước Ngoài) 챕터별 낱말 · ★·밑줄은 선배 시험 참고', gybmEntry);
   row('공인인증 베트남어', '공인 시험 대비 학습 콘텐츠 (준비 중)', () =>
     alert('공인인증 베트남어 전용 학습 콘텐츠는 아직 준비 중입니다. 지금은 아래 "시험" 탭에서 모의고사로 연습해 보세요.'));
   row('복습', '잊을 때 된 것을 다시 봅니다', () => reviewMenu('all'));
@@ -6336,129 +6336,183 @@ function basicWordRow(x) {
   row.onclick = () => { const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
   return row;
 }
-/* 회차 차례 — 20기 1일차 → 19기 1일차 → 18기 1일차 → 17기 1일차 → 20기 2일차 ...
-   (대표님 지시, 2026-09-15: "별표 순서로 하지말고... 가장 빠른 일차부터 순서대로").
-   원본 회차(사수·회차 번호)는 tools/build_basicword_sets.py가 4개 기수 원본 파일에서
-   되살려 data/basicword_sets.json으로 만들어 둔다 — basicwords.json은 기수를 합치며
-   회차 번호를 버렸기 때문이다(같은 낱말이 여러 기수·회차에 겹쳐 나와 번호 하나로 못 남는다).
-   별·빨간 밑줄(주간시험) 표시는 그대로 basicWordRow가 그린다 — 바뀐 건 순서뿐이다. */
-let BASICSETS = null, BW_BYVI = null;
-function basicSetsBuild(cb) {
-  if (BASICSETS) { cb(BASICSETS); return; }
-  fetch('data/basicword_sets.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { BASICSETS = j.sets; cb(BASICSETS); })
-    .catch(() => { BASICSETS = []; cb(BASICSETS); });
-}
+/* GYBM 시험 — 예전엔 기수/일차(회차) 기준으로 훑었으나, 실제 쓰는 교재가 확인돼
+   (대표님 지시, 2026-09-17: "찐교재 폴더 안에 pdf파일 2개 잇다") 교재 챕터(Bài) 기준으로
+   완전히 바꿨다 — data/realbook.json(Tiếng Việt Cho Người Nước Ngoài 1·2권 전체 OCR).
+   basicwords.json과 겹치는 낱말(전체의 약 47%)은 그쪽의 예문·그림과 별·빨간 밑줄
+   (선배 시험 참고용, 뜻은 안 바뀜)을 BW_BYVI로 그대로 이어받는다 — 안 겹치면 아직
+   예문·그림이 없어 낱말·발음만 나온다(추후 채울 예정). */
+let REALBOOK = null;
 const bdone = () => (S.bdone = S.bdone || {});
-const bkey = t => 'B:' + t.cohort + t.kind + t.no;
-const bsetTitle = t => t.cohort + tr('기 · ') + (t.kind === '일일' ? t.no + tr('일차')
-  : t.kind === '주간' ? tr('주간 ') + t.no + tr('회') : tr('기타 모음'));
+function realbookBuild(cb) {
+  if (REALBOOK) { cb(REALBOOK); return; }
+  fetch('data/realbook.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { REALBOOK = j.books; cb(REALBOOK); })
+    .catch(() => { REALBOOK = []; cb(REALBOOK); });
+}
+function gybmMerge(w) {
+  const bw = BW_BYVI && BW_BYVI[w.vi];
+  return bw ? { ...w, star: bw.star, weekly: bw.weekly, ex: bw.ex, img: bw.img } : w;
+}
+const gybmKey = (vol, tag) => 'B:V' + vol + tag;
 
-/* 기초단어 학습 입구 — 다른 단어 학습과 같은 틀(회차 목록 → 배우기 → 시험 → 복습)을 쓴다
-   (대표님 지시: "그 선배 단어들도 다른 단어 학습과 동일하게 해줘. 배우고 복습하는것.").
-   창고(S.bsrs)·진도(S.bdone)·오답노트(S.stats.bmiss)를 전부 따로 두는 것은
-   실전 단어(S.ssrs)가 이미 쓰던 방식 그대로다 — 대표님 지시(복습은 안 섞이게)가 여기도 걸린다. */
-function basicWordsEntry() {
+/* GYBM 학습 입구 — 다른 단어 학습과 같은 틀(목록 → 배우기 → 시험 → 복습)을 쓴다
+   (대표님 지시: "선배 단어들도 다른 단어 학습과 동일하게 해줘. 배우고 복습하는것.").
+   창고(S.bsrs)·진도(S.bdone)는 예전 기초단어 때 쓰던 것 그대로 이어받는다 — 낱말
+   자체(vi 텍스트)로 키를 잡는 S.bsrs 복습 진도는 구조가 바뀌어도 안 끊긴다. */
+function gybmEntry() {
   SBOX = 'bsrs';
   const b = $('#subBody'); b.textContent = '';
   b.append(el('p', 'lede', tr('불러오는 중…')));
-  show('sub', '기초단어', true);
-  basicWordsBuild(() => basicSetsBuild(() => drawBasicSets()));
+  show('sub', 'GYBM 시험', true);
+  basicWordsBuild(() => {
+    BW_BYVI = {}; BASICWORDS.forEach(w => { BW_BYVI[w.vi] = w; });
+    realbookBuild(() => drawGybmVols());
+  });
 }
-function drawBasicSets() {
+function drawGybmVols() {
   SBOX = 'bsrs';
-  BW_BYVI = {}; BASICWORDS.forEach(w => { BW_BYVI[w.vi] = w; });
   const b = $('#subBody'); b.textContent = '';
 
   const head = el('div', 'catpick');
   const due = Object.values(S.bsrs || {}).filter(v => v.due <= now()).length;
-  const met = Object.keys(S.bsrs || {}).length;
-  head.append(el('span', 'msub', tr('익힌 낱말') + ' ' + met + '/' + BASICWORDS.length + '  ·  '));
-  const rb = el('button', 'primary sm', tr('기초단어 복습') + (due ? ' (' + due + ')' : ''));
-  rb.onclick = () => { SBOX = 'bsrs'; dive(drawBasicSets); reviewMenu('word'); };
+  head.append(el('span', 'msub', tr('GYBM 시험 대비 — 교재 챕터별 낱말') + '  ·  '));
+  const rb = el('button', 'primary sm', tr('GYBM 낱말 복습') + (due ? ' (' + due + ')' : ''));
+  rb.onclick = () => { SBOX = 'bsrs'; dive(drawGybmVols); reviewMenu('word'); };
   head.append(rb);
   head.append(el('span', 'msub', tr('다른 복습과 섞이지 않습니다')));
   b.append(head);
 
   const sb = el('button', 'bigmenu');
-  sb.append(el('b', null, tr('🔍 낱말 찾기')), el('span', 'exmeta', tr('★ · 빨간 밑줄로 전체 훑어보기')));
-  sb.onclick = () => { dive(drawBasicSets); basicWordsSearch(); };
+  sb.append(el('b', null, tr('🔍 낱말 찾기')), el('span', 'exmeta', tr('교재 전체에서 찾기')));
+  sb.onclick = () => { dive(drawGybmVols); gybmSearch(); };
   b.append(sb);
 
-  const box = S.bsrs || {};
   const list = el('div', 'dictout');
-  BASICSETS.forEach(t => {
-    const k = bkey(t), done = !!bdone()[k];
-    const ws = t.words.map(v => BW_BYVI[v]).filter(Boolean);
-    if (!ws.length) return;
-    const got = ws.filter(w => box[w.vi]).length;
+  REALBOOK.forEach(vol => {
+    const n = vol.chapters.reduce((s, c) => s + c.words.length, 0);
     const btn = el('button', 'dictrow');
     btn.type = 'button';
-    btn.dataset.done = done ? '1' : '0';
-    btn.append(el('span', 'dvi', esc(bsetTitle(t))),
-      el('span', 'dko', ws.length + tr('낱말')),
-      el('span', 'dkr', done ? tr('완료 ✔') : got ? got + '/' + ws.length : tr('보기')));
-    btn.onclick = () => { dive(drawBasicSets); drawBasicSet(t); };
+    btn.append(el('span', 'dvi', esc(vol.title)),
+      el('span', 'dko', n + tr('낱말')),
+      el('span', 'dkr', tr('보기')));
+    btn.onclick = () => { dive(drawGybmVols); drawGybmChapters(vol); };
     list.append(btn);
   });
   b.append(list);
-  show('sub', '기초단어', true);
+  show('sub', 'GYBM 시험', true);
 }
-function drawBasicSet(t) {
+function drawGybmChapters(vol) {
+  const b = $('#subBody'); b.textContent = '';
+  const list = el('div', 'dictout');
+  vol.chapters.forEach(ch => {
+    const k = gybmKey(vol.vol, 'B' + ch.bai), done = !!bdone()[k];
+    const btn = el('button', 'dictrow');
+    btn.type = 'button';
+    btn.dataset.done = done ? '1' : '0';
+    btn.append(el('span', 'dvi', esc('Bài ' + ch.bai + ' · ' + ch.title)),
+      el('span', 'dko', esc(ch.title_ko || '')),
+      el('span', 'dkr', done ? tr('완료 ✔') : ch.words.length + tr('낱말')));
+    btn.onclick = () => { dive(() => drawGybmChapters(vol)); drawGybmChapter(vol, ch); };
+    list.append(btn);
+  });
+  const gk = gybmKey(vol.vol, 'G'), gdone = !!bdone()[gk];
+  const gbtn = el('button', 'dictrow');
+  gbtn.type = 'button';
+  gbtn.dataset.done = gdone ? '1' : '0';
+  gbtn.append(el('span', 'dvi', tr('공식 낱말장')),
+    el('span', 'dko', tr('책 뒤쪽 Bảng từ 전체')),
+    el('span', 'dkr', gdone ? tr('완료 ✔') : vol.glossary.length + tr('낱말')));
+  gbtn.onclick = () => { dive(() => drawGybmChapters(vol)); drawGybmWordList(vol.glossary, tr('공식 낱말장'), gk, null, null); };
+  list.append(gbtn);
+  b.append(list);
+  show('sub', vol.title, true);
+}
+function drawGybmChapter(vol, ch) {
+  drawGybmWordList(ch.words, 'Bài ' + ch.bai + ' · ' + ch.title, gybmKey(vol.vol, 'B' + ch.bai), ch.grammar, ch.dialogues);
+}
+function drawGybmWordList(words, title, key, grammar, dialogues) {
   SBOX = 'bsrs';
   const b = $('#subBody'); b.textContent = '';
-  const ws = t.words.map(v => BW_BYVI[v]).filter(Boolean);
+  const ws = words.map(gybmMerge);
+
   const go = el('div', 'catpick');
-  const gb = el('button', 'primary sm', tr('이 회차 시험 보기'));
+  const gb = el('button', 'primary sm', tr('이 낱말 시험 보기'));
   gb.onclick = () => {
     SBOX = 'bsrs';
-    dive(() => drawBasicSet(t));
-    startQuiz(ws, { day: bkey(t), basic: 1 }, null, false, { kind: 'word' });
+    dive(() => drawGybmWordList(words, title, key, grammar, dialogues));
+    startQuiz(ws, { day: key, basic: 1 }, null, false, { kind: 'word' });
   };
   go.append(gb);
   go.append(el('span', 'msub', ws.length + tr('낱말') + ' · ' + tr('낱말을 누르면 소리가 납니다')));
   b.append(go);
+
+  if (grammar && grammar.length) {
+    b.append(el('p', 'lede', tr('문법')));
+    grammar.forEach(g => {
+      const c = el('div', 'rulecard');
+      c.append(el('div', 'rhead', '<b>' + esc(g.title_vi) + '</b>' + (g.title_ko ? ' — ' + esc(g.title_ko) : '')));
+      c.append(el('div', 'rbody', esc(g.note_ko)));
+      b.append(c);
+    });
+  }
+
+  b.append(el('p', 'lede', tr('낱말')));
   ws.forEach(x => b.append(basicWordRow(x)));
-  show('sub', bsetTitle(t), true);
+
+  if (dialogues && dialogues.length) {
+    b.append(el('p', 'lede', tr('대화문')));
+    dialogues.forEach(d => {
+      const row = el('button', 'dictrow');
+      row.type = 'button';
+      row.append(el('span', 'dvi', esc(d.vi)), el('span', 'dko', esc(d.ko)));
+      row.onclick = () => speakVi(d.vi, false, 0, S.voice);
+      b.append(row);
+    });
+  }
+  show('sub', title, true);
 }
-/* 낱말 찾기 — 회차 순서로 훑는 것 말고, 특정 낱말을 바로 찾고 싶을 때 쓴다. */
-function basicWordsSearch() {
+/* 낱말 찾기 — 챕터 순서로 훑는 것 말고, 특정 낱말을 바로 찾고 싶을 때 쓴다. */
+function gybmSearch() {
   SBOX = 'bsrs';
   const b = $('#subBody'); b.textContent = '';
-  show('sub', tr('기초단어 찾기'), true);
-  basicWordsBuild(words => {
-    b.textContent = '';
-    b.append(el('p', 'lede', tr('선배들이 실제로 본 단어시험 N개 · ★는 겹쳐 나온 기수 수 · 빨간 밑줄은 주간시험')
-      .replace('N', words.length.toLocaleString('ko-KR'))));
-    const inp = el('input', 'keyin dictin');
-    inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
-    const out = el('div', 'dictout');
-    const draw = () => {
-      const q = inp.value.trim();
-      out.textContent = '';
-      let list, note;
-      if (q.length < 1) {
-        list = words.filter(x => x.star > 0);
-        note = tr('여러 기수에 겹쳐 나온 것부터 N개 — 찾는 말을 입력하면 전체에서 찾습니다').replace('N', list.length);
-      } else {
-        const qb = dictBare(q), qk = q.toLowerCase();
-        const kor = /[가-힣]/.test(q);
-        list = words.filter(x => kor ? x.ko.toLowerCase().includes(qk)
-                                      : (dictBare(x.vi).includes(qb) || x.vi.toLowerCase().includes(qk)));
-        note = tr('N개 찾음').replace('N', list.length);
-      }
-      out.append(el('p', 'note', note));
-      list = list.slice(0, 80);
-      if (!list.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
-      list.forEach(x => out.append(basicWordRow(x)));
-      if (list.length >= 80) out.append(el('p', 'note', tr('앞 80개만 보입니다 — 더 적어 보세요')));
-    };
-    let tm = null;
-    inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
-    b.append(inp, out);
-    draw();
-    setTimeout(() => inp.focus(), 60);
+  show('sub', tr('GYBM 낱말 찾기'), true);
+  const all = [];
+  REALBOOK.forEach(vol => {
+    vol.chapters.forEach(ch => ch.words.forEach(w => all.push(w)));
+    vol.glossary.forEach(w => all.push(w));
   });
+  const words = all.map(gybmMerge);
+  b.append(el('p', 'lede', tr('교재 낱말 N개 · ★는 선배 시험에 겹쳐 나온 기수 수 · 빨간 밑줄은 주간시험')
+    .replace('N', words.length.toLocaleString('ko-KR'))));
+  const inp = el('input', 'keyin dictin');
+  inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
+  const out = el('div', 'dictout');
+  const draw = () => {
+    const q = inp.value.trim();
+    out.textContent = '';
+    let list, note;
+    if (q.length < 1) {
+      list = words.filter(x => x.star > 0);
+      note = tr('여러 기수에 겹쳐 나온 것부터 N개 — 찾는 말을 입력하면 전체에서 찾습니다').replace('N', list.length);
+    } else {
+      const qb = dictBare(q), qk = q.toLowerCase();
+      const kor = /[가-힣]/.test(q);
+      list = words.filter(x => kor ? x.ko.toLowerCase().includes(qk)
+                                    : (dictBare(x.vi).includes(qb) || x.vi.toLowerCase().includes(qk)));
+      note = tr('N개 찾음').replace('N', list.length);
+    }
+    out.append(el('p', 'note', note));
+    list = list.slice(0, 80);
+    if (!list.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
+    list.forEach(x => out.append(basicWordRow(x)));
+    if (list.length >= 80) out.append(el('p', 'note', tr('앞 80개만 보입니다 — 더 적어 보세요')));
+  };
+  let tm = null;
+  inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
+  b.append(inp, out);
+  draw();
+  setTimeout(() => inp.focus(), 60);
 }
 
 function wordbookEntry() { SBOX = 'srs'; WB = 'star'; drawWordbook(); }
