@@ -366,8 +366,9 @@ def card2(d):
     PAD, GAP = 84, 56                       # 여백을 키워 덩어리를 가운데로
     COL = (W - PAD * 2 - GAP) // 2
 
-    # '이 기사에서 배울 말' 제목은 뺐다 (대표님 지시 2026-09-01) —
-    # 낱말과 대화를 넣을 자리를 벌기 위해. 무엇인지는 보면 안다.
+    # '이 기사에서 배울 말' 제목은 2026-09-01에 뺐었는데, 2026-09-16에 다시 넣었다
+    # (대표님 지적: "문장 아래에 빈 공간이 많다 — 단어 위에 제목 한 줄 넣어라").
+    dtext(dr, (PAD, 18), "이 기사에 나오는 단어", font(29, 1), FG, LS_TITLE)
 
     # 다른 기사에 이미 쓴 낱말은 **뒤로 민다** (대표님 지시 2026-09-02:
     # "다른 기사와 낱말·문장·그림이 가급적 겹치지 않게"). 모자라면 그냥 쓴다 — 필수는 아니다.
@@ -379,9 +380,10 @@ def card2(d):
     # **낱말은 위쪽에 모아 붙이고, 남는 자리는 문장에 준다**
     # (대표님 지적 2026-09-02 "단어는 널널한데 문장은 너무 좁다").
     ROW = 158
+    WORDS_TOP = 76                          # 위에 넣은 제목 줄만큼 아래로 민다
     for i, w in enumerate(words):
         cx = PAD + (i % 2) * (COL + GAP)
-        cy = 60 + (i // 2) * ROW
+        cy = WORDS_TOP + (i // 2) * ROW
         vi = nfc(w["vi"])
         fv = f_vi
         for sz in (44, 40, 36, 32, 28):
@@ -401,10 +403,10 @@ def card2(d):
     #    (전에는 마지막 한글 줄이 출처 줄에 붙어 찍혔다, 2026-09-02 실측).
     lines = ((d.get("dialog") or {}).get("lines") or [])[:2]
     if lines:
-        TOP = 60 + ((len(words) + 1) // 2) * ROW + 26      # 낱말 아래
+        TOP = WORDS_TOP + ((len(words) + 1) // 2) * ROW + 26      # 낱말 아래
         BOT = H - 108                                       # 출처 줄 위
 
-        def draw_dialog(scale, do_draw):
+        def draw_dialog(scale, do_draw, y0=TOP):
             """대화를 그린다(또는 재기만 한다). 끝난 y 를 돌려준다."""
             fv2 = font(int(29 * scale), vi=True)
             fk2 = font(int(23 * scale))
@@ -412,7 +414,7 @@ def card2(d):
             fw2 = font(int(23 * scale), 1)
             fh2 = font(int(34 * scale), 1)
             lv, lk, lo = int(38 * scale), int(30 * scale), int(34 * scale)
-            y = TOP
+            y = y0
             if do_draw:
                 dr.line([PAD, y - 22, W - PAD, y - 22], fill=(226, 226, 222), width=3)
                 dtext(dr, (PAD, y), "이 기사로 나누는 말", fh2, FG, LS_TITLE)
@@ -445,7 +447,11 @@ def card2(d):
 
         sc = next((x for x in (1.0, 0.94, 0.88, 0.82, 0.76, 0.7)
                    if draw_dialog(x, False) <= BOT), 0.7)
-        draw_dialog(sc, True)
+        # 2026-09-16: 늘 TOP 에 붙여 그려서 **문장 아래에 빈 공간이 많다**는 지적이
+        # 나왔다(대표님) — 남는 자리(slack)의 절반만큼 아래로 밀어 위아래 가운데로 둔다.
+        end_y = draw_dialog(sc, False)
+        slack = max(0, BOT - end_y)
+        draw_dialog(sc, True, y0=TOP + slack // 2)
 
     foot(dr, d, f_s, PAD)
     return im

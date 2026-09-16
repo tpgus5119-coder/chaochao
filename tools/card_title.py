@@ -43,10 +43,15 @@ def main():
     a.add_argument("--day", default=""); a.add_argument("--force", action="store_true")
     a = a.parse_args()
     j = json.loads(F.read_text(encoding="utf-8"))
+    # 2026-09-16 수정: 길이만 보고 손댈지 정했더니, **영어 기사(VnExpress) 제목이
+    # 28자를 안 넘으면 번역도 없이 영어 그대로 카드에 찍혔다**(대표님 지적 "제목에
+    # 왜 영어냐"). ASK 프롬프트는 이미 "한국어로" 를 못박아 두고 있어 번역까지
+    # 겸하는데, 길이 조건에 안 걸리면 이 프롬프트 자체를 안 돌렸던 것. 그래서
+    # 한글이 하나도 없는 제목(=번역 안 된 원문)도 무조건 다듬게 조건을 추가했다.
     todo = [d for d in j["days"]
             if (not a.day or d.get("ts") == a.day)
             and (a.force or not d.get("title_card"))
-            and len(d.get("title", "")) > LIM]
+            and (len(d.get("title", "")) > LIM or not re.search(r"[가-힣]", d.get("title", "")))]
     print(f"다듬을 제목 {todo and len(todo) or 0} (그 밖은 원문 그대로 쓴다)", flush=True)
 
     for d in todo:

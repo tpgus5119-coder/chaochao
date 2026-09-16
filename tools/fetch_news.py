@@ -405,6 +405,24 @@ def _ok_src(c, cat):
     host = c['u'].split('/')[2].lower().replace('www.', '')
     return any(host.endswith(h) for h in POLITICS_OK)
 
+def _site_of(u):
+    try: return u.split('/')[2].replace('www.', '')
+    except Exception: return ''
+
+
+# 뽑기 전 **후보 전체**를 남겨 둔다 (2026-09-16, 대표님 지시 "후보들 다 말해봐" —
+# 전에는 뽑힌 것만 남아서 왜 떨어졌는지 되짚을 수가 없었다). 가벼운 파일이라
+# 매번 그냥 쓴다.
+try:
+    (R / 'data' / '_candidates_debug.json').write_text(json.dumps(
+        {'when': datetime.now(KST).strftime('%Y-%m-%d %H:%M'),
+         'candidates': [{'t': c['t'], 'u': c['u'], 'site': _site_of(c['u']),
+                          'cat': c.get('cat'), 'care': c['care'], 'daily': c['daily'],
+                          'about_vn': about_vn(c)} for c in cand]},
+        ensure_ascii=False, indent=1), encoding='utf-8')
+except Exception as e:
+    print(f'후보 기록 실패(무시): {e}')
+
 # ── 주제마다 자리만큼 뽑는다
 picked, used, per_site = [], set(), {}
 def _site(c):
