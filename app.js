@@ -1480,7 +1480,7 @@ function syncTabBar() {
    보여주라고, 하루5분을 보여주지말고"). 홈 단추·탭은 renderHome()(스티치 대시보드)을
    그대로 쓴다. 앱을 처음 켤 때만 dailyFlowEntry()(하루5분)로 바로 들어간다
    (10241번 줄, 2026-09-09 지시는 그대로 유지) — 그 둘은 이제 서로 다른 문이다. */
-const TAB_ACTIONS = { home: renderHome, daily: dailyFlowEntry, study: studyHubEntry, exam: vlptEntry };
+const TAB_ACTIONS = { home: renderHome, daily: dailyFlowEntry, study: studyHubEntry, exam: examHubEntry };
 $$('#tabbar .tabbtn').forEach(b => b.onclick = () => {
   ACTIVE_TAB = b.dataset.tab;
   (TAB_ACTIONS[b.dataset.tab] || dailyFlowEntry)();
@@ -1519,9 +1519,9 @@ function studyHubEntry() {
     b.append(btn);
   };
   row('회화', '단어·문법·기본기 전체 목차', courseEntry);
-  row('기초단어', 'GYBM 선배들이 실제로 본 단어시험 낱말 모음', basicWordsEntry);
-  row('시험 대비', '시험에 자주 나오는 표현 위주 (준비 중)', () =>
-    alert('시험 대비 전용 학습 콘텐츠는 아직 준비 중입니다. 지금은 아래 "시험" 탭에서 모의고사로 연습해 보세요.'));
+  row('GYBM 시험', 'GYBM 선배들이 실제로 본 단어시험 낱말 모음', basicWordsEntry);
+  row('공인인증 베트남어', '공인 시험 대비 학습 콘텐츠 (준비 중)', () =>
+    alert('공인인증 베트남어 전용 학습 콘텐츠는 아직 준비 중입니다. 지금은 아래 "시험" 탭에서 모의고사로 연습해 보세요.'));
   row('복습', '잊을 때 된 것을 다시 봅니다', () => reviewMenu('all'));
   show('sub', '학습', true);
 }
@@ -2765,6 +2765,28 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
   vex:   { name: '능력시험', items: () => [['모의고사', vlptEntry]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
+
+/* 시험 탭 입구 — 학습 탭과 같은 갈래(회화·GYBM·공인인증시험)로 보낸다 (대표님 지시,
+   2026-09-16: "시험탭내부도 회화, gybm, 공인인증시험. 이런식으로 학습탭과 동일하게").
+   회화·GYBM은 아직 시험 콘텐츠가 없어 준비 중이라고 정직하게 말한다 — 낱말만 먼저
+   업데이트하고 시험 문항은 나중에 만들라는 지시라 여기서 지어내지 않는다. */
+function examHubEntry() {
+  const b = $('#examBody');
+  b.textContent = '';
+  b.append(el('p', 'lede', '무엇을 볼까요?'));
+  const row = (t, sub, fn) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, t), el('span', 'exmeta', sub));
+    btn.onclick = fn;
+    b.append(btn);
+  };
+  row('회화', '교재 회화 시험 (준비 중)', () =>
+    alert('회화 시험 콘텐츠는 아직 준비 중입니다.'));
+  row('GYBM', 'GYBM 낱말 시험 (준비 중)', () =>
+    alert('GYBM 시험 콘텐츠는 아직 준비 중입니다. 지금은 "학습" 탭의 GYBM 시험에서 낱말을 먼저 익혀 보세요.'));
+  row('공인인증시험', 'VLPT 형식 모의고사', vlptEntry);
+  show('exam', '시험', true);
+}
 
 /* ── 베트남어 능력시험(VLPT) 모의고사 (2026-09-08 대표님 지시) ──
    VLPT(Vietnamese Language Proficiency Test)는 하노이 국립대(VNU-USSH)가 운영하는
