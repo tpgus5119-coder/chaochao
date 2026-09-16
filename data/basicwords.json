@@ -1,5 +1,5 @@
 {
- "note": "GYBM 17~20기 선배 단어시험 전수를 하나로 합친 것(3차, 정밀 검수 — 사전 47,341표제어와 대조 + 눈으로 358곳 확인). 직무 회화(order.json)와는 완전히 별개 — 순수 단어시험 낱말만. (4차: '바이올린' 류 순수 외래어 제거 + 성조·띄어쓰기 오류 206곳 전수 손교정 — 대표님 지시 2026-09-15)",
+ "note": "GYBM 17~20기 선배 단어시험 전수를 하나로 합친 것(3차, 정밀 검수 — 사전 47,341표제어와 대조 + 눈으로 358곳 확인). 직무 회화(order.json)와는 완전히 별개 — 순수 단어시험 낱말만. (4차: '바이올린' 류 순수 외래어 제거 + 성조·띄어쓰기 오류 206곳 전수 손교정 — 대표님 지시 2026-09-15) (5차: 원본 xlsx 294개 전수 재검토로 빠졌던 낱말 56개 추가 — 대표님 지적 2026-09-16)",
  "cohorts_included": [
   "17",
   "18",
@@ -72125,6 +72125,793 @@
    "ex": {
     "vi": "Ừ, tớ hiểu rồi.",
     "ko": "응, 나 알았어."
+   }
+  },
+  {
+   "vi": "thương gia",
+   "ko": "사업가, 무역인",
+   "kr_read": "트엉 자",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Ông ấy là một thương gia thành đạt.",
+    "ko": "그는 성공한 사업가이다."
+   }
+  },
+  {
+   "vi": "xe tải",
+   "ko": "트럭",
+   "kr_read": "쌔 따이",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Chiếc xe tải chở đầy hàng hóa.",
+    "ko": "트럭이 화물을 가득 싣고 있다."
+   }
+  },
+  {
+   "vi": "mặt trăng",
+   "ko": "달",
+   "kr_read": "맛 짱",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Đêm nay mặt trăng rất sáng.",
+    "ko": "오늘 밤 달이 매우 밝다."
+   }
+  },
+  {
+   "vi": "phim tài liệu",
+   "ko": "다큐멘터리",
+   "kr_read": "핌 따이 리에우",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Tôi thích xem phim tài liệu về thiên nhiên.",
+    "ko": "나는 자연에 관한 다큐멘터리 보는 것을 좋아한다."
+   }
+  },
+  {
+   "vi": "vật lý",
+   "ko": "물리",
+   "kr_read": "벗 리",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Anh ấy học ngành vật lý ở đại học.",
+    "ko": "그는 대학에서 물리학을 전공한다."
+   }
+  },
+  {
+   "vi": "dự báo thời tiết",
+   "ko": "일기예보",
+   "kr_read": "즈 바오 터이 띠엣",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Dự báo thời tiết nói ngày mai trời mưa.",
+    "ko": "일기예보에서 내일 비가 온다고 했다."
+   }
+  },
+  {
+   "vi": "họa sĩ",
+   "ko": "화가",
+   "kr_read": "호아 씨",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Cô ấy là một họa sĩ nổi tiếng.",
+    "ko": "그녀는 유명한 화가이다."
+   }
+  },
+  {
+   "vi": "gối",
+   "ko": "베개",
+   "kr_read": "고이",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Tôi ôm gối để ngủ ngon hơn.",
+    "ko": "나는 더 잘 자려고 베개를 껴안는다."
+   }
+  },
+  {
+   "vi": "động / hang",
+   "ko": "동굴",
+   "kr_read": "동 항",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Chúng tôi khám phá một cái động lớn.",
+    "ko": "우리는 큰 동굴을 탐험했다."
+   }
+  },
+  {
+   "vi": "trộn",
+   "ko": "섞다",
+   "kr_read": "쫀",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Mẹ trộn rau với nước sốt.",
+    "ko": "엄마가 채소를 소스와 섞으신다."
+   }
+  },
+  {
+   "vi": "thợ mộc",
+   "ko": "목수",
+   "kr_read": "터 목",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Bố tôi làm nghề thợ mộc.",
+    "ko": "우리 아버지는 목수 일을 하신다."
+   }
+  },
+  {
+   "vi": "chờ một lát",
+   "ko": "잠시만요",
+   "kr_read": "쩌 못 랏",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Xin chờ một lát, tôi sẽ quay lại ngay.",
+    "ko": "잠시만요, 곧 돌아올게요."
+   }
+  },
+  {
+   "vi": "giùm",
+   "ko": "돕다",
+   "kr_read": "줌",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Bạn giúp giùm tôi việc này được không?",
+    "ko": "이 일 좀 저 대신 도와주실 수 있어요?"
+   }
+  },
+  {
+   "vi": "máy in đen",
+   "ko": "흑백 프린터",
+   "kr_read": "마이 인 댄",
+   "cohorts": [
+    "17"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Văn phòng chỉ có máy in đen.",
+    "ko": "사무실에는 흑백 프린터만 있다."
+   }
+  },
+  {
+   "vi": "chơi",
+   "ko": "연주하다, (운동)하다",
+   "kr_read": "쩌이",
+   "cohorts": [
+    "18",
+    "19"
+   ],
+   "star": 2,
+   "weekly": false,
+   "ex": {
+    "vi": "Trẻ em thích chơi ngoài sân.",
+    "ko": "아이들은 마당에서 노는 것을 좋아한다."
+   }
+  },
+  {
+   "vi": "giỏi/tốt",
+   "ko": "좋은, 잘하는",
+   "kr_read": "조이 똣",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Anh ấy học rất giỏi/tốt.",
+    "ko": "그는 공부를 매우 잘한다."
+   }
+  },
+  {
+   "vi": "Máy quạt",
+   "ko": "선풍기",
+   "kr_read": "마이 꽛",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Trời nóng nên tôi bật máy quạt.",
+    "ko": "날이 더워서 나는 선풍기를 켰다."
+   }
+  },
+  {
+   "vi": "sân tennis",
+   "ko": "테니스장",
+   "kr_read": "썬 때 니",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Chúng tôi chơi ở sân tennis gần nhà.",
+    "ko": "우리는 집 근처 테니스장에서 친다."
+   }
+  },
+  {
+   "vi": "nghe nói (rằng)",
+   "ko": "듣기로는",
+   "kr_read": "응애 노이 장",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Nghe nói rằng anh ấy sắp về nước.",
+    "ko": "듣기로는 그가 곧 귀국한다고 한다."
+   }
+  },
+  {
+   "vi": "Tủ áo",
+   "ko": "옷장",
+   "kr_read": "뚜 아오",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Tôi treo áo khoác trong tủ áo.",
+    "ko": "나는 옷장에 외투를 건다."
+   }
+  },
+  {
+   "vi": "tạm tạm",
+   "ko": "보통이야",
+   "kr_read": "땀 땀",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Sức khỏe của tôi dạo này tạm tạm.",
+    "ko": "요즘 내 건강은 그럭저럭 보통이다."
+   }
+  },
+  {
+   "vi": "chạy (bộ 10km)",
+   "ko": "(10km 세트를) 달리다",
+   "kr_read": "짜이 보",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Sáng nay tôi chạy bộ 10km.",
+    "ko": "오늘 아침 나는 10km를 달렸다."
+   }
+  },
+  {
+   "vi": "Bến xe buýt",
+   "ko": "버스정류장",
+   "kr_read": "벤 쌔 부잇",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Chúng tôi đợi nhau ở bến xe buýt.",
+    "ko": "우리는 버스정류장에서 서로 기다린다."
+   }
+  },
+  {
+   "vi": "quạt máy",
+   "ko": "선풍기",
+   "kr_read": "꽛 마이",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Mùa hè nhà nào cũng có quạt máy.",
+    "ko": "여름에는 어느 집이나 선풍기가 있다."
+   }
+  },
+  {
+   "vi": "có gia đình(kết hôn)",
+   "ko": "가정이 있는(결혼한)",
+   "kr_read": "꼬 자 딘 껫 혼",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Anh ấy đã có gia đình rồi.",
+    "ko": "그는 이미 결혼해서 가정이 있다."
+   }
+  },
+  {
+   "vi": "kiểm tra an ninh",
+   "ko": "보안검색",
+   "kr_read": "끼엠 짜 안 닌",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Hành khách phải qua kiểm tra an ninh.",
+    "ko": "승객은 보안검색을 통과해야 한다."
+   }
+  },
+  {
+   "vi": "cụ thể là",
+   "ko": "구체적으로",
+   "kr_read": "꾸 테 라",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Cụ thể là, chúng ta cần thêm thời gian.",
+    "ko": "구체적으로는, 우리는 시간이 더 필요하다."
+   }
+  },
+  {
+   "vi": "10 ngàn cây (số)",
+   "ko": "거리 단위",
+   "kr_read": "응안 꺼이 쏘",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Khoảng cách này là 10 ngàn cây số.",
+    "ko": "이 거리는 만 킬로미터이다."
+   }
+  },
+  {
+   "vi": "kiểm tra xuất cảnh",
+   "ko": "출국심사",
+   "kr_read": "끼엠 짜 쑤엇 까인",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Tôi xếp hàng ở quầy kiểm tra xuất cảnh.",
+    "ko": "나는 출국심사 창구에 줄을 섰다."
+   }
+  },
+  {
+   "vi": "bất cứ ở đâu",
+   "ko": "어디든",
+   "kr_read": "벗 끄 어 더우",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Bạn có thể học tiếng Việt bất cứ ở đâu.",
+    "ko": "당신은 어디든 베트남어를 배울 수 있다."
+   }
+  },
+  {
+   "vi": "ấm áp",
+   "ko": "따뜻하다",
+   "kr_read": "엄 압",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Căn phòng này rất ấm áp.",
+    "ko": "이 방은 매우 따뜻하다."
+   }
+  },
+  {
+   "vi": "tháng lương đầu tiên",
+   "ko": "첫 월급",
+   "kr_read": "탕 르엉 더우 띠엔",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Anh ấy dùng tháng lương đầu tiên để mua quà cho mẹ.",
+    "ko": "그는 첫 월급으로 엄마에게 줄 선물을 샀다."
+   }
+  },
+  {
+   "vi": "rộng bao nhiêu",
+   "ko": "얼마나 넓어요",
+   "kr_read": "종 바오 니에우",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Căn nhà này rộng bao nhiêu?",
+    "ko": "이 집은 얼마나 넓어요?"
+   }
+  },
+  {
+   "vi": "dân ca",
+   "ko": "민요",
+   "kr_read": "전 까",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Bà tôi thích hát dân ca.",
+    "ko": "우리 할머니는 민요 부르는 것을 좋아하신다."
+   }
+  },
+  {
+   "vi": "chạy vào",
+   "ko": "뛰어서 입장하다",
+   "kr_read": "짜이 바오",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Em bé chạy vào nhà khi trời mưa.",
+    "ko": "비가 오자 아이가 집으로 뛰어 들어갔다."
+   }
+  },
+  {
+   "vi": "Trong trường hợp này",
+   "ko": "이 경우에는(in this situation)",
+   "kr_read": "쫑 쯔엉 헙 나이",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Trong trường hợp này, bạn nên gọi bác sĩ.",
+    "ko": "이 경우에는 의사를 불러야 한다."
+   }
+  },
+  {
+   "vi": "khám (bệnh,bịnh)",
+   "ko": "(병을) 진찰하다",
+   "kr_read": "캄 벤",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Tôi đi khám bệnh ở bệnh viện.",
+    "ko": "나는 병원에서 진찰을 받는다."
+   }
+  },
+  {
+   "vi": "cùng với nhau",
+   "ko": "함께(=với nhau, với)",
+   "kr_read": "꿍 버이 냐우",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Chúng tôi làm bài tập cùng với nhau.",
+    "ko": "우리는 함께 숙제를 한다."
+   }
+  },
+  {
+   "vi": "doanh thu, tiền hàng",
+   "ko": "수입 (income)",
+   "kr_read": "조아인 투 띠엔 항",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Doanh thu tháng này tăng đáng kể.",
+    "ko": "이번 달 수입이 상당히 늘었다."
+   }
+  },
+  {
+   "vi": "Ông nội",
+   "ko": "친 할아버지",
+   "kr_read": "옹 노이",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Ông nội tôi năm nay 80 tuổi.",
+    "ko": "우리 친할아버지는 올해 80세이시다."
+   }
+  },
+  {
+   "vi": "Bác trai",
+   "ko": "큰 아버지",
+   "kr_read": "박 짜이",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Bác trai tôi sống ở Hà Nội.",
+    "ko": "우리 큰아버지는 하노이에 사신다."
+   }
+  },
+  {
+   "vi": "sau đó",
+   "ko": "그 다음",
+   "kr_read": "싸우 도",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Tôi ăn sáng, sau đó đi làm.",
+    "ko": "나는 아침을 먹고, 그 다음 출근한다."
+   }
+  },
+  {
+   "vi": "giặt quần áo",
+   "ko": "옷을 빨다",
+   "kr_read": "잣 꾸언 아오",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Mẹ giặt quần áo vào buổi sáng.",
+    "ko": "엄마는 아침에 옷을 빠신다."
+   }
+  },
+  {
+   "vi": "Đính hôn",
+   "ko": "약혼하다",
+   "kr_read": "딘 혼",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Họ vừa mới đính hôn tuần trước.",
+    "ko": "그들은 지난주에 막 약혼했다."
+   }
+  },
+  {
+   "vi": "gần gũi",
+   "ko": "친한",
+   "kr_read": "건 구이",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Cô ấy rất gần gũi với học sinh.",
+    "ko": "그녀는 학생들과 매우 친하다."
+   }
+  },
+  {
+   "vi": "rẽ trái",
+   "ko": "왼쪽으로 도세요",
+   "kr_read": "재 짜이",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Ở ngã tư này, hãy rẽ trái.",
+    "ko": "이 사거리에서 왼쪽으로 도세요."
+   }
+  },
+  {
+   "vi": "ngủ say",
+   "ko": "깊은 잠",
+   "kr_read": "응우 싸이",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Em bé đang ngủ say.",
+    "ko": "아기가 깊은 잠을 자고 있다."
+   }
+  },
+  {
+   "vi": "dinh dưỡng",
+   "ko": "영양분",
+   "kr_read": "진 즈엉",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Bác sĩ khuyên tôi bổ sung dinh dưỡng.",
+    "ko": "의사가 나에게 영양분을 보충하라고 권했다."
+   }
+  },
+  {
+   "vi": "nào cả",
+   "ko": "전혀 ~없다",
+   "kr_read": "나오 까",
+   "cohorts": [
+    "18"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Tôi không thấy ai nào cả.",
+    "ko": "나는 아무도 전혀 보지 못했다."
+   }
+  },
+  {
+   "vi": "Ốm",
+   "ko": "아픈",
+   "kr_read": "옴",
+   "cohorts": [
+    "19",
+    "20"
+   ],
+   "star": 2,
+   "weekly": false,
+   "ex": {
+    "vi": "Con tôi bị ốm mấy ngày nay.",
+    "ko": "우리 아이가 요 며칠 아팠다."
+   }
+  },
+  {
+   "vi": "đương nhiên",
+   "ko": "당연히",
+   "kr_read": "드엉 니엔",
+   "cohorts": [
+    "19",
+    "20"
+   ],
+   "star": 2,
+   "weekly": false,
+   "ex": {
+    "vi": "Đương nhiên tôi sẽ giúp bạn.",
+    "ko": "당연히 나는 당신을 도울 것이다."
+   }
+  },
+  {
+   "vi": "phó giám đốc",
+   "ko": "부사장",
+   "kr_read": "포 잠 독",
+   "cohorts": [
+    "19"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Anh ấy vừa được thăng chức phó giám đốc.",
+    "ko": "그는 방금 부사장으로 승진했다."
+   }
+  },
+  {
+   "vi": "cổ vũ cuồng nhiệt",
+   "ko": "열정적으로 응원하다",
+   "kr_read": "꼬 부 꾸옹 니엣",
+   "cohorts": [
+    "19"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Người hâm mộ cổ vũ cuồng nhiệt cho đội nhà.",
+    "ko": "팬들이 자국 팀을 열정적으로 응원한다."
+   }
+  },
+  {
+   "vi": "không thích",
+   "ko": "싫어요",
+   "kr_read": "콩 틱",
+   "cohorts": [
+    "19"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Tôi không thích món ăn cay.",
+    "ko": "나는 매운 음식을 싫어한다."
+   }
+  },
+  {
+   "vi": "hàng vạn",
+   "ko": "수만",
+   "kr_read": "항 반",
+   "cohorts": [
+    "20"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Hàng vạn người tham gia lễ hội.",
+    "ko": "수만 명이 축제에 참가했다."
+   }
+  },
+  {
+   "vi": "hồi phục",
+   "ko": "회복하다",
+   "kr_read": "호이 푹",
+   "cohorts": [
+    "20"
+   ],
+   "star": 1,
+   "weekly": false,
+   "ex": {
+    "vi": "Sức khỏe của ông đang hồi phục dần.",
+    "ko": "할아버지의 건강이 점차 회복되고 있다."
    }
   }
  ]
