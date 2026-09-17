@@ -234,9 +234,7 @@
     ],
     "extra": []
    },
-   "n": 42,
-   "title_card": "현대차 베트남 8월 신차판매 2,900대로 연중 최저치",
-   "pub": "2026-09-17"
+   "n": 43
   },
   {
    "ts": "2026-09-16",
@@ -466,51 +464,65 @@
     ],
     "extra": []
    },
-   "n": 41,
-   "title_card": "베트남 영화관 매출 역대 최대 기록 한국 극장 반토막",
-   "pub": "2026-09-17"
+   "n": 42
   },
   {
    "ts": "2026-09-16",
-   "day": "N781.html",
+   "day": "N535.html",
    "track": "news",
-   "theme": "도로 공사",
-   "title": "Central Ho Chi Minh City streets to go one-way for 3 years for metro construction",
-   "u": "https://e.vnexpress.net/news/news/traffic/central-ho-chi-minh-city-streets-to-go-one-way-for-3-years-for-metro-construction-5120781.html",
-   "cat": "사회",
-   "intro": "호치민 시 지하철 2 호선 공사로 주요 도로가 3 년간 단방향으로 변경됩니다. 공사 구간은 차량 통행이 제한되고 우회 경로가 지정되어 교통 체증이 예상됩니다.",
+   "theme": "베트남 생활",
+   "title": "Four celebrities to host food reality show exploring 10 Vietnamese destinations",
+   "u": "https://e.vnexpress.net/news/life/four-celebrities-to-host-food-reality-show-exploring-10-vietnamese-destinations-5120535.html",
+   "cat": "문화·생활",
+   "intro": "베트남 음식 문화 탐방 리얼리티 쇼가 8월부터 방영됩니다. 10개 도시의 음식과 문화를 소개하며 베트남을 홍보합니다.",
    "words": [
     {
-     "vi": "đường",
-     "ko": "도로",
-     "kr_read": "드엉",
-     "emoji": "🛣️",
-     "en": "a long road with cars",
+     "vi": "ăn",
+     "ko": "먹다",
+     "kr_read": "안",
+     "emoji": "🍽️",
+     "en": "a person eating food",
      "tones": [
       {
-       "syl": "đường",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-duong.webp"
-    },
-    {
-     "vi": "xe",
-     "ko": "차",
-     "kr_read": "쌔",
-     "emoji": "🚗",
-     "en": "a small car",
-     "tones": [
-      {
-       "syl": "xe",
+       "syl": "ăn",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
       }
      ],
-     "img": "n-xe.webp"
+     "img": "n-an.webp"
+    },
+    {
+     "vi": "món",
+     "ko": "요리",
+     "kr_read": "몬",
+     "emoji": "🍲",
+     "en": "a bowl of food",
+     "tones": [
+      {
+       "syl": "món",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-mon.webp"
+    },
+    {
+     "vi": "người",
+     "ko": "사람",
+     "kr_read": "응으어이",
+     "emoji": "🧑",
+     "en": "a person",
+     "tones": [
+      {
+       "syl": "người",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-nguoi.webp"
     },
     {
      "vi": "đi",
@@ -529,84 +541,298 @@
      "img": "n-di.webp"
     },
     {
-     "vi": "ngăn",
-     "ko": "막다",
-     "kr_read": "응안",
-     "emoji": "🚧",
-     "en": "a red barrier sign",
+     "vi": "chỗ",
+     "ko": "장소",
+     "kr_read": "쪼",
+     "emoji": "📍",
+     "en": "a map pin",
      "tones": [
       {
-       "syl": "ngăn",
+       "syl": "chỗ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "n-cho.webp"
+    },
+    {
+     "vi": "văn hóa",
+     "ko": "문화",
+     "kr_read": "반 호아",
+     "emoji": "🎭",
+     "en": "a theater mask",
+     "tones": [
+      {
+       "syl": "văn",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
+      },
+      {
+       "syl": "hóa",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
       }
      ],
-     "img": "n-ngan.webp"
-    },
+     "img": "n-van-hoa.webp"
+    }
+   ],
+   "dialog": {
+    "title": "베트남 생활",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Anh đi ăn không?",
+      "ko": "식사하러 가세요?",
+      "kr_read": "아인 디 안 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có. Tôi đi ăn món ngon.",
+      "ko": "네. 맛있는 음식 먹으러 가요.",
+      "kr_read": "꼬 또이 디 안 몬 응온",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "món",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 41
+  },
+  {
+   "ts": "2026-09-16",
+   "day": "Nno=44070",
+   "track": "news",
+   "theme": "마트 쇼핑",
+   "title": "日 이온그룹, 연내 베트남 쇼핑몰 5곳 신규 개장예정…진출 12년 만 최대 확장세",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44070",
+   "cat": "경제",
+   "intro": "일본 이온그룹이 연내 베트남에 쇼핑몰 5곳을 새로 개장합니다.",
+   "words": [
     {
-     "vi": "chạy",
-     "ko": "달리다",
-     "kr_read": "짜이",
-     "emoji": "🏃",
-     "en": "a person running fast",
+     "vi": "siêu thị",
+     "ko": "슈퍼마켓",
+     "kr_read": "씨에우 티",
+     "emoji": "🛒",
+     "en": "a supermarket interior with shelves",
      "tones": [
       {
-       "syl": "chạy",
+       "syl": "siêu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "thị",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       }
      ],
-     "img": "n-chay.webp"
+     "img": "n-sieu-thi.webp"
     },
     {
-     "vi": "lùi",
-     "ko": "되돌아감",
-     "kr_read": "루이",
-     "emoji": "🔄",
-     "en": "a car reversing",
+     "vi": "thuốc",
+     "ko": "약",
+     "kr_read": "투옥",
+     "emoji": "💊",
+     "en": "pills and a medicine bottle",
      "tones": [
       {
-       "syl": "lùi",
+       "syl": "thuốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thuoc.webp"
+    },
+    {
+     "vi": "rạp phim",
+     "ko": "영화관",
+     "kr_read": "잡 핌",
+     "emoji": "🎬",
+     "en": "a movie theater screen with red seats",
+     "tones": [
+      {
+       "syl": "rạp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "phim",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-rap-phim.webp"
+    },
+    {
+     "vi": "cửa hàng",
+     "ko": "상점/가게",
+     "kr_read": "끄어 항",
+     "emoji": "🏪",
+     "en": "a small convenience store front",
+     "tones": [
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hàng",
        "name": "huyền",
        "ko": "낮게 내려감",
        "shape": "＼"
       }
      ],
-     "img": "n-lui.webp"
+     "img": "n-cua-hang.webp"
+    },
+    {
+     "vi": "mua",
+     "ko": "사다",
+     "kr_read": "무어",
+     "emoji": "🛍️",
+     "en": "a person holding shopping bags",
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua.webp"
+    },
+    {
+     "vi": "mở cửa",
+     "ko": "문을 열다/개업하다",
+     "kr_read": "머 끄어",
+     "emoji": "🔓",
+     "en": "an open sign hanging on a glass door",
+     "tones": [
+      {
+       "syl": "mở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-mo-cua.webp"
     }
    ],
    "dialog": {
-    "title": "도로 공사",
+    "title": "마트 쇼핑",
     "emoji": "📰",
     "lines": [
      {
-      "vi": "Đường này bị chặn không?",
-      "ko": "이 길 막혔나요?",
-      "kr_read": "드엉 나이 비 짠 콩",
+      "vi": "Gần đây có siêu thị không?",
+      "ko": "이 근처에 슈퍼마켓이 있나요?",
+      "kr_read": "건 더이 꼬 씨에우 티 콩",
       "who": "A",
       "tones": [
        {
-        "syl": "Đường",
+        "syl": "Gần",
         "name": "huyền",
         "ko": "낮게 내려감",
         "shape": "＼"
        },
        {
-        "syl": "này",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        },
        {
-        "syl": "bị",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
        },
        {
-        "syl": "chặn",
+        "syl": "siêu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thị",
         "name": "nặng",
         "ko": "짧고 무겁게",
         "shape": "↓"
@@ -621,34 +847,46 @@
       "gloss": []
      },
      {
-      "vi": "Vâng, đang sửa đường.",
-      "ko": "네, 도로 공사 중이에요.",
-      "kr_read": "벙 당 쓰어 드엉",
+      "vi": "Có, sắp mở siêu thị mới.",
+      "ko": "네, 곧 새 슈퍼마켓이 열려요.",
+      "kr_read": "꼬 쌉 머 씨에우 티 머이",
       "who": "B",
       "tones": [
        {
-        "syl": "Vâng,",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
        },
        {
-        "syl": "đang",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
+        "syl": "sắp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
        },
        {
-        "syl": "sửa",
+        "syl": "mở",
         "name": "hỏi",
         "ko": "내렸다 올림",
         "shape": "∨"
        },
        {
-        "syl": "đường.",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
+        "syl": "siêu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "mới.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
        }
       ],
       "gloss": []
@@ -656,21 +894,7 @@
     ],
     "extra": []
    },
-   "n": 40,
-   "sum5": [
-    "호치민 시내 주요 도로가 3년간 단방향으로 바뀔 예정이에요",
-    "태오단역 건설을 위해 도로 일부가 차선으로 막혀요",
-    "카차망탐탐 도로 350 미터 구간이 단방향으로 운영될 거예요",
-    "운행 대안을 위해 우회 경로가 미리 안내될 예정이에요",
-    "응우옌티민 Khai 도로도 1.5 킬로미터가 단방향으로 바뀔 거예요",
-    "수엉응옥안과 부이티선 도로만 양방향 통행이 가능해요",
-    "바이현역 공사 현장도 도로 일부를 점유하게 되어요",
-    "특정 교차로에서는 직진 금지와 우회전만 허용될 거예요",
-    "시민들은 우회로를 미리 확인하고 교통에 대비해야 해요",
-    "지하철 건설로 불편은 있지만 미래 교통망이 완성될 거예요"
-   ],
-   "title_card": "호치민 시내 주요 도로 3년간 단방향 전환 태오단역 건설",
-   "pub": "2026-09-17"
+   "n": 40
   },
   {
    "ts": "2026-09-16",
@@ -929,9 +1153,255 @@
     ],
     "extra": []
    },
-   "n": 39,
-   "title_card": "호치민시 버스 지하철 통합승차권 도입 추진",
-   "pub": "2026-09-17"
+   "n": 39
+  },
+  {
+   "ts": "2026-09-16",
+   "day": "N781.html",
+   "track": "news",
+   "theme": "교통 통제",
+   "title": "Central Ho Chi Minh City streets to go one-way for 3 years for metro construction",
+   "u": "https://e.vnexpress.net/news/news/traffic/central-ho-chi-minh-city-streets-to-go-one-way-for-3-years-for-metro-construction-5120781.html",
+   "cat": "소식",
+   "intro": "호찌민 지하철 2호선 공사로 주요 도로가 3년간 일방통행으로 변경됩니다. 우회 도로가 지정되며 일부 구간은 차량 통행이 금지됩니다.",
+   "words": [
+    {
+     "vi": "đường",
+     "ko": "길, 도로",
+     "kr_read": "드엉",
+     "emoji": "🛣️",
+     "en": "a wide asphalt road",
+     "tones": [
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-duong.webp"
+    },
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🛵",
+     "en": "a motor scooter",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    },
+    {
+     "vi": "kẹt xe",
+     "ko": "차가 막히다",
+     "kr_read": "깻 쌔",
+     "emoji": "🚗",
+     "en": "a line of cars stuck in heavy traffic",
+     "tones": [
+      {
+       "syl": "kẹt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ket-xe.webp"
+    },
+    {
+     "vi": "đi làm",
+     "ko": "출근하다",
+     "kr_read": "디 람",
+     "emoji": "🏢",
+     "en": "an office worker walking into an office building",
+     "tones": [
+      {
+       "syl": "đi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-di-lam.webp"
+    },
+    {
+     "vi": "sửa đường",
+     "ko": "도로 공사",
+     "kr_read": "쓰어 드엉",
+     "emoji": "🚧",
+     "en": "an orange construction traffic cone on a road",
+     "tones": [
+      {
+       "syl": "sửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-sua-duong.webp"
+    },
+    {
+     "vi": "rẽ phải",
+     "ko": "우회전하다",
+     "kr_read": "재 파이",
+     "emoji": "➡️",
+     "en": "a road sign pointing right",
+     "tones": [
+      {
+       "syl": "rẽ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "phải",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-re-phai.webp"
+    }
+   ],
+   "dialog": {
+    "title": "교통 통제",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Sao hôm nay đi làm muộn thế?",
+      "ko": "오늘 왜 이렇게 출근이 늦었어요?",
+      "kr_read": "싸오 홈 나이 디 람 무온 테",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Sao",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "muộn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "thế?",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Đường đang sửa nên kẹt xe quá.",
+      "ko": "도로 공사 중이라 차가 너무 막혀요.",
+      "kr_read": "드엉 당 쓰어 넨 깻 쌔 꽈",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Đường",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đang",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sửa",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "nên",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "kẹt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "quá.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 38
   },
   {
    "ts": "2026-09-16",
@@ -1161,9 +1631,7 @@
     ],
     "extra": []
    },
-   "n": 38,
-   "title_card": "HCMC 공항 게이트웨이 인근 지하철 공사 3km 교통정체",
-   "pub": "2026-09-17"
+   "n": 37
   },
   {
    "ts": "2026-09-16",
@@ -1403,26 +1871,68 @@
     ],
     "extra": []
    },
-   "n": 37,
-   "title_card": "베트남 두리안 산업 양적 성장에서 질적 성장으로 전환",
-   "pub": "2026-09-17"
+   "n": 36
   },
   {
    "ts": "2026-09-16",
    "day": "N607.html",
    "track": "news",
-   "theme": "공사 이주",
+   "theme": "공항과 지하철",
    "title": "HCMC plans $1B compensation for metro linking Tan Son Nhat, Long Thanh airports",
    "u": "https://e.vnexpress.net/news/news/traffic/hcmc-plans-1b-compensation-for-metro-linking-tan-son-nhat-long-thanh-airports-5120607.html",
-   "cat": "사회",
-   "intro": "호치민시가 두 공항을 잇는 지하철 건설 계획을 발표했습니다. 공사로 인해 많은 가구가 이주해야 하며 보상 절차가 진행됩니다.",
+   "cat": "소식",
+   "intro": "호찌민시가 공항 연결 지하철 보상안 작성 올해 말 착공해 2030년 완공 목표입니다.",
    "words": [
     {
-     "vi": "nhà máy",
-     "ko": "공장",
-     "kr_read": "냐 마이",
-     "emoji": "🏭",
-     "en": "a big factory building",
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport terminal with airplanes",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "tàu điện",
+     "ko": "지하철",
+     "kr_read": "따우 디엔",
+     "emoji": "🚇",
+     "en": "a modern subway train on tracks",
+     "tones": [
+      {
+       "syl": "tàu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tau-dien.webp"
+    },
+    {
+     "vi": "nhà ga",
+     "ko": "역",
+     "kr_read": "냐 가",
+     "emoji": "🚉",
+     "en": "a train station platform",
      "tones": [
       {
        "syl": "nhà",
@@ -1431,164 +1941,120 @@
        "shape": "＼"
       },
       {
-       "syl": "máy",
+       "syl": "ga",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nha-ga.webp"
+    },
+    {
+     "vi": "xây dựng",
+     "ko": "건설하다",
+     "kr_read": "써이 증",
+     "emoji": "🏗️",
+     "en": "a construction site with cranes",
+     "tones": [
+      {
+       "syl": "xây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "dựng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-xay-dung.webp"
+    },
+    {
+     "vi": "đất",
+     "ko": "땅",
+     "kr_read": "덧",
+     "emoji": "🏜️",
+     "en": "a plot of empty land",
+     "tones": [
+      {
+       "syl": "đất",
        "name": "sắc",
        "ko": "짧게 올라감",
        "shape": "／"
       }
      ],
-     "img": "n-nha-may.webp"
+     "img": "n-dat.webp"
     },
     {
-     "vi": "văn phòng",
-     "ko": "사무실",
-     "kr_read": "반 퐁",
-     "emoji": "🏢",
-     "en": "an office building with desks",
-     "tones": [
-      {
-       "syl": "văn",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "phòng",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-van-phong.webp"
-    },
-    {
-     "vi": "công nhân",
-     "ko": "노동자",
-     "kr_read": "꽁 년",
-     "emoji": "👷",
-     "en": "a worker wearing a yellow helmet",
-     "tones": [
-      {
-       "syl": "công",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "nhân",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-cong-nhan.webp"
-    },
-    {
-     "vi": "di chuyển",
-     "ko": "이동하다",
-     "kr_read": "지 쭈옌",
+     "vi": "xe buýt",
+     "ko": "버스",
+     "kr_read": "쌔 부잇",
      "emoji": "🚌",
-     "en": "a bus moving on the road",
+     "en": "a public city bus",
      "tones": [
       {
-       "syl": "di",
+       "syl": "xe",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
       },
       {
-       "syl": "chuyển",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
+       "syl": "buýt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
       }
      ],
-     "img": "n-di-chuyen.webp"
-    },
-    {
-     "vi": "tiền",
-     "ko": "돈",
-     "kr_read": "띠엔",
-     "emoji": "💰",
-     "en": "a pile of gold coins",
-     "tones": [
-      {
-       "syl": "tiền",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-tien.webp"
-    },
-    {
-     "vi": "nhà",
-     "ko": "집",
-     "kr_read": "냐",
-     "emoji": "🏠",
-     "en": "a small house with a red roof",
-     "tones": [
-      {
-       "syl": "nhà",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-nha.webp"
+     "img": "n-xe-buyt.webp"
     }
    ],
    "dialog": {
-    "title": "공사 이주",
+    "title": "공항과 지하철",
     "emoji": "📰",
     "lines": [
      {
-      "vi": "Công nhân có phải di chuyển nhà không?",
-      "ko": "노동자는 집을 옮기나요?",
-      "kr_read": "꽁 년 꼬 파이 지 쭈옌 냐 콩",
+      "vi": "Tàu điện này đi sân bay không?",
+      "ko": "이 지하철은 공항에 가나요?",
+      "kr_read": "따우 디엔 나이 디 썬 바이 콩",
       "who": "A",
       "tones": [
        {
-        "syl": "Công",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "nhân",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "có",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "phải",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "di",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "chuyển",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "nhà",
+        "syl": "Tàu",
         "name": "huyền",
         "ko": "낮게 내려감",
         "shape": "＼"
+       },
+       {
+        "syl": "điện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        },
        {
         "syl": "không?",
@@ -1600,34 +2066,28 @@
       "gloss": []
      },
      {
-      "vi": "Vâng, họ phải dọn đi vì xây dựng.",
-      "ko": "네, 건설 때문에 이사해야 해요.",
-      "kr_read": "벙 호 파이 존 디 비 써이 증",
+      "vi": "Có, tàu này đi đến sân bay.",
+      "ko": "네, 이 지하철은 공항에 가요.",
+      "kr_read": "꼬 따우 나이 디 덴 썬 바이",
       "who": "B",
       "tones": [
        {
-        "syl": "Vâng,",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
        },
        {
-        "syl": "họ",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
+        "syl": "tàu",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
        },
        {
-        "syl": "phải",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "dọn",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
        },
        {
         "syl": "đi",
@@ -1636,22 +2096,22 @@
         "shape": "—"
        },
        {
-        "syl": "vì",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
+        "syl": "đến",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
        },
        {
-        "syl": "xây",
+        "syl": "sân",
         "name": "ngang",
         "ko": "평평하게 그대로",
         "shape": "—"
        },
        {
-        "syl": "dựng.",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
+        "syl": "bay.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        }
       ],
       "gloss": []
@@ -1659,21 +2119,7 @@
     ],
     "extra": []
    },
-   "n": 36,
-   "sum5": [
-    "호치민시가 두 공항을 잇는 지하철 6 호선 건설을 계획했어요",
-    "총 19 킬로미터 구간을 지하와 지상 형태로 지을 예정이에요",
-    "공사로 인해 2천 501 가구가 철거나 이주 대상이 될 거예요",
-    "지상 17개 역 중 13개는 지하에 위치할 예정이에요",
-    "호치민시와 빈트리어우 지역에 있는 창고도 함께 만들어요",
-    "타인손낫 공항과 장성 공항을 직접 연결하는 노선이 될 거예요",
-    "장성 공항은 12월에 개업 예정인 베트남 최대 공항이에요",
-    "공사 비용으로 약 2조 6천 300억 동을 지원할 계획이에요",
-    "올해 말부터 공사를 시작해 주민들의 생활에 큰 변화를 줄 거예요",
-    "공항 간 이동이 빨라져 호치민시의 교통 편의가 크게 좋아질 거예요"
-   ],
-   "pub": "2026-09-17",
-   "title_card": "호치민시 두 공항 연결 지하철 6 호선 건설 계획 발표"
+   "n": 35
   },
   {
    "ts": "2026-09-15",
@@ -1915,7 +2361,7 @@
     ],
     "extra": []
    },
-   "n": 35,
+   "n": 34,
    "sum5": [
     "베트남 중앙은행이 연준 회의 앞두고 환율을 올렸어요",
     "기준 환율이 2만 5천 617동으로 사상 최고치예요",
@@ -1928,233 +2374,7 @@
     "금리 정책 변화는 전 세계 자본 흐름을 바꾸는 힘이 있어요",
     "우리도 환율 리스크를 잘 관리하며 미래를 준비해야 해요"
    ],
-   "title_card": "베트남 중앙은행 연준 회의 앞두고 기준환율 사상 최고치 기록",
-   "pub": "2026-09-17"
-  },
-  {
-   "ts": "2026-09-15",
-   "day": "N533.html",
-   "track": "news",
-   "theme": "환율 상승",
-   "title": "Vietnam central bank sets record exchange rate against dollar",
-   "u": "https://e.vnexpress.net/news/business/markets/vietnam-central-bank-sets-record-exchange-rate-against-dollar-5120533.html",
-   "cat": "경제",
-   "intro": "베트남은행이 달러 대비 환율 최고치를 기록했습니다. 상업은행들의 매수·매도율이 급격히 올랐습니다.",
-   "words": [
-    {
-     "vi": "đồng",
-     "ko": "동 (화폐)",
-     "kr_read": "동",
-     "emoji": "💰",
-     "en": "a pile of Vietnamese money",
-     "tones": [
-      {
-       "syl": "đồng",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-dong.webp"
-    },
-    {
-     "vi": "đắt",
-     "ko": "비싸다",
-     "kr_read": "닷",
-     "emoji": "💸",
-     "en": "a price tag with a high number",
-     "tones": [
-      {
-       "syl": "đắt",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-dat.webp"
-    },
-    {
-     "vi": "rẻ",
-     "ko": "싸다",
-     "kr_read": "재",
-     "emoji": "💵",
-     "en": "a price tag with a low number",
-     "tones": [
-      {
-       "syl": "rẻ",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "n-re.webp"
-    },
-    {
-     "vi": "tiền",
-     "ko": "돈",
-     "kr_read": "띠엔",
-     "emoji": "💲",
-     "en": "a stack of cash bills",
-     "tones": [
-      {
-       "syl": "tiền",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-tien.webp"
-    },
-    {
-     "vi": "mua",
-     "ko": "사다",
-     "kr_read": "무어",
-     "emoji": "🛒",
-     "en": "a person putting items in a cart",
-     "tones": [
-      {
-       "syl": "mua",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-mua.webp"
-    },
-    {
-     "vi": "bán",
-     "ko": "팔다",
-     "kr_read": "반",
-     "emoji": "🏪",
-     "en": "a shopkeeper handing goods to a customer",
-     "tones": [
-      {
-       "syl": "bán",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-ban.webp"
-    }
-   ],
-   "dialog": {
-    "title": "환율 상승",
-    "emoji": "📰",
-    "lines": [
-     {
-      "vi": "Tiền đồng hôm nay đắt hơn không?",
-      "ko": "오늘 동화 값이 더 비싸졌나요?",
-      "kr_read": "띠엔 동 홈 나이 닷 헌 콩",
-      "who": "A",
-      "tones": [
-       {
-        "syl": "Tiền",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "đồng",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "hôm",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "nay",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "đắt",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "hơn",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "không?",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       }
-      ],
-      "gloss": []
-     },
-     {
-      "vi": "Đúng rồi, tiền mua cũng tăng.",
-      "ko": "네, 매수 가격도 올랐어요.",
-      "kr_read": "둥 조이 띠엔 무어 꿍 땅",
-      "who": "B",
-      "tones": [
-       {
-        "syl": "Đúng",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "rồi,",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "tiền",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "mua",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "cũng",
-        "name": "ngã",
-        "ko": "끊었다 올림",
-        "shape": "∿"
-       },
-       {
-        "syl": "tăng.",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       }
-      ],
-      "gloss": []
-     }
-    ],
-    "extra": []
-   },
-   "n": 34,
-   "sum5": [
-    "베트남은행이 달러 대비 환율 최고치를 기록했어요",
-    "상업은행들의 매수 가격도 어제보다 크게 올랐어요",
-    "주요 은행들은 달러를 25,800동으로 사들이고요",
-    "이는 일주일 전보다 무려 27%나 뛰어난 수치예요",
-    "많은 기관들이 연준이 금리를 더 올릴 거라고 믿어요",
-    "미국 연방준비은행이 금리 인상 25bps를 예상하고요",
-    "이는 2023년 이후 첫 번째 금리 인상 결정이에요",
-    "환율 변동성이 커져서 수출입 기업들이 조심해요",
-    "5% 거래 폭 안에서 은행별 차이가 많이 벌어졌어요",
-    "우리도 환율 리스크를 잘 관리해야 할 때예요"
-   ],
-   "title_card": "베트남은행 달러 환율 사상 최고치 기록",
+   "title_card": "베트남 중앙은행 연준 회의 앞두고 기준환율 사상 최고치",
    "pub": "2026-09-17"
   },
   {
@@ -2476,7 +2696,18 @@
     "extra": []
    },
    "n": 33,
-   "sum5": [],
+   "sum5": [
+    "중국 입국 절차가 훨씬 쉬워져 외국인 관광객이 많이 늘었어요",
+    "지난 여덟 달에만 무비자 입국객이 2천 3만 명에 달했어요",
+    "유럽과 남미 등 45개 나라에 무비자 혜택이 이어지고 있어요",
+    "특히 베트남도 240시간 무비자 환승 프로그램에 새로 추가됐어요",
+    "베트남 여권을 소지한 사람은 10일 동안 중국을 자유롭게 여행할 수 있어요",
+    "전국 65개 관문 중 어디든 도착하면 바로 입국할 수 있게 됐어요",
+    "단, 세 번째 국가로 가는 확정된 항공권과 일정은 꼭 필요해요",
+    "이 정책은 8월 20일부터正式 시행되어 여행객 편의를 높였어요",
+    "중국 정부는 앞으로도 입국 절차를 더 빠르게 개선해 나갈 계획이에요",
+    "우리도 중국을 방문할 때 비자 걱정 없이 더 편하게 갈 수 있어요"
+   ],
    "pub": "2026-09-17"
   },
   {
@@ -3254,9 +3485,7 @@
     ],
     "extra": []
    },
-   "n": 30,
-   "title_card": "호치민시가 지하철 건설을 위해 7만 명 숙련공 필요",
-   "pub": "2026-09-17"
+   "n": 30
   },
   {
    "ts": "2026-09-15",
@@ -3707,8 +3936,7 @@
     "extra": []
    },
    "n": 28,
-   "pub": "2026-09-17",
-   "title_card": "베트남, 올해 외국인 관광객 2700만 명 유치 목표"
+   "pub": "2026-09-17"
   },
   {
    "ts": "2026-09-15",
@@ -4005,7 +4233,7 @@
     "extra": []
    },
    "n": 27,
-   "title_card": "하노이 홍강변에 109층 에라 타워 건립 구상",
+   "title_card": "베트남 하노이 홍강변에 109 층 초고층 타워 추진",
    "sum5": [
     "하노이 홍강변에 109층 에라 타워 건립 구상이 나왔어요",
     "단순 건물보다 홍강을 중심으로 도시를 새로 만들 계획이죠",
@@ -4735,7 +4963,7 @@
     "extra": []
    },
    "n": 24,
-   "title_card": "빈그룹 오너 2 세 경영 보폭 확대 총수 장 차남 선임"
+   "title_card": "빈그룹 오너 2 세 경영 보폭 확대 총수 장·차남 대표 선임"
   },
   {
    "ts": "2026-09-14",
@@ -5032,7 +5260,7 @@
     "그 회사는 스타링크 서비스로 자본금 300억 동이에요",
     "우리도 전기차 시장이 커지면 더 좋은 기회가 올 거예요"
    ],
-   "title_card": "에론 머스크가 베트남 호치민에 테슬라 법인을 설립"
+   "title_card": "에론 머스크가 베트남 호치민에 테슬라 법인을 설립했습니다"
   },
   {
    "ts": "2026-09-14",
@@ -5335,7 +5563,7 @@
     "재난 위험 수준은 5 점 만점 중 3 점으로 높게 평가됐어요",
     "우리도 해외 여행이나 무역 시 현지 날씨를 꼭 확인해야 해요"
    ],
-   "title_card": "베트남 중부 열대 저기압 폭우로 홍수와 산사태 발생"
+   "title_card": "베트남 중부 열대저기압 폭우로 홍수와 산사태 발생"
   },
   {
    "ts": "2026-09-14",
@@ -7095,7 +7323,7 @@
     "extra": []
    },
    "n": 14,
-   "title_card": "베트남산 해상변전소 4기가 유럽으로 수출되었다"
+   "title_card": "베트남 페트로베트남이 유럽에 해상변전소 4 기 수출"
   },
   {
    "ts": "2026-09-12",
@@ -7344,7 +7572,7 @@
     "extra": []
    },
    "n": 13,
-   "title_card": "롯데카드 정상호 베트남 리스 시장 선점 야심"
+   "title_card": "롯데카드 베트남 리스 시장 선점 야심"
   },
   {
    "ts": "2026-09-12",
@@ -9732,7 +9960,7 @@
    },
    "n": 3,
    "pub": "2026-09-15",
-   "title_card": "베트남 개정 사회보험법과 한베협정 외국인 근로자 핵심"
+   "title_card": "베트남 개정 사회보험법과 한베협정 외국인 근로자 핵심 내용"
   },
   {
    "ts": "2026-09-10",
@@ -9987,8 +10215,7 @@
     "extra": []
    },
    "n": 2,
-   "pub": "2026-09-15",
-   "title_card": "베트남 목바이검문소 현대화 사업비 3700만 달러"
+   "pub": "2026-09-15"
   },
   {
    "ts": "2026-09-10",
@@ -10252,5 +10479,5 @@
    "title_card": "베트남과 러시아가 포괄적 전략 동반자 관계 강화 합의"
   }
  ],
- "updated": "2026-09-17 08:31"
+ "updated": "2026-09-17 08:52"
 }
