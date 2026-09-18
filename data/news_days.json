@@ -227,7 +227,7 @@
     ],
     "extra": []
    },
-   "n": 47
+   "n": 49
   },
   {
    "ts": "2026-09-17",
@@ -457,7 +457,7 @@
     ],
     "extra": []
    },
-   "n": 46
+   "n": 48
   },
   {
    "ts": "2026-09-17",
@@ -705,7 +705,7 @@
     ],
     "extra": []
    },
-   "n": 45
+   "n": 47
   },
   {
    "ts": "2026-09-17",
@@ -959,7 +959,7 @@
     ],
     "extra": []
    },
-   "n": 44
+   "n": 46
   },
   {
    "ts": "2026-09-17",
@@ -1193,7 +1193,7 @@
     ],
     "extra": []
    },
-   "n": 43
+   "n": 45
   },
   {
    "ts": "2026-09-17",
@@ -1446,7 +1446,7 @@
     ],
     "extra": []
    },
-   "n": 42
+   "n": 44
   },
   {
    "ts": "2026-09-17",
@@ -1680,7 +1680,7 @@
     ],
     "extra": []
    },
-   "n": 41
+   "n": 43
   },
   {
    "ts": "2026-09-17",
@@ -1915,7 +1915,7 @@
     ],
     "extra": []
    },
-   "n": 40
+   "n": 42
   },
   {
    "ts": "2026-09-17",
@@ -2162,7 +2162,212 @@
     ],
     "extra": []
    },
-   "n": 39
+   "n": 41
+  },
+  {
+   "ts": "2026-09-17",
+   "day": "N445.html",
+   "track": "news",
+   "theme": "공항 도난",
+   "title": "Vietnamese woman arrested for stealing Chinese tourist's luggage at Bangkok airport",
+   "u": "https://e.vnexpress.net/news/news/crime/vietnamese-woman-arrested-for-stealing-chinese-tourist-s-luggage-at-bangkok-airport-5121445.html",
+   "cat": "사회",
+   "intro": "베트남 여성이 태국 방콕 공항에서 중국인 관광객 짐 훔쳐 체포되었습니다.",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport building with planes",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "hành lý",
+     "ko": "짐, 수하물",
+     "kr_read": "하인 리",
+     "emoji": "🧳",
+     "en": "a suitcase",
+     "tones": [
+      {
+       "syl": "hành",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "lý",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-hanh-ly.webp"
+    },
+    {
+     "vi": "mất",
+     "ko": "잃다, 없어지다",
+     "kr_read": "멋",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "mất",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "tìm",
+     "ko": "찾다",
+     "kr_read": "띰",
+     "emoji": "🔎",
+     "en": "a magnifying glass",
+     "tones": [
+      {
+       "syl": "tìm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tim.webp"
+    },
+    {
+     "vi": "tiền",
+     "ko": "돈",
+     "kr_read": "띠엔",
+     "emoji": "💰",
+     "en": "a stack of money",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tien.webp"
+    },
+    {
+     "vi": "khách",
+     "ko": "손님, 관광객",
+     "kr_read": "칵",
+     "emoji": "🧍",
+     "en": "a person",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-khach.webp"
+    }
+   ],
+   "dialog": {
+    "title": "공항 도난",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Hành lý của tôi mất rồi.",
+      "ko": "제 짐이 없어졌어요.",
+      "kr_read": "하인 리 꾸어 또이 멋 조이",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Hành",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "lý",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "của",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Anh tìm ở đâu?",
+      "ko": "어디에서 찾으셨어요?",
+      "kr_read": "아인 띰 어 더우",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tìm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đâu?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 40
   },
   {
    "ts": "2026-09-16",
@@ -2398,7 +2603,7 @@
     ],
     "extra": []
    },
-   "n": 38,
+   "n": 39,
    "pub": "2026-09-17"
   },
   {
@@ -2629,7 +2834,7 @@
     ],
     "extra": []
    },
-   "n": 37,
+   "n": 38,
    "pub": "2026-09-17"
   },
   {
@@ -2884,7 +3089,7 @@
     ],
     "extra": []
    },
-   "n": 36
+   "n": 37
   },
   {
    "ts": "2026-09-16",
@@ -3084,8 +3289,244 @@
     ],
     "extra": []
    },
-   "n": 35,
+   "n": 36,
    "pub": "2026-09-17"
+  },
+  {
+   "ts": "2026-09-16",
+   "day": "N107.html",
+   "track": "news",
+   "theme": "문화 교류",
+   "title": "Thai king and queen visit Hanoi university that hosts Thai language, culture center",
+   "u": "https://e.vnexpress.net/photo/politics/thai-king-and-queen-visit-hanoi-university-that-hosts-thai-language-culture-center-5121107.html",
+   "cat": "문화·생활",
+   "intro": "태국 국왕 부부, 하노이 대학교 방문 태국 문화 및 언어 교류 활성화 격려",
+   "words": [
+    {
+     "vi": "vua",
+     "ko": "국왕",
+     "kr_read": "부어",
+     "emoji": "👑",
+     "en": "a king wearing a crown",
+     "tones": [
+      {
+       "syl": "vua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-vua.webp"
+    },
+    {
+     "vi": "hoàng hậu",
+     "ko": "왕비",
+     "kr_read": "호앙 허우",
+     "emoji": "👸",
+     "en": "a queen wearing a crown",
+     "tones": [
+      {
+       "syl": "hoàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hậu",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-hoang-hau.webp"
+    },
+    {
+     "vi": "trường",
+     "ko": "학교",
+     "kr_read": "쯔엉",
+     "emoji": "🏫",
+     "en": "a school building",
+     "tones": [
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-truong.webp"
+    },
+    {
+     "vi": "học",
+     "ko": "배우다",
+     "kr_read": "혹",
+     "emoji": "🧑‍🎓",
+     "en": "a student studying a book",
+     "tones": [
+      {
+       "syl": "học",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-hoc.webp"
+    },
+    {
+     "vi": "sinh viên",
+     "ko": "학생",
+     "kr_read": "씬 비엔",
+     "emoji": "🧑‍🎓",
+     "en": "a student",
+     "tones": [
+      {
+       "syl": "sinh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "viên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-sinh-vien.webp"
+    },
+    {
+     "vi": "thăm",
+     "ko": "방문하다",
+     "kr_read": "탐",
+     "emoji": "👋",
+     "en": "two people greeting each other",
+     "tones": [
+      {
+       "syl": "thăm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tham.webp"
+    }
+   ],
+   "dialog": {
+    "title": "문화 교류",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Trường này có dạy văn hóa không?",
+      "ko": "이 학교는 문화를 가르치나요?",
+      "kr_read": "쯔엉 나이 꼬 자이 반 호아 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Trường",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "dạy",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "văn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hóa",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, sinh viên học nhảy và biểu diễn.",
+      "ko": "네, 학생들이 춤과 공연을 배워요.",
+      "kr_read": "꼬 씬 비엔 혹 냐이 바 비에우 지엔",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sinh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "viên",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "học",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "nhảy",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "và",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "biểu",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "diễn.",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 35
   },
   {
    "ts": "2026-09-16",
@@ -11476,5 +11917,5 @@
    "title_card": "베트남 호치민서 한국인 6명 불법체류로 추방"
   }
  ],
- "updated": "2026-09-18 08:44"
+ "updated": "2026-09-18 23:48"
 }
