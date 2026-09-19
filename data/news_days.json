@@ -228,7 +228,7 @@
     ],
     "extra": []
    },
-   "n": 49
+   "n": 53
   },
   {
    "ts": "2026-09-18",
@@ -470,7 +470,254 @@
     ],
     "extra": []
    },
-   "n": 48
+   "n": 52
+  },
+  {
+   "ts": "2026-09-18",
+   "day": "Nno=44087",
+   "track": "news",
+   "theme": "중국 차 수입",
+   "title": "베트남, ‘중국車’ 수입 급증세…8월 기준 4.4만 대 '3년 새 4배 폭증'",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44087",
+   "cat": "경제",
+   "intro": "베트남의 중국산 자동차 수입이 급증했습니다. 화물차와 부품 수입이 큰 비중을 차지합니다.",
+   "words": [
+    {
+     "vi": "xe ô tô",
+     "ko": "자동차",
+     "kr_read": "쌔 오 또",
+     "emoji": "🚘",
+     "en": "a red car",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ô",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tô",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-xe-o-to.webp"
+    },
+    {
+     "vi": "phụ tùng",
+     "ko": "부품",
+     "kr_read": "푸 뚱",
+     "emoji": "⚙️",
+     "en": "metal mechanical parts",
+     "tones": [
+      {
+       "syl": "phụ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "tùng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-phu-tung.webp"
+    },
+    {
+     "vi": "hàng hóa",
+     "ko": "화물",
+     "kr_read": "항 호아",
+     "emoji": "📦",
+     "en": "stacked cardboard boxes",
+     "tones": [
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hóa",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-hang-hoa.webp"
+    },
+    {
+     "vi": "nhập khẩu",
+     "ko": "수입하다",
+     "kr_read": "녑 커우",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "nhập",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "khẩu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "xe buýt",
+     "ko": "버스",
+     "kr_read": "쌔 부잇",
+     "emoji": "🚌",
+     "en": "a blue city bus",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "buýt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-buyt.webp"
+    },
+    {
+     "vi": "xe tải",
+     "ko": "트럭",
+     "kr_read": "쌔 따이",
+     "emoji": "🚛",
+     "en": "a large truck",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tải",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-xe-tai.webp"
+    }
+   ],
+   "dialog": {
+    "title": "중국 차 수입",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Xe tải này mua ở đâu?",
+      "ko": "이 트럭은 어디서 샀어요?",
+      "kr_read": "쌔 따이 나이 무어 어 더우",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tải",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "mua",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đâu?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Công ty mua từ Trung Quốc.",
+      "ko": "회사에서 중국에서 샀어요.",
+      "kr_read": "꽁 띠 무어 뜨 쭝 꾸옥",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mua",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "từ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Trung",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "Quốc.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 51
   },
   {
    "ts": "2026-09-18",
@@ -681,6 +928,683 @@
         "name": "huyền",
         "ko": "낮게 내려감",
         "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 50
+  },
+  {
+   "ts": "2026-09-18",
+   "day": "Nno=44084",
+   "track": "news",
+   "theme": "유튜브 시청",
+   "title": "베트남, 인터넷사용자 10명 중 9명 ‘유튜브 매일 본다’…구글 발표",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44084",
+   "cat": "경제",
+   "intro": "베트남 인터넷 사용자의 90%가 유튜브를 매일 본다. 크리에이터의 추천 상품을 믿고 구매하는 비율도 높다.",
+   "words": [
+    {
+     "vi": "mạng",
+     "ko": "인터넷",
+     "kr_read": "망",
+     "emoji": "🌐",
+     "en": "a global network globe icon",
+     "tones": [
+      {
+       "syl": "mạng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-mang.webp"
+    },
+    {
+     "vi": "mỗi ngày",
+     "ko": "매일",
+     "kr_read": "모이 응아이",
+     "emoji": "📅",
+     "en": "a wall calendar with pages",
+     "tones": [
+      {
+       "syl": "mỗi",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "ngày",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-moi-ngay.webp"
+    },
+    {
+     "vi": "kênh",
+     "ko": "채널",
+     "kr_read": "껜",
+     "emoji": "📺",
+     "en": "a television set",
+     "tones": [
+      {
+       "syl": "kênh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-kenh.webp"
+    },
+    {
+     "vi": "xem",
+     "ko": "보다",
+     "kr_read": "쌤",
+     "emoji": "👀",
+     "en": "a pair of eyes looking forward",
+     "tones": [
+      {
+       "syl": "xem",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-xem.webp"
+    },
+    {
+     "vi": "điện thoại",
+     "ko": "휴대폰",
+     "kr_read": "디엔 토아이",
+     "emoji": "📱",
+     "en": "a modern smartphone screen",
+     "tones": [
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "thoại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-dien-thoai.webp"
+    },
+    {
+     "vi": "thích",
+     "ko": "좋아하다",
+     "kr_read": "틱",
+     "emoji": "👍",
+     "en": "a hand giving a thumbs up",
+     "tones": [
+      {
+       "syl": "thích",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thich.webp"
+    }
+   ],
+   "dialog": {
+    "title": "유튜브 시청",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Em có hay xem video không?",
+      "ko": "너 동영상 자주 보니?",
+      "kr_read": "앰 꼬 하이 쌤 비 데 오 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "hay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xem",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "video",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, em xem trên điện thoại mỗi ngày.",
+      "ko": "네, 저는 매일 휴대폰으로 봐요.",
+      "kr_read": "꼬 앰 쌤 쩬 디엔 토아이 모이 응아이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xem",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "trên",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "điện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "thoại",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "mỗi",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "ngày.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 49
+  },
+  {
+   "ts": "2026-09-18",
+   "day": "N509.html",
+   "track": "news",
+   "theme": "병원과 건강",
+   "title": "Terumo Vietnam, Bach Mai Hospital partner on medical training",
+   "u": "https://e.vnexpress.net/news/business/terumo-vietnam-bach-mai-hospital-partner-on-medical-training-5121509.html",
+   "cat": "사회",
+   "intro": "테루모와 백마이 병원이 의료 교육 협약을 맺었습니다. 의사 대상 교육과 의료 신기술 도입을 진행합니다.",
+   "words": [
+    {
+     "vi": "bệnh viện",
+     "ko": "병원",
+     "kr_read": "벤 비엔",
+     "emoji": "🏥",
+     "en": "a modern hospital building with a red cross",
+     "tones": [
+      {
+       "syl": "bệnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "viện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-benh-vien.webp"
+    },
+    {
+     "vi": "bác sĩ",
+     "ko": "의사",
+     "kr_read": "박 씨",
+     "emoji": "👨‍⚕️",
+     "en": "a doctor wearing a white medical coat",
+     "tones": [
+      {
+       "syl": "bác",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sĩ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "n-bac-si.webp"
+    },
+    {
+     "vi": "thuốc",
+     "ko": "약",
+     "kr_read": "투옥",
+     "emoji": "💊",
+     "en": "colorful medical pills and capsules",
+     "tones": [
+      {
+       "syl": "thuốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thuoc.webp"
+    },
+    {
+     "vi": "khám bệnh",
+     "ko": "진료를 받다",
+     "kr_read": "캄 벤",
+     "emoji": "🩺",
+     "en": "a doctor checking a patient with a stethoscope",
+     "tones": [
+      {
+       "syl": "khám",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bệnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-kham-benh.webp"
+    },
+    {
+     "vi": "đau",
+     "ko": "아프다",
+     "kr_read": "다우",
+     "emoji": "🤕",
+     "en": "a person holding their painful head",
+     "tones": [
+      {
+       "syl": "đau",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-dau.webp"
+    },
+    {
+     "vi": "tim",
+     "ko": "심장",
+     "kr_read": "띰",
+     "emoji": "🫀",
+     "en": "an anatomical illustration of a human heart",
+     "tones": [
+      {
+       "syl": "tim",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tim.webp"
+    }
+   ],
+   "dialog": {
+    "title": "병원과 건강",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Anh bị đau ở đâu?",
+      "ko": "어디가 아프세요?",
+      "kr_read": "아인 비 다우 어 더우",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đau",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đâu?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Tôi muốn đi bệnh viện khám.",
+      "ko": "병원에 진료받으러 가고 싶어요.",
+      "kr_read": "또이 무온 디 벤 비엔 캄",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "muốn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bệnh",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "viện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "khám.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 48
+  },
+  {
+   "ts": "2026-09-18",
+   "day": "N537.html",
+   "track": "news",
+   "theme": "모바일 결제",
+   "title": "MoMo, Saigontourist Travel partner to develop digital travel services",
+   "u": "https://e.vnexpress.net/news/business/momo-saigontourist-travel-partner-to-develop-digital-travel-services-5121537.html",
+   "cat": "문화·생활",
+   "intro": "모모와 사이공투어리스트가 여행과 결제 서비스를 결합합니다. 앱으로 여행 상품을 사고 국내외에서 QR 결제를 지원합니다.",
+   "words": [
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "✈️",
+     "en": "a travel suitcase",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "thanh toán",
+     "ko": "결제하다",
+     "kr_read": "타인 또안",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "thanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "toán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "tiền mặt",
+     "ko": "현금",
+     "kr_read": "띠엔 맛",
+     "emoji": "💵",
+     "en": "paper cash money bills",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "mặt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tien-mat.webp"
+    },
+    {
+     "vi": "quét mã",
+     "ko": "코드를 스캔하다",
+     "kr_read": "꾸앳 마",
+     "emoji": "📱",
+     "en": "a smartphone scanning a QR code",
+     "tones": [
+      {
+       "syl": "quét",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "mã",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "n-quet-ma.webp"
+    },
+    {
+     "vi": "giảm giá",
+     "ko": "할인",
+     "kr_read": "잠 자",
+     "emoji": "🏷️",
+     "en": "a red discount sale tag",
+     "tones": [
+      {
+       "syl": "giảm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "giá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-giam-gia.webp"
+    },
+    {
+     "vi": "điện thoại",
+     "ko": "휴대전화",
+     "kr_read": "디엔 토아이",
+     "emoji": "📱",
+     "en": "a smartphone on a table",
+     "tones": [
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "thoại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-dien-thoai.webp"
+    }
+   ],
+   "dialog": {
+    "title": "모바일 결제",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Em quét mã được không?",
+      "ko": "저 QR코드 스캔으로 결제해도 되나요?",
+      "kr_read": "앰 꾸앳 마 드억 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "quét",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mã",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Được, anh quét ở đây.",
+      "ko": "네, 여기서 스캔해 주세요.",
+      "kr_read": "드억 아인 꾸앳 어 더이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Được,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "quét",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        }
       ],
       "gloss": []
@@ -11832,5 +12756,5 @@
    "title_card": "효성화학 베트남 법인이 상반기 396억원 순이익 기록"
   }
  ],
- "updated": "2026-09-19 08:40"
+ "updated": "2026-09-19 23:07"
 }
