@@ -2,9 +2,9 @@
    앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
    음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
 <<<<<<< HEAD
-const V = 'vn-941ffa4e';
+const V = 'vn-e1bfc52a';
 =======
-const V = 'vn-941ffa4e';
+const V = 'vn-e1bfc52a';
 >>>>>>> 46a4d9acf (오늘의 카드뉴스 (자동))
 const SHELL = ['./', './index.html', './app.js', './pitch.js', './style.css',
                './manifest.json', './icon.png',
