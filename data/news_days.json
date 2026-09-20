@@ -251,7 +251,255 @@
     ],
     "extra": []
    },
-   "n": 54
+   "n": 57
+  },
+  {
+   "ts": "2026-09-19",
+   "day": "N652.html",
+   "track": "news",
+   "theme": "식당 폐업",
+   "title": "25-year-old restaurant chain Crystal Jade closes 3 Singapore outlets in one month, 5 so far this year",
+   "u": "https://e.vnexpress.net/news/business/companies/25-year-old-restaurant-chain-crystal-jade-closes-3-singapore-outlets-in-one-month-5-so-far-this-year-5121652.html",
+   "cat": "문화·생활",
+   "intro": "싱가포르 크리스탈 제이드가 매장을 잇달아 닫았습니다. 외식업계 침체로 올해 많은 식당이 폐업하고 있습니다.",
+   "words": [
+    {
+     "vi": "nhà hàng",
+     "ko": "식당",
+     "kr_read": "냐 항",
+     "emoji": "🍽️",
+     "en": "a modern restaurant dining room with tables",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-nha-hang.webp"
+    },
+    {
+     "vi": "đóng cửa",
+     "ko": "문을 닫다",
+     "kr_read": "동 끄어",
+     "emoji": "🚪",
+     "en": "a closed glass door with a closed sign",
+     "tones": [
+      {
+       "syl": "đóng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-dong-cua.webp"
+    },
+    {
+     "vi": "mở cửa",
+     "ko": "문을 열다",
+     "kr_read": "머 끄어",
+     "emoji": "🚪",
+     "en": "an open shop door with an open sign",
+     "tones": [
+      {
+       "syl": "mở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-mo-cua.webp"
+    },
+    {
+     "vi": "món ăn",
+     "ko": "음식",
+     "kr_read": "몬 안",
+     "emoji": "🍲",
+     "en": "a warm bowl of delicious Asian food",
+     "tones": [
+      {
+       "syl": "món",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mon-an.webp"
+    },
+    {
+     "vi": "chi nhánh",
+     "ko": "지점",
+     "kr_read": "찌 나인",
+     "emoji": "🏬",
+     "en": "a commercial branch store facade on a street",
+     "tones": [
+      {
+       "syl": "chi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhánh",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-chi-nhanh.webp"
+    },
+    {
+     "vi": "năm nay",
+     "ko": "올해",
+     "kr_read": "남 나이",
+     "emoji": "📅",
+     "en": "a desk calendar showing dates of the year",
+     "tones": [
+      {
+       "syl": "năm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nam-nay.webp"
+    }
+   ],
+   "dialog": {
+    "title": "식당 폐업",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Nhà hàng này đóng cửa rồi à?",
+      "ko": "이 식당 문 닫았어요?",
+      "kr_read": "냐 항 나이 동 끄어 조이 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "hàng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đóng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cửa",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "rồi",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, nhà hàng đóng cửa rồi.",
+      "ko": "네, 식당 문 닫았어요.",
+      "kr_read": "벙 냐 항 동 끄어 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "hàng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đóng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cửa",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 56
   },
   {
    "ts": "2026-09-19",
@@ -493,7 +741,7 @@
     ],
     "extra": []
    },
-   "n": 53
+   "n": 55
   },
   {
    "ts": "2026-09-19",
@@ -734,6 +982,488 @@
         "name": "sắc",
         "ko": "짧게 올라감",
         "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 54
+  },
+  {
+   "ts": "2026-09-19",
+   "day": "N942.html",
+   "track": "news",
+   "theme": "베트남 음식",
+   "title": "Hanoi restaurant with 100 home-cooked dishes recognized by Michelin",
+   "u": "https://e.vnexpress.net/photo/food-recipes/hanoi-restaurant-with-100-home-cooked-dishes-recognized-by-michelin-5109942.html",
+   "cat": "문화·생활",
+   "intro": "하노이의 한 가정식 전문 식당이 미쉐린 빕구르망에 선정되었습니다.",
+   "words": [
+    {
+     "vi": "nhà hàng",
+     "ko": "식당/레스토랑",
+     "kr_read": "냐 항",
+     "emoji": "🏪",
+     "en": "a cozy restaurant building with a sign",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-nha-hang.webp"
+    },
+    {
+     "vi": "món ăn",
+     "ko": "음식/요리",
+     "kr_read": "몬 안",
+     "emoji": "🍲",
+     "en": "a steaming bowl of traditional soup and rice",
+     "tones": [
+      {
+       "syl": "món",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mon-an.webp"
+    },
+    {
+     "vi": "ngon",
+     "ko": "맛있다",
+     "kr_read": "응온",
+     "emoji": "😋",
+     "en": "a smiling face licking lips",
+     "tones": [
+      {
+       "syl": "ngon",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ngon.webp"
+    },
+    {
+     "vi": "gia đình",
+     "ko": "가족",
+     "kr_read": "자 딘",
+     "emoji": "👨‍👩‍👧‍👦",
+     "en": "a happy family sitting together",
+     "tones": [
+      {
+       "syl": "gia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "đình",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-gia-dinh.webp"
+    },
+    {
+     "vi": "thực đơn",
+     "ko": "메뉴판",
+     "kr_read": "특 던",
+     "emoji": "📋",
+     "en": "a restaurant menu paper with food illustrations",
+     "tones": [
+      {
+       "syl": "thực",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "đơn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-thuc-don.webp"
+    },
+    {
+     "vi": "nước mắm",
+     "ko": "피시소스(느억맘)",
+     "kr_read": "느억 맘",
+     "emoji": "🍶",
+     "en": "a glass bottle of amber fish sauce",
+     "tones": [
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "mắm",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nuoc-mam.webp"
+    }
+   ],
+   "dialog": {
+    "title": "베트남 음식",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Món ăn ở đây có ngon không?",
+      "ko": "여기 음식은 맛있나요?",
+      "kr_read": "몬 안 어 더이 꼬 응온 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Món",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Ngon lắm, giá cả cũng rẻ.",
+      "ko": "아주 맛있고 가격도 저렴해요.",
+      "kr_read": "응온 람 자 까 꿍 재",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Ngon",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lắm,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "giá",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cả",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "cũng",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "rẻ.",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 53
+  },
+  {
+   "ts": "2026-09-19",
+   "day": "N134.html",
+   "track": "news",
+   "theme": "공부와 면접",
+   "title": "Vietnamese student gives up Western plans to follow his sister to 'China's MIT'",
+   "u": "https://e.vnexpress.net/news/news/education/vietnamese-student-gives-up-western-plans-to-follow-his-sister-to-china-s-mit-5121134.html",
+   "cat": "사회",
+   "intro": "한 베트남 남학생이 누나를 따라 중국 명문대에 장학생으로 입학했습니다. 어학 점수와 철저한 면접 준비로 높은 경쟁률을 뚫고 합격했습니다.",
+   "words": [
+    {
+     "vi": "học",
+     "ko": "공부하다",
+     "kr_read": "혹",
+     "emoji": "📖",
+     "en": "a person studying at a desk",
+     "tones": [
+      {
+       "syl": "học",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-hoc.webp"
+    },
+    {
+     "vi": "phỏng vấn",
+     "ko": "면접하다",
+     "kr_read": "퐁 번",
+     "emoji": "💼",
+     "en": "two people sitting across a table for an interview",
+     "tones": [
+      {
+       "syl": "phỏng",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "vấn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-phong-van.webp"
+    },
+    {
+     "vi": "chuẩn bị",
+     "ko": "준비하다",
+     "kr_read": "쭈언 비",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "chuẩn",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "bị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "câu hỏi",
+     "ko": "질문",
+     "kr_read": "꺼우 호이",
+     "emoji": "❓",
+     "en": "a red question mark",
+     "tones": [
+      {
+       "syl": "câu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hỏi",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-cau-hoi.webp"
+    },
+    {
+     "vi": "trả lời",
+     "ko": "대답하다",
+     "kr_read": "짜 러이",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "trả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "lời",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "kết quả",
+     "ko": "결과",
+     "kr_read": "껫 꽈",
+     "emoji": "📄",
+     "en": "a paper showing test results",
+     "tones": [
+      {
+       "syl": "kết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "quả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-ket-qua.webp"
+    }
+   ],
+   "dialog": {
+    "title": "공부와 면접",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Bạn đã chuẩn bị phỏng vấn chưa?",
+      "ko": "면접 준비 다 했어요?",
+      "kr_read": "반 다 쭈언 비 퐁 번 쯔어",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Bạn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đã",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "chuẩn",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "phỏng",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "vấn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chưa?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Tôi đã chuẩn bị xong rồi.",
+      "ko": "저 이미 다 준비했어요.",
+      "kr_read": "또이 다 쭈언 비 쏭 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đã",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "chuẩn",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "xong",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
        }
       ],
       "gloss": []
@@ -13019,5 +13749,5 @@
    "title_card": "베트남 페트로베트남이 유럽에 해상변전소 4 기 수출"
   }
  ],
- "updated": "2026-09-20 08:32"
+ "updated": "2026-09-20 23:28"
 }
