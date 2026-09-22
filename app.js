@@ -1519,7 +1519,7 @@ function studyHubEntry() {
     b.append(btn);
   };
   row('회화', '단어·문법·기본기 전체 목차', courseEntry);
-  row('GYBM 시험', '교재(Tiếng Việt Cho Người Nước Ngoài) 챕터별 낱말 · ★·밑줄은 선배 시험 참고', gybmEntry);
+  row('GYBM 시험', '메인·서브 교재 + 수업자료 + 선배 시험 낱말, 15개씩 카드로 학습', gybmEntry);
   row('공인인증 베트남어', '공인 시험 대비 학습 콘텐츠 (준비 중)', () =>
     alert('공인인증 베트남어 전용 학습 콘텐츠는 아직 준비 중입니다. 지금은 아래 "시험" 탭에서 모의고사로 연습해 보세요.'));
   row('복습', '잊을 때 된 것을 다시 봅니다', () => reviewMenu('all'));
@@ -4837,7 +4837,7 @@ function learntSet() {
   return LEARNT;
 }
 const findItem = vi => (SBOX === 'ssrs' ? seniorItems().find(w => w.vi === vi) : null)
-  || (SBOX === 'bsrs' ? (BASICWORDS || []).find(w => w.vi === vi) : null)
+  || (SBOX === 'bsrs' ? gybmAllWords().find(w => w.vi === vi) : null)
   || allWords().find(w => w.vi === vi)
   || allSents().find(x => x.vi === vi) || lessonSents().find(x => x.vi === vi);
 /* 오늘 꺼낼 카드 차례. 최근에 배운 것일수록 먼저 — 갓 배운 것이 가장 빨리 샌다.
@@ -6306,20 +6306,10 @@ function dictEntry() {
   setTimeout(() => inp.focus(), 60);
 }
 
-/* 기초단어 — GYBM 17~20기 선배들이 1년간 실제로 본 단어시험 낱말을 하나로 합친 것
-   (대표님 지시, 2026-09-15). 직무 회화(courseEntry)와는 완전히 별개 자료다.
-   별은 몇 기수 시험에 겹쳐 나왔는지(2기수=1★·3기수=2★·4기수=3★, 1기수만이면 별 없음),
-   빨간 밑줄은 그 낱말이 실린 회차 중 '주간'(매주 한 번) 시험이 있었다는 뜻 — 둘 다
-   data/basicwords.json 만들 때 실제로 센 값이다(지어낸 등급이 아니다).
-   17기 원본엔 애초에 '주간' 구분이 없다 — 그래서 17기에서만 나온 낱말은 밑줄을
-   못 그린다("안 나왔다"가 아니라 "그 기수는 기록 자체가 없다"는 뜻). */
-let BASICWORDS = null;
-function basicWordsBuild(cb) {
-  if (BASICWORDS) { cb(BASICWORDS); return; }
-  fetch('data/basicwords.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { BASICWORDS = j.words; cb(BASICWORDS); })
-    .catch(() => { BASICWORDS = []; cb(BASICWORDS); });
-}
+/* data/basicwords.json(GYBM 17~20기 선배 시험 원자료, 별·빨간 밑줄 값의 출처)은
+   이제 앱이 직접 안 읽는다 — tools/build_gybm.py가 미리 대조해서 data/gybm.json에
+   별·밑줄·예문·그림을 구워 넣어 두기 때문이다(2026-09-22 GYBM 개편). basicwords.json
+   자체는 그 스크립트의 입력 자료로만 남는다. */
 function basicWordRow(x) {
   const row = el('button', 'dictrow basicrow');
   row.type = 'button';
@@ -6342,25 +6332,31 @@ function basicWordRow(x) {
   row.onclick = () => { const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
   return row;
 }
-/* GYBM 시험 — 예전엔 기수/일차(회차) 기준으로 훑었으나, 실제 쓰는 교재가 확인돼
-   (대표님 지시, 2026-09-17: "찐교재 폴더 안에 pdf파일 2개 잇다") 교재 챕터(Bài) 기준으로
-   완전히 바꿨다 — data/realbook.json(Tiếng Việt Cho Người Nước Ngoài 1·2권 전체 OCR).
-   basicwords.json과 겹치는 낱말(전체의 약 47%)은 그쪽의 예문·그림과 별·빨간 밑줄
-   (선배 시험 참고용, 뜻은 안 바뀜)을 BW_BYVI로 그대로 이어받는다 — 안 겹치면 아직
-   예문·그림이 없어 낱말·발음만 나온다(추후 채울 예정). */
-let REALBOOK = null, BW_BYVI = null;
+/* GYBM 시험 — 출처 네 개(메인교재·서브교재·수업자료·선배단어)를 미리 하나로 합쳐 둔
+   data/gybm.json을 쓴다(대표님 지시, 2026-09-22: "출처가 4개가 잇네... 4개의 큰 구분이
+   잇어야겟네"). 낱말 하나가 여러 출처에 겹쳐도 **한 곳에만** 있도록 빌드 단계에서 이미
+   중복 제거하고 15개씩 묶어 뒀다 — "chào가 여러 번 나와도 중복해서 넣지 마라"는 지시대로
+   앱은 그 결과만 그대로 쓴다. 챕터→목록→"낱말 카드로 배우기" 버튼 3단계였던 것을 없애고,
+   레슨을 누르면 회화·직무회화와 똑같이 바로 낱말카드(startLearn/drawCard)로 들어간다. */
+let GYBM = null;
 const bdone = () => (S.bdone = S.bdone || {});
-function realbookBuild(cb) {
-  if (REALBOOK) { cb(REALBOOK); return; }
-  fetch('data/realbook.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { REALBOOK = j.books; cb(REALBOOK); })
-    .catch(() => { REALBOOK = []; cb(REALBOOK); });
+function gybmBuild(cb) {
+  if (GYBM) { cb(GYBM); return; }
+  fetch('data/gybm.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { GYBM = j.sources; cb(GYBM); })
+    .catch(() => { GYBM = []; cb(GYBM); });
 }
-function gybmMerge(w) {
-  const bw = BW_BYVI && BW_BYVI[w.vi];
-  return bw ? { ...w, star: bw.star, weekly: bw.weekly, ex: bw.ex, img: bw.img } : w;
+const gybmKey = (srcKey, i) => 'B:' + srcKey + i;
+/* GYBM 낱말 전체를 한 배열로 — 복습 화면(findItem)과 객관식 오답 보기(buildQuestions)가
+   예전엔 BASICWORDS(basicwords.json)만 봤는데, 이제 GYBM 낱말은 메인교재·서브교재·
+   수업자료에서 온 것도 많아 BASICWORDS에 없을 수 있다. 그래서 GYBM 전체를 대신 쓴다. */
+let GYBM_ALL = null;
+function gybmAllWords() {
+  if (GYBM_ALL) return GYBM_ALL;
+  GYBM_ALL = [];
+  (GYBM || []).forEach(src => src.lessons.forEach(l => l.words.forEach(w => GYBM_ALL.push(w))));
+  return GYBM_ALL;
 }
-const gybmKey = (vol, tag) => 'B:V' + vol + tag;
 
 /* GYBM 학습 입구 — 다른 단어 학습과 같은 틀(목록 → 배우기 → 시험 → 복습)을 쓴다
    (대표님 지시: "선배 단어들도 다른 단어 학습과 동일하게 해줘. 배우고 복습하는것.").
@@ -6383,143 +6379,77 @@ function gybmEntry() {
     retry.onclick = gybmEntry;
     b.append(retry);
   }, 8000);
-  basicWordsBuild(() => {
-    BW_BYVI = {}; BASICWORDS.forEach(w => { BW_BYVI[w.vi] = w; });
-    realbookBuild(() => {
-      loaded = true; clearTimeout(timer);
-      drawGybmVols();
-    });
+  gybmBuild(() => {
+    loaded = true; clearTimeout(timer);
+    drawGybmSources();
   });
 }
-function drawGybmVols() {
+function drawGybmSources() {
   SBOX = 'bsrs';
   const b = $('#subBody'); b.textContent = '';
 
   const head = el('div', 'catpick');
   const due = Object.values(S.bsrs || {}).filter(v => v.due <= now()).length;
-  head.append(el('span', 'msub', tr('GYBM 시험 대비 — 교재 챕터별 낱말') + '  ·  '));
+  head.append(el('span', 'msub', tr('GYBM 시험 대비') + '  ·  '));
   const rb = el('button', 'primary sm', tr('GYBM 낱말 복습') + (due ? ' (' + due + ')' : ''));
-  rb.onclick = () => { SBOX = 'bsrs'; dive(drawGybmVols); reviewMenu('word'); };
+  rb.onclick = () => { SBOX = 'bsrs'; dive(drawGybmSources); reviewMenu('word'); };
   head.append(rb);
   head.append(el('span', 'msub', tr('다른 복습과 섞이지 않습니다')));
   b.append(head);
 
   const sb = el('button', 'bigmenu');
-  sb.append(el('b', null, tr('🔍 낱말 찾기')), el('span', 'exmeta', tr('교재 전체에서 찾기')));
-  sb.onclick = () => { dive(drawGybmVols); gybmSearch(); };
+  sb.append(el('b', null, tr('🔍 낱말 찾기')), el('span', 'exmeta', tr('네 출처 전체에서 찾기')));
+  sb.onclick = () => { dive(drawGybmSources); gybmSearch(); };
   b.append(sb);
 
   const list = el('div', 'dictout');
-  REALBOOK.forEach(vol => {
-    const n = vol.chapters.reduce((s, c) => s + c.words.length, 0);
+  GYBM.forEach((src, si) => {
+    const n = src.lessons.reduce((s, l) => s + l.words.length, 0);
+    const doneN = src.lessons.filter((l, li) => bdone()[gybmKey(src.key, li)]).length;
     const btn = el('button', 'dictrow');
     btn.type = 'button';
-    btn.append(el('span', 'dvi', esc(vol.title)),
-      el('span', 'dko', n + tr('낱말')),
-      el('span', 'dkr', tr('보기')));
-    btn.onclick = () => { dive(drawGybmVols); drawGybmChapters(vol); };
+    btn.append(el('span', 'dvi', esc(src.label)),
+      el('span', 'dko', esc(src.sub)),
+      el('span', 'dkr', n + tr('낱말') + (doneN ? ' · ' + doneN + '/' + src.lessons.length : '')));
+    btn.onclick = () => { dive(drawGybmSources); drawGybmLessons(si); };
     list.append(btn);
   });
   b.append(list);
   show('sub', 'GYBM 시험', true);
 }
-function drawGybmChapters(vol) {
+/* 레슨 세로 지도 — 두오링고처럼 15개씩 잘라 둔 레슨을 한 줄로 쭉 잇는다.
+   실제 수업 진도를 따라가야 하므로 잠그지 않는다(freeNav:true, 대표님 지시 2026-09-22).
+   레슨을 누르면 목록·버튼 없이 **바로** 낱말카드로 들어간다("낱말 카드로 배우기"
+   버튼도 없앰 — 회화·직무회화가 레슨을 누르면 바로 카드가 뜨는 것과 동일하게). */
+function drawGybmLessons(si) {
+  const src = GYBM[si];
   const b = $('#subBody'); b.textContent = '';
-
-  /* 두오링고식 세로 지도(renderRoadmap, 원래 홈용) 재사용 — GYBM은 실제 수업 진도를
-     따라가야 하므로 freeNav:true 로 잠금 없이 전부 눌리게 한다(대표님 지시, 2026-09-22). */
-  b.append(el('p', 'lede', vol.title));
   const road = el('div', 'roadmap');
-  const nodes = vol.chapters.map(ch => ({
-    key: gybmKey(vol.vol, 'B' + ch.bai),
-    title: 'Bài ' + ch.bai + ' · ' + ch.title,
-    sub: (ch.title_ko ? ch.title_ko + ' · ' : '') + ch.words.length + tr('낱말'),
-    num: ch.bai,
-    done: !!bdone()[gybmKey(vol.vol, 'B' + ch.bai)],
-    fn: () => { dive(() => drawGybmChapters(vol)); drawGybmChapter(vol, ch); },
+  const nodes = src.lessons.map((l, li) => ({
+    key: gybmKey(src.key, li),
+    title: l.title,
+    sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('낱말'),
+    num: li + 1,
+    done: !!bdone()[gybmKey(src.key, li)],
+    fn: () => {
+      SBOX = 'bsrs';
+      dive(() => drawGybmLessons(si));
+      startLearn({ theme: l.title, day: gybmKey(src.key, li), basic: 1, words: l.words });
+    },
   }));
   const curNode = nodes.find(n => !n.done);
   renderRoadmap(road, nodes, curNode ? curNode.key : null, { freeNav: true });
   b.append(road);
-
-  const gk = gybmKey(vol.vol, 'G'), gdone = !!bdone()[gk];
-  const gbtn = el('button', 'dictrow');
-  gbtn.type = 'button';
-  gbtn.dataset.done = gdone ? '1' : '0';
-  gbtn.append(el('span', 'dvi', tr('공식 낱말장')),
-    el('span', 'dko', tr('책 뒤쪽 Bảng từ 전체')),
-    el('span', 'dkr', gdone ? tr('완료 ✔') : vol.glossary.length + tr('낱말')));
-  gbtn.onclick = () => { dive(() => drawGybmChapters(vol)); drawGybmWordList(vol.glossary, tr('공식 낱말장'), gk, null, null); };
-  const glist = el('div', 'dictout');
-  glist.append(gbtn);
-  b.append(glist);
-  show('sub', vol.title, true);
+  show('sub', src.label, true);
 }
-function drawGybmChapter(vol, ch) {
-  drawGybmWordList(ch.words, 'Bài ' + ch.bai + ' · ' + ch.title, gybmKey(vol.vol, 'B' + ch.bai), ch.grammar, ch.dialogues);
-}
-function drawGybmWordList(words, title, key, grammar, dialogues) {
-  SBOX = 'bsrs';
-  const b = $('#subBody'); b.textContent = '';
-  const ws = words.map(gybmMerge);
-
-  const go = el('div', 'catpick');
-  /* 낱말 카드 — 회화(startLearn/drawCard)와 완전히 같은 화면을 쓴다 (대표님 지시,
-     2026-09-22: "일반 회화 단어들 처럼 한페이지에 단어 하나만... 완전히 동일하게").
-     새 "날"을 만들지 않고 startLearn이 원래 받는 모양 그대로 { words, day, basic, theme }
-     를 즉석에서 지어서 넘긴다 — 그래야 카드 마지막 장의 '확인 문제 ›'도 그대로 이
-     낱말들로 퀴즈를 내고, 끝나면 S.bdone[key]에 정확히 쌓인다(제출용 코드를 새로 안 짬). */
-  const cardBtn = el('button', 'primary big', tr('🗂️ 낱말 카드로 배우기'));
-  cardBtn.onclick = () => {
-    SBOX = 'bsrs';
-    dive(() => drawGybmWordList(words, title, key, grammar, dialogues));
-    startLearn({ theme: title, day: key, basic: 1, words: ws });
-  };
-  go.append(cardBtn);
-  const gb = el('button', 'primary sm', tr('이 낱말 시험 보기'));
-  gb.onclick = () => {
-    SBOX = 'bsrs';
-    dive(() => drawGybmWordList(words, title, key, grammar, dialogues));
-    startQuiz(ws, { day: key, basic: 1 }, null, false, { kind: 'word' });
-  };
-  go.append(gb);
-  go.append(el('span', 'msub', ws.length + tr('낱말')));
-  b.append(go);
-
-  if (grammar && grammar.length) {
-    b.append(el('p', 'lede', tr('문법')));
-    grammar.forEach(g => {
-      const c = el('div', 'rulecard');
-      c.append(el('div', 'rhead', '<b>' + esc(g.title_vi) + '</b>' + (g.title_ko ? ' — ' + esc(g.title_ko) : '')));
-      c.append(el('div', 'rbody', esc(g.note_ko)));
-      b.append(c);
-    });
-  }
-
-  if (dialogues && dialogues.length) {
-    b.append(el('p', 'lede', tr('대화문')));
-    dialogues.forEach(d => {
-      const row = el('button', 'dictrow');
-      row.type = 'button';
-      row.append(el('span', 'dvi', esc(d.vi)), el('span', 'dko', esc(d.ko)));
-      row.onclick = () => speakVi(d.vi, false, 0, S.voice);
-      b.append(row);
-    });
-  }
-  show('sub', title, true);
-}
-/* 낱말 찾기 — 챕터 순서로 훑는 것 말고, 특정 낱말을 바로 찾고 싶을 때 쓴다. */
+/* 낱말 찾기 — 레슨 순서로 훑는 것 말고, 특정 낱말을 바로 찾고 싶을 때 쓴다. */
 function gybmSearch() {
   SBOX = 'bsrs';
   const b = $('#subBody'); b.textContent = '';
   show('sub', tr('GYBM 낱말 찾기'), true);
-  const all = [];
-  REALBOOK.forEach(vol => {
-    vol.chapters.forEach(ch => ch.words.forEach(w => all.push(w)));
-    vol.glossary.forEach(w => all.push(w));
-  });
-  const words = all.map(gybmMerge);
-  b.append(el('p', 'lede', tr('교재 낱말 N개 · ★는 선배 시험에 겹쳐 나온 기수 수 · 빨간 밑줄은 주간시험')
+  const words = [];
+  GYBM.forEach(src => src.lessons.forEach(l => l.words.forEach(w => words.push(w))));
+  b.append(el('p', 'lede', tr('GYBM 낱말 N개 · ★는 선배 시험에 겹쳐 나온 기수 수 · 빨간 밑줄은 주간시험')
     .replace('N', words.length.toLocaleString('ko-KR'))));
   const inp = el('input', 'keyin dictin');
   inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
@@ -7227,8 +7157,8 @@ function buildQuestions(words, forced) {
      진짜로 헷갈린다. 실전 단어 화면에서만 그렇게 하고, 나머지는 그대로 둔다. */
   const pool = SBOX === 'ssrs' && SENIOR
     ? (words.length >= 4 ? words : seniorItems())
-    : SBOX === 'bsrs' && BASICWORDS
-    ? (words.length >= 4 ? words : BASICWORDS)
+    : SBOX === 'bsrs' && GYBM
+    ? (words.length >= 4 ? words : gybmAllWords())
     : allWords();
   // 오답 보기는 같은 종류에서 고른다 — 문장 문제에 단어 뜻을 섞으면
   // 길이만 보고 정답을 찍을 수 있어 문제가 문제 구실을 못 한다.
