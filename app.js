@@ -6464,6 +6464,18 @@ function drawGybmWordList(words, title, key, grammar, dialogues) {
   const ws = words.map(gybmMerge);
 
   const go = el('div', 'catpick');
+  /* 낱말 카드 — 회화(startLearn/drawCard)와 완전히 같은 화면을 쓴다 (대표님 지시,
+     2026-09-22: "일반 회화 단어들 처럼 한페이지에 단어 하나만... 완전히 동일하게").
+     새 "날"을 만들지 않고 startLearn이 원래 받는 모양 그대로 { words, day, basic, theme }
+     를 즉석에서 지어서 넘긴다 — 그래야 카드 마지막 장의 '확인 문제 ›'도 그대로 이
+     낱말들로 퀴즈를 내고, 끝나면 S.bdone[key]에 정확히 쌓인다(제출용 코드를 새로 안 짬). */
+  const cardBtn = el('button', 'primary big', tr('🗂️ 낱말 카드로 배우기'));
+  cardBtn.onclick = () => {
+    SBOX = 'bsrs';
+    dive(() => drawGybmWordList(words, title, key, grammar, dialogues));
+    startLearn({ theme: title, day: key, basic: 1, words: ws });
+  };
+  go.append(cardBtn);
   const gb = el('button', 'primary sm', tr('이 낱말 시험 보기'));
   gb.onclick = () => {
     SBOX = 'bsrs';
@@ -6471,7 +6483,7 @@ function drawGybmWordList(words, title, key, grammar, dialogues) {
     startQuiz(ws, { day: key, basic: 1 }, null, false, { kind: 'word' });
   };
   go.append(gb);
-  go.append(el('span', 'msub', ws.length + tr('낱말') + ' · ' + tr('낱말을 누르면 소리가 납니다')));
+  go.append(el('span', 'msub', ws.length + tr('낱말')));
   b.append(go);
 
   if (grammar && grammar.length) {
@@ -6483,9 +6495,6 @@ function drawGybmWordList(words, title, key, grammar, dialogues) {
       b.append(c);
     });
   }
-
-  b.append(el('p', 'lede', tr('낱말')));
-  ws.forEach(x => b.append(basicWordRow(x)));
 
   if (dialogues && dialogues.length) {
     b.append(el('p', 'lede', tr('대화문')));
