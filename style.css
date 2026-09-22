@@ -481,7 +481,9 @@ button.song{
 .rmnode.lock .rmlabel b{color:var(--dim); font-weight:500}
 .rmnode.cur .rmlabel b{font-size:17px; font-weight:700}
 .rmlabel span{display:block; font-size:12px; color:var(--accent); font-weight:700; margin-top:2px}
-.rmnode.cur{cursor:pointer}
+.rmlabel span.rmsub{color:var(--dim); font-weight:400; font-size:13px; margin-top:1px}
+.rmnode.cur, .rmnode.go{cursor:pointer}
+.rmnode.go:active{opacity:.8}
 
 .bbtns{display:flex; gap:6px; flex:none}
 .bbtns button{white-space:nowrap; padding:10px 13px; font-size:14px}

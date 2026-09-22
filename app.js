@@ -4967,19 +4967,25 @@ function recentDoneUnits(nMax) {
 
 /* 세로 지도 그리기 — 완료(체크) · 지금(고리, 누르면 학습 시작) · 다음(자물쇠) 세 상태.
    '지금' 칸을 누르면 하는 일은 홈 일정판의 '오늘 학습' 칸과 **같아야** 한다(중복 금지) —
-   그래서 그 손잡이(curFn)를 만들어 준 dailyFlowEntry() 에서 그대로 받아 쓴다. */
-function renderRoadmap(host, nodes, curKey) {
+   그래서 그 손잡이(curFn)를 만들어 준 dailyFlowEntry() 에서 그대로 받아 쓴다.
+   opt.freeNav=true 면 잠그지 않고 전부 눌러도 된다 — GYBM 챕터처럼 실제 수업 진도를
+   따라가야 해서 앱이 순서를 강제하면 안 되는 경우다(대표님 지시, 2026-09-22: "길따라
+   올라가듯이 선택하면서" 두오링고 지도를 GYBM에도 적용). 이때 🔒 대신 과 번호(nd.num)를 보여준다. */
+function renderRoadmap(host, nodes, curKey, opt) {
   host.textContent = '';
   if (!nodes.length) return;
+  const free = !!(opt && opt.freeNav);
   nodes.forEach(nd => {
     const state = nd.key === curKey ? 'cur' : nd.done ? 'done' : 'lock';
     const row = el('div', 'rmnode ' + state);
-    const dot = el('span', 'rmdot', nd.done ? '✔' : state === 'cur' ? '' : '🔒');
+    const dot = el('span', 'rmdot',
+      nd.done ? '✔' : state === 'cur' ? '' : free ? (nd.num != null ? String(nd.num) : '') : '🔒');
     const lbl = el('div', 'rmlabel');
     lbl.append(el('b', null, esc(nd.title)));
+    if (nd.sub) lbl.append(el('span', 'rmsub', esc(nd.sub)));
     if (state === 'cur') lbl.append(el('span', null, tr('지금 여기')));
     row.append(dot, lbl);
-    if (state === 'cur' && nd.fn) row.onclick = nd.fn;
+    if ((state === 'cur' || free) && nd.fn) { row.onclick = nd.fn; row.classList.add('go'); }
     host.append(row);
   });
 }
@@ -6419,18 +6425,23 @@ function drawGybmVols() {
 }
 function drawGybmChapters(vol) {
   const b = $('#subBody'); b.textContent = '';
-  const list = el('div', 'dictout');
-  vol.chapters.forEach(ch => {
-    const k = gybmKey(vol.vol, 'B' + ch.bai), done = !!bdone()[k];
-    const btn = el('button', 'dictrow');
-    btn.type = 'button';
-    btn.dataset.done = done ? '1' : '0';
-    btn.append(el('span', 'dvi', esc('Bài ' + ch.bai + ' · ' + ch.title)),
-      el('span', 'dko', esc(ch.title_ko || '')),
-      el('span', 'dkr', done ? tr('완료 ✔') : ch.words.length + tr('낱말')));
-    btn.onclick = () => { dive(() => drawGybmChapters(vol)); drawGybmChapter(vol, ch); };
-    list.append(btn);
-  });
+
+  /* 두오링고식 세로 지도(renderRoadmap, 원래 홈용) 재사용 — GYBM은 실제 수업 진도를
+     따라가야 하므로 freeNav:true 로 잠금 없이 전부 눌리게 한다(대표님 지시, 2026-09-22). */
+  b.append(el('p', 'lede', vol.title));
+  const road = el('div', 'roadmap');
+  const nodes = vol.chapters.map(ch => ({
+    key: gybmKey(vol.vol, 'B' + ch.bai),
+    title: 'Bài ' + ch.bai + ' · ' + ch.title,
+    sub: (ch.title_ko ? ch.title_ko + ' · ' : '') + ch.words.length + tr('낱말'),
+    num: ch.bai,
+    done: !!bdone()[gybmKey(vol.vol, 'B' + ch.bai)],
+    fn: () => { dive(() => drawGybmChapters(vol)); drawGybmChapter(vol, ch); },
+  }));
+  const curNode = nodes.find(n => !n.done);
+  renderRoadmap(road, nodes, curNode ? curNode.key : null, { freeNav: true });
+  b.append(road);
+
   const gk = gybmKey(vol.vol, 'G'), gdone = !!bdone()[gk];
   const gbtn = el('button', 'dictrow');
   gbtn.type = 'button';
@@ -6439,8 +6450,9 @@ function drawGybmChapters(vol) {
     el('span', 'dko', tr('책 뒤쪽 Bảng từ 전체')),
     el('span', 'dkr', gdone ? tr('완료 ✔') : vol.glossary.length + tr('낱말')));
   gbtn.onclick = () => { dive(() => drawGybmChapters(vol)); drawGybmWordList(vol.glossary, tr('공식 낱말장'), gk, null, null); };
-  list.append(gbtn);
-  b.append(list);
+  const glist = el('div', 'dictout');
+  glist.append(gbtn);
+  b.append(glist);
   show('sub', vol.title, true);
 }
 function drawGybmChapter(vol, ch) {
