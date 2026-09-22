@@ -6348,7 +6348,7 @@ function basicWordRow(x) {
    basicwords.json과 겹치는 낱말(전체의 약 47%)은 그쪽의 예문·그림과 별·빨간 밑줄
    (선배 시험 참고용, 뜻은 안 바뀜)을 BW_BYVI로 그대로 이어받는다 — 안 겹치면 아직
    예문·그림이 없어 낱말·발음만 나온다(추후 채울 예정). */
-let REALBOOK = null;
+let REALBOOK = null, BW_BYVI = null;
 const bdone = () => (S.bdone = S.bdone || {});
 function realbookBuild(cb) {
   if (REALBOOK) { cb(REALBOOK); return; }
