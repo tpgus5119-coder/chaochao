@@ -2,6 +2,478 @@
  "days": [
   {
    "ts": "2026-09-23",
+   "day": "N541.html",
+   "track": "news",
+   "theme": "회사 사기",
+   "title": "Apax Leaders English school boss accused of $295M fraud",
+   "u": "https://e.vnexpress.net/news/news/crime/apax-leaders-english-school-boss-accused-of-295m-fraud-5123541.html",
+   "cat": "사회",
+   "intro": "유명 영어 학원 대표가 거액의 사기 혐의로 기소되었습니다. 가짜 주식을 팔고 허위 매출을 만들어 투자금을 가로챘습니다.",
+   "words": [
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꽁 띠",
+     "emoji": "🏢",
+     "en": "a modern office building with glass windows",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ty",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-ty.webp"
+    },
+    {
+     "vi": "giám đốc",
+     "ko": "사장",
+     "kr_read": "잠 독",
+     "emoji": "👨‍💼",
+     "en": "a businessman in a suit holding a pen",
+     "tones": [
+      {
+       "syl": "giám",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "đốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-giam-doc.webp"
+    },
+    {
+     "vi": "tiền",
+     "ko": "돈",
+     "kr_read": "띠엔",
+     "emoji": "💵",
+     "en": "a stack of paper money banknotes",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tien.webp"
+    },
+    {
+     "vi": "ngân hàng",
+     "ko": "은행",
+     "kr_read": "응언 항",
+     "emoji": "🏦",
+     "en": "a bank building with a sign outside",
+     "tones": [
+      {
+       "syl": "ngân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ngan-hang.webp"
+    },
+    {
+     "vi": "nợ",
+     "ko": "빚",
+     "kr_read": "너",
+     "emoji": "📄",
+     "en": "a bill paper with numbers and a red stamp",
+     "tones": [
+      {
+       "syl": "nợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-no.webp"
+    },
+    {
+     "vi": "cổ phiếu",
+     "ko": "주식",
+     "kr_read": "꼬 피에우",
+     "emoji": "📈",
+     "en": "a rising stock market chart on a screen",
+     "tones": [
+      {
+       "syl": "cổ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "phiếu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-co-phieu.webp"
+    }
+   ],
+   "dialog": {
+    "title": "회사 사기",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Giám đốc có ở công ty không?",
+      "ko": "사장님이 회사에 계십니까?",
+      "kr_read": "잠 독 꼬 어 꽁 띠 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Giám",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đốc",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Không, giám đốc đi ngân hàng rồi.",
+      "ko": "아니요, 사장님은 은행에 갔습니다.",
+      "kr_read": "콩 잠 독 디 응언 항 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Không,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giám",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đốc",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ngân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hàng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 58
+  },
+  {
+   "ts": "2026-09-23",
+   "day": "N731.html",
+   "track": "news",
+   "theme": "폭우와 침수 주의",
+   "title": "Ho Chi Minh City braces for continued heavy rain and flooding amid high tides",
+   "u": "https://e.vnexpress.net/news/news/environment/ho-chi-minh-city-braces-for-continued-heavy-rain-and-flooding-amid-high-tides-5123731.html",
+   "cat": "사회",
+   "intro": "호치민시 폭우와 만조로 인한 침수 피해 발생 출퇴근길 교통 체증과 안전사고 주의 당부",
+   "words": [
+    {
+     "vi": "mưa",
+     "ko": "비",
+     "kr_read": "므어",
+     "emoji": "🌧️",
+     "en": "heavy rain falling from a dark cloud",
+     "tones": [
+      {
+       "syl": "mưa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua.webp"
+    },
+    {
+     "vi": "ngập",
+     "ko": "침수되다",
+     "kr_read": "응업",
+     "emoji": "🌊",
+     "en": "a street flooded with water",
+     "tones": [
+      {
+       "syl": "ngập",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-ngap.webp"
+    },
+    {
+     "vi": "tắc đường",
+     "ko": "길이 막히다",
+     "kr_read": "딱 드엉",
+     "emoji": "🚗",
+     "en": "many cars and motorbikes in a traffic jam",
+     "tones": [
+      {
+       "syl": "tắc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tac-duong.webp"
+    },
+    {
+     "vi": "đi làm",
+     "ko": "출근하다",
+     "kr_read": "디 람",
+     "emoji": "💼",
+     "en": "an office worker going to work",
+     "tones": [
+      {
+       "syl": "đi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-di-lam.webp"
+    },
+    {
+     "vi": "muộn",
+     "ko": "늦다",
+     "kr_read": "무온",
+     "emoji": "⏰",
+     "en": "a clock showing late time",
+     "tones": [
+      {
+       "syl": "muộn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-muon.webp"
+    },
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🛵",
+     "en": "a modern scooter motorbike",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    }
+   ],
+   "dialog": {
+    "title": "폭우와 침수 주의",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Đường ngập, tôi đi làm muộn nhé.",
+      "ko": "길이 침수되어서 출근이 늦을 것 같아요.",
+      "kr_read": "드엉 응업 또이 디 람 무온 냬",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Đường",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ngập,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "muộn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Được, anh đi cẩn thận nhé.",
+      "ko": "알겠어요, 조심해서 오세요.",
+      "kr_read": "드억 아인 디 껀 턴 냬",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Được,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cẩn",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "thận",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 57
+  },
+  {
+   "ts": "2026-09-23",
    "day": "Nno=44130",
    "track": "news",
    "theme": "집값 문제",
@@ -213,7 +685,7 @@
     ],
     "extra": []
    },
-   "n": 54,
+   "n": 56,
    "pub": "2026-09-24",
    "sum5": [
     "베트남 집값이 계속 오르는 건 개발사들이 대출에 너무 의존해서라",
@@ -227,6 +699,235 @@
     "금융 의존도를 낮추지 않으면 앞으로도 집값 안정은 어려울 것 같아",
     "우리나라도 부동산 시장 건강을 위해 적절한 규제와 자금을 잘 관리해야"
    ]
+  },
+  {
+   "ts": "2026-09-23",
+   "day": "Nxno=1908",
+   "track": "news",
+   "theme": "베트남 미국 무역",
+   "title": "베트남-미국 무역협정 타결 임박...양국 협상 막바지",
+   "u": "http://www.vietnamkoreatimes.com/news/articleView.html?idxno=1908",
+   "cat": "문화·생활",
+   "intro": "베트남과 미국이 무역협정 최종 타결에 근접했습니다. 관세 인하와 시장 개방으로 양국 교역이 확대됩니다.",
+   "words": [
+    {
+     "vi": "xuất khẩu",
+     "ko": "수출",
+     "kr_read": "쑤엇 커우",
+     "emoji": "🚢",
+     "en": "a large cargo ship with containers",
+     "tones": [
+      {
+       "syl": "xuất",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "khẩu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-xuat-khau.webp"
+    },
+    {
+     "vi": "thị trường",
+     "ko": "시장",
+     "kr_read": "티 쯔엉",
+     "emoji": "🏢",
+     "en": "a busy marketplace with many stalls",
+     "tones": [
+      {
+       "syl": "thị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-thi-truong.webp"
+    },
+    {
+     "vi": "hợp tác",
+     "ko": "협력",
+     "kr_read": "헙 딱",
+     "emoji": "🤝",
+     "en": "two people shaking hands",
+     "tones": [
+      {
+       "syl": "hợp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "tác",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-hop-tac.webp"
+    },
+    {
+     "vi": "hàng hóa",
+     "ko": "상품",
+     "kr_read": "항 호아",
+     "emoji": "📦",
+     "en": "stacked cardboard boxes in a warehouse",
+     "tones": [
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hóa",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-hang-hoa.webp"
+    },
+    {
+     "vi": "nhập khẩu",
+     "ko": "수입",
+     "kr_read": "녑 커우",
+     "emoji": "✈️",
+     "en": "a cargo plane being loaded with boxes",
+     "tones": [
+      {
+       "syl": "nhập",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "khẩu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-nhap-khau.webp"
+    },
+    {
+     "vi": "thuế",
+     "ko": "세금",
+     "kr_read": "투에",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "thuế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "베트남 미국 무역",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Hàng hóa này xuất khẩu à?",
+      "ko": "이 상품은 수출용인가요?",
+      "kr_read": "항 호아 나이 쑤엇 커우 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Hàng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "hóa",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "xuất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "khẩu",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, giá sẽ rẻ hơn.",
+      "ko": "네, 가격이 더 저렴해질 거예요.",
+      "kr_read": "벙 자 쌔 재 헌",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giá",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sẽ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "rẻ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "hơn.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 55
   },
   {
    "ts": "2026-09-23",
@@ -420,7 +1121,7 @@
     ],
     "extra": []
    },
-   "n": 53,
+   "n": 54,
    "sum5": [
     "러시아인이 베트남의 외로운 길 사진으로 화제가 되었어요",
     "호치민 출신 러시아인이 광_tri 성에서 찍은 드론 사진이에요",
@@ -669,7 +1370,7 @@
     ],
     "extra": []
    },
-   "n": 52,
+   "n": 53,
    "sum5": [
     "미국 애틀랜타에서 열린 큰 박람회 무대에 HS효성첨단소재가 나섰어요",
     "드론 몸체와 인공위성 연료통을 만드는 초강력 탄소섬유를 선보였죠",
@@ -857,7 +1558,7 @@
     ],
     "extra": []
    },
-   "n": 51,
+   "n": 52,
    "sum5": [
     "호치민시 중심부가 무거운 비로 물에 잠기면서 교통이 마비됐어요",
     "레 로이 대로와 파스퇴르 대로가 깊게 물에 잠겨 차량 통행이 어렵어요",
@@ -871,6 +1572,230 @@
     "비만 오는 나라가 아니라 우리도 비슷한 상황을 대비해야 할 때인 것 같아요"
    ],
    "pub": "2026-09-24"
+  },
+  {
+   "ts": "2026-09-23",
+   "day": "N257.html",
+   "track": "news",
+   "theme": "날씨와 여행",
+   "title": "Korean singer likens Phu Quoc basket boat ride to a thrill ride",
+   "u": "https://e.vnexpress.net/news/travel/places/korean-singer-likens-phu-quoc-basket-boat-ride-to-a-thrill-ride-5123257.html",
+   "cat": "소식",
+   "intro": "한국 가수가 푸꾸옥에서 바구니 배와 음식을 즐겼습니다. 베트남은 현재 우기이므로 여행 시 날씨에 주의해야 합니다.",
+   "words": [
+    {
+     "vi": "mưa",
+     "ko": "비",
+     "kr_read": "므어",
+     "emoji": "🌧️",
+     "en": "heavy tropical rain falling from the sky",
+     "tones": [
+      {
+       "syl": "mưa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua.webp"
+    },
+    {
+     "vi": "trời",
+     "ko": "날씨/하늘",
+     "kr_read": "쩌이",
+     "emoji": "☁️",
+     "en": "blue sky with some white clouds",
+     "tones": [
+      {
+       "syl": "trời",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-troi.webp"
+    },
+    {
+     "vi": "thuyền",
+     "ko": "배",
+     "kr_read": "투옌",
+     "emoji": "⛵",
+     "en": "a small wooden boat on a river",
+     "tones": [
+      {
+       "syl": "thuyền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-thuyen.webp"
+    },
+    {
+     "vi": "cà phê",
+     "ko": "커피",
+     "kr_read": "까 페",
+     "emoji": "☕",
+     "en": "a cup of hot brown coffee",
+     "tones": [
+      {
+       "syl": "cà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "phê",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ca-phe.webp"
+    },
+    {
+     "vi": "hoa quả",
+     "ko": "과일",
+     "kr_read": "호아 꽈",
+     "emoji": "🍎",
+     "en": "a basket filled with various tropical fruits",
+     "tones": [
+      {
+       "syl": "hoa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "quả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-hoa-qua.webp"
+    },
+    {
+     "vi": "hải sản",
+     "ko": "해산물",
+     "kr_read": "하이 싼",
+     "emoji": "🦐",
+     "en": "a plate of grilled shrimp and fish",
+     "tones": [
+      {
+       "syl": "hải",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "sản",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-hai-san.webp"
+    }
+   ],
+   "dialog": {
+    "title": "날씨와 여행",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Hôm nay trời có mưa không?",
+      "ko": "오늘 날씨에 비가 오나요?",
+      "kr_read": "홈 나이 쩌이 꼬 므어 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "trời",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mưa",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, đừng đi thuyền bây giờ.",
+      "ko": "네, 지금은 배를 타러 가지 마세요.",
+      "kr_read": "꼬 등 디 투옌 버이 저",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đừng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thuyền",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giờ.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 51
   },
   {
    "ts": "2026-09-23",
@@ -12568,5 +13493,5 @@
    "n": 1
   }
  ],
- "updated": "2026-09-24 00:20"
+ "updated": "2026-09-24 08:59"
 }
