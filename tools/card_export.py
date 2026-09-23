@@ -43,6 +43,21 @@ def ko_name(d):
     return safe(d.get("theme")) or "기사"
 
 
+def link_title(d):
+    """기사링크.txt 에 적을 **한국어 제목**.
+
+    2026-09-23 대표님 지적("영어제목들 한글제목으로 수정해줘") — 이 파일만 카드 제목(title_card)
+    대신 원문 제목(title)을 적어서, 영어 기사는 영어 그대로, 한자가 섞인 제목은 한자째 나갔다.
+    카드에 얹은 제목과 **똑같은 것**을 쓴다. 카드 제목이 없으면 한글이 있고 한자가 없는
+    원문을 쓰고, 그것도 없으면 원문 그대로다(고칠 수 없는 것을 지어내지 않는다)."""
+    han = re.compile(r"[\u4e00-\u9fff]")
+    for x in (d.get("title_card"), d.get("title")):
+        t = str(x or "").strip()
+        if t and re.search(r"[가-힣]", t) and not han.search(t):
+            return t
+    return str(d.get("title_card") or d.get("title") or "").strip()
+
+
 def safe(s, n=18):
     """폴더에서 읽기 좋은 이름으로. 슬래시·따옴표처럼 탈 나는 글자를 뺀다."""
     s = re.sub(r'[\\/:*?"<>|]', "", str(s)).strip()
@@ -113,7 +128,7 @@ def main():
                                            d.get('ts') or ''))
         for i, d in enumerate(arts, 1):
             if d.get("u"):
-                lines.append(f"{i}. {d.get('title','')}")
+                lines.append(f"{i}. {link_title(d)}")
                 lines.append(f"   {d['u']}")
                 lines.append("")
         lines += ["📱 카드뉴스와 오늘의 낱말은 짜오짜오에서",

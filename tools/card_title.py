@@ -26,6 +26,7 @@ from ai import ask_text
 
 F = R / "data" / "news_days.json"
 LIM = 28
+HANJA = re.compile(r"[\u4e00-\u9fff]")      # 한자 — 카드에는 한글만 쓴다 (대표님 지시 2026-09-16)
 
 # 2026-09-17: "지어낸 수" 검사가 **영어 기사 번역 건에서 계속 오작동**했다(대표님
 # 지적으로 발견 — 카드에 영어 제목이 그대로 남아있었음). 원인: sum5 는 "2천 3만"으로
@@ -57,6 +58,7 @@ ASK = ("아래 기사 제목을 카드뉴스용으로 짧게 다듬어라.\n"
        " ② 어디서·무엇이 일어났는지를 앞에 둔다\n"
        " ③ '충격'·'경악' 같은 낚시말을 쓰지 마라\n"
        f" ④ 한국어로 {LIM}자 이내, 한 줄. 마침표 없이\n"
+       " ⑤ 한자(漢字)를 쓰지 마라. '銀'·'社'·'車'·'美' 같은 글자는 모두 한글로 풀어 쓴다\n"
        "출력은 다듬은 제목 한 줄만. 다른 말은 적지 마라.\n\n"
        "원문 제목: {t}\n"
        "기사 요약: {s}\n")
@@ -75,7 +77,8 @@ def main():
     todo = [d for d in j["days"]
             if (not a.day or d.get("ts") == a.day)
             and (a.force or not d.get("title_card"))
-            and (len(d.get("title", "")) > LIM or not re.search(r"[가-힣]", d.get("title", "")))]
+            and (len(d.get("title", "")) > LIM or not re.search(r"[가-힣]", d.get("title", ""))
+                 or HANJA.search(d.get("title", "")))]
     print(f"다듬을 제목 {todo and len(todo) or 0} (그 밖은 원문 그대로 쓴다)", flush=True)
 
     for d in todo:
@@ -105,8 +108,8 @@ def main():
                 continue
             made_up.append(x)
         # ── 검수 ③ 길이·글자
-        if not t or len(t) > LIM + 6 or not re.search(r"[가-힣]", t) or made_up:
-            why = f"지어낸 수 {made_up}" if made_up else "길거나 비었다"
+        if not t or len(t) > LIM + 6 or not re.search(r"[가-힣]", t) or made_up or HANJA.search(t):
+            why = f"지어낸 수 {made_up}" if made_up else "한자가 남았다" if HANJA.search(t) else "길거나 비었다"
             print(f"  버림({why}): {t!r}  ← 원문 그대로 둔다"); continue
         d["title_card"] = t
         print(f"  {d['title'][:30]}\n   → {t}", flush=True)

@@ -98,6 +98,7 @@ def foot_text(d, ts):
     host = urllib.parse.urlparse(d.get("u") or "").netloc.lower().replace("www.", "")
     name = {"insidevina.com": "인사이드비나", "vnexpress.net": "VnExpress",
             "e.vnexpress.net": "VnExpress", "vietnamkoreatimes.com": "베트남코리아타임즈",
+            "chaovietnam.co.kr": "씬짜오베트남", "goodmorningvietnam.co.kr": "굿모닝베트남미디어",
             "tuoitre.vn": "Tuổi Trẻ", "thanhnien.vn": "Thanh Niên"}.get(host, host)
     return "짜오짜오 · " + (d.get("pub") or ts) + ("  ·  출처 " + name if name else "")
 
@@ -105,7 +106,9 @@ def foot_text(d, ts):
 def slide2(prs, d, ts):
     s = prs.slides.add_slide(prs.slide_layouts[6])
     s.background.fill.solid(); s.background.fill.fore_color.rgb = BG
-    # 카드 그림과 같은 짜임 — 제목 없이 낱말 여섯, 아래에 대화 두 줄
+    # 카드 그림과 같은 짜임 — 머리글 한 줄, 낱말 여섯, 아래에 대화 두 줄
+    # (2026-09-16 카드에 "이 기사에 나오는 단어" 줄이 들어갔는데 파워포인트에는 빠져 있었다)
+    put(box(s, 84, 18, 912, 50), "이 기사에 나오는 단어", 29, FG, bold=True, first=True)
     words = (d.get("words") or [])[:6]
     for i, w in enumerate(words):
         x = 84 + (i % 2) * 484

@@ -164,22 +164,27 @@ def wrap_title(dr, text, f, width, ls=0.0):
     그래도 안 들어가면 그때 낱말 단위로 접는다."""
     import re as _r
     txt = str(text).strip()
-    parts = [x for x in _r.split(r"(?<=[…·,])\s*", txt) if x.strip()]
+    # 끊는 자리는 '…'·'·' 뒤, 그리고 **뒤에 띄어쓰기가 오는** ',' 뒤다.
+    # 2026-09-23: 예전에는 모든 쉼표 뒤에서 끊고 조각을 " " 로 이어 붙여서, 숫자 속 쉼표가
+    # 갈라져 '2,928대' 가 카드에 '2, 928대' 로 찍혔고 '…' 뒤에도 없던 띄어쓰기가 생겼다.
+    # 이제 원문의 띄어쓰기를 그대로 두고 자른다(붙여 쓴 '…올해' 는 붙어 있는 채로).
+    parts = [x for x in _r.split(r"(?<=[…·])|(?<=,)(?=\s)", txt) if x.strip()]
     out, line = [], ""
     for pt in parts:
-        cand = (line + " " + pt).strip() if line else pt
+        cand = (line + pt) if line else pt.lstrip()
         if tw(dr, cand, f, ls) <= width:
             line = cand
         else:
             if line:
-                out.append(line)
+                out.append(line.rstrip())
+            pt = pt.lstrip()
             if tw(dr, pt, f, ls) <= width:
                 line = pt
             else:
                 got = wrap(dr, pt, f, width, ls)
                 out += got[:-1]; line = got[-1] if got else ""
     if line:
-        out.append(line)
+        out.append(line.rstrip())
     return out or [""]
 
 
@@ -209,6 +214,10 @@ def bg_image(prompt, seed):
 # 새로 쓰므로, 어디서 온 사실인지 밝히는 것이 정당한 인용의 요건에 가깝고 예의이기도 하다.
 SRC_NAME = {
     "insidevina.com": "인사이드비나",
+    # 2026-09-23: 아래 셋이 이름표에 없어 카드 아래에 'vietnamkoreatimes.com' 주소가 그대로 찍혔다
+    "vietnamkoreatimes.com": "베트남코리아타임즈",
+    "chaovietnam.co.kr": "씬짜오베트남",
+    "goodmorningvietnam.co.kr": "굿모닝베트남미디어",
     "vnexpress.net": "VnExpress",
     "tuoitre.vn": "Tuổi Trẻ",
     "thanhnien.vn": "Thanh Niên",
@@ -508,7 +517,26 @@ def main():
             #   씨앗도 기사(제목)에서 뽑아 같은 장면이라도 다른 그림이 나오게 한다.
             # **소재를 먼저 본다.** 갈래로만 고르면 커피 기사에 은행 건물이 깔린다
             # (대표님 지적 2026-09-02 "커피 기사의 뒷 배경그림은 안 맞는 듯").
+            # 2026-09-23: 아래 여덟 줄을 맨 위에 더했다. 5일치를 손으로 만들며 그림이 글과 안 맞는
+            # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
+            # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              (("영화", "극장", "시네마", "cgv"),
+               "an empty cinema hall with red seats facing a big screen"),
+              (("화재", "소방"),
+               "a red fire truck parked beside a narrow alley at dawn"),
+              (("폭우", "홍수", "침수", "산사태"),
+               "a flooded country road with rice fields under gray rain clouds"),
+              (("차량호출", "택시", "그랩"),
+               "small electric cars parked in a row at a charging station"),
+              (("버스", "지하철", "도시철도", "승차권", "환승"),
+               "a modern city bus at an empty bus stop"),
+              (("휘발유", "주유소", "유가"),
+               "a gas station with fuel pumps under a clear morning sky"),
+              (("증시", "주식", "증권", "환율"),
+               "stacked coins and a rising line chart on a plain table"),
+              (("문화의 날",),
+               "a quiet museum hall with framed paintings and a bench"),
               (("커피", "cà phê", "coffee", "로부스타", "아라비카"),
                "coffee beans and a coffee cup on a wooden table"),
               (("쌀국수", "포 ", "phở", "pho ", "국수", "식당", "먹거리", "맛집"),
@@ -545,7 +573,8 @@ def main():
                "a fighter jet silhouette on an empty runway"),
               (("임금", "월급", "최저임금", "급여", "lương", "wage", "salary"),
                "an envelope of banknotes and a payslip on a desk"),
-              (("기숙사", "숙소", "방", "이사", "고향", "설", "명절", "tết"),
+              # '방'·'설' 한 글자는 '방문'·'설립'·'설명'에도 걸려 부실채권 기사에 침실이 깔렸다 (2026-09-23)
+              (("기숙사", "숙소", "이사", "고향", "설날", "명절", "tết"),
                "a small tidy room with a bed and a suitcase"),
             ]
             SCENES = {
