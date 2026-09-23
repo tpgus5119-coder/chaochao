@@ -82,6 +82,17 @@ def main():
                 k = re.sub(r"\s+", " ", U.normalize("NFC", w["ko"]).split("/")[0].split("(")[0]).strip()
                 if k not in pr or k in seen: continue
                 seen.add(k); need.append(k)
+    # GYBM 통합 낱말도 같은 뜻-해시 이름으로 굽는다 (2026-09-22/23).
+    gp = R / "data" / "gybm.json"
+    if gp.exists():
+        gb = json.loads(gp.read_text(encoding="utf-8"))
+        for src in gb["sources"]:
+            for l in src["lessons"]:
+                for w in l["words"]:
+                    if w.get("img"): continue
+                    k = re.sub(r"\s+", " ", U.normalize("NFC", w["ko"]).split("/")[0].split("(")[0]).strip()
+                    if k not in pr or k in seen: continue
+                    seen.add(k); need.append(k)
     if a.limit: need = need[:a.limit]
     print(f"구울 그림 {len(need)}장", flush=True)
     made = skip = fail = 0

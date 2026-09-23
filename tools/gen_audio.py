@@ -70,6 +70,19 @@ def collect(data):
         for w in o.get("gramwords", []):
             out.setdefault(w["vi"], "word")
             if w.get("ex"): out.setdefault(w["ex"]["vi"], "sent")
+    # GYBM 통합 낱말(메인·서브 교재 + 수업자료 + 선배단어, 대표님 지시 2026-09-22/23)
+    #    낱말과 예문 둘 다 소리가 필요하다. basicwords.json과 텍스트가 겹치면
+    #    (예: 선배단어 출처) 해시가 같아 자동으로 재사용된다 — 새로 만들 필요 없음.
+    gp = ROOT / "data" / "gybm.json"
+    if gp.exists():
+        gb = json.loads(gp.read_text(encoding="utf-8"))
+        for src in gb["sources"]:
+            for l in src["lessons"]:
+                for w in l["words"]:
+                    out.setdefault(w["vi"], "word")
+                    if w.get("ex"):
+                        out.setdefault(w["ex"]["vi"], "sent")
+
     # 예문 안에만 나오는 낱말 (data/exgloss.json) — này·đang·ở 같은 말들.
     #   2026-08-31: 이것이 빠져 있어 681개 중 349개에 소리가 없었다.
     #   소리가 없으면 앱이 **기기 내장 목소리**로 대신 읽는데, 그러면 골라 둔

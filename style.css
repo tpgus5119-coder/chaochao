@@ -440,13 +440,23 @@ button.song{
 .badge i{font-style:normal; font-size:13px}
 .badge em{font-style:normal}
 
-/* 세로 지도 — 끝낸 과 · 지금 · 다음 과를 이은 세로줄 하나. 완료(체크) · 지금(고리, 크게)
-   · 다음(자물쇠, 흐리게)를 색뿐 아니라 표시·굵기로도 가른다. */
+/* 산길 지도 — 끝낸 과 · 지금 · 다음 과를 좌우로 구불거리며 위로 오르는 길 하나로 잇는다.
+   완료(체크) · 지금(고리, 크게) · 다음(자물쇠, 흐리게)를 색뿐 아니라 표시·굵기로도 가른다.
+   배경은 아래(출발)에서 위(정상)로 갈수록 강조색이 옅게 스며 "오르고 있다"는 느낌을 준다
+   (대표님 지시, 2026-09-23). */
 .roadmap{
-  background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg);
+  background:repeating-linear-gradient(180deg,
+    color-mix(in srgb, var(--accent) 5%, var(--card)) 0px,
+    var(--card) 90px, var(--card) 180px,
+    color-mix(in srgb, var(--accent) 5%, var(--card)) 270px);
+  border:1px solid var(--line); border-radius:var(--radius-lg);
   padding:16px; margin-bottom:14px; display:flex; flex-direction:column;
+  position:relative; overflow:hidden;
 }
 .roadmap:empty{display:none; border:none; padding:0; margin:0}
+.rmpath{position:absolute; inset:0; pointer-events:none; z-index:0}
+.rmedge{fill:none; stroke:color-mix(in srgb, var(--line) 70%, var(--dim)); stroke-width:4; stroke-dasharray:1 8; stroke-linecap:round}
+.rmedge.done{stroke:var(--accent); stroke-width:5; stroke-dasharray:none}
 
 /* 성과·분석 — 예전엔 '내 정보' 화면 안에서만 보였다. 홈으로 옮기며(2026-09-09)
    이웃한 .progress·.roadmap과 같은 카드 꼴로 맞춘다. */
@@ -455,15 +465,17 @@ button.song{
   padding:16px; margin-bottom:14px;
 }
 .achieve:empty, .analysis:empty{display:none; border:none; padding:0; margin:0}
-.rmnode{position:relative; display:flex; align-items:flex-start; gap:12px; padding:0 0 22px 0}
+.rmnode{position:relative; z-index:1; display:flex; align-items:flex-start; gap:12px; padding:0 0 26px 0}
 .rmnode:last-child{padding-bottom:0}
-/* 동그라미를 잇는 세로줄 — 마지막 칸만 뺀다 */
-.rmnode:not(:last-child)::before{
-  content:""; position:absolute; left:15px; top:32px; bottom:0; width:2px; background:var(--line);
-}
+/* 점을 담는 자리 — 폭을 고정해 두고(52px) 그 안에서만 점이 좌우로 흔들려서(--wob),
+   글자 칸(rmlabel)은 흔들리지 않고 늘 같은 자리에서 시작한다. 실제 잇는 선은
+   drawRoadPath() 가 각 점의 진짜 좌표를 재서 <svg class="rmpath"> 위에 그린다. */
+.rmdotwrap{flex:0 0 auto; width:80px; height:32px; position:relative}
 .rmdot{
-  flex:0 0 auto; width:32px; height:32px; border-radius:50%; display:grid; place-items:center;
+  position:absolute; left:calc(50% + var(--wob, 0px)); top:0; transform:translateX(-50%);
+  width:32px; height:32px; border-radius:50%; display:grid; place-items:center;
   font-size:14px; background:var(--bg); border:2px solid var(--line); color:var(--dim); z-index:1;
+  transition:left .2s ease;
 }
 .rmnode.done .rmdot{background:var(--ok); border-color:var(--ok); color:#fff}
 .rmnode.lock .rmdot{opacity:.6}

@@ -108,6 +108,19 @@ def main():
                 k = norm(w["ko"]).split("/")[0].split("(")[0].strip()
                 if k in seen or not drawable(w["ko"]): continue
                 seen.add(k); need.append(k)
+    # GYBM 통합 낱말(메인·서브 교재 + 수업자료 + 선배단어, 대표님 지시 2026-09-22/23)도
+    # 같은 뜻-해시 이름 체계를 쓰므로 여기 합쳐서 프롬프트를 만들면 gen_word_img.py가
+    # order.json·days.json과 똑같이 구워 낸다.
+    gp = R / "data" / "gybm.json"
+    if gp.exists():
+        gb = json.loads(gp.read_text(encoding="utf-8"))
+        for src in gb["sources"]:
+            for l in src["lessons"]:
+                for w in l["words"]:
+                    if w.get("img"): continue
+                    k = norm(w["ko"]).split("/")[0].split("(")[0].strip()
+                    if k in seen or not drawable(w["ko"]): continue
+                    seen.add(k); need.append(k)
     have = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
     done = dict(have)
     for f in (R / "data").glob("_imgprompts*.json"):

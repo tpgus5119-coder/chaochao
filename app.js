@@ -4975,19 +4975,58 @@ function renderRoadmap(host, nodes, curKey, opt) {
   host.textContent = '';
   if (!nodes.length) return;
   const free = !!(opt && opt.freeNav);
-  nodes.forEach(nd => {
+  // 산길처럼 좌우로 살짝 구불거리며 위로 올라가는 느낌 (대표님 지시, 2026-09-23:
+  // "좀더 길을 걷고 있고, 더 높은곳으로 가고 잇음을 시각적으로"). 점(dot)만 폭 52px
+  // 안에서 흔들리고 글자 자리는 고정이라, 레슨 제목이 길어도 줄바꿈이 안 틀어진다.
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'rmpath');
+  host.append(svg);
+  const rows = [];
+  nodes.forEach((nd, i) => {
     const state = nd.key === curKey ? 'cur' : nd.done ? 'done' : 'lock';
+    const done = nd.done || state === 'cur';
+    const isLast = i === nodes.length - 1;
     const row = el('div', 'rmnode ' + state);
+    const wob = Math.round(Math.sin(i * 0.95) * 34);
+    const dotwrap = el('span', 'rmdotwrap');
+    dotwrap.style.setProperty('--wob', wob + 'px');
     const dot = el('span', 'rmdot',
+      isLast && done ? '🚩' :
       nd.done ? '✔' : state === 'cur' ? '' : free ? (nd.num != null ? String(nd.num) : '') : '🔒');
+    dotwrap.append(dot);
     const lbl = el('div', 'rmlabel');
     lbl.append(el('b', null, esc(nd.title)));
     if (nd.sub) lbl.append(el('span', 'rmsub', esc(nd.sub)));
     if (state === 'cur') lbl.append(el('span', null, tr('지금 여기')));
-    row.append(dot, lbl);
+    row.append(dotwrap, lbl);
     if ((state === 'cur' || free) && nd.fn) { row.onclick = nd.fn; row.classList.add('go'); }
     host.append(row);
+    rows.push({ dotwrap, done });
   });
+  requestAnimationFrame(() => drawRoadPath(host, svg, rows));
+}
+
+/* renderRoadmap 이 그린 점들을 구불구불한 선으로 잇는다 — 실제 배치 후 좌표를 재서
+   그리므로 글자 줄바꿈으로 칸 높이가 들쭉날쭉해도 선이 항상 점을 정확히 지난다. */
+function drawRoadPath(host, svg, rows) {
+  if (!host.isConnected || !rows.length) return;
+  const hb = host.getBoundingClientRect();
+  const pts = rows.map(r => {
+    const db = r.dotwrap.querySelector('.rmdot').getBoundingClientRect();
+    return { x: db.left + db.width / 2 - hb.left, y: db.top + db.height / 2 - hb.top, done: r.done };
+  });
+  svg.setAttribute('width', hb.width);
+  svg.setAttribute('height', hb.height);
+  svg.setAttribute('viewBox', `0 0 ${hb.width} ${hb.height}`);
+  svg.textContent = '';
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1], b = pts[i];
+    const midY = (a.y + b.y) / 2;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M${a.x},${a.y} C${a.x},${midY} ${b.x},${midY} ${b.x},${b.y}`);
+    path.setAttribute('class', 'rmedge' + (a.done ? ' done' : ''));
+    svg.append(path);
+  }
 }
 
 function renderHome() {
