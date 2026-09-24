@@ -1,0 +1,55 @@
+{
+  "source": "줌수업자료",
+  "bai": 4,
+  "title": "Bài 4: Số và tiền",
+  "title_en": "Number and money",
+  "title_ko": "숫자와 돈",
+  "words": [
+    {"vi": "không", "ko": "영, 공(0)", "en": "zero"},
+    {"vi": "một", "ko": "하나(1)", "en": "one"},
+    {"vi": "hai", "ko": "둘(2)", "en": "two"},
+    {"vi": "ba", "ko": "셋(3)", "en": "three"},
+    {"vi": "bốn", "ko": "넷(4)", "en": "four"},
+    {"vi": "năm", "ko": "다섯(5) — '해/년'이라는 뜻도 있는 동음이의어", "en": "five — also a homonym meaning \"year\""},
+    {"vi": "sáu", "ko": "여섯(6)", "en": "six"},
+    {"vi": "bảy", "ko": "일곱(7)", "en": "seven"},
+    {"vi": "tám", "ko": "여덟(8)", "en": "eight"},
+    {"vi": "chín", "ko": "아홉(9) — '익다/익은'이라는 뜻도 있는 동음이의어", "en": "nine — also a homonym meaning \"ripe/cooked\""},
+    {"vi": "mười", "ko": "열(10)", "en": "ten"},
+    {"vi": "mười một", "ko": "열하나(11)", "en": "eleven"},
+    {"vi": "mười hai", "ko": "열둘(12)", "en": "twelve"},
+    {"vi": "mười ba", "ko": "열셋(13)", "en": "thirteen"},
+    {"vi": "mười bốn", "ko": "열넷(14)", "en": "fourteen"},
+    {"vi": "mười lăm", "ko": "열다섯(15)", "en": "fifteen"},
+    {"vi": "mười sáu", "ko": "열여섯(16)", "en": "sixteen"},
+    {"vi": "mười bảy", "ko": "열일곱(17)", "en": "seventeen"},
+    {"vi": "mười tám", "ko": "열여덟(18)", "en": "eighteen"},
+    {"vi": "mười chín", "ko": "열아홉(19)", "en": "nineteen"},
+    {"vi": "trăm", "ko": "백(100)", "en": "hundred"},
+    {"vi": "mươi", "ko": "십(20 이상 두 자리 수의 '십', 예: hai mươi=20)", "en": "ten (used for tens from 20 up, e.g. hai mươi=20)"},
+    {"vi": "mốt", "ko": "하나(21·31·41...처럼 끝자리에 쓰는 '1'의 변이형)", "en": "one (variant used as final digit in 21, 31, 41...)"},
+    {"vi": "tư", "ko": "넷(24·34...에서 쓰는 '4'의 변이형, hai tư=24가 hai bốn보다 흔함)", "en": "four (variant used in numbers like 24; \"hai tư\" is more common than \"hai bốn\")"},
+    {"vi": "lăm", "ko": "다섯(15·25 등 끝자리에 쓰는 '5'의 변이형, 예: mười lăm=15)", "en": "five (variant used as the final digit in 15, 25, etc.)"},
+    {"vi": "nhăm", "ko": "다섯(hai nhăm=25처럼 25에서 lăm 대신 쓰기도 하는 변이형)", "en": "five (alternative to \"lăm\", used e.g. in \"hai nhăm\"=25)"},
+    {"vi": "nghìn", "ko": "천(1,000)", "en": "thousand"},
+    {"vi": "triệu", "ko": "백만(1,000,000)", "en": "million"},
+    {"vi": "đồng", "ko": "동(베트남 화폐 단위)", "en": "dong (Vietnamese currency unit)"}
+  ],
+  "grammar": [
+    {
+      "title_vi": "Số đếm 0–19",
+      "title_ko": "0~19 기본 수사",
+      "note_ko": "0(không)부터 9(chín)까지는 고유한 수사이고, 10(mười)부터는 'mười+한 자리 수'로 만든다(11=mười một … 19=mười chín). 단 15는 'mười năm'이 아니라 'mười lăm'으로 예외적으로 읽는다."
+    },
+    {
+      "title_vi": "B. Number from 10 to 100 — 수 만들기 규칙과 예외",
+      "title_ko": "10~100 수 만들기 규칙과 예외",
+      "note_ko": "① 기본 규칙: 두 자리 수는 기본 산수처럼 '(십의 자리 수)+mươi+(일의 자리 수)'로 만든다(더하기 개념). 예: 22=hai (mươi) hai, 99=chín mươi chín. 100=một trăm(백), 111=Một trăm mười một. ② 0, 1, 4, 5는 끝자리에서 형태가 바뀌는 예외: 정수 10단위는 mươi만 쓰고 끝자리 없음(10=mười, 20=hai mươi, 30=ba mươi); 끝자리 1은 một 대신 mốt(21=hai mốt, 단 11=mười một은 예외적으로 một 유지); 끝자리 4는 bốn 대신 tư를 더 흔히 씀(24=hai tư가 hai bốn보다 흔함); 끝자리 5는 năm 대신 lăm 또는 nhăm(25=hai lăm/hai nhăm)."
+    },
+    {
+      "title_vi": "Tiền — money (화폐 단위와 지폐)",
+      "title_ko": "베트남 화폐 단위와 지폐 읽기",
+      "note_ko": "베트남 화폐 단위는 đồng(동). 1,000=một nghìn(천), 1,000,000=một triệu(백만). 금액은 천 단위마다 마침표를 찍어 표기한다(1.000, 2.000, 10.000, 1.000.000 등 — 한국의 쉼표 자리와 같은 자리에 마침표를 씀). 실제 유통 지폐 단위: 10.000/20.000/50.000/100.000/200.000/500.000 đồng이며, 'Mười nghìn đồng'(만 동), 'Hai mươi nghìn đồng'(2만 동), 'Một trăm nghìn đồng'(10만 동)처럼 '(숫자) nghìn đồng' 형태로 읽는다."
+    }
+  ]
+}

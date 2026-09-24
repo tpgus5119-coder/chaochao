@@ -1,0 +1,43 @@
+{
+  "source": "줌수업자료",
+  "bai": 5,
+  "title": "Phương hướng + chỉ đường",
+  "title_en": "Directions + Ask for Directions",
+  "title_ko": "방향 + 길 안내",
+  "words": [
+    {"vi": "ở", "ko": "~에 있다 (장소를 나타내는 전치사)", "en": "at"},
+    {"vi": "đâu", "ko": "어디", "en": "where"},
+    {"vi": "đi", "ko": "가다", "en": "go"},
+    {"vi": "như thế nào / thế nào", "ko": "어떻게", "en": "how"},
+    {"vi": "Đi thẳng", "ko": "직진하다", "en": "Go straight"},
+    {"vi": "Rẽ trái", "ko": "좌회전하다", "en": "Turn left"},
+    {"vi": "Rẽ phải", "ko": "우회전하다", "en": "Turn right"},
+    {"vi": "Quay lại", "ko": "유턴하다, 되돌아가다", "en": "Turn around"},
+    {"vi": "(Đi) nhanh lên", "ko": "빨리 가다, 서두르다", "en": "(Go) faster"},
+    {"vi": "(Đi) chậm lại", "ko": "천천히 가다, 속도를 줄이다", "en": "(Go) slower"},
+    {"vi": "Đây", "ko": "여기", "en": "Here"},
+    {"vi": "Dừng lại", "ko": "멈추다, 정지하다", "en": "Stop"},
+    {"vi": "Xe ôm", "ko": "쎄옴 (오토바이 택시)", "en": "Motorbike taxi"},
+    {"vi": "Xe taxi", "ko": "택시", "en": "Taxi"},
+    {"vi": "Xe xích-lô", "ko": "씨클로 (자전거 인력거)", "en": "Cyclo"},
+    {"vi": "Bao nhiêu tiền / Bao tiền", "ko": "얼마예요? (가격을 물을 때)", "en": "How much (money)?"},
+    {"vi": "nghìn", "ko": "천 (화폐 단위)", "en": "thousand"},
+    {"vi": "Cho em đến...", "ko": "~로 가 주세요, ~까지 데려다 주세요", "en": "Take me to..."},
+    {"vi": "Được rồi", "ko": "됐어요, 알겠어요", "en": "OK, alright"},
+    {"vi": "Lăng Bác", "ko": "호찌민 묘", "en": "Ho Uncle Mausoleum"},
+    {"vi": "Chùa một cột", "ko": "못꼿사 (일주사, 기둥 하나로 된 절)", "en": "One-pole Pagoda"},
+    {"vi": "Văn Miếu", "ko": "반미에우 (문묘)", "en": "Temple of Literature"}
+  ],
+  "grammar": [
+    {
+      "title_vi": "A. WHERE? ([Nơi] + ở + đâu?)",
+      "title_ko": "어디에 있어요? (장소 + ở + đâu?)",
+      "note_ko": "장소의 위치를 물을 때 쓰는 표현. [장소] + ở(~에 있다) + đâu(어디)?로 질문하고, 대답은 [장소] + ở + [주소] 형태로 한다. 예) Nhà em ở đâu? (당신 집은 어디예요?) → Nhà em ở Busan (제 집은 부산에 있어요). Công ty của em ở đâu? → Công ty của em ở Hà Nội (회사는 하노이에 있어요)."
+    },
+    {
+      "title_vi": "B. ASK FOR DIRECTIONS ([Nơi] + đi + thế nào?)",
+      "title_ko": "길 묻기 (장소 + đi + thế nào?)",
+      "note_ko": "길을 물을 때 쓰는 표현. [장소] + đi(가다) + thế nào/như thế nào(어떻게)?로 질문하면, 대답은 방향 지시(직진, 좌회전, 우회전 등)로 한다. 예) Xuân Diệu đi thế nào? (쑤언지에우는 어떻게 가요?) → Đi thẳng rồi rẽ phải (직진한 다음 우회전하세요). Công ty SamSung đi thế nào? → Đi thẳng rồi rẽ trái (직진한 다음 좌회전하세요)."
+    }
+  ]
+}
