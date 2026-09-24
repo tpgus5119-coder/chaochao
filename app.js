@@ -853,7 +853,9 @@ function toneArrow(name) {
 function bigWord(vi, tones) {
   const b = el('button', 'bigw');
   b.type = 'button';
-  const list = (tones || []).length ? tones : vi.split(' ').map(sy => ({ syl: sy, name: 'ngang' }));
+  /* 성조 정보가 없는 낱말(GYBM 메인·서브·줌·선배 낱말 7천여 개)은 **글자에서 성조를 읽어** 화살표를 그린다.
+     전에는 전부 'ngang'(평평)으로 그려서 chào·đến·này 같은 낱말도 평평한 화살표가 붙었다(2026-09-24 발견). */
+  const list = (tones || []).length ? tones : vi.split(' ').map(sy => ({ syl: sy, name: sibToneOf(sy) }));
   list.forEach(t => {
     const u = el('span', 'bwsyl ' + t.name);
     u.append(el('b', null, esc(t.syl)), el('i', null, toneArrow(t.name)));

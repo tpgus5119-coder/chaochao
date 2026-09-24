@@ -2059,13 +2059,7 @@
        },
        "img": "w-fb9e0fb244.webp",
        "star": 1
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 1부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "các",
        "ko": "여러, ~들(복수 표지)",
@@ -2077,22 +2071,82 @@
        "ex_src": "main_exact"
       },
       {
+       "vi": "đến",
+       "ko": "도착하다, ~까지",
+       "kr_read": "덴",
+       "ex": {
+        "vi": "Anh ấy đến muộn.",
+        "ko": "그는 늦게 도착했다."
+       },
+       "img": "b-den.webp",
+       "star": 1
+      },
+      {
+       "vi": "này",
+       "ko": "이 (이것, 이 ~)",
+       "kr_read": "나이",
+       "ex": {
+        "vi": "Bài này không hay.",
+        "ko": "이 과는 재미없어요."
+       },
+       "ex_src": "main_exact"
+      },
+      {
+       "vi": "bán",
+       "ko": "팔다",
+       "kr_read": "반",
+       "ex": {
+        "vi": "Cửa hàng này bán rất nhiều loại trái cây.",
+        "ko": "이 가게는 다양한 과일을 팝니다."
+       },
+       "img": "b-ban.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "đầy",
+       "ko": "가득 차다, 가득한",
+       "kr_read": "더이",
+       "ex": {
+        "vi": "Ly nước này đầy quá.",
+        "ko": "이 물컵은 너무 가득 찼다."
+       },
+       "img": "b-day.webp",
+       "weekly": true
+      },
+      {
+       "vi": "rát",
+       "ko": "따갑다, 쓰라리다",
+       "kr_read": "잣",
+       "ex": {
+        "vi": "Cổ họng tôi rát quá.",
+        "ko": "목이 너무 따가워요."
+       },
+       "ex_src": "claude"
+      },
+      {
+       "vi": "ở",
+       "ko": "~에 있다, ~에서",
+       "kr_read": "어",
+       "ex": {
+        "vi": "Không, tôi dạy ở Quận 2.",
+        "ko": "아니요, 저는 2군에서 가르쳐요."
+       },
+       "ex_src": "main_exact"
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 1부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
+      {
        "vi": "ơn",
        "ko": "은혜, 신세(cám ơn의 어근)",
        "kr_read": "언",
        "ex": {
         "vi": "Cảm ơn em.",
         "ko": "란: 고마워요."
-       },
-       "ex_src": "main_exact"
-      },
-      {
-       "vi": "ở",
-       "ko": "~에 있다",
-       "kr_read": "어",
-       "ex": {
-        "vi": "Không, tôi dạy ở Quận 2.",
-        "ko": "아니요, 저는 2군에서 가르쳐요."
        },
        "ex_src": "main_exact"
       },
@@ -2223,13 +2277,7 @@
         "ko": "꿘: 왜요?"
        },
        "ex_src": "main_exact"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 2부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "đấy",
        "ko": "거기, 그것(지시대명사)",
@@ -2249,7 +2297,13 @@
         "ko": "저 사람은 내 친구이다."
        },
        "img": "b-ay.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 2부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "mặc",
        "ko": "입다",
@@ -2392,13 +2446,7 @@
        },
        "ex_src": "qwen",
        "img": "w-3077db5473.webp"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 3부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "mười tám",
        "ko": "열여덟(18)",
@@ -2420,7 +2468,13 @@
        },
        "ex_src": "qwen",
        "img": "w-471ad2292f.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 3부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "hai mươi",
        "ko": "스물(20)",
@@ -2561,13 +2615,7 @@
        },
        "ex_src": "main_exact",
        "img": "w-5fdee9411b.webp"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 4부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "người Úc",
        "ko": "호주 사람",
@@ -2589,7 +2637,13 @@
        },
        "ex_src": "main_exact",
        "img": "w-33d3d5f0a8.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 4부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "người Trung Quốc",
        "ko": "중국 사람",
@@ -2731,13 +2785,7 @@
         "ko": "그녀는 프랑스인이다."
        },
        "img": "b-nguoi-phap.webp"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 5부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "người Canada",
        "ko": "캐나다 사람",
@@ -2759,7 +2807,13 @@
        },
        "ex_src": "qwen",
        "img": "w-2b841ca2be.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 5부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "người nước ngoài",
        "ko": "외국인",
@@ -2900,13 +2954,7 @@
        "img": "b-pho-tu.webp",
        "star": 1,
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 6부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "điều",
        "ko": "것, 사항",
@@ -2928,7 +2976,13 @@
         "ko": "우리는 곧 도착한다."
        },
        "img": "b-toi.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 6부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "báo",
        "ko": "신문",
@@ -2995,17 +3049,6 @@
        "weekly": true
       },
       {
-       "vi": "đến",
-       "ko": "도착하다, ~까지",
-       "kr_read": "덴",
-       "ex": {
-        "vi": "Anh ấy đến muộn.",
-        "ko": "그는 늦게 도착했다."
-       },
-       "img": "b-den.webp",
-       "star": 1
-      },
-      {
        "vi": "sao",
        "ko": "왜",
        "kr_read": "싸오",
@@ -3066,13 +3109,7 @@
         "ko": "그는 취했다."
        },
        "img": "b-say.webp"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 7부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "ngôi thứ ba",
        "ko": "3인칭",
@@ -3102,17 +3139,13 @@
         "ko": "어제 저는 Brian과 David를 만났어요."
        },
        "ex_src": "main_exact"
-      },
-      {
-       "vi": "này",
-       "ko": "이 (이것, 이 ~)",
-       "kr_read": "나이",
-       "ex": {
-        "vi": "Bài này không hay.",
-        "ko": "이 과는 재미없어요."
-       },
-       "ex_src": "main_exact"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 7부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "Anh",
        "ko": "영국",
@@ -3235,13 +3268,7 @@
        "img": "b-loi.webp",
        "star": 2,
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 8부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "anh ấy",
        "ko": "그 (형/오빠뻘)",
@@ -3281,7 +3308,13 @@
         "ko": "그분 어디 가셨어요?"
        },
        "ex_src": "qwen"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 8부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "bà ấy",
        "ko": "그녀 (할머니/아주머니뻘)",
@@ -3402,13 +3435,7 @@
        },
        "ex_src": "main_exact",
        "img": "w-e8c966943e.webp"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 9부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "lần",
        "ko": "번, 회 (횟수)",
@@ -3452,7 +3479,13 @@
        },
        "ex_src": "claude",
        "img": "w-f2df1de2db.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 9부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "vạn",
        "ko": "만(10,000)",
@@ -3569,13 +3602,7 @@
        },
        "ex_src": "claude",
        "img": "w-c8ef070c70.webp"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 10부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "sậy",
        "ko": "갈대",
@@ -3618,7 +3645,13 @@
         "ko": "그녀는 머리를 뒤로 휙 넘겨요."
        },
        "ex_src": "claude"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 10부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "mạt",
        "ko": "진드기; 말기, 끝",
@@ -3741,13 +3774,7 @@
        },
        "ex_src": "main_exact",
        "img": "d03-viet-nam.webp"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 11부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "Chile",
        "ko": "칠레",
@@ -3791,7 +3818,13 @@
        },
        "ex_src": "qwen",
        "img": "w-380ce3376b.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 11부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "Thái Lan",
        "ko": "태국",
@@ -3911,13 +3944,7 @@
         "ko": "기사가 환경 문제를 언급한다."
        },
        "img": "b-de-cap.webp"
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 12부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "hiện diện",
        "ko": "존재하다, 현존",
@@ -3960,7 +3987,13 @@
        },
        "img": "b-ghep.webp",
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "Chị ấy là người Hàn Quốc · 12부",
+     "sub": "그녀는 한국 사람입니다",
+     "words": [
       {
        "vi": "thêm",
        "ko": "더하다, 추가하다; 더",
@@ -4083,13 +4116,7 @@
        "img": "b-duc.webp",
        "star": 1,
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "Chị ấy là người Hàn Quốc · 13부",
-     "sub": "그녀는 한국 사람입니다",
-     "words": [
+      },
       {
        "vi": "Đài Loan",
        "ko": "대만",
@@ -15275,18 +15302,6 @@
        "weekly": true
       },
       {
-       "vi": "bán",
-       "ko": "팔다",
-       "kr_read": "반",
-       "ex": {
-        "vi": "Cửa hàng này bán rất nhiều loại trái cây.",
-        "ko": "이 가게는 다양한 과일을 팝니다."
-       },
-       "img": "b-ban.webp",
-       "star": 2,
-       "weekly": true
-      },
-      {
        "vi": "thứ",
        "ko": "종류, 가지",
        "kr_read": "트",
@@ -15317,13 +15332,7 @@
        },
        "ex_src": "qwen",
        "img": "w-96ff299b21.webp"
-      }
-     ]
-    },
-    {
-     "title": "Anh thường mua sắm ở đâu? · 7부",
-     "sub": "당신은 보통 어디서 쇼핑하세요?",
-     "words": [
+      },
       {
        "vi": "hàng thủ công",
        "ko": "수공예품",
@@ -15334,7 +15343,13 @@
        },
        "ex_src": "qwen",
        "img": "w-707016f31b.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "Anh thường mua sắm ở đâu? · 7부",
+     "sub": "당신은 보통 어디서 쇼핑하세요?",
+     "words": [
       {
        "vi": "đồ gia dụng",
        "ko": "생활용품, 가정용품",
@@ -15488,13 +15503,7 @@
        },
        "ex_src": "qwen",
        "img": "w-c7bfdd669f.webp"
-      }
-     ]
-    },
-    {
-     "title": "Anh thường mua sắm ở đâu? · 8부",
-     "sub": "당신은 보통 어디서 쇼핑하세요?",
-     "words": [
+      },
       {
        "vi": "cao",
        "ko": "높은, (가격이) 비싼",
@@ -15506,7 +15515,13 @@
        "img": "b-cao.webp",
        "star": 1,
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "Anh thường mua sắm ở đâu? · 8부",
+     "sub": "당신은 보통 어디서 쇼핑하세요?",
+     "words": [
       {
        "vi": "chợ Tân Định",
        "ko": "떤딘 시장 (호치민시)",
@@ -15662,13 +15677,7 @@
        "img": "b-vay.webp",
        "star": 2,
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "Anh thường mua sắm ở đâu? · 9부",
-     "sub": "당신은 보통 어디서 쇼핑하세요?",
-     "words": [
+      },
       {
        "vi": "màu",
        "ko": "색",
@@ -15679,7 +15688,13 @@
        },
        "img": "b-mau.webp",
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "Anh thường mua sắm ở đâu? · 9부",
+     "sub": "당신은 보통 어디서 쇼핑하세요?",
+     "words": [
       {
        "vi": "túi xách",
        "ko": "가방, 핸드백",
@@ -15823,13 +15838,7 @@
        },
        "img": "b-lit.webp",
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "Anh thường mua sắm ở đâu? · 10부",
-     "sub": "당신은 보통 어디서 쇼핑하세요?",
-     "words": [
+      },
       {
        "vi": "mét",
        "ko": "미터",
@@ -15841,7 +15850,13 @@
        "img": "b-met.webp",
        "star": 1,
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "Anh thường mua sắm ở đâu? · 10부",
+     "sub": "당신은 보통 어디서 쇼핑하세요?",
+     "words": [
       {
        "vi": "lá",
        "ko": "장 (잎 모양을 세는 종별사)",
@@ -15990,13 +16005,7 @@
        "img": "b-den.webp",
        "star": 1,
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "Anh thường mua sắm ở đâu? · 11부",
-     "sub": "당신은 보통 어디서 쇼핑하세요?",
-     "words": [
+      },
       {
        "vi": "to",
        "ko": "큰",
@@ -16007,7 +16016,13 @@
        },
        "img": "b-to.webp",
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "Anh thường mua sắm ở đâu? · 11부",
+     "sub": "당신은 보통 어디서 쇼핑하세요?",
+     "words": [
       {
        "vi": "tiệc",
        "ko": "파티, 잔치",
