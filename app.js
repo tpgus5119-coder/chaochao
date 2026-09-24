@@ -636,6 +636,25 @@ const UIVI = {
     'Khoảnh khắc sửa được lỗi là quý nhất',
   '점수는 <b>효과크기 × 걸리는 시간</b>으로 정했습니다 — 연구가 잰 "얼마나 남는가"에 그 활동에 드는 시간을 곱한 값입니다. 그래서 점수를 좇는 것과 실제로 느는 것이 같은 방향이 됩니다.':
     'Điểm được tính theo <b>độ hiệu quả × thời gian bỏ ra</b> — lấy mức "còn nhớ được bao nhiêu" mà nghiên cứu đo được nhân với thời gian dành cho hoạt động đó. Nhờ vậy, chạy theo điểm cũng chính là tiến bộ thật.',
+  '헷갈리는 짝': 'Cặp dễ nhầm',
+  '성조만 다른 낱말': 'Từ chỉ khác thanh điệu',
+  '글자는 같고 높낮이만 다름': 'Cùng chữ, chỉ khác cao độ',
+  '모양이 조금 다른 글자': 'Chữ cái hơi khác dạng',
+  '성조는 같음': 'Cùng thanh điệu',
+  '뜻 미확인': 'Chưa rõ nghĩa',
+  '예': 'VD',
+  '순서대로 듣기': 'Nghe lần lượt',
+  '사전에는 더 있음(뜻 미확인)': 'Trong từ điển còn có (chưa rõ nghĩa)',
+  '내렸다 올림': 'Xuống rồi lên',
+  '끊었다 올림': 'Ngắt rồi lên',
+  '짧고 무겁게': 'Ngắn và nặng',
+  '평평하게': 'Bằng phẳng',
+  '내려감': 'Xuống',
+  '올라감': 'Lên',
+  '<b>hỏi</b>와 <b>ngã</b>는 남부·중부에서 한 소리로 합쳐집니다. 북부 소리로는 다릅니다.':
+    '<b>hỏi</b> và <b>ngã</b> nhập làm một ở miền Nam và miền Trung. Giọng miền Bắc thì khác nhau.',
+  '받침이 <b>p·t·c·ch</b>인 음절은 성조가 <b>sắc</b> 아니면 <b>nặng</b> 둘 중 하나뿐입니다.':
+    'Âm tiết kết thúc bằng <b>p·t·c·ch</b> chỉ có thể mang thanh <b>sắc</b> hoặc <b>nặng</b>.',
 };
 /* 화면 글을 베트남어로 바꾼다.
    'dev' 는 만드는 사람용 — 베트남어 뒤에 한국어 원문을 ⟨ ⟩ 로 같이 붙인다.
@@ -865,6 +884,145 @@ function toneRow(tones, small) {
     r.append(b);
   });
   return r;
+}
+
+/* ---------- 헷갈리는 짝 ----------
+   대표님 제안(2026-09-24): 낱말 하나를 볼 때 ① 성조만 다른 낱말 ② o·ô·ơ 처럼 글자 모양이 조금 다른
+   낱말도 같이 본다. 자료 data/siblings.json 은 tools/build_siblings.py 가 글자 규칙으로 만든다.
+   뜻은 앱 안 낱말에서만 가져온다 — 근거가 없는 짝은 '뜻 미확인'으로 적고 지어내지 않는다.
+   처음 배울 때 관련 낱말을 한꺼번에 외우면 오히려 헷갈린다는 연구(의미 군집)가 많아서, 낱말 카드에서는
+   접어 두고 퀴즈에서 틀렸을 때만 펼쳐 보여 준다. */
+let SIB = null, SIBP = null;
+function sibLoad() {
+  if (SIB) return Promise.resolve(SIB);
+  if (!SIBP) SIBP = fetch('data/siblings.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => (SIB = j)).catch(() => { SIBP = null; return null; });
+  return SIBP;
+}
+const SIB_T = ['ngang', 'huyền', 'sắc', 'hỏi', 'ngã', 'nặng'];
+const SIB_KO = { 'ngang': '평평하게', 'huyền': '내려감', 'sắc': '올라감', 'hỏi': '내렸다 올림',
+                 'ngã': '끊었다 올림', 'nặng': '짧고 무겁게' };
+const sibToneOf = s => {
+  const m = s.normalize('NFD').match(/[̣̀́̃̉]/);
+  return m ? { '̀': 'huyền', '́': 'sắc', '̃': 'ngã', '̉': 'hỏi', '̣': 'nặng' }[m[0]] : 'ngang';
+};
+const sibBase = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
+/* 낱말의 음절마다 짝(가족)을 찾는다 — 자기 말고 짝이 하나라도 있는 음절만 돌려준다 */
+function sibFams(vi) {
+  const seen = new Set(), out = [];
+  vi.toLowerCase().replace(/[.,!?;:…"'“”‘’()]/g, ' ').split(/\s+/).filter(Boolean).forEach(s => {
+    if (seen.has(s)) return;
+    seen.add(s);
+    const tf = SIB.tone[stripTone(s)], sf = SIB.shape[sibBase(s) + '|' + SIB_T.indexOf(sibToneOf(s))];
+    const other = f => f && (f.m.some(i => i[0] !== s) || (f.u || []).length);
+    if (other(tf) || other(sf)) out.push({ s, tf: other(tf) ? tf : null, sf: other(sf) ? sf : null });
+  });
+  return out;
+}
+/* 모양 짝은 어느 글자가 다른지 색으로 짚어 준다 (o ↔ ô ↔ ơ) — 성조 부호는 빼고 모음 모양만 견준다 */
+function sibDiff(syl, cur) {
+  const a = [...syl.normalize('NFC')], sa = [...stripTone(syl)], sc = [...stripTone(cur)];
+  return a.map((ch, i) => sc.length === sa.length && sa[i] !== sc[i] ? '<u class="dif">' + esc(ch) + '</u>' : esc(ch)).join('');
+}
+function pairRow(it, cur, withTone) {
+  const key = recKey(it[0]), tn = sibToneOf(it[0]);
+  const r = el('div', 'prow' + (it[0] === cur ? ' cur' : ''));
+  const w = el('span', 'psyl ' + tn);
+  w.append(el('b', null, withTone || it[0] === cur ? esc(it[0]) : sibDiff(it[0], cur)), el('i', null, toneArrow(tn)));
+  const m = el('span', 'pmn');
+  if (it[1]) m.append(el('span', 'pko', esc(it[1])));
+  else m.append(el('span', 'pko no', tr('뜻 미확인') + ' · ' + tr('예') + ' <b>' + esc(it[2]) + '</b> ' + esc(it[3])));
+  if (withTone) m.append(el('span', 'ptone', tn + ' · ' + tr(SIB_KO[tn])));
+  r.append(w, m);
+  if (key) {
+    const b = iconBtn('play', tr('듣기'), () => play(key, false));
+    b.classList.add('playi');
+    r.append(b);
+  }
+  return r;
+}
+/* 성조 가족을 순서대로 들려준다 — 같은 글자에 높낮이만 다른 소리를 이어서 듣는 것이 핵심이다 */
+function pairSeq(items, rows, wrap, btn) {
+  if (wrap._seq) { wrap._seq = false; return; }
+  wrap._seq = true;
+  btn.classList.add('on');
+  (async () => {
+    for (let i = 0; i < items.length && wrap._seq && wrap.isConnected; i++) {
+      const key = recKey(items[i][0]);
+      if (!key) continue;
+      rows.forEach(r => r.classList.remove('now'));
+      rows[i].classList.add('now');
+      play(key, false);
+      await new Promise(res => { const t = setTimeout(res, 2400); audio.onended = () => { clearTimeout(t); res(); }; });
+      audio.onended = null;
+      await new Promise(r => setTimeout(r, 300));
+    }
+    rows.forEach(r => r.classList.remove('now'));
+    wrap._seq = false;
+    btn.classList.remove('on');
+  })();
+}
+function pairPanel(vi, opt) {
+  const o = opt || {};
+  const wrap = el('div', 'pairbox');
+  sibLoad().then(() => {
+    if (!SIB || !wrap.isConnected) return;
+    const fams = sibFams(vi);
+    if (!fams.length) return;
+    const head = el('button', 'pairhead', '<span>' + tr('헷갈리는 짝') + '</span><i class="pchev">▾</i>');
+    head.type = 'button';
+    const body = el('div', 'pairbody');
+    let cur = 0, built = false;
+    const section = (title, note, fam, s, withTone) => {
+      const sec = el('div', 'psec');
+      sec.append(el('div', 'ptitle', tr(title) + '<span>' + tr(note) + '</span>'));
+      const rows = fam.m.map(it => pairRow(it, s, withTone));
+      rows.forEach(r => sec.append(r));
+      if ((fam.u || []).length) {
+        const u = el('div', 'punk', tr('사전에는 더 있음(뜻 미확인)'));
+        fam.u.forEach(x => u.append(el('span', 'pchip', esc(x))));
+        sec.append(u);
+      }
+      if (withTone && fam.m.filter(it => recKey(it[0])).length > 1) {
+        const b = el('button', 'ghost sm pseq', '▶ ' + tr('순서대로 듣기'));
+        b.type = 'button';
+        b.onclick = () => pairSeq(fam.m, rows, wrap, b);
+        sec.append(b);
+      }
+      return sec;
+    };
+    const draw = () => {
+      body.textContent = '';
+      if (fams.length > 1) {
+        const sel = el('div', 'psel');
+        fams.forEach((f, i) => {
+          const b = el('button', 'pchip pick' + (i === cur ? ' on' : ''), esc(f.s));
+          b.type = 'button';
+          b.onclick = () => { cur = i; draw(); };
+          sel.append(b);
+        });
+        body.append(sel);
+      }
+      const F = fams[cur];
+      if (F.tf) body.append(section('성조만 다른 낱말', '글자는 같고 높낮이만 다름', F.tf, F.s, true));
+      if (F.sf) body.append(section('모양이 조금 다른 글자', '성조는 같음', F.sf, F.s, false));
+      const tn = F.tf ? F.tf.m.map(i => sibToneOf(i[0])) : [];
+      if (tn.includes('hỏi') && tn.includes('ngã'))
+        body.append(el('div', 'pnote', '<b>hỏi</b>와 <b>ngã</b>는 남부·중부에서 한 소리로 합쳐집니다. 북부 소리로는 다릅니다.'));
+      if (/(p|t|c|ch)$/.test(F.s) && ['sắc', 'nặng'].includes(sibToneOf(F.s)))
+        body.append(el('div', 'pnote', '받침이 <b>p·t·c·ch</b>인 음절은 성조가 <b>sắc</b> 아니면 <b>nặng</b> 둘 중 하나뿐입니다.'));
+    };
+    const set = open => {
+      head.classList.toggle('on', open);
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+      body.hidden = !open;
+      if (open && !built) { built = true; draw(); }
+    };
+    head.onclick = () => set(body.hidden);
+    wrap.append(head, body);
+    set(!!o.open);
+  });
+  return wrap;
 }
 
 /* 대화 전체를 순서대로 재생한다 */
@@ -6841,6 +6999,7 @@ function drawCard() {
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
       c.append(eb);
     }
+    c.append(pairPanel(x.vi));                 // 헷갈리는 짝 — 접어 둔다(처음부터 묶어 외우면 오히려 헷갈린다)
     c.append(curveArea(x.vi, box));
     tutorTap();
   }
@@ -8132,6 +8291,7 @@ function answer(btn, correct, w) {
   const ans = el('div', 'ansbox');
   ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(w.kr_read),
              el('div', 'ko', esc(w.ko)));
+  ans.append(pairPanel(w.vi, { open: !correct }));   // 틀렸을 때만 펼친다 — 헷갈린 바로 그때가 짝을 볼 때다
   btn.parentNode.after(ans);
   /* **여기 있던 `body` 는 아무 데도 없는 이름이었다.** 그래서 ReferenceError 가 나고
      '다음 ›' 단추가 안 붙어, 맞히고도 넘어갈 수가 없었다 (대표님 지적 2026-09-03).
