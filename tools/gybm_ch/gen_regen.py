@@ -4,7 +4,7 @@ import gen_word_img as G
 from PIL import Image
 HERE = pathlib.Path(__file__).resolve().parent
 SP = HERE.parent
-SUFFIX = ", Flat vector illustration, bold black outlines, flat pastel fill, one centered subject, plain white background, no text"
+SUFFIX = ", Flat vector illustration, bold black outlines, flat pastel fill, one centered subject, plain white background"
 slug = lambda vi: hashlib.sha1(vi.encode()).hexdigest()[:10]
 rnd = int(sys.argv[1]) if len(sys.argv) > 1 else 1
 only = set(sys.argv[2][7:].split(",")) if len(sys.argv) > 2 and sys.argv[2].startswith("--only=") else None

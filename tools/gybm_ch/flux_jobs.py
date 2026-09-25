@@ -21,7 +21,7 @@ JOBS = {
 "ăn thịt": "A person eating grilled meat with chopsticks at a barbecue table",
 "khu phố": "A quiet neighborhood street with small shops and houses seen from above",
 "ký túc xá": "A university dormitory building with students on the balcony",
-"nhà khách": "A small welcoming guest house with a front door and a lantern, no writing",
+"nhà khách": "A small welcoming guest house with a front door and a lantern",
 "khu công nghiệp": "An industrial park with factories and chimneys",
 "bến xe buýt": "A bus stop shelter with a city bus arriving and people waiting",
 "sân chơi": "A children's playground with a slide and swings",

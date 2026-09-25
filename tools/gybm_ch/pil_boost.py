@@ -32,8 +32,12 @@ def sentence_bubble(vi, exvi):
     im, d = cv(); toks = exvi.split(); key = norm(vi).split()
     hi = set()
     nt = [norm(t) for t in toks]
-    for i in range(len(nt) - len(key) + 1):
-        if nt[i:i + len(key)] == key: hi = set(range(i, i + len(key))); break
+    if "..." in vi:
+        ks = {norm(k) for k in re.split(r"\.\.\.|\s+", vi) if norm(k)}
+        hi = {i for i, t in enumerate(nt) if t in ks}
+    else:
+        for i in range(len(nt) - len(key) + 1):
+            if nt[i:i + len(key)] == key: hi = set(range(i, i + len(key))); break
     bx0, by0, bx1, by1 = 20, 40, 364, 250
     bubble(d, bx0, by0, bx1, by1, 110)
     for fs in (44, 38, 34, 30, 27):
