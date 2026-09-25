@@ -3,6 +3,9 @@
 import hashlib, json, pathlib, shutil, sys
 ROOT = pathlib.Path.home() / "짜오짜오/베트남어-어플"; SP = pathlib.Path(__file__).resolve().parent
 dry = "--dry" in sys.argv
+only = None
+for a in sys.argv[1:]:
+    if a.startswith("--only-file="): only = set(json.loads(pathlib.Path(a[12:]).read_text(encoding="utf-8")))
 slug = lambda s: hashlib.sha1(s.encode()).hexdigest()[:10]
 regen = json.loads((SP / "shared_regen.json").read_text(encoding="utf-8"))
 byword = {}
@@ -19,6 +22,7 @@ def fix(o, where, vi, olds, new):
         for v in o: n += fix(v, where, vi, olds, new)
     return n
 for vi, olds in byword.items():
+    if only is not None and vi not in only: continue
     src = SP / "regen/imgnew" / f"{slug(vi)}.webp"
     if not src.exists(): skipped += 1; continue
     new = f"w-{slug('rg:' + vi)}.webp"
