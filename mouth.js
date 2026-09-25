@@ -168,7 +168,7 @@ const MOUTH = (() => {
 <clipPath id="${f('fclip')}"><ellipse id="${f('fce')}" cx="561" cy="116" rx="40" ry="20"/></clipPath>
 <marker id="${f('ar')}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#378ADD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
-<g transform="translate(50,6)">
+<g transform="translate(262,6)">
 <path id="${f('nas')}" fill="#378ADD" fill-opacity=".14" stroke="none" d="M58 122C58 100 84 94 118 94L286 96C304 97 314 104 314 122L314 134L298 130C270 131 244 129 214 122C182 121 150 126 122 135C112 141 106 149 104 155L96 167C80 153 66 141 58 122Z"/>
 <path id="${f('nasArr')}" fill="none" stroke="#378ADD" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#${f('ar')})" d="M300 112L110 108L70 112" opacity="0"/>
 <path fill="none" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" d="M100 12C84 34 58 60 36 96C29 107 27 114 35 118C41 121 47 120 52 124C58 130 62 138 66 148"/>
@@ -192,16 +192,15 @@ const MOUTH = (() => {
 <circle id="${f('m1d')}" r="2.6" fill="#E24B4A" opacity="0"/>
 <circle id="${f('m2')}" r="8" fill="none" stroke="#E24B4A" stroke-width="2.2" opacity="0"/>
 <circle id="${f('m2d')}" r="2.6" fill="#E24B4A" opacity="0"/>
-<g id="${f('names')}" fill="var(--dim)" font-size="13">
+<g id="${f('names')}" fill="var(--dim)" font-size="17">
 <g stroke="var(--line)" stroke-width="1"><path d="M190 42V104"/><path d="M104 66V152"/><path d="M160 66V130"/><path d="M262 66V136"/><path d="M30 190L50 186"/><path d="M324 168L294 176"/><path d="M324 214L302 214"/><path d="M324 292L318 290"/></g>
 <text x="190" y="36" text-anchor="middle">코안</text><text x="104" y="60" text-anchor="middle">잇몸</text><text x="160" y="60" text-anchor="middle">입천장</text>
 <text x="262" y="60" text-anchor="middle">연구개</text><text x="26" y="194" text-anchor="end">입술</text><text x="328" y="172">목젖</text>
 <text x="328" y="218">혀뿌리</text><text x="328" y="296">성대</text>
 </g>
 </g>
-<g>
+<g transform="translate(-442 0)">
 <rect x="462" y="26" width="198" height="172" rx="12" fill="var(--bg)" stroke="var(--line)"/>
-<text x="474" y="46" fill="var(--dim)" font-size="13">정면</text>
 <g transform="translate(561 120) scale(1.3) translate(-561 -116)">
 <ellipse id="${f('lipO')}" cx="561" cy="116" rx="52" ry="26" fill="#D4537E" stroke="#993556" stroke-width="1.6"/>
 <ellipse id="${f('opn')}" cx="561" cy="116" rx="40" ry="20" fill="#4A1B0C"/>
@@ -212,11 +211,11 @@ const MOUTH = (() => {
 </g>
 <ellipse id="${f('opl')}" cx="561" cy="116" rx="40" ry="20" fill="none" stroke="#993556" stroke-width="1.2"/>
 </g>
-<g font-size="12" fill="var(--dim)">
-<rect x="474" y="212" width="12" height="12" rx="3" fill="#F4C0D1" stroke="#993556" stroke-width="1.2"/><text x="492" y="222">혀·연구개</text>
-<rect x="474" y="232" width="12" height="12" rx="3" fill="#D4537E" stroke="#993556" stroke-width="1.2"/><text x="492" y="242">입술</text>
-<rect x="474" y="252" width="12" height="12" rx="3" fill="#378ADD" fill-opacity=".3" stroke="#378ADD" stroke-width="1.2"/><text x="492" y="262">콧길(코소리)</text>
-<circle cx="480" cy="278" r="6" fill="none" stroke="#E24B4A" stroke-width="2"/><text x="492" y="282">닿는 곳</text>
+<g font-size="15" fill="var(--dim)">
+<rect x="474" y="214" width="14" height="14" rx="3" fill="#F4C0D1" stroke="#993556" stroke-width="1.2"/><text x="496" y="226">혀·연구개</text>
+<rect x="474" y="240" width="14" height="14" rx="3" fill="#D4537E" stroke="#993556" stroke-width="1.2"/><text x="496" y="252">입술</text>
+<rect x="474" y="266" width="14" height="14" rx="3" fill="#378ADD" fill-opacity=".3" stroke="#378ADD" stroke-width="1.2"/><text x="496" y="278">콧길(코소리)</text>
+<circle cx="481" cy="299" r="7" fill="none" stroke="#E24B4A" stroke-width="2"/><text x="496" y="304">닿는 곳</text>
 </g>
 </g>
 </svg>`;

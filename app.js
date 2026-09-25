@@ -585,6 +585,8 @@ const UIVI = {
   '듣고 손으로 써 보세요': 'Nghe và viết tay', '모르겠어요': 'Không biết',
   '원어민': 'Người bản xứ', '나': 'Tôi', '번갈아 듣기': 'Nghe lần lượt',
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
+  '천천히': 'Chậm', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
+  '원어민 소리 높낮이': 'Cao độ giọng người bản xứ',
   /* 탈퇴 · 순위 · 가입 화면 (2026-08-29 대표님 지시) */
   '내 말 (화면에 나올 말)':
     'Ngôn ngữ của tôi (hiện trên màn hình)',
@@ -1402,7 +1404,7 @@ function tutorTap() {
   if (S.tut) return;
   S.tut = 1; save();
   popup('<b>글자를 누르면 소리가 납니다</b><br>' +
-        '단어도, 아래 예문도 눌러 보세요. 시계 단추는 느리게, 마이크 단추는 따라 말하기입니다.');
+        '단어도, 아래 예문도 눌러 보세요. 위쪽 <b>단어 · 발음</b> 단추를 누르면 입모양과 높낮이 그래프, 따라 말하기가 나옵니다.');
 }
 /* 예/아니오 확인 창. 브라우저 confirm() 은 **홈 화면에 설치한 PWA 에서 막히는 폰이 있다** —
    그러면 아무 일도 안 일어난다(대표님: "동아리 탈퇴 버튼 작동 안 한다", 2026-08-30).
@@ -1518,44 +1520,33 @@ function curveArea(text, box) {
   return wrap;
 }
 
-/* 입모양 2D — 옆 단면(혀·입천장·연구개·콧길·성대)과 정면 입술 (대표님 지시 2026-09-25 #6).
-   소리(audio)와 같은 시계로 움직인다(PB). 소리가 없는 낱말·재생 전에도 '천천히' 단추로 입모양만 볼 수 있다.
-   그림의 세부 좌표는 **모식도**다 — 베트남어 전용 MRI·초음파 자료가 없어 범주(혀 높이·앞뒤·둥글기, 닿는 곳)만 근거가 있다. */
+/* 입모양 2D — 정면 입술(왼쪽)과 옆 단면(오른쪽: 혀·입천장·연구개·콧길·성대) (대표님 지시 2026-09-25 #6, 09-26 배치·글자 정리).
+   소리(audio)와 같은 시계로 움직인다(PB). '천천히'는 느린 소리로, '보통'은 보통 소리로 함께 움직인다.
+   소리 파일이 없는 낱말은 '천천히'가 입모양만 2.6초에 걸쳐 보여 준다.
+   그림의 세부 좌표는 **모식도**다 — 베트남어 전용 MRI·초음파 자료가 없어 범주(혀 높이·앞뒤·둥글기, 닿는 곳)만 근거가 있다.
+   화면에는 '모식도'·'숨기기'·'이름표' 같은 글을 두지 않는다(대표님 지시 09-26). */
 function mouthPanel(text) {
   const wrap = el('div', 'mouthbox');
   if (typeof MOUTH === 'undefined') return wrap;
-  if (S.mouthOff) {
-    const b = el('button', 'ghost sm', tr('입모양 보기'));
-    b.onclick = () => { S.mouthOff = 0; save(); wrap.replaceWith(mouthPanel(text)); };
-    wrap.append(b);
-    return wrap;
-  }
-  const head = el('div', 'mouthhead');
-  head.append(el('b', null, tr('입모양')), el('span', 'msub', tr('모식도 · 옆 단면과 정면')));
-  const hide = el('button', 'ghost sm', tr('숨기기'));
-  hide.onclick = () => { S.mouthOff = 1; save(); wrap.replaceWith(mouthPanel(text)); };
-  head.append(hide);
   const body = el('div', 'mouthsvg');
   const cap = el('div', 'mouthcap');
   const row = el('div', 'mouthrow');
-  const bSlow = el('button', 'ghost sm', '▶ ' + tr('입모양만 천천히'));
-  const bSnd = el('button', 'ghost sm', '🔊 ' + tr('소리와 함께'));
-  const bNm = el('button', 'ghost sm', tr('이름표'));
-  row.append(bSlow, bSnd, bNm);
-  wrap.append(head, body, cap, row);
+  const bSlow = el('button', 'ghost sm', '▶ ' + tr('천천히'));
+  const bSnd = el('button', 'ghost sm', '▶ ' + tr('보통'));
+  row.append(bSlow, bSnd);
+  wrap.append(body, cap, row);
   const M = MOUTH.create(body);
   M.setWord(text);
-  const idle = () => { cap.innerHTML = tr('▶ 를 누르면 입 안이 움직입니다'); };
-  const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : tr('쉬는 자세'); };
+  const idle = () => { cap.innerHTML = ''; };
+  const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : ''; };
   M.at(0); idle();
   const h = AIDX[text] || AIDX[text.toLowerCase()];
   let nat = null, local = null, lastId = '';
   nativeCurve(text).then(n => { nat = n; });
   const show = t => { const id = M.at(t); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
-  let nm = true;
-  bNm.onclick = () => { nm = !nm; M.names(nm); bNm.classList.toggle('off', !nm); };
   bSlow.onclick = () => {
-    if (local) { local.stop = true; }
+    if (local) { local.stop = true; local = null; }
+    if (h) { play(text, true); return; }              // 소리 파일이 있으면 느린 소리와 같이 움직인다
     const st = { t0: performance.now(), dur: 2600, stop: false };
     local = st;
     const step = now => {
@@ -1567,7 +1558,7 @@ function mouthPanel(text) {
     };
     requestAnimationFrame(step);
   };
-  bSnd.onclick = () => { if (local) local.stop = true; local = null; play(text, true); };
+  bSnd.onclick = () => { if (local) local.stop = true; local = null; play(text, false); };
   PB.views.add({ root: wrap, update(playing) {
     if (local) return;
     if (playing && ownsAudio(h) && nat && nat.raw) {
@@ -6185,11 +6176,12 @@ function drawGramQuiz() {
   const opts = el('div', 'opts');
   q.opts.forEach(o => {
     const btn = el('button', null, esc(o.k) + ' — ' + esc(o.t));
+    btn.dataset.k = o.k;                 // 정답 표시는 글자 앞부분이 아니라 문형 값으로 (앞부분이 같은 문형이 늘었다)
     btn.onclick = () => {
       [...opts.children].forEach(x => x.disabled = true);
       const ok = o.k === q.correct;
       btn.dataset.r = ok ? 'ok' : 'no';
-      if (!ok) [...opts.children].forEach(x => { if (x.textContent.startsWith(q.correct)) x.dataset.r = 'ok'; });
+      if (!ok) [...opts.children].forEach(x => { if (x.dataset.k === q.correct) x.dataset.r = 'ok'; });
       fxTone(ok);
       if (ok) GQ.ok++;
       nextBtn(b, () => {
@@ -7048,28 +7040,36 @@ function drawCard() {
   }
 
   if (it.k === 'word') {
-    // 그림을 크게 두려고 글자 요소를 줄였다.
-    // 그림 → [단어 · 발음 · 느리게 · 마이크] → 뜻 → 예문(누르면 소리) → 원어민 곡선
-    const p = pic(x, 'pic big'); if (p) c.append(p);
+    /* 낱말 하나에 **두 면** — 단어 면(그림·단어·발음·뜻·예문·헷갈리는 짝·높낮이 그래프)과
+       발음 면(입모양·낱말이 그래프 위를 따라 움직이는 높낮이·따라 말하기). 단추 하나로 넘긴다
+       (대표님 지시, 2026-09-26). 고른 면은 이 수업 동안 다음 카드에도 이어진다. */
+    const cf = el('div', 'wfcard');           // 단어 면
+    const pf = el('div', 'wfpron');           // 발음 면
+    const tg = el('button', 'facetg');
+    tg.type = 'button';
+    tg.innerHTML = '<span data-f="card">' + tr('단어') + '</span><span data-f="pron">' + tr('발음') + '</span>';
+    const setFace = f => {
+      L.face = f;
+      cf.hidden = f !== 'card'; pf.hidden = f !== 'pron';
+      tg.dataset.f = f;
+      tg.setAttribute('aria-label', f === 'card' ? tr('발음 면으로 넘기기') : tr('단어 면으로 넘기기'));
+    };
+    tg.onclick = () => setFace(L.face === 'pron' ? 'card' : 'pron');
+
+    /* ── 단어 면 ──
+       그림 → [단어 · 발음 · 별] → 뜻 → 예문(누르면 소리) → 헷갈리는 짝 → 높낮이 그래프 */
+    const p = pic(x, 'pic big'); if (p) cf.append(p);
     else if (x.form) {                       // 그림으로 못 그리는 말은 '자리'를 보여준다
       const fb = el('div', 'formbox');
       fb.append(el('div', 'formf', esc(x.form)));
       if (x.fex) fb.append(el('div', 'formex', esc(x.fex)));
-      c.append(fb);
+      cf.append(fb);
     }
     const row = el('div', 'wrow');
     row.append(bigWord(x.vi, x.tones));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
-    const box = el('div', 'cmpbox');
-    if (canRecord()) {
-      const mic = iconBtn('mic', '따라 말하기', null);
-      mic.onclick = () => toggleRec(x.vi, mic, box);
-      row.append(mic);
-    } else {
-      box.append(el('div', 'cmpnote', '이 기기·브라우저에서는 녹음을 못 씁니다 — 소리 내어 따라 말해만 보세요.'));
-    }
     row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
-    c.append(row);
+    cf.append(row);
     /* 뜻이 같은 다른 낱말 — 지우지 않고 **같이 보여 준다** (대표님 지시, 2026-08-30).
        ngang vai 와 rộng vai 는 둘 다 '어깨 넓이'다. 하나만 두면 나머지를 못 배운다. */
     if (x.alt && x.alt.length) {
@@ -7082,22 +7082,23 @@ function drawCard() {
         const kr = a2.kr;
         if (kr) b2.append(el('span', 'altkr', '[' + esc(kr) + ']'));
         b2.onclick = () => { const k = recKey(a2.vi); k ? play(k, false) : speakVi(a2.vi); };
+        box.append(b2);
       });
-      c.append(box);
+      cf.append(box);
     }
     // 선배 표시(⭐)는 완전히 없앴다 (대표님 지시, 2026-09-09).
     const kob = el('div', 'ko', esc(x.ko));
     /* 낱말장(교재 맨 뒤 Bảng từ)에 실린 낱말은 '핵심' 표시 — 그 밖의 낱말은 그냥 둔다
        (대표님 지시 2026-09-25 #13). 데이터는 gybm.json 의 gl:1 (낱말장 표시). */
     if (x.gl) kob.prepend(el('span', 'corepill', tr('핵심')));
-    c.append(kob);
+    cf.append(kob);
     /* 일터에서 뜻이 달라지는 낱말 — 직무 권에 또 두지 않고 여기에 덧붙인다
        (대표님 지적, 2026-08-30: 같은 낱말을 두 번 외우게 하지 않는다). */
     if (x.work && x.work.length)
-      c.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
+      cf.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
                   x.work.map(t2 => esc(t2)).join(' · ')));
-    if (x.hanja) c.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
-    if (x.south) c.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
+    if (x.hanja) cf.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
+    if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **낱말마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
        낱말을 누르면 그 낱말만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
        문장 전체를 듣는 길은 오른쪽 작은 단추로 남겨 둔다. */
@@ -7111,11 +7112,39 @@ function drawCard() {
       const ekr = exm.kr;
       if (ekr) eb.append(el('div', 'wexkr', '[' + esc(ekr) + ']'));
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
-      c.append(eb);
+      cf.append(eb);
     }
-    c.append(pairPanel(x.vi));                 // 헷갈리는 짝 — 접어 둔다(처음부터 묶어 외우면 오히려 헷갈린다)
-    c.append(curveArea(x.vi, box));
-    c.append(mouthPanel(x.vi));                // 입모양 2D (2026-09-25 #6)
+    cf.append(pairPanel(x.vi));                // 헷갈리는 짝 — 접어 둔다(처음부터 묶어 외우면 오히려 헷갈린다)
+    const sg = el('div', 'curvearea prenat');  // 높낮이 그래프(가만히 있는 판) — 낱말이 따라 움직이는 판은 발음 면에
+    nativeCurve(x.vi).then(nat => {
+      if (!nat || !nat.curve) return;
+      sg.innerHTML = `<div class="curvebox">${curveSvg(null, nat.curve)}</div>` +
+        `<div class="curvelegend"><span class="k nat"></span>${tr('원어민 소리 높낮이')}</div>`;
+    });
+    cf.append(sg);
+
+    /* ── 발음 면 ──
+       낱말 · 뜻 → 입모양(정면·옆면) → 낱말이 그래프 위를 따라 움직이는 높낮이 → 따라 말하기 */
+    const prow = el('div', 'wrow');
+    prow.append(bigWord(x.vi, x.tones));
+    if (krShow(x)) prow.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
+    pf.append(prow, el('div', 'ko', esc(x.ko)));
+    pf.append(mouthPanel(x.vi));               // 입모양 2D (2026-09-25 #6)
+    const rbox = el('div', 'cmpbox');
+    const cw = curveArea(x.vi, rbox);          // 낱말이 소리를 따라 움직이는 높낮이 (2026-09-25 #7)
+    if (canRecord()) {
+      const mrow = el('div', 'qplay');
+      const mic = el('button', 'rec', '따라 말하기');
+      mic.onclick = () => toggleRec(x.vi, mic, rbox);
+      mrow.append(mic);
+      cw.insertBefore(mrow, rbox);
+    } else {
+      rbox.append(el('div', 'cmpnote', '이 기기·브라우저에서는 녹음을 못 씁니다 — 소리 내어 따라 말해만 보세요.'));
+    }
+    pf.append(cw);
+
+    c.append(tg, cf, pf);
+    setFace(L.face === 'pron' ? 'pron' : 'card');
     tutorTap();
   }
 

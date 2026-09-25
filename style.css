@@ -2137,16 +2137,22 @@ button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color
 svg.curve.pw .played{fill:none; stroke:var(--accent); stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round}
 svg.curve.pw .pwpill{fill:var(--bg); stroke:var(--dim); stroke-width:1.2}
 svg.curve.pw .pwword.on .pwpill{fill:var(--accent); stroke:var(--accent)}
-svg.curve.pw .pwtx{font-size:14px; font-weight:800; fill:var(--text, #111); pointer-events:none}
-svg.curve.pw .pwword.on .pwtx{fill:#fff}
+svg.curve.pw .pwtx{font-size:14px; font-weight:800; fill:var(--fg); pointer-events:none}
+svg.curve.pw .pwword.on .pwtx{fill:var(--accent-fg)}
 svg.curve.pw .pwword{transition:none}
 
 /* 입모양 2D (2026-09-25 #6) */
 .mouthbox{margin-top:10px; padding:10px; border:1px solid var(--line); border-radius:14px; background:var(--card)}
-.mouthhead{display:flex; align-items:center; gap:8px; margin-bottom:6px}
-.mouthhead .msub{flex:1; font-size:12px; color:var(--dim)}
 .mouthsvg svg{width:100%; height:auto; display:block}
-.mouthcap{font-size:13px; line-height:1.45; min-height:38px; margin-top:6px; color:var(--dim)}
-.mouthcap b{color:var(--text, #111)}
-.mouthrow{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px}
-.mouthrow button.off{opacity:.5}
+.mouthcap{font-size:13px; line-height:1.45; min-height:20px; margin-top:6px; color:var(--dim); text-align:center}
+.mouthcap b{color:var(--fg)}
+.mouthrow{display:flex; gap:8px; justify-content:center; margin-top:8px}
+
+/* 낱말 카드의 두 면 — 단어 면 / 발음 면을 단추 하나로 넘긴다 (2026-09-26) */
+.facetg{display:flex; margin:0 auto 10px; padding:3px; border:1px solid var(--line); border-radius:999px;
+  background:var(--bg); cursor:pointer; font:inherit; color:inherit}
+.facetg span{padding:6px 20px; border-radius:999px; font-size:14px; font-weight:700; color:var(--dim); pointer-events:none}
+.facetg[data-f="card"] span[data-f="card"], .facetg[data-f="pron"] span[data-f="pron"]{background:var(--accent); color:var(--accent-fg)}
+.wfcard[hidden], .wfpron[hidden]{display:none}
+.wfpron .ko{text-align:center; margin-top:2px}
+.wfpron .qplay{margin:12px 0 4px}

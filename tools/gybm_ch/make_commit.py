@@ -11,12 +11,15 @@ def git(*a, env=None, inp=None):
 git("fetch", "origin")
 MY = ["app.js", "style.css", "pitch.js", "mouth.js", "index.html", "sw.js", "data/days.json", "data/order.json", "data/gybm.json", "data/realbook.json",
       "data/siblings.json", "data/basicwords.json", "data/basicword_sets.json", "data/senior.json", "data/cohort22.json", "data/_book_glossary.json", "data/_boost_words.json", "data/_job_boost.json",
-      "docs/기준.md", "docs/문법_대조.md", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py"]
+      "data/grammar.json", "docs/기준.md", "docs/문법_대조.md", "tools/build_gram_main.py", "tools/gram_main_data1.py", "tools/gram_main_data2.py", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py"]
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
 chk = [f for f in MY if f not in ("index.html", "sw.js", "data/audio_index.json")]
 tracked = [f for f in chk if git("ls-tree", "origin/main", f)]
-r = subprocess.run(["git", "diff", "--quiet", "HEAD", "origin/main", "--", *tracked], cwd=ROOT)
+# 로컬 HEAD 는 자동 작업(카드뉴스 봇)이 내 작업 중인 파일까지 끌어안고 로컬 커밋을 만들었을 수 있다(2026-09-26 확인) —
+# 그래서 HEAD 가 아니라 **HEAD 와 origin 의 공통 조상**과 견준다.
+base = git("merge-base", "HEAD", "origin/main")
+r = subprocess.run(["git", "diff", "--quiet", base, "origin/main", "--", *tracked], cwd=ROOT)
 if r.returncode: raise SystemExit("origin 쪽에서 내 파일이 바뀌었다 — 손으로 확인")
 # 데이터가 가리키는 그림·소리
 imgs, texts = set(), set()
@@ -30,6 +33,9 @@ def walk(o):
     elif isinstance(o, list):
         for v in o: walk(v)
 for f in ("gybm", "days", "order"): walk(json.loads((ROOT / f"data/{f}.json").read_text(encoding="utf-8")))
+sys.path.insert(0, str(ROOT / "tools"))
+import build_gram_main            # 메인 교재 문법의 소리(예문·문장 안 낱말·핵심 낱말)도 같이 올린다
+texts |= set(build_gram_main.all_texts())
 files = list(MY)
 for i in sorted(imgs):
     if (ROOT / "img" / i).exists(): files.append(f"img/{i}")
