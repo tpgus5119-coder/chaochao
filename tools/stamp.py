@@ -22,13 +22,14 @@ def h8(*paths):
 #   판번호가 안 바뀌고, 서비스 워커가 옛 order.json 을 계속 내준다("고쳤는데 안 바뀐다").
 #   sw.js 의 SHELL 목록에서 자동으로 읽어 온다 — 목록이 늘면 여기도 따라 늘게.
 _shell = re.findall(r"'\./([^']+)'", pathlib.Path('sw.js').read_text())
-ver = h8('style.css', 'app.js', 'pitch.js',
+ver = h8('style.css', 'app.js', 'pitch.js', 'mouth.js',
          *[f for f in _shell if f.endswith('.json') and pathlib.Path(f).exists()])
 
 f = pathlib.Path('index.html'); s = f.read_text()
 s = re.sub(r'(href="style\.css)(\?v=[^"]*)?"', rf'\1?v={ver}"', s)
 s = re.sub(r'(src="app\.js)(\?v=[^"]*)?"', rf'\1?v={ver}"', s)
 s = re.sub(r'(src="pitch\.js)(\?v=[^"]*)?"', rf'\1?v={ver}"', s)
+s = re.sub(r'(src="mouth\.js)(\?v=[^"]*)?"', rf'\1?v={ver}"', s)
 f.write_text(s)
 
 w = pathlib.Path('sw.js'); t = w.read_text()

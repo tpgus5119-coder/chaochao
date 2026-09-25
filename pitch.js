@@ -183,9 +183,17 @@ const PITCH = (() => {
       const g = speechLike(ch, rate, hz);
       if (!g.ok) return { reject: g.why };
     }
-    const curve = resample(clean(normalize(hz)));
+    const nz = normalize(hz);
+    const cl = clean(nz);
+    const curve = resample(cl);
     if (!curve) return null;
-    return { curve, en: energy(ch, rate, hz), sec: voicedSec(hz, rate, Math.round(rate * 0.010)) };
+    /* raw·t0·total: 높낮이 그래프 위에서 낱말이 소리와 함께 움직이게 하려는 시간 정보 (2026-09-25 #7).
+       raw = 10ms 간격 반음 곡선(소리 난 구간만, 사이 빈 곳은 null), t0 = 그 곡선이 시작하는 시각(초),
+       total = 소리 파일 전체 길이(초). 20점으로 줄인 curve 는 판정용이라 그대로 둔다. */
+    const a0 = nz ? Math.max(0, nz.findIndex(x => x !== null)) : 0;
+    const hopS = Math.round(rate * 0.010) / rate;
+    return { curve, en: energy(ch, rate, hz), sec: voicedSec(hz, rate, Math.round(rate * 0.010)),
+             raw: cl, t0: a0 * hopS + 0.0225, hop: hopS, total: buf.duration };
   }
 
   /* 두 곡선의 '모양'이 얼마나 닮았나 (0~100).

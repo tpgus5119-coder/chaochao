@@ -7,7 +7,7 @@
    "tracks": [
     {
      "track": "지시하고 확인하기",
-     "words": 17,
+     "words": 35,
      "chapters": [
       {
        "lessons": [
@@ -483,6 +483,600 @@
            }
           }
          ]
+        },
+        {
+         "t": "챕터1-3",
+         "words": [
+          {
+           "vi": "kế hoạch sản xuất",
+           "ko": "생산 계획",
+           "kr": "께 호악 싼 쑤엇",
+           "krs": "께 호앗 상 쑤억",
+           "img": "",
+           "tones": [
+            {
+             "syl": "kế",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "hoạch",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "sản",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "xuất",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "께 호악 싼 쑤엇",
+           "ex": {
+            "vi": "Anh xem kế hoạch sản xuất tuần này chưa?",
+            "ko": "이번 주 생산 계획 보셨어요?",
+            "kr": "아인 쌤 께 호악 싼 쑤엇 뚜언 나이 쯔어",
+            "krs": "아인 쌤 께 호앗 상 쑤억 뚜엉 나이 쯔어",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "lệnh sản xuất",
+           "ko": "작업 지시서",
+           "kr": "렌 싼 쑤엇",
+           "krs": "렌 상 쑤억",
+           "img": "",
+           "tones": [
+            {
+             "syl": "lệnh",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "sản",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "xuất",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "렌 싼 쑤엇",
+           "ex": {
+            "vi": "Lệnh sản xuất đã được gửi xuống chuyền.",
+            "ko": "작업 지시서가 라인에 내려갔어요.",
+            "kr": "렌 싼 쑤엇 다 드억 그이 쑤옹 쭈옌",
+            "krs": "렌 상 쑤억 다 드억 그이 쑤옹 쭈옝",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "thao tác chuẩn",
+           "ko": "표준 작업",
+           "kr": "타오 딱 쭈언",
+           "krs": "타오 딱 쭈엉",
+           "img": "",
+           "tones": [
+            {
+             "syl": "thao",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "tác",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "chuẩn",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "타오 딱 쭈언",
+           "ex": {
+            "vi": "Mọi người làm theo thao tác chuẩn nhé.",
+            "ko": "모두 표준 작업대로 해 주세요.",
+            "kr": "모이 응으어이 람 태오 타오 딱 쭈언 냬",
+            "krs": "모이 응으어이 람 태오 타오 딱 쭈엉 냬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bố trí nhân lực",
+           "ko": "인력 배치",
+           "kr": "보 찌 년 륵",
+           "krs": "보 찌 녕 륵",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bố",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "trí",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "nhân",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "lực",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "보 찌 년 륵",
+           "ex": {
+            "vi": "Trưởng chuyền đang bố trí nhân lực cho ca đêm.",
+            "ko": "라인장이 야간조 인력을 배치하고 있어요.",
+            "kr": "쯔엉 쭈옌 당 보 찌 년 륵 쪼 까 뎀",
+            "krs": "쯔엉 쭈옝 당 보 찌 녕 륵 쪼 까 뎀",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "giao ca",
+           "ko": "교대 인수인계",
+           "kr": "자오 까",
+           "krs": "야오 까",
+           "img": "",
+           "tones": [
+            {
+             "syl": "giao",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "ca",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "자오 까",
+           "ex": {
+            "vi": "Trước khi giao ca, chị nhớ ghi lại tình hình máy.",
+            "ko": "교대하기 전에 설비 상태를 적어 두세요.",
+            "kr": "쯔억 키 자오 까 찌 녀 기 라이 띤 힌 마이",
+            "krs": "쯔억 키 야오 까 찌 녀 기 라이 띤 힌 마이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "điểm danh",
+           "ko": "출석 점검",
+           "kr": "디엠 자인",
+           "krs": "디엠 아인",
+           "img": "",
+           "tones": [
+            {
+             "syl": "điểm",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "danh",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "디엠 자인",
+           "ex": {
+            "vi": "Sáng nào cũng điểm danh trước giờ làm.",
+            "ko": "아침마다 근무 시작 전에 출석을 점검해요.",
+            "kr": "쌍 나오 꿍 디엠 자인 쯔억 저 람",
+            "krs": "상 나오 꿍 디엠 아인 쯔억 여 람",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "tăng ca",
+           "ko": "잔업하다",
+           "kr": "땅 까",
+           "krs": "땅 까",
+           "img": "",
+           "tones": [
+            {
+             "syl": "tăng",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "ca",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "땅 까",
+           "ex": {
+            "vi": "Hôm nay cả tổ phải tăng ca hai tiếng.",
+            "ko": "오늘은 조 전체가 두 시간 잔업해야 해요.",
+            "kr": "홈 나이 까 또 파이 땅 까 하이 띠엥",
+            "krs": "홈 나이 까 또 파이 땅 까 하이 띠엥",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "ca đêm",
+           "ko": "야간조",
+           "kr": "까 뎀",
+           "krs": "까 뎀",
+           "img": "",
+           "tones": [
+            {
+             "syl": "ca",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "đêm",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "까 뎀",
+           "ex": {
+            "vi": "Tuần sau tôi chuyển sang ca đêm.",
+            "ko": "다음 주에 저는 야간조로 옮겨요.",
+            "kr": "뚜언 싸우 또이 쭈옌 쌍 까 뎀",
+            "krs": "뚜엉 사우 또이 쭈옝 상 까 뎀",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "thiếu người",
+           "ko": "인원 부족",
+           "kr": "티에우 응으어이",
+           "krs": "티에우 응으어이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "thiếu",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "người",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "티에우 응으어이",
+           "ex": {
+            "vi": "Chuyền này đang thiếu người.",
+            "ko": "이 라인은 인원이 부족해요.",
+            "kr": "쭈옌 나이 당 티에우 응으어이",
+            "krs": "쭈옝 나이 당 티에우 응으어이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "làm lại",
+           "ko": "재작업하다",
+           "kr": "람 라이",
+           "krs": "람 라이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "làm",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "lại",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "람 라이",
+           "ex": {
+            "vi": "Lô hàng này phải làm lại.",
+            "ko": "이 로트는 재작업해야 해요.",
+            "kr": "로 항 나이 파이 람 라이",
+            "krs": "로 항 나이 파이 람 라이",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
+        },
+        {
+         "t": "챕터1-4",
+         "words": [
+          {
+           "vi": "cải tiến",
+           "ko": "개선",
+           "kr": "까이 띠엔",
+           "krs": "까이 띠엥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "cải",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "tiến",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "까이 띠엔",
+           "ex": {
+            "vi": "Anh có ý kiến cải tiến gì không?",
+            "ko": "개선할 의견이 있으세요?",
+            "kr": "아인 꼬 이 끼엔 까이 띠엔 지 콩",
+            "krs": "아인 꼬 이 끼엥 까이 띠엥 이 콩",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "lãng phí",
+           "ko": "낭비",
+           "kr": "랑 피",
+           "krs": "랑 피",
+           "img": "",
+           "tones": [
+            {
+             "syl": "lãng",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "phí",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "랑 피",
+           "ex": {
+            "vi": "Chúng ta cần giảm lãng phí vật liệu.",
+            "ko": "우리는 자재 낭비를 줄여야 해요.",
+            "kr": "쭝 따 껀 잠 랑 피 벗 리에우",
+            "krs": "쭝 따 껑 얌 랑 피 벅 리에우",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "khởi động chuyền",
+           "ko": "라인 가동",
+           "kr": "커이 동 쭈옌",
+           "krs": "커이 동 쭈옝",
+           "img": "",
+           "tones": [
+            {
+             "syl": "khởi",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "động",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "chuyền",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "커이 동 쭈옌",
+           "ex": {
+            "vi": "Bảy giờ sẽ khởi động chuyền.",
+            "ko": "7시에 라인을 가동할 거예요.",
+            "kr": "바이 저 쌔 커이 동 쭈옌",
+            "krs": "바이 여 새 커이 동 쭈옝",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "dừng chuyền",
+           "ko": "라인 정지",
+           "kr": "증 쭈옌",
+           "krs": "응 쭈옝",
+           "img": "",
+           "tones": [
+            {
+             "syl": "dừng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "chuyền",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "증 쭈옌",
+           "ex": {
+            "vi": "Có sự cố nên phải dừng chuyền.",
+            "ko": "문제가 생겨서 라인을 멈춰야 해요.",
+            "kr": "꼬 쓰 꼬 넨 파이 증 쭈옌",
+            "krs": "꼬 스 꼬 넨 파이 응 쭈옝",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "chạy thử",
+           "ko": "시운전",
+           "kr": "짜이 트",
+           "krs": "짜이 트",
+           "img": "",
+           "tones": [
+            {
+             "syl": "chạy",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "thử",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "짜이 트",
+           "ex": {
+            "vi": "Anh chạy thử máy một lần nhé.",
+            "ko": "설비를 한 번 시운전해 보세요.",
+            "kr": "아인 짜이 트 마이 못 런 냬",
+            "krs": "아인 짜이 트 마이 목 렁 냬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "mục tiêu ngày",
+           "ko": "일일 목표",
+           "kr": "묵 띠에우 응아이",
+           "krs": "묵 띠에우 응아이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "mục",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "tiêu",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "ngày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "묵 띠에우 응아이",
+           "ex": {
+            "vi": "Mục tiêu ngày hôm nay là năm trăm sản phẩm.",
+            "ko": "오늘 일일 목표는 오백 개예요.",
+            "kr": "묵 띠에우 응아이 홈 나이 라 남 짬 싼 펌",
+            "krs": "묵 띠에우 응아이 홈 나이 라 남 짬 상 펌",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đạt kế hoạch",
+           "ko": "계획 달성",
+           "kr": "닷 께 호악",
+           "krs": "닥 께 호앗",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đạt",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "kế",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "hoạch",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "닷 께 호악",
+           "ex": {
+            "vi": "Tháng này tổ chúng ta đã đạt kế hoạch.",
+            "ko": "이번 달 우리 조는 계획을 달성했어요.",
+            "kr": "탕 나이 또 쭝 따 다 닷 께 호악",
+            "krs": "탕 나이 또 쭝 따 다 닥 께 호앗",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "người thay ca",
+           "ko": "교대 대체 인력",
+           "kr": "응으어이 타이 까",
+           "krs": "응으어이 타이 까",
+           "img": "",
+           "tones": [
+            {
+             "syl": "người",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "thay",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "ca",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "응으어이 타이 까",
+           "ex": {
+            "vi": "Chị tìm người thay ca giúp tôi được không?",
+            "ko": "저 대신 교대할 사람을 찾아 주실 수 있어요?",
+            "kr": "찌 띰 응으어이 타이 까 줍 또이 드억 콩",
+            "krs": "찌 띰 응으어이 타이 까 윱 또이 드억 콩",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
         }
        ]
       }
@@ -490,7 +1084,7 @@
     },
     {
      "track": "회의와 보고",
-     "words": 17,
+     "words": 32,
      "chapters": [
       {
        "lessons": [
@@ -978,6 +1572,495 @@
            }
           }
          ]
+        },
+        {
+         "t": "챕터2-3",
+         "words": [
+          {
+           "vi": "báo cáo tháng",
+           "ko": "월간 보고",
+           "kr": "바오 까오 탕",
+           "krs": "바오 까오 탕",
+           "img": "",
+           "tones": [
+            {
+             "syl": "báo",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "cáo",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "tháng",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "바오 까오 탕",
+           "ex": {
+            "vi": "Cuối tháng tôi phải nộp báo cáo tháng.",
+            "ko": "월말에 저는 월간 보고를 내야 해요.",
+            "kr": "꾸오이 탕 또이 파이 놉 바오 까오 탕",
+            "krs": "꾸오이 탕 또이 파이 놉 바오 까오 탕",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "trình ký",
+           "ko": "결재 상신",
+           "kr": "찐 끼",
+           "krs": "찐 끼",
+           "img": "",
+           "tones": [
+            {
+             "syl": "trình",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "ký",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "찐 끼",
+           "ex": {
+            "vi": "Tôi đã trình ký lên giám đốc.",
+            "ko": "저는 이사님께 결재를 올렸어요.",
+            "kr": "또이 다 찐 끼 렌 잠 독",
+            "krs": "또이 다 찐 끼 렌 얌 독",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "phê duyệt",
+           "ko": "승인하다",
+           "kr": "페 주옛",
+           "krs": "페 우옉",
+           "img": "",
+           "tones": [
+            {
+             "syl": "phê",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "duyệt",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "페 주옛",
+           "ex": {
+            "vi": "Giám đốc đã phê duyệt đề xuất này.",
+            "ko": "이사님이 이 제안을 승인했어요.",
+            "kr": "잠 독 다 페 주옛 데 쑤엇 나이",
+            "krs": "얌 독 다 페 우옉 데 쑤억 나이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "từ chối duyệt",
+           "ko": "반려하다",
+           "kr": "뜨 쪼이 주옛",
+           "krs": "뜨 쪼이 우옉",
+           "img": "",
+           "tones": [
+            {
+             "syl": "từ",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "chối",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "duyệt",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "뜨 쪼이 주옛",
+           "ex": {
+            "vi": "Phòng kế toán từ chối duyệt hồ sơ này.",
+            "ko": "경리팀이 이 서류를 반려했어요.",
+            "kr": "퐁 께 또안 뜨 쪼이 주옛 호 써 나이",
+            "krs": "퐁 께 또앙 뜨 쪼이 우옉 호 서 나이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bản gốc",
+           "ko": "원본",
+           "kr": "반 곡",
+           "krs": "방 곡",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bản",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "gốc",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "반 곡",
+           "ex": {
+            "vi": "Anh nhớ mang bản gốc đến nhé.",
+            "ko": "원본을 꼭 가져오세요.",
+            "kr": "아인 녀 망 반 곡 덴 냬",
+            "krs": "아인 녀 망 방 곡 덴 냬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bản sao",
+           "ko": "사본",
+           "kr": "반 싸오",
+           "krs": "방 사오",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bản",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "sao",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "반 싸오",
+           "ex": {
+            "vi": "Chị cho tôi xin một bản sao.",
+            "ko": "사본을 한 부 주세요.",
+            "kr": "찌 쪼 또이 씬 못 반 싸오",
+            "krs": "찌 쪼 또이 씬 목 방 사오",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "lưu hồ sơ",
+           "ko": "서류 보관",
+           "kr": "르우 호 써",
+           "krs": "르우 호 서",
+           "img": "",
+           "tones": [
+            {
+             "syl": "lưu",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "hồ",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "sơ",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "르우 호 써",
+           "ex": {
+            "vi": "Tài liệu này cần lưu hồ sơ năm năm.",
+            "ko": "이 서류는 5년간 보관해야 해요.",
+            "kr": "따이 리에우 나이 껀 르우 호 써 남 남",
+            "krs": "따이 리에우 나이 껑 르우 호 서 남 남",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "chi phí",
+           "ko": "비용",
+           "kr": "찌 피",
+           "krs": "찌 피",
+           "img": "",
+           "tones": [
+            {
+             "syl": "chi",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "phí",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "찌 피",
+           "ex": {
+            "vi": "Chi phí tháng này tăng nhiều.",
+            "ko": "이번 달 비용이 많이 늘었어요.",
+            "kr": "찌 피 탕 나이 땅 니에우",
+            "krs": "찌 피 탕 나이 땅 니에우",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "lợi nhuận",
+           "ko": "이익",
+           "kr": "러이 누연",
+           "krs": "러이 누영",
+           "img": "",
+           "tones": [
+            {
+             "syl": "lợi",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "nhuận",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "러이 누연",
+           "ex": {
+            "vi": "Lợi nhuận năm nay cao hơn năm ngoái.",
+            "ko": "올해 이익이 작년보다 높아요.",
+            "kr": "러이 누연 남 나이 까오 헌 남 응오아이",
+            "krs": "러이 누영 남 나이 까오 헝 남 응오아이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "ngân sách",
+           "ko": "예산",
+           "kr": "응언 싹",
+           "krs": "응엉 삿",
+           "img": "",
+           "tones": [
+            {
+             "syl": "ngân",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "sách",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "응언 싹",
+           "ex": {
+            "vi": "Ngân sách quý này còn lại bao nhiêu?",
+            "ko": "이번 분기 예산이 얼마나 남았어요?",
+            "kr": "응언 싹 꾸이 나이 꼰 라이 바오 니에우",
+            "krs": "응엉 삿 꾸이 나이 꽁 라이 바오 니에우",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
+        },
+        {
+         "t": "챕터2-4",
+         "words": [
+          {
+           "vi": "quyết toán",
+           "ko": "결산",
+           "kr": "꾸이엣 또안",
+           "krs": "꾸이엑 또앙",
+           "img": "",
+           "tones": [
+            {
+             "syl": "quyết",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "toán",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "꾸이엣 또안",
+           "ex": {
+            "vi": "Phòng kế toán đang làm quyết toán cuối năm.",
+            "ko": "경리팀이 연말 결산을 하고 있어요.",
+            "kr": "퐁 께 또안 당 람 꾸이엣 또안 꾸오이 남",
+            "krs": "퐁 께 또앙 당 람 꾸이엑 또앙 꾸오이 남",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "báo giá",
+           "ko": "견적서",
+           "kr": "바오 자",
+           "krs": "바오 야",
+           "img": "",
+           "tones": [
+            {
+             "syl": "báo",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "giá",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "바오 자",
+           "ex": {
+            "vi": "Công ty đó đã gửi báo giá cho chúng tôi.",
+            "ko": "그 회사가 우리에게 견적서를 보냈어요.",
+            "kr": "꽁 띠 도 다 그이 바오 자 쪼 쭝 또이",
+            "krs": "꽁 띠 도 다 그이 바오 야 쪼 쭝 또이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "tạm ứng",
+           "ko": "가불, 선지급",
+           "kr": "땀 응",
+           "krs": "땀 응",
+           "img": "",
+           "tones": [
+            {
+             "syl": "tạm",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "ứng",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "땀 응",
+           "ex": {
+            "vi": "Anh ấy xin tạm ứng lương.",
+            "ko": "그는 월급 가불을 신청했어요.",
+            "kr": "아인 어이 씬 땀 응 르엉",
+            "krs": "아인 어이 씬 땀 응 르엉",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "chấm dứt hợp đồng",
+           "ko": "계약 해지",
+           "kr": "쩜 즛 헙 동",
+           "krs": "쩜 윽 헙 동",
+           "img": "",
+           "tones": [
+            {
+             "syl": "chấm",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "dứt",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "hợp",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "đồng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "쩜 즛 헙 동",
+           "ex": {
+            "vi": "Hai bên đã chấm dứt hợp đồng.",
+            "ko": "양측이 계약을 해지했어요.",
+            "kr": "하이 벤 다 쩜 즛 헙 동",
+            "krs": "하이 벤 다 쩜 윽 헙 동",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đề xuất cải tiến",
+           "ko": "개선 제안",
+           "kr": "데 쑤엇 까이 띠엔",
+           "krs": "데 쑤억 까이 띠엥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đề",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "xuất",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "cải",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "tiến",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "데 쑤엇 까이 띠엔",
+           "ex": {
+            "vi": "Tôi muốn nộp một đề xuất cải tiến.",
+            "ko": "저는 개선 제안을 하나 내고 싶어요.",
+            "kr": "또이 무온 놉 못 데 쑤엇 까이 띠엔",
+            "krs": "또이 무옹 놉 목 데 쑤억 까이 띠엥",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
         }
        ]
       }
@@ -985,7 +2068,7 @@
     },
     {
      "track": "인사·평가·채용",
-     "words": 16,
+     "words": 33,
      "chapters": [
       {
        "lessons": [
@@ -1444,6 +2527,583 @@
            }
           }
          ]
+        },
+        {
+         "t": "챕터3-3",
+         "words": [
+          {
+           "vi": "hợp đồng lao động",
+           "ko": "근로 계약",
+           "kr": "헙 동 라오 동",
+           "krs": "헙 동 라오 동",
+           "img": "",
+           "tones": [
+            {
+             "syl": "hợp",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "đồng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "lao",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "động",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "헙 동 라오 동",
+           "ex": {
+            "vi": "Anh đã ký hợp đồng lao động chưa?",
+            "ko": "근로 계약서에 서명하셨어요?",
+            "kr": "아인 다 끼 헙 동 라오 동 쯔어",
+            "krs": "아인 다 끼 헙 동 라오 동 쯔어",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "thử việc",
+           "ko": "수습",
+           "kr": "트 비엑",
+           "krs": "트 비엑",
+           "img": "",
+           "tones": [
+            {
+             "syl": "thử",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "việc",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "트 비엑",
+           "ex": {
+            "vi": "Tôi đang trong thời gian thử việc.",
+            "ko": "저는 수습 기간이에요.",
+            "kr": "또이 당 쫑 터이 잔 트 비엑",
+            "krs": "또이 당 쫑 터이 양 트 비엑",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bảng lương",
+           "ko": "급여 명세서",
+           "kr": "방 르엉",
+           "krs": "방 르엉",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bảng",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "lương",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "방 르엉",
+           "ex": {
+            "vi": "Cuối tháng công ty phát bảng lương.",
+            "ko": "월말에 회사가 급여 명세서를 나눠 줘요.",
+            "kr": "꾸오이 탕 꽁 띠 팟 방 르엉",
+            "krs": "꾸오이 탕 꽁 띠 팍 방 르엉",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "lương cơ bản",
+           "ko": "기본급",
+           "kr": "르엉 꺼 반",
+           "krs": "르엉 꺼 방",
+           "img": "",
+           "tones": [
+            {
+             "syl": "lương",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "cơ",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "bản",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "르엉 꺼 반",
+           "ex": {
+            "vi": "Lương cơ bản của tôi là mười triệu.",
+            "ko": "제 기본급은 천만 동이에요.",
+            "kr": "르엉 꺼 반 꾸어 또이 라 므어이 찌에우",
+            "krs": "르엉 꺼 방 꾸어 또이 라 므어이 찌에우",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "phụ cấp",
+           "ko": "수당",
+           "kr": "푸 껍",
+           "krs": "푸 껍",
+           "img": "",
+           "tones": [
+            {
+             "syl": "phụ",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "cấp",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "푸 껍",
+           "ex": {
+            "vi": "Công ty có phụ cấp ăn trưa không?",
+            "ko": "회사에 점심 수당이 있어요?",
+            "kr": "꽁 띠 꼬 푸 껍 안 쯔어 콩",
+            "krs": "꽁 띠 꼬 푸 껍 앙 쯔어 콩",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bảo hiểm xã hội",
+           "ko": "사회보험",
+           "kr": "바오 히엠 싸 호이",
+           "krs": "바오 히엠 싸 호이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bảo",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "hiểm",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "xã",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "hội",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "바오 히엠 싸 호이",
+           "ex": {
+            "vi": "Công ty đóng bảo hiểm xã hội cho nhân viên.",
+            "ko": "회사가 직원의 사회보험을 내 줘요.",
+            "kr": "꽁 띠 동 바오 히엠 싸 호이 쪼 년 비엔",
+            "krs": "꽁 띠 동 바오 히엠 싸 호이 쪼 녕 비엥",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "nghỉ phép năm",
+           "ko": "연차 휴가",
+           "kr": "응이 팹 남",
+           "krs": "응이 팹 남",
+           "img": "",
+           "tones": [
+            {
+             "syl": "nghỉ",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "phép",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "năm",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "응이 팹 남",
+           "ex": {
+            "vi": "Mỗi năm tôi được mười hai ngày nghỉ phép năm.",
+            "ko": "저는 해마다 연차 휴가가 12일 있어요.",
+            "kr": "모이 남 또이 드억 므어이 하이 응아이 응이 팹 남",
+            "krs": "모이 남 또이 드억 므어이 하이 응아이 응이 팹 남",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "nghỉ ốm",
+           "ko": "병가",
+           "kr": "응이 옴",
+           "krs": "응이 옴",
+           "img": "",
+           "tones": [
+            {
+             "syl": "nghỉ",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "ốm",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "응이 옴",
+           "ex": {
+            "vi": "Tôi xin nghỉ ốm hai ngày.",
+            "ko": "저는 병가를 이틀 신청해요.",
+            "kr": "또이 씬 응이 옴 하이 응아이",
+            "krs": "또이 씬 응이 옴 하이 응아이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đơn xin nghỉ",
+           "ko": "휴가 신청서",
+           "kr": "던 씬 응이",
+           "krs": "덩 씬 응이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đơn",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "xin",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "nghỉ",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "던 씬 응이",
+           "ex": {
+            "vi": "Anh viết đơn xin nghỉ rồi nộp cho trưởng phòng.",
+            "ko": "휴가 신청서를 써서 부장님께 내세요.",
+            "kr": "아인 비엣 던 씬 응이 조이 놉 쪼 쯔엉 퐁",
+            "krs": "아인 비엑 덩 씬 응이 로이 놉 쪼 쯔엉 퐁",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đi muộn",
+           "ko": "지각",
+           "kr": "디 무온",
+           "krs": "디 무옹",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đi",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "muộn",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "디 무온",
+           "ex": {
+            "vi": "Tháng này tôi đi muộn hai lần.",
+            "ko": "이번 달 저는 지각을 두 번 했어요.",
+            "kr": "탕 나이 또이 디 무온 하이 런",
+            "krs": "탕 나이 또이 디 무옹 하이 렁",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
+        },
+        {
+         "t": "챕터3-4",
+         "words": [
+          {
+           "vi": "tự ý nghỉ",
+           "ko": "무단 결근",
+           "kr": "뜨 이 응이",
+           "krs": "뜨 이 응이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "tự",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "ý",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "nghỉ",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "뜨 이 응이",
+           "ex": {
+            "vi": "Tự ý nghỉ sẽ bị trừ lương.",
+            "ko": "무단 결근하면 월급이 깎여요.",
+            "kr": "뜨 이 응이 쌔 비 쯔 르엉",
+            "krs": "뜨 이 응이 새 비 쯔 르엉",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "khen thưởng",
+           "ko": "포상",
+           "kr": "캔 트엉",
+           "krs": "캥 트엉",
+           "img": "",
+           "tones": [
+            {
+             "syl": "khen",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "thưởng",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "캔 트엉",
+           "ex": {
+            "vi": "Cuối năm công ty có khen thưởng nhân viên giỏi.",
+            "ko": "연말에 회사가 우수 직원을 포상해요.",
+            "kr": "꾸오이 남 꽁 띠 꼬 캔 트엉 년 비엔 조이",
+            "krs": "꾸오이 남 꽁 띠 꼬 캥 트엉 녕 비엥 요이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đánh giá năng lực",
+           "ko": "인사 평가",
+           "kr": "다인 자 낭 륵",
+           "krs": "다인 야 낭 륵",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đánh",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "giá",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "năng",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "lực",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "다인 자 낭 륵",
+           "ex": {
+            "vi": "Tháng sau có đánh giá năng lực.",
+            "ko": "다음 달에 인사 평가가 있어요.",
+            "kr": "탕 싸우 꼬 다인 자 낭 륵",
+            "krs": "탕 사우 꼬 다인 야 낭 륵",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bàn giao",
+           "ko": "인수인계",
+           "kr": "반 자오",
+           "krs": "방 야오",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bàn",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "giao",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "반 자오",
+           "ex": {
+            "vi": "Tôi phải bàn giao công việc trước khi nghỉ.",
+            "ko": "저는 그만두기 전에 업무를 인수인계해야 해요.",
+            "kr": "또이 파이 반 자오 꽁 비엑 쯔억 키 응이",
+            "krs": "또이 파이 방 야오 꽁 비엑 쯔억 키 응이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "công đoàn",
+           "ko": "노동조합",
+           "kr": "꽁 도안",
+           "krs": "꽁 도앙",
+           "img": "",
+           "tones": [
+            {
+             "syl": "công",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "đoàn",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "꽁 도안",
+           "ex": {
+            "vi": "Công đoàn tổ chức chuyến đi cho công nhân.",
+            "ko": "노동조합이 근로자들을 위한 여행을 열어요.",
+            "kr": "꽁 도안 또 쯕 쭈옌 디 쪼 꽁 년",
+            "krs": "꽁 도앙 또 쯕 쭈옝 디 쪼 꽁 녕",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "sơ yếu lý lịch",
+           "ko": "이력서",
+           "kr": "써 이에우 리 릭",
+           "krs": "서 이에우 리 릿",
+           "img": "",
+           "tones": [
+            {
+             "syl": "sơ",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "yếu",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "lý",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "lịch",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "써 이에우 리 릭",
+           "ex": {
+            "vi": "Chị gửi sơ yếu lý lịch qua thư điện tử nhé.",
+            "ko": "이력서를 이메일로 보내 주세요.",
+            "kr": "찌 그이 써 이에우 리 릭 꽈 트 디엔 뜨 냬",
+            "krs": "찌 그이 서 이에우 리 릿 꽈 트 디엥 뜨 냬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đình công",
+           "ko": "파업",
+           "kr": "딘 꽁",
+           "krs": "딘 꽁",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đình",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "công",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "딘 꽁",
+           "ex": {
+            "vi": "Công nhân ở nhà máy đó đã đình công.",
+            "ko": "그 공장 근로자들이 파업했어요.",
+            "kr": "꽁 년 어 냐 마이 도 다 딘 꽁",
+            "krs": "꽁 녕 어 냐 마이 도 다 딘 꽁",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
         }
        ]
       }
@@ -1451,7 +3111,7 @@
     },
     {
      "track": "전자·전기",
-     "words": 13,
+     "words": 31,
      "chapters": [
       {
        "lessons": [
@@ -1824,6 +3484,594 @@
            }
           }
          ]
+        },
+        {
+         "t": "챕터4-2",
+         "words": [
+          {
+           "vi": "linh kiện điện tử",
+           "ko": "전자부품",
+           "kr": "린 끼엔 디엔 뜨",
+           "krs": "린 끼엥 디엥 뜨",
+           "img": "",
+           "tones": [
+            {
+             "syl": "linh",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "kiện",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "điện",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "tử",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "린 끼엔 디엔 뜨",
+           "ex": {
+            "vi": "Kho đã nhập thêm linh kiện điện tử.",
+            "ko": "창고에 전자부품이 더 입고됐어요.",
+            "kr": "코 다 녑 템 린 끼엔 디엔 뜨",
+            "krs": "코 다 녑 템 린 끼엥 디엥 뜨",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bo mạch",
+           "ko": "기판(PCB)",
+           "kr": "보 막",
+           "krs": "보 맛",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bo",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "mạch",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "보 막",
+           "ex": {
+            "vi": "Bo mạch này bị lỗi rồi.",
+            "ko": "이 기판에 불량이 났어요.",
+            "kr": "보 막 나이 비 로이 조이",
+            "krs": "보 맛 나이 비 로이 로이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "tụ điện",
+           "ko": "콘덴서",
+           "kr": "뚜 디엔",
+           "krs": "뚜 디엥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "tụ",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "điện",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "뚜 디엔",
+           "ex": {
+            "vi": "Anh thay tụ điện giúp tôi nhé.",
+            "ko": "콘덴서를 교체해 주세요.",
+            "kr": "아인 타이 뚜 디엔 줍 또이 냬",
+            "krs": "아인 타이 뚜 디엥 윱 또이 냬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "điện trở",
+           "ko": "저항",
+           "kr": "디엔 쩌",
+           "krs": "디엥 쩌",
+           "img": "",
+           "tones": [
+            {
+             "syl": "điện",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "trở",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "디엔 쩌",
+           "ex": {
+            "vi": "Điện trở này có giá trị bao nhiêu?",
+            "ko": "이 저항은 값이 얼마예요?",
+            "kr": "디엔 쩌 나이 꼬 자 찌 바오 니에우",
+            "krs": "디엥 쩌 나이 꼬 야 찌 바오 니에우",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đầu nối",
+           "ko": "커넥터",
+           "kr": "더우 노이",
+           "krs": "더우 노이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đầu",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "nối",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "더우 노이",
+           "ex": {
+            "vi": "Đầu nối bị lỏng nên máy không chạy.",
+            "ko": "커넥터가 헐거워서 기계가 안 돌아가요.",
+            "kr": "더우 노이 비 롱 넨 마이 콩 짜이",
+            "krs": "더우 노이 비 롱 넨 마이 콩 짜이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "dây cáp",
+           "ko": "케이블",
+           "kr": "저이 깝",
+           "krs": "여이 깝",
+           "img": "",
+           "tones": [
+            {
+             "syl": "dây",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "cáp",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "저이 깝",
+           "ex": {
+            "vi": "Dây cáp này quá ngắn.",
+            "ko": "이 케이블은 너무 짧아요.",
+            "kr": "저이 깝 나이 꽈 응안",
+            "krs": "여이 깝 나이 꽈 응앙",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "cầu chì",
+           "ko": "퓨즈",
+           "kr": "꺼우 찌",
+           "krs": "꺼우 찌",
+           "img": "",
+           "tones": [
+            {
+             "syl": "cầu",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "chì",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "꺼우 찌",
+           "ex": {
+            "vi": "Cầu chì bị cháy rồi.",
+            "ko": "퓨즈가 나갔어요.",
+            "kr": "꺼우 찌 비 짜이 조이",
+            "krs": "꺼우 찌 비 짜이 로이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "hàn thiếc",
+           "ko": "납땜하다",
+           "kr": "한 티엑",
+           "krs": "항 티엑",
+           "img": "",
+           "tones": [
+            {
+             "syl": "hàn",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "thiếc",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "한 티엑",
+           "ex": {
+            "vi": "Chị ấy hàn thiếc rất nhanh.",
+            "ko": "그녀는 납땜을 아주 빨리 해요.",
+            "kr": "찌 어이 한 티엑 젓 나인",
+            "krs": "찌 어이 항 티엑 럭 나인",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "kem hàn",
+           "ko": "솔더 페이스트",
+           "kr": "깸 한",
+           "krs": "깸 항",
+           "img": "",
+           "tones": [
+            {
+             "syl": "kem",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "hàn",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "깸 한",
+           "ex": {
+            "vi": "Kem hàn phải để trong tủ lạnh.",
+            "ko": "솔더 페이스트는 냉장고에 넣어 둬야 해요.",
+            "kr": "깸 한 파이 데 쫑 뚜 라인",
+            "krs": "깸 항 파이 데 쫑 뚜 라인",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "kiểm tra chức năng",
+           "ko": "기능 검사",
+           "kr": "끼엠 짜 쯕 낭",
+           "krs": "끼엠 짜 쯕 낭",
+           "img": "",
+           "tones": [
+            {
+             "syl": "kiểm",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "tra",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "chức",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "năng",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "끼엠 짜 쯕 낭",
+           "ex": {
+            "vi": "Sau khi lắp xong phải kiểm tra chức năng.",
+            "ko": "조립을 마친 뒤에는 기능 검사를 해야 해요.",
+            "kr": "싸우 키 랍 쏭 파이 끼엠 짜 쯕 낭",
+            "krs": "사우 키 랍 쏭 파이 끼엠 짜 쯕 낭",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
+        },
+        {
+         "t": "챕터4-3",
+         "words": [
+          {
+           "vi": "tỷ lệ lỗi",
+           "ko": "불량률",
+           "kr": "띠 레 로이",
+           "krs": "띠 레 로이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "tỷ",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "lệ",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "lỗi",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            }
+           ],
+           "kr_read": "띠 레 로이",
+           "ex": {
+            "vi": "Tỷ lệ lỗi tuần này giảm rồi.",
+            "ko": "이번 주 불량률이 내려갔어요.",
+            "kr": "띠 레 로이 뚜언 나이 잠 조이",
+            "krs": "띠 레 로이 뚜엉 나이 얌 로이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "lỗi hàn",
+           "ko": "납땜 불량",
+           "kr": "로이 한",
+           "krs": "로이 항",
+           "img": "",
+           "tones": [
+            {
+             "syl": "lỗi",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "hàn",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "로이 한",
+           "ex": {
+            "vi": "Có ba bo bị lỗi hàn.",
+            "ko": "기판 세 장에 납땜 불량이 있어요.",
+            "kr": "꼬 바 보 비 로이 한",
+            "krs": "꼬 바 보 비 로이 항",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "thiếu linh kiện",
+           "ko": "부품 누락",
+           "kr": "티에우 린 끼엔",
+           "krs": "티에우 린 끼엥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "thiếu",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "linh",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "kiện",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "티에우 린 끼엔",
+           "ex": {
+            "vi": "Bo này bị thiếu linh kiện.",
+            "ko": "이 기판은 부품이 빠졌어요.",
+            "kr": "보 나이 비 티에우 린 끼엔",
+            "krs": "보 나이 비 티에우 린 끼엥",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "gắn ngược",
+           "ko": "역삽입",
+           "kr": "간 응으억",
+           "krs": "강 응으억",
+           "img": "",
+           "tones": [
+            {
+             "syl": "gắn",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "ngược",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "간 응으억",
+           "ex": {
+            "vi": "Điốt này bị gắn ngược.",
+            "ko": "이 다이오드는 거꾸로 꽂혔어요.",
+            "kr": "디 옷 나이 비 간 응으억",
+            "krs": "디 옥 나이 비 강 응으억",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "vòng tay tĩnh điện",
+           "ko": "정전기 손목띠",
+           "kr": "봉 따이 띤 디엔",
+           "krs": "봉 따이 띤 디엥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "vòng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "tay",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "tĩnh",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "điện",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "봉 따이 띤 디엔",
+           "ex": {
+            "vi": "Vào khu vực này phải đeo vòng tay tĩnh điện.",
+            "ko": "이 구역에 들어가려면 정전기 손목띠를 차야 해요.",
+            "kr": "바오 쿠 븍 나이 파이 대오 봉 따이 띤 디엔",
+            "krs": "바오 쿠 븍 나이 파이 대오 봉 따이 띤 디엥",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "áo phòng sạch",
+           "ko": "방진복",
+           "kr": "아오 퐁 싹",
+           "krs": "아오 퐁 삿",
+           "img": "",
+           "tones": [
+            {
+             "syl": "áo",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "phòng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "sạch",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "아오 퐁 싹",
+           "ex": {
+            "vi": "Mặc áo phòng sạch trước khi vào phòng.",
+            "ko": "방에 들어가기 전에 방진복을 입으세요.",
+            "kr": "막 아오 퐁 싹 쯔억 키 바오 퐁",
+            "krs": "막 아오 퐁 삿 쯔억 키 바오 퐁",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "băng tải",
+           "ko": "컨베이어",
+           "kr": "방 따이",
+           "krs": "방 따이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "băng",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "tải",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "방 따이",
+           "ex": {
+            "vi": "Băng tải đang chạy chậm.",
+            "ko": "컨베이어가 느리게 돌아가요.",
+            "kr": "방 따이 당 짜이 쩜",
+            "krs": "방 따이 당 짜이 쩜",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "mã vạch",
+           "ko": "바코드",
+           "kr": "마 박",
+           "krs": "마 밧",
+           "img": "",
+           "tones": [
+            {
+             "syl": "mã",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "vạch",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "마 박",
+           "ex": {
+            "vi": "Anh quét mã vạch trên khay linh kiện.",
+            "ko": "부품 트레이의 바코드를 스캔하세요.",
+            "kr": "아인 꾸앳 마 박 쩬 카이 린 끼엔",
+            "krs": "아인 꾸액 마 밧 쩬 카이 린 끼엥",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
         }
        ]
       }
@@ -1831,7 +4079,7 @@
     },
     {
      "track": "섬유·봉제·신발",
-     "words": 15,
+     "words": 32,
      "chapters": [
       {
        "lessons": [
@@ -2220,6 +4468,511 @@
            }
           }
          ]
+        },
+        {
+         "t": "챕터5-2",
+         "words": [
+          {
+           "vi": "giày da",
+           "ko": "구두",
+           "kr": "자이 자",
+           "krs": "야이 야",
+           "img": "",
+           "tones": [
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "da",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "자이 자",
+           "ex": {
+            "vi": "Nhà máy này làm giày da xuất khẩu.",
+            "ko": "이 공장은 수출용 구두를 만들어요.",
+            "kr": "냐 마이 나이 람 자이 자 쑤엇 커우",
+            "krs": "냐 마이 나이 람 야이 야 쑤억 커우",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "mũ giày",
+           "ko": "갑피",
+           "kr": "무 자이",
+           "krs": "무 야이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "mũ",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "무 자이",
+           "ex": {
+            "vi": "Chuyền may đang may mũ giày.",
+            "ko": "봉제 라인에서 갑피를 박고 있어요.",
+            "kr": "쭈옌 마이 당 마이 무 자이",
+            "krs": "쭈옝 마이 당 마이 무 야이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đế giữa",
+           "ko": "미드솔",
+           "kr": "데 즈어",
+           "krs": "데 으어",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đế",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "giữa",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            }
+           ],
+           "kr_read": "데 즈어",
+           "ex": {
+            "vi": "Đế giữa của đôi này rất mềm.",
+            "ko": "이 신발의 미드솔은 아주 말랑해요.",
+            "kr": "데 즈어 꾸어 도이 나이 젓 멤",
+            "krs": "데 으어 꾸어 도이 나이 럭 멤",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "lót giày",
+           "ko": "인솔, 깔창",
+           "kr": "롯 자이",
+           "krs": "록 야이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "lót",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "롯 자이",
+           "ex": {
+            "vi": "Anh đặt lót giày vào trước.",
+            "ko": "먼저 깔창을 넣으세요.",
+            "kr": "아인 닷 롯 자이 바오 쯔억",
+            "krs": "아인 닥 록 야이 바오 쯔억",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "dây giày",
+           "ko": "신발끈",
+           "kr": "저이 자이",
+           "krs": "여이 야이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "dây",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "저이 자이",
+           "ex": {
+            "vi": "Đôi này thiếu dây giày.",
+            "ko": "이 신발은 신발끈이 빠졌어요.",
+            "kr": "도이 나이 티에우 저이 자이",
+            "krs": "도이 나이 티에우 여이 야이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "gót giày",
+           "ko": "뒷굽",
+           "kr": "곳 자이",
+           "krs": "곡 야이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "gót",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "곳 자이",
+           "ex": {
+            "vi": "Gót giày bị lệch.",
+            "ko": "뒷굽이 삐뚤어졌어요.",
+            "kr": "곳 자이 비 렉",
+            "krs": "곡 야이 비 렛",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "phom giày",
+           "ko": "라스트(신발 골)",
+           "kr": "폼 자이",
+           "krs": "폼 야이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "phom",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "폼 자이",
+           "ex": {
+            "vi": "Kho phom giày ở tầng hai.",
+            "ko": "라스트 창고는 2층에 있어요.",
+            "kr": "코 폼 자이 어 떵 하이",
+            "krs": "코 폼 야이 어 떵 하이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "da thật",
+           "ko": "천연가죽",
+           "kr": "자 텃",
+           "krs": "야 턱",
+           "img": "",
+           "tones": [
+            {
+             "syl": "da",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "thật",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "자 텃",
+           "ex": {
+            "vi": "Đôi giày này làm bằng da thật.",
+            "ko": "이 신발은 천연가죽으로 만들었어요.",
+            "kr": "도이 자이 나이 람 방 자 텃",
+            "krs": "도이 야이 나이 람 방 야 턱",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "ép đế",
+           "ko": "밑창 압착",
+           "kr": "앱 데",
+           "krs": "앱 데",
+           "img": "",
+           "tones": [
+            {
+             "syl": "ép",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "đế",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "앱 데",
+           "ex": {
+            "vi": "Công nhân đang ép đế.",
+            "ko": "작업자가 밑창을 압착하고 있어요.",
+            "kr": "꽁 년 당 앱 데",
+            "krs": "꽁 녕 당 앱 데",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "dán đế",
+           "ko": "밑창 접착",
+           "kr": "잔 데",
+           "krs": "양 데",
+           "img": "",
+           "tones": [
+            {
+             "syl": "dán",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "đế",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "잔 데",
+           "ex": {
+            "vi": "Dán đế xong phải để khô.",
+            "ko": "밑창을 붙인 뒤에는 말려야 해요.",
+            "kr": "잔 데 쏭 파이 데 코",
+            "krs": "양 데 쏭 파이 데 코",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
+        },
+        {
+         "t": "챕터5-3",
+         "words": [
+          {
+           "vi": "bôi keo",
+           "ko": "본드 칠하기",
+           "kr": "보이 깨오",
+           "krs": "보이 깨오",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bôi",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "keo",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "보이 깨오",
+           "ex": {
+            "vi": "Bôi keo đều tay nhé.",
+            "ko": "본드를 고르게 칠하세요.",
+            "kr": "보이 깨오 데우 따이 냬",
+            "krs": "보이 깨오 데우 따이 냬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "gò giày",
+           "ko": "라스팅",
+           "kr": "고 자이",
+           "krs": "고 야이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "gò",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "고 자이",
+           "ex": {
+            "vi": "Chuyền gò giày cần thêm hai người.",
+            "ko": "라스팅 라인에 두 명이 더 필요해요.",
+            "kr": "쭈옌 고 자이 껀 템 하이 응으어이",
+            "krs": "쭈옝 고 야이 껑 템 하이 응으어이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "cắt da",
+           "ko": "가죽 재단",
+           "kr": "깟 자",
+           "krs": "깍 야",
+           "img": "",
+           "tones": [
+            {
+             "syl": "cắt",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "da",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "깟 자",
+           "ex": {
+            "vi": "Bộ phận cắt da làm việc từ sáng sớm.",
+            "ko": "가죽 재단부는 이른 아침부터 일해요.",
+            "kr": "보 펀 깟 자 람 비엑 뜨 쌍 썸",
+            "krs": "보 펑 깍 야 람 비엑 뜨 상 섬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bong keo",
+           "ko": "본드 벗겨짐",
+           "kr": "봉 깨오",
+           "krs": "봉 깨오",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bong",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "keo",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "봉 깨오",
+           "ex": {
+            "vi": "Đôi này bị bong keo ở mũi.",
+            "ko": "이 신발은 앞코 본드가 벗겨졌어요.",
+            "kr": "도이 나이 비 봉 깨오 어 무이",
+            "krs": "도이 나이 비 봉 깨오 어 무이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "cỡ giày",
+           "ko": "신발 치수",
+           "kr": "꺼 자이",
+           "krs": "꺼 야이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "cỡ",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "꺼 자이",
+           "ex": {
+            "vi": "Chị đi cỡ giày bao nhiêu?",
+            "ko": "신발 치수가 어떻게 되세요?",
+            "kr": "찌 디 꺼 자이 바오 니에우",
+            "krs": "찌 디 꺼 야이 바오 니에우",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "giày lỗi",
+           "ko": "불량 신발",
+           "kr": "자이 로이",
+           "krs": "야이 로이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "lỗi",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            }
+           ],
+           "kr_read": "자이 로이",
+           "ex": {
+            "vi": "Giày lỗi để riêng vào thùng này.",
+            "ko": "불량 신발은 이 상자에 따로 담으세요.",
+            "kr": "자이 로이 데 지엥 바오 퉁 나이",
+            "krs": "야이 로이 데 리엥 바오 퉁 나이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "hộp giày",
+           "ko": "신발 상자",
+           "kr": "홉 자이",
+           "krs": "홉 야이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "hộp",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "giày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "홉 자이",
+           "ex": {
+            "vi": "Xếp giày vào hộp giày cho ngay ngắn.",
+            "ko": "신발을 상자에 반듯하게 담으세요.",
+            "kr": "쎕 자이 바오 홉 자이 쪼 응아이 응안",
+            "krs": "쎕 야이 바오 홉 야이 쪼 응아이 응앙",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
         }
        ]
       }
@@ -2227,7 +4980,7 @@
     },
     {
      "track": "건설·부동산",
-     "words": 13,
+     "words": 30,
      "chapters": [
       {
        "lessons": [
@@ -2624,6 +5377,505 @@
            }
           }
          ]
+        },
+        {
+         "t": "챕터6-2",
+         "words": [
+          {
+           "vi": "công trường",
+           "ko": "공사 현장",
+           "kr": "꽁 쯔엉",
+           "krs": "꽁 쯔엉",
+           "img": "",
+           "tones": [
+            {
+             "syl": "công",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "trường",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "꽁 쯔엉",
+           "ex": {
+            "vi": "Sáng mai tôi ra công trường sớm.",
+            "ko": "내일 아침 저는 일찍 공사 현장에 나가요.",
+            "kr": "쌍 마이 또이 자 꽁 쯔엉 썸",
+            "krs": "상 마이 또이 라 꽁 쯔엉 섬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "thi công",
+           "ko": "시공하다",
+           "kr": "티 꽁",
+           "krs": "티 꽁",
+           "img": "",
+           "tones": [
+            {
+             "syl": "thi",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "công",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "티 꽁",
+           "ex": {
+            "vi": "Nhà thầu đang thi công tầng năm.",
+            "ko": "시공사가 5층을 시공하고 있어요.",
+            "kr": "냐 터우 당 티 꽁 떵 남",
+            "krs": "냐 터우 당 티 꽁 떵 남",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bản vẽ thiết kế",
+           "ko": "설계도",
+           "kr": "반 배 티엣 께",
+           "krs": "방 배 티엑 께",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bản",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "vẽ",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "thiết",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "kế",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "반 배 티엣 께",
+           "ex": {
+            "vi": "Anh cho tôi xem bản vẽ thiết kế.",
+            "ko": "설계도를 보여 주세요.",
+            "kr": "아인 쪼 또이 쌤 반 배 티엣 께",
+            "krs": "아인 쪼 또이 쌤 방 배 티엑 께",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "giám sát",
+           "ko": "감리하다, 감독",
+           "kr": "잠 쌋",
+           "krs": "얌 삭",
+           "img": "",
+           "tones": [
+            {
+             "syl": "giám",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "sát",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "잠 쌋",
+           "ex": {
+            "vi": "Kỹ sư giám sát kiểm tra mỗi ngày.",
+            "ko": "감리 기사가 매일 점검해요.",
+            "kr": "끼 쓰 잠 쌋 끼엠 짜 모이 응아이",
+            "krs": "끼 스 얌 삭 끼엠 짜 모이 응아이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "nghiệm thu",
+           "ko": "준공 검사",
+           "kr": "응이엠 투",
+           "krs": "응이엠 투",
+           "img": "",
+           "tones": [
+            {
+             "syl": "nghiệm",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "thu",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "응이엠 투",
+           "ex": {
+            "vi": "Ngày mai có nghiệm thu công trình.",
+            "ko": "내일 공사 준공 검사가 있어요.",
+            "kr": "응아이 마이 꼬 응이엠 투 꽁 찐",
+            "krs": "응아이 마이 꼬 응이엠 투 꽁 찐",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bê tông",
+           "ko": "콘크리트",
+           "kr": "베 똥",
+           "krs": "베 똥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bê",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "tông",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "베 똥",
+           "ex": {
+            "vi": "Hôm nay đổ bê tông sàn tầng ba.",
+            "ko": "오늘 3층 바닥에 콘크리트를 부어요.",
+            "kr": "홈 나이 도 베 똥 싼 떵 바",
+            "krs": "홈 나이 도 베 똥 상 떵 바",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "cốt thép",
+           "ko": "철근",
+           "kr": "꼿 탭",
+           "krs": "꼭 탭",
+           "img": "",
+           "tones": [
+            {
+             "syl": "cốt",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "thép",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "꼿 탭",
+           "ex": {
+            "vi": "Cốt thép phải buộc chắc chắn.",
+            "ko": "철근을 단단히 묶어야 해요.",
+            "kr": "꼿 탭 파이 부옥 짝 짠",
+            "krs": "꼭 탭 파이 부옥 짝 짱",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "gạch",
+           "ko": "벽돌",
+           "kr": "각",
+           "krs": "갓",
+           "img": "",
+           "tones": [
+            {
+             "syl": "gạch",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "각",
+           "ex": {
+            "vi": "Xe chở gạch đã đến.",
+            "ko": "벽돌을 실은 차가 도착했어요.",
+            "kr": "쌔 쩌 각 다 덴",
+            "krs": "쌔 쩌 갓 다 덴",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "cát",
+           "ko": "모래",
+           "kr": "깟",
+           "krs": "깍",
+           "img": "",
+           "tones": [
+            {
+             "syl": "cát",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "깟",
+           "ex": {
+            "vi": "Chúng ta cần thêm hai xe cát.",
+            "ko": "모래가 두 차 더 필요해요.",
+            "kr": "쭝 따 껀 템 하이 쌔 깟",
+            "krs": "쭝 따 껑 템 하이 쌔 깍",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "cẩu",
+           "ko": "크레인",
+           "kr": "꺼우",
+           "krs": "꺼우",
+           "img": "",
+           "tones": [
+            {
+             "syl": "cẩu",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "꺼우",
+           "ex": {
+            "vi": "Cẩu đang nâng thép lên cao.",
+            "ko": "크레인이 철강재를 높이 들어 올려요.",
+            "kr": "꺼우 당 넝 탭 렌 까오",
+            "krs": "꺼우 당 넝 탭 렌 까오",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
+        },
+        {
+         "t": "챕터6-3",
+         "words": [
+          {
+           "vi": "máy xúc",
+           "ko": "굴착기",
+           "kr": "마이 쑥",
+           "krs": "마이 쑥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "máy",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "xúc",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "마이 쑥",
+           "ex": {
+            "vi": "Máy xúc đang đào móng.",
+            "ko": "굴착기가 기초를 파고 있어요.",
+            "kr": "마이 쑥 당 다오 몽",
+            "krs": "마이 쑥 당 다오 몽",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "chống thấm",
+           "ko": "방수",
+           "kr": "쫑 텀",
+           "krs": "쫑 텀",
+           "img": "",
+           "tones": [
+            {
+             "syl": "chống",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "thấm",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "쫑 텀",
+           "ex": {
+            "vi": "Nhà vệ sinh phải chống thấm kỹ.",
+            "ko": "화장실은 방수를 꼼꼼히 해야 해요.",
+            "kr": "냐 베 씬 파이 쫑 텀 끼",
+            "krs": "냐 베 신 파이 쫑 텀 끼",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "dây an toàn",
+           "ko": "안전벨트",
+           "kr": "저이 안 또안",
+           "krs": "여이 앙 또앙",
+           "img": "",
+           "tones": [
+            {
+             "syl": "dây",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "an",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "toàn",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "저이 안 또안",
+           "ex": {
+            "vi": "Làm việc trên cao phải đeo dây an toàn.",
+            "ko": "높은 곳에서 일할 때는 안전벨트를 매야 해요.",
+            "kr": "람 비엑 쩬 까오 파이 대오 저이 안 또안",
+            "krs": "람 비엑 쩬 까오 파이 대오 여이 앙 또앙",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "lưới an toàn",
+           "ko": "안전망",
+           "kr": "르어이 안 또안",
+           "krs": "르어이 앙 또앙",
+           "img": "",
+           "tones": [
+            {
+             "syl": "lưới",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "an",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "toàn",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "르어이 안 또안",
+           "ex": {
+            "vi": "Lưới an toàn được căng quanh tòa nhà.",
+            "ko": "건물 둘레에 안전망을 쳤어요.",
+            "kr": "르어이 안 또안 드억 깡 꾸아인 또아 냐",
+            "krs": "르어이 앙 또앙 드억 깡 꾸아인 또아 냐",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "dự toán",
+           "ko": "공사비 산출",
+           "kr": "즈 또안",
+           "krs": "으 또앙",
+           "img": "",
+           "tones": [
+            {
+             "syl": "dự",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "toán",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "즈 또안",
+           "ex": {
+            "vi": "Phòng kỹ thuật đang lập dự toán.",
+            "ko": "기술팀이 공사비를 산출하고 있어요.",
+            "kr": "퐁 끼 투엇 당 럽 즈 또안",
+            "krs": "퐁 끼 투억 당 럽 으 또앙",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "móng",
+           "ko": "기초",
+           "kr": "몽",
+           "krs": "몽",
+           "img": "",
+           "tones": [
+            {
+             "syl": "móng",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "몽",
+           "ex": {
+            "vi": "Đào móng xong thì đổ bê tông.",
+            "ko": "기초를 다 파면 콘크리트를 부어요.",
+            "kr": "다오 몽 쏭 티 도 베 똥",
+            "krs": "다오 몽 쏭 티 도 베 똥",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "mái",
+           "ko": "지붕",
+           "kr": "마이",
+           "krs": "마이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "mái",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "마이",
+           "ex": {
+            "vi": "Mái nhà bị dột.",
+            "ko": "지붕이 새요.",
+            "kr": "마이 냐 비 좃",
+            "krs": "마이 냐 비 욕",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
         }
        ]
       }
@@ -2631,7 +5883,7 @@
     },
     {
      "track": "일반 제조·기계",
-     "words": 13,
+     "words": 33,
      "chapters": [
       {
        "lessons": [
@@ -2998,6 +6250,622 @@
            }
           }
          ]
+        },
+        {
+         "t": "챕터7-2",
+         "words": [
+          {
+           "vi": "máy tiện",
+           "ko": "선반",
+           "kr": "마이 띠엔",
+           "krs": "마이 띠엥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "máy",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "tiện",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "마이 띠엔",
+           "ex": {
+            "vi": "Anh Nam đứng máy tiện đã mười năm.",
+            "ko": "남 씨는 선반 앞에 선 지 십 년이에요.",
+            "kr": "아인 남 등 마이 띠엔 다 므어이 남",
+            "krs": "아인 남 등 마이 띠엥 다 므어이 남",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "máy phay",
+           "ko": "밀링",
+           "kr": "마이 파이",
+           "krs": "마이 파이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "máy",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "phay",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "마이 파이",
+           "ex": {
+            "vi": "Máy phay này chạy rất chính xác.",
+            "ko": "이 밀링은 아주 정확하게 돌아요.",
+            "kr": "마이 파이 나이 짜이 젓 찐 싹",
+            "krs": "마이 파이 나이 짜이 럭 찐 싹",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "máy khoan",
+           "ko": "드릴링기",
+           "kr": "마이 코안",
+           "krs": "마이 코앙",
+           "img": "",
+           "tones": [
+            {
+             "syl": "máy",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "khoan",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "마이 코안",
+           "ex": {
+            "vi": "Chị dùng máy khoan để khoan lỗ.",
+            "ko": "드릴링기로 구멍을 뚫으세요.",
+            "kr": "찌 중 마이 코안 데 코안 로",
+            "krs": "찌 융 마이 코앙 데 코앙 로",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "máy hàn",
+           "ko": "용접기",
+           "kr": "마이 한",
+           "krs": "마이 항",
+           "img": "",
+           "tones": [
+            {
+             "syl": "máy",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "hàn",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "마이 한",
+           "ex": {
+            "vi": "Máy hàn bị hỏng rồi.",
+            "ko": "용접기가 고장났어요.",
+            "kr": "마이 한 비 홍 조이",
+            "krs": "마이 항 비 홍 로이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "vòng bi",
+           "ko": "베어링",
+           "kr": "봉 비",
+           "krs": "봉 비",
+           "img": "",
+           "tones": [
+            {
+             "syl": "vòng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "bi",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "봉 비",
+           "ex": {
+            "vi": "Vòng bi bị mòn nên máy kêu to.",
+            "ko": "베어링이 닳아서 기계 소리가 커요.",
+            "kr": "봉 비 비 몬 넨 마이 께우 또",
+            "krs": "봉 비 비 몽 넨 마이 께우 또",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bơm",
+           "ko": "펌프",
+           "kr": "범",
+           "krs": "범",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bơm",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "범",
+           "ex": {
+            "vi": "Bơm nước của xưởng đang bị nghẹt.",
+            "ko": "공장 급수 펌프가 막혔어요.",
+            "kr": "범 느억 꾸어 쓰엉 당 비 응앳",
+            "krs": "범 느억 꾸어 쓰엉 당 비 응액",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "van",
+           "ko": "밸브",
+           "kr": "반",
+           "krs": "방",
+           "img": "",
+           "tones": [
+            {
+             "syl": "van",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "반",
+           "ex": {
+            "vi": "Anh đóng van lại giúp tôi.",
+            "ko": "밸브를 잠가 주세요.",
+            "kr": "아인 동 반 라이 줍 또이",
+            "krs": "아인 동 방 라이 윱 또이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bánh răng",
+           "ko": "기어",
+           "kr": "바인 장",
+           "krs": "바인 랑",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bánh",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "răng",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "바인 장",
+           "ex": {
+            "vi": "Bánh răng cần được tra dầu.",
+            "ko": "기어에 기름을 쳐야 해요.",
+            "kr": "바인 장 껀 드억 짜 저우",
+            "krs": "바인 랑 껑 드억 짜 여우",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bu lông",
+           "ko": "볼트",
+           "kr": "부 롱",
+           "krs": "부 롱",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bu",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "lông",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "부 롱",
+           "ex": {
+            "vi": "Siết chặt bu lông này nhé.",
+            "ko": "이 볼트를 단단히 조이세요.",
+            "kr": "씨엣 짯 부 롱 나이 냬",
+            "krs": "시엑 짝 부 롱 나이 냬",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đai ốc",
+           "ko": "너트",
+           "kr": "다이 옥",
+           "krs": "다이 옥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đai",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "ốc",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "다이 옥",
+           "ex": {
+            "vi": "Có một đai ốc bị lỏng.",
+            "ko": "너트 하나가 풀렸어요.",
+            "kr": "꼬 못 다이 옥 비 롱",
+            "krs": "꼬 목 다이 옥 비 롱",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
+        },
+        {
+         "t": "챕터7-3",
+         "words": [
+          {
+           "vi": "thước cặp",
+           "ko": "버니어 캘리퍼스",
+           "kr": "트억 깝",
+           "krs": "트억 깝",
+           "img": "",
+           "tones": [
+            {
+             "syl": "thước",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "cặp",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "트억 깝",
+           "ex": {
+            "vi": "Dùng thước cặp để đo đường kính.",
+            "ko": "버니어 캘리퍼스로 지름을 재세요.",
+            "kr": "중 트억 깝 데 도 드엉 낀",
+            "krs": "융 트억 깝 데 도 드엉 낀",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bảo trì định kỳ",
+           "ko": "정기 보전",
+           "kr": "바오 찌 딘 끼",
+           "krs": "바오 찌 딘 끼",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bảo",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "trì",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "định",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "kỳ",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "바오 찌 딘 끼",
+           "ex": {
+            "vi": "Máy được bảo trì định kỳ mỗi tháng.",
+            "ko": "설비는 매달 정기 보전을 해요.",
+            "kr": "마이 드억 바오 찌 딘 끼 모이 탕",
+            "krs": "마이 드억 바오 찌 딘 끼 모이 탕",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bôi trơn",
+           "ko": "급유하다",
+           "kr": "보이 쩐",
+           "krs": "보이 쩡",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bôi",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "trơn",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "보이 쩐",
+           "ex": {
+            "vi": "Nhớ bôi trơn trục trước khi chạy máy.",
+            "ko": "설비를 돌리기 전에 축에 급유하는 걸 잊지 마세요.",
+            "kr": "녀 보이 쩐 쭉 쯔억 키 짜이 마이",
+            "krs": "녀 보이 쩡 쭉 쯔억 키 짜이 마이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "quá tải",
+           "ko": "과부하",
+           "kr": "꽈 따이",
+           "krs": "꽈 따이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "quá",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "tải",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "꽈 따이",
+           "ex": {
+            "vi": "Máy dừng vì bị quá tải.",
+            "ko": "과부하가 걸려서 설비가 멈췄어요.",
+            "kr": "마이 증 비 비 꽈 따이",
+            "krs": "마이 응 비 비 꽈 따이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "rò rỉ",
+           "ko": "누유, 누수",
+           "kr": "조 지",
+           "krs": "로 리",
+           "img": "",
+           "tones": [
+            {
+             "syl": "rò",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "rỉ",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "조 지",
+           "ex": {
+            "vi": "Ống dầu bị rò rỉ.",
+            "ko": "오일 배관에서 기름이 새요.",
+            "kr": "옹 저우 비 조 지",
+            "krs": "옹 여우 비 로 리",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "mất điện",
+           "ko": "정전",
+           "kr": "멋 디엔",
+           "krs": "먹 디엥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "mất",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "điện",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "멋 디엔",
+           "ex": {
+            "vi": "Xưởng bị mất điện từ sáng.",
+            "ko": "공장이 아침부터 정전이에요.",
+            "kr": "쓰엉 비 멋 디엔 뜨 쌍",
+            "krs": "쓰엉 비 먹 디엥 뜨 상",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "kiểm tra cuối",
+           "ko": "최종 검사",
+           "kr": "끼엠 짜 꾸오이",
+           "krs": "끼엠 짜 꾸오이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "kiểm",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "tra",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "cuối",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "끼엠 짜 꾸오이",
+           "ex": {
+            "vi": "Sản phẩm phải qua kiểm tra cuối.",
+            "ko": "제품은 최종 검사를 거쳐야 해요.",
+            "kr": "싼 펌 파이 꽈 끼엠 짜 꾸오이",
+            "krs": "상 펌 파이 꽈 끼엠 짜 꾸오이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "hàng không đạt",
+           "ko": "불합격품",
+           "kr": "항 콩 닷",
+           "krs": "항 콩 닥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "hàng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "không",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "đạt",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "항 콩 닷",
+           "ex": {
+            "vi": "Hàng không đạt để riêng ra.",
+            "ko": "불합격품은 따로 빼 두세요.",
+            "kr": "항 콩 닷 데 지엥 자",
+            "krs": "항 콩 닥 데 리엥 라",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bình chữa cháy",
+           "ko": "소화기",
+           "kr": "빈 쯔어 짜이",
+           "krs": "빈 쯔어 짜이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bình",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "chữa",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "cháy",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "빈 쯔어 짜이",
+           "ex": {
+            "vi": "Bình chữa cháy ở cạnh cửa.",
+            "ko": "소화기는 문 옆에 있어요.",
+            "kr": "빈 쯔어 짜이 어 까인 끄어",
+            "krs": "빈 쯔어 짜이 어 까인 끄어",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "kính bảo hộ",
+           "ko": "보안경",
+           "kr": "낀 바오 호",
+           "krs": "낀 바오 호",
+           "img": "",
+           "tones": [
+            {
+             "syl": "kính",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "bảo",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "hộ",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            }
+           ],
+           "kr_read": "낀 바오 호",
+           "ex": {
+            "vi": "Vào xưởng phải đeo kính bảo hộ.",
+            "ko": "작업장에 들어가려면 보안경을 써야 해요.",
+            "kr": "바오 쓰엉 파이 대오 낀 바오 호",
+            "krs": "바오 쓰엉 파이 대오 낀 바오 호",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
         }
        ]
       }
@@ -3005,7 +6873,7 @@
     },
     {
      "track": "유통·무역·물류",
-     "words": 14,
+     "words": 31,
      "chapters": [
       {
        "lessons": [
@@ -3401,6 +7269,517 @@
            }
           }
          ]
+        },
+        {
+         "t": "챕터8-2",
+         "words": [
+          {
+           "vi": "kho hàng",
+           "ko": "창고",
+           "kr": "코 항",
+           "krs": "코 항",
+           "img": "",
+           "tones": [
+            {
+             "syl": "kho",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "hàng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "코 항",
+           "ex": {
+            "vi": "Kho hàng của công ty ở ngoại ô.",
+            "ko": "회사 창고는 교외에 있어요.",
+            "kr": "코 항 꾸어 꽁 띠 어 응오아이 오",
+            "krs": "코 항 꾸어 꽁 띠 어 응오아이 오",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "nhập kho",
+           "ko": "입고하다",
+           "kr": "녑 코",
+           "krs": "녑 코",
+           "img": "",
+           "tones": [
+            {
+             "syl": "nhập",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "kho",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "녑 코",
+           "ex": {
+            "vi": "Hàng sẽ nhập kho chiều nay.",
+            "ko": "물건이 오늘 오후에 입고돼요.",
+            "kr": "항 쌔 녑 코 찌에우 나이",
+            "krs": "항 새 녑 코 찌에우 나이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "xuất kho",
+           "ko": "출고하다",
+           "kr": "쑤엇 코",
+           "krs": "쑤억 코",
+           "img": "",
+           "tones": [
+            {
+             "syl": "xuất",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "kho",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "쑤엇 코",
+           "ex": {
+            "vi": "Anh làm phiếu để xuất kho.",
+            "ko": "출고 전표를 만드세요.",
+            "kr": "아인 람 피에우 데 쑤엇 코",
+            "krs": "아인 람 피에우 데 쑤억 코",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "kiểm kê",
+           "ko": "재고 조사",
+           "kr": "끼엠 께",
+           "krs": "끼엠 께",
+           "img": "",
+           "tones": [
+            {
+             "syl": "kiểm",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "kê",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "끼엠 께",
+           "ex": {
+            "vi": "Cuối tháng cả kho phải kiểm kê.",
+            "ko": "월말에 창고 전체가 재고 조사를 해요.",
+            "kr": "꾸오이 탕 까 코 파이 끼엠 께",
+            "krs": "꾸오이 탕 까 코 파이 끼엠 께",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "xe nâng",
+           "ko": "지게차",
+           "kr": "쌔 넝",
+           "krs": "쌔 넝",
+           "img": "",
+           "tones": [
+            {
+             "syl": "xe",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "nâng",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "쌔 넝",
+           "ex": {
+            "vi": "Anh lái xe nâng được không?",
+            "ko": "지게차를 운전할 수 있어요?",
+            "kr": "아인 라이 쌔 넝 드억 콩",
+            "krs": "아인 라이 쌔 넝 드억 콩",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "pa lét",
+           "ko": "팔레트",
+           "kr": "빠 랫",
+           "krs": "빠 랙",
+           "img": "",
+           "tones": [
+            {
+             "syl": "pa",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "lét",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "빠 랫",
+           "ex": {
+            "vi": "Xếp thùng hàng lên pa lét.",
+            "ko": "상자를 팔레트에 쌓으세요.",
+            "kr": "쎕 퉁 항 렌 빠 랫",
+            "krs": "쎕 퉁 항 렌 빠 랙",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "bốc xếp",
+           "ko": "상하차",
+           "kr": "복 쎕",
+           "krs": "복 쎕",
+           "img": "",
+           "tones": [
+            {
+             "syl": "bốc",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            },
+            {
+             "syl": "xếp",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "복 쎕",
+           "ex": {
+            "vi": "Công nhân bốc xếp đang làm việc.",
+            "ko": "상하차 작업자들이 일하고 있어요.",
+            "kr": "꽁 년 복 쎕 당 람 비엑",
+            "krs": "꽁 녕 복 쎕 당 람 비엑",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "dỡ hàng",
+           "ko": "하역하다",
+           "kr": "저 항",
+           "krs": "여 항",
+           "img": "",
+           "tones": [
+            {
+             "syl": "dỡ",
+             "name": "ngã",
+             "ko": "끊었다 올림",
+             "shape": "∿"
+            },
+            {
+             "syl": "hàng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "저 항",
+           "ex": {
+            "vi": "Xe container đang dỡ hàng.",
+            "ko": "컨테이너 차가 짐을 내리고 있어요.",
+            "kr": "쌔 꼰 떼 너 당 저 항",
+            "krs": "쌔 꼰 떼 너 당 여 항",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "xe tải",
+           "ko": "트럭",
+           "kr": "쌔 따이",
+           "krs": "쌔 따이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "xe",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "tải",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "쌔 따이",
+           "ex": {
+            "vi": "Xe tải này chở được năm tấn.",
+            "ko": "이 트럭은 5톤을 실을 수 있어요.",
+            "kr": "쌔 따이 나이 쩌 드억 남 떤",
+            "krs": "쌔 따이 나이 쩌 드억 남 떵",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "cảng biển",
+           "ko": "항구",
+           "kr": "깡 비엔",
+           "krs": "깡 비엥",
+           "img": "",
+           "tones": [
+            {
+             "syl": "cảng",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "biển",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "깡 비엔",
+           "ex": {
+            "vi": "Hàng đã đến cảng biển Hải Phòng.",
+            "ko": "물건이 하이퐁 항구에 도착했어요.",
+            "kr": "항 다 덴 깡 비엔 하이 퐁",
+            "krs": "항 다 덴 깡 비엥 하이 퐁",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
+        },
+        {
+         "t": "챕터8-3",
+         "words": [
+          {
+           "vi": "niêm phong",
+           "ko": "봉인하다",
+           "kr": "니엠 퐁",
+           "krs": "니엠 퐁",
+           "img": "",
+           "tones": [
+            {
+             "syl": "niêm",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "phong",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "니엠 퐁",
+           "ex": {
+            "vi": "Thùng hàng đã được niêm phong.",
+            "ko": "상자가 봉인됐어요.",
+            "kr": "퉁 항 다 드억 니엠 퐁",
+            "krs": "퉁 항 다 드억 니엠 퐁",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "băng keo",
+           "ko": "포장 테이프",
+           "kr": "방 깨오",
+           "krs": "방 깨오",
+           "img": "",
+           "tones": [
+            {
+             "syl": "băng",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "keo",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "방 깨오",
+           "ex": {
+            "vi": "Cho tôi một cuộn băng keo.",
+            "ko": "포장 테이프 한 롤 주세요.",
+            "kr": "쪼 또이 못 꾸온 방 깨오",
+            "krs": "쪼 또이 목 꾸옹 방 깨오",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "quầy thu ngân",
+           "ko": "계산대",
+           "kr": "꾸어이 투 응언",
+           "krs": "꾸어이 투 응엉",
+           "img": "",
+           "tones": [
+            {
+             "syl": "quầy",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            },
+            {
+             "syl": "thu",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "ngân",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            }
+           ],
+           "kr_read": "꾸어이 투 응언",
+           "ex": {
+            "vi": "Quầy thu ngân ở bên phải.",
+            "ko": "계산대는 오른쪽에 있어요.",
+            "kr": "꾸어이 투 응언 어 벤 파이",
+            "krs": "꾸어이 투 응엉 어 벤 파이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "kệ hàng",
+           "ko": "진열대",
+           "kr": "께 항",
+           "krs": "께 항",
+           "img": "",
+           "tones": [
+            {
+             "syl": "kệ",
+             "name": "nặng",
+             "ko": "짧고 무겁게",
+             "shape": "↓"
+            },
+            {
+             "syl": "hàng",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "께 항",
+           "ex": {
+            "vi": "Kệ hàng này còn trống.",
+            "ko": "이 진열대가 비어 있어요.",
+            "kr": "께 항 나이 꼰 쫑",
+            "krs": "께 항 나이 꽁 쫑",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "trưng bày",
+           "ko": "진열하다",
+           "kr": "쯩 바이",
+           "krs": "쯩 바이",
+           "img": "",
+           "tones": [
+            {
+             "syl": "trưng",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "bày",
+             "name": "huyền",
+             "ko": "낮게 내려감",
+             "shape": "＼"
+            }
+           ],
+           "kr_read": "쯩 바이",
+           "ex": {
+            "vi": "Chị trưng bày hàng mới ra phía trước.",
+            "ko": "신상품을 앞쪽에 진열하세요.",
+            "kr": "찌 쯩 바이 항 머이 자 피어 쯔억",
+            "krs": "찌 쯩 바이 항 머이 라 피어 쯔억",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "đổi trả",
+           "ko": "교환·반품",
+           "kr": "도이 짜",
+           "krs": "도이 짜",
+           "img": "",
+           "tones": [
+            {
+             "syl": "đổi",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            },
+            {
+             "syl": "trả",
+             "name": "hỏi",
+             "ko": "내렸다 올림",
+             "shape": "∨"
+            }
+           ],
+           "kr_read": "도이 짜",
+           "ex": {
+            "vi": "Hàng lỗi được đổi trả trong bảy ngày.",
+            "ko": "불량품은 7일 안에 교환·반품할 수 있어요.",
+            "kr": "항 로이 드억 도이 짜 쫑 바이 응아이",
+            "krs": "항 로이 드억 도이 짜 쫑 바이 응아이",
+            "src": "claude"
+           }
+          },
+          {
+           "vi": "doanh số",
+           "ko": "매출액",
+           "kr": "조아인 쏘",
+           "krs": "오아인 소",
+           "img": "",
+           "tones": [
+            {
+             "syl": "doanh",
+             "name": "ngang",
+             "ko": "평평하게 그대로",
+             "shape": "—"
+            },
+            {
+             "syl": "số",
+             "name": "sắc",
+             "ko": "짧게 올라감",
+             "shape": "／"
+            }
+           ],
+           "kr_read": "조아인 쏘",
+           "ex": {
+            "vi": "Doanh số tháng này tăng khá cao.",
+            "ko": "이번 달 매출액이 꽤 늘었어요.",
+            "kr": "조아인 쏘 탕 나이 땅 카 까오",
+            "krs": "오아인 소 탕 나이 땅 카 까오",
+            "src": "claude"
+           }
+          }
+         ],
+         "boost": 1
         }
        ]
       }

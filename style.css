@@ -2120,3 +2120,33 @@ button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color
 .lessontabs button{flex:0 0 auto; padding:8px 14px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--fg); font-size:14px; font-weight:600}
 .lessontabs button.on{background:var(--accent); color:var(--accent-fg); border-color:transparent}
 .lessonextra{padding:40px 20px; text-align:center; color:var(--dim)}
+
+/* 목차의 레슨 줄들을 길(로드맵)로 그린 자리 — .days li 가 flex 라 block 으로 되돌린다
+   (대표님 지시 2026-09-25 #14: 일상·직무·기본기+문법도 GYBM 과 같은 길 모양) */
+.days li.roadli{display:block}
+.days li.roadli .roadmap{margin-bottom:0}
+
+/* 낱말장 낱말 '핵심' 표시 (대표님 지시 2026-09-25 #13) */
+.corepill{display:inline-block; margin-right:8px; padding:2px 8px; border-radius:999px;
+  font-size:12px; font-weight:800; letter-spacing:.02em; vertical-align:middle;
+  color:var(--accent); background:color-mix(in srgb, var(--accent) 12%, var(--card));
+  border:1px solid color-mix(in srgb, var(--accent) 35%, transparent)}
+
+/* 높낮이 그래프 위에서 낱말이 움직이는 자리 (2026-09-25 #7) */
+.pwstage{padding:6px 4px 2px}
+svg.curve.pw .played{fill:none; stroke:var(--accent); stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round}
+svg.curve.pw .pwpill{fill:var(--bg); stroke:var(--dim); stroke-width:1.2}
+svg.curve.pw .pwword.on .pwpill{fill:var(--accent); stroke:var(--accent)}
+svg.curve.pw .pwtx{font-size:14px; font-weight:800; fill:var(--text, #111); pointer-events:none}
+svg.curve.pw .pwword.on .pwtx{fill:#fff}
+svg.curve.pw .pwword{transition:none}
+
+/* 입모양 2D (2026-09-25 #6) */
+.mouthbox{margin-top:10px; padding:10px; border:1px solid var(--line); border-radius:14px; background:var(--card)}
+.mouthhead{display:flex; align-items:center; gap:8px; margin-bottom:6px}
+.mouthhead .msub{flex:1; font-size:12px; color:var(--dim)}
+.mouthsvg svg{width:100%; height:auto; display:block}
+.mouthcap{font-size:13px; line-height:1.45; min-height:38px; margin-top:6px; color:var(--dim)}
+.mouthcap b{color:var(--text, #111)}
+.mouthrow{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px}
+.mouthrow button.off{opacity:.5}

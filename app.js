@@ -729,6 +729,23 @@ const voiceDir = () => S.voice;
    "남부 남자로 선택된 상태라면 예문의 단어도 모두 남부 남자가 해야지."
    전에는 남부 파일이 없으면 북부 녹음으로 슬쩍 바꿔 틀었다 — 그래서 남녀·남북이 섞여 들렸다.
    이제 남부 파일이 없으면 기기 목소리로 낸다(성별은 맞춘다). 없는 소리는 내지 않는다. */
+/* ── 재생 위치 하나로 묶기 (대표님 지시 2026-09-24·25: 소리·높낮이·입모양·그림을 한꺼번에) ──
+   audio.currentTime 하나를 시계로 삼아, 화면에 떠 있는 '보기'(높낮이 그래프 위 낱말, 입모양)들이
+   자기 낱말이 지금 재생 중일 때만 그 시각에 맞춰 움직인다. 보기는 PB.views 에 등록하고,
+   화면에서 사라지면(root.isConnected=false) 알아서 빠진다. */
+const PB = { views: new Set(), raf: 0 };
+const ownsAudio = h => !!h && !!audio.src && audio.src.includes('/n/' + h + '.mp3');
+function pbTick() {
+  const playing = !audio.paused && !audio.ended;
+  PB.views.forEach(v => {
+    if (!v.root.isConnected) { PB.views.delete(v); return; }
+    try { v.update(playing); } catch (e) { }
+  });
+  PB.raf = playing ? requestAnimationFrame(pbTick) : 0;
+}
+audio.addEventListener('play', () => { if (!PB.raf) PB.raf = requestAnimationFrame(pbTick); });
+['pause', 'ended', 'emptied'].forEach(ev => audio.addEventListener(ev, () => { setTimeout(pbTick, 0); }));
+
 function play(text, slow, dir) {
   /* 대소문자 구분 없이 찾는다 — 문장 첫머리라 대문자로 들어온 낱말(Đây, Bạn...)도
      소문자 표제어 녹음을 그대로 쓴다(2026-09-09, 위 tapLine 주석 참고). */
@@ -1420,16 +1437,146 @@ function popup(html) {
   document.body.append(back);
 }
 
-/* 원어민 높낮이 곡선 + 내 녹음 결과 자리. 버튼은 밖에 두고 여기는 그림만 맡는다. */
+/* 원어민 높낮이 곡선 + 내 녹음 결과 자리. 버튼은 밖에 두고 여기는 그림만 맡는다.
+   2026-09-25 #7: 곡선 위에 **낱말이 직접** 얹혀서, 소리가 재생되는 동안 높낮이를 따라 위아래로 움직인다
+   (위쪽 낱말 표시는 그대로). 재생 중이 아닐 때는 출발점에 서 있다. 낱말을 누르면 소리가 난다. */
+function pitchStage(text, nat) {
+  const NSs = 'http://www.w3.org/2000/svg';
+  const W = 300, H = 118, PAD = 12;
+  const raw = nat.raw && nat.raw.length > 4 ? nat.raw : null;
+  const box = el('div', 'curvebox pwstage');
+  if (!raw || !nat.total) {               // 시간 정보가 없으면 예전 그림 그대로
+    box.innerHTML = curveSvg(null, nat.curve);
+    return box;
+  }
+  const h = AIDX[text] || AIDX[text.toLowerCase()];
+  const vals = raw.filter(v => v !== null && isFinite(v));
+  const lo = Math.min(-3, Math.min(...vals)), hi = Math.max(3, Math.max(...vals));
+  const t0 = nat.t0, span = raw.length * nat.hop;
+  const xmin = Math.max(0, t0 - 0.10), xmax = Math.min(nat.total, t0 + span + 0.10);
+  const px = t => PAD + (t - xmin) / ((xmax - xmin) || 1) * (W - PAD * 2);
+  const py = v => 26 + (hi - v) * (H - 26 - PAD) / ((hi - lo) || 1);
+  const pts = raw.map((v, i) => v === null ? null : [px(t0 + i * nat.hop), py(v)]);
+  let d = '', pen = false;
+  pts.forEach(q => { if (!q) { pen = false; return; } d += (pen ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); pen = true; });
+  const svg = document.createElementNS(NSs, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('class', 'curve pw');
+  const uid = 'pw' + Math.random().toString(36).slice(2, 7);
+  svg.innerHTML =
+    `<defs><clipPath id="${uid}"><rect x="0" y="0" width="0" height="${H}"/></clipPath></defs>` +
+    `<line x1="${PAD}" y1="${py(0).toFixed(1)}" x2="${W - PAD}" y2="${py(0).toFixed(1)}" class="mid"/>` +
+    `<path d="${d}" class="nat"/>` +
+    `<path d="${d}" class="played" clip-path="url(#${uid})"/>` +
+    `<g class="pwword"><rect class="pwpill" rx="11" ry="11" height="22"/><text class="pwtx" text-anchor="middle"></text></g>`;
+  box.append(svg);
+  const clip = svg.querySelector('clipPath rect'), gW = svg.querySelector('.pwword');
+  const rectE = gW.querySelector('rect'), txt = gW.querySelector('text');
+  const syl = text.split(' ').filter(Boolean);
+  const first = pts.find(q => q), lastQ = [...pts].reverse().find(q => q);
+  const at = t => {                         // 시각 t(초) → 곡선 위 점 (사이 빈 곳은 앞뒤를 이어 준다)
+    const i = clamp01((t - t0) / (nat.hop * (raw.length - 1))) * (raw.length - 1);
+    let a = Math.floor(i), b = Math.ceil(i);
+    while (a > 0 && pts[a] === null) a--;
+    while (b < pts.length - 1 && pts[b] === null) b++;
+    const A = pts[a] || first, B = pts[b] || lastQ;
+    const f = b === a ? 0 : (i - a) / (b - a);
+    return [A[0] + (B[0] - A[0]) * f, A[1] + (B[1] - A[1]) * f];
+  };
+  const place = (t, playing) => {
+    const q = at(t);
+    const s = syl.length > 1 ? syl[Math.min(syl.length - 1, Math.floor(clamp01((t - t0) / span) * syl.length))] : syl[0];
+    txt.textContent = s;
+    const w = Math.max(38, s.length * 9.5 + 18);
+    rectE.setAttribute('width', w); rectE.setAttribute('x', -w / 2); rectE.setAttribute('y', -11);
+    txt.setAttribute('y', 5);
+    const cx = Math.min(W - w / 2 - 2, Math.max(w / 2 + 2, q[0])), cy = Math.max(13, q[1] - 17);
+    gW.setAttribute('transform', `translate(${cx.toFixed(1)} ${cy.toFixed(1)})`);
+    gW.classList.toggle('on', !!playing);
+    clip.setAttribute('width', playing ? q[0].toFixed(1) : 0);
+  };
+  place(t0, false);
+  gW.onclick = () => play(text, false);
+  gW.style.cursor = 'pointer';
+  PB.views.add({ root: box, update(playing) {
+    if (playing && ownsAudio(h)) place(clamp(audio.currentTime, t0, t0 + span), true);
+    else place(t0, false);
+  } });
+  return box;
+}
+const clamp01 = v => v < 0 ? 0 : (v > 1 ? 1 : v);
+const clamp = (v, a, b) => v < a ? a : (v > b ? b : v);
+
 function curveArea(text, box) {
   const wrap = el('div', 'speak');
   const pre = el('div', 'curvearea prenat');
   nativeCurve(text).then(nat => {
     if (!nat || !nat.curve) return;
-    pre.innerHTML = `<div class="curvebox">${curveSvg(null, nat.curve)}</div>` +
-      `<div class="curvelegend"><span class="k nat"></span>원어민 소리 높낮이</div>`;
+    pre.append(pitchStage(text, nat));
+    pre.append(el('div', 'curvelegend', '<span class="k nat"></span>원어민 소리 높낮이 — 낱말이 소리를 따라 움직입니다'));
   });
   wrap.append(pre, box);
+  return wrap;
+}
+
+/* 입모양 2D — 옆 단면(혀·입천장·연구개·콧길·성대)과 정면 입술 (대표님 지시 2026-09-25 #6).
+   소리(audio)와 같은 시계로 움직인다(PB). 소리가 없는 낱말·재생 전에도 '천천히' 단추로 입모양만 볼 수 있다.
+   그림의 세부 좌표는 **모식도**다 — 베트남어 전용 MRI·초음파 자료가 없어 범주(혀 높이·앞뒤·둥글기, 닿는 곳)만 근거가 있다. */
+function mouthPanel(text) {
+  const wrap = el('div', 'mouthbox');
+  if (typeof MOUTH === 'undefined') return wrap;
+  if (S.mouthOff) {
+    const b = el('button', 'ghost sm', tr('입모양 보기'));
+    b.onclick = () => { S.mouthOff = 0; save(); wrap.replaceWith(mouthPanel(text)); };
+    wrap.append(b);
+    return wrap;
+  }
+  const head = el('div', 'mouthhead');
+  head.append(el('b', null, tr('입모양')), el('span', 'msub', tr('모식도 · 옆 단면과 정면')));
+  const hide = el('button', 'ghost sm', tr('숨기기'));
+  hide.onclick = () => { S.mouthOff = 1; save(); wrap.replaceWith(mouthPanel(text)); };
+  head.append(hide);
+  const body = el('div', 'mouthsvg');
+  const cap = el('div', 'mouthcap');
+  const row = el('div', 'mouthrow');
+  const bSlow = el('button', 'ghost sm', '▶ ' + tr('입모양만 천천히'));
+  const bSnd = el('button', 'ghost sm', '🔊 ' + tr('소리와 함께'));
+  const bNm = el('button', 'ghost sm', tr('이름표'));
+  row.append(bSlow, bSnd, bNm);
+  wrap.append(head, body, cap, row);
+  const M = MOUTH.create(body);
+  M.setWord(text);
+  const idle = () => { cap.innerHTML = tr('▶ 를 누르면 입 안이 움직입니다'); };
+  const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : tr('쉬는 자세'); };
+  M.at(0); idle();
+  const h = AIDX[text] || AIDX[text.toLowerCase()];
+  let nat = null, local = null, lastId = '';
+  nativeCurve(text).then(n => { nat = n; });
+  const show = t => { const id = M.at(t); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
+  let nm = true;
+  bNm.onclick = () => { nm = !nm; M.names(nm); bNm.classList.toggle('off', !nm); };
+  bSlow.onclick = () => {
+    if (local) { local.stop = true; }
+    const st = { t0: performance.now(), dur: 2600, stop: false };
+    local = st;
+    const step = now => {
+      if (st.stop || !wrap.isConnected) { if (local === st) local = null; return; }
+      const t = (now - st.t0) / st.dur;
+      if (t >= 1) { show(1); local = null; setTimeout(() => { if (!local && !ownsAudio(h)) { M.at(0); lastId = ''; idle(); } }, 900); return; }
+      show(t);
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  bSnd.onclick = () => { if (local) local.stop = true; local = null; play(text, true); };
+  PB.views.add({ root: wrap, update(playing) {
+    if (local) return;
+    if (playing && ownsAudio(h) && nat && nat.raw) {
+      const span = nat.raw.length * nat.hop, a = Math.max(0, nat.t0 - .06), b = Math.min(nat.total, nat.t0 + span + .05);
+      show(clamp((audio.currentTime - a) / ((b - a) || 1), 0, 1));
+    } else if (playing && ownsAudio(h)) {
+      show(clamp(audio.currentTime / (audio.duration || 1), 0, 1));
+    } else { M.at(0); lastId = ''; idle(); }
+  } });
   return wrap;
 }
 
@@ -1679,9 +1826,7 @@ function studyHubEntry() {
     b.append(btn);
   };
   row('회화', '단어·문법·기본기 전체 목차', courseEntry);
-  row('GYBM 시험', '메인·서브 교재 + 수업자료 + 선배 시험 낱말, 15개씩 카드로 학습', gybmEntry);
-  row('공인인증 베트남어', '공인 시험 대비 학습 콘텐츠 (준비 중)', () =>
-    alert('공인인증 베트남어 전용 학습 콘텐츠는 아직 준비 중입니다. 지금은 아래 "시험" 탭에서 모의고사로 연습해 보세요.'));
+  row('GYBM 시험', '메인 교재 + 선배·22기 시험 낱말, 15개씩 카드로 학습', gybmEntry);
   row('복습', '잊을 때 된 것을 다시 봅니다', () => reviewMenu('all'));
   show('sub', '학습', true);
 }
@@ -2922,12 +3067,12 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
                                       ['베트남 바로알기', knowEntry],
                                       ['오늘의 기사', showNewsLearn]] },
   cred:  { name: '순위', items: () => [['보기', creditEntry]] },
-  vex:   { name: '능력시험', items: () => [['모의고사', vlptEntry]] },
   guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
 
-/* 시험 탭 입구 — 학습 탭과 같은 갈래(회화·GYBM·공인인증시험)로 보낸다 (대표님 지시,
+/* 시험 탭 입구 — 학습 탭과 같은 갈래(회화·GYBM)로 보낸다 (대표님 지시,
    2026-09-16: "시험탭내부도 회화, gybm, 공인인증시험. 이런식으로 학습탭과 동일하게").
+   2026-09-25 대표님 지시로 공인인증시험(VLPT 모의고사) 갈래는 통째로 뺐다.
    회화·GYBM은 아직 시험 콘텐츠가 없어 준비 중이라고 정직하게 말한다 — 낱말만 먼저
    업데이트하고 시험 문항은 나중에 만들라는 지시라 여기서 지어내지 않는다. */
 function examHubEntry() {
@@ -2944,7 +3089,6 @@ function examHubEntry() {
     alert('회화 시험 콘텐츠는 아직 준비 중입니다.'));
   row('GYBM', 'GYBM 낱말 시험 (준비 중)', () =>
     alert('GYBM 시험 콘텐츠는 아직 준비 중입니다. 지금은 "학습" 탭의 GYBM 시험에서 낱말을 먼저 익혀 보세요.'));
-  row('공인인증시험', 'VLPT 형식 모의고사', vlptEntry);
   show('exam', '시험', true);
 }
 
@@ -5047,6 +5191,7 @@ const GROUPS = [
   [d => !d.track && d.n <= 31, '날씨'],
   [d => !d.track && d.n <= 32, '취미'],
   [d => !d.track && d.n <= 34, '감정과 의견 표현 심화'],
+  [d => !d.track && d.n <= 99, '수업 자료 보강'],  // 35일차~ — 서브교재·줌 자료에서 골라 붙인 보강 세션(tools/build_boost.py)
   [d => !d.track, '기타'],  // 안전망 — 위 21개에 안 걸리는 경우는 없어야 정상
 ];
 
@@ -5138,11 +5283,15 @@ function renderRoadmap(host, nodes, curKey, opt) {
   // 산길처럼 좌우로 살짝 구불거리며 위로 올라가는 느낌 (대표님 지시, 2026-09-23:
   // "좀더 길을 걷고 있고, 더 높은곳으로 가고 잇음을 시각적으로"). 점(dot)만 폭 52px
   // 안에서 흔들리고 글자 자리는 고정이라, 레슨 제목이 길어도 줄바꿈이 안 틀어진다.
+  // 2026-09-25 대표님 지시: "길의 방향이 아래로 이동하는 모양 — 위로 올라가는 방향으로".
+  // 그래서 첫 과를 **맨 아래**에 두고 뒤 과일수록 위로 쌓는다(정상 = 맨 위 깃발).
+  // 화면을 열면 '지금 할 차례'(없으면 맨 아래 첫 과)가 가운데 오도록 스크롤한다.
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'rmpath');
   host.append(svg);
   const rows = [];
-  nodes.forEach((nd, i) => {
+  const order = nodes.map((nd, i) => ({ nd, i })).reverse();       // 위 = 뒤쪽 과
+  order.forEach(({ nd, i }, di) => {
     const state = nd.key === curKey ? 'cur' : nd.done ? 'done' : 'lock';
     const done = nd.done || state === 'cur';
     const isLast = i === nodes.length - 1;
@@ -5163,11 +5312,18 @@ function renderRoadmap(host, nodes, curKey, opt) {
     host.append(row);
     rows.push({ dotwrap, done });
   });
-  requestAnimationFrame(() => drawRoadPath(host, svg, rows));
+  requestAnimationFrame(() => {
+    drawRoadPath(host, svg, rows);
+    // 열자마자 지금 자리가 보이게 — 없으면(다 끝냄) 정상 깃발이 있는 맨 위, 시작 전이면 맨 아래
+    const els = host.querySelectorAll('.rmnode');
+    const target = host.querySelector('.rmnode.cur') || (nodes.every(n => n.done) ? els[0] : els[els.length - 1]);
+    if (target && target.scrollIntoView && !(opt && opt.noScroll)) target.scrollIntoView({ block: 'center' });
+  });
 }
 
 /* renderRoadmap 이 그린 점들을 구불구불한 선으로 잇는다 — 실제 배치 후 좌표를 재서
-   그리므로 글자 줄바꿈으로 칸 높이가 들쭉날쭉해도 선이 항상 점을 정확히 지난다. */
+   그리므로 글자 줄바꿈으로 칸 높이가 들쭉날쭉해도 선이 항상 점을 정확히 지난다.
+   위쪽이 뒤 과이므로, 두 점 사이 선은 **아래쪽(앞 과)** 을 끝냈을 때 진하게 칠한다. */
 function drawRoadPath(host, svg, rows) {
   if (!host.isConnected || !rows.length) return;
   const hb = host.getBoundingClientRect();
@@ -5180,13 +5336,25 @@ function drawRoadPath(host, svg, rows) {
   svg.setAttribute('viewBox', `0 0 ${hb.width} ${hb.height}`);
   svg.textContent = '';
   for (let i = 1; i < pts.length; i++) {
-    const a = pts[i - 1], b = pts[i];
+    const a = pts[i - 1], b = pts[i];                 // a = 위(뒤 과), b = 아래(앞 과)
     const midY = (a.y + b.y) / 2;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', `M${a.x},${a.y} C${a.x},${midY} ${b.x},${midY} ${b.x},${b.y}`);
-    path.setAttribute('class', 'rmedge' + (a.done ? ' done' : ''));
+    path.setAttribute('class', 'rmedge' + (b.done ? ' done' : ''));
     svg.append(path);
   }
+}
+
+/* 목차의 레슨 줄들을 **길(로드맵)** 로 그린다 — 회화(일상·직무·기본기+문법)와 GYBM 이
+   같은 모양이어야 한다(대표님 지시, 2026-09-25 #14). 잠그지 않는다(freeNav):
+   어느 과든 눌러 들어갈 수 있고, 아직 안 끝낸 첫 과가 '지금 여기'다.
+   nodes: [{key, title, sub, num, done, fn}]  list: #dayList 같은 <ul> */
+function roadInList(list, nodes) {
+  const li = el('li', 'roadli');
+  const road = el('div', 'roadmap');
+  li.append(road); list.append(li);
+  const cur = nodes.find(n => !n.done);
+  renderRoadmap(road, nodes, cur ? cur.key : null, { freeNav: true });
 }
 
 function renderHome() {
@@ -5353,25 +5521,19 @@ function renderDays() {
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track)
     .sort((a, b) => (a.n || 0) - (b.n || 0));
 
-  const row = d => {                       // 한 줄 그리기
-    const done = !!S.done[d.day];
-    const b = el('button');
-    b.dataset.done = done ? '1' : '0';
-    if (nx && d.day === nx.day && !nx.track) b.dataset.next = '1';
-    const nm2 = el('span', 'nm', esc(d.theme));
-    b.append(el('span', 'num', esc(label(d))), nm2,
-             el('span', 'st', done ? '완료 ✔' : (d.words || []).length + '단어' + (d.dialog ? ' + 대화' : '')));
-    b.onclick = () => { dive(renderDays); startLearn(d); };
-    const li = el('li'); li.append(b);
-    return li;
-  };
-
-  let g = -1;
-  days.forEach(d => {
+  /* 2026-09-25 대표님 지시(#14): GYBM 과 같은 **길(로드맵)** 로 그린다. 갈래(GROUPS) 이름은
+     줄 부제에 붙인다. 일정판의 '다음 차례'(nx)가 있으면 그 세트가 '지금 여기'다. */
+  const nodes = days.map((d, i) => {
     const gi = GROUPS.findIndex(([f]) => f(d));
-    if (gi !== g) { g = gi; list.append(el('li', 'grp', esc(GROUPS[gi][1]))); }
-    list.append(row(d));
+    return { key: d.day, title: d.theme,
+             sub: (gi >= 0 ? GROUPS[gi][1] + ' · ' : '') + (d.words || []).length + tr('낱말') + (d.dialog ? ' + ' + tr('대화') : ''),
+             num: i + 1, done: !!S.done[d.day],
+             fn: () => { dive(renderDays); startLearn(d); } };
   });
+  const li = el('li', 'roadli'), road = el('div', 'roadmap');
+  li.append(road); list.append(li);
+  const cur = (nx && !nx.track) ? nodes.find(n => n.key === nx.day) : nodes.find(n => !n.done);
+  renderRoadmap(road, nodes, cur ? cur.key : null, { freeNav: true });
   show('course', '일상 낱말', true);
 }
 
@@ -5406,33 +5568,14 @@ function startLearn(d) {
   show('learn', typeof d.day === 'string' ? d.theme : label(d) + ' · ' + d.theme, true);
   drawLessonTabs();
 }
-/* 학습 방법 탭 — 카드 학습/강의/애니메이션/노래 (2026-09-08 대표님 지시).
-   하루5분(자동 진행)에서는 고를 게 없어야 하므로 숨긴다 — ACTIVE_TAB으로 구분한다.
-   강의·애니메이션·노래는 아직 콘텐츠가 없어 "준비 중"이라고 정직하게 말한다.
-   카드 학습으로 돌아오면 이미 그려진 L을 그대로 다시 그린다(새로 안 만듦). */
+/* 학습 방법 탭 — 2026-09-25 대표님 지시로 강의·애니메이션·노래 단추를 없앴다
+   ("단어카드만 남기고 위쪽 버튼은 없애자"). 카드 학습만 남으므로 탭 줄은 늘 숨긴다.
+   새 레슨은 늘 카드부터 시작한다. */
 function drawLessonTabs() {
   const bar = $('#lessonTabs');
-  $('#card').hidden = false; $('#lessonExtra').hidden = true;   // 새 레슨은 항상 카드부터
-  if (ACTIVE_TAB === 'daily') { bar.hidden = true; return; }
-  bar.hidden = false;
+  $('#card').hidden = false; $('#lessonExtra').hidden = true;
+  bar.hidden = true;
   bar.textContent = '';
-  const modes = [['card', '카드 학습'], ['lecture', '강의'], ['anim', '애니메이션'], ['song', '노래']];
-  modes.forEach(([k, name]) => {
-    const b = el('button', k === 'card' ? 'on' : '', name);
-    b.onclick = () => {
-      [...bar.children].forEach(x => x.classList.remove('on'));
-      b.classList.add('on');
-      const extra = $('#lessonExtra');
-      if (k === 'card') { $('#card').hidden = false; extra.hidden = true; drawCard(); }
-      else {
-        $('#card').hidden = true; extra.hidden = false;
-        extra.textContent = '';
-        extra.append(el('p', null, `${name} 학습은 아직 준비 중입니다.`));
-        extra.append(el('p', 'note', '곧 이 레슨의 단어·예문으로 만든 콘텐츠가 올라옵니다.'));
-      }
-    };
-    bar.append(b);
-  });
 }
 
 /* 단어의 예문 — 새로 짓지 않고 그날 대화·바꿔말하기에서 그 단어가 든 문장을 꺼내 쓴다.
@@ -5793,20 +5936,18 @@ function drawVol(vi) {
 function drawCh(vi, ci) {
   const c = lifeVols()[vi].chapters[ci];
   const list = $('#dayList'); list.textContent = '';
-  c.lessons.forEach((l, li) => {
-    const k = ckey(vi, ci, li), fin = !!S.done[k];
-    const b = el('button');
-    b.dataset.done = fin ? '1' : '0';
-    /* 낱말을 늘어놓지는 않는다 (2026-08-30) — 그것이 주제인 줄 알게 된다.
-       대신 **꼭지 제목**이 있으면 그것을 쓴다 (2026-09-02). 진짜 주제이기 때문이다. */
-    b.append(el('span', 'num', ''),
-             el('span', 'nm', tr(lsName(l, li))),
-             el('span', 'st', l.words.length + tr('낱말') + (fin ? ' ✔' : '')));
-    b.onclick = () => { dive(() => drawCh(vi, ci));
-      startLearn({ day: k, theme: l.t ? tr(l.t) : (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
-                   words: l.words, course: 1 }); };
-    const li2 = el('li'); li2.append(b); list.append(li2);
+  /* 레슨 줄은 **길(로드맵)** 로 그린다 (대표님 지시 2026-09-25: GYBM 과 같은 모양).
+     낱말을 늘어놓지는 않는다 (2026-08-30) — 그것이 주제인 줄 알게 된다.
+     대신 **꼭지 제목**이 있으면 그것을 쓴다 (2026-09-02). 진짜 주제이기 때문이다. */
+  const nodes = c.lessons.map((l, li) => {
+    const k = ckey(vi, ci, li);
+    return { key: k, title: tr(lsName(l, li)), sub: l.words.length + tr('낱말'), num: li + 1,
+             done: !!S.done[k],
+             fn: () => { dive(() => drawCh(vi, ci));
+               startLearn({ day: k, theme: l.t ? tr(l.t) : (vi + 2) + '권 ' + (ci + 1) + '-' + (li + 1),
+                            words: l.words, course: 1 }); } };
   });
+  roadInList(list, nodes);
   show('course', c.t ? tr(c.t) : (vi + 2) + '권 · ' + tr('챕터') + ' ' + (ci + 1), true);
 }
 
@@ -5888,20 +6029,15 @@ function drawJobCh(ti, ci) {
   const t = jobVol(JOBI).tracks[ti], c = t.chapters[ci];
   // 제목은 갈래 이름 그대로 — '직무 낱말 › 공통 · 생산과 공정' 으로 읽힌다
   const list = $('#dayList'); list.textContent = '';
-  c.lessons.forEach((l, li) => {
-    const k = jkey(ti, ci, li), fin = !!S.done[k];
-    const b = el('button');
-    b.dataset.done = fin ? '1' : '0';
-    /* 낱말을 늘어놓지는 않는다 (2026-08-30) — 그것이 주제인 줄 알게 된다.
-       대신 **꼭지 제목**이 있으면 그것을 쓴다 (2026-09-02). 진짜 주제이기 때문이다. */
-    b.append(el('span', 'num', ''),
-             el('span', 'nm', tr(lsName(l, li))),
-             el('span', 'st', l.words.length + tr('낱말') + (fin ? ' ✔' : '')));
-    b.onclick = () => { dive(() => drawJobCh(ti, ci));
-      startLearn({ day: k, theme: t.track + ' · ' + lsName(l, li),
-                   words: l.words, course: 1 }); };
-    const li2 = el('li'); li2.append(b); list.append(li2);
+  const nodes = c.lessons.map((l, li) => {
+    const k = jkey(ti, ci, li);
+    return { key: k, title: tr(lsName(l, li)), sub: l.words.length + tr('낱말'), num: li + 1,
+             done: !!S.done[k],
+             fn: () => { dive(() => drawJobCh(ti, ci));
+               startLearn({ day: k, theme: t.track + ' · ' + lsName(l, li),
+                            words: l.words, course: 1 }); } };
   });
+  roadInList(list, nodes);
   show('course', t.track + ' · ' + tr('챕터') + ' ' + (ci + 1), true);
 }
 
@@ -5929,17 +6065,15 @@ function drawCore() {
   head.append(el('span', 'msub',
     tr('네 기수 중 두 기수 이상에 나온 낱말만 모았습니다 — 급할 때는 이 길만 걸어도 됩니다.')));
   list.append(head);
-  ch.forEach((c, i) => {
-    const k = 'K' + i, fin = !!S.done[k];
-    const b = el('button');
-    b.dataset.done = fin ? '1' : '0';
-    b.append(el('span', 'num', tr('레슨') + ' ' + (i + 1)),
-             el('span', 'nm', c.slice(0, 3).map(w => esc(w.ko.split('/')[0].trim())).join(' · ')),
-             el('span', 'st', fin ? tr('완료 ✔') : c.length + tr('낱말')));
-    b.onclick = () => { dive(drawCore);
-      startLearn({ day: k, theme: tr('핵심') + ' ' + (i + 1), words: c, course: 1 }); };
-    const li = el('li'); li.append(b); list.append(li);
+  const nodes = ch.map((c, i) => {
+    const k = 'K' + i;
+    return { key: k, title: tr('레슨') + ' ' + (i + 1),
+             sub: c.slice(0, 3).map(w => w.ko.split('/')[0].trim()).join(' · ') + ' · ' + c.length + tr('낱말'),
+             num: i + 1, done: !!S.done[k],
+             fn: () => { dive(drawCore);
+               startLearn({ day: k, theme: tr('핵심') + ' ' + (i + 1), words: c, course: 1 }); } };
   });
+  roadInList(list, nodes);
   show('course', '핵심만', true);
 }
 
@@ -5982,49 +6116,23 @@ function startKeyGuide() {          // 이름이 startType 이면 기존 '타이
 function drawGramList() {
   const list = $('#dayList'); list.textContent = '';
   /* **기본기가 1권에 들어 있어야 한다** (대표님 지적, 2026-08-30).
-     글자·모음·성조·자음·자판 — 문법보다 먼저 봐야 할 것들인데 진입점이 없었다. */
-  const bs = el('li', 'catpick');
-  bs.append(el('span', 'msub', '📗 ' + tr('기본기')));
-  list.append(bs);
-  (ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P')).forEach(d => {
-    const fin = !!S.done[d.day];
-    const b = el('button');
-    b.dataset.done = fin ? '1' : '0';
+     글자·모음·성조·자음·자판 — 문법보다 먼저 봐야 할 것들인데 진입점이 없었다.
+     2026-09-25: 다른 목차들과 같이 **한 줄 길**로 그린다 — 기본기 → 자판 → 문법 순으로 위로 오른다. */
+  const nodes = [];
+  ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P').forEach(d => {
     const n = (d.letters || d.tones || []).length;
-    b.append(el('span', 'num', esc(d.day)),
-             el('span', 'nm', esc(d.theme)),
-             el('span', 'st', n + tr('개') + (fin ? ' ✔' : '')));
-    b.onclick = () => { dive(drawGramList); startLearn(d); };
-    const li = el('li'); li.append(b); list.append(li);
+    nodes.push({ key: d.day, title: d.theme, sub: tr('기본기') + ' · ' + n + tr('개'),
+                 done: !!S.done[d.day], fn: () => { dive(drawGramList); startLearn(d); } });
   });
-  {
-    const fin = !!S.done['PTYPE'];
-    const b = el('button');
-    b.dataset.done = fin ? '1' : '0';
-    b.append(el('span', 'num', 'P4'), el('span', 'nm', tr('자판 치는 법')),
-             el('span', 'st', TYPEKEYS.length + tr('개') + (fin ? ' ✔' : '')));
-    b.onclick = () => { dive(drawGramList); startKeyGuide(); };
-    const li = el('li'); li.append(b); list.append(li);
-  }
-  const gs = el('li', 'catpick');
-  gs.append(el('span', 'msub', '📘 ' + tr('문법')));
-  list.append(gs);
-
-  GRAM.books.forEach((b, bi) => {
-    const sec = el('li', 'catpick');
-    sec.append(el('span', 'msub', '📘 ' + esc(b.book)));
-    list.append(sec);
-    b.bai.forEach((x, ni) => {
-      const k = gkey(bi, ni), fin = !!S.done[k];
-      const btn = el('button');
-      btn.dataset.done = fin ? '1' : '0';
-      btn.append(el('span', 'num', tr('챕터') + ' ' + x.no),
-                 el('span', 'nm', esc(x.t)),
-                 el('span', 'st', x.g.length + tr('개 문법') + (fin ? ' ✔' : '')));
-      btn.onclick = () => { dive(drawGramList); startGram(bi, ni); };
-      const li = el('li'); li.append(btn); list.append(li);
-    });
-  });
+  nodes.push({ key: 'PTYPE', title: tr('자판 치는 법'), sub: tr('기본기') + ' · ' + TYPEKEYS.length + tr('개'),
+               done: !!S.done['PTYPE'], fn: () => { dive(drawGramList); startKeyGuide(); } });
+  GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
+    const k = gkey(bi, ni);
+    nodes.push({ key: k, title: x.t, sub: tr('문법') + ' · ' + b.book + ' ' + x.no + tr('과') + ' · ' + x.g.length + tr('개 문법'),
+                 done: !!S.done[k], fn: () => { dive(drawGramList); startGram(bi, ni); } });
+  }));
+  nodes.forEach((n, i) => { n.num = i + 1; });
+  roadInList(list, nodes);
   show('course', '기본기 · 문법', true);
 }
 
@@ -6531,7 +6639,7 @@ function basicWordRow(x) {
   row.onclick = () => { const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
   return row;
 }
-/* GYBM 시험 — 출처 네 개(메인교재·서브교재·수업자료·선배단어)를 미리 하나로 합쳐 둔
+/* GYBM 시험 — 출처(메인교재·선배단어, 22기 자료가 올라오면 22기도 — 서브교재·수업자료는 2026-09-25 에 회화 보강으로 옮김)를 미리 하나로 합쳐 둔
    data/gybm.json을 쓴다(대표님 지시, 2026-09-22: "출처가 4개가 잇네... 4개의 큰 구분이
    잇어야겟네"). 낱말 하나가 여러 출처에 겹쳐도 **한 곳에만** 있도록 빌드 단계에서 이미
    중복 제거하고 15개씩 묶어 뒀다 — "chào가 여러 번 나와도 중복해서 넣지 마라"는 지시대로
@@ -6597,7 +6705,7 @@ function drawGybmSources() {
   b.append(head);
 
   const sb = el('button', 'bigmenu');
-  sb.append(el('b', null, tr('🔍 낱말 찾기')), el('span', 'exmeta', tr('네 출처 전체에서 찾기')));
+  sb.append(el('b', null, tr('🔍 낱말 찾기')), el('span', 'exmeta', tr('전체에서 찾기')));
   sb.onclick = () => { dive(drawGybmSources); gybmSearch(); };
   b.append(sb);
 
@@ -6627,7 +6735,8 @@ function drawGybmLessons(si) {
   const nodes = src.lessons.map((l, li) => ({
     key: gybmKey(src.key, li),
     title: l.title,
-    sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('낱말'),
+    sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('낱말') +
+         (l.words.some(w => w.gl) ? ' · ' + tr('핵심') + ' ' + l.words.filter(w => w.gl).length : ''),
     num: li + 1,
     done: !!bdone()[gybmKey(src.key, li)],
     fn: () => {
@@ -6978,6 +7087,9 @@ function drawCard() {
     }
     // 선배 표시(⭐)는 완전히 없앴다 (대표님 지시, 2026-09-09).
     const kob = el('div', 'ko', esc(x.ko));
+    /* 낱말장(교재 맨 뒤 Bảng từ)에 실린 낱말은 '핵심' 표시 — 그 밖의 낱말은 그냥 둔다
+       (대표님 지시 2026-09-25 #13). 데이터는 gybm.json 의 gl:1 (낱말장 표시). */
+    if (x.gl) kob.prepend(el('span', 'corepill', tr('핵심')));
     c.append(kob);
     /* 일터에서 뜻이 달라지는 낱말 — 직무 권에 또 두지 않고 여기에 덧붙인다
        (대표님 지적, 2026-08-30: 같은 낱말을 두 번 외우게 하지 않는다). */
@@ -7003,6 +7115,7 @@ function drawCard() {
     }
     c.append(pairPanel(x.vi));                 // 헷갈리는 짝 — 접어 둔다(처음부터 묶어 외우면 오히려 헷갈린다)
     c.append(curveArea(x.vi, box));
+    c.append(mouthPanel(x.vi));                // 입모양 2D (2026-09-25 #6)
     tutorTap();
   }
 

@@ -21,8 +21,8 @@ from vi_kr import word as vi_kr_word
 def nfc(s):
     return unicodedata.normalize("NFC", s.strip())
 
-# 대문자로 시작해야 뜻이 갈리는 낱말 — 중복 제거·캐시에서 소문자로 뭉개지 않는다 (Anh 영국 ≠ anh 형/오빠)
-EXACT_CASE = {"Anh"}
+# 대문자로 시작해야 뜻이 갈리는 낱말 — 중복 제거·캐시에서 소문자로 뭉개지 않는다 (Anh 영국 ≠ anh 형/오빠 · Ý 이탈리아 ≠ ý 뜻)
+EXACT_CASE = {"Anh", "Ý"}
 
 def key(s):
     t = nfc(s)
@@ -64,6 +64,7 @@ def kko(k):
 
 # ---------- 기존 gybm.json → 낱말 캐시(예문·그림 보존용) ----------
 old_cache = {}
+old_src = {}      # (출처 key, 낱말) → 그 출처 안의 옛 낱말 — 같은 출처 값을 먼저 쓴다(메인에서 고친 예문·그림이 뒤 출처 값에 덮이지 않게, 2026-09-25)
 old_path = pathlib.Path(DATA) / "gybm.json"
 if old_path.exists():
     old = json.loads(old_path.read_text(encoding="utf-8"))
@@ -72,6 +73,7 @@ if old_path.exists():
             for w in l["words"]:
                 if is_england(w): continue
                 old_cache[ckey(w["vi"])] = w
+                old_src.setdefault((src["key"], ckey(w["vi"])), w)
 print(f"기존 gybm.json 캐시: {len(old_cache)}개 낱말 (예문·그림 재사용용)")
 
 # ---------- basicwords.json 대조용(대소문자 안전) ----------
@@ -130,15 +132,17 @@ def kr_of(vi):
             kr_cache[vi] = None
     return kr_cache[vi]
 
-def enrich(w):
+def enrich(w, skey=None):
     out = {"vi": nfc(w["vi"]), "ko": w.get("ko", "")}
+    if w.get("gl"):
+        out["gl"] = 1        # 교재 낱말장(Bảng từ) 낱말 — 앱에서 '핵심' 표시 (tools/mark_glossary.py)
     ck = ckey(w["vi"])
     if is_england(w):
         bw = find_bw("Anh") or {}
         for f in ("kr_read", "ex", "img", "star", "weekly"):
             if bw.get(f): out[f] = bw[f]
         return out
-    cached = old_cache.get(ck)
+    cached = old_src.get((skey, ck)) or old_cache.get(ck)
     if cached:
         # 이전에 이미 값을 구해 둔 낱말 — 예문·그림·발음을 그대로 재사용(새로 안 만든다)
         for f in ("kr_read", "ex", "ex_src", "img", "star", "weekly"):
@@ -167,7 +171,7 @@ def enrich(w):
     return out
 
 CASE_LOG = []   # 대소문자만 다른데 뜻이 다른 쌍이 중복 제거로 사라지는지 본다
-def dedupe(words, seen):
+def dedupe(words, seen, skey=None):
     """seen 은 **출처 하나** 안에서만 공유한다 — 대표님 지시대로 출처 간에는 안 나눈다."""
     out = []
     for w in words:
@@ -180,13 +184,13 @@ def dedupe(words, seen):
                 CASE_LOG.append((prev[0], prev[1], nfc(w["vi"]), w.get("ko", "")))
             continue
         seen[k] = (nfc(w["vi"]), w.get("ko", ""))
-        out.append(enrich(w))
+        out.append(enrich(w, skey))
     return out
 
-def chunk_chapters(chapters, seen, size=15):
+def chunk_chapters(chapters, seen, size=15, skey=None):
     lessons = []
     for ch in chapters:
-        kept = dedupe(ch["words"], seen)
+        kept = dedupe(ch["words"], seen, skey)
         if not kept:
             continue
         parts = [kept[i:i + size] for i in range(0, len(kept), size)]
@@ -225,11 +229,20 @@ for n in range(1, 11):
 # ================= 출처 4: 선배 시험 단어 =================
 sets = load(f"{DATA}/basicword_sets.json")["sets"]
 def bset_title(t):
+    """차례는 회차(일차) 오름차순 → 같은 회차 안에서는 20기·19기·18기·17기 (대표님 지시 2026-09-25 #3).
+    basicword_sets.json 이 이미 그 순서라 그대로 따라 걷는다 — 아래 검증(check_senior_order)이 어긋남을 잡는다."""
     if t["kind"] == "일일":
-        return f"{t['cohort']}기 {t['no']}일차"
+        return f"{t['no']}회차 · {t['cohort']}기"
     if t["kind"] == "주간":
-        return f"{t['cohort']}기 주간 {t['no']}회"
-    return f"{t['cohort']}기 기타 모음"
+        return f"주간 {t['no']}회 · {t['cohort']}기"
+    return f"기타 모음 · {t['cohort']}기"
+
+def check_senior_order(sets):
+    def k(t):
+        return ((0 if t["kind"] == "일일" else 1 if t["kind"] == "주간" else 2), int(t["no"] or 0), -int(t["cohort"]))
+    bad = [(a, b) for a, b in zip(sets, sets[1:]) if k(a) > k(b)]
+    assert not bad, f"선배 시험 세트 순서 어긋남 {len(bad)}곳: {bad[:3]}"
+check_senior_order(sets)
 
 senior_chapters = []
 for s in sets:
@@ -245,15 +258,32 @@ gybm = {
             " 수 있는데 메인교재2엔 없어야 한다\"). 일상회화·직무회화와는 원래 별개.",
     "sources": [
         {"key": "main", "label": "메인 교재", "sub": "Tiếng Việt Cho Người Nước Ngoài 1·2권",
-         "lessons": chunk_chapters(main_chapters, {})},
-        {"key": "sub", "label": "서브 교재", "sub": "Tiếng Việt Cơ sở (1권만, 계속 진행 중)",
-         "lessons": chunk_chapters(sub_chapters, {})},
-        {"key": "zoom", "label": "수업 자료", "sub": "줌 수업 슬라이드 10개",
-         "lessons": chunk_chapters(zoom_chapters, {})},
+         "lessons": chunk_chapters(main_chapters, {}, skey="main")},
+        # 서브 교재·줌 수업 자료는 GYBM 에서 뺐다(대표님 결정 2026-09-25) — 일상회화 '보강' 세션(tools/build_boost.py)으로 쓴다.
+        # 원본은 그대로 두고, 되살리려면 SUB_ZOOM = True.
         {"key": "senior", "label": "선배 시험 단어", "sub": "17~20기 매일·매주 시험",
-         "lessons": chunk_chapters(senior_chapters, {})},
+         "lessons": chunk_chapters(senior_chapters, {}, skey="senior")},
     ],
 }
+
+SUB_ZOOM = False
+if SUB_ZOOM:
+    gybm["sources"][1:1] = [
+        {"key": "sub", "label": "서브 교재", "sub": "Tiếng Việt Cơ sở", "lessons": chunk_chapters(sub_chapters, {}, skey="sub")},
+        {"key": "zoom", "label": "수업 자료", "sub": "줌 수업 슬라이드 10개", "lessons": chunk_chapters(zoom_chapters, {}, skey="zoom")},
+    ]
+
+# ================= 출처 5: 22기 시험 단어 (대표님이 날마다 올려 주시는 시험 파일 → 올린 순서대로 한 일차씩) =================
+# data/cohort22.json = {"days":[{"no":1,"words":[{"vi":..,"ko":..,"ex":{..}?}, ...]}, ...]}
+# 아직 한 일차도 없으면 출처를 만들지 않는다(빈 출처가 화면에 뜨지 않게). 22기끼리만 중복을 뺀다.
+c22p = pathlib.Path(f"{DATA}/cohort22.json")
+if c22p.exists():
+    c22 = load(c22p)
+    ch22 = [{"title": f"{d['no']}회차 · 22기", "title_ko": "", "words": d["words"]}
+            for d in sorted(c22.get("days", []), key=lambda d: d["no"]) if d.get("words")]
+    if ch22:
+        gybm["sources"].append({"key": "c22", "label": "22기 시험 단어", "sub": "22기 매일 시험 (올린 순서대로)",
+                                "lessons": chunk_chapters(ch22, {}, skey="c22")})
 
 with open(f"{DATA}/gybm.json", "w", encoding="utf-8") as f:
     json.dump(gybm, f, ensure_ascii=False, indent=1)
