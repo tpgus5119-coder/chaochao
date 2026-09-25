@@ -6,7 +6,7 @@
      낱말 → 소리(음소) 차례 → 소리마다 자세(턱·입술·혀 앞/가운데/뒤·연구개·성대) → 자세 사이를 부드럽게 잇기.
    **정직한 한계**: 베트남어 전용 MRI·초음파 자료가 없어 그림의 세부 좌표는 '모식도'다.
    근거가 있는 것은 범주(모음 높이·앞뒤·둥글기, 자음 닿는 곳·방식, o·u 뒤 -c/-ng 의 입술 닫힘 — Kirby 2011 JIPA 41(3),
-   Wikipedia Vietnamese phonology, 다낭대 음성학 교재)까지다. 화면에도 '모식도'라고 적는다.
+   Wikipedia Vietnamese phonology, 다낭대 음성학 교재)까지다. 화면에는 그 말을 적지 않는다(대표님 지시 2026-09-26) — 한계는 이 주석과 docs/기준.md 에 남긴다.
    하노이 발음 기준(s=x, ch=tr, d=gi=r → [z]). */
 const MOUTH = (() => {
   const NS = 'http://www.w3.org/2000/svg';
@@ -162,8 +162,8 @@ const MOUTH = (() => {
   let UID = 0;
   function svgMarkup(p) {
     const f = id => p + id;
-    return `<svg viewBox="0 0 680 330" width="100%" role="img" aria-label="입모양 모식도">
-<title>입 단면 모식도</title>
+    return `<svg viewBox="0 0 680 330" width="100%" role="img" aria-label="입모양">
+<title>입모양</title>
 <defs>
 <clipPath id="${f('fclip')}"><ellipse id="${f('fce')}" cx="561" cy="116" rx="40" ry="20"/></clipPath>
 <marker id="${f('ar')}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#378ADD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
