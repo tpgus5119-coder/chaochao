@@ -3335,80 +3335,68 @@ function pickRow(label, opts, cur, onPick) {
 /* 내 정보 — 계정 · 이름 · 알림 · 하루 분량 순서 (대표님 지시, 2026-09-12).
    소리 속도·화면 언어 칸은 없앴다 — 소리는 항상 0.8배속, 화면은 항상 한국어라
    고를 게 없다. 연속·누적 학습일도 홈에 이미 있어 여기선 뺐다(중복 금지). */
+/* 내 정보 — 스티치 시안 '내 정보 (프로필 & 설정)'(2026-09-27 저녁)대로:
+   프로필 카드(머리글자 동그라미·이름·계정·[바꾸기]) → 통계 타일 셋 → 하루 분량 → 설정 목록 카드(줄 사이 선) → 로그아웃 · 탈퇴하기 글자 단추 + 판번호 */
 function renderAwards() {
   const b = $('#awardBody');
   b.textContent = '';
-
-  // 계정
-  const ac = el('div', 'planrow');
-  ac.append(el('span', 'pk', '계정'),
-            el('span', 'pv', S.acct ? esc(S.acct.id) : '없음 (이 기기에만 저장)'));
-  const ab = el('button', 'ghost sm', S.acct ? '로그아웃' : '로그인·가입');
-  ab.onclick = async () => {
-    if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.acct = null; save(); renderAwards(); } }
-    else acctForm();
-  };
-  ac.append(ab);
-  b.append(ac);
-  if (S.acct) {
-    const qb = el('div', 'planrow');
-    qb.append(el('span', 'pk', tr('탈퇴')), el('span', 'pv', tr('계정과 진도를 지웁니다')));
-    const qq = el('button', 'ghost sm danger', tr('탈퇴하기'));
-    qq.onclick = quitForm;
-    qb.append(qq);
-    b.append(qb);
-  }
-
-  // 이름
-  const nm = el('div', 'planrow');
-  nm.append(el('span', 'pk', '이름'), el('span', 'pv', esc(S.nick || '이름없음')));
-  const ch = el('button', 'ghost sm', '바꾸기');
+  const nick = S.nick || '이름없음';
+  // 프로필 카드
+  const pc = el('div', 'mecard');
+  pc.innerHTML = `<span class="meavatar">${esc(nick.slice(0, 1))}</span><span class="mebody"><b>${esc(nick)}</b><span class="mesub">${S.acct ? tr('계정') + ' ' + esc(S.acct.id) : tr('계정 없음 (이 기기에만 저장)')}</span></span>`;
+  const ch = el('button', 'ghost sm', tr('바꾸기'));
   ch.onclick = askNick;
-  nm.append(ch);
-  b.append(nm);
-
-  // 알림
+  pc.append(ch);
+  b.append(pc);
+  // 통계 타일(배운 단어·외운 단어·끝낸 세트)과 이번 주 도장 — 홈에서 뺀 것(2026-09-27)을 여기서 본다
+  const pg = el('div', 'progress'); renderProgress(pg); b.append(pg);
+  // 하루 분량
+  b.append(el('h3', 'mesec', tr('하루 분량')));
+  b.append(pickRow('',
+    [[1, '하루 한 레슨'], [2, '하루 두 레슨']], S.pace || 1,
+    v => { S.pace = v; save(); renderAwards(); }));
+  // 설정 목록 카드
+  const list = el('div', 'melist');
+  const row = (label, right, fn) => {
+    const r = el('div', 'merow' + (fn ? ' go' : ''));
+    r.append(el('span', 'mek', esc(tr(label))));
+    if (typeof right === 'string') r.append(el('span', 'mev', right));
+    else if (right) r.append(right);
+    if (fn) { r.append(el('span', 'parrow', '›')); r.onclick = () => { dive(renderAwards); fn(); }; }
+    list.append(r);
+  };
   if (canPush()) {
-    const nr = el('div', 'planrow');
-    nr.append(el('span', 'pk', '알림'), el('span', 'pv', S.push ? '켜짐' : '꺼짐'));
-    const nb = el('button', 'ghost sm', S.push ? '끄기' : '켜기');
-    nb.onclick = async () => {
+    const wrap = el('span', 'mev');
+    wrap.append(el('span', null, S.push ? tr('켜짐') : tr('꺼짐')));
+    const nb = el('button', 'ghost sm', S.push ? tr('끄기') : tr('켜기'));
+    nb.onclick = async ev => {
+      ev.stopPropagation();
       if (S.push) { await stopPush(); renderAwards(); return; }
       const err = await askPush();
       popup(err ? esc(err) : tr('<b>알림을 켰습니다.</b><br>하루 한 번, 그날 아직 공부 안 했을 때만 옵니다.'));
       renderAwards();
     };
-    nr.append(nb);
-    b.append(nr);
+    wrap.append(nb);
+    row('알림', wrap);
   }
-
-  // 하루 분량
-  b.append(pickRow('하루 분량',
-    [[1, '하루 한 레슨'], [2, '하루 두 레슨']], S.pace || 1,
-    v => { S.pace = v; save(); renderAwards(); }));
-
-  // 더보기 — 예전 홈 메뉴(학습·복습단어장·문화·순위·능력시험·사용법)와
-  // 성과·분석을 여기로 모았다(대표님 지시, 2026-09-12: 홈은 비우고 여기로).
-  // 위 계정·이름·알림 줄과 같은 .planrow 결로 맞춘다 — button 태그는 자식이
-  // 여럿이면 칸이 0×0으로 찌그러지는 버릇이 있어(검수로 확인) div를 쓴다.
-  const more = el('div');
-  /* 이번 주 도장·통계·업적 요약 — 홈에서 뺐으니(2026-09-27 홈 세 덩이) 여기서 본다 */
-  const pg = el('div', 'progress'); renderProgress(pg); b.append(pg);
-  const moreRow = (label, fn) => {
-    const r = el('div', 'planrow go');
-    r.append(el('span', 'pv', label), el('span', 'parrow', '›'));
-    r.onclick = () => { dive(renderAwards); fn(); };
-    more.append(r);
-  };
-  moreRow('업적', renderAchievementsPage);
-  moreRow('실력 분석', renderAnalysisPage);
-  moreRow('내 단어장', wordbookEntry);
-  moreRow('사전', dictEntry);
-  moreRow('베트남 문화', () => startCulture());
-  moreRow('순위', creditEntry);
-  moreRow('사용법', showGuide);
-  b.append(more);
-
+  {
+    const sg = el('span', 'meseg');
+    [['m', '남'], ['f', '여']].forEach(([v, t]) => {
+      const bt = el('button', 'segb' + (S.voice === v ? ' on' : ''), tr(t));
+      bt.type = 'button';
+      bt.onclick = ev => { ev.stopPropagation(); S.voice = v; save(); topBtns(); renderAwards(); };
+      sg.append(bt);
+    });
+    row('목소리', sg);
+  }
+  row('업적', null, renderAchievementsPage);
+  row('실력 분석', null, renderAnalysisPage);
+  row('내 단어장', null, wordbookEntry);
+  row('사전', null, dictEntry);
+  row('베트남 문화', null, () => startCulture());
+  row('순위', null, creditEntry);
+  row('사용법', null, showGuide);
+  b.append(list);
   if (S.admin) {
     const ad = el('button', 'ghost', '운영 현황 보기');
     ad.style.width = '100%'; ad.style.marginTop = '10px';
@@ -3419,6 +3407,18 @@ function renderAwards() {
   sh.style.width = '100%'; sh.style.marginTop = '16px';
   sh.onclick = shareCard;
   b.append(sh);
+  // 계정 — 로그아웃 · 탈퇴하기 (글자 단추) + 판번호
+  const foot = el('div', 'mefoot');
+  const lo = el('button', 'metext', S.acct ? tr('로그아웃') : tr('로그인·가입'));
+  lo.onclick = async () => {
+    if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.acct = null; save(); renderAwards(); } }
+    else acctForm();
+  };
+  foot.append(lo);
+  if (S.acct) { foot.append(el('span', 'medot', '·')); const q = el('button', 'metext danger', tr('탈퇴하기')); q.onclick = quitForm; foot.append(q); }
+  b.append(foot);
+  const ver = ((document.querySelector('script[src*="app.js"]') || {}).src || '').split('v=')[1] || '';
+  if (ver) b.append(el('p', 'mever', '짜오짜오 ' + tr('판') + ' ' + esc(ver)));
   show('award', '내 정보', true);
 }
 
@@ -3761,28 +3761,39 @@ function testHubEntry() {
   SBOX = 'srs';
   const b = $('#examBody');
   b.textContent = '';
-  const row = (t, sub, fn, dis) => {
-    const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, esc(t)), el('span', 'exmeta', esc(sub)));
-    if (dis) btn.disabled = true;
-    else btn.onclick = () => { dive(testHubEntry); fn(); };
-    b.append(btn);
+  /* 스티치 시안 '테스트'(2026-09-27 저녁): 아이콘 + 20px 제목 + 부제 + 오른쪽 화살, 오늘 복습은 파란 테두리·'오늘' 알약·'카드 → 테스트 → 결과' 칩 */
+  const ICO = {
+    today: '<svg viewBox="0 0 24 24"><path d="M12 3 4 6.5v5c0 4.6 3.4 8.4 8 9.5 4.6-1.1 8-4.9 8-9.5v-5z"/><path d="m9 12 2 2 4-4"/></svg>',
+    all: '<svg viewBox="0 0 24 24"><path d="M4 7h4l3 5-3 5H4M20 7h-4l-3 5 3 5h4"/><path d="m17 5 3 2-3 2M17 15l3 2-3 2"/></svg>',
+    pick: '<svg viewBox="0 0 24 24"><path d="M4 6h2M4 12h2M4 18h2M10 6h10M10 12h10M10 18h10"/><path d="m3.5 6 1 1 1.5-2"/></svg>',
+    fresh: '<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v5h5"/><path d="M12 8v4l3 2"/></svg>',
+  };
+  const row = (ico, t, sub, fn, o) => {
+    o = o || {};
+    const c = el('button', 'hubcard' + (o.today ? ' today' : '') + (o.dis ? ' off' : ''));
+    c.innerHTML = `<span class="hubico">${ico}</span><span class="hubbody"><b class="hubt2">${esc(tr(t))}${o.today ? '<span class="hubtag">' + tr('오늘') + '</span>' : ''}</b>` +
+      `<span class="hubsub">${esc(sub)}</span>${o.steps ? '<span class="hubsteps"><i>' + tr('카드') + '</i>→<i>' + tr('테스트') + '</i>→<i>' + tr('결과') + '</i></span>' : ''}</span>` +
+      `<svg class="hubchev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>`;
+    if (o.dis) c.disabled = true;
+    else c.onclick = () => { dive(testHubEntry); fn(); };
+    b.append(c);
   };
   const due = dueWords().map(findItem).filter(Boolean);
   const bdue = Object.values(S.bsrs || {}).filter(v => v.due <= now()).length;
   const sdue = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
   const pool = learnedPool();
   const learned = Object.keys(S.srs || {}).length || pool.length;
-  row('오늘 복습', due.length ? due.length + tr('개 대기') + ' — ' + tr('카드로 훑고 바로 테스트')
+  row(ICO.today, '오늘 복습', due.length ? due.length + tr('개 대기') + ' — ' + tr('카드로 훑고 바로 테스트')
                   : (learned ? tr('오늘 꺼낼 카드가 없습니다 — 없는 날은 정상입니다') : tr('아직 배운 낱말이 없습니다')),
-      () => testToday());
-  if (bdue) row('GYBM 낱말 오늘 복습', bdue + tr('개 대기') + ' · ' + tr('교재·단어시험·수업 단어'), () => { SBOX = 'bsrs'; testToday(); });
-  if (sdue) row('실전 단어 오늘 복습', sdue + tr('개 대기'), () => { SBOX = 'ssrs'; testToday(); });
-  row('배운 낱말 전체', pool.length ? pool.length + tr('낱말') + ' — ' + tr('랜덤으로 테스트') : tr('아직 배운 낱말이 없습니다'),
-      () => testAllLearned(pool), !pool.length);
-  row('선택 복습', tr('내 단어장 · 오답 노트 · 일차·레슨 골라서'), testPickEntry);
+      () => testToday(), { today: true, steps: !!due.length });
+  if (bdue) row(ICO.today, 'GYBM 낱말 오늘 복습', bdue + tr('개 대기') + ' · ' + tr('교재·단어시험·수업 단어'), () => { SBOX = 'bsrs'; testToday(); }, { steps: true });
+  if (sdue) row(ICO.today, '실전 단어 오늘 복습', sdue + tr('개 대기'), () => { SBOX = 'ssrs'; testToday(); }, { steps: true });
+  row(ICO.all, '배운 낱말 전체', pool.length ? pool.length + tr('낱말') + ' — ' + tr('랜덤으로 테스트') : tr('아직 배운 낱말이 없습니다'),
+      () => testAllLearned(pool), { dis: !pool.length });
+  row(ICO.pick, '선택 복습', tr('내 단어장 · 오답 노트 · 일차·레슨 골라서'), testPickEntry);
   const fr = freshSet();
-  row('최근 학습 복습', fr ? fr.theme + ' · ' + fr.words.length + tr('낱말') : tr('아직 끝낸 학습이 없습니다'), () => testFresh(fr), !fr);
+  row(ICO.fresh, '최근 학습 복습', fr ? fr.theme + ' · ' + fr.words.length + tr('낱말') : tr('아직 끝낸 학습이 없습니다'), () => testFresh(fr), { dis: !fr });
+  b.append(el('p', 'hubnote', '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>' + tr('복습 간격 1·3·7·14·30·60일 — 잊기 직전에 다시 봅니다')));
   show('exam', '테스트', true);
   if (!COURSE) withCourse(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
   if (!GYBM) gybmBuild(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
@@ -7461,14 +7472,22 @@ function openWordCard(x, back) {
 function dictEntry(q0) {
   const b = $('#subBody'); b.textContent = '';
   const lede = el('p', 'lede', tr('불러오는 중…'));
+  /* 스티치 시안 '사전'(2026-09-27 저녁): 돋보기 + 입력칸 + 지우기(×), 줄마다 오른쪽에 스피커 */
+  const box = el('div', 'dictsearch');
+  box.innerHTML = '<svg class="dsico" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>';
   const inp = el('input', 'keyin dictin');
   inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
   if (typeof q0 === 'string' && q0) inp.value = q0;   // 내 정보 → 사전 에서는 click 이벤트가 넘어온다
+  const clr = el('button', 'dsclear', '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>');
+  clr.type = 'button'; clr.title = tr('지우기');
+  clr.onclick = () => { inp.value = ''; inp.focus(); draw(); };
+  box.append(inp, clr);
   const out = el('div', 'dictout');
   let d = [];
   const draw = () => {
     const q = inp.value.trim();
     out.textContent = '';
+    clr.hidden = !q;
     if (q.length < 1) { out.append(el('p', 'note', tr('한 글자만 넣어도 찾습니다'))); return; }
     const qb = dictBare(q), qk = q.toLowerCase();
     const kor = /[가-힣]/.test(q);
@@ -7486,16 +7505,21 @@ function dictEntry(q0) {
       row.type = 'button';
       const kr = krShow(x) || krOf(x.vi);
       row.append(el('b', 'dvi', esc(x.vi)));
-      if (kr) row.append(el('span', 'dkr', '[' + esc(kr) + ']'));
+      row.append(el('span', 'dkr', kr ? '[' + esc(kr) + ']' : ''));   // 발음이 없어도 칸은 둔다 — 스피커가 늘 오른쪽 끝
       row.append(el('span', 'dko', esc(x.ko)));
+      const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
+      spk.setAttribute('role', 'button'); spk.title = tr('듣기');
+      spk.onclick = ev => { ev.stopPropagation(); const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
+      row.append(spk);
       row.onclick = () => openWordCard(x, () => dictEntry(inp.value));   // 누르면 낱말 카드 — 뒤로 가면 찾던 말 그대로
       out.append(row);
     });
+    out.append(el('p', 'dicthint', tr('낱말을 누르면 낱말 카드가 열립니다')));
     if (hit.length > 60) out.append(el('p', 'note', tr('앞 60개만 보입니다 — 더 적어 보세요')));
   };
   let tm = null;
   inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
-  b.append(lede, inp, out);
+  b.append(lede, box, out);
   show('sub', '사전', true);
   dictReady().then(() => {
     if ($('#sub').hidden) return;
