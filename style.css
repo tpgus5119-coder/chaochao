@@ -2224,3 +2224,59 @@ svg.curve.pw .pwword{transition:none}
 .pko.en{color:var(--dim); font-style:italic; font-size:13px}
 .psyl b{white-space:nowrap}
 .psec .prow{grid-template-columns:minmax(78px,auto) 1fr auto}
+
+
+/* ── 머리띠 [단어|발음] — 낱말 카드에서만 · 남/여 왼쪽 · 내 정보 오른쪽 (2026-09-27) ── */
+/* 좁은 폰(375px)에서 겹치지 않게 절대 위치 대신 흐름 안에 둔다: [홈][‹][남|여] … [단어|발음] … [내 정보] */
+header > #face{margin:0 auto; padding:2px; background:var(--card); flex:0 0 auto}
+header > #face span{padding:4px 11px; font-size:13px}
+header > #face:not([hidden]) ~ #goMe{margin-left:0}
+
+/* ── 입모양: [정면 | 옆 단면] 단추, 정면은 크게 ── */
+.mouthsw{display:flex; gap:6px; justify-content:center; margin:0 0 8px}
+.mouthsw button{padding:5px 14px; font-size:13px; border-radius:999px; min-height:32px}
+.mouthsw button.on{background:var(--accent); color:var(--accent-fg); border-color:var(--accent)}
+.mouthsvg[data-v="front"] svg{max-width:360px; margin:0 auto}
+.mouthsvg[data-v="side"] svg{max-width:420px; margin:0 auto}
+
+/* ── 홈: 인사 · 앵무 '짜오' · 오늘 학습/복습 (2026-09-27) ── */
+.hgreet{padding:6px 2px 0}
+.hname{font-size:22px; font-weight:800; line-height:1.25; letter-spacing:0}
+.hstreak{display:flex; align-items:center; gap:8px; margin-top:6px; font-size:16px; color:var(--dim); line-height:1.5}
+.hfire{font-weight:700; color:var(--fg)}
+.hpill{font-size:13px; font-weight:700; padding:3px 9px; border-radius:999px; background:var(--surface-2); color:var(--dim)}
+.hdots{display:flex; justify-content:space-between; gap:4px; margin:10px 0 2px}
+.hdot{display:flex; flex-direction:column; align-items:center; gap:3px; flex:1}
+.hdot i{width:26px; height:26px; border-radius:50%; border:2px solid var(--line); font-style:normal; font-size:13px; font-weight:800;
+  display:flex; align-items:center; justify-content:center; color:#fff}
+.hdot.on i{background:var(--accent); border-color:var(--accent)}
+.hdot.today i{border-color:var(--accent); box-shadow:0 0 0 3px rgba(24,119,242,.18)}
+.hdot.fut{opacity:.45}
+.hdot span{font-size:12px; color:var(--dim)}
+.petcard{margin-top:16px; padding:14px 14px 16px; border:1px solid var(--line); border-radius:16px; background:var(--card);
+  display:flex; flex-direction:column; align-items:center; gap:10px}
+.petbub{position:relative; display:inline-flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px 10px; max-width:100%;
+  padding:10px 14px; border-radius:16px; background:var(--surface-2); font-size:16px; line-height:1.4; text-align:center}
+.petbub::after{content:''; position:absolute; left:50%; bottom:-8px; margin-left:-8px; border:8px solid transparent; border-top-color:var(--surface-2); border-bottom:0}
+.petvi{font-weight:800; font-size:18px}
+.petko{color:var(--dim); font-size:14px; flex-basis:100%}
+.petbub .playi{width:34px; height:34px; min-height:0; padding:0}
+.petfig{border:0; background:var(--surface-2); border-radius:50%; width:224px; height:224px; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0}
+.petfig svg{width:200px; height:200px; animation:petbob 3.2s ease-in-out infinite}
+.petfig.hop svg{animation:pethop .5s ease-out}
+@keyframes petbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pethop{0%{transform:translateY(0)}40%{transform:translateY(-22px) scale(1.04)}100%{transform:translateY(0)}}
+@media (prefers-reduced-motion: reduce){.petfig svg{animation:none}}
+.petmeta{width:100%; text-align:center}
+.petname{font-size:14px; font-weight:700; color:var(--dim)}
+.petbar{height:8px; border-radius:4px; background:var(--line); overflow:hidden; margin:8px 0 6px}
+.petbar i{display:block; height:100%; background:var(--accent); border-radius:4px; transition:width .6s ease}
+.petcap{font-size:13px; color:var(--dim)}
+.hact{display:flex; flex-direction:column; gap:12px; margin-top:20px}
+.hbtn{display:flex; flex-direction:column; align-items:center; gap:2px; min-height:56px; padding:10px 16px; border-radius:14px; font-size:17px;
+  border:1px solid var(--line); background:var(--card); color:var(--fg); width:100%}
+.hbtn b{font-weight:800}
+.hbtn small{font-size:13px; font-weight:500; opacity:.8}
+.hbtn.primary{background:var(--accent); color:var(--accent-fg); border-color:var(--accent)}
+.hbtn.done{background:var(--surface-2); color:var(--fg); border-color:var(--line)}
+.hbtn:disabled{opacity:.5}

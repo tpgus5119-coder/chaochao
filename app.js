@@ -723,6 +723,8 @@ const audio = new Audio();
 const RATES = [['0.8', '보통'], ['0.6', '느리게']];
 const rate = () => Number(S.rate || 0.8);
 const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 둔다)
+/* 아주 느리게(0.4·0.2배) 틀어도 높낮이(성조)는 그대로 — 브라우저 기본값이지만 옛 사파리는 접두어가 필요하다 (2026-09-27) */
+[audio, myVoice].forEach(a => { try { a.preservesPitch = true; a.webkitPreservesPitch = true; a.mozPreservesPitch = true; } catch (e) { } });
 
 /* 목소리(여/남) 에 따른 소리 폴더. 남부는 완전히 없앴다(대표님 지시, 2026-09-09). */
 const voiceDir = () => S.voice;
@@ -1396,10 +1398,13 @@ function liveRec(box, stream, secs, onStop) {
 }
 
 /* 원어민 소리를 고른 속도로, 내 소리와 순서대로/겹쳐서 듣는다 (대표님 지시 2026-09-27) */
+/* 원어민→나 듣기. both=true 면 **겹쳐서** — 두 소리가 '들리기 시작하는 순간'을 정확히 맞춘다 (대표님 지시 2026-09-27).
+   내 녹음은 말하기 전 빈 시간이 제각각이라 그냥 둘을 같이 틀면 원어민이 먼저 들린다.
+   그래서 둘 다 미리 불러 두고, 각자 소리가 시작되는 자리(PITCH.analyze 의 s)로 옮겨 놓은 뒤 한 틱에 함께 튼다(overlayPlay). */
 function nativeThenMine(text, both) {
   if (REC.key !== text || !REC.url) return;
   const spd = spdOf();
-  if (both) { play(text, false, null, spd); playMine(); return; }        // 겹쳐서: 둘을 한꺼번에
+  if (both) { overlayPlay(text, spd); return; }
   play(text, false, null, spd);                                          // 순서대로: 원어민 → 나
   nativeCurve(text).then(nat => {
     const endAt = nat && nat.e ? nat.e + .1 : 0;                         // 소리가 들리는 끝(파일 뒤 무음은 기다리지 않는다)
@@ -1411,6 +1416,37 @@ function nativeThenMine(text, both) {
     }, 40);
     setTimeout(() => clearInterval(iv), 9000);
   });
+}
+async function overlayPlay(text, spd) {
+  const h = AIDX[text] || AIDX[text.toLowerCase()];
+  if (!h) { play(text, false, null, spd); playMine(); return; }
+  const nat = await nativeCurve(text);
+  const mine = REC.mine && REC.mineKey === text ? REC.mine : null;
+  if (REC.key !== text || !REC.url) return;
+  audio.pause(); myVoice.pause(); PB.hold = null;
+  const src = `audio/${voiceDir()}/n/${h}.mp3`;
+  PB.spdSrc = src;
+  audio.onerror = null;
+  audio.src = src; audio.playbackRate = spd;               // 원어민은 고른 듣기 속도로
+  myVoice.src = REC.url; myVoice.playbackRate = 1;
+  const ready = a => new Promise(res => {                   // 둘 다 바로 틀 수 있을 때까지
+    if (a.readyState >= 3) return res();
+    const done = () => { a.removeEventListener('canplay', done); res(); };
+    a.addEventListener('canplay', done);
+    setTimeout(res, 2000);
+  });
+  await Promise.all([ready(audio), ready(myVoice)]);
+  const seekTo = (a, t) => new Promise(res => {             // 각자 소리가 나기 직전 자리로
+    if (!(t > 0)) { a.currentTime = 0; return res(); }
+    const done = () => { a.removeEventListener('seeked', done); res(); };
+    a.addEventListener('seeked', done);
+    a.currentTime = t;
+    setTimeout(res, 400);
+  });
+  await Promise.all([seekTo(audio, nat && nat.s ? Math.max(0, nat.s - .03) : 0),
+                     seekTo(myVoice, mine && mine.s ? Math.max(0, mine.s - .03) : 0)]);
+  if (REC.key !== text) return;
+  audio.play().catch(() => { }); myVoice.play().catch(() => { });   // 같은 틱에 함께
 }
 
 function drawCompare(text, box) {
@@ -1834,8 +1870,8 @@ function pitchGraph(text, opt) {
   return wrap;
 }
 
-/* 듣기 속도 — 1배·0.8배·0.6배 (대표님 지시 2026-09-27). 고른 값은 저장하고, 낱말 카드·예문·'원어민 듣기'가 모두 같은 값을 쓴다. */
-const SPDS = [1, .8, .6];
+/* 듣기 속도 — 1·0.8·0.6·0.4·0.2배 (대표님 지시 2026-09-27, 0.4·0.2 추가). 고른 값은 저장하고, 낱말 카드·예문·'원어민 듣기'가 모두 같은 값을 쓴다. */
+const SPDS = [1, .8, .6, .4, .2];
 const spdOf = () => SPDS.includes(Number(S.wspd)) ? Number(S.wspd) : .8;
 const spdLab = v => v + '배';
 /* 속도 칩 — 누르면 1배·0.8배·0.6배 목록이 내려오고 **바로 고른다**(대표님 지시 2026-09-27: 1배에서 0.6배로도 한 번에).
@@ -1978,11 +2014,22 @@ function playBar(text) {
 function mouthPanel(text) {
   const wrap = el('div', 'mouthbox');
   if (typeof MOUTH === 'undefined') return wrap;
+  /* 정면을 크게, 옆 단면은 단추로 (대표님 물음 2026-09-27 "옆모습이 크게 도움이 되나?").
+     혀 자리가 갈리는 소리(ư·ơ·â·ng·nh·đ·tr·r·kh)에서만 옆 단면이 값어치가 있어 기본은 정면, 고른 쪽은 저장(S.mview). */
+  const sw = el('div', 'mouthsw');
   const body = el('div', 'mouthsvg');
   const cap = el('div', 'mouthcap');
-  wrap.append(body, cap);
+  wrap.append(sw, body, cap);
   const M = MOUTH.create(body);
+  const setV = v => {
+    S.mview = v; save(); M.setView(v); body.dataset.v = v;
+    sw.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  };
+  [['front', '정면'], ['side', '옆 단면']].forEach(([v, lab]) => {
+    const b = el('button', 'ghost sm', tr(lab)); b.type = 'button'; b.dataset.v = v; b.onclick = () => setV(v); sw.append(b);
+  });
   M.setWord(text);
+  setV(S.mview === 'side' ? 'side' : 'front');
   const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : ''; };
   M.at(0);
   const h = AIDX[text] || AIDX[text.toLowerCase()];
@@ -2185,6 +2232,7 @@ const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'type', 'speak
    북부/남부 토글은 없앴다(대표님 지시, 2026-09-09) — 버튼 자체를 index.html에서 지웠다. */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
+let FACE = null;                     // 낱말 카드가 열려 있을 때 [단어|발음] 넘기는 함수 — 머리띠 #face 가 부른다 (2026-09-27)
 const NAV = [];                      // 뒤로가기 발자국 (홈에 오면 비운다)
 const dive = fn => { NAV.push(fn); };
 function topBtns() {
@@ -2292,6 +2340,7 @@ function show(v, title, canBack) {
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
   $('#title').textContent = tr(title);
   $('#back').hidden = !canBack;
+  if (v !== 'learn') { $('#face').hidden = true; FACE = null; }   // [단어|발음]은 낱말 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
   /* 홈 단추 — 홈이 아닐 때는 늘 보인다 (대표님 지시, 2026-08-30).
      뒤로(‹)는 한 칸씩 돌아가지만, 깊이 들어간 자리에서는 몇 번을 눌러야 하는지 알 수 없다.
      어디서든 한 번에 나가는 길이 있어야 한다. */
@@ -3143,6 +3192,8 @@ function renderAwards() {
   // 위 계정·이름·알림 줄과 같은 .planrow 결로 맞춘다 — button 태그는 자식이
   // 여럿이면 칸이 0×0으로 찌그러지는 버릇이 있어(검수로 확인) div를 쓴다.
   const more = el('div');
+  /* 이번 주 도장·통계·업적 요약 — 홈에서 뺐으니(2026-09-27 홈 세 덩이) 여기서 본다 */
+  const pg = el('div', 'progress'); renderProgress(pg); b.append(pg);
   const moreRow = (label, fn) => {
     const r = el('div', 'planrow go');
     r.append(el('span', 'pv', label), el('span', 'parrow', '›'));
@@ -5782,137 +5833,168 @@ function roadInList(list, nodes) {
   renderRoadmap(road, nodes, cur ? cur.key : null, { freeNav: true });
 }
 
+/* ---------- 홈 (대표님 지시 2026-09-27: 딱 세 덩이) ----------
+   ① 인사 + 연속 학습  ② 키우는 앵무 '짜오'  ③ [오늘 학습][오늘 복습]
+   왜 이 차례인가 — 첫 화면의 근거:
+   · 연속 학습일을 맨 위에: 듀오링고가 그렇게 한다. 손실 회피(Kahneman & Tversky 1979) — 쌓아 둔 것을 잃기 싫어 돌아온다.
+     듀오링고가 공개한 실험(2023 블로그)에서도 스트릭이 잔존율을 가장 크게 올린 장치였다.
+   · 캐릭터 + 다음 단계 진행 막대: 부여된 진척 효과(Nunes & Drèze 2006) — 조금이라도 채워진 막대가 완주율을 높인다.
+     '내가 키운다'는 소유 효과(Kahneman·Knetsch·Thaler 1990) — 다마고치가 학습을 놓기 어렵게 만든다.
+   · 큰 단추 둘: 힉의 법칙(Hick 1952) — 고를 것이 적을수록 빨리 시작한다. 주 행동은 하나(파란 단추)뿐.
+   · 글자 본문 16px 이상·설명 13px 이상, 누르는 곳 44px 이상(Apple HIG · WCAG 2.5.5). 주간 성적·업적·내일 예고는 내 정보로 옮겼다. */
+const PET_NAME = '짜오';
+const PET_STAGES = [
+  { n: 0,   name: '알',       hint: '낱말을 배우면 알이 깨어나요' },
+  { n: 5,   name: '금 간 알',  hint: '조금만 더 — 곧 깨어나요' },
+  { n: 20,  name: '아기 앵무', hint: '배운 낱말만 말할 수 있어요' },
+  { n: 80,  name: '어린 앵무', hint: '문장을 말하기 시작했어요' },
+  { n: 250, name: '어른 앵무', hint: '이제 제법 대화가 돼요' },
+  { n: 700, name: '박사 앵무', hint: '베트남어 박사예요' },
+];
+/* 배운 낱말 — 세 창고(하루5분·선배·GYBM) 모두. 낱말 안의 음절도 '배운 것'으로 친다(xin chào 를 배웠으면 chào 도) */
+function petLearned() {
+  const s = new Set();
+  ['srs', 'ssrs', 'bsrs'].forEach(k => Object.keys(S[k] || {}).forEach(v => {
+    const t = v.toLowerCase(); s.add(t); t.split(/\s+/).forEach(x => s.add(x));
+  }));
+  return s;
+}
+const petCount = () => new Set(['srs', 'ssrs', 'bsrs'].flatMap(k => Object.keys(S[k] || {}).map(v => v.toLowerCase()))).size;
+function petStage(n) { let i = 0; PET_STAGES.forEach((st, k) => { if (n >= st.n) i = k; }); return i; }
+/* 짜오가 할 말 — **배운 낱말로만** 된 문장(예문·대화 문장 가운데 모든 낱말을 배운 것). 없으면 배운 낱말 하나. */
+const petTok = t => t.toLowerCase().replace(/[.,!?;:…"“”'()]/g, ' ').split(/\s+/).filter(Boolean);
+function petSay(learned) {
+  if (!learned.size) return null;
+  const pool = [];
+  const push = (vi, ko) => { const tk = vi ? petTok(vi) : []; if (tk.length >= 2 && tk.every(t => learned.has(t))) pool.push({ vi, ko }); };
+  allWords().forEach(w => { if (w.ex && w.ex.vi) push(w.ex.vi, w.ex.ko); });
+  allSents().forEach(x => push(x.vi, x.ko));
+  if (!pool.length) {
+    ['srs', 'ssrs', 'bsrs'].forEach(k => Object.keys(S[k] || {}).forEach(v => { const it = findItem(v); pool.push({ vi: v, ko: it && it.ko || '' }); }));
+  }
+  if (!pool.length) return null;
+  const cand = pool.filter(p => p.vi !== S.petLast);
+  const src = cand.length ? cand : pool;
+  const pick = src[Math.floor(Math.random() * src.length)];
+  S.petLast = pick.vi; save();
+  return pick;
+}
+/* 앵무 그림 — 알 → 금 간 알 → 갓 깬 아기(반쪽 껍데기 안) → 어린 → 어른 → 박사(학사모). 마스코트 색 그대로(진파랑·하늘·주황·흰 배). */
+function petSvg(stage) {
+  const B = '#0A5BC7', L2 = '#3FB0F0', O = '#FF8A3D', W = '#FFFFFF', K = '#1B1B1B';
+  const egg = crack => `<ellipse cx="100" cy="112" rx="54" ry="66" fill="#FFF6E3" stroke="#E6D6B4" stroke-width="3"/>
+    <circle cx="82" cy="92" r="4" fill="#EFE0BF"/><circle cx="120" cy="130" r="3.2" fill="#EFE0BF"/><circle cx="106" cy="76" r="2.6" fill="#EFE0BF"/><circle cx="76" cy="136" r="2.6" fill="#EFE0BF"/>
+    ${crack ? '<path d="M74 104l12 12-9 11 13 12-7 12" fill="none" stroke="#C9B48A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M128 84l-8 9 7 9" fill="none" stroke="#C9B48A" stroke-width="2.6" stroke-linecap="round"/>' : ''}`;
+  const bird = (cap, wings) => `
+    <ellipse cx="100" cy="146" rx="44" ry="40" fill="${L2}"/>
+    <ellipse cx="100" cy="154" rx="27" ry="26" fill="${W}"/>
+    ${wings ? `<ellipse cx="56" cy="140" rx="17" ry="27" fill="${B}" transform="rotate(12 56 140)"/><ellipse cx="56" cy="142" rx="9" ry="16" fill="${O}" transform="rotate(12 56 142)"/>
+    <ellipse cx="144" cy="140" rx="17" ry="27" fill="${B}" transform="rotate(-12 144 140)"/><ellipse cx="144" cy="142" rx="9" ry="16" fill="${O}" transform="rotate(-12 144 142)"/>` : ''}
+    <rect x="84" y="180" width="12" height="16" rx="5" fill="${O}"/><rect x="104" y="180" width="12" height="16" rx="5" fill="${O}"/>
+    <path d="M86 42l6-22 6 22zM94 40l6-24 6 24zM102 42l6-22 6 22z" fill="${O}"/>
+    <circle cx="100" cy="82" r="42" fill="${B}"/>
+    <circle cx="70" cy="96" r="11" fill="${L2}"/><circle cx="130" cy="96" r="11" fill="${L2}"/>
+    <circle cx="86" cy="76" r="13" fill="${W}"/><circle cx="114" cy="76" r="13" fill="${W}"/>
+    <circle cx="89" cy="78" r="6" fill="${K}"/><circle cx="117" cy="78" r="6" fill="${K}"/>
+    <circle cx="91" cy="75" r="2" fill="${W}"/><circle cx="119" cy="75" r="2" fill="${W}"/>
+    <ellipse cx="100" cy="102" rx="13" ry="8" fill="${O}"/><path d="M92 101h16" stroke="#D96A25" stroke-width="2" stroke-linecap="round"/>
+    ${cap ? `<path d="M62 46l38-16 38 16-38 16z" fill="${K}"/><rect x="88" y="46" width="24" height="10" rx="3" fill="${K}"/><path d="M138 46v22" stroke="${K}" stroke-width="3"/><circle cx="138" cy="70" r="4" fill="${O}"/>` : ''}`;
+  const shell = `<path d="M46 132l10-10 10 12 12-14 12 12 10-12 12 14 10-12 12 12 10-10c4 40-18 62-54 62s-58-22-54-54z" fill="#FFF6E3" stroke="#E6D6B4" stroke-width="3" stroke-linejoin="round"/>`;
+  let inner;
+  if (stage === 0) inner = egg(false);
+  else if (stage === 1) inner = egg(true);
+  else if (stage === 2) inner = `<g transform="translate(30 50) scale(.7)">${bird(false, false)}</g>${shell}`;
+  else if (stage === 3) inner = `<g transform="translate(15 20) scale(.85)">${bird(false, true)}</g>`;
+  else if (stage === 4) inner = bird(false, true);
+  else inner = bird(true, true);
+  return `<svg viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="${PET_NAME}">${inner}</svg>`;
+}
+function homeGreet() {
+  const g = el('div', 'hgreet');
+  g.append(el('div', 'hname', esc(S.nick || tr('학습자')) + tr('님, 어서오세요!')));
+  const dots = weekDots();
+  const row = el('div', 'hstreak');
+  row.append(el('span', 'hfire', '🔥 ' + streakDays() + tr('일 연속 학습 중')));
+  row.append(el('span', 'hpill', tr('이번 주') + ' ' + dots.filter(d => d.done).length + '/' + dots.length));
+  g.append(row);
+  const wk = el('div', 'hdots');
+  tr('월 화 수 목 금 토 일').split(' ').forEach((lab, i) => {
+    const d = dots[i] || {};
+    const c = el('div', 'hdot' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
+    c.append(el('i', null, d.done ? '✓' : ''), el('span', null, lab));
+    wk.append(c);
+  });
+  g.append(wk);
+  return g;
+}
+function petCard() {
+  const card = el('div', 'petcard');
+  const learned = petLearned();
+  const n = petCount(), si = petStage(n), st = PET_STAGES[si], nx = PET_STAGES[si + 1];
+  const bub = el('div', 'petbub');
+  const setBub = p => {
+    bub.textContent = '';
+    if (si < 2 || !p) { bub.append(el('span', 'petvi', si < 2 ? '…' : 'Xin chào!'), el('span', 'petko', tr(st.hint))); return; }
+    bub.append(el('span', 'petvi', esc(p.vi)));
+    const pl = iconBtn('play', tr('듣기'), ev => { ev.stopPropagation(); const k = recKey(p.vi); k ? play(k, false, null, spdOf()) : speakVi(p.vi, false, spdOf()); });
+    pl.classList.add('playi'); bub.append(pl);
+    if (p.ko) bub.append(el('span', 'petko', esc(p.ko)));
+  };
+  setBub(si >= 2 ? petSay(learned) : null);
+  const fig = el('button', 'petfig'); fig.type = 'button'; fig.setAttribute('aria-label', PET_NAME + ' — ' + tr('누르면 말해요'));
+  fig.innerHTML = petSvg(si);
+  fig.onclick = () => { fig.classList.remove('hop'); void fig.offsetWidth; fig.classList.add('hop'); if (si >= 2) setBub(petSay(learned)); };
+  const meta = el('div', 'petmeta');
+  meta.append(el('div', 'petname', PET_NAME + ' · ' + (si + 1) + tr('단계') + ' ' + tr(st.name)));
+  const bar = el('div', 'petbar'); const fill = el('i');
+  const pct = nx ? Math.min(100, Math.round((n - st.n) / (nx.n - st.n) * 100)) : 100;
+  fill.style.width = pct + '%'; bar.append(fill);
+  meta.append(bar);
+  meta.append(el('div', 'petcap', (nx ? tr('다음 단계까지 낱말 N개').replace('N', nx.n - n) + ' · ' : '') + tr('배운 낱말') + ' ' + n));
+  card.append(bub, fig, meta);
+  return card;
+}
+function homeActions() {
+  const box = el('div', 'hact');
+  const due = dueWords();
+  const todayCnt = Object.entries(S.done)
+    .filter(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd()).length;
+  const pace = S.pace || 1;
+  const left = Math.max(0, pace - todayCnt);
+  const queue = courseQueue(left + pace);
+  const nm = d => d.theme || (trackName(d) + label(d));
+  const b1 = el('button', 'hbtn primary');
+  if (left && queue.length) {
+    const t = queue[0];
+    b1.append(el('b', null, tr('오늘 학습 시작하기')), el('small', null, esc(nm(t)) + ' · ' + ((t.words || []).length ? (t.words || []).length + tr('개 낱말') : tr('5분'))));
+    b1.onclick = () => startLearn(t);
+  } else if (!queue.length) {
+    b1.append(el('b', null, tr('전 과정 완료')), el('small', null, tr('새 과정을 기다려 주세요')));
+    b1.disabled = true;
+  } else {
+    const t = queue[0];                                  // 오늘 몫은 끝났다 — 내일 것도 미리 할 수 있다
+    b1.classList.add('done');
+    b1.append(el('b', null, '✓ ' + tr('오늘 학습 완료')), el('small', null, tr('더 하기') + ' · ' + esc(nm(t))));
+    b1.onclick = () => startLearn(t);
+  }
+  const b2 = el('button', 'hbtn sec');
+  b2.append(el('b', null, tr('오늘 복습하기')),
+            el('small', null, due.length ? due.length + tr('개 대기 중') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
+  b2.disabled = !due.length; if (due.length) b2.onclick = () => reviewStart();
+  box.append(b1, b2);
+  return box;
+}
 function renderHome() {
   cloudSave();                           // 로그인한 사람은 하루 한 번 서버에 진도를 남긴다
-  // drawMenu() 없앰 (대표님 지시, 2026-09-12) — 옛 홈 메뉴 그리드(학습·복습단어장·
-  // 문화·순위·능력시험·사용법)는 내 정보 '더보기'로 옮겼다.
   drawWxNow();
   // 한국어를 배우는 사람에게는 베트남어 일정판이 아무 뜻이 없다 — 딴 판을 그린다
   if (learnKo()) { drawKoHome(); show('home', '짜오짜오', false); return; }
-  /* 첫 화면 일정판은 **새 과정**을 본다 — 없으면 조용히 받아 와서 다시 그린다 */
   if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
     .then(j => { COURSE = j; loadCWords(); if (!$('#home').hidden) renderHome(); }).catch(() => {});
-  renderProgress($('#progress'));      // 이번 주 도장·통계·업적 (첫 화면 일정판 아래)
-  const nx = nextDay();
-  const due = dueWords();
-
-  // 오늘·내일 일정판 — 뭘 하게 될지 미리 보이고, 버튼 하나로 바로 들어간다
+  $('#progress').textContent = ''; $('#progress').hidden = true;   // 통계·업적은 내 정보에서 본다
   const plan = $('#plan');
   plan.textContent = '';
-  // 인사말 카드 — 이름+연속학습일을 한 줄로 (대표님 지시, 2026-09-12: 중복 없이 한 멘트로).
-  // 사진은 안 쓴다(대표님 지시), 아이콘으로 대신한다. 연속 학습일은 실제 데이터(streakDays())만 쓴다.
-  const greet = el('div', 'kogreet');
-  const gtxt = el('div', 'kogtxt');
-  gtxt.append(el('div', 'kogh1', esc(S.nick || tr('학습자')) + tr('님, 어서오세요!')));
-  gtxt.append(el('div', 'kogsub', streakDays() + tr('일 연속 학습 중이에요')));
-  greet.append(gtxt);
-  /* 보석 배지 — 페북 파랑 바탕에 흰 글자, 홈 인사말 한쪽에 조용히 얹는다.
-     듀오링고처럼 화면 맨 위를 다 차지하는 상시 표시줄은 안 쓴다(대표님 지시:
-     "너무 카피해서 짝퉁 느낌이 나면 안된다") — 인사말 카드 안 배지 하나로 그친다. */
-  greet.append(el('div', 'gempill', '💎 ' + gems().toLocaleString('ko-KR')));
-  greet.append(el('div', 'kogicon', '🎓'));
-  plan.append(greet);
-
-  /* 주간 스트릭 카드 — Stitch 시안의 "Weekly Streak Widget" 그대로.
-     요일 동그라미(완료·오늘·잠김)는 이미 있던 weekDots()/.wkday 결을 그대로 쓴다. */
-  const dots = weekDots();
-  const wk = el('div', 'weekcard');
-  const wkHead = el('div', 'weekcard-head');
-  const wkTitle = el('div', 'weekcard-title');
-  wkTitle.append(el('span', null, '🔥'), el('b', null, streakDays() + tr('일 연속 학습 중')));
-  wkHead.append(wkTitle, el('span', 'weekpill',
-    tr('이번 주 완료') + ' ' + dots.filter(d => d.done).length + '/' + dots.length));
-  wk.append(wkHead);
-  const wkRow = el('div', 'wkrow');
-  tr('월 화 수 목 금 토 일').split(' ').forEach((dayLabel, i) => {
-    const d = dots[i];
-    const cell = el('div', 'wkday' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
-    cell.append(el('span', 'wklabel', dayLabel));
-    cell.append(el('span', 'wkcirc', d.done ? '✔' : d.future ? '🔒' : ''));
-    wkRow.append(cell);
-  });
-  wk.append(wkRow);
-  plan.append(wk);
-
-  const todayCnt = Object.entries(S.done)
-    .filter(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd()).length;
-  const pace = S.pace || 1;                       // 하루에 몇 세트 할 것인가 (내 정보에서 바꾼다)
-  const left = Math.max(0, pace - todayCnt);      // 오늘 남은 세트
-  const doneToday = left === 0;
-  const queue = courseQueue(left + pace);         // 오늘 남은 것 + 내일 것 (새 과정)
-  const nm = d => d.theme || (trackName(d) + label(d));
-
-  /* 오늘 할 일 — Stitch 시안의 "Today's Action Cards" 그대로(학습 카드 + 복습 카드,
-     태그·아이콘·큰 버튼). 세로 지도의 '지금' 손잡이(curFn)도 여기서 만든다. */
-  const ahead = el('div', 'actionhead');
-  ahead.append(el('b', null, tr('오늘 할 일')), el('span', null, tr('필수') + ' 2' + tr('개')));
-  plan.append(ahead);
-
-  let curFn = null, curKey = null;
-  const lessonCard = el('div', 'actioncard main');
-  const lrow = el('div', 'actionrow');
-  const ltxt = el('div');
-  if (doneToday) {
-    ltxt.append(el('span', 'actiontag', tr('오늘의 핵심 학습')));
-    ltxt.append(el('div', 'actiontitle', pace > 1 ? todayCnt + tr('세트 완료') : tr('완료')));
-  } else if (queue.length) {
-    const t = queue.slice(0, left);
-    curFn = () => startLearn(t[0]);
-    curKey = t[0].day;
-    const preview = t.length > 1 ? '' : (t[0].words || []).slice(0, 3)
-      .map(w => w.ko.split('/')[0].trim()).join(' · ');
-    ltxt.append(el('span', 'actiontag', tr('오늘의 핵심 학습')));
-    ltxt.append(el('div', 'actiontitle', esc(t.map(nm).join(' · '))));
-    if (preview) ltxt.append(el('div', 'actionsub', esc(preview)));
-  } else {
-    ltxt.append(el('span', 'actiontag', tr('오늘의 핵심 학습')));
-    ltxt.append(el('div', 'actiontitle', tr('전 과정 완료')));
-  }
-  lrow.append(ltxt, el('div', 'actionicon', '📖'));
-  lessonCard.append(lrow);
-  const lbtn = el('button', 'actionbtn primary', curFn ? tr('학습 시작하기') : tr('완료'));
-  lbtn.disabled = !curFn; if (curFn) lbtn.onclick = curFn;
-  lessonCard.append(lbtn);
-  plan.append(lessonCard);
-
-  // 오늘 복습 — 문장도 같이 나오므로 뭉뚱그려 '단어'라고 하지 않는다
-  const revCard = el('div', 'actioncard tertiary');
-  const rrow = el('div', 'actionrow');
-  const rtxt = el('div');
-  rtxt.append(el('span', 'actiontag tertiary', tr('복습')));
-  rtxt.append(el('div', 'actiontitle',
-    due.length ? due.length + tr('개 복습 대기 중') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
-  rrow.append(rtxt, el('div', 'actionicon', '🔁'));
-  revCard.append(rrow);
-  const rbtn = el('button', 'actionbtn', tr('단어 복습하기'));
-  rbtn.disabled = !due.length; if (due.length) rbtn.onclick = () => reviewStart();
-  revCard.append(rbtn);
-  plan.append(revCard);
-
-  /* 내일 — Stitch 시안엔 없지만, 내일 뭘 할지 미리 보여주는 건 우리 앱 고유 기준이라
-     (대표님 지시, 여러 번) 가볍게 둔다. 오늘 카드보다 작은 두 칸으로. */
-  const tomHead = el('div', 'actionhead'); tomHead.append(el('b', null, tr('내일')));
-  plan.append(tomHead);
-  const plantom = el('div', 'plantom'); plan.append(plantom);
-  const prow = (k, v, state, fn) => {
-    const r = el('div', 'plancell ' + state + (fn ? ' go' : ''));
-    r.append(el('span', 'pk', tr(k)), el('span', 'pv', esc(tr(v))));
-    if (fn) r.onclick = fn;
-    plantom.append(r);
-  };
-  const tset = queue.slice(left, left + pace);
-  if (tset.length) {
-    const words = tset.flatMap(d => d.words || []);
-    prow('내일 학습', tset.map(nm).join(' · '), 'next',
-         words.length ? () => flashRun(words, '예습 · ' + tset.map(nm).join(' · ')) : null);
-  } else prow('내일 학습', '없음', 'none', null);
-  const tmr = Object.entries(S.srs).filter(([, v]) => v.due > now() && v.due <= now() + DAY)
-    .map(([k]) => findItem(k)).filter(Boolean);
-  prow('내일 복습', !tmr.length ? '없음' : tmr.length + tr('개'), tmr.length ? 'next' : 'none', null);
-
-  /* 업적 전체 목록·세로 지도(로드맵)는 홈에서 뺐다 (대표님 지시, 2026-09-12) —
-     오늘·내일 학습/복습과 내용이 겹쳤다. 업적은 요약 한 줄만 아래에 남기고,
-     전체는 renderAchievementsPage()(내 정보 → 업적)에서 본다. */
+  plan.append(homeGreet(), petCard(), homeActions());
   show('home', '짜오짜오', false);
 }
 
@@ -6975,28 +7057,67 @@ const dictBare = v => {
 function dictBuild() {
   if (DICT) return DICT;
   const seen = new Map();
-  const put = (vi, ko, extra) => {
+  /* 문장은 사전에 안 나온다 (대표님 지시 2026-09-27) — 낱말·구만. 다섯 낱말 이상이거나 문장 부호가 들어 있으면 문장으로 본다. */
+  const isSent = v => v.split(/\s+/).length >= 5 || /[.!?…]$/.test(v) || /[,;:"“”]/.test(v);
+  const KEEP = ['ex', 'img', 'kr', 'kr_read', 'tones', 'alt', 'hanja', 'south', 'work', 'gl', 'form', 'fex'];
+  const put = (vi, ko, w) => {
     const k = String(vi || '').trim();
-    if (!k || !ko) return;
+    if (!k || !ko || isSent(k)) return;
     const kk = k.toLowerCase();
-    if (seen.has(kk)) { const o = seen.get(kk);
-      if (!o.ko.includes(ko)) o.ko += ' / ' + ko; return; }
-    seen.set(kk, { vi: k, ko: String(ko), ...(extra || {}) });
+    if (!seen.has(kk)) seen.set(kk, { vi: k, ko: String(ko) });
+    const o = seen.get(kk);
+    /* 여러 자료의 뜻을 합칠 때 겹치는 낱말은 다시 안 붙인다 — "누나·언니 / 누나·언니뻘 여자 / 언니" 처럼 길어지지 않게. 세 갈래까지만. */
+    const toks = g => g.split(/[·\/,;()\s]+/).filter(Boolean);
+    if (!o.ko.includes(ko) && o.ko.split(' / ').length < 3) {
+      const have = new Set(toks(o.ko));
+      if (toks(ko).some(t => !have.has(t))) o.ko += ' / ' + ko;
+    }
+    if (w) KEEP.forEach(f => { if (o[f] === undefined && w[f] !== undefined) o[f] = w[f]; });
   };
-  allWords().forEach(w => put(w.vi, w.ko, { ex: w.ex, img: w.img }));
-  Object.entries(EXG || {}).forEach(([k, v]) => put(k, typeof v === 'string' ? v : v.ko));
+  /* 앱에 있는 낱말은 **전부** (대표님 지시 2026-09-27: "최소한 우리 어플에 있는 모든 단어는 들어가야 함") */
+  allWords().forEach(w => put(w.vi, w.ko, w));               // 하루5분·회화·직무(order.json)
+  gybmAllWords().forEach(w => put(w.vi, w.ko, w));           // GYBM 교재 낱말
+  seniorItems().forEach(w => put(w.vi, w.ko, w));            // 선배 시험 낱말
+  if (GRAM) GRAM.books.forEach(b => b.bai.forEach(c => c.g.forEach(g =>
+    (g.kw || []).forEach(([w, m]) => put(String(w).replace(/[.…]/g, '').trim(), m)))));   // 문법 핵심 낱말
+  Object.entries(EXG || {}).forEach(([k, v]) => put(k, typeof v === 'string' ? v : v.ko, typeof v === 'object' ? { kr: v.kr } : null));   // 예문 낱말
+  if (SIB) Object.entries(SIB.w).forEach(([k, v]) => { if (v.k) put(k, v.k); });   // 헷갈리는 짝 자료(사전 낱말 — 한국어 뜻 있는 것)
   DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi) }));
   DICT.sort((a, b) => a.b.localeCompare(b.b));
   return DICT;
 }
-function dictEntry() {
+/* 사전이 읽는 자료가 다 와 있는지 — 안 온 것은 받아 온다 (문법·선배·GYBM·짝 자료는 그 화면을 열어야만 받아 왔다) */
+async function dictReady() {
+  const get = (path, fn) => fetch(path, { cache: 'no-cache' }).then(r => r.json()).then(fn).catch(() => { });
+  const jobs = [];
+  if (!SIB) jobs.push(sibLoad());
+  if (!GRAM) jobs.push(get('data/grammar.json', j => { GRAM = j; }));
+  if (!SENIOR) jobs.push(get('data/senior.json', j => { SENIOR = j; }));
+  if (typeof GYBM !== 'undefined' && !GYBM) jobs.push(get('data/gybm.json', j => { GYBM = j; GYBM_ALL = null; }));
+  if (!COURSE) jobs.push(get('data/order.json', j => { COURSE = j; loadCWords(); }));
+  await Promise.all(jobs);
+  DICT = null;
+}
+/* 사전에서 낱말을 누르면 **낱말 카드와 완전히 같은 화면**으로 연다 (대표님 지시 2026-09-27) —
+   단어/발음 면·헷갈리는 짝·듣기·말하기·입모양·높낮이 전부. 학습 진도와는 상관없다(L.dict). */
+function openWordCard(x, back) {
+  const w = Object.assign({}, x);
+  delete w.b;
+  if (!w.vi) return;
+  L = { day: { day: 'dict', theme: tr('사전'), words: [w] }, items: [{ k: 'word', d: w }], i: 0, dict: true };
+  if (back) dive(back);
+  drawCard();
+  show('learn', w.vi, true);
+  drawLessonTabs();
+}
+function dictEntry(q0) {
   const b = $('#subBody'); b.textContent = '';
-  const d = dictBuild();
-  b.append(el('p', 'lede', tr('낱말 N개 · 베트남어로도 한국어로도 찾습니다')
-    .replace('N', d.length.toLocaleString('ko-KR'))));
+  const lede = el('p', 'lede', tr('불러오는 중…'));
   const inp = el('input', 'keyin dictin');
   inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
+  if (typeof q0 === 'string' && q0) inp.value = q0;   // 내 정보 → 사전 에서는 click 이벤트가 넘어온다
   const out = el('div', 'dictout');
+  let d = [];
   const draw = () => {
     const q = inp.value.trim();
     out.textContent = '';
@@ -7006,9 +7127,9 @@ function dictEntry() {
     const hit = d.filter(x => kor ? x.ko.toLowerCase().includes(qk)
                                   : (x.b.includes(qb) || x.vi.toLowerCase().includes(qk)))
                  .sort((a, b2) => {
-                   const s = x => kor ? (x.ko.startsWith(q) ? 0 : 1)
-                                      : (x.b === qb ? 0 : x.b.startsWith(qb) ? 1 : 2);
-                   return s(a) - s(b2) || a.vi.length - b2.vi.length;
+                   const sc = x => kor ? (x.ko.startsWith(q) ? 0 : 1)
+                                       : (x.b === qb ? 0 : x.b.startsWith(qb) ? 1 : 2);
+                   return sc(a) - sc(b2) || a.vi.length - b2.vi.length;
                  });
     if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
     out.append(el('p', 'note', tr('N개 찾음').replace('N', hit.length)));
@@ -7019,17 +7140,21 @@ function dictEntry() {
       row.append(el('b', 'dvi', esc(x.vi)));
       if (kr) row.append(el('span', 'dkr', '[' + esc(kr) + ']'));
       row.append(el('span', 'dko', esc(x.ko)));
-      if (x.ex) row.append(el('span', 'dex', esc(x.ex.vi) + ' — ' + esc(x.ex.ko)));
-      row.onclick = () => { const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
+      row.onclick = () => openWordCard(x, () => dictEntry(inp.value));   // 누르면 낱말 카드 — 뒤로 가면 찾던 말 그대로
       out.append(row);
     });
     if (hit.length > 60) out.append(el('p', 'note', tr('앞 60개만 보입니다 — 더 적어 보세요')));
   };
   let tm = null;
   inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
-  b.append(inp, out);
-  draw();
+  b.append(lede, inp, out);
   show('sub', '사전', true);
+  dictReady().then(() => {
+    if ($('#sub').hidden) return;
+    d = dictBuild();
+    lede.textContent = tr('낱말 N개 · 베트남어로도 한국어로도 찾습니다').replace('N', d.length.toLocaleString('ko-KR'));
+    draw();
+  });
   setTimeout(() => inp.focus(), 60);
 }
 
@@ -7330,6 +7455,7 @@ function drawCard() {
   resetRec();
   if (window.cardArrows) setTimeout(window.cardArrows, 0);
   const c = $('#card');
+  $('#face').hidden = true; FACE = null;
   c.textContent = '';
   const it = L.items[L.i], x = it.d;
 
@@ -7475,16 +7601,15 @@ function drawCard() {
        낱말을 누르면 어느 면에서든 헷갈리는 짝이 팝업으로 뜬다. 낱말 뜻 밑에 [듣기][말하기]. */
     const cf = el('div', 'wfcard');           // 단어 면
     const pf = el('div', 'wfpron');           // 발음 면
-    const tg = el('button', 'facetg');
-    tg.type = 'button';
-    tg.innerHTML = '<span data-f="card">' + tr('단어') + '</span><span data-f="pron">' + tr('발음') + '</span>';
+    const tg = $('#face');                    // 머리띠 가운데 [단어|발음] (대표님 지시 2026-09-27: 맨 위로 옮김 — 남/여 · 단어/발음 · 내 정보)
+    tg.hidden = false;
     const setFace = f => {
       L.face = f;
       cf.hidden = f !== 'card'; pf.hidden = f !== 'pron';
       tg.dataset.f = f;
       tg.setAttribute('aria-label', f === 'card' ? tr('발음 면으로 넘기기') : tr('단어 면으로 넘기기'));
     };
-    tg.onclick = () => setFace(L.face === 'pron' ? 'card' : 'pron');
+    FACE = setFace;
     const tapPair = () => pairPopup(x.vi, { kr: krShow(x), ko: x.ko });
 
     /* ── 단어 면 ──
@@ -7564,7 +7689,7 @@ function drawCard() {
     pf.append(mouthPanel(x.vi));               // 입모양 2D (2026-09-25 #6)
     pf.append(pitchGraph(x.vi, { img: x.img })); // 낱말이 소리를 따라 움직이는 하나뿐인 높낮이 그래프 (2026-09-25 #7 · 09-27 합침)
 
-    c.append(tg, cf, pf);
+    c.append(cf, pf);
     setFace(L.keepFace || 'card');           // 목소리를 바꿔 다시 그릴 때만 보던 면을 지킨다
     L.keepFace = null;
     tutorTap();
@@ -7643,8 +7768,9 @@ function drawCard() {
   }
   /* 단추는 **마지막 장에서만** 나온다 (대표님 지시) — 그 사이는 밀어서 넘긴다.
      마지막 장의 단추는 '다음'이 아니라 진도를 확정하는 자리라 남긴다. */
+  if (L.dict) $('#pos').textContent = tr('사전');
   const last = L.i === L.items.length - 1;
-  $('#next').hidden = !last;
+  $('#next').hidden = !last || !!L.dict;      // 사전에서 연 낱말 카드는 확인 문제로 안 간다
   $('#next').textContent = L.day.gram ? '확인 문제 ›'
     : L.cult || L.day.know ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
@@ -10306,6 +10432,8 @@ function telex(word, ch) {
    복습 안에서 방식만 바꾸려 해도 처음부터 다시 들어가야 했다. */
 $('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
 $('#goMe').onclick = renderAwards;
+$('#face').innerHTML = '<span data-f="card">' + tr('단어') + '</span><span data-f="pron">' + tr('발음') + '</span>';
+$('#face').onclick = () => { if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron'); };
 /* 홈 단추(우측 상단 아이콘) · 뒤로가기가 끝까지 갈 때 — **늘 대시보드**를 보여준다.
    전에는 dailyFlowEntry()를 불러 오늘 할 게 있으면 그걸로 바로 들어가 버렸다.
    그러면 "하루5분"과 다를 게 없어서, 대표님이 뒤로가기 끝에서 만나는 대시보드를
@@ -11037,7 +11165,7 @@ function seg(a, b, first) {
   return `<i${first ? ' class="on"' : ''}>${cut(a)}</i><i${first ? '' : ' class="on"'}>${cut(b)}</i>`;
 }
 function drawVoiceBtn() {
-  $('#voice').innerHTML = seg('여', '남', S.voice === 'f');
+  $('#voice').innerHTML = seg('남', '여', S.voice === 'm');   // 남·여 차례 (대표님 지시 2026-09-27)
 }
 /* 진도 초기화 — 처음부터 다시. 되돌릴 수 없어서 두 번 묻는다 */
 async function doReset() {
@@ -11250,7 +11378,7 @@ Promise.all([
   if (!S.acct || !S.acct.tok) { acctForm(true, 'login'); return; }
   if (!S.nick) { askNick(); return; }                 // 최초 1회
   if (S.wk && S.wk.k !== weekKey()) { showWeek(weekReport(S.wk.base)); return; }
-  // 앱을 켜면 바로 '하루5분'이 뜬다 — 홈 대시보드를 한 번 더 누르게 하지 않는다 (대표님 지시 2026-09-09).
-  ACTIVE_TAB = 'daily';
-  dailyFlowEntry();
+  // 앱을 켜면 **홈**이 뜬다 — 앵무 '짜오'와 [오늘 학습][오늘 복습] 단추가 바로 보인다 (대표님 지시 2026-09-27, 09-09 지시를 뒤집음).
+  ACTIVE_TAB = 'home';
+  renderHome();
 }).catch(e => { $('#title').textContent = '불러오기 실패'; console.error(e); });

@@ -122,6 +122,8 @@ def main():
     words = [nfc(w) for w in json.loads((R / "data/_vi_words.json").read_text(encoding="utf-8"))]
     syl = {w for w in words if " " not in w and VI_WORD.match(w)}
     syl |= {s for w in app_k for s in w.split() if VI_WORD.match(s)}
+    # 사전 복합어 안의 음절(bâng khuâng 의 bâng 같은 붙임 음절)도 — 한국어 뜻(_sib_ko.json)이 있는 것만 살아남는다 (2026-09-27 "단 하나도 빠지지 않게")
+    syl |= {s.lower() for w in words if " " in w for s in w.split() if VI_WORD.match(s.lower())}
     syl |= {it[0] for kind in ("tone", "shape") for fam in old.get(kind, {}).values() for it in fam.get("m", [])}
     # 진짜 베트남어 음절 짜임인 것만 — 사전 표제어 중 붙여 쓴 외래어(amoniac·ankađien)가 음절로 끼지 않게
     SYL = re.compile(r"^(ngh|ng|nh|ph|th|tr|ch|gh|gi|kh|qu|[bcdghklmnpqrstvx]|)[aeiouy]{1,3}(ch|c|ng|nh|n|m|p|t|)$")
@@ -174,6 +176,19 @@ def main():
 
     bad_rel = {frozenset(p) for p in json.loads((R / "data/_sib_badrel.json").read_text(encoding="utf-8"))} if (R / "data/_sib_badrel.json").exists() else set()
 
+    good_rel = {frozenset(p) for p in json.loads((R / "data/_sib_goodrel.json").read_text(encoding="utf-8"))} if (R / "data/_sib_goodrel.json").exists() else set()
+
+    def clean_target(t):
+        """위키낱말 동의어 칸의 표기 찌꺼기를 걷어 낸다: [[ba]] [[má]] → ba má, muỗng <q:southern> → muỗng. 여러 개(a/b · a; b)는 나눈다."""
+        t = re.sub(r"<[^>]*>", "", t).replace("[[", "").replace("]]", "")
+        out = []
+        for x in re.split(r"[/;]", t):
+            x = nfc(x).strip().lower()
+            if not x or ":" in x or "{{" in x:
+                continue
+            out.append(x)
+        return out
+
     def add(a, b, kind, tag):
         if a == b or not VI_WORD.match(a) or not VI_WORD.match(b) or frozenset((a, b)) in bad_rel:
             return
@@ -186,13 +201,13 @@ def main():
         if not VI_WORD.match(w):
             continue
         for t in v.get("vs", []):
-            add(w, nfc(t), "s", "vi")
+            for x in clean_target(t): add(w, x, "s", "vi")
         for t in v.get("es", []):
-            add(w, nfc(t), "s", "en")
+            for x in clean_target(t): add(w, x, "s", "en")
         for t in v.get("va", []):
-            add(w, nfc(t), "a", "vi")
+            for x in clean_target(t): add(w, x, "a", "vi")
         for t in v.get("ea", []):
-            add(w, nfc(t), "a", "en")
+            for x in clean_target(t): add(w, x, "a", "en")
 
     def strong(kind, x, y):
         """두 위키가 다 적었거나, 양쪽 낱말 문서가 서로를 적었으면 믿는다."""
@@ -213,8 +228,9 @@ def main():
     # 뜻(gloss)이 있는 낱말만, 한 낱말에 6개까지. 서로 동의어이면서 반의어인 모순은 반의어를 남기고 동의어에서 뺀다.
     n_rel = 0
     for w, r in rel.items():
-        a = [x for x in r["a"] if need(x)][:6]
-        s = [x for x in r["s"] if x not in a and need(x) and (near(w, x) or strong("s", w, x))][:6]
+        a = [x for x in r["a"] if need(x)][:8]
+        # 뜻이 안 겹치는 동의어는 사람이 눈으로 확인한 것(_sib_goodrel.json)만 살린다 (2026-09-27, 528쌍 검토)
+        s = [x for x in r["s"] if x not in a and need(x) and (near(w, x) or strong("s", w, x) or frozenset((w, x)) in good_rel)][:8]
         if (a or s) and need(w):
             W[w]["a"], W[w]["s"] = a, s
             if not a: del W[w]["a"]
@@ -223,6 +239,15 @@ def main():
     for w, g in W.items():                            # 앱 낱말에 쓰이는 음절·낱말은 p:1 — 비슷한 낱말 목록에서 먼저 보인다
         if w in app_k or w in app_syl:
             g["p"] = 1
+    for w in [w for w, g in W.items() if "k" not in g]:   # 한국어 뜻이 없는 낱말은 화면에 안 올린다(영어 뜻만 있는 것 포함) — 대표님 지시 2026-09-27
+        del W[w]
+    for w, r in list(rel.items()):
+        pass
+    for g in W.values():
+        for key in ("s", "a"):
+            if key in g:
+                g[key] = [x for x in g[key] if x in W]
+                if not g[key]: del g[key]
     for g in W.values():                              # 한국어 뜻이 있으면 영어 뜻(뜻 겹침 검사에만 썼다)은 화면 자료에서 뺀다
         if "k" in g:
             g.pop("e", None)

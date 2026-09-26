@@ -199,7 +199,7 @@ const MOUTH = (() => {
 <text x="328" y="218">혀뿌리</text><text x="328" y="296">성대</text>
 </g>
 </g>
-<g transform="translate(10,6) scale(1.5) translate(-462,-26)">
+<g id="${f('front')}" transform="translate(10,6) scale(1.5) translate(-462,-26)">
 <rect x="462" y="26" width="198" height="172" rx="12" fill="var(--bg)" stroke="var(--line)"/>
 <g transform="translate(561 120) scale(1.3) translate(-561 -116)">
 <ellipse id="${f('lipO')}" cx="561" cy="116" rx="52" ry="26" fill="#D4537E" stroke="#993556" stroke-width="1.6"/>
@@ -224,11 +224,18 @@ const MOUTH = (() => {
   function create(host, opt) {
     const p = 'mm' + (++UID) + '_';
     host.innerHTML = svgMarkup(p);
-    if (opt && opt.front) {                     // 정면 입술만 (그래프 위 따라가는 작은 그림용)
-      const sv = host.querySelector('svg');
-      sv.setAttribute('viewBox', '10 6 297 258'); sv.setAttribute('aria-hidden', 'true');
-      ['side', 'leg'].forEach(id => { const g = host.querySelector('#' + p + id); if (g) g.setAttribute('display', 'none'); });
-    }
+    /* 보는 면: front 정면만(크게) · side 옆 단면만 · both 둘 다. 범례는 both 에서만 (2026-09-27 정면 기본, 옆 단면은 단추) */
+    const sv = host.querySelector('svg');
+    const VIEW = { front: '10 6 297 258', side: '318 0 350 318', both: '0 0 680 318' };
+    const setView = v => {
+      sv.setAttribute('viewBox', VIEW[v] || VIEW.both);
+      const g = id => host.querySelector('#' + p + id);
+      if (g('side')) g('side').setAttribute('display', v === 'front' ? 'none' : '');
+      if (g('front')) g('front').setAttribute('display', v === 'side' ? 'none' : '');
+      if (g('leg')) g('leg').setAttribute('display', v === 'both' ? '' : 'none');
+    };
+    if (opt && opt.front) { sv.setAttribute('aria-hidden', 'true'); setView('front'); }   // 그래프 위 따라가는 작은 그림용
+    else setView('both');
     const $ = id => host.querySelector('#' + p + id);
     const set = (e, k, v) => e.setAttribute(k, v);
     const els = {};
@@ -290,6 +297,7 @@ const MOUTH = (() => {
     let cur = null;
     const api = {
       root: host,
+      setView,
       setWord(word) { cur = wordKeys(word); cur.word = word; api.at(1); },
       keys() { return cur; },
       /* t: 0~1 (낱말 시간표 위 위치). 지금 나는 소리 id 를 돌려준다 */
