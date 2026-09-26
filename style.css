@@ -1869,6 +1869,7 @@ button.wex{width:100%; background:transparent; color:var(--fg); font:inherit; cu
   font-size:13px; color:var(--dim); background:transparent}
 button.pchip.pick{border-style:solid; color:var(--fg); cursor:pointer}
 button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color:var(--accent-fg)}
+.pmore{margin-top:8px; width:100%}
 .pseq{margin-top:8px}
 .pseq.on{border-color:var(--accent); color:var(--accent)}
 .pnote{margin-top:10px; font-size:12.5px; line-height:1.55; color:var(--dim)}
@@ -2180,6 +2181,15 @@ svg.curve.pw .pwword{transition:none}
 .lgrp .lbtn{border:0; border-radius:0; padding:8px 14px; font-size:14px; font-weight:650; background:transparent}
 .spdchip{border:0; border-left:1px solid var(--line); border-radius:0; padding:8px 10px; min-width:54px; font-size:13px; font-weight:800;
   background:var(--surface-2); color:var(--accent); cursor:pointer}
+.spdchip .spdcaret{font-style:normal; font-size:11px; opacity:.7}
+.spdchip.open{background:var(--accent); color:#fff}
+.spdmenu{position:fixed; z-index:9999; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:4px;
+  box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.spdopt{white-space:nowrap; min-height:44px; display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; border:0; background:transparent; color:var(--fg);
+  padding:11px 12px; border-radius:9px; font-size:15px; font-weight:650; cursor:pointer}
+.spdopt i{font-style:normal; color:var(--accent); font-weight:800}
+.spdopt.on{background:var(--surface-2); color:var(--accent)}
+.spdopt:active{background:var(--surface-2)}
 .wex .exctl{margin:8px 0 0}
 .wex .wctl{justify-content:center}
 

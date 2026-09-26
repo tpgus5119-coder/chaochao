@@ -928,7 +928,7 @@ let SIB = null, SIBP = null;
 function sibLoad() {
   if (SIB) return Promise.resolve(SIB);
   if (!SIBP) SIBP = fetch('data/sib.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => (SIB = j)).catch(() => { SIBP = null; return null; });
+    .then(j => { sibIndex(j); return (SIB = j); }).catch(() => { SIBP = null; return null; });
   return SIBP;
 }
 const SIB_T = ['ngang', 'huyền', 'sắc', 'hỏi', 'ngã', 'nặng'];
@@ -941,6 +941,54 @@ const sibToneOf = s => {
 /* 성조 부호 자리만 다른 표기(hòa/hoà)는 같은 낱말로 본다 */
 const sibKey = s => stripTone(s) + '|' + sibToneOf(s);
 const sibBase = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
+/* 비슷한 소리·모양 낱말 (대표님 지시 2026-09-27: "o·u·d 만 넣지 말고 비슷한 건 다") —
+   음절을 [첫 자음][모음][받침]+성조로 쪼개어, 한 부분만 헷갈리기 쉬운 짝으로 바꿔 본다. 성조는 그대로 둔다.
+   바꾼 결과가 sib.json 에 있는 진짜 음절일 때만 보여 준다(없는 글자는 안 나온다). */
+const SIB_SYL = /^(ngh|ng|nh|ph|th|tr|ch|gh|gi|kh|qu|[bcdđghklmnpqrstvx])?([aăâeêioôơuưy]+)(ch|c|ng|nh|n|m|p|t)?$/;
+function sibParse(s) {
+  const m = SIB_SYL.exec(stripTone(s.toLowerCase()));
+  return m ? { i: m[1] || '', v: m[2], f: m[3] || '', t: sibToneOf(s) } : null;
+}
+const sibPairMap = pairs => { const m = {}; pairs.forEach(([a, b]) => { (m[a] = m[a] || new Set()).add(b); (m[b] = m[b] || new Set()).add(a); }); return m; };
+const SIB_VOW = sibPairMap([['a', 'ă'], ['a', 'â'], ['ă', 'â'], ['e', 'ê'], ['ê', 'i'], ['e', 'i'], ['i', 'y'], ['o', 'ô'], ['o', 'ơ'], ['ô', 'ơ'],
+                            ['u', 'ư'], ['o', 'u'], ['ô', 'u'], ['ơ', 'ư'], ['â', 'ơ'], ['a', 'o'], ['e', 'a']]);
+const SIB_VGRP = [['ia', 'iê', 'yê', 'ya'], ['ua', 'uô'], ['ưa', 'ươ'], ['uy', 'ui'], ['oa', 'ua'], ['ai', 'ay'], ['ao', 'au'], ['âu', 'ao'], ['ây', 'ai']];
+const SIB_INI = sibPairMap([['ch', 'tr'], ['s', 'x'], ['d', 'gi'], ['d', 'r'], ['gi', 'r'], ['d', 'đ'], ['l', 'n'], ['n', 'nh'], ['ng', 'nh'], ['ng', 'n'],
+                            ['kh', 'h'], ['kh', 'c'], ['kh', 'k'], ['t', 'th'], ['t', 'đ'], ['t', 'tr'], ['c', 'k'], ['c', 'q'], ['g', 'gh'], ['ng', 'ngh'],
+                            ['b', 'd'], ['b', 'đ'], ['b', 'p'], ['b', 'v'], ['m', 'n'], ['b', 'm'], ['ph', 'b'], ['th', 'kh'], ['x', 'ch'], ['', 'h'], ['g', 'ng']]);
+const SIB_FIN = sibPairMap([['n', 'ng'], ['ng', 'nh'], ['n', 'nh'], ['n', 'm'], ['t', 'c'], ['c', 'ch'], ['t', 'ch'], ['p', 't'], ['m', 'p'], ['', 'n'], ['', 'ng'], ['', 'nh'], ['', 'm'], ['', 'c'], ['', 't']]);
+let SIB_IDX = null;
+function sibIndex(j) {
+  SIB_IDX = new Map();
+  Object.keys(j.w).forEach(w => {
+    if (w.indexOf(' ') >= 0) return;
+    const p = sibParse(w);
+    if (!p) return;
+    const k = p.i + '|' + p.v + '|' + p.f + '|' + p.t;
+    (SIB_IDX.get(k) || SIB_IDX.set(k, []).get(k)).push(w);
+  });
+}
+/* 낱말 s 에서 한 부분만 바꾼 진짜 음절들 — {v: 모음, i: 첫 자음, f: 받침} 각각 배열 */
+function sibNear(s, exclude) {
+  const p = sibParse(s), out = { v: [], i: [], f: [] };
+  if (!p || !SIB_IDX) return out;
+  const seen = new Set([s]);
+  const grab = (kind, i, v, f) => {
+    (SIB_IDX.get(i + '|' + v + '|' + f + '|' + p.t) || []).forEach(w => {
+      if (seen.has(w) || (exclude && exclude(w))) return;
+      seen.add(w); out[kind].push(w);
+    });
+  };
+  const vs = new Set();
+  [...p.v].forEach((ch, x) => (SIB_VOW[ch] || []).forEach(c => vs.add(p.v.slice(0, x) + c + p.v.slice(x + 1))));
+  SIB_VGRP.forEach(g => { if (g.includes(p.v)) g.forEach(c => c !== p.v && vs.add(c)); });
+  vs.forEach(v => grab('v', p.i, v, p.f));
+  (SIB_INI[p.i] || []).forEach(i => grab('i', i, p.v, p.f));
+  (SIB_FIN[p.f] || []).forEach(f => grab('f', p.i, p.v, f));
+  const rank = w => (SIB.w[w] && SIB.w[w].p ? 0 : 1);
+  Object.keys(out).forEach(k => out[k].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b, 'vi')));
+  return out;
+}
 /* 낱말의 음절마다 짝(가족)을 찾는다 — 자기 말고 짝이 하나라도 있는 음절만 돌려준다.
    가족 셋(대표님 지시 2026-09-27: 모양 비슷한 것·성조 다른 것 다 넣는다):
      tone  글자는 같고 성조만 다름(ma·mà·má…)        shape 성조는 같고 모음·đ 모양만 다름(mua·mưa)
@@ -954,7 +1002,11 @@ function sibFams(vi) {
     const other = f => f && f.some(x => sibKey(x) !== sibKey(s));
     const inT = new Set(tf || []), inS = new Set(sf || []);
     const rest = kf ? kf.filter(x => sibKey(x) !== sibKey(s) && !inT.has(x) && !inS.has(x)) : [];
-    if (other(tf) || other(sf) || rest.length) out.push({ s, tf: other(tf) ? tf : null, sf: other(sf) ? sf : null, kf: rest.length ? rest : null });
+    const b0 = sibBase(s);
+    const nr = sibNear(s, x => sibBase(x) === b0);          // 글자 뼈대가 같은 것(위 세 가족)은 빼고, 다른 글자로 바뀐 것만
+    const has = a => (a.length ? a : null);
+    if (other(tf) || other(sf) || rest.length || nr.v.length || nr.i.length || nr.f.length)
+      out.push({ s, tf: other(tf) ? tf : null, sf: other(sf) ? sf : null, kf: rest.length ? rest : null, vf: has(nr.v), if_: has(nr.i), ff: has(nr.f) });
   });
   return out;
 }
@@ -965,8 +1017,10 @@ function sibRel(vi) {
 }
 /* 모양 짝은 어느 글자가 다른지 색으로 짚어 준다 (o ↔ ô ↔ ơ) — 성조 부호는 빼고 모음 모양만 견준다 */
 function sibDiff(syl, cur) {
-  const a = [...syl.normalize('NFC')], sa = [...stripTone(syl)], sc = [...stripTone(cur)];
-  return a.map((ch, i) => sc.length === sa.length && sa[i] !== sc[i] ? '<u class="dif">' + esc(ch) + '</u>' : esc(ch)).join('');
+  const a = [...syl.normalize('NFC')], ta = a.map(c => stripTone(c)), tb = [...cur.normalize('NFC')].map(c => stripTone(c));
+  let p = 0; while (p < ta.length && p < tb.length && ta[p] === tb[p]) p++;
+  let q = 0; while (q < ta.length - p && q < tb.length - p && ta[ta.length - 1 - q] === tb[tb.length - 1 - q]) q++;
+  return a.map((ch, i) => i >= p && i < a.length - q ? '<u class="dif">' + esc(ch) + '</u>' : esc(ch)).join('');
 }
 /* 짝 한 줄: 낱말 · 뜻(한국어, 없으면 영어, 없으면 이 음절이 든 예) · ▶ */
 function pairRow(word, cur, mode) {
@@ -975,7 +1029,7 @@ function pairRow(word, cur, mode) {
   const r = el('div', 'prow' + (cur && (word === cur || (word.indexOf(' ') < 0 && cur.indexOf(' ') < 0 && sibKey(word) === sibKey(cur))) ? ' cur' : ''));
   const one = word.indexOf(' ') < 0;
   const w = el('span', 'psyl ' + (one ? tn : ''));
-  w.append(el('b', null, mode === 'shape' && word !== cur ? sibDiff(word, cur) : esc(word)));
+  w.append(el('b', null, (mode === 'shape' || mode === 'sim') && word !== cur ? sibDiff(word, cur) : esc(word)));
   if (one) w.append(el('i', null, toneArrow(tn)));
   const m = el('span', 'pmn');
   if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
@@ -1026,11 +1080,18 @@ function pairPanel(vi, opt) {
     head.type = 'button';
     const body = el('div', 'pairbody');
     let cur = 0, built = false;
+    const CAP = 8;                                    // 처음엔 여덟 줄만, 나머지는 [더 보기]
     const section = (title, note, list, s, mode) => {
       const sec = el('div', 'psec');
       sec.append(el('div', 'ptitle', tr(title) + '<span>' + tr(note) + '</span>'));
       const rows = list.map(x => pairRow(x, s, mode));
-      rows.forEach(r => sec.append(r));
+      rows.forEach((r, i) => { if (i >= CAP) r.hidden = true; sec.append(r); });
+      if (rows.length > CAP) {
+        const more = el('button', 'ghost sm pmore', '＋ ' + (rows.length - CAP) + tr('개 더 보기'));
+        more.type = 'button';
+        more.onclick = () => { rows.forEach(r => { r.hidden = false; }); more.remove(); };
+        sec.append(more);
+      }
       if (mode === 'tone' && list.filter(x => recKey(x)).length > 1) {
         const b = el('button', 'ghost sm pseq', '▶ ' + tr('순서대로 듣기'));
         b.type = 'button';
@@ -1059,6 +1120,9 @@ function pairPanel(vi, opt) {
       if (F) {
         if (F.tf) body.append(section('성조만 다른 낱말', '글자는 같고 높낮이만 다름', F.tf, F.s, 'tone'));
         if (F.sf) body.append(section('모양이 조금 다른 글자', '성조는 같음', F.sf, F.s, 'shape'));
+        if (F.vf) body.append(section('모음이 비슷한 낱말', 'o·u · ô·ơ · a·ă·â · e·ê·i 처럼 모음만 바뀜', F.vf, F.s, 'sim'));
+        if (F.if_) body.append(section('첫 자음이 비슷한 낱말', 'ch·tr · s·x · d·gi·r · l·n · d·đ 처럼 첫소리만 바뀜', F.if_, F.s, 'sim'));
+        if (F.ff) body.append(section('받침이 비슷한 낱말', 'n·ng·nh · t·c·ch · m·p 처럼 받침만 바뀜', F.ff, F.s, 'sim'));
         if (F.kf) body.append(section('비슷하게 생긴 다른 글자', '글자 모양·성조가 모두 다름', F.kf, F.s, 'skel'));
         const tn = F.tf ? F.tf.map(x => sibToneOf(x)) : [];
         if (tn.includes('hỏi') && tn.includes('ngã'))
@@ -1774,19 +1838,50 @@ function pitchGraph(text, opt) {
 const SPDS = [1, .8, .6];
 const spdOf = () => SPDS.includes(Number(S.wspd)) ? Number(S.wspd) : .8;
 const spdLab = v => v + '배';
+/* 속도 칩 — 누르면 1배·0.8배·0.6배 목록이 내려오고 **바로 고른다**(대표님 지시 2026-09-27: 1배에서 0.6배로도 한 번에).
+   .lgrp 가 overflow:hidden 이라 목록은 화면 맨 위 층(body)에 띄우고 칩 자리에 맞춘다. */
+let SPDMENU = null;
+function spdMenuClose() { if (SPDMENU) { SPDMENU.remove(); SPDMENU = null; } document.querySelectorAll('.spdchip.open').forEach(x => x.classList.remove('open')); }
+function spdSet(v) {
+  S.wspd = v; save();
+  document.querySelectorAll('.spdchip').forEach(x => { x.firstChild.nodeValue = spdLab(v) + ' '; });
+  if (PB.spdSrc && audio.src.endsWith(PB.spdSrc) && !audio.paused) audio.playbackRate = v;   // 듣는 중이면 바로 바꾼다
+}
 function spdChip() {
   const b = el('button', 'spdchip');
   b.type = 'button';
-  b.textContent = spdLab(spdOf());
+  b.append(document.createTextNode(spdLab(spdOf()) + ' '), el('i', 'spdcaret', '▾'));
   b.setAttribute('aria-label', tr('듣기 속도'));
+  b.setAttribute('aria-haspopup', 'listbox');
   b.onclick = ev => {
     ev.stopPropagation();
-    S.wspd = SPDS[(SPDS.indexOf(spdOf()) + 1) % SPDS.length]; save();
-    document.querySelectorAll('.spdchip').forEach(x => { x.textContent = spdLab(S.wspd); });
-    if (PB.spdSrc && audio.src.endsWith(PB.spdSrc) && !audio.paused) audio.playbackRate = S.wspd;   // 듣는 중이면 바로 바꾼다
+    if (SPDMENU) { const same = b.classList.contains('open'); spdMenuClose(); if (same) return; }
+    const m = el('div', 'spdmenu');
+    m.setAttribute('role', 'listbox');
+    SPDS.forEach(v => {
+      const o = el('button', 'spdopt' + (v === spdOf() ? ' on' : ''), '<span>' + spdLab(v) + '</span><i>' + (v === spdOf() ? '✓' : '') + '</i>');
+      o.type = 'button';
+      o.setAttribute('role', 'option');
+      o.setAttribute('aria-selected', v === spdOf() ? 'true' : 'false');
+      o.onclick = e => { e.stopPropagation(); spdSet(v); spdMenuClose(); };
+      m.append(o);
+    });
+    document.body.append(m);
+    const r = b.getBoundingClientRect();
+    const w = Math.max(r.width, 120), h = m.offsetHeight;
+    const below = window.innerHeight - r.bottom >= h + 12;
+    m.style.left = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8) + 'px';
+    m.style.width = w + 'px';
+    m.style.top = (below ? r.bottom + 6 : Math.max(8, r.top - h - 6)) + 'px';
+    SPDMENU = m;
+    b.classList.add('open');
   };
   return b;
 }
+addEventListener('click', spdMenuClose);
+addEventListener('scroll', spdMenuClose, true);
+addEventListener('resize', spdMenuClose);
+addEventListener('keydown', e => { if (e.key === 'Escape') spdMenuClose(); });
 /* [▶ 듣기][0.8배] — fn(속도) 를 부른다 */
 function listenGroup(fn) {
   const g = el('div', 'lgrp');

@@ -98,9 +98,14 @@ def main():
                 elif len(it) >= 4:
                     old_x.setdefault(it[0], [it[2], it[3]])
 
+    # 클로드가 직접 옮기고 대조한 한국어 뜻(2026-09-27) — 가장 먼저 쓴다. '!' 는 낱말이 아닌 것(글자 이름 등)이라 뺀다.
+    ko_fix = json.loads((R / "data/_sib_ko.json").read_text(encoding="utf-8")) if (R / "data/_sib_ko.json").exists() else {}
+
     def gloss(w):
         g = {}
-        k = app_k.get(w) or old_k.get(w) or verified.get(w)
+        if ko_fix.get(w) == "!":
+            return g
+        k = ko_fix.get(w) or app_k.get(w) or old_k.get(w) or verified.get(w)
         s0 = src.get(w) or {}
         if not k and s0.get("ko"):
             k = short_ko_from_wiki(s0["ko"])
@@ -167,8 +172,10 @@ def main():
     rel = collections.defaultdict(lambda: {"s": [], "a": []})
     evid = collections.defaultdict(set)              # (종류, 낱말쌍) → 그 쌍을 적은 곳들 (위키 종류·방향)
 
+    bad_rel = {frozenset(p) for p in json.loads((R / "data/_sib_badrel.json").read_text(encoding="utf-8"))} if (R / "data/_sib_badrel.json").exists() else set()
+
     def add(a, b, kind, tag):
-        if a == b or not VI_WORD.match(a) or not VI_WORD.match(b):
+        if a == b or not VI_WORD.match(a) or not VI_WORD.match(b) or frozenset((a, b)) in bad_rel:
             return
         evid[(kind,) + tuple(sorted((a, b)))].add(tag + ":" + a)
         for x, y in ((a, b), (b, a)):
@@ -213,6 +220,13 @@ def main():
             if not a: del W[w]["a"]
             if not s: del W[w]["s"]
             n_rel += 1
+    for w, g in W.items():                            # 앱 낱말에 쓰이는 음절·낱말은 p:1 — 비슷한 낱말 목록에서 먼저 보인다
+        if w in app_k or w in app_syl:
+            g["p"] = 1
+    for g in W.values():                              # 한국어 뜻이 있으면 영어 뜻(뜻 겹침 검사에만 썼다)은 화면 자료에서 뺀다
+        if "k" in g:
+            g.pop("e", None)
+            g.pop("x", None)
     doc = {"t": T, "s": S, "k": K, "w": W}
     (R / "data/sib.json").write_text(json.dumps(doc, ensure_ascii=False, separators=(",", ":"), sort_keys=True), encoding="utf-8")
     print(f"성조 가족 {len(T)} · 모양 가족 {len(S)} · 뼈대 가족 {len(K)} · 낱말 {len(W)} (동의·반의 있는 낱말 {n_rel})")
