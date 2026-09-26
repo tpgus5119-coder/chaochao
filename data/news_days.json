@@ -246,7 +246,7 @@
     ],
     "extra": []
    },
-   "n": 59
+   "n": 63
   },
   {
    "ts": "2026-09-25",
@@ -494,7 +494,7 @@
     ],
     "extra": []
    },
-   "n": 58
+   "n": 62
   },
   {
    "ts": "2026-09-25",
@@ -706,7 +706,7 @@
     ],
     "extra": []
    },
-   "n": 57
+   "n": 61
   },
   {
    "ts": "2026-09-25",
@@ -930,7 +930,7 @@
     ],
     "extra": []
    },
-   "n": 56
+   "n": 60
   },
   {
    "ts": "2026-09-25",
@@ -1145,7 +1145,7 @@
     ],
     "extra": []
    },
-   "n": 55
+   "n": 59
   },
   {
    "ts": "2026-09-25",
@@ -1345,7 +1345,7 @@
     ],
     "extra": []
    },
-   "n": 54
+   "n": 58
   },
   {
    "ts": "2026-09-24",
@@ -1550,7 +1550,249 @@
     ],
     "extra": []
    },
-   "n": 53
+   "n": 57
+  },
+  {
+   "ts": "2026-09-24",
+   "day": "N157.html",
+   "track": "news",
+   "theme": "커피 전문점",
+   "title": "Highlands Coffee founder repurchases controlling stake in deal valuing company at $800M",
+   "u": "https://e.vnexpress.net/news/business/companies/highlands-coffee-founder-repurchases-controlling-stake-in-deal-valuing-company-at-800m-5124157.html",
+   "cat": "문화·생활",
+   "intro": "하이랜드 커피 창업자가 지분을 재매수했습니다. 기업 가치는 약 8억 달러로 평가되었습니다.",
+   "words": [
+    {
+     "vi": "cà phê",
+     "ko": "커피",
+     "kr_read": "까 페",
+     "emoji": "☕",
+     "en": "a cup of hot coffee",
+     "tones": [
+      {
+       "syl": "cà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "phê",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ca-phe.webp"
+    },
+    {
+     "vi": "quán cà phê",
+     "ko": "카페",
+     "kr_read": "꽌 까 페",
+     "emoji": "☕",
+     "en": "a cozy coffee shop",
+     "tones": [
+      {
+       "syl": "quán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "cà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "phê",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-quan-ca-phe.webp"
+    },
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꽁 띠",
+     "emoji": "🏢",
+     "en": "a modern office building",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ty",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-ty.webp"
+    },
+    {
+     "vi": "mua",
+     "ko": "사다",
+     "kr_read": "무어",
+     "emoji": "🛒",
+     "en": "a shopping cart",
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua.webp"
+    },
+    {
+     "vi": "bán",
+     "ko": "팔다",
+     "kr_read": "반",
+     "emoji": "🏷️",
+     "en": "a price tag",
+     "tones": [
+      {
+       "syl": "bán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ban.webp"
+    },
+    {
+     "vi": "chủ",
+     "ko": "주인",
+     "kr_read": "쭈",
+     "emoji": "🧑‍💼",
+     "en": "a business owner in a suit",
+     "tones": [
+      {
+       "syl": "chủ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-chu.webp"
+    }
+   ],
+   "dialog": {
+    "title": "커피 전문점",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Hôm nay anh uống cà phê không?",
+      "ko": "오늘 커피 드실래요?",
+      "kr_read": "홈 나이 아인 우옹 까 페 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "uống",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "phê",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, quán cà phê này rất ngon.",
+      "ko": "네, 이 카페 커피가 아주 맛있어요.",
+      "kr_read": "꼬 꽌 까 페 나이 젓 응온",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "quán",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "phê",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 56
   },
   {
    "ts": "2026-09-24",
@@ -1780,7 +2022,7 @@
     ],
     "extra": []
    },
-   "n": 52
+   "n": 55
   },
   {
    "ts": "2026-09-24",
@@ -2034,7 +2276,7 @@
     ],
     "extra": []
    },
-   "n": 51
+   "n": 54
   },
   {
    "ts": "2026-09-24",
@@ -2227,7 +2469,7 @@
     ],
     "extra": []
    },
-   "n": 50
+   "n": 53
   },
   {
    "ts": "2026-09-24",
@@ -2433,7 +2675,7 @@
     ],
     "extra": []
    },
-   "n": 49
+   "n": 52
   },
   {
    "ts": "2026-09-24",
@@ -2657,7 +2899,266 @@
     ],
     "extra": []
    },
-   "n": 48
+   "n": 51
+  },
+  {
+   "ts": "2026-09-24",
+   "day": "Nxno=1909",
+   "track": "news",
+   "theme": "베트남 교육",
+   "title": "베트남 대학 입시서 ‘IELTS 가산점’ 사라지나...수년 준비한 학생들 혼란",
+   "u": "http://www.vietnamkoreatimes.com/news/articleView.html?idxno=1909",
+   "cat": "문화·생활",
+   "intro": "베트남 대입에서 국제 영어 자격증 가산점이 폐지됩니다. 갑작스러운 제도 변경으로 학생들과 학부모가 혼란스럽습니다.",
+   "words": [
+    {
+     "vi": "học sinh",
+     "ko": "학생",
+     "kr_read": "혹 씬",
+     "emoji": "🧑‍🎓",
+     "en": "a young student holding books",
+     "tones": [
+      {
+       "syl": "học",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "sinh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-hoc-sinh.webp"
+    },
+    {
+     "vi": "trường học",
+     "ko": "학교",
+     "kr_read": "쯔엉 혹",
+     "emoji": "🏫",
+     "en": "a modern school building",
+     "tones": [
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "học",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-truong-hoc.webp"
+    },
+    {
+     "vi": "kỳ thi",
+     "ko": "시험",
+     "kr_read": "끼 티",
+     "emoji": "📝",
+     "en": "an exam paper with a pen",
+     "tones": [
+      {
+       "syl": "kỳ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "thi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ky-thi.webp"
+    },
+    {
+     "vi": "tiếng Anh",
+     "ko": "영어",
+     "kr_read": "띠엥 아인",
+     "emoji": "🇬🇧",
+     "en": "the United Kingdom flag",
+     "tones": [
+      {
+       "syl": "tiếng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "Anh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tieng-anh.webp"
+    },
+    {
+     "vi": "điểm",
+     "ko": "점수",
+     "kr_read": "디엠",
+     "emoji": "💯",
+     "en": "a red hundred score mark",
+     "tones": [
+      {
+       "syl": "điểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-diem.webp"
+    },
+    {
+     "vi": "thay đổi",
+     "ko": "변경하다",
+     "kr_read": "타이 도이",
+     "emoji": "🔄",
+     "en": "",
+     "tones": [
+      {
+       "syl": "thay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "đổi",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "베트남 교육",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Con anh lo lắng về kỳ thi à?",
+      "ko": "자녀분이 시험에 대해 걱정하나요?",
+      "kr_read": "꼰 아인 로 랑 베 끼 티 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Con",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lo",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lắng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "về",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "kỳ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "thi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, học sinh bây giờ rất vất vả.",
+      "ko": "네, 요즘 학생들이 아주 힘들어해요.",
+      "kr_read": "벙 혹 씬 버이 저 젓 벗 바",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "học",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "sinh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "vất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "vả.",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 50
   },
   {
    "ts": "2026-09-24",
@@ -2898,6 +3399,492 @@
         "name": "sắc",
         "ko": "짧게 올라감",
         "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 49
+  },
+  {
+   "ts": "2026-09-24",
+   "day": "N409.html",
+   "track": "news",
+   "theme": "대중교통 이용",
+   "title": "Ho Chi Minh City rules out gasoline vehicle ban, bets on free buses and EV incentives instead",
+   "u": "https://e.vnexpress.net/news/news/traffic/ho-chi-minh-city-rules-out-gasoline-vehicle-ban-bets-on-free-buses-and-ev-incentives-instead-5124409.html",
+   "cat": "소식",
+   "intro": "호치민시는 휘발유차 금지 대신 무료 버스를 늘립니다. 전기차 전환을 유도해 출퇴근길 체증을 줄일 계획입니다.",
+   "words": [
+    {
+     "vi": "xe buýt",
+     "ko": "버스",
+     "kr_read": "쌔 부잇",
+     "emoji": "🚌",
+     "en": "a public city bus on the road",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "buýt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-buyt.webp"
+    },
+    {
+     "vi": "miễn phí",
+     "ko": "무료",
+     "kr_read": "미엔 피",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "miễn",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "phí",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🛵",
+     "en": "a scooter motorbike on the street",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    },
+    {
+     "vi": "tắc đường",
+     "ko": "교통 체증",
+     "kr_read": "딱 드엉",
+     "emoji": "🚗",
+     "en": "cars and scooters stuck in a traffic jam",
+     "tones": [
+      {
+       "syl": "tắc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tac-duong.webp"
+    },
+    {
+     "vi": "vé",
+     "ko": "표, 티켓",
+     "kr_read": "배",
+     "emoji": "🎫",
+     "en": "a paper bus ticket",
+     "tones": [
+      {
+       "syl": "vé",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ve.webp"
+    },
+    {
+     "vi": "xăng",
+     "ko": "휘발유, 기름",
+     "kr_read": "쌍",
+     "emoji": "⛽",
+     "en": "a fuel nozzle at a gas station",
+     "tones": [
+      {
+       "syl": "xăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-xang.webp"
+    }
+   ],
+   "dialog": {
+    "title": "대중교통 이용",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Xe buýt này miễn phí phải không?",
+      "ko": "이 버스 무료인가요?",
+      "kr_read": "쌔 부잇 나이 미엔 피 파이 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "buýt",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "miễn",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "phí",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "phải",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, xe buýt đang miễn phí.",
+      "ko": "네, 버스 지금 무료예요.",
+      "kr_read": "벙 쌔 부잇 당 미엔 피",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "buýt",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đang",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "miễn",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "phí.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 48
+  },
+  {
+   "ts": "2026-09-24",
+   "day": "N096.html",
+   "track": "news",
+   "theme": "경제 성장",
+   "title": "ADB lifts Vietnam's growth forecast to 7.8%, highest in Southeast Asia",
+   "u": "https://e.vnexpress.net/news/business/economy/adb-lifts-vietnam-s-growth-forecast-to-7-8-highest-in-southeast-asia-5124096.html",
+   "cat": "소식",
+   "intro": "ADB가 베트남 성장 전망을 7.8%로 올렸습니다. 투자 증가와 소비 회복이 성장을 이끌고 있습니다.",
+   "words": [
+    {
+     "vi": "kinh tế",
+     "ko": "경제",
+     "kr_read": "낀 떼",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "kinh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꽁 띠",
+     "emoji": "🏢",
+     "en": "a modern office building",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ty",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-ty.webp"
+    },
+    {
+     "vi": "nhà máy",
+     "ko": "공장",
+     "kr_read": "냐 마이",
+     "emoji": "🏭",
+     "en": "a large industrial factory",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nha-may.webp"
+    },
+    {
+     "vi": "đầu tư",
+     "ko": "투자하다",
+     "kr_read": "더우 뜨",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "đầu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "tư",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "phát triển",
+     "ko": "발전하다",
+     "kr_read": "팟 찌엔",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "phát",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "triển",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "ngân hàng",
+     "ko": "은행",
+     "kr_read": "응언 항",
+     "emoji": "🏦",
+     "en": "a commercial bank building",
+     "tones": [
+      {
+       "syl": "ngân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ngan-hang.webp"
+    }
+   ],
+   "dialog": {
+    "title": "경제 성장",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Năm nay kinh tế tốt không anh?",
+      "ko": "올해 경제 좋아요, 형?",
+      "kr_read": "남 나이 낀 떼 똣 콩 아인",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Năm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "kinh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tế",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tốt",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "anh?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Tốt lắm, nhiều công ty đầu tư.",
+      "ko": "아주 좋아요, 많은 회사가 투자해요.",
+      "kr_read": "똣 람 니에우 꽁 띠 더우 뜨",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Tốt",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "lắm,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhiều",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đầu",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tư.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        }
       ],
       "gloss": []
@@ -13852,5 +14839,5 @@
    "title_card": "베트남 학생이 서구 계획 포기하고 중국 미티에 동생 따라가"
   }
  ],
- "updated": "2026-09-26 09:10"
+ "updated": "2026-09-26 23:54"
 }
