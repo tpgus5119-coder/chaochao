@@ -3391,7 +3391,7 @@ function showWeek(rep) {
 
   const go = el('button', 'primary big', '이번 주 시작하기');
   go.style.width = '100%'; go.style.marginTop = '18px';
-  go.onclick = () => { S.wk = { k: weekKey(), base: snapshot() }; save(); dailyFlowEntry(); };
+  go.onclick = () => { S.wk = { k: weekKey(), base: snapshot() }; save(); ACTIVE_TAB = 'home'; renderHome(); };   // 성적표 다음은 홈 (2026-09-27)
   b.append(go);
   show('week', '주간 성적표', false);
 }
