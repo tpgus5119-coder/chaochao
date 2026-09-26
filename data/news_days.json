@@ -2,6 +2,254 @@
  "days": [
   {
    "ts": "2026-09-25",
+   "day": "Nxno=1910",
+   "track": "news",
+   "theme": "양국 협력 강화",
+   "title": "베트남-캐나다, ‘전략적 파트너십’으로 관계 격상...무역·AI·에너지 협력 확대",
+   "u": "http://www.vietnamkoreatimes.com/news/articleView.html?idxno=1910",
+   "cat": "문화·생활",
+   "intro": "베트남과 캐나다가 전략적 파트너십으로 관계를 격상했습니다. 무역, AI, 직항 노선 확대 등 다양한 협력을 추진할 계획입니다.",
+   "words": [
+    {
+     "vi": "hợp tác",
+     "ko": "협력하다",
+     "kr_read": "헙 딱",
+     "emoji": "🤝",
+     "en": "two people shaking hands in a business suit",
+     "tones": [
+      {
+       "syl": "hợp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "tác",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-hop-tac.webp"
+    },
+    {
+     "vi": "đối tác",
+     "ko": "파트너",
+     "kr_read": "도이 딱",
+     "emoji": "🤝",
+     "en": "two business partners talking in an office",
+     "tones": [
+      {
+       "syl": "đối",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "tác",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-doi-tac.webp"
+    },
+    {
+     "vi": "chuyến bay",
+     "ko": "항공편",
+     "kr_read": "쭈옌 바이",
+     "emoji": "🎫",
+     "en": "a boarding pass for a flight",
+     "tones": [
+      {
+       "syl": "chuyến",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-chuyen-bay.webp"
+    },
+    {
+     "vi": "hàng hóa",
+     "ko": "상품/화물",
+     "kr_read": "항 호아",
+     "emoji": "📦",
+     "en": "stacked cardboard boxes in a warehouse",
+     "tones": [
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hóa",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-hang-hoa.webp"
+    },
+    {
+     "vi": "công nghệ",
+     "ko": "기술",
+     "kr_read": "꽁 응에",
+     "emoji": "💻",
+     "en": "a glowing blue computer circuit board",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nghệ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-cong-nghe.webp"
+    },
+    {
+     "vi": "đầu tư",
+     "ko": "투자",
+     "kr_read": "더우 뜨",
+     "emoji": "💰",
+     "en": "gold coins being placed in a glass jar",
+     "tones": [
+      {
+       "syl": "đầu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "tư",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-dau-tu.webp"
+    }
+   ],
+   "dialog": {
+    "title": "양국 협력 강화",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Công ty sắp hợp tác à?",
+      "ko": "회사가 곧 협력하나요?",
+      "kr_read": "꽁 띠 쌉 헙 딱 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sắp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "hợp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tác",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, sẽ có thêm chuyến bay mới.",
+      "ko": "네, 새로운 항공편이 더 생길 거예요.",
+      "kr_read": "벙 쌔 꼬 템 쭈옌 바이 머이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sẽ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "thêm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "chuyến",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mới.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 59
+  },
+  {
+   "ts": "2026-09-25",
    "day": "N838.html",
    "track": "news",
    "theme": "비행기 안전",
@@ -246,7 +494,7 @@
     ],
     "extra": []
    },
-   "n": 54
+   "n": 58
   },
   {
    "ts": "2026-09-25",
@@ -458,7 +706,231 @@
     ],
     "extra": []
    },
-   "n": 53
+   "n": 57
+  },
+  {
+   "ts": "2026-09-25",
+   "day": "Nxno=1911",
+   "track": "news",
+   "theme": "기내 화재",
+   "title": "[심층] 에어부산 화재 이어 이번은 '다낭행 에어서울'...\"보조배터리 두고,한국 탑승객도 국토부도 당황\"",
+   "u": "http://www.vietnamkoreatimes.com/news/articleView.html?idxno=1911",
+   "cat": "사회",
+   "intro": "다낭행 비행기 안에서 보조배터리 화재가 발생했다. 승객 전원 대피 후 비행기를 교체해 출발했다.",
+   "words": [
+    {
+     "vi": "máy bay",
+     "ko": "비행기",
+     "kr_read": "마이 바이",
+     "emoji": "✈️",
+     "en": "a commercial passenger airplane",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-may-bay.webp"
+    },
+    {
+     "vi": "pin",
+     "ko": "배터리",
+     "kr_read": "삔",
+     "emoji": "🔋",
+     "en": "a portable power bank battery",
+     "tones": [
+      {
+       "syl": "pin",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-pin.webp"
+    },
+    {
+     "vi": "túi xách",
+     "ko": "가방",
+     "kr_read": "뚜이 싹",
+     "emoji": "👜",
+     "en": "a handbag on the floor",
+     "tones": [
+      {
+       "syl": "túi",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "xách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-tui-xach.webp"
+    },
+    {
+     "vi": "khói",
+     "ko": "연기",
+     "kr_read": "코이",
+     "emoji": "💨",
+     "en": "thick smoke rising up",
+     "tones": [
+      {
+       "syl": "khói",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-khoi.webp"
+    },
+    {
+     "vi": "lửa",
+     "ko": "불",
+     "kr_read": "르어",
+     "emoji": "🔥",
+     "en": "bright red and orange flames",
+     "tones": [
+      {
+       "syl": "lửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-lua.webp"
+    },
+    {
+     "vi": "ghế ngồi",
+     "ko": "좌석",
+     "kr_read": "게 응오이",
+     "emoji": "💺",
+     "en": "an airplane passenger seat",
+     "tones": [
+      {
+       "syl": "ghế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "ngồi",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ghe-ngoi.webp"
+    }
+   ],
+   "dialog": {
+    "title": "기내 화재",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Trong túi xách có khói kìa!",
+      "ko": "가방 안에 연기가 나요!",
+      "kr_read": "쫑 뚜이 싹 꼬 코이 끼어",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Trong",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "túi",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "xách",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "khói",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "kìa!",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Nguy hiểm quá, kiểm tra ngay!",
+      "ko": "너무 위험해요, 바로 확인해요!",
+      "kr_read": "응우이 히엠 꽈 끼엠 짜 응아이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Nguy",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "quá,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "kiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tra",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ngay!",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 56
   },
   {
    "ts": "2026-09-25",
@@ -673,7 +1145,7 @@
     ],
     "extra": []
    },
-   "n": 52
+   "n": 55
   },
   {
    "ts": "2026-09-25",
@@ -873,7 +1345,212 @@
     ],
     "extra": []
    },
-   "n": 51
+   "n": 54
+  },
+  {
+   "ts": "2026-09-24",
+   "day": "N616.html",
+   "track": "news",
+   "theme": "하노이 일상",
+   "title": "Miss World Vanessa Ponce explores Hanoi by motorbike, tries street food",
+   "u": "https://e.vnexpress.net/news/travel/miss-world-vanessa-ponce-explores-hanoi-by-motorbike-tries-street-food-5123616.html",
+   "cat": "문화·생활",
+   "intro": "미스 월드가 오토바이를 타고 하노이를 관광하며 다양한 길거리 음식과 문화를 체험했습니다.",
+   "words": [
+    {
+     "vi": "cà phê",
+     "ko": "커피",
+     "kr_read": "까 페",
+     "emoji": "☕",
+     "en": "a cup of Vietnamese iced coffee",
+     "tones": [
+      {
+       "syl": "cà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "phê",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ca-phe.webp"
+    },
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🛵",
+     "en": "a modern scooter motorbike",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    },
+    {
+     "vi": "ăn",
+     "ko": "먹다",
+     "kr_read": "안",
+     "emoji": "🍴",
+     "en": "a person eating with chopsticks",
+     "tones": [
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-an.webp"
+    },
+    {
+     "vi": "ngon",
+     "ko": "맛있다",
+     "kr_read": "응온",
+     "emoji": "😋",
+     "en": "",
+     "tones": [
+      {
+       "syl": "ngon",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "ghế",
+     "ko": "의자",
+     "kr_read": "게",
+     "emoji": "🪑",
+     "en": "a small blue plastic stool",
+     "tones": [
+      {
+       "syl": "ghế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ghe.webp"
+    },
+    {
+     "vi": "phố",
+     "ko": "거리",
+     "kr_read": "포",
+     "emoji": "🛣️",
+     "en": "a busy street in Hanoi",
+     "tones": [
+      {
+       "syl": "phố",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-pho.webp"
+    }
+   ],
+   "dialog": {
+    "title": "하노이 일상",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Đi ăn bánh mì nhé.",
+      "ko": "반미 먹으러 가요.",
+      "kr_read": "디 안 바인 미 냬",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bánh",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mì",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, bánh mì rất ngon.",
+      "ko": "네, 반미는 정말 맛있어요.",
+      "kr_read": "벙 바인 미 젓 응온",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bánh",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mì",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 53
   },
   {
    "ts": "2026-09-24",
@@ -1103,7 +1780,261 @@
     ],
     "extra": []
    },
-   "n": 50
+   "n": 52
+  },
+  {
+   "ts": "2026-09-24",
+   "day": "N121.html",
+   "track": "news",
+   "theme": "지하철 건설",
+   "title": "HCMC set to begin construction of 3 new metro lines for $9.6B",
+   "u": "https://e.vnexpress.net/news/news/traffic/hcmc-set-to-begin-construction-of-3-new-metro-lines-for-9-6b-5124121.html",
+   "cat": "소식",
+   "intro": "호치민시가 96억 달러 규모의 메트로 노선 3개를 추가 건설합니다. 2030년 완공 시 시내 철도망은 255km까지 늘어날 예정입니다.",
+   "words": [
+    {
+     "vi": "tàu điện",
+     "ko": "지하철",
+     "kr_read": "따우 디엔",
+     "emoji": "🚆",
+     "en": "a modern metro train",
+     "tones": [
+      {
+       "syl": "tàu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tau-dien.webp"
+    },
+    {
+     "vi": "nhà ga",
+     "ko": "역",
+     "kr_read": "냐 가",
+     "emoji": "🚉",
+     "en": "a train station platform",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "ga",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nha-ga.webp"
+    },
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airplane at an airport",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "đi làm",
+     "ko": "출근하다",
+     "kr_read": "디 람",
+     "emoji": "🏢",
+     "en": "a person walking to an office building",
+     "tones": [
+      {
+       "syl": "đi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-di-lam.webp"
+    },
+    {
+     "vi": "đường",
+     "ko": "길/도로",
+     "kr_read": "드엉",
+     "emoji": "🛣️",
+     "en": "a city street with cars",
+     "tones": [
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-duong.webp"
+    },
+    {
+     "vi": "xây dựng",
+     "ko": "건설하다",
+     "kr_read": "써이 증",
+     "emoji": "🏗️",
+     "en": "a tall construction crane",
+     "tones": [
+      {
+       "syl": "xây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "dựng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-xay-dung.webp"
+    }
+   ],
+   "dialog": {
+    "title": "지하철 건설",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Đi làm bằng tàu điện được không?",
+      "ko": "지하철로 출근할 수 있어요?",
+      "kr_read": "디 람 방 따우 디엔 드억 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bằng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tàu",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "điện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Hiện tại chưa có nhà ga gần đây.",
+      "ko": "현재 근처에 역이 없어요.",
+      "kr_read": "히엔 따이 쯔어 꼬 냐 가 건 더이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Hiện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tại",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chưa",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ga",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "gần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đây.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 51
   },
   {
    "ts": "2026-09-24",
@@ -1296,7 +2227,7 @@
     ],
     "extra": []
    },
-   "n": 49
+   "n": 50
   },
   {
    "ts": "2026-09-24",
@@ -1502,7 +2433,7 @@
     ],
     "extra": []
    },
-   "n": 48
+   "n": 49
   },
   {
    "ts": "2026-09-24",
@@ -1726,7 +2657,7 @@
     ],
     "extra": []
    },
-   "n": 47
+   "n": 48
   },
   {
    "ts": "2026-09-24",
@@ -1964,6 +2895,247 @@
        },
        {
         "syl": "lắm.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 47
+  },
+  {
+   "ts": "2026-09-24",
+   "day": "N152.html",
+   "track": "news",
+   "theme": "결제와 관광",
+   "title": "Sun Group, Visa partner to develop digital tourism services in Vietnam",
+   "u": "https://e.vnexpress.net/news/travel/sun-group-visa-partner-to-develop-digital-tourism-services-in-vietnam-5124152.html",
+   "cat": "일자리",
+   "intro": "썬그룹과 비자가 베트남 디지털 관광을 위해 협력합니다. 카드 결제 확대와 QR 코드 도입으로 여행이 편해집니다.",
+   "words": [
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "en": "a travel suitcase with stickers",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "thanh toán",
+     "ko": "결제",
+     "kr_read": "타인 또안",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "thanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "toán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "thẻ",
+     "ko": "카드",
+     "kr_read": "태",
+     "emoji": "💳",
+     "en": "a credit card",
+     "tones": [
+      {
+       "syl": "thẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-the.webp"
+    },
+    {
+     "vi": "tiền mặt",
+     "ko": "현금",
+     "kr_read": "띠엔 맛",
+     "emoji": "💵",
+     "en": "a stack of banknotes",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "mặt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tien-mat.webp"
+    },
+    {
+     "vi": "khách sạn",
+     "ko": "호텔",
+     "kr_read": "칵 싼",
+     "emoji": "🏨",
+     "en": "a tall luxury hotel building",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-khach-san.webp"
+    },
+    {
+     "vi": "điện thoại",
+     "ko": "핸드폰",
+     "kr_read": "디엔 토아이",
+     "emoji": "📱",
+     "en": "a modern smartphone",
+     "tones": [
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "thoại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-dien-thoai.webp"
+    }
+   ],
+   "dialog": {
+    "title": "결제와 관광",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Tôi thanh toán bằng thẻ được không?",
+      "ko": "카드로 결제할 수 있나요?",
+      "kr_read": "또이 타인 또안 방 태 드억 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thanh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "toán",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bằng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "thẻ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Được, anh quét mã QR nhé.",
+      "ko": "네, QR 코드를 스캔해 주세요.",
+      "kr_read": "드억 아인 꾸앳 마 냬",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Được,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "quét",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mã",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "QR",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhé.",
         "name": "sắc",
         "ko": "짧게 올라감",
         "shape": "／"
@@ -12680,5 +13852,5 @@
    "title_card": "베트남 학생이 서구 계획 포기하고 중국 미티에 동생 따라가"
   }
  ],
- "updated": "2026-09-26 00:45"
+ "updated": "2026-09-26 09:10"
 }
