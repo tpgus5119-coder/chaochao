@@ -2280,3 +2280,17 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .hbtn.primary{background:var(--accent); color:var(--accent-fg); border-color:var(--accent)}
 .hbtn.done{background:var(--surface-2); color:var(--fg); border-color:var(--line)}
 .hbtn:disabled{opacity:.5}
+
+
+/* 속도 ▾ 만 (2026-09-27) · 계이름 눈금 */
+.spdchip{min-width:30px; padding:8px 8px}
+.pgsvg svg .pgnl{stroke:var(--line); stroke-width:.6; stroke-dasharray:2 3}
+.pgsvg svg .pgnt{font-size:9px; fill:var(--dim); text-anchor:end; font-weight:700}
+.pgsvg svg .pgno{font-size:7px; font-weight:500}
+
+/* 학습·테스트 허브의 갈래 머리말 (2026-09-27 탭 재편) */
+.hubsec{margin:22px 0 8px; font-size:13px; font-weight:800; color:var(--dim); letter-spacing:.02em}
+.hubsec:first-child, .lede + .hubsec{margin-top:4px}
+.hubsec small{font-weight:500; margin-left:6px}
+.bigmenu .exmeta{display:block; font-weight:400; font-size:13px; margin:3px 0 0; color:var(--dim); line-height:1.45}
+.bigmenu[disabled]{opacity:.5}

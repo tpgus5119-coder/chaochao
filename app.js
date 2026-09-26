@@ -1721,34 +1721,34 @@ function curveArea(text, box) {
    · 따라가는 것은 [단어 | 입 | 그림] 중에서 고른다(S.pgm). 입·그림은 곡선 위쪽에 더 큰 자리를 둔다. */
 function pitchGraph(text, opt) {
   const o = opt || {};
-  const W = 300, PAD = 12;
+  const W = 300, PAD = 12, PADL = 34;                 // 왼쪽은 계이름 눈금 자리
   const h = AIDX[text] || AIDX[text.toLowerCase()];
   const wrap = el('div', 'pgwrap');
   const box = el('div', 'pgraph curvebox');
   const svgHost = el('div', 'pgsvg');
-  const mkN = el('div', 'pgmk'), mkM = el('div', 'pgmk me');
+  const mkN = el('div', 'pgmk mouth'), mkM = el('div', 'pgmk me mouth');
   mkM.hidden = true;
   box.append(svgHost, mkN, mkM);
-  const leg = el('div', 'curvelegend');
-  const sel = el('div', 'pgsel');
-  wrap.append(box, leg, sel);
-  let nat = null, mine = null, mode = S.pgm || 'word', built = '', mouths = [], syl = text.split(' ').filter(Boolean);
-  if (mode === 'img' && !o.img) mode = 'word';
-  const geom = () => mode === 'word' ? { H: 118, TOP: 30 } : { H: 158, TOP: 66 };
-  let G = geom(), X0 = 0, X1 = 0, px = () => 0, py = () => 0, seriesN = null, seriesM = null;
+  wrap.append(box);
+  /* 따라가는 표지는 **입모양 하나**(대표님 지시 2026-09-27: 단어·그림 고르기 없앰). '원어민 소리 높낮이' 같은 글도 없다.
+     왼쪽 눈금은 계이름 — 원어민 목소리의 중앙값(nat.med Hz)을 기준으로 반음 곡선을 실제 음높이로 되돌려 도·레·미로 적는다. */
+  let nat = null, mine = null, built = false, mouths = [];
+  const G = { H: 158, TOP: 66 };
+  let X0 = 0, X1 = 0, px = () => 0, py = () => 0, seriesN = null, seriesM = null;
+  const NOTE = ['도', '도♯', '레', '레♯', '미', '파', '파♯', '솔', '솔♯', '라', '라♯', '시'];
+  const noteOf = hz => { const m = Math.round(69 + 12 * Math.log2(hz / 440)); return { name: NOTE[((m % 12) + 12) % 12], oct: Math.floor(m / 12) - 1, sharp: NOTE[((m % 12) + 12) % 12].includes('♯') }; };
 
   const clip = (id, w, H) => `<clipPath id="${id}"><rect x="0" y="0" width="${w}" height="${H}"/></clipPath>`;
   const pathOf = (pts) => { let d = '', pen = false; pts.forEach(q => { if (!q) { pen = false; return; } d += (pen ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); pen = true; }); return d; };
-  let uid = 'pg' + Math.random().toString(36).slice(2, 7), elN = null, elM = null, clN = null, clM = null;
+  let uid = 'pg' + Math.random().toString(36).slice(2, 7), clN = null, clM = null;
 
   function draw() {
-    G = geom();
     const rawN = nat && nat.raw && nat.raw.length > 4 ? nat.raw : null;
     seriesN = seriesM = null;
     if (!rawN) { svgHost.textContent = ''; return; }
     const spanN = rawN.length * nat.hop, t0 = nat.t0;
     const xmin = Math.max(0, t0 - .10), xmax = Math.min(nat.total, t0 + spanN + .10);
-    px = t => PAD + (t - xmin) / ((xmax - xmin) || 1) * (W - PAD * 2);
+    px = t => PADL + (t - xmin) / ((xmax - xmin) || 1) * (W - PADL - PAD);
     X0 = px(t0); X1 = px(t0 + spanN);
     const vals = rawN.filter(v => v !== null && isFinite(v)).concat(mine && mine.raw ? mine.raw.filter(v => v !== null && isFinite(v)) : []);
     const lo = Math.min(-3, Math.min(...vals)), hi = Math.max(3, Math.max(...vals));
@@ -1763,10 +1763,24 @@ function pitchGraph(text, opt) {
       const dM = pathOf(ptsM);
       mineSvg = `<path d="${dM}" class="mine"/><path d="${dM}" class="mplayed" clip-path="url(#${uid}m)"/>`;
     }
+    // 계이름 눈금 — 반음 값 정수마다 실제 음을 구해 온음(♯ 아닌 것)만 적는다
+    let scale = '';
+    if (nat.med) {
+      let lastY = -99;                       // 이름표가 겹치지 않게 — 반음 사이(미·파, 시·도)는 줄만 긋고 글자는 건너뛴다
+      for (let st = Math.ceil(lo); st <= Math.floor(hi); st++) {
+        const n = noteOf(nat.med * Math.pow(2, st / 12));
+        if (n.sharp) continue;
+        const y = py(st).toFixed(1);
+        scale += `<line x1="${PADL}" y1="${y}" x2="${W - PAD}" y2="${y}" class="pgnl"/>`;
+        if (Math.abs(+y - lastY) >= 11) {
+          scale += `<text x="${PADL - 4}" y="${(+y + 3).toFixed(1)}" class="pgnt">${n.name}<tspan class="pgno">${n.oct}</tspan></text>`;
+          lastY = +y;
+        }
+      }
+    }
     const dN = pathOf(ptsN);
     svgHost.innerHTML = `<svg viewBox="0 0 ${W} ${G.H}" class="curve pw">` +
-      `<defs>${clip(uid + 'n', 0, G.H)}${clip(uid + 'm', 0, G.H)}</defs>` +
-      `<line x1="${PAD}" y1="${py(0).toFixed(1)}" x2="${W - PAD}" y2="${py(0).toFixed(1)}" class="mid"/>` +
+      `<defs>${clip(uid + 'n', 0, G.H)}${clip(uid + 'm', 0, G.H)}</defs>${scale}` +
       `<path d="${dN}" class="nat"/><path d="${dN}" class="played" clip-path="url(#${uid}n)"/>${mineSvg}</svg>`;
     clN = svgHost.querySelector(`#${uid}n rect`); clM = svgHost.querySelector(`#${uid}m rect`);
   }
@@ -1783,29 +1797,19 @@ function pitchGraph(text, opt) {
   }
 
   function buildMarkers() {
-    const key = mode + (mine ? '+' : '');
-    if (built === key) return;
-    built = key;
+    if (built) return;
+    built = true;
     mouths = [];
     [mkN, mkM].forEach((mk, k) => {
-      mk.textContent = ''; mk.className = 'pgmk' + (k ? ' me' : '') + ' ' + mode;
-      if (mode === 'word') mk.append(el('span', 'pgtx'));
-      else if (mode === 'mouth') {
-        const host = el('div', 'pgmouth'); mk.append(host);
-        if (typeof MOUTH !== 'undefined') { const M = MOUTH.create(host, { front: true }); M.setWord(text); M.at(0); mouths[k] = M; }
-      } else {
-        const im = new Image(); im.alt = ''; im.src = 'img/' + o.img; mk.append(im);
-      }
+      mk.textContent = '';
+      const host = el('div', 'pgmouth'); mk.append(host);
+      if (typeof MOUTH !== 'undefined') { const M = MOUTH.create(host, { front: true }); M.setWord(text); M.at(0); mouths[k] = M; }
     });
   }
 
   function place(mk, k, sr, t, playing, u) {
     const q = atSeries(sr, t);
-    if (mode === 'word') {
-      const tx = mk.firstChild;
-      const s = syl.length > 1 ? syl[Math.min(syl.length - 1, Math.floor(clamp01((t - sr.t0) / sr.span) * syl.length))] : syl[0];
-      if (tx && tx.textContent !== s) tx.textContent = s;
-    } else if (mode === 'mouth' && mouths[k]) mouths[k].at(clamp01(u));
+    if (mouths[k]) mouths[k].at(clamp01(u));
     mk.style.left = (clamp(q[0], 22, W - 22) / W * 100).toFixed(2) + '%';
     mk.style.top = (q[1] / G.H * 100).toFixed(2) + '%';
     mk.classList.toggle('on', !!playing);
@@ -1832,38 +1836,18 @@ function pitchGraph(text, opt) {
     } else mkM.hidden = true;
   }
 
-  function legend() {
-    leg.innerHTML = `<span class="k nat"></span>${tr('원어민 소리 높낮이')}` + (seriesM ? ` &nbsp; <span class="k mine"></span>${tr('나')}` : '');
-  }
-  function selUi() {
-    sel.textContent = '';
-    sel.append(el('span', 'pgsl', tr('따라가는 것')));
-    [['word', '단어'], ['mouth', '입모양'], ['img', '그림']].forEach(([m, lab]) => {
-      if (m === 'img' && !o.img) return;
-      const b = el('button', 'pgsb' + (mode === m ? ' on' : ''), lab);
-      b.type = 'button';
-      b.onclick = () => { S.pgm = m; save(); window.dispatchEvent(new CustomEvent('chao-pgm')); };
-      sel.append(b);
-    });
-  }
   const onRec = ev => {
     if (!box.isConnected) { window.removeEventListener('chao-rec', onRec); return; }
     if (ev.detail !== text) return;
     mine = (REC.key === text && REC.mine) ? REC.mine : null;
-    built = ''; draw(); legend(); update(false, false);
-  };
-  const onPgm = () => {
-    if (!box.isConnected) { window.removeEventListener('chao-pgm', onPgm); return; }
-    mode = (S.pgm === 'img' && !o.img) ? 'word' : (S.pgm || 'word');
-    built = ''; draw(); selUi(); update(false, false);
+    draw(); update(false, false);
   };
   window.addEventListener('chao-rec', onRec);
-  window.addEventListener('chao-pgm', onPgm);
   if (REC.key === text && REC.mine) mine = REC.mine;
   nativeCurve(text).then(n => {
     nat = n;
     if (!nat || !nat.raw || nat.raw.length < 5) { wrap.hidden = true; return; }
-    draw(); legend(); selUi(); update(false, false);
+    draw(); update(false, false);
     box.onclick = ev => { if (ev.target.closest('.pgmk')) play(text, false, null, spdOf()); };
   });
   PB.views.add({ root: wrap, update });
@@ -1880,14 +1864,15 @@ let SPDMENU = null;
 function spdMenuClose() { if (SPDMENU) { SPDMENU.remove(); SPDMENU = null; } document.querySelectorAll('.spdchip.open').forEach(x => x.classList.remove('open')); }
 function spdSet(v) {
   S.wspd = v; save();
-  document.querySelectorAll('.spdchip').forEach(x => { x.firstChild.nodeValue = spdLab(v) + ' '; });
+  document.querySelectorAll('.spdchip').forEach(x => { x.title = tr('듣기 속도') + ' ' + spdLab(v); x.setAttribute('aria-label', tr('듣기 속도') + ' ' + spdLab(v)); });
   if (PB.spdSrc && audio.src.endsWith(PB.spdSrc) && !audio.paused) audio.playbackRate = v;   // 듣는 중이면 바로 바꾼다
 }
 function spdChip() {
-  const b = el('button', 'spdchip');
+  const b = el('button', 'spdchip');                       // 듣기 옆 작은 ▾ 만 (대표님 2026-09-27: 배속 표시가 너무 큼) — 누르면 1·0.8·0.6·0.4·0.2배 목록
   b.type = 'button';
-  b.append(document.createTextNode(spdLab(spdOf()) + ' '), el('i', 'spdcaret', '▾'));
-  b.setAttribute('aria-label', tr('듣기 속도'));
+  b.append(el('i', 'spdcaret', '▾'));
+  b.title = tr('듣기 속도') + ' ' + spdLab(spdOf());
+  b.setAttribute('aria-label', tr('듣기 속도') + ' ' + spdLab(spdOf()));
   b.setAttribute('aria-haspopup', 'listbox');
   b.onclick = ev => {
     ev.stopPropagation();
@@ -1959,6 +1944,23 @@ function playBar(text) {
   if (!h) { rng.disabled = true; return wrap; }
   let span = null, dur0 = 0, drag = false, resume = false;
   const url = () => `audio/${voiceDir()}/n/${h}.mp3`;
+  /* 끌면 소리가 따라온다 (대표님 지시 2026-09-27: 천천히 끌면 천천히 들리게) —
+     손가락이 지나는 자리마다 원음 90ms 조각을 원래 높이 그대로 낸다(DJ 스크럽처럼). 조각 사이 간격이 곧 끄는 빠르기다. */
+  let buf = null, bufUrl = '', lastT = -1, lastAt = 0;
+  const bufLoad = () => {
+    const u = url();
+    if (buf && bufUrl === u) return Promise.resolve(buf);
+    return fetch(u).then(r => r.arrayBuffer()).then(ab => getCtx().decodeAudioData(ab)).then(b => { buf = b; bufUrl = u; return b; }).catch(() => null);
+  };
+  const grain = t => {
+    if (!buf) return;
+    const ctx = getCtx(), src = ctx.createBufferSource(), g = ctx.createGain();
+    src.buffer = buf; src.connect(g); g.connect(ctx.destination);
+    const at = ctx.currentTime, len = .09;
+    g.gain.setValueAtTime(0, at); g.gain.linearRampToValueAtTime(.9, at + .012);
+    g.gain.setValueAtTime(.9, at + len - .015); g.gain.linearRampToValueAtTime(0, at + len);
+    src.start(at, Math.max(0, Math.min(buf.duration - len, t)), len);
+  };
   const fmt = t => (Math.round(t * 100) / 100).toFixed(2);
   const D = () => (ownsAudio(h) && isFinite(audio.duration) && audio.duration) ? audio.duration : dur0;
   const range = () => span || { a: 0, b: D() };
@@ -1985,12 +1987,15 @@ function playBar(text) {
   };
   rng.addEventListener('input', async () => {
     drag = true;
+    bufLoad();
     if (!ownsAudio(h)) await load();
     if (!audio.paused && !audio.ended) { resume = true; audio.pause(); }
     PB.hold = h;
     const R = range(), len = R.b - R.a;
     if (len <= 0) return;
-    audio.currentTime = R.a + clamp(rng.value / 1000, 0, 1) * len;
+    const t = R.a + clamp(rng.value / 1000, 0, 1) * len;
+    audio.currentTime = t;
+    if (Math.abs(t - lastT) >= .025 && performance.now() - lastAt > 40) { lastT = t; lastAt = performance.now(); grain(t); }
     setTimeout(pbTick, 0);
     paint();
   });
@@ -2247,7 +2252,7 @@ function topBtns() {
    중에도 언제든 이동할 수 있도록." 이제 어느 화면에서든 늘 켜 둔다. 자판·채팅
    입력칸처럼 화면 아래에 붙박이가 있는 화면은 그 붙박이를 탭 막대 위로 올렸다
    (style.css의 --tabbar-h, .chatin/.tonebar 참고). */
-let ACTIVE_TAB = 'daily';
+let ACTIVE_TAB = 'home';
 function syncTabBar() {
   $('#tabbar').hidden = false;
   document.body.classList.add('has-tabbar');
@@ -2260,10 +2265,12 @@ function syncTabBar() {
    보여주라고, 하루5분을 보여주지말고"). 홈 단추·탭은 renderHome()(스티치 대시보드)을
    그대로 쓴다. 앱을 처음 켤 때만 dailyFlowEntry()(하루5분)로 바로 들어간다
    (10241번 줄, 2026-09-09 지시는 그대로 유지) — 그 둘은 이제 서로 다른 문이다. */
-const TAB_ACTIONS = { home: renderHome, daily: dailyFlowEntry, study: studyHubEntry, exam: examHubEntry };
+/* 2026-09-27 대표님 지시: 아래 단추는 [홈][학습][테스트] + 넷째(미정 — 정하실 때까지 '사전').
+   하루5분 탭은 뺐다 — 홈의 [오늘 학습 시작하기]가 같은 문(dailyFlowEntry → startLearn)이다. */
+const TAB_ACTIONS = { home: renderHome, study: studyHubEntry, test: testHubEntry, dict: () => { NAV.length = 0; dictEntry(); } };
 $$('#tabbar .tabbtn').forEach(b => b.onclick = () => {
   ACTIVE_TAB = b.dataset.tab;
-  (TAB_ACTIONS[b.dataset.tab] || dailyFlowEntry)();
+  (TAB_ACTIONS[b.dataset.tab] || renderHome)();
 });
 /* 하루5분 — 오늘 레슨을 바로 시작한다. startLearn() 안에 이미 카드→테스트→오늘의 대화가
    순서대로 들어있어 새로 안 짜도 된다. '이어하기'도 새 상태를 안 만들어도 된다 — 이미
@@ -2288,20 +2295,111 @@ function dailyFlowEntry() {
 /* 학습 — 회화/시험 대비/복습 세 갈래로 보낸다. 각 화면은 이미 있는 걸 그대로 쓴다
    (courseEntry·reviewMenu 중복 금지). '시험 대비 전용 학습'은 아직 콘텐츠가 없어
    준비 중이라고 정직하게 말한다 — 되는 척 안 한다. */
+/* 학습 탭 (대표님 지시 2026-09-27) — 세 갈래를 한 화면에 늘어놓는다.
+   2-1 기본기: 글자·모음(P1) · 성조(P2) · 헷갈리는 자음(P3) · 자판 · 성조/모음 듣고 가르기 · 타이핑 · 손글씨
+   2-2 단어: 일상(회화 일차) · 직무(8갈래) · 교재(메인 교재) · 단어시험(선배) · 수업 단어(22기 A·B반 회차 순)
+   2-3 문법: 책마다 한 줄 — 기초 · 중급 1·2 · 메인 교재 1·2권 · 줌 수업
+   화면을 새로 짜지 않고 **있는 문**(startLearn·renderDays·drawJob·drawGybmLessons·startGram)만 잇는다. */
 function studyHubEntry() {
+  SBOX = 'srs';
   const b = $('#subBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '무엇을 배울까요?'));
-  const row = (t, sub, fn) => {
+  const sec = (t, sub) => { const h = el('h3', 'hubsec', esc(tr(t))); if (sub) h.append(el('small', null, esc(sub))); b.append(h); };
+  const row = (t, sub, fn, done) => {
     const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, t), el('span', 'exmeta', sub));
-    btn.onclick = fn;
+    btn.append(el('b', null, (done ? '✓ ' : '') + esc(t)), el('span', 'exmeta', esc(sub)));
+    btn.onclick = () => { dive(studyHubEntry); fn(); };
     b.append(btn);
   };
-  row('회화', '단어·문법·기본기 전체 목차', courseEntry);
-  row('GYBM 시험', '메인 교재 + 선배·22기 시험 낱말, 15개씩 카드로 학습', gybmEntry);
-  row('복습', '잊을 때 된 것을 다시 봅니다', () => reviewMenu('all'));
+  // 2-1 기본기
+  sec('기본기', '글자·성조·자음 → 자판 → 귀로 가르기');
+  ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P').forEach(d => {
+    const n = (d.letters || d.tones || []).length;
+    row(d.theme, n + tr('개') + ' · ' + tr('카드로 익히기'), () => startLearn(d), !!S.done[d.day]);
+  });
+  row('자판 치는 법', 'Telex 방식 — 성조·모자 ' + TYPEKEYS.length + '가지', startKeyGuide, !!S.done['PTYPE']);
+  row('성조 듣고 가르기', '비슷한 두 소리를 듣고 성조를 맞힙니다 (6문제 + 부호 붙이기 4문제)', toneEntry);
+  row('모음 듣고 가르기', 'ư·ơ·â·ă 처럼 헷갈리는 모음을 귀로 가릅니다', vowelEntry);
+  row('타이핑 연습', '배운 낱말을 자판으로 쳐 봅니다 — 철자까지 정확해집니다', startType);
+  row('손글씨 연습', '배운 낱말을 손으로 써 봅니다', startWrite);
+  // 2-2 단어
+  sec('단어', '다섯 갈래 — 레슨을 누르면 바로 낱말 카드');
+  const days = ALL.filter(d => typeof d.day === 'number' && !d.track);
+  const dn = days.filter(d => S.done[d.day]).length;
+  row('일상', days.length + tr('일차') + ' · ' + days.reduce((a, d) => a + (d.words || []).length, 0) + tr('낱말') + (dn ? ' · ' + tr('끝냄') + ' ' + dn : ''),
+      renderDays, dn >= days.length);
+  const jv = COURSE ? jobVol(0) : null;
+  row('직무', jv ? jv.tracks.length + tr('갈래') + ' · ' + jv.tracks.reduce((a, t) => a + (t.words || 0), 0) + tr('낱말') : '8갈래 — 전자·봉제·건설·제조·물류·회의·인사',
+      () => withCourse(() => drawJob(0)));
+  const gl = key => { const s = GYBM && GYBM.find(x => x.key === key);
+    return s ? s.lessons.length + tr('레슨') + ' · ' + s.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말') +
+               (s.lessons.filter((l, li) => bdone()[gybmKey(key, li)]).length ? ' · ' + tr('끝냄') + ' ' + s.lessons.filter((l, li) => bdone()[gybmKey(key, li)]).length : '') : ''; };
+  row('교재', gl('main') || '메인 교재 1·2권 낱말', () => gybmSource('main'));
+  row('단어시험', gl('senior') || '선배 기수 단어시험 낱말', () => gybmSource('senior'));
+  row('수업 단어', gl('c22') || '22기 A·B반 수업 시험 낱말 (회차 순)', () => gybmSource('c22'));
+  // 2-3 문법
+  sec('문법', '책을 고르면 과 목록이 나옵니다');
+  if (GRAM) GRAM.books.forEach((bk, bi) => {
+    const dn2 = bk.bai.filter((x, ni) => S.done[gkey(bi, ni)]).length;
+    row(bk.book, bk.bai.length + tr('과') + ' · ' + bk.bai.reduce((a, x) => a + (x.g || []).length, 0) + tr('개 문법') + (dn2 ? ' · ' + tr('끝냄') + ' ' + dn2 : ''),
+        () => drawGramBook(bi), dn2 >= bk.bai.length);
+  });
+  else row('문법 책 고르기', '기초 · 중급 1·2 · 메인 교재 1·2권 · 줌 수업', gramBooksEntry);
   show('sub', '학습', true);
+  // 자료가 아직 안 왔으면 받아서 이 화면을 다시 그린다 (숫자·책 목록이 채워진다). 다른 데로 갔으면 건드리지 않는다.
+  const still = () => ACTIVE_TAB === 'study' && CURV === 'sub' && $('#title').textContent === tr('학습');
+  if (!GRAM) fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { GRAM = j; if (still()) studyHubEntry(); }).catch(() => {});
+  if (!GYBM) gybmBuild(() => { if (still()) studyHubEntry(); });
+  if (!COURSE) withCourse(() => { if (still()) studyHubEntry(); });
+}
+/* 과정 자료(order.json)가 있어야 하는 문 — 없으면 받아 온 뒤 연다 */
+function withCourse(fn) {
+  if (COURSE) return fn();
+  fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { COURSE = j; loadCWords(); fn(); }).catch(() => popup(tr('불러오지 못했습니다')));
+}
+/* GYBM 출처 하나(main·senior·c22)의 레슨 길로 바로 들어간다 */
+function gybmSource(key) {
+  SBOX = 'bsrs';
+  gybmBuild(() => {
+    const si = GYBM.findIndex(s => s.key === key);
+    if (si < 0) { popup(tr('자료가 없습니다')); return; }
+    drawGybmLessons(si);
+  });
+}
+/* 문법 — 책 고르기 → 그 책의 과 목록(길) → 과(startGram) */
+function gramBooksEntry() {
+  if (GRAM) return drawGramBooks();
+  const b = $('#subBody'); b.textContent = '';
+  b.append(el('p', 'lede', tr('불러오는 중…')));
+  show('sub', '문법', true);
+  fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
+    .then(j => { GRAM = j; drawGramBooks(); })
+    .catch(() => { b.textContent = ''; b.append(el('p', 'lede', tr('불러오지 못했습니다'))); });
+}
+function drawGramBooks() {
+  const b = $('#subBody'); b.textContent = '';
+  b.append(el('p', 'lede', tr('어느 책의 문법을 볼까요?')));
+  GRAM.books.forEach((bk, bi) => {
+    const dn = bk.bai.filter((x, ni) => S.done[gkey(bi, ni)]).length;
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, (dn >= bk.bai.length ? '✓ ' : '') + esc(bk.book)),
+               el('span', 'exmeta', bk.bai.length + tr('과') + ' · ' + bk.bai.reduce((a, x) => a + (x.g || []).length, 0) + tr('개 문법') + (dn ? ' · ' + tr('끝냄') + ' ' + dn : '')));
+    btn.onclick = () => { dive(drawGramBooks); drawGramBook(bi); };
+    b.append(btn);
+  });
+  show('sub', '문법', true);
+}
+function drawGramBook(bi) {
+  const bk = GRAM.books[bi];
+  const list = $('#dayList'); list.textContent = '';
+  const nodes = bk.bai.map((x, ni) => {
+    const k = gkey(bi, ni);
+    return { key: k, title: x.t, sub: x.no + tr('과') + ' · ' + (x.g || []).length + tr('개 문법'), num: ni + 1,
+             done: !!S.done[k], fn: () => { dive(() => drawGramBook(bi)); startGram(bi, ni); } };
+  });
+  roadInList(list, nodes);
+  show('course', bk.book, true);
 }
 
 /* 머리 왼쪽 — 지금 베트남 시각과 날씨. 지역은 내 정보에서 고른 북부/남부를 따른다.
@@ -3551,21 +3649,169 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
    2026-09-25 대표님 지시로 공인인증시험(VLPT 모의고사) 갈래는 통째로 뺐다.
    회화·GYBM은 아직 시험 콘텐츠가 없어 준비 중이라고 정직하게 말한다 — 낱말만 먼저
    업데이트하고 시험 문항은 나중에 만들라는 지시라 여기서 지어내지 않는다. */
-function examHubEntry() {
+/* 테스트 탭 (대표님 지시 2026-09-27) — 네 문.
+   3-1 오늘 복습: 간격 반복(1·3·7·14·30·60일 — 강성태식 복습 주기와 같은 원리)으로 오늘 때가 된 낱말을
+       **카드로 쭉 훑고 → 바로 테스트**. 창고는 셋(하루5분·실전·GYBM)이라 섞지 않고 각각 문을 낸다.
+   3-2 배운 낱말 전체: 지금까지 배운 모든 낱말을 랜덤으로 (20·50·전부). 맞고 틀림은 낱말마다 제 창고에 쌓인다.
+   3-3 선택 복습: 내 단어장(별표)·오답 노트·일차/레슨 골라서.
+   3-4 최근 학습 복습: 가장 마지막에 끝낸 세트를 다시 (카드 → 테스트). */
+function testHubEntry() {
+  SBOX = 'srs';
   const b = $('#examBody');
   b.textContent = '';
-  b.append(el('p', 'lede', '무엇을 볼까요?'));
-  const row = (t, sub, fn) => {
+  const row = (t, sub, fn, dis) => {
     const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, t), el('span', 'exmeta', sub));
-    btn.onclick = fn;
+    btn.append(el('b', null, esc(t)), el('span', 'exmeta', esc(sub)));
+    if (dis) btn.disabled = true;
+    else btn.onclick = () => { dive(testHubEntry); fn(); };
     b.append(btn);
   };
-  row('회화', '교재 회화 시험 (준비 중)', () =>
-    alert('회화 시험 콘텐츠는 아직 준비 중입니다.'));
-  row('GYBM', 'GYBM 낱말 시험 (준비 중)', () =>
-    alert('GYBM 시험 콘텐츠는 아직 준비 중입니다. 지금은 "학습" 탭의 GYBM 시험에서 낱말을 먼저 익혀 보세요.'));
-  show('exam', '시험', true);
+  const due = dueWords().map(findItem).filter(Boolean);
+  const bdue = Object.values(S.bsrs || {}).filter(v => v.due <= now()).length;
+  const sdue = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
+  const pool = learnedPool();
+  const learned = Object.keys(S.srs || {}).length || pool.length;
+  row('오늘 복습', due.length ? due.length + tr('개 대기') + ' — ' + tr('카드로 훑고 바로 테스트')
+                  : (learned ? tr('오늘 꺼낼 카드가 없습니다 — 없는 날은 정상입니다') : tr('아직 배운 낱말이 없습니다')),
+      () => testToday());
+  if (bdue) row('GYBM 낱말 오늘 복습', bdue + tr('개 대기') + ' · ' + tr('교재·단어시험·수업 단어'), () => { SBOX = 'bsrs'; testToday(); });
+  if (sdue) row('실전 단어 오늘 복습', sdue + tr('개 대기'), () => { SBOX = 'ssrs'; testToday(); });
+  row('배운 낱말 전체', pool.length ? pool.length + tr('낱말') + ' — ' + tr('랜덤으로 테스트') : tr('아직 배운 낱말이 없습니다'),
+      () => testAllLearned(pool), !pool.length);
+  row('선택 복습', tr('내 단어장 · 오답 노트 · 일차·레슨 골라서'), testPickEntry);
+  const fr = freshSet();
+  row('최근 학습 복습', fr ? fr.theme + ' · ' + fr.words.length + tr('낱말') : tr('아직 끝낸 학습이 없습니다'), () => testFresh(fr), !fr);
+  show('exam', '테스트', true);
+  if (!COURSE) withCourse(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
+  if (!GYBM) gybmBuild(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
+}
+/* 카드로 쭉 → [이제 테스트 시작] → 같은 낱말로 문제 */
+function cardsThenQuiz(words, title, o) {
+  const ws = (words || []).slice();
+  if (!ws.length) { popup(tr('복습할 낱말이 없습니다')); return; }
+  flashRun(ws, title, { next: () => startQuiz(ws, null, ws.length, !!(o && o.early), (o && o.opt) || {}) });
+}
+function testToday() {
+  const due = dueWords().map(findItem).filter(Boolean);
+  if (!due.length) { drawRevInfo(); return; }
+  S.revSeen = 1; save();
+  cardsThenQuiz(due, '오늘 복습 카드', {});
+}
+/* 지금까지 배운 낱말 — 끝낸 일차·레슨의 낱말 + 세 복습 창고의 낱말. 낱말마다 제 창고 이름(_box)을 단다 */
+function learnedPool() {
+  const out = new Map();
+  const put = (w, box) => { if (!w || !w.vi) return; const k = w.vi.toLowerCase(); if (!out.has(k)) out.set(k, Object.assign({}, w, { _box: box })); };
+  ALL.forEach(d => { if (typeof d.day === 'number' && !d.track && S.done[d.day]) (d.words || []).forEach(w => put(w, 'srs')); });
+  if (COURSE) freeUnits().forEach(u => u[2].forEach(w => put(w, 'srs')));
+  const words = allWords();
+  Object.keys(S.srs || {}).forEach(k => put(words.find(x => x.vi === k), 'srs'));
+  const sen = typeof seniorItems === 'function' ? seniorItems() : [];
+  Object.keys(S.ssrs || {}).forEach(k => put(sen.find(x => x.vi === k) || words.find(x => x.vi === k), 'ssrs'));
+  if (GYBM) { const g = gybmAllWords(); Object.keys(S.bsrs || {}).forEach(k => put(g.find(x => x.vi === k) || words.find(x => x.vi === k), 'bsrs')); }
+  return [...out.values()];
+}
+function testAllLearned(pool) {
+  pool = pool || learnedPool();
+  const b = $('#examBody'); b.textContent = '';
+  b.append(el('p', 'lede', tr('지금까지 배운') + ' ' + pool.length + tr('낱말') + ' — ' + tr('몇 문제를 풀까요?')));
+  b.append(el('p', 'note', tr('낱말은 매번 랜덤으로 섞입니다. 맞고 틀림은 낱말마다 제 복습 창고에 그대로 쌓입니다.')));
+  const boxOf = {}; pool.forEach(w => { boxOf[w.vi] = w._box; });
+  const ns = [20, 50, pool.length].filter((n, i, a) => n <= pool.length && a.indexOf(n) === i);
+  ns.forEach(n => {
+    const btn = el('button', 'bigmenu', n === pool.length ? tr('전부') + ' (' + n + tr('문제') + ')' : n + tr('문제'));
+    btn.onclick = () => {
+      const ws = pool.slice().sort(() => Math.random() - .5).slice(0, n);
+      dive(() => testAllLearned(pool));
+      startQuiz(ws, null, n, false, { kind: 'word', boxOf: vi => boxOf[vi] || 'srs' });
+    };
+    b.append(btn);
+  });
+  show('exam', '배운 낱말 전체', true);
+}
+function testPickEntry() {
+  const b = $('#examBody'); b.textContent = '';
+  const row = (t, sub, fn, dis) => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, esc(t)), el('span', 'exmeta', esc(sub)));
+    if (dis) btn.disabled = true;
+    else btn.onclick = () => { dive(testPickEntry); fn(); };
+    b.append(btn);
+  };
+  const stars = Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k);
+  row('내 단어장', stars.length ? tr('별표한 낱말') + ' ' + stars.length + tr('개') : tr('별표한 낱말이 없습니다 — 낱말 카드의 ☆로 담습니다'),
+      () => startWordbookQuiz(stars, '단어장 복습'), !stars.length);
+  const miss = missWords('word');
+  row('오답 노트', miss.length ? tr('자주 틀린 낱말') + ' ' + miss.length + tr('개') : tr('자주 틀린 낱말이 없습니다'),
+      () => { S.revSeen = 1; save(); startQuiz(miss.slice(0, 20), null, null, true); }, !miss.length);
+  row('일상 — 일차 고르기', tr('회화 일차를 골라 그 낱말만'), () => pickUnits('days'));
+  row('직무 — 레슨 고르기', tr('갈래별 레슨을 골라 그 낱말만'), () => withCourse(() => pickUnits('job')));
+  row('교재 — 레슨 고르기', tr('메인 교재 레슨'), () => gybmBuild(() => pickUnits('main')));
+  row('단어시험 — 레슨 고르기', tr('선배 단어시험 레슨'), () => gybmBuild(() => pickUnits('senior')));
+  row('수업 단어 — 회차 고르기', tr('22기 A·B반 회차'), () => gybmBuild(() => pickUnits('c22')));
+  show('exam', '선택 복습', true);
+}
+let PICK = null;                                   // 고른 단위 열쇠들 (갈래마다 새로)
+function pickUnits(kind) {
+  const units = [];                                // [열쇠, 이름, 낱말들, 끝냄, 창고]
+  if (kind === 'days') ALL.filter(d => typeof d.day === 'number' && !d.track).sort((a, b) => (a.n || 0) - (b.n || 0))
+    .forEach(d => units.push([d.day, d.theme, d.words || [], !!S.done[d.day], 'srs']));
+  else if (kind === 'job') { const jv = jobVol(0); if (jv) jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+    const k = 'J0.' + ti + '.' + ci + '.' + li; units.push([k, t.track + ' · ' + lsName(l, li), l.words, !!S.done[k], 'srs']); }))); }
+  else { const src = (GYBM || []).find(s => s.key === kind); if (src) src.lessons.forEach((l, li) => {
+    const k = gybmKey(src.key, li); units.push([k, l.title, l.words, !!bdone()[k], 'bsrs']); }); }
+  PICK = PICK && PICK.kind === kind ? PICK : { kind, set: new Set() };
+  const title = { days: '일상', job: '직무', main: '교재', senior: '단어시험', c22: '수업 단어' }[kind] || kind;
+  const b = $('#examBody'); b.textContent = '';
+  b.append(el('p', 'lede', tr('복습할 것을 고르세요') + ' — ' + units.length + tr('개') + ' (✓ ' + tr('끝낸 것') + ')'));
+  const list = el('div', 'freelist');
+  units.forEach(([k, nm, ws, done]) => {
+    const on = PICK.set.has(k);
+    const r = el('button', 'freerow' + (on ? ' on' : '')); r.type = 'button';
+    r.append(el('i', 'freebox', on ? '☑' : '☐'), el('span', 'freenm', (done ? '✓ ' : '') + esc(nm)), el('span', 'freen', ws.length + tr('낱말')));
+    r.onclick = () => { on ? PICK.set.delete(k) : PICK.set.add(k); pickUnits(kind); };
+    list.append(r);
+  });
+  b.append(list);
+  const picked = units.filter(u => PICK.set.has(u[0]));
+  const n = picked.reduce((a, u) => a + u[2].length, 0);
+  const all = el('button', 'bigmenu', tr('끝낸 것 모두 고르기'));
+  all.onclick = () => { units.filter(u => u[3]).forEach(u => PICK.set.add(u[0])); pickUnits(kind); };
+  const none = el('button', 'bigmenu', tr('모두 풀기(해제)'));
+  none.onclick = () => { PICK.set.clear(); pickUnits(kind); };
+  b.append(all, none);
+  if (n) {
+    const go = el('button', 'primary big');
+    go.style.width = '100%'; go.style.marginTop = '14px';
+    go.textContent = tr('고른 것 복습') + ' (' + n + tr('낱말') + ')';
+    go.onclick = () => {
+      SBOX = picked[0][4];
+      const ws = picked.flatMap(u => u[2]);
+      dive(() => pickUnits(kind));
+      cardsThenQuiz(ws, title + ' ' + tr('카드'), { opt: { kind: 'word' } });
+    };
+    b.append(go);
+  }
+  show('exam', title + ' · ' + tr('선택 복습'), true);
+}
+/* 가장 마지막에 끝낸 세트 — 일차·회화 레슨·직무 레슨·GYBM 레슨 가운데 끝낸 시각이 가장 늦은 것 */
+function freshSet() {
+  let best = null;
+  const cand = (t, theme, words, box) => { if (typeof t === 'number' && words && words.length && (!best || t > best.t)) best = { t, theme, words, box }; };
+  ALL.forEach(d => { if (typeof d.day === 'number' && !d.track) cand(S.done[d.day], d.theme, d.words, 'srs'); });
+  if (COURSE) {
+    lifeVols().forEach((v, vi) => v.chapters.forEach((c, ci) => c.lessons.forEach((l, li) =>
+      cand(S.done[ckey(vi, ci, li)], (v.title || (vi + 2) + '권') + ' ' + lsName(l, li), l.words, 'srs'))));
+    jobVols().forEach(jv => jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) =>
+      cand(S.done['J0.' + ti + '.' + ci + '.' + li], t.track + ' · ' + lsName(l, li), l.words, 'srs')))));
+  }
+  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => cand(bdone()[gybmKey(src.key, li)], src.label + ' · ' + l.title, l.words, 'bsrs')));
+  return best;
+}
+function testFresh(fr) {
+  fr = fr || freshSet();
+  if (!fr) { testHubEntry(); return; }
+  SBOX = fr.box;
+  cardsThenQuiz(fr.words, fr.theme + ' ' + tr('카드'), { opt: { kind: 'word' } });
 }
 
 /* ── 베트남어 능력시험(VLPT) 모의고사 (2026-09-08 대표님 지시) ──
@@ -5980,7 +6226,7 @@ function homeActions() {
   const b2 = el('button', 'hbtn sec');
   b2.append(el('b', null, tr('오늘 복습하기')),
             el('small', null, due.length ? due.length + tr('개 대기 중') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
-  b2.disabled = !due.length; if (due.length) b2.onclick = () => reviewStart();
+  b2.disabled = !due.length; if (due.length) b2.onclick = () => { ACTIVE_TAB = 'test'; testToday(); };   // 테스트 탭 3-1 과 같은 문 (카드 → 테스트)
   box.append(b1, b2);
   return box;
 }
@@ -7093,7 +7339,7 @@ async function dictReady() {
   if (!SIB) jobs.push(sibLoad());
   if (!GRAM) jobs.push(get('data/grammar.json', j => { GRAM = j; }));
   if (!SENIOR) jobs.push(get('data/senior.json', j => { SENIOR = j; }));
-  if (typeof GYBM !== 'undefined' && !GYBM) jobs.push(get('data/gybm.json', j => { GYBM = j; GYBM_ALL = null; }));
+  if (typeof GYBM !== 'undefined' && !GYBM) jobs.push(get('data/gybm.json', j => { GYBM = j.sources; GYBM_ALL = null; }));   // gybmBuild 와 같이 sources 배열만 (2026-09-27: 통째로 넣어 사전이 멈췄다)
   if (!COURSE) jobs.push(get('data/order.json', j => { COURSE = j; loadCWords(); }));
   await Promise.all(jobs);
   DICT = null;
@@ -7881,10 +8127,12 @@ $('#next').onclick = () => {
    내일 것을 미리 눈에 발라두거나(예습) 바쁜 날 밀린 카드를 훑는(간략) 용도.
    카드를 누르면 바로 다음으로 넘어간다. */
 let FL = null;
-function flashRun(words, title) {
-  const ws = (words || []).filter(w => AIDX[w.vi]);
-  if (!ws.length) return;
-  FL = { list: ws, i: 0 };
+/* opt.next 가 있으면 카드를 다 넘긴 뒤 [테스트 시작] 단추로 잇는다 (2026-09-27 테스트 탭 3-1: "카드로 쭉 보여준 뒤에 테스트").
+   소리가 없는 낱말도 뺀 채 넘어가지 않는다 — 카드는 보여 주고 소리만 못 낸다. */
+function flashRun(words, title, opt) {
+  const ws = (words || []).filter(w => w && w.vi && (AIDX[w.vi] || (opt && opt.next)));
+  if (!ws.length) { if (opt && opt.next) opt.next(); return; }
+  FL = { list: ws, i: 0, next: opt && opt.next, nextLabel: opt && opt.nextLabel };
   show('quiz', title, true);
   drawFlash();
 }
@@ -7897,9 +8145,19 @@ function drawFlash() {
     const r = el('div', 'result');
     r.append(el('div', 'n', (FL ? FL.list.length : 0) + '개'));
     r.append(el('div', null, '눈과 귀로 훑었습니다 — 외우는 건 퀴즈가 합니다'));
-    const hm = el('button', 'primary big', '홈으로');
-    hm.style.marginTop = '20px'; hm.onclick = renderHome;
-    r.append(hm); b.append(r);
+    if (FL && FL.next) {                       // 카드 → 바로 테스트 (테스트 탭)
+      const nx = el('button', 'primary big', FL.nextLabel || '이제 테스트 시작');
+      nx.style.marginTop = '20px'; nx.onclick = () => { const f = FL.next; FL = null; f(); };
+      r.append(nx);
+      const hm = el('button', 'ghost big', '홈으로');
+      hm.style.marginTop = '10px'; hm.onclick = renderHome;
+      r.append(hm);
+    } else {
+      const hm = el('button', 'primary big', '홈으로');
+      hm.style.marginTop = '20px'; hm.onclick = renderHome;
+      r.append(hm);
+    }
+    b.append(r);
     touchToday();
     return;
   }
@@ -9025,7 +9283,15 @@ function bump(box, key, ok) {
 const HARDLTR = ['ư', 'ơ', 'ă', 'â', 'ê', 'ô', 'đ'];
 /* 성조 부호만 뗀 모양. "성조만 틀렸나 글자를 틀렸나"를 가르는 데 쓴다 */
 const bare = t => t.trim().toLowerCase().split(/\s+/).map(stripTone).join(' ');
+/* 창고가 섞인 판(테스트 탭 '배운 낱말 전체')은 낱말마다 제 창고에 적는다 — opt.boxOf(vi) 가 창고 이름을 준다.
+   그래야 GYBM 낱말이 하루 5분 창고(S.srs)로 새어 들어가지 않는다 (복습은 섞이지 않게 — 대표님 지시). */
 function grade(vi, ok, early) {
+  const bx = (typeof Q !== 'undefined' && Q && Q.opt && Q.opt.boxOf) ? Q.opt.boxOf(vi) : null;
+  const s0 = SBOX;
+  if (bx) SBOX = bx;
+  try { grade0(vi, ok, early); } finally { SBOX = s0; }
+}
+function grade0(vi, ok, early) {
   touchToday();
   // 암기 점수용 계수기 — 인출 시도와 성공을 센다
   S.stats.qAll = (S.stats.qAll || 0) + 1;

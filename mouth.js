@@ -200,8 +200,8 @@ const MOUTH = (() => {
 </g>
 </g>
 <g id="${f('front')}" transform="translate(10,6) scale(1.5) translate(-462,-26)">
-<rect x="462" y="26" width="198" height="172" rx="12" fill="var(--bg)" stroke="var(--line)"/>
-<g transform="translate(561 120) scale(1.3) translate(-561 -116)">
+<rect x="462" y="26" width="198" height="200" rx="12" fill="var(--bg)" stroke="var(--line)"/>
+<g transform="translate(561 126) scale(1.3) translate(-561 -116)">
 <ellipse id="${f('lipO')}" cx="561" cy="116" rx="52" ry="26" fill="#D4537E" stroke="#993556" stroke-width="1.6"/>
 <ellipse id="${f('opn')}" cx="561" cy="116" rx="40" ry="20" fill="#4A1B0C"/>
 <g clip-path="url(#${f('fclip')})">
@@ -226,7 +226,7 @@ const MOUTH = (() => {
     host.innerHTML = svgMarkup(p);
     /* 보는 면: front 정면만(크게) · side 옆 단면만 · both 둘 다. 범례는 both 에서만 (2026-09-27 정면 기본, 옆 단면은 단추) */
     const sv = host.querySelector('svg');
-    const VIEW = { front: '10 6 297 258', side: '318 0 350 318', both: '0 0 680 318' };
+    const VIEW = { front: '10 6 297 300', side: '318 0 350 318', both: '0 0 680 318' };
     const setView = v => {
       sv.setAttribute('viewBox', VIEW[v] || VIEW.both);
       const g = id => host.querySelector('#' + p + id);
@@ -281,13 +281,14 @@ const MOUTH = (() => {
       /* 정면 입술 — 움직임을 **과장**해서 구별이 잘 되게 한다(대표님 지시 2026-09-27):
          벌림(i·ê·e)은 옆으로 아주 넓게, 오므림(u·ô·o)은 작고 동그랗게, 턱은 크게 벌린다. */
       const cy = 116, rw = pz.lipR >= 0 ? lerp(40, 70, clamp(pz.lipR, 0, 1)) : lerp(40, 13, clamp(-pz.lipR, 0, 1));
-      let oh = (pz.jaw * 46 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);
+      /* 벌림을 과장한다 — 입술 두께가 아니라 **입 자체**가 크게 열리게 (대표님 지시 2026-09-27 "입술만 두꺼워졌잖아"): 턱 46→82 */
+      let oh = (pz.jaw * 90 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);
       if (pz.lipR < -.4) oh = Math.max(oh, rw * .85 * (1 - pz.lipC));
       if (pz.lipR > .3) oh = oh * (1 - .35 * pz.lipR);
-      const lt = pz.lipC > .5 ? 11 : (8 + Math.max(0, -pz.lipR) * 13 - Math.max(0, pz.lipR) * 3);
+      const lt = pz.lipC > .5 ? 8 : (4 + Math.max(0, -pz.lipR) * 6 - Math.max(0, pz.lipR) * 2);   // 입술은 얇게 — 벌림이 주인공
       set(els.lipO, 'rx', f1(rw + lt)); set(els.lipO, 'ry', f1(oh + lt * .85));
       ['opn', 'opl', 'fce'].forEach(id => { set(els[id], 'rx', f1(rw)); set(els[id], 'ry', f1(Math.max(oh, .8))); });
-      const tu = Math.min(oh * .9, 13), tl = oh > 16 ? Math.min(oh * .5, 9) : 0;
+      const tu = Math.min(oh * .9, 16), tl = oh > 16 ? Math.min(oh * .5, 11) : 0;
       set(els.tU, 'y', f1(cy - oh)); set(els.tU, 'height', f1(tu));
       set(els.tL, 'y', f1(cy + oh - tl)); set(els.tL, 'height', f1(tl));
       let lv = clamp((.6 - pz.gF) / .6, 0, 1); if (pz.ty < 180) lv = Math.max(lv, .85);
