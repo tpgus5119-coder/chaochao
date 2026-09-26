@@ -2366,3 +2366,21 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .metext.danger{color:var(--bad)}
 .medot{color:var(--dim)}
 .mever{text-align:center; font-size:12px; color:var(--dim); margin:2px 0 8px}
+
+/* 문법 카드 — 스티치 시안(2026-09-27 저녁): 문형 알약(연한 파랑) · 키워드 칩(베트남어 굵게 + 뜻 회색) · 설명 상자 · 팁 상자(연노랑) · 예문 소카드 + [▶ 듣기] */
+.card .gramt{font-size:22px; font-weight:800; text-align:left; line-height:1.35}
+.card .gramk{display:inline-block; background:color-mix(in srgb, var(--accent) 10%, var(--card)); color:var(--accent); font-weight:700; font-size:15px; padding:6px 12px; border-radius:10px; margin:8px 0 10px}
+.card .gramkw{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-start; margin:0 0 12px}
+.card .gkw{display:inline-flex; align-items:baseline; gap:6px; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:5px 10px; font-size:13px; color:var(--dim)}
+.card .gkw b{font-size:14px; color:var(--fg)}
+.card .gramkw + .rulenote, .card .gramk + .rulenote{background:var(--surface-2,#f6f8fa); border:1px solid var(--line); border-radius:12px; padding:14px; text-align:left; font-size:16px; line-height:1.65; color:var(--fg); margin:0 0 10px}
+.card .gramtip{background:color-mix(in srgb, #fde047 22%, var(--card)); border:1px solid color-mix(in srgb, #fde047 60%, var(--line)); border-radius:10px; padding:10px 12px; font-size:14px; text-align:left; line-height:1.5; margin:0 0 12px}
+.card .wex{display:block; width:100%; box-sizing:border-box; text-align:left; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; margin:10px 0}
+.card .wex .wexvi{font-size:18px}
+.card .wex .wexkr{font-size:14px; margin-top:2px}
+.card .wex .wexko{font-size:16px; color:var(--fg); margin-top:4px}
+/* 카드 훑기 — 양옆 둥근 화살 단추 */
+#quizBody .card{position:relative}
+.flarrows{position:absolute; left:-14px; right:-14px; top:50%; transform:translateY(-50%); display:flex; justify-content:space-between; pointer-events:none}
+.flarr{pointer-events:auto; width:48px; height:48px; border-radius:50%; background:var(--card); border:1px solid var(--line); font-size:26px; line-height:1; color:var(--fg); display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.flarr:disabled{opacity:.35}

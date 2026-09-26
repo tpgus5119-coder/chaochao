@@ -8306,6 +8306,12 @@ function drawFlash() {
     moved = true; clearTimeout(tm); audio.onended = null;
     FL.i = Math.max(0, FL.i + (step === undefined ? 1 : step)); drawFlash();
   };
+  // 스티치 시안 '카드 훑기': 카드 양옆에 둥근 ‹ › 단추 (밀기·자동 넘김과 같은 일)
+  const wrap = el('div', 'flarrows');
+  const lb = el('button', 'flarr', '‹'), rb = el('button', 'flarr', '›');
+  lb.type = rb.type = 'button'; lb.disabled = FL.i === 0;
+  lb.onclick = ev => { ev.stopPropagation(); go(-1); }; rb.onclick = ev => { ev.stopPropagation(); go(1); };
+  wrap.append(lb, rb); c.append(wrap);
   // 릴스처럼 — 왼쪽으로 밀면 다음, 오른쪽으로 밀면 이전
   let x0 = null;
   c.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
