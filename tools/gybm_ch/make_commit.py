@@ -11,7 +11,7 @@ def git(*a, env=None, inp=None):
 git("fetch", "origin")
 MY = ["app.js", "style.css", "pitch.js", "mouth.js", "index.html", "sw.js", "data/days.json", "data/order.json", "data/gybm.json", "data/realbook.json",
       "data/siblings.json", "data/basicwords.json", "data/basicword_sets.json", "data/senior.json", "data/cohort22.json", "data/_book_glossary.json", "data/_boost_words.json", "data/_job_boost.json",
-      "data/grammar.json", "data/sib.json", "data/siblings.json", "data/_lex_src.json", "data/_sib_meanings.json", "data/_sib_ko.json", "data/_sib_badrel.json", "tools/build_lex.py", "tools/trim_audio.py", "tools/apply_sib_meanings.py", "tools/gen_audio_list.py", "docs/기준.md", "docs/tts-조사.md", "docs/문법_대조.md", "tools/build_gram_main.py", "tools/gram_main_data1.py", "tools/gram_main_data2.py", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py"]
+      "data/grammar.json", "data/exgloss.json", "data/sib.json", "data/siblings.json", "data/_lex_src.json", "data/_sib_meanings.json", "data/_sib_ko.json", "data/_sib_badrel.json", "tools/build_lex.py", "tools/trim_audio.py", "tools/apply_sib_meanings.py", "tools/gen_audio_list.py", "docs/기준.md", "docs/tts-조사.md", "docs/문법_대조.md", "tools/build_gram_main.py", "tools/gram_main_data1.py", "tools/gram_main_data2.py", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py"]
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
 chk = [f for f in MY if f not in ("index.html", "sw.js", "data/audio_index.json")]
