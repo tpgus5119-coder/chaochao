@@ -587,6 +587,8 @@ const UIVI = {
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
   '천천히': 'Chậm', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
   '원어민 소리 높낮이': 'Cao độ giọng người bản xứ',
+  '녹음': 'Ghi âm', '재생 위치': 'Vị trí phát', '멈춤': 'Tạm dừng', '재생': 'Phát', '닫기': 'Đóng',
+  '이 낱말과 헷갈리는 짝이 없습니다.': 'Từ này không có từ dễ nhầm.',
   /* 탈퇴 · 순위 · 가입 화면 (2026-08-29 대표님 지시) */
   '내 말 (화면에 나올 말)':
     'Ngôn ngữ của tôi (hiện trên màn hình)',
@@ -735,8 +737,11 @@ const voiceDir = () => S.voice;
    audio.currentTime 하나를 시계로 삼아, 화면에 떠 있는 '보기'(높낮이 그래프 위 낱말, 입모양)들이
    자기 낱말이 지금 재생 중일 때만 그 시각에 맞춰 움직인다. 보기는 PB.views 에 등록하고,
    화면에서 사라지면(root.isConnected=false) 알아서 빠진다. */
-const PB = { views: new Set(), raf: 0 };
-const ownsAudio = h => !!h && !!audio.src && audio.src.includes('/n/' + h + '.mp3');
+const PB = { views: new Set(), raf: 0, hold: null };
+/* 지금 audio 가 **이 낱말의 고른 목소리 파일**인가 — 여·남은 같은 이름(해시)이라 폴더까지 봐야 한다(목소리를 바꾼 뒤 옛 목소리를 이어 트는 일이 없게) */
+const ownsAudio = h => !!h && !!audio.src && audio.src.includes('/' + voiceDir() + '/n/' + h + '.mp3');
+/* 보기(입모양·높낮이 그래프)가 지금 소리 위치를 따라야 하는가 — 재생 중이거나, 사용자가 재생 막대로 멈춰 둔 자리(hold)일 때 */
+const pbLive = (h, playing) => ownsAudio(h) && (playing || PB.hold === h);
 function pbTick() {
   const playing = !audio.paused && !audio.ended;
   PB.views.forEach(v => {
@@ -746,7 +751,8 @@ function pbTick() {
   PB.raf = playing ? requestAnimationFrame(pbTick) : 0;
 }
 audio.addEventListener('play', () => { if (!PB.raf) PB.raf = requestAnimationFrame(pbTick); });
-['pause', 'ended', 'emptied'].forEach(ev => audio.addEventListener(ev, () => { setTimeout(pbTick, 0); }));
+audio.addEventListener('ended', () => { PB.hold = null; });
+['pause', 'ended', 'emptied', 'seeked'].forEach(ev => audio.addEventListener(ev, () => { setTimeout(pbTick, 0); }));
 
 function play(text, slow, dir) {
   /* 대소문자 구분 없이 찾는다 — 문장 첫머리라 대문자로 들어온 낱말(Đây, Bạn...)도
@@ -755,6 +761,7 @@ function play(text, slow, dir) {
   const d = dir || voiceDir();
   if (!h) { speakVi(text, false, slow ? rate() * .7 : 0, S.voice); return; }
   audio.pause();
+  PB.hold = null;
   audio.onerror = null;
   /* 조금 느리게 튼다 (대표님 지시 2026-08-31) — 원어민 속도가 초보에겐 빠르다.
      playbackRate 는 높낮이를 지켜 주므로 성조가 뭉개지지 않는다. */
@@ -869,7 +876,7 @@ function toneArrow(name) {
 /* 단어를 크게 — 글자 위에 성조 화살표를 얹어 한 덩어리로 보여준다.
    전에는 큰 글자와 작은 성조칩이 따로 있어 같은 단어가 두 번 보였다.
    누르면 소리가 난다(버튼을 따로 두지 않는다 — 그림 자리를 벌기 위해). */
-function bigWord(vi, tones) {
+function bigWord(vi, tones, onTap) {
   const b = el('button', 'bigw');
   b.type = 'button';
   /* 성조 정보가 없는 낱말(GYBM 메인·서브·줌·선배 낱말 7천여 개)은 **글자에서 성조를 읽어** 화살표를 그린다.
@@ -881,7 +888,7 @@ function bigWord(vi, tones) {
     if (t.ko) u.title = t.name + ' · ' + t.ko;
     b.append(u);
   });
-  b.onclick = () => play(vi, false);
+  b.onclick = onTap || (() => play(vi, false));
   return b;
 }
 const ICON = {
@@ -910,7 +917,7 @@ function toneRow(tones, small) {
 /* ---------- 헷갈리는 짝 ----------
    대표님 제안(2026-09-24): 낱말 하나를 볼 때 ① 성조만 다른 낱말 ② o·ô·ơ 처럼 글자 모양이 조금 다른
    낱말도 같이 본다. 자료 data/siblings.json 은 tools/build_siblings.py 가 글자 규칙으로 만든다.
-   뜻은 앱 안 낱말에서만 가져온다 — 근거가 없는 짝은 '뜻 미확인'으로 적고 지어내지 않는다.
+   뜻은 앱 안 낱말과 사전(영어 위키낱말·한국어기초사전 겹침 → 눈 검수)에서만 가져온다 — 근거가 없는 짝은 화면에 올리지 않는다(2026-09-26, tools/apply_sib_meanings.py).
    처음 배울 때 관련 낱말을 한꺼번에 외우면 오히려 헷갈린다는 연구(의미 군집)가 많아서, 낱말 카드에서는
    접어 두고 퀴즈에서 틀렸을 때만 펼쳐 보여 준다. */
 let SIB = null, SIBP = null;
@@ -935,7 +942,7 @@ function sibFams(vi) {
     if (seen.has(s)) return;
     seen.add(s);
     const tf = SIB.tone[stripTone(s)], sf = SIB.shape[sibBase(s) + '|' + SIB_T.indexOf(sibToneOf(s))];
-    const other = f => f && (f.m.some(i => i[0] !== s) || (f.u || []).length);
+    const other = f => f && f.m.some(i => i[0] !== s);
     if (other(tf) || other(sf)) out.push({ s, tf: other(tf) ? tf : null, sf: other(sf) ? sf : null });
   });
   return out;
@@ -952,7 +959,7 @@ function pairRow(it, cur, withTone) {
   w.append(el('b', null, withTone || it[0] === cur ? esc(it[0]) : sibDiff(it[0], cur)), el('i', null, toneArrow(tn)));
   const m = el('span', 'pmn');
   if (it[1]) m.append(el('span', 'pko', esc(it[1])));
-  else m.append(el('span', 'pko no', tr('뜻 미확인') + ' · ' + tr('예') + ' <b>' + esc(it[2]) + '</b> ' + esc(it[3])));
+  else m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(it[2]) + '</b> ' + esc(it[3])));   // 뜻 자리가 비면 이 음절이 든 낱말을 보여 준다(2026-09-26 '뜻 미확인' 표시 없앰)
   if (withTone) m.append(el('span', 'ptone', tn + ' · ' + tr(SIB_KO[tn])));
   r.append(w, m);
   if (key) {
@@ -985,7 +992,7 @@ function pairSeq(items, rows, wrap, btn) {
 }
 function pairPanel(vi, opt) {
   const o = opt || {};
-  const wrap = el('div', 'pairbox');
+  const wrap = el('div', o.bare ? 'pairbox bare' : 'pairbox');
   sibLoad().then(() => {
     if (!SIB || !wrap.isConnected) return;
     const fams = sibFams(vi);
@@ -999,11 +1006,6 @@ function pairPanel(vi, opt) {
       sec.append(el('div', 'ptitle', tr(title) + '<span>' + tr(note) + '</span>'));
       const rows = fam.m.map(it => pairRow(it, s, withTone));
       rows.forEach(r => sec.append(r));
-      if ((fam.u || []).length) {
-        const u = el('div', 'punk', tr('사전에는 더 있음(뜻 미확인)'));
-        fam.u.forEach(x => u.append(el('span', 'pchip', esc(x))));
-        sec.append(u);
-      }
       if (withTone && fam.m.filter(it => recKey(it[0])).length > 1) {
         const b = el('button', 'ghost sm pseq', '▶ ' + tr('순서대로 듣기'));
         b.type = 'button';
@@ -1040,10 +1042,32 @@ function pairPanel(vi, opt) {
       if (open && !built) { built = true; draw(); }
     };
     head.onclick = () => set(body.hidden);
-    wrap.append(head, body);
-    set(!!o.open);
+    if (o.bare) { wrap.append(body); set(true); }        // 팝업 안에서는 머리 단추 없이 바로 펼친다
+    else { wrap.append(head, body); set(!!o.open); }
   });
   return wrap;
+}
+
+/* 낱말을 누르면 **팝업**으로 헷갈리는 짝을 보여 준다 (대표님 지시 2026-09-26) — 단어 면·발음 면 똑같이. */
+function pairPopup(vi) {
+  const back = el('div', 'modalback');
+  const box = el('div', 'modalbox pairpop');
+  const hd = el('div', 'pairpophd');
+  hd.append(el('b', null, esc(vi)), el('span', null, tr('헷갈리는 짝')));
+  const body = el('div', 'pairpopbody');
+  const ok = el('button', 'primary big', tr('닫기'));
+  ok.style.width = '100%';
+  const close = () => { const w = body.firstChild; if (w) w._seq = false; back.remove(); };
+  ok.onclick = close;
+  box.append(hd, body, ok);
+  back.append(box);
+  back.onclick = e => { if (e.target === back) close(); };
+  document.body.append(back);
+  sibLoad().then(() => {
+    if (!SIB) { body.append(el('div', 'pnote', tr('불러오지 못했습니다'))); return; }
+    if (!sibFams(vi).length) { body.append(el('div', 'pnote', tr('이 낱말과 헷갈리는 짝이 없습니다.'))); return; }
+    body.append(pairPanel(vi, { bare: true }));
+  });
 }
 
 /* 대화 전체를 순서대로 재생한다 */
@@ -1403,8 +1427,9 @@ function sayCredit(box) {
 function tutorTap() {
   if (S.tut) return;
   S.tut = 1; save();
-  popup('<b>글자를 누르면 소리가 납니다</b><br>' +
-        '단어도, 아래 예문도 눌러 보세요. 위쪽 <b>단어 · 발음</b> 단추를 누르면 입모양과 높낮이 그래프, 따라 말하기가 나옵니다.');
+  popup('<b>낱말 카드 쓰는 법</b><br>' +
+        '낱말을 누르면 <b>헷갈리는 짝</b>이 나옵니다. 소리는 낱말 밑의 <b>보통 · 느리게</b>, 따라 말하기는 <b>녹음</b>입니다. ' +
+        '위쪽 <b>단어 · 발음</b> 단추를 누르면 입모양과 높낮이 그래프, 재생 막대가 나옵니다. 예문은 눌러서 들으세요.');
 }
 /* 예/아니오 확인 창. 브라우저 confirm() 은 **홈 화면에 설치한 PWA 에서 막히는 폰이 있다** —
    그러면 아무 일도 안 일어난다(대표님: "동아리 탈퇴 버튼 작동 안 한다", 2026-08-30).
@@ -1500,7 +1525,7 @@ function pitchStage(text, nat) {
   gW.onclick = () => play(text, false);
   gW.style.cursor = 'pointer';
   PB.views.add({ root: box, update(playing) {
-    if (playing && ownsAudio(h)) place(clamp(audio.currentTime, t0, t0 + span), true);
+    if (pbLive(h, playing)) place(clamp(audio.currentTime, t0, t0 + span), true);
     else place(t0, false);
   } });
   return box;
@@ -1516,13 +1541,97 @@ function curveArea(text, box) {
     pre.append(pitchStage(text, nat));
     pre.append(el('div', 'curvelegend', '<span class="k nat"></span>원어민 소리 높낮이 — 낱말이 소리를 따라 움직입니다'));
   });
-  wrap.append(pre, box);
+  if (box) wrap.append(pre, box); else wrap.append(pre);
+  return wrap;
+}
+
+/* 낱말 밑 단추 줄 — [보통] [느리게] [녹음] (대표님 지시 2026-09-26). 단어 면·발음 면 똑같은 자리에 둔다.
+   box: 녹음 결과(원어민과 겹친 높낮이·판정)가 뜨는 자리. */
+function wordControls(text, box) {
+  const row = el('div', 'wctl');
+  const b1 = el('button', 'ghost', '▶ ' + tr('보통'));
+  const b2 = el('button', 'ghost', '🐢 ' + tr('느리게'));
+  b1.type = b2.type = 'button';
+  b1.onclick = () => play(text, false);
+  b2.onclick = () => play(text, true);
+  row.append(b1, b2);
+  if (canRecord()) {
+    const mic = el('button', 'rec', '🎤 ' + tr('녹음'));
+    mic.type = 'button';
+    mic.onclick = () => toggleRec(text, mic, box);
+    row.append(mic);
+  } else {
+    box.append(el('div', 'cmpnote', '이 기기·브라우저에서는 녹음을 못 씁니다 — 소리 내어 따라 말해만 보세요.'));
+  }
+  return row;
+}
+
+/* 재생 막대 — 사용자가 직접 재생·멈춤하고 막대를 끌어 원하는 자리로 옮긴다 (대표님 지시 2026-09-26).
+   막대를 끌면 입모양과 높낮이 그래프도 그 자리에 맞춰 멈춘다(PB.hold). */
+function playBar(text) {
+  const h = AIDX[text] || AIDX[text.toLowerCase()];
+  const wrap = el('div', 'pbar');
+  const btn = el('button', 'pbtn');
+  btn.type = 'button';
+  const rng = document.createElement('input');
+  rng.type = 'range'; rng.min = 0; rng.max = 1000; rng.step = 1; rng.value = 0; rng.className = 'prng';
+  rng.setAttribute('aria-label', tr('재생 위치'));
+  const tm = el('span', 'ptm', '0.00 / 0.00');
+  wrap.append(btn, rng, tm);
+  if (!h) { btn.disabled = rng.disabled = true; btn.textContent = '▶'; return wrap; }
+  let dur = 0, drag = false, resume = false;
+  const url = () => `audio/${voiceDir()}/n/${h}.mp3`;
+  const D = () => (ownsAudio(h) && isFinite(audio.duration) && audio.duration) ? audio.duration : dur;
+  const fmt = t => (Math.round(t * 100) / 100).toFixed(2);
+  const paint = () => {
+    const own = ownsAudio(h), playing = own && !audio.paused && !audio.ended, d = D();
+    const t = own && !audio.ended ? audio.currentTime : 0;
+    if (!drag) rng.value = d ? Math.round(clamp(t / d, 0, 1) * 1000) : 0;
+    tm.textContent = fmt(drag ? clamp(rng.value / 1000, 0, 1) * d : t) + ' / ' + fmt(d);
+    btn.textContent = playing ? '⏸' : '▶';
+    btn.setAttribute('aria-label', playing ? tr('멈춤') : tr('재생'));
+  };
+  const probe = new Audio();                       // 길이를 미리 알아 둔다 (다른 소리가 audio 를 쓰고 있어도 되게 따로)
+  probe.preload = 'metadata';
+  probe.onloadedmetadata = () => { dur = probe.duration || 0; paint(); };
+  probe.src = url();
+  const load = () => {
+    if (ownsAudio(h)) return Promise.resolve();
+    audio.pause(); PB.hold = null; audio.onerror = null;
+    audio.src = url(); audio.playbackRate = rate();
+    return new Promise(res => { audio.addEventListener('loadedmetadata', res, { once: true }); setTimeout(res, 2500); });
+  };
+  btn.onclick = () => {
+    if (ownsAudio(h) && !audio.paused && !audio.ended) { PB.hold = h; audio.pause(); return; }     // 멈춤 — 그 자리를 붙든다
+    if (ownsAudio(h) && !audio.ended && audio.currentTime > 0.02) { PB.hold = null; audio.play().catch(() => { }); return; }   // 이어서
+    play(text, false);                                                                            // 처음부터
+  };
+  rng.addEventListener('input', async () => {
+    drag = true;
+    if (!ownsAudio(h)) await load();
+    if (!audio.paused && !audio.ended) { resume = true; audio.pause(); }
+    PB.hold = h;
+    const d = D();
+    if (!d) return;
+    audio.currentTime = clamp(rng.value / 1000, 0, 1) * d;
+    setTimeout(pbTick, 0);
+    paint();
+  });
+  const endDrag = () => {
+    if (!drag) return;
+    drag = false;
+    if (resume) { resume = false; PB.hold = null; audio.play().catch(() => { }); }
+    paint();
+  };
+  rng.addEventListener('change', endDrag);
+  ['pointerup', 'pointercancel', 'touchend', 'mouseup'].forEach(ev => rng.addEventListener(ev, endDrag));
+  PB.views.add({ root: wrap, update() { paint(); } });
+  paint();
   return wrap;
 }
 
 /* 입모양 2D — 정면 입술(왼쪽)과 옆 단면(오른쪽: 혀·입천장·연구개·콧길·성대) (대표님 지시 2026-09-25 #6, 09-26 배치·글자 정리).
-   소리(audio)와 같은 시계로 움직인다(PB). '천천히'는 느린 소리로, '보통'은 보통 소리로 함께 움직인다.
-   소리 파일이 없는 낱말은 '천천히'가 입모양만 2.6초에 걸쳐 보여 준다.
+   소리(audio)와 같은 시계로 움직인다(PB). 재생은 낱말 아래의 [보통 · 느리게] 단추와 재생 막대(playBar)가 맡는다 — 이 그림에는 단추를 두지 않는다.
    그림의 세부 좌표는 **모식도**다 — 베트남어 전용 MRI·초음파 자료가 없어 범주(혀 높이·앞뒤·둥글기, 닿는 곳)만 근거가 있다.
    화면에는 '모식도'·'숨기기'·'이름표' 같은 글을 두지 않는다(대표님 지시 09-26). */
 function mouthPanel(text) {
@@ -1530,43 +1639,22 @@ function mouthPanel(text) {
   if (typeof MOUTH === 'undefined') return wrap;
   const body = el('div', 'mouthsvg');
   const cap = el('div', 'mouthcap');
-  const row = el('div', 'mouthrow');
-  const bSlow = el('button', 'ghost sm', '▶ ' + tr('천천히'));
-  const bSnd = el('button', 'ghost sm', '▶ ' + tr('보통'));
-  row.append(bSlow, bSnd);
-  wrap.append(body, cap, row);
+  wrap.append(body, cap);
   const M = MOUTH.create(body);
   M.setWord(text);
-  const idle = () => { cap.innerHTML = ''; };
   const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : ''; };
-  M.at(0); idle();
+  M.at(0);
   const h = AIDX[text] || AIDX[text.toLowerCase()];
-  let nat = null, local = null, lastId = '';
+  let nat = null, lastId = '';
   nativeCurve(text).then(n => { nat = n; });
   const show = t => { const id = M.at(t); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
-  bSlow.onclick = () => {
-    if (local) { local.stop = true; local = null; }
-    if (h) { play(text, true); return; }              // 소리 파일이 있으면 느린 소리와 같이 움직인다
-    const st = { t0: performance.now(), dur: 2600, stop: false };
-    local = st;
-    const step = now => {
-      if (st.stop || !wrap.isConnected) { if (local === st) local = null; return; }
-      const t = (now - st.t0) / st.dur;
-      if (t >= 1) { show(1); local = null; setTimeout(() => { if (!local && !ownsAudio(h)) { M.at(0); lastId = ''; idle(); } }, 900); return; }
-      show(t);
-      requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
-  bSnd.onclick = () => { if (local) local.stop = true; local = null; play(text, false); };
   PB.views.add({ root: wrap, update(playing) {
-    if (local) return;
-    if (playing && ownsAudio(h) && nat && nat.raw) {
+    if (pbLive(h, playing) && nat && nat.raw) {
       const span = nat.raw.length * nat.hop, a = Math.max(0, nat.t0 - .06), b = Math.min(nat.total, nat.t0 + span + .05);
       show(clamp((audio.currentTime - a) / ((b - a) || 1), 0, 1));
-    } else if (playing && ownsAudio(h)) {
+    } else if (pbLive(h, playing)) {
       show(clamp(audio.currentTime / (audio.duration || 1), 0, 1));
-    } else { M.at(0); lastId = ''; idle(); }
+    } else { M.at(0); lastId = ''; cap.innerHTML = ''; }
   } });
   return wrap;
 }
@@ -5660,7 +5748,7 @@ function krOf(w) {
   if (!GKR) { GKR = {}; allWords().forEach(x => { const k = x.vi.toLowerCase();
     const v = krShow(x);
     if (v && !GKR[k]) GKR[k] = v; }); }
-  const k = String(w).toLowerCase().replace(/[,.!?;:]/g, '').trim();
+  const k = String(w).toLowerCase().replace(/[,.!?;:"“”‘’'()]/g, '').trim();
   return GKR[k] || exgKr(k);
 }
 
@@ -5694,7 +5782,7 @@ function glossAll(vi, extra) {
     for (let n = 5; n >= 1 && !hit; n -= 2) {          // 낱말·공백·낱말… 이라 2칸씩
       const slice = toks.slice(i, i + n);
       if (slice.length < n) continue;
-      const ph = slice.join('').replace(/[,.!?;:]/g, '').toLowerCase().trim();
+      const ph = slice.join('').replace(/[,.!?;:"“”‘’'()]/g, '').toLowerCase().trim();   // 따옴표·괄호에 싸인 낱말도 뜻을 찾는다
       const m = ph && look(ph);
       if (m) hit = { w: slice.join(''), m, n };
     }
@@ -5727,7 +5815,7 @@ function tapLine(vi, cls, o) {
       ev.stopPropagation();
       if (on) on.classList.remove('on');
       on = w; w.classList.add('on');
-      const bare = t.w.replace(/[,.!?;:]/g, '').trim();
+      const bare = t.w.replace(/[,.!?;:"“”‘’'()]/g, '').trim();   // 따옴표에 싸인 낱말('"tôi"')도 우리 소리를 찾는다
       /* **고른 목소리로만** 낸다 (대표님 지적, 2026-08-30) —
          voiceDir() 이 목소리를 정한다.
          **문장 첫 낱말은 대문자로 시작한다**(Đây, Bạn, Tôi...). 그런데 낱말 녹음은
@@ -6954,6 +7042,7 @@ function drawCard() {
   }
 
   if (it.k === 'tone') {
+    const tp = pic(x, 'pic'); if (tp) c.append(tp);        // ma·má·mả… 낱말 그림 (2026-09-26)
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(el('div', 'tone-shape', toneArrow(x.mark)));
     c.append(reveal(krShow(x)));
@@ -7040,9 +7129,10 @@ function drawCard() {
   }
 
   if (it.k === 'word') {
-    /* 낱말 하나에 **두 면** — 단어 면(그림·단어·발음·뜻·예문·헷갈리는 짝·높낮이 그래프)과
-       발음 면(입모양·낱말이 그래프 위를 따라 움직이는 높낮이·따라 말하기). 단추 하나로 넘긴다
-       (대표님 지시, 2026-09-26). 고른 면은 이 수업 동안 다음 카드에도 이어진다. */
+    /* 낱말 하나에 **두 면** — 단어 면(그림·단어·발음·뜻·예문·높낮이 그래프)과
+       발음 면(입모양·낱말이 그래프 위를 따라 움직이는 높낮이·재생 막대). 단추 하나로 넘긴다
+       (대표님 지시, 2026-09-26). 카드를 열 때는 늘 **단어 면**에서 시작한다.
+       낱말을 누르면 어느 면에서든 헷갈리는 짝이 팝업으로 뜬다. 낱말 밑에 [보통][느리게][녹음]. */
     const cf = el('div', 'wfcard');           // 단어 면
     const pf = el('div', 'wfpron');           // 발음 면
     const tg = el('button', 'facetg');
@@ -7055,9 +7145,10 @@ function drawCard() {
       tg.setAttribute('aria-label', f === 'card' ? tr('발음 면으로 넘기기') : tr('단어 면으로 넘기기'));
     };
     tg.onclick = () => setFace(L.face === 'pron' ? 'card' : 'pron');
+    const tapPair = () => pairPopup(x.vi);
 
     /* ── 단어 면 ──
-       그림 → [단어 · 발음 · 별] → 뜻 → 예문(누르면 소리) → 헷갈리는 짝 → 높낮이 그래프 */
+       그림 → [단어 · 발음 · 별] → [보통 · 느리게 · 녹음] → 뜻 → 예문(누르면 소리) → 높낮이 그래프 */
     const p = pic(x, 'pic big'); if (p) cf.append(p);
     else if (x.form) {                       // 그림으로 못 그리는 말은 '자리'를 보여준다
       const fb = el('div', 'formbox');
@@ -7066,10 +7157,12 @@ function drawCard() {
       cf.append(fb);
     }
     const row = el('div', 'wrow');
-    row.append(bigWord(x.vi, x.tones));
+    row.append(bigWord(x.vi, x.tones, tapPair));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
     cf.append(row);
+    const boxC = el('div', 'cmpbox');         // 녹음 결과
+    cf.append(wordControls(x.vi, boxC), boxC);
     /* 뜻이 같은 다른 낱말 — 지우지 않고 **같이 보여 준다** (대표님 지시, 2026-08-30).
        ngang vai 와 rộng vai 는 둘 다 '어깨 넓이'다. 하나만 두면 나머지를 못 배운다. */
     if (x.alt && x.alt.length) {
@@ -7114,7 +7207,6 @@ function drawCard() {
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
       cf.append(eb);
     }
-    cf.append(pairPanel(x.vi));                // 헷갈리는 짝 — 접어 둔다(처음부터 묶어 외우면 오히려 헷갈린다)
     const sg = el('div', 'curvearea prenat');  // 높낮이 그래프(가만히 있는 판) — 낱말이 따라 움직이는 판은 발음 면에
     nativeCurve(x.vi).then(nat => {
       if (!nat || !nat.curve) return;
@@ -7124,27 +7216,19 @@ function drawCard() {
     cf.append(sg);
 
     /* ── 발음 면 ──
-       낱말 · 뜻 → 입모양(정면·옆면) → 낱말이 그래프 위를 따라 움직이는 높낮이 → 따라 말하기 */
+       낱말 → [보통 · 느리게 · 녹음] (단어 면과 같은 자리) → 뜻 → 재생 막대 → 입모양 → 낱말이 따라 움직이는 높낮이 */
     const prow = el('div', 'wrow');
-    prow.append(bigWord(x.vi, x.tones));
+    prow.append(bigWord(x.vi, x.tones, tapPair));
     if (krShow(x)) prow.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
-    pf.append(prow, el('div', 'ko', esc(x.ko)));
+    const boxP = el('div', 'cmpbox');
+    pf.append(prow, wordControls(x.vi, boxP), boxP, el('div', 'ko', esc(x.ko)));
+    pf.append(playBar(x.vi));                  // 재생 막대 (2026-09-26)
     pf.append(mouthPanel(x.vi));               // 입모양 2D (2026-09-25 #6)
-    const rbox = el('div', 'cmpbox');
-    const cw = curveArea(x.vi, rbox);          // 낱말이 소리를 따라 움직이는 높낮이 (2026-09-25 #7)
-    if (canRecord()) {
-      const mrow = el('div', 'qplay');
-      const mic = el('button', 'rec', '따라 말하기');
-      mic.onclick = () => toggleRec(x.vi, mic, rbox);
-      mrow.append(mic);
-      cw.insertBefore(mrow, rbox);
-    } else {
-      rbox.append(el('div', 'cmpnote', '이 기기·브라우저에서는 녹음을 못 씁니다 — 소리 내어 따라 말해만 보세요.'));
-    }
-    pf.append(cw);
+    pf.append(curveArea(x.vi, null));          // 낱말이 소리를 따라 움직이는 높낮이 (2026-09-25 #7)
 
     c.append(tg, cf, pf);
-    setFace(L.face === 'pron' ? 'pron' : 'card');
+    setFace(L.keepFace || 'card');           // 목소리를 바꿔 다시 그릴 때만 보던 면을 지킨다
+    L.keepFace = null;
     tutorTap();
   }
 
@@ -7301,7 +7385,7 @@ $('#next').onclick = () => {
   };
   if (prevB) prevB.onclick = () => goto(-1);
   if (nextB) nextB.onclick = () => goto(1);
-  card.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  card.addEventListener('touchstart', e => { x0 = e.target.closest('input, .pbar') ? null : e.touches[0].clientX; }, { passive: true });   // 재생 막대를 끌 때 카드가 넘어가면 안 된다
   card.addEventListener('touchend', e => {
     if (x0 === null) return;
     const dx = e.changedTouches[0].clientX - x0;
@@ -10628,7 +10712,8 @@ async function doReset() {
 
 $('#voice').onclick = () => {
   S.voice = S.voice === 'f' ? 'm' : 'f'; save(); drawVoiceBtn();
-  if (!$('#learn').hidden && L) drawCard();
+  audio.pause(); PB.hold = null;                 // 다른 목소리로 바꾸면 듣던 소리는 멈추고, 이후 모든 재생은 새 목소리로
+  if (!$('#learn').hidden && L) { L.keepFace = L.face; drawCard(); }
 };
 
 /* 남부(호찌민) 소리는 완전히 없앴다 (대표님 지시, 2026-09-09) — 버튼도 index.html에서
@@ -10814,6 +10899,9 @@ Promise.all([
   DRILL = d.tonedrill || [];
   VDRILL = d.voweldrill || [];
   AIDX = a;
+  /* 대문자 표제어('Giới')만 색인에 있으면 문장 가운데의 소문자 낱말('giới')을 눌러도 우리 소리가 안 났다 —
+     기기 목소리로 넘어가 북부·고른 목소리가 아니었다(2026-09-26). 소문자 별칭을 달아 둔다. */
+  for (const k of Object.keys(a)) { const l = k.toLowerCase(); if (l !== k && !(l in a)) a[l] = a[k]; }
   drawRegion();
   // 메일 속 재설정 링크(?reset=토큰)로 들어온 경우 — 다른 무엇보다 먼저 처리한다.
   const resetTok = new URLSearchParams(location.search).get('reset');

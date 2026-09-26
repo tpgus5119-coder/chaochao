@@ -2146,7 +2146,6 @@ svg.curve.pw .pwword{transition:none}
 .mouthsvg svg{width:100%; height:auto; display:block}
 .mouthcap{font-size:13px; line-height:1.45; min-height:20px; margin-top:6px; color:var(--dim); text-align:center}
 .mouthcap b{color:var(--fg)}
-.mouthrow{display:flex; gap:8px; justify-content:center; margin-top:8px}
 
 /* 낱말 카드의 두 면 — 단어 면 / 발음 면을 단추 하나로 넘긴다 (2026-09-26) */
 .facetg{display:flex; margin:0 auto 10px; padding:3px; border:1px solid var(--line); border-radius:999px;
@@ -2156,3 +2155,25 @@ svg.curve.pw .pwword{transition:none}
 .wfcard[hidden], .wfpron[hidden]{display:none}
 .wfpron .ko{text-align:center; margin-top:2px}
 .wfpron .qplay{margin:12px 0 4px}
+
+/* 낱말 밑 단추 줄 [보통][느리게][녹음] — 단어 면·발음 면 같은 자리 (2026-09-26) */
+.wctl{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:8px 0 6px}
+.wctl button{padding:8px 14px; font-size:14px; font-weight:650; min-width:0}
+.wfcard .cmpbox, .wfpron .cmpbox{margin-top:2px}
+/* 재생 막대 */
+.pbar{display:flex; align-items:center; gap:10px; margin-top:12px; padding:8px 12px;
+  border:1px solid var(--line); border-radius:14px; background:var(--card)}
+.pbtn{width:40px; height:40px; flex:0 0 auto; padding:0; border-radius:50%; font-size:16px; line-height:1;
+  background:var(--accent); color:var(--accent-fg); border:0; display:grid; place-items:center}
+.pbtn:disabled{opacity:.4}
+.prng{flex:1; min-width:0; height:28px; accent-color:var(--accent); cursor:pointer}
+.ptm{flex:0 0 auto; min-width:78px; text-align:right; font-size:12px; color:var(--dim); font-variant-numeric:tabular-nums}
+/* 헷갈리는 짝 팝업 */
+.pairpop{max-width:380px; max-height:82vh; overflow:auto; display:flex; flex-direction:column; gap:12px}
+.pairpophd{display:flex; align-items:baseline; gap:10px}
+.pairpophd b{font-size:24px}
+.pairpophd span{font-size:13px; color:var(--dim)}
+.pairpop .pairbox{margin-top:0}
+.pairpop .pairbody{margin-top:0; padding:0; border:0; background:transparent}
+.pairpopbody .pnote{margin-top:0; font-size:14px}
+.pbar + .mouthbox{margin-top:14px}
