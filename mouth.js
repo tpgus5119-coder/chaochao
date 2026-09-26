@@ -88,7 +88,7 @@ const MOUTH = (() => {
     { id: 'kp', sp: 'o·u 뒤 -c', ipa: 'kp', g: 'f', o: { jaw: .16, lipR: -.8, lipC: 1, tip: 'lowb', gF: .5, gM: .36, gB: 0, gR: 24, pl: ['vel', 'lip'] }, tg: '혀 뒤쪽을 연구개에', pl: '연구개 + 두 입술이 함께 닫힘' },
     { id: 'ngm', sp: 'o·u 뒤 -ng', ipa: 'ŋm', g: 'f', o: { jaw: .16, lipR: -.8, lipC: 1, tip: 'lowb', gF: .5, gM: .36, gB: 0, gR: 24, vel: 1, pl: ['vel', 'lip'] }, tg: '혀 뒤쪽을 연구개에', pl: '연구개 + 두 입술이 함께 닫힘 · 코소리' },
   ];
-  const POSE = { rest: mkp({}) }, SI = {};
+  const POSE = { rest: mkp({ jaw: 0, lipC: 1 }) }, SI = {};        // 시작·쉬는 자세는 입을 다문다 (대표님 지시 2026-09-27)
   SND.forEach(s => { POSE[s.id] = mkp(s.o); SI[s.id] = s; });
 
   /* ── 글자 → 소리 차례 ── */
@@ -168,7 +168,7 @@ const MOUTH = (() => {
 <clipPath id="${f('fclip')}"><ellipse id="${f('fce')}" cx="561" cy="116" rx="40" ry="20"/></clipPath>
 <marker id="${f('ar')}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#378ADD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
-<g transform="translate(324,4) scale(.9)">
+<g id="${f('side')}" transform="translate(324,4) scale(.9)">
 <path id="${f('nas')}" fill="#378ADD" fill-opacity=".14" stroke="none" d="M58 122C58 100 84 94 118 94L286 96C304 97 314 104 314 122L314 134L298 130C270 131 244 129 214 122C182 121 150 126 122 135C112 141 106 149 104 155L96 167C80 153 66 141 58 122Z"/>
 <path id="${f('nasArr')}" fill="none" stroke="#378ADD" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#${f('ar')})" d="M300 112L110 108L70 112" opacity="0"/>
 <path fill="none" stroke="var(--dim)" stroke-width="1.5" stroke-linecap="round" d="M100 12C84 34 58 60 36 96C29 107 27 114 35 118C41 121 47 120 52 124C58 130 62 138 66 148"/>
@@ -212,7 +212,7 @@ const MOUTH = (() => {
 <ellipse id="${f('opl')}" cx="561" cy="116" rx="40" ry="20" fill="none" stroke="#993556" stroke-width="1.2"/>
 </g>
 </g>
-<g font-size="15" fill="var(--dim)">
+<g id="${f('leg')}" font-size="15" fill="var(--dim)">
 <rect x="34" y="290" width="14" height="14" rx="3" fill="#F4C0D1" stroke="#993556" stroke-width="1.2"/><text x="54" y="302">혀·연구개</text>
 <rect x="180" y="290" width="14" height="14" rx="3" fill="#D4537E" stroke="#993556" stroke-width="1.2"/><text x="200" y="302">입술</text>
 <rect x="290" y="290" width="14" height="14" rx="3" fill="#378ADD" fill-opacity=".3" stroke="#378ADD" stroke-width="1.2"/><text x="310" y="302">콧길(코소리)</text>
@@ -221,9 +221,14 @@ const MOUTH = (() => {
 </svg>`;
   }
 
-  function create(host) {
+  function create(host, opt) {
     const p = 'mm' + (++UID) + '_';
     host.innerHTML = svgMarkup(p);
+    if (opt && opt.front) {                     // 정면 입술만 (그래프 위 따라가는 작은 그림용)
+      const sv = host.querySelector('svg');
+      sv.setAttribute('viewBox', '10 6 297 258'); sv.setAttribute('aria-hidden', 'true');
+      ['side', 'leg'].forEach(id => { const g = host.querySelector('#' + p + id); if (g) g.setAttribute('display', 'none'); });
+    }
     const $ = id => host.querySelector('#' + p + id);
     const set = (e, k, v) => e.setAttribute(k, v);
     const els = {};
@@ -238,8 +243,12 @@ const MOUTH = (() => {
       const fl = FLOOR.map(q => rot(q[0], q[1], pz.jaw));
       const stn = (sv, g) => { const r = roofAt(sv), yf = fy(fl, r.x), y = r.y + g * (yf - r.y); return [r.x, Math.min(y, yf - 24)]; };
       const top = [[pz.tx, pz.ty], stn(1.35, pz.gF * .85 + .04), stn(2.7, pz.gF), stn(4.2, pz.gM), stn(5.7, (pz.gM + pz.gB) / 2), stn(7.0, pz.gB)];
-      const last = fl[fl.length - 1];
-      const pts = top.concat([[WX - pz.gR + 2, Math.min(206, fy(fl, WX - pz.gR) - 30)]]).concat(fl).concat([[Math.min(pz.tx + 9, last[0]), Math.min(pz.ty + 17, last[1] - 6)]]);
+      /* 혀 — 예전에는 혀 윗면에서 턱 바닥선까지 통째로 칠해서 입 안이 온통 혀였다(대표님: "혀가 너무 두꺼워 이상하고 이해가 어렵다").
+         이제는 **윗면을 따라 두께만큼만** 칠한다: 끝은 얇고 몸통은 두껍고 뿌리로 갈수록 다시 가늘다. 아래는 턱 바닥선 위에 뜬다. */
+      const TH = [9, 24, 36, 42, 40, 34];
+      const under = top.map((p, i) => [p[0], Math.min(p[1] + TH[i], fy(fl, p[0]) - 5)]);
+      const back = [WX - pz.gR + 2, Math.min(200, fy(fl, WX - pz.gR) - 34)];
+      const pts = top.concat([back]).concat(under.slice(1).reverse()).concat([[pz.tx + 6, pz.ty + 8]]);
       set(els.tg, 'd', cr(pts, true));
       set(els.roof, 'd', cr(ROOF.slice(0, 7), false));
       const T = [lerp(305, 288, pz.vel), lerp(127, 196, pz.vel)], C = [lerp(272, 286, pz.vel), lerp(128, 150, pz.vel)];
@@ -262,13 +271,16 @@ const MOUTH = (() => {
         set(els[ids[0]], 'opacity', q ? f1(mk.a) : 0); set(els[ids[1]], 'opacity', q ? f1(mk.a) : 0);
         if (q) { [ids[0], ids[1]].forEach(i => { set(els[i], 'cx', f1(q[0])); set(els[i], 'cy', f1(q[1])); }); }
       });
-      const cy = 116, rw = pz.lipR >= 0 ? lerp(44, 58, clamp(pz.lipR, 0, 1)) : lerp(44, 20, -pz.lipR);
-      let oh = (pz.jaw * 30 + 1.5) * (1 - pz.lipC) * (1 - pz.lipD * .75);
-      if (pz.lipR < -.4) oh = Math.max(oh, rw * .42 * (1 - pz.lipC));
-      const lt = pz.lipC > .5 ? 12 : (9 + Math.max(0, -pz.lipR) * 7 - Math.max(0, pz.lipR) * 2);
+      /* 정면 입술 — 움직임을 **과장**해서 구별이 잘 되게 한다(대표님 지시 2026-09-27):
+         벌림(i·ê·e)은 옆으로 아주 넓게, 오므림(u·ô·o)은 작고 동그랗게, 턱은 크게 벌린다. */
+      const cy = 116, rw = pz.lipR >= 0 ? lerp(40, 70, clamp(pz.lipR, 0, 1)) : lerp(40, 13, clamp(-pz.lipR, 0, 1));
+      let oh = (pz.jaw * 46 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);
+      if (pz.lipR < -.4) oh = Math.max(oh, rw * .85 * (1 - pz.lipC));
+      if (pz.lipR > .3) oh = oh * (1 - .35 * pz.lipR);
+      const lt = pz.lipC > .5 ? 11 : (8 + Math.max(0, -pz.lipR) * 13 - Math.max(0, pz.lipR) * 3);
       set(els.lipO, 'rx', f1(rw + lt)); set(els.lipO, 'ry', f1(oh + lt * .85));
       ['opn', 'opl', 'fce'].forEach(id => { set(els[id], 'rx', f1(rw)); set(els[id], 'ry', f1(Math.max(oh, .8))); });
-      const tu = Math.min(oh * .9, 11), tl = oh > 15 ? Math.min(oh * .55, 8) : 0;
+      const tu = Math.min(oh * .9, 13), tl = oh > 16 ? Math.min(oh * .5, 9) : 0;
       set(els.tU, 'y', f1(cy - oh)); set(els.tU, 'height', f1(tu));
       set(els.tL, 'y', f1(cy + oh - tl)); set(els.tL, 'height', f1(tl));
       let lv = clamp((.6 - pz.gF) / .6, 0, 1); if (pz.ty < 180) lv = Math.max(lv, .85);

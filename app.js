@@ -7,7 +7,7 @@ document.addEventListener('gesturestart', e => e.preventDefault());
 
 /* ---------- 저장 ---------- */
 const KEY = 'vnstudy.v2';
-const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', done: {}, srs: {},
+const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', wspd: .8, pgm: 'word', done: {}, srs: {},
                           qbank: {}, act: {}, stats: {} },
   JSON.parse(localStorage.getItem(KEY) || '{}'));
 
@@ -320,7 +320,7 @@ const UIVI = {
   '조각을 눌러 문장을 만들어 보세요': 'Nhấn các mảnh để ghép thành câu',
   '아래 조각을 눌러 보세요': 'Hãy nhấn các mảnh bên dưới',
   'N개 중 M개를 한 번에 맞혔어요': 'Bạn đúng M/N ngay lần đầu',
-  '보통 속도': 'Tốc độ thường', '느리게': 'Chậm lại',
+  '보통 속도': 'Tốc độ thường',
   '📚 배운 것 모두': '📚 Tất cả đã học', '★ 담은 것': '★ Đã lưu',
   '여기까지 배운 낱말 N개입니다': 'Bạn đã học N từ',
   '여기 있는 낱말로 복습하기': 'Ôn tập các từ này',
@@ -587,8 +587,9 @@ const UIVI = {
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
   '천천히': 'Chậm', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
   '원어민 소리 높낮이': 'Cao độ giọng người bản xứ',
-  '녹음': 'Ghi âm', '재생 위치': 'Vị trí phát', '멈춤': 'Tạm dừng', '재생': 'Phát', '닫기': 'Đóng',
+  '녹음': 'Ghi âm', '듣기 속도': 'Tốc độ nghe', '재생 위치': 'Vị trí phát', '멈춤': 'Tạm dừng', '재생': 'Phát', '닫기': 'Đóng',
   '이 낱말과 헷갈리는 짝이 없습니다.': 'Từ này không có từ dễ nhầm.',
+  '동의어': 'Đồng nghĩa', '반의어': 'Trái nghĩa', '뜻이 비슷함': 'Nghĩa gần giống', '뜻이 반대': 'Nghĩa ngược lại', '따라가는 것': 'Hiển thị', '입모양': 'Khẩu hình', '그림': 'Hình',
   /* 탈퇴 · 순위 · 가입 화면 (2026-08-29 대표님 지시) */
   '내 말 (화면에 나올 말)':
     'Ngôn ngữ của tôi (hiện trên màn hình)',
@@ -737,31 +738,34 @@ const voiceDir = () => S.voice;
    audio.currentTime 하나를 시계로 삼아, 화면에 떠 있는 '보기'(높낮이 그래프 위 낱말, 입모양)들이
    자기 낱말이 지금 재생 중일 때만 그 시각에 맞춰 움직인다. 보기는 PB.views 에 등록하고,
    화면에서 사라지면(root.isConnected=false) 알아서 빠진다. */
-const PB = { views: new Set(), raf: 0, hold: null };
+const PB = { views: new Set(), raf: 0, hold: null, spdSrc: null };
 /* 지금 audio 가 **이 낱말의 고른 목소리 파일**인가 — 여·남은 같은 이름(해시)이라 폴더까지 봐야 한다(목소리를 바꾼 뒤 옛 목소리를 이어 트는 일이 없게) */
 const ownsAudio = h => !!h && !!audio.src && audio.src.includes('/' + voiceDir() + '/n/' + h + '.mp3');
 /* 보기(입모양·높낮이 그래프)가 지금 소리 위치를 따라야 하는가 — 재생 중이거나, 사용자가 재생 막대로 멈춰 둔 자리(hold)일 때 */
 const pbLive = (h, playing) => ownsAudio(h) && (playing || PB.hold === h);
 function pbTick() {
-  const playing = !audio.paused && !audio.ended;
+  const playing = !audio.paused && !audio.ended, mine = !myVoice.paused && !myVoice.ended;   // mine: 내 녹음을 듣는 중
   PB.views.forEach(v => {
     if (!v.root.isConnected) { PB.views.delete(v); return; }
-    try { v.update(playing); } catch (e) { }
+    try { v.update(playing, mine); } catch (e) { }
   });
-  PB.raf = playing ? requestAnimationFrame(pbTick) : 0;
+  PB.raf = (playing || mine) ? requestAnimationFrame(pbTick) : 0;
 }
 audio.addEventListener('play', () => { if (!PB.raf) PB.raf = requestAnimationFrame(pbTick); });
 audio.addEventListener('ended', () => { PB.hold = null; });
 ['pause', 'ended', 'emptied', 'seeked'].forEach(ev => audio.addEventListener(ev, () => { setTimeout(pbTick, 0); }));
+myVoice.addEventListener('play', () => { if (!PB.raf) PB.raf = requestAnimationFrame(pbTick); });
+['pause', 'ended', 'emptied', 'seeked'].forEach(ev => myVoice.addEventListener(ev, () => { setTimeout(pbTick, 0); }));
 
-function play(text, slow, dir) {
+function play(text, slow, dir, spd) {
   /* 대소문자 구분 없이 찾는다 — 문장 첫머리라 대문자로 들어온 낱말(Đây, Bạn...)도
      소문자 표제어 녹음을 그대로 쓴다(2026-09-09, 위 tapLine 주석 참고). */
   const h = AIDX[text] || AIDX[text.toLowerCase()];
   const d = dir || voiceDir();
-  if (!h) { speakVi(text, false, slow ? rate() * .7 : 0, S.voice); return; }
+  if (!h) { speakVi(text, false, spd ? spd : (slow ? rate() * .7 : 0), S.voice); return; }
   audio.pause();
   PB.hold = null;
+  PB.spdSrc = spd ? `audio/${d}/n/${h}.mp3` : null;      // 낱말 카드의 속도 단추(0.6·0.8·1배)로 튼 소리인가
   audio.onerror = null;
   /* 조금 느리게 튼다 (대표님 지시 2026-08-31) — 원어민 속도가 초보에겐 빠르다.
      playbackRate 는 높낮이를 지켜 주므로 성조가 뭉개지지 않는다. */
@@ -775,8 +779,8 @@ function play(text, slow, dir) {
      계속 1배로 나고 있었다. 이 파일 다른 다섯 곳(예: 8783줄)은 이미 src 먼저였는데
      제일 많이 쓰이는 이 자리만 거꾸로였다. 순서만 바꾼다. */
   audio.src = `audio/${d}/n/${h}.mp3`;
-  audio.playbackRate = slow ? Math.max(.5, rate() * .7) : rate();
-  audio.onerror = () => { audio.onerror = null; speakVi(text, false, slow ? rate() * .7 : 0, S.voice); };
+  audio.playbackRate = spd ? spd : (slow ? Math.max(.5, rate() * .7) : rate());
+  audio.onerror = () => { audio.onerror = null; speakVi(text, false, spd ? spd : (slow ? rate() * .7 : 0), S.voice); };
   audio.currentTime = 0;
   audio.play().catch(() => { });
 }
@@ -923,7 +927,7 @@ function toneRow(tones, small) {
 let SIB = null, SIBP = null;
 function sibLoad() {
   if (SIB) return Promise.resolve(SIB);
-  if (!SIBP) SIBP = fetch('data/siblings.json', { cache: 'no-cache' }).then(r => r.json())
+  if (!SIBP) SIBP = fetch('data/sib.json', { cache: 'no-cache' }).then(r => r.json())
     .then(j => (SIB = j)).catch(() => { SIBP = null; return null; });
   return SIBP;
 }
@@ -931,39 +935,56 @@ const SIB_T = ['ngang', 'huyền', 'sắc', 'hỏi', 'ngã', 'nặng'];
 const SIB_KO = { 'ngang': '평평하게', 'huyền': '내려감', 'sắc': '올라감', 'hỏi': '내렸다 올림',
                  'ngã': '끊었다 올림', 'nặng': '짧고 무겁게' };
 const sibToneOf = s => {
-  const m = s.normalize('NFD').match(/[̣̀́̃̉]/);
+  const m = s.normalize('NFD').match(/[̣̀́̃̉]/);
   return m ? { '̀': 'huyền', '́': 'sắc', '̃': 'ngã', '̉': 'hỏi', '̣': 'nặng' }[m[0]] : 'ngang';
 };
+/* 성조 부호 자리만 다른 표기(hòa/hoà)는 같은 낱말로 본다 */
+const sibKey = s => stripTone(s) + '|' + sibToneOf(s);
 const sibBase = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
-/* 낱말의 음절마다 짝(가족)을 찾는다 — 자기 말고 짝이 하나라도 있는 음절만 돌려준다 */
+/* 낱말의 음절마다 짝(가족)을 찾는다 — 자기 말고 짝이 하나라도 있는 음절만 돌려준다.
+   가족 셋(대표님 지시 2026-09-27: 모양 비슷한 것·성조 다른 것 다 넣는다):
+     tone  글자는 같고 성조만 다름(ma·mà·má…)        shape 성조는 같고 모음·đ 모양만 다름(mua·mưa)
+     skel  글자 뼈대(부호 뺀 글자)가 같은 나머지 전부(mua·mùa·mưa·múa·mừa…) — 위 둘에 안 든 것만 따로 보여 준다 */
 function sibFams(vi) {
   const seen = new Set(), out = [];
   vi.toLowerCase().replace(/[.,!?;:…"'“”‘’()]/g, ' ').split(/\s+/).filter(Boolean).forEach(s => {
     if (seen.has(s)) return;
     seen.add(s);
-    const tf = SIB.tone[stripTone(s)], sf = SIB.shape[sibBase(s) + '|' + SIB_T.indexOf(sibToneOf(s))];
-    const other = f => f && f.m.some(i => i[0] !== s);
-    if (other(tf) || other(sf)) out.push({ s, tf: other(tf) ? tf : null, sf: other(sf) ? sf : null });
+    const tf = SIB.t[stripTone(s)], sf = SIB.s[sibBase(s) + '|' + SIB_T.indexOf(sibToneOf(s))], kf = SIB.k[sibBase(s)];
+    const other = f => f && f.some(x => sibKey(x) !== sibKey(s));
+    const inT = new Set(tf || []), inS = new Set(sf || []);
+    const rest = kf ? kf.filter(x => sibKey(x) !== sibKey(s) && !inT.has(x) && !inS.has(x)) : [];
+    if (other(tf) || other(sf) || rest.length) out.push({ s, tf: other(tf) ? tf : null, sf: other(sf) ? sf : null, kf: rest.length ? rest : null });
   });
   return out;
+}
+/* 낱말의 동의어·반의어 (없으면 null) */
+function sibRel(vi) {
+  const w = SIB.w[vi.toLowerCase().trim()];
+  return w && ((w.s && w.s.length) || (w.a && w.a.length)) ? w : null;
 }
 /* 모양 짝은 어느 글자가 다른지 색으로 짚어 준다 (o ↔ ô ↔ ơ) — 성조 부호는 빼고 모음 모양만 견준다 */
 function sibDiff(syl, cur) {
   const a = [...syl.normalize('NFC')], sa = [...stripTone(syl)], sc = [...stripTone(cur)];
   return a.map((ch, i) => sc.length === sa.length && sa[i] !== sc[i] ? '<u class="dif">' + esc(ch) + '</u>' : esc(ch)).join('');
 }
-function pairRow(it, cur, withTone) {
-  const key = recKey(it[0]), tn = sibToneOf(it[0]);
-  const r = el('div', 'prow' + (it[0] === cur ? ' cur' : ''));
-  const w = el('span', 'psyl ' + tn);
-  w.append(el('b', null, withTone || it[0] === cur ? esc(it[0]) : sibDiff(it[0], cur)), el('i', null, toneArrow(tn)));
+/* 짝 한 줄: 낱말 · 뜻(한국어, 없으면 영어, 없으면 이 음절이 든 예) · ▶ */
+function pairRow(word, cur, mode) {
+  const w0 = SIB.w[word] || {};
+  const key = recKey(word), tn = sibToneOf(word.split(' ')[0]);
+  const r = el('div', 'prow' + (cur && (word === cur || (word.indexOf(' ') < 0 && cur.indexOf(' ') < 0 && sibKey(word) === sibKey(cur))) ? ' cur' : ''));
+  const one = word.indexOf(' ') < 0;
+  const w = el('span', 'psyl ' + (one ? tn : ''));
+  w.append(el('b', null, mode === 'shape' && word !== cur ? sibDiff(word, cur) : esc(word)));
+  if (one) w.append(el('i', null, toneArrow(tn)));
   const m = el('span', 'pmn');
-  if (it[1]) m.append(el('span', 'pko', esc(it[1])));
-  else m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(it[2]) + '</b> ' + esc(it[3])));   // 뜻 자리가 비면 이 음절이 든 낱말을 보여 준다(2026-09-26 '뜻 미확인' 표시 없앰)
-  if (withTone) m.append(el('span', 'ptone', tn + ' · ' + tr(SIB_KO[tn])));
+  if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
+  else if (w0.e) m.append(el('span', 'pko en', esc(w0.e)));
+  else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
+  if (mode === 'tone' && one) m.append(el('span', 'ptone', tn + ' · ' + tr(SIB_KO[tn])));
   r.append(w, m);
   if (key) {
-    const b = iconBtn('play', tr('듣기'), () => play(key, false));
+    const b = iconBtn('play', tr('듣기'), () => play(key, false, null, spdOf()));
     b.classList.add('playi');
     r.append(b);
   }
@@ -976,14 +997,18 @@ function pairSeq(items, rows, wrap, btn) {
   btn.classList.add('on');
   (async () => {
     for (let i = 0; i < items.length && wrap._seq && wrap.isConnected; i++) {
-      const key = recKey(items[i][0]);
+      const key = recKey(items[i]);
       if (!key) continue;
       rows.forEach(r => r.classList.remove('now'));
       rows[i].classList.add('now');
-      play(key, false);
-      await new Promise(res => { const t = setTimeout(res, 2400); audio.onended = () => { clearTimeout(t); res(); }; });
-      audio.onended = null;
-      await new Promise(r => setTimeout(r, 300));
+      play(key, false, null, spdOf());
+      const nat = await nativeCurve(key);
+      const endAt = nat && nat.e ? nat.e + .1 : 0;                 // 소리가 들리는 끝까지만 (파일 뒤 무음은 기다리지 않는다)
+      await new Promise(res => {
+        const t = setTimeout(res, 2400);
+        const iv = setInterval(() => { if (audio.paused || audio.ended || (endAt && audio.currentTime >= endAt)) { clearTimeout(t); clearInterval(iv); res(); } }, 40);
+      });
+      await new Promise(r => setTimeout(r, 250));
     }
     rows.forEach(r => r.classList.remove('now'));
     wrap._seq = false;
@@ -995,27 +1020,31 @@ function pairPanel(vi, opt) {
   const wrap = el('div', o.bare ? 'pairbox bare' : 'pairbox');
   sibLoad().then(() => {
     if (!SIB || !wrap.isConnected) return;
-    const fams = sibFams(vi);
-    if (!fams.length) return;
+    const fams = sibFams(vi), rel = sibRel(vi);
+    if (!fams.length && !rel) return;
     const head = el('button', 'pairhead', '<span>' + tr('헷갈리는 짝') + '</span><i class="pchev">▾</i>');
     head.type = 'button';
     const body = el('div', 'pairbody');
     let cur = 0, built = false;
-    const section = (title, note, fam, s, withTone) => {
+    const section = (title, note, list, s, mode) => {
       const sec = el('div', 'psec');
       sec.append(el('div', 'ptitle', tr(title) + '<span>' + tr(note) + '</span>'));
-      const rows = fam.m.map(it => pairRow(it, s, withTone));
+      const rows = list.map(x => pairRow(x, s, mode));
       rows.forEach(r => sec.append(r));
-      if (withTone && fam.m.filter(it => recKey(it[0])).length > 1) {
+      if (mode === 'tone' && list.filter(x => recKey(x)).length > 1) {
         const b = el('button', 'ghost sm pseq', '▶ ' + tr('순서대로 듣기'));
         b.type = 'button';
-        b.onclick = () => pairSeq(fam.m, rows, wrap, b);
+        b.onclick = () => pairSeq(list, rows, wrap, b);
         sec.append(b);
       }
       return sec;
     };
     const draw = () => {
       body.textContent = '';
+      if (rel) {                                   // 동의어·반의어는 눌린 낱말 전체 기준 — 음절 고르기와 상관없이 늘 위에
+        if (rel.s && rel.s.length) body.append(section('동의어', '뜻이 비슷함', rel.s, '', 'rel'));
+        if (rel.a && rel.a.length) body.append(section('반의어', '뜻이 반대', rel.a, '', 'rel'));
+      }
       if (fams.length > 1) {
         const sel = el('div', 'psel');
         fams.forEach((f, i) => {
@@ -1027,13 +1056,16 @@ function pairPanel(vi, opt) {
         body.append(sel);
       }
       const F = fams[cur];
-      if (F.tf) body.append(section('성조만 다른 낱말', '글자는 같고 높낮이만 다름', F.tf, F.s, true));
-      if (F.sf) body.append(section('모양이 조금 다른 글자', '성조는 같음', F.sf, F.s, false));
-      const tn = F.tf ? F.tf.m.map(i => sibToneOf(i[0])) : [];
-      if (tn.includes('hỏi') && tn.includes('ngã'))
-        body.append(el('div', 'pnote', '<b>hỏi</b>와 <b>ngã</b>는 남부·중부에서 한 소리로 합쳐집니다. 북부 소리로는 다릅니다.'));
-      if (/(p|t|c|ch)$/.test(F.s) && ['sắc', 'nặng'].includes(sibToneOf(F.s)))
-        body.append(el('div', 'pnote', '받침이 <b>p·t·c·ch</b>인 음절은 성조가 <b>sắc</b> 아니면 <b>nặng</b> 둘 중 하나뿐입니다.'));
+      if (F) {
+        if (F.tf) body.append(section('성조만 다른 낱말', '글자는 같고 높낮이만 다름', F.tf, F.s, 'tone'));
+        if (F.sf) body.append(section('모양이 조금 다른 글자', '성조는 같음', F.sf, F.s, 'shape'));
+        if (F.kf) body.append(section('비슷하게 생긴 다른 글자', '글자 모양·성조가 모두 다름', F.kf, F.s, 'skel'));
+        const tn = F.tf ? F.tf.map(x => sibToneOf(x)) : [];
+        if (tn.includes('hỏi') && tn.includes('ngã'))
+          body.append(el('div', 'pnote', '<b>hỏi</b>와 <b>ngã</b>는 남부·중부에서 한 소리로 합쳐집니다. 북부 소리로는 다릅니다.'));
+        if (/(p|t|c|ch)$/.test(F.s) && ['sắc', 'nặng'].includes(sibToneOf(F.s)))
+          body.append(el('div', 'pnote', '받침이 <b>p·t·c·ch</b>인 음절은 성조가 <b>sắc</b> 아니면 <b>nặng</b> 둘 중 하나뿐입니다.'));
+      }
     };
     const set = open => {
       head.classList.toggle('on', open);
@@ -1049,23 +1081,31 @@ function pairPanel(vi, opt) {
 }
 
 /* 낱말을 누르면 **팝업**으로 헷갈리는 짝을 보여 준다 (대표님 지시 2026-09-26) — 단어 면·발음 면 똑같이. */
-function pairPopup(vi) {
+function pairPopup(vi, info) {
+  const inf = info || {};
   const back = el('div', 'modalback');
   const box = el('div', 'modalbox pairpop');
   const hd = el('div', 'pairpophd');
-  hd.append(el('b', null, esc(vi)), el('span', null, tr('헷갈리는 짝')));
+  hd.append(el('b', null, esc(vi)));
+  if (inf.kr) hd.append(el('span', 'pkr', '[' + esc(inf.kr) + ']'));
+  const pl = iconBtn('play', tr('듣기'), () => { const k = recKey(vi); k ? play(k, false, null, spdOf()) : speakVi(vi, false, spdOf()); });
+  pl.classList.add('playi');
+  hd.append(pl);
+  box.append(hd);
+  if (inf.ko) box.append(el('div', 'pairpopko', esc(inf.ko)));
+  const sub = el('div', 'pairpopsub', tr('헷갈리는 짝'));
   const body = el('div', 'pairpopbody');
   const ok = el('button', 'primary big', tr('닫기'));
   ok.style.width = '100%';
   const close = () => { const w = body.firstChild; if (w) w._seq = false; back.remove(); };
   ok.onclick = close;
-  box.append(hd, body, ok);
+  box.append(sub, body, ok);
   back.append(box);
   back.onclick = e => { if (e.target === back) close(); };
   document.body.append(back);
   sibLoad().then(() => {
     if (!SIB) { body.append(el('div', 'pnote', tr('불러오지 못했습니다'))); return; }
-    if (!sibFams(vi).length) { body.append(el('div', 'pnote', tr('이 낱말과 헷갈리는 짝이 없습니다.'))); return; }
+    if (!sibFams(vi).length && !sibRel(vi)) { body.append(el('div', 'pnote', tr('이 낱말과 헷갈리는 짝이 없습니다.'))); return; }
     body.append(pairPanel(vi, { bare: true }));
   });
 }
@@ -1291,31 +1331,60 @@ function liveRec(box, stream, secs, onStop) {
                  try { src.disconnect(); } catch (e) { } };
 }
 
+/* 원어민 소리를 고른 속도로, 내 소리와 순서대로/겹쳐서 듣는다 (대표님 지시 2026-09-27) */
+function nativeThenMine(text, both) {
+  if (REC.key !== text || !REC.url) return;
+  const spd = spdOf();
+  if (both) { play(text, false, null, spd); playMine(); return; }        // 겹쳐서: 둘을 한꺼번에
+  play(text, false, null, spd);                                          // 순서대로: 원어민 → 나
+  nativeCurve(text).then(nat => {
+    const endAt = nat && nat.e ? nat.e + .1 : 0;                         // 소리가 들리는 끝(파일 뒤 무음은 기다리지 않는다)
+    const iv = setInterval(() => {
+      if (audio.paused || audio.ended || (endAt && audio.currentTime >= endAt)) {
+        clearInterval(iv);
+        if (REC.key === text) { audio.pause(); playMine(); }
+      }
+    }, 40);
+    setTimeout(() => clearInterval(iv), 9000);
+  });
+}
+
 function drawCompare(text, box) {
   box.textContent = '';
-  box.parentElement?.querySelector('.prenat')?.remove();   // 원어민 단독 곡선은 겹쳐 그리기로 대체
+  const merged = !!box.dataset.merged;     // 낱말 카드: 그래프는 카드의 하나뿐인 그래프에 겹쳐 그린다
+  if (!merged) box.parentElement?.querySelector('.prenat')?.remove();   // (옛 화면) 원어민 단독 곡선은 겹쳐 그리기로 대체
   const row = el('div', 'cmp');
   const a = el('button', 'ghost', '원어민');
-  a.onclick = () => play(text, false);
+  a.onclick = () => play(text, false, null, merged ? spdOf() : undefined);
   const b = el('button', 'ghost', '나');
   b.onclick = () => {
     if (REC.key === text) playMine();
   };
-  const c = el('button', 'ghost', '번갈아 듣기');
-  c.onclick = async () => {
+  const c = el('button', 'ghost', merged ? '순서대로 듣기' : '번갈아 듣기');
+  if (merged) c.onclick = () => nativeThenMine(text, false);
+  else c.onclick = async () => {
     play(text, false);
     await new Promise(r => setTimeout(r, 2200));
     if (REC.key === text) playMine();
   };
   /* 판정 칸은 **그래프 아래**에 온다 — 그림을 보고 나서 결과를 읽는 순서가 자연스럽다.
      발음(AI)과 높낮이(곡선)는 서로 다른 것을 보므로 한 칸에 나란히 둔다. */
-  const curve = el('div', 'curvearea');
   const said = el('div', 'saidbox');
   said.append(el('div', 'vrow', '<span class="vname">발음</span><span class="vmark">…</span>'),
               el('div', 'vrow', '<span class="vname">높낮이</span><span class="vmark">…</span>'));
   row.append(a, b, c);
-  box.append(row, curve, said);
-  showTone(text, REC.url, curve);        // 녹음이 끝나면 버튼 없이 바로 그린다
+  if (merged) {
+    const d = el('button', 'ghost', '겹쳐서 듣기');
+    d.onclick = () => nativeThenMine(text, true);
+    row.append(d);
+    box.append(row, said);
+    REC.mine = null; window.dispatchEvent(new CustomEvent('chao-rec', { detail: text }));   // 새 녹음 — 옛 내 곡선을 지운다
+    showTone(text, REC.url, null, box);
+  } else {
+    const curve = el('div', 'curvearea');
+    box.append(row, curve, said);
+    showTone(text, REC.url, curve);        // 녹음이 끝나면 버튼 없이 바로 그린다
+  }
   if (canLocalASR()) aiListen(text, REC.url, said);   // 발음도 누를 것 없이 바로 (폰으로만 판정)
 }
 
@@ -1428,7 +1497,7 @@ function tutorTap() {
   if (S.tut) return;
   S.tut = 1; save();
   popup('<b>낱말 카드 쓰는 법</b><br>' +
-        '낱말을 누르면 <b>헷갈리는 짝</b>이 나옵니다. 소리는 낱말 밑의 <b>보통 · 느리게</b>, 따라 말하기는 <b>녹음</b>입니다. ' +
+        '낱말을 누르면 <b>헷갈리는 짝</b>이 나옵니다. 소리는 뜻 밑의 <b>듣기</b>(누를 때마다 1배·0.8배·0.6배), 따라 말하기는 <b>말하기</b>입니다. 예문 속 낱말도 눌러 보세요. ' +
         '위쪽 <b>단어 · 발음</b> 단추를 누르면 입모양과 높낮이 그래프, 재생 막대가 나옵니다. 예문은 눌러서 들으세요.');
 }
 /* 예/아니오 확인 창. 브라우저 confirm() 은 **홈 화면에 설치한 PWA 에서 막히는 폰이 있다** —
@@ -1545,19 +1614,198 @@ function curveArea(text, box) {
   return wrap;
 }
 
-/* 낱말 밑 단추 줄 — [보통] [느리게] [녹음] (대표님 지시 2026-09-26). 단어 면·발음 면 똑같은 자리에 둔다.
-   box: 녹음 결과(원어민과 겹친 높낮이·판정)가 뜨는 자리. */
+/* 하나뿐인 높낮이 그래프 (대표님 지시 2026-09-27: "두 그래프를 하나로 합치자").
+   · 원어민 곡선(회색)에 낱말(또는 입·그림)이 소리를 따라 위아래로 움직인다.
+   · 말하기(녹음)를 하면 내 곡선(파랑)이 **같은 그래프에 겹쳐** 나오고, 내 소리를 들을 때는 내 곡선 위를 따라간다.
+   · 원어민 소리와 내 소리를 **겹쳐서** 들으면 두 표지가 동시에 움직인다.
+   · 따라가는 것은 [단어 | 입 | 그림] 중에서 고른다(S.pgm). 입·그림은 곡선 위쪽에 더 큰 자리를 둔다. */
+function pitchGraph(text, opt) {
+  const o = opt || {};
+  const W = 300, PAD = 12;
+  const h = AIDX[text] || AIDX[text.toLowerCase()];
+  const wrap = el('div', 'pgwrap');
+  const box = el('div', 'pgraph curvebox');
+  const svgHost = el('div', 'pgsvg');
+  const mkN = el('div', 'pgmk'), mkM = el('div', 'pgmk me');
+  mkM.hidden = true;
+  box.append(svgHost, mkN, mkM);
+  const leg = el('div', 'curvelegend');
+  const sel = el('div', 'pgsel');
+  wrap.append(box, leg, sel);
+  let nat = null, mine = null, mode = S.pgm || 'word', built = '', mouths = [], syl = text.split(' ').filter(Boolean);
+  if (mode === 'img' && !o.img) mode = 'word';
+  const geom = () => mode === 'word' ? { H: 118, TOP: 30 } : { H: 158, TOP: 66 };
+  let G = geom(), X0 = 0, X1 = 0, px = () => 0, py = () => 0, seriesN = null, seriesM = null;
+
+  const clip = (id, w, H) => `<clipPath id="${id}"><rect x="0" y="0" width="${w}" height="${H}"/></clipPath>`;
+  const pathOf = (pts) => { let d = '', pen = false; pts.forEach(q => { if (!q) { pen = false; return; } d += (pen ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1); pen = true; }); return d; };
+  let uid = 'pg' + Math.random().toString(36).slice(2, 7), elN = null, elM = null, clN = null, clM = null;
+
+  function draw() {
+    G = geom();
+    const rawN = nat && nat.raw && nat.raw.length > 4 ? nat.raw : null;
+    seriesN = seriesM = null;
+    if (!rawN) { svgHost.textContent = ''; return; }
+    const spanN = rawN.length * nat.hop, t0 = nat.t0;
+    const xmin = Math.max(0, t0 - .10), xmax = Math.min(nat.total, t0 + spanN + .10);
+    px = t => PAD + (t - xmin) / ((xmax - xmin) || 1) * (W - PAD * 2);
+    X0 = px(t0); X1 = px(t0 + spanN);
+    const vals = rawN.filter(v => v !== null && isFinite(v)).concat(mine && mine.raw ? mine.raw.filter(v => v !== null && isFinite(v)) : []);
+    const lo = Math.min(-3, Math.min(...vals)), hi = Math.max(3, Math.max(...vals));
+    py = v => G.TOP + (hi - v) * (G.H - G.TOP - PAD) / ((hi - lo) || 1);
+    seriesN = { raw: rawN, t0, hop: nat.hop, span: spanN, x: t => px(t) };
+    const ptsN = rawN.map((v, i) => v === null ? null : [px(t0 + i * nat.hop), py(v)]);
+    let mineSvg = '';
+    if (mine && mine.raw && mine.raw.length > 4) {
+      const spanM = mine.raw.length * mine.hop;
+      seriesM = { raw: mine.raw, t0: mine.t0, hop: mine.hop, span: spanM, x: t => X0 + (t - mine.t0) / (spanM || 1) * (X1 - X0) };
+      const ptsM = mine.raw.map((v, i) => v === null ? null : [seriesM.x(mine.t0 + i * mine.hop), py(v)]);
+      const dM = pathOf(ptsM);
+      mineSvg = `<path d="${dM}" class="mine"/><path d="${dM}" class="mplayed" clip-path="url(#${uid}m)"/>`;
+    }
+    const dN = pathOf(ptsN);
+    svgHost.innerHTML = `<svg viewBox="0 0 ${W} ${G.H}" class="curve pw">` +
+      `<defs>${clip(uid + 'n', 0, G.H)}${clip(uid + 'm', 0, G.H)}</defs>` +
+      `<line x1="${PAD}" y1="${py(0).toFixed(1)}" x2="${W - PAD}" y2="${py(0).toFixed(1)}" class="mid"/>` +
+      `<path d="${dN}" class="nat"/><path d="${dN}" class="played" clip-path="url(#${uid}n)"/>${mineSvg}</svg>`;
+    clN = svgHost.querySelector(`#${uid}n rect`); clM = svgHost.querySelector(`#${uid}m rect`);
+  }
+
+  function atSeries(sr, t) {              // 시각 t → 곡선 위 점 (사이 빈 곳은 앞뒤를 이어 준다)
+    const raw = sr.raw, n = raw.length, i = clamp01((t - sr.t0) / (sr.hop * (n - 1))) * (n - 1);
+    let a = Math.floor(i), b = Math.ceil(i);
+    while (a > 0 && raw[a] === null) a--;
+    while (b < n - 1 && raw[b] === null) b++;
+    const va = raw[a] ?? raw.find(v => v !== null), vb = raw[b] ?? [...raw].reverse().find(v => v !== null);
+    const f = b === a ? 0 : (i - a) / (b - a);
+    const tt = sr.t0 + (a + (b - a) * f) * sr.hop;
+    return [sr.x(tt), py(va + (vb - va) * f)];
+  }
+
+  function buildMarkers() {
+    const key = mode + (mine ? '+' : '');
+    if (built === key) return;
+    built = key;
+    mouths = [];
+    [mkN, mkM].forEach((mk, k) => {
+      mk.textContent = ''; mk.className = 'pgmk' + (k ? ' me' : '') + ' ' + mode;
+      if (mode === 'word') mk.append(el('span', 'pgtx'));
+      else if (mode === 'mouth') {
+        const host = el('div', 'pgmouth'); mk.append(host);
+        if (typeof MOUTH !== 'undefined') { const M = MOUTH.create(host, { front: true }); M.setWord(text); M.at(0); mouths[k] = M; }
+      } else {
+        const im = new Image(); im.alt = ''; im.src = 'img/' + o.img; mk.append(im);
+      }
+    });
+  }
+
+  function place(mk, k, sr, t, playing, u) {
+    const q = atSeries(sr, t);
+    if (mode === 'word') {
+      const tx = mk.firstChild;
+      const s = syl.length > 1 ? syl[Math.min(syl.length - 1, Math.floor(clamp01((t - sr.t0) / sr.span) * syl.length))] : syl[0];
+      if (tx && tx.textContent !== s) tx.textContent = s;
+    } else if (mode === 'mouth' && mouths[k]) mouths[k].at(clamp01(u));
+    mk.style.left = (clamp(q[0], 22, W - 22) / W * 100).toFixed(2) + '%';
+    mk.style.top = (q[1] / G.H * 100).toFixed(2) + '%';
+    mk.classList.toggle('on', !!playing);
+    return q;
+  }
+
+  function update(playing, minePlaying) {
+    if (!seriesN) return;
+    buildMarkers();
+    const nLive = pbLive(h, playing);
+    const tN = nLive ? clamp(audio.currentTime, seriesN.t0, seriesN.t0 + seriesN.span) : seriesN.t0;
+    const a = Math.max(0, nat.t0 - .06), b = Math.min(nat.total, nat.t0 + seriesN.span + .05);
+    const q = place(mkN, 0, seriesN, tN, nLive, (audio.currentTime - a) / ((b - a) || 1));
+    if (clN) clN.setAttribute('width', nLive ? q[0].toFixed(1) : 0);
+    if (seriesM) {
+      const mLive = !!minePlaying && REC.key === text;
+      const tM = mLive ? clamp(myVoice.currentTime, seriesM.t0, seriesM.t0 + seriesM.span) : seriesM.t0;
+      mkM.hidden = !mLive;
+      if (mLive) {
+        const a2 = Math.max(0, mine.t0 - .06), b2 = Math.min(mine.total, mine.t0 + seriesM.span + .05);
+        const q2 = place(mkM, 1, seriesM, tM, true, (myVoice.currentTime - a2) / ((b2 - a2) || 1));
+        if (clM) clM.setAttribute('width', q2[0].toFixed(1));
+      } else if (clM) clM.setAttribute('width', 0);
+    } else mkM.hidden = true;
+  }
+
+  function legend() {
+    leg.innerHTML = `<span class="k nat"></span>${tr('원어민 소리 높낮이')}` + (seriesM ? ` &nbsp; <span class="k mine"></span>${tr('나')}` : '');
+  }
+  function selUi() {
+    sel.textContent = '';
+    sel.append(el('span', 'pgsl', tr('따라가는 것')));
+    [['word', '단어'], ['mouth', '입모양'], ['img', '그림']].forEach(([m, lab]) => {
+      if (m === 'img' && !o.img) return;
+      const b = el('button', 'pgsb' + (mode === m ? ' on' : ''), lab);
+      b.type = 'button';
+      b.onclick = () => { S.pgm = m; save(); window.dispatchEvent(new CustomEvent('chao-pgm')); };
+      sel.append(b);
+    });
+  }
+  const onRec = ev => {
+    if (!box.isConnected) { window.removeEventListener('chao-rec', onRec); return; }
+    if (ev.detail !== text) return;
+    mine = (REC.key === text && REC.mine) ? REC.mine : null;
+    built = ''; draw(); legend(); update(false, false);
+  };
+  const onPgm = () => {
+    if (!box.isConnected) { window.removeEventListener('chao-pgm', onPgm); return; }
+    mode = (S.pgm === 'img' && !o.img) ? 'word' : (S.pgm || 'word');
+    built = ''; draw(); selUi(); update(false, false);
+  };
+  window.addEventListener('chao-rec', onRec);
+  window.addEventListener('chao-pgm', onPgm);
+  if (REC.key === text && REC.mine) mine = REC.mine;
+  nativeCurve(text).then(n => {
+    nat = n;
+    if (!nat || !nat.raw || nat.raw.length < 5) { wrap.hidden = true; return; }
+    draw(); legend(); selUi(); update(false, false);
+    box.onclick = ev => { if (ev.target.closest('.pgmk')) play(text, false, null, spdOf()); };
+  });
+  PB.views.add({ root: wrap, update });
+  return wrap;
+}
+
+/* 듣기 속도 — 1배·0.8배·0.6배 (대표님 지시 2026-09-27). 고른 값은 저장하고, 낱말 카드·예문·'원어민 듣기'가 모두 같은 값을 쓴다. */
+const SPDS = [1, .8, .6];
+const spdOf = () => SPDS.includes(Number(S.wspd)) ? Number(S.wspd) : .8;
+const spdLab = v => v + '배';
+function spdChip() {
+  const b = el('button', 'spdchip');
+  b.type = 'button';
+  b.textContent = spdLab(spdOf());
+  b.setAttribute('aria-label', tr('듣기 속도'));
+  b.onclick = ev => {
+    ev.stopPropagation();
+    S.wspd = SPDS[(SPDS.indexOf(spdOf()) + 1) % SPDS.length]; save();
+    document.querySelectorAll('.spdchip').forEach(x => { x.textContent = spdLab(S.wspd); });
+    if (PB.spdSrc && audio.src.endsWith(PB.spdSrc) && !audio.paused) audio.playbackRate = S.wspd;   // 듣는 중이면 바로 바꾼다
+  };
+  return b;
+}
+/* [▶ 듣기][0.8배] — fn(속도) 를 부른다 */
+function listenGroup(fn) {
+  const g = el('div', 'lgrp');
+  const b = el('button', 'ghost lbtn', '▶ ' + tr('듣기'));
+  b.type = 'button';
+  b.onclick = ev => { ev.stopPropagation(); fn(spdOf()); };
+  g.append(b, spdChip());
+  return g;
+}
+
+/* 낱말 밑 단추 줄 — [▶ 듣기 0.8배] [🔴 말하기] (대표님 지시 2026-09-26·27). 뜻 바로 아래, 단어 면·발음 면 같은 자리.
+   box: 말하기(녹음) 결과가 뜨는 자리 — 원어민→나 순서대로 듣기·겹쳐서 듣기와 발음·높낮이 판정. */
 function wordControls(text, box) {
   const row = el('div', 'wctl');
-  const b1 = el('button', 'ghost', '▶ ' + tr('보통'));
-  const b2 = el('button', 'ghost', '🐢 ' + tr('느리게'));
-  b1.type = b2.type = 'button';
-  b1.onclick = () => play(text, false);
-  b2.onclick = () => play(text, true);
-  row.append(b1, b2);
+  row.append(listenGroup(spd => play(text, false, null, spd)));
   if (canRecord()) {
-    const mic = el('button', 'rec', '🎤 ' + tr('녹음'));
+    const mic = el('button', 'rec', '🔴 ' + tr('말하기'));
     mic.type = 'button';
+    box.dataset.merged = '1';                 // 그래프는 카드의 하나뿐인 그래프에 겹쳐 그린다
     mic.onclick = () => toggleRec(text, mic, box);
     row.append(mic);
   } else {
@@ -1566,54 +1814,52 @@ function wordControls(text, box) {
   return row;
 }
 
-/* 재생 막대 — 사용자가 직접 재생·멈춤하고 막대를 끌어 원하는 자리로 옮긴다 (대표님 지시 2026-09-26).
-   막대를 끌면 입모양과 높낮이 그래프도 그 자리에 맞춰 멈춘다(PB.hold). */
+/* 재생 막대 — 끌어서 원하는 자리로 옮긴다 (대표님 지시 2026-09-26). 재생·멈춤 단추는 없다(위의 [듣기]가 한다).
+   막대의 처음·끝은 **소리가 실제로 들리는 구간**이다(2026-09-27: 파일 뒤에 1초 안팎 무음이 붙어 있어서
+   소리가 끝난 뒤에도 막대가 계속 갔다). 끌면 입모양·높낮이 그래프도 그 자리에 멈춘다(PB.hold). */
 function playBar(text) {
   const h = AIDX[text] || AIDX[text.toLowerCase()];
   const wrap = el('div', 'pbar');
-  const btn = el('button', 'pbtn');
-  btn.type = 'button';
   const rng = document.createElement('input');
   rng.type = 'range'; rng.min = 0; rng.max = 1000; rng.step = 1; rng.value = 0; rng.className = 'prng';
   rng.setAttribute('aria-label', tr('재생 위치'));
   const tm = el('span', 'ptm', '0.00 / 0.00');
-  wrap.append(btn, rng, tm);
-  if (!h) { btn.disabled = rng.disabled = true; btn.textContent = '▶'; return wrap; }
-  let dur = 0, drag = false, resume = false;
+  wrap.append(rng, tm);
+  if (!h) { rng.disabled = true; return wrap; }
+  let span = null, dur0 = 0, drag = false, resume = false;
   const url = () => `audio/${voiceDir()}/n/${h}.mp3`;
-  const D = () => (ownsAudio(h) && isFinite(audio.duration) && audio.duration) ? audio.duration : dur;
   const fmt = t => (Math.round(t * 100) / 100).toFixed(2);
+  const D = () => (ownsAudio(h) && isFinite(audio.duration) && audio.duration) ? audio.duration : dur0;
+  const range = () => span || { a: 0, b: D() };
   const paint = () => {
-    const own = ownsAudio(h), playing = own && !audio.paused && !audio.ended, d = D();
-    const t = own && !audio.ended ? audio.currentTime : 0;
-    if (!drag) rng.value = d ? Math.round(clamp(t / d, 0, 1) * 1000) : 0;
-    tm.textContent = fmt(drag ? clamp(rng.value / 1000, 0, 1) * d : t) + ' / ' + fmt(d);
-    btn.textContent = playing ? '⏸' : '▶';
-    btn.setAttribute('aria-label', playing ? tr('멈춤') : tr('재생'));
+    const R = range(), len = Math.max(.05, R.b - R.a), own = ownsAudio(h);
+    let pos = own ? clamp((audio.currentTime - R.a) / len, 0, 1) : 0;
+    if (own && audio.ended) pos = 1;
+    if (!drag) rng.value = Math.round(pos * 1000);
+    tm.textContent = fmt((drag ? rng.value / 1000 : pos) * len) + ' / ' + fmt(len);
   };
-  const probe = new Audio();                       // 길이를 미리 알아 둔다 (다른 소리가 audio 를 쓰고 있어도 되게 따로)
+  nativeCurve(text).then(n => {
+    if (n && n.e > n.s) span = { a: Math.max(0, n.s - .05), b: Math.min(n.total, n.e + .12) };
+    paint();
+  });
+  const probe = new Audio();                       // 소리 분석이 안 되는 낱말은 파일 길이로
   probe.preload = 'metadata';
-  probe.onloadedmetadata = () => { dur = probe.duration || 0; paint(); };
+  probe.onloadedmetadata = () => { dur0 = probe.duration || 0; paint(); };
   probe.src = url();
   const load = () => {
     if (ownsAudio(h)) return Promise.resolve();
-    audio.pause(); PB.hold = null; audio.onerror = null;
-    audio.src = url(); audio.playbackRate = rate();
+    audio.pause(); PB.hold = null; PB.spdSrc = null; audio.onerror = null;
+    audio.src = url(); audio.playbackRate = spdOf();
     return new Promise(res => { audio.addEventListener('loadedmetadata', res, { once: true }); setTimeout(res, 2500); });
-  };
-  btn.onclick = () => {
-    if (ownsAudio(h) && !audio.paused && !audio.ended) { PB.hold = h; audio.pause(); return; }     // 멈춤 — 그 자리를 붙든다
-    if (ownsAudio(h) && !audio.ended && audio.currentTime > 0.02) { PB.hold = null; audio.play().catch(() => { }); return; }   // 이어서
-    play(text, false);                                                                            // 처음부터
   };
   rng.addEventListener('input', async () => {
     drag = true;
     if (!ownsAudio(h)) await load();
     if (!audio.paused && !audio.ended) { resume = true; audio.pause(); }
     PB.hold = h;
-    const d = D();
-    if (!d) return;
-    audio.currentTime = clamp(rng.value / 1000, 0, 1) * d;
+    const R = range(), len = R.b - R.a;
+    if (len <= 0) return;
+    audio.currentTime = R.a + clamp(rng.value / 1000, 0, 1) * len;
     setTimeout(pbTick, 0);
     paint();
   });
@@ -1631,7 +1877,7 @@ function playBar(text) {
 }
 
 /* 입모양 2D — 정면 입술(왼쪽)과 옆 단면(오른쪽: 혀·입천장·연구개·콧길·성대) (대표님 지시 2026-09-25 #6, 09-26 배치·글자 정리).
-   소리(audio)와 같은 시계로 움직인다(PB). 재생은 낱말 아래의 [보통 · 느리게] 단추와 재생 막대(playBar)가 맡는다 — 이 그림에는 단추를 두지 않는다.
+   소리(audio)와 같은 시계로 움직인다(PB). 재생은 낱말 아래의 [듣기] 단추와 재생 막대(playBar)가 맡는다 — 이 그림에는 단추를 두지 않는다.
    그림의 세부 좌표는 **모식도**다 — 베트남어 전용 MRI·초음파 자료가 없어 범주(혀 높이·앞뒤·둥글기, 닿는 곳)만 근거가 있다.
    화면에는 '모식도'·'숨기기'·'이름표' 같은 글을 두지 않는다(대표님 지시 09-26). */
 function mouthPanel(text) {
@@ -1727,10 +1973,10 @@ function curveSvg(mine, native) {
   </svg>`;
 }
 
-async function showTone(text, blobUrl, box) {
-  box.textContent = '';
+async function showTone(text, blobUrl, box, hostBox) {
+  const merged = !!hostBox;                 // 낱말 카드: 하나뿐인 그래프에 내 곡선을 겹친다(pitchGraph 가 'chao-rec' 로 받는다)
   const wait = el('div', 'cmpnote', '소리 높낮이를 재는 중…');
-  box.append(wait);
+  if (merged) hostBox.append(wait); else { box.textContent = ''; box.append(wait); }
 
   let mine = null, nat = null;
   try {
@@ -1740,18 +1986,24 @@ async function showTone(text, blobUrl, box) {
   nat = await nativeCurve(text);
   wait.remove();
 
-  if (mine && mine.reject) { verdict(box.parentElement, 1, null, '높낮이', esc(mine.reject)); return; }
+  const host = merged ? hostBox : box.parentElement;
+  if (mine && mine.reject) { verdict(host, 1, null, '높낮이', esc(mine.reject)); return; }
   if (!mine || !mine.curve) {
-    verdict(box.parentElement, 1, null, '높낮이', '못 읽었습니다 — 조금 크고 또박또박 다시');
+    verdict(host, 1, null, '높낮이', '못 읽었습니다 — 조금 크고 또박또박 다시');
     return;
   }
 
-  const wrap = el('div', 'curvebox');
-  wrap.innerHTML = curveSvg(mine.curve, nat && nat.curve);
-  box.append(wrap);
-  const lg = el('div', 'curvelegend');
-  lg.innerHTML = `<span class="k nat"></span>원어민 &nbsp; <span class="k mine"></span>나`;
-  box.append(lg);
+  if (merged) {
+    REC.mine = mine; REC.mineKey = text;
+    window.dispatchEvent(new CustomEvent('chao-rec', { detail: text }));
+  } else {
+    const wrap = el('div', 'curvebox');
+    wrap.innerHTML = curveSvg(mine.curve, nat && nat.curve);
+    box.append(wrap);
+    const lg = el('div', 'curvelegend');
+    lg.innerHTML = `<span class="k nat"></span>원어민 &nbsp; <span class="k mine"></span>나`;
+    box.append(lg);
+  }
 
   /* 점수를 매기지 않는다.
      음높이만 보는 방식은 성조를 세밀하게 가려내지 못한다(문헌상 72~75%).
@@ -1763,7 +2015,6 @@ async function showTone(text, blobUrl, box) {
      '모르겠다'가 없으면 제대로 낸 발음의 13%를 틀렸다고 하게 된다(실측). */
   const want = targetFam(text) || (nat && PITCH.classify(nat) && PITCH.classify(nat).fam);
   const j = want && PITCH.judge(mine, want);
-  const host = box.parentElement;
   if (!j) { verdict(host, 1, null, '높낮이', '이번엔 높낮이를 못 읽었습니다'); return; }
   if (j.v === 'ok') {
     verdict(host, 1, true, '높낮이', `${j.ko} — 모양이 맞습니다`);
@@ -2195,7 +2446,7 @@ function renderAnalysis(host, mode) {
            '먼저 소리를 듣고, 그다음 따라 말해 보세요.'],
     '쓰기': ['<b>손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.',
              '<b>타이핑</b>에서 글자 보기를 누르지 말고 먼저 쳐 보세요 — 보고 치면 기억에 안 남습니다.'],
-    '말하기': ['<b>따라 말하기</b>에서 녹음한 뒤 원어민 곡선과 겹쳐 보세요.',
+    '말하기': ['낱말 카드의 <b>말하기</b>를 누른 뒤 원어민 곡선과 겹쳐 보세요.',
              '<b>AI가 듣기</b>를 눌러 알아듣는 발음인지 확인하세요 — 안 알아들으면 조금 크게, 또박또박.'],
   };
   const card = el('div', 'rulecard');
@@ -5633,7 +5884,7 @@ function startLearn(d) {
     // 사용법은 처음 세 세트에만. 그 뒤엔 손이 기억한다 — 계속 띄우면 잔소리가 된다.
     how: (Object.keys(S.done).filter(k => +k >= 1).length < 3)
       ? '<b>베트남어 글자를 누르면 소리가 납니다.</b> 예문 칸도 누르면 들립니다.<br>' +
-        '🎤 따라 말하기 — 녹음하면 원어민과 높낮이를 겹쳐 보여줍니다.'
+        '🎤 따라 말하기 — <b>말하기</b>를 누르면 원어민과 높낮이를 겹쳐 보여줍니다.'
       : '',
     /* 문화 조각은 표지에서 뺐다 (대표님 지시, 2026-08-30) — 문화는 따로 한 권으로 모은다.
        표지는 그 과가 무엇인지만 말하면 된다. */
@@ -5816,16 +6067,10 @@ function tapLine(vi, cls, o) {
       if (on) on.classList.remove('on');
       on = w; w.classList.add('on');
       const bare = t.w.replace(/[,.!?;:"“”‘’'()]/g, '').trim();   // 따옴표에 싸인 낱말('"tôi"')도 우리 소리를 찾는다
-      /* **고른 목소리로만** 낸다 (대표님 지적, 2026-08-30) —
-         voiceDir() 이 목소리를 정한다.
-         **문장 첫 낱말은 대문자로 시작한다**(Đây, Bạn, Tôi...). 그런데 낱말 녹음은
-         전부 소문자 표제어로만 있다(AIDX['đây']는 있어도 AIDX['Đây']는 없음).
-         그래서 거의 모든 문장의 첫 낱말만 기기 목소리로 나서 "목소리가 섞인다"는
-         소리를 들었다(대표님이 여러 번 지적, 2026-09-09에 원인 확정) — 대소문자
-         구분 없이 찾는다. */
-      const key = recKey(bare);
-      if (key) play(key, false, voiceDir());
-      else speakVi(bare, false, 0, S.voice);
+      /* 낱말을 누르면 **헷갈리는 짝 팝업**이 뜬다 (대표님 지시 2026-09-27: 낱말 카드의 낱말과 똑같이).
+         소리는 팝업 머리의 ▶ 로 듣는다(고른 목소리로만 — 예전 주석: 문장 첫 낱말은 대문자로 시작하지만
+         낱말 녹음은 소문자 표제어라 대소문자 구분 없이 찾는다, 2026-09-09). */
+      pairPopup(bare, { kr: krOf(bare), ko: t.m });
       info.textContent = '';
       info.append(el('b', null, esc(bare)));
       // 성조 — 대화 화면에서는 낱말마다 성조 모양도 같이 보여 준다
@@ -7132,7 +7377,7 @@ function drawCard() {
     /* 낱말 하나에 **두 면** — 단어 면(그림·단어·발음·뜻·예문·높낮이 그래프)과
        발음 면(입모양·낱말이 그래프 위를 따라 움직이는 높낮이·재생 막대). 단추 하나로 넘긴다
        (대표님 지시, 2026-09-26). 카드를 열 때는 늘 **단어 면**에서 시작한다.
-       낱말을 누르면 어느 면에서든 헷갈리는 짝이 팝업으로 뜬다. 낱말 밑에 [보통][느리게][녹음]. */
+       낱말을 누르면 어느 면에서든 헷갈리는 짝이 팝업으로 뜬다. 낱말 뜻 밑에 [듣기][말하기]. */
     const cf = el('div', 'wfcard');           // 단어 면
     const pf = el('div', 'wfpron');           // 발음 면
     const tg = el('button', 'facetg');
@@ -7145,10 +7390,10 @@ function drawCard() {
       tg.setAttribute('aria-label', f === 'card' ? tr('발음 면으로 넘기기') : tr('단어 면으로 넘기기'));
     };
     tg.onclick = () => setFace(L.face === 'pron' ? 'card' : 'pron');
-    const tapPair = () => pairPopup(x.vi);
+    const tapPair = () => pairPopup(x.vi, { kr: krShow(x), ko: x.ko });
 
     /* ── 단어 면 ──
-       그림 → [단어 · 발음 · 별] → [보통 · 느리게 · 녹음] → 뜻 → 예문(누르면 소리) → 높낮이 그래프 */
+       그림 → [단어 · 발음 · 별] → [듣기 · 말하기] → 뜻 → 예문(누르면 소리) → 높낮이 그래프 */
     const p = pic(x, 'pic big'); if (p) cf.append(p);
     else if (x.form) {                       // 그림으로 못 그리는 말은 '자리'를 보여준다
       const fb = el('div', 'formbox');
@@ -7161,8 +7406,6 @@ function drawCard() {
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
     cf.append(row);
-    const boxC = el('div', 'cmpbox');         // 녹음 결과
-    cf.append(wordControls(x.vi, boxC), boxC);
     /* 뜻이 같은 다른 낱말 — 지우지 않고 **같이 보여 준다** (대표님 지시, 2026-08-30).
        ngang vai 와 rộng vai 는 둘 다 '어깨 넓이'다. 하나만 두면 나머지를 못 배운다. */
     if (x.alt && x.alt.length) {
@@ -7185,6 +7428,8 @@ function drawCard() {
        (대표님 지시 2026-09-25 #13). 데이터는 gybm.json 의 gl:1 (낱말장 표시). */
     if (x.gl) kob.prepend(el('span', 'corepill', tr('핵심')));
     cf.append(kob);
+    const boxC = el('div', 'cmpbox');         // 말하기(녹음) 결과 — 뜻 바로 아래 [듣기][말하기] 밑에 (대표님 지시 2026-09-27)
+    cf.append(wordControls(x.vi, boxC), boxC);
     /* 일터에서 뜻이 달라지는 낱말 — 직무 권에 또 두지 않고 여기에 덧붙인다
        (대표님 지적, 2026-08-30: 같은 낱말을 두 번 외우게 하지 않는다). */
     if (x.work && x.work.length)
@@ -7205,26 +7450,24 @@ function drawCard() {
       const ekr = exm.kr;
       if (ekr) eb.append(el('div', 'wexkr', '[' + esc(ekr) + ']'));
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
+      const eck = recKey(exm.vi);              // 예문 뜻 밑 [듣기][속도] — 낱말 것과 같은 속도를 쓴다 (2026-09-27)
+      const ectl = el('div', 'wctl exctl');
+      ectl.append(listenGroup(spd => { eck ? play(eck, false, null, spd) : speakVi(exm.vi, false, spd); }));
+      eb.append(ectl);
       cf.append(eb);
     }
-    const sg = el('div', 'curvearea prenat');  // 높낮이 그래프(가만히 있는 판) — 낱말이 따라 움직이는 판은 발음 면에
-    nativeCurve(x.vi).then(nat => {
-      if (!nat || !nat.curve) return;
-      sg.innerHTML = `<div class="curvebox">${curveSvg(null, nat.curve)}</div>` +
-        `<div class="curvelegend"><span class="k nat"></span>${tr('원어민 소리 높낮이')}</div>`;
-    });
-    cf.append(sg);
+    cf.append(pitchGraph(x.vi, { img: x.img }));   // 하나뿐인 높낮이 그래프 — 낱말이 따라가고, 말하면 내 곡선이 겹친다
 
     /* ── 발음 면 ──
-       낱말 → [보통 · 느리게 · 녹음] (단어 면과 같은 자리) → 뜻 → 재생 막대 → 입모양 → 낱말이 따라 움직이는 높낮이 */
+       낱말 → [듣기 · 말하기] (단어 면과 같은 자리) → 뜻 → 재생 막대 → 입모양 → 낱말이 따라 움직이는 높낮이 */
     const prow = el('div', 'wrow');
     prow.append(bigWord(x.vi, x.tones, tapPair));
     if (krShow(x)) prow.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     const boxP = el('div', 'cmpbox');
-    pf.append(prow, wordControls(x.vi, boxP), boxP, el('div', 'ko', esc(x.ko)));
+    pf.append(prow, el('div', 'ko', esc(x.ko)), wordControls(x.vi, boxP), boxP);
     pf.append(playBar(x.vi));                  // 재생 막대 (2026-09-26)
     pf.append(mouthPanel(x.vi));               // 입모양 2D (2026-09-25 #6)
-    pf.append(curveArea(x.vi, null));          // 낱말이 소리를 따라 움직이는 높낮이 (2026-09-25 #7)
+    pf.append(pitchGraph(x.vi, { img: x.img })); // 낱말이 소리를 따라 움직이는 하나뿐인 높낮이 그래프 (2026-09-25 #7 · 09-27 합침)
 
     c.append(tg, cf, pf);
     setFace(L.keepFace || 'card');           // 목소리를 바꿔 다시 그릴 때만 보던 면을 지킨다
@@ -10106,7 +10349,7 @@ function showGuide() {
   ]);
 
   sec('🎤', '말하기 채점', [
-    '녹음하면 <b>내 높낮이가 실시간으로 그려집니다.</b> 낱말 3.5초 · 문장 7초',
+    '<b>말하기</b>를 누르면 <b>내 높낮이가 실시간으로 그려집니다.</b> 낱말 3.5초 · 문장 7초',
     '<b>발음</b>은 AI가 받아 적어서, <b>높낮이</b>는 곡선으로 따로 봅니다.',
     '<b>애매하면 틀렸다고 하지 않습니다</b> — "가려내기 어렵습니다"라고 합니다.',
   ]);

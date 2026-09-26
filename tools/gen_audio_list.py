@@ -6,6 +6,7 @@
 - 이미 있으면(정확히 같은 글자, 또는 소문자 표제어) 건너뛴다. 실패는 다시 시도한다.
 - 소리 파일 이름 = sha1(글)[:12]. 색인에는 파일이 f·m 둘 다 있을 때만 올린다."""
 import asyncio, hashlib, json, pathlib, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
 R = pathlib.Path(__file__).resolve().parent.parent
 VOICES = {"f": "vi-VN-HoaiMyNeural", "m": "vi-VN-NamMinhNeural"}
@@ -59,6 +60,14 @@ def main():
         idx[t] = k12(t)
     idxp.write_text(json.dumps(idx, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"새로 {len(ok)} · 실패 {len(need) - len(ok)}", [t for t, g in res if not g][:10], flush=True)
+    # 새로 만든 소리는 바로 앞뒤 무음을 잘라 낸다(edge-tts 는 소리 뒤에 1초 안팎 무음을 붙인다 — tools/trim_audio.py)
+    if "--no-trim" not in sys.argv and ok:
+        import multiprocessing as mp
+        import trim_audio
+        paths = [R / "audio" / v / "n" / f"{k12(t)}.mp3" for t in ok for v in VOICES]
+        with mp.Pool(6) as pool:
+            r = [x[1] for x in pool.imap_unordered(trim_audio.one, [(p, False) for p in paths], chunksize=10)]
+        print("무음 자름", {k: r.count(k) for k in set(r)}, flush=True)
 
 
 if __name__ == "__main__":

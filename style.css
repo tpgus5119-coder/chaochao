@@ -2163,9 +2163,6 @@ svg.curve.pw .pwword{transition:none}
 /* 재생 막대 */
 .pbar{display:flex; align-items:center; gap:10px; margin-top:12px; padding:8px 12px;
   border:1px solid var(--line); border-radius:14px; background:var(--card)}
-.pbtn{width:40px; height:40px; flex:0 0 auto; padding:0; border-radius:50%; font-size:16px; line-height:1;
-  background:var(--accent); color:var(--accent-fg); border:0; display:grid; place-items:center}
-.pbtn:disabled{opacity:.4}
 .prng{flex:1; min-width:0; height:28px; accent-color:var(--accent); cursor:pointer}
 .ptm{flex:0 0 auto; min-width:78px; text-align:right; font-size:12px; color:var(--dim); font-variant-numeric:tabular-nums}
 /* 헷갈리는 짝 팝업 */
@@ -2177,3 +2174,43 @@ svg.curve.pw .pwword{transition:none}
 .pairpop .pairbody{margin-top:0; padding:0; border:0; background:transparent}
 .pairpopbody .pnote{margin-top:0; font-size:14px}
 .pbar + .mouthbox{margin-top:14px}
+
+/* [▶ 듣기 0.8배] — 듣기 단추 + 속도 칩 (2026-09-27) */
+.lgrp{display:inline-flex; align-items:stretch; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--card)}
+.lgrp .lbtn{border:0; border-radius:0; padding:8px 14px; font-size:14px; font-weight:650; background:transparent}
+.spdchip{border:0; border-left:1px solid var(--line); border-radius:0; padding:8px 10px; min-width:54px; font-size:13px; font-weight:800;
+  background:var(--surface-2); color:var(--accent); cursor:pointer}
+.wex .exctl{margin:8px 0 0}
+.wex .wctl{justify-content:center}
+
+/* 하나뿐인 높낮이 그래프 + 따라가는 표지 */
+.pgwrap{margin-top:12px; width:100%}
+.pgraph{position:relative; padding:6px 4px 2px}
+.pgsvg svg{display:block; width:100%; height:auto}
+.pgsvg svg.curve.pw .played{stroke:var(--fg); stroke-width:3.2}
+.pgsvg svg.curve.pw .mine{stroke:var(--accent); stroke-width:2.6; opacity:.6}
+.pgsvg svg.curve.pw .mplayed{fill:none; stroke:var(--accent); stroke-width:3.6; stroke-linecap:round; stroke-linejoin:round}
+.pgmk{position:absolute; transform:translate(-50%,-112%); z-index:2; cursor:pointer; user-select:none}
+.pgmk.word{padding:2px 11px; border:1.3px solid var(--dim); border-radius:12px; background:var(--bg); font-weight:800; font-size:14px; white-space:nowrap; color:var(--fg)}
+.pgmk.word.on{background:var(--fg); color:var(--bg); border-color:var(--fg)}
+.pgmk.word.me{border-color:var(--accent); color:var(--accent)}
+.pgmk.word.me.on{background:var(--accent); color:var(--accent-fg); border-color:var(--accent)}
+.pgmk.mouth{width:66px; height:56px; border:1.6px solid var(--dim); border-radius:12px; overflow:hidden; background:var(--bg)}
+.pgmk.mouth.me{border-color:var(--accent)}
+.pgmk.mouth.on{border-color:var(--fg)}
+.pgmk.mouth.me.on{border-color:var(--accent)}
+.pgmouth, .pgmouth svg{width:100%; height:100%; display:block}
+.pgmk.img{width:50px; height:50px; border-radius:50%; overflow:hidden; border:2px solid var(--dim); background:#fff}
+.pgmk.img.me{border-color:var(--accent)}
+.pgmk.img img{width:100%; height:100%; object-fit:cover; display:block}
+.pgsel{display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:6px; font-size:12px; color:var(--dim)}
+.pgsb{padding:3px 11px; border-radius:99px; border:1px solid var(--line); background:transparent; color:var(--fg); font-size:12px; font-weight:600; cursor:pointer}
+.pgsb.on{background:var(--accent); color:var(--accent-fg); border-color:var(--accent)}
+/* 헷갈리는 짝 팝업 머리 */
+.pairpophd .pkr{font-size:15px; color:var(--dim)}
+.pairpophd .ibtn{margin-left:auto}
+.pairpopko{font-size:16px; margin-top:-4px}
+.pairpopsub{font-size:12px; font-weight:700; color:var(--dim); margin-top:2px}
+.pko.en{color:var(--dim); font-style:italic; font-size:13px}
+.psyl b{white-space:nowrap}
+.psec .prow{grid-template-columns:minmax(78px,auto) 1fr auto}

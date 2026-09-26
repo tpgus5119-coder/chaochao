@@ -11,7 +11,7 @@ def git(*a, env=None, inp=None):
 git("fetch", "origin")
 MY = ["app.js", "style.css", "pitch.js", "mouth.js", "index.html", "sw.js", "data/days.json", "data/order.json", "data/gybm.json", "data/realbook.json",
       "data/siblings.json", "data/basicwords.json", "data/basicword_sets.json", "data/senior.json", "data/cohort22.json", "data/_book_glossary.json", "data/_boost_words.json", "data/_job_boost.json",
-      "data/grammar.json", "data/_sib_meanings.json", "tools/apply_sib_meanings.py", "tools/gen_audio_list.py", "docs/기준.md", "docs/tts-조사.md", "docs/문법_대조.md", "tools/build_gram_main.py", "tools/gram_main_data1.py", "tools/gram_main_data2.py", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py"]
+      "data/grammar.json", "data/sib.json", "data/siblings.json", "data/_lex_src.json", "data/_sib_meanings.json", "tools/build_lex.py", "tools/trim_audio.py", "tools/apply_sib_meanings.py", "tools/gen_audio_list.py", "docs/기준.md", "docs/tts-조사.md", "docs/문법_대조.md", "tools/build_gram_main.py", "tools/gram_main_data1.py", "tools/gram_main_data2.py", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py"]
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
 chk = [f for f in MY if f not in ("index.html", "sw.js", "data/audio_index.json")]
@@ -38,11 +38,9 @@ import build_gram_main            # 메인 교재 문법의 소리(예문·문�
 texts |= set(build_gram_main.all_texts())
 # 헷갈리는 짝 낱말과, 모든 문장 안 낱말(눌러 듣기 — 원래 글자와 소문자 둘 다)의 소리도 같이 올린다 (2026-09-26)
 import re as _re0
-_sib = json.loads((ROOT / "data/siblings.json").read_text(encoding="utf-8"))
-for _k in ("tone", "shape"):
-    for _f in _sib[_k].values():
-        for _m in _f["m"]:
-            texts.add(_m[0])
+_sib = json.loads((ROOT / "data/sib.json").read_text(encoding="utf-8"))
+for _w in _sib["w"]:
+    texts.add(_w)
 for _t in list(texts):
     for _w in _re0.sub(r'[,.!?;:…"“”‘’()]', " ", _t).split():
         texts.add(_w); texts.add(_w.lower())
