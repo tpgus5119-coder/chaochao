@@ -2300,57 +2300,159 @@ function dailyFlowEntry() {
    2-2 단어: 일상(회화 일차) · 직무(8갈래) · 교재(메인 교재) · 단어시험(선배) · 수업 단어(22기 A·B반 회차 순)
    2-3 문법: 책마다 한 줄 — 기초 · 중급 1·2 · 메인 교재 1·2권 · 줌 수업
    화면을 새로 짜지 않고 **있는 문**(startLearn·renderDays·drawJob·drawGybmLessons·startGram)만 잇는다. */
+/* 2026-09-27 저녁, 대표님: "학습에서 크게 기본·단어·문법으로 나눠야지. 거기 들어가서 챕터 보이게".
+   스티치(Stitch MCP, 프로젝트 'TOPIK Duolingo for Vietnam', 디자인 시스템 'Functional Clarity') 시안 두 장을 그대로 옮겼다:
+   ① 학습 허브 = 큰 카드 셋(아이콘·제목 22px·부제·8px 진도 막대·'끝냄 n/N')
+   ② 단어 = 갈래 다섯 줄이 접혔다 펼쳐지는 아코디언, 펼치면 그 갈래의 챕터가 길(로드맵)로 보인다.
+   기본·문법도 같은 틀: 기본은 길 하나, 문법은 책마다 아코디언. */
+const HUB_ICO = {
+  basic: '<svg viewBox="0 0 24 24"><path d="M4 5.5c2.4-1 5-1 8 .4v13c-3-1.4-5.6-1.4-8-.4z"/><path d="M20 5.5c-2.4-1-5-1-8 .4v13c3-1.4 5.6-1.4 8-.4z"/></svg>',
+  words: '<svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="13" height="14" rx="2"/><path d="M8 3.5h10.5a2 2 0 0 1 2 2V16"/><path d="M7 11h6M7 15h4"/></svg>',
+  gram: '<svg viewBox="0 0 24 24"><path d="M4 6h16M4 11h10M4 16h7"/><path d="m15 19 5-5-2-2-5 5v2z"/></svg>',
+};
+let WOPEN = null;                                   // 단어 화면에서 펼쳐 둔 갈래
+let GOPEN = null;                                   // 문법 화면에서 펼쳐 둔 책
+function studyStats() {
+  const basicKeys = ['P1', 'P2', 'P3', 'PTYPE'];
+  const basic = [basicKeys.filter(k => S.done[k]).length, basicKeys.length];
+  const days = ALL.filter(d => typeof d.day === 'number' && !d.track);
+  let wd = days.filter(d => S.done[d.day]).length, wa = days.length;
+  if (COURSE) jobVols().forEach(jv => jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+    wa++; if (S.done['J0.' + ti + '.' + ci + '.' + li]) wd++; }))));
+  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => { wa++; if (bdone()[gybmKey(src.key, li)]) wd++; }));
+  let gd = 0, ga = 0;
+  if (GRAM) GRAM.books.forEach((bk, bi) => bk.bai.forEach((x, ni) => { ga++; if (S.done[gkey(bi, ni)]) gd++; }));
+  return { basic, words: [wd, wa], gram: [gd, ga] };
+}
 function studyHubEntry() {
   SBOX = 'srs';
   const b = $('#subBody');
   b.textContent = '';
-  const sec = (t, sub) => { const h = el('h3', 'hubsec', esc(tr(t))); if (sub) h.append(el('small', null, esc(sub))); b.append(h); };
-  const row = (t, sub, fn, done) => {
-    const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, (done ? '✓ ' : '') + esc(t)), el('span', 'exmeta', esc(sub)));
-    btn.onclick = () => { dive(studyHubEntry); fn(); };
-    b.append(btn);
+  const st = studyStats();
+  const card = (ico, t, sub, [done, all], fn) => {
+    const c = el('button', 'hubcard');
+    const pct = all ? Math.round(done / all * 100) : 0;
+    c.innerHTML = `<span class="hubico">${ico}</span><span class="hubbody"><b class="hubt">${esc(tr(t))}</b><span class="hubsub">${esc(sub)}</span>` +
+      `<span class="hubprog"><i class="hubbar"><i style="width:${done ? Math.max(3, pct) : 0}%"></i></i><small>${tr('끝냄')} ${done}/${all}</small></span></span>`;
+    c.onclick = () => { dive(studyHubEntry); fn(); };
+    b.append(c);
   };
-  // 2-1 기본기
-  sec('기본기', '글자·성조·자음 → 자판 → 귀로 가르기');
-  ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P').forEach(d => {
-    const n = (d.letters || d.tones || []).length;
-    row(d.theme, n + tr('개') + ' · ' + tr('카드로 익히기'), () => startLearn(d), !!S.done[d.day]);
-  });
-  row('자판 치는 법', 'Telex 방식 — 성조·모자 ' + TYPEKEYS.length + '가지', startKeyGuide, !!S.done['PTYPE']);
-  row('성조 듣고 가르기', '비슷한 두 소리를 듣고 성조를 맞힙니다 (6문제 + 부호 붙이기 4문제)', toneEntry);
-  row('모음 듣고 가르기', 'ư·ơ·â·ă 처럼 헷갈리는 모음을 귀로 가릅니다', vowelEntry);
-  row('타이핑 연습', '배운 낱말을 자판으로 쳐 봅니다 — 철자까지 정확해집니다', startType);
-  row('손글씨 연습', '배운 낱말을 손으로 써 봅니다', startWrite);
-  // 2-2 단어
-  sec('단어', '다섯 갈래 — 레슨을 누르면 바로 낱말 카드');
-  const days = ALL.filter(d => typeof d.day === 'number' && !d.track);
-  const dn = days.filter(d => S.done[d.day]).length;
-  row('일상', days.length + tr('일차') + ' · ' + days.reduce((a, d) => a + (d.words || []).length, 0) + tr('낱말') + (dn ? ' · ' + tr('끝냄') + ' ' + dn : ''),
-      renderDays, dn >= days.length);
-  const jv = COURSE ? jobVol(0) : null;
-  row('직무', jv ? jv.tracks.length + tr('갈래') + ' · ' + jv.tracks.reduce((a, t) => a + (t.words || 0), 0) + tr('낱말') : '8갈래 — 전자·봉제·건설·제조·물류·회의·인사',
-      () => withCourse(() => drawJob(0)));
-  const gl = key => { const s = GYBM && GYBM.find(x => x.key === key);
-    return s ? s.lessons.length + tr('레슨') + ' · ' + s.lessons.reduce((a, l) => a + l.words.length, 0) + tr('낱말') +
-               (s.lessons.filter((l, li) => bdone()[gybmKey(key, li)]).length ? ' · ' + tr('끝냄') + ' ' + s.lessons.filter((l, li) => bdone()[gybmKey(key, li)]).length : '') : ''; };
-  row('교재', gl('main') || '메인 교재 1·2권 낱말', () => gybmSource('main'));
-  row('단어시험', gl('senior') || '선배 기수 단어시험 낱말', () => gybmSource('senior'));
-  row('수업 단어', gl('c22') || '22기 A·B반 수업 시험 낱말 (회차 순)', () => gybmSource('c22'));
-  // 2-3 문법
-  sec('문법', '책을 고르면 과 목록이 나옵니다');
-  if (GRAM) GRAM.books.forEach((bk, bi) => {
-    const dn2 = bk.bai.filter((x, ni) => S.done[gkey(bi, ni)]).length;
-    row(bk.book, bk.bai.length + tr('과') + ' · ' + bk.bai.reduce((a, x) => a + (x.g || []).length, 0) + tr('개 문법') + (dn2 ? ' · ' + tr('끝냄') + ' ' + dn2 : ''),
-        () => drawGramBook(bi), dn2 >= bk.bai.length);
-  });
-  else row('문법 책 고르기', '기초 · 중급 1·2 · 메인 교재 1·2권 · 줌 수업', gramBooksEntry);
+  card(HUB_ICO.basic, '기본', '글자·성조·자음 · 자판 · 듣고 가르기', st.basic, studyBasicsEntry);
+  card(HUB_ICO.words, '단어', '일상 · 직무 · 교재 · 단어시험 · 수업 단어', st.words, studyWordsEntry);
+  card(HUB_ICO.gram, '문법', '기초 · 중급 · 메인 교재 · 줌 수업', st.gram, studyGramEntry);
   show('sub', '학습', true);
-  // 자료가 아직 안 왔으면 받아서 이 화면을 다시 그린다 (숫자·책 목록이 채워진다). 다른 데로 갔으면 건드리지 않는다.
+  // 자료가 아직 안 왔으면 받아서 이 화면을 다시 그린다 (진도 숫자가 채워진다). 다른 데로 갔으면 건드리지 않는다.
   const still = () => ACTIVE_TAB === 'study' && CURV === 'sub' && $('#title').textContent === tr('학습');
   if (!GRAM) fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { GRAM = j; if (still()) studyHubEntry(); }).catch(() => {});
   if (!GYBM) gybmBuild(() => { if (still()) studyHubEntry(); });
   if (!COURSE) withCourse(() => { if (still()) studyHubEntry(); });
+}
+/* 기본 — 여덟 챕터를 길 하나로 */
+function studyBasicsEntry() {
+  const b = $('#subBody'); b.textContent = '';
+  const back = () => studyBasicsEntry();
+  const nodes = [];
+  ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P').forEach(d => nodes.push({
+    key: d.day, title: d.theme, sub: (d.letters || d.tones || []).length + tr('개') + ' · ' + tr('카드로 익히기'),
+    done: !!S.done[d.day], fn: () => { dive(back); startLearn(d); } }));
+  nodes.push({ key: 'PTYPE', title: '자판 치는 법', sub: 'Telex — 성조·모자 ' + TYPEKEYS.length + '가지', done: !!S.done['PTYPE'], fn: () => { dive(back); startKeyGuide(); } });
+  nodes.push({ key: 'TONE', title: '성조 듣고 가르기', sub: '비슷한 두 소리를 듣고 성조 맞히기', done: false, fn: () => { dive(back); toneEntry(); } });
+  nodes.push({ key: 'VOWEL', title: '모음 듣고 가르기', sub: 'ư·ơ·â·ă 를 귀로 가르기', done: false, fn: () => { dive(back); vowelEntry(); } });
+  nodes.push({ key: 'TYPE', title: '타이핑 연습', sub: '배운 낱말을 자판으로', done: false, fn: () => { dive(back); startType(); } });
+  nodes.push({ key: 'WRITE', title: '손글씨 연습', sub: '배운 낱말을 손으로', done: false, fn: () => { dive(back); startWrite(); } });
+  nodes.forEach((n, i) => { n.num = i + 1; });
+  const cur = nodes.find(n => !n.done);
+  const road = el('div', 'roadmap');
+  b.append(road);
+  renderRoadmap(road, nodes, cur ? cur.key : null, { freeNav: true });
+  show('sub', '기본', true);
+}
+/* 아코디언 한 줄 — 머리(제목·부제·n/N 알약·화살)와, 펼치면 길이 그려지는 몸통 */
+function accRow(host, o, open, onToggle, scroll) {
+  const box = el('div', 'acc' + (open ? ' open' : ''));
+  const head = el('button', 'acchead');
+  head.type = 'button';
+  head.innerHTML = `<span class="acctxt"><b>${esc(tr(o.title))}</b><span class="accsub">${esc(o.sub)}</span></span>` +
+    `<span class="accpill">${o.done}/${o.all}</span><svg class="accchev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>`;
+  head.onclick = onToggle;
+  box.append(head);
+  if (open) {
+    const body = el('div', 'accbody');
+    box.append(body);
+    if (o.nodes) {
+      const road = el('div', 'roadmap');
+      body.append(road);
+      const cur = o.nodes.find(n => !n.done);
+      renderRoadmap(road, o.nodes, cur ? cur.key : null, { freeNav: true, noScroll: !scroll });   // 화면에 처음 들어올 땐 갈래 머리들이 보이게, 눌러 펼쳤을 때만 '지금 여기'로
+    } else body.append(el('p', 'note', tr(o.note || '불러오는 중…')));
+  }
+  host.append(box);
+}
+/* 단어 — 다섯 갈래 아코디언, 펼치면 챕터가 길로 */
+function studyWordsEntry(scroll) {
+  const b = $('#subBody'); b.textContent = '';
+  const back = () => studyWordsEntry();
+  const still = () => ACTIVE_TAB === 'study' && CURV === 'sub' && $('#title').textContent === tr('단어');
+  b.append(el('p', 'lede', tr('갈래를 고르면 챕터가 보입니다')));
+  const rows = [];
+  // ① 일상
+  const days = ALL.filter(d => typeof d.day === 'number' && !d.track).sort((x, y) => (x.n || 0) - (y.n || 0));
+  rows.push({ key: 'days', title: '일상', sub: days.length + tr('일차') + ' · ' + days.reduce((a, d) => a + (d.words || []).length, 0) + tr('낱말'),
+    done: days.filter(d => S.done[d.day]).length, all: days.length,
+    nodes: days.map((d, i) => { const gi = GROUPS.findIndex(([f]) => f(d));
+      return { key: d.day, title: d.theme, sub: (gi >= 0 ? GROUPS[gi][1] + ' · ' : '') + (d.words || []).length + tr('낱말'), num: i + 1, done: !!S.done[d.day],
+               fn: () => { SBOX = 'srs'; dive(back); startLearn(d); } }; }) });
+  // ② 직무 — 갈래별 레슨 전부를 한 길로 (갈래 이름 · 레슨 이름)
+  const jv = COURSE ? jobVol(0) : null;
+  if (jv) {
+    const nodes = []; let n = 0;
+    jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
+      const k = 'J0.' + ti + '.' + ci + '.' + li;
+      nodes.push({ key: k, title: t.track + ' · ' + lsName(l, li), sub: l.words.length + tr('낱말'), num: ++n, done: !!S.done[k],
+                   fn: () => { SBOX = 'srs'; JOBI = 0; dive(back); startLearn({ day: k, theme: t.track + ' · ' + lsName(l, li), words: l.words, course: 1 }); } });
+    })));
+    rows.push({ key: 'job', title: '직무', sub: jv.tracks.length + tr('갈래') + ' · ' + jv.tracks.reduce((a, t) => a + (t.words || 0), 0) + tr('낱말'),
+      done: nodes.filter(x => x.done).length, all: nodes.length, nodes });
+  } else rows.push({ key: 'job', title: '직무', sub: '8갈래', done: 0, all: 0, nodes: null });
+  // ③④⑤ 교재 · 단어시험 · 수업 단어
+  [['main', '교재'], ['senior', '단어시험'], ['c22', '수업 단어']].forEach(([key, title]) => {
+    const src = GYBM && GYBM.find(s => s.key === key);
+    if (!src) { rows.push({ key, title, sub: '', done: 0, all: 0, nodes: null }); return; }
+    const nodes = src.lessons.map((l, li) => ({ key: gybmKey(key, li), title: l.title,
+      sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('낱말') + (l.words.some(w => w.gl) ? ' · ' + tr('핵심') + ' ' + l.words.filter(w => w.gl).length : ''),
+      num: li + 1, done: !!bdone()[gybmKey(key, li)],
+      fn: () => { SBOX = 'bsrs'; dive(back); startLearn({ theme: l.title, day: gybmKey(key, li), basic: 1, words: l.words }); } }));
+    rows.push({ key, title, sub: src.lessons.length + tr('레슨') + ' · ' + src.lessons.reduce((a, l) => a + l.words.length, 0).toLocaleString('ko-KR') + tr('낱말'),
+      done: nodes.filter(x => x.done).length, all: nodes.length, nodes });
+  });
+  if (!WOPEN) WOPEN = 'days';
+  rows.forEach(r => accRow(b, r, WOPEN === r.key, () => { WOPEN = WOPEN === r.key ? null : r.key; studyWordsEntry(true); }, scroll));
+  show('sub', '단어', true);
+  if (!COURSE) withCourse(() => { if (still()) studyWordsEntry(); });
+  if (!GYBM) gybmBuild(() => { if (still()) studyWordsEntry(); });
+}
+/* 문법 — 책마다 아코디언, 펼치면 과가 길로 */
+function studyGramEntry(scroll) {
+  const b = $('#subBody'); b.textContent = '';
+  const back = () => studyGramEntry();
+  if (!GRAM) {
+    b.append(el('p', 'lede', tr('불러오는 중…')));
+    show('sub', '문법', true);
+    fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
+      .then(j => { GRAM = j; if (CURV === 'sub' && $('#title').textContent === tr('문법')) studyGramEntry(); })
+      .catch(() => { b.textContent = ''; b.append(el('p', 'lede', tr('불러오지 못했습니다'))); });
+    return;
+  }
+  b.append(el('p', 'lede', tr('책을 고르면 과가 보입니다')));
+  const rows = GRAM.books.map((bk, bi) => {
+    const nodes = bk.bai.map((x, ni) => ({ key: gkey(bi, ni), title: x.t, sub: x.no + tr('과') + ' · ' + (x.g || []).length + tr('개 문법'), num: ni + 1,
+      done: !!S.done[gkey(bi, ni)], fn: () => { dive(back); startGram(bi, ni); } }));
+    return { key: 'b' + bi, title: bk.book, sub: bk.bai.length + tr('과') + ' · ' + bk.bai.reduce((a, x) => a + (x.g || []).length, 0) + tr('개 문법'),
+             done: nodes.filter(n => n.done).length, all: nodes.length, nodes };
+  });
+  if (!GOPEN) { const first = rows.find(r => r.done < r.all) || rows[0]; GOPEN = first && first.key; }
+  rows.forEach(r => accRow(b, r, GOPEN === r.key, () => { GOPEN = GOPEN === r.key ? null : r.key; studyGramEntry(true); }, scroll));
+  show('sub', '문법', true);
 }
 /* 과정 자료(order.json)가 있어야 하는 문 — 없으면 받아 온 뒤 연다 */
 function withCourse(fn) {
