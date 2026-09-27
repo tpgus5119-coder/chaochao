@@ -3535,6 +3535,7 @@ function testHubEntry() {
   const stars = Object.keys(starOf()).length;
   row(ICO.star, '내 단어장', stars, () => startWordbookQuiz(Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k), '단어장 복습'), { dis: !stars });
   row(ICO.pick, '선택 복습', 0, testPickEntry);
+  row(ICO.pick, '주간 시험', 0, startWeeklyExam);   // 실제 반 시험 짜임(듣기·읽기·쓰기·말하기)의 모의시험 (2026-09-28)
   show('exam', '테스트', true);
   if (!COURSE) withCourse(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
   if (!GYBM) gybmBuild(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
@@ -6437,9 +6438,19 @@ function krOf(w) {
 /* 문장 한 줄의 발음 — 단어 발음을 이어 붙인다. 하나라도 모르면 빈 값을 낸다
    (반쪽짜리 발음을 보여 주느니 안 보여 주는 게 낫다). 2026-08-30 */
 
+/* 문장별 '안 묶을 것' — data/_seg.json = { "<문장>": ["người nhận", "một phần"] } (클로드가 문맥을 읽어 확정한 것만, 2026-09-28).
+   Qwen 1차(tools/seg_check.py) → 클로드 확정 → 이 파일. 있으면 그 문장에서는 그 묶음을 낱말로 푼다 */
+let SEG = null, SEG_P = null;
+function segLoad() {
+  if (SEG) return Promise.resolve();
+  if (!SEG_P) SEG_P = fetch('data/_seg.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { SEG = j; }).catch(() => { SEG = {}; });
+  return SEG_P;
+}
+segLoad();
 function glossAll(vi, extra) {
   if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
                                                     if (!GVOC[k]) GVOC[k] = w.ko; }); }
+  const noMerge = new Set(((SEG && SEG[vi]) || []).map(x => String(x).toLowerCase()));
   const look = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || exgKo(ph);
   const toks = vi.split(/(\s+)/);        // 공백도 남겨 문장 모양 그대로 다시 그린다
   const out = [];
@@ -6450,6 +6461,7 @@ function glossAll(vi, extra) {
       const slice = toks.slice(i, i + n);
       if (slice.length < n) continue;
       const ph = slice.join('').replace(/[,.!?;:"“”‘’'()]/g, '').toLowerCase().trim();   // 따옴표·괄호에 싸인 단어도 뜻을 찾는다
+      if (n > 1 && noMerge.has(ph)) continue;                                            // 이 문장에서는 안 묶는 것 (data/_seg.json)
       const m = ph && look(ph);
       if (m) hit = { w: slice.join(''), m, n };
     }
@@ -8631,13 +8643,17 @@ function drawQuiz() {
                   match: '뜻과 단어를 짝지어 보세요', puzzle: '조각을 눌러 문장을 만들어 보세요',
                   read_ko: '뜻을 보고 단어를 고르세요', listen_ko: '뜻을 듣고 단어를 고르세요', say_ko: '뜻을 듣고 베트남어로 말해 보세요',
                   tone: '성조 부호가 맞는 것을 고르세요', shadow: '듣고 따라 말해 보세요',
-                  puzzle_ko: '뜻을 듣고 조각으로 문장을 만들어 보세요', puzzle_vi: '문장을 듣고 조각으로 만들어 보세요' };
+                  puzzle_ko: '뜻을 듣고 조각으로 문장을 만들어 보세요', puzzle_vi: '문장을 듣고 조각으로 만들어 보세요',
+                  pic_tf: '듣고 그림이 맞으면 맞다, 아니면 틀리다', pic4: '듣고 맞는 그림을 고르세요', dictation: '듣고 그대로 쳐 보세요',
+                  cloze: '빈칸에 들어갈 단어를 고르세요', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
   body.append(el('div', 'qcount', (Q.i + 1) + ' / ' + Q.list.length));
-  body.append(el('div', 'q', LABEL[q.mode]));
+  body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + ' · ' : '') + (q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : LABEL[q.mode])));
+  if (Q.exam) { q._okBefore = Q.ok; const pq = Q.i > 0 ? Q.list[Q.i - 1] : null; if (pq && pq._ok === undefined) pq._ok = Q.ok > (pq._okBefore || 0); }   // 시험 채점용
 
   if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
-  if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow') return drawSay(body, q);
-  if (q.mode === 'type') return drawTypeQ(body, q);
+  if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
+  if (q.mode === 'type' || q.mode === 'dictation') return drawTypeQ(body, q);
+  if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'tf' || q.mode === 'err') return drawExamKind(body, q);
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
   if (q.mode === 'match') return drawMatch(body, q);
@@ -8904,6 +8920,129 @@ function drawDict(body, q) {
 /* 입으로 — 듣고 따라 말하고, 원어민 높낮이와 겹쳐 본다 (복습 안에서) */
 /* 말하기 — 한국어 뜻만 보고 베트남어로 말한다(가장 어렵고 가장 남는 방식).
    보기도 글자도 주지 않는다: 단서 없이 꺼내야 진짜 기억이 된다. */
+/* ── 주간 시험 (대표님 지시 2026-09-28: 실제 반 시험 구조를 따른 모의시험) ──
+   실제 시험(90분, 말하기 별도): A 듣기 40(그림 맞다/틀리다 5·그림 고르기 5·답 고르기 10·짧은 답 10) · B 읽기 30(빈칸 5·읽고 답 5·맞다/틀리다 10·알맞은 문장 10)
+   · C 쓰기(배열 5·틀린 곳 5·한 주제 10문장) · D 말하기(발음·그림 보고·상황 읽고). 앱에서는 같은 짜임을 43문항으로 줄이고 자동 채점이 되는 것만 넣는다.
+   재료 = 지난 7일에 끝낸 세트의 단어(없으면 배운 단어 전부, 그것도 없으면 첫 60단어)와 그 예문. 틀려도 다시 안 내고 부분별 점수를 낸다. */
+function weeklyMaterial() {
+  const cut = now() - 7 * DAY, words = [], seen = new Set();
+  const put = w => { if (w && w.vi && !w.sent && !seen.has(w.vi)) { seen.add(w.vi); words.push(w); } };
+  ALL.forEach(d => { if (typeof d.day === 'number' && typeof S.done[d.day] === 'number' && S.done[d.day] >= cut) (d.words || []).forEach(put); });
+  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => { const t = bdone()[gybmKey(src.key, li)]; if (typeof t === 'number' && t >= cut) l.words.forEach(put); }));
+  if (words.length < 12) ['srs', 'ssrs', 'bsrs'].forEach(k => Object.keys(S[k] || {}).forEach(v => put(findItem(v))));
+  if (words.length < 12) allWords().slice(0, 60).forEach(put);
+  return words;
+}
+function startWeeklyExam() {
+  const words = weeklyMaterial().sort(() => Math.random() - .5);
+  const withImg = words.filter(w => w.img), withAud = words.filter(w => AIDX[w.vi]);
+  const sents = []; const ss = new Set();
+  words.forEach(w => { const e = w.ex; if (e && e.vi && e.vi.split(/\s+/).length >= 4 && !ss.has(e.vi)) { ss.add(e.vi); sents.push({ vi: e.vi, ko: e.ko || '', kr_read: e.kr || '', sent: true, of: w.vi, aud: !!AIDX[e.vi] }); } });
+  const pick = (arr, n) => arr.slice().sort(() => Math.random() - .5).slice(0, n);
+  const others = (pool, w, n, ok) => pick(pool.filter(x => x.vi !== w.vi && (!ok || ok(x))), n);
+  const mk = (w, mode, sec, pool, ok) => ({ w, mode, sec, opts: [w, ...others(pool || words, w, 3, ok)].sort(() => Math.random() - .5) });
+  const L = [];
+  pick(withImg, 3).forEach(w => L.push(mk(w, 'pic_tf', 'A 듣기', withImg, x => !!x.img)));
+  pick(withImg, 3).forEach(w => L.push(mk(w, 'pic4', 'A 듣기', withImg, x => !!x.img)));
+  pick(sents.filter(x => x.aud), 5).forEach(x => L.push(mk(x, 'listen', 'A 듣기', sents)));
+  pick(withAud, 4).forEach(w => L.push(mk(w, 'dictation', 'A 듣기')));
+  pick(sents, 4).forEach(x => L.push(mk(x, 'cloze', 'B 읽기')));
+  pick(sents, 3).forEach(x => L.push(mk(x, 'read', 'B 읽기', sents)));
+  pick(sents, 5).forEach(x => L.push(mk(x, 'tf', 'B 읽기', sents)));
+  pick(sents, 5).forEach(x => L.push(mk(x, 'read_ko', 'B 읽기', sents)));
+  pick(sents, 3).forEach(x => L.push(mk(x, 'puzzle', 'C 쓰기')));
+  pick(sents, 3).forEach(x => L.push(mk(x, 'err', 'C 쓰기')));
+  if (canRecord()) { pick(withAud, 3).forEach(w => L.push(mk(w, 'say', 'D 말하기'))); pick(withImg.filter(w => AIDX[w.vi]), 2).forEach(w => L.push(mk(w, 'say_pic', 'D 말하기'))); }
+  if (L.length < 10) { popup(tr('시험을 만들 재료가 모자랍니다 — 세트를 몇 개 더 끝내면 됩니다')); return; }
+  SBOX = 'srs';
+  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true };
+  drawQuiz();
+  show('quiz', '주간 시험', true);
+}
+/* 시험 전용 문제들 — 그림 맞다/틀리다 · 그림 고르기 · 빈칸 · 문장 맞다/틀리다 · 틀린 곳 찾기 */
+function drawExamKind(body, q) {
+  const w = q.w, md = q.mode;
+  const tfBtns = (isTrue) => {
+    const box = el('div', 'opts');
+    [['맞다', isTrue], ['틀리다', !isTrue]].forEach(([t, good]) => { const b = el('button', null, t); b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
+    body.append(box);
+  };
+  if (md === 'pic_tf' || md === 'pic4') {
+    const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(w.vi); row.append(lb); body.append(row);
+    sound(w.vi);
+    if (md === 'pic_tf') {
+      const other = q.opts.find(o => o.vi !== w.vi && o.img) || w;
+      const shown = Math.random() < .5 ? w : other;
+      const p = pic(shown, 'pic mid'); if (p) body.append(p);
+      tfBtns(shown === w);
+    } else {
+      const grid = el('div', 'picgrid');
+      q.opts.forEach(o => { const b = el('button', 'picopt'); b.dataset.vi = o.vi; const im = new Image(); im.src = 'img/' + o.img; im.alt = ''; b.append(im); b.onclick = () => answer(b, o.vi === w.vi, w); grid.append(b); });
+      body.append(grid);
+    }
+    return;
+  }
+  if (md === 'cloze') {
+    const tok = w.of || '';
+    const re = new RegExp('(^|\\s)' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i');
+    const shown = re.test(w.vi) ? w.vi.replace(re, '$1____') : w.vi;
+    body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(w.ko)));
+    const target = findItem(tok) || { vi: tok, ko: '' };
+    const pool = weeklyMaterial().filter(x => x.vi !== tok);
+    const opts = [target, ...pool.sort(() => Math.random() - .5).slice(0, 3)].sort(() => Math.random() - .5);
+    const box = el('div', 'opts');
+    opts.forEach(o => { const b = el('button', null, esc(o.vi)); b.dataset.vi = o.vi === tok ? w.vi : '-'; b.onclick = () => answer(b, o.vi === tok, w); box.append(b); });
+    body.append(box); return;
+  }
+  if (md === 'tf') {
+    const other = q.opts.find(o => o.vi !== w.vi && o.ko) || w;
+    const isTrue = Math.random() < .5;
+    body.append(el('div', 'qmain sent', esc(w.vi)), el('div', 'q mid', esc(isTrue ? w.ko : other.ko)));
+    tfBtns(isTrue); return;
+  }
+  if (md === 'err') {
+    const toks = w.vi.replace(/[.?!]+$/, '').split(/\s+/);
+    const MK = ['', '̀', '́', '̉', '̃', '̣'];
+    let bad = -1, altered = null;
+    for (let g = 0; g < 40 && bad < 0; g++) {
+      const i = Math.floor(Math.random() * toks.length), b = stripTone(toks[i]);
+      const c = withMark(b, MK[Math.floor(Math.random() * 6)], tonePos(b));
+      if (c.toLowerCase() !== toks[i].toLowerCase()) { bad = i; altered = c; }
+    }
+    if (bad < 0) { q.mode = 'read'; return drawQuiz(); }
+    const line = el('div', 'errline');
+    let done = false;
+    toks.forEach((t, i) => {
+      const b = el('button', 'errtok', esc(i === bad ? altered : t)); b.type = 'button';
+      b.onclick = () => {
+        if (done) return; done = true;
+        const good = i === bad;
+        [...line.children].forEach((x, k) => { x.disabled = true; if (k === bad) x.dataset.r = 'ok'; });
+        if (!good) b.dataset.r = 'no';
+        fxTone(good); sound(w.vi); celebrate(good);
+        grade(w.vi, good, Q.early); if (good) Q.ok++;
+        body.append(el('div', 'ansbox', '<div class="vi sm">' + esc(w.vi) + '</div><div class="ko">' + esc(w.ko) + '</div>'));
+        nextBtn(body, () => { Q.i++; drawQuiz(); });
+      };
+      line.append(b);
+    });
+    body.append(el('div', 'q mid', esc(w.ko)), line);
+    return;
+  }
+}
+function finishExam() {
+  const last = Q.list[Q.list.length - 1]; if (last && last._ok === undefined) last._ok = Q.ok > (last._okBefore || 0);
+  const secs = {}; Q.list.forEach(q => { const s = secs[q.sec] = secs[q.sec] || [0, 0]; s[1]++; if (q._ok) s[0]++; });
+  const r = el('div', 'result');
+  const tot = Q.list.length, ok = Q.list.filter(q => q._ok).length;
+  r.append(el('div', 'n', ok + ' / ' + tot), el('div', null, tr('주간 시험 결과') + ' · ' + Math.round(ok * 100 / Math.max(1, tot)) + '%'));
+  const tb = el('div', 'exsec');
+  Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
+  r.append(tb);
+  S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
+  const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = renderHome; r.append(b);
+  $('#quizBody').textContent = ''; $('#quizBody').append(r);
+}
 /* 성조 부호 고르기 (대표님 지시 2026-09-28) — 부호 없는 글자를 보여 주고 소리를 들려준 뒤, 맞게 적힌 것을 넷 중 고른다.
    틀린 보기는 음절 하나의 성조만 바꾼 것 — 그래야 성조를 듣는 문제가 된다 */
 function drawToneQ(body, q) {
@@ -8926,11 +9065,12 @@ function drawToneQ(body, q) {
   body.append(box);
 }
 function drawSay(body, q) {
-  const w = q.w, koMode = q.mode === 'say_ko', shadow = q.mode === 'shadow';
+  const w = q.w, koMode = q.mode === 'say_ko', shadow = q.mode === 'shadow', picOnly = q.mode === 'say_pic';
   const p = pic(w, 'pic mid'); if (p && !shadow) body.append(p);
   if (shadow) body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.vi)));          // 따라 말하기 — 베트남어를 보며 듣고 따라 한다
+  else if (picOnly) { /* 그림만 보고 말한다 (주간 시험 D2) — 뜻 글은 없다 */ }
   else if (koMode) { const kr = el('div', 'qplay'); const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(w.ko); kr.append(kb); body.append(kr); setTimeout(() => speakKo(w.ko), 150); }
-  else body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.ko)));
+  else if (!picOnly) body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.ko)));
   let done = false;
   const finish = (ok, judged) => {
     if (done) return; done = true;
@@ -8950,7 +9090,7 @@ function drawSay(body, q) {
   const box = el('div', 'cmpbox'); box.dataset.merged = '1';
   box.onVerdict = (i, ok) => { if (i === 0 && ok !== null) finish(ok === true, true); };
   const row = el('div', 'qplay');
-  if (!koMode) { const lb = el('button', 'ghost', '🔊 듣기'); lb.onclick = () => sound(w.vi); row.append(lb); }   // 뜻 듣고 말하기에는 베트남어 소리 단추가 없다(답을 주니까)
+  if (!koMode && !picOnly) { const lb = el('button', 'ghost', '🔊 듣기'); lb.onclick = () => sound(w.vi); row.append(lb); }   // 뜻 듣고·그림 보고 말하기에는 베트남어 소리 단추가 없다(답을 주니까)
   if (shadow) setTimeout(() => sound(w.vi), 150);
   const rec = canRecord();
   if (rec) { const mic = el('button', 'rec', '🎤 말하기'); mic.onclick = () => toggleRec(w.vi, mic, box); row.append(mic); }
@@ -9077,7 +9217,7 @@ function telexHint() {
 }
 function drawTypeQ(body, q) {
   const w = q.w;
-  body.append(el('div', 'qmain', esc(w.ko)));
+  body.append(el('div', 'qmain', q.mode === 'dictation' ? '🔊' : esc(w.ko)));   // 받아쓰기는 뜻 없이 듣고 친다 (주간 시험 A4)
   const row = el('div', 'qplay');
   const p1 = el('button', 'ghost', '🔊 듣기'); p1.onclick = () => play(w.vi, false);
   row.append(p1); body.append(row);
@@ -9183,6 +9323,7 @@ function markSpeed(ok, mode) {
 }
 
 function requeue(q) {
+  if (Q && Q.exam) return;                      // 주간 시험에서는 다시 안 낸다 — 점수를 매기는 시험이니까 (2026-09-28)
   if (q.retry) return;                          // 두 번은 안 미룬다
   Q.list.push({ ...q, retry: true });
 }
@@ -9248,6 +9389,7 @@ function grade0(vi, ok, early) {
 
 function finishQuiz() {
   $('#quizFill').style.width = '100%';
+  if (Q.exam) return finishExam();
   if (!Q.day) {
     S.stats.rev = (S.stats.rev || 0) + 1;                          // 복습 판 수 (업적용)
     earnOnce('rev', CRD.rev, tr('복습을 끝냈습니다'));

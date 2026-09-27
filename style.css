@@ -2639,3 +2639,13 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .shnav button{width:56px; height:56px; border-radius:50%; border:1px solid var(--line); background:var(--card); font-size:26px; color:var(--fg); cursor:pointer}
 .senses{font-size:14px; color:var(--dim); margin-top:2px}
 .thinthd:disabled{cursor:default; color:var(--dim)}
+/* 주간 시험 (2026-09-28) */
+.picgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+.picopt{border:2px solid var(--line); border-radius:14px; background:var(--card); padding:6px; cursor:pointer}
+.picopt img{width:100%; aspect-ratio:1; object-fit:contain; border-radius:10px}
+.picopt[data-r="ok"]{border-color:var(--good,#2e7d32)} .picopt[data-r="no"]{border-color:var(--bad)}
+.errline{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:14px 0}
+.errtok{font-size:20px; font-weight:700; padding:8px 12px; border:1.5px solid var(--line); border-radius:12px; background:var(--card); color:var(--fg)}
+.errtok[data-r="ok"]{border-color:var(--good,#2e7d32); background:color-mix(in srgb, #2e7d32 12%, var(--card))} .errtok[data-r="no"]{border-color:var(--bad)}
+.exsec{margin:14px auto 0; max-width:320px; display:flex; flex-direction:column; gap:6px}
+.exsecrow{display:flex; justify-content:space-between; padding:8px 12px; border:1px solid var(--line); border-radius:10px; background:var(--card)}

@@ -36542,7 +36542,7 @@
       },
       {
        "vi": "phục vụ",
-       "ko": "서비스하다, 서빙하다",
+       "ko": "봉사하다",
        "kr_read": "푹 부",
        "ex": {
         "vi": "Nhân viên phục vụ rất nhiệt tình.",
@@ -38552,14 +38552,9 @@
        "weekly": true
       },
       {
-       "vi": "điềm tính",
+       "vi": "điềm tĩnh",
        "ko": "차분한 성격",
        "kr_read": "디엠 띤",
-       "ex": {
-        "vi": "Cô ấy có điềm tính rất bình tĩnh.",
-        "ko": "그녀는 매우 차분한 성격을 가지고 있다."
-       },
-       "img": "b-diem-tinh.webp",
        "weekly": true
       },
       {
@@ -39584,16 +39579,6 @@
         "ko": "아이들은 워터파크를 좋아한다."
        },
        "img": "b-cong-vien-nuoc.webp"
-      },
-      {
-       "vi": "phúc vụ",
-       "ko": "봉사하다",
-       "kr_read": "푹 부",
-       "ex": {
-        "vi": "Nhân viên phúc vụ khách hàng tận tình.",
-        "ko": "직원이 고객에게 정성껏 봉사한다."
-       },
-       "img": "w-27d96033ec.webp"
       },
       {
        "vi": "mỗi ngày",
@@ -42487,14 +42472,16 @@
        "weekly": true
       },
       {
-       "vi": "tột nghiệp",
-       "ko": "졸업하다 - graduate",
+       "vi": "tốt nghiệp",
+       "ko": "졸업하다 (to graduate)",
        "kr_read": "똣 응이엡",
        "ex": {
-        "vi": "Tôi sẽ tột nghiệp vào năm sau.",
-        "ko": "나는 내년에 졸업할 것이다."
+        "vi": "Tôi tốt nghiệp đại học năm ngoái.",
+        "ko": "저는 작년에 대학을 졸업했습니다."
        },
-       "img": "w-d3531aed44.webp"
+       "img": "b-tot-nghiep.webp",
+       "star": 2,
+       "weekly": true
       },
       {
        "vi": "thất",
@@ -52372,16 +52359,6 @@
        "img": "b-rau-bi-hong.webp"
       },
       {
-       "vi": "định dưỡng",
-       "ko": "영양분",
-       "kr_read": "딘 즈엉",
-       "ex": {
-        "vi": "Thực phẩm này giàu định dưỡng.",
-        "ko": "이 식품은 영양분이 풍부하다."
-       },
-       "img": "w-afc8896166.webp"
-      },
-      {
        "vi": "hoá đơn điện",
        "ko": "전기요금 청구서",
        "kr_read": "호아 던 디엔",
@@ -59910,14 +59887,9 @@
        "img": "b-dang-nguoi.webp"
       },
       {
-       "vi": "chủ thế",
+       "vi": "chủ thể",
        "ko": "주체 (main entity)",
-       "kr_read": "쭈 테",
-       "ex": {
-        "vi": "Ai là chủ thế của hành động này?",
-        "ko": "이 행동의 주체는 누구인가요?"
-       },
-       "img": "b-chu-the.webp"
+       "kr_read": "쭈 테"
       },
       {
        "vi": "cho nhau",
@@ -69809,18 +69781,6 @@
        "star": 1
       },
       {
-       "vi": "tốt nghiệp",
-       "ko": "졸업하다 (to graduate)",
-       "kr_read": "똣 응이엡",
-       "ex": {
-        "vi": "Tôi tốt nghiệp đại học năm ngoái.",
-        "ko": "저는 작년에 대학을 졸업했습니다."
-       },
-       "img": "b-tot-nghiep.webp",
-       "star": 2,
-       "weekly": true
-      },
-      {
        "vi": "đại học",
        "ko": "대학교",
        "kr_read": "다이 혹",
@@ -69922,13 +69882,7 @@
        },
        "img": "b-lap-trinh.webp",
        "star": 1
-      }
-     ]
-    },
-    {
-     "title": "332",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "bằng",
        "ko": "~로 by",
@@ -69940,7 +69894,13 @@
        "img": "w-bf8a141261.webp",
        "star": 3,
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "332",
+     "sub": "",
+     "words": [
       {
        "vi": "so sánh",
        "ko": "비교하다 (compare)",
@@ -71989,7 +71949,7 @@
       },
       {
        "vi": "địa bàn",
-       "ko": "나침판",
+       "ko": "지역, 구역",
        "kr_read": "디어 반",
        "ex": {
         "vi": "Chúng tôi dùng địa bàn để định hướng.",
@@ -72020,7 +71980,7 @@
       },
       {
        "vi": "dân chủ",
-       "ko": "민㈜적인",
+       "ko": "민주적인",
        "kr_read": "전 쭈",
        "ex": {
         "vi": "Đây là một xã hội dân chủ.",
