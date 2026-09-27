@@ -6239,17 +6239,7 @@ function resumeNext() {
 }
 function homeActions() {
   const box = el('div', 'hact');
-  const nx = resumeNext();
-  const b1 = el('button', 'hbtn primary');
-  if (nx) {
-    const n = nx.d && (nx.d.words || []).length;
-    b1.append(el('b', null, tr(S.lastTrack ? '이어서 학습' : '학습 시작')),
-              el('small', null, esc(nx.kind) + ' · ' + esc(nx.name) + (n ? ' · ' + n + tr('단어') : '')));
-    b1.onclick = () => { if (nx.gram) startGram(nx.gram[0], nx.gram[1]); else { SBOX = nx.box || 'srs'; if (nx.kind === '직무') JOBI = 0; startLearn(nx.d); } };
-  } else {
-    b1.append(el('b', null, tr('전 과정 완료')), el('small', null, tr('새 과정을 기다려 주세요')));
-    b1.disabled = true;
-  }
+  // '학습 시작(오늘 학습)' 단추는 뺐다 (대표님 지시 2026-09-28: 하루 분량과 함께 없앤다). 학습은 학습 탭에서 고르고, 세트가 끝나면 [다음 세트 ›]가 잇는다
   const b2 = el('button', 'hbtn sec');
   const dn = dueCount();                                 // 세 창고 합 — 테스트 탭의 '오늘 복습'과 같은 숫자
   b2.append(el('b', null, tr('복습 시작')),
@@ -6257,7 +6247,7 @@ function homeActions() {
   b2.disabled = !dn; if (dn) b2.onclick = () => { ACTIVE_TAB = 'test'; testToday(); };   // 테스트 탭의 '오늘 복습'과 같은 문 (카드 → 테스트)
   const b3 = el('button', 'hbtn sec'); b3.append(el('b', null, tr('훑어보기')), el('small', null, tr('오늘 배운 것·복습할 것을 자동으로 넘겨 봅니다')));
   b3.onclick = startShorts;
-  box.append(b1, b2, b3);
+  box.append(b2, b3);
   return box;
 }
 function renderHome() {
