@@ -26,9 +26,9 @@ function save() {
       alert('이 브라우저에서는 진도가 저장되지 않습니다.\n시크릿 모드를 끄거나 다른 브라우저로 열어 주세요.\n(학습은 그대로 하실 수 있습니다)');
     }
   }
-  // 로그인한 사람은 진도가 저절로 서버에도 올라간다 (단추를 누를 필요가 없다).
-  // cloudSoon 은 아래에서 정의되지만 save() 는 늘 나중에 불리므로 문제없다.
-  if (typeof cloudSoon === 'function') cloudSoon();
+  /* 서버 백업은 여기서 하지 않는다 (대표님 결정 2026-09-27: 챕터를 끝냈을 때만).
+     전에는 폰에 적을 때마다 8초 뒤 서버에도 올려서 20분 공부에 50번쯤 썼다 — KV 무료 한도(하루 1,000번)를
+     40명이면 넘긴다. 이제 세트 끝(finishDay 앞)·복습 끝·진도 초기화·앱을 켤 때 하루 한 번(renderHome)만 올린다. */
 }
 
 /* 단톡방 공유용 키 링크: 주소 뒤 #k=... 를 한 번 읽어 저장하고 지운다.
@@ -7674,7 +7674,7 @@ function drawCard() {
     if (x.work && x.work.length)
       cf.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
                   x.work.map(t2 => esc(t2)).join(' · ')));
-    if (x.hanja) cf.append(el('div', 'hanja', '🔑 한자어 ' + esc(x.hanja)));
+    if (x.hanja) kob.append(el('span', 'hanja', esc(x.hanja)));          // 한자 뿌리 — 뜻 옆 알약 (대표님 지시 2026-09-27: 한자 기반 낱말은 한자·한글 음을 보여 준다)
     if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **낱말마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
        낱말을 누르면 그 낱말만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
@@ -7704,7 +7704,8 @@ function drawCard() {
     prow.append(bigWord(x.vi, x.tones, tapPair));
     if (krShow(x)) prow.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     const boxP = el('div', 'cmpbox');
-    pf.append(prow, el('div', 'ko', esc(x.ko)), wordControls(x.vi, boxP), boxP);
+    const pko = el('div', 'ko', esc(x.ko)); if (x.hanja) pko.append(el('span', 'hanja', esc(x.hanja)));
+    pf.append(prow, pko, wordControls(x.vi, boxP), boxP);
     pf.append(playBar(x.vi));                  // 재생 막대 (2026-09-26)
     pf.append(mouthPanel(x.vi));               // 입모양 2D (2026-09-25 #6)
     pf.append(pitchGraph(x.vi, { img: x.img })); // 낱말이 소리를 따라 움직이는 하나뿐인 높낮이 그래프 (2026-09-25 #7 · 09-27 합침)
@@ -7946,7 +7947,8 @@ function drawFlash() {
   c.append(el('div', 'vi', esc(w.vi)));
   c.append(toneRow(w.tones));
   if (krShow(w)) c.append(el('span', 'wkr', '[' + esc(krShow(w)) + ']'));
-  c.append(el('div', 'ko', esc(w.ko)));
+  const fko = el('div', 'ko', esc(w.ko)); if (w.hanja) fko.append(el('span', 'hanja', esc(w.hanja)));
+  c.append(fko);
   const exm = w.ex && w.ex.vi ? w.ex : null;
   if (exm) { c.append(el('div', 'flex', esc(exm.vi))); if (exm.ko) c.append(el('div', 'flexko', esc(exm.ko))); }
   c.append(listenGroup(spd => { const k = recKey(w.vi); k ? play(k, false, null, spd) : speakVi(w.vi, false, spd); }));

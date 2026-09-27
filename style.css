@@ -2458,3 +2458,6 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .bars{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 14px}
 .barrow .bname{flex:0 0 60px; font-size:15px; font-weight:700; white-space:nowrap}
 .barrow .bpct{font-size:14px; font-weight:800}
+
+/* 한자 뿌리 알약 — 뜻 옆 (2026-09-27) */
+.ko .hanja{display:inline-flex; align-items:center; margin-left:8px; font-size:13px; font-weight:700; padding:3px 9px; border-radius:999px; background:#FFF1E8; color:#B4520F; vertical-align:middle; white-space:nowrap}
