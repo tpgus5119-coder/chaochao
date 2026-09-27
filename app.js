@@ -1245,7 +1245,7 @@ function startLocalASR() {
       r.onend = finish;      // 결과가 없어도(못 알아들어도) end 는 반드시 온다
       r.start();
       REC.sr = r;
-      setTimeout(() => { if (!done && !REC.localHeard && !REC.localErr) REC.localErr = 'timeout'; finish(); }, 4000);   // end 도 안 오면 4초 뒤엔 넘어간다(먹통 방지)
+      setTimeout(() => { if (!done && !REC.localHeard && !REC.localErr) REC.localErr = 'timeout'; finish(); }, 2000);   // end 도 안 오면 2초 뒤엔 넘어간다(먹통 방지·2026-09-28 4초→2초)
     } catch (e) { REC.sr = null; REC.localErr = 'start:' + (e && e.name || 'error'); finish(); }
   });
 }
@@ -1264,8 +1264,8 @@ function jgCands(text) {
 }
 /* 폰 인식이 답을 안 줬을 때 — 소리 비교로 판정해 본다. 돌려주는 것: {ok, heard} / {ok:null, why} / null(못 잼) */
 async function soundFallback(text, blobUrl) {
-  try { await sibLoad(); } catch (e) { }           // 헷갈리는 짝을 후보에 넣으려면 짝 자료가 먼저 있어야 한다
-  const c = jgCands(text);
+  let c = REC.cands && REC.cands[0] && REC.cands[0].vi === text ? REC.cands : null;
+  if (!c) { try { await sibLoad(); } catch (e) { } c = jgCands(text); }   // 헷갈리는 짝을 후보에 넣으려면 짝 자료가 먼저 있어야 한다
   if (!c || typeof soundJudge !== 'function' || !blobUrl) return null;
   try { return await soundJudge(text, blobUrl, c); } catch (e) { return null; }
 }
@@ -1352,6 +1352,8 @@ async function toggleRec(text, btn, box) {
   mr.onstop = e => { kill(); oldStop(e); };
   startLocalASR();                     // 녹음 시작과 동시에 폰 음성인식도 같이 켠다
   mr.start();
+  REC.cands = null;                    // 소리 비교 후보를 미리 만들고 원어민 소리를 데워 둔다 — 녹음이 끝나면 바로 견준다 (2026-09-28)
+  if (typeof soundJudge === 'function') sibLoad().catch(() => { }).then(() => { const c = jgCands(text); if (c) { REC.cands = c; jgPrepare(c); } });
   btn.dataset.on = '1';
   btn.classList.add('rec-on');       // 이름은 그대로, 녹음 중은 색으로만 알린다
   setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, secs * 1000);
@@ -1561,10 +1563,11 @@ async function aiListen(text, blobUrl, box) {
   try {
     // 오직 폰(브라우저 내장 음성인식)으로만 판정한다 — 구글(제미나이) 호출은 절대 하지 않는다
     // (대표님 지시 2026-09-08). 결과가 이벤트로 늦게 오므로 반드시 먼저 기다린다(2026-09-09 수정).
+    const soundP = soundFallback(text, blobUrl).catch(() => null);   // 폰 인식을 기다리는 동안 소리 비교도 같이 돌린다 (2026-09-28: 느리다는 지적)
     if (REC.localDone) await REC.localDone;
     if (!REC.localHeard) {                       // 폰 인식이 답을 안 줬다 → 소리 비교로 (2026-09-27 저녁)
       verdict(box, 0, null, '발음', '소리를 견주는 중…');
-      const r = await soundFallback(text, blobUrl);
+      const r = await soundP;
       if (r && r.ok !== null) {
         S.stats.pronAll = (S.stats.pronAll || 0) + 1; if (r.ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1; save();
         verdict(box, 0, r.ok, '발음', (r.ok ? '알아들었습니다' : esc(r.heard) + ' 처럼 들립니다 (목표 ' + esc(text) + ')') + ' <small>(소리 비교)</small>');

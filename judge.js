@@ -124,6 +124,10 @@ async function jgNative(h) {
   }
   return out;
 }
+/* 미리 데우기 — 녹음을 시작할 때 후보 원어민 소리를 받아 MFCC 까지 만들어 둔다(대표님 지적 2026-09-28: 인식이 느리다). 그러면 녹음이 끝난 뒤엔 내 소리만 계산하면 된다 */
+async function jgPrepare(cands) {
+  try { await Promise.all((cands || []).map(c => jgNative(c.h))); } catch (e) { }
+}
 /* 판정. cands = [{vi, h}] (목표는 첫째). 돌려주는 것: {ok, heard, dist:{vi:거리}} 또는 null(재지 못함) */
 async function soundJudge(target, blobUrl, cands) {
   let mine;
