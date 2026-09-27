@@ -8258,9 +8258,10 @@ function pickMode(w, lv) {
   // 2026-09-28: 뜻 듣고 말하기(say_ko)·뜻 듣고 고르기(listen_ko)·뜻 보고 고르기(read_ko)·성조 부호 고르기(tone)·따라 말하기(shadow)·뜻 듣고/문장 듣고 퍼즐 추가. 손글씨는 뺐다
   if (w.sent) return r < .22 ? 'listen' : r < .40 ? 'say' : r < .58 ? 'shadow' : r < .74 ? 'puzzle' : r < .87 ? 'puzzle_ko' : 'puzzle_vi';
   // 뜻 듣고 단어 고르기(listen_ko)는 뺐다 (대표님 지시 2026-09-28)
-  if (lv >= 2) return r < .14 ? 'say' : r < .26 ? 'say_ko' : r < .44 ? 'type' : r < .58 ? 'listen' : r < .70 ? 'read' : r < .80 ? 'read_ko' : r < .90 ? 'tone' : 'match';
-  if (lv >= 1) return r < .10 ? 'say' : r < .20 ? 'say_ko' : r < .40 ? 'type' : r < .56 ? 'listen' : r < .72 ? 'read' : r < .82 ? 'read_ko' : r < .92 ? 'tone' : 'match';
-  return r < .07 ? 'say' : r < .14 ? 'say_ko' : r < .28 ? 'type' : r < .50 ? 'listen' : r < .72 ? 'read' : r < .84 ? 'read_ko' : r < .92 ? 'tone' : 'match';
+  // 뜻 듣고 말하기(say_ko)도 뺐다 (대표님 지시 2026-09-28)
+  if (lv >= 2) return r < .24 ? 'say' : r < .44 ? 'type' : r < .58 ? 'listen' : r < .70 ? 'read' : r < .80 ? 'read_ko' : r < .90 ? 'tone' : 'match';
+  if (lv >= 1) return r < .18 ? 'say' : r < .40 ? 'type' : r < .56 ? 'listen' : r < .72 ? 'read' : r < .82 ? 'read_ko' : r < .92 ? 'tone' : 'match';
+  return r < .12 ? 'say' : r < .28 ? 'type' : r < .50 ? 'listen' : r < .72 ? 'read' : r < .84 ? 'read_ko' : r < .92 ? 'tone' : 'match';
 }
 /* 단어 → 속한 세트 색인. 오답 보기를 같은 세트에서 뽑기 위한 것 —
    엉뚱한 세트의 단어가 보기로 나오면 뜻만 슬쩍 봐도 답이 티가 난다. */
@@ -8338,7 +8339,7 @@ const REV_CHUNK = 20;                          // 복습 한 판의 최대 문�
    틀린 것은 그 판 끝에 또 나오므로 결국 단어마다 두 번은 맞혀야 끝난다. 손글씨는 뺐다. 말하기는 녹음이 되는 폰에서만. */
 function buildSetQuestions(words) {
   const rec = buildQuestions(words, ['listen', 'read', 'read_ko', 'match', 'tone', 'listen', 'read']);
-  const prod = buildQuestions(words, canRecord() ? ['type', 'say', 'say_ko', 'type'] : ['type']);
+  const prod = buildQuestions(words, canRecord() ? ['type', 'say', 'type'] : ['type']);
   return rec.concat(prod);
 }
 function startQuiz(words, day, cap, early, opt) {
