@@ -11,14 +11,31 @@ import hanja
 CJK = re.compile(r'[一-鿿㐀-䶿]')
 
 
-def reading(han):
-    ko = hanja.translate(han, 'substitution')
+def reading(han, prev_syl=None):
+    """한글 음 — hanja 꾸러미(두음법칙) + 여러 음 가진 글자 바로잡기: 率 률/율(앞 음절이 모음·ㄴ 받침이면 율), 樂 음악의 악."""
+    out = []
+    for i, ch in enumerate(han):
+        r = hanja.translate(ch, 'substitution') if i == 0 else hanja.translate(han[:i + 1], 'substitution')[-1:]
+        if ch == '率':
+            pv = out[-1] if out else ''
+            tail = (ord(pv) - 0xAC00) % 28 if pv and '가' <= pv <= '힣' else -1
+            r = '율' if (pv and (tail == 0 or tail == 4)) else '률'
+        elif ch == '樂': r = '악'
+        out.append(r)
+    ko = ''.join(out)
     return None if CJK.search(ko) or not ko else ko
+
+
+MAN = json.loads((R / 'data/_hanviet_manual.json').read_text(encoding='utf-8'))
+ONE = {w.lower() for w in MAN.get('한음절_붙임', [])}
+FIX = {k.lower(): v for k, v in MAN.get('바로잡음', {}).items()}
+NO = {w.lower() for w in MAN.get('안_붙임', [])}
+ADD = {k.lower(): v for k, v in MAN.get('추가', {}).items()}
 
 
 def label(vi, han):
     syl = len(vi.strip().split())
-    if syl < 2 or len(han) != syl: return None   # 한 음절 낱말은 뺀다 — 같은 글자의 다른 뜻(báo 신문→豹 표범, cơ 기회→肌 살)을 첫 어원으로 잘못 잡는 것이 표본에서 보였다
+    if len(han) != syl: return None
     ko = reading(han)
     if not ko: return None
     return f'{han} · {ko}'
@@ -32,9 +49,17 @@ def main():
     def tag(w):
         if not isinstance(w, dict) or not isinstance(w.get('vi'), str): return
         if clear: w.pop('hanja', None); return
-        v = low.get(w['vi'].strip().lower())
-        if not v or not v.get('han') or v.get('src') not in ('vi-etym-sino', 'chinese-link'): stat['없음'] += 1; w.pop('hanja', None); return   # 'sino-reading'·'der-zh' 는 표본에서 틀린 것(của→具, cạn→旱)이 보여 안 쓴다
-        lab = label(w['vi'], v['han'])
+        k = w['vi'].strip().lower()
+        v = low.get(k)
+        han = None
+        if k in NO: han = None
+        elif k in FIX: han = FIX[k]                                   # 사람이 바로잡은 글자
+        elif k in ADD: han = ADD[k]                                   # 위키에 없어 사람이 더한 한자어
+        elif v and v.get('han') and v.get('src') in ('vi-etym-sino', 'chinese-link'):
+            syl = len(k.split())
+            if syl >= 2 or k in ONE: han = v['han']                    # 한 음절은 사람이 본 것만
+        if not han: stat['없음'] += 1; w.pop('hanja', None); return
+        lab = label(w['vi'], han)
         if lab: w['hanja'] = lab; stat['붙임'] += 1
         else:
             stat['음절 안 맞음' if len(v['han']) != len(w['vi'].strip().split()) else '음 없음'] += 1

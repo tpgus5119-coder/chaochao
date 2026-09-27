@@ -2444,7 +2444,7 @@ function studyWordsEntry(scroll) {
     rows.push({ key, title, sub: src.lessons.length + tr('레슨') + ' · ' + src.lessons.reduce((a, l) => a + l.words.length, 0).toLocaleString('ko-KR') + tr('낱말'),
       done: nodes.filter(x => x.done).length, all: nodes.length, nodes });
   });
-  if (!WOPEN) WOPEN = 'days';
+  // 처음엔 다 접혀 있다 — 갈래를 눌러야 그 안이 보인다 (대표님 지시 2026-09-27)
   rows.forEach(r => accRow(b, r, WOPEN === r.key, () => { WOPEN = WOPEN === r.key ? null : r.key; studyWordsEntry(true); }, scroll));
   show('sub', '단어', true);
   if (!COURSE) withCourse(() => { if (still()) studyWordsEntry(); });
@@ -2468,7 +2468,7 @@ function studyGramEntry(scroll) {
     return { key: 'b' + bi, title: bk.book, sub: bk.bai.length + tr('과') + ' · ' + bk.bai.reduce((a, x) => a + (x.g || []).length, 0) + tr('개 문법'),
              done: nodes.filter(n => n.done).length, all: nodes.length, nodes };
   });
-  if (!GOPEN) { const first = rows.find(r => r.done < r.all) || rows[0]; GOPEN = first && first.key; }
+  // 처음엔 다 접혀 있다 — 책을 눌러야 과가 보인다 (대표님 지시 2026-09-27)
   rows.forEach(r => accRow(b, r, GOPEN === r.key, () => { GOPEN = GOPEN === r.key ? null : r.key; studyGramEntry(true); }, scroll));
   show('sub', '문법', true);
 }
@@ -3268,7 +3268,7 @@ function renderAwards() {
   // 하루 분량
   b.append(el('h3', 'mesec', tr('하루 분량')));
   b.append(pickRow('',
-    [[1, '하루 한 레슨'], [2, '하루 두 레슨']], S.pace || 1,
+    [1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => [n, String(n)]), S.pace || 1,   // 하루 단어 세트 수 1~9 (대표님 지시 2026-09-27) — 기본기·문법은 분량에 안 들어가 무제한
     v => { S.pace = v; save(); renderAwards(); }));
   // 설정 목록 카드
   const list = el('div', 'melist');
