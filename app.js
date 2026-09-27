@@ -1325,14 +1325,7 @@ const canRecord = () => !!(navigator.mediaDevices?.getUserMedia && window.MediaR
 
 async function toggleRec(text, btn, box) {
   if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
-  if (!S.rectold) {                      // 처음 한 번만 — 녹음이 어디로 가고 어디에 남는지
-    S.rectold = 1; save();
-    popup('<b>녹음은 어디에 남나요</b><br>' +
-      '· 우리 서버에는 <b>저장하지 않습니다.</b> 저장소 자체가 붙어 있지 않습니다.<br>' +
-      '· 폰 안에서만 잠깐 들고 있다가 <b>다음 녹음 때 지웁니다.</b> 앱을 닫으면 사라집니다.<br>' +
-      '· 발음을 받아 적는 일은 <b>이 폰의 음성인식 기능</b>이 먼저 합니다(지원 안 되면 그때만 구글 제미나이로 넘어갑니다).<br>' +
-      '· 높낮이 판정은 <b>폰 안에서</b> 합니다. 아무 데도 안 보냅니다.');
-  }
+  // '녹음은 어디에 남나요' 안내창은 뺐다 (대표님 지시 2026-09-28). 녹음은 서버로 가지 않고 폰 안에서만 잠깐 쓴다는 사실은 그대로다
   try {
     if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   } catch (e) {
