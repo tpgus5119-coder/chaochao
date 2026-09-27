@@ -6245,9 +6245,8 @@ function homeActions() {
   b2.append(el('b', null, tr('복습 시작')),
             el('small', null, dn ? dn + tr('개') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
   b2.disabled = !dn; if (dn) b2.onclick = () => { ACTIVE_TAB = 'test'; testToday(); };   // 테스트 탭의 '오늘 복습'과 같은 문 (카드 → 테스트)
-  const b3 = el('button', 'hbtn sec'); b3.append(el('b', null, tr('훑어보기')), el('small', null, tr('오늘 배운 것·복습할 것을 자동으로 넘겨 봅니다')));
-  b3.onclick = () => startShorts();
-  box.append(b2, b3);
+  // 훑어보기(쇼츠) 단추는 뺐다 (대표님 지시 2026-09-28 "훑어보기는 그냥 없애자")
+  box.append(b2);
   return box;
 }
 function renderHome() {
@@ -8115,75 +8114,6 @@ function finishDay(d) {
   show('quiz', '오늘 완료', true);
 }
 
-/* 훑어보기 — 오늘 배운 것과 복습할 것을 쇼츠처럼 자동으로 넘긴다 (대표님 지시 2026-09-27 밤).
-   그림 + 단어 + 발음 + 뜻, 소리는 0.8배로 한 번, 소리가 끝나고 1.6초 뒤 다음. 톡 치면 멈춤/재개, ‹ › 로 손으로 넘김, ✕ 로 닫음. */
-let SH = null;
-function shortsWords() {
-  const out = [], seen = new Set();
-  const put = w => { if (w && w.vi && !w.sent && !seen.has(w.vi)) { seen.add(w.vi); out.push(w); } };
-  const today = ymd();
-  ALL.forEach(d => { if (typeof d.day === 'number' && typeof S.done[d.day] === 'number' && ymd(S.done[d.day]) === today) (d.words || []).forEach(put); });
-  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => { const t = bdone()[gybmKey(src.key, li)]; if (typeof t === 'number' && ymd(t) === today) l.words.forEach(put); }));
-  dueAll().forEach(put);
-  if (!out.length) {                                    // 오늘 한 것이 없으면 최근에 배운 20개
-    const recent = ['srs', 'ssrs', 'bsrs'].flatMap(k => Object.entries(S[k] || {}).map(([vi, v]) => [vi, v.first || 0]))
-      .sort((a, b) => b[1] - a[1]).slice(0, 20);
-    recent.forEach(([vi]) => put(findItem(vi)));
-  }
-  return out;
-}
-/* 훑어보기 대상 고르기 — 오늘 배운 것 · 복습할 것 · 주간 시험 범위 · 내 단어장 (대표님 지시 2026-09-28: 타겟을 명확히) */
-function shortsPick() {
-  const today = ymd(), learned = [], seen = new Set();
-  const put = (arr, w) => { if (w && w.vi && !w.sent && !seen.has(w.vi)) { seen.add(w.vi); arr.push(w); } };
-  ALL.forEach(d => { if (typeof d.day === 'number' && typeof S.done[d.day] === 'number' && ymd(S.done[d.day]) === today) (d.words || []).forEach(w => put(learned, w)); });
-  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => { const t = bdone()[gybmKey(src.key, li)]; if (typeof t === 'number' && ymd(t) === today) l.words.forEach(w => put(learned, w)); }));
-  seen.clear(); const due = []; dueAll().forEach(w => put(due, w));
-  seen.clear(); const round = GYBM ? weeklyRoundWords(WEEKLY_ROUNDS[0]) : [];
-  seen.clear(); const star = []; Object.entries(starOf()).forEach(([k, v]) => put(star, findItem((v && v.vi) || k)));
-  const back = el('div', 'modalback'), box = el('div', 'modalbox');
-  box.append(el('div', 'pairpophd', '<b>' + tr('무엇을 훑어볼까요') + '</b>'));
-  const opt = (name, arr) => { const b = el('button', 'bigmenu'); b.append(el('b', null, esc(tr(name)) + ' <span class="mbadge">' + arr.length + '</span>')); b.disabled = !arr.length; b.onclick = () => { back.remove(); startShorts(arr); }; box.append(b); };
-  opt('오늘 배운 단어', learned); opt('복습할 단어', due); opt('주간 시험 범위 · ' + WEEKLY_ROUNDS[0].name, round); opt('내 단어장', star);
-  const no = el('button', 'ghost', tr('닫기')); no.type = 'button'; no.onclick = () => back.remove(); const row = el('div', 'bugbtns'); row.append(no); box.append(row);
-  back.append(box); back.onclick = e => { if (e.target === back) back.remove(); }; document.body.append(back);
-}
-function startShorts(list) {
-  if (!list) { if (!GYBM) { gybmBuild(shortsPick); return; } shortsPick(); return; }
-  const ws = list;
-  if (!ws.length) { popup(tr('훑어볼 단어가 없습니다')); return; }
-  if (SH && SH.ov) SH.ov.remove();
-  const ov = el('div', 'shorts');
-  ov.innerHTML = '<div class="shtop"><span class="shcount"></span><button type="button" class="shx" aria-label="닫기">✕</button></div>' +
-    '<div class="shcard"><div class="shpic"></div><div class="shvi"></div><div class="shkr"></div><div class="shko"></div><div class="shpause">⏸</div></div>' +
-    '<div class="shnav"><button type="button" class="shprev">‹</button><button type="button" class="shnext">›</button></div>';
-  document.body.append(ov);
-  SH = { ws, i: 0, paused: false, timer: 0, ov };
-  const stop = () => { clearTimeout(SH.timer); audio.onended = null; };
-  const close = () => { stop(); audio.pause(); ov.remove(); SH = null; };
-  ov.querySelector('.shx').onclick = close;
-  ov.querySelector('.shprev').onclick = () => { stop(); SH.i = Math.max(0, SH.i - 1); drawShort(); };
-  ov.querySelector('.shnext').onclick = () => { stop(); next(); };
-  ov.querySelector('.shcard').onclick = () => { SH.paused = !SH.paused; ov.classList.toggle('paused', SH.paused); if (!SH.paused) { stop(); drawShort(); } else stop(); };
-  function next() { if (SH.i >= SH.ws.length - 1) { close(); popup(tr('훑어보기 끝 — ') + ws.length + tr('단어')); return; } SH.i++; drawShort(); }
-  function drawShort() {
-    const w = SH.ws[SH.i];
-    ov.querySelector('.shcount').textContent = (SH.i + 1) + ' / ' + SH.ws.length;
-    const pic = ov.querySelector('.shpic'); pic.textContent = '';
-    if (w.img) { const im = new Image(); im.src = 'img/' + w.img; im.alt = ''; pic.append(im); }
-    ov.querySelector('.shvi').textContent = w.vi;
-    ov.querySelector('.shkr').textContent = krShow(w) ? '[' + krShow(w) + ']' : '';
-    ov.querySelector('.shko').textContent = w.ko || '';
-    const k = recKey(w.vi);
-    audio.onended = null;
-    if (k) { play(k, false, null, .8); audio.onended = () => { audio.onended = null; if (!SH.paused) SH.timer = setTimeout(next, 1600); }; }
-    else { speakVi(w.vi, false, .8); SH.timer = setTimeout(next, 2600); }
-    // 소리가 안 나거나 끝 신호가 안 오면 4초 뒤 넘긴다
-    clearTimeout(SH.guard); SH.guard = setTimeout(() => { if (SH && !SH.paused && SH.ws[SH.i] === w) { stop(); next(); } }, 4500);
-  }
-  drawShort();
-}
-
 /* 세트를 끝낸 뒤의 두 단추 (대표님 물음 2026-09-27 밤 "어떤 화면이 나오게 할까?") — 저절로 다음 세트로 가지 않는다(숨 돌릴 틈·짜오 동 확인).
    [다음 세트 ›]는 같은 갈래의 다음 과를 바로 시작, [목록으로]는 학습 탭 단어 목록에서 그 갈래를 펼치고 다음 과로 굴려 둔다 */
 function afterSetBtns(host) {
@@ -8950,15 +8880,25 @@ function weeklyEntry() {
   WEEKLY_ROUNDS.forEach(r => {
     const btn = el('button', 'bigmenu');
     btn.append(el('b', null, esc(tr(r.name)) + ' <span class="exmeta">' + esc(r.desc) + '</span>'));
-    btn.onclick = () => { dive(weeklyEntry); gybmBuild(() => startWeeklyExam(r)); };
+    btn.onclick = () => { dive(weeklyEntry); weeklyRound(r); };
     b.append(btn);
   });
-  const last = (S.stats.wexam || []).slice(-1)[0];
-  if (last) b.append(el('p', 'note', tr('지난 결과') + ' · ' + esc(last.d) + ' · ' + last.ok + ' / ' + last.tot));
-  const wb = el('button', 'bigmenu'); wb.append(el('b', null, esc(tr('쓰기 연습')) + ' <span class="exmeta">' + tr('상황 그림 ' + ((WEEKLY_ROUNDS[0].scenes || []).length || 5) + '장 보고 문장 · 주제로 10문장 (채점 없음)') + '</span>'));
-  wb.onclick = () => { dive(weeklyEntry); gybmBuild(() => writingPractice(WEEKLY_ROUNDS[0])); };
-  b.append(wb);
   show('exam', '주간 시험', true);
+}
+/* 회차 하나 — 안에 [시험 보기]와 [쓰기 연습]이 같이 있다 (대표님 지시 2026-09-28 "1회차 안에 쓰기 그것도 있는 거야") */
+function weeklyRound(r) {
+  const b = $('#examBody'); b.textContent = '';
+  const eb = el('button', 'bigmenu');
+  eb.append(el('b', null, esc(tr('시험 보기')) + ' <span class="exmeta">' + tr('듣기·읽기·쓰기·말하기 43문항 · 부분별 점수') + '</span>'));
+  eb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => startWeeklyExam(r)); };
+  b.append(eb);
+  const wb = el('button', 'bigmenu');
+  wb.append(el('b', null, esc(tr('쓰기 연습')) + ' <span class="exmeta">' + tr('상황 그림 ' + ((r.scenes || []).length || 5) + '장 보고 문장 · 주제로 10문장 (채점 없음)') + '</span>'));
+  wb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => writingPractice(r)); };
+  b.append(wb);
+  const last = (S.stats.wexam || []).filter(x => (x.round || 1) === r.no).slice(-1)[0];
+  if (last) b.append(el('p', 'note', tr('지난 결과') + ' · ' + esc(last.d) + ' · ' + last.ok + ' / ' + last.tot));
+  show('exam', tr('주간 시험') + ' · ' + r.name, true);
 }
 /* 쓰기 연습 — 실제 시험의 '그림 보고 말하기'·'한 주제로 10문장'을 손으로 연습한다. 채점은 없고 쓴 것은 폰에 남는다 (2026-09-28) */
 function writingPractice(r) {
