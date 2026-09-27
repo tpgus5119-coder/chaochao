@@ -8582,7 +8582,7 @@ function drawQuiz() {
                   tone: '성조 부호가 맞는 것을 고르세요', shadow: '듣고 따라 말해 보세요',
                   puzzle_ko: '뜻을 듣고 조각으로 문장을 만들어 보세요', puzzle_vi: '문장을 듣고 조각으로 만들어 보세요',
                   pic_tf: '듣고 그림이 맞으면 맞다, 아니면 틀리다', pic4: '듣고 맞는 그림을 고르세요', dictation: '듣고 그대로 쳐 보세요',
-                  cloze: '빈칸에 들어갈 단어를 고르세요', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
+                  cloze: '빈칸에 들어갈 단어를 고르세요', gcloze: '빈칸에 들어갈 말을 고르세요 (문법)', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
   body.append(el('div', 'qcount', (Q.i + 1) + ' / ' + Q.list.length));
   body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + ' · ' : '') + (q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : LABEL[q.mode])));
   if (Q.exam) { q._okBefore = Q.ok; const pq = Q.i > 0 ? Q.list[Q.i - 1] : null; if (pq && pq._ok === undefined) pq._ok = Q.ok > (pq._okBefore || 0); }   // 시험 채점용
@@ -8590,7 +8590,7 @@ function drawQuiz() {
   if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
   if (q.mode === 'type' || q.mode === 'dictation') return drawTypeQ(body, q);
-  if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'tf' || q.mode === 'err') return drawExamKind(body, q);
+  if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err') return drawExamKind(body, q);
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
   if (q.mode === 'match') return drawMatch(body, q);
@@ -8889,12 +8889,18 @@ function weeklyEntry() {
 function weeklyRound(r) {
   const b = $('#examBody'); b.textContent = '';
   const eb = el('button', 'bigmenu');
-  eb.append(el('b', null, esc(tr('시험 보기')) + ' <span class="exmeta">' + tr('듣기·읽기·쓰기·말하기 43문항 · 부분별 점수') + '</span>'));
-  eb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => startWeeklyExam(r)); };
+  eb.append(el('b', null, esc(tr('시험 보기')) + ' <span class="exmeta">' + tr('단어·문법 문제 · 듣기·읽기·쓰기·말하기 · 부분별 점수') + '</span>'));
+  eb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => gramEnsure(() => startWeeklyExam(r))); };
   b.append(eb);
+  if (r.gram && r.gram.length) {                      // 이 회차 문법 (대표님 지시 2026-09-28: 출제자의 의도는 단어와 문법을 학습하고 시험하는 것)
+    const gb = el('button', 'bigmenu');
+    gb.append(el('b', null, esc(tr('이 회차 문법')) + ' <span class="exmeta">' + r.gram.length + tr('개 · 누르면 문법 카드') + '</span>'));
+    gb.onclick = () => { dive(() => weeklyRound(r)); gramEnsure(() => weeklyGramList(r)); };
+    b.append(gb);
+  }
   const wb = el('button', 'bigmenu');
   wb.append(el('b', null, esc(tr('쓰기 연습')) + ' <span class="exmeta">' + tr('상황 그림 ' + ((r.scenes || []).length || 5) + '장 보고 문장 · 주제로 10문장 (채점 없음)') + '</span>'));
-  wb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => writingPractice(r)); };
+  wb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => gramEnsure(() => writingPractice(r))); };
   b.append(wb);
   const last = (S.stats.wexam || []).filter(x => (x.round || 1) === r.no).slice(-1)[0];
   if (last) b.append(el('p', 'note', tr('지난 결과') + ' · ' + esc(last.d) + ' · ' + last.ok + ' / ' + last.tot));
@@ -8916,11 +8922,64 @@ function writingPractice(r) {
     ta.oninput = () => { mem.pics[sc.img] = ta.value; save(); };
     col.append(ta); row.append(col); b.append(row);
   });
+  const gl = roundGram(r);
+  if (gl.length) {                                    // 문법마다 문장 하나 (대표님 물음 2026-09-28 "문법에 맞는 문장 쓰기")
+    mem.gram = mem.gram || {};
+    b.append(el('p', 'lede', tr('이 문법으로 문장을 하나씩 써 보세요')));
+    gl.forEach(e => {
+      const row = el('div', 'wrow2 scene gramrow');
+      const x0 = (e.it.ex || [])[0];
+      row.append(el('div', 'gramt', '<b>' + esc(e.it.t) + '</b>' + (e.it.k ? '<small>' + esc(e.it.k) + '</small>' : '')));
+      if (x0) row.append(el('div', 'sceneko', tr('보기: ') + esc(x0.vi) + ' — ' + esc(x0.ko || '')));
+      const ta = document.createElement('textarea'); ta.className = 'bugta'; ta.rows = 2; ta.placeholder = tr('베트남어로 한 문장'); ta.value = mem.gram[e.it.t] || '';
+      ta.oninput = () => { mem.gram[e.it.t] = ta.value; save(); };
+      row.append(ta); b.append(row);
+    });
+  }
   b.append(el('p', 'lede', tr('주제 하나로 10문장 — ') + esc(r.topic || '자기소개')));
   const ta = document.createElement('textarea'); ta.className = 'bugta'; ta.rows = 10; ta.placeholder = tr('한 줄에 한 문장씩'); ta.value = mem.text || '';
   ta.oninput = () => { mem.text = ta.value; save(); };
   b.append(ta, el('p', 'note', tr('쓴 것은 이 폰에 남습니다. 문장 안 단어를 사전에서 눌러 보면 소리와 짝이 나옵니다.')));
   show('exam', tr('쓰기 연습') + ' · ' + r.name, true);
+}
+/* 문법 자료가 아직 없으면 불러온 뒤 이어 간다 */
+function gramEnsure(cb) {
+  if (GRAM) { cb(); return; }
+  fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { GRAM = gramReady(j); cb(); }).catch(() => popup(tr('문법 자료를 못 불러왔습니다')));
+}
+/* 회차의 문법 항목 — weekly.json 의 gram[{t, tok}] 을 앱 문법 항목(제목 t 로 찾음)에 잇는다 */
+function roundGram(r) {
+  const out = [];
+  if (!GRAM || !r.gram) return out;
+  r.gram.forEach(e => {
+    (GRAM.books || []).forEach((b, bi) => b.bai.forEach((x, ni) => x.g.forEach((it, gi) => {
+      if (it.t === e.t || it.t.startsWith(e.t)) out.push({ it, tok: e.tok || [], bi, ni, gi, no: x.no });
+    })));
+  });
+  return out;
+}
+/* 회차 문법의 예문 — 문장 문제(빈칸·고르기·배열)의 재료. 빈칸으로 뚫을 말(tok)이 그 문장에 있으면 tok 에 적어 둔다 */
+function roundGramSents(r) {
+  const out = [], seen = new Set();
+  roundGram(r).forEach(e => (e.it.ex || []).forEach(x => {
+    if (!x.vi || seen.has(x.vi)) return; seen.add(x.vi);
+    const tok = e.tok.find(t => new RegExp('(^|\\s)' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i').test(x.vi)) || null;
+    out.push({ vi: x.vi, ko: x.ko || '', kr_read: x.kr || '', sent: true, gram: e.it.t, tok, aud: !!AIDX[x.vi], nograde: true });
+  }));
+  return out;
+}
+/* 회차 문법 목록 — 누르면 그 문법 카드로 */
+function weeklyGramList(r) {
+  const b = $('#examBody'); b.textContent = '';
+  const list = roundGram(r);
+  list.forEach(e => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, esc(e.it.t) + ' <span class="exmeta">' + esc(e.it.k || '') + ' · ' + e.no + tr('과') + '</span>'));
+    btn.onclick = () => { dive(() => weeklyGramList(r)); startGram(e.bi, e.ni); L.i = e.gi; drawCard(); };
+    b.append(btn);
+  });
+  if (!list.length) b.append(el('p', 'note', tr('이 회차에 문법이 없습니다')));
+  show('exam', tr('이 회차 문법') + ' · ' + r.name, true);
 }
 /* 회차 범위의 단어 — 메인 교재는 과 제목(· N부 앞) 차례로 과를 센다 */
 function weeklyRoundWords(r) {
@@ -8953,6 +9012,30 @@ function startWeeklyExam(round) {
   pick(sents, 5).forEach(x => L.push(mk(x, 'read_ko', 'B 읽기', sents)));
   pick(sents, 3).forEach(x => L.push(mk(x, 'puzzle', 'C 쓰기')));
   pick(sents, 3).forEach(x => L.push(mk(x, 'err', 'C 쓰기')));
+  /* 문법 문제 (대표님 지시 2026-09-28 "단어들도 있지만 문법들도 넣어주라") — 회차 문법의 예문으로:
+     빈칸에 문법 말 넣기(B1 어휘·문법 검사) · 뜻 보고 문장 고르기(B4) · 조각 배열(C1) */
+  let gs = round ? roundGramSents(r) : [];
+  if (gs.length) {
+    /* 회차 범위 단어로만 된 예문을 먼저 쓴다 — 시험 범위(1~3과) 밖 단어가 섞이면 문법이 아니라 단어를 묻는 셈이 된다. 모자라면 전부 쓴다 */
+    const known = new Set(); words.forEach(w => { const v = w.vi.toLowerCase(); known.add(v); v.split(/\s+/).forEach(t => known.add(t)); });
+    const FN = new Set(['tôi', 'anh', 'chị', 'em', 'ông', 'bà', 'cô', 'thầy', 'cháu', 'họ', 'nó', 'ấy', 'các', 'chúng', 'là', 'không', 'phải', 'có', 'cũng', 'đều', 'đã', 'ạ', 'vậy', 'à', 'gì', 'ai', 'nào', 'đâu', 'ở', 'mấy', 'bao', 'nhiêu', 'đây', 'đó', 'đấy', 'kia', 'của', 'và', 'với', 'rất', 'này', 'người', 'nước', 'tên', 'nam', 'lan', 'hoa', 'vân', 'hòa', 'mai', 'david']);
+    const inRange = x => x.vi.toLowerCase().replace(/[.,!?;:…"“”()]/g, ' ').split(/\s+/).filter(Boolean).every(t => known.has(t) || FN.has(t));
+    const gsIn = gs.filter(inRange);
+    if (gsIn.filter(x => x.tok).length >= 8) gs = gsIn;
+    const toks = [...new Set(gs.map(x => x.tok).filter(Boolean).map(t => t.toLowerCase()))];
+    const gOf = t => (gs.find(x => x.tok && x.tok.toLowerCase() === t) || {}).gram;
+    /* 서로 바꿔 넣어도 말이 되는 것끼리는 오답으로 안 쓴다 — 'Họ đều/cũng là…', 'Em đi đâu vậy/ạ?', 'anh ấy/đấy' 처럼 둘 다 맞는 문장이 되면 시험이 아니다 */
+    const CF = [['đây', 'đó', 'đấy', 'kia', 'ấy'], ['đã', 'cũng', 'đều', 'có'], ['ạ', 'vậy'], ['ai', 'gì']];
+    const grp = t => CF.findIndex(g => g.includes(t));
+    pick(gs.filter(x => x.tok), 5).forEach(x => {
+      const ans = x.tok.toLowerCase(), same = gOf(ans), ga = grp(ans);
+      const wrong = pick(toks.filter(t => t !== ans && gOf(t) !== same && (ga < 0 || grp(t) !== ga)), 3);   // 같은 문법 항목의 다른 꼴(đó·đấy·kia)과 바꿔 넣어도 되는 말은 오답으로 안 쓴다
+      if (wrong.length < 3) return;
+      L.push({ w: x, mode: 'gcloze', sec: 'B 읽기', opts: [], topts: [x.tok.toLowerCase(), ...wrong].sort(() => Math.random() - .5) });
+    });
+    pick(gs, 3).forEach(x => L.push(mk(x, 'read_ko', 'B 읽기', gs)));
+    pick(gs.filter(x => { const n = x.vi.replace(/[.?!]+$/, '').split(/\s+/).length; return n >= 3 && n <= 9 && !/[.!?]\s/.test(x.vi); }), 3).forEach(x => L.push(mk(x, 'puzzle', 'C 쓰기')));
+  }
   if (canRecord()) {
     if (r.speak === 'pron') pick(withAud, 5).forEach(w => L.push(mk(w, 'say', 'D 말하기')));          // 발음만 (1회차)
     else { pick(withAud, 3).forEach(w => L.push(mk(w, 'say', 'D 말하기'))); pick(withImg.filter(w => AIDX[w.vi]), 2).forEach(w => L.push(mk(w, 'say_pic', 'D 말하기'))); }
@@ -8998,6 +9081,14 @@ function drawExamKind(body, q) {
     opts.forEach(o => { const b = el('button', null, esc(o.vi)); b.dataset.vi = o.vi === tok ? w.vi : '-'; b.onclick = () => answer(b, o.vi === tok, w); box.append(b); });
     body.append(box); return;
   }
+  if (md === 'gcloze') {                                   // 문법 빈칸 — 보기는 회차 문법의 말들 (2026-09-28)
+    const tok = w.tok || '';
+    const re = new RegExp('(^|\\s)' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i');
+    body.append(el('div', 'qmain sent', esc(w.vi.replace(re, '$1____'))), el('div', 'q mid', esc(w.ko)));
+    const box = el('div', 'opts');
+    (q.topts || []).forEach(o => { const b = el('button', null, esc(o)); const good = o === tok.toLowerCase(); b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
+    body.append(box); return;
+  }
   if (md === 'tf') {
     const other = q.opts.find(o => o.vi !== w.vi && o.ko) || w;
     const isTrue = Math.random() < .5;
@@ -9034,7 +9125,7 @@ function drawExamKind(body, q) {
     return;
   }
 }
-function finishExam() {
+function finishWeekly() {
   const last = Q.list[Q.list.length - 1]; if (last && last._ok === undefined) last._ok = Q.ok > (last._okBefore || 0);
   const secs = {}; Q.list.forEach(q => { const s = secs[q.sec] = secs[q.sec] || [0, 0]; s[1]++; if (q._ok) s[0]++; });
   const r = el('div', 'result');
@@ -9298,7 +9389,7 @@ function answer(btn, correct, w) {
   }
   if (correct) Q.ok++;
   else requeue(Q.list[Q.i]);        // 틀린 건 이번 판 끝에 한 번 더
-  grade(w.vi, correct, Q.early);
+  if (!w.nograde) grade(w.vi, correct, Q.early);   // 문법 예문(주간 시험)은 단어 창고에 안 넣는다 (2026-09-28)
   sound(w.vi);                      // 답이 열릴 때 소리 한 번 (대표님 지시 2026-09-27 밤) — 맞든 틀리든
   // 답한 뒤에는 글자·성조·발음·뜻을 한 번에 보여준다 (맞았든 틀렸든)
   const ans = el('div', 'ansbox');
@@ -9393,7 +9484,7 @@ function grade0(vi, ok, early) {
 
 function finishQuiz() {
   $('#quizFill').style.width = '100%';
-  if (Q.exam) return finishExam();
+  if (Q.exam) return finishWeekly();
   if (!Q.day) {
     S.stats.rev = (S.stats.rev || 0) + 1;                          // 복습 판 수 (업적용)
     earnOnce('rev', CRD.rev, tr('복습을 끝냈습니다'));
