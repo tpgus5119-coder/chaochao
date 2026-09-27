@@ -2403,7 +2403,7 @@ function studyWordsEntry(scroll) {
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track).sort((x, y) => (x.n || 0) - (y.n || 0));
   rows.push({ key: 'days', title: '일상', sub: days.length + tr('일차') + ' · ' + days.reduce((a, d) => a + (d.words || []).length, 0) + tr('낱말'),
     done: days.filter(d => S.done[d.day]).length, all: days.length,
-    nodes: days.map((d, i) => { const gi = GROUPS.findIndex(([f]) => f(d));
+    nodes: days.map((d, i) => { const base = d.group ? (ALL.find(x => x.day === d.group) || d) : d; const gi = GROUPS.findIndex(([f]) => f(base));
       return { key: d.day, title: d.theme, sub: (gi >= 0 ? GROUPS[gi][1] + ' · ' : '') + (d.words || []).length + tr('낱말'), num: i + 1, done: !!S.done[d.day],
                fn: () => { SBOX = 'srs'; dive(back); startLearn(d); } }; }) });
   // ② 직무 — 갈래별 레슨 전부를 한 길로 (갈래 이름 · 레슨 이름)
@@ -6394,7 +6394,8 @@ function renderDays() {
   /* 2026-09-25 대표님 지시(#14): GYBM 과 같은 **길(로드맵)** 로 그린다. 갈래(GROUPS) 이름은
      줄 부제에 붙인다. 일정판의 '다음 차례'(nx)가 있으면 그 세트가 '지금 여기'다. */
   const nodes = days.map((d, i) => {
-    const gi = GROUPS.findIndex(([f]) => f(d));
+    const base = d.group ? (ALL.find(x => x.day === d.group) || d) : d;   // '· 보강' 일차는 원래 일차의 갈래 이름을 쓴다 (2026-09-27)
+    const gi = GROUPS.findIndex(([f]) => f(base));
     return { key: d.day, title: d.theme,
              sub: (gi >= 0 ? GROUPS[gi][1] + ' · ' : '') + (d.words || []).length + tr('낱말') + (d.dialog ? ' + ' + tr('대화') : ''),
              num: i + 1, done: !!S.done[d.day],
