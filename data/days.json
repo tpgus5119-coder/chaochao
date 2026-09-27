@@ -540,7 +540,6 @@
  "days": [
   {
    "day": 1,
-   "n": 1,
    "theme": "인사와 자기소개 (1/4)",
    "words": [
     {
@@ -844,11 +843,11 @@
       "kr": "또이 혹 띠엥 비엣"
      }
     }
-   ]
+   ],
+   "n": 1
   },
   {
    "day": 2,
-   "n": 2,
    "theme": "인사와 자기소개 (2/4)",
    "words": [
     {
@@ -1206,11 +1205,11 @@
      },
      "img": "w-7b9a2b5b49.webp"
     }
-   ]
+   ],
+   "n": 2
   },
   {
    "day": 3,
-   "n": 3,
    "theme": "인사와 자기소개 (3/4)",
    "words": [
     {
@@ -1609,11 +1608,11 @@
       "kr": "꼬 어이 라 응으어이 팝"
      }
     }
-   ]
+   ],
+   "n": 3
   },
   {
    "day": 4,
-   "n": 4,
    "theme": "인사와 자기소개 (4/4)",
    "words": [
     {
@@ -1967,12 +1966,12 @@
      },
      "hanja": "臺灣 · 대만"
     }
-   ]
+   ],
+   "n": 4
   },
   {
    "day": 5,
-   "n": 5,
-   "theme": "나라와 언어",
+   "theme": "나라와 언어 (1/2)",
    "words": [
     {
      "vi": "Đức",
@@ -2265,7 +2264,14 @@
       "ko": "저는 러시아어를 공부해요.",
       "kr": "또이 혹 띠엥 응아"
      }
-    },
+    }
+   ],
+   "n": 5
+  },
+  {
+   "day": 132,
+   "theme": "나라와 언어 (2/2)",
+   "words": [
     {
      "vi": "tiếng Nhật",
      "ko": "일본어",
@@ -2512,13 +2518,64 @@
       "ko": "나는 너를 한 시간째 기다리고 있다.",
       "kr": "또이 더이 반 못 띠엥 조이"
      }
+    },
+    {
+     "vi": "công dân",
+     "ko": "시민, 국민",
+     "kr_read": "꽁 전",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "dân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "bo-d3de78a785.webp",
+     "ex": {
+      "vi": "Công dân Hàn Quốc được miễn thị thực.",
+      "ko": "한국 국민은 비자가 면제돼요.",
+      "kr": "꽁 전 한 꾸옥 드억 미엔 티 특"
+     },
+     "hanja": "公民 · 공민"
+    },
+    {
+     "vi": "quốc kỳ",
+     "ko": "국기",
+     "kr_read": "꾸옥 끼",
+     "tones": [
+      {
+       "syl": "quốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "kỳ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "bo-313ebf5097.webp",
+     "ex": {
+      "vi": "Quốc kỳ Việt Nam màu đỏ có ngôi sao vàng.",
+      "ko": "베트남 국기는 빨간 바탕에 노란 별이 있어요.",
+      "kr": "꾸옥 끼 비엣 남 마우 도 꼬 응오이 싸오 방"
+     }
     }
-   ]
+   ],
+   "n": 6
   },
   {
    "day": 6,
-   "n": 6,
-   "theme": "가리키기와 묻기 (1/3)",
+   "theme": "가리키기와 묻기 (1/2)",
    "words": [
     {
      "vi": "cái gì",
@@ -2672,162 +2729,6 @@
      }
     },
     {
-     "vi": "không thích",
-     "ko": "좋아하지 않다",
-     "kr_read": "콩 틱",
-     "tones": [
-      {
-       "syl": "không",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "thích",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "bo-6007f96bd0.webp",
-     "ex": {
-      "vi": "Tôi không thích ăn cay.",
-      "ko": "저는 매운 걸 안 좋아해요.",
-      "kr": "또이 콩 틱 안 까이"
-     }
-    },
-    {
-     "vi": "khi nào cũng",
-     "ko": "언제나",
-     "kr_read": "키 나오 꿍",
-     "tones": [
-      {
-       "syl": "khi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "nào",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "cũng",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      }
-     ],
-     "img": "bo-bf737ac98c.webp",
-     "ex": {
-      "vi": "Khi nào cũng có người giúp tôi.",
-      "ko": "언제나 저를 도와주는 사람이 있어요.",
-      "kr": "키 나오 꿍 꼬 응으어이 줍 또이"
-     }
-    },
-    {
-     "vi": "nói chung",
-     "ko": "일반적으로",
-     "kr_read": "노이 쭝",
-     "tones": [
-      {
-       "syl": "nói",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "chung",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-622e5ccab4.webp",
-     "ex": {
-      "vi": "Nói chung người Hà Nội dậy sớm.",
-      "ko": "일반적으로 하노이 사람들은 일찍 일어나요.",
-      "kr": "노이 쭝 응으어이 하 노이 저이 썸"
-     }
-    },
-    {
-     "vi": "nói riêng",
-     "ko": "특히, 개별적으로",
-     "kr_read": "노이 지엥",
-     "tones": [
-      {
-       "syl": "nói",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "riêng",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-2ff9d0cd37.webp",
-     "ex": {
-      "vi": "Tôi thích nhiều món, nói riêng là phở.",
-      "ko": "저는 여러 음식을 좋아하지만 특히 쌀국수를 좋아해요.",
-      "kr": "또이 틱 니에우 몬 노이 지엥 라 퍼"
-     }
-    },
-    {
-     "vi": "tùy theo",
-     "ko": "~에 따라",
-     "kr_read": "뚜이 태오",
-     "tones": [
-      {
-       "syl": "tùy",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "theo",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-77c781a16b.webp",
-     "ex": {
-      "vi": "Giá thay đổi tùy theo mùa.",
-      "ko": "가격은 계절에 따라 바뀌어요.",
-      "kr": "자 타이 도이 뚜이 태오 무어"
-     }
-    },
-    {
-     "vi": "trên dưới",
-     "ko": "위아래, 약 ~쯤",
-     "kr_read": "쩬 즈어이",
-     "tones": [
-      {
-       "syl": "trên",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "dưới",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "bo-305438fdc5.webp",
-     "ex": {
-      "vi": "Anh ấy trên dưới bốn mươi tuổi.",
-      "ko": "그분은 마흔 살쯤 되었어요.",
-      "kr": "아인 어이 쩬 즈어이 본 므어이 뚜오이"
-     }
-    },
-    {
      "vi": "cái đó",
      "ko": "그것",
      "kr_read": "까이 도",
@@ -2876,14 +2777,7 @@
       "ko": "이 사람은 누구예요?",
       "kr": "응으어이 나이 라 아이"
      }
-    }
-   ]
-  },
-  {
-   "day": 7,
-   "n": 7,
-   "theme": "가리키기와 묻기 (2/3)",
-   "words": [
+    },
     {
      "vi": "người đó",
      "ko": "그 사람",
@@ -3122,7 +3016,14 @@
       "kr": "아인 틱 로아이 나오"
      },
      "img": "w-9d017761a8.webp"
-    },
+    }
+   ],
+   "n": 7
+  },
+  {
+   "day": 7,
+   "theme": "가리키기와 묻기 (2/2)",
+   "words": [
     {
      "vi": "mấy lần",
      "ko": "몇 번",
@@ -3213,14 +3114,7 @@
       "ko": "Vân 언니! 저기는 누구예요?",
       "kr": "찌 번 어이 끼어 라 아이"
      }
-    }
-   ]
-  },
-  {
-   "day": 8,
-   "n": 8,
-   "theme": "가리키기와 묻기 (3/3)",
-   "words": [
+    },
     {
      "vi": "đâu",
      "ko": "어디",
@@ -3505,11 +3399,11 @@
       "kr": "꼰 쪼 쫑 콩"
      }
     }
-   ]
+   ],
+   "n": 8
   },
   {
    "day": 9,
-   "n": 9,
    "theme": "숫자 세기 (1/3)",
    "words": [
     {
@@ -3851,11 +3745,11 @@
      },
      "img": "w-dce9f107e6.webp"
     }
-   ]
+   ],
+   "n": 9
   },
   {
    "day": 10,
-   "n": 10,
    "theme": "숫자 세기 (2/3)",
    "words": [
     {
@@ -4199,14 +4093,54 @@
       "kr": "니엣 도 홈 나이 라 바 므어이 도"
      },
      "hanja": "度 · 도"
+    },
+    {
+     "vi": "ki-lô-gam",
+     "ko": "킬로그램",
+     "kr_read": "끼 로 감",
+     "tones": [
+      {
+       "syl": "ki-lô-gam",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-7c47a0c9b8.webp",
+     "ex": {
+      "vi": "Cho tôi hai ki-lô-gam xoài.",
+      "ko": "망고 2킬로그램 주세요.",
+      "kr": "쪼 또이 하이 끼 로 감 쏘아이"
+     }
     }
-   ]
+   ],
+   "n": 10
   },
   {
    "day": 11,
-   "n": 11,
    "theme": "숫자 세기 (3/3)",
    "words": [
+    {
+     "vi": "xen-ti-mét",
+     "ko": "센티미터",
+     "kr_read": "쌘 띠 맷",
+     "tones": [
+      {
+       "syl": "xen-ti-mét",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Dài khoảng ba mươi xen-ti-mét.",
+      "ko": "길이가 30센티미터쯤이에요.",
+      "kr": "자이 코앙 바 므어이 쌘 띠 맷"
+     },
+     "img": "w-e99cf8fd50.webp"
+    },
     {
      "vi": "một phần",
      "ko": "일부분",
@@ -4537,11 +4471,11 @@
       "kr": "또이 디 비엣 남 하이 런"
      }
     }
-   ]
+   ],
+   "n": 11
   },
   {
    "day": 12,
-   "n": 12,
    "theme": "시간과 요일 (1/4)",
    "words": [
     {
@@ -4873,11 +4807,11 @@
      },
      "hanja": "主日 · 주일"
     }
-   ]
+   ],
+   "n": 12
   },
   {
    "day": 13,
-   "n": 13,
    "theme": "시간과 요일 (2/4)",
    "words": [
     {
@@ -5246,11 +5180,11 @@
       "kr": "홈 꽈 또이 갑 바 자 비"
      }
     }
-   ]
+   ],
+   "n": 13
   },
   {
    "day": 14,
-   "n": 14,
    "theme": "시간과 요일 (3/4)",
    "words": [
     {
@@ -5585,11 +5519,11 @@
       "kr": "버이 저 라 바이 저 둥"
      }
     }
-   ]
+   ],
+   "n": 14
   },
   {
    "day": 15,
-   "n": 15,
    "theme": "시간과 요일 (4/4)",
    "words": [
     {
@@ -5945,11 +5879,11 @@
      },
      "hanja": "時 · 시"
     }
-   ]
+   ],
+   "n": 15
   },
   {
    "day": 16,
-   "n": 16,
    "theme": "달 이름",
    "words": [
     {
@@ -6264,11 +6198,11 @@
       "kr": "탕 므어이 하이 꼬 레 장 씬"
      }
     }
-   ]
+   ],
+   "n": 16
   },
   {
    "day": 17,
-   "n": 17,
    "theme": "때 표현과 헤어질 때 인사 (1/3)",
    "words": [
     {
@@ -6453,56 +6387,6 @@
      }
     },
     {
-     "vi": "hầu như",
-     "ko": "거의",
-     "kr_read": "허우 느",
-     "tones": [
-      {
-       "syl": "hầu",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "như",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-5aebe4a304.webp",
-     "ex": {
-      "vi": "Hầu như ngày nào tôi cũng đi bộ.",
-      "ko": "저는 거의 매일 걸어요.",
-      "kr": "허우 느 응아이 나오 또이 꿍 디 보"
-     }
-    },
-    {
-     "vi": "bỗng nhiên",
-     "ko": "갑자기",
-     "kr_read": "봉 니엔",
-     "tones": [
-      {
-       "syl": "bỗng",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      },
-      {
-       "syl": "nhiên",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-072f547705.webp",
-     "ex": {
-      "vi": "Bỗng nhiên trời mưa to.",
-      "ko": "갑자기 비가 많이 왔어요.",
-      "kr": "봉 니엔 쩌이 므어 또"
-     }
-    },
-    {
      "vi": "về sớm",
      "ko": "일찍 돌아가다",
      "kr_read": "베 썸",
@@ -6639,14 +6523,7 @@
       "ko": "여러분 안녕, 나는 남이야.",
       "kr": "짜오 깍 반 민 라 남"
      }
-    }
-   ]
-  },
-  {
-   "day": 18,
-   "n": 18,
-   "theme": "때 표현과 헤어질 때 인사 (2/3)",
-   "words": [
+    },
     {
      "vi": "ngày mốt",
      "ko": "모레",
@@ -6672,7 +6549,14 @@
       "ko": "모레 하노이에 가요.",
       "kr": "응아이 못 또이 디 하 노이"
      }
-    },
+    }
+   ],
+   "n": 17
+  },
+  {
+   "day": 18,
+   "theme": "때 표현과 헤어질 때 인사 (2/3)",
+   "words": [
     {
      "vi": "chúc ngủ ngon",
      "ko": "안녕히 주무세요",
@@ -7014,14 +6898,7 @@
       "ko": "베트남에 처음 왔어요.",
       "kr": "더이 라 런 더우 또이 덴 비엣 남"
      }
-    }
-   ]
-  },
-  {
-   "day": 19,
-   "n": 19,
-   "theme": "때 표현과 헤어질 때 인사 (3/3)",
-   "words": [
+    },
     {
      "vi": "đi cẩn thận",
      "ko": "조심해서 가세요",
@@ -7053,7 +6930,14 @@
       "kr": "쩌이 므어 디 껀 턴 냬"
      },
      "img": "w-89893084ec.webp"
-    },
+    }
+   ],
+   "n": 18
+  },
+  {
+   "day": 19,
+   "theme": "때 표현과 헤어질 때 인사 (3/3)",
+   "words": [
     {
      "vi": "ngay",
      "ko": "바로, 즉시",
@@ -7308,12 +7192,12 @@
       "kr": "또이 루온 깜 터이 멧 바오 트 하이"
      }
     }
-   ]
+   ],
+   "n": 19
   },
   {
    "day": 20,
-   "n": 20,
-   "theme": "얼마나 자주, 언제",
+   "theme": "얼마나 자주, 언제 (1/2)",
    "words": [
     {
      "vi": "luôn luôn",
@@ -7597,7 +7481,14 @@
       "ko": "근처에 카페가 하나 있다.",
       "kr": "꼬 못 꽌 까 페 건 더이"
      }
-    },
+    }
+   ],
+   "n": 20
+  },
+  {
+   "day": 133,
+   "theme": "얼마나 자주, 언제 (2/2)",
+   "words": [
     {
      "vi": "trước đây",
      "ko": "예전에, 전에",
@@ -7851,13 +7742,44 @@
       "ko": "도착했을 때 전화할게요.",
       "kr": "또이 고이 반 키 덴 너이"
      }
+    },
+    {
+     "vi": "khi nào cũng",
+     "ko": "언제나",
+     "kr_read": "키 나오 꿍",
+     "tones": [
+      {
+       "syl": "khi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nào",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "cũng",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "bo-bf737ac98c.webp",
+     "ex": {
+      "vi": "Khi nào cũng có người giúp tôi.",
+      "ko": "언제나 저를 도와주는 사람이 있어요.",
+      "kr": "키 나오 꿍 꼬 응으어이 줍 또이"
+     }
     }
-   ]
+   ],
+   "n": 21
   },
   {
    "day": 21,
-   "n": 21,
-   "theme": "전화·인터넷 개통 (1/3)",
+   "theme": "전화 (1/2)",
    "words": [
     {
      "vi": "điện thoại",
@@ -7884,6 +7806,44 @@
       "kr": "또이 무온 무어 디엔 토아이 머이"
      },
      "hanja": "電話 · 전화"
+    },
+    {
+     "vi": "điện thoại di động",
+     "ko": "휴대폰 cell phone",
+     "kr_read": "디엔 토아이 지 동",
+     "tones": [
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "thoại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "di",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "động",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-dien-thoai-di-dong.webp",
+     "ex": {
+      "vi": "Tôi để quên điện thoại di động ở nhà.",
+      "ko": "나는 휴대폰을 집에 두고 왔다.",
+      "kr": "또이 데 꾸엔 디엔 토아이 지 동 어 냐"
+     }
     },
     {
      "vi": "sim",
@@ -7924,6 +7884,51 @@
      }
     },
     {
+     "vi": "bộ sạc",
+     "ko": "충전기",
+     "kr_read": "보 싹",
+     "tones": [
+      {
+       "syl": "bộ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "sạc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-c15b3b4d26.webp",
+     "ex": {
+      "vi": "Tôi quên bộ sạc ở nhà.",
+      "ko": "충전기를 집에 두고 왔어요.",
+      "kr": "또이 꾸엔 보 싹 어 냐"
+     }
+    },
+    {
+     "vi": "sạc",
+     "ko": "충전하다(전기)",
+     "kr_read": "싹",
+     "tones": [
+      {
+       "syl": "sạc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "sac-charge.webp",
+     "ex": {
+      "vi": "Tôi đang sạc điện thoại.",
+      "ko": "나는 전화기를 충전하고 있어요.",
+      "kr": "또이 당 싹 디엔 토아이"
+     }
+    },
+    {
      "vi": "số điện thoại",
      "ko": "전화번호",
      "kr_read": "쏘 디엔 토아이",
@@ -7953,26 +7958,6 @@
       "ko": "전화번호 좀 알려주세요.",
       "kr": "쪼 또이 씬 쏘 디엔 토아이"
      }
-    },
-    {
-     "vi": "mạng",
-     "ko": "네트워크·인터넷",
-     "kr_read": "망",
-     "tones": [
-      {
-       "syl": "mạng",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "x-mang.webp",
-     "ex": {
-      "vi": "Mạng ở đây rất yếu.",
-      "ko": "여기 인터넷이 너무 약해요.",
-      "kr": "망 어 더이 젓 이에우"
-     },
-     "hanja": "網 · 망"
     },
     {
      "vi": "cước phí",
@@ -8026,73 +8011,114 @@
      }
     },
     {
-     "vi": "đăng ký",
-     "ko": "등록하다",
-     "kr_read": "당 끼",
+     "vi": "thuê bao",
+     "ko": "가입자, 회선(휴대전화 번호)",
+     "kr_read": "투에 바오",
      "tones": [
       {
-       "syl": "đăng",
+       "syl": "thuê",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
       },
       {
-       "syl": "ký",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
+       "syl": "bao",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       }
      ],
-     "img": "rv-9524d840a2.webp",
+     "img": "bo-b2586db5e7.webp",
      "ex": {
-      "vi": "Tôi muốn đăng ký mạng internet.",
-      "ko": "인터넷을 등록하고 싶어요.",
-      "kr": "또이 무온 당 끼 망 인 떠 넷"
+      "vi": "Số thuê bao này không liên lạc được.",
+      "ko": "이 번호는 연결되지 않아요.",
+      "kr": "쏘 투에 바오 나이 콩 리엔 락 드억"
      }
     },
     {
-     "vi": "sạc",
-     "ko": "충전하다(전기)",
-     "kr_read": "싹",
+     "vi": "mã quốc gia",
+     "ko": "국가번호",
+     "kr_read": "마 꾸옥 자",
      "tones": [
       {
-       "syl": "sạc",
+       "syl": "mã",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "quốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "gia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Mã quốc gia của Hàn Quốc là tám hai.",
+      "ko": "한국 국가번호는 82예요.",
+      "kr": "마 꾸옥 자 꾸어 한 꾸옥 라 땀 하이"
+     },
+     "img": "w-32029c043a.webp"
+    },
+    {
+     "vi": "mã vùng",
+     "ko": "지역번호",
+     "kr_read": "마 붕",
+     "tones": [
+      {
+       "syl": "mã",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "vùng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Mã vùng Hà Nội là hai bốn.",
+      "ko": "하노이 지역번호는 24예요.",
+      "kr": "마 붕 하 노이 라 하이 본"
+     },
+     "img": "w-fe43fd792f.webp"
+    },
+    {
+     "vi": "danh bạ",
+     "ko": "전화번호부",
+     "kr_read": "자인 바",
+     "tones": [
+      {
+       "syl": "danh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bạ",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       }
      ],
-     "img": "sac-charge.webp",
+     "src": "승빈",
+     "img": "w-830616db95.webp",
      "ex": {
-      "vi": "Tôi đang sạc điện thoại.",
-      "ko": "나는 전화기를 충전하고 있어요.",
-      "kr": "또이 당 싹 디엔 토아이"
-     }
-    },
-    {
-     "vi": "tin nhắn",
-     "ko": "문자메시지",
-     "kr_read": "띤 냔",
-     "tones": [
-      {
-       "syl": "tin",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "nhắn",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "tin-nhan.webp",
-     "ex": {
-      "vi": "Tôi đã nhận được tin nhắn.",
-      "ko": "나는 문자메시지를 받았어요.",
-      "kr": "또이 다 년 드억 띤 냔"
-     }
+      "vi": "Tôi tìm số trong danh bạ.",
+      "ko": "나는 전화번호부에서 번호를 찾아요.",
+      "kr": "또이 띰 쏘 쫑 자인 바"
+     },
+     "hanja": "名簿 · 명부"
     },
     {
      "vi": "gọi điện",
@@ -8118,224 +8144,207 @@
       "ko": "내가 너에게 전화할게.",
       "kr": "또이 쌔 고이 디엔 쪼 반"
      }
-    },
-    {
-     "vi": "đăng nhập",
-     "ko": "로그인",
-     "kr_read": "당 녑",
-     "tones": [
-      {
-       "syl": "đăng",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "nhập",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Tôi không đăng nhập được.",
-      "ko": "로그인이 안 돼요.",
-      "kr": "또이 콩 당 녑 드억"
-     },
-     "img": "w-e225a6fd75.webp",
-     "hanja": "登入 · 등입"
-    },
-    {
-     "vi": "đăng xuất",
-     "ko": "로그아웃",
-     "kr_read": "당 쑤엇",
-     "tones": [
-      {
-       "syl": "đăng",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "xuất",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Nhớ đăng xuất trước khi về.",
-      "ko": "퇴근 전에 로그아웃하는 거 잊지 마세요.",
-      "kr": "녀 당 쑤엇 쯔억 키 베"
-     },
-     "img": "w-3879f078a4.webp",
-     "hanja": "登出 · 등출"
-    },
-    {
-     "vi": "bài đăng",
-     "ko": "게시물",
-     "kr_read": "바이 당",
-     "tones": [
-      {
-       "syl": "bài",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "đăng",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Bài đăng này nhiều người thích.",
-      "ko": "이 게시물은 좋아요가 많아요.",
-      "kr": "바이 당 나이 니에우 응으어이 틱"
-     },
-     "img": "w-0131626e0e.webp"
     }
-   ]
+   ],
+   "n": 22
   },
   {
    "day": 22,
-   "n": 22,
-   "theme": "전화·인터넷 개통 (2/3)",
+   "theme": "전화 (2/2)",
    "words": [
     {
-     "vi": "bình luận",
-     "ko": "댓글",
-     "kr_read": "빈 루언",
+     "vi": "gọi đi",
+     "ko": "전화를 걸다(발신)",
+     "kr_read": "고이 디",
      "tones": [
       {
-       "syl": "bình",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "luận",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Có nhiều bình luận dưới bài này.",
-      "ko": "이 글 아래 댓글이 많아요.",
-      "kr": "꼬 니에우 빈 루언 즈어이 바이 나이"
-     },
-     "img": "w-6d4e9bd3a9.webp",
-     "hanja": "評論 · 평론"
-    },
-    {
-     "vi": "lượt thích",
-     "ko": "좋아요(수)",
-     "kr_read": "르엇 틱",
-     "tones": [
-      {
-       "syl": "lượt",
+       "syl": "gọi",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       },
       {
-       "syl": "thích",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Ảnh này có một nghìn lượt thích.",
-      "ko": "이 사진은 좋아요가 천 개예요.",
-      "kr": "아인 나이 꼬 못 응인 르엇 틱"
-     },
-     "img": "w-224a288614.webp"
-    },
-    {
-     "vi": "video",
-     "ko": "영상",
-     "kr_read": "비 데 오",
-     "tones": [
-      {
-       "syl": "video",
+       "syl": "đi",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
       }
      ],
      "src": "승빈",
+     "img": "w-6c359b081b.webp",
      "ex": {
-      "vi": "Tôi xem video học tiếng Việt.",
-      "ko": "나는 베트남어 학습 영상을 봐요.",
-      "kr": "또이 쌤 비 데 오 혹 띠엥 비엣"
-     },
-     "img": "w-e9d6e13c5d.webp"
+      "vi": "Máy này chỉ gọi đi được.",
+      "ko": "이 전화기는 발신만 돼요.",
+      "kr": "마이 나이 찌 고이 디 드억"
+     }
     },
     {
-     "vi": "phát trực tiếp",
-     "ko": "생방송",
-     "kr_read": "팟 쯕 띠엡",
+     "vi": "nhận cuộc gọi",
+     "ko": "전화를 받다",
+     "kr_read": "년 꾸옥 고이",
      "tones": [
       {
-       "syl": "phát",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "trực",
+       "syl": "nhận",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       },
       {
-       "syl": "tiếp",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Tối nay cô ấy phát trực tiếp.",
-      "ko": "오늘 밤 그녀는 생방송을 해요.",
-      "kr": "또이 나이 꼬 어이 팟 쯕 띠엡"
-     },
-     "img": "w-cbe90a9723.webp"
-    },
-    {
-     "vi": "tải xuống",
-     "ko": "다운로드",
-     "kr_read": "따이 쑤옹",
-     "tones": [
-      {
-       "syl": "tải",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
+       "syl": "cuộc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
       },
       {
-       "syl": "xuống",
+       "syl": "gọi",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-4b807c2658.webp",
+     "ex": {
+      "vi": "Tôi không nhận cuộc gọi lạ.",
+      "ko": "모르는 전화는 받지 않아요.",
+      "kr": "또이 콩 년 꾸옥 고이 라"
+     }
+    },
+    {
+     "vi": "nghe máy",
+     "ko": "전화를 받다",
+     "kr_read": "응애 마이",
+     "tones": [
+      {
+       "syl": "nghe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
        "name": "sắc",
        "ko": "짧게 올라감",
        "shape": "／"
       }
      ],
      "src": "승빈",
+     "img": "w-678f882392.webp",
      "ex": {
-      "vi": "Tải xuống ứng dụng này đi.",
-      "ko": "이 앱을 다운로드하세요.",
-      "kr": "따이 쑤옹 응 중 나이 디"
+      "vi": "Alô, sao hồi chiều mình gọi mà cậu không nghe máy?",
+      "ko": "여보세요, 아까 오후에 전화했는데 왜 안 받았어?",
+      "kr": "아 로 싸오 호이 찌에우 민 고이 마 꺼우 콩 응애 마이"
+     }
+    },
+    {
+     "vi": "cúp máy",
+     "ko": "전화를 끊다",
+     "kr_read": "꿉 마이",
+     "tones": [
+      {
+       "syl": "cúp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-af75a34cf1.webp",
+     "ex": {
+      "vi": "Ừ, 0912.345.678. Thôi, chị cúp máy đây. Em nhớ gọi lại cho chị nhé!",
+      "ko": "네, 0912.345.678이에요. 그럼 전화 끊을게요. 꼭 다시 전화해 줘요!",
+      "kr": "으 토이 찌 꿉 마이 더이 앰 녀 고이 라이 쪼 찌 냬"
+     }
+    },
+    {
+     "vi": "cuộc gọi",
+     "ko": "통화, 전화 한 통",
+     "kr_read": "꾸옥 고이",
+     "tones": [
+      {
+       "syl": "cuộc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "gọi",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-564ec72705.webp",
+     "ex": {
+      "vi": "Tôi có một cuộc gọi quan trọng.",
+      "ko": "중요한 전화가 한 통 왔어요.",
+      "kr": "또이 꼬 못 꾸옥 고이 꽌 쫑"
+     }
+    },
+    {
+     "vi": "cuộc gọi nhỡ",
+     "ko": "부재중 전화",
+     "kr_read": "꾸옥 고이 녀",
+     "tones": [
+      {
+       "syl": "cuộc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "gọi",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "nhỡ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Tôi có ba cuộc gọi nhỡ.",
+      "ko": "부재중 전화가 세 통 있어요.",
+      "kr": "또이 꼬 바 꾸옥 고이 녀"
      },
-     "img": "w-5c5095ab96.webp"
+     "img": "w-39cbba67ec.webp"
+    },
+    {
+     "vi": "a lô",
+     "ko": "여보세요 (전화 받을 때)",
+     "kr_read": "아 로",
+     "tones": [
+      {
+       "syl": "a",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lô",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-fb9e0fb244.webp",
+     "ex": {
+      "vi": "A lô, tôi là Mary.",
+      "ko": "여보세요, 저는 Mary입니다.",
+      "kr": "아 로 또이 라 마 지"
+     }
     },
     {
      "vi": "tôi sẽ nối máy",
@@ -8464,120 +8473,134 @@
      "img": "w-b5c7506100.webp"
     },
     {
-     "vi": "mã quốc gia",
-     "ko": "국가번호",
-     "kr_read": "마 꾸옥 자",
+     "vi": "thư thoại",
+     "ko": "음성 메시지",
+     "kr_read": "트 토아이",
      "tones": [
       {
-       "syl": "mã",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
+       "syl": "thư",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
       },
       {
-       "syl": "quốc",
+       "syl": "thoại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Anh ấy để lại thư thoại.",
+      "ko": "그가 음성 메시지를 남겼어요.",
+      "kr": "아인 어이 데 라이 트 토아이"
+     },
+     "img": "w-9ea73fc88b.webp"
+    },
+    {
+     "vi": "tin nhắn",
+     "ko": "문자메시지",
+     "kr_read": "띤 냔",
+     "tones": [
+      {
+       "syl": "tin",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhắn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "tin-nhan.webp",
+     "ex": {
+      "vi": "Tôi đã nhận được tin nhắn.",
+      "ko": "나는 문자메시지를 받았어요.",
+      "kr": "또이 다 년 드억 띤 냔"
+     }
+    },
+    {
+     "vi": "nhắn tin",
+     "ko": "문자를 보내다",
+     "kr_read": "냔 띤",
+     "tones": [
+      {
+       "syl": "nhắn",
        "name": "sắc",
        "ko": "짧게 올라감",
        "shape": "／"
       },
       {
-       "syl": "gia",
+       "syl": "tin",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
       }
      ],
      "src": "승빈",
+     "img": "b-nhan-tin.webp",
      "ex": {
-      "vi": "Mã quốc gia của Hàn Quốc là tám hai.",
-      "ko": "한국 국가번호는 82예요.",
-      "kr": "마 꾸옥 자 꾸어 한 꾸옥 라 땀 하이"
-     },
-     "img": "w-32029c043a.webp"
+      "vi": "Tôi sẽ nhắn tin cho bạn sau.",
+      "ko": "나중에 문자 보낼게요.",
+      "kr": "또이 쌔 냔 띤 쪼 반 싸우"
+     }
     },
     {
-     "vi": "mã vùng",
-     "ko": "지역번호",
-     "kr_read": "마 붕",
+     "vi": "người nhận",
+     "ko": "전화 받는 사람 (receiver / recipient)",
+     "kr_read": "응으어이 년",
      "tones": [
       {
-       "syl": "mã",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      },
-      {
-       "syl": "vùng",
+       "syl": "người",
        "name": "huyền",
        "ko": "낮게 내려감",
        "shape": "＼"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Mã vùng Hà Nội là hai bốn.",
-      "ko": "하노이 지역번호는 24예요.",
-      "kr": "마 붕 하 노이 라 하이 본"
-     },
-     "img": "w-fe43fd792f.webp"
-    },
-    {
-     "vi": "nhận cuộc gọi",
-     "ko": "전화를 받다",
-     "kr_read": "년 꾸옥 고이",
-     "tones": [
+      },
       {
        "syl": "nhận",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
-      },
-      {
-       "syl": "cuộc",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "gọi",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
       }
      ],
      "src": "승빈",
-     "img": "w-4b807c2658.webp",
+     "img": "b-nguoi-nhan.webp",
      "ex": {
-      "vi": "Tôi không nhận cuộc gọi lạ.",
-      "ko": "모르는 전화는 받지 않아요.",
-      "kr": "또이 콩 년 꾸옥 고이 라"
+      "vi": "Người nhận đã xác nhận đơn hàng.",
+      "ko": "받는 사람이 주문을 확인했다.",
+      "kr": "응으어이 년 다 싹 년 던 항"
      }
-    },
+    }
+   ],
+   "n": 23
+  },
+  {
+   "day": 23,
+   "theme": "인터넷과 SNS",
+   "words": [
     {
-     "vi": "gọi đi",
-     "ko": "전화를 걸다(발신)",
-     "kr_read": "고이 디",
+     "vi": "mạng",
+     "ko": "네트워크·인터넷",
+     "kr_read": "망",
      "tones": [
       {
-       "syl": "gọi",
+       "syl": "mạng",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
-      },
-      {
-       "syl": "đi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
       }
      ],
-     "src": "승빈",
-     "img": "w-6c359b081b.webp",
+     "img": "x-mang.webp",
      "ex": {
-      "vi": "Máy này chỉ gọi đi được.",
-      "ko": "이 전화기는 발신만 돼요.",
-      "kr": "마이 나이 찌 고이 디 드억"
-     }
+      "vi": "Mạng ở đây rất yếu.",
+      "ko": "여기 인터넷이 너무 약해요.",
+      "kr": "망 어 더이 젓 이에우"
+     },
+     "hanja": "網 · 망"
     },
     {
      "vi": "Wi-Fi",
@@ -8598,77 +8621,367 @@
       "ko": "여기 와이파이 있어요?",
       "kr": "어 더이 꼬 와이 파이 콩"
      }
-    }
-   ]
-  },
-  {
-   "day": 23,
-   "n": 23,
-   "theme": "전화·인터넷 개통 (3/3)",
-   "words": [
-    {
-     "vi": "bộ sạc",
-     "ko": "충전기",
-     "kr_read": "보 싹",
-     "tones": [
-      {
-       "syl": "bộ",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "sạc",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-c15b3b4d26.webp",
-     "ex": {
-      "vi": "Tôi quên bộ sạc ở nhà.",
-      "ko": "충전기를 집에 두고 왔어요.",
-      "kr": "또이 꾸엔 보 싹 어 냐"
-     }
     },
     {
-     "vi": "máy tính xách tay",
-     "ko": "노트북",
-     "kr_read": "마이 띤 싹 따이",
+     "vi": "internet",
+     "ko": "인터넷",
+     "kr_read": "인 떠 넷",
      "tones": [
       {
-       "syl": "máy",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "tính",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "xách",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "tay",
+       "syl": "internet",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
       }
      ],
      "src": "승빈",
-     "img": "b-may-tinh-xach-tay.webp",
+     "img": "w-39a4b563ee.webp",
      "ex": {
-      "vi": "Máy tính xách tay của tôi hết pin.",
-      "ko": "내 노트북 배터리가 다 됐어요.",
-      "kr": "마이 띤 싹 따이 꾸어 또이 헷 삔"
+      "vi": "Có internet rất tiện lợi.",
+      "ko": "인터넷이 있으면 아주 편리해요.",
+      "kr": "꼬 인 떠 넷 젓 띠엔 러이"
      }
+    },
+    {
+     "vi": "lên mạng",
+     "ko": "인터넷을 하다",
+     "kr_read": "렌 망",
+     "tones": [
+      {
+       "syl": "lên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "mạng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-len-mang.webp",
+     "ex": {
+      "vi": "Tôi lên mạng tìm thông tin.",
+      "ko": "나는 정보를 찾으려고 인터넷에 접속한다.",
+      "kr": "또이 렌 망 띰 통 띤"
+     }
+    },
+    {
+     "vi": "đăng ký",
+     "ko": "등록하다",
+     "kr_read": "당 끼",
+     "tones": [
+      {
+       "syl": "đăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ký",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "rv-9524d840a2.webp",
+     "ex": {
+      "vi": "Tôi muốn đăng ký mạng internet.",
+      "ko": "인터넷을 등록하고 싶어요.",
+      "kr": "또이 무온 당 끼 망 인 떠 넷"
+     }
+    },
+    {
+     "vi": "đăng nhập",
+     "ko": "로그인",
+     "kr_read": "당 녑",
+     "tones": [
+      {
+       "syl": "đăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhập",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Tôi không đăng nhập được.",
+      "ko": "로그인이 안 돼요.",
+      "kr": "또이 콩 당 녑 드억"
+     },
+     "img": "w-e225a6fd75.webp",
+     "hanja": "登入 · 등입"
+    },
+    {
+     "vi": "đăng xuất",
+     "ko": "로그아웃",
+     "kr_read": "당 쑤엇",
+     "tones": [
+      {
+       "syl": "đăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "xuất",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Nhớ đăng xuất trước khi về.",
+      "ko": "퇴근 전에 로그아웃하는 거 잊지 마세요.",
+      "kr": "녀 당 쑤엇 쯔억 키 베"
+     },
+     "img": "w-3879f078a4.webp",
+     "hanja": "登出 · 등출"
+    },
+    {
+     "vi": "mật khẩu",
+     "ko": "비밀번호",
+     "kr_read": "멋 커우",
+     "tones": [
+      {
+       "syl": "mật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "khẩu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-81973897c7.webp",
+     "ex": {
+      "vi": "Mật khẩu của bạn là gì?",
+      "ko": "여러분의 비밀번호는 무엇인가요?",
+      "kr": "멋 커우 꾸어 반 라 지"
+     },
+     "hanja": "密口 · 밀구"
+    },
+    {
+     "vi": "bài đăng",
+     "ko": "게시물",
+     "kr_read": "바이 당",
+     "tones": [
+      {
+       "syl": "bài",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "đăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Bài đăng này nhiều người thích.",
+      "ko": "이 게시물은 좋아요가 많아요.",
+      "kr": "바이 당 나이 니에우 응으어이 틱"
+     },
+     "img": "w-0131626e0e.webp"
+    },
+    {
+     "vi": "bình luận",
+     "ko": "댓글",
+     "kr_read": "빈 루언",
+     "tones": [
+      {
+       "syl": "bình",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "luận",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Có nhiều bình luận dưới bài này.",
+      "ko": "이 글 아래 댓글이 많아요.",
+      "kr": "꼬 니에우 빈 루언 즈어이 바이 나이"
+     },
+     "img": "w-6d4e9bd3a9.webp",
+     "hanja": "評論 · 평론"
+    },
+    {
+     "vi": "lượt thích",
+     "ko": "좋아요(수)",
+     "kr_read": "르엇 틱",
+     "tones": [
+      {
+       "syl": "lượt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "thích",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Ảnh này có một nghìn lượt thích.",
+      "ko": "이 사진은 좋아요가 천 개예요.",
+      "kr": "아인 나이 꼬 못 응인 르엇 틱"
+     },
+     "img": "w-224a288614.webp"
+    },
+    {
+     "vi": "video",
+     "ko": "영상",
+     "kr_read": "비 데 오",
+     "tones": [
+      {
+       "syl": "video",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Tôi xem video học tiếng Việt.",
+      "ko": "나는 베트남어 학습 영상을 봐요.",
+      "kr": "또이 쌤 비 데 오 혹 띠엥 비엣"
+     },
+     "img": "w-e9d6e13c5d.webp"
+    },
+    {
+     "vi": "phát trực tiếp",
+     "ko": "생방송",
+     "kr_read": "팟 쯕 띠엡",
+     "tones": [
+      {
+       "syl": "phát",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "trực",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "tiếp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Tối nay cô ấy phát trực tiếp.",
+      "ko": "오늘 밤 그녀는 생방송을 해요.",
+      "kr": "또이 나이 꼬 어이 팟 쯕 띠엡"
+     },
+     "img": "w-cbe90a9723.webp"
+    },
+    {
+     "vi": "theo dõi",
+     "ko": "따라가다(follow)",
+     "kr_read": "태오 조이",
+     "tones": [
+      {
+       "syl": "theo",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "dõi",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-theo-doi.webp",
+     "ex": {
+      "vi": "Bác sĩ theo dõi tình trạng bệnh nhân.",
+      "ko": "의사가 환자의 상태를 따라간다.",
+      "kr": "박 씨 태오 조이 띤 짱 벤 년"
+     }
+    },
+    {
+     "vi": "chia sẻ",
+     "ko": "나누다, 공유하다",
+     "kr_read": "찌어 쌔",
+     "tones": [
+      {
+       "syl": "chia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "sẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-chia-se.webp",
+     "ex": {
+      "vi": "Hãy chia sẻ khó khăn với tôi.",
+      "ko": "저와 어려움을 나누어요.",
+      "kr": "하이 찌어 쌔 코 칸 버이 또이"
+     }
+    },
+    {
+     "vi": "tải xuống",
+     "ko": "다운로드",
+     "kr_read": "따이 쑤옹",
+     "tones": [
+      {
+       "syl": "tải",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "xuống",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Tải xuống ứng dụng này đi.",
+      "ko": "이 앱을 다운로드하세요.",
+      "kr": "따이 쑤옹 응 중 나이 디"
+     },
+     "img": "w-5c5095ab96.webp"
     },
     {
      "vi": "tải lên",
@@ -8697,9 +9010,57 @@
      "img": "w-51672ccd18.webp"
     },
     {
-     "vi": "thư mục",
-     "ko": "폴더",
-     "kr_read": "트 묵",
+     "vi": "tải",
+     "ko": "다운로드하다",
+     "kr_read": "따이",
+     "tones": [
+      {
+       "syl": "tải",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-d5d9b575f5.webp",
+     "ex": {
+      "vi": "Tôi tải ảnh đó về máy.",
+      "ko": "저는 그 사진을 컴퓨터에 내려받아요.",
+      "kr": "또이 따이 아인 도 베 마이"
+     },
+     "hanja": "載 · 재"
+    }
+   ],
+   "n": 24
+  },
+  {
+   "day": 24,
+   "theme": "이메일과 파일",
+   "words": [
+    {
+     "vi": "email",
+     "ko": "이메일",
+     "kr_read": "이 메일",
+     "tones": [
+      {
+       "syl": "email",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-email.webp",
+     "ex": {
+      "vi": "Tôi sẽ gửi email cho bạn.",
+      "ko": "당신에게 이메일을 보낼게요.",
+      "kr": "또이 쌔 그이 이 메일 쪼 반"
+     }
+    },
+    {
+     "vi": "thư điện tử",
+     "ko": "이메일",
+     "kr_read": "트 디엔 뜨",
      "tones": [
       {
        "syl": "thư",
@@ -8708,104 +9069,50 @@
        "shape": "—"
       },
       {
-       "syl": "mục",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Tệp ở trong thư mục này.",
-      "ko": "파일은 이 폴더 안에 있어요.",
-      "kr": "뗍 어 쫑 트 묵 나이"
-     },
-     "img": "w-aa8bd1a3a2.webp",
-     "hanja": "書目 · 서목"
-    },
-    {
-     "vi": "sao chép",
-     "ko": "복사하다",
-     "kr_read": "싸오 쨉",
-     "tones": [
-      {
-       "syl": "sao",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "chép",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Sao chép tệp này sang máy khác.",
-      "ko": "이 파일을 다른 컴퓨터로 복사하세요.",
-      "kr": "싸오 쨉 뗍 나이 쌍 마이 칵"
-     },
-     "img": "w-cea7a27126.webp"
-    },
-    {
-     "vi": "cuộc gọi nhỡ",
-     "ko": "부재중 전화",
-     "kr_read": "꾸옥 고이 녀",
-     "tones": [
-      {
-       "syl": "cuộc",
+       "syl": "điện",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       },
       {
-       "syl": "gọi",
+       "syl": "tử",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "bo-6411722aa9.webp",
+     "ex": {
+      "vi": "Chị gửi thư điện tử cho tôi nhé.",
+      "ko": "저에게 이메일 보내 주세요.",
+      "kr": "찌 그이 트 디엔 뜨 쪼 또이 냬"
+     }
+    },
+    {
+     "vi": "hộp thư",
+     "ko": "받은편지함",
+     "kr_read": "홉 트",
+     "tones": [
+      {
+       "syl": "hộp",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       },
-      {
-       "syl": "nhỡ",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Tôi có ba cuộc gọi nhỡ.",
-      "ko": "부재중 전화가 세 통 있어요.",
-      "kr": "또이 꼬 바 꾸옥 고이 녀"
-     },
-     "img": "w-39cbba67ec.webp"
-    },
-    {
-     "vi": "thư thoại",
-     "ko": "음성 메시지",
-     "kr_read": "트 토아이",
-     "tones": [
       {
        "syl": "thư",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
-      },
-      {
-       "syl": "thoại",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
       }
      ],
      "src": "승빈",
      "ex": {
-      "vi": "Anh ấy để lại thư thoại.",
-      "ko": "그가 음성 메시지를 남겼어요.",
-      "kr": "아인 어이 데 라이 트 토아이"
+      "vi": "Hộp thư của tôi đầy rồi.",
+      "ko": "제 받은편지함이 꽉 찼어요.",
+      "kr": "홉 트 꾸어 또이 더이 조이"
      },
-     "img": "w-9ea73fc88b.webp"
+     "img": "w-7ce230d0bd.webp"
     },
     {
      "vi": "tiêu đề",
@@ -8867,32 +9174,6 @@
      "img": "w-c21935b067.webp"
     },
     {
-     "vi": "hộp thư",
-     "ko": "받은편지함",
-     "kr_read": "홉 트",
-     "tones": [
-      {
-       "syl": "hộp",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "thư",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Hộp thư của tôi đầy rồi.",
-      "ko": "제 받은편지함이 꽉 찼어요.",
-      "kr": "홉 트 꾸어 또이 더이 조이"
-     },
-     "img": "w-7ce230d0bd.webp"
-    },
-    {
      "vi": "chuyển tiếp",
      "ko": "전달(포워딩)",
      "kr_read": "쭈옌 띠엡",
@@ -8920,345 +9201,104 @@
      "hanja": "轉接 · 전접"
     },
     {
-     "vi": "a lô",
-     "ko": "여보세요 (전화 받을 때)",
-     "kr_read": "아 로",
+     "vi": "thư mục",
+     "ko": "폴더",
+     "kr_read": "트 묵",
      "tones": [
       {
-       "syl": "a",
+       "syl": "thư",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
       },
       {
-       "syl": "lô",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-fb9e0fb244.webp",
-     "ex": {
-      "vi": "A lô, tôi là Mary.",
-      "ko": "여보세요, 저는 Mary입니다.",
-      "kr": "아 로 또이 라 마 지"
-     }
-    },
-    {
-     "vi": "cuộc gọi",
-     "ko": "통화, 전화 한 통",
-     "kr_read": "꾸옥 고이",
-     "tones": [
-      {
-       "syl": "cuộc",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "gọi",
+       "syl": "mục",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       }
      ],
      "src": "승빈",
-     "img": "w-564ec72705.webp",
      "ex": {
-      "vi": "Tôi có một cuộc gọi quan trọng.",
-      "ko": "중요한 전화가 한 통 왔어요.",
-      "kr": "또이 꼬 못 꾸옥 고이 꽌 쫑"
-     }
-    }
-   ]
-  },
-  {
-   "day": 24,
-   "n": 24,
-   "theme": "휴대폰과 컴퓨터 (1/2)",
-   "words": [
-    {
-     "vi": "nghe máy",
-     "ko": "전화를 받다",
-     "kr_read": "응애 마이",
-     "tones": [
-      {
-       "syl": "nghe",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "máy",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-678f882392.webp",
-     "ex": {
-      "vi": "Alô, sao hồi chiều mình gọi mà cậu không nghe máy?",
-      "ko": "여보세요, 아까 오후에 전화했는데 왜 안 받았어?",
-      "kr": "아 로 싸오 호이 찌에우 민 고이 마 꺼우 콩 응애 마이"
-     }
-    },
-    {
-     "vi": "cúp máy",
-     "ko": "전화를 끊다",
-     "kr_read": "꿉 마이",
-     "tones": [
-      {
-       "syl": "cúp",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "máy",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-af75a34cf1.webp",
-     "ex": {
-      "vi": "Ừ, 0912.345.678. Thôi, chị cúp máy đây. Em nhớ gọi lại cho chị nhé!",
-      "ko": "네, 0912.345.678이에요. 그럼 전화 끊을게요. 꼭 다시 전화해 줘요!",
-      "kr": "으 토이 찌 꿉 마이 더이 앰 녀 고이 라이 쪼 찌 냬"
-     }
-    },
-    {
-     "vi": "nhắn tin",
-     "ko": "문자를 보내다",
-     "kr_read": "냔 띤",
-     "tones": [
-      {
-       "syl": "nhắn",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "tin",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-nhan-tin.webp",
-     "ex": {
-      "vi": "Tôi sẽ nhắn tin cho bạn sau.",
-      "ko": "나중에 문자 보낼게요.",
-      "kr": "또이 쌔 냔 띤 쪼 반 싸우"
-     }
-    },
-    {
-     "vi": "danh bạ",
-     "ko": "전화번호부",
-     "kr_read": "자인 바",
-     "tones": [
-      {
-       "syl": "danh",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "bạ",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-830616db95.webp",
-     "ex": {
-      "vi": "Tôi tìm số trong danh bạ.",
-      "ko": "나는 전화번호부에서 번호를 찾아요.",
-      "kr": "또이 띰 쏘 쫑 자인 바"
+      "vi": "Tệp ở trong thư mục này.",
+      "ko": "파일은 이 폴더 안에 있어요.",
+      "kr": "뗍 어 쫑 트 묵 나이"
      },
-     "hanja": "名簿 · 명부"
+     "img": "w-aa8bd1a3a2.webp",
+     "hanja": "書目 · 서목"
     },
     {
-     "vi": "điện thoại di động",
-     "ko": "휴대폰 cell phone",
-     "kr_read": "디엔 토아이 지 동",
+     "vi": "thông báo",
+     "ko": "공지, 안내문",
+     "kr_read": "통 바오",
      "tones": [
       {
-       "syl": "điện",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "thoại",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "di",
+       "syl": "thông",
        "name": "ngang",
        "ko": "평평하게 그대로",
        "shape": "—"
       },
       {
-       "syl": "động",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-dien-thoai-di-dong.webp",
-     "ex": {
-      "vi": "Tôi để quên điện thoại di động ở nhà.",
-      "ko": "나는 휴대폰을 집에 두고 왔다.",
-      "kr": "또이 데 꾸엔 디엔 토아이 지 동 어 냐"
-     }
-    },
-    {
-     "vi": "email",
-     "ko": "이메일",
-     "kr_read": "이 메일",
-     "tones": [
-      {
-       "syl": "email",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-email.webp",
-     "ex": {
-      "vi": "Tôi sẽ gửi email cho bạn.",
-      "ko": "당신에게 이메일을 보낼게요.",
-      "kr": "또이 쌔 그이 이 메일 쪼 반"
-     }
-    },
-    {
-     "vi": "internet",
-     "ko": "인터넷",
-     "kr_read": "인 떠 넷",
-     "tones": [
-      {
-       "syl": "internet",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-39a4b563ee.webp",
-     "ex": {
-      "vi": "Có internet rất tiện lợi.",
-      "ko": "인터넷이 있으면 아주 편리해요.",
-      "kr": "꼬 인 떠 넷 젓 띠엔 러이"
-     }
-    },
-    {
-     "vi": "lên mạng",
-     "ko": "인터넷을 하다",
-     "kr_read": "렌 망",
-     "tones": [
-      {
-       "syl": "lên",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "mạng",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-len-mang.webp",
-     "ex": {
-      "vi": "Tôi lên mạng tìm thông tin.",
-      "ko": "나는 정보를 찾으려고 인터넷에 접속한다.",
-      "kr": "또이 렌 망 띰 통 띤"
-     }
-    },
-    {
-     "vi": "mật khẩu",
-     "ko": "비밀번호",
-     "kr_read": "멋 커우",
-     "tones": [
-      {
-       "syl": "mật",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "khẩu",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-81973897c7.webp",
-     "ex": {
-      "vi": "Mật khẩu của bạn là gì?",
-      "ko": "여러분의 비밀번호는 무엇인가요?",
-      "kr": "멋 커우 꾸어 반 라 지"
-     },
-     "hanja": "密口 · 밀구"
-    },
-    {
-     "vi": "cài đặt",
-     "ko": "설치하다",
-     "kr_read": "까이 닷",
-     "tones": [
-      {
-       "syl": "cài",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "đặt",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-b80b76da5c.webp",
-     "ex": {
-      "vi": "Cô cài đặt phần mềm mới.",
-      "ko": "그분은 새로운 소프트웨어를 설치합니다.",
-      "kr": "꼬 까이 닷 펀 멤 머이"
-     }
-    },
-    {
-     "vi": "xóa",
-     "ko": "삭제하다",
-     "kr_read": "쏘아",
-     "tones": [
-      {
-       "syl": "xóa",
+       "syl": "báo",
        "name": "sắc",
        "ko": "짧게 올라감",
        "shape": "／"
       }
      ],
      "src": "승빈",
-     "img": "b-xoa.webp",
+     "img": "b-thong-bao.webp",
      "ex": {
-      "vi": "Tôi xóa tin nhắn cũ.",
-      "ko": "나는 오래된 메시지를 삭제한다.",
-      "kr": "또이 쏘아 띤 냔 꾸"
+      "vi": "Trường thông báo nghỉ học.",
+      "ko": "학교가 휴교를 공지했다.",
+      "kr": "쯔엉 통 바오 응이 혹"
+     },
+     "hanja": "通報 · 통보"
+    },
+    {
+     "vi": "Tệp",
+     "ko": "파일(File)",
+     "kr_read": "뗍",
+     "tones": [
+      {
+       "syl": "Tệp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-tep.webp",
+     "ex": {
+      "vi": "Tôi gửi tệp tài liệu cho bạn.",
+      "ko": "나는 당신에게 파일을 보낸다.",
+      "kr": "또이 그이 뗍 따이 리에우 쪼 반"
      }
+    },
+    {
+     "vi": "sao chép",
+     "ko": "복사하다",
+     "kr_read": "싸오 쨉",
+     "tones": [
+      {
+       "syl": "sao",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "chép",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Sao chép tệp này sang máy khác.",
+      "ko": "이 파일을 다른 컴퓨터로 복사하세요.",
+      "kr": "싸오 쨉 뗍 나이 쌍 마이 칵"
+     },
+     "img": "w-cea7a27126.webp"
     },
     {
      "vi": "lưu",
@@ -9280,6 +9320,26 @@
       "kr": "또이 르우 쏘 디엔 토아이 꾸어 찌"
      },
      "hanja": "留 · 유"
+    },
+    {
+     "vi": "xóa",
+     "ko": "삭제하다",
+     "kr_read": "쏘아",
+     "tones": [
+      {
+       "syl": "xóa",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-xoa.webp",
+     "ex": {
+      "vi": "Tôi xóa tin nhắn cũ.",
+      "ko": "나는 오래된 메시지를 삭제한다.",
+      "kr": "또이 쏘아 띤 냔 꾸"
+     }
     },
     {
      "vi": "tìm kiếm",
@@ -9309,51 +9369,153 @@
      "hanja": "尋檢 · 심검"
     },
     {
-     "vi": "tải",
-     "ko": "다운로드하다",
-     "kr_read": "따이",
+     "vi": "cài đặt",
+     "ko": "설치하다",
+     "kr_read": "까이 닷",
      "tones": [
       {
-       "syl": "tải",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-d5d9b575f5.webp",
-     "ex": {
-      "vi": "Tôi tải ảnh đó về máy.",
-      "ko": "저는 그 사진을 컴퓨터에 내려받아요.",
-      "kr": "또이 따이 아인 도 베 마이"
-     },
-     "hanja": "載 · 재"
-    }
-   ]
-  },
-  {
-   "day": 25,
-   "n": 25,
-   "theme": "휴대폰과 컴퓨터 (2/2)",
-   "words": [
-    {
-     "vi": "Tệp",
-     "ko": "파일(File)",
-     "kr_read": "뗍",
-     "tones": [
+       "syl": "cài",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
       {
-       "syl": "Tệp",
+       "syl": "đặt",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       }
      ],
      "src": "승빈",
-     "img": "b-tep.webp",
+     "img": "w-b80b76da5c.webp",
      "ex": {
-      "vi": "Tôi gửi tệp tài liệu cho bạn.",
-      "ko": "나는 당신에게 파일을 보낸다.",
-      "kr": "또이 그이 뗍 따이 리에우 쪼 반"
+      "vi": "Cô cài đặt phần mềm mới.",
+      "ko": "그분은 새로운 소프트웨어를 설치합니다.",
+      "kr": "꼬 까이 닷 펀 멤 머이"
+     }
+    },
+    {
+     "vi": "cập nhật",
+     "ko": "업데이트 / update",
+     "kr_read": "껍 녓",
+     "tones": [
+      {
+       "syl": "cập",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "nhật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-cap-nhat.webp",
+     "ex": {
+      "vi": "Hãy cập nhật thông tin mới nhất.",
+      "ko": "최신 정보로 업데이트하세요.",
+      "kr": "하이 껍 녓 통 띤 머이 녓"
+     },
+     "hanja": "及日 · 급일"
+    }
+   ],
+   "n": 25
+  },
+  {
+   "day": 25,
+   "theme": "컴퓨터 기기",
+   "words": [
+    {
+     "vi": "máy tính",
+     "ko": "컴퓨터",
+     "kr_read": "마이 띤",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "tính",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-may-tinh.webp",
+     "ex": {
+      "vi": "Tôi làm việc trên máy tính.",
+      "ko": "나는 컴퓨터로 일한다.",
+      "kr": "또이 람 비엑 쩬 마이 띤"
+     }
+    },
+    {
+     "vi": "máy tính xách tay",
+     "ko": "노트북",
+     "kr_read": "마이 띤 싹 따이",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "tính",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "xách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "tay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-may-tinh-xach-tay.webp",
+     "ex": {
+      "vi": "Máy tính xách tay của tôi hết pin.",
+      "ko": "내 노트북 배터리가 다 됐어요.",
+      "kr": "마이 띤 싹 따이 꾸어 또이 헷 삔"
+     }
+    },
+    {
+     "vi": "bàn phím",
+     "ko": "키보드 (keyboard)",
+     "kr_read": "반 핌",
+     "tones": [
+      {
+       "syl": "bàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "phím",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-ban-phim.webp",
+     "ex": {
+      "vi": "Bàn phím này bị hỏng.",
+      "ko": "이 키보드가 고장 났습니다.",
+      "kr": "반 핌 나이 비 홍"
      }
     },
     {
@@ -9404,55 +9566,23 @@
      "hanja": "印 · 인"
     },
     {
-     "vi": "bàn phím",
-     "ko": "키보드 (keyboard)",
-     "kr_read": "반 핌",
+     "vi": "quét",
+     "ko": "스캔하다",
+     "kr_read": "꾸앳",
      "tones": [
       {
-       "syl": "bàn",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "phím",
+       "syl": "quét",
        "name": "sắc",
        "ko": "짧게 올라감",
        "shape": "／"
       }
      ],
      "src": "승빈",
-     "img": "b-ban-phim.webp",
+     "img": "b-quet.webp",
      "ex": {
-      "vi": "Bàn phím này bị hỏng.",
-      "ko": "이 키보드가 고장 났습니다.",
-      "kr": "반 핌 나이 비 홍"
-     }
-    },
-    {
-     "vi": "máy tính",
-     "ko": "컴퓨터",
-     "kr_read": "마이 띤",
-     "tones": [
-      {
-       "syl": "máy",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "tính",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-may-tinh.webp",
-     "ex": {
-      "vi": "Tôi làm việc trên máy tính.",
-      "ko": "나는 컴퓨터로 일한다.",
-      "kr": "또이 람 비엑 쩬 마이 띤"
+      "vi": "Hãy quét mã QR này.",
+      "ko": "이 QR 코드를 스캔하세요.",
+      "kr": "하이 꾸앳 마 나이"
      }
     },
     {
@@ -9509,131 +9639,6 @@
      "hanja": "電子 · 전자"
     },
     {
-     "vi": "người nhận",
-     "ko": "전화 받는 사람 (receiver / recipient)",
-     "kr_read": "응으어이 년",
-     "tones": [
-      {
-       "syl": "người",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "nhận",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-nguoi-nhan.webp",
-     "ex": {
-      "vi": "Người nhận đã xác nhận đơn hàng.",
-      "ko": "받는 사람이 주문을 확인했다.",
-      "kr": "응으어이 년 다 싹 년 던 항"
-     }
-    },
-    {
-     "vi": "quét",
-     "ko": "스캔하다",
-     "kr_read": "꾸앳",
-     "tones": [
-      {
-       "syl": "quét",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-quet.webp",
-     "ex": {
-      "vi": "Hãy quét mã QR này.",
-      "ko": "이 QR 코드를 스캔하세요.",
-      "kr": "하이 꾸앳 마 나이"
-     }
-    },
-    {
-     "vi": "thông báo",
-     "ko": "공지, 안내문",
-     "kr_read": "통 바오",
-     "tones": [
-      {
-       "syl": "thông",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "báo",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-thong-bao.webp",
-     "ex": {
-      "vi": "Trường thông báo nghỉ học.",
-      "ko": "학교가 휴교를 공지했다.",
-      "kr": "쯔엉 통 바오 응이 혹"
-     },
-     "hanja": "通報 · 통보"
-    },
-    {
-     "vi": "theo dõi",
-     "ko": "따라가다(follow)",
-     "kr_read": "태오 조이",
-     "tones": [
-      {
-       "syl": "theo",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "dõi",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-theo-doi.webp",
-     "ex": {
-      "vi": "Bác sĩ theo dõi tình trạng bệnh nhân.",
-      "ko": "의사가 환자의 상태를 따라간다.",
-      "kr": "박 씨 태오 조이 띤 짱 벤 년"
-     }
-    },
-    {
-     "vi": "chia sẻ",
-     "ko": "나누다, 공유하다",
-     "kr_read": "찌어 쌔",
-     "tones": [
-      {
-       "syl": "chia",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "sẻ",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-chia-se.webp",
-     "ex": {
-      "vi": "Hãy chia sẻ khó khăn với tôi.",
-      "ko": "저와 어려움을 나누어요.",
-      "kr": "하이 찌어 쌔 코 칸 버이 또이"
-     }
-    },
-    {
      "vi": "máy",
      "ko": "기계, 기기(컴퓨터 등)",
      "kr_read": "마이",
@@ -9653,11 +9658,11 @@
       "kr": "또이 쌔 끼엠 짜 쫑 마이"
      }
     }
-   ]
+   ],
+   "n": 26
   },
   {
    "day": 26,
-   "n": 26,
    "theme": "집 구하기와 이사 (1/2)",
    "words": [
     {
@@ -10004,11 +10009,11 @@
      },
      "hanja": "房 · 방"
     }
-   ]
+   ],
+   "n": 27
   },
   {
    "day": 27,
-   "n": 27,
    "theme": "집 구하기와 이사 (2/2)",
    "words": [
     {
@@ -10316,11 +10321,11 @@
      },
      "hanja": "向 · 향"
     }
-   ]
+   ],
+   "n": 28
   },
   {
    "day": 28,
-   "n": 28,
    "theme": "은행과 관공서 (1/3)",
    "words": [
     {
@@ -10680,11 +10685,11 @@
       "kr": "돈 까인 쌋 어 더우"
      }
     }
-   ]
+   ],
+   "n": 29
   },
   {
    "day": 29,
-   "n": 29,
    "theme": "은행과 관공서 (2/3)",
    "words": [
     {
@@ -11081,11 +11086,11 @@
       "kr": "건 더이 꼬 아 떼 엠 콩"
      }
     }
-   ]
+   ],
+   "n": 30
   },
   {
    "day": 30,
-   "n": 30,
    "theme": "은행과 관공서 (3/3)",
    "words": [
     {
@@ -11435,11 +11440,11 @@
       "kr": "아이 쌔 짜 띠엔 브어 안 홈 나이"
      }
     }
-   ]
+   ],
+   "n": 31
   },
   {
    "day": 31,
-   "n": 31,
    "theme": "서류와 비자",
    "words": [
     {
@@ -11871,12 +11876,12 @@
      },
      "hanja": "郵電 · 우전"
     }
-   ]
+   ],
+   "n": 32
   },
   {
    "day": 32,
-   "n": 32,
-   "theme": "여행과 숙소 (1/3)",
+   "theme": "여행과 숙소 (1/2)",
    "words": [
     {
      "vi": "tờ khai",
@@ -11987,138 +11992,6 @@
      "hanja": "向引員 · 향인원"
     },
     {
-     "vi": "thư điện tử",
-     "ko": "이메일",
-     "kr_read": "트 디엔 뜨",
-     "tones": [
-      {
-       "syl": "thư",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "điện",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "tử",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "bo-6411722aa9.webp",
-     "ex": {
-      "vi": "Chị gửi thư điện tử cho tôi nhé.",
-      "ko": "저에게 이메일 보내 주세요.",
-      "kr": "찌 그이 트 디엔 뜨 쪼 또이 냬"
-     }
-    },
-    {
-     "vi": "xin việc",
-     "ko": "구직하다, 일자리를 구하다",
-     "kr_read": "씬 비엑",
-     "tones": [
-      {
-       "syl": "xin",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "việc",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "bo-7dba2bad1e.webp",
-     "ex": {
-      "vi": "Anh ấy đang đi xin việc.",
-      "ko": "그는 일자리를 구하러 다니고 있어요.",
-      "kr": "아인 어이 당 디 씬 비엑"
-     }
-    },
-    {
-     "vi": "lý lịch",
-     "ko": "이력, 신상 정보",
-     "kr_read": "리 릭",
-     "tones": [
-      {
-       "syl": "lý",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "lịch",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "bo-e1e1f4d950.webp",
-     "ex": {
-      "vi": "Tôi đã nộp lý lịch cho công ty.",
-      "ko": "저는 회사에 이력서를 냈어요.",
-      "kr": "또이 다 놉 리 릭 쪼 꽁 띠"
-     }
-    },
-    {
-     "vi": "công dân",
-     "ko": "시민, 국민",
-     "kr_read": "꽁 전",
-     "tones": [
-      {
-       "syl": "công",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "dân",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-d3de78a785.webp",
-     "ex": {
-      "vi": "Công dân Hàn Quốc được miễn thị thực.",
-      "ko": "한국 국민은 비자가 면제돼요.",
-      "kr": "꽁 전 한 꾸옥 드억 미엔 티 특"
-     },
-     "hanja": "公民 · 공민"
-    },
-    {
-     "vi": "quốc kỳ",
-     "ko": "국기",
-     "kr_read": "꾸옥 끼",
-     "tones": [
-      {
-       "syl": "quốc",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "kỳ",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "bo-313ebf5097.webp",
-     "ex": {
-      "vi": "Quốc kỳ Việt Nam màu đỏ có ngôi sao vàng.",
-      "ko": "베트남 국기는 빨간 바탕에 노란 별이 있어요.",
-      "kr": "꾸옥 끼 비엣 남 마우 도 꼬 응오이 싸오 방"
-     }
-    },
-    {
      "vi": "thám hiểm",
      "ko": "탐험하다",
      "kr_read": "탐 히엠",
@@ -12143,31 +12016,6 @@
       "kr": "아인 어이 틱 디 탐 히엠"
      },
      "hanja": "探險 · 탐험"
-    },
-    {
-     "vi": "đóng cửa",
-     "ko": "문을 닫다, 문 닫다",
-     "kr_read": "동 끄어",
-     "tones": [
-      {
-       "syl": "đóng",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "cửa",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "bo-268535d23d.webp",
-     "ex": {
-      "vi": "Cửa hàng đóng cửa lúc chín giờ.",
-      "ko": "가게는 9시에 문을 닫아요.",
-      "kr": "끄어 항 동 끄어 룩 찐 저"
-     }
     },
     {
      "vi": "đón bạn",
@@ -12219,14 +12067,7 @@
       "kr": "또이 어 냐 응이 건 가"
      },
      "img": "w-3ac9335d32.webp"
-    }
-   ]
-  },
-  {
-   "day": 33,
-   "n": 33,
-   "theme": "여행과 숙소 (2/3)",
-   "words": [
+    },
     {
      "vi": "mã đặt chỗ",
      "ko": "예약번호",
@@ -12507,7 +12348,14 @@
       "ko": "저는 호찌민시에 살아요.",
       "kr": "또이 쏭 어 타인 포 호 찌 민"
      }
-    },
+    }
+   ],
+   "n": 33
+  },
+  {
+   "day": 33,
+   "theme": "여행과 숙소 (2/2)",
+   "words": [
     {
      "vi": "trả phòng",
      "ko": "체크아웃하다",
@@ -12645,14 +12493,7 @@
       "kr": "더이 라 태 렌 마이 바이 꾸어 또이"
      },
      "img": "w-8a93c2da8c.webp"
-    }
-   ]
-  },
-  {
-   "day": 34,
-   "n": 34,
-   "theme": "여행과 숙소 (3/3)",
-   "words": [
+    },
     {
      "vi": "giờ khởi hành",
      "ko": "출발 시간",
@@ -12920,55 +12761,13 @@
       "kr": "하이 느억 꼬 쭝 비엔 저이"
      },
      "hanja": "邊界 · 변계"
-    },
-    {
-     "vi": "nhập",
-     "ko": "수입하다/입력하다 (to import/to enter)",
-     "kr_read": "녑",
-     "tones": [
-      {
-       "syl": "nhập",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-nhap.webp",
-     "ex": {
-      "vi": "Hãy nhập số điện thoại của bạn.",
-      "ko": "당신의 전화번호를 입력해 주세요.",
-      "kr": "하이 녑 쏘 디엔 토아이 꾸어 반"
-     },
-     "hanja": "入 · 입"
-    },
-    {
-     "vi": "giao",
-     "ko": "인도하다, 넘겨주다",
-     "kr_read": "자오",
-     "tones": [
-      {
-       "syl": "giao",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-giao.webp",
-     "ex": {
-      "vi": "Anh ấy giao hàng đúng giờ.",
-      "ko": "그는 정시에 물건을 인도했다.",
-      "kr": "아인 어이 자오 항 둥 저"
-     },
-     "hanja": "交 · 교"
     }
-   ]
+   ],
+   "n": 34
   },
   {
    "day": 35,
-   "n": 35,
-   "theme": "집과 살림 (1/5)",
+   "theme": "집과 살림 (1/4)",
    "words": [
     {
      "vi": "phòng ngủ",
@@ -13323,33 +13122,6 @@
       "ko": "욕실은 복도 끝에 있어요.",
       "kr": "퐁 땀 어 꾸오이 하인 랑"
      }
-    }
-   ]
-  },
-  {
-   "day": 36,
-   "n": 36,
-   "theme": "집과 살림 (2/5)",
-   "words": [
-    {
-     "vi": "lửa",
-     "ko": "불",
-     "kr_read": "르어",
-     "tones": [
-      {
-       "syl": "lửa",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Cẩn thận lửa nhé.",
-      "ko": "불조심하세요.",
-      "kr": "껀 턴 르어 냬"
-     },
-     "img": "w-e0a777a2f2.webp"
     },
     {
      "vi": "máy hút bụi",
@@ -13382,7 +13154,14 @@
       "kr": "마이 훗 부이 홍 조이"
      },
      "img": "w-f25ceba458.webp"
-    },
+    }
+   ],
+   "n": 35
+  },
+  {
+   "day": 36,
+   "theme": "집과 살림 (2/4)",
+   "words": [
     {
      "vi": "máy sấy",
      "ko": "건조기",
@@ -13474,38 +13253,6 @@
       "kr": "느억 쏘이 조이"
      },
      "img": "w-d7b186daa5.webp"
-    },
-    {
-     "vi": "kem đánh răng",
-     "ko": "치약",
-     "kr_read": "깸 다인 장",
-     "tones": [
-      {
-       "syl": "kem",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "đánh",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "răng",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Hết kem đánh răng rồi.",
-      "ko": "치약이 다 떨어졌어요.",
-      "kr": "헷 깸 다인 장 조이"
-     },
-     "img": "w-3286d2f50b.webp"
     },
     {
      "vi": "dơ",
@@ -13645,53 +13392,6 @@
      },
      "img": "w-360a5cf79f.webp"
     },
-    {
-     "vi": "ruồi",
-     "ko": "파리",
-     "kr_read": "주오이",
-     "tones": [
-      {
-       "syl": "ruồi",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-e2be634c4d.webp",
-     "ex": {
-      "vi": "Trong bếp có ruồi.",
-      "ko": "부엌에 파리가 있어요.",
-      "kr": "쫑 벱 꼬 주오이"
-     }
-    },
-    {
-     "vi": "chuột",
-     "ko": "쥐",
-     "kr_read": "쭈옷",
-     "tones": [
-      {
-       "syl": "chuột",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-con-chuot.webp",
-     "ex": {
-      "vi": "Nhà tôi có chuột.",
-      "ko": "우리 집에 쥐가 있어요.",
-      "kr": "냐 또이 꼬 쭈옷"
-     }
-    }
-   ]
-  },
-  {
-   "day": 37,
-   "n": 37,
-   "theme": "집과 살림 (3/5)",
-   "words": [
     {
      "vi": "mền",
      "ko": "이불(남부)",
@@ -13859,7 +13559,14 @@
       "ko": "나갈 때 에어컨 끄는 거 잊지 마세요.",
       "kr": "자 응오아이 녀 땃 디에우 호아"
      }
-    },
+    }
+   ],
+   "n": 36
+  },
+  {
+   "day": 37,
+   "theme": "집과 살림 (3/4)",
+   "words": [
     {
      "vi": "dọn dẹp thôi",
      "ko": "청소하자",
@@ -14083,14 +13790,7 @@
       "kr": "하이 땃 디엔 키 자 응오아이"
      },
      "hanja": "電 · 전"
-    }
-   ]
-  },
-  {
-   "day": 38,
-   "n": 38,
-   "theme": "집과 살림 (4/5)",
-   "words": [
+    },
     {
      "vi": "nước",
      "ko": "물",
@@ -14247,7 +13947,14 @@
       "ko": "저는 주말에 빨래를 해요.",
       "kr": "또이 잣 꾸언 아오 바오 꾸오이 뚜언"
      }
-    },
+    }
+   ],
+   "n": 37
+  },
+  {
+   "day": 38,
+   "theme": "집과 살림 (4/4)",
+   "words": [
     {
      "vi": "lau",
      "ko": "닦다",
@@ -14347,173 +14054,6 @@
       "vi": "Mẹ rang lạc cho bữa sáng.",
       "ko": "엄마가 아침식사로 땅콩을 볶으셨다.",
       "kr": "매 장 락 쪼 브어 쌍"
-     }
-    },
-    {
-     "vi": "đặt",
-     "ko": "놓다, 두다; 주문하다, 예약하다",
-     "kr_read": "닷",
-     "tones": [
-      {
-       "syl": "đặt",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-1be9643e4f.webp",
-     "ex": {
-      "vi": "Tôi đặt sách trên bàn.",
-      "ko": "나는 책을 탁자 위에 둔다.",
-      "kr": "또이 닷 싹 쩬 반"
-     }
-    },
-    {
-     "vi": "cầm",
-     "ko": "잡다, 들다",
-     "kr_read": "껌",
-     "tones": [
-      {
-       "syl": "cầm",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-d7d36f5d31.webp",
-     "ex": {
-      "vi": "Cô ấy cầm một cuốn sách.",
-      "ko": "그녀는 책 한 권을 들고 있다.",
-      "kr": "꼬 어이 껌 못 꾸온 싹"
-     }
-    },
-    {
-     "vi": "xách",
-     "ko": "(손에) 들다",
-     "kr_read": "싹",
-     "tones": [
-      {
-       "syl": "xách",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-xach.webp",
-     "ex": {
-      "vi": "Cô ấy xách túi rất nặng.",
-      "ko": "그녀는 아주 무거운 가방을 들고 있어요.",
-      "kr": "꼬 어이 싹 뚜이 젓 낭"
-     }
-    }
-   ]
-  },
-  {
-   "day": 39,
-   "n": 39,
-   "theme": "집과 살림 (5/5)",
-   "words": [
-    {
-     "vi": "mang",
-     "ko": "가지고 가다, 나르다",
-     "kr_read": "망",
-     "tones": [
-      {
-       "syl": "mang",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-mang.webp",
-     "ex": {
-      "vi": "Anh ấy mang theo một chiếc ba lô.",
-      "ko": "그는 배낭을 하나 가지고 왔다.",
-      "kr": "아인 어이 망 태오 못 찌엑 바 로"
-     }
-    },
-    {
-     "vi": "đưa",
-     "ko": "건네주다, 주다",
-     "kr_read": "드어",
-     "tones": [
-      {
-       "syl": "đưa",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-dua.webp",
-     "ex": {
-      "vi": "Hãy đưa cho tôi cây bút đó.",
-      "ko": "저에게 그 펜을 건네주세요.",
-      "kr": "하이 드어 쪼 또이 꺼이 붓 도"
-     }
-    },
-    {
-     "vi": "ném",
-     "ko": "던지다 throw",
-     "kr_read": "냄",
-     "tones": [
-      {
-       "syl": "ném",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-nem.webp",
-     "ex": {
-      "vi": "Anh ấy ném bóng cho tôi.",
-      "ko": "그는 나에게 공을 던졌다.",
-      "kr": "아인 어이 냄 봉 쪼 또이"
-     }
-    },
-    {
-     "vi": "vứt",
-     "ko": "버리다, 던지다",
-     "kr_read": "븟",
-     "tones": [
-      {
-       "syl": "vứt",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-5af9ab1766.webp",
-     "ex": {
-      "vi": "Đừng vứt rác bừa bãi.",
-      "ko": "쓰레기를 함부로 버리지 마세요.",
-      "kr": "등 븟 작 브어 바이"
-     }
-    },
-    {
-     "vi": "kéo",
-     "ko": "끌다, 당기다 (pull)",
-     "kr_read": "깨오",
-     "tones": [
-      {
-       "syl": "kéo",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-6d8cbc188e.webp",
-     "ex": {
-      "vi": "Anh ấy kéo chiếc xe ra khỏi bùn.",
-      "ko": "그는 진흙에서 차를 끌어냈다.",
-      "kr": "아인 어이 깨오 찌엑 쌔 자 코이 분"
      }
     },
     {
@@ -14754,12 +14294,37 @@
       "kr": "하이 쓰 중 껀 턴 티엣 비 나이"
      },
      "hanja": "使用 · 사용"
+    },
+    {
+     "vi": "đóng cửa",
+     "ko": "문을 닫다, 문 닫다",
+     "kr_read": "동 끄어",
+     "tones": [
+      {
+       "syl": "đóng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "bo-268535d23d.webp",
+     "ex": {
+      "vi": "Cửa hàng đóng cửa lúc chín giờ.",
+      "ko": "가게는 9시에 문을 닫아요.",
+      "kr": "끄어 항 동 끄어 룩 찐 저"
+     }
     }
-   ]
+   ],
+   "n": 38
   },
   {
    "day": 40,
-   "n": 40,
    "theme": "부엌 도구와 살림살이 (1/2)",
    "words": [
     {
@@ -15158,12 +14723,32 @@
       "ko": "엄마가 큰 냄비에 국을 끓이신다.",
       "kr": "매 너우 까인 쫑 노이 런"
      }
+    },
+    {
+     "vi": "lửa",
+     "ko": "불",
+     "kr_read": "르어",
+     "tones": [
+      {
+       "syl": "lửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Cẩn thận lửa nhé.",
+      "ko": "불조심하세요.",
+      "kr": "껀 턴 르어 냬"
+     },
+     "img": "w-e0a777a2f2.webp"
     }
-   ]
+   ],
+   "n": 39
   },
   {
    "day": 41,
-   "n": 41,
    "theme": "부엌 도구와 살림살이 (2/2)",
    "words": [
     {
@@ -15548,11 +15133,11 @@
       "kr": "찌 쌤 띠 비 지 버이"
      }
     }
-   ]
+   ],
+   "n": 40
   },
   {
    "day": 42,
-   "n": 42,
    "theme": "길과 교통 (1/6)",
    "words": [
     {
@@ -15913,33 +15498,6 @@
      "img": "w-8bb3ae3099.webp"
     },
     {
-     "vi": "đẩy",
-     "ko": "밀다",
-     "kr_read": "더이",
-     "tones": [
-      {
-       "syl": "đẩy",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Đẩy cửa vào.",
-      "ko": "문을 밀어서 들어가세요.",
-      "kr": "더이 끄어 바오"
-     },
-     "img": "w-57f918b2c5.webp"
-    }
-   ]
-  },
-  {
-   "day": 43,
-   "n": 43,
-   "theme": "길과 교통 (2/6)",
-   "words": [
-    {
      "vi": "đường nhanh",
      "ko": "빠른 길",
      "kr_read": "드엉 나인",
@@ -15964,7 +15522,14 @@
       "kr": "더이 라 드엉 나인 녓"
      },
      "img": "w-9e94036664.webp"
-    },
+    }
+   ],
+   "n": 41
+  },
+  {
+   "day": 43,
+   "theme": "길과 교통 (2/6)",
+   "words": [
     {
      "vi": "lối ra",
      "ko": "출구",
@@ -16337,12 +15902,37 @@
       "ko": "우리는 배를 타고 섬에 간다.",
       "kr": "쭝 또이 디 따우 자 다오"
      }
+    },
+    {
+     "vi": "bánh xe",
+     "ko": "바퀴",
+     "kr_read": "바인 쌔",
+     "tones": [
+      {
+       "syl": "bánh",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "bo-411b1e92a8.webp",
+     "ex": {
+      "vi": "Bánh xe sau bị xẹp rồi.",
+      "ko": "뒷바퀴가 바람이 빠졌어요.",
+      "kr": "바인 쌔 싸우 비 쌥 조이"
+     }
     }
-   ]
+   ],
+   "n": 42
   },
   {
    "day": 44,
-   "n": 44,
    "theme": "길과 교통 (3/6)",
    "words": [
     {
@@ -16712,11 +16302,11 @@
       "kr": "아인 어이 라이 쌔 젓 껀 턴"
      }
     }
-   ]
+   ],
+   "n": 43
   },
   {
    "day": 45,
-   "n": 45,
    "theme": "길과 교통 (4/6)",
    "words": [
     {
@@ -17029,11 +16619,11 @@
       "kr": "벤 쌔 어 더우 버이"
      }
     }
-   ]
+   ],
+   "n": 44
   },
   {
    "day": 46,
-   "n": 46,
    "theme": "길과 교통 (5/6)",
    "words": [
     {
@@ -17395,11 +16985,11 @@
       "kr": "디 바오 햄 뇨 끼어"
      }
     }
-   ]
+   ],
+   "n": 45
   },
   {
    "day": 47,
-   "n": 47,
    "theme": "길과 교통 (6/6)",
    "words": [
     {
@@ -17752,11 +17342,11 @@
      },
      "hanja": "起行 · 기행"
     }
-   ]
+   ],
+   "n": 46
   },
   {
    "day": 48,
-   "n": 48,
    "theme": "오고 가기와 길 묻기",
    "words": [
     {
@@ -18129,11 +17719,11 @@
      },
      "hanja": "的 · 적"
     }
-   ]
+   ],
+   "n": 47
   },
   {
    "day": 49,
-   "n": 49,
    "theme": "동네와 장소",
    "words": [
     {
@@ -18302,31 +17892,6 @@
       "vi": "Bọn trẻ chơi ở sân chơi.",
       "ko": "아이들이 놀이터에서 놀아요.",
       "kr": "본 째 쩌이 어 썬 쩌이"
-     }
-    },
-    {
-     "vi": "làng nghề",
-     "ko": "수공예 전통 마을",
-     "kr_read": "랑 응에",
-     "tones": [
-      {
-       "syl": "làng",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "nghề",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "bo-1629bd040d.webp",
-     "ex": {
-      "vi": "Chúng tôi thăm một làng nghề gốm.",
-      "ko": "우리는 도자기 전통 마을을 방문했어요.",
-      "kr": "쭝 또이 탐 못 랑 응에 곰"
      }
     },
     {
@@ -18645,65 +18210,12 @@
       "ko": "텔레비전 보세요?",
       "kr": "아인 쌤 다이 쭈옌 힌 콩"
      }
-    },
-    {
-     "vi": "yên tĩnh",
-     "ko": "조용한",
-     "kr_read": "이엔 띤",
-     "tones": [
-      {
-       "syl": "yên",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "tĩnh",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-yen-tinh.webp",
-     "ex": {
-      "vi": "Ngôi làng này rất yên tĩnh.",
-      "ko": "이 마을은 매우 고요하다.",
-      "kr": "응오이 랑 나이 젓 이엔 띤"
-     },
-     "hanja": "安靜 · 안정"
-    },
-    {
-     "vi": "ồn ào",
-     "ko": "시끄럽다",
-     "kr_read": "온 아오",
-     "tones": [
-      {
-       "syl": "ồn",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "ào",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-on-ao.webp",
-     "ex": {
-      "vi": "Quán này khá ồn ào vào buổi tối.",
-      "ko": "이 가게는 저녁에 꽤 시끄럽다.",
-      "kr": "꽌 나이 카 온 아오 바오 부오이 또이"
-     }
     }
-   ]
+   ],
+   "n": 48
   },
   {
    "day": 50,
-   "n": 50,
    "theme": "자연과 동물 (1/2)",
    "words": [
     {
@@ -19021,14 +18533,80 @@
       "ko": "아침에 새가 지저귀어요.",
       "kr": "찜 홋 부오이 쌍"
      }
+    },
+    {
+     "vi": "ruồi",
+     "ko": "파리",
+     "kr_read": "주오이",
+     "tones": [
+      {
+       "syl": "ruồi",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-e2be634c4d.webp",
+     "ex": {
+      "vi": "Trong bếp có ruồi.",
+      "ko": "부엌에 파리가 있어요.",
+      "kr": "쫑 벱 꼬 주오이"
+     }
     }
-   ]
+   ],
+   "n": 49
   },
   {
    "day": 51,
-   "n": 51,
    "theme": "자연과 동물 (2/2)",
    "words": [
+    {
+     "vi": "chuột",
+     "ko": "쥐",
+     "kr_read": "쭈옷",
+     "tones": [
+      {
+       "syl": "chuột",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-con-chuot.webp",
+     "ex": {
+      "vi": "Nhà tôi có chuột.",
+      "ko": "우리 집에 쥐가 있어요.",
+      "kr": "냐 또이 꼬 쭈옷"
+     }
+    },
+    {
+     "vi": "Thiên nhiên",
+     "ko": "자연",
+     "kr_read": "티엔 니엔",
+     "tones": [
+      {
+       "syl": "Thiên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhiên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-thien-nhien.webp",
+     "ex": {
+      "vi": "Chúng ta cần bảo vệ thiên nhiên.",
+      "ko": "우리는 자연을 보호해야 한다.",
+      "kr": "쭝 따 껀 바오 베 티엔 니엔"
+     }
+    },
     {
      "vi": "cạn",
      "ko": "얕다",
@@ -19310,11 +18888,11 @@
       "kr": "아인 어이 끄어이 응으어 어 농 짜이"
      }
     }
-   ]
+   ],
+   "n": 50
   },
   {
    "day": 52,
-   "n": 52,
    "theme": "일과 하루 (1/4)",
    "words": [
     {
@@ -19664,11 +19242,11 @@
      },
      "img": "w-b5b59a546e.webp"
     }
-   ]
+   ],
+   "n": 51
   },
   {
    "day": 53,
-   "n": 53,
    "theme": "일과 하루 (2/4)",
    "words": [
     {
@@ -20059,11 +19637,11 @@
       "kr": "또이 덴 무온 므어이 풋"
      }
     }
-   ]
+   ],
+   "n": 52
   },
   {
    "day": 54,
-   "n": 54,
    "theme": "일과 하루 (3/4)",
    "words": [
     {
@@ -20352,14 +19930,7 @@
       "ko": "나는 큰 회사에서 일한다.",
       "kr": "또이 람 비엑 어 꽁 띠 런"
      }
-    }
-   ]
-  },
-  {
-   "day": 55,
-   "n": 55,
-   "theme": "일과 하루 (4/4)",
-   "words": [
+    },
     {
      "vi": "cơ quan",
      "ko": "기관, 직장",
@@ -20386,7 +19957,14 @@
       "kr": "보 또이 람 비엑 어 꺼 꽌 냐 느억"
      },
      "hanja": "機關 · 기관"
-    },
+    }
+   ],
+   "n": 53
+  },
+  {
+   "day": 55,
+   "theme": "일과 하루 (4/4)",
+   "words": [
     {
      "vi": "nghề",
      "ko": "직업",
@@ -20702,13 +20280,63 @@
       "ko": "제출 마감일은 내일이다.",
       "kr": "한 쫏 놉 바이 라 응아이 마이"
      }
+    },
+    {
+     "vi": "xin việc",
+     "ko": "구직하다, 일자리를 구하다",
+     "kr_read": "씬 비엑",
+     "tones": [
+      {
+       "syl": "xin",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "việc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "bo-7dba2bad1e.webp",
+     "ex": {
+      "vi": "Anh ấy đang đi xin việc.",
+      "ko": "그는 일자리를 구하러 다니고 있어요.",
+      "kr": "아인 어이 당 디 씬 비엑"
+     }
+    },
+    {
+     "vi": "lý lịch",
+     "ko": "이력, 신상 정보",
+     "kr_read": "리 릭",
+     "tones": [
+      {
+       "syl": "lý",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "bo-e1e1f4d950.webp",
+     "ex": {
+      "vi": "Tôi đã nộp lý lịch cho công ty.",
+      "ko": "저는 회사에 이력서를 냈어요.",
+      "kr": "또이 다 놉 리 릭 쪼 꽁 띠"
+     }
     }
-   ]
+   ],
+   "n": 54
   },
   {
    "day": 56,
-   "n": 56,
-   "theme": "학교와 공부 (1/3)",
+   "theme": "학교와 공부 (1/2)",
    "words": [
     {
      "vi": "nói rõ",
@@ -20887,81 +20515,6 @@
      }
     },
     {
-     "vi": "thúc giục",
-     "ko": "재촉하다",
-     "kr_read": "툭 죽",
-     "tones": [
-      {
-       "syl": "thúc",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "giục",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "bo-64d3aed897.webp",
-     "ex": {
-      "vi": "Đừng thúc giục tôi.",
-      "ko": "저를 재촉하지 마세요.",
-      "kr": "등 툭 죽 또이"
-     }
-    },
-    {
-     "vi": "khuyên bảo",
-     "ko": "타이르다, 충고하다",
-     "kr_read": "쿠옌 바오",
-     "tones": [
-      {
-       "syl": "khuyên",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "bảo",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "bo-b170549055.webp",
-     "ex": {
-      "vi": "Mẹ luôn khuyên bảo tôi.",
-      "ko": "어머니는 늘 저에게 충고해 주세요.",
-      "kr": "매 루온 쿠옌 바오 또이"
-     }
-    },
-    {
-     "vi": "đem theo",
-     "ko": "가져가다, 지참하다",
-     "kr_read": "댐 태오",
-     "tones": [
-      {
-       "syl": "đem",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "theo",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-cda83dada6.webp",
-     "ex": {
-      "vi": "Anh nhớ đem theo hộ chiếu.",
-      "ko": "여권을 꼭 가져가세요.",
-      "kr": "아인 녀 댐 태오 호 찌에우"
-     }
-    },
-    {
      "vi": "thi đỗ",
      "ko": "시험에 합격하다",
      "kr_read": "티 도",
@@ -20984,119 +20537,6 @@
       "vi": "Em ấy thi đỗ đại học rồi.",
       "ko": "그 애는 대학에 합격했어요.",
       "kr": "앰 어이 티 도 다이 혹 조이"
-     }
-    },
-    {
-     "vi": "thi đấu",
-     "ko": "경기하다",
-     "kr_read": "티 더우",
-     "tones": [
-      {
-       "syl": "thi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "đấu",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "bo-a2c3bcaef2.webp",
-     "ex": {
-      "vi": "Đội Việt Nam thi đấu tối nay.",
-      "ko": "베트남 팀이 오늘 밤 경기해요.",
-      "kr": "도이 비엣 남 티 더우 또이 나이"
-     }
-    },
-    {
-     "vi": "đá bóng",
-     "ko": "축구하다",
-     "kr_read": "다 봉",
-     "tones": [
-      {
-       "syl": "đá",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "bóng",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "bo-750de7a0e9.webp",
-     "ex": {
-      "vi": "Chiều nào tôi cũng đá bóng.",
-      "ko": "저는 오후마다 축구를 해요.",
-      "kr": "찌에우 나오 또이 꿍 다 봉"
-     }
-    },
-    {
-     "vi": "thể dục",
-     "ko": "체육, 운동",
-     "kr_read": "테 죽",
-     "tones": [
-      {
-       "syl": "thể",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      },
-      {
-       "syl": "dục",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "bo-e6d49af78f.webp",
-     "ex": {
-      "vi": "Sáng nào tôi cũng tập thể dục.",
-      "ko": "저는 아침마다 운동해요.",
-      "kr": "쌍 나오 또이 꿍 떱 테 죽"
-     }
-    }
-   ]
-  },
-  {
-   "day": 57,
-   "n": 57,
-   "theme": "학교와 공부 (2/3)",
-   "words": [
-    {
-     "vi": "chơi điện tử",
-     "ko": "게임하다",
-     "kr_read": "쩌이 디엔 뜨",
-     "tones": [
-      {
-       "syl": "chơi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "điện",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "tử",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "bo-3dc5713f83.webp",
-     "ex": {
-      "vi": "Con trai tôi thích chơi điện tử.",
-      "ko": "우리 아들은 게임하는 걸 좋아해요.",
-      "kr": "꼰 짜이 또이 틱 쩌이 디엔 뜨"
      }
     },
     {
@@ -21195,78 +20635,6 @@
      "img": "w-dcc13e07f7.webp"
     },
     {
-     "vi": "thợ",
-     "ko": "장인·기술자",
-     "kr_read": "터",
-     "tones": [
-      {
-       "syl": "thợ",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Anh ấy là thợ giỏi.",
-      "ko": "그는 솜씨 좋은 기술자예요.",
-      "kr": "아인 어이 라 터 조이"
-     },
-     "img": "w-4e6156062b.webp"
-    },
-    {
-     "vi": "thợ điện",
-     "ko": "전기 기사",
-     "kr_read": "터 디엔",
-     "tones": [
-      {
-       "syl": "thợ",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "điện",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Gọi thợ điện đến sửa.",
-      "ko": "전기 기사를 불러 고치세요.",
-      "kr": "고이 터 디엔 덴 쓰어"
-     },
-     "img": "w-449881dce3.webp"
-    },
-    {
-     "vi": "thợ xây",
-     "ko": "건설 노동자",
-     "kr_read": "터 써이",
-     "tones": [
-      {
-       "syl": "thợ",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "xây",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Bố tôi là thợ xây.",
-      "ko": "아버지는 건설 노동자예요.",
-      "kr": "보 또이 라 터 써이"
-     },
-     "img": "w-71fbc705f6.webp"
-    },
-    {
      "vi": "bài học",
      "ko": "(교과) 과·레슨",
      "kr_read": "바이 혹",
@@ -21318,32 +20686,6 @@
      "img": "w-5503506ed3.webp"
     },
     {
-     "vi": "thợ mộc",
-     "ko": "목수",
-     "kr_read": "터 목",
-     "tones": [
-      {
-       "syl": "thợ",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "mộc",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Bố tôi là thợ mộc.",
-      "ko": "아버지는 목수예요.",
-      "kr": "보 또이 라 터 목"
-     },
-     "img": "w-727f243ad5.webp"
-    },
-    {
      "vi": "trường",
      "ko": "학교",
      "kr_read": "쯔엉",
@@ -21390,7 +20732,14 @@
       "kr": "쯔엉 혹 꾸어 꼰 또이 젓 건 냐"
      },
      "hanja": "場學 · 장학"
-    },
+    }
+   ],
+   "n": 55
+  },
+  {
+   "day": 57,
+   "theme": "학교와 공부 (2/2)",
+   "words": [
     {
      "vi": "lớp",
      "ko": "교실, 반",
@@ -21410,14 +20759,7 @@
       "ko": "저희 반은 11명이에요.",
       "kr": "럽 앰 꼬 응으어이"
      }
-    }
-   ]
-  },
-  {
-   "day": 58,
-   "n": 58,
-   "theme": "학교와 공부 (3/3)",
-   "words": [
+    },
     {
      "vi": "lớp học",
      "ko": "교실, 수업(반)",
@@ -21740,12 +21082,32 @@
       "kr": "또이 독 싹 쯔억 키 응우"
      },
      "hanja": "冊 · 책"
+    },
+    {
+     "vi": "sổ",
+     "ko": "수첩, 공책",
+     "kr_read": "쏘",
+     "tones": [
+      {
+       "syl": "sổ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-69d2292b0e.webp",
+     "ex": {
+      "vi": "Tôi ghi vào sổ.",
+      "ko": "저는 수첩에 적어요.",
+      "kr": "또이 기 바오 쏘"
+     }
     }
-   ]
+   ],
+   "n": 56
   },
   {
    "day": 59,
-   "n": 59,
    "theme": "읽고 쓰기와 회사 일 (1/2)",
    "words": [
     {
@@ -22035,11 +21397,11 @@
      },
      "hanja": "說呈 · 설정"
     }
-   ]
+   ],
+   "n": 57
   },
   {
    "day": 60,
-   "n": 60,
    "theme": "읽고 쓰기와 회사 일 (2/2)",
    "words": [
     {
@@ -22245,33 +21607,6 @@
      "hanja": "發展 · 발전"
     },
     {
-     "vi": "cập nhật",
-     "ko": "업데이트 / update",
-     "kr_read": "껍 녓",
-     "tones": [
-      {
-       "syl": "cập",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "nhật",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-cap-nhat.webp",
-     "ex": {
-      "vi": "Hãy cập nhật thông tin mới nhất.",
-      "ko": "최신 정보로 업데이트하세요.",
-      "kr": "하이 껍 녓 통 띤 머이 녓"
-     },
-     "hanja": "及日 · 급일"
-    },
-    {
      "vi": "Đàm phán",
      "ko": "협상 (Negotiation)",
      "kr_read": "담 판",
@@ -22344,12 +21679,54 @@
       "kr": "칵 싼 나이 꼬 직 부 똣"
      },
      "hanja": "役務 · 역무"
+    },
+    {
+     "vi": "nhập",
+     "ko": "수입하다/입력하다 (to import/to enter)",
+     "kr_read": "녑",
+     "tones": [
+      {
+       "syl": "nhập",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-nhap.webp",
+     "ex": {
+      "vi": "Hãy nhập số điện thoại của bạn.",
+      "ko": "당신의 전화번호를 입력해 주세요.",
+      "kr": "하이 녑 쏘 디엔 토아이 꾸어 반"
+     },
+     "hanja": "入 · 입"
+    },
+    {
+     "vi": "giao",
+     "ko": "인도하다, 넘겨주다",
+     "kr_read": "자오",
+     "tones": [
+      {
+       "syl": "giao",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-giao.webp",
+     "ex": {
+      "vi": "Anh ấy giao hàng đúng giờ.",
+      "ko": "그는 정시에 물건을 인도했다.",
+      "kr": "아인 어이 자오 항 둥 저"
+     },
+     "hanja": "交 · 교"
     }
-   ]
+   ],
+   "n": 58
   },
   {
    "day": 61,
-   "n": 61,
    "theme": "자리와 정도를 나타내는 말 (1/2)",
    "words": [
     {
@@ -22679,14 +22056,64 @@
       "ko": "한 그릇 더 주세요.",
       "kr": "쪼 또이 템 못 밧 느어"
      }
+    },
+    {
+     "vi": "tùy theo",
+     "ko": "~에 따라",
+     "kr_read": "뚜이 태오",
+     "tones": [
+      {
+       "syl": "tùy",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "theo",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "bo-77c781a16b.webp",
+     "ex": {
+      "vi": "Giá thay đổi tùy theo mùa.",
+      "ko": "가격은 계절에 따라 바뀌어요.",
+      "kr": "자 타이 도이 뚜이 태오 무어"
+     }
     }
-   ]
+   ],
+   "n": 59
   },
   {
    "day": 62,
-   "n": 62,
    "theme": "자리와 정도를 나타내는 말 (2/2)",
    "words": [
+    {
+     "vi": "trên dưới",
+     "ko": "위아래, 약 ~쯤",
+     "kr_read": "쩬 즈어이",
+     "tones": [
+      {
+       "syl": "trên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "dưới",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "bo-305438fdc5.webp",
+     "ex": {
+      "vi": "Anh ấy trên dưới bốn mươi tuổi.",
+      "ko": "그분은 마흔 살쯤 되었어요.",
+      "kr": "아인 어이 쩬 즈어이 본 므어이 뚜오이"
+     }
+    },
     {
      "vi": "lại",
      "ko": "다시; 되돌아 (viết lại: 다시 쓰다)",
@@ -22998,11 +22425,11 @@
      },
      "hanja": "每 · 매"
     }
-   ]
+   ],
+   "n": 60
   },
   {
    "day": 63,
-   "n": 63,
    "theme": "이어 주는 말 (1/3)",
    "words": [
     {
@@ -23354,14 +22781,7 @@
       "ko": "저는 어느 정도 이해해요.",
       "kr": "또이 히에우 펀 나오"
      }
-    }
-   ]
-  },
-  {
-   "day": 64,
-   "n": 64,
-   "theme": "이어 주는 말 (2/3)",
-   "words": [
+    },
     {
      "vi": "có điều",
      "ko": "다만, 그런데",
@@ -23386,7 +22806,14 @@
       "ko": "이 음식은 맛있는데 다만 좀 매워요.",
       "kr": "몬 나이 응온 꼬 디에우 허이 까이"
      }
-    },
+    }
+   ],
+   "n": 61
+  },
+  {
+   "day": 64,
+   "theme": "이어 주는 말 (2/3)",
+   "words": [
     {
      "vi": "tóm lại",
      "ko": "요약하면",
@@ -23678,14 +23105,114 @@
       "kr": "또이 틱 몬 나이 뚜이 니엔 허이 닷"
      },
      "hanja": "雖然 · 수연"
+    },
+    {
+     "vi": "nói chung",
+     "ko": "일반적으로",
+     "kr_read": "노이 쭝",
+     "tones": [
+      {
+       "syl": "nói",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "chung",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "bo-622e5ccab4.webp",
+     "ex": {
+      "vi": "Nói chung người Hà Nội dậy sớm.",
+      "ko": "일반적으로 하노이 사람들은 일찍 일어나요.",
+      "kr": "노이 쭝 응으어이 하 노이 저이 썸"
+     }
+    },
+    {
+     "vi": "nói riêng",
+     "ko": "특히, 개별적으로",
+     "kr_read": "노이 지엥",
+     "tones": [
+      {
+       "syl": "nói",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "riêng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "bo-2ff9d0cd37.webp",
+     "ex": {
+      "vi": "Tôi thích nhiều món, nói riêng là phở.",
+      "ko": "저는 여러 음식을 좋아하지만 특히 쌀국수를 좋아해요.",
+      "kr": "또이 틱 니에우 몬 노이 지엥 라 퍼"
+     }
+    },
+    {
+     "vi": "hầu như",
+     "ko": "거의",
+     "kr_read": "허우 느",
+     "tones": [
+      {
+       "syl": "hầu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "như",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "bo-5aebe4a304.webp",
+     "ex": {
+      "vi": "Hầu như ngày nào tôi cũng đi bộ.",
+      "ko": "저는 거의 매일 걸어요.",
+      "kr": "허우 느 응아이 나오 또이 꿍 디 보"
+     }
     }
-   ]
+   ],
+   "n": 62
   },
   {
    "day": 65,
-   "n": 65,
    "theme": "이어 주는 말 (3/3)",
    "words": [
+    {
+     "vi": "bỗng nhiên",
+     "ko": "갑자기",
+     "kr_read": "봉 니엔",
+     "tones": [
+      {
+       "syl": "bỗng",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "nhiên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "bo-072f547705.webp",
+     "ex": {
+      "vi": "Bỗng nhiên trời mưa to.",
+      "ko": "갑자기 비가 많이 왔어요.",
+      "kr": "봉 니엔 쩌이 므어 또"
+     }
+    },
     {
      "vi": "hoặc",
      "ko": "또는, 혹은",
@@ -23985,12 +23512,12 @@
       "kr": "헌 느어 쩌이 꼰 므어 또"
      }
     }
-   ]
+   ],
+   "n": 63
   },
   {
    "day": 66,
-   "n": 66,
-   "theme": "사고 팔기 (1/5)",
+   "theme": "사고 팔기 (1/3)",
    "words": [
     {
      "vi": "chợ",
@@ -24261,58 +23788,6 @@
      "hanja": "清算 · 청산"
     },
     {
-     "vi": "nước hoa",
-     "ko": "향수",
-     "kr_read": "느억 호아",
-     "tones": [
-      {
-       "syl": "nước",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "hoa",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Nước hoa này thơm quá.",
-      "ko": "이 향수 아주 향기로워요.",
-      "kr": "느억 호아 나이 텀 꽈"
-     },
-     "img": "w-a64a616707.webp"
-    },
-    {
-     "vi": "kính mắt",
-     "ko": "안경",
-     "kr_read": "낀 맛",
-     "tones": [
-      {
-       "syl": "kính",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "mắt",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-kinh.webp",
-     "ex": {
-      "vi": "Tôi cần mua kính mắt mới.",
-      "ko": "새 안경을 사야 해요.",
-      "kr": "또이 껀 무어 낀 맛 머이"
-     }
-    },
-    {
      "vi": "sắm",
      "ko": "장만하다·사들이다",
      "kr_read": "쌈",
@@ -24364,13 +23839,114 @@
       "kr": "응으어이 무어 항 젓 동"
      }
     }
-   ]
+   ],
+   "n": 64
   },
   {
    "day": 67,
-   "n": 67,
-   "theme": "사고 팔기 (2/5)",
+   "theme": "사고 팔기 (2/3)",
    "words": [
+    {
+     "vi": "tăng giá",
+     "ko": "값이 오르다",
+     "kr_read": "땅 자",
+     "tones": [
+      {
+       "syl": "tăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "giá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "bo-501e2cd4ef.webp",
+     "ex": {
+      "vi": "Xăng lại tăng giá rồi.",
+      "ko": "휘발유가 또 올랐어요.",
+      "kr": "쌍 라이 땅 자 조이"
+     }
+    },
+    {
+     "vi": "miễn thuế",
+     "ko": "면세",
+     "kr_read": "미엔 투에",
+     "tones": [
+      {
+       "syl": "miễn",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "thuế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "bo-b00c189c5e.webp",
+     "ex": {
+      "vi": "Cửa hàng miễn thuế ở sân bay.",
+      "ko": "공항에 면세점이 있어요.",
+      "kr": "끄어 항 미엔 투에 어 썬 바이"
+     },
+     "hanja": "免稅 · 면세"
+    },
+    {
+     "vi": "mở hàng",
+     "ko": "장사를 시작하다 (첫 손님)",
+     "kr_read": "머 항",
+     "tones": [
+      {
+       "syl": "mở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "bo-ec561e62be.webp",
+     "ex": {
+      "vi": "Chị ơi, mua giúp em để mở hàng nhé!",
+      "ko": "언니, 첫 손님으로 좀 사 주세요!",
+      "kr": "찌 어이 무어 줍 앰 데 머 항 냬"
+     }
+    },
+    {
+     "vi": "tiền bạc",
+     "ko": "돈, 금전",
+     "kr_read": "띠엔 박",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "bạc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "bo-ed5c983906.webp",
+     "ex": {
+      "vi": "Tiền bạc không phải là tất cả.",
+      "ko": "돈이 전부는 아니에요.",
+      "kr": "띠엔 박 콩 파이 라 떳 까"
+     }
+    },
     {
      "vi": "tiền thừa",
      "ko": "거스름돈",
@@ -24462,46 +24038,6 @@
       "ko": "이 안경 참 예쁘네요.",
       "kr": "맛 낀 나이 댑 꽈"
      }
-    },
-    {
-     "vi": "ki-lô-gam",
-     "ko": "킬로그램",
-     "kr_read": "끼 로 감",
-     "tones": [
-      {
-       "syl": "ki-lô-gam",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-7c47a0c9b8.webp",
-     "ex": {
-      "vi": "Cho tôi hai ki-lô-gam xoài.",
-      "ko": "망고 2킬로그램 주세요.",
-      "kr": "쪼 또이 하이 끼 로 감 쏘아이"
-     }
-    },
-    {
-     "vi": "xen-ti-mét",
-     "ko": "센티미터",
-     "kr_read": "쌘 띠 맷",
-     "tones": [
-      {
-       "syl": "xen-ti-mét",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Dài khoảng ba mươi xen-ti-mét.",
-      "ko": "길이가 30센티미터쯤이에요.",
-      "kr": "자이 코앙 바 므어이 쌘 띠 맷"
-     },
-     "img": "w-e99cf8fd50.webp"
     },
     {
      "vi": "đắt quá",
@@ -24735,7 +24271,14 @@
       "kr": "쪼 또이 호아 던 냬"
      },
      "img": "w-9ecd87d84d.webp"
-    },
+    }
+   ],
+   "n": 65
+  },
+  {
+   "day": 68,
+   "theme": "사고 팔기 (3/3)",
+   "words": [
     {
      "vi": "đổi hàng",
      "ko": "교환하다",
@@ -24851,14 +24394,7 @@
       "kr": "씬 로이 또이 콩 꼬 띠엔 래"
      },
      "img": "w-f109c466ae.webp"
-    }
-   ]
-  },
-  {
-   "day": 68,
-   "n": 68,
-   "theme": "사고 팔기 (3/5)",
-   "words": [
+    },
     {
      "vi": "biên lai",
      "ko": "영수증",
@@ -25093,167 +24629,13 @@
       "ko": "봉지 하나만 주세요.",
       "kr": "쪼 또이 씬 못 까이 뚜이"
      }
-    },
-    {
-     "vi": "rau",
-     "ko": "채소",
-     "kr_read": "자우",
-     "tones": [
-      {
-       "syl": "rau",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "d77-rau.webp",
-     "ex": {
-      "vi": "Tôi thích ăn rau tươi.",
-      "ko": "저는 신선한 채소를 먹는 것을 좋아해요.",
-      "kr": "또이 틱 안 자우 뜨어이"
-     }
-    },
-    {
-     "vi": "thịt",
-     "ko": "고기",
-     "kr_read": "팃",
-     "tones": [
-      {
-       "syl": "thịt",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "thit.webp",
-     "ex": {
-      "vi": "Hôm nay tôi ăn thịt heo.",
-      "ko": "오늘 저는 돼지고기를 먹어요.",
-      "kr": "홈 나이 또이 안 팃 해오"
-     }
-    },
-    {
-     "vi": "cá",
-     "ko": "생선",
-     "kr_read": "까",
-     "tones": [
-      {
-       "syl": "cá",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "ca-fish.webp",
-     "ex": {
-      "vi": "Con cá này rất tươi.",
-      "ko": "이 생선은 매우 신선해요.",
-      "kr": "꼰 까 나이 젓 뜨어이"
-     }
-    },
-    {
-     "vi": "hoa quả",
-     "ko": "과일",
-     "kr_read": "호아 꽈",
-     "tones": [
-      {
-       "syl": "hoa",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "quả",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "hoa-qua.webp",
-     "ex": {
-      "vi": "Tôi muốn mua hoa quả.",
-      "ko": "저는 과일을 사고 싶어요.",
-      "kr": "또이 무온 무어 호아 꽈"
-     },
-     "hanja": "花果 · 화과"
-    },
-    {
-     "vi": "gạo",
-     "ko": "쌀",
-     "kr_read": "가오",
-     "tones": [
-      {
-       "syl": "gạo",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "gao.webp",
-     "ex": {
-      "vi": "Mẹ đi mua gạo ở chợ.",
-      "ko": "어머니는 시장에 쌀을 사러 가셔요.",
-      "kr": "매 디 무어 가오 어 쩌"
-     }
-    },
-    {
-     "vi": "màu cam",
-     "ko": "주황색",
-     "kr_read": "마우 깜",
-     "tones": [
-      {
-       "syl": "màu",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "cam",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-a6d6efea31.webp",
-     "ex": {
-      "vi": "Tôi thích màu cam.",
-      "ko": "나는 주황색을 좋아해요.",
-      "kr": "또이 틱 마우 깜"
-     }
-    },
-    {
-     "vi": "xanh dương",
-     "ko": "파란색",
-     "kr_read": "싸인 즈엉",
-     "tones": [
-      {
-       "syl": "xanh",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "dương",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-mau-xanh-duong.webp",
-     "ex": {
-      "vi": "Áo này màu xanh dương.",
-      "ko": "이 옷은 파란색이에요.",
-      "kr": "아오 나이 마우 싸인 즈엉"
-     }
     }
-   ]
+   ],
+   "n": 66
   },
   {
    "day": 69,
-   "n": 69,
-   "theme": "사고 팔기 (4/5)",
+   "theme": "색깔 (1/2)",
    "words": [
     {
      "vi": "xanh lá",
@@ -25596,7 +24978,14 @@
       "ko": "그는 갈색 신발을 샀다.",
       "kr": "아인 어이 무어 도이 자이 마우 너우"
      }
-    },
+    }
+   ],
+   "n": 67
+  },
+  {
+   "day": 128,
+   "theme": "색깔 (2/2)",
+   "words": [
     {
      "vi": "màu hồng",
      "ko": "분홍색",
@@ -25682,14 +25071,59 @@
       "ko": "그녀는 흰색 옷을 입었다.",
       "kr": "꼬 어이 막 아오 짱"
      }
-    }
-   ]
-  },
-  {
-   "day": 70,
-   "n": 70,
-   "theme": "사고 팔기 (5/5)",
-   "words": [
+    },
+    {
+     "vi": "màu cam",
+     "ko": "주황색",
+     "kr_read": "마우 깜",
+     "tones": [
+      {
+       "syl": "màu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "cam",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-a6d6efea31.webp",
+     "ex": {
+      "vi": "Tôi thích màu cam.",
+      "ko": "나는 주황색을 좋아해요.",
+      "kr": "또이 틱 마우 깜"
+     }
+    },
+    {
+     "vi": "xanh dương",
+     "ko": "파란색",
+     "kr_read": "싸인 즈엉",
+     "tones": [
+      {
+       "syl": "xanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "dương",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-mau-xanh-duong.webp",
+     "ex": {
+      "vi": "Áo này màu xanh dương.",
+      "ko": "이 옷은 파란색이에요.",
+      "kr": "아오 나이 마우 싸인 즈엉"
+     }
+    },
     {
      "vi": "vàng",
      "ko": "노란색",
@@ -25812,7 +25246,14 @@
       "kr": "꼬 어이 틱 마우 홍"
      },
      "hanja": "紅 · 홍"
-    },
+    }
+   ],
+   "n": 68
+  },
+  {
+   "day": 70,
+   "theme": "옷과 소지품 (1/2)",
+   "words": [
     {
      "vi": "quần áo",
      "ko": "옷, 의류",
@@ -26079,14 +25520,7 @@
       "ko": "그는 반바지를 입고 운동하러 갔다.",
       "kr": "아인 어이 막 꾸언 두이 디 쩌이 테 타오"
      }
-    }
-   ]
-  },
-  {
-   "day": 71,
-   "n": 71,
-   "theme": "옷과 소지품 (1/2)",
-   "words": [
+    },
     {
      "vi": "cao",
      "ko": "높은, (가격이) 비싼",
@@ -26262,7 +25696,14 @@
       "ko": "그는 밖에 나갈 때 선글라스를 낀다.",
       "kr": "아인 어이 대오 낀 점 키 자 응오아이"
      }
-    },
+    }
+   ],
+   "n": 69
+  },
+  {
+   "day": 71,
+   "theme": "옷과 소지품 (2/2)",
+   "words": [
     {
      "vi": "đồng hồ",
      "ko": "시계",
@@ -26361,14 +25802,59 @@
       "ko": "그녀는 핸드백을 들고 있어요.",
       "kr": "찌 어이 껌 뚜이 싹"
      }
-    }
-   ]
-  },
-  {
-   "day": 72,
-   "n": 72,
-   "theme": "옷과 소지품 (2/2)",
-   "words": [
+    },
+    {
+     "vi": "nước hoa",
+     "ko": "향수",
+     "kr_read": "느억 호아",
+     "tones": [
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "hoa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Nước hoa này thơm quá.",
+      "ko": "이 향수 아주 향기로워요.",
+      "kr": "느억 호아 나이 텀 꽈"
+     },
+     "img": "w-a64a616707.webp"
+    },
+    {
+     "vi": "kính mắt",
+     "ko": "안경",
+     "kr_read": "낀 맛",
+     "tones": [
+      {
+       "syl": "kính",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "mắt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-kinh.webp",
+     "ex": {
+      "vi": "Tôi cần mua kính mắt mới.",
+      "ko": "새 안경을 사야 해요.",
+      "kr": "또이 껀 무어 낀 맛 머이"
+     }
+    },
     {
      "vi": "va li",
      "ko": "여행 가방",
@@ -26666,11 +26152,11 @@
       "kr": "또이 껀 타이 꾸언 아오"
      }
     }
-   ]
+   ],
+   "n": 70
   },
   {
    "day": 73,
-   "n": 73,
    "theme": "입고 씻고 빨래하기 (1/2)",
    "words": [
     {
@@ -26817,132 +26303,6 @@
      }
     },
     {
-     "vi": "bánh xe",
-     "ko": "바퀴",
-     "kr_read": "바인 쌔",
-     "tones": [
-      {
-       "syl": "bánh",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "xe",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-411b1e92a8.webp",
-     "ex": {
-      "vi": "Bánh xe sau bị xẹp rồi.",
-      "ko": "뒷바퀴가 바람이 빠졌어요.",
-      "kr": "바인 쌔 싸우 비 쌥 조이"
-     }
-    },
-    {
-     "vi": "tăng giá",
-     "ko": "값이 오르다",
-     "kr_read": "땅 자",
-     "tones": [
-      {
-       "syl": "tăng",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "giá",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "bo-501e2cd4ef.webp",
-     "ex": {
-      "vi": "Xăng lại tăng giá rồi.",
-      "ko": "휘발유가 또 올랐어요.",
-      "kr": "쌍 라이 땅 자 조이"
-     }
-    },
-    {
-     "vi": "miễn thuế",
-     "ko": "면세",
-     "kr_read": "미엔 투에",
-     "tones": [
-      {
-       "syl": "miễn",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      },
-      {
-       "syl": "thuế",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "bo-b00c189c5e.webp",
-     "ex": {
-      "vi": "Cửa hàng miễn thuế ở sân bay.",
-      "ko": "공항에 면세점이 있어요.",
-      "kr": "끄어 항 미엔 투에 어 썬 바이"
-     },
-     "hanja": "免稅 · 면세"
-    },
-    {
-     "vi": "mở hàng",
-     "ko": "장사를 시작하다 (첫 손님)",
-     "kr_read": "머 항",
-     "tones": [
-      {
-       "syl": "mở",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      },
-      {
-       "syl": "hàng",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "bo-ec561e62be.webp",
-     "ex": {
-      "vi": "Chị ơi, mua giúp em để mở hàng nhé!",
-      "ko": "언니, 첫 손님으로 좀 사 주세요!",
-      "kr": "찌 어이 무어 줍 앰 데 머 항 냬"
-     }
-    },
-    {
-     "vi": "tiền bạc",
-     "ko": "돈, 금전",
-     "kr_read": "띠엔 박",
-     "tones": [
-      {
-       "syl": "tiền",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "bạc",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "bo-ed5c983906.webp",
-     "ex": {
-      "vi": "Tiền bạc không phải là tất cả.",
-      "ko": "돈이 전부는 아니에요.",
-      "kr": "띠엔 박 콩 파이 라 떳 까"
-     }
-    },
-    {
      "vi": "quần",
      "ko": "바지",
      "kr_read": "꾸언",
@@ -27004,31 +26364,6 @@
       "vi": "Chị ấy làm ở công ty may mặc.",
       "ko": "그녀는 의류 회사에서 일해요.",
       "kr": "찌 어이 람 어 꽁 띠 마이 막"
-     }
-    },
-    {
-     "vi": "thuê bao",
-     "ko": "가입자, 회선(휴대전화 번호)",
-     "kr_read": "투에 바오",
-     "tones": [
-      {
-       "syl": "thuê",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "bao",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "bo-b2586db5e7.webp",
-     "ex": {
-      "vi": "Số thuê bao này không liên lạc được.",
-      "ko": "이 번호는 연결되지 않아요.",
-      "kr": "쏘 투에 바오 나이 콩 리엔 락 드억"
      }
     },
     {
@@ -27134,14 +26469,7 @@
       "ko": "이불을 말리려고 널어요.",
       "kr": "퍼이 짠 쪼 코"
      }
-    }
-   ]
-  },
-  {
-   "day": 74,
-   "n": 74,
-   "theme": "입고 씻고 빨래하기 (2/2)",
-   "words": [
+    },
     {
      "vi": "khoác",
      "ko": "걸치다",
@@ -27213,7 +26541,14 @@
       "ko": "이 샴푸는 향이 좋아요.",
       "kr": "저우 고이 나이 텀"
      }
-    },
+    }
+   ],
+   "n": 71
+  },
+  {
+   "day": 74,
+   "theme": "입고 씻고 빨래하기 (2/2)",
+   "words": [
     {
      "vi": "bàn chải đánh răng",
      "ko": "칫솔",
@@ -27584,12 +26919,44 @@
       "ko": "저는 머리를 자르러 가요.",
       "kr": "또이 디 깟 똑"
      }
+    },
+    {
+     "vi": "kem đánh răng",
+     "ko": "치약",
+     "kr_read": "깸 다인 장",
+     "tones": [
+      {
+       "syl": "kem",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "đánh",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "răng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Hết kem đánh răng rồi.",
+      "ko": "치약이 다 떨어졌어요.",
+      "kr": "헷 깸 다인 장 조이"
+     },
+     "img": "w-3286d2f50b.webp"
     }
-   ]
+   ],
+   "n": 72
   },
   {
    "day": 75,
-   "n": 75,
    "theme": "생김새와 성질 말하기 (1/3)",
    "words": [
     {
@@ -27854,14 +27221,7 @@
       "kr": "자오 나이 반 테 나오 빈 토이"
      },
      "hanja": "平 · 평"
-    }
-   ]
-  },
-  {
-   "day": 76,
-   "n": 76,
-   "theme": "생김새와 성질 말하기 (2/3)",
-   "words": [
+    },
     {
      "vi": "đẹp",
      "ko": "예쁘다, 아름답다",
@@ -27881,7 +27241,14 @@
       "ko": "그녀는 매우 예쁘다.",
       "kr": "꼬 어이 젓 댑"
      }
-    },
+    }
+   ],
+   "n": 73
+  },
+  {
+   "day": 76,
+   "theme": "생김새와 성질 말하기 (2/3)",
+   "words": [
     {
      "vi": "xấu",
      "ko": "나쁘다, 못생기다",
@@ -28139,14 +27506,67 @@
       "kr": "아인 어이 젓 마인 코애"
      },
      "hanja": "猛 · 맹"
+    },
+    {
+     "vi": "yên tĩnh",
+     "ko": "조용한",
+     "kr_read": "이엔 띤",
+     "tones": [
+      {
+       "syl": "yên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tĩnh",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-yen-tinh.webp",
+     "ex": {
+      "vi": "Ngôi làng này rất yên tĩnh.",
+      "ko": "이 마을은 매우 고요하다.",
+      "kr": "응오이 랑 나이 젓 이엔 띤"
+     },
+     "hanja": "安靜 · 안정"
     }
-   ]
+   ],
+   "n": 74
   },
   {
    "day": 77,
-   "n": 77,
    "theme": "생김새와 성질 말하기 (3/3)",
    "words": [
+    {
+     "vi": "ồn ào",
+     "ko": "시끄럽다",
+     "kr_read": "온 아오",
+     "tones": [
+      {
+       "syl": "ồn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "ào",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-on-ao.webp",
+     "ex": {
+      "vi": "Quán này khá ồn ào vào buổi tối.",
+      "ko": "이 가게는 저녁에 꽤 시끄럽다.",
+      "kr": "꽌 나이 카 온 아오 바오 부오이 또이"
+     }
+    },
     {
      "vi": "yếu",
      "ko": "약한",
@@ -28400,11 +27820,11 @@
       "kr": "꼰 드엉 나이 젓 자이"
      }
     }
-   ]
+   ],
+   "n": 75
   },
   {
    "day": 78,
-   "n": 78,
    "theme": "식당과 카페 (1/4)",
    "words": [
     {
@@ -28763,11 +28183,11 @@
      },
      "img": "w-1a22bf4c03.webp"
     }
-   ]
+   ],
+   "n": 76
   },
   {
    "day": 79,
-   "n": 79,
    "theme": "식당과 카페 (2/4)",
    "words": [
     {
@@ -29154,11 +28574,11 @@
      },
      "img": "w-753e1f4311.webp"
     }
-   ]
+   ],
+   "n": 77
   },
   {
    "day": 80,
-   "n": 80,
    "theme": "식당과 카페 (3/4)",
    "words": [
     {
@@ -29557,11 +28977,11 @@
       "kr": "쪼 또이 씬 템 다"
      }
     }
-   ]
+   ],
+   "n": 78
   },
   {
    "day": 81,
-   "n": 81,
    "theme": "식당과 카페 (4/4)",
    "words": [
     {
@@ -29919,11 +29339,11 @@
       "kr": "꼰 무온 안 깸"
      }
     }
-   ]
+   ],
+   "n": 79
   },
   {
    "day": 82,
-   "n": 82,
    "theme": "베트남 음식과 식사 (1/2)",
    "words": [
     {
@@ -30000,7 +29420,7 @@
     },
     {
      "vi": "Bánh cuốn",
-     "ko": "Steamed rice rolls (월남쌈(찐 쌀피 롤)",
+     "ko": "반꾸온 (쌀피 찜말이)",
      "kr_read": "바인 꾸온",
      "tones": [
       {
@@ -30236,11 +29656,11 @@
       "kr": "또이 안 브어 쌍 룩 바이 저"
      }
     }
-   ]
+   ],
+   "n": 80
   },
   {
    "day": 83,
-   "n": 83,
    "theme": "베트남 음식과 식사 (2/2)",
    "words": [
     {
@@ -30535,11 +29955,11 @@
       "kr": "쭝 또이 안 짜이 꺼이 짱 미엥"
      }
     }
-   ]
+   ],
+   "n": 81
   },
   {
    "day": 84,
-   "n": 84,
    "theme": "먹을거리 (1/5)",
    "words": [
     {
@@ -30880,14 +30300,7 @@
       "ko": "오늘 저녁엔 고기를 먹고 싶어요.",
       "kr": "또이 나이 또이 무온 안 팃"
      }
-    }
-   ]
-  },
-  {
-   "day": 85,
-   "n": 85,
-   "theme": "먹을거리 (2/5)",
-   "words": [
+    },
     {
      "vi": "mắm",
      "ko": "젓갈",
@@ -30907,7 +30320,14 @@
       "kr": "응으어이 비엣 안 니에우 맘"
      },
      "img": "w-735b9a748b.webp"
-    },
+    }
+   ],
+   "n": 82
+  },
+  {
+   "day": 85,
+   "theme": "먹을거리 (2/5)",
+   "words": [
     {
      "vi": "bánh bao",
      "ko": "찐빵·왕만두",
@@ -31215,14 +30635,26 @@
       "ko": "이 파인애플 아주 달아요.",
       "kr": "즈어 나이 응옷 꽈"
      }
-    }
-   ]
-  },
-  {
-   "day": 86,
-   "n": 86,
-   "theme": "먹을거리 (3/5)",
-   "words": [
+    },
+    {
+     "vi": "thịt",
+     "ko": "고기",
+     "kr_read": "팃",
+     "tones": [
+      {
+       "syl": "thịt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "thit.webp",
+     "ex": {
+      "vi": "Hôm nay tôi ăn thịt heo.",
+      "ko": "오늘 저는 돼지고기를 먹어요.",
+      "kr": "홈 나이 또이 안 팃 해오"
+     }
+    },
     {
      "vi": "dừa",
      "ko": "코코넛",
@@ -31242,7 +30674,14 @@
       "ko": "코코넛 하나 주세요.",
       "kr": "쪼 또이 못 꽈 즈어"
      }
-    },
+    }
+   ],
+   "n": 83
+  },
+  {
+   "day": 86,
+   "theme": "먹을거리 (3/5)",
+   "words": [
     {
      "vi": "quýt",
      "ko": "귤",
@@ -31563,14 +31002,26 @@
       "kr": "믁 느엉 젓 응온"
      },
      "img": "w-05796792f0.webp"
-    }
-   ]
-  },
-  {
-   "day": 87,
-   "n": 87,
-   "theme": "먹을거리 (4/5)",
-   "words": [
+    },
+    {
+     "vi": "rau",
+     "ko": "채소",
+     "kr_read": "자우",
+     "tones": [
+      {
+       "syl": "rau",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "d77-rau.webp",
+     "ex": {
+      "vi": "Tôi thích ăn rau tươi.",
+      "ko": "저는 신선한 채소를 먹는 것을 좋아해요.",
+      "kr": "또이 틱 안 자우 뜨어이"
+     }
+    },
     {
      "vi": "nghêu",
      "ko": "조개",
@@ -31590,7 +31041,14 @@
       "ko": "조개탕은 새콤하게 끓여요.",
       "kr": "까인 응에우 너우 쭈어"
      }
-    },
+    }
+   ],
+   "n": 84
+  },
+  {
+   "day": 87,
+   "theme": "먹을거리 (4/5)",
+   "words": [
     {
      "vi": "trứng",
      "ko": "계란",
@@ -31861,14 +31319,26 @@
       "ko": "나는 빵에 버터를 바른다.",
       "kr": "또이 펫 버 렌 바인 미"
      }
-    }
-   ]
-  },
-  {
-   "day": 88,
-   "n": 88,
-   "theme": "먹을거리 (5/5)",
-   "words": [
+    },
+    {
+     "vi": "cá",
+     "ko": "생선",
+     "kr_read": "까",
+     "tones": [
+      {
+       "syl": "cá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "ca-fish.webp",
+     "ex": {
+      "vi": "Con cá này rất tươi.",
+      "ko": "이 생선은 매우 신선해요.",
+      "kr": "꼰 까 나이 젓 뜨어이"
+     }
+    },
     {
      "vi": "dâu",
      "ko": "딸기; 며느리",
@@ -31888,7 +31358,14 @@
       "ko": "저는 딸기 스무디를 좋아해요.",
       "kr": "또이 틱 씬 또 저우"
      }
-    },
+    }
+   ],
+   "n": 85
+  },
+  {
+   "day": 88,
+   "theme": "먹을거리 (5/5)",
+   "words": [
     {
      "vi": "lạc",
      "ko": "땅콩 (peanut)",
@@ -32141,12 +31618,57 @@
       "ko": "7월, 여름휴가 때. 그때 과일이 정말 많았어.",
       "kr": "탕 집 응이 해 룩 도 꼬 니에우 짜이 꺼이 람"
      }
+    },
+    {
+     "vi": "hoa quả",
+     "ko": "과일",
+     "kr_read": "호아 꽈",
+     "tones": [
+      {
+       "syl": "hoa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "quả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "hoa-qua.webp",
+     "ex": {
+      "vi": "Tôi muốn mua hoa quả.",
+      "ko": "저는 과일을 사고 싶어요.",
+      "kr": "또이 무온 무어 호아 꽈"
+     },
+     "hanja": "花果 · 화과"
+    },
+    {
+     "vi": "gạo",
+     "ko": "쌀",
+     "kr_read": "가오",
+     "tones": [
+      {
+       "syl": "gạo",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "gao.webp",
+     "ex": {
+      "vi": "Mẹ đi mua gạo ở chợ.",
+      "ko": "어머니는 시장에 쌀을 사러 가셔요.",
+      "kr": "매 디 무어 가오 어 쩌"
+     }
     }
-   ]
+   ],
+   "n": 86
   },
   {
    "day": 89,
-   "n": 89,
    "theme": "부탁하고 약속하기 (1/4)",
    "words": [
     {
@@ -32582,11 +32104,11 @@
      },
      "img": "w-f429d5becc.webp"
     }
-   ]
+   ],
+   "n": 87
   },
   {
    "day": 90,
-   "n": 90,
    "theme": "부탁하고 약속하기 (2/4)",
    "words": [
     {
@@ -33016,7 +32538,14 @@
       "ko": "그는 아직 메시지에 답하지 않았습니다.",
       "kr": "아인 어이 쯔어 짜 러이 띤 냔"
      }
-    },
+    }
+   ],
+   "n": 88
+  },
+  {
+   "day": 91,
+   "theme": "부탁하고 약속하기 (3/4)",
+   "words": [
     {
      "vi": "nói",
      "ko": "말하다",
@@ -33036,14 +32565,7 @@
       "ko": "그는 베트남어를 매우 잘 말합니다.",
       "kr": "아인 어이 노이 띠엥 비엣 젓 똣"
      }
-    }
-   ]
-  },
-  {
-   "day": 91,
-   "n": 91,
-   "theme": "부탁하고 약속하기 (3/4)",
-   "words": [
+    },
     {
      "vi": "nghe",
      "ko": "듣다",
@@ -33401,7 +32923,14 @@
       "ko": "줄을 서 주십시오.",
       "kr": "씬 부이 롱 쎕 항"
      }
-    },
+    }
+   ],
+   "n": 89
+  },
+  {
+   "day": 92,
+   "theme": "부탁하고 약속하기 (4/4)",
+   "words": [
     {
      "vi": "yên lặng",
      "ko": "조용히 하다",
@@ -33426,14 +32955,57 @@
       "ko": "모두 조용히 해주세요.",
       "kr": "모이 응으어이 하이 이엔 랑"
      }
-    }
-   ]
-  },
-  {
-   "day": 92,
-   "n": 92,
-   "theme": "부탁하고 약속하기 (4/4)",
-   "words": [
+    },
+    {
+     "vi": "thúc giục",
+     "ko": "재촉하다",
+     "kr_read": "툭 죽",
+     "tones": [
+      {
+       "syl": "thúc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "giục",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "bo-64d3aed897.webp",
+     "ex": {
+      "vi": "Đừng thúc giục tôi.",
+      "ko": "저를 재촉하지 마세요.",
+      "kr": "등 툭 죽 또이"
+     }
+    },
+    {
+     "vi": "khuyên bảo",
+     "ko": "타이르다, 충고하다",
+     "kr_read": "쿠옌 바오",
+     "tones": [
+      {
+       "syl": "khuyên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bảo",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "bo-b170549055.webp",
+     "ex": {
+      "vi": "Mẹ luôn khuyên bảo tôi.",
+      "ko": "어머니는 늘 저에게 충고해 주세요.",
+      "kr": "매 루온 쿠옌 바오 또이"
+     }
+    },
     {
      "vi": "cấm hút thuốc",
      "ko": "금연",
@@ -33466,60 +33038,6 @@
      }
     },
     {
-     "vi": "tôn trọng",
-     "ko": "존중하다 respect",
-     "kr_read": "똔 쫑",
-     "tones": [
-      {
-       "syl": "tôn",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "trọng",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-ton-trong.webp",
-     "ex": {
-      "vi": "Chúng ta nên tôn trọng lẫn nhau.",
-      "ko": "우리는 서로 존중해야 한다.",
-      "kr": "쭝 따 넨 똔 쫑 런 냐우"
-     },
-     "hanja": "尊重 · 존중"
-    },
-    {
-     "vi": "ủng hộ",
-     "ko": "옹호하다, 지지하다",
-     "kr_read": "웅 호",
-     "tones": [
-      {
-       "syl": "ủng",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      },
-      {
-       "syl": "hộ",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-ung-ho.webp",
-     "ex": {
-      "vi": "Chúng tôi ủng hộ quyết định này.",
-      "ko": "우리는 이 결정을 지지한다.",
-      "kr": "쭝 또이 웅 호 꾸이엣 딘 나이"
-     },
-     "hanja": "擁護 · 옹호"
-    },
-    {
      "vi": "giảm",
      "ko": "줄이다, 줄어들다",
      "kr_read": "잠",
@@ -33539,32 +33057,6 @@
       "kr": "끄어 항 잠 자 홈 나이"
      },
      "hanja": "減 · 감"
-    },
-    {
-     "vi": "so sánh",
-     "ko": "비교하다",
-     "kr_read": "쏘 싸인",
-     "tones": [
-      {
-       "syl": "so",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "sánh",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-so-sanh.webp",
-     "ex": {
-      "vi": "Hãy so sánh tuổi của hai người.",
-      "ko": "두 사람의 나이를 비교해 보세요.",
-      "kr": "하이 쏘 싸인 뚜오이 꾸어 하이 응으어이"
-     }
     },
     {
      "vi": "đổi lịch",
@@ -33843,166 +33335,13 @@
      },
      "hanja": "轉 · 전"
     }
-   ]
+   ],
+   "n": 90
   },
   {
    "day": 93,
-   "n": 93,
    "theme": "약국과 병원 (1/4)",
    "words": [
-    {
-     "vi": "đầu",
-     "ko": "머리",
-     "kr_read": "더우",
-     "tones": [
-      {
-       "syl": "đầu",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "d16-dau2.webp",
-     "ex": {
-      "vi": "Hôm nay tôi bị đau đầu.",
-      "ko": "오늘 나는 머리가 아픕니다.",
-      "kr": "홈 나이 또이 비 다우 더우"
-     },
-     "hanja": "頭 · 두"
-    },
-    {
-     "vi": "tay",
-     "ko": "손",
-     "kr_read": "따이",
-     "tones": [
-      {
-       "syl": "tay",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "d16-tay.webp",
-     "ex": {
-      "vi": "Đây là tay của tôi.",
-      "ko": "이것은 제 손입니다.",
-      "kr": "더이 라 따이 꾸어 또이"
-     }
-    },
-    {
-     "vi": "chân",
-     "ko": "다리·발",
-     "kr_read": "쩐",
-     "tones": [
-      {
-       "syl": "chân",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "d16-chan.webp",
-     "ex": {
-      "vi": "Anh ấy có chân dài.",
-      "ko": "그는 다리가 깁니다.",
-      "kr": "아인 어이 꼬 쩐 자이"
-     }
-    },
-    {
-     "vi": "lưng",
-     "ko": "등",
-     "kr_read": "릉",
-     "tones": [
-      {
-       "syl": "lưng",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "lung-back.webp",
-     "ex": {
-      "vi": "Tôi đau lưng.",
-      "ko": "저는 등이 아픕니다.",
-      "kr": "또이 다우 릉"
-     }
-    },
-    {
-     "vi": "mắt",
-     "ko": "눈",
-     "kr_read": "맛",
-     "tones": [
-      {
-       "syl": "mắt",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "d47-mat.webp",
-     "ex": {
-      "vi": "Cô ấy có đôi mắt đẹp.",
-      "ko": "그녀는 예쁜 눈을 가지고 있습니다.",
-      "kr": "꼬 어이 꼬 도이 맛 댑"
-     }
-    },
-    {
-     "vi": "tai",
-     "ko": "귀",
-     "kr_read": "따이",
-     "tones": [
-      {
-       "syl": "tai",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "tai-ear.webp",
-     "ex": {
-      "vi": "Tai tôi bị đau.",
-      "ko": "제 귀가 아픕니다.",
-      "kr": "따이 또이 비 다우"
-     }
-    },
-    {
-     "vi": "mũi",
-     "ko": "코",
-     "kr_read": "무이",
-     "tones": [
-      {
-       "syl": "mũi",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      }
-     ],
-     "img": "d47-mui.webp",
-     "ex": {
-      "vi": "Mũi của tôi to.",
-      "ko": "제 코는 큽니다.",
-      "kr": "무이 꾸어 또이 또"
-     }
-    },
-    {
-     "vi": "miệng",
-     "ko": "입",
-     "kr_read": "미엥",
-     "tones": [
-      {
-       "syl": "miệng",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "d47-mieng.webp",
-     "ex": {
-      "vi": "Hãy mở miệng ra.",
-      "ko": "입을 여세요.",
-      "kr": "하이 머 미엥 자"
-     }
-    },
     {
      "vi": "xe cứu thương",
      "ko": "구급차",
@@ -34224,14 +33563,7 @@
       "ko": "목구멍이 아파요.",
       "kr": "꼬 홍 또이 비 다우"
      }
-    }
-   ]
-  },
-  {
-   "day": 94,
-   "n": 94,
-   "theme": "약국과 병원 (2/4)",
-   "words": [
+    },
     {
      "vi": "nhiệt độ cơ thể",
      "ko": "체온",
@@ -34402,7 +33734,14 @@
       "ko": "그는 응급실로 이송되었다.",
       "kr": "아인 어이 드억 드어 바오 퐁 껍 끄우"
      }
-    },
+    }
+   ],
+   "n": 91
+  },
+  {
+   "day": 94,
+   "theme": "약국과 병원 (2/4)",
+   "words": [
     {
      "vi": "nhập viện",
      "ko": "입원하다",
@@ -34645,14 +33984,7 @@
       "kr": "옹 또이 비 까오 후옛 압"
      },
      "hanja": "血壓 · 혈압"
-    }
-   ]
-  },
-  {
-   "day": 95,
-   "n": 95,
-   "theme": "약국과 병원 (3/4)",
-   "words": [
+    },
     {
      "vi": "sức khỏe",
      "ko": "건강",
@@ -34751,7 +34083,14 @@
       "kr": "째 앰 껀 두 진 즈엉 데 팟 찌엔"
      },
      "hanja": "營養 · 영양"
-    },
+    }
+   ],
+   "n": 92
+  },
+  {
+   "day": 95,
+   "theme": "약국과 병원 (3/4)",
+   "words": [
     {
      "vi": "vitamin",
      "ko": "비타민",
@@ -35011,14 +34350,7 @@
       "ko": "제 아이는 열이 납니다.",
       "kr": "꼰 또이 비 쏫"
      }
-    }
-   ]
-  },
-  {
-   "day": 96,
-   "n": 96,
-   "theme": "약국과 병원 (4/4)",
-   "words": [
+    },
     {
      "vi": "ho",
      "ko": "기침하다",
@@ -35057,7 +34389,14 @@
       "kr": "또이 비 깜"
      },
      "hanja": "感 · 감"
-    },
+    }
+   ],
+   "n": 93
+  },
+  {
+   "day": 96,
+   "theme": "약국과 병원 (4/4)",
+   "words": [
     {
      "vi": "hiệu thuốc",
      "ko": "약국",
@@ -35384,12 +34723,12 @@
      },
      "hanja": "出院 · 출원"
     }
-   ]
+   ],
+   "n": 94
   },
   {
    "day": 97,
-   "n": 97,
-   "theme": "몸과 건강 (1/2)",
+   "theme": "몸 (1/3)",
    "words": [
     {
      "vi": "kháng sinh",
@@ -35699,7 +35038,14 @@
       "kr": "누옷 투옥 버이 느억"
      },
      "img": "w-88f5a29c3d.webp"
-    },
+    }
+   ],
+   "n": 95
+  },
+  {
+   "day": 98,
+   "theme": "몸 (2/3)",
+   "words": [
     {
      "vi": "bàn chân",
      "ko": "발 (foot)",
@@ -35751,14 +35097,84 @@
       "ko": "그녀의 손은 매우 부드럽다.",
       "kr": "반 따이 꼬 어이 젓 멤 마이"
      }
-    }
-   ]
-  },
-  {
-   "day": 98,
-   "n": 98,
-   "theme": "몸과 건강 (2/2)",
-   "words": [
+    },
+    {
+     "vi": "đầu",
+     "ko": "머리",
+     "kr_read": "더우",
+     "tones": [
+      {
+       "syl": "đầu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "d16-dau2.webp",
+     "ex": {
+      "vi": "Hôm nay tôi bị đau đầu.",
+      "ko": "오늘 나는 머리가 아픕니다.",
+      "kr": "홈 나이 또이 비 다우 더우"
+     },
+     "hanja": "頭 · 두"
+    },
+    {
+     "vi": "tay",
+     "ko": "손",
+     "kr_read": "따이",
+     "tones": [
+      {
+       "syl": "tay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "d16-tay.webp",
+     "ex": {
+      "vi": "Đây là tay của tôi.",
+      "ko": "이것은 제 손입니다.",
+      "kr": "더이 라 따이 꾸어 또이"
+     }
+    },
+    {
+     "vi": "chân",
+     "ko": "다리·발",
+     "kr_read": "쩐",
+     "tones": [
+      {
+       "syl": "chân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "d16-chan.webp",
+     "ex": {
+      "vi": "Anh ấy có chân dài.",
+      "ko": "그는 다리가 깁니다.",
+      "kr": "아인 어이 꼬 쩐 자이"
+     }
+    },
+    {
+     "vi": "lưng",
+     "ko": "등",
+     "kr_read": "릉",
+     "tones": [
+      {
+       "syl": "lưng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "lung-back.webp",
+     "ex": {
+      "vi": "Tôi đau lưng.",
+      "ko": "저는 등이 아픕니다.",
+      "kr": "또이 다우 릉"
+     }
+    },
     {
      "vi": "ngón chân",
      "ko": "발가락",
@@ -35884,7 +35300,14 @@
       "ko": "나는 하루에 두 번 이를 닦는다.",
       "kr": "또이 다인 장 하이 런 못 응아이"
      }
-    },
+    }
+   ],
+   "n": 96
+  },
+  {
+   "day": 129,
+   "theme": "몸 (3/3)",
+   "words": [
     {
      "vi": "cổ",
      "ko": "목",
@@ -36046,12 +35469,88 @@
       "kr": "쭉 까 냐 루온 빈 안"
      },
      "hanja": "安 · 안"
+    },
+    {
+     "vi": "mắt",
+     "ko": "눈",
+     "kr_read": "맛",
+     "tones": [
+      {
+       "syl": "mắt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "d47-mat.webp",
+     "ex": {
+      "vi": "Cô ấy có đôi mắt đẹp.",
+      "ko": "그녀는 예쁜 눈을 가지고 있습니다.",
+      "kr": "꼬 어이 꼬 도이 맛 댑"
+     }
+    },
+    {
+     "vi": "tai",
+     "ko": "귀",
+     "kr_read": "따이",
+     "tones": [
+      {
+       "syl": "tai",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "tai-ear.webp",
+     "ex": {
+      "vi": "Tai tôi bị đau.",
+      "ko": "제 귀가 아픕니다.",
+      "kr": "따이 또이 비 다우"
+     }
+    },
+    {
+     "vi": "mũi",
+     "ko": "코",
+     "kr_read": "무이",
+     "tones": [
+      {
+       "syl": "mũi",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "d47-mui.webp",
+     "ex": {
+      "vi": "Mũi của tôi to.",
+      "ko": "제 코는 큽니다.",
+      "kr": "무이 꾸어 또이 또"
+     }
+    },
+    {
+     "vi": "miệng",
+     "ko": "입",
+     "kr_read": "미엥",
+     "tones": [
+      {
+       "syl": "miệng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "d47-mieng.webp",
+     "ex": {
+      "vi": "Hãy mở miệng ra.",
+      "ko": "입을 여세요.",
+      "kr": "하이 머 미엥 자"
+     }
     }
-   ]
+   ],
+   "n": 97
   },
   {
    "day": 99,
-   "n": 99,
    "theme": "회식과 술자리",
    "words": [
     {
@@ -36289,11 +35788,11 @@
       "kr": "더이 라 몬 녀우 응온"
      }
     }
-   ]
+   ],
+   "n": 98
   },
   {
    "day": 100,
-   "n": 100,
    "theme": "마음과 맞장구 (1/3)",
    "words": [
     {
@@ -36617,13 +36116,38 @@
      },
      "img": "w-92292142f4.webp"
     }
-   ]
+   ],
+   "n": 99
   },
   {
    "day": 101,
-   "n": 101,
    "theme": "마음과 맞장구 (2/3)",
    "words": [
+    {
+     "vi": "không thích",
+     "ko": "좋아하지 않다",
+     "kr_read": "콩 틱",
+     "tones": [
+      {
+       "syl": "không",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "thích",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "bo-6007f96bd0.webp",
+     "ex": {
+      "vi": "Tôi không thích ăn cay.",
+      "ko": "저는 매운 걸 안 좋아해요.",
+      "kr": "또이 콩 틱 안 까이"
+     }
+    },
     {
      "vi": "gật",
      "ko": "끄덕이다",
@@ -36959,11 +36483,11 @@
       "kr": "콩 파이 찌 어이 라 응으어이 욱"
      }
     }
-   ]
+   ],
+   "n": 100
   },
   {
    "day": 102,
-   "n": 102,
    "theme": "마음과 맞장구 (3/3)",
    "words": [
     {
@@ -37286,12 +36810,12 @@
      },
      "hanja": "慮 · 여"
     }
-   ]
+   ],
+   "n": 101
   },
   {
    "day": 103,
-   "n": 103,
-   "theme": "느낌과 생각 말하기",
+   "theme": "느낌과 생각 말하기 (1/2)",
    "words": [
     {
      "vi": "ngại",
@@ -37586,7 +37110,14 @@
       "kr": "또이 몽 갑 라이 아인"
      },
      "hanja": "望 · 망"
-    },
+    }
+   ],
+   "n": 102
+  },
+  {
+   "day": 130,
+   "theme": "느낌과 생각 말하기 (2/2)",
+   "words": [
     {
      "vi": "tin",
      "ko": "A tin B : A가 B를 믿다 / trust",
@@ -37797,12 +37328,66 @@
       "kr": "깜 언 앰"
      },
      "hanja": "恩 · 은"
+    },
+    {
+     "vi": "tôn trọng",
+     "ko": "존중하다 respect",
+     "kr_read": "똔 쫑",
+     "tones": [
+      {
+       "syl": "tôn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "trọng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-ton-trong.webp",
+     "ex": {
+      "vi": "Chúng ta nên tôn trọng lẫn nhau.",
+      "ko": "우리는 서로 존중해야 한다.",
+      "kr": "쭝 따 넨 똔 쫑 런 냐우"
+     },
+     "hanja": "尊重 · 존중"
+    },
+    {
+     "vi": "ủng hộ",
+     "ko": "옹호하다, 지지하다",
+     "kr_read": "웅 호",
+     "tones": [
+      {
+       "syl": "ủng",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hộ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-ung-ho.webp",
+     "ex": {
+      "vi": "Chúng tôi ủng hộ quyết định này.",
+      "ko": "우리는 이 결정을 지지한다.",
+      "kr": "쭝 또이 웅 호 꾸이엣 딘 나이"
+     },
+     "hanja": "擁護 · 옹호"
     }
-   ]
+   ],
+   "n": 103
   },
   {
    "day": 104,
-   "n": 104,
    "theme": "성격과 느낌",
    "words": [
     {
@@ -38254,11 +37839,11 @@
      },
      "img": "w-6c216b5189.webp"
     }
-   ]
+   ],
+   "n": 104
   },
   {
    "day": 105,
-   "n": 105,
    "theme": "가족과 인간관계 (1/5)",
    "words": [
     {
@@ -38605,11 +38190,11 @@
      "img": "w-d58e4957b5.webp",
      "hanja": "婿 · 서"
     }
-   ]
+   ],
+   "n": 105
   },
   {
    "day": 106,
-   "n": 106,
    "theme": "가족과 인간관계 (2/5)",
    "words": [
     {
@@ -38986,11 +38571,11 @@
       "kr": "찌 까 꾸어 또이 람 년 비엔 반 퐁"
      }
     }
-   ]
+   ],
+   "n": 106
   },
   {
    "day": 107,
-   "n": 107,
    "theme": "가족과 인간관계 (3/5)",
    "words": [
     {
@@ -39242,97 +38827,6 @@
      }
     },
     {
-     "vi": "thầy",
-     "ko": "선생님(남)",
-     "kr_read": "터이",
-     "tones": [
-      {
-       "syl": "thầy",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "thay-teacher.webp",
-     "ex": {
-      "vi": "Thầy dạy tiếng Việt.",
-      "ko": "선생님은 베트남어를 가르치십니다.",
-      "kr": "터이 자이 띠엥 비엣"
-     }
-    },
-    {
-     "vi": "giáo viên",
-     "ko": "선생님(formal)",
-     "kr_read": "자오 비엔",
-     "tones": [
-      {
-       "syl": "giáo",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "viên",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "giao-vien.webp",
-     "ex": {
-      "vi": "Cô ấy là giáo viên tiếng Anh.",
-      "ko": "그녀는 영어 선생님입니다.",
-      "kr": "꼬 어이 라 자오 비엔 띠엥 아인"
-     },
-     "hanja": "教員 · 교원"
-    },
-    {
-     "vi": "giám đốc",
-     "ko": "사장",
-     "kr_read": "잠 독",
-     "tones": [
-      {
-       "syl": "giám",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "đốc",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "giam-doc.webp",
-     "ex": {
-      "vi": "Giám đốc đang họp.",
-      "ko": "사장님은 회의 중이십니다.",
-      "kr": "잠 독 당 홉"
-     },
-     "hanja": "監督 · 감독"
-    },
-    {
-     "vi": "chủ",
-     "ko": "주인·사장",
-     "kr_read": "쭈",
-     "tones": [
-      {
-       "syl": "chủ",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "chu-owner.webp",
-     "ex": {
-      "vi": "Anh ấy là chủ cửa hàng này.",
-      "ko": "그분은 이 가게의 주인입니다.",
-      "kr": "아인 어이 라 쭈 끄어 항 나이"
-     },
-     "hanja": "主 · 주"
-    },
-    {
      "vi": "con dâu",
      "ko": "며느리",
      "kr_read": "꼰 저우",
@@ -39357,14 +38851,7 @@
       "kr": "꼰 저우 또이 라 응으어이 한"
      },
      "img": "w-ca99e0c5d9.webp"
-    }
-   ]
-  },
-  {
-   "day": 108,
-   "n": 108,
-   "theme": "가족과 인간관계 (4/5)",
-   "words": [
+    },
     {
      "vi": "con rể",
      "ko": "사위",
@@ -39468,7 +38955,14 @@
       "kr": "매 쫑 또이 너우 안 응온"
      },
      "img": "w-cf8115d2c2.webp"
-    },
+    }
+   ],
+   "n": 107
+  },
+  {
+   "day": 108,
+   "theme": "가족과 인간관계 (4/5)",
+   "words": [
     {
      "vi": "bố vợ",
      "ko": "장인어른",
@@ -39735,14 +39229,7 @@
       "ko": "그 소년은 혼자 학교에 가요.",
       "kr": "꺼우 배 디 혹 못 민"
      }
-    }
-   ]
-  },
-  {
-   "day": 109,
-   "n": 109,
-   "theme": "가족과 인간관계 (5/5)",
-   "words": [
+    },
     {
      "vi": "bạn bè",
      "ko": "친구들",
@@ -39852,7 +39339,14 @@
       "ko": "그녀는 이미 남자친구가 있다.",
       "kr": "꼬 어이 꼬 반 짜이 조이"
      }
-    },
+    }
+   ],
+   "n": 108
+  },
+  {
+   "day": 109,
+   "theme": "가족과 인간관계 (5/5)",
+   "words": [
     {
      "vi": "bạn gái",
      "ko": "여자 친구",
@@ -40089,12 +39583,116 @@
       "ko": "나는 당신과 함께 간다.",
       "kr": "또이 디 버이 반"
      }
+    },
+    {
+     "vi": "hẹn hò",
+     "ko": "데이트하다",
+     "kr_read": "핸 호",
+     "tones": [
+      {
+       "syl": "hẹn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "hò",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Tối nay tôi đi hẹn hò.",
+      "ko": "오늘 밤 데이트해요.",
+      "kr": "또이 나이 또이 디 핸 호"
+     },
+     "img": "w-481b53632b.webp"
+    },
+    {
+     "vi": "quen nhau",
+     "ko": "사귀다",
+     "kr_read": "꾸앤 냐우",
+     "tones": [
+      {
+       "syl": "quen",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhau",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Hai người quen nhau lâu chưa?",
+      "ko": "두 분 사귄 지 오래됐어요?",
+      "kr": "하이 응으어이 꾸앤 냐우 러우 쯔어"
+     },
+     "img": "w-eb309195f1.webp"
+    },
+    {
+     "vi": "tin tưởng",
+     "ko": "신뢰하다",
+     "kr_read": "띤 뜨엉",
+     "tones": [
+      {
+       "syl": "tin",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tưởng",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Tôi tin tưởng anh ấy.",
+      "ko": "나는 그를 신뢰해요.",
+      "kr": "또이 띤 뜨엉 아인 어이"
+     },
+     "img": "w-c2b0372f89.webp"
+    },
+    {
+     "vi": "lòng tốt",
+     "ko": "친절·선의",
+     "kr_read": "롱 똣",
+     "tones": [
+      {
+       "syl": "lòng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "tốt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Cảm ơn lòng tốt của chị.",
+      "ko": "친절에 감사드려요.",
+      "kr": "깜 언 롱 똣 꾸어 찌"
+     },
+     "img": "w-2837a1bd06.webp"
     }
-   ]
+   ],
+   "n": 109
   },
   {
    "day": 110,
-   "n": 110,
    "theme": "친척과 결혼",
    "words": [
     {
@@ -40467,11 +40065,11 @@
      },
      "hanja": "祖先 · 조선"
     }
-   ]
+   ],
+   "n": 110
   },
   {
    "day": 111,
-   "n": 111,
    "theme": "사람과 직업 (1/2)",
    "words": [
     {
@@ -40826,14 +40424,203 @@
       "ko": "엄마와 아이가 시장에 가고 있어요.",
       "kr": "하이 매 꼰 당 디 쩌"
      }
+    },
+    {
+     "vi": "thợ",
+     "ko": "장인·기술자",
+     "kr_read": "터",
+     "tones": [
+      {
+       "syl": "thợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Anh ấy là thợ giỏi.",
+      "ko": "그는 솜씨 좋은 기술자예요.",
+      "kr": "아인 어이 라 터 조이"
+     },
+     "img": "w-4e6156062b.webp"
     }
-   ]
+   ],
+   "n": 111
   },
   {
    "day": 112,
-   "n": 112,
    "theme": "사람과 직업 (2/2)",
    "words": [
+    {
+     "vi": "thợ điện",
+     "ko": "전기 기사",
+     "kr_read": "터 디엔",
+     "tones": [
+      {
+       "syl": "thợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Gọi thợ điện đến sửa.",
+      "ko": "전기 기사를 불러 고치세요.",
+      "kr": "고이 터 디엔 덴 쓰어"
+     },
+     "img": "w-449881dce3.webp"
+    },
+    {
+     "vi": "thợ xây",
+     "ko": "건설 노동자",
+     "kr_read": "터 써이",
+     "tones": [
+      {
+       "syl": "thợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "xây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Bố tôi là thợ xây.",
+      "ko": "아버지는 건설 노동자예요.",
+      "kr": "보 또이 라 터 써이"
+     },
+     "img": "w-71fbc705f6.webp"
+    },
+    {
+     "vi": "thợ mộc",
+     "ko": "목수",
+     "kr_read": "터 목",
+     "tones": [
+      {
+       "syl": "thợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "mộc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Bố tôi là thợ mộc.",
+      "ko": "아버지는 목수예요.",
+      "kr": "보 또이 라 터 목"
+     },
+     "img": "w-727f243ad5.webp"
+    },
+    {
+     "vi": "thầy",
+     "ko": "선생님(남)",
+     "kr_read": "터이",
+     "tones": [
+      {
+       "syl": "thầy",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "thay-teacher.webp",
+     "ex": {
+      "vi": "Thầy dạy tiếng Việt.",
+      "ko": "선생님은 베트남어를 가르치십니다.",
+      "kr": "터이 자이 띠엥 비엣"
+     }
+    },
+    {
+     "vi": "giáo viên",
+     "ko": "선생님(formal)",
+     "kr_read": "자오 비엔",
+     "tones": [
+      {
+       "syl": "giáo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "viên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "giao-vien.webp",
+     "ex": {
+      "vi": "Cô ấy là giáo viên tiếng Anh.",
+      "ko": "그녀는 영어 선생님입니다.",
+      "kr": "꼬 어이 라 자오 비엔 띠엥 아인"
+     },
+     "hanja": "教員 · 교원"
+    },
+    {
+     "vi": "giám đốc",
+     "ko": "사장",
+     "kr_read": "잠 독",
+     "tones": [
+      {
+       "syl": "giám",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "đốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "giam-doc.webp",
+     "ex": {
+      "vi": "Giám đốc đang họp.",
+      "ko": "사장님은 회의 중이십니다.",
+      "kr": "잠 독 당 홉"
+     },
+     "hanja": "監督 · 감독"
+    },
+    {
+     "vi": "chủ",
+     "ko": "주인·사장",
+     "kr_read": "쭈",
+     "tones": [
+      {
+       "syl": "chủ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "chu-owner.webp",
+     "ex": {
+      "vi": "Anh ấy là chủ cửa hàng này.",
+      "ko": "그분은 이 가게의 주인입니다.",
+      "kr": "아인 어이 라 쭈 끄어 항 나이"
+     },
+     "hanja": "主 · 주"
+    },
     {
      "vi": "người giúp việc",
      "ko": "가사도우미",
@@ -40891,110 +40678,6 @@
       "kr": "옹 어이 쏭 부이 뚜오이 자"
      },
      "img": "w-06d676a868.webp"
-    },
-    {
-     "vi": "hẹn hò",
-     "ko": "데이트하다",
-     "kr_read": "핸 호",
-     "tones": [
-      {
-       "syl": "hẹn",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "hò",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Tối nay tôi đi hẹn hò.",
-      "ko": "오늘 밤 데이트해요.",
-      "kr": "또이 나이 또이 디 핸 호"
-     },
-     "img": "w-481b53632b.webp"
-    },
-    {
-     "vi": "quen nhau",
-     "ko": "사귀다",
-     "kr_read": "꾸앤 냐우",
-     "tones": [
-      {
-       "syl": "quen",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "nhau",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Hai người quen nhau lâu chưa?",
-      "ko": "두 분 사귄 지 오래됐어요?",
-      "kr": "하이 응으어이 꾸앤 냐우 러우 쯔어"
-     },
-     "img": "w-eb309195f1.webp"
-    },
-    {
-     "vi": "tin tưởng",
-     "ko": "신뢰하다",
-     "kr_read": "띤 뜨엉",
-     "tones": [
-      {
-       "syl": "tin",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "tưởng",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Tôi tin tưởng anh ấy.",
-      "ko": "나는 그를 신뢰해요.",
-      "kr": "또이 띤 뜨엉 아인 어이"
-     },
-     "img": "w-c2b0372f89.webp"
-    },
-    {
-     "vi": "lòng tốt",
-     "ko": "친절·선의",
-     "kr_read": "롱 똣",
-     "tones": [
-      {
-       "syl": "lòng",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "tốt",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "ex": {
-      "vi": "Cảm ơn lòng tốt của chị.",
-      "ko": "친절에 감사드려요.",
-      "kr": "깜 언 롱 똣 꾸어 찌"
-     },
-     "img": "w-2837a1bd06.webp"
     },
     {
      "vi": "nữ giới",
@@ -41144,32 +40827,12 @@
       "kr": "터이 자오 당 장 바이"
      },
      "hanja": "講 · 강"
-    },
-    {
-     "vi": "sổ",
-     "ko": "수첩, 공책",
-     "kr_read": "쏘",
-     "tones": [
-      {
-       "syl": "sổ",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-69d2292b0e.webp",
-     "ex": {
-      "vi": "Tôi ghi vào sổ.",
-      "ko": "저는 수첩에 적어요.",
-      "kr": "또이 기 바오 쏘"
-     }
     }
-   ]
+   ],
+   "n": 112
   },
   {
    "day": 113,
-   "n": 113,
    "theme": "고향과 명절 (1/2)",
    "words": [
     {
@@ -41493,12 +41156,37 @@
       "kr": "레 호이 나이 젓 동 응으어이"
      },
      "hanja": "禮會 · 예회"
+    },
+    {
+     "vi": "làng nghề",
+     "ko": "수공예 전통 마을",
+     "kr_read": "랑 응에",
+     "tones": [
+      {
+       "syl": "làng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "nghề",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "bo-1629bd040d.webp",
+     "ex": {
+      "vi": "Chúng tôi thăm một làng nghề gốm.",
+      "ko": "우리는 도자기 전통 마을을 방문했어요.",
+      "kr": "쭝 또이 탐 못 랑 응에 곰"
+     }
     }
-   ]
+   ],
+   "n": 113
   },
   {
    "day": 114,
-   "n": 114,
    "theme": "고향과 명절 (2/2)",
    "words": [
     {
@@ -41840,12 +41528,12 @@
       "kr": "따이 쎄 자 비엣 쯔 능 냐 항 나오 노이 띠엥 또이 데우 비엣 까"
      }
     }
-   ]
+   ],
+   "n": 114
   },
   {
    "day": 115,
-   "n": 115,
-   "theme": "축하와 기념일 (1/2)",
+   "theme": "축하와 기념일",
    "words": [
     {
      "vi": "sinh nhật",
@@ -42109,210 +41797,14 @@
       "kr": "쭉 반 코애 마인 바 부이 배"
      },
      "img": "w-af0dae9ae2.webp"
-    },
-    {
-     "vi": "hát",
-     "ko": "노래하다",
-     "kr_read": "핫",
-     "tones": [
-      {
-       "syl": "hát",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-hat.webp",
-     "ex": {
-      "vi": "Cô ấy hát rất hay.",
-      "ko": "그녀는 노래를 매우 잘 부른다.",
-      "kr": "꼬 어이 핫 젓 하이"
-     }
-    },
-    {
-     "vi": "nhạc",
-     "ko": "음악",
-     "kr_read": "냑",
-     "tones": [
-      {
-       "syl": "nhạc",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-76949b64b2.webp",
-     "ex": {
-      "vi": "Tôi thích nghe nhạc buồn.",
-      "ko": "나는 슬픈 음악 듣는 것을 좋아한다.",
-      "kr": "또이 틱 응애 냑 부온"
-     },
-     "hanja": "樂 · 악"
-    },
-    {
-     "vi": "vẽ",
-     "ko": "그리다",
-     "kr_read": "배",
-     "tones": [
-      {
-       "syl": "vẽ",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-bf5217e165.webp",
-     "ex": {
-      "vi": "Con tôi thích vẽ tranh.",
-      "ko": "우리 아이는 그림 그리는 것을 좋아한다.",
-      "kr": "꼰 또이 틱 배 짜인"
-     },
-     "hanja": "畫 · 화"
-    },
-    {
-     "vi": "vẽ tranh",
-     "ko": "그림을 그리다",
-     "kr_read": "배 짜인",
-     "tones": [
-      {
-       "syl": "vẽ",
-       "name": "ngã",
-       "ko": "끊었다 올림",
-       "shape": "∿"
-      },
-      {
-       "syl": "tranh",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-ve-tranh.webp",
-     "ex": {
-      "vi": "Cô ấy vẽ tranh phong cảnh.",
-      "ko": "그녀는 풍경화를 그린다.",
-      "kr": "꼬 어이 배 짜인 퐁 까인"
-     }
-    },
-    {
-     "vi": "tranh",
-     "ko": "그림",
-     "kr_read": "짜인",
-     "tones": [
-      {
-       "syl": "tranh",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-4dcedd1845.webp",
-     "ex": {
-      "vi": "Trên tường có một bức tranh đẹp.",
-      "ko": "벽에 예쁜 그림이 한 점 걸려 있어요.",
-      "kr": "쩬 뜨엉 꼬 못 븍 짜인 댑"
-     }
     }
-   ]
+   ],
+   "n": 115
   },
   {
    "day": 116,
-   "n": 116,
-   "theme": "축하와 기념일 (2/2)",
+   "theme": "꿈과 노력",
    "words": [
-    {
-     "vi": "hình",
-     "ko": "그림, 사진",
-     "kr_read": "힌",
-     "tones": [
-      {
-       "syl": "hình",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-360be1b6a7.webp",
-     "ex": {
-      "vi": "Hình gì vậy, chị?",
-      "ko": "무슨 사진이에요, 언니?",
-      "kr": "힌 지 버이 찌"
-     },
-     "hanja": "形 · 형"
-    },
-    {
-     "vi": "ảnh",
-     "ko": "사진",
-     "kr_read": "아인",
-     "tones": [
-      {
-       "syl": "ảnh",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "img": "w-1517176614.webp",
-     "ex": {
-      "vi": "Tôi chụp ảnh gia đình.",
-      "ko": "나는 가족사진을 찍는다.",
-      "kr": "또이 쭙 아인 자 딘"
-     },
-     "hanja": "影 · 영"
-    },
-    {
-     "vi": "chụp",
-     "ko": "(사진을) 찍다",
-     "kr_read": "쭙",
-     "tones": [
-      {
-       "syl": "chụp",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-chup.webp",
-     "ex": {
-      "vi": "Tôi chụp một tấm ảnh đẹp.",
-      "ko": "나는 예쁜 사진 한 장을 찍었다.",
-      "kr": "또이 쭙 못 떰 아인 댑"
-     }
-    },
-    {
-     "vi": "chụp ảnh",
-     "ko": "사진을 찍다",
-     "kr_read": "쭙 아인",
-     "tones": [
-      {
-       "syl": "chụp",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "ảnh",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-chup-anh.webp",
-     "ex": {
-      "vi": "Chúng tôi chụp ảnh cùng nhau.",
-      "ko": "우리는 함께 사진을 찍는다.",
-      "kr": "쭝 또이 쭙 아인 꿍 냐우"
-     }
-    },
     {
      "vi": "đặc biệt",
      "ko": "특별히, 특별한",
@@ -42595,12 +42087,12 @@
      },
      "hanja": "機 · 기"
     }
-   ]
+   ],
+   "n": 116
   },
   {
    "day": 117,
-   "n": 117,
-   "theme": "날씨 (1/3)",
+   "theme": "날씨 (1/2)",
    "words": [
     {
      "vi": "thời tiết",
@@ -42894,14 +42386,7 @@
       "kr": "홈 나이 쩌이 낭 댑"
      },
      "img": "w-b85c2f0f12.webp"
-    }
-   ]
-  },
-  {
-   "day": 118,
-   "n": 118,
-   "theme": "날씨 (2/3)",
-   "words": [
+    },
     {
      "vi": "sét",
      "ko": "번개",
@@ -43025,7 +42510,14 @@
       "kr": "쩌이 오이 븍 꽈"
      },
      "img": "w-2c4ef4fae3.webp"
-    },
+    }
+   ],
+   "n": 117
+  },
+  {
+   "day": 118,
+   "theme": "날씨 (2/2)",
+   "words": [
     {
      "vi": "mặt trăng",
      "ko": "달",
@@ -43180,14 +42672,33 @@
       "kr": "어 한 꾸옥 무어 동 꼬 뚜옛"
      },
      "hanja": "雪 · 설"
-    }
-   ]
-  },
-  {
-   "day": 119,
-   "n": 119,
-   "theme": "날씨 (3/3)",
-   "words": [
+    },
+    {
+     "vi": "ngôi sao",
+     "ko": "별",
+     "kr_read": "응오이 싸오",
+     "tones": [
+      {
+       "syl": "ngôi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "sao",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-ngoi-sao.webp",
+     "ex": {
+      "vi": "Bầu trời đêm nay nhiều ngôi sao.",
+      "ko": "오늘 밤하늘에 별이 많다.",
+      "kr": "버우 쩌이 뎀 나이 니에우 응오이 싸오"
+     }
+    },
     {
      "vi": "rét",
      "ko": "추운 (살을 에는 추위)",
@@ -43401,65 +42912,13 @@
       "ko": "베트남의 여름은 매우 덥다.",
       "kr": "무어 해 어 비엣 남 젓 농"
      }
-    },
-    {
-     "vi": "Thiên nhiên",
-     "ko": "자연",
-     "kr_read": "티엔 니엔",
-     "tones": [
-      {
-       "syl": "Thiên",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "nhiên",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-thien-nhien.webp",
-     "ex": {
-      "vi": "Chúng ta cần bảo vệ thiên nhiên.",
-      "ko": "우리는 자연을 보호해야 한다.",
-      "kr": "쭝 따 껀 바오 베 티엔 니엔"
-     }
-    },
-    {
-     "vi": "ngôi sao",
-     "ko": "별",
-     "kr_read": "응오이 싸오",
-     "tones": [
-      {
-       "syl": "ngôi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "sao",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "src": "승빈",
-     "img": "b-ngoi-sao.webp",
-     "ex": {
-      "vi": "Bầu trời đêm nay nhiều ngôi sao.",
-      "ko": "오늘 밤하늘에 별이 많다.",
-      "kr": "버우 쩌이 뎀 나이 니에우 응오이 싸오"
-     }
     }
-   ]
+   ],
+   "n": 118
   },
   {
    "day": 120,
-   "n": 120,
-   "theme": "취미 (1/3)",
+   "theme": "취미 (1/4)",
    "words": [
     {
      "vi": "cuối tuần",
@@ -43810,13 +43269,290 @@
      },
      "img": "w-248cdea3b3.webp"
     }
-   ]
+   ],
+   "n": 119
   },
   {
    "day": 121,
-   "n": 121,
-   "theme": "취미 (2/3)",
+   "theme": "취미 (2/4)",
    "words": [
+    {
+     "vi": "đá bóng",
+     "ko": "축구하다",
+     "kr_read": "다 봉",
+     "tones": [
+      {
+       "syl": "đá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bóng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "bo-750de7a0e9.webp",
+     "ex": {
+      "vi": "Chiều nào tôi cũng đá bóng.",
+      "ko": "저는 오후마다 축구를 해요.",
+      "kr": "찌에우 나오 또이 꿍 다 봉"
+     }
+    },
+    {
+     "vi": "thể dục",
+     "ko": "체육, 운동",
+     "kr_read": "테 죽",
+     "tones": [
+      {
+       "syl": "thể",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "dục",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "bo-e6d49af78f.webp",
+     "ex": {
+      "vi": "Sáng nào tôi cũng tập thể dục.",
+      "ko": "저는 아침마다 운동해요.",
+      "kr": "쌍 나오 또이 꿍 떱 테 죽"
+     }
+    },
+    {
+     "vi": "chơi điện tử",
+     "ko": "게임하다",
+     "kr_read": "쩌이 디엔 뜨",
+     "tones": [
+      {
+       "syl": "chơi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "tử",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "bo-3dc5713f83.webp",
+     "ex": {
+      "vi": "Con trai tôi thích chơi điện tử.",
+      "ko": "우리 아들은 게임하는 걸 좋아해요.",
+      "kr": "꼰 짜이 또이 틱 쩌이 디엔 뜨"
+     }
+    },
+    {
+     "vi": "hát",
+     "ko": "노래하다",
+     "kr_read": "핫",
+     "tones": [
+      {
+       "syl": "hát",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-hat.webp",
+     "ex": {
+      "vi": "Cô ấy hát rất hay.",
+      "ko": "그녀는 노래를 매우 잘 부른다.",
+      "kr": "꼬 어이 핫 젓 하이"
+     }
+    },
+    {
+     "vi": "nhạc",
+     "ko": "음악",
+     "kr_read": "냑",
+     "tones": [
+      {
+       "syl": "nhạc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-76949b64b2.webp",
+     "ex": {
+      "vi": "Tôi thích nghe nhạc buồn.",
+      "ko": "나는 슬픈 음악 듣는 것을 좋아한다.",
+      "kr": "또이 틱 응애 냑 부온"
+     },
+     "hanja": "樂 · 악"
+    },
+    {
+     "vi": "vẽ",
+     "ko": "그리다",
+     "kr_read": "배",
+     "tones": [
+      {
+       "syl": "vẽ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-bf5217e165.webp",
+     "ex": {
+      "vi": "Con tôi thích vẽ tranh.",
+      "ko": "우리 아이는 그림 그리는 것을 좋아한다.",
+      "kr": "꼰 또이 틱 배 짜인"
+     },
+     "hanja": "畫 · 화"
+    },
+    {
+     "vi": "vẽ tranh",
+     "ko": "그림을 그리다",
+     "kr_read": "배 짜인",
+     "tones": [
+      {
+       "syl": "vẽ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "tranh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-ve-tranh.webp",
+     "ex": {
+      "vi": "Cô ấy vẽ tranh phong cảnh.",
+      "ko": "그녀는 풍경화를 그린다.",
+      "kr": "꼬 어이 배 짜인 퐁 까인"
+     }
+    },
+    {
+     "vi": "tranh",
+     "ko": "그림",
+     "kr_read": "짜인",
+     "tones": [
+      {
+       "syl": "tranh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-4dcedd1845.webp",
+     "ex": {
+      "vi": "Trên tường có một bức tranh đẹp.",
+      "ko": "벽에 예쁜 그림이 한 점 걸려 있어요.",
+      "kr": "쩬 뜨엉 꼬 못 븍 짜인 댑"
+     }
+    },
+    {
+     "vi": "hình",
+     "ko": "그림, 사진",
+     "kr_read": "힌",
+     "tones": [
+      {
+       "syl": "hình",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-360be1b6a7.webp",
+     "ex": {
+      "vi": "Hình gì vậy, chị?",
+      "ko": "무슨 사진이에요, 언니?",
+      "kr": "힌 지 버이 찌"
+     },
+     "hanja": "形 · 형"
+    },
+    {
+     "vi": "ảnh",
+     "ko": "사진",
+     "kr_read": "아인",
+     "tones": [
+      {
+       "syl": "ảnh",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-1517176614.webp",
+     "ex": {
+      "vi": "Tôi chụp ảnh gia đình.",
+      "ko": "나는 가족사진을 찍는다.",
+      "kr": "또이 쭙 아인 자 딘"
+     },
+     "hanja": "影 · 영"
+    },
+    {
+     "vi": "chụp",
+     "ko": "(사진을) 찍다",
+     "kr_read": "쭙",
+     "tones": [
+      {
+       "syl": "chụp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-chup.webp",
+     "ex": {
+      "vi": "Tôi chụp một tấm ảnh đẹp.",
+      "ko": "나는 예쁜 사진 한 장을 찍었다.",
+      "kr": "또이 쭙 못 떰 아인 댑"
+     }
+    },
+    {
+     "vi": "chụp ảnh",
+     "ko": "사진을 찍다",
+     "kr_read": "쭙 아인",
+     "tones": [
+      {
+       "syl": "chụp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "ảnh",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-chup-anh.webp",
+     "ex": {
+      "vi": "Chúng tôi chụp ảnh cùng nhau.",
+      "ko": "우리는 함께 사진을 찍는다.",
+      "kr": "쭝 또이 쭙 아인 꿍 냐우"
+     }
+    },
     {
      "vi": "giãn cơ",
      "ko": "스트레칭",
@@ -43842,7 +43578,14 @@
       "kr": "녀 잔 꺼 쯔억 키 짜이"
      },
      "img": "w-77af975251.webp"
-    },
+    }
+   ],
+   "n": 120
+  },
+  {
+   "day": 122,
+   "theme": "취미 (3/4)",
+   "words": [
     {
      "vi": "yoga",
      "ko": "요가",
@@ -44126,14 +43869,7 @@
       "kr": "또이 틱 쌤 테 타오 바오 꾸오이 뚜언"
      },
      "hanja": "體操 · 체조"
-    }
-   ]
-  },
-  {
-   "day": 122,
-   "n": 122,
-   "theme": "취미 (3/3)",
-   "words": [
+    },
     {
      "vi": "bóng rổ",
      "ko": "농구",
@@ -44159,7 +43895,14 @@
       "ko": "우리는 농구를 해요.",
       "kr": "쭝 또이 쩌이 봉 조"
      }
-    },
+    }
+   ],
+   "n": 121
+  },
+  {
+   "day": 131,
+   "theme": "취미 (4/4)",
+   "words": [
     {
      "vi": "cầu lông",
      "ko": "배드민턴",
@@ -44445,13 +44188,38 @@
       "ko": "저는 땀을 흘려요.",
       "kr": "또이 자 모 호이"
      }
+    },
+    {
+     "vi": "thi đấu",
+     "ko": "경기하다",
+     "kr_read": "티 더우",
+     "tones": [
+      {
+       "syl": "thi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "đấu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "bo-a2c3bcaef2.webp",
+     "ex": {
+      "vi": "Đội Việt Nam thi đấu tối nay.",
+      "ko": "베트남 팀이 오늘 밤 경기해요.",
+      "kr": "도이 비엣 남 티 더우 또이 나이"
+     }
     }
-   ]
+   ],
+   "n": 122
   },
   {
    "day": 123,
-   "n": 123,
-   "theme": "몸의 움직임",
+   "theme": "손과 몸의 움직임 (1/2)",
    "words": [
     {
      "vi": "chạy",
@@ -44632,118 +44400,226 @@
       "ko": "펜이 바닥에 떨어졌다.",
       "kr": "찌엑 붓 저이 쑤옹 덧"
      }
-    }
-   ]
-  },
-  {
-   "day": 124,
-   "n": 124,
-   "theme": "감정과 의견 표현 심화 (1/4)",
-   "words": [
-    {
-     "vi": "ý kiến",
-     "ko": "의견",
-     "kr_read": "이 끼엔",
-     "tones": [
-      {
-       "syl": "ý",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "kiến",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "y-kien.webp",
-     "ex": {
-      "vi": "Bạn có ý kiến gì không?",
-      "ko": "의견이 있으세요?",
-      "kr": "반 꼬 이 끼엔 지 콩"
-     },
-     "hanja": "意見 · 의견"
     },
     {
-     "vi": "phản đối",
-     "ko": "반대하다",
-     "kr_read": "판 도이",
+     "vi": "đặt",
+     "ko": "놓다, 두다; 주문하다, 예약하다",
+     "kr_read": "닷",
      "tones": [
       {
-       "syl": "phản",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      },
-      {
-       "syl": "đối",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "phan-doi.webp",
-     "ex": {
-      "vi": "Tôi không phản đối ý kiến này.",
-      "ko": "저는 이 의견에 반대하지 않아요.",
-      "kr": "또이 콩 판 도이 이 끼엔 나이"
-     },
-     "hanja": "反對 · 반대"
-    },
-    {
-     "vi": "quan điểm",
-     "ko": "관점·견해",
-     "kr_read": "꽌 디엠",
-     "tones": [
-      {
-       "syl": "quan",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "điểm",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "quan-diem.webp",
-     "ex": {
-      "vi": "Quan điểm của tôi khác bạn.",
-      "ko": "제 관점은 당신과 달라요.",
-      "kr": "꽌 디엠 꾸어 또이 칵 반"
-     },
-     "hanja": "觀點 · 관점"
-    },
-    {
-     "vi": "quan trọng",
-     "ko": "중요하다",
-     "kr_read": "꽌 쫑",
-     "tones": [
-      {
-       "syl": "quan",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "trọng",
+       "syl": "đặt",
        "name": "nặng",
        "ko": "짧고 무겁게",
        "shape": "↓"
       }
      ],
-     "img": "d20-quan-trong.webp",
+     "src": "승빈",
+     "img": "w-1be9643e4f.webp",
      "ex": {
-      "vi": "Gia đình rất quan trọng với tôi.",
-      "ko": "가족은 저에게 아주 중요해요.",
-      "kr": "자 딘 젓 꽌 쫑 버이 또이"
-     },
-     "hanja": "關重 · 관중"
+      "vi": "Tôi đặt sách trên bàn.",
+      "ko": "나는 책을 탁자 위에 둔다.",
+      "kr": "또이 닷 싹 쩬 반"
+     }
+    }
+   ],
+   "n": 123
+  },
+  {
+   "day": 134,
+   "theme": "손과 몸의 움직임 (2/2)",
+   "words": [
+    {
+     "vi": "cầm",
+     "ko": "잡다, 들다",
+     "kr_read": "껌",
+     "tones": [
+      {
+       "syl": "cầm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-d7d36f5d31.webp",
+     "ex": {
+      "vi": "Cô ấy cầm một cuốn sách.",
+      "ko": "그녀는 책 한 권을 들고 있다.",
+      "kr": "꼬 어이 껌 못 꾸온 싹"
+     }
     },
+    {
+     "vi": "xách",
+     "ko": "(손에) 들다",
+     "kr_read": "싹",
+     "tones": [
+      {
+       "syl": "xách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-xach.webp",
+     "ex": {
+      "vi": "Cô ấy xách túi rất nặng.",
+      "ko": "그녀는 아주 무거운 가방을 들고 있어요.",
+      "kr": "꼬 어이 싹 뚜이 젓 낭"
+     }
+    },
+    {
+     "vi": "mang",
+     "ko": "가지고 가다, 나르다",
+     "kr_read": "망",
+     "tones": [
+      {
+       "syl": "mang",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-mang.webp",
+     "ex": {
+      "vi": "Anh ấy mang theo một chiếc ba lô.",
+      "ko": "그는 배낭을 하나 가지고 왔다.",
+      "kr": "아인 어이 망 태오 못 찌엑 바 로"
+     }
+    },
+    {
+     "vi": "đưa",
+     "ko": "건네주다, 주다",
+     "kr_read": "드어",
+     "tones": [
+      {
+       "syl": "đưa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-dua.webp",
+     "ex": {
+      "vi": "Hãy đưa cho tôi cây bút đó.",
+      "ko": "저에게 그 펜을 건네주세요.",
+      "kr": "하이 드어 쪼 또이 꺼이 붓 도"
+     }
+    },
+    {
+     "vi": "ném",
+     "ko": "던지다 throw",
+     "kr_read": "냄",
+     "tones": [
+      {
+       "syl": "ném",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-nem.webp",
+     "ex": {
+      "vi": "Anh ấy ném bóng cho tôi.",
+      "ko": "그는 나에게 공을 던졌다.",
+      "kr": "아인 어이 냄 봉 쪼 또이"
+     }
+    },
+    {
+     "vi": "vứt",
+     "ko": "버리다, 던지다",
+     "kr_read": "븟",
+     "tones": [
+      {
+       "syl": "vứt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-5af9ab1766.webp",
+     "ex": {
+      "vi": "Đừng vứt rác bừa bãi.",
+      "ko": "쓰레기를 함부로 버리지 마세요.",
+      "kr": "등 븟 작 브어 바이"
+     }
+    },
+    {
+     "vi": "kéo",
+     "ko": "끌다, 당기다 (pull)",
+     "kr_read": "깨오",
+     "tones": [
+      {
+       "syl": "kéo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "w-6d8cbc188e.webp",
+     "ex": {
+      "vi": "Anh ấy kéo chiếc xe ra khỏi bùn.",
+      "ko": "그는 진흙에서 차를 끌어냈다.",
+      "kr": "아인 어이 깨오 찌엑 쌔 자 코이 분"
+     }
+    },
+    {
+     "vi": "đẩy",
+     "ko": "밀다",
+     "kr_read": "더이",
+     "tones": [
+      {
+       "syl": "đẩy",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "src": "승빈",
+     "ex": {
+      "vi": "Đẩy cửa vào.",
+      "ko": "문을 밀어서 들어가세요.",
+      "kr": "더이 끄어 바오"
+     },
+     "img": "w-57f918b2c5.webp"
+    },
+    {
+     "vi": "đem theo",
+     "ko": "가져가다, 지참하다",
+     "kr_read": "댐 태오",
+     "tones": [
+      {
+       "syl": "đem",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "theo",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "bo-cda83dada6.webp",
+     "ex": {
+      "vi": "Anh nhớ đem theo hộ chiếu.",
+      "ko": "여권을 꼭 가져가세요.",
+      "kr": "아인 녀 댐 태오 호 찌에우"
+     }
+    }
+   ],
+   "n": 124
+  },
+  {
+   "day": 124,
+   "theme": "한자말 조각과 바탕 단어 (1/3)",
+   "words": [
     {
      "vi": "ý",
      "ko": "뜻, 의미, 생각",
@@ -44978,14 +44854,7 @@
       "kr": "꾸옥 호이 토아이 나이 젓 부이"
      },
      "hanja": "局 · 국"
-    }
-   ]
-  },
-  {
-   "day": 125,
-   "n": 125,
-   "theme": "감정과 의견 표현 심화 (2/4)",
-   "words": [
+    },
     {
      "vi": "tính",
      "ko": "성질, ~성; 계산하다",
@@ -45027,7 +44896,14 @@
       "kr": "팟 엄 꾸어 반 젓 쭈언"
      },
      "hanja": "準 · 준"
-    },
+    }
+   ],
+   "n": 125
+  },
+  {
+   "day": 125,
+   "theme": "한자말 조각과 바탕 단어 (2/3)",
+   "words": [
     {
      "vi": "chính",
      "ko": "exactly / precisely (emphasis)[바로(강조)]",
@@ -45276,12 +45152,12 @@
      },
      "hanja": "立 · 입"
     }
-   ]
+   ],
+   "n": 126
   },
   {
    "day": 126,
-   "n": 126,
-   "theme": "감정과 의견 표현 심화 (3/4)",
+   "theme": "한자말 조각과 바탕 단어 (3/3)",
    "words": [
     {
      "vi": "viện",
@@ -45531,64 +45407,13 @@
       "kr": "뜨 응으 나이 젓 코"
      },
      "hanja": "語 · 어"
-    },
-    {
-     "vi": "cảm thấy",
-     "ko": "느끼다",
-     "kr_read": "깜 터이",
-     "tones": [
-      {
-       "syl": "cảm",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      },
-      {
-       "syl": "thấy",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "cam-thay.webp",
-     "ex": {
-      "vi": "Hôm nay tôi cảm thấy rất mệt.",
-      "ko": "오늘 저는 아주 피곤하게 느껴요.",
-      "kr": "홈 나이 또이 깜 터이 젓 멧"
-     }
-    },
-    {
-     "vi": "hối hận",
-     "ko": "후회하다",
-     "kr_read": "호이 헌",
-     "tones": [
-      {
-       "syl": "hối",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "hận",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "hoi-han.webp",
-     "ex": {
-      "vi": "Tôi không hối hận về việc đó.",
-      "ko": "저는 그 일에 대해 후회하지 않아요.",
-      "kr": "또이 콩 호이 헌 베 비엑 도"
-     },
-     "hanja": "悔恨 · 회한"
     }
-   ]
+   ],
+   "n": 127
   },
   {
    "day": 127,
-   "n": 127,
-   "theme": "감정과 의견 표현 심화 (4/4)",
+   "theme": "감정과 의견 (1/2)",
    "words": [
     {
      "vi": "tự hào",
@@ -45871,7 +45696,14 @@
      },
      "img": "w-7bf81c1c23.webp",
      "hanja": "故情 · 고정"
-    },
+    }
+   ],
+   "n": 128
+  },
+  {
+   "day": 135,
+   "theme": "감정과 의견 (2/2)",
+   "words": [
     {
      "vi": "vô tình",
      "ko": "무심코·우연히",
@@ -45951,8 +45783,190 @@
       "ko": "시험 전에 아주 긴장했어요.",
       "kr": "쯔억 끼 티 또이 젓 깡 탕"
      }
+    },
+    {
+     "vi": "so sánh",
+     "ko": "비교하다",
+     "kr_read": "쏘 싸인",
+     "tones": [
+      {
+       "syl": "so",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "sánh",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "src": "승빈",
+     "img": "b-so-sanh.webp",
+     "ex": {
+      "vi": "Hãy so sánh tuổi của hai người.",
+      "ko": "두 사람의 나이를 비교해 보세요.",
+      "kr": "하이 쏘 싸인 뚜오이 꾸어 하이 응으어이"
+     }
+    },
+    {
+     "vi": "ý kiến",
+     "ko": "의견",
+     "kr_read": "이 끼엔",
+     "tones": [
+      {
+       "syl": "ý",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "kiến",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "y-kien.webp",
+     "ex": {
+      "vi": "Bạn có ý kiến gì không?",
+      "ko": "의견이 있으세요?",
+      "kr": "반 꼬 이 끼엔 지 콩"
+     },
+     "hanja": "意見 · 의견"
+    },
+    {
+     "vi": "phản đối",
+     "ko": "반대하다",
+     "kr_read": "판 도이",
+     "tones": [
+      {
+       "syl": "phản",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "đối",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "phan-doi.webp",
+     "ex": {
+      "vi": "Tôi không phản đối ý kiến này.",
+      "ko": "저는 이 의견에 반대하지 않아요.",
+      "kr": "또이 콩 판 도이 이 끼엔 나이"
+     },
+     "hanja": "反對 · 반대"
+    },
+    {
+     "vi": "quan điểm",
+     "ko": "관점·견해",
+     "kr_read": "꽌 디엠",
+     "tones": [
+      {
+       "syl": "quan",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "điểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "quan-diem.webp",
+     "ex": {
+      "vi": "Quan điểm của tôi khác bạn.",
+      "ko": "제 관점은 당신과 달라요.",
+      "kr": "꽌 디엠 꾸어 또이 칵 반"
+     },
+     "hanja": "觀點 · 관점"
+    },
+    {
+     "vi": "quan trọng",
+     "ko": "중요하다",
+     "kr_read": "꽌 쫑",
+     "tones": [
+      {
+       "syl": "quan",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "trọng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "d20-quan-trong.webp",
+     "ex": {
+      "vi": "Gia đình rất quan trọng với tôi.",
+      "ko": "가족은 저에게 아주 중요해요.",
+      "kr": "자 딘 젓 꽌 쫑 버이 또이"
+     },
+     "hanja": "關重 · 관중"
+    },
+    {
+     "vi": "cảm thấy",
+     "ko": "느끼다",
+     "kr_read": "깜 터이",
+     "tones": [
+      {
+       "syl": "cảm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "thấy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "cam-thay.webp",
+     "ex": {
+      "vi": "Hôm nay tôi cảm thấy rất mệt.",
+      "ko": "오늘 저는 아주 피곤하게 느껴요.",
+      "kr": "홈 나이 또이 깜 터이 젓 멧"
+     }
+    },
+    {
+     "vi": "hối hận",
+     "ko": "후회하다",
+     "kr_read": "호이 헌",
+     "tones": [
+      {
+       "syl": "hối",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "hận",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "hoi-han.webp",
+     "ex": {
+      "vi": "Tôi không hối hận về việc đó.",
+      "ko": "저는 그 일에 대해 후회하지 않아요.",
+      "kr": "또이 콩 호이 헌 베 비엑 도"
+     },
+     "hanja": "悔恨 · 회한"
     }
-   ]
+   ],
+   "n": 129
   }
  ]
 }

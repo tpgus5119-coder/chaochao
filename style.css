@@ -2613,3 +2613,13 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .celeb-gem svg{width:16px; height:16px; vertical-align:-3px; margin-right:2px}
 .celebrate.big .celeb-t{font-size:20px}
 .celebrate.big{box-shadow:0 6px 24px rgba(255,138,61,.35)}
+/* 목록의 '다음 할 것' 표시 · 타이핑 힌트 (2026-09-27 밤) */
+.ubtn.next{border-color:var(--accent); box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent)}
+.thint{margin:6px 0 4px; text-align:center}
+.thinthd{border:0; background:none; color:var(--dim); font-size:13px; padding:4px 8px; cursor:pointer}
+.thintb{display:flex; flex-wrap:wrap; gap:6px 10px; justify-content:center; padding:6px 4px}
+.thk{font-size:13px; color:var(--dim)}
+.thk kbd{display:inline-block; min-width:18px; padding:1px 5px; border:1px solid var(--line); border-radius:5px; background:var(--card); color:var(--fg); font:inherit; font-size:12px; margin-right:2px}
+.thk b{color:var(--fg); font-size:15px; margin-left:3px}
+.roadli{list-style:none}
+.hanja .hun{display:block; font-size:11px; font-weight:500; opacity:.85; margin-top:1px; white-space:normal}

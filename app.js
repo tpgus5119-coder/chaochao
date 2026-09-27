@@ -1036,7 +1036,7 @@ function pairRow(word, cur, mode) {
   if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
   else if (w0.e) m.append(el('span', 'pko en', esc(w0.e)));
   else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
-  if (mode === 'tone' && one) m.append(el('span', 'ptone', tn + ' · ' + tr(SIB_KO[tn])));
+  // 성조 이름(ngang · 평평하게 …) 글은 뺐다 (대표님 지시 2026-09-27 밤) — 화살표만
   r.append(w, m);
   /* 소리 단추는 **늘** 있다 (대표님 지시 2026-09-27: 짝 단어 모두 TTS). 우리 소리 파일이 있으면 그것을, 아직 없으면 기기 목소리로 */
   const b = iconBtn('play', tr('듣기'), () => key ? play(key, false, null, pairSpd()) : speakVi(word, false, pairSpd()));
@@ -1221,7 +1221,6 @@ const HAND_AI = false;   // 손글씨 AI 채점 기능 제외 (대표님 지시 
    구글 제미나이 호출을 아예 없애는 게 아니라 — 브라우저가 못 알아들으면(지원 안 하거나 결과가 비면)
    그때만 기존 제미나이 방식으로 넘어간다. 아직 실제 폰에서 검증 전이라 폴백을 반드시 남겨둔다. */
 const SRClass = window.SpeechRecognition || window.webkitSpeechRecognition;
-const canLocalASR = () => !!SRClass;
 /* 실제 폰 테스트에서 "인식이 안 된다"고 나온 원인을 찾았다(2026-09-09):
    음성인식 결과(onresult)는 stop() 을 부른다고 바로 오지 않고 조금 뒤에 이벤트로 온다.
    그런데 녹음이 끝나자마자(REC.localHeard 를) 바로 읽어버려서 늘 비어 있었다 —
@@ -1311,12 +1310,16 @@ function resetRec() {
 }
 
 /* 마이크는 다 쓰면 반드시 놓아준다. 안 놓으면 폰에 녹음 표시가 계속 뜬다. */
-function releaseMic() {
-  if (REC.stream) {
-    REC.stream.getTracks().forEach(t => t.stop());
-    REC.stream = null;
-  }
+/* 마이크 — 녹음이 끝나도 90초는 잡고 있는다(다음 녹음 때 '허용?'을 또 묻지 않게, 대표님 지시 2026-09-27 밤). 화면을 떠나거나 앱이 숨으면 바로 놓는다 */
+let MIC_T = 0;
+function releaseMic(force) {
+  clearTimeout(MIC_T);
+  if (!REC.stream) return;
+  if (!force) { MIC_T = setTimeout(() => releaseMic(true), 90000); return; }
+  REC.stream.getTracks().forEach(t => t.stop());
+  REC.stream = null;
 }
+document.addEventListener('visibilitychange', () => { if (document.hidden) releaseMic(true); });
 
 const canRecord = () => !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
 
@@ -1560,34 +1563,6 @@ async function recToWav(blobUrl) {
    성조는 위의 높낮이 곡선이 담당한다 — 둘이 합쳐야 온전한 피드백이 된다. */
 /* 발음(글자)은 AI가 받아 적어 보고, 성조는 아래 높낮이 곡선이 본다.
    둘이 하는 일이 다르다 — 합쳐야 '무슨 소리를, 어떤 높낮이로' 냈는지가 다 보인다. */
-/* 말소리 하나를 AI에게 묻는다 — 퀴즈든 따라 말하기든 **같은 방식**을 쓴다.
-   단어이면 헷갈리는 넷 중에서 고르게 하고(실측 92%), 문장이면 받아쓰게 한다.
-   예전에는 따라 말하기만 옛 받아쓰기(60%)를 쓰고 있었다 — 같은 소리에 다른 점수가 나왔다. */
-async function askSpeech(text, b64, onWait) {
-  const opts = sayOpts(text);
-  if (opts) {
-    const t = await gCall({
-      contents: [{ role: 'user', parts: [
-        { text: '이 녹음은 베트남어 단어 하나를 읽은 것이다. 아래 보기 가운데 **무엇을 말했는지** 하나만 고르라.\n'
-                + opts.map((o, i) => (i + 1) + '. ' + o).join('\n')
-                + '\n보기에 없으면 0 이라고 답하라. 숫자 하나만 답하고 다른 말은 붙이지 마라.' },
-        { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-      generationConfig: { maxOutputTokens: 6, thinkingConfig: { thinkingBudget: 0 } }
-    }, onWait);
-    const m = /\d/.exec(t || ''), k = m ? +m[0] : 0;
-    const heard = k >= 1 && k <= opts.length ? opts[k - 1] : null;
-    return { heard, ok: heard ? heard === text : null, pick: true };
-  }
-  const heard = await gCall({
-    contents: [{ role: 'user', parts: [
-      { text: '이 녹음은 한국인이 베트남어를 읽은 것이다. 들린 그대로 베트남어 철자로 받아 적어라. 철자만 답하고 다른 말은 붙이지 마라.' },
-      { inline_data: { mime_type: 'audio/wav', data: b64 } }] }],
-    generationConfig: { maxOutputTokens: 60, thinkingConfig: { thinkingBudget: 0 } }
-  }, onWait);
-  const clean = x => String(x || '').toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
-  const ok = clean(heard) === clean(text) || stripTone(clean(heard)) === stripTone(clean(text));
-  return { heard, ok, pick: false };
-}
 
 async function aiListen(text, blobUrl, box) {
   try {
@@ -2405,7 +2380,7 @@ function studyHubEntry() {
   show('sub', '학습', true);
   // 자료가 아직 안 왔으면 받아서 이 화면을 다시 그린다 (진도 숫자가 채워진다). 다른 데로 갔으면 건드리지 않는다.
   const still = () => ACTIVE_TAB === 'study' && CURV === 'sub' && $('#title').textContent === tr('학습');
-  if (!GRAM) fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { GRAM = j; if (still()) studyHubEntry(); }).catch(() => {});
+  if (!GRAM) fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { GRAM = gramReady(j); if (still()) studyHubEntry(); }).catch(() => {});
   if (!GYBM) gybmBuild(() => { if (still()) studyHubEntry(); });
   if (!COURSE) withCourse(() => { if (still()) studyHubEntry(); });
 }
@@ -2444,6 +2419,8 @@ function accRow(host, o, open, onToggle, scroll) {
       const list = el('div', 'ulist');
       body.append(list);
       renderRoadmap(list, o.nodes, null, { freeNav: true, noScroll: !scroll });
+      const nx = list.querySelector('.ubtn:not(.done)');            // 다음 할 것 표시 + 그 자리로 (2026-09-27 밤)
+      if (nx) { nx.classList.add('next'); if (scroll) setTimeout(() => { try { nx.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { } }, 60); }
     } else body.append(el('p', 'note', tr(o.note || '불러오는 중…')));
   }
   host.append(box);
@@ -2497,18 +2474,15 @@ function studyGramEntry(scroll) {
     b.append(el('p', 'lede', tr('불러오는 중…')));
     show('sub', '문법', true);
     fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
-      .then(j => { GRAM = j; if (CURV === 'sub' && $('#title').textContent === tr('문법')) studyGramEntry(); })
+      .then(j => { GRAM = gramReady(j); if (CURV === 'sub' && $('#title').textContent === tr('문법')) studyGramEntry(); })
       .catch(() => { b.textContent = ''; b.append(el('p', 'lede', tr('불러오지 못했습니다'))); });
     return;
   }
-  const rows = GRAM.books.map((bk, bi) => {
-    const nodes = bk.bai.map((x, ni) => ({ key: gkey(bi, ni), title: x.t, sub: x.no + tr('과') + ' · ' + (x.g || []).length + tr('개 문법'), num: ni + 1,
-      done: !!S.done[gkey(bi, ni)], fn: () => { dive(back); startGram(bi, ni); } }));
-    return { key: 'b' + bi, title: bk.book, sub: bk.bai.length + tr('과') + ' · ' + bk.bai.reduce((a, x) => a + (x.g || []).length, 0) + tr('개 문법'),
-             done: nodes.filter(n => n.done).length, all: nodes.length, nodes };
-  });
-  // 처음엔 다 접혀 있다 — 책을 눌러야 과가 보인다 (대표님 지시 2026-09-27)
-  rows.forEach(r => accRow(b, r, GOPEN === r.key, () => { GOPEN = GOPEN === r.key ? null : r.key; studyGramEntry(true); }, scroll));
+  /* 한 줄 — 책·챕터 구분 없이 난이도 순 46과 (대표님 지시 2026-09-27 밤: "문법 누르면 쭉 다 순서대로") */
+  const bk = GRAM.books[0];
+  const nodes = bk.bai.map((x, ni) => ({ key: gkey(0, ni), title: x.t, sub: (x.g || []).length + tr('개 문법'), num: ni + 1,
+    done: !!S.done[gkey(0, ni)], fn: () => { dive(back); startGram(0, ni); } }));
+  roadInList(b, nodes, { focus: scroll });
   show('sub', '문법', true);
 }
 /* 과정 자료(order.json)가 있어야 하는 문 — 없으면 받아 온 뒤 연다 */
@@ -2516,38 +2490,6 @@ function withCourse(fn) {
   if (COURSE) return fn();
   fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
     .then(j => { COURSE = j; loadCWords(); fn(); }).catch(() => popup(tr('불러오지 못했습니다')));
-}
-/* GYBM 출처 하나(main·senior·c22)의 레슨 길로 바로 들어간다 */
-function gybmSource(key) {
-  SBOX = 'bsrs';
-  gybmBuild(() => {
-    const si = GYBM.findIndex(s => s.key === key);
-    if (si < 0) { popup(tr('자료가 없습니다')); return; }
-    drawGybmLessons(si);
-  });
-}
-/* 문법 — 책 고르기 → 그 책의 과 목록(길) → 과(startGram) */
-function gramBooksEntry() {
-  if (GRAM) return drawGramBooks();
-  const b = $('#subBody'); b.textContent = '';
-  b.append(el('p', 'lede', tr('불러오는 중…')));
-  show('sub', '문법', true);
-  fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { GRAM = j; drawGramBooks(); })
-    .catch(() => { b.textContent = ''; b.append(el('p', 'lede', tr('불러오지 못했습니다'))); });
-}
-function drawGramBooks() {
-  const b = $('#subBody'); b.textContent = '';
-  b.append(el('p', 'lede', tr('어느 책의 문법을 볼까요?')));
-  GRAM.books.forEach((bk, bi) => {
-    const dn = bk.bai.filter((x, ni) => S.done[gkey(bi, ni)]).length;
-    const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, (dn >= bk.bai.length ? '✓ ' : '') + esc(bk.book)),
-               el('span', 'exmeta', bk.bai.length + tr('과') + ' · ' + bk.bai.reduce((a, x) => a + (x.g || []).length, 0) + tr('개 문법') + (dn ? ' · ' + tr('끝냄') + ' ' + dn : '')));
-    btn.onclick = () => { dive(drawGramBooks); drawGramBook(bi); };
-    b.append(btn);
-  });
-  show('sub', '문법', true);
 }
 function drawGramBook(bi) {
   const bk = GRAM.books[bi];
@@ -2594,6 +2536,7 @@ function show(v, title, canBack) {
 
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   resetRec();
+  if (v !== 'learn' && v !== 'quiz') releaseMic(true);   // 카드·테스트 밖으로 나가면 마이크를 놓는다
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
   $('#title').textContent = tr(title);
   $('#back').hidden = !canBack;
@@ -2646,7 +2589,6 @@ function weekDots() {
   return out;
 }
 
-const doneCount = () => Object.keys(S.done).filter(k => +k >= 1).length;
 
 
 
@@ -2893,11 +2835,6 @@ const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield
    (문제를 연달아 풀면 mark() 가 초당 몇 번씩 불린다 — 그때마다 보내면 안 된다).
    보내는 것은 진도(PROGKEYS)뿐이고 글자로 치면 몇 KB라 데이터 요금도 무시할 만하다. */
 let cloudTimer = 0;
-function cloudSoon() {
-  if (!S.acct || !S.acct.tok) return;
-  clearTimeout(cloudTimer);
-  cloudTimer = setTimeout(() => cloudSave(true), 8000);
-}
 function cloudSave(force) {
   if (!S.acct || !S.acct.tok) return Promise.resolve();
   clearTimeout(cloudTimer);
@@ -3271,20 +3208,6 @@ function resetPwForm(token) {
 /* 직접 고르는 줄 — 예전에는 '바꾸기' 단추를 눌러야 다음 값으로 넘어갔다.
    그러면 ①지금 무엇을 고를 수 있는지 안 보이고 ②원하는 값까지 여러 번 눌러야 했다.
    이제 값을 모두 늘어놓고 **누른 것이 곧 선택**이다 (사용자 지시). */
-function pickRow(label, opts, cur, onPick) {
-  const row = el('div', 'pickrow');
-  row.append(el('div', 'pklab', tr(label)));
-  const box = el('div', 'pkopts');
-  opts.forEach(([val, name]) => {
-    const b = el('button', 'pkopt' + (val === cur ? ' on' : ''));
-    b.type = 'button';
-    b.textContent = tr(name);
-    b.onclick = () => { if (val !== cur) onPick(val); };
-    box.append(b);
-  });
-  row.append(box);
-  return row;
-}
 
 /* 내 정보 — 계정 · 이름 · 알림 · 하루 분량 순서 (대표님 지시, 2026-09-12).
    소리 속도·화면 언어 칸은 없앴다 — 소리는 항상 0.8배속, 화면은 항상 한국어라
@@ -3318,23 +3241,6 @@ function renderAnalysisPage() {
 /* 이번 주 며칠 공부했는지(요일 동그라미)는 뺐다 (대표님 지시, 2026-09-12) —
    맨 위 '연속 학습' 배지와 같은 정보를 두 번 보여주는 것이었다.
    여기는 이제 '배운/외운/끝낸' 숫자와 업적 요약만 보여준다. */
-function renderProgress(host) {
-  const box = host || $('#progress');
-  box.textContent = '';
-
-  const st = el('div', 'stats');
-  const words = Object.keys(S.srs).length;
-  const memo = Object.values(S.srs).filter(v => v.lv >= 2).length;   // 간격을 두고 두 번 맞힌 단어
-  const days = Object.keys(S.done).filter(k => +k >= 1).length;
-  [['배운 단어', words], ['외운 단어', memo], ['끝낸 세트', days]]
-    .forEach(([k, v]) => {
-      const c = el('div', 'stat');
-      c.append(el('b', null, String(v)), el('span', null, k));
-      st.append(c);
-    });
-  box.append(st);
-  // 업적 요약은 뺐다 (대표님 지시 2026-09-27: 업적 완전 삭제)
-}
 
 
 /* ---------- 주간 총복습 ----------
@@ -3342,13 +3248,6 @@ function renderProgress(host) {
    같은 반복 횟수라면 작게 쪼개 여러 바퀴 도는 것보다 큰 묶음 한 바퀴가 낫다는
    실험이 있다(Kornell 2009). 그런데 참가자의 72%가 반대로 판단했다 —
    그래서 '쪼개기' 기능은 일부러 만들지 않는다. */
-function weekWords() {
-  const from = now() - 7 * DAY;
-  const learned = Object.entries(S.srs)
-    .filter(([, v]) => v.first && v.first >= from)
-    .map(([k]) => k);
-  return learned.map(v => allWords().find(w => w.vi === v)).filter(Boolean);
-}
 
 
 
@@ -3376,20 +3275,6 @@ function snapshot() {
   SUBJ.forEach(x => { o[x.ok] = t[x.ok] || 0; o[x.all] = t[x.all] || 0; });
   return o;
 }
-function weekReport(base) {
-  const cur = snapshot(), b = base || {};
-  const subj = SUBJ.map(x => {
-    const n = (cur[x.all] || 0) - (b[x.all] || 0), ok = (cur[x.ok] || 0) - (b[x.ok] || 0);
-    return { name: x.k, n, ok, pct: n ? Math.round(ok * 100 / n) : null, tip: x.tip };
-  });
-  const d = k => (cur[k] || 0) - (b[k] || 0);
-  const r = { subj, memo: d('memo'), days: d('days'), sets: d('sets'), said: d('said') };
-  r.skill = skillScore();               // 순위와 같은 잣대 — 따로 놀지 않게
-
-  const solved = d('qAll') + d('drill');
-  r.solved = solved;
-  return r;
-}
 
 /* ---------- 실력 점수 ----------
    순위와 실력 분석이 따로 놀면 안 된다. 순위는 분석에서 나와야 한다.
@@ -3407,13 +3292,6 @@ function weekReport(base) {
    많이 누른 사람이 이기는 순위는 실력 순위가 아니다.
 
    과목이 하나도 10문제를 못 넘으면 점수를 내지 않는다(0) — 못 잰 것을 재었다고 하지 않는다. */
-function skillScore() {
-  const cur = snapshot();
-  const done = SUBJ.map(x => [cur[x.all] || 0, cur[x.ok] || 0]).filter(([n]) => n >= NEED);
-  if (!done.length) return { score: 0, acc: null, memo: cur.memo, subjects: 0 };
-  const acc = Math.round(done.reduce((a, [n, ok]) => a + ok / n, 0) * 100 / done.length);
-  return { score: Math.round(cur.memo * acc / 100), acc, memo: cur.memo, subjects: done.length };
-}
 function showWeek(rep) {
   const b = $('#weekBody');
   b.textContent = '';
@@ -5913,20 +5791,6 @@ function courseQueue(n) {
 
 /* 홈 세로 지도(로드맵)에 보여줄 "최근에 끝낸 몇 과" — 끝낸 시각은 S.done[key] 가
    이미 담고 있다(끝낼 때 now() 를 넣는다, app.js 학습 마침 자리 참고). 새 값을 안 만든다. */
-function recentDoneUnits(nMax) {
-  if (!COURSE) return [];
-  const out = [];
-  // courseQueue()와 같은 이유로 일상은 order.json(lifeVols)이 아니라 days.json(ALL)을 본다.
-  ALL.filter(d => typeof d.day === 'number' && !d.track && visibleDay(d)).forEach(d => {
-    if (S.done[d.day]) out.push({ key: d.day, title: d.theme, at: S.done[d.day], done: true });
-  });
-  const jv = jobVol(0);
-  if (jv) jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => {
-    const k = jkey(ti, ci, li);
-    if (S.done[k]) out.push({ key: k, title: t.track + ' · ' + lsName(l, li), at: S.done[k], done: true });
-  })));
-  return out.sort((a, b) => b.at - a.at).slice(0, nMax).reverse();      // 오래된 → 최신
-}
 
 /* 세로 지도 그리기 — 완료(체크) · 지금(고리, 누르면 학습 시작) · 다음(자물쇠) 세 상태.
    '지금' 칸을 누르면 하는 일은 홈 일정판의 '오늘 학습' 칸과 **같아야** 한다(중복 금지) —
@@ -5943,7 +5807,7 @@ function renderRoadmap(host, nodes, curKey, opt) {
   if (!nodes.length) return;
   nodes.forEach((nd, i) => {
     const row = el('button', 'ubtn' + (nd.done ? ' done' : ''));
-    row.type = 'button';
+    row.type = 'button'; if (nd.key != null) row.dataset.key = nd.key;
     row.append(el('span', 'unum', nd.num != null ? String(nd.num) : String(i + 1)));
     row.append(el('span', 'utitle', esc(nd.title)));
     row.append(el('span', 'ust', nd.done ? '✓' : '›'));
@@ -5954,11 +5818,15 @@ function renderRoadmap(host, nodes, curKey, opt) {
 
 /* 목차의 레슨 줄들을 단추 목록으로 — 회화(일상·직무·기본기+문법)와 GYBM 이 같은 모양.
    nodes: [{key, title, num, done, fn}]  list: #dayList 같은 <ul> */
-function roadInList(list, nodes) {
+function roadInList(list, nodes, opt) {
   const li = el('li', 'roadli');
   const box = el('div', 'ulist');
   li.append(box); list.append(li);
   renderRoadmap(box, nodes, null, { freeNav: true });
+  /* 다음 할 것(첫 미완)을 표시하고 그 자리로 굴린다 (대표님 지시 2026-09-27 밤: "방금 학습한 것과 다음 학습할 쪽이 바로 보이도록") */
+  const o = opt || {};
+  const tgt = o.focusKey ? box.querySelector('[data-key="' + String(o.focusKey).replace(/"/g, '') + '"]') : box.querySelector('.ubtn:not(.done)');
+  if (tgt && o.focus !== false) { tgt.classList.add('next'); setTimeout(() => { try { tgt.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { } }, 60); }
 }
 
 /* ---------- 홈 (대표님 지시 2026-09-27: 딱 세 덩이) ----------
@@ -6508,21 +6376,6 @@ function krOf(w) {
 
 /* 문장 한 줄의 발음 — 단어 발음을 이어 붙인다. 하나라도 모르면 빈 값을 낸다
    (반쪽짜리 발음을 보여 주느니 안 보여 주는 게 낫다). 2026-08-30 */
-function krLine(vi) {
-  const ts = String(vi).split(/\s+/).filter(Boolean);
-  const out = [];
-  for (let i = 0; i < ts.length;) {
-    let hit = null;
-    for (let n = 3; n >= 1 && !hit; n--) {          // cảm ơn 처럼 두세 마디 단어을 먼저 본다
-      if (i + n > ts.length) continue;
-      const k = krOf(ts.slice(i, i + n).join(' '));
-      if (k) hit = { k, n };
-    }
-    if (!hit) return '';
-    out.push(hit.k); i += hit.n;
-  }
-  return out.join(' ');
-}
 
 function glossAll(vi, extra) {
   if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
@@ -6552,6 +6405,30 @@ function glossAll(vi, extra) {
    ② 뜻줄이 길어 정작 문장 자체가 화면에서 밀려난다.
    이제 문장 속 단어을 직접 누르면 그 자리에서 소리가 나고 뜻이 뜬다.
    빠지는 단어이 없고(모든 단어이 눌린다), 화면도 문장 하나로 짧아진다. */
+/* 한자 뿌리 알약 — "翁 · 옹" 밑에 글자마다 훈·음("늙은이 옹"). 훈은 data/_hanja_hun.json(영어 위키낱말사전 {{ko-hanja|훈|음}}, tools/fetch_hanja_hun.py).
+   여러 훈음이 있는 글자는 우리 음(뒤의 한글)과 맞는 것을 고른다. 없으면 훈 줄을 안 붙인다 (대표님 지시 2026-09-27 밤) */
+let HUN = null, HUN_P = null;
+function hunLoad() {
+  if (HUN) return Promise.resolve();
+  if (!HUN_P) HUN_P = fetch('data/_hanja_hun.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { HUN = j; }).catch(() => { HUN = {}; });
+  return HUN_P;
+}
+function hanjaPill(h) {
+  const sp = el('span', 'hanja', esc(h));
+  const [chars, reading] = String(h).split(' · ');
+  const draw = () => {
+    if (!HUN || !chars) return;
+    const syl = (reading || '').replace(/\s+/g, ''), parts = [];
+    [...chars].forEach((c, i) => {
+      const cands = HUN[c] || []; if (!cands.length) return;
+      const pick = cands.find(p => p[1] === syl[i]) || cands[0];
+      parts.push(pick[0] + ' ' + pick[1]);
+    });
+    if (parts.length) sp.append(el('small', 'hun', esc(parts.join(' · '))));
+  };
+  if (HUN) draw(); else hunLoad().then(draw);
+  return sp;
+}
 function tapLine(vi, cls, o) {
   const opt = o || {};
   const wrap = el('div', 'tapwrap');
@@ -6594,18 +6471,6 @@ function tapLine(vi, cls, o) {
 }
 
 /* 단어 뜻 줄 — 대화 화면의 gloss 와 같은 차림새 (아직 쓰는 곳이 있어 남겨 둔다) */
-function glossRow(vi) {
-  const list = glossOf(vi);
-  if (!list.length) return null;
-  const g = el('div', 'gloss');
-  list.forEach(x => {
-    const cell = el('div', 'gcell');
-    cell.append(el('span', 'gtop').appendChild(el('span', 'gw', esc(x.w))).parentNode,
-                el('span', 'gm', esc(x.m)));
-    g.append(cell);
-  });
-  return g;
-}
 
 /* ---------- 나만의 단어장 ----------
    ① 별표 — 배우다가 "이건 따로 챙기자" 싶은 단어을 그 자리에서 담는다.
@@ -6627,7 +6492,20 @@ function toggleStar(k, ko, vi) {
    책 → 과 → 문법 카드. 한 과가 곧 한 강이다(문법 5~8개).
    예문은 단어마다 눌러 소리·발음·뜻을 볼 수 있다 — 단어 카드와 같은 방식이다. */
 let GRAM = null;
-const gkey = (bi, ni) => 'G' + bi + '-' + ni;
+/* 문법 진도 열쇠 — 한 줄 문법(2026-09-27 밤)은 'H<과>'. 옛 책·과 열쇠('G<책>-<과>')는 gramReady 가 한 번 옮긴다 */
+const gkey = (bi, ni) => 'H' + ni;
+function gramReady(j) {
+  try {
+    if (j && j.books && j.books.length === 1 && !S.gramMig) {
+      j.books[0].bai.forEach((x, ni) => {
+        const t = (x.src || []).map(k => S.done['G' + k]).filter(Boolean)[0];
+        if (t && !S.done[gkey(0, ni)]) S.done[gkey(0, ni)] = t;
+      });
+      S.gramMig = 1; save();
+    }
+  } catch (e) { }
+  return j;
+}
 
 
 /* ---------- 과정 — **이름 없는 목차** (대표님 결정, 2026-08-30) ----------
@@ -6695,7 +6573,7 @@ function drawCourse() {
   /* 1권 몫을 세려면 문법 자료가 있어야 한다 — 없으면 조용히 받아 와서 다시 그린다
      (다른 권은 0/7 챕터인데 1권만 '보기'로 떠 잣대가 어긋나 보였다) */
   if (!GRAM) fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { GRAM = j; if (!$('#course').hidden) drawCourse(); }).catch(() => {});
+    .then(j => { GRAM = gramReady(j); if (!$('#course').hidden) drawCourse(); }).catch(() => {});
   const list = $('#dayList'); list.textContent = '';
   const head = el('li', 'catpick');
   list.append(head);
@@ -6869,14 +6747,6 @@ function drawJobCh(ti, ci) {
 
 /* 핵심만 — 두 기수 이상에 나온 단어. 급할 때 가는 길. */
 let CORE = null;
-function coreEntry() {
-  if (COURSE) return drawCore();
-  const list = $('#dayList'); list.textContent = '';
-  list.append(el('li', 'catpick', tr('불러오는 중…')));
-  show('course', '핵심만', true);
-  fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { COURSE = j; loadCWords(); drawCore(); }).catch(() => { });
-}
 function coreList() {
   if (CORE) return CORE;
   const ws = CWORDS.filter(w => w.core);
@@ -6909,7 +6779,7 @@ function gramEntry() {
   list.append(el('li', 'catpick', tr('불러오는 중…')));
   show('course', '기본기 · 문법', true);
   fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { GRAM = j; drawGramList(); })
+    .then(j => { GRAM = gramReady(j); drawGramList(); })
     .catch(() => { list.textContent = ''; list.append(el('li', 'catpick', tr('불러오지 못했습니다'))); });
 }
 
@@ -6943,7 +6813,7 @@ function drawGramList() {
   });
   GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
     const k = gkey(bi, ni);
-    nodes.push({ key: k, title: x.t, sub: tr('문법') + ' · ' + b.book + ' ' + x.no + tr('과') + ' · ' + x.g.length + tr('개 문법'),
+    nodes.push({ key: k, title: x.t, sub: tr('문법') + ' ' + x.no + tr('과') + ' · ' + x.g.length + tr('개 문법'),
                  done: !!S.done[k], fn: () => { dive(drawGramList); startGram(bi, ni); } });
   }));
   nodes.forEach((n, i) => { n.num = i + 1; });
@@ -6957,7 +6827,7 @@ function startGram(bi, ni) {
   L = { day: { day: gkey(bi, ni), theme: x.t, gram: 1 }, i: 0,
         items: x.g.map(g => ({ k: 'gram', d: g })) };
   drawCard();
-  show('learn', b.book + ' ' + x.no + '과 · ' + x.t, true);
+  show('learn', tr('문법') + ' ' + x.no + '과 · ' + x.t, true);
 }
 
 /* 문법·기본기 확인 문제 (2026-09-09 대표님 지시 — "기본기와 문법에도 문제 넣어줘").
@@ -7023,16 +6893,6 @@ function drawGramQuiz() {
 }
 
 /* 모음·자음·성조를 **베트남어로 뭐라 하는가** — 기본기와 한 이야기다 (대표님 지적, 2026-08-30). */
-function gramWordsEntry() {
-  const go = () => {
-    const gw = (COURSE && COURSE.gramwords) || [];
-    if (!gw.length) return dailyFlowEntry();
-    startLearn({ day: 'GW', theme: tr('말에 대한 말'), words: gw, course: 1 });
-  };
-  if (COURSE) return go();
-  fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { COURSE = j; loadCWords(); go(); }).catch(() => { });
-}
 
 function starBtn(k, ko, vi) {
   const b = el('button', 'starb' + (isStar(k) ? ' on' : ''));
@@ -7115,7 +6975,6 @@ function spend(n) {
   return true;
 }
 /* 앱이 내주는 열쇠로 도는가(=우리가 돈을 내는가). 내 키가 있으면 점수와 무관하다. */
-const onAppKey = () => !S.gkey && !!PROXY;
 
 /* 출석·연속 보너스 — touchToday 가 '오늘 처음'일 때만 부른다 */
 function earnAttend() {
@@ -7136,20 +6995,10 @@ function earnOnce(key, n, why) {
 
 /* 이 과정에서 실제로 얻을 수 있는 점수만 보여 준다 */
 
-const weekCredits = () => (credits().wk || {})[weekKey()] || 0;
 /* 한 달 점수 — 최근 주에 더 무게를 준다.
    지난달에 몰아서 하고 이번 달 내내 논 사람이 위에 있으면 순위가 거짓말이 된다.
    이번 주 1.0 · 1주 전 0.7 · 2주 전 0.5 · 3주 전 0.3 으로 접는다. */
 const MONTH_W = [1, 0.7, 0.5, 0.3];
-function monthCredits() {
-  const wk = credits().wk || {};
-  let sum = 0;
-  MONTH_W.forEach((w, i) => {
-    const d = new Date(); d.setDate(d.getDate() - i * 7);
-    sum += (wk[weekKey(d)] || 0) * w;
-  });
-  return Math.round(sum);
-}
 
 /* ---------- 이번 주 순위판 ----------
    ⚠ 앞의 주석에 적어 둔 대로, 연구는 '전체 등수가 다 보이는 순위표'가 하위권의
@@ -7267,7 +7116,7 @@ async function dictReady() {
   const get = (path, fn) => fetch(path, { cache: 'no-cache' }).then(r => r.json()).then(fn).catch(() => { });
   const jobs = [];
   if (!SIB) jobs.push(sibLoad());
-  if (!GRAM) jobs.push(get('data/grammar.json', j => { GRAM = j; }));
+  if (!GRAM) jobs.push(get('data/grammar.json', j => { GRAM = gramReady(j); }));
   if (!SENIOR) jobs.push(get('data/senior.json', j => { SENIOR = j; }));
   if (typeof GYBM !== 'undefined' && !GYBM) jobs.push(get('data/gybm.json', j => { GYBM = j.sources; GYBM_ALL = null; }));   // gybmBuild 와 같이 sources 배열만 (2026-09-27: 통째로 넣어 사전이 멈췄다)
   if (!COURSE) jobs.push(get('data/order.json', j => { COURSE = j; loadCWords(); }));
@@ -7848,7 +7697,7 @@ function drawCard() {
     if (x.work && x.work.length)
       cf.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
                   x.work.map(t2 => esc(t2)).join(' · ')));
-    if (x.hanja) kob.append(el('span', 'hanja', esc(x.hanja)));          // 한자 뿌리 — 뜻 옆 알약 (대표님 지시 2026-09-27: 한자 기반 단어은 한자·한글 음을 보여 준다)
+    if (x.hanja) kob.append(hanjaPill(x.hanja));          // 한자 뿌리 — 뜻 옆 알약: 한자·음 + 글자마다 훈(뜻) (대표님 지시 2026-09-27 밤: '무슨 옹인지')
     if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
        단어을 누르면 그 단어만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
@@ -7878,7 +7727,7 @@ function drawCard() {
     prow.append(bigWord(x.vi, x.tones, tapPair));
     if (krShow(x)) prow.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     const boxP = el('div', 'cmpbox');
-    const pko = el('div', 'ko', esc(x.ko)); if (x.hanja) pko.append(el('span', 'hanja', esc(x.hanja)));
+    const pko = el('div', 'ko', esc(x.ko)); if (x.hanja) pko.append(hanjaPill(x.hanja));
     pf.append(prow, pko, wordControls(x.vi, boxP), boxP);
     pf.append(playBar(x.vi));                  // 재생 막대 (2026-09-26)
     pf.append(mouthPanel(x.vi));               // 입모양 2D (2026-09-25 #6)
@@ -8122,7 +7971,7 @@ function drawFlash() {
   c.append(el('div', 'vi', esc(w.vi)));
   c.append(toneRow(w.tones));
   if (krShow(w)) c.append(el('span', 'wkr', '[' + esc(krShow(w)) + ']'));
-  const fko = el('div', 'ko', esc(w.ko)); if (w.hanja) fko.append(el('span', 'hanja', esc(w.hanja)));
+  const fko = el('div', 'ko', esc(w.ko)); if (w.hanja) fko.append(hanjaPill(w.hanja));
   c.append(fko);
   const exm = w.ex && w.ex.vi ? w.ex : null;
   if (exm) { c.append(el('div', 'flex', esc(exm.vi))); if (exm.ko) c.append(el('div', 'flexko', esc(exm.ko))); }
@@ -8180,13 +8029,32 @@ function finishDay(d) {
   r.append(el('div', 'n', '오늘 완료'));
   r.append(el('div', null, '단어 → 확인 문제 → 문장까지, 한 세트를 다 했습니다'));
   /* AI 선생님과 자유 대화(역할극)는 뺐다 (대표님 지시 2026-08-31). */
-  const hm = el('button', 'ghost big', '홈으로');
-  hm.style.marginTop = '10px';
-  hm.onclick = renderHome;
-  r.append(hm);
   b.append(r);
+  afterSetBtns(b);                          // [다음 세트 ›][목록으로] (2026-09-27 밤)
   missionCard(b, d);
   show('quiz', '오늘 완료', true);
+}
+
+/* 세트를 끝낸 뒤의 두 단추 (대표님 물음 2026-09-27 밤 "어떤 화면이 나오게 할까?") — 저절로 다음 세트로 가지 않는다(숨 돌릴 틈·짜오 동 확인).
+   [다음 세트 ›]는 같은 갈래의 다음 과를 바로 시작, [목록으로]는 학습 탭 단어 목록에서 그 갈래를 펼치고 다음 과로 굴려 둔다 */
+function afterSetBtns(host) {
+  const row = el('div', 'hact');
+  const nx = resumeNext();
+  if (nx) {
+    const b1 = el('button', 'primary big', tr('다음 세트') + ' › ' + esc(nx.name));
+    b1.onclick = () => { if (nx.gram) startGram(nx.gram[0], nx.gram[1]); else { SBOX = nx.box || 'srs'; if (nx.kind === '직무') JOBI = 0; startLearn(nx.d); } };
+    row.append(b1);
+  }
+  const b2 = el('button', 'ghost big', tr('목록으로'));
+  b2.onclick = () => {
+    const t = S.lastTrack || 'life';
+    ACTIVE_TAB = 'study'; NAV.length = 0;
+    if (t === 'gram') { studyGramEntry(true); return; }
+    WOPEN = t === 'life' ? 'days' : t === 'job' ? 'job' : t.slice(5);
+    if (t.startsWith('gybm:')) gybmBuild(() => studyWordsEntry(true)); else studyWordsEntry(true);
+  };
+  row.append(b2);
+  host.append(row);
 }
 
 /* 짝 미션 — 세트를 다 한 **뒤에** 나온다. 오늘 배운 것으로 실제로 말을 주고받는 자리다.
@@ -8546,11 +8414,6 @@ function reviewMenu(kind) {
 /* 복습 입구 — 처음이거나 꺼낼 카드가 없으면 방식부터 설명한다.
    전에는 카드가 없으면 말없이 홈으로 돌아가서 버튼이 죽은 것처럼 보였다.
    설명은 홈의 [방식] 버튼으로 언제든 다시 볼 수 있다. */
-function reviewStart(cap) {
-  const due = dueWords().map(findItem).filter(Boolean);
-  if (S.revSeen && due.length) { startQuiz(due, null, cap); return; }
-  drawRevInfo(cap);
-}
 function drawRevInfo(cap) {
   const due = dueWords().map(findItem).filter(Boolean);
   const b = $('#quizBody');
@@ -8813,7 +8676,7 @@ function drawPuzzle(body, q) {
     const mine = picked.map(x => x.word).join(' ');
     const good = mine.toLowerCase() === want.join(' ').toLowerCase();
     if (good && tail) ans.dataset.tail = tail;
-    markSpeed(good, 'puzzle');
+    markSpeed(good, 'puzzle'); sound(w.vi);
     fxTone(good);
     ans.dataset.r = good ? 'ok' : 'no';
     chk.disabled = true;
@@ -8874,7 +8737,7 @@ function drawDict(body, q) {
   chk.onclick = () => {
     if (!picked.length) return;
     const good = picked.join(' ').toLowerCase() === q.w.vi.toLowerCase();
-    markSpeed(good, 'dict');
+    markSpeed(good, 'dict'); sound(q.w.vi);
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
     const toneOnly2 = !good && bare(picked.join(' ')) === bare(q.w.vi);
@@ -8905,7 +8768,7 @@ function drawSay(body, q) {
   let done = false;
   const finish = (ok, judged) => {
     if (done) return; done = true;
-    markSpeed(ok, judged ? 'say' : 'sayself');
+    markSpeed(ok, judged ? 'say' : 'sayself'); sound(w.vi);
     grade(w.vi, ok, Q.early);
     if (ok) Q.ok++; else requeue(q);
     const ans = el('div', 'ansbox');
@@ -8967,7 +8830,7 @@ function drawHandQ(body, q) {
     body.insertBefore(ans, box);
   };
   const mark = good => {
-    markSpeed(good, 'hand');
+    markSpeed(good, 'hand'); sound(w.vi);
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) { S.stats.spellOk = (S.stats.spellOk || 0) + 1; fxTone(true); grade(w.vi, true, Q.early); Q.ok++; }
     else { grade(w.vi, false); requeue(q); }
@@ -9033,6 +8896,18 @@ function viKeypad(get, set, onGo) {
 }
 
 /* 자판으로 — 철자와 부호 위치를 정확히 (복습 안에서) */
+/* 성조·모자 치는 법 — 접힌 한 줄, 누르면 표 (타이핑 테스트) */
+function telexHint() {
+  const w = el('div', 'thint');
+  const hd = el('button', 'thinthd', tr('성조·모자 치는 법') + ' ▾'); hd.type = 'button';
+  const tb = el('div', 'thintb');
+  const rows = [['a f', 'à'], ['a s', 'á'], ['a r', 'ả'], ['a x', 'ã'], ['a j', 'ạ'], ['a a', 'â'], ['a w', 'ă'], ['e e', 'ê'], ['o o', 'ô'], ['o w', 'ơ'], ['u w', 'ư'], ['d d', 'đ']];
+  rows.forEach(([k, v]) => { const r = el('span', 'thk'); r.innerHTML = '<kbd>' + k.split(' ').join('</kbd><kbd>') + '</kbd>→<b>' + v + '</b>'; tb.append(r); });
+  tb.hidden = true;
+  hd.onclick = () => { tb.hidden = !tb.hidden; hd.textContent = tr('성조·모자 치는 법') + (tb.hidden ? ' ▾' : ' ▴'); };
+  w.append(hd, tb);
+  return w;
+}
 function drawTypeQ(body, q) {
   const w = q.w;
   body.append(el('div', 'qmain', esc(w.ko)));
@@ -9040,15 +8915,17 @@ function drawTypeQ(body, q) {
   const p1 = el('button', 'ghost', '🔊 듣기'); p1.onclick = () => play(w.vi, false);
   row.append(p1); body.append(row);
   play(w.vi, false);
-  let txt = '';
+  body.append(telexHint());          // 성조·모자 치는 법 (접힘) — 대표님 지시 2026-09-27 밤
+  let txt = '', typed = false;
   const out = el('div', 'dictans');
   const draw = () => { out.textContent = txt || '· · ·'; };
   draw(); body.append(out);
   body.append(viKeypad(() => txt, v => { txt = v; draw(); }, () => {
     if (!txt.trim()) return;
+    if (typed) return; typed = true;   // 확인을 두 번 눌러도 한 번만 (대표님 지적 2026-09-27 밤)
     const good = txt.trim().toLowerCase() === w.vi.toLowerCase();
     markSpeed(good, 'type');
-    fxTone(good);
+    fxTone(good); sound(w.vi);
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
     /* 성조만 틀린 것은 **오답이되 따로 알려 준다** (대표님 지시 2026-08-31).
@@ -9088,114 +8965,10 @@ function sayOpts(target) {
                             if (!pick.includes(v)) pick.push(v); }
   return [target, ...pick].sort(() => Math.random() - .5);
 }
-function judgeBtn(target, box, onDone) {
-  if (!canRecord() || !canLocalASR()) return null;
-  const b = el('button', 'rec', '🎤 말하고 채점받기');
-  b.onclick = async () => {
-    if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
-    try {
-      if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch (e) { box.textContent = '마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.'; return; }
-    const chunks = [];
-    const mr = new MediaRecorder(REC.stream);
-    REC.mr = mr; REC.key = target;
-    mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
-    mr.onstop = async () => {
-      stopLocalASR();
-      releaseMic();
-      b.textContent = '🎤 말하고 채점받기';
-      const url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
-      if (REC.url) URL.revokeObjectURL(REC.url);
-      REC.url = url;
-      box.textContent = '폰이 듣는 중…';
-      bumpSaid();
-      try {
-        // 오직 폰(브라우저 내장 음성인식)으로만 판정한다 — 제미나이 호출 없음 (대표님 지시 2026-09-08)
-        // 결과가 이벤트로 늦게 오므로 반드시 먼저 기다린다(2026-09-09 수정).
-        if (REC.localDone) await REC.localDone;
-        let heard, ok, bySound = false;
-        if (!REC.localHeard) {                        // 폰 인식이 답을 안 줬다 → 소리 비교로 (2026-09-27 저녁)
-          box.innerHTML = '소리를 견주는 중…';
-          const r = await soundFallback(target, url);
-          if (!r || r.ok === null) {
-            box.innerHTML = '<b>알아듣지 못했습니다.</b> ' + (r && r.why ? r.why : asrFailText())
-              + '<span class="tonenote">높낮이는 아래 곡선이 봅니다.</span>';
-            onDone && onDone(null, true);
-            return;
-          }
-          heard = r.heard; ok = r.ok; bySound = true;
-        } else ({ heard, ok } = judgeLocalHeard(target, REC.localHeard));
-        if (ok !== null) {                    // 판정을 미룬 것은 성적에 넣지 않는다
-          S.stats.pronAll = (S.stats.pronAll || 0) + 1;
-          if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
-          save();
-        }
-        box.innerHTML = (ok === true
-          ? '<b class="okmsg">알아들었습니다.</b>' + (bySound ? ' <small>(소리 비교)</small>' : '')
-          : heard
-            ? '<b class="nomsg">「' + esc(heard) + '」처럼 들립니다.</b> 목표는 <b>' + esc(target)
-              + '</b> — 조금 크게, 또박또박 다시 해 보세요.'
-            : '<b>가려내기 어렵습니다 — <b>틀렸다고 하지 않겠습니다.</b></b> 폰을 입 가까이 대고 조금 크게 다시 해 보세요.')
-          + '<span class="tonenote">높낮이는 아래 곡선이 봅니다.</span>';
-        fxTone(ok === true);
-        onDone && onDone(ok, true);   // null 이면 점수 없음
-      } catch (e) { box.textContent = '판정 실패: ' + (e.message || ''); }
-    };
-    const kill = liveRec(box, REC.stream, RECSEC(target),
-                         () => { if (mr.state === 'recording') mr.stop(); });
-    const prevStop = mr.onstop;
-    mr.onstop = async e => { kill(); await prevStop(e); };
-    startLocalASR();
-    mr.start();
-    b.textContent = '■ 멈추기';
-    setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, RECSEC(target) * 1000);
-  };
-  return b;
-}
 
 /* 회상형 — 보기를 주지 않고 직접 떠올려 소리 내게 한다.
    4지선다는 아는 것처럼 보이게 만든다(실제보다 20% 과대평가). 회상이 진짜다.
    게다가 소리 내어 말하므로 산출 효과까지 같이 얻는다. 채점은 본인이 한다. */
-function drawRecall(body, q) {
-  body.append(el('div', 'qmain', esc(q.w.ko)));
-  { const p = pic(q.w, 'pic mid'); if (p) body.append(p); }
-
-  const hint = el('p', 'cmpnote', '베트남어로 <b>입 밖에 내어</b> 말해 보세요. 속으로만 생각하면 효과가 절반입니다.');
-  body.append(hint);
-
-  const jbox = el('div', 'cmpnote judge');
-  const jb = judgeBtn(q.w.vi, jbox, ok => {
-    grade(q.w.vi, ok, Q.early);
-    if (ok) Q.ok++; else requeue(q);
-    nextBtn(body, () => { Q.i++; drawQuiz(); });
-  });
-  if (jb) { const row = el('div', 'qplay'); row.append(jb); body.append(row, jbox); }
-
-  const show = el('button', 'primary big', jb ? '모르겠어요 · 정답 보기' : '말했어요 · 정답 보기');
-  show.style.width = '100%';
-  body.append(show);
-
-  show.onclick = () => {
-    bumpSaid();                      // 소리 내어 말했다고 스스로 누른 순간
-    show.remove(); hint.remove();
-    const ans = el('div', 'ansbox');
-    ans.append(el('div', 'vi sm', esc(q.w.vi)));
-    ans.append(toneRow(q.w.tones));
-    ans.append(reveal(krShow(q.w)));
-    const sr = soundRow(q.w.vi, true);
-    sr.classList.add('mid');
-    ans.append(sr);
-    body.append(ans);
-
-    const grade2 = el('div', 'opts');
-    const ok = el('button', null, '✓ 맞았어요');
-    ok.onclick = () => { fxTone(true); markSpeed(true, 'sayself'); grade(q.w.vi, true, Q.early); Q.ok++; Q.i++; drawQuiz(); };
-    const no = el('button', null, '✗ 못 맞혔어요');
-    no.onclick = () => { markSpeed(false, 'sayself'); grade(q.w.vi, false); requeue(q); Q.i++; drawQuiz(); };
-    grade2.append(ok, no);
-    body.append(grade2);
-  };
-}
 
 function answer(btn, correct, w) {
   const md = Q.list[Q.i].mode;
@@ -9215,6 +8988,7 @@ function answer(btn, correct, w) {
   if (correct) Q.ok++;
   else requeue(Q.list[Q.i]);        // 틀린 건 이번 판 끝에 한 번 더
   grade(w.vi, correct, Q.early);
+  sound(w.vi);                      // 답이 열릴 때 소리 한 번 (대표님 지시 2026-09-27 밤) — 맞든 틀리든
   // 답한 뒤에는 글자·성조·발음·뜻을 한 번에 보여준다 (맞았든 틀렸든)
   const ans = el('div', 'ansbox');
   // 단어를 누르면 헷갈리는 짝 팝업 — 짝 줄(단추)은 뺐다 (대표님 지시 2026-09-27 저녁)
@@ -9247,10 +9021,6 @@ function requeue(q) {
 }
 
 /* 어떤 성조에서 자주 틀리는지 — 단어의 첫 음절 성조로 센다 */
-const toneOfWord = vi => {
-  const w = allWords().find(x => x.vi === vi);
-  return (w && (w.tones || [])[0] || {}).name || null;
-};
 function bump(box, key, ok) {
   if (!key) return;
   const b = S.stats[box] || (S.stats[box] = {});
@@ -9352,7 +9122,8 @@ function finishQuiz() {
   b.onclick = () => {
     if (hasDlg) { startDialog(Q.day); return; }
     if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : Q.day.basic ? (S.bdone = S.bdone || {}) : S.done)[Q.day.day] = now();
-                 LEARNT = null; touchToday(); save(); }
+                 LEARNT = null; touchToday(); save();
+                 r.textContent = ''; r.append(el('div', 'n', tr('세트 완료'))); afterSetBtns(r); return; }   // 다음 세트 · 목록으로 (2026-09-27 밤)
     dailyFlowEntry();
   };
   r.append(b);
@@ -9367,17 +9138,6 @@ function finishQuiz() {
    자료는 228KB 라 **누를 때 받는다.** 홈 화면을 늦추면 안 된다. */
 let SENIOR = null;
 const SKIND = { d: '일일', w: '주간', x: '모음' };
-function seniorEntry() {
-  SBOX = 'ssrs';
-  if (SENIOR) return drawSenior();
-  const list = $('#dayList');
-  list.textContent = '';
-  list.append(el('li', 'lede', tr('실전 단어를 받는 중…')));
-  show('course', '실전 단어', true);
-  fetch('data/senior.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => { SENIOR = j; drawSenior(); })
-    .catch(() => { list.textContent = ''; list.append(el('li', 'lede', tr('자료를 못 받았습니다 — 잠시 뒤 다시'))); });
-}
 const sdone = () => (S.sdone = S.sdone || {});
 const skey = t => 'S:' + t.k + t.no;
 function drawSenior() {
@@ -10138,32 +9898,9 @@ function drawType() {
 
 /* 지난 세트의 문장 — 단어만 반복하면 입이 문장까지 못 간다.
    최근 것만 주지 않고 오래된 것도 섞는다(오래 안 본 것일수록 다시 꺼낼 값어치가 크다). */
-function pastSentences(n) {
-  const done = ALL.filter(d => typeof d.day === 'number' && S.done[d.day] && d.dialog);
-  if (!done.length) return [];
-  const pick = [];
-  const spots = [done.length - 1, 0, Math.floor(done.length / 2)];   // 최근·처음·중간 순
-  for (const idx of spots) {
-    const d = done[idx];
-    const ls = (d.dialog.lines || []).filter(l => AIDX[l.vi]);
-    if (!ls.length) continue;
-    const l = ls[Math.floor(Math.random() * ls.length)];
-    if (!pick.some(x => x.vi === l.vi))
-      pick.push({ vi: l.vi, ko: l.ko, kr_read: l.kr_read, tones: l.tones, sent: true });
-    if (pick.length >= n) break;
-  }
-  return pick;
-}
 
 /* ---------- 따라 말하기 연습 ---------- */
 let SP = null;
-function startSpeak() {
-  const ws = practiceWords(6).filter(w => AIDX[w.vi]).concat(pastSentences(2));
-  if (!ws.length) return;
-  SP = { list: ws, i: 0 };
-  drawSpeak();
-  show('speak', '따라 말하기', true);
-}
 function drawSpeak() {
   const b = $('#speakBody'); b.textContent = '';
   resetRec();
@@ -10194,13 +9931,6 @@ function drawSpeak() {
    흐름: 뜻과 소리만 주고 → 기억으로 쓴다(인출) → 정답과 비교 → 원하면 AI 선생님 점검.
    AI 점검은 참고용이다 — 흘려 쓰면 AI도 잘못 읽으므로 눈 비교가 기본이다. */
 let WR = null;
-function startWrite() {
-  const ws = practiceWords(6).filter(w => AIDX[w.vi]);
-  if (!ws.length) return;
-  WR = { list: ws, i: 0 };
-  drawWrite();
-  show('write', '손글씨', true);
-}
 function drawWrite() {
   const b = $('#writeBody'); b.textContent = '';
   if (WR.i >= WR.list.length) {
@@ -10496,15 +10226,7 @@ const viVoices = () => (VOICES || []).filter(v => (v.lang || '').toLowerCase().s
 const viVoice = () => viVoices()[0] || null;
 /* 폰마다 받는 길이 다르다 — 아이폰과 안드로이드를 구별해서 알려준다.
    (기종·버전마다 메뉴 이름이 조금씩 달라서 '비슷한 이름'이라고 밝혀 둔다) */
-const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-function voiceHowTo() {
-  return isIOS()
-    ? '아이폰: 설정 → 손쉬운 사용 → 콘텐츠 말하기 → 음성 → 베트남어 추가\n' +
-      '(안 보이면 설정 → 일반 → 언어 및 지역에서 베트남어를 넣고 다시 보세요)'
-    : '안드로이드: 설정 → 일반(또는 시스템) → 언어 및 입력 → 음성 → 텍스트 음성 변환 → ' +
-      '구글 TTS 설정 → 음성 데이터 설치 → 베트남어\n(기종마다 메뉴 이름이 조금 다릅니다)';
-}
 
 /* 소리 한 군데로 — 녹음이 있으면 녹음, 없으면 기기 목소리.
    전에는 문제 화면이 play() 를 바로 불러서, 녹음 없는 단어은 **아무 소리도 안 났다**. */
@@ -10569,37 +10291,6 @@ const TLXHELP = [
                  ['oo', 'oo', 'ô', ''], ['ow', 'ow', 'ơ', ''], ['uw', 'uw', 'ư', ''],
                  ['dd', 'dd', 'đ', '']]],
 ];
-function kbGuide() {
-  const b = $('#rulesBody');
-  b.textContent = '';
-  b.append(el('h2', null, '자판 쓰는 법'));
-  b.append(el('p', 'lede', '베트남 자판에는 <b>성조 글쇠가 없습니다.</b> 글자를 다 치고 ' +
-    '<b>열쇠 글자</b>를 뒤에 붙이면 부호가 얹힙니다. 베트남 사람 대다수가 이렇게 칩니다(텔렉스).'));
-  const demo = el('div', 'kbdemo');
-  demo.innerHTML = '<b>chao</b> 치고 <b>f</b> → <b class="big">chào</b>' +
-                   '<br><b>chi</b> 치고 <b>j</b> → <b class="big">chị</b>' +
-                   '<br><b>com</b> 치고 <b>ow</b> → <b class="big">cơm</b>';
-  b.append(demo);
-  TLXHELP.forEach(([title, rows]) => {
-    b.append(el('div', 'grp', title));
-    const t = el('div', 'kbtab');
-    rows.forEach(([k, typed, made, ko]) => {
-      const r = el('div', 'kbtr');
-      r.append(el('span', 'kbk', esc(k)), el('span', 'kbt', esc(typed) + ' →'),
-               el('span', 'kbm', esc(made)), el('span', 'kbko', esc(ko)));
-      const say = el('button', 'ghost sm', '🔊');
-      say.type = 'button'; say.title = '들어 보기';
-      say.onclick = () => speakVi(made, false, 0, S.voice);
-      r.append(say);
-      t.append(r);
-    });
-    b.append(t);
-  });
-  b.append(el('p', 'note', '부호를 지우려면 <b>z</b> 를 칩니다. 같은 열쇠를 한 번 더 치면 되돌아갑니다 ' +
-    '— <b>chaof</b> 를 한 번 더 치면 <b>chaof</b> 그대로 남습니다.'));
-  b.append(el('p', 'note', '숫자와 기호는 자판의 <b>123</b>, 한글은 <b>베/한</b> 을 누르세요.'));
-  show('rules', '자판 쓰는 법', true);
-}
 
 /* ── 텔렉스 ──────────────────────────────────────────────────
    베트남 사람들이 실제로 치는 방식. 글자를 치고 뒤에 열쇠 글자를 붙인다.
@@ -10999,89 +10690,18 @@ function showCards(d) {
   show('sub', '카드뉴스', true);
 }
 
-function startNews(d) {
-  /* 기사를 누르면 **카드뉴스 두 장이 먼저** 나온다 (대표님 지시 2026-08-31).
-     그 뒤는 예전 그대로 — 표지 → 단어 → 대화. 카드 파일이 아직 없는 날이면
-     그림이 안 뜨고 저절로 다음 장으로 넘어간다(drawCard 의 card 갈래). */
-  const items = [{ k: 'card', d: { src: cardName(d, 1), n: 1, u: d.u } },
-                 { k: 'card', d: { src: cardName(d, 2), n: 2, u: d.u } },
-                 { k: 'cover', d: { t: '📰 ' + d.theme, b: esc(d.intro), src: d.u, title: d.title,
-                                    img: (d.words || []).map(w => w.img).find(Boolean),
-                                    emoji: (d.words || []).map(w => w.emoji).find(Boolean) } }];
-  (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
-  L = { day: { day: d.day, theme: d.theme, words: d.words, dialog: d.dialog, news: true },
-        items, i: 0, news: true };
-  drawCard();
-  show('learn', d.theme, true);
-}
 
 /* 오늘 기사 — 깃허브 로봇이 아침마다 골라둔 것을 보여준다 (data/news.json) */
-function showNews() {
-  const b = $('#newsBody');
-  b.textContent = '';
-  fetch('data/news.json', { cache: 'no-cache' }).then(r => r.json()).then(n => {
-    let last = null;
-    (n.items || []).forEach(it => {
-      if (it.d !== last) { b.append(el('p', 'newsday', esc(it.d))); last = it.d; }
-      const a = el('a', 'newsrow');
-      a.href = it.u; a.target = '_blank'; a.rel = 'noopener';
-      a.append(el('span', 'ncat', it.cat || '경제·직무'), el('b', null, esc(it.t)));
-      b.append(a);
-    });
-    b.append(el('p', 'note', '매일 아침 6시 30분에 업데이트됩니다. 최근 3일치만 남습니다.<br>기사 출처 — 인사이드비나'));
-  }).catch(() => b.append(el('p', 'note', '기사를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.')));
-  show('news', '베트남 소식', true);
-}
 /* 진도 백업 — 아이폰 사파리가 저장소를 비울 수 있어서 대비한다.
    단추는 홈 아래가 아니라 '진도' 타일 안에 있다 — 첫 화면은 학습만 남긴다.
    200단어가 다 쌓이면 원본이 7.5KB라 압축해서 내보낸다 (10,600자 → 2,900자). */
 const b64 = u8 => { let s = ''; u8.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
-const unb64 = t => Uint8Array.from(atob(t), c => c.charCodeAt(0));
 
-async function makeBackup() {
-  const raw = JSON.stringify({ done: S.done, srs: S.srs, firstDay: S.firstDay, act: S.act, stats: S.stats });
-  if (typeof CompressionStream === 'undefined')
-    return 'VNSTUDY1' + btoa(unescape(encodeURIComponent(raw)));
-  const st = new Blob([raw]).stream().pipeThrough(new CompressionStream('gzip'));
-  return 'VNSTUDY2' + b64(new Uint8Array(await new Response(st).arrayBuffer()));
-}
 
-async function readBackup(v) {
-  if (v.startsWith('VNSTUDY2')) {
-    const st = new Blob([unb64(v.slice(8))]).stream().pipeThrough(new DecompressionStream('gzip'));
-    return JSON.parse(await new Response(st).text());
-  }
-  if (v.startsWith('VNSTUDY1'))
-    return JSON.parse(decodeURIComponent(escape(atob(v.slice(8)))));
-  throw new Error('형식 아님');
-}
 
 /* 진도 단추(백업·불러오기·초기화)는 화면에서 뺐다 — 진도는 이제 저절로 서버에 올라간다.
    함수는 남겨 둔다: doReset 은 '내 정보'에서 아직 쓰고, 나머지는 서버가 죽었을 때의 대비책이다. */
-async function doExport() {
-  const blob = await makeBackup();
-  let copied = false;
-  try { await navigator.clipboard.writeText(blob); copied = true; } catch (e) { }
-  const n = Object.keys(S.done).length;
-  prompt(`${n}일치 진도를 담았습니다 (${blob.length}자).\n` +
-    (copied ? '이미 복사해 뒀습니다. ' : '') +
-    '메모 앱에 붙여넣어 두세요.', blob);
-}
 
-async function doImport() {
-  const v = (prompt('백업해둔 글자를 붙여넣으세요.') || '').trim();
-  if (!v) return;
-  try {
-    const o = await readBackup(v);
-    const nd = Object.keys(o.done || {}).length, nw = Object.keys(o.srs || {}).length;
-    if (!confirm(`${nd}일치 진도와 단어 ${nw}개를 되살립니다.\n지금 진도는 덮어씁니다. 진행할까요?`)) return;
-    S.done = o.done || {}; S.srs = o.srs || {}; S.firstDay = o.firstDay;
-    S.act = o.act || {}; S.stats = o.stats || {};
-    save(); dailyFlowEntry(); alert('되살렸습니다.');
-  } catch (e) {
-    alert('백업 글자가 아니거나 중간이 잘렸습니다.\nVNSTUDY 로 시작하는 글자 전체를 복사해 주세요.');
-  }
-}
 
 
 /* 위 토글 두 개 — 두 값이 다 보이고 지금 켜진 쪽만 진하게 (현재 상태가 헷갈리지 않게) */
@@ -11237,7 +10857,6 @@ function chipRow(items, cur, onPick) {
    솔직히: 연속 기록은 하루 끊기면 그만두게 만든다는 걱정이 있어 일부러 안 세고 있었다.
    이제 세되 **끊긴 것을 벌하지 않는다** — 빨간 글씨도, 잃는다는 말도 쓰지 않는다.
    그리고 '모두 며칠'을 나란히 둔다. 연속이 0이 돼도 모두 며칠은 줄지 않는다. */
-const totalDays = () => Object.keys(S.act || {}).length;
 function streakDays() {
   const d = new Date();
   if (!S.act[ymd(d)]) d.setDate(d.getDate() - 1);      // 오늘 아직 안 했으면 어제부터 센다

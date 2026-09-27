@@ -11,7 +11,7 @@ def git(*a, env=None, inp=None):
 git("fetch", "origin")
 MY = ["app.js", "style.css", "icon.png", "icon-192.png", "icon-180.png", "manifest.json", "pitch.js", "mouth.js", "pet.js", "judge.js", "index.html", "sw.js", "data/days.json", "data/order.json", "data/gybm.json", "data/realbook.json",
       "data/siblings.json", "data/basicwords.json", "data/basicword_sets.json", "data/senior.json", "data/cohort22.json", "data/_book_glossary.json", "data/_boost_words.json", "data/_job_boost.json",
-      "data/grammar.json", "data/exgloss.json", "data/sib.json", "data/siblings.json", "data/_lex_src.json", "data/_sib_meanings.json", "data/_sib_ko.json", "data/_sib_badrel.json", "data/_sib_goodrel.json", "tools/build_lex.py", "tools/trim_audio.py", "tools/apply_sib_meanings.py", "tools/gen_audio_list.py", "docs/기준.md", "docs/tts-조사.md", "docs/문법_대조.md", "tools/build_gram_main.py", "tools/gram_main_data1.py", "tools/gram_main_data2.py", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py", "tools/asr_audit.py", "tools/voice_audit.py", "data/_imgprompts.json", "tools/img_prompt_gen.py", "tools/gen_word_img.py", "tools/club_worker.js", "tools/bug_admin.py", "tools/fetch_hanviet.py", "tools/attach_hanviet.py", "data/_hanviet.json"]
+      "data/grammar.json", "data/exgloss.json", "data/sib.json", "data/siblings.json", "data/_lex_src.json", "data/_sib_meanings.json", "data/_sib_ko.json", "data/_sib_badrel.json", "data/_sib_goodrel.json", "tools/build_lex.py", "tools/trim_audio.py", "tools/apply_sib_meanings.py", "tools/gen_audio_list.py", "docs/기준.md", "docs/tts-조사.md", "docs/문법_대조.md", "tools/build_gram_main.py", "tools/gram_main_data1.py", "tools/gram_main_data2.py", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py", "tools/asr_audit.py", "tools/voice_audit.py", "data/_imgprompts.json", "tools/img_prompt_gen.py", "tools/gen_word_img.py", "tools/club_worker.js", "tools/bug_admin.py", "tools/fetch_hanviet.py", "tools/attach_hanviet.py", "data/_hanviet.json", "data/_hanja_hun.json", "data/_hanja_hun_manual.json", "tools/fetch_hanja_hun.py"]
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
 chk = [f for f in MY if f not in ("index.html", "sw.js", "data/audio_index.json")]
@@ -92,6 +92,20 @@ if "--no-prune" not in sys.argv and orphans:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in orphans)
     subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
 print(f"쓰이지 않는 소리 파일 지움 {len(orphans) if '--no-prune' not in sys.argv else 0}")
+# ── 쓰이지 않는 그림(어느 데이터·코드에도 이름이 없는 img/*) 지우기 — 대표님 지시 2026-09-27 밤 ("사용하지 않는 이미지 정리").
+#    모든 data/*.json(l)·app.js·index.html·style.css·sw.js·manifest 의 본문에서 파일 이름이 보이면 쓰는 것으로 친다(표지·차트도 데이터에 이름이 있다).
+_ref = ""
+for q in git("ls-tree", "-r", "--name-only", "origin/main").splitlines():
+    if (q.startswith("data/") and (q.endswith(".json") or q.endswith(".jsonl"))) or q in ("app.js", "index.html", "style.css", "sw.js", "manifest.json", "voice-vi.html", "voice-ko.html", "privacy.html"):
+        _ref += git("show", f"origin/main:{q}") if not (ROOT / q).exists() else (ROOT / q).read_text(encoding="utf-8", errors="ignore")
+for f in files:
+    if f.startswith("data/") and (ROOT / f).exists(): _ref += (ROOT / f).read_text(encoding="utf-8", errors="ignore")
+_imgs = [l for l in git("ls-tree", "-r", "--name-only", "origin/main", "img").splitlines()]
+img_orphans = [q for q in _imgs if q.rsplit("/", 1)[1] not in _ref and q not in files]
+if "--no-prune" not in sys.argv and img_orphans:
+    gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in img_orphans)
+    subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
+print(f"쓰이지 않는 그림 지움 {len(img_orphans) if '--no-prune' not in sys.argv else 0}")
 print(f"올릴 파일 {n_new} · origin 과 같아 건너뜀 {n_same} · 소리 목록 {before} → {len(oi)}")
 if dry: raise SystemExit("dry")
 tree = git("write-tree", env=env)
