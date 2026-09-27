@@ -3325,11 +3325,6 @@
        "ko": "영국",
        "gl": 1,
        "kr_read": "아인",
-       "ex": {
-        "vi": "Chị ấy sống ở Anh từ nhỏ.",
-        "ko": "그녀는 어릴 때부터 영국에서 살았다."
-       },
-       "img": "b-anh.webp",
        "star": 1,
        "weekly": true
       },
@@ -34604,11 +34599,6 @@
        "vi": "Anh",
        "ko": "영국",
        "kr_read": "아인",
-       "ex": {
-        "vi": "Chị ấy sống ở Anh từ nhỏ.",
-        "ko": "그녀는 어릴 때부터 영국에서 살았다."
-       },
-       "img": "b-anh.webp",
        "star": 1,
        "weekly": true
       },
@@ -35650,16 +35640,6 @@
        "img": "b-so-sanh-bang.webp"
       },
       {
-       "vi": "câu ví dụ",
-       "ko": "예문",
-       "kr_read": "꺼우 비 주",
-       "ex": {
-        "vi": "Hãy cho tôi một câu ví dụ.",
-        "ko": "예문을 하나 들어 주세요."
-       },
-       "img": "b-cau-vi-du.webp"
-      },
-      {
        "vi": "nhiều chỗ nhất",
        "ko": "(차의 좌석이) 제일 많다 most seats (in a car)",
        "kr_read": "니에우 쪼 녓",
@@ -35668,13 +35648,7 @@
         "ko": "이 차가 좌석이 제일 많다."
        },
        "img": "b-nhieu-cho-nhat.webp"
-      }
-     ]
-    },
-    {
-     "title": "17",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "ít chỗ nhất",
        "ko": "(차의 좌석이) 제일 적다 fewest seats (in a car)",
@@ -35684,7 +35658,13 @@
         "ko": "이 차는 좌석이 제일 적다."
        },
        "img": "b-it-cho-nhat.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "17",
+     "sub": "",
+     "words": [
       {
        "vi": "phòng ẩm thực",
        "ko": "식당/음식 코너 (culinary room)",
@@ -35702,16 +35682,6 @@
      "title": "18",
      "sub": "",
      "words": [
-      {
-       "vi": "người",
-       "ko": "사람",
-       "kr_read": "응으어이",
-       "ex": {
-        "vi": "Có rất nhiều người ở công viên.",
-        "ko": "공원에 사람이 매우 많다."
-       },
-       "img": "b-nguoi.webp"
-      },
       {
        "vi": "vâng",
        "ko": "(대답)그래 / 맞아",
@@ -35829,16 +35799,6 @@
         "ko": "우리 같이 밥 먹으러 가자."
        },
        "img": "b-chung-ta.webp"
-      },
-      {
-       "vi": "Bà ấy",
-       "ko": "그 / 할머니",
-       "kr_read": "바 어이",
-       "ex": {
-        "vi": "Bà ấy là giáo viên về hưu.",
-        "ko": "그 할머니는 은퇴한 교사이다."
-       },
-       "img": "b-ba-ay.webp"
       },
       {
        "vi": "xin lỗi",
@@ -35963,6 +35923,17 @@
        "weekly": true
       },
       {
+       "vi": "khám bệnh",
+       "ko": "진단하다, 진찰하다see a doctor",
+       "kr_read": "캄 벤",
+       "ex": {
+        "vi": "Tôi đi khám bệnh sáng nay.",
+        "ko": "나는 오늘 아침 진찰을 받으러 갔다."
+       },
+       "img": "b-kham-benh.webp",
+       "weekly": true
+      },
+      {
        "vi": "ghế sofa",
        "ko": "소파 sofa",
        "kr_read": "게 쏘 파",
@@ -36047,6 +36018,17 @@
         "ko": "도착했을 때 전화할게요."
        },
        "img": "b-khi.webp"
+      },
+      {
+       "vi": "bên cạnh",
+       "ko": "옆에, 곁에",
+       "kr_read": "벤 까인",
+       "ex": {
+        "vi": "Bên cạnh tiếng Anh, tôi còn học tiếng Việt.",
+        "ko": "영어 외에도 나는 베트남어도 배운다."
+       },
+       "img": "b-ben-canh.webp",
+       "weekly": true
       }
      ]
     },
@@ -36272,7 +36254,7 @@
       },
       {
        "vi": "buồn ngủ",
-       "ko": "졸리다 sleepy",
+       "ko": "졸린",
        "kr_read": "부온 응우",
        "ex": {
         "vi": "Tôi rất buồn ngủ vào buổi chiều.",
@@ -36870,16 +36852,6 @@
        "weekly": true
       },
       {
-       "vi": "Ba Lan",
-       "ko": "폴란드",
-       "kr_read": "바 란",
-       "ex": {
-        "vi": "Anh ấy học ở Ba Lan.",
-        "ko": "그는 폴란드에서 공부한다."
-       },
-       "img": "b-ba-lan.webp"
-      },
-      {
        "vi": "Pháp",
        "ko": "프랑스",
        "kr_read": "팝",
@@ -36920,13 +36892,7 @@
         "ko": "그는 핀란드에서 공부한다."
        },
        "img": "b-phan-lan.webp"
-      }
-     ]
-    },
-    {
-     "title": "27",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "Thụy Điển",
        "ko": "스웨덴",
@@ -36940,7 +36906,7 @@
      ]
     },
     {
-     "title": "28",
+     "title": "27",
      "sub": "",
      "words": [
       {
@@ -36954,26 +36920,6 @@
        "img": "b-han-quoc.webp",
        "star": 2,
        "weekly": true
-      },
-      {
-       "vi": "nước Hàn",
-       "ko": "나라한국",
-       "kr_read": "느억 한",
-       "ex": {
-        "vi": "Tôi đang học ở nước Hàn.",
-        "ko": "나는 한국에서 공부하고 있다."
-       },
-       "img": "b-nuoc-han.webp"
-      },
-      {
-       "vi": "người Hàn",
-       "ko": "사람한국인",
-       "kr_read": "응으어이 한",
-       "ex": {
-        "vi": "Tôi có nhiều bạn là người Hàn.",
-        "ko": "나는 한국인 친구가 많다."
-       },
-       "img": "b-nguoi-han.webp"
       },
       {
        "vi": "Trung Quốc",
@@ -37056,7 +37002,7 @@
       },
       {
        "vi": "Đều",
-       "ko": "모두",
+       "ko": "모두 / 다 (all)",
        "kr_read": "데우",
        "ex": {
         "vi": "Mọi người đều đã đến.",
@@ -37069,7 +37015,7 @@
      ]
     },
     {
-     "title": "29",
+     "title": "28",
      "sub": "",
      "words": [
       {
@@ -37081,6 +37027,17 @@
         "ko": "내 취미는 독서이다."
        },
        "img": "b-so-thich.webp",
+       "weekly": true
+      },
+      {
+       "vi": "phương hướng",
+       "ko": "방향 direction",
+       "kr_read": "프엉 흐엉",
+       "ex": {
+        "vi": "Chúng ta cần xác định phương hướng.",
+        "ko": "우리는 방향을 정해야 한다."
+       },
+       "img": "b-phuong-huong.webp",
        "weekly": true
       },
       {
@@ -37139,17 +37096,6 @@
        "weekly": true
       },
       {
-       "vi": "tại sao",
-       "ko": "왜 why",
-       "kr_read": "따이 싸오",
-       "ex": {
-        "vi": "Tại sao bạn đến trễ?",
-        "ko": "왜 늦게 왔어요?"
-       },
-       "img": "b-tai-sao.webp",
-       "weekly": true
-      },
-      {
        "vi": "thế còn",
        "ko": "~는요? (what about..., how about...)",
        "kr_read": "테 꼰",
@@ -37161,7 +37107,7 @@
       },
       {
        "vi": "từ ~ đến ~",
-       "ko": "~부터 ~까지",
+       "ko": "~부터 ~까지 from~ to~",
        "kr_read": "뜨 덴",
        "ex": {
         "vi": "Tôi làm việc từ thứ hai đến thứ sáu.",
@@ -37238,7 +37184,7 @@
      ]
     },
     {
-     "title": "30",
+     "title": "29",
      "sub": "",
      "words": [
       {
@@ -37299,7 +37245,7 @@
      ]
     },
     {
-     "title": "31",
+     "title": "30",
      "sub": "",
      "words": [
       {
@@ -37315,7 +37261,7 @@
       },
       {
        "vi": "dở",
-       "ko": "서툰, 못하는, 맛없는bad, not good",
+       "ko": "서투른, 미완성의",
        "kr_read": "저",
        "ex": {
         "vi": "Món ăn hôm nay hơi dở.",
@@ -37410,19 +37356,9 @@
      ]
     },
     {
-     "title": "32",
+     "title": "31",
      "sub": "",
      "words": [
-      {
-       "vi": "đó, đấy, kia",
-       "ko": "(멀리 / 있는)",
-       "kr_read": "도 더이 끼어",
-       "ex": {
-        "vi": "Nhà tôi ở đó, đấy, kia.",
-        "ko": "우리 집은 저쪽에 있다."
-       },
-       "img": "b-do-day-kia.webp"
-      },
       {
        "vi": "Chăm chỉ",
        "ko": "열심히 / 수행하는(hard-working)",
@@ -37516,16 +37452,6 @@
        "img": "b-tam-anh-buc-anh.webp"
       },
       {
-       "vi": "chiếc giày",
-       "ko": "신발(한",
-       "kr_read": "찌엑 자이",
-       "ex": {
-        "vi": "Chiếc giày này rất đẹp.",
-        "ko": "이 신발은 매우 예쁘다."
-       },
-       "img": "b-chiec-giay.webp"
-      },
-      {
        "vi": "Chùng ta",
        "ko": "(참고: / 사용 / 불가)",
        "kr_read": "쭝 따",
@@ -37538,7 +37464,7 @@
      ]
     },
     {
-     "title": "33",
+     "title": "32",
      "sub": "",
      "words": [
       {
@@ -37678,7 +37604,7 @@
      ]
     },
     {
-     "title": "34",
+     "title": "33",
      "sub": "",
      "words": [
       {
@@ -37852,7 +37778,7 @@
      ]
     },
     {
-     "title": "35",
+     "title": "34",
      "sub": "",
      "words": [
       {
@@ -37932,7 +37858,7 @@
      ]
     },
     {
-     "title": "36",
+     "title": "35",
      "sub": "",
      "words": [
       {
@@ -38016,7 +37942,7 @@
       },
       {
        "vi": "thấp",
-       "ko": "키 작은 (short)",
+       "ko": "낮다, 짧다",
        "kr_read": "텁",
        "ex": {
         "vi": "Anh ấy hơi thấp.",
@@ -38085,7 +38011,7 @@
      ]
     },
     {
-     "title": "37",
+     "title": "36",
      "sub": "",
      "words": [
       {
@@ -38252,7 +38178,7 @@
      ]
     },
     {
-     "title": "38",
+     "title": "37",
      "sub": "",
      "words": [
       {
@@ -38388,16 +38314,6 @@
        "weekly": true
       },
       {
-       "vi": "bánh ga-tô",
-       "ko": "케이크 / cake",
-       "kr_read": "바인 가 또",
-       "ex": {
-        "vi": "Chúng tôi mua bánh ga-tô sinh nhật.",
-        "ko": "우리는 생일 케이크를 샀다."
-       },
-       "img": "b-banh-ga-to.webp"
-      },
-      {
        "vi": "vali",
        "ko": "여행가방 / luggage",
        "kr_read": "바 리",
@@ -38410,7 +38326,7 @@
      ]
     },
     {
-     "title": "39",
+     "title": "38",
      "sub": "",
      "words": [
       {
@@ -38504,7 +38420,7 @@
      ]
     },
     {
-     "title": "40",
+     "title": "39",
      "sub": "",
      "words": [
       {
@@ -38527,6 +38443,17 @@
         "ko": "저에게 시간을 조금 주세요."
        },
        "img": "b-mot-chut.webp",
+       "weekly": true
+      },
+      {
+       "vi": "tiểu thuyết",
+       "ko": "장편소설 novel",
+       "kr_read": "띠에우 투옛",
+       "ex": {
+        "vi": "Tôi đang đọc một cuốn tiểu thuyết.",
+        "ko": "나는 장편소설 한 권을 읽고 있다."
+       },
+       "img": "b-tieu-thuyet.webp",
        "weekly": true
       },
       {
@@ -38553,7 +38480,7 @@
      ]
     },
     {
-     "title": "41",
+     "title": "40",
      "sub": "",
      "words": [
       {
@@ -38726,7 +38653,7 @@
      ]
     },
     {
-     "title": "42",
+     "title": "41",
      "sub": "",
      "words": [
       {
@@ -38799,7 +38726,7 @@
       },
       {
        "vi": "nóng tính",
-       "ko": "성격이 급한",
+       "ko": "분노 / 조절을 / 잘 / 못하는",
        "kr_read": "농 띤",
        "ex": {
         "vi": "Anh ấy hơi nóng tính.",
@@ -38865,7 +38792,7 @@
      ]
     },
     {
-     "title": "43",
+     "title": "42",
      "sub": "",
      "words": [
       {
@@ -38912,16 +38839,6 @@
        "img": "b-quoc-lui.webp"
       },
       {
-       "vi": "tiếng Khmer",
-       "ko": "캄보디아어 / Khmer language",
-       "kr_read": "띠엥",
-       "ex": {
-        "vi": "Anh ấy biết nói tiếng Khmer.",
-        "ko": "그는 캄보디아어를 할 줄 안다."
-       },
-       "img": "b-tieng-khmer.webp"
-      },
-      {
        "vi": "tiếng Lào",
        "ko": "라오어 / Lao language",
        "kr_read": "띠엥 라오",
@@ -38945,7 +38862,7 @@
      ]
     },
     {
-     "title": "44",
+     "title": "43",
      "sub": "",
      "words": [
       {
@@ -38962,7 +38879,7 @@
      ]
     },
     {
-     "title": "45",
+     "title": "44",
      "sub": "",
      "words": [
       {
@@ -39045,7 +38962,7 @@
      ]
     },
     {
-     "title": "46",
+     "title": "45",
      "sub": "",
      "words": [
       {
@@ -39096,9 +39013,20 @@
      ]
     },
     {
-     "title": "47",
+     "title": "46",
      "sub": "",
      "words": [
+      {
+       "vi": "vịnh",
+       "ko": "만 (bay)",
+       "kr_read": "빈",
+       "ex": {
+        "vi": "Vịnh Hạ Long rất đẹp.",
+        "ko": "하롱베이는 매우 아름답다."
+       },
+       "img": "b-vinh.webp",
+       "weekly": true
+      },
       {
        "vi": "đến chơi",
        "ko": "놀러 오다 / 방문하다",
@@ -39179,7 +39107,7 @@
      ]
     },
     {
-     "title": "48",
+     "title": "47",
      "sub": "",
      "words": [
       {
@@ -39209,7 +39137,7 @@
      ]
     },
     {
-     "title": "49",
+     "title": "48",
      "sub": "",
      "words": [
       {
@@ -39362,7 +39290,7 @@
      ]
     },
     {
-     "title": "50",
+     "title": "49",
      "sub": "",
      "words": [
       {
@@ -39420,6 +39348,17 @@
        "weekly": true
       },
       {
+       "vi": "trượt",
+       "ko": "불합격하다 fail",
+       "kr_read": "쯔엇",
+       "ex": {
+        "vi": "Tôi trượt kỳ thi lần này.",
+        "ko": "나는 이번 시험에 불합격했다."
+       },
+       "img": "b-truot.webp",
+       "weekly": true
+      },
+      {
        "vi": "cuối tuần",
        "ko": "주말 (weekend)",
        "kr_read": "꾸오이 뚜언",
@@ -39442,6 +39381,18 @@
        "weekly": true
       },
       {
+       "vi": "xin phép",
+       "ko": "허락받다 –permission",
+       "kr_read": "씬 팹",
+       "ex": {
+        "vi": "Tôi xin phép vào lớp.",
+        "ko": "저는 교실에 들어가도 되는지 허락을 구해요."
+       },
+       "ex_src": "claude",
+       "img": "b-xin-phep.webp",
+       "weekly": true
+      },
+      {
        "vi": "học bổng",
        "ko": "장학금 (scholarship)",
        "kr_read": "혹 봉",
@@ -39455,7 +39406,7 @@
      ]
     },
     {
-     "title": "51",
+     "title": "50",
      "sub": "",
      "words": [
       {
@@ -39532,16 +39483,6 @@
        "star": 1
       },
       {
-       "vi": "lớp học",
-       "ko": "교실",
-       "kr_read": "럽 혹",
-       "ex": {
-        "vi": "Lớp học rất yên tĩnh.",
-        "ko": "교실이 매우 조용하다."
-       },
-       "img": "b-lop-hoc.webp"
-      },
-      {
        "vi": "sáng sủa",
        "ko": "밝은 bright",
        "kr_read": "쌍 쑤어",
@@ -39597,7 +39538,7 @@
      ]
     },
     {
-     "title": "52",
+     "title": "51",
      "sub": "",
      "words": [
       {
@@ -39679,7 +39620,7 @@
      ]
     },
     {
-     "title": "53",
+     "title": "52",
      "sub": "",
      "words": [
       {
@@ -39858,7 +39799,7 @@
      ]
     },
     {
-     "title": "54",
+     "title": "53",
      "sub": "",
      "words": [
       {
@@ -39872,16 +39813,6 @@
        "img": "b-nam.webp",
        "star": 3,
        "weekly": true
-      },
-      {
-       "vi": "cái gương",
-       "ko": "거울",
-       "kr_read": "까이 그엉",
-       "ex": {
-        "vi": "Cô ấy soi cái gương.",
-        "ko": "그녀는 거울을 본다."
-       },
-       "img": "b-cai-guong.webp"
       },
       {
        "vi": "cái giương",
@@ -39917,7 +39848,7 @@
      ]
     },
     {
-     "title": "55",
+     "title": "54",
      "sub": "",
      "words": [
       {
@@ -39967,7 +39898,7 @@
      ]
     },
     {
-     "title": "56",
+     "title": "55",
      "sub": "",
      "words": [
       {
@@ -40037,7 +39968,7 @@
      ]
     },
     {
-     "title": "57",
+     "title": "56",
      "sub": "",
      "words": [
       {
@@ -40085,7 +40016,7 @@
      ]
     },
     {
-     "title": "58",
+     "title": "57",
      "sub": "",
      "words": [
       {
@@ -40179,7 +40110,7 @@
      ]
     },
     {
-     "title": "59",
+     "title": "58",
      "sub": "",
      "words": [
       {
@@ -40267,11 +40198,44 @@
        },
        "img": "b-bat-tien.webp",
        "weekly": true
+      },
+      {
+       "vi": "hàng xóm",
+       "ko": "이웃, 옆집사람 (neighbor)",
+       "kr_read": "항 쏨",
+       "ex": {
+        "vi": "Hàng xóm của tôi rất thân thiện.",
+        "ko": "우리 이웃은 매우 친절하다."
+       },
+       "img": "b-hang-xom.webp",
+       "weekly": true
+      },
+      {
+       "vi": "ngạt mũi",
+       "ko": "코막힘 (nasal congestion)",
+       "kr_read": "응앗 무이",
+       "ex": {
+        "vi": "Tôi bị ngạt mũi vì cảm.",
+        "ko": "나는 감기로 코가 막혔다."
+       },
+       "img": "b-ngat-mui.webp",
+       "weekly": true
+      },
+      {
+       "vi": "sắm sửa",
+       "ko": "장만하다, 준비하다 (prepare for buy)",
+       "kr_read": "쌈 쓰어",
+       "ex": {
+        "vi": "Mẹ sắm sửa đồ Tết.",
+        "ko": "엄마가 설날 물건을 장만하신다."
+       },
+       "img": "b-sam-sua.webp",
+       "weekly": true
       }
      ]
     },
     {
-     "title": "60",
+     "title": "59",
      "sub": "",
      "words": [
       {
@@ -40310,7 +40274,7 @@
      ]
     },
     {
-     "title": "61",
+     "title": "60",
      "sub": "",
      "words": [
       {
@@ -40357,6 +40321,17 @@
        "weekly": true
       },
       {
+       "vi": "trả lại",
+       "ko": "반품하다 return",
+       "kr_read": "짜 라이",
+       "ex": {
+        "vi": "Tôi muốn trả lại sản phẩm này.",
+        "ko": "나는 이 제품을 반품하고 싶다."
+       },
+       "img": "b-tra-lai.webp",
+       "weekly": true
+      },
+      {
        "vi": "đáng tiền",
        "ko": "값어치가 있다worth the money",
        "kr_read": "당 띠엔",
@@ -40366,11 +40341,88 @@
        },
        "img": "b-dang-tien.webp",
        "weekly": true
+      },
+      {
+       "vi": "áo bơi",
+       "ko": "수영복 (swimsuit)",
+       "kr_read": "아오 버이",
+       "ex": {
+        "vi": "Tôi mang áo bơi đi biển.",
+        "ko": "나는 수영복을 가지고 바다에 간다."
+       },
+       "img": "b-ao-boi.webp",
+       "weekly": true
+      },
+      {
+       "vi": "bác bỏ",
+       "ko": "거절하다, 부정하다 (reject, deny)",
+       "kr_read": "박 보",
+       "ex": {
+        "vi": "Anh ấy bác bỏ ý kiến đó.",
+        "ko": "그는 그 의견을 부정했다."
+       },
+       "img": "w-00c83f1dcd.webp",
+       "weekly": true
+      },
+      {
+       "vi": "công nhận",
+       "ko": "인정하다, 등재하다 (recognize, list)",
+       "kr_read": "꽁 년",
+       "ex": {
+        "vi": "Di sản này được công nhận là di sản thế giới.",
+        "ko": "이 유산은 세계유산으로 인정받았다."
+       },
+       "img": "w-eb552633fc.webp",
+       "weekly": true
+      },
+      {
+       "vi": "du khách",
+       "ko": "관광객 (tourist)",
+       "kr_read": "주 칵",
+       "ex": {
+        "vi": "Nhiều du khách đến Việt Nam.",
+        "ko": "많은 관광객이 베트남에 온다."
+       },
+       "img": "b-du-khach.webp",
+       "weekly": true
+      },
+      {
+       "vi": "hình dạng",
+       "ko": "형태, 모양 (shape, form)",
+       "kr_read": "힌 장",
+       "ex": {
+        "vi": "Chiếc bánh có hình dạng tròn.",
+        "ko": "케이크는 둥근 형태를 하고 있다."
+       },
+       "img": "b-hinh-dang.webp",
+       "weekly": true
+      },
+      {
+       "vi": "ngã",
+       "ko": "넘어지다 (fall)",
+       "kr_read": "응아",
+       "ex": {
+        "vi": "Em bé bị ngã khi chạy.",
+        "ko": "아기가 뛰다가 넘어졌다."
+       },
+       "img": "w-baadd8a9bf.webp",
+       "weekly": true
+      },
+      {
+       "vi": "phá",
+       "ko": "부수다 (destroy, break)",
+       "kr_read": "파",
+       "ex": {
+        "vi": "Họ phá ngôi nhà cũ để xây mới.",
+        "ko": "그들은 새로 짓기 위해 오래된 집을 부순다."
+       },
+       "img": "w-3dd3d64f00.webp",
+       "weekly": true
       }
      ]
     },
     {
-     "title": "62",
+     "title": "61",
      "sub": "",
      "words": [
       {
@@ -40386,7 +40438,7 @@
      ]
     },
     {
-     "title": "63",
+     "title": "62",
      "sub": "",
      "words": [
       {
@@ -40464,16 +40516,6 @@
        "weekly": true
       },
       {
-       "vi": "đến đây",
-       "ko": "(여기에) 도착하다",
-       "kr_read": "덴 더이",
-       "ex": {
-        "vi": "Cảm ơn bạn đã đến đây.",
-        "ko": "여기 와 주셔서 감사합니다."
-       },
-       "img": "b-den-day.webp"
-      },
-      {
        "vi": "dùng máy tính",
        "ko": "컴퓨터를 하다",
        "kr_read": "중 마이 띤",
@@ -40526,7 +40568,7 @@
       },
       {
        "vi": "một vài",
-       "ko": "약간의, 몇몇의",
+       "ko": "몇 / 개의, / 일부",
        "kr_read": "못 바이",
        "ex": {
         "vi": "Tôi có một vài câu hỏi.",
@@ -40537,7 +40579,7 @@
      ]
     },
     {
-     "title": "64",
+     "title": "63",
      "sub": "",
      "words": [
       {
@@ -40598,7 +40640,7 @@
       },
       {
        "vi": "đóng",
-       "ko": "닫다/지불하다(close/pay)",
+       "ko": "닫다, 박다",
        "kr_read": "동",
        "ex": {
         "vi": "Cửa hàng đóng cửa lúc 9 giờ.",
@@ -40688,7 +40730,7 @@
      ]
     },
     {
-     "title": "65",
+     "title": "64",
      "sub": "",
      "words": [
       {
@@ -40700,6 +40742,17 @@
         "ko": "이 제품의 가격은 높다."
        },
        "img": "w-5f9562be68.webp",
+       "weekly": true
+      },
+      {
+       "vi": "quà",
+       "ko": "선물 gift",
+       "kr_read": "꽈",
+       "ex": {
+        "vi": "Tôi mua quà cho mẹ.",
+        "ko": "나는 엄마에게 줄 선물을 샀다."
+       },
+       "img": "w-90eb31165b.webp",
        "weekly": true
       },
       {
@@ -40745,11 +40798,22 @@
        },
        "img": "b-nha-may-det.webp",
        "weekly": true
+      },
+      {
+       "vi": "đáng kể",
+       "ko": "상당한, 눈에 띄는 (considerable, significant)",
+       "kr_read": "당 께",
+       "ex": {
+        "vi": "Doanh thu tăng đáng kể.",
+        "ko": "매출이 상당히 늘었다."
+       },
+       "img": "b-dang-ke.webp",
+       "weekly": true
       }
      ]
     },
     {
-     "title": "66",
+     "title": "65",
      "sub": "",
      "words": [
       {
@@ -40765,7 +40829,7 @@
       },
       {
        "vi": "Dạo này",
-       "ko": "recently/최근",
+       "ko": "요즘, 최근에 recently",
        "kr_read": "자오 나이",
        "ex": {
         "vi": "Dạo này anh có khỏe không?",
@@ -40924,7 +40988,7 @@
      ]
     },
     {
-     "title": "67",
+     "title": "66",
      "sub": "",
      "words": [
       {
@@ -41038,7 +41102,7 @@
      ]
     },
     {
-     "title": "68",
+     "title": "67",
      "sub": "",
      "words": [
       {
@@ -41094,11 +41158,88 @@
        },
        "img": "b-lam-ruong.webp",
        "weekly": true
+      },
+      {
+       "vi": "đãng trí",
+       "ko": "건망증 있는, 깜빡하는 (absent-minded)",
+       "kr_read": "당 찌",
+       "ex": {
+        "vi": "Ông tôi dạo này hơi đãng trí.",
+        "ko": "우리 할아버지는 요즘 좀 건망증이 있으시다."
+       },
+       "img": "b-dang-tri.webp",
+       "weekly": true
+      },
+      {
+       "vi": "đấm bốc",
+       "ko": "권투 (boxing)",
+       "kr_read": "덤 복",
+       "ex": {
+        "vi": "Anh ấy tập đấm bốc mỗi tối.",
+        "ko": "그는 매일 저녁 권투를 연습한다."
+       },
+       "img": "b-dam-boc.webp",
+       "weekly": true
+      },
+      {
+       "vi": "gôn",
+       "ko": "골프 (golf)",
+       "kr_read": "곤",
+       "ex": {
+        "vi": "Ông ấy chơi gôn cuối tuần.",
+        "ko": "그는 주말에 골프를 친다."
+       },
+       "img": "w-e86c145575.webp",
+       "weekly": true
+      },
+      {
+       "vi": "hành động",
+       "ko": "행동 action",
+       "kr_read": "하인 동",
+       "ex": {
+        "vi": "Hành động của anh ấy rất dũng cảm.",
+        "ko": "그의 행동은 매우 용감했다."
+       },
+       "img": "b-hanh-dong.webp",
+       "weekly": true
+      },
+      {
+       "vi": "nhất định",
+       "ko": "반드시, 꼭, 틀림없이 (definitely, certainly)",
+       "kr_read": "녓 딘",
+       "ex": {
+        "vi": "Tôi nhất định sẽ thành công.",
+        "ko": "나는 반드시 성공할 것이다."
+       },
+       "img": "b-nhat-dinh.webp",
+       "weekly": true
+      },
+      {
+       "vi": "trận chung kết",
+       "ko": "결승전 (final match)",
+       "kr_read": "쩐 쭝 껫",
+       "ex": {
+        "vi": "Chúng tôi xem trận chung kết tối nay.",
+        "ko": "우리는 오늘 저녁 결승전을 본다."
+       },
+       "img": "b-tran-chung-ket.webp",
+       "weekly": true
+      },
+      {
+       "vi": "tuần trăng mật",
+       "ko": "신혼여행 (honeymoon)",
+       "kr_read": "뚜언 짱 멋",
+       "ex": {
+        "vi": "Họ đi tuần trăng mật ở Phú Quốc.",
+        "ko": "그들은 푸꾸옥으로 신혼여행을 간다."
+       },
+       "img": "b-tuan-trang-mat.webp",
+       "weekly": true
       }
      ]
     },
     {
-     "title": "69",
+     "title": "68",
      "sub": "",
      "words": [
       {
@@ -41116,7 +41257,7 @@
      ]
     },
     {
-     "title": "70",
+     "title": "69",
      "sub": "",
      "words": [
       {
@@ -41265,7 +41406,7 @@
      ]
     },
     {
-     "title": "71",
+     "title": "70",
      "sub": "",
      "words": [
       {
@@ -41289,16 +41430,6 @@
        "img": "b-bat-tay.webp",
        "star": 2,
        "weekly": true
-      },
-      {
-       "vi": "nâng cốc",
-       "ko": "건배하다.",
-       "kr_read": "넝 꼭",
-       "ex": {
-        "vi": "Mọi người cùng nâng cốc chúc mừng.",
-        "ko": "모두가 함께 건배하며 축하했다."
-       },
-       "img": "b-nang-coc.webp"
       },
       {
        "vi": "nhảy",
@@ -41422,7 +41553,7 @@
      ]
     },
     {
-     "title": "72",
+     "title": "71",
      "sub": "",
      "words": [
       {
@@ -41477,11 +41608,33 @@
         "ko": "나는 문학 과목을 좋아한다."
        },
        "img": "w-c577201cdd.webp"
+      },
+      {
+       "vi": "bánh gối",
+       "ko": "반고이/베개빵 (pillow cake)",
+       "kr_read": "바인 고이",
+       "ex": {
+        "vi": "Bánh gối là món ăn vặt phổ biến.",
+        "ko": "반고이는 인기 있는 간식이다."
+       },
+       "img": "b-banh-goi.webp",
+       "weekly": true
+      },
+      {
+       "vi": "chợ phiên",
+       "ko": "정기 시장 (kermis/fair)",
+       "kr_read": "쩌 피엔",
+       "ex": {
+        "vi": "Chợ phiên họp vào cuối tuần.",
+        "ko": "정기 시장은 주말에 열린다."
+       },
+       "img": "b-cho-phien.webp",
+       "weekly": true
       }
      ]
     },
     {
-     "title": "73",
+     "title": "72",
      "sub": "",
      "words": [
       {
@@ -41521,7 +41674,7 @@
      ]
     },
     {
-     "title": "74",
+     "title": "73",
      "sub": "",
      "words": [
       {
@@ -41538,7 +41691,7 @@
       },
       {
        "vi": "đến",
-       "ko": "가다(도착지에 간다)",
+       "ko": "도착하다·~까지",
        "kr_read": "덴",
        "ex": {
         "vi": "Anh ấy đến muộn.",
@@ -41603,7 +41756,7 @@
       },
       {
        "vi": "gác",
-       "ko": "다락, 위층 (attic, upper floor)",
+       "ko": "계단 (stairs)",
        "kr_read": "각",
        "ex": {
         "vi": "Phòng tôi ở trên gác hai.",
@@ -41633,16 +41786,6 @@
         "ko": "우리는 함께 사진을 찍는다."
        },
        "img": "b-chup-anh.webp"
-      },
-      {
-       "vi": "bạn trai",
-       "ko": "남자친구",
-       "kr_read": "반 짜이",
-       "ex": {
-        "vi": "Cô ấy có bạn trai rồi.",
-        "ko": "그녀는 이미 남자친구가 있다."
-       },
-       "img": "b-ban-trai.webp"
       },
       {
        "vi": "bạn gai",
@@ -41687,13 +41830,7 @@
         "ko": "학생들이 받아쓰기를 한다."
        },
        "img": "b-viet-chinh-ta.webp"
-      }
-     ]
-    },
-    {
-     "title": "75",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "đủ",
        "ko": "충분한",
@@ -41704,7 +41841,13 @@
        },
        "img": "w-5e4ced89af.webp",
        "star": 2
-      },
+      }
+     ]
+    },
+    {
+     "title": "74",
+     "sub": "",
+     "words": [
       {
        "vi": "thật",
        "ko": "진짜·정말",
@@ -41743,7 +41886,7 @@
      ]
     },
     {
-     "title": "76",
+     "title": "75",
      "sub": "",
      "words": [
       {
@@ -41877,7 +42020,7 @@
      ]
     },
     {
-     "title": "77",
+     "title": "76",
      "sub": "",
      "words": [
       {
@@ -41889,16 +42032,6 @@
         "ko": "그는 친구 집으로 건너가서 놀았다."
        },
        "img": "w-94f412f51b.webp"
-      },
-      {
-       "vi": "thấy",
-       "ko": "보다",
-       "kr_read": "터이",
-       "ex": {
-        "vi": "Tôi thấy anh ấy ở công viên.",
-        "ko": "나는 공원에서 그를 봤다."
-       },
-       "img": "w-c036a2aa2e.webp"
       },
       {
        "vi": "đón",
@@ -42046,7 +42179,7 @@
      ]
     },
     {
-     "title": "78",
+     "title": "77",
      "sub": "",
      "words": [
       {
@@ -42061,17 +42194,6 @@
        "weekly": true
       },
       {
-       "vi": "anh chị em",
-       "ko": "형제/자매 (Siblings)",
-       "kr_read": "아인 찌 앰",
-       "ex": {
-        "vi": "Anh Brian có mấy anh chị em, vậy chị?",
-        "ko": "브라이언 오빠는 형제자매가 몇 명이에요?"
-       },
-       "ex_src": "main_exact",
-       "img": "w-3b2ba86d56.webp"
-      },
-      {
        "vi": "bố / ba",
        "ko": "아버지 (father)",
        "kr_read": "보 바",
@@ -42080,17 +42202,6 @@
         "ko": "우리 아빠는 매우 엄격하시다."
        },
        "img": "b-bo-ba.webp",
-       "weekly": true
-      },
-      {
-       "vi": "càng... càng...",
-       "ko": "A할수록 B한다.",
-       "kr_read": "깡 깡",
-       "ex": {
-        "vi": "Càng học càng thấy khó.",
-        "ko": "공부할수록 더 어렵게 느껴진다."
-       },
-       "img": "b-cang-cang.webp",
        "weekly": true
       },
       {
@@ -42113,21 +42224,11 @@
         "ko": "우리 외숙모는 하노이에 사신다."
        },
        "img": "w-d7c90a7e34.webp"
-      },
-      {
-       "vi": "anh chị em họ",
-       "ko": "사촌 (cousin)",
-       "kr_read": "아인 찌 앰 호",
-       "ex": {
-        "vi": "Tôi có nhiều anh chị em họ.",
-        "ko": "나는 사촌이 많다."
-       },
-       "img": "b-anh-chi-em-ho.webp"
       }
      ]
     },
     {
-     "title": "79",
+     "title": "78",
      "sub": "",
      "words": [
       {
@@ -42228,7 +42329,7 @@
       },
       {
        "vi": "vừa",
-       "ko": "막, 알맞은 (just, fit)",
+       "ko": "알맞다, 적당하다",
        "kr_read": "브어",
        "ex": {
         "vi": "Đôi giày này vừa chân tôi.",
@@ -42247,16 +42348,6 @@
        },
        "img": "w-75e28b0c1c.webp",
        "star": 2
-      },
-      {
-       "vi": "xin được việc làm",
-       "ko": "취직하다",
-       "kr_read": "씬 드억 비엑 람",
-       "ex": {
-        "vi": "Anh ấy vừa xin được việc làm mới.",
-        "ko": "그는 방금 새 직장에 취직했다."
-       },
-       "img": "b-xin-duoc-viec-lam.webp"
       },
       {
        "vi": "tháng lương",
@@ -42302,13 +42393,7 @@
        "img": "b-ho-hang.webp",
        "star": 2,
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "80",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "xây",
        "ko": "짓다 (build)",
@@ -42320,7 +42405,13 @@
        "img": "b-xay.webp",
        "star": 2,
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "79",
+     "sub": "",
+     "words": [
       {
        "vi": "kính trọng",
        "ko": "존중하다 to respect",
@@ -42348,20 +42439,9 @@
      ]
     },
     {
-     "title": "81",
+     "title": "80",
      "sub": "",
      "words": [
-      {
-       "vi": "đầu tư vào",
-       "ko": "투자 - invest",
-       "kr_read": "더우 뜨 바오",
-       "ex": {
-        "vi": "Anh ấy đầu tư vào bất động sản.",
-        "ko": "그는 부동산에 투자한다."
-       },
-       "img": "b-dau-tu-vao.webp",
-       "weekly": true
-      },
       {
        "vi": "tiền thối",
        "ko": "거스름돈 - change",
@@ -42407,28 +42487,6 @@
        "weekly": true
       },
       {
-       "vi": "lần sau",
-       "ko": "다음번에",
-       "kr_read": "런 싸우",
-       "ex": {
-        "vi": "Lần sau chúng ta đi cùng nhau nhé.",
-        "ko": "다음번에는 우리 같이 가요."
-       },
-       "img": "b-lan-sau.webp"
-      },
-      {
-       "vi": "em út",
-       "ko": "막내 the youngest",
-       "kr_read": "앰 웃",
-       "ex": {
-        "vi": "Em út trong nhà được cưng chiều.",
-        "ko": "집안 막냇동생은 귀여움을 받는다."
-       },
-       "img": "b-em-ut.webp",
-       "star": 1,
-       "weekly": true
-      },
-      {
        "vi": "tột nghiệp",
        "ko": "졸업하다 - graduate",
        "kr_read": "똣 응이엡",
@@ -42447,22 +42505,11 @@
         "ko": "그는 일에서 실패했다."
        },
        "img": "w-16f317996d.webp"
-      },
-      {
-       "vi": "thất vọng",
-       "ko": "실망하다 (disappointed)",
-       "kr_read": "텃 봉",
-       "ex": {
-        "vi": "Tôi rất thất vọng về kết quả này.",
-        "ko": "나는 이 결과에 매우 실망했다."
-       },
-       "img": "b-that-vong.webp",
-       "star": 3
       }
      ]
     },
     {
-     "title": "82",
+     "title": "81",
      "sub": "",
      "words": [
       {
@@ -42498,7 +42545,7 @@
      ]
     },
     {
-     "title": "83",
+     "title": "82",
      "sub": "",
      "words": [
       {
@@ -42578,6 +42625,18 @@
        "weekly": true
       },
       {
+       "vi": "em út",
+       "ko": "막내 the youngest",
+       "kr_read": "앰 웃",
+       "ex": {
+        "vi": "Em út trong nhà được cưng chiều.",
+        "ko": "집안 막냇동생은 귀여움을 받는다."
+       },
+       "img": "b-em-ut.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
        "vi": "anh cả",
        "ko": "맏형 - the eldest brother",
        "kr_read": "아인 까",
@@ -42613,7 +42672,7 @@
      ]
     },
     {
-     "title": "84",
+     "title": "83",
      "sub": "",
      "words": [
       {
@@ -42791,7 +42850,7 @@
      ]
     },
     {
-     "title": "85",
+     "title": "84",
      "sub": "",
      "words": [
       {
@@ -42807,7 +42866,7 @@
      ]
     },
     {
-     "title": "86",
+     "title": "85",
      "sub": "",
      "words": [
       {
@@ -42975,7 +43034,7 @@
      ]
     },
     {
-     "title": "87",
+     "title": "86",
      "sub": "",
      "words": [
       {
@@ -43061,7 +43120,7 @@
      ]
     },
     {
-     "title": "88",
+     "title": "87",
      "sub": "",
      "words": [
       {
@@ -43112,7 +43171,7 @@
       },
       {
        "vi": "xanh lá cây",
-       "ko": "초",
+       "ko": "초록색 - green",
        "kr_read": "싸인 라 꺼이",
        "ex": {
         "vi": "Tôi thích màu xanh lá cây.",
@@ -43193,7 +43252,7 @@
      ]
     },
     {
-     "title": "89",
+     "title": "88",
      "sub": "",
      "words": [
       {
@@ -43338,6 +43397,16 @@
        "img": "b-nam-tinh.webp"
       },
       {
+       "vi": "nữ tính",
+       "ko": "여성성, 여성적인",
+       "kr_read": "느 띤",
+       "ex": {
+        "vi": "Cô ấy ăn mặc rất nữ tính.",
+        "ko": "그녀는 매우 여성적으로 옷을 입는다."
+       },
+       "img": "b-nu-tinh.webp"
+      },
+      {
        "vi": "rộng lượng",
        "ko": "도량이 넓은 관대한generous",
        "kr_read": "종 르엉",
@@ -43346,6 +43415,23 @@
         "ko": "그는 모든 사람에게 매우 관대하다."
        },
        "img": "b-rong-luong.webp",
+       "weekly": true
+      }
+     ]
+    },
+    {
+     "title": "89",
+     "sub": "",
+     "words": [
+      {
+       "vi": "bừa bộn",
+       "ko": "무질서한, 난잡한 disorder",
+       "kr_read": "브어 본",
+       "ex": {
+        "vi": "Phòng của em trai tôi rất bừa bộn.",
+        "ko": "내 남동생 방은 매우 어수선하다."
+       },
+       "img": "b-bua-bon.webp",
        "weekly": true
       }
      ]
@@ -43486,7 +43572,7 @@
       },
       {
        "vi": "thời tiết",
-       "ko": "날씨",
+       "ko": "날씨 (뉴스사용) weather",
        "kr_read": "터이 띠엣",
        "ex": {
         "vi": "Thời tiết hôm nay rất đẹp.",
@@ -43744,6 +43830,28 @@
        "img": "w-edea0d28ca.webp"
       },
       {
+       "vi": "sông",
+       "ko": "강 river",
+       "kr_read": "쏭",
+       "ex": {
+        "vi": "Chúng tôi đi thuyền trên sông.",
+        "ko": "우리는 강에서 배를 탔다."
+       },
+       "img": "w-fc2622de1f.webp",
+       "weekly": true
+      },
+      {
+       "vi": "hỏng",
+       "ko": "고장난 broken",
+       "kr_read": "홍",
+       "ex": {
+        "vi": "Máy tính của tôi bị hỏng.",
+        "ko": "내 컴퓨터가 고장 났다."
+       },
+       "img": "w-757db51d1e.webp",
+       "weekly": true
+      },
+      {
        "vi": "ngã tư",
        "ko": "사거리 4-way intersection",
        "kr_read": "응아 뜨",
@@ -43890,18 +43998,6 @@
        "star": 1
       },
       {
-       "vi": "xe lửa",
-       "ko": "기차",
-       "kr_read": "쌔 르어",
-       "ex": {
-        "vi": "Chúng tôi đi Đà Nẵng bằng xe lửa.",
-        "ko": "우리는 기차를 타고 다낭에 간다."
-       },
-       "img": "b-xe-lua.webp",
-       "star": 1,
-       "weekly": true
-      },
-      {
        "vi": "tàu thủy",
        "ko": "배 ship",
        "kr_read": "따우 투이",
@@ -43923,17 +44019,6 @@
        },
        "img": "b-doan.webp",
        "star": 2
-      },
-      {
-       "vi": "đối diện với",
-       "ko": "(~와) 마주보고, 맞은편에 / ( opposite, facing, across from )",
-       "kr_read": "도이 지엔 버이",
-       "ex": {
-        "vi": "Chúng ta phải đối diện với khó khăn.",
-        "ko": "우리는 어려움에 맞서야 한다."
-       },
-       "img": "b-doi-dien-voi.webp",
-       "star": 1
       },
       {
        "vi": "sau đó",
@@ -44046,7 +44131,7 @@
       },
       {
        "vi": "như",
-       "ko": "같다, ~처럼 same, like",
+       "ko": "~와 같은",
        "kr_read": "느",
        "ex": {
         "vi": "Anh ấy hiền như em trai tôi.",
@@ -44436,16 +44521,6 @@
        "weekly": true
       },
       {
-       "vi": "đi ra khỏi",
-       "ko": "(~밖으로) / 나가다",
-       "kr_read": "디 자 코이",
-       "ex": {
-        "vi": "Anh ấy đi ra khỏi phòng.",
-        "ko": "그는 방 밖으로 나갔다."
-       },
-       "img": "b-di-ra-khoi.webp"
-      },
-      {
        "vi": "đưa",
        "ko": "건네주다 to hand over",
        "kr_read": "드어",
@@ -44541,13 +44616,7 @@
         "ko": "고양이가 나무 위로 기어오른다."
        },
        "img": "b-treo-len.webp"
-      }
-     ]
-    },
-    {
-     "title": "101",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "Vậy thì",
        "ko": "그렇다면, / 따라서",
@@ -44561,7 +44630,7 @@
      ]
     },
     {
-     "title": "102",
+     "title": "101",
      "sub": "",
      "words": [
       {
@@ -44739,7 +44808,7 @@
      ]
     },
     {
-     "title": "103",
+     "title": "102",
      "sub": "",
      "words": [
       {
@@ -44909,7 +44978,7 @@
      ]
     },
     {
-     "title": "104",
+     "title": "103",
      "sub": "",
      "words": [
       {
@@ -44967,7 +45036,7 @@
      ]
     },
     {
-     "title": "105",
+     "title": "104",
      "sub": "",
      "words": [
       {
@@ -45006,7 +45075,7 @@
      ]
     },
     {
-     "title": "106",
+     "title": "105",
      "sub": "",
      "words": [
       {
@@ -45146,7 +45215,7 @@
       },
       {
        "vi": "tương lai",
-       "ko": "미래 future",
+       "ko": "미래",
        "kr_read": "뜨엉 라이",
        "ex": {
         "vi": "Tương lai của tôi phụ thuộc vào hôm nay.",
@@ -45159,7 +45228,7 @@
      ]
     },
     {
-     "title": "107",
+     "title": "106",
      "sub": "",
      "words": [
       {
@@ -45221,7 +45290,7 @@
       },
       {
        "vi": "khởi hành",
-       "ko": "출발하다 set off, depart",
+       "ko": "시행하다, 출발하다set off, depart",
        "kr_read": "커이 하인",
        "ex": {
         "vi": "Chuyến bay khởi hành lúc 9 giờ.",
@@ -45291,7 +45360,7 @@
       },
       {
        "vi": "mất",
-       "ko": "(시간이) ~만큼 걸리다 (take ~ time)",
+       "ko": "잃다, 소비하다",
        "kr_read": "멋",
        "ex": {
         "vi": "Chuyến đi mất khoảng hai tiếng.",
@@ -45325,7 +45394,7 @@
      ]
     },
     {
-     "title": "108",
+     "title": "107",
      "sub": "",
      "words": [
       {
@@ -45395,7 +45464,7 @@
      ]
     },
     {
-     "title": "109",
+     "title": "108",
      "sub": "",
      "words": [
       {
@@ -45411,7 +45480,7 @@
      ]
     },
     {
-     "title": "110",
+     "title": "109",
      "sub": "",
      "words": [
       {
@@ -45463,7 +45532,7 @@
      ]
     },
     {
-     "title": "111",
+     "title": "110",
      "sub": "",
      "words": [
       {
@@ -45522,26 +45591,6 @@
        "star": 1
       },
       {
-       "vi": "hôm kia",
-       "ko": "2일 / 전",
-       "kr_read": "홈 끼어",
-       "ex": {
-        "vi": "Hôm kia tôi gặp anh ấy.",
-        "ko": "그저께 나는 그를 만났다."
-       },
-       "img": "b-hom-kia.webp"
-      },
-      {
-       "vi": "ngày kìa",
-       "ko": "3일 / 후",
-       "kr_read": "응아이 끼어",
-       "ex": {
-        "vi": "Ngày kìa tôi sẽ đi công tác.",
-        "ko": "모레 다음날 나는 출장을 간다."
-       },
-       "img": "b-ngay-kia.webp"
-      },
-      {
        "vi": "tiếng",
        "ko": "시간",
        "kr_read": "띠엥",
@@ -45574,16 +45623,6 @@
        "img": "b-lat-nua.webp",
        "star": 2,
        "weekly": true
-      },
-      {
-       "vi": "nửa tiếng",
-       "ko": "30분",
-       "kr_read": "느어 띠엥",
-       "ex": {
-        "vi": "Tôi đợi bạn nửa tiếng rồi.",
-        "ko": "나는 너를 30분째 기다리고 있다."
-       },
-       "img": "b-nua-tieng.webp"
       },
       {
        "vi": "nữa",
@@ -45630,7 +45669,7 @@
      ]
     },
     {
-     "title": "112",
+     "title": "111",
      "sub": "",
      "words": [
       {
@@ -45653,6 +45692,12 @@
         "ko": "할머니의 생일은 음력으로 계산된다."
        },
        "img": "b-am-lich.webp",
+       "weekly": true
+      },
+      {
+       "vi": "dương lịch",
+       "ko": "양력 (solar calendar)",
+       "kr_read": "즈엉 릭",
        "weekly": true
       },
       {
@@ -45735,7 +45780,7 @@
      ]
     },
     {
-     "title": "113",
+     "title": "112",
      "sub": "",
      "words": [
       {
@@ -45903,7 +45948,7 @@
      ]
     },
     {
-     "title": "114",
+     "title": "113",
      "sub": "",
      "words": [
       {
@@ -45919,7 +45964,7 @@
      ]
     },
     {
-     "title": "115",
+     "title": "114",
      "sub": "",
      "words": [
       {
@@ -46024,7 +46069,7 @@
      ]
     },
     {
-     "title": "116",
+     "title": "115",
      "sub": "",
      "words": [
       {
@@ -46074,7 +46119,7 @@
      ]
     },
     {
-     "title": "117",
+     "title": "116",
      "sub": "",
      "words": [
       {
@@ -46133,7 +46178,7 @@
       },
       {
        "vi": "tiệc",
-       "ko": "파티 (party)",
+       "ko": "파티, 연회",
        "kr_read": "띠엑",
        "ex": {
         "vi": "Chúng tôi tổ chức tiệc sinh nhật.",
@@ -46219,21 +46264,11 @@
         "ko": "4명 자리를 예약하고 싶습니다."
        },
        "img": "b-dat-cho.webp"
-      },
-      {
-       "vi": "Dương lịch",
-       "ko": "양력",
-       "kr_read": "즈엉 릭",
-       "ex": {
-        "vi": "Hôm nay là ngày mấy dương lịch?",
-        "ko": "오늘은 양력으로 며칠이에요?"
-       },
-       "img": "b-duong-lich.webp"
       }
      ]
     },
     {
-     "title": "118",
+     "title": "117",
      "sub": "",
      "words": [
       {
@@ -46406,7 +46441,7 @@
      ]
     },
     {
-     "title": "119",
+     "title": "118",
      "sub": "",
      "words": [
       {
@@ -46445,7 +46480,7 @@
      ]
     },
     {
-     "title": "120",
+     "title": "119",
      "sub": "",
      "words": [
       {
@@ -46537,6 +46572,17 @@
        "weekly": true
       },
       {
+       "vi": "thời gian biểu",
+       "ko": "일정표, 시간표 schedule",
+       "kr_read": "터이 잔 비에우",
+       "ex": {
+        "vi": "Hãy làm thời gian biểu học tập.",
+        "ko": "학습 시간표를 만드세요."
+       },
+       "img": "b-thoi-gian-bieu.webp",
+       "weekly": true
+      },
+      {
        "vi": "sinh nhật",
        "ko": "생일 (일상회화사용) birthday",
        "kr_read": "씬 녓",
@@ -46600,6 +46646,23 @@
         "ko": "나는 90년대 초에 태어났다."
        },
        "img": "b-dau-thap-nien-90.webp",
+       "weekly": true
+      }
+     ]
+    },
+    {
+     "title": "120",
+     "sub": "",
+     "words": [
+      {
+       "vi": "động đất",
+       "ko": "지진 earthquake",
+       "kr_read": "동 덧",
+       "ex": {
+        "vi": "Khu vực này thường xuyên có động đất.",
+        "ko": "이 지역은 지진이 자주 발생한다."
+       },
+       "img": "b-dong-dat.webp",
        "weekly": true
       },
       {
@@ -46691,7 +46754,7 @@
       },
       {
        "vi": "dần dần",
-       "ko": "점차로, / 차차로, / 서서히",
+       "ko": "점점 (gradually)",
        "kr_read": "전 전",
        "ex": {
         "vi": "Trời dần dần tối.",
@@ -46769,7 +46832,7 @@
       },
       {
        "vi": "phàn nàn",
-       "ko": "불평하다 (complain)",
+       "ko": "불평하다",
        "kr_read": "판 난",
        "ex": {
         "vi": "Khách hàng phàn nàn về dịch vụ.",
@@ -46850,6 +46913,16 @@
      "sub": "",
      "words": [
       {
+       "vi": "độ ẩm",
+       "ko": "습도",
+       "kr_read": "도 엄",
+       "ex": {
+        "vi": "Độ ẩm hôm nay khá cao.",
+        "ko": "오늘 습도는 꽤 높다."
+       },
+       "img": "b-do-am.webp"
+      },
+      {
        "vi": "sắp chuyển",
        "ko": "곧 이사하다( moving soon)",
        "kr_read": "쌉 쭈옌",
@@ -46887,7 +46960,7 @@
      "words": [
       {
        "vi": "trở nên",
-       "ko": "~하게 되다 (To become)",
+       "ko": "~하게 되다",
        "kr_read": "쩌 넨",
        "ex": {
         "vi": "Thành phố này trở nên đông đúc hơn.",
@@ -46968,7 +47041,7 @@
       },
       {
        "vi": "kêu",
-       "ko": "불평하다 (to complain)",
+       "ko": "부르다, 외치다",
        "kr_read": "께우",
        "ex": {
         "vi": "Đừng kêu ca nữa.",
@@ -47031,16 +47104,6 @@
        "weekly": true
       },
       {
-       "vi": "không nên",
-       "ko": "않는편이 / 낫다.",
-       "kr_read": "콩 넨",
-       "ex": {
-        "vi": "Bạn không nên thức khuya.",
-        "ko": "밤늦게까지 안 자는 편이 낫지 않다."
-       },
-       "img": "b-khong-nen.webp"
-      },
-      {
        "vi": "rải rác",
        "ko": "흩어진 (spreaded)",
        "kr_read": "자이 작",
@@ -47082,17 +47145,6 @@
        },
        "img": "b-dong.webp",
        "star": 2
-      },
-      {
-       "vi": "Xin phép",
-       "ko": "(허락을)구하다",
-       "kr_read": "씬 팹",
-       "ex": {
-        "vi": "Tôi xin phép vào lớp.",
-        "ko": "나는 교실에 들어가도 되는지 허락받는다."
-       },
-       "img": "b-xin-phep.webp",
-       "weekly": true
       },
       {
        "vi": "Làm ơn",
@@ -47209,6 +47261,16 @@
        "img": "b-sap-toi.webp"
       },
       {
+       "vi": "thích hợp",
+       "ko": "적합하다, 알맞다",
+       "kr_read": "틱 헙",
+       "ex": {
+        "vi": "Đây là thời điểm thích hợp.",
+        "ko": "이것은 적합한 시점이다."
+       },
+       "img": "b-thich-hop.webp"
+      },
+      {
        "vi": "áo mưa",
        "ko": "우비 (raincoat)",
        "kr_read": "아오 므어",
@@ -47227,6 +47289,16 @@
         "ko": "어젯밤 큰 천둥번개가 쳤다."
        },
        "img": "w-f8ef5e09d5.webp"
+      },
+      {
+       "vi": "chớp",
+       "ko": "번개, 섬광 (flash, lightning)",
+       "kr_read": "쩝",
+       "ex": {
+        "vi": "Trời có chớp và sấm.",
+        "ko": "하늘에 번개와 천둥이 친다."
+       },
+       "img": "b-chop.webp"
       },
       {
        "vi": "lá vàng",
@@ -47421,6 +47493,16 @@
        "img": "b-den-giao-thong.webp"
       },
       {
+       "vi": "gần đây",
+       "ko": "최근에",
+       "kr_read": "건 더이",
+       "ex": {
+        "vi": "Có một quán cà phê gần đây.",
+        "ko": "근처에 카페가 하나 있다."
+       },
+       "img": "b-gan-day.webp"
+      },
+      {
        "vi": "Hồng Kông",
        "ko": "홍콩 (Hong Kong)",
        "kr_read": "홍 꽁",
@@ -47439,6 +47521,16 @@
         "ko": "우리는 예술 전시회를 관람한다."
        },
        "img": "b-trien-lam.webp"
+      },
+      {
+       "vi": "trở về",
+       "ko": "되돌아오다",
+       "kr_read": "쩌 베",
+       "ex": {
+        "vi": "Tôi trở về nhà lúc tám giờ.",
+        "ko": "나는 8시에 집으로 돌아온다."
+       },
+       "img": "b-tro-ve.webp"
       },
       {
        "vi": "chuyển nhà",
@@ -47479,7 +47571,13 @@
         "ko": "그래도 나는 시도해보고 싶다."
        },
        "img": "b-du-vay.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "132",
+     "sub": "",
+     "words": [
       {
        "vi": "có cả",
        "ko": "~까지도 있다 (even have)",
@@ -47493,7 +47591,7 @@
      ]
     },
     {
-     "title": "132",
+     "title": "133",
      "sub": "",
      "words": [
       {
@@ -47520,7 +47618,7 @@
      ]
     },
     {
-     "title": "133",
+     "title": "134",
      "sub": "",
      "words": [
       {
@@ -47536,7 +47634,7 @@
       },
       {
        "vi": "phó giám đốc",
-       "ko": "부사장",
+       "ko": "부사장, 부국장",
        "kr_read": "포 잠 독",
        "ex": {
         "vi": "Cô ấy vừa được bổ nhiệm làm phó giám đốc.",
@@ -47579,7 +47677,7 @@
       },
       {
        "vi": "thức khuya",
-       "ko": "늦게까지 깨어있는 (wake till late)",
+       "ko": "밤늦게까지 깨어있다",
        "kr_read": "특 쿠여",
        "ex": {
         "vi": "Đừng thức khuya quá nhiều.",
@@ -47614,7 +47712,7 @@
      ]
     },
     {
-     "title": "134",
+     "title": "135",
      "sub": "",
      "words": [
       {
@@ -47717,7 +47815,7 @@
       },
       {
        "vi": "nhẹ",
-       "ko": "가볍다 light",
+       "ko": "가벼운",
        "kr_read": "냬",
        "ex": {
         "vi": "Cái túi này rất nhẹ.",
@@ -47749,23 +47847,24 @@
        },
        "img": "b-nha-o.webp",
        "star": 1
-      },
-      {
-       "vi": "tiết kiệm tiền",
-       "ko": "돈을 / 모으다.",
-       "kr_read": "띠엣 끼엠 띠엔",
-       "ex": {
-        "vi": "Tôi cố gắng tiết kiệm tiền mỗi tháng.",
-        "ko": "나는 매달 돈을 모으려 노력한다."
-       },
-       "img": "b-tiet-kiem-tien.webp"
       }
      ]
     },
     {
-     "title": "135",
+     "title": "136",
      "sub": "",
      "words": [
+      {
+       "vi": "mặc dù",
+       "ko": "비록 ~이지만 (although)",
+       "kr_read": "막 주",
+       "ex": {
+        "vi": "Mặc dù trời mưa, chúng tôi vẫn đi.",
+        "ko": "비록 비가 왔지만 우리는 그래도 갔다."
+       },
+       "img": "b-mac-du.webp",
+       "weekly": true
+      },
       {
        "vi": "miêu tả",
        "ko": "묘사하다 (describe)",
@@ -47816,6 +47915,16 @@
         "ko": "아이들은 예방접종을 충분히 받아야 한다."
        },
        "img": "b-tiem-phong.webp"
+      },
+      {
+       "vi": "sốt xuất huyết",
+       "ko": "뎅기열 (출혈열)",
+       "kr_read": "쏫 쑤엇 후옛",
+       "ex": {
+        "vi": "Anh ấy bị sốt xuất huyết.",
+        "ko": "그는 뎅기열에 걸렸다."
+       },
+       "img": "b-sot-xuat-huyet.webp"
       },
       {
        "vi": "thị lực",
@@ -47899,7 +48008,13 @@
         "ko": "떠이응우옌에는 맛있는 커피가 많다."
        },
        "img": "b-tay-nguyen.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "137",
+     "sub": "",
+     "words": [
       {
        "vi": "Phía Tây Bắc Bộ",
        "ko": "베트남 서북부 지역 Northwest region of Vietnam",
@@ -47919,13 +48034,7 @@
         "ko": "남중부 지역에는 아름다운 해변이 많다."
        },
        "img": "b-phia-nam-trung-bo.webp"
-      }
-     ]
-    },
-    {
-     "title": "136",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "tầm nhìn xa",
        "ko": "가시거리 visibility",
@@ -47971,7 +48080,7 @@
      ]
     },
     {
-     "title": "137",
+     "title": "138",
      "sub": "",
      "words": [
       {
@@ -48009,16 +48118,6 @@
        "weekly": true
       },
       {
-       "vi": "thân mật, thân thiết",
-       "ko": "intimate(친밀한)",
-       "kr_read": "턴 멋 턴 티엣",
-       "ex": {
-        "vi": "Chúng tôi có mối quan hệ thân mật, thân thiết.",
-        "ko": "우리는 친밀한 관계를 가지고 있다."
-       },
-       "img": "b-than-mat-than-thiet.webp"
-      },
-      {
        "vi": "túi",
        "ko": "가방, 주머니 (Bag, Pouch)",
        "kr_read": "뚜이",
@@ -48041,7 +48140,7 @@
       },
       {
        "vi": "hiện đại",
-       "ko": "현대적인(modern)",
+       "ko": "현대적인",
        "kr_read": "히엔 다이",
        "ex": {
         "vi": "Tòa nhà này rất hiện đại.",
@@ -48054,12 +48153,12 @@
      ]
     },
     {
-     "title": "138",
+     "title": "139",
      "sub": "",
      "words": [
       {
        "vi": "lựa chọn",
-       "ko": "선택하다",
+       "ko": "선택하다 (choose)",
        "kr_read": "르어 쫀",
        "ex": {
         "vi": "Bạn có nhiều lựa chọn khác nhau.",
@@ -48138,7 +48237,7 @@
       },
       {
        "vi": "mang",
-       "ko": "나르다, 가지고 가다",
+       "ko": "지니다·나르다·(신발을) 신다",
        "kr_read": "망",
        "ex": {
         "vi": "Anh ấy mang theo một chiếc ba lô.",
@@ -48203,7 +48302,7 @@
      ]
     },
     {
-     "title": "139",
+     "title": "140",
      "sub": "",
      "words": [
       {
@@ -48372,7 +48471,7 @@
      ]
     },
     {
-     "title": "140",
+     "title": "141",
      "sub": "",
      "words": [
       {
@@ -48414,7 +48513,7 @@
      ]
     },
     {
-     "title": "141",
+     "title": "142",
      "sub": "",
      "words": [
       {
@@ -48426,6 +48525,16 @@
         "ko": "그는 올해 입대한다."
        },
        "img": "b-nhap-ngu.webp"
+      },
+      {
+       "vi": "thích ứng",
+       "ko": "적응하다",
+       "kr_read": "틱 응",
+       "ex": {
+        "vi": "Tôi đang thích ứng với môi trường mới.",
+        "ko": "나는 새로운 환경에 적응하고 있다."
+       },
+       "img": "b-thich-ung.webp"
       },
       {
        "vi": "công sức",
@@ -48446,26 +48555,6 @@
         "ko": "무장한 경찰이 경계한다."
        },
        "img": "b-vu-trang.webp"
-      },
-      {
-       "vi": "hướng ngoại",
-       "ko": "외향적인 (extrovert)",
-       "kr_read": "흐엉 응오아이",
-       "ex": {
-        "vi": "Cô ấy là người hướng ngoại.",
-        "ko": "그녀는 외향적인 사람이다."
-       },
-       "img": "w-778cb44720.webp"
-      },
-      {
-       "vi": "hướng nội",
-       "ko": "내향적인 (introvert)",
-       "kr_read": "흐엉 노이",
-       "ex": {
-        "vi": "Anh ấy là người hướng nội.",
-        "ko": "그는 내향적인 사람이다."
-       },
-       "img": "w-e1b9fb8b60.webp"
       },
       {
        "vi": "tổng đài",
@@ -48551,7 +48640,7 @@
      ]
     },
     {
-     "title": "142",
+     "title": "143",
      "sub": "",
      "words": [
       {
@@ -48589,7 +48678,7 @@
      ]
     },
     {
-     "title": "143",
+     "title": "144",
      "sub": "",
      "words": [
       {
@@ -48676,7 +48765,7 @@
       },
       {
        "vi": "ngoài ra",
-       "ko": "~외에, 그 밖에besides, apart from",
+       "ko": "게다가",
        "kr_read": "응오아이 자",
        "ex": {
         "vi": "Ngoài ra, tôi còn học tiếng Anh.",
@@ -48700,7 +48789,7 @@
      ]
     },
     {
-     "title": "144",
+     "title": "145",
      "sub": "",
      "words": [
       {
@@ -48828,7 +48917,7 @@
       },
       {
        "vi": "bản",
-       "ko": "버전, 판 - version",
+       "ko": "마을 (소수민족) / 판",
        "kr_read": "반",
        "ex": {
         "vi": "Đây là bản mới nhất của tài liệu.",
@@ -48875,7 +48964,7 @@
      ]
     },
     {
-     "title": "145",
+     "title": "146",
      "sub": "",
      "words": [
       {
@@ -49002,7 +49091,7 @@
      ]
     },
     {
-     "title": "146",
+     "title": "147",
      "sub": "",
      "words": [
       {
@@ -49110,12 +49199,12 @@
      ]
     },
     {
-     "title": "147",
+     "title": "148",
      "sub": "",
      "words": [
       {
        "vi": "dịp",
-       "ko": "기회 (opportunity)",
+       "ko": "기회, 때",
        "kr_read": "집",
        "ex": {
         "vi": "Đây là dịp tốt để gặp mọi người.",
@@ -49183,7 +49272,7 @@
       },
       {
        "vi": "phong phú",
-       "ko": "풍부하다(abundant)",
+       "ko": "풍부한",
        "kr_read": "퐁 푸",
        "ex": {
         "vi": "Món ăn ở đây rất phong phú.",
@@ -49281,7 +49370,7 @@
      ]
     },
     {
-     "title": "148",
+     "title": "149",
      "sub": "",
      "words": [
       {
@@ -49356,11 +49445,21 @@
        },
        "img": "w-3599b11415.webp",
        "weekly": true
+      },
+      {
+       "vi": "từ vựng",
+       "ko": "어휘 (Vocabulary)",
+       "kr_read": "뜨 븡",
+       "ex": {
+        "vi": "Tôi học từ vựng mới mỗi ngày.",
+        "ko": "나는 매일 새로운 어휘를 배운다."
+       },
+       "img": "b-tu-vung.webp"
       }
      ]
     },
     {
-     "title": "149",
+     "title": "150",
      "sub": "",
      "words": [
       {
@@ -49483,7 +49582,7 @@
      ]
     },
     {
-     "title": "150",
+     "title": "151",
      "sub": "",
      "words": [
       {
@@ -49500,7 +49599,7 @@
       },
       {
        "vi": "thuộc",
-       "ko": "외우다, 속하다memorize, belong to",
+       "ko": "~에 속하다, 소속되다",
        "kr_read": "투옥",
        "ex": {
         "vi": "Tôi đã thuộc hết từ vựng mới.",
@@ -49512,7 +49611,7 @@
       },
       {
        "vi": "đạt",
-       "ko": "달성하다 achieve",
+       "ko": "도달하다, 이루다",
        "kr_read": "닷",
        "ex": {
         "vi": "Anh ấy đã đạt mục tiêu đề ra.",
@@ -49536,7 +49635,7 @@
       },
       {
        "vi": "trung thực",
-       "ko": "정직한 honest",
+       "ko": "충실한, 정직한",
        "kr_read": "쭝 특",
        "ex": {
         "vi": "Anh ấy luôn trung thực trong công việc.",
@@ -49584,7 +49683,7 @@
       },
       {
        "vi": "tiện lợi",
-       "ko": "편리하다 convenient",
+       "ko": "편리한, 이로운",
        "kr_read": "띠엔 러이",
        "ex": {
         "vi": "Ứng dụng này rất tiện lợi.",
@@ -49667,7 +49766,7 @@
      ]
     },
     {
-     "title": "151",
+     "title": "152",
      "sub": "",
      "words": [
       {
@@ -49684,7 +49783,7 @@
       },
       {
        "vi": "cổ điển",
-       "ko": "클래식한, 고전적인 classical",
+       "ko": "고전적인",
        "kr_read": "꼬 디엔",
        "ex": {
         "vi": "Cô ấy thích âm nhạc cổ điển.",
@@ -49709,7 +49808,7 @@
      ]
     },
     {
-     "title": "152",
+     "title": "153",
      "sub": "",
      "words": [
       {
@@ -49886,7 +49985,7 @@
      ]
     },
     {
-     "title": "153",
+     "title": "154",
      "sub": "",
      "words": [
       {
@@ -49938,7 +50037,7 @@
      ]
     },
     {
-     "title": "154",
+     "title": "155",
      "sub": "",
      "words": [
       {
@@ -50097,7 +50196,7 @@
      ]
     },
     {
-     "title": "155",
+     "title": "156",
      "sub": "",
      "words": [
       {
@@ -50113,7 +50212,7 @@
      ]
     },
     {
-     "title": "156",
+     "title": "157",
      "sub": "",
      "words": [
       {
@@ -50247,7 +50346,7 @@
      ]
     },
     {
-     "title": "157",
+     "title": "158",
      "sub": "",
      "words": [
       {
@@ -50322,7 +50421,7 @@
       },
       {
        "vi": "khỏi",
-       "ko": "~ 벗어나다, ~ 낫다recover from, free from",
+       "ko": "(병이) 낫다, ~로부터 벗어나다",
        "kr_read": "코이",
        "ex": {
         "vi": "Tôi đã khỏi bệnh.",
@@ -50380,9 +50479,19 @@
      ]
     },
     {
-     "title": "158",
+     "title": "159",
      "sub": "",
      "words": [
+      {
+       "vi": "kỳ thi",
+       "ko": "시험 (exam)",
+       "kr_read": "끼 티",
+       "ex": {
+        "vi": "Kỳ thi sắp đến gần.",
+        "ko": "시험이 가까워지고 있다."
+       },
+       "img": "b-ky-thi.webp"
+      },
       {
        "vi": "ông trời",
        "ko": "(베트남에서) 하늘에 있는 신 ( god )",
@@ -50402,16 +50511,6 @@
         "ko": "내가 돌아올 때까지 기다리세요."
        },
        "img": "b-cho-den.webp"
-      },
-      {
-       "vi": "khắp thế giới",
-       "ko": "전세계에 ( all around the world )",
-       "kr_read": "캅 테 저이",
-       "ex": {
-        "vi": "Sản phẩm này bán khắp thế giới.",
-        "ko": "이 제품은 전세계에 팔린다."
-       },
-       "img": "b-khap-the-gioi.webp"
       },
       {
        "vi": "hút thuốc",
@@ -50456,7 +50555,7 @@
      ]
     },
     {
-     "title": "159",
+     "title": "160",
      "sub": "",
      "words": [
       {
@@ -50533,19 +50632,9 @@
      ]
     },
     {
-     "title": "160",
+     "title": "161",
      "sub": "",
      "words": [
-      {
-       "vi": "Điểm tốt",
-       "ko": "좋은 점수",
-       "kr_read": "디엠 똣",
-       "ex": {
-        "vi": "Em ấy đạt điểm tốt trong kỳ thi.",
-        "ko": "그 아이는 시험에서 좋은 점수를 받았다."
-       },
-       "img": "b-diem-tot.webp"
-      },
       {
        "vi": "Dụng cụ",
        "ko": "도구 (Tool)",
@@ -50692,13 +50781,7 @@
         "ko": "엄마가 아침식사로 계란을 부치셨다."
        },
        "img": "b-ran.webp"
-      }
-     ]
-    },
-    {
-     "title": "161",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "Rang",
        "ko": "볶다",
@@ -50735,17 +50818,6 @@
         "ko": "가격은 제품 품질에 따라 다르다."
        },
        "img": "b-tuy.webp",
-       "weekly": true
-      },
-      {
-       "vi": "Cam-pu-chia",
-       "ko": "캄보디아 (Cambodia)",
-       "kr_read": "깜 뿌 찌어",
-       "ex": {
-        "vi": "Chúng tôi đi du lịch Cam-pu-chia.",
-        "ko": "우리는 캄보디아로 여행 간다."
-       },
-       "img": "b-cam-pu-chia.webp",
        "weekly": true
       },
       {
@@ -50844,7 +50916,7 @@
       },
       {
        "vi": "thuê",
-       "ko": "빌리다, 임차하다 (to rent, hire)",
+       "ko": "빌리다, 임차하다",
        "kr_read": "투에",
        "ex": {
         "vi": "Chúng tôi thuê một căn hộ nhỏ.",
@@ -50928,7 +51000,7 @@
       },
       {
        "vi": "tổ chức",
-       "ko": "조직하다/개최하다 (to organize)",
+       "ko": "조직하다/개최하다 (to organize)",
        "kr_read": "또 쯕",
        "ex": {
         "vi": "Công ty tổ chức tiệc cuối năm.",
@@ -51098,6 +51170,16 @@
         "ko": "우리 할머니는 고향에서 요양하고 계신다."
        },
        "img": "b-an-duong.webp"
+      },
+      {
+       "vi": "tỉnh táo",
+       "ko": "깨어있는, 정신이 맑은",
+       "kr_read": "띤 따오",
+       "ex": {
+        "vi": "Tôi cần cà phê để tỉnh táo.",
+        "ko": "나는 잠을 깨려고 커피가 필요하다."
+       },
+       "img": "b-tinh-tao.webp"
       }
      ]
     },
@@ -51159,16 +51241,6 @@
        },
        "img": "b-tin-cay.webp",
        "star": 1
-      },
-      {
-       "vi": "cả... cũng",
-       "ko": "even… also.. (~조차도 ~하다)",
-       "kr_read": "까 꿍",
-       "ex": {
-        "vi": "Cả trẻ em cũng biết điều đó.",
-        "ko": "아이들조차도 그것을 안다."
-       },
-       "img": "b-ca-cung.webp"
       },
       {
        "vi": "trèo",
@@ -51477,7 +51549,7 @@
       },
       {
        "vi": "không kể",
-       "ko": "~을 제외하고 excluding",
+       "ko": "~을 제외하고",
        "kr_read": "콩 께",
        "ex": {
         "vi": "Không kể tôi, cả nhóm đều đến.",
@@ -51578,6 +51650,17 @@
         "ko": "학생들은 저녁에 자습 시간이 있다."
        },
        "img": "b-gio-tu-hoc.webp",
+       "weekly": true
+      },
+      {
+       "vi": "bắt buộc",
+       "ko": "강요하다, 의무적인",
+       "kr_read": "밧 부옥",
+       "ex": {
+        "vi": "Đây là quy định bắt buộc.",
+        "ko": "이것은 필수 규정이다."
+       },
+       "img": "b-bat-buoc.webp",
        "weekly": true
       },
       {
@@ -51940,7 +52023,7 @@
       },
       {
        "vi": "thiết kế",
-       "ko": "디자인 - design",
+       "ko": "설계하다, 디자인하다",
        "kr_read": "티엣 께",
        "ex": {
         "vi": "Cô ấy thiết kế quần áo rất đẹp.",
@@ -52209,6 +52292,16 @@
         "ko": "엄마가 아침으로 찹쌀밥을 지으신다."
        },
        "img": "b-xoi.webp"
+      },
+      {
+       "vi": "ý nghĩa",
+       "ko": "의미",
+       "kr_read": "이 응이어",
+       "ex": {
+        "vi": "Món quà này có ý nghĩa lớn.",
+        "ko": "이 선물은 큰 의미가 있다."
+       },
+       "img": "b-y-nghia.webp"
       }
      ]
     },
@@ -52279,16 +52372,6 @@
        "img": "b-rau-bi-hong.webp"
       },
       {
-       "vi": "giá đắt lên",
-       "ko": "가격이 오르다",
-       "kr_read": "자 닷 렌",
-       "ex": {
-        "vi": "Giá xăng đắt lên gần đây.",
-        "ko": "최근 기름값이 올랐다."
-       },
-       "img": "b-gia-dat-len.webp"
-      },
-      {
        "vi": "định dưỡng",
        "ko": "영양분",
        "kr_read": "딘 즈엉",
@@ -52331,7 +52414,7 @@
       },
       {
        "vi": "cơ quan",
-       "ko": "기관 (Agency)",
+       "ko": "기관, 사무실",
        "kr_read": "꺼 꽌",
        "ex": {
         "vi": "Bố tôi làm việc ở cơ quan nhà nước.",
@@ -52358,7 +52441,7 @@
       },
       {
        "vi": "thị trường",
-       "ko": "시장 (market)",
+       "ko": "시장 (Market)",
        "kr_read": "티 쯔엉",
        "ex": {
         "vi": "Thị trường lao động đang thay đổi.",
@@ -52462,6 +52545,17 @@
      "title": "177",
      "sub": "",
      "words": [
+      {
+       "vi": "chìa khóa",
+       "ko": "열쇠",
+       "kr_read": "찌어 코아",
+       "ex": {
+        "vi": "Tôi làm mất chìa khóa.",
+        "ko": "나는 열쇠를 잃어버렸다."
+       },
+       "img": "b-chia-khoa.webp",
+       "weekly": true
+      },
       {
        "vi": "thang máy",
        "ko": "엘리베이터(elevator)",
@@ -52755,7 +52849,7 @@
       },
       {
        "vi": "điều kiện",
-       "ko": "조건 (condition)",
+       "ko": "조건",
        "kr_read": "디에우 끼엔",
        "ex": {
         "vi": "Điều kiện làm việc ở đây khá tốt.",
@@ -52767,7 +52861,7 @@
       },
       {
        "vi": "giao tiếp",
-       "ko": "소통하다 (communicate)",
+       "ko": "의사소통하다",
        "kr_read": "자오 띠엡",
        "ex": {
         "vi": "Kỹ năng giao tiếp rất quan trọng.",
@@ -52828,7 +52922,7 @@
       },
       {
        "vi": "gọi món",
-       "ko": "주문하다 (to order)",
+       "ko": "주문하다 to order",
        "kr_read": "고이 몬",
        "ex": {
         "vi": "Chúng tôi gọi món ở nhà hàng.",
@@ -53031,7 +53125,7 @@
       },
       {
        "vi": "thuận tiện",
-       "ko": "편리한 (convenient)",
+       "ko": "편리한, 순조로운",
        "kr_read": "투언 띠엔",
        "ex": {
         "vi": "Vị trí này rất thuận tiện đi lại.",
@@ -53109,6 +53203,17 @@
        "img": "b-chan-nan.webp",
        "star": 3,
        "weekly": true
+      },
+      {
+       "vi": "thất vọng",
+       "ko": "실망하다",
+       "kr_read": "텃 봉",
+       "ex": {
+        "vi": "Tôi rất thất vọng về kết quả này.",
+        "ko": "나는 이 결과에 매우 실망했다."
+       },
+       "img": "b-that-vong.webp",
+       "star": 3
       },
       {
        "vi": "cơ hội",
@@ -53219,7 +53324,7 @@
       },
       {
        "vi": "tiến bộ",
-       "ko": "진보 (progress)",
+       "ko": "진보(하다), 발전하다",
        "kr_read": "띠엔 보",
        "ex": {
         "vi": "Tiếng Việt của bạn tiến bộ nhiều.",
@@ -53262,7 +53367,13 @@
        "img": "b-quyet-dinh.webp",
        "star": 3,
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "184",
+     "sub": "",
+     "words": [
       {
        "vi": "đôi khi",
        "ko": "가끔 (sometimes)",
@@ -53274,13 +53385,7 @@
        "img": "b-doi-khi.webp",
        "star": 1,
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "184",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "lo lắng",
        "ko": "걱정하다 (worried)",
@@ -53574,7 +53679,7 @@
       },
       {
        "vi": "cởi mở",
-       "ko": "개방적인",
+       "ko": "마음이 열린, 개방적인",
        "kr_read": "꺼이 머",
        "ex": {
         "vi": "Anh ấy là người khá cởi mở.",
@@ -53958,7 +54063,7 @@
       },
       {
        "vi": "dự án",
-       "ko": "프로젝트 (project)",
+       "ko": "프로젝트, 안건",
        "kr_read": "즈 안",
        "ex": {
         "vi": "Chúng tôi đang làm một dự án lớn.",
@@ -54085,6 +54190,17 @@
        "img": "b-dien-vao.webp"
       },
       {
+       "vi": "gắn",
+       "ko": "붙이다, 부착하다",
+       "kr_read": "간",
+       "ex": {
+        "vi": "Hãy gắn ảnh vào bài viết.",
+        "ko": "글에 사진을 붙이세요."
+       },
+       "img": "w-7beb91b75b.webp",
+       "weekly": true
+      },
+      {
        "vi": "sử dụng",
        "ko": "사용하다 ( use )",
        "kr_read": "쓰 중",
@@ -54113,6 +54229,16 @@
         "ko": "나는 모둠 요리를 주문했다."
        },
        "img": "b-thap-cam.webp"
+      },
+      {
+       "vi": "phiên dịch",
+       "ko": "통역하다",
+       "kr_read": "피엔 직",
+       "ex": {
+        "vi": "Cô ấy làm phiên dịch cho công ty.",
+        "ko": "그녀는 회사에서 통역을 한다."
+       },
+       "img": "b-phien-dich.webp"
       },
       {
        "vi": "vịt",
@@ -54236,7 +54362,7 @@
       },
       {
        "vi": "bất ngờ",
-       "ko": "갑작스러운, 뜻밖의 (unexpected)",
+       "ko": "뜻밖의, 갑자기",
        "kr_read": "벗 응어",
        "ex": {
         "vi": "Tin này thật bất ngờ.",
@@ -54331,17 +54457,6 @@
        "weekly": true
       },
       {
-       "vi": "kiếm đâu ra",
-       "ko": "어디서 이런 ~를 구하겠어 (Where can I find these...)",
-       "kr_read": "끼엠 더우 자",
-       "ex": {
-        "vi": "Bạn kiếm đâu ra chiếc túi đẹp thế?",
-        "ko": "이렇게 예쁜 가방 어디서 구했어?"
-       },
-       "img": "b-kiem-dau-ra.webp",
-       "weekly": true
-      },
-      {
        "vi": "phanh",
        "ko": "브레이크 (Brake)",
        "kr_read": "파인",
@@ -54426,13 +54541,7 @@
         "ko": "이 여행은 전부 얼마예요?"
        },
        "img": "b-het-bao-nhieu-tien.webp"
-      }
-     ]
-    },
-    {
-     "title": "193",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "bảo vệ luận án",
        "ko": "논문 심사를 받다(To defend a thesis)",
@@ -54442,7 +54551,13 @@
         "ko": "나는 다음 달에 논문 심사를 받을 것이다."
        },
        "img": "b-bao-ve-luan-an.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "193",
+     "sub": "",
+     "words": [
       {
        "vi": "ổ cứng",
        "ko": "하드디스크 (Hard drive)",
@@ -54710,7 +54825,7 @@
       },
       {
        "vi": "di tích",
-       "ko": "유적 / 유물 (relic / historical site)",
+       "ko": "유적",
        "kr_read": "지 띡",
        "ex": {
         "vi": "Chúng tôi tham quan một di tích lịch sử.",
@@ -54776,7 +54891,7 @@
       },
       {
        "vi": "nhanh nhẹn",
-       "ko": "민첩한 (nimble)",
+       "ko": "민첩한",
        "kr_read": "나인 냰",
        "ex": {
         "vi": "Cậu bé đó rất nhanh nhẹn.",
@@ -54984,16 +55099,6 @@
        "weekly": true
       },
       {
-       "vi": "quyến rũ",
-       "ko": "매혹적인, 유혹하다",
-       "kr_read": "꾸이엔 주",
-       "ex": {
-        "vi": "Cô ấy có nụ cười quyến rũ.",
-        "ko": "그녀는 매혹적인 미소를 가지고 있다."
-       },
-       "img": "b-quyen-ru.webp"
-      },
-      {
        "vi": "thất lạc",
        "ko": "분실하다 (lost)",
        "kr_read": "텃 락",
@@ -55127,7 +55232,7 @@
       },
       {
        "vi": "trí nhớ",
-       "ko": "기억력 (memory)",
+       "ko": "기억력",
        "kr_read": "찌 녀",
        "ex": {
         "vi": "Bà tôi có trí nhớ rất tốt.",
@@ -55148,16 +55253,6 @@
        "img": "b-dong-dong.webp",
        "star": 2,
        "weekly": true
-      },
-      {
-       "vi": "đẹp lão",
-       "ko": "중후한, / 곱게 / 늙은",
-       "kr_read": "댑 라오",
-       "ex": {
-        "vi": "Ông tôi trông rất đẹp lão.",
-        "ko": "우리 할아버지는 매우 곱게 늙어 보이신다."
-       },
-       "img": "b-dep-lao.webp"
       },
       {
        "vi": "nếp nhăn",
@@ -55268,13 +55363,7 @@
        },
        "img": "b-dua-ra.webp",
        "star": 2
-      }
-     ]
-    },
-    {
-     "title": "201",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "hình dáng",
        "ko": "모양, 형체",
@@ -55285,7 +55374,13 @@
        },
        "img": "w-f136265f0a.webp",
        "star": 1
-      },
+      }
+     ]
+    },
+    {
+     "title": "201",
+     "sub": "",
+     "words": [
       {
        "vi": "trở ngại",
        "ko": "장애물, 난관 (obstacle)",
@@ -55368,6 +55463,17 @@
        "weekly": true
       },
       {
+       "vi": "giá thành",
+       "ko": "원가, 가격",
+       "kr_read": "자 타인",
+       "ex": {
+        "vi": "Giá thành sản xuất tăng lên.",
+        "ko": "생산 원가가 올랐다."
+       },
+       "img": "b-gia-thanh.webp",
+       "weekly": true
+      },
+      {
        "vi": "nết",
        "ko": "품행, 성품, 버릇 (character, habit)",
        "kr_read": "넷",
@@ -55399,6 +55505,16 @@
        },
        "img": "b-do-go.webp",
        "weekly": true
+      },
+      {
+       "vi": "xây dựng",
+       "ko": "건설하다, 세우다",
+       "kr_read": "써이 증",
+       "ex": {
+        "vi": "Họ xây dựng một tòa nhà mới.",
+        "ko": "그들은 새 건물을 건설한다."
+       },
+       "img": "b-xay-dung.webp"
       },
       {
        "vi": "cạp",
@@ -55627,16 +55743,6 @@
        "img": "b-nguoi-dong.webp"
       },
       {
-       "vi": "vệ sĩ",
-       "ko": "경호원",
-       "kr_read": "베 씨",
-       "ex": {
-        "vi": "Ca sĩ có vệ sĩ đi cùng.",
-        "ko": "가수는 경호원을 대동한다."
-       },
-       "img": "b-ve-si.webp"
-      },
-      {
        "vi": "tiện dịp",
        "ko": "~한 김에",
        "kr_read": "띠엔 집",
@@ -55667,16 +55773,6 @@
         "ko": "우리는 원숭이 섬을 관광하러 간다."
        },
        "img": "b-dao-khi.webp"
-      },
-      {
-       "vi": "chợ tình",
-       "ko": "사랑 / 시장(전통 / 시장)",
-       "kr_read": "쩌 띤",
-       "ex": {
-        "vi": "Chợ tình là nét văn hóa đặc biệt.",
-        "ko": "사랑시장은 특별한 문화이다."
-       },
-       "img": "b-cho-tinh.webp"
       },
       {
        "vi": "thảo nào",
@@ -55741,7 +55837,7 @@
       },
       {
        "vi": "chính sách",
-       "ko": "정책 (policy)",
+       "ko": "정책",
        "kr_read": "찐 싹",
        "ex": {
         "vi": "Chính sách này có lợi cho người dân.",
@@ -55750,16 +55846,6 @@
        "img": "b-chinh-sach.webp",
        "star": 1,
        "weekly": true
-      },
-      {
-       "vi": "sự trợ giúp",
-       "ko": "도움, / 지원",
-       "kr_read": "쓰 쩌 줍",
-       "ex": {
-        "vi": "Tôi xin sự trợ giúp từ đồng nghiệp.",
-        "ko": "나는 동료에게 도움을 요청했다."
-       },
-       "img": "b-su-tro-giup.webp"
       },
       {
        "vi": "tăng lương",
@@ -55980,6 +56066,16 @@
         "ko": "나는 알고리즘에 대해 공부하고 있다."
        },
        "img": "b-thuat-toan.webp"
+      },
+      {
+       "vi": "trêu",
+       "ko": "놀리다, 희롱하다",
+       "kr_read": "쩨우",
+       "ex": {
+        "vi": "Đừng trêu em bé nữa.",
+        "ko": "아기를 더 이상 놀리지 마세요."
+       },
+       "img": "b-treu.webp"
       }
      ]
     },
@@ -56153,7 +56249,7 @@
       },
       {
        "vi": "thêm nữa",
-       "ko": "더 추가로 (more)",
+       "ko": "더 추가하다 (add more)",
        "kr_read": "템 느어",
        "ex": {
         "vi": "Bạn có muốn ăn thêm nữa không?",
@@ -56628,7 +56724,7 @@
       },
       {
        "vi": "Nguy hiểm",
-       "ko": "위험한",
+       "ko": "위험한 danger",
        "kr_read": "응우이 히엠",
        "ex": {
         "vi": "Đừng đi vào khu vực nguy hiểm.",
@@ -56766,7 +56862,7 @@
       },
       {
        "vi": "mở rộng",
-       "ko": "확장하다, 넓히다 (expand / widen)",
+       "ko": "확장하다",
        "kr_read": "머 종",
        "ex": {
         "vi": "Công ty đang mở rộng nhà máy.",
@@ -57367,7 +57463,7 @@
       },
       {
        "vi": "nguồn",
-       "ko": "근원, 출처 (root)",
+       "ko": "근원, 원천",
        "kr_read": "응우온",
        "ex": {
         "vi": "Nguồn thu nhập chính của tôi là lương.",
@@ -57481,6 +57577,17 @@
         "ko": "나는 갈증을 해소하려고 물을 마신다."
        },
        "img": "b-giai-khat.webp",
+       "weekly": true
+      },
+      {
+       "vi": "hòa bình",
+       "ko": "평화",
+       "kr_read": "호아 빈",
+       "ex": {
+        "vi": "Chúng ta mong muốn hòa bình.",
+        "ko": "우리는 평화를 원한다."
+       },
+       "img": "b-hoa-binh.webp",
        "weekly": true
       },
       {
@@ -57660,7 +57767,7 @@
       },
       {
        "vi": "kết luận",
-       "ko": "결론 conclusion",
+       "ko": "결론, 결론짓다",
        "kr_read": "껫 루언",
        "ex": {
         "vi": "Cuối cùng, chúng tôi đưa ra kết luận.",
@@ -57690,16 +57797,6 @@
        "img": "b-kham-chua.webp"
       },
       {
-       "vi": "khỏi bệnh",
-       "ko": "(병이) / 낫다",
-       "kr_read": "코이 벤",
-       "ex": {
-        "vi": "Tôi đã khỏi bệnh hoàn toàn.",
-        "ko": "나는 병이 완전히 나았다."
-       },
-       "img": "b-khoi-benh.webp"
-      },
-      {
        "vi": "đỡ hơn",
        "ko": "더 / 나아지다",
        "kr_read": "더 헌",
@@ -57718,13 +57815,7 @@
         "ko": "할머니의 병이 이제 나아졌다."
        },
        "img": "b-do-roi.webp"
-      }
-     ]
-    },
-    {
-     "title": "222",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "bình phục, hồi phục",
        "ko": "회복하다",
@@ -57738,7 +57829,7 @@
      ]
     },
     {
-     "title": "223",
+     "title": "222",
      "sub": "",
      "words": [
       {
@@ -57761,6 +57852,17 @@
         "ko": "회사는 새 사람을 고용해야 한다."
        },
        "img": "b-thue-nguoi.webp",
+       "weekly": true
+      },
+      {
+       "vi": "dành",
+       "ko": "남겨두다, 할애하다",
+       "kr_read": "자인",
+       "ex": {
+        "vi": "Tôi dành thời gian cho gia đình.",
+        "ko": "나는 가족을 위해 시간을 할애한다."
+       },
+       "img": "b-danh.webp",
        "weekly": true
       },
       {
@@ -57865,7 +57967,7 @@
      ]
     },
     {
-     "title": "224",
+     "title": "223",
      "sub": "",
      "words": [
       {
@@ -57928,7 +58030,7 @@
      ]
     },
     {
-     "title": "225",
+     "title": "224",
      "sub": "",
      "words": [
       {
@@ -57957,7 +58059,7 @@
       },
       {
        "vi": "thất nghiệp",
-       "ko": "실직하다 - laid off",
+       "ko": "실업, 실직하다",
        "kr_read": "텃 응이엡",
        "ex": {
         "vi": "Anh ấy bị thất nghiệp mấy tháng nay.",
@@ -58058,7 +58160,7 @@
       },
       {
        "vi": "găng",
-       "ko": "장갑 (Gloves)",
+       "ko": "장갑",
        "kr_read": "강",
        "ex": {
         "vi": "Hãy đeo găng khi làm việc.",
@@ -58069,7 +58171,7 @@
       },
       {
        "vi": "ba lô",
-       "ko": "배낭, 백팩 (Backpack)",
+       "ko": "배낭 (ballot)",
        "kr_read": "바 로",
        "ex": {
         "vi": "Tôi đeo ba lô đi học.",
@@ -58105,7 +58207,7 @@
      ]
     },
     {
-     "title": "226",
+     "title": "225",
      "sub": "",
      "words": [
       {
@@ -58157,7 +58259,7 @@
      ]
     },
     {
-     "title": "227",
+     "title": "226",
      "sub": "",
      "words": [
       {
@@ -58282,7 +58384,7 @@
      ]
     },
     {
-     "title": "228",
+     "title": "227",
      "sub": "",
      "words": [
       {
@@ -58299,7 +58401,7 @@
       },
       {
        "vi": "tất",
-       "ko": "양말 (Socks)",
+       "ko": "다, 모두",
        "kr_read": "떳",
        "ex": {
         "vi": "Tôi mua một đôi tất mới.",
@@ -58346,7 +58448,7 @@
      ]
     },
     {
-     "title": "229",
+     "title": "228",
      "sub": "",
      "words": [
       {
@@ -58473,7 +58575,7 @@
       },
       {
        "vi": "chặt chẽ",
-       "ko": "엄격하다 / 철저하다 (strict / tight)",
+       "ko": "엄격한, 긴밀한",
        "kr_read": "짯 째",
        "ex": {
         "vi": "Quy trình kiểm tra rất chặt chẽ.",
@@ -58485,7 +58587,7 @@
      ]
     },
     {
-     "title": "230",
+     "title": "229",
      "sub": "",
      "words": [
       {
@@ -58558,7 +58660,7 @@
       },
       {
        "vi": "tiền công",
-       "ko": "임금 (wages)",
+       "ko": "보수, 임금",
        "kr_read": "띠엔 꽁",
        "ex": {
         "vi": "Tiền công một ngày là hai trăm nghìn.",
@@ -58637,7 +58739,7 @@
       },
       {
        "vi": "sính",
-       "ko": "열중하다/빠져있다 (to be very fond of)",
+       "ko": "~을 몹시 좋아하다, 선호하다",
        "kr_read": "씬",
        "ex": {
         "vi": "Cô ấy sính hàng ngoại.",
@@ -58648,7 +58750,7 @@
       },
       {
        "vi": "nhập",
-       "ko": "수입하다/입력하다 (to import/to enter)",
+       "ko": "수입하다, 들어가다",
        "kr_read": "녑",
        "ex": {
         "vi": "Hãy nhập số điện thoại của bạn.",
@@ -58661,7 +58763,7 @@
      ]
     },
     {
-     "title": "231",
+     "title": "230",
      "sub": "",
      "words": [
       {
@@ -58691,7 +58793,7 @@
      ]
     },
     {
-     "title": "232",
+     "title": "231",
      "sub": "",
      "words": [
       {
@@ -58713,25 +58815,23 @@
         "ko": "내 전공은 정보기술이다."
        },
        "img": "b-chuyen-nganh.webp"
+      },
+      {
+       "vi": "thiết bị",
+       "ko": "설비, 장치",
+       "kr_read": "티엣 비",
+       "ex": {
+        "vi": "Nhà máy có nhiều thiết bị hiện đại.",
+        "ko": "공장에는 현대적인 장비가 많다."
+       },
+       "img": "b-thiet-bi.webp"
       }
      ]
     },
     {
-     "title": "233",
+     "title": "232",
      "sub": "",
      "words": [
-      {
-       "vi": "lên tàu",
-       "ko": "(배에) 타다 (to get on the ship)",
-       "kr_read": "렌 따우",
-       "ex": {
-        "vi": "Hành khách lên tàu lúc tám giờ.",
-        "ko": "승객들은 8시에 배에 탔다."
-       },
-       "img": "b-len-tau.webp",
-       "star": 1,
-       "weekly": true
-      },
       {
        "vi": "kiến",
        "ko": "개미 (ant)",
@@ -58861,7 +58961,7 @@
       },
       {
        "vi": "thời trang",
-       "ko": "패션, 유행",
+       "ko": "패션, 시속",
        "kr_read": "터이 짱",
        "ex": {
         "vi": "Cô ấy rất quan tâm đến thời trang.",
@@ -58873,7 +58973,7 @@
      ]
     },
     {
-     "title": "234",
+     "title": "233",
      "sub": "",
      "words": [
       {
@@ -58900,7 +59000,7 @@
       },
       {
        "vi": "ngay cả",
-       "ko": "심지어 (even)",
+       "ko": "심지어 ~조차",
        "kr_read": "응아이 까",
        "ex": {
         "vi": "Ngay cả trẻ em cũng biết điều đó.",
@@ -58993,7 +59093,7 @@
      ]
     },
     {
-     "title": "235",
+     "title": "234",
      "sub": "",
      "words": [
       {
@@ -59008,7 +59108,7 @@
       },
       {
        "vi": "quần soóc",
-       "ko": "반바지, 쇼츠 (Shorts)",
+       "ko": "반바지, 쇼츠 (shorts)",
        "kr_read": "꾸언 쏙",
        "ex": {
         "vi": "Trời nóng nên tôi mặc quần soóc.",
@@ -59020,7 +59120,7 @@
       },
       {
        "vi": "quần jean",
-       "ko": "청바지",
+       "ko": "청바지 (jeans)",
        "kr_read": "꾸언 애 안",
        "ex": {
         "vi": "Anh ấy mặc quần jean và áo phông.",
@@ -59032,7 +59132,7 @@
       },
       {
        "vi": "bộ com-lê",
-       "ko": "정장 (suit)",
+       "ko": "정장, / 슈트",
        "kr_read": "보 꼼 레",
        "ex": {
         "vi": "Anh ấy mặc bộ com-lê đi phỏng vấn.",
@@ -59078,7 +59178,7 @@
      ]
     },
     {
-     "title": "236",
+     "title": "235",
      "sub": "",
      "words": [
       {
@@ -59203,6 +59303,17 @@
        "weekly": true
       },
       {
+       "vi": "cãi nhau",
+       "ko": "싸우다 (argue)",
+       "kr_read": "까이 냐우",
+       "ex": {
+        "vi": "Hai người bạn cãi nhau.",
+        "ko": "두 친구가 말다툼했다."
+       },
+       "img": "b-cai-nhau.webp",
+       "weekly": true
+      },
+      {
        "vi": "hít vào",
        "ko": "숨을 마시다 (breath in)",
        "kr_read": "힛 바오",
@@ -59234,7 +59345,13 @@
        },
        "img": "b-hiem-khi.webp",
        "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "236",
+     "sub": "",
+     "words": [
       {
        "vi": "cụm từ",
        "ko": "구, 어구 (phrase)",
@@ -59245,13 +59362,7 @@
        },
        "img": "b-cum-tu.webp",
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "237",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "một ly",
        "ko": "한 잔 (one cup)",
@@ -59295,7 +59406,7 @@
      ]
     },
     {
-     "title": "238",
+     "title": "237",
      "sub": "",
      "words": [
       {
@@ -59400,12 +59511,12 @@
      ]
     },
     {
-     "title": "239",
+     "title": "238",
      "sub": "",
      "words": [
       {
        "vi": "chùa",
-       "ko": "절 (pagoda)",
+       "ko": "절, 사찰",
        "kr_read": "쭈어",
        "ex": {
         "vi": "Chúng tôi đi thăm một ngôi chùa cổ.",
@@ -59507,7 +59618,7 @@
      ]
     },
     {
-     "title": "240",
+     "title": "239",
      "sub": "",
      "words": [
       {
@@ -59692,9 +59803,19 @@
      ]
     },
     {
-     "title": "241",
+     "title": "240",
      "sub": "",
      "words": [
+      {
+       "vi": "động lực",
+       "ko": "동력, 원동력",
+       "kr_read": "동 륵",
+       "ex": {
+        "vi": "Gia đình là động lực của tôi.",
+        "ko": "가족은 나의 동기이다."
+       },
+       "img": "b-dong-luc.webp"
+      },
       {
        "vi": "còn nhớ",
        "ko": "아직 기억하다 (still remember)",
@@ -59731,7 +59852,7 @@
      ]
     },
     {
-     "title": "242",
+     "title": "241",
      "sub": "",
      "words": [
       {
@@ -59905,7 +60026,7 @@
      ]
     },
     {
-     "title": "243",
+     "title": "242",
      "sub": "",
      "words": [
       {
@@ -59922,7 +60043,7 @@
      ]
     },
     {
-     "title": "244",
+     "title": "243",
      "sub": "",
      "words": [
       {
@@ -60052,7 +60173,7 @@
      ]
     },
     {
-     "title": "245",
+     "title": "244",
      "sub": "",
      "words": [
       {
@@ -60068,7 +60189,7 @@
       },
       {
        "vi": "cược",
-       "ko": "내기하다, 걸다 (bet / wager)",
+       "ko": "내기하다, 걸다",
        "kr_read": "끄억",
        "ex": {
         "vi": "Chúng tôi cược một bữa ăn.",
@@ -60201,7 +60322,7 @@
      ]
     },
     {
-     "title": "246",
+     "title": "245",
      "sub": "",
      "words": [
       {
@@ -60262,7 +60383,7 @@
      ]
     },
     {
-     "title": "247",
+     "title": "246",
      "sub": "",
      "words": [
       {
@@ -60396,7 +60517,7 @@
      ]
     },
     {
-     "title": "248",
+     "title": "247",
      "sub": "",
      "words": [
       {
@@ -60408,6 +60529,16 @@
         "ko": "그는 알코올 중독에 걸렸다."
        },
        "img": "b-nghien-ruou.webp"
+      },
+      {
+       "vi": "nghiện",
+       "ko": "중독되다(to addicted)",
+       "kr_read": "응이엔",
+       "ex": {
+        "vi": "Anh ấy nghiện chơi game.",
+        "ko": "그는 게임에 중독되었다."
+       },
+       "img": "b-nghien.webp"
       },
       {
        "vi": "nguyện vọng",
@@ -60449,6 +60580,17 @@
         "ko": "쌀 한 포대 주세요."
        },
        "img": "w-4dcd5679db.webp"
+      },
+      {
+       "vi": "kiếm tiền",
+       "ko": "돈을 벌다",
+       "kr_read": "끼엠 띠엔",
+       "ex": {
+        "vi": "Anh ấy kiếm tiền bằng nghề tự do.",
+        "ko": "그는 프리랜서 일로 돈을 번다."
+       },
+       "img": "b-kiem-tien.webp",
+       "weekly": true
       },
       {
        "vi": "sưu tập",
@@ -60504,11 +60646,22 @@
        },
        "img": "b-cau-thu.webp",
        "weekly": true
+      },
+      {
+       "vi": "phổ thông",
+       "ko": "보통의, 일반적인",
+       "kr_read": "포 통",
+       "ex": {
+        "vi": "Đây là kiến thức phổ thông.",
+        "ko": "이것은 일반적인 지식이다."
+       },
+       "img": "b-pho-thong.webp",
+       "weekly": true
       }
      ]
     },
     {
-     "title": "249",
+     "title": "248",
      "sub": "",
      "words": [
       {
@@ -60553,16 +60706,6 @@
        },
        "img": "b-khoc.webp",
        "star": 1
-      },
-      {
-       "vi": "khàn",
-       "ko": "목이 쉬다(a frog in your throat)",
-       "kr_read": "칸",
-       "ex": {
-        "vi": "Giọng tôi bị khàn vì cảm.",
-        "ko": "나는 감기로 목이 쉬었다."
-       },
-       "img": "w-45531f0d4f.webp"
       },
       {
        "vi": "giọng",
@@ -60664,7 +60807,7 @@
      ]
     },
     {
-     "title": "250",
+     "title": "249",
      "sub": "",
      "words": [
       {
@@ -60811,7 +60954,7 @@
      ]
     },
     {
-     "title": "251",
+     "title": "250",
      "sub": "",
      "words": [
       {
@@ -60981,7 +61124,7 @@
       },
       {
        "vi": "ướt",
-       "ko": "젖다 (wet)",
+       "ko": "젖은",
        "kr_read": "으엇",
        "ex": {
         "vi": "Áo tôi bị ướt vì mưa.",
@@ -60994,7 +61137,7 @@
      ]
     },
     {
-     "title": "252",
+     "title": "251",
      "sub": "",
      "words": [
       {
@@ -61032,7 +61175,7 @@
       },
       {
        "vi": "nhà bếp",
-       "ko": "주방 kitchen",
+       "ko": "주방, 부엌",
        "kr_read": "냐 벱",
        "ex": {
         "vi": "Mẹ tôi đang nấu ăn trong nhà bếp.",
@@ -61164,7 +61307,7 @@
      ]
     },
     {
-     "title": "253",
+     "title": "252",
      "sub": "",
      "words": [
       {
@@ -61191,7 +61334,7 @@
      ]
     },
     {
-     "title": "254",
+     "title": "253",
      "sub": "",
      "words": [
       {
@@ -61228,7 +61371,7 @@
       },
       {
        "vi": "yêu cầu",
-       "ko": "요구하다 (order)",
+       "ko": "요구(하다), 요청(하다)",
        "kr_read": "이에우 꺼우",
        "ex": {
         "vi": "Khách hàng yêu cầu hoàn tiền.",
@@ -61304,12 +61447,12 @@
      ]
     },
     {
-     "title": "255",
+     "title": "254",
      "sub": "",
      "words": [
       {
        "vi": "nhanh lên",
-       "ko": "서둘러 (hurry up)",
+       "ko": "서둘러 (hurry up)",
        "kr_read": "나인 렌",
        "ex": {
         "vi": "Nhanh lên, chúng ta sắp trễ rồi!",
@@ -61342,6 +61485,16 @@
        "weekly": true
       },
       {
+       "vi": "lần sau",
+       "ko": "다음번에",
+       "kr_read": "런 싸우",
+       "ex": {
+        "vi": "Lần sau chúng ta đi cùng nhau nhé.",
+        "ko": "다음번에는 우리 같이 가요."
+       },
+       "img": "b-lan-sau.webp"
+      },
+      {
        "vi": "đi chậm",
        "ko": "천천히 가다 / ( go slowly )",
        "kr_read": "디 쩜",
@@ -61366,7 +61519,7 @@
       },
       {
        "vi": "đường",
-       "ko": "길, 도로 /way , road",
+       "ko": "길, 도로 / 설탕",
        "kr_read": "드엉",
        "ex": {
         "vi": "Con đường này rất đẹp.",
@@ -61409,7 +61562,7 @@
      ]
     },
     {
-     "title": "256",
+     "title": "255",
      "sub": "",
      "words": [
       {
@@ -61571,7 +61724,7 @@
      ]
     },
     {
-     "title": "257",
+     "title": "256",
      "sub": "",
      "words": [
       {
@@ -61651,7 +61804,7 @@
       },
       {
        "vi": "văn phòng phẩm",
-       "ko": "문구류 (stationery)",
+       "ko": "문구류 (stationery)",
        "kr_read": "반 퐁 펌",
        "ex": {
         "vi": "Tôi cần mua thêm văn phòng phẩm.",
@@ -61663,7 +61816,7 @@
       },
       {
        "vi": "giải tán",
-       "ko": "해산시키다 (to disperse)",
+       "ko": "해산시키다 (to disperse)",
        "kr_read": "자이 딴",
        "ex": {
         "vi": "Cảnh sát yêu cầu đám đông giải tán.",
@@ -61687,7 +61840,7 @@
       },
       {
        "vi": "mất cắp",
-       "ko": "도둑맞다 (to steal / be stolen)",
+       "ko": "도둑맞다 (to steal / be stolen)",
        "kr_read": "멋 깝",
        "ex": {
         "vi": "Xe máy của tôi bị mất cắp.",
@@ -61744,7 +61897,7 @@
      ]
     },
     {
-     "title": "258",
+     "title": "257",
      "sub": "",
      "words": [
       {
@@ -61797,7 +61950,7 @@
       },
       {
        "vi": "ý thức",
-       "ko": "의식, 자각, 시민의식 (awareness / consciousness)",
+       "ko": "의식",
        "kr_read": "이 특",
        "ex": {
         "vi": "Chúng ta cần nâng cao ý thức bảo vệ môi trường.",
@@ -61832,7 +61985,7 @@
       },
       {
        "vi": "bộ mặt",
-       "ko": "얼굴, 외관 (Appearance)",
+       "ko": "얼굴 / 모습 / 체면",
        "kr_read": "보 맛",
        "ex": {
         "vi": "Thành phố đã thay đổi bộ mặt hoàn toàn.",
@@ -61892,7 +62045,7 @@
      ]
     },
     {
-     "title": "259",
+     "title": "258",
      "sub": "",
      "words": [
       {
@@ -61907,7 +62060,7 @@
       },
       {
        "vi": "bán lẻ",
-       "ko": "소매하다 (to sell retail)",
+       "ko": "소매하다 (to sell retail)",
        "kr_read": "반 래",
        "ex": {
         "vi": "Cô ấy làm việc trong ngành bán lẻ.",
@@ -61930,7 +62083,7 @@
       },
       {
        "vi": "thượng đế",
-       "ko": "상제/하느님 (god)",
+       "ko": "상제/하느님 (god)",
        "kr_read": "트엉 데",
        "ex": {
         "vi": "Nhiều người tin vào thượng đế.",
@@ -62041,7 +62194,7 @@
      ]
     },
     {
-     "title": "260",
+     "title": "259",
      "sub": "",
      "words": [
       {
@@ -62168,19 +62321,9 @@
      ]
     },
     {
-     "title": "261",
+     "title": "260",
      "sub": "",
      "words": [
-      {
-       "vi": "Đã... lại...",
-       "ko": "…했을 뿐만 아니라 …까지 했다 Not only …but also …",
-       "kr_read": "다 라이",
-       "ex": {
-        "vi": "Anh ấy đã thông minh lại chăm chỉ.",
-        "ko": "그는 똑똑할 뿐만 아니라 부지런하기까지 하다."
-       },
-       "img": "b-da-lai.webp"
-      },
       {
        "vi": "cầu thả",
        "ko": "부주의한, 대충 하는 careless / sloppy",
@@ -62235,7 +62378,7 @@
       },
       {
        "vi": "mắc lỗi",
-       "ko": "(실수를) 저지르다",
+       "ko": "실수를 하다 make a mistake",
        "kr_read": "막 로이",
        "ex": {
         "vi": "Ai cũng có thể mắc lỗi.",
@@ -62278,7 +62421,7 @@
      ]
     },
     {
-     "title": "262",
+     "title": "261",
      "sub": "",
      "words": [
       {
@@ -62294,7 +62437,7 @@
       },
       {
        "vi": "dân cư",
-       "ko": "주민/거주자 (inhabitants)",
+       "ko": "주민/거주자 (inhabitants)",
        "kr_read": "전 끄",
        "ex": {
         "vi": "Khu này có nhiều dân cư sinh sống.",
@@ -62306,7 +62449,7 @@
       },
       {
        "vi": "bãi biển",
-       "ko": "해변/해수욕장 (beach)",
+       "ko": "해변/해수욕장 (beach)",
        "kr_read": "바이 비엔",
        "ex": {
         "vi": "Chúng tôi đi chơi ở bãi biển.",
@@ -62328,7 +62471,7 @@
       },
       {
        "vi": "sầm uất",
-       "ko": "붐비는/번화한 (crowded & busy)",
+       "ko": "붐비는/번화한 (crowded & busy)",
        "kr_read": "썸 우엇",
        "ex": {
         "vi": "Khu phố này rất sầm uất.",
@@ -62340,7 +62483,7 @@
       },
       {
        "vi": "bán buôn",
-       "ko": "도매하다(북부 표현) (to wholesale)",
+       "ko": "도매하다(북부 표현) (to wholesale)",
        "kr_read": "반 부온",
        "ex": {
         "vi": "Cửa hàng này chuyên bán buôn quần áo.",
@@ -62352,7 +62495,7 @@
       },
       {
        "vi": "cố định",
-       "ko": "고정된 (fixed)",
+       "ko": "고정된 (fixed)",
        "kr_read": "꼬 딘",
        "ex": {
         "vi": "Bàn này được cố định vào tường.",
@@ -62364,7 +62507,7 @@
       },
       {
        "vi": "tồn tại",
-       "ko": "존재하다 (to exist)",
+       "ko": "존재하다 (to exist)",
        "kr_read": "똔 따이",
        "ex": {
         "vi": "Vấn đề này vẫn tồn tại.",
@@ -62376,7 +62519,7 @@
       },
       {
        "vi": "xa xôi",
-       "ko": "멀리 떨어진 (far)",
+       "ko": "멀리 떨어진 (far)",
        "kr_read": "싸 쏘이",
        "ex": {
         "vi": "Anh ấy sống ở một vùng xa xôi.",
@@ -62388,7 +62531,7 @@
       },
       {
        "vi": "lời",
-       "ko": "이익/이자 (profit/interest)",
+       "ko": "이익/이자 (profit/interest)",
        "kr_read": "러이",
        "ex": {
         "vi": "Tháng này công ty có lời.",
@@ -62400,7 +62543,7 @@
       },
       {
        "vi": "rủi",
-       "ko": "운이 나쁜 (unlucky)",
+       "ko": "운이 나쁜 (unlucky)",
        "kr_read": "주이",
        "ex": {
         "vi": "Hôm nay tôi thấy khá rủi.",
@@ -62423,7 +62566,7 @@
       },
       {
        "vi": "song",
-       "ko": "그러나/하지만 (but)",
+       "ko": "그러나/하지만 (but)",
        "kr_read": "쏭",
        "ex": {
         "vi": "Anh ấy nghèo, song rất hạnh phúc.",
@@ -62435,7 +62578,7 @@
       },
       {
        "vi": "duy trì",
-       "ko": "유지하다 (to maintain)",
+       "ko": "유지하다 (to maintain)",
        "kr_read": "주이 찌",
        "ex": {
         "vi": "Chúng ta cần duy trì sức khỏe tốt.",
@@ -62460,7 +62603,7 @@
      ]
     },
     {
-     "title": "263",
+     "title": "262",
      "sub": "",
      "words": [
       {
@@ -62487,7 +62630,7 @@
      ]
     },
     {
-     "title": "264",
+     "title": "263",
      "sub": "",
      "words": [
       {
@@ -62503,7 +62646,7 @@
       },
       {
        "vi": "giáo dục",
-       "ko": "교육 (education)",
+       "ko": "교육",
        "kr_read": "자오 죽",
        "ex": {
         "vi": "Giáo dục rất quan trọng với trẻ em.",
@@ -62514,7 +62657,7 @@
       },
       {
        "vi": "cảng",
-       "ko": "항구 (port)",
+       "ko": "항구",
        "kr_read": "깡",
        "ex": {
         "vi": "Tàu vừa cập cảng.",
@@ -62657,7 +62800,7 @@
      ]
     },
     {
-     "title": "265",
+     "title": "264",
      "sub": "",
      "words": [
       {
@@ -62681,18 +62824,6 @@
        },
        "img": "b-co-don.webp",
        "star": 1
-      },
-      {
-       "vi": "diện tích",
-       "ko": "면적 (area)",
-       "kr_read": "지엔 띡",
-       "ex": {
-        "vi": "Diện tích căn phòng này khá rộng.",
-        "ko": "이 방의 면적은 꽤 넓습니다."
-       },
-       "img": "b-dien-tich.webp",
-       "star": 3,
-       "weekly": true
       },
       {
        "vi": "di tích lịch sử",
@@ -62719,7 +62850,7 @@
      ]
     },
     {
-     "title": "266",
+     "title": "265",
      "sub": "",
      "words": [
       {
@@ -62837,7 +62968,7 @@
      ]
     },
     {
-     "title": "267",
+     "title": "266",
      "sub": "",
      "words": [
       {
@@ -62948,7 +63079,7 @@
      ]
     },
     {
-     "title": "268",
+     "title": "267",
      "sub": "",
      "words": [
       {
@@ -63046,7 +63177,7 @@
      ]
     },
     {
-     "title": "269",
+     "title": "268",
      "sub": "",
      "words": [
       {
@@ -63096,7 +63227,7 @@
       },
       {
        "vi": "tỉnh",
-       "ko": "성/지방 (province)",
+       "ko": "성/지방 (province)",
        "kr_read": "띤",
        "ex": {
         "vi": "Tôi sinh ra ở một tỉnh nhỏ.",
@@ -63210,7 +63341,7 @@
      ]
     },
     {
-     "title": "270",
+     "title": "269",
      "sub": "",
      "words": [
       {
@@ -63347,12 +63478,12 @@
      ]
     },
     {
-     "title": "271",
+     "title": "270",
      "sub": "",
      "words": [
       {
        "vi": "chợ đầu mối",
-       "ko": "도매 시장 (wholesale market)",
+       "ko": "도매 시장 (wholesale market)",
        "kr_read": "쩌 더우 모이",
        "ex": {
         "vi": "Ông tôi lấy hàng ở chợ đầu mối.",
@@ -63503,12 +63634,12 @@
      ]
     },
     {
-     "title": "272",
+     "title": "271",
      "sub": "",
      "words": [
       {
        "vi": "lộn xộn",
-       "ko": "어수선하다 / 혼란스럽다 (messy)",
+       "ko": "어지러운, 무질서한",
        "kr_read": "론 쏜",
        "ex": {
         "vi": "Phòng của em trai tôi rất lộn xộn.",
@@ -63530,19 +63661,8 @@
        "weekly": true
       },
       {
-       "vi": "quận, huyện",
-       "ko": "구 / 군 (행정구역)",
-       "kr_read": "꾸언 후옌",
-       "ex": {
-        "vi": "Anh ấy sống ở quận Cầu Giấy.",
-        "ko": "그는 꺼우저이 구에 산다."
-       },
-       "img": "b-quan-huyen.webp",
-       "star": 1
-      },
-      {
        "vi": "truyền thông",
-       "ko": "미디어 (media)",
+       "ko": "소통, 매스컴",
        "kr_read": "쭈옌 통",
        "ex": {
         "vi": "Sự việc được truyền thông đưa tin.",
@@ -63597,7 +63717,7 @@
       },
       {
        "vi": "xứng đáng",
-       "ko": "가치 있다 / 마땅하다 (worthy / deserving)",
+       "ko": "마땅하다, 가치가 있다",
        "kr_read": "씅 당",
        "ex": {
         "vi": "Bạn xứng đáng được nghỉ ngơi.",
@@ -63619,7 +63739,7 @@
       },
       {
        "vi": "chật chội",
-       "ko": "비좁고 답답하다 (cramped)",
+       "ko": "좁은, 비좁은",
        "kr_read": "쩟 쪼이",
        "ex": {
         "vi": "Căn phòng này quá chật chội.",
@@ -63631,7 +63751,7 @@
      ]
     },
     {
-     "title": "273",
+     "title": "272",
      "sub": "",
      "words": [
       {
@@ -63773,7 +63893,7 @@
      ]
     },
     {
-     "title": "274",
+     "title": "273",
      "sub": "",
      "words": [
       {
@@ -63852,7 +63972,7 @@
      ]
     },
     {
-     "title": "275",
+     "title": "274",
      "sub": "",
      "words": [
       {
@@ -63912,7 +64032,7 @@
      ]
     },
     {
-     "title": "276",
+     "title": "275",
      "sub": "",
      "words": [
       {
@@ -63969,7 +64089,7 @@
      ]
     },
     {
-     "title": "277",
+     "title": "276",
      "sub": "",
      "words": [
       {
@@ -64007,7 +64127,7 @@
      ]
     },
     {
-     "title": "278",
+     "title": "277",
      "sub": "",
      "words": [
       {
@@ -64084,12 +64204,12 @@
      ]
     },
     {
-     "title": "279",
+     "title": "278",
      "sub": "",
      "words": [
       {
        "vi": "ùn tắc",
-       "ko": "교통 정체 / 막히다 (traffic jam)",
+       "ko": "정체, 막히다",
        "kr_read": "운 딱",
        "ex": {
         "vi": "Đường phố bị ùn tắc vào giờ cao điểm.",
@@ -64100,7 +64220,7 @@
       },
       {
        "vi": "đồng đều",
-       "ko": "균등하다 / 고르다 (even / uniform)",
+       "ko": "균등한",
        "kr_read": "동 데우",
        "ex": {
         "vi": "Hãy chia đều số tiền này.",
@@ -64164,7 +64284,7 @@
      ]
     },
     {
-     "title": "280",
+     "title": "279",
      "sub": "",
      "words": [
       {
@@ -64213,7 +64333,7 @@
       },
       {
        "vi": "phụ đề",
-       "ko": "자막 (Subtitle)",
+       "ko": "자막",
        "kr_read": "푸 데",
        "ex": {
         "vi": "Bộ phim này có phụ đề tiếng Hàn.",
@@ -64335,7 +64455,7 @@
      ]
     },
     {
-     "title": "281",
+     "title": "280",
      "sub": "",
      "words": [
       {
@@ -64352,7 +64472,7 @@
      ]
     },
     {
-     "title": "282",
+     "title": "281",
      "sub": "",
      "words": [
       {
@@ -64509,7 +64629,7 @@
      ]
     },
     {
-     "title": "283",
+     "title": "282",
      "sub": "",
      "words": [
       {
@@ -64610,7 +64730,7 @@
      ]
     },
     {
-     "title": "284",
+     "title": "283",
      "sub": "",
      "words": [
       {
@@ -64657,7 +64777,7 @@
      ]
     },
     {
-     "title": "285",
+     "title": "284",
      "sub": "",
      "words": [
       {
@@ -64824,7 +64944,7 @@
      ]
     },
     {
-     "title": "286",
+     "title": "285",
      "sub": "",
      "words": [
       {
@@ -64861,7 +64981,7 @@
      ]
     },
     {
-     "title": "287",
+     "title": "286",
      "sub": "",
      "words": [
       {
@@ -65018,7 +65138,7 @@
      ]
     },
     {
-     "title": "288",
+     "title": "287",
      "sub": "",
      "words": [
       {
@@ -65096,17 +65216,6 @@
        "weekly": true
       },
       {
-       "vi": "sức khỏe thể chất",
-       "ko": "신체 건강 (physical health)",
-       "kr_read": "쓱 코애 테 쩟",
-       "ex": {
-        "vi": "Tập thể dục tốt cho sức khỏe thể chất.",
-        "ko": "운동은 신체 건강에 좋다."
-       },
-       "img": "b-suc-khoe-the-chat.webp",
-       "weekly": true
-      },
-      {
        "vi": "chế độ ăn",
        "ko": "식단 / 다이어트 (diet)",
        "kr_read": "쩨 도 안",
@@ -65181,13 +65290,7 @@
         "ko": "우리는 학교 정문에서 만난다."
        },
        "img": "w-bcf0943091.webp"
-      }
-     ]
-    },
-    {
-     "title": "289",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "cổng viên",
        "ko": "(공원) 정문 (park gate)",
@@ -65201,7 +65304,7 @@
      ]
     },
     {
-     "title": "290",
+     "title": "288",
      "sub": "",
      "words": [
       {
@@ -65249,7 +65352,7 @@
      ]
     },
     {
-     "title": "291",
+     "title": "289",
      "sub": "",
      "words": [
       {
@@ -65418,7 +65521,7 @@
      ]
     },
     {
-     "title": "292",
+     "title": "290",
      "sub": "",
      "words": [
       {
@@ -65435,7 +65538,7 @@
      ]
     },
     {
-     "title": "293",
+     "title": "291",
      "sub": "",
      "words": [
       {
@@ -65472,7 +65575,7 @@
       },
       {
        "vi": "kín đáo",
-       "ko": "은밀한 (discreet/subtle)",
+       "ko": "수줍은, 은밀한 (discreet/subtle)",
        "kr_read": "낀 다오",
        "ex": {
         "vi": "Cô ấy ăn mặc rất kín đáo.",
@@ -65606,7 +65709,7 @@
      ]
     },
     {
-     "title": "294",
+     "title": "292",
      "sub": "",
      "words": [
       {
@@ -65623,7 +65726,7 @@
      ]
     },
     {
-     "title": "295",
+     "title": "293",
      "sub": "",
      "words": [
       {
@@ -65705,7 +65808,7 @@
      ]
     },
     {
-     "title": "296",
+     "title": "294",
      "sub": "",
      "words": [
       {
@@ -65816,7 +65919,7 @@
       },
       {
        "vi": "giả vờ",
-       "ko": "~인 척하다 (act as)",
+       "ko": "~인 척하다",
        "kr_read": "자 버",
        "ex": {
         "vi": "Cô ấy giả vờ không biết gì.",
@@ -65840,7 +65943,7 @@
      ]
     },
     {
-     "title": "297",
+     "title": "295",
      "sub": "",
      "words": [
       {
@@ -66001,7 +66104,7 @@
      ]
     },
     {
-     "title": "298",
+     "title": "296",
      "sub": "",
      "words": [
       {
@@ -66111,7 +66214,7 @@
      ]
     },
     {
-     "title": "299",
+     "title": "297",
      "sub": "",
      "words": [
       {
@@ -66148,7 +66251,7 @@
       },
       {
        "vi": "ưu điểm",
-       "ko": "장점",
+       "ko": "장점, 우점",
        "kr_read": "으우 디엠",
        "ex": {
         "vi": "Ưu điểm của xe này là tiết kiệm xăng.",
@@ -66193,7 +66296,7 @@
       },
       {
        "vi": "hài kịch",
-       "ko": "희극, 코미디 comedy",
+       "ko": "희극 (코미디)",
        "kr_read": "하이 끽",
        "ex": {
         "vi": "Tôi thích xem phim hài kịch.",
@@ -66229,7 +66332,7 @@
       },
       {
        "vi": "phân tích",
-       "ko": "분석하다 (to analyze)",
+       "ko": "분석하다",
        "kr_read": "펀 띡",
        "ex": {
         "vi": "Chúng ta cần phân tích kỹ vấn đề này.",
@@ -66253,7 +66356,7 @@
      ]
     },
     {
-     "title": "300",
+     "title": "298",
      "sub": "",
      "words": [
       {
@@ -66401,7 +66504,7 @@
      ]
     },
     {
-     "title": "301",
+     "title": "299",
      "sub": "",
      "words": [
       {
@@ -66430,7 +66533,7 @@
       },
       {
        "vi": "thạo",
-       "ko": "능숙한 skillful",
+       "ko": "능숙한, 숙련된",
        "kr_read": "타오",
        "ex": {
         "vi": "Anh ấy rất thạo việc này.",
@@ -66526,7 +66629,7 @@
       },
       {
        "vi": "mỹ nghệ",
-       "ko": "공예 fine arts",
+       "ko": "미예 fine arts",
        "kr_read": "미 응에",
        "ex": {
         "vi": "Chợ này bán nhiều đồ mỹ nghệ.",
@@ -66587,7 +66690,7 @@
      ]
     },
     {
-     "title": "302",
+     "title": "300",
      "sub": "",
      "words": [
       {
@@ -66641,7 +66744,7 @@
      ]
     },
     {
-     "title": "303",
+     "title": "301",
      "sub": "",
      "words": [
       {
@@ -66717,7 +66820,7 @@
      ]
     },
     {
-     "title": "304",
+     "title": "302",
      "sub": "",
      "words": [
       {
@@ -66795,7 +66898,7 @@
      ]
     },
     {
-     "title": "305",
+     "title": "303",
      "sub": "",
      "words": [
       {
@@ -66811,18 +66914,8 @@
        "weekly": true
       },
       {
-       "vi": "đôi chút",
-       "ko": "잠시",
-       "kr_read": "도이 쭛",
-       "ex": {
-        "vi": "Tôi cảm thấy mệt đôi chút.",
-        "ko": "나는 잠시 피곤함을 느낀다."
-       },
-       "img": "b-doi-chut.webp"
-      },
-      {
        "vi": "bán sỉ",
-       "ko": "도매하다 (to wholesale)",
+       "ko": "도매하다 (to wholesale)",
        "kr_read": "반 씨",
        "ex": {
         "vi": "Chợ này chuyên bán sỉ quần áo.",
@@ -66957,13 +67050,7 @@
         "ko": "그는 내 의견 쪽으로 기울었다."
        },
        "img": "b-thien-ve.webp"
-      }
-     ]
-    },
-    {
-     "title": "306",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "chính thức",
        "ko": "공식적인, 정식의",
@@ -66974,7 +67061,13 @@
        },
        "img": "b-chinh-thuc.webp",
        "star": 1
-      },
+      }
+     ]
+    },
+    {
+     "title": "304",
+     "sub": "",
+     "words": [
       {
        "vi": "năng động",
        "ko": "역동적인, 활동적인",
@@ -66989,7 +67082,7 @@
      ]
     },
     {
-     "title": "307",
+     "title": "305",
      "sub": "",
      "words": [
       {
@@ -67005,7 +67098,7 @@
      ]
     },
     {
-     "title": "308",
+     "title": "306",
      "sub": "",
      "words": [
       {
@@ -67043,7 +67136,7 @@
      ]
     },
     {
-     "title": "309",
+     "title": "307",
      "sub": "",
      "words": [
       {
@@ -67193,7 +67286,7 @@
       },
       {
        "vi": "thừa kế",
-       "ko": "상속하다, 물려받다 (inherit)",
+       "ko": "상속하다, 물려받다",
        "kr_read": "트어 께",
        "ex": {
         "vi": "Anh ấy thừa kế tài sản của bố.",
@@ -67205,7 +67298,7 @@
      ]
     },
     {
-     "title": "310",
+     "title": "308",
      "sub": "",
      "words": [
       {
@@ -67366,7 +67459,7 @@
      ]
     },
     {
-     "title": "311",
+     "title": "309",
      "sub": "",
      "words": [
       {
@@ -67426,7 +67519,7 @@
      ]
     },
     {
-     "title": "312",
+     "title": "310",
      "sub": "",
      "words": [
       {
@@ -67591,7 +67684,7 @@
      ]
     },
     {
-     "title": "313",
+     "title": "311",
      "sub": "",
      "words": [
       {
@@ -67640,7 +67733,7 @@
      ]
     },
     {
-     "title": "314",
+     "title": "312",
      "sub": "",
      "words": [
       {
@@ -67689,7 +67782,7 @@
      ]
     },
     {
-     "title": "315",
+     "title": "313",
      "sub": "",
      "words": [
       {
@@ -67795,7 +67888,7 @@
      ]
     },
     {
-     "title": "316",
+     "title": "314",
      "sub": "",
      "words": [
       {
@@ -67841,16 +67934,6 @@
         "ko": "의사가 환자의 상태를 따라간다."
        },
        "img": "b-theo-doi.webp"
-      },
-      {
-       "vi": "công cụ để",
-       "ko": "~를 위한 수단",
-       "kr_read": "꽁 꾸 데",
-       "ex": {
-        "vi": "Đây là công cụ để học tập.",
-        "ko": "이것은 학습을 위한 수단이다."
-       },
-       "img": "b-cong-cu-de.webp"
       },
       {
        "vi": "mâu thuẫn",
@@ -67953,13 +68036,7 @@
         "ko": "당신은 반대 방향으로 가고 있다."
        },
        "img": "b-nguoc.webp"
-      }
-     ]
-    },
-    {
-     "title": "317",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "siêng năng",
        "ko": "부지런한",
@@ -67969,17 +68046,13 @@
         "ko": "그는 매우 부지런하게 일한다."
        },
        "img": "b-sieng-nang.webp"
-      },
-      {
-       "vi": "khơi dậy",
-       "ko": "유발하다, 불러일으키다",
-       "kr_read": "커이 저이",
-       "ex": {
-        "vi": "Bài học này khơi dậy sự tò mò.",
-        "ko": "이 수업은 호기심을 유발한다."
-       },
-       "img": "b-khoi-day.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "315",
+     "sub": "",
+     "words": [
       {
        "vi": "trật tự",
        "ko": "순서/서열",
@@ -68056,16 +68129,6 @@
        "img": "b-quy-trinh.webp"
       },
       {
-       "vi": "trọng yếu",
-       "ko": "중요한",
-       "kr_read": "쫑 이에우",
-       "ex": {
-        "vi": "Đây là vấn đề trọng yếu.",
-        "ko": "이것은 중요한 문제이다."
-       },
-       "img": "b-trong-yeu.webp"
-      },
-      {
        "vi": "tập thể",
        "ko": "집단, 단체",
        "kr_read": "떱 테",
@@ -68089,7 +68152,7 @@
      ]
     },
     {
-     "title": "318",
+     "title": "316",
      "sub": "",
      "words": [
       {
@@ -68142,16 +68205,6 @@
         "ko": "그녀는 판매업을 한다."
        },
        "img": "b-ban-hang.webp"
-      },
-      {
-       "vi": "tầm nhìn",
-       "ko": "비전",
-       "kr_read": "떰 닌",
-       "ex": {
-        "vi": "Anh ấy có tầm nhìn xa trong kinh doanh.",
-        "ko": "그는 사업에 대한 비전이 있다."
-       },
-       "img": "b-tam-nhin.webp"
       },
       {
        "vi": "chiến lược",
@@ -68240,7 +68293,7 @@
      ]
     },
     {
-     "title": "319",
+     "title": "317",
      "sub": "",
      "words": [
       {
@@ -68256,7 +68309,7 @@
      ]
     },
     {
-     "title": "320",
+     "title": "318",
      "sub": "",
      "words": [
       {
@@ -68417,7 +68470,7 @@
      ]
     },
     {
-     "title": "321",
+     "title": "319",
      "sub": "",
      "words": [
       {
@@ -68525,7 +68578,7 @@
      ]
     },
     {
-     "title": "322",
+     "title": "320",
      "sub": "",
      "words": [
       {
@@ -68661,7 +68714,7 @@
      ]
     },
     {
-     "title": "323",
+     "title": "321",
      "sub": "",
      "words": [
       {
@@ -68742,6 +68795,27 @@
        "weekly": true
       },
       {
+       "vi": "hòn than",
+       "ko": "연탄 (coal briquette)",
+       "kr_read": "혼 탄",
+       "ex": {
+        "vi": "Bà nhóm bếp bằng hòn than.",
+        "ko": "할머니가 연탄으로 불을 피우신다."
+       },
+       "img": "b-hon-than.webp",
+       "weekly": true
+      },
+      {
+       "vi": "sên",
+       "ko": "민달팽이, 달팽이",
+       "kr_read": "쎈",
+       "ex": {
+        "vi": "Có một con sên trên lá cây.",
+        "ko": "나뭇잎 위에 달팽이가 한 마리 있다."
+       },
+       "img": "b-sen.webp"
+      },
+      {
        "vi": "voi",
        "ko": "코끼리 (elephant)",
        "kr_read": "보이",
@@ -68765,7 +68839,7 @@
      ]
     },
     {
-     "title": "324",
+     "title": "322",
      "sub": "",
      "words": [
       {
@@ -68883,7 +68957,7 @@
      ]
     },
     {
-     "title": "325",
+     "title": "323",
      "sub": "",
      "words": [
       {
@@ -69042,7 +69116,7 @@
      ]
     },
     {
-     "title": "326",
+     "title": "324",
      "sub": "",
      "words": [
       {
@@ -69100,7 +69174,7 @@
      ]
     },
     {
-     "title": "327",
+     "title": "325",
      "sub": "",
      "words": [
       {
@@ -69256,7 +69330,7 @@
      ]
     },
     {
-     "title": "328",
+     "title": "326",
      "sub": "",
      "words": [
       {
@@ -69282,7 +69356,7 @@
      ]
     },
     {
-     "title": "329",
+     "title": "327",
      "sub": "",
      "words": [
       {
@@ -69304,6 +69378,16 @@
         "ko": "이 질문은 꽤 까다롭다."
        },
        "img": "b-cac-co.webp"
+      },
+      {
+       "vi": "rừng",
+       "ko": "숲, 산림",
+       "kr_read": "증",
+       "ex": {
+        "vi": "Chúng tôi đi dạo trong rừng.",
+        "ko": "우리는 숲에서 산책했다."
+       },
+       "img": "b-rung.webp"
       },
       {
        "vi": "đi đò",
@@ -69341,7 +69425,7 @@
      ]
     },
     {
-     "title": "330",
+     "title": "328",
      "sub": "",
      "words": [
       {
@@ -69447,7 +69531,7 @@
      ]
     },
     {
-     "title": "331",
+     "title": "329",
      "sub": "",
      "words": [
       {
@@ -69609,7 +69693,7 @@
      ]
     },
     {
-     "title": "332",
+     "title": "330",
      "sub": "",
      "words": [
       {
@@ -69679,7 +69763,7 @@
      ]
     },
     {
-     "title": "333",
+     "title": "331",
      "sub": "",
      "words": [
       {
@@ -69842,7 +69926,7 @@
      ]
     },
     {
-     "title": "334",
+     "title": "332",
      "sub": "",
      "words": [
       {
@@ -69883,7 +69967,7 @@
      ]
     },
     {
-     "title": "335",
+     "title": "333",
      "sub": "",
      "words": [
       {
@@ -69986,7 +70070,7 @@
      ]
     },
     {
-     "title": "336",
+     "title": "334",
      "sub": "",
      "words": [
       {
@@ -70000,16 +70084,6 @@
        "img": "b-rap-chieu-phim.webp",
        "star": 1,
        "weekly": true
-      },
-      {
-       "vi": "máy bán vé tự động",
-       "ko": "키오스크",
-       "kr_read": "마이 반 배 뜨 동",
-       "ex": {
-        "vi": "Hãy mua vé ở máy bán vé tự động.",
-        "ko": "키오스크에서 표를 사세요."
-       },
-       "img": "b-may-ban-ve-tu-dong.webp"
       },
       {
        "vi": "vai chính",
@@ -70054,16 +70128,6 @@
        "star": 1
       },
       {
-       "vi": "kỹ xảo tốt",
-       "ko": "영화기법이좋다",
-       "kr_read": "끼 싸오 똣",
-       "ex": {
-        "vi": "Bộ phim này có kỹ xảo tốt.",
-        "ko": "이 영화는 영화기법이 좋다."
-       },
-       "img": "b-ky-xao-tot.webp"
-      },
-      {
        "vi": "mang tính giáo dục",
        "ko": "교육적이다",
        "kr_read": "망 띤 자오 죽",
@@ -70104,21 +70168,11 @@
         "ko": "그의 사회적 신분은 꽤 높다."
        },
        "img": "b-than-phan-xa-hoi.webp"
-      },
-      {
-       "vi": "sự hiểu lầm",
-       "ko": "오해",
-       "kr_read": "쓰 히에우 럼",
-       "ex": {
-        "vi": "Chúng tôi giải quyết sự hiểu lầm.",
-        "ko": "우리는 오해를 풀었다."
-       },
-       "img": "b-su-hieu-lam.webp"
       }
      ]
     },
     {
-     "title": "337",
+     "title": "335",
      "sub": "",
      "words": [
       {
@@ -70132,16 +70186,6 @@
        "img": "b-phim.webp",
        "star": 1,
        "weekly": true
-      },
-      {
-       "vi": "phim hành động",
-       "ko": "액션 / 영화",
-       "kr_read": "핌 하인 동",
-       "ex": {
-        "vi": "Tôi thích xem phim hành động.",
-        "ko": "나는 액션 영화 보는 것을 좋아한다."
-       },
-       "img": "b-phim-hanh-dong.webp"
       },
       {
        "vi": "phim lãng mạn",
@@ -70187,7 +70231,7 @@
       },
       {
        "vi": "cảm động",
-       "ko": "감동하다 (impressed)",
+       "ko": "감동하다",
        "kr_read": "깜 동",
        "ex": {
         "vi": "Câu chuyện đó khiến tôi rất cảm động.",
@@ -70265,7 +70309,7 @@
      ]
     },
     {
-     "title": "338",
+     "title": "336",
      "sub": "",
      "words": [
       {
@@ -70293,7 +70337,7 @@
      ]
     },
     {
-     "title": "339",
+     "title": "337",
      "sub": "",
      "words": [
       {
@@ -70409,19 +70453,9 @@
      ]
     },
     {
-     "title": "340",
+     "title": "338",
      "sub": "",
      "words": [
-      {
-       "vi": "chuyên môn",
-       "ko": "전공",
-       "kr_read": "쭈옌 몬",
-       "ex": {
-        "vi": "Chuyên môn của anh ấy là kinh tế.",
-        "ko": "그의 전공은 경제학이다."
-       },
-       "img": "b-chuyen-mon.webp"
-      },
       {
        "vi": "trưởng phòng nhân sự",
        "ko": "인사부장",
@@ -70506,7 +70540,7 @@
      ]
     },
     {
-     "title": "341",
+     "title": "339",
      "sub": "",
      "words": [
       {
@@ -70532,7 +70566,7 @@
      ]
     },
     {
-     "title": "342",
+     "title": "340",
      "sub": "",
      "words": [
       {
@@ -70567,6 +70601,16 @@
        },
        "img": "b-nha-the-thao.webp",
        "weekly": true
+      },
+      {
+       "vi": "công viên",
+       "ko": "공원",
+       "kr_read": "꽁 비엔",
+       "ex": {
+        "vi": "Chúng tôi đi dạo ở công viên.",
+        "ko": "우리는 공원에서 산책했다."
+       },
+       "img": "b-cong-vien.webp"
       },
       {
        "vi": "quán karaoke",
@@ -70633,7 +70677,7 @@
      ]
     },
     {
-     "title": "343",
+     "title": "341",
      "sub": "",
      "words": [
       {
@@ -70750,7 +70794,7 @@
      ]
     },
     {
-     "title": "344",
+     "title": "342",
      "sub": "",
      "words": [
       {
@@ -70897,7 +70941,7 @@
      ]
     },
     {
-     "title": "345",
+     "title": "343",
      "sub": "",
      "words": [
       {
@@ -71055,7 +71099,7 @@
      ]
     },
     {
-     "title": "346",
+     "title": "344",
      "sub": "",
      "words": [
       {
@@ -71067,16 +71111,6 @@
         "ko": "그의 이름은 곳곳에 알려졌다."
        },
        "img": "b-thanh-danh.webp"
-      },
-      {
-       "vi": "kỷ lục",
-       "ko": "기록",
-       "kr_read": "끼 룩",
-       "ex": {
-        "vi": "Anh ấy phá kỷ lục thế giới.",
-        "ko": "그는 세계 기록을 깼다."
-       },
-       "img": "b-ky-luc.webp"
       },
       {
        "vi": "điểm mạnh",
@@ -71191,7 +71225,7 @@
       },
       {
        "vi": "thất bại",
-       "ko": "실패하다 - failed",
+       "ko": "실패하다",
        "kr_read": "텃 바이",
        "ex": {
         "vi": "Kế hoạch của chúng tôi đã thất bại.",
@@ -71210,13 +71244,7 @@
        },
        "img": "b-cong-thuc.webp",
        "star": 1
-      }
-     ]
-    },
-    {
-     "title": "347",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "bảng khảo sát",
        "ko": "설문조사",
@@ -71230,7 +71258,7 @@
      ]
     },
     {
-     "title": "348",
+     "title": "345",
      "sub": "",
      "words": [
       {
@@ -71394,7 +71422,7 @@
      ]
     },
     {
-     "title": "349",
+     "title": "346",
      "sub": "",
      "words": [
       {
@@ -71458,7 +71486,7 @@
      ]
     },
     {
-     "title": "350",
+     "title": "347",
      "sub": "",
      "words": [
       {
@@ -71617,7 +71645,7 @@
      ]
     },
     {
-     "title": "351",
+     "title": "348",
      "sub": "",
      "words": [
       {
@@ -71693,7 +71721,7 @@
      ]
     },
     {
-     "title": "352",
+     "title": "349",
      "sub": "",
      "words": [
       {
@@ -71849,7 +71877,7 @@
      ]
     },
     {
-     "title": "353",
+     "title": "350",
      "sub": "",
      "words": [
       {
@@ -72003,7 +72031,7 @@
      ]
     },
     {
-     "title": "354",
+     "title": "351",
      "sub": "",
      "words": [
       {
@@ -72132,7 +72160,7 @@
      ]
     },
     {
-     "title": "355",
+     "title": "352",
      "sub": "",
      "words": [
       {
@@ -72282,7 +72310,7 @@
      ]
     },
     {
-     "title": "356",
+     "title": "353",
      "sub": "",
      "words": [
       {
@@ -72306,11 +72334,21 @@
        },
        "img": "b-quy-tac.webp",
        "weekly": true
+      },
+      {
+       "vi": "tận mắt",
+       "ko": "직접 (자기 눈으로)",
+       "kr_read": "떤 맛",
+       "ex": {
+        "vi": "Tôi tận mắt chứng kiến sự việc.",
+        "ko": "나는 직접 눈으로 그 일을 목격했다."
+       },
+       "img": "b-tan-mat.webp"
       }
      ]
     },
     {
-     "title": "357",
+     "title": "354",
      "sub": "",
      "words": [
       {
@@ -72389,7 +72427,7 @@
      ]
     },
     {
-     "title": "358",
+     "title": "355",
      "sub": "",
      "words": [
       {
@@ -72518,7 +72556,7 @@
      ]
     },
     {
-     "title": "359",
+     "title": "356",
      "sub": "",
      "words": [
       {
@@ -72541,16 +72579,6 @@
         "ko": "프린터가 종이 걸림이 났다."
        },
        "img": "b-ket-giay.webp"
-      },
-      {
-       "vi": "hết giấy",
-       "ko": "용지부족",
-       "kr_read": "헷 자이",
-       "ex": {
-        "vi": "Máy in bị hết giáy.",
-        "ko": "프린터가 용지부족이다."
-       },
-       "img": "b-het-giay.webp"
       },
       {
        "vi": "hết mực",
@@ -72605,16 +72633,6 @@
         "ko": "전화번호를 입력해야 한다."
        },
        "img": "b-bam-so.webp"
-      },
-      {
-       "vi": "quét vi rút",
-       "ko": "바이러스 검사(스캔)",
-       "kr_read": "꾸앳 비 줏",
-       "ex": {
-        "vi": "Tôi quét vi rút cho máy tính.",
-        "ko": "나는 컴퓨터에 바이러스 검사를 한다."
-       },
-       "img": "b-quet-vi-rut.webp"
       },
       {
        "vi": "nhiễm vi rút",
@@ -72678,22 +72696,6 @@
         "ko": "나는 당신의 도움이 필요하다."
        },
        "img": "b-su-giup.webp"
-      }
-     ]
-    },
-    {
-     "title": "360",
-     "sub": "",
-     "words": [
-      {
-       "vi": "độ phân giải",
-       "ko": "해상도",
-       "kr_read": "도 펀 자이",
-       "ex": {
-        "vi": "Camera này có độ phân giải cao.",
-        "ko": "이 카메라는 해상도가 높다."
-       },
-       "img": "b-do-phan-giai.webp"
       },
       {
        "vi": "bộ nhớ",
@@ -72718,7 +72720,7 @@
      ]
     },
     {
-     "title": "361",
+     "title": "357",
      "sub": "",
      "words": [
       {
@@ -72767,7 +72769,7 @@
      ]
     },
     {
-     "title": "362",
+     "title": "358",
      "sub": "",
      "words": [
       {
@@ -72833,7 +72835,7 @@
      ]
     },
     {
-     "title": "363",
+     "title": "359",
      "sub": "",
      "words": [
       {
@@ -72856,16 +72858,6 @@
        },
        "img": "b-hoa-ra.webp",
        "star": 2
-      },
-      {
-       "vi": "ngay khi",
-       "ko": "~하자마자",
-       "kr_read": "응아이 키",
-       "ex": {
-        "vi": "Ngay khi về nhà, tôi tắm rửa.",
-        "ko": "집에 돌아오자마자 나는 씻었다."
-       },
-       "img": "b-ngay-khi.webp"
       },
       {
        "vi": "vô cùng",
@@ -72928,16 +72920,6 @@
        "img": "b-nhan-vat.webp"
       },
       {
-       "vi": "giây phút",
-       "ko": "순간(찰나)",
-       "kr_read": "저이 풋",
-       "ex": {
-        "vi": "Đây là giây phút quan trọng.",
-        "ko": "이것은 중요한 순간이다."
-       },
-       "img": "b-giay-phut.webp"
-      },
-      {
        "vi": "khởi động",
        "ko": "워밍업(준비운동)하다",
        "kr_read": "커이 동",
@@ -72988,13 +72970,7 @@
        "img": "b-doi-dien.webp",
        "star": 1,
        "weekly": true
-      }
-     ]
-    },
-    {
-     "title": "364",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "xóa văn bản",
        "ko": "문서를 / 삭제하다",
@@ -73018,7 +72994,7 @@
      ]
     },
     {
-     "title": "365",
+     "title": "360",
      "sub": "",
      "words": [
       {
@@ -73045,7 +73021,7 @@
       },
       {
        "vi": "reo",
-       "ko": "환호하다, 함성을 지르다",
+       "ko": "파업하다",
        "kr_read": "재오",
        "ex": {
         "vi": "Khán giả reo hò khi đội nhà ghi bàn.",
@@ -73149,7 +73125,7 @@
      ]
     },
     {
-     "title": "366",
+     "title": "361",
      "sub": "",
      "words": [
       {
@@ -73320,7 +73296,7 @@
      ]
     },
     {
-     "title": "367",
+     "title": "362",
      "sub": "",
      "words": [
       {
@@ -73447,7 +73423,7 @@
      ]
     },
     {
-     "title": "368",
+     "title": "363",
      "sub": "",
      "words": [
       {
@@ -73459,16 +73435,6 @@
         "ko": "이 가게는 외상을 허용한다."
        },
        "img": "b-tra-cham.webp"
-      },
-      {
-       "vi": "bán chịu",
-       "ko": "외상",
-       "kr_read": "반 찌우",
-       "ex": {
-        "vi": "Cửa hàng không bán chịu.",
-        "ko": "가게는 외상 판매를 하지 않는다."
-       },
-       "img": "b-ban-chiu.webp"
       },
       {
        "vi": "nợ",
@@ -73552,16 +73518,6 @@
        "img": "b-chao-hang.webp"
       },
       {
-       "vi": "giá trị gia tăng",
-       "ko": "부가가치",
-       "kr_read": "자 찌 자 땅",
-       "ex": {
-        "vi": "Thuế giá trị gia tăng là mười phần trăm.",
-        "ko": "부가가치세는 10퍼센트이다."
-       },
-       "img": "b-gia-tri-gia-tang.webp"
-      },
-      {
        "vi": "ế",
        "ko": "잘 안팔리는",
        "kr_read": "에",
@@ -73594,7 +73550,7 @@
      ]
     },
     {
-     "title": "369",
+     "title": "364",
      "sub": "",
      "words": [
       {
@@ -73649,7 +73605,7 @@
       },
       {
        "vi": "biến mất",
-       "ko": "사라지다 / 없어지다 (disappear)",
+       "ko": "사라지다",
        "kr_read": "비엔 멋",
        "ex": {
         "vi": "Chiếc ví của tôi đã biến mất.",
@@ -73724,7 +73680,7 @@
      ]
     },
     {
-     "title": "370",
+     "title": "365",
      "sub": "",
      "words": [
       {
@@ -73825,7 +73781,7 @@
      ]
     },
     {
-     "title": "371",
+     "title": "366",
      "sub": "",
      "words": [
       {
@@ -73984,7 +73940,7 @@
      ]
     },
     {
-     "title": "372",
+     "title": "367",
      "sub": "",
      "words": [
       {
@@ -74000,7 +73956,7 @@
      ]
     },
     {
-     "title": "373",
+     "title": "368",
      "sub": "",
      "words": [
       {
@@ -74105,11 +74061,23 @@
        },
        "img": "b-tu-nhien.webp",
        "star": 3
+      },
+      {
+       "vi": "diện tích",
+       "ko": "면적 (area)",
+       "kr_read": "지엔 띡",
+       "ex": {
+        "vi": "Diện tích căn phòng này khá rộng.",
+        "ko": "이 방의 면적은 꽤 넓습니다."
+       },
+       "img": "b-dien-tich.webp",
+       "star": 3,
+       "weekly": true
       }
      ]
     },
     {
-     "title": "374",
+     "title": "369",
      "sub": "",
      "words": [
       {
@@ -74134,6 +74102,17 @@
        "img": "w-bc880bdf24.webp"
       },
       {
+       "vi": "toàn cầu",
+       "ko": "글로벌 (global)",
+       "kr_read": "또안 꺼우",
+       "ex": {
+        "vi": "Đây là vấn đề toàn cầu.",
+        "ko": "이것은 글로벌 문제이다."
+       },
+       "img": "b-toan-cau.webp",
+       "weekly": true
+      },
+      {
        "vi": "rồng",
        "ko": "용 (dragon)",
        "kr_read": "종",
@@ -74143,11 +74122,22 @@
        },
        "img": "w-5a4a820068.webp",
        "weekly": true
+      },
+      {
+       "vi": "bao bọc",
+       "ko": "보호하다 (protect)",
+       "kr_read": "바오 복",
+       "ex": {
+        "vi": "Bố mẹ luôn bao bọc con cái.",
+        "ko": "부모는 항상 자녀를 보호한다."
+       },
+       "img": "b-bao-boc.webp",
+       "weekly": true
       }
      ]
     },
     {
-     "title": "375",
+     "title": "370",
      "sub": "",
      "words": [
       {
@@ -74303,7 +74293,7 @@
      ]
     },
     {
-     "title": "376",
+     "title": "371",
      "sub": "",
      "words": [
       {
@@ -74319,7 +74309,7 @@
      ]
     },
     {
-     "title": "377",
+     "title": "372",
      "sub": "",
      "words": [
       {
@@ -74380,7 +74370,7 @@
      ]
     },
     {
-     "title": "378",
+     "title": "373",
      "sub": "",
      "words": [
       {
@@ -74514,9 +74504,53 @@
      ]
     },
     {
-     "title": "379",
+     "title": "374",
      "sub": "",
      "words": [
+      {
+       "vi": "sản vật",
+       "ko": "산물, 생산물 (product)",
+       "kr_read": "싼 벗",
+       "ex": {
+        "vi": "Vùng này có nhiều sản vật quý.",
+        "ko": "이 지역에는 귀한 산물이 많다."
+       },
+       "img": "b-san-vat.webp",
+       "weekly": true
+      },
+      {
+       "vi": "cày",
+       "ko": "쟁기 (plow)",
+       "kr_read": "까이",
+       "ex": {
+        "vi": "Ngày xưa nông dân dùng cày.",
+        "ko": "옛날에 농부들은 쟁기를 사용했다."
+       },
+       "img": "w-ebd12c2882.webp",
+       "weekly": true
+      },
+      {
+       "vi": "cuốc",
+       "ko": "괭이 (hoe)",
+       "kr_read": "꾸옥",
+       "ex": {
+        "vi": "Nông dân dùng cuốc để làm đất.",
+        "ko": "농부가 흙을 다지려고 괭이를 사용한다."
+       },
+       "img": "w-0e58087b07.webp",
+       "weekly": true
+      },
+      {
+       "vi": "xẻng",
+       "ko": "삽 (shovel)",
+       "kr_read": "쌩",
+       "ex": {
+        "vi": "Anh ấy đào đất bằng xẻng.",
+        "ko": "그는 삽으로 땅을 판다."
+       },
+       "img": "b-xeng.webp",
+       "weekly": true
+      },
       {
        "vi": "dao",
        "ko": "칼 (knife)",
@@ -74572,6 +74606,17 @@
        "weekly": true
       },
       {
+       "vi": "chèo kéo",
+       "ko": "끈질기게 붙들다, 호객 행위 하다 (to solicit, to pester)",
+       "kr_read": "째오 깨오",
+       "ex": {
+        "vi": "Người bán hàng chèo kéo khách.",
+        "ko": "판매원이 손님을 끈질기게 붙잡는다."
+       },
+       "img": "b-cheo-keo.webp",
+       "weekly": true
+      },
+      {
        "vi": "gương mặt",
        "ko": "얼굴, 면모 (face, countenance)",
        "kr_read": "그엉 맛",
@@ -74580,6 +74625,28 @@
         "ko": "그녀의 얼굴은 매우 예쁘다."
        },
        "img": "b-guong-mat.webp"
+      },
+      {
+       "vi": "chất phác",
+       "ko": "소박한, 꾸밈없는 (simple, rustic)",
+       "kr_read": "쩟 팍",
+       "ex": {
+        "vi": "Người dân ở đây rất chất phác.",
+        "ko": "이곳 사람들은 매우 소박하다."
+       },
+       "img": "b-chat-phac.webp",
+       "weekly": true
+      },
+      {
+       "vi": "vãn khách",
+       "ko": "손님이 적은 (sparse visitors)",
+       "kr_read": "반 칵",
+       "ex": {
+        "vi": "Buổi chiều quán này vãn khách.",
+        "ko": "오후에는 이 가게가 손님이 적다."
+       },
+       "img": "b-van-khach.webp",
+       "weekly": true
       },
       {
        "vi": "ngất ngưỡng",
@@ -74601,6 +74668,23 @@
         "ko": "그것은 내게 남아 있는 이미지이다."
        },
        "img": "b-hinh-anh-dong-lai.webp"
+      }
+     ]
+    },
+    {
+     "title": "375",
+     "sub": "",
+     "words": [
+      {
+       "vi": "thất học",
+       "ko": "배우지 못한, 미취학의 (uneducated, illiterate)",
+       "kr_read": "텃 혹",
+       "ex": {
+        "vi": "Nhiều trẻ em ở đây bị thất học.",
+        "ko": "이곳의 많은 아이들이 배우지 못했다."
+       },
+       "img": "b-that-hoc.webp",
+       "weekly": true
       },
       {
        "vi": "đông vui",
@@ -74616,7 +74700,7 @@
      ]
     },
     {
-     "title": "380",
+     "title": "376",
      "sub": "",
      "words": [
       {
@@ -74642,16 +74726,6 @@
        "img": "w-4125231ca9.webp",
        "star": 1,
        "weekly": true
-      },
-      {
-       "vi": "màu da trời",
-       "ko": "하늘색 / ( sky blue )",
-       "kr_read": "마우 자 쩌이",
-       "ex": {
-        "vi": "Cô ấy thích màu da trời.",
-        "ko": "그녀는 하늘색을 좋아한다."
-       },
-       "img": "b-mau-da-troi.webp"
       },
       {
        "vi": "hôn",
@@ -74700,7 +74774,7 @@
      ]
     },
     {
-     "title": "381",
+     "title": "377",
      "sub": "",
      "words": [
       {
@@ -74808,7 +74882,7 @@
      ]
     },
     {
-     "title": "382",
+     "title": "378",
      "sub": "",
      "words": [
       {
@@ -74914,19 +74988,9 @@
      ]
     },
     {
-     "title": "383",
+     "title": "379",
      "sub": "",
      "words": [
-      {
-       "vi": "đói bụng",
-       "ko": "배고픈 / ( hungry (stomach empty) )",
-       "kr_read": "도이 붕",
-       "ex": {
-        "vi": "Trẻ em đói bụng vào buổi chiều.",
-        "ko": "아이들은 오후에 배고파한다."
-       },
-       "img": "b-doi-bung.webp"
-      },
       {
        "vi": "thành viên",
        "ko": "구성원, 회원 / ( member )",
@@ -74990,7 +75054,7 @@
      ]
     },
     {
-     "title": "384",
+     "title": "380",
      "sub": "",
      "words": [
       {
@@ -75110,7 +75174,7 @@
      ]
     },
     {
-     "title": "385",
+     "title": "381",
      "sub": "",
      "words": [
       {
@@ -75142,16 +75206,6 @@
         "ko": "대사관이 나에게 비자를 발급했다."
        },
        "img": "b-cap-visa.webp"
-      },
-      {
-       "vi": "đường cao tốc",
-       "ko": "고속도로",
-       "kr_read": "드엉 까오 똑",
-       "ex": {
-        "vi": "Chúng tôi đi đường cao tốc về quê.",
-        "ko": "우리는 고속도로로 고향에 간다."
-       },
-       "img": "b-duong-cao-toc.webp"
       },
       {
        "vi": "món ăn tiêu biểu",
@@ -75187,7 +75241,7 @@
      ]
     },
     {
-     "title": "386",
+     "title": "382",
      "sub": "",
      "words": [
       {
@@ -75241,6 +75295,26 @@
        "img": "b-thue-doi-ung.webp"
       },
       {
+       "vi": "biểu tượng",
+       "ko": "상징 / 표상",
+       "kr_read": "비에우 뜨엉",
+       "ex": {
+        "vi": "Hoa sen là biểu tượng của Việt Nam.",
+        "ko": "연꽃은 베트남의 상징이다."
+       },
+       "img": "b-bieu-tuong.webp"
+      },
+      {
+       "vi": "bức tượng",
+       "ko": "조각상",
+       "kr_read": "븍 뜨엉",
+       "ex": {
+        "vi": "Có một bức tượng lớn ở quảng trường.",
+        "ko": "광장에 큰 조각상이 하나 있다."
+       },
+       "img": "b-buc-tuong.webp"
+      },
+      {
        "vi": "đất liền",
        "ko": "육지 / 본토 / 대륙 (mainland)",
        "kr_read": "덧 리엔",
@@ -75269,6 +75343,16 @@
         "ko": "베트남은 디지털 정부를 구축하고 있다."
        },
        "img": "b-chinh-phu-so.webp"
+      },
+      {
+       "vi": "cải cách",
+       "ko": "개혁하다",
+       "kr_read": "까이 깍",
+       "ex": {
+        "vi": "Chính phủ cải cách giáo dục.",
+        "ko": "정부가 교육을 개혁한다."
+       },
+       "img": "b-cai-cach.webp"
       },
       {
        "vi": "đều đặn",
@@ -75313,7 +75397,7 @@
      ]
     },
     {
-     "title": "387",
+     "title": "383",
      "sub": "",
      "words": [
       {
@@ -75365,7 +75449,7 @@
      ]
     },
     {
-     "title": "388",
+     "title": "384",
      "sub": "",
      "words": [
       {
@@ -75463,16 +75547,6 @@
        "img": "b-vao-hoc.webp"
       },
       {
-       "vi": "áo rét",
-       "ko": "겨울",
-       "kr_read": "아오 잿",
-       "ex": {
-        "vi": "Trời lạnh nên tôi mặc áo rét.",
-        "ko": "날씨가 추워서 나는 겨울옷을 입는다."
-       },
-       "img": "b-ao-ret.webp"
-      },
-      {
        "vi": "vi nhựa",
        "ko": "마이크로 플라스틱",
        "kr_read": "비 느어",
@@ -75505,7 +75579,7 @@
      ]
     },
     {
-     "title": "389",
+     "title": "385",
      "sub": "",
      "words": [
       {
@@ -75641,7 +75715,7 @@
      ]
     },
     {
-     "title": "390",
+     "title": "386",
      "sub": "",
      "words": [
       {
@@ -75787,7 +75861,7 @@
      ]
     },
     {
-     "title": "391",
+     "title": "387",
      "sub": "",
      "words": [
       {
@@ -75946,7 +76020,7 @@
      ]
     },
     {
-     "title": "392",
+     "title": "388",
      "sub": "",
      "words": [
       {
@@ -75983,7 +76057,7 @@
      ]
     },
     {
-     "title": "393",
+     "title": "389",
      "sub": "",
      "words": [
       {
@@ -76096,7 +76170,7 @@
      ]
     },
     {
-     "title": "394",
+     "title": "390",
      "sub": "",
      "words": [
       {
@@ -76182,7 +76256,7 @@
      ]
     },
     {
-     "title": "395",
+     "title": "391",
      "sub": "",
      "words": [
       {
@@ -76329,7 +76403,7 @@
      ]
     },
     {
-     "title": "396",
+     "title": "392",
      "sub": "",
      "words": [
       {
@@ -76366,7 +76440,7 @@
       },
       {
        "vi": "rủ",
-       "ko": "(같이 가자고) 권하다 (invite (to go together))",
+       "ko": "(함께 하자고) 권유하다",
        "kr_read": "주",
        "ex": {
         "vi": "Bạn tôi rủ tôi đi xem phim.",
@@ -76410,7 +76484,7 @@
      ]
     },
     {
-     "title": "397",
+     "title": "393",
      "sub": "",
      "words": [
       {
@@ -76566,7 +76640,7 @@
      ]
     },
     {
-     "title": "398",
+     "title": "394",
      "sub": "",
      "words": [
       {
@@ -76628,22 +76702,11 @@
         "ko": "그는 나에게 명함을 주었다."
        },
        "img": "b-danh-thiep.webp"
-      },
-      {
-       "vi": "Quà",
-       "ko": "선물 (Gift)",
-       "kr_read": "꽈",
-       "ex": {
-        "vi": "Tôi mua quà cho mẹ.",
-        "ko": "나는 엄마에게 줄 선물을 샀다."
-       },
-       "img": "w-9cf98ff901.webp",
-       "weekly": true
       }
      ]
     },
     {
-     "title": "399",
+     "title": "395",
      "sub": "",
      "words": [
       {
@@ -76783,7 +76846,7 @@
      ]
     },
     {
-     "title": "400",
+     "title": "396",
      "sub": "",
      "words": [
       {
@@ -76869,7 +76932,7 @@
       },
       {
        "vi": "quá trình",
-       "ko": "과정 / 절차 (process)",
+       "ko": "과정",
        "kr_read": "꽈 찐",
        "ex": {
         "vi": "Quá trình sản xuất mất ba ngày.",
@@ -76913,7 +76976,7 @@
      ]
     },
     {
-     "title": "401",
+     "title": "397",
      "sub": "",
      "words": [
       {
@@ -77059,7 +77122,7 @@
      ]
     },
     {
-     "title": "402",
+     "title": "398",
      "sub": "",
      "words": [
       {
@@ -77156,7 +77219,7 @@
      ]
     },
     {
-     "title": "403",
+     "title": "399",
      "sub": "",
      "words": [
       {
@@ -77266,7 +77329,7 @@
      ]
     },
     {
-     "title": "404",
+     "title": "400",
      "sub": "",
      "words": [
       {
@@ -77288,16 +77351,6 @@
         "ko": "문서를 저장해 주세요."
        },
        "img": "b-luu.webp"
-      },
-      {
-       "vi": "Tệp",
-       "ko": "파일(File)",
-       "kr_read": "뗍",
-       "ex": {
-        "vi": "Tôi gửi tệp tài liệu cho bạn.",
-        "ko": "나는 당신에게 파일을 보낸다."
-       },
-       "img": "b-tep.webp"
       },
       {
        "vi": "Tiến độ",
@@ -77342,7 +77395,7 @@
      ]
     },
     {
-     "title": "405",
+     "title": "401",
      "sub": "",
      "words": [
       {
@@ -77501,7 +77554,7 @@
      ]
     },
     {
-     "title": "406",
+     "title": "402",
      "sub": "",
      "words": [
       {
@@ -77517,7 +77570,7 @@
      ]
     },
     {
-     "title": "407",
+     "title": "403",
      "sub": "",
      "words": [
       {
@@ -77529,16 +77582,6 @@
         "ko": "시내의 부지 대여료는 꽤 비싸다."
        },
        "img": "b-chi-phi-mat-bang.webp"
-      },
-      {
-       "vi": "tầng trệt",
-       "ko": "1층",
-       "kr_read": "떵 쩻",
-       "ex": {
-        "vi": "Cửa hàng ở tầng trệt.",
-        "ko": "가게는 1층에 있다."
-       },
-       "img": "b-tang-tret.webp"
       },
       {
        "vi": "tầng lầu",
@@ -77672,13 +77715,7 @@
         "ko": "이것은 불가항력적인 경우이다."
        },
        "img": "b-bat-kha-khang.webp"
-      }
-     ]
-    },
-    {
-     "title": "408",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "thông cảm",
        "ko": "공감하다 (sympathize)",
@@ -77694,7 +77731,7 @@
      ]
     },
     {
-     "title": "409",
+     "title": "404",
      "sub": "",
      "words": [
       {
@@ -77773,7 +77810,7 @@
      ]
     },
     {
-     "title": "410",
+     "title": "405",
      "sub": "",
      "words": [
       {
@@ -77808,7 +77845,7 @@
       },
       {
        "vi": "nhập khẩu",
-       "ko": "수입-import-export",
+       "ko": "수입하다",
        "kr_read": "녑 커우",
        "ex": {
         "vi": "Công ty nhập khẩu ô tô từ Đức.",
@@ -77932,7 +77969,7 @@
      ]
     },
     {
-     "title": "411",
+     "title": "406",
      "sub": "",
      "words": [
       {
@@ -77978,12 +78015,12 @@
      ]
     },
     {
-     "title": "412",
+     "title": "407",
      "sub": "",
      "words": [
       {
        "vi": "đảm bảo",
-       "ko": "보장하다, 담보하다 (guarantee, ensure)",
+       "ko": "보장하다, 확실히 하다",
        "kr_read": "담 바오",
        "ex": {
         "vi": "Chúng tôi đảm bảo chất lượng sản phẩm.",
@@ -78080,7 +78117,7 @@
      ]
     },
     {
-     "title": "413",
+     "title": "408",
      "sub": "",
      "words": [
       {
@@ -78221,7 +78258,7 @@
      ]
     },
     {
-     "title": "414",
+     "title": "409",
      "sub": "",
      "words": [
       {
@@ -78340,7 +78377,7 @@
      ]
     },
     {
-     "title": "415",
+     "title": "410",
      "sub": "",
      "words": [
       {
@@ -78491,7 +78528,7 @@
      ]
     },
     {
-     "title": "416",
+     "title": "411",
      "sub": "",
      "words": [
       {
@@ -78653,7 +78690,7 @@
      ]
     },
     {
-     "title": "417",
+     "title": "412",
      "sub": "",
      "words": [
       {
@@ -78691,7 +78728,7 @@
      ]
     },
     {
-     "title": "418",
+     "title": "413",
      "sub": "",
      "words": [
       {
@@ -78708,7 +78745,7 @@
      ]
     },
     {
-     "title": "419",
+     "title": "414",
      "sub": "",
      "words": [
       {
@@ -78781,7 +78818,7 @@
      ]
     },
     {
-     "title": "420",
+     "title": "415",
      "sub": "",
      "words": [
       {
@@ -78809,7 +78846,7 @@
      ]
     },
     {
-     "title": "421",
+     "title": "416",
      "sub": "",
      "words": [
       {
@@ -78826,24 +78863,33 @@
      ]
     },
     {
-     "title": "422",
+     "title": "417",
      "sub": "",
      "words": [
       {
-       "vi": "mùa hạ mùa hè",
-       "ko": "여름 summer",
-       "kr_read": "무어 하 무어 해",
+       "vi": "tàu hỏa",
+       "ko": "기차",
+       "kr_read": "따우 호아",
        "ex": {
-        "vi": "Mùa hạ mùa hè trời rất nóng.",
-        "ko": "여름철에는 날씨가 매우 덥다."
+        "vi": "Tôi đi tàu hỏa về quê.",
+        "ko": "나는 기차를 타고 고향에 간다."
        },
-       "img": "b-mua-ha-mua-he.webp",
-       "weekly": true
+       "img": "b-tau-hoa.webp"
+      },
+      {
+       "vi": "thông thạo",
+       "ko": "정통하다, 능숙하다",
+       "kr_read": "통 타오",
+       "ex": {
+        "vi": "Anh ấy thông thạo ba ngoại ngữ.",
+        "ko": "그는 세 개의 외국어에 능숙하다."
+       },
+       "img": "b-thong-thao.webp"
       }
      ]
     },
     {
-     "title": "423",
+     "title": "418",
      "sub": "",
      "words": [
       {
@@ -78869,6 +78915,17 @@
        "weekly": true
       },
       {
+       "vi": "thích thú",
+       "ko": "즐거워하다, 흥미 있다",
+       "kr_read": "틱 투",
+       "ex": {
+        "vi": "Trẻ em rất thích thú với trò chơi này.",
+        "ko": "아이들이 이 게임을 매우 흥미로워한다."
+       },
+       "img": "b-thich-thu.webp",
+       "weekly": true
+      },
+      {
        "vi": "con chó bông",
        "ko": "강아지 인형 (stuffed dog toy)",
        "kr_read": "꼰 쪼 봉",
@@ -78882,7 +78939,7 @@
      ]
     },
     {
-     "title": "424",
+     "title": "419",
      "sub": "",
      "words": [
       {
@@ -78910,7 +78967,7 @@
      ]
     },
     {
-     "title": "425",
+     "title": "420",
      "sub": "",
      "words": [
       {
@@ -78942,28 +78999,6 @@
         "ko": "산에 갈 때 따뜻한 옷을 챙기세요."
        },
        "img": "b-ao-am.webp"
-      },
-      {
-       "vi": "áo bơi",
-       "ko": "수영복 (swimsuit)",
-       "kr_read": "아오 버이",
-       "ex": {
-        "vi": "Tôi mang áo bơi đi biển.",
-        "ko": "나는 수영복을 가지고 바다에 간다."
-       },
-       "img": "b-ao-boi.webp",
-       "weekly": true
-      },
-      {
-       "vi": "bác bỏ",
-       "ko": "거절하다, 부정하다 (reject, deny)",
-       "kr_read": "박 보",
-       "ex": {
-        "vi": "Anh ấy bác bỏ ý kiến đó.",
-        "ko": "그는 그 의견을 부정했다."
-       },
-       "img": "w-00c83f1dcd.webp",
-       "weekly": true
       },
       {
        "vi": "bài hát",
@@ -79016,28 +79051,6 @@
        "img": "b-banh-day.webp"
       },
       {
-       "vi": "bánh gối",
-       "ko": "반고이/베개빵 (pillow cake)",
-       "kr_read": "바인 고이",
-       "ex": {
-        "vi": "Bánh gối là món ăn vặt phổ biến.",
-        "ko": "반고이는 인기 있는 간식이다."
-       },
-       "img": "b-banh-goi.webp",
-       "weekly": true
-      },
-      {
-       "vi": "bao bọc",
-       "ko": "보호하다 (protect)",
-       "kr_read": "바오 복",
-       "ex": {
-        "vi": "Bố mẹ luôn bao bọc con cái.",
-        "ko": "부모는 항상 자녀를 보호한다."
-       },
-       "img": "b-bao-boc.webp",
-       "weekly": true
-      },
-      {
        "vi": "bạo dạn",
        "ko": "대담한 / 용기 있는",
        "kr_read": "바오 잔",
@@ -79066,13 +79079,7 @@
         "ko": "그는 말라리아에 걸렸다."
        },
        "img": "b-benh-sot-ret.webp"
-      }
-     ]
-    },
-    {
-     "title": "426",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "bệnh tả",
        "ko": "콜레라",
@@ -79112,7 +79119,13 @@
         "ko": "물은 추워지면 얼음으로 변한다."
        },
        "img": "b-bien-thanh.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "421",
+     "sub": "",
+     "words": [
       {
        "vi": "biểu diễn",
        "ko": "공연하다 / 연주하다",
@@ -79122,16 +79135,6 @@
         "ko": "가수가 무대에서 공연한다."
        },
        "img": "b-bieu-dien.webp"
-      },
-      {
-       "vi": "biểu tượng",
-       "ko": "상징 / 상징물 / 아이콘 (symbol / emblem / icon)",
-       "kr_read": "비에우 뜨엉",
-       "ex": {
-        "vi": "Hoa sen là biểu tượng của Việt Nam.",
-        "ko": "연꽃은 베트남의 상징이다."
-       },
-       "img": "b-bieu-tuong.webp"
       },
       {
        "vi": "bó hẹp",
@@ -79164,17 +79167,6 @@
        "img": "b-bay-to.webp"
       },
       {
-       "vi": "bắt buộc",
-       "ko": "강요하다 (Compel)",
-       "kr_read": "밧 부옥",
-       "ex": {
-        "vi": "Đây là quy định bắt buộc.",
-        "ko": "이것은 필수 규정이다."
-       },
-       "img": "b-bat-buoc.webp",
-       "weekly": true
-      },
-      {
        "vi": "bất hạnh",
        "ko": "불행한",
        "kr_read": "벗 하인",
@@ -79195,17 +79187,6 @@
        "img": "b-bau.webp"
       },
       {
-       "vi": "bên cạnh",
-       "ko": "~외에도 besides",
-       "kr_read": "벤 까인",
-       "ex": {
-        "vi": "Bên cạnh tiếng Anh, tôi còn học tiếng Việt.",
-        "ko": "영어 외에도 나는 베트남어도 배운다."
-       },
-       "img": "b-ben-canh.webp",
-       "weekly": true
-      },
-      {
        "vi": "bồi dưỡng",
        "ko": "배양하다, 보충하다",
        "kr_read": "보이 즈엉",
@@ -79224,13 +79205,7 @@
         "ko": "연꽃은 베트남의 국화이다."
        },
        "img": "b-bong-sen.webp"
-      }
-     ]
-    },
-    {
-     "title": "427",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "buộc",
        "ko": "묶다, 강제하다",
@@ -79250,27 +79225,6 @@
         "ko": "내 침실은 2층에 있다."
        },
        "img": "b-buong.webp"
-      },
-      {
-       "vi": "bừa bộn",
-       "ko": "무질서한, 난잡한 disorder",
-       "kr_read": "브어 본",
-       "ex": {
-        "vi": "Phòng của em trai tôi rất bừa bộn.",
-        "ko": "내 남동생 방은 매우 어수선하다."
-       },
-       "img": "b-bua-bon.webp",
-       "weekly": true
-      },
-      {
-       "vi": "bức tượng",
-       "ko": "조각상 / 동상 (statue / sculpture)",
-       "kr_read": "븍 뜨엉",
-       "ex": {
-        "vi": "Có một bức tượng lớn ở quảng trường.",
-        "ko": "광장에 큰 조각상이 하나 있다."
-       },
-       "img": "b-buc-tuong.webp"
       },
       {
        "vi": "bưng",
@@ -79303,27 +79257,6 @@
        "img": "b-cach-tan.webp"
       },
       {
-       "vi": "cải cách",
-       "ko": "개혁하다 / 제도를 고치다 (to reform / reform)",
-       "kr_read": "까이 깍",
-       "ex": {
-        "vi": "Chính phủ cải cách giáo dục.",
-        "ko": "정부가 교육을 개혁한다."
-       },
-       "img": "b-cai-cach.webp"
-      },
-      {
-       "vi": "cãi nhau",
-       "ko": "싸우다 (argue)",
-       "kr_read": "까이 냐우",
-       "ex": {
-        "vi": "Hai người bạn cãi nhau.",
-        "ko": "두 친구가 말다툼했다."
-       },
-       "img": "b-cai-nhau.webp",
-       "weekly": true
-      },
-      {
        "vi": "cam lòng",
        "ko": "감수하다, 체념하다",
        "kr_read": "깜 롱",
@@ -79342,7 +79275,13 @@
         "ko": "정부가 태풍에 대해 경고했다."
        },
        "img": "b-canh-bao.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "422",
+     "sub": "",
+     "words": [
       {
        "vi": "cao nguyên",
        "ko": "고원",
@@ -79364,17 +79303,6 @@
        "img": "b-cat.webp"
       },
       {
-       "vi": "cày",
-       "ko": "쟁기 (plow)",
-       "kr_read": "까이",
-       "ex": {
-        "vi": "Ngày xưa nông dân dùng cày.",
-        "ko": "옛날에 농부들은 쟁기를 사용했다."
-       },
-       "img": "w-ebd12c2882.webp",
-       "weekly": true
-      },
-      {
        "vi": "cắn",
        "ko": "물다",
        "kr_read": "깐",
@@ -79383,13 +79311,7 @@
         "ko": "개가 나를 물었다."
        },
        "img": "w-5ad672b3a1.webp"
-      }
-     ]
-    },
-    {
-     "title": "428",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "cắp",
        "ko": "끼다 / 훔치다",
@@ -79451,27 +79373,6 @@
        "img": "b-cho-coc.webp"
       },
       {
-       "vi": "chợ phiên",
-       "ko": "정기 시장 (kermis/fair)",
-       "kr_read": "쩌 피엔",
-       "ex": {
-        "vi": "Chợ phiên họp vào cuối tuần.",
-        "ko": "정기 시장은 주말에 열린다."
-       },
-       "img": "b-cho-phien.webp",
-       "weekly": true
-      },
-      {
-       "vi": "chớp",
-       "ko": "번개, 섬광 (flash, lightning)",
-       "kr_read": "쩝",
-       "ex": {
-        "vi": "Trời có chớp và sấm.",
-        "ko": "하늘에 번개와 천둥이 친다."
-       },
-       "img": "b-chop.webp"
-      },
-      {
        "vi": "chủ tịch",
        "ko": "주석, 회장",
        "kr_read": "쭈 띡",
@@ -79530,7 +79431,13 @@
         "ko": "이 문장 구조는 꽤 복잡하다."
        },
        "img": "b-cau-truc.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "423",
+     "sub": "",
+     "words": [
       {
        "vi": "chanh đá",
        "ko": "아이스 레몬차",
@@ -79540,23 +79447,6 @@
         "ko": "나는 여름에 아이스 레몬차를 마신다."
        },
        "img": "b-chanh-da.webp"
-      }
-     ]
-    },
-    {
-     "title": "429",
-     "sub": "",
-     "words": [
-      {
-       "vi": "chất phác",
-       "ko": "소박한, 꾸밈없는 (simple, rustic)",
-       "kr_read": "쩟 팍",
-       "ex": {
-        "vi": "Người dân ở đây rất chất phác.",
-        "ko": "이곳 사람들은 매우 소박하다."
-       },
-       "img": "b-chat-phac.webp",
-       "weekly": true
       },
       {
        "vi": "che khuất",
@@ -79579,17 +79469,6 @@
        "img": "b-chen.webp"
       },
       {
-       "vi": "chèo kéo",
-       "ko": "끈질기게 붙들다, 호객 행위 하다 (to solicit, to pester)",
-       "kr_read": "째오 깨오",
-       "ex": {
-        "vi": "Người bán hàng chèo kéo khách.",
-        "ko": "판매원이 손님을 끈질기게 붙잡는다."
-       },
-       "img": "b-cheo-keo.webp",
-       "weekly": true
-      },
-      {
        "vi": "chi phối",
        "ko": "지배하다, 조종하다",
        "kr_read": "찌 포이",
@@ -79598,17 +79477,6 @@
         "ko": "감정이 그의 결정을 지배한다."
        },
        "img": "b-chi-phoi.webp"
-      },
-      {
-       "vi": "chìa khóa",
-       "ko": "열쇠(key)",
-       "kr_read": "찌어 코아",
-       "ex": {
-        "vi": "Tôi làm mất chìa khóa.",
-        "ko": "나는 열쇠를 잃어버렸다."
-       },
-       "img": "b-chia-khoa.webp",
-       "weekly": true
       },
       {
        "vi": "chiến thắng",
@@ -79699,13 +79567,7 @@
         "ko": "그들의 첫째 아이는 딸이다."
        },
        "img": "b-con-dau-long.webp"
-      }
-     ]
-    },
-    {
-     "title": "430",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "con đẻ",
        "ko": "친자식",
@@ -79725,7 +79587,13 @@
         "ko": "그들은 양자를 한 명 입양했다."
        },
        "img": "b-con-nuoi.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "424",
+     "sub": "",
+     "words": [
       {
        "vi": "cố đô",
        "ko": "옛 수도",
@@ -79747,17 +79615,6 @@
        "img": "b-cong-nghe.webp"
       },
       {
-       "vi": "công nhận",
-       "ko": "인정하다, 등재하다 (recognize, list)",
-       "kr_read": "꽁 년",
-       "ex": {
-        "vi": "Di sản này được công nhận là di sản thế giới.",
-        "ko": "이 유산은 세계유산으로 인정받았다."
-       },
-       "img": "w-eb552633fc.webp",
-       "weekly": true
-      },
-      {
        "vi": "công trình",
        "ko": "공사, 건축물, 작품",
        "kr_read": "꽁 찐",
@@ -79766,16 +79623,6 @@
         "ko": "이것은 큰 건축물이다."
        },
        "img": "b-cong-trinh.webp"
-      },
-      {
-       "vi": "công viên",
-       "ko": "공원 (park)",
-       "kr_read": "꽁 비엔",
-       "ex": {
-        "vi": "Chúng tôi đi dạo ở công viên.",
-        "ko": "우리는 공원에서 산책했다."
-       },
-       "img": "b-cong-vien.webp"
       },
       {
        "vi": "cột đá",
@@ -79828,17 +79675,6 @@
        "img": "b-cung-co.webp"
       },
       {
-       "vi": "cuốc",
-       "ko": "괭이 (hoe)",
-       "kr_read": "꾸옥",
-       "ex": {
-        "vi": "Nông dân dùng cuốc để làm đất.",
-        "ko": "농부가 흙을 다지려고 괭이를 사용한다."
-       },
-       "img": "w-0e58087b07.webp",
-       "weekly": true
-      },
-      {
        "vi": "cuộc thi",
        "ko": "대회, 경기",
        "kr_read": "꾸옥 티",
@@ -79857,13 +79693,7 @@
         "ko": "이 이야기는 매우 매력적이다."
        },
        "img": "b-cuon-hut.webp"
-      }
-     ]
-    },
-    {
-     "title": "431",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "cử",
        "ko": "선출하다, 임명하다",
@@ -79913,7 +79743,13 @@
         "ko": "우리는 주말에 소풍을 간다."
        },
        "img": "b-da-ngoai.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "425",
+     "sub": "",
+     "words": [
       {
        "vi": "danh hiệu",
        "ko": "칭호, 명칭",
@@ -79933,17 +79769,6 @@
         "ko": "이 회사는 좋은 명성을 가지고 있다."
        },
        "img": "b-danh-tieng.webp"
-      },
-      {
-       "vi": "dành",
-       "ko": "남겨두다, 할애하다reserve, spend for",
-       "kr_read": "자인",
-       "ex": {
-        "vi": "Tôi dành thời gian cho gia đình.",
-        "ko": "나는 가족을 위해 시간을 할애한다."
-       },
-       "img": "b-danh.webp",
-       "weekly": true
       },
       {
        "vi": "dân gian",
@@ -80014,13 +79839,7 @@
         "ko": "그는 자신의 감정을 묘사했다."
        },
        "img": "b-dien-ta.webp"
-      }
-     ]
-    },
-    {
-     "title": "432",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "dinh",
        "ko": "관저, 궁전",
@@ -80040,17 +79859,6 @@
         "ko": "그는 성공한 기업가이다."
        },
        "img": "b-doanh-nhan.webp"
-      },
-      {
-       "vi": "du khách",
-       "ko": "관광객 (tourist)",
-       "kr_read": "주 칵",
-       "ex": {
-        "vi": "Nhiều du khách đến Việt Nam.",
-        "ko": "많은 관광객이 베트남에 온다."
-       },
-       "img": "b-du-khach.webp",
-       "weekly": true
       },
       {
        "vi": "đa số",
@@ -80083,17 +79891,6 @@
        "img": "b-da-voi.webp"
       },
       {
-       "vi": "đáng kể",
-       "ko": "상당한, 눈에 띄는 (considerable, significant)",
-       "kr_read": "당 께",
-       "ex": {
-        "vi": "Doanh thu tăng đáng kể.",
-        "ko": "매출이 상당히 늘었다."
-       },
-       "img": "b-dang-ke.webp",
-       "weekly": true
-      },
-      {
        "vi": "đại hội",
        "ko": "대회",
        "kr_read": "다이 호이",
@@ -80102,7 +79899,13 @@
         "ko": "회사가 주주 대회를 개최한다."
        },
        "img": "b-dai-hoi.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "426",
+     "sub": "",
+     "words": [
       {
        "vi": "đáng ra",
        "ko": "마땅히, 원래는",
@@ -80122,17 +79925,6 @@
         "ko": "길고양이가 정말 가련해 보인다."
        },
        "img": "b-dang-thuong.webp"
-      },
-      {
-       "vi": "đãng trí",
-       "ko": "건망증 있는, 깜빡하는 (absent-minded)",
-       "kr_read": "당 찌",
-       "ex": {
-        "vi": "Ông tôi dạo này hơi đãng trí.",
-        "ko": "우리 할아버지는 요즘 좀 건망증이 있으시다."
-       },
-       "img": "b-dang-tri.webp",
-       "weekly": true
       },
       {
        "vi": "điều tra",
@@ -80173,13 +79965,7 @@
         "ko": "식당이 손님을 매우 세심하게 맞이한다."
        },
        "img": "b-don-tiep.webp"
-      }
-     ]
-    },
-    {
-     "title": "433",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "đáp",
        "ko": "답하다",
@@ -80261,17 +80047,6 @@
        "img": "w-49fa20b623.webp"
       },
       {
-       "vi": "đấm bốc",
-       "ko": "권투 (boxing)",
-       "kr_read": "덤 복",
-       "ex": {
-        "vi": "Anh ấy tập đấm bốc mỗi tối.",
-        "ko": "그는 매일 저녁 권투를 연습한다."
-       },
-       "img": "b-dam-boc.webp",
-       "weekly": true
-      },
-      {
        "vi": "đầu não",
        "ko": "두뇌, 본부, 핵심",
        "kr_read": "더우 나오",
@@ -80280,7 +80055,13 @@
         "ko": "본사는 회사의 핵심이다."
        },
        "img": "b-dau-nao.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "427",
+     "sub": "",
+     "words": [
       {
        "vi": "đấu tranh",
        "ko": "투쟁하다",
@@ -80330,13 +80111,7 @@
         "ko": "나는 집을 사려고 돈을 저축한다."
        },
        "img": "b-de-danh-tien.webp"
-      }
-     ]
-    },
-    {
-     "title": "434",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "để đời",
        "ko": "불후의, 후세에 남길",
@@ -80408,16 +80183,6 @@
        "img": "w-7c88ad318b.webp"
       },
       {
-       "vi": "độ ẩm",
-       "ko": "습도 ( humidity )",
-       "kr_read": "도 엄",
-       "ex": {
-        "vi": "Độ ẩm hôm nay khá cao.",
-        "ko": "오늘 습도는 꽤 높다."
-       },
-       "img": "b-do-am.webp"
-      },
-      {
        "vi": "độ cao",
        "ko": "높이, 고도",
        "kr_read": "도 까오",
@@ -80446,7 +80211,13 @@
         "ko": "인생에는 많은 뜻밖의 일이 있다."
        },
        "img": "w-ee8c9cfd4c.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "428",
+     "sub": "",
+     "words": [
       {
        "vi": "đối phó",
        "ko": "대응하다, 대처하다",
@@ -80486,33 +80257,6 @@
         "ko": "메콩 델타는 매우 풍요롭다."
        },
        "img": "b-dong-bang.webp"
-      }
-     ]
-    },
-    {
-     "title": "435",
-     "sub": "",
-     "words": [
-      {
-       "vi": "động đất",
-       "ko": "지진 earthquake",
-       "kr_read": "동 덧",
-       "ex": {
-        "vi": "Khu vực này thường xuyên có động đất.",
-        "ko": "이 지역은 지진이 자주 발생한다."
-       },
-       "img": "b-dong-dat.webp",
-       "weekly": true
-      },
-      {
-       "vi": "động lực",
-       "ko": "동기, 동력 (motivation)",
-       "kr_read": "동 륵",
-       "ex": {
-        "vi": "Gia đình là động lực của tôi.",
-        "ko": "가족은 나의 동기이다."
-       },
-       "img": "b-dong-luc.webp"
       },
       {
        "vi": "đồng minh",
@@ -80623,32 +80367,11 @@
         "ko": "그는 매우 혹독하게 비판했다."
        },
        "img": "b-gay-gat.webp"
-      },
-      {
-       "vi": "gắn",
-       "ko": "붙이다 attached",
-       "kr_read": "간",
-       "ex": {
-        "vi": "Hãy gắn ảnh vào bài viết.",
-        "ko": "글에 사진을 붙이세요."
-       },
-       "img": "w-7beb91b75b.webp",
-       "weekly": true
-      },
-      {
-       "vi": "gần đây",
-       "ko": "근처에/최근에 (nearby / recently)",
-       "kr_read": "건 더이",
-       "ex": {
-        "vi": "Có một quán cà phê gần đây.",
-        "ko": "근처에 카페가 하나 있다."
-       },
-       "img": "b-gan-day.webp"
       }
      ]
     },
     {
-     "title": "436",
+     "title": "429",
      "sub": "",
      "words": [
       {
@@ -80700,17 +80423,6 @@
         "ko": "이 가족은 좋은 가풍을 가지고 있다."
        },
        "img": "b-gia-phong.webp"
-      },
-      {
-       "vi": "giá thành",
-       "ko": "원가 (production cost)",
-       "kr_read": "자 타인",
-       "ex": {
-        "vi": "Giá thành sản xuất tăng lên.",
-        "ko": "생산 원가가 올랐다."
-       },
-       "img": "b-gia-thanh.webp",
-       "weekly": true
       },
       {
        "vi": "giã",
@@ -80801,13 +80513,7 @@
         "ko": "나는 파티 초대장을 받았다."
        },
        "img": "b-giay-moi.webp"
-      }
-     ]
-    },
-    {
-     "title": "437",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "giỗ",
        "ko": "제사",
@@ -80817,7 +80523,13 @@
         "ko": "우리 가족은 할아버지 제사를 지낸다."
        },
        "img": "w-99ef2e2690.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "430",
+     "sub": "",
+     "words": [
       {
        "vi": "gò ép",
        "ko": "강요하다, 억지로 하다",
@@ -80847,17 +80559,6 @@
         "ko": "그녀는 섹시한 드레스를 입었다."
        },
        "img": "b-goi-cam.webp"
-      },
-      {
-       "vi": "gôn",
-       "ko": "골프 (golf)",
-       "kr_read": "곤",
-       "ex": {
-        "vi": "Ông ấy chơi gôn cuối tuần.",
-        "ko": "그는 주말에 골프를 친다."
-       },
-       "img": "w-e86c145575.webp",
-       "weekly": true
       },
       {
        "vi": "gươm",
@@ -80920,17 +80621,6 @@
        "img": "b-hang-loat.webp"
       },
       {
-       "vi": "hòa bình",
-       "ko": "평화 peace",
-       "kr_read": "호아 빈",
-       "ex": {
-        "vi": "Chúng ta mong muốn hòa bình.",
-        "ko": "우리는 평화를 원한다."
-       },
-       "img": "b-hoa-binh.webp",
-       "weekly": true
-      },
-      {
        "vi": "hòa nhạc",
        "ko": "음악회 (콘서트)",
        "kr_read": "호아 냑",
@@ -80959,45 +80649,6 @@
         "ko": "이것은 까다로운 질문이다."
        },
        "img": "b-hoc-bua.webp"
-      }
-     ]
-    },
-    {
-     "title": "438",
-     "sub": "",
-     "words": [
-      {
-       "vi": "hòn than",
-       "ko": "연탄 (coal briquette)",
-       "kr_read": "혼 탄",
-       "ex": {
-        "vi": "Bà nhóm bếp bằng hòn than.",
-        "ko": "할머니가 연탄으로 불을 피우신다."
-       },
-       "img": "b-hon-than.webp",
-       "weekly": true
-      },
-      {
-       "vi": "hàng xóm",
-       "ko": "이웃, 옆집사람 (neighbor)",
-       "kr_read": "항 쏨",
-       "ex": {
-        "vi": "Hàng xóm của tôi rất thân thiện.",
-        "ko": "우리 이웃은 매우 친절하다."
-       },
-       "img": "b-hang-xom.webp",
-       "weekly": true
-      },
-      {
-       "vi": "hành động",
-       "ko": "행동 action",
-       "kr_read": "하인 동",
-       "ex": {
-        "vi": "Hành động của anh ấy rất dũng cảm.",
-        "ko": "그의 행동은 매우 용감했다."
-       },
-       "img": "b-hanh-dong.webp",
-       "weekly": true
       },
       {
        "vi": "hành lang",
@@ -81028,7 +80679,13 @@
         "ko": "이것은 드문 기회이다."
        },
        "img": "b-hiem-co.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "431",
+     "sub": "",
+     "words": [
       {
        "vi": "hiếm hoi",
        "ko": "드문, 극히 적은",
@@ -81070,17 +80727,6 @@
        "img": "b-hieu-may.webp"
       },
       {
-       "vi": "hình dạng",
-       "ko": "형태, 모양 (shape, form)",
-       "kr_read": "힌 장",
-       "ex": {
-        "vi": "Chiếc bánh có hình dạng tròn.",
-        "ko": "케이크는 둥근 형태를 하고 있다."
-       },
-       "img": "b-hinh-dang.webp",
-       "weekly": true
-      },
-      {
        "vi": "hít thở",
        "ko": "호흡하다",
        "kr_read": "힛 터",
@@ -81101,17 +80747,6 @@
        "img": "b-hon-ngoc.webp"
       },
       {
-       "vi": "hỏng",
-       "ko": "고장난 broken",
-       "kr_read": "홍",
-       "ex": {
-        "vi": "Máy tính của tôi bị hỏng.",
-        "ko": "내 컴퓨터가 고장 났다."
-       },
-       "img": "w-757db51d1e.webp",
-       "weekly": true
-      },
-      {
        "vi": "hối hận",
        "ko": "후회하다",
        "kr_read": "호이 헌",
@@ -81120,13 +80755,7 @@
         "ko": "나는 그렇게 말한 것을 후회한다."
        },
        "img": "b-hoi-han.webp"
-      }
-     ]
-    },
-    {
-     "title": "439",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "hội đồng",
        "ko": "위원회, 의회",
@@ -81206,7 +80835,13 @@
         "ko": "독서는 많은 유익함이 있다."
        },
        "img": "b-ich-loi.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "432",
+     "sub": "",
+     "words": [
       {
        "vi": "kẻ trộm",
        "ko": "도둑",
@@ -81216,17 +80851,6 @@
         "ko": "도둑이 경찰에게 잡혔다."
        },
        "img": "b-ke-trom.webp"
-      },
-      {
-       "vi": "khám bệnh",
-       "ko": "진단하다, 진찰하다see a doctor",
-       "kr_read": "캄 벤",
-       "ex": {
-        "vi": "Tôi đi khám bệnh sáng nay.",
-        "ko": "나는 오늘 아침 진찰을 받으러 갔다."
-       },
-       "img": "b-kham-benh.webp",
-       "weekly": true
       },
       {
        "vi": "khàn giọng",
@@ -81277,13 +80901,7 @@
         "ko": "우리는 숲 지역을 걸었다."
        },
        "img": "b-khu-rung.webp"
-      }
-     ]
-    },
-    {
-     "title": "440",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "kịch",
        "ko": "연극, 드라마",
@@ -81303,17 +80921,6 @@
         "ko": "회사는 이 프로젝트에서 이익을 얻는다."
        },
        "img": "b-kiem-loi.webp"
-      },
-      {
-       "vi": "kiếm tiền",
-       "ko": "돈을 벌다 (To earn money)",
-       "kr_read": "끼엠 띠엔",
-       "ex": {
-        "vi": "Anh ấy kiếm tiền bằng nghề tự do.",
-        "ko": "그는 프리랜서 일로 돈을 번다."
-       },
-       "img": "b-kiem-tien.webp",
-       "weekly": true
       },
       {
        "vi": "kiên quyết",
@@ -81367,7 +80974,7 @@
       },
       {
        "vi": "khéo tay",
-       "ko": "솜씨 좋은/교묘한 (skillful)",
+       "ko": "솜씨 좋은/교묘한 (skillful)",
        "kr_read": "캐오 따이",
        "ex": {
         "vi": "Mẹ tôi rất khéo tay.",
@@ -81385,17 +80992,13 @@
         "ko": "이 그림은 꽤 섹시하다."
        },
        "img": "b-kheu-goi.webp"
-      },
-      {
-       "vi": "khiến cho",
-       "ko": "~하게 만들다, 시키다",
-       "kr_read": "키엔 쪼",
-       "ex": {
-        "vi": "Tin này khiến cho tôi buồn.",
-        "ko": "이 소식은 나를 슬프게 만들었다."
-       },
-       "img": "b-khien-cho.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "433",
+     "sub": "",
+     "words": [
       {
        "vi": "khó thở",
        "ko": "숨쉬기 힘든",
@@ -81435,13 +81038,7 @@
         "ko": "노래가 옛 추억을 불러일으켰다."
        },
        "img": "b-khoi-goi.webp"
-      }
-     ]
-    },
-    {
-     "title": "441",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "kim tự tháp",
        "ko": "피라미드",
@@ -81461,16 +81058,6 @@
         "ko": "그것은 기괴한 행동이었다."
        },
        "img": "b-ky-quac.webp"
-      },
-      {
-       "vi": "kỳ thi",
-       "ko": "시험 (exam)",
-       "kr_read": "끼 티",
-       "ex": {
-        "vi": "Kỳ thi sắp đến gần.",
-        "ko": "시험이 가까워지고 있다."
-       },
-       "img": "b-ky-thi.webp"
       },
       {
        "vi": "kỳ thú",
@@ -81561,7 +81148,13 @@
         "ko": "신부님이 성당에서 미사를 집전한다."
        },
        "img": "b-linh-muc.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "434",
+     "sub": "",
+     "words": [
       {
        "vi": "loét",
        "ko": "궤양, 헐다",
@@ -81591,13 +81184,7 @@
         "ko": "이 국은 좀 싱겁고 비리다."
        },
        "img": "w-3094bb1440.webp"
-      }
-     ]
-    },
-    {
-     "title": "442",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "lợi",
        "ko": "이익, 잇몸",
@@ -81709,17 +81296,6 @@
        "img": "b-mac.webp"
       },
       {
-       "vi": "mặc dù",
-       "ko": "비록 ~이지만 (although)",
-       "kr_read": "막 주",
-       "ex": {
-        "vi": "Mặc dù trời mưa, chúng tôi vẫn đi.",
-        "ko": "비록 비가 왔지만 우리는 그래도 갔다."
-       },
-       "img": "b-mac-du.webp",
-       "weekly": true
-      },
-      {
        "vi": "mất sạch",
        "ko": "전부 잃다",
        "kr_read": "멋 싹",
@@ -81728,7 +81304,13 @@
         "ko": "그는 도박으로 돈을 전부 잃었다."
        },
        "img": "b-mat-sach.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "435",
+     "sub": "",
+     "words": [
       {
        "vi": "mất tích",
        "ko": "행방불명되다",
@@ -81748,13 +81330,7 @@
         "ko": "나는 종이 조각에 전화번호를 적었다."
        },
        "img": "w-eca4f48ddb.webp"
-      }
-     ]
-    },
-    {
-     "title": "443",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "miễn nhiệm",
        "ko": "면직시키다, 해임하다",
@@ -81856,28 +81432,6 @@
        "img": "b-nao.webp"
       },
       {
-       "vi": "ngã",
-       "ko": "넘어지다 (fall)",
-       "kr_read": "응아",
-       "ex": {
-        "vi": "Em bé bị ngã khi chạy.",
-        "ko": "아기가 뛰다가 넘어졌다."
-       },
-       "img": "w-baadd8a9bf.webp",
-       "weekly": true
-      },
-      {
-       "vi": "ngạt mũi",
-       "ko": "코막힘 (nasal congestion)",
-       "kr_read": "응앗 무이",
-       "ex": {
-        "vi": "Tôi bị ngạt mũi vì cảm.",
-        "ko": "나는 감기로 코가 막혔다."
-       },
-       "img": "b-ngat-mui.webp",
-       "weekly": true
-      },
-      {
        "vi": "ngay lập tức",
        "ko": "즉시",
        "kr_read": "응아이 럽 뜩",
@@ -81898,22 +81452,6 @@
        "img": "b-ngay-nha-giao.webp"
       },
       {
-       "vi": "ngập nước",
-       "ko": "침수되다",
-       "kr_read": "응업 느억",
-       "ex": {
-        "vi": "Khu vực này thường bị ngập nước.",
-        "ko": "이 지역은 자주 침수된다."
-       },
-       "img": "b-ngap-nuoc.webp"
-      }
-     ]
-    },
-    {
-     "title": "444",
-     "sub": "",
-     "words": [
-      {
        "vi": "nhà cao tầng",
        "ko": "고층 건물",
        "kr_read": "냐 까오 떵",
@@ -81922,7 +81460,13 @@
         "ko": "도시에는 고층 건물이 많다."
        },
        "img": "b-nha-cao-tang.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "436",
+     "sub": "",
+     "words": [
       {
        "vi": "nhà vua",
        "ko": "왕",
@@ -82024,16 +81568,6 @@
        "img": "b-nghia-dia.webp"
       },
       {
-       "vi": "nghiện",
-       "ko": "중독되다(to addicted)",
-       "kr_read": "응이엔",
-       "ex": {
-        "vi": "Anh ấy nghiện chơi game.",
-        "ko": "그는 게임에 중독되었다."
-       },
-       "img": "b-nghien.webp"
-      },
-      {
        "vi": "nghiêng",
        "ko": "기울어진, 기울이다",
        "kr_read": "응이엥",
@@ -82062,13 +81596,7 @@
         "ko": "그는 거의 10년째 일하고 있다."
        },
        "img": "w-97207e13b7.webp"
-      }
-     ]
-    },
-    {
-     "title": "445",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "ngộ độc",
        "ko": "중독",
@@ -82088,7 +81616,13 @@
         "ko": "학생이 수업 시간에 꾸벅꾸벅 졸았다."
        },
        "img": "b-ngu-gat.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "437",
+     "sub": "",
+     "words": [
       {
        "vi": "nguồn lợi",
        "ko": "이익의 원천, 혜택",
@@ -82170,17 +81704,6 @@
        "img": "b-nhap-cuoc.webp"
       },
       {
-       "vi": "nhất định",
-       "ko": "반드시, 꼭, 틀림없이 (definitely, certainly)",
-       "kr_read": "녓 딘",
-       "ex": {
-        "vi": "Tôi nhất định sẽ thành công.",
-        "ko": "나는 반드시 성공할 것이다."
-       },
-       "img": "b-nhat-dinh.webp",
-       "weekly": true
-      },
-      {
        "vi": "nhất là",
        "ko": "특히",
        "kr_read": "녓 라",
@@ -82219,13 +81742,7 @@
         "ko": "동굴에는 아름다운 종유석이 많다."
        },
        "img": "b-nhu-da.webp"
-      }
-     ]
-    },
-    {
-     "title": "446",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "niềm vui",
        "ko": "기쁨",
@@ -82255,17 +81772,13 @@
         "ko": "이 두 문장을 이어보세요."
        },
        "img": "w-5c444a80c1.webp"
-      },
-      {
-       "vi": "nữ tính",
-       "ko": "여성적인 / womanly",
-       "kr_read": "느 띤",
-       "ex": {
-        "vi": "Cô ấy ăn mặc rất nữ tính.",
-        "ko": "그녀는 매우 여성적으로 옷을 입는다."
-       },
-       "img": "b-nu-tinh.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "438",
+     "sub": "",
+     "words": [
       {
        "vi": "nửa đêm",
        "ko": "한밤중",
@@ -82305,17 +81818,6 @@
         "ko": "벽에 금이 갔다."
        },
        "img": "w-8582cf9263.webp"
-      },
-      {
-       "vi": "phá",
-       "ko": "부수다 (destroy, break)",
-       "kr_read": "파",
-       "ex": {
-        "vi": "Họ phá ngôi nhà cũ để xây mới.",
-        "ko": "그들은 새로 짓기 위해 오래된 집을 부순다."
-       },
-       "img": "w-3dd3d64f00.webp",
-       "weekly": true
       },
       {
        "vi": "phải chi",
@@ -82358,16 +81860,6 @@
        "img": "b-pham-vi.webp"
       },
       {
-       "vi": "phiên dịch",
-       "ko": "통역 ( translate )",
-       "kr_read": "피엔 직",
-       "ex": {
-        "vi": "Cô ấy làm phiên dịch cho công ty.",
-        "ko": "그녀는 회사에서 통역을 한다."
-       },
-       "img": "b-phien-dich.webp"
-      },
-      {
        "vi": "phong kiến",
        "ko": "봉건(시대)의",
        "kr_read": "퐁 끼엔",
@@ -82376,13 +81868,7 @@
         "ko": "이것은 봉건 사회이다."
        },
        "img": "b-phong-kien.webp"
-      }
-     ]
-    },
-    {
-     "title": "447",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "phong trào",
        "ko": "운동, 캠페인",
@@ -82442,7 +81928,13 @@
         "ko": "쓰레기를 분류하세요."
        },
        "img": "b-phan-loai.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "439",
+     "sub": "",
+     "words": [
       {
        "vi": "phấn",
        "ko": "분필, 가루",
@@ -82452,17 +81944,6 @@
         "ko": "선생님이 분필로 쓴다."
        },
        "img": "w-5c7d91c3db.webp"
-      },
-      {
-       "vi": "phổ thông",
-       "ko": "보통의, 일반적인 (Common, General)",
-       "kr_read": "포 통",
-       "ex": {
-        "vi": "Đây là kiến thức phổ thông.",
-        "ko": "이것은 일반적인 지식이다."
-       },
-       "img": "b-pho-thong.webp",
-       "weekly": true
       },
       {
        "vi": "phù sa",
@@ -82495,17 +81976,6 @@
        "img": "b-phuong.webp"
       },
       {
-       "vi": "phương hướng",
-       "ko": "방향 direction",
-       "kr_read": "프엉 흐엉",
-       "ex": {
-        "vi": "Chúng ta cần xác định phương hướng.",
-        "ko": "우리는 방향을 정해야 한다."
-       },
-       "img": "b-phuong-huong.webp",
-       "weekly": true
-      },
-      {
        "vi": "phường rối",
        "ko": "인형극단",
        "kr_read": "프엉 조이",
@@ -82534,13 +82004,7 @@
         "ko": "나는 당신의 관점을 존중한다."
        },
        "img": "b-quan-diem.webp"
-      }
-     ]
-    },
-    {
-     "title": "448",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "quân sự",
        "ko": "군사",
@@ -82592,6 +82056,16 @@
        "img": "b-quyen-loi.webp"
       },
       {
+       "vi": "quyến rũ",
+       "ko": "매혹적인, 유혹하다",
+       "kr_read": "꾸이엔 주",
+       "ex": {
+        "vi": "Cô ấy có nụ cười quyến rũ.",
+        "ko": "그녀는 매혹적인 미소를 가지고 있다."
+       },
+       "img": "b-quyen-ru.webp"
+      },
+      {
        "vi": "quyết tâm",
        "ko": "결심, 결심하다",
        "kr_read": "꾸이엣 떰",
@@ -82610,7 +82084,13 @@
         "ko": "음력 7월 보름에는 우란분절이 있다."
        },
        "img": "b-ram.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "440",
+     "sub": "",
+     "words": [
       {
        "vi": "rèn luyện",
        "ko": "단련하다, 연마하다",
@@ -82652,16 +82132,6 @@
        "img": "b-run-nguoi.webp"
       },
       {
-       "vi": "rừng",
-       "ko": "숲 (forest)",
-       "kr_read": "증",
-       "ex": {
-        "vi": "Chúng tôi đi dạo trong rừng.",
-        "ko": "우리는 숲에서 산책했다."
-       },
-       "img": "b-rung.webp"
-      },
-      {
        "vi": "sa mạc",
        "ko": "사막",
        "kr_read": "싸 막",
@@ -82690,44 +82160,6 @@
         "ko": "그것은 큰 실수였다."
        },
        "img": "b-sai-lam.webp"
-      }
-     ]
-    },
-    {
-     "title": "449",
-     "sub": "",
-     "words": [
-      {
-       "vi": "sản vật",
-       "ko": "산물, 생산물 (product)",
-       "kr_read": "싼 벗",
-       "ex": {
-        "vi": "Vùng này có nhiều sản vật quý.",
-        "ko": "이 지역에는 귀한 산물이 많다."
-       },
-       "img": "b-san-vat.webp",
-       "weekly": true
-      },
-      {
-       "vi": "xổ số",
-       "ko": "복권",
-       "kr_read": "쏘 쏘",
-       "ex": {
-        "vi": "Ông tôi thích mua xổ số.",
-        "ko": "우리 할아버지는 복권 사는 것을 좋아하신다."
-       },
-       "img": "b-xo-so.webp"
-      },
-      {
-       "vi": "sông",
-       "ko": "강 river",
-       "kr_read": "쏭",
-       "ex": {
-        "vi": "Chúng tôi đi thuyền trên sông.",
-        "ko": "우리는 강에서 배를 탔다."
-       },
-       "img": "w-fc2622de1f.webp",
-       "weekly": true
       },
       {
        "vi": "sống động",
@@ -82738,16 +82170,6 @@
         "ko": "이 그림은 매우 생생하다."
        },
        "img": "b-song-dong.webp"
-      },
-      {
-       "vi": "sốt xuất huyết",
-       "ko": "뎅기열 dengue fever",
-       "kr_read": "쏫 쑤엇 후옛",
-       "ex": {
-        "vi": "Anh ấy bị sốt xuất huyết.",
-        "ko": "그는 뎅기열에 걸렸다."
-       },
-       "img": "b-sot-xuat-huyet.webp"
       },
       {
        "vi": "say nắng",
@@ -82778,27 +82200,6 @@
         "ko": "나는 배에서 배멀미를 했다."
        },
        "img": "b-say-song.webp"
-      },
-      {
-       "vi": "sắm sửa",
-       "ko": "장만하다, 준비하다 (prepare for buy)",
-       "kr_read": "쌈 쓰어",
-       "ex": {
-        "vi": "Mẹ sắm sửa đồ Tết.",
-        "ko": "엄마가 설날 물건을 장만하신다."
-       },
-       "img": "b-sam-sua.webp",
-       "weekly": true
-      },
-      {
-       "vi": "sên",
-       "ko": "달팽이 (snail)",
-       "kr_read": "쎈",
-       "ex": {
-        "vi": "Có một con sên trên lá cây.",
-        "ko": "나뭇잎 위에 달팽이가 한 마리 있다."
-       },
-       "img": "b-sen.webp"
       },
       {
        "vi": "sứ mệnh",
@@ -82839,7 +82240,13 @@
         "ko": "그는 모든 힘을 일에 쏟았다."
        },
        "img": "b-suc-luc.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "441",
+     "sub": "",
+     "words": [
       {
        "vi": "sung sướng",
        "ko": "행복한, 즐거운",
@@ -82849,13 +82256,7 @@
         "ko": "나는 합격해서 행복함을 느꼈다."
        },
        "img": "b-sung-suong.webp"
-      }
-     ]
-    },
-    {
-     "title": "450",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "suốt đời",
        "ko": "평생 동안",
@@ -82947,16 +82348,6 @@
        "img": "w-f775edacb7.webp"
       },
       {
-       "vi": "tàu hỏa",
-       "ko": "기차",
-       "kr_read": "따우 호아",
-       "ex": {
-        "vi": "Tôi đi tàu hỏa về quê.",
-        "ko": "나는 기차를 타고 고향에 간다."
-       },
-       "img": "b-tau-hoa.webp"
-      },
-      {
        "vi": "tăng lên",
        "ko": "오르다, 증가하다",
        "kr_read": "땅 렌",
@@ -82987,16 +82378,6 @@
        "img": "b-tan.webp"
       },
       {
-       "vi": "tận mắt",
-       "ko": "직접 눈으로, 두 눈으로 (with one’s own eyes)",
-       "kr_read": "떤 맛",
-       "ex": {
-        "vi": "Tôi tận mắt chứng kiến sự việc.",
-        "ko": "나는 직접 눈으로 그 일을 목격했다."
-       },
-       "img": "b-tan-mat.webp"
-      },
-      {
        "vi": "tập luyện",
        "ko": "연습하다, 훈련하다",
        "kr_read": "떱 루옌",
@@ -83005,13 +82386,7 @@
         "ko": "선수가 열심히 훈련한다."
        },
        "img": "b-tap-luyen.webp"
-      }
-     ]
-    },
-    {
-     "title": "451",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "tiêm",
        "ko": "주사를 놓다",
@@ -83021,7 +82396,13 @@
         "ko": "간호사가 환자에게 주사를 놓는다."
        },
        "img": "b-tiem.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "442",
+     "sub": "",
+     "words": [
       {
        "vi": "tiện",
        "ko": "편리한",
@@ -83051,17 +82432,6 @@
         "ko": "나는 신중하게 돈을 쓴다."
        },
        "img": "b-tieu-tien.webp"
-      },
-      {
-       "vi": "tiểu thuyết",
-       "ko": "장편소설 novel",
-       "kr_read": "띠에우 투옛",
-       "ex": {
-        "vi": "Tôi đang đọc một cuốn tiểu thuyết.",
-        "ko": "나는 장편소설 한 권을 읽고 있다."
-       },
-       "img": "b-tieu-thuyet.webp",
-       "weekly": true
       },
       {
        "vi": "tim",
@@ -83163,13 +82533,7 @@
         "ko": "우리는 생일 초를 켰다."
        },
        "img": "w-a9660cd829.webp"
-      }
-     ]
-    },
-    {
-     "title": "452",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "thân mến",
        "ko": "친애하는, 정다운",
@@ -83189,7 +82553,13 @@
         "ko": "사람들이 사원에서 신을 모신다."
        },
        "img": "b-than.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "443",
+     "sub": "",
+     "words": [
       {
        "vi": "thập phương",
        "ko": "시방, 사방팔방",
@@ -83199,17 +82569,6 @@
         "ko": "순례객들이 사방팔방에서 온다."
        },
        "img": "b-thap-phuong.webp"
-      },
-      {
-       "vi": "thất học",
-       "ko": "배우지 못한, 미취학의 (uneducated, illiterate)",
-       "kr_read": "텃 혹",
-       "ex": {
-        "vi": "Nhiều trẻ em ở đây bị thất học.",
-        "ko": "이곳의 많은 아이들이 배우지 못했다."
-       },
-       "img": "b-that-hoc.webp",
-       "weekly": true
       },
       {
        "vi": "thèm",
@@ -83242,37 +82601,6 @@
        "img": "b-theo-duoi.webp"
       },
       {
-       "vi": "thích hợp",
-       "ko": "적합한 (suitable)",
-       "kr_read": "틱 헙",
-       "ex": {
-        "vi": "Đây là thời điểm thích hợp.",
-        "ko": "이것은 적합한 시점이다."
-       },
-       "img": "b-thich-hop.webp"
-      },
-      {
-       "vi": "thích thú",
-       "ko": "흥미로워하다 (interested)",
-       "kr_read": "틱 투",
-       "ex": {
-        "vi": "Trẻ em rất thích thú với trò chơi này.",
-        "ko": "아이들이 이 게임을 매우 흥미로워한다."
-       },
-       "img": "b-thich-thu.webp",
-       "weekly": true
-      },
-      {
-       "vi": "thích ứng",
-       "ko": "적응하다 (adapt)",
-       "kr_read": "틱 응",
-       "ex": {
-        "vi": "Tôi đang thích ứng với môi trường mới.",
-        "ko": "나는 새로운 환경에 적응하고 있다."
-       },
-       "img": "b-thich-ung.webp"
-      },
-      {
        "vi": "thiếp",
        "ko": "카드, 초대장",
        "kr_read": "티엡",
@@ -83303,16 +82631,6 @@
        "img": "b-tinh-tinh.webp"
       },
       {
-       "vi": "tỉnh táo",
-       "ko": "잠이 깬 (awake)",
-       "kr_read": "띤 따오",
-       "ex": {
-        "vi": "Tôi cần cà phê để tỉnh táo.",
-        "ko": "나는 잠을 깨려고 커피가 필요하다."
-       },
-       "img": "b-tinh-tao.webp"
-      },
-      {
        "vi": "tỏ tình",
        "ko": "사랑을 고백하다",
        "kr_read": "또 띤",
@@ -83321,13 +82639,7 @@
         "ko": "그는 그 여자에게 사랑을 고백했다."
        },
        "img": "b-to-tinh.webp"
-      }
-     ]
-    },
-    {
-     "title": "453",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "toàn bộ",
        "ko": "전부, 전체",
@@ -83337,17 +82649,6 @@
         "ko": "나는 책 전체를 읽었다."
        },
        "img": "b-toan-bo.webp"
-      },
-      {
-       "vi": "toàn cầu",
-       "ko": "글로벌 (global)",
-       "kr_read": "또안 꺼우",
-       "ex": {
-        "vi": "Đây là vấn đề toàn cầu.",
-        "ko": "이것은 글로벌 문제이다."
-       },
-       "img": "b-toan-cau.webp",
-       "weekly": true
       },
       {
        "vi": "tồi tệ",
@@ -83390,17 +82691,6 @@
        "img": "b-tot-lanh.webp"
       },
       {
-       "vi": "trả lại",
-       "ko": "반품하다 return",
-       "kr_read": "짜 라이",
-       "ex": {
-        "vi": "Tôi muốn trả lại sản phẩm này.",
-        "ko": "나는 이 제품을 반품하고 싶다."
-       },
-       "img": "b-tra-lai.webp",
-       "weekly": true
-      },
-      {
        "vi": "tràn",
        "ko": "넘치다, 범람하다",
        "kr_read": "짠",
@@ -83419,7 +82709,13 @@
         "ko": "전통 의복은 매우 아름답다."
        },
        "img": "b-trang-phuc.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "444",
+     "sub": "",
+     "words": [
       {
        "vi": "tranh ấn tượng",
        "ko": "인상주의 그림",
@@ -83451,17 +82747,6 @@
        "img": "b-tram-cam.webp"
       },
       {
-       "vi": "trận chung kết",
-       "ko": "결승전 (final match)",
-       "kr_read": "쩐 쭝 껫",
-       "ex": {
-        "vi": "Chúng tôi xem trận chung kết tối nay.",
-        "ko": "우리는 오늘 저녁 결승전을 본다."
-       },
-       "img": "b-tran-chung-ket.webp",
-       "weekly": true
-      },
-      {
        "vi": "trấn tĩnh",
        "ko": "진정하다, 평정심을 찾다",
        "kr_read": "쩐 띤",
@@ -83480,22 +82765,6 @@
         "ko": "물소가 논을 갈고 있다."
        },
        "img": "b-trau.webp"
-      }
-     ]
-    },
-    {
-     "title": "454",
-     "sub": "",
-     "words": [
-      {
-       "vi": "trêu",
-       "ko": "놀리다 (to tease)",
-       "kr_read": "쩨우",
-       "ex": {
-        "vi": "Đừng trêu em bé nữa.",
-        "ko": "아기를 더 이상 놀리지 마세요."
-       },
-       "img": "b-treu.webp"
       },
       {
        "vi": "trí não",
@@ -83518,16 +82787,6 @@
        "img": "b-tri-tuong-tuong.webp"
       },
       {
-       "vi": "thiết bị",
-       "ko": "장비, 설비 (equipment / device)",
-       "kr_read": "티엣 비",
-       "ex": {
-        "vi": "Nhà máy có nhiều thiết bị hiện đại.",
-        "ko": "공장에는 현대적인 장비가 많다."
-       },
-       "img": "b-thiet-bi.webp"
-      },
-      {
        "vi": "thiết thực",
        "ko": "실질적인, 현실적인",
        "kr_read": "티엣 특",
@@ -83538,16 +82797,6 @@
        "img": "b-thiet-thuc.webp"
       },
       {
-       "vi": "thông thạo",
-       "ko": "정통하다, 능숙하다",
-       "kr_read": "통 타오",
-       "ex": {
-        "vi": "Anh ấy thông thạo ba ngoại ngữ.",
-        "ko": "그는 세 개의 외국어에 능숙하다."
-       },
-       "img": "b-thong-thao.webp"
-      },
-      {
        "vi": "thời",
        "ko": "때, 시기",
        "kr_read": "터이",
@@ -83556,17 +82805,6 @@
         "ko": "우리 할아버지 때와 지금은 다르다."
        },
        "img": "w-f995c25586.webp"
-      },
-      {
-       "vi": "thời gian biểu",
-       "ko": "일정표, 시간표 schedule",
-       "kr_read": "터이 잔 비에우",
-       "ex": {
-        "vi": "Hãy làm thời gian biểu học tập.",
-        "ko": "학습 시간표를 만드세요."
-       },
-       "img": "b-thoi-gian-bieu.webp",
-       "weekly": true
       },
       {
        "vi": "thu phục",
@@ -83627,7 +82865,13 @@
         "ko": "이 기술은 상업화되었다."
        },
        "img": "b-thuong-mai-hoa.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "445",
+     "sub": "",
+     "words": [
       {
        "vi": "thường dân",
        "ko": "상민, 평민",
@@ -83637,13 +82881,7 @@
         "ko": "그는 평민 출신이다."
        },
        "img": "b-thuong-dan.webp"
-      }
-     ]
-    },
-    {
-     "title": "455",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "trọng tâm",
        "ko": "중심, 중점",
@@ -83653,16 +82891,6 @@
         "ko": "이것은 수업의 중점이다."
        },
        "img": "b-trong-tam.webp"
-      },
-      {
-       "vi": "trở về",
-       "ko": "돌아오다 (to come back)",
-       "kr_read": "쩌 베",
-       "ex": {
-        "vi": "Tôi trở về nhà lúc tám giờ.",
-        "ko": "나는 8시에 집으로 돌아온다."
-       },
-       "img": "b-tro-ve.webp"
       },
       {
        "vi": "trồng",
@@ -83705,17 +82933,6 @@
        "img": "b-truyen.webp"
       },
       {
-       "vi": "trượt",
-       "ko": "불합격하다 fail",
-       "kr_read": "쯔엇",
-       "ex": {
-        "vi": "Tôi trượt kỳ thi lần này.",
-        "ko": "나는 이번 시험에 불합격했다."
-       },
-       "img": "b-truot.webp",
-       "weekly": true
-      },
-      {
        "vi": "túng thiếu",
        "ko": "궁핍한, 부족한",
        "kr_read": "뚱 티에우",
@@ -83724,27 +82941,6 @@
         "ko": "그들의 가족은 궁핍한 상태이다."
        },
        "img": "b-tung-thieu.webp"
-      },
-      {
-       "vi": "tuần trăng mật",
-       "ko": "신혼여행 (honeymoon)",
-       "kr_read": "뚜언 짱 멋",
-       "ex": {
-        "vi": "Họ đi tuần trăng mật ở Phú Quốc.",
-        "ko": "그들은 푸꾸옥으로 신혼여행을 간다."
-       },
-       "img": "b-tuan-trang-mat.webp",
-       "weekly": true
-      },
-      {
-       "vi": "từ vựng",
-       "ko": "어휘 (Vocabulary)",
-       "kr_read": "뜨 븡",
-       "ex": {
-        "vi": "Tôi học từ vựng mới mỗi ngày.",
-        "ko": "나는 매일 새로운 어휘를 배운다."
-       },
-       "img": "b-tu-vung.webp"
       },
       {
        "vi": "tử tế",
@@ -83795,13 +82991,7 @@
         "ko": "내가 시간이 더 많다면 얼마나 좋을까."
        },
        "img": "b-uoc-gi.webp"
-      }
-     ]
-    },
-    {
-     "title": "456",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "ước tính",
        "ko": "추산하다, 어림잡다",
@@ -83811,17 +83001,6 @@
         "ko": "추산 비용은 약 천만 동이다."
        },
        "img": "b-uoc-tinh.webp"
-      },
-      {
-       "vi": "vãn khách",
-       "ko": "손님이 적은 (sparse visitors)",
-       "kr_read": "반 칵",
-       "ex": {
-        "vi": "Buổi chiều quán này vãn khách.",
-        "ko": "오후에는 이 가게가 손님이 적다."
-       },
-       "img": "b-van-khach.webp",
-       "weekly": true
       },
       {
        "vi": "văn hóa dân gian",
@@ -83842,7 +83021,13 @@
         "ko": "이것은 고대 문명이다."
        },
        "img": "b-van-minh.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "446",
+     "sub": "",
+     "words": [
       {
        "vi": "vận động viên",
        "ko": "운동선수",
@@ -83895,7 +83080,7 @@
       },
       {
        "vi": "viên thuốc",
-       "ko": "알약 (단위)",
+       "ko": "알약 a pill",
        "kr_read": "비엔 투옥",
        "ex": {
         "vi": "Uống hai viên thuốc sau bữa ăn.",
@@ -83913,17 +83098,6 @@
         "ko": "러시아는 넓은 극동 지역을 가지고 있다."
        },
        "img": "b-vien-dong.webp"
-      },
-      {
-       "vi": "vịnh",
-       "ko": "만 (bay)",
-       "kr_read": "빈",
-       "ex": {
-        "vi": "Vịnh Hạ Long rất đẹp.",
-        "ko": "하롱베이는 매우 아름답다."
-       },
-       "img": "b-vinh.webp",
-       "weekly": true
       },
       {
        "vi": "vòng eo",
@@ -83954,13 +83128,7 @@
         "ko": "우리는 전통 체오 공연을 본다."
        },
        "img": "b-vo-cheo.webp"
-      }
-     ]
-    },
-    {
-     "title": "457",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "vụ mùa",
        "ko": "수확기, 농사철",
@@ -83992,16 +83160,6 @@
        "img": "b-vuon-len.webp"
       },
       {
-       "vi": "xây dựng",
-       "ko": "건설하다 (build, construct)",
-       "kr_read": "써이 증",
-       "ex": {
-        "vi": "Họ xây dựng một tòa nhà mới.",
-        "ko": "그들은 새 건물을 건설한다."
-       },
-       "img": "b-xay-dung.webp"
-      },
-      {
        "vi": "xoay sở",
        "ko": "그럭저럭 꾸려가다, 해결하려 애쓰다",
        "kr_read": "쏘아이 써",
@@ -84020,18 +83178,13 @@
         "ko": "그의 머리는 일어난 후 흐트러졌다."
        },
        "img": "b-xoc-xech.webp"
-      },
-      {
-       "vi": "xẻng",
-       "ko": "삽 (shovel)",
-       "kr_read": "쌩",
-       "ex": {
-        "vi": "Anh ấy đào đất bằng xẻng.",
-        "ko": "그는 삽으로 땅을 판다."
-       },
-       "img": "b-xeng.webp",
-       "weekly": true
-      },
+      }
+     ]
+    },
+    {
+     "title": "447",
+     "sub": "",
+     "words": [
       {
        "vi": "xỏ",
        "ko": "(신발, 장갑 등을) 신다, 끼다",
@@ -84041,16 +83194,6 @@
         "ko": "아기가 신발 신는 연습을 한다."
        },
        "img": "b-xo.webp"
-      },
-      {
-       "vi": "ý nghĩa",
-       "ko": "의미 (meaning)",
-       "kr_read": "이 응이어",
-       "ex": {
-        "vi": "Món quà này có ý nghĩa lớn.",
-        "ko": "이 선물은 큰 의미가 있다."
-       },
-       "img": "b-y-nghia.webp"
       },
       {
        "vi": "yêu thích",
@@ -84065,7 +83208,7 @@
      ]
     },
     {
-     "title": "458",
+     "title": "448",
      "sub": "",
      "words": [
       {
@@ -84187,7 +83330,7 @@
       },
       {
        "vi": "mềm mại",
-       "ko": "부드러운, 유연한 (soft)",
+       "ko": "부드러운, 유연한",
        "kr_read": "멤 마이",
        "ex": {
         "vi": "Chiếc gối này rất mềm mại.",
@@ -84232,7 +83375,7 @@
      ]
     },
     {
-     "title": "459",
+     "title": "449",
      "sub": "",
      "words": [
       {
@@ -84382,7 +83525,7 @@
      ]
     },
     {
-     "title": "460",
+     "title": "450",
      "sub": "",
      "words": [
       {
@@ -84468,7 +83611,7 @@
       },
       {
        "vi": "màu xanh lá cây",
-       "ko": "초록색, 녹색 / ( green )",
+       "ko": "초록색",
        "kr_read": "마우 싸인 라 꺼이",
        "ex": {
         "vi": "Lá cây có màu xanh lá cây.",
@@ -84479,7 +83622,7 @@
       },
       {
        "vi": "màu xanh da trời",
-       "ko": "파란색 / ( blue )",
+       "ko": "파란색",
        "kr_read": "마우 싸인 자 쩌이",
        "ex": {
         "vi": "Bầu trời có màu xanh da trời.",
@@ -84546,7 +83689,7 @@
      ]
     },
     {
-     "title": "461",
+     "title": "451",
      "sub": "",
      "words": [
       {
@@ -84574,7 +83717,7 @@
       },
       {
        "vi": "tuyết",
-       "ko": "눈, 눈송이 (snow)",
+       "ko": "눈(날씨)",
        "kr_read": "뚜옛",
        "ex": {
         "vi": "Ở Hàn Quốc mùa đông có tuyết.",
@@ -84585,7 +83728,7 @@
       },
       {
        "vi": "ngõ",
-       "ko": "골목길 (alley)",
+       "ko": "골목, 통로",
        "kr_read": "응오",
        "ex": {
         "vi": "Nhà tôi nằm sâu trong ngõ nhỏ.",
@@ -84597,7 +83740,7 @@
       },
       {
        "vi": "quán giải khát",
-       "ko": "음료점, 다과점 (cafe)",
+       "ko": "음료수 전문점 (찻집)",
        "kr_read": "꽌 자이 캇",
        "ex": {
         "vi": "Chúng tôi nghỉ chân ở quán giải khát.",
@@ -84617,16 +83760,6 @@
        "img": "b-thu-cong.webp",
        "star": 2,
        "weekly": true
-      },
-      {
-       "vi": "đồ chơi",
-       "ko": "장난감",
-       "kr_read": "도 쩌이",
-       "ex": {
-        "vi": "Con tôi thích chơi đồ chơi mới.",
-        "ko": "우리 아이는 새 장난감 가지고 노는 것을 좋아한다."
-       },
-       "img": "b-do-choi.webp"
       },
       {
        "vi": "một vòng",
@@ -84717,13 +83850,7 @@
        },
        "img": "b-chau.webp",
        "star": 1
-      }
-     ]
-    },
-    {
-     "title": "462",
-     "sub": "",
-     "words": [
+      },
       {
        "vi": "tôi",
        "ko": "나",
@@ -84733,7 +83860,13 @@
         "ko": "제 이름은 민입니다."
        },
        "img": "w-eb3146a6c9.webp"
-      },
+      }
+     ]
+    },
+    {
+     "title": "452",
+     "sub": "",
+     "words": [
       {
        "vi": "năm",
        "ko": "해, 년 – year",
@@ -84791,7 +83924,7 @@
       },
       {
        "vi": "của",
-       "ko": "~의 (것)of (possessive)",
+       "ko": "재산 / ~의",
        "kr_read": "꾸어",
        "ex": {
         "vi": "Đây là xe của tôi.",
