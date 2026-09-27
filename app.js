@@ -9073,8 +9073,8 @@ function telexHint() {
   const tb = el('div', 'thintb');
   const rows = [['a f', 'à'], ['a s', 'á'], ['a r', 'ả'], ['a x', 'ã'], ['a j', 'ạ'], ['a a', 'â'], ['a w', 'ă'], ['e e', 'ê'], ['o o', 'ô'], ['o w', 'ơ'], ['u w', 'ư'], ['d d', 'đ']];
   rows.forEach(([k, v]) => { const r = el('span', 'thk'); r.innerHTML = '<kbd>' + k.split(' ').join('</kbd><kbd>') + '</kbd>→<b>' + v + '</b>'; tb.append(r); });
-  tb.hidden = true;
-  hd.onclick = () => { tb.hidden = !tb.hidden; hd.textContent = tr('성조·모자 치는 법') + (tb.hidden ? ' ▾' : ' ▴'); };
+  // 늘 펼쳐 둔다 (대표님 지시 2026-09-28: "상시로 표시") — 머리글은 이름표만
+  hd.textContent = tr('성조·모자 치는 법'); hd.disabled = true;
   w.append(hd, tb);
   return w;
 }

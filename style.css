@@ -2638,3 +2638,4 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .shnav{display:flex; gap:16px; margin-top:16px}
 .shnav button{width:56px; height:56px; border-radius:50%; border:1px solid var(--line); background:var(--card); font-size:26px; color:var(--fg); cursor:pointer}
 .senses{font-size:14px; color:var(--dim); margin-top:2px}
+.thinthd:disabled{cursor:default; color:var(--dim)}
