@@ -2379,7 +2379,7 @@ function studyHubEntry() {
   card(HUB_ICO.book, '내 단어장', null, wordbookEntry);      // 내 정보에서 옮겨 왔다 (대표님 지시 2026-09-27)
   show('sub', '학습', true);
   // 자료가 아직 안 왔으면 받아서 이 화면을 다시 그린다 (진도 숫자가 채워진다). 다른 데로 갔으면 건드리지 않는다.
-  const still = () => ACTIVE_TAB === 'study' && CURV === 'sub' && $('#title').textContent === tr('학습');
+  const still = () => CURV === 'sub' && $('#title').textContent === tr('학습');
   if (!GRAM) fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { GRAM = gramReady(j); if (still()) studyHubEntry(); }).catch(() => {});
   if (!GYBM) gybmBuild(() => { if (still()) studyHubEntry(); });
   if (!COURSE) withCourse(() => { if (still()) studyHubEntry(); });
@@ -2429,7 +2429,7 @@ function accRow(host, o, open, onToggle, scroll) {
 function studyWordsEntry(scroll) {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyWordsEntry();
-  const still = () => ACTIVE_TAB === 'study' && CURV === 'sub' && $('#title').textContent === tr('단어');
+  const still = () => CURV === 'sub' && $('#title').textContent === tr('단어');   // 탭 상태(ACTIVE_TAB)는 안 본다 — 다른 길로 들어와도 자료가 오면 다시 그려야 한다 (2026-09-28 무한 로딩 원인)
   const rows = [];
   // ① 일상
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track).sort((x, y) => (x.n || 0) - (y.n || 0));
@@ -2464,7 +2464,16 @@ function studyWordsEntry(scroll) {
   rows.forEach(r => accRow(b, r, WOPEN === r.key, () => { WOPEN = WOPEN === r.key ? null : r.key; studyWordsEntry(true); }, scroll));
   show('sub', '단어', true);
   if (!COURSE) withCourse(() => { if (still()) studyWordsEntry(); });
-  if (!GYBM) gybmBuild(() => { if (still()) studyWordsEntry(); });
+  if (!GYBM) {
+    gybmBuild(() => { if (still()) studyWordsEntry(true); });
+    setTimeout(() => {                                       // 8초 안에 안 오면 무한 로딩으로 두지 않는다
+      if (GYBM || !still()) return;
+      const note = b.querySelector('.acc.open .note');
+      if (!note) return;
+      note.textContent = ''; note.append(el('span', null, tr('자료를 받지 못했습니다. ')));
+      const rb = el('button', 'ghost sm', tr('다시 시도')); rb.type = 'button'; rb.onclick = () => { GYBM = null; studyWordsEntry(true); }; note.append(rb);
+    }, 8000);
+  }
 }
 /* 문법 — 책마다 아코디언, 펼치면 과가 길로 */
 function studyGramEntry(scroll) {
@@ -8248,9 +8257,10 @@ function pickMode(w, lv) {
   // 문장은 알아듣기·말하기 위주, 그리고 **퍼즐**로 어순을 만져 본다
   // 2026-09-28: 뜻 듣고 말하기(say_ko)·뜻 듣고 고르기(listen_ko)·뜻 보고 고르기(read_ko)·성조 부호 고르기(tone)·따라 말하기(shadow)·뜻 듣고/문장 듣고 퍼즐 추가. 손글씨는 뺐다
   if (w.sent) return r < .22 ? 'listen' : r < .40 ? 'say' : r < .58 ? 'shadow' : r < .74 ? 'puzzle' : r < .87 ? 'puzzle_ko' : 'puzzle_vi';
-  if (lv >= 2) return r < .14 ? 'say' : r < .26 ? 'say_ko' : r < .44 ? 'type' : r < .54 ? 'listen' : r < .62 ? 'listen_ko' : r < .72 ? 'read' : r < .80 ? 'read_ko' : r < .90 ? 'tone' : 'match';
-  if (lv >= 1) return r < .10 ? 'say' : r < .20 ? 'say_ko' : r < .40 ? 'type' : r < .52 ? 'listen' : r < .60 ? 'listen_ko' : r < .74 ? 'read' : r < .82 ? 'read_ko' : r < .92 ? 'tone' : 'match';
-  return r < .07 ? 'say' : r < .14 ? 'say_ko' : r < .28 ? 'type' : r < .46 ? 'listen' : r < .54 ? 'listen_ko' : r < .74 ? 'read' : r < .84 ? 'read_ko' : r < .92 ? 'tone' : 'match';
+  // 뜻 듣고 단어 고르기(listen_ko)는 뺐다 (대표님 지시 2026-09-28)
+  if (lv >= 2) return r < .14 ? 'say' : r < .26 ? 'say_ko' : r < .44 ? 'type' : r < .58 ? 'listen' : r < .70 ? 'read' : r < .80 ? 'read_ko' : r < .90 ? 'tone' : 'match';
+  if (lv >= 1) return r < .10 ? 'say' : r < .20 ? 'say_ko' : r < .40 ? 'type' : r < .56 ? 'listen' : r < .72 ? 'read' : r < .82 ? 'read_ko' : r < .92 ? 'tone' : 'match';
+  return r < .07 ? 'say' : r < .14 ? 'say_ko' : r < .28 ? 'type' : r < .50 ? 'listen' : r < .72 ? 'read' : r < .84 ? 'read_ko' : r < .92 ? 'tone' : 'match';
 }
 /* 단어 → 속한 세트 색인. 오답 보기를 같은 세트에서 뽑기 위한 것 —
    엉뚱한 세트의 단어가 보기로 나오면 뜻만 슬쩍 봐도 답이 티가 난다. */
@@ -8327,7 +8337,7 @@ const REV_CHUNK = 20;                          // 복습 한 판의 최대 문�
 /* 세트 뒤 확인 문제 — 단어마다 **두 번** (대표님 지시 2026-09-27 밤): 먼저 알아보기(듣고 뜻·읽고 뜻·짝 맞추기) 한 바퀴, 다음 만들어 내기(타이핑·말하기) 한 바퀴.
    틀린 것은 그 판 끝에 또 나오므로 결국 단어마다 두 번은 맞혀야 끝난다. 손글씨는 뺐다. 말하기는 녹음이 되는 폰에서만. */
 function buildSetQuestions(words) {
-  const rec = buildQuestions(words, ['listen', 'read', 'read_ko', 'listen_ko', 'match', 'tone', 'listen', 'read']);
+  const rec = buildQuestions(words, ['listen', 'read', 'read_ko', 'match', 'tone', 'listen', 'read']);
   const prod = buildQuestions(words, canRecord() ? ['type', 'say', 'say_ko', 'type'] : ['type']);
   return rec.concat(prod);
 }
@@ -8663,12 +8673,7 @@ function drawQuiz() {
     const qc = el('div', 'qcard');                   // 물음 카드 (캔버스 시안 2026-09-27)
     qc.append(body.querySelector('.q'), main);
     body.append(qc);
-    const wrap = el('div', 'qplay');
-    if (!koQ) {
-      const lb = el('button', 'ghost', '🔊 듣기'); lb.onclick = () => sound(q.w.vi); wrap.append(lb);   // 글자를 눌러도 나지만 단추도 둔다 (2026-09-27 밤)
-      const m = addMic(); if (m) wrap.append(m);
-    }
-    body.append(wrap, sayBox);
+    body.append(sayBox);                 // 읽고 뜻 고르기에는 듣기·말하기 단추를 두지 않는다 — 단어를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   }
 
   const opts = el('div', 'opts');
@@ -8908,7 +8913,7 @@ function drawToneQ(body, q) {
   const w = q.w, syls = String(w.vi).trim().split(/\s+/);
   const bare = syls.map(stripTone).join(' ');
   const main = el('button', 'qmain qtap', esc(bare)); main.type = 'button'; main.onclick = () => sound(w.vi);
-  const qc = el('div', 'qcard'); qc.append(body.querySelector('.q'), main); body.append(qc);
+  const qc = el('div', 'qcard'); qc.append(body.querySelector('.q'), main, el('div', 'q mid', esc(w.ko))); body.append(qc);   // 뜻도 보여 준다 (대표님 지시 2026-09-28: 소리만 듣고 맞추라는 건 너무 어렵다)
   const row = el('div', 'qplay'); const lb = el('button', 'ghost', '🔊 듣기'); lb.onclick = () => sound(w.vi); row.append(lb); body.append(row);
   sound(w.vi);
   const MK = ['', '\u0300', '\u0301', '\u0309', '\u0303', '\u0323'];
