@@ -3160,7 +3160,7 @@ function forgotForm(gate) {
   const b = $('#subBody');
   b.textContent = '';
   b.append(el('p', 'lede', tr('가입할 때 적은 이메일로 재설정 링크를 보내드립니다.')));
-  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = trP('아이디');
+  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = tr('아이디');
   id.autocapitalize = 'none'; id.maxLength = 20;
   const err = el('p', 'note nickerr'); err.hidden = true;
   const go = el('button', 'primary big', tr('재설정 메일 보내기'));
@@ -3190,7 +3190,7 @@ function resetPwForm(token) {
   const b = $('#subBody');
   b.textContent = '';
   b.append(el('p', 'lede', tr('새 비밀번호를 정해 주세요.')));
-  const pw = el('input', 'keyin'); pw.type = 'password'; pw.placeholder = trP('새 비밀번호 (8자 이상)'); pw.maxLength = 64;
+  const pw = el('input', 'keyin'); pw.type = 'password'; pw.placeholder = tr('새 비밀번호 (8자 이상)'); pw.maxLength = 64;
   const err = el('p', 'note nickerr'); err.hidden = true;
   const go = el('button', 'primary big', tr('바꾸기'));
   go.style.width = '100%';
@@ -3297,6 +3297,57 @@ function snapshot() {
    많이 누른 사람이 이기는 순위는 실력 순위가 아니다.
 
    과목이 하나도 10문제를 못 넘으면 점수를 내지 않는다(0) — 못 잰 것을 재었다고 하지 않는다. */
+/* 되살림(2026-09-28 밤): 09-27 죽은 코드 정리 때 지웠으나 부르는 곳이 남아 있었다 — weekReport 는 새 주 첫 실행(월요일)에서, skillScore 는 실력 분석에서. 월요일에 앱이 안 켜진 원인. */
+/* ---------- 실력 점수 ----------
+   순위와 실력 분석이 따로 놀면 안 된다. 순위는 분석에서 나와야 한다.
+   그래서 점수를 지어내지 않고 **분석이 이미 재고 있는 두 가지만** 쓴다.
+
+     실력 점수 = 외운 단어 수 × 평균 정답률
+
+   뜻이 분명하다 — "믿을 만하게 아는 단어가 몇 개인가".
+     · 외운 단어 = 하루 이상 간격을 두고 두 번 이상 맞힌 단어 (앱이 쓰는 '진짜 실력'의 정의)
+     · 평균 정답률 = 말하기·듣기·읽기·쓰기·암기 중 **10문제를 넘긴 과목만** 평균
+   300단어를 80%로 아는 사람이 240, 100단어를 95%로 아는 사람이 95다.
+
+   뺀 것: 소리 낸 횟수 · 공부한 날 · 푼 문제 수.
+   그건 노력이지 실력이 아니고, 노력은 동아리 출석판이 이미 보여준다.
+   많이 누른 사람이 이기는 순위는 실력 순위가 아니다.
+
+   과목이 하나도 10문제를 못 넘으면 점수를 내지 않는다(0) — 못 잰 것을 재었다고 하지 않는다. */
+function skillScore() {
+  const cur = snapshot();
+  const done = SUBJ.map(x => [cur[x.all] || 0, cur[x.ok] || 0]).filter(([n]) => n >= NEED);
+  if (!done.length) return { score: 0, acc: null, memo: cur.memo, subjects: 0 };
+  const acc = Math.round(done.reduce((a, [n, ok]) => a + ok / n, 0) * 100 / done.length);
+  return { score: Math.round(cur.memo * acc / 100), acc, memo: cur.memo, subjects: done.length };
+}
+function weekReport(base) {
+  const cur = snapshot(), b = base || {};
+  const subj = SUBJ.map(x => {
+    const n = (cur[x.all] || 0) - (b[x.all] || 0), ok = (cur[x.ok] || 0) - (b[x.ok] || 0);
+    return { name: x.k, n, ok, pct: n ? Math.round(ok * 100 / n) : null, tip: x.tip };
+  });
+  const d = k => (cur[k] || 0) - (b[k] || 0);
+  const r = { subj, memo: d('memo'), days: d('days'), sets: d('sets'), said: d('said') };
+  r.skill = skillScore();               // 순위와 같은 잣대 — 따로 놀지 않게
+
+  const solved = d('qAll') + d('drill');
+  r.solved = solved;
+  return r;
+}
+/* 되살림(2026-09-28 밤) — 09-27 정리 때 지워졌지만 실력 분석(순위 보내기)과 AI 호출이 아직 부른다 */
+const onAppKey = () => !S.gkey && !!PROXY;
+const weekCredits = () => (credits().wk || {})[weekKey()] || 0;
+/* 한 달 점수 — 최근 주에 더 무게를 준다(MONTH_W 는 아래 동 계산 쪽에 그대로 있다) */
+function monthCredits() {
+  const wk = credits().wk || {};
+  let sum = 0;
+  MONTH_W.forEach((w, i) => {
+    const d = new Date(); d.setDate(d.getDate() - i * 7);
+    sum += (wk[weekKey(d)] || 0) * w;
+  });
+  return Math.round(sum);
+}
 function showWeek(rep) {
   const b = $('#weekBody');
   b.textContent = '';
