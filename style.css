@@ -2609,3 +2609,7 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .feedrow .ficon.big svg{width:96px!important; height:96px!important; flex:none}
 .feedrow .fvi{white-space:nowrap}
 .feedrow button.primary{flex:none}
+/* 콤보 팝업 — 동 (2026-09-27 밤) */
+.celeb-gem svg{width:16px; height:16px; vertical-align:-3px; margin-right:2px}
+.celebrate.big .celeb-t{font-size:20px}
+.celebrate.big{box-shadow:0 6px 24px rgba(255,138,61,.35)}

@@ -801,9 +801,7 @@ function soundRow(text, withSlow) {
   const row = el('div', 'sound');
   const a = el('button', 'ghost', '🔊 듣기');
   a.onclick = () => play(text, false);
-  const b = el('button', 'ghost slow', '🐢 느리게');
-  b.onclick = () => play(text, true);
-  row.append(a, b);
+  row.append(a);                                   // 🐢 느리게 단추는 뺐다 (대표님 지시 2026-09-27 밤: 옛 디자인). 속도는 카드의 듣기▾ 로
   return row;
 }
 
@@ -846,19 +844,20 @@ let FX_STREAK = 0;
    시험 준비용이라, 틀렸다고 더 못 풀게 막으면 공부가 아니라 훼방이 된다.
    대신 보석은 순전히 보상(맞힐 때마다 쌓이는 것)이라 안전하다 — 정답 판정이
    모이는 이 한 곳(celebrate)에서만 주면 18곳 호출부를 하나도 안 건드려도 된다. */
-const gems = () => (S.stats.gems = S.stats.gems || 0);
+/* 콤보 → 동 (대표님 지시 2026-09-27 밤: "6연속 정답 팝업 좋아. 콤보처럼. 맞출수록·콤보가 클수록 동 더"). 다이아몬드(보석)는 뺐다.
+   맞힐 때마다 1동, 3연속부터 2동, 5연속 3동, 10연속 5동, 20연속 8동. 돈은 짜오 상점에서 쓴다. */
+const comboGain = n => n >= 20 ? 8 : n >= 10 ? 5 : n >= 5 ? 3 : n >= 3 ? 2 : 1;
 function celebrate(ok) {
   if (!ok) { FX_STREAK = 0; return; }
   FX_STREAK++;
-  const gain = FX_STREAK >= 5 ? 3 : FX_STREAK >= 3 ? 2 : 1;   // 연속일수록 조금 더 — 화려하지 않게, 딱 이 정도만
-  S.stats.gems = gems() + gain;
-  save();
+  const gain = comboGain(FX_STREAK);
+  earn(gain, tr('정답'));
   const old = document.querySelector('.celebrate'); if (old) old.remove();
   const el2 = document.createElement('div');
-  el2.className = 'celebrate';
-  el2.innerHTML = '<span class="celeb-i">🎓</span><span class="celeb-t">' +
-    (FX_STREAK >= 3 ? tr(FX_STREAK + '연속 정답!') : tr('정답이에요!')) +
-    '</span><span class="celeb-gem">💎+' + gain + '</span>';
+  el2.className = 'celebrate' + (FX_STREAK >= 5 ? ' big' : '');
+  el2.innerHTML = '<span class="celeb-t">' +
+    (FX_STREAK >= 2 ? tr(FX_STREAK + '연속 정답!') : tr('정답이에요!')) +
+    '</span><span class="celeb-gem">' + COIN_SVG + '+' + gain + tr('동') + '</span>';
   document.body.append(el2);
   requestAnimationFrame(() => el2.classList.add('on'));
   setTimeout(() => { el2.classList.remove('on'); setTimeout(() => el2.remove(), 220); }, 1100);
@@ -1633,6 +1632,7 @@ function verdict(box, i, ok, name, sub) {
     '<span class="vmark">' + (ok === null ? '—' : ok ? 'O' : 'X') + '</span>' +
     '<span class="vsub">' + sub + '</span>';
   sayCredit(box);
+  if (box.onVerdict) box.onVerdict(i, ok);            // 말하기 테스트가 판정을 받아 채점한다 (2026-09-27 밤)
 }
 
 /* 따라 말하기 점수 — **발음과 높낮이가 둘 다 O 일 때만** 준다 (사용자 지시).
@@ -7533,10 +7533,7 @@ function wbRow(vi, ko, meta) {
   const p1 = el('button', 'iconbtn', '🔊');
   p1.title = tr('보통 속도');
   p1.onclick = () => { const k = recKey(vi); k ? play(k, false) : speakVi(vi, false, 0, S.voice); };
-  const p2 = el('button', 'iconbtn', '🐢');
-  p2.title = tr('느리게');
-  p2.onclick = () => { const k = recKey(vi); k ? play(k, true) : speakVi(vi, false, rate() * .7, S.voice); };
-  top.append(p1, p2, starBtn(vi, ko || '', vi));
+  top.append(p1, starBtn(vi, ko || '', vi));   // 🐢 는 뺐다 (2026-09-27 밤)
   r.append(top, el('div', 'wbko', esc(ko || '')));
   return r;
 }
@@ -8666,9 +8663,9 @@ function drawQuiz() {
     qc.append(body.querySelector('.q'), main);
     body.append(qc);
     const wrap = el('div', 'qplay');
+    const lb = el('button', 'ghost', '🔊 듣기'); lb.onclick = () => sound(q.w.vi); wrap.append(lb);   // 글자를 눌러도 나지만 단추도 둔다 (2026-09-27 밤)
     const m = addMic(); if (m) wrap.append(m);
-    if (wrap.children.length) body.append(wrap);
-    body.append(sayBox);
+    body.append(wrap, sayBox);
   }
 
   const opts = el('div', 'opts');
@@ -8779,8 +8776,7 @@ function drawPuzzle(body, q) {
   body.append(el('div', 'puzzhint', esc(w.ko)));      // 뜻은 보여준다 — 어순을 묻는 문제니까
   const row0 = el('div', 'qplay');
   const pb = el('button', 'ghost', '🔊 듣기'); pb.onclick = () => play(w.vi, false);
-  const pb2 = el('button', 'ghost slow', '🐢 느리게'); pb2.onclick = () => play(w.vi, true);
-  row0.append(pb, pb2); body.append(row0);
+  row0.append(pb); body.append(row0);
 
   /* 마침표\u00b7물음표는 조각에서 뗀다 — 'gỗ.' 처럼 붙어 있으면
      그 조각이 맨 끝이라는 게 티가 나서 문제가 헐거워진다. */
@@ -8906,7 +8902,6 @@ function drawSay(body, q) {
   const w = q.w;
   const p = pic(w, 'pic mid'); if (p) body.append(p);
   body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.ko)));
-  const jbox = el('div', 'cmpnote judge');
   let done = false;
   const finish = (ok, judged) => {
     if (done) return; done = true;
@@ -8914,19 +8909,25 @@ function drawSay(body, q) {
     grade(w.vi, ok, Q.early);
     if (ok) Q.ok++; else requeue(q);
     const ans = el('div', 'ansbox');
-    ans.append(el('div', 'vi sm', esc(w.vi)), toneRow(w.tones), reveal(krShow(w)));
+    const vb = el('button', 'vi sm tapword', esc(w.vi)); vb.type = 'button'; vb.onclick = () => pairPopup(w.vi, { kr: w.kr_read, ko: w.ko });
+    ans.append(vb, toneRow(w.tones), reveal(krShow(w)));
     const sr = soundRow(w.vi, true); sr.classList.add('mid');
     ans.append(sr);
     body.append(ans);
     nextBtn(body, () => { Q.i++; drawQuiz(); });
   };
-  const jb = judgeBtn(w.vi, jbox, finish);
+  /* 카드의 말하기와 **같은 길**(대표님 지적 2026-09-27 밤: "발음을 알아들을 수 없고 높낮이 그래프도 안 보인다") —
+     높낮이 그래프에 내 곡선이 겹치고, 그 아래 발음(폰 인식 → 안 되면 소리 비교)·높낮이 O/X 가 뜬다. 발음 판정이 채점이 된다. */
+  const box = el('div', 'cmpbox'); box.dataset.merged = '1';
+  box.onVerdict = (i, ok) => { if (i === 0 && ok !== null) finish(ok === true, true); };
   const row = el('div', 'qplay');
-  if (jb) row.append(jb);
-  const showA = el('button', jb ? 'ghost' : 'primary big', jb ? '모르겠어요' : '말했어요 · 정답 보기');
-  showA.onclick = () => { bumpSaid(); finish(!jb ? true : false, false); };
+  const lb = el('button', 'ghost', '🔊 듣기'); lb.onclick = () => sound(w.vi); row.append(lb);
+  const rec = canRecord();
+  if (rec) { const mic = el('button', 'rec', '🎤 말하기'); mic.onclick = () => toggleRec(w.vi, mic, box); row.append(mic); }
+  const showA = el('button', rec ? 'ghost' : 'primary big', rec ? '모르겠어요' : '말했어요 · 정답 보기');
+  showA.onclick = () => { bumpSaid(); finish(!rec, false); };
   row.append(showA);
-  body.append(row, jbox);
+  body.append(row, pitchGraph(w.vi, {}), box);
 }
 
 /* 손으로 — 성조 부호까지 써 본다 (복습 안에서) */
