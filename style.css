@@ -2502,13 +2502,14 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 /* ── 짜오 움직임 (2026-09-27 저녁) ── pet.js 가 그린 부위(class pt-*)를 돌린다.
    transform-box:fill-box 라야 SVG 안 요소의 회전 축이 그 부위 자체의 상자 안에 잡힌다(안 그러면 그림 왼쪽 위가 축이 된다). */
 .petfig svg{animation:none}
-.petfig svg *{transform-box:fill-box}
+/* fill-box 는 CSS 로 움직이는 무리(g)에만. 속성 transform 이 있는 타원·네모에 주면 회전 축이 두 번 잡혀 자리가 밀린다 — 날개가 짝짝이였던 원인(2026-09-27) */
+.pt-body,.pt-head,.pt-lid,.pt-crest,.pt-tail,.pt-wing,.pt-beakb,.pt-egg,.pt-chick,.pt-eggtop,.pt-shellbot,.pt-food,.pt-zz{transform-box:fill-box}
 .pt-body{transform-origin:50% 100%; animation:ptbreath 2.8s ease-in-out infinite}
 .pt-head{transform-origin:50% 92%; animation:ptbob 2.8s ease-in-out infinite}
 .pt-lid{transform-origin:50% 0; transform:scaleY(0); animation:ptblink 4.6s linear infinite}
 .pt-crest{transform-origin:50% 100%; animation:ptcrest 7s ease-in-out infinite}
 .pt-tail{transform-origin:50% 0; animation:pttail 3.4s ease-in-out infinite}
-.pt-wing.l{transform-origin:100% 12%} .pt-wing.r{transform-origin:0 12%}
+.pt-wing.l{transform-origin:100% 45%} .pt-wing.r{transform-origin:0 45%}   /* 3판 날개: 어깨가 안쪽 가운데 */
 .pt-smile,.pt-zz{display:none}
 .pt-food{transform-origin:50% 50%}
 @keyframes ptbreath{0%,100%{transform:scale(1,1)}50%{transform:scale(1.015,1.035)}}
@@ -2588,3 +2589,23 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .feedrow button.primary{min-height:36px; padding:6px 12px; white-space:nowrap}
 .feedrow button[disabled]{opacity:.45}
 .feedbox .pnote{font-size:13px; color:var(--dim); margin-bottom:10px}
+/* 둥지(가진 새들)·알 상점 (2026-09-27 저녁) */
+.nest{display:flex; align-items:center; gap:6px; flex:1; min-width:0; overflow-x:auto; padding:2px 0}
+.nestbtn{flex:none; width:44px; height:44px; border-radius:12px; border:2px solid var(--line); background:var(--surface-2); padding:2px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; color:var(--dim)}
+.nestbtn svg{width:38px; height:38px}
+.nestbtn svg,.nestbtn svg *,.ficon svg *{animation:none!important}
+.nestbtn.on{border-color:var(--accent); background:color-mix(in srgb, var(--accent) 10%, var(--card))}
+.nestbtn.add{font-size:22px; font-weight:800}
+.feedrow .ficon.big,.feedrow .ficon.big svg{width:96px; height:96px}
+.shopsec{font-weight:800; margin:12px 0 4px; display:flex; justify-content:space-between; align-items:baseline; gap:8px}
+.shopsec small{font-weight:500; color:var(--dim); font-size:12px; text-align:right}
+.modalbox.feedbox{max-height:calc(100dvh - 40px); overflow-y:auto; -webkit-overflow-scrolling:touch}
+.feedlist.foods{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.feedlist.foods .feedrow{flex-direction:column; align-items:center; text-align:center; gap:4px; padding:8px 6px}
+.feedlist.foods .fbody{align-items:center}
+.feedlist.foods .fvi{font-size:15px}
+.feedlist.foods button.primary{min-height:32px; padding:4px 12px; font-size:14px}
+.ansbox .tapword{border:0; background:none; font:inherit; color:inherit; padding:0; cursor:pointer; text-decoration:underline dotted; text-underline-offset:4px}
+.feedrow .ficon.big svg{width:96px!important; height:96px!important; flex:none}
+.feedrow .fvi{white-space:nowrap}
+.feedrow button.primary{flex:none}

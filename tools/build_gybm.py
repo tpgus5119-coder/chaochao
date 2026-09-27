@@ -133,6 +133,12 @@ def kr_of(vi):
     return kr_cache[vi]
 
 def enrich(w, skey=None):
+    # 원본(cohort22.json 등)에 예문·그림·발음이 직접 적혀 있으면 그것이 우선 — 전에는 캐시·basicwords 만 보고 원본 것을 버렸다(2026-09-27 저녁 발견)
+    out = _enrich0(w, skey)
+    for f in ("kr_read", "ex", "img"):
+        if w.get(f): out[f] = w[f]
+    return out
+def _enrich0(w, skey=None):
     out = {"vi": nfc(w["vi"]), "ko": w.get("ko", "")}
     if w.get("gl"):
         out["gl"] = 1        # 교재 낱말장(Bảng từ) 낱말 — 앱에서 '핵심' 표시 (tools/mark_glossary.py)
@@ -190,10 +196,18 @@ def dedupe(words, seen, skey=None):
 def chunk_chapters(chapters, seen, size=15, skey=None):
     lessons = []
     for ch in chapters:
-        kept = dedupe(ch["words"], seen, skey)
+        # 22기 시험 자료는 **파일 그대로** — 앞 회차에 나온 낱말도 다시 넣는다 (대표님 지시 2026-09-27 저녁: "그냥 파일 그대로 단어 넣어")
+        kept = [enrich(w, skey) for w in ch["words"] if w.get("vi") and w.get("ko")] if skey == "c22" else dedupe(ch["words"], seen, skey)
         if not kept:
             continue
-        parts = [kept[i:i + size] for i in range(0, len(kept), size)]
+        if skey == "c22":
+            # 회차를 고르게 나눈다 — 40 → 14·13·13, 49 → 17·16·16 (12~18 낱말). 15씩 자르면 마지막이 4개가 된다
+            n = max(1, -(-len(kept) // 18)); q, r = divmod(len(kept), n)
+            parts, at = [], 0
+            for i in range(n):
+                sz = q + (1 if i < r else 0); parts.append(kept[at:at + sz]); at += sz
+        else:
+            parts = [kept[i:i + size] for i in range(0, len(kept), size)]
         for i, part in enumerate(parts):
             title = ch["title"]
             if len(parts) > 1:
@@ -218,7 +232,7 @@ for n in range(1, 9):
     d = load(f"{SP}/sub_v1_bai{n}.json")
     sub_chapters.append({"title": d["title"], "title_ko": d.get("title_ko", ""), "words": d["words"]})
 glos = load(f"{SP}/sub_v1_glossary.json")
-sub_chapters.append({"title": "Bảng từ (낱말장)", "title_ko": "낱말장", "words": glos})
+sub_chapters.append({"title": "Bảng từ (단어장)", "title_ko": "단어장", "words": glos})
 
 # ================= 출처 3: 수업 자료(줌) =================
 zoom_chapters = []
@@ -252,7 +266,7 @@ for s in sets:
         senior_chapters.append({"title": bset_title(s), "title_ko": "", "words": ws})
 
 gybm = {
-    "note": "GYBM 학습용 통합 낱말 — 중복 제거는 **출처 하나 안에서만** 한다"
+    "note": "GYBM 학습용 통합 단어 — 중복 제거는 **출처 하나 안에서만** 한다"
             "(메인교재는 1·2권 합쳐 하나의 출처). 출처가 다르면 같은 낱말이 각자 있을 수"
             " 있다(대표님 지시, 2026-09-23: \"메인교재1에 chao 있으면 서브교재2에도 있을"
             " 수 있는데 메인교재2엔 없어야 한다\"). 일상회화·직무회화와는 원래 별개.",
@@ -275,7 +289,7 @@ if SUB_ZOOM:
 
 # ================= 출처 5: 22기 시험 단어 (대표님이 날마다 올려 주시는 시험 파일 → 올린 순서대로 한 일차씩) =================
 # data/cohort22.json = {"days":[{"no":1,"words":[{"vi":..,"ko":..,"ex":{..}?}, ...]}, ...]}
-# 아직 한 일차도 없으면 출처를 만들지 않는다(빈 출처가 화면에 뜨지 않게). 22기끼리만 중복을 뺀다.
+# 아직 한 일차도 없으면 출처를 만들지 않는다(빈 출처가 화면에 뜨지 않게). 22기는 중복을 빼지 않는다(파일 그대로).
 c22p = pathlib.Path(f"{DATA}/cohort22.json")
 if c22p.exists():
     c22 = load(c22p)

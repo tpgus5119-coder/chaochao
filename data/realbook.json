@@ -1,5 +1,5 @@
 {
- "note": "실제 GYBM 사용 교재 'Tiếng Việt Cho Người Nước Ngoài' 1·2권 (Khoa Việt Nam học, NXB ĐHQG TP.HCM, Nguyễn Thị Ngọc Hân 외) 전체를 챕터(Bài)별로 OCR 추출한 데이터. 이전에 잘못 추출했던 'Tiếng Việt Cơ sở'(다른 책, Nguyễn Việt Hương)와는 무관하다. 1·2권 각 12과(Bài, 6·12과는 복습) + 책 자체 공식 낱말장(Bảng từ) 전부 포함. 3·4권은 아직 없음(교재가 있는지 미확인).",
+ "note": "실제 GYBM 사용 교재 'Tiếng Việt Cho Người Nước Ngoài' 1·2권 (Khoa Việt Nam học, NXB ĐHQG TP.HCM, Nguyễn Thị Ngọc Hân 외) 전체를 챕터(Bài)별로 OCR 추출한 데이터. 이전에 잘못 추출했던 'Tiếng Việt Cơ sở'(다른 책, Nguyễn Việt Hương)와는 무관하다. 1·2권 각 12과(Bài, 6·12과는 복습) + 책 자체 공식 단어장(Bảng từ) 전부 포함. 3·4권은 아직 없음(교재가 있는지 미확인).",
  "books": [
   {
    "vol": 1,
@@ -580,7 +580,7 @@
       },
       {
        "vi": "từ",
-       "ko": "단어, 낱말",
+       "ko": "단어",
        "en": "word",
        "kr_read": "뜨",
        "gl": 1
@@ -26969,7 +26969,7 @@
       },
       {
        "vi": "thay từ ngữ",
-       "ko": "낱말 바꾸기",
+       "ko": "단어 바꾸기",
        "en": "",
        "kr_read": "타이 뜨 응으"
       },
