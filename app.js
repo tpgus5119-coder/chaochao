@@ -2856,7 +2856,7 @@ async function analysisCard(mode) {
 /* ── 진도 서버 저장 ──────────────────────────────────────────
    로그인한 사람만. 하루 한 번 + 세트를 끝낼 때 올린다.
    서버 쓰기 한도(무료 1,000/일)를 아끼려고 그 이상은 안 올린다. */
-const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick'];   // 실전·GYBM 창고와 별표도 같이 올린다 (2026-09-27)
+const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick', 'cr', 'pet', 'petName'];   // 돈(cr)·짜오 살림(pet)도 같이 (2026-09-27 저녁)   // 실전·GYBM 창고와 별표도 같이 올린다 (2026-09-27)
 /* 자동 진도 백업.
    예전에는 '하루 한 번'이라 오늘 공부한 것이 밤에 폰을 잃으면 통째로 날아갔다.
    이제 학습이 끝날 때마다 올리되, 8초 안에 여러 번 불려도 **한 번만** 보낸다
@@ -3267,7 +3267,7 @@ function renderAwards() { renderHome(); }   // 내 정보 화면은 홈에 녹�
    (대표님 지시 2026-09-27: "tpgus5119 아이디의 진도 리셋"). 별명·계정·설정(목소리·하루 분량·알림)은 남긴다. */
 async function resetProgress() {
   if (!await askYN(tr('<b>진도를 모두 지울까요?</b><br>배운 세트·복습 창고·별표·통계가 비워집니다. 되돌릴 수 없습니다.'), '지우기', true)) return;
-  ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'cr', 'miss', 'revDay', 'revSeen', 'cloudAt'].forEach(k => { delete S[k]; });
+  ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'cr', 'pet', 'miss', 'revDay', 'revSeen', 'cloudAt'].forEach(k => { delete S[k]; });
   S.done = {}; S.srs = {}; S.ssrs = {}; S.bsrs = {}; S.star = {}; S.act = {}; S.stats = {};
   save();
   if (S.acct && S.acct.tok) await cloudSave(true);
@@ -5976,38 +5976,7 @@ function petSay(learned) {
   S.petLast = pick.vi; save();
   return pick;
 }
-/* 앵무 그림 — 알 → 금 간 알 → 갓 깬 아기(반쪽 껍데기 안) → 어린 → 어른 → 박사(학사모). 마스코트 색 그대로(진파랑·하늘·주황·흰 배). */
-function petSvg(stage) {
-  const B = '#0A5BC7', L2 = '#3FB0F0', O = '#FF8A3D', W = '#FFFFFF', K = '#1B1B1B';
-  const egg = crack => `<defs><radialGradient id="peg" cx="38%" cy="28%" r="78%"><stop offset="0" stop-color="#FFFDF6"/><stop offset="1" stop-color="#EBD9B4"/></radialGradient></defs>
-    <g transform="translate(14 4) scale(.86)"><ellipse cx="100" cy="228" rx="64" ry="9" fill="rgba(0,0,0,.08)"/>
-    <path d="M100 18 C 150 18, 172 90, 170 140 C 168 195, 138 222, 100 222 C 62 222, 32 195, 30 140 C 28 90, 50 18, 100 18 Z" fill="url(#peg)" stroke="#E0CFA8" stroke-width="3"/>
-    <g fill="#E6D6B2"><circle cx="70" cy="96" r="4"/><circle cx="128" cy="150" r="3.4"/><circle cx="60" cy="150" r="2.8"/><circle cx="140" cy="100" r="2.6"/></g>
-    ${crack ? `<path d="M116 30 l-11 17 13 14 -15 19 12 15 -9 14" fill="none" stroke="#B89B66" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M105 47 l13 14 -15 19" fill="none" stroke="#3FB0F0" stroke-width="2.2" opacity=".9"/><path d="M108 32 l5 -18 6 17z" fill="${O}"/><g stroke="#C9B48A" stroke-width="3" stroke-linecap="round"><path d="M20 110 l-10 -5"/><path d="M20 130 l-12 0"/><path d="M180 110 l10 -5"/><path d="M180 130 l12 0"/></g>` : ''}</g>`;
-  const bird = (cap, wings) => `
-    <ellipse cx="100" cy="146" rx="44" ry="40" fill="${L2}"/>
-    <ellipse cx="100" cy="154" rx="27" ry="26" fill="${W}"/>
-    ${wings ? `<ellipse cx="56" cy="140" rx="17" ry="27" fill="${B}" transform="rotate(12 56 140)"/><ellipse cx="56" cy="142" rx="9" ry="16" fill="${O}" transform="rotate(12 56 142)"/>
-    <ellipse cx="144" cy="140" rx="17" ry="27" fill="${B}" transform="rotate(-12 144 140)"/><ellipse cx="144" cy="142" rx="9" ry="16" fill="${O}" transform="rotate(-12 144 142)"/>` : ''}
-    <rect x="84" y="180" width="12" height="16" rx="5" fill="${O}"/><rect x="104" y="180" width="12" height="16" rx="5" fill="${O}"/>
-    <path d="M86 42l6-22 6 22zM94 40l6-24 6 24zM102 42l6-22 6 22z" fill="${O}"/>
-    <circle cx="100" cy="82" r="42" fill="${B}"/>
-    <circle cx="70" cy="96" r="11" fill="${L2}"/><circle cx="130" cy="96" r="11" fill="${L2}"/>
-    <circle cx="86" cy="76" r="13" fill="${W}"/><circle cx="114" cy="76" r="13" fill="${W}"/>
-    <circle cx="89" cy="78" r="6" fill="${K}"/><circle cx="117" cy="78" r="6" fill="${K}"/>
-    <circle cx="91" cy="75" r="2" fill="${W}"/><circle cx="119" cy="75" r="2" fill="${W}"/>
-    <ellipse cx="100" cy="102" rx="13" ry="8" fill="${O}"/><path d="M92 101h16" stroke="#D96A25" stroke-width="2" stroke-linecap="round"/>
-    ${cap ? `<path d="M62 46l38-16 38 16-38 16z" fill="${K}"/><rect x="88" y="46" width="24" height="10" rx="3" fill="${K}"/><path d="M138 46v22" stroke="${K}" stroke-width="3"/><circle cx="138" cy="70" r="4" fill="${O}"/>` : ''}`;
-  const shell = `<path d="M46 132l10-10 10 12 12-14 12 12 10-12 12 14 10-12 12 12 10-10c4 40-18 62-54 62s-58-22-54-54z" fill="#FFF6E3" stroke="#E6D6B4" stroke-width="3" stroke-linejoin="round"/>`;
-  let inner;
-  if (stage === 0) inner = egg(false);
-  else if (stage === 1) inner = egg(true);
-  else if (stage === 2) inner = `<g transform="translate(30 50) scale(.7)">${bird(false, false)}</g>${shell}`;
-  else if (stage === 3) inner = `<g transform="translate(15 20) scale(.85)">${bird(false, true)}</g>`;
-  else if (stage === 4) inner = bird(false, true);
-  else inner = bird(true, true);
-  return `<svg viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="${PET_NAME}">${inner}</svg>`;
-}
+/* 앵무 그림은 pet.js 의 petSvg(stage, 종, 옵션) 이 그린다 (2026-09-27 저녁 — 종별 뼈대 하나·부위별 움직임). */
 function homeGreet() {
   const g = el('div', 'hgreet');
   g.append(el('div', 'hname', tr('반갑습니다, ') + esc(S.nick || tr('학습자')) + tr('님')));
@@ -6056,33 +6025,132 @@ function homeSkills() {
   box.append(bars(subj.map(x => [x.name, x.pct === null ? 0 : x.pct, x.n, undefined, null, x.ok])));
   return box;
 }
+/* ---------- 짜오 살림 — 돈(동)·배부름·먹이 (대표님 지시 2026-09-27 저녁: 학습하면 돈을 벌고, 그 돈으로 먹이를 준다) ----------
+   돈 = 기존 점수 창고(credits: earn/spend. 값의 근거는 tools/pricing.py · docs/scoring-basis.md). 화면 이름만 '동'(đồng).
+   배부름은 0~100. 하루 지날 때마다 25 꺼진다. 30 아래면 배고파 보인다(볏 처짐·눈 반쯤). 죽지는 않는다 — 벌주는 게임이 아니다.
+   자라는 것은 여전히 **배운 낱말 수**다. 먹이는 기분(웃음·말수)만 바꾼다 — 배움이 아닌 것으로 자라면 안 된다.
+   먹이는 베트남 과일 — 먹이 이름이 곧 낱말 하나(chuối·xoài·thanh long). */
+const PET_FOOD = [
+  { k: 'seed',   vi: 'hạt hướng dương', ko: '해바라기씨', cost: 10, full: 20 },
+  { k: 'banana', vi: 'chuối',           ko: '바나나',     cost: 20, full: 35 },
+  { k: 'mango',  vi: 'xoài',            ko: '망고',       cost: 35, full: 55 },
+  { k: 'dragon', vi: 'thanh long',      ko: '용과',       cost: 50, full: 80 },
+];
+const PET_DECAY = 25;
+function petState() {
+  if (!S.pet) S.pet = { full: 70, at: ymd(), seen: -1, sp: 'cockatiel', fed: 0 };
+  const p = S.pet;
+  if (!PET_SPECIES[p.sp]) p.sp = 'cockatiel';
+  const d = Math.floor((Date.parse(ymd()) - Date.parse(p.at || ymd())) / DAY);
+  if (d > 0) { p.full = Math.max(0, (p.full || 0) - PET_DECAY * d); p.at = ymd(); save(); }
+  return p;
+}
+const petHungry = p => (p.full || 0) < 30;
+const petAsleep = () => { const h = new Date().getHours(); return h >= 22 || h < 6; };
+const COIN_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#F5C542"/><circle cx="12" cy="12" r="6.8" fill="none" stroke="#C99A1E" stroke-width="1.6"/></svg>';
+const coinPill = () => el('span', 'petcoin', COIN_SVG + credits().bal.toLocaleString('ko-KR') + tr('동'));
+function fullBar(p) {
+  const v = Math.round(p.full || 0);
+  const w = el('div', 'petfull' + (petHungry(p) ? ' low' : ''));
+  w.append(el('span', null, tr('배부름')), el('i', null, '<b style="width:' + v + '%"></b>'), el('span', null, v + '%'));
+  return w;
+}
+/* 먹이 창 — 먹이마다 [베트남어 이름 · 듣기] 뜻 · 배부름 · 값. 돈이 모자라거나 배가 부르면 단추가 꺼진다 */
+function feedSheet(onFed) {
+  const p = petState();
+  const back = el('div', 'modalback'), box = el('div', 'modalbox feedbox');
+  const hd = el('div', 'pairpophd'); hd.append(el('b', null, tr('먹이 주기')), coinPill()); box.append(hd);
+  box.append(fullBar(p));
+  const list = el('div', 'feedlist');
+  PET_FOOD.forEach(f => {
+    const r = el('div', 'feedrow');
+    r.append(el('span', 'ficon', petFoodSvg(f.k, 34)));
+    const bd = el('div', 'fbody');
+    const top = el('div', 'ftop');
+    const pl = iconBtn('play', tr('듣기'), ev => { ev.stopPropagation(); const k = recKey(f.vi); k ? play(k, false, null, spdOf()) : speakVi(f.vi, false, spdOf()); });
+    pl.classList.add('playi');
+    top.append(el('span', 'fvi', esc(f.vi)), pl);
+    bd.append(top, el('span', 'fko', esc(f.ko) + ' · ' + tr('배부름') + ' +' + f.full));
+    const b = el('button', 'primary', f.cost + tr('동')); b.type = 'button';
+    b.disabled = (p.full || 0) >= 100 || credits().bal < f.cost;
+    b.onclick = () => {
+      if (!spend(f.cost)) return;
+      p.full = Math.min(100, (p.full || 0) + f.full); p.fed = (p.fed || 0) + 1; save();
+      back.remove(); onFed(f);
+    };
+    r.append(bd, b); list.append(r);
+  });
+  box.append(list);
+  if ((p.full || 0) >= 100) box.append(el('div', 'pnote', tr('배가 불러요 — 내일 다시 주세요')));
+  else if (credits().bal < PET_FOOD[0].cost) box.append(el('div', 'pnote', tr('동이 모자라요 — 세트를 끝내거나 복습하면 벌어요')));
+  const no = el('button', 'ghost', tr('닫기')); no.type = 'button'; no.onclick = () => back.remove();
+  const row = el('div', 'bugbtns'); row.append(no); box.append(row);
+  back.append(box);
+  back.onclick = e => { if (e.target === back) back.remove(); };
+  document.body.append(back);
+}
 function petCard() {
   const card = el('div', 'petcard');
   const learned = petLearned();
   const n = petCount(), si = petStage(n), st = PET_STAGES[si], nx = PET_STAGES[si + 1];
+  const p = petState();
+  const hungry = si >= 2 && petHungry(p), asleep = si >= 2 && petAsleep();
   const bub = el('div', 'petbub');
-  const setBub = p => {
-    bub.textContent = '';
-    if (si < 2 || !p) { bub.append(el('span', 'petvi', si < 2 ? '…' : 'Xin chào!'), el('span', 'petko', tr(st.hint))); return; }
-    bub.append(el('span', 'petvi', esc(p.vi)));
-    const pl = iconBtn('play', tr('듣기'), ev => { ev.stopPropagation(); const k = recKey(p.vi); k ? play(k, false, null, spdOf()) : speakVi(p.vi, false, spdOf()); });
+  const line = (vi, ko) => {
+    bub.hidden = false; bub.textContent = '';
+    bub.append(el('span', 'petvi', esc(vi)));
+    const pl = iconBtn('play', tr('듣기'), ev => { ev.stopPropagation(); const k = recKey(vi); k ? play(k, false, null, spdOf()) : speakVi(vi, false, spdOf()); });
     pl.classList.add('playi'); bub.append(pl);
-    if (p.ko) bub.append(el('span', 'petko', esc(p.ko)));
+    if (ko) bub.append(el('span', 'petko', esc(ko)));
   };
-  if (si >= 2) setBub(petSay(learned)); else bub.hidden = true;   // 알 단계에는 말풍선을 두지 않는다 (2026-09-27)
+  const setBub = q => {
+    if (si < 2) { bub.hidden = true; return; }                       // 알 단계에는 말풍선이 없다
+    if (hungry) { line('Đói quá…', tr('배고파요 — 먹이를 주세요')); return; }
+    if (!q) { line('Xin chào!', tr(st.hint)); return; }
+    line(q.vi, q.ko);
+  };
+  if (asleep) { bub.textContent = ''; bub.append(el('span', 'petko', tr('자는 중이에요 (밤 10시부터 아침 6시까지)'))); }
+  else setBub(petSay(learned));
+  // 단계가 올랐으면 한 번짜리 움직임 — 금 가기(1) · 깨기(2) · 커지기(3~)
+  let anim = '';
+  if (p.seen < 0) { p.seen = si; save(); }
+  else if (si > p.seen) { anim = si === 1 ? 'crack' : si === 2 ? 'hatch' : 'grow'; p.seen = si; save(); }
   const fig = el('button', 'petfig'); fig.type = 'button'; fig.setAttribute('aria-label', petName() + ' — ' + tr('누르면 말해요'));
-  fig.innerHTML = petSvg(si);
-  fig.onclick = () => { fig.classList.remove('hop'); void fig.offsetWidth; fig.classList.add('hop'); if (si >= 2) setBub(petSay(learned)); };
+  fig.innerHTML = petSvg(si, p.sp, { hatch: anim === 'hatch', label: petName() });
+  if (si < 2) fig.classList.add('wob');
+  if (hungry) fig.classList.add('sad');
+  if (asleep) fig.classList.add('sleep');
+  if (anim) { fig.classList.add(anim); if (anim !== 'hatch') setTimeout(() => fig.classList.remove(anim), 2600); }
+  const once = (cls, ms) => new Promise(r => { fig.classList.remove(cls); void fig.offsetWidth; fig.classList.add(cls); setTimeout(() => { fig.classList.remove(cls); r(); }, ms); });
+  fig.onclick = () => {
+    if (asleep) { fig.classList.remove('sleep'); once('hop', 600); setTimeout(() => fig.classList.add('sleep'), 6000); return; }   // 깨우면 잠깐만 일어난다
+    once('hop', 600);
+    if (si >= 2 && !hungry) setBub(petSay(learned));
+  };
   const meta = el('div', 'petmeta');
   const bar = el('div', 'petbar'); const fill = el('i');
   const pct = nx ? Math.min(100, Math.round((n - st.n) / (nx.n - st.n) * 100)) : 100;
   fill.style.width = pct + '%'; bar.append(fill);
-  meta.append(bar);
-  meta.append(el('div', 'petcap', tr('배운 낱말') + ' ' + n + (nx ? ' · ' + tr('다음 단계까지') + ' ' + (nx.n - n) : '')));
+  meta.append(bar, el('div', 'petcap', tr('배운 낱말') + ' ' + n + (nx ? ' · ' + tr('다음 단계까지') + ' ' + (nx.n - n) : '')));
+  if (si >= 2) {
+    const row = el('div', 'petrow');
+    const fb = el('button', 'feedbtn', tr('먹이 주기')); fb.type = 'button';
+    fb.onclick = () => feedSheet(async f => {
+      fig.classList.remove('sad', 'sleep');
+      fig.innerHTML = petSvg(si, p.sp, { food: f.k, label: petName() });
+      await once('eat', 1700);
+      fig.innerHTML = petSvg(si, p.sp, { label: petName() });   // 먹이 그림을 치우고 웃는다
+      line('Ngon quá!', tr('맛있어요!'));
+      await once('laugh', 1500);
+      renderHome();                          // 배부름·돈을 새로 그린다
+    });
+    row.append(fullBar(p), fb);
+    meta.append(row);
+  }
   const head = el('div', 'pethead');
   const nm = el('button', 'petnm', esc(petName()) + ' <i>✎</i>'); nm.type = 'button'; nm.title = tr('이름 바꾸기');
   nm.onclick = async () => { const v = await askText(tr('짜오 이름'), petName(), 10); if (v === null) return; if (v && v === (S.nick || '').trim()) { popup(tr('별명과 같은 이름은 안 됩니다 — 짜오를 부를 때 헷갈립니다')); return; } S.petName = v; save(); renderHome(); };
-  head.append(nm, el('span', 'petstage', (si + 1) + tr('단계') + ' · ' + tr(st.name)));
+  head.append(nm, coinPill());              // '1단계 · 알' 같은 단계 글은 뺐다 (대표님 지시 2026-09-27 저녁)
   card.append(head, bub, fig, meta);
   return card;
 }
@@ -7833,12 +7901,13 @@ $('#next').onclick = () => {
     dailyFlowEntry(); return;
   }
   if (L.dlg) {                         // 대화(써먹기)까지 끝나면 오늘 완료
+    const firstDone = !S.done[L.day.day];   // 처음 끝내는 세트마다 돈을 준다 (2026-09-27 저녁: 학습하면 짜오 먹이 살 돈을 번다). 다시 하는 세트는 하루 한 번만
     S.done[L.day.day] = now();
     (L.day.dialog?.lines || []).forEach(l => {          // 그날 문장도 복습 창고로
       if (!S.srs[l.vi]) S.srs[l.vi] = { lv: 0, first: now(), due: now() + STEPS[0] * DAY };
     });
     touchToday(); save();
-    earnOnce('set', CRD.set, tr('오늘 세트를 끝냈습니다'));
+    if (firstDone) earn(CRD.set, tr('세트를 끝냈습니다')); else earnOnce('set', CRD.set, tr('오늘 세트를 끝냈습니다'));
     cloudSave(true);                        // 세트를 끝냈으니 서버에도 남긴다
     finishDay(L.day);
     return;

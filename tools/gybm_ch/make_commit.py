@@ -9,7 +9,7 @@ def git(*a, env=None, inp=None):
     if r.returncode: raise SystemExit(f"git {a[:2]} 실패: {r.stderr[:300]}")
     return r.stdout.strip()
 git("fetch", "origin")
-MY = ["app.js", "style.css", "pitch.js", "mouth.js", "index.html", "sw.js", "data/days.json", "data/order.json", "data/gybm.json", "data/realbook.json",
+MY = ["app.js", "style.css", "pitch.js", "mouth.js", "pet.js", "index.html", "sw.js", "data/days.json", "data/order.json", "data/gybm.json", "data/realbook.json",
       "data/siblings.json", "data/basicwords.json", "data/basicword_sets.json", "data/senior.json", "data/cohort22.json", "data/_book_glossary.json", "data/_boost_words.json", "data/_job_boost.json",
       "data/grammar.json", "data/exgloss.json", "data/sib.json", "data/siblings.json", "data/_lex_src.json", "data/_sib_meanings.json", "data/_sib_ko.json", "data/_sib_badrel.json", "data/_sib_goodrel.json", "tools/build_lex.py", "tools/trim_audio.py", "tools/apply_sib_meanings.py", "tools/gen_audio_list.py", "docs/기준.md", "docs/tts-조사.md", "docs/문법_대조.md", "tools/build_gram_main.py", "tools/gram_main_data1.py", "tools/gram_main_data2.py", "tools/build_gybm.py", "tools/stamp.py", "tools/mark_glossary.py", "tools/build_boost.py", "tools/build_job_boost.py", "tools/asr_audit.py", "tools/voice_audit.py", "data/_imgprompts.json", "tools/img_prompt_gen.py", "tools/gen_word_img.py", "tools/club_worker.js", "tools/bug_admin.py", "tools/fetch_hanviet.py", "tools/attach_hanviet.py", "data/_hanviet.json"]
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
