@@ -245,11 +245,8 @@ sets = load(f"{DATA}/basicword_sets.json")["sets"]
 def bset_title(t):
     """차례는 회차(일차) 오름차순 → 같은 회차 안에서는 20기·19기·18기·17기 (대표님 지시 2026-09-25 #3).
     basicword_sets.json 이 이미 그 순서라 그대로 따라 걷는다 — 아래 검증(check_senior_order)이 어긋남을 잡는다."""
-    if t["kind"] == "일일":
-        return f"{t['no']}회차 · {t['cohort']}기"
-    if t["kind"] == "주간":
-        return f"주간 {t['no']}회 · {t['cohort']}기"
-    return f"기타 모음 · {t['cohort']}기"
+    # 선배 자료의 과 이름은 숫자로만 (대표님 지시 2026-09-27 밤) — 회차·기수 글 없이. 차례는 아래 check_senior_order 그대로
+    return ""
 
 def check_senior_order(sets):
     def k(t):
@@ -299,6 +296,9 @@ if c22p.exists():
         gybm["sources"].append({"key": "c22", "label": "22기 단어 시험 자료", "sub": "22기 매일 시험 (올린 순서대로)",
                                 "lessons": chunk_chapters(ch22, {}, skey="c22")})
 
+for _src in gybm["sources"]:
+    if _src["key"] == "senior":
+        for _i, _l in enumerate(_src["lessons"], 1): _l["title"] = str(_i)   # 선배 자료: 과 이름은 번호만 (대표님 지시 2026-09-27 밤)
 with open(f"{DATA}/gybm.json", "w", encoding="utf-8") as f:
     json.dump(gybm, f, ensure_ascii=False, indent=1)
 

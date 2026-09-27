@@ -5809,7 +5809,7 @@ function renderRoadmap(host, nodes, curKey, opt) {
     const row = el('button', 'ubtn' + (nd.done ? ' done' : ''));
     row.type = 'button'; if (nd.key != null) row.dataset.key = nd.key;
     row.append(el('span', 'unum', nd.num != null ? String(nd.num) : String(i + 1)));
-    row.append(el('span', 'utitle', esc(nd.title)));
+    if (!/^\d+$/.test(String(nd.title || '').trim())) row.append(el('span', 'utitle', esc(nd.title)));   // 선배 자료처럼 숫자만인 제목은 번호로만 (2026-09-27 밤)
     row.append(el('span', 'ust', nd.done ? '✓' : '›'));
     if (nd.fn) row.onclick = nd.fn;
     host.append(row);
@@ -5859,14 +5859,56 @@ const petCount = () => new Set(['srs', 'ssrs', 'bsrs'].flatMap(k => Object.keys(
 function petStage(n) { let i = 0; PET_STAGES.forEach((st, k) => { if (n >= st.n) i = k; }); return i; }
 /* 짜오가 할 말 — **배운 단어로만** 된 문장(예문·대화 문장 가운데 모든 단어을 배운 것). 없으면 배운 단어 하나. */
 const petTok = t => t.toLowerCase().replace(/[.,!?;:…"“”'()]/g, ' ').split(/\s+/).filter(Boolean);
+/* 짜오 말 만들기 — 배운 단어만으로 (대표님 지시 2026-09-27 밤: "배운 단어를 조합해 문장을 만들어도 된다. 시내+버스를 배웠으면 시내버스도").
+   차례: ① 배운 단어로만 된 예문·대화 문장(petSay) ② 없으면 배운 단어를 문법 틀에 넣은 짧은 문장 ③ 그것도 안 되면 배운 단어 둘 나열("나 먹다").
+   품사는 data/_pos.json(영어 위키낱말사전 첫 품사). 틀: 나+동사+명사(Tôi ăn cơm) · 나+형용사(Tôi vui) · 명사+này+형용사 · 나+동사 · 나 thích 명사 · 나 muốn 동사.
+   합성어: 배운 두 단어를 붙인 것이 앱 단어면(xe + buýt = xe buýt) 명사로 쓴다. 한국어 뜻은 단어 뜻을 우리말 어순(주어 목적어 서술어)으로 나열한 것이라 매끈하지 않다. */
+let POS = null, POS_P = null;
+function posLoad() {
+  if (POS) return Promise.resolve();
+  if (!POS_P) POS_P = fetch('data/_pos.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { POS = j; }).catch(() => { POS = {}; });
+  return POS_P;
+}
+const koStem = v => { const k = (GVOC && GVOC[v]) || ''; return String(k).split(/[,;(·/]/)[0].trim(); };
+function petMake(whole) {
+  if (!POS || !GVOC) return null;
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const L = [...whole].filter(v => POS[v] && GVOC[v]);
+  const by = k => L.filter(v => POS[v] === k);
+  const PRON = ['tôi', 'em', 'anh', 'chị', 'bạn', 'mình', 'chúng ta', 'chúng tôi'];
+  const pron = L.filter(v => PRON.includes(v));
+  const Sv = pron.length ? pick(pron) : null;
+  const FUNC = new Set(['muốn', 'thích', 'cần', 'phải', 'có thể', 'là', 'có', 'không', 'đi']);   // 틀 자체에 쓰는 말은 자리 채우기에서 뺀다
+  const V = by('v').filter(v => !FUNC.has(v) && v !== Sv), N = by('n').filter(v => v !== Sv && !PRON.includes(v)), A = by('a');
+  const comp = [];
+  L.forEach(a => L.forEach(b => { if (a !== b && GVOC[a + ' ' + b]) comp.push(a + ' ' + b); }));   // 시내+버스 → 시내버스
+  const NN = N.concat(comp);
+  const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+  const cands = [];
+  if (Sv && V.length && NN.length) cands.push(() => { const v = pick(V), n = pick(NN); return { vi: cap(`${Sv} ${v} ${n}.`), ko: `${koStem(Sv)} ${koStem(n)} ${koStem(v)}` }; });
+  if (Sv && A.length) cands.push(() => { const a = pick(A); return { vi: cap(`${Sv} ${a}.`), ko: `${koStem(Sv)} ${koStem(a)}` }; });
+  if (NN.length && A.length && whole.has('này')) cands.push(() => { const n = pick(NN), a = pick(A); return { vi: cap(`${n} này ${a}.`), ko: `이 ${koStem(n)} ${koStem(a)}` }; });
+  if (Sv && V.length) cands.push(() => { const v = pick(V); return { vi: cap(`${Sv} ${v}.`), ko: `${koStem(Sv)} ${koStem(v)}` }; });
+  if (Sv && whole.has('thích') && NN.length) cands.push(() => { const n = pick(NN); return { vi: cap(`${Sv} thích ${n}.`), ko: `${koStem(Sv)} ${koStem(n)} 좋아하다` }; });
+  if (Sv && whole.has('muốn') && V.length) cands.push(() => { const v = pick(V); return { vi: cap(`${Sv} muốn ${v}.`), ko: `${koStem(Sv)} ${koStem(v)} 원하다` }; });
+  if (cands.length) return pick(cands)();
+  const all = [...whole].filter(v => GVOC[v]);
+  if (all.length >= 2) { const a = pick(all), b = pick(all.filter(x => x !== a)); return { vi: cap(a + ' ' + b), ko: koStem(a) + ' ' + koStem(b) }; }
+  return null;
+}
 function petSay(learned) {
   if (!learned.size) return null;
   const pool = [];
   const push = (vi, ko) => { const tk = vi ? petTok(vi) : []; if (tk.length >= 2 && tk.every(t => learned.has(t))) pool.push({ vi, ko }); };
   allWords().forEach(w => { if (w.ex && w.ex.vi) push(w.ex.vi, w.ex.ko); });
   allSents().forEach(x => push(x.vi, x.ko));
-  if (!pool.length) {
-    ['srs', 'ssrs', 'bsrs'].forEach(k => Object.keys(S[k] || {}).forEach(v => { const it = findItem(v); pool.push({ vi: v, ko: it && it.ko || '' }); }));
+  if (!pool.length) {                                   // 통째로 배운 문장이 없으면 배운 단어로 짧은 문장을 만든다 (2026-09-27 밤)
+    const whole = new Set(['srs', 'ssrs', 'bsrs'].flatMap(k => Object.keys(S[k] || {}).map(v => v.toLowerCase())));
+    if (!GVOC) glossAll('a');                            // GVOC(단어→뜻)를 채운다
+    if (!POS) posLoad().then(() => { if (!$('#home').hidden) renderHome(); });
+    const g = petMake(whole);
+    if (g) pool.push(g);
+    else ['srs', 'ssrs', 'bsrs'].forEach(k => Object.keys(S[k] || {}).forEach(v => { const it = findItem(v); pool.push({ vi: v, ko: it && it.ko || '' }); }));
   }
   if (!pool.length) return null;
   const cand = pool.filter(p => p.vi !== S.petLast);
@@ -6038,7 +6080,7 @@ function petCard() {
     // 문장의 단어를 누르면 헷갈리는 짝 팝업 (대표님 지시 2026-09-27 저녁) — 낱말 카드의 예문과 같은 tapLine
     if (/\s/.test(vi.trim())) { const tl = tapLine(vi, 'petvi tapline'); tl.onclick = ev => ev.stopPropagation(); bub.append(tl); }
     else bub.append(el('span', 'petvi', esc(vi)));
-    const pl = iconBtn('play', tr('듣기'), ev => { ev.stopPropagation(); const k = recKey(vi); k ? play(k, false, null, spdOf()) : speakVi(vi, false, spdOf()); });
+    const pl = iconBtn('play', tr('듣기'), ev => { ev.stopPropagation(); const k = recKey(vi); k ? play(k, false, null, .8) : speakVi(vi, false, .8); });   // 짜오 말은 0.8배 고정 (대표님 지시 2026-09-27 밤)
     pl.classList.add('playi'); bub.append(pl);
     if (ko) bub.append(el('span', 'petko', esc(ko)));
   };
@@ -6196,7 +6238,9 @@ function homeActions() {
   b2.append(el('b', null, tr('복습 시작')),
             el('small', null, dn ? dn + tr('개') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
   b2.disabled = !dn; if (dn) b2.onclick = () => { ACTIVE_TAB = 'test'; testToday(); };   // 테스트 탭의 '오늘 복습'과 같은 문 (카드 → 테스트)
-  box.append(b1, b2);
+  const b3 = el('button', 'hbtn sec'); b3.append(el('b', null, tr('훑어보기')), el('small', null, tr('오늘 배운 것·복습할 것을 자동으로 넘겨 봅니다')));
+  b3.onclick = startShorts;
+  box.append(b1, b2, b3);
   return box;
 }
 function renderHome() {
@@ -6407,6 +6451,23 @@ function glossAll(vi, extra) {
    빠지는 단어이 없고(모든 단어이 눌린다), 화면도 문장 하나로 짧아진다. */
 /* 한자 뿌리 알약 — "翁 · 옹" 밑에 글자마다 훈·음("늙은이 옹"). 훈은 data/_hanja_hun.json(영어 위키낱말사전 {{ko-hanja|훈|음}}, tools/fetch_hanja_hun.py).
    여러 훈음이 있는 글자는 우리 음(뒤의 한글)과 맞는 것을 고른다. 없으면 훈 줄을 안 붙인다 (대표님 지시 2026-09-27 밤) */
+/* 단어의 뜻 여러 개 — 카드 뜻 밑에 작은 글로 (대표님 지시 2026-09-27 밤: 최소 3개, 흔한 순서). data/_senses.json 은 클로드가 검수한 것만 */
+let SENSES = null, SENSES_P = null;
+function sensesLoad() {
+  if (SENSES) return Promise.resolve();
+  if (!SENSES_P) SENSES_P = fetch('data/_senses.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { SENSES = j; }).catch(() => { SENSES = {}; });
+  return SENSES_P;
+}
+function senseLine(host, x) {
+  const draw = () => {
+    const ss = SENSES && SENSES[String(x.vi || '').toLowerCase()];
+    if (!ss || !ss.length) return;
+    const stem = t => String(t || '').split(/[,;(·/]/)[0].trim();
+    const mine = stem(x.ko), rest = ss.filter(t => stem(t) !== mine).slice(0, 3);
+    if (rest.length) host.append(el('div', 'senses', rest.map(esc).join(' · ')));
+  };
+  if (SENSES) draw(); else sensesLoad().then(draw);
+}
 let HUN = null, HUN_P = null;
 function hunLoad() {
   if (HUN) return Promise.resolve();
@@ -7698,6 +7759,7 @@ function drawCard() {
       cf.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
                   x.work.map(t2 => esc(t2)).join(' · ')));
     if (x.hanja) kob.append(hanjaPill(x.hanja));          // 한자 뿌리 — 뜻 옆 알약: 한자·음 + 글자마다 훈(뜻) (대표님 지시 2026-09-27 밤: '무슨 옹인지')
+    senseLine(kob, x);                                     // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
     if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
        단어을 누르면 그 단어만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
@@ -8035,6 +8097,58 @@ function finishDay(d) {
   show('quiz', '오늘 완료', true);
 }
 
+/* 훑어보기 — 오늘 배운 것과 복습할 것을 쇼츠처럼 자동으로 넘긴다 (대표님 지시 2026-09-27 밤).
+   그림 + 단어 + 발음 + 뜻, 소리는 0.8배로 한 번, 소리가 끝나고 1.6초 뒤 다음. 톡 치면 멈춤/재개, ‹ › 로 손으로 넘김, ✕ 로 닫음. */
+let SH = null;
+function shortsWords() {
+  const out = [], seen = new Set();
+  const put = w => { if (w && w.vi && !w.sent && !seen.has(w.vi)) { seen.add(w.vi); out.push(w); } };
+  const today = ymd();
+  ALL.forEach(d => { if (typeof d.day === 'number' && typeof S.done[d.day] === 'number' && ymd(S.done[d.day]) === today) (d.words || []).forEach(put); });
+  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => { const t = bdone()[gybmKey(src.key, li)]; if (typeof t === 'number' && ymd(t) === today) l.words.forEach(put); }));
+  dueAll().forEach(vi => put(findItem(vi)));
+  if (!out.length) {                                    // 오늘 한 것이 없으면 최근에 배운 20개
+    const recent = ['srs', 'ssrs', 'bsrs'].flatMap(k => Object.entries(S[k] || {}).map(([vi, v]) => [vi, v.first || 0]))
+      .sort((a, b) => b[1] - a[1]).slice(0, 20);
+    recent.forEach(([vi]) => put(findItem(vi)));
+  }
+  return out;
+}
+function startShorts() {
+  const ws = shortsWords();
+  if (!ws.length) { popup(tr('아직 훑어볼 단어가 없습니다 — 세트를 하나 끝내면 생깁니다')); return; }
+  if (SH && SH.ov) SH.ov.remove();
+  const ov = el('div', 'shorts');
+  ov.innerHTML = '<div class="shtop"><span class="shcount"></span><button type="button" class="shx" aria-label="닫기">✕</button></div>' +
+    '<div class="shcard"><div class="shpic"></div><div class="shvi"></div><div class="shkr"></div><div class="shko"></div><div class="shpause">⏸</div></div>' +
+    '<div class="shnav"><button type="button" class="shprev">‹</button><button type="button" class="shnext">›</button></div>';
+  document.body.append(ov);
+  SH = { ws, i: 0, paused: false, timer: 0, ov };
+  const stop = () => { clearTimeout(SH.timer); audio.onended = null; };
+  const close = () => { stop(); audio.pause(); ov.remove(); SH = null; };
+  ov.querySelector('.shx').onclick = close;
+  ov.querySelector('.shprev').onclick = () => { stop(); SH.i = Math.max(0, SH.i - 1); drawShort(); };
+  ov.querySelector('.shnext').onclick = () => { stop(); next(); };
+  ov.querySelector('.shcard').onclick = () => { SH.paused = !SH.paused; ov.classList.toggle('paused', SH.paused); if (!SH.paused) { stop(); drawShort(); } else stop(); };
+  function next() { if (SH.i >= SH.ws.length - 1) { close(); popup(tr('훑어보기 끝 — ') + ws.length + tr('단어')); return; } SH.i++; drawShort(); }
+  function drawShort() {
+    const w = SH.ws[SH.i];
+    ov.querySelector('.shcount').textContent = (SH.i + 1) + ' / ' + SH.ws.length;
+    const pic = ov.querySelector('.shpic'); pic.textContent = '';
+    if (w.img) { const im = new Image(); im.src = 'img/' + w.img; im.alt = ''; pic.append(im); }
+    ov.querySelector('.shvi').textContent = w.vi;
+    ov.querySelector('.shkr').textContent = krShow(w) ? '[' + krShow(w) + ']' : '';
+    ov.querySelector('.shko').textContent = w.ko || '';
+    const k = recKey(w.vi);
+    audio.onended = null;
+    if (k) { play(k, false, null, .8); audio.onended = () => { audio.onended = null; if (!SH.paused) SH.timer = setTimeout(next, 1600); }; }
+    else { speakVi(w.vi, false, .8); SH.timer = setTimeout(next, 2600); }
+    // 소리가 안 나거나 끝 신호가 안 오면 4초 뒤 넘긴다
+    clearTimeout(SH.guard); SH.guard = setTimeout(() => { if (SH && !SH.paused && SH.ws[SH.i] === w) { stop(); next(); } }, 4500);
+  }
+  drawShort();
+}
+
 /* 세트를 끝낸 뒤의 두 단추 (대표님 물음 2026-09-27 밤 "어떤 화면이 나오게 할까?") — 저절로 다음 세트로 가지 않는다(숨 돌릴 틈·짜오 동 확인).
    [다음 세트 ›]는 같은 갈래의 다음 과를 바로 시작, [목록으로]는 학습 탭 단어 목록에서 그 갈래를 펼치고 다음 과로 굴려 둔다 */
 function afterSetBtns(host) {
@@ -8122,8 +8236,9 @@ function pickMode(w, lv) {
   const r = Math.random();
   // 문장은 알아듣기·말하기 위주, 그리고 **퍼즐**로 어순을 만져 본다
   if (w.sent) return r < .35 ? 'listen' : r < .70 ? 'say' : 'puzzle';
-  if (lv >= 2) return r < .28 ? 'say' : r < .44 ? 'type' : r < .55 ? 'hand' : r < .70 ? 'listen' : r < .86 ? 'read' : 'match';
-  if (lv >= 1) return r < .20 ? 'say' : r < .38 ? 'type' : r < .46 ? 'hand' : r < .66 ? 'listen' : r < .85 ? 'read' : 'match';
+  // 손글씨(hand)는 뺐다 (대표님 지시 2026-09-27 밤)
+  if (lv >= 2) return r < .28 ? 'say' : r < .50 ? 'type' : r < .68 ? 'listen' : r < .86 ? 'read' : 'match';
+  if (lv >= 1) return r < .20 ? 'say' : r < .42 ? 'type' : r < .66 ? 'listen' : r < .85 ? 'read' : 'match';
   return r < .14 ? 'say' : r < .28 ? 'type' : r < .56 ? 'listen' : r < .84 ? 'read' : 'match';
 }
 /* 단어 → 속한 세트 색인. 오답 보기를 같은 세트에서 뽑기 위한 것 —
@@ -8148,7 +8263,8 @@ function buildQuestions(words, forced) {
   const spool = [...allSents(), ...lessonSents()];
   return words.map(w => {
     const lv = (srsBox()[w.vi] || {}).lv || 0;   // 실전 단어는 제 창고(S.ssrs)를 봐야 한다
-    let mode = forced === 'write' ? (!w.sent && Math.random() < .35 ? 'hand' : 'type')
+    let mode = forced === 'write' ? 'type'
+             : Array.isArray(forced) ? forced[Math.floor(Math.random() * forced.length)]
              : forced || pickMode(w, lv);
     // 녹음이 없어도 **기기 목소리**가 있으면 듣기·자판 쓰기를 낸다.
     // 실전 단어 2,078개에는 녹음이 없다. 그것 때문에 문제 유형이 '읽기' 하나로
@@ -8196,6 +8312,13 @@ function startWordbookQuiz(viList, name) {
 }
 
 const REV_CHUNK = 20;                          // 복습 한 판의 최대 문제 수
+/* 세트 뒤 확인 문제 — 단어마다 **두 번** (대표님 지시 2026-09-27 밤): 먼저 알아보기(듣고 뜻·읽고 뜻·짝 맞추기) 한 바퀴, 다음 만들어 내기(타이핑·말하기) 한 바퀴.
+   틀린 것은 그 판 끝에 또 나오므로 결국 단어마다 두 번은 맞혀야 끝난다. 손글씨는 뺐다. 말하기는 녹음이 되는 폰에서만. */
+function buildSetQuestions(words) {
+  const rec = buildQuestions(words, ['listen', 'read', 'match', 'listen', 'read']);
+  const prod = buildQuestions(words, canRecord() ? ['type', 'say', 'type'] : ['type']);
+  return rec.concat(prod);
+}
 function startQuiz(words, day, cap, early, opt) {
   const o = opt || {};
   let src = words || dueWords().map(findItem).filter(Boolean);
@@ -8203,7 +8326,7 @@ function startQuiz(words, day, cap, early, opt) {
   if (o.kind === 'sent') src = src.filter(x => x.sent);
   if (!src.length) { noItems(o); return; }
   if (!day) src = src.slice(0, cap || REV_CHUNK);   // 복습은 20개씩 끊어 낸다
-  const list = buildQuestions(src, o.skill);
+  const list = day ? buildSetQuestions(src) : buildQuestions(src, o.skill);
   Q = { list, i: 0, ok: 0, day, total: list.length, early, opt: o };
   drawQuiz();
   const nm = (o.kind === 'sent' ? '문장' : o.kind === 'word' ? '단어' : '') +

@@ -2623,3 +2623,18 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .thk b{color:var(--fg); font-size:15px; margin-left:3px}
 .roadli{list-style:none}
 .hanja .hun{display:block; font-size:11px; font-weight:500; opacity:.85; margin-top:1px; white-space:normal}
+/* 훑어보기(쇼츠) (2026-09-27 밤) */
+.shorts{position:fixed; inset:0; z-index:60; background:var(--bg,#F0F2F5); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px}
+.shtop{position:absolute; top:12px; left:16px; right:16px; display:flex; justify-content:space-between; align-items:center; font-weight:700; color:var(--dim)}
+.shx{border:0; background:var(--card); border-radius:50%; width:40px; height:40px; font-size:18px; cursor:pointer; color:var(--fg)}
+.shcard{position:relative; width:min(92vw,440px); background:var(--card); border:1px solid var(--line); border-radius:24px; padding:24px 20px; text-align:center; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:10px}
+.shpic{width:min(60vw,260px); height:min(60vw,260px); display:flex; align-items:center; justify-content:center}
+.shpic img{width:100%; height:100%; object-fit:contain; border-radius:16px}
+.shvi{font-size:38px; font-weight:900; line-height:1.15}
+.shkr{font-size:16px; color:var(--dim)}
+.shko{font-size:20px; font-weight:700}
+.shpause{display:none; position:absolute; inset:0; align-items:center; justify-content:center; font-size:64px; background:rgba(0,0,0,.25); border-radius:24px; color:#fff}
+.shorts.paused .shpause{display:flex}
+.shnav{display:flex; gap:16px; margin-top:16px}
+.shnav button{width:56px; height:56px; border-radius:50%; border:1px solid var(--line); background:var(--card); font-size:26px; color:var(--fg); cursor:pointer}
+.senses{font-size:14px; color:var(--dim); margin-top:2px}
