@@ -101,7 +101,7 @@ for q in git("ls-tree", "-r", "--name-only", "origin/main").splitlines():
 for f in files:
     if f.startswith("data/") and (ROOT / f).exists(): _ref += (ROOT / f).read_text(encoding="utf-8", errors="ignore")
 # 이름을 집합으로 뽑아 견준다 — 60MB 글에 8천 번 부분 문자열 검색을 하면 30분이 넘게 걸린다(2026-09-27 밤 실제로 그랬다)
-_names = set(_re.findall(r"[A-Za-z0-9_\-\.]+\.(?:webp|svg|png|jpg|jpeg|gif)", _ref))
+_names = set(_re.findall(r"[^\s\"'<>()\[\]{},:]+\.(?:webp|svg|png|jpg|jpeg|gif)", _ref))
 _imgs = [l for l in git("ls-tree", "-r", "--name-only", "origin/main", "img").splitlines()]
 img_orphans = [q for q in _imgs if q.rsplit("/", 1)[1] not in _names and q not in files]
 if "--no-prune" not in sys.argv and img_orphans:
