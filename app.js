@@ -6246,7 +6246,7 @@ function homeActions() {
             el('small', null, dn ? dn + tr('개') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
   b2.disabled = !dn; if (dn) b2.onclick = () => { ACTIVE_TAB = 'test'; testToday(); };   // 테스트 탭의 '오늘 복습'과 같은 문 (카드 → 테스트)
   const b3 = el('button', 'hbtn sec'); b3.append(el('b', null, tr('훑어보기')), el('small', null, tr('오늘 배운 것·복습할 것을 자동으로 넘겨 봅니다')));
-  b3.onclick = startShorts;
+  b3.onclick = () => startShorts();
   box.append(b2, b3);
   return box;
 }
@@ -8132,9 +8132,26 @@ function shortsWords() {
   }
   return out;
 }
-function startShorts() {
-  const ws = shortsWords();
-  if (!ws.length) { popup(tr('아직 훑어볼 단어가 없습니다 — 세트를 하나 끝내면 생깁니다')); return; }
+/* 훑어보기 대상 고르기 — 오늘 배운 것 · 복습할 것 · 주간 시험 범위 · 내 단어장 (대표님 지시 2026-09-28: 타겟을 명확히) */
+function shortsPick() {
+  const today = ymd(), learned = [], seen = new Set();
+  const put = (arr, w) => { if (w && w.vi && !w.sent && !seen.has(w.vi)) { seen.add(w.vi); arr.push(w); } };
+  ALL.forEach(d => { if (typeof d.day === 'number' && typeof S.done[d.day] === 'number' && ymd(S.done[d.day]) === today) (d.words || []).forEach(w => put(learned, w)); });
+  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => { const t = bdone()[gybmKey(src.key, li)]; if (typeof t === 'number' && ymd(t) === today) l.words.forEach(w => put(learned, w)); }));
+  seen.clear(); const due = []; dueAll().forEach(w => put(due, w));
+  seen.clear(); const round = GYBM ? weeklyRoundWords(WEEKLY_ROUNDS[0]) : [];
+  seen.clear(); const star = []; Object.entries(starOf()).forEach(([k, v]) => put(star, findItem((v && v.vi) || k)));
+  const back = el('div', 'modalback'), box = el('div', 'modalbox');
+  box.append(el('div', 'pairpophd', '<b>' + tr('무엇을 훑어볼까요') + '</b>'));
+  const opt = (name, arr) => { const b = el('button', 'bigmenu'); b.append(el('b', null, esc(tr(name)) + ' <span class="mbadge">' + arr.length + '</span>')); b.disabled = !arr.length; b.onclick = () => { back.remove(); startShorts(arr); }; box.append(b); };
+  opt('오늘 배운 단어', learned); opt('복습할 단어', due); opt('주간 시험 범위 · ' + WEEKLY_ROUNDS[0].name, round); opt('내 단어장', star);
+  const no = el('button', 'ghost', tr('닫기')); no.type = 'button'; no.onclick = () => back.remove(); const row = el('div', 'bugbtns'); row.append(no); box.append(row);
+  back.append(box); back.onclick = e => { if (e.target === back) back.remove(); }; document.body.append(back);
+}
+function startShorts(list) {
+  if (!list) { if (!GYBM) { gybmBuild(shortsPick); return; } shortsPick(); return; }
+  const ws = list;
+  if (!ws.length) { popup(tr('훑어볼 단어가 없습니다')); return; }
   if (SH && SH.ov) SH.ov.remove();
   const ov = el('div', 'shorts');
   ov.innerHTML = '<div class="shtop"><span class="shcount"></span><button type="button" class="shx" aria-label="닫기">✕</button></div>' +
@@ -8925,7 +8942,7 @@ function weeklyMaterial() {
 }
 /* 회차 — 실제 반 시험 범위대로 (대표님 지시 2026-09-28). 1회차 = 메인 교재 1권 1~3과, 말하기는 발음만. 다음 회차는 대표님이 범위를 알려 주면 여기에 더한다 */
 const WEEKLY_ROUNDS = [
-  { no: 1, name: '1회차', desc: '메인 교재 1권 1~3과', chapters: [0, 1, 2], speak: 'pron' },
+  { no: 1, name: '1회차', desc: '메인 교재 1권 1~3과', chapters: [0, 1, 2], speak: 'pron', topic: '자기소개 (이름·나라·하는 일·배우는 것)' },
 ];
 function weeklyEntry() {
   const b = $('#examBody'); b.textContent = '';
@@ -8937,7 +8954,29 @@ function weeklyEntry() {
   });
   const last = (S.stats.wexam || []).slice(-1)[0];
   if (last) b.append(el('p', 'note', tr('지난 결과') + ' · ' + esc(last.d) + ' · ' + last.ok + ' / ' + last.tot));
+  const wb = el('button', 'bigmenu'); wb.append(el('b', null, esc(tr('쓰기 연습')) + ' <span class="exmeta">' + tr('그림 보고 문장 5개 · 주제로 10문장 (채점 없음)') + '</span>'));
+  wb.onclick = () => { dive(weeklyEntry); gybmBuild(() => writingPractice(WEEKLY_ROUNDS[0])); };
+  b.append(wb);
   show('exam', '주간 시험', true);
+}
+/* 쓰기 연습 — 실제 시험의 '그림 보고 말하기'·'한 주제로 10문장'을 손으로 연습한다. 채점은 없고 쓴 것은 폰에 남는다 (2026-09-28) */
+function writingPractice(r) {
+  const b = $('#examBody'); b.textContent = '';
+  const words = weeklyRoundWords(r).filter(w => w.img).sort(() => Math.random() - .5).slice(0, 5);
+  S.essay = S.essay || {}; const mem = S.essay[r.no] = S.essay[r.no] || { pics: {}, text: '' };
+  b.append(el('p', 'lede', tr('그림을 보고 베트남어 문장을 하나씩 써 보세요')));
+  words.forEach(w => {
+    const row = el('div', 'wrow2');
+    const p = pic(w, 'pic sm'); if (p) row.append(p);
+    const ta = document.createElement('textarea'); ta.className = 'bugta'; ta.rows = 2; ta.placeholder = tr('이 그림으로 문장 하나'); ta.value = mem.pics[w.vi] || '';
+    ta.oninput = () => { mem.pics[w.vi] = ta.value; save(); };
+    row.append(ta); b.append(row);
+  });
+  b.append(el('p', 'lede', tr('주제 하나로 10문장 — ') + esc(r.topic || '자기소개')));
+  const ta = document.createElement('textarea'); ta.className = 'bugta'; ta.rows = 10; ta.placeholder = tr('한 줄에 한 문장씩'); ta.value = mem.text || '';
+  ta.oninput = () => { mem.text = ta.value; save(); };
+  b.append(ta, el('p', 'note', tr('쓴 것은 이 폰에 남습니다. 문장 안 단어를 사전에서 눌러 보면 소리와 짝이 나옵니다.')));
+  show('exam', tr('쓰기 연습') + ' · ' + r.name, true);
 }
 /* 회차 범위의 단어 — 메인 교재는 과 제목(· N부 앞) 차례로 과를 센다 */
 function weeklyRoundWords(r) {

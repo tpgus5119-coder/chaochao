@@ -2649,3 +2649,9 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .errtok[data-r="ok"]{border-color:var(--good,#2e7d32); background:color-mix(in srgb, #2e7d32 12%, var(--card))} .errtok[data-r="no"]{border-color:var(--bad)}
 .exsec{margin:14px auto 0; max-width:320px; display:flex; flex-direction:column; gap:6px}
 .exsecrow{display:flex; justify-content:space-between; padding:8px 12px; border:1px solid var(--line); border-radius:10px; background:var(--card)}
+.petnm i{font-size:17px}   /* 짜오 이름의 연필을 조금 더 크게 (2026-09-28) */
+.wrow2{display:flex; gap:10px; align-items:flex-start; margin:8px 0}
+.wrow2 .pic.sm{width:84px; height:84px; flex:none}
+.wrow2 textarea{flex:1}
+.wrow2 .pic, .wrow2 .pic.sm{width:84px; height:84px; flex:none; margin:0; overflow:hidden; border-radius:10px}
+.wrow2 .pic img{width:84px; height:84px; object-fit:contain; display:block}
