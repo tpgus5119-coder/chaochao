@@ -3535,7 +3535,7 @@ function testHubEntry() {
   const stars = Object.keys(starOf()).length;
   row(ICO.star, '내 단어장', stars, () => startWordbookQuiz(Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k), '단어장 복습'), { dis: !stars });
   row(ICO.pick, '선택 복습', 0, testPickEntry);
-  row(ICO.pick, '주간 시험', 0, startWeeklyExam);   // 실제 반 시험 짜임(듣기·읽기·쓰기·말하기)의 모의시험 (2026-09-28)
+  row(ICO.pick, '주간 시험', 0, weeklyEntry);   // 회차별(범위별) 모의시험 — 실제 반 시험 짜임 (2026-09-28)
   show('exam', '테스트', true);
   if (!COURSE) withCourse(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
   if (!GYBM) gybmBuild(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
@@ -8923,8 +8923,36 @@ function weeklyMaterial() {
   if (words.length < 12) allWords().slice(0, 60).forEach(put);
   return words;
 }
-function startWeeklyExam() {
-  const words = weeklyMaterial().sort(() => Math.random() - .5);
+/* 회차 — 실제 반 시험 범위대로 (대표님 지시 2026-09-28). 1회차 = 메인 교재 1권 1~3과, 말하기는 발음만. 다음 회차는 대표님이 범위를 알려 주면 여기에 더한다 */
+const WEEKLY_ROUNDS = [
+  { no: 1, name: '1회차', desc: '메인 교재 1권 1~3과', chapters: [0, 1, 2], speak: 'pron' },
+];
+function weeklyEntry() {
+  const b = $('#examBody'); b.textContent = '';
+  WEEKLY_ROUNDS.forEach(r => {
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, esc(tr(r.name)) + ' <span class="exmeta">' + esc(r.desc) + '</span>'));
+    btn.onclick = () => { dive(weeklyEntry); gybmBuild(() => startWeeklyExam(r)); };
+    b.append(btn);
+  });
+  const last = (S.stats.wexam || []).slice(-1)[0];
+  if (last) b.append(el('p', 'note', tr('지난 결과') + ' · ' + esc(last.d) + ' · ' + last.ok + ' / ' + last.tot));
+  show('exam', '주간 시험', true);
+}
+/* 회차 범위의 단어 — 메인 교재는 과 제목(· N부 앞) 차례로 과를 센다 */
+function weeklyRoundWords(r) {
+  const main = GYBM && GYBM.find(x => x.key === 'main');
+  if (!main) return [];
+  const base = t => String(t).replace(/\s*·\s*\d+부$/, '');
+  const order = [...new Set(main.lessons.map(l => base(l.title)))];
+  const want = new Set(r.chapters.map(i => order[i]).filter(Boolean));
+  const out = [], seen = new Set();
+  main.lessons.forEach(l => { if (want.has(base(l.title))) l.words.forEach(w => { if (!seen.has(w.vi)) { seen.add(w.vi); out.push(w); } }); });
+  return out;
+}
+function startWeeklyExam(round) {
+  const r = round || WEEKLY_ROUNDS[0];
+  const words = (round ? weeklyRoundWords(r) : weeklyMaterial()).sort(() => Math.random() - .5);
   const withImg = words.filter(w => w.img), withAud = words.filter(w => AIDX[w.vi]);
   const sents = []; const ss = new Set();
   words.forEach(w => { const e = w.ex; if (e && e.vi && e.vi.split(/\s+/).length >= 4 && !ss.has(e.vi)) { ss.add(e.vi); sents.push({ vi: e.vi, ko: e.ko || '', kr_read: e.kr || '', sent: true, of: w.vi, aud: !!AIDX[e.vi] }); } });
@@ -8942,12 +8970,15 @@ function startWeeklyExam() {
   pick(sents, 5).forEach(x => L.push(mk(x, 'read_ko', 'B 읽기', sents)));
   pick(sents, 3).forEach(x => L.push(mk(x, 'puzzle', 'C 쓰기')));
   pick(sents, 3).forEach(x => L.push(mk(x, 'err', 'C 쓰기')));
-  if (canRecord()) { pick(withAud, 3).forEach(w => L.push(mk(w, 'say', 'D 말하기'))); pick(withImg.filter(w => AIDX[w.vi]), 2).forEach(w => L.push(mk(w, 'say_pic', 'D 말하기'))); }
-  if (L.length < 10) { popup(tr('시험을 만들 재료가 모자랍니다 — 세트를 몇 개 더 끝내면 됩니다')); return; }
-  SBOX = 'srs';
-  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true };
+  if (canRecord()) {
+    if (r.speak === 'pron') pick(withAud, 5).forEach(w => L.push(mk(w, 'say', 'D 말하기')));          // 발음만 (1회차)
+    else { pick(withAud, 3).forEach(w => L.push(mk(w, 'say', 'D 말하기'))); pick(withImg.filter(w => AIDX[w.vi]), 2).forEach(w => L.push(mk(w, 'say_pic', 'D 말하기'))); }
+  }
+  if (L.length < 10) { popup(tr('시험을 만들 재료가 모자랍니다')); return; }
+  SBOX = round ? 'bsrs' : 'srs';                     // 교재 단어는 교재 창고에 채점
+  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, round: r.no };
   drawQuiz();
-  show('quiz', '주간 시험', true);
+  show('quiz', '주간 시험 ' + r.name, true);
 }
 /* 시험 전용 문제들 — 그림 맞다/틀리다 · 그림 고르기 · 빈칸 · 문장 맞다/틀리다 · 틀린 곳 찾기 */
 function drawExamKind(body, q) {
@@ -8978,7 +9009,7 @@ function drawExamKind(body, q) {
     const shown = re.test(w.vi) ? w.vi.replace(re, '$1____') : w.vi;
     body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(w.ko)));
     const target = findItem(tok) || { vi: tok, ko: '' };
-    const pool = weeklyMaterial().filter(x => x.vi !== tok);
+    const pool = (Q.round ? weeklyRoundWords(WEEKLY_ROUNDS.find(r => r.no === Q.round) || WEEKLY_ROUNDS[0]) : weeklyMaterial()).filter(x => x.vi !== tok);
     const opts = [target, ...pool.sort(() => Math.random() - .5).slice(0, 3)].sort(() => Math.random() - .5);
     const box = el('div', 'opts');
     opts.forEach(o => { const b = el('button', null, esc(o.vi)); b.dataset.vi = o.vi === tok ? w.vi : '-'; b.onclick = () => answer(b, o.vi === tok, w); box.append(b); });
@@ -9029,7 +9060,7 @@ function finishExam() {
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
   r.append(tb);
-  S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
+  S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs, round: Q.round || 0 }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
   const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = renderHome; r.append(b);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
