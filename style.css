@@ -2384,3 +2384,22 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .flarrows{position:absolute; left:-14px; right:-14px; top:50%; transform:translateY(-50%); display:flex; justify-content:space-between; pointer-events:none}
 .flarr{pointer-events:auto; width:48px; height:48px; border-radius:50%; background:var(--card); border:1px solid var(--line); font-size:26px; line-height:1; color:var(--fg); display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .flarr:disabled{opacity:.35}
+
+/* 오류 보고 — 머리띠 ⚑ 단추와 보고 창 (2026-09-27) */
+#goBug{margin-right:2px}
+#goBug svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+.bugback{z-index:80}                                    /* 헷갈리는 짝 팝업(50) 위에 */
+.bugbox{max-width:360px}
+.bughd{display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:12px}
+.bughd b{font-size:18px}
+.bughd span{font-size:13px; color:var(--dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:50%}
+.bugchips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px}
+.bugchips .chip{font-size:14px; padding:8px 12px}
+.bugta{width:100%; box-sizing:border-box; font:inherit; font-size:16px; line-height:1.5; padding:12px; border:1.5px solid var(--line); border-radius:10px; background:var(--card); color:var(--fg); resize:vertical}
+.bugta:focus{outline:none; border-color:var(--accent)}
+.bugsnap{display:flex; align-items:center; gap:8px; font-size:14px; margin:10px 0 4px}
+.bugsnap input{width:18px; height:18px}
+.bugnote{margin:0 0 12px; font-size:12.5px}
+.bugbtns{display:flex; gap:10px}
+.bugbtns button{flex:1}
+.bugsm{width:100%; margin-top:8px; color:var(--dim)}

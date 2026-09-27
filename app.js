@@ -1166,6 +1166,10 @@ function pairPopup(vi, info) {
   const close = () => { const w = body.firstChild; if (w) w._seq = false; back.remove(); };
   ok.onclick = close;
   box.append(sub, body, ok);
+  // 팝업이 떠 있는 채로도 오류를 보낼 수 있게 (대표님 지시 2026-09-27) — 짝 낱말이 보고에 같이 붙는다
+  const rp = el('button', 'ghost sm bugsm', '⚑ ' + tr('이 화면 오류 보고'));
+  rp.type = 'button'; rp.onclick = () => bugReport({ pair: vi });
+  box.append(rp);
   back.append(box);
   back.onclick = e => { if (e.target === back) close(); };
   document.body.append(back);
@@ -10830,6 +10834,94 @@ function telex(word, ch) {
    복습 안에서 방식만 바꾸려 해도 처음부터 다시 들어가야 했다. */
 $('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
 $('#goMe').onclick = renderAwards;
+
+/* ── 오류 보고 (대표님 지시 2026-09-27 밤) ──────────────────────────────
+   머리띠의 ⚑ 단추 — 어느 화면에서든(헷갈리는 짝 팝업이 떠 있어도) 지금 화면의 오류를 보낸다.
+   화면 사진 대신 **그 화면을 다시 그릴 수 있는 것**을 보낸다: 화면 이름·탭·낱말·소리 파일·그림 파일·목소리·
+   팝업 낱말·판번호·기기 + 지금 화면의 HTML(글자라 작다, 사진이 아니다 — 같은 CSS 로 그대로 다시 그려 볼 수 있다).
+   서버는 동아리 워커(Cloudflare KV, 공짜)의 'bug' 행동에 쌓이고 tools/bug_admin.py 로 읽는다.
+   서버가 아직 옛 판이거나 오프라인이면 기기(S.bugq)에 두었다가 다음에 다시 보낸다. */
+function bugContext() {
+  const c = { view: CURV, tab: ACTIVE_TAB, title: $('#title').textContent,
+              ver: ((document.querySelector('script[src*="app.js"]') || {}).src || '').split('v=')[1] || '',
+              voice: S.voice, online: navigator.onLine, ua: navigator.userAgent.slice(0, 160),
+              scr: innerWidth + 'x' + innerHeight, at: new Date().toISOString() };
+  try {
+    if (L && L.items && L.items[L.i]) {
+      const it = L.items[L.i], d = it.d || {};
+      c.lesson = L.day && L.day.day; c.theme = L.day && L.day.theme; c.face = L.face;
+      c.item = { k: it.k, vi: d.vi, ko: d.ko, img: d.img, ex: d.ex && d.ex.vi, t: d.t, i: L.i, n: L.items.length };
+    }
+    if (typeof Q !== 'undefined' && Q && Q.list && Q.list[Q.i]) {
+      const q = Q.list[Q.i];
+      c.quiz = { i: Q.i, total: Q.total, mode: q.mode, word: q.word || (q.w && q.w.vi), stem: String(q.stem || '').slice(0, 80), img: q.img };
+    }
+    if (typeof FL !== 'undefined' && FL && FL.list && FL.list[FL.i]) c.flash = { i: FL.i, vi: FL.list[FL.i].vi };
+    c.audio = (audio.src || '').split('/').slice(-3).join('/');
+    const pp = document.querySelector('.pairpop'); if (pp) c.pair = (pp.querySelector('.pairpophd b') || {}).textContent;
+    c.mview = S.mview; c.spd = S.spd;
+  } catch (e) { c.ctxErr = String(e).slice(0, 80); }
+  return c;
+}
+function bugSnapshot() {
+  try {
+    const main = document.querySelector('main');
+    const vis = [...main.children].filter(x => !x.hidden).map(x => x.outerHTML).join('');
+    const pops = [...document.querySelectorAll('.modalback:not(.bugback)')].map(x => x.outerHTML).join('');
+    let h = ('<header id="top">' + $('#top').innerHTML + '</header>' + vis + pops).replace(/\s+/g, ' ');
+    return h.length > 150000 ? h.slice(0, 150000) + '<!--cut-->' : h;
+  } catch (e) { return ''; }
+}
+const BUG_KINDS = [['img', '그림이 이상해요'], ['snd', '소리가 이상해요'], ['mean', '뜻·발음이 틀려요'],
+                   ['ui', '화면이 깨져요'], ['dead', '안 눌리거나 멈춰요'], ['etc', '기타']];
+function bugReport(extra) {
+  if (document.querySelector('.bugback')) return;
+  const back = el('div', 'modalback bugback');
+  const box = el('div', 'modalbox bugbox');
+  box.append(el('div', 'bughd', '<b>⚑ ' + tr('이 화면 오류 보고') + '</b><span>' + esc($('#title').textContent) + '</span>'));
+  let kind = 'etc';
+  const chips = el('div', 'chiprow bugchips');
+  BUG_KINDS.forEach(([k, t]) => {
+    const c = el('button', 'chip' + (k === kind ? ' on' : ''), tr(t)); c.type = 'button';
+    c.onclick = () => { kind = k; [...chips.children].forEach(x => x.classList.toggle('on', x === c)); };
+    chips.append(c);
+  });
+  box.append(chips);
+  const ta = el('textarea', 'bugta'); ta.rows = 3;
+  ta.placeholder = tr('무엇이 이상한지 한 줄만 적어 주세요 (안 적어도 됩니다)');
+  box.append(ta);
+  const snapRow = el('label', 'bugsnap');
+  const cb = el('input'); cb.type = 'checkbox'; cb.checked = true;
+  snapRow.append(cb, el('span', null, tr('화면 모습도 함께 보내기 (글자만, 사진이 아닙니다)')));
+  box.append(snapRow);
+  box.append(el('p', 'note bugnote', tr('지금 화면·낱말·소리·그림 파일 이름이 자동으로 붙습니다. 개인 정보는 가지 않습니다.')));
+  const row = el('div', 'bugbtns');
+  const cancel = el('button', 'ghost big', tr('취소')), send = el('button', 'primary big', tr('보내기'));
+  cancel.onclick = () => back.remove();
+  send.onclick = async () => {
+    send.disabled = true;
+    const rep = { kind, note: ta.value.trim().slice(0, 500), ctx: Object.assign(bugContext(), extra || {}), snap: cb.checked ? bugSnapshot() : '' };
+    back.remove();
+    const ok = await bugSend(rep);
+    popup(ok ? '<b>' + tr('보냈습니다. 고맙습니다!') + '</b><br>' + tr('확인해서 고치겠습니다.')
+             : '<b>' + tr('지금은 보내지 못했습니다.') + '</b><br>' + tr('기기에 두었다가 연결되면 자동으로 보냅니다.'));
+  };
+  row.append(cancel, send); box.append(row);
+  back.append(box); document.body.append(back);
+  setTimeout(() => ta.focus(), 50);
+}
+async function bugSend(rep) {
+  try { const j = await cCall(Object.assign({ act: 'bug' }, rep)); if (j && j.ok) return true; } catch (e) { }
+  S.bugq = (S.bugq || []).concat([rep]).slice(-20); save();
+  return false;
+}
+async function bugFlush() {
+  if (!(S.bugq || []).length || !navigator.onLine) return;
+  const q = S.bugq.slice(); S.bugq = []; save();
+  for (const rep of q) await bugSend(rep);
+}
+$('#goBug').onclick = () => bugReport();
+addEventListener('load', () => setTimeout(bugFlush, 4000));
 $('#face').innerHTML = '<span data-f="card">' + tr('단어') + '</span><span data-f="pron">' + tr('발음') + '</span>';
 $('#face').onclick = () => { if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron'); };
 /* 홈 단추(우측 상단 아이콘) · 뒤로가기가 끝까지 갈 때 — **늘 대시보드**를 보여준다.

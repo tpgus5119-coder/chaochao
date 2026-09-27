@@ -122,6 +122,36 @@ export default {
     /* ── 목소리 블라인드 설문 (v13) ────────────────────
        표 하나 = KV 글 하나(동시 제출이 서로를 덮어쓸 일이 없다). 90일 보관.
        개인정보 없음 — 어느 소리를 골랐는지 뿐. 풀은 둘: vi(베트남인) / ko(한국인). */
+    /* ── 앱 오류 보고 (2026-09-27, 대표님 지시 "유저들이 오류 보고할 수 있게") ────────
+       표 하나 = KV 글 하나, 180일 보관. 화면 사진이 아니라 **화면 HTML(글자)** 과 상황(낱말·소리·그림 파일·판번호)이 온다.
+       개인 정보는 별명·기기표뿐. 읽기는 관리자 열쇠(PUSH_KEY)로 — tools/bug_admin.py. KV 공짜 몫 안(글 하나 ≤ 160KB). */
+    if (act === 'bug') {
+      let ctx = b.ctx && typeof b.ctx === 'object' ? b.ctx : {};
+      if (JSON.stringify(ctx).length > 6000) ctx = { cut: true, view: cut(String(ctx.view || ''), 20) };
+      const rep = { at: Date.now(), nick, uid: cut(b.uid, 24), kind: cut(b.kind, 8), note: cut(b.note, 500), ctx, snap: cut(b.snap, 160000) };
+      await KV.put(`bug:${rep.at}:${Math.random().toString(36).slice(2, 8)}`, JSON.stringify(rep), { expirationTtl: 60 * 60 * 24 * 180 });
+      return send({ ok: true });
+    }
+    if (act === 'bugs') {                                    // 관리자 — 목록 (화면 HTML 은 뺀다)
+      if (!(env.PUSH_KEY && cut(b.key, 64) === env.PUSH_KEY)) return send({ error: 'no' });
+      const out = []; let cursor;
+      do {
+        const l = await KV.list({ prefix: 'bug:', cursor });
+        for (const k of l.keys) { const v = JSON.parse((await KV.get(k.name)) || 'null'); if (v) { v.hasSnap = !!v.snap; delete v.snap; v.id = k.name; out.push(v); } }
+        cursor = l.list_complete ? null : l.cursor;
+      } while (cursor);
+      return send({ bugs: out.sort((x, y) => y.at - x.at) });
+    }
+    if (act === 'bug1') {                                    // 관리자 — 하나 통째로 (화면 HTML 포함)
+      if (!(env.PUSH_KEY && cut(b.key, 64) === env.PUSH_KEY)) return send({ error: 'no' });
+      const v = await KV.get(cut(b.id, 60));
+      return send({ bug: v ? JSON.parse(v) : null });
+    }
+    if (act === 'delbug') {                                  // 관리자 — 처리한 보고 지우기
+      if (!(env.PUSH_KEY && cut(b.key, 64) === env.PUSH_KEY)) return send({ error: 'no' });
+      await KV.delete(cut(b.id, 60));
+      return send({ ok: true });
+    }
     if (act === 'vote') {
       const pool = b.pool === 'vi' ? 'vi' : 'ko';
       const clean = {};
