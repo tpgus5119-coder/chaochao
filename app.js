@@ -8955,7 +8955,7 @@ function weeklyEntry() {
   });
   const last = (S.stats.wexam || []).slice(-1)[0];
   if (last) b.append(el('p', 'note', tr('지난 결과') + ' · ' + esc(last.d) + ' · ' + last.ok + ' / ' + last.tot));
-  const wb = el('button', 'bigmenu'); wb.append(el('b', null, esc(tr('쓰기 연습')) + ' <span class="exmeta">' + tr('그림 보고 문장 5개 · 주제로 10문장 (채점 없음)') + '</span>'));
+  const wb = el('button', 'bigmenu'); wb.append(el('b', null, esc(tr('쓰기 연습')) + ' <span class="exmeta">' + tr('상황 그림 ' + ((WEEKLY_ROUNDS[0].scenes || []).length || 5) + '장 보고 문장 · 주제로 10문장 (채점 없음)') + '</span>'));
   wb.onclick = () => { dive(weeklyEntry); gybmBuild(() => writingPractice(WEEKLY_ROUNDS[0])); };
   b.append(wb);
   show('exam', '주간 시험', true);
