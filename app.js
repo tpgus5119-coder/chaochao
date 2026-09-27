@@ -3456,6 +3456,7 @@ function askNick() {
     // 같은 별명이 둘이면 동아리 출석판에서 누가 누구인지 알 수 없다 — 먼저 쓴 사람이 임자다
     go.disabled = true; err.hidden = true;
     const old = S.nick;
+    if (v === petName()) { popup(tr('짜오 이름과 같은 별명은 안 됩니다')); return; }
     S.nick = v;
     try {
       await cCall({ act: 'nick' });
@@ -6000,23 +6001,11 @@ function petSvg(stage) {
 }
 function homeGreet() {
   const g = el('div', 'hgreet');
-  const d = new Date();
-  g.append(el('div', 'hdate', (d.getMonth() + 1) + tr('월') + ' ' + d.getDate() + tr('일') + ' ' + tr('일월화수목금토'.charAt(d.getDay()) + '요일')));
-  /* 오늘 할 일 한 줄 — 새로 배울 낱말 수와 복습 수 (대표님 지시 2026-09-27: 인사말·감탄사 없이 숫자와 할 일만) */
-  const pace = S.pace || 1;
-  const todayCnt = Object.entries(S.done).filter(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd()).length;
-  const left = Math.max(0, pace - todayCnt);
-  const q = courseQueue(left + pace);
-  const nw = left && q.length ? (q[0].words || []).length : 0, dn = dueCount();
-  const line = nw && dn ? tr('오늘 N낱말 배우고 M개 복습').replace('N', nw).replace('M', dn)
-    : nw ? tr('오늘 N낱말 배우기').replace('N', nw)
-    : dn ? tr('오늘 N개 복습').replace('N', dn)
-    : q.length ? tr('오늘 몫을 다 했습니다') : tr('전 과정 완료');
-  g.append(el('div', 'hname', line));
+  g.append(el('div', 'hname', tr('반갑습니다, ') + esc(S.nick || tr('학습자')) + tr('님')));
   const dots = weekDots();
   const row = el('div', 'hstreak');
   row.append(el('span', 'hpill fire', '<svg viewBox="0 0 24 24"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>' + tr('연속') + ' ' + streakDays() + tr('일')));
-  row.append(el('span', 'hpill', tr('이번 주') + ' ' + dots.filter(x => x.done).length + '/' + dots.length));
+  row.append(el('span', 'hpill', tr('누적') + ' ' + Object.keys(S.act || {}).length + tr('일')));
   g.append(row);
   const wk = el('div', 'hdots');
   tr('월 화 수 목 금 토 일').split(' ').forEach((lab, i) => {
@@ -6027,6 +6016,36 @@ function homeGreet() {
   });
   g.append(wk);
   return g;
+}
+/* 지금까지 얼마나 배웠나 — 낱말·외운 낱말·세트 막대 (대표님 지시 2026-09-27 오후) */
+function homeProgress() {
+  const box = el('div', 'hprog');
+  box.append(el('div', 'hsttl', tr('지금까지')));
+  const learned = petCount();
+  const memo = ['srs', 'ssrs', 'bsrs'].reduce((a, k) => a + Object.values(S[k] || {}).filter(v => v.lv >= 2).length, 0);
+  const allW = new Set(allWords().map(w => (w.vi || '').toLowerCase()));
+  if (GYBM) gybmAllWords().forEach(w => allW.add((w.vi || '').toLowerCase()));
+  const st = studyStats();
+  const line = (k, v, t) => {
+    const r = el('div', 'hprow');
+    r.append(el('span', 'hpk', k), el('span', 'hpv', '<b>' + v.toLocaleString('ko-KR') + '</b> / ' + t.toLocaleString('ko-KR')));
+    const bar = el('div', 'hpbar'); const f = el('i'); f.style.width = (t ? Math.min(100, Math.round(v / t * 100)) : 0) + '%'; bar.append(f);
+    box.append(r, bar);
+  };
+  line(tr('배운 낱말'), learned, allW.size);
+  line(tr('외운 낱말'), memo, learned || 1);
+  line(tr('끝낸 세트'), st.words[0], st.words[1]);
+  return box;
+}
+/* 실력 분석 — 홈에 바로 보인다(누적 다섯 영역). 자세한 것은 › (대표님 지시: 토글로 가리지 말 것) */
+function homeSkills() {
+  const box = el('div', 'hskill');
+  const hd = el('button', 'hsttl go'); hd.type = 'button'; hd.append(el('span', null, tr('실력 분석')), el('span', 'parrow', '›'));
+  hd.onclick = () => { dive(renderHome); renderAnalysisPage(); };
+  box.append(hd);
+  const subj = analysisData('all');
+  box.append(bars(subj.map(x => [x.name, x.pct === null ? 0 : x.pct, x.n, undefined, null, x.ok])));
+  return box;
 }
 function petCard() {
   const card = el('div', 'petcard');
@@ -6053,7 +6072,7 @@ function petCard() {
   meta.append(el('div', 'petcap', tr('배운 낱말') + ' ' + n + (nx ? ' · ' + tr('다음 단계까지') + ' ' + (nx.n - n) : '')));
   const head = el('div', 'pethead');
   const nm = el('button', 'petnm', esc(petName()) + ' <i>✎</i>'); nm.type = 'button'; nm.title = tr('이름 바꾸기');
-  nm.onclick = async () => { const v = await askText(tr('짜오 이름'), petName(), 10); if (v !== null) { S.petName = v; save(); renderHome(); } };
+  nm.onclick = async () => { const v = await askText(tr('짜오 이름'), petName(), 10); if (v === null) return; if (v && v === (S.nick || '').trim()) { popup(tr('별명과 같은 이름은 안 됩니다 — 짜오를 부를 때 헷갈립니다')); return; } S.petName = v; save(); renderHome(); };
   head.append(nm, el('span', 'petstage', (si + 1) + tr('단계') + ' · ' + tr(st.name)));
   card.append(head, bub, fig, meta);
   return card;
@@ -6087,15 +6106,12 @@ function homeSettings() {
     if (fn) r.append(el('span', 'parrow', '›'));
     box.append(r); return r;
   };
-  // 하루 분량 — 단어 세트 수 1~9 (기본기·문법은 분량에 안 들어간다)
+  // 하루 분량 — 1~9 세트 중 고르기 (기본기·문법은 분량에 안 들어간다)
   const pace = Math.min(9, Math.max(1, S.pace || 1));
-  const st = el('span', 'stepper');
-  const mn = el('button', 'stepb', '−'), val = el('b', 'stepv', pace + tr('세트')), pl = el('button', 'stepb', '+');
-  mn.type = pl.type = 'button'; mn.disabled = pace <= 1; pl.disabled = pace >= 9;
-  mn.onclick = () => { S.pace = pace - 1; save(); renderHome(); };
-  pl.onclick = () => { S.pace = pace + 1; save(); renderHome(); };
-  st.append(mn, val, pl);
-  row(tr('하루 분량'), st);
+  const sel = document.createElement('select'); sel.className = 'hsel'; sel.setAttribute('aria-label', tr('하루 분량'));
+  for (let i = 1; i <= 9; i++) { const o = document.createElement('option'); o.value = i; o.textContent = i + tr('세트'); if (i === pace) o.selected = true; sel.append(o); }
+  sel.onchange = () => { S.pace = +sel.value; save(); renderHome(); };
+  row(tr('하루 분량'), sel);
   if (canPush()) {
     const sw = el('button', 'switch' + (S.push ? ' on' : ''));
     sw.type = 'button'; sw.setAttribute('role', 'switch'); sw.setAttribute('aria-checked', S.push ? 'true' : 'false'); sw.setAttribute('aria-label', tr('알림'));
@@ -6121,8 +6137,6 @@ function homeSettings() {
   if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
   row(esc(S.nick || tr('이름 없음')) + (S.acct ? ' <small>' + esc(S.acct.id) + '</small>' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
   if (S.admin) row(tr('운영 현황'), null, () => { dive(renderHome); showAdmin(); });
-  const ver = ((document.querySelector('script[src*="app.js"]') || {}).src || '').split('v=')[1] || '';
-  if (ver) box.append(el('p', 'mever', '짜오짜오 ' + tr('판') + ' ' + esc(ver)));
   return box;
 }
 function homeActions() {
@@ -6163,9 +6177,10 @@ function renderHome() {
   if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json())
     .then(j => { COURSE = j; loadCWords(); if (!$('#home').hidden) renderHome(); }).catch(() => {});
   $('#progress').textContent = ''; $('#progress').hidden = true;   // 통계·업적은 내 정보에서 본다
+  if (!GYBM) gybmBuild(() => { if (!$('#home').hidden) renderHome(); });   // '지금까지'의 전체 낱말·세트 수에 교재·시험 자료도 들어가게
   const plan = $('#plan');
   plan.textContent = '';
-  plan.append(homeGreet(), petCard(), homeActions(), homeSettings());
+  plan.append(homeGreet(), petCard(), homeActions(), homeProgress(), homeSkills(), homeSettings());
   show('home', '짜오짜오', false);
 }
 

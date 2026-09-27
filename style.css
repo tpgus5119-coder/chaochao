@@ -2485,3 +2485,16 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .petnm{border:0; background:none; font:inherit; font-size:15px; font-weight:800; color:var(--fg); padding:0; cursor:pointer; display:inline-flex; align-items:center; gap:4px}
 .petnm i{font-style:normal; font-size:12px; color:var(--dim)}
 .hset .mever{margin:8px 0 10px}
+/* 홈: 지금까지 · 실력 분석 · 분량 고르기 (2026-09-27 오후) */
+.hsttl{font-size:16px; font-weight:800; margin:0 0 8px; display:flex; align-items:center; justify-content:space-between}
+button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit; padding:0; cursor:pointer; font-size:16px; font-weight:800}
+.hprog{margin-top:18px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 16px 12px}
+.hprow{display:flex; justify-content:space-between; align-items:baseline; font-size:14px; margin-top:6px}
+.hpk{font-weight:700}
+.hpv{color:var(--dim); font-variant-numeric:tabular-nums}
+.hpv b{color:var(--fg); font-size:16px}
+.hpbar{height:8px; border-radius:4px; background:var(--line); overflow:hidden; margin:6px 0 4px}
+.hpbar i{display:block; height:100%; background:var(--accent); border-radius:4px}
+.hskill{margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 16px 10px}
+.hskill .bars{background:none; border:0; padding:0}
+.hsel{font:inherit; font-size:15px; font-weight:800; color:var(--accent); background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:8px 14px}
