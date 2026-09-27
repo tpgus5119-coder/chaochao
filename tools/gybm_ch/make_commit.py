@@ -34,7 +34,7 @@ def walk(o):
         for v in o.values(): walk(v)
     elif isinstance(o, list):
         for v in o: walk(v)
-for f in ("gybm", "days", "order", "grammar"): walk(   # grammar: 줌 수업 문법 예문 소리도 올린다 (2026-09-27)
+for f in ("gybm", "days", "order", "grammar", "weekly"): walk(   # weekly: 주간 시험 그림   # grammar: 줌 수업 문법 예문 소리도 올린다 (2026-09-27)
     json.loads((ROOT / f"data/{f}.json").read_text(encoding="utf-8")))
 sys.path.insert(0, str(ROOT / "tools"))
 import build_gram_main            # 메인 교재 문법의 소리(예문·문장 안 낱말·핵심 낱말)도 같이 올린다

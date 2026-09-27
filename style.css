@@ -2655,3 +2655,7 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .wrow2 textarea{flex:1}
 .wrow2 .pic, .wrow2 .pic.sm{width:84px; height:84px; flex:none; margin:0; overflow:hidden; border-radius:10px}
 .wrow2 .pic img{width:84px; height:84px; object-fit:contain; display:block}
+.wrow2.scene{flex-direction:column; align-items:stretch; gap:6px; margin:14px 0}
+.scenepic{width:100%; max-width:440px; aspect-ratio:1; object-fit:contain; border-radius:14px; background:#fff; margin:0 auto; display:block}
+.scenecol{display:flex; flex-direction:column; gap:6px}
+.sceneko{font-size:14px; color:var(--dim)}

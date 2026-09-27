@@ -8941,9 +8941,10 @@ function weeklyMaterial() {
   return words;
 }
 /* 회차 — 실제 반 시험 범위대로 (대표님 지시 2026-09-28). 1회차 = 메인 교재 1권 1~3과, 말하기는 발음만. 다음 회차는 대표님이 범위를 알려 주면 여기에 더한다 */
-const WEEKLY_ROUNDS = [
+let WEEKLY_ROUNDS = [
   { no: 1, name: '1회차', desc: '메인 교재 1권 1~3과', chapters: [0, 1, 2], speak: 'pron', topic: '자기소개 (이름·나라·하는 일·배우는 것)' },
 ];
+fetch('data/weekly.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { if (j && j.rounds && j.rounds.length) WEEKLY_ROUNDS = j.rounds; }).catch(() => { });   // 회차는 자료 파일에서 (2026-09-28)
 function weeklyEntry() {
   const b = $('#examBody'); b.textContent = '';
   WEEKLY_ROUNDS.forEach(r => {
@@ -8962,15 +8963,18 @@ function weeklyEntry() {
 /* 쓰기 연습 — 실제 시험의 '그림 보고 말하기'·'한 주제로 10문장'을 손으로 연습한다. 채점은 없고 쓴 것은 폰에 남는다 (2026-09-28) */
 function writingPractice(r) {
   const b = $('#examBody'); b.textContent = '';
-  const words = weeklyRoundWords(r).filter(w => w.img).sort(() => Math.random() - .5).slice(0, 5);
+  /* 그림은 단어 그림이 아니라 **배운 문장·문법을 쓰게 하는 상황**(대표님 지시 2026-09-28: 출제자의 의도 — 누가 누구를 소개한다, 어느 나라 사람이다 …). data/weekly.json 의 scenes */
+  const scenes = (r.scenes && r.scenes.length) ? r.scenes : weeklyRoundWords(r).filter(w => w.img).sort(() => Math.random() - .5).slice(0, 5).map(w => ({ img: w.img, ko: '' }));
   S.essay = S.essay || {}; const mem = S.essay[r.no] = S.essay[r.no] || { pics: {}, text: '' };
-  b.append(el('p', 'lede', tr('그림을 보고 베트남어 문장을 하나씩 써 보세요')));
-  words.forEach(w => {
-    const row = el('div', 'wrow2');
-    const p = pic(w, 'pic sm'); if (p) row.append(p);
-    const ta = document.createElement('textarea'); ta.className = 'bugta'; ta.rows = 2; ta.placeholder = tr('이 그림으로 문장 하나'); ta.value = mem.pics[w.vi] || '';
-    ta.oninput = () => { mem.pics[w.vi] = ta.value; save(); };
-    row.append(ta); b.append(row);
+  b.append(el('p', 'lede', tr('상황 그림을 보고 배운 말로 문장을 써 보세요 (한두 문장)')));
+  scenes.forEach((sc, i) => {
+    const row = el('div', 'wrow2 scene');
+    const im = new Image(); im.src = 'img/' + sc.img; im.alt = ''; im.className = 'scenepic'; row.append(im);
+    const col = el('div', 'scenecol');
+    if (sc.ko) col.append(el('div', 'sceneko', esc(sc.ko)));
+    const ta = document.createElement('textarea'); ta.className = 'bugta'; ta.rows = 2; ta.placeholder = tr('베트남어로'); ta.value = mem.pics[sc.img] || '';
+    ta.oninput = () => { mem.pics[sc.img] = ta.value; save(); };
+    col.append(ta); row.append(col); b.append(row);
   });
   b.append(el('p', 'lede', tr('주제 하나로 10문장 — ') + esc(r.topic || '자기소개')));
   const ta = document.createElement('textarea'); ta.className = 'bugta'; ta.rows = 10; ta.placeholder = tr('한 줄에 한 문장씩'); ta.value = mem.text || '';
