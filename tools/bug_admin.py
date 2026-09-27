@@ -6,6 +6,7 @@
   python3 tools/bug_admin.py 목록                 — 최근 보고 목록 (언제·누가·종류·화면·낱말·한 줄)
   python3 tools/bug_admin.py 보기 <id>            — 하나를 자세히: 상황 전부 + 화면 HTML 을 파일로 만들어 연다
   python3 tools/bug_admin.py 지우기 <id>          — 처리한 보고 지우기
+  python3 tools/bug_admin.py 진도초기화 <아이디>   — 그 계정의 서버 진도(prog:)를 지운다 (워커 새 판 필요)
 
 열쇠는 환경변수 PUSH_KEY 에서 읽는다(없으면 물어본다). 화면 HTML 은 tools/_bugs/<id>.html 로 저장되며
 앱의 style.css 를 그대로 물려 받아 **그 사람이 본 화면을 거의 그대로** 다시 그린다(사진이 아니라 글자라 가볍다)."""
@@ -71,6 +72,11 @@ def main():
         if input(f"  {a[1]} 을(를) 지울까요? (y/N) ").strip().lower() != "y": return
         j = call(act="delbug", id=a[1], key=key())
         print("  ✓ 지움" if j.get("ok") else f"  ✗ {j.get('error')}")
+        return
+    if cmd == "진도초기화":
+        if input(f"  계정 {a[1]} 의 서버 진도를 지울까요? (y/N) ").strip().lower() != "y": return
+        j = call(act="resetprog", id=a[1], key=key())
+        print("  ✓ 지움 (기기에 남은 진도는 앱의 내 정보 › 진도 초기화로)" if j.get("ok") else f"  ✗ {j.get('error')}")
         return
     print(__doc__)
 

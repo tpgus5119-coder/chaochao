@@ -29,6 +29,8 @@ def walk(o):
         if isinstance(o.get("vi"), str) and "ko" in o:
             texts.add(o["vi"]); ex = o.get("ex")
             if isinstance(ex, dict) and isinstance(ex.get("vi"), str): texts.add(ex["vi"])
+            if isinstance(ex, str): texts.add(ex)                       # 글자 카드의 예시 낱말(문자열)
+            if isinstance(o.get("snd"), str): texts.add(o["snd"])      # 글자 소리(모음 하나·자음 학교식 bờ·cờ…) (2026-09-27)
         for v in o.values(): walk(v)
     elif isinstance(o, list):
         for v in o: walk(v)

@@ -491,6 +491,16 @@ export default {
        비밀번호를 한 번 더 받고, **계정·진도·별명·동아리 자리를 모두 지운다.**
        떠나는 까닭은 이름 없이 세기만 한다 — 누가 왜 나갔는지가 아니라
        '무엇 때문에 나가는가'만 알면 고칠 수 있다. */
+    /* ── 관리자: 진도 초기화 (2026-09-27) — prog:<id> 를 지운다. 열쇠는 PUSH_KEY.
+       기기에 남은 진도는 앱의 [내 정보 › 진도 초기화]가 지운다(그때 서버도 빈 것으로 덮는다). */
+    if (act === 'resetprog') {
+      if (!(env.PUSH_KEY && cut(b.key, 64) === env.PUSH_KEY)) return send({ error: 'no' });
+      const id = cut(b.id, 20).toLowerCase().trim();
+      if (!id) return send({ error: '아이디가 없습니다' });
+      await KV.delete('prog:' + id);
+      return send({ ok: true, id });
+    }
+
     if (act === 'quit') {
       const id = cut(b.id, 20).toLowerCase().trim();
       const pw = String(b.pw || '').slice(0, 64);

@@ -705,7 +705,7 @@ const pic = (x, cls) => {
 const esc = s => new String(String(s).replace(/[&<>"]/g,
   c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])));
 // 번호는 두 과정 다 Day N 으로 통일. 트랙 구분은 앞에 붙는 '일상/직무' 말이 한다.
-const label = d => (typeof d.day === 'string' ? '준비 ' + d.day.slice(1)
+const label = d => (typeof d.day === 'string' ? (typeof BASIC_ORDER !== 'undefined' && BASIC_ORDER.includes(d.day) ? '기본기 ' + (BASIC_ORDER.indexOf(d.day) + 1) : '준비 ' + d.day.slice(1))
   : 'Day ' + (d.n || d.day));
 const trackName = d => (typeof d.day === 'string' ? '' : d.track === 'work' ? '직무 ' : '일상 ');
 
@@ -1039,11 +1039,10 @@ function pairRow(word, cur, mode) {
   else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
   if (mode === 'tone' && one) m.append(el('span', 'ptone', tn + ' · ' + tr(SIB_KO[tn])));
   r.append(w, m);
-  if (key) {
-    const b = iconBtn('play', tr('듣기'), () => play(key, false, null, spdOf()));
-    b.classList.add('playi');
-    r.append(b);
-  }
+  /* 소리 단추는 **늘** 있다 (대표님 지시 2026-09-27: 짝 낱말 모두 TTS). 우리 소리 파일이 있으면 그것을, 아직 없으면 기기 목소리로 */
+  const b = iconBtn('play', tr('듣기'), () => key ? play(key, false, null, pairSpd()) : speakVi(word, false, pairSpd()));
+  b.classList.add('playi');
+  r.append(b);
   return r;
 }
 /* 성조 가족을 순서대로 들려준다 — 같은 글자에 높낮이만 다른 소리를 이어서 듣는 것이 핵심이다 */
@@ -1057,7 +1056,7 @@ function pairSeq(items, rows, wrap, btn) {
       if (!key) continue;
       rows.forEach(r => r.classList.remove('now'));
       rows[i].classList.add('now');
-      play(key, false, null, spdOf());
+      play(key, false, null, pairSpd());
       const nat = await nativeCurve(key);
       const endAt = nat && nat.e ? nat.e + .1 : 0;                 // 소리가 들리는 끝까지만 (파일 뒤 무음은 기다리지 않는다)
       await new Promise(res => {
@@ -1104,6 +1103,11 @@ function pairPanel(vi, opt) {
     };
     const draw = () => {
       body.textContent = '';
+      if (!o.bare) {                               // 카드 안에 펼친 짝 목록에도 제 속도 토글 (팝업은 머리에 있다)
+        const sp = el('div', 'pspdrow');
+        sp.append(el('span', null, tr('짝 듣기 속도')), spdChip({ pair: true }));
+        body.append(sp);
+      }
       if (rel) {                                   // 동의어·반의어는 눌린 낱말 전체 기준 — 음절 고르기와 상관없이 늘 위에
         if (rel.s && rel.s.length) body.append(section('동의어', '뜻이 비슷함', rel.s, '', 'rel'));
         if (rel.a && rel.a.length) body.append(section('반의어', '뜻이 반대', rel.a, '', 'rel'));
@@ -1154,9 +1158,12 @@ function pairPopup(vi, info) {
   const hd = el('div', 'pairpophd');
   hd.append(el('b', null, esc(vi)));
   if (inf.kr) hd.append(el('span', 'pkr', '[' + esc(inf.kr) + ']'));
-  const pl = iconBtn('play', tr('듣기'), () => { const k = recKey(vi); k ? play(k, false, null, spdOf()) : speakVi(vi, false, spdOf()); });
+  /* 재생 단추 + **짝 전용 속도**(기본 1배, 카드 속도와 별개 — 대표님 지시 2026-09-27) */
+  const pl = iconBtn('play', tr('듣기'), () => { const k = recKey(vi); k ? play(k, false, null, pairSpd()) : speakVi(vi, false, pairSpd()); });
   pl.classList.add('playi');
-  hd.append(pl);
+  const grp = el('span', 'pspd');
+  grp.append(pl, spdChip({ pair: true }));
+  hd.append(grp);
   box.append(hd);
   if (inf.ko) box.append(el('div', 'pairpopko', esc(inf.ko)));
   const sub = el('div', 'pairpopsub', tr('헷갈리는 짝'));
@@ -1871,12 +1878,19 @@ function spdSet(v) {
   document.querySelectorAll('.spdchip').forEach(x => { x.title = tr('듣기 속도') + ' ' + spdLab(v); x.setAttribute('aria-label', tr('듣기 속도') + ' ' + spdLab(v)); });
   if (PB.spdSrc && audio.src.endsWith(PB.spdSrc) && !audio.paused) audio.playbackRate = v;   // 듣는 중이면 바로 바꾼다
 }
-function spdChip() {
-  const b = el('button', 'spdchip');                       // 듣기 옆 작은 ▾ 만 (대표님 2026-09-27: 배속 표시가 너무 큼) — 누르면 1·0.8·0.6·0.4·0.2배 목록
+/* 헷갈리는 짝은 **제 속도**를 따로 둔다 (대표님 지시 2026-09-27: "별개로 속도 조절", 기본 1배). 카드의 듣기 속도(S.wspd)와 무관하다. */
+const pairSpd = () => SPDS.includes(Number(S.pspd)) ? Number(S.pspd) : 1;
+function pairSpdSet(v) { S.pspd = v; save(); document.querySelectorAll('.spdchip.pair').forEach(x => { x.title = tr('짝 듣기 속도') + ' ' + spdLab(v); }); }
+/* opt.pair 이면 헷갈리는 짝 속도(pairSpd)를 읽고 쓴다. 아니면 카드 듣기 속도 */
+function spdChip(opt) {
+  const pr = !!(opt && opt.pair);
+  const get = pr ? pairSpd : spdOf, set = pr ? pairSpdSet : spdSet;
+  const b = el('button', 'spdchip' + (pr ? ' pair' : ''));   // 듣기 옆 ▾ — 누르면 1·0.8·0.6·0.4·0.2배 목록
   b.type = 'button';
+  if (pr) b.append(el('span', 'spdval', spdLab(get())));    // 짝에서는 값도 같이 보인다 — 카드 속도와 다른 값임을 알 수 있게
   b.append(el('i', 'spdcaret', '▾'));
-  b.title = tr('듣기 속도') + ' ' + spdLab(spdOf());
-  b.setAttribute('aria-label', tr('듣기 속도') + ' ' + spdLab(spdOf()));
+  b.title = tr('듣기 속도') + ' ' + spdLab(get());
+  b.setAttribute('aria-label', tr('듣기 속도') + ' ' + spdLab(get()));
   b.setAttribute('aria-haspopup', 'listbox');
   b.onclick = ev => {
     ev.stopPropagation();
@@ -1884,11 +1898,11 @@ function spdChip() {
     const m = el('div', 'spdmenu');
     m.setAttribute('role', 'listbox');
     SPDS.forEach(v => {
-      const o = el('button', 'spdopt' + (v === spdOf() ? ' on' : ''), '<span>' + spdLab(v) + '</span><i>' + (v === spdOf() ? '✓' : '') + '</i>');
+      const o = el('button', 'spdopt' + (v === get() ? ' on' : ''), '<span>' + spdLab(v) + '</span><i>' + (v === get() ? '✓' : '') + '</i>');
       o.type = 'button';
       o.setAttribute('role', 'option');
-      o.setAttribute('aria-selected', v === spdOf() ? 'true' : 'false');
-      o.onclick = e => { e.stopPropagation(); spdSet(v); spdMenuClose(); };
+      o.setAttribute('aria-selected', v === get() ? 'true' : 'false');
+      o.onclick = e => { e.stopPropagation(); set(v); const sv = b.querySelector('.spdval'); if (sv) sv.textContent = spdLab(v); spdMenuClose(); };
       m.append(o);
     });
     document.body.append(m);
@@ -2236,7 +2250,7 @@ function sayTip(target, heard) {
 }
 
 /* ---------- 화면 ---------- */
-const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'type', 'speak', 'course', 'write', 'news', 'wx', 'guide', 'week', 'nick', 'sub', 'exam'];
+const VIEWS = ['home', 'learn', 'quiz', 'tone', 'award', 'rules', 'type', 'speak', 'course', 'write', 'news', 'wx', 'week', 'nick', 'sub', 'exam'];
 /* 위 여남 토글은 소리가 나는 화면에서만 보여준다 — 나머지에선 자리만 차지한다.
    북부/남부 토글은 없앴다(대표님 지시, 2026-09-09) — 버튼 자체를 index.html에서 지웠다. */
 const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
@@ -2299,8 +2313,8 @@ function dailyFlowEntry() {
 /* 학습 — 회화/시험 대비/복습 세 갈래로 보낸다. 각 화면은 이미 있는 걸 그대로 쓴다
    (courseEntry·reviewMenu 중복 금지). '시험 대비 전용 학습'은 아직 콘텐츠가 없어
    준비 중이라고 정직하게 말한다 — 되는 척 안 한다. */
-/* 학습 탭 (대표님 지시 2026-09-27) — 세 갈래를 한 화면에 늘어놓는다.
-   2-1 기본기: 글자·모음(P1) · 성조(P2) · 헷갈리는 자음(P3) · 자판 · 성조/모음 듣고 가르기 · 타이핑 · 손글씨
+/* 학습 탭 (대표님 지시 2026-09-27) — 네 카드를 한 화면에 늘어놓는다 (기본기·단어·문법·내 단어장).
+   2-1 기본기: 자음(P3) · 모음(P1) · 성조(P2) · 타이핑(자판 치는 법은 그 안에 접힘) — 09-27 낮 지시로 재편
    2-2 단어: 일상(회화 일차) · 직무(8갈래) · 교재(메인 교재) · 단어시험(선배) · 수업 단어(22기 A·B반 회차 순)
    2-3 문법: 책마다 한 줄 — 기초 · 중급 1·2 · 메인 교재 1·2권 · 줌 수업
    화면을 새로 짜지 않고 **있는 문**(startLearn·renderDays·drawJob·drawGybmLessons·startGram)만 잇는다. */
@@ -2313,11 +2327,12 @@ const HUB_ICO = {
   basic: '<svg viewBox="0 0 24 24"><path d="M4 5.5c2.4-1 5-1 8 .4v13c-3-1.4-5.6-1.4-8-.4z"/><path d="M20 5.5c-2.4-1-5-1-8 .4v13c3-1.4 5.6-1.4 8-.4z"/></svg>',
   words: '<svg viewBox="0 0 24 24"><rect x="3.5" y="6" width="13" height="14" rx="2"/><path d="M8 3.5h10.5a2 2 0 0 1 2 2V16"/><path d="M7 11h6M7 15h4"/></svg>',
   gram: '<svg viewBox="0 0 24 24"><path d="M4 6h16M4 11h10M4 16h7"/><path d="m15 19 5-5-2-2-5 5v2z"/></svg>',
+  book: '<svg viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
 };
 let WOPEN = null;                                   // 단어 화면에서 펼쳐 둔 갈래
 let GOPEN = null;                                   // 문법 화면에서 펼쳐 둔 책
 function studyStats() {
-  const basicKeys = ['P1', 'P2', 'P3', 'PTYPE'];
+  const basicKeys = ['P3', 'P1', 'P2'];                 // 자음 · 모음 · 성조 (타이핑은 끝냄이 없는 연습이라 안 센다)
   const basic = [basicKeys.filter(k => S.done[k]).length, basicKeys.length];
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track);
   let wd = days.filter(d => S.done[d.day]).length, wa = days.length;
@@ -2333,17 +2348,21 @@ function studyHubEntry() {
   const b = $('#subBody');
   b.textContent = '';
   const st = studyStats();
-  const card = (ico, t, sub, [done, all], fn) => {
+  /* 부제 글줄은 뺐다 (대표님 지시 2026-09-27: "학습과 테스트에 있는 소제목 글자들 모두 없애") — 제목·진행 막대·숫자만 */
+  const card = (ico, t, prog, fn) => {
     const c = el('button', 'hubcard');
+    const [done, all] = prog || [0, 0];
     const pct = all ? Math.round(done / all * 100) : 0;
-    c.innerHTML = `<span class="hubico">${ico}</span><span class="hubbody"><b class="hubt">${esc(tr(t))}</b><span class="hubsub">${esc(sub)}</span>` +
-      `<span class="hubprog"><i class="hubbar"><i style="width:${done ? Math.max(3, pct) : 0}%"></i></i><small>${tr('끝냄')} ${done}/${all}</small></span></span>`;
+    c.innerHTML = `<span class="hubico">${ico}</span><span class="hubbody"><b class="hubt">${esc(tr(t))}</b>` +
+      (prog ? `<span class="hubprog"><i class="hubbar"><i style="width:${done ? Math.max(3, pct) : 0}%"></i></i><small>${done}/${all}</small></span>` : '') +
+      `</span><svg class="hubchev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>`;
     c.onclick = () => { dive(studyHubEntry); fn(); };
     b.append(c);
   };
-  card(HUB_ICO.basic, '기본', '글자·성조·자음 · 자판 · 듣고 가르기', st.basic, studyBasicsEntry);
-  card(HUB_ICO.words, '단어', '일상 · 직무 · 교재 · 단어시험 · 수업 단어', st.words, studyWordsEntry);
-  card(HUB_ICO.gram, '문법', '기초 · 중급 · 메인 교재 · 줌 수업', st.gram, studyGramEntry);
+  card(HUB_ICO.basic, '기본기', st.basic, studyBasicsEntry);
+  card(HUB_ICO.words, '단어', st.words, studyWordsEntry);
+  card(HUB_ICO.gram, '문법', st.gram, studyGramEntry);
+  card(HUB_ICO.book, '내 단어장', null, wordbookEntry);      // 내 정보에서 옮겨 왔다 (대표님 지시 2026-09-27)
   show('sub', '학습', true);
   // 자료가 아직 안 왔으면 받아서 이 화면을 다시 그린다 (진도 숫자가 채워진다). 다른 데로 갔으면 건드리지 않는다.
   const still = () => ACTIVE_TAB === 'study' && CURV === 'sub' && $('#title').textContent === tr('학습');
@@ -2351,32 +2370,31 @@ function studyHubEntry() {
   if (!GYBM) gybmBuild(() => { if (still()) studyHubEntry(); });
   if (!COURSE) withCourse(() => { if (still()) studyHubEntry(); });
 }
-/* 기본 — 여덟 챕터를 길 하나로 */
+/* 기본기 — 자음 · 모음 · 성조 · 타이핑, 단추 넷 (대표님 지시 2026-09-27).
+   · 차례의 근거: 자음(첫소리) → 모음(가운뎃소리) → 성조(음절 전체에 얹힘) — 베트남 초등 국어(Tiếng Việt 1)가
+     음절을 가르치는 차례(âm đầu → vần → thanh)와 같다. 타이핑은 셋을 다 알아야 칠 수 있으니 맨 뒤.
+   · '자판 치는 법'은 타이핑 연습 안(맨 위 접힘 표)으로 넣었고, '성조 듣고 가르기'·'모음 듣고 가르기'는
+     성조·모음 챕터의 끝(귀로 구별하기)과 같은 것이라 뺐다. 손글씨는 테스트로 옮겼다. */
+const BASIC_ORDER = ['P3', 'P1', 'P2'];
 function studyBasicsEntry() {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyBasicsEntry();
   const nodes = [];
-  ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P').forEach(d => nodes.push({
-    key: d.day, title: d.theme, sub: (d.letters || d.tones || []).length + tr('개') + ' · ' + tr('카드로 익히기'),
-    done: !!S.done[d.day], fn: () => { dive(back); startLearn(d); } }));
-  nodes.push({ key: 'PTYPE', title: '자판 치는 법', sub: 'Telex — 성조·모자 ' + TYPEKEYS.length + '가지', done: !!S.done['PTYPE'], fn: () => { dive(back); startKeyGuide(); } });
-  nodes.push({ key: 'TONE', title: '성조 듣고 가르기', sub: '비슷한 두 소리를 듣고 성조 맞히기', done: false, fn: () => { dive(back); toneEntry(); } });
-  nodes.push({ key: 'VOWEL', title: '모음 듣고 가르기', sub: 'ư·ơ·â·ă 를 귀로 가르기', done: false, fn: () => { dive(back); vowelEntry(); } });
-  nodes.push({ key: 'TYPE', title: '타이핑 연습', sub: '배운 낱말을 자판으로', done: false, fn: () => { dive(back); startType(); } });
-  nodes.push({ key: 'WRITE', title: '손글씨 연습', sub: '배운 낱말을 손으로', done: false, fn: () => { dive(back); startWrite(); } });
+  BASIC_ORDER.forEach(k => { const d = ALL.find(x => x.day === k); if (d) nodes.push({
+    key: d.day, title: d.theme, done: !!S.done[d.day], fn: () => { dive(back); startLearn(d); } }); });
+  nodes.push({ key: 'TYPE', title: '타이핑', done: false, fn: () => { dive(back); startType(); } });
   nodes.forEach((n, i) => { n.num = i + 1; });
-  const cur = nodes.find(n => !n.done);
-  const road = el('div', 'roadmap');
-  b.append(road);
-  renderRoadmap(road, nodes, cur ? cur.key : null, { freeNav: true });
-  show('sub', '기본', true);
+  const list = el('div', 'ulist');
+  b.append(list);
+  renderRoadmap(list, nodes, null, { freeNav: true });
+  show('sub', '기본기', true);
 }
 /* 아코디언 한 줄 — 머리(제목·부제·n/N 알약·화살)와, 펼치면 길이 그려지는 몸통 */
 function accRow(host, o, open, onToggle, scroll) {
   const box = el('div', 'acc' + (open ? ' open' : ''));
   const head = el('button', 'acchead');
   head.type = 'button';
-  head.innerHTML = `<span class="acctxt"><b>${esc(tr(o.title))}</b><span class="accsub">${esc(o.sub)}</span></span>` +
+  head.innerHTML = `<span class="acctxt"><b>${esc(tr(o.title))}</b></span>` +      // 부제 글줄은 뺐다 (2026-09-27)
     `<span class="accpill">${o.done}/${o.all}</span><svg class="accchev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>`;
   head.onclick = onToggle;
   box.append(head);
@@ -2384,10 +2402,9 @@ function accRow(host, o, open, onToggle, scroll) {
     const body = el('div', 'accbody');
     box.append(body);
     if (o.nodes) {
-      const road = el('div', 'roadmap');
-      body.append(road);
-      const cur = o.nodes.find(n => !n.done);
-      renderRoadmap(road, o.nodes, cur ? cur.key : null, { freeNav: true, noScroll: !scroll });   // 화면에 처음 들어올 땐 갈래 머리들이 보이게, 눌러 펼쳤을 때만 '지금 여기'로
+      const list = el('div', 'ulist');
+      body.append(list);
+      renderRoadmap(list, o.nodes, null, { freeNav: true, noScroll: !scroll });
     } else body.append(el('p', 'note', tr(o.note || '불러오는 중…')));
   }
   host.append(box);
@@ -2397,15 +2414,13 @@ function studyWordsEntry(scroll) {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyWordsEntry();
   const still = () => ACTIVE_TAB === 'study' && CURV === 'sub' && $('#title').textContent === tr('단어');
-  b.append(el('p', 'lede', tr('갈래를 고르면 챕터가 보입니다')));
   const rows = [];
   // ① 일상
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track).sort((x, y) => (x.n || 0) - (y.n || 0));
   rows.push({ key: 'days', title: '일상', sub: days.length + tr('일차') + ' · ' + days.reduce((a, d) => a + (d.words || []).length, 0) + tr('낱말'),
     done: days.filter(d => S.done[d.day]).length, all: days.length,
-    nodes: days.map((d, i) => { const base = d.group ? (ALL.find(x => x.day === d.group) || d) : d; const gi = GROUPS.findIndex(([f]) => f(base));
-      return { key: d.day, title: d.theme, sub: (gi >= 0 ? GROUPS[gi][1] + ' · ' : '') + (d.words || []).length + tr('낱말'), num: i + 1, done: !!S.done[d.day],
-               fn: () => { SBOX = 'srs'; dive(back); startLearn(d); } }; }) });
+    nodes: days.map((d, i) => ({ key: d.day, title: d.theme, num: i + 1, done: !!S.done[d.day],
+                                 fn: () => { SBOX = 'srs'; dive(back); startLearn(d); } })) });
   // ② 직무 — 갈래별 레슨 전부를 한 길로 (갈래 이름 · 레슨 이름)
   const jv = COURSE ? jobVol(0) : null;
   if (jv) {
@@ -2447,7 +2462,6 @@ function studyGramEntry(scroll) {
       .catch(() => { b.textContent = ''; b.append(el('p', 'lede', tr('불러오지 못했습니다'))); });
     return;
   }
-  b.append(el('p', 'lede', tr('책을 고르면 과가 보입니다')));
   const rows = GRAM.books.map((bk, bi) => {
     const nodes = bk.bai.map((x, ni) => ({ key: gkey(bi, ni), title: x.t, sub: x.no + tr('과') + ' · ' + (x.g || []).length + tr('개 문법'), num: ni + 1,
       done: !!S.done[gkey(bi, ni)], fn: () => { dive(back); startGram(bi, ni); } }));
@@ -2545,10 +2559,7 @@ function show(v, title, canBack) {
   $('#title').textContent = tr(title);
   $('#back').hidden = !canBack;
   if (v !== 'learn') { $('#face').hidden = true; FACE = null; }   // [단어|발음]은 낱말 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
-  /* 홈 단추 — 홈이 아닐 때는 늘 보인다 (대표님 지시, 2026-08-30).
-     뒤로(‹)는 한 칸씩 돌아가지만, 깊이 들어간 자리에서는 몇 번을 눌러야 하는지 알 수 없다.
-     어디서든 한 번에 나가는 길이 있어야 한다. */
-  $('#goHome').hidden = v === 'home';
+  /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 아래 탭의 [홈]이 어디서든 한 번에 나가는 길이다. */
   if (window.cardArrows) setTimeout(window.cardArrows, 0);   // 좌우 넘김 단추는 학습 화면에서만
   CURV = v;
   if (v === 'home') ACTIVE_TAB = 'home';
@@ -2597,54 +2608,6 @@ function weekDots() {
 }
 
 const doneCount = () => Object.keys(S.done).filter(k => +k >= 1).length;
-const BADGES = [
-  // ① 기초 — 시작을 뗐는가
-  { icon: '🔤', name: '기본기를 뗐다', how: '기본기 학습 완료',
-    test: () => ['P1','P2','P3','R1','R2','R3','R4'].every(k => S.done[k]) },
-  { icon: '👋', name: '첫 5일',        how: '일상 Day 1~5 완료',             test: () => [1,2,3,4,5].every(k => S.done[k]) },
-  // 옛 직무(days.json track:'work')는 2026-09-09에 order.json(J열쇠)으로 완전히
-  // 옮겨서 데이터를 지웠다 — 그래도 예전에 실제로 그 날을 끝낸 사람의 배지가
-  // 갑자기 사라지면 안 되므로 옛 날짜 번호를 그대로 남겨 같이 검사한다.
-  { icon: '🏭', name: '출근 첫날',     how: '직무 세트 1개 완료',
-    test: () => Object.keys(S.done).some(k => k[0] === 'J') ||
-      [21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,51,52,53,55,56,57,59,60,
-       61,62,63,64,65,66,67,68,69,70,81,82,83,84,85,88,89,90,91,92,93,94,95,96,97,100,
-       107,108,109,110,111,112,113,114].some(n => S.done[n]) },
-  // ② 진도 — 얼마나 걸어왔는가
-  { icon: '🌓', name: '10세트',        how: '아무 세트나 10개 완료',         test: () => doneCount() >= 10 },
-  { icon: '🏔️', name: '25세트',        how: '세트 25개 완료',                test: () => doneCount() >= 25 },
-  { icon: '🎖️', name: '50세트',        how: '세트 50개 완료',                test: () => doneCount() >= 50 },
-  { icon: '🏁', name: '전 과정 완주',  how: '100세트 전부 완료',             test: () => doneCount() >= 100 },
-  // ③ 어휘 — 만난 단어와 실제로 남은 단어
-  { icon: '🔠', name: '단어 50',       how: '복습 창고에 단어 50개',         test: () => Object.keys(S.srs).length >= 50 },
-  { icon: '💯', name: '단어 100',      how: '복습 창고에 단어 100개',        test: () => Object.keys(S.srs).length >= 100 },
-  { icon: '📗', name: '단어 200',      how: '복습 창고에 단어 200개',        test: () => Object.keys(S.srs).length >= 200 },
-  { icon: '📚', name: '단어 300',      how: '복습 창고에 단어 300개',        test: () => Object.keys(S.srs).length >= 300 },
-  { icon: '📖', name: '단어 450',      how: '복습 창고에 단어 450개',        test: () => Object.keys(S.srs).length >= 450 },
-  { icon: '🚀', name: '단어 600',      how: '복습 창고에 단어 600개',        test: () => Object.keys(S.srs).length >= 600 },
-  { icon: '🏆', name: '단어 1000',     how: '전 과정 단어 1000개',           test: () => Object.keys(S.srs).length >= 1000 },
-  { icon: '🧠', name: '외운 단어 100', how: '간격을 두고 두 번 이상 맞힌 단어 100개',
-    test: () => Object.values(S.srs).filter(v => v.lv >= 2).length >= 100 },
-  { icon: '🧩', name: '외운 단어 300', how: '간격을 두고 두 번 이상 맞힌 단어 300개',
-    test: () => Object.values(S.srs).filter(v => v.lv >= 2).length >= 300 },
-  // ④ 훈련 — 귀와 입
-  { icon: '👂', name: '성조 8/10',     how: '성조 훈련에서 8점',             test: () => (S.stats.toneBest || 0) >= 8 },
-  { icon: '🎯', name: '성조 만점',     how: '성조 훈련에서 10점',            test: () => (S.stats.toneBest || 0) >= 10 },
-  { icon: '🗣️', name: '50번 말했다',   how: '소리 내어 50번',                test: () => (S.stats.said || 0) >= 50 },
-  { icon: '🎙️', name: '120번 말했다',  how: '소리 내어 120번',               test: () => (S.stats.said || 0) >= 120 },
-  { icon: '📢', name: '300번 말했다',  how: '소리 내어 300번',               test: () => (S.stats.said || 0) >= 300 },
-  { icon: '🔊', name: '600번 말했다',  how: '소리 내어 600번',               test: () => (S.stats.said || 0) >= 600 },
-  { icon: '💬', name: 'AI와 첫 대화',  how: 'AI 대화 한 번 시작',            test: () => (S.stats.chat || 0) >= 1 },
-  // ⑤ 꾸준함 — 돌아오는 힘
-  { icon: '📅', name: '한 주 5일',     how: '이번 주 5일 공부',              test: () => weekDots().filter(d => d.done).length >= 5 },
-  { icon: '🔁', name: '복습 10판',     how: '복습 퀴즈 10번 완료',           test: () => (S.stats.rev || 0) >= 10 },
-  { icon: '♻️', name: '복습 30판',     how: '복습 퀴즈 30번 완료',           test: () => (S.stats.rev || 0) >= 30 },
-  { icon: '🔄', name: '복습 80판',     how: '복습 퀴즈 80번 완료',           test: () => (S.stats.rev || 0) >= 80 },
-  { icon: '📆', name: '10일 출석',     how: '지금까지 총 10일 공부',         test: () => Object.keys(S.act).length >= 10 },
-  { icon: '🗓️', name: '30일 출석',     how: '지금까지 총 30일 공부',         test: () => Object.keys(S.act).length >= 30 },
-  { icon: '📔', name: '60일 출석',     how: '지금까지 총 60일 공부',         test: () => Object.keys(S.act).length >= 60 },
-  { icon: '💎', name: '100일 출석',    how: '지금까지 총 100일 공부',        test: () => Object.keys(S.act).length >= 100 },
-];
 
 
 
@@ -2877,58 +2840,6 @@ async function analysisCard(mode) {
 
 /* 자랑 카드 — 내 진행 상황을 그림 한 장으로 만들어 단톡방에 공유한다.
    목표를 남에게 보이면 지속률이 올라간다(공개 선언 효과). 서버 없이 폰 안에서 그린다. */
-async function shareCard() {
-  const c = document.createElement('canvas');
-  c.width = 720; c.height = 900;
-  const x = c.getContext('2d');
-  x.fillStyle = '#0f1115'; x.fillRect(0, 0, 720, 900);
-  x.strokeStyle = '#2a3040'; x.lineWidth = 2; x.strokeRect(24, 24, 672, 852);
-  x.textAlign = 'center';
-  x.fillStyle = '#7aa2ff'; x.font = 'bold 62px sans-serif';
-  x.fillText('짜오짜오', 360, 128);
-  // 군더더기 날짜·소개문 대신 이름+연속학습일로 (대표님 지시, 2026-09-12)
-  x.fillStyle = '#8b93a7'; x.font = '26px sans-serif';
-  x.fillText(`${S.nick || '학습자'}님 · ${streakDays()}일 연속 학습 중`, 360, 176);
-  const dots = weekDots();
-  '월화수목금토일'.split('').forEach((lb, i) => {
-    const cx = 360 + (i - 3) * 88;
-    x.beginPath(); x.arc(cx, 278, 30, 0, 7);
-    x.fillStyle = dots[i].done ? '#2f9e63' : '#1a1f2b'; x.fill();
-    x.strokeStyle = dots[i].today ? '#7aa2ff' : '#2a3040'; x.lineWidth = 3; x.stroke();
-    x.fillStyle = dots[i].done ? '#fff' : '#5a6273'; x.font = '25px sans-serif';
-    x.fillText(lb, cx, 287);
-  });
-  x.fillStyle = '#e7ebf4'; x.font = 'bold 34px sans-serif';
-  x.fillText(`이번 주 ${dots.filter(d => d.done).length} / ${dots.length}일`, 360, 372);
-  [['배운 단어', Object.keys(S.srs).length], ['끝낸 세트', doneCount()], ['소리 낸 횟수', S.stats.said || 0]]
-    .forEach(([k, v], i) => {
-      const cx = 360 + (i - 1) * 212;
-      x.fillStyle = '#7aa2ff'; x.font = 'bold 50px sans-serif'; x.fillText(String(v), cx, 490);
-      x.fillStyle = '#8b93a7'; x.font = '23px sans-serif'; x.fillText(k, cx, 530);
-    });
-  const got = BADGES.filter(g => g.test());
-  x.fillStyle = '#e7ebf4'; x.font = 'bold 30px sans-serif';
-  x.fillText(got.length ? '최근 업적' : '이제 시작했습니다', 360, 630);
-  if (got.length) {
-    const g = got[got.length - 1];
-    x.font = '62px sans-serif'; x.fillText(g.icon, 360, 712);
-    x.fillStyle = '#7aa2ff'; x.font = 'bold 32px sans-serif'; x.fillText(g.name, 360, 764);
-    x.fillStyle = '#8b93a7'; x.font = '23px sans-serif';
-    x.fillText(`업적 ${got.length} / ${BADGES.length}`, 360, 802);
-  }
-  // 링크 주소 줄 없앰 (대표님 지시, 2026-09-12) — 필요 없는 글자다.
-
-  const blob = await new Promise(r => c.toBlob(r, 'image/png'));
-  const file = new File([blob], 'chaochao-card.png', { type: 'image/png' });
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    try { await navigator.share({ files: [file] }); return; } catch (e) { }
-  }
-  // 공유 창이 없는 기기: 카드를 띄워서 길게 눌러 저장하게 한다
-  $('#awardBody .cardimg')?.remove();
-  const im = new Image();
-  im.src = c.toDataURL('image/png'); im.className = 'cardimg'; im.alt = '자랑 카드';
-  $('#awardBody').prepend(im);
-}
 
 /* 업적 전체 화면 — 홈에는 딴 것 몇 개만 보이고, 나머지는 여기서 */
 
@@ -2936,7 +2847,7 @@ async function shareCard() {
 /* ── 진도 서버 저장 ──────────────────────────────────────────
    로그인한 사람만. 하루 한 번 + 세트를 끝낼 때 올린다.
    서버 쓰기 한도(무료 1,000/일)를 아끼려고 그 이상은 안 올린다. */
-const PROGKEYS = ['done', 'srs', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick'];
+const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick'];   // 실전·GYBM 창고와 별표도 같이 올린다 (2026-09-27)
 /* 자동 진도 백업.
    예전에는 '하루 한 번'이라 오늘 공부한 것이 밤에 폰을 잃으면 통째로 날아갔다.
    이제 학습이 끝날 때마다 올리되, 8초 안에 여러 번 불려도 **한 번만** 보낸다
@@ -3258,7 +3169,7 @@ function acctForm(gate, mode) {
   show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), !gate);
   /* 로그인 관문 화면에서는 다른 데로 못 나가야 한다 (대표님 지시, 2026-09-12).
      show()가 늘 아래 탭 막대를 켜므로, 관문일 때는 그 뒤에 다시 잠근다. */
-  if (gate) { $('#tabbar').hidden = true; $('#goHome').hidden = true; $('#goMe').hidden = true; }
+  if (gate) { $('#tabbar').hidden = true; $('#goMe').hidden = true; }
 }
 
 /* 비밀번호 찾기 — 이메일로 재설정 링크를 보낸다 (2026-09-09, 대표님 지시).
@@ -3289,7 +3200,7 @@ function forgotForm(gate) {
   back.onclick = () => acctForm(gate, 'login');
   b.append(back);
   show('sub', tr('비밀번호 찾기'), !gate);
-  if (gate) { $('#tabbar').hidden = true; $('#goHome').hidden = true; $('#goMe').hidden = true; }
+  if (gate) { $('#tabbar').hidden = true; $('#goMe').hidden = true; }
 }
 
 /* 새 비밀번호 정하기 — 메일 속 링크(?reset=토큰)로 들어오면 뜨는 화면.
@@ -3315,7 +3226,7 @@ function resetPwForm(token) {
   };
   b.append(pw, err, go);
   show('sub', tr('새 비밀번호'), false);
-  $('#tabbar').hidden = true; $('#goHome').hidden = true; $('#goMe').hidden = true;
+  $('#tabbar').hidden = true; $('#goMe').hidden = true;
 }
 
 /* 직접 고르는 줄 — 예전에는 '바꾸기' 단추를 눌러야 다음 값으로 넘어갔다.
@@ -3383,23 +3294,10 @@ function renderAwards() {
     wrap.append(nb);
     row('알림', wrap);
   }
-  {
-    const sg = el('span', 'meseg');
-    [['m', '남'], ['f', '여']].forEach(([v, t]) => {
-      const bt = el('button', 'segb' + (S.voice === v ? ' on' : ''), tr(t));
-      bt.type = 'button';
-      bt.onclick = ev => { ev.stopPropagation(); S.voice = v; save(); topBtns(); renderAwards(); };
-      sg.append(bt);
-    });
-    row('목소리', sg);
-  }
-  row('업적', null, renderAchievementsPage);
+  /* 내 정보에 남는 것은 하루 분량 · 알림 · 실력 분석뿐 (대표님 지시 2026-09-27).
+     목소리는 머리띠의 [남|여]가, 내 단어장은 학습·테스트 탭이, 사전은 아래 탭이 맡는다.
+     업적·자랑 카드·순위·사용법·베트남 문화는 앱에서 통째로 뺐다. */
   row('실력 분석', null, renderAnalysisPage);
-  row('내 단어장', null, wordbookEntry);
-  row('사전', null, dictEntry);
-  row('베트남 문화', null, () => startCulture());
-  row('순위', null, creditEntry);
-  row('사용법', null, showGuide);
   b.append(list);
   if (S.admin) {
     const ad = el('button', 'ghost', '운영 현황 보기');
@@ -3407,11 +3305,7 @@ function renderAwards() {
     ad.onclick = () => { dive(renderAwards); showAdmin(); };
     b.append(ad);
   }
-  const sh = el('button', 'primary big', '자랑 카드 만들기');
-  sh.style.width = '100%'; sh.style.marginTop = '16px';
-  sh.onclick = shareCard;
-  b.append(sh);
-  // 계정 — 로그아웃 · 탈퇴하기 (글자 단추) + 판번호
+  // 계정 — 로그아웃 · 진도 초기화 · 탈퇴하기 (글자 단추) + 판번호
   const foot = el('div', 'mefoot');
   const lo = el('button', 'metext', S.acct ? tr('로그아웃') : tr('로그인·가입'));
   lo.onclick = async () => {
@@ -3419,6 +3313,10 @@ function renderAwards() {
     else acctForm();
   };
   foot.append(lo);
+  foot.append(el('span', 'medot', '·'));
+  const rs = el('button', 'metext danger', tr('진도 초기화'));
+  rs.onclick = resetProgress;
+  foot.append(rs);
   if (S.acct) { foot.append(el('span', 'medot', '·')); const q = el('button', 'metext danger', tr('탈퇴하기')); q.onclick = quitForm; foot.append(q); }
   b.append(foot);
   const ver = ((document.querySelector('script[src*="app.js"]') || {}).src || '').split('v=')[1] || '';
@@ -3426,13 +3324,19 @@ function renderAwards() {
   show('award', '내 정보', true);
 }
 
-/* 업적 전체 목록 — 홈에서는 요약만 보이고, 여기서 다 본다 (대표님 지시, 2026-09-12). */
-function renderAchievementsPage() {
-  const b = $('#subBody');
-  b.textContent = '';
-  renderBadges(b);
-  show('sub', '업적', true);
+/* 진도 초기화 — 배운 것·복습 창고·별표·통계를 모두 비운다. 로그인돼 있으면 서버 진도도 빈 것으로 덮는다
+   (대표님 지시 2026-09-27: "tpgus5119 아이디의 진도 리셋"). 별명·계정·설정(목소리·하루 분량·알림)은 남긴다. */
+async function resetProgress() {
+  if (!await askYN(tr('<b>진도를 모두 지울까요?</b><br>배운 세트·복습 창고·별표·통계가 비워집니다. 되돌릴 수 없습니다.'), '지우기', true)) return;
+  ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'cr', 'miss', 'revDay', 'revSeen', 'cloudAt'].forEach(k => { delete S[k]; });
+  S.done = {}; S.srs = {}; S.ssrs = {}; S.bsrs = {}; S.star = {}; S.act = {}; S.stats = {};
+  save();
+  if (S.acct && S.acct.tok) await cloudSave(true);
+  popup(tr('<b>진도를 지웠습니다.</b> 처음부터 다시 시작합니다.'));
+  setTimeout(() => location.reload(), 900);
 }
+
+/* 업적 전체 목록 — 홈에서는 요약만 보이고, 여기서 다 본다 (대표님 지시, 2026-09-12). */
 
 /* 실력 분석 전체 — 홈 카드는 뺐다. 여기서만 본다 (대표님 지시, 2026-09-12). */
 function renderAnalysisPage() {
@@ -3460,19 +3364,7 @@ function renderProgress(host) {
       st.append(c);
     });
   box.append(st);
-
-  // 업적은 최근 몇 개만 미리 보여주고, 누르면 전체 목록으로 (대표님 지시, 2026-09-12:
-  // "업적은 다 나열하지말고 버튼눌러서 들어갈 수 있도록").
-  const got = BADGES.filter(b => b.test());
-  const bd = el('div', 'badges go');
-  bd.append(el('span', 'lede', `업적 ${got.length}/${BADGES.length} ›`));
-  got.slice(-4).forEach(b => {
-    const s = el('span', 'badge on');
-    s.append(el('i', null, b.icon), el('em', null, b.name));
-    bd.append(s);
-  });
-  bd.onclick = () => { dive(renderHome); renderAchievementsPage(); };
-  box.append(bd);
+  // 업적 요약은 뺐다 (대표님 지시 2026-09-27: 업적 완전 삭제)
 }
 
 
@@ -3743,11 +3635,8 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
                                       ['기사 복습', newsReviewEntry]] },
   book:  { name: '단어장', items: () => [['내 단어장', wordbookEntry],
                                         ['사전', dictEntry]] },
-  cult:  { name: '문화', items: () => [['베트남 문화', () => startCulture()],
-                                      ['베트남 바로알기', knowEntry],
+  cult:  { name: '문화', items: () => [['베트남 바로알기', knowEntry],
                                       ['오늘의 기사', showNewsLearn]] },
-  cred:  { name: '순위', items: () => [['보기', creditEntry]] },
-  guide: { name: '사용법', items: () => [['보기', showGuide]] },
 };
 
 /* 시험 탭 입구 — 학습 탭과 같은 갈래(회화·GYBM)로 보낸다 (대표님 지시,
@@ -3770,34 +3659,30 @@ function testHubEntry() {
     today: '<svg viewBox="0 0 24 24"><path d="M12 3 4 6.5v5c0 4.6 3.4 8.4 8 9.5 4.6-1.1 8-4.9 8-9.5v-5z"/><path d="m9 12 2 2 4-4"/></svg>',
     all: '<svg viewBox="0 0 24 24"><path d="M4 7h4l3 5-3 5H4M20 7h-4l-3 5 3 5h4"/><path d="m17 5 3 2-3 2M17 15l3 2-3 2"/></svg>',
     pick: '<svg viewBox="0 0 24 24"><path d="M4 6h2M4 12h2M4 18h2M10 6h10M10 12h10M10 18h10"/><path d="m3.5 6 1 1 1.5-2"/></svg>',
-    fresh: '<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7"/><path d="M4 4v5h5"/><path d="M12 8v4l3 2"/></svg>',
+    star: '<svg viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
+    write: '<svg viewBox="0 0 24 24"><path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 7 3 3"/></svg>',
   };
-  const row = (ico, t, sub, fn, o) => {
+  /* 부제 글줄은 뺐다 (대표님 지시 2026-09-27). 숫자(대기·낱말 수)만 오른쪽 알약으로 */
+  const row = (ico, t, n, fn, o) => {
     o = o || {};
     const c = el('button', 'hubcard' + (o.today ? ' today' : '') + (o.dis ? ' off' : ''));
-    c.innerHTML = `<span class="hubico">${ico}</span><span class="hubbody"><b class="hubt2">${esc(tr(t))}${o.today ? '<span class="hubtag">' + tr('오늘') + '</span>' : ''}</b>` +
-      `<span class="hubsub">${esc(sub)}</span>${o.steps ? '<span class="hubsteps"><i>' + tr('카드') + '</i>→<i>' + tr('테스트') + '</i>→<i>' + tr('결과') + '</i></span>' : ''}</span>` +
+    c.innerHTML = `<span class="hubico">${ico}</span><span class="hubbody"><b class="hubt2">${esc(tr(t))}${o.today ? '<span class="hubtag">' + tr('오늘') + '</span>' : ''}</b></span>` +
+      (n ? `<span class="accpill">${n}</span>` : '') +
       `<svg class="hubchev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>`;
     if (o.dis) c.disabled = true;
     else c.onclick = () => { dive(testHubEntry); fn(); };
     b.append(c);
   };
-  const due = dueWords().map(findItem).filter(Boolean);
-  const bdue = Object.values(S.bsrs || {}).filter(v => v.due <= now()).length;
-  const sdue = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
+  /* 오늘 복습은 **하나** — 세 창고(하루5분·실전·GYBM)의 오늘 낱말을 한 판에 모은다 (대표님 지시 2026-09-27:
+     "gybm낱말 오늘 복습, 이거는 뭐냐"). 낱말마다 제 창고에 채점이 쌓인다(boxOf). */
+  const due = dueCount();
   const pool = learnedPool();
-  const learned = Object.keys(S.srs || {}).length || pool.length;
-  row(ICO.today, '오늘 복습', due.length ? due.length + tr('개 대기') + ' — ' + tr('카드로 훑고 바로 테스트')
-                  : (learned ? tr('오늘 꺼낼 카드가 없습니다 — 없는 날은 정상입니다') : tr('아직 배운 낱말이 없습니다')),
-      () => testToday(), { today: true, steps: !!due.length });
-  if (bdue) row(ICO.today, 'GYBM 낱말 오늘 복습', bdue + tr('개 대기') + ' · ' + tr('교재·단어시험·수업 단어'), () => { SBOX = 'bsrs'; testToday(); }, { steps: true });
-  if (sdue) row(ICO.today, '실전 단어 오늘 복습', sdue + tr('개 대기'), () => { SBOX = 'ssrs'; testToday(); }, { steps: true });
-  row(ICO.all, '배운 낱말 전체', pool.length ? pool.length + tr('낱말') + ' — ' + tr('랜덤으로 테스트') : tr('아직 배운 낱말이 없습니다'),
-      () => testAllLearned(pool), { dis: !pool.length });
-  row(ICO.pick, '선택 복습', tr('내 단어장 · 오답 노트 · 일차·레슨 골라서'), testPickEntry);
-  const fr = freshSet();
-  row(ICO.fresh, '최근 학습 복습', fr ? fr.theme + ' · ' + fr.words.length + tr('낱말') : tr('아직 끝낸 학습이 없습니다'), () => testFresh(fr), { dis: !fr });
-  b.append(el('p', 'hubnote', '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>' + tr('복습 간격 1·3·7·14·30·60일 — 잊기 직전에 다시 봅니다')));
+  row(ICO.today, '오늘 복습', due, () => testToday(), { today: true, dis: !due });
+  row(ICO.all, '배운 낱말 전체', pool.length ? pool.length.toLocaleString('ko-KR') : 0, () => testAllLearned(pool), { dis: !pool.length });
+  const stars = Object.keys(starOf()).length;
+  row(ICO.star, '내 단어장', stars, () => startWordbookQuiz(Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k), '단어장 복습'), { dis: !stars });
+  row(ICO.pick, '선택 복습', 0, testPickEntry);
+  row(ICO.write, '손글씨', 0, startWrite, { dis: !practiceWords(1).length });     // 기본기에서 옮겨 왔다 — 배운 낱말을 손으로 써 보는 테스트
   show('exam', '테스트', true);
   if (!COURSE) withCourse(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
   if (!GYBM) gybmBuild(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
@@ -3808,11 +3693,27 @@ function cardsThenQuiz(words, title, o) {
   if (!ws.length) { popup(tr('복습할 낱말이 없습니다')); return; }
   flashRun(ws, title, { next: () => startQuiz(ws, null, ws.length, !!(o && o.early), (o && o.opt) || {}) });
 }
+/* 오늘 때가 된 낱말 — 세 창고를 다 본다. 낱말마다 제 창고 이름(_box)을 단다 */
+const dueN = box => Object.values(S[box] || {}).filter(v => v.due <= now()).length;
+const dueCount = () => dueN('srs') + dueN('ssrs') + dueN('bsrs');
+function dueAll() {
+  const seen = new Set(), out = [];
+  const add = (w, box) => { if (!w || !w.vi) return; const k = w.vi.toLowerCase(); if (seen.has(k)) return; seen.add(k); out.push(Object.assign({}, w, { _box: box })); };
+  dueWords().forEach(k => add(findItem(k), 'srs'));                       // 하루5분 창고는 원래 차례(급한 것 먼저)대로
+  const n = now(), words = allWords();
+  const sen = typeof seniorItems === 'function' ? seniorItems() : [];
+  Object.entries(S.ssrs || {}).forEach(([k, v]) => { if (v.due <= n) add(sen.find(x => x.vi === k) || words.find(x => x.vi === k), 'ssrs'); });
+  const gy = GYBM ? gybmAllWords() : [];
+  Object.entries(S.bsrs || {}).forEach(([k, v]) => { if (v.due <= n) add(gy.find(x => x.vi === k) || words.find(x => x.vi === k), 'bsrs'); });
+  return out;
+}
 function testToday() {
-  const due = dueWords().map(findItem).filter(Boolean);
+  SBOX = 'srs';
+  const due = dueAll();
   if (!due.length) { drawRevInfo(); return; }
   S.revSeen = 1; save();
-  cardsThenQuiz(due, '오늘 복습 카드', {});
+  const boxOf = {}; due.forEach(w => { boxOf[w.vi] = w._box; });
+  cardsThenQuiz(due, '오늘 복습 카드', { opt: { boxOf: vi => boxOf[vi] || 'srs' } });
 }
 /* 지금까지 배운 낱말 — 끝낸 일차·레슨의 낱말 + 세 복습 창고의 낱말. 낱말마다 제 창고 이름(_box)을 단다 */
 function learnedPool() {
@@ -3847,24 +3748,21 @@ function testAllLearned(pool) {
 }
 function testPickEntry() {
   const b = $('#examBody'); b.textContent = '';
-  const row = (t, sub, fn, dis) => {
+  /* 부제 글줄 없이 제목만 (2026-09-27). 내 단어장은 테스트 첫 화면으로 올렸다 */
+  const row = (t, n, fn, dis) => {
     const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, esc(t)), el('span', 'exmeta', esc(sub)));
+    btn.append(el('b', null, esc(tr(t)) + (n ? ' <span class="mbadge">' + n + '</span>' : '')));
     if (dis) btn.disabled = true;
     else btn.onclick = () => { dive(testPickEntry); fn(); };
     b.append(btn);
   };
-  const stars = Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k);
-  row('내 단어장', stars.length ? tr('별표한 낱말') + ' ' + stars.length + tr('개') : tr('별표한 낱말이 없습니다 — 낱말 카드의 ☆로 담습니다'),
-      () => startWordbookQuiz(stars, '단어장 복습'), !stars.length);
   const miss = missWords('word');
-  row('오답 노트', miss.length ? tr('자주 틀린 낱말') + ' ' + miss.length + tr('개') : tr('자주 틀린 낱말이 없습니다'),
-      () => { S.revSeen = 1; save(); startQuiz(miss.slice(0, 20), null, null, true); }, !miss.length);
-  row('일상 — 일차 고르기', tr('회화 일차를 골라 그 낱말만'), () => pickUnits('days'));
-  row('직무 — 레슨 고르기', tr('갈래별 레슨을 골라 그 낱말만'), () => withCourse(() => pickUnits('job')));
-  row('교재 — 레슨 고르기', tr('메인 교재 레슨'), () => gybmBuild(() => pickUnits('main')));
-  row('단어시험 — 레슨 고르기', tr('선배 단어시험 레슨'), () => gybmBuild(() => pickUnits('senior')));
-  row('수업 단어 — 회차 고르기', tr('22기 A·B반 회차'), () => gybmBuild(() => pickUnits('c22')));
+  row('오답 노트', miss.length, () => { S.revSeen = 1; save(); startQuiz(miss.slice(0, 20), null, null, true); }, !miss.length);
+  row('일상 — 일차 고르기', 0, () => pickUnits('days'));
+  row('직무 — 레슨 고르기', 0, () => withCourse(() => pickUnits('job')));
+  row('교재 — 레슨 고르기', 0, () => gybmBuild(() => pickUnits('main')));
+  row('단어시험 — 레슨 고르기', 0, () => gybmBuild(() => pickUnits('senior')));
+  row('수업 단어 — 회차 고르기', 0, () => gybmBuild(() => pickUnits('c22')));
   show('exam', '선택 복습', true);
 }
 let PICK = null;                                   // 고른 단위 열쇠들 (갈래마다 새로)
@@ -3911,25 +3809,6 @@ function pickUnits(kind) {
   show('exam', title + ' · ' + tr('선택 복습'), true);
 }
 /* 가장 마지막에 끝낸 세트 — 일차·회화 레슨·직무 레슨·GYBM 레슨 가운데 끝낸 시각이 가장 늦은 것 */
-function freshSet() {
-  let best = null;
-  const cand = (t, theme, words, box) => { if (typeof t === 'number' && words && words.length && (!best || t > best.t)) best = { t, theme, words, box }; };
-  ALL.forEach(d => { if (typeof d.day === 'number' && !d.track) cand(S.done[d.day], d.theme, d.words, 'srs'); });
-  if (COURSE) {
-    lifeVols().forEach((v, vi) => v.chapters.forEach((c, ci) => c.lessons.forEach((l, li) =>
-      cand(S.done[ckey(vi, ci, li)], (v.title || (vi + 2) + '권') + ' ' + lsName(l, li), l.words, 'srs'))));
-    jobVols().forEach(jv => jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) =>
-      cand(S.done['J0.' + ti + '.' + ci + '.' + li], t.track + ' · ' + lsName(l, li), l.words, 'srs')))));
-  }
-  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => cand(bdone()[gybmKey(src.key, li)], src.label + ' · ' + l.title, l.words, 'bsrs')));
-  return best;
-}
-function testFresh(fr) {
-  fr = fr || freshSet();
-  if (!fr) { testHubEntry(); return; }
-  SBOX = fr.box;
-  cardsThenQuiz(fr.words, fr.theme + ' ' + tr('카드'), { opt: { kind: 'word' } });
-}
 
 /* ── 베트남어 능력시험(VLPT) 모의고사 (2026-09-08 대표님 지시) ──
    VLPT(Vietnamese Language Proficiency Test)는 하노이 국립대(VNU-USSH)가 운영하는
@@ -4015,8 +3894,6 @@ const MENUS_KO = {          // 베트남 사람이 한국어를 배운다
   gram2:  { name: '기초 문법', items: () => [['보기', koGramEntry]] },
   culture:{ name: '한국 문화', items: () => [['보기', koCultureEntry]] },
   book:   { name: '단어장', items: () => [['보기', wordbookEntry]] },
-  cred:   { name: '순위', items: () => [['보기', creditEntry]] },
-  guide:  { name: '사용법', items: () => [['보기', showGuide]] },
 };
 
 /* '더 공부할 곳'을 뺐다 (2026-08-29, 사용자 지시).
@@ -6006,34 +5883,6 @@ function dueWords() {
 }
 
 
-/* 목록의 머리말 — **차례 자체가 주제별로 모여 있으니** 그 묶음을 그대로 적는다.
-   (예전에는 '만든 차례'로 묶어서 같은 주제가 앞뒤로 흩어져 보였다.) */
-const GROUPS = [
-  [d => !d.track && d.n <= 2, '인사와 자기소개'],
-  [d => !d.track && d.n <= 4, '숫자 세기'],
-  [d => !d.track && d.n <= 6, '시간과 요일'],
-  [d => !d.track && d.n <= 7, '전화·인터넷 개통'],
-  [d => !d.track && d.n <= 8, '집 구하기와 이사'],
-  [d => !d.track && d.n <= 9, '은행과 관공서'],
-  [d => !d.track && d.n <= 11, '집과 살림'],
-  [d => !d.track && d.n <= 13, '길과 교통'],
-  [d => !d.track && d.n <= 15, '일과 하루'],
-  [d => !d.track && d.n <= 17, '사고 팔기'],
-  [d => !d.track && d.n <= 19, '식당과 카페'],
-  [d => !d.track && d.n <= 21, '부탁하고 약속하기'],
-  [d => !d.track && d.n <= 24, '약국과 병원'],
-  [d => !d.track && d.n <= 25, '회식과 술자리'],
-  [d => !d.track && d.n <= 26, '마음과 맞장구'],
-  [d => !d.track && d.n <= 28, '가족과 인간관계'],
-  [d => !d.track && d.n <= 29, '고향과 명절'],
-  [d => !d.track && d.n <= 30, '축하와 기념일'],
-  [d => !d.track && d.n <= 31, '날씨'],
-  [d => !d.track && d.n <= 32, '취미'],
-  [d => !d.track && d.n <= 34, '감정과 의견 표현 심화'],
-  [d => !d.track && d.n <= 99, '수업 자료 보강'],  // 35일차~ — 서브교재·줌 자료에서 골라 붙인 보강 세션(tools/build_boost.py)
-  [d => !d.track, '기타'],  // 안전망 — 위 21개에 안 걸리는 경우는 없어야 정상
-];
-
 /* 내 업종이 아닌 직무 묶음은 가릴 수 있다 — 가린 것은 목록·일정·추천에서 빠진다 */
 const hiddenCats = () => S.hide || [];
 const visibleDay = d => !(d.track === 'work' && hiddenCats().includes(d.cat));
@@ -6115,85 +5964,31 @@ function recentDoneUnits(nMax) {
    opt.freeNav=true 면 잠그지 않고 전부 눌러도 된다 — GYBM 챕터처럼 실제 수업 진도를
    따라가야 해서 앱이 순서를 강제하면 안 되는 경우다(대표님 지시, 2026-09-22: "길따라
    올라가듯이 선택하면서" 두오링고 지도를 GYBM에도 적용). 이때 🔒 대신 과 번호(nd.num)를 보여준다. */
+/* 챕터 목록 — **단추를 늘어놓는다** (대표님 지시 2026-09-27: "길 가는 것처럼 보이는 컨셉은 없애자.
+   그냥 버튼 눌러서 할 수 있도록"). 옛 이름(renderRoadmap)은 부르는 데가 많아 그대로 두고 속만 바꿨다.
+   줄마다 번호 · 제목 · 끝냈으면 ✓. 부제 글줄은 그리지 않는다. 어느 과든 눌러 들어간다. */
 function renderRoadmap(host, nodes, curKey, opt) {
   host.textContent = '';
+  host.classList.add('ulist');
   if (!nodes.length) return;
-  const free = !!(opt && opt.freeNav);
-  // 산길처럼 좌우로 살짝 구불거리며 위로 올라가는 느낌 (대표님 지시, 2026-09-23:
-  // "좀더 길을 걷고 있고, 더 높은곳으로 가고 잇음을 시각적으로"). 점(dot)만 폭 52px
-  // 안에서 흔들리고 글자 자리는 고정이라, 레슨 제목이 길어도 줄바꿈이 안 틀어진다.
-  // 2026-09-25 대표님 지시: "길의 방향이 아래로 이동하는 모양 — 위로 올라가는 방향으로".
-  // 그래서 첫 과를 **맨 아래**에 두고 뒤 과일수록 위로 쌓는다(정상 = 맨 위 깃발).
-  // 화면을 열면 '지금 할 차례'(없으면 맨 아래 첫 과)가 가운데 오도록 스크롤한다.
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('class', 'rmpath');
-  host.append(svg);
-  const rows = [];
-  const order = nodes.map((nd, i) => ({ nd, i })).reverse();       // 위 = 뒤쪽 과
-  order.forEach(({ nd, i }, di) => {
-    const state = nd.key === curKey ? 'cur' : nd.done ? 'done' : 'lock';
-    const done = nd.done || state === 'cur';
-    const isLast = i === nodes.length - 1;
-    const row = el('div', 'rmnode ' + state);
-    const wob = Math.round(Math.sin(i * 0.95) * 34);
-    const dotwrap = el('span', 'rmdotwrap');
-    dotwrap.style.setProperty('--wob', wob + 'px');
-    const dot = el('span', 'rmdot',
-      isLast && done ? '🚩' :
-      nd.done ? '✔' : state === 'cur' ? '' : free ? (nd.num != null ? String(nd.num) : '') : '🔒');
-    dotwrap.append(dot);
-    const lbl = el('div', 'rmlabel');
-    lbl.append(el('b', null, esc(nd.title)));
-    if (nd.sub) lbl.append(el('span', 'rmsub', esc(nd.sub)));
-    if (state === 'cur') lbl.append(el('span', null, tr('지금 여기')));
-    row.append(dotwrap, lbl);
-    if ((state === 'cur' || free) && nd.fn) { row.onclick = nd.fn; row.classList.add('go'); }
+  nodes.forEach((nd, i) => {
+    const row = el('button', 'ubtn' + (nd.done ? ' done' : ''));
+    row.type = 'button';
+    row.append(el('span', 'unum', nd.num != null ? String(nd.num) : String(i + 1)));
+    row.append(el('span', 'utitle', esc(nd.title)));
+    row.append(el('span', 'ust', nd.done ? '✓' : '›'));
+    if (nd.fn) row.onclick = nd.fn;
     host.append(row);
-    rows.push({ dotwrap, done });
-  });
-  requestAnimationFrame(() => {
-    drawRoadPath(host, svg, rows);
-    // 열자마자 지금 자리가 보이게 — 없으면(다 끝냄) 정상 깃발이 있는 맨 위, 시작 전이면 맨 아래
-    const els = host.querySelectorAll('.rmnode');
-    const target = host.querySelector('.rmnode.cur') || (nodes.every(n => n.done) ? els[0] : els[els.length - 1]);
-    if (target && target.scrollIntoView && !(opt && opt.noScroll)) target.scrollIntoView({ block: 'center' });
   });
 }
 
-/* renderRoadmap 이 그린 점들을 구불구불한 선으로 잇는다 — 실제 배치 후 좌표를 재서
-   그리므로 글자 줄바꿈으로 칸 높이가 들쭉날쭉해도 선이 항상 점을 정확히 지난다.
-   위쪽이 뒤 과이므로, 두 점 사이 선은 **아래쪽(앞 과)** 을 끝냈을 때 진하게 칠한다. */
-function drawRoadPath(host, svg, rows) {
-  if (!host.isConnected || !rows.length) return;
-  const hb = host.getBoundingClientRect();
-  const pts = rows.map(r => {
-    const db = r.dotwrap.querySelector('.rmdot').getBoundingClientRect();
-    return { x: db.left + db.width / 2 - hb.left, y: db.top + db.height / 2 - hb.top, done: r.done };
-  });
-  svg.setAttribute('width', hb.width);
-  svg.setAttribute('height', hb.height);
-  svg.setAttribute('viewBox', `0 0 ${hb.width} ${hb.height}`);
-  svg.textContent = '';
-  for (let i = 1; i < pts.length; i++) {
-    const a = pts[i - 1], b = pts[i];                 // a = 위(뒤 과), b = 아래(앞 과)
-    const midY = (a.y + b.y) / 2;
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', `M${a.x},${a.y} C${a.x},${midY} ${b.x},${midY} ${b.x},${b.y}`);
-    path.setAttribute('class', 'rmedge' + (b.done ? ' done' : ''));
-    svg.append(path);
-  }
-}
-
-/* 목차의 레슨 줄들을 **길(로드맵)** 로 그린다 — 회화(일상·직무·기본기+문법)와 GYBM 이
-   같은 모양이어야 한다(대표님 지시, 2026-09-25 #14). 잠그지 않는다(freeNav):
-   어느 과든 눌러 들어갈 수 있고, 아직 안 끝낸 첫 과가 '지금 여기'다.
-   nodes: [{key, title, sub, num, done, fn}]  list: #dayList 같은 <ul> */
+/* 목차의 레슨 줄들을 단추 목록으로 — 회화(일상·직무·기본기+문법)와 GYBM 이 같은 모양.
+   nodes: [{key, title, num, done, fn}]  list: #dayList 같은 <ul> */
 function roadInList(list, nodes) {
   const li = el('li', 'roadli');
-  const road = el('div', 'roadmap');
-  li.append(road); list.append(li);
-  const cur = nodes.find(n => !n.done);
-  renderRoadmap(road, nodes, cur ? cur.key : null, { freeNav: true });
+  const box = el('div', 'ulist');
+  li.append(box); list.append(li);
+  renderRoadmap(box, nodes, null, { freeNav: true });
 }
 
 /* ---------- 홈 (대표님 지시 2026-09-27: 딱 세 덩이) ----------
@@ -6319,7 +6114,6 @@ function petCard() {
 }
 function homeActions() {
   const box = el('div', 'hact');
-  const due = dueWords();
   const todayCnt = Object.entries(S.done)
     .filter(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd()).length;
   const pace = S.pace || 1;
@@ -6341,9 +6135,10 @@ function homeActions() {
     b1.onclick = () => startLearn(t);
   }
   const b2 = el('button', 'hbtn sec');
+  const dn = dueCount();                                 // 세 창고 합 — 테스트 탭의 '오늘 복습'과 같은 숫자
   b2.append(el('b', null, tr('오늘 복습하기')),
-            el('small', null, due.length ? due.length + tr('개 대기 중') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
-  b2.disabled = !due.length; if (due.length) b2.onclick = () => { ACTIVE_TAB = 'test'; testToday(); };   // 테스트 탭 3-1 과 같은 문 (카드 → 테스트)
+            el('small', null, dn ? dn + tr('개 대기 중') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
+  b2.disabled = !dn; if (dn) b2.onclick = () => { ACTIVE_TAB = 'test'; testToday(); };   // 테스트 탭의 '오늘 복습'과 같은 문 (카드 → 테스트)
   box.append(b1, b2);
   return box;
 }
@@ -6363,25 +6158,11 @@ function renderHome() {
 
 /* 업적 목록 — 예전엔 '내 정보' 화면 안에서만 보였다. 홈으로 옮기면서
    공용 함수로 뺐다(2026-09-09) — renderAwards()는 이제 이걸 안 부른다. */
-function renderBadges(host) {
-  host.textContent = '';
-  const got = BADGES.filter(x => x.test()).length;
-  host.append(el('p', 'lede', `업적 <b>${got}</b> / ${BADGES.length}`));
-  BADGES.forEach(bg => {
-    const on = bg.test();
-    const row = el('div', 'awrow' + (on ? ' on' : ''));
-    row.append(el('span', 'awi', bg.icon),
-               el('span', 'awn', esc(bg.name)),
-               el('span', 'awh', on ? '달성 ✔' : esc(bg.how)));
-    host.append(row);
-  });
-}
 
 /* 학습 과정 목록 — 트랙별로 보여준다 */
 /* 일상 낱말 목차 — 옛 직무(track:'work') 갈래는 2026-09-09에 order.json으로
    완전히 옮기고 여기선 지웠다. drawJob()이 직무 목차를 따로 그린다. */
 function renderDays() {
-  const nx = nextDay();
   const list = $('#dayList');
   list.textContent = '';
   // n = 실제 학습 차례(기초→심화, 빈틈없이 1,2,3...). day는 예전에 쓰던 옛 번호라
@@ -6391,20 +6172,10 @@ function renderDays() {
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track)
     .sort((a, b) => (a.n || 0) - (b.n || 0));
 
-  /* 2026-09-25 대표님 지시(#14): GYBM 과 같은 **길(로드맵)** 로 그린다. 갈래(GROUPS) 이름은
-     줄 부제에 붙인다. 일정판의 '다음 차례'(nx)가 있으면 그 세트가 '지금 여기'다. */
-  const nodes = days.map((d, i) => {
-    const base = d.group ? (ALL.find(x => x.day === d.group) || d) : d;   // '· 보강' 일차는 원래 일차의 갈래 이름을 쓴다 (2026-09-27)
-    const gi = GROUPS.findIndex(([f]) => f(base));
-    return { key: d.day, title: d.theme,
-             sub: (gi >= 0 ? GROUPS[gi][1] + ' · ' : '') + (d.words || []).length + tr('낱말') + (d.dialog ? ' + ' + tr('대화') : ''),
-             num: i + 1, done: !!S.done[d.day],
-             fn: () => { dive(renderDays); startLearn(d); } };
-  });
-  const li = el('li', 'roadli'), road = el('div', 'roadmap');
-  li.append(road); list.append(li);
-  const cur = (nx && !nx.track) ? nodes.find(n => n.key === nx.day) : nodes.find(n => !n.done);
-  renderRoadmap(road, nodes, cur ? cur.key : null, { freeNav: true });
+  /* 단추 목록 (2026-09-27: 길 그림 없앰). 번호·제목·끝냄 표시만 */
+  const nodes = days.map((d, i) => ({ key: d.day, title: d.theme, num: i + 1, done: !!S.done[d.day],
+                                      fn: () => { dive(renderDays); startLearn(d); } }));
+  roadInList(list, nodes);
   show('course', '일상 낱말', true);
 }
 
@@ -6724,7 +6495,6 @@ function gramStat() {
   let all = 0, done = 0;
   ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P').forEach(d => {
     all++; if (S.done[d.day]) done++; });
-  all++; if (S.done['PTYPE']) done++;                 // 자판 치는 법
   if (GRAM) GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
     all++; if (S.done[gkey(bi, ni)]) done++; }));
   return stat(done, all, '챕터');
@@ -6968,15 +6738,6 @@ const TYPEKEYS = [
   { k: 'uw', t: 'ư', ex: 'tuw', out: 'tư', ko: '넷' },
   { k: 'dd', t: 'đ', ex: 'ddi', out: 'đi', ko: '가다' },
 ];
-function startKeyGuide() {          // 이름이 startType 이면 기존 '타이핑 연습'과 겹친다
-  L = { day: { day: 'PTYPE', theme: '자판 치는 법', know: 1 }, cult: 1, i: 0,
-        items: TYPEKEYS.map(x => ({ k: 'know', d: {
-          e: '⌨️', t: x.k + '  →  ' + x.t,
-          b: `<b>${x.ex}</b> 라고 치면 <b>${x.out}</b> (${x.ko}) 가 됩니다.` +
-             ' 베트남 사람이 실제로 쓰는 자판 방식(Telex)과 같습니다.' } })) };
-  drawCard();
-  show('learn', '자판 치는 법', true);
-}
 
 function drawGramList() {
   const list = $('#dayList'); list.textContent = '';
@@ -6989,8 +6750,6 @@ function drawGramList() {
     nodes.push({ key: d.day, title: d.theme, sub: tr('기본기') + ' · ' + n + tr('개'),
                  done: !!S.done[d.day], fn: () => { dive(drawGramList); startLearn(d); } });
   });
-  nodes.push({ key: 'PTYPE', title: tr('자판 치는 법'), sub: tr('기본기') + ' · ' + TYPEKEYS.length + tr('개'),
-               done: !!S.done['PTYPE'], fn: () => { dive(drawGramList); startKeyGuide(); } });
   GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
     const k = gkey(bi, ni);
     nodes.push({ key: k, title: x.t, sub: tr('문법') + ' · ' + b.book + ' ' + x.no + tr('과') + ' · ' + x.g.length + tr('개 문법'),
@@ -7155,7 +6914,7 @@ function earn(n, why) {
   const keep = Object.keys(c.wk).sort().slice(-8);
   Object.keys(c.wk).forEach(k => { if (!keep.includes(k)) delete c.wk[k]; });
   save();
-  if (why) popup(`🪙 <b>+${n}점</b><br>${why}`);
+  // 점수 알림은 뺐다 (2026-09-27: 순위 화면을 없앴으니 점수는 AI 채점 몫으로만 조용히 쌓인다)
 }
 function spend(n) {
   const c = credits();
@@ -7184,21 +6943,6 @@ function earnOnce(key, n, why) {
 }
 
 /* 이 과정에서 실제로 얻을 수 있는 점수만 보여 준다 */
-function earnRules() {
-  const common = [
-    [CRD.rev, '복습을 끝내면', '가장 높습니다 — 복습이 무너지면 나머지가 다 무너집니다'],
-    [CRD.set, '오늘 세트를 끝내면', ''],
-    [CRD.day, '그날 처음 앱을 열면', '오는 것 자체에 주는 몫이라 작습니다'],
-    [CRD.fix, '자주 틀리던 낱말을 하나 외울 때마다', '틀린 것을 고친 순간이 가장 값집니다'],
-    [CRD.d3, '연속 3일', ''], [CRD.d7, '연속 7일', ''],
-  ];
-  return learnKo()
-    ? common.concat([[CRD.exam, '모의고사 한 회를 끝내면', ''],
-                     [CRD.card, '문법·기본기·문화 카드를 처음 볼 때마다', '']])
-    : common.concat([[CRD.say, '따라 말하기에서 발음과 높낮이가 모두 통과되면',
-                      '둘 중 하나만 맞아서는 안 됩니다'],
-                     [CRD.write, '받아쓰기·타이핑 한 판', '']]);
-}
 
 const weekCredits = () => (credits().wk || {})[weekKey()] || 0;
 /* 한 달 점수 — 최근 주에 더 무게를 준다.
@@ -7227,160 +6971,22 @@ function monthCredits() {
    대신 매기고 그 사실을 화면에 밝힌다 — 없는 숫자로 등수를 만들면 안 된다. */
 /* 순위 한 줄 — 사람이든 동아리든 같은 모양으로 그린다.
    1·2·3등은 메달을 달아 준다. 숫자만 다르면 눈이 등수를 못 읽는다(색만으로도 안 된다). */
-const MEDAL = ['🥇', '🥈', '🥉'];
-function rankRow(i, name, val, top, mine, sub) {
-  const r = el('div', 'crank' + (mine ? ' me' : ''));
-  r.append(el('span', 'crno' + (i < 3 ? ' hi' : ''), i < 3 ? MEDAL[i] : String(i + 1)));
-  const nk = el('span', 'crnick');
-  nk.append(document.createTextNode(name));
-  if (mine) nk.append(el('span', 'crmine', tr('나')));   // CSS 에 한글을 박으면 베트남어 화면에 샌다
-  if (sub) nk.append(el('i', 'cnsub', sub));
-  r.append(nk);
-  const bar = el('span', 'crbar');
-  const fill = el('i');
-  fill.style.width = Math.max(4, Math.round(val / (top || 1) * 100)) + '%';
-  bar.append(fill);
-  r.append(bar, el('span', 'crval', String(val)));
-  return r;
-}
 
 /* 순위판은 **1~3위만** 내건다 (사용자 지시).
    4위 아래는 이름을 걸지 않는다 — 내 등수는 화면 맨 위 '내 자리'에서 나만 본다.
    연구가 말하는 해악(전체 등수 공개가 하위권 의욕을 꺾는다, Li 외 2024)을
    피하면서 겨루는 재미는 위 세 자리에 남긴다. */
-const TOP_N = 3;
 /* 개인 순위 = **앱 전체 사람 중에서** (대표님 지시, 2026-08-29).
    전에는 같은 동아리 사람끼리만 줄을 세웠다. 동아리가 셋뿐이라 그건 순위가 아니라 방 안 겨루기였다.
    서버가 내주는 것은 **맨 위 셋의 별명·점수**와 **내 자리**뿐이다 —
    4등 아래는 이름도 등수도 오지 않는다. 자기 등수는 자기만 본다. */
-let GRANK = null, GRANKQ = 0;
-function loadGRank(then) {
-  if (GRANKQ) return;                       // 한 번에 한 번만 — 그리기가 여러 번 불려도 서버는 한 번
-  GRANKQ = 1;
-  const sk = skillScore();
-  cCall({ act: 'rank', uid: myUid(), score: sk.score, memo: sk.memo, pct: myPcts(),
-          cr: weekCredits(), crm: monthCredits(),
-          days: weekDots().map(d => d.done ? 1 : 0) })
-    .then(j => { GRANK = j || {}; GRANKQ = 0; then && then(); })
-    /* 서버가 말해 준 까닭을 버리지 마라 (2026-08-31).
-       cCall 은 서버가 보낸 error 를 그대로 예외로 던진다. 전에는 그것을 통째로 삼키고
-       늘 '서버에 못 닿았습니다' 라고만 해서, 별명을 아직 안 정한 사람이
-       고칠 수 없는 딴소리를 보고 있었다. 진짜 못 닿은 때만 그렇게 말한다. */
-    .catch(e => { GRANK = { off: 1, why: (e && e.message) || '' }; GRANKQ = 0; then && then(); });
-}
-function globalBoard(span) {
-  const box = el('div', 'crclub');
-  if (!GRANK) { box.append(el('p', 'note', tr('불러오는 중…'))); return box; }
-  const b = GRANK[span === 'month' ? 'month' : 'week'];
-  /* 사람이 적어도 **있는 만큼 바로 세운다** (대표님 지시: 수가 부족하다고 하지 마라).
-     한 명이면 한 명만 나온다 — 그게 사실이고, 기다리라는 말보다 낫다. */
-  if (!b || !b.top || !b.top.length) {
-    box.append(el('p', 'note', GRANK.off
-      ? (GRANK.why || tr('순위 서버에 못 닿았습니다 — 잠시 뒤 다시 열어 보세요.'))
-      : tr('오늘 공부하면 줄에 섭니다.')));
-    return box;
-  }
-  const me = (S.nick || '').trim();
-  const top = b.top[0].v || 1;
-  b.top.forEach((x, i) => box.append(rankRow(i, x.n, x.v, top, x.n === me)));
-  if (b.rank > TOP_N) {
-    box.append(el('p', 'note', tr('내 자리는 N위입니다 — 나만 보입니다.').replace('N', b.rank)));
-  } else if (!b.rank) {
-    box.append(el('p', 'note', tr('오늘 공부하면 줄에 섭니다.')));
-  }
-  box.append(el('p', 'note', tr('앱 전체 N명 가운데').replace('N', b.total)));
-  return box;
-}
 
-function creditEntry() { drawCredit(); }
 /* 이 화면의 주인공은 **순위**다. 점수는 순위를 매기기 위한 재료로 뒤에 놓는다.
    숫자는 둘이고 하는 일이 다르다 — 헷갈리면 안 되므로 화면에서도 갈라 놓는다.
      · 이번 주 점수 : 순위용. 월요일마다 0으로 초기화된다.
      · 모은 점수 : AI 채점에 쓰는 몫. 계속 쌓이고, **써도 순위는 안 내려간다**
        (순위는 '번 것'으로 매기지 '남은 것'으로 매기지 않는다 — 안 그러면
         AI 채점을 쓸수록 등수가 떨어져서, 좋은 기능을 쓰지 말라는 말이 된다). */
-function drawCredit() {
-  const ko = learnKo();
-  const host = ko ? $('#examBody') : $('#subBody');
-  host.textContent = '';
-  const c = credits();
-  const thisW = c.wk[weekKey()] || 0;
-
-  // ── 1. 내 등수 — 맨 위, 가장 크게
-  const useSpan = RKP.span;
-  const big = el('div', 'crbig');
-  const gb = GRANK && GRANK[RKP.span === 'month' ? 'month' : 'week'];
-  if (gb && gb.rank) {
-    big.append(el('div', 'crnum', tr('N위').replace('N', gb.rank)));
-    big.append(el('div', 'crsub', tr('앱 전체 N명 중').replace('N', gb.total) + '  ·  '
-      + (RKP.span === 'month' ? tr('한 달 점수') + ' ' + monthCredits()
-                              : tr('이번 주 점수') + ' ' + thisW)));
-    const above = (gb.top.filter(x => x.v > gb.mine).slice(-1)[0] || {}).v;
-    if (gb.rank === 1) big.append(el('div', 'crgap top', tr('지금 1위입니다. 월요일까지 지켜 보세요.')));
-    else if (above) big.append(el('div', 'crgap',
-      tr('N점만 더 하면 위 사람을 따라잡습니다.').replace('N', Math.max(1, above - gb.mine))));
-  } else {
-    big.append(el('div', 'crnum', tr('N점').replace('N', thisW)));
-    big.append(el('div', 'crsub', tr('오늘 공부하면 순위가 생깁니다')));
-  }
-  host.append(big);
-
-  // ── 2. 순위판 — 언제까지(주/달)
-  /* 한 달 칸은 늘 보여준다 — 서버가 한 달치도 준다 (대표님 지적). */
-  const spans = [['week', tr('이번 주')], ['month', tr('한 달')]];
-  host.append(chipRow(spans, useSpan, k => { RKP.span = k; drawCredit(); }));
-  const head = el('div', 'crct');
-  head.append(document.createTextNode(useSpan === 'month' ? tr('한 달 순위') : tr('이번 주 순위')));
-  head.append(el('span', 'crreset', useSpan === 'month'
-    ? tr('최근 주에 더 무게') : tr('월요일마다 초기화')));
-  host.append(head);
-
-  /* 개인 순위는 앱 전체 사람 중에서다 (대표님 지시). */
-  host.append(globalBoard(RKP.span));
-  if (!GRANK) loadGRank(drawCredit);
-
-  // ── 3. 지난주의 나 (순위와 별개로, 내 흐름은 내가 본다)
-  const d = new Date(); d.setDate(d.getDate() - 7);
-  const lastW = c.wk[weekKey(d)] || 0;
-  const diff = thisW - lastW;
-  const cmp = el('div', 'crcmp');
-  cmp.append(el('b', null, tr('이번 주') + ' ' + thisW));
-  cmp.append(document.createTextNode('  ·  ' + tr('지난주') + ' ' + lastW));
-  cmp.append(el('span', 'crdiff' + (diff >= 0 ? ' up' : ''),
-                (diff >= 0 ? '▲ +' : '▼ ') + Math.abs(diff)));
-  host.append(cmp);
-
-  // ── 5. 점수 버는 법
-  host.append(el('h3', 'exhead', tr('점수 올리는 법')));
-  const table = el('div', 'crearn');
-  earnRules().forEach(([n, why, note]) => {
-    const r = el('div', 'crrow');
-    const w = el('span', 'crwhy');
-    w.append(document.createTextNode(tr(why)));
-    if (note) w.append(el('span', 'crnote', tr(note)));
-    r.append(el('span', 'crplus', '+' + n), w);
-    table.append(r);
-  });
-  host.append(table);
-
-  // ── 6. 점수(AI 채점 몫)는 순위와 다른 숫자라 따로 떼어 놓는다
-  const wal = el('div', 'crwallet');
-  wal.append(el('div', 'crct', tr('AI 채점에 쓰는 점수')));
-  const line = el('div', 'crwline');
-  line.append(el('b', null, '🪙 ' + c.bal));
-  line.append(el('span', null, tr('지금까지 모두') + ' ' + c.sum));
-  wal.append(line);
-  /* 숫자가 낀 문장은 el() 통짜 번역이 안 된다(사전 열쇠가 안 맞는다).
-     자리표 N 을 넣은 문장을 사전에 두고, 옮긴 뒤에 숫자를 끼운다. */
-  const cost = el('p', 'note');
-  cost.innerHTML = onAppKey()
-    ? tr('AI 채점 한 번에 <b>N점</b>을 씁니다. 점수를 써도 <b>순위는 안 내려갑니다</b>.').replace('N', AI_COST)
-    : tr('<b>내 정보</b>에 내 구글 키를 넣어 두셨으므로 AI 채점은 점수를 쓰지 않습니다.');
-  wal.append(cost);
-  host.append(wal);
-
-  show(ko ? 'exam' : 'sub', '순위', true);
-}
 
 /* 좌우로 밀어 이전·다음 — 사진첩과 같은 방향(왼쪽으로 밀면 다음).
    한국어 과정 카드들(날마다·문법·기본기·문화)은 '‹이전 / 다음›' 단추만 있었는데,
@@ -7402,9 +7008,23 @@ function swipeNav(host, prev, next) {
   }, { passive: true });
 }
 
-/* 순위판이 지금 무엇을 보여 주는가 — 화면을 다시 그려도 고른 것이 남는다.
-   span : 이번 주(week) / 한 달(month) */
-let RKP = { span: 'week' };
+/* 가로 막대 한 줄 — 운영 현황(제보 주제)에서 쓴다. 1·2·3등은 메달 (순위 화면은 2026-09-27에 뺐지만 이 줄은 남긴다) */
+const MEDAL = ['🥇', '🥈', '🥉'];
+function rankRow(i, name, val, top, mine, sub) {
+  const r = el('div', 'crank' + (mine ? ' me' : ''));
+  r.append(el('span', 'crno' + (i < 3 ? ' hi' : ''), i < 3 ? MEDAL[i] : String(i + 1)));
+  const nk = el('span', 'crnick');
+  nk.append(document.createTextNode(name));
+  if (mine) nk.append(el('span', 'crmine', tr('나')));
+  if (sub) nk.append(el('i', 'cnsub', sub));
+  r.append(nk);
+  const bar = el('span', 'crbar');
+  const fill = el('i');
+  fill.style.width = Math.max(4, Math.round(val / (top || 1) * 100)) + '%';
+  bar.append(fill);
+  r.append(bar, el('span', 'crval', String(val)));
+  return r;
+}
 let WB = 'star';                       // 단어장에서 보고 있는 칸
 /* 단어장은 **하루 5분 것만** 담는다 (대표님 지시: 섞지 마라).
    실전 단어는 제 화면에서 회차별로 보므로 여기 섞으면 목록만 길어진다. */
@@ -7477,9 +7097,8 @@ function openWordCard(x, back) {
 function dictEntry(q0) {
   const b = $('#subBody'); b.textContent = '';
   const lede = el('p', 'lede', tr('불러오는 중…'));
-  /* 스티치 시안 '사전'(2026-09-27 저녁): 돋보기 + 입력칸 + 지우기(×), 줄마다 오른쪽에 스피커 */
+  /* 입력칸 + 지우기(×), 줄마다 오른쪽에 스피커. 돋보기는 뺐다 (대표님 지시 2026-09-27: '찾을 말' 글자와 겹친다) */
   const box = el('div', 'dictsearch');
-  box.innerHTML = '<svg class="dsico" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>';
   const inp = el('input', 'keyin dictin');
   inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
   if (typeof q0 === 'string' && q0) inp.value = q0;   // 내 정보 → 사전 에서는 click 이벤트가 넘어온다
@@ -7653,12 +7272,10 @@ function drawGybmSources() {
 function drawGybmLessons(si) {
   const src = GYBM[si];
   const b = $('#subBody'); b.textContent = '';
-  const road = el('div', 'roadmap');
+  const box = el('div', 'ulist');
   const nodes = src.lessons.map((l, li) => ({
     key: gybmKey(src.key, li),
     title: l.title,
-    sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('낱말') +
-         (l.words.some(w => w.gl) ? ' · ' + tr('핵심') + ' ' + l.words.filter(w => w.gl).length : ''),
     num: li + 1,
     done: !!bdone()[gybmKey(src.key, li)],
     fn: () => {
@@ -7667,9 +7284,8 @@ function drawGybmLessons(si) {
       startLearn({ theme: l.title, day: gybmKey(src.key, li), basic: 1, words: l.words });
     },
   }));
-  const curNode = nodes.find(n => !n.done);
-  renderRoadmap(road, nodes, curNode ? curNode.key : null, { freeNav: true });
-  b.append(road);
+  renderRoadmap(box, nodes, null, { freeNav: true });
+  b.append(box);
   show('sub', src.label, true);
 }
 /* 낱말 찾기 — 레슨 순서로 훑는 것 말고, 특정 낱말을 바로 찾고 싶을 때 쓴다. */
@@ -7876,12 +7492,23 @@ function drawCard() {
   if (it.k === 'letter') {
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(el('div', 'ko', esc(x.ko)));   // ko에 발음이 이미 있어 따로 안 겹쳐 쓴다
-    c.append(el('div', 'exline', '예: <b>' + esc(x.ex) + '</b> — ' + esc(x.ex_ko)));
-    // 소리는 글자가 아니라 예시 단어를 읽는다 — 버튼에 그걸 밝힌다
+    /* **글자 소리 그 자체**를 들려준다 (대표님 지시 2026-09-27: "ba 듣기 대신 진짜 그 소리").
+       모음은 그 모음 하나를, 자음은 베트남 초등학교가 자음을 읽는 방식(bờ·cờ·dờ… — 자음 뒤에 'ơ'를 붙여
+       첫소리만 들리게)으로 읽은 소리(x.snd)를 튼다. 예시 낱말은 그 뒤 작은 단추로 남긴다. */
     const row = el('div', 'sound');
-    const a = el('button', 'ghost', esc(x.ex) + ' 듣기'); a.onclick = () => play(x.ex, false);
-    row.append(a); c.append(row);
-    c.append(speakRow(x.ex));               // 준비 단계부터 따라 말하기 + 곡선 비교
+    const snd = x.snd || x.vi;
+    const a = el('button', 'primary', '🔊 ' + tr('소리 듣기'));
+    a.onclick = () => { const k = recKey(snd); k ? play(k, false, null, spdOf()) : speakVi(snd, false, spdOf()); };
+    row.append(a);
+    if (x.ex) {
+      const e = el('button', 'ghost', esc(x.ex) + ' ' + tr('듣기'));
+      e.onclick = () => play(x.ex, false, null, spdOf());
+      row.append(e);
+    }
+    c.append(row);
+    if (x.ex) c.append(el('div', 'exline', '예: <b>' + esc(x.ex) + '</b> — ' + esc(x.ex_ko)));
+    if (x.snd && x.snd !== x.vi) c.append(el('div', 'lnote', tr('자음은 베트남 학교식으로') + ' <b>' + esc(x.snd) + '</b>' + tr('처럼 읽어 첫소리만 들려줍니다')));
+    c.append(speakRow(snd));                // 글자 소리를 따라 말하기 + 곡선 비교
   }
 
   if (it.k === 'tone') {
@@ -8197,6 +7824,7 @@ $('#next').onclick = () => {
   const backToCards = () => { startLearn(d0); L.i = Math.min(at0, L.items.length - 1); drawCard(); };
   if (L.day.day === 'P1') { dive(backToCards); startVowel(); }
   else if (L.day.day === 'P2') { dive(backToCards); startTone(); }
+  else if (typeof L.day.day === 'string' && L.day.day[0] === 'P') studyBasicsEntry();   // 자음 챕터 → 기본기 목록으로
   else dailyFlowEntry();
 };
 
@@ -9676,20 +9304,10 @@ function drawVowel() {
 }
 
 /* 성조는 버튼 하나 — 처음이면 소개 카드(준비 2)부터, 그 뒤로는 바로 훈련 */
-function toneEntry() {
-  const p2 = ALL.find(d => d.day === 'P2');
-  if (p2 && !S.done['P2']) { startLearn(p2); return; }
-  startTone();
-}
 
 /* 모음도 버튼 하나 — 처음이면 모음 카드(준비 1)부터, 그 뒤로는 바로 구별 훈련.
    자음은 카드만 있고 '구별 훈련'이 없는 것은 의도다: 북부 표준에서
    tr=ch, s=x, d=gi=r이 같은 소리로 합쳐져 귀로 가르는 훈련이 성립하지 않는다. */
-function vowelEntry() {
-  const p1 = ALL.find(d => d.day === 'P1');
-  if (p1 && !S.done['P1']) { startLearn(p1); return; }
-  startVowel();
-}
 
 /* 한 세션 = 듣고 구별 6문제 + 들은 소리에 부호 붙이기 4문제 (같은 귀의 두 얼굴) */
 function startTone() {
@@ -10235,6 +9853,23 @@ function practiceWords(n) {
 /* 화면 속 베트남어 자판 — 다운로드 없이 브라우저 안에서 바로.
    실기기 자판(텔렉스 방식)의 전 단계 연습: 글자와 성조 부호의 짝을 손에 익힌다. */
 let TY = null;
+/* 자판 치는 법 — 접히는 표. 처음엔 펼쳐져 있고, 한 번 접으면 다음부터 접힌 채로 시작한다(S.kgSeen).
+   옛 '자판 치는 법' 챕터를 없애고 타이핑 연습 맨 위로 옮긴 것이다 (대표님 지시 2026-09-27). */
+function keyGuide() {
+  const box = el('details', 'keyguide');
+  if (!S.kgSeen) box.open = true;
+  const sm = el('summary', null, '⌨️ ' + tr('자판 치는 법') + ' <span>' + tr('Telex — 베트남 사람이 실제로 쓰는 방식') + '</span>');
+  box.append(sm);
+  const tb = el('div', 'kgrows');
+  TYPEKEYS.forEach(x => {
+    const r = el('div', 'kgrow');
+    r.append(el('b', null, esc(x.k)), el('i', null, esc(x.t)), el('span', null, '<code>' + esc(x.ex) + '</code> → <b>' + esc(x.out) + '</b> ' + esc(x.ko)));
+    tb.append(r);
+  });
+  box.append(tb);
+  box.ontoggle = () => { if (!box.open) { S.kgSeen = 1; save(); } };
+  return box;
+}
 function startType() {
   const ws = practiceWords(8).filter(w => AIDX[w.vi]);
   if (!ws.length) return;
@@ -10252,6 +9887,7 @@ function drawType() {
     hm.style.marginTop = '24px'; r.append(hm); b.append(r); return;
   }
   const w = TY.list[TY.i]; TY.txt = '';
+  b.append(keyGuide());                    // 자판 치는 법(Telex 표)은 타이핑 연습 안에 접어 두었다 (대표님 지시 2026-09-27)
   b.append(el('div', 'q', `${TY.i + 1} / ${TY.list.length} · 듣고 자판으로 쳐 보세요`));
   b.append(el('div', 'qmain', esc(w.ko)));
   const wrap = el('div', 'qplay');
@@ -10925,18 +10561,7 @@ $('#goBug').onclick = () => bugReport();
 addEventListener('load', () => setTimeout(bugFlush, 4000));
 $('#face').innerHTML = '<span data-f="card">' + tr('단어') + '</span><span data-f="pron">' + tr('발음') + '</span>';
 $('#face').onclick = () => { if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron'); };
-/* 홈 단추(우측 상단 아이콘) · 뒤로가기가 끝까지 갈 때 — **늘 대시보드**를 보여준다.
-   전에는 dailyFlowEntry()를 불러 오늘 할 게 있으면 그걸로 바로 들어가 버렸다.
-   그러면 "하루5분"과 다를 게 없어서, 대표님이 뒤로가기 끝에서 만나는 대시보드를
-   "또 딴 홈화면"으로 느꼈다(2026-09-09 지적). 오늘 학습은 아래 탭 '하루5분'이
-   맡고, 이 단추·뒤로가기는 늘 renderHome()으로 고정한다. */
-$('#goHome').onclick = async () => {
-  // 시험·퀴즈 도중이면 한 번 묻는다 — 눌러 놓고 답이 날아가면 그게 더 나쁘다
-  //   브라우저 confirm 은 설치형 PWA 에서 막히는 폰이 있다 → 앱이 그리는 창으로 (2026-08-30)
-  if (!$('#quiz').hidden && Q && Q.i > 0 &&
-      !await askYN(tr('풀던 문제를 그만두고 홈으로 갈까요?'), '홈으로')) return;
-  renderHome();
-};
+/* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 홈은 아래 탭의 [홈]이 맡는다 (renderHome). */
 
 /* 날씨·시간 — 베트남 시각(실시간)과 하노이·호찌민 한 주 예보.
    무료 기상 서비스(Open-Meteo, 키·가입 불필요)라 운영비 0원 원칙에 맞다. */
@@ -11014,405 +10639,12 @@ function showWx(city) {
 }
 
 /* 사용법 — 짧은 제목 + 한 줄씩. 이 앱의 모든 설계 근거가 여기 모여 있다. */
-function showGuide() {
-  const b = $('#guideBody');
-  b.textContent = '';
-  const sec = (icon, title, lines) => {
-    const c = el('div', 'gsec');
-    c.append(el('div', 'ghead', `<span>${icon}</span>${title}`));
-    const ul = el('ul');
-    lines.forEach(t => { const li = el('li'); li.innerHTML = t; ul.append(li); });
-    c.append(ul);
-    b.append(c);
-  };
-
-  sec('🕐', '일상 낱말', [
-    '홈 맨 위 <b>오늘 학습</b>을 누르세요. 그날 할 것이 바로 열립니다.',
-    '<b>낱말 15개 → 확인 문제</b> 순서로 이어집니다. 낱말마다 예문이 하나씩 붙어 있습니다.',
-    '<b>오늘 복습</b>이 떠 있으면 같이 하세요. <b>실력은 여기서 나옵니다.</b>',
-  ]);
-
-  sec('📚', '학습 — 세 권', [
-    '<b>1권 기본기·문법</b> — 글자·모음·성조·자음·자판 치는 법, 그리고 교재 문법 177개',
-    '<b>2권 하루 5분</b> — 인사부터 요일·하루 일과까지. 하루 낱말 10개 + 대화 2문장',
-    '<b>3권 직무</b> — 갈래를 <b>체크</b>해서 고릅니다. 갈 곳이 정해졌으면 그 갈래만 하면 됩니다.',
-  ]);
-
-  sec('🔁', '복습 — 셋', [
-    '<b>복습</b> — 잊을 때가 된 것을 앱이 골라 줍니다(간격 반복). 가장 중요합니다.',
-    '<b>자유 복습</b> — 내가 끝낸 레슨을 골라 그것만 풉니다.',
-    '<b>기사 복습</b> — 오늘의 기사에서 나온 말만 따로 풉니다.',
-  ]);
-
-  sec('📖', '단어장 · 사전', [
-    '<b>내 단어장</b> — 낱말 옆 ☆를 누르면 여기 모입니다. 자주 틀린 것도 따로 보입니다.',
-    '<b>사전</b> — 낱말 6,000여 개를 <b>성조 없이도</b> 찾습니다. <b>com</b> 이라고 치면 <b>cơm</b>(밥)이 나옵니다.',
-    '한국어로도 찾습니다. 결과를 누르면 소리가 납니다.',
-  ]);
-
-  sec('📰', '문화 · 기사', [
-    '<b>베트남 문화</b> 59장 · <b>바로알기</b> 12강 — 읽는 자리입니다. 외우지 않아도 됩니다.',
-    '<b>오늘의 기사</b> — 어제 베트남 소식 다섯 편. 갈래표(경제·일자리·공장 등)가 앞에 붙습니다.',
-    '기사마다 <b>🖼 카드뉴스</b> 두 장이 있습니다. 길게 누르면 폰에 저장됩니다.',
-  ]);
-
-  sec('📱', '화면', [
-    '<b>🕐 시각·날씨</b> 왼쪽 위 · <b>👤 내 정보</b> 오른쪽 위',
-    '<b>북 | 남</b> · <b>여 | 남</b> — 소리와 <b>발음 표기</b>가 함께 바뀝니다.',
-    '베트남어 글자를 <b>누르면 소리</b>가 납니다. 예문 속 낱말도 눌러 보세요 — 뜻과 발음이 뜹니다.',
-  ]);
-
-  sec('🎤', '말하기 채점', [
-    '<b>말하기</b>를 누르면 <b>내 높낮이가 실시간으로 그려집니다.</b> 낱말 3.5초 · 문장 7초',
-    '<b>발음</b>은 AI가 받아 적어서, <b>높낮이</b>는 곡선으로 따로 봅니다.',
-    '<b>애매하면 틀렸다고 하지 않습니다</b> — "가려내기 어렵습니다"라고 합니다.',
-  ]);
-
-  sec('✍️', '쓰기 채점', [
-    '<b>손글씨</b>는 AI가 정답 글씨와 나란히 놓고 견줍니다 — 글자·성조·모자를 따로.',
-    '<b>자판</b>은 성조 부호까지 정확히 칩니다. 틀리면 되돌릴 수 있습니다.',
-  ]);
-
-  sec('👥', '함께 하기', [
-    '<b>순위</b> — 앱 전체 사람들과 이번 주·한 달 점수로 겨룹니다.',
-    '<b>기사</b> — 어제 베트남 소식 다섯 꼭지. 외우는 자리가 아니라 스치는 자리입니다.',
-  ]);
-
-  sec('💾', '진도 지키기', [
-    '<b>진도 → 진도 백업</b>을 가끔 눌러 두세요. 폰을 바꾸거나 브라우저가 저장소를 비울 때 대비입니다.',
-  ]);
-
-  // ── 왜 이렇게 만들었나 ──────────────────────────────
-  b.append(el('div', 'gwhy', '왜 이렇게 만들었나'));
-  const why = (n, t, d) => {
-    const c = el('div', 'grow');
-    c.append(el('b', 'gnum', n), el('div', 'gtxt', '<b>' + t + '</b><br>' + d));
-    b.append(c);
-  };
-  why('254', '몰아서 하지 않고 <b>나눠서</b> 합니다',
-      '연구 254편·관찰 14,000건을 모아 보니 나눠서 하는 쪽이 늘 나았습니다. 복습 간격은 <b>1·3·7·14·30·60일</b>입니다. <span class="gsrc">Cepeda 2006</span>');
-  why('49<span>%</span>', '복습은 <b>한 묶음으로 통째</b> 돕니다',
-      '카드를 잘게 쪼개 여러 바퀴 돈 쪽은 36%, 큰 묶음 한 바퀴 돈 쪽은 49%가 남았습니다. 그런데 참가자 <b>72%는 쪼개는 쪽을 골랐습니다</b> — 그래서 쪼개기 기능은 일부러 안 만들었습니다. <span class="gsrc">Kornell 2009</span>');
-  why('4', '<b>네 목소리</b>로 듣습니다',
-      '한 사람 소리만 들으면 그 사람 소리만 알아듣게 됩니다. 여러 사람으로 익히면 <b>처음 듣는 사람 말도 알아듣습니다</b>(78.1%→85.9%). 북부·남부 × 남·여 네 목소리를 씁니다. <span class="gsrc">Logan·Lively·Pisoni 1991</span>');
-  why('1,151', '성조 판정을 <b>원어민 소리로 맞췄습니다</b>',
-      '원어민 음성 1,151개를 재서 본보기를 만들었습니다. 맞히는 비율 <b>87%</b>. 확신이 없으면 판정을 미뤄, 제대로 낸 발음을 틀렸다고 하는 일이 <b>13.2%에서 1.4%로</b> 줄었습니다. <span class="gsrc">직접 측정</span>');
-  why('✍️', '손으로 <b>쓰게</b> 합니다',
-      '손으로 쓴 낱말이 타자로 친 낱말보다 잘 남습니다. 제2언어 글자는 <b>써 본 쪽이 더 잘 알아봅니다.</b> 자판 연습은 성조 부호 위치를 익히려고 따로 둡니다. <span class="gsrc">Longcamp 외</span>');
-  why('🖼️', '낱말마다 <b>그림</b>을 답니다',
-      '글자만 있을 때보다 그림이 함께 있을 때 더 잘 떠오릅니다(그림 우월 효과·이중부호화). 개수·국기·달력처럼 <b>AI가 늘 틀리는 것은 손으로 그렸습니다.</b> <span class="gsrc">Paivio · Childers 1984</span>');
-  why('50~70<span>%</span>', '<b>한자어</b>를 짚어 줍니다',
-      '베트남어 낱말의 절반 넘게가 한자에서 왔습니다. 한국어와 소리가 닮은 것이 많아 우리에게 유리합니다 — <b>quản lý(관리) · an toàn(안전) · điện thoại(전화)</b>. 카드에 🔑 표로 알려 드립니다. <span class="gsrc">Sino-Vietnamese</span>');
-  why('94', '<b>주제별로</b> 묶었습니다',
-      '교재들이 장소·상황으로 묶는 방식을 따랐습니다 — 첫 인사 · 숫자 · 시장 · 식당 · 길 · 아플 때. 일상 40 + 직무 54세트, 낱말 940개. 억지로 늘린 8세트는 덜어냈습니다. <span class="gsrc">Colloquial Vietnamese 외</span>');
-  why('5', '<b>공장에서 쓰는 말</b>이 따로 있습니다',
-      '안전 · 불량 · 근태 · 지시하기 · 급여명세 · 근로계약 · 비자. 업종(봉제·전자·사무)을 골라 필요한 것만 봅니다. 표지에는 문화 이야기 <b>59장</b>이 붙습니다. <span class="gsrc">현장 어휘</span>');
-
-  b.append(el('p', 'gfoot',
-    '출처 · Cepeda, Pashler, Vul, Wixted &amp; Rohrer (2006) <i>Psychological Bulletin</i> 132, 354–380 · ' +
-    'Kornell (2009) <i>Applied Cognitive Psychology</i> · ' +
-    'Logan, Lively &amp; Pisoni (1991) <i>JASA</i> · ' +
-    'Longcamp 외 · Roediger &amp; Karpicke (2006) · Paivio 이중부호화 · Childers &amp; Houston (1984)<br>' +
-    '성조 판정 수치는 이 앱이 원어민 음성 1,151개를 직접 재서 얻은 것입니다.'));
-
-  show('guide', '사용법', true);
-}
 
 /* 베트남 문화 — 학습 카드와 같은 방식으로 한 장씩 넘기며 본다 */
-const CULTURE = [
-  { e: '🙇', t: '호칭이 예의의 절반', b: '나이를 물어보는 건 실례가 아니라 <b>당신을 뭐라고 부를지 정하려는 것</b>입니다.<br>' +
-      '<b>anh</b>(아인) 손위 남자 = 형·오빠 · <b>chị</b>(찌) 손위 여자 = 누나·언니 · <b>em</b>(앰) 손아래 = 동생.<br>' +
-      '이 셋만 제대로 써도 예의 바른 사람이 됩니다.' },
-  { e: '📛', t: '이름은 뒤에서 부른다', b: '베트남 이름은 <b>성 + 가운데 이름 + 끝 이름</b> 순서입니다(예: Nguyễn Văn Hùng).<br>' +
-      '부를 때는 성이 아니라 <b>끝 이름</b>을 씁니다 — "Anh Hùng"처럼 호칭 뒤에 끝 이름을 붙입니다.' },
-  { e: '🤲', t: '두 손으로', b: '물건·서류·명함을 주고받을 때 <b>두 손</b>을 쓰면 공손하게 봅니다. 한 손이면 다른 손을 팔에 살짝 대는 것도 같은 뜻입니다.' },
-  { e: '🍻', t: '회식과 건배', b: '건배할 때 <b>Một, hai, ba, dô!</b>(못 하이 바, 요! — 하나 둘 셋, 야!)를 외칩니다.<br>' +
-      '잔을 부딪칠 때 손윗사람보다 <b>잔을 살짝 낮게</b> 대면 좋아합니다. 회식 뒤 노래방(karaoke)으로 이어지는 일이 흔합니다.' },
-  { e: '😴', t: '점심 후 낮잠', b: '많은 공장·사무실이 점심 뒤 <b>불을 끄고 30분쯤</b> 낮잠을 잡니다(<b>ngủ trưa</b> 응우 쯔어). 바닥에 돗자리와 베개를 펴는 곳도 흔합니다.<br>' +
-      '더운 낮을 피해 쉬던 농사 시절의 습관이 남은 것입니다. 놀라지 말고 같이 쉬면 됩니다.' },
-  { e: '☕', t: '커피의 나라', b: '연유를 넣은 진한 <b>cà phê sữa đá</b>(까 페 스어 다 — 아이스 연유 커피)가 국민 음료입니다.<br>' +
-      '베트남은 세계 손꼽히는 커피 생산국이고, 커피숍에 오래 앉아 있는 것이 일상 문화입니다.' },
-  { e: '🍵', t: '차부터 한 잔', b: '사무실이나 집에 손님이 오면 먼저 <b>차(trà)</b>를 냅니다. 거절하지 말고 한 모금이라도 마시는 것이 예의입니다.' },
-  { e: '🧧', t: '설(Tết)이 일 년의 중심', b: '음력 설 전후로 <b>나라가 멈춥니다</b>. 법정 휴일은 <b>5일</b>이고 주말이 붙어 더 길어집니다.<br>' +
-      '이른바 <b>13월 월급</b>은 <b>법으로 정해진 것이 아니라 관례</b>입니다 — 노동법에 의무 규정이 없고, 회사 내부 규정이나 단체협약에 적혀 있으면 그때 지킬 의무가 생깁니다.<br>' +
-      '아이·손아래에게 세뱃돈 <b>lì xì</b>(리 씨)를 붉은 봉투에 담아 줍니다.' }, 
-  { e: '🇻🇳', t: '쉬는 날', b: '법정 공휴일은 <b>1/1 · 음력 설(5일) · 훙왕 기일(음력 3/10) · 4/30 통일기념일 · 5/1 노동절 · 9/2 국경일(2일)</b>로, 2026년 기준 <b>모두 11일</b>입니다(노동법 112조).<br>' +
-      '설 연휴가 가장 길고, 4/30~5/1은 붙여서 쉽니다. 주말이 겹치면 대체 휴일이 붙습니다.' },
-  { e: '💵', t: '돈 다루기', b: '지폐 단위가 커서 <b>0의 개수</b>를 봐야 합니다. 색이 닮은 짝이 둘 있습니다 — <b>2만 동과 50만 동</b>(둘 다 파랑), <b>1만 동과 20만 동</b>. 스물다섯 배 차이라 낼 때 한 번 더 봐야 합니다.<br>' +
-      '시장은 흥정이 자연스럽지만, 마트·편의점은 정찰제입니다.' },
-  { e: '🚫', t: '하지 않는 것이 좋은 일', b: '어른의 <b>머리를 만지지 않기</b>, 밥에 <b>젓가락을 꽂지 않기</b>(제사 상 연상), 사람을 <b>손가락으로 가리키지 않기</b>.<br>' +
-      '국가·지도자에 대한 험담은 <b>법적 문제</b>가 될 수 있으니 하지 않는 편이 안전합니다.' },
-  { e: '🏠', t: '가족이 먼저', b: '월급의 상당 부분을 고향 가족에게 보내는 일이 흔합니다. 명절에 고향 가는 것을 아주 중요하게 여깁니다.<br>' +
-      '가족·고향 이야기를 물어보면 마음이 빨리 열립니다.' },
-  { e: '👟', t: '신발과 집', b: '집에 들어갈 때는 <b>신발을 벗습니다</b>. 식당·가게는 신은 채로 들어갑니다.' },
-  { e: '🌦️', t: '북부는 사계절, 남부는 두 계절', b: '하노이는 봄(흐리고 이슬비)·여름(무덥고 소나기)·가을(맑고 선선)·겨울(15도 안팎, <b>난방이 없어</b> 체감은 더 춥다)이 있습니다.<br>' +
-      '호찌민은 연중 27도 안팎에 <b>우기(5~10월)와 건기(11~4월)</b>뿐입니다.' },
-  { e: '⚽', t: '축구 — 여기서는 국민 스포츠', b: '현지 조사기업 <b>Adtima</b>의 시장조사에서 <b>축구 85%</b>로 압도적 1위였습니다(테니스 15% · 배구 12% · 수영 12%). ' +
-      '축구를 좋아한다는 <b>85% 가운데 3분의 1</b>은 관련 기사를 다 챙겨보는 열성 팬이었습니다. 여기서 축구는 <b>킹 스포츠</b>라 불립니다.<br>' +
-      '<b>국가대표</b> 별명은 <b>황금 별 전사</b>(Những chiến binh sao vàng)입니다. ' +
-      '2018년 <b>박항서 감독</b>이 U-23 아시아선수권 준우승과 아세안선수권 우승을 이끌면서 열기가 폭발했습니다 — ' +
-      '그 뒤로 한국 사람에게 축구는 <b>가장 확실한 말문 트기</b>입니다.<br>' +
-      '국내 리그는 <b>V리그 1</b>(하노이 FC·비엣텔·HAGL 등).<br>' +
-      '저녁이면 동네 <b>인조잔디 구장(sân cỏ nhân tạo)</b>이 사람으로 찹니다. 5인제·7인제로 돈을 걷어 구장을 빌려 뜁니다 — ' +
-      '<b>같이 뛰자고 하면 거의 거절하지 않습니다.</b>' },
-  { e: '👩‍🏭', t: '공장에서 만날 사람들', b: '베트남 노동조합 연구원 조사에서 공장 근로자 <b>평균 나이 31.2세</b>였습니다. ' +
-      '<b>전자는 26.9세</b>, <b>봉제·신발은 29.5세</b>로 더 젊습니다.<br>' +
-      '섬유·의류는 일하는 사람의 <b>약 74~75%가 여성</b>이고, 대부분 시골에서 온 사람들입니다. ' +
-      '한 회사에 머무는 기간은 평균 <b>6~7년</b>입니다.<br>' +
-      '20~30대 한국인이 중간관리자로 가면 <b>나와 비슷하거나 어린 여성 작업자</b>가 대다수입니다 — ' +
-      '<b>em</b>으로 부르되 함부로 대하지 않는 것이 시작입니다.' },
-  { e: '🍜', t: '아침은 밖에서 사 먹는다', b: '길가 가게에서 쌀국수(<b>phở</b> 퍼)나 바게트 샌드위치(<b>bánh mì</b> 반 미)로 아침을 때우는 것이 흔합니다.<br>' +
-      '점심도 회사 식당이나 도시락(<b>cơm hộp</b> 껌 홉)으로 빨리 먹고 낮잠을 잡니다.<br>' +
-      '아침에 "밥 먹었어요?"(<b>Ăn sáng chưa?</b>)는 인사말에 가깝습니다 — 진짜 묻는 게 아닐 때가 많습니다.' },
-  { e: '🍫', t: '한국 라면을 이미 먹고 있다', b: '베트남은 <b>1인당 라면 소비량이 세계에서 손꼽히는 나라</b>이고, 수입 면 제품 중 <b>한국산이 절반 이상</b>을 차지합니다(2022년 52.3%).<br>' +
-      '짜장라면과 매운 볶음면이 특히 인기입니다. 한국 식품은 베트남에서 <b>우리 농식품 수출 4위 시장</b>일 만큼 자리를 잡았습니다.<br>' +
-      '작업자들과 말문을 트기에 <b>라면 이야기</b>만 한 것이 없습니다.' },
-  { e: '🚫', t: '설 첫날에 하지 않는 것', b: '설 첫날(<b>mùng 1</b>)에는 <b>비질과 쓰레기 버리기</b>를 피합니다 — 복을 쓸어 내보낸다고 봅니다(사흘째까지 지키기도 합니다).<br>' +
-      '<b>돈을 빌리거나 빌려주는 것</b>, <b>불과 물을 남에게 주는 것</b>도 피합니다. 재물이 새 나간다는 뜻입니다.<br>' +
-      '첫 손님이 한 해 운을 정한다는 <b>xông đất</b>(쏭 덧) 풍습이 있어, 상중인 사람은 남의 집에 먼저 들어가지 않습니다.<br>' +
-      '<b>믿고 안 믿고를 떠나 그날은 그냥 맞춰 주는 것</b>이 편합니다.' },
-  { e: '🎬', t: '한국 것을 이미 알고 있다', b: '한 조사에서 <b>68%</b>가 한국 드라마·영화를 좋아한다고, <b>51%</b>가 K팝을 좋아한다고 답했습니다.<br>' +
-      '1990년대 말 한국 드라마가 들어간 뒤로 삼십 년 가까이 이어진 흐름입니다. <b>한국에서 왔다</b>는 것만으로 말이 붙는 일이 흔합니다.<br>' +
-      '다만 "한국 게 더 낫다"는 식으로 견주는 말은 하지 않는 편이 좋습니다.' },
-  { e: '💬', t: '잘로가 여기의 카톡', b: '베트남 사람 열에 여덟이 <b>Zalo</b>(잘로)를 씁니다 — 2024년 월 이용자 <b>7,780만 명</b>, 하루 오가는 말이 <b>21억 건</b>입니다.<br>' +
-      '카카오톡·라인·위챗이 다 들어왔다가 물러났고 잘로만 남았습니다. 회사 공지도, 반장 연락도, 식당 예약도 잘로로 옵니다.<br>' +
-      '유심을 사면 <b>잘로부터 깔고 번호를 등록</b>하는 것이 첫 일입니다.' },
-  { e: '🙋', t: '못 알아들었다고 말해도 된다', b: '초보가 한 번에 알아듣는 일은 없습니다. 되묻는 것은 무례가 아닙니다.<br>' +
-      '<b>Xin lỗi, nói chậm lại.</b>(씬 로이, 노이 짬 라이 — 죄송해요, 천천히 말해 주세요)<br>' +
-      '<b>Dạ?</b>(자?) 한 마디면 "네?" 가 됩니다. 남부에서는 <b>dạ</b> 를 문장 앞에 붙이기만 해도 말이 공손해집니다.' },
-  { e: '🎨', t: '붉은색과 흰색', b: '<b>붉은색</b>은 복과 기쁨입니다 — 결혼식도, 설 세뱃돈 봉투(<b>lì xì</b>)도 붉은색입니다.<br>' +
-      '<b>흰색</b>은 상(喪)의 색입니다. 장례에서 흰 두건과 흰 상복을 씁니다.<br>' +
-      '그래서 축의금을 <b>흰 봉투</b>에 넣지 않습니다. 결혼식에 갈 때 온통 흰옷·검은옷도 피하는 편이 좋습니다.' },
-  { e: '💊', t: '약국이 먼저, 그다음 병원', b: '약국(<b>nhà thuốc</b> 냐 투옥)에서 처방전 없이 살 수 있는 약이 많습니다. 감기·배탈 정도는 약국에서 해결하는 것이 보통입니다.<br>' +
-      '다만 <b>항생제는 법으로는 처방이 필요한데</b> 실제로는 그냥 파는 곳이 많습니다. 베트남은 <b>항생제 내성률이 세계에서 높은 축</b>에 듭니다 — 스스로 항생제를 골라 먹지 마세요.<br>' +
-      '열이 사흘 넘게 가거나 배가 심하게 아프면 약국이 아니라 병원(<b>bệnh viện</b>)으로 갑니다.' },
-  { e: '📄', t: '노동허가서가 먼저다', b: '외국인이 <b>3개월 넘게</b> 일하려면 <b>노동허가서(giấy phép lao động)</b>가 있어야 합니다. 유효기간은 최대 <b>2년</b>이고, 더 일하려면 다시 받습니다.<br>' +
-      '신청은 <b>회사가</b> 합니다. 본인이 준비할 것은 대개 <b>범죄경력회보서</b>(3개월 이내 발급 → 한국에서 공증 → 영사확인 → 베트남어 번역공증)와 <b>베트남 병원의 건강검진서</b>입니다.<br>' +
-      '서류 한 장이 빠지면 몇 주가 밀립니다 — 출국 전에 회사에 목록을 받아 두세요.' },
-  { e: '💴', t: '월급에서 빠지는 것', b: '베트남의 사회보험은 회사와 본인이 나눠 냅니다. 합쳐서 급여의 <b>32%</b>이고, 그중 <b>본인 몫은 10.5%</b>입니다.<br>' +
-      '본인 부담 = <b>연금·유족 8% + 의료보험 1.5% + 실업보험 1%</b>.<br>' +
-      '회사 몫은 21.5%입니다(연금 14 · 상병출산 3 · 산재 0.5 · 의료 3 · 실업 1).<br>' +
-      '급여명세에 <b>BHXH · BHYT · BHTN</b> 이라고 적혀 나오는 것이 이 셋입니다.' },
-  { e: '📈', t: '최저임금은 지역마다 다르다', b: '베트남은 나라를 <b>1~4지역</b>으로 나눠 최저임금을 따로 정합니다. 하노이·호찌민 도심이 1지역, 시골이 4지역입니다.<br>' +
-      '<b>2026년 1월 1일부터</b>(시행령 293/2025/ND-CP) 월 최저임금은 <b>1지역 531만 동 · 2지역 473만 동 · 3지역 414만 동 · 4지역 370만 동</b>입니다 — 평균 7.2% 올랐습니다.<br>' +
-      '같은 회사라도 공장이 어느 지역에 있느냐로 기준이 달라집니다.' },
-  { e: '🌴', t: '연차와 잔업에는 한도가 있다', b: '한 회사에서 <b>12개월</b>을 채우면 <b>연차 12일</b>이 생깁니다(힘들거나 위험한 일은 14일·16일).<br>' +
-      '잔업은 <b>한 달 30시간 · 한 해 200시간</b>을 넘길 수 없습니다. 정부가 정한 특별한 경우에만 <b>한 해 300시간</b>까지입니다.<br>' +
-      '한국식으로 "오늘 좀 더 하자"를 이어 붙이면 법을 넘깁니다 — 라인을 맡으면 이 숫자를 먼저 외워 두세요.' },
-  { e: '🤝', t: '지적은 따로, 칭찬은 여럿 앞에서', b: '여러 사람 앞에서 이름을 부르며 나무라면, 일보다 <b>얼굴이 상한 것</b>이 먼저 남습니다. 베트남 진출 기업 안내서들이 공통으로 말리는 일입니다.<br>' +
-      '잘못은 <b>따로 불러</b> 조용히, 잘한 일은 <b>사람들 앞에서</b> 짚어 주는 편이 라인이 잘 돕니다.<br>' +
-      '목소리를 높이면 이겼다고 보지 않고 <b>자기를 다스리지 못한다</b>고 봅니다.' },
-  { e: '🏠', t: '주소는 골목까지 읽는다', b: '베트남 주소는 큰길에서 <b>골목으로 파고드는</b> 순서로 적습니다.<br>' +
-      '<b>số 12, ngõ 5, đường Nguyễn Trãi</b> = 응우옌짜이 <b>길</b>의 5번 <b>골목</b> 안 12번지.<br>' +
-      '북부는 골목을 <b>ngõ</b>(응오), 남부는 <b>hẻm</b>(햄)이라 합니다. 골목 안에 또 골목이 있으면 <b>12/5</b> 처럼 빗금으로 적습니다.<br>' +
-      '택시·배달에 주소를 부를 때 이 순서대로 말하면 한 번에 통합니다.' },
-  { e: '🪔', t: '가게 앞의 작은 제단', b: '가게·사무실 바닥 구석에 작은 <b>제단</b>이 놓이고 아침마다 향을 피우는 것을 보게 됩니다. 장사가 잘되게 비는 <b>재물신(Thần Tài)</b> 자리입니다.<br>' +
-      '과일·꽃·물이 놓여 있으면 <b>건드리지도 넘어가지도 않습니다</b>. 발로 가리키는 것도 피합니다.<br>' +
-      '믿음을 묻지 말고 그냥 비켜 가면 됩니다.' },
-  { e: '📅', t: '달력이 두 개 돈다', b: '베트남 달력에는 양력 밑에 <b>음력(âm lịch)</b>이 같이 적혀 있습니다.<br>' +
-      '설(<b>Tết</b>)·제사(<b>giỗ</b>)·보름(<b>rằm</b>)은 모두 음력으로 셉니다. 매달 <b>1일과 15일</b>에 향을 피우고 절에 가는 사람이 많습니다.<br>' +
-      '"다음 달 언제 쉬냐"는 물음에 음력 날짜가 나오면 놀라지 마세요 — 두 달력이 같이 돕니다.' },
-  { e: '🏡', t: '고향(quê)을 묻는다', b: '처음 만나면 나이 다음으로 <b>고향</b>을 묻습니다. <b>Quê anh ở đâu?</b>(꾸에 아인 어 더우 — 고향이 어디예요?)<br>' +
-      '공장 사람들 대다수가 시골에서 도시로 온 사람들이라, 고향은 곧 <b>그 사람 이야기의 시작</b>입니다.<br>' +
-      '고향 이야기를 물어보면 말문이 빨리 트입니다. 설에 고향에 가는 일을 아주 중요하게 여깁니다.' },
-  { e: '🍚', t: '먼저 권하고 먹는다', b: '밥상에서 어른보다 먼저 수저를 들지 않습니다. 먹기 전에 <b>Mời</b>(머이 — 드세요)로 권합니다.<br>' +
-      '<b>Mời anh ăn cơm.</b>(머이 아인 안 껌 — 형님, 드세요) 한 마디면 예의가 갖춰집니다.<br>' +
-      '반찬은 가운데 두고 나눠 먹습니다. 밥에 <b>젓가락을 꽂지 않습니다</b> — 제사 상을 떠올리게 합니다.' },
-  { e: '🦺', t: '안전은 서류가 아니라 습관', b: '베트남 노동법은 <b>안전보건 교육</b>을 회사의 의무로 정하고 있습니다. 그런데 더운 날 안전모·마스크가 벗겨지는 것이 현장의 현실입니다.<br>' +
-      '중간관리자가 <b>먼저 쓰고 다니는 것</b>이 백 번 말하는 것보다 빠릅니다.<br>' +
-      '<b>Cẩn thận!</b>(껀 턴 — 조심해요!) · <b>Nguy hiểm!</b>(응위 히엠 — 위험해요!) 두 마디는 첫날 외워 두세요.' },
-  { e: '🔢', t: '점과 쉼표가 우리와 반대', b: '베트남은 <b>천 단위에 점(.)</b>, <b>소수점에 쉼표(,)</b>를 씁니다.<br>' +
-      '<b>1.000</b> = 천 · <b>1.000.000</b> = 백만 · <b>1,5</b> = 1.5 · <b>0,75</b> = 0.75<br>' +
-      '수량표·납기표를 잘못 읽으면 천 배가 틀립니다. 숫자를 받으면 <b>점인지 쉼표인지</b> 한 번 더 봅니다.' },
-  { e: '📆', t: '날짜는 일 / 월 / 년', b: '베트남은 <b>일 / 월 / 년</b> 순서로 적습니다 — <b>22/08/2026</b> 은 2026년 <b>8월 22일</b>입니다.<br>' +
-      '한국은 년/월/일이라 <b>08/09</b> 를 8월 9일로 읽기 쉬운데, 여기서는 <b>9월 8일</b>입니다.<br>' +
-      '납기·검사일처럼 숫자만 적힌 날짜는 <b>월을 소리 내어 확인</b>하고 넘기는 것이 안전합니다.' },
-  { e: '🔌', t: '220V, 플러그는 그대로', b: '베트남 전압은 한국과 같은 <b>220V</b>이고 둥근 구멍 콘센트라 <b>한국 플러그가 대개 그대로 들어갑니다</b>.<br>' +
-      '다만 <b>주파수가 50Hz</b>로 한국(60Hz)과 다릅니다. 어댑터에 <b>50/60Hz</b> 라고 적혀 있으면 괜찮습니다.<br>' +
-      '모터가 도는 기계는 50Hz에서 조금 느리게 돕니다 — 설비 이야기를 할 때 걸리는 대목입니다.' },
-  { e: '🕐', t: '한국보다 두 시간 느리다', b: '베트남은 <b>UTC+7</b>, 한국은 UTC+9 — <b>두 시간</b> 차이입니다. 서머타임은 없습니다.<br>' +
-      '한국 오전 <b>9시</b> = 베트남 오전 <b>7시</b>. 한국 본사가 퇴근할 때 여기는 아직 오후입니다.<br>' +
-      '보고 시각을 정할 때 "한국 시각으로"인지 "여기 시각으로"인지 <b>반드시 붙여 말합니다</b>.' },
-  { e: '🐟', t: '세는 말이 따로 있다', b: '베트남어는 개수를 셀 때 <b>물건에 맞는 세는 말</b>을 넣습니다 — 한국어의 "한 <b>마리</b>·한 <b>장</b>"과 같습니다.<br>' +
-      '<b>cái</b>(까이) 보통 물건 · <b>con</b>(꼰) 동물 · <b>chiếc</b>(찌엑) 한 짝·탈것 · <b>quả/trái</b>(꽈/짜이) 과일 · <b>tờ</b>(떠) 종이<br>' +
-      '<b>hai con cá</b> = 물고기 두 마리 · <b>ba cái ghế</b> = 의자 세 개.<br>' +
-      '모르겠으면 일단 <b>cái</b> 를 쓰면 대개 통합니다.' },
-  { e: '🗣️', t: '남과 북 — 말도 결도 다릅니다', b: '<b>왜 다른가</b> · 나라가 <b>1,650km</b>나 길어 옛날에는 오가기가 어려웠습니다. ' +
-      '남쪽 땅은 원래 <b>참파·크메르</b>의 땅이었고 베트남 사람이 남쪽으로 내려가며 뒤늦게 합쳐진 곳입니다. ' +
-      '여기에 수백 년의 분열과 프랑스 지배, <b>남북 분단(1954~1975)</b>이 겹쳐 소리와 말이 갈렸습니다.<br>' +
-      '<b>글은 완전히 같습니다.</b> 다른 것은 소리와 몇몇 낱말입니다 — 아빠 <b>bố</b>(북)/<b>ba</b>(남) · 네 <b>vâng</b>/<b>dạ</b> · 숟가락 <b>thìa</b>/<b>muỗng</b>. ' +
-      '남부는 <b>hỏi와 ngã를 잘 안 가릅니다</b>.<br>' +
-      '<b>결도 다릅니다</b> · 북부는 전통·격식·서열을 중히 여기고, 남부는 장사에 밝고 개방적이라고들 합니다(통계가 아니라 통설입니다).<br>' +
-      '<b>다만 한국의 지역감정만큼 첨예하지는 않습니다.</b> 어느 쪽이 낫다는 말은 하지 마세요. ' +
-      '특히 <b>전쟁 이야기</b>는 남부에 가족사가 얽힌 사람이 있습니다. 사람을 출신 지역으로 묶어 판단하지도 마세요.' },
-  { e: '🗓️', t: '주말에 뭐 하나', b: '베트남 노동법이 정한 기본 근로시간은 <b>하루 8시간 · 주 48시간</b>입니다. 국가가 주 40시간을 권장할 뿐 강제하지 않아서, ' +
-      '<b>공장은 토요일까지 엿새 일하는 곳이 흔합니다.</b> "주말"이 하루뿐인 사람이 많다는 뜻입니다.<br>' +
-      '쉬는 날에는 <b>카페에 오래 앉아 있기</b>, 가족·고향 사람들과 밥 먹기, 축구 보기가 흔합니다. 젊은 사람은 <b>틱톡</b>과 <b>노래방</b>을 많이 합니다.<br>' +
-      '"주말에 뭐 했어요?"(<b>Cuối tuần bạn làm gì?</b>)는 월요일 아침의 안전한 말문 트기입니다.' },
-  { e: '📱', t: '폰에 뭐가 깔려 있나', b: '여기서 하루가 돌아가는 앱들입니다 — 이것만 깔면 말이 서툴러도 살 수 있습니다.<br>' +
-      '· <b>메신저</b> <b>Zalo</b>(잘로). 개인·회사 연락이 다 여기로 옵니다.<br>' +
-      '· <b>SNS</b> <b>페이스북</b>과 <b>틱톡</b>. 가게 홍보도 페이스북 페이지로 합니다.<br>' +
-      '· <b>이동·배달</b> <b>Grab</b>(그랩) · <b>Be</b>(베) · <b>ShopeeFood</b>(쇼피푸드).<br>' +
-      '· <b>결제</b> <b>MoMo</b>(모모) · <b>ZaloPay</b> · <b>VNPay</b>.<br>' +
-      '· <b>쇼핑</b> <b>Shopee</b>(쇼피)가 가장 크고 <b>TikTok Shop</b>이 가장 빨리 크고 있습니다.<br>' +
-      '도착한 날 <b>유심 → 잘로 → 그랩</b> 순서로 깔면 그날부터 움직일 수 있습니다.' },
-  { e: '💳', t: '현금 대신 QR', b: '전자지갑이 아주 널리 쓰입니다. <b>MoMo</b>(모모)가 이용자 <b>3,100만 명</b> 남짓으로 가장 크고, <b>ZaloPay</b>·<b>VNPay</b> 가 뒤를 잇습니다.<br>' +
-      '길가 국수집·과일 노점에도 <b>QR 종이</b>가 붙어 있어 폰으로 찍어 보냅니다.<br>' +
-      '다만 <b>현금도 여전히 많이</b> 씁니다 — 잔돈(1만·2만 동)을 늘 조금 갖고 다니는 편이 편합니다.' },
-  { e: '🙏', t: '존댓말 대신 호칭과 ạ', b: '베트남어에는 한국어 같은 <b>존댓말 어미가 따로 없습니다.</b> 대신 두 가지로 예의를 표시합니다.<br>' +
-      '① <b>호칭</b> — anh·chị·em 을 문장 안에 넣습니다. <b>Cảm ơn anh.</b>(형님, 고맙습니다)<br>' +
-      '② 문장 끝의 <b>ạ</b>(아) — 붙이기만 하면 공손해집니다. <b>Vâng ạ. / Cảm ơn chị ạ.</b><br>' +
-      '남부에서는 앞에 <b>dạ</b>(자)를 붙입니다. <b>Dạ, cảm ơn anh.</b><br>' +
-      '이 두 글자가 한국어의 "-요/-습니다" 자리를 대신합니다.' },
-  { e: '🎒', t: '도착한 첫 주에 할 일', b: '· <b>거주 신고(tạm trú)</b> — 외국인은 머무는 곳을 관할 공안에 신고해야 합니다. <b>원칙은 도착 24시간 안</b>이고, 보통 <b>집주인이나 호텔이 대신</b> 해 줍니다. 빠뜨리면 <b>최대 500만 동</b> 벌금이 나올 수 있으니 집주인에게 "했느냐"고 꼭 물어보세요.<br>' +
-      '· <b>유심</b>과 <b>잘로</b> 등록 · <b>그랩</b> 설치<br>' +
-      '· <b>노동허가서</b> 서류를 회사에 확인<br>' +
-      '· <b>생수통</b> 배달 시켜 두기<br>' +
-      '· 회사 근처 <b>병원</b> 이름과 위치 알아 두기' },
-  { e: '🏦', t: '은행 — 계좌부터 만들어야 산다', b: '큰 은행은 <b>Vietcombank</b>·<b>BIDV</b>·<b>Techcombank</b>·<b>VietinBank</b>·<b>Agribank</b>입니다. 지점과 ATM이 어디에나 있습니다.<br>' +
-      '한국계는 <b>신한베트남은행</b>과 <b>우리은행 베트남</b>이 개인 영업을 합니다 — 한국어 상담이 되고 앱도 한국어를 지원합니다.<br>' +
-      '<b>계좌는 아무나 못 만듭니다.</b> <b>노동허가서 + 임시거주증(TRC)</b> 또는 <b>1년 이상 장기 비자</b>가 있어야 합니다. ' +
-      '단기 비자·무비자는 창구에서 거절당하는 일이 흔합니다.<br>' +
-      '한국으로 보낼 때는 은행 창구보다 <b>Wise</b> 같은 앱이 수수료가 쌉니다.' },
-  { e: '🏥', t: '병원 — 어디로 갈지 미리 정해 두기', b: '가벼운 것은 약국, 그다음이 병원입니다. <b>회사 근처 병원 이름과 위치를 첫 주에 알아 두세요.</b><br>' +
-      '<b>하노이</b> · <b>Vinmec Times City</b> — 베트남 최초로 <b>JCI 국제 인증</b>을 받은 종합병원(2015년)<br>' +
-      '<b>호찌민</b> · <b>FV Hospital</b>(프랑스-베트남 병원, <b>한국인 코디네이터</b> 상주) · <b>Vinmec Central Park</b><br>' +
-      '<b>국제병원은 비쌉니다.</b> 회사 단체보험이나 개인 해외의료보험이 있는지 출국 전에 확인하세요. ' +
-      '공립병원은 싸지만 대기가 길고 영어가 잘 안 통합니다.' },
-  { e: '🚨', t: '긴급 전화는 113 · 114 · 115', b: '<b>한국의 112·119가 아닙니다.</b> 세 개로 나뉘어 있습니다.<br>' +
-      '· <b>113</b> — 경찰 (도난·사고·폭행)<br>· <b>114</b> — 소방·구조 (불·갇힘)<br>· <b>115</b> — 구급차 (의료 응급)<br>' +
-      '셋 다 24시간이고 전국 어디서나 걸립니다. 지금은 <b>하나로 합치는 작업이 진행 중</b>이라 어느 번호로 걸어도 연결되게 바뀌어 가고 있습니다.<br>' +
-      '<b>Cứu tôi với!</b>(끄우 또이 버이 — 도와주세요!) · <b>Gọi cấp cứu!</b>(고이 껍 끄우 — 구급차 불러 주세요!)<br>' +
-      '주베트남 대사관·주호치민 총영사관의 <b>긴급 연락처</b>도 폰에 저장해 두세요.' },
-  { e: '🛵', t: '어떻게 다니나 — 그랩 · 버스 · 지하철', b: '<b>Grab</b>(그랩) 앱 하나로 오토바이 택시·자동차 택시·음식 배달이 다 됩니다. <b>Be</b>·<b>ShopeeFood</b> 도 함께 씁니다. ' +
-      '값이 앱에 미리 뜨고 지도로 따라오니 <b>말이 안 통해도 탈 수 있습니다</b>. 오토바이 택시는 <b>헬멧을 기사가 줍니다</b>(헬멧은 법으로 의무).<br>' +
-      '<b>지하철은 아주 새것</b>입니다. 두 도시에 한 노선씩뿐입니다.<br>' +
-      '· <b>하노이 2A호선</b>(Cát Linh–Hà Đông, 2021년) — 8,000~15,000동, 카드형 표<br>' +
-      '· <b>호찌민 1호선</b>(Bến Thành–Suối Tiên, <b>2024년 12월 22일 개통</b>) — 6,000~19,000동. <b>HCMC Metro 앱</b>의 QR·비접촉 카드·종이표<br>' +
-      '노선이 하나뿐이라 <b>출퇴근은 아직 오토바이와 버스</b>가 주력입니다.' },
-  { e: '🏙️', t: '두 도시 — 하노이와 호찌민', b: '<b>하노이</b> · 나라의 <b>정치·행정 중심</b>. 천 년 된 도시라 골목이 좁습니다. 겨울에 15도까지 내려가는데 <b>난방이 없어</b> 더 춥게 느껴집니다.<br>' +
-      '호안끼엠 호수 · 36거리 · 문묘 · 서호 / 쇼핑은 <b>롯데센터 하노이</b>·<b>이온몰</b>·<b>빈컴센터</b> / 한인 상권은 <b>미딩·낌마</b><br>' +
-      '<b>호찌민</b> · 옛 이름 <b>사이공</b>. 나라의 <b>경제 중심</b>이고 더 빠르고 개방적입니다. 연중 27도 안팎에 우기·건기만 있습니다.<br>' +
-      '<b>랜드마크 81</b>(461m·81층, 베트남 최고층) · 벤탄시장 · 노트르담 성당 · 중앙우체국 / 한인 밀집지는 <b>푸미흥(7군)</b>' },
-  { e: '🛒', t: '시장이 아직 생활의 중심', b: '마트가 늘고 있지만 <b>재래시장(chợ)</b>이 여전히 중심입니다. 동네마다 시장이 있고 아침이 가장 붐빕니다.<br>' +
-      '· <b>시장·노점은 흥정이 기본</b>입니다. 부르는 값이 정가가 아닙니다.<br>' +
-      '· <b>마트·편의점은 정찰제</b>입니다. 여기서 흥정하면 안 됩니다.<br>' +
-      '· 외국인에게 값을 높여 부르는 일이 흔합니다 — 기분 상할 일이 아니라 관행입니다.<br>' +
-      '<b>Bao nhiêu tiền?</b>(바오 니에우 띠엔 — 얼마예요?) · <b>Bớt chút đi!</b>(벋 쭏 디 — 좀 깎아 주세요!)<br>' +
-      '편의점은 <b>Circle K</b>·<b>GS25</b>·<b>Ministop</b>·<b>WinMart+</b> 가 많습니다.' },
-  { e: '🗺️', t: '베트남이라는 나라', b: '인구 <b>약 1억 명</b>(2023년에 1억을 넘었습니다). 젊은 나라입니다.<br>' +
-      '남북으로 <b>1,650km</b>가 넘게 길쭉해서 북쪽 끝과 남쪽 끝의 날씨가 완전히 다릅니다.<br>' +
-      '<b>낑족(Kinh)</b>이 인구의 85% 남짓이고 54개 민족이 함께 삽니다.<br>' +
-      '글자는 로마자(<b>Quốc ngữ</b>)를 쓰지만 원래 한자를 쓰던 나라라 <b>한자어가 아주 많습니다</b> — 우리에게 유리한 대목입니다.<br>' +
-      '정치는 <b>공산당 일당제</b>입니다. 국가·지도자 험담은 <b>법적 문제</b>가 될 수 있습니다.<br>' +
-      'GDP 약 <b>4,760억 달러</b>(2024년), 성장률은 최근 몇 해 <b>6~8%</b>대이고 <b>한국은 가장 큰 투자국의 하나</b>입니다.' },
-  { e: '📜', t: '지나온 길 — 왜 이렇게 되었나', b: '· <b>~10세기</b> 천 년 가까이 <b>중국의 지배</b>. 한자와 유교가 이때 들어왔습니다.<br>' +
-      '· <b>19세기 후반</b> <b>프랑스 식민지</b>. 로마자 표기·커피·바게트가 이때 들어왔습니다.<br>' +
-      '· <b>1945년</b> 호찌민이 독립 선언 · <b>1954년</b> 남북으로 갈림<br>' +
-      '· <b>1955~1975년</b> 전쟁. <b>한국군도 파병</b>되었습니다 — 이 이야기는 먼저 꺼내지 않는 편이 좋습니다.<br>' +
-      '· <b>1975년</b> 통일. 사이공이 호찌민시가 됩니다.<br>' +
-      '· <b>1986년</b> <b>도이머이(Đổi mới, 쇄신)</b> 개혁으로 시장경제를 받아들이며 지금의 성장이 시작됩니다.<br>' +
-      '지금 대다수는 <b>전쟁을 겪지 않은 세대</b>이고 한국에 대한 감정도 대체로 좋습니다.' },
-  { e: '🏫', t: '아이가 있다면 — 학교', b: '<b>한국국제학교</b> · <b>하노이한국국제학교</b>와 <b>호찌민시한국국제학교</b>가 있습니다. ' +
-      '<b>한국 교육부가 인가한 재외한국학교</b>라 한국 교육과정·교과서·교사이고 귀국 후 편입이 수월합니다. ' +
-      '<b>학비가 국제학교 중 가장 낮은 편</b>입니다(초등 기준 연 3,000만~3,500만 동, 우리 돈 150만~175만 원 안팎).<br>' +
-      '<b>외국계 국제학교</b>는 영어로 수업하고 학비가 <b>몇 배</b>입니다.<br>' +
-      '고를 때는 학비만 보지 말고 <b>국제 인증(IB·CIS·WASC)</b>·운영 주체의 재정·운영 이력을 함께 보세요. ' +
-      '회사가 학비를 어디까지 대는지도 계약 전에 확인해야 합니다.' },
-  { e: '🏠', t: '집 — 어디서 어떻게 사나', b: '공장은 <b>기숙사</b>를 주는 곳이 많습니다. 공짜거나 아주 쌉니다.<br>' +
-      '따로 구한다면 <b>아파트(căn hộ)</b>가 관리·보안이 되고 외국인이 많습니다. 보증금은 보통 <b>1~2개월치</b>, 월세는 선불입니다. ' +
-      '전기·수도·인터넷이 따로인지 확인하세요 — <b>전기요금이 비쌉니다.</b><br>' +
-      '<b>마시는 물은 사서 마십니다.</b> 수돗물을 그대로 마시지 않고, 집·사무실에 <b>20리터 생수통(bình nước)</b>을 배달시켜 씁니다.<br>' +
-      '외국인은 <b>임시거주 신고(tạm trú)</b>가 필요합니다. 보통 집주인이 해 주는데 <b>"했느냐"고 반드시 확인</b>하세요 — 최대 500만 동 벌금이 나올 수 있습니다.' },
-  { e: '💸', t: '세금 — 183일이 갈림길', b: '베트남에 <b>183일 이상</b> 머물면 베트남 세법상 <b>거주자</b>로 볼 가능성이 높습니다. ' +
-      '그러면 현지 급여뿐 아니라 <b>한국 본사에서 받은 급여·상여까지 신고 대상</b>이 될 수 있습니다.<br>' +
-      '현지 급여만 신고하고 넘어갔다가 <b>가산세와 지연이자</b>를 무는 일이 실제로 있습니다. ' +
-      '요즘은 해외 지급소득 파악이 촘촘해져서 그냥 넘어가지 않습니다.<br>' +
-      '어렵게 생각할 것 없이 <b>회사 세무 담당에게 "저는 거주자입니까"</b> 한 번만 물어보세요. ' +
-      '한국·베트남 조세조약이 있어 이중과세는 조정됩니다.' },
-  { e: '🛡️', t: '치안 — 날치기만 조심하면', b: '베트남은 공안 조직이 강해 <b>치안은 상대적으로 양호한 편</b>입니다. ' +
-      '다만 <b>오토바이 날치기</b>는 계속 일어납니다 — 가방과 폰을 낚아채고 달아납니다.<br>' +
-      '· 가방은 <b>도로 반대쪽</b>으로 메세요.<br>' +
-      '· <b>길에서 폰을 들고 걷지 마세요.</b> 지도를 볼 일이 있으면 가게 안으로 들어가서 봅니다.<br>' +
-      '· 현금은 <b>소액만</b> 들고 다니고, 여권은 두고 사본만 가지고 다닙니다.<br>' +
-      '잃어버렸을 때는 <b>113</b>(경찰). 여권을 잃으면 대사관·총영사관으로 갑니다.' },
-  { e: '🏍️', t: '오토바이 — 다리이자 가장 큰 위험', b: '출퇴근·배달·이사까지 오토바이로 합니다. <b>헬멧은 법으로 의무</b>이고, ' +
-      '그랩 오토바이 택시는 <b>기사가 헬멧을 줍니다</b>.<br>' +
-      '<b>여기서 가장 큰 위험은 범죄가 아니라 교통사고입니다.</b> ' +
-      '베트남 교통사고 사망자의 <b>90%가 오토바이 사고</b>라는 보도가 있습니다.<br>' +
-      '길을 건널 때는 멈칫하거나 뛰지 말고 <b>일정한 속도로 천천히</b> 걷습니다 — 오토바이가 알아서 피해 갑니다. ' +
-      '갑자기 서거나 뛰면 오히려 위험합니다.<br>' +
-      '처음 몇 달은 직접 몰기보다 <b>그랩</b>을 쓰는 편이 안전합니다.' },
-];
 /* 세트 → 그 자리에 어울리는 문화 이야기. **번호가 아니라 주제 이름으로** 짝짓는다.
    번호로 하면 차례를 한 번 바꿀 때마다 짝이 통째로 어긋난다 — 실제로 두 번 어긋났다.
    억지로 채우지 않는다. 안 맞는 자리는 비워 둔다 — 딴소리가 나면 안 하느니만 못하다.
    한 장은 두 곳까지만 쓴다. 봉제·전자 심화 세트는 문화 이야기가 안 붙어 비워 뒀다. */
-const CULTAT = {
-  '일상 — 인사와 호칭': '호칭이 예의의 절반',
-  '일상 — 이름 묻고 답하기': '이름은 뒤에서 부른다',
-  '일상 — 어느 나라, 어디 사세요': '베트남이라는 나라',
-  '일상 — 반갑습니다 / 잘 지내세요': '한국 것을 이미 알고 있다',
-  '일상 — 못 알아들었을 때': '못 알아들었다고 말해도 된다',
-  '일상 — 헤어질 때': '두 손으로',
-  '일상 — 개수 세기': '세는 말이 따로 있다',
-  '일상 — 나이와 시간': '고향(quê)을 묻는다',
-  '일상 — 요일': '달력이 두 개 돈다',
-  '일상 — 했다 / 할 것이다': '지나온 길 — 왜 이렇게 되었나',
-  '일상 — 무슨 일 하세요': '공장에서 만날 사람들',
-  '일상 — 하루 일과': '점심 후 낮잠',
-  '일상 — 부탁하기': '존댓말 대신 호칭과 ạ',
-  '일상 — 쉬는 날': '쉬는 날',
-  '일상 — 축하와 명절': '설 첫날에 하지 않는 것',
-  '일상 — 아플 때': '약국이 먼저, 그다음 병원',
-  '일상 — 아플 때 더 자세히': '병원 — 어디로 갈지 미리 정해 두기',
-  '일상 — 사고 팔기': '시장이 아직 생활의 중심',
-  '일상 — 숫자와 돈 계산': '돈 다루기',
-  '일상 — 색깔': '붉은색과 흰색',
-  '일상 — 맞장구와 리액션': '남과 북 — 말도 결도 다릅니다',
-  '일상 — 먹고 마시기': '아침은 밖에서 사 먹는다',
-  '일상 — 만나서 한잔': '회식과 건배',
-  '일상 — 카페': '커피의 나라',
-  '일상 — 쌀국수 주문 심화': '먼저 권하고 먹는다',
-  '일상 — 어디에 있어요': '두 도시 — 하노이와 호찌민',
-  '일상 — 타고 다니기': '오토바이 — 다리이자 가장 큰 위험',
-  '일상 — 택배와 그랩': '어떻게 다니나 — 그랩 · 버스 · 지하철',
-  '일상 — 집안일': '집 — 어디서 어떻게 사나',
-  '일상 — 베트남에서 살기': '도착한 첫 주에 할 일',
-  '일상 — 유심과 휴대폰': '폰에 뭐가 깔려 있나',
-  '일상 — 가족': '가족이 먼저',
-  '일상 — 고향과 나이': '아이가 있다면 — 학교',
-  '일상 — 날씨': '북부는 사계절, 남부는 두 계절',
-  '일상 — 주말 이야기': '주말에 뭐 하나',
-  '일상 — 축구 이야기': '축구 — 여기서는 국민 스포츠',
-  '직무 — 회사와 사람들': '공장에서 만날 사람들',
-  '직무 — 수량과 납기': '점과 쉼표가 우리와 반대',
-  '직무 — 안전': '안전은 서류가 아니라 습관',
-  '직무 — 기계와 전기': '220V, 플러그는 그대로',
-  '직무 — 근태와 보고': '연차와 잔업에는 한도가 있다',
-  '직무 — 세고 적기': '날짜는 일 / 월 / 년',
-  '직무 — 식당과 기숙사': '한국 라면을 이미 먹고 있다',
-  '직무 — 큰 숫자와 월급': '월급에서 빠지는 것',
-  '직무 — 공장 안 길찾기': '주소는 골목까지 읽는다',
-  '직무 — 전화와 연락': '잘로가 여기의 카톡',
-  '직무 — 사무실': '가게 앞의 작은 제단',
-  '직무 — 손님 응대': '차부터 한 잔',
-  '직무 — 은행과 서류': '은행 — 계좌부터 만들어야 산다',
-  '직무 — 복장과 태도': '신발과 집',
-  '직무 — 동료와 지내기': '하지 않는 것이 좋은 일',
-  '직무 — 회식': '회식과 건배',
-  '직무 — 휴가와 근태 심화': '설(Tết)이 일 년의 중심',
-  '직무 — 근로계약': '최저임금은 지역마다 다르다',
-  '직무 — 급여명세 읽기': '세금 — 183일이 갈림길',
-  '직무 — 비자와 체류': '노동허가서가 먼저다',
-  '직무 — 건강검진과 응급': '긴급 전화는 113 · 114 · 115',
-  '직무 — 잃어버렸을 때': '치안 — 날치기만 조심하면',
-  '직무 — 지적은 따로, 부드럽게': '지적은 따로, 칭찬은 여럿 앞에서',
-  '직무 — 실수했을 때': '못 알아들었다고 말해도 된다',
-  '직무 — 일정과 출장': '한국보다 두 시간 느리다',
-  '직무 — 지게차와 안전거리': '안전은 서류가 아니라 습관',
-  '직무 — 입고와 출고': '현금 대신 QR',
-};
 /* 문화 카드 한 벌 — 표지에서 뺀 조각들을 죽 넘겨 볼 수 있게. */
 
 /* 숫자를 막대로 — 글보다 그림이 빠르다 (7권 바로알기).
@@ -11476,17 +10708,7 @@ function startKnow(i) {
   show('learn', x.t, true);
 }
 
-function startCulture() {
-  L = { day: { day: 'CULT', theme: '베트남 문화' }, cult: 1, i: 0,
-        items: CULTURE.map(c => ({ k: 'cult', d: c })) };
-  drawCard();
-  show('learn', '베트남 문화', true);
-}
 
-const CULTBY = {};
-CULTURE.forEach(c => { CULTBY[c.t] = c; });
-const cultureFor = d =>
-  CULTBY[CULTAT[(d.track === 'work' ? '직무 — ' : '일상 — ') + (d.theme || '')]] || null;
 
 
 /* ---------- 기사 학습 ----------
