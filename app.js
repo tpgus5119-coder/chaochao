@@ -8249,7 +8249,7 @@ function pickMode(w, lv) {
   const r = Math.random();
   // 문장은 알아듣기·말하기 위주, 그리고 **퍼즐**로 어순을 만져 본다
   // 2026-09-28: 뜻 듣고 말하기(say_ko)·뜻 듣고 고르기(listen_ko)·뜻 보고 고르기(read_ko)·성조 부호 고르기(tone)·따라 말하기(shadow)·뜻 듣고/문장 듣고 퍼즐 추가. 손글씨는 뺐다
-  if (w.sent) return r < .22 ? 'listen' : r < .40 ? 'say' : r < .58 ? 'shadow' : r < .74 ? 'puzzle' : r < .87 ? 'puzzle_ko' : 'puzzle_vi';
+  if (w.sent) return r < .22 ? 'listen' : r < .40 ? 'say' : r < .58 ? 'shadow' : r < .80 ? 'puzzle' : 'puzzle_vi';   // 뜻 듣고 배열(puzzle_ko)은 뺐다 — 듣는 것은 베트남어만 (2026-09-28)
   // 뜻 듣고 단어 고르기(listen_ko)는 뺐다 (대표님 지시 2026-09-28)
   // 뜻 듣고 말하기(say_ko)도 뺐다 (대표님 지시 2026-09-28)
   if (lv >= 2) return r < .24 ? 'say' : r < .44 ? 'type' : r < .58 ? 'listen' : r < .70 ? 'read' : r < .80 ? 'read_ko' : r < .90 ? 'tone' : 'match';
@@ -8663,7 +8663,7 @@ function drawQuiz() {
   } else {                             // 눈으로 — 글자(또는 뜻)를 보여주고 고른다
     const main = el('button', 'qmain qtap' + (q.w.sent ? ' sent' : ''), esc(koQ ? q.w.ko : q.w.vi));
     main.type = 'button';
-    main.onclick = () => koQ ? speakKo(q.w.ko) : sound(q.w.vi);
+    if (!koQ) main.onclick = () => sound(q.w.vi);   // 뜻 물음에서는 아무 소리도 안 낸다 (한국어 읽어 주기 없음)
     const qc = el('div', 'qcard');                   // 물음 카드 (캔버스 시안 2026-09-27)
     qc.append(body.querySelector('.q'), main);
     body.append(qc);
