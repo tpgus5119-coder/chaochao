@@ -197,7 +197,7 @@ def chunk_chapters(chapters, seen, size=15, skey=None):
         for i, part in enumerate(parts):
             title = ch["title"]
             if len(parts) > 1:
-                title = f"{title} · {i+1}부"
+                title = f"{title} ({i+1}/{len(parts)})" if skey == "c22" else f"{title} · {i+1}부"
             lessons.append({"title": title, "sub": ch.get("title_ko", ""), "words": part})
     return lessons
 
@@ -261,7 +261,7 @@ gybm = {
          "lessons": chunk_chapters(main_chapters, {}, skey="main")},
         # 서브 교재·줌 수업 자료는 GYBM 에서 뺐다(대표님 결정 2026-09-25) — 일상회화 '보강' 세션(tools/build_boost.py)으로 쓴다.
         # 원본은 그대로 두고, 되살리려면 SUB_ZOOM = True.
-        {"key": "senior", "label": "선배 시험 단어", "sub": "17~20기 매일·매주 시험",
+        {"key": "senior", "label": "선배 단어 시험 자료", "sub": "17~20기 매일·매주 시험",
          "lessons": chunk_chapters(senior_chapters, {}, skey="senior")},
     ],
 }
@@ -279,10 +279,10 @@ if SUB_ZOOM:
 c22p = pathlib.Path(f"{DATA}/cohort22.json")
 if c22p.exists():
     c22 = load(c22p)
-    ch22 = [{"title": f"{d['no']}회차 · 22기", "title_ko": "", "words": d["words"]}
+    ch22 = [{"title": d.get("label") or f"{d['no']}회차", "title_ko": "", "words": d["words"]}   # 'A반 1회' 꼴 (반·회차) — 대표님이 그 이름으로 부른다
             for d in sorted(c22.get("days", []), key=lambda d: d["no"]) if d.get("words")]
     if ch22:
-        gybm["sources"].append({"key": "c22", "label": "22기 시험 단어", "sub": "22기 매일 시험 (올린 순서대로)",
+        gybm["sources"].append({"key": "c22", "label": "22기 단어 시험 자료", "sub": "22기 매일 시험 (올린 순서대로)",
                                 "lessons": chunk_chapters(ch22, {}, skey="c22")})
 
 with open(f"{DATA}/gybm.json", "w", encoding="utf-8") as f:

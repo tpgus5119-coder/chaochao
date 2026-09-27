@@ -2332,7 +2332,7 @@ const HUB_ICO = {
 let WOPEN = null;                                   // 단어 화면에서 펼쳐 둔 갈래
 let GOPEN = null;                                   // 문법 화면에서 펼쳐 둔 책
 function studyStats() {
-  const basicKeys = ['P3', 'P1', 'P2'];                 // 자음 · 모음 · 성조 (타이핑은 끝냄이 없는 연습이라 안 센다)
+  const basicKeys = ['P3', 'P1', 'P2', 'TYPE'];         // 자음 · 모음 · 성조 · 타이핑(24판을 끝내면 끝냄)
   const basic = [basicKeys.filter(k => S.done[k]).length, basicKeys.length];
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track);
   let wd = days.filter(d => S.done[d.day]).length, wa = days.length;
@@ -2382,7 +2382,7 @@ function studyBasicsEntry() {
   const nodes = [];
   BASIC_ORDER.forEach(k => { const d = ALL.find(x => x.day === k); if (d) nodes.push({
     key: d.day, title: d.theme, done: !!S.done[d.day], fn: () => { dive(back); startLearn(d); } }); });
-  nodes.push({ key: 'TYPE', title: '타이핑', done: false, fn: () => { dive(back); startType(); } });
+  nodes.push({ key: 'TYPE', title: '타이핑', done: !!S.done['TYPE'], fn: () => { dive(back); startType(); } });
   nodes.forEach((n, i) => { n.num = i + 1; });
   const list = el('div', 'ulist');
   b.append(list);
@@ -2434,7 +2434,7 @@ function studyWordsEntry(scroll) {
       done: nodes.filter(x => x.done).length, all: nodes.length, nodes });
   } else rows.push({ key: 'job', title: '직무', sub: '8갈래', done: 0, all: 0, nodes: null });
   // ③④⑤ 교재 · 단어시험 · 수업 단어
-  [['main', '교재'], ['senior', '단어시험'], ['c22', '수업 단어']].forEach(([key, title]) => {
+  [['main', '교재'], ['senior', '선배 단어 시험 자료'], ['c22', '22기 단어 시험 자료']].forEach(([key, title]) => {
     const src = GYBM && GYBM.find(s => s.key === key);
     if (!src) { rows.push({ key, title, sub: '', done: 0, all: 0, nodes: null }); return; }
     const nodes = src.lessons.map((l, li) => ({ key: gybmKey(key, li), title: l.title,
@@ -3169,7 +3169,7 @@ function acctForm(gate, mode) {
   show('sub', mode === 'login' ? tr('로그인') : tr('회원가입'), !gate);
   /* 로그인 관문 화면에서는 다른 데로 못 나가야 한다 (대표님 지시, 2026-09-12).
      show()가 늘 아래 탭 막대를 켜므로, 관문일 때는 그 뒤에 다시 잠근다. */
-  if (gate) { $('#tabbar').hidden = true; $('#goMe').hidden = true; }
+  if (gate) { $('#tabbar').hidden = true; }
 }
 
 /* 비밀번호 찾기 — 이메일로 재설정 링크를 보낸다 (2026-09-09, 대표님 지시).
@@ -3200,7 +3200,7 @@ function forgotForm(gate) {
   back.onclick = () => acctForm(gate, 'login');
   b.append(back);
   show('sub', tr('비밀번호 찾기'), !gate);
-  if (gate) { $('#tabbar').hidden = true; $('#goMe').hidden = true; }
+  if (gate) { $('#tabbar').hidden = true; }
 }
 
 /* 새 비밀번호 정하기 — 메일 속 링크(?reset=토큰)로 들어오면 뜨는 화면.
@@ -3226,7 +3226,7 @@ function resetPwForm(token) {
   };
   b.append(pw, err, go);
   show('sub', tr('새 비밀번호'), false);
-  $('#tabbar').hidden = true; $('#goMe').hidden = true;
+  $('#tabbar').hidden = true;
 }
 
 /* 직접 고르는 줄 — 예전에는 '바꾸기' 단추를 눌러야 다음 값으로 넘어갔다.
@@ -3252,77 +3252,7 @@ function pickRow(label, opts, cur, onPick) {
    고를 게 없다. 연속·누적 학습일도 홈에 이미 있어 여기선 뺐다(중복 금지). */
 /* 내 정보 — 스티치 시안 '내 정보 (프로필 & 설정)'(2026-09-27 저녁)대로:
    프로필 카드(머리글자 동그라미·이름·계정·[바꾸기]) → 통계 타일 셋 → 하루 분량 → 설정 목록 카드(줄 사이 선) → 로그아웃 · 탈퇴하기 글자 단추 + 판번호 */
-function renderAwards() {
-  const b = $('#awardBody');
-  b.textContent = '';
-  const nick = S.nick || '이름없음';
-  // 프로필 카드
-  const pc = el('div', 'mecard');
-  pc.innerHTML = `<span class="meavatar">${esc(nick.slice(0, 1))}</span><span class="mebody"><b>${esc(nick)}</b><span class="mesub">${S.acct ? tr('계정') + ' ' + esc(S.acct.id) : tr('계정 없음 (이 기기에만 저장)')}</span></span>`;
-  const ch = el('button', 'ghost sm', tr('바꾸기'));
-  ch.onclick = askNick;
-  pc.append(ch);
-  b.append(pc);
-  // 통계 타일(배운 단어·외운 단어·끝낸 세트)과 이번 주 도장 — 홈에서 뺀 것(2026-09-27)을 여기서 본다
-  const pg = el('div', 'progress'); renderProgress(pg); b.append(pg);
-  // 하루 분량
-  b.append(el('h3', 'mesec', tr('하루 분량')));
-  b.append(pickRow('',
-    [1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => [n, String(n)]), S.pace || 1,   // 하루 단어 세트 수 1~9 (대표님 지시 2026-09-27) — 기본기·문법은 분량에 안 들어가 무제한
-    v => { S.pace = v; save(); renderAwards(); }));
-  // 설정 목록 카드
-  const list = el('div', 'melist');
-  const row = (label, right, fn) => {
-    const r = el('div', 'merow' + (fn ? ' go' : ''));
-    r.append(el('span', 'mek', esc(tr(label))));
-    if (typeof right === 'string') r.append(el('span', 'mev', right));
-    else if (right) r.append(right);
-    if (fn) { r.append(el('span', 'parrow', '›')); r.onclick = () => { dive(renderAwards); fn(); }; }
-    list.append(r);
-  };
-  if (canPush()) {
-    const wrap = el('span', 'mev');
-    wrap.append(el('span', null, S.push ? tr('켜짐') : tr('꺼짐')));
-    const nb = el('button', 'ghost sm', S.push ? tr('끄기') : tr('켜기'));
-    nb.onclick = async ev => {
-      ev.stopPropagation();
-      if (S.push) { await stopPush(); renderAwards(); return; }
-      const err = await askPush();
-      popup(err ? esc(err) : tr('<b>알림을 켰습니다.</b><br>하루 한 번, 그날 아직 공부 안 했을 때만 옵니다.'));
-      renderAwards();
-    };
-    wrap.append(nb);
-    row('알림', wrap);
-  }
-  /* 내 정보에 남는 것은 하루 분량 · 알림 · 실력 분석뿐 (대표님 지시 2026-09-27).
-     목소리는 머리띠의 [남|여]가, 내 단어장은 학습·테스트 탭이, 사전은 아래 탭이 맡는다.
-     업적·자랑 카드·순위·사용법·베트남 문화는 앱에서 통째로 뺐다. */
-  row('실력 분석', null, renderAnalysisPage);
-  b.append(list);
-  if (S.admin) {
-    const ad = el('button', 'ghost', '운영 현황 보기');
-    ad.style.width = '100%'; ad.style.marginTop = '10px';
-    ad.onclick = () => { dive(renderAwards); showAdmin(); };
-    b.append(ad);
-  }
-  // 계정 — 로그아웃 · 진도 초기화 · 탈퇴하기 (글자 단추) + 판번호
-  const foot = el('div', 'mefoot');
-  const lo = el('button', 'metext', S.acct ? tr('로그아웃') : tr('로그인·가입'));
-  lo.onclick = async () => {
-    if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.acct = null; save(); renderAwards(); } }
-    else acctForm();
-  };
-  foot.append(lo);
-  foot.append(el('span', 'medot', '·'));
-  const rs = el('button', 'metext danger', tr('진도 초기화'));
-  rs.onclick = resetProgress;
-  foot.append(rs);
-  if (S.acct) { foot.append(el('span', 'medot', '·')); const q = el('button', 'metext danger', tr('탈퇴하기')); q.onclick = quitForm; foot.append(q); }
-  b.append(foot);
-  const ver = ((document.querySelector('script[src*="app.js"]') || {}).src || '').split('v=')[1] || '';
-  if (ver) b.append(el('p', 'mever', '짜오짜오 ' + tr('판') + ' ' + esc(ver)));
-  show('award', '내 정보', true);
-}
+function renderAwards() { renderHome(); }   // 내 정보 화면은 홈에 녹였다 (2026-09-27 오후)
 
 /* 진도 초기화 — 배운 것·복습 창고·별표·통계를 모두 비운다. 로그인돼 있으면 서버 진도도 빈 것으로 덮는다
    (대표님 지시 2026-09-27: "tpgus5119 아이디의 진도 리셋"). 별명·계정·설정(목소리·하루 분량·알림)은 남긴다. */
@@ -3682,7 +3612,6 @@ function testHubEntry() {
   const stars = Object.keys(starOf()).length;
   row(ICO.star, '내 단어장', stars, () => startWordbookQuiz(Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k), '단어장 복습'), { dis: !stars });
   row(ICO.pick, '선택 복습', 0, testPickEntry);
-  row(ICO.write, '손글씨', 0, startWrite, { dis: !practiceWords(1).length });     // 기본기에서 옮겨 왔다 — 배운 낱말을 손으로 써 보는 테스트
   show('exam', '테스트', true);
   if (!COURSE) withCourse(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
   if (!GYBM) gybmBuild(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
@@ -3761,8 +3690,8 @@ function testPickEntry() {
   row('일상 — 일차 고르기', 0, () => pickUnits('days'));
   row('직무 — 레슨 고르기', 0, () => withCourse(() => pickUnits('job')));
   row('교재 — 레슨 고르기', 0, () => gybmBuild(() => pickUnits('main')));
-  row('단어시험 — 레슨 고르기', 0, () => gybmBuild(() => pickUnits('senior')));
-  row('수업 단어 — 회차 고르기', 0, () => gybmBuild(() => pickUnits('c22')));
+  row('선배 단어 시험 자료 — 레슨 고르기', 0, () => gybmBuild(() => pickUnits('senior')));
+  row('22기 단어 시험 자료 — 회차 고르기', 0, () => gybmBuild(() => pickUnits('c22')));
   show('exam', '선택 복습', true);
 }
 let PICK = null;                                   // 고른 단위 열쇠들 (갈래마다 새로)
@@ -3775,7 +3704,7 @@ function pickUnits(kind) {
   else { const src = (GYBM || []).find(s => s.key === kind); if (src) src.lessons.forEach((l, li) => {
     const k = gybmKey(src.key, li); units.push([k, l.title, l.words, !!bdone()[k], 'bsrs']); }); }
   PICK = PICK && PICK.kind === kind ? PICK : { kind, set: new Set() };
-  const title = { days: '일상', job: '직무', main: '교재', senior: '단어시험', c22: '수업 단어' }[kind] || kind;
+  const title = { days: '일상', job: '직무', main: '교재', senior: '선배 단어 시험 자료', c22: '22기 단어 시험 자료' }[kind] || kind;
   const b = $('#examBody'); b.textContent = '';
   b.append(el('p', 'lede', tr('복습할 것을 고르세요') + ' — ' + units.length + tr('개') + ' (✓ ' + tr('끝낸 것') + ')'));
   const list = el('div', 'freelist');
@@ -6113,7 +6042,7 @@ function petCard() {
     if (p.ko) bub.append(el('span', 'petko', esc(p.ko)));
   };
   if (si >= 2) setBub(petSay(learned)); else bub.hidden = true;   // 알 단계에는 말풍선을 두지 않는다 (2026-09-27)
-  const fig = el('button', 'petfig'); fig.type = 'button'; fig.setAttribute('aria-label', PET_NAME + ' — ' + tr('누르면 말해요'));
+  const fig = el('button', 'petfig'); fig.type = 'button'; fig.setAttribute('aria-label', petName() + ' — ' + tr('누르면 말해요'));
   fig.innerHTML = petSvg(si);
   fig.onclick = () => { fig.classList.remove('hop'); void fig.offsetWidth; fig.classList.add('hop'); if (si >= 2) setBub(petSay(learned)); };
   const meta = el('div', 'petmeta');
@@ -6123,9 +6052,78 @@ function petCard() {
   meta.append(bar);
   meta.append(el('div', 'petcap', tr('배운 낱말') + ' ' + n + (nx ? ' · ' + tr('다음 단계까지') + ' ' + (nx.n - n) : '')));
   const head = el('div', 'pethead');
-  head.append(el('span', 'petnm', PET_NAME), el('span', 'petstage', (si + 1) + tr('단계') + ' · ' + tr(st.name)));
+  const nm = el('button', 'petnm', esc(petName()) + ' <i>✎</i>'); nm.type = 'button'; nm.title = tr('이름 바꾸기');
+  nm.onclick = async () => { const v = await askText(tr('짜오 이름'), petName(), 10); if (v !== null) { S.petName = v; save(); renderHome(); } };
+  head.append(nm, el('span', 'petstage', (si + 1) + tr('단계') + ' · ' + tr(st.name)));
   card.append(head, bub, fig, meta);
   return card;
+}
+/* 짜오 이름 — 사용자가 지어 줄 수 있다 (대표님 물음 2026-09-27: 별명과는 별개, 겹쳐도 됨). 기본 '짜오' */
+const petName = () => (S.petName || '').trim() || PET_NAME;
+function askText(title, cur, max) {
+  return new Promise(res => {
+    const back = el('div', 'modalback'), box = el('div', 'modalbox');
+    box.append(el('div', 'pairpophd', '<b>' + esc(title) + '</b>'));
+    const inp = document.createElement('input'); inp.className = 'keyin'; inp.value = cur || ''; inp.maxLength = max || 12; inp.style.width = '100%';
+    const row = el('div', 'bugbtns');
+    const ok = el('button', 'primary', tr('저장')), no = el('button', 'ghost', tr('취소'));
+    ok.type = no.type = 'button';
+    ok.onclick = () => { back.remove(); res(inp.value.trim()); };
+    no.onclick = () => { back.remove(); res(null); };
+    row.append(no, ok); box.append(inp, row); back.append(box);
+    back.onclick = e => { if (e.target === back) { back.remove(); res(null); } };
+    document.body.append(back); setTimeout(() => inp.focus(), 50);
+  });
+}
+/* 홈 아래 '설정' 덩이 — 내 정보 화면을 없애고 여기로 (대표님 지시 2026-09-27 오후):
+   하루 분량(−/+), 알림(스위치), 실력 분석, 별명·계정 줄 */
+function homeSettings() {
+  const box = el('div', 'hset');
+  const row = (label, right, fn) => {
+    const r = el(fn ? 'button' : 'div', 'hsrow' + (fn ? ' go' : ''));
+    if (fn) { r.type = 'button'; r.onclick = fn; }
+    r.append(el('span', 'hsk', label));
+    if (right) r.append(right);
+    if (fn) r.append(el('span', 'parrow', '›'));
+    box.append(r); return r;
+  };
+  // 하루 분량 — 단어 세트 수 1~9 (기본기·문법은 분량에 안 들어간다)
+  const pace = Math.min(9, Math.max(1, S.pace || 1));
+  const st = el('span', 'stepper');
+  const mn = el('button', 'stepb', '−'), val = el('b', 'stepv', pace + tr('세트')), pl = el('button', 'stepb', '+');
+  mn.type = pl.type = 'button'; mn.disabled = pace <= 1; pl.disabled = pace >= 9;
+  mn.onclick = () => { S.pace = pace - 1; save(); renderHome(); };
+  pl.onclick = () => { S.pace = pace + 1; save(); renderHome(); };
+  st.append(mn, val, pl);
+  row(tr('하루 분량'), st);
+  if (canPush()) {
+    const sw = el('button', 'switch' + (S.push ? ' on' : ''));
+    sw.type = 'button'; sw.setAttribute('role', 'switch'); sw.setAttribute('aria-checked', S.push ? 'true' : 'false'); sw.setAttribute('aria-label', tr('알림'));
+    sw.append(el('i'));
+    sw.onclick = async () => {
+      if (S.push) await stopPush();
+      else { const err = await askPush(); if (err) popup(esc(err)); }
+      renderHome();
+    };
+    row(tr('알림') + ' <small>' + (S.push ? tr('켜짐') : tr('꺼짐')) + '</small>', sw);
+  }
+  row(tr('실력 분석'), null, () => { dive(renderHome); renderAnalysisPage(); });
+  // 별명 · 계정
+  const acct = el('span', 'hslinks');
+  const nb = el('button', 'metext', tr('별명 바꾸기')); nb.type = 'button'; nb.onclick = askNick; acct.append(nb);
+  const lo = el('button', 'metext', S.acct ? tr('로그아웃') : tr('로그인·가입')); lo.type = 'button';
+  lo.onclick = async () => {
+    if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.acct = null; save(); renderHome(); } }
+    else acctForm();
+  };
+  acct.append(lo);
+  const rs = el('button', 'metext danger', tr('진도 초기화')); rs.type = 'button'; rs.onclick = resetProgress; acct.append(rs);
+  if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
+  row(esc(S.nick || tr('이름 없음')) + (S.acct ? ' <small>' + esc(S.acct.id) + '</small>' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
+  if (S.admin) row(tr('운영 현황'), null, () => { dive(renderHome); showAdmin(); });
+  const ver = ((document.querySelector('script[src*="app.js"]') || {}).src || '').split('v=')[1] || '';
+  if (ver) box.append(el('p', 'mever', '짜오짜오 ' + tr('판') + ' ' + esc(ver)));
+  return box;
 }
 function homeActions() {
   const box = el('div', 'hact');
@@ -6167,7 +6165,7 @@ function renderHome() {
   $('#progress').textContent = ''; $('#progress').hidden = true;   // 통계·업적은 내 정보에서 본다
   const plan = $('#plan');
   plan.textContent = '';
-  plan.append(homeGreet(), petCard(), homeActions());
+  plan.append(homeGreet(), petCard(), homeActions(), homeSettings());
   show('home', '짜오짜오', false);
 }
 
@@ -9902,6 +9900,7 @@ const kbd = k => '<kbd class="tkey">' + esc(k) + '</kbd>';
 function drawType() {
   const b = $('#typeBody'); b.textContent = '';
   if (TY.i >= TY.list.length) {
+    if (!S.done['TYPE']) { S.done['TYPE'] = now(); touchToday(); save(); }   // 24판을 다 치면 기본기 4/4
     const r = el('div', 'result');
     r.append(el('div', 'n', TYPEKEYS.length + '가지'));
     r.append(el('div', null, '성조 다섯과 모자 일곱을 다 쳐 봤습니다'));
@@ -10498,7 +10497,7 @@ function telex(word, ch) {
 /* 뒤로가기 — 한 단계씩. 전에는 어디서 눌러도 홈으로 튀어서,
    복습 안에서 방식만 바꾸려 해도 처음부터 다시 들어가야 했다. */
 $('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
-$('#goMe').onclick = renderAwards;
+/* 머리띠의 내 정보 단추는 뺐다 (대표님 지시 2026-09-27 오후) — 내용은 홈 아래 '설정'으로 녹였다(homeSettings) */
 
 /* ── 오류 보고 (대표님 지시 2026-09-27 밤) ──────────────────────────────
    머리띠의 ⚑ 단추 — 어느 화면에서든(헷갈리는 짝 팝업이 떠 있어도) 지금 화면의 오류를 보낸다.

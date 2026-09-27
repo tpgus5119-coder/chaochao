@@ -2461,3 +2461,27 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 
 /* 한자 뿌리 알약 — 뜻 옆 (2026-09-27) */
 .ko .hanja{display:inline-flex; align-items:center; margin-left:8px; font-size:13px; font-weight:700; padding:3px 9px; border-radius:999px; background:#FFF1E8; color:#B4520F; vertical-align:middle; white-space:nowrap}
+/* 듣기 옆 ▾ 는 검은색 (대표님 2026-09-27 오후) */
+.spdchip, .spdchip .spdcaret{color:var(--fg)}
+.spdchip.pair .spdval{color:var(--accent)}
+/* 홈 아래 설정 덩이 (2026-09-27 오후: 내 정보를 홈에 녹임) */
+.hset{margin-top:18px; background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden}
+.hsrow{display:flex; align-items:center; gap:10px; min-height:56px; padding:8px 16px; border-top:1px solid var(--line); width:100%; background:none; border-left:0; border-right:0; border-bottom:0; font:inherit; color:inherit; text-align:left}
+.hsrow:first-child{border-top:0}
+.hsrow.go{cursor:pointer}
+.hsrow.go:active{background:color-mix(in srgb, var(--accent) 5%, var(--card))}
+.hsk{flex:1; font-size:15px; font-weight:700}
+.hsk small{font-weight:600; color:var(--dim); margin-left:6px; font-size:13px}
+.hslinks{display:flex; gap:2px; flex-wrap:wrap; justify-content:flex-end}
+.hslinks .metext{padding:6px 8px; font-size:13px}
+.stepper{display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:999px; overflow:hidden}
+.stepb{width:40px; height:36px; border:0; background:var(--bg); font:inherit; font-size:20px; font-weight:800; color:var(--accent); cursor:pointer}
+.stepb:disabled{color:var(--dim); opacity:.5}
+.stepv{min-width:64px; text-align:center; font-size:15px; font-weight:800}
+.switch{position:relative; width:52px; height:30px; border-radius:999px; border:0; background:#C9CDD3; padding:0; cursor:pointer; transition:background .15s}
+.switch i{position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.3); transition:left .15s}
+.switch.on{background:var(--accent)}
+.switch.on i{left:25px}
+.petnm{border:0; background:none; font:inherit; font-size:15px; font-weight:800; color:var(--fg); padding:0; cursor:pointer; display:inline-flex; align-items:center; gap:4px}
+.petnm i{font-style:normal; font-size:12px; color:var(--dim)}
+.hset .mever{margin:8px 0 10px}

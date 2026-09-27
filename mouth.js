@@ -280,9 +280,9 @@ const MOUTH = (() => {
       });
       /* 정면 입술 — 움직임을 **과장**해서 구별이 잘 되게 한다(대표님 지시 2026-09-27):
          벌림(i·ê·e)은 옆으로 아주 넓게, 오므림(u·ô·o)은 작고 동그랗게, 턱은 크게 벌린다. */
-      const cy = 116, rw = pz.lipR >= 0 ? lerp(40, 70, clamp(pz.lipR, 0, 1)) : lerp(40, 13, clamp(-pz.lipR, 0, 1));
+      const cy = 116, rw = pz.lipR >= 0 ? lerp(40, 78, clamp(pz.lipR, 0, 1)) : lerp(40, 11, clamp(-pz.lipR, 0, 1));   // 09-27 오후: 조금 더 과장(70→78, 13→11)
       /* 벌림을 과장한다 — 입술 두께가 아니라 **입 자체**가 크게 열리게 (대표님 지시 2026-09-27 "입술만 두꺼워졌잖아"): 턱 46→82 */
-      let oh = (pz.jaw * 90 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);
+      let oh = (pz.jaw * 110 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);   // 턱 90→110 (대표님 2026-09-27 오후 '약간 더 과장')
       if (pz.lipR < -.4) oh = Math.max(oh, rw * .85 * (1 - pz.lipC));
       if (pz.lipR > .3) oh = oh * (1 - .35 * pz.lipR);
       const lt = pz.lipC > .5 ? 8 : (4 + Math.max(0, -pz.lipR) * 6 - Math.max(0, pz.lipR) * 2);   // 입술은 얇게 — 벌림이 주인공
