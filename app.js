@@ -1230,8 +1230,10 @@ const canLocalASR = () => !!SRClass;
    "결과가 오면(또는 최대 4초 안에) 끝나는 약속(Promise)"을 REC.localDone 에 남기고,
    판정하는 쪽(aiListen 등)이 그 약속을 기다린 뒤에 REC.localHeard 를 읽도록 고쳤다. */
 function startLocalASR() {
-  REC.localHeard = null;
-  if (!SRClass) { REC.localDone = Promise.resolve(); return; }
+  REC.localHeard = null; REC.localErr = null;
+  /* 왜 실패했는지를 반드시 남긴다(2026-09-27 저녁, 대표님: "높낮이는 O·X 가 되는데 발음은 표시가 안 된다").
+     전에는 결과가 없으면 아무 말 없이 '…' 만 남았다 — 폰에서 무엇이 잘못됐는지 알 길이 없었다. */
+  if (!SRClass) { REC.localErr = 'unsupported'; REC.localDone = Promise.resolve(); return; }
   REC.localDone = new Promise(resolve => {
     let done = false;
     const finish = () => { if (!done) { done = true; resolve(); } };
@@ -1240,13 +1242,28 @@ function startLocalASR() {
       r.lang = learnKo() ? 'ko-KR' : 'vi-VN';
       r.continuous = false; r.interimResults = false; r.maxAlternatives = 1;
       r.onresult = e => { REC.localHeard = e.results[0][0].transcript || null; };
-      r.onerror = () => {};
+      r.onerror = e => { REC.localErr = (e && e.error) || 'error'; };
+      r.onnomatch = () => { if (!REC.localErr) REC.localErr = 'nomatch'; };
       r.onend = finish;      // 결과가 없어도(못 알아들어도) end 는 반드시 온다
       r.start();
       REC.sr = r;
-      setTimeout(finish, 4000);   // 혹시 end 도 안 오면 4초 뒤엔 그냥 넘어간다(먹통 방지)
-    } catch (e) { REC.sr = null; finish(); }
+      setTimeout(() => { if (!done && !REC.localHeard && !REC.localErr) REC.localErr = 'timeout'; finish(); }, 4000);   // end 도 안 오면 4초 뒤엔 넘어간다(먹통 방지)
+    } catch (e) { REC.sr = null; REC.localErr = 'start:' + (e && e.name || 'error'); finish(); }
   });
+}
+/* 폰 음성 인식이 아무것도 못 돌려줬을 때 화면에 적을 까닭 — 원인 코드도 작게 같이 적는다(폰 화면을 보고 고칠 수 있게) */
+function asrFailText() {
+  const e = REC.localErr || '';
+  const why = e === 'unsupported' ? '이 브라우저에는 음성 인식이 없습니다 — 아이폰은 사파리에서 열어 보세요'
+    : e === 'not-allowed' || e === 'service-not-allowed' ? '음성 인식 권한이 꺼져 있습니다 — 폰 설정에서 이 브라우저의 음성 인식(받아쓰기)을 켜 주세요'
+    : e === 'audio-capture' ? '음성 인식이 마이크를 못 잡았습니다 — 다른 앱이 마이크를 쓰고 있는지 보세요'
+    : e === 'no-speech' || e === 'nomatch' ? '말소리를 못 알아들었습니다 — 폰을 입 가까이 대고 조금 크게'
+    : e === 'network' ? '음성 인식에는 인터넷이 필요합니다'
+    : e === 'language-not-supported' ? '이 폰은 베트남어 음성 인식을 지원하지 않습니다'
+    : e === 'aborted' ? '인식이 중간에 끊겼습니다 — 다시 말해 보세요'
+    : e === 'timeout' ? '음성 인식이 답을 주지 않았습니다 — 다시 말해 보세요'
+    : '아무것도 못 알아들었습니다 — 조금 크게 다시';
+  return why + (e ? ' <small>(' + esc(e) + ')</small>' : '');
 }
 function stopLocalASR() {
   try { REC.sr && REC.sr.stop(); } catch (e) { }
@@ -1496,7 +1513,7 @@ function drawCompare(text, box) {
     box.append(row, curve, said);
     showTone(text, REC.url, curve);        // 녹음이 끝나면 버튼 없이 바로 그린다
   }
-  if (canLocalASR()) aiListen(text, REC.url, said);   // 발음도 누를 것 없이 바로 (폰으로만 판정)
+  aiListen(text, REC.url, said);   // 발음도 누를 것 없이 바로 (폰으로만 판정). 인식이 없는 폰이면 그 까닭을 적는다
 }
 
 /* 녹음을 16kHz 모노 WAV 로 바꾼다 — 폰마다 다른 녹음 형식을 AI가 다 읽지는 못해서 */
@@ -1558,7 +1575,7 @@ async function aiListen(text, blobUrl, box) {
     // 오직 폰(브라우저 내장 음성인식)으로만 판정한다 — 구글(제미나이) 호출은 절대 하지 않는다
     // (대표님 지시 2026-09-08). 결과가 이벤트로 늦게 오므로 반드시 먼저 기다린다(2026-09-09 수정).
     if (REC.localDone) await REC.localDone;
-    if (!REC.localHeard) return;
+    if (!REC.localHeard) { verdict(box, 0, null, '발음', asrFailText()); return; }   // 조용히 '…' 로 남기지 않는다
     const { heard, ok, pick } = judgeLocalHeard(text, REC.localHeard);
     if (ok !== null) {
       S.stats.pronAll = (S.stats.pronAll || 0) + 1;
@@ -1573,7 +1590,7 @@ async function aiListen(text, blobUrl, box) {
       ok ? (pick ? '알아들었습니다' : show(heard) + ' 로 들렸습니다')
          : show(heard) + ' 처럼 들립니다 (목표 ' + show(text) + ')');
     if (!ok) box.append(el('div', 'fixtip', '↳ ' + sayTip(text, heard)));
-  } catch (e) { verdict(box, 0, null, '발음', 'AI가 듣지 못했습니다'); }
+  } catch (e) { verdict(box, 0, null, '발음', '판정 중에 오류가 났습니다 <small>(' + esc(String(e && e.message || e).slice(0, 60)) + ')</small>'); }
 }
 
 /* 판정 한 줄 — O(초록) / X(빨강) 과 그 밑의 작은 설명.
@@ -1603,14 +1620,6 @@ function sayCredit(box) {
   earn(CRD.say, tr('발음과 높낮이 모두 통과'));
 }
 
-/* 첫 단어에서 한 번만 — 눌러서 소리 듣는 법을 모르면 이 앱의 절반이 안 보인다 */
-function tutorTap() {
-  if (S.tut) return;
-  S.tut = 1; save();
-  popup('<b>낱말 카드 쓰는 법</b><br>' +
-        '낱말을 누르면 <b>헷갈리는 짝</b>이 나옵니다. 소리는 뜻 밑의 <b>듣기</b>(누를 때마다 1배·0.8배·0.6배), 따라 말하기는 <b>말하기</b>입니다. 예문 속 낱말도 눌러 보세요. ' +
-        '위쪽 <b>단어 · 발음</b> 단추를 누르면 입모양과 높낮이 그래프, 재생 막대가 나옵니다. 예문은 눌러서 들으세요.');
-}
 /* 예/아니오 확인 창. 브라우저 confirm() 은 **홈 화면에 설치한 PWA 에서 막히는 폰이 있다** —
    그러면 아무 일도 안 일어난다(대표님: "동아리 탈퇴 버튼 작동 안 한다", 2026-08-30).
    그래서 앱이 그리는 창으로 바꾼다. 답을 Promise 로 돌려준다. */
@@ -6123,7 +6132,7 @@ function homeSettings() {
     };
     row(tr('알림') + ' <small>' + (S.push ? tr('켜짐') : tr('꺼짐')) + '</small>', sw);
   }
-  row(tr('실력 분석'), null, () => { dive(renderHome); renderAnalysisPage(); });
+  // 실력 분석 줄은 뺐다 — 그래프가 바로 위에 있고 그 머리(›)가 자세히 보기로 간다 (대표님 지시 2026-09-27 저녁)
   // 별명 · 계정
   const acct = el('span', 'hslinks');
   const nb = el('button', 'metext', tr('별명 바꾸기')); nb.type = 'button'; nb.onclick = askNick; acct.append(nb);
@@ -7708,7 +7717,7 @@ function drawCard() {
       eb.append(ectl);
       cf.append(eb);
     }
-    cf.append(pairPanel(x.vi));                 // 헷갈리는 짝 — 카드 안 접힌 줄 (캔버스 시안 2026-09-27); 낱말을 눌러도 팝업으로 뜬다
+    // 카드 안의 '헷갈리는 짝 ▾' 줄은 뺐다 — 낱말을 누르면 같은 것이 팝업으로 뜬다 (대표님 지시 2026-09-27 저녁)
     cf.append(pitchGraph(x.vi, { img: x.img }));   // 하나뿐인 높낮이 그래프 — 낱말이 따라가고, 말하면 내 곡선이 겹친다
 
     /* ── 발음 면 ──
@@ -7726,7 +7735,7 @@ function drawCard() {
     c.append(cf, pf);
     setFace(L.keepFace || 'card');           // 목소리를 바꿔 다시 그릴 때만 보던 면을 지킨다
     L.keepFace = null;
-    tutorTap();
+    // 첫 카드의 '쓰는 법' 안내창(tutorTap)은 뺐다 (대표님 지시 2026-09-27 저녁)
   }
 
   if (it.k === 'dialog') {
@@ -8948,7 +8957,7 @@ function judgeBtn(target, box, onDone) {
         // 결과가 이벤트로 늦게 오므로 반드시 먼저 기다린다(2026-09-09 수정).
         if (REC.localDone) await REC.localDone;
         if (!REC.localHeard) {
-          box.innerHTML = '<b>알아듣지 못했습니다.</b> 폰을 입 가까이 대고 조금 크게, 또박또박 다시 해 보세요.'
+          box.innerHTML = '<b>알아듣지 못했습니다.</b> ' + asrFailText()
             + '<span class="tonenote">높낮이는 아래 곡선이 봅니다.</span>';
           onDone && onDone(null, true);
           return;
