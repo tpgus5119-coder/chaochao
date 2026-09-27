@@ -2394,3 +2394,67 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .spdchip.pair .spdcaret{font-size:20px}
 .pspdrow{display:flex; align-items:center; justify-content:flex-end; gap:8px; font-size:13px; color:var(--dim); margin:0 0 8px}
 .pspdrow .spdchip{border:1px solid var(--line); border-radius:10px; min-height:34px}
+
+/* 타이핑 — Telex 익히기 (2026-09-27): 규칙 줄(키 + 키 → 글자) · 목표 글자 · 피드백 */
+.tkrule{display:flex; align-items:center; justify-content:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin:4px 0 12px; flex-wrap:wrap}
+.tkey{display:inline-flex; align-items:center; justify-content:center; min-width:44px; height:44px; padding:0 12px; border-radius:10px; background:var(--bg); border:1px solid var(--line); box-shadow:0 2px 0 var(--line); font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:22px; font-weight:800; color:var(--accent)}
+.tkplus,.tkarrow{font-size:22px; font-weight:800; color:var(--dim)}
+.tkout{font-size:34px; font-weight:900; color:var(--fg)}
+.tkname{flex-basis:100%; text-align:center; font-size:13px; color:var(--dim); font-weight:700}
+.tktarget{font-size:64px; font-weight:900; text-align:center; line-height:1.1; margin:6px 0 2px; letter-spacing:.02em}
+.tktarget.word{font-size:44px; letter-spacing:0}
+.tktarget.word b{color:var(--accent)}
+.tkmeta{display:flex; align-items:center; justify-content:center; gap:10px; font-size:17px; font-weight:700; margin:2px 0}
+.tkmeta .playi{width:36px; height:36px; min-height:0; padding:0}
+.tkhint{text-align:center; font-size:14px; color:var(--dim); margin:4px 0 8px}
+.tkfb{min-height:22px; text-align:center; font-size:15px; font-weight:700; margin:6px 0 4px}
+.tkfb .tkey{min-width:32px; height:32px; font-size:16px; padding:0 8px}
+.keyguide{display:none}
+
+/* ── 캔버스 시안대로 화면 통일 (2026-09-27 낮) ── */
+.hdate{font-size:13px; font-weight:700; color:var(--dim)}
+.hname{font-size:22px; font-weight:800; margin-top:2px}
+.hstreak{gap:8px; margin-top:8px}
+.hpill{display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:700; padding:4px 10px; border-radius:999px; background:#E4E6EB; color:var(--dim)}
+.hpill.fire{background:#FFF1E8; color:#B4520F}
+.hpill.fire svg{width:14px; height:14px; fill:#FF8A3D; stroke:none}
+.pethead{width:100%; display:flex; justify-content:space-between; align-items:center}
+.petnm{font-size:15px; font-weight:800}
+.petstage{font-size:13px; font-weight:700; padding:4px 10px; border-radius:999px; background:color-mix(in srgb, var(--accent) 10%, var(--card)); color:var(--accent)}
+.petfig{background:transparent; width:auto; height:auto; border-radius:0}
+.petfig svg{width:190px; height:190px}
+.petbub[hidden]{display:none}
+.hbtn small{opacity:.85}
+/* 낱말 카드 — 발음 알약 · 말하기 단추 · 예문 상자 */
+.wkr{display:inline-flex; align-items:center; font-size:14px; font-weight:700; padding:4px 10px; border-radius:999px; background:#E4E6EB; color:var(--dim)}
+.rec{display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--bad); color:var(--bad); background:var(--card); border-radius:12px; font-weight:700}
+.rec svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.wfcard .wex{background:#F5F6F8; border:0; text-align:left}
+/* 카드 훑기 */
+.flcard{gap:8px}
+.flhead{display:flex; justify-content:space-between; align-items:center; width:100%}
+.flcount{font-size:13px; color:var(--dim)}
+.flpill{font-size:13px; font-weight:700; padding:4px 10px; border-radius:999px; background:color-mix(in srgb, var(--accent) 10%, var(--card)); color:var(--accent)}
+.flex{font-size:14px; color:var(--dim); margin-top:8px}
+.flexko{font-size:13px; color:var(--dim)}
+.flnav{display:flex; justify-content:space-between; align-items:center; margin:12px 0}
+.flnav .flarr{position:static; width:48px; height:48px; border-radius:50%; border:1px solid var(--line); background:var(--card); font-size:24px; color:var(--fg); display:flex; align-items:center; justify-content:center; padding:0}
+.flnav .flarr:disabled{color:var(--dim); opacity:.6}
+.flnav .fldots{margin:0}
+.flnav .fldots i.on{width:14px; border-radius:3px; background:var(--accent)}
+/* 테스트 */
+.qcount{text-align:right; font-size:13px; color:var(--dim); margin:-4px 0 6px}
+.qcard{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:12px}
+.qcard .q{margin:0 0 4px}
+.qcard .qmain{margin:0; text-align:left; font-size:30px; font-weight:900; width:100%; display:block}
+.opts button{min-height:60px; border-radius:14px; font-size:20px; font-weight:700; box-shadow:none}
+.opts button[data-r="ok"]{border-color:var(--ok); background:#EDF8F1; color:#1B6B3A; font-weight:800}
+/* 실력 분석 */
+.rolepick{justify-content:center; gap:0; border:1px solid var(--line); border-radius:999px; overflow:hidden; width:max-content; margin:6px auto 12px; background:var(--card)}
+.rolepick button{border:0; border-radius:0; padding:8px 16px; font-weight:800; color:var(--dim); background:transparent}
+.rolepick .pick{background:var(--accent); color:#fff; border-color:transparent}
+.anahead{display:none}
+.anasec{margin:14px 0 8px; font-size:16px; font-weight:800; color:var(--fg)}
+.bars{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px 14px}
+.barrow .bname{flex:0 0 60px; font-size:15px; font-weight:700; white-space:nowrap}
+.barrow .bpct{font-size:14px; font-weight:800}

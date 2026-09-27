@@ -1937,7 +1937,7 @@ function wordControls(text, box) {
   const row = el('div', 'wctl');
   row.append(listenGroup(spd => play(text, false, null, spd)));
   if (canRecord()) {
-    const mic = el('button', 'rec', '🔴 ' + tr('말하기'));
+    const mic = el('button', 'rec', ICON.mic + '<span>' + tr('말하기') + '</span>');
     mic.type = 'button';
     box.dataset.merged = '1';                 // 그래프는 카드의 하나뿐인 그래프에 겹쳐 그린다
     mic.onclick = () => toggleRec(text, mic, box);
@@ -6040,9 +6040,11 @@ function petSay(learned) {
 /* 앵무 그림 — 알 → 금 간 알 → 갓 깬 아기(반쪽 껍데기 안) → 어린 → 어른 → 박사(학사모). 마스코트 색 그대로(진파랑·하늘·주황·흰 배). */
 function petSvg(stage) {
   const B = '#0A5BC7', L2 = '#3FB0F0', O = '#FF8A3D', W = '#FFFFFF', K = '#1B1B1B';
-  const egg = crack => `<ellipse cx="100" cy="112" rx="54" ry="66" fill="#FFF6E3" stroke="#E6D6B4" stroke-width="3"/>
-    <circle cx="82" cy="92" r="4" fill="#EFE0BF"/><circle cx="120" cy="130" r="3.2" fill="#EFE0BF"/><circle cx="106" cy="76" r="2.6" fill="#EFE0BF"/><circle cx="76" cy="136" r="2.6" fill="#EFE0BF"/>
-    ${crack ? '<path d="M74 104l12 12-9 11 13 12-7 12" fill="none" stroke="#C9B48A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M128 84l-8 9 7 9" fill="none" stroke="#C9B48A" stroke-width="2.6" stroke-linecap="round"/>' : ''}`;
+  const egg = crack => `<defs><radialGradient id="peg" cx="38%" cy="28%" r="78%"><stop offset="0" stop-color="#FFFDF6"/><stop offset="1" stop-color="#EBD9B4"/></radialGradient></defs>
+    <g transform="translate(14 4) scale(.86)"><ellipse cx="100" cy="228" rx="64" ry="9" fill="rgba(0,0,0,.08)"/>
+    <path d="M100 18 C 150 18, 172 90, 170 140 C 168 195, 138 222, 100 222 C 62 222, 32 195, 30 140 C 28 90, 50 18, 100 18 Z" fill="url(#peg)" stroke="#E0CFA8" stroke-width="3"/>
+    <g fill="#E6D6B2"><circle cx="70" cy="96" r="4"/><circle cx="128" cy="150" r="3.4"/><circle cx="60" cy="150" r="2.8"/><circle cx="140" cy="100" r="2.6"/></g>
+    ${crack ? `<path d="M116 30 l-11 17 13 14 -15 19 12 15 -9 14" fill="none" stroke="#B89B66" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M105 47 l13 14 -15 19" fill="none" stroke="#3FB0F0" stroke-width="2.2" opacity=".9"/><path d="M108 32 l5 -18 6 17z" fill="${O}"/><g stroke="#C9B48A" stroke-width="3" stroke-linecap="round"><path d="M20 110 l-10 -5"/><path d="M20 130 l-12 0"/><path d="M180 110 l10 -5"/><path d="M180 130 l12 0"/></g>` : ''}</g>`;
   const bird = (cap, wings) => `
     <ellipse cx="100" cy="146" rx="44" ry="40" fill="${L2}"/>
     <ellipse cx="100" cy="154" rx="27" ry="26" fill="${W}"/>
@@ -6069,17 +6071,29 @@ function petSvg(stage) {
 }
 function homeGreet() {
   const g = el('div', 'hgreet');
-  g.append(el('div', 'hname', esc(S.nick || tr('학습자')) + tr('님, 어서오세요!')));
+  const d = new Date();
+  g.append(el('div', 'hdate', (d.getMonth() + 1) + tr('월') + ' ' + d.getDate() + tr('일') + ' ' + tr('일월화수목금토'.charAt(d.getDay()) + '요일')));
+  /* 오늘 할 일 한 줄 — 새로 배울 낱말 수와 복습 수 (대표님 지시 2026-09-27: 인사말·감탄사 없이 숫자와 할 일만) */
+  const pace = S.pace || 1;
+  const todayCnt = Object.entries(S.done).filter(([k, v]) => +k >= 1 && typeof v === 'number' && ymd(v) === ymd()).length;
+  const left = Math.max(0, pace - todayCnt);
+  const q = courseQueue(left + pace);
+  const nw = left && q.length ? (q[0].words || []).length : 0, dn = dueCount();
+  const line = nw && dn ? tr('오늘 N낱말 배우고 M개 복습').replace('N', nw).replace('M', dn)
+    : nw ? tr('오늘 N낱말 배우기').replace('N', nw)
+    : dn ? tr('오늘 N개 복습').replace('N', dn)
+    : q.length ? tr('오늘 몫을 다 했습니다') : tr('전 과정 완료');
+  g.append(el('div', 'hname', line));
   const dots = weekDots();
   const row = el('div', 'hstreak');
-  row.append(el('span', 'hfire', '🔥 ' + streakDays() + tr('일 연속 학습 중')));
-  row.append(el('span', 'hpill', tr('이번 주') + ' ' + dots.filter(d => d.done).length + '/' + dots.length));
+  row.append(el('span', 'hpill fire', '<svg viewBox="0 0 24 24"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>' + tr('연속') + ' ' + streakDays() + tr('일')));
+  row.append(el('span', 'hpill', tr('이번 주') + ' ' + dots.filter(x => x.done).length + '/' + dots.length));
   g.append(row);
   const wk = el('div', 'hdots');
   tr('월 화 수 목 금 토 일').split(' ').forEach((lab, i) => {
-    const d = dots[i] || {};
-    const c = el('div', 'hdot' + (d.done ? ' on' : '') + (d.today ? ' today' : '') + (d.future ? ' fut' : ''));
-    c.append(el('i', null, d.done ? '✓' : ''), el('span', null, lab));
+    const x = dots[i] || {};
+    const c = el('div', 'hdot' + (x.done ? ' on' : '') + (x.today ? ' today' : '') + (x.future ? ' fut' : ''));
+    c.append(el('i', null, x.done ? '✓' : ''), el('span', null, lab));
     wk.append(c);
   });
   g.append(wk);
@@ -6098,18 +6112,19 @@ function petCard() {
     pl.classList.add('playi'); bub.append(pl);
     if (p.ko) bub.append(el('span', 'petko', esc(p.ko)));
   };
-  setBub(si >= 2 ? petSay(learned) : null);
+  if (si >= 2) setBub(petSay(learned)); else bub.hidden = true;   // 알 단계에는 말풍선을 두지 않는다 (2026-09-27)
   const fig = el('button', 'petfig'); fig.type = 'button'; fig.setAttribute('aria-label', PET_NAME + ' — ' + tr('누르면 말해요'));
   fig.innerHTML = petSvg(si);
   fig.onclick = () => { fig.classList.remove('hop'); void fig.offsetWidth; fig.classList.add('hop'); if (si >= 2) setBub(petSay(learned)); };
   const meta = el('div', 'petmeta');
-  meta.append(el('div', 'petname', PET_NAME + ' · ' + (si + 1) + tr('단계') + ' ' + tr(st.name)));
   const bar = el('div', 'petbar'); const fill = el('i');
   const pct = nx ? Math.min(100, Math.round((n - st.n) / (nx.n - st.n) * 100)) : 100;
   fill.style.width = pct + '%'; bar.append(fill);
   meta.append(bar);
-  meta.append(el('div', 'petcap', (nx ? tr('다음 단계까지 낱말 N개').replace('N', nx.n - n) + ' · ' : '') + tr('배운 낱말') + ' ' + n));
-  card.append(bub, fig, meta);
+  meta.append(el('div', 'petcap', tr('배운 낱말') + ' ' + n + (nx ? ' · ' + tr('다음 단계까지') + ' ' + (nx.n - n) : '')));
+  const head = el('div', 'pethead');
+  head.append(el('span', 'petnm', PET_NAME), el('span', 'petstage', (si + 1) + tr('단계') + ' · ' + tr(st.name)));
+  card.append(head, bub, fig, meta);
   return card;
 }
 function homeActions() {
@@ -6123,7 +6138,7 @@ function homeActions() {
   const b1 = el('button', 'hbtn primary');
   if (left && queue.length) {
     const t = queue[0];
-    b1.append(el('b', null, tr('오늘 학습 시작하기')), el('small', null, esc(nm(t)) + ' · ' + ((t.words || []).length ? (t.words || []).length + tr('개 낱말') : tr('5분'))));
+    b1.append(el('b', null, tr('학습 시작')), el('small', null, esc(nm(t)) + ((t.words || []).length ? ' · ' + (t.words || []).length + tr('낱말') : '')));
     b1.onclick = () => startLearn(t);
   } else if (!queue.length) {
     b1.append(el('b', null, tr('전 과정 완료')), el('small', null, tr('새 과정을 기다려 주세요')));
@@ -6136,8 +6151,8 @@ function homeActions() {
   }
   const b2 = el('button', 'hbtn sec');
   const dn = dueCount();                                 // 세 창고 합 — 테스트 탭의 '오늘 복습'과 같은 숫자
-  b2.append(el('b', null, tr('오늘 복습하기')),
-            el('small', null, dn ? dn + tr('개 대기 중') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
+  b2.append(el('b', null, tr('복습 시작')),
+            el('small', null, dn ? dn + tr('개') : (S.revDay === ymd() ? tr('오늘 복습 완료') : tr('복습할 것 없음'))));
   b2.disabled = !dn; if (dn) b2.onclick = () => { ACTIVE_TAB = 'test'; testToday(); };   // 테스트 탭의 '오늘 복습'과 같은 문 (카드 → 테스트)
   box.append(b1, b2);
   return box;
@@ -7680,6 +7695,7 @@ function drawCard() {
       eb.append(ectl);
       cf.append(eb);
     }
+    cf.append(pairPanel(x.vi));                 // 헷갈리는 짝 — 카드 안 접힌 줄 (캔버스 시안 2026-09-27); 낱말을 눌러도 팝업으로 뜬다
     cf.append(pitchGraph(x.vi, { img: x.img }));   // 하나뿐인 높낮이 그래프 — 낱말이 따라가고, 말하면 내 곡선이 겹친다
 
     /* ── 발음 면 ──
@@ -7922,29 +7938,38 @@ function drawFlash() {
   }
   $('#quizFill').style.width = (FL.i / FL.list.length * 100) + '%';
   const w = FL.list[FL.i];
-  const c = el('div', 'card');
+  const c = el('div', 'card flcard');
+  const top = el('div', 'flhead');
+  top.append(el('span', 'flcount', tr('카드') + ' ' + (FL.i + 1) + ' / ' + FL.list.length), el('span', 'flpill', esc($('#title').textContent.replace(/ 카드$/, ''))));
+  c.append(top);
   const p = pic(w, 'pic'); if (p) c.append(p);
   c.append(el('div', 'vi', esc(w.vi)));
   c.append(toneRow(w.tones));
-  c.append(reveal(krShow(w)));
+  if (krShow(w)) c.append(el('span', 'wkr', '[' + esc(krShow(w)) + ']'));
   c.append(el('div', 'ko', esc(w.ko)));
+  const exm = w.ex && w.ex.vi ? w.ex : null;
+  if (exm) { c.append(el('div', 'flex', esc(exm.vi))); if (exm.ko) c.append(el('div', 'flexko', esc(exm.ko))); }
+  c.append(listenGroup(spd => { const k = recKey(w.vi); k ? play(k, false, null, spd) : speakVi(w.vi, false, spd); }));
   b.append(c);
-  const dots = el('div', 'fldots');
-  FL.list.forEach((_, i) => dots.append(el('i', i === FL.i ? 'on' : null)));
-  b.append(dots);
-  b.append(el('p', 'note', '옆으로 밀면 앞뒤로 넘어갑니다. 그냥 두면 3초마다 저절로 넘어갑니다.'));
   let moved = false;
   const go = (step) => {
     if (moved || $('#quiz').hidden || !FL) return;
     moved = true; clearTimeout(tm); audio.onended = null;
     FL.i = Math.max(0, FL.i + (step === undefined ? 1 : step)); drawFlash();
   };
-  // 스티치 시안 '카드 훑기': 카드 양옆에 둥근 ‹ › 단추 (밀기·자동 넘김과 같은 일)
-  const wrap = el('div', 'flarrows');
+  // 카드 밑 [‹] · · ● · · [›] (캔버스 시안 2026-09-27)
+  const nav = el('div', 'flnav');
   const lb = el('button', 'flarr', '‹'), rb = el('button', 'flarr', '›');
   lb.type = rb.type = 'button'; lb.disabled = FL.i === 0;
   lb.onclick = ev => { ev.stopPropagation(); go(-1); }; rb.onclick = ev => { ev.stopPropagation(); go(1); };
-  wrap.append(lb, rb); c.append(wrap);
+  const dots = el('div', 'fldots');
+  FL.list.forEach((_, i) => dots.append(el('i', i === FL.i ? 'on' : null)));
+  nav.append(lb, dots, rb); b.append(nav);
+  if (FL.next) {                             // 카드를 다 안 봐도 바로 테스트로 갈 수 있다
+    const nx = el('button', 'primary big', FL.nextLabel || tr('이제 테스트 시작'));
+    nx.style.width = '100%'; nx.onclick = () => { clearTimeout(tm); const f = FL.next; FL = null; f(); };
+    b.append(nx);
+  }
   // 릴스처럼 — 왼쪽으로 밀면 다음, 오른쪽으로 밀면 이전
   let x0 = null;
   c.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
@@ -8422,6 +8447,7 @@ function drawQuiz() {
                   type: '듣고 자판으로 쳐 보세요', hand: '듣고 손으로 써 보세요', recall: '소리 내어 말해 보세요',
                   dict: '듣고 글자를 만들어 보세요',
                   match: '뜻과 낱말을 짝지어 보세요', puzzle: '조각을 눌러 문장을 만들어 보세요' };
+  body.append(el('div', 'qcount', (Q.i + 1) + ' / ' + Q.list.length));
   body.append(el('div', 'q', LABEL[q.mode]));
 
   if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
@@ -8456,7 +8482,9 @@ function drawQuiz() {
     const main = el('button', 'qmain qtap' + (q.w.sent ? ' sent' : ''), esc(q.w.vi));
     main.type = 'button';
     main.onclick = () => sound(q.w.vi);
-    body.append(main);
+    const qc = el('div', 'qcard');                   // 물음 카드 (캔버스 시안 2026-09-27)
+    qc.append(body.querySelector('.q'), main);
+    body.append(qc);
     const wrap = el('div', 'qplay');
     const m = addMic(); if (m) wrap.append(m);
     if (wrap.children.length) body.append(wrap);
@@ -8819,8 +8847,7 @@ function viKeypad(get, set, onGo) {
               key('⌫', () => set(get().slice(0, -1)), 'wide'),
               key('확인', onGo, 'go wide'));
   kb.append(brow);
-  kb.append(el('p', 'note', '성조는 낱말 뒤에 <b>f s r x j</b> 를 붙여 찍습니다 (chao+f → chào). ' +
-    '모자는 <b>aa ee oo aw ow uw dd</b>. 실제 베트남 자판과 같은 방식입니다.'));
+  // 자판 밑 설명 글은 뺐다 (대표님 지시 2026-09-27) — 규칙은 타이핑 연습의 화면마다 위에 보인다
   return kb;
 }
 
@@ -9853,73 +9880,72 @@ function practiceWords(n) {
 /* 화면 속 베트남어 자판 — 다운로드 없이 브라우저 안에서 바로.
    실기기 자판(텔렉스 방식)의 전 단계 연습: 글자와 성조 부호의 짝을 손에 익힌다. */
 let TY = null;
-/* 자판 치는 법 — 접히는 표. 처음엔 펼쳐져 있고, 한 번 접으면 다음부터 접힌 채로 시작한다(S.kgSeen).
-   옛 '자판 치는 법' 챕터를 없애고 타이핑 연습 맨 위로 옮긴 것이다 (대표님 지시 2026-09-27). */
-function keyGuide() {
-  const box = el('details', 'keyguide');
-  if (!S.kgSeen) box.open = true;
-  const sm = el('summary', null, '⌨️ ' + tr('자판 치는 법') + ' <span>' + tr('Telex — 베트남 사람이 실제로 쓰는 방식') + '</span>');
-  box.append(sm);
-  const tb = el('div', 'kgrows');
-  TYPEKEYS.forEach(x => {
-    const r = el('div', 'kgrow');
-    r.append(el('b', null, esc(x.k)), el('i', null, esc(x.t)), el('span', null, '<code>' + esc(x.ex) + '</code> → <b>' + esc(x.out) + '</b> ' + esc(x.ko)));
-    tb.append(r);
-  });
-  box.append(tb);
-  box.ontoggle = () => { if (!box.open) { S.kgSeen = 1; save(); } };
-  return box;
-}
+/* 타이핑 — Telex 익히기 (대표님 지시 2026-09-27: "안녕하세요 같은 걸 치게 하지 말고 à 를 치게").
+   부호 하나마다 **두 판**: ① 글자 만들기 — 위에 규칙(a + f → à)을 보여 주고 그 글자 하나를 친다
+   ② 그 글자가 든 낱말 — 낱말·뜻·소리를 보고 그 낱말을 친다. 성조 다섯(f s r x j) → 모자 일곱(aa aw ee oo ow uw dd) 차례.
+   틀리면 규칙을 다시 보여 주고 그 자리에서 다시 친다(세 번 틀리면 넘어간다). 자판은 실제 Telex 와 같다. */
+const TYPE_TARGET = { f: 'à', s: 'á', r: 'ả', x: 'ã', j: 'ạ', aa: 'â', aw: 'ă', ee: 'ê', oo: 'ô', ow: 'ơ', uw: 'ư', dd: 'đ' };
+const typeSteps = () => TYPEKEYS.flatMap(x => {
+  const keys = x.k.length === 1 ? ['a', x.k] : [x.k[0], x.k[1]];
+  const ch = TYPE_TARGET[x.k];
+  return [{ kind: 'char', keys, target: ch, name: x.t, x },
+          { kind: 'word', keys, target: x.out, name: x.t, x }];
+});
 function startType() {
-  const ws = practiceWords(8).filter(w => AIDX[w.vi]);
-  if (!ws.length) return;
-  TY = { list: ws, i: 0, txt: '' };
+  TY = { list: typeSteps(), i: 0, txt: '', miss: 0 };
   drawType();
   show('type', '타이핑', true);
 }
+const kbd = k => '<kbd class="tkey">' + esc(k) + '</kbd>';
 function drawType() {
   const b = $('#typeBody'); b.textContent = '';
   if (TY.i >= TY.list.length) {
     const r = el('div', 'result');
-    r.append(el('div', 'n', TY.list.length + '개'));
-    r.append(el('div', null, '자판으로 친 단어는 철자까지 정확해집니다'));
-    const hm = el('button', 'primary big', '홈으로'); hm.onclick = renderHome;
-    hm.style.marginTop = '24px'; r.append(hm); b.append(r); return;
+    r.append(el('div', 'n', TYPEKEYS.length + '가지'));
+    r.append(el('div', null, '성조 다섯과 모자 일곱을 다 쳐 봤습니다'));
+    const ag = el('button', 'primary big', '한 번 더'); ag.onclick = startType; ag.style.marginTop = '24px';
+    const bk = el('button', 'ghost big', '기본기로'); bk.onclick = studyBasicsEntry; bk.style.marginLeft = '8px'; bk.style.marginTop = '24px';
+    r.append(ag, bk); b.append(r); return;
   }
-  const w = TY.list[TY.i]; TY.txt = '';
-  b.append(keyGuide());                    // 자판 치는 법(Telex 표)은 타이핑 연습 안에 접어 두었다 (대표님 지시 2026-09-27)
-  b.append(el('div', 'q', `${TY.i + 1} / ${TY.list.length} · 듣고 자판으로 쳐 보세요`));
-  b.append(el('div', 'qmain', esc(w.ko)));
-  const wrap = el('div', 'qplay');
-  const p1 = el('button', 'primary', '듣기'); p1.onclick = () => play(w.vi, false);
-  // 디딤돌: 먼저 기억으로 쳐 보고, 막히면 글자를 보고 따라 친다.
-  // 단 보고 친 성공은 복습 사다리를 올리지 않는다 — 기억에서 꺼낸 게 아니니까.
-  let hinted = false;
-  const p3 = el('button', 'ghost', '글자 보기');
-  p3.onclick = () => {
-    hinted = true; p3.disabled = true;
-    wrap.after(el('div', 'hintvi', esc(w.vi)));
-  };
-  wrap.append(p1, p3); b.append(wrap);
-  play(w.vi, false);
-
+  const st = TY.list[TY.i]; TY.txt = ''; TY.miss = 0;
+  b.append(el('div', 'q', `${TY.i + 1} / ${TY.list.length} · ${st.kind === 'char' ? esc(st.target) + ' 만들기' : esc(st.target) + ' 치기'}`));
+  // 규칙 — 어떤 키를 차례로 누르면 그 글자가 되는지
+  const rule = el('div', 'tkrule');
+  rule.innerHTML = kbd(st.keys[0]) + '<span class="tkplus">+</span>' + kbd(st.keys[1]) + '<span class="tkarrow">→</span><b class="tkout">' + esc(TYPE_TARGET[st.x.k]) + '</b>' +
+    '<span class="tkname">' + esc(st.name) + '</span>';
+  b.append(rule);
+  if (st.kind === 'char') {
+    b.append(el('div', 'tktarget', esc(st.target)));
+    b.append(el('div', 'tkhint', '위 차례대로 눌러 이 글자를 만들어 보세요'));
+  } else {
+    // 낱말 — 글자 안의 목표 글자를 진하게, 뜻과 소리
+    const ch = TYPE_TARGET[st.x.k];
+    const shown = esc(st.target).replace(esc(ch), '<b>' + esc(ch) + '</b>');
+    const wt = el('div', 'tktarget word'); wt.innerHTML = shown; b.append(wt);
+    const meta = el('div', 'tkmeta');
+    meta.append(el('span', null, esc(st.x.ko)));
+    const pl = iconBtn('play', tr('듣기'), () => { const k = recKey(st.target); k ? play(k, false) : speakVi(st.target); });
+    pl.classList.add('playi'); meta.append(pl);
+    b.append(meta);
+    b.append(el('div', 'tkhint', esc(st.x.ex.replace('+', ' + ')) + ' 처럼 쳐 보세요'));
+  }
   const out = el('div', 'dictans');
   const draw = () => { out.textContent = TY.txt || '· · ·'; };
   draw(); b.append(out);
-
-  b.append(viKeypad(() => TY.txt, v => { TY.txt = v; draw(); }, () => {
+  const fb = el('div', 'tkfb'); b.append(fb);
+  b.append(viKeypad(() => TY.txt, v => { TY.txt = v; draw(); out.dataset.r = ''; fb.textContent = ''; }, () => {
     if (!TY.txt.trim()) return;
-    const good = TY.txt.trim().toLowerCase() === w.vi.toLowerCase();
+    const good = TY.txt.trim().toLowerCase() === st.target.toLowerCase();
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
     fxTone(good);
     out.dataset.r = good ? 'ok' : 'no';
-    if (!good) out.textContent = TY.txt.trim() + '  →  ' + w.vi;
-    if (!good || !hinted) grade(w.vi, good);   // 보고 친 성공은 사다리에 반영 안 함
-    setTimeout(() => { TY.i++; drawType(); }, good ? 600 : 1900);
+    if (good) { fb.textContent = '맞았습니다'; setTimeout(() => { TY.i++; drawType(); }, 600); return; }
+    TY.miss++;
+    fb.innerHTML = esc(TY.txt.trim()) + ' → <b>' + esc(st.target) + '</b> · ' + kbd(st.keys[0]) + ' 다음에 ' + kbd(st.keys[1]);
+    if (TY.miss >= 3) setTimeout(() => { TY.i++; drawType(); }, 1900);
+    else { TY.txt = ''; draw(); }
   }));
-  b.append(el('p', 'note', '실제 폰·컴퓨터의 베트남어 자판도 설정에서 추가하는 내장 기능입니다(다운로드 아님). ' +
-    '둘 다 영어 자판에 텔렉스 규칙(aa→â, dd→đ, 낱말 끝 s→´ …)을 얹는 같은 방식이라, 여기서 익힌 글자 그대로 쓸 수 있습니다.'));
 }
 
 /* 지난 세트의 문장 — 단어만 반복하면 입이 문장까지 못 간다.
