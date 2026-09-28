@@ -1073,7 +1073,7 @@ function sibDiff(syl, cur) {
   let q = 0; while (q < ta.length - p && q < tb.length - p && ta[ta.length - 1 - q] === tb[tb.length - 1 - q]) q++;
   return a.map((ch, i) => i >= p && i < a.length - q ? '<u class="dif">' + esc(ch) + '</u>' : esc(ch)).join('');
 }
-/* 짝 한 줄: 단어 · 뜻(한국어, 없으면 영어, 없으면 이 음절이 든 예) · ▶ */
+/* 짝 한 줄: 단어 · 뜻(한국어, 없으면 이 음절이 든 예) · ▶ — 영어 뜻은 화면에 안 올린다(대표님 지시) */
 function pairRow(word, cur, mode) {
   const w0 = SIB.w[word] || {};
   const key = recKey(word), tn = sibToneOf(word.split(' ')[0]);
@@ -1084,7 +1084,6 @@ function pairRow(word, cur, mode) {
   if (one) w.append(el('i', null, toneArrow(tn)));
   const m = el('span', 'pmn');
   if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
-  else if (w0.e) m.append(el('span', 'pko en', esc(w0.e)));
   else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
   // 성조 이름(ngang · 평평하게 …) 글은 뺐다 (대표님 지시 2026-09-27 밤) — 화살표만
   r.append(w, m);
@@ -2706,7 +2705,7 @@ function show(v, title, canBack) {
   $('#back').hidden = !canBack;
   if (v !== 'learn') { $('#face').hidden = true; FACE = null; }
   if (v === 'learn') inkSetup();                                  // 손글씨 겹쳐 쓰기 (2026-09-28 밤)
-  if (INK.btn) { INK.btn.hidden = v !== 'learn'; if (v !== 'learn') { inkFinger(false); inkClear(); } }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
+  if (INK.btn) { INK.btn.hidden = v !== 'learn'; if (v !== 'learn') { inkFinger(false); inkClear(); } inkPalSync(); }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
   /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 아래 탭의 [홈]이 어디서든 한 번에 나가는 길이다. */
   if (window.cardArrows) setTimeout(window.cardArrows, 0);   // 좌우 넘김 단추는 학습 화면에서만
   CURV = v;
@@ -7921,9 +7920,15 @@ function drawWordbook() {
    외울 때 손도 같이 외우면 도움") ──
    · 애플펜슬·S펜(pointerType 'pen')은 켜기 없이 늘 쓴다. 펜으로 살짝 톡 치면 원래대로 단추가 눌린다.
    · 손가락은 ✍ 단추를 켰을 때만 — 늘 켜 두면 카드 넘기기·단추 누르기를 막는다.
-   · 마지막 획을 긋고 2.5초 뒤 전체가 1.5초에 걸쳐 사라진다. 다 사라지면 그리기를 멈춘다(배터리·발열 없음). */
-const INK = { cv: null, g: null, strokes: [], cur: null, raf: 0, finger: false, btn: null, last: 0, block: false };
-const INK_HOLD = 2500, INK_FADE = 1500;
+   · 마지막 획을 긋고 1초 뒤 전체가 0.6초에 걸쳐 사라진다(대표님 지시 2026-09-28 밤: "너무 오래 안 지워진다" — 전엔 2.5초+1.5초).
+     다 사라지면 그리기를 멈춘다(배터리·발열 없음).
+   · 색: 검정·빨강·파랑 + 노란 형광펜(대표님 지시 2026-09-28 밤). 고른 색은 S.inkColor 에 남는다. 색 고르기는 ✍를 켰을 때나 글씨가 있을 때만 보인다 */
+const INK = { cv: null, g: null, strokes: [], cur: null, raf: 0, finger: false, btn: null, pal: null, last: 0, block: false };
+const INK_HOLD = 1000, INK_FADE = 600;
+const INK_COLORS = [['k', '검정'], ['r', '빨강'], ['b', '파랑'], ['y', '형광펜']];
+const inkColor = () => (typeof S !== 'undefined' && S.inkColor) || 'k';
+const inkStyle = c => c === 'r' ? '#e41e3f' : c === 'b' ? '#1877f2' : c === 'y' ? '#ffd400'
+  : (getComputedStyle(document.body).getPropertyValue('--fg').trim() || '#16181d');
 const inkPt = e => ({ x: e.clientX, y: e.clientY });
 function inkSetup() {
   if (INK.cv) return;
@@ -7936,13 +7941,21 @@ function inkSetup() {
   btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 7 3 3"/></svg>';
   btn.onclick = () => inkFinger(!INK.finger);
   document.body.append(btn); INK.btn = btn;
+  const pal = document.createElement('div'); pal.id = 'inkPal'; pal.hidden = true;
+  INK_COLORS.forEach(([c, name]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'inkc inkc-' + c; b.dataset.c = c;
+    b.title = tr(name); b.setAttribute('aria-label', tr(name));
+    b.onclick = e => { e.stopPropagation(); S.inkColor = c; save(); inkPalSync(); };
+    pal.append(b);
+  });
+  document.body.append(pal); INK.pal = pal; inkPalSync();
   const here = () => CURV === 'learn';
   // 손가락(켰을 때) — 캔버스가 받는다
   cv.addEventListener('pointerdown', e => { if (!INK.finger || !here()) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
   cv.addEventListener('pointermove', e => { if (INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } });
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, e => { if (INK.cur && INK.cur.id === e.pointerId) inkEnd(); }));
   // 펜 — 켜기 없이 문서 전체에서 먼저 받는다
-  document.addEventListener('pointerdown', e => { if (e.pointerType !== 'pen' || !here() || INK.finger || e.target === btn) return; inkStart(e); }, true);
+  document.addEventListener('pointerdown', e => { if (e.pointerType !== 'pen' || !here() || INK.finger || e.target === btn || (INK.pal && INK.pal.contains(e.target))) return; inkStart(e); }, true);   // 색 고르기를 펜으로 눌러도 글씨가 아니라 누르기
   document.addEventListener('pointermove', e => { if (e.pointerType === 'pen' && INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } }, true);
   ['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, e => { if (e.pointerType === 'pen' && INK.cur && INK.cur.id === e.pointerId) inkEnd(); }, true));
   // 글씨를 쓴 획이 단추 위에서 끝나도 그 단추가 눌리지 않게 — 톡 친 것만 눌린다
@@ -7951,8 +7964,9 @@ function inkSetup() {
 }
 function inkStart(e) {
   const pen = e.pointerType === 'pen';
-  INK.cur = { id: e.pointerId, pts: [inkPt(e)], w: pen ? 2.2 + (e.pressure || .5) * 2.6 : 3.4, x0: e.clientX, y0: e.clientY, t0: performance.now(), tap: true, pen };
-  INK.strokes.push(INK.cur); INK.block = false; inkLoop();
+  const c = inkColor(), hl = c === 'y';
+  INK.cur = { id: e.pointerId, pts: [inkPt(e)], w: hl ? 18 : pen ? 2.2 + (e.pressure || .5) * 2.6 : 3.4, c, hl, x0: e.clientX, y0: e.clientY, t0: performance.now(), tap: true, pen };
+  INK.strokes.push(INK.cur); INK.block = false; inkLoop(); inkPalSync();
 }
 function inkMove(e) {
   const s = INK.cur; if (!s) return;
@@ -7974,11 +7988,12 @@ function inkDraw() {
   const g = INK.g, now = performance.now();
   g.clearRect(0, 0, innerWidth, innerHeight);
   const age = INK.cur ? 0 : now - INK.last;
-  if (!INK.cur && age > INK_HOLD + INK_FADE) { INK.strokes = []; return; }       // 다 사라졌다 — 여기서 멈춘다
-  g.globalAlpha = Math.max(0, Math.min(1, 1 - (age - INK_HOLD) / INK_FADE));
-  g.strokeStyle = getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#1877f2';
+  if (!INK.cur && age > INK_HOLD + INK_FADE) { INK.strokes = []; inkPalSync(); return; }       // 다 사라졌다 — 여기서 멈춘다
+  const fade = Math.max(0, Math.min(1, 1 - (age - INK_HOLD) / INK_FADE));
   g.lineCap = 'round'; g.lineJoin = 'round';
   INK.strokes.forEach(s => {
+    g.globalAlpha = fade * (s.hl ? .42 : 1);                                  // 형광펜은 밑 글자가 비치게 반투명
+    g.strokeStyle = inkStyle(s.c);
     g.lineWidth = s.w; g.beginPath();
     s.pts.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
     if (s.pts.length === 1) g.lineTo(s.pts[0].x + .1, s.pts[0].y + .1);
@@ -7991,8 +8006,17 @@ function inkFinger(on) {
   INK.finger = !!on;
   document.body.classList.toggle('inking', INK.finger);
   if (INK.btn) { INK.btn.classList.toggle('on', INK.finger); INK.btn.setAttribute('aria-pressed', INK.finger ? 'true' : 'false'); }
+  inkPalSync();
 }
-function inkClear() { INK.strokes = []; INK.cur = null; if (INK.g) INK.g.clearRect(0, 0, innerWidth, innerHeight); }
+function inkClear() { INK.strokes = []; INK.cur = null; if (INK.g) INK.g.clearRect(0, 0, innerWidth, innerHeight); inkPalSync(); }
+/* 색 고르기 — ✍를 켰거나 화면에 글씨가 있을 때만 보인다 (늘 떠 있으면 카드를 가린다) */
+function inkPalSync() {
+  if (!INK.pal) return;
+  INK.pal.hidden = !(INK.btn && !INK.btn.hidden && (INK.finger || INK.strokes.length));
+  const c = inkColor();
+  [...INK.pal.children].forEach(b => b.classList.toggle('on', b.dataset.c === c));
+  if (INK.btn) INK.btn.dataset.c = c;
+}
 
 function drawCard() {
   resetRec();
@@ -9240,13 +9264,7 @@ function drawPuzzle(body, q) {
     [...pool.children].forEach(t => t.disabled = true);
     if (good) Q.ok++; else requeue(Q.list[Q.i]);
     grade(w.vi, good, Q.early);
-    if (!good) {
-      const right = el('div', 'ansbox');
-      right.append(el('div', 'vi sm', esc(w.vi)));
-      const sr = soundRow(w.vi, true); sr.classList.add('mid');
-      right.append(sr);
-      body.append(right);
-    }
+    if (!good) ans.after(el('div', 'puzzright', '→ ' + esc(w.vi)));   // 바른 문장은 내 답 줄 바로 밑에 한 줄로 (아래 따로 상자 없이, 2026-09-28 밤)
     save();
     nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
   };
@@ -9582,11 +9600,11 @@ function drawExamKind(body, q) {
       b.onclick = () => {
         if (done) return; done = true;
         const good = i === bad;
-        [...line.children].forEach((x, k) => { x.disabled = true; if (k === bad) x.dataset.r = 'ok'; });
+        [...line.children].forEach((x, k) => { x.disabled = true; if (k === bad) { x.dataset.r = 'ok'; x.innerHTML = '<s>' + esc(altered) + '</s> ' + esc(toks[bad]); } });   // 틀린 곳 자리에 바른 글자를 바로 옆에
         if (!good) b.dataset.r = 'no';
         fxTone(good); sound(w.vi); celebrate(good);
         grade(w.vi, good, Q.early); if (good) Q.ok++;
-        body.append(el('div', 'ansbox', '<div class="vi sm">' + esc(w.vi) + '</div><div class="ko">' + esc(w.ko) + '</div>'));
+        // 아래 정답 상자는 없앴다 — 뜻은 문제 위에, 문장은 이 줄에 바른 글자가 표시된다 (2026-09-28 밤)
         nextBtn(body, () => { Q.i++; drawQuiz(); });
       };
       line.append(b);
@@ -9643,10 +9661,14 @@ function drawSay(body, q) {
     markSpeed(ok, judged ? 'say' : 'sayself'); sound(w.vi);
     grade(w.vi, ok, Q.early);
     if (ok) Q.ok++; else requeue(q);
-    const ans = el('div', 'ansbox');
-    const vb = el('button', 'vi sm tapword', esc(w.vi)); vb.type = 'button'; vb.onclick = () => pairPopup(w.vi, { kr: w.kr_read, ko: w.ko });
-    ans.append(vb, toneRow(w.tones), reveal(krShow(w)));   // 답 칸의 듣기 줄은 뺐다 — 답이 열릴 때 소리가 한 번 나고, 단어를 누르면 된다
-    body.append(ans);
+    /* 정답(베트남어·발음)은 아래 상자가 아니라 문제 글자 바로 옆에 (대표님 지시 2026-09-28 밤) — 낱말을 누르면 헷갈리는 짝 */
+    const ans = el('span', 'optinfo ansinl');
+    const vb = el('button', 'oivi tapword', esc(w.vi)); vb.type = 'button'; vb.onclick = () => pairPopup(w.vi, { kr: w.kr_read, ko: w.ko });
+    ans.append(vb);
+    const kr0 = w.sent ? '' : (krShow(w) || krOf(w.vi) || '');
+    if (kr0) ans.append(el('span', 'oikr', '[' + esc(kr0) + ']'));
+    const qm0 = body.querySelector('.qmain') || body.querySelector('.pic') || body.querySelector('.qplay');
+    if (qm0) qm0.after(ans); else body.prepend(ans);
     const early = body.querySelector('.nextrow'); if (early) early.remove();
     nextBtn(body, () => { Q.i++; drawQuiz(); });
   };
@@ -9815,6 +9837,8 @@ function drawTypeQ(body, q) {
         ? tr('성조만 틀렸어요 — 글자는 맞았습니다')
         : tr('글자가 틀렸어요')));
     }
+    const kr1 = w.sent ? '' : (krShow(w) || krOf(w.vi) || '');
+    if (kr1) out.append(el('span', 'oikr', ' [' + esc(kr1) + ']'));   // 발음은 답 줄 옆에 (2026-09-28 밤)
     grade(w.vi, good, Q.early);
     if (good) Q.ok++; else requeue(q);
     nextBtn(body, () => { Q.i++; drawQuiz(); });
@@ -9878,17 +9902,21 @@ function answer(btn, correct, w) {
     nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
     return;
   }
-  // 답한 뒤에는 글자·성조·발음·뜻을 한 번에 보여준다 (맞았든 틀렸든)
-  const ans = el('div', 'ansbox');
-  // 단어를 누르면 헷갈리는 짝 팝업 — 짝 줄(단추)은 뺐다 (대표님 지시 2026-09-27 저녁)
-  const vb = el('button', 'vi sm tapword', esc(w.vi)); vb.type = 'button'; vb.setAttribute('aria-label', esc(w.vi) + ' — ' + tr('헷갈리는 짝'));
-  vb.onclick = () => pairPopup(w.vi, { kr: w.kr_read, ko: w.ko });
-  ans.append(vb, toneRow(w.tones), reveal(w.kr_read), el('div', 'ko', esc(w.ko)));
-  btn.parentNode.after(ans);
-  /* **여기 있던 `body` 는 아무 데도 없는 이름이었다.** 그래서 ReferenceError 가 나고
-     '다음 ›' 단추가 안 붙어, 맞히고도 넘어갈 수가 없었다 (대표님 지적 2026-09-03).
-     화면이 안 멈추고 답만 보인 채 멈춘 이유가 이것이다 — 오류가 조용히 났다. */
-  nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
+  /* 그 밖의 문제(성조 고르기·맞다/틀리다·빈칸·문형 고르기·그림 맞다/틀리다)도 **아래 따로 뜨던 정답 상자를 없앴다**
+     (대표님 재지시 2026-09-28 밤: "정답·오답 나올 때 아래에 따로 단어·뜻·발음 보여주지 말고 단어 옆에") — 문제 글자나 보기 옆에 붙인다 */
+  const qb = $('#quizBody'), qm = qb.querySelector('.qmain');
+  let put = false;
+  obtn.forEach(b => {                                            // 성조 고르기: 보기가 곧 낱말 — 맞는 낱말엔 발음·뜻, 다른 보기도 실제 낱말이면 그 뜻
+    const t = b.textContent.trim();
+    if (!t || b.dataset.vi !== t) return;
+    const sw = t === w.vi ? w : (SIB && SIB.w && SIB.w[t.toLowerCase()] && SIB.w[t.toLowerCase()].k ? { vi: t, ko: SIB.w[t.toLowerCase()].k } : null);
+    if (sw) { b.classList.add('ann', 'answered'); b.append(optInfo(sw, true)); }
+    put = true;
+  });
+  if (!put && qm && /____/.test(qm.textContent)) { qm.textContent = w.vi; qm.classList.add('filled'); put = true; }   // 빈칸 — 문장에 답을 채워 보인다 (뜻은 이미 밑에 있다)
+  else if (!put && qm && md !== 'gpat') { qm.after(optInfo(w, !!w.sent || qm.textContent.trim() === w.vi)); put = true; }   // 맞다/틀리다 — 문제 글자 옆에 발음·참 뜻
+  else if (!put && md !== 'gpat') { const p0 = qb.querySelector('.pic') || qb.querySelector('.q'); if (p0) p0.after(optInfo(w, false)); }   // 그림 맞다/틀리다 — 그림 옆에 낱말·발음·뜻
+  nextBtn(qb, () => { Q.i++; drawQuiz(); });
 }
 
 /* 보기 한 칸의 풀이 — 베트남어 보기면 [발음] 뜻①②③, 뜻 보기면 베트남어 [발음] (+ 다른 뜻). 뜻은 검수된 data/_senses.json 차례(흔히 쓰는 순서) */
