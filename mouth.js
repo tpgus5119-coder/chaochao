@@ -188,15 +188,17 @@ const MOUTH = (() => {
 <path id="${f('ll1')}" fill="none" stroke="#993556" stroke-linecap="round"/>
 <path id="${f('ll2')}" fill="none" stroke="#D4537E" stroke-linecap="round"/>
 <path id="${f('airO')}" fill="none" stroke="#378ADD" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#${f('ar')})" d="M44 190L14 190" opacity="0"/>
-<circle id="${f('m1')}" r="8" fill="none" stroke="#E24B4A" stroke-width="2.2" opacity="0"/>
-<circle id="${f('m1d')}" r="2.6" fill="#E24B4A" opacity="0"/>
-<circle id="${f('m2')}" r="8" fill="none" stroke="#E24B4A" stroke-width="2.2" opacity="0"/>
-<circle id="${f('m2d')}" r="2.6" fill="#E24B4A" opacity="0"/>
+<path id="${f('z1')}" fill="none" stroke="#E24B4A" stroke-width="11" stroke-linecap="round" opacity="0"/>
+<path id="${f('z2')}" fill="none" stroke="#E24B4A" stroke-width="11" stroke-linecap="round" opacity="0"/>
+<circle id="${f('m1')}" r="12" fill="#E24B4A" fill-opacity=".16" stroke="#E24B4A" stroke-width="3" opacity="0"/>
+<circle id="${f('m1d')}" r="4" fill="#E24B4A" opacity="0"/>
+<circle id="${f('m2')}" r="12" fill="#E24B4A" fill-opacity=".16" stroke="#E24B4A" stroke-width="3" opacity="0"/>
+<circle id="${f('m2d')}" r="4" fill="#E24B4A" opacity="0"/>
 <g id="${f('names')}" fill="var(--dim)" font-size="17">
-<g stroke="var(--line)" stroke-width="1"><path d="M190 42V104"/><path d="M104 66V152"/><path d="M160 66V130"/><path d="M262 66V136"/><path d="M30 190L50 186"/><path d="M324 168L294 176"/><path d="M324 214L302 214"/><path d="M324 292L318 290"/></g>
-<text x="190" y="36" text-anchor="middle">코안</text><text x="104" y="60" text-anchor="middle">잇몸</text><text x="160" y="60" text-anchor="middle">입천장</text>
-<text x="262" y="60" text-anchor="middle">연구개</text><text x="26" y="194" text-anchor="end">입술</text><text x="328" y="172">목젖</text>
-<text x="328" y="218">혀뿌리</text><text x="328" y="296">성대</text>
+<g stroke="var(--line)" stroke-width="1"><path d="M190 42V104"/><path d="M104 66V152"/><path d="M160 66V130"/><path d="M262 66V136"/><path d="M30 168L52 174"/><path d="M324 168L294 176"/><path d="M324 214L302 214"/><path d="M324 292L318 290"/></g>
+<text x="190" y="36" text-anchor="middle">코안</text><text x="104" y="60" text-anchor="middle" data-p="alv dent">잇몸</text><text x="160" y="60" text-anchor="middle" data-p="post">입천장</text>
+<text x="262" y="60" text-anchor="middle" data-p="vel">연구개</text><text x="26" y="172" text-anchor="end" data-p="lip lab">입술</text><text x="328" y="172">목젖</text>
+<text x="328" y="218">혀뿌리</text><text x="328" y="296" data-p="glo">성대</text>
 </g>
 </g>
 <g id="${f('front')}" transform="translate(10,6) scale(1.5) translate(-462,-26)">
@@ -239,8 +241,9 @@ const MOUTH = (() => {
     const $ = id => host.querySelector('#' + p + id);
     const set = (e, k, v) => e.setAttribute(k, v);
     const els = {};
-    ['nas', 'nasArr', 'tg', 'jawg', 'roof', 'v1', 'v2', 'lar', 'lu1', 'lu2', 'll1', 'll2', 'airO', 'm1', 'm1d', 'm2', 'm2d',
+    ['nas', 'nasArr', 'tg', 'jawg', 'roof', 'v1', 'v2', 'lar', 'lu1', 'lu2', 'll1', 'll2', 'airO', 'z1', 'z2', 'm1', 'm1d', 'm2', 'm2d',
       'lipO', 'opn', 'opl', 'fce', 'tU', 'tL', 'tT', 'names'].forEach(k => { els[k] = $(k); });
+    const placeNames = [...els.names.querySelectorAll('text[data-p]')];
     function cap(a, b, x1, y1, x2, y2, w) {
       const d = 'M' + f1(x1) + ' ' + f1(y1) + 'L' + f1(x2) + ' ' + f1(y2);
       set(a, 'd', d); set(a, 'stroke-width', f1(w + 2.4)); set(b, 'd', d); set(b, 'stroke-width', f1(w));
@@ -253,9 +256,14 @@ const MOUTH = (() => {
       /* 혀 — 예전에는 혀 윗면에서 턱 바닥선까지 통째로 칠해서 입 안이 온통 혀였다(대표님: "혀가 너무 두꺼워 이상하고 이해가 어렵다").
          이제는 **윗면을 따라 두께만큼만** 칠한다: 끝은 얇고 몸통은 두껍고 뿌리로 갈수록 다시 가늘다. 아래는 턱 바닥선 위에 뜬다. */
       const TH = [9, 24, 36, 42, 40, 34];
-      const under = top.map((p, i) => [p[0], Math.min(p[1] + TH[i], fy(fl, p[0]) - 5)]);
-      const back = [WX - pz.gR + 2, Math.min(200, fy(fl, WX - pz.gR) - 34)];
-      const pts = top.concat([back]).concat(under.slice(1).reverse()).concat([[pz.tx + 6, pz.ty + 8]]);
+      /* 혀 뒤쪽 두 점의 아랫면은 턱 바닥 가까이까지 — 혀 뒤를 연구개에 붙이면(k·ng) 윗면만 올라가고 아랫면이 따라 올라가
+         혀뿌리가 얇은 갈고리처럼 보였다(2026-09-28). 혀뿌리는 늘 목 쪽으로 두껍게 내려온다. */
+      const under = top.map((p, i) => [p[0], Math.min(Math.max(p[1] + TH[i], i >= 4 ? fy(fl, p[0]) - 40 : 0), fy(fl, p[0]) - 5)]);
+      const back = [WX - pz.gR + 2, Math.min(228, fy(fl, WX - pz.gR) - 24)];
+      /* 혀 뒤가 연구개에 닿는 소리(k·ng·kh·g)에서 윗면 끝→뿌리로 곧장 떨어지면 곡선이 갈고리처럼 꺾였다 —
+         가운데 점 하나를 둬 둥글게 넘어가게 한다 (대표님 지적 2026-09-28 "옆모습 더 잘 보이게") */
+      const t5 = top[top.length - 1], bend = [lerp(t5[0], back[0], .62) + 4, lerp(t5[1], back[1], .38)];
+      const pts = top.concat([bend, back]).concat(under.slice(1).reverse()).concat([[pz.tx + 6, pz.ty + 8]]);
       set(els.tg, 'd', cr(pts, true));
       set(els.roof, 'd', cr(ROOF.slice(0, 7), false));
       const T = [lerp(305, 288, pz.vel), lerp(127, 196, pz.vel)], C = [lerp(272, 286, pz.vel), lerp(128, 150, pz.vel)];
@@ -273,10 +281,24 @@ const MOUTH = (() => {
       if (pz.lipD > 0) { sx += pz.lipD * (88 - l1[0]); sy += pz.lipD * (198 - l1[1]); }
       cap(els.ll1, els.ll2, l1[0] + sx - pr, l1[1] + sy, l2[0] + sx * .6 - pr * .6, l2[1] + sy * .6, tk);
       const M = { lip: [ux - 1, 184], lab: [88, 196], dent: [97, 187], alv: [105, 158], post: [124, 145], vel: [254, 139], glo: [308, 288 + pz.lar * 12] };
-      [['m1', 'm1d'], ['m2', 'm2d']].forEach((ids, k) => {
-        const q = (mk && mk.pl[k]) ? M[mk.pl[k]] : null;
-        set(els[ids[0]], 'opacity', q ? f1(mk.a) : 0); set(els[ids[1]], 'opacity', q ? f1(mk.a) : 0);
-        if (q) { [ids[0], ids[1]].forEach(i => { set(els[i], 'cx', f1(q[0])); set(els[i], 'cy', f1(q[1])); }); }
+      /* 닿는 곳을 **점 + 구간 + 이름**으로 — 입천장·이·입술에서 닿는 구간을 빨갛게 칠하고, 위 이름표(잇몸·입천장·연구개·입술·성대)도
+         빨간 굵은 글씨로 바꾼다 (대표님 지시 2026-09-28 "혀의 닫는 위치 등 좀 더 눈에 잘 보이게") */
+      const gy = 288 + pz.lar * 12;
+      const Z = { lip: `M${f1(ux - 1)} 174L${f1(ux - 1)} 194`, lab: 'M83 189L93 201', dent: 'M95 171L97 190',
+        alv: 'M97 168Q100 158 110 150', post: 'M111 150Q121 142 146 135', vel: vd, glo: `M307 ${f1(gy - 9)}L307 ${f1(gy + 9)}` };
+      const on = new Set();
+      [['m1', 'm1d', 'z1'], ['m2', 'm2d', 'z2']].forEach((ids, k) => {
+        const pl = mk && mk.pl[k], q = pl ? M[pl] : null, a = q ? mk.a : 0;
+        set(els[ids[0]], 'opacity', f1(a)); set(els[ids[1]], 'opacity', f1(a)); set(els[ids[2]], 'opacity', f1(a * .55));
+        if (q) {
+          [ids[0], ids[1]].forEach(i => { set(els[i], 'cx', f1(q[0])); set(els[i], 'cy', f1(q[1])); });
+          set(els[ids[2]], 'd', Z[pl]);
+          if (a > .3) on.add(pl);
+        }
+      });
+      placeNames.forEach(t => {
+        const hit = t.dataset.p.split(' ').some(x => on.has(x));
+        t.setAttribute('fill', hit ? '#E24B4A' : 'var(--dim)'); t.setAttribute('font-weight', hit ? '700' : '400');
       });
       /* 정면 입술 — 움직임을 **과장**해서 구별이 잘 되게 한다(대표님 지시 2026-09-27):
          벌림(i·ê·e)은 옆으로 아주 넓게, 오므림(u·ô·o)은 작고 동그랗게, 턱은 크게 벌린다. */
@@ -305,7 +327,9 @@ const MOUTH = (() => {
       at(t) {
         if (!cur) return 'rest';
         const dk = domKey(cur.kf, clamp(t, 0, 1)), a = POSE[dk.a], b = POSE[dk.b], u = sm(dk.u);
-        const pose = blend(a, b, u), key = dk.u > .5 ? dk.b : dk.a, src = POSE[key], alpha = Math.abs(dk.u - .5) * 2;
+        /* 같은 소리를 머무는 동안(a===b)은 닿는 곳 표시를 끝까지 켠다 — 예전 식(|u-.5|×2)은 **소리 한가운데서 0**이 되어
+           정작 그 소리를 내는 동안 표시가 거의 안 보였다 (2026-09-28 발견) */
+        const pose = blend(a, b, u), key = dk.u > .5 ? dk.b : dk.a, src = POSE[key], alpha = dk.a === dk.b ? 1 : Math.abs(dk.u - .5) * 2;
         render(pose, { pl: src.pl, a: key === 'rest' ? 0 : clamp(alpha * 1.4, 0, 1) });
         return key;
       },
