@@ -2755,3 +2755,10 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .cmpplay{color:var(--accent); font-size:14px}
 .cmpseq{margin:10px auto 2px}
 .cmpmouth{width:100%; margin-top:6px}
+
+/* 팝업 뜻 고르개 (2026-09-28) — 골라진 뜻은 진하게, 이 수업의 기본 뜻에는 '기본' 표시 */
+.senselist.pick{gap:6px}
+.senselist.pick .sn{background:none; border:1px solid var(--line); border-radius:999px; padding:4px 10px; font:inherit; color:var(--dim); cursor:pointer}
+.senselist.pick .sn.cur{border-color:var(--accent); color:var(--fg); font-weight:800; background:color-mix(in srgb, var(--accent) 10%, transparent)}
+.senselist.pick .sn.def::after{content:'기본'; margin-left:5px; font-size:.72em; font-weight:700; color:var(--accent)}
+.snhint{font-size:11px; color:var(--dim); margin-top:8px}

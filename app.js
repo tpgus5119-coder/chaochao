@@ -590,7 +590,7 @@ const UIVI = {
   '듣고 손으로 써 보세요': 'Nghe và viết tay', '모르겠어요': 'Không biết',
   '원어민': 'Người bản xứ', '나': 'Tôi', '번갈아 듣기': 'Nghe lần lượt',
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
-  '천천히': 'Chậm', '그래프를 누르면 아주 느리게(0.2배)': 'Chạm vào biểu đồ để nghe rất chậm (0,2×)', '알아 둘 것': 'Cần nhớ', '북부에서 같은 소리': 'Miền Bắc đọc giống nhau', '다른 소리 — 구별해야 함': 'Âm khác — cần phân biệt', '번갈아 듣기': 'Nghe xen kẽ', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
+  '천천히': 'Chậm', '그래프를 누르면 아주 느리게(0.2배)': 'Chạm vào biểu đồ để nghe rất chậm (0,2×)', '알아 둘 것': 'Cần nhớ', '북부에서 같은 소리': 'Miền Bắc đọc giống nhau', '다른 소리 — 구별해야 함': 'Âm khác — cần phân biệt', '번갈아 듣기': 'Nghe xen kẽ', '뜻을 누르면 그 뜻의 동의어·반의어로 바뀝니다': 'Chạm vào một nghĩa để xem từ đồng nghĩa · trái nghĩa của nghĩa đó', '이 뜻의 동의어·반의어는 아직 자료에 없습니다.': 'Chưa có từ đồng nghĩa · trái nghĩa cho nghĩa này.', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
   '원어민 소리 높낮이': 'Cao độ giọng người bản xứ',
   '녹음': 'Ghi âm', '듣기 속도': 'Tốc độ nghe', '재생 위치': 'Vị trí phát', '멈춤': 'Tạm dừng', '재생': 'Phát', '닫기': 'Đóng',
   '이 단어과 헷갈리는 짝이 없습니다.': 'Từ này không có từ dễ nhầm.',
@@ -1121,7 +1121,9 @@ function pairSeq(items, rows, wrap, btn) {
 function pairPanel(vi, opt) {
   const o = opt || {};
   const wrap = el('div', o.bare ? 'pairbox bare' : 'pairbox');
-  sibLoad().then(() => sensesLoad()).then(() => {          // 뜻 목록도 같이 — 동의어·반의어를 뜻별로 나누는 데 쓴다
+  const lk0 = o.lk !== undefined ? o.lk : curLessonKey();
+  let sel = null;                                   // 지금 고른 뜻 번호 — 처음엔 기본 뜻
+  sibLoad().then(() => sensesLoad()).then(() => sdefLoad()).then(() => {          // 뜻 목록·기본 뜻도 같이 — 동의어·반의어를 뜻별로 나누는 데 쓴다
     if (!SIB || !wrap.isConnected) return;
     const fams = sibFams(vi), rel = sibRel(vi);
     if (!fams.length && !rel) return;
@@ -1160,27 +1162,23 @@ function pairPanel(vi, opt) {
         /* **뜻별로** (대표님 지시 2026-09-28 밤: "같은 단어라도 어떤 뜻에 포커싱되어 있냐에 따라 동의어·반의어가 달라진다").
            rel.m = {짝: 뜻 번호} (tools/rel_sense/뜻별_짝.tsv, 클로드 판정). 지금 보는 뜻(o.ko)의 짝을 맨 위에 굵은 뜻 이름과 함께,
            나머지는 뜻 이름 밑에 나눠 보인다. 판정이 없는 낱말은 예전처럼 한 줄로 */
+        /* **고른 뜻 하나만** (대표님 지시 2026-09-28: "헷갈리는 짝 팝업에서 뜻을 고르면 그 뜻 기준으로 동의어·반의어") —
+           rel.m = {짝: 뜻 번호} (tools/rel_sense·tools/sense_review, 클로드 판정). 처음엔 이 수업의 기본 뜻. 뜻 목록이 없는 낱말은 예전처럼 한 줄로 */
         const ss = rel.m && SENSES && SENSES[vi.toLowerCase().trim()];
-        const secRel = (title, note, list) => {
-          if (!list || !list.length) return;
-          if (!ss) { body.append(section(title, note, list, '', 'rel')); return; }
-          const parts = t => String(t || '').replace(/\([^)]*\)/g, ' ').split(/[,;·/]/).map(p => p.trim().replace(/^~/, '')).filter(Boolean);
-          const mine = new Set(parts(o.ko));
-          const focus = o.ko ? ss.findIndex(t => parts(t).some(p => mine.has(p))) + 1 : 0;   // 1부터, 없으면 0
-          const groups = new Map();
-          list.forEach(x => { const i = rel.m[x] || 0; if (!groups.has(i)) groups.set(i, []); groups.get(i).push(x); });
-          const order = [...groups.keys()].sort((a, b) => (b === focus) - (a === focus) || (a || 99) - (b || 99));
+        if (!ss) {
+          if (rel.s && rel.s.length) body.append(section('동의어', '뜻이 비슷함', rel.s, '', 'rel'));
+          if (rel.a && rel.a.length) body.append(section('반의어', '뜻이 반대', rel.a, '', 'rel'));
+        } else {
+          if (sel == null) sel = senseDefault(vi, o.ko, lk0) || 1;
+          const of = list => (list || []).filter(x => (rel.m[x] || 0) === sel);
+          const syn = of(rel.s), ant = of(rel.a);
           const sec = el('div', 'psec');
-          sec.append(el('div', 'ptitle', tr(title) + '<span>' + tr(note) + '</span>'));
-          order.forEach(i => {
-            const lab = i ? '<i>' + i + '</i>' + esc(ss[i - 1]) : tr('그 밖의 뜻');
-            sec.append(el('div', 'prelsense' + (i && i === focus ? ' cur' : ''), lab));
-            groups.get(i).forEach(x => sec.append(pairRow(x, '', 'rel')));
-          });
+          sec.append(el('div', 'prelsense cur', '<i>' + sel + '</i>' + esc(ss[sel - 1])));
+          if (!syn.length && !ant.length) sec.append(el('div', 'pnote', tr('이 뜻의 동의어·반의어는 아직 자료에 없습니다.')));
           body.append(sec);
-        };
-        secRel('동의어', '뜻이 비슷함', rel.s);
-        secRel('반의어', '뜻이 반대', rel.a);
+          if (syn.length) body.append(section('동의어', '뜻이 비슷함', syn, '', 'rel'));
+          if (ant.length) body.append(section('반의어', '뜻이 반대', ant, '', 'rel'));
+        }
       }
       if (fams.length > 1) {
         const sel = el('div', 'psel');
@@ -1207,6 +1205,7 @@ function pairPanel(vi, opt) {
           body.append(el('div', 'pnote', '받침이 <b>p·t·c·ch</b>인 음절은 성조가 <b>sắc</b> 아니면 <b>nặng</b> 둘 중 하나뿐입니다.'));
       }
     };
+    if (o.api) o.api({ setSense(i) { sel = i; if (built) draw(); } });
     const set = open => {
       head.classList.toggle('on', open);
       head.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -1235,7 +1234,9 @@ function pairPopup(vi, info) {
   grp.append(pl, spdChip({ pair: true }));
   hd.append(grp);
   box.append(hd);
-  if (inf.ko) { const pk = el('div', 'pairpopko', esc(inf.ko)); box.append(pk); senseLine(pk, { vi, ko: inf.ko }); rootPills(pk, { vi, ko: inf.ko }); }   // 뜻 여러 개 (2026-09-28) · 한자·외래어 뿌리 (09-28 밤)
+  const lk = inf.lk !== undefined ? inf.lk : curLessonKey();       // 이 팝업이 열린 수업 — 기본 뜻을 고르는 데 쓴다
+  let panelApi = null;
+  if (inf.ko) { const pk = el('div', 'pairpopko', esc(inf.ko)); box.append(pk); sensePick(pk, vi, inf.ko, lk, i => { if (panelApi) panelApi.setSense(i); }); rootPills(pk, { vi, ko: inf.ko }); }   // 뜻 여러 개 — 골라서 짝 바꾸기 (2026-09-28) · 한자·외래어 뿌리
   const sub = el('div', 'pairpopsub', tr('헷갈리는 짝'));
   const body = el('div', 'pairpopbody');
   const ok = el('button', 'primary big', tr('닫기'));
@@ -1253,7 +1254,7 @@ function pairPopup(vi, info) {
   sibLoad().then(() => {
     if (!SIB) { body.append(el('div', 'pnote', tr('불러오지 못했습니다'))); return; }
     if (!sibFams(vi).length && !sibRel(vi)) { body.append(el('div', 'pnote', tr('이 단어과 헷갈리는 짝이 없습니다.'))); return; }
-    body.append(pairPanel(vi, { bare: true, ko: inf.ko }));   // 지금 보는 뜻(ko)의 동의어·반의어를 먼저 (2026-09-28 밤)
+    body.append(pairPanel(vi, { bare: true, ko: inf.ko, lk, api: a => { panelApi = a; } }));   // 골라진 뜻(처음엔 기본 뜻)의 동의어·반의어만 (2026-09-28)
   });
 }
 
@@ -6810,22 +6811,65 @@ function sensesLoad() {
   if (!SENSES_P) SENSES_P = fetch('data/_senses.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { SENSES = j; }).catch(() => { SENSES = {}; });
   return SENSES_P;
 }
+/* 수업마다 낱말의 **기본 뜻**(1부터 _senses 차례) — data/_sdef.json {수업 키: {낱말: 뜻 번호}} (대표님 지시 2026-09-28:
+   "출처의 앞뒤 문맥·출처에 적힌 뜻을 디폴트로. 선배·22기는 메인교재에 있는 낱말이면 그 디폴트를 따른다"). tools/sense_review/apply.py 가 만든다.
+   표에 없으면 예전처럼 이 과의 뜻(ko)과 글자가 겹치는 뜻을 찾는다. 수업 밖(사전 등)은 0 = 정하지 않음 → 첫째(가장 흔한) 뜻 */
+let SDEF = null, SDEF_P = null;
+function sdefLoad() {
+  if (SDEF) return Promise.resolve();
+  if (!SDEF_P) SDEF_P = fetch('data/_sdef.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { SDEF = j; }).catch(() => { SDEF = {}; });
+  return SDEF_P;
+}
+const curLessonKey = () => (typeof L !== 'undefined' && L && L.day && !L.dict && L.day.day != null) ? L.day.day : null;
+const senseParts = t => String(t || '').replace(/\([^)]*\)/g, ' ').split(/[,;·/]/).map(p => p.trim().replace(/^~/, '')).filter(Boolean);
+function senseDefault(vi, ko, lk) {
+  const k = String(vi || '').trim().toLowerCase();
+  const ss = SENSES && SENSES[k];
+  if (!ss || ss.length < 2) return 0;
+  const tab = SDEF && lk != null ? SDEF[String(lk)] : null;
+  if (tab && tab[k] >= 1 && tab[k] <= ss.length) return tab[k];
+  if (!ko) return 0;
+  const mine = new Set(senseParts(ko));
+  return ss.findIndex(t => senseParts(t).some(p => mine.has(p))) + 1;   // 못 찾으면 0
+}
 function senseLine(host, x) {
-  /* 뜻이 여럿이면 **자주 쓰는 차례로 최대 3개**를 번호를 붙여 보여 준다 (대표님 지시 2026-09-28: "뜻이 3개 있는 단어인데 왜 2개만 보여주냐, 자주 쓰이는 순서대로").
-     이 과(카드)에서 배우는 뜻은 굵게. data/_senses.json 은 클로드가 사전(위키낱말사전) 뜻풀이를 근거로 낱말마다 적은 것 */
+  /* 뜻이 여럿이면 **가진 뜻 모두를 흔히 쓰는 차례로** 번호를 붙여 보여 준다 (대표님 지시 2026-09-28).
+     이 과(카드)의 **기본 뜻**(senseDefault)은 색으로 — 기본 뜻이 첫째가 아닐 수도 있다. data/_senses.json 은 클로드가 사전 뜻풀이를 근거로 낱말마다 적은 것 */
   const draw = () => {
     const ss = SENSES && SENSES[String(x.vi || '').trim().toLowerCase()];
     if (!ss || ss.length < 2) return;
-    const parts = t => String(t || '').replace(/\([^)]*\)/g, ' ').split(/[,;·/]/).map(p => p.trim().replace(/^~/, '')).filter(Boolean);
-    const mine = new Set(parts(x.ko));
-    const hit = ss.findIndex(t => parts(t).some(p => mine.has(p)));
+    const hit = senseDefault(x.vi, x.ko, x.lk !== undefined ? x.lk : curLessonKey()) - 1;
     const list = el('div', 'senselist');
     ss.forEach((t, i) => { const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp); });   // 3개까지 → 가진 뜻 모두 (대표님 지시 2026-09-28 밤)
     const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
     if (hit >= 0 && tn) tn.replaceWith(list);          // 이 과의 뜻이 목록 안에 있으면 목록이 뜻 자리를 대신한다
     else host.append(list);                             // 없으면(이 과만의 특수한 뜻) 원래 뜻을 두고 밑에 목록
   };
-  if (SENSES) draw(); else sensesLoad().then(draw);
+  if (SENSES && SDEF) draw(); else Promise.all([sensesLoad(), sdefLoad()]).then(draw);
+}
+/* 팝업의 뜻 고르개 — 뜻을 누르면 그 뜻이 골라지고(onPick) 동의어·반의어가 그 뜻 기준으로 바뀐다 (대표님 지시 2026-09-28).
+   처음 골라진 것은 기본 뜻. 기본 뜻은 옅은 색, 골라진 뜻은 진한 색 */
+function sensePick(host, vi, ko, lk, onPick) {
+  Promise.all([sensesLoad(), sdefLoad()]).then(() => {
+    const ss = SENSES && SENSES[String(vi || '').trim().toLowerCase()];
+    if (!ss || ss.length < 2) return;
+    const def = senseDefault(vi, ko, lk);
+    let sel = def || 1;
+    const list = el('div', 'senselist pick');
+    const draw = () => {
+      list.textContent = '';
+      ss.forEach((t, i) => {
+        const b = el('button', 'sn' + (i + 1 === def ? ' def' : '') + (i + 1 === sel ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t));
+        b.type = 'button';
+        b.onclick = () => { sel = i + 1; draw(); onPick(sel); };
+        list.append(b);
+      });
+    };
+    draw();
+    const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+    if (def && tn) tn.replaceWith(list); else host.append(list);
+    list.before(el('div', 'snhint', tr('뜻을 누르면 그 뜻의 동의어·반의어로 바뀝니다')));
+  });
 }
 let HUN = null, HUN_P = null;
 function hunLoad() {
