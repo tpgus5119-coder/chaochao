@@ -58,7 +58,8 @@ def main():
                 m = e.get("m") or {}
                 for f in ("s", "a"):
                     for p in e.get(f) or []:
-                        if not 1 <= int(m.get(p, 0)) <= len(ss):
+                        mv = m.get(p, 0)
+                        if not all(1 <= int(v) <= len(ss) for v in (mv if isinstance(mv, list) else [mv])):
                             probs.append(f"{w['vi']}: 짝 {p} 뜻 번호 없음/틀림 ({m.get(p)})")
             for f in ("s", "a"):
                 for p in e.get(f) or []:

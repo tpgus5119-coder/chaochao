@@ -1170,7 +1170,7 @@ function pairPanel(vi, opt) {
           if (rel.a && rel.a.length) body.append(section('반의어', '뜻이 반대', rel.a, '', 'rel'));
         } else {
           if (sel == null) sel = senseDefault(vi, o.ko, lk0) || 1;
-          const of = list => (list || []).filter(x => (rel.m[x] || 0) === sel);
+          const of = list => (list || []).filter(x => { const v = rel.m[x]; return Array.isArray(v) ? v.includes(sel) : (v || 0) === sel; });   // 한 짝이 여러 뜻의 짝일 수 있다([1,2])
           const syn = of(rel.s), ant = of(rel.a);
           const sec = el('div', 'psec');
           sec.append(el('div', 'prelsense cur', '<i>' + sel + '</i>' + esc(ss[sel - 1])));

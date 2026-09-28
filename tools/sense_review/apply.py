@@ -5,7 +5,7 @@
 판정표 (클로드가 수업마다 낱말 하나씩 읽고 적는다 — 근거: 수업 뜻·예문·영어 위키낱말사전 뜻풀이·한국어기초사전 대역)
   뜻목록.tsv  낱말 \t 뜻1 | 뜻2 | …        — data/_senses.json 의 그 낱말을 이 목록으로(흔히 쓰는 차례). '-' 는 뜻이 하나뿐(목록 지움)
   기본뜻.tsv  수업키 \t 낱말 \t 번호|-     — 그 수업에서의 기본 뜻(출처의 문맥·출처에 적힌 뜻). '-' 는 뜻이 하나뿐. 검토한 낱말은 모두 한 줄씩
-  짝.tsv      낱말 \t 짝=번호 …           — 동의어·반의어가 몇째 뜻의 짝인지. 짝=x 는 틀린 짝(양쪽에서 지움),
+  짝.tsv      낱말 \t 짝=번호 …           — 동의어·반의어가 몇째 뜻의 짝인지(여러 뜻이면 짝=1,2). 짝=x 는 틀린 짝(양쪽에서 지움),
                                            +s:짝=번호 / +a:짝=번호 는 동의어/반의어를 새로 붙임
 결과
   data/_senses.json · data/sib.json(w[낱말].m·s·a) · data/_sdef.json {수업키: {낱말: 번호}}
@@ -16,6 +16,12 @@ import sys
 
 sys.path.insert(0, __file__.rsplit("/", 1)[0])
 from common import R, lessons, read_tsv, key  # noqa: E402
+
+
+def ix(v):
+    """'2' → 2 · '1,2' → [1, 2] (한 짝이 여러 뜻의 짝일 때 — 예: mở cửa 의 반의어 đóng cửa 는 '문을 열다'·'영업을 시작하다' 둘 다)"""
+    xs = [int(x) for x in str(v).split(",") if x.strip()]
+    return xs[0] if len(xs) == 1 else xs
 
 
 def main():
@@ -52,12 +58,12 @@ def main():
                 e.setdefault(f, [])
                 if p not in e[f]:
                     e[f].append(p); na += 1
-                e.setdefault("m", {})[p] = int(idx)
+                e.setdefault("m", {})[p] = ix(idx)
                 continue
             p = left
             if idx == "x":
                 drop.append((k, p)); continue
-            e.setdefault("m", {})[p] = int(idx); nm += 1
+            e.setdefault("m", {})[p] = ix(idx); nm += 1
     for a, b in drop:
         for x, y in ((a, b), (b, a)):
             if x in W:
