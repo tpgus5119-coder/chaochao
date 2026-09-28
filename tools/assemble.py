@@ -113,6 +113,12 @@ out = {"meta": {"version":"v4",
        "prep": p1["prep"], "tonedrill": p1["tonedrill"],
        "voweldrill": p1.get("voweldrill", []),
        "ruledrill": p1.get("ruledrill", []), "days": days}
+# 기본기(prep·귀로 구별하기)의 원본은 tools/build_basics.py → data/_basics.json (2026-09-28).
+# _part1.json 의 옛 prep 로 덮으면 받침·겹모음·헷갈리는 소리와 글자 소리가 사라지고, 모음 구별 문제가 0개가 된다(8월 24일에 실제로 그랬다).
+_bp = pathlib.Path("data/_basics.json")
+if _bp.exists():
+    _b = json.loads(_bp.read_text(encoding="utf-8"))
+    out["prep"], out["voweldrill"], out["eardrill"] = _b["prep"], _b["voweldrill"], _b["eardrill"]
 
 SCENE = {1:"👋",2:"🪪",3:"🌏",4:"😊",5:"❓",6:"🚪",7:"🔢",8:"📦",9:"🕐",10:"📅",
          11:"⏰",12:"🍜",13:"🛒",14:"🗺️",15:"👨‍👩‍👧",16:"🏥",17:"🙏",18:"👍",19:"⏳",20:"🤞"}

@@ -166,6 +166,7 @@ const MOUTH = (() => {
 <title>입모양</title>
 <defs>
 <clipPath id="${f('fclip')}"><ellipse id="${f('fce')}" cx="561" cy="116" rx="40" ry="20"/></clipPath>
+<radialGradient id="${f('glow')}"><stop offset="0" stop-color="#E24B4A" stop-opacity=".55"/><stop offset=".55" stop-color="#E24B4A" stop-opacity=".22"/><stop offset="1" stop-color="#E24B4A" stop-opacity="0"/></radialGradient>
 <marker id="${f('ar')}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#378ADD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
 <g id="${f('side')}" transform="translate(324,4) scale(.9)">
@@ -188,6 +189,8 @@ const MOUTH = (() => {
 <path id="${f('ll1')}" fill="none" stroke="#993556" stroke-linecap="round"/>
 <path id="${f('ll2')}" fill="none" stroke="#D4537E" stroke-linecap="round"/>
 <path id="${f('airO')}" fill="none" stroke="#378ADD" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#${f('ar')})" d="M44 190L14 190" opacity="0"/>
+<circle id="${f('g1')}" r="30" fill="url(#${f('glow')})" opacity="0"/>
+<circle id="${f('g2')}" r="30" fill="url(#${f('glow')})" opacity="0"/>
 <path id="${f('z1')}" fill="none" stroke="#E24B4A" stroke-width="11" stroke-linecap="round" opacity="0"/>
 <path id="${f('z2')}" fill="none" stroke="#E24B4A" stroke-width="11" stroke-linecap="round" opacity="0"/>
 <circle id="${f('m1')}" r="12" fill="#E24B4A" fill-opacity=".16" stroke="#E24B4A" stroke-width="3" opacity="0"/>
@@ -241,7 +244,7 @@ const MOUTH = (() => {
     const $ = id => host.querySelector('#' + p + id);
     const set = (e, k, v) => e.setAttribute(k, v);
     const els = {};
-    ['nas', 'nasArr', 'tg', 'jawg', 'roof', 'v1', 'v2', 'lar', 'lu1', 'lu2', 'll1', 'll2', 'airO', 'z1', 'z2', 'm1', 'm1d', 'm2', 'm2d',
+    ['nas', 'nasArr', 'tg', 'jawg', 'roof', 'v1', 'v2', 'lar', 'lu1', 'lu2', 'll1', 'll2', 'airO', 'g1', 'g2', 'z1', 'z2', 'm1', 'm1d', 'm2', 'm2d',
       'lipO', 'opn', 'opl', 'fce', 'tU', 'tL', 'tT', 'names'].forEach(k => { els[k] = $(k); });
     const placeNames = [...els.names.querySelectorAll('text[data-p]')];
     function cap(a, b, x1, y1, x2, y2, w) {
@@ -287,11 +290,11 @@ const MOUTH = (() => {
       const Z = { lip: `M${f1(ux - 1)} 174L${f1(ux - 1)} 194`, lab: 'M83 189L93 201', dent: 'M95 171L97 190',
         alv: 'M97 168Q100 158 110 150', post: 'M111 150Q121 142 146 135', vel: vd, glo: `M307 ${f1(gy - 9)}L307 ${f1(gy + 9)}` };
       const on = new Set();
-      [['m1', 'm1d', 'z1'], ['m2', 'm2d', 'z2']].forEach((ids, k) => {
+      [['m1', 'm1d', 'z1', 'g1'], ['m2', 'm2d', 'z2', 'g2']].forEach((ids, k) => {
         const pl = mk && mk.pl[k], q = pl ? M[pl] : null, a = q ? mk.a : 0;
-        set(els[ids[0]], 'opacity', f1(a)); set(els[ids[1]], 'opacity', f1(a)); set(els[ids[2]], 'opacity', f1(a * .55));
+        set(els[ids[0]], 'opacity', f1(a)); set(els[ids[1]], 'opacity', f1(a)); set(els[ids[2]], 'opacity', f1(a * .55)); set(els[ids[3]], 'opacity', f1(a));
         if (q) {
-          [ids[0], ids[1]].forEach(i => { set(els[i], 'cx', f1(q[0])); set(els[i], 'cy', f1(q[1])); });
+          [ids[0], ids[1], ids[3]].forEach(i => { set(els[i], 'cx', f1(q[0])); set(els[i], 'cy', f1(q[1])); });
           set(els[ids[2]], 'd', Z[pl]);
           if (a > .3) on.add(pl);
         }

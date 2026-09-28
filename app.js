@@ -49,7 +49,7 @@ const STEPS = [1, 3, 7, 14, 30, 60];   // 일 단위. 반년~1년 기억을 목�
 const now = () => Date.now();
 
 /* ---------- 데이터 ---------- */
-let ALL = [], AIDX = {}, DRILL = [], VDRILL = [];
+let ALL = [], AIDX = {}, DRILL = [], VDRILL = [], EAR = {};
 /* 녹음 찾기 — 대소문자 안 가린다. 문장 첫 단어(Đây, Bạn...)은 대문자로 들어오는데
    녹음은 소문자 표제어로만 있어서, 이 한 곳을 통하지 않으면 문장마다 첫 단어만
    기기 목소리로 나서 "목소리가 섞인다"가 된다(2026-09-09 원인 확정). */
@@ -590,7 +590,7 @@ const UIVI = {
   '듣고 손으로 써 보세요': 'Nghe và viết tay', '모르겠어요': 'Không biết',
   '원어민': 'Người bản xứ', '나': 'Tôi', '번갈아 듣기': 'Nghe lần lượt',
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
-  '천천히': 'Chậm', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
+  '천천히': 'Chậm', '그래프를 누르면 아주 느리게(0.2배)': 'Chạm vào biểu đồ để nghe rất chậm (0,2×)', '알아 둘 것': 'Cần nhớ', '북부에서 같은 소리': 'Miền Bắc đọc giống nhau', '다른 소리 — 구별해야 함': 'Âm khác — cần phân biệt', '번갈아 듣기': 'Nghe xen kẽ', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
   '원어민 소리 높낮이': 'Cao độ giọng người bản xứ',
   '녹음': 'Ghi âm', '듣기 속도': 'Tốc độ nghe', '재생 위치': 'Vị trí phát', '멈춤': 'Tạm dừng', '재생': 'Phát', '닫기': 'Đóng',
   '이 단어과 헷갈리는 짝이 없습니다.': 'Từ này không có từ dễ nhầm.',
@@ -1992,7 +1992,11 @@ function pitchGraph(text, opt) {
     nat = n;
     if (!nat || !nat.raw || nat.raw.length < 5) { wrap.hidden = true; return; }
     draw(); update(false, false);
-    box.onclick = ev => { if (ev.target.closest('.pgmk')) play(text, false, null, spdOf()); };
+    /* 그래프(따라가는 입모양 포함) 어디를 눌러도 **0.2배 고정** (대표님 지시 2026-09-28: "발음이 너무 빨라 입모양도 너무 빠름").
+       위 [▶ 듣기]는 고른 속도 그대로다. */
+    box.classList.add('slowtap');
+    box.onclick = () => play(text, false, null, SLOW_TAP);
+    wrap.append(el('div', 'slowtaphint', tr('그래프를 누르면 아주 느리게(0.2배)')));
   });
   PB.views.add({ root: wrap, update });
   return wrap;
@@ -2000,6 +2004,7 @@ function pitchGraph(text, opt) {
 
 /* 듣기 속도 — 1·0.8·0.6·0.4·0.2배 (대표님 지시 2026-09-27, 0.4·0.2 추가). 고른 값은 저장하고, 단어 카드·예문·'원어민 듣기'가 모두 같은 값을 쓴다. */
 const SPDS = [1, .8, .6, .4, .2];
+const SLOW_TAP = .2;                 // 그래프·입모양 그림을 누르면 이 속도로 (2026-09-28)
 const spdOf = () => SPDS.includes(Number(S.wspd)) ? Number(S.wspd) : .8;
 const spdLab = v => v + '배';
 /* 속도 칩 — 누르면 1배·0.8배·0.6배 목록이 내려오고 **바로 고른다**(대표님 지시 2026-09-27: 1배에서 0.6배로도 한 번에).
@@ -2186,6 +2191,8 @@ function mouthPanel(text) {
   });
   M.setWord(text);
   setV(S.mview === 'side' ? 'side' : 'front');
+  body.classList.add('slowtap');                     // 입모양 그림을 눌러도 0.2배 고정 (2026-09-28)
+  body.onclick = () => play(text, false, null, SLOW_TAP);
   const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : ''; };
   M.at(0);
   const h = AIDX[text] || AIDX[text.toLowerCase()];
@@ -2466,7 +2473,7 @@ const HUB_ICO = {
 let WOPEN = null;                                   // 단어 화면에서 펼쳐 둔 갈래
 let GOPEN = null;                                   // 문법 화면에서 펼쳐 둔 책
 function studyStats() {
-  const basicKeys = ['P3', 'P1', 'P2', 'TYPE'];         // 자음 · 모음 · 성조 · 타이핑(24판을 끝내면 끝냄)
+  const basicKeys = [...BASIC_ORDER, 'TYPE'];          // 자음 · 모음 · 겹모음 · 받침 · 성조 · 헷갈리는 소리 · 타이핑(24판을 끝내면 끝냄)
   const basic = [basicKeys.filter(k => S.done[k]).length, basicKeys.length];
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track);
   let wd = days.filter(d => S.done[d.day]).length, wa = days.length;
@@ -2509,7 +2516,9 @@ function studyHubEntry() {
      음절을 가르치는 차례(âm đầu → vần → thanh)와 같다. 타이핑은 셋을 다 알아야 칠 수 있으니 맨 뒤.
    · '자판 치는 법'은 타이핑 연습 안(맨 위 접힘 표)으로 넣었고, '성조 듣고 가르기'·'모음 듣고 가르기'는
      성조·모음 챕터의 끝(귀로 구별하기)과 같은 것이라 뺐다. 손글씨는 테스트로 옮겼다. */
-const BASIC_ORDER = ['P3', 'P1', 'P2'];
+/* 2026-09-28 대표님 지시 "모든 모음과 자음이 나오게 · 뒤에 뭐만 올 수 있다 · 같거나 비슷한 소리" → 겹모음(P4)·받침(P5)·헷갈리는 소리(P6) 추가.
+   차례: 첫소리 → 모음 → 겹모음 → 받침(모음을 알아야 연습됨) → 성조 → 헷갈리는 소리. 자료 원본은 tools/build_basics.py */
+const BASIC_ORDER = ['P3', 'P1', 'P4', 'P5', 'P2', 'P6'];
 function studyBasicsEntry() {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyBasicsEntry();
@@ -6610,6 +6619,8 @@ function startLearn(d) {
     pre: d.pre || [] } });
   (d.letters || []).forEach(x => items.push({ k: 'letter', d: x }));
   (d.tones || []).forEach(x => items.push({ k: 'tone', d: x }));
+  (d.cmp || []).forEach(x => items.push({ k: 'cmp', d: x }));        // 헷갈리는 소리 짝 (기본기 P6)
+  (d.after || []).forEach(x => items.push({ k: 'know', d: x }));     // 장 끝 읽을거리 한 장 (받침 규칙 등)
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
   L = { day: d, items, i: 0 };
   drawCard();
@@ -7260,7 +7271,7 @@ function drawGramList() {
      2026-09-25: 다른 목차들과 같이 **한 줄 길**로 그린다 — 기본기 → 자판 → 문법 순으로 위로 오른다. */
   const nodes = [];
   ALL.filter(d => typeof d.day === 'string' && d.day[0] === 'P').forEach(d => {
-    const n = (d.letters || d.tones || []).length;
+    const n = (d.letters || d.tones || d.cmp || []).length;
     nodes.push({ key: d.day, title: d.theme, sub: tr('기본기') + ' · ' + n + tr('개'),
                  done: !!S.done[d.day], fn: () => { dive(drawGramList); startLearn(d); } });
   });
@@ -8085,9 +8096,47 @@ function drawCard() {
       row.append(e);
     }
     c.append(row);
+    /* 기본기 글자 카드 = **발음 면** (대표님 지시 2026-09-28: "기본기는 발음 카드면만 보여줘도 된다. 특별한 사항만 글로") —
+       소리 단추가 트는 말(snd)로 움직이는 입모양(정면·옆 단면, 누르면 0.2배) + 알아 둘 것(뒤에 무엇이 오나·철자 규칙) */
+    c.append(mouthPanel(snd));
+    if (x.rules && x.rules.length) {
+      const rb = el('div', 'lrules');
+      rb.append(el('div', 'lrulet', tr('알아 둘 것')));
+      const ul = el('ul');
+      x.rules.forEach(r => ul.append(el('li', null, r)));
+      rb.append(ul);
+      c.append(rb);
+    }
     if (x.ex) c.append(el('div', 'exline', '예: <b>' + esc(x.ex) + '</b> — ' + esc(x.ex_ko)));
-    if (x.snd && x.snd !== x.vi) c.append(el('div', 'lnote', tr('자음은 베트남 학교식으로') + ' <b>' + esc(x.snd) + '</b>' + tr('처럼 읽어 첫소리만 들려줍니다')));
+    if (L.day && L.day.day === 'P3' && x.snd && x.snd !== x.vi) c.append(el('div', 'lnote', tr('자음은 베트남 학교식으로') + ' <b>' + esc(x.snd) + '</b>' + tr('처럼 읽어 첫소리만 들려줍니다')));
     c.append(speakRow(snd));                // 글자 소리를 따라 말하기 + 곡선 비교
+  }
+
+  if (it.k === 'cmp') {
+    /* 헷갈리는 소리 짝 (기본기 P6) — 낱말을 누르면 그 소리 + 그 낱말의 입모양, [번갈아 듣기]로 비교 */
+    c.append(el('div', 'cmpt', esc(x.t)));
+    c.append(el('div', 'cmpsame ' + (x.same ? 'same' : 'diff'), tr(x.same ? '북부에서 같은 소리' : '다른 소리 — 구별해야 함')));
+    const list = el('div', 'cmplist'), mhost = el('div', 'cmpmouth'), rows = [];
+    const pick = (i, sound) => {
+      rows.forEach((r, j) => r.classList.toggle('on', j === i));
+      mhost.textContent = '';
+      mhost.append(mouthPanel(x.items[i].vi));
+      if (sound) play(x.items[i].vi, false, null, spdOf());
+    };
+    x.items.forEach((o, i) => {
+      const r = el('button', 'cmprow', '<span class="cmpplay">▶</span><b>' + esc(o.vi) + '</b><span>' + esc(o.ko) + '</span>');
+      r.type = 'button';
+      r.onclick = () => pick(i, true);
+      rows.push(r); list.append(r);
+    });
+    c.append(list);
+    const seq = el('button', 'ghost cmpseq', '▶ ' + tr('번갈아 듣기'));
+    seq.type = 'button';
+    seq.onclick = () => { const w = x.items.map(o => o.vi); playSeq(w.concat(w), rows.concat(rows)); };
+    c.append(seq);
+    c.append(el('div', 'rulenote', x.note));
+    c.append(mhost);
+    pick(0, false);
   }
 
   if (it.k === 'tone') {
@@ -8340,7 +8389,7 @@ function drawCard() {
   }
 
   // '1 / 12'만 보면 외울 게 12개인 줄 안다. 무엇을 세는지 붙여준다.
-  const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화', rule: '예문', cult: '문화' };
+  const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화', rule: '예문', cult: '문화', cmp: '소리 짝', know: '알아 두기' };
   // 표지는 세는 대상에서 빼야 '단어 1 / 10'이 맞는다
   const kinds = L.items.map(x => x.k);
   if (it.k === 'cover') {
@@ -8363,7 +8412,7 @@ function drawCard() {
   $('#next').textContent = L.day.gram ? '확인 문제 ›'
     : L.cult || L.day.know ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
-    : L.day.day === 'P1' || L.day.day === 'P2' ? '귀로 구별하기 ›' : '완료 ›';
+    : ['P1', 'P2', 'P4', 'P5', 'P6'].includes(L.day.day) ? '귀로 구별하기 ›' : '완료 ›';
 }
 $('#next').onclick = () => {
   // 연타 방지는 시간이 아니라 '아직 이 화면에 있는가'로 판단한다.
@@ -8408,7 +8457,7 @@ $('#next').onclick = () => {
   // 소개가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
   const d0 = L.day, at0 = L.i;
   const backToCards = () => { startLearn(d0); L.i = Math.min(at0, L.items.length - 1); drawCard(); };
-  if (L.day.day === 'P1') { dive(backToCards); startVowel(); }
+  if (['P1', 'P4', 'P5', 'P6'].includes(L.day.day)) { dive(backToCards); startEar(L.day.day); }
   else if (L.day.day === 'P2') { dive(backToCards); startTone(); }
   else if (typeof L.day.day === 'string' && L.day.day[0] === 'P') studyBasicsEntry();   // 자음 챕터 → 기본기 목록으로
   else dailyFlowEntry();
@@ -10160,30 +10209,42 @@ let T = null;
 
 /* 모음 구별 듣기 — 한국인이 가장 오래 헷갈리는 o/ô/ơ · u/ư · a/ă 를 귀로 가른다 */
 let VD = null;
-function startVowel() {
+/* 귀로 구별하기 — 장마다(모음 P1·겹모음 P4·받침 P5·헷갈리는 소리 P6) 묶음 안의 비슷한 소리를 듣고 고른다.
+   2026-09-28: 모음 묶음(voweldrill)이 8월 24일 재조립 때 빈 목록이 되어 문제가 0개였다 → tools/build_basics.py 의 eardrill 로 되살리고 넓힘 */
+const EAR_INTRO = {
+  P1: "글자는 아는데 소리가 다른 모음들입니다. o 입 크게 '오' · ô 오므린 '오' · ơ '어' · ư 입술 편 '으' — 귀에만 익히면 됩니다.",
+  P4: "겹모음 — a 가 긴가 짧은가(ai·ay, ao·au)와 입술 모양(ua·ưa, oi·ôi·ơi)을 귀로 가릅니다.",
+  P5: "받침 — 끝소리 -n·-ng·-nh, -t·-c·-ch 를 귀로 가릅니다. 짧은 소리라 여러 번 들어도 됩니다.",
+  P6: "헷갈리는 첫소리 — 북부에서도 서로 다른 소리들(l·n, t·th, b·v, c·kh, n·ng, đ·d)입니다.",
+};
+function startEar(key) {
+  const k = key || 'P1';
+  const groups = (EAR && EAR[k] && EAR[k].length) ? EAR[k] : (k === 'P1' ? VDRILL : []);
   const qs = [];
-  VDRILL.forEach(g => g.items.forEach(it => qs.push({ g, it })));
-  VD = { list: qs.sort(() => Math.random() - .5).slice(0, 10), i: 0, ok: 0 };
+  groups.forEach(g => g.items.forEach(it => qs.push({ g, it })));
+  VD = { key: k, list: qs.sort(() => Math.random() - .5).slice(0, 10), i: 0, ok: 0 };
   drawVowel();
-  show('tone', '모음', true);
+  const d = ALL.find(x => x.day === k);
+  show('tone', d ? d.theme : '모음', true);
 }
+function startVowel() { startEar('P1'); }
 function drawVowel() {
   const body = $('#toneBody');
   body.textContent = '';
   if (VD.i >= VD.list.length) {
     const r = el('div', 'result');
     r.append(el('div', 'n', VD.ok + ' / ' + VD.list.length));
-    r.append(el('div', null, VD.ok >= 7 ? '모음이 귀에 들어오고 있습니다' : '괜찮습니다. u와 ư는 원래 오래 걸립니다'));
-    const b2 = el('button', 'primary big', '다시 하기'); b2.style.marginTop = '16px'; b2.onclick = startVowel;
+    r.append(el('div', null, VD.ok >= 7 ? '귀에 들어오고 있습니다' : (VD.key === 'P1' ? '괜찮습니다. u와 ư는 원래 오래 걸립니다' : '괜찮습니다. 여러 번 들으면 차이가 들리기 시작합니다')));
+    const b2 = el('button', 'primary big', '다시 하기'); b2.style.marginTop = '16px'; b2.onclick = () => startEar(VD.key);
     const h2 = el('button', 'ghost big', '홈으로'); h2.style.marginLeft = '8px'; h2.onclick = renderHome;
     r.append(b2, h2); body.append(r); return;
   }
   const { g, it } = VD.list[VD.i];
   if (VD.i === 0) {
-    body.append(el('div', 'intro',
-      "글자는 아는데 소리가 다른 모음들입니다. o 입 크게 '오' · ô 오므린 '오' · ơ '어' · ư 입 벌린 '으' — 귀에만 익히면 됩니다."));
-    const rb = el('button', 'ghost sm', '모음 소개 다시 보기');
-    rb.onclick = () => startLearn(ALL.find(d => d.day === 'P1'));
+    body.append(el('div', 'intro', EAR_INTRO[VD.key] || EAR_INTRO.P1));
+    const d0 = ALL.find(d => d.day === VD.key);
+    const rb = el('button', 'ghost sm', (d0 ? d0.theme : '모음') + ' 소개 다시 보기');
+    rb.onclick = () => startLearn(d0 || ALL.find(d => d.day === 'P1'));
     body.append(rb);
   }
   body.append(el('div', 'q', `${VD.i + 1} / ${VD.list.length} · 소리를 듣고 고르세요`));
@@ -12036,6 +12097,7 @@ Promise.all([
   ALL = [...(d.prep || []), ...d.days];
   DRILL = d.tonedrill || [];
   VDRILL = d.voweldrill || [];
+  EAR = d.eardrill || {};                 // 장마다 '귀로 구별하기' 묶음 (tools/build_basics.py, 2026-09-28)
   AIDX = a;
   /* 대문자 표제어('Giới')만 색인에 있으면 문장 가운데의 소문자 단어('giới')을 눌러도 우리 소리가 안 났다 —
      기기 목소리로 넘어가 북부·고른 목소리가 아니었다(2026-09-26). 소문자 별칭을 달아 둔다. */

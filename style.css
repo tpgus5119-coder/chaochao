@@ -2162,6 +2162,8 @@ svg.curve.pw .pwword{transition:none}
 /* 하나뿐인 높낮이 그래프 + 따라가는 표지 */
 .pgwrap{margin-top:12px; width:100%}
 .pgraph{position:relative; padding:6px 4px 2px}
+.slowtap{cursor:pointer; -webkit-tap-highlight-color:transparent}
+.slowtaphint{font-size:12px; color:var(--dim); text-align:center; margin-top:2px}
 .pgsvg svg{display:block; width:100%; height:auto}
 .pgsvg svg.curve.pw .played{stroke:var(--fg); stroke-width:3.2}
 .pgsvg svg.curve.pw .mine{stroke:var(--accent); stroke-width:2.6; opacity:.6}
@@ -2734,3 +2736,22 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .ttrow.miss{border-color:var(--bad)}
 .ttname small{color:var(--dim); margin-left:4px}
 .ttsc{font-variant-numeric:tabular-nums; font-weight:700}
+
+/* 기본기 발음 면 — 알아 둘 것 · 헷갈리는 소리 짝 (2026-09-28) */
+.lrules{width:100%; margin:10px 0 4px; padding:10px 14px; border:1px solid var(--line); border-radius:12px; background:var(--bg); text-align:left}
+.lrulet{font-size:13px; font-weight:700; color:var(--accent); margin-bottom:4px}
+.lrules ul{margin:0; padding-left:18px}
+.lrules li{font-size:14px; line-height:1.55; color:var(--fg); margin:2px 0}
+.cmpt{font-size:34px; font-weight:800; letter-spacing:.02em; text-align:center; margin-top:4px}
+.cmpsame{display:inline-block; font-size:13px; font-weight:700; padding:3px 10px; border-radius:999px; margin:6px auto 10px}
+.cmpsame.same{color:var(--ok); border:1px solid var(--ok)}
+.cmpsame.diff{color:var(--bad); border:1px solid var(--bad)}
+.cmplist{display:flex; flex-direction:column; gap:8px; width:100%}
+.cmprow{display:flex; align-items:center; gap:10px; width:100%; padding:10px 14px; border:1px solid var(--line); border-radius:12px; background:var(--card); color:var(--fg); text-align:left; font-size:15px}
+.cmprow b{font-size:22px; min-width:64px}
+.cmprow span:last-child{color:var(--dim)}
+.cmprow.on{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset}
+.cmprow.now{background:var(--bg)}
+.cmpplay{color:var(--accent); font-size:14px}
+.cmpseq{margin:10px auto 2px}
+.cmpmouth{width:100%; margin-top:6px}
