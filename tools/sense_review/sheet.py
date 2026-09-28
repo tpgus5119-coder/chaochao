@@ -15,6 +15,7 @@ def main():
     S = json.loads((R / "data/_senses.json").read_text(encoding="utf-8"))
     W = json.loads((R / "data/sib.json").read_text(encoding="utf-8"))["w"]
     G = json.loads((R / "data/_dict_gloss.json").read_text(encoding="utf-8"))
+    sdef = json.loads((R / "data/_sdef.json").read_text(encoding="utf-8"))
     L = lessons(part)
     for lk, name, words in L[start - 1:start - 1 + n]:
         print(f"=== [{part} {L.index((lk, name, words)) + 1}/{len(L)}] {lk} · {name} · {len(words)}낱말")
@@ -26,6 +27,10 @@ def main():
             ss = S.get(k)
             if ss:
                 print("    뜻: " + " ".join(f"{i + 1}){t}" for i, t in enumerate(ss)))
+                # 다른 수업에서 이미 정한 기본 뜻 — 같은 낱말을 한결같이 보려고(문맥이 다르면 달라도 된다)
+                prev = [f"{x}={v[k]}" for x, v in sdef.items() if k in v and x != lk][:8]
+                if prev:
+                    print("    앞서: " + " ".join(prev))
             sw = W.get(k) or W.get(w["vi"]) or {}
             m = sw.get("m") or {}
             if sw.get("s") or sw.get("a"):

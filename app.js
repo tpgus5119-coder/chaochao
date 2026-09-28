@@ -590,7 +590,7 @@ const UIVI = {
   '듣고 손으로 써 보세요': 'Nghe và viết tay', '모르겠어요': 'Không biết',
   '원어민': 'Người bản xứ', '나': 'Tôi', '번갈아 듣기': 'Nghe lần lượt',
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
-  '천천히': 'Chậm', '그래프를 누르면 아주 느리게(0.2배)': 'Chạm vào biểu đồ để nghe rất chậm (0,2×)', '알아 둘 것': 'Cần nhớ', '북부에서 같은 소리': 'Miền Bắc đọc giống nhau', '다른 소리 — 구별해야 함': 'Âm khác — cần phân biệt', '번갈아 듣기': 'Nghe xen kẽ', '뜻을 누르면 그 뜻의 동의어·반의어로 바뀝니다': 'Chạm vào một nghĩa để xem từ đồng nghĩa · trái nghĩa của nghĩa đó', '이 뜻의 동의어·반의어는 아직 자료에 없습니다.': 'Chưa có từ đồng nghĩa · trái nghĩa cho nghĩa này.', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
+  '천천히': 'Chậm', '그래프를 누르면 아주 느리게(0.2배)': 'Chạm vào biểu đồ để nghe rất chậm (0,2×)', '알아 둘 것': 'Cần nhớ', '북부에서 같은 소리': 'Miền Bắc đọc giống nhau', '다른 소리 — 구별해야 함': 'Âm khác — cần phân biệt', '뜻을 누르면 그 뜻의 동의어·반의어로 바뀝니다': 'Chạm vào một nghĩa để xem từ đồng nghĩa · trái nghĩa của nghĩa đó', '이 뜻의 동의어·반의어는 아직 자료에 없습니다.': 'Chưa có từ đồng nghĩa · trái nghĩa cho nghĩa này.', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
   '원어민 소리 높낮이': 'Cao độ giọng người bản xứ',
   '녹음': 'Ghi âm', '듣기 속도': 'Tốc độ nghe', '재생 위치': 'Vị trí phát', '멈춤': 'Tạm dừng', '재생': 'Phát', '닫기': 'Đóng',
   '이 단어과 헷갈리는 짝이 없습니다.': 'Từ này không có từ dễ nhầm.',
