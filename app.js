@@ -786,7 +786,13 @@ function play(text, slow, dir, spd) {
      계속 1배로 나고 있었다. 이 파일 다른 다섯 곳(예: 8783줄)은 이미 src 먼저였는데
      제일 많이 쓰이는 이 자리만 거꾸로였다. 순서만 바꾼다. */
   audio.src = `audio/${d}/n/${h}.mp3`;
-  audio.playbackRate = spd ? spd : (slow ? Math.max(.5, rate() * .7) : rate());
+  const r = spd ? spd : (slow ? Math.max(.5, rate() * .7) : rate());
+  /* 그래프를 누르면 **무조건 0.2배** (대표님 지시 2026-09-29) — 사파리는 새 소리를 불러오면서 속도를 기본값(1배)으로
+     되돌리는 일이 있다. 기본 속도(defaultPlaybackRate)까지 같이 넣고, 소리가 실제로 시작되면 한 번 더 맞춘다 */
+  audio.defaultPlaybackRate = r;
+  audio.playbackRate = r;
+  const want = audio.src;
+  audio.addEventListener('playing', () => { if (audio.src === want && audio.playbackRate !== r) audio.playbackRate = r; }, { once: true });
   audio.onerror = () => { audio.onerror = null; speakVi(text, false, spd ? spd : (slow ? rate() * .7 : 0), S.voice); };
   audio.currentTime = 0;
   audio.play().catch(() => { });
@@ -1269,7 +1275,7 @@ async function playSeq(list, rows) {
     if (!h) continue;
     audio.pause();
     audio.src = `audio/${voiceDir()}/n/${h}.mp3`;
-    audio.playbackRate = rate();
+    audio.defaultPlaybackRate = audio.playbackRate = rate();
     audio.currentTime = 0;
     await new Promise(res => {
       audio.onended = audio.onerror = res;
@@ -1572,7 +1578,7 @@ async function overlayPlay(text, spd) {
   const src = `audio/${voiceDir()}/n/${h}.mp3`;
   PB.spdSrc = src;
   audio.onerror = null;
-  audio.src = src; audio.playbackRate = spd;               // 원어민은 고른 듣기 속도로
+  audio.src = src; audio.defaultPlaybackRate = audio.playbackRate = spd;               // 원어민은 고른 듣기 속도로
   myVoice.src = REC.url; myVoice.playbackRate = 1;
   const ready = a => new Promise(res => {                   // 둘 다 바로 틀 수 있을 때까지
     if (a.readyState >= 3) return res();
@@ -1967,7 +1973,9 @@ function pitchGraph(text, opt) {
     const nLive = pbLive(h, playing);
     const tN = nLive ? clamp(audio.currentTime, seriesN.t0, seriesN.t0 + seriesN.span) : seriesN.t0;
     const a = Math.max(0, nat.t0 - .06), b = Math.min(nat.total, nat.t0 + seriesN.span + .05);
-    const q = place(mkN, 0, seriesN, tN, nLive, (audio.currentTime - a) / ((b - a) || 1));
+    /* 이 낱말 소리가 아닐 때(예문·다른 낱말 재생 중)는 입을 **처음 모양에 둔다** — 전에는 재생 시각만 보고 입을 움직여
+       예문을 누르면 아래 그래프의 입이 따라 움직였다(대표님 지적 2026-09-29: "예문 클릭할 때 아래의 입모양 움직이지 말라") */
+    const q = place(mkN, 0, seriesN, tN, nLive, nLive ? (audio.currentTime - a) / ((b - a) || 1) : 0);
     if (clN) clN.setAttribute('width', nLive ? q[0].toFixed(1) : 0);
     if (seriesM) {
       const mLive = !!minePlaying && REC.key === text;
@@ -2139,7 +2147,7 @@ function playBar(text) {
   const load = () => {
     if (ownsAudio(h)) return Promise.resolve();
     audio.pause(); PB.hold = null; PB.spdSrc = null; audio.onerror = null;
-    audio.src = url(); audio.playbackRate = spdOf();
+    audio.src = url(); audio.defaultPlaybackRate = audio.playbackRate = spdOf();
     return new Promise(res => { audio.addEventListener('loadedmetadata', res, { once: true }); setTimeout(res, 2500); });
   };
   rng.addEventListener('input', async () => {
@@ -2253,7 +2261,7 @@ function getCtx() {
 async function nativeCurve(text) {
   const key = voiceDir() + '|' + text;
   if (nativeCache[key] !== undefined) return nativeCache[key];
-  const h = AIDX[text];
+  const h = AIDX[text] || AIDX[text.toLowerCase()];
   if (!h) return (nativeCache[key] = null);
   try {
     /* 느린 판은 더 두지 않는다 ('느리게 듣기'를 없앴고 저장소가 1GB 에 닿았다).
@@ -5910,13 +5918,13 @@ function playKoSeq(items, done) {
       // 안 나는 일을 막는다.
       let fell = false;
       audio.pause(); audio.src = src; audio.currentTime = 0;
-    audio.playbackRate = rate();
+    audio.defaultPlaybackRate = audio.playbackRate = rate();
       audio.onended = () => setTimeout(step, 450);
       audio.onerror = () => {
         if (fell) { audio.onerror = null; step(); return; }
         fell = true;
         audio.src = src.replace('/x/', '/n/');
-        audio.playbackRate = rate();
+        audio.defaultPlaybackRate = audio.playbackRate = rate();
         audio.play().catch(() => step());
       };
       audio.play().catch(() => { audio.onended = null; done && done(); });
@@ -5945,7 +5953,7 @@ function speakKo(text) {
   const play = id => {
     audio.pause();
     audio.src = `audio/ko-${S.voice === 'm' ? 'm' : 'f'}/n/${id}.mp3`;
-    audio.playbackRate = rate();
+    audio.defaultPlaybackRate = audio.playbackRate = rate();
     audio.currentTime = 0;
     audio.play().catch(() => sysSpeakKo(text));
   };
@@ -5959,6 +5967,12 @@ function sysSpeakKo(text) {
   try {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'ko-KR';
+    /* 한국어 폰 목소리도 **고른 목소리(남·여)** 로 (대표님 지시 2026-09-29: "모든 tts") — 이름으로 남녀를 찾고, 없으면 높낮이로 흉내 낸다(speakVi 와 같은 방법) */
+    const male = S.voice === 'm';
+    const ks = (VOICES || []).filter(v => (v.lang || '').toLowerCase().startsWith('ko'));
+    const pick = ks.find(v => (male ? /male|minsu|injoon|jinho|hyunsu|_m\b|-m\b/i : /female|yuna|sora|sunhi|seoyeon|jimin|_f\b|-f\b/i).test(v.name || ''));
+    if (pick) u.voice = pick;
+    else if (ks.length) { u.voice = ks[0]; u.pitch = male ? .65 : 1.15; }
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   } catch (e) { /* 목소리가 없는 기기도 있다 — 조용히 넘긴다 */ }
 }
@@ -8646,7 +8660,7 @@ function drawFlash() {
   }, { passive: true });
   audio.pause();
   audio.src = `audio/${voiceDir()}/n/${AIDX[w.vi]}.mp3`;
-  audio.playbackRate = rate();
+  audio.defaultPlaybackRate = audio.playbackRate = rate();
   audio.currentTime = 0;
   audio.play().catch(() => { });
   const tm = setTimeout(go, 3000);       // 한 장에 3초 — 소리가 끝나도 남은 시간은 눈으로 본다

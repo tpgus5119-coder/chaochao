@@ -19,6 +19,8 @@
      실제 카드에 12px가 그대로 쓰여 있었다. 그래서 14px가 아니라 12px로 맞춘다. */
   --radius-lg:12px;
   --shadow:0 1px 2px rgba(0,0,0,.1);
+  --chip:#E4E6EB; --exbg:#F5F6F8; --warm-bg:#FFF1E8; --warm-fg:#B4520F; --okbg:#EDF8F1; --okfg:#1B6B3A; --okbg2:#e8f5e9; --okfg2:#2e7d32;
+  --badbg:#ffebee; --coinbg:#FFF4D6; --coinfg:#8A5A00; --switchoff:#C9CDD3;   /* 9-27 화면 통일 때 박아 둔 밝은 색을 변수로 — 야간 모드에서 흰 상자에 흰 글자가 되던 것(대표님 지적 2026-09-29) */
   /* 위 색·반경 값은 Stitch(구글 AI 디자인 도구) 시안(stitch-home.html)의 실제 토큰을 그대로 옮긴 것 — 2026-09-08 */
 }
 @media (prefers-color-scheme:dark){
@@ -29,9 +31,13 @@
     --surface-2:#2a2b2c; --track:#3a3b3c;
     --ok:#34d399; --bad:#f02849; --warn:#e3b341;
     --shadow:0 1px 2px rgba(0,0,0,.35);
+    --chip:#3a3b3c; --exbg:#2a2b2c; --warm-bg:#4a2410; --warm-fg:#ffb691; --okbg:#143a26; --okfg:#6ee7a8; --okbg2:#143a26; --okfg2:#6ee7a8;
+    --badbg:#3d1a1f; --coinbg:#3d3010; --coinfg:#f0c35a; --switchoff:#4e4f50;
   }
 }
 :root[data-theme=dark]{
+  --chip:#3a3b3c; --exbg:#2a2b2c; --warm-bg:#4a2410; --warm-fg:#ffb691; --okbg:#143a26; --okfg:#6ee7a8; --okbg2:#143a26; --okfg2:#6ee7a8;
+  --badbg:#3d1a1f; --coinbg:#3d3010; --coinfg:#f0c35a; --switchoff:#4e4f50;
   --bg:#18191a; --fg:#e4e6e9; --dim:#b0b3b8; --line:#3e4042;
   --card:#242526; --accent:#5a9cff; --accent-fg:#0a1a33;
   --accent-soft:#1d3866; --tertiary:#ffb691; --tertiary-soft:#4a2410;
@@ -2012,8 +2018,8 @@ button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color
           min-height:52px; transition:transform .08s}
 .matchbtn[data-s="sel"]{border-color:var(--accent,#1877F2); border-width:2.5px;
                         background:color-mix(in srgb, var(--accent,#1877F2) 10%, transparent)}
-.matchbtn[data-s="ok"]{border-color:#2e7d32; background:#e8f5e9; color:#2e7d32; opacity:.55}
-.matchbtn[data-s="no"]{border-color:#c62828; background:#ffebee; animation:shake .3s}
+.matchbtn[data-s="ok"]{border-color:var(--okfg2); background:var(--okbg2); color:var(--okfg2); opacity:.55}
+.matchbtn[data-s="no"]{border-color:#c62828; background:var(--badbg); animation:shake .3s}
 @keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .matchdone{text-align:center; font-size:15px; margin:14px 0 4px; color:var(--dim)}
 
@@ -2021,8 +2027,8 @@ button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color
 .puzzans{min-height:64px; border:2px dashed var(--line,#e4e6eb); border-radius:12px;
          padding:12px; display:flex; flex-wrap:wrap; gap:8px; align-items:flex-start;
          font-size:17px; margin:10px 0}
-.puzzans[data-r="ok"]{border-style:solid; border-color:#2e7d32; background:#e8f5e9}
-.puzzans[data-r="no"]{border-style:solid; border-color:#c62828; background:#ffebee}
+.puzzans[data-r="ok"]{border-style:solid; border-color:var(--okfg2); background:var(--okbg2)}
+.puzzans[data-r="no"]{border-style:solid; border-color:#c62828; background:var(--badbg)}
 .puzzhint{font-size:14.5px; color:var(--dim); text-align:center; margin-bottom:4px}
 .puzztiles{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
 .puzztile{padding:10px 14px; border-radius:10px; border:1.5px solid var(--line,#e4e6eb);
@@ -2417,8 +2423,8 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .hdate{font-size:13px; font-weight:700; color:var(--dim)}
 .hname{font-size:22px; font-weight:800; margin-top:2px}
 .hstreak{gap:8px; margin-top:8px}
-.hpill{display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:700; padding:4px 10px; border-radius:999px; background:#E4E6EB; color:var(--dim)}
-.hpill.fire{background:#FFF1E8; color:#B4520F}
+.hpill{display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:700; padding:4px 10px; border-radius:999px; background:var(--chip); color:var(--dim)}
+.hpill.fire{background:var(--warm-bg); color:var(--warm-fg)}
 .hpill.fire svg{width:14px; height:14px; fill:#FF8A3D; stroke:none}
 .pethead{width:100%; display:flex; justify-content:space-between; align-items:center}
 .petnm{font-size:15px; font-weight:800}
@@ -2428,10 +2434,10 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .petbub[hidden]{display:none}
 .hbtn small{opacity:.85}
 /* 낱말 카드 — 발음 알약 · 말하기 단추 · 예문 상자 */
-.wkr{display:inline-flex; align-items:center; font-size:14px; font-weight:700; padding:4px 10px; border-radius:999px; background:#E4E6EB; color:var(--dim)}
+.wkr{display:inline-flex; align-items:center; font-size:14px; font-weight:700; padding:4px 10px; border-radius:999px; background:var(--chip); color:var(--dim)}
 .rec{display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--bad); color:var(--bad); background:var(--card); border-radius:12px; font-weight:700}
 .rec svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
-.wfcard .wex{background:#F5F6F8; border:0; text-align:left}
+.wfcard .wex{background:var(--exbg); border:0; text-align:left}
 /* 카드 훑기 */
 .flcard{gap:8px}
 .flhead{display:flex; justify-content:space-between; align-items:center; width:100%}
@@ -2450,7 +2456,7 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .qcard .q{margin:0 0 4px}
 .qcard .qmain{margin:0; text-align:left; font-size:30px; font-weight:900; width:100%; display:block}
 .opts button{min-height:60px; border-radius:14px; font-size:20px; font-weight:700; box-shadow:none}
-.opts button[data-r="ok"]{border-color:var(--ok); background:#EDF8F1; color:#1B6B3A; font-weight:800}
+.opts button[data-r="ok"]{border-color:var(--ok); background:var(--okbg); color:var(--okfg); font-weight:800}
 /* 실력 분석 */
 .rolepick{justify-content:center; gap:0; border:1px solid var(--line); border-radius:999px; overflow:hidden; width:max-content; margin:6px auto 12px; background:var(--card)}
 .rolepick button{border:0; border-radius:0; padding:8px 16px; font-weight:800; color:var(--dim); background:transparent}
@@ -2462,7 +2468,7 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .barrow .bpct{font-size:14px; font-weight:800}
 
 /* 한자 뿌리 알약 — 뜻 옆 (2026-09-27) */
-.ko .hanja{display:inline-flex; align-items:center; margin-left:8px; font-size:13px; font-weight:700; padding:3px 9px; border-radius:999px; background:#FFF1E8; color:#B4520F; vertical-align:middle; white-space:nowrap}
+.ko .hanja{display:inline-flex; align-items:center; margin-left:8px; font-size:13px; font-weight:700; padding:3px 9px; border-radius:999px; background:var(--warm-bg); color:var(--warm-fg); vertical-align:middle; white-space:nowrap}
 /* 듣기 옆 ▾ 는 검은색 (대표님 2026-09-27 오후) */
 .spdchip, .spdchip .spdcaret{color:var(--fg)}
 .spdchip.pair .spdval{color:var(--accent)}
@@ -2480,7 +2486,7 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .stepb{width:40px; height:36px; border:0; background:var(--bg); font:inherit; font-size:20px; font-weight:800; color:var(--accent); cursor:pointer}
 .stepb:disabled{color:var(--dim); opacity:.5}
 .stepv{min-width:64px; text-align:center; font-size:15px; font-weight:800}
-.switch{position:relative; width:52px; height:30px; border-radius:999px; border:0; background:#C9CDD3; padding:0; cursor:pointer; transition:background .15s}
+.switch{position:relative; width:52px; height:30px; border-radius:999px; border:0; background:var(--switchoff); padding:0; cursor:pointer; transition:background .15s}
 .switch i{position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.3); transition:left .15s}
 .switch.on{background:var(--accent)}
 .switch.on i{left:25px}
@@ -2570,7 +2576,7 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 @keyframes ptgrow{0%{transform:scale(.6)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.petfig svg *{animation:none!important}}
 /* 짜오 살림 — 돈 알약 · 배부름 막대 · 먹이 창 (2026-09-27 저녁) */
-.petcoin{display:inline-flex; align-items:center; gap:5px; font-size:13px; font-weight:800; padding:4px 10px; border-radius:999px; background:#FFF4D6; color:#8A5A00}
+.petcoin{display:inline-flex; align-items:center; gap:5px; font-size:13px; font-weight:800; padding:4px 10px; border-radius:999px; background:var(--coinbg); color:var(--coinfg)}
 .petcoin svg{width:15px; height:15px}
 .petrow{width:100%; display:flex; align-items:center; gap:10px; margin-top:8px}
 .petfull{flex:1; display:flex; align-items:center; gap:8px; font-size:13px; color:var(--dim); min-width:0}

@@ -151,7 +151,8 @@ def _enrich0(w, skey=None):
     cached = old_src.get((skey, ck)) or old_cache.get(ck)
     if cached:
         # 이전에 이미 값을 구해 둔 낱말 — 예문·그림·발음을 그대로 재사용(새로 안 만든다)
-        for f in ("kr_read", "ex", "ex_src", "img", "star", "weekly"):
+        # ex_pool·ex_chk: 교재 예문을 교재 문장으로 바꾼 기록(tools/book_ex) — 다시 빌드해도 남게
+        for f in ("kr_read", "ex", "ex_src", "ex_pool", "ex_chk", "img", "star", "weekly"):
             if cached.get(f):
                 out[f] = cached[f]
         if out.get("img"):
