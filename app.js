@@ -8785,7 +8785,7 @@ function drawPuzzle(body, q) {
   if (md === 'puzzle') body.append(el('div', 'puzzhint', esc(w.ko)));      // 뜻은 보여준다 — 어순을 묻는 문제니까
   const row0 = el('div', 'qplay');
   if (md === 'puzzle_ko') { const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(w.ko); row0.append(kb); setTimeout(() => speakKo(w.ko), 150); }   // 뜻을 듣고 만든다 (2026-09-28)
-  else { const pb = el('button', md === 'puzzle_vi' ? 'primary big' : 'ghost', '🔊 듣기'); pb.onclick = () => play(w.vi, false); row0.append(pb); if (md === 'puzzle_vi') setTimeout(() => play(w.vi, false), 150); }   // 문장을 듣고 만든다
+  else if (md === 'puzzle_vi') { const pb = el('button', 'primary big', '🔊 듣기'); pb.onclick = () => play(w.vi, false); row0.append(pb); if (md === 'puzzle_vi') setTimeout(() => play(w.vi, false), 150); }   // 문장을 듣고 만든다
   body.append(row0);
 
   /* 마침표\u00b7물음표는 조각에서 뗀다 — 'gỗ.' 처럼 붙어 있으면
@@ -9196,7 +9196,7 @@ function drawToneQ(body, q) {
   const bare = syls.map(stripTone).join(' ');
   const main = el('button', 'qmain qtap', esc(bare)); main.type = 'button'; main.onclick = () => sound(w.vi);
   const qc = el('div', 'qcard'); qc.append(body.querySelector('.q'), main, el('div', 'q mid', esc(w.ko))); body.append(qc);   // 뜻도 보여 준다 (대표님 지시 2026-09-28: 소리만 듣고 맞추라는 건 너무 어렵다)
-  const row = el('div', 'qplay'); const lb = el('button', 'ghost', '🔊 듣기'); lb.onclick = () => sound(w.vi); row.append(lb); body.append(row);
+  // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   sound(w.vi);
   const MK = ['', '\u0300', '\u0301', '\u0309', '\u0303', '\u0323'];
   const seen = new Set([w.vi.toLowerCase()]), opts = [w.vi];
@@ -9213,10 +9213,11 @@ function drawToneQ(body, q) {
 function drawSay(body, q) {
   const w = q.w, koMode = q.mode === 'say_ko', shadow = q.mode === 'shadow', picOnly = q.mode === 'say_pic';
   const p = pic(w, 'pic mid'); if (p && !shadow) body.append(p);
-  if (shadow) body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.vi)));          // 따라 말하기 — 베트남어를 보며 듣고 따라 한다
+  const tapQ = txt => { const b = el('button', 'qmain qtap' + (w.sent ? ' sent' : ''), esc(txt)); b.type = 'button'; b.onclick = () => sound(w.vi); return b; };   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
+  if (shadow) body.append(tapQ(w.vi));          // 따라 말하기 — 베트남어를 보며 듣고 따라 한다
   else if (picOnly) { /* 그림만 보고 말한다 (주간 시험 D2) — 뜻 글은 없다 */ }
   else if (koMode) { const kr = el('div', 'qplay'); const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(w.ko); kr.append(kb); body.append(kr); setTimeout(() => speakKo(w.ko), 150); }
-  else if (!picOnly) body.append(el('div', 'qmain' + (w.sent ? ' sent' : ''), esc(w.ko)));
+  else if (!picOnly) body.append(tapQ(w.ko));
   let done = false;
   const finish = (ok, judged) => {
     if (done) return; done = true;
@@ -9225,10 +9226,9 @@ function drawSay(body, q) {
     if (ok) Q.ok++; else requeue(q);
     const ans = el('div', 'ansbox');
     const vb = el('button', 'vi sm tapword', esc(w.vi)); vb.type = 'button'; vb.onclick = () => pairPopup(w.vi, { kr: w.kr_read, ko: w.ko });
-    ans.append(vb, toneRow(w.tones), reveal(krShow(w)));
-    const sr = soundRow(w.vi, true); sr.classList.add('mid');
-    ans.append(sr);
+    ans.append(vb, toneRow(w.tones), reveal(krShow(w)));   // 답 칸의 듣기 줄은 뺐다 — 답이 열릴 때 소리가 한 번 나고, 단어를 누르면 된다
     body.append(ans);
+    const early = body.querySelector('.nextrow'); if (early) early.remove();
     nextBtn(body, () => { Q.i++; drawQuiz(); });
   };
   /* 카드의 말하기와 **같은 길**(대표님 지적 2026-09-27 밤: "발음을 알아들을 수 없고 높낮이 그래프도 안 보인다") —
@@ -9236,7 +9236,6 @@ function drawSay(body, q) {
   const box = el('div', 'cmpbox'); box.dataset.merged = '1';
   box.onVerdict = (i, ok) => { if (i === 0 && ok !== null) finish(ok === true, true); };
   const row = el('div', 'qplay');
-  if (!koMode && !picOnly) { const lb = el('button', 'ghost', '🔊 듣기'); lb.onclick = () => sound(w.vi); row.append(lb); }   // 뜻 듣고·그림 보고 말하기에는 베트남어 소리 단추가 없다(답을 주니까)
   if (shadow) setTimeout(() => sound(w.vi), 150);
   const rec = canRecord();
   if (rec) { const mic = el('button', 'rec', '🎤 말하기'); mic.onclick = () => toggleRec(w.vi, mic, box); row.append(mic); }
@@ -9244,6 +9243,12 @@ function drawSay(body, q) {
   showA.onclick = () => { bumpSaid(); finish(!rec, false); };
   row.append(showA);
   body.append(row, pitchGraph(w.vi, {}), box);
+  /* 판정이 나든 안 나든 넘어갈 수 있어야 한다 (대표님 지시 2026-09-28: "다른 테스트들도 맞든 틀리든 다음 버튼이 활성화되잖아").
+     전에는 폰 인식이 답을 못 주면(—) 단추가 안 생겨 그 자리에서 막혔다. 판정 전에 누르면 틀린 것으로 적고 바로 다음으로 간다 */
+  const early = el('div', 'nextrow');
+  const nx = el('button', 'ghost big', tr('다음') + ' ›');
+  nx.onclick = () => { if (!done) { done = true; markSpeed(false, 'sayself'); grade(w.vi, false, Q.early); requeue(q); } Q.i++; drawQuiz(); };
+  early.append(nx); row.after(early);                 // 말하기 단추 바로 밑 — 스크롤 없이 보이게
 }
 
 /* 손으로 — 성조 부호까지 써 본다 (복습 안에서) */
@@ -9363,10 +9368,8 @@ function telexHint() {
 }
 function drawTypeQ(body, q) {
   const w = q.w;
-  body.append(el('div', 'qmain', q.mode === 'dictation' ? '🔊' : esc(w.ko)));   // 받아쓰기는 뜻 없이 듣고 친다 (주간 시험 A4)
-  const row = el('div', 'qplay');
-  const p1 = el('button', 'ghost', '🔊 듣기'); p1.onclick = () => play(w.vi, false);
-  row.append(p1); body.append(row);
+  const qm = el('button', 'qmain qtap', q.mode === 'dictation' ? '🔊' : esc(w.ko)); qm.type = 'button';   // 받아쓰기는 뜻 없이 듣고 친다 (주간 시험 A4)
+  qm.onclick = () => play(w.vi, false); body.append(qm);   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   play(w.vi, false);
   body.append(telexHint());          // 성조·모자 치는 법 (접힘) — 대표님 지시 2026-09-27 밤
   let txt = '', typed = false;
