@@ -10,7 +10,7 @@ import re
 import sys
 
 sys.path.insert(0, __file__.rsplit("/", 1)[0])
-from common import R, lessons, read_tsv, key  # noqa: E402
+from common import R, lessons, read_tsv, key, main_defaults, main_defaults_all  # noqa: E402
 
 VN = set("àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ")
 
@@ -28,6 +28,8 @@ def main():
     vw = json.loads((R / "data/_vi_words.json").read_text(encoding="utf-8"))
     syl = {s for w in (vw if isinstance(vw, list) else vw.keys()) for s in str(w).lower().split()}
     rev = {(r[0], key(r[1])): r[2].strip() for r in read_tsv("기본뜻.tsv")}
+    md = main_defaults()
+    mda = main_defaults_all()
     L = lessons(part)
     bad_total = 0
     for i in range(start - 1, min(len(L), start - 1 + n)):
@@ -39,12 +41,22 @@ def main():
             r = rev.get((lk, k))
             if r is None:
                 probs.append(f"{w['vi']}: 판정 없음"); continue
-            if len(ss) >= 2:
+            if r == "M":
+                # 선배·22기: 교재에서 정한 기본 뜻을 따른다
+                if part not in ("선배", "22기") or len(ss) < 2 or k not in md:
+                    probs.append(f"{w['vi']}: 'M'(교재 따름)인데 교재 기본 뜻이 없음")
+                elif sdef.get(lk, {}).get(k) != md[k]:
+                    probs.append(f"{w['vi']}: 교재 따름이 _sdef.json 에 안 들어감 (apply.py?)")
+                elif not (parts(ss[md[k] - 1]) & parts(w.get("ko", ""))):
+                    notes.append(f"{w['vi']}: 교재따름 {md[k]}) {ss[md[k] - 1]} ↔ 이 자료 뜻 {w.get('ko', '')}")
+            elif len(ss) >= 2:
                 if not r.isdigit() or not 1 <= int(r) <= len(ss):
                     probs.append(f"{w['vi']}: 기본 뜻 번호 '{r}' (뜻 {len(ss)}개)")
                 elif sdef.get(lk, {}).get(k) != int(r):
                     probs.append(f"{w['vi']}: _sdef.json 에 안 들어감 (apply.py?)")
                 else:
+                    if part in ("선배", "22기") and k in mda and int(r) not in mda[k]:
+                        notes.append(f"{w['vi']}: 교재에 있는 낱말인데 교재 기본 뜻({mda[k]})이 아닌 {r}번")
                     if not (parts(ss[int(r) - 1]) & parts(w.get("ko", ""))):
                         notes.append(f"{w['vi']}: 기본 {r}) {ss[int(r) - 1]} ↔ 수업뜻 {w.get('ko', '')}")
             elif r != "-":

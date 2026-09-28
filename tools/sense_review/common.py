@@ -44,3 +44,23 @@ def read_tsv(name):
 
 def key(vi):
     return " ".join(str(vi).strip().lower().split())
+
+
+def main_defaults_all():
+    """교재(main) 수업마다 정한 기본 뜻 {낱말: [번호, …]} — 같은 낱말이 교재 여러 과에서 다른 뜻이면 모두(앞 과 먼저, 겹침 없이)"""
+    out = {}
+    for r in read_tsv("기본뜻.tsv"):
+        if r[0].startswith("B:main") and r[2].strip().isdigit():
+            v = out.setdefault(key(r[1]), [])
+            if int(r[2].strip()) not in v:
+                v.append(int(r[2].strip()))
+    return out
+
+
+def main_defaults():
+    """교재(main)에서 정한 기본 뜻 {낱말: 번호} — 선배·22기는 교재에 있는 낱말이면 이것을 따른다(대표님 지시). 교재 앞 수업의 판정이 먼저."""
+    out = {}
+    for r in read_tsv("기본뜻.tsv"):
+        if r[0].startswith("B:main") and r[2].strip().isdigit() and key(r[1]) not in out:
+            out[key(r[1])] = int(r[2].strip())
+    return out

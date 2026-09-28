@@ -6,7 +6,7 @@ import json
 import sys
 
 sys.path.insert(0, __file__.rsplit("/", 1)[0])
-from common import R, lessons, key  # noqa: E402
+from common import R, lessons, key, main_defaults, main_defaults_all  # noqa: E402
 
 
 def main():
@@ -17,10 +17,22 @@ def main():
     G = json.loads((R / "data/_dict_gloss.json").read_text(encoding="utf-8"))
     sdef = json.loads((R / "data/_sdef.json").read_text(encoding="utf-8"))
     L = lessons(part)
+    follow = part in ("선배", "22기")
+    md = main_defaults() if follow else {}
+    mda = main_defaults_all() if follow else {}
     for lk, name, words in L[start - 1:start - 1 + n]:
         print(f"=== [{part} {L.index((lk, name, words)) + 1}/{len(L)}] {lk} · {name} · {len(words)}낱말")
         for w in words:
             k = key(w["vi"])
+            if follow:
+                # 선배·22기는 뜻이 여럿인 낱말만 — 교재에 있으면 교재 기본 뜻을 한 줄로
+                ss0 = S.get(k) or []
+                if len(ss0) < 2:
+                    continue
+                if k in md:
+                    other = " · 교재의 다른 과: " + ", ".join(f"{x}) {ss0[x - 1]}" for x in mda[k][1:]) if len(mda.get(k, [])) > 1 else ""
+                    print(f"- [교재따름] {w['vi']} | 이 자료 뜻: {w.get('ko', '')} | → {md[k]}) {ss0[md[k] - 1]}{other}")
+                    continue
             ex = w.get("ex") or {}
             ex = ex if isinstance(ex, dict) else {"vi": ex}
             print(f"- {w['vi']} | 수업뜻: {w.get('ko', '')} | 예: {ex.get('vi', '')} = {ex.get('ko', '')}")
