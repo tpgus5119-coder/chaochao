@@ -953,14 +953,28 @@ function toneRow(tones, small) {
 let SIB = null, SIBP = null;
 /* 낱말 뜻 찾기 — 여러 자료를 차례로: 앱 낱말(DICT) → 뜻 목록(_senses, 흔한 차례) → 짝 사전(sib.json 한국어 뜻) → 참고 사전(_dict_ko, 검수본) */
 async function meaningOf(vi) {
-  const k = String(vi || '').trim().toLowerCase();
-  if (!k) return '';
-  try { const d = dictBuild(); const hit = Array.isArray(d) && d.find(x => String(x.vi).toLowerCase() === k); if (hit && hit.ko) return hit.ko; } catch (e) { }
-  try { await sensesLoad(); const ss = SENSES && SENSES[k]; if (ss && ss.length) return ss.join(' · '); } catch (e) { }
-  try { const s = await sibLoad(); const w = s && s.w && s.w[k]; if (w && w.k) return w.k; } catch (e) { }
-  try { if (!DKO) DKO = await fetch('data/_dict_ko.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => ({})); const e = DKO[k]; if (e) return Array.isArray(e) ? e.join(' · ') : String(e); } catch (e) { }
+  const k0 = String(vi || '').trim().toLowerCase();
+  if (!k0) return '';
+  for (const k of (toneAlt(k0) === k0 ? [k0] : [k0, toneAlt(k0)])) {      // toà 로 적힌 말도 tòa 로 찾는다
+    try { const d = dictBuild(); const hit = Array.isArray(d) && d.find(x => String(x.vi).toLowerCase() === k); if (hit && hit.ko) return hit.ko; } catch (e) { }
+    try { await sensesLoad(); const ss = SENSES && SENSES[k]; if (ss && ss.length) return ss.join(' · '); } catch (e) { }
+    try { const s = await sibLoad(); const w = s && s.w && s.w[k]; if (w && w.k) return w.k; } catch (e) { }
+    try { if (!DKO) DKO = await fetch('data/_dict_ko.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => ({})); const e = DKO[k]; if (e) return Array.isArray(e) ? e.join(' · ') : String(e); } catch (e) { }
+  }
   return '';
 }
+/* 성조 표시 자리 두 가지 — 옛 꼴 hòa·tòa·khỏe·thúy 와 새 꼴 hoà·toà·khoẻ·thuý 는 같은 말이다.
+   음절 끝의 oa·oe·uy 에서 성조 자리를 바꿔 본다 (자료마다 섞여 있어 한쪽으로만 찾으면 뜻이 안 나온다, 2026-09-28 밤) */
+const TONE_ALT = (() => {
+  const m = {}, t = ['̀', '́', '̉', '̃', '̣'];
+  ['oa', 'oe', 'uy'].forEach(p => t.forEach(c => {
+    const a = (p[0] + c).normalize('NFC') + p[1], b = p[0] + (p[1] + c).normalize('NFC');
+    m[a] = b; m[b] = a;
+  }));
+  return m;
+})();
+const TONE_ALT_RE = new RegExp('(' + Object.keys(TONE_ALT).join('|') + ')(?![a-zà-ỹđ])', 'g');
+const toneAlt = s => String(s).replace(TONE_ALT_RE, x => TONE_ALT[x]);
 let DKO = null;
 function sibLoad() {
   if (SIB) return Promise.resolve(SIB);
@@ -6690,7 +6704,7 @@ function krOf(w) {
   if (!GKR) { GKR = {}; allWords().forEach(x => { const k = x.vi.toLowerCase();
     const v = krShow(x);
     if (v && !GKR[k]) GKR[k] = v; }); }
-  const k = String(w).toLowerCase().replace(/[,.!?;:"“”‘’'()]/g, '').trim();
+  const k = String(w).toLowerCase().replace(/[,.!?;:"“”‘’'()…]/g, '').trim();
   return GKR[k] || exgKr(k);
 }
 
@@ -6714,23 +6728,30 @@ function glossAll(vi, extra) {
   const noMerge = new Set((Array.isArray(sg) ? sg : (sg.no || [])).map(x => String(x).toLowerCase()));
   const koAt = Array.isArray(sg) ? {} : (sg.ko || {});
   const seenN = {};
-  const look = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || exgKo(ph);
-  const toks = vi.split(/(\s+)/);        // 공백도 남겨 문장 모양 그대로 다시 그린다
+  const look0 = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || exgKo(ph);
+  const look = ph => look0(ph) || (toneAlt(ph) !== ph && look0(toneAlt(ph)));     // toà ↔ tòa
+  /* 붙여 쓴 기호에서 낱말을 떼어 낸다 — từ...đến · xe lửa/tàu hỏa · (tại)sao · cơm sen… 가 통째로 한 덩이가 되어
+     뜻을 못 찾았다. 글자가 하나도 없는 조각(숫자·기호)은 누르는 단추가 아니라 그냥 글로 둔다 (2026-09-28 밤) */
+  const SEP = /(\.{2,}|…|~|\/|=|\+|·|\([^()\s]+\))/;
+  const hasL = t => /[a-zà-ỹđ]/.test(String(t).toLowerCase());
+  const toks = [];                        // 공백도 남겨 문장 모양 그대로 다시 그린다
+  vi.split(/(\s+)/).forEach(t => { if (/^\s+$/.test(t)) toks.push(t); else t.split(SEP).forEach(p => { if (p) toks.push(p); }); });
   const out = [];
   for (let i = 0; i < toks.length;) {
-    if (/^\s+$/.test(toks[i])) { out.push({ sp: toks[i] }); i++; continue; }
+    if (/^\s+$/.test(toks[i]) || !hasL(toks[i])) { out.push({ sp: toks[i] }); i++; continue; }
     let hit = null;
     for (let n = 5; n >= 1 && !hit; n -= 2) {          // 단어·공백·단어… 이라 2칸씩
       const slice = toks.slice(i, i + n);
       if (slice.length < n) continue;
-      const ph = slice.join('').replace(/[,.!?;:"“”‘’'()]/g, '').toLowerCase().trim();   // 따옴표·괄호에 싸인 단어도 뜻을 찾는다
+      if (n > 1 && slice.some((t, j) => j % 2 ? !/^\s+$/.test(t) : !hasL(t))) continue;    // 낱말·공백·낱말 차례일 때만 묶는다
+      const ph = slice.join('').replace(/[,.!?;:"“”‘’'()…]/g, '').toLowerCase().trim();   // 따옴표·괄호에 싸인 단어도 뜻을 찾는다
       if (n > 1 && noMerge.has(ph)) continue;                                            // 이 문장에서는 안 묶는 것 (data/_seg.json)
       if (n > 1 && slice.slice(0, -1).some(t => /[,.;:!?]["”’)]*$/.test(t))) continue;   // 쉼표·마침표를 넘어서는 묶지 않는다 ('bạn, tôi' 가 '내 친구'가 되던 것, 2026-09-28)
       const m = ph && look(ph);
       if (m) hit = { w: slice.join(''), m, n };
     }
     if (hit) {
-      const key = hit.w.replace(/[,.!?;:"“”‘’'()]/g, '').toLowerCase().trim();
+      const key = hit.w.replace(/[,.!?;:"“”‘’'()…]/g, '').toLowerCase().trim();
       seenN[key] = (seenN[key] || 0) + 1;
       const ctx = koAt[key + '#' + seenN[key]];
       out.push({ w: hit.w, m: ctx || hit.m }); i += hit.n;
@@ -6851,7 +6872,7 @@ function tapLine(vi, cls, o) {
       ev.stopPropagation();
       if (on) on.classList.remove('on');
       on = w; w.classList.add('on');
-      const bare = t.w.replace(/[,.!?;:"“”‘’'()]/g, '').trim();   // 따옴표에 싸인 단어('"tôi"')도 우리 소리를 찾는다
+      const bare = t.w.replace(/[,.!?;:"“”‘’'()…]/g, '').trim();   // 따옴표에 싸인 단어('"tôi"')도 우리 소리를 찾는다
       /* 단어을 누르면 **헷갈리는 짝 팝업**이 뜬다 (대표님 지시 2026-09-27: 단어 카드의 단어과 똑같이).
          소리는 팝업 머리의 ▶ 로 듣는다(고른 목소리로만 — 예전 주석: 문장 첫 단어은 대문자로 시작하지만
          단어 녹음은 소문자 표제어라 대소문자 구분 없이 찾는다, 2026-09-09). */

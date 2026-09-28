@@ -16,7 +16,7 @@ MY = ["app.js", "style.css", "icon.png", "icon-192.png", "icon-180.png", "manife
       "data/_roots.json", "tools/make_roots.py", "tools/build_roots.py", "tools/fetch_etym.py", "tools/fetch_etym_vi.py", "tools/clean_hanja_hun.py",
       "tools/roots/한자_판정.tsv", "tools/roots/외래어_판정.tsv", "tools/roots/뺀_낱말.tsv", "data/_etym_raw.json", "data/_etym_raw_vi.json", "data/_roots_cand.json",
       "tools/img_word_text.py", "tools/img_erase_word.py", "tools/img_erase_keyed.py", "tools/img_scene_redraw.py", "tools/img_text_redraw.json", "tools/ocr_box.swift", "tools/bin/ocr_box",
-      "data/_img_ocr.json", "data/_img_wordtext.json", "data/_img_wordtext_done.json"]   # 한자·외래어 뿌리 낱말별 검수 (2026-09-28 밤) — 근거 원문까지   # 주간 시험 회차·묶음 검수·뜻 여러 개 (2026-09-28)
+      "data/_img_ocr.json", "data/_img_wordtext.json", "data/_img_wordtext_done.json", "data/_dict_ko.json", "tools/fix_senior/고침표.tsv", "tools/fix_senior/apply.py", "tools/fix_senior/clean_en.py", "tools/fix_senior/뜻_손질.tsv", "tools/fix_senior/new_img.py", "tools/fix_senior/new_img.json", "tools/fix_senior/이름_외래어_뜻.tsv"]   # 한자·외래어 뿌리 낱말별 검수 (2026-09-28 밤) — 근거 원문까지   # 주간 시험 회차·묶음 검수·뜻 여러 개 (2026-09-28)
 MY = [f for f in MY if (ROOT / f).exists()]   # 아직 없는 파일(_senses.json 은 검수 뒤 생김)은 건너뛴다
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
@@ -117,7 +117,7 @@ print(f"쓰이지 않는 그림 지움 {len(img_orphans) if '--no-prune' not in 
 print(f"올릴 파일 {n_new} · origin 과 같아 건너뜀 {n_same} · 소리 목록 {before} → {len(oi)}")
 if dry: raise SystemExit("dry")
 tree = git("write-tree", env=env)
-c = git("commit-tree", tree, "-p", "origin/main", "-m", msg + "\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>")
+c = git("commit-tree", tree, "-p", "origin/main", "-m", msg + "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
 git("push", "origin", f"{c}:refs/heads/main")
 print("올림", c)
 if "--no-prune" not in sys.argv:
