@@ -50,7 +50,8 @@ def main():
             elif r != "-":
                 probs.append(f"{w['vi']}: 뜻이 하나뿐인데 번호 '{r}'")
             for t in ss:
-                eng = [x for x in re.findall(r"[A-Za-z]{3,}", t) if x.lower() not in syl and not (set(x.lower()) & VN)]
+                # 베트남어 글자(성조 부호 포함)까지 한 낱말로 묶은 뒤, 로마자만으로 된 3자 이상 낱말 중 베트남어 음절이 아닌 것
+                eng = [x for x in re.findall(r"[A-Za-zÀ-ỹđĐ]+", t) if len(x) >= 3 and x.isascii() and x.lower() not in syl]
                 if eng:
                     probs.append(f"{w['vi']}: 뜻에 영어? {eng} ← {t}")
             e = W.get(k) or {}
