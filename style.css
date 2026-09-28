@@ -2721,3 +2721,16 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .prelsense i{font-style:normal; display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; background:var(--line); color:var(--fg); font-size:10px; font-weight:700}
 .prelsense.cur{color:var(--fg); font-weight:700}
 .prelsense.cur i{background:var(--accent); color:var(--accent-fg)}
+/* 성조 테스트 (2026-09-28) — 보기마다 성조 화살표·이름, 답한 뒤 뜻. 틀리면 두 소리 이어 듣기 */
+.ttopts button{align-items:center}
+.ttopts .tmark{min-width:118px; display:inline-flex; align-items:center; gap:4px; font-size:13px}
+.ttopts .tko{flex:1; text-align:right}
+.ttlv{text-align:center; margin:12px 0 0; font-weight:700; color:var(--accent)}
+.ttcmp{margin-top:14px; padding:12px; border:1px dashed var(--line); border-radius:12px; text-align:center}
+.ttcmpt{font-size:14px; color:var(--dim); margin-bottom:8px}
+.ttcmpb{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+.tttbl{margin:14px auto 4px; max-width:360px; display:grid; gap:6px; text-align:left}
+.ttrow{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--line); border-radius:10px}
+.ttrow.miss{border-color:var(--bad)}
+.ttname small{color:var(--dim); margin-left:4px}
+.ttsc{font-variant-numeric:tabular-nums; font-weight:700}
