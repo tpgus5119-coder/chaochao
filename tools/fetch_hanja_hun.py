@@ -4,6 +4,7 @@
 한국어 항목의 {{ko-hanja|훈|음}} 을 읽는다. 결과 data/_hanja_hun.json = { "翁": [["늙은이","옹"]], … }. 20자씩 curl. 이어서 돌릴 수 있다."""
 import json, pathlib, re, subprocess, sys, time, urllib.parse
 R = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(R / 'tools'))
 OUT = R / 'data/_hanja_hun.json'
 RAW = R / 'data/_hanja_hun_raw.json'      # 한국어 절 원문 — 파서를 고칠 때 다시 안 받아도 되게
 UA = 'chaochao-app/1.0 (https://tpgus5119-coder.github.io/chaochao/; tpgus5119@gmail.com)'
@@ -21,7 +22,10 @@ def parse(sec):
     for m in re.finditer(r'\{\{ko-hanja(?:/new)?\|([^}]*)\}\}', sec):
         parts = [re.sub(r'\[\[(?:[^|\]]*\|)?([^\]]+)\]\]', r'\1', p).strip() for p in m.group(1).split('|')]
         named = {p.split('=', 1)[0]: p.split('=', 1)[1] for p in parts if '=' in p}
-        pos = [p for p in parts if '=' not in p and p]
+        pos_all = [p for p in parts if '=' not in p]
+        # {{ko-hanja|힘|력||역}} — 빈칸 뒤는 두음법칙 음(역)이다. 빈칸을 버리고 끝 둘을 잡으면 '력 역'이 훈음이 된다 (2026-09-28 밤 고침)
+        pos = pos_all[:pos_all.index('')] if '' in pos_all else pos_all
+        pos = [p for p in pos if p]
         hun = eum = None
         if len(pos) >= 2: hun, eum = pos[-2], pos[-1]        # (훈|음) 또는 (사전꼴|관형꼴|음)
         elif named.get('eumhun') and len(named['eumhun'].split()) >= 2:
@@ -64,8 +68,9 @@ def main():
     got = {c: parse(raw.get(c, '')) for c in chars}
     OUT.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8')
     print(f'끝 · {len(got)} · 훈 있음 {sum(1 for v in got.values() if v)}', flush=True)
+    print('  다음: python3 tools/fetch_hanja_hun.py --ko (한국어 위키 2차) — 끝에 clean_hanja_hun 이 돈다', flush=True)
 
-if __name__ == '__main__':
+if __name__ == '__main__' and '--ko' not in sys.argv:
     main()
 
 # ---- 2차: 영어 위키에 훈이 없는 글자는 한국어 위키낱말사전({{한자풀이|훈=…|음=…}})에서 ----
@@ -114,6 +119,7 @@ def second_pass():
         print(f'  {min(i + 20, len(todo))}/{len(todo)} · 훈 있음 {sum(1 for v in got.values() if v)}', flush=True)
         time.sleep(0.8)
     print(f'2차 끝 · 훈 있음 {sum(1 for v in got.values() if v)} / {len(got)}', flush=True)
+    import clean_hanja_hun; clean_hanja_hun.main()     # 찌꺼기 걷기 + 사람 표 채우기 — 이걸 빼먹어 한 번 덮인 적이 있다 (2026-09-28 밤)
 
 if __name__ == '__main__' and '--ko' in sys.argv:
     second_pass()

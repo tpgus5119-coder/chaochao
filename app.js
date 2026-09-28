@@ -1164,7 +1164,7 @@ function pairPopup(vi, info) {
   grp.append(pl, spdChip({ pair: true }));
   hd.append(grp);
   box.append(hd);
-  if (inf.ko) { const pk = el('div', 'pairpopko', esc(inf.ko)); box.append(pk); senseLine(pk, { vi, ko: inf.ko }); }   // 뜻 여러 개 (2026-09-28)
+  if (inf.ko) { const pk = el('div', 'pairpopko', esc(inf.ko)); box.append(pk); senseLine(pk, { vi, ko: inf.ko }); rootPills(pk, { vi, ko: inf.ko }); }   // 뜻 여러 개 (2026-09-28) · 한자·외래어 뿌리 (09-28 밤)
   const sub = el('div', 'pairpopsub', tr('헷갈리는 짝'));
   const body = el('div', 'pairpopbody');
   const ok = el('button', 'primary big', tr('닫기'));
@@ -6568,18 +6568,56 @@ function hunLoad() {
   if (!HUN_P) HUN_P = fetch('data/_hanja_hun.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { HUN = j; }).catch(() => { HUN = {}; });
   return HUN_P;
 }
-function hanjaPill(h) {
-  const sp = el('span', 'hanja', esc(h));
+/* 한자 뿌리·외래어 뿌리 — data/_roots.json (tools/make_roots.py). 클로드가 위키낱말사전 원문을 낱말마다 보고 판정한 것만 싣는다
+   (대표님 지시 2026-09-28 밤: "한문 뿌리 아닌데 넣지 말라, 사실대로"). 표에 없는 낱말은 아무것도 안 붙인다 — 예전 x.hanja(검수 전)는 안 쓴다.
+   · 옛 한자어: 표준 한자음과 소리가 다른 옛 차용(tuổi ← 歲 tuế) — '옛 한자어 · 한자음 tuế' 를 밝힌다
+   · 일부 음절만 한자어·외래어: 그 음절을 앞에 적는다(giá = 價 · xe buýt 의 buýt ← 프랑스어 bus)
+   · 뜻마다 뿌리가 다르면(thư 편지 書 / 쉬다 舒) 카드 뜻에 든 말로 고른다 */
+let ROOTS = null, ROOTS_P = null;
+function rootsLoad() {
+  if (ROOTS) return Promise.resolve();
+  if (!ROOTS_P) ROOTS_P = fetch('data/_roots.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { ROOTS = j; }).catch(() => { ROOTS = {}; });
+  return ROOTS_P;
+}
+function rootPills(host, x) {
+  const box = el('span', 'roots');                 // 자리를 먼저 잡아 둔다 — 파일이 늦게 와도 뜻 목록과 순서가 바뀌지 않게
+  host.append(box);
+  const draw = () => {
+    const alts = ROOTS && ROOTS[String(x.vi || '').trim().toLowerCase()];
+    if (!alts) return;
+    const ko = String(x.ko || '');
+    alts.filter(a => !a.c || a.c.some(k => ko.includes(k))).forEach(a => {
+      if (a.h) box.append(hanjaPill(a.h + ' · ' + a.r, {
+        pre: a.p ? a.p + ' =' : '',
+        note: a.o ? tr([...a.h].length > 1 ? '옛 한자음 섞임' : '옛 한자어') + (a.s ? ' · ' + tr('한자음') + ' ' + a.s : '') : ''   // thông tin 은 tin 만 옛 음
+      }));
+      else if (a.l) box.append(el('span', 'loanpill', (a.p ? esc(a.p) + ' ← ' : '') + esc(tr(a.l)) + ' <b>' + esc(a.w) + '</b>'));
+    });
+  };
+  if (ROOTS) draw(); else rootsLoad().then(draw);
+}
+function hanjaPill(h, o) {
+  const opt = o || {};
+  const sp = el('span', 'hanja', '<span class="rmain">' + (opt.pre ? '<small class="rpart">' + esc(opt.pre) + '</small> ' : '') + esc(h) + '</span>');
+  const note = opt.note ? el('small', 'rold', esc(opt.note)) : null;
+  if (note) sp.append(note);
   const [chars, reading] = String(h).split(' · ');
   const draw = () => {
     if (!HUN || !chars) return;
     const syl = (reading || '').replace(/\s+/g, ''), parts = [];
+    /* 음이 맞는 훈만 — 두음법칙(역량의 '역' ↔ '힘 력')은 같게 본다. 맞는 것이 없으면 억지로 첫 훈을 붙이지 않는다
+       (行 '항'에 '다닐 행'을 붙이면 틀린 풀이가 된다, 2026-09-28 밤) */
+    const same = (a, b) => {
+      if (a === b) return true;
+      const x = (a || '').charCodeAt(0) - 0xAC00, y = (b || '').charCodeAt(0) - 0xAC00;
+      if (!(x >= 0 && x < 11172 && y >= 0 && y < 11172)) return false;
+      return x % 588 === y % 588 && [2, 5, 11].includes(Math.floor(x / 588)) && [2, 5, 11].includes(Math.floor(y / 588));
+    };
     [...chars].forEach((c, i) => {
-      const cands = HUN[c] || []; if (!cands.length) return;
-      const pick = cands.find(p => p[1] === syl[i]) || cands[0];
-      parts.push(pick[0] + ' ' + pick[1]);
+      const pick = (HUN[c] || []).find(p => same(p[1], syl[i]));
+      if (pick) parts.push(pick[0] + ' ' + pick[1]);
     });
-    if (parts.length) sp.append(el('small', 'hun', esc(parts.join(' · '))));
+    if (parts.length) sp.insertBefore(el('small', 'hun', esc(parts.join(' · '))), note);   // 훈음은 한자 바로 밑, '옛 한자어' 풀이는 맨 밑
   };
   if (HUN) draw(); else hunLoad().then(draw);
   return sp;
@@ -7852,7 +7890,7 @@ function drawCard() {
     if (x.work && x.work.length)
       cf.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
                   x.work.map(t2 => esc(t2)).join(' · ')));
-    if (x.hanja) kob.append(hanjaPill(x.hanja));          // 한자 뿌리 — 뜻 옆 알약: 한자·음 + 글자마다 훈(뜻) (대표님 지시 2026-09-27 밤: '무슨 옹인지')
+    rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
     senseLine(kob, x);                                     // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
     if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
@@ -7883,7 +7921,7 @@ function drawCard() {
     prow.append(bigWord(x.vi, x.tones, tapPair));
     if (krShow(x)) prow.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     const boxP = el('div', 'cmpbox');
-    const pko = el('div', 'ko', esc(x.ko)); if (x.hanja) pko.append(hanjaPill(x.hanja));
+    const pko = el('div', 'ko', esc(x.ko)); rootPills(pko, x);
     pf.append(prow, pko, wordControls(x.vi, boxP), boxP);
     pf.append(playBar(x.vi));                  // 재생 막대 (2026-09-26)
     pf.append(mouthPanel(x.vi));               // 입모양 2D (2026-09-25 #6)
@@ -8127,7 +8165,7 @@ function drawFlash() {
   c.append(el('div', 'vi', esc(w.vi)));
   c.append(toneRow(w.tones));
   if (krShow(w)) c.append(el('span', 'wkr', '[' + esc(krShow(w)) + ']'));
-  const fko = el('div', 'ko', esc(w.ko)); if (w.hanja) fko.append(hanjaPill(w.hanja));
+  const fko = el('div', 'ko', esc(w.ko)); rootPills(fko, w);
   c.append(fko);
   const exm = w.ex && w.ex.vi ? w.ex : null;
   if (exm) { c.append(el('div', 'flex', esc(exm.vi))); if (exm.ko) c.append(el('div', 'flexko', esc(exm.ko))); }
