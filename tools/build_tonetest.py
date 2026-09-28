@@ -38,6 +38,9 @@ def main():
     sib = json.load(open(os.path.join(ROOT, 'data/sib.json'), encoding='utf-8'))
     ai = json.load(open(os.path.join(ROOT, 'data/audio_index.json'), encoding='utf-8'))
     dko = json.load(open(os.path.join(ROOT, 'data/_dict_ko.json'), encoding='utf-8'))
+    # 소리가 표시된 성조대로 들리는 낱말만 (tools/tone_audio_check.py — 먼저 돌려야 한다, 2026-09-28)
+    chk = json.load(open(os.path.join(ROOT, 'data/_tone_audio_chk.json'), encoding='utf-8'))
+    drop = set(chk['bad']) | set(chk['foreign'])
     w = sib['w']
     fams = []
     words = 0
@@ -45,7 +48,7 @@ def main():
         seen, row = set(), []
         for v in vs:
             h = ai.get(v)
-            if not h:
+            if not h or v not in chk['w'] or v in drop:
                 continue
             if not (os.path.exists(os.path.join(ROOT, f'audio/f/n/{h}.mp3'))
                     and os.path.exists(os.path.join(ROOT, f'audio/m/n/{h}.mp3'))):
