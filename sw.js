@@ -1,7 +1,7 @@
 /* 오프라인 캐시.
    앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
    음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
-const V = 'vn-ab2f29bd';
+const V = 'vn-85cc6da5';
 const SHELL = ['./', './index.html', './app.js', './pitch.js', './mouth.js', './pet.js', './judge.js', './style.css',
                './manifest.json', './icon.png',
                // 새 짜임(일곱 권)의 알맹이 — 이것이 없으면 비행기 모드에서 과정이 안 열린다
@@ -9,13 +9,17 @@ const SHELL = ['./', './index.html', './app.js', './pitch.js', './mouth.js', './
                './data/order.json', './data/grammar.json', './data/know.json',
                './data/exgloss.json', './data/sib.json'];
 
+/* 소리·그림은 판번호와 **따로** 둔다 (2026-09-28 밤, 대표님: "누르면 소리가 늦게 난다").
+   전에는 판을 올릴 때마다 캐시를 통째로 버려 소리를 처음부터 다시 받았다 — 배포가 잦은 날은 늘 첫 재생이 늦었다.
+   파일 이름이 낱말 해시라 같은 낱말은 같은 파일이다. 소리를 통째로 새로 만들었을 때만 MEDIA 숫자를 올린다 */
+const MEDIA = 'vn-media-1';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
-    .then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k))))
+    .then(ks => Promise.all(ks.filter(k => k !== V && k !== MEDIA).map(k => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
 
@@ -27,7 +31,7 @@ self.addEventListener('fetch', e => {
   // (판번호가 바뀌면 캐시를 통째로 버리므로 옛 파일이 남을 일은 없다)
   if (url.pathname.endsWith('.mp3') || url.pathname.endsWith('.webp')) {
     e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(r => {
-      if (r.ok) { const cp = r.clone(); caches.open(V).then(c => c.put(e.request, cp)); }
+      if (r.ok) { const cp = r.clone(); caches.open(MEDIA).then(c => c.put(e.request, cp)); }
       return r;
     })));
     return;

@@ -791,6 +791,26 @@ function play(text, slow, dir, spd) {
   audio.currentTime = 0;
   audio.play().catch(() => { });
 }
+/* 소리 미리 받기 (2026-09-28 밤, 대표님: "단어 누르면 소리가 바로 나오게 — 재생 시작이 늦다. 속도 말고").
+   누를 때 받기 시작하면 인터넷 왕복만큼 늦다 → 화면에 낱말이 뜨는 순간 그 소리를 미리 받아 둔다(서비스 워커 캐시에 남는다).
+   같은 파일은 한 번만. 폰 TTS(녹음 없는 낱말)는 첫 터치 때 소리 없이 한 번 깨워 둔다 — 첫 호출이 씹혀 0.45초 늦던 것 */
+const PREF = new Set();
+function prefetchSnd(texts) {
+  setTimeout(() => (texts || []).forEach(t => {
+    const s = String(t || '').replace(/[,.!?;:"“”‘’'()]/g, '').trim();
+    if (!s) return;
+    const h = AIDX[s] || AIDX[s.toLowerCase()];
+    if (!h) return;
+    const url = `audio/${voiceDir()}/n/${h}.mp3`;
+    if (PREF.has(url)) return;
+    PREF.add(url);
+    fetch(url).catch(() => PREF.delete(url));
+  }), 0);
+}
+addEventListener('pointerdown', function ttsWarm() {
+  removeEventListener('pointerdown', ttsWarm, true);
+  try { if ('speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; u.lang = 'vi-VN'; speechSynthesis.speak(u); } } catch (e) { }
+}, true);
 function playMine() {
   if (!REC.url) return;
   myVoice.pause();
@@ -6780,7 +6800,9 @@ function tapLine(vi, cls, o) {
   const line = el('div', cls || 'tapline');
   const info = el('div', 'tapinfo');
   let on = null;
-  glossAll(vi, opt.dict).forEach(t => {
+  const toks = glossAll(vi, opt.dict);
+  prefetchSnd([vi].concat(toks.filter(t => t.sp === undefined).map(t => t.w)));   // 문장·낱말 소리를 미리 (누르면 바로 나게)
+  toks.forEach(t => {
     if (t.sp !== undefined) { line.append(document.createTextNode(t.sp)); return; }
     const w = el('button', 'tapw' + (t.m ? '' : ' nom'));
     w.type = 'button';
@@ -7839,6 +7861,7 @@ function drawCard() {
   $('#face').hidden = true; FACE = null;
   c.textContent = '';
   const it = L.items[L.i], x = it.d;
+  { const nx = L.items[L.i + 1]; prefetchSnd([x && x.vi, x && x.ex && x.ex.vi, nx && nx.d && nx.d.vi]); }   // 이 카드·다음 카드 소리를 미리 (2026-09-28 밤)
 
   if (it.k === 'card') {                     // 카드뉴스 한 장 (기사 세트의 맨 앞 두 장)
     const im = el('img', 'newscardimg');
@@ -8869,6 +8892,7 @@ function drawQuiz() {
 
   const q = Q.list[Q.i];
   Q.t0 = Date.now();                                   // 이 문제를 언제 봤는지 (반응 속도)
+  { const nx = Q.list[Q.i + 1]; prefetchSnd([q.w && q.w.vi, ...(q.opts || []).map(o => o && o.vi), nx && nx.w && nx.w.vi]); }   // 소리 미리 (2026-09-28 밤)
   const LABEL = { listen: '듣고 뜻을 고르세요', read: '뜻을 고르세요', say: '베트남어로 말해 보세요',
                   type: '듣고 자판으로 쳐 보세요', hand: '듣고 손으로 써 보세요', recall: '소리 내어 말해 보세요',
                   dict: '듣고 글자를 만들어 보세요',
