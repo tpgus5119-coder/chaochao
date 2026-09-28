@@ -2687,3 +2687,9 @@ header > #goBug{margin-left:auto}
 /* 학습 마지막 장 — 문제 수 고르기는 단추 위 한 줄로 (한 줄에 끼면 단추 글이 두 줄로 눌린다) */
 .pager{flex-wrap:wrap}
 .pager #qnRow{flex:1 1 100%; order:-1; display:flex; justify-content:center}
+/* 답한 뒤 보기마다 발음·뜻 (2026-09-28 밤) — 한 줄에 들어가면 옆에, 길면 아래 줄로 */
+.opts button.ann{display:flex; flex-wrap:wrap; align-items:baseline; column-gap:10px; row-gap:2px; text-align:left}
+.opts button .optinfo{display:inline-flex; flex-wrap:wrap; align-items:baseline; gap:2px 8px; font-size:13px; font-weight:500; color:var(--dim); line-height:1.35}
+.opts button .optinfo .oivi{color:var(--fg); font-weight:700}
+.opts button .optinfo i{font-style:normal; display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px; margin-right:3px; border-radius:50%; background:var(--line); color:var(--fg); font-size:10px; font-weight:700}
+.opts button[data-r="ok"] .optinfo, .opts button[data-r="no"] .optinfo{color:inherit; opacity:.85}

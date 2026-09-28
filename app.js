@@ -8614,6 +8614,7 @@ function startQuiz(words, day, cap, early, opt) {
   if (!day) src = src.slice(0, Math.min(cap || qN(), qN()));   // 테스트·복습은 고른 문제 수(10·20·30)만큼
   const list = day ? buildSetQuestions(src) : buildQuestions(src, o.skill);
   Q = { list, i: 0, ok: 0, day, total: list.length, early, opt: o };
+  sensesLoad();                                   // 답한 뒤 보기마다 뜻 3개를 붙이려면 미리 (2026-09-28 밤)
   drawQuiz();
   const nm = (o.kind === 'sent' ? '문장' : o.kind === 'word' ? '단어' : '') +
              (o.skill ? ' ' + (SKILLS.find(x => x.k === o.skill) || {}).name : '');
@@ -9722,6 +9723,20 @@ function answer(btn, correct, w) {
   else requeue(Q.list[Q.i]);        // 틀린 건 이번 판 끝에 한 번 더
   if (!w.nograde) grade(w.vi, correct, Q.early);   // 문법 예문(주간 시험)은 단어 창고에 안 넣는다 (2026-09-28)
   sound(w.vi);                      // 답이 열릴 때 소리 한 번 (대표님 지시 2026-09-27 밤) — 맞든 틀리든
+  /* 보기마다 발음과 뜻 (대표님 지시 2026-09-28 밤: "정답이든 오답이든 옆에(길면 아래) 발음과 뜻, 뜻은 흔히 쓰는 순서로 3개까지.
+     그러면 하단의 정답 단어·발음·뜻 상자는 없애도 된다"). 모든 보기가 낱말·문장 보기일 때만 — 그림·맞다틀리다 같은 문제는 옛 상자 그대로 */
+  const qq = Q.list[Q.i], obtn = [...btn.parentNode.children];
+  const byVi = new Map((qq.opts || []).filter(o => o && o.vi).map(o => [o.vi, o]));
+  if (obtn.length > 1 && obtn.every(b => byVi.has(b.dataset.vi))) {
+    obtn.forEach(b => {
+      const o = byVi.get(b.dataset.vi);
+      b.classList.add('ann', 'answered'); b.append(optInfo(o, b.textContent.trim() === o.vi));
+      /* 답한 뒤에는 보기를 누르면 그 낱말의 헷갈리는 짝 (대표님 지시 2026-09-28 밤). 짝 창은 누를 때만 그리므로 가만히 있을 때는 비용이 없다 */
+      if (!o.sent) { b.disabled = false; b.onclick = () => pairPopup(o.vi, { kr: krOf(o.vi) || o.kr_read, ko: o.ko }); }
+    });
+    nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
+    return;
+  }
   // 답한 뒤에는 글자·성조·발음·뜻을 한 번에 보여준다 (맞았든 틀렸든)
   const ans = el('div', 'ansbox');
   // 단어를 누르면 헷갈리는 짝 팝업 — 짝 줄(단추)은 뺐다 (대표님 지시 2026-09-27 저녁)
@@ -9735,6 +9750,23 @@ function answer(btn, correct, w) {
   nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
 }
 
+/* 보기 한 칸의 풀이 — 베트남어 보기면 [발음] 뜻①②③, 뜻 보기면 베트남어 [발음] (+ 다른 뜻). 뜻은 검수된 data/_senses.json 차례(흔히 쓰는 순서) */
+function optInfo(o, showsVi) {
+  const box = el('span', 'optinfo');
+  const kr = o.sent ? '' : (krOf(o.vi) || o.kr_read || '');
+  const ss = !o.sent && SENSES && SENSES[String(o.vi).toLowerCase().trim()];
+  const senses = (ss && ss.length ? ss : [o.ko]).filter(Boolean).slice(0, 3);
+  if (showsVi) {
+    if (kr) box.append(el('span', 'oikr', '[' + esc(kr) + ']'));
+    box.append(el('span', 'oiko', senses.map((s, i) => (senses.length > 1 ? '<i>' + (i + 1) + '</i>' : '') + esc(s)).join(' ')));
+  } else {
+    box.append(el('b', 'oivi', esc(o.vi)));
+    if (kr) box.append(el('span', 'oikr', '[' + esc(kr) + ']'));
+    const more = senses.length > 1 ? senses : [];
+    if (more.length) box.append(el('span', 'oiko', more.map((s, i) => '<i>' + (i + 1) + '</i>' + esc(s)).join(' ')));
+  }
+  return box;
+}
 /* 틀린 문제를 같은 판 뒤쪽에 한 번만 다시 넣는다.
    틀린 채로 끝내면 그 기억이 남는다. 맞히고 끝내야 한다. */
 /* 얼마나 빨리 답했나 — 정답만 센다(틀린 건 고민 시간이 뒤섞인다).
