@@ -951,6 +951,17 @@ function toneRow(tones, small) {
    처음 배울 때 관련 단어을 한꺼번에 외우면 오히려 헷갈린다는 연구(의미 군집)가 많아서, 단어 카드에서는
    접어 두고 퀴즈에서 틀렸을 때만 펼쳐 보여 준다. */
 let SIB = null, SIBP = null;
+/* 낱말 뜻 찾기 — 여러 자료를 차례로: 앱 낱말(DICT) → 뜻 목록(_senses, 흔한 차례) → 짝 사전(sib.json 한국어 뜻) → 참고 사전(_dict_ko, 검수본) */
+async function meaningOf(vi) {
+  const k = String(vi || '').trim().toLowerCase();
+  if (!k) return '';
+  try { const d = dictBuild(); const hit = Array.isArray(d) && d.find(x => String(x.vi).toLowerCase() === k); if (hit && hit.ko) return hit.ko; } catch (e) { }
+  try { await sensesLoad(); const ss = SENSES && SENSES[k]; if (ss && ss.length) return ss.join(' · '); } catch (e) { }
+  try { const s = await sibLoad(); const w = s && s.w && s.w[k]; if (w && w.k) return w.k; } catch (e) { }
+  try { if (!DKO) DKO = await fetch('data/_dict_ko.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => ({})); const e = DKO[k]; if (e) return Array.isArray(e) ? e.join(' · ') : String(e); } catch (e) { }
+  return '';
+}
+let DKO = null;
 function sibLoad() {
   if (SIB) return Promise.resolve(SIB);
   if (!SIBP) SIBP = fetch('data/sib.json', { cache: 'no-cache' }).then(r => r.json())
@@ -1624,12 +1635,14 @@ async function aiListen(text, blobUrl, box) {
       if (r && r.ok !== null) {
         S.stats.pronAll = (S.stats.pronAll || 0) + 1; if (r.ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1; save();
         verdict(box, 0, r.ok, '발음', (r.ok ? '알아들었습니다' : esc(r.heard) + ' 처럼 들립니다 (목표 ' + esc(text) + ')') + ' <small>(소리 비교)</small>');
+        heardLine(box, { letters: r.heard || (r.ok ? text : '') });
         if (!r.ok) box.append(el('div', 'fixtip', '↳ ' + sayTip(text, r.heard)));
         return;
       }
       verdict(box, 0, null, '발음', r && r.why ? r.why : asrFailText()); return;
     }
     const { heard, ok, pick } = judgeLocalHeard(text, REC.localHeard);
+    sibLoad().then(() => heardLine(box, { letters: heard }));
     if (ok !== null) {
       S.stats.pronAll = (S.stats.pronAll || 0) + 1;
       if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
@@ -1646,6 +1659,28 @@ async function aiListen(text, blobUrl, box) {
   } catch (e) { verdict(box, 0, null, '발음', '판정 중에 오류가 났습니다 <small>(' + esc(String(e && e.message || e).slice(0, 60)) + ')</small>'); }
 }
 
+/* '들린 말' 한 줄 — 발음(폰 인식이 알아들은 글자)과 높낮이(곡선이 가린 성조 무리)를 합친다 (대표님 물음 2026-09-28 밤:
+   "내가 말한 것을 성조까지 인식해서 단어로 보여 줄 수 있냐, 두 파트를 합쳐 최종 어떤 단어·성조로 들렸는지").
+   · 글자는 폰 인식 것에서 성조 부호를 뗀다 — 폰 인식은 실제 높낮이가 아니라 '있는 낱말'로 부호를 채우기 때문
+   · 성조는 곡선이 가린 무리(내려감 = ngang·huyền·nặng / 올라감 = sắc / 내렸다 올라감 = hỏi·ngã) 안에서 **실제로 있는 음절**만 후보로 보인다
+     (여섯 성조를 곡선만으로 가르면 58% 라 못 믿는다 — 세 무리는 87%, pitch.js 실측). 한 음절 낱말만 성조를 합친다 */
+function heardLine(host, part) {
+  const sb = host && (host.classList && host.classList.contains('saidbox') ? host : host.querySelector && host.querySelector('.saidbox'));
+  if (!sb) return;
+  sb._heard = Object.assign(sb._heard || {}, part);
+  const h = sb._heard;
+  let row = sb.querySelector('.heardrow');
+  if (!row) { row = el('div', 'heardrow'); sb.append(row); }
+  if (!h.letters) { row.innerHTML = '<span class="hname">' + tr('들린 말') + '</span><span class="hval">…</span>'; return; }
+  const base = stripTone(String(h.letters).toLowerCase().replace(/[.,!?]/g, '').trim());
+  let show = esc(base);
+  if (h.fam && base && !base.includes(' ') && SIB && SIB.t && SIB.t[base]) {
+    const cands = SIB.t[base].filter(s => PITCH.FAM[sibToneOf(s)] === h.fam);
+    show = (cands.length ? cands.map(s => '<b>' + esc(s) + '</b>').join(' · ') : esc(base)) + ' <small>(' + tr('높낮이') + ': ' + esc(PITCH.FAMKO[h.fam]) + ')</small>';
+  } else if (h.fam && base && !base.includes(' ')) show = '<b>' + esc(base) + '</b> <small>(' + tr('높낮이') + ': ' + esc(PITCH.FAMKO[h.fam]) + ')</small>';
+  else show = '<b>' + esc(h.letters) + '</b>';
+  row.innerHTML = '<span class="hname">' + tr('들린 말') + '</span><span class="hval">' + show + '</span>';
+}
 /* 판정 한 줄 — O(초록) / X(빨강) 과 그 밑의 작은 설명.
    두 줄이 각각 다른 것을 본다: 발음은 AI가 글자를, 높낮이는 곡선이 성조를. */
 function verdict(box, i, ok, name, sub) {
@@ -2243,6 +2278,7 @@ async function showTone(text, blobUrl, box, hostBox) {
      '모르겠다'가 없으면 제대로 낸 발음의 13%를 틀렸다고 하게 된다(실측). */
   const want = targetFam(text) || (nat && PITCH.classify(nat) && PITCH.classify(nat).fam);
   const j = want && PITCH.judge(mine, want);
+  { const c = j && j.v !== 'unsure' ? j.fam : null; if (c && text.trim().split(/\s+/).length === 1) sibLoad().then(() => heardLine(host, { fam: c })); }
   if (!j) { verdict(host, 1, null, '높낮이', '이번엔 높낮이를 못 읽었습니다'); return; }
   if (j.v === 'ok') {
     verdict(host, 1, true, '높낮이', `${j.ko} — 모양이 맞습니다`);
@@ -6729,7 +6765,7 @@ function senseLine(host, x) {
     const mine = new Set(parts(x.ko));
     const hit = ss.findIndex(t => parts(t).some(p => mine.has(p)));
     const list = el('div', 'senselist');
-    ss.slice(0, 3).forEach((t, i) => { const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp); });
+    ss.forEach((t, i) => { const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp); });   // 3개까지 → 가진 뜻 모두 (대표님 지시 2026-09-28 밤)
     const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
     if (hit >= 0 && tn) tn.replaceWith(list);          // 이 과의 뜻이 목록 안에 있으면 목록이 뜻 자리를 대신한다
     else host.append(list);                             // 없으면(이 과만의 특수한 뜻) 원래 뜻을 두고 밑에 목록
@@ -6831,7 +6867,11 @@ function tapLine(vi, cls, o) {
       }
       const kr = krOf(bare);
       if (kr) info.append(el('span', 'gkr', '[' + esc(kr) + ']'));
-      info.append(document.createTextNode(t.m ? ' — ' + t.m : ' — ' + tr('아직 뜻이 없는 단어입니다')));
+      /* 뜻이 묶음 사전에 없으면 다른 자료에서 찾는다 — 뜻 목록(_senses)·짝 사전(sib.json)·앱 낱말 사전 (대표님 지적 2026-09-28 밤:
+         "뜻이 없는 단어라고 표시하지 말고 뜻을 넣으라", 짝 팝업에는 '어휘'가 있었다). 끝내 없을 때만 그 사실을 적는다 */
+      const mtx = document.createTextNode(' — ' + (t.m || '…'));
+      info.append(mtx);
+      if (!t.m) meaningOf(bare).then(m => { mtx.textContent = ' — ' + (m || tr('아직 뜻이 없는 단어입니다')); });
     };
     line.append(w);
   });
@@ -9835,7 +9875,7 @@ function optInfo(o, showsVi) {
   const box = el('span', 'optinfo');
   const kr = o.sent ? '' : (krOf(o.vi) || o.kr_read || '');
   const ss = !o.sent && SENSES && SENSES[String(o.vi).toLowerCase().trim()];
-  const senses = (ss && ss.length ? ss : [o.ko]).filter(Boolean).slice(0, 3);
+  const senses = (ss && ss.length ? ss : [o.ko]).filter(Boolean);                      // 가진 뜻 모두 (2026-09-28 밤)
   if (showsVi) {
     if (kr) box.append(el('span', 'oikr', '[' + esc(kr) + ']'));
     box.append(el('span', 'oiko', senses.map((s, i) => (senses.length > 1 ? '<i>' + (i + 1) + '</i>' : '') + esc(s)).join(' ')));
