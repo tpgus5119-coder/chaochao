@@ -14,6 +14,7 @@ import sys
 import unicodedata
 
 D = pathlib.Path(__file__).resolve().parent
+SPLIT = {"không đâu": "không...đâu"}   # 낱말표엔 붙여 적었지만 교재 문법은 떨어진 틀(không X đâu)
 R = D.parent.parent
 sys.path.insert(0, str(D.parent / "sense_review"))
 sys.path.insert(0, str(D))
@@ -62,7 +63,9 @@ def main():
                 probs.append(f"{lk} {w['vi']}: 앱에 안 들어감(ex_src={x.get('ex_src')}) — apply_ex.py?"); continue
             else:
                 cnt[x["ex_src"]] += 1
-            # 틀 낱말(từ...đến)은 조각들이 차례대로 들어 있으면 된다
+            # 틀 낱말(từ...đến)은 조각들이 차례대로 들어 있으면 된다.
+            # 낱말표에 줄임표 없이 적혔지만 교재가 떨어진 틀로 가르치는 것(2권 3과 문법 'KHÔNG X ĐÂU!')은 여기 적는다
+            k = SPLIT.get(k, k)
             pat = r"(?<![\wÀ-ỹ])" + r"(?![\wÀ-ỹ]).+?(?<![\wÀ-ỹ])".join(re.escape(x.strip()) for x in re.split(r"\.\.\.|…", k)) + r"(?![\wÀ-ỹ])"
             if not re.search(pat, " ".join(evi.lower().split())):
                 probs.append(f"{lk} {w['vi']}: 예문에 단어가 없음 — {evi}")
