@@ -62,7 +62,9 @@ def main():
                 probs.append(f"{lk} {w['vi']}: 앱에 안 들어감(ex_src={x.get('ex_src')}) — apply_ex.py?"); continue
             else:
                 cnt[x["ex_src"]] += 1
-            if not re.search(r"(?<![\wÀ-ỹ])" + re.escape(k) + r"(?![\wÀ-ỹ])", " ".join(evi.lower().split())):
+            # 틀 낱말(từ...đến)은 조각들이 차례대로 들어 있으면 된다
+            pat = r"(?<![\wÀ-ỹ])" + r"(?![\wÀ-ỹ]).+?(?<![\wÀ-ỹ])".join(re.escape(x.strip()) for x in re.split(r"\.\.\.|…", k)) + r"(?![\wÀ-ỹ])"
+            if not re.search(pat, " ".join(evi.lower().split())):
                 probs.append(f"{lk} {w['vi']}: 예문에 단어가 없음 — {evi}")
             if not re.search(r"[가-힣]", eko):
                 probs.append(f"{lk} {w['vi']}: 번역 없음/한글 아님 — {eko}")

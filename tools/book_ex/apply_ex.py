@@ -94,8 +94,12 @@ def main():
             sense_rows.append(f"{r['lk']}\t{w['vi']}\t{r['sense']}")
     gp.write_text(json.dumps(g, ensure_ascii=False, indent=1), encoding="utf-8")
     print("넣음", n, "· 못 찾은 줄", bad)
+    # 이미 적힌 줄은 다시 붙이지 않는다 — 돌릴 때마다 통째로 붙여 같은 줄이 9벌 쌓인 적이 있다
+    sp = D.parent / "sense_review/기본뜻.tsv"
+    have = set(sp.read_text(encoding="utf-8").split("\n"))
+    sense_rows = [x for x in dict.fromkeys(sense_rows) if x not in have]
     if sense_rows:
-        with open(D.parent / "sense_review/기본뜻.tsv", "a", encoding="utf-8") as f:
+        with open(sp, "a", encoding="utf-8") as f:
             f.write("# 교재 예문을 교재 문장으로 바꾸며 교재 문맥에 맞춰 기본 뜻 조정(2026-09-29)\n" + "\n".join(sense_rows) + "\n")
         subprocess.run([sys.executable, str(D.parent / "sense_review/apply.py")], check=True)
     if "--no-audio" in sys.argv:

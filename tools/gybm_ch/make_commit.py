@@ -18,7 +18,7 @@ MY = ["app.js", "style.css", "icon.png", "icon-192.png", "icon-180.png", "manife
       "tools/img_word_text.py", "tools/img_erase_word.py", "tools/img_erase_keyed.py", "tools/img_scene_redraw.py", "tools/img_text_redraw.json", "tools/ocr_box.swift", "tools/bin/ocr_box",
       "data/_img_ocr.json", "data/_img_wordtext.json", "data/_img_wordtext_done.json", "data/_dict_ko.json", "tools/fix_senior/고침표.tsv", "tools/fix_senior/apply.py", "tools/fix_senior/clean_en.py", "tools/fix_senior/뜻_손질.tsv", "tools/fix_senior/new_img.py", "tools/fix_senior/new_img.json", "tools/fix_senior/이름_외래어_뜻.tsv", "tools/rel_sense/뜻별_짝.tsv", "tools/rel_sense/apply.py"] + [f"tools/dict_one/one_{i:02d}.ko.tsv" for i in range(19)] + ["tools/dict_multi/merge.py"] + [f"tools/dict_multi/m{i:03d}.ko.tsv" for i in range(86)]   # 한자·외래어 뿌리 낱말별 검수 (2026-09-28 밤) — 근거 원문까지   # 주간 시험 회차·묶음 검수·뜻 여러 개 (2026-09-28)
 # 교재 예문을 교재 문장으로 (2026-09-29) — 도구·판정표·쪽 이미지로 확인한 번호·손으로 옮긴 문장, 녹음 채우기·뜻 끼워 넣기
-MY += ["tools/fill_audio.py", "tools/sense_review/insert_sense.py"] + [f"tools/book_ex/{n}" for n in ("build_pool.py", "cand.py", "qwen_pass.py", "review.py", "strips.py", "rec_ex.py", "apply_ex.py", "check_ex.py", "예문판정.tsv", "확인.txt", "src/손문장.tsv")]   # 교재 전체 글(src/·pool·cand)은 교재를 통째로 옮긴 것이라 공개 저장소에 안 올린다
+MY += ["tools/fill_audio.py", "tools/sense_review/insert_sense.py"] + [f"tools/book_ex/{n}" for n in ("build_pool.py", "cand.py", "qwen_pass.py", "review.py", "strips.py", "rec_ex.py", "apply_ex.py", "check_ex.py", "예문판정.tsv", "확인.txt", "src/손문장.tsv")] + [".gitignore"]   # 교재 전체 글(src/·pool·cand)은 교재를 통째로 옮긴 것이라 공개 저장소에 안 올린다
 MY = [f for f in MY if (ROOT / f).exists()]   # 아직 없는 파일(_senses.json 은 검수 뒤 생김)은 건너뛴다
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
@@ -123,6 +123,14 @@ if "--no-prune" not in sys.argv and img_orphans:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in img_orphans)
     subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
 print(f"쓰이지 않는 그림 지움 {len(img_orphans) if '--no-prune' not in sys.argv else 0}")
+# ── 교재 원문(저작권)은 공개 저장소에 두지 않는다 — 아침 봇(card_ship.sh 의 git add -A)이 2026-09-29 새벽에 쓸어 올린 것을 뺀다.
+#    이 맥의 파일은 그대로 둔다(올린 판에서만 뺀다). 다시 안 올라가게 .gitignore 에도 적었다.
+_nopub = _re.compile(r"tools/book_ex/(src/v\d_b\d+\.txt|src/_ocr_v\d\.json|pool\.json|cand\.json|qwen\.json)$")
+book_src = [q for q in git("ls-tree", "-r", "--name-only", "origin/main", "tools/book_ex").splitlines() if _nopub.match(q)]
+if book_src:
+    gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in book_src)
+    subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
+print(f"교재 원문 뺌 {len(book_src)}")
 print(f"올릴 파일 {n_new} · origin 과 같아 건너뜀 {n_same} · 소리 목록 {before} → {len(oi)}")
 if dry: raise SystemExit("dry")
 tree = git("write-tree", env=env)
