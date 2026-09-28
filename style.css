@@ -2716,18 +2716,6 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .qmain.filled{color:var(--ok, #1a7f37)}
 .puzzright{margin:6px 0 2px; font-size:15px; font-weight:600; color:var(--ok, #1a7f37)}
 .errtok s{opacity:.55; margin-right:2px}
-/* 연필 색 고르기 (2026-09-28 밤) — ✍ 단추 바로 위 */
-#inkPal{position:fixed; right:18px; bottom:calc(var(--tabbar-h) + 68px); z-index:46; display:flex; flex-direction:column; gap:8px; padding:6px; border-radius:22px; background:var(--card, #fff); box-shadow:0 2px 10px rgba(0,0,0,.15)}
-#inkPal[hidden]{display:none}
-#inkPal .inkc{width:26px; height:26px; border-radius:50%; border:2px solid transparent; padding:0; cursor:pointer}
-#inkPal .inkc.on{border-color:var(--fg); box-shadow:0 0 0 2px var(--card, #fff) inset}
-#inkPal .inkc-k{background:var(--fg)}
-#inkPal .inkc-r{background:#e41e3f}
-#inkPal .inkc-b{background:#1877f2}
-#inkPal .inkc-y{background:#ffd400}
-#inkPal .inkc:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-#inkBtn[data-c="r"]{color:#e41e3f} #inkBtn[data-c="b"]{color:#1877f2} #inkBtn[data-c="y"]{color:#c9a400}
-#inkBtn.on{color:var(--accent-fg)}
 /* 동의어·반의어 뜻별 머리 (2026-09-28 밤) — 지금 보는 뜻은 굵게 */
 .prelsense{margin:8px 0 2px; font-size:13px; color:var(--dim); display:flex; align-items:center; gap:4px}
 .prelsense i{font-style:normal; display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; background:var(--line); color:var(--fg); font-size:10px; font-weight:700}

@@ -2727,7 +2727,7 @@ function show(v, title, canBack) {
   $('#back').hidden = !canBack;
   if (v !== 'learn') { $('#face').hidden = true; FACE = null; }
   if (v === 'learn') inkSetup();                                  // 손글씨 겹쳐 쓰기 (2026-09-28 밤)
-  if (INK.btn) { INK.btn.hidden = v !== 'learn'; if (v !== 'learn') { inkFinger(false); inkClear(); } inkPalSync(); }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
+  if (INK.btn) { INK.btn.hidden = v !== 'learn'; if (v !== 'learn') { inkFinger(false); inkClear(); } }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
   /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 아래 탭의 [홈]이 어디서든 한 번에 나가는 길이다. */
   if (window.cardArrows) setTimeout(window.cardArrows, 0);   // 좌우 넘김 단추는 학습 화면에서만
   CURV = v;
@@ -7944,13 +7944,11 @@ function drawWordbook() {
    · 손가락은 ✍ 단추를 켰을 때만 — 늘 켜 두면 카드 넘기기·단추 누르기를 막는다.
    · 마지막 획을 긋고 1초 뒤 전체가 0.6초에 걸쳐 사라진다(대표님 지시 2026-09-28 밤: "너무 오래 안 지워진다" — 전엔 2.5초+1.5초).
      다 사라지면 그리기를 멈춘다(배터리·발열 없음).
-   · 색: 검정·빨강·파랑 + 노란 형광펜(대표님 지시 2026-09-28 밤). 고른 색은 S.inkColor 에 남는다. 색 고르기는 ✍를 켰을 때나 글씨가 있을 때만 보인다 */
-const INK = { cv: null, g: null, strokes: [], cur: null, raf: 0, finger: false, btn: null, pal: null, last: 0, block: false };
+   · 색은 파랑 하나(대표님 지시 2026-09-28: "파랑 하나만 남겨" — 검정·빨강·형광펜과 색 고르기 판을 뺐다).
+     빨강은 앱에서 '틀림' 색이고, 검정은 어두운 화면에서 안 보이고 인쇄 글씨와 섞인다. 앱 강조색(--accent)을 써서 밝은·어두운 화면 둘 다 보인다 */
+const INK = { cv: null, g: null, strokes: [], cur: null, raf: 0, finger: false, btn: null, last: 0, block: false };
 const INK_HOLD = 1000, INK_FADE = 600;
-const INK_COLORS = [['k', '검정'], ['r', '빨강'], ['b', '파랑'], ['y', '형광펜']];
-const inkColor = () => (typeof S !== 'undefined' && S.inkColor) || 'k';
-const inkStyle = c => c === 'r' ? '#e41e3f' : c === 'b' ? '#1877f2' : c === 'y' ? '#ffd400'
-  : (getComputedStyle(document.body).getPropertyValue('--fg').trim() || '#16181d');
+const inkBlue = () => getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#1877f2';
 const inkPt = e => ({ x: e.clientX, y: e.clientY });
 function inkSetup() {
   if (INK.cv) return;
@@ -7963,21 +7961,13 @@ function inkSetup() {
   btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 7 3 3"/></svg>';
   btn.onclick = () => inkFinger(!INK.finger);
   document.body.append(btn); INK.btn = btn;
-  const pal = document.createElement('div'); pal.id = 'inkPal'; pal.hidden = true;
-  INK_COLORS.forEach(([c, name]) => {
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'inkc inkc-' + c; b.dataset.c = c;
-    b.title = tr(name); b.setAttribute('aria-label', tr(name));
-    b.onclick = e => { e.stopPropagation(); S.inkColor = c; save(); inkPalSync(); };
-    pal.append(b);
-  });
-  document.body.append(pal); INK.pal = pal; inkPalSync();
   const here = () => CURV === 'learn';
   // 손가락(켰을 때) — 캔버스가 받는다
   cv.addEventListener('pointerdown', e => { if (!INK.finger || !here()) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
   cv.addEventListener('pointermove', e => { if (INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } });
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, e => { if (INK.cur && INK.cur.id === e.pointerId) inkEnd(); }));
   // 펜 — 켜기 없이 문서 전체에서 먼저 받는다
-  document.addEventListener('pointerdown', e => { if (e.pointerType !== 'pen' || !here() || INK.finger || e.target === btn || (INK.pal && INK.pal.contains(e.target))) return; inkStart(e); }, true);   // 색 고르기를 펜으로 눌러도 글씨가 아니라 누르기
+  document.addEventListener('pointerdown', e => { if (e.pointerType !== 'pen' || !here() || INK.finger || e.target === btn) return; inkStart(e); }, true);
   document.addEventListener('pointermove', e => { if (e.pointerType === 'pen' && INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } }, true);
   ['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, e => { if (e.pointerType === 'pen' && INK.cur && INK.cur.id === e.pointerId) inkEnd(); }, true));
   // 글씨를 쓴 획이 단추 위에서 끝나도 그 단추가 눌리지 않게 — 톡 친 것만 눌린다
@@ -7986,9 +7976,8 @@ function inkSetup() {
 }
 function inkStart(e) {
   const pen = e.pointerType === 'pen';
-  const c = inkColor(), hl = c === 'y';
-  INK.cur = { id: e.pointerId, pts: [inkPt(e)], w: hl ? 18 : pen ? 2.2 + (e.pressure || .5) * 2.6 : 3.4, c, hl, x0: e.clientX, y0: e.clientY, t0: performance.now(), tap: true, pen };
-  INK.strokes.push(INK.cur); INK.block = false; inkLoop(); inkPalSync();
+  INK.cur = { id: e.pointerId, pts: [inkPt(e)], w: pen ? 2.2 + (e.pressure || .5) * 2.6 : 3.4, x0: e.clientX, y0: e.clientY, t0: performance.now(), tap: true, pen };
+  INK.strokes.push(INK.cur); INK.block = false; inkLoop();
 }
 function inkMove(e) {
   const s = INK.cur; if (!s) return;
@@ -8010,12 +7999,11 @@ function inkDraw() {
   const g = INK.g, now = performance.now();
   g.clearRect(0, 0, innerWidth, innerHeight);
   const age = INK.cur ? 0 : now - INK.last;
-  if (!INK.cur && age > INK_HOLD + INK_FADE) { INK.strokes = []; inkPalSync(); return; }       // 다 사라졌다 — 여기서 멈춘다
+  if (!INK.cur && age > INK_HOLD + INK_FADE) { INK.strokes = []; return; }       // 다 사라졌다 — 여기서 멈춘다
   const fade = Math.max(0, Math.min(1, 1 - (age - INK_HOLD) / INK_FADE));
   g.lineCap = 'round'; g.lineJoin = 'round';
+  g.globalAlpha = fade; g.strokeStyle = inkBlue();
   INK.strokes.forEach(s => {
-    g.globalAlpha = fade * (s.hl ? .42 : 1);                                  // 형광펜은 밑 글자가 비치게 반투명
-    g.strokeStyle = inkStyle(s.c);
     g.lineWidth = s.w; g.beginPath();
     s.pts.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
     if (s.pts.length === 1) g.lineTo(s.pts[0].x + .1, s.pts[0].y + .1);
@@ -8028,17 +8016,8 @@ function inkFinger(on) {
   INK.finger = !!on;
   document.body.classList.toggle('inking', INK.finger);
   if (INK.btn) { INK.btn.classList.toggle('on', INK.finger); INK.btn.setAttribute('aria-pressed', INK.finger ? 'true' : 'false'); }
-  inkPalSync();
 }
-function inkClear() { INK.strokes = []; INK.cur = null; if (INK.g) INK.g.clearRect(0, 0, innerWidth, innerHeight); inkPalSync(); }
-/* 색 고르기 — ✍를 켰거나 화면에 글씨가 있을 때만 보인다 (늘 떠 있으면 카드를 가린다) */
-function inkPalSync() {
-  if (!INK.pal) return;
-  INK.pal.hidden = !(INK.btn && !INK.btn.hidden && (INK.finger || INK.strokes.length));
-  const c = inkColor();
-  [...INK.pal.children].forEach(b => b.classList.toggle('on', b.dataset.c === c));
-  if (INK.btn) INK.btn.dataset.c = c;
-}
+function inkClear() { INK.strokes = []; INK.cur = null; if (INK.g) INK.g.clearRect(0, 0, innerWidth, innerHeight); }
 
 function drawCard() {
   resetRec();
