@@ -6429,10 +6429,19 @@ fetch('data/exgloss.json').then(r => r.json()).then(j => { EXG = j; GVOC = null;
 const exgKo = k => { const v = EXG[k]; return v && (typeof v === 'string' ? v : v.ko); };
 const exgKr = k => { const v = EXG[k]; return v && typeof v === 'object'
   ? v.kr : ''; };
-let GVOC = null;
+let GVOC = null, GVOC_G = false;
+/* 문장 속 단어 사전 — 일상·직무(allWords)에 교재·선배·22기 단어(gybmAllWords)까지 (2026-09-28 밤: 교재 단어가 빠져
+   'bảo vệ môi trường' 이 bảo / vệ / môi(입술) / trường(학교) 로 쪼개져 엉뚱한 뜻이 붙었다). 교재 자료가 늦게 오면 그때 다시 만든다 */
+function gvocBuild() {
+  const g = typeof GYBM !== 'undefined' && !!GYBM;
+  if (GVOC && (GVOC_G || !g)) return;
+  GVOC = {}; GVOC_G = g;
+  const put = w => { if (!w || !w.vi || !w.ko || w.sent) return; const k = String(w.vi).toLowerCase().trim(); if (!GVOC[k]) GVOC[k] = w.ko; };
+  allWords().forEach(put);
+  if (g && typeof gybmAllWords === 'function') gybmAllWords().forEach(put);
+}
 function glossOf(vi) {
-  if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
-                                                    if (!GVOC[k]) GVOC[k] = w.ko; }); }
+  gvocBuild();
   const toks = vi.replace(/[,.!?;:]/g, ' ').split(/\s+/).filter(Boolean);
   const out = [];
   for (let i = 0; i < toks.length;) {
@@ -6488,9 +6497,13 @@ function segLoad() {
 }
 segLoad();
 function glossAll(vi, extra) {
-  if (!GVOC) { GVOC = {}; allWords().forEach(w => { const k = w.vi.toLowerCase();
-                                                    if (!GVOC[k]) GVOC[k] = w.ko; }); }
-  const noMerge = new Set(((SEG && SEG[vi]) || []).map(x => String(x).toLowerCase()));
+  gvocBuild();
+  /* data/_seg.json 한 문장 = ["안 묶을 묶음"…] (옛 꼴) 또는 { no: [안 묶을 묶음], ko: { "낱말#n": 이 문장에서의 뜻 } } (2026-09-28 밤).
+     ko 는 그 낱말이 그 문장에서 n번째로 나올 때의 뜻 — 사람이 쓴 한국어 번역에 그 뜻이 들어 있거나 문법 규칙으로 정해진 것만(클로드 검수) */
+  const sg = (SEG && SEG[vi]) || [];
+  const noMerge = new Set((Array.isArray(sg) ? sg : (sg.no || [])).map(x => String(x).toLowerCase()));
+  const koAt = Array.isArray(sg) ? {} : (sg.ko || {});
+  const seenN = {};
   const look = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || exgKo(ph);
   const toks = vi.split(/(\s+)/);        // 공백도 남겨 문장 모양 그대로 다시 그린다
   const out = [];
@@ -6502,10 +6515,16 @@ function glossAll(vi, extra) {
       if (slice.length < n) continue;
       const ph = slice.join('').replace(/[,.!?;:"“”‘’'()]/g, '').toLowerCase().trim();   // 따옴표·괄호에 싸인 단어도 뜻을 찾는다
       if (n > 1 && noMerge.has(ph)) continue;                                            // 이 문장에서는 안 묶는 것 (data/_seg.json)
+      if (n > 1 && slice.slice(0, -1).some(t => /[,.;:!?]["”’)]*$/.test(t))) continue;   // 쉼표·마침표를 넘어서는 묶지 않는다 ('bạn, tôi' 가 '내 친구'가 되던 것, 2026-09-28)
       const m = ph && look(ph);
       if (m) hit = { w: slice.join(''), m, n };
     }
-    if (hit) { out.push({ w: hit.w, m: hit.m }); i += hit.n; }
+    if (hit) {
+      const key = hit.w.replace(/[,.!?;:"“”‘’'()]/g, '').toLowerCase().trim();
+      seenN[key] = (seenN[key] || 0) + 1;
+      const ctx = koAt[key + '#' + seenN[key]];
+      out.push({ w: hit.w, m: ctx || hit.m }); i += hit.n;
+    }
     else { out.push({ w: toks[i], m: null }); i += 1; }
   }
   return out;
