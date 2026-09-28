@@ -497,6 +497,11 @@ const UIVI = {
   '선배': 'Khoá trước', '과': ' bài', '끝낸 과': 'Bài đã xong',
   '강': ' buổi', '과정': 'Khoá học', '전체 보기': 'Xem toàn bộ', '핵심만': 'Chỉ phần cốt lõi',
   '핵심': 'Cốt lõi', '기본기 · 문법': 'Nền tảng · Ngữ pháp',
+  // 2026-09-28 밤: 문제 수 · 핵심 통일 · 한자·외래어 뿌리
+  '문제 수': 'Số câu', '핵심 단어 N개 — 찾는 말을 입력하면 전체에서 찾습니다': 'N từ cốt lõi — nhập từ cần tìm để tìm trong toàn bộ',
+  'GYBM 단어 N개 · 핵심 = 교재 단어장·선배 시험·주간 시험에 나온 단어': 'N từ GYBM · Cốt lõi = từ trong bảng từ giáo trình, đề thi khoá trước và thi tuần',
+  '옛 한자어': 'Từ Hán cổ', '옛 한자음 섞임': 'Có âm Hán cổ', '한자음': 'Âm Hán Việt',
+  '프랑스어': 'tiếng Pháp', '영어': 'tiếng Anh', '광둥어': 'tiếng Quảng Đông', '민난어': 'tiếng Mân Nam', '일본어': 'tiếng Nhật', '한국어': 'tiếng Hàn', '라오어': 'tiếng Lào', '중국어(표준어)': 'tiếng Trung (phổ thông)',
   '문화 · 베트남 바로알기': 'Văn hoá · Hiểu đúng Việt Nam',
   '7권 · 문화와 베트남 바로알기': 'Quyển 7 · Văn hoá và Hiểu đúng Việt Nam',
   '베트남 문화': 'Văn hoá Việt Nam', '베트남 바로알기': 'Hiểu đúng Việt Nam',
@@ -1227,25 +1232,43 @@ const SRClass = window.SpeechRecognition || window.webkitSpeechRecognition;
    **결과를 기다리지 않고 확인한 것**이 진짜 원인이다. 그래서 startLocalASR()이
    "결과가 오면(또는 최대 4초 안에) 끝나는 약속(Promise)"을 REC.localDone 에 남기고,
    판정하는 쪽(aiListen 등)이 그 약속을 기다린 뒤에 REC.localHeard 를 읽도록 고쳤다. */
+/* 빠르고 정확하게 (대표님 지시 2026-09-28 밤: "인식 속도 빠르고 정확도 높게, 무료로") — 폰 내장 인식만 쓴다(무료).
+   ① 전에는 '2초 기다림'을 녹음 **시작**부터 셌다. 녹음은 말이 끝나고 0.66초 뒤 저절로 멈추는데(liveRec),
+      폰 인식의 답은 멈춘 **뒤** 0.3~1.5초에 온다 → 답이 오기 전에 기다림이 끝나 소리 비교(덜 정확)로 넘어갔다.
+      이제 기다림은 녹음이 **끝난 때**부터 센다(stopLocalASR). 녹음 시작부터는 먹통 방지용 넉넉한 한도만.
+   ② 인식이 '확정' 답을 주면 end 를 기다리지 않고 바로 판정한다. 녹음 중에 확정 답이 오면 녹음도 바로 끝낸다.
+   ③ 후보를 여럿(5) 받아, 그 안에 목표 낱말이 있으면 그것으로 본다 — 짧은 낱말은 폰이 더 흔한 말을 첫 후보로 적기 쉽다. */
+const ASR_AFTER_STOP = 2500;
 function startLocalASR() {
-  REC.localHeard = null; REC.localErr = null;
+  REC.localHeard = null; REC.localErr = null; REC.localAlts = [];
   /* 왜 실패했는지를 반드시 남긴다(2026-09-27 저녁, 대표님: "높낮이는 O·X 가 되는데 발음은 표시가 안 된다").
      전에는 결과가 없으면 아무 말 없이 '…' 만 남았다 — 폰에서 무엇이 잘못됐는지 알 길이 없었다. */
-  if (!SRClass) { REC.localErr = 'unsupported'; REC.localDone = Promise.resolve(); return; }
+  if (!SRClass) { REC.localErr = 'unsupported'; REC.localDone = Promise.resolve(); REC.localFinish = null; return; }
   REC.localDone = new Promise(resolve => {
     let done = false;
-    const finish = () => { if (!done) { done = true; resolve(); } };
+    const finish = () => { if (!done) { done = true; REC.localFinish = null; resolve(); } };
+    REC.localFinish = finish;
     try {
       const r = new SRClass();
       r.lang = learnKo() ? 'ko-KR' : 'vi-VN';
-      r.continuous = false; r.interimResults = false; r.maxAlternatives = 1;
-      r.onresult = e => { REC.localHeard = e.results[0][0].transcript || null; };
+      r.continuous = false; r.interimResults = false; r.maxAlternatives = 5;
+      r.onresult = e => {
+        const res = e.results[e.results.length - 1];
+        const alts = [];
+        for (let i = 0; i < res.length; i++) if (res[i] && res[i].transcript) alts.push(res[i].transcript);
+        REC.localAlts = alts;
+        REC.localHeard = alts[0] || null;
+        if (res.isFinal !== false && REC.localHeard) {
+          finish();                                                          // ② 확정 답 → 바로
+          if (REC.mr && REC.mr.state === 'recording') { try { REC.mr.stop(); } catch (x) { } }
+        }
+      };
       r.onerror = e => { REC.localErr = (e && e.error) || 'error'; };
       r.onnomatch = () => { if (!REC.localErr) REC.localErr = 'nomatch'; };
       r.onend = finish;      // 결과가 없어도(못 알아들어도) end 는 반드시 온다
       r.start();
       REC.sr = r;
-      setTimeout(() => { if (!done && !REC.localHeard && !REC.localErr) REC.localErr = 'timeout'; finish(); }, 2000);   // end 도 안 오면 2초 뒤엔 넘어간다(먹통 방지·2026-09-28 4초→2초)
+      setTimeout(() => { if (!done && !REC.localHeard && !REC.localErr) REC.localErr = 'timeout'; finish(); }, 12000);   // 먹통 방지 한도(녹음 최대 7초 + 여유)
     } catch (e) { REC.sr = null; REC.localErr = 'start:' + (e && e.name || 'error'); finish(); }
   });
 }
@@ -1285,11 +1308,21 @@ function asrFailText() {
 }
 function stopLocalASR() {
   try { REC.sr && REC.sr.stop(); } catch (e) { }
+  const f = REC.localFinish;                 // ① 기다림은 녹음이 끝난 때부터 — 2.5초 안에 답이 없으면 소리 비교로
+  if (f) setTimeout(() => { if (REC.localFinish === f) { if (!REC.localHeard && !REC.localErr) REC.localErr = 'timeout'; f(); } }, ASR_AFTER_STOP);
 }
 /* 폰 인식 결과를 기존 askSpeech()와 같은 모양({heard, ok, pick})으로 바꾼다 —
    호출하는 쪽(aiListen 등)을 안 건드리려고 반환 형태를 맞춘다. */
 function judgeLocalHeard(text, heard) {
   const clean = x => String(x || '').toLowerCase().replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+  /* ③ 폰이 준 후보 여럿 중 목표와 같은 것이 있으면 그것을 들은 말로 본다 (글자·성조 부호까지 같거나, 부호를 떼고 같거나).
+     성조는 이 줄이 아니라 높낮이 곡선이 따로 본다 */
+  const alts = (REC.localAlts || []).filter(Boolean);
+  if (alts.length > 1 && !sayOpts(text)) {
+    const exact = alts.find(a => clean(a) === clean(text));
+    const loose = exact || alts.find(a => stripTone(clean(a)) === stripTone(clean(text)));
+    if (loose) heard = loose;
+  }
   const opts = sayOpts(text);
   if (opts) {
     const h = clean(heard);
@@ -2450,7 +2483,7 @@ function studyWordsEntry(scroll) {
     const src = GYBM && GYBM.find(s => s.key === key);
     if (!src) { rows.push({ key, title, sub: '', done: 0, all: 0, nodes: null }); return; }
     const nodes = src.lessons.map((l, li) => ({ key: gybmKey(key, li), title: l.title,
-      sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('단어') + (l.words.some(w => w.gl) ? ' · ' + tr('핵심') + ' ' + l.words.filter(w => w.gl).length : ''),
+      sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('단어') + (l.words.some(isCore) ? ' · ' + tr('핵심') + ' ' + l.words.filter(isCore).length : ''),
       num: li + 1, done: !!bdone()[gybmKey(key, li)],
       fn: () => { SBOX = 'bsrs'; dive(back); startLearn({ theme: l.title, day: gybmKey(key, li), basic: 1, words: l.words }); } }));
     rows.push({ key, title, sub: src.lessons.length + tr('레슨') + ' · ' + src.lessons.reduce((a, l) => a + l.words.length, 0).toLocaleString('ko-KR') + tr('단어'),
@@ -2536,6 +2569,59 @@ function drawWxNow() {
   }
 }
 setInterval(() => { if (CURV === 'home') drawWxNow(); }, 60e3);
+/* 지금 무엇을 공부·시험하는지 — 머리띠 한 줄 (대표님 지시 2026-09-28 밤: "학습·테스트 중 최상단에 챕터 번호와 제목. 예: 단어-교재-1 chào em …").
+   길면 3초 쉬었다가 천천히 옆으로 흘러 잘린 글자를 보여 주고, 끝에서 잠깐 멈춘 뒤 처음 자리로 돌아와 다시 3초 쉰다.
+   '움직임 줄이기' 설정이면 흐르지 않고 말줄임(…)으로 둔다 */
+var LCRUMB = '', CRUMB_ANIM = null;          // var — 앱이 켜지는 도중 show() 가 이 줄보다 먼저 불려도 멈추지 않게
+var GYBM_NAME = { main: '교재', senior: '선배 시험', c22: '22기 시험' };
+function jobNum(k) {
+  const jv = COURSE && typeof jobVol === 'function' ? jobVol(0) : null;
+  if (!jv) return '';
+  let n = 0, hit = '';
+  jv.tracks.forEach((t, ti) => t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => { n++; if ('J0.' + ti + '.' + ci + '.' + li === k) hit = n; })));
+  return hit;
+}
+function crumbOf(d) {
+  if (!d) return '';
+  const k = d.day, th = tr(d.theme || '');
+  let m;
+  if (typeof k === 'string' && (m = k.match(/^B:(main|senior|c22)(\d+)$/))) return tr('단어') + '-' + tr(GYBM_NAME[m[1]]) + '-' + (+m[2] + 1) + ' ' + th;
+  if (typeof k === 'number') return tr('단어') + '-' + tr(d.track === 'work' ? '직무' : '일상') + '-' + (d.n || k) + ' ' + th;
+  if (typeof k === 'string' && /^J0\./.test(k)) return tr('단어') + '-' + tr('직무') + '-' + jobNum(k) + ' ' + th;
+  if (typeof k === 'string' && typeof BASIC_ORDER !== 'undefined' && BASIC_ORDER.includes(k)) return tr('기본기') + '-' + (BASIC_ORDER.indexOf(k) + 1) + ' ' + th;
+  return th;
+}
+function setCrumb(text) {
+  const box = $('#crumb');
+  if (!box) return;
+  const sp = box.firstElementChild, t = text || '';
+  box.hidden = !t;
+  if (sp.textContent === t && CRUMB_ANIM) return;          // 같은 글이면 흐름을 처음부터 다시 하지 않는다
+  sp.textContent = t;
+  crumbFlow();
+}
+function crumbFlow() {
+  const box = $('#crumb'), sp = box && box.firstElementChild;
+  if (CRUMB_ANIM) { CRUMB_ANIM.cancel(); CRUMB_ANIM = null; }
+  const my = crumbFlow.n = (crumbFlow.n || 0) + 1;          // 짧은 새에 두 번 불리면 늦은 것만 — 흐름이 겹치지 않게
+  if (!sp || box.hidden) return;
+  setTimeout(() => {                                        // 그리기 뒤에 잰다 (rAF 는 화면이 가려지면 멈춰서 타이머로)
+    if (my !== crumbFlow.n || box.hidden) return;
+    if (CRUMB_ANIM) { CRUMB_ANIM.cancel(); CRUMB_ANIM = null; }
+    const over = Math.ceil(sp.scrollWidth - box.clientWidth);
+    box.classList.toggle('long', over > 2);
+    if (over <= 2 || !sp.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const wait = 3000, slide = Math.max(1600, over / 30 * 1000), hold = 1200, back = 800, T = wait + slide + hold + back;
+    CRUMB_ANIM = sp.animate([
+      { transform: 'translateX(0)', offset: 0 },
+      { transform: 'translateX(0)', offset: wait / T, easing: 'linear' },                 // 3초 쉼
+      { transform: 'translateX(' + (-over) + 'px)', offset: (wait + slide) / T },           // 천천히 흘러 끝까지
+      { transform: 'translateX(' + (-over) + 'px)', offset: (wait + slide + hold) / T, easing: 'ease-in-out' },   // 끝에서 잠깐
+      { transform: 'translateX(0)', offset: 1 }                                             // 처음 자리로 스르르
+    ], { duration: T, iterations: Infinity });
+  }, 60);
+}
+addEventListener('resize', () => { clearTimeout(crumbFlow.t); crumbFlow.t = setTimeout(crumbFlow, 200); });
 function show(v, title, canBack) {
   if (v === 'home') { NAV.length = 0; SBOX = 'srs'; }   // 홈에 서면 복습 창고는 늘 하루 5분 것
 
@@ -2544,6 +2630,9 @@ function show(v, title, canBack) {
   if (v !== 'learn' && v !== 'quiz') releaseMic(true);   // 카드·테스트 밖으로 나가면 마이크를 놓는다
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
   $('#title').textContent = tr(title);
+  if (v !== 'learn' && v !== 'quiz') LCRUMB = '';           // 학습·문제 흐름 밖으로 나가면 지난 과 이름을 지운다
+  setCrumb(v === 'learn' ? (LCRUMB || tr(title))
+    : v === 'quiz' ? (ACTIVE_TAB === 'test' ? tr('테스트') + '-' + tr(title) : LCRUMB ? LCRUMB + ' · ' + tr(title) : tr(title)) : '');
   $('#back').hidden = !canBack;
   if (v !== 'learn') { $('#face').hidden = true; FACE = null; }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
   /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 아래 탭의 [홈]이 어디서든 한 번에 나가는 길이다. */
@@ -3581,11 +3670,14 @@ function testHubEntry() {
      "gybm단어 오늘 복습, 이거는 뭐냐"). 단어마다 제 창고에 채점이 쌓인다(boxOf). */
   const due = dueCount();
   const pool = learnedPool();
+  b.append(qnPicker());                                   // 문제 수 10·20·30 — 학습 뒤 확인 문제와 같은 값 (2026-09-28 밤)
   row(ICO.today, '오늘 복습', due, () => testToday(), { today: true, dis: !due });
   row(ICO.all, '배운 단어 전체', pool.length ? pool.length.toLocaleString('ko-KR') : 0, () => testAllLearned(pool), { dis: !pool.length });
   const stars = Object.keys(starOf()).length;
   row(ICO.star, '내 단어장', stars, () => startWordbookQuiz(Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k), '단어장 복습'), { dis: !stars });
   row(ICO.pick, '선택 복습', 0, testPickEntry);
+  row(ICO.write, '문장', 0, testSents);             // 배운 단어 예문·복습 창고 문장 (2026-09-28 밤)
+  row(ICO.write, '문법', 0, testGram);              // 끝낸 문법 과의 문형 (2026-09-28 밤)
   row(ICO.pick, '주간 시험', 0, weeklyEntry);   // 회차별(범위별) 모의시험 — 실제 반 시험 짜임 (2026-09-28)
   show('exam', '테스트', true);
   if (!COURSE) withCourse(() => { if (ACTIVE_TAB === 'test' && CURV === 'exam' && $('#title').textContent === tr('테스트')) testHubEntry(); });
@@ -3593,7 +3685,7 @@ function testHubEntry() {
 }
 /* 카드로 쭉 → [이제 테스트 시작] → 같은 단어로 문제 */
 function cardsThenQuiz(words, title, o) {
-  const ws = (words || []).slice();
+  const ws = (words || []).slice(0, qN());          // 카드도 문제 수만큼만 — 카드 50장 보고 문제는 20개면 어긋난다 (2026-09-28 밤)
   if (!ws.length) { popup(tr('복습할 단어이 없습니다')); return; }
   flashRun(ws, title, { next: () => startQuiz(ws, null, ws.length, !!(o && o.early), (o && o.opt) || {}) });
 }
@@ -3638,10 +3730,12 @@ function testAllLearned(pool) {
   b.append(el('p', 'lede', tr('지금까지 배운') + ' ' + pool.length + tr('단어') + ' — ' + tr('몇 문제를 풀까요?')));
   b.append(el('p', 'note', tr('단어은 매번 랜덤으로 섞입니다. 맞고 틀림은 단어마다 제 복습 창고에 그대로 쌓입니다.')));
   const boxOf = {}; pool.forEach(w => { boxOf[w.vi] = w._box; });
-  const ns = [20, 50, pool.length].filter((n, i, a) => n <= pool.length && a.indexOf(n) === i);
+  const ns = [10, 20, 30].filter(n => n <= pool.length);          // 학습 뒤 확인 문제와 같은 10·20·30 (2026-09-28 밤)
+  if (!ns.length) ns.push(pool.length);
   ns.forEach(n => {
-    const btn = el('button', 'bigmenu', n === pool.length ? tr('전부') + ' (' + n + tr('문제') + ')' : n + tr('문제'));
+    const btn = el('button', 'bigmenu', n + tr('문제'));
     btn.onclick = () => {
+      if ([10, 20, 30].includes(n)) { S.qn = n; save(); }
       const ws = pool.slice().sort(() => Math.random() - .5).slice(0, n);
       dive(() => testAllLearned(pool));
       startQuiz(ws, null, n, false, { kind: 'word', boxOf: vi => boxOf[vi] || 'srs' });
@@ -3649,6 +3743,63 @@ function testAllLearned(pool) {
     b.append(btn);
   });
   show('exam', '배운 단어 전체', true);
+}
+/* 테스트 탭의 문장·문법 (대표님 물음 2026-09-28 밤: "테스트에 문법 테스트와 문장 테스트도 넣을까?" → 넣음).
+   둘 다 고른 문제 수(qN)만큼. 배운 것만 낸다 — 안 배운 것을 풀면 복습이 아니라 시험이다 */
+function learnedSents() {
+  const out = [], seen = new Set();
+  const put = (s, graded) => {
+    if (!s || !s.vi || seen.has(s.vi)) return; seen.add(s.vi);
+    out.push(Object.assign({ vi: s.vi, ko: s.ko || '', kr_read: s.kr_read || s.kr || '', tones: s.tones, sent: true }, graded ? {} : { nograde: true }));
+  };
+  Object.keys(S.srs || {}).forEach(k => { const it = findItem(k); if (it && it.sent) put(it, true); });            // 복습 창고의 문장 — 채점이 창고에 쌓인다
+  learnedPool().forEach(w => { const e = w.ex; if (e && e.vi && e.ko && e.vi.split(/\s+/).length >= 3) put(e, false); });   // 배운 단어의 예문 — 창고에는 안 넣는다
+  return out.filter(x => x.ko);
+}
+function testSents() {
+  const pool = learnedSents().sort(() => Math.random() - .5);
+  if (pool.length < 4) { popup(tr('아직 배운 문장이 적습니다 — 학습을 조금 더 하면 여기서 풀 수 있습니다')); return; }
+  SBOX = 'srs';
+  startQuiz(pool, null, qN(), true, { kind: 'sent' });
+  if (Q) Q.noMore = true;
+}
+function learnedGram() {
+  const out = [];
+  if (!GRAM) return out;
+  (GRAM.books || []).forEach((b, bi) => b.bai.forEach((x, ni) => {
+    if (S.done[gkey(bi, ni)]) x.g.forEach(g => { if (g.k && g.t && g.ex && g.ex.length) out.push(g); });
+  }));
+  return out;
+}
+function testGram() {
+  gramEnsure(() => {
+    const gs = learnedGram();
+    if (!gs.length) { popup(tr('끝낸 문법 과가 아직 없습니다 — 학습의 문법에서 한 과를 끝내면 여기서 풀 수 있습니다')); return; }
+    const mix = a => a.slice().sort(() => Math.random() - .5), N = qN();
+    const all = gramPool();
+    const sents = [], seen = new Set();
+    gs.forEach(g => g.ex.forEach(e => { if (e.vi && !seen.has(e.vi)) { seen.add(e.vi); sents.push({ vi: e.vi, ko: e.ko || '', kr_read: e.kr || '', sent: true, nograde: true, gk: g.k, gt: g.t }); } }));
+    const L = [], modes = ['gpat', 'read_ko', 'puzzle'];
+    let i = 0;
+    for (const s of mix(sents)) {
+      if (L.length >= N) break;
+      let md = modes[i++ % 3];
+      const nw = s.vi.replace(/[.?!]+$/, '').split(/\s+/).length;
+      if (md === 'puzzle' && (nw < 3 || nw > 9 || /[.!?]\s/.test(s.vi))) md = 'gpat';
+      if (md === 'read_ko' && (sents.length < 4 || !s.ko)) md = 'gpat';
+      if (md === 'gpat') {
+        const wrong = [], ks = new Set([s.gk]);
+        [...mix(gs), ...mix(all)].forEach(p => { if (wrong.length < 3 && !ks.has(p.k)) { ks.add(p.k); wrong.push({ k: p.k, t: p.t }); } });   // 오답 보기는 배운 문법에서 먼저 — 모자라면 전체에서
+        L.push({ w: s, mode: 'gpat', opts: [], popts: mix([{ k: s.gk, t: s.gt }, ...wrong]) });
+      } else if (md === 'read_ko') {
+        L.push({ w: s, mode: 'read_ko', opts: mix([s, ...mix(sents.filter(x => x.vi !== s.vi && x.ko && x.ko !== s.ko)).slice(0, 3)]) });
+      } else L.push({ w: s, mode: 'puzzle', opts: [] });
+    }
+    SBOX = 'srs';
+    Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, noMore: true };
+    drawQuiz();
+    show('quiz', tr('문법'), true);
+  });
 }
 function testPickEntry() {
   const b = $('#examBody'); b.textContent = '';
@@ -3705,7 +3856,7 @@ function pickUnits(kind) {
     go.textContent = tr('고른 것 복습') + ' (' + n + tr('단어') + ')';
     go.onclick = () => {
       SBOX = picked[0][4];
-      const ws = picked.flatMap(u => u[2]);
+      const ws = picked.flatMap(u => u[2]).slice().sort(() => Math.random() - .5);   // 섞어서 고른 문제 수만큼 (앞 과만 나오지 않게)
       dive(() => pickUnits(kind));
       cardsThenQuiz(ws, title + ' ' + tr('카드'), { opt: { kind: 'word' } });
     };
@@ -6343,6 +6494,7 @@ let L = null;
 
 function startLearn(d) {
   noteTrack(d);
+  LCRUMB = crumbOf(d);                                 // 머리띠 '단어-교재-1 Xin chào · 1부' (2026-09-28 밤)
   // 순서: 단어 카드 → 확인 문제(암기 다지기) → 오늘의 대화(문장으로 써먹기).
   // 문장이 마무리인 이유: 외운 것을 산출(말하기)로 끝내야 하루가 완성된다.
   const items = [];
@@ -7017,6 +7169,7 @@ function drawGramList() {
 function startGram(bi, ni) {
   const b = GRAM.books[bi], x = b.bai[ni];
   noteTrack({ day: gkey(bi, ni) });
+  LCRUMB = tr('문법') + '-' + x.no + ' ' + tr(x.t);
   L = { day: { day: gkey(bi, ni), theme: x.t, gram: 1 }, i: 0,
         items: x.g.map(g => ({ k: 'gram', d: g })) };
   drawCard();
@@ -7322,6 +7475,7 @@ function openWordCard(x, back) {
   const w = Object.assign({}, x);
   delete w.b;
   if (!w.vi) return;
+  LCRUMB = tr('사전') + '-' + w.vi;
   L = { day: { day: 'dict', theme: tr('사전'), words: [w] }, items: [{ k: 'word', d: w }], i: 0, dict: true };
   if (back) dive(back);
   drawCard();
@@ -7405,8 +7559,8 @@ function basicWordRow(x) {
   // .dictrow는 [dvi][dkr][dko] 3칸 그리드다 — 별을 딴 칸으로 안 붙이고 dvi 안에
   // 같이 넣어야 기존 사전 화면 줄 짜임을 안 깬다.
   const vi = el('span', 'dvi');
-  vi.append(el('span', 'bwvi' + (x.weekly ? ' weekly' : ''), esc(x.vi)));
-  if (x.star) vi.append(el('span', 'bwstar', ' ' + '★'.repeat(x.star)));
+  vi.append(el('span', 'bwvi', esc(x.vi)));
+  if (isCore(x)) vi.append(el('span', 'corepill sm', tr('핵심')));      // ★·빨간 밑줄 대신 핵심 하나 (2026-09-28 밤)
   row.append(vi);
   if (x.kr_read) row.append(el('span', 'dkr', '[' + esc(x.kr_read) + ']'));
   row.append(el('span', 'dko', esc(x.ko)));
@@ -7422,6 +7576,9 @@ function basicWordRow(x) {
    레슨을 누르면 회화·직무회화와 똑같이 바로 단어카드(startLearn/drawCard)로 들어간다. */
 let GYBM = null;
 const bdone = () => (S.bdone = S.bdone || {});
+/* 강조는 '핵심' 하나로 (대표님 지시 2026-09-28 밤: "별표·빨간 밑줄·핵심 세 가지 → 핵심으로 통일").
+   교재 단어장(gl) · 선배 시험에 나온 것(star, 예전 ★) · 주간 시험(weekly, 예전 빨간 밑줄)을 모두 '핵심'으로 본다 */
+function isCore(x) { return !!(x && (x.gl || x.star > 0 || x.weekly)); }
 function gybmBuild(cb) {
   if (GYBM) { cb(GYBM); return; }
   fetch('data/gybm.json', { cache: 'no-cache' }).then(r => r.json())
@@ -7529,7 +7686,7 @@ function gybmSearch() {
   show('sub', tr('GYBM 단어 찾기'), true);
   const words = [];
   GYBM.forEach(src => src.lessons.forEach(l => l.words.forEach(w => words.push(w))));
-  b.append(el('p', 'lede', tr('GYBM 단어 N개 · ★는 선배 시험에 겹쳐 나온 기수 수 · 빨간 밑줄은 주간시험')
+  b.append(el('p', 'lede', tr('GYBM 단어 N개 · 핵심 = 교재 단어장·선배 시험·주간 시험에 나온 단어')
     .replace('N', words.length.toLocaleString('ko-KR'))));
   const inp = el('input', 'keyin dictin');
   inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
@@ -7539,8 +7696,8 @@ function gybmSearch() {
     out.textContent = '';
     let list, note;
     if (q.length < 1) {
-      list = words.filter(x => x.star > 0);
-      note = tr('여러 기수에 겹쳐 나온 것부터 N개 — 찾는 말을 입력하면 전체에서 찾습니다').replace('N', list.length);
+      list = words.filter(isCore).sort((a, b) => (b.star || 0) - (a.star || 0));
+      note = tr('핵심 단어 N개 — 찾는 말을 입력하면 전체에서 찾습니다').replace('N', list.length);
     } else {
       const qb = dictBare(q), qk = q.toLowerCase();
       const kor = /[가-힣]/.test(q);
@@ -7881,7 +8038,7 @@ function drawCard() {
     const kob = el('div', 'ko', esc(x.ko));
     /* 단어장(교재 맨 뒤 Bảng từ)에 실린 단어은 '핵심' 표시 — 그 밖의 단어은 그냥 둔다
        (대표님 지시 2026-09-25 #13). 데이터는 gybm.json 의 gl:1 (단어장 표시). */
-    if (x.gl) kob.prepend(el('span', 'corepill', tr('핵심')));
+    if (isCore(x)) kob.prepend(el('span', 'corepill', tr('핵심')));
     cf.append(kob);
     const boxC = el('div', 'cmpbox');         // 말하기(녹음) 결과 — 뜻 바로 아래 [듣기][말하기] 밑에 (대표님 지시 2026-09-27)
     cf.append(wordControls(x.vi, boxC), boxC);
@@ -8009,6 +8166,9 @@ function drawCard() {
   if (L.dict) $('#pos').textContent = tr('사전');
   const last = L.i === L.items.length - 1;
   $('#next').hidden = !last || !!L.dict;      // 사전에서 연 단어 카드는 확인 문제로 안 간다
+  const qnr = $('#qnRow');                       // 단어 확인 문제로 가는 마지막 장에만 문제 수 고르기 (2026-09-28 밤)
+  if (qnr) { qnr.textContent = ''; const toQuiz = last && !L.dict && !L.day.gram && !L.cult && !L.day.know && !L.news && !L.dlg && (L.day.words || []).length;
+             qnr.hidden = !toQuiz; if (toQuiz) qnr.append(qnPicker()); }
   $('#next').textContent = L.day.gram ? '확인 문제 ›'
     : L.cult || L.day.know ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
@@ -8211,6 +8371,7 @@ function drawFlash() {
 
 /* 확인 문제 뒤의 마무리 — 오늘 배운 문장을 실제로 써먹는다 */
 function startDialog(d) {
+  LCRUMB = crumbOf(d) + ' · ' + tr('문장으로 써먹기');
   L = { day: d, items: [{ k: 'dialog', d: d.dialog }], i: 0, dlg: true };
   drawCard();
   show('learn', label(d) + ' · 문장으로 써먹기', true);
@@ -8390,16 +8551,35 @@ function startWordbookQuiz(viList, name) {
   });
   if (!src.length) { popup('복습할 단어을 못 찾았습니다.'); return; }
   src.sort(() => Math.random() - .5);
-  startQuiz(src, null, REV_CHUNK, false);
+  startQuiz(src, null, qN(), false);
   show('quiz', name || '단어장 복습', true);
 }
 
-const REV_CHUNK = 20;                          // 복습 한 판의 최대 문제 수
+const REV_CHUNK = 20;                          // (옛 값) 이제는 qN() — 사용자가 고른 문제 수
+/* 문제 수 — 10·20·30 중 사용자가 고른다 (대표님 지시 2026-09-28 밤: "학습 후 30문제 너무 많다. 학습 후와 테스트 모두 같게, 고를 수 있게").
+   S.qn 에 남아 학습 뒤 확인 문제·테스트가 같은 수를 쓴다. 처음엔 20 */
+function qN() { return [10, 20, 30].includes(S.qn) ? S.qn : 20; }
+function qnPicker(onPick) {
+  const row = el('div', 'qnpick');
+  row.append(el('span', 'qnlab', tr('문제 수')));
+  [10, 20, 30].forEach(n => {
+    const b = el('button', 'qnchip' + (qN() === n ? ' on' : ''), String(n));
+    b.type = 'button';
+    b.onclick = e => { e.stopPropagation(); S.qn = n; save(); row.querySelectorAll('.qnchip').forEach(x => x.classList.toggle('on', x === b)); if (onPick) onPick(n); };
+    row.append(b);
+  });
+  return row;
+}
 /* 세트 뒤 확인 문제 — 단어마다 **두 번** (대표님 지시 2026-09-27 밤): 먼저 알아보기(듣고 뜻·읽고 뜻·짝 맞추기) 한 바퀴, 다음 만들어 내기(타이핑·말하기) 한 바퀴.
    틀린 것은 그 판 끝에 또 나오므로 결국 단어마다 두 번은 맞혀야 끝난다. 손글씨는 뺐다. 말하기는 녹음이 되는 폰에서만. */
 function buildSetQuestions(words) {
-  const rec = buildQuestions(words, ['listen', 'read', 'read_ko', 'match', 'tone', 'listen', 'read']);
-  const prod = buildQuestions(words, canRecord() ? ['type', 'say', 'type'] : ['type']);
+  /* 고른 문제 수(qN)에 맞춘다: 알아보기 한 바퀴를 먼저 채우고(단어가 더 많으면 그중 일부), 남는 수만큼 만들어 내기.
+     15단어 세트에서 10 → 알아보기 10 · 20 → 알아보기 15 + 만들기 5 · 30 → 15 + 15 (2026-09-28 밤) */
+  const N = qN(), mix = a => a.slice().sort(() => Math.random() - .5);
+  const recW = words.length <= N ? words : mix(words).slice(0, N);
+  const rec = buildQuestions(recW, ['listen', 'read', 'read_ko', 'match', 'tone', 'listen', 'read']);
+  const k = Math.min(words.length, N - recW.length);
+  const prod = k > 0 ? buildQuestions(mix(words).slice(0, k), canRecord() ? ['type', 'say', 'type'] : ['type']) : [];
   return rec.concat(prod);
 }
 function startQuiz(words, day, cap, early, opt) {
@@ -8408,7 +8588,7 @@ function startQuiz(words, day, cap, early, opt) {
   if (o.kind === 'word') src = src.filter(x => !x.sent);
   if (o.kind === 'sent') src = src.filter(x => x.sent);
   if (!src.length) { noItems(o); return; }
-  if (!day) src = src.slice(0, cap || REV_CHUNK);   // 복습은 20개씩 끊어 낸다
+  if (!day) src = src.slice(0, Math.min(cap || qN(), qN()));   // 테스트·복습은 고른 문제 수(10·20·30)만큼
   const list = day ? buildSetQuestions(src) : buildQuestions(src, o.skill);
   Q = { list, i: 0, ok: 0, day, total: list.length, early, opt: o };
   drawQuiz();
@@ -8697,7 +8877,7 @@ function drawQuiz() {
                   tone: '성조 부호가 맞는 것을 고르세요', shadow: '듣고 따라 말해 보세요',
                   puzzle_ko: '뜻을 듣고 조각으로 문장을 만들어 보세요', puzzle_vi: '문장을 듣고 조각으로 만들어 보세요',
                   pic_tf: '듣고 그림이 맞으면 맞다, 아니면 틀리다', pic4: '듣고 맞는 그림을 고르세요', dictation: '듣고 그대로 쳐 보세요',
-                  cloze: '빈칸에 들어갈 단어를 고르세요', gcloze: '빈칸에 들어갈 말을 고르세요 (문법)', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
+                  cloze: '빈칸에 들어갈 단어를 고르세요', gpat: '이 문장에 쓰인 문법을 고르세요', gcloze: '빈칸에 들어갈 말을 고르세요 (문법)', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
   body.append(el('div', 'qcount', (Q.i + 1) + ' / ' + Q.list.length));
   body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + ' · ' : '') + (q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : LABEL[q.mode])));
   if (Q.exam) { q._okBefore = Q.ok; const pq = Q.i > 0 ? Q.list[Q.i - 1] : null; if (pq && pq._ok === undefined) pq._ok = Q.ok > (pq._okBefore || 0); }   // 시험 채점용
@@ -8705,7 +8885,7 @@ function drawQuiz() {
   if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
   if (q.mode === 'type' || q.mode === 'dictation') return drawTypeQ(body, q);
-  if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err') return drawExamKind(body, q);
+  if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err' || q.mode === 'gpat') return drawExamKind(body, q);
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
   if (q.mode === 'match') return drawMatch(body, q);
@@ -9196,6 +9376,15 @@ function drawExamKind(body, q) {
     opts.forEach(o => { const b = el('button', null, esc(o.vi)); b.dataset.vi = o.vi === tok ? w.vi : '-'; b.onclick = () => answer(b, o.vi === tok, w); box.append(b); });
     body.append(box); return;
   }
+  if (md === 'gpat') {                                     // 테스트 탭 문법 — 예문에 쓰인 문형 고르기 (2026-09-28 밤)
+    const bx = el('div', 'wex');
+    bx.append(tapLine(w.vi, 'wexvi tapline'));
+    if (w.ko) bx.append(el('div', 'wexko', esc(w.ko)));
+    body.append(bx);
+    const box = el('div', 'opts');
+    (q.popts || []).forEach(o => { const b = el('button', null, esc(o.k) + ' — ' + esc(o.t)); const good = o.k === w.gk; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
+    body.append(box); return;
+  }
   if (md === 'gcloze') {                                   // 문법 빈칸 — 보기는 회차 문법의 말들 (2026-09-28)
     const tok = w.tok || '';
     const re = new RegExp('(^|\\s)' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i');
@@ -9630,9 +9819,9 @@ function finishQuiz() {
     const days = Math.max(1, Math.round((soon - now()) / DAY));
     r.append(el('p', 'note', `다음 복습은 ${days}일 뒤입니다. 잊기 직전에 다시 꺼내야 오래 남습니다.`));
   }
-  const left = Q.day ? 0 : dueWords().length;
+  const left = Q.day || Q.noMore ? 0 : dueWords().length;
   if (left) {
-    const more = el('button', 'primary big', '이어서 ' + Math.min(left, REV_CHUNK) + '개 더');
+    const more = el('button', 'primary big', '이어서 ' + Math.min(left, qN()) + '개 더');
     more.style.marginTop = '20px'; more.style.width = '100%';
     more.onclick = () => startQuiz(null, null);
     r.append(more);
@@ -10261,6 +10450,7 @@ function startRule(i) {
   const cw = (r.cards || []).flatMap(c0 => glossOf(c0.vi).map(g => g.w))
     .map(w => (allWords().find(x => x.vi.toLowerCase() === w.toLowerCase()) || {}).img)
     .find(Boolean);
+  LCRUMB = tr('기본기') + '-' + tr(r.title);
   L = { day: { day: r.key, theme: r.title, intro: r.intro, words: [], rule: r },
         items: [{ k: 'cover', d: { t: r.title, b: r.intro, img: cw } },
                 ...r.cards.map(c => ({ k: 'rule', d: c }))], i: 0 };
@@ -10913,7 +11103,7 @@ $('#back').onclick = () => { const f = NAV.pop(); (f || renderHome)(); };
    서버는 동아리 워커(Cloudflare KV, 공짜)의 'bug' 행동에 쌓이고 tools/bug_admin.py 로 읽는다.
    서버가 아직 옛 판이거나 오프라인이면 기기(S.bugq)에 두었다가 다음에 다시 보낸다. */
 function bugContext() {
-  const c = { view: CURV, tab: ACTIVE_TAB, title: $('#title').textContent,
+  const c = { view: CURV, tab: ACTIVE_TAB, title: $('#title').textContent, crumb: ($('#crumb') && $('#crumb').textContent) || '',
               ver: ((document.querySelector('script[src*="app.js"]') || {}).src || '').split('v=')[1] || '',
               voice: S.voice, online: navigator.onLine, ua: navigator.userAgent.slice(0, 160),
               scr: innerWidth + 'x' + innerHeight, at: new Date().toISOString() };
@@ -10949,8 +11139,9 @@ function bugReport(extra) {
   if (document.querySelector('.bugback')) return;
   const back = el('div', 'modalback bugback');
   const box = el('div', 'modalbox bugbox');
-  box.append(el('div', 'bughd', '<b>⚑ ' + tr('이 화면 오류 보고') + '</b><span>' + esc($('#title').textContent) + '</span>'));
-  let kind = 'etc';
+  const where = !$('#crumb').hidden && $('#crumb').textContent ? $('#crumb').textContent : $('#title').textContent;   // 머리띠 줄(단어-교재-1 …)이 있으면 그것 (2026-09-28 밤)
+  box.append(el('div', 'bughd', '<b>⚑ ' + tr('이 화면 오류 보고') + '</b><span>' + esc(where) + '</span>'));
+  let kind = 'img';                                   // 처음 고른 것 = '그림이 이상해요' (대표님 지시 2026-09-28 밤)
   const chips = el('div', 'chiprow bugchips');
   BUG_KINDS.forEach(([k, t]) => {
     const c = el('button', 'chip' + (k === kind ? ' on' : ''), tr(t)); c.type = 'button';
@@ -11136,6 +11327,7 @@ function drawKnowList() {
 }
 function startKnow(i) {
   const x = KNOW[i];
+  LCRUMB = tr('문화') + '-' + (i + 1) + ' ' + tr(x.t);
   L = { day: { day: 'KNOW' + i, theme: x.t, know: 1 }, cult: 1, i: 0,
         items: (x.c || []).map(c => ({ k: 'know', d: c })) };
   drawCard();

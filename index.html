@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="짜오짜오">
 <meta name="mobile-web-app-capable" content="yes">
 <title>짜오짜오 — 베트남어</title>
-<link rel="stylesheet" href="style.css?v=e21dbd28">
+<link rel="stylesheet" href="style.css?v=ab2f29bd">
 </head>
 <body>
 
@@ -19,6 +19,7 @@
   <!-- 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27: 아래 탭에 홈이 늘 있으니 위에는 필요 없다) -->
   <button id="back" class="ghost" hidden>‹</button>
   <button id="wxnow" class="ghost wxnow" title="베트남 날씨와 시각" aria-label="날씨와 시각" hidden></button>
+  <div id="crumb" class="crumb" hidden><span></span></div>   <!-- 지금 공부하는 곳: 단어-교재-1 제목 (2026-09-28 밤) -->
   <h1 id="title">짜오짜오</h1>
   <!-- 내 정보를 우측 상단으로 (대표님 지시, 2026-09-12) — 아래 탭에서는 뺐다 -->
   <!-- 차례: 남/여 · [단어|발음] · 내 정보 (대표님 지시 2026-09-27). [단어|발음]은 단어 카드에서만 보인다 -->
@@ -55,6 +56,7 @@
     <button id="goNext" class="pagearrow right" type="button" aria-label="다음">›</button>
     <div class="pager">
       <span id="pos"></span>
+      <div id="qnRow" hidden></div>
       <button id="next" class="primary big" hidden>다음 ›</button>
     </div>
   </section>
@@ -152,10 +154,10 @@
   </button>
 </nav>
 
-<script src="pitch.js?v=e21dbd28"></script>
-<script src="mouth.js?v=e21dbd28"></script>
-<script src="judge.js?v=e21dbd28"></script>
-<script src="pet.js?v=e21dbd28"></script>
-<script src="app.js?v=e21dbd28"></script>
+<script src="pitch.js?v=ab2f29bd"></script>
+<script src="mouth.js?v=ab2f29bd"></script>
+<script src="judge.js?v=ab2f29bd"></script>
+<script src="pet.js?v=ab2f29bd"></script>
+<script src="app.js?v=ab2f29bd"></script>
 </body>
 </html>

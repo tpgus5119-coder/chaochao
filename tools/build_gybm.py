@@ -200,6 +200,10 @@ def chunk_chapters(chapters, seen, size=15, skey=None):
         kept = [enrich(w, skey) for w in ch["words"] if w.get("vi") and w.get("ko")] if skey == "c22" else dedupe(ch["words"], seen, skey)
         if not kept:
             continue
+        if skey == "main":
+            # 과 안에서 **핵심 먼저** (대표님 지시 2026-09-28 밤: "단어장의 단어들이 먼저 쭉 나오고 그 후에 그 챕터의 다른 단어들").
+            # 차례: 교재 단어장(gl) → 선배·주간 시험에 나온 것(star·weekly, 앱에선 같은 '핵심') → 나머지. 같은 무리 안은 교재 차례 그대로(안정 정렬)
+            kept = sorted(kept, key=lambda w: 0 if w.get("gl") else (1 if (w.get("star") or w.get("weekly")) else 2))
         if skey == "c22":
             # 회차를 고르게 나눈다 — 40 → 14·13·13, 49 → 17·16·16 (12~18 낱말). 15씩 자르면 마지막이 4개가 된다
             n = max(1, -(-len(kept) // 18)); q, r = divmod(len(kept), n)

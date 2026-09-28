@@ -2666,3 +2666,24 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .gramrow{margin:10px 0; padding:10px 12px; border:1px solid var(--line); border-radius:12px}
 .gramt b{display:block; font-size:15px}
 .gramt small{display:block; font-size:12px; color:var(--dim); margin-top:2px}
+/* 문제 수 10·20·30 (2026-09-28 밤) — 학습 마지막 장 '확인 문제' 옆과 테스트 첫 화면 */
+.qnpick{display:flex; align-items:center; gap:6px; flex-wrap:wrap}
+.qnpick .qnlab{font-size:13px; color:var(--dim); margin-right:2px}
+.qnpick .qnchip{min-width:44px; padding:7px 10px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--fg); font:inherit; font-size:14px; font-weight:700; font-variant-numeric:tabular-nums; cursor:pointer}
+.qnpick .qnchip.on{background:var(--accent); border-color:var(--accent); color:var(--accent-fg)}
+.qnpick .qnchip:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+#qnRow[hidden]{display:none}
+#examBody > .qnpick{margin:2px 0 12px}
+/* 사전·단어 목록 줄의 핵심 알약 — ★·빨간 밑줄을 대신 (2026-09-28 밤) */
+.corepill.sm{font-size:10.5px; padding:1px 6px; margin:0 0 0 6px}
+/* 머리띠 '지금 공부하는 곳' 줄 (2026-09-28 밤) — 남은 너비를 다 쓰고, 넘치면 흐른다(app.js crumbFlow). 단어·발음 단추는 오른쪽으로 */
+header > .crumb{flex:1 1 0; min-width:0; overflow:hidden; white-space:nowrap; font-size:14px; font-weight:700; color:var(--fg); text-align:left; line-height:1.3}
+header > .crumb[hidden]{display:none}
+header > .crumb > span{display:inline-block; white-space:nowrap; will-change:transform}
+header > .crumb.long{-webkit-mask-image:linear-gradient(90deg, #000 88%, transparent); mask-image:linear-gradient(90deg, #000 88%, transparent)}
+@media (prefers-reduced-motion: reduce){ header > .crumb > span{display:block; overflow:hidden; text-overflow:ellipsis} header > .crumb.long{-webkit-mask-image:none; mask-image:none} }
+header > #face{margin:0}
+header > #goBug{margin-left:auto}
+/* 학습 마지막 장 — 문제 수 고르기는 단추 위 한 줄로 (한 줄에 끼면 단추 글이 두 줄로 눌린다) */
+.pager{flex-wrap:wrap}
+.pager #qnRow{flex:1 1 100%; order:-1; display:flex; justify-content:center}
