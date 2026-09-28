@@ -2654,7 +2654,9 @@ function show(v, title, canBack) {
   setCrumb(v === 'learn' ? (LCRUMB || tr(title))
     : v === 'quiz' ? (ACTIVE_TAB === 'test' ? tr('테스트') + '-' + tr(title) : LCRUMB ? LCRUMB + ' · ' + tr(title) : tr(title)) : '');
   $('#back').hidden = !canBack;
-  if (v !== 'learn') { $('#face').hidden = true; FACE = null; }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
+  if (v !== 'learn') { $('#face').hidden = true; FACE = null; }
+  if (v === 'learn') inkSetup();                                  // 손글씨 겹쳐 쓰기 (2026-09-28 밤)
+  if (INK.btn) { INK.btn.hidden = v !== 'learn'; if (v !== 'learn') { inkFinger(false); inkClear(); } }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
   /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 아래 탭의 [홈]이 어디서든 한 번에 나가는 길이다. */
   if (window.cardArrows) setTimeout(window.cardArrows, 0);   // 좌우 넘김 단추는 학습 화면에서만
   CURV = v;
@@ -7854,8 +7856,86 @@ function drawWordbook() {
   show(ko ? 'exam' : 'sub', '단어장', true);
 }
 
+/* ── 손글씨 겹쳐 쓰기 (대표님 지시 2026-09-28 밤: "단어 카드·발음 카드 화면 위에 펜·손가락으로 필기, 몇 초 뒤 스르르 사라지게.
+   외울 때 손도 같이 외우면 도움") ──
+   · 애플펜슬·S펜(pointerType 'pen')은 켜기 없이 늘 쓴다. 펜으로 살짝 톡 치면 원래대로 단추가 눌린다.
+   · 손가락은 ✍ 단추를 켰을 때만 — 늘 켜 두면 카드 넘기기·단추 누르기를 막는다.
+   · 마지막 획을 긋고 2.5초 뒤 전체가 1.5초에 걸쳐 사라진다. 다 사라지면 그리기를 멈춘다(배터리·발열 없음). */
+const INK = { cv: null, g: null, strokes: [], cur: null, raf: 0, finger: false, btn: null, last: 0, block: false };
+const INK_HOLD = 2500, INK_FADE = 1500;
+const inkPt = e => ({ x: e.clientX, y: e.clientY });
+function inkSetup() {
+  if (INK.cv) return;
+  const cv = document.createElement('canvas'); cv.id = 'inkcv'; cv.setAttribute('aria-hidden', 'true');
+  document.body.append(cv); INK.cv = cv; INK.g = cv.getContext('2d');
+  const size = () => { const r = window.devicePixelRatio || 1; cv.width = Math.round(innerWidth * r); cv.height = Math.round(innerHeight * r); INK.g.setTransform(r, 0, 0, r, 0, 0); inkLoop(); };
+  size(); addEventListener('resize', size);
+  const btn = document.createElement('button'); btn.id = 'inkBtn'; btn.type = 'button'; btn.hidden = true;
+  btn.setAttribute('aria-label', tr('손가락으로 쓰기')); btn.title = tr('손가락으로 쓰기');
+  btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 7 3 3"/></svg>';
+  btn.onclick = () => inkFinger(!INK.finger);
+  document.body.append(btn); INK.btn = btn;
+  const here = () => CURV === 'learn';
+  // 손가락(켰을 때) — 캔버스가 받는다
+  cv.addEventListener('pointerdown', e => { if (!INK.finger || !here()) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
+  cv.addEventListener('pointermove', e => { if (INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } });
+  ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, e => { if (INK.cur && INK.cur.id === e.pointerId) inkEnd(); }));
+  // 펜 — 켜기 없이 문서 전체에서 먼저 받는다
+  document.addEventListener('pointerdown', e => { if (e.pointerType !== 'pen' || !here() || INK.finger || e.target === btn) return; inkStart(e); }, true);
+  document.addEventListener('pointermove', e => { if (e.pointerType === 'pen' && INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } }, true);
+  ['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, e => { if (e.pointerType === 'pen' && INK.cur && INK.cur.id === e.pointerId) inkEnd(); }, true));
+  // 글씨를 쓴 획이 단추 위에서 끝나도 그 단추가 눌리지 않게 — 톡 친 것만 눌린다
+  document.addEventListener('click', e => { if (INK.block) { INK.block = false; e.preventDefault(); e.stopPropagation(); } }, true);
+  document.addEventListener('touchmove', e => { if (INK.cur) e.preventDefault(); }, { passive: false });   // 펜으로 쓰는 동안 화면이 밀리지 않게
+}
+function inkStart(e) {
+  const pen = e.pointerType === 'pen';
+  INK.cur = { id: e.pointerId, pts: [inkPt(e)], w: pen ? 2.2 + (e.pressure || .5) * 2.6 : 3.4, x0: e.clientX, y0: e.clientY, t0: performance.now(), tap: true, pen };
+  INK.strokes.push(INK.cur); INK.block = false; inkLoop();
+}
+function inkMove(e) {
+  const s = INK.cur; if (!s) return;
+  const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+  (evs.length ? evs : [e]).forEach(x => s.pts.push(inkPt(x)));
+  if (Math.hypot(e.clientX - s.x0, e.clientY - s.y0) > 6) s.tap = false;
+  inkLoop();
+}
+function inkEnd() {
+  const s = INK.cur; if (!s) return;
+  INK.cur = null; INK.last = performance.now();
+  if (s.pen && s.tap && INK.last - s.t0 < 350) { INK.strokes.pop(); return; }   // 펜으로 톡 — 글씨가 아니라 누르기
+  if (s.pen) INK.block = true;                                                      // 펜 획 끝의 클릭은 막는다
+  inkLoop();
+}
+function inkLoop() { if (!INK.raf && INK.g) INK.raf = requestAnimationFrame(inkDraw); }
+function inkDraw() {
+  INK.raf = 0;
+  const g = INK.g, now = performance.now();
+  g.clearRect(0, 0, innerWidth, innerHeight);
+  const age = INK.cur ? 0 : now - INK.last;
+  if (!INK.cur && age > INK_HOLD + INK_FADE) { INK.strokes = []; return; }       // 다 사라졌다 — 여기서 멈춘다
+  g.globalAlpha = Math.max(0, Math.min(1, 1 - (age - INK_HOLD) / INK_FADE));
+  g.strokeStyle = getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#1877f2';
+  g.lineCap = 'round'; g.lineJoin = 'round';
+  INK.strokes.forEach(s => {
+    g.lineWidth = s.w; g.beginPath();
+    s.pts.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
+    if (s.pts.length === 1) g.lineTo(s.pts[0].x + .1, s.pts[0].y + .1);
+    g.stroke();
+  });
+  g.globalAlpha = 1;
+  if (INK.strokes.length) INK.raf = requestAnimationFrame(inkDraw);
+}
+function inkFinger(on) {
+  INK.finger = !!on;
+  document.body.classList.toggle('inking', INK.finger);
+  if (INK.btn) { INK.btn.classList.toggle('on', INK.finger); INK.btn.setAttribute('aria-pressed', INK.finger ? 'true' : 'false'); }
+}
+function inkClear() { INK.strokes = []; INK.cur = null; if (INK.g) INK.g.clearRect(0, 0, innerWidth, innerHeight); }
+
 function drawCard() {
   resetRec();
+  inkClear();                                  // 카드를 넘기면 앞 카드에 쓴 글씨는 바로 지운다
   if (window.cardArrows) setTimeout(window.cardArrows, 0);
   const c = $('#card');
   $('#face').hidden = true; FACE = null;
