@@ -1164,7 +1164,7 @@ function pairPopup(vi, info) {
   grp.append(pl, spdChip({ pair: true }));
   hd.append(grp);
   box.append(hd);
-  if (inf.ko) box.append(el('div', 'pairpopko', esc(inf.ko)));
+  if (inf.ko) { const pk = el('div', 'pairpopko', esc(inf.ko)); box.append(pk); senseLine(pk, { vi, ko: inf.ko }); }   // 뜻 여러 개 (2026-09-28)
   const sub = el('div', 'pairpopsub', tr('헷갈리는 짝'));
   const body = el('div', 'pairpopbody');
   const ok = el('button', 'primary big', tr('닫기'));
@@ -6527,12 +6527,19 @@ function sensesLoad() {
   return SENSES_P;
 }
 function senseLine(host, x) {
+  /* 뜻이 여럿이면 **자주 쓰는 차례로 최대 3개**를 번호를 붙여 보여 준다 (대표님 지시 2026-09-28: "뜻이 3개 있는 단어인데 왜 2개만 보여주냐, 자주 쓰이는 순서대로").
+     이 과(카드)에서 배우는 뜻은 굵게. data/_senses.json 은 클로드가 사전(위키낱말사전) 뜻풀이를 근거로 낱말마다 적은 것 */
   const draw = () => {
-    const ss = SENSES && SENSES[String(x.vi || '').toLowerCase()];
-    if (!ss || !ss.length) return;
-    const stem = t => String(t || '').split(/[,;(·/]/)[0].trim();
-    const mine = stem(x.ko), rest = ss.filter(t => stem(t) !== mine).slice(0, 3);
-    if (rest.length) host.append(el('div', 'senses', rest.map(esc).join(' · ')));
+    const ss = SENSES && SENSES[String(x.vi || '').trim().toLowerCase()];
+    if (!ss || ss.length < 2) return;
+    const parts = t => String(t || '').replace(/\([^)]*\)/g, ' ').split(/[,;·/]/).map(p => p.trim().replace(/^~/, '')).filter(Boolean);
+    const mine = new Set(parts(x.ko));
+    const hit = ss.findIndex(t => parts(t).some(p => mine.has(p)));
+    const list = el('div', 'senselist');
+    ss.slice(0, 3).forEach((t, i) => { const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp); });
+    const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+    if (hit >= 0 && tn) tn.replaceWith(list);          // 이 과의 뜻이 목록 안에 있으면 목록이 뜻 자리를 대신한다
+    else host.append(list);                             // 없으면(이 과만의 특수한 뜻) 원래 뜻을 두고 밑에 목록
   };
   if (SENSES) draw(); else sensesLoad().then(draw);
 }
