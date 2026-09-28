@@ -29,7 +29,8 @@ def main():
             if not c:
                 bad.append(f"{lk} {vi}: pool 에 없는 문장 — {src}")
                 continue
-            pick = c[0]["id"]
+            # 같은 글이 OCR 쪽과 손문장 둘에 있으면 손문장(쪽을 눈으로 확인한 것) — 듣기 대본은 OCR 쪽번호가 틀린 곳이 있다
+            pick = next((p for p in c if p["sec"] == "hand"), c[0])["id"]
             ids.append(pick)
         lines.append("\t".join([lk, vi, pick, evi, eko, str(sense), memo]))
     if bad:

@@ -14,7 +14,7 @@ import sys
 import unicodedata
 
 D = pathlib.Path(__file__).resolve().parent
-SPLIT = {"không đâu": "không...đâu"}   # 낱말표엔 붙여 적었지만 교재 문법은 떨어진 틀(không X đâu)
+SPLIT = {"không đâu": "không...đâu", "cầm lên": "cầm...lên", "công ty mời làm việc": "công ty...mời...làm việc"}   # 낱말표엔 붙여 적었지만 교재 문법은 떨어진 틀(không X đâu)
 R = D.parent.parent
 sys.path.insert(0, str(D.parent / "sense_review"))
 sys.path.insert(0, str(D))
