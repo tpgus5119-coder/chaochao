@@ -1121,7 +1121,7 @@ function pairSeq(items, rows, wrap, btn) {
 function pairPanel(vi, opt) {
   const o = opt || {};
   const wrap = el('div', o.bare ? 'pairbox bare' : 'pairbox');
-  sibLoad().then(() => {
+  sibLoad().then(() => sensesLoad()).then(() => {          // 뜻 목록도 같이 — 동의어·반의어를 뜻별로 나누는 데 쓴다
     if (!SIB || !wrap.isConnected) return;
     const fams = sibFams(vi), rel = sibRel(vi);
     if (!fams.length && !rel) return;
@@ -1157,8 +1157,30 @@ function pairPanel(vi, opt) {
         body.append(sp);
       }
       if (rel) {                                   // 동의어·반의어는 눌린 단어 전체 기준 — 음절 고르기와 상관없이 늘 위에
-        if (rel.s && rel.s.length) body.append(section('동의어', '뜻이 비슷함', rel.s, '', 'rel'));
-        if (rel.a && rel.a.length) body.append(section('반의어', '뜻이 반대', rel.a, '', 'rel'));
+        /* **뜻별로** (대표님 지시 2026-09-28 밤: "같은 단어라도 어떤 뜻에 포커싱되어 있냐에 따라 동의어·반의어가 달라진다").
+           rel.m = {짝: 뜻 번호} (tools/rel_sense/뜻별_짝.tsv, 클로드 판정). 지금 보는 뜻(o.ko)의 짝을 맨 위에 굵은 뜻 이름과 함께,
+           나머지는 뜻 이름 밑에 나눠 보인다. 판정이 없는 낱말은 예전처럼 한 줄로 */
+        const ss = rel.m && SENSES && SENSES[vi.toLowerCase().trim()];
+        const secRel = (title, note, list) => {
+          if (!list || !list.length) return;
+          if (!ss) { body.append(section(title, note, list, '', 'rel')); return; }
+          const parts = t => String(t || '').replace(/\([^)]*\)/g, ' ').split(/[,;·/]/).map(p => p.trim().replace(/^~/, '')).filter(Boolean);
+          const mine = new Set(parts(o.ko));
+          const focus = o.ko ? ss.findIndex(t => parts(t).some(p => mine.has(p))) + 1 : 0;   // 1부터, 없으면 0
+          const groups = new Map();
+          list.forEach(x => { const i = rel.m[x] || 0; if (!groups.has(i)) groups.set(i, []); groups.get(i).push(x); });
+          const order = [...groups.keys()].sort((a, b) => (b === focus) - (a === focus) || (a || 99) - (b || 99));
+          const sec = el('div', 'psec');
+          sec.append(el('div', 'ptitle', tr(title) + '<span>' + tr(note) + '</span>'));
+          order.forEach(i => {
+            const lab = i ? '<i>' + i + '</i>' + esc(ss[i - 1]) : tr('그 밖의 뜻');
+            sec.append(el('div', 'prelsense' + (i && i === focus ? ' cur' : ''), lab));
+            groups.get(i).forEach(x => sec.append(pairRow(x, '', 'rel')));
+          });
+          body.append(sec);
+        };
+        secRel('동의어', '뜻이 비슷함', rel.s);
+        secRel('반의어', '뜻이 반대', rel.a);
       }
       if (fams.length > 1) {
         const sel = el('div', 'psel');
@@ -1231,7 +1253,7 @@ function pairPopup(vi, info) {
   sibLoad().then(() => {
     if (!SIB) { body.append(el('div', 'pnote', tr('불러오지 못했습니다'))); return; }
     if (!sibFams(vi).length && !sibRel(vi)) { body.append(el('div', 'pnote', tr('이 단어과 헷갈리는 짝이 없습니다.'))); return; }
-    body.append(pairPanel(vi, { bare: true }));
+    body.append(pairPanel(vi, { bare: true, ko: inf.ko }));   // 지금 보는 뜻(ko)의 동의어·반의어를 먼저 (2026-09-28 밤)
   });
 }
 
