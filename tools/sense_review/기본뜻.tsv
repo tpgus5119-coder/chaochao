@@ -1856,3 +1856,308 @@
 135	quan trọng	-
 135	cảm thấy	-
 135	hối hận	-
+# 직무 1~3 (지시하고 확인하기)
+J0.0.0.0	yêu cầu	1
+J0.0.0.0	chỉ đạo	-
+J0.0.0.0	giao việc	-
+J0.0.0.0	bắt đầu	-
+J0.0.0.0	gấp	1
+J0.0.0.0	kiểm tra	1
+J0.0.0.0	xác nhận	-
+J0.0.0.0	tiến độ	-
+J0.0.0.0	hoàn thành	-
+J0.0.0.0	xong	1
+J0.0.0.0	hạn	1
+J0.0.0.0	chậm trễ	-
+J0.0.0.1	vấn đề	1
+J0.0.0.1	nguyên nhân	-
+J0.0.0.1	sai	1
+J0.0.0.1	giải quyết	-
+J0.0.0.1	sửa	-
+J0.0.0.1	cải tiến	-
+J0.0.0.1	lãng phí	-
+J0.0.0.1	khởi động chuyền	-
+J0.0.0.1	dừng chuyền	-
+J0.0.0.1	chạy thử	-
+J0.0.0.1	mục tiêu ngày	-
+J0.0.0.1	đạt kế hoạch	-
+J0.0.0.1	người thay ca	-
+J0.0.0.2	kế hoạch sản xuất	-
+J0.0.0.2	lệnh sản xuất	-
+J0.0.0.2	thao tác chuẩn	-
+J0.0.0.2	bố trí nhân lực	-
+J0.0.0.2	giao ca	-
+J0.0.0.2	điểm danh	1
+J0.0.0.2	tăng ca	-
+J0.0.0.2	ca đêm	-
+J0.0.0.2	thiếu người	-
+J0.0.0.2	làm lại	-
+# 직무 4~7 (회의와 보고) — chi tiết 예문 '세부사항을 확인'
+J0.1.0.0	cuộc họp	-
+J0.1.0.0	họp	-
+J0.1.0.0	thảo luận	-
+J0.1.0.0	đề xuất	-
+J0.1.0.0	quyết định	1
+J0.1.0.0	báo cáo	1
+J0.1.0.0	kết quả	-
+J0.1.0.0	số liệu	-
+J0.1.0.0	doanh thu	-
+J0.1.0.0	kế hoạch	-
+J0.1.0.0	mục tiêu	-
+J0.1.0.1	văn bản	-
+J0.1.0.1	trình bày	1
+J0.1.0.1	tóm tắt	-
+J0.1.0.1	chi tiết	2
+J0.1.0.1	gửi	1
+J0.1.0.1	nhận	1
+J0.1.0.1	quyết toán	-
+J0.1.0.1	báo giá	-
+J0.1.0.1	tạm ứng	-
+J0.1.0.1	chấm dứt hợp đồng	-
+J0.1.0.1	đề xuất cải tiến	-
+J0.1.0.2	báo cáo tháng	-
+J0.1.0.2	trình ký	-
+J0.1.0.2	phê duyệt	-
+J0.1.0.2	từ chối duyệt	-
+J0.1.0.2	bản gốc	-
+J0.1.0.2	bản sao	-
+J0.1.0.2	lưu hồ sơ	-
+J0.1.0.2	chi phí	1
+J0.1.0.2	lợi nhuận	-
+J0.1.0.2	ngân sách	-
+J0.1.0.3	thua lỗ	-
+J0.1.0.3	biên bản họp	-
+J0.1.0.3	kết thúc cuộc họp	-
+J0.1.0.3	vui lòng gửi tệp	-
+J0.1.0.3	người phụ trách	-
+J0.1.0.3	tạm hoãn	-
+J0.1.0.3	xử lý trước	-
+J0.1.0.3	phối hợp	-
+J0.1.0.3	chia sẻ thông tin	-
+J0.1.0.3	vui lòng xem xét	-
+J0.1.0.3	vui lòng sửa	-
+# 직무 8~12 (인사·평가·채용 1~3, 전자·전기 1·2) — phỏng vấn '면접', thưởng '보너스', lỗi '불량·에러', điện trở 예문 '이 저항(부품)'
+J0.2.0.0	tuyển dụng	-
+J0.2.0.0	phỏng vấn	2
+J0.2.0.0	hồ sơ	-
+J0.2.0.0	kinh nghiệm	-
+J0.2.0.0	năng lực	-
+J0.2.0.0	nhân viên	-
+J0.2.0.0	lao động	1
+J0.2.0.0	lương	1
+J0.2.0.0	nghỉ phép	-
+J0.2.0.0	nghỉ việc	1
+J0.2.0.1	đánh giá	1
+J0.2.0.1	thưởng	2
+J0.2.0.1	thăng chức	-
+J0.2.0.1	phạt	1
+J0.2.0.1	kỷ luật	1
+J0.2.0.1	sa thải	-
+J0.2.0.1	tự ý nghỉ	-
+J0.2.0.1	khen thưởng	-
+J0.2.0.1	đánh giá năng lực	-
+J0.2.0.1	bàn giao	-
+J0.2.0.1	công đoàn	-
+J0.2.0.1	sơ yếu lý lịch	-
+J0.2.0.1	đình công	-
+J0.2.0.2	hợp đồng lao động	-
+J0.2.0.2	thử việc	-
+J0.2.0.2	bảng lương	-
+J0.2.0.2	lương cơ bản	-
+J0.2.0.2	phụ cấp	-
+J0.2.0.2	bảo hiểm xã hội	-
+J0.2.0.2	nghỉ phép năm	-
+J0.2.0.2	nghỉ ốm	-
+J0.2.0.2	đơn xin nghỉ	-
+J0.2.0.2	đi muộn	-
+J0.3.0.0	linh kiện	-
+J0.3.0.0	bảng mạch	-
+J0.3.0.0	màn hình	-
+J0.3.0.0	cảm biến	-
+J0.3.0.0	lắp ráp	-
+J0.3.0.0	dây chuyền	1
+J0.3.0.0	hàn	1
+J0.3.0.0	chất lượng	-
+J0.3.0.0	lỗi	2
+J0.3.0.0	tĩnh điện	-
+J0.3.0.0	phòng sạch	-
+J0.3.0.0	nhiệt độ	-
+J0.3.0.0	độ ẩm	-
+J0.3.0.1	linh kiện điện tử	-
+J0.3.0.1	bo mạch	-
+J0.3.0.1	tụ điện	-
+J0.3.0.1	điện trở	2
+J0.3.0.1	đầu nối	-
+J0.3.0.1	dây cáp	-
+J0.3.0.1	cầu chì	-
+J0.3.0.1	hàn thiếc	-
+J0.3.0.1	kem hàn	-
+J0.3.0.1	kiểm tra chức năng	-
+# 직무 13~18 — chỉ '실', da '가죽', may '재봉하다', an toàn '안전'(명사), dự toán '공사비 산출', móng '기초', công suất '생산 용량', rung '진동하다'
+J0.3.0.2	tỷ lệ lỗi	-
+J0.3.0.2	lỗi hàn	-
+J0.3.0.2	thiếu linh kiện	-
+J0.3.0.2	gắn ngược	-
+J0.3.0.2	vòng tay tĩnh điện	-
+J0.3.0.2	áo phòng sạch	-
+J0.3.0.2	băng tải	-
+J0.3.0.2	mã vạch	-
+J0.3.0.2	nguồn điện	-
+J0.3.0.2	dây điện	-
+J0.3.0.2	cầu dao	-
+J0.3.0.2	điện áp	-
+J0.3.0.2	dòng điện	-
+J0.3.0.2	máy phát điện	-
+J0.3.0.2	điện giật	-
+J0.4.0.0	vải	1
+J0.4.0.0	chỉ	3
+J0.4.0.0	da	2
+J0.4.0.0	màu	1
+J0.4.0.0	kim	1
+J0.4.0.0	máy may	-
+J0.4.0.0	may	2
+J0.4.0.0	cắt	1
+J0.4.0.0	đường may	-
+J0.4.0.0	kích cỡ	-
+J0.4.0.0	giày	1
+J0.4.0.0	đế giày	-
+J0.4.0.0	nhãn mác	-
+J0.4.0.0	đóng gói	-
+J0.4.0.0	hàng	1
+J0.4.0.1	giày da	-
+J0.4.0.1	mũ giày	-
+J0.4.0.1	đế giữa	-
+J0.4.0.1	lót giày	-
+J0.4.0.1	dây giày	-
+J0.4.0.1	gót giày	-
+J0.4.0.1	phom giày	-
+J0.4.0.1	da thật	-
+J0.4.0.1	ép đế	-
+J0.4.0.1	dán đế	-
+J0.4.0.1	bôi keo	-
+J0.4.0.1	gò giày	-
+J0.4.0.1	cắt da	-
+J0.4.0.1	bong keo	-
+J0.4.0.1	cỡ giày	-
+J0.4.0.1	giày lỗi	-
+J0.4.0.1	hộp giày	-
+J0.5.0.0	công trình	1
+J0.5.0.0	dự án	-
+J0.5.0.0	bản vẽ	-
+J0.5.0.0	xây dựng	1
+J0.5.0.0	vật liệu	-
+J0.5.0.0	xi măng	-
+J0.5.0.0	sắt thép	-
+J0.5.0.0	an toàn	2
+J0.5.0.0	mũ bảo hộ	-
+J0.5.0.0	giàn giáo	-
+J0.5.0.0	chủ đầu tư	-
+J0.5.0.0	nhà thầu	-
+J0.5.0.0	giấy phép	-
+J0.5.0.1	công trường	-
+J0.5.0.1	thi công	-
+J0.5.0.1	bản vẽ thiết kế	-
+J0.5.0.1	giám sát	-
+J0.5.0.1	nghiệm thu	-
+J0.5.0.1	bê tông	-
+J0.5.0.1	cốt thép	-
+J0.5.0.1	gạch	1
+J0.5.0.1	cát	-
+J0.5.0.1	cẩu	1
+J0.5.0.1	máy xúc	-
+J0.5.0.1	chống thấm	-
+J0.5.0.1	dây an toàn	-
+J0.5.0.1	lưới an toàn	-
+J0.5.0.1	dự toán	2
+J0.5.0.1	móng	3
+J0.5.0.1	mái	1
+J0.6.0.0	máy móc	1
+J0.6.0.0	thiết bị	-
+J0.6.0.0	động cơ	1
+J0.6.0.0	phụ tùng	-
+J0.6.0.0	bảo trì	-
+J0.6.0.0	vận hành	1
+J0.6.0.0	tự động	-
+J0.6.0.0	thủ công	1
+J0.6.0.0	dầu	1
+J0.6.0.0	áp suất	-
+J0.6.0.0	công suất	2
+J0.6.0.0	rung	2
+J0.6.0.0	hỏng	1
+# 직무 19~24 — 공구·설비·물류 낱말은 모두 수업 뜻 1번(펌프·밸브·새다·펜치·톱·못·사다리·창고·라벨)
+J0.6.0.1	máy tiện	-
+J0.6.0.1	máy phay	-
+J0.6.0.1	máy khoan	-
+J0.6.0.1	máy hàn	-
+J0.6.0.1	vòng bi	-
+J0.6.0.1	bơm	1
+J0.6.0.1	van	1
+J0.6.0.1	bánh răng	-
+J0.6.0.1	bu lông	-
+J0.6.0.1	đai ốc	-
+J0.6.0.2	thước cặp	-
+J0.6.0.2	bảo trì định kỳ	-
+J0.6.0.2	bôi trơn	-
+J0.6.0.2	quá tải	-
+J0.6.0.2	rò rỉ	1
+J0.6.0.2	mất điện	-
+J0.6.0.2	kiểm tra cuối	-
+J0.6.0.2	hàng không đạt	-
+J0.6.0.2	bình chữa cháy	-
+J0.6.0.2	kính bảo hộ	-
+J0.6.0.3	dừng máy	-
+J0.6.0.3	đạt chuẩn	-
+J0.6.0.3	giày bảo hộ	-
+J0.6.0.3	hỏa hoạn	-
+J0.6.0.3	sơ tán	-
+J0.6.0.3	cấm vào	-
+J0.6.0.3	lối thoát hiểm	-
+J0.6.0.3	búa	-
+J0.6.0.3	tua vít	-
+J0.6.0.3	cờ lê	-
+J0.6.0.3	kìm	1
+J0.6.0.3	cưa	1
+J0.6.0.3	đinh	1
+J0.6.0.3	ốc vít	-
+J0.6.0.3	thước dây	-
+J0.6.0.3	thang	1
+J0.6.0.3	lắp đặt	-
+J0.7.0.0	xuất khẩu	-
+J0.7.0.0	nhập khẩu	-
+J0.7.0.0	hải quan	-
+J0.7.0.0	thuế	-
+J0.7.0.0	chứng từ	-
+J0.7.0.0	vận chuyển	-
+J0.7.0.0	container	-
+J0.7.0.0	cảng	-
+J0.7.0.0	giao hàng	-
+J0.7.0.0	kho	1
+J0.7.0.0	tồn kho	-
+J0.7.0.0	đơn hàng	-
+J0.7.0.0	nhà cung cấp	-
+J0.7.0.0	khách hàng	-
+J0.7.0.1	kho hàng	-
+J0.7.0.1	nhập kho	-
+J0.7.0.1	xuất kho	-
+J0.7.0.1	kiểm kê	-
+J0.7.0.1	xe nâng	-
+J0.7.0.1	pa lét	-
+J0.7.0.1	bốc xếp	-
+J0.7.0.1	dỡ hàng	-
+J0.7.0.1	xe tải	-
+J0.7.0.1	cảng biển	-
+J0.7.0.2	niêm phong	-
+J0.7.0.2	băng keo	-
+J0.7.0.2	quầy thu ngân	-
+J0.7.0.2	kệ hàng	-
+J0.7.0.2	trưng bày	-
+J0.7.0.2	đổi trả	-
+J0.7.0.2	doanh số	-
+J0.7.0.2	bốc hàng	-
+J0.7.0.2	vận đơn	-
+J0.7.0.2	thời hạn giao hàng	-
+J0.7.0.2	nhãn	1
+J0.7.0.2	kiểm hàng	-
+J0.7.0.2	đơn đặt hàng	-
+J0.7.0.2	xuất hàng	-
+J0.7.0.2	pa-lét	-
