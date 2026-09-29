@@ -27,6 +27,10 @@
        암호화하지 않으므로 운영자는 마음먹으면 볼 수 있다. 앱 화면에도 그렇게 적어 둔다.
        막는 것은 Origin 허용목록 하나뿐이다 — 비밀 이야기를 할 자리가 아니다.
    v14: 남·북 말씨 확인 설문(act:'dialect'/'dialects') 추가 — giong.html 이 쓴다.
+   v16 (2026-09-29): **비밀번호 찾기 질문** — act:'setq'(로그인한 사람이 질문·답 정하기)·'getq'(아이디 → 질문 글)·
+        'ansq'(답이 맞으면 새 비밀번호로 바꾸고 증표를 새로). 답은 소금 친 으깬 값만 남긴다. 틀린 답은 아이디마다 하루 5번.
+        가입(signup)도 q·qa 를 받으면 같이 정한다. 로그인 응답에 hasq(질문을 정했나)를 붙인다.
+        원래 비밀번호는 서버에도 으깬 값뿐이라 보여 줄 수 없다 — 답이 맞으면 **새로 정하게** 한다.
    v15: 설문 **하나로 합침**(act:'giong'/'giongs'). 링크 두 개를 사람에게 부탁하면
         둘째 것은 거의 안 온다 — 한 화면에서 두 가지를 함께 묻는다.
         · 문장마다 '어느 소리가 사람 같은가' **하나만** (nat)
@@ -388,6 +392,39 @@ export default {
       const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + '\u0001' + pw));
       return [...new Uint8Array(d)].map(x => x.toString(16).padStart(2, '0')).join('');
     };
+    const normAns = a => String(a || '').normalize('NFC').toLowerCase().replace(/\s+/g, '').slice(0, 60);   // 띄어쓰기·대소문자는 안 가린다
+    /* ── 비밀번호 찾기 질문 (v16, 2026-09-29) ── */
+    if (act === 'setq') {
+      const id = cut(b.id, 20).toLowerCase().trim(), AK = 'acct:' + id;
+      const acct = JSON.parse((await KV.get(AK)) || 'null');
+      if (!acct || !acct.t || cut(b.tok, 40) !== acct.t) return send({ error: '로그인이 필요합니다' });
+      const q = cut(b.q, 80).trim(), qa = normAns(b.qa);
+      if (!q || qa.length < 2) return send({ error: '질문과 답(2자 이상)을 적어 주세요' });
+      acct.q = q; acct.qs = Math.random().toString(36).slice(2, 12); acct.qh = await hashPw(acct.qs, qa);
+      await KV.put(AK, JSON.stringify(acct));
+      return send({ ok: true });
+    }
+    if (act === 'getq' || act === 'ansq') {
+      const id = cut(b.id, 20).toLowerCase().trim(), AK = 'acct:' + id;
+      const acct = JSON.parse((await KV.get(AK)) || 'null');
+      if (!acct || !acct.qh) return send({ error: '이 아이디에는 비밀번호 찾기 질문이 없습니다' });
+      if (act === 'getq') return send({ ok: true, q: acct.q });
+      const day = new Date().toISOString().slice(0, 10);
+      const fails = acct.qf && acct.qf.d === day ? acct.qf.n : 0;
+      if (fails >= 5) return send({ error: '오늘은 더 시도할 수 없습니다 — 내일 다시 해 주세요' });
+      if (await hashPw(acct.qs, normAns(b.qa)) !== acct.qh) {
+        acct.qf = { d: day, n: fails + 1 };
+        await KV.put(AK, JSON.stringify(acct));
+        return send({ error: '답이 다릅니다 (오늘 ' + (5 - acct.qf.n) + '번 남음)' });
+      }
+      const npw = String(b.pw || '').slice(0, 64);
+      if (npw.length < 8) return send({ error: '새 비밀번호는 8자 이상입니다' });
+      acct.s = Math.random().toString(36).slice(2, 12); acct.h = await hashPw(acct.s, npw);
+      acct.t = [...crypto.getRandomValues(new Uint8Array(16))].map(x => x.toString(16).padStart(2, '0')).join('');   // 다른 기기는 다시 로그인
+      delete acct.qf;
+      await KV.put(AK, JSON.stringify(acct));
+      return send({ ok: true });
+    }
     if (act === 'signup' || act === 'login') {
       const id = cut(b.id, 20).toLowerCase().trim();
       const pw = String(b.pw || '').slice(0, 64);
@@ -418,9 +455,12 @@ export default {
         // 증표(token): 로그인한 사람만 자기 진도를 읽고 쓸 수 있게 하는 문패.
         // 비밀번호를 매번 보내지 않으려고 따로 둔다.
         const tok = [...crypto.getRandomValues(new Uint8Array(16))].map(x => x.toString(16).padStart(2, '0')).join('');
-        await KV.put(AK, JSON.stringify({ s: salt, h: await hashPw(salt, pw), u: uid, p: prof, t: tok, email }));
+        const rec = { s: salt, h: await hashPw(salt, pw), u: uid, p: prof, t: tok, email };
+        const q0 = cut(b.q, 80).trim(), qa0 = normAns(b.qa);          // 비밀번호 찾기 질문 (v16)
+        if (q0 && qa0.length >= 2) { rec.q = q0; rec.qs = Math.random().toString(36).slice(2, 12); rec.qh = await hashPw(rec.qs, qa0); }
+        await KV.put(AK, JSON.stringify(rec));
         if (elow) { emails[elow] = id; await KV.put(EKEY, JSON.stringify(emails)); }
-        return send({ ok: true, uid, nick, prof, tok });
+        return send({ ok: true, uid, nick, prof, tok, hasq: !!rec.qh });
       }
       if (!acct) return send({ error: '없는 아이디입니다' });
       if (await hashPw(acct.s, pw) !== acct.h) return send({ error: '비밀번호가 다릅니다' });
@@ -438,7 +478,7 @@ export default {
       }
       const hasProg = !!(await KV.get('prog:' + id, { type: 'text' }));
       return send({ ok: true, uid: acct.u, nick: myNick || (myClub && myClub.nick) || '',
-                    club: myClub, prof: acct.p || null, tok: acct.t, hasProg });
+                    club: myClub, prof: acct.p || null, tok: acct.t, hasProg, hasq: !!acct.qh });
     }
 
     /* ── 이메일로 비밀번호 찾기 (2026-09-09, 대표님 지시) ──────────────────

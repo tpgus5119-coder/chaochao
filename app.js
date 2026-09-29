@@ -3249,141 +3249,22 @@ function quitForm() {
   show('sub', tr('탈퇴'), true);
 }
 
-/* ---------- 소셜 로그인(구글·페이스북) ----------
-   Worker(서버) 소스를 못 고치는 상태라, 토큰 서명 검증은 서버가 아니라 안 한다.
-   대신 구글/페북이 준 고유 id로 결정적인 가짜 아이디·비번을 만들어(해시),
-   이미 있는 아이디/비번 계정 시스템(cCall)에 그대로 로그인·가입을 태운다.
-   같은 사람은 언제나 같은 계정으로 들어온다. 진짜 보안이 필요해지면
-   나중에 Worker에서 서명 검증을 추가해야 한다 — 지금은 이 정도가 정직한 한계다. */
-async function sha256hex(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-}
-async function socialFinish(provider, sub, email, nick) {
-  const id = provider[0] + (await sha256hex(provider + ':' + sub)).slice(0, 19);
-  const pw = (await sha256hex(provider + ':' + sub + ':pw')).slice(0, 32);
-  try {
-    let j, act;
-    try { j = await cCall({ act: 'login', id, pw }); act = 'login'; }
-    catch (e) {
-      j = await cCall({ act: 'signup', id, pw, nat: 'kr', learn: 'vi', reg: '', email });
-      act = 'signup';
-      if (!S.nick && nick) { try { await cCall({ act: 'nick', nick }); S.nick = nick; save(); } catch (e2) { } }
-    }
-    if (act === 'signup') { S.nat = 'kr'; S.learn = 'vi'; S.email = email; save(); }
-    if (act === 'login' && j.prof) {
-      S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
-    }
-    if (act === 'login') { S.uid = j.uid; if (j.nick) S.nick = j.nick; }
-    S.acct = { id, tok: j.tok || '' }; save();
-    if (act === 'login' && j.hasProg) await loginPull();   // 새 기기면 받고, 공부한 기기면 합친다
-    popup('<b>' + (provider === 'google' ? '구글' : '페이스북') + ' 계정으로 로그인됐습니다.</b>');
-    if (!S.nick) { askNick(); return; }
-    dailyFlowEntry();
-  } catch (e) { alert(tr('로그인 실패') + ': ' + (e.message || '')); }
-}
-function loadGIS() {
-  return new Promise((res, rej) => {
-    if (window.google && google.accounts && google.accounts.id) return res();
-    const s = document.createElement('script');
-    s.src = 'https://accounts.google.com/gsi/client';
-    s.onload = res; s.onerror = rej;
-    document.head.appendChild(s);
-  });
-}
-async function googleLogin() {
-  try {
-    await loadGIS();
-    google.accounts.id.initialize({
-      client_id: '529668173593-514i71o4op45v29t2km0nk096pd4td82.apps.googleusercontent.com',
-      callback: async (resp) => {
-        const b64 = resp.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-        const payload = JSON.parse(decodeURIComponent(escape(atob(b64))));
-        await socialFinish('google', payload.sub, payload.email, payload.name);
-      }
-    });
-    google.accounts.id.prompt();
-  } catch (e) { alert(tr('구글 로그인을 불러오지 못했습니다.')); }
-}
-function loadFBSDK() {
-  return new Promise(res => {
-    if (window.FB) return res();
-    window.fbAsyncInit = function () {
-      FB.init({ appId: '2021387731860931', version: 'v26.0', xfbml: false });
-      res();
-    };
-    const s = document.createElement('script');
-    s.src = 'https://connect.facebook.net/ko_KR/sdk.js';
-    document.head.appendChild(s);
-  });
-}
-async function facebookLogin() {
-  try {
-    await loadFBSDK();
-    FB.login(resp => {
-      if (!resp.authResponse) { alert(tr('페이스북 로그인이 취소됐습니다.')); return; }
-      FB.api('/me', { fields: 'id,name,email' }, async u => {
-        await socialFinish('facebook', u.id, u.email || '', u.name);
-      });
-    }, { scope: 'email' });
-  } catch (e) { alert(tr('페이스북 로그인을 불러오지 못했습니다.')); }
-}
-
+/* 구글·페이스북 로그인은 없앴다 (대표님 지시 2026-09-29: "구글 이런 거 없애고 그냥 아이디와 비번만"). */
 function acctForm(gate, mode) {
   mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
   b.textContent = '';
-  // 말 고르기·안내 문구 없앰 (대표님 지시, 2026-09-08·2026-09-12) — 군더더기 글자는 안 둔다.
-  // 별명이 아직 없으면(첫 방문 가입) 여기서 같이 정한다 — 가입에 별명이 필요해서다
+  /* 아이디·비밀번호만 (대표님 지시 2026-09-29: "구글 이런 거 없애고 그냥 아이디와 비번만. 비번 잃어버리면 찾을 수 있도록 비번찾기 질문만").
+     국적·이메일 칸은 뺐다 — 이 앱은 한국인 전용이고, 비밀번호는 이제 이메일이 아니라 질문으로 되찾는다.
+     별명은 서버가 가입에 요구해서(순위·동아리에 쓰는 이름) 없으면 여기서 같이 받는다. */
   const nickIn = el('input', 'keyin'); nickIn.type = 'text'; nickIn.maxLength = 10;
-  nickIn.placeholder = tr('별명 (2~10자) — 순위에 보입니다');
+  nickIn.placeholder = tr('별명 (2~10자)');
   const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = tr('아이디 (영문·숫자 4~20자)');
   id.autocapitalize = 'none'; id.maxLength = 20;
   const pw = el('input', 'keyin'); pw.type = 'password';
   // 비밀번호 규칙은 NIST 지침대로: 길이만 본다(8자+). 특수문자 강제는 뻔한 변형만 낳는다.
   pw.placeholder = tr('비밀번호 (8자 이상)'); pw.maxLength = 64;
-  /* 이메일 — 가입할 때 받는다(대표님 지시, 2026-09-08). 비밀번호를 잊었을 때 되찾는
-     유일한 통로다. **다만 지금은 받아서 보관만 한다** — 실제로 "이메일로 재설정 링크
-     보내기"가 되려면 계정을 처리하는 서버(Worker) 쪽에 그 기능을 새로 만들어야 하고,
-     그 코드는 이 저장소 밖에 있어서 여기서 못 넣는다. 받아두면 나중에 서버 쪽 작업만
-     하면 되니 미리 걷어 둔다. */
-  const emailIn = el('input', 'keyin'); emailIn.type = 'email';
-  emailIn.placeholder = tr('이메일 (비밀번호를 잊었을 때 되찾는 용도)');
-  emailIn.maxLength = 100;
-
-  /* 가입 화면에만 나오는 것들 — 국적과 배울 언어 */
-  const profBox = el('div', 'profbox');
-  const mkSel = (opts) => {
-    const w = el('div', 'catpick'); let cur = opts[0][0];
-    opts.forEach(([k, nm], i) => {
-      const c = el('button', 'catchipbtn' + (i === 0 ? ' on' : ''), nm);
-      c.type = 'button';
-      c.onclick = () => { cur = k; [...w.children].forEach(x => x.classList.remove('on')); c.classList.add('on'); w.dispatchEvent(new Event('pick')); };
-      w.append(c);
-    });
-    w.val = () => cur;
-    return w;
-  };
-  const natW = mkSel([['kr', '🇰🇷 한국'], ['vn', '🇻🇳 베트남'], ['etc', '🌏 그 외']]);
-  const lrnW = el('div');
-  const regW = el('div');
-  const drawLearn = () => {
-    lrnW.textContent = ''; regW.textContent = '';
-    // 이 앱은 베트남어 전용으로 고정한다(2026-09-07) — 국적과 상관없이 배울 언어는
-    // 하나뿐이라 고를 게 없다. 한국어 코스는 별개 앱으로 분리됐다.
-    lrnW.sel = mkSel([['vi', '베트남어']]);
-    // 남부 목소리를 완전히 없애서(대표님 지시 2026-09-09) 이제 고를 말씨가 하나뿐이다 —
-    // 물어볼 필요가 없어져 이 칸 자체를 지웠다. regW는 비워 둔 채 그대로 두어(위 2164줄)
-    // 다른 코드를 안 건드린다.
-    const drawReg = () => { regW.textContent = ''; };
-    lrnW.sel.addEventListener('pick', drawReg);
-    drawReg();
-  };
-  natW.addEventListener('pick', drawLearn);
-  drawLearn();
-  // 화면 언어 선택 없앰 (대표님 지시, 2026-09-12) — 한국인 전용 앱, 화면은 항상 한국어.
-  profBox.append(el('p', 'note', '국적'), natW, lrnW, regW);
-
+  const qBox = qaFields();                // 비밀번호 찾기 질문·답 (가입 화면에만)
   const err = el('p', 'note nickerr'); err.hidden = true;
   const oops = m => { err.textContent = m; err.hidden = false; };
   const go = (act) => async () => {
@@ -3392,8 +3273,8 @@ function acctForm(gate, mode) {
     if (!/^[a-z0-9_]{4,20}$/.test(i)) return oops('아이디는 영문·숫자 4~20자입니다.');
     if (p.length < 4) return oops('비밀번호는 4자 이상입니다.');
     if (act === 'signup' && p.length < 8) return oops('비밀번호는 8자 이상입니다.');
-    const em = act === 'signup' ? emailIn.value.trim() : '';
-    if (act === 'signup' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return oops('이메일을 올바르게 적어 주세요.');
+    const qv = act === 'signup' ? qBox.val() : null;
+    if (act === 'signup' && qv.error) return oops(qv.error);
     try {
       if (act === 'signup' && !S.nick) {
         const v = nickIn.value.trim();
@@ -3401,11 +3282,9 @@ function acctForm(gate, mode) {
         await cCall({ act: 'nick', nick: v });        // 먼저 쓴 사람이 임자 — 겹치면 여기서 걸린다
         S.nick = v; save();
       }
-      const prof = act === 'signup'
-        ? { nat: natW.val(), learn: lrnW.sel.val(), reg: regW.sel ? regW.sel.val() : '',
-            ui: 'ko', email: em } : {};
-      const j = await cCall(Object.assign({ act, id: i, pw: p }, prof));
-      if (act === 'signup') { S.nat = prof.nat; S.learn = prof.learn; S.email = em; S.ui = 'ko'; save(); }
+      const extra = act === 'signup' ? { nat: 'kr', learn: 'vi', reg: '', ui: 'ko', email: '', q: qv.q, qa: qv.qa } : {};
+      const j = await cCall(Object.assign({ act, id: i, pw: p }, extra));
+      if (act === 'signup') { S.nat = 'kr'; S.learn = 'vi'; S.ui = 'ko'; save(); }
       if (act === 'login' && j.prof) {
         S.nat = j.prof.nat || S.nat; S.learn = j.prof.learn || S.learn;
         S.ui = 'ko';                                // 무조건 한국어 — 예전 계정 값은 무시한다
@@ -3425,6 +3304,8 @@ function acctForm(gate, mode) {
       popup(act === 'signup'
         ? '<b>가입됐습니다.</b><br>다른 폰에서 로그인하면 지금 별명이 따라옵니다.'
         : '<b>로그인됐습니다.</b> 별명이 이 기기로 따라왔습니다.');
+      /* 비밀번호 찾기 질문이 없는 계정(예전 가입자)은 한 번 정하게 한다. 서버가 옛 판이면 hasq 가 오지 않아 묻지 않는다 */
+      if (j.hasq === false) { setqForm(() => { if (gate) dailyFlowEntry(); else renderAwards(); }, true); return; }
       if (gate) dailyFlowEntry(); else renderAwards();
     } catch (e) { oops(e.message || '안 됐습니다'); }
   };
@@ -3433,36 +3314,20 @@ function acctForm(gate, mode) {
   main.style.width = '100%';
   main.onclick = go(mode === 'login' ? 'login' : 'signup');
   bs.append(main);
-  if (!S.nick) profBox.append(el('p', 'note', tr('별명')), nickIn);
   if (mode === 'login') b.append(id, pw, err, bs);
-  else b.append(profBox, id, pw, emailIn, err, bs);
-  /* 구글·페이스북 로그인 (2026-09-09 실제 연결).
-     Worker(서버) 코드를 못 고치는 상태라, 구글/페북이 준 고유 id로 **결정적인 가짜
-     아이디·비번을 만들어내서** 기존 아이디/비번 계정 시스템에 그대로 로그인·가입을 태운다.
-     같은 사람이면 언제나 같은 가짜 계정이 나오므로 실제로는 잘 작동한다.
-     한계: 토큰 서명을 서버가 검증하지 않는다(클라이언트에서 디코딩만 함) — 진짜 보안이
-     필요해지면 나중에 Worker에서 서명 검증을 추가해야 한다. 지금은 정직하게 이 정도까지만. */
-  const social = el('div', 'socialrow');
-  const gBtn = el('button', 'ghost social');
-  gBtn.append(el('span', 'socialmark', '🇬'), el('span', null, tr('구글로 계속하기')));
-  gBtn.onclick = () => googleLogin(gate);
-  const fBtn = el('button', 'ghost social');
-  fBtn.append(el('span', 'socialmark', 'f'), el('span', null, tr('페이스북으로 계속하기')));
-  fBtn.onclick = () => facebookLogin(gate);
-  social.append(gBtn, fBtn);
-  b.append(social);
+  else {
+    if (!S.nick) b.append(el('p', 'note', tr('별명 — 순위에 보이는 이름')), nickIn);
+    b.append(id, pw, qBox, err, bs);
+  }
   // 두 화면 사이를 오가는 문
   const sw = el('button', 'ghost');
   sw.style.width = '100%'; sw.style.marginTop = '10px';
   sw.textContent = mode === 'login' ? tr('처음이세요? 가입하기') : tr('이미 계정이 있어요 — 로그인');
   sw.onclick = () => acctForm(gate, mode === 'login' ? 'signup' : 'login');
   b.append(sw);
-  // '나중에 둘러보기'는 없앴다 (대표님 지시, 2026-09-12) — 로그인 전에는
-  // 다른 화면으로 못 나간다. 관문 모드에서는 반드시 로그인·가입해야 한다.
-  // 보안 안내 문구 삭제 — 다른 앱엔 없는 군더더기 설명이다 (사용자 지시, 2026-09-08).
-  // "이메일 없어 복구 불가"도 이제 사실이 아니다(가입 때 이메일을 받는다).
+  // '나중에 둘러보기'는 없앴다 (대표님 지시, 2026-09-12) — 로그인 전에는 다른 화면으로 못 나간다.
   if (mode === 'login') {
-    const forgot = el('button', 'ghost sm', tr('아이디·비밀번호를 잊으셨나요?'));
+    const forgot = el('button', 'ghost sm', tr('비밀번호를 잊으셨나요?'));
     forgot.style.width = '100%'; forgot.style.marginTop = '8px';
     forgot.onclick = () => forgotForm(gate);
     b.append(forgot);
@@ -3473,29 +3338,97 @@ function acctForm(gate, mode) {
   if (gate) { $('#tabbar').hidden = true; }
 }
 
-/* 비밀번호 찾기 — 이메일로 재설정 링크를 보낸다 (2026-09-09, 대표님 지시).
-   서버(club_worker.js)의 act:'reqreset'을 부른다. 아이디가 있든 없든
-   "보냈습니다"라고만 답한다 — 계정 훑기(존재 여부 노출)를 막기 위해서다. */
+/* 비밀번호 찾기 질문·답 칸 — 가입 화면과 '질문 정하기' 화면이 같이 쓴다.
+   질문은 고르거나 직접 쓴다. 답은 띄어쓰기·대소문자를 가리지 않는다(서버가 맞춰 본다). */
+const QA_QS = ['처음 다닌 초등학교 이름은?', '처음 키운 동물 이름은?', '어머니의 고향은?', '가장 좋아하는 음식은?', '어릴 때 가장 친했던 친구 이름은?'];
+function qaFields() {
+  const box = el('div', 'qabox');
+  box.append(el('p', 'note', tr('비밀번호를 잊었을 때 쓸 질문 — 답을 맞히면 새 비밀번호를 정할 수 있습니다')));
+  const sel = el('select', 'keyin');
+  [...QA_QS, tr('직접 쓰기')].forEach((q, i) => { const o = document.createElement('option'); o.value = i < QA_QS.length ? q : ''; o.textContent = q; sel.append(o); });
+  const own = el('input', 'keyin'); own.type = 'text'; own.maxLength = 80; own.placeholder = tr('질문을 직접 쓰세요'); own.hidden = true;
+  sel.onchange = () => { own.hidden = !!sel.value; };
+  const ans = el('input', 'keyin'); ans.type = 'text'; ans.maxLength = 60; ans.placeholder = tr('답 (2자 이상)'); ans.autocomplete = 'off';
+  box.append(sel, own, ans);
+  box.val = () => {
+    const q = (sel.value || own.value).trim(), qa = ans.value.trim();
+    if (!q) return { error: tr('질문을 골라 주세요.') };
+    if (qa.replace(/\s+/g, '').length < 2) return { error: tr('답을 2자 이상 적어 주세요.') };
+    return { q, qa };
+  };
+  return box;
+}
+/* 질문 정하기·바꾸기 — 로그인한 사람만 (예전 가입자는 로그인 뒤 한 번 권한다) */
+function setqForm(next, first) {
+  if (!S.acct || !S.acct.tok) { acctForm(); return; }
+  const b = $('#subBody');
+  b.textContent = '';
+  if (first) b.append(el('p', 'lede', tr('비밀번호를 잊었을 때 되찾을 질문을 정해 두세요.')));
+  const qBox = qaFields();
+  const err = el('p', 'note nickerr'); err.hidden = true;
+  const go = el('button', 'primary big', tr('저장'));
+  go.style.width = '100%';
+  go.onclick = async () => {
+    const v = qBox.val();
+    if (v.error) { err.textContent = v.error; err.hidden = false; return; }
+    go.disabled = true;
+    try {
+      await cCall({ act: 'setq', id: S.acct.id, tok: S.acct.tok, q: v.q, qa: v.qa });
+      popup('<b>' + tr('저장했습니다.') + '</b>');
+      (next || renderHome)();
+    } catch (e) {
+      err.textContent = /bad act/.test(e.message || '') ? tr('서버가 아직 옛 판입니다 — 서버를 새로 올린 뒤에 해 주세요.') : (e.message || tr('실패했습니다'));
+      err.hidden = false; go.disabled = false;
+    }
+  };
+  b.append(qBox, err, go);
+  const later = el('button', 'ghost'); later.style.width = '100%'; later.style.marginTop = '10px';
+  later.textContent = first ? tr('나중에') : tr('‹ 돌아가기');
+  later.onclick = () => (next || renderHome)();
+  b.append(later);
+  show('sub', tr('비밀번호 찾기 질문'), true);
+}
+
+/* 비밀번호 찾기 — 아이디 → 질문 → 답과 새 비밀번호 (대표님 지시 2026-09-29).
+   **원래 비밀번호는 보여 줄 수 없다** — 서버에도 되돌릴 수 없는 으깬 값(해시)만 있다. 그래서 답이 맞으면 새로 정한다.
+   틀린 답은 아이디마다 하루 5번까지(서버가 센다). 예전의 이메일 링크 방식은 쓰지 않는다. */
 function forgotForm(gate) {
   const b = $('#subBody');
   b.textContent = '';
-  b.append(el('p', 'lede', tr('가입할 때 적은 이메일로 재설정 링크를 보내드립니다.')));
   const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = tr('아이디');
   id.autocapitalize = 'none'; id.maxLength = 20;
   const err = el('p', 'note nickerr'); err.hidden = true;
-  const go = el('button', 'primary big', tr('재설정 메일 보내기'));
-  go.style.width = '100%';
-  go.onclick = async () => {
+  const step2 = el('div'); step2.hidden = true;
+  const qLine = el('p', 'lede');
+  const ans = el('input', 'keyin'); ans.type = 'text'; ans.maxLength = 60; ans.placeholder = tr('답'); ans.autocomplete = 'off';
+  const npw = el('input', 'keyin'); npw.type = 'password'; npw.maxLength = 64; npw.placeholder = tr('새 비밀번호 (8자 이상)');
+  const npw2 = el('input', 'keyin'); npw2.type = 'password'; npw2.maxLength = 64; npw2.placeholder = tr('새 비밀번호 한 번 더');
+  const fin = el('button', 'primary big', tr('새 비밀번호로 바꾸기')); fin.style.width = '100%';
+  step2.append(qLine, ans, npw, npw2, fin);
+  const next = el('button', 'primary big', tr('질문 보기')); next.style.width = '100%';
+  const fail = e => { err.textContent = /bad act/.test(e.message || '') ? tr('서버가 아직 옛 판입니다 — 잠시 뒤에 다시 해 주세요.') : (e.message || tr('실패했습니다')); err.hidden = false; };
+  next.onclick = async () => {
+    err.hidden = true;
     const i = id.value.trim().toLowerCase();
     if (!/^[a-z0-9_]{4,20}$/.test(i)) { err.textContent = tr('아이디는 영문·숫자 4~20자입니다.'); err.hidden = false; return; }
-    go.disabled = true;
+    next.disabled = true;
     try {
-      await cCall({ act: 'reqreset', id: i });
-      popup('<b>' + tr('메일을 보냈습니다.') + '</b><br>' + tr('받은 편지함(스팸함도)을 확인해 주세요. 1시간 안에 링크를 눌러야 합니다.'));
-      acctForm(gate, 'login');
-    } catch (e) { err.textContent = e.message || tr('실패했습니다'); err.hidden = false; go.disabled = false; }
+      const j = await cCall({ act: 'getq', id: i });
+      qLine.textContent = j.q; step2.hidden = false; next.hidden = true; id.disabled = true; ans.focus();
+    } catch (e) { fail(e); next.disabled = false; }
   };
-  b.append(id, err, go);
+  fin.onclick = async () => {
+    err.hidden = true;
+    if (npw.value.length < 8) { err.textContent = tr('비밀번호는 8자 이상입니다.'); err.hidden = false; return; }
+    if (npw.value !== npw2.value) { err.textContent = tr('새 비밀번호 두 칸이 다릅니다.'); err.hidden = false; return; }
+    fin.disabled = true;
+    try {
+      await cCall({ act: 'ansq', id: id.value.trim().toLowerCase(), qa: ans.value, pw: npw.value });
+      popup('<b>' + tr('바뀌었습니다.') + '</b> ' + tr('새 비밀번호로 로그인해 주세요.'));
+      acctForm(gate, 'login');
+    } catch (e) { fail(e); fin.disabled = false; }
+  };
+  b.append(id, next, step2, err);
   const back = el('button', 'ghost'); back.style.width = '100%'; back.style.marginTop = '10px';
   back.textContent = tr('‹ 돌아가기');
   back.onclick = () => acctForm(gate, 'login');
@@ -6643,6 +6576,7 @@ function homeSettings() {
     else acctForm();
   };
   acct.append(lo);
+  if (S.acct) { const qb = el('button', 'metext', tr('비밀번호 찾기 질문')); qb.type = 'button'; qb.onclick = () => setqForm(renderHome); acct.append(qb); }
   const rs = el('button', 'metext danger', tr('진도 초기화')); rs.type = 'button'; rs.onclick = resetProgress; acct.append(rs);
   if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
   row(esc(S.nick || tr('이름 없음')) + (S.acct ? ' <small>' + esc(S.acct.id) + '</small>' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
