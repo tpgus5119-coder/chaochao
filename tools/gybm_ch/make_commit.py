@@ -157,7 +157,7 @@ print(f"교재 원문 뺌 {len(book_src)}")
 #    audio/ko-qwen·ko-qwen2 = Qwen 목소리 시험본(앱 코드가 부르지 않음, 45MB) · scratchpad·_보관 = 작업 중 임시 파일. 이 맥의 파일은 그대로 둔다.
 #    audio/ko-f·ko-m = 한국어 뜻 소리 4,134×2 (159MB). 2026-09-07 "한국어 코스 분리" 때 색인 data/ko_audio_index.json 을 지워 앱(speakKo)이 이 파일을 부를 길이 없다 — 늘 폰 목소리(sysSpeakKo)로 간다.
 #    아침 봇의 git add -A 가 도로 올린 것. 서버에서만 뺀다(맥의 파일은 그대로) — 대표님 2026-09-29 "안 쓰는 건 서버에 없어도 됨".
-_unused = [q for q in git("ls-tree", "-r", "--name-only", "origin/main").splitlines() if q.startswith(("audio/ko-qwen/", "audio/ko-qwen2/", "scratchpad/", "_보관/", "audio/ko-f/", "audio/ko-m/"))]
+_unused = [q for q in git("ls-tree", "-r", "--name-only", "origin/main").splitlines() if q.startswith(("audio/ko-qwen/", "audio/ko-qwen2/", "scratchpad/", "_보관/", "audio/ko-f/", "audio/ko-m/")) or q == "data/compound.json"]   # compound.json = 걷어낸 붙은 말 접기 자료 (2026-09-29 밤)
 if _unused:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in _unused)
     subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
