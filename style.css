@@ -2805,3 +2805,18 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .tonetab th, .tonetab td{border:1px solid var(--line); padding:4px 8px; text-align:center; color:var(--fg)}
 .tonetab tr:first-child th{font-size:11px; font-weight:600; color:var(--dim); padding:4px 3px}
 .tonetab tr th:first-child{color:var(--dim)}
+
+/* 붙은 말 '쓰임' — 바탕 낱말 카드 안에 같은 뜻의 붙은 말(nấu ăn = nấu)을 줄로 보여 준다 (2026-09-29, 대표님: "동일한 의미라면 하나의 단어 안에 넣어야지") */
+.usebox { margin: 10px 0 4px; padding: 8px 10px; border: 1px solid var(--line, #e3e6ea); border-radius: 12px; background: var(--card2, var(--bg2, transparent)); }
+.uset { font-size: 12px; font-weight: 700; color: var(--muted, #6b7280); letter-spacing: .02em; margin-bottom: 4px; }
+.userow { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: baseline; padding: 6px 4px; border-radius: 8px; }
+.userow.on { background: var(--accent-soft, rgba(24,119,242,.08)); }
+.userow .usevi { font-weight: 700; font-size: 17px; border: 0; background: none; padding: 0; color: inherit; text-align: left; cursor: pointer; }
+.userow .usekr { color: var(--muted, #6b7280); font-size: 13px; }
+.userow .useko { grid-column: 2; font-size: 14px; }
+.userow .usespk { grid-column: 3; grid-row: 1 / span 2; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line, #e3e6ea); background: none; cursor: pointer; }
+.userow .usespk svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.userow .useex { grid-column: 1 / -1; font-size: 13px; color: var(--muted, #6b7280); padding-left: 2px; }
+.userow .useex b { color: inherit; font-weight: 600; }
+.usenote { font-size: 12px; color: var(--muted, #6b7280); margin-top: 6px; }
+.dictrow .dfold { display: block; font-size: 11px; color: var(--muted, #6b7280); font-weight: 400; }
