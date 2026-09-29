@@ -22,3 +22,8 @@ tools/book_ex/src/_ocr_v*.json
 tools/book_ex/pool.json
 tools/book_ex/cand.json
 tools/book_ex/qwen.json
+# 앱이 안 부르는 소리 — 서버에 안 올린다(맥에는 둔다). 아침 봇의 git add -A 가 도로 올리지 않게 (2026-09-29 밤)
+audio/ko-f/
+audio/ko-m/
+audio/ko-qwen/
+audio/ko-qwen2/

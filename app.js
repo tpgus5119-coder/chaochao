@@ -1270,6 +1270,7 @@ function pairPopup(vi, info) {
   const lk = inf.lk !== undefined ? inf.lk : curLessonKey();       // 이 팝업이 열린 수업 — 기본 뜻을 고르는 데 쓴다
   let panelApi = null;
   if (inf.ko) { const pk = el('div', 'pairpopko', esc(inf.ko)); box.append(pk); sensePick(pk, vi, inf.ko, lk, i => { if (panelApi) panelApi.setSense(i); }); rootPills(pk, { vi, ko: inf.ko }); }   // 뜻 여러 개 — 골라서 짝 바꾸기 (2026-09-28) · 한자·외래어 뿌리
+  { const so = southOf(vi); if (so) box.append(southLine(so)); }   // 남부 말이면 북부 말도 (2026-09-29)
   const sub = el('div', 'pairpopsub', tr('헷갈리는 짝'));
   const body = el('div', 'pairpopbody');
   const ok = el('button', 'primary big', tr('닫기'));
@@ -6780,50 +6781,33 @@ const EXTRAG = { 'để': '~하도록·두다', 'dạ': '네 (공손)', 'mắc':
    대표님 지시(2026-08-30): 예문 단어도 소리·발음·뜻이 다 나와야 한다. */
 let EXG = {};
 fetch('data/exgloss.json').then(r => r.json()).then(j => { EXG = j; GVOC = null; GKR = null; }).catch(() => {});
-/* 붙은 말 접기 (대표님 지시 2026-09-29: "단어 두 개를 붙여서 다른 의미가 된다면 하나로 합치면 안 됨. 그러나 동일한 의미라면 하나의 단어 안에 넣어야지").
-   data/compound.json = {붙은 말: 바탕 낱말} — 판정은 tools/compound/판정.tsv 의 '같음'(218). nấu ăn 을 열면 nấu 카드가 뜨고 '쓰임' 줄에 nấu ăn 이 강조된다.
-   시험·복습 열쇠는 그대로(교재 단어 nấu ăn 을 외우는 것은 같다) — 카드의 '얼굴'만 바탕 낱말이 된다. */
-let FOLD = {}, FOLDREV = {};
-fetch('data/compound.json').then(r => r.json()).then(j => {
-  FOLD = {}; FOLDREV = {};
-  Object.entries(j).forEach(([c, b]) => { const ck = viCanon(c), bk = viCanon(b); FOLD[ck] = b; (FOLDREV[bk] = FOLDREV[bk] || []).push(c); });
-}).catch(() => {});
-/* 어느 출처에든 있는 단어 하나 찾기 — 회화·직무·GYBM(교재·선배·22기)·선배 시험 (2026-09-29) */
-function wordAny(vi) {
-  const k = viCanon(vi);
-  const pools = [allWords(), (typeof GYBM !== 'undefined' && GYBM) ? gybmAllWords() : [], SENIOR ? seniorItems() : []];
-  for (const p of pools) { const w = p.find(o => o && o.vi && viCanon(o.vi) === k); if (w) return w; }
-  return null;
+/* 남부 딱지 (대표님 지시 2026-09-29: "작은 딱지는 남부만 넣어. 기준은 북부니까") — data/_south.json {낱말: {n: 북부 말, s: 어느 뜻일 때, w: 근거}}.
+   판정은 tools/south/남부.tsv (낱말마다 위키낱말사전 지역 표시·교재 표기를 근거로). 붙은 말 접기(nấu ăn→nấu)는 대표님 지시로 걷어냈다("인터넷 대형 사전처럼 분리"). */
+let SOUTH = {}, SOUTH_P = null;
+function southLoad() {
+  if (!SOUTH_P) SOUTH_P = fetch('data/_south.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { SOUTH = j; }).catch(() => { SOUTH = {}; });
+  return SOUTH_P;
 }
-/* '쓰임' 상자 — 바탕 낱말 카드 안에 같은 뜻의 붙은 말들. cur 는 지금 배우는 붙은 말(강조 + 그 예문) */
-function useBox(host, base, cur) {
-  const bk = viCanon(base.vi);
-  const list = (FOLDREV[bk] || []).slice();
-  if (cur && cur !== base && !list.some(c => viCanon(c) === viCanon(cur.vi))) list.unshift(cur.vi);
-  if (!list.length) return;
-  const box = el('div', 'usebox');
-  box.append(el('div', 'uset', tr('쓰임') + ' — ' + esc(base.vi) + tr('와 같은 뜻으로 붙어 쓰는 말')));
-  list.sort((a, b) => (cur && viCanon(a) === viCanon(cur.vi) ? -1 : 0) - (cur && viCanon(b) === viCanon(cur.vi) ? -1 : 0));
-  list.forEach(cv => {
-    const w = (cur && viCanon(cur.vi) === viCanon(cv)) ? cur : (wordAny(cv) || { vi: cv, ko: (SIB && SIB.w[cv.toLowerCase()] && SIB.w[cv.toLowerCase()].k) || (DKO && DKO[cv.toLowerCase()]) || '' });
-    const row = el('div', 'userow' + (cur && viCanon(cur.vi) === viCanon(cv) ? ' on' : ''));
-    const vb = el('button', 'usevi', esc(w.vi)); vb.type = 'button';
-    vb.onclick = () => pairPopup(w.vi, { kr: krShow(w) || krOf(w.vi), ko: w.ko });
-    row.append(vb);
-    row.append(el('span', 'usekr', krShow(w) || krOf(w.vi) ? '[' + esc(krShow(w) || krOf(w.vi)) + ']' : ''));
-    const spk = el('button', 'usespk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
-    spk.type = 'button'; spk.title = tr('듣기');
-    spk.onclick = () => { const k = recKey(w.vi); k ? play(k, false, voiceDir(), spdOf()) : speakVi(w.vi, false, spdOf(), S.voice); };
-    row.append(spk);
-    row.append(el('div', 'useko', esc(w.ko || '')));
-    if (w.ex && w.ex.vi && cur && viCanon(cur.vi) === viCanon(cv)) {
-      const ex = el('div', 'useex', '<b>' + esc(w.ex.vi) + '</b>' + (w.ex.ko ? ' — ' + esc(w.ex.ko) : ''));
-      ex.onclick = () => { const k = recKey(w.ex.vi); k ? play(k, false) : speakVi(w.ex.vi); };
-      row.append(ex);
-    }
-    box.append(row);
-  });
-  host.append(box);
+southLoad();
+const southOf = vi => SOUTH[String(vi || '').trim().toLowerCase()] || null;
+/* 남부 말 줄 — "남부 말 (○○ 뜻일 때) · 북부에서는 ○○ 🔊". 북부 말을 누르면 그 말의 짝 팝업, 스피커는 북부 말 소리 */
+function southLine(so) {
+  const d = el('div', 'south southline');
+  d.append(el('span', 'southlab', tr('남부 말') + (so.s ? ' <small>(' + esc(so.s) + ' ' + tr('뜻일 때') + ')</small>' : '')));
+  const ns = String(so.n || '').split('·').map(t => t.trim()).filter(Boolean);
+  if (ns.length) {
+    d.append(el('span', 'southarr', '· ' + tr('북부에서는')));
+    ns.forEach(n0 => {
+      const n = n0.replace(/\s*\([^)]*\)\s*/g, ' ').trim();   // 'bát (to)' → 소리·팝업은 bát, 글자는 그대로
+      const b = el('button', 'southn', '<b>' + esc(n0) + '</b>');
+      b.type = 'button';
+      b.onclick = () => pairPopup(n, { kr: krOf(n), ko: (SIB && SIB.w[n.toLowerCase()] && SIB.w[n.toLowerCase()].k) || (DKO && DKO[n.toLowerCase()]) || '' });
+      const spk = el('button', 'southspk', '🔊'); spk.type = 'button'; spk.title = tr('듣기');
+      spk.onclick = () => { const k = recKey(n); k ? play(k, false, voiceDir()) : speakVi(n, false, 0, S.voice); };
+      d.append(b, spk);
+    });
+  }
+  return d;
 }
 const exgKo = k => { const v = EXG[k]; return v && (typeof v === 'string' ? v : v.ko); };
 const exgKr = k => { const v = EXG[k]; return v && typeof v === 'object'
@@ -7755,6 +7739,8 @@ const dictBare = v => {
   // 자음 뒤 홀로 끝나는 y 는 i 로 — 'quan li' 로 쳐도 quản lý 가 나온다 (viCanon 과 같은 규칙, 2026-09-29)
   return t.split(' ').map(x => /^(b|c|ch|d|g|gh|h|k|kh|l|m|n|ng|ngh|nh|p|ph|r|s|t|th|tr|v|x|qu)y$/.test(x) ? x.slice(0, -1) + 'i' : x).join(' ');
 };
+/* 모자(ă â ê ô ơ ư đ)는 두고 성조만 뺀 꼴 — 'ăn' 을 치면 ăn·ắn·ằn 이 an·án 보다 앞에 오게 (2026-09-29 밤) */
+const dictHat = v => viCanon(v).replace(/[0-9]/g, '');
 function dictBuild() {
   if (DICT) return DICT;
   const seen = new Map();
@@ -7799,7 +7785,7 @@ function dictBuild() {
   /* 참고 사전 (2026-09-29, 대표님 "사전 작업 다 못했니?") — 뜻 25,835개를 다 옮겨 놓고도 사전 탭이 찾지 않았다.
      앱·짝 자료에 없는 말만 '참고' 표시를 달아 넣는다. 열쇠가 소문자라 대문자 꼴은 _dict_head.json 에서 되살린다. */
   if (DKO) Object.entries(DKO).forEach(([k, v]) => put((DKH && DKH[k]) || k, Array.isArray(v) ? v.join(' · ') : v, null, true, '참고 사전'));
-  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi), en: (DEN && DEN[x.vi.toLowerCase()]) || null }));
+  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi), h: dictHat(x.vi), en: (DEN && DEN[x.vi.toLowerCase()]) || null }));
   DICT.sort((a, b) => a.b.localeCompare(b.b));
   return DICT;
 }
@@ -7817,6 +7803,7 @@ async function dictReady() {
   if (!KRSYL) jobs.push(get('data/_kr_syl.json', j => { KRSYL = j; }));
   if (!DSKIP) jobs.push(get('data/_dict_skip.json', j => { DSKIP = new Set(j.map(viCanon)); }));
   if (!DEN) jobs.push(get('data/_dict_en.json', j => { DEN = j; }));
+  jobs.push(southLoad());
   await Promise.all(jobs);
   DICT = null;
 }
@@ -7852,7 +7839,7 @@ function dictEntry(q0) {
     out.textContent = '';
     clr.hidden = !q;
     if (q.length < 1) { out.append(el('p', 'note', tr('한 글자만 넣어도 찾습니다'))); return; }
-    const qb = dictBare(q), qk = q.toLowerCase();
+    const qb = dictBare(q), qk = q.toLowerCase(), qh = dictHat(q);
     const kor = /[가-힣]/.test(q);
     /* 정확한 것부터 (대표님 지시 2026-09-29: "병원이라고 검색하면 병원이 최상단에 나와야지 왜 병원비가 최상단에 있냐").
        한국어: 뜻이 그 말 자체(병원) 0 → 여러 뜻 중 하나가 그 말 1 → 그 말로 시작(병원비) 2 → 어딘가 들어 있음 3.
@@ -7864,12 +7851,17 @@ function dictEntry(q0) {
     const hit = d.filter(x => kor ? x.ko.toLowerCase().includes(qk)
                                   : (x.b.includes(qb) || x.vi.toLowerCase().includes(qk) || (enq && x.en && x.en.some(e => e === qk || e.startsWith(qk + ' ')))))
                  .sort((a, b2) => {
+                   /* 베트남어 차례 (2026-09-29 밤, 대표님: "a만 검색해도 모자 쓴 것들도 다 검색 · 우선순위는 근거 기반으로") — docs/기준.md §14-33
+                      ① 범위: 낱말 전체가 그 말 0 · 첫 낱말이 그 말 1 · 다른 자리의 한 낱말이 그 말 2 · 앞부분만 3 · 안에 들어 있음 4
+                      ② 정확도: 성조·모자까지 똑같음 0 · 모자까지(성조 빼고) 1 · 모자·성조 다 빼고 2
+                      점수 = 범위×3 + 정확도 — 범위가 먼저: 친 말 그 자체인 낱말(ăn)이 그 말을 품은 낱말(an toàn)보다 앞, 같은 범위면 친 글자와 더 똑같은 것(an > án > ăn) */
+                   const ext = (s, t) => s === t ? 0 : s.startsWith(t + ' ') ? 1 : (s.includes(' ' + t + ' ') || s.endsWith(' ' + t)) ? 2 : s.startsWith(t) ? 3 : s.includes(t) ? 4 : 9;
                    const sc = x => {
                      if (kor) { const p = phrs(x.ko); return p[0] === qk ? 0 : p.includes(qk) ? 1 : p.some(v => v.startsWith(qk)) ? 2 : 3; }
-                     if (x.b === qb || x.vi.toLowerCase() === qk) return 0;
-                     if (x.b.startsWith(qb + ' ') || x.b.startsWith(qb)) return x.b.startsWith(qb + ' ') ? 1 : 2;
-                     if (x.b.includes(qb) || x.vi.toLowerCase().includes(qk)) return 3;
-                     return x.en && x.en[0] === qk ? 4 : 5;   // 영어 열쇠로만 잡힌 것은 맨 뒤 — 첫 뜻이 딱 그 말이면 먼저
+                     let best = 99;
+                     [[x.vi.toLowerCase(), qk], [x.h, qh], [x.b, qb]].forEach(([s, t], f) => { const e = ext(s, t); if (e < 9) best = Math.min(best, e * 3 + f); });
+                     if (best < 99) return best;
+                     return x.en && x.en[0] === qk ? 20 : 21;   // 영어 열쇠로만 잡힌 것은 맨 뒤 — 첫 뜻이 딱 그 말이면 먼저
                    };
                    const lesson = x => x.src && x.src.some(s => !['예문', '사전', '참고 사전'].includes(s)) ? 0 : 1;   // 수업에 나온 말이 먼저 (trường học 이 học hiệu 보다 위)
                    const nw = x => x.vi.split(/\s+/).length;   // 같은 등급이면 낱말 수가 적은 것(trường)이 붙은 말(trường học)보다 먼저
@@ -7882,8 +7874,7 @@ function dictEntry(q0) {
       row.type = 'button';
       const kr = krShow(x) || krOf(x.vi);
       // 참고 사전(앱 수업에는 없는 말)은 작은 표시를 단다 — 배운 단어와 섞여 보이지 않게 (2026-09-29)
-      const fb = FOLD[viCanon(x.vi)];   // 붙은 말은 바탕 낱말 카드로 열린다 — 어디로 가는지 작게 (2026-09-29)
-      row.append(el('b', 'dvi', esc(x.vi) + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (fb ? '<small class="dfold">→ ' + esc(fb) + ' ' + tr('카드 안 쓰임') + '</small>' : '')));
+      row.append(el('b', 'dvi', esc(x.vi) + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (southOf(x.vi) ? ' <small class="dref southtag">' + tr('남부') + '</small>' : '')));
       row.append(el('span', 'dkr', kr ? '[' + esc(kr) + ']' : ''));   // 발음이 없어도 칸은 둔다 — 스피커가 늘 오른쪽 끝
       row.append(el('span', 'dko', esc(x.ko)));
       const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
@@ -8289,12 +8280,8 @@ function drawCard() {
   const c = $('#card');
   $('#face').hidden = true; FACE = null;
   c.textContent = '';
-  const it = L.items[L.i]; let x = it.d;
+  const it = L.items[L.i], x = it.d;
   { const nx = L.items[L.i + 1]; prefetchSnd([x && x.vi, x && x.ex && x.ex.vi, nx && nx.d && nx.d.vi]); }   // 이 카드·다음 카드 소리를 미리 (2026-09-28 밤)
-  /* 붙은 말(nấu ăn)은 바탕 낱말(nấu) 카드로 — 배우는 말은 x0 로 남겨 '쓰임' 줄에 강조한다 (2026-09-29) */
-  const x0 = x;
-  const foldBase = it.k === 'word' && x && x.vi && FOLD[viCanon(x.vi)] ? wordAny(FOLD[viCanon(x.vi)]) : null;
-  if (foldBase) x = foldBase;
 
   if (it.k === 'card') {                     // 카드뉴스 한 장 (기사 세트의 맨 앞 두 장)
     const im = el('img', 'newscardimg');
@@ -8509,6 +8496,8 @@ function drawCard() {
     }
     const row = el('div', 'wrow');
     row.append(bigWord(x.vi, x.tones, tapPair));
+    const so = southOf(x.vi);                                // 남부 말이면 작은 딱지 — 북부 기준 (2026-09-29)
+    if (so) row.append(el('span', 'southpill', tr('남부')));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
     cf.append(row);
@@ -8544,8 +8533,8 @@ function drawCard() {
     rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
     caiNote(cf, x);                                        // 'cái nhà' 처럼 분류사가 붙은 표제어 (2026-09-29)
     senseLine(kob, x);                                     // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
-    if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
-    useBox(cf, x, foldBase ? x0 : null);                   // 같은 뜻으로 붙어 쓰는 말 — 바탕 카드 안에 (2026-09-29)
+    if (so) cf.append(southLine(so));                       // 남부 말 · 북부에서는 ○○ (2026-09-29)
+    else if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
        단어을 누르면 그 단어만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
        문장 전체를 듣는 길은 오른쪽 작은 단추로 남겨 둔다. */
