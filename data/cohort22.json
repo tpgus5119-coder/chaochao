@@ -5474,6 +5474,432 @@
     }
    ],
    "no": 13
+  },
+  {
+   "no": 14,
+   "label": "B반 7회",
+   "words": [
+    {
+     "vi": "trường học",
+     "ko": "학교",
+     "kr_read": "쯔엉 혹",
+     "img": "b-truong-hoc.webp",
+     "ex": {
+      "vi": "Trường học của con tôi rất gần nhà.",
+      "ko": "우리 아이의 학교는 집에서 매우 가깝다.",
+      "kr": "쯔엉 혹 꾸어 꼰 또이 젓 건 냐"
+     }
+    },
+    {
+     "vi": "giáo viên",
+     "ko": "선생님 (thầy·cô)",
+     "kr_read": "자오 비엔",
+     "img": "giao-vien.webp",
+     "ex": {
+      "vi": "Cô ấy là giáo viên tiếng Anh.",
+      "ko": "그녀는 영어 선생님입니다.",
+      "kr": "꼬 어이 라 자오 비엔 띠엥 아인"
+     }
+    },
+    {
+     "vi": "học sinh",
+     "ko": "학생",
+     "kr_read": "혹 씬",
+     "img": "b-hoc-sinh.webp",
+     "ex": {
+      "vi": "Học sinh đang làm bài kiểm tra.",
+      "ko": "학생들이 시험을 보고 있다.",
+      "kr": "혹 씬 당 람 바이 끼엠 짜"
+     }
+    },
+    {
+     "vi": "bạn",
+     "ko": "친구",
+     "kr_read": "반",
+     "img": "w-41ca3acd72.webp",
+     "ex": {
+      "vi": "Tôi có nhiều bạn.",
+      "ko": "나는 친구가 많다."
+     }
+    },
+    {
+     "vi": "nước",
+     "ko": "물",
+     "kr_read": "느억",
+     "img": "w-4a9eb28c29.webp",
+     "ex": {
+      "vi": "Cho tôi xin một ly nước.",
+      "ko": "물 한 잔 주세요.",
+      "kr": "쪼 또이 씬 못 리 느억"
+     }
+    },
+    {
+     "vi": "cà phê",
+     "ko": "커피",
+     "kr_read": "까 페",
+     "img": "d12-ca-phe.webp",
+     "ex": {
+      "vi": "Tôi uống cà phê mỗi sáng.",
+      "ko": "저는 매일 아침 커피를 마셔요.",
+      "kr": "또이 우옹 까 페 모이 쌍"
+     }
+    },
+    {
+     "vi": "cơm",
+     "ko": "밥",
+     "kr_read": "껌",
+     "img": "b-com.webp",
+     "ex": {
+      "vi": "Tôi ăn cơm mỗi ngày.",
+      "ko": "나는 매일 밥을 먹는다."
+     }
+    },
+    {
+     "vi": "nhà hàng",
+     "ko": "식당 (quán ăn)",
+     "kr_read": "냐 항",
+     "img": "nha-hang.webp",
+     "ex": {
+      "vi": "Nhà hàng này rất đẹp.",
+      "ko": "이 식당은 매우 예뻐요."
+     }
+    },
+    {
+     "vi": "trà",
+     "ko": "차(티)",
+     "kr_read": "짜",
+     "img": "d48-tra.webp",
+     "ex": {
+      "vi": "Cho tôi một ly trà nóng.",
+      "ko": "따뜻한 차 한 잔 주세요.",
+      "kr": "쪼 또이 못 리 짜 농"
+     }
+    },
+    {
+     "vi": "nhà",
+     "ko": "집",
+     "kr_read": "냐",
+     "img": "d06-nha.webp",
+     "ex": {
+      "vi": "Bây giờ tôi về nhà.",
+      "ko": "지금 나는 집에 가요."
+     }
+    },
+    {
+     "vi": "phòng",
+     "ko": "방",
+     "kr_read": "퐁",
+     "img": "w-6633539de9.webp",
+     "ex": {
+      "vi": "Tôi ở phòng số một trăm.",
+      "ko": "나는 100호실에 있다.",
+      "kr": "또이 어 퐁 쏘 못 짬"
+     }
+    },
+    {
+     "vi": "cửa",
+     "ko": "문",
+     "kr_read": "끄어",
+     "img": "cua.webp",
+     "ex": {
+      "vi": "Xin hãy đóng cửa lại.",
+      "ko": "문을 닫아 주세요.",
+      "kr": "씬 하이 동 끄어 라이"
+     }
+    },
+    {
+     "vi": "hôm nay",
+     "ko": "오늘",
+     "kr_read": "홈 나이",
+     "img": "hom-nay.webp",
+     "ex": {
+      "vi": "Hôm nay bạn thế nào?",
+      "ko": "오늘 당신은 어때요?"
+     }
+    },
+    {
+     "vi": "ngày mai",
+     "ko": "내일",
+     "kr_read": "응아이 마이",
+     "img": "ngay-mai.webp",
+     "ex": {
+      "vi": "Ngày mai tôi đi du lịch.",
+      "ko": "내일 나는 여행을 가요."
+     }
+    },
+    {
+     "vi": "hôm qua",
+     "ko": "어제",
+     "kr_read": "홈 꽈",
+     "img": "hom-qua.webp",
+     "ex": {
+      "vi": "Hôm qua tôi ở nhà.",
+      "ko": "어제 나는 집에 있었어요."
+     }
+    },
+    {
+     "vi": "thời gian",
+     "ko": "시간",
+     "kr_read": "터이 잔",
+     "img": "thoi-gian.webp",
+     "ex": {
+      "vi": "Bạn có thời gian không?",
+      "ko": "당신은 시간이 있습니까?",
+      "kr": "반 꼬 터이 잔 콩"
+     }
+    },
+    {
+     "vi": "đẹp",
+     "ko": "예쁘다",
+     "kr_read": "댑",
+     "img": "w-db83e5f93d.webp",
+     "ex": {
+      "vi": "Cô ấy rất đẹp.",
+      "ko": "그녀는 매우 예쁘다.",
+      "kr": "꼬 어이 젓 댑"
+     }
+    },
+    {
+     "vi": "ngon",
+     "ko": "맛있다",
+     "kr_read": "응온",
+     "img": "d12-ngon.webp",
+     "ex": {
+      "vi": "Phở ở đây rất ngon.",
+      "ko": "여기 쌀국수는 매우 맛있어요.",
+      "kr": "퍼 어 더이 젓 응온"
+     }
+    },
+    {
+     "vi": "đắt",
+     "ko": "비싸다",
+     "kr_read": "닷",
+     "img": "d13-dat.webp",
+     "ex": {
+      "vi": "Cái áo này quá đắt.",
+      "ko": "이 옷은 너무 비싸다."
+     }
+    },
+    {
+     "vi": "rẻ",
+     "ko": "싸다",
+     "kr_read": "재",
+     "img": "rv-c943b9efee.webp",
+     "ex": {
+      "vi": "Táo ở đây rất rẻ.",
+      "ko": "여기 사과는 매우 싸다."
+     }
+    },
+    {
+     "vi": "xin chào",
+     "ko": "안녕하세요",
+     "kr_read": "씬 짜오",
+     "img": "x-xin-chao.webp",
+     "ex": {
+      "vi": "Xin chào mọi người.",
+      "ko": "안녕하세요 여러분."
+     }
+    },
+    {
+     "vi": "cảm ơn",
+     "ko": "감사합니다",
+     "kr_read": "깜 언",
+     "img": "d01-cam-on.webp",
+     "ex": {
+      "vi": "Cảm ơn bạn rất nhiều.",
+      "ko": "정말 고맙습니다."
+     }
+    },
+    {
+     "vi": "tạm biệt",
+     "ko": "안녕히 가세요/계세요",
+     "kr_read": "땀 비엣",
+     "img": "tam-biet.webp",
+     "ex": {
+      "vi": "Tạm biệt, hẹn gặp lại!",
+      "ko": "안녕히 가세요, 또 만나요!",
+      "kr": "땀 비엣 핸 갑 라이"
+     }
+    },
+    {
+     "vi": "xin lỗi",
+     "ko": "죄송합니다",
+     "kr_read": "씬 로이",
+     "img": "x-xin-chao.webp",
+     "ex": {
+      "vi": "Xin lỗi, tôi nhầm rồi.",
+      "ko": "죄송합니다, 제가 착각했습니다."
+     }
+    },
+    {
+     "vi": "người",
+     "ko": "사람",
+     "kr_read": "응으어이",
+     "img": "b-nguoi.webp",
+     "ex": {
+      "vi": "Tôi là người Hàn Quốc.",
+      "ko": "저는 한국 사람입니다.",
+      "kr": "또이 라 응으어이 한 꾸옥"
+     }
+    },
+    {
+     "vi": "mẹ",
+     "ko": "엄마",
+     "kr_read": "매",
+     "img": "d15-me.webp",
+     "ex": {
+      "vi": "Mẹ tôi đang nấu ăn.",
+      "ko": "저희 엄마는 요리 중이세요.",
+      "kr": "매 또이 당 너우 안"
+     }
+    },
+    {
+     "vi": "bố",
+     "ko": "아빠",
+     "kr_read": "보",
+     "img": "d15-bo.webp",
+     "ex": {
+      "vi": "Bố tôi rất tốt bụng.",
+      "ko": "저희 아빠는 아주 친절하세요.",
+      "kr": "보 또이 젓 똣 붕"
+     }
+    },
+    {
+     "vi": "anh",
+     "ko": "형, 오빠, 남성",
+     "kr_read": "아인",
+     "img": "d01-anh.webp",
+     "ex": {
+      "vi": "Anh ăn cơm chưa?",
+      "ko": "형, 밥 먹었어요?",
+      "kr": "아인 안 껌 쯔어"
+     }
+    },
+    {
+     "vi": "chị",
+     "ko": "누나, 언니, 여성",
+     "kr_read": "찌",
+     "img": "d01-chi.webp",
+     "ex": {
+      "vi": "Chị uống cà phê không?",
+      "ko": "누나, 커피 마실래요?",
+      "kr": "찌 우옹 까 페 콩"
+     }
+    },
+    {
+     "vi": "em",
+     "ko": "동생",
+     "kr_read": "앰",
+     "img": "em.webp",
+     "ex": {
+      "vi": "Em tôi rất thích ăn kẹo.",
+      "ko": "내 동생은 사탕을 아주 좋아한다.",
+      "kr": "앰 또이 젓 틱 안 깨오"
+     }
+    },
+    {
+     "vi": "sách",
+     "ko": "책",
+     "kr_read": "싹",
+     "img": "b-sach.webp",
+     "ex": {
+      "vi": "Tôi đọc sách trước khi ngủ.",
+      "ko": "나는 자기 전에 책을 읽는다."
+     }
+    },
+    {
+     "vi": "bút",
+     "ko": "펜, 볼펜",
+     "kr_read": "붓",
+     "img": "w-0f214bd9bd.webp",
+     "ex": {
+      "vi": "Tôi viết bằng bút.",
+      "ko": "나는 펜으로 써요."
+     }
+    },
+    {
+     "vi": "áo",
+     "ko": "옷 (상의)",
+     "kr_read": "아오",
+     "img": "b-ao.webp",
+     "ex": {
+      "vi": "Tôi mua một chiếc áo mới.",
+      "ko": "나는 새 옷을 하나 샀다.",
+      "kr": "또이 무어 못 찌엑 아오 머이"
+     }
+    },
+    {
+     "vi": "quần",
+     "ko": "바지",
+     "kr_read": "꾸언",
+     "img": "bo-f760f599df.webp",
+     "ex": {
+      "vi": "Tôi muốn mua một cái quần mới.",
+      "ko": "저는 새 바지를 사고 싶어요.",
+      "kr": "또이 무온 무어 못 까이 꾸언 머이"
+     }
+    },
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "img": "d42-xe-may.webp",
+     "ex": {
+      "vi": "Tôi đi làm bằng xe máy.",
+      "ko": "나는 오토바이로 출근해요."
+     }
+    },
+    {
+     "vi": "ô tô",
+     "ko": "자동차",
+     "kr_read": "오 또",
+     "img": "b-xe-hoi.webp",
+     "ex": {
+      "vi": "Ô tô của anh màu gì?",
+      "ko": "당신 자동차는 무슨 색이에요?"
+     }
+    },
+    {
+     "vi": "mua",
+     "ko": "사다 (구매하다)",
+     "kr_read": "무어",
+     "img": "mua-buy.webp",
+     "ex": {
+      "vi": "Tôi muốn mua cái này.",
+      "ko": "나는 이것을 사고 싶다."
+     }
+    },
+    {
+     "vi": "ăn",
+     "ko": "먹다",
+     "kr_read": "안",
+     "img": "b-an.webp",
+     "ex": {
+      "vi": "Bạn đã ăn cơm chưa?",
+      "ko": "밥 먹었어요?"
+     }
+    },
+    {
+     "vi": "uống",
+     "ko": "마시다",
+     "kr_read": "우옹",
+     "img": "d12-uong.webp",
+     "ex": {
+      "vi": "Tôi muốn uống nước.",
+      "ko": "저는 물을 마시고 싶습니다."
+     }
+    },
+    {
+     "vi": "đi",
+     "ko": "가다",
+     "kr_read": "디",
+     "img": "b-di.webp",
+     "ex": {
+      "vi": "Chúng ta đi thôi.",
+      "ko": "우리 가자."
+     }
+    }
+   ]
   }
  ]
 }

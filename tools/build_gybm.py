@@ -65,15 +65,22 @@ def kko(k):
 # ---------- 기존 gybm.json → 낱말 캐시(예문·그림 보존용) ----------
 old_cache = {}
 old_src = {}      # (출처 key, 낱말) → 그 출처 안의 옛 낱말 — 같은 출처 값을 먼저 쓴다(메인에서 고친 예문·그림이 뒤 출처 값에 덮이지 않게, 2026-09-25)
+old_ex = {}       # (출처 key, 낱말, 예문) → 옛 낱말 — 22기처럼 한 출처에 같은 낱말이 회차마다 다른 예문으로 있을 때
+                  # 예문에 붙은 표시(ex_src·ex_pool·ex_chk)를 **그 예문의 것으로** 되살린다 (2026-09-29: B반 6회 cao 의 sense_fix 가 빠졌었다)
+old_eng = {}      # 출처 key → 옛 '영국(Anh)' 낱말 — 교재 예문으로 바꾼 것이 다시 지을 때 옛 예문으로 되돌아가던 것 (2026-09-29)
 old_path = pathlib.Path(DATA) / "gybm.json"
 if old_path.exists():
     old = json.loads(old_path.read_text(encoding="utf-8"))
     for src in old["sources"]:
         for l in src["lessons"]:
             for w in l["words"]:
-                if is_england(w): continue
+                if is_england(w):
+                    old_eng.setdefault(src["key"], w)
+                    continue
                 old_cache[ckey(w["vi"])] = w
                 old_src.setdefault((src["key"], ckey(w["vi"])), w)
+                if w.get("ex"):
+                    old_ex.setdefault((src["key"], ckey(w["vi"]), w["ex"].get("vi", "")), w)
 print(f"기존 gybm.json 캐시: {len(old_cache)}개 낱말 (예문·그림 재사용용)")
 
 # ---------- basicwords.json 대조용(대소문자 안전) ----------
@@ -137,6 +144,12 @@ def enrich(w, skey=None):
     out = _enrich0(w, skey)
     for f in ("kr_read", "ex", "img"):
         if w.get(f): out[f] = w[f]
+    if w.get("ex"):
+        # 예문을 원본 것으로 갈았으면, 캐시에서 딸려 온 예문 표시는 다른 예문의 것일 수 있다 — 같은 예문의 옛 표시만 남긴다
+        o = old_ex.get((skey, ckey(w["vi"]), w["ex"].get("vi", "")))
+        for f in ("ex_src", "ex_pool", "ex_chk"):
+            if o and o.get("ex") == out["ex"] and o.get(f): out[f] = o[f]
+            else: out.pop(f, None)
     return out
 def _enrich0(w, skey=None):
     out = {"vi": nfc(w["vi"]), "ko": w.get("ko", "")}
@@ -144,8 +157,8 @@ def _enrich0(w, skey=None):
         out["gl"] = 1        # 교재 낱말장(Bảng từ) 낱말 — 앱에서 '핵심' 표시 (tools/mark_glossary.py)
     ck = ckey(w["vi"])
     if is_england(w):
-        bw = find_bw("Anh") or {}
-        for f in ("kr_read", "ex", "img", "star", "weekly"):
+        bw = old_eng.get(skey) or find_bw("Anh") or {}      # 같은 출처의 옛 값(교재 예문) 먼저
+        for f in ("kr_read", "ex", "ex_src", "ex_pool", "ex_chk", "img", "star", "weekly"):
             if bw.get(f): out[f] = bw[f]
         return out
     cached = old_src.get((skey, ck)) or old_cache.get(ck)
