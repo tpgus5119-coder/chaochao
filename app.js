@@ -354,12 +354,17 @@ const UIVI = {
     'Chưa có từ nào. Hoàn thành một phần học thì từ sẽ xuất hiện ở đây.',
   '단어 N개쯤 외운 뒤에 보면 더 잘 듣습니다': 'Học khoảng N từ rồi xem sẽ hiểu hơn',
   '듣기로 넘어가기 ›': 'Sang phần nghe ›',
-  '이번엔 넘기기': 'Bỏ qua lần này',
-  'N개는 넘겼습니다 — 성적에 넣지 않았고, 다음 복습에 다시 나옵니다': 'Đã bỏ qua N câu — không tính điểm, sẽ gặp lại ở lần ôn sau',
-  '이번엔 다 넘겼습니다. 넘긴 건 외운 것으로 치지 않습니다': 'Lần này bỏ qua hết. Bỏ qua không tính là đã thuộc',
+  '스킵': 'Bỏ qua',
+  '알림 켜기': 'Bật thông báo', '알림 끄기': 'Tắt thông báo', '계정': 'Tài khoản',
+  '최근 찾은 말': 'Từ đã tra gần đây', '이 기기에만 남습니다': 'Chỉ lưu trên máy này', '기록 지우기': 'Xóa lịch sử',
+  '찾은 말 기록을 지울까요? 이 기기에서만 지워집니다.': 'Xóa lịch sử tra từ? Chỉ xóa trên máy này.',
+  '1초 안에 답하고 틀린 문제가 N개입니다. 모르겠으면 스킵하세요 — 찍은 답은 기록만 망칩니다.': 'Có N câu trả lời sai trong vòng 1 giây. Không biết thì hãy bỏ qua — đoán bừa chỉ làm hỏng hồ sơ.',
+  '복습 간격 조정': 'Điều chỉnh khoảng ôn', '일 뒤 정답률': ' ngày sau, tỉ lệ đúng', '문제': ' câu',
+  'N개는 스킵했습니다 — 성적에 넣지 않았고, 다음 복습에 다시 나옵니다': 'Đã bỏ qua N câu — không tính điểm, sẽ gặp lại ở lần ôn sau',
+  '이번엔 다 스킵했습니다. 스킵한 건 외운 것으로 치지 않습니다': 'Lần này bỏ qua hết. Bỏ qua không tính là đã thuộc',
   '답한 것은 전부 맞혔습니다': 'Những câu đã trả lời đều đúng',
-  '넘긴 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다': 'N câu bỏ qua tính 0 điểm — chỉ vào điểm thi, không vào phân tích năng lực',
-  '넘긴 문제 N개는 어느 통계에도 넣지 않았습니다 — 틀린 게 아니라 아직 안 재 본 것입니다': 'N câu bỏ qua không vào thống kê nào — không phải sai, chỉ là chưa đo',
+  '스킵한 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다': 'N câu bỏ qua tính 0 điểm — chỉ vào điểm thi, không vào phân tích năng lực',
+  '스킵한 문제 N개는 어느 통계에도 넣지 않았습니다 — 틀린 게 아니라 아직 안 재 본 것입니다': 'N câu bỏ qua không vào thống kê nào — không phải sai, chỉ là chưa đo',
   '실제 시험처럼 자동으로 나옵니다. 두 번 들려줍니다.':
     'Âm thanh tự phát như thi thật. Sẽ cho nghe hai lần.',
   '읽기 시간이 끝났습니다. 듣기를 시작합니다.':
@@ -3000,7 +3005,13 @@ function renderAnalysis(host, mode) {
     }
   }
 
-  if (S.stats.skipN) host.append(el('p', 'dimtxt', tr('넘긴 문제 N개는 어느 통계에도 넣지 않았습니다 — 틀린 게 아니라 아직 안 재 본 것입니다').replace('N', S.stats.skipN)));
+  if (S.stats.skipN) host.append(el('p', 'dimtxt', tr('스킵한 문제 N개는 어느 통계에도 넣지 않았습니다 — 틀린 게 아니라 아직 안 재 본 것입니다').replace('N', S.stats.skipN)));
+  if ((S.stats.guessN || 0) >= 5 && S.stats.guessN / Math.max(1, S.stats.ansN || 0) >= .2)   // 찍기 감지 — 1초 안에 답하고 틀린 것이 다섯 넘고 답한 것의 20% 이상
+    host.append(el('p', 'dimtxt', tr('1초 안에 답하고 틀린 문제가 N개입니다. 모르겠으면 스킵하세요 — 찍은 답은 기록만 망칩니다.').replace('N', S.stats.guessN)));
+  const adj = STEPS.map((d, i) => [i, d, stepDays(i)]).filter(x => x[1] !== x[2]);   // 복습 간격 개인 보정이 걸린 단계
+  if (adj.length) host.append(el('p', 'dimtxt', tr('복습 간격 조정') + ' — ' + adj.map(([i, d, e]) => {
+    const c = S.stats.lvt[String(i)];
+    return d + tr('일') + ' → ' + e + tr('일') + ' (' + d + tr('일 뒤 정답률') + ' ' + Math.round(c.ok * 100 / c.all) + '%, ' + c.all + tr('문제') + ')'; }).join(' · ')));
   // 처방 — 분석만 하고 끝내지 않는다
   if (ok.length < 2) {
     host.append(el('p', 'note', tr('두 영역이 10문제를 넘으면 강점·약점과 처방이 나옵니다.')));
@@ -3035,8 +3046,8 @@ function renderAnalysis(host, mode) {
     '<br>&nbsp;&nbsp;이 단어만 따로 소리 내어 다섯 번씩. 맞히기 시작하면 목록에서 서서히 사라집니다.');
   const skp = Object.entries(S.stats.skipW || {}).filter(([, n]) => n >= 2)
     .sort((a, b) => b[1] - a[1]).slice(0, 5);
-  if (skp.length) lines.push('· <b>자꾸 넘기는 단어</b>(두 번 이상 넘긴 것) — ' + skp.map(m => esc(m[0])).join(' · ') +
-    '<br>&nbsp;&nbsp;넘긴 건 틀린 게 아니라 아직 안 재 본 것입니다. 시간 있을 때 이 단어만 골라 풀어 보세요.');
+  if (skp.length) lines.push('· <b>자꾸 스킵하는 단어</b>(두 번 이상 스킵한 것) — ' + skp.map(m => esc(m[0])).join(' · ') +
+    '<br>&nbsp;&nbsp;스킵한 건 틀린 게 아니라 아직 안 재 본 것입니다. 시간 있을 때 이 단어만 골라 풀어 보세요.');
   lines.push(`<br><b>잘하는 곳 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}`);
   card.append(el('div', 'rbody', lines.join('<br>')));
   host.append(card);
@@ -6389,12 +6400,14 @@ function petSay(learned) {
 /* 앵무 그림은 pet.js 의 petSvg(stage, 종, 옵션) 이 그린다 (2026-09-27 저녁 — 종별 뼈대 하나·부위별 움직임). */
 function homeGreet() {
   const g = el('div', 'hgreet');
-  g.append(el('div', 'hname', tr('반갑습니다, ') + esc(S.nick || tr('학습자')) + tr('님')));
+  const top = el('div', 'htop');                          // 인사와 연속·누적을 한 줄에 (대표님 지시 2026-09-30: "불필요한 공간 낭비 말자")
+  top.append(el('div', 'hname', tr('반갑습니다, ') + esc(S.nick || tr('학습자')) + tr('님')));
   const dots = weekDots();
   const row = el('div', 'hstreak');
   row.append(el('span', 'hpill fire', '<svg viewBox="0 0 24 24"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>' + tr('연속') + ' ' + streakDays() + tr('일')));
   row.append(el('span', 'hpill', tr('누적') + ' ' + Object.keys(S.act || {}).length + tr('일')));
-  g.append(row);
+  top.append(row);
+  g.append(top);
   const wk = el('div', 'hdots');
   tr('월 화 수 목 금 토 일').split(' ').forEach((lab, i) => {
     const x = dots[i] || {};
@@ -6633,21 +6646,9 @@ function homeSettings() {
   };
   // 하루 분량 설정은 없앴다 (2026-09-27 저녁) — 홈의 [이어서 학습]이 마지막 갈래의 다음 세트 하나를 잇는다
 
-  if (canPush()) {
-    const sw = el('button', 'switch' + (S.push ? ' on' : ''));
-    sw.type = 'button'; sw.setAttribute('role', 'switch'); sw.setAttribute('aria-checked', S.push ? 'true' : 'false'); sw.setAttribute('aria-label', tr('알림'));
-    sw.append(el('i'));
-    sw.onclick = async () => {
-      if (S.push) await stopPush();
-      else { const err = await askPush(); if (err) popup(esc(err)); }
-      renderHome();
-    };
-    row(tr('알림') + ' <small>' + (S.push ? tr('켜짐') : tr('꺼짐')) + '</small>', sw);
-  }
   // 실력 분석 줄은 뺐다 — 그래프가 바로 위에 있고 그 머리(›)가 자세히 보기로 간다 (대표님 지시 2026-09-27 저녁)
-  // 별명 · 계정
+  // 계정 — [별명 바꾸기]는 뺐다 (대표님 지시 2026-09-30: 아이디가 곧 별명이라 별명을 바꾸면 아이디가 바뀐다). 아이디·별명 글자도 안 적는다 — 인사말에 이미 있다
   const acct = el('span', 'hslinks');
-  const nb = el('button', 'metext', tr('별명 바꾸기')); nb.type = 'button'; nb.onclick = askNick; acct.append(nb);
   const lo = el('button', 'metext', S.acct ? tr('로그아웃') : tr('로그인·가입')); lo.type = 'button';
   lo.onclick = async () => {
     if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.acct = null; save(); renderHome(); } }
@@ -6657,13 +6658,23 @@ function homeSettings() {
   if (S.acct) { const qb = el('button', 'metext', tr('비밀번호 찾기 질문')); qb.type = 'button'; qb.onclick = () => setqForm(renderHome); acct.append(qb); }
   const rs = el('button', 'metext danger', tr('진도 초기화')); rs.type = 'button'; rs.onclick = resetProgress; acct.append(rs);
   if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
-  row(esc(S.nick || tr('이름 없음')) + (S.acct ? ' <small>' + esc(S.acct.id) + '</small>' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
+  row(tr('계정') + (S.acct ? '' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
   if (S.acct) {                                            // 진도 동기화 상태 + [지금 맞추기] (2026-09-30)
     const hm = t => t ? new Date(t).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : tr('아직');
     const st = S.cloudErr ? '<span class="danger">' + tr('오류') + ': ' + esc(S.cloudErr.m) + '</span>' : tr('서버와 맞춘 때') + ' ' + hm(S.cloudSeen);
     const sb = el('button', 'metext', tr('지금 맞추기')); sb.type = 'button';
     sb.onclick = async () => { sb.disabled = true; const ch = await cloudSync(true, false); popup(S.cloudErr ? esc(S.cloudErr.m) : (ch ? tr('다른 기기의 진도를 받아 합쳤습니다.') : tr('서버와 같습니다.'))); renderHome(); };
     row(tr('진도 동기화') + ' <small>' + st + '</small>', sb);
+  }
+  if (canPush()) {                                         // 맨 아래 (대표님 지시 2026-09-30) — 스위치 대신 글자 단추: '알림 켜기' 를 누르면 켜지고 글자가 '알림 끄기'로, 다시 누르면 꺼지고 '알림 켜기'로
+    const pb = el('button', 'metext', tr(S.push ? '알림 끄기' : '알림 켜기')); pb.type = 'button';
+    pb.onclick = async () => {
+      pb.disabled = true;
+      if (S.push) await stopPush();
+      else { const err = await askPush(); if (err) popup(esc(err)); }
+      renderHome();
+    };
+    row(tr('알림') + ' <small>' + (S.push ? tr('켜짐') : tr('꺼짐')) + '</small>', pb);
   }
   if (S.admin) row(tr('운영 현황'), null, () => { dive(renderHome); showAdmin(); });
   return box;
@@ -7889,6 +7900,14 @@ function openWordCard(x, back) {
   show('learn', w.vi, true);
   drawLessonTabs();
 }
+/* 사전 검색 기록 (대표님 지시 2026-09-30: "각자 폰에 남기면 서버비 부담 없지? 몇 개까지?") — 누른 낱말을 이 기기에만 50개.
+   S 에 두지만 PROGKEYS 밖이라 서버로 안 올라간다(진도 해시에도 안 든다). 같은 말은 맨 위로 올린다. 50개 ≈ 3KB — 크기는 문제가 아니고, 그보다 길면 아무도 안 내려 본다 */
+const DICT_HIST_MAX = 50;
+function dictRemember(x) {
+  const h = (S.dictHist || []).filter(e => e.vi !== x.vi);
+  h.unshift({ vi: x.vi, ko: x.ko, t: Date.now() });
+  S.dictHist = h.slice(0, DICT_HIST_MAX); save();
+}
 function dictEntry(q0) {
   const b = $('#subBody'); b.textContent = '';
   const lede = el('p', 'lede', tr('불러오는 중…'));
@@ -7903,11 +7922,37 @@ function dictEntry(q0) {
   box.append(inp, clr);
   const out = el('div', 'dictout');
   let d = [];
+  /* 결과 한 줄 — 찾은 말 목록과 최근 찾은 말 목록이 같은 줄을 쓴다 */
+  const dictRow = x => {
+    const row = el('button', 'dictrow');
+    row.type = 'button';
+    const kr = krShow(x) || krOf(x.vi);
+    // 참고 사전(앱 수업에는 없는 말)은 작은 표시를 단다 — 배운 단어와 섞여 보이지 않게 (2026-09-29)
+    row.append(el('b', 'dvi', esc(x.vi) + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (southOf(x.vi) ? ' <small class="dref southtag">' + tr('남부') + '</small>' : '')));
+    row.append(el('span', 'dkr', kr ? '[' + esc(kr) + ']' : ''));   // 발음이 없어도 칸은 둔다 — 스피커가 늘 오른쪽 끝
+    row.append(el('span', 'dko', esc(x.ko)));
+    const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
+    spk.setAttribute('role', 'button'); spk.title = tr('듣기');
+    spk.onclick = ev => { ev.stopPropagation(); const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
+    row.append(spk);
+    row.onclick = () => { dictRemember(x); openWordCard(x, () => dictEntry(inp.value)); };   // 누르면 단어 카드 — 뒤로 가면 찾던 말 그대로. 누른 말은 기록에 남는다 (2026-09-30)
+    return row;
+  };
+  /* 최근 찾은 말 (대표님 지시 2026-09-30) — 입력칸이 비어 있을 때. 이 기기(localStorage)에만 남고 서버로는 안 간다(PROGKEYS 밖). 최대 DICT_HIST_MAX 개 */
+  const histDraw = () => {
+    const h = S.dictHist || [];
+    if (!h.length) { out.append(el('p', 'note', tr('한 글자만 넣어도 찾습니다'))); return; }
+    out.append(el('p', 'note', tr('최근 찾은 말') + ' ' + h.length + ' · ' + tr('이 기기에만 남습니다')));
+    h.forEach(e => out.append(dictRow(d.find(y => y.vi === e.vi) || { vi: e.vi, ko: e.ko })));
+    const cl = el('button', 'ghost sm', tr('기록 지우기')); cl.type = 'button'; cl.style.marginTop = '10px';
+    cl.onclick = async () => { if (await askYN(tr('찾은 말 기록을 지울까요? 이 기기에서만 지워집니다.'), tr('지우기'), true)) { S.dictHist = []; save(); draw(); } };
+    out.append(cl);
+  };
   const draw = () => {
     const q = inp.value.trim();
     out.textContent = '';
     clr.hidden = !q;
-    if (q.length < 1) { out.append(el('p', 'note', tr('한 글자만 넣어도 찾습니다'))); return; }
+    if (q.length < 1) { histDraw(); return; }
     const qb = dictBare(q), qk = q.toLowerCase(), qh = dictHat(q);
     const kor = /[가-힣]/.test(q);
     /* 정확한 것부터 (대표님 지시 2026-09-29: "병원이라고 검색하면 병원이 최상단에 나와야지 왜 병원비가 최상단에 있냐").
@@ -7938,21 +7983,7 @@ function dictEntry(q0) {
                  });
     if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
     out.append(el('p', 'note', tr('N개 찾음').replace('N', hit.length)));
-    hit.slice(0, 60).forEach(x => {
-      const row = el('button', 'dictrow');
-      row.type = 'button';
-      const kr = krShow(x) || krOf(x.vi);
-      // 참고 사전(앱 수업에는 없는 말)은 작은 표시를 단다 — 배운 단어와 섞여 보이지 않게 (2026-09-29)
-      row.append(el('b', 'dvi', esc(x.vi) + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (southOf(x.vi) ? ' <small class="dref southtag">' + tr('남부') + '</small>' : '')));
-      row.append(el('span', 'dkr', kr ? '[' + esc(kr) + ']' : ''));   // 발음이 없어도 칸은 둔다 — 스피커가 늘 오른쪽 끝
-      row.append(el('span', 'dko', esc(x.ko)));
-      const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
-      spk.setAttribute('role', 'button'); spk.title = tr('듣기');
-      spk.onclick = ev => { ev.stopPropagation(); const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
-      row.append(spk);
-      row.onclick = () => openWordCard(x, () => dictEntry(inp.value));   // 누르면 단어 카드 — 뒤로 가면 찾던 말 그대로
-      out.append(row);
-    });
+    hit.slice(0, 60).forEach(x => out.append(dictRow(x)));
     out.append(el('p', 'dicthint', tr('단어을 누르면 단어 카드가 열립니다')));
     if (hit.length > 60) out.append(el('p', 'note', tr('앞 60개만 보입니다 — 더 적어 보세요')));
     if (hit.slice(0, 60).some(x => x.ref))       // 근거 밝히기 — 옮긴 뜻의 바탕 자료(공개 허락된 사전)
@@ -9449,11 +9480,11 @@ function drawQuiz() {
                   puzzle_ko: '뜻을 듣고 조각으로 문장을 만들어 보세요', puzzle_vi: '문장을 듣고 조각으로 만들어 보세요',
                   pic_tf: '듣고 그림이 맞으면 맞다, 아니면 틀리다', pic4: '듣고 맞는 그림을 고르세요', dictation: '듣고 그대로 쳐 보세요',
                   cloze: '빈칸에 들어갈 단어를 고르세요', gpat: '이 문장에 쓰인 문법을 고르세요', gcloze: '빈칸에 들어갈 말을 고르세요 (문법)', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
-  /* 맨 윗줄: 몇 번째 문제 · [이번엔 넘기기] (대표님 지시 2026-09-30: "시간 없어서 찍고 넘어간 게 틀린 걸로 잡히면 기록이 망가진다").
+  /* 맨 윗줄: 몇 번째 문제 · [스킵] (대표님 지시 2026-09-30: "시간 없어서 찍고 넘어간 게 틀린 걸로 잡히면 기록이 망가진다").
      넘기면 어느 통계에도 들지 않고 창고 사다리도 안 움직인다 — 틀린 게 아니라 '아직 안 재 본' 것. 답한 뒤에는 단추가 사라진다 (skipQ) */
   const qc0 = el('div', 'qcount');
   qc0.append(el('span', null, (Q.i + 1) + ' / ' + Q.list.length));
-  const sk = el('button', 'qskip', tr('이번엔 넘기기') + ' ›'); sk.type = 'button'; sk.onclick = skipQ; qc0.append(sk);
+  const sk = el('button', 'qskip', tr('스킵') + ' ›'); sk.type = 'button'; sk.onclick = skipQ; qc0.append(sk);
   body.append(qc0);
   body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + ' · ' : '') + (q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : LABEL[q.mode])));
   if (Q.exam) { q._okBefore = Q.ok; const pq = Q.i > 0 ? Q.list[Q.i - 1] : null; if (pq && pq._ok === undefined) pq._ok = Q.ok > (pq._okBefore || 0); }   // 시험 채점용
@@ -10106,7 +10137,7 @@ function finishWeekly() {
   const r = el('div', 'result');
   const tot = Q.list.length, ok = Q.list.filter(q => q._ok).length;
   r.append(el('div', 'n', ok + ' / ' + tot), el('div', null, tr('주간 시험 결과') + ' · ' + Math.round(ok * 100 / Math.max(1, tot)) + '%'));
-  if (Q.skip) r.append(el('div', 'sub', tr('넘긴 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다').replace('N', Q.skip)));
+  if (Q.skip) r.append(el('div', 'sub', tr('스킵한 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다').replace('N', Q.skip)));
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
   r.append(tb);
@@ -10492,14 +10523,16 @@ function optInfo(o, showsVi) {
    정답률이 같아도 느리면 아직 '자동'이 안 된 것이다. */
 function markSpeed(ok, mode) {
   bump('md', mode, ok);
-  if (!ok || !Q.t0) return;
+  if (!Q.t0) return;
   const ms = Date.now() - Q.t0;
+  S.stats.ansN = (S.stats.ansN || 0) + 1;                                 // 답한 문제 수 (찍기 비율의 분모)
+  if (!ok) { if (ms < 1000) S.stats.guessN = (S.stats.guessN || 0) + 1; return; }   // 1초 안에 답하고 틀림 = 찍었을 가능성 → 분석에서 '스킵하세요' (2026-09-30)
   if (ms < 500 || ms > 20000) return;                  // 튀는 값은 버린다
   S.stats.ms = (S.stats.ms || 0) + ms;
   S.stats.msN = (S.stats.msN || 0) + 1;
 }
 
-/* ── 이번엔 넘기기 (대표님 지시 2026-09-30) ──
+/* ── 스킵 (대표님 지시 2026-09-30, 글자는 '스킵'으로 — 09-30 낮) ──
    찍어서 틀리면 '틀림'으로 남아 실력 분석이 망가지고 의욕이 꺾인다. 그래서 풀지 않고 넘기는 길을 둔다.
    넘긴 문제는: 정답률(말하기·듣기·읽기·쓰기·암기) 어디에도 안 들어감 · 오답 노트에 안 들어감 · 창고 사다리 그대로(기한이 지난 채라
    다음 복습에 다시 나옴) · 이번 판 끝에 다시 안 물음. 대신 '넘긴 수'만 따로 센다(S.stats.skipN, 낱말별 S.stats.skipW) — 자꾸 넘기는 낱말은
@@ -10562,6 +10595,7 @@ function grade0(vi, ok, early) {
     const od = r0.due ? now() - r0.due : -1;
     if (od >= 0) bump('od', od < DAY ? '제때' : od < 4 * DAY ? '1~3일 밀림'
                           : od < 8 * DAY ? '4~7일 밀림' : '8일 넘게 밀림', ok);
+    if (od >= 0 && od < DAY) bump('lvt', String(r0.lv || 0), ok);        // 제때 푼 것만 — 간격별 기억률 (복습 간격 보정의 근거, 2026-09-30)
   }
   if (!ok) {                                          // 자주 틀리는 단어
     const m = missBox();
@@ -10579,10 +10613,23 @@ function grade0(vi, ok, early) {
   const r = srsBox()[vi] || { lv: 0, first: now() };
   if (!r.first) r.first = now();
   r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : Math.max(0, r.lv - 2);
-  r.due = now() + STEPS[r.lv] * DAY;
+  r.due = now() + stepDays(r.lv) * DAY;                 // 고정 간격에 개인 보정을 조금 얹은 값 (stepDays)
   r.t = now();                          // 마지막으로 푼 때 — 두 기기 진도를 합칠 때 더 나중 것을 고른다 (mergeProg)
   srsBox()[vi] = r;
   save();
+}
+
+/* ── 복습 간격의 개인 보정 (대표님 물음 2026-09-30: "복습 간격이 사람마다 다르니? 성적을 분석해서 조금 조절하되 고정에서 하루쯤만 벗어나게") ──
+   근거는 S.stats.lvt — 그 단계의 간격을 **제때** 기다린 뒤 푼 문제의 정답률(밀린 뒤 푼 것은 간격 탓인지 밀린 탓인지 모르니 뺀다).
+   10문제가 넘은 단계만 본다(NEED). 정답률 70% 미만이면 그 단계 간격을 줄이고, 95% 이상이면 늘린다. 벗어나는 폭은 STEP_BOUND —
+   1·3·7·14일 단계는 하루, 30·60일 단계는 사흘. 최소 하루. 화면(실력 분석)에 '복습 간격 조정 — 3일 → 2일 (3일 뒤 정답률 62%, 14문제)'로 보인다. */
+const STEP_BOUND = [1, 1, 1, 1, 3, 3];
+function stepDays(lv) {
+  const base = STEPS[lv] || STEPS[STEPS.length - 1];
+  const c = ((S.stats || {}).lvt || {})[String(lv)];
+  if (!c || c.all < NEED) return base;
+  const p = c.ok / c.all, b = STEP_BOUND[lv] || 1;
+  return Math.max(1, base + (p < .7 ? -b : p >= .95 ? b : 0));
 }
 
 function finishQuiz() {
@@ -10610,8 +10657,8 @@ function finishQuiz() {
   }
   r.append(el('div', 'n', n + ' / ' + t));
   if (again) r.append(el('div', 'sub', again + '개는 그 자리에서 한 번 더 물었습니다'));
-  if (sk) r.append(el('div', 'sub', tr('N개는 넘겼습니다 — 성적에 넣지 않았고, 다음 복습에 다시 나옵니다').replace('N', sk)));
-  r.append(el('div', null, !t ? tr('이번엔 다 넘겼습니다. 넘긴 건 외운 것으로 치지 않습니다') :
+  if (sk) r.append(el('div', 'sub', tr('N개는 스킵했습니다 — 성적에 넣지 않았고, 다음 복습에 다시 나옵니다').replace('N', sk)));
+  r.append(el('div', null, !t ? tr('이번엔 다 스킵했습니다. 스킵한 건 외운 것으로 치지 않습니다') :
     n === t ? (sk ? tr('답한 것은 전부 맞혔습니다') : '전부 맞혔습니다') :
     n >= t * .7 ? '좋습니다. 틀린 건 내일 다시 나옵니다' :
       '틀린 건 내일 다시 나옵니다. 처음엔 다 그렇습니다'));

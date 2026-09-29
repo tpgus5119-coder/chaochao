@@ -2835,3 +2835,8 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .vkpop{position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); display:flex; gap:4px; padding:6px; background:var(--card); border:1px solid var(--line); border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,.25); z-index:30; white-space:nowrap}
 .vkpk{min-width:36px; padding:8px 6px; font-size:20px; border:0; border-radius:6px; background:none; color:var(--fg)}
 .vkpk:active{background:var(--accent); color:var(--accent-fg)}
+/* 홈 인사말과 연속·누적을 한 줄에 (2026-09-30) — 좁으면 알약이 다음 줄로 내려간다 */
+.htop{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.htop .hname{flex:1; min-width:0; font-size:20px}     /* 이름이 길면 이름만 두 줄로 — 알약은 늘 오른쪽 같은 줄 */
+.htop .hstreak{margin-top:0; flex:none; gap:6px}
+.htop .hpill{font-size:12px; padding:3px 8px}
