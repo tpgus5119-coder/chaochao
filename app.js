@@ -3063,7 +3063,8 @@ async function analysisCard(mode) {
 const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick', 'cr', 'pet', 'petName',   // 돈(cr)·짜오 살림(pet)도 같이 (2026-09-27 저녁)   // 실전·GYBM 창고와 별표도 같이 올린다 (2026-09-27)
   /* 2026-09-29 (대표님 "아이패드와 폰에서 진도 연동 안되는듯"): 실전·GYBM 과를 끝낸 기록(sdone·bdone)이
      여기 빠져 있어서 폰에서 끝낸 GYBM 과가 아이패드에 **한 번도** 가지 않았다. 시험 성적·문항 창고·성조 테스트도 같이. */
-  'sdone', 'bdone', 'kbank', 'qbank', 'exam', 'anchor', 'vlpt', 'tt', 'kday', 'revDay', 'lastTrack'];
+  'sdone', 'bdone', 'kbank', 'qbank', 'exam', 'anchor', 'vlpt', 'tt', 'kday', 'revDay', 'lastTrack',
+  'score'];   // 실제 반 시험 점수 (2026-09-29)
 /* 진도 서버 맞추기 (2026-09-29 다시 짬).
    예전에는 서버에서 **받는 것이 로그인하는 순간 한 번뿐**이었다 — 폰과 아이패드가 둘 다 로그인된 채로 쓰면
    서로의 진도를 영영 못 받았고, 올릴 때는 나중에 올린 기기가 서버 것을 통째로 덮었다(앞 기기 진도가 사라짐).
@@ -3114,6 +3115,11 @@ function mergeProg(L, R) {
       case 'tt': out[k] = ((b.r || []).length > (a.r || []).length) ? b : a; break;
       case 'kday': out[k] = maxNum(a, b); break;
       case 'revDay': out[k] = String(b) > String(a) ? b : a; break;
+      case 'score': {                       // (회차, 날짜) 한 줄 — 두 기기에서 고쳤으면 나중에 적은 것
+        const m = new Map();
+        [...b, ...a].forEach(x => { const kk = x.r + '|' + x.d; const o = m.get(kk); if (!o || (x.at || 0) >= (o.at || 0)) m.set(kk, x); });
+        out[k] = [...m.values()]; break;
+      }
       default: out[k] = a;                  // 별명·말씨·국적 같은 설정은 지금 손에 든 기기 것
     }
   }
@@ -9570,8 +9576,108 @@ let WEEKLY_ROUNDS = [
   { no: 1, name: '1회차', desc: '메인 교재 1권 1~3과', chapters: [0, 1, 2], speak: 'pron', topic: '자기소개 (이름·나라·하는 일·배우는 것)' },
 ];
 fetch('data/weekly.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { if (j && j.rounds && j.rounds.length) WEEKLY_ROUNDS = j.rounds; }).catch(() => { });   // 회차는 자료 파일에서 (2026-09-28)
+/* ── 내 시험 성적 · 성장 곡선 (대표님 지시 2026-09-29: "성적 곡선은 현재 주간 시험 성적들로 하자") ──
+   실제 반 시험 점수를 회차마다 적는다(총점 100 = 듣기 30 · 읽기 30 · 쓰기 20 · 말하기 20 — 1회 시험지 짜임).
+   그래프: 실제 시험 총점(실선) + 앱 안 모의시험 맞힌 비율(점선, 같은 회차의 마지막 결과) — 둘 다 100점 기준이라 축 하나.
+   색은 --chart1/--chart2(dataviz 색 검사 통과), 모의시험은 점선으로도 가린다(색만으로 가리지 않게). 아래에 표.
+   S.score = [{r 회차, d 날짜, t 총점, p [듣기,읽기,쓰기,말하기] | null, at}] — 진도와 같이 서버에 올린다(PROGKEYS). */
+const SCORE_PARTS = [['듣기', 30], ['읽기', 30], ['쓰기', 20], ['말하기', 20]];
+const scoreList = () => (S.score || []).filter(x => !x.del).sort((a, b) => a.r - b.r || String(a.d).localeCompare(String(b.d)));
+function scoreCard(host) {
+  const card = el('div', 'scorecard');
+  const head = el('div', 'schead');
+  head.append(el('b', null, tr('내 시험 성적')));
+  const add = el('button', 'ghost sm', tr('+ 점수 적기')); add.type = 'button';
+  add.onclick = () => { dive(weeklyEntry); scoreForm(); };
+  head.append(add);
+  card.append(head);
+  const L = scoreList();
+  // 앱 모의시험 — 회차마다 마지막 결과를 100점으로 바꿔 (맞힌 수 / 문항 수)
+  const mock = {};
+  (S.stats.wexam || []).forEach(x => { if (x.tot) mock[x.round || 1] = Math.round(x.ok / x.tot * 1000) / 10; });
+  const rounds = [...new Set([...L.map(x => x.r), ...Object.keys(mock).map(Number)])].sort((a, b) => a - b);
+  if (!rounds.length) {
+    card.append(el('p', 'note', tr('반 시험 점수를 적으면 회차마다 곡선으로 보여 줍니다. 앱의 모의시험 점수도 같이 그립니다.')));
+    host.append(card); return;
+  }
+  const W = 320, H = 170, pl = 30, pr = 34, pt = 14, pb = 26;
+  const X = i => rounds.length === 1 ? (pl + (W - pr)) / 2 : pl + i * (W - pl - pr) / (rounds.length - 1);
+  const Y = v => pt + (100 - v) * (H - pt - pb) / 100;
+  let svg = `<svg class="scorechart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(tr('회차별 시험 점수'))}">`;
+  [0, 25, 50, 75, 100].forEach(v => {
+    svg += `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" class="scgrid${v % 50 ? ' faint' : ''}"/>`;
+    if (v % 50 === 0) svg += `<text x="${pl - 6}" y="${Y(v) + 4}" class="scaxis" text-anchor="end">${v}</text>`;
+  });
+  rounds.forEach((r, i) => { svg += `<text x="${X(i)}" y="${H - 8}" class="scaxis" text-anchor="middle">${r}${esc(tr('회'))}</text>`; });
+  const line = (pts, cls) => pts.length > 1 ? `<polyline class="${cls}" points="${pts.map(p => p.join(',')).join(' ')}"/>` : '';
+  const realPts = [], mockPts = [];
+  rounds.forEach((r, i) => {
+    const e = L.filter(x => x.r === r).slice(-1)[0];
+    if (e) realPts.push([X(i), Y(e.t), e]);
+    if (mock[r] != null) mockPts.push([X(i), Y(mock[r]), mock[r]]);
+  });
+  svg += line(mockPts.map(p => [p[0], p[1]]), 'scmock');
+  svg += line(realPts.map(p => [p[0], p[1]]), 'screal');
+  mockPts.forEach(p => { svg += `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" class="scdot mock"><title>${esc(tr('앱 모의시험'))} ${p[2]}</title></circle>`; });
+  realPts.forEach(p => { svg += `<circle cx="${p[0]}" cy="${p[1]}" r="4.5" class="scdot real"><title>${esc(tr('실제 시험'))} ${p[2].r}${esc(tr('회'))} ${p[2].t}</title></circle>`; });
+  const last = realPts[realPts.length - 1];
+  if (last) svg += `<text x="${last[0] + 7}" y="${last[1] + 4}" class="sclabel">${last[2].t}</text>`;   // 마지막 실제 점수만 바로 적는다 — 나머지는 아래 표
+  svg += '</svg>';
+  const legend = el('div', 'sclegend',
+    `<span><i class="lg real"></i>${esc(tr('실제 시험'))}</span><span><i class="lg mock"></i>${esc(tr('앱 모의시험'))}</span>`);
+  card.append(legend, el('div', 'scwrap', svg));
+  if (L.length) {
+    const tbl = el('div', 'sctable');
+    tbl.append(el('div', 'scrow schd', `<span>${tr('회차')}</span><span>${tr('총점')}</span><span>${SCORE_PARTS.map(([n, m]) => n + '<small>/' + m + '</small>').join(' · ')}</span><span></span>`));
+    L.slice().reverse().forEach(e => {
+      const r = el('div', 'scrow');
+      const ed = el('button', 'metext', tr('고치기')); ed.type = 'button';
+      ed.onclick = () => { dive(weeklyEntry); scoreForm(e); };
+      r.append(el('span', null, e.r + tr('회') + ' <small>' + esc(e.d || '') + '</small>'), el('span', 'sct', String(e.t)),
+               el('span', 'scp', e.p ? e.p.map(v => v == null ? '–' : v).join(' · ') : '–'), ed);
+      tbl.append(r);
+    });
+    card.append(tbl);
+  }
+  host.append(card);
+}
+/* 점수 적기·고치기 — 부분 점수를 적으면 총점은 더해서 채운다. 소수점은 쉼표(89,25)로 적어도 된다 */
+function scoreForm(e) {
+  const b = $('#examBody'); b.textContent = '';
+  const num = (ph, v, max) => { const i = el('input', 'keyin'); i.type = 'text'; i.inputMode = 'decimal'; i.placeholder = ph; if (v != null) i.value = String(v); i.dataset.max = max; return i; };
+  const rIn = num(tr('회차 (예: 1)'), e ? e.r : ((scoreList().slice(-1)[0] || { r: 0 }).r + 1), 99); rIn.inputMode = 'numeric';
+  const dIn = el('input', 'keyin'); dIn.type = 'date'; dIn.value = e ? e.d : ymd();
+  const parts = SCORE_PARTS.map(([n, m], i) => num(tr(n) + ' (' + m + tr('점') + ')', e && e.p ? e.p[i] : null, m));
+  const tIn = num(tr('총점 (100점)'), e ? e.t : null, 100);
+  const val = i => { const t = i.value.trim().replace(',', '.'); return t === '' ? null : Number(t); };
+  const sync = () => { const v = parts.map(val); if (v.every(x => x != null && !isNaN(x))) tIn.value = String(Math.round(v.reduce((a, c) => a + c, 0) * 100) / 100); };
+  parts.forEach(i => { i.oninput = sync; });
+  const err = el('p', 'note nickerr'); err.hidden = true;
+  const ok = el('button', 'primary big', tr('저장')); ok.style.width = '100%';
+  ok.onclick = () => {
+    const bad = m => { err.textContent = m; err.hidden = false; };
+    const r = Math.round(val(rIn)), t = val(tIn), p = parts.map(val);
+    if (!(r >= 1 && r <= 99)) return bad(tr('회차를 1 이상으로 적어 주세요.'));
+    if (t == null || isNaN(t) || t < 0 || t > 100) return bad(tr('총점은 0~100 사이로 적어 주세요.'));
+    for (let i = 0; i < p.length; i++) if (p[i] != null && (isNaN(p[i]) || p[i] < 0 || p[i] > SCORE_PARTS[i][1])) return bad(tr(SCORE_PARTS[i][0]) + ' ' + tr('점수가 범위를 넘습니다.'));
+    S.score = (S.score || []).filter(x => x !== e && !(x.r === r && x.d === dIn.value));
+    if (e && (e.r !== r || e.d !== dIn.value)) S.score.push({ r: e.r, d: e.d, del: 1, at: now() });   // 회차·날짜를 바꿨으면 옛 줄은 지움 표시
+    S.score.push({ r, d: dIn.value || ymd(), t, p: p.some(x => x != null) ? p : null, at: now() });
+    save(); cloudSave(true);
+    weeklyEntry();
+  };
+  b.append(el('p', 'lede', tr('반 시험 점수를 적어 주세요 — 부분 점수를 적으면 총점은 저절로 채워집니다')), rIn, dIn, ...parts, tIn, err, ok);
+  if (e) {
+    const del = el('button', 'ghost danger', tr('이 점수 지우기')); del.style.width = '100%'; del.style.marginTop = '10px';
+    // 지운 자리에 '지움' 표시를 남긴다 — 그래야 다른 기기와 합칠 때 되살아나지 않는다(나중에 적은 것이 이긴다)
+    del.onclick = async () => { if (!await askYN(tr('이 회차 점수를 지울까요?'), '지우기', true)) return; S.score = (S.score || []).filter(x => !(x.r === e.r && x.d === e.d)); S.score.push({ r: e.r, d: e.d, del: 1, at: now() }); save(); cloudSave(true); weeklyEntry(); };
+    b.append(del);
+  }
+  show('exam', tr('시험 점수'), true);
+}
 function weeklyEntry() {
   const b = $('#examBody'); b.textContent = '';
+  scoreCard(b);                                         // 내 시험 성적 · 성장 곡선 (2026-09-29)
   WEEKLY_ROUNDS.forEach(r => {
     const btn = el('button', 'bigmenu');
     btn.append(el('b', null, esc(tr(r.name)) + ' <span class="exmeta">' + esc(r.desc) + '</span>'));
