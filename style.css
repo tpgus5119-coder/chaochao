@@ -2455,7 +2455,10 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .flnav .fldots{margin:0}
 .flnav .fldots i.on{width:14px; border-radius:3px; background:var(--accent)}
 /* 테스트 */
-.qcount{text-align:right; font-size:13px; color:var(--dim); margin:-4px 0 6px}
+.qcount{display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--dim); margin:-4px 0 6px}
+/* 이번엔 넘기기 — 답 단추와 헷갈리지 않게 글자 단추로, 오른쪽 위 한구석 (2026-09-30) */
+.qskip{background:none; border:0; box-shadow:none; color:var(--dim); font-size:13px; font-weight:600; padding:6px 0 6px 12px; min-height:0; border-radius:8px; text-decoration:underline; text-underline-offset:3px}
+.qskip:active{opacity:.6}
 .qcard{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:12px}
 .qcard .q{margin:0 0 4px}
 .qcard .qmain{margin:0; text-align:left; font-size:30px; font-weight:900; width:100%; display:block}

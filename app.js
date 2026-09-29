@@ -354,6 +354,12 @@ const UIVI = {
     'Chưa có từ nào. Hoàn thành một phần học thì từ sẽ xuất hiện ở đây.',
   '단어 N개쯤 외운 뒤에 보면 더 잘 듣습니다': 'Học khoảng N từ rồi xem sẽ hiểu hơn',
   '듣기로 넘어가기 ›': 'Sang phần nghe ›',
+  '이번엔 넘기기': 'Bỏ qua lần này',
+  'N개는 넘겼습니다 — 성적에 넣지 않았고, 다음 복습에 다시 나옵니다': 'Đã bỏ qua N câu — không tính điểm, sẽ gặp lại ở lần ôn sau',
+  '이번엔 다 넘겼습니다. 넘긴 건 외운 것으로 치지 않습니다': 'Lần này bỏ qua hết. Bỏ qua không tính là đã thuộc',
+  '답한 것은 전부 맞혔습니다': 'Những câu đã trả lời đều đúng',
+  '넘긴 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다': 'N câu bỏ qua tính 0 điểm — chỉ vào điểm thi, không vào phân tích năng lực',
+  '넘긴 문제 N개는 어느 통계에도 넣지 않았습니다 — 틀린 게 아니라 아직 안 재 본 것입니다': 'N câu bỏ qua không vào thống kê nào — không phải sai, chỉ là chưa đo',
   '실제 시험처럼 자동으로 나옵니다. 두 번 들려줍니다.':
     'Âm thanh tự phát như thi thật. Sẽ cho nghe hai lần.',
   '읽기 시간이 끝났습니다. 듣기를 시작합니다.':
@@ -2994,6 +3000,7 @@ function renderAnalysis(host, mode) {
     }
   }
 
+  if (S.stats.skipN) host.append(el('p', 'dimtxt', tr('넘긴 문제 N개는 어느 통계에도 넣지 않았습니다 — 틀린 게 아니라 아직 안 재 본 것입니다').replace('N', S.stats.skipN)));
   // 처방 — 분석만 하고 끝내지 않는다
   if (ok.length < 2) {
     host.append(el('p', 'note', tr('두 영역이 10문제를 넘으면 강점·약점과 처방이 나옵니다.')));
@@ -3026,6 +3033,10 @@ function renderAnalysis(host, mode) {
     .sort((a, b) => b[1] - a[1]).slice(0, 5);
   if (miss.length) lines.push('· <b>발목 잡는 단어</b>(두 번 이상 틀린 것) — ' + miss.map(m => esc(m[0])).join(' · ') +
     '<br>&nbsp;&nbsp;이 단어만 따로 소리 내어 다섯 번씩. 맞히기 시작하면 목록에서 서서히 사라집니다.');
+  const skp = Object.entries(S.stats.skipW || {}).filter(([, n]) => n >= 2)
+    .sort((a, b) => b[1] - a[1]).slice(0, 5);
+  if (skp.length) lines.push('· <b>자꾸 넘기는 단어</b>(두 번 이상 넘긴 것) — ' + skp.map(m => esc(m[0])).join(' · ') +
+    '<br>&nbsp;&nbsp;넘긴 건 틀린 게 아니라 아직 안 재 본 것입니다. 시간 있을 때 이 단어만 골라 풀어 보세요.');
   lines.push(`<br><b>잘하는 곳 — ${esc(best.name)} ${best.pct}%</b> · ${esc(best.tip)}`);
   card.append(el('div', 'rbody', lines.join('<br>')));
   host.append(card);
@@ -9438,7 +9449,12 @@ function drawQuiz() {
                   puzzle_ko: '뜻을 듣고 조각으로 문장을 만들어 보세요', puzzle_vi: '문장을 듣고 조각으로 만들어 보세요',
                   pic_tf: '듣고 그림이 맞으면 맞다, 아니면 틀리다', pic4: '듣고 맞는 그림을 고르세요', dictation: '듣고 그대로 쳐 보세요',
                   cloze: '빈칸에 들어갈 단어를 고르세요', gpat: '이 문장에 쓰인 문법을 고르세요', gcloze: '빈칸에 들어갈 말을 고르세요 (문법)', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
-  body.append(el('div', 'qcount', (Q.i + 1) + ' / ' + Q.list.length));
+  /* 맨 윗줄: 몇 번째 문제 · [이번엔 넘기기] (대표님 지시 2026-09-30: "시간 없어서 찍고 넘어간 게 틀린 걸로 잡히면 기록이 망가진다").
+     넘기면 어느 통계에도 들지 않고 창고 사다리도 안 움직인다 — 틀린 게 아니라 '아직 안 재 본' 것. 답한 뒤에는 단추가 사라진다 (skipQ) */
+  const qc0 = el('div', 'qcount');
+  qc0.append(el('span', null, (Q.i + 1) + ' / ' + Q.list.length));
+  const sk = el('button', 'qskip', tr('이번엔 넘기기') + ' ›'); sk.type = 'button'; sk.onclick = skipQ; qc0.append(sk);
+  body.append(qc0);
   body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + ' · ' : '') + (q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : LABEL[q.mode])));
   if (Q.exam) { q._okBefore = Q.ok; const pq = Q.i > 0 ? Q.list[Q.i - 1] : null; if (pq && pq._ok === undefined) pq._ok = Q.ok > (pq._okBefore || 0); }   // 시험 채점용
 
@@ -9493,6 +9509,7 @@ function drawQuiz() {
 
 /* 오답 뒤에는 스스로 넘긴다 — 틀린 걸 볼 시간이 필요하다. 정답은 자동으로 넘어간다. */
 function nextBtn(box, fn) {
+  hideSkip();                                        // 답이 났으니 '넘기기'는 치운다
   const b = el('button', 'primary big', '다음 ›');
   b.style.width = '100%'; b.style.marginTop = '14px';
   b.onclick = fn;
@@ -10089,6 +10106,7 @@ function finishWeekly() {
   const r = el('div', 'result');
   const tot = Q.list.length, ok = Q.list.filter(q => q._ok).length;
   r.append(el('div', 'n', ok + ' / ' + tot), el('div', null, tr('주간 시험 결과') + ' · ' + Math.round(ok * 100 / Math.max(1, tot)) + '%'));
+  if (Q.skip) r.append(el('div', 'sub', tr('넘긴 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다').replace('N', Q.skip)));
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
   r.append(tb);
@@ -10402,6 +10420,7 @@ function sayOpts(target) {
 
 function answer(btn, correct, w) {
   const md = Q.list[Q.i].mode;
+  Q.list[Q.i]._ans = true; hideSkip();          // 문법 예문(nograde)도 답한 뒤에는 못 넘긴다
   markSpeed(correct, md);
   // 눈으로 푼 것은 읽기, 귀로 푼 것은 듣기로 센다 (전에는 둘 다 '암기'에만 쌓였다)
   const bx = (md === 'read' || md === 'read_ko') ? 'read' : (md === 'listen' || md === 'listen_ko' || md === 'tone') ? 'ear' : null;
@@ -10480,6 +10499,25 @@ function markSpeed(ok, mode) {
   S.stats.msN = (S.stats.msN || 0) + 1;
 }
 
+/* ── 이번엔 넘기기 (대표님 지시 2026-09-30) ──
+   찍어서 틀리면 '틀림'으로 남아 실력 분석이 망가지고 의욕이 꺾인다. 그래서 풀지 않고 넘기는 길을 둔다.
+   넘긴 문제는: 정답률(말하기·듣기·읽기·쓰기·암기) 어디에도 안 들어감 · 오답 노트에 안 들어감 · 창고 사다리 그대로(기한이 지난 채라
+   다음 복습에 다시 나옴) · 이번 판 끝에 다시 안 물음. 대신 '넘긴 수'만 따로 센다(S.stats.skipN, 낱말별 S.stats.skipW) — 자꾸 넘기는 낱말은
+   분석에서 '아직 안 재 본 것'으로 따로 보여 준다. 주간 시험에서는 그 문제가 0점이다(점수 시험이니까). 다 넘기면 외운 단어는 그대로 0 —
+   넘김은 앎이 아니다. 답한 뒤(_ans)에는 넘길 수 없다 — 이미 통계에 들어갔다. */
+function hideSkip() { const s = $('#quizBody') && $('#quizBody').querySelector('.qskip'); if (s) s.remove(); }
+function skipQ() {
+  if (!Q || Q.i >= Q.list.length) return;
+  const q = Q.list[Q.i];
+  if (q._ans) return;
+  q._skip = true; if (Q.exam) q._ok = false;
+  Q.skip = (Q.skip || 0) + 1;
+  S.stats.skipN = (S.stats.skipN || 0) + 1;
+  const vi = q.w && q.w.vi;
+  if (vi) { const b = S.stats.skipW || (S.stats.skipW = {}); b[vi] = (b[vi] || 0) + 1; }
+  save();
+  Q.i++; drawQuiz();
+}
 function requeue(q) {
   if (Q && Q.exam) return;                      // 주간 시험에서는 다시 안 낸다 — 점수를 매기는 시험이니까 (2026-09-28)
   if (q.retry) return;                          // 두 번은 안 미룬다
@@ -10501,6 +10539,7 @@ const bare = t => t.trim().toLowerCase().split(/\s+/).map(stripTone).join(' ');
 /* 창고가 섞인 판(테스트 탭 '배운 단어 전체')은 단어마다 제 창고에 적는다 — opt.boxOf(vi) 가 창고 이름을 준다.
    그래야 GYBM 단어이 하루 5분 창고(S.srs)로 새어 들어가지 않는다 (복습은 섞이지 않게 — 대표님 지시). */
 function grade(vi, ok, early) {
+  if (typeof Q !== 'undefined' && Q && Q.list && Q.list[Q.i]) { Q.list[Q.i]._ans = true; hideSkip(); }   // 답이 통계에 들어갔다 — 이제 못 넘긴다
   const bx = (typeof Q !== 'undefined' && Q && Q.opt && Q.opt.boxOf) ? Q.opt.boxOf(vi) : null;
   const s0 = SBOX;
   if (bx) SBOX = bx;
@@ -10549,17 +10588,20 @@ function grade0(vi, ok, early) {
 function finishQuiz() {
   $('#quizFill').style.width = '100%';
   if (Q.exam) return finishWeekly();
+  const sk = Q.skip || 0, halfSkipped = sk * 2 > Q.total;     // 절반 넘게 넘긴 판은 복습 도장·복습 크레딧을 주지 않는다 — 판을 넘긴 것이지 복습한 것이 아니다
   if (!Q.day) {
-    S.stats.rev = (S.stats.rev || 0) + 1;                          // 복습 판 수 (업적용)
-    earnOnce('rev', CRD.rev, tr('복습을 끝냈습니다'));
-    if (!Q.early) S.revDay = ymd();                                // 오늘 복습을 끝냈다는 도장
+    if (!halfSkipped) {
+      S.stats.rev = (S.stats.rev || 0) + 1;                          // 복습 판 수 (업적용)
+      earnOnce('rev', CRD.rev, tr('복습을 끝냈습니다'));
+      if (!Q.early) S.revDay = ymd();                                // 오늘 복습을 끝냈다는 도장
+    }
     save();
     cloudSave(true);                       // 복습을 마쳤으니 서버에도 남긴다 (버튼 없이 자동)
   }
-  const n = Q.ok, t = Q.total;
+  const n = Q.ok, t = Q.total - sk;                            // 넘긴 문제는 분모에서 뺀다 — 푼 것만 성적이다
   const again = Q.list.length - Q.total;
   const r = el('div', 'result');
-  if (n === t && t > 0) {          // 다 맞힌 날은 축하가 있어야 한다
+  if (n === t && t > 0 && !sk) {   // 다 맞힌 날은 축하가 있어야 한다 (넘긴 게 있으면 '다' 맞힌 게 아니다)
     r.classList.add('perfect');
     const cf = el('div', 'confetti');
     for (let i = 0; i < 14; i++) { const s = el('i'); s.style.setProperty('--i', i); cf.append(s); }
@@ -10568,7 +10610,9 @@ function finishQuiz() {
   }
   r.append(el('div', 'n', n + ' / ' + t));
   if (again) r.append(el('div', 'sub', again + '개는 그 자리에서 한 번 더 물었습니다'));
-  r.append(el('div', null, n === t ? '전부 맞혔습니다' :
+  if (sk) r.append(el('div', 'sub', tr('N개는 넘겼습니다 — 성적에 넣지 않았고, 다음 복습에 다시 나옵니다').replace('N', sk)));
+  r.append(el('div', null, !t ? tr('이번엔 다 넘겼습니다. 넘긴 건 외운 것으로 치지 않습니다') :
+    n === t ? (sk ? tr('답한 것은 전부 맞혔습니다') : '전부 맞혔습니다') :
     n >= t * .7 ? '좋습니다. 틀린 건 내일 다시 나옵니다' :
       '틀린 건 내일 다시 나옵니다. 처음엔 다 그렇습니다'));
   const soon = Object.values(srsBox()).map(v => v.due).filter(d => d > now()).sort((a, b) => a - b)[0];
