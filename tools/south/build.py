@@ -25,15 +25,20 @@ def app_words():
     return ws
 
 def main():
-    ws = app_words(); out = {}; miss = []
-    for ln in (R / "tools/south/남부.tsv").read_text(encoding="utf-8").splitlines():
-        if not ln.strip() or ln.startswith("#"): continue
-        p = (ln.rstrip("\n") + "\t\t\t").split("\t")
-        k = nfc(p[0]).strip().lower()
-        if k not in ws: miss.append(k)
-        out[k] = {"n": nfc(p[1]).strip(), "s": p[2].strip(), "w": p[3].strip()}
+    ws = app_words(); out = {}; miss = []; nd = 0
+    DK = json.loads((R / "data/_dict_ko.json").read_text(encoding="utf-8"))
+    for f, must_app in (("남부.tsv", True), ("참고사전_남부.tsv", False)):    # 앱 낱말(손 판정) + 참고 사전 낱말(위키 표시가 모든 뜻에 있는 것, make_dict_south.py)
+        for ln in (R / "tools/south" / f).read_text(encoding="utf-8").splitlines():
+            if not ln.strip() or ln.startswith("#"): continue
+            p = (ln.rstrip("\n") + "\t\t\t").split("\t")
+            k = nfc(p[0]).strip().lower()
+            if must_app and k not in ws: miss.append(k)
+            if not must_app and k not in DK and k not in ws: miss.append(k)
+            if k in out: continue                       # 손 판정이 먼저
+            out[k] = {"n": nfc(p[1]).strip(), "s": p[2].strip(), "w": p[3].strip()}
+            if not must_app: nd += 1
     (R / "data/_south.json").write_text(json.dumps(out, ensure_ascii=False, indent=0), encoding="utf-8")
-    print(f"남부 딱지 {len(out)}개 · 앱 낱말 아님 {len(miss)} {miss}")
+    print(f"남부 딱지 {len(out)}개(앱 낱말 {len(out) - nd} · 참고 사전 {nd}) · 목록에 없는 낱말 {len(miss)} {miss}")
 
 if __name__ == "__main__":
     main()

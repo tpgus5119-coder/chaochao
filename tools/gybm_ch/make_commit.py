@@ -23,7 +23,7 @@ MY += ["tools/fill_audio.py", "tools/sense_review/insert_sense.py"] + [f"tools/b
 MY += ["tools/word_check/asr_recheck.py", "data/_asr_recheck.jsonl"]
 MY += ["tools/word_check/asr_num.py", "data/_asr_num.jsonl"]
 MY += ["data/_dict_skip.json", "data/_dict_en.json", "tools/dict_en/build.py", "tools/word_check/fix_kr.py", "tools/compound/판정.tsv", "tools/compound/_후보.tsv"]   # 사전 문장 빼기·영어 열쇠·발음 고침·붙은 말 판정 (2026-09-29)
-MY += ["data/_south.json", "tools/south/남부.tsv", "tools/south/build.py"]   # 남부 딱지 (2026-09-29 밤)
+MY += ["data/_south.json", "tools/south/남부.tsv", "tools/south/참고사전_남부.tsv", "tools/south/build.py", "tools/south/make_dict_south.py", "tools/gloss_all.py", "tools/fetch_raw_more.py"]   # 남부 딱지·뜻풀이 전부 뽑기 (2026-09-29 밤)
 MY += [f"tools/rel_mine/{n}" for n in ("apply.py", "짝.tsv", "뜻_새로.tsv")] + [f"tools/word_check/{n}" for n in ("asr.py", "sheet.py", "apply_k.py", "carrier.mp3", "검사표.tsv", "k_고침.tsv", "짝_삭제.tsv", "_main_words.json")] + ["data/_asr_word.jsonl"]
 # 위키낱말사전에 표시된 유의어·반의어 넣기 + 클로드 뜻별 판정 (2026-09-29)
 MY += ["tools/rel_parse.py"] + [f"tools/rel_import/{n}" for n in ("apply.py", "pairs.tsv", "뜻판정.tsv", "뜻_새로.tsv", "갈래.tsv")]
@@ -147,7 +147,7 @@ if "--no-prune" not in sys.argv and img_orphans:
 print(f"쓰이지 않는 그림 지움 {len(img_orphans) if '--no-prune' not in sys.argv else 0}")
 # ── 교재 원문(저작권)은 공개 저장소에 두지 않는다 — 아침 봇(card_ship.sh 의 git add -A)이 2026-09-29 새벽에 쓸어 올린 것을 뺀다.
 #    이 맥의 파일은 그대로 둔다(올린 판에서만 뺀다). 다시 안 올라가게 .gitignore 에도 적었다.
-_nopub = _re.compile(r"tools/book_ex/(src/v\d_b\d+\.txt|src/_ocr_v\d\.json|pool\.json|cand\.json|qwen\.json)$")
+_nopub = _re.compile(r"tools/book_ex/(src/.*|pool\.json|cand\.json|qwen\.json)$")   # src/ 전부 — 손문장.tsv(쪽 이미지를 보고 옮긴 교재 문장)도 교재 원문이다 (2026-09-29 밤)
 book_src = [q for q in git("ls-tree", "-r", "--name-only", "origin/main", "tools/book_ex").splitlines() if _nopub.match(q)]
 if book_src:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in book_src)
@@ -157,11 +157,16 @@ print(f"교재 원문 뺌 {len(book_src)}")
 #    audio/ko-qwen·ko-qwen2 = Qwen 목소리 시험본(앱 코드가 부르지 않음, 45MB) · scratchpad·_보관 = 작업 중 임시 파일. 이 맥의 파일은 그대로 둔다.
 #    audio/ko-f·ko-m = 한국어 뜻 소리 4,134×2 (159MB). 2026-09-07 "한국어 코스 분리" 때 색인 data/ko_audio_index.json 을 지워 앱(speakKo)이 이 파일을 부를 길이 없다 — 늘 폰 목소리(sysSpeakKo)로 간다.
 #    아침 봇의 git add -A 가 도로 올린 것. 서버에서만 뺀다(맥의 파일은 그대로) — 대표님 2026-09-29 "안 쓰는 건 서버에 없어도 됨".
-_unused = [q for q in git("ls-tree", "-r", "--name-only", "origin/main").splitlines() if q.startswith(("audio/ko-qwen/", "audio/ko-qwen2/", "scratchpad/", "_보관/", "audio/ko-f/", "audio/ko-m/")) or q == "data/compound.json"]   # compound.json = 걷어낸 붙은 말 접기 자료 (2026-09-29 밤)
+#    (2026-09-29 밤) 한글 경로(_보관/…)는 git 이 "\353\263\264…" 로 따옴표를 쳐 startswith 가 못 잡았다 → core.quotePath=false. 그래서 _보관 139개가 서버에 남아 있었다.
+#    data/ 에서 앱(app.js·sw.js·index.html)이 이름을 부르지 않는 파일도 뺀다 — 뜻풀이 원문·검수 기록 등 144개 58.6MB. 구글 드라이브 data_서버제외_2026-09-29 에 복사해 뒀고 맥의 파일은 그대로.
+_origin_all = git("-c", "core.quotePath=false", "ls-tree", "-r", "--name-only", "origin/main").splitlines()
+_app_txt = "".join((ROOT / f).read_text(encoding="utf-8") for f in ("app.js", "sw.js", "index.html") if (ROOT / f).exists())
+_data_unused = [q for q in _origin_all if q.startswith("data/") and q.rsplit("/", 1)[-1] not in _app_txt]
+_unused = [q for q in _origin_all if q.startswith(("audio/ko-qwen/", "audio/ko-qwen2/", "scratchpad/", "_보관/", "audio/ko-f/", "audio/ko-m/")) or q == "data/compound.json"] + _data_unused   # compound.json = 걷어낸 붙은 말 접기 자료 (2026-09-29 밤)
 if _unused:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in _unused)
     subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
-print(f"앱이 안 쓰는 파일 뺌 {len(_unused)}")
+print(f"앱이 안 쓰는 파일 뺌 {len(_unused)} (그중 data/ {len(_data_unused)})")
 print(f"올릴 파일 {n_new} · origin 과 같아 건너뜀 {n_same} · 소리 목록 {before} → {len(oi)}")
 if dry: raise SystemExit("dry")
 tree = git("write-tree", env=env)

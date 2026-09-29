@@ -1260,7 +1260,7 @@ function pairPopup(vi, info) {
   const hd = el('div', 'pairpophd');
   hd.append(el('b', null, esc(vi)));
   if (inf.kr) hd.append(el('span', 'pkr', '[' + esc(inf.kr) + ']'));
-  /* 재생 단추 + **짝 전용 속도**(기본 1배, 카드 속도와 별개 — 대표님 지시 2026-09-27) */
+  /* 재생 단추 + **짝 전용 속도**(카드 속도와 별개 — 대표님 지시 2026-09-27; 기본 0.8배 — 2026-09-29 밤) */
   const pl = iconBtn('play', tr('듣기'), () => { const k = recKey(vi); k ? play(k, false, null, pairSpd()) : speakVi(vi, false, pairSpd()); });
   pl.classList.add('playi');
   const grp = el('span', 'pspd');
@@ -1870,7 +1870,7 @@ function pitchStage(text, nat) {
     clip.setAttribute('width', playing ? q[0].toFixed(1) : 0);
   };
   place(t0, false);
-  gW.onclick = () => play(text, false);
+  gW.onclick = () => play(text, false, null, SLOW_TAP);   // 그래프를 누르면 0.2배 고정 (대표님 지시 2026-09-29 밤: "발음 그래프 박스·입모양 박스는 0.2배 고정")
   gW.style.cursor = 'pointer';
   PB.views.add({ root: box, update(playing) {
     if (pbLive(h, playing)) place(clamp(audio.currentTime, t0, t0 + span), true);
@@ -2053,8 +2053,8 @@ function spdSet(v) {
   document.querySelectorAll('.spdchip').forEach(x => { x.title = tr('듣기 속도') + ' ' + spdLab(v); x.setAttribute('aria-label', tr('듣기 속도') + ' ' + spdLab(v)); });
   if (PB.spdSrc && audio.src.endsWith(PB.spdSrc) && !audio.paused) audio.playbackRate = v;   // 듣는 중이면 바로 바꾼다
 }
-/* 헷갈리는 짝은 **제 속도**를 따로 둔다 (대표님 지시 2026-09-27: "별개로 속도 조절", 기본 1배). 카드의 듣기 속도(S.wspd)와 무관하다. */
-const pairSpd = () => SPDS.includes(Number(S.pspd)) ? Number(S.pspd) : 1;
+/* 헷갈리는 짝은 **제 속도**를 따로 둔다 (대표님 지시 2026-09-27: "별개로 속도 조절"). 기본은 0.8배(2026-09-29 밤 "디폴트값은 0.8로. 모두 고정"). 카드의 듣기 속도(S.wspd)와 무관하다. */
+const pairSpd = () => SPDS.includes(Number(S.pspd)) ? Number(S.pspd) : .8;   // 기본 0.8배 (대표님 지시 2026-09-29 밤: "디폴트값은 0.8로. 모두 고정" — 전에는 1배)
 function pairSpdSet(v) { S.pspd = v; save(); document.querySelectorAll('.spdchip.pair').forEach(x => { x.title = tr('짝 듣기 속도') + ' ' + spdLab(v); }); }
 /* opt.pair 이면 헷갈리는 짝 속도(pairSpd)를 읽고 쓴다. 아니면 카드 듣기 속도 */
 function spdChip(opt) {
@@ -7747,6 +7747,9 @@ function dictBuild() {
   /* 문장은 사전에 안 나온다 (대표님 지시 2026-09-27) — 단어·구만. 다섯 단어 이상이거나 문장 부호가 들어 있으면 문장으로 본다. */
   const isSent = v => v.split(/\s+/).length >= 5 || /[.!?…]$/.test(v) || /[,;:"“”]/.test(v);
   const KEEP = ['ex', 'img', 'kr', 'kr_read', 'tones', 'alt', 'hanja', 'south', 'work', 'gl', 'form', 'fex'];
+  // 괄호 안의 ·,/; 는 구절 경계가 아니다 — '운동하다(헬스·체조: tập gym·tập thể dục)' 이 세 조각으로 찢기지 않게 (2026-09-29 밤)
+  const SEP = { '·': '\u0001', ',': '\u0002', '/': '\u0003', ';': '\u0004' }, UNSEP = { '\u0001': '·', '\u0002': ',', '\u0003': '/', '\u0004': ';' };
+  const phr = g => g.replace(/\([^)]*\)/g, m => m.replace(/[·,\/;]/g, c => SEP[c])).split(/\s*[·\/,;]\s*/).map(s => s.replace(/[\u0001-\u0004]/g, c => UNSEP[c]).trim()).filter(Boolean);
   const put = (vi, ko, w, onlyNew, src) => {
     const k = String(vi || '').trim();
     if (!k || !ko || isSent(k)) return;
@@ -7764,9 +7767,6 @@ function dictBuild() {
     /* 여러 자료의 뜻을 합칠 때 겹치는 단어은 다시 안 붙인다 — "누나·언니 / 누나·언니뻘 여자 / 언니" 처럼 길어지지 않게. 세 갈래까지만. */
     /* 뜻은 **구절** 단위로 합친다 (2026-09-29): 앞서는 낱말 단위라 '요리하다 / 요리하다, 밥을 짓다 / 요리하다·요리·밥을 짓다' 처럼 같은 뜻이 세 번 붙었다.
        새 자료의 구절 중 이미 있는 구절(또는 그것을 품은 구절)과 겹치지 않는 것만 ' · ' 로 잇는다. 여섯 구절까지. */
-    // 괄호 안의 ·,/; 는 구절 경계가 아니다 — '운동하다(헬스·체조: tập gym·tập thể dục)' 이 세 조각으로 찢기지 않게 (2026-09-29 밤)
-    const SEP = { '·': '\u0001', ',': '\u0002', '/': '\u0003', ';': '\u0004' }, UNSEP = { '\u0001': '·', '\u0002': ',', '\u0003': '/', '\u0004': ';' };
-    const phr = g => g.replace(/\([^)]*\)/g, m => m.replace(/[·,\/;]/g, c => SEP[c])).split(/\s*[·\/,;]\s*/).map(s => s.replace(/[\u0001-\u0004]/g, c => UNSEP[c]).trim()).filter(Boolean);
     if (!o.ko.includes(ko)) {
       const have = phr(o.ko);
       const add = phr(ko).filter(p => !have.some(h => h === p || h.includes(p) || p.includes(h)));
@@ -7787,6 +7787,14 @@ function dictBuild() {
   /* 참고 사전 (2026-09-29, 대표님 "사전 작업 다 못했니?") — 뜻 25,835개를 다 옮겨 놓고도 사전 탭이 찾지 않았다.
      앱·짝 자료에 없는 말만 '참고' 표시를 달아 넣는다. 열쇠가 소문자라 대문자 꼴은 _dict_head.json 에서 되살린다. */
   if (DKO) Object.entries(DKO).forEach(([k, v]) => put((DKH && DKH[k]) || k, Array.isArray(v) ? v.join(' · ') : v, null, true, '참고 사전'));
+  /* 검수된 뜻 목록(data/_senses.json)의 뜻도 사전 뜻에 넣는다 — 한국어로 찾을 때 '운동하다' 로 tập 이 나오게 (대표님 지시 2026-09-29 밤: "모든 뜻을 가져와서 표기"). 여덟 구절까지 */
+  if (SENSES) seen.forEach(o => {
+    const ss = SENSES[String(o.vi).trim().toLowerCase()];
+    if (!ss || ss.length < 2) return;
+    const have = phr(o.ko);
+    const add = ss.map(t => t.trim()).filter(p => p && !have.some(h => h === p || h.includes(p) || p.includes(h)));
+    if (add.length && have.length < 8) o.ko += ' · ' + add.slice(0, 8 - have.length).join(' · ');
+  });
   DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi), h: dictHat(x.vi), en: (DEN && DEN[x.vi.toLowerCase()]) || null }));
   DICT.sort((a, b) => a.b.localeCompare(b.b));
   return DICT;
@@ -7805,7 +7813,7 @@ async function dictReady() {
   if (!KRSYL) jobs.push(get('data/_kr_syl.json', j => { KRSYL = j; }));
   if (!DSKIP) jobs.push(get('data/_dict_skip.json', j => { DSKIP = new Set(j.map(viCanon)); }));
   if (!DEN) jobs.push(get('data/_dict_en.json', j => { DEN = j; }));
-  jobs.push(southLoad());
+  jobs.push(southLoad(), sensesLoad());   // 남부 딱지·검수된 뜻 목록 (2026-09-29 밤)
   await Promise.all(jobs);
   DICT = null;
 }
