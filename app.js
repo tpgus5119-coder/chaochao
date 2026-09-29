@@ -53,7 +53,29 @@ let ALL = [], AIDX = {}, DRILL = [], VDRILL = [], EAR = {};
 /* 녹음 찾기 — 대소문자 안 가린다. 문장 첫 단어(Đây, Bạn...)은 대문자로 들어오는데
    녹음은 소문자 표제어로만 있어서, 이 한 곳을 통하지 않으면 문장마다 첫 단어만
    기기 목소리로 나서 "목소리가 섞인다"가 된다(2026-09-09 원인 확정). */
-const recKey = t => AIDX[t] ? t : (AIDX[t.toLowerCase()] ? t.toLowerCase() : null);
+/* 같은 말의 다른 표기를 한 열쇠로 (2026-09-29, 대표님: "quản lý 마지막 y 대신 i 로 해도 된다는데? 반영 가능한 것 모두")
+   ① 성조 자리 두 꼴(hoà/hòa·thuý/thúy) ② 자음 뒤 끝소리 i/y(lý/lí·kỹ/kĩ·sỹ/sĩ·Mỹ/Mĩ·quý/quí —
+   교육부 결정 1989/2018/QĐ-BGDĐT 가 자음 뒤는 i 로 정했지만 y 표기도 널리 쓰여 둘 다 통한다).
+   음절마다 성조 부호를 떼어 끝에 번호로 붙이므로 성조 자리가 달라도 같은 열쇠다.
+   y 가 자음 뒤 **홀로 모음**일 때만 i 로 — ay·ây·uy·yê·y tế(홀로 y)는 소리나 규정이 달라 건드리지 않는다. */
+const VI_TONE = { '\u0300': 1, '\u0301': 2, '\u0309': 3, '\u0303': 4, '\u0323': 5 };
+const VI_ONSET_Y = /^(b|c|ch|d|đ|g|gh|h|k|kh|l|m|n|ng|ngh|nh|p|ph|r|s|t|th|tr|v|x|qu)y$/;
+function viCanon(s) {
+  return String(s || '').normalize('NFC').toLowerCase().replace(/[.,!?;:…"“”()]+/g, ' ').split(/\s+/).filter(Boolean).map(syl => {
+    let t = 0;
+    const base = syl.normalize('NFD').replace(/[\u0300\u0301\u0309\u0303\u0323]/g, c => { t = VI_TONE[c]; return ''; }).normalize('NFC');
+    return (VI_ONSET_Y.test(base) ? base.slice(0, -1) + 'i' : base) + (t || '');
+  }).join(' ');
+}
+/* 열쇠 → 실제 표제어 색인 (자료 하나마다 한 번만 만든다) */
+const CANON_IX = new WeakMap();
+function canonFind(obj, t) {
+  if (!obj) return null;
+  let ix = CANON_IX.get(obj);
+  if (!ix) { ix = new Map(); Object.keys(obj).forEach(k => { const c = viCanon(k); if (!ix.has(c)) ix.set(c, k); }); CANON_IX.set(obj, ix); }
+  return ix.get(viCanon(t)) || null;
+}
+const recKey = t => AIDX[t] ? t : (AIDX[t.toLowerCase()] ? t.toLowerCase() : canonFind(AIDX, t));
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 /* ── 화면 언어 (1단계) ────────────────────────────────────────────
@@ -590,11 +612,11 @@ const UIVI = {
   '듣고 손으로 써 보세요': 'Nghe và viết tay', '모르겠어요': 'Không biết',
   '원어민': 'Người bản xứ', '나': 'Tôi', '번갈아 듣기': 'Nghe lần lượt',
   '발음': 'Phát âm', '높낮이': 'Thanh điệu', '띄어쓰기': 'Dấu cách', '확인': 'OK',
-  '천천히': 'Chậm', '그래프를 누르면 아주 느리게(0.2배)': 'Chạm vào biểu đồ để nghe rất chậm (0,2×)', '알아 둘 것': 'Cần nhớ', '북부에서 같은 소리': 'Miền Bắc đọc giống nhau', '다른 소리 — 구별해야 함': 'Âm khác — cần phân biệt', '뜻을 누르면 그 뜻의 동의어·반의어로 바뀝니다': 'Chạm vào một nghĩa để xem từ đồng nghĩa · trái nghĩa của nghĩa đó', '이 뜻의 동의어·반의어는 아직 자료에 없습니다.': 'Chưa có từ đồng nghĩa · trái nghĩa cho nghĩa này.', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
+  '천천히': 'Chậm', '그래프를 누르면 아주 느리게(0.2배)': 'Chạm vào biểu đồ để nghe rất chậm (0,2×)', '알아 둘 것': 'Cần nhớ', '북부에서 같은 소리': 'Miền Bắc đọc giống nhau', '다른 소리 — 구별해야 함': 'Âm khác — cần phân biệt', '뜻을 누르면 그 뜻의 유의어·반의어로 바뀝니다': 'Chạm vào một nghĩa để xem từ đồng nghĩa · trái nghĩa của nghĩa đó', '이 뜻의 유의어·반의어는 아직 자료에 없습니다.': 'Chưa có từ đồng nghĩa · trái nghĩa cho nghĩa này.', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
   '원어민 소리 높낮이': 'Cao độ giọng người bản xứ',
   '녹음': 'Ghi âm', '듣기 속도': 'Tốc độ nghe', '재생 위치': 'Vị trí phát', '멈춤': 'Tạm dừng', '재생': 'Phát', '닫기': 'Đóng',
   '이 단어과 헷갈리는 짝이 없습니다.': 'Từ này không có từ dễ nhầm.',
-  '동의어': 'Đồng nghĩa', '반의어': 'Trái nghĩa', '뜻이 비슷함': 'Nghĩa gần giống', '뜻이 반대': 'Nghĩa ngược lại', '따라가는 것': 'Hiển thị', '입모양': 'Khẩu hình', '그림': 'Hình',
+  '유의어': 'Đồng nghĩa', '반의어': 'Trái nghĩa', '뜻이 비슷함': 'Nghĩa gần giống', '뜻이 반대': 'Nghĩa ngược lại', '따라가는 것': 'Hiển thị', '입모양': 'Khẩu hình', '그림': 'Hình',
   /* 탈퇴 · 순위 · 가입 화면 (2026-08-29 대표님 지시) */
   '내 말 (화면에 나올 말)':
     'Ngôn ngữ của tôi (hiện trên màn hình)',
@@ -967,6 +989,11 @@ async function meaningOf(vi) {
     try { const s = await sibLoad(); const w = s && s.w && s.w[k]; if (w && w.k) return w.k; } catch (e) { }
     try { if (!DKO) DKO = await fetch('data/_dict_ko.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => ({})); const e = DKO[k]; if (e) return Array.isArray(e) ? e.join(' · ') : String(e); } catch (e) { }
   }
+  /* 다른 표기(quản lí/quản lý·hoà/hòa)로 한 번 더 — 같은 차례로 (2026-09-29) */
+  try { const d = dictBuild(); const c = viCanon(k0); const hit = Array.isArray(d) && d.find(x => !x.ref && viCanon(x.vi) === c); if (hit && hit.ko) return hit.ko; } catch (e) { }
+  try { await sensesLoad(); const k = canonFind(SENSES, k0); if (k && SENSES[k].length) return SENSES[k].join(' · '); } catch (e) { }
+  try { const s = await sibLoad(); const k = s && canonFind(s.w, k0); if (k && s.w[k].k) return s.w[k].k; } catch (e) { }
+  try { const k = canonFind(DKO, k0); if (k) { const e = DKO[k]; return Array.isArray(e) ? e.join(' · ') : String(e); } } catch (e) { }
   return '';
 }
 /* 성조 표시 자리 두 가지 — 옛 꼴 hòa·tòa·khỏe·thúy 와 새 꼴 hoà·toà·khoẻ·thuý 는 같은 말이다.
@@ -981,7 +1008,7 @@ const TONE_ALT = (() => {
 })();
 const TONE_ALT_RE = new RegExp('(' + Object.keys(TONE_ALT).join('|') + ')(?![a-zà-ỹđ])', 'g');
 const toneAlt = s => String(s).replace(TONE_ALT_RE, x => TONE_ALT[x]);
-let DKO = null;
+let DKO = null, DKH = null;          // 참고 사전 뜻 · 표제어 대문자 꼴 (소문자 열쇠 → 원래 꼴)
 function sibLoad() {
   if (SIB) return Promise.resolve(SIB);
   if (!SIBP) SIBP = fetch('data/sib.json', { cache: 'no-cache' }).then(r => r.json())
@@ -1172,7 +1199,7 @@ function pairPanel(vi, opt) {
            rel.m = {짝: 뜻 번호} (tools/rel_sense·tools/sense_review, 클로드 판정). 처음엔 이 수업의 기본 뜻. 뜻 목록이 없는 낱말은 예전처럼 한 줄로 */
         const ss = rel.m && SENSES && SENSES[vi.toLowerCase().trim()];
         if (!ss) {
-          if (rel.s && rel.s.length) body.append(section('동의어', '뜻이 비슷함', rel.s, '', 'rel'));
+          if (rel.s && rel.s.length) body.append(section('유의어', '뜻이 비슷함', rel.s, '', 'rel'));
           if (rel.a && rel.a.length) body.append(section('반의어', '뜻이 반대', rel.a, '', 'rel'));
         } else {
           if (sel == null) sel = senseDefault(vi, o.ko, lk0) || 1;
@@ -1180,9 +1207,9 @@ function pairPanel(vi, opt) {
           const syn = of(rel.s), ant = of(rel.a);
           const sec = el('div', 'psec');
           sec.append(el('div', 'prelsense cur', '<i>' + sel + '</i>' + esc(ss[sel - 1])));
-          if (!syn.length && !ant.length) sec.append(el('div', 'pnote', tr('이 뜻의 동의어·반의어는 아직 자료에 없습니다.')));
+          if (!syn.length && !ant.length) sec.append(el('div', 'pnote', tr('이 뜻의 유의어·반의어는 아직 자료에 없습니다.')));
           body.append(sec);
-          if (syn.length) body.append(section('동의어', '뜻이 비슷함', syn, '', 'rel'));
+          if (syn.length) body.append(section('유의어', '뜻이 비슷함', syn, '', 'rel'));
           if (ant.length) body.append(section('반의어', '뜻이 반대', ant, '', 'rel'));
         }
       }
@@ -6849,7 +6876,17 @@ function krOf(w) {
     const v = krShow(x);
     if (v && !GKR[k]) GKR[k] = v; }); }
   const k = String(w).toLowerCase().replace(/[,.!?;:"“”‘’'()…]/g, '').trim();
-  return GKR[k] || exgKr(k);
+  return GKR[k] || exgKr(k) || sylKr(k);
+}
+/* 참고 사전 낱말의 한글 발음 (2026-09-29) — tools/vi_kr.py(규칙식, AI 금지)로 음절마다 미리 만든 표 data/_kr_syl.json 을 이어 붙인다.
+   음절을 이어 붙인 것은 낱말 전체를 vi_kr 로 돌린 것과 같다(참고 사전 25,841개 중 다른 것은 외래어 조각 33개뿐 — 그런 것은 표에 없어 빈 값).
+   한 음절이라도 표에 없으면 빈 값 — 반쪽 발음은 보여 주지 않는다. */
+let KRSYL = null;
+function sylKr(k) {
+  if (!KRSYL) return '';
+  const ps = String(k).split(/[\s-]+/).filter(Boolean);
+  const r = ps.map(p => KRSYL[p]);
+  return ps.length && r.every(Boolean) ? r.join(' ') : '';
 }
 
 /* 문장 한 줄의 발음 — 단어 발음을 이어 붙인다. 하나라도 모르면 빈 값을 낸다
@@ -6977,7 +7014,7 @@ function sensePick(host, vi, ko, lk, onPick) {
     draw();
     const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
     if (def && tn) tn.replaceWith(list); else host.append(list);
-    list.before(el('div', 'snhint', tr('뜻을 누르면 그 뜻의 동의어·반의어로 바뀝니다')));
+    list.before(el('div', 'snhint', tr('뜻을 누르면 그 뜻의 유의어·반의어로 바뀝니다')));
   });
 }
 let HUN = null, HUN_P = null;
@@ -6996,6 +7033,18 @@ function rootsLoad() {
   if (ROOTS) return Promise.resolve();
   if (!ROOTS_P) ROOTS_P = fetch('data/_roots.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { ROOTS = j; }).catch(() => { ROOTS = {}; });
   return ROOTS_P;
+}
+/* 분류사 cái 가 붙은 표제어 (대표님 물음 2026-09-29: "cái nhà 이거 집이라고 나오는데 맞냐? nhà 만 집 아님?")
+   선배 자료가 사물 낱말을 'Cái bàn·Cái mũ·cái nhà'처럼 분류사를 붙인 꼴로 적었다. 뜻(집)은 맞지만 낱말은 뒤의 nhà 이고,
+   cái 는 '사물 하나'를 가리킬 때 앞에 붙는 분류사다. cái + 형용사·동사(cái nóng 더위·cái chết 죽음)는 그 성질·일을 가리키는 명사를 만든다. */
+const CAI_NOUNIFY = new Set(['cái nóng', 'cái lạnh', 'cái đẹp', 'cái xấu', 'cái ác', 'cái thiện', 'cái chết', 'cái tôi', 'cái đói', 'cái nghèo']);
+function caiNote(host, x) {
+  const m = /^cái\s+(.+)$/i.exec(String(x.vi || '').trim());
+  if (!m) return;
+  const rest = m[1], lo = String(x.vi).trim().toLowerCase();
+  host.append(el('div', 'clfnote', CAI_NOUNIFY.has(lo)
+    ? tr('cái + 형용사·동사 → 그 성질·일을 가리키는 명사입니다') + ' (' + esc(rest) + ' → ' + esc(x.vi) + ')'
+    : tr('cái 는 사물 하나를 가리킬 때 앞에 붙는 분류사입니다 — 낱말 자체는') + ' <b>' + esc(rest) + '</b>'));
 }
 function rootPills(host, x) {
   const box = el('span', 'roots');                 // 자리를 먼저 잡아 둔다 — 파일이 늦게 와도 뜻 목록과 순서가 바뀌지 않게
@@ -7695,7 +7744,9 @@ let WB = 'star';                       // 단어장에서 보고 있는 칸
 let DICT = null;
 const dictBare = v => {
   let t = String(v).normalize('NFD').replace(/[\u0300-\u0323]/g, '');
-  return t.normalize('NFC').toLowerCase().replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, '').trim();
+  t = t.normalize('NFC').toLowerCase().replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, '').trim();
+  // 자음 뒤 홀로 끝나는 y 는 i 로 — 'quan li' 로 쳐도 quản lý 가 나온다 (viCanon 과 같은 규칙, 2026-09-29)
+  return t.split(' ').map(x => /^(b|c|ch|d|g|gh|h|k|kh|l|m|n|ng|ngh|nh|p|ph|r|s|t|th|tr|v|x|qu)y$/.test(x) ? x.slice(0, -1) + 'i' : x).join(' ');
 };
 function dictBuild() {
   if (DICT) return DICT;
@@ -7703,12 +7754,17 @@ function dictBuild() {
   /* 문장은 사전에 안 나온다 (대표님 지시 2026-09-27) — 단어·구만. 다섯 단어 이상이거나 문장 부호가 들어 있으면 문장으로 본다. */
   const isSent = v => v.split(/\s+/).length >= 5 || /[.!?…]$/.test(v) || /[,;:"“”]/.test(v);
   const KEEP = ['ex', 'img', 'kr', 'kr_read', 'tones', 'alt', 'hanja', 'south', 'work', 'gl', 'form', 'fex'];
-  const put = (vi, ko, w) => {
+  const put = (vi, ko, w, onlyNew, src) => {
     const k = String(vi || '').trim();
     if (!k || !ko || isSent(k)) return;
-    const kk = k.toLowerCase();
-    if (!seen.has(kk)) seen.set(kk, { vi: k, ko: String(ko) });
+    const kk = viCanon(k);                  // quản lý/quản lí·hoà/hòa 는 한 줄로 (2026-09-29)
+    if (onlyNew && seen.has(kk)) return;    // 참고 사전은 앱에 없는 말만 — 앱 단어 뜻에 사전 뜻을 덧붙이지 않는다
+    if (!seen.has(kk)) seen.set(kk, onlyNew ? { vi: k, ko: String(ko), ref: 1 } : { vi: k, ko: String(ko) });
     const o = seen.get(kk);
+    /* 어느 파트에서 나온 단어인지 (대표님 지시 2026-09-29: "사전-일상-cái nhà 이런 식으로") — 먼저 넣은 파트부터 둘까지 */
+    // '예문·사전·참고 사전'은 수업 파트가 없을 때만 — '선배·사전'처럼 군더더기가 붙지 않게
+    const part = !['예문', '사전', '참고 사전'].includes(src);
+    if (src && (part || !(o.src && o.src.length))) { o.src = o.src || []; if (!o.src.includes(src) && o.src.length < 2) o.src.push(src); }
     /* 여러 자료의 뜻을 합칠 때 겹치는 단어은 다시 안 붙인다 — "누나·언니 / 누나·언니뻘 여자 / 언니" 처럼 길어지지 않게. 세 갈래까지만. */
     const toks = g => g.split(/[·\/,;()\s]+/).filter(Boolean);
     if (!o.ko.includes(ko) && o.ko.split(' / ').length < 3) {
@@ -7718,13 +7774,18 @@ function dictBuild() {
     if (w) KEEP.forEach(f => { if (o[f] === undefined && w[f] !== undefined) o[f] = w[f]; });
   };
   /* 앱에 있는 단어은 **전부** (대표님 지시 2026-09-27: "최소한 우리 어플에 있는 모든 단어는 들어가야 함") */
-  allWords().forEach(w => put(w.vi, w.ko, w));               // 하루5분·회화·직무(order.json)
-  gybmAllWords().forEach(w => put(w.vi, w.ko, w));           // GYBM 교재 단어
-  seniorItems().forEach(w => put(w.vi, w.ko, w));            // 선배 시험 단어
+  ALL.forEach(d => (d.words || []).forEach(w => put(w.vi, w.ko, w, false, /^P/.test(String(d.day)) ? '기본기' : '일상')));   // 기본기·일상
+  CWORDS.forEach(w => put(w.vi, w.ko, w, false, '직무'));                                                              // 직무(order.json)
+  const GSRC = { main: '교재', senior: '선배', c22: '22기' };
+  (GYBM || []).forEach(g => g.lessons.forEach(l => l.words.forEach(w => put(w.vi, w.ko, w, false, GSRC[g.key] || 'GYBM'))));   // GYBM 교재·선배·22기
+  seniorItems().forEach(w => put(w.vi, w.ko, w, false, '선배'));            // 선배 시험 단어
   if (GRAM) GRAM.books.forEach(b => b.bai.forEach(c => c.g.forEach(g =>
-    (g.kw || []).forEach(([w, m]) => put(String(w).replace(/[.…]/g, '').trim(), m)))));   // 문법 핵심 단어
-  Object.entries(EXG || {}).forEach(([k, v]) => put(k, typeof v === 'string' ? v : v.ko, typeof v === 'object' ? { kr: v.kr } : null));   // 예문 단어
-  if (SIB) Object.entries(SIB.w).forEach(([k, v]) => { if (v.k) put(k, v.k); });   // 헷갈리는 짝 자료(사전 단어 — 한국어 뜻 있는 것)
+    (g.kw || []).forEach(([w, m]) => put(String(w).replace(/[.…]/g, '').trim(), m, null, false, '문법')))));   // 문법 핵심 단어
+  Object.entries(EXG || {}).forEach(([k, v]) => put(k, typeof v === 'string' ? v : v.ko, typeof v === 'object' ? { kr: v.kr } : null, false, '예문'));   // 예문 단어
+  if (SIB) Object.entries(SIB.w).forEach(([k, v]) => { if (v.k) put(k, v.k, null, false, '사전'); });   // 헷갈리는 짝 자료(사전 단어 — 한국어 뜻 있는 것)
+  /* 참고 사전 (2026-09-29, 대표님 "사전 작업 다 못했니?") — 뜻 25,835개를 다 옮겨 놓고도 사전 탭이 찾지 않았다.
+     앱·짝 자료에 없는 말만 '참고' 표시를 달아 넣는다. 열쇠가 소문자라 대문자 꼴은 _dict_head.json 에서 되살린다. */
+  if (DKO) Object.entries(DKO).forEach(([k, v]) => put((DKH && DKH[k]) || k, Array.isArray(v) ? v.join(' · ') : v, null, true, '참고 사전'));
   DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi) }));
   DICT.sort((a, b) => a.b.localeCompare(b.b));
   return DICT;
@@ -7738,6 +7799,9 @@ async function dictReady() {
   if (!SENIOR) jobs.push(get('data/senior.json', j => { SENIOR = j; }));
   if (typeof GYBM !== 'undefined' && !GYBM) jobs.push(get('data/gybm.json', j => { GYBM = j.sources; GYBM_ALL = null; }));   // gybmBuild 와 같이 sources 배열만 (2026-09-27: 통째로 넣어 사전이 멈췄다)
   if (!COURSE) jobs.push(get('data/order.json', j => { COURSE = j; loadCWords(); }));
+  if (!DKO) jobs.push(get('data/_dict_ko.json', j => { DKO = j; }));
+  if (!DKH) jobs.push(get('data/_dict_head.json', j => { DKH = j; }));
+  if (!KRSYL) jobs.push(get('data/_kr_syl.json', j => { KRSYL = j; }));
   await Promise.all(jobs);
   DICT = null;
 }
@@ -7747,7 +7811,7 @@ function openWordCard(x, back) {
   const w = Object.assign({}, x);
   delete w.b;
   if (!w.vi) return;
-  LCRUMB = tr('사전') + '-' + w.vi;
+  LCRUMB = tr('사전') + '-' + (x.src && x.src.length ? x.src.map(t => tr(t)).join('·') + '-' : '') + w.vi;   // 사전-일상-cái nhà (2026-09-29)
   L = { day: { day: 'dict', theme: tr('사전'), words: [w] }, items: [{ k: 'word', d: w }], i: 0, dict: true };
   if (back) dive(back);
   drawCard();
@@ -7788,7 +7852,8 @@ function dictEntry(q0) {
       const row = el('button', 'dictrow');
       row.type = 'button';
       const kr = krShow(x) || krOf(x.vi);
-      row.append(el('b', 'dvi', esc(x.vi)));
+      // 참고 사전(앱 수업에는 없는 말)은 작은 표시를 단다 — 배운 단어와 섞여 보이지 않게 (2026-09-29)
+      row.append(el('b', 'dvi', esc(x.vi) + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '')));
       row.append(el('span', 'dkr', kr ? '[' + esc(kr) + ']' : ''));   // 발음이 없어도 칸은 둔다 — 스피커가 늘 오른쪽 끝
       row.append(el('span', 'dko', esc(x.ko)));
       const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
@@ -7800,6 +7865,8 @@ function dictEntry(q0) {
     });
     out.append(el('p', 'dicthint', tr('단어을 누르면 단어 카드가 열립니다')));
     if (hit.length > 60) out.append(el('p', 'note', tr('앞 60개만 보입니다 — 더 적어 보세요')));
+    if (hit.slice(0, 60).some(x => x.ref))       // 근거 밝히기 — 옮긴 뜻의 바탕 자료(공개 허락된 사전)
+      out.append(el('p', 'note', tr('참고 사전 뜻: 영어 위키낱말사전(CC BY-SA)·국립국어원 한국어기초사전(CC BY-SA)을 근거로 한국어로 옮긴 것')));
   };
   let tm = null;
   inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
@@ -8441,6 +8508,7 @@ function drawCard() {
       cf.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
                   x.work.map(t2 => esc(t2)).join(' · ')));
     rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
+    caiNote(cf, x);                                        // 'cái nhà' 처럼 분류사가 붙은 표제어 (2026-09-29)
     senseLine(kob, x);                                     // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
     if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
@@ -10034,7 +10102,7 @@ function drawTypeQ(body, q) {
   body.append(viKeypad(() => txt, v => { txt = v; draw(); }, () => {
     if (!txt.trim()) return;
     if (typed) return; typed = true;   // 확인을 두 번 눌러도 한 번만 (대표님 지적 2026-09-27 밤)
-    const good = txt.trim().toLowerCase() === w.vi.toLowerCase();
+    const good = viCanon(txt) === viCanon(w.vi);   // 성조 자리(hoà/hòa)·i/y(lý/lí) 두 꼴 다 정답 (2026-09-29)
     markSpeed(good, 'type');
     fxTone(good); sound(w.vi);
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
@@ -11275,7 +11343,7 @@ function drawType() {
   const fb = el('div', 'tkfb'); b.append(fb);
   b.append(viKeypad(() => TY.txt, v => { TY.txt = v; draw(); out.dataset.r = ''; fb.textContent = ''; }, () => {
     if (!TY.txt.trim()) return;
-    const good = TY.txt.trim().toLowerCase() === st.target.toLowerCase();
+    const good = viCanon(TY.txt) === viCanon(st.target);
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
     fxTone(good);

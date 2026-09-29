@@ -1949,6 +1949,7 @@ button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color
   width:100%; text-align:left; background:var(--card); border:1px solid var(--line);
   border-radius:var(--radius); padding:12px 14px; color:var(--fg)}
 .dictrow .dvi{font-size:16px; font-weight:700}
+.dictrow .dref{font-size:10.5px; font-weight:600; color:var(--dim); border:1px solid var(--line, #8884); border-radius:6px; padding:0 5px; margin-left:4px; vertical-align:2px}
 .dictrow .dkr{font-size:12.5px; color:var(--dim); white-space:nowrap}
 .dictrow .dko{font-size:14px}
 .dictrow .dex{grid-column:1/-1; font-size:12.5px; color:var(--dim); line-height:1.45; margin-top:2px}
@@ -2768,3 +2769,6 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .senselist.pick .sn.cur{border-color:var(--accent); color:var(--fg); font-weight:800; background:color-mix(in srgb, var(--accent) 10%, transparent)}
 .senselist.pick .sn.def::after{content:'기본'; margin-left:5px; font-size:.72em; font-weight:700; color:var(--accent)}
 .snhint{font-size:11px; color:var(--dim); margin-top:8px}
+
+/* 분류사 cái 안내 (2026-09-29) */
+.clfnote{font-size:12.5px; color:var(--dim); margin:6px 0 0; line-height:1.45}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """참고 사전(data/_dict_ko.json) 만들기 (2026-09-28 밤~).
 한 음절: tools/dict_one/one_*.ko.tsv · 여러 음절: tools/dict_multi/m*.ko.tsv (클로드가 영어 위키낱말 뜻풀이·한국어기초사전 대역·한자를 근거로 낱말마다 적은 것)
-· 이름·외래어: tools/fix_senior/이름_외래어_뜻.tsv. '-' 는 낱말이 아니거나 근거가 모자라 뺀 것.
+· 이름·외래어: tools/fix_senior/이름_외래어_뜻.tsv · 손으로 더한 것: tools/dict_multi/m_hand.ko.tsv(맨 뒤에 읽어 앞 것을 덮는다). '-' 는 낱말이 아니거나 근거가 모자라 뺀 것.
 쓰기: python3 tools/dict_multi/merge.py"""
 import glob, json, pathlib, unicodedata
 
