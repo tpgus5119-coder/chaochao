@@ -3881,7 +3881,7 @@ function testHubEntry() {
   const stars = Object.keys(starOf()).length;
   row(ICO.star, '내 단어장', stars, () => startWordbookQuiz(Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k), '단어장 복습'), { dis: !stars });
   row(ICO.pick, '선택 복습', 0, testPickEntry);
-  row(ICO.tone, '성조', 0, startToneTest);           // 성조만 귀로 가리기 — 여남 목소리·틀리면 비교 듣기·단계 (2026-09-28)
+  row(ICO.tone, '성조·모자', 0, startToneTest);      // 성조·모음 모자를 귀로 가리기 — 여남 목소리·틀리면 비교 듣기·단계 (2026-09-28, 모자 2026-09-29)
   row(ICO.write, '문장', 0, testSents);             // 배운 단어 예문·복습 창고 문장 (2026-09-28 밤)
   row(ICO.write, '문법', 0, testGram);              // 끝낸 문법 과의 문형 (2026-09-28 밤)
   row(ICO.pick, '주간 시험', 0, weeklyEntry);   // 회차별(범위별) 모의시험 — 실제 반 시험 짜임 (2026-09-28)
@@ -10597,57 +10597,103 @@ function finishTone() {
    · 틀리면 정답 → 고른 것 순서로 이어 들려준다(차이를 귀에 새기는 자리). 맞히면 저절로 넘어간다.
    · 단계: 보기 2개에서 시작. 최근 10문제 중 8개를 맞히면 보기를 하나 늘리고, 최근 6문제 중 2개 이하면 하나 줄인다.
      그만큼 큰 묶음이 20개 넘게 있을 때까지만 늘린다.
-   · 자주 헷갈리는 성조 쌍(S.tt.cf)을 보기로 더 자주 붙이고, 자주 틀리는 성조(S.tt.tn)를 문제로 더 자주 낸다. */
-let TTD = null, TTP = null, TT = null;
+   · 자주 헷갈리는 성조 쌍(S.tt.cf)을 보기로 더 자주 붙이고, 자주 틀리는 성조(S.tt.tn)를 문제로 더 자주 낸다.
+   모음 모자 (대표님 지시 2026-09-29: "모음 모자도 성조처럼 헷갈림. 성조만 맞춰야 할 수도, 모자만, 둘 다 맞춰야 할 수도"):
+   · 갈래 셋 — t 성조만(위 그대로) · s 모자만(성조는 같고 a/ă/â·e/ê·o/ô/ơ·u/ư 만 다름, 예 thuốc/thước)
+     · k 둘 다(chắc/chác/chặc…). 자료는 tonetest.json 의 f·s·k (짝 사전 t·s·k, 자음이 다른 d/đ 는 한 문제에 안 섞음).
+   · 갈래마다 단계·틀린 기록을 따로 둔다(S.tt = 성조만, S.tt.s·S.tt.k). 한 낱말 = [글자, 성조, 뜻, 모음].
+   · '둘 다'는 보기가 셋 이상이면 모자가 다른 보기와 성조가 다른 보기를 적어도 하나씩 넣는다. */
+let TTJ = null, TTP = null, TT = null;
 function ttLoad() {
-  if (TTD) return Promise.resolve(TTD);
+  if (TTJ) return Promise.resolve(TTJ);
   if (!TTP) TTP = fetch('data/tonetest.json', { cache: 'no-cache' }).then(r => r.json())
-    .then(j => (TTD = j.f || [])).catch(() => { TTP = null; return null; });
+    .then(j => (TTJ = j)).catch(() => { TTP = null; return null; });
   return TTP;
 }
-const ttS = () => S.tt || (S.tt = { lv: 2, r: [], tn: {}, cf: {} });
+const TT_MODES = [['t', '성조만'], ['s', '모자만'], ['k', '둘 다']];
+const ttMode = () => (TT_MODES.some(m => m[0] === S.ttMode) ? S.ttMode : 't');
+const ttFams = () => (TTJ && TTJ[ttMode() === 't' ? 'f' : ttMode()]) || [];
+const ttS = () => {
+  const b = S.tt || (S.tt = { lv: 2, r: [], tn: {}, cf: {} });
+  const m = ttMode();
+  return m === 't' ? b : (b[m] || (b[m] = { lv: 2, r: [], tn: {}, cf: {} }));
+};
+/* 문제의 '갈래 값' — 성조만이면 성조, 모자만이면 모음, 둘 다면 모음+성조. 보기끼리 이것이 다르다 */
+const ttCat = x => { const m = ttMode(); return m === 't' ? x[1] : m === 's' ? x[3] : x[3] + ' ' + x[1]; };
+function ttLabel(c) {                           // 표·안내에 쓰는 이름
+  const m = ttMode();
+  if (m === 't') return toneArrow(c) + ' ' + esc(c) + ' <small>' + esc(SIB_KO[c]) + '</small>';
+  if (m === 's') return tr('모음') + ' <b>' + esc(c) + '</b>';
+  const [v, t] = c.split(' ');
+  return tr('모음') + ' <b>' + esc(v) + '</b> · ' + toneArrow(t) + ' <small>' + esc(SIB_KO[t]) + '</small>';
+}
+/* '둘 다'는 보기가 셋부터다 — 정답과 **모자만** 다른 보기 하나, **성조만** 다른 보기 하나가 함께 있어야
+   한쪽만 들어서는 못 맞힌다(보기 둘이면 어느 한쪽만 듣고도 가려진다). 그런 짝이 둘 다 있는 낱말만 정답으로 낸다. */
+const ttMinLv = () => ttMode() === 'k' ? 3 : 2;
+const ttAnchor = (f, x) => ttMode() !== 'k'
+  || (f.some(y => y[1] === x[1] && y[3] !== x[3]) && f.some(y => y[3] === x[3] && y[1] !== x[1]));
 function ttMaxLv() {
-  let lv = 2;
-  for (let k = 3; k <= 6; k++) if (TTD.filter(f => f.length >= k).length >= 20) lv = k;
+  let lv = ttMinLv();
+  const fs = ttFams();
+  for (let k = lv + 1; k <= 6; k++) if (fs.filter(f => f.length >= k).length >= 20) lv = k;
   return lv;
 }
 function startToneTest() {
-  ttLoad().then(d => {
-    if (!d || !d.length) { popup(tr('성조 문제를 불러오지 못했습니다')); return; }
+  ttLoad().then(() => {
+    if (!ttFams().length) { popup(tr('성조 문제를 불러오지 못했습니다')); return; }
     const st = ttS();
-    st.lv = Math.max(2, Math.min(st.lv || 2, ttMaxLv()));
+    st.lv = Math.max(ttMinLv(), Math.min(st.lv || 2, ttMaxLv()));
     TT = { i: 0, n: qN(), ok: 0, used: new Set(), log: [], tok: 0 };
-    show('tone', '성조 테스트', true);     // show 가 소리를 멈추므로 화면부터 연다 — 그다음 첫 소리
+    show('tone', '성조·모자 테스트', true);     // show 가 소리를 멈추므로 화면부터 연다 — 그다음 첫 소리
     drawToneTest();
   });
 }
 function ttPick() {
-  const st = ttS(), lv = st.lv;
-  const fams = TTD.filter(f => f.length >= lv);
-  const tones = SIB_T.filter(t => fams.some(f => f.some(x => x[1] === t)));
-  // 성조마다 무게 — 기본 1, 세 번 이상 푼 성조는 틀린 비율만큼 더, 아직 덜 푼 성조는 조금 더
+  const st = ttS(), lv = st.lv, m = ttMode();
+  const fams = ttFams().filter(f => f.length >= lv && f.some(x => ttAnchor(f, x)));
+  const cats = [...new Set(fams.flatMap(f => f.filter(x => ttAnchor(f, x)).map(ttCat)))];
+  // 갈래 값마다 무게 — 기본 1, 세 번 이상 푼 것은 틀린 비율만큼 더, 아직 덜 푼 것은 조금 더
   const wt = t => { const c = st.tn[t]; return 1 + (c && c.all >= 3 ? 4 * (1 - c.ok / c.all) : .6); };
-  let r = Math.random() * tones.reduce((a, t) => a + wt(t), 0), tgt = tones[0];
-  for (const t of tones) { r -= wt(t); if (r <= 0) { tgt = t; break; } }
-  let pool = fams.filter(f => f.some(x => x[1] === tgt));
+  let r = Math.random() * cats.reduce((a, t) => a + wt(t), 0), tgt = cats[0];
+  for (const t of cats) { r -= wt(t); if (r <= 0) { tgt = t; break; } }
+  let pool = fams.filter(f => f.some(x => ttCat(x) === tgt && ttAnchor(f, x)));
   const fresh = pool.filter(f => !TT.used.has(f[0][0]));
   if (fresh.length) pool = fresh;
   const fam = pool[Math.floor(Math.random() * pool.length)];
   TT.used.add(fam[0][0]);
-  const ans = fam.find(x => x[1] === tgt);
-  const conf = x => (st.cf[tgt + '>' + x[1]] || 0) + (st.cf[x[1] + '>' + tgt] || 0);
-  const others = fam.filter(x => x !== ans).map(x => ({ x, s: conf(x) + Math.random() * 1.5 }))
-    .sort((a, b) => b.s - a.s).slice(0, lv - 1).map(o => o.x);
-  const opts = [ans, ...others].sort((a, b) => SIB_T.indexOf(a[1]) - SIB_T.indexOf(b[1]));
+  const ans = fam.find(x => ttCat(x) === tgt && ttAnchor(fam, x));
+  const conf = x => (st.cf[tgt + '>' + ttCat(x)] || 0) + (st.cf[ttCat(x) + '>' + tgt] || 0);
+  const ranked = fam.filter(x => x !== ans).map(x => ({ x, s: conf(x) + Math.random() * 1.5 }))
+    .sort((a, b) => b.s - a.s).map(o => o.x);
+  const others = [];
+  if (m === 'k')                                // 모자만 다른 보기 하나, 성조만 다른 보기 하나는 꼭 (ttAnchor 가 있음을 보장)
+    [x => x[1] === ans[1] && x[3] !== ans[3], x => x[3] === ans[3] && x[1] !== ans[1]]
+      .forEach(p => { const c = ranked.find(o => p(o) && !others.includes(o)); if (c) others.push(c); });
+  ranked.forEach(o => { if (others.length < lv - 1 && !others.includes(o)) others.push(o); });
+  const opts = m === 't' ? [ans, ...others].sort((a, b) => SIB_T.indexOf(a[1]) - SIB_T.indexOf(b[1]))
+                         : [ans, ...others].sort((a, b) => fam.indexOf(a) - fam.indexOf(b));   // 묶음 차례 = 모음 → 성조
   return { ans, opts, dir: Math.random() < .5 ? 'f' : 'm' };
 }
 function drawToneTest() {
   const body = $('#toneBody');
   body.textContent = '';
   if (TT.i >= TT.n) return finishToneTest();
-  const st = ttS(), q = ttPick(), tok = ++TT.tok;
-  if (TT.i === 0) body.append(el('div', 'intro',
-    '소리 하나를 듣고, 글자는 같고 성조만 다른 보기 중에서 고르세요. 틀리면 정답과 고른 것을 이어서 들려줍니다.'));
+  const st = ttS(), q = ttPick(), tok = ++TT.tok, m = ttMode();
+  if (TT.i === 0) {
+    const pick = el('div', 'catpick');            // 갈래 고르기 — 바꾸면 새 판
+    TT_MODES.forEach(([k, nm]) => {
+      const c = el('button', 'catchipbtn' + (k === m ? ' on' : ''), tr(nm));
+      c.type = 'button';
+      c.onclick = () => { if (k === ttMode()) return; S.ttMode = k; save(); startToneTest(); };
+      pick.append(c);
+    });
+    body.append(pick);
+    body.append(el('div', 'intro', m === 't'
+      ? '소리 하나를 듣고, 글자는 같고 성조만 다른 보기 중에서 고르세요. 틀리면 정답과 고른 것을 이어서 들려줍니다.'
+      : m === 's'
+      ? '소리 하나를 듣고, 성조는 같고 모음 모자(ă·â·ê·ô·ơ·ư)만 다른 보기 중에서 고르세요. 틀리면 정답과 고른 것을 이어서 들려줍니다.'
+      : '소리 하나를 듣고, 모음 모자도 성조도 섞인 보기 중에서 고르세요. 틀리면 정답과 고른 것을 이어서 들려줍니다.'));
+  }
   body.append(el('div', 'q', `${TT.i + 1} / ${TT.n} · 소리를 듣고 고르세요`));
   body.append(el('div', 'tonehint', `보기 ${st.lv}개 · ${q.dir === 'f' ? '여자' : '남자'} 목소리`));
   const wrap = el('div', 'qplay');
@@ -10664,7 +10710,9 @@ function drawToneTest() {
     const btn = el('button');
     btn.dataset.vi = o[0];
     btn.append(el('span', 'tvi', esc(o[0])),
-               el('span', 'tmark', toneArrow(o[1]) + ' ' + esc(SIB_KO[o[1]])),
+               el('span', 'tmark', m === 't' ? toneArrow(o[1]) + ' ' + esc(SIB_KO[o[1]])
+                                 : m === 's' ? tr('모음') + ' ' + esc(o[3])
+                                 : tr('모음') + ' ' + esc(o[3]) + ' · ' + toneArrow(o[1]) + ' ' + esc(SIB_KO[o[1]])),
                el('span', 'tko', ''));
     btn.onclick = () => ttAnswer(body, opts, btn, o, q, tok);
     opts.append(btn);
@@ -10682,14 +10730,15 @@ function ttAnswer(body, opts, btn, o, q, tok) {
     if (x.dataset.vi === q.ans[0]) x.dataset.r = 'ok';
   });
   fxTone(good);
-  const c = st.tn[q.ans[1]] || (st.tn[q.ans[1]] = { ok: 0, all: 0 });
+  const ca = ttCat(q.ans), co = ttCat(o);
+  const c = st.tn[ca] || (st.tn[ca] = { ok: 0, all: 0 });
   c.all++; if (good) c.ok++;
-  if (!good) st.cf[q.ans[1] + '>' + o[1]] = (st.cf[q.ans[1] + '>' + o[1]] || 0) + 1;
-  bump('tn', q.ans[1], good);                           // 분석 화면의 성조별 칸에도 같이 적는다
+  if (!good) st.cf[ca + '>' + co] = (st.cf[ca + '>' + co] || 0) + 1;
+  if (ttMode() === 't') bump('tn', q.ans[1], good);     // 분석 화면의 성조별 칸에도 같이 적는다 (성조만일 때만 — 모자 문제는 성조를 가리는 문제가 아니다)
   if (!good) bump('conf', q.ans[0] + ' → ' + o[0], false);
   S.stats.earAll = (S.stats.earAll || 0) + 1;
   if (good) { S.stats.earOk = (S.stats.earOk || 0) + 1; TT.ok++; }
-  TT.log.push({ t: q.ans[1], ok: good });
+  TT.log.push({ t: ca, ok: good });
   const msg = ttLevel(st, good);
   touchToday(); save();
   if (msg) body.append(el('div', 'ttlv', esc(msg)));
@@ -10723,7 +10772,7 @@ function ttLevel(st, good) {
   st.r = (st.r || []).concat(good ? 1 : 0).slice(-10);
   const sum = a => a.reduce((x, y) => x + y, 0), mx = ttMaxLv();
   if (st.r.length >= 10 && sum(st.r) >= 8 && st.lv < mx) { st.lv++; st.r = []; return `잘하고 있어요 — 이제 보기 ${st.lv}개로 늘립니다`; }
-  if (st.r.length >= 6 && sum(st.r.slice(-6)) <= 2 && st.lv > 2) { st.lv--; st.r = []; return `조금 쉽게 — 보기 ${st.lv}개로 줄입니다`; }
+  if (st.r.length >= 6 && sum(st.r.slice(-6)) <= 2 && st.lv > ttMinLv()) { st.lv--; st.r = []; return `조금 쉽게 — 보기 ${st.lv}개로 줄입니다`; }
   return '';
 }
 function finishToneTest() {
@@ -10734,13 +10783,14 @@ function finishToneTest() {
   r.append(el('div', null, TT.ok >= TT.n * .8 ? '귀가 트이고 있어요'
     : TT.ok >= TT.n * .5 ? '좋아요. 성조는 매일 조금씩 들을 때 가장 잘 늡니다'
     : '괜찮아요. 처음엔 누구나 헷갈립니다 — 틀린 뒤 두 소리를 이어 듣는 것이 가장 도움이 됩니다'));
-  const tbl = el('div', 'tttbl');                      // 이번 판 성조별
-  SIB_T.forEach(t => {
+  const tbl = el('div', 'tttbl');                      // 이번 판 갈래 값별 (성조만이면 성조 차례, 아니면 처음 나온 차례)
+  const cats = ttMode() === 't' ? SIB_T.slice() : [...new Set(TT.log.map(x => x.t))].sort();
+  cats.forEach(t => {
     const L = TT.log.filter(x => x.t === t);
     if (!L.length) return;
     const k = L.filter(x => x.ok).length;
     tbl.append(el('div', 'ttrow' + (k < L.length ? ' miss' : ''),
-      `<span class="ttname">${toneArrow(t)} ${esc(t)} <small>${esc(SIB_KO[t])}</small></span><span class="ttsc">${k} / ${L.length}</span>`));
+      `<span class="ttname">${ttLabel(t)}</span><span class="ttsc">${k} / ${L.length}</span>`));
   });
   r.append(tbl);
   const pairs = {};                                    // 지금까지 가장 헷갈린 쌍(방향 없이)
@@ -10748,9 +10798,9 @@ function finishToneTest() {
   const top = Object.entries(pairs).sort((a, b) => b[1] - a[1])[0];
   if (top) {
     const [a, b] = top[0].split('|');
-    r.append(el('p', 'note', `지금까지 가장 헷갈린 쌍: <b>${esc(a)}</b>(${esc(SIB_KO[a])}) ↔ <b>${esc(b)}</b>(${esc(SIB_KO[b])}) — ${top[1]}번. 이 쌍을 보기로 더 자주 냅니다.`));
+    r.append(el('p', 'note', `지금까지 가장 헷갈린 쌍: ${ttLabel(a)} ↔ ${ttLabel(b)} — ${top[1]}번. 이 쌍을 보기로 더 자주 냅니다.`));
   }
-  r.append(el('p', 'note', `지금 단계: 보기 ${st.lv}개 · 여·남 목소리를 섞어 들려줍니다(북부 발음)`));
+  r.append(el('p', 'note', `지금 갈래: ${esc(tr(TT_MODES.find(x => x[0] === ttMode())[1]))} · 보기 ${st.lv}개 · 여·남 목소리를 섞어 들려줍니다(북부 발음)`));
   const again = el('button', 'primary big', '한 판 더');
   again.style.marginTop = '18px';
   again.onclick = startToneTest;

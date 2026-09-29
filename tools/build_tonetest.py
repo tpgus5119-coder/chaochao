@@ -34,6 +34,50 @@ def short(k):
     return k[:24]
 
 
+def hat_sig(s):
+    """모음 모자 — 성조 표시를 뗀 뒤의 모음 글자들 (bận → 'â', người → 'ươi')"""
+    t = ''.join(c for c in unicodedata.normalize('NFD', s.lower()) if c not in MARK)
+    t = unicodedata.normalize('NFC', t)
+    # gi·qu 의 i·u 는 자음 쪽 글자다 (giàu → 'au', quá → 'a'). 'gì' 처럼 뒤에 모음이 없으면 i 가 모음
+    if t.startswith('qu'):
+        t = 'q' + t[2:]
+    elif t.startswith('gi') and len(t) > 2 and t[2] in 'aăâeêoôơuưy':
+        t = 'g' + t[2:]
+    return ''.join(c for c in t if c in 'aăâeêioôơuưy')
+
+
+def cons_key(s):
+    """모자·성조를 다 떼고 남는 글자 — đ 는 남는다(d/đ 는 자음이 다른 말이라 한 문제에 섞지 않는다)"""
+    return ''.join(c for c in unicodedata.normalize('NFD', s.lower()) if not unicodedata.combining(c))
+
+
+def hat_fams(groups, ok, need_tones):
+    """모자 묶음 (대표님 지시 2026-09-29: "모음 모자도 성조처럼 헷갈림 — 성조만/모자만/둘 다").
+    groups = 짝 사전 s(같은 성조, 모자만 다름) 또는 k(모자·성조 다 다름). 자음이 다르면 나눈다.
+    같은 (성조, 모자) 두 표기는 하나만. 모자가 두 가지 이상이어야 하고, need_tones 면 성조도 두 가지 이상."""
+    out = []
+    for vs in groups.values():
+        by = {}
+        for v in vs:
+            by.setdefault(cons_key(v), []).append(v)
+        for sub in by.values():
+            seen, row = set(), []
+            for v in sub:
+                it = ok(v)
+                if not it:
+                    continue
+                sig = (it[1], hat_sig(v))
+                if sig in seen:
+                    continue
+                seen.add(sig)
+                row.append(it + [hat_sig(v)])
+            if len({r[3] for r in row}) < 2 or (need_tones and len({r[1] for r in row}) < 2):
+                continue
+            row.sort(key=lambda r: (r[3], ORDER.index(r[1])))
+            out.append(row)
+    return out
+
+
 def main():
     sib = json.load(open(os.path.join(ROOT, 'data/sib.json'), encoding='utf-8'))
     ai = json.load(open(os.path.join(ROOT, 'data/audio_index.json'), encoding='utf-8'))
@@ -65,12 +109,24 @@ def main():
             row.sort(key=lambda r: ORDER.index(r[1]))
             fams.append(row)
             words += len(row)
+    def ok(v):                     # 성조 묶음과 같은 거름: 여·남 녹음 + 소리 성조 검사 통과 + 뜻
+        h = ai.get(v)
+        if not h or v not in chk['w'] or v in drop:
+            return None
+        if not (os.path.exists(os.path.join(ROOT, f'audio/f/n/{h}.mp3'))
+                and os.path.exists(os.path.join(ROOT, f'audio/m/n/{h}.mp3'))):
+            return None
+        ko = short((w.get(v) or {}).get('k') or dko.get(v) or '')
+        return [v, tone_of(v), ko] if ko else None
+    s_fams = hat_fams(sib['s'], ok, False)      # 모자만 — 같은 성조
+    k_fams = hat_fams(sib['k'], ok, True)       # 둘 다 — 모자도 성조도 다른 말이 섞인 묶음
     out = os.path.join(ROOT, 'data/tonetest.json')
-    json.dump({'f': fams}, open(out, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-    size = {}
-    for f in fams:
-        size[len(f)] = size.get(len(f), 0) + 1
-    print('성조 묶음', len(fams), '낱말', words, '크기별', dict(sorted(size.items())))
+    json.dump({'f': fams, 's': s_fams, 'k': k_fams}, open(out, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+    for name, fs in (('성조 묶음', fams), ('모자 묶음', s_fams), ('모자+성조 묶음', k_fams)):
+        size = {}
+        for f in fs:
+            size[len(f)] = size.get(len(f), 0) + 1
+        print(name, len(fs), '낱말', sum(len(f) for f in fs), '크기별', dict(sorted(size.items())))
 
 
 if __name__ == '__main__':
