@@ -26,6 +26,7 @@ function save() {
       alert('이 브라우저에서는 진도가 저장되지 않습니다.\n시크릿 모드를 끄거나 다른 브라우저로 열어 주세요.\n(학습은 그대로 하실 수 있습니다)');
     }
   }
+  if (typeof cloudTouch === 'function') cloudTouch();   // 2026-09-30: 바뀌면 올린다(20초 뒤·3분에 한 번) — 아래 옛 결정은 이것으로 바꿨다
   /* 서버 백업은 여기서 하지 않는다 (대표님 결정 2026-09-27: 챕터를 끝냈을 때만).
      전에는 폰에 적을 때마다 8초 뒤 서버에도 올려서 20분 공부에 50번쯤 썼다 — KV 무료 한도(하루 1,000번)를
      40명이면 넘긴다. 이제 세트 끝(finishDay 앞)·복습 끝·진도 초기화·앱을 켤 때 하루 한 번(renderHome)만 올린다. */
@@ -2672,11 +2673,27 @@ function studyGramEntry(scroll) {
       .catch(() => { b.textContent = ''; b.append(el('p', 'lede', tr('불러오지 못했습니다'))); });
     return;
   }
-  /* 한 줄 — 책·챕터 구분 없이 난이도 순 46과 (대표님 지시 2026-09-27 밤: "문법 누르면 쭉 다 순서대로") */
+  /* 세 갈래 (대표님 지시 2026-09-30: "기초·중급·교재로 나눠. 메인교재·메인보조교재·줌 수업 자료의 문법은 교재 파트에, 나머지는 초급·중급") —
+     46과(난이도 순, 열쇠 'H과' 그대로)를 출처로 가른다. 교재 = 메인 교재 1·2권·줌 수업 자료에서 온 문형이 하나라도 든 과(38과, 교재 차례로 정렬).
+     나머지 8과는 클로드가 필수 여부로 초급 4(요일·날짜 / 부터~까지 / 해야 한다·필요하다 / 원하다·해 보다)·중급 4(따라·~에 대해 / 덕분에 / 안 할 수 없다 / ~가 아니라). 
+     메인 보조교재(Tiếng Việt Cơ sở)의 문법은 따로 뽑은 자료가 없어 아직 안 들어 있다. */
   const bk = GRAM.books[0];
-  const nodes = bk.bai.map((x, ni) => ({ key: gkey(0, ni), title: x.t, sub: (x.g || []).length + tr('개 문법'), num: ni + 1,
-    done: !!S.done[gkey(0, ni)], fn: () => { dive(back); startGram(0, ni); } }));
-  roadInList(b, nodes, { focus: scroll });
+  const LV = { 14: '초급', 18: '초급', 20: '초급', 23: '초급', 26: '중급', 30: '중급', 44: '중급', 45: '중급' };
+  const BKN = { 3: '1권', 4: '2권', 5: '줌' };
+  const units = bk.bai.map((x, ni) => {
+    const tb = (x.src || []).map(t => t.split('-').map(Number)).filter(([b]) => b >= 3).sort((a, b2) => a[0] - b2[0] || a[1] - b2[1]);
+    const grp = tb.length ? '교재' : (LV[x.no] || '중급');
+    const from = tb.length ? BKN[tb[0][0]] + ' ' + (tb[0][1] + 1) + tr('과') : '';
+    return { ni, x, grp, from, ord: tb.length ? tb[0][0] * 100 + tb[0][1] : ni };
+  });
+  const node = u => ({ key: gkey(0, u.ni), title: u.x.t, sub: (u.from ? u.from + ' · ' : '') + (u.x.g || []).length + tr('개 문법'),
+    done: !!S.done[gkey(0, u.ni)], fn: () => { dive(back); startGram(0, u.ni); } });
+  const rows = [['초급', '꼭 알아야 하는 것'], ['중급', '그다음'], ['교재', '메인 교재 1·2권 · 줌 수업 자료']].map(([g, sub]) => {
+    const us = units.filter(u => u.grp === g).sort((a, b2) => a.ord - b2.ord);
+    const nodes = us.map((u, i) => Object.assign(node(u), { num: i + 1 }));
+    return { key: g, title: g, sub: us.length + tr('과') + ' · ' + sub, done: nodes.filter(n => n.done).length, all: nodes.length, nodes };
+  });
+  rows.forEach(r => accRow(b, r, GOPEN === r.key, () => { GOPEN = GOPEN === r.key ? null : r.key; studyGramEntry(true); }, scroll));
   show('sub', '문법', true);
 }
 /* 과정 자료(order.json)가 있어야 하는 문 — 없으면 받아 온 뒤 연다 */
@@ -2798,7 +2815,10 @@ function show(v, title, canBack) {
   CURV = v;
   if (v === 'home') ACTIVE_TAB = 'home';
   topBtns();
-  syncTabBar();
+  /* 카드·테스트 화면에서는 아래 탭 4개를 숨긴다 (대표님 지시 2026-09-30: "하단은 손이 자주 가서 실수로 눌러 학습 중에 빠져나가는 일이 비일비재할 것" —
+     나가는 길은 머리띠의 [‹ 뒤로] 하나뿐). 진도는 세트를 끝내야 확정되므로 실수로 나가면 그 세트가 날아간다. */
+  if (v === 'learn' || v === 'quiz') { $('#tabbar').hidden = true; document.body.classList.remove('has-tabbar'); }
+  else syncTabBar();
   window.scrollTo(0, 0);
 }
 
@@ -3173,9 +3193,31 @@ function cloudSync(push, overwrite) {
       S.cloudSeen = r.at || Date.now(); S.cloudHash = h; S.cloudAt = ymd(); save();
     }
     return changed;
-  })().catch(() => false).finally(() => { cloudBusy = null; });   // 안 되면 조용히 — 다음 기회에 또 한다
+  })().then(v => { if (S.cloudErr) { delete S.cloudErr; save(); } cloudLastPush = Date.now(); return v; })
+    .catch(e => {                                                   // 2026-09-30: 조용히 삼키지 않는다 — 내 정보에 보이고, 로그인이 끊긴 것이면 한 번 알린다
+      S.cloudErr = { m: String((e && e.message) || e), at: Date.now() }; cloudErrAt = Date.now(); save();
+      if (/로그인/.test(S.cloudErr.m) && !cloudWarned) { cloudWarned = true; popup('<b>서버 진도와 맞추지 못했습니다.</b><br>다른 기기에서 비밀번호를 바꿨으면 이 기기도 로그아웃 뒤 다시 로그인해 주세요.'); }
+      return false;
+    }).finally(() => { cloudBusy = null; });
   return cloudBusy;
 }
+/* 진도가 바뀔 때마다 올린다 (대표님 2026-09-30 "폰·노트북·아이패드 진도 통합이 안 되어 있다") —
+   전에는 세트 끝·복습 끝·하루 한 번만 올려서, 그 사이에 한 것(복습 답·별표·기본기·문항 창고)은 다른 기기로 가지 않았다.
+   조용해진 뒤 20초에 올리고, 3분에 한 번을 넘지 않는다(KV 쓰기 한도). 앱이 뒤로 가면(다른 앱·화면 끄기) 바로 올린다. */
+let cloudTimer = null, cloudLastPush = 0, cloudErrAt = 0, cloudWarned = false;
+function cloudTouch() {
+  if (!S.acct || !S.acct.tok || cloudBusy) return;
+  if (S.cloudErr && /로그인/.test(S.cloudErr.m)) return;             // 다시 로그인할 때까지 두드리지 않는다
+  if (Date.now() - cloudErrAt < 300e3) return;                       // 서버가 안 되면 5분 쉬었다 한다
+  clearTimeout(cloudTimer);
+  cloudTimer = setTimeout(() => cloudSync(true, false), Math.max(20e3, 180e3 - (Date.now() - cloudLastPush)));
+}
+function cloudFlush() {                                             // 앱을 떠날 때 — 바뀐 것이 있으면 지금 올린다
+  if (!S.acct || !S.acct.tok || cloudBusy) return;
+  clearTimeout(cloudTimer);
+  if (progHash(progData()) !== S.cloudHash) cloudSync(true, false);
+}
+window.addEventListener('pagehide', cloudFlush);
 /* 예전 이름 그대로 부른다 — force(세트 끝·복습 끝)는 바로 올리고, 아니면 하루 한 번만 올린다 */
 function cloudSave(force) {
   return cloudSync(force || S.cloudAt !== ymd(), false);
@@ -3188,7 +3230,8 @@ function cloudPull() {
   });
 }
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && Date.now() - cloudPulled > 30e3) cloudPull();   // 다른 기기에서 하고 돌아온 경우
+  if (document.hidden) { cloudFlush(); return; }                          // 다른 앱으로 가기 전에 올린다 (2026-09-30)
+  if (Date.now() - cloudPulled > 30e3) cloudPull();                       // 다른 기기에서 하고 돌아온 경우
 });
 /* 로그인 직후 — 이 기기에 공부한 것이 없으면 서버 것을 받고, 있으면 합쳐서 다시 올린다 */
 async function loginPull() {
@@ -3275,38 +3318,38 @@ function quitForm() {
   show('sub', tr('탈퇴'), true);
 }
 
-/* 구글·페이스북 로그인은 없앴다 (대표님 지시 2026-09-29: "구글 이런 거 없애고 그냥 아이디와 비번만"). */
+/* 구글·페이스북 로그인은 없앴다 (대표님 지시 2026-09-29: "구글 이런 거 없애고 그냥 아이디와 비번만").
+   2026-09-30 대표님: "그냥 아이디 비번 치고 들어가도록. 비번 제한 없음. 아이디도 자유, 아이디가 곧 닉네임" →
+   별명 칸을 없애고 **아이디 = 별명**(순위·동아리에 보이는 이름). 아이디는 한글·영문 어느 글자든 1~20자, 비밀번호는 길이 제한 없음(1자 이상).
+   비밀번호 찾기 질문은 가입 때 **안 물어도 된다**(비워 두면 건너뜀, 내 정보에서 나중에 정할 수 있다). 옛 서버(v16)는 아이디 영문 4~20자·비밀번호 8자를 요구하므로 그 오류가 그대로 보인다 → 워커 v17 을 올려야 한다. */
 function acctForm(gate, mode) {
   mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
   b.textContent = '';
-  /* 아이디·비밀번호만 (대표님 지시 2026-09-29: "구글 이런 거 없애고 그냥 아이디와 비번만. 비번 잃어버리면 찾을 수 있도록 비번찾기 질문만").
-     국적·이메일 칸은 뺐다 — 이 앱은 한국인 전용이고, 비밀번호는 이제 이메일이 아니라 질문으로 되찾는다.
-     별명은 서버가 가입에 요구해서(순위·동아리에 쓰는 이름) 없으면 여기서 같이 받는다. */
-  const nickIn = el('input', 'keyin'); nickIn.type = 'text'; nickIn.maxLength = 10;
-  nickIn.placeholder = tr('별명 (2~10자)');
-  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = tr('아이디 (영문·숫자 4~20자)');
+  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = mode === 'login' ? tr('아이디') : tr('아이디 (= 별명, 1~20자)');
   id.autocapitalize = 'none'; id.maxLength = 20;
   const pw = el('input', 'keyin'); pw.type = 'password';
-  // 비밀번호 규칙은 NIST 지침대로: 길이만 본다(8자+). 특수문자 강제는 뻔한 변형만 낳는다.
-  pw.placeholder = tr('비밀번호 (8자 이상)'); pw.maxLength = 64;
-  const qBox = qaFields();                // 비밀번호 찾기 질문·답 (가입 화면에만)
+  pw.placeholder = tr('비밀번호'); pw.maxLength = 64;
+  const qBox = qaFields();                // 비밀번호 찾기 질문·답 (가입 화면에만, 선택)
   const err = el('p', 'note nickerr'); err.hidden = true;
   const oops = m => { err.textContent = m; err.hidden = false; };
   const go = (act) => async () => {
     err.hidden = true;
-    const i = id.value.trim().toLowerCase(), p = pw.value;
-    if (!/^[a-z0-9_]{4,20}$/.test(i)) return oops('아이디는 영문·숫자 4~20자입니다.');
-    if (p.length < 4) return oops('비밀번호는 4자 이상입니다.');
-    if (act === 'signup' && p.length < 8) return oops('비밀번호는 8자 이상입니다.');
-    const qv = act === 'signup' ? qBox.val() : null;
-    if (act === 'signup' && qv.error) return oops(qv.error);
+    const i = id.value.trim(), p = pw.value;
+    if (!i) return oops('아이디를 적어 주세요.');
+    if (i.length > 20) return oops('아이디는 20자까지입니다.');
+    if (!p) return oops('비밀번호를 적어 주세요.');
+    let qv = null;
+    if (act === 'signup') {
+      const v = qBox.val();
+      const touched = !v.error || /답을/.test(v.error);   // 질문을 골랐거나 답을 적었으면 끝까지 받고, 아무것도 안 건드렸으면 건너뛴다
+      if (touched && v.error) return oops(v.error);
+      qv = touched ? v : { q: '', qa: '' };
+    }
     try {
-      if (act === 'signup' && !S.nick) {
-        const v = nickIn.value.trim();
-        if (v.length < 2) return oops('별명을 2자 이상 적어 주세요.');
-        await cCall({ act: 'nick', nick: v });        // 먼저 쓴 사람이 임자 — 겹치면 여기서 걸린다
-        S.nick = v; save();
+      if (act === 'signup') {
+        await cCall({ act: 'nick', nick: i });        // 아이디가 곧 별명 — 먼저 쓴 사람이 임자, 겹치면 여기서 걸린다
+        S.nick = i; save();
       }
       const extra = act === 'signup' ? { nat: 'kr', learn: 'vi', reg: '', ui: 'ko', email: '', q: qv.q, qa: qv.qa } : {};
       const j = await cCall(Object.assign({ act, id: i, pw: p }, extra));
@@ -3319,19 +3362,17 @@ function acctForm(gate, mode) {
       if (act === 'login') {
         // 계정의 기기표를 이 기기에 입힌다 — 이제 서버가 보기에 같은 사람이다
         S.uid = j.uid;
-        if (j.nick) S.nick = j.nick;
+        S.nick = j.nick || i;                       // 별명이 없던 옛 계정은 아이디를 별명으로
       }
-      S.acct = { id: i, tok: j.tok || '' }; save();
+      S.acct = { id: i.toLowerCase(), tok: j.tok || '' }; delete S.cloudErr; save();
       if (act === 'login' && j.hasProg) {
         // 서버에 진도가 있다 — 새 기기라면 그대로 받고, 이미 공부한 기기라면 **둘을 합친다** (2026-09-29:
         // 전에는 '덮어쓸까요?'를 물었다 — 어느 쪽을 골라도 한쪽 기기의 공부가 사라졌다)
         await loginPull();
       }
       popup(act === 'signup'
-        ? '<b>가입됐습니다.</b><br>다른 폰에서 로그인하면 지금 별명이 따라옵니다.'
-        : '<b>로그인됐습니다.</b> 별명이 이 기기로 따라왔습니다.');
-      /* 비밀번호 찾기 질문이 없는 계정(예전 가입자)은 한 번 정하게 한다. 서버가 옛 판이면 hasq 가 오지 않아 묻지 않는다 */
-      if (j.hasq === false) { setqForm(() => { if (gate) dailyFlowEntry(); else renderAwards(); }, true); return; }
+        ? '<b>가입됐습니다.</b><br>다른 기기에서 같은 아이디로 로그인하면 진도가 따라옵니다.'
+        : '<b>로그인됐습니다.</b> 진도를 서버와 맞춥니다.');
       if (gate) dailyFlowEntry(); else renderAwards();
     } catch (e) { oops(e.message || '안 됐습니다'); }
   };
@@ -3342,8 +3383,8 @@ function acctForm(gate, mode) {
   bs.append(main);
   if (mode === 'login') b.append(id, pw, err, bs);
   else {
-    if (!S.nick) b.append(el('p', 'note', tr('별명 — 순위에 보이는 이름')), nickIn);
-    b.append(id, pw, qBox, err, bs);
+    b.append(el('p', 'note', tr('아이디가 곧 별명입니다 — 순위·동아리에 이 이름이 보입니다. 비밀번호는 길이 제한이 없습니다.')));
+    b.append(id, pw, el('p', 'note', tr('비밀번호 찾기 질문 (선택 — 나중에 내 정보에서 정할 수도 있습니다)')), qBox, err, bs);
   }
   // 두 화면 사이를 오가는 문
   const sw = el('button', 'ghost');
@@ -6606,6 +6647,13 @@ function homeSettings() {
   const rs = el('button', 'metext danger', tr('진도 초기화')); rs.type = 'button'; rs.onclick = resetProgress; acct.append(rs);
   if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
   row(esc(S.nick || tr('이름 없음')) + (S.acct ? ' <small>' + esc(S.acct.id) + '</small>' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
+  if (S.acct) {                                            // 진도 동기화 상태 + [지금 맞추기] (2026-09-30)
+    const hm = t => t ? new Date(t).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : tr('아직');
+    const st = S.cloudErr ? '<span class="danger">' + tr('오류') + ': ' + esc(S.cloudErr.m) + '</span>' : tr('서버와 맞춘 때') + ' ' + hm(S.cloudSeen);
+    const sb = el('button', 'metext', tr('지금 맞추기')); sb.type = 'button';
+    sb.onclick = async () => { sb.disabled = true; const ch = await cloudSync(true, false); popup(S.cloudErr ? esc(S.cloudErr.m) : (ch ? tr('다른 기기의 진도를 받아 합쳤습니다.') : tr('서버와 같습니다.'))); renderHome(); };
+    row(tr('진도 동기화') + ' <small>' + st + '</small>', sb);
+  }
   if (S.admin) row(tr('운영 현황'), null, () => { dive(renderHome); showAdmin(); });
   return box;
 }
@@ -8745,23 +8793,27 @@ $('#next').onclick = () => {
   };
   if (prevB) prevB.onclick = () => goto(-1);
   if (nextB) nextB.onclick = () => goto(1);
-  card.addEventListener('touchstart', e => { x0 = e.target.closest('input, .pbar') ? null : e.touches[0].clientX; }, { passive: true });   // 재생 막대를 끌 때 카드가 넘어가면 안 된다
+  /* 세로로 밀면(스크롤) 넘어가지 않는다 (대표님 지시 2026-09-30: "위아래로 스와이프해서 이전·이후 이동하는 거 안 되게").
+     전에는 가로 움직임만 40px 넘으면 넘겨서, 긴 카드를 비스듬히 스크롤하다 카드가 넘어갔다.
+     이제 가로가 세로의 1.5배 넘게 움직였을 때만 — 단어 면·발음 면 모두. */
+  let y0 = null;
+  card.addEventListener('touchstart', e => { x0 = e.target.closest('input, .pbar') ? null : e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });   // 재생 막대를 끌 때 카드가 넘어가면 안 된다
   card.addEventListener('touchend', e => {
     if (x0 === null) return;
-    const dx = e.changedTouches[0].clientX - x0;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
     x0 = null;
-    if (Math.abs(dx) > 40) goto(dx < 0 ? 1 : -1);   // 왼쪽으로 밀면 다음(+1), 오른쪽으로 밀면 이전(-1)
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) goto(dx < 0 ? 1 : -1);   // 왼쪽으로 밀면 다음(+1), 오른쪽으로 밀면 이전(-1)
   }, { passive: true });
   /* 컴퓨터에서도 넘어가야 한다 — 손가락만 받으면 마우스로는 아무 일도 안 일어난다.
      단추·입력칸 위에서 시작한 끌기는 무시한다(마이크 단추를 끌다가 넘어가면 안 된다). */
-  let m0 = null;
+  let m0 = null, my0 = null;
   card.addEventListener('mousedown', e => {
-    m0 = e.target.closest('button, input, textarea, a') ? null : e.clientX;
+    m0 = e.target.closest('button, input, textarea, a') ? null : e.clientX; my0 = e.clientY;
   });
   window.addEventListener('mouseup', e => {
     if (m0 === null) return;
-    const dx = e.clientX - m0; m0 = null;
-    if (Math.abs(dx) > 40) goto(dx < 0 ? 1 : -1);
+    const dx = e.clientX - m0, dy = e.clientY - my0; m0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) goto(dx < 0 ? 1 : -1);
   });
   // 화살표 키로도 — 글자를 쓰는 중이면 건드리지 않는다
   window.addEventListener('keydown', e => {
@@ -8851,12 +8903,13 @@ function drawFlash() {
     b.append(nx);
   }
   // 릴스처럼 — 왼쪽으로 밀면 다음, 오른쪽으로 밀면 이전
-  let x0 = null;
-  c.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  let x0 = null, y0 = null;
+  c.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
   c.addEventListener('touchend', e => {
     if (x0 === null) return;
-    const dx = e.changedTouches[0].clientX - x0;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
     x0 = null;
+    if (Math.abs(dy) > 40 && Math.abs(dy) >= Math.abs(dx)) return;   // 세로 스크롤은 넘기지 않는다 (2026-09-30)
     if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
     else if (!e.target.closest('button')) go(1);   // [▶ 듣기]·속도 단추를 누른 건 넘기라는 뜻이 아니다
   }, { passive: true });
@@ -10182,11 +10235,18 @@ function drawHandQ(body, q) {
   play(w.vi, false);
 }
 
-/* 연습용 화면 자판 — 대화 자판과 **같은 텔렉스**를 쓴다.
-   예전에는 여기만 모자 글쇠(ă â ê…)와 성조 화살표가 따로 붙어 있었다.
-   대화에서 익힌 방식이 시험에서 안 통하면 두 번 배우는 셈이다. */
+/* 연습용 화면 자판 = **아이폰 베트남어(텔렉스) 자판과 같은 배열** (대표님 지시 2026-09-30: "실제 폰 자판과 100% 동일하게").
+   줄: q…p / a…l(반 칸 들여쓰기) / ⇧ z…m ⌫ / 123 · dấu cách(띄어쓰기) · Xong(확인).
+   ⇧ 한 번 = 다음 글자만 대문자, 두 번 연달아 = 고정. 123 = 숫자·문장 부호 판(아이폰과 같은 배열, #+= 으로 기호 판), ABC 로 돌아온다.
+   ⌫ 를 누르고 있으면 연달아 지운다. 모음·d 를 길게 누르면(0.4초) 부호 붙은 글자 목록이 뜬다(아이폰 길게 누르기와 같다).
+   텔렉스(aa·aw·ee·oo·ow·uw·dd·s·f·r·x·j)는 그대로 된다. 아이폰의 🌐(자판 바꾸기)·이모지 글쇠는 여기서 할 일이 없어 없다.
+   예전에는 여기만 모자 글쇠(ă â ê…)와 성조 화살표가 따로 붙어 있었다. 대화에서 익힌 방식이 시험에서 안 통하면 두 번 배우는 셈이다. */
+const KB_NUM = [['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], ['-', '/', ':', ';', '(', ')', '$', '&', '@', '"'], ['.', ',', '?', '!', "'"]];
+const KB_SYM = [['[', ']', '{', '}', '#', '%', '^', '*', '+', '='], ['_', '\\', '|', '~', '<', '>', '€', '£', '¥', '•'], ['.', ',', '?', '!', "'"]];
+const KB_HOLD = { a: 'à á ả ã ạ ă â', e: 'è é ẻ ẽ ẹ ê', i: 'ì í ỉ ĩ ị', o: 'ò ó ỏ õ ọ ô ơ', u: 'ù ú ủ ũ ụ ư', y: 'ỳ ý ỷ ỹ ỵ', d: 'đ' };
 function viKeypad(get, set, onGo) {
-  const kb = el('div', 'vkb');
+  const kb = el('div', 'vkb ios');
+  let shift = 0, layer = 'abc', shiftAt = 0;          // shift: 0 없음 · 1 다음 한 글자 · 2 고정(두 번 연달아)
   const key = (label, fn, cls) => {
     const k = el('button', 'vk' + (cls ? ' ' + cls : ''), label);
     k.type = 'button'; k.onclick = fn; return k;
@@ -10197,16 +10257,70 @@ function viKeypad(get, set, onGo) {
     const made = telex(t.slice(cut), ch);
     set(made === null ? t + ch : t.slice(0, cut) + made);
   };
-  KBROWS.forEach(chars => {
-    const row = el('div', 'vkrow');
-    chars.forEach(ch => row.append(key(ch, () => tap(ch))));
+  const del = () => set(get().slice(0, -1));
+  const holdDel = k => {                              // ⌫ 를 누르고 있으면 연달아
+    let t1 = null, t2 = null;
+    const stop = () => { clearTimeout(t1); clearInterval(t2); t1 = t2 = null; };
+    k.addEventListener('pointerdown', () => { stop(); t1 = setTimeout(() => { t2 = setInterval(del, 90); }, 500); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => k.addEventListener(ev, stop));
+  };
+  let pop = null;
+  const closePop = () => { if (pop) { pop.remove(); pop = null; } };
+  const hold = (k, ch) => {                           // 길게 누르면 부호 글자 목록 (아이폰과 같다)
+    let t = null, fired = false;
+    k.addEventListener('pointerdown', () => {
+      fired = false; clearTimeout(t);
+      t = setTimeout(() => {
+        fired = true; closePop();
+        pop = el('div', 'vkpop');
+        (shift ? KB_HOLD[ch].toUpperCase() : KB_HOLD[ch]).split(' ').forEach(v => {
+          const b = el('button', 'vkpk', v); b.type = 'button';
+          b.onclick = ev => { ev.stopPropagation(); set(get() + v); if (shift === 1) { shift = 0; draw(); } closePop(); };
+          pop.append(b);
+        });
+        k.append(pop);
+      }, 400);
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => k.addEventListener(ev, () => clearTimeout(t)));
+    k.addEventListener('click', ev => { if (fired) { ev.stopImmediatePropagation(); fired = false; } }, true);   // 길게 눌렀으면 보통 입력은 안 한다
+  };
+  document.addEventListener('pointerdown', e => { if (pop && !e.target.closest('.vkpop')) closePop(); }, true);
+  const bottom = (lab, fn) => {
+    const row = el('div', 'vkrow bottom');
+    row.append(key(lab, fn, 'fn abc'), key('dấu cách', () => { set(get() + ' '); if (shift === 1) { shift = 0; draw(); } }, 'space'), key('Xong', onGo, 'go ret'));
     kb.append(row);
-  });
-  const brow = el('div', 'vkrow');
-  brow.append(key('띄어쓰기', () => set(get() + ' '), 'wide'),
-              key('⌫', () => set(get().slice(0, -1)), 'wide'),
-              key('확인', onGo, 'go wide'));
-  kb.append(brow);
+  };
+  const draw = () => {
+    kb.textContent = ''; closePop();
+    if (layer === 'abc') {
+      KBROWS.forEach((chars, ri) => {
+        const row = el('div', 'vkrow r' + (ri + 1));
+        if (ri === 2) row.append(key(shift === 2 ? '⇪' : '⇧', () => {
+          const now2 = Date.now();
+          shift = shift === 2 ? 0 : (shift === 1 && now2 - shiftAt < 350 ? 2 : (shift === 1 ? 0 : 1));   // 두 번 연달아 = 고정
+          shiftAt = now2; draw();
+        }, 'fn shift' + (shift ? ' on' : '')));
+        chars.forEach(ch => {
+          const k = key(shift ? ch.toUpperCase() : ch, () => { tap(shift ? ch.toUpperCase() : ch); if (shift === 1) { shift = 0; draw(); } });
+          if (KB_HOLD[ch]) hold(k, ch);
+          row.append(k);
+        });
+        if (ri === 2) { const d = key('⌫', del, 'fn del'); holdDel(d); row.append(d); }
+        kb.append(row);
+      });
+      bottom('123', () => { layer = 'num'; draw(); });
+    } else {
+      (layer === 'num' ? KB_NUM : KB_SYM).forEach((chars, ri) => {
+        const row = el('div', 'vkrow n' + (ri + 1));
+        if (ri === 2) row.append(key(layer === 'num' ? '#+=' : '123', () => { layer = layer === 'num' ? 'sym' : 'num'; draw(); }, 'fn'));
+        chars.forEach(ch => row.append(key(ch, () => set(get() + ch))));
+        if (ri === 2) { const d = key('⌫', del, 'fn del'); holdDel(d); row.append(d); }
+        kb.append(row);
+      });
+      bottom('ABC', () => { layer = 'abc'; draw(); });
+    }
+  };
+  draw();
   // 자판 밑 설명 글은 뺐다 (대표님 지시 2026-09-27) — 규칙은 타이핑 연습의 화면마다 위에 보인다
   return kb;
 }

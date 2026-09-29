@@ -27,6 +27,7 @@
        암호화하지 않으므로 운영자는 마음먹으면 볼 수 있다. 앱 화면에도 그렇게 적어 둔다.
        막는 것은 Origin 허용목록 하나뿐이다 — 비밀 이야기를 할 자리가 아니다.
    v14: 남·북 말씨 확인 설문(act:'dialect'/'dialects') 추가 — giong.html 이 쓴다.
+   v17 (2026-09-30): 아이디 = 별명(어느 글자든 1~20자), 비밀번호 길이 제한 없음, 가입 때 별명 자동 등록. 앱의 [지금 맞추기]는 기존 save/load 그대로.
    v16 (2026-09-29): **비밀번호 찾기 질문** — act:'setq'(로그인한 사람이 질문·답 정하기)·'getq'(아이디 → 질문 글)·
         'ansq'(답이 맞으면 새 비밀번호로 바꾸고 증표를 새로). 답은 소금 친 으깬 값만 남긴다. 틀린 답은 아이디마다 하루 5번.
         가입(signup)도 q·qa 를 받으면 같이 정한다. 로그인 응답에 hasq(질문을 정했나)를 붙인다.
@@ -121,7 +122,7 @@ export default {
     if (!KV) return send({ error: 'KV 저장소가 연결되지 않았습니다 (Bindings: CLUB)' });
 
     const b = await req.json().catch(() => ({}));
-    const act = cut(b.act, 20), nick = cut(b.nick, 10);
+    const act = cut(b.act, 20), nick = cut(b.nick, 20);   // v17: 별명 = 아이디라 20자까지
 
     /* ── 목소리 블라인드 설문 (v13) ────────────────────
        표 하나 = KV 글 하나(동시 제출이 서로를 덮어쓸 일이 없다). 90일 보관.
@@ -418,7 +419,7 @@ export default {
         return send({ error: '답이 다릅니다 (오늘 ' + (5 - acct.qf.n) + '번 남음)' });
       }
       const npw = String(b.pw || '').slice(0, 64);
-      if (npw.length < 8) return send({ error: '새 비밀번호는 8자 이상입니다' });
+      if (!npw) return send({ error: '새 비밀번호를 적어 주세요' });   // v17: 길이 제한 없음
       acct.s = Math.random().toString(36).slice(2, 12); acct.h = await hashPw(acct.s, npw);
       acct.t = [...crypto.getRandomValues(new Uint8Array(16))].map(x => x.toString(16).padStart(2, '0')).join('');   // 다른 기기는 다시 로그인
       delete acct.qf;
@@ -426,19 +427,22 @@ export default {
       return send({ ok: true });
     }
     if (act === 'signup' || act === 'login') {
-      const id = cut(b.id, 20).toLowerCase().trim();
+      /* v17 (2026-09-30, 대표님 "아이디도 자유, 아이디가 곧 닉네임, 비번 제한 없음"): 아이디는 어느 글자든 1~20자(열쇠는 소문자),
+         비밀번호는 1자 이상이면 된다(옛 규칙 8자·영문 4~20자 삭제). 가입하면 아이디를 별명(nicks)으로 같이 등록한다. */
+      const idShow = cut(b.id, 20).trim().replace(/[\u0000-\u001f]/g, '');
+      const id = idShow.toLowerCase();
       const pw = String(b.pw || '').slice(0, 64);
-      if (!/^[a-z0-9_]{4,20}$/.test(id)) return send({ error: '아이디는 영문·숫자 4~20자입니다' });
-      // 비밀번호 규칙은 NIST 지침을 따른다: 길이 8자 이상, 특수문자 강제는 하지 않는다
-      // (강제 규칙은 오히려 뻔한 변형을 만든다는 것이 지침의 근거다). 기존 가입자는 그대로 들어온다.
-      if (act === 'signup' && pw.length < 8) return send({ error: '비밀번호는 8자 이상입니다' });
-      if (pw.length < 4) return send({ error: '비밀번호가 너무 짧습니다' });
+      if (!id) return send({ error: '아이디를 적어 주세요' });
+      if (!pw) return send({ error: '비밀번호를 적어 주세요' });
       const AK = 'acct:' + id;
       const acct = JSON.parse((await KV.get(AK)) || 'null');
       if (act === 'signup') {
         if (acct) return send({ error: '이미 있는 아이디입니다' });
         const uid = cut(b.uid, 16);
-        if (!nick || !uid) return send({ error: '별명을 먼저 정해 주세요' });
+        if (!uid) return send({ error: '기기 표가 없습니다 — 앱을 다시 열어 주세요' });
+        const nicks0 = JSON.parse((await KV.get(NKEY)) || '{}');            // 아이디 = 별명
+        if (nicks0[id] && nicks0[id] !== uid) return send({ error: '이미 쓰는 사람이 있는 이름입니다' });
+        if (nicks0[id] !== uid) { nicks0[id] = uid; await KV.put(NKEY, JSON.stringify(nicks0)); }
         // 이메일도 아이디처럼 겹치면 안 된다 (대표님 지시, 2026-09-12) — 한 이메일이
         // 여러 계정에 쓰이면 비밀번호 재설정 메일이 어느 계정 것인지 알 길이 없어진다.
         // 별명(NKEY 'nicks')과 같은 결로 EKEY('emails')에 {이메일: 아이디} 색인을 둔다.
@@ -460,7 +464,7 @@ export default {
         if (q0 && qa0.length >= 2) { rec.q = q0; rec.qs = Math.random().toString(36).slice(2, 12); rec.qh = await hashPw(rec.qs, qa0); }
         await KV.put(AK, JSON.stringify(rec));
         if (elow) { emails[elow] = id; await KV.put(EKEY, JSON.stringify(emails)); }
-        return send({ ok: true, uid, nick, prof, tok, hasq: !!rec.qh });
+        return send({ ok: true, uid, nick: idShow, prof, tok, hasq: !!rec.qh });
       }
       if (!acct) return send({ error: '없는 아이디입니다' });
       if (await hashPw(acct.s, pw) !== acct.h) return send({ error: '비밀번호가 다릅니다' });
@@ -514,7 +518,7 @@ export default {
     if (act === 'resetpw') {
       const token = cut(b.token, 64);
       const pw = String(b.pw || '').slice(0, 64);
-      if (pw.length < 8) return send({ error: '비밀번호는 8자 이상입니다' });
+      if (!pw) return send({ error: '비밀번호를 적어 주세요' });   // v17: 길이 제한 없음
       const id = await KV.get('reset:' + token);
       if (!id) return send({ error: '링크가 만료됐거나 이미 썼습니다. 다시 요청해 주세요.' });
       const AK = 'acct:' + id;
