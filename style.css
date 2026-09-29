@@ -2840,3 +2840,16 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .htop .hname{flex:1; min-width:0; font-size:20px}     /* 이름이 길면 이름만 두 줄로 — 알약은 늘 오른쪽 같은 줄 */
 .htop .hstreak{margin-top:0; flex:none; gap:6px}
 .htop .hpill{font-size:12px; padding:3px 8px}
+/* 실력 분석 v2 — 영역 줄(정답률·▲▼·작은 선)·세부·처방 단추 (2026-09-30 밤) */
+.analist{display:flex; flex-direction:column; gap:8px; margin:6px 0 12px}
+.anarow{display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; text-align:left; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:10px 12px; box-shadow:none; min-height:0; font-size:14px; color:var(--fg)}
+.anarow.open{border-color:var(--ok)}
+.anahd{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; min-width:0}
+.ananm{font-size:15px}
+.anapct{font-size:18px; font-weight:800; font-variant-numeric:tabular-nums}
+.anadelta{font-size:12px; font-weight:700; color:var(--dim)} .anadelta.up{color:var(--okfg)} .anadelta.down{color:#d9534f}
+.anan,.anaavg{font-size:12px; color:var(--dim)}
+.anaspark{flex:none}
+.anadetail{padding:2px 6px 8px 10px; border-left:2px solid var(--line); margin:0 0 4px 10px}
+.anachips{display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 6px} .anachips span{background:var(--chip); border-radius:999px; padding:3px 9px; font-size:13px} .anachips b{margin-left:3px}
+.anabtns{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
