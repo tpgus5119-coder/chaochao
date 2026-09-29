@@ -7701,6 +7701,9 @@ let WB = 'star';                       // 단어장에서 보고 있는 칸
    베트남어로도 한국어로도 찾을 수 있고, 성조를 안 찍어도 찾아진다(뼈대로 견준다).
    AI 를 쓰지 않으므로 돈이 들지 않는다. */
 let DICT = null;
+let DSKIP = null;   // 사전에서 뺄 문장 (data/_dict_skip.json — 대표님 지시 2026-09-29: "사전 검색했는데 왜 문장도 검색되니")
+let DEN = null;     // 영어 검색 열쇠 (data/_dict_en.json — 영어는 열쇠일 뿐, 화면에는 한국어만)
+const ENQ = q => /^[a-z][a-z' -]*$/i.test(q);
 const dictBare = v => {
   let t = String(v).normalize('NFD').replace(/[\u0300-\u0323]/g, '');
   t = t.normalize('NFC').toLowerCase().replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, '').trim();
@@ -7717,6 +7720,9 @@ function dictBuild() {
     const k = String(vi || '').trim();
     if (!k || !ko || isSent(k)) return;
     const kk = viCanon(k);                  // quản lý/quản lí·hoà/hòa 는 한 줄로 (2026-09-29)
+    /* 문장·문형·글자 묶음은 사전에 안 나온다 (2026-09-29): 다섯 낱말 미만이라 위 걸개를 빠져나온 문장(tôi đi nhé·có sao không …)은
+       손으로 고른 목록(_dict_skip.json)으로, 'c · k · q'·'từ ~ đến ~'·'mỗi A một B'·한글 제목 같은 것은 글자 꼴로 거른다 */
+    if ((DSKIP && DSKIP.has(kk)) || /[·\/~()]/.test(k) || /[가-힣]/.test(k) || /(^|\s)[A-Z](\s|$)/.test(k)) return;
     if (onlyNew && seen.has(kk)) return;    // 참고 사전은 앱에 없는 말만 — 앱 단어 뜻에 사전 뜻을 덧붙이지 않는다
     if (!seen.has(kk)) seen.set(kk, onlyNew ? { vi: k, ko: String(ko), ref: 1 } : { vi: k, ko: String(ko) });
     const o = seen.get(kk);
@@ -7725,10 +7731,13 @@ function dictBuild() {
     const part = !['예문', '사전', '참고 사전'].includes(src);
     if (src && (part || !(o.src && o.src.length))) { o.src = o.src || []; if (!o.src.includes(src) && o.src.length < 2) o.src.push(src); }
     /* 여러 자료의 뜻을 합칠 때 겹치는 단어은 다시 안 붙인다 — "누나·언니 / 누나·언니뻘 여자 / 언니" 처럼 길어지지 않게. 세 갈래까지만. */
-    const toks = g => g.split(/[·\/,;()\s]+/).filter(Boolean);
-    if (!o.ko.includes(ko) && o.ko.split(' / ').length < 3) {
-      const have = new Set(toks(o.ko));
-      if (toks(ko).some(t => !have.has(t))) o.ko += ' / ' + ko;
+    /* 뜻은 **구절** 단위로 합친다 (2026-09-29): 앞서는 낱말 단위라 '요리하다 / 요리하다, 밥을 짓다 / 요리하다·요리·밥을 짓다' 처럼 같은 뜻이 세 번 붙었다.
+       새 자료의 구절 중 이미 있는 구절(또는 그것을 품은 구절)과 겹치지 않는 것만 ' · ' 로 잇는다. 여섯 구절까지. */
+    const phr = g => g.split(/\s*[·\/,;]\s*/).map(s => s.trim()).filter(Boolean);
+    if (!o.ko.includes(ko)) {
+      const have = phr(o.ko);
+      const add = phr(ko).filter(p => !have.some(h => h === p || h.includes(p) || p.includes(h)));
+      if (add.length && have.length < 6) o.ko += ' · ' + add.slice(0, 6 - have.length).join(' · ');
     }
     if (w) KEEP.forEach(f => { if (o[f] === undefined && w[f] !== undefined) o[f] = w[f]; });
   };
@@ -7745,7 +7754,7 @@ function dictBuild() {
   /* 참고 사전 (2026-09-29, 대표님 "사전 작업 다 못했니?") — 뜻 25,835개를 다 옮겨 놓고도 사전 탭이 찾지 않았다.
      앱·짝 자료에 없는 말만 '참고' 표시를 달아 넣는다. 열쇠가 소문자라 대문자 꼴은 _dict_head.json 에서 되살린다. */
   if (DKO) Object.entries(DKO).forEach(([k, v]) => put((DKH && DKH[k]) || k, Array.isArray(v) ? v.join(' · ') : v, null, true, '참고 사전'));
-  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi) }));
+  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi), en: (DEN && DEN[x.vi.toLowerCase()]) || null }));
   DICT.sort((a, b) => a.b.localeCompare(b.b));
   return DICT;
 }
@@ -7761,6 +7770,8 @@ async function dictReady() {
   if (!DKO) jobs.push(get('data/_dict_ko.json', j => { DKO = j; }));
   if (!DKH) jobs.push(get('data/_dict_head.json', j => { DKH = j; }));
   if (!KRSYL) jobs.push(get('data/_kr_syl.json', j => { KRSYL = j; }));
+  if (!DSKIP) jobs.push(get('data/_dict_skip.json', j => { DSKIP = new Set(j.map(viCanon)); }));
+  if (!DEN) jobs.push(get('data/_dict_en.json', j => { DEN = j; }));
   await Promise.all(jobs);
   DICT = null;
 }
@@ -7798,12 +7809,26 @@ function dictEntry(q0) {
     if (q.length < 1) { out.append(el('p', 'note', tr('한 글자만 넣어도 찾습니다'))); return; }
     const qb = dictBare(q), qk = q.toLowerCase();
     const kor = /[가-힣]/.test(q);
+    /* 정확한 것부터 (대표님 지시 2026-09-29: "병원이라고 검색하면 병원이 최상단에 나와야지 왜 병원비가 최상단에 있냐").
+       한국어: 뜻이 그 말 자체(병원) 0 → 여러 뜻 중 하나가 그 말 1 → 그 말로 시작(병원비) 2 → 어딘가 들어 있음 3.
+       앞서는 '시작하면 0' 한 갈래뿐이라 '병원'과 '병원비'가 같은 등급이 되고, 베트남어 길이(viện phí 8 < bệnh viện 9)로 병원비가 위로 올라갔다.
+       베트남어: 그 말 자체 0 → 그 말로 시작 1 → 들어 있음 2. 같은 등급이면 수업 낱말이 참고 사전보다 먼저, 그다음 짧은 것. */
+    // 뜻은 구절 단위로 견준다 — '학교 정문'의 첫 낱말이 '학교'라고 병원·학교와 같은 등급이 되지 않게. 괄호 설명은 빼고 본다: '학교(기관)' = '학교'
+    const phrs = s => s.toLowerCase().split(/\s*[·\/,;]\s*/).map(p => p.replace(/\([^)]*\)/g, '').trim()).filter(Boolean);
+    const enq = !kor && ENQ(q);                     // 영어로 찾기(hospital) — 영어는 열쇠일 뿐 화면엔 안 나온다
     const hit = d.filter(x => kor ? x.ko.toLowerCase().includes(qk)
-                                  : (x.b.includes(qb) || x.vi.toLowerCase().includes(qk)))
+                                  : (x.b.includes(qb) || x.vi.toLowerCase().includes(qk) || (enq && x.en && x.en.some(e => e === qk || e.startsWith(qk + ' ')))))
                  .sort((a, b2) => {
-                   const sc = x => kor ? (x.ko.startsWith(q) ? 0 : 1)
-                                       : (x.b === qb ? 0 : x.b.startsWith(qb) ? 1 : 2);
-                   return sc(a) - sc(b2) || a.vi.length - b2.vi.length;
+                   const sc = x => {
+                     if (kor) { const p = phrs(x.ko); return p[0] === qk ? 0 : p.includes(qk) ? 1 : p.some(v => v.startsWith(qk)) ? 2 : 3; }
+                     if (x.b === qb || x.vi.toLowerCase() === qk) return 0;
+                     if (x.b.startsWith(qb + ' ') || x.b.startsWith(qb)) return x.b.startsWith(qb + ' ') ? 1 : 2;
+                     if (x.b.includes(qb) || x.vi.toLowerCase().includes(qk)) return 3;
+                     return x.en && x.en[0] === qk ? 4 : 5;   // 영어 열쇠로만 잡힌 것은 맨 뒤 — 첫 뜻이 딱 그 말이면 먼저
+                   };
+                   const lesson = x => x.src && x.src.some(s => !['예문', '사전', '참고 사전'].includes(s)) ? 0 : 1;   // 수업에 나온 말이 먼저 (trường học 이 học hiệu 보다 위)
+                   const nw = x => x.vi.split(/\s+/).length;   // 같은 등급이면 낱말 수가 적은 것(trường)이 붙은 말(trường học)보다 먼저
+                   return sc(a) - sc(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || lesson(a) - lesson(b2) || nw(a) - nw(b2) || (kor ? a.ko.length - b2.ko.length : 0) || a.vi.length - b2.vi.length;
                  });
     if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
     out.append(el('p', 'note', tr('N개 찾음').replace('N', hit.length)));

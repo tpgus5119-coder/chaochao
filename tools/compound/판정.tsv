@@ -1,0 +1,2262 @@
+# 붙은 말 판정 (2026-09-29, 대표님: "두 낱말을 붙여서 다른 의미가 된다면 하나로 합치면 안 됨. 동일한 의미라면 하나의 단어 안에 넣어야지")
+# 후보: 조각이 모두 앱 낱말인 붙은 말(tools/compound/_후보.tsv 2,259개). 클로드가 낱말마다 읽고 판정.
+# 칸: 낱말 ⇥ 판정 ⇥ 까닭   판정 = 같음=바탕낱말(바탕 낱말 카드의 '쓰임'으로 옮김) · 다름(뜻이 달라 따로 낱말) · 구(뜻이 그대로 더해지는 구·숫자 — 지금대로)
+hôm nay	다름	hôm(날)+nay(지금) → '오늘' 하나의 낱말
+xin lỗi	다름	정중한 사과 표현 — xin·lỗi 어느 쪽과도 뜻이 다름
+tiếng Việt	다름	언어 이름
+thanh điệu	다름	성조(용어)
+trả lời	다름	대답하다 — trả(돌려주다)·lời(말)과 다름
+học viên	다름	학습자(사람)
+bên cạnh	같음=cạnh	cạnh 옆 = bên cạnh 옆(의)
+thích hợp	다름	적절하다 — thích(좋아하다)·hợp(어울리다)과 다름
+bài tập	다름	연습문제
+lặp lại	같음=lặp	lặp 반복하다 = lặp lại 반복하다
+câu hỏi	다름	질문(명사) — hỏi 묻다(동사)와 품사·뜻이 다름
+chính tả	다름	맞춤법·받아쓰기
+tìm hiểu	다름	알아보다 — tìm(찾다)·hiểu(이해하다)과 다름
+ngữ pháp	다름	문법
+hành động	다름	행동
+cách nói	구	방법+말하다 그대로
+sức khỏe	다름	건강(명사) — khỏe 건강하다(형용사)
+hỏi thăm	다름	안부를 묻다(특정 뜻)
+a lô	다름	여보세요
+xin chào	같음=chào	chào 안녕 = xin chào 안녕하세요(정중)
+không sao	다름	괜찮아요
+rất tốt	구	매우+좋다 그대로
+bảng chữ cái	다름	알파벳
+theo mẫu	구	~대로+견본 그대로
+từ ngữ	같음=từ	từ 단어 = từ ngữ 어휘·단어
+dưới đây	구	아래+여기 그대로
+còn thiếu	구	아직+부족하다 그대로
+đọc hiểu	다름	독해(용어)
+đoạn văn	같음=đoạn	đoạn 단락 = đoạn văn 문단
+bài đọc	구	과+읽기 그대로
+dựa vào	같음=dựa	dựa 근거하다 = dựa vào ~에 근거하다
+ngôi thứ nhất	다름	1인칭(용어)
+ngôi thứ hai	다름	2인칭(용어)
+số ít	다름	단수(용어)
+người nghe	구	사람+듣다 그대로
+chỉ định từ	다름	지시사(용어)
+người nói	구	사람+말하다 그대로
+thời điểm	다름	시점
+nào đó	구	어떤+그 그대로
+câu trả lời	다름	대답(명사)
+chỉ định	다름	지정하다
+chào hỏi	같음=chào	chào 인사하다 = chào hỏi 인사하다
+số đếm	다름	기수(용어)
+thứ nhất	다름	첫째(서수)
+thanh ngang	다름	성조 이름
+thanh huyền	다름	성조 이름
+thanh ngã	다름	성조 이름
+thanh hỏi	다름	성조 이름
+thanh sắc	다름	성조 이름
+thanh nặng	다름	성조 이름
+áo dài	다름	아오자이
+sinh viên	다름	대학생
+đi bộ	다름	걷다 — đi 가다와 다름
+chị ấy	다름	그녀(3인칭)
+phải không	다름	~이죠?(확인 물음)
+anh ấy	다름	그(3인칭)
+cô ấy	다름	그녀(3인칭)
+em ấy	다름	그(3인칭)
+ông ấy	다름	그분(3인칭)
+bà ấy	다름	그분(3인칭)
+ông bà	다름	조부모(하나의 낱말)
+ở nhà	구	~에서+집 그대로
+nước ngoài	다름	외국(나라+밖 → 새 뜻)
+có mặt	다름	참석하다
+trường hợp	다름	경우
+mười lăm	구	숫자
+hôm qua	다름	어제
+phó từ	다름	부사(용어)
+sau đó	구	뒤+그 그대로
+lần này	구	번+이 그대로
+mười một	구	숫자
+mười hai	구	숫자
+mười ba	구	숫자
+mười bốn	구	숫자
+mười sáu	구	숫자
+mười bảy	구	숫자
+mười tám	구	숫자
+mười chín	구	숫자
+hai mươi	구	숫자
+người Mỹ	구	사람+나라 그대로
+người Úc	구	사람+나라 그대로
+người Nhật	구	사람+나라 그대로
+người Anh	구	사람+나라 그대로
+không phải	다름	아니다(là 문장의 부정) — không 과 쓰임이 다름
+người nước nào	구	사람+나라+어느 그대로
+người Việt	구	사람+나라 그대로
+người Chile	구	사람+나라 그대로
+người Pháp	구	사람+나라 그대로
+người Canada	구	사람+나라 그대로
+người Singapore	구	사람+나라 그대로
+người nước ngoài	구	사람+외국 그대로(외국인)
+lượng từ	다름	수량사(용어)
+số lượng	다름	수량
+ngôi thứ ba	다름	3인칭(용어)
+số nhiều	다름	복수(용어)
+ăn cơm	같음=ăn	ăn 먹다 = ăn cơm 밥을 먹다(식사하다)
+ngược lại	같음=ngược	ngược 반대의 = ngược lại 반대로
+hiện diện	다름	존재하다
+nhìn thấy	같음=thấy	thấy 보다·보이다 = nhìn thấy 보이다
+trước đây	같음=trước	trước 전에 = trước đây 예전에
+đi học	다름	등교하다·공부하러 가다(굳어진 말)
+hiện nay	같음=hiện	hiện 지금 = hiện nay 지금
+chăm chỉ	같음=chăm	chăm 부지런하다 = chăm chỉ 부지런한
+nổi tiếng	다름	유명한
+làm việc	같음=làm	làm 일하다(뜻 2) = làm việc 일하다
+buổi chiều	같음=chiều	chiều 오후 = buổi chiều 오후
+buổi tối	같음=tối	tối 저녁 = buổi tối 저녁
+khoa học	다름	과학
+thành phố	다름	도시
+chúng tôi	다름	우리(대명사)
+ở đó	구	~에서+거기 그대로
+phòng học	다름	교실(방+공부 → 새 낱말, 시내버스 꼴)
+đi chơi	다름	놀러 가다(굳어진 말)
+thư ký	다름	비서
+giải thích	다름	설명하다
+uống thuốc	구	마시다+약 그대로
+một trăm	구	숫자
+tiếng Anh	다름	언어 이름
+tiếng Nhật	다름	언어 이름
+thân mật	다름	친밀하다
+yêu cầu	다름	요구하다
+nước nào	구	나라+어느 그대로
+ở đâu	구	~에서+어디 그대로
+đúng rồi	구	맞다+이미 그대로
+đi đâu	구	가다+어디 그대로
+một năm	구	숫자+해
+bài số	구	과+번호 그대로
+thế nào	다름	어떻게
+không khỏe	구	안+건강하다 그대로
+chia lìa	같음=lìa	lìa 헤어지다 = chia lìa 헤어지다
+đêm khuya	같음=khuya	khuya 한밤중 = đêm khuya 심야
+mùa lúa	구	철+벼 그대로
+mua cua	구	교재 발음 연습 구
+mưa nữa	구	교재 발음 연습 구
+tựa cửa	구	교재 발음 연습 구
+biển xanh	구	교재 발음 연습 구
+hiểu biết	다름	뜻 2 '지식'이 따로 있음
+yêu thương	같음=yêu	yêu 사랑하다 = yêu thương 아끼고 사랑하다
+mười người	구	숫자+사람
+bưởi tươi	구	교재 발음 연습 구
+hai mươi mốt	구	숫자
+hai mươi hai	구	숫자
+hai mươi ba	구	숫자
+hai mươi bốn	구	숫자
+hai mươi lăm	구	숫자
+hai mươi sáu	구	숫자
+hai mươi bảy	구	숫자
+hai mươi tám	구	숫자
+hai mươi chín	구	숫자
+ba mươi	구	숫자
+bốn mươi	구	숫자
+năm mươi	구	숫자
+sáu mươi	구	숫자
+bảy mươi	구	숫자
+tám mươi	구	숫자
+chín mươi	구	숫자
+ba mươi mốt	구	숫자
+bốn mươi mốt	구	숫자
+năm mươi mốt	구	숫자
+chín mươi mốt	구	숫자
+ba mươi lăm	구	숫자
+bốn mươi lăm	구	숫자
+năm mươi lăm	구	숫자
+sáu mươi lăm	구	숫자
+bảy mươi lăm	구	숫자
+tám mươi lăm	구	숫자
+chín mươi lăm	구	숫자
+tiếng Pháp	다름	언어 이름
+đồng nhất	다름	동일하다
+lớp học	같음=lớp	lớp 교실·반 = lớp học 교실·수업
+người Việt Nam	구	사람+나라 그대로
+cho là	다름	~라고 여기다
+cấp cứu	다름	응급
+bố mẹ	다름	부모(하나의 낱말)
+buổi sáng	같음=sáng	sáng 아침 = buổi sáng 아침
+kế toán	다름	회계
+dạo này	다름	요즘 — dạo 혼자서는 산책하다
+đi làm	다름	출근하다(굳어진 말)
+văn phòng	다름	사무실
+bệnh viện	다름	병원
+lái xe	같음=lái	lái 운전하다 = lái xe 운전하다
+bắt đầu	다름	시작하다
+nấu ăn	같음=nấu	nấu 요리하다 = nấu ăn 요리하다
+trước khi	다름	~하기 전에(접속)
+máy tính	다름	컴퓨터
+nhà hàng	다름	식당
+ngoại ngữ	다름	외국어
+cố gắng	같음=cố	cố 노력하다 = cố gắng 노력하다
+một số	다름	일부·몇몇
+mức độ	같음=mức	mức 정도 = mức độ 정도
+tính từ	다름	형용사(용어)
+động từ	다름	동사(용어)
+cau có	같음=cau	cau 찌푸리다(뜻 2) = cau có 찌푸리다
+cây cầu	같음=cầu	분류사+명사 — cầu 다리
+kiểu cách	다름	격식을 차리는
+cũ kỹ	같음=cũ	cũ 낡은 = cũ kỹ 낡고 오래된
+quanh co	다름	구불구불한
+quán cơm	같음=quán	quán 작은 식당 = quán cơm 밥집
+quyền quý	다름	권세 있고 존귀한
+gan dạ	같음=gan	gan 대담하다(뜻 3) = gan dạ 대담한
+ghi chép	같음=ghi	ghi 기록하다 = ghi chép 기록하다
+ngon ngọt	다름	(말이) 달콤한
+hai trăm	구	숫자
+ba trăm	구	숫자
+bốn trăm	구	숫자
+năm trăm	구	숫자
+sáu trăm	구	숫자
+bảy trăm	구	숫자
+tám trăm	구	숫자
+chín trăm	구	숫자
+một trăm lẻ một	구	숫자
+một trăm lẻ hai	구	숫자
+một trăm lẻ ba	구	숫자
+một trăm lẻ bốn	구	숫자
+một trăm lẻ năm	구	숫자
+một trăm lẻ sáu	구	숫자
+một trăm lẻ bảy	구	숫자
+một trăm lẻ tám	구	숫자
+một trăm lẻ chín	구	숫자
+một trăm mười	구	숫자
+một trăm mười một	구	숫자
+một trăm mười hai	구	숫자
+một trăm hai mươi	구	숫자
+một trăm hai mươi lăm	구	숫자
+một trăm ba mươi	구	숫자
+một trăm chín mươi	구	숫자
+một trăm chín mươi chín	구	숫자
+hai giờ chiều	구	시각
+bảy giờ tối	구	시각
+phòng số	구	방+번호 그대로
+một ngày	구	숫자+날
+để làm gì	구	~하려고+하다+무엇 그대로
+thứ tiếng	구	종류+언어 그대로
+mấy giờ	구	몇+시 그대로
+một vài	같음=vài	vài 몇몇 = một vài 몇몇
+chuyển đổi	같음=chuyển	chuyển 전환하다(뜻 3) = chuyển đổi 전환하다
+nhà sách	다름	서점
+giảm giá	다름	할인하다(굳어진 말)
+phần trăm	다름	퍼센트
+món ăn	같음=món	món 음식·요리 = món ăn 음식
+tối nay	구	저녁+오늘 그대로
+đài truyền hình	다름	방송국
+sau khi	다름	~한 후에(접속)
+phố đi bộ	다름	보행자 거리
+đi dạo	같음=dạo	dạo 산책하다 = đi dạo 산책하다
+nói chuyện	다름	이야기하다·대화하다 — nói 말하다와 다름
+cuối tuần	다름	주말
+tiệm ăn	다름	식당 — tiệm 가게와 다름
+chuyển nhà	다름	이사하다
+tiện lợi	같음=tiện	tiện 편리한 = tiện lợi 편리한
+bao lâu	다름	얼마나 오래(물음)
+bình thường	다름	보통의
+tuần sau	구	주+다음 그대로
+tại sao	같음=sao	sao 왜 = tại sao 왜
+ngày mai	같음=mai	mai 내일(뜻 1) = ngày mai 내일
+thuê nhà	구	빌리다+집 그대로
+nghe nói	다름	듣자 하니
+một triệu	구	숫자
+tốt quá	구	좋다+너무 그대로
+quê quán	같음=quê	quê 고향 = quê quán 고향
+tính toán	같음=tính	tính 계산하다(뜻 1) = tính toán 계산하다
+chan chứa	다름	충만한
+chán chê	다름	물리도록
+thành thật	다름	정직한
+thương thuyết	다름	협상하다
+thật sự	같음=thật	thật 정말 = thật sự 정말로
+qua loa	다름	대충
+sự việc	같음=việc	việc 일 = sự việc 일·사건
+dự kiến	다름	예정하다
+một ngàn	구	숫자
+hai ngàn	구	숫자
+ba ngàn	구	숫자
+năm ngàn	구	숫자
+mười ngàn	구	숫자
+mười sáu ngàn	구	숫자
+hai mươi ngàn	구	숫자
+một trăm ngàn	구	숫자
+một ngàn không trăm lẻ một	구	숫자
+một ngàn không trăm lẻ hai	구	숫자
+một ngàn không trăm lẻ bảy	구	숫자
+một ngàn không trăm lẻ chín	구	숫자
+một ngàn không trăm mười	구	숫자
+một ngàn không trăm mười lăm	구	숫자
+một ngàn không trăm hai mươi	구	숫자
+hai triệu	구	숫자
+ba triệu	구	숫자
+năm triệu	구	숫자
+mười triệu	구	숫자
+ba mươi triệu	구	숫자
+một trăm triệu	구	숫자
+năm trăm triệu	구	숫자
+một triệu không trăm lẻ một ngàn	구	숫자
+một triệu không trăm lẻ chín ngàn	구	숫자
+một triệu một trăm hai mươi sáu ngàn	구	숫자
+một triệu chín trăm ngàn	구	숫자
+một tỷ	구	숫자
+hai tỷ	구	숫자
+ba tỷ	구	숫자
+mười tỷ	구	숫자
+một trăm tỷ	구	숫자
+sân bay	다름	공항
+mở cửa	다름	문을 열다·영업을 시작하다(뜻이 넓어짐)
+máy bay	다름	비행기
+chương trình	다름	프로그램
+từ từ	다름	천천히
+tuần trước	구	주+지난 그대로
+quán ăn	다름	식당
+ăn tối	구	먹다+저녁 그대로
+con gái	다름	딸
+tất cả	같음=cả	cả 전부 = tất cả 모두
+đi một vòng	구	가다+한 바퀴 그대로
+giảng viên	다름	강사
+như trước	구	~처럼+전 그대로
+cất cánh	다름	이륙하다
+chú ý	다름	주의하다
+kia kìa	같음=kia	kia 저기 = kia kìa 저기 저기
+thế thì	같음=thế	thế 그러면 = thế thì 그렇다면
+dự định	다름	계획하다
+rảnh rỗi	같음=rảnh	rảnh 한가하다 = rảnh rỗi 한가한
+thế à	구	그러면+~야? 그대로
+đọc sách	구	읽다+책 그대로
+giảng dạy	같음=dạy	dạy 가르치다 = giảng dạy 가르치다
+giúp đỡ	같음=giúp	giúp 돕다 = giúp đỡ 돕다
+trông chờ	같음=chờ	chờ 기다리다 = trông chờ 기다리다
+tươi cười	다름	활짝 웃는
+nước mía	구	즙+사탕수수 그대로
+hay là	같음=hay	hay 또는(뜻 1) = hay là 혹은
+tháng hai	구	달 이름
+trong khi	다름	~하는 동안(접속)
+cũng được	다름	괜찮아요(굳어진 대답)
+ăn sáng	구	먹다+아침 그대로
+ăn trưa	구	먹다+점심 그대로
+buồn ngủ	다름	졸리다(슬프다+자다 → 새 뜻)
+đi ngủ	구	가다+자다 그대로
+một mình	다름	혼자
+lên mạng	다름	인터넷을 하다(굳어진 말)
+chuẩn bị	다름	준비하다
+bữa ăn sáng	구	끼니+먹다+아침 그대로
+thứ bảy	다름	토요일
+rửa mặt	구	씻다+얼굴 그대로
+hàng ngày	다름	매일(줄+날 → 새 뜻)
+bài hát	다름	노래(과+노래하다 → 명사)
+bữa sáng	구	끼니+아침 그대로
+bàn ăn	다름	식탁
+sáng nay	구	아침+오늘 그대로
+đi ra ngoài	구	가다+나가다+밖 그대로
+bạn cùng lớp	구	친구+같은+반 그대로
+đi mua sắm	구	가다+쇼핑 그대로
+thay thế	같음=thay	thay 바꾸다·대신하다 = thay thế 대체하다
+học xong	구	공부+끝나다 그대로
+xem phim	구	보다+영화 그대로
+xem tivi	구	보다+TV 그대로
+nghe nhạc	구	듣다+음악 그대로
+trên mạng	구	위+인터넷 그대로
+về nhà	구	돌아가다+집 그대로
+đi đến	구	가다+~까지 그대로
+người bạn	구	사람(단위)+친구 그대로
+ngày nào	구	날+어느 그대로
+đọc báo	구	읽다+신문 그대로
+các bạn	구	~들+친구 그대로
+trong lớp	구	안+반 그대로
+đông khách	구	붐비는+손님 그대로
+làm thêm	다름	아르바이트하다(굳어진 말)
+các anh chị	구	~들+형+누나 그대로
+đi về nhà	구	가다+돌아가다+집 그대로
+nhạc Pháp	구	음악+프랑스 그대로
+mua sắm	같음=mua	mua 사다 = mua sắm 쇼핑하다
+mỗi ngày	구	~마다+날 그대로
+tiếng Đức	구	언어+독일 그대로
+các con	구	~들+아이 그대로
+ý nghĩa	다름	의미(한 낱말, 사전 표제어)
+đầu câu	구	처음+문장 그대로
+gạch dưới	다름	밑줄(벽돌+아래 → 새 뜻)
+buổi trưa	구	때+낮 그대로
+chiều nay	구	오후+오늘 그대로
+tiếng Hàn	구	언어+한국 그대로
+hình như	다름	~인 것 같다(그림+처럼 → 새 뜻)
+một chút	구	하나+조금 그대로
+người bán	구	사람+팔다 그대로
+nhỏ tuổi	구	작은+나이 그대로
+kiểm tra	다름	시험·검사(한 낱말)
+năm sau	구	해+뒤 그대로
+bạn thân	구	친구+친한 그대로
+tự tin	다름	자신 있다(스스로+믿다 → 새 뜻)
+ý kiến	다름	의견(한 낱말)
+bà ngoại	다름	외할머니
+đầu tiên	다름	처음·첫 번째(머리+요정 → 새 뜻)
+ở đây	구	~에서+여기 그대로
+vắng khách	구	한산한+손님 그대로
+với nhau	구	~와+서로 그대로
+đã từng	같음=từng	từng ~한 적 있다 = đã từng
+nói được	구	말하다+할 수 있다 그대로
+viết gì vậy	구	쓰다+뭐+어조사 그대로
+nghĩa là	구	뜻+이다 그대로
+một tháng	구	하나+달 그대로
+tiếng Nga	구	언어+러시아 그대로
+tiếng Ý	구	언어+이탈리아 그대로
+tiếng Indonesia	구	언어+인도네시아 그대로
+tên là	구	이름+이다 그대로
+không phải là	구	아니다+이다 그대로
+cuối khóa	구	끝+과정 그대로
+nói với	구	말하다+~에게 그대로
+ôn tập	같음=ôn	ôn 복습하다 = ôn tập 복습하다
+tháng trước	구	달+전 그대로
+thời lượng	다름	시간량(한 낱말)
+thời điểm mốc	구	시점+기준 그대로
+cùng với	같음=với	với ~와 함께 = cùng với ~와 함께
+được không	구	될까요 그대로
+đơn xin	구	신청서+부탁 그대로
+thứ hai	다름	월요일
+thứ ba	다름	화요일
+thứ năm	다름	목요일
+thứ sáu	다름	금요일
+chủ nhật	다름	일요일
+tuần này	구	주+이 그대로
+năm trước	구	해+전 그대로
+lúc đó	구	때+그 그대로
+chúc mừng	같음=chúc	chúc 기원하다·축하하다 = chúc mừng 축하하다
+trở lại	같음=trở	trở 돌아가다 = trở lại 돌아오다
+dọn dẹp	같음=dọn	dọn 정리하다·치우다 = dọn dẹp 청소하다
+cảm thấy	같음=thấy	thấy 느끼다(뜻 2) = cảm thấy 느끼다
+khó tính	다름	까다로운(어려운+성질 → 새 뜻)
+khách hàng	다름	고객(한 낱말)
+sinh nhật	다름	생일
+ba mẹ	구	아빠+엄마 그대로(ba 는 아빠 뜻)
+xe lửa	다름	기차(차+불 → 새 뜻)
+bao giờ	다름	언제(봉지+시 → 새 뜻)
+tháng sáu	구	달 이름
+tháng tám	구	달 이름
+đặt vé	구	예약하다+표 그대로
+năm nay	구	해+올 그대로
+thứ mấy	구	요일+몇 그대로
+đầu tuần	구	처음+주 그대로
+tháng này	구	달+이 그대로
+đến trường	구	가다+학교 그대로
+về nước	구	돌아가다+나라 그대로
+làm bài tập	구	하다+숙제 그대로
+đi chợ	구	가다+시장 그대로
+đến lớp	구	가다+반 그대로
+vé máy bay	구	표+비행기 그대로
+vé xe lửa	구	표+기차 그대로
+ngày tháng	다름	날짜(날+달 → 새 뜻)
+chúc mừng sinh nhật	구	축하하다+생일 그대로
+trời ơi	다름	맙소사(굳어진 감탄)
+sinh năm	구	태어나다+해 그대로
+bia hơi	다름	생맥주(맥주+약간 → 새 뜻)
+cảnh báo	다름	경고하다(한 낱말)
+tháng ba	구	달 이름
+lớn tuổi	구	큰+나이 그대로
+con một	다름	외동(아이+하나 → 새 뜻)
+chị gái	다름	친언니·누나(호칭 chị 와 다름)
+em gái	다름	여동생
+nhỏ hơn	구	작은+더 그대로
+họ hàng	다름	친척(그들+줄 → 새 뜻)
+lớn hơn	구	큰+더 그대로
+cùng tuổi	구	같은+나이 그대로
+ngày nghỉ	구	날+쉬다 그대로
+mọi người	구	모든+사람 그대로
+học sinh	다름	학생(한 낱말)
+nghỉ hè	다름	여름방학(쉬다+여름 → 명사)
+anh cả	다름	맏형(형+전부 → 새 뜻)
+chị cả	다름	맏언니
+thành viên	다름	구성원(한 낱말)
+con cả	다름	맏이
+con út	구	아이+막내 그대로
+về quê	구	돌아가다+고향 그대로
+luôn luôn	같음=luôn	luôn 늘 = luôn luôn 항상
+đi thăm	구	가다+방문하다 그대로
+mấy người	구	몇+사람 그대로
+anh chị em	다름	형제자매(굳어진 말)
+bằng tuổi nhau	구	같은+나이+서로 그대로
+bữa ăn tối	구	끼니+먹다+저녁 그대로
+vẽ tranh	구	그리다+그림 그대로
+cuối năm	구	끝+해 그대로
+chưa bao giờ	구	아직+언제 그대로
+sống một mình	구	살다+혼자 그대로
+anh em	다름	형제(형+동생 → 새 뜻)
+chị em	다름	자매
+nêu ra	같음=nêu	nêu 제시하다 = nêu ra 제시하다
+xe máy	다름	오토바이(차+기계 → 새 뜻)
+xe đạp	다름	자전거
+xe ôm	다름	쎄옴(오토바이 택시)
+xe điện	다름	전차
+xe điện ngầm	다름	지하철
+kẹt xe	다름	교통체증(굳어진 말)
+xe đạp điện	구	자전거+전기 그대로
+người lái xe	구	사람+운전하다+차 그대로
+đúng giờ	구	맞다+시간 그대로
+bến xe	다름	터미널
+xe khách	다름	시외버스(차+손님 → 새 뜻)
+đường phố	다름	거리(한 낱말)
+tự do	다름	자유
+vì vậy	다름	그래서(접속)
+một chiều	다름	편도(하나+방향 → 새 뜻)
+xe hơi	다름	자동차
+nhanh lên	구	빠른+~해라 그대로
+đi vào	구	가다+안으로 그대로
+kéo dài	다름	이어지다·지속되다(끌다+길다 → 새 뜻)
+phải đến	구	해야+가다 그대로
+vé xe điện	구	표+전차 그대로
+vé xe điện ngầm	구	표+지하철 그대로
+vé một chiều	구	표+편도 그대로
+rất ít	구	매우+적은 그대로
+chắc là	같음=chắc	chắc 아마 = chắc là 아마
+gọi cho	구	전화하다+~에게 그대로
+đến trễ	구	도착하다+늦은 그대로
+mất bao lâu	구	걸리다+얼마나 오래 그대로
+có hẹn với	구	있다+약속+~와 그대로
+mệt lắm	구	피곤+매우 그대로
+sắp trễ	구	곧+늦은 그대로
+không ai trả lời	구	문장
+đông xe	구	붐비는+차 그대로
+điều đó	구	것+그 그대로
+lái xe máy	구	몰다+오토바이 그대로
+trời mưa	구	하늘+비 그대로
+thuê xe máy	구	빌리다+오토바이 그대로
+gọi lại	구	전화하다+다시 그대로
+chạy xe máy	구	달리다+오토바이 그대로
+sao không	구	왜+않다 그대로
+ảnh cũ	구	사진+옛 그대로
+tập cho	구	연습시키다+~에게 그대로
+từ...đến giờ	구	~부터+지금까지 그대로
+gọi điện	다름	전화하다(부르다+전기 → 새 뜻)
+lúc nào	구	때+어느 그대로
+xem lại	구	보다+다시 그대로
+không ai	구	아니다+누구 그대로
+làm cho	구	하다+~에게 그대로
+nhận định	다름	판단(한 낱말)
+nghe lại	구	듣다+다시 그대로
+đặt lại	구	예약하다+다시 그대로
+nói lại	구	말하다+다시 그대로
+làm lại	구	하다+다시 그대로
+đọc lại	구	읽다+다시 그대로
+trái cây	다름	과일(열매+나무 → 새 뜻)
+bao xa	구	얼마나+먼 그대로
+cây số	다름	킬로미터(나무+숫자 → 새 뜻)
+chắc hẳn	같음=chắc	chắc 틀림없이 = chắc hẳn 틀림없이
+nhà cửa	다름	집안·살림(집+문 → 총칭)
+sáng sớm	구	아침+일찍 그대로
+thư viện	다름	도서관
+vừa rồi	다름	방금·최근(때를 나타내는 굳어진 말)
+xe cộ	다름	차량들(총칭)
+bánh mì	다름	반미(빵+국수 → 새 뜻)
+giá cả	다름	물가(총칭)
+khi nào	구	때+어느 그대로
+lần đầu tiên	구	번+처음 그대로
+khoảng cách	다름	거리·간격(한 낱말)
+lâu quá không gặp	구	문장
+đông con	구	많은+자녀 그대로
+nước suối	다름	생수(물+시내 → 새 뜻)
+bằng nhau	구	같은+서로 그대로
+lỗi sai	같음=lỗi	lỗi 잘못 = lỗi sai 잘못·오류
+không bao giờ	구	아니다+언제 그대로
+đến nơi	구	도착하다+곳 그대로
+ba má	구	아빠+엄마 그대로(남부)
+cầu khiến	다름	문법 용어(명령·요청문)
+vậy hả	구	그러면+~야? 그대로
+cơm sen	다름	음식 이름(연잎밥)
+chả giò	다름	음식 이름(짜조)
+gỏi cá	다름	음식 이름
+lẩu cua	다름	음식 이름
+nước mắm	다름	느억맘(물+젓갈 → 새 뜻)
+gia vị	다름	조미료(한 낱말)
+rau thơm	다름	향채(굳어진 말)
+tính tiền	구	계산하다+돈 그대로
+trả tiền	구	내다+돈 그대로
+miền Nam	구	지방+남 그대로
+miền Bắc	구	지방+북 그대로
+hằng ngày	다름	매일(늘+날 → 새 뜻)
+bữa ăn	같음=bữa	bữa 끼니 = bữa ăn 식사
+mùi vị	다름	풍미(냄새+맛 → 총칭)
+chủ quán	구	주인+가게 그대로
+nước chấm	다름	소스(물+찍다 → 새 뜻)
+đồng ý	다름	동의하다(한 낱말)
+chả cá	다름	음식 이름
+đàn ông	다름	남자(악기+할아버지 → 새 뜻)
+đặt trước	구	예약하다+미리 그대로
+vì sao	같음=sao	sao 왜 = vì sao 왜
+luyện tập	같음=luyện	luyện 연습하다 = luyện tập 연습하다
+chẳng hạn	다름	예를 들어(굳어진 말)
+bánh mì thịt	구	반미+고기 그대로
+canh chua	다름	음식 이름
+bún bò Huế	다름	음식 이름
+phòng riêng	구	방+개인의 그대로
+đặt bàn	구	예약하다+탁자 그대로
+ăn thử	구	먹다+해 보다 그대로
+ăn no	구	먹다+배부른 그대로
+bữa tối	구	끼니+저녁 그대로
+nhà hát	다름	극장(집+노래하다 → 새 뜻)
+một triệu đồng	구	숫자+동 그대로
+đi về	구	가다+돌아가다 그대로
+uống rượu	구	마시다+술 그대로
+cả nhà	구	온+집 그대로
+nhất là	다름	특히(가장+이다 → 새 뜻)
+say rượu	구	취한+술 그대로
+đồng thời	다름	동시에(한 낱말)
+làm nên	다름	이루다(하다+그래서 → 새 뜻)
+phòng đơn	구	방+홑 그대로
+phòng đôi	구	방+쌍 그대로
+miễn phí	다름	무료(한 낱말)
+thang máy	다름	엘리베이터(사다리+기계 → 새 뜻)
+chụp ảnh	구	찍다+사진 그대로
+hồ bơi	다름	수영장(호수+수영 → 새 뜻)
+tủ quần áo	구	장+옷 그대로
+chung quanh	같음=quanh	quanh 주위에 = chung quanh 주위
+mùa hè	같음=hè	hè 여름 = mùa hè 여름
+hài lòng	다름	만족하다(한 낱말)
+gần đây	다름	최근에(가깝다+여기 → 새 뜻)
+nhận phòng	다름	체크인(받다+방 → 굳어진 말)
+mong đợi	같음=mong	mong 바라다·기대하다 = mong đợi 기대하다
+mỗi khi	구	~마다+때 그대로
+đứa bé	구	단위+아이 그대로
+ngày thường	다름	평일(날+보통 → 굳어진 말)
+ngày lễ	구	날+명절 그대로
+bên phải	구	쪽+오른 그대로
+bên trái	구	쪽+왼 그대로
+làm ơn	다름	부디(하다+은혜 → 새 뜻)
+sạch sẽ	같음=sạch	sạch 깨끗한 = sạch sẽ 깨끗하다
+nửa đêm	구	절반+밤 그대로
+miền Tây	다름	메콩 델타 지역 이름
+bức ảnh	구	단위+사진 그대로
+cửa hàng	다름	가게(문+상품 → 새 뜻)
+con chó	구	단위+개 그대로
+cửa sổ	다름	창문(문+공책 → 새 뜻)
+khỏe mạnh	같음=khỏe	khỏe 건강하다 = khỏe mạnh 건강하다
+bắt buộc	다름	필수의(잡다+묶다 → 새 뜻)
+cảm ơn	다름	감사하다(한 낱말)
+trở thành	같음=thành	thành ~이 되다 = trở thành ~이 되다
+điền vào	구	채우다+안으로 그대로
+con mèo	구	단위+고양이 그대로
+đặt phòng	구	예약하다+방 그대로
+vậy à	구	그러면+아? 그대로
+số một	다름	최고(숫자+하나 → 새 뜻)
+chợ đêm	구	시장+밤 그대로
+quyển sách	구	단위+책 그대로
+đôi dép	구	단위+슬리퍼 그대로
+một đêm	구	하나+밤 그대로
+gần biển	구	가깝다+바다 그대로
+bến xe khách	구	터미널+시외버스 그대로
+khác với	구	다르다+~와 그대로
+lần trước	구	번+전 그대로
+giờ nghỉ	구	시간+쉬다 그대로
+nước uống	구	물+마시다 그대로
+một tiếng	구	하나+시간 그대로
+vợ con	구	아내+자식 그대로
+từ mới	구	단어+새 그대로
+gặp nhau	구	만나다+서로 그대로
+chỗ cũ	구	곳+옛 그대로
+tùy chọn	다름	선택적인(한 낱말)
+vị từ	다름	문법 용어(서술어)
+ghi chú	다름	메모·주석(적다+주 → 새 뜻)
+tùy thuộc	같음=tùy	tùy ~에 따라 다르다 = tùy thuộc ~에 달려 있다
+góc nhìn	다름	관점(각+보다 → 새 뜻)
+thay đổi	같음=thay	thay 바꾸다 = thay đổi 바꾸다
+sự vật	다름	사물(한 낱말)
+tiền thối	다름	거스름돈(돈+썩다 → 새 뜻)
+giao hàng	다름	배달하다(굳어진 말)
+đồng hồ	다름	시계(동+호수 → 새 뜻)
+máy lạnh	다름	에어컨(기계+차갑다 → 새 뜻)
+quần áo	다름	옷(바지+상의 → 총칭)
+giày dép	다름	신발류(총칭)
+trả giá	다름	흥정하다(내다+가격 → 새 뜻)
+chào mời	다름	호객하다(인사+권하다 → 새 뜻)
+món uống	구	가짓수+마시다 그대로
+mặt hàng	다름	품목(얼굴+상품 → 새 뜻)
+xinh đẹp	같음=đẹp	đẹp 예쁘다 = xinh đẹp 예쁜
+màu nâu	구	색+갈색 그대로
+người lớn	다름	어른(사람+큰 → 굳어진 말)
+cửa hàng tiện lợi	다름	편의점
+tốt bụng	다름	마음씨 좋은(좋다+배 → 새 뜻)
+cuối cùng	다름	마지막·결국(끝+함께 → 새 뜻)
+mang theo	같음=mang	mang 가지고 가다 = mang theo 지니고 가다
+người mua	구	사람+사다 그대로
+trẻ em	다름	어린이(한 낱말)
+bức tranh	구	단위+그림 그대로
+bác bỏ	다름	반박하다(한 낱말)
+đôi khi	다름	때로는(쌍+때 → 새 뜻)
+vừa mới	같음=vừa	vừa 방금 = vừa mới 방금
+bao giờ chưa	구	언제+아직 그대로
+mua một tặng một	구	문장
+được tặng	구	받다+선물 그대로
+hết mốt	다름	유행이 지나다(mốt 유행 뜻이지만 굳어진 말)
+không đâu	다름	전혀 아니다(아니다+어디 → 새 뜻)
+nước ngọt	다름	탄산음료(물+단 → 새 뜻)
+tốt cho sức khỏe	구	문장
+quần tây	다름	정장 바지(바지+서쪽 → 새 뜻)
+kiểu áo	구	스타일+옷 그대로
+thịt bò	구	고기+소 그대로
+đến nhà	구	~까지+집 그대로
+rẻ nhất	구	싼+가장 그대로
+chợ Bến Thành	다름	고유명사(벤타인 시장)
+con đường	구	단위+길 그대로
+nói giá	구	말하다+가격 그대로
+khu ăn uống	구	구역+먹고 마시다 그대로
+bún bò	다름	음식 이름
+làm bằng tay	구	만들다+손으로 그대로
+nước cam	구	물(즙)+오렌지 그대로
+đô la	다름	달러(외래어)
+túi xách	다름	핸드백(가방+들다 → 굳어진 말)
+có sao không	구	문장
+chợ nhỏ	구	시장+작은 그대로
+loại từ	다름	문법 용어(분류사)
+giỏi nhất	구	잘하는+가장 그대로
+cây bút	구	단위+펜 그대로
+cô gái	다름	아가씨·여자(호칭 cô 와 다름)
+ăn uống	다름	식사하다(먹다+마시다 → 총칭)
+vị ngữ	다름	문법 용어(서술어)
+đặt hàng	구	주문하다+상품 그대로
+không những	다름	~뿐만 아니라(아니다+~들 → 새 뜻)
+đôi giày	구	단위+신발 그대로
+đơn vị	다름	단위(한 낱말)
+bó hoa	구	다발+꽃 그대로
+thì giờ	다름	시간·겨를(한 낱말)
+gọi là	구	부르다+이다 그대로
+số từ	다름	문법 용어(수사)
+mong muốn	같음=mong	mong 바라다 = mong muốn 바라다
+cho biết	다름	알려 주다(주다+알다 → 굳어진 말)
+như vậy	구	~처럼+그러면 그대로
+tạo thành	같음=tạo	tạo 만들다 = tạo thành 만들어 내다
+chủ ý	다름	고의·의도(주인+뜻 → 새 뜻)
+một lần nữa	구	하나+번+더 그대로
+bức thư	구	단위+편지 그대로
+nhưng mà	같음=nhưng	nhưng 그러나 = nhưng mà 그렇지만
+mà thôi	다름	~일 뿐(굳어진 말)
+đầu dây	다름	수화기 너머(머리+선 → 새 뜻)
+bắt máy	다름	전화를 받다(잡다+기계 → 새 뜻)
+nhắn tin	구	남기다+문자 그대로
+hết pin	구	다 떨어지다+배터리 그대로
+họp mặt	다름	모임(회의+얼굴 → 새 뜻)
+trung học	다름	중고등학교(한 낱말)
+tập trung	다름	집중하다(한 낱말)
+thời sinh viên	구	때+대학생 그대로
+tin nhắn	다름	문자메시지(소식+남기다 → 굳어진 말)
+hình ảnh	다름	이미지(총칭)
+ngoài ra	다름	그 외에(밖+나가다 → 새 뜻)
+hơn nữa	다름	게다가(더+또 → 접속)
+cuộc gọi	구	단위+전화하다 그대로
+người giao hàng	구	사람+배달하다 그대로
+tiền lương	같음=lương	lương 월급 = tiền lương 급여
+giống như	같음=như	như ~처럼 = giống như ~처럼
+liên lạc	다름	연락하다(한 낱말)
+càng ngày càng	다름	날이 갈수록(굳어진 말)
+mất ngủ	다름	불면(잃다+자다 → 새 뜻)
+nghỉ học	구	쉬다+수업 그대로
+ít khi	다름	좀처럼(적은+때 → 새 뜻)
+quyết định	같음=quyết	quyết 결정하다 = quyết định 결정하다
+kiếm tiền	구	벌다+돈 그대로
+bóng đá	다름	축구(공+차다 → 새 뜻)
+ngày càng	다름	점점(날+더욱 → 새 뜻)
+phân chia	같음=chia	chia 나누다 = phân chia 나누다
+dự báo	다름	예보(한 낱말)
+đầy đủ	같음=đủ	đủ 충분하다 = đầy đủ 충분한
+bao gồm	같음=gồm	gồm 포함하다 = bao gồm 포함하다
+hiếm khi	다름	좀처럼(드문+때 → 새 뜻)
+đến chơi	구	오다+놀다 그대로
+giao cơm	구	배달하다+밥 그대로
+kiểm tra lại	구	확인하다+다시 그대로
+đặt cơm	구	주문하다+밥 그대로
+cả tháng	구	온+달 그대로
+bà chủ quán	구	여사장+가게 그대로
+số mấy	구	번호+몇 그대로
+nghỉ mát	다름	피서하다(쉬다+시원 → 새 뜻)
+làm bài kiểm tra	구	하다+시험 그대로
+nghỉ trưa	구	쉬다+낮 그대로
+quay phim	다름	촬영하다(돌리다+영화 → 새 뜻)
+uống trà	구	마시다+차 그대로
+việc bận	구	일+바쁜 그대로
+tìm đường đi	구	찾다+길 그대로
+ghi âm	구	기록하다+소리 그대로
+sạc pin	구	충전하다+배터리 그대로
+cục sạc	다름	충전기(덩어리+충전 → 새 뜻)
+học trung học	구	다니다+중고등학교 그대로
+việc học	구	일+공부 그대로
+mới nhất	구	새로운+가장 그대로
+món quà	구	단위+선물 그대로
+lưu lại	같음=lưu	lưu 저장하다 = lưu lại 저장하다
+chuyến đi chơi	구	단위+놀러 가다 그대로
+cùng lớp	구	같은+반 그대로
+học kém	구	공부+못하다 그대로
+tiền Internet	구	돈+인터넷 그대로
+báo mạng	구	신문+인터넷 그대로
+được thưởng	구	받다+상 그대로
+tủ sách	구	장+책 그대로
+dọn dẹp nhà cửa	구	청소하다+집 그대로
+cha mẹ	구	아버지+어머니 그대로
+tốt hơn	구	좋다+더 그대로
+con cái	다름	자녀(총칭)
+nghe máy	다름	전화를 받다(듣다+기계 → 새 뜻)
+bà chủ	구	여성+주인 그대로
+giải đáp	같음=đáp	đáp 답하다 = giải đáp 답해 주다
+chú thích	다름	주석(한 낱말)
+dựa theo	같음=theo	theo ~에 따라 = dựa theo ~에 따라
+tập hợp	다름	모이다(한 낱말)
+thuộc tính	다름	속성(한 낱말)
+chóng mặt	다름	어지럽다(빨리+얼굴 → 새 뜻)
+đau đầu	구	아프다+머리 그대로
+buồn nôn	다름	메스껍다(굳어진 말)
+đau mắt	구	아프다+눈 그대로
+nhà trường	다름	학교 기관(집+학교 → 새 뜻)
+thuốc nhỏ mắt	구	약+떨어뜨리다+눈 그대로
+đau bụng	구	아프다+배 그대로
+đau họng	구	아프다+목 그대로
+hỏi ý kiến	구	묻다+의견 그대로
+đau tim	구	아프다+심장 그대로
+tăng lương	구	오르다+월급 그대로
+hết bệnh	구	끝나다+병 그대로
+ăn kiêng	구	먹다+가리다 그대로
+sổ mũi	다름	콧물이 나다(sổ 흘러나오다 뜻이지만 굳어진 말)
+đau răng	구	아프다+이 그대로
+đau lưng	구	아프다+허리 그대로
+khó chịu	다름	불편하다(어려운+견디다 → 새 뜻)
+phòng khám	구	방+진찰 그대로
+tăng cân	구	오르다+무게 그대로
+khám sức khỏe	구	진찰+건강 그대로
+mắc mưa	구	걸리다+비 그대로
+bị cảm	구	당하다+감기 그대로
+bụng yếu	구	배+약한 그대로
+hồi sáng	구	때+아침 그대로
+mặc dù	다름	비록(입다+우산 → 새 뜻)
+thằng bé	구	단위+아이 그대로
+đơn thuốc	다름	처방전(굳어진 말)
+ra ngoài	구	나가다+밖 그대로
+còn trẻ	구	아직+젊다 그대로
+khám bệnh	구	진찰+병 그대로
+mệt mỏi	같음=mệt	mệt 피곤하다 = mệt mỏi 피곤하다
+hiện tại	다름	현재(한 낱말)
+bị sao vậy	구	문장
+từ khi nào	구	~부터+언제 그대로
+người đàn ông	구	사람+남자 그대로
+từ hồi sáng	구	~부터+아침 그대로
+đeo kính	구	쓰다+안경 그대로
+hút thuốc	다름	담배를 피우다(thuốc lá 줄임, 굳어진 말)
+loại thuốc	구	종류+약 그대로
+sưng chân	구	붓다+다리 그대로
+trầy chân	구	까지다+다리 그대로
+đi ăn tối	구	가다+저녁 먹다 그대로
+trong người	다름	몸 상태(안+사람 → 새 뜻)
+đói bụng	같음=đói	đói 배고프다 = đói bụng 배고프다
+thịt nướng	구	고기+굽다 그대로
+cả người	구	온+몸 그대로
+sốt cao	구	열+높은 그대로
+lên đến	구	오르다+~까지 그대로
+thay quần áo	구	갈아입다+옷 그대로
+cảm nhẹ	구	감기+가벼운 그대로
+giữ ấm	구	유지하다+따뜻 그대로
+uống đá	구	마시다+얼음 그대로
+cho nghỉ làm	구	주다+휴가 그대로
+cảm nặng	구	감기+심한 그대로
+bỏ thuốc lá	구	끊다+담배 그대로
+thuốc lá	다름	담배(약+잎 → 새 뜻)
+chạy xe	구	달리다+차 그대로
+trễ học	구	늦다+수업 그대로
+định kỳ	다름	정기적(한 낱말)
+ngày nào cũng	구	어느 날+도 그대로
+đi nước ngoài	구	가다+외국 그대로
+lần cuối cùng	구	번+마지막 그대로
+cách đây	다름	~전에(떨어져+여기 → 새 뜻)
+từ đó	구	~부터+그때 그대로
+với lại	다름	게다가(굳어진 말)
+cá biển	구	물고기+바다 그대로
+việc làm	다름	일자리(일+하다 → 새 뜻)
+tiếp nhận	같음=nhận	nhận 받다 = tiếp nhận 접수하다
+bổ ngữ	다름	문법 용어(보어)
+ngủ nướng	다름	늦잠 자다(자다+굽다 → 새 뜻)
+làm sao	다름	어떻게(하다+왜 → 새 뜻)
+phòng thường	구	방+보통 그대로
+trở nên	다름	~해지다(형용사 앞 굳어진 말)
+bệnh tật	다름	질병(총칭)
+giống nhau	구	같다+서로 그대로
+tủ áo	구	장+옷 그대로
+cùng loại	구	같은+종류 그대로
+cả ngày	구	온+날 그대로
+hẹn gặp lại	구	약속+만나다+다시 그대로
+túi áo	구	주머니+옷 그대로
+phòng ngủ	구	방+자다 그대로
+phòng làm việc	구	방+일하다 그대로
+nhập viện	다름	입원하다(한 낱말)
+ngủ quên	다름	깜빡 잠들다(자다+잊다 → 새 뜻)
+đi lại	다름	오가다(가다+다시 → 새 뜻)
+thân nhau	구	친하다+서로 그대로
+rau sống	구	채소+날것 그대로
+muỗi đốt	구	모기+물다 그대로
+thành phần	다름	성분(한 낱말)
+có dịp	구	있다+기회 그대로
+đi ngang	구	가다+옆으로 그대로
+chỉ đường	구	가리키다+길 그대로
+đi thẳng	구	가다+곧게 그대로
+cuối đường	구	끝+길 그대로
+rẽ phải	구	꺾다+오른 그대로
+rẽ trái	구	꺾다+왼 그대로
+tiệm bánh mì	구	가게+반미 그대로
+trạm xăng	구	소+기름 그대로
+tiệm sách	구	가게+책 그대로
+nhà thuốc	다름	약국(집+약 → 새 뜻)
+cửa hàng thời trang	구	가게+패션 그대로
+người đi đường	구	사람+길 가다 그대로
+lạc đường	구	잃다+길 그대로
+cậu bé	구	소년+꼬마 그대로
+mỏi chân	구	뻐근하다+다리 그대로
+đi qua	구	가다+지나다 그대로
+phần lớn	다름	대부분(부분+큰 → 새 뜻)
+mắc cỡ	다름	부끄럽다(남부, 한 낱말)
+cây ATM	구	단위+ATM 그대로
+dừng lại	같음=dừng	dừng 멈추다 = dừng lại 멈추다
+đi vòng vòng	구	가다+빙빙 그대로
+đường tắt	구	길+지름 그대로
+hỏi đường	구	묻다+길 그대로
+hướng dẫn	다름	안내하다(한 낱말)
+hiệu thuốc	다름	약국(가게+약 → 굳어진 말)
+quay lại	다름	돌아오다(돌리다+다시 → 새 뜻)
+trước mặt	다름	바로 앞(앞+얼굴 → 새 뜻)
+vòng qua	구	돌다+지나다 그대로
+nằm ở	다름	~에 위치하다(눕다+~에 → 새 뜻)
+giờ cao điểm	다름	러시아워(굳어진 말)
+trường học	같음=trường	trường 학교 = trường học 학교
+ngã ba	다름	삼거리(넘어지다+셋 → 새 뜻)
+áo khoác	다름	겉옷(옷+걸치다 → 굳어진 말)
+đưa ra	다름	제시하다(주다+나가다 → 새 뜻)
+xuống xe	구	내리다+차 그대로
+đủ thứ	다름	온갖 것(충분+종류 → 새 뜻)
+phía trước	구	쪽+앞 그대로
+ra về	다름	귀가하다(나가다+돌아가다 → 새 뜻)
+quay xe lại	구	돌리다+차+다시 그대로
+con đường tắt	구	단위+지름길 그대로
+góc đường	구	모퉁이+길 그대로
+gần nhất	구	가깝다+가장 그대로
+giải thưởng	다름	상(한 낱말)
+quán phở	구	가게+쌀국수 그대로
+tiệm giày	구	가게+신발 그대로
+ngừng lại	같음=ngừng	ngừng 멈추다 = ngừng lại 멈추다
+nơi đến	구	곳+도착 그대로
+dẫn đi học	구	데려가다+등교 그대로
+một hôm	구	하나+날 그대로
+lần đầu	구	번+처음 그대로
+đi một mình	구	가다+혼자 그대로
+chỉ tay	구	가리키다+손 그대로
+có hai cách	구	문장
+hơi xa	구	약간+먼 그대로
+qua cầu	구	건너다+다리 그대로
+ngắn hơn	구	짧은+더 그대로
+con hẻm trước mặt	구	골목+바로 앞 그대로
+nhìn hướng	구	보다+방향 그대로
+hiểu ra	다름	깨닫다(이해하다+나가다 → 새 뜻)
+đi lạc	다름	길을 잃다(가다+잃다 → 굳어진 말)
+ga ra	다름	차고(외래어 garage)
+nghỉ Tết	구	쉬다+설 그대로
+nấu cơm	구	요리하다+밥 그대로
+mây đen	구	구름+검은 그대로
+tiếng xe	구	소리+차 그대로
+trước cửa	구	앞+문 그대로
+quay xe	구	돌리다+차 그대로
+chậm lại	구	느린+다시 그대로
+con hẻm	구	단위+골목 그대로
+cả hai	구	전부+둘 그대로
+không dám	구	아니다+감히 그대로
+định ngữ	다름	문법 용어(한정어)
+đừng ngại	구	~하지 마라+꺼리다 그대로
+trước tiên	다름	우선(앞+요정 → 새 뜻)
+không có gì	다름	괜찮아요(굳어진 대답)
+chia tay	다름	헤어지다(나누다+손 → 새 뜻)
+trễ hẹn	구	늦다+약속 그대로
+đi làm thêm	구	가다+아르바이트 그대로
+hết tiền	구	떨어지다+돈 그대로
+cô đơn	다름	외롭다(한 낱말)
+bữa tiệc	구	단위+파티 그대로
+có lỗi	구	있다+잘못 그대로
+tiền nhà	구	돈+집 그대로
+việc nhà	구	일+집 그대로
+khó khăn	다름	어려움(어려운+수건 → 새 뜻)
+động vật	다름	동물(한 낱말)
+cuộc sống	다름	삶·생활(단위+살다 → 명사)
+câu chuyện	같음=chuyện	chuyện 이야기 = câu chuyện 이야기
+hồi hộp	다름	두근거리다(한 낱말)
+kí lô	다름	킬로그램(외래어)
+lịch sự	다름	예의 바르다(한 낱말)
+mát xa	다름	마사지(외래어)
+môi trường	다름	환경(한 낱말)
+máy tính xách tay	다름	노트북(굳어진 말)
+tài liệu	다름	자료(한 낱말)
+thêm nữa	구	더+또 그대로
+ở bên	구	있다+곁 그대로
+chịu được	구	견디다+할 수 있다 그대로
+chẳng hạn như	같음=chẳng hạn	chẳng hạn 예를 들어 = chẳng hạn như 예를 들면
+giờ làm	구	시간+일하다 그대로
+uống bia	구	마시다+맥주 그대로
+nhà mới	구	집+새 그대로
+rơi xuống	구	떨어지다+아래로 그대로
+bay thấp	구	날다+낮게 그대로
+suốt ngày đêm	구	내내+밤낮 그대로
+đứa nhỏ	구	단위+작은 그대로
+trường lớp	다름	학교·학급(총칭)
+không chịu được	구	아니다+견디다 그대로
+mùi nước mắm	구	냄새+느억맘 그대로
+sự cô đơn	구	~함+외롭다 그대로
+cái nóng	구	단위+덥다 그대로
+thấy mệt	구	느끼다+피곤 그대로
+tự mua thuốc	구	스스로+사다+약 그대로
+ở ngoài	구	있다+밖 그대로
+uống nước	구	마시다+물 그대로
+nghỉ việc	구	그만두다+일 그대로
+trả lời email	구	답하다+이메일 그대로
+khó chịu với	구	짜증+~에게 그대로
+lo sợ	같음=lo	lo 걱정하다 = lo sợ 걱정하다·두려워하다
+nhớ rõ	구	기억하다+뚜렷이 그대로
+bạn cũ	구	친구+옛 그대로
+gặp lại	구	만나다+다시 그대로
+quên mất	같음=quên	quên 잊다 = quên mất 깜빡 잊다
+nhóm bạn	구	그룹+친구 그대로
+tìm mua	구	찾다+사다 그대로
+làm quà	구	삼다+선물 그대로
+bộ phim	구	단위+영화 그대로
+cho thêm	구	넣다+더 그대로
+nhanh hơn	구	빠른+더 그대로
+mùi thuốc lá	구	냄새+담배 그대로
+mét rưỡi	구	미터+반 그대로
+tiếng Trung	구	언어+중국 그대로
+dầu mỡ	다름	기름기(총칭)
+khác nhau	구	다르다+서로 그대로
+sách báo	다름	읽을거리(총칭)
+bàn ghế	다름	가구(총칭)
+ngôi nhà	구	단위+집 그대로
+trâu bò	다름	소 떼(총칭)
+nhầm lẫn	같음=nhầm	nhầm 잘못 알다 = nhầm lẫn 착각하다
+lo ngại	같음=lo	lo 걱정하다 = lo ngại 걱정·우려
+gương mặt	같음=mặt	mặt 얼굴 = gương mặt 얼굴
+hiện giờ	같음=hiện	hiện 지금 = hiện giờ 지금
+thời hạn	다름	기한(한 낱말)
+thẻ căn cước	다름	신분증(굳어진 말)
+ký tên	구	서명하다+이름 그대로
+chuyển tiền	구	보내다+돈 그대로
+đổi tiền	구	바꾸다+돈 그대로
+quý khách	구	귀한+손님 그대로
+khóa cửa	구	잠그다+문 그대로
+tủ lạnh	다름	냉장고(장+차갑다 → 새 뜻)
+bằng lái xe	구	증서+운전 그대로
+đếm tiền	구	세다+돈 그대로
+giao dịch	다름	거래(한 낱말)
+ông xã	다름	남편(구어, 할아버지+마을 → 새 뜻)
+tết âm lịch	구	설+음력 그대로
+ngày nghỉ lễ	구	날+휴일 그대로
+tiền mặt	다름	현금(돈+얼굴 → 새 뜻)
+tiền thưởng	구	돈+상 그대로
+tỷ giá	다름	환율(한 낱말)
+mọi thứ	구	모든+것 그대로
+bài kiểm tra	구	단위+시험 그대로
+ngày sinh	구	날+태어나다 그대로
+suốt ngày	구	내내+날 그대로
+thanh toán	다름	결제하다(한 낱말)
+tiền thưởng Tết	구	보너스+설 그대로
+đừng quên	구	~하지 마라+잊다 그대로
+ngồi chờ	구	앉다+기다리다 그대로
+vào quầy	구	가다+창구 그대로
+quầy giao dịch	구	창구+거래 그대로
+thay từ ngữ	구	바꾸기+단어 그대로
+miễn phí chuyển tiền	구	무료+송금 그대로
+vui lòng	다름	~해 주세요(기쁘다+마음 → 새 뜻)
+uống hết thuốc	구	먹다+다+약 그대로
+đi khám lại	구	가다+진찰+다시 그대로
+khỏi bệnh	구	낫다+병 그대로
+có visa	구	있다+비자 그대로
+mua vé máy bay	구	사다+비행기표 그대로
+đưa cho	구	건네다+~에게 그대로
+trả bằng tiền mặt	구	내다+현금으로 그대로
+dùng thẻ	구	쓰다+카드 그대로
+tiền Việt	구	돈+베트남 그대로
+ngừng giao dịch	구	멈추다+거래 그대로
+giao dịch trở lại	구	거래+다시 그대로
+giao dịch qua thẻ	구	거래+카드로 그대로
+nghỉ lễ	구	쉬다+명절 그대로
+đông người	구	붐비다+사람 그대로
+nhiều màu	구	많은+색 그대로
+quần áo trẻ em	구	옷+어린이 그대로
+than đói bụng	구	투덜대다+배고프다 그대로
+lương cao	구	월급+높은 그대로
+hợp chuyên môn	구	맞다+전공 그대로
+chưa quyết định được	구	문장
+béo ra	구	뚱뚱+~해지다 그대로
+đi xe máy	구	타다+오토바이 그대로
+tắt đèn	구	끄다+불 그대로
+ăn kem	구	먹다+아이스크림 그대로
+đổi ra tiền Việt	구	바꾸다+베트남 돈 그대로
+giỏi ngoại ngữ	구	잘하다+외국어 그대로
+rửa tay	구	씻다+손 그대로
+vợ chồng	다름	부부(아내+남편 → 총칭)
+vậy thì	같음=vậy	vậy 그러면 = vậy thì 그렇다면
+chuyên môn	다름	전문 분야(한 낱말)
+kêu gọi	다름	호소하다(부르다+부르다 → 새 뜻)
+nửa tiếng	구	절반+시간 그대로
+đồng tiền	다름	화폐(총칭)
+miền Trung	구	지방+중부 그대로
+nhớ nhà	구	그리워하다+집 그대로
+hồi chiều	구	때+오후 그대로
+chạy bộ	다름	조깅(달리다+걸어서 → 굳어진 말)
+nhạc đồng quê	구	음악+시골 그대로
+lên giường	구	오르다+침대 그대로
+truyện tranh	다름	만화책(이야기+그림 → 새 뜻)
+cầm lên	구	잡다+들다 그대로
+có hại	구	있다+해 그대로
+có lợi	구	있다+이익 그대로
+đi ăn ngoài	구	가다+먹다+밖 그대로
+điều khó hiểu	구	것+이해하기 어려운 그대로
+học tập	같음=học	học 공부하다 = học tập 학습하다
+lớn lên	다름	자라다(큰+오르다 → 새 뜻)
+móng tay	다름	손톱(móng 발톱·손톱 뜻이지만 굳어진 말)
+nâng cao	같음=nâng	nâng 올리다 = nâng cao 높이다
+phim hài	구	영화+코미디 그대로
+ra khỏi	구	나가다+~에서 그대로
+than phiền	같음=than	than 불평하다 = than phiền 불평하다
+thời trẻ	구	때+젊은 그대로
+ý chính	구	뜻+주된 그대로
+yêu thích	같음=thích	thích 좋아하다 = yêu thích 좋아하다
+bị ốm	구	당하다+아프다 그대로
+người nào	구	사람+어느 그대로
+quá trình	다름	과정(한 낱말)
+bạn gái	다름	여자 친구(애인)(친구+여자 → 새 뜻)
+đến giờ ăn	구	되다+밥때 그대로
+đặt món ăn	구	주문하다+음식 그대로
+mang đến	구	가져오다+~에 그대로
+món Việt	구	음식+베트남 그대로
+loại rượu	구	종류+술 그대로
+uống một mình	구	마시다+혼자 그대로
+chuyển qua	구	바꾸다+~로 그대로
+đá cầu	구	차다+제기 그대로
+mai mốt	다름	나중에(내일+모레 → 새 뜻)
+chơi giỏi	구	하다+잘 그대로
+mới tập	구	막+연습하다 그대로
+chưa về nhà	구	아직+집에 가다 그대로
+ra quán	구	나가다+가게 그대로
+tốn tiền	구	들다+돈 그대로
+gặp chuyện không vui	구	문장
+sau giờ làm việc	구	후+근무 시간 그대로
+cảm thấy mệt	구	느끼다+피곤 그대로
+ra khỏi nhà	구	나가다+집 그대로
+về đến nhà	구	돌아오다+도착+집 그대로
+đi tắm	구	가다+씻다 그대로
+cắn móng tay	구	물다+손톱 그대로
+sau bữa ăn	구	후+식사 그대로
+xem phim hài	구	보다+코미디 영화 그대로
+rung đùi	구	떨다+허벅지 그대로
+dậy sớm	구	일어나다+일찍 그대로
+sách khoa học	구	책+과학 그대로
+có trong tay	구	있다+손 안 그대로
+khó hiểu	구	어려운+이해하다 그대로
+cầm sách lên	구	들다+책 그대로
+đĩa nhạc	다름	음반(접시+음악 → 새 뜻)
+món ngon	구	음식+맛있는 그대로
+thành phố biển	구	도시+바다 그대로
+trả lời đúng	구	대답하다+맞게 그대로
+sửa được	구	고치다+할 수 있다 그대로
+các loại xe	구	여러+종류+차 그대로
+bị bệnh	구	당하다+병 그대로
+tắt máy lạnh	구	끄다+에어컨 그대로
+lau bảng	구	닦다+칠판 그대로
+loa bị hư	구	문장
+xuống văn phòng	구	내려가다+사무실 그대로
+người bán hàng	구	사람+장사 그대로
+xách túi nặng	구	들다+가방+무거운 그대로
+hết giờ	구	다 되다+시간 그대로
+đi xem kịch	구	가다+보다+연극 그대로
+nằm bệnh viện	구	눕다+병원 그대로
+khỏe chưa	구	문장
+đi bộ về nhà	구	걷다+집에 가다 그대로
+hơi lạnh	구	약간+춥다 그대로
+đâu có	다름	~하지 않아요(어디+있다 → 새 뜻)
+biết chữ	구	알다+글자 그대로
+bữa cơm	같음=bữa	bữa 끼니 = bữa cơm 식사
+bán hàng	구	팔다+상품 그대로
+đắt tiền	같음=đắt	đắt 비싸다 = đắt tiền 값비싼
+phiếm chỉ	다름	문법 용어(부정칭)
+cây cỏ	다름	초목(총칭)
+xanh tươi	같음=xanh	xanh 푸른 = xanh tươi 푸릇푸릇
+ban đầu	다름	처음(부서+처음 → 새 뜻)
+từ khi	구	~부터+때 그대로
+tóc bạc	구	머리카락+흰 그대로
+bé gái	구	아이+여자 그대로
+buộc tóc	구	묶다+머리 그대로
+cầu hôn	다름	청혼하다(한 낱말)
+cẩu thả	다름	부주의한(한 낱말)
+cười luôn miệng	구	웃다+늘+입 그대로
+dáng người	같음=dáng	dáng 몸매 = dáng người 체형
+dễ thương	다름	귀여운(쉬운+아끼다 → 새 뜻)
+hoa tai	다름	귀걸이(꽃+귀 → 새 뜻)
+ít nói	구	적은+말하다 그대로
+khuôn mặt	같음=mặt	mặt 얼굴 = khuôn mặt 얼굴형
+màu tối	구	색+어두운 그대로
+màu sáng	구	색+밝은 그대로
+mắt hai mí	구	눈+두 겹+눈꺼풀 그대로
+mắt một mí	구	눈+한 겹+눈꺼풀 그대로
+mặt nhọn	구	얼굴+뾰족 그대로
+miệng rộng	구	입+넓다 그대로
+mọi chuyện	구	모든+일 그대로
+ngang trán	구	가로+이마 그대로
+nóng tính	다름	성급한(뜨겁다+성질 → 새 뜻)
+nước da	다름	피부색(물+피부 → 새 뜻)
+ổn định	다름	안정적인(한 낱말)
+thon thả	같음=thon	thon 날씬하다 = thon thả 날씬한
+tính cách	다름	성격(한 낱말)
+tóc thẳng	구	머리카락+곧은 그대로
+trái lại	다름	반대로(trái 반대 뜻이지만 굳어진 접속)
+vui tính	다름	명랑한(기쁘다+성질 → 새 뜻)
+ngoại hình	다름	외모(한 낱말)
+dễ chịu	다름	편안한(쉬운+견디다 → 새 뜻)
+đầu gối	다름	무릎(머리+베개 → 새 뜻)
+người yêu	다름	애인(사람+사랑하다 → 새 뜻)
+dần dần	같음=dần	dần 점점 = dần dần 점점
+trang điểm	다름	화장하다(한 낱말)
+cho thuê	다름	임대하다(주다+빌리다 → 방향이 반대)
+dài ngang vai	구	길다+어깨까지 그대로
+trọc đầu	구	삭발+머리 그대로
+bàn tay	같음=tay	tay 손 = bàn tay 손
+mũi cao	구	코+높은 그대로
+mũi thấp	구	코+낮은 그대로
+tóc muối tiêu	다름	희끗한 머리(소금+후추 → 새 뜻)
+để râu	구	두다+수염 그대로
+được quý mến	구	받다+사랑 그대로
+sinh con	구	낳다+아이 그대로
+thật ra	다름	사실은(진짜+나가다 → 새 뜻)
+chủ nhà	구	주인+집 그대로
+tên gọi	같음=tên	tên 이름 = tên gọi 명칭
+mái tóc	같음=tóc	tóc 머리카락 = mái tóc 머리
+còn lại	다름	나머지(còn 남다 뜻이지만 굳어진 말)
+sinh ra	같음=sinh	sinh 태어나다 = sinh ra 태어나다
+làm đẹp	구	하다+예쁘게 그대로
+cắt tóc	구	자르다+머리 그대로
+tuần lễ	같음=tuần	tuần 주 = tuần lễ 일주일
+chờ đợi	같음=chờ	chờ 기다리다 = chờ đợi 기다리다
+vế câu	같음=vế	vế 절 = vế câu 절
+thi trượt	구	시험+떨어지다 그대로
+trẻ ra	구	젊은+~해지다 그대로
+nhận biết	다름	인식하다(받다+알다 → 새 뜻)
+cao lớn	구	키 큰+큰 그대로
+chúng nó	구	그들+그 아이 그대로
+giải quyết	다름	해결하다(한 낱말)
+nước da đen	구	피부색+검은 그대로
+tiền lẻ	다름	잔돈(돈+홀수 → 새 뜻)
+trú mưa	구	피하다+비 그대로
+tạnh mưa	구	그치다+비 그대로
+bằng tuổi	구	같은+나이 그대로
+điểm kém	구	점수+나쁜 그대로
+chán học	구	싫증+공부 그대로
+mua bán	다름	거래(사다+팔다 → 총칭)
+làm quen	다름	친해지다(하다+익숙 → 새 뜻)
+căn cước	다름	신분(한 낱말)
+ngủ ngon	구	자다+잘 그대로
+khát nước	같음=khát	khát 목마르다 = khát nước 목이 마르다
+đứa trẻ	구	단위+어린 그대로
+nhắm mắt	구	감다+눈 그대로
+ghé thăm	같음=ghé	ghé 들르다 = ghé thăm 방문하다
+xuống còn	구	낮추다+~까지 그대로
+mắc hơn	구	비싸다+더 그대로
+tùy vào	같음=tùy	tùy ~에 따라 = tùy vào ~에 따라
+chiều rộng	구	치수+넓은 그대로
+hoa văn	다름	무늬(꽃+문 → 새 뜻)
+gà con	구	닭+새끼 그대로
+một nghìn	구	숫자
+không khỏe lắm	구	문장
+bạn tôi	구	친구+나 그대로
+cước phí	같음=phí	phí 요금 = cước phí 요금
+rau quả	다름	채소와 과일(총칭)
+đầu bếp	다름	요리사(머리+주방 → 새 뜻)
+máy ảnh	다름	카메라(기계+사진 → 굳어진 말)
+phòng họp	구	방+회의 그대로
+món nào	구	가짓수+어느 그대로
+quả dưa	구	단위+참외 그대로
+quả dứa	구	단위+파인애플 그대로
+bài tập về nhà	구	연습 문제+집에 그대로
+nhiều tuổi hơn	구	많은+나이+더 그대로
+ít tuổi hơn	구	적은+나이+더 그대로
+nhiều chỗ nhất	구	많은+자리+가장 그대로
+ít chỗ nhất	구	적은+자리+가장 그대로
+chúng em	구	복수+em 그대로
+hiếu kỳ	다름	호기심 있는(한 낱말)
+nhiều loại	구	많은+종류 그대로
+con ngựa	구	단위+말 그대로
+quả chuối	구	단위+바나나 그대로
+con tôm	구	단위+새우 그대로
+con vịt	구	단위+오리 그대로
+quả dưa chuột	구	단위+오이 그대로
+quả dừa	구	단위+코코넛 그대로
+quả nho	구	단위+포도 그대로
+nhà báo	다름	기자(집+신문 → 새 뜻)
+phóng viên	다름	기자(한 낱말)
+thế còn	구	그러면+~는요 그대로
+bộ ấm chén	구	세트+주전자+잔 그대로
+kia là	구	저것+이다 그대로
+con chim	구	단위+새 그대로
+quyển vở	구	단위+공책 그대로
+tờ séc	구	단위+수표 그대로
+con gà	구	단위+닭 그대로
+con bò	구	단위+소 그대로
+con lợn	구	단위+돼지 그대로
+mẹ cậu	구	엄마+너 그대로
+nước Nga	구	나라+러시아 그대로
+quyển lịch	구	단위+달력 그대로
+quả cam	구	단위+오렌지 그대로
+quả táo	구	단위+사과 그대로
+quả bóng	구	단위+공 그대로
+quả trứng	구	단위+계란 그대로
+con voi	구	단위+코끼리 그대로
+con cá	구	단위+물고기 그대로
+không biết	구	아니다+알다 그대로
+cô bé	구	아가씨+꼬마 그대로
+chơi cờ	구	놀다+장기 그대로
+nói đùa	같음=đùa	đùa 농담하다 = nói đùa 농담하다
+buồn chán	같음=chán	chán 지루하다 = buồn chán 재미없는
+mùa thu	같음=thu	thu 가을 = mùa thu 가을
+mùa xuân	같음=xuân	xuân 봄 = mùa xuân 봄
+ngôi sao	구	단위+별 그대로
+mùa đông	같음=đông	đông 겨울 = mùa đông 겨울
+sôi nổi	다름	명랑한(끓다+뜨다 → 새 뜻)
+ngữ điệu	다름	억양(한 낱말)
+tiếng Lào	구	언어+라오스 그대로
+buổi học	구	때+수업 그대로
+nhìn lên	구	보다+위로 그대로
+trả lời câu hỏi	구	대답하다+질문 그대로
+thật là	같음=thật	thật 정말 = thật là 매우
+tìm việc	구	찾다+일 그대로
+vào trong	구	들어가다+안 그대로
+cao học	다름	대학원(높은+공부 → 새 뜻)
+gửi thư	구	보내다+편지 그대로
+bán mở hàng	다름	마수걸이(굳어진 말)
+trà sữa	구	차+우유 그대로
+mọi nơi	구	모든+곳 그대로
+câu cá	구	낚다+물고기 그대로
+giá sách	구	선반+책 그대로
+hộp giấy ăn	구	상자+휴지 그대로
+thùng rác	구	통+쓰레기 그대로
+tai nghe	다름	이어폰(귀+듣다 → 새 뜻)
+nâng lên	같음=nâng	nâng 올리다 = nâng lên 들어올리다
+tất cả mọi	구	모두+모든 그대로
+làm theo	구	하다+따라 그대로
+về nhất	다름	1등하다(돌아오다+가장 → 새 뜻)
+sắm sửa	같음=sắm	sắm 장만하다 = sắm sửa 장만하다
+học chăm chỉ	구	공부+열심히 그대로
+lười học	구	게으르다+공부 그대로
+lời khuyên của cô	구	문장
+trả lại	구	돌려주다+다시 그대로
+đáng tiền	구	~할 만한+돈 그대로
+áo bơi	구	옷+수영 그대로
+hình dạng	다름	형태(한 낱말)
+tồi lắm	구	나쁘다+매우 그대로
+dịch bài báo	구	번역하다+기사 그대로
+dùng máy tính	구	쓰다+컴퓨터 그대로
+nhiều loại đàn	구	많은+종류+악기 그대로
+dệt vải	구	짜다+천 그대로
+một ít	같음=ít	ít 적은 = một ít 조금
+bóng bàn	다름	탁구(공+탁자 → 새 뜻)
+cháu gái	구	손주+여자 그대로
+nhà máy dệt	구	공장+방직 그대로
+đáng kể	다름	상당한(~할 만한+이야기하다 → 새 뜻)
+đóng cửa sổ	구	닫다+창문 그대로
+nhất định	다름	반드시(한 낱말)
+bắt tay	다름	악수하다(잡다+손 → 새 뜻)
+tái hiện	다름	재현하다(한 낱말)
+hình vẽ	구	그림+그리다 그대로
+ở lại	같음=ở	ở 머무르다 = ở lại 머무르다
+bánh gối	다름	음식 이름
+viết chính tả	구	쓰다+받아쓰기 그대로
+anh họ	다름	사촌 형(굳어진 말)
+chị họ	다름	사촌 누나(굳어진 말)
+cháu nội	구	손주+친가 그대로
+cháu ngoại	구	손주+외가 그대로
+ly hôn	다름	이혼하다(한 낱말)
+báo tin	구	알리다+소식 그대로
+lên xe	구	타다+차 그대로
+trời nóng	구	날씨+덥다 그대로
+kể chuyện	구	들려주다+이야기 그대로
+đến thăm	구	오다+방문하다 그대로
+tháng lương	구	달+월급 그대로
+tiếp theo	다름	다음(계속+따라 → 새 뜻)
+nửa quả	구	절반+개 그대로
+ở kia	구	있다+저기 그대로
+thứ gì	구	것+무엇 그대로
+về việc	구	~에 대해+일 그대로
+em út	구	동생+막내 그대로
+dọn sạch	구	치우다+깨끗이 그대로
+bảo hành	다름	보증(한 낱말)
+dưa chuột	다름	오이(참외+쥐 → 새 뜻)
+mặc cả	다름	흥정하다(입다+전부 → 새 뜻)
+hàng trăm	다름	수백(줄+백 → 새 뜻)
+rượu vào lời ra	구	속담
+phóng to lên	구	확대+~해지다 그대로
+tóc bạc đi	구	머리+희다+~해지다 그대로
+da trắng lên	구	피부+하얗다+~해지다 그대로
+nhỏ lại	구	작은+~해지다 그대로
+cao lên	구	큰+~해지다 그대로
+xanh lá cây	구	초록+나뭇잎 그대로
+hộp bút	구	상자+펜 그대로
+sắp đi	구	곧+가다 그대로
+một lúc	구	하나+잠깐 그대로
+thật tuyệt	구	정말+훌륭한 그대로
+năm học	구	해+공부 그대로
+như nhau	구	~처럼+서로 그대로
+nữ tính	다름	여성성(한 낱말)
+rộng lượng	다름	관대한(넓다+양 → 새 뜻)
+nhà nội	구	집+친가 그대로
+nhà ngoại	구	집+외가 그대로
+chiếc váy	구	단위+치마 그대로
+đường một chiều	구	길+일방통행 그대로
+đi tiếp	구	가다+계속 그대로
+từ đây	구	~부터+여기 그대로
+rẽ tay trái	구	꺾다+왼쪽 그대로
+rẽ tay phải	구	꺾다+오른쪽 그대로
+tiệm cắt tóc	구	가게+머리 자르다 그대로
+cửa hàng hoa	구	가게+꽃 그대로
+nhà ga	같음=ga	ga 기차역 = nhà ga 기차역
+tàu điện ngầm	다름	지하철(굳어진 말)
+tàu điện trên cao	구	전철+지상 그대로
+xe cấp cứu	구	차+구급 그대로
+xe con	다름	소형차(차+아이 → 새 뜻)
+xe giường nằm	구	차+침대 그대로
+bị hỏng	구	당하다+고장 그대로
+bơi qua	구	헤엄치다+건너다 그대로
+nhà hát lớn	구	극장+큰 그대로
+trèo lên	같음=trèo	trèo 기어오르다 = trèo lên 기어오르다
+chuyến bay	구	편+날다 그대로
+các đảo trên biển	구	여러+섬+바다 위 그대로
+chạy lên gác	구	뛰다+오르다+위층 그대로
+cúi đầu xuống	구	숙이다+머리 그대로
+nhắm mắt vào	구	감다+눈 그대로
+mở mắt ra	구	뜨다+눈 그대로
+bật đèn lên	구	켜다+불 그대로
+tắt đèn đi	구	끄다+불 그대로
+bị cảm lạnh	구	당하다+감기 그대로
+rửa bát	구	씻다+그릇 그대로
+sang năm	다름	내년(~으로+해 → 새 뜻)
+cảm lạnh	같음=cảm	cảm 감기 = cảm lạnh 감기
+phóng nhanh	구	질주하다+빨리 그대로
+đi bằng tàu	구	가다+배로 그대로
+khóa học	구	과정+공부 그대로
+ngày tết	구	날+설 그대로
+giờ đúng	구	시+정각 그대로
+lúc vào	구	때+~에 그대로
+hè trước	구	여름+지난 그대로
+tháng tới	구	달+다음 그대로
+lấy nhau	다름	결혼하다(가지다+서로 → 새 뜻)
+làm việc nhà	구	하다+집안일 그대로
+cổ truyền	다름	전통의(한 낱말)
+âm lịch	다름	음력(한 낱말)
+gia nhập	다름	가입하다(한 낱말)
+ra đời	다름	태어나다(나가다+삶 → 새 뜻)
+câu lạc bộ	다름	동아리(외래어 club)
+chuyến đi	구	편+가다 그대로
+tờ lịch	구	단위+달력 그대로
+đàn bầu	다름	악기 이름
+tái hôn	다름	재혼(한 낱말)
+no bụng	같음=no	no 배부르다 = no bụng 배부른
+giữa tháng	구	가운데+달 그대로
+trận động đất	구	단위+지진 그대로
+đặt chỗ	구	예약하다+자리 그대로
+mùa mưa	구	계절+비 그대로
+mùa khô	구	계절+건조 그대로
+ngày mười bốn	구	날짜
+bốn tháng	구	숫자+달 그대로
+mấy tháng	구	몇+달 그대로
+tháng mấy	구	달+몇 그대로
+động đất	다름	지진(움직이다+땅 → 새 뜻)
+dùng được	구	쓰다+할 수 있다 그대로
+trái đất	다름	지구(열매+땅 → 새 뜻)
+cuộc họp	구	단위+회의 그대로
+độ ẩm	구	정도+습기 그대로
+sắp chuyển	구	곧+이사하다 그대로
+trời oi	구	날씨+후텁지근 그대로
+sự thay đổi	구	~함+바꾸다 그대로
+mưa gió	다름	비바람(총칭)
+bắc bộ	다름	북부 지역(한 낱말)
+sắp tới	구	곧+오다 그대로
+áo mưa	구	옷+비 그대로
+lá vàng	구	잎+노란 그대로
+mặt trời mọc	구	해+뜨다 그대로
+thay vì	다름	대신(바꾸다+때문에 → 새 뜻)
+qua đêm	구	지나다+밤 그대로
+lịch trình	다름	스케줄(한 낱말)
+suốt tối	구	내내+저녁 그대로
+cho tới	구	~까지 그대로
+trở về	같음=về	về 돌아가다 = trở về 되돌아오다
+dù vậy	다름	그래도(비록+그러면 → 새 뜻)
+có cả	구	있다+~까지 그대로
+hết hạn	구	끝나다+기한 그대로
+cửa hàng miễn thuế	구	가게+면세 그대로
+kiểm tra người	구	검사+사람 그대로
+phòng chờ	구	방+기다리다 그대로
+xuống máy bay	구	내리다+비행기 그대로
+nhà ở	구	집+살다 그대로
+đèn pin	구	전등+배터리 그대로
+bị muỗi đốt	구	당하다+모기+물다 그대로
+tiêm phòng	다름	예방접종(주사+예방 → 굳어진 말)
+thị lực	다름	시력(한 낱말)
+thuốc bổ	구	약+영양 그대로
+đi vắng	다름	자리를 비우다(가다+없다 → 새 뜻)
+nhầm số	구	잘못+번호 그대로
+quầy đổi tiền	구	창구+환전 그대로
+tiền chẵn	다름	고액권(돈+짝수 → 새 뜻)
+chỗ ở	구	곳+살다 그대로
+gia hạn	다름	연장하다(한 낱말)
+hàng không	다름	항공(줄+아니다 → 새 뜻)
+họ và tên	구	성+과+이름 그대로
+sinh ngày	구	태어나다+날 그대로
+nơi sinh	구	곳+태어나다 그대로
+ít nhất	다름	적어도(적은+가장 → 새 뜻)
+đâu cả	구	어디+~도 그대로
+còn lâu	구	아직+오래 그대로
+đáng ghét	구	~할 만한+싫어하다 그대로
+biết ngay mà	구	문장
+hôm nào	구	날+어느 그대로
+lâu rồi mới lại	구	문장
+mì xào bò	구	면+볶다+소고기 그대로
+dọn nhà	구	치우다·이사하다+집 그대로
+đan áo len	구	뜨다+스웨터 그대로
+hiệu giặt là	구	가게+세탁+다림질 그대로
+chuyến bay thẳng	구	비행편+직행 그대로
+ảnh thẻ	구	사진+카드 그대로
+hãng hàng không	구	회사+항공 그대로
+đang bận máy	구	문장
+nghỉ họp	구	쉬다+회의 그대로
+đến muộn	구	도착하다+늦은 그대로
+căn phòng	구	단위+방 그대로
+nơi đỗ xe	구	곳+주차 그대로
+hoãn thi	구	연기하다+시험 그대로
+đi nhờ xe	구	가다+얻어+차 그대로
+ngày một	다름	점점(날+하나 → 새 뜻)
+thành thị	다름	도시(한 낱말)
+ký hiệu	다름	기호(한 낱말)
+độ lượng	다름	관대한(한 낱말)
+vừa phải	같음=vừa	vừa 알맞은 = vừa phải 적당한
+chính hiệu	다름	정통의(한 낱말)
+rửa ảnh	다름	인화하다(씻다+사진 → 새 뜻)
+kỳ thi	구	기간+시험 그대로
+ông trời	구	높임+하늘 그대로
+cho đến	구	~까지 그대로
+đủ bài tập	구	다+숙제 그대로
+vật liệu	다름	소재(한 낱말)
+hấp dẫn	다름	매력적인(한 낱말)
+mỗi một	같음=mỗi	mỗi 각 = mỗi một 각각
+chủ yếu	다름	주요한(한 낱말)
+cùng một lúc	구	함께+한 때 그대로
+uốn tóc	구	구부리다+머리 그대로
+hợp pháp	다름	합법적인(한 낱말)
+tỉnh táo	같음=tỉnh	tỉnh 깨다 = tỉnh táo 정신이 맑은
+chính đáng	다름	정당한(한 낱말)
+xin học	구	신청하다+입학 그대로
+nhà riêng	구	집+개인 그대로
+hợp đồng	다름	계약(한 낱말)
+không kể	다름	~을 제외하고(아니다+세다 → 새 뜻)
+tiền điện	구	돈+전기 그대로
+kể cả	다름	~을 포함해서(세다+~도 → 새 뜻)
+tiền thuê nhà	구	돈+집 빌리다 그대로
+gì cũng	구	무엇+도 그대로
+tươi trẻ	구	신선+젊은 그대로
+giờ tự học	구	시간+자습 그대로
+không tính	구	아니다+세다 그대로
+biển số xe	구	표지판+번호+차 그대로
+may sẵn	구	재봉+미리 그대로
+chuyển quà	구	전하다+선물 그대로
+ngủ say	구	자다+깊이 그대로
+cây ăn quả	구	나무+열매 그대로
+vườn cây ăn trái	구	정원+과일 나무 그대로
+phòng bếp	같음=bếp	bếp 부엌 = phòng bếp 주방
+nhà cho thuê	구	집+임대 그대로
+lên giá	구	오르다+가격 그대로
+giải pháp	다름	해결책(한 낱말)
+học thuộc	다름	암기하다(배우다+속하다 → 새 뜻)
+áo len	구	옷+양모 그대로
+cơm bụi	다름	서민 밥집(밥+먼지 → 새 뜻)
+đích thân	다름	본인 스스로(한 낱말)
+ít ra	다름	적어도(적은+나가다 → 새 뜻)
+trang sức	다름	보석(한 낱말)
+thời hạn bảo hành	구	기한+보증 그대로
+đường ngập nước	구	문장
+rau bị hỏng	구	문장
+đúng hạn	구	맞다+기한 그대로
+thị trường	다름	시장(한 낱말)
+mỗi A một B	구	문형
+thu hút	다름	끌어들이다(한 낱말)
+thang cuốn	다름	에스컬레이터(사다리+말다 → 새 뜻)
+đổi tiền lẻ	구	바꾸다+잔돈 그대로
+theo ý	구	따라+뜻 그대로
+học phí	구	공부+비용 그대로
+trình độ	다름	수준(한 낱말)
+giao tiếp	다름	의사소통(한 낱말)
+thành phần chủ yếu	구	성분+주요 그대로
+đúng là	구	맞다+이다 그대로
+gọi món	구	부르다+요리 그대로
+nước xương	구	국물+뼈 그대로
+đón chào	같음=đón	đón 맞이하다 = đón chào 환영하다
+việc giảng dạy	구	일+가르치다 그대로
+tuy A nhưng B	구	문형
+yêu cầu chính đáng	구	요구+정당한 그대로
+nâng cao hiệu quả	구	높이다+효과 그대로
+gắn bó	다름	정이 들다(붙이다+다발 → 새 뜻)
+cách nhìn	구	방법+보다 그대로
+hương vị	같음=vị	vị 맛 = hương vị 맛
+chả miếng	다름	음식 이름
+yêu mến	같음=yêu	yêu 사랑하다 = yêu mến 소중히 여기다
+túi tiền	다름	예산(가방+돈 → 새 뜻)
+gà nướng	구	닭+굽다 그대로
+lịch học	구	일정+공부 그대로
+nhận lời	다름	승낙하다(받다+말 → 새 뜻)
+để ý	다름	신경 쓰다(두다+뜻 → 새 뜻)
+vứt rác	구	버리다+쓰레기 그대로
+ăn xin	다름	구걸하다(먹다+부탁 → 새 뜻)
+người ăn xin	구	사람+구걸 그대로
+cởi mở	다름	개방적인(벗다+열다 → 새 뜻)
+mến khách	구	좋아하다+손님 그대로
+chỉ cần	구	단지+필요 그대로
+vừa khỏi ốm	구	막+낫다+병 그대로
+vui đùa	같음=đùa	đùa 장난치다 = vui đùa 장난치다
+đền đáp	다름	보답하다(한 낱말)
+cũng tùy	구	도+달렸다 그대로
+hợp với	구	맞다+~와 그대로
+bí mật	다름	비밀(한 낱말)
+nâng ly	구	들다+잔 그대로
+thủng săm	구	구멍+튜브 그대로
+giảm sốt	구	줄이다+열 그대로
+đâu ra	구	어디+나오다 그대로
+sấy tóc	구	말리다+머리 그대로
+cắt ngắn	구	자르다+짧게 그대로
+thợ cắt tóc	구	기술자+머리 자르다 그대로
+hiệu cắt tóc	구	가게+머리 자르다 그대로
+ổ cứng	다름	하드디스크(단위+단단한 → 새 뜻)
+mặt tròn	구	얼굴+둥근 그대로
+mặt vuông	구	얼굴+네모 그대로
+mặt dài	구	얼굴+긴 그대로
+vợ sắp cưới	구	아내+곧+결혼 그대로
+nhận ra	다름	알아차리다(받다+나가다 → 새 뜻)
+sự thật	구	~함+진짜 그대로
+chữ ký	구	글자+서명 그대로
+bán chạy	다름	잘 팔리다(팔다+달리다 → 새 뜻)
+biết ơn	다름	감사하다(알다+은혜 → 새 뜻)
+dễ gần	구	쉬운+가깝다 그대로
+may đo	다름	맞춤 제작(재봉+재다 → 굳어진 말)
+kể từ khi	구	~부터+때 그대로
+thất lạc	다름	분실하다(한 낱말)
+hơi đậm	구	약간+진한 그대로
+nhỏ bé	같음=nhỏ	nhỏ 작은 = nhỏ bé 작은
+sôi động	다름	활기찬(한 낱말)
+hình dáng	다름	모양(한 낱말)
+trở ngại	다름	장애물(한 낱말)
+cân nặng	다름	몸무게(무게+무겁다 → 굳어진 말)
+người tiêu dùng	구	사람+소비하다 그대로
+giá thành	다름	원가(한 낱말)
+tiêu chuẩn	다름	기준(한 낱말)
+động cơ	다름	동기(한 낱말)
+chân thành	다름	진심(한 낱말)
+người đông	구	사람+많다 그대로
+tiện dịp	구	편리+기회 그대로
+đảo Khỉ	구	섬+원숭이 그대로
+lớp trẻ	다름	차세대(반+젊은 → 새 뜻)
+chính sách	다름	정책(한 낱말)
+cánh cửa	구	단위+문 그대로
+dạ dày	다름	위(胃)(한 낱말)
+bỏ qua	다름	건너뛰다(버리다+지나다 → 새 뜻)
+cờ đỏ	다름	경고 신호(깃발+빨간 → 새 뜻)
+nhiều dầu mỡ	구	많은+기름기 그대로
+thay đầu	구	바꾸다+헤드 그대로
+thèm chân gà	구	먹고 싶다+닭발 그대로
+bắt chuyện	다름	말을 걸다(잡다+이야기 → 새 뜻)
+nhận thấy	다름	인식하다(받다+느끼다 → 새 뜻)
+ngứa mắt	다름	꼴보기 싫다(가렵다+눈 → 새 뜻)
+đá quý	구	돌+귀한 그대로
+hiếu khách	다름	환대하는(한 낱말)
+người già	구	사람+늙다 그대로
+xa lạ	다름	낯선(먼+이상한 → 새 뜻)
+viện phó	구	기관+부 그대로
+nơi để xe	구	곳+두다+차 그대로
+đầu đĩa	다름	플레이어(머리+접시 → 새 뜻)
+bật quạt	구	켜다+선풍기 그대로
+lạnh run	구	춥다+떨림 그대로
+mẫu đơn	구	양식+신청서 그대로
+tạm trú	다름	임시 거주(한 낱말)
+viêm họng	구	염증+목 그대로
+hàng nghìn	다름	수천(줄+천 → 새 뜻)
+mở rộng	다름	확장하다(열다+넓다 → 새 뜻)
+khu vườn	구	구역+정원 그대로
+thắp hương	구	켜다+향 그대로
+sổ hồng	다름	등기 증서(수첩+핑크 → 새 뜻)
+hướng nhà	구	방향+집 그대로
+hướng Nam	구	방향+남 그대로
+nội thất đầy đủ	구	가구+충분 그대로
+nội thất cơ bản	구	가구+기본 그대로
+kệ bếp	구	선반+주방 그대로
+tủ bếp	구	장+주방 그대로
+cây cảnh	다름	관상용 식물(나무+경치 → 새 뜻)
+đèn bàn	구	전등+책상 그대로
+bình nóng lạnh	다름	온수기(통+뜨겁다+차갑다 → 새 뜻)
+xuống cấp	다름	노후화(내려가다+급 → 새 뜻)
+trang bị	다름	장비(한 낱말)
+hiệu quả	다름	효과(한 낱말)
+động viên	다름	격려하다(한 낱말)
+dự thi	구	참석+시험 그대로
+đáng quý	구	~할 만한+귀한 그대로
+truyện ngắn	구	소설+짧은 그대로
+sự cách âm	구	~함+방음 그대로
+thuyền máy	구	배+기계 그대로
+giải khát	구	풀다+갈증 그대로
+món mặn	구	요리+짠 그대로
+không thì	다름	그렇지 않으면(아니다+그러면 → 새 뜻)
+khá lên	구	나은+~해지다 그대로
+thăm hỏi	같음=thăm	thăm 문안하다 = thăm hỏi 안부를 묻다
+đỡ hơn	구	나아지다+더 그대로
+đỡ rồi	구	나아지다+이미 그대로
+thuê người	구	고용하다+사람 그대로
+liên tiếp	다름	연달아(한 낱말)
+sàn gỗ	구	바닥+나무 그대로
+thoáng mát	구	통풍+시원 그대로
+trách mắng	같음=mắng	mắng 꾸짖다 = trách mắng 꾸짖다
+không may	구	아니다+운 그대로
+kiến trúc	다름	건축(한 낱말)
+chịu khó	다름	부지런하다(견디다+어려운 → 새 뜻)
+quần đùi	다름	반바지(바지+허벅지 → 새 뜻)
+quần bò	다름	청바지(바지+소 → 새 뜻)
+ba lô	다름	배낭(외래어)
+vòng cổ	구	고리+목 그대로
+ăn mặc	다름	차려입다(먹다+입다 → 새 뜻)
+nằm viện	구	눕다+병원 그대로
+ra viện	구	나가다+병원 그대로
+mấy hôm nay	구	몇+날+지금 그대로
+mấy hôm trước	구	몇+날+전 그대로
+chuyện không may	구	일+불운 그대로
+áo may ô	다름	러닝셔츠(외래어)
+vòng tay	구	고리+손 그대로
+số đo	구	숫자+재다 그대로
+vội vàng	같음=vội	vội 서두르다 = vội vàng 서두르는
+trình bày	다름	발표하다(한 낱말)
+người mẫu	다름	모델(사람+견본 → 새 뜻)
+đô thị	다름	도시(한 낱말)
+hàng nội	구	상품+국내 그대로
+hàng ngoại	구	상품+외국 그대로
+thắng cảnh	다름	명승지(한 낱말)
+hành trình	다름	여정(한 낱말)
+bàn bạc	같음=bàn	bàn 논의하다 = bàn bạc 상의하다
+thời trang	다름	패션(한 낱말)
+ngay cả	다름	심지어(바로+~도 → 새 뜻)
+cao điểm	다름	절정·러시아워(높은+점 → 새 뜻)
+hiểu nhầm	구	이해하다+잘못 그대로
+hình thành	다름	형성하다(한 낱말)
+ngoại thương	다름	국제무역(한 낱말)
+học kỳ	구	공부+기간 그대로
+thở ra	구	숨쉬다+내보내다 그대로
+một ly	구	하나+잔 그대로
+khá là	같음=khá	khá 꽤 = khá là 꽤
+sính hàng ngoại	구	좋아하다+외제 그대로
+được nhập	구	되다+수입 그대로
+mét vuông	구	미터+제곱 그대로
+ngoại thành	다름	교외(한 낱말)
+chủ động	다름	주도적(한 낱말)
+động lực	다름	동력(한 낱말)
+còn nhớ	구	아직+기억하다 그대로
+thường là	같음=thường	thường 보통 = thường là 보통은
+cho nhau	구	~에게+서로 그대로
+chỉ dẫn	다름	안내하다(한 낱말)
+sửa lỗi	구	고치다+잘못 그대로
+lẫn nhau	같음=nhau	nhau 서로 = lẫn nhau 서로
+đến chùa	구	가다+절 그대로
+phố cổ	구	거리+옛 그대로
+nội thành	다름	시내(한 낱말)
+cũng như	다름	~뿐만 아니라(또한+처럼 → 새 뜻)
+trượt tuyết	구	미끄러지다+눈 그대로
+chơi đẹp	다름	정정당당하다(놀다+예쁘다 → 새 뜻)
+nghiện rượu	구	중독+술 그대로
+ngoài giờ	구	밖+시간 그대로
+đi dạy thêm	구	가다+가르치다+더 그대로
+mỏi rời	같음=mỏi	mỏi 지치다 = mỏi rời 매우 지친
+chơi gôn	구	놀다+골프 그대로
+cùng chiều	구	같은+방향 그대로
+ngược chiều	구	반대+방향 그대로
+sân gôn	구	장+골프 그대로
+nhà bếp	같음=bếp	bếp 부엌 = nhà bếp 주방
+trốn học	구	도망+수업 그대로
+dẫn đường	구	이끌다+길 그대로
+quay đầu lại	다름	유턴하다(돌리다+머리 → 굳어진 말)
+đi ngược chiều	구	가다+반대 방향 그대로
+một đoạn	구	하나+구간 그대로
+lần sau	구	번+뒤 그대로
+đi chậm	구	가다+느리게 그대로
+cầu xin	같음=xin	xin 부탁하다 = cầu xin 요청하다
+khoa văn	구	학과+문학 그대로
+bị ngã xuống hồ	구	문장
+đưa thư cho	구	건네다+편지+~에게 그대로
+không nào cả	구	아니다+어느+~도 그대로
+biển báo	구	표지판+알리다 그대로
+cùng chúng tôi	구	함께+우리 그대로
+không còn chỗ	구	문장
+đèn đỏ	구	불+빨간 그대로
+lỗi chính tả	구	잘못+맞춤법 그대로
+giờ làm việc	구	시간+일하다 그대로
+thiên tai	다름	천재지변(한 낱말)
+đi vòng	구	가다+돌아 그대로
+mất cắp	구	잃다+훔치다 그대로
+bộ mặt	다름	체면·모습(세트+얼굴 → 새 뜻)
+tuyến đường	구	노선+길 그대로
+quá tải	다름	과부하(한 낱말)
+bán lẻ	다름	소매(팔다+홀수 → 새 뜻)
+thư pháp	다름	서예(한 낱말)
+chịu thôi	구	못하겠다+뿐 그대로
+một điếu	구	하나+개비 그대로
+lễ cưới	구	예식+결혼 그대로
+vượt đèn đỏ	구	넘다+빨간불 그대로
+mắc lỗi	구	범하다+실수 그대로
+bên nữa	구	쪽+또 그대로
+cố định	다름	고정된(한 낱말)
+xa xôi	같음=xa	xa 먼 = xa xôi 멀리 떨어진
+lưu giữ	같음=lưu	lưu 보관하다 = lưu giữ 보존하다
+hồi đó	구	때+그 그대로
+dời đô	구	옮기다+수도 그대로
+quen thuộc	같음=quen	quen 익숙하다 = quen thuộc 익숙한
+để lại	다름	남기다(두다+다시 → 굳어진 말)
+khắp đất nước	구	온+나라 그대로
+leo thang	다름	에스컬레이트(오르다+사다리 → 새 뜻)
+say mê	같음=mê	mê 매료되다 = say mê 매료되다
+nâng cấp	다름	업그레이드(올리다+급 → 새 뜻)
+ngày đó	구	날+그 그대로
+mừng tuổi	다름	세뱃돈(축하+나이 → 새 뜻)
+kim loại	다름	금속(한 낱말)
+vùng cao	구	지역+높은 그대로
+kế toán cơ bản	구	회계+기초 그대로
+văn học Anh	구	문학+영국 그대로
+thị xã	다름	읍(한 낱말)
+chuyên gia	다름	전문가(한 낱말)
+bếp điện	구	레인지+전기 그대로
+làm khách	구	하다+손님 그대로
+khỏe nhất	구	건강+가장 그대로
+bí quyết	다름	비결(한 낱말)
+người trẻ	구	사람+젊은 그대로
+đồng đều	다름	균등한(한 낱말)
+trung bình	다름	평균(한 낱말)
+mẩu giấy	구	조각+종이 그대로
+người bản ngữ	구	사람+모국어 그대로
+nhà máy	다름	공장(집+기계 → 새 뜻)
+nguồn gốc	다름	기원(한 낱말)
+nếu không thì	구	만약+아니면 그대로
+vừa lòng	다름	만족스러운(알맞다+마음 → 새 뜻)
+do đó	구	~때문에+그것 그대로
+trên đời	구	위+삶 그대로
+cổ tay	다름	손목(목+손 → 새 뜻)
+cổ chân	다름	발목(목+발 → 새 뜻)
+bàn chân	같음=chân	chân 발 = bàn chân 발
+cầu nối	다름	가교(다리+잇다 → 새 뜻)
+chậm trễ	같음=chậm	chậm 늦다 = chậm trễ 지연
+đời sống	같음=đời	đời 삶 = đời sống 생활
+tránh khỏi	같음=tránh	tránh 피하다 = tránh khỏi 피하다
+năm bảy	다름	여럿(다섯+일곱 → 새 뜻)
+phạm lỗi	구	범하다+잘못 그대로
+tạo ra	같음=tạo	tạo 만들다 = tạo ra 만들어내다
+tập quán	다름	관습(한 낱말)
+vùng cấm	구	지역+금지 그대로
+bệnh viện tỉnh	구	병원+성 그대로
+bệnh viện quận	구	병원+군 그대로
+bệnh viện chuyên khoa	구	병원+전문과 그대로
+bệnh viện Đông y	구	병원+한방 그대로
+điều hành	다름	운영하다(한 낱말)
+cổng trường	구	대문+학교 그대로
+làm ăn	다름	사업하다(하다+먹다 → 새 뜻)
+túi bụi	다름	정신없이 바쁜(가방+먼지 → 새 뜻)
+bằng lòng	다름	동의하다(~로+마음 → 새 뜻)
+cầu kỳ	다름	까다로운(한 낱말)
+cơ động	다름	기동성 있는(한 낱말)
+truyền thuyết	다름	전설(한 낱말)
+thành ra	다름	결국(되다+나가다 → 새 뜻)
+gia tăng	같음=tăng	tăng 늘다 = gia tăng 증가하다
+tiên đoán	같음=đoán	đoán 짐작하다 = tiên đoán 예측하다
+tiêu phí	다름	낭비하다(소비+비용 → 새 뜻)
+khẩn cấp	같음=khẩn	khẩn 긴급한 = khẩn cấp 급한
+quyền hạn	같음=quyền	quyền 권한 = quyền hạn 권한
+thu nhập	다름	수입(거두다+들어오다 → 새 뜻)
+hài kịch	구	코미디+연극 그대로
+cân nhắc	다름	고려하다(저울+상기 → 새 뜻)
+gói quà	구	싸다+선물 그대로
+hàng tuần	다름	매주(줄+주 → 새 뜻)
+vắng người	구	한산+사람 그대로
+mọc lên	같음=mọc	mọc 나다 = mọc lên 생겨나다
+khắp nơi	구	온+곳 그대로
+nghe lời	다름	말을 잘 듣다(듣다+말 → 순종)
+sốt ruột	다름	초조하다(열+장 → 새 뜻)
+bên trong	구	쪽+안 그대로
+vở kịch	구	단위+연극 그대로
+khen thưởng	다름	포상하다(칭찬+상 → 새 뜻)
+coi là	구	여기다+이다 그대로
+đôi chút	같음=chút	chút 조금 = đôi chút 약간
+tiếp thị	다름	마케팅(한 낱말)
+hai bên	구	둘+쪽 그대로
+ảnh hưởng	다름	영향(한 낱말)
+cầm quyền	구	잡다+권력 그대로
+thiên về	같음=thiên	thiên 치우치다 = thiên về 치우치다
+bộ quần áo ngủ	구	세트+잠옷 그대로
+bản sắc	다름	정체성(한 낱말)
+dự đoán	같음=đoán	đoán 짐작하다 = dự đoán 예측하다
+sinh sống	같음=sống	sống 살다 = sinh sống 거주하다
+sáng tạo	다름	창조하다(한 낱말)
+được sinh ra	구	되다+태어나다 그대로
+lời khuyên	구	말+충고 그대로
+quyết đoán	다름	결단력 있는(한 낱말)
+cấp trên	다름	상사(급+위 → 새 뜻)
+cấp dưới	다름	부하(급+아래 → 새 뜻)
+lớn mạnh	같음=mạnh	mạnh 강한 = lớn mạnh 강성하다
+dùng thử	구	쓰다+해 보다 그대로
+đẹp mắt	다름	눈길을 끄는(예쁘다+눈 → 새 뜻)
+tràn ngập	같음=tràn	tràn 넘치다 = tràn ngập 가득하다
+ngữ văn Anh	구	어문+영국 그대로
+cho rằng	다름	~라고 생각하다(주다+라고 → 새 뜻)
+dựa trên	같음=dựa	dựa 근거하다 = dựa trên ~에 기반하여
+dữ liệu	다름	자료(한 낱말)
+tài chính	다름	재정(한 낱말)
+thanh bình	다름	평화롭다(한 낱말)
+thử sức	다름	도전하다(시도+힘 → 새 뜻)
+được mở rộng	구	되다+확장 그대로
+bị thu hẹp	구	되다+축소 그대로
+đắt đỏ	같음=đắt	đắt 비싸다 = đắt đỏ 고가의
+nguồn lực	다름	자원(한 낱말)
+chỉ số	다름	지수(한 낱말)
+văn bản	다름	문서(한 낱말)
+gián tiếp	다름	간접(한 낱말)
+song song	다름	평행한(한 낱말)
+quầy bán vé	구	창구+표 팔다 그대로
+cảm nghĩ	다름	소감(한 낱말)
+màn hình	다름	화면(한 낱말)
+đến nhau	구	다가가다+서로 그대로
+uốn cong	같음=uốn	uốn 구부리다 = uốn cong 구부리다
+đi trễ	구	가다+늦게 그대로
+tính cạnh tranh	구	~성+경쟁 그대로
+hợp nhất	다름	합병하다(한 낱말)
+đi đò	구	타다+나룻배 그대로
+đâu đó	구	어디+그 그대로
+đổi lịch	구	바꾸다+일정 그대로
+đồng cấp	구	같은+급 그대로
+vượt qua	같음=vượt	vượt 넘다 = vượt qua 극복하다
+thư kí văn phòng	구	비서+사무 그대로
+tin học văn phòng	구	정보학+사무 그대로
+đội bóng	구	팀+공 그대로
+lập trình	다름	프로그래밍(한 낱말)
+xem kịch	구	보다+연극 그대로
+leo núi	구	오르다+산 그대로
+sơn lại	구	칠하다+다시 그대로
+đỡ buồn	구	덜하다+슬프다 그대로
+đỡ mệt	구	덜하다+피곤 그대로
+vai chính	구	역할+주된 그대로
+chiếu phim	구	상영하다+영화 그대로
+chỗ ngồi	구	곳+앉다 그대로
+cảm động	다름	감동하다(한 낱말)
+đáng sợ	구	~할 만한+무섭다 그대로
+bình yên	다름	평온한(한 낱말)
+khá hơn	구	나은+더 그대로
+hút bụi	구	빨다+먼지 그대로
+gấp quần áo	구	개다+옷 그대로
+nằm dài	구	눕다+길게 그대로
+nhận lương	구	받다+월급 그대로
+hành chính	다름	행정(한 낱말)
+nơi có thắng cảnh	구	곳+명승 그대로
+đền chùa	다름	사원(총칭)
+tắm rửa	같음=tắm	tắm 씻다 = tắm rửa 씻다
+ngoại giao	다름	외교(한 낱말)
+người gọi đến	구	사람+전화 걸다 그대로
+người nhận	구	사람+받다 그대로
+ghi lại	같음=ghi	ghi 기록하다 = ghi lại 기록하다
+mức lương	구	수준+월급 그대로
+trong vòng	다름	~동안(안+바퀴 → 새 뜻)
+thay mặt	다름	대신하여(바꾸다+얼굴 → 새 뜻)
+điểm mạnh	구	점+강한 그대로
+hoa mỹ	다름	화려한(한 낱말)
+tiếp thêm sức mạnh	구	문장
+đơn xin việc	구	신청서+구직 그대로
+người hướng nội	구	사람+내향 그대로
+người hướng ngoại	구	사람+외향 그대로
+cờ vua	다름	체스(장기+왕 → 새 뜻)
+nhảy cao	구	뛰다+높이 그대로
+hiểu lầm	구	이해+잘못 그대로
+định kiến	다름	편견(한 낱말)
+thành lập	같음=lập	lập 설립하다 = thành lập 설립하다
+trong xanh	구	맑다+파랗다 그대로
+đón gió biển	구	맞다+바닷바람 그대로
+mặt trời lặn	구	해+지다 그대로
+mặt nước biển	구	표면+바닷물 그대로
+nhỏ xinh	구	작은+예쁜 그대로
+cây nước nóng lạnh	다름	정수기(굳어진 말)
+mất tiếng	구	잃다+소리 그대로
+mở đầu	다름	시작하다(열다+처음 → 새 뜻)
+cô lập	다름	고립(한 낱말)
+chuẩn mực	다름	규범(한 낱말)
+đứng máy	구	멈추다+기계 그대로
+kẹt giấy	구	끼다+종이 그대로
+hết mực	구	떨어지다+잉크 그대로
+mất điện	구	잃다+전기 그대로
+mất màu	구	잃다+색 그대로
+mất hình	구	잃다+화면 그대로
+bấm số	구	누르다+번호 그대로
+lưu văn bản	구	저장+문서 그대로
+mở máy	구	켜다+기계 그대로
+tắt máy	구	끄다+기계 그대로
+sự giúp	구	~함+돕다 그대로
+bộ nhớ	다름	메모리(세트+기억 → 새 뜻)
+giá tiền	같음=giá	giá 가격 = giá tiền 가격
+cấm đi ngược chiều	구	금지+역주행 그대로
+bằng cách	구	~로+방법 그대로
+chấm hỏi	구	점+묻다 그대로
+chấm than	구	점+감탄 그대로
+chấm phẩy	구	점+쉼표 그대로
+đi qua khỏi	구	가다+지나다 그대로
+xóa văn bản	구	삭제+문서 그대로
+không thấy ai cả	구	문장
+chuyển sang	같음=chuyển	chuyển 바꾸다 = chuyển sang 바꾸다
+giúp cho	구	돕다+~에게 그대로
+hết cỡ	다름	한껏(끝+크기 → 새 뜻)
+thấy nóng	구	느끼다+덥다 그대로
+con chuột	구	단위+쥐 그대로
+máy in màu	구	프린터+컬러 그대로
+biển báo tròn	구	표지판+둥근 그대로
+biển báo hình vuông	구	표지판+네모 그대로
+cấm xe kéo	구	금지+견인차 그대로
+cấm xe người kéo	구	금지+인력 수레 그대로
+cấm người đi bộ	구	금지+보행자 그대로
+cấm xe tải	구	금지+화물차 그대로
+cấm xe ô tô	구	금지+자동차 그대로
+cấm xe đạp	구	금지+자전거 그대로
+cấm rẽ phải	구	금지+우회전 그대로
+cấm rẽ trái	구	금지+좌회전 그대로
+cấm quay đầu	구	금지+유턴 그대로
+biển báo dừng lại	구	표지판+정지 그대로
+trạm dừng nghỉ	구	소+멈추다+쉬다 그대로
+trả chậm	구	내다+늦게 그대로
+thu thuế	구	거두다+세금 그대로
+giá thân thương	구	가격+친한 그대로
+chào hàng	다름	호객하다(인사+상품 → 새 뜻)
+kẹt tiền	구	쪼들리다+돈 그대로
+quầy hướng dẫn	구	창구+안내 그대로
+máy chạy bộ	구	기계+조깅 그대로
+đáng nhớ	구	~할 만한+기억 그대로
+không hẳn	구	아니다+완전히 그대로
+chính gốc	구	정+출신 그대로
+được chỉ định	구	되다+지정 그대로
+tuyệt cảnh	구	최고+경치 그대로
+bán đảo	다름	반도(半+섬, 한 낱말)
+quanh năm	다름	일년 내내(둘레+해 → 새 뜻)
+máy giặt	구	기계+세탁 그대로
+bộ ly chén	구	세트+컵+그릇 그대로
+nhận tiền mặt	구	받다+현금 그대로
+chen nhau	구	밀치다+서로 그대로
+mẫu hàng	구	견본+상품 그대로
+máy in	구	기계+인쇄 그대로
+bộ quần áo	구	세트+옷 그대로
+quà tặng	같음=quà	quà 선물 = quà tặng 증정품
+màu sắc	같음=màu	màu 색 = màu sắc 색상
+từng vùng	구	각+지역 그대로
+chèo kéo	다름	호객하다(노 젓다+끌다 → 새 뜻)
+hình ảnh đọng lại	구	이미지+남다 그대로
+thất học	다름	배우지 못한(한 낱말)
+đông vui	구	붐비다+즐겁다 그대로
+dẫn đến	다름	일으키다(이끌다+~까지 → 새 뜻)
+tốn nhiều tiền	구	들다+많은+돈 그대로
+cả đêm	구	온+밤 그대로
+cầu tre	구	다리+대나무 그대로
+lỡ hẹn	구	놓치다+약속 그대로
+ngã năm	다름	오거리(넘어지다+다섯 → 새 뜻)
+hộp thư rác	구	메일함+스팸 그대로
+tắm biển	구	물놀이+바다 그대로
+bảo hành dài hạn	구	보증+장기 그대로
+cấp visa	구	발급+비자 그대로
+nội ô	다름	도심(한 낱말)
+nhà ống	다름	튜브하우스(집+관 → 새 뜻)
+đất liền	다름	육지(땅+연결 → 새 뜻)
+phải lòng	다름	반하다(옳다+마음 → 새 뜻)
+mạng lưới	같음=mạng	mạng 네트워크 = mạng lưới 네트워크
+thiếu nước	구	부족+물 그대로
+lá héo	구	잎+시들다 그대로
+cho đến nay	구	~까지+지금 그대로
+vào học	구	들어가다+학교 그대로
+sinh động	다름	생동감 있는(한 낱말)
+tiêu dùng	같음=tiêu	tiêu 소비하다 = tiêu dùng 소비하다
+nhìn chung	다름	대체로(보다+공통 → 새 뜻)
+dầu gội đầu	구	기름+머리 감다 그대로
+sữa rửa mặt	구	우유+세안 그대로
+mua số lượng lớn	구	사다+대량 그대로
+nổi bật	다름	두드러지다(뜨다+켜다 → 새 뜻)
+dự toán	다름	예산안(한 낱말)
+buổi họp cuối năm	구	회의+연말 그대로
+tăng gấp đôi	구	늘다+두 배 그대로
+giảm một nửa	구	줄다+절반 그대로
+chở xăng dầu	구	운송+기름 그대로
+tiền thuê hàng tháng	구	집세+매달 그대로
+có sẵn	구	있다+미리 그대로
+tặng kèm	구	주다+곁들여 그대로
+dành cho	다름	~를 위한(할애+~에게 → 굳어진 말)
+tiền lời	구	돈+이익 그대로
+chợ nổi	구	시장+뜨다 그대로
+khác hẳn	구	다르다+완전히 그대로
+lặn biển	구	잠수+바다 그대로
+số chẵn	구	수+짝수 그대로
+số lẻ	구	수+홀수 그대로
+bao la	다름	광대한(한 낱말)
+thật ra thì	같음=thật ra	thật ra 사실은 = thật ra thì 사실은
+phí đỗ xe	구	요금+주차 그대로
+hạn mức	다름	한도(한 낱말)
+bán dẫn	다름	반도체(半+이끌다, 한 낱말)
+mắc nợ	구	걸리다+빚 그대로
+cạnh tranh	다름	경쟁(한 낱말)
+chỉ tiêu	다름	지표(한 낱말)
+con số	같음=số	số 숫자 = con số 숫자
+giữ chân	다름	붙잡다(지키다+발 → 새 뜻)
+phòng ban	다름	부서(총칭)
+trước hết	다름	우선(앞+끝 → 새 뜻)
+tầng lầu	같음=tầng	tầng 층 = tầng lầu 층
+thương lượng	다름	협상(한 낱말)
+đời mới	구	세대+새 그대로
+tiền hàng	구	돈+상품 그대로
+gấp đôi	다름	두 배(접다+쌍 → 새 뜻)
+một nửa	같음=nửa	nửa 절반 = một nửa 절반
+đóng thuế	구	내다+세금 그대로
+trốn thuế	구	피하다+세금 그대로
+độ phân giải cao	구	해상도+높은 그대로
+độ bền	구	정도+튼튼 그대로
+thương hiệu nổi tiếng	구	브랜드+유명 그대로
+kịp thời	다름	제때(한 낱말)
+say xe	다름	멀미(취하다+차 → 새 뜻)
+cảm sổ mũi	구	감기+콧물 그대로
+nội thất	다름	인테리어(한 낱말)
+tiền hoa hồng	다름	수수료(돈+장미 → 새 뜻)
+làm việc từ xa	구	일하다+멀리서 그대로
+vay tiền	구	빌리다+돈 그대로
+mua đô la	구	사다+달러 그대로
+ánh sáng	같음=ánh	ánh 빛 = ánh sáng 빛
+phiếu giảm giá	구	쿠폰+할인 그대로
+thứ tự	다름	순서(한 낱말)
+việc gấp	구	일+급한 그대로
+việc chạy xe	구	~것+달리다 그대로
+việc dừng xe	구	~것+멈추다 그대로
+việc kiếm tiền	구	~것+돈 벌다 그대로
+việc làm việc	구	~것+일하다 그대로
+bình an	다름	평안(한 낱말)
+một ngày nào đó	구	어느+날 그대로
+kiểu nói chuyện	구	방식+말하다 그대로
+mời uống nước	구	권하다+마시다 그대로
+áo ấm	구	옷+따뜻 그대로
+ban nhạc	다름	밴드(부서+음악 → 새 뜻)
+bánh dày	다름	음식 이름
+bệnh sốt rét	다름	말라리아(굳어진 말)
+bệnh tả	다름	콜레라(병+설사 → 한 낱말)
+bó hẹp	다름	한정된(묶다+좁다 → 새 뜻)
+cam lòng	다름	감수하다(甘+마음 → 새 뜻)
+chịu ơn	구	받다+은혜 그대로
+chanh đá	구	레몬+얼음 그대로
+chiều dài	구	치수+길다 그대로
+chuyển tải	다름	전달하다(한 낱말)
+con đầu lòng	다름	첫째 아이(굳어진 말)
+cố đô	다름	옛 수도(故+수도, 한 낱말)
+cột đá	구	기둥+돌 그대로
+cơ bản	다름	기본(한 낱말)
+cuộc thi	구	단위+시험 그대로
+cuốn hút	다름	매혹하다(말다+빨다 → 새 뜻)
+chính quyền	다름	정권(한 낱말)
+cử chỉ	다름	몸짓(한 낱말)
+đáng ra	다름	마땅히(~할 만한+나가다 → 새 뜻)
+đáng thương	구	~할 만한+불쌍히 여기다 그대로
+điều tra	다름	조사하다(한 낱말)
+đỉnh núi	구	꼭대기+산 그대로
+đón tiếp	같음=đón	đón 맞이하다 = đón tiếp 영접하다
+đau khổ	같음=khổ	khổ 괴롭다 = đau khổ 고통스러운
+đau vai	구	아프다+어깨 그대로
+đầu não	다름	본부(머리+뇌 → 새 뜻)
+để dành tiền	구	저축하다+돈 그대로
+để đời	다름	불후의(두다+세대 → 새 뜻)
+đi ngoài	다름	설사하다(가다+밖 → 새 뜻)
+độ cao	구	정도+높은 그대로
+đồng bằng	다름	평야(한 낱말)
+đúng hẹn	구	맞다+약속 그대로
+gần như	다름	거의(가깝다+처럼 → 새 뜻)
+giải nhất	구	상+1등 그대로
+giảm bớt	같음=giảm	giảm 줄이다 = giảm bớt 줄이다
+giảm cân	구	줄이다+무게 그대로
+giàu có	같음=giàu	giàu 부유한 = giàu có 부유한
+giấy mời	구	종이+초대 그대로
+hắt hơi	다름	재채기(뿌리다+숨 → 새 뜻)
+hiếm có	같음=hiếm	hiếm 드문 = hiếm có 드문
+hiệu may	구	가게+재봉 그대로
+khu rừng	구	구역+숲 그대로
+kiếm lời	구	벌다+이익 그대로
+khéo tay	구	능숙+손 그대로
+khó thở	구	어려운+숨쉬다 그대로
+kim tự tháp	다름	피라미드(한 낱말)
+lạnh giá	같음=lạnh	lạnh 춥다 = lạnh giá 매우 추운
+mai một	다름	소멸되다(한 낱말)
+mất sạch	구	잃다+싹 그대로
+một phần	구	하나+부분 그대로
+nhà cao tầng	구	집+고층 그대로
+nhà vua	같음=vua	vua 왕 = nhà vua 왕
+nhanh chóng	같음=nhanh	nhanh 빠른 = nhanh chóng 신속히
+ngủ gật	다름	꾸벅꾸벅 졸다(자다+끄덕 → 새 뜻)
+nguồn lợi	구	원천+이익 그대로
+nhập cuộc	다름	참여하다(들어가다+판 → 새 뜻)
+nhịn ăn	구	참다+먹다 그대로
+nóng bức	같음=nóng	nóng 덥다 = nóng bức 무더운
+nước lũ	구	물+홍수 그대로
+phòng cấp cứu	구	방+응급 그대로
+phân bổ	다름	배분하다(한 낱말)
+phân loại	구	나누다+종류 그대로
+quyền lợi	다름	권리(한 낱말)
+rời bỏ	같음=rời	rời 떠나다 = rời bỏ 떠나다
+run người	구	떨다+몸 그대로
+sai lầm	같음=sai	sai 틀리다 = sai lầm 잘못된
+sống động	다름	생생한(한 낱말)
+say nắng	다름	일사병(취하다+햇볕 → 새 뜻)
+say sóng	다름	배멀미(취하다+파도 → 새 뜻)
+sức lực	같음=sức	sức 힘 = sức lực 체력
+suốt đời	구	내내+삶 그대로
+suốt năm	구	내내+해 그대로
+tăng lên	같음=tăng	tăng 오르다 = tăng lên 증가하다
+tập luyện	같음=luyện	luyện 연습하다 = tập luyện 훈련하다
+tiêu tiền	구	쓰다+돈 그대로
+tìm kiếm	같음=tìm	tìm 찾다 = tìm kiếm 찾다
+tất bật	다름	분주한(한 낱말)
+thành đạt	다름	성공하다(한 낱말)
+thân mến	같음=thân	thân 친한 = thân mến 친애하는
+thuốc giảm sốt	구	약+해열 그대로
+thuyết trình	다름	발표하다(한 낱말)
+vật cảnh	다름	애완동물(사물+경치 → 새 뜻)
+viên thuốc	구	알+약 그대로
+vở chèo	구	단위+체오 그대로
+vừa vặn	같음=vừa	vừa 알맞은 = vừa vặn 딱 맞는
+hẳn là	같음=hẳn	hẳn 분명히 = hẳn là 틀림없이
+đáng yêu	구	~할 만한+사랑 그대로
+rượu thuốc	구	술+약 그대로
+cách nghĩ	구	방식+생각하다 그대로
+điện ảnh	다름	영화 예술(전기+사진 → 새 뜻)
+nhật ký	다름	일기(한 낱말)
+màu đen	구	색+검은 그대로
+màu trắng	구	색+하얀 그대로
+màu đỏ	구	색+빨간 그대로
+màu vàng	구	색+노란 그대로
+màu xám	구	색+회색 그대로
+màu tím	구	색+보라 그대로
+màu xanh lá cây	구	색+초록 그대로
+màu xanh da trời	구	색+하늘색 그대로
+màu hồng	구	색+분홍 그대로
+quán giải khát	구	가게+음료 그대로
+một vòng	구	하나+바퀴 그대로
+theo mình	구	따라+나 그대로
+ô tô	다름	자동차(외래어)
+thịt gà	구	고기+닭 그대로
+xong rồi	구	끝나다+이미 그대로
+thịt lợn	구	고기+돼지 그대로
+ổ điện	다름	콘센트(틀+전기 → 새 뜻)
+máy tính bảng	다름	태블릿(굳어진 말)
+đôi đũa	구	단위+젓가락 그대로
+chanh leo	다름	패션프루트(라임+오르다 → 새 뜻)
+sữa tươi	구	우유+신선 그대로
+rau mùi	다름	고수(채소+냄새 → 새 뜻)
+vịt quay	구	오리+굽다 그대로
+quên rồi	구	잊다+이미 그대로
+mì tôm	다름	라면(국수+새우 → 새 뜻)
+xanh da trời	구	파란+하늘 그대로
+cố lên	구	애쓰다+~해라 그대로
+đầu năm	구	처음+해 그대로
+ngủ dậy	구	자다+일어나다 그대로
+bạn mới	구	친구+새 그대로
+kem tay	구	크림+손 그대로
+quán ăn gần	구	식당+가까운 그대로
+chúc buổi trưa	구	빌다+점심 그대로
+con thỏ	구	단위+토끼 그대로
+con cá heo	구	단위+돌고래 그대로
+ngu ngốc	같음=ngu	ngu 어리석다 = ngu ngốc 멍청한
+phố chuyên	구	거리+전문 그대로

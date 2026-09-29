@@ -20,6 +20,7 @@ MY = ["app.js", "style.css", "icon.png", "icon-192.png", "icon-180.png", "manife
 # 교재 예문을 교재 문장으로 (2026-09-29) — 도구·판정표·쪽 이미지로 확인한 번호·손으로 옮긴 문장, 녹음 채우기·뜻 끼워 넣기
 MY += ["tools/fill_audio.py", "tools/sense_review/insert_sense.py"] + [f"tools/book_ex/{n}" for n in ("build_pool.py", "cand.py", "qwen_pass.py", "review.py", "strips.py", "rec_ex.py", "apply_ex.py", "check_ex.py", "예문판정.tsv", "확인.txt", "src/손문장.tsv")] + [".gitignore"]   # 교재 전체 글(src/·pool·cand)은 교재를 통째로 옮긴 것이라 공개 저장소에 안 올린다
 # 낱말 하나씩 검사(뜻·발음·짝·녹음 받아쓰기)와 클로드가 지은 유의어·반의어 (2026-09-29)
+MY += ["data/_dict_skip.json", "data/_dict_en.json", "tools/dict_en/build.py", "tools/word_check/fix_kr.py", "tools/compound/판정.tsv", "tools/compound/_후보.tsv"]   # 사전 문장 빼기·영어 열쇠·발음 고침·붙은 말 판정 (2026-09-29)
 MY += [f"tools/rel_mine/{n}" for n in ("apply.py", "짝.tsv", "뜻_새로.tsv")] + [f"tools/word_check/{n}" for n in ("asr.py", "sheet.py", "apply_k.py", "carrier.mp3", "검사표.tsv", "k_고침.tsv", "짝_삭제.tsv", "_main_words.json")] + ["data/_asr_word.jsonl"]
 # 위키낱말사전에 표시된 유의어·반의어 넣기 + 클로드 뜻별 판정 (2026-09-29)
 MY += ["tools/rel_parse.py"] + [f"tools/rel_import/{n}" for n in ("apply.py", "pairs.tsv", "뜻판정.tsv", "뜻_새로.tsv", "갈래.tsv")]
