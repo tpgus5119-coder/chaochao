@@ -7764,7 +7764,9 @@ function dictBuild() {
     /* 여러 자료의 뜻을 합칠 때 겹치는 단어은 다시 안 붙인다 — "누나·언니 / 누나·언니뻘 여자 / 언니" 처럼 길어지지 않게. 세 갈래까지만. */
     /* 뜻은 **구절** 단위로 합친다 (2026-09-29): 앞서는 낱말 단위라 '요리하다 / 요리하다, 밥을 짓다 / 요리하다·요리·밥을 짓다' 처럼 같은 뜻이 세 번 붙었다.
        새 자료의 구절 중 이미 있는 구절(또는 그것을 품은 구절)과 겹치지 않는 것만 ' · ' 로 잇는다. 여섯 구절까지. */
-    const phr = g => g.split(/\s*[·\/,;]\s*/).map(s => s.trim()).filter(Boolean);
+    // 괄호 안의 ·,/; 는 구절 경계가 아니다 — '운동하다(헬스·체조: tập gym·tập thể dục)' 이 세 조각으로 찢기지 않게 (2026-09-29 밤)
+    const SEP = { '·': '\u0001', ',': '\u0002', '/': '\u0003', ';': '\u0004' }, UNSEP = { '\u0001': '·', '\u0002': ',', '\u0003': '/', '\u0004': ';' };
+    const phr = g => g.replace(/\([^)]*\)/g, m => m.replace(/[·,\/;]/g, c => SEP[c])).split(/\s*[·\/,;]\s*/).map(s => s.replace(/[\u0001-\u0004]/g, c => UNSEP[c]).trim()).filter(Boolean);
     if (!o.ko.includes(ko)) {
       const have = phr(o.ko);
       const add = phr(ko).filter(p => !have.some(h => h === p || h.includes(p) || p.includes(h)));
@@ -7846,7 +7848,7 @@ function dictEntry(q0) {
        앞서는 '시작하면 0' 한 갈래뿐이라 '병원'과 '병원비'가 같은 등급이 되고, 베트남어 길이(viện phí 8 < bệnh viện 9)로 병원비가 위로 올라갔다.
        베트남어: 그 말 자체 0 → 그 말로 시작 1 → 들어 있음 2. 같은 등급이면 수업 낱말이 참고 사전보다 먼저, 그다음 짧은 것. */
     // 뜻은 구절 단위로 견준다 — '학교 정문'의 첫 낱말이 '학교'라고 병원·학교와 같은 등급이 되지 않게. 괄호 설명은 빼고 본다: '학교(기관)' = '학교'
-    const phrs = s => s.toLowerCase().split(/\s*[·\/,;]\s*/).map(p => p.replace(/\([^)]*\)/g, '').trim()).filter(Boolean);
+    const phrs = s => s.toLowerCase().replace(/\([^)]*\)/g, '').split(/\s*[·\/,;]\s*/).map(p => p.trim()).filter(Boolean);   // 괄호는 자르기 전에 뺀다 — 괄호 안 ·,/ 로 찢기면 괄호가 안 닫혀 못 뺐다 (2026-09-29 밤)
     const enq = !kor && ENQ(q);                     // 영어로 찾기(hospital) — 영어는 열쇠일 뿐 화면엔 안 나온다
     const hit = d.filter(x => kor ? x.ko.toLowerCase().includes(qk)
                                   : (x.b.includes(qb) || x.vi.toLowerCase().includes(qk) || (enq && x.en && x.en.some(e => e === qk || e.startsWith(qk + ' ')))))
