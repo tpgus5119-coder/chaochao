@@ -22,9 +22,15 @@ import hashlib
 import json
 import os
 import pathlib
+import sys
 
 R = pathlib.Path(__file__).resolve().parent.parent
 k12 = lambda t: hashlib.sha1(t.encode()).hexdigest()[:12]
+
+
+sys.path.insert(0, str(R / "tools"))
+from vi_kr import word as _vk
+KR = lambda w, south=False: _vk(w, south=south)     # 한글 발음은 vi_kr 로만 (AI·손 금지)
 
 
 def L(vi, ko, snd, ex, ex_ko, rules=(), kr=''):
@@ -235,6 +241,168 @@ P6 = {"day": "P6", "theme": "헷갈리는 소리",
                   "a": "당신이 먼저 냅니다", "b": "당신이 먼저 맞힙니다"}}
 
 
+# ── 7. 철자·성조 부호 규칙 (2026-09-29, 대표님: "i와 y의 차이도 잘 알려주고 있니? ai, ay 등? 각 성조 각 모음 위의 모자…
+#    모음자음 결합했을 때 어떤 발음이 되는지 gio 등등 — 예를 든 것만 하지 말고 관련된 모든 것을")
+#    소리·모음·겹모음·받침·성조 장에 흩어져 있던 **철자 규칙**을 모으고, 빠져 있던 **성조 부호 자리**와 **i/y 규정**을 더한다.
+P7 = {"day": "P7", "theme": "철자·성조 부호 규칙",
+      "intro": "소리는 같은데 적는 법이 여러 가지인 것, 그리고 성조 부호를 어느 글자 위에 찍는지 모았습니다. "
+               "읽을 때 헷갈리지 않고 칠 때 틀리지 않게 — 규칙은 몇 개뿐입니다.",
+      "letters": [
+          L("i · y", "같은 [이] 소리 — 쓰는 자리가 정해져 있다", "lí", "quản lý", "관리하다 (quản lí 로도 적는다)",
+            ["자음 바로 뒤의 [이]는 <b>i</b> 로 씁니다 — 교육부 맞춤법 규정(2018, 결정 1989/QĐ-BGDĐT) 9조의 예: hi vọng · kỉ niệm · lí luận · mĩ thuật · bác sĩ · tỉ lệ. "
+             "y 로 쓴 lý · kỹ · mỹ · tỷ 도 널리 보여 <b>둘 다 통합니다</b>(앱은 같은 말로 봅니다). 사람·땅 이름은 원래 적는 대로.",
+             "<b>uy</b> 는 y: quý 귀하다 · thuỷ 물 · huy (u 가 반모음일 때 — 규정의 예 quý hoá · thuỷ thủ)",
+             "<b>ay · ây</b> 의 끝은 y: tay 손 · mấy 몇. <b>ai 와 ay 는 다른 소리</b> — ai 는 a 가 길고 ay 는 짧습니다(hai 둘 · hay 재미있다). 겹모음 장에서 들어 보세요.",
+             "<b>yê</b>: 첫소리가 없거나 u 뒤면 y 로 시작(yêu 사랑하다 · yên 조용하다 · chuyện 이야기 · quyển 권), 자음 뒤면 iê(tiền 돈 · biển 바다)",
+             "<b>i 만</b>: ia · iu · oi · ôi · ơi · ui · ưi 의 i(mía · chịu · nói · tôi · mới · vui · gửi), 첫소리 없이 받침이 붙은 i(ít 적다 · in 인쇄하다 · ích 이롭다)",
+             "혼자 쓰는 [이]: 한자어는 y(ý 뜻 · y tá 간호사), 고유어는 i(ì ạch)"], KR("lí")),
+          L("gi", "gi 는 자음 한 글자 — 뒤 모음 규칙", "giờ", "gì", "무엇",
+            ["gi 뒤에 모음이 오면 gi 가 자음 하나입니다: " + " · ".join(f"{w} [{KR(w)}]" for w in ("gia", "giờ", "giữa")),
+             "gi + i 는 i 하나만 씁니다: <b>gì</b> [" + KR("gì") + "](무엇) · gìn(gìn giữ 지키다)",
+             "gi + iê 도 i 하나만: <b>giết</b>(죽이다) · <b>giếng</b>(우물)",
+             "성조 부호는 gi 의 i 가 아니라 <b>뒤 모음</b>에: giá · giờ · giữa — 뒤 모음이 없으면(gì · gìn) i 위",
+             "북부에서는 d · r 과 같은 소리(da · gia · ra), 남부에서는 gi · d 가 영어 y 같은 반모음 소리입니다(gia 남부 [" + KR("gia", True) + "]). 철자는 낱말마다 외웁니다."], KR("giờ")),
+          L("qu", "q 는 늘 qu — u 는 반모음 [w]", "quý", "quê", "고향",
+            [" · ".join(f"{w} [{KR(w)}]" for w in ("qua", "quê", "quý", "quân", "quyển")),
+             "성조 부호는 u 가 아니라 <b>뒤 모음</b>에: quá · quý · quốc",
+             "uy 는 y 가 규정 표기라 <b>quý</b> 입니다 — 옛 글에서는 quí 로도 적었습니다(앱은 같은 말로 봅니다)."], KR("quý")),
+          L("c · k · q  ·  g · gh  ·  ng · ngh", "같은 소리 — 뒤 모음에 따라 글자만 바뀐다", "kem", "nghe", "듣다",
+            ["<b>i · y · e · ê 앞</b> → k · gh · ngh (kim 바늘, ghi 적다, nghĩ 생각하다, kem 아이스크림, ghế 의자, nghề 직업)",
+             "<b>a · ă · â · o · ô · ơ · u · ư 앞</b> → c · g · ng (cá 물고기, gà 닭, ngon 맛있다, cô 선생님, gỗ 나무, ngủ 자다)",
+             "<b>반모음 [w] 앞</b> → q (qua, quê) — cua(게)의 u 는 반모음이 아니라 모음이라 c 입니다.",
+             "받침 자리에는 k · gh · ngh 가 오지 않습니다(받침은 -c · -ng)."], KR("kem")),
+          L("성조 부호 자리", "부호는 음절의 주 모음 위(아래)에 — 규정 8조", "người", "tiếng", "소리·말",
+            ["주 모음이 한 글자면 그 위(아래): có · bạn · học · mái nhà",
+             "<b>oa · oe · uy · uê</b> 는 주 모음이 뒤 글자라 뒤 글자 위: <b>hoà · khoẻ · thuỷ · tuệ</b> (규정 8조 1 의 예: hoà nhạc · quý hoá · thuỷ thủ · mạnh khoẻ · trí tuệ). "
+             "옛 방식 hòa · khỏe · thủy 도 널리 쓰입니다(앱은 같은 말로 봅니다). 받침이 붙으면 어느 방식이든 뒤 글자: hoàn · huyện",
+             "<b>ia · ua · ưa</b> 는 앞 글자 위(아래): bìa · lụa · lửa · mía · cửa (8조 2a)",
+             "<b>iê · yê · uô · ươ</b> 는 뒤 글자 위(아래): biển · thuyền · nhuộm · được · tiếng · người (8조 2b)",
+             "qu · gi 의 u · i 는 주 모음이 아닙니다: quá · giá"], KR("người")),
+      ],
+      "after": [
+          {"e": "🔤", "t": "모음 12 × 성조 6 한눈에",
+           "b": "<table class='tonetab'><tr><th></th><th>평평<br>ngang</th><th>내려감<br>huyền</th><th>올라감<br>sắc</th><th>내렸다 올림<br>hỏi</th><th>끊겼다 올림<br>ngã</th><th>뚝 떨어짐<br>nặng</th></tr>"
+                + "".join("<tr><th>%s</th>%s</tr>" % (row[0], "".join("<td>%s</td>" % c for c in row)) for row in [
+                    "a à á ả ã ạ".split(), "ă ằ ắ ẳ ẵ ặ".split(), "â ầ ấ ẩ ẫ ậ".split(), "e è é ẻ ẽ ẹ".split(), "ê ề ế ể ễ ệ".split(),
+                    "i ì í ỉ ĩ ị".split(), "o ò ó ỏ õ ọ".split(), "ô ồ ố ổ ỗ ộ".split(), "ơ ờ ớ ở ỡ ợ".split(), "u ù ú ủ ũ ụ".split(),
+                    "ư ừ ứ ử ữ ự".split(), "y ỳ ý ỷ ỹ ỵ".split()])
+                + "</table>ă · â 는 혼자 끝나지 못해 실제 낱말에서는 받침과 함께 나옵니다(ăn · cần). 부호 모양: 모자(^ ˘ ˀ)는 <b>모음이 무슨 소리인지</b>, 성조 부호(` ´ ˀ ~ .)는 <b>높낮이</b>를 나타냅니다 — 둘은 따로 붙습니다(ố = ô + ´)."},
+      ],
+      "mission": {"goal": "부호 자리 맞히기",
+                  "how": "한 사람이 tiếng / người / mua / hoà / quý 를 성조 부호 없이 적어 준다. 다른 사람이 부호를 제자리에 찍는다. 5개 중 4개면 통과.",
+                  "a": "당신이 먼저 적어 줍니다", "b": "당신이 먼저 찍습니다"}}
+
+# ── 8. 숫자 읽기 (2026-09-29, 대표님: "5 năm·lăm, 4 bốn·tư, 1 một·mốt, 0 이 둘이면 không trăm … 전화번호·연도·돈 읽는 법이 다르더라 — 자세하게")
+#    규칙은 기본기에 모으고, 숫자 낱말·대화 연습은 일상 '숫자 세기'·'시간과 요일' 과에서 한다(관련 과 표시).
+#    연도: 공식은 수 전체, 말할 때는 앞 두 자리를 하나씩·뒤 두 자리를 한 수로(howtovietnamese.com 등 확인). 돈 속어는 fptshop.com.vn 등으로 확인(xị = 1만).
+P8 = {"day": "P8", "theme": "숫자 읽기",
+      "intro": "베트남어 숫자는 자리에 따라 소리가 바뀝니다 — 1 은 một 이었다가 mốt, 5 는 năm 이었다가 lăm, 4 는 bốn 이었다가 tư. "
+               "그리고 <b>하나씩 읽을 때</b>(전화번호)와 <b>수로 읽을 때</b>(돈·개수)가 다릅니다. 규칙만 모았습니다 — 낱말과 대화는 일상 '숫자 세기' 과에서.",
+      "letters": [
+          L("0 ~ 10", "không · một · hai · ba · bốn · năm · sáu · bảy · tám · chín · mười", "không, một, hai, ba, bốn, năm, sáu, bảy, tám, chín, mười", "mười", "10",
+            ["0 은 không — 전화번호의 0 도 không", "10 은 mười (내려가는 성조)"]),
+          L("11 ~ 19", "mười + 수 — 15 는 mười lăm", "mười một, mười hai, mười lăm, mười chín", "mười lăm", "15",
+            ["11 은 mười một (mốt 아님 — mốt 은 21 부터)", "15 는 <b>mười lăm</b> — 10 뒤의 5 는 năm → lăm", "14 는 mười bốn (mười tư 도)"]),
+          L("20 · 30 … 90", "수 + mươi — mười 가 mươi 로 성조가 바뀐다", "hai mươi, ba mươi, năm mươi, chín mươi", "hai mươi", "20",
+            ["10 만 mười(내려감), 20 · 30 … 은 <b>mươi</b>(평평)", "말할 때는 mươi 를 빼기도: hai lăm = 25, ba mốt = 31 (구어)"]),
+          L("21 · 24 · 25", "끝자리 1 → mốt · 4 → tư · 5 → lăm", "hai mươi mốt, hai mươi tư, hai mươi lăm", "hai mươi mốt", "21",
+            ["21 · 31 … 91 의 1 은 <b>mốt</b> (11 만 mười một)", "24 · 34 … 의 4 는 <b>tư</b> 도 씁니다 (hai mươi tư = hai mươi bốn)",
+             "25 · 35 … 의 5 는 <b>lăm</b> (북부 구어로 nhăm 도)", "linh(lẻ) 뒤에서는 본디 꼴: 105 = một trăm linh năm, 101 = một trăm linh một"]),
+          L("100 ~ 999", "trăm — 가운데 빈 자리(0)는 linh(북부) · lẻ(남부)", "một trăm, một trăm linh năm, một trăm mười lăm, hai trăm năm mươi", "một trăm linh năm", "105",
+            ["101 một trăm linh một (남부 lẻ một) · 110 một trăm mười · 115 một trăm mười lăm",
+             "구어: 120 은 <b>trăm hai</b>, 150 은 <b>trăm rưỡi</b>(rưỡi = 절반)"]),
+          L("1.000 ~", "nghìn(북부) · ngàn(남부) · triệu · tỷ — 백의 자리가 비면 không trăm", "một nghìn, một nghìn không trăm linh năm, mười nghìn, một trăm nghìn, một triệu, một tỷ", "một nghìn không trăm linh năm", "1.005",
+            ["1.000 một nghìn · 10.000 mười nghìn · 100.000 một trăm nghìn · 1.000.000 một triệu · 1.000.000.000 một tỷ(tỉ)",
+             "천 단위에서 백의 자리가 0 이면 <b>không trăm</b>: 2.005 hai nghìn không trăm linh năm · 2.024 hai nghìn không trăm hai mươi tư",
+             "'만' 단위(vạn)는 거의 쓰지 않습니다 — 10.000 은 mười nghìn(열 천)",
+             "자릿점은 <b>점(.)</b>, 소수점은 <b>쉼표(,)</b>: 1.500 = 천오백, 1,5 = một phẩy năm"]),
+          L("돈", "수 + đồng — 하나씩 읽지 않고 수로 읽는다", "năm mươi nghìn đồng", "năm mươi nghìn đồng", "5만 동",
+            ["50.000 đ = năm mươi nghìn (đồng) — 각 숫자를 따로 읽지 않습니다",
+             "구어: năm chục (5만) · hai trăm rưỡi (25만) · một triệu rưỡi (150만)",
+             "'k' 는 nghìn: 50k 를 năm mươi ca 로 읽기도 합니다",
+             "속어: 1 củ(북부) · 1 chai(남부) = 100만 동 · 1 lít = 10만 동 · 1 xị = 1만 동"]),
+          L("전화번호", "한 자리씩 — 0 은 không", "không chín một hai, ba bốn năm, sáu bảy tám", "không chín một hai", "0912 …",
+            ["숫자를 <b>하나씩</b> 읽습니다: 1 은 một(mốt 아님) · 4 는 bốn · 5 는 năm",
+             "보통 4 · 3 · 3 자리로 끊어 읽습니다: 0912 / 345 / 678"]),
+          L("연도", "공식은 수 전체 · 말할 때는 앞 두 자리를 하나씩", "năm hai nghìn không trăm hai mươi sáu", "hai không hai sáu", "2026 (말할 때)",
+            ["공식: năm <b>hai nghìn không trăm hai mươi sáu</b> (2026년)",
+             "말할 때: 앞 두 자리는 하나씩, 뒤 두 자리는 한 수 — hai không hai sáu (2026), một chín chín hai (1992)",
+             "1900년대는 뒤 두 자리만 말하기도: năm tám tư (84년)"]),
+          L("시각", "giờ · phút · rưỡi · kém", "bảy giờ rưỡi, tám giờ kém mười", "bảy giờ rưỡi", "7시 반",
+            ["7:30 bảy giờ rưỡi = bảy giờ ba mươi", "7:50 tám giờ kém mười (8시 10분 전)",
+             "시간의 길이는 <b>tiếng</b>: hai tiếng (2시간) — giờ 는 시각"]),
+          L("날짜 · 요일 · 서수", "4 는 tư: thứ tư(수요일) · tháng tư(4월)", "ngày mồng một tháng tư", "thứ tư", "수요일",
+            ["요일: thứ hai(월) … thứ bảy(토), chủ nhật(일) — 수요일은 <b>thứ tư</b>",
+             "달: tháng một … tháng mười hai — 4월은 <b>tháng tư</b>",
+             "1~10일은 mồng(mùng) 을 붙입니다: mồng một, mùng mười",
+             "서수: thứ nhất(첫째) · thứ hai/thứ nhì(둘째) · thứ ba · thứ tư …",
+             "날짜 차례는 ngày · tháng · năm (일 · 월 · 년)"]),
+          L("분수 · 퍼센트 · 대략", "phần · nửa · rưỡi · khoảng", "một phần ba, một nửa, năm mươi phần trăm", "năm mươi phần trăm", "50%",
+            ["1/3 một phần ba · 1/2 một nửa · 50% năm mươi phần trăm",
+             "<b>rưỡi</b> 는 앞 단위의 절반: một tiếng rưỡi (1시간 반) · hai triệu rưỡi (250만)",
+             "대략: khoảng · chừng · độ + 수 (khoảng mười người 열 명쯤)"]),
+      ],
+      "after": [
+          {"e": "🔢", "t": "하나씩 읽기 · 수로 읽기",
+           "b": "<b>하나씩</b>: 전화번호 · 계좌번호 · 번호판 · (말할 때) 연도의 앞 두 자리<br><b>수로</b>: 돈 · 개수 · 나이 · 시각 · 날짜 · (공식) 연도"},
+          {"e": "🔗", "t": "연습은 일상 과에서",
+           "b": "숫자 낱말과 대화는 일상 <b>숫자 세기</b>(9~11과) · <b>시간과 요일</b>(12~15과) · <b>사고 팔기</b>(66~68과)에서 연습합니다."},
+      ],
+      "mission": {"goal": "값 부르고 받아 적기",
+                  "how": "한 사람이 25.000 · 105.000 · 2.024 · 0912 345 678 중 하나를 베트남어로 읽는다. 다른 사람이 숫자로 받아 적는다. 4개 중 3개면 통과.",
+                  "a": "당신이 먼저 읽습니다", "b": "당신이 먼저 받아 적습니다"}}
+
+# ── 9. 끊어 읽기 (2026-09-29, 대표님: "긴 글을 읽을 때 나누는 기준 — 대충 말하지 말고 실제 학문적으로 어떻게 나누는지")
+#    근거: ① 베트남 중학교 국어(Ngữ văn 6)의 명사구 3칸(앞 꾸밈 · 중심 · 뒤 꾸밈, 예 tất cả ba con mèo đen ấy)
+#          ② Brunelle(2016, Intonational phrase marking in Southern Vietnamese): 억양구는 대체로 절과 같고, 끊는 자리의 가장 좋은 표지는 앞 음절이 길어지는 것
+#          ③ Rasinski(1990 리뷰 · 1994): 끊는 자리를 빗금으로 표시한 글로 연습하면 읽기 유창성·이해가 오른다(특히 아직 문장 짜임에 익숙하지 않은 독자)
+#    예문은 모두 교재 문장(1권 3·4·5·11과, 2권 7과) — 소리는 앱에 있는 것.
+P9 = {"day": "P9", "theme": "끊어 읽기",
+      "intro": "긴 문장은 <b>뜻 덩어리</b>로 끊어 읽어야 빠르고 정확하게 이해됩니다. 끊는 자리는 문법 짜임이 정합니다 — "
+               "음절(tiếng) → 낱말(từ) → 구(cụm từ: 명사구·동사구) → 절 → 문장. <b>낱말과 구 안에서는 끊지 않고</b>, 구와 구 · 절과 절 사이에서 끊습니다. "
+               "끊는 자리를 빗금(/)으로 표시한 글로 연습하면 읽기가 빨라지고 이해가 좋아진다는 연구가 있습니다(Rasinski 1990 · 1994).",
+      "letters": [
+          L("Buổi sáng / …", "① 문장 앞의 때 · 곳 말 뒤에서 끊는다", "Buổi sáng tôi đi học tiếng Việt, còn buổi chiều tôi đi làm.", "", "",
+            ["<b>Buổi sáng</b> / tôi đi học tiếng Việt, / còn <b>buổi chiều</b> / tôi đi làm.",
+             "오전에는 / 베트남어를 배우러 가고, / 오후에는 / 일하러 가요. (교재 1권 4과)",
+             "때(buổi sáng · hôm qua) · 곳(ở Việt Nam) · 까닭을 나타내는 말이 문장 앞에 오면 그 뒤에서 한 번 쉽니다.",
+             "đi học · tiếng Việt · đi làm 처럼 <b>한 낱말</b>은 가운데서 끊지 않습니다."]),
+          L("… / thường đến …", "② 주어가 길면 주어와 서술어 사이에서 끊는다", "Người thích đi dạo, nói chuyện với bạn bè, đi với gia đình thường đến Phố đi bộ Nguyễn Huệ vào buổi chiều, buổi tối cuối tuần.", "", "",
+            ["<b>Người thích đi dạo, nói chuyện với bạn bè, đi với gia đình</b> / thường đến Phố đi bộ Nguyễn Huệ / vào buổi chiều, buổi tối cuối tuần.",
+             "산책하고, 친구와 이야기하고, 가족과 함께 다니기를 좋아하는 사람은 / 응우옌후에 보행자 거리에 자주 가요 / 오후나 주말 저녁에. (교재 1권 5과)",
+             "주어 덩어리(누가)가 끝나는 곳 = 서술어(thường đến …)가 시작하는 곳에서 끊습니다.",
+             "베트남어는 꾸밈말이 <b>뒤</b>에 옵니다 — người(사람) 뒤의 thích … gia đình 이 모두 그 사람을 꾸밉니다."]),
+          L("Những cuốn sách … này /", "③ 명사구는 한 덩어리 — 앞 꾸밈 · 중심 · 뒤 꾸밈", "Những cuốn sách tiếng Việt này rất dễ học.", "", "",
+            ["<b>Những cuốn sách tiếng Việt này</b> / rất dễ học.",
+             "이 베트남어 책들은 / 배우기 아주 쉬워요. (교재 2권 7과)",
+             "명사구의 세 칸(베트남 중학교 국어 Ngữ văn 6): 앞 꾸밈(những · các · tất cả · 수) + 중심(cuốn sách) + 뒤 꾸밈(tiếng Việt · này). 예: [tất cả ba] [con mèo] [đen ấy]",
+             "이 세 칸 안에서는 끊지 않습니다 — 한국어와 달리 '이(này)'가 맨 뒤에 오는 것에 주의."]),
+          L("… / nhưng …", "④ 이어 주는 말(nhưng · vì · nên · còn · và) 앞에서 끊는다", "Tiếng Việt không dễ nhưng họ học chăm chỉ.", "", "",
+            ["Tiếng Việt không dễ / <b>nhưng</b> họ học chăm chỉ.",
+             "베트남어는 쉽지 않지만 / 그들은 열심히 공부해요. (교재 1권 3과)",
+             "절과 절이 이어지는 곳이 가장 큰 끊는 자리입니다 — 억양구는 대체로 절과 같습니다(Brunelle 2016).",
+             "이어 주는 말은 <b>뒤</b> 덩어리에 붙여 읽습니다: / nhưng họ … · / vì chúng tôi … · / còn buổi chiều …"]),
+          L("…, / nếu … / thì …", "⑤ 조건 · 때 짜임(nếu … thì · khi … thì)은 thì 앞에서", "Từ nhà tôi đến trường đại học, nếu đi bộ thì mất 20 phút.", "", "",
+            ["Từ nhà tôi đến trường đại học, / <b>nếu</b> đi bộ / <b>thì</b> mất 20 phút.",
+             "우리 집에서 대학교까지, / 걸어가면 / 20분 걸려요. (교재 1권 11과)",
+             "thì 는 앞 조건과 뒤 결과를 가르는 표지입니다 — thì 앞에서 쉬고 thì 부터 뒤 덩어리로 읽습니다."]),
+      ],
+      "after": [
+          {"e": "✂️", "t": "끊는 자리 · 안 끊는 자리",
+           "b": "<b>끊는다</b>: 쉼표 · 마침표 / 문장 앞 때 · 곳 · 까닭 말 뒤 / 긴 주어 뒤(서술어 앞) / 절과 절 사이 · 이어 주는 말 앞 / thì 앞<br>"
+                "<b>안 끊는다</b>: 한 낱말 안(sinh viên · xe máy · Hồ Chí Minh) / 명사구 안(những cuốn sách tiếng Việt này) / 부정 · 때 말과 동사 사이(không biết · đang học · đã ăn)"},
+          {"e": "📚", "t": "학문 근거",
+           "b": "① 베트남 학교 문법: 문장 = 주어 + 서술어(+ 문장 앞 부사어), 구 = 앞 꾸밈 + 중심 + 뒤 꾸밈(Ngữ văn 6 '명사구').<br>"
+                "② 말소리 연구: 베트남어 억양구는 대체로 절과 같고, 경계는 <b>앞 음절이 길어지는 것</b>과 쉼으로 드러납니다(Brunelle 2016).<br>"
+                "③ 읽기 연구: 끊는 자리를 빗금으로 표시한 글로 연습하면 유창성과 이해가 오릅니다(Rasinski 1990 · 1994)."},
+          {"e": "🗣️", "t": "연습 방법",
+           "b": "1) 읽기 전에 문장에 빗금(/)을 긋는다 → 2) 빗금마다 짧게 쉬며 소리 내어 읽는다 → 3) 빗금 앞 음절을 조금 길게 → 4) 익숙해지면 빗금 없이 읽는다."},
+      ],
+      "mission": {"goal": "빗금 긋기",
+                  "how": "교재 한 문단을 골라 각자 빗금을 긋고 서로 견준다. 다른 곳을 긋었으면 왜 거기서 끊었는지 말해 본다.",
+                  "a": "당신이 먼저 읽습니다", "b": "당신이 먼저 긋습니다"}}
+
+
 # ── 귀로 구별하기 (각 장 끝) ────────────────────────────────────
 def G(base, note, items):
     return {"base": base, "note": note, "items": [{"vi": v, "ko": k} for v, k in items]}
@@ -292,7 +460,10 @@ def main():
     doc = json.loads(p.read_text(encoding="utf-8"))
     old = {d["day"]: d for d in doc.get("prep", [])}
     P2 = old.get("P2") or json.loads((R / "data/_basics.json").read_text(encoding="utf-8"))["prep"][4]
-    prep = [P3, P1, P4, P5, P2, P6]                    # 자음 → 모음 → 겹모음 → 받침 → 성조 → 헷갈리는 소리
+    for _d in (P8, P9):                                # 숫자·끊어 읽기는 입모양 판 대신 규칙이 주인공 (앱 x.nomouth)
+        for _x in _d["letters"]:
+            _x["nomouth"] = 1
+    prep = [P3, P1, P4, P5, P2, P6, P7, P8, P9]        # 자음 → 모음 → 겹모음 → 받침 → 성조 → 헷갈리는 소리 → 철자·부호 규칙 → 숫자 읽기 → 끊어 읽기 (2026-09-29)
     doc["prep"] = prep
     doc["voweldrill"] = EAR["P1"]
     doc["eardrill"] = EAR

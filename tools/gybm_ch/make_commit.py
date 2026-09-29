@@ -97,9 +97,21 @@ git("update-index", "--add", "--cacheinfo", f"100644,{sha},data/audio_index.json
 # ── 쓰이지 않는 소리 파일(색인 어디에도 없는 해시) 지우기 — 저장소가 1GB(사이트 한도)에 닿아 간다 (2026-09-26).
 #    앱은 소리를 색인(글→해시)으로만 찾는다. 색인에 없는 파일은 아무도 못 부른다. 데이터 파일이 해시를 직접 들고 있는지도 확인한다.
 import re as _re
-vals = set(oi.values())
 tree_files = [l for l in git("ls-tree", "-r", "--name-only", "origin/main", "audio/f/n", "audio/m/n").splitlines() if l.endswith(".mp3")]
-orphans = [q for q in tree_files if q.rsplit("/", 1)[1][:-4] not in vals]
+# 앱 데이터가 부르는 글의 소리는 색인에서 빠졌어도 지우지 않고 색인에 다시 잇는다 (2026-09-29).
+#   아침 봇이 옛 색인을 올려 nờ·pờ·xờ 등 9개 키가 빠졌고, 그 뒤 이 정리가 '색인에 없는 파일'로 보고 지웠다 — 글자 카드 소리가 기계 목소리로 나왔다.
+_need = {k12(t): t for t in texts}
+_in_tree = {}
+for q in tree_files:
+    _in_tree.setdefault(q.rsplit("/", 1)[1][:-4], set()).add(q.split("/")[1])
+healed = [_need[h] for h, vs in _in_tree.items() if h in _need and vs >= {"f", "m"} and oi.get(_need[h]) != h]
+for t in healed: oi[t] = k12(t)
+if healed:
+    sha = subprocess.run(["git", "hash-object", "-w", "--stdin"], cwd=ROOT, capture_output=True, text=True, env=env, input=json.dumps(oi, ensure_ascii=False)).stdout.strip()
+    git("update-index", "--add", "--cacheinfo", f"100644,{sha},data/audio_index.json", env=env)
+print(f"색인에 다시 이은 소리 {len(healed)}")
+vals = set(oi.values())
+orphans = [q for q in tree_files if q.rsplit("/", 1)[1][:-4] not in vals and q.rsplit("/", 1)[1][:-4] not in _need]
 held = set()
 for q in git("ls-tree", "-r", "--name-only", "origin/main", "data").splitlines():
     if q.endswith(".json") and q != "data/audio_index.json":

@@ -33,14 +33,21 @@ def fetch(host, titles):
     return None
 
 
+# 베트남어 위키의 절 머리 중 세 글자인 것 — 언어 머리({{-eng-}} 등)와 모양이 같아 여기서 자르면 안 된다 (2026-09-29: 처음엔 {{-adj-}}·{{-syn-}}·{{-ant-}} 에서 잘려 유의어가 0개였다)
+SEC3 = {'adj', 'adv', 'ant', 'syn', 'ref', 'num', 'art', 'det', 'nôm', 'see', 'hyp'}
+
+
 def vi_section_vi(text):
-    """vi.wiktionary: 베트남어 절 — {{-vie-}} 또는 == Tiếng Việt == 부터 다음 언어 머리까지"""
+    """vi.wiktionary: 베트남어 절 — {{-vie-}} 또는 == Tiếng Việt == 부터 다음 **언어** 머리까지"""
     m = re.search(r'^\s*(\{\{-vie-\}\}|==\s*Tiếng Việt\s*==)\s*$', text, re.M)
     if not m:
         return None
     rest = text[m.end():]
-    n = re.search(r'^\s*(\{\{-[a-z]{2,3}-\}\}|==[^=].*==)\s*$', rest, re.M)
-    return rest[:n.start()] if n else rest
+    for n in re.finditer(r'^\s*(\{\{-([a-z]{2,3})-\}\}|==[^=].*==)\s*$', rest, re.M):
+        if n.group(2) and n.group(2) in SEC3:
+            continue
+        return rest[:n.start()]
+    return rest
 
 
 def vi_section_en(text):
@@ -92,8 +99,12 @@ def main():
     global DATA
     DATA = json.loads(OUT.read_text(encoding='utf-8')) if OUT.exists() else {'vi': {}, 'en': {}}
     ws, g = words()
-    # 베트남어 위키: 전부
+    # 베트남어 위키: 전부 (옛 자르기로 받은 것은 다시 — '_v2' 표시가 없는 베트남어 절)
+    redo = [w for w, v in DATA['vi'].items() if v and w not in DATA.get('vi_ok', {})]
+    for w in redo: DATA['vi'].pop(w)
+    DATA.setdefault('vi_ok', {})
     run('vi.wiktionary.org', [w for w in ws if w not in DATA['vi']], DATA['vi'], vi_section_vi)
+    DATA['vi_ok'] = {w: 1 for w, v in DATA['vi'].items() if v}
     # 영어 위키: 잘린 쪽(6,000자) + 받은 적 없는 것
     en_todo = [w for w in ws if w not in DATA['en'] and (len((g.get(w) or {}).get('raw') or '') >= 6000)]
     run('en.wiktionary.org', en_todo, DATA['en'], vi_section_en)

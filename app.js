@@ -2554,7 +2554,9 @@ function studyHubEntry() {
      성조·모음 챕터의 끝(귀로 구별하기)과 같은 것이라 뺐다. 손글씨는 테스트로 옮겼다. */
 /* 2026-09-28 대표님 지시 "모든 모음과 자음이 나오게 · 뒤에 뭐만 올 수 있다 · 같거나 비슷한 소리" → 겹모음(P4)·받침(P5)·헷갈리는 소리(P6) 추가.
    차례: 첫소리 → 모음 → 겹모음 → 받침(모음을 알아야 연습됨) → 성조 → 헷갈리는 소리. 자료 원본은 tools/build_basics.py */
-const BASIC_ORDER = ['P3', 'P1', 'P4', 'P5', 'P2', 'P6'];
+/* 2026-09-29 대표님 지시 "i와 y의 차이 · 각 모음 위의 모자·성조 · gio 같은 결합 — 관련된 모든 것 / 숫자 읽는 규칙 자세하게 / 긴 글을 나누는 기준(학문적으로)"
+   → 철자·성조 부호 규칙(P7)·숫자 읽기(P8)·끊어 읽기(P9). 숫자·끊어 읽기 카드는 입모양 대신 규칙이 주인공이라 입모양 판을 안 그린다(x.nomouth). */
+const BASIC_ORDER = ['P3', 'P1', 'P4', 'P5', 'P2', 'P6', 'P7', 'P8', 'P9'];
 function studyBasicsEntry() {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyBasicsEntry();
@@ -8275,7 +8277,7 @@ function drawCard() {
     c.append(row);
     /* 기본기 글자 카드 = **발음 면** (대표님 지시 2026-09-28: "기본기는 발음 카드면만 보여줘도 된다. 특별한 사항만 글로") —
        소리 단추가 트는 말(snd)로 움직이는 입모양(정면·옆 단면, 누르면 0.2배) + 알아 둘 것(뒤에 무엇이 오나·철자 규칙) */
-    c.append(mouthPanel(snd));
+    if (!x.nomouth) c.append(mouthPanel(snd));
     if (x.rules && x.rules.length) {
       const rb = el('div', 'lrules');
       rb.append(el('div', 'lrulet', tr('알아 둘 것')));
@@ -8568,6 +8570,7 @@ function drawCard() {
 
   // '1 / 12'만 보면 외울 게 12개인 줄 안다. 무엇을 세는지 붙여준다.
   const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화', rule: '예문', cult: '문화', cmp: '소리 짝', know: '알아 두기' };
+  if (L.day && ['P7', 'P8', 'P9'].includes(L.day.day)) KIND.letter = '규칙';   // 철자·숫자·끊어 읽기 카드는 글자가 아니라 규칙 (2026-09-29)
   // 표지는 세는 대상에서 빼야 '단어 1 / 10'이 맞는다
   const kinds = L.items.map(x => x.k);
   if (it.k === 'cover') {
