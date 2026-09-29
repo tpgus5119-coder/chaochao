@@ -2591,16 +2591,32 @@ function accRow(host, o, open, onToggle, scroll) {
   host.append(box);
 }
 /* 단어 — 다섯 갈래 아코디언, 펼치면 챕터가 길로 */
+/* 교재 과 ↔ 일상 주제 (대표님 지시 2026-09-29: "메인교재 4단원은 직업과 장소 — 일상에 직업·장소 챕터가 있으면 관련 챕터 표시").
+   data/topic_links.json = { main: { 교재 과 제목: { book: '1권 4과', topic, days: [일상 주제 이름…] } } } — 목록의 작은 줄에 서로 적는다 */
+let TLINK = null, TLINK_P = null;
+function tlinkLoad(fn) {
+  if (TLINK) return fn && fn();
+  if (!TLINK_P) TLINK_P = fetch('data/topic_links.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { TLINK = j.main || {}; }).catch(() => { TLINK = {}; });
+  TLINK_P.then(() => fn && fn());
+}
+const tlinkMain = title => { const x = TLINK && TLINK[String(title).split(' · ')[0]]; return x ? tr('관련') + ': ' + tr('일상') + ' ' + x.days.slice(0, 3).map(t => tr(t)).join('·') : ''; };
+const tlinkDay = theme => {
+  if (!TLINK) return '';
+  const base = String(theme || '').split(' (')[0];
+  const bks = Object.values(TLINK).filter(x => x.days.includes(base)).map(x => x.book);
+  return bks.length ? tr('교재') + ' ' + bks.slice(0, 3).join('·') + (bks.length > 3 ? ' …' : '') : '';
+};
 function studyWordsEntry(scroll) {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyWordsEntry();
   const still = () => CURV === 'sub' && $('#title').textContent === tr('단어');   // 탭 상태(ACTIVE_TAB)는 안 본다 — 다른 길로 들어와도 자료가 오면 다시 그려야 한다 (2026-09-28 무한 로딩 원인)
+  if (!TLINK) tlinkLoad(() => { if (still()) studyWordsEntry(true); });
   const rows = [];
   // ① 일상
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track).sort((x, y) => (x.n || 0) - (y.n || 0));
   rows.push({ key: 'days', title: '일상', sub: days.length + tr('일차') + ' · ' + days.reduce((a, d) => a + (d.words || []).length, 0) + tr('단어'),
     done: days.filter(d => S.done[d.day]).length, all: days.length,
-    nodes: days.map((d, i) => ({ key: d.day, title: d.theme, num: i + 1, done: !!S.done[d.day],
+    nodes: days.map((d, i) => ({ key: d.day, title: d.theme, rel: tlinkDay(d.theme), num: i + 1, done: !!S.done[d.day],
                                  fn: () => { SBOX = 'srs'; dive(back); startLearn(d); } })) });
   // ② 직무 — 갈래별 레슨 전부를 한 길로 (갈래 이름 · 레슨 이름)
   const jv = COURSE ? jobVol(0) : null;
@@ -2620,6 +2636,7 @@ function studyWordsEntry(scroll) {
     if (!src) { rows.push({ key, title, sub: '', done: 0, all: 0, nodes: null }); return; }
     const nodes = src.lessons.map((l, li) => ({ key: gybmKey(key, li), title: l.title,
       sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('단어') + (l.words.some(isCore) ? ' · ' + tr('핵심') + ' ' + l.words.filter(isCore).length : ''),
+      rel: key === 'main' ? tlinkMain(l.title) : '',   // 관련 일상 주제 (2026-09-29)
       num: li + 1, done: !!bdone()[gybmKey(key, li)],
       fn: () => { SBOX = 'bsrs'; dive(back); startLearn({ theme: l.title, day: gybmKey(key, li), basic: 1, words: l.words }); } }));
     rows.push({ key, title, sub: src.lessons.length + tr('레슨') + ' · ' + src.lessons.reduce((a, l) => a + l.words.length, 0).toLocaleString('ko-KR') + tr('단어'),
@@ -6206,7 +6223,7 @@ function renderRoadmap(host, nodes, curKey, opt) {
     const row = el('button', 'ubtn' + (nd.done ? ' done' : ''));
     row.type = 'button'; if (nd.key != null) row.dataset.key = nd.key;
     row.append(el('span', 'unum', nd.num != null ? String(nd.num) : String(i + 1)));
-    if (!/^\d+$/.test(String(nd.title || '').trim())) row.append(el('span', 'utitle', esc(nd.title)));   // 선배 자료처럼 숫자만인 제목은 번호로만 (2026-09-27 밤)
+    if (!/^\d+$/.test(String(nd.title || '').trim())) row.append(el('span', 'utitle', esc(nd.title) + (nd.rel ? '<small class="urel">' + esc(nd.rel) + '</small>' : '')));   // 선배 자료처럼 숫자만인 제목은 번호로만 (2026-09-27 밤) · 관련 과 한 줄 (2026-09-29)
     row.append(el('span', 'ust', nd.done ? '✓' : '›'));
     if (nd.fn) row.onclick = nd.fn;
     host.append(row);
