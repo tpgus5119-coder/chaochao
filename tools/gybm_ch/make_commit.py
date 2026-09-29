@@ -20,7 +20,7 @@ MY = ["app.js", "style.css", "icon.png", "icon-192.png", "icon-180.png", "manife
 # 교재 예문을 교재 문장으로 (2026-09-29) — 도구·판정표·쪽 이미지로 확인한 번호·손으로 옮긴 문장, 녹음 채우기·뜻 끼워 넣기
 MY += ["tools/fill_audio.py", "tools/sense_review/insert_sense.py"] + [f"tools/book_ex/{n}" for n in ("build_pool.py", "cand.py", "qwen_pass.py", "review.py", "strips.py", "rec_ex.py", "apply_ex.py", "check_ex.py", "예문판정.tsv", "확인.txt", "src/손문장.tsv")] + [".gitignore"]   # 교재 전체 글(src/·pool·cand)은 교재를 통째로 옮긴 것이라 공개 저장소에 안 올린다
 # 낱말 하나씩 검사(뜻·발음·짝·녹음 받아쓰기)와 클로드가 지은 유의어·반의어 (2026-09-29)
-MY += [f"tools/rel_mine/{n}" for n in ("apply.py", "짝.tsv", "뜻_새로.tsv")] + [f"tools/word_check/{n}" for n in ("asr.py", "sheet.py", "apply_k.py", "carrier.mp3", "검사표.tsv", "k_고침.tsv", "_main_words.json")] + ["data/_asr_word.jsonl"]
+MY += [f"tools/rel_mine/{n}" for n in ("apply.py", "짝.tsv", "뜻_새로.tsv")] + [f"tools/word_check/{n}" for n in ("asr.py", "sheet.py", "apply_k.py", "carrier.mp3", "검사표.tsv", "k_고침.tsv", "짝_삭제.tsv", "_main_words.json")] + ["data/_asr_word.jsonl"]
 # 위키낱말사전에 표시된 유의어·반의어 넣기 + 클로드 뜻별 판정 (2026-09-29)
 MY += ["tools/rel_parse.py"] + [f"tools/rel_import/{n}" for n in ("apply.py", "pairs.tsv", "뜻판정.tsv", "뜻_새로.tsv", "갈래.tsv")]
 # 일상·직무·선배·22기 예문이 기본 뜻(자료에 적힌 뜻)으로 쓰였나 검사·새로 쓴 예문 (2026-09-29)
@@ -149,6 +149,13 @@ if book_src:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in book_src)
     subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
 print(f"교재 원문 뺌 {len(book_src)}")
+# ── 앱이 안 쓰는 것은 서버에 두지 않는다 (2026-09-29, 대표님: "한국어 학습 앱용 tts·자료는 서버에 없어도 된다 · 맥북에만 있으면 됨").
+#    audio/ko-qwen·ko-qwen2 = Qwen 목소리 시험본(앱 코드가 부르지 않음, 45MB) · scratchpad·_보관 = 작업 중 임시 파일. 이 맥의 파일은 그대로 둔다.
+_unused = [q for q in git("ls-tree", "-r", "--name-only", "origin/main").splitlines() if q.startswith(("audio/ko-qwen/", "audio/ko-qwen2/", "scratchpad/", "_보관/"))]
+if _unused:
+    gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in _unused)
+    subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
+print(f"앱이 안 쓰는 파일 뺌 {len(_unused)}")
 print(f"올릴 파일 {n_new} · origin 과 같아 건너뜀 {n_same} · 소리 목록 {before} → {len(oi)}")
 if dry: raise SystemExit("dry")
 tree = git("write-tree", env=env)
