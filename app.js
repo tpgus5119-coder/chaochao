@@ -3033,28 +3033,128 @@ async function analysisCard(mode) {
 /* ── 진도 서버 저장 ──────────────────────────────────────────
    로그인한 사람만. 하루 한 번 + 세트를 끝낼 때 올린다.
    서버 쓰기 한도(무료 1,000/일)를 아끼려고 그 이상은 안 올린다. */
-const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick', 'cr', 'pet', 'petName'];   // 돈(cr)·짜오 살림(pet)도 같이 (2026-09-27 저녁)   // 실전·GYBM 창고와 별표도 같이 올린다 (2026-09-27)
-/* 자동 진도 백업.
-   예전에는 '하루 한 번'이라 오늘 공부한 것이 밤에 폰을 잃으면 통째로 날아갔다.
-   이제 학습이 끝날 때마다 올리되, 8초 안에 여러 번 불려도 **한 번만** 보낸다
-   (문제를 연달아 풀면 mark() 가 초당 몇 번씩 불린다 — 그때마다 보내면 안 된다).
-   보내는 것은 진도(PROGKEYS)뿐이고 글자로 치면 몇 KB라 데이터 요금도 무시할 만하다. */
-let cloudTimer = 0;
+const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick', 'cr', 'pet', 'petName',   // 돈(cr)·짜오 살림(pet)도 같이 (2026-09-27 저녁)   // 실전·GYBM 창고와 별표도 같이 올린다 (2026-09-27)
+  /* 2026-09-29 (대표님 "아이패드와 폰에서 진도 연동 안되는듯"): 실전·GYBM 과를 끝낸 기록(sdone·bdone)이
+     여기 빠져 있어서 폰에서 끝낸 GYBM 과가 아이패드에 **한 번도** 가지 않았다. 시험 성적·문항 창고·성조 테스트도 같이. */
+  'sdone', 'bdone', 'kbank', 'qbank', 'exam', 'anchor', 'vlpt', 'tt', 'kday', 'revDay', 'lastTrack'];
+/* 진도 서버 맞추기 (2026-09-29 다시 짬).
+   예전에는 서버에서 **받는 것이 로그인하는 순간 한 번뿐**이었다 — 폰과 아이패드가 둘 다 로그인된 채로 쓰면
+   서로의 진도를 영영 못 받았고, 올릴 때는 나중에 올린 기기가 서버 것을 통째로 덮었다(앞 기기 진도가 사라짐).
+   이제
+   · 앱을 켤 때와 다시 앞으로 올 때 서버 것을 받아 본다 (읽기는 무료 한도가 넉넉하다 — 하루 10만)
+   · 이 기기에 올리지 않은 공부가 없으면 서버 것을 그대로 받고, 있으면 **둘을 합친다**(mergeProg)
+   · 올리기 전에도 먼저 받아서 합친다 — 그래야 남의 기기 진도를 덮지 않는다
+   · 올리는 때는 전과 같다: 세트 끝·복습 끝·진도 초기화·하루 첫 화면 (대표님 결정 2026-09-27, 쓰기 한도 1,000/일)
+   S.cloudSeen = 마지막으로 맞춘 서버 판의 시각(서버가 준 at), S.cloudHash = 그때 진도의 지문. */
+const progData = () => { const d = {}; PROGKEYS.forEach(k => { if (S[k] !== undefined) d[k] = S[k]; }); return d; };
+function progHash(d) {                      // 진도 지문 — 바뀌었는지만 보면 되므로 짧은 수 하나
+  const s = JSON.stringify(d);
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0).toString(36) + '.' + s.length;
+}
+/* 두 기기 진도 합치기. L = 이 기기, R = 서버. 지우는 쪽보다 **잃지 않는 쪽**을 고른다. */
+function mergeProg(L, R) {
+  const out = {};
+  const newer = (a, b) => {                 // 같은 낱말의 두 기록 — 더 나중에 손댄 것
+    if (!a || !b || typeof a !== 'object' || typeof b !== 'object') return a || b;
+    for (const f of ['t', 'at', 'due']) if (a[f] != null && b[f] != null && a[f] !== b[f]) return a[f] > b[f] ? a : b;
+    return a;
+  };
+  const byKey = (a, b, pick) => {
+    const o = Object.assign({}, b || {});
+    for (const [k, v] of Object.entries(a || {})) o[k] = k in o ? pick(v, o[k]) : v;
+    return o;
+  };
+  const deep = (a, b) => {                  // 통계: 수는 큰 쪽, 목록은 긴 쪽, 묶음은 안으로 들어가서
+    if (typeof a === 'number' && typeof b === 'number') return Math.max(a, b);
+    if (Array.isArray(a) && Array.isArray(b)) return a.length >= b.length ? a : b;
+    if (a && b && typeof a === 'object' && typeof b === 'object' && !Array.isArray(a) && !Array.isArray(b)) return byKey(a, b, deep);
+    return a === undefined ? b : a;
+  };
+  const maxNum = (x, y) => typeof x === 'number' && typeof y === 'number' ? Math.max(x, y) : x;
+  for (const k of PROGKEYS) {
+    const a = L[k], b = R[k];
+    if (a === undefined) { if (b !== undefined) out[k] = b; continue; }
+    if (b === undefined) { out[k] = a; continue; }
+    switch (k) {
+      case 'done': case 'sdone': case 'bdone': case 'act': case 'star': out[k] = byKey(a, b, maxNum); break;
+      case 'srs': case 'ssrs': case 'bsrs': case 'kbank': case 'qbank': case 'vlpt': out[k] = byKey(a, b, newer); break;
+      case 'exam': out[k] = byKey(a, b, (x, y) => ((y && y.score) || 0) > ((x && x.score) || 0) ? y : x); break;   // 최고 점수
+      case 'stats': case 'shield': case 'shieldWk': case 'anchor': out[k] = deep(a, b); break;
+      case 'cr': out[k] = (b.sum || 0) > (a.sum || 0) ? b : a; break;         // 모두 번 돈이 많은 쪽 — 쓴 돈도 그쪽 기록과 맞는다
+      case 'pet': out[k] = (b.fed || 0) > (a.fed || 0) ? b : a; break;
+      case 'tt': out[k] = ((b.r || []).length > (a.r || []).length) ? b : a; break;
+      case 'kday': out[k] = maxNum(a, b); break;
+      case 'revDay': out[k] = String(b) > String(a) ? b : a; break;
+      default: out[k] = a;                  // 별명·말씨·국적 같은 설정은 지금 손에 든 기기 것
+    }
+  }
+  return out;
+}
+let cloudBusy = null, cloudPulled = 0;
+/* push: true 면 (바뀐 게 있을 때) 올린다. 돌려주는 값 = 서버에서 받아 이 기기 진도가 바뀌었나 */
+function cloudSync(push, overwrite) {
+  if (!S.acct || !S.acct.tok) return Promise.resolve(false);
+  if (cloudBusy) return cloudBusy.then(() => cloudSync(push, overwrite));   // 겹쳐 돌면 서로 덮는다 — 줄 세운다
+  cloudBusy = (async () => {
+    let changed = false, needPush = false;
+    if (!overwrite) {
+      const j = await cCall({ act: 'load', id: S.acct.id, tok: S.acct.tok });
+      cloudPulled = Date.now();
+      const srvAt = j.at || 0;
+      if (j.data && srvAt > (S.cloudSeen || 0)) {            // 다른 기기가 그 뒤에 올린 것이 있다
+        const dirty = progHash(progData()) !== S.cloudHash;
+        const got = dirty ? mergeProg(progData(), j.data) : j.data;
+        PROGKEYS.forEach(k => { if (got[k] !== undefined) S[k] = got[k]; });
+        S.cloudSeen = srvAt;
+        S.cloudHash = progHash(j.data);                        // 서버 판의 지문
+        needPush = progHash(progData()) !== S.cloudHash;       // 합쳐서 서버에 없는 것이 생겼으면 올린다
+        changed = true;
+        save();
+      }
+    }
+    const data = progData(), h = progHash(data);
+    if ((push || needPush) && (overwrite || h !== S.cloudHash)) {
+      const r = await cCall({ act: 'save', id: S.acct.id, tok: S.acct.tok, data });
+      S.cloudSeen = r.at || Date.now(); S.cloudHash = h; S.cloudAt = ymd(); save();
+    }
+    return changed;
+  })().catch(() => false).finally(() => { cloudBusy = null; });   // 안 되면 조용히 — 다음 기회에 또 한다
+  return cloudBusy;
+}
+/* 예전 이름 그대로 부른다 — force(세트 끝·복습 끝)는 바로 올리고, 아니면 하루 한 번만 올린다 */
 function cloudSave(force) {
-  if (!S.acct || !S.acct.tok) return Promise.resolve();
-  clearTimeout(cloudTimer);
-  const today = ymd();
-  if (!force && S.cloudAt === today) return Promise.resolve();
-  const data = {};
-  PROGKEYS.forEach(k => { if (S[k] !== undefined) data[k] = S[k]; });
-  return cCall({ act: 'save', id: S.acct.id, tok: S.acct.tok, data })
-    .then(() => { S.cloudAt = today; save(); })
-    .catch(() => { });                     // 안 되면 조용히 — 다음 기회에 또 올린다
+  return cloudSync(force || S.cloudAt !== ymd(), false);
+}
+/* 받아 온 진도로 화면을 새로 그린다 — 공부하던 화면(카드·문제)은 건드리지 않고, 홈에 있을 때만 */
+function cloudPull() {
+  return cloudSync(S.cloudAt !== ymd(), false).then(changed => {
+    if (changed && CURV === 'home') renderHome();
+    return changed;
+  });
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && Date.now() - cloudPulled > 30e3) cloudPull();   // 다른 기기에서 하고 돌아온 경우
+});
+/* 로그인 직후 — 이 기기에 공부한 것이 없으면 서버 것을 받고, 있으면 합쳐서 다시 올린다 */
+async function loginPull() {
+  const mine = Object.keys(S.done || {}).length + Object.keys(S.srs || {}).length
+             + Object.keys(S.sdone || {}).length + Object.keys(S.bdone || {}).length;
+  try {
+    if (!mine) { await cloudLoad(); return; }
+    S.cloudSeen = 0; S.cloudHash = '';          // 이 계정으로는 아직 맞춘 적이 없다 — 반드시 합친다
+    if (await cloudSync(true, false)) {
+      popup('<b>이 기기의 진도와 서버 진도를 합쳤습니다.</b> 화면을 새로 그립니다.');
+      setTimeout(() => location.reload(), 900);
+    }
+  } catch (e) { }
 }
 async function cloudLoad() {
   const j = await cCall({ act: 'load', id: S.acct.id, tok: S.acct.tok });
   if (!j.data) return false;
   PROGKEYS.forEach(k => { if (j.data[k] !== undefined) S[k] = j.data[k]; });
+  S.cloudSeen = j.at || Date.now(); S.cloudHash = progHash(progData());
   save();
   popup('<b>진도를 불러왔습니다.</b> 화면을 새로 그립니다.');
   setTimeout(() => location.reload(), 900);
@@ -3149,12 +3249,7 @@ async function socialFinish(provider, sub, email, nick) {
     }
     if (act === 'login') { S.uid = j.uid; if (j.nick) S.nick = j.nick; }
     S.acct = { id, tok: j.tok || '' }; save();
-    if (act === 'login' && j.hasProg) {
-      const mine = Object.keys(S.done || {}).length;
-      if (mine === 0 || await askYN(tr('서버에 저장된 진도가 있습니다. 이 기기로 불러올까요?<br>지금 기기의 진도는 덮어써집니다.'), '불러오기')) {
-        try { await cloudLoad(); } catch (e) { }
-      }
-    }
+    if (act === 'login' && j.hasProg) await loginPull();   // 새 기기면 받고, 공부한 기기면 합친다
     popup('<b>' + (provider === 'google' ? '구글' : '페이스북') + ' 계정으로 로그인됐습니다.</b>');
     if (!S.nick) { askNick(); return; }
     dailyFlowEntry();
@@ -3296,11 +3391,9 @@ function acctForm(gate, mode) {
       }
       S.acct = { id: i, tok: j.tok || '' }; save();
       if (act === 'login' && j.hasProg) {
-        // 서버에 진도가 있다 — 새 기기라면 그대로 받고, 이미 공부한 기기라면 물어본다
-        const mine = Object.keys(S.done || {}).length;
-        if (mine === 0 || await askYN(tr('서버에 저장된 진도가 있습니다. 이 기기로 불러올까요?<br>지금 기기의 진도는 덮어써집니다.'), '불러오기')) {
-          try { await cloudLoad(); } catch (e) { }
-        }
+        // 서버에 진도가 있다 — 새 기기라면 그대로 받고, 이미 공부한 기기라면 **둘을 합친다** (2026-09-29:
+        // 전에는 '덮어쓸까요?'를 물었다 — 어느 쪽을 골라도 한쪽 기기의 공부가 사라졌다)
+        await loginPull();
       }
       popup(act === 'signup'
         ? '<b>가입됐습니다.</b><br>다른 폰에서 로그인하면 지금 별명이 따라옵니다.'
@@ -3428,7 +3521,7 @@ async function resetProgress() {
   ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'cr', 'pet', 'miss', 'revDay', 'revSeen', 'cloudAt'].forEach(k => { delete S[k]; });
   S.done = {}; S.srs = {}; S.ssrs = {}; S.bsrs = {}; S.star = {}; S.act = {}; S.stats = {};
   save();
-  if (S.acct && S.acct.tok) await cloudSave(true);
+  if (S.acct && S.acct.tok) await cloudSync(true, true);   // 덮어쓰기 — 합치면 서버의 옛 진도가 되살아난다
   popup(tr('<b>진도를 지웠습니다.</b> 처음부터 다시 시작합니다.'));
   setTimeout(() => location.reload(), 900);
 }
@@ -6571,7 +6664,9 @@ function homeActions() {
   return box;
 }
 function renderHome() {
-  cloudSave();                           // 로그인한 사람은 하루 한 번 서버에 진도를 남긴다
+  /* 홈에 설 때 다른 기기 진도를 받아 본다(받은 게 있으면 홈을 다시 그린다). 하루 첫 번에는 올리기도 한다.
+     홈은 자주 다시 그려지므로 30초 안에 또 받지는 않는다 (2026-09-29) */
+  if (Date.now() - cloudPulled > 30e3 || S.cloudAt !== ymd()) cloudPull();
   drawWxNow();
   // 한국어를 배우는 사람에게는 베트남어 일정판이 아무 뜻이 없다 — 딴 판을 그린다
   if (learnKo()) { drawKoHome(); show('home', '짜오짜오', false); return; }
@@ -8579,12 +8674,14 @@ $('#next').onclick = () => {
    내일 것을 미리 눈에 발라두거나(예습) 바쁜 날 밀린 카드를 훑는(간략) 용도.
    카드를 누르면 바로 다음으로 넘어간다. */
 let FL = null;
+let FLTM = 0;                  // 카드 넘김 타이머는 하나뿐 — 새 카드를 그리면 옛것을 끈다
+const FLSEEN = new Set();      // 오늘 이 목록에서 이미 저절로 넘겨 본 카드 ('날짜|제목|낱말')
 /* opt.next 가 있으면 카드를 다 넘긴 뒤 [테스트 시작] 단추로 잇는다 (2026-09-27 테스트 탭 3-1: "카드로 쭉 보여준 뒤에 테스트").
    소리가 없는 단어도 뺀 채 넘어가지 않는다 — 카드는 보여 주고 소리만 못 낸다. */
 function flashRun(words, title, opt) {
   const ws = (words || []).filter(w => w && w.vi && (AIDX[w.vi] || (opt && opt.next)));
   if (!ws.length) { if (opt && opt.next) opt.next(); return; }
-  FL = { list: ws, i: 0, next: opt && opt.next, nextLabel: opt && opt.nextLabel };
+  FL = { list: ws, i: 0, next: opt && opt.next, nextLabel: opt && opt.nextLabel, title };
   show('quiz', title, true);
   drawFlash();
 }
@@ -8630,9 +8727,11 @@ function drawFlash() {
   c.append(listenGroup(spd => { const k = recKey(w.vi); k ? play(k, false, null, spd) : speakVi(w.vi, false, spd); }));
   b.append(c);
   let moved = false;
+  /* c.isConnected: 이 카드가 아직 화면에 있을 때만 넘긴다. 예전에는 카드를 둔 채 홈으로 나가도 3초 타이머가
+     살아 있어서, 다시 들어오면 그 옛 타이머가 1초 만에 새 카드를 넘겼다 (대표님 지적 2026-09-29) */
   const go = (step) => {
-    if (moved || $('#quiz').hidden || !FL) return;
-    moved = true; clearTimeout(tm); audio.onended = null;
+    if (moved || $('#quiz').hidden || !FL || !c.isConnected) return;
+    moved = true; clearTimeout(FLTM); audio.onended = null;
     FL.i = Math.max(0, FL.i + (step === undefined ? 1 : step)); drawFlash();
   };
   // 카드 밑 [‹] · · ● · · [›] (캔버스 시안 2026-09-27)
@@ -8645,7 +8744,7 @@ function drawFlash() {
   nav.append(lb, dots, rb); b.append(nav);
   if (FL.next) {                             // 카드를 다 안 봐도 바로 테스트로 갈 수 있다
     const nx = el('button', 'primary big', FL.nextLabel || tr('이제 테스트 시작'));
-    nx.style.width = '100%'; nx.onclick = () => { clearTimeout(tm); const f = FL.next; FL = null; f(); };
+    nx.style.width = '100%'; nx.onclick = () => { clearTimeout(FLTM); const f = FL.next; FL = null; f(); };
     b.append(nx);
   }
   // 릴스처럼 — 왼쪽으로 밀면 다음, 오른쪽으로 밀면 이전
@@ -8656,14 +8755,19 @@ function drawFlash() {
     const dx = e.changedTouches[0].clientX - x0;
     x0 = null;
     if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
-    else go(1);
+    else if (!e.target.closest('button')) go(1);   // [▶ 듣기]·속도 단추를 누른 건 넘기라는 뜻이 아니다
   }, { passive: true });
   audio.pause();
   audio.src = `audio/${voiceDir()}/n/${AIDX[w.vi]}.mp3`;
   audio.defaultPlaybackRate = audio.playbackRate = rate();
   audio.currentTime = 0;
   audio.play().catch(() => { });
-  const tm = setTimeout(go, 3000);       // 한 장에 3초 — 소리가 끝나도 남은 시간은 눈으로 본다
+  /* 한 장에 3초 — 소리가 끝나도 남은 시간은 눈으로 본다. 저절로 넘기는 건 **처음 볼 때 한 번만**이다.
+     뒤로 돌아와 다시 보거나 나갔다가 다시 들어와 보는 카드는 들여다보려고 온 것이니 멈춰 둔다
+     (대표님 지시 2026-09-29) — 밀거나 눌러야 넘어간다. */
+  clearTimeout(FLTM);
+  const seenKey = ymd() + '|' + FL.title + '|' + w.vi;
+  if (!FLSEEN.has(seenKey)) { FLSEEN.add(seenKey); FLTM = setTimeout(go, 3000); }
   c.onclick = go;                        // 급하면 눌러서 바로 다음
 }
 
@@ -10120,6 +10224,7 @@ function grade0(vi, ok, early) {
   if (!r.first) r.first = now();
   r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : Math.max(0, r.lv - 2);
   r.due = now() + STEPS[r.lv] * DAY;
+  r.t = now();                          // 마지막으로 푼 때 — 두 기기 진도를 합칠 때 더 나중 것을 고른다 (mergeProg)
   srsBox()[vi] = r;
   save();
 }
