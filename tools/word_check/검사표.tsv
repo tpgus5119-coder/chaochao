@@ -1,0 +1,270 @@
+# 낱말 하나씩 검사 (2026-09-29~, 대표님: "단어 하나 뜻(순서도)과 발음과 헷갈리는 짝 — 단어 하나 완료하고 검사하고. 챕터 단위로 검사하지 말고. tts 도 위스퍼로")
+# 차례: 메인 교재(tools/word_check/_main_words.json). 판: tools/word_check/sheet.py. 녹음 칸은 data/_asr_word.jsonl 받아쓰기 결과로 채운다(대기 = 아직 안 받아씀).
+# 칸: 순번 ⇥ 낱말 ⇥ 뜻(뜻·차례) ⇥ 발음(북·남 한글) ⇥ 짝(성조·모양·유의·반의) ⇥ 녹음(여·남) ⇥ 고친 것
+1	chào	ok	ok	ok	ok(여·남 1.0)	-
+2	chị	ok	ok	ok	대기	-
+3	anh	고침	ok	ok	대기	참고 사전 뜻이 '그(젊은 호찌민을 부르는 말)' 하나뿐 → 형·오빠·당신·나·그·영국(m_hand)
+4	không	ok	ok	ok	대기	-
+5	năm	ok	ok	ok	대기	-
+6	ông	ok	ok	고침	대기	반의 bà(할아버지↔할머니) 더함
+7	bà	ok	ok	고침	대기	반의 ông 더함
+8	cô	ok	ok	고침	대기	반의 chú(고모↔삼촌)·thầy(여선생↔남선생) 더함
+9	em	ok	ok	ok	대기	-
+10	tôi	ok	ok	ok	대기	-
+11	đây	ok	ok	ok	대기	-
+12	vui	ok	ok	ok	대기	-
+13	hôm nay	ok	ok	ok	대기	-
+14	là	ok	ok	ok	대기	-
+15	gì	ok	ok	ok	대기	-
+16	thầy	ok	ok	고침	대기	반의 cô(남선생↔여선생) 더함
+17	khỏe	ok	ok	고침	대기	짝이 하나도 없었음 → 유의 khỏe mạnh·mạnh khỏe(건강하다)·mạnh(힘세다), 반의 ốm(건강하다↔아프다)·yếu(힘세다↔약하다)
+18	phải	ok	ok	ok	대기	-
+19	hỏi	ok	ok	고침	대기	반의 trả lời 더함
+20	lỗi	ok	ok	고침	대기	짝 없었음 → 유의 sai lầm·lỗi lầm(잘못)·sai sót(오류)
+21	vẽ	ok	ok	고침	대기	짝 없었음 → 유의 bịa(꾸며 내다)
+22	với	ok	ok	ok	대기	-
+23	có	ok	ok	ok	대기	-
+24	rất	ok	ok	ok	대기	-
+25	bạn	ok	ok	ok	대기	-
+26	tự	ok	ok	ok	대기	-
+27	gặp	ok	ok	고침	대기	유의 gặp gỡ·gặp mặt, 반의 chia tay 더함
+28	mệt	ok	ok	고침	대기	반의 khỏe 더함
+29	tên	ok	ok	ok	대기	-
+30	xin lỗi	ok	ok	고침	대기	짝 없었음 → 유의 thứ lỗi
+31	giới thiệu	ok	ok	ok	ok(여·남 1.0)	-
+32	còn	ok	ok	고침	여 확인 필요(위스퍼 "Cần")·남 ok	유의 vẫn@1 더함
+33	cám ơn	ok	ok	ok	ok(여 1.0·남 0.83)	-
+34	cũng	ok	ok	ok	ok(여·남 1.0)	-
+35	và	ok	ok	ok	ok(여·남 1.0)	-
+36	của	ok	ok	ok	ok(여·남 1.0)	-
+37	nói	ok	ok	고침	ok(받침 말 붙여 여·남 Nói)	짝 없었음 → 유의 bảo·kể, 반의 nghe·im lặng
+38	ai	ok	ok	ok	ok(여·남 1.0)	-
+39	đúng	ok	ok	ok	ok(여·남 1.0)	-
+40	sai	ok	ok	ok	여·남 확인 필요(위스퍼 "XAY"·"Sài")	-
+41	lớp	ok	ok	ok	여 ok·남 확인 필요("Lật")	-
+42	nghe	ok	ok	고침	여 확인 필요("NGÀ")·남 ok	반의 nói 더함
+43	tiếng Việt	ok	ok	ok	ok(받침 말 붙여 여·남 Tiếng Việt)	-
+44	thanh điệu	ok	ok	ok	여 확인 필요("Thanh điều")·남 ok	-
+45	số	ok	ok	ok	ok(받침 말 붙여 여·남 Số)	-
+46	hội thoại	ok	ok	ok	ok(받침 말 붙여 여·남)	-
+47	trả lời	ok	ok	고침	ok(여·남 1.0)	반의 hỏi 더함
+48	học viên	ok	ok	ok	ok(여 1.0·남 0.88)	-
+49	nhau	ok	ok	고침	ok(받침 말 붙여 여·남 Nhau)	유의 lẫn nhau 더함
+50	người	고침	ok	ok	ok(여 1.0·남 0.8)	참고 사전 뜻이 '그분(호찌민·하느님)' 하나뿐 → 사람·명·몸·그분(m_hand)
+51	bên cạnh	ok	ok	ok	ok(여·남 1.0)	-
+52	từ	ok	ok	고침	ok(받침 말 붙여 여·남 Từ)	유의 từ ngữ@2 더함
+53	thích hợp	ok	ok	고침	ok(받침 말 붙여 여·남)	짝 없었음 → 유의 phù hợp·hợp
+54	trong	ok	ok	ok	대기	-
+55	hình	ok	ok	ok	ok(받침 말 붙여 여·남 Hình)	-
+56	câu	ok	ok	ok	여·남 확인 필요("Tô"·"Go!")	-
+57	đoạn	ok	ok	ok	ok(받침 말 붙여 여·남 Đoạn)	-
+58	điền	ok	ok	고침	여·남 확인 필요("Đình"·"ĐIÊN")	유의 ghi@1 더함
+59	vào	ok	ok	ok	ok(받침 말 붙여 여·남 Vào)	-
+60	xem	ok	ok	고침	ok(받침 말 붙여 여·남 xem)	유의 nhìn@1·coi@1(남부) 더함
+61	bài	ok	ok	고침	대기	유의 bài học@1 더함
+62	viết	ok	ok	고침	대기	반의 đọc@1 더함
+63	gọi	ok	ok	고침	대기	유의 kêu@1(남부)·gọi điện@2·gọi món@3 더함
+64	chỉ	ok	ok	ok	대기	-
+65	gần	ok	ok	고침	대기	유의 gần như@2·hầu như@2 더함
+66	tại	ok	ok	ok	대기	-
+67	xác nhận	ok	ok	고침	대기	짝 없었음 → 유의 khẳng định
+68	dưới	ok	ok	ok	대기	-
+69	chuyển	ok	ok	ok	대기	-
+70	sử dụng	ok	ok	ok	대기	-
+71	bài tập	ok	ok	고침	대기	유의 bài tập về nhà@1 더함
+72	phát âm	ok	ok	ok	대기	짝 없음(마땅한 유의어 없음)
+73	để	ok	ok	ok	대기	-
+74	hay	ok	ok	ok	대기	-
+75	về	ok	ok	고침	대기	유의 trở về@1·quay về@1 더함
+76	theo	ok	ok	고침	대기	짝 없었음 → 유의 tuân theo@1·dựa theo@2
+77	hiểu	ok	ok	ok	대기	(짝은 rel_mine 에 이미 적음: thông hiểu·lĩnh hội, 반의 hiểu lầm)
+78	sau	ok	ok	ok	대기	-
+79	các	ok	ok	ok	대기	-
+80	đến	ok	ok	고침	대기	반의 đi@1 더함
+81	này	ok	ok	고침	대기	반의 kia@1·đó@1 더함
+82	bán	ok	ok	ok	대기	-
+83	ở	ok	ok	고침	대기	짝 없었음 → 유의 sống@2·tại@3
+84	chín	ok	ok	ok	대기	-
+85	mười	ok	ok	ok	대기	-
+86	xin	ok	ok	고침	대기	짝 없었음 → 유의 nhờ@1·yêu cầu@1
+87	mỗi	ok	ok	고침	대기	짝 없었음 → 유의 từng·mọi
+88	ngã	ok	ok	ok	대기	-
+89	tốt	ok	ok	ok	대기	-
+90	được	ok	ok	고침	대기	반의 không được@1 더함
+91	tự giới thiệu	ok	ok	ok	대기	짝 없음(합성 표현)
+92	thông tin	ok	ok	고침	대기	짝 없었음 → 유의 tin tức@1
+93	lặp lại	ok	ok	ok	대기	-
+94	nguyên âm	ok	ok	고침	대기	반의 phụ âm 더함
+95	phụ âm	ok	ok	고침	대기	반의 nguyên âm 더함
+96	kết hợp	ok	ok	ok	대기	(rel_mine 에 phối hợp·liên kết·tổ hợp 적음)
+97	đếm	ok	ok	ok	대기	짝 없음(마땅한 유의어 없음)
+98	thực hành	ok	ok	고침	대기	짝 없었음 → 유의 thực tập@1·luyện tập@1, 반의 lý thuyết@2
+99	dùng	ok	ok	ok	대기	-
+100	câu hỏi	ok	ok	ok	대기	(rel_mine 에 반의 câu trả lời)
+101	chọn	ok	ok	고침	대기	유의 lựa chọn 더함
+102	chính tả	ok	ok	ok	대기	-
+103	tìm hiểu	ok	ok	고침	대기	짝 없었음 → 유의 tìm tòi@1·nghiên cứu@1
+104	ngữ pháp	ok	ok	ok	대기	-
+105	vật	ok	ok	ok	대기	-
+106	kết cấu	ok	ok	ok	대기	-
+107	tồn tại	ok	ok	고침	대기	유의 hiện hữu@1 더함
+108	hành động	ok	ok	ok	대기	(rel_mine 에 hành vi·cư xử·hành xử)
+109	thể hiện	ok	ok	고침	대기	짝 없었음 → 유의 biểu hiện·bày tỏ·biểu lộ
+110	khẳng định	ok	ok	ok	대기	뜻 1 '긍정'은 교재 8과 문맥(câu khẳng định 긍정문) 그대로 둠
+111	thành	ok	ok	ok	대기	-
+112	cách nói	ok	ok	ok	대기	(rel_mine 에 kiểu nói chuyện)
+113	cho	ok	ok	고침	대기	반의 nhận@1 더함
+114	hoặc	ok	ok	ok	대기	-
+115	sức khỏe	ok	ok	고침	대기	유의 sức khoẻ(같은 말, 다른 표기) 더함
+116	gắn	ok	ok	ok	대기	(rel_mine 에 dán·gắn kết)
+117	hỏi thăm	ok	ok	ok	대기	(rel_mine 에 thăm hỏi·chào hỏi·hỏi han)
+118	mẫu	ok	ok	고침	대기	유의 mẫu mã@2·biểu mẫu@3 더함
+119	thiếu	ok	ok	고침	대기	유의 thiếu hụt@1 더함
+120	đọc	ok	ok	고침	대기	반의 viết@1 더함
+121	trang	고침	ok	ok	대기	참고 사전 뜻이 '짱(이름)·장(莊)'뿐 → 쪽·페이지 앞에(m_hand)
+122	a lô	ok	ok	ok	대기	(rel_mine 에 alô·a-lô)
+123	đầy	ok	ok	고침	대기	반의 rỗng@1·vơi@1 더함
+124	xin chào	ok	ok	ok	대기	-
+125	một	ok	ok	ok	대기	-
+126	hai	ok	ok	ok	대기	-
+127	ba	ok	ok	ok	대기	-
+128	bốn	ok	ok	ok	대기	-
+129	sáu	ok	ok	ok	대기	-
+130	bảy	ok	ok	ok	대기	-
+131	tám	ok	ok	ok	대기	-
+132	không sao	ok	ok	고침	대기	짝 없었음 → 유의 không có gì·không sao đâu
+133	tủ	ok	ok	ok	대기	-
+134	mũ mão	ok	ok	ok	대기	짝 없음(합성어)
+135	bã	ok	ok	ok	대기	(rel_mine 에 cặn bã·cặn)
+136	rất tốt	ok	ok	ok	대기	짝 없음(구)
+137	dạ	ok	ok	ok	대기	-
+138	hả	ok	ok	ok	대기	-
+139	bảng chữ cái	ok	ok	ok	대기	-
+140	khoanh tròn	ok	ok	ok	대기	(rel_mine 에 khoanh trò)
+141	âm	ok	ok	ok	대기	-
+142	theo mẫu	ok	ok	ok	대기	짝 없음(구)
+143	từ ngữ	ok	ok	고침	대기	짝 없었음 → 유의 từ vựng
+144	dưới đây	ok	ok	ok	대기	(rel_mine 에 sau đây, 반의 trên đây)
+145	còn thiếu	ok	ok	ok	대기	(rel_mine 에 thiếu hụt)
+146	chỗ trống	ok	ok	고침	대기	짝 없었음 → 유의 ô trống·khoảng trống
+147	đọc hiểu	ok	ok	ok	대기	짝 없음(합성어)
+148	đoạn văn	ok	ok	고침	대기	유의 đoạn 더함
+149	dựa vào	ok	ok	ok	대기	(rel_mine 에 dựa theo·căn cứ vào·tựa·ỷ)
+150	bài đọc	ok	ok	ok	대기	짝 없음(합성어)
+151	đại từ	ok	ok	ok	대기	-
+152	nhân xưng	ok	ok	ok	대기	짝 없음(문법 용어)
+153	ngôi thứ nhất	ok	ok	ok	대기	짝 없음(문법 용어)
+154	ngôi thứ hai	ok	ok	ok	대기	짝 없음(문법 용어)
+155	số ít	ok	ok	ok	대기	-
+156	tự xưng	ok	ok	ok	대기	-
+157	người nghe	ok	ok	고침	대기	반의 người nói 더함
+158	chỉ định từ	ok	ok	고침	대기	유의 đại từ chỉ định 더함
+159	địa điểm	ok	ok	고침	대기	유의 nơi·chỗ 더함
+160	người nói	ok	ok	고침	대기	반의 người nghe 더함
+161	thời điểm	ok	ok	고침	대기	유의 lúc·thời khắc 더함
+162	nghi vấn	ok	ok	고침	대기	짝 없었음 → 유의 thắc mắc@1·nghi ngờ@1, 반의 khẳng định@2
+163	sự tồn tại	ok	ok	고침	대기	유의 tồn tại 더함
+164	trạng thái	ok	ok	ok	대기	-
+165	nào đó	ok	ok	ok	대기	짝 없음(구)
+166	câu trả lời	ok	ok	ok	대기	(rel_mine 에 đáp án, 반의 câu hỏi)
+167	dạng	ok	ok	고침	대기	유의 hình dạng@1·kiểu@2 더함
+168	phủ định	ok	ok	고침	대기	짝 없었음 → 유의 phủ nhận@1, 반의 khẳng định@1
+169	cột	ok	ok	ok	대기	-
+170	sang	ok	ok	고침	대기	유의 qua@1·chuyển sang@2·sang trọng@3 더함
+171	từ vựng	ok	ok	고침	대기	짝 없었음 → 유의 từ ngữ·vốn từ
+172	đại từ nhân xưng	ok	ok	ok	대기	짝 없음(문법 용어)
+173	chỉ định	ok	ok	고침	대기	유의 chỉ thị@3 더함
+174	chào hỏi	ok	ok	ok	대기	(rel_mine 에 hỏi thăm·thăm hỏi)
+175	số đếm	ok	ok	고침	대기	반의 số thứ tự 더함
+176	thanh	고침	ok	ok	대기	참고 사전 뜻이 '청나라·이름·탄호아'뿐 → 성조·막대·맑은 앞에(m_hand)
+177	thứ nhất	ok	ok	고침	대기	유의 đầu tiên, 반의 cuối cùng 더함
+178	ngang	ok	ok	ok	대기	-
+179	huyền	ok	ok	고침	대기	유의 thanh huyền@1 더함
+180	sắc	ok	ok	고침	대기	유의 thanh sắc@3 더함
+181	thanh ngang	ok	ok	고침	대기	유의 ngang@2 더함
+182	thanh huyền	ok	ok	고침	대기	유의 huyền@1 더함
+183	thanh ngã	ok	ok	고침	대기	유의 ngã@3 더함
+184	thanh hỏi	ok	ok	ok	대기	짝 없음(hỏi 의 뜻 목록에 성조 뜻이 없어 안 이음)
+185	thanh sắc	ok	ok	고침	대기	유의 sắc@3 더함
+186	thanh nặng	ok	ok	ok	대기	짝 없음(nặng 은 '무겁다')
+187	à	ok	ok	ok	대기	-
+188	sự	ok	ok	ok	대기	-
+189	rát	ok	ok	고침	대기	짝 없었음 → 유의 xót
+190	nhà	ok	ok	고침	대기	유의 nhà ở@1·nhà cửa@1 더함
+191	ăn	ok	ok	고침	대기	짝 없었음 → 유의 xơi@1(높임)·ăn uống@1
+192	lắm	ok	ok	ok	대기	-
+193	vẫn	ok	ok	고침	대기	유의 còn@1 더함
+194	mặc	ok	ok	ok	대기	-
+195	áo dài	ok	ok	ok	대기	-
+196	đẹp	ok	ok	고침	대기	유의 xinh@1·xinh đẹp@1 더함
+197	nước	ok	ok	ok	대기	-
+198	nào	ok	ok	ok	대기	-
+199	kia	ok	ok	고침	대기	반의 này@1 더함
+200	đó	ok	ok	고침	대기	반의 này@1 더함
+201	tiếng	ok	ok	ok	대기	-
+202	đi	ok	ok	고침	대기	반의 đến@1 더함
+203	biết	ok	ok	ok	대기	(rel_mine 에 hiểu biết·nhận biết, 반의 không biết)
+204	vâng	ok	ok	ok	대기	-
+205	quốc tịch	ok	ok	ok	대기	-
+206	họ	ok	ok	ok	대기	-
+207	khác	ok	ok	고침	대기	유의 khác nhau@1 더함
+208	có lẽ	ok	ok	고침	대기	짝 없었음 → 유의 chắc là·có thể
+209	muốn	ok	ok	ok	대기	(rel_mine 에 ước·thích, 반의 không muốn)
+210	sinh viên	ok	ok	ok	대기	-
+211	giáo viên	ok	ok	ok	대기	(rel_mine 에 thầy giáo·cô giáo·nhà giáo·thầy·cô, 반의 học sinh·học trò)
+212	tới	ok	ok	ok	대기	-
+213	thấy	ok	ok	고침	대기	유의 nhìn thấy@1·cảm thấy@2 더함
+214	đi bộ	ok	ok	ok	대기	-
+215	chị ấy	ok	ok	ok	대기	-
+216	phải không	ok	ok	ok	대기	-
+217	Hàn Quốc	ok	ok	ok	대기	-
+218	Pháp	고침	ok	ok	대기	짝 사전 뜻이 '법'뿐 → 프랑스(Pháp)·법(法)(k_고침)
+219	say	ok	ok	ok	대기	-
+220	Anh	ok	ok	ok	ok(여·남 1.0)	(3번 anh 과 같은 낱말)
+221	cách	ok	ok	ok	대기	-
+222	anh ấy	ok	ok	ok	대기	-
+223	cô ấy	ok	ok	ok	대기	-
+224	em ấy	ok	ok	ok	대기	-
+225	ông ấy	ok	ok	ok	대기	-
+226	bà ấy	ok	ok	ok	대기	-
+227	mát	ok	ok	ok	대기	-
+228	tay	ok	ok	ok	대기	-
+229	Tây	ok	ok	고침	대기	반의 đông@1 더함
+230	Bắc	ok	ok	ok	대기	-
+231	ông bà	ok	ok	ok	대기	-
+232	ở nhà	ok	ok	ok	대기	짝 없음(구)
+233	lần	ok	ok	ok	대기	-
+234	hàng	ok	ok	고침	대기	유의 hàng hóa@1·cửa hàng@2·dãy@3 더함
+235	Úc	고침	ok	ok	대기	짝 사전 뜻 '(예) Úc = 호주' → 호주(Úc)(k_고침)
+236	Mỹ	고침	ok	ok	대기	짝 사전 뜻 '(hoa mỹ) 화려하다' → 미국(Mỹ)·미(美)(k_고침)
+237	Nhật	고침	ok	고침	대기	짝 사전 뜻 → 일본(Nhật)·날(日)(k_고침) · 유의 nhật bản@1 더함
+238	Trung Quốc	ok	ok	ok	대기	-
+239	nước ngoài	ok	ok	고침	대기	유의 ngoại quốc, 반의 trong nước 더함
+240	Thái Lan	ok	ok	ok	대기	-
+241	có mặt	ok	ok	ok	대기	-
+242	giữa	ok	ok	ok	대기	-
+243	bằng	ok	ok	ok	대기	-
+244	đặt	ok	ok	고침	대기	유의 đặt hàng@2·đặt trước@2·đặt tên@3 더함
+245	như	ok	ok	고침	대기	짝 없었음 → 유의 giống như@1
+246	trước	ok	ok	ok	대기	-
+247	thêm	ok	ok	고침	대기	유의 bổ sung@2·thêm vào@2, 반의 bớt@2 더함
+248	xa	ok	ok	ok	대기	-
+249	có thể	ok	ok	ok	대기	-
+250	trường hợp	ok	ok	고침	대기	짝 없었음 → 유의 tình huống@1
+251	vị trí	ok	ok	고침	대기	짝 없었음 → 유의 chỗ@1·địa điểm@1·chức vị@2
+252	Đức	고침	ok	ok	대기	짝 사전 뜻이 '덕(德)·(존칭)'뿐 → 독일(Đức) 앞에(k_고침)
+253	Đài Loan	ok	ok	ok	대기	-
+254	mấy	ok	ok	고침	대기	유의 bao nhiêu@1 더함
+255	nhưng	ok	ok	ok	대기	-
+256	cơm	ok	ok	ok	대기	-
+257	nắng	ok	ok	고침	대기	유의 ánh nắng@1, 반의 mưa@2 더함
+258	chắc	ok	ok	고침	대기	유의 chắc là@1·có lẽ@1·chắc chắn@2 더함
+259	đã	ok	ok	고침	대기	유의 rồi@1, 반의 chưa@1 더함
+260	mười lăm	ok	ok	ok	대기	-
+261	hôm qua	ok	ok	ok	대기	(rel_mine 에 반의 ngày mai)
+262	những	ok	ok	ok	대기	-
+263	hoàn thành	ok	ok	고침	대기	유의 hoàn tất, 반의 dang dở 더함
+264	quốc gia	ok	ok	ok	대기	-
+265	phó từ	ok	ok	ok	대기	-
+266	điều	ok	ok	ok	대기	-
+267	báo	ok	ok	고침	대기	유의 tờ báo@1·báo chí@1 더함
