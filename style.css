@@ -2860,3 +2860,9 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .dwq{font-weight:800; font-size:16px} .dwq small{font-weight:600; color:var(--dim)}
 .dwa{color:var(--dim); font-size:14px; margin-top:2px}
 .dwgram{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
+/* 사전 말로 찾기 — 입력칸 오른쪽 [VI/한] [마이크] (2026-09-30) */
+.dictsearch .dictin{flex:1; min-width:0}
+.dictsearch.hasmic .dsclear{right:92px}
+.dslang,.dsmic{flex:none; width:40px; height:40px; margin-left:4px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--fg); font-weight:800; font-size:13px; padding:0; min-height:0; box-shadow:none; display:flex; align-items:center; justify-content:center}
+.dsmic svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round}
+.dsmic.on{background:var(--ok); color:#fff; border-color:var(--ok)}

@@ -2696,17 +2696,18 @@ function studyGramEntry(scroll) {
      ② 교재별: 메인 1권(src 3) · 메인 2권(4) · 사이드 기초(0 = Tiếng Việt Cơ sở 2) · 사이드 중급 1(1 = Nâng cao 1) · 사이드 중급 2(2 = Nâng cao 2) · 줌 수업(5), 그 책의 과 차례.
         메인 보조(B1~B3)의 문형 6개는 4·5과 안에 있으나 책 번호가 없어 따로 묶지 못한다. */
   const bk = GRAM.books[0];
-  const BK = [[3, '메인 1권', '메인 교재 1권'], [4, '메인 2권', '메인 교재 2권'], [0, '사이드 기초', 'Tiếng Việt Cơ sở 2'], [1, '사이드 중급 1', 'Tiếng Việt Nâng cao 1'], [2, '사이드 중급 2', 'Tiếng Việt Nâng cao 2'], [5, '줌 수업', '줌 수업 자료']];
-  const BKN = { 3: '1권', 4: '2권', 0: '기초', 1: '중급 1', 2: '중급 2', 5: '줌' };
+  const BK = [[3, '메인 1권', '메인 교재 1권'], [4, '메인 2권', '메인 교재 2권'], [6, '메인 보조', 'VSL1 B1~B3'], [0, '사이드 기초', 'Tiếng Việt Cơ sở 2'], [1, '사이드 중급 1', 'Tiếng Việt Nâng cao 1'], [2, '사이드 중급 2', 'Tiếng Việt Nâng cao 2'], [5, '줌 수업', '줌 수업 자료']];
+  const BKN = { 3: '1권', 4: '2권', 6: '보조 B', 0: '기초', 1: '중급 1', 2: '중급 2', 5: '줌' };   // 6 = 메인 보조 VSL1 B1(6-0)·B2(6-1)·B3(6-2) (2026-09-30)
   const ESS = { 14: 1, 17: 1, 18: 1, 20: 1, 23: 1 };
   const units = bk.bai.map((x, ni) => {
+    if (x.ng) return null;                              // 문법이 아닌 과(1·2과) — 기본기·일상으로 옮김
     const ch = {};
     (x.src || []).forEach(t => { const [b2, c] = t.split('-').map(Number); if (ch[b2] === undefined || c < ch[b2]) ch[b2] = c; });   // 책마다 첫 과
     const lv = ch[3] !== undefined || ch[5] !== undefined || ESS[x.no] ? '초급' : '중급';
-    const fb = [3, 4, 5, 0, 1, 2].find(b2 => ch[b2] !== undefined);
+    const fb = [3, 4, 6, 5, 0, 1, 2].find(b2 => ch[b2] !== undefined);
     const from = fb !== undefined ? BKN[fb] + ' ' + (ch[fb] + 1) + tr('과') : '';
     return { ni, x, ch, lv, from };
-  });
+  }).filter(Boolean);
   const node = (u, from) => ({ key: gkey(0, u.ni), title: u.x.t, sub: (from ? from + ' · ' : '') + (u.x.g || []).length + tr('개 문법'),
     done: !!S.done[gkey(0, u.ni)], fn: () => { dive(back); startGram(0, u.ni); } });
   const row = (key, title, sub, us, fromOf) => {
@@ -2736,10 +2737,11 @@ function drawGramBook(bi) {
   const bk = GRAM.books[bi];
   const list = $('#dayList'); list.textContent = '';
   const nodes = bk.bai.map((x, ni) => {
+    if (x.ng) return null;                              // 문법이 아닌 과는 목록에서 뺀다 (2026-09-30)
     const k = gkey(bi, ni);
     return { key: k, title: x.t, sub: x.no + tr('과') + ' · ' + (x.g || []).length + tr('개 문법'), num: ni + 1,
              done: !!S.done[k], fn: () => { dive(() => drawGramBook(bi)); startGram(bi, ni); } };
-  });
+  }).filter(Boolean);
   roadInList(list, nodes);
   show('course', bk.book, true);
 }
@@ -2981,6 +2983,7 @@ function boxRows(o, box, map, keep) {
   });
   return Object.entries(rows).filter(([, v]) => v.all > 0).map(([k, v]) => [(map ? map(k) : k), Math.round(v.ok * 100 / v.all), v.all, undefined, null, v.ok, k]).sort((a, b) => a[1] - b[1]);
 }
+const gramName = k => /^\d+$/.test(k) ? (k + tr('과') + (GRAM ? ' ' + ((GRAM.books[0].bai.find(x => x.no === +k) || {}).t || '').split(' — ')[0] : '')) : String(k).split(' — ')[0];
 const TN_NM = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감', 'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
 const tnName = k => (TN_NM[k] || k) + ' ' + toneArrow(k);
 function renderAnalysis(host, mode) {
@@ -3032,6 +3035,25 @@ function renderAnalysis(host, mode) {
       list.append(row);
       if (ANA_OPEN === sb) list.append(detail(sb, x));
     });
+    /* 문장 (2026-09-30, 대표님 "문장 학습 분석도 필요하지?") — 낱말이 아니라 **문장 문제**만: 조각 배열·문장 뜻 고르기·빈칸·받아쓰기·문법 문제.
+       다섯 영역과 겹쳐 세지만(문장 조각은 쓰기에도 든다) 문장만 따로 모아 보는 줄이다. 세부는 문제 유형별 · 쓰인 문법별 */
+    const c = pctOf(cur, 'sentOk', 'sentAll'), p = prev ? pctOf(prev, 'sentOk', 'sentAll') : null;
+    const row = el('button', 'anarow' + (ANA_OPEN === 'sent' ? ' open' : '')); row.type = 'button';
+    const head = el('div', 'anahd');
+    head.append(el('b', 'ananm', tr('문장')), el('span', 'anapct', c.pct === null ? tr('아직') : c.pct + '%'));
+    if (p && p.pct !== null && c.pct !== null && c.n >= 5 && p.n >= 5) { const dd = c.pct - p.pct; head.append(el('span', 'anadelta ' + (dd > 0 ? 'up' : dd < 0 ? 'down' : ''), (dd > 0 ? '▲ ' : dd < 0 ? '▼ ' : '± ') + Math.abs(dd))); }
+    head.append(el('span', 'anan', c.n ? c.ok + '/' + c.n : ''));
+    row.append(head, sparkline(weekSeries('sentOk', 'sentAll')));
+    row.onclick = () => { ANA_OPEN = ANA_OPEN === 'sent' ? null : 'sent'; drawList(); };
+    list.append(row);
+    if (ANA_OPEN === 'sent') {
+      const d = el('div', 'anadetail');
+      const put = (title, rows, note) => { if (!rows.length) return; d.append(el('p', 'anasec', esc(title))); d.append(bars(rows)); if (note) d.append(el('p', 'dimtxt', esc(note))); };
+      put(tr('문제 유형별'), boxRows(cur, 'smd', k => MODE_NM[k] || k));
+      put(tr('쓰인 문법별'), boxRows(cur, 'gr', gramName), tr('문장 속 문형으로 셉니다 — 매일 단어 시험·주간 시험 문장'));
+      if (!d.children.length) d.append(el('p', 'dimtxt', tr('아직 푼 문장 문제가 없습니다 — 테스트의 문장·매일 단어 시험·주간 시험에서 쌓입니다')));
+      list.append(d);
+    }
   };
   drawList();
   if (S.nick && S.nick !== '이름없음') {                    // 다른 사람들의 평균 (등수는 안 보여 준다 — 견줄 것은 실력이지 자리가 아니다)
@@ -3049,7 +3071,8 @@ function renderAnalysis(host, mode) {
 }
 /* 처방 — 분석만 하고 끝내지 않는다. 단추를 누르면 바로 그 훈련 (2026-09-30 밤) */
 function renderRx(host, cur, prev) {
-  const rows = SUBJ.map(x => Object.assign({ name: x.k, sb: SUBJ_KEY[x.k], tip: x.tip }, pctOf(cur, x.ok, x.all), { prev: prev ? pctOf(prev, x.ok, x.all) : null }));
+  const rows = SUBJ.map(x => Object.assign({ name: x.k, sb: SUBJ_KEY[x.k], tip: x.tip }, pctOf(cur, x.ok, x.all), { prev: prev ? pctOf(prev, x.ok, x.all) : null }))
+    .concat([Object.assign({ name: '문장', sb: 'sent', tip: '낱말을 문장 차례로 쓰고, 문장 뜻을 알아보기' }, pctOf(cur, 'sentOk', 'sentAll'), { prev: prev ? pctOf(prev, 'sentOk', 'sentAll') : null })]);   // 문장 줄도 처방 대상 (2026-09-30)
   const ok = rows.filter(r => r.n >= NEED);
   const lines = [], btns = [];
   const btn = (t, fn) => { const b = el('button', 'ghost sm anabtn', t); b.type = 'button'; b.onclick = fn; btns.push(b); };
@@ -3080,15 +3103,23 @@ function renderRx(host, cur, prev) {
              '먼저 소리를 듣고, 그다음 따라 말해 보세요.'],
     '쓰기': ['<b>손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.',
              '<b>타이핑</b>에서 글자 보기를 누르지 말고 먼저 쳐 보세요 — 보고 치면 기억에 안 남습니다.'],
+    '문장': ['테스트의 <b>문장</b>을 하루 한 판 — 낱말을 알아도 차례(어순)를 모르면 문장이 안 됩니다.',
+             '틀린 문장은 <b>쓰인 문법 카드</b>를 다시 보세요 — 매일 단어 시험 결과에서 바로 갈 수 있습니다.'],
     '말하기': ['단어 카드의 <b>말하기</b>를 누른 뒤 원어민 곡선과 겹쳐 보세요.',
                '<b>AI가 듣기</b>를 눌러 알아듣는 발음인지 확인하세요 — 안 알아들으면 조금 크게, 또박또박.'],
   };
   lines.unshift(worst.pct >= 80 ? `<b>모두 좋습니다.</b> 더 올릴 곳 — <b>${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)` : `<b>약한 곳 — ${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`,
                 ...(RX[worst.name] || []).map(t => '· ' + t));
-  if (SUBJ_SKILL[worst.sb]) btn(tr('N 훈련 20문제').replace('N', worst.name), () => { const ws = pool20(); if (ws.length) startQuiz(ws, null, 20, true, { skill: SUBJ_SKILL[worst.sb] }); else popup(tr('아직 배운 단어가 없습니다')); });
+  if (worst.sb === 'sent') btn(tr('문장 연습'), () => testSents());
+  else if (SUBJ_SKILL[worst.sb]) btn(tr('N 훈련 20문제').replace('N', worst.name), () => { const ws = pool20(); if (ws.length) startQuiz(ws, null, 20, true, { skill: SUBJ_SKILL[worst.sb] }); else popup(tr('아직 배운 단어가 없습니다')); });
   else btn(tr('복습 시작'), () => startQuiz(null, null));
   const tn = boxRows(cur, 'tn_' + worst.sb, tnName).filter(t => t[2] >= NEED);
   if (tn.length && tn[0][1] < 70) { lines.push(`· ${esc(worst.name)}${tr('에서 성조는')} <b>${esc(tn[0][0])}</b>${tr('이')} ${tn[0][1]}%${tr('로 가장 약합니다 — 기본기 성조에서 그 소리만 골라 들어 보세요.')}`); btn(tr('성조 훈련'), () => startTone()); }
+  const gw = boxRows(cur, 'gr', gramName).filter(r => r[2] >= 5 && r[1] < 70);   // 문장 속에서 약한 문법 (5문제 넘은 것만)
+  if (gw.length) {
+    lines.push('· ' + tr('문장에서 가장 약한 문법') + ' — <b>' + esc(gw[0][0]) + '</b> ' + gw[0][1] + '% (' + gw[0][2] + tr('문제') + ')');
+    const no = +gw[0][6]; if (no && GRAM) { const ni = GRAM.books[0].bai.findIndex(x => x.no === no); if (ni >= 0) btn(tr('그 문법 카드'), () => startGram(0, ni)); }
+  }
   const miss = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 2).sort((a, b) => b[1] - a[1]).slice(0, 5);
   if (miss.length) {
     lines.push('· <b>발목 잡는 단어</b>(두 번 이상 틀린 것) — ' + miss.map(m => esc(m[0])).join(' · ') + '<br>&nbsp;&nbsp;이 단어만 따로 소리 내어 다섯 번씩. 맞히기 시작하면 목록에서 서서히 사라집니다.');
@@ -7278,6 +7309,10 @@ function gramReady(j) {
       S.gramMig = 1; save();
     }
   } catch (e) { }
+  /* 문법이 아닌 것 (대표님 물음 2026-09-30 "문법이 아닌 것이 섞여 있니? 어디로 옮겨야겠니?") — 자료에 ng(옮긴 곳)가 붙은 과·항목은
+     문법 화면·문법 카드·문법 테스트에서 뺀다. 과(1·2과)는 목록에서만 숨기고(진도 열쇠 'H과'는 차례라 배열은 그대로), 항목은 x.g 에서 걷어 x.ngItems 로.
+     옮긴 곳: 1과 → 기본기 발음 · 2과 → 일상 '인사와 자기소개' · 13·14·16·46과의 낱말·표현 → 일상 해당 주제(없던 표현 7개는 일상에 새로 넣음) */
+  try { (j.books || []).forEach(b => b.bai.forEach(x => { if (x.g) { x.ngItems = x.g.filter(g => g.ng); x.g = x.g.filter(g => !g.ng); } })); } catch (e) { }
   return j;
 }
 
@@ -7586,6 +7621,7 @@ function drawGramList() {
                  done: !!S.done[d.day], fn: () => { dive(drawGramList); startLearn(d); } });
   });
   GRAM.books.forEach((b, bi) => b.bai.forEach((x, ni) => {
+    if (x.ng) return;                                   // 문법이 아닌 과 (2026-09-30)
     const k = gkey(bi, ni);
     nodes.push({ key: k, title: x.t, sub: tr('문법') + ' ' + x.no + tr('과') + ' · ' + x.g.length + tr('개 문법'),
                  done: !!S.done[k], fn: () => { dive(drawGramList); startGram(bi, ni); } });
@@ -7970,6 +8006,26 @@ function dictEntry(q0) {
   clr.type = 'button'; clr.title = tr('지우기');
   clr.onclick = () => { inp.value = ''; inp.focus(); draw(); };
   box.append(inp, clr);
+  /* 말로 찾기 (대표님 물음 2026-09-30 "말로 검색도 되냐" → 폰·브라우저 내장 음성 인식 — 무료, 앱 용량 0, 서버 안 거침).
+     말할 언어는 작은 단추(VI/한)로 고르고 기기에 기억한다. 들은 글자를 입력칸에 넣고 바로 찾는다 */
+  if (SRClass) {
+    const lang = () => S.dictSay || 'vi-VN';
+    const lg = el('button', 'dslang', lang() === 'vi-VN' ? 'VI' : '한'); lg.type = 'button'; lg.title = tr('말할 언어');
+    lg.onclick = () => { S.dictSay = lang() === 'vi-VN' ? 'ko-KR' : 'vi-VN'; save(); lg.textContent = lang() === 'vi-VN' ? 'VI' : '한'; };
+    const mic = el('button', 'dsmic', '<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>');
+    mic.type = 'button'; mic.title = tr('말로 찾기');
+    let sr = null;
+    mic.onclick = () => {
+      if (sr) { try { sr.stop(); } catch (e) { } return; }
+      sr = new SRClass(); sr.lang = lang(); sr.interimResults = true; sr.maxAlternatives = 1;
+      mic.classList.add('on');
+      sr.onresult = ev => { const r = ev.results[ev.results.length - 1]; inp.value = String(r[0].transcript || '').replace(/[.?!。]+$/, '').trim(); draw(); };
+      sr.onerror = ev => { if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') popup(tr('마이크를 쓸 수 없습니다 — 브라우저 설정에서 마이크를 허용해 주세요')); };
+      sr.onend = () => { mic.classList.remove('on'); sr = null; };
+      try { sr.start(); } catch (e) { mic.classList.remove('on'); sr = null; }
+    };
+    box.classList.add('hasmic'); box.append(lg, mic);
+  }
   const out = el('div', 'dictout');
   let d = [];
   /* 결과 한 줄 — 찾은 말 목록과 최근 찾은 말 목록이 같은 줄을 쓴다 */
@@ -10692,6 +10748,12 @@ function optInfo(o, showsVi) {
    정답률이 같아도 느리면 아직 '자동'이 안 된 것이다. */
 function markSpeed(ok, mode) {
   bump('md', mode, ok);
+  { const qw = (typeof Q !== 'undefined' && Q && Q.list && Q.list[Q.i]) ? Q.list[Q.i].w : null;   // 문장 문제 (분석 v2 '문장' 영역, 2026-09-30)
+    if (qw && qw.sent) {
+      S.stats.sentAll = (S.stats.sentAll || 0) + 1; if (ok) S.stats.sentOk = (S.stats.sentOk || 0) + 1;
+      bump('smd', mode, ok);
+      [].concat(qw.gram || []).forEach(g => bump('gr', String(g), ok));   // 쓰인 문법 — 과 번호(매일 시험) 또는 문형 제목(주간 시험)
+    } }
   if (!Q.t0) return;
   const ms = Date.now() - Q.t0;
   S.stats.ansN = (S.stats.ansN || 0) + 1;                                 // 답한 문제 수 (찍기 비율의 분모)
@@ -10756,11 +10818,11 @@ function noteLetters(want, got, box) {
    save() 한 곳에서만 잰다 — 계수기가 30군데 흩어져 있어 하나씩 손대면 빠뜨린다. 다른 기기 진도를 받아 합친 직후에는 늘어난 것이 내가 오늘 한 게 아니므로
    tallyReset() 으로 기준만 새로 잡는다. 그날의 외운 단어 수(memo)·배운 단어 수(learned)는 상태값이라 그대로 적는다.
    하루 30~60개 숫자(0.5~1KB) → 1년 300KB. 기기끼리는 날짜별 열쇠마다 큰 쪽을 취한다(mergeProg deep). */
-const TALLY_BOX = ['tn', 'md', 'lvt', 'serr', 'od', 'ltrw', 'ltrs', 'tn_say', 'tn_ear', 'tn_read', 'tn_spell', 'tn_memo'];
+const TALLY_BOX = ['tn', 'md', 'lvt', 'serr', 'od', 'ltrw', 'ltrs', 'tn_say', 'tn_ear', 'tn_read', 'tn_spell', 'tn_memo', 'smd', 'gr'];
 function tallyCur() {
   const t = S.stats || {}, cur = {};
   SUBJ.forEach(x => { cur[x.ok] = t[x.ok] || 0; cur[x.all] = t[x.all] || 0; });
-  ['skipN', 'guessN', 'ansN', 'ms', 'msN', 'said', 'drill'].forEach(k => { cur[k] = t[k] || 0; });
+  ['skipN', 'guessN', 'ansN', 'ms', 'msN', 'said', 'drill', 'sentAll', 'sentOk'].forEach(k => { cur[k] = t[k] || 0; });
   TALLY_BOX.forEach(bx => Object.entries(t[bx] || {}).forEach(([k, v]) => {
     if (v && typeof v === 'object') { cur[bx + ':' + k + ':ok'] = v.ok || 0; cur[bx + ':' + k + ':all'] = v.all || 0; } else cur[bx + ':' + k + ':all'] = v || 0;
   }));
@@ -10833,6 +10895,7 @@ function grade0(vi, ok, early) {
   r.lv = ok ? Math.min(r.lv + 1, STEPS.length - 1) : Math.max(0, r.lv - 2);
   r.due = now() + stepDays(r.lv) * DAY;                 // 고정 간격에 개인 보정을 조금 얹은 값 (stepDays)
   r.t = now();                          // 마지막으로 푼 때 — 두 기기 진도를 합칠 때 더 나중 것을 고른다 (mergeProg)
+  r.h = ((r.h || '') + (ok ? '1' : '0')).slice(-8);   // 낱말별 이력 — 마지막 8번 (1 맞음·0 틀림). 낱말마다 잘 잊는지 보는 재료 (2026-09-30)
   srsBox()[vi] = r;
   save();
 }

@@ -23,7 +23,7 @@ def text_of(p):
                                  for para in re.findall(r'<w:p(?:\s[^>]*)?>.*?</w:p>', x, flags=re.S)) if t)
 GRAM = [(r'không phải là', 4), (r'\blà\b', 4), (r'\bcủa\b', 4), (r'\bcũng\b', 4), (r'\bcó\b[^?]*\bkhông\?', 5), (r'phải không', 5),
         (r'\bgì\b', 5), (r'\bai\b', 5), (r'nước nào', 5), (r'thế nào', 5), (r'\bmấy\b', 8), (r'bao nhiêu', 8), (r'\bđã\b|\bđang\b|\bsẽ\b', 10),
-        (r'\bchưa\b', 11), (r'\brất\b|\bquá\b', 12), (r'ở đâu|đi đâu|từ đâu', 17), (r'\bđều\b', 28), (r'\bđược\b|\bbiết\b|có thể', 19)]
+        (r'\bchưa\b', 11), (r'\brất\b|\bquá\b', 12), (r'ở đâu|đi đâu|từ đâu', 17), (r'\bđều\b', 28), (r'\bđược\b|\bbiết\b|có thể|\bmuốn\b', 19)]
 OVR = {('b1', 'tắc xi'): 'to_ko'}   # 시험지 'Taxi'(베트남어 칸) — 앱 표제어는 tắc xi 라 글자로 못 찾는다
 # 문장 속 이름(한국·영어 이름·약자)은 베트남어 읽기 규칙으로 읽으면 이상해진다('Seung Bin' → 쌔우 빈) — 발음 칸에서만 바로잡는다
 NAME_KR = {'Seung Bin': '승빈', 'Yeo Jeong': '여정', 'Eun Ji': '은지', 'GYBM': '지와이비엠', 'Brian': '브라이언', 'David': '데이비드',
