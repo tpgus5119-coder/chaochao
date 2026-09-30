@@ -8101,7 +8101,7 @@ function dictEntry(q0) {
   const histDraw = () => {
     const h = S.dictHist || [];
     if (!h.length) { out.append(el('p', 'note', tr('한 글자만 넣어도 찾습니다'))); return; }
-    out.append(el('p', 'note', tr('최근 찾은 말') + ' ' + h.length + ' · ' + tr('이 기기에만 남습니다')));
+    out.append(el('p', 'note', tr('최근 검색한 단어')));          // 개수·'이 기기에만' 글은 뺐다 (대표님 2026-09-30)
     h.forEach(e => out.append(dictRow(d.find(y => y.vi === e.vi) || { vi: e.vi, ko: e.ko })));
     const cl = el('button', 'ghost sm', tr('기록 지우기')); cl.type = 'button'; cl.style.marginTop = '10px';
     cl.onclick = async () => { if (await askYN(tr('찾은 말 기록을 지울까요? 이 기기에서만 지워집니다.'), tr('지우기'), true)) { S.dictHist = []; save(); draw(); } };
