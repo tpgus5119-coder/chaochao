@@ -10499,6 +10499,15 @@ function startWeeklyExam(round) {
   const pick = (arr, n) => arr.slice().sort(() => Math.random() - .5).slice(0, n);
   const others = (pool, w, n, ok) => pick(pool.filter(x => x.vi !== w.vi && (!ok || ok(x))), n);
   const mk = (w, mode, sec, pool, ok) => ({ w, mode, sec, opts: [w, ...others(pool || words, w, 3, ok)].sort(() => Math.random() - .5) });
+  /* 문장은 **시험 범위 낱말로만 된 것**, 그중에서도 **범위 문법이 든 예문**을 먼저 (대표님 2026-09-30: "듣기는 범위 단어로만 된 문장 + 가급적 문법 포함").
+     범위 판정: 문장의 낱말이 모두 회차 낱말(음절 단위로도)이거나 기능어(FN)면 범위 안. 범위 안 문장이 모자랄 때만 범위 밖 예문으로 채운다 */
+  const knownSet = new Set(); words.forEach(w => { const v = w.vi.toLowerCase(); knownSet.add(v); v.split(/\s+/).forEach(t => knownSet.add(t)); });
+  const FN0 = new Set(['tôi', 'anh', 'chị', 'em', 'ông', 'bà', 'cô', 'thầy', 'cháu', 'họ', 'nó', 'ấy', 'các', 'chúng', 'là', 'không', 'phải', 'có', 'cũng', 'đều', 'đã', 'ạ', 'vậy', 'à', 'gì', 'ai', 'nào', 'đâu', 'này', 'kia', 'đó', 'đấy', 'và', 'của', 'với', 'ở', 'thì', 'mà', 'nhé', 'rồi', 'chưa', 'đang', 'sẽ', 'rất', 'lắm', 'quá', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín', 'mười', 'dạ', 'vâng', 'ừ', 'ơi', 'nhỉ', 'thế', 'sao', 'được', 'cho', 'để', 'từ', 'đến', 'về', 'đi', 'nhưng', 'hay', 'hoặc', 'vì', 'nên', 'mình', 'ta', 'người']);
+  const inRange0 = x => x.vi.toLowerCase().replace(/[.,!?;:…"“”()]/g, ' ').split(/\s+/).filter(Boolean).every(t => knownSet.has(t) || FN0.has(t));
+  const gsAll = round ? roundGramSents(r) : [];
+  const gsIn = gsAll.filter(inRange0), sentsIn = sents.filter(inRange0);
+  const prefer = (n, ...pools) => { const out = [], seen = new Set(); for (const pl of pools) { for (const x of pick(pl, pl.length)) { if (out.length >= n) break; if (seen.has(x.vi)) continue; seen.add(x.vi); out.push(x); } } return out; };
+  const withTts = x => Object.assign({}, x, { aud: true });    // 녹음이 없는 문법 예문은 기계 소리로 (sound() 이 알아서 넘긴다)
   /* 1차 시험지(2026-09-29, 원본자료/…/주간시험) 짜임 그대로 (대표님 지시 2026-09-30: "실제 시험지처럼, 최대한 동일한 틀로. 내용은 시험 범위에 따라"):
      A 듣기 30 — 1 그림 맞다/틀리다 5 · 2 맞는 그림 5 · 3 듣고 고르기 10 · 4 듣고 쓰기 10
      B 읽기 30 — 1 빈칸(낱말·문법) 5 · 2 읽고 고르기 5 · 3 맞다/틀리다 10 · 4 알맞은 문장 10
@@ -10509,7 +10518,7 @@ function startWeeklyExam(round) {
   const imgAud = withImg.filter(w => AIDX[w.vi]);
   pick(imgAud, 5).forEach(w => L.push(mk(w, 'pic_tf', 'A 듣기 · 1 그림 맞다/틀리다', withImg, x => !!x.img)));
   pick(imgAud, 5).forEach(w => L.push(mk(w, 'pic4', 'A 듣기 · 2 맞는 그림', withImg, x => !!x.img)));
-  pick(sents.filter(x => x.aud), 10).forEach(x => L.push(mk(x, 'listen', 'A 듣기 · 3 듣고 고르기', sents)));
+  prefer(10, gsIn, sentsIn, sents.filter(x => x.aud)).forEach(x => L.push(mk(withTts(x), 'listen', 'A 듣기 · 3 듣고 고르기', [...gsIn, ...sentsIn, ...sents])));   // 범위 낱말+문법 문장 먼저
   pick(withAud, 10).forEach(w => L.push(mk(w, 'dictation', 'A 듣기 · 4 듣고 쓰기')));
   /* B1 빈칸 — 시험지 지시문 그대로 '낱말과 문법을 본다': 회차 문법 빈칸을 먼저, 모자라면 낱말 빈칸 */
   let gs = round ? roundGramSents(r) : [];
@@ -10535,14 +10544,15 @@ function startWeeklyExam(round) {
   }
   pick(sents, 5 - b1.length).forEach(x => b1.push(mk(x, 'cloze', 'B 읽기 · 1 빈칸(낱말·문법)')));
   L.push(...b1);
-  pick(sents, 5).forEach(x => L.push(mk(x, 'read', 'B 읽기 · 2 읽고 고르기', sents)));
-  pick(sents, 10).forEach(x => L.push(mk(x, 'tf', 'B 읽기 · 3 맞다/틀리다', sents)));
+  const sPool = [...gsIn, ...sentsIn, ...sents];
+  prefer(5, gsIn, sentsIn, sents).forEach(x => L.push(mk(x, 'read', 'B 읽기 · 2 읽고 고르기', sPool)));
+  prefer(10, gsIn, sentsIn, sents).forEach(x => L.push(mk(x, 'tf', 'B 읽기 · 3 맞다/틀리다', sPool)));
   const b4 = gs.length >= 10 ? gs : [...gs, ...sents];
   pick(b4, 10).forEach(x => L.push(mk(x, 'read_ko', 'B 읽기 · 4 알맞은 문장', b4)));
   const shortS = arr => arr.filter(x => { const n = x.vi.replace(/[.?!]+$/, '').split(/\s+/).length; return n >= 3 && n <= 9 && !/[.!?]\s/.test(x.vi); });
-  const c1 = [...pick(shortS(gs), 5)]; pick(shortS(sents).filter(x => !c1.includes(x)), 5 - c1.length).forEach(x => c1.push(x));
+  const c1 = prefer(5, shortS(gsIn), shortS(sentsIn), shortS(gs), shortS(sents));
   c1.forEach(x => L.push(mk(x, 'puzzle', 'C 쓰기 · 1 낱말 배열')));
-  pick(sents, 5).forEach(x => L.push(mk(x, 'err', 'C 쓰기 · 2 틀린 곳')));
+  prefer(5, gsIn, sentsIn, sents).forEach(x => L.push(mk(x, 'err', 'C 쓰기 · 2 틀린 곳')));
   if (canRecord()) {
     pick(withAud, 10).forEach(w => L.push(mk(w, 'say', 'D 말하기 · 1 낱말 읽기')));
     if (r.speak !== 'pron') pick(sents.filter(x => x.aud), 5).forEach(x => L.push(mk(x, 'shadow', 'D 말하기 · 2 문장 읽기')));
