@@ -28,6 +28,7 @@
        막는 것은 Origin 허용목록 하나뿐이다 — 비밀 이야기를 할 자리가 아니다.
    v14: 남·북 말씨 확인 설문(act:'dialect'/'dialects') 추가 — giong.html 이 쓴다.
    v17 (2026-09-30): 아이디 = 별명(어느 글자든 1~20자), 비밀번호 길이 제한 없음, 가입 때 별명 자동 등록. 앱의 [지금 맞추기]는 기존 save/load 그대로.
+   v18 (2026-09-30): 탈퇴(act:'quit')를 로그인 증표(tok)로도 받는다 — 비밀번호 다시 안 물음. 같은 아이디는 지운 뒤 다시 쓸 수 있다(계정 열쇠를 지우므로 원래 가능했다).
    v16 (2026-09-29): **비밀번호 찾기 질문** — act:'setq'(로그인한 사람이 질문·답 정하기)·'getq'(아이디 → 질문 글)·
         'ansq'(답이 맞으면 새 비밀번호로 바꾸고 증표를 새로). 답은 소금 친 으깬 값만 남긴다. 틀린 답은 아이디마다 하루 5번.
         가입(signup)도 q·qa 를 받으면 같이 정한다. 로그인 응답에 hasq(질문을 정했나)를 붙인다.
@@ -551,7 +552,9 @@ export default {
       const AK = 'acct:' + id;
       const acct = JSON.parse((await KV.get(AK)) || 'null');
       if (!acct) return send({ error: '없는 아이디입니다' });
-      if (await hashPw(acct.s, pw) !== acct.h) return send({ error: '비밀번호가 다릅니다' });
+      // v18 (2026-09-30): 로그인 증표(tok)로도 지울 수 있다 — 앱이 '정말 탈퇴하시겠습니까?' 하나로 바로 지운다. 증표가 없으면 옛날처럼 비밀번호
+      const tok = cut(b.tok, 40);
+      if (!(tok && acct.t && tok === acct.t) && await hashPw(acct.s, pw) !== acct.h) return send({ error: '비밀번호가 다릅니다' });
 
       // 까닭 세기 — 이름도 아이디도 남기지 않는다
       const WHY = ['hard', 'easy', 'busy', 'bug', 'need', 'other'];

@@ -3372,62 +3372,31 @@ async function cloudLoad() {
 /* ── 계정 로그인·가입 ────────────────────────────────────────────
    이메일이 없어서 비밀번호를 잊으면 되찾을 길이 없다 — 화면에 그대로 밝힌다.
    서버에는 비밀번호의 으깬 값(해시)만 남는다. */
-/* 탈퇴 — 지우기 전에 **왜 떠나는지 묻는다** (사용자 지시).
-   붙잡으려고 묻는 것이 아니다. 떠나는 까닭은 앱을 고칠 유일한 단서다.
-   다만 **답하지 않아도 나갈 수 있어야 한다** — 답을 강요하면 그것이 또 하나의 벽이 된다.
-   지우는 것은 되돌릴 수 없으므로 비밀번호를 한 번 더 받는다. */
-const QUIT_WHY = [
-  ['hard', '너무 어렵습니다'],
-  ['easy', '너무 쉽습니다'],
-  ['busy', '시간이 없습니다'],
-  ['bug', '고장이 잦습니다'],
-  ['need', '필요한 것이 없습니다'],
-  ['other', '그 밖의 까닭'],
-];
-function quitForm() {
-  const b = $('#subBody');
-  b.textContent = '';
-  b.append(el('p', 'lede', tr('정말 떠나시겠습니까?')));
-  b.append(el('p', 'note', tr('계정·별명·진도가 <b>모두 지워지고 되돌릴 수 없습니다.</b> 같은 아이디를 다시 쓸 수 없습니다.')));
-  b.append(el('p', 'note', tr('떠나시는 까닭을 알려 주시면 고치겠습니다. 안 고르셔도 나가실 수 있습니다.')));
-  let why = '';
-  const pick = el('div', 'catpick');
-  QUIT_WHY.forEach(([k, nm]) => {
-    const c = el('button', 'catchipbtn', tr(nm));
-    c.type = 'button';
-    c.onclick = () => { why = k; [...pick.children].forEach(x => x.classList.remove('on')); c.classList.add('on'); };
-    pick.append(c);
-  });
-  b.append(pick);
-  const memo = el('textarea', 'keyin');
-  memo.placeholder = tr('더 하실 말씀 (안 쓰셔도 됩니다)');
-  memo.maxLength = 200; memo.rows = 3;
-  b.append(memo);
-  const pw = el('input', 'keyin'); pw.type = 'password';
-  pw.placeholder = tr('비밀번호를 한 번 더');
-  b.append(pw);
+async function quitForm() {
+  /* 대표님 2026-09-30: "탈퇴한다고 하면 '정말 탈퇴하시겠습니까?' 네/아니요만, 바로 탈퇴". 까닭 묻기·비밀번호 다시 받기는 뺐다.
+     서버 v18 은 로그인 증표(tok)로 지운다. 옛 서버(v17 이하)면 비밀번호를 한 번 묻는다. 같은 아이디는 지운 뒤 다시 쓸 수 있다(서버가 계정 열쇠를 지운다) */
+  if (!await askYN(tr('정말 탈퇴하시겠습니까?'), tr('네'), true)) return;
+  const bye = () => { try { localStorage.removeItem('vnstudy.prog.' + S.acct.id); } catch (e) { } localStorage.removeItem('vnstudy.v2'); location.reload(); };
+  try {
+    const j = await cCall({ act: 'quit', id: S.acct.id, tok: S.acct.tok });
+    if (j && j.error && /비밀번호/.test(j.error)) throw new Error('pw');
+    bye(); return;
+  } catch (e) {
+    if (String(e.message) !== 'pw' && !/비밀번호/.test(String(e.message))) { bye(); return; }   // 서버가 못 지워도 이 기기에서는 나간다
+  }
+  const b = $('#subBody'); b.textContent = '';                   // 옛 서버 — 비밀번호 한 번
+  b.append(el('p', 'lede', tr('비밀번호를 한 번 적어 주세요')));
+  const pw = el('input', 'keyin'); pw.type = 'password'; pw.placeholder = tr('비밀번호'); b.append(pw);
   const err = el('p', 'note nickerr'); err.hidden = true;
-  const go = el('button', 'primary big danger', tr('영영 지우기'));
-  go.style.width = '100%';
+  const go = el('button', 'primary big danger', tr('탈퇴')); go.style.width = '100%';
   go.onclick = async () => {
-    err.hidden = true;
     if (!pw.value) { err.textContent = tr('비밀번호를 적어 주세요.'); err.hidden = false; return; }
-    if (!await askYN(tr('마지막 확인입니다. 지우면 되돌릴 수 없습니다.'), '지우기', true)) return;
     go.disabled = true;
-    try {
-      await cCall({ act: 'quit', id: S.acct.id, pw: pw.value,
-                    why, memo: memo.value.trim().slice(0, 200) });
-    } catch (e) {
-      // 서버가 못 지워도 이 기기에서는 지운다 — 사용자를 붙잡아 두면 안 된다
-    }
-    localStorage.removeItem('vnstudy.v2');
-    location.reload();
+    try { const j = await cCall({ act: 'quit', id: S.acct.id, pw: pw.value }); if (j && j.error) { err.textContent = j.error; err.hidden = false; go.disabled = false; return; } } catch (e) { }
+    bye();
   };
   b.append(go, err);
-  const back = el('button', 'ghost big', tr('그만두기'));
-  back.style.width = '100%'; back.style.marginTop = '8px';
-  back.onclick = () => renderAwards();
-  b.append(back);
+  const back = el('button', 'ghost big', tr('그만두기')); back.style.width = '100%'; back.style.marginTop = '8px'; back.onclick = renderHome; b.append(back);
   show('sub', tr('탈퇴'), true);
 }
 
@@ -3435,11 +3404,28 @@ function quitForm() {
    2026-09-30 대표님: "그냥 아이디 비번 치고 들어가도록. 비번 제한 없음. 아이디도 자유, 아이디가 곧 닉네임" →
    별명 칸을 없애고 **아이디 = 별명**(순위·동아리에 보이는 이름). 아이디는 한글·영문 어느 글자든 1~20자, 비밀번호는 길이 제한 없음(1자 이상).
    비밀번호 찾기 질문은 가입 때 **안 물어도 된다**(비워 두면 건너뜀, 내 정보에서 나중에 정할 수 있다). 옛 서버(v16)는 아이디 영문 4~20자·비밀번호 8자를 요구하므로 그 오류가 그대로 보인다 → 워커 v17 을 올려야 한다. */
+/* 아이디마다 진도가 따로 (대표님 2026-09-30: "같은 기기에서 다른 아이디로 로그인했는데 왜 진도가 같냐") —
+   다른 아이디로 들어오면 이 기기의 진도는 앞 아이디 이름으로 따로 재워 두고(localStorage 'vnstudy.prog.<아이디>'), 새 아이디는 빈 진도에서 서버 것을 받는다.
+   앞 아이디로 다시 들어오면 재워 둔 것을 깨워 서버와 합친다. 아이디 없이(손님으로) 공부한 진도는 처음 들어오는 아이디의 것이 된다. */
+function acctSwitch(newId) {
+  const prev = (S.acct && S.acct.id) || S.lastId || '';
+  if (prev && prev !== newId) {
+    try { localStorage.setItem('vnstudy.prog.' + prev, JSON.stringify(progData())); } catch (e) { }
+    PROGKEYS.forEach(k => { delete S[k]; });
+    S.done = {}; S.srs = {}; S.ssrs = {}; S.bsrs = {}; S.star = {}; S.act = {}; S.stats = {}; S.qbank = {};
+    delete S.miss; delete S.revDay; delete S.revSeen; S.cloudSeen = 0; S.cloudHash = ''; delete S.cloudErr;
+    try { const kept = localStorage.getItem('vnstudy.prog.' + newId);
+      if (kept) { const d = JSON.parse(kept); PROGKEYS.forEach(k => { if (d[k] !== undefined) S[k] = d[k]; }); localStorage.removeItem('vnstudy.prog.' + newId); } } catch (e) { }
+    S.wk = { k: weekKey(), base: snapshot() };
+    tallyReset();
+  }
+  S.lastId = newId;
+}
 function acctForm(gate, mode) {
   mode = mode || 'login';                 // 로그인과 가입은 딴 화면 — 섞어 두면 헷갈린다 (사용자 지시)
   const b = $('#subBody');
   b.textContent = '';
-  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = mode === 'login' ? tr('아이디') : tr('아이디 (= 별명, 1~20자)');
+  const id = el('input', 'keyin'); id.type = 'text'; id.placeholder = tr('아이디');
   id.autocapitalize = 'none'; id.maxLength = 20;
   const pw = el('input', 'keyin'); pw.type = 'password';
   pw.placeholder = tr('비밀번호'); pw.maxLength = 64;
@@ -3477,16 +3463,14 @@ function acctForm(gate, mode) {
         S.uid = j.uid;
         S.nick = j.nick || i;                       // 별명이 없던 옛 계정은 아이디를 별명으로
       }
+      acctSwitch(i.toLowerCase());                  // 다른 아이디면 이 기기의 진도를 따로 재우고 빈 진도로 (2026-09-30)
       S.acct = { id: i.toLowerCase(), tok: j.tok || '' }; delete S.cloudErr; save();
       if (act === 'login' && j.hasProg) {
         // 서버에 진도가 있다 — 새 기기라면 그대로 받고, 이미 공부한 기기라면 **둘을 합친다** (2026-09-29:
         // 전에는 '덮어쓸까요?'를 물었다 — 어느 쪽을 골라도 한쪽 기기의 공부가 사라졌다)
         await loginPull();
       }
-      popup(act === 'signup'
-        ? '<b>가입됐습니다.</b><br>다른 기기에서 같은 아이디로 로그인하면 진도가 따라옵니다.'
-        : '<b>로그인됐습니다.</b> 진도를 서버와 맞춥니다.');
-      if (gate) dailyFlowEntry(); else renderAwards();
+      ACTIVE_TAB = 'home'; renderHome();             // 가입·로그인 뒤 첫 화면은 홈, 팝업 없이 (대표님 2026-09-30)
     } catch (e) { oops(e.message || '안 됐습니다'); }
   };
   const bs = el('div');
@@ -3496,8 +3480,7 @@ function acctForm(gate, mode) {
   bs.append(main);
   if (mode === 'login') b.append(id, pw, err, bs);
   else {
-    b.append(el('p', 'note', tr('아이디가 곧 별명입니다 — 순위·동아리에 이 이름이 보입니다. 비밀번호는 길이 제한이 없습니다.')));
-    b.append(id, pw, el('p', 'note', tr('비밀번호 찾기 질문 (선택 — 나중에 내 정보에서 정할 수도 있습니다)')), qBox, err, bs);
+    b.append(id, pw, qBox, err, bs);          // 설명 글은 뺐다 (대표님 2026-09-30) — 순위·동아리는 이미 없는 것
   }
   // 두 화면 사이를 오가는 문
   const sw = el('button', 'ghost');
@@ -3523,17 +3506,17 @@ function acctForm(gate, mode) {
 const QA_QS = ['처음 다닌 초등학교 이름은?', '처음 키운 동물 이름은?', '어머니의 고향은?', '가장 좋아하는 음식은?', '어릴 때 가장 친했던 친구 이름은?'];
 function qaFields() {
   const box = el('div', 'qabox');
-  box.append(el('p', 'note', tr('비밀번호를 잊었을 때 쓸 질문 — 답을 맞히면 새 비밀번호를 정할 수 있습니다')));
+  box.append(el('p', 'note', tr('비밀번호 찾기 질문-답을 맞히면 새 비밀번호를 정할 수 있습니다.')));
   const sel = el('select', 'keyin');
   [...QA_QS, tr('직접 쓰기')].forEach((q, i) => { const o = document.createElement('option'); o.value = i < QA_QS.length ? q : ''; o.textContent = q; sel.append(o); });
   const own = el('input', 'keyin'); own.type = 'text'; own.maxLength = 80; own.placeholder = tr('질문을 직접 쓰세요'); own.hidden = true;
   sel.onchange = () => { own.hidden = !!sel.value; };
-  const ans = el('input', 'keyin'); ans.type = 'text'; ans.maxLength = 60; ans.placeholder = tr('답 (2자 이상)'); ans.autocomplete = 'off';
+  const ans = el('input', 'keyin'); ans.type = 'text'; ans.maxLength = 60; ans.placeholder = tr('답'); ans.autocomplete = 'off';
   box.append(sel, own, ans);
   box.val = () => {
     const q = (sel.value || own.value).trim(), qa = ans.value.trim();
     if (!q) return { error: tr('질문을 골라 주세요.') };
-    if (qa.replace(/\s+/g, '').length < 2) return { error: tr('답을 2자 이상 적어 주세요.') };
+    if (!qa.replace(/\s+/g, '').length) return { error: tr('답을 적어 주세요.') };
     return { q, qa };
   };
   return box;
@@ -6765,33 +6748,23 @@ function homeSettings() {
   // 실력 분석 줄은 뺐다 — 그래프가 바로 위에 있고 그 머리(›)가 자세히 보기로 간다 (대표님 지시 2026-09-27 저녁)
   // 계정 — [별명 바꾸기]는 뺐다 (대표님 지시 2026-09-30: 아이디가 곧 별명이라 별명을 바꾸면 아이디가 바뀐다). 아이디·별명 글자도 안 적는다 — 인사말에 이미 있다
   const acct = el('span', 'hslinks');
+  /* 한 줄 (대표님 2026-09-30: "계정·진도 동기화·알림 버튼을 한 줄로. 동기화는 자동으로") — 진도 동기화는 저장할 때마다·앱을 뒤로 보낼 때·홈에 설 때 저절로 되므로 단추를 뺐다.
+     오류가 나면 로그인 안내 팝업이 한 번 뜬다(cloudSync). 이 줄: 로그아웃(또는 로그인·가입) · 비밀번호 찾기 질문 · 알림 켜기/끄기 · 진도 초기화 · 탈퇴 */
   const lo = el('button', 'metext', S.acct ? tr('로그아웃') : tr('로그인·가입')); lo.type = 'button';
   lo.onclick = async () => {
-    if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.acct = null; save(); renderHome(); } }
+    if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.lastId = S.acct.id; S.acct = null; save(); renderHome(); } }
     else acctForm();
   };
   acct.append(lo);
   if (S.acct) { const qb = el('button', 'metext', tr('비밀번호 찾기 질문')); qb.type = 'button'; qb.onclick = () => setqForm(renderHome); acct.append(qb); }
+  if (canPush()) {                                         // 알림 — 글자 단추: '알림 켜기' 를 누르면 켜지고 '알림 끄기'로, 다시 누르면 꺼진다
+    const pb = el('button', 'metext', tr(S.push ? '알림 끄기' : '알림 켜기')); pb.type = 'button';
+    pb.onclick = async () => { pb.disabled = true; if (S.push) await stopPush(); else { const err = await askPush(); if (err) popup(esc(err)); } renderHome(); };
+    acct.append(pb);
+  }
   const rs = el('button', 'metext danger', tr('진도 초기화')); rs.type = 'button'; rs.onclick = resetProgress; acct.append(rs);
   if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
   row(tr('계정') + (S.acct ? '' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
-  if (S.acct) {                                            // 진도 동기화 상태 + [지금 맞추기] (2026-09-30)
-    const hm = t => t ? new Date(t).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : tr('아직');
-    const st = S.cloudErr ? '<span class="danger">' + tr('오류') + ': ' + esc(S.cloudErr.m) + '</span>' : tr('서버와 맞춘 때') + ' ' + hm(S.cloudSeen);
-    const sb = el('button', 'metext', tr('지금 맞추기')); sb.type = 'button';
-    sb.onclick = async () => { sb.disabled = true; const ch = await cloudSync(true, false); popup(S.cloudErr ? esc(S.cloudErr.m) : (ch ? tr('다른 기기의 진도를 받아 합쳤습니다.') : tr('서버와 같습니다.'))); renderHome(); };
-    row(tr('진도 동기화') + ' <small>' + st + '</small>', sb);
-  }
-  if (canPush()) {                                         // 맨 아래 (대표님 지시 2026-09-30) — 스위치 대신 글자 단추: '알림 켜기' 를 누르면 켜지고 글자가 '알림 끄기'로, 다시 누르면 꺼지고 '알림 켜기'로
-    const pb = el('button', 'metext', tr(S.push ? '알림 끄기' : '알림 켜기')); pb.type = 'button';
-    pb.onclick = async () => {
-      pb.disabled = true;
-      if (S.push) await stopPush();
-      else { const err = await askPush(); if (err) popup(esc(err)); }
-      renderHome();
-    };
-    row(tr('알림') + ' <small>' + (S.push ? tr('켜짐') : tr('꺼짐')) + '</small>', pb);
-  }
   if (S.admin) row(tr('운영 현황'), null, () => { dive(renderHome); showAdmin(); });
   return box;
 }
