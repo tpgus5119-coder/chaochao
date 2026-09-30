@@ -8023,12 +8023,40 @@ function dictRemember(x) {
 }
 /* ── 사진에서 글자 찾기 ── Tesseract.js 5 (폰 안 OCR). 엔진·핵심은 jsdelivr, 글자 자료는 tessdata_fast(GitHub) — 모두 무료·한도 없음 */
 let OCR = null;
+/* 어느 단계에서 막혔는지 남긴다 (대표님 2026-09-30 폰에서 "준비하지 못했습니다 — 인터넷 연결" 이 떴는데 와이파이는 됐음). 엔진(jsdelivr → unpkg)과
+   글자 자료(jsdelivr 의 GitHub 거울 → raw.githubusercontent) 는 한 곳이 막히면 다른 곳으로 다시 받는다. 실패하면 e.step 에 단계 이름. */
+const ocrStep = (step, e) => { const err = e instanceof Error ? e : new Error(String(e && e.message || e || '')); err.step = step; return err; };
+function loadScript(src) { return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = src; sc.onload = res; sc.onerror = () => rej(new Error(src.split('/')[2])); document.head.append(sc); }); }
 async function ocrWorker(lang) {
-  if (!window.Tesseract) await new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'; sc.onload = res; sc.onerror = rej; document.head.append(sc); });
+  if (!window.Tesseract) {
+    try { await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'); }
+    catch (e) { try { await loadScript('https://unpkg.com/tesseract.js@5.1.1/dist/tesseract.min.js'); } catch (e2) { throw ocrStep('엔진 받기', e2); } }
+  }
   if (OCR && OCR.lang === lang) return OCR.w;
   if (OCR) { try { await OCR.w.terminate(); } catch (e) { } OCR = null; }
-  const w = await Tesseract.createWorker(lang, 1, { langPath: 'https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/main', gzip: false });
-  OCR = { w, lang }; return w;
+  const PATHS = ['https://cdn.jsdelivr.net/gh/tesseract-ocr/tessdata_fast@main', 'https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/main'];
+  let last = null;
+  for (const langPath of PATHS) {
+    try { const w = await Tesseract.createWorker(lang, 1, { langPath, gzip: false }); OCR = { w, lang }; return w; }
+    catch (e) { last = e; }
+  }
+  throw ocrStep('글자 자료 받기', last);
+}
+/* 사진을 그림판(canvas)에 옮겨 긴 변 1600px 이하로 줄인다 — 폰 사진 원본(4000px, 12MP)은 인식 엔진 메모리를 넘겨 실패하기 쉽고,
+   아이폰 HEIC 도 브라우저가 그릴 수 있으면 여기서 보통 그림이 된다. 못 그리면 e.step = '사진 열기' */
+async function ocrCanvas(file, max) {
+  let bmp = null;
+  try { bmp = await createImageBitmap(file); }
+  catch (e) {
+    bmp = await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = () => rej(new Error(file.type || 'image')); im.src = URL.createObjectURL(file); }).catch(e2 => { throw ocrStep('사진 열기', e2); });
+  }
+  const W = bmp.width || bmp.naturalWidth, H = bmp.height || bmp.naturalHeight;
+  if (!W || !H) throw ocrStep('사진 열기', new Error('0px'));
+  const k = Math.min(1, max / Math.max(W, H));
+  const c = document.createElement('canvas'); c.width = Math.round(W * k); c.height = Math.round(H * k);
+  c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+  if (bmp.close) bmp.close();
+  return c;
 }
 async function photoSearch(file, inp, redraw, host) {
   const old = host.querySelector('.photopan'); if (old) old.remove();
@@ -8043,9 +8071,11 @@ async function photoSearch(file, inp, redraw, host) {
   host.querySelector('.dictsearch').after(pan);
   try {
     const w = await ocrWorker(lang());
-    const { data } = await w.recognize(file);
+    const cv = await ocrCanvas(file, 1600);
+    let data;
+    try { ({ data } = await w.recognize(cv)); } catch (e) { throw ocrStep('글자 읽기', e); }
     await new Promise(r => { if (im.complete && im.naturalWidth) r(); else im.onload = r; });
-    const sx = im.clientWidth / (im.naturalWidth || 1), sy = im.clientHeight / (im.naturalHeight || 1);
+    const sx = im.clientWidth / (cv.width || 1), sy = im.clientHeight / (cv.height || 1);   // 알약 자리는 줄인 그림 기준
     const clean = t => String(t || '').replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
     const words = (data.words || []).map(x => ({ t: clean(x.text), b: x.bbox, c: x.confidence })).filter(x => x.t && /\p{L}/u.test(x.t) && x.c >= 40);
     words.forEach(x => {
@@ -8055,7 +8085,12 @@ async function photoSearch(file, inp, redraw, host) {
     });
     st.textContent = words.length ? tr('낱말을 누르면 찾습니다') + ' · ' + words.length : tr('글자를 못 찾았습니다 — 글자가 크고 또렷한 사진이 좋습니다');
     if (words.length) { const list = el('p', 'anachips'); words.forEach(x => { const c = el('span', null, esc(x.t)); c.onclick = () => { inp.value = x.t; redraw(); }; list.append(c); }); pan.append(list); }
-  } catch (e) { st.textContent = tr('글자 인식을 준비하지 못했습니다 — 인터넷 연결을 확인해 주세요'); }
+  } catch (e) {
+    /* 어느 단계가 막혔는지와 원인 한 토막을 보여 준다 — '인터넷 연결' 만 말하면 와이파이가 되는 폰에서 원인을 알 수 없었다(2026-09-30) */
+    const step = (e && e.step) || '준비', msg = String(e && e.message || '').slice(0, 60);
+    st.textContent = tr('글자 인식 실패') + ' — ' + tr(step) + (msg ? ' (' + msg + ')' : '');
+    console.warn('photoSearch', step, e);
+  }
 }
 function dictEntry(q0) {
   const b = $('#subBody'); b.textContent = '';
