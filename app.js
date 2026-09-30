@@ -201,7 +201,7 @@ const UIVI = {
   '듣고 있습니다… 다 말하면 위 단추를 누르세요.': 'Đang nghe… Nói xong hãy bấm nút phía trên.',
   '들어 보기': 'Nghe thử',
   '들어보기': 'Nghe thử',
-  '로그아웃할까요? 진도는 이 기기에 그대로 남습니다.': 'Bạn muốn đăng xuất? Tiến độ học vẫn được giữ trên thiết bị này.',
+  '로그아웃할까요?': 'Bạn muốn đăng xuất?',
   '마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.': 'Không dùng được micro. Hãy cho phép trong cài đặt trình duyệt.',
   '막대는 나, 세로 선은 <b>다른 사람들의 평균</b>입니다.': 'Cột là bạn, đường dọc là <b>mức trung bình của người khác</b>.',
   '만나는 땅으로 묶여 있습니다. 같은 도시면 한국인도 베트남인도 함께 옵니다.': 'Nhóm theo nơi gặp mặt. Cùng thành phố thì cả người Hàn và người Việt đều đến.',
@@ -1134,12 +1134,33 @@ function pairRow(word, cur, mode) {
   if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
   else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
   // 성조 이름(ngang · 평평하게 …) 글은 뺐다 (대표님 지시 2026-09-27 밤) — 화살표만
+  /* 낱말을 누르면 그 낱말의 카드로 (대표님 지시 2026-09-30: "헷갈리는 짝 팝업에서 단어 누르면 그 단어 카드로") — 뒤로 가면 원래 화면 */
+  w.classList.add('tapword'); w.title = tr('이 낱말 카드로');
+  w.onclick = () => pairToCard(word);
   r.append(w, m);
   /* 소리 단추는 **늘** 있다 (대표님 지시 2026-09-27: 짝 단어 모두 TTS). 우리 소리 파일이 있으면 그것을, 아직 없으면 기기 목소리로 */
   const b = iconBtn('play', tr('듣기'), () => key ? play(key, false, null, pairSpd()) : speakVi(word, false, pairSpd()));
   b.classList.add('playi');
   r.append(b);
   return r;
+}
+/* 짝 목록의 낱말 → 그 낱말 카드 (2026-09-30). 사전이 아는 낱말이면 사전 항목(뜻·발음·파트) 그대로, 모르면 짝 자료의 뜻만으로 카드를 연다.
+   뒤로 가기: 카드에서 왔으면 그 카드로(L 을 되돌려 다시 그림), 문제 풀이에서 왔으면 다음 문제로(답한 문제를 다시 그리면 두 번 채점될 수 있다),
+   그 밖은 보통 뒤로 가기와 같다. 팝업은 닫는다. */
+async function pairToCard(word) {
+  const L0 = L, v0 = CURV, t0 = $('#title').textContent, c0 = LCRUMB, tab0 = ACTIVE_TAB;
+  document.querySelectorAll('.modalback').forEach(b => b.remove());
+  try { await dictReady(); } catch (e) { }
+  const k = viCanon(word);
+  const w0 = (SIB && SIB.w[word]) || {};
+  const x = (DICT || dictBuild()).find(e => viCanon(e.vi) === k) || { vi: word, ko: w0.k || '', kr: krOf(word) || '' };
+  const back = () => {
+    L = L0; LCRUMB = c0; ACTIVE_TAB = tab0;
+    if (v0 === 'quiz' && typeof Q !== 'undefined' && Q) { show('quiz', t0, true); Q.i++; drawQuiz(); }
+    else if (v0 === 'learn' && L0 && L0.items && L0.items[L0.i]) { drawCard(); show('learn', t0, true); drawLessonTabs(); }
+    else { const f = NAV.pop(); (f || renderHome)(); }
+  };
+  openWordCard(x, back);
 }
 /* 성조 가족을 순서대로 들려준다 — 같은 글자에 높낮이만 다른 소리를 이어서 듣는 것이 핵심이다 */
 function pairSeq(items, rows, wrap, btn) {
@@ -3062,7 +3083,7 @@ function renderAnalysis(host, mode) {
       const put = (title, rows, note) => { if (!rows.length) return; d.append(el('p', 'anasec', esc(title))); d.append(bars(rows)); if (note) d.append(el('p', 'dimtxt', esc(note))); };
       put(tr('문제 유형별'), boxRows(cur, 'smd', k => MODE_NM[k] || k));
       put(tr('쓰인 문법별'), boxRows(cur, 'gr', gramName), tr('문장 속 문형으로 셉니다 — 매일 단어 시험·주간 시험 문장'));
-      if (!d.children.length) d.append(el('p', 'dimtxt', tr('아직 푼 문장 문제가 없습니다 — 테스트의 문장·매일 단어 시험·주간 시험에서 쌓입니다')));
+      if (!d.children.length) d.append(el('p', 'dimtxt', tr('아직 푼 문장 문제가 없습니다')));
       list.append(d);
     }
   };
@@ -4067,7 +4088,6 @@ function testAllLearned(pool) {
   pool = pool || learnedPool();
   const b = $('#examBody'); b.textContent = '';
   b.append(el('p', 'lede', tr('지금까지 배운') + ' ' + pool.length + tr('단어') + ' — ' + tr('몇 문제를 풀까요?')));
-  b.append(el('p', 'note', tr('단어은 매번 랜덤으로 섞입니다. 맞고 틀림은 단어마다 제 복습 창고에 그대로 쌓입니다.')));
   const boxOf = {}; pool.forEach(w => { boxOf[w.vi] = w._box; });
   const ns = [10, 20, 30].filter(n => n <= pool.length);          // 학습 뒤 확인 문제와 같은 10·20·30 (2026-09-28 밤)
   if (!ns.length) ns.push(pool.length);
@@ -4109,7 +4129,6 @@ function testSents(mode) {
     mk('듣고 만들기', '문장을 듣고 조각으로 만든다', 'puzzle_vi');
     mk('뜻 고르기', '문장을 읽고 뜻을 고른다', 'read');
     mk('섞어서', '위 넷을 섞는다', ['puzzle', 'write_ko', 'puzzle_vi', 'read']);
-    b.append(el('p', 'note', tr('배운 낱말 N개의 예문에서 냅니다').replace('N', pool.length)));
     show('exam', tr('문장'), true);
     return;
   }
@@ -6752,7 +6771,7 @@ function homeSettings() {
      오류가 나면 로그인 안내 팝업이 한 번 뜬다(cloudSync). 이 줄: 로그아웃(또는 로그인·가입) · 비밀번호 찾기 질문 · 알림 켜기/끄기 · 진도 초기화 · 탈퇴 */
   const lo = el('button', 'metext', S.acct ? tr('로그아웃') : tr('로그인·가입')); lo.type = 'button';
   lo.onclick = async () => {
-    if (S.acct) { if (await askYN(tr('로그아웃할까요? 진도는 이 기기에 그대로 남습니다.'), '로그아웃')) { S.lastId = S.acct.id; S.acct = null; save(); renderHome(); } }
+    if (S.acct) { if (await askYN(tr('로그아웃할까요?'), '로그아웃')) { S.lastId = S.acct.id; S.acct = null; save(); renderHome(); } }
     else acctForm();
   };
   acct.append(lo);
@@ -10055,7 +10074,6 @@ function weeklyStudyEntry() {
     btn.onclick = () => { dive(weeklyStudyEntry); weeklyStudyRound(r); };
     b.append(btn);
   });
-  b.append(el('p', 'note', tr('회차 범위를 카드로 학습합니다. 시험은 테스트 탭의 주간 시험에서 봅니다.')));
   show('sub', tr('주간 시험'), true);
 }
 function weeklyStudyRound(r) {
@@ -10196,9 +10214,6 @@ function dailyEntry(mode) {
     c.onclick = study ? () => { dive(() => dailyEntry('study')); dailyStudyOnly(t); } : () => { dive(() => dailyEntry()); dailyRound(t); };
     b.append(c);
   });
-  b.append(el('p', 'note', study
-    ? tr('낱말 카드 → 문장 카드로 학습합니다. 시험은 테스트 탭의 단어 시험에서 봅니다.')
-    : tr('22기 반 시험지 그대로 — 낱말과 문장 10개, 시험지가 물은 방향까지 같습니다. 푸는 동안 정답을 보여 주지 않고 끝에 한꺼번에 채점합니다. 오른쪽 숫자는 내 최고점.')));
 }
 function dailyStudyOnly(t) {
   SBOX = 'bsrs';
@@ -10212,7 +10227,7 @@ function dailyRound(t) {
   b.append(el('p', 'note', tr('낱말 N개 · 문장 10개 · 모두 M문제').replace('N', t.words.length).replace('M', tot)));
   const go = el('button', 'primary big', tr('시험 보기')); go.style.width = '100%';
   go.onclick = () => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t)); };
-  b.append(go, el('p', 'dimtxt', tr('실제 시험처럼 — 푸는 동안 맞았는지 보여 주지 않고, 다 풀면 점수와 틀린 것을 한꺼번에 보여 줍니다. 학습은 학습 탭의 매일 단어 시험에서.')));
+  b.append(go);
   if (rec && rec.runs && rec.runs.length) {
     b.append(el('p', 'anasec', tr('지난 결과') + ' <span>' + tr('최고') + ' ' + rec.best + ' / ' + tot + '</span>'));
     b.append(el('p', 'dimtxt', rec.runs.slice(-5).reverse().map(r => esc(String(r.d).slice(5).replace('-', '/')) + ' · ' + r.ok + ' / ' + r.tot).join('<br>')));
@@ -10445,7 +10460,6 @@ function finishWeekly() {
   const tp = el('div', 'exsec');
   pts.forEach(([k, g, m]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(tr(NM[k]))), el('b', null, g + ' / ' + m)); tp.append(row); });
   r.append(tp);
-  if (part.C) r.append(el('p', 'dimtxt', tr('쓰기의 그림 보고 5문장(10점)은 선생님이 채점하는 부분이라 뺐습니다 — 학습 탭 주간 시험의 쓰기 연습으로 준비하세요.')));
   if (Q.skip) r.append(el('div', 'sub', tr('스킵한 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다').replace('N', Q.skip)));
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });

@@ -1936,8 +1936,8 @@ button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color
 .barrow.thin .bn{color:var(--dim)}
 
 /* 예/아니오 창 — 두 단추를 나란히 */
-.modalbox .rolepick{display:flex; gap:10px; margin-top:14px}
-.modalbox .rolepick button{flex:1; padding:12px 10px; font-weight:650}
+.modalbox .rolepick{display:flex; gap:10px; margin-top:14px; width:100%}   /* 아래 .rolepick 의 width:max-content 를 이기지 못해 '로그아웃'이 두 줄로 접혔다 (2026-09-30) */
+.modalbox .rolepick button{flex:1; padding:12px 10px; font-weight:650; white-space:nowrap}
 .modalbox .primary.danger{background:var(--bad,#c62828); border-color:transparent; color:#fff}
 
 /* 기사 갈래표 — 무엇에 대한 기사인지 먼저 보인다 */
@@ -2878,3 +2878,7 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 /* 홈 계정 줄 — 한 줄 (2026-09-30): 단추가 많아도 줄을 안 바꾸고 옆으로 민다 */
 .hslinks{flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:84%; justify-content:flex-start}
 .hslinks .metext{white-space:nowrap; padding:6px 6px; font-size:12px}
+
+/* 짝 목록의 낱말은 누를 수 있다 → 그 낱말 카드 (2026-09-30) */
+.prow .psyl.tapword{cursor:pointer}
+.prow .psyl.tapword:active{opacity:.6}
