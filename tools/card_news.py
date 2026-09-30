@@ -471,9 +471,17 @@ def main():
     a.add_argument("--day", default=""); a.add_argument("--limit", type=int, default=10)  # 2026-09-16: 5→10 (하루 목표 7건 근거로 상향)
     a.add_argument("--nobg", action="store_true")
     a.add_argument("--pub", default="")      # 카드에 찍을 '펴낸 날'. 안 주면 오늘
+    # 2026-09-30: 펴낸 날 하나가 ts 여러 날(예: 월요일=금+주말)을 묶을 때, --day 를
+    # ts 별로 나눠 여러 번 돌리면 **그때마다 DAY_SZ(글자 크기)를 따로 재서** 같은 날
+    #카드끼리 글자 크기가 달라질 수 있다. --select-pub 은 ts 상관없이 '펴낸 날'
+    # 하나로 한 번에 걸러 한 번만 돈다 — 크기가 한 번에 통일된다.
+    a.add_argument("--select-pub", default="")
     a = a.parse_args()
     D = json.loads((R / "data" / "news_days.json").read_text(encoding="utf-8"))["days"]
-    if a.day: D = [d for d in D if d.get("ts") == a.day]
+    if a.select_pub:
+        D = [d for d in D if (d.get("pub") or "") == a.select_pub]
+    elif a.day:
+        D = [d for d in D if d.get("ts") == a.day]
     else:
         last = max((d.get("ts") or "") for d in D)
         D = [d for d in D if d.get("ts") == last]
@@ -488,7 +496,7 @@ def main():
     from datetime import datetime, timezone, timedelta
     # 자료에 이미 찍힌 펴낸날을 그대로 쓴다 (card_pick 이 찍는다).
     # --pub 을 주면 그것이 이긴다.
-    pub = a.pub or (D[0].get("pub") if D and D[0].get("pub") else
+    pub = a.pub or a.select_pub or (D[0].get("pub") if D and D[0].get("pub") else
                     datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d"))
     for d in D:
         d["pub"] = d.get("pub") or pub                        # 내보내기·파워포인트도 같은 날짜를 쓴다
@@ -531,6 +539,9 @@ def main():
                "small electric cars parked in a row at a charging station"),
               (("버스", "지하철", "도시철도", "승차권", "환승"),
                "a modern city bus at an empty bus stop"),
+              # 2026-09-29: '고속철도'가 키워드에 없어 빈스피드·지멘스 기사에 은행 건물이 깔렸다.
+              (("고속철도", "고속철", "기관차", "철도"),
+               "a sleek high-speed train on elevated tracks under a clear sky"),
               (("휘발유", "주유소", "유가"),
                "a gas station with fuel pumps under a clear morning sky"),
               (("증시", "주식", "증권", "환율"),
