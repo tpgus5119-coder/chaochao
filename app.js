@@ -8532,7 +8532,7 @@ function drawWordbook() {
    외울 때 손도 같이 외우면 도움") ──
    · 애플펜슬·S펜(pointerType 'pen')은 켜기 없이 늘 쓴다. 펜으로 살짝 톡 치면 원래대로 단추가 눌린다.
    · 손가락은 ✍ 단추를 켰을 때만 — 늘 켜 두면 카드 넘기기·단추 누르기를 막는다.
-   · 마지막 획을 긋고 1초 뒤 전체가 0.6초에 걸쳐 사라진다(대표님 지시 2026-09-28 밤: "너무 오래 안 지워진다" — 전엔 2.5초+1.5초).
+   · 획마다 따로, 그 획을 끝내고 1초 뒤 0.6초에 걸쳐 사라진다(2026-09-30 대표님 "획 단위로"; 그 전엔 마지막 획 뒤 전체가 함께).
      다 사라지면 그리기를 멈춘다(배터리·발열 없음).
    · 색은 파랑 하나(대표님 지시 2026-09-28: "파랑 하나만 남겨" — 검정·빨강·형광펜과 색 고르기 판을 뺐다).
      빨강은 앱에서 '틀림' 색이고, 검정은 어두운 화면에서 안 보이고 인쇄 글씨와 섞인다. 앱 강조색(--accent)을 써서 밝은·어두운 화면 둘 다 보인다 */
@@ -8578,7 +8578,7 @@ function inkMove(e) {
 }
 function inkEnd() {
   const s = INK.cur; if (!s) return;
-  INK.cur = null; INK.last = performance.now();
+  INK.cur = null; INK.last = performance.now(); s.t1 = INK.last;                    // 획마다 제 끝난 때 — 획 하나하나 따로 사라진다 (대표님 2026-09-30)
   if (s.pen && s.tap && INK.last - s.t0 < 350) { INK.strokes.pop(); return; }   // 펜으로 톡 — 글씨가 아니라 누르기
   if (s.pen) INK.block = true;                                                      // 펜 획 끝의 클릭은 막는다
   inkLoop();
@@ -8588,12 +8588,13 @@ function inkDraw() {
   INK.raf = 0;
   const g = INK.g, now = performance.now();
   g.clearRect(0, 0, innerWidth, innerHeight);
-  const age = INK.cur ? 0 : now - INK.last;
-  if (!INK.cur && age > INK_HOLD + INK_FADE) { INK.strokes = []; return; }       // 다 사라졌다 — 여기서 멈춘다
-  const fade = Math.max(0, Math.min(1, 1 - (age - INK_HOLD) / INK_FADE));
-  g.lineCap = 'round'; g.lineJoin = 'round';
-  g.globalAlpha = fade; g.strokeStyle = inkBlue();
+  /* 획마다 따로: 그 획을 끝낸 지 1초 뒤 0.6초에 걸쳐 사라진다 (대표님 2026-09-30: "이어 쓰는 단위로 지워지지 말고 획 하나하나"). 다 사라진 획은 버린다 */
+  INK.strokes = INK.strokes.filter(s => s === INK.cur || now - s.t1 <= INK_HOLD + INK_FADE);
+  if (!INK.strokes.length) return;                                                // 다 사라졌다 — 여기서 멈춘다
+  g.lineCap = 'round'; g.lineJoin = 'round'; g.strokeStyle = inkBlue();
   INK.strokes.forEach(s => {
+    const age = s === INK.cur ? 0 : now - s.t1;
+    g.globalAlpha = Math.max(0, Math.min(1, 1 - (age - INK_HOLD) / INK_FADE));
     g.lineWidth = s.w; g.beginPath();
     s.pts.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
     if (s.pts.length === 1) g.lineTo(s.pts[0].x + .1, s.pts[0].y + .1);
