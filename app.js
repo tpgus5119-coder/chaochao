@@ -6756,13 +6756,13 @@ function homeSettings() {
     else acctForm();
   };
   acct.append(lo);
-  if (S.acct) { const qb = el('button', 'metext', tr('비밀번호 찾기 질문')); qb.type = 'button'; qb.onclick = () => setqForm(renderHome); acct.append(qb); }
+  if (S.acct) { const qb = el('button', 'metext', tr('비밀번호 질문')); qb.type = 'button'; qb.onclick = () => setqForm(renderHome); acct.append(qb); }
   if (canPush()) {                                         // 알림 — 글자 단추: '알림 켜기' 를 누르면 켜지고 '알림 끄기'로, 다시 누르면 꺼진다
     const pb = el('button', 'metext', tr(S.push ? '알림 끄기' : '알림 켜기')); pb.type = 'button';
     pb.onclick = async () => { pb.disabled = true; if (S.push) await stopPush(); else { const err = await askPush(); if (err) popup(esc(err)); } renderHome(); };
     acct.append(pb);
   }
-  const rs = el('button', 'metext danger', tr('진도 초기화')); rs.type = 'button'; rs.onclick = resetProgress; acct.append(rs);
+  const rs = el('button', 'metext danger', tr('초기화')); rs.type = 'button'; rs.onclick = resetProgress; acct.append(rs);
   if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
   row(tr('계정') + (S.acct ? '' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
   if (S.admin) row(tr('운영 현황'), null, () => { dive(renderHome); showAdmin(); });

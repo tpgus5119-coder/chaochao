@@ -2876,5 +2876,5 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .photochip:active{opacity:.7}
 .anachips span{cursor:pointer}
 /* 홈 계정 줄 — 한 줄 (2026-09-30): 단추가 많아도 줄을 안 바꾸고 옆으로 민다 */
-.hslinks{flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:78%}
+.hslinks{flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:84%; justify-content:flex-start}
 .hslinks .metext{white-space:nowrap; padding:6px 6px; font-size:12px}
