@@ -210,7 +210,231 @@
     ],
     "extra": []
    },
-   "n": 44
+   "n": 47
+  },
+  {
+   "ts": "2026-09-29",
+   "day": "N084.html",
+   "track": "news",
+   "theme": "음식 문화",
+   "title": "Korean artists cook chicken pho while performing hip-hop at Hanoi show",
+   "u": "https://e.vnexpress.net/photo/food-recipes/korean-artists-cook-chicken-pho-while-performing-hip-hop-at-hanoi-show-5126084.html",
+   "cat": "소식",
+   "intro": "하노이에서 힙합과 요리를 결합한 한국 '셰프쇼'가 열렸습니다. 비트박스, 댄스와 함께 쌀국수 등 세계 요리를 선보였습니다.",
+   "words": [
+    {
+     "vi": "phở",
+     "ko": "쌀국수",
+     "kr_read": "퍼",
+     "emoji": "🍜",
+     "en": "a bowl of Vietnamese beef noodle soup",
+     "tones": [
+      {
+       "syl": "phở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-pho.webp"
+    },
+    {
+     "vi": "gà",
+     "ko": "닭",
+     "kr_read": "가",
+     "emoji": "🐔",
+     "en": "a cartoon chicken",
+     "tones": [
+      {
+       "syl": "gà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ga.webp"
+    },
+    {
+     "vi": "nấu ăn",
+     "ko": "요리하다",
+     "kr_read": "너우 안",
+     "emoji": "🧑‍🍳",
+     "en": "a chef cooking in a kitchen",
+     "tones": [
+      {
+       "syl": "nấu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nau-an.webp"
+    },
+    {
+     "vi": "nghệ sĩ",
+     "ko": "예술가",
+     "kr_read": "응에 씨",
+     "emoji": "🎨",
+     "en": "an artist holding a paint palette",
+     "tones": [
+      {
+       "syl": "nghệ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "sĩ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "n-nghe-si.webp"
+    },
+    {
+     "vi": "khán giả",
+     "ko": "관객",
+     "kr_read": "칸 자",
+     "emoji": "👥",
+     "en": "an audience watching a show",
+     "tones": [
+      {
+       "syl": "khán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "giả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-khan-gia.webp"
+    },
+    {
+     "vi": "vé",
+     "ko": "표/티켓",
+     "kr_read": "배",
+     "emoji": "🎫",
+     "en": "two admission tickets",
+     "tones": [
+      {
+       "syl": "vé",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ve.webp"
+    }
+   ],
+   "dialog": {
+    "title": "음식 문화",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Trưa nay ăn phở gà nhé?",
+      "ko": "오늘 점심에 닭 쌀국수 먹을까요?",
+      "kr_read": "쯔어 나이 안 퍼 가 냬",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Trưa",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "phở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "gà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nhé?",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Được, phở ở đây rất ngon.",
+      "ko": "좋아요, 여기 쌀국수 아주 맛있어요.",
+      "kr_read": "드억 퍼 어 더이 젓 응온",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Được,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "phở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 46
   },
   {
    "ts": "2026-09-29",
@@ -464,7 +688,7 @@
     ],
     "extra": []
    },
-   "n": 43
+   "n": 45
   },
   {
    "ts": "2026-09-29",
@@ -724,7 +948,7 @@
     ],
     "extra": []
    },
-   "n": 42
+   "n": 44
   },
   {
    "ts": "2026-09-29",
@@ -924,7 +1148,231 @@
     ],
     "extra": []
    },
-   "n": 41
+   "n": 43
+  },
+  {
+   "ts": "2026-09-29",
+   "day": "Nxno=1914",
+   "track": "news",
+   "theme": "새 고속도로",
+   "title": "[여기는 베트남] 메콩델타-롱탄공항 40분대 연결...‘1시간 단축’ 새 교통축 열린다",
+   "u": "http://www.vietnamkoreatimes.com/news/articleView.html?idxno=1914",
+   "cat": "문화·생활",
+   "intro": "메콩델타-롱탄공항 40분대 연결 고속도로 9월 개통 이동시간 1시간 이상 단축, 물류 개선 큰 기대",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport with a plane",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "thời gian",
+     "ko": "시간",
+     "kr_read": "터이 잔",
+     "emoji": "⏰",
+     "en": "a clock showing time",
+     "tones": [
+      {
+       "syl": "thời",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "gian",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-thoi-gian.webp"
+    },
+    {
+     "vi": "xe",
+     "ko": "차",
+     "kr_read": "쌔",
+     "emoji": "🚗",
+     "en": "a car",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-xe.webp"
+    },
+    {
+     "vi": "đi",
+     "ko": "가다",
+     "kr_read": "디",
+     "emoji": "🚶‍♂️",
+     "en": "a person walking",
+     "tones": [
+      {
+       "syl": "đi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-di.webp"
+    },
+    {
+     "vi": "đường",
+     "ko": "길, 도로",
+     "kr_read": "드엉",
+     "emoji": "🛣️",
+     "en": "a highway road",
+     "tones": [
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-duong.webp"
+    },
+    {
+     "vi": "nhanh",
+     "ko": "빠르다",
+     "kr_read": "나인",
+     "emoji": "⚡",
+     "en": "a lightning bolt",
+     "tones": [
+      {
+       "syl": "nhanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nhanh.webp"
+    }
+   ],
+   "dialog": {
+    "title": "새 고속도로",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Đi sân bay mất bao nhiêu thời gian?",
+      "ko": "공항까지 가는 데 시간 얼마나 걸려요?",
+      "kr_read": "디 썬 바이 멋 바오 니에우 터이 잔",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bao",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhiêu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thời",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "gian?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Đi đường mới, rất nhanh.",
+      "ko": "새 길로 가면 아주 빨라요.",
+      "kr_read": "디 드엉 머이 젓 나인",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đường",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "mới,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhanh.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 42
   },
   {
    "ts": "2026-09-29",
@@ -1105,6 +1553,236 @@
         "name": "nặng",
         "ko": "짧고 무겁게",
         "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 41
+  },
+  {
+   "ts": "2026-09-29",
+   "day": "Nno=44159",
+   "track": "news",
+   "theme": "과일 수출",
+   "title": "베트남, 9월 청과류 수출 11억 달러…3개월 연속 10억 달러 돌파",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44159",
+   "cat": "경제",
+   "intro": "베트남 청과류 수출액이 3개월 연속 10억 달러를 돌파하며 호조세를 이어가고 있습니다. 중국의 두리안 수요 증가와 주요 시장의 꾸준한 성장이 주된 원인입니다.",
+   "words": [
+    {
+     "vi": "trái cây",
+     "ko": "과일",
+     "kr_read": "짜이 꺼이",
+     "emoji": "🍎",
+     "en": "a red apple",
+     "tones": [
+      {
+       "syl": "trái",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "cây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-trai-cay.webp"
+    },
+    {
+     "vi": "xuất khẩu",
+     "ko": "수출",
+     "kr_read": "쑤엇 커우",
+     "emoji": "🚢",
+     "en": "a cargo ship leaving a port",
+     "tones": [
+      {
+       "syl": "xuất",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "khẩu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-xuat-khau.webp"
+    },
+    {
+     "vi": "tăng",
+     "ko": "증가하다",
+     "kr_read": "땅",
+     "emoji": "📈",
+     "en": "an upward trending graph",
+     "tones": [
+      {
+       "syl": "tăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tang.webp"
+    },
+    {
+     "vi": "thị trường",
+     "ko": "시장",
+     "kr_read": "티 쯔엉",
+     "emoji": "🛍️",
+     "en": "a bustling market street",
+     "tones": [
+      {
+       "syl": "thị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-thi-truong.webp"
+    },
+    {
+     "vi": "tốt",
+     "ko": "좋다",
+     "kr_read": "똣",
+     "emoji": "👍",
+     "en": "a thumbs up icon",
+     "tones": [
+      {
+       "syl": "tốt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-tot.webp"
+    },
+    {
+     "vi": "mua",
+     "ko": "사다",
+     "kr_read": "무어",
+     "emoji": "🛒",
+     "en": "a shopping cart icon",
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua.webp"
+    }
+   ],
+   "dialog": {
+    "title": "과일 수출",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Đây là gì?",
+      "ko": "이것은 무엇입니까?",
+      "kr_read": "더이 라 지",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "gì?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Đây là trái cây Việt Nam. Xuất khẩu rất tốt.",
+      "ko": "이것은 베트남 과일입니다. 수출에 아주 좋습니다.",
+      "kr_read": "더이 라 짜이 꺼이 비엣 남 쑤엇 커우 젓 똣",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "trái",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "Việt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "Nam.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "Xuất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "khẩu",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tốt.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
        }
       ],
       "gloss": []
@@ -10928,5 +11606,5 @@
    "title_card": "푸꾸옥 공항 푸꾸옥 항공 에어버스 대형기 첫 도착"
   }
  ],
- "updated": "2026-09-30 01:47"
+ "updated": "2026-09-30 09:47"
 }
