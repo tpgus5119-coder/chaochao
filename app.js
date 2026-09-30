@@ -4112,11 +4112,26 @@ function learnedSents() {
   learnedPool().forEach(w => { const e = w.ex; if (e && e.vi && e.ko && e.vi.split(/\s+/).length >= 3) put(e, false); });   // 배운 단어의 예문 — 창고에는 안 넣는다
   return out.filter(x => x.ko);
 }
-function testSents() {
+function testSents(mode) {
+  /* 문장 = 단어 학습의 연장 (대표님 2026-09-30: "학습은 단어로 하고, 테스트에서 문장을 만드는 것까지") — 배운 낱말의 예문으로 문장을 **만든다**.
+     조각 배열(기본)·뜻 보고 쳐서 쓰기·듣고 조각·뜻 고르기·섞어서. buildQuestions 의 forced 에 문제 유형을 넘긴다 */
   const pool = learnedSents().sort(() => Math.random() - .5);
   if (pool.length < 4) { popup(tr('아직 배운 문장이 적습니다 — 학습을 조금 더 하면 여기서 풀 수 있습니다')); return; }
+  if (!mode) {
+    const b = $('#examBody'); b.textContent = '';
+    b.append(qnPicker());
+    const mk = (t, meta, m) => { const x = el('button', 'bigmenu'); x.append(el('b', null, esc(tr(t)) + ' <span class="exmeta">' + esc(tr(meta)) + '</span>')); x.onclick = () => { dive(() => testSents()); testSents(m); }; b.append(x); };
+    mk('문장 만들기', '뜻을 보고 조각을 차례대로 눌러 문장을 만든다', 'puzzle');
+    mk('뜻 보고 쓰기', '뜻을 보고 자판으로 문장을 친다 (성조까지)', 'write_ko');
+    mk('듣고 만들기', '문장을 듣고 조각으로 만든다', 'puzzle_vi');
+    mk('뜻 고르기', '문장을 읽고 뜻을 고른다', 'read');
+    mk('섞어서', '위 넷을 섞는다', ['puzzle', 'write_ko', 'puzzle_vi', 'read']);
+    b.append(el('p', 'note', tr('배운 낱말 N개의 예문에서 냅니다').replace('N', pool.length)));
+    show('exam', tr('문장'), true);
+    return;
+  }
   SBOX = 'srs';
-  startQuiz(pool, null, qN(), true, { kind: 'sent' });
+  startQuiz(pool, null, qN(), true, { kind: 'sent', skill: mode });
   if (Q) Q.noMore = true;
 }
 function learnedGram() {
@@ -8014,6 +8029,43 @@ function dictRemember(x) {
   h.unshift({ vi: x.vi, ko: x.ko, t: Date.now() });
   S.dictHist = h.slice(0, DICT_HIST_MAX); save();
 }
+/* ── 사진에서 글자 찾기 ── Tesseract.js 5 (폰 안 OCR). 엔진·핵심은 jsdelivr, 글자 자료는 tessdata_fast(GitHub) — 모두 무료·한도 없음 */
+let OCR = null;
+async function ocrWorker(lang) {
+  if (!window.Tesseract) await new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js'; sc.onload = res; sc.onerror = rej; document.head.append(sc); });
+  if (OCR && OCR.lang === lang) return OCR.w;
+  if (OCR) { try { await OCR.w.terminate(); } catch (e) { } OCR = null; }
+  const w = await Tesseract.createWorker(lang, 1, { langPath: 'https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/main', gzip: false });
+  OCR = { w, lang }; return w;
+}
+async function photoSearch(file, inp, redraw, host) {
+  const old = host.querySelector('.photopan'); if (old) old.remove();
+  const pan = el('div', 'photopan');
+  const top = el('div', 'photohd');
+  const lang = () => S.ocrLang || 'vie';
+  const lg = el('button', 'ghost sm', tr(lang() === 'vie' ? '베트남어 글자' : '한국어 글자')); lg.type = 'button';
+  lg.onclick = () => { S.ocrLang = lang() === 'vie' ? 'kor' : 'vie'; save(); photoSearch(file, inp, redraw, host); };
+  const cl = el('button', 'ghost sm', tr('닫기')); cl.type = 'button'; cl.onclick = () => pan.remove();
+  top.append(lg, cl); pan.append(top);
+  const wrap = el('div', 'photowrap'); const im = new Image(); im.className = 'photoimg'; im.alt = ''; im.src = URL.createObjectURL(file); wrap.append(im); pan.append(wrap);
+  const st = el('p', 'dimtxt', tr('글자를 읽는 중… 처음 한 번은 읽기 엔진(약 3MB)을 받습니다')); pan.append(st);
+  host.querySelector('.dictsearch').after(pan);
+  try {
+    const w = await ocrWorker(lang());
+    const { data } = await w.recognize(file);
+    await new Promise(r => { if (im.complete && im.naturalWidth) r(); else im.onload = r; });
+    const sx = im.clientWidth / (im.naturalWidth || 1), sy = im.clientHeight / (im.naturalHeight || 1);
+    const clean = t => String(t || '').replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
+    const words = (data.words || []).map(x => ({ t: clean(x.text), b: x.bbox, c: x.confidence })).filter(x => x.t && /\p{L}/u.test(x.t) && x.c >= 40);
+    words.forEach(x => {
+      const chip = el('button', 'photochip', esc(x.t)); chip.type = 'button';
+      chip.style.left = Math.round(x.b.x0 * sx) + 'px'; chip.style.top = Math.round(x.b.y0 * sy) + 'px';
+      chip.onclick = () => { inp.value = x.t; redraw(); }; wrap.append(chip);
+    });
+    st.textContent = words.length ? tr('낱말을 누르면 찾습니다') + ' · ' + words.length : tr('글자를 못 찾았습니다 — 글자가 크고 또렷한 사진이 좋습니다');
+    if (words.length) { const list = el('p', 'anachips'); words.forEach(x => { const c = el('span', null, esc(x.t)); c.onclick = () => { inp.value = x.t; redraw(); }; list.append(c); }); pan.append(list); }
+  } catch (e) { st.textContent = tr('읽기 엔진을 불러오지 못했습니다 — 인터넷 연결을 확인해 주세요'); }
+}
 function dictEntry(q0) {
   const b = $('#subBody'); b.textContent = '';
   const lede = el('p', 'lede', tr('불러오는 중…'));
@@ -8046,6 +8098,15 @@ function dictEntry(q0) {
     };
     box.classList.add('hasmic'); box.append(lg, mic);
   }
+  /* 사진에서 글자 찾기 (대표님 2026-09-30 "사진 검색 무료면 넣자") — 폰 안에서 Tesseract(무료)로 읽는다. 처음 한 번 읽기 엔진(약 2.8MB)과
+     베트남어 글자 자료(0.5MB, 한국어는 1.6MB)를 받아 브라우저가 보관하고, 사진은 폰 밖으로 안 나간다. 읽은 낱말을 사진 위 그 자리에 알약으로 얹고 누르면 찾는다.
+     사물(동물 같은 것) 알아보기는 서버 AI가 있어야 해서 아직 없다 */
+  { const cam = el('button', 'dsmic dscam', '<svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>');
+    cam.type = 'button'; cam.title = tr('사진에서 찾기');
+    const fi = document.createElement('input'); fi.type = 'file'; fi.accept = 'image/*'; fi.hidden = true;
+    cam.onclick = () => fi.click();
+    fi.onchange = () => { const f = fi.files && fi.files[0]; if (f) photoSearch(f, inp, () => draw(), b); fi.value = ''; };
+    box.classList.add('hasmic'); box.append(cam, fi); }
   const out = el('div', 'dictout');
   let d = [];
   /* 결과 한 줄 — 찾은 말 목록과 최근 찾은 말 목록이 같은 줄을 쓴다 */
@@ -9050,7 +9111,6 @@ function drawFlash() {
   const exm = w.ex && w.ex.vi ? w.ex : null;
   if (exm) { c.append(el('div', 'flex', esc(exm.vi))); if (exm.ko) c.append(el('div', 'flexko', esc(exm.ko))); }
   if (w.sent && w.alt && w.alt.length) c.append(el('div', 'flexko', tr('다른 정답') + ' · ' + w.alt.map(esc).join(' · ')));
-  if (w.sent && w.dsrc && /^클로드/.test(w.dsrc)) c.append(el('div', 'dimtxt', tr('시험지에 답이 없어 클로드가 쓴 답입니다')));
   c.append(listenGroup(spd => { const k = recKey(w.vi); k ? play(k, false, null, spd) : speakVi(w.vi, false, spd); }));
   b.append(c);
   let moved = false;
@@ -9324,7 +9384,7 @@ function startQuiz(words, day, cap, early, opt) {
   sensesLoad();                                   // 답한 뒤 보기마다 뜻 3개를 붙이려면 미리 (2026-09-28 밤)
   drawQuiz();
   const nm = (o.kind === 'sent' ? '문장' : o.kind === 'word' ? '단어' : '') +
-             (o.skill ? ' ' + (SKILLS.find(x => x.k === o.skill) || {}).name : '');
+             (o.skill && typeof o.skill === 'string' && SKILLS.find(x => x.k === o.skill) ? ' ' + SKILLS.find(x => x.k === o.skill).name : '');
   show('quiz', day ? '확인 문제' : (nm.trim() || (cap ? '3분 복습' : '복습')), true);
 }
 function noItems(o) {
@@ -10186,7 +10246,6 @@ function dailyRound(t) {
     b.append(el('p', 'anasec', tr('지난 결과') + ' <span>' + tr('최고') + ' ' + rec.best + ' / ' + tot + '</span>'));
     b.append(el('p', 'dimtxt', rec.runs.slice(-5).reverse().map(r => esc(String(r.d).slice(5).replace('-', '/')) + ' · ' + r.ok + ' / ' + r.tot).join('<br>')));
   }
-  if (t.sents.some(x => /^클로드/.test(x.src))) b.append(el('p', 'dimtxt', tr('시험지에 답이 없던 문장은 클로드가 답을 썼습니다 — 문장 카드에 표시')));
   show('exam', t.date + ' ' + tr('단어 시험'), true);
 }
 function startDaily(t) {
@@ -10586,7 +10645,7 @@ function drawHandQ(body, q) {
 }
 
 /* 연습용 화면 자판 = **아이폰 베트남어(텔렉스) 자판과 같은 배열** (대표님 지시 2026-09-30: "실제 폰 자판과 100% 동일하게").
-   줄: q…p / a…l(반 칸 들여쓰기) / ⇧ z…m ⌫ / 123 · dấu cách(띄어쓰기) · Xong(확인).
+   줄: q…p / a…l(반 칸 들여쓰기) / ⇧ z…m ⌫ / 123 · (빈 긴 글쇠 = 띄어쓰기) · ✓(확인). 글쇠 글자는 뺐다 (대표님 2026-09-30: 폰 자판과 글자를 맞출 필요 없이).
    ⇧ 한 번 = 다음 글자만 대문자, 두 번 연달아 = 고정. 123 = 숫자·문장 부호 판(아이폰과 같은 배열, #+= 으로 기호 판), ABC 로 돌아온다.
    ⌫ 를 누르고 있으면 연달아 지운다. 모음·d 를 길게 누르면(0.4초) 부호 붙은 글자 목록이 뜬다(아이폰 길게 누르기와 같다).
    텔렉스(aa·aw·ee·oo·ow·uw·dd·s·f·r·x·j)는 그대로 된다. 아이폰의 🌐(자판 바꾸기)·이모지 글쇠는 여기서 할 일이 없어 없다.
@@ -10637,7 +10696,7 @@ function viKeypad(get, set, onGo) {
   document.addEventListener('pointerdown', e => { if (pop && !e.target.closest('.vkpop')) closePop(); }, true);
   const bottom = (lab, fn) => {
     const row = el('div', 'vkrow bottom');
-    row.append(key(lab, fn, 'fn abc'), key('dấu cách', () => { set(get() + ' '); if (shift === 1) { shift = 0; draw(); } }, 'space'), key('Xong', onGo, 'go ret'));
+    row.append(key(lab, fn, 'fn abc'), key('', () => { set(get() + ' '); if (shift === 1) { shift = 0; draw(); } }, 'space'), key('✓', onGo, 'go ret'));
     kb.append(row);
   };
   const draw = () => {

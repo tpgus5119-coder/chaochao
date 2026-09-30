@@ -2866,3 +2866,12 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .dslang,.dsmic{flex:none; width:40px; height:40px; margin-left:4px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--fg); font-weight:800; font-size:13px; padding:0; min-height:0; box-shadow:none; display:flex; align-items:center; justify-content:center}
 .dsmic svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round}
 .dsmic.on{background:var(--ok); color:#fff; border-color:var(--ok)}
+/* 사진에서 글자 찾기 (2026-09-30) */
+.dictsearch.hasmic .dsclear{right:136px}
+.photopan{margin:0 0 12px}
+.photohd{display:flex; gap:8px; justify-content:flex-end; margin-bottom:6px}
+.photowrap{position:relative; border-radius:12px; overflow:hidden; background:var(--chip)}
+.photoimg{width:100%; display:block}
+.photochip{position:absolute; transform:translateY(-100%); background:var(--ok); color:#fff; font-size:12px; font-weight:700; padding:2px 6px; border-radius:8px; border:0; min-height:0; box-shadow:0 1px 3px rgba(0,0,0,.3); white-space:nowrap}
+.photochip:active{opacity:.7}
+.anachips span{cursor:pointer}
