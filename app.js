@@ -9753,13 +9753,13 @@ function drawQuiz() {
   if (q.mode === 'listen' || q.mode === 'listen_ko') {   // 귀로만 — 글자는 답한 뒤에 보여준다
     const wrap = el('div', 'qplay');
     const b = el('button', 'primary big', koQ ? '뜻 듣기' : '듣기');
-    b.onclick = () => koQ ? speakKo(q.w.ko) : sound(q.w.vi);
+    b.onclick = () => koQ ? speakKo(koShow(q.w.ko)) : sound(q.w.vi);
     wrap.append(b);
     if (!koQ) { const m = addMic(); if (m) wrap.append(m); }
     body.append(wrap, sayBox);
-    koQ ? setTimeout(() => speakKo(q.w.ko), 150) : sound(q.w.vi);
+    koQ ? setTimeout(() => speakKo(koShow(q.w.ko)), 150) : sound(q.w.vi);
   } else {                             // 눈으로 — 글자(또는 뜻)를 보여주고 고른다
-    const main = el('button', 'qmain qtap' + (q.w.sent ? ' sent' : ''), esc(koQ ? q.w.ko : q.w.vi));
+    const main = el('button', 'qmain qtap' + (q.w.sent ? ' sent' : ''), esc(koQ ? koShow(q.w.ko) : q.w.vi));
     main.type = 'button';
     if (!koQ) main.onclick = () => sound(q.w.vi);   // 뜻 물음에서는 아무 소리도 안 낸다 (한국어 읽어 주기 없음)
     const qc = el('div', 'qcard');                   // 물음 카드 (캔버스 시안 2026-09-27)
@@ -9770,7 +9770,7 @@ function drawQuiz() {
 
   const opts = el('div', 'opts');
   q.opts.forEach(o => {
-    const b = el('button', null, esc(koQ ? o.vi : o.ko));      // 보기는 '뜻'(뜻 물음이면 베트남어) — 무엇을 묻는지가 분명해진다
+    const b = el('button', null, esc(koQ ? o.vi : koShow(o.ko)));      // 보기는 '뜻'(뜻 물음이면 베트남어) — 무엇을 묻는지가 분명해진다
     b.dataset.vi = o.vi;
     b.onclick = () => answer(b, o.vi === q.w.vi, q.w);
     opts.append(b);
@@ -9821,7 +9821,7 @@ function drawMatch(body, q) {
   let sel = null, left = pairs.length, wrong = 0, firstTry = {};
 
   const btnOf = (w, side) => {
-    const b = el('button', 'matchbtn', esc(side === 'L' ? w.ko : w.vi));
+    const b = el('button', 'matchbtn', esc(side === 'L' ? koShow(w.ko) : w.vi));
     b.type = 'button';
     b.dataset.vi = w.vi; b.dataset.side = side;
     b.onclick = () => {
@@ -9873,11 +9873,51 @@ function drawMatch(body, q) {
 
 /* ── 문장 퍼즐 ──
    조각을 눌러 문장을 만든다. 어순은 설명으로 안 붙는다 — 손으로 놓아 봐야 붙는다. */
+/* 뜻 글에서 베트남어 낱말을 뺀다 — 문제로 보일 때 힌트가 되지 않게 (대표님 2026-09-30: "cô giáo 뜻이 '선생님 (여자) cô 라고도' 면 퀴즈 힌트").
+   괄호 안에 로마자가 있으면 괄호째, 맨몸 로마자 낱말은 뒤의 '라고도'와 함께 뺀다. 카드·결과 화면은 그대로(배울 때는 봐야 하니까). 다 빠지면 원래 글 */
+function koShow(ko) {
+  let s = String(ko || '');
+  if (!/[A-Za-zÀ-ỹđĐ]/.test(s)) return s;
+  s = s.replace(/\([^()]*[A-Za-zÀ-ỹđĐ][^()]*\)/g, '');
+  s = s.replace(/[A-Za-zÀ-ỹđĐ][A-Za-zÀ-ỹđĐ'’.-]*(\s+[A-Za-zÀ-ỹđĐ][A-Za-zÀ-ỹđĐ'’.-]*)*\s*(이?라고도|이?라고|=)?/g, '');
+  s = s.replace(/\(\s*\)/g, '').replace(/\s*([·,;/])\s*(?=[·,;/])/g, '').replace(/^\s*[·,;/=]+\s*|\s*[·,;/=]+\s*$/g, '').replace(/\s{2,}/g, ' ').replace(/\s+([,;)])/g, '$1').trim();
+  return s || String(ko || '');
+}
+/* 퍼즐 조각의 대문자 — 문장 첫 낱말이 대문자면 "이게 첫 조각"이라고 알려 주는 셈이라(대표님 2026-09-30) 소문자로 보인다.
+   이름·지명은 그대로: 다른 문장 가운데에서 대문자로 나온 낱말(anh Nam · Hà Nội) 목록(properSet)에 있거나, 바로 뒤 낱말도 대문자(Hà Nội)면 고유명사로 본다 */
+const isCap = x => { const c = String(x || '')[0] || ''; return c !== c.toLowerCase() && c === c.toUpperCase(); };   // 첫 글자가 대문자 (À-Ỹ 범위 검사는 소문자 à·đ·ơ 도 걸려서 틀렸다)
+let PROPER = null;
+function properSet() {
+  if (PROPER) return PROPER;
+  /* 문장 가운데서 대문자로 나온 횟수(capMid) 가 소문자로 나온 횟수(low) 이상이어야 고유명사 — 'Tôi' 는 "B: Tôi…" 처럼 가운데 대문자로도 나오지만
+     소문자 tôi 가 훨씬 많아 빠지고, 'Nam' 은 anh Nam·Việt Nam 이 소문자 nam(남쪽) 보다 많아 남는다 */
+  const capMid = {}, low = {};
+  const add = v => { const t = String(v || '').split(/\s+/); t.forEach((x, i) => {
+    const k = x.replace(/[.,;:?!]+$/, ''); if (!k) return;
+    if (isCap(k)) { if (i > 0 && !/[.?!:]$/.test(t[i - 1])) capMid[k] = (capMid[k] || 0) + 1; }
+    else low[k] = (low[k] || 0) + 1;
+  }); };
+  const each = w => { if (!w) return; if (w.ex && w.ex.vi) add(w.ex.vi); if (w.sent && w.vi) add(w.vi); (w.fex || []).forEach(e => e && e.vi && add(e.vi)); };
+  ALL.forEach(d => (d.words || []).forEach(each)); CWORDS.forEach(each); (GYBM || []).forEach(g => g.lessons.forEach(l => l.words.forEach(each)));
+  if (DAILY22) DAILY22.tests.forEach(t => (t.sents || []).forEach(x => add(x.vi)));
+  if (GRAM) GRAM.books.forEach(bk => bk.bai.forEach(c => c.g.forEach(g => (g.ex || []).forEach(e => e && e.vi && add(e.vi)))));
+  PROPER = new Set(Object.keys(capMid).filter(k => capMid[k] >= (low[k[0].toLowerCase() + k.slice(1)] || 0)));
+  return PROPER;
+}
+function tileText(want, i) {
+  const x = want[i];
+  if (!isCap(x)) return x;
+  const first = i === 0 || /[.?!]$/.test(want[i - 1]);
+  if (!first) return x;
+  if (properSet().has(x.replace(/[.,;:?!]+$/, ''))) return x;
+  if (want[i + 1] && isCap(want[i + 1])) return x;
+  return x[0].toLowerCase() + x.slice(1);
+}
 function drawPuzzle(body, q) {
   const w = q.w, md = q.mode;
-  if (md === 'puzzle') body.append(el('div', 'puzzhint', esc(w.ko)));      // 뜻은 보여준다 — 어순을 묻는 문제니까
+  if (md === 'puzzle') body.append(el('div', 'puzzhint', esc(koShow(w.ko))));      // 뜻은 보여준다 — 어순을 묻는 문제니까
   const row0 = el('div', 'qplay');
-  if (md === 'puzzle_ko') { const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(w.ko); row0.append(kb); setTimeout(() => speakKo(w.ko), 150); }   // 뜻을 듣고 만든다 (2026-09-28)
+  if (md === 'puzzle_ko') { const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(koShow(w.ko)); row0.append(kb); setTimeout(() => speakKo(koShow(w.ko)), 150); }   // 뜻을 듣고 만든다 (2026-09-28)
   else if (md === 'puzzle_vi') { const pb = el('button', 'primary big', '🔊 듣기'); pb.onclick = () => play(w.vi, false); row0.append(pb); if (md === 'puzzle_vi') setTimeout(() => play(w.vi, false), 150); }   // 문장을 듣고 만든다
   body.append(row0);
 
@@ -9886,7 +9926,7 @@ function drawPuzzle(body, q) {
   const tail = (String(w.vi).trim().match(/[.?!]+$/) || [''])[0];
   const want = String(w.vi).trim().replace(/[.?!]+$/, '').split(/\s+/);
   if (want.length < 3) { q.mode = 'listen'; return drawQuiz(); }   // 조각이 둘이면 퍼즐이 아니다
-  const tiles = [...want].sort(() => Math.random() - .5);
+  const tiles = want.map((x, i) => tileText(want, i)).sort(() => Math.random() - .5);   // 첫 낱말 대문자는 소문자로 (고유명사 빼고)
 
   const ans = el('div', 'puzzans');
   const pool = el('div', 'puzztiles');
@@ -9940,7 +9980,7 @@ function drawDict(body, q) {
   wrap.append(b);
   body.append(wrap);
   sound(q.w.vi);
-  body.append(el('div', 'q mid', esc(q.w.ko)));   // 뜻은 보여준다 — 철자와 성조를 시험하는 것이니까
+  body.append(el('div', 'q mid', esc(koShow(q.w.ko))));   // 뜻은 보여준다 — 철자와 성조를 시험하는 것이니까
 
   const syls = q.w.vi.split(' ');
   const MKS = ['', '\u0300', '\u0301', '\u0309', '\u0303', '\u0323'];
@@ -10274,10 +10314,24 @@ function dailyEntry(mode) {
     b.append(c);
   });
 }
+/* 학습 탭의 매일 단어 시험 = 보통 수업과 똑같이 **세트로 나눠**(카드 → 확인 문제) — 대표님 2026-09-30 "동일하게 단어 학습할 수 있게… 나눠서… 이전처럼".
+   22기 자료(gybm.json c22)에 이미 13~14개씩 세 세트로 잘라 둔 레슨을 그대로 쓴다(진도는 교재 창고 bdone/bsrs). 문장은 학습에 없고 테스트에만. */
 function dailyStudyOnly(t) {
   SBOX = 'bsrs';
-  flashRun(dailyWords(t), t.date + ' ' + tr('낱말'), { nextLabel: tr('문장 카드로 ›'),
-    next: () => flashRun(dailySents(t), t.date + ' ' + tr('문장'), { nextLabel: tr('날짜 목록으로'), next: () => dailyEntry('study') }) });
+  const b = $('#subBody'); b.textContent = '';
+  show('sub', t.label, true);
+  gybmBuild(() => {
+    const src = (GYBM || []).find(g => g.key === 'c22');
+    const sets = src ? src.lessons.map((l, li) => [l, li]).filter(([l]) => String(l.title).startsWith(t.label)) : [];
+    if (!sets.length) { startLearn({ theme: t.label, day: 'daily:' + t.key, basic: 1, words: dailyWords(t) }); return; }   // 잘라 둔 것이 없으면 통째로 한 세트
+    const box = el('div', 'ulist');
+    const nodes = sets.map(([l, li], n) => ({
+      key: gybmKey('c22', li), num: n + 1, title: tr('세트') + ' ' + (n + 1) + '/' + sets.length + ' · ' + l.words.length + tr('단어'), done: !!bdone()[gybmKey('c22', li)],
+      fn: () => { SBOX = 'bsrs'; dive(() => dailyStudyOnly(t)); startLearn({ theme: l.title, day: gybmKey('c22', li), basic: 1, words: l.words }); },
+    }));
+    renderRoadmap(box, nodes, null, { freeNav: true });
+    b.append(box);
+  });
 }
 function dailyRound(t) {
   const b = $('#examBody'); b.textContent = '';
@@ -10443,7 +10497,7 @@ function drawExamKind(body, q) {
     const tok = w.of || '';
     const re = new RegExp('(^|\\s)' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i');
     const shown = re.test(w.vi) ? w.vi.replace(re, '$1____') : w.vi;
-    body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(w.ko)));
+    body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(koShow(w.ko))));
     const target = findItem(tok) || { vi: tok, ko: '' };
     const pool = (Q.round ? weeklyRoundWords(WEEKLY_ROUNDS.find(r => r.no === Q.round) || WEEKLY_ROUNDS[0]) : weeklyMaterial()).filter(x => x.vi !== tok);
     const opts = [target, ...pool.sort(() => Math.random() - .5).slice(0, 3)].sort(() => Math.random() - .5);
@@ -10454,7 +10508,7 @@ function drawExamKind(body, q) {
   if (md === 'gpat') {                                     // 테스트 탭 문법 — 예문에 쓰인 문형 고르기 (2026-09-28 밤)
     const bx = el('div', 'wex');
     bx.append(tapLine(w.vi, 'wexvi tapline'));
-    if (w.ko) bx.append(el('div', 'wexko', esc(w.ko)));
+    if (w.ko) bx.append(el('div', 'wexko', esc(koShow(w.ko))));
     body.append(bx);
     const box = el('div', 'opts');
     (q.popts || []).forEach(o => { const b = el('button', null, esc(o.k) + ' — ' + esc(o.t)); const good = o.k === w.gk; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
@@ -10463,7 +10517,7 @@ function drawExamKind(body, q) {
   if (md === 'gcloze') {                                   // 문법 빈칸 — 보기는 회차 문법의 말들 (2026-09-28)
     const tok = w.tok || '';
     const re = new RegExp('(^|\\s)' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i');
-    body.append(el('div', 'qmain sent', esc(w.vi.replace(re, '$1____'))), el('div', 'q mid', esc(w.ko)));
+    body.append(el('div', 'qmain sent', esc(w.vi.replace(re, '$1____'))), el('div', 'q mid', esc(koShow(w.ko))));
     const box = el('div', 'opts');
     (q.topts || []).forEach(o => { const b = el('button', null, esc(o)); const good = o === tok.toLowerCase(); b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
     body.append(box); return;
@@ -10471,7 +10525,7 @@ function drawExamKind(body, q) {
   if (md === 'tf') {
     const other = q.opts.find(o => o.vi !== w.vi && o.ko) || w;
     const isTrue = Math.random() < .5;
-    body.append(el('div', 'qmain sent', esc(w.vi)), el('div', 'q mid', esc(isTrue ? w.ko : other.ko)));
+    body.append(el('div', 'qmain sent', esc(w.vi)), el('div', 'q mid', esc(koShow(isTrue ? w.ko : other.ko))));
     tfBtns(isTrue); return;
   }
   if (md === 'err') {
@@ -10500,7 +10554,7 @@ function drawExamKind(body, q) {
       };
       line.append(b);
     });
-    body.append(el('div', 'q mid', esc(w.ko)), line);
+    body.append(el('div', 'q mid', esc(koShow(w.ko))), line);
     return;
   }
 }
@@ -10549,7 +10603,7 @@ function drawToneQ(body, q) {
   const w = q.w, syls = String(w.vi).trim().split(/\s+/);
   const bare = syls.map(stripTone).join(' ');
   const main = el('button', 'qmain qtap', esc(bare)); main.type = 'button'; main.onclick = () => sound(w.vi);
-  const qc = el('div', 'qcard'); qc.append(body.querySelector('.q'), main, el('div', 'q mid', esc(w.ko))); body.append(qc);   // 뜻도 보여 준다 (대표님 지시 2026-09-28: 소리만 듣고 맞추라는 건 너무 어렵다)
+  const qc = el('div', 'qcard'); qc.append(body.querySelector('.q'), main, el('div', 'q mid', esc(koShow(w.ko)))); body.append(qc);   // 뜻도 보여 준다 (대표님 지시 2026-09-28: 소리만 듣고 맞추라는 건 너무 어렵다)
   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   sound(w.vi);
   const MK = ['', '\u0300', '\u0301', '\u0309', '\u0303', '\u0323'];
@@ -10570,8 +10624,8 @@ function drawSay(body, q) {
   const tapQ = txt => { const b = el('button', 'qmain qtap' + (w.sent ? ' sent' : ''), esc(txt)); b.type = 'button'; b.onclick = () => sound(w.vi); return b; };   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   if (shadow) body.append(tapQ(w.vi));          // 따라 말하기 — 베트남어를 보며 듣고 따라 한다
   else if (picOnly) { /* 그림만 보고 말한다 (주간 시험 D2) — 뜻 글은 없다 */ }
-  else if (koMode) { const kr = el('div', 'qplay'); const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(w.ko); kr.append(kb); body.append(kr); setTimeout(() => speakKo(w.ko), 150); }
-  else if (!picOnly) body.append(tapQ(w.ko));
+  else if (koMode) { const kr = el('div', 'qplay'); const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(koShow(w.ko)); kr.append(kb); body.append(kr); setTimeout(() => speakKo(koShow(w.ko)), 150); }
+  else if (!picOnly) body.append(tapQ(koShow(w.ko)));
   let done = false;
   const finish = (ok, judged) => {
     if (done) return; done = true;
@@ -10618,7 +10672,7 @@ function drawSay(body, q) {
 /* 손으로 — 성조 부호까지 써 본다 (복습 안에서) */
 function drawHandQ(body, q) {
   const w = q.w;
-  body.append(el('div', 'qmain', esc(w.ko)));
+  body.append(el('div', 'qmain', esc(koShow(w.ko))));
   const row = el('div', 'qplay');
   const p1 = el('button', 'ghost', '🔊 듣기'); p1.onclick = () => play(w.vi, false);
   row.append(p1); body.append(row);
@@ -10796,7 +10850,7 @@ function drawTypeQ(body, q) {
   /* write_ko = 뜻을 보고 베트남어로 쓰기 (매일 단어 시험, 2026-09-30) — 시험지처럼 소리를 먼저 들려주지 않는다. 답한 뒤에만 소리 */
   const silent = q.mode === 'write_ko';
   let txt = '', typed = false;
-  const qm = el('button', 'qmain qtap', q.mode === 'dictation' ? '🔊' : esc(w.ko)); qm.type = 'button';   // 받아쓰기는 뜻 없이 듣고 친다 (주간 시험 A4)
+  const qm = el('button', 'qmain qtap', q.mode === 'dictation' ? '🔊' : esc(koShow(w.ko))); qm.type = 'button';   // 받아쓰기는 뜻 없이 듣고 친다 (주간 시험 A4)
   qm.onclick = () => { if (!silent || typed) play(w.vi, false); }; body.append(qm);   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   if (!silent) play(w.vi, false);
   body.append(telexHint());          // 성조·모자 치는 법 (접힘) — 대표님 지시 2026-09-27 밤
@@ -10869,7 +10923,7 @@ function answer(btn, correct, w) {
   fxTone(correct);
   if (!correct) {
     [...btn.parentNode.children].forEach(b => {
-      if (b.dataset.vi === w.vi || b.textContent === w.ko) b.dataset.r = 'ok';
+      if (b.dataset.vi === w.vi || b.textContent === koShow(w.ko)) b.dataset.r = 'ok';
     });
   }
   if (correct) Q.ok++;
