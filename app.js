@@ -9904,14 +9904,20 @@ function properSet() {
     else low[k] = (low[k] || 0) + 1;
   }); };
   const each = w => { if (!w) return; if (w.ex && w.ex.vi) add(w.ex.vi); if (w.sent && w.vi) add(w.vi); (w.fex || []).forEach(e => e && e.vi && add(e.vi)); };
-  ALL.forEach(d => (d.words || []).forEach(each)); CWORDS.forEach(each); (GYBM || []).forEach(g => g.lessons.forEach(l => l.words.forEach(each)));
-  if (DAILY22) DAILY22.tests.forEach(t => (t.sents || []).forEach(x => add(x.vi)));
-  if (GRAM) GRAM.books.forEach(bk => bk.bai.forEach(c => c.g.forEach(g => (g.ex || []).forEach(e => e && e.vi && add(e.vi)))));
+  /* 자료가 아직 안 온 화면(테스트 탭에서 바로 시험)에서는 CWORDS 가 없다 — 없는 자료는 건너뛴다 (2026-09-30 밤 대표님 "조각이 안 보인다": 여기서 멈춰 퍼즐 조각이 안 그려졌다) */
+  try {
+    (typeof ALL !== 'undefined' && ALL || []).forEach(d => (d.words || []).forEach(each));
+    (typeof CWORDS !== 'undefined' && CWORDS || []).forEach(each);
+    (GYBM || []).forEach(g => (g.lessons || []).forEach(l => (l.words || []).forEach(each)));
+    if (DAILY22) (DAILY22.tests || []).forEach(t => (t.sents || []).forEach(x => add(x.vi)));
+    if (GRAM && GRAM.books) GRAM.books.forEach(bk => (bk.bai || []).forEach(c => (c.g || []).forEach(g => (g.ex || []).forEach(e => e && e.vi && add(e.vi)))));
+  } catch (e) { console.warn('properSet', e); }
   PROPER = new Set(Object.keys(capMid).filter(k => capMid[k] >= (low[k[0].toLowerCase() + k.slice(1)] || 0)));
   return PROPER;
 }
 function tileText(want, i) {
   const x = want[i];
+  try { properSet(); } catch (e) { return x; }
   if (!isCap(x)) return x;
   const first = i === 0 || /[.?!]$/.test(want[i - 1]);
   if (!first) return x;
@@ -10487,7 +10493,8 @@ function finishDaily() {
   }
   const re = el('button', wrong.length ? 'ghost big' : 'primary big', tr('다시 풀기')); re.style.width = '100%'; re.style.marginTop = '10px'; re.onclick = () => startDaily(t);
   const ls = el('button', 'ghost big', tr('날짜 목록으로')); ls.style.width = '100%'; ls.style.marginTop = '10px'; ls.onclick = () => { ACTIVE_TAB = 'test'; dailyEntry(); };
-  r.append(re, ls);
+  const hm = el('button', 'ghost big', tr('홈으로')); hm.style.width = '100%'; hm.style.marginTop = '10px'; hm.onclick = () => { ACTIVE_TAB = 'home'; renderHome(); };   // 시험 결과에서 바로 홈 (2026-09-30 밤)
+  r.append(re, ls, hm);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
 function startWeeklyExam(round) {
@@ -10675,7 +10682,7 @@ function finishWeekly() {
   r.append(tb);
   S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs, round: Q.exam1 ? 'exam1' : (Q.round || 0), pts: got, max }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
   examWrongList(r, Q.list);
-  const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = renderHome; r.append(b);
+  const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = () => { ACTIVE_TAB = 'home'; renderHome(); }; r.append(b);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
 /* 시험 뒤 '틀린 것' — 문제 → 정답(다른 정답)·스킵 표시 (매일·주간 시험이 같이 쓴다) */
