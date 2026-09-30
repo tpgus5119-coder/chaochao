@@ -8069,6 +8069,7 @@ async function photoSearch(file, inp, redraw, host) {
   const wrap = el('div', 'photowrap'); const im = new Image(); im.className = 'photoimg'; im.alt = ''; im.src = URL.createObjectURL(file); wrap.append(im); pan.append(wrap);
   const st = el('p', 'dimtxt', tr('글자 인식 준비 중… 처음 한 번은 조금 걸립니다')); pan.append(st);
   host.querySelector('.dictsearch').after(pan);
+  const out0 = host.querySelector('.dictout');            // 사전 결과 칸 — 목록의 낱말을 누르면 사진 판 바로 아래에 오게 옮긴다
   try {
     const w = await ocrWorker(lang());
     const cv = await ocrCanvas(file, 1600);
@@ -8078,13 +8079,36 @@ async function photoSearch(file, inp, redraw, host) {
     const sx = im.clientWidth / (cv.width || 1), sy = im.clientHeight / (cv.height || 1);   // 알약 자리는 줄인 그림 기준
     const clean = t => String(t || '').replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, '');
     const words = (data.words || []).map(x => ({ t: clean(x.text), b: x.bbox, c: x.confidence })).filter(x => x.t && /\p{L}/u.test(x.t) && x.c >= 40);
+    /* 사진 위 알약 = 그 자리를 **다시 읽기**(잘못 읽혔을 때 — 대표님 2026-09-30 "사진에서 글자 인식을 잘 못하는 경우가 있어서"):
+       그 낱말 상자만 잘라 글자 높이 60px 쯤으로 키워 한 낱말 모드로 다시 읽고, 다르게 읽히면 알약·목록 글자를 바꾼다.
+       사진 밑 목록 = 그 낱말 **찾기**(결과는 목록 바로 아래 사전 결과 칸에). */
+    const recheck = async x => {
+      st.textContent = tr('다시 읽는 중') + '… ' + x.t;
+      try {
+        const m = 6, bx = x.b, cx = Math.max(0, bx.x0 - m), cy = Math.max(0, bx.y0 - m);
+        const cw = Math.min(cv.width - cx, bx.x1 - bx.x0 + 2 * m), ch = Math.min(cv.height - cy, bx.y1 - bx.y0 + 2 * m);
+        const k = Math.max(1, Math.min(4, 60 / Math.max(1, ch)));
+        const c2 = document.createElement('canvas'); c2.width = Math.round(cw * k); c2.height = Math.round(ch * k);
+        c2.getContext('2d').drawImage(cv, cx, cy, cw, ch, 0, 0, c2.width, c2.height);
+        await w.setParameters({ tessedit_pageseg_mode: '8' });                       // 한 낱말
+        let t = '';
+        try { const r = await w.recognize(c2); t = clean(String(r.data.text || '').trim().split(/\s+/)[0] || ''); }
+        finally { await w.setParameters({ tessedit_pageseg_mode: '3' }); }
+        if (t && /\p{L}/u.test(t) && t !== x.t) { x.t = t; x.chip.textContent = t; if (x.li) x.li.textContent = t; st.textContent = tr('다시 읽음') + ': ' + t; }
+        else st.textContent = tr('같게 읽힙니다') + ' — ' + tr('틀렸으면 찾을 말 칸에 직접 고쳐 쓰세요');
+      } catch (e) { st.textContent = tr('다시 읽지 못했습니다'); }
+    };
     words.forEach(x => {
-      const chip = el('button', 'photochip', esc(x.t)); chip.type = 'button';
+      const chip = el('button', 'photochip', esc(x.t)); chip.type = 'button'; chip.title = tr('다시 읽기');
       chip.style.left = Math.round(x.b.x0 * sx) + 'px'; chip.style.top = Math.round(x.b.y0 * sy) + 'px';
-      chip.onclick = () => { inp.value = x.t; redraw(); }; wrap.append(chip);
+      chip.onclick = () => recheck(x); x.chip = chip; wrap.append(chip);
     });
-    st.textContent = words.length ? tr('낱말을 누르면 찾습니다') + ' · ' + words.length : tr('글자를 못 찾았습니다 — 글자가 크고 또렷한 사진이 좋습니다');
-    if (words.length) { const list = el('p', 'anachips'); words.forEach(x => { const c = el('span', null, esc(x.t)); c.onclick = () => { inp.value = x.t; redraw(); }; list.append(c); }); pan.append(list); }
+    st.textContent = words.length ? tr('사진 위 알약 = 다시 읽기 · 아래 목록 = 찾기') : tr('글자를 못 찾았습니다 — 글자가 크고 또렷한 사진이 좋습니다');
+    if (words.length) {
+      const list = el('p', 'anachips');
+      words.forEach(x => { const c = el('span', null, esc(x.t)); c.onclick = () => { inp.value = x.t; redraw(); pan.after(out0); }; x.li = c; list.append(c); });
+      pan.append(list);
+    }
   } catch (e) {
     /* 어느 단계가 막혔는지와 원인 한 토막을 보여 준다 — '인터넷 연결' 만 말하면 와이파이가 되는 폰에서 원인을 알 수 없었다(2026-09-30) */
     const step = (e && e.step) || '준비', msg = String(e && e.message || '').slice(0, 60);
