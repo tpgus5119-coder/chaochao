@@ -7940,7 +7940,15 @@ function dictBuild() {
     /* 문장·문형·글자 묶음은 사전에 안 나온다 (2026-09-29): 다섯 낱말 미만이라 위 걸개를 빠져나온 문장(tôi đi nhé·có sao không …)은
        손으로 고른 목록(_dict_skip.json)으로, 'c · k · q'·'từ ~ đến ~'·'mỗi A một B'·한글 제목 같은 것은 글자 꼴로 거른다 */
     if ((DSKIP && DSKIP.has(kk)) || /[·\/~()]/.test(k) || /[가-힣]/.test(k) || /(^|\s)[A-Z](\s|$)/.test(k)) return;
-    if (onlyNew && seen.has(kk)) return;    // 참고 사전은 앱에 없는 말만 — 앱 단어 뜻에 사전 뜻을 덧붙이지 않는다
+    /* 낱말이 아닌 것은 사전에 없다 (대표님 2026-09-30 "실제 베-한 사전에 있는 것만"): 숫자(1·2023), 문형 빈칸(càng...càng, 'cả  lẫn'), 음절 조각("(예) ắc quy = …" 뜻) */
+    if (/^\d/.test(k) || /\.\.\.|  /.test(k) || /^\(예\)/.test(String(ko))) return;
+    /* 뜻은 **사전 한 벌**에서 (대표님 2026-09-30 "출처마다 뜻이 겹친다 — 사전 하나로"): 참고 사전 줄이 있으면 그것이 뜻이고, 없으면 처음 넣은 수업 자료의 뜻 하나.
+       수업 자료끼리는 뜻을 이어 붙이지 않는다(전엔 '책상 · 책상, 탁자 · 테이블·탁자' 처럼 겹쳤다). 수업 자료의 첫 뜻이 사전 줄에 없으면 그 하나만 뒤에 보탠다 */
+    if (onlyNew && seen.has(kk)) {
+      const o = seen.get(kk), first = phr(o.ko)[0] || '', dko = String(ko);
+      o.ko = dko; if (first && !phr(dko).some(h => h === first || h.includes(first) || first.includes(h))) o.ko += ' · ' + first;
+      return;
+    }
     if (!seen.has(kk)) seen.set(kk, onlyNew ? { vi: k, ko: String(ko), ref: 1 } : { vi: k, ko: String(ko) });
     const o = seen.get(kk);
     /* 어느 파트에서 나온 단어인지 (대표님 지시 2026-09-29: "사전-일상-cái nhà 이런 식으로") — 먼저 넣은 파트부터 둘까지 */
@@ -7950,11 +7958,6 @@ function dictBuild() {
     /* 여러 자료의 뜻을 합칠 때 겹치는 단어은 다시 안 붙인다 — "누나·언니 / 누나·언니뻘 여자 / 언니" 처럼 길어지지 않게. 세 갈래까지만. */
     /* 뜻은 **구절** 단위로 합친다 (2026-09-29): 앞서는 낱말 단위라 '요리하다 / 요리하다, 밥을 짓다 / 요리하다·요리·밥을 짓다' 처럼 같은 뜻이 세 번 붙었다.
        새 자료의 구절 중 이미 있는 구절(또는 그것을 품은 구절)과 겹치지 않는 것만 ' · ' 로 잇는다. 여섯 구절까지. */
-    if (!o.ko.includes(ko)) {
-      const have = phr(o.ko);
-      const add = phr(ko).filter(p => !have.some(h => h === p || h.includes(p) || p.includes(h)));
-      if (add.length && have.length < 6) o.ko += ' · ' + add.slice(0, 6 - have.length).join(' · ');
-    }
     if (w) KEEP.forEach(f => { if (o[f] === undefined && w[f] !== undefined) o[f] = w[f]; });
   };
   /* 앱에 있는 단어은 **전부** (대표님 지시 2026-09-27: "최소한 우리 어플에 있는 모든 단어는 들어가야 함") */

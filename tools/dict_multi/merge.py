@@ -10,10 +10,12 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 
 def main():
     d = {}
-    files = sorted(glob.glob(str(R / "tools/dict_one/one_*.ko.tsv"))) + sorted(glob.glob(str(R / "tools/dict_multi/m*.ko.tsv")))
+    files = sorted(glob.glob(str(R / "tools/dict_one/one_*.ko.tsv"))) + sorted(glob.glob(str(R / "tools/dict_multi/m*.ko.tsv"))) + sorted(glob.glob(str(R / "tools/dict_vw/vw_*.ko.tsv")))   # vw = 베트남어 위키낱말에만 있던 낱말 (2026-09-30)
     for f in files:
         for line in open(f, encoding="utf-8"):
             p = line.rstrip("\n").split("\t")
+            if len(p) >= 3 and p[0].strip().isdigit():
+                p = p[1:]                      # vw 시트: 번호 칸을 뗀다
             if len(p) < 2:
                 continue
             vi, ko = unicodedata.normalize("NFC", p[0].strip()), p[1].strip()
