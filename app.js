@@ -2649,7 +2649,8 @@ function studyWordsEntry(scroll) {
       done: nodes.filter(x => x.done).length, all: nodes.length, nodes });
   } else rows.push({ key: 'job', title: '직무', sub: '8갈래', done: 0, all: 0, nodes: null });
   // ③④⑤ 교재 · 단어시험 · 수업 단어
-  [['main', '교재'], ['senior', '선배 단어 시험 자료'], ['c22', '22기 단어 시험 자료']].forEach(([key, title]) => {
+  /* 22기 단어 시험 자료는 테스트 → 매일 단어 시험으로 옮겼다 (대표님 결정 2026-09-30: 같은 자료로 들어가는 문이 둘이면 헷갈린다). 복습 창고(bsrs)·지난 진도는 그대로 */
+  [['main', '교재'], ['senior', '선배 단어 시험 자료']].forEach(([key, title]) => {
     const src = GYBM && GYBM.find(s => s.key === key);
     if (!src) { rows.push({ key, title, sub: '', done: 0, all: 0, nodes: null }); return; }
     const nodes = src.lessons.map((l, li) => ({ key: gybmKey(key, li), title: l.title,
@@ -2968,7 +2969,7 @@ function sparkline(series, w, h) {
   pts.forEach(p => { if (p) { x.beginPath(); x.arc(p[0], p[1], 2.2, 0, 7); x.fill(); } });
   return cv;
 }
-const MODE_NM = { listen: '듣고 뜻 고르기', listen_ko: '뜻 듣고 낱말 고르기', tone: '성조 부호 고르기', pic_tf: '그림 맞다·틀리다', pic4: '그림 고르기', read: '읽고 뜻 고르기', read_ko: '뜻 보고 낱말 고르기', match: '짝 맞추기', cloze: '빈칸', tf: '문장 맞다·틀리다', err: '틀린 글자 찾기', gpat: '문법 고르기', gcloze: '문법 빈칸', type: '타이핑', dictation: '받아쓰기', hand: '손글씨', dict: '글자 조각 만들기', say: '말하기', say_ko: '뜻 듣고 말하기', shadow: '따라 말하기', say_pic: '그림 보고 말하기', sayself: '말하기(스스로 판정)', recall: '말하기', puzzle: '문장 조각', puzzle_ko: '뜻 듣고 문장 조각', puzzle_vi: '문장 듣고 조각' };
+const MODE_NM = { write_ko: '뜻 보고 베트남어 쓰기', listen: '듣고 뜻 고르기', listen_ko: '뜻 듣고 낱말 고르기', tone: '성조 부호 고르기', pic_tf: '그림 맞다·틀리다', pic4: '그림 고르기', read: '읽고 뜻 고르기', read_ko: '뜻 보고 낱말 고르기', match: '짝 맞추기', cloze: '빈칸', tf: '문장 맞다·틀리다', err: '틀린 글자 찾기', gpat: '문법 고르기', gcloze: '문법 빈칸', type: '타이핑', dictation: '받아쓰기', hand: '손글씨', dict: '글자 조각 만들기', say: '말하기', say_ko: '뜻 듣고 말하기', shadow: '따라 말하기', say_pic: '그림 보고 말하기', sayself: '말하기(스스로 판정)', recall: '말하기', puzzle: '문장 조각', puzzle_ko: '뜻 듣고 문장 조각', puzzle_vi: '문장 듣고 조각' };
 const SUBJ_KEY = { '말하기': 'say', '듣기': 'ear', '읽기': 'read', '쓰기': 'spell', '암기': 'memo' };
 const SUBJ_SKILL = { say: 'say', ear: 'listen', read: 'read', spell: 'write' };
 /* 상자(box)의 갈래별 줄 — o 는 평평한 열쇠('tn_ear:ngang:ok')의 합. keep(열쇠)로 고르고 map(열쇠)로 이름을 붙인다 */
@@ -3171,7 +3172,8 @@ const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield
   /* 2026-09-29 (대표님 "아이패드와 폰에서 진도 연동 안되는듯"): 실전·GYBM 과를 끝낸 기록(sdone·bdone)이
      여기 빠져 있어서 폰에서 끝낸 GYBM 과가 아이패드에 **한 번도** 가지 않았다. 시험 성적·문항 창고·성조 테스트도 같이. */
   'sdone', 'bdone', 'kbank', 'qbank', 'exam', 'anchor', 'vlpt', 'tt', 'kday', 'revDay', 'lastTrack',
-  'score'];   // 실제 반 시험 점수 (2026-09-29)
+  'score',   // 실제 반 시험 점수 (2026-09-29)
+  'daily'];  // 매일 단어 시험 최고점·지난 결과 (2026-09-30)
 /* 진도 서버 맞추기 (2026-09-29 다시 짬).
    예전에는 서버에서 **받는 것이 로그인하는 순간 한 번뿐**이었다 — 폰과 아이패드가 둘 다 로그인된 채로 쓰면
    서로의 진도를 영영 못 받았고, 올릴 때는 나중에 올린 기기가 서버 것을 통째로 덮었다(앞 기기 진도가 사라짐).
@@ -3216,7 +3218,7 @@ function mergeProg(L, R) {
       case 'done': case 'sdone': case 'bdone': case 'act': case 'star': out[k] = byKey(a, b, maxNum); break;
       case 'srs': case 'ssrs': case 'bsrs': case 'kbank': case 'qbank': case 'vlpt': out[k] = byKey(a, b, newer); break;
       case 'exam': out[k] = byKey(a, b, (x, y) => ((y && y.score) || 0) > ((x && x.score) || 0) ? y : x); break;   // 최고 점수
-      case 'stats': case 'shield': case 'shieldWk': case 'anchor': out[k] = deep(a, b); break;
+      case 'stats': case 'shield': case 'shieldWk': case 'anchor': case 'daily': out[k] = deep(a, b); break;   // daily: 최고점은 큰 쪽, 지난 결과는 긴 쪽
       case 'cr': out[k] = (b.sum || 0) > (a.sum || 0) ? b : a; break;         // 모두 번 돈이 많은 쪽 — 쓴 돈도 그쪽 기록과 맞는다
       case 'pet': out[k] = (b.fed || 0) > (a.fed || 0) ? b : a; break;
       case 'tt': out[k] = ((b.r || []).length > (a.r || []).length) ? b : a; break;
@@ -3973,6 +3975,7 @@ function testHubEntry() {
   const pool = learnedPool();
   b.append(qnPicker());                                   // 문제 수 10·20·30 — 학습 뒤 확인 문제와 같은 값 (2026-09-28 밤)
   row(ICO.today, '오늘 복습', due, () => testToday(), { today: true, dis: !due });
+  row(ICO.pick, '매일 단어 시험', 0, dailyEntry);      // 22기 반 시험지 그대로 — 학습하고 이어서 시험 (2026-09-30)
   row(ICO.all, '배운 단어 전체', pool.length ? pool.length.toLocaleString('ko-KR') : 0, () => testAllLearned(pool), { dis: !pool.length });
   const stars = Object.keys(starOf()).length;
   row(ICO.star, '내 단어장', stars, () => startWordbookQuiz(Object.entries(starOf()).map(([k, v]) => (v && v.vi) || k), '단어장 복습'), { dis: !stars });
@@ -6741,7 +6744,7 @@ function resumeNext() {
   const t = S.lastTrack || 'life';
   const q = COURSE ? courseQueue(999) : [];
   if (t === 'job') { const j = q.find(d => d.kind === '직무'); if (j) return { d: j, name: j.theme, kind: '직무' }; }
-  if (t.startsWith('gybm:') && GYBM) {
+  if (t.startsWith('gybm:') && t !== 'gybm:c22' && GYBM) {          // 22기는 학습에서 뺐다 — 이어서 학습은 일상으로
     const key = t.slice(5), src = GYBM.find(x => x.key === key);
     if (src) { const li = src.lessons.findIndex((l, i) => !bdone()[gybmKey(key, i)]);
       if (li >= 0) { const l = src.lessons[li]; return { d: { theme: l.title, day: gybmKey(key, li), basic: 1, words: l.words }, name: l.title, kind: src.label, box: 'bsrs' }; } }
@@ -8956,7 +8959,7 @@ function drawFlash() {
   }
   $('#quizFill').style.width = (FL.i / FL.list.length * 100) + '%';
   const w = FL.list[FL.i];
-  const c = el('div', 'card flcard');
+  const c = el('div', 'card flcard' + (w.sent ? ' flsent' : ''));
   const top = el('div', 'flhead');
   top.append(el('span', 'flcount', tr('카드') + ' ' + (FL.i + 1) + ' / ' + FL.list.length), el('span', 'flpill', esc($('#title').textContent.replace(/ 카드$/, ''))));
   c.append(top);
@@ -8968,6 +8971,8 @@ function drawFlash() {
   c.append(fko);
   const exm = w.ex && w.ex.vi ? w.ex : null;
   if (exm) { c.append(el('div', 'flex', esc(exm.vi))); if (exm.ko) c.append(el('div', 'flexko', esc(exm.ko))); }
+  if (w.sent && w.alt && w.alt.length) c.append(el('div', 'flexko', tr('다른 정답') + ' · ' + w.alt.map(esc).join(' · ')));
+  if (w.sent && w.dsrc && /^클로드/.test(w.dsrc)) c.append(el('div', 'dimtxt', tr('시험지에 답이 없어 클로드가 쓴 답입니다')));
   c.append(listenGroup(spd => { const k = recKey(w.vi); k ? play(k, false, null, spd) : speakVi(w.vi, false, spd); }));
   b.append(c);
   let moved = false;
@@ -9523,7 +9528,7 @@ function drawQuiz() {
                   dict: '듣고 글자를 만들어 보세요',
                   match: '뜻과 단어를 짝지어 보세요', puzzle: '조각을 눌러 문장을 만들어 보세요',
                   read_ko: '뜻을 보고 단어를 고르세요', listen_ko: '뜻을 듣고 단어를 고르세요', say_ko: '뜻을 듣고 베트남어로 말해 보세요',
-                  tone: '성조 부호가 맞는 것을 고르세요', shadow: '듣고 따라 말해 보세요',
+                  tone: '성조 부호가 맞는 것을 고르세요', shadow: '듣고 따라 말해 보세요', write_ko: '뜻을 보고 베트남어로 쳐 보세요',
                   puzzle_ko: '뜻을 듣고 조각으로 문장을 만들어 보세요', puzzle_vi: '문장을 듣고 조각으로 만들어 보세요',
                   pic_tf: '듣고 그림이 맞으면 맞다, 아니면 틀리다', pic4: '듣고 맞는 그림을 고르세요', dictation: '듣고 그대로 쳐 보세요',
                   cloze: '빈칸에 들어갈 단어를 고르세요', gpat: '이 문장에 쓰인 문법을 고르세요', gcloze: '빈칸에 들어갈 말을 고르세요 (문법)', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
@@ -9538,7 +9543,7 @@ function drawQuiz() {
 
   if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
-  if (q.mode === 'type' || q.mode === 'dictation') return drawTypeQ(body, q);
+  if (q.mode === 'type' || q.mode === 'dictation' || q.mode === 'write_ko') return drawTypeQ(body, q);
   if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err' || q.mode === 'gpat') return drawExamKind(body, q);
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
@@ -9728,7 +9733,7 @@ function drawPuzzle(body, q) {
     chk.disabled = true;
     [...pool.children].forEach(t => t.disabled = true);
     if (good) Q.ok++; else requeue(Q.list[Q.i]);
-    grade(w.vi, good, Q.early);
+    if (!w.nograde) grade(w.vi, good, Q.early);
     if (!good) ans.after(el('div', 'puzzright', '→ ' + esc(w.vi)));   // 바른 문장은 내 답 줄 바로 밑에 한 줄로 (아래 따로 상자 없이, 2026-09-28 밤)
     save();
     nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
@@ -10036,6 +10041,119 @@ function weeklyRoundWords(r) {
   const out = [], seen = new Set();
   main.lessons.forEach(l => { if (want.has(base(l.title))) l.words.forEach(w => { if (!seen.has(w.vi)) { seen.add(w.vi); out.push(w); } }); });
   return out;
+}
+/* ── 매일 단어 시험 (대표님 지시 2026-09-30: "매일 보는 단어 시험(문법 포함)을 테스트 파트에 — 학습 진행 후 테스트도 이어서") ──
+   자료 data/daily22.json (tools/daily22/build.py): 22기 A·B반 시험지 그대로 — 낱말 40개(시험지가 물은 방향: 뜻→베트남어 / 베트남어→뜻)와 문장 10개.
+   흐름: 날짜 고르기 → [학습하고 시험 보기] 낱말 카드 → 문장 카드 → 시험 / [바로 시험]. 시험 = 시험지 차례 그대로, 1문제 1점, 스킵은 0점.
+   낱말 채점은 GYBM 창고(bsrs)로 — 새 낱말은 창고에 들어가 '오늘 복습'에 다시 나온다. 문장은 창고에 안 넣는다(nograde).
+   결과는 S.daily[key] = {best, runs:[{d, ok, tot}]} (진도 동기화 PROGKEYS). 틀린 문장은 쓰인 문법 과로 가는 단추. */
+let DAILY22 = null;
+function dailyLoad(cb) {
+  if (DAILY22) { cb(); return; }
+  fetch('data/daily22.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { DAILY22 = j.tests || []; cb(); })
+    .catch(() => popup(tr('불러오지 못했습니다')));
+}
+const dailyWords = t => t.words.map(w => Object.assign({}, w));
+const dailySents = t => t.sents.map(x => ({ vi: x.vi, ko: x.ko, kr_read: x.kr, sent: true, nograde: true, gram: x.gram, alt: x.alt, dir: x.dir, dsrc: x.src }));
+function dailyEntry() {
+  const b = $('#examBody'); b.textContent = '';
+  show('exam', tr('매일 단어 시험'), true);
+  if (!DAILY22) { b.append(el('p', 'lede', tr('불러오는 중…'))); dailyLoad(() => { if ($('#title').textContent === tr('매일 단어 시험')) dailyEntry(); }); return; }
+  const cls = S.dcls || 'B';
+  const pick = el('div', 'rolepick');
+  ['A', 'B'].forEach(c => { const bb = el('button', 'ghost sm' + (cls === c ? ' pick' : ''), (cls === c ? '✓ ' : '') + c + tr('반')); bb.onclick = () => { S.dcls = c; save(); dailyEntry(); }; pick.append(bb); });
+  b.append(pick);
+  DAILY22.filter(t => t.cls === cls).slice().reverse().forEach(t => {        // 최신 날짜가 위
+    const rec = (S.daily || {})[t.key], tot = t.words.length + t.sents.length;
+    const c = el('button', 'hubcard');
+    c.innerHTML = `<span class="hubbody"><b class="hubt2">${esc(t.date)} ${esc(tr('단어 시험'))}</b></span>` +
+      (rec && rec.best != null ? `<span class="accpill">${rec.best}/${tot}</span>` : '') + `<svg class="hubchev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>`;
+    c.onclick = () => { dive(dailyEntry); dailyRound(t); };
+    b.append(c);
+  });
+  b.append(el('p', 'note', tr('22기 반 시험지 그대로 — 낱말과 문장 10개, 시험지가 물은 방향(뜻→베트남어 / 베트남어→뜻)까지 같습니다. 오른쪽 숫자는 내 최고점.')));
+}
+function dailyRound(t) {
+  const b = $('#examBody'); b.textContent = '';
+  const tot = t.words.length + t.sents.length, rec = (S.daily || {})[t.key];
+  b.append(el('p', 'lede', esc(t.cls + tr('반') + ' ' + t.date + ' ' + tr('단어 시험'))));
+  b.append(el('p', 'note', tr('낱말 N개 · 문장 10개 · 모두 M문제').replace('N', t.words.length).replace('M', tot)));
+  const go = el('button', 'primary big', tr('학습하고 시험 보기')); go.style.width = '100%';
+  go.onclick = () => { dive(() => dailyRound(t)); gramEnsure(() => dailyStudy(t)); };
+  const quick = el('button', 'ghost big', tr('바로 시험')); quick.style.width = '100%'; quick.style.marginTop = '10px';
+  quick.onclick = () => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t)); };
+  b.append(go, quick);
+  if (rec && rec.runs && rec.runs.length) {
+    b.append(el('p', 'anasec', tr('지난 결과') + ' <span>' + tr('최고') + ' ' + rec.best + ' / ' + tot + '</span>'));
+    b.append(el('p', 'dimtxt', rec.runs.slice(-5).reverse().map(r => esc(String(r.d).slice(5).replace('-', '/')) + ' · ' + r.ok + ' / ' + r.tot).join('<br>')));
+  }
+  if (t.sents.some(x => /^클로드/.test(x.src))) b.append(el('p', 'dimtxt', tr('시험지에 답이 없던 문장은 클로드가 답을 썼습니다 — 문장 카드에 표시')));
+  show('exam', t.date + ' ' + tr('단어 시험'), true);
+}
+function dailyStudy(t) {
+  SBOX = 'bsrs';
+  S.daily = S.daily || {}; (S.daily[t.key] = S.daily[t.key] || {}).st = now(); save();
+  flashRun(dailyWords(t), t.date + ' ' + tr('낱말'), { nextLabel: tr('문장 카드로 ›'),
+    next: () => flashRun(dailySents(t), t.date + ' ' + tr('문장'), { nextLabel: tr('이제 시험 시작'), next: () => startDaily(t) }) });
+}
+function startDaily(t) {
+  const ws = dailyWords(t), ss = dailySents(t);
+  const pick = (arr, n) => arr.slice().sort(() => Math.random() - .5).slice(0, n);
+  const mk = (w, sec, pool) => ({ w, mode: 'read', sec, opts: [w, ...pick(pool.filter(x => x.vi !== w.vi && x.ko !== w.ko), 3)].sort(() => Math.random() - .5) });
+  const L = [];
+  ws.forEach(w => L.push(w.dir === 'to_vi' ? { w, mode: 'write_ko', sec: tr('낱말 · 베트남어로 쓰기') } : mk(w, tr('낱말 · 뜻 고르기'), ws)));
+  ss.forEach(x => {
+    if (x.dir === 'to_ko') { L.push(mk(x, tr('문장 · 뜻 고르기'), ss)); return; }
+    const n = x.vi.replace(/[.?!]+$/, '').split(/\s+/).length;
+    L.push({ w: x, mode: n >= 3 ? 'puzzle' : 'write_ko', sec: tr('문장 · 베트남어로') });   // 두 낱말 이하는 조각이 안 되니 쳐서
+  });
+  SBOX = 'bsrs';
+  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: false, opt: {}, exam: true, daily: t.key, dtest: t };
+  sensesLoad();
+  drawQuiz();
+  show('quiz', t.date + ' ' + tr('단어 시험'), true);
+}
+function finishDaily() {
+  const last = Q.list[Q.list.length - 1]; if (last && last._ok === undefined) last._ok = Q.ok > (last._okBefore || 0);
+  const t = Q.dtest, tot = Q.list.length, ok = Q.list.filter(q => q._ok).length;
+  const secs = {}; Q.list.forEach(q => { const s0 = secs[q.sec] = secs[q.sec] || [0, 0]; s0[1]++; if (q._ok) s0[0]++; });
+  S.daily = S.daily || {}; const rec = S.daily[t.key] = S.daily[t.key] || {};
+  rec.best = Math.max(rec.best || 0, ok); rec.runs = (rec.runs || []).concat([{ d: ymd(), ok, tot }]).slice(-10); save();
+  cloudSave(true);
+  const r = el('div', 'result');
+  if (ok === tot) { r.classList.add('perfect'); const cf = el('div', 'confetti'); for (let i = 0; i < 14; i++) { const s0 = el('i'); s0.style.setProperty('--i', i); cf.append(s0); } r.append(cf); fxTone(true); }
+  r.append(el('div', 'n', ok + ' / ' + tot), el('div', null, esc(t.cls + tr('반') + ' ' + t.date + ' ' + tr('단어 시험')) + ' · ' + Math.round(ok * 100 / Math.max(1, tot)) + '% · ' + tr('최고') + ' ' + rec.best));
+  if (Q.skip) r.append(el('div', 'sub', tr('스킵한 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다').replace('N', Q.skip)));
+  const tb = el('div', 'exsec');
+  Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
+  r.append(tb);
+  const wrong = Q.list.filter(q => !q._ok);
+  if (wrong.length) {
+    r.append(el('p', 'anasec', tr('틀린 것') + ' <span>' + wrong.length + '</span>'));
+    const box = el('div', 'dwrong');
+    wrong.forEach(q => {
+      const w = q.w, row = el('div', 'dwrow');
+      row.append(el('div', 'dwq', esc(w.vi) + (w.alt && w.alt.length ? ' <small>' + tr('또는') + ' ' + w.alt.map(esc).join(' · ') + '</small>' : '')));
+      row.append(el('div', 'dwa', esc(w.ko) + (q._skip ? ' <small class="dimtxt">' + tr('스킵') + '</small>' : '')));
+      const gb = el('div', 'dwgram');
+      (w.gram || []).forEach(no => {
+        const ni = GRAM ? GRAM.books[0].bai.findIndex(x => x.no === no) : -1; if (ni < 0) return;
+        const bt = el('button', 'ghost sm', no + tr('과') + ' ' + esc(GRAM.books[0].bai[ni].t.split(' — ')[0]));
+        bt.type = 'button'; bt.onclick = () => { dive(() => dailyRound(t)); startGram(0, ni); };
+        gb.append(bt);
+      });
+      if (gb.children.length) row.append(gb);
+      box.append(row);
+    });
+    r.append(box);
+    const again = el('button', 'primary big', tr('틀린 것만 카드로 보고 다시 시험')); again.style.width = '100%'; again.style.marginTop = '14px';
+    again.onclick = () => flashRun(wrong.map(q => q.w), t.date + ' ' + tr('틀린 것'), { nextLabel: tr('다시 시험'), next: () => startDaily(t) });
+    r.append(again);
+  }
+  const re = el('button', wrong.length ? 'ghost big' : 'primary big', tr('다시 풀기')); re.style.width = '100%'; re.style.marginTop = '10px'; re.onclick = () => startDaily(t);
+  const ls = el('button', 'ghost big', tr('날짜 목록으로')); ls.style.width = '100%'; ls.style.marginTop = '10px'; ls.onclick = () => { ACTIVE_TAB = 'test'; dailyEntry(); };
+  r.append(re, ls);
+  $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
 function startWeeklyExam(round) {
   const r = round || WEEKLY_ROUNDS[0];
@@ -10437,18 +10555,20 @@ function telexHint() {
 }
 function drawTypeQ(body, q) {
   const w = q.w;
-  const qm = el('button', 'qmain qtap', q.mode === 'dictation' ? '🔊' : esc(w.ko)); qm.type = 'button';   // 받아쓰기는 뜻 없이 듣고 친다 (주간 시험 A4)
-  qm.onclick = () => play(w.vi, false); body.append(qm);   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
-  play(w.vi, false);
-  body.append(telexHint());          // 성조·모자 치는 법 (접힘) — 대표님 지시 2026-09-27 밤
+  /* write_ko = 뜻을 보고 베트남어로 쓰기 (매일 단어 시험, 2026-09-30) — 시험지처럼 소리를 먼저 들려주지 않는다. 답한 뒤에만 소리 */
+  const silent = q.mode === 'write_ko';
   let txt = '', typed = false;
+  const qm = el('button', 'qmain qtap', q.mode === 'dictation' ? '🔊' : esc(w.ko)); qm.type = 'button';   // 받아쓰기는 뜻 없이 듣고 친다 (주간 시험 A4)
+  qm.onclick = () => { if (!silent || typed) play(w.vi, false); }; body.append(qm);   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
+  if (!silent) play(w.vi, false);
+  body.append(telexHint());          // 성조·모자 치는 법 (접힘) — 대표님 지시 2026-09-27 밤
   const out = el('div', 'dictans');
   const draw = () => { out.textContent = txt || '· · ·'; };
   draw(); body.append(out);
   body.append(viKeypad(() => txt, v => { txt = v; draw(); }, () => {
     if (!txt.trim()) return;
     if (typed) return; typed = true;   // 확인을 두 번 눌러도 한 번만 (대표님 지적 2026-09-27 밤)
-    const good = viCanon(txt) === viCanon(w.vi);   // 성조 자리(hoà/hòa)·i/y(lý/lí) 두 꼴 다 정답 (2026-09-29)
+    const good = [w.vi, ...(w.alt || [])].some(a => viCanon(txt) === viCanon(a));   // 성조 자리(hoà/hòa)·i/y(lý/lí) 두 꼴 다 정답 (2026-09-29) · 시험지의 다른 정답(alt)도 정답
     markSpeed(good, 'type');
     fxTone(good); sound(w.vi);
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
@@ -10468,7 +10588,7 @@ function drawTypeQ(body, q) {
     }
     const kr1 = w.sent ? '' : (krShow(w) || krOf(w.vi) || '');
     if (kr1) out.append(el('span', 'oikr', ' [' + esc(kr1) + ']'));   // 발음은 답 줄 옆에 (2026-09-28 밤)
-    grade(w.vi, good, Q.early);
+    if (!w.nograde) grade(w.vi, good, Q.early);                       // 시험 문장(nograde)은 낱말 창고에 안 넣는다
     if (good) Q.ok++; else requeue(q);
     nextBtn(body, () => { Q.i++; drawQuiz(); });
   }));
@@ -10614,7 +10734,7 @@ function bump(box, key, ok) {
   c.all++; if (ok) c.ok++;
 }
 /* ── 문제 유형 → 영역 (성조별·글자별을 영역마다 따로 세려고, 2026-09-30 밤) ── */
-const MODE_SUBJ = { say: 'say', say_ko: 'say', shadow: 'say', say_pic: 'say', recall: 'say', sayself: 'say',
+const MODE_SUBJ = { write_ko: 'spell', say: 'say', say_ko: 'say', shadow: 'say', say_pic: 'say', recall: 'say', sayself: 'say',
                     listen: 'ear', listen_ko: 'ear', tone: 'ear', pic_tf: 'ear', pic4: 'ear',
                     read: 'read', read_ko: 'read', match: 'read', cloze: 'read', tf: 'read', err: 'read', gpat: 'read', gcloze: 'read', puzzle: 'read', puzzle_ko: 'read', puzzle_vi: 'read',
                     type: 'spell', dictation: 'spell', hand: 'spell', dict: 'spell' };
@@ -10675,6 +10795,7 @@ function grade(vi, ok, early) {
 }
 function grade0(vi, ok, early) {
   touchToday();
+  if (typeof Q !== 'undefined' && Q && Q.daily) { const r0 = srsBox()[vi]; early = !!(r0 && r0.due > now()); }   // 매일 단어 시험: 새 낱말은 창고로, 기한 전 낱말은 사다리 그대로 (2026-09-30)
   // 암기 점수용 계수기 — 인출 시도와 성공을 센다
   S.stats.qAll = (S.stats.qAll || 0) + 1;
   if (ok) S.stats.qOk = (S.stats.qOk || 0) + 1;
@@ -10731,7 +10852,7 @@ function stepDays(lv) {
 
 function finishQuiz() {
   $('#quizFill').style.width = '100%';
-  if (Q.exam) return finishWeekly();
+  if (Q.exam) return Q.daily ? finishDaily() : finishWeekly();
   const sk = Q.skip || 0, halfSkipped = sk * 2 > Q.total;     // 절반 넘게 넘긴 판은 복습 도장·복습 크레딧을 주지 않는다 — 판을 넘긴 것이지 복습한 것이 아니다
   if (!Q.day) {
     if (!halfSkipped) {

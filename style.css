@@ -2853,3 +2853,10 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .anadetail{padding:2px 6px 8px 10px; border-left:2px solid var(--line); margin:0 0 4px 10px}
 .anachips{display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 6px} .anachips span{background:var(--chip); border-radius:999px; padding:3px 9px; font-size:13px} .anachips b{margin-left:3px}
 .anabtns{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+/* 매일 단어 시험 — 문장 카드·틀린 것 목록 (2026-09-30) */
+.flcard.flsent .vi{font-size:24px; line-height:1.35; word-break:keep-all}
+.dwrong{display:flex; flex-direction:column; gap:8px; margin:6px 0 4px; text-align:left}
+.dwrow{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px 12px}
+.dwq{font-weight:800; font-size:16px} .dwq small{font-weight:600; color:var(--dim)}
+.dwa{color:var(--dim); font-size:14px; margin-top:2px}
+.dwgram{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px}
