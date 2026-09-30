@@ -8042,13 +8042,12 @@ async function photoSearch(file, inp, redraw, host) {
   const old = host.querySelector('.photopan'); if (old) old.remove();
   const pan = el('div', 'photopan');
   const top = el('div', 'photohd');
-  const lang = () => S.ocrLang || 'vie';
-  const lg = el('button', 'ghost sm', tr(lang() === 'vie' ? '베트남어 글자' : '한국어 글자')); lg.type = 'button';
-  lg.onclick = () => { S.ocrLang = lang() === 'vie' ? 'kor' : 'vie'; save(); photoSearch(file, inp, redraw, host); };
+  /* 베트남어 글자만 읽는다 (대표님 2026-09-30 "한국어 글자도 읽어야 하나?") — 영어·로마자는 베트남어 자료로도 읽히고(같은 알파벳), 한국어는 따로 1.6MB 자료가 필요한데 쓸 일이 없다 */
+  const lang = () => 'vie';
   const cl = el('button', 'ghost sm', tr('닫기')); cl.type = 'button'; cl.onclick = () => pan.remove();
-  top.append(lg, cl); pan.append(top);
+  top.append(cl); pan.append(top);
   const wrap = el('div', 'photowrap'); const im = new Image(); im.className = 'photoimg'; im.alt = ''; im.src = URL.createObjectURL(file); wrap.append(im); pan.append(wrap);
-  const st = el('p', 'dimtxt', tr('글자를 읽는 중… 처음 한 번은 읽기 엔진(약 3MB)을 받습니다')); pan.append(st);
+  const st = el('p', 'dimtxt', tr('글자 인식 준비 중… 처음 한 번은 조금 걸립니다')); pan.append(st);
   host.querySelector('.dictsearch').after(pan);
   try {
     const w = await ocrWorker(lang());
@@ -8064,7 +8063,7 @@ async function photoSearch(file, inp, redraw, host) {
     });
     st.textContent = words.length ? tr('낱말을 누르면 찾습니다') + ' · ' + words.length : tr('글자를 못 찾았습니다 — 글자가 크고 또렷한 사진이 좋습니다');
     if (words.length) { const list = el('p', 'anachips'); words.forEach(x => { const c = el('span', null, esc(x.t)); c.onclick = () => { inp.value = x.t; redraw(); }; list.append(c); }); pan.append(list); }
-  } catch (e) { st.textContent = tr('읽기 엔진을 불러오지 못했습니다 — 인터넷 연결을 확인해 주세요'); }
+  } catch (e) { st.textContent = tr('글자 인식을 준비하지 못했습니다 — 인터넷 연결을 확인해 주세요'); }
 }
 function dictEntry(q0) {
   const b = $('#subBody'); b.textContent = '';
