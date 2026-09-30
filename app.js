@@ -10740,8 +10740,9 @@ function drawSay(body, q) {
        전에는 판정 뒤 단추를 그래프·결과 상자 맨 아래로 옮겨서, 폰에서는 화면 밖으로 밀려 안 보였다 */
     hideSkip();
     if (Q.blind) { setTimeout(() => { Q.i++; drawQuiz(); }, 0); return; }
-    const nxb = body.querySelector('.nextrow button');
-    if (nxb) nxb.onclick = () => { Q.i++; drawQuiz(); };
+    /* 판정 뒤에는 '다음'을 **맨 아래**로 (대표님 2026-09-30 밤: "그래프 위에 나와서 어색") — 판정 전에는 말하기 단추 밑에 있다가, 판정이 나면 그래프·결과 밑으로 내려간다 */
+    const nr = body.querySelector('.nextrow');
+    if (nr) { body.append(nr); nr.querySelector('button').onclick = () => { Q.i++; drawQuiz(); }; }
     else nextBtn(body, () => { Q.i++; drawQuiz(); });
   };
   /* 카드의 말하기와 **같은 길**(대표님 지적 2026-09-27 밤: "발음을 알아들을 수 없고 높낮이 그래프도 안 보인다") —
@@ -10751,6 +10752,8 @@ function drawSay(body, q) {
   const row = el('div', 'qplay');
   if (shadow) setTimeout(() => sound(w.vi), 150);
   const rec = canRecord();
+  /* 듣기 단추를 말하기 왼쪽에 (대표님 2026-09-30 밤: "어차피 말하기 버튼이 있어야 하니까 듣기 버튼도 그 왼쪽에") — 시험(blind)에서도 듣는 건 된다 */
+  { const lb = el('button', 'ghost', '🔊 ' + tr('듣기')); lb.type = 'button'; lb.onclick = () => { const k = recKey(w.vi); k ? play(k, false) : speakVi(w.vi, false); }; row.append(lb); }
   if (rec) { const mic = el('button', 'rec', '🎤 말하기'); mic.onclick = () => toggleRec(w.vi, mic, box); row.append(mic); }
   const showA = el('button', rec ? 'ghost' : 'primary big', rec ? '모르겠어요' : '말했어요 · 정답 보기');
   showA.onclick = () => { bumpSaid(); finish(!rec, false); };
