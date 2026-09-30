@@ -8053,9 +8053,8 @@ function dictEntry(q0) {
   /* 말로 찾기 (대표님 물음 2026-09-30 "말로 검색도 되냐" → 폰·브라우저 내장 음성 인식 — 무료, 앱 용량 0, 서버 안 거침).
      말할 언어는 작은 단추(VI/한)로 고르고 기기에 기억한다. 들은 글자를 입력칸에 넣고 바로 찾는다 */
   if (SRClass) {
-    const lang = () => S.dictSay || 'vi-VN';
-    const lg = el('button', 'dslang', lang() === 'vi-VN' ? 'VI' : '한'); lg.type = 'button'; lg.title = tr('말할 언어');
-    lg.onclick = () => { S.dictSay = lang() === 'vi-VN' ? 'ko-KR' : 'vi-VN'; save(); lg.textContent = lang() === 'vi-VN' ? 'VI' : '한'; };
+    /* 베트남어만 듣는다 (대표님 2026-09-30 "말할 언어 버튼이 있어야 하니?") — 폰 음성 인식은 한 번에 한 언어로만 듣고 스스로 가리지 못한다. 찾을 말은 베트남어라 고정 */
+    const lang = () => 'vi-VN';
     const mic = el('button', 'dsmic', '<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>');
     mic.type = 'button'; mic.title = tr('말로 찾기');
     let sr = null;
@@ -8068,7 +8067,7 @@ function dictEntry(q0) {
       sr.onend = () => { mic.classList.remove('on'); sr = null; };
       try { sr.start(); } catch (e) { mic.classList.remove('on'); sr = null; }
     };
-    box.classList.add('hasmic'); box.append(lg, mic);
+    box.classList.add('hasmic'); box.append(mic);
   }
   /* 사진에서 글자 찾기 (대표님 2026-09-30 "사진 검색 무료면 넣자") — 폰 안에서 Tesseract(무료)로 읽는다. 처음 한 번 읽기 엔진(약 2.8MB)과
      베트남어 글자 자료(0.5MB, 한국어는 1.6MB)를 받아 브라우저가 보관하고, 사진은 폰 밖으로 안 나간다. 읽은 낱말을 사진 위 그 자리에 알약으로 얹고 누르면 찾는다.
@@ -8155,7 +8154,7 @@ function dictEntry(q0) {
   dictReady().then(() => {
     if ($('#sub').hidden) return;
     d = dictBuild();
-    lede.textContent = tr('단어 N개 · 베트남어로도 한국어로도 찾습니다').replace('N', d.length.toLocaleString('ko-KR'));
+    lede.remove();                                    // 머리글('단어 N개 · …')은 뺐다 (대표님 2026-09-30)
     draw();
   });
   setTimeout(() => inp.focus(), 60);

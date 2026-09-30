@@ -2867,7 +2867,7 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .dsmic svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round}
 .dsmic.on{background:var(--ok); color:#fff; border-color:var(--ok)}
 /* 사진에서 글자 찾기 (2026-09-30) */
-.dictsearch.hasmic .dsclear{right:136px}
+.dictsearch.hasmic .dsclear{right:92px}
 .photopan{margin:0 0 12px}
 .photohd{display:flex; gap:8px; justify-content:flex-end; margin-bottom:6px}
 .photowrap{position:relative; border-radius:12px; overflow:hidden; background:var(--chip)}
