@@ -10,7 +10,7 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 
 def main():
     d = {}
-    files = sorted(glob.glob(str(R / "tools/dict_one/one_*.ko.tsv"))) + sorted(glob.glob(str(R / "tools/dict_multi/m*.ko.tsv"))) + sorted(glob.glob(str(R / "tools/dict_vw/vw_*.ko.tsv")))   # vw = 베트남어 위키낱말에만 있던 낱말 (2026-09-30)
+    files = sorted(glob.glob(str(R / "tools/dict_one/one_*.ko.tsv"))) + sorted(f for f in glob.glob(str(R / "tools/dict_multi/m*.ko.tsv")) if not f.endswith("m_hand.ko.tsv")) + sorted(glob.glob(str(R / "tools/dict_vw/vw_*.ko.tsv"))) + [str(R / "tools/dict_multi/m_hand.ko.tsv")]   # 손질표는 맨 뒤 — 모든 것을 덮는다   # vw = 베트남어 위키낱말에만 있던 낱말 (2026-09-30)
     for f in files:
         for line in open(f, encoding="utf-8"):
             p = line.rstrip("\n").split("\t")
