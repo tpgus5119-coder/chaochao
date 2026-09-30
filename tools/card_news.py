@@ -542,6 +542,17 @@ def main():
               # 2026-09-29: '고속철도'가 키워드에 없어 빈스피드·지멘스 기사에 은행 건물이 깔렸다.
               (("고속철도", "고속철", "기관차", "철도"),
                "a sleek high-speed train on elevated tracks under a clear sky"),
+              # 2026-09-30 밤(예약 작업): 눈으로 보니 도로 기사에 아파트('건설'에 걸림), 전자담배 기사에
+              # 회로기판('전자'에 걸림), 게임 대회 기사에 시장 좌판(문화·생활 기본)이 깔렸다. 넷을 위에 둔다.
+              # '고속도로'를 '도로'보다 먼저 — 같은 날 둘 다 있으면 다른 그림이 나오게.
+              (("고속도로", "expressway"),
+               "an empty expressway with green fields on both sides under a clear sky"),
+              (("도로", "나들목", "교량", "고가"),
+               "a wide city road and a long bridge under a clear sky"),
+              (("전자담배", "담배", "흡연"),
+               "a no-smoking sign on a plain wall beside a green plant"),
+              (("pc방", "게임", "e스포츠", "pubg", "배틀그라운드"),
+               "a row of empty gaming desks with glowing monitors and headsets in a dark room"),
               (("휘발유", "주유소", "유가"),
                "a gas station with fuel pumps under a clear morning sky"),
               (("증시", "주식", "증권", "환율"),
