@@ -22,7 +22,7 @@ MY += ["tools/fill_audio.py", "tools/sense_review/insert_sense.py"] + [f"tools/b
 # 낱말 하나씩 검사(뜻·발음·짝·녹음 받아쓰기)와 클로드가 지은 유의어·반의어 (2026-09-29)
 MY += ["tools/word_check/asr_recheck.py", "data/_asr_recheck.jsonl"]
 MY += ["tools/word_check/asr_num.py", "data/_asr_num.jsonl"]
-MY += ["data/_dict_skip.json", "data/_dict_en.json", "tools/dict_en/build.py", "tools/word_check/fix_kr.py", "tools/compound/판정.tsv", "tools/compound/_후보.tsv"]   # 사전 문장 빼기·영어 열쇠·발음 고침·붙은 말 판정 (2026-09-29)
+MY += ["tools/dict_keep.tsv", "tools/dict_skip_2026-09-30.txt", "data/_dict_skip.json", "data/_dict_en.json", "tools/dict_en/build.py", "tools/word_check/fix_kr.py", "tools/compound/판정.tsv", "tools/compound/_후보.tsv"]   # 사전 문장 빼기·영어 열쇠·발음 고침·붙은 말 판정 (2026-09-29)
 MY += ["data/_south.json", "tools/south/남부.tsv", "tools/south/참고사전_남부.tsv", "tools/south/build.py", "tools/south/make_dict_south.py", "tools/gloss_all.py", "tools/fetch_raw_more.py"]
 MY += ["data/daily22.json", "tools/daily22/build.py", "tools/daily22/문장.tsv"]
 MY += ["tools/word_check/tone_check.py", "data/_tone_check.json"]   # 성조 잣대 (2026-09-30)   # 매일 단어 시험 (2026-09-30)
