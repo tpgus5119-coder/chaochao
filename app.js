@@ -7935,7 +7935,7 @@ function dictBuild() {
   const phr = g => g.replace(/\([^)]*\)/g, m => m.replace(/[·,\/;]/g, c => SEP[c])).split(/\s*[·\/,;]\s*/).map(s => s.replace(/[\u0001-\u0004]/g, c => UNSEP[c]).trim()).filter(Boolean);
   const put = (vi, ko, w, onlyNew, src) => {
     const k = String(vi || '').trim();
-    if (!k || !ko || isSent(k)) return;
+    if (!k || !ko || (isSent(k) && !onlyNew)) return;   // 참고 사전의 속담·관용구(4낱말 이상)는 사전 표제어라 문장 걸개를 안 탄다 (2026-09-30)
     const kk = viCanon(k);                  // quản lý/quản lí·hoà/hòa 는 한 줄로 (2026-09-29)
     /* 문장·문형·글자 묶음은 사전에 안 나온다 (2026-09-29): 다섯 낱말 미만이라 위 걸개를 빠져나온 문장(tôi đi nhé·có sao không …)은
        손으로 고른 목록(_dict_skip.json)으로, 'c · k · q'·'từ ~ đến ~'·'mỗi A một B'·한글 제목 같은 것은 글자 꼴로 거른다 */
@@ -9730,13 +9730,15 @@ function drawQuiz() {
   qc0.append(el('span', null, (Q.i + 1) + ' / ' + Q.list.length));
   const sk = el('button', 'qskip', tr('스킵') + ' ›'); sk.type = 'button'; sk.onclick = skipQ; qc0.append(sk);
   body.append(qc0);
-  body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + ' · ' : '') + (q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : LABEL[q.mode])));
+  { const lb = q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : (LABEL[q.mode] || '');   // 시험지 문항(fx)은 지시문이 없다
+    body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + (lb ? ' · ' : '') : '') + lb)); }
   if (Q.exam) { q._okBefore = Q.ok; const pq = Q.i > 0 ? Q.list[Q.i - 1] : null; if (pq && pq._ok === undefined) pq._ok = Q.ok > (pq._okBefore || 0); }   // 시험 채점용
 
   if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
   if (q.mode === 'type' || q.mode === 'dictation' || q.mode === 'write_ko') return drawTypeQ(body, q);
   if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err' || q.mode === 'gpat') return drawExamKind(body, q);
+  if (q.mode === 'fx') return drawFixed(body, q);   // 1차 시험지 그대로 (2026-09-30)
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
   if (q.mode === 'match') return drawMatch(body, q);
@@ -9930,7 +9932,8 @@ function drawPuzzle(body, q) {
   const tail = (String(w.vi).trim().match(/[.?!]+$/) || [''])[0];
   const want = String(w.vi).trim().replace(/[.?!]+$/, '').split(/\s+/);
   if (want.length < 3) { q.mode = 'listen'; return drawQuiz(); }   // 조각이 둘이면 퍼즐이 아니다
-  const tiles = want.map((x, i) => tileText(want, i)).sort(() => Math.random() - .5);   // 첫 낱말 대문자는 소문자로 (고유명사 빼고)
+  /* 시험지가 조각을 정해 준 문제(1차 시험지 'anh John'·'sinh viên' 처럼 여러 낱말이 한 조각)는 그 조각 그대로 (2026-09-30) */
+  const tiles = (w.tiles && w.tiles.length ? w.tiles.slice() : want.map((x, i) => tileText(want, i))).sort(() => Math.random() - .5);   // 시험지 조각은 대소문자도 시험지 그대로   // 첫 낱말 대문자는 소문자로 (고유명사 빼고)
 
   const ans = el('div', 'puzzans');
   const pool = el('div', 'puzztiles');
@@ -9958,7 +9961,7 @@ function drawPuzzle(body, q) {
   chk.onclick = () => {
     if (!picked.length || ans.dataset.r) return;
     const mine = picked.map(x => x.word).join(' ');
-    const good = mine.toLowerCase() === want.join(' ').toLowerCase();
+    const good = mine.toLowerCase().replace(/\s+/g, ' ') === want.join(' ').toLowerCase();
     if (good && tail) ans.dataset.tail = tail;
     markSpeed(good, 'puzzle'); sound(w.vi);
     fxTone(good);
@@ -10166,7 +10169,84 @@ function weeklyEntry() {
     btn.onclick = () => { dive(weeklyEntry); weeklyRound(r); };
     b.append(btn);
   });
+  /* 1차 시험지 문항 그대로 + 90분 시계 (대표님 2026-09-30 "주간시험 일단 그대로 넣어줘봐. 시간도") — data/exam1.json */
+  { const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, esc(tr('1차 시험지 그대로')) + ' <span class="exmeta">' + esc(tr('실제 문항 82 · 90분')) + '</span>'));
+    btn.onclick = () => { dive(weeklyEntry); startExam1(); };
+    b.append(btn); }
   show('exam', '주간 시험', true);
+}
+/* ── 1차 시험지 그대로 (2026-09-30) ──
+   data/exam1.json 의 문항을 차례대로. 듣기는 시험지에 대본이 없어 앱이 정답에 맞춰 지은 문장을 기계 소리로 들려준다(made).
+   쓰기 3(그림 보고 5문장)은 모범 답안을 보고 스스로 매긴다(_score 0~1). 90분(말하기 제외)이 지나면 남은 문제는 0점으로 끝난다. */
+let EXAM1 = null, EXAM1_TIMER = 0;
+function startExam1() {
+  const go = () => {
+    const L = EXAM1.q.map(x => {
+      const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
+      if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles }, mode: 'puzzle', sec: x.sec, opts: [] };
+      if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '' }, mode: 'say', sec: x.sec, opts: [] };
+      return { w, mode: 'fx', sec: x.sec, opts: [] };
+    }).filter(q => q.mode !== 'say' || canRecord());
+    SBOX = 'bsrs';
+    Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, deadline: Date.now() + EXAM1.time * 60000 };
+    drawQuiz();
+    show('quiz', '1차 시험지', true);
+    exam1Clock();
+  };
+  if (EXAM1) go(); else fetch('data/exam1.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { EXAM1 = j; go(); }).catch(() => popup(tr('시험지를 불러오지 못했습니다')));
+}
+function exam1Clock() {
+  clearInterval(EXAM1_TIMER);
+  let box = $('#examClock');
+  if (!box) { box = el('div', 'examclock'); box.id = 'examClock'; $('#quiz').prepend(box); }
+  box.hidden = false;
+  const tick = () => {
+    if (CURV !== 'quiz' || !Q || !Q.exam1) { clearInterval(EXAM1_TIMER); box.hidden = true; return; }
+    const left = Math.max(0, Q.deadline - Date.now()), m = Math.floor(left / 60000), sc = Math.floor(left % 60000 / 1000);
+    box.textContent = m + ':' + String(sc).padStart(2, '0');
+    box.classList.toggle('low', left < 5 * 60000);
+    if (!left) { clearInterval(EXAM1_TIMER); box.hidden = true; Q.i = Q.list.length; drawQuiz(); }   // 시간 끝 — 남은 문제는 0점
+  };
+  tick(); EXAM1_TIMER = setInterval(tick, 1000);
+}
+/* 시험지 문항 그리기 — tf(맞다/틀리다) · choice(보기 고르기) · pick(그림 고르기) · free(그림 보고 5문장, 스스로 매김) */
+function drawFixed(body, q) {
+  const x = q.w.fx, w = q.w;
+  const say = t => { const k = recKey(t); k ? play(k, false) : speakVi(t, false); };
+  if (x.audio) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '🔊 ' + tr('듣기')); lb.onclick = () => say(x.audio); row.append(lb); body.append(row); setTimeout(() => say(x.audio), 200); }
+  if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; body.append(im); }
+  if (x.text) body.append(el('div', 'fxtext', esc(x.text)));
+  if (x.prompt) body.append(el('div', 'qmain sent', esc(x.prompt)));
+  const box = el('div', 'opts');
+  if (x.k === 'tf') {
+    [['맞다', true], ['틀리다', false]].forEach(([t, v]) => { const b = el('button', null, tr(t)); const good = v === x.ans; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
+    body.append(box); return;
+  }
+  if (x.k === 'choice') {
+    let idx = x.opts.map((o, i) => i); if (x.shuffle) idx = idx.sort(() => Math.random() - .5);
+    idx.forEach(i => { const b = el('button', null, esc(x.opts[i])); const good = i === x.ans; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
+    body.append(box); return;
+  }
+  if (x.k === 'pick') {
+    const grid = el('div', 'picgrid five');
+    x.opts.forEach((im0, i) => { const b = el('button', 'picopt'); const good = i === x.ans; b.dataset.vi = good ? w.vi : '-'; const im = new Image(); im.src = 'img/' + im0; im.alt = ''; b.append(im, el('small', null, 'ABCDE'[i])); b.onclick = () => answer(b, good, w); grid.append(b); });
+    body.append(grid); return;
+  }
+  if (x.k === 'free') {
+    const ta = el('textarea', 'fxfree'); ta.rows = x.n + 1; ta.placeholder = tr('문장을 한 줄에 하나씩');
+    body.append(ta);
+    const done = el('button', 'primary big', tr('다 썼어요 — 모범 답안 보기')); done.style.width = '100%';
+    done.onclick = () => {
+      done.disabled = true; ta.readOnly = true;
+      body.append(el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map(esc).join('<br>')));
+      body.append(el('p', 'q mid', tr('맞게 쓴 문장이 몇 개인가요?')));
+      const g = el('div', 'opts');
+      for (let n = 0; n <= x.n; n++) { const b = el('button', null, String(n)); b.onclick = () => { [...g.children].forEach(c => c.disabled = true); b.dataset.r = 'ok'; q._score = n / x.n; q._ok = n === x.n; q._ans = true; if (q._ok) Q.ok++; nextBtn(body, () => { Q.i++; drawQuiz(); }); }; g.append(b); }
+      body.append(g);
+    };
+    body.append(done); return;
+  }
 }
 /* 학습 탭의 주간 시험 (대표님 지시 2026-09-30: "학습 파트에 일일 단어시험과 주간시험 학습할 수 있게 — 그 안에서는 카드로 학습만") */
 function weeklyStudyEntry() {
@@ -10563,12 +10643,14 @@ function drawExamKind(body, q) {
   }
 }
 function finishWeekly() {
+  clearInterval(EXAM1_TIMER); { const ec = $('#examClock'); if (ec) ec.hidden = true; }   // 1차 시험지 시계 끄기
   const last = Q.list[Q.list.length - 1]; if (last && last._ok === undefined) last._ok = Q.ok > (last._okBefore || 0);
   const secs = {}; Q.list.forEach(q => { const s0 = secs[q.sec] = secs[q.sec] || [0, 0]; s0[1]++; if (q._ok) s0[0]++; });
   /* 시험지 배점으로 바꿔 적는다 (1차 시험지: 듣기 30 · 읽기 30 · 쓰기 20 · 말하기 20). 쓰기의 '그림 보고 5문장'(10점)은 선생님 채점이라 앱은 10점만 잰다.
      말하기를 못 본 기기(녹음 안 됨)는 말하기를 빼고 만점을 줄인다 */
-  const W = { A: 30, B: 30, C: 10, D: 20 }, NM = { A: '듣기', B: '읽기', C: '쓰기', D: '말하기' };
-  const part = {}; Q.list.forEach(q => { const k = (q.sec || '')[0]; if (!W[k]) return; const p0 = part[k] = part[k] || [0, 0]; p0[1]++; if (q._ok) p0[0]++; });
+  const W = { A: 30, B: 30, C: Q.exam1 ? 20 : 10, D: 20 }, NM = { A: '듣기', B: '읽기', C: '쓰기', D: '말하기' };   // 1차 시험지 그대로면 쓰기 20 (그림 5문장은 스스로 매김)
+  const sc = q => q._score !== undefined ? q._score : (q._ok ? 1 : 0);
+  const part = {}; Q.list.forEach(q => { const k = (q.sec || '')[0]; if (!W[k]) return; const p0 = part[k] = part[k] || [0, 0]; p0[1]++; p0[0] += sc(q); });
   const pts = Object.entries(part).map(([k, [o, n]]) => [k, Math.round(o / n * W[k] * 4) / 4, W[k]]);
   const got = pts.reduce((a, x) => a + x[1], 0), max = pts.reduce((a, x) => a + x[2], 0);
   const r = el('div', 'result');
@@ -10581,7 +10663,7 @@ function finishWeekly() {
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
   r.append(tb);
-  S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs, round: Q.round || 0, pts: got, max }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
+  S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs, round: Q.exam1 ? 'exam1' : (Q.round || 0), pts: got, max }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
   examWrongList(r, Q.list);
   const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = renderHome; r.append(b);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);

@@ -2882,3 +2882,13 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 /* 짝 목록의 낱말은 누를 수 있다 → 그 낱말 카드 (2026-09-30) */
 .prow .psyl.tapword{cursor:pointer}
 .prow .psyl.tapword:active{opacity:.6}
+
+/* 1차 시험지 그대로 (2026-09-30) */
+.examclock{position:sticky; top:0; z-index:5; text-align:right; padding:4px 12px; font-weight:800; font-variant-numeric:tabular-nums; color:var(--dim); background:var(--bg)}
+.examclock.low{color:var(--bad, #c0392b)}
+.fximg{display:block; max-width:min(100%, 360px); margin:8px auto; border-radius:12px}
+.fxtext{padding:10px 12px; margin:6px 0 10px; border-radius:10px; background:var(--card); border:1px solid var(--line); line-height:1.6}
+.picgrid.five{grid-template-columns:repeat(3, 1fr)}
+.picgrid.five .picopt small{display:block; text-align:center; font-weight:800; margin-top:2px}
+.fxfree{width:100%; min-height:140px; padding:10px; border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--fg); font:inherit; line-height:1.6; margin:8px 0}
+.fxmodel{padding:10px 12px; margin:10px 0; border-radius:10px; background:var(--card); border:1px solid var(--line); line-height:1.7}

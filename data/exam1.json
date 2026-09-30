@@ -1,0 +1,876 @@
+{
+"note": "1차 시험지(Học viện Daewoosky, Bài kiểm tra số 1, 원본자료/…/주간시험 IMG_7001~7011) 그대로 옮김. 배점 듣기30·읽기30·쓰기20·말하기20, 90분(말하기 제외). made:true 인 듣기 문항의 들려주는 문장은 시험지에 대본이 없어 앱이 정답에 맞춰 지은 것. 듣기 4의 6~9번은 정답을 확인할 수 없어 뺐다. 쓰기 3(그림 5문장)은 모범 답안을 보고 스스로 매긴다.",
+"time": 90,
+"pts": {
+"A": 30,
+"B": 30,
+"C": 20,
+"D": 20
+},
+"q": [
+{
+"sec": "A 듣기 · 1 그림 맞다/틀리다",
+"k": "tf",
+"img": "exam1-l1.webp",
+"audio": "Anh ấy là người Hàn Quốc.",
+"ans": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 1 그림 맞다/틀리다",
+"k": "tf",
+"img": "exam1-l2.webp",
+"audio": "Anh ấy rất vui.",
+"ans": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 1 그림 맞다/틀리다",
+"k": "tf",
+"img": "exam1-l3.webp",
+"audio": "Hai người đang ăn cơm.",
+"ans": false,
+"made": true
+},
+{
+"sec": "A 듣기 · 1 그림 맞다/틀리다",
+"k": "tf",
+"img": "exam1-l4.webp",
+"audio": "Chị ấy rất khỏe.",
+"ans": false,
+"made": true
+},
+{
+"sec": "A 듣기 · 1 그림 맞다/틀리다",
+"k": "tf",
+"img": "exam1-l5.webp",
+"audio": "Cô giáo dạy tiếng Anh.",
+"ans": false,
+"made": true
+},
+{
+"sec": "A 듣기 · 2 맞는 그림",
+"k": "pick",
+"audio": "Ba người bạn chào các bạn. Họ đều là người Việt Nam.",
+"opts": [
+"exam1-pa.webp",
+"exam1-pb.webp",
+"exam1-pc.webp",
+"exam1-pd.webp",
+"exam1-pe.webp"
+],
+"ans": 4,
+"made": true
+},
+{
+"sec": "A 듣기 · 2 맞는 그림",
+"k": "pick",
+"audio": "Chị ấy là sinh viên. Chị ấy học ở Mỹ.",
+"opts": [
+"exam1-pa.webp",
+"exam1-pb.webp",
+"exam1-pc.webp",
+"exam1-pd.webp",
+"exam1-pe.webp"
+],
+"ans": 2,
+"made": true
+},
+{
+"sec": "A 듣기 · 2 맞는 그림",
+"k": "pick",
+"audio": "Anh ấy giới thiệu hai chị với nhau.",
+"opts": [
+"exam1-pa.webp",
+"exam1-pb.webp",
+"exam1-pc.webp",
+"exam1-pd.webp",
+"exam1-pe.webp"
+],
+"ans": 1,
+"made": true
+},
+{
+"sec": "A 듣기 · 2 맞는 그림",
+"k": "pick",
+"audio": "Hai anh là bạn thân. Một anh là người Việt Nam.",
+"opts": [
+"exam1-pa.webp",
+"exam1-pb.webp",
+"exam1-pc.webp",
+"exam1-pd.webp",
+"exam1-pe.webp"
+],
+"ans": 0,
+"made": true
+},
+{
+"sec": "A 듣기 · 2 맞는 그림",
+"k": "pick",
+"audio": "Em ấy tặng hoa cho cô giáo.",
+"opts": [
+"exam1-pa.webp",
+"exam1-pb.webp",
+"exam1-pc.webp",
+"exam1-pd.webp",
+"exam1-pe.webp"
+],
+"ans": 3,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Anh ấy tên là gì?",
+"audio": "Xin chào, tôi tên là David.",
+"opts": [
+"David",
+"Brian",
+"Hiroki"
+],
+"ans": 0,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Ai là bạn của So Jeong?",
+"audio": "Hiroko là bạn của So Jeong.",
+"opts": [
+"David",
+"Brian",
+"Hiroko"
+],
+"ans": 2,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Anh ấy là người nước nào?",
+"audio": "Anh ấy là người Anh.",
+"opts": [
+"Mỹ",
+"Anh",
+"Pháp"
+],
+"ans": 1,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Các anh ấy đi đâu?",
+"audio": "Các anh ấy đi Úc.",
+"opts": [
+"Canada",
+"Mỹ",
+"Úc"
+],
+"ans": 2,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Anh ấy học tiếng Việt ở đâu?",
+"audio": "Anh ấy học tiếng Việt ở trường đại học.",
+"opts": [
+"Mỹ",
+"trường đại học",
+"nhà"
+],
+"ans": 1,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Ông Kim có khỏe không?",
+"audio": "Ông Kim khỏe.",
+"opts": [
+"khỏe",
+"bình thường",
+"không khỏe lắm"
+],
+"ans": 0,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Chị ấy tên là gì?",
+"audio": "Chị ấy tên là Mây.",
+"opts": [
+"Lan",
+"Mây",
+"Mai"
+],
+"ans": 1,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Chị ấy giới thiệu ai?",
+"audio": "Chị ấy giới thiệu cô Hoa.",
+"opts": [
+"Cô Hoa",
+"Anh Long",
+"Chị Mai"
+],
+"ans": 0,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Em ấy muốn gì?",
+"audio": "Em ấy muốn đăng ký học.",
+"opts": [
+"cảm ơn cô giáo",
+"đăng ký học",
+"chào cô giáo"
+],
+"ans": 1,
+"made": true
+},
+{
+"sec": "A 듣기 · 3 듣고 고르기",
+"k": "choice",
+"prompt": "Lớp em ấy có mấy sinh viên?",
+"audio": "Lớp em ấy có 10 sinh viên.",
+"opts": [
+"5",
+"10",
+"15"
+],
+"ans": 1,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "Trước đây Tom học tiếng Thái Lan ở ____.",
+"audio": "Trước đây Tom học tiếng Thái Lan ở Mỹ.",
+"opts": [
+"Mỹ",
+"Nhật",
+"Úc",
+"Hàn Quốc"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "Chị Linda không ____ anh James.",
+"audio": "Chị Linda không gặp anh James.",
+"opts": [
+"gặp",
+"biết",
+"chào",
+"giới thiệu"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "Bạn ông ấy là người ____.",
+"audio": "Bạn ông ấy là người Nhật.",
+"opts": [
+"Nhật",
+"Mỹ",
+"Đức",
+"Pháp"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "Anh ấy ____ là Jack.",
+"audio": "Anh ấy không phải là Jack.",
+"opts": [
+"không phải",
+"cũng",
+"đều",
+"đã"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "Học sinh lớp em ấy ____ là người Hàn Quốc.",
+"audio": "Học sinh lớp em ấy đều là người Hàn Quốc.",
+"opts": [
+"đều",
+"cũng",
+"không",
+"đã"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "Không, bà ấy rất ____.",
+"audio": "Không, bà ấy rất mệt.",
+"opts": [
+"mệt",
+"khỏe",
+"vui",
+"bận"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "B 읽기 · 1 빈칸",
+"k": "choice",
+"prompt": "Hôm qua chị Hà và chị Mai đã đến đấy. ____ muốn gặp em Yumiko.",
+"opts": [
+"đều",
+"họ",
+"dạy",
+"cũng",
+"khó"
+],
+"ans": 1
+},
+{
+"sec": "B 읽기 · 1 빈칸",
+"k": "choice",
+"prompt": "Bài 1 và bài 2 không ____.",
+"opts": [
+"đều",
+"họ",
+"dạy",
+"cũng",
+"khó"
+],
+"ans": 4
+},
+{
+"sec": "B 읽기 · 1 빈칸",
+"k": "choice",
+"prompt": "Hai người này ____ là sinh viên lớp tôi.",
+"opts": [
+"đều",
+"họ",
+"dạy",
+"cũng",
+"khó"
+],
+"ans": 0
+},
+{
+"sec": "B 읽기 · 1 빈칸",
+"k": "choice",
+"prompt": "Anh Nam là người Việt Nam, anh Dũng ____ là người Việt Nam.",
+"opts": [
+"đều",
+"họ",
+"dạy",
+"cũng",
+"khó"
+],
+"ans": 3
+},
+{
+"sec": "B 읽기 · 1 빈칸",
+"k": "choice",
+"prompt": "Một bạn người Nhật ____ tôi tiếng Nhật.",
+"opts": [
+"đều",
+"họ",
+"dạy",
+"cũng",
+"khó"
+],
+"ans": 2
+},
+{
+"sec": "B 읽기 · 2 읽고 고르기",
+"k": "choice",
+"text": "Hoa học tiếng Anh ở Việt Nam. Giáo viên của Hoa là người Anh, Úc, Mỹ.",
+"prompt": "Hoa học tiếng Anh ở đâu?",
+"opts": [
+"Việt Nam",
+"Anh",
+"Mỹ"
+],
+"ans": 0
+},
+{
+"sec": "B 읽기 · 2 읽고 고르기",
+"k": "choice",
+"text": "Trường Đại học Khoa học Xã hội và Nhân văn là trường đại học nổi tiếng ở Thành phố Hồ Chí Minh. Có nhiều người nước ngoài đến đây học tiếng Việt.",
+"prompt": "Người nước ngoài học gì ở trường Đại học Khoa học Xã hội và Nhân văn?",
+"opts": [
+"Tiếng Anh",
+"Tiếng Hàn",
+"Tiếng Việt"
+],
+"ans": 2
+},
+{
+"sec": "B 읽기 · 2 읽고 고르기",
+"k": "choice",
+"text": "Tiếng Việt không dễ nhưng anh Ben vẫn học chăm chỉ.",
+"prompt": "Tiếng Việt thế nào?",
+"opts": [
+"dễ",
+"khó",
+"chăm chỉ"
+],
+"ans": 1
+},
+{
+"sec": "B 읽기 · 2 읽고 고르기",
+"k": "choice",
+"text": "Reiko là người Nhật. Bạn của Reiko cũng là người Nhật.",
+"prompt": "Họ là người nước nào?",
+"opts": [
+"Nhật Bản",
+"Hàn Quốc",
+"Trung Quốc"
+],
+"ans": 0
+},
+{
+"sec": "B 읽기 · 2 읽고 고르기",
+"k": "choice",
+"text": "Hôm nay Vân gặp Brian, David và Hiroki. Brian giới thiệu David và Hiroki với Vân.",
+"prompt": "Vân là bạn của ai?",
+"opts": [
+"David",
+"Brian",
+"Hiroki"
+],
+"ans": 1
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "Đây là Emily. Emily là người Úc. Trước đây Emily đã học tiếng Nhật ở Thái Lan.",
+"prompt": "Emily là người Úc.",
+"ans": true
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "Đây là Emily. Emily là người Úc. Trước đây Emily đã học tiếng Nhật ở Thái Lan.",
+"prompt": "Emily học tiếng Nhật ở Nhật.",
+"ans": false
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "Bà Linda là người Canada. Bà ấy không biết tiếng Việt. Bà ấy đăng ký học tiếng Việt ở trường Đại học Khoa học Xã hội và Nhân văn.",
+"prompt": "Bà Linda là người Canada.",
+"ans": true
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "Bà Linda là người Canada. Bà ấy không biết tiếng Việt. Bà ấy đăng ký học tiếng Việt ở trường Đại học Khoa học Xã hội và Nhân văn.",
+"prompt": "Bà Linda biết tiếng Việt.",
+"ans": false
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "Xin tự giới thiệu, tôi là Monica, người Chile. Kia là ông Kevin, người Mỹ.",
+"prompt": "Chị Monica là người Mỹ.",
+"ans": false
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "Xin tự giới thiệu, tôi là Monica, người Chile. Kia là ông Kevin, người Mỹ.",
+"prompt": "Ông Kevin là người Mỹ.",
+"ans": true
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "Đây là em Joey. Em Joey không phải là người Mỹ. Em ấy là người Pháp.",
+"prompt": "Joey là người Mỹ.",
+"ans": false
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "Đây là em Joey. Em Joey không phải là người Mỹ. Em ấy là người Pháp.",
+"prompt": "Joey là người Pháp.",
+"ans": true
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "David là bạn của chị Vân. Anh ấy cũng là bạn của chị Kate. Hôm nay, anh David giới thiệu chị Vân với chị Kate.",
+"prompt": "David là bạn của Vân và Kate.",
+"ans": true
+},
+{
+"sec": "B 읽기 · 3 맞다/틀리다",
+"k": "tf",
+"text": "David là bạn của chị Vân. Anh ấy cũng là bạn của chị Kate. Hôm nay, anh David giới thiệu chị Vân với chị Kate.",
+"prompt": "Vân không biết Kate.",
+"ans": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Không sao.",
+"opts": [
+"Xin lỗi chị.",
+"Các ông ấy là người nước nào?",
+"Các em đã học tiếng Việt mấy tháng?",
+"Em đi đâu vậy?"
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Không, tôi không phải là người Hàn Quốc.",
+"opts": [
+"Anh là người Hàn Quốc phải không?",
+"Ông Nam không khỏe.",
+"Các ông ấy là người nước nào?",
+"Hôm nay em có ăn phở không?"
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Các ông ấy là người Mỹ.",
+"opts": [
+"Các ông ấy là người nước nào?",
+"Em muốn đăng ký mấy tháng?",
+"Anh là người Hàn Quốc phải không?",
+"Xin lỗi chị."
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Họ học tiếng Việt ở Hà Nội.",
+"opts": [
+"Họ học tiếng Việt ở đâu?",
+"Các ông ấy là người nước nào?",
+"Anh là người Hàn Quốc phải không?",
+"Hôm nay em có ăn phở không?"
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Đấy là anh Nam, bạn tôi.",
+"opts": [
+"Đấy là ai?",
+"Các em đã học tiếng Việt mấy tháng?",
+"Họ học tiếng Việt ở đâu?",
+"Xin lỗi chị."
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Có, hôm nay em ăn phở.",
+"opts": [
+"Hôm nay em có ăn phở không?",
+"Họ học tiếng Việt ở đâu?",
+"Xin lỗi chị.",
+"Các ông ấy là người nước nào?"
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Bà Mai cũng không khỏe.",
+"opts": [
+"Ông Nam không khỏe.",
+"Họ học tiếng Việt ở đâu?",
+"Em đi đâu vậy?",
+"Anh là người Hàn Quốc phải không?"
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Em muốn đăng ký học tiếng Anh.",
+"opts": [
+"Em muốn đăng ký mấy tháng?",
+"Hôm nay em có ăn phở không?",
+"Các em đã học tiếng Việt mấy tháng?",
+"Họ học tiếng Việt ở đâu?"
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Em đi học tiếng Việt.",
+"opts": [
+"Em đi đâu vậy?",
+"Hôm nay em có ăn phở không?",
+"Đấy là ai?",
+"Ông Nam không khỏe."
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "B 읽기 · 4 알맞은 문장",
+"k": "choice",
+"prompt": "Chúng em đã học tiếng Việt 2 tháng.",
+"opts": [
+"Các em đã học tiếng Việt mấy tháng?",
+"Các ông ấy là người nước nào?",
+"Hôm nay em có ăn phở không?",
+"Em muốn đăng ký mấy tháng?"
+],
+"ans": 0,
+"shuffle": true
+},
+{
+"sec": "C 쓰기 · 1 낱말 배열",
+"k": "puzzle",
+"vi": "Các chị ấy đều là người Nhật.",
+"tiles": [
+"Nhật",
+"đều",
+"là",
+"ấy",
+"các",
+"chị",
+"người"
+]
+},
+{
+"sec": "C 쓰기 · 1 낱말 배열",
+"k": "puzzle",
+"vi": "Anh John cũng là sinh viên lớp tôi.",
+"tiles": [
+"cũng",
+"lớp",
+"là",
+"anh John",
+"sinh viên",
+"tôi"
+]
+},
+{
+"sec": "C 쓰기 · 1 낱말 배열",
+"k": "puzzle",
+"vi": "Sinh viên lớp này đều học chăm chỉ.",
+"tiles": [
+"đều",
+"lớp này",
+"chăm chỉ",
+"học",
+"sinh viên"
+]
+},
+{
+"sec": "C 쓰기 · 1 낱말 배열",
+"k": "puzzle",
+"vi": "Lớp tiếng Việt của chúng tôi rất vui.",
+"tiles": [
+"của",
+"rất",
+"lớp",
+"tiếng Việt",
+"vui",
+"chúng tôi"
+]
+},
+{
+"sec": "C 쓰기 · 1 낱말 배열",
+"k": "puzzle",
+"vi": "Hôm qua tôi không gặp em Vi.",
+"tiles": [
+"em Vi",
+"hôm qua",
+"gặp",
+"tôi",
+"không"
+]
+},
+{
+"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+"k": "choice",
+"prompt": "Chị là người Việt không phải?",
+"opts": [
+"Chị là người Việt phải không?",
+"Đúng — 맞는 문장",
+"Chị không phải là người Việt?"
+],
+"ans": 0
+},
+{
+"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+"k": "choice",
+"prompt": "Giáo viên của tôi là người nước Úc.",
+"opts": [
+"Đúng — 맞는 문장",
+"Giáo viên của tôi là người Úc.",
+"Giáo viên tôi là nước Úc."
+],
+"ans": 1
+},
+{
+"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+"k": "choice",
+"prompt": "Hôm qua chị có gặp anh Hòa không?",
+"opts": [
+"Đúng — 맞는 문장",
+"Hôm qua chị gặp anh Hòa có không?",
+"Hôm qua chị có gặp không anh Hòa?"
+],
+"ans": 0
+},
+{
+"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+"k": "choice",
+"prompt": "Em đã học tiếng Việt ở Hàn Quốc.",
+"opts": [
+"Em học đã tiếng Việt ở Hàn Quốc.",
+"Đúng — 맞는 문장",
+"Em đã học ở Hàn Quốc tiếng Việt."
+],
+"ans": 1
+},
+{
+"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+"k": "choice",
+"prompt": "Chúng tôi khỏe đều.",
+"opts": [
+"Chúng tôi đều khỏe.",
+"Đúng — 맞는 문장",
+"Đều chúng tôi khỏe."
+],
+"ans": 0
+},
+{
+"sec": "C 쓰기 · 3 그림 보고 5문장",
+"k": "free",
+"img": "exam1-w3.webp",
+"prompt": "그림을 보고 문장 5개를 쓰세요.",
+"model": [
+"Anh Brian là người Mỹ.",
+"Anh David là người Anh.",
+"Chị EunJi là người Hàn Quốc.",
+"Họ đều học tiếng Việt.",
+"Họ học tiếng Việt chăm chỉ."
+],
+"n": 5,
+"pts": 10
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "Xin chào"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "cảm ơn"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "xin lỗi"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "không sao"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "giới thiệu"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "mười lăm"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "Việt Nam"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "Hàn Quốc"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "giáo viên"
+},
+{
+"sec": "D 말하기 · 1 낱말 읽기",
+"k": "say",
+"vi": "sinh viên"
+},
+{
+"sec": "D 말하기 · 2 문장 읽기",
+"k": "say",
+"vi": "Đây là lớp học của chúng tôi."
+},
+{
+"sec": "D 말하기 · 2 문장 읽기",
+"k": "say",
+"vi": "Anh ấy tên là Nam."
+},
+{
+"sec": "D 말하기 · 2 문장 읽기",
+"k": "say",
+"vi": "Tiếng Việt khó nhưng thú vị."
+},
+{
+"sec": "D 말하기 · 2 문장 읽기",
+"k": "say",
+"vi": "Lớp em ấy có 5 người."
+},
+{
+"sec": "D 말하기 · 2 문장 읽기",
+"k": "say",
+"vi": "Rất vui được gặp các bạn."
+}
+]
+}
