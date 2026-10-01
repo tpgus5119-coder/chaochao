@@ -8,30 +8,46 @@ import json, pathlib, glob
 R = pathlib.Path(__file__).resolve().parent.parent.parent
 
 
+# 뜻이 아닌 조각(출전 이름·잘린 뜻풀이·다른 낱말 뜻) — 두 판정을 맞대다 찾음, 클로드 확인 (2026-10-01)
+EXTRA_DROP = {('ngày rằm', '날'), ('ngày rằm', '음력 매달')}
+
+
 def main():
     F = json.loads((R / 'data/_dict_full.json').read_text(encoding='utf-8'))
-    judged = {}
-    for f in sorted((R / 'tools/dict_pos').glob('pos_*.json')):
+    D = R / 'tools/dict_pos'
+    final = {}
+    for l in (D / '불일치.tsv').read_text(encoding='utf-8').splitlines()[1:]:
+        c = l.split('\t')
+        if len(c) > 4: final[(c[0], c[1])] = c[4].strip()
+    judged, drop = {}, set(EXTRA_DROP)
+    st = {'두 판정 같음': 0, '클로드 최종': 0, '빈칸(근거 없음)': 0, '뺀 조각': 0}
+    for f in sorted(D.glob('pos_*.json')):
         src = {str(x['n']): x for x in json.loads(f.read_text(encoding='utf-8'))}
-        for l in f.with_suffix('.ko.tsv').read_text(encoding='utf-8').splitlines():
-            n, i, p = (l.split('\t') + ['', ''])[:3]
-            x = src[n.strip()]; p = p.strip()
-            ko = next((s['ko'] for s in x['senses'] if str(s['i']) == i.strip()), None)
-            if ko is None or p in ('', '?'): continue
+        A = {tuple(x.split('\t')[:2]): x.split('\t')[2].strip() for x in f.with_suffix('.ko.tsv').read_text(encoding='utf-8').splitlines()}
+        B = {tuple(x.split('\t')[:2]): x.split('\t')[2].strip() for x in (D / (f.stem + '.b.tsv')).read_text(encoding='utf-8').splitlines()}
+        for (n, i), a in A.items():
+            x = src[n.strip()]; ko = next((s['ko'] for s in x['senses'] if str(s['i']) == i.strip()), None)
+            if ko is None: continue
+            if a == B.get((n, i)): p = a; st['두 판정 같음'] += 1
+            else: p = final.get((x['w'], i.strip()), '?'); st['클로드 최종'] += 1
+            if p == '뺌': drop.add((x['w'].lower(), ko)); st['뺀 조각'] += 1; continue
+            if p in ('', '?'): st['빈칸(근거 없음)'] += 1; continue
             judged.setdefault(x['w'].lower(), {})[ko] = p
     n_set = 0
     for k, e in F.items():
         e.pop('pj', None)
+        for r in [i for i, s in enumerate(e['s']) if (k, s) in drop][::-1]:     # 조각 뜻 빼기 — 보충 자리('b')도 같이 당긴다
+            del e['s'][r]; del e['p'][r]
+            if e.get('b'): e['b'] = [b - 1 if b > r else b for b in e['b'] if b != r]
         j = judged.get(k)
         if not j: continue
         pj = []
-        for i, s in enumerate(e['s']):
-            if s in j and (not e['p'][i] or e['p'][i] == j[s]):
-                if not e['p'][i]: n_set += 1
-                e['p'][i] = j[s]; pj.append(i)
+        for i, s2 in enumerate(e['s']):
+            if s2 in j and not e['p'][i]:                 # 원문에 품사가 없던 뜻에만 — 위키 품사는 건드리지 않는다
+                e['p'][i] = j[s2]; pj.append(i); n_set += 1
         if pj: e['pj'] = pj
     (R / 'data/_dict_full.json').write_text(json.dumps(F, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
-    print(f'판정 품사 넣음 {n_set} · 판정 뜻 {sum(len(v) for v in judged.values())} · 아직 빈 뜻 {sum(1 for e in F.values() for p in e["p"] if not p)}')
+    print(st, f'· 새로 넣음 {n_set} · 아직 빈 뜻 {sum(1 for e in F.values() for p in e["p"] if not p)}')
 
 
 if __name__ == '__main__':
