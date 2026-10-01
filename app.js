@@ -8160,8 +8160,19 @@ function appExIndex() {
   };
   /* 교재 원문 먼저 — 메인 교재 낱말의 예문 가운데 쪽 이미지로 대조해 교재 문장으로 확인한 것(ex_src = main_book, tools/book_ex, 2,094문장).
      나머지(일상·직무·선배·22기·문법 예문)는 대부분 AI·클로드가 쓴 문장이다 — '만든 예문'(대표님 2026-10-01 "거의 대부분 지어낸 문장일걸?" → 출처 표시로 확인) */
-  (GYBM || []).forEach(src => { if (src.key === 'main') src.lessons.forEach(l => l.words.forEach(w => { if (w.ex_src === 'main_book' && w.ex && w.ex.vi) { add(w.ex); list[list.length - 1] && list[list.length - 1].vi === String(w.ex.vi).trim() && (list[list.length - 1].bk = 1); } })); });
+  /* 교재 원문 표시 둘 다 본다 — 낱말의 ex_src(메인 교재) · 예문 안의 src(일상·직무·선배·22기 예문을 교재 원문으로 바꾼 것, tools/ex_source 2026-10-01) */
+  const bkSet = new Set();
+  const scan = (o, dep) => {
+    if (!o || dep > 16) return;
+    if (Array.isArray(o)) { o.forEach(v => scan(v, dep + 1)); return; }
+    if (typeof o !== 'object') return;
+    if (o.ex && o.ex.vi && (o.ex_src === 'main_book' || o.ex.src === 'main_book')) bkSet.add(String(o.ex.vi).trim().toLowerCase());
+    for (const v of Object.values(o)) if (v && typeof v === 'object') scan(v, dep + 1);
+  };
+  scan(ALL, 0); scan(COURSE, 0); scan(GYBM, 0);
+  (GYBM || []).forEach(src => src.lessons.forEach(l => l.words.forEach(w => { if (w.ex && w.ex.vi && bkSet.has(String(w.ex.vi).trim().toLowerCase())) add(w.ex); })));
   walk(ALL, 0); walk(COURSE, 0); walk(GYBM, 0); walk(GRAM, 0);
+  list.forEach(s2 => { if (bkSet.has(s2.vi.toLowerCase())) s2.bk = 1; });
   const idx = new Map();
   list.forEach((s2, i) => {
     const raw = s2.vi.replace(/[.,!?;:"“”‘’()…–—]/g, ' ').split(/\s+/).filter(Boolean), t = raw.map(x => x.toLowerCase());
@@ -9288,7 +9299,7 @@ function drawCard() {
       dexLoad().then(() => {
         const have = new Set(), MAX = 3;
         const take = (list, n) => list.filter(m => { const k = m.vi.toLowerCase(); if (have.has(k)) return false; have.add(k); return true; }).slice(0, n);
-        const own = exm && exm.vi ? [{ vi: exm.vi, ko: exm.ko || '', bk: x.ex_src === 'main_book' }] : [];
+        const own = exm && exm.vi ? [{ vi: exm.vi, ko: exm.ko || '', bk: x.ex_src === 'main_book' || exm.src === 'main_book' }] : [];
         const t1 = take([...own.filter(m => m.bk), ...appExFor(x.vi, null, true)], MAX);
         const t2 = take(((DEX && DEX[String(x.vi).trim().toLowerCase()]) || []).map(([v, k]) => ({ vi: v, ko: k })), MAX - t1.length);
         const t3 = t1.length || t2.length ? [] : take([...own.filter(m => !m.bk), ...appExFor(x.vi, null, false)], MAX);
