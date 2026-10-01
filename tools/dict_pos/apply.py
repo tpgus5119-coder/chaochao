@@ -10,6 +10,8 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 
 # 뜻이 아닌 조각(출전 이름·잘린 뜻풀이·다른 낱말 뜻) — 두 판정을 맞대다 찾음, 클로드 확인 (2026-10-01)
 EXTRA_DROP = {('ngày rằm', '날'), ('ngày rằm', '음력 매달')}
+# 원문(FVDP) 뜻풀이 앞에 품사 약자가 적힌 낱말 — 판정보다 원문이 이긴다 (P. 부 · L. 접 · T. 형; 같은 약자 붙은 giá dụ·thì ra·tiếng rằng·túng sử 가 모두 접속사라 L. = 접속사)
+SRC_POS = {'cấp thời': '부', 'giá dụ': '접', 'lọ là': '접', 'nhộn nhạo': '형', 'thuần lý': '형', 'thì ra': '접', 'tiếng rằng': '접', 'túng sử': '접'}
 
 
 def main():
@@ -30,6 +32,7 @@ def main():
             if ko is None: continue
             if a == B.get((n, i)): p = a; st['두 판정 같음'] += 1
             else: p = final.get((x['w'], i.strip()), '?'); st['클로드 최종'] += 1
+            if x['w'].lower() in SRC_POS: p = SRC_POS[x['w'].lower()]
             if p == '뺌': drop.add((x['w'].lower(), ko)); st['뺀 조각'] += 1; continue
             if p in ('', '?'): st['빈칸(근거 없음)'] += 1; continue
             judged.setdefault(x['w'].lower(), {})[ko] = p
