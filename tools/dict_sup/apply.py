@@ -44,3 +44,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # 품사 판정(tools/dict_pos)도 다시 얹는다 — 보충 뜻을 걷고 넣으면 차례가 밀리므로 그 뒤에 (2026-10-01)
+    import runpy; runpy.run_path(str(R / 'tools/dict_pos/apply.py'), run_name='__main__')
