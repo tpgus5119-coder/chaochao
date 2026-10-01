@@ -74,6 +74,10 @@ for _fam in json.loads((ROOT / "data/tonetest.json").read_text(encoding="utf-8")
 # 녹음을 채운 낱말(헷갈리는 짝 상대·사전 낱말 — tools/fill_audio.py 가 모으는 것과 같게, 2026-09-29)
 import fill_audio
 texts |= set(fill_audio.collect())
+# 사전 '자주 쓰는 말' 3,000위 낱말 소리 (2026-10-01, tools/dict_freq) — 수업 자료가 안 가리켜도 사전 줄 스피커가 쓴다
+_fq = json.loads((ROOT / "data/_dict_freq.json").read_text(encoding="utf-8")); _df = json.loads((ROOT / "data/_dict_full.json").read_text(encoding="utf-8"))
+for _w, _r in _fq.items():
+    if _r <= 3000: texts.add((_df.get(_w) or {}).get("h") or _w); texts.add(_w)
 for _t in list(texts):
     for _w in _re0.sub(r'[,.!?;:…"“”‘’()]', " ", _t).split():
         texts.add(_w); texts.add(_w.lower())
