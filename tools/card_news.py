@@ -553,6 +553,19 @@ def main():
                "a no-smoking sign on a plain wall beside a green plant"),
               (("pc방", "게임", "e스포츠", "pubg", "배틀그라운드"),
                "a row of empty gaming desks with glowing monitors and headsets in a dark room"),
+              # 2026-10-01 아침(예약 작업): 화물선은 키워드가 없어 갈래 기본(공장)으로, 궁전 복원은
+              # 제목엔 걸릴 말이 없어 시장 좌판으로, 보잉 항공 훈련은 '학생'에 걸려 교실로 갈 판이었다.
+              # '항공 기술'을 '학생'(학교 줄)보다 먼저 두려고 여기 올린다.
+              (("화물선", "조선소", "선박"),
+               "a large cargo ship docked at a shipyard under a clear sky"),
+              (("황성", "궁전", "유적"),
+               "an ancient palace hall with a curved tiled roof and stone dragon stairs"),
+              (("항공 기술", "항공 직업", "항공 인력"),
+               "an airplane parked in a clean maintenance hangar"),
+              (("노인", "돌봄", "요양"),
+               "a quiet garden courtyard with benches and potted plants"),
+              (("페이스북", "메신저", "facebook"),
+               "a smartphone lying beside colorful shopping bags and a parcel box on a table"),
               (("휘발유", "주유소", "유가"),
                "a gas station with fuel pumps under a clear morning sky"),
               (("증시", "주식", "증권", "환율"),
