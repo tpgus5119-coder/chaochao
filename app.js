@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -9292,12 +9292,19 @@ function drawCard() {
         const t1 = take([...own.filter(m => m.bk), ...appExFor(x.vi, null, true)], MAX);
         const t2 = take(((DEX && DEX[String(x.vi).trim().toLowerCase()]) || []).map(([v, k]) => ({ vi: v, ko: k })), MAX - t1.length);
         const t3 = t1.length || t2.length ? [] : take([...own.filter(m => !m.bk), ...appExFor(x.vi, null, false)], MAX);
-        [[tr('교재 예문'), t1], [tr('사전 예문'), t2], [tr('만든 예문'), t3]].forEach(([h, ms]) => {
-          if (!ms.length) return;
-          host.append(el('div', 'appexh', h));
-          ms.forEach(m => host.append(exRow(m)));
-        });
-        if (!host.children.length) host.remove();
+        /* 처음엔 한 문장만 (대표님 2026-10-01 "단어 카드마다 하나의 예문이면 괜찮지?") — 나머지는 [예문 더 보기] 를 눌러야 펼친다(뜻이 여럿인 낱말 cảm 느끼다·감기 같은 것) */
+        const all = [...t1.map(m => [tr('교재 예문'), m]), ...t2.map(m => [tr('사전 예문'), m]), ...t3.map(m => [tr('만든 예문'), m])];
+        if (!all.length) { host.remove(); return; }
+        let lastH = null;
+        const put = (box, [h, m]) => { if (h !== lastH) { box.append(el('div', 'appexh', h)); lastH = h; } box.append(exRow(m)); };
+        put(host, all[0]);
+        if (all.length > 1) {
+          const more = el('div', 'appexmore'); more.hidden = true;
+          all.slice(1).forEach(x2 => put(more, x2));
+          const btn = el('button', 'ghost sm appexbtn', tr('예문 더 보기') + ' (' + (all.length - 1) + ')'); btn.type = 'button';
+          btn.onclick = () => { more.hidden = !more.hidden; btn.textContent = more.hidden ? tr('예문 더 보기') + ' (' + (all.length - 1) + ')' : tr('접기'); };
+          host.append(btn, more);
+        }
       });
     }
     // 카드 안의 '헷갈리는 짝 ▾' 줄은 뺐다 — 단어을 누르면 같은 것이 팝업으로 뜬다 (대표님 지시 2026-09-27 저녁)

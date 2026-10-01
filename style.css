@@ -2956,3 +2956,5 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .newspos{text-align:center;font-size:13px;color:var(--dim);margin:10px 0 4px;font-variant-numeric:tabular-nums}
 #subBody .newslink{display:block;text-align:center;margin:6px auto 0;font-size:14px;text-decoration:none}
 .dfull .dfpos.pj{border-style:dashed;opacity:.8}   /* 판정한 품사 (2026-10-01) */
+.appexmore{display:grid;gap:8px}
+.appex .appexbtn{justify-self:start}

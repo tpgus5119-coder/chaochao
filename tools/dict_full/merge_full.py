@@ -36,6 +36,12 @@ def main():
     NUM = {"영": "0", "공": "0", "하나": "1", "한": "1", "일": "1", "둘": "2", "두": "2", "이": "2", "셋": "3", "세": "3", "삼": "3", "넷": "4", "네": "4", "사": "4", "다섯": "5", "오": "5",
            "여섯": "6", "육": "6", "일곱": "7", "칠": "7", "여덟": "8", "팔": "8", "아홉": "9", "구": "9", "열": "10", "십": "10", "스물": "20", "서른": "30", "마흔": "40", "쉰": "50",
            "예순": "60", "일흔": "70", "여든": "80", "아흔": "90", "백": "100", "천": "1000", "만": "10000", "십만": "100000", "백만": "1000000", "천만": "10000000", "억": "100000000", "십억": "1000000000"}
+    POSFIX = {}
+    pf = R / "tools/dict_full/pos_fix.tsv"
+    if pf.exists():
+        for l in pf.read_text(encoding="utf-8").splitlines():
+            c = l.split("\t")
+            if len(c) >= 3 and not l.startswith("#"): POSFIX[(c[0], int(c[1]))] = c[2]
     out, en, miss = {}, {}, 0
     for k, v in src.items():
         if not re.search(r"[A-Za-zÀ-ỹđĐ]", k): continue      # 한자 표제어(布政使·日本 — 한자 꼴)는 베트남 글자 사전에서 뺀다
@@ -47,9 +53,9 @@ def main():
         elif v.get("alt") and key(v["alt"]) in dk and len(ss) == 1: kos = [dk[key(v["alt"])]]
         else: kos = ["-"] * len(ss); miss += 1
         keep, seen_s = [], set()
-        for s_, m in zip(ss, kos):
+        for si, (s_, m) in enumerate(zip(ss, kos)):
             if s_["pos"] == "Numeral" and m in NUM: m = NUM[m]          # 숫자 뜻은 숫자로 (대표님 2026-09-30 "통일감": 여덟 → 8)
-            t = (TAG.get(s_["pos"], s_["pos"]), m)
+            t = (POSFIX.get((k.lower(), si)) or TAG.get(s_["pos"], s_["pos"]), m)   # 위키 품사 제목·틀이 어긋난 곳 바로잡기 (tools/dict_full/pos_fix.tsv, 2026-10-01 tự tin)
             if m and m != "-" and m not in {x[1] for x in keep}: keep.append(t)      # 같은 뜻이 두 번(úc '뇌 · 뇌', thứ hai [명]·[고유] '월요일')이면 하나로
         # 한자음 — 위키의 'Sino-Vietnamese reading of 三' 줄(뜻 줄이 아니라 따로 둔 것)을 [한자] 로 (tam → 三 석 삼: 합성어 tam giác 삼각형의 tam)
         hv = re.findall(r"\{\{sino-vietnamese reading of\|([^}|]+)", (g.get(k) or {}).get("raw") or "") if v["lang"] == "en" else []
