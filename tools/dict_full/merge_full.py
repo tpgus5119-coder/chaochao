@@ -64,7 +64,7 @@ def main():
         kk = key(k)
         if kk in out:                                      # 대소문자만 다른 표제어(úc 뇌 / Úc 호주)는 한 줄에 — 소문자 뜻 먼저, 고유명사 뜻을 뒤에
             o = out[kk]; lo, hi = (o, e) if o["h"] == o["h"].lower() else (e, o)
-            pairs = list(zip(lo["p"], lo["s"])) + [x for x in zip(hi["p"], hi["s"]) if x not in set(zip(lo["p"], lo["s"]))]
+            pairs = list(zip(lo["p"], lo["s"])) + [x for x in zip(hi["p"], hi["s"]) if x[1] not in set(lo["s"])]   # 소문자 쪽에 이미 있는 뜻은 다시 안 붙인다
             m = {"h": lo["h"], "p": [a for a, _ in pairs], "s": [b for _, b in pairs]}
             for f in ("y", "a", "v"):
                 if lo.get(f) or hi.get(f): m[f] = (lo.get(f) or []) + [x for x in (hi.get(f) or []) if x not in (lo.get(f) or [])] if f != "v" else (lo.get(f) or hi.get(f))
