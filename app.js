@@ -2872,15 +2872,17 @@ function studyGramEntry(scroll) {
     return { key, title, sub: us.length + tr('과') + (sub ? ' · ' + sub : ''), done: nodes.filter(n => n.done).length, all: nodes.length, nodes };
   };
   const toggle = k => () => { GOPEN = GOPEN === k ? null : k; studyGramEntry(true); };
-  b.append(el('p', 'anasec', tr('수준별') + ' <span>' + tr('꼭 알아야 하는 것부터') + '</span>'));
-  [['초급', '메인 1권 · 줌 · 필수'], ['중급', '메인 2권 · 사이드 중급']].forEach(([g, sub]) =>
-    accRow(b, row(g, g, sub, units.filter(u => u.lv === g), u => u.from), GOPEN === g, toggle(g), scroll));
-  b.append(el('p', 'anasec', tr('교재별') + ' <span>' + tr('책의 과 차례대로') + '</span>'));
-  BK.forEach(([bn, title, sub]) => {
-    const us = units.filter(u => u.ch[bn] !== undefined).sort((a, c) => a.ch[bn] - c.ch[bn] || a.ni - c.ni);
-    if (!us.length) return;
-    const k = 'bk' + bn;
-    accRow(b, row(k, title, sub, us, u => BKN[bn] + ' ' + (u.ch[bn] + 1) + tr('과')), GOPEN === k, toggle(k), scroll);
+  /* 자주 쓰는 순서 (대표님 2026-10-01 "출처로 구분하지 말고 자주 쓰이는 순서로 — 시중 베스트셀러·스테디셀러 참고").
+     예스24 판매량 1·2위 GO! 독학·NEW 가장 쉬운 독학 첫걸음과 착! 붙는·한 번에 끝내는 첫걸음·회화 핵심패턴 233·문법 마스터에서
+     그 문법이 처음 나오는 과가 이른 것부터 — 근거는 tools/grammar_order/순서.tsv. 과 열쇠(gkey)는 그대로라 진도는 안 깨진다. 출처 글은 뺐다 */
+  const GSTAGE = [['1단계', '처음 말하기', [2, 3, 4, 7, 6, 8, 12, 13]], ['2단계', '때·일상·할 수 있다', [9, 10, 22, 11, 16, 17, 18, 14, 26, 15]],
+                  ['3단계', '부탁·비교·이유', [45, 20, 21, 39, 32, 28, 19, 23, 5, 27, 24, 30, 41]], ['4단계', '더 자연스럽게', [25, 29, 31, 33, 34, 35, 36, 37, 38, 40, 42, 43, 44]]];
+  const byNi = {}; units.forEach(u => { byNi[u.ni] = u; });
+  let num = 0;
+  GSTAGE.forEach(([k, sub, nis]) => {
+    const us = nis.map(n => byNi[n]).filter(Boolean);
+    const nodes = us.map(u => Object.assign(node(u, ''), { num: ++num }));
+    accRow(b, { key: k, title: tr(k), sub: us.length + tr('과') + ' · ' + tr(sub), done: nodes.filter(n => n.done).length, all: nodes.length, nodes }, GOPEN === k, toggle(k), scroll);
   });
   show('sub', '문법', true);
 }
@@ -7028,8 +7030,9 @@ function resumeNext() {
       if (li >= 0) { const l = src.lessons[li]; return { d: { theme: l.title, day: gybmKey(key, li), basic: 1, words: l.words }, name: l.title, kind: src.label, box: 'bsrs' }; } }
   }
   if (t === 'gram' && GRAM) {
-    for (let bi = 0; bi < GRAM.books.length; bi++) for (let ni = 0; ni < GRAM.books[bi].bai.length; ni++)
-      if (!S.done[gkey(bi, ni)]) return { gram: [bi, ni], name: GRAM.books[bi].bai[ni].t, kind: '문법' };
+    /* 문법 화면과 같은 '자주 쓰는 순서'로 (tools/grammar_order/순서.tsv, 2026-10-01) */
+    const ord = [2, 3, 4, 7, 6, 8, 12, 13, 9, 10, 22, 11, 16, 17, 18, 14, 26, 15, 45, 20, 21, 39, 32, 28, 19, 23, 5, 27, 24, 30, 41, 25, 29, 31, 33, 34, 35, 36, 37, 38, 40, 42, 43, 44];
+    for (const ni of ord) if (GRAM.books[0].bai[ni] && !S.done[gkey(0, ni)]) return { gram: [0, ni], name: GRAM.books[0].bai[ni].t, kind: '문법' };
   }
   const life = q.find(d => d.kind !== '직무');
   if (life) return { d: life, name: life.theme || (trackName(life) + label(life)), kind: '일상' };
