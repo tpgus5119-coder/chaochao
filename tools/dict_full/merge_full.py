@@ -37,18 +37,19 @@ def main():
            "여섯": "6", "육": "6", "일곱": "7", "칠": "7", "여덟": "8", "팔": "8", "아홉": "9", "구": "9", "열": "10", "십": "10", "스물": "20", "서른": "30", "마흔": "40", "쉰": "50",
            "예순": "60", "일흔": "70", "여든": "80", "아흔": "90", "백": "100", "천": "1000", "만": "10000", "십만": "100000", "백만": "1000000", "천만": "10000000", "억": "100000000", "십억": "1000000000"}
     POSFIX = {}
-    pf = R / "tools/dict_full/pos_fix.tsv"
-    if pf.exists():
+    for pf in (R / "tools/dict_full/pos_fix.tsv", R / "tools/dict_audit/pos_fix.tsv"):
+        if not pf.exists(): continue
         for l in pf.read_text(encoding="utf-8").splitlines():
             c = l.split("\t")
             if len(c) >= 3 and not l.startswith("#"): POSFIX[(c[0], int(c[1]))] = c[2]
     KOFIX = {}                                             # 한국어 뜻 바로잡기 (tools/dict_full/ko_fix.tsv, 2026-10-01 밤 앱 낱말 품사 전체 점검) — 표제어는 대소문자 구별
-    kf = R / "tools/dict_full/ko_fix.tsv"
-    if kf.exists():
+    for kf in (R / "tools/dict_full/ko_fix.tsv", R / "tools/dict_audit/ko_fix.tsv"):   # 둘째 = 사전 전체 뜻 점검(tools/dict_audit, 2026-10-01 밤~)
+        if not kf.exists(): continue
         for l in kf.read_text(encoding="utf-8").splitlines():
             c = l.split("\t")
             if len(c) >= 3 and not l.startswith("#"): KOFIX[(U.normalize("NFC", c[0]), int(c[1]))] = c[2].strip()
     out, en, miss = {}, {}, 0
+    SMAP = []
     for k, v in src.items():
         if not re.search(r"[A-Za-zÀ-ỹđĐ]", k): continue      # 한자 표제어(布政使·日本 — 한자 꼴)는 베트남 글자 사전에서 뺀다
         ss = v["s"]
@@ -63,7 +64,8 @@ def main():
             if (k, si) in KOFIX: m = KOFIX[(k, si)]                        # '-' 이면 아래에서 빠진다
             if s_["pos"] == "Numeral" and m in NUM: m = NUM[m]          # 숫자 뜻은 숫자로 (대표님 2026-09-30 "통일감": 여덟 → 8)
             t = (POSFIX.get((k.lower(), si)) or TAG.get(s_["pos"], s_["pos"]), m)   # 위키 품사 제목·틀이 어긋난 곳 바로잡기 (tools/dict_full/pos_fix.tsv, 2026-10-01 tự tin)
-            if m and m != "-" and m not in {x[1] for x in keep}: keep.append(t)      # 같은 뜻이 두 번(úc '뇌 · 뇌', thứ hai [명]·[고유] '월요일')이면 하나로
+            if m and m != "-" and m not in {x[1] for x in keep}: keep.append(t)
+            SMAP.append([k, si, t[0], m, s_["pos"], s_["lab"], s_["t"][:300], v["lang"]])   # 뜻 하나하나의 출처 자리 — tools/dict_audit 점검용      # 같은 뜻이 두 번(úc '뇌 · 뇌', thứ hai [명]·[고유] '월요일')이면 하나로
         # 한자음 — 위키의 'Sino-Vietnamese reading of 三' 줄(뜻 줄이 아니라 따로 둔 것)을 [한자] 로 (tam → 三 석 삼: 합성어 tam giác 삼각형의 tam)
         hv = re.findall(r"\{\{sino-vietnamese reading of\|([^}|]+)", (g.get(k) or {}).get("raw") or "") if v["lang"] == "en" else []
         # [한자] 뜻 줄은 뺐다 (대표님 2026-10-01 "凌(업신여길 릉) · 稜 이런 식으로 단어 뜻을 넣으면 안 되지") — 그 음으로 읽히는 한자 목록일 뿐 낱말 뜻이 아니다.
@@ -91,6 +93,8 @@ def main():
             if key(w) in dk: out[key(w)] = {"h": w, "p": [""], "s": [dk[key(w)]], "k": 1}     # k = 위키 밖 굳은 말
     json.dump(out, open(R / "data/_dict_full.json", "w"), ensure_ascii=False, separators=(",", ":"))
     json.dump(en, open(R / "data/_dict_en.json", "w"), ensure_ascii=False, separators=(",", ":"))
+    (R / "tools/dict_audit").mkdir(exist_ok=True)
+    json.dump(SMAP, open(R / "tools/dict_audit/sense_map.json", "w"), ensure_ascii=False, separators=(",", ":"))   # 앱에 안 실림
     ns = sum(len(e["s"]) for e in out.values())
     print("표제어", len(out), "· 뜻", ns, "· 한국어 없는 표제어(뺌)", miss, "· 영어 열쇠", len(en), "· 크기", (R / "data/_dict_full.json").stat().st_size // 1024, "KB")
 if __name__ == "__main__":
