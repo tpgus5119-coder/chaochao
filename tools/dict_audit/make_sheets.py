@@ -19,6 +19,9 @@ def expand(l):
 key = lambda s: U.normalize('NFC', s).strip().lower()
 
 
+PFX = 'bu' if '--b' in sys.argv else 'au'   # bu = 2차(고친 뒤의 사전으로 다시 만든 시트, 2026-10-02)
+
+
 def main():
     M = json.loads((A / 'sense_map.json').read_text(encoding='utf-8'))
     F = json.loads((R / 'data/_dict_full.json').read_text(encoding='utf-8'))
@@ -45,7 +48,7 @@ def main():
         if n_s >= 500: sheets.append(cur); cur, n_s = [], 0
     if cur: sheets.append(cur)
     for i, sh in enumerate(sheets):
-        (A / f'au_{i:03d}.json').write_text('[\n' + ',\n'.join(json.dumps(x, ensure_ascii=False, separators=(',', ':')) for x in sh) + '\n]\n', encoding='utf-8')   # 낱말 하나 = 한 줄
+        (A / f'{PFX}_{i:03d}.json').write_text('[\n' + ',\n'.join(json.dumps(x, ensure_ascii=False, separators=(',', ':')) for x in sh) + '\n]\n', encoding='utf-8')   # 낱말 하나 = 한 줄
     print('되살린 생물 뜻풀이', sum(1 for v in by.values() for x in v['senses'] if 'full' in x), '·', '표제어', len(by), '· 뜻', sum(len(v['senses']) for v in by.values()), '· 시트', len(sheets))
 
 

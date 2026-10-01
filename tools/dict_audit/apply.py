@@ -16,12 +16,24 @@ def main():
     for js in A.glob('au_*.json'):
         for it in __import__('json').loads(js.read_text(encoding='utf-8')):
             for s in it['senses']: SH[(str(it['n']), str(s['i']))] = s
+    SH2 = {}                                              # 2차 시트(bu) — 표제어·뜻 번호로
+    for js in A.glob('bu_*.json'):
+        for it in __import__('json').loads(js.read_text(encoding='utf-8')):
+            for s in it['senses']: SH2[(it['w'], str(s['i']))] = s
+    rows = []
     for l in (A / '확정.tsv').read_text(encoding='utf-8').splitlines():
         if l.startswith('#') or not l.strip(): continue
-        n, i, w, d, k, p, why = (l.split('\t') + [''] * 7)[:7]
-        st[d] += 1
+        rows.append((l.split('\t') + [''] * 7)[:7] + [1])
+    p2 = A / '확정2.tsv'                                  # 2차 확정(2026-10-02~) — 같은 뜻이면 1차 위에 덮는다. 2차 R 은 '지금(1차 고친 뒤) 그대로'
+    if p2.exists():
+        for l in p2.read_text(encoding='utf-8').splitlines():
+            if l.startswith('#') or not l.strip(): continue
+            c = (l.split('\t') + [''] * 7)[:7]                  # 2차 줄은 표제어 ⇥ 뜻 번호 ⇥ (빈칸) ⇥ … 차례
+            rows.append([c[1], c[1], c[0]] + c[3:7] + [2])
+    for n, i, w, d, k, p, why, rnd in rows:
+        st[f'{rnd}차 {d}'] += 1
         if d == 'R': continue
-        sh = SH.get((n, i)) or {}
+        sh = (SH.get((n, i)) if rnd == 1 else SH2.get((w, i))) or {}
         if k and not p and not sh.get('src_pos') and sh.get('pos'): p = sh['pos']; st['판정 품사 넘김'] += 1
         if k: ko.append(f'{w}\t{i}\t{k}\t{why}')
         if p: pos.append(f'{w.lower()}\t{i}\t{p}\t{why}')
