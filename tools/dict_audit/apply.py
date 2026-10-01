@@ -11,11 +11,18 @@ A = pathlib.Path(__file__).resolve().parent
 
 def main():
     ko, pos, st = [], [], collections.Counter()
+    # 원문에 품사가 없어 따로 판정한 뜻(tools/dict_pos — 뜻 글로 찾아 붙인다)은 한국어를 고치면 판정이 끊긴다 → 시트에 적힌 그 품사를 함께 넘긴다
+    SH = {}
+    for js in A.glob('au_*.json'):
+        for it in __import__('json').loads(js.read_text(encoding='utf-8')):
+            for s in it['senses']: SH[(str(it['n']), str(s['i']))] = s
     for l in (A / '확정.tsv').read_text(encoding='utf-8').splitlines():
         if l.startswith('#') or not l.strip(): continue
         n, i, w, d, k, p, why = (l.split('\t') + [''] * 7)[:7]
         st[d] += 1
         if d == 'R': continue
+        sh = SH.get((n, i)) or {}
+        if k and not p and not sh.get('src_pos') and sh.get('pos'): p = sh['pos']; st['판정 품사 넘김'] += 1
         if k: ko.append(f'{w}\t{i}\t{k}\t{why}')
         if p: pos.append(f'{w.lower()}\t{i}\t{p}\t{why}')
     (A / 'ko_fix.tsv').write_text('# 사전 전체 뜻 점검 확정분(apply.py 가 확정.tsv 에서 만듦 — 손으로 고치지 말 것)\n' + '\n'.join(ko) + '\n', encoding='utf-8')
