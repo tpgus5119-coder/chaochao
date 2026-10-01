@@ -11,7 +11,7 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(R / "tools"))
 from vi_kr import word as vi_kr  # noqa: E402
 SRC = pathlib.Path.home() / "짜오짜오/원본자료/베트남어 학습자료/22기 자료"
-DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30']      # 1~8회 (일요일 9/27 없음)
+DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1']      # 1~9회 (일요일 9/27 없음)
 nfc = lambda s: unicodedata.normalize('NFC', s)
 def bare(s):
     s = unicodedata.normalize('NFD', nfc(s).lower().replace('đ', 'd'))

@@ -2584,7 +2584,7 @@ function studyHubEntry() {
   card(HUB_ICO.words, '단어', st.words, studyWordsEntry);       // 내 단어장은 단어 안으로 옮겼다 (대표님 지시 2026-09-30)
   card(HUB_ICO.gram, '문법', st.gram, studyGramEntry);
   card(HUB_ICO.test, '매일 단어 시험', null, () => dailyEntry('study'));   // 22기 반 시험 — 학습에서는 카드로 학습만, 시험은 테스트 탭 (2026-09-30)
-  card(HUB_ICO.test, '주간 시험', null, weeklyStudyEntry);
+  /* 학습 탭의 '주간 시험'은 뺐다 (대표님 2026-10-01: 주간 시험은 범위 낱말+문법의 종합이라 단어·문법에서 이미 배운다). 쓰기 연습은 테스트 탭 회차 화면으로 */
   show('sub', '학습', true);
   // 자료가 아직 안 왔으면 받아서 이 화면을 다시 그린다 (진도 숫자가 채워진다). 다른 데로 갔으면 건드리지 않는다.
   const still = () => CURV === 'sub' && $('#title').textContent === tr('학습');
@@ -10281,7 +10281,11 @@ function weeklyRound(r) {
   eb.append(el('b', null, esc(tr('시험 보기')) + ' <span class="exmeta">' + tr('실제 시험지 짜임 — 듣기 30 · 읽기 30 · 쓰기 · 말하기 20 · 끝에 채점') + '</span>'));
   eb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => gramEnsure(() => startWeeklyExam(r))); };
   b.append(eb);
-  /* 이 회차 문법·쓰기 연습은 학습 탭 → 주간 시험으로 옮겼다 (2026-09-30) */
+  /* 쓰기 연습(상황 그림·문법마다 한 문장·주제 10문장, 채점 없음)은 시험 준비라 여기 둔다 (2026-10-01, 학습 탭 주간 시험을 없애면서 옮김) */
+  { const wb = el('button', 'bigmenu');
+    wb.append(el('b', null, esc(tr('쓰기 연습')) + ' <span class="exmeta">' + esc(tr('상황 그림 보고 문장 · 문법마다 한 문장 · 주제로 10문장 (채점 없음)')) + '</span>'));
+    wb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => gramEnsure(() => writingPractice(r))); };
+    b.append(wb); }
   const last = (S.stats.wexam || []).filter(x => (x.round || 1) === r.no).slice(-1)[0];
   if (last) b.append(el('p', 'note', tr('지난 결과') + ' · ' + esc(last.d) + ' · ' + last.ok + ' / ' + last.tot));
   show('exam', tr('주간 시험') + ' · ' + r.name, true);
