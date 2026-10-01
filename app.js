@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -6686,6 +6686,62 @@ function homeSkills() {
   box.append(bars(subj.map(x => [x.name, x.pct === null ? 0 : x.pct, x.n, undefined, null, x.ok])));
   return box;
 }
+/* 베트남 기사 — 실력 분석 밑 (대표님 2026-10-01: "누르면 최근 5일 날짜 버튼 → 누르면 카드뉴스 그대로").
+   카드뉴스 그림(img/card/<날짜>-<n>-{1,2}.webp, tools/card_news.py)이 실제로 있는 날만 센다 — 만들지 못한 날(9/27·9/29)은 빈 화면이 되니까. */
+function homeNews() {
+  const box = el('div', 'hskill');
+  const hd = el('button', 'hsttl go'); hd.type = 'button'; hd.append(el('span', null, tr('베트남 기사')), el('span', 'parrow', '›'));
+  hd.onclick = () => { dive(renderHome); newsDatesEntry(); };
+  box.append(hd);
+  return box;
+}
+const cardOk = src => new Promise(res => { const im = new Image(); const t = setTimeout(() => res(false), 8000); im.onload = () => { clearTimeout(t); res(true); }; im.onerror = () => { clearTimeout(t); res(false); }; im.src = src; });
+async function newsDatesEntry() {
+  const b = $('#subBody'); b.textContent = '';
+  b.append(el('p', 'lede', tr('불러오는 중…')));
+  show('sub', '베트남 기사', true);
+  const days = await newsSets();
+  const by = {};
+  days.forEach(d => { (by[d.ts] = by[d.ts] || []).push(d); });
+  const dates = Object.keys(by).sort().reverse().slice(0, 12);
+  const has = await Promise.all(dates.map(async ts => (await Promise.all(by[ts].map((d, i) => cardOk(`img/card/${ts}-${i + 1}-1.webp`)))).filter(Boolean).length));
+  const pick = dates.map((ts, i) => [ts, has[i]]).filter(x => x[1] > 0).slice(0, 5);
+  if ($('#title').textContent !== tr('베트남 기사')) return;          // 그새 다른 화면으로 갔으면 그대로 둔다
+  b.textContent = '';
+  if (!pick.length) { b.append(el('p', 'note', tr('카드뉴스가 아직 없습니다'))); return; }
+  const WD = ['일', '월', '화', '수', '목', '금', '토'];
+  pick.forEach(([ts, n]) => {
+    const dt = new Date(ts + 'T00:00:00');
+    const btn = el('button', 'bigmenu');
+    btn.append(el('b', null, esc((dt.getMonth() + 1) + tr('월') + ' ' + dt.getDate() + tr('일') + ' (' + tr(WD[dt.getDay()]) + ')')), el('span', 'msub', tr('기사 N개').replace('N', n)));
+    btn.onclick = () => { dive(newsDatesEntry); newsDayCards(ts, by[ts]); };
+    b.append(btn);
+  });
+}
+/* 그날 카드뉴스 그대로 — 기사마다 카드 두 장(길게 누르면 저장) + 기사 보러가기. 그림이 없는 기사는 통째로 뺀다 */
+function newsDayCards(ts, list) {
+  const b = $('#subBody'); b.textContent = '';
+  const dt = new Date(ts + 'T00:00:00');
+  show('sub', (dt.getMonth() + 1) + tr('월') + ' ' + dt.getDate() + tr('일'), true);
+  list.forEach((d, i) => {
+    const art = el('div', 'newsart');
+    const top = el('div', 'newstop');
+    if (d.cat) top.append(el('i', 'newscat', esc(d.cat)));
+    top.append(el('b', null, esc(d.theme || '')));
+    art.append(top);
+    const box = el('div', 'cardbox');
+    let bad = 0;
+    [1, 2].forEach(n => {
+      const im = el('img', 'cardimg');
+      im.src = `img/card/${ts}-${i + 1}-${n}.webp`; im.alt = tr('카드뉴스') + ' ' + n; im.loading = 'lazy';
+      im.onerror = () => { im.remove(); if (++bad === 2) art.remove(); };
+      box.append(im);
+    });
+    art.append(box);
+    if (d.u) { const go = el('a', 'ghost newslink', '🔗 ' + tr('기사 보러가기')); go.href = d.u; go.target = '_blank'; go.rel = 'noopener'; art.append(go); }
+    b.append(art);
+  });
+}
 /* ---------- 짜오 살림 — 돈(동)·먹이·둥지·알 상점 (대표님 지시 2026-09-27 저녁) ----------
    돈 = 기존 점수 창고(credits: earn/spend. 값의 근거는 tools/pricing.py · docs/scoring-basis.md). 화면 이름만 '동'(đồng).
    먹이 = 베트남 과일(단어 하나씩). 배부름 재기는 뺐다(대표님: "배부름 없애도 될 듯") — 먹이면 먹고 웃고 그 과일 이름을 말한다.
@@ -6965,7 +7021,8 @@ function renderHome() {
   if (!GYBM) gybmBuild(() => { if (!$('#home').hidden) renderHome(); });   // '지금까지'의 전체 단어·세트 수에 교재·시험 자료도 들어가게
   const plan = $('#plan');
   plan.textContent = '';
-  plan.append(homeGreet(), petCard(), homeActions(), homeProgress(), homeSkills(), homeSettings());
+  // '복습 시작' 단추(homeActions)는 뺐다 (대표님 2026-10-01 "홈에 복습시작 그 버튼은 없애자") — 복습은 테스트 탭
+  plan.append(homeGreet(), petCard(), homeProgress(), homeSkills(), homeNews(), homeSettings());
   show('home', '짜오짜오', false);
 }
 
