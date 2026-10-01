@@ -49,7 +49,7 @@ def main():
             c = l.split("\t")
             if len(c) >= 3 and not l.startswith("#"): KOFIX[(U.normalize("NFC", c[0]), int(c[1]))] = c[2].strip()
     out, en, miss = {}, {}, 0
-    SMAP = []
+    SMAP, PJ = [], []
     for k, v in src.items():
         if not re.search(r"[A-Za-zÀ-ỹđĐ]", k): continue      # 한자 표제어(布政使·日本 — 한자 꼴)는 베트남 글자 사전에서 뺀다
         ss = v["s"]
@@ -65,6 +65,7 @@ def main():
             if s_["pos"] == "Numeral" and m in NUM: m = NUM[m]          # 숫자 뜻은 숫자로 (대표님 2026-09-30 "통일감": 여덟 → 8)
             t = (POSFIX.get((k.lower(), si)) or TAG.get(s_["pos"], s_["pos"]), m)   # 위키 품사 제목·틀이 어긋난 곳 바로잡기 (tools/dict_full/pos_fix.tsv, 2026-10-01 tự tin)
             if m and m != "-" and m not in {x[1] for x in keep}: keep.append(t)
+            if not s_["pos"] and POSFIX.get((k.lower(), si)) and m and m != "-": PJ.append([k.lower(), m])   # 원문에 품사가 없어 판정한 뜻 — 한국어를 고쳐 dict_pos 가 글로 못 찾는 것도 '판정' 표시가 붙게
             SMAP.append([k, si, t[0], m, s_["pos"], s_["lab"], s_["t"][:300], v["lang"]])   # 뜻 하나하나의 출처 자리 — tools/dict_audit 점검용      # 같은 뜻이 두 번(úc '뇌 · 뇌', thứ hai [명]·[고유] '월요일')이면 하나로
         # 한자음 — 위키의 'Sino-Vietnamese reading of 三' 줄(뜻 줄이 아니라 따로 둔 것)을 [한자] 로 (tam → 三 석 삼: 합성어 tam giác 삼각형의 tam)
         hv = re.findall(r"\{\{sino-vietnamese reading of\|([^}|]+)", (g.get(k) or {}).get("raw") or "") if v["lang"] == "en" else []
@@ -95,6 +96,7 @@ def main():
     json.dump(en, open(R / "data/_dict_en.json", "w"), ensure_ascii=False, separators=(",", ":"))
     (R / "tools/dict_audit").mkdir(exist_ok=True)
     json.dump(SMAP, open(R / "tools/dict_audit/sense_map.json", "w"), ensure_ascii=False, separators=(",", ":"))   # 앱에 안 실림
+    json.dump(PJ, open(R / "tools/dict_audit/pj_fix.json", "w"), ensure_ascii=False)   # 앱에 안 실림 — dict_pos/apply.py 가 읽는다
     ns = sum(len(e["s"]) for e in out.values())
     print("표제어", len(out), "· 뜻", ns, "· 한국어 없는 표제어(뺌)", miss, "· 영어 열쇠", len(en), "· 크기", (R / "data/_dict_full.json").stat().st_size // 1024, "KB")
 if __name__ == "__main__":

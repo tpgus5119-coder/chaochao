@@ -37,18 +37,19 @@ def main():
             if p in ('', '?'): st['빈칸(근거 없음)'] += 1; continue
             judged.setdefault(x['w'].lower(), {})[ko] = p
     n_set = 0
+    pjf = R / 'tools/dict_audit/pj_fix.json'      # merge_full 이 pos_fix 로 품사를 넣은 '원문에 품사 없던 뜻' (한국어를 고친 뜻 — 글로는 못 찾는다)
+    PJX = {tuple(x) for x in json.loads(pjf.read_text(encoding='utf-8'))} if pjf.exists() else set()
     for k, e in F.items():
         e.pop('pj', None)
         for r in [i for i, s in enumerate(e['s']) if (k, s) in drop][::-1]:     # 조각 뜻 빼기 — 보충 자리('b')도 같이 당긴다
             del e['s'][r]; del e['p'][r]
             if e.get('b'): e['b'] = [b - 1 if b > r else b for b in e['b'] if b != r]
-        j = judged.get(k)
-        if not j: continue
-        pj = []
+        j = judged.get(k) or {}
+        pj = [i for i, s2 in enumerate(e['s']) if (k, s2) in PJX and e['p'][i]]
         for i, s2 in enumerate(e['s']):
             if s2 in j and not e['p'][i]:                 # 원문에 품사가 없던 뜻에만 — 위키 품사는 건드리지 않는다
                 e['p'][i] = j[s2]; pj.append(i); n_set += 1
-        if pj: e['pj'] = pj
+        if pj: e['pj'] = sorted(set(pj))
     (R / 'data/_dict_full.json').write_text(json.dumps(F, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     print(st, f'· 새로 넣음 {n_set} · 아직 빈 뜻 {sum(1 for e in F.values() for p in e["p"] if not p)}')
 
