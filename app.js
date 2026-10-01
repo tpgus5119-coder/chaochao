@@ -1024,6 +1024,34 @@ const TONE_ALT = (() => {
 const TONE_ALT_RE = new RegExp('(' + Object.keys(TONE_ALT).join('|') + ')(?![a-zà-ỹđ])', 'g');
 const toneAlt = s => String(s).replace(TONE_ALT_RE, x => TONE_ALT[x]);
 let DKO = null, DKH = null;          // 참고 사전 뜻 · 표제어 대문자 꼴 (소문자 열쇠 → 원래 꼴)
+/* 사전 한 벌 (2026-10-01, 대표님: "위키는 그대로 — 품사·모든 뜻·차례 그대로·유의어·반의어·영어로도 검색") — data/_dict_full.json
+   {소문자 표제어: {h 표제어, p [품사 표시], s [한국어 뜻], y [유의어], a [반의어], v 다른 표기의 원래 꼴, k 위키 밖 굳은 말}} (tools/dict_full/merge_full.py) */
+let DFULL = null;
+/* 품사가 같은 뜻끼리 묶어 한 줄 글로: "[명] 탁자 · 판 · [동] 의논하다" — 사전 목록 줄과 검색에 쓴다 */
+function dfullText(e) {
+  let out = '', last = null;
+  e.s.forEach((t, i) => { const p = e.p[i] || ''; if (p !== last) { out += (out ? ' · ' : '') + (p ? '[' + p + '] ' : ''); last = p; } else out += ' · '; out += t; });
+  return out;
+}
+/* 사전 낱말 카드의 뜻 칸 — 품사별로 번호를 매겨 모든 뜻을 위키 차례 그대로, 밑에 유의어·반의어(누르면 그 낱말 카드) */
+function dfullBox(e, back) {
+  const box = el('div', 'dfull');
+  let ol = null, last = null;
+  e.s.forEach((t, i) => {
+    const p = e.p[i] || '';
+    if (p !== last || !ol) { const g = el('div', 'dfg'); if (p) g.append(el('span', 'dfpos', esc(p))); ol = el('ol', 'dfol'); g.append(ol); box.append(g); last = p; }
+    ol.append(el('li', null, esc(t)));
+  });
+  const rel = (lab, list) => {
+    if (!list || !list.length) return;
+    const r = el('div', 'dfrel'); r.append(el('span', 'dfrl', tr(lab)));
+    list.forEach(w => { const b = el('button', 'dfw', esc(w)); b.type = 'button'; b.onclick = ev => { ev.stopPropagation(); const d = (DICT || dictBuild()).find(x => viCanon(x.vi) === viCanon(w)) || { vi: w, ko: (DFULL[w.toLowerCase()] ? dfullText(DFULL[w.toLowerCase()]) : '') }; openWordCard(d, back); }; r.append(b); });
+    box.append(r);
+  };
+  rel('유의어', e.y); rel('반의어', e.a);
+  if (e.v) box.append(el('div', 'dfnote', tr('다른 표기') + ': ' + esc(e.v)));
+  return box;
+}
 function sibLoad() {
   if (SIB) return Promise.resolve(SIB);
   if (!SIBP) SIBP = fetch('data/sib.json', { cache: 'no-cache' }).then(r => r.json())
@@ -7976,7 +8004,8 @@ function dictBuild() {
   if (SIB) Object.entries(SIB.w).forEach(([k, v]) => { if (v.k) put(k, v.k, null, false, '사전'); });   // 헷갈리는 짝 자료(사전 단어 — 한국어 뜻 있는 것)
   /* 참고 사전 (2026-09-29, 대표님 "사전 작업 다 못했니?") — 뜻 25,835개를 다 옮겨 놓고도 사전 탭이 찾지 않았다.
      앱·짝 자료에 없는 말만 '참고' 표시를 달아 넣는다. 열쇠가 소문자라 대문자 꼴은 _dict_head.json 에서 되살린다. */
-  if (DKO) Object.entries(DKO).forEach(([k, v]) => put((DKH && DKH[k]) || k, Array.isArray(v) ? v.join(' · ') : v, null, true, '참고 사전'));
+  if (DFULL) Object.entries(DFULL).forEach(([k, e]) => put(e.h || k, dfullText(e), null, true, '참고 사전'));   // 사전 한 벌(위키 그대로, 2026-10-01)
+  else if (DKO) Object.entries(DKO).forEach(([k, v]) => put((DKH && DKH[k]) || k, Array.isArray(v) ? v.join(' · ') : v, null, true, '참고 사전'));
   /* 검수된 뜻 목록(data/_senses.json)의 뜻도 사전 뜻에 넣는다 — 한국어로 찾을 때 '운동하다' 로 tập 이 나오게 (대표님 지시 2026-09-29 밤: "모든 뜻을 가져와서 표기"). 여덟 구절까지 */
   if (SENSES) seen.forEach(o => {
     const ss = SENSES[String(o.vi).trim().toLowerCase()];
@@ -7999,6 +8028,7 @@ async function dictReady() {
   if (typeof GYBM !== 'undefined' && !GYBM) jobs.push(get('data/gybm.json', j => { GYBM = j.sources; GYBM_ALL = null; }));   // gybmBuild 와 같이 sources 배열만 (2026-09-27: 통째로 넣어 사전이 멈췄다)
   if (!COURSE) jobs.push(get('data/order.json', j => { COURSE = j; loadCWords(); }));
   if (!DKO) jobs.push(get('data/_dict_ko.json', j => { DKO = j; }));
+  if (!DFULL) jobs.push(get('data/_dict_full.json', j => { DFULL = j; }));
   if (!DKH) jobs.push(get('data/_dict_head.json', j => { DKH = j; }));
   if (!KRSYL) jobs.push(get('data/_kr_syl.json', j => { KRSYL = j; }));
   if (!DSKIP) jobs.push(get('data/_dict_skip.json', j => { DSKIP = new Set(j.map(viCanon)); }));
@@ -8876,7 +8906,9 @@ function drawCard() {
                   x.work.map(t2 => esc(t2)).join(' · ')));
     rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
     caiNote(cf, x);                                        // 'cái nhà' 처럼 분류사가 붙은 표제어 (2026-09-29)
-    senseLine(kob, x);                                     // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
+    const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
+    if (dfe) { kob.textContent = ''; if (isCore(x)) kob.append(el('span', 'corepill', tr('핵심'))); kob.append(dfullBox(dfe, () => openWordCard(x))); }   // 사전 카드: 품사별 모든 뜻·유의어·반의어 (2026-10-01)
+    else senseLine(kob, x);                                // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
     if (so) cf.append(southLine(so));                       // 남부 말 · 북부에서는 ○○ (2026-09-29)
     else if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
@@ -10180,7 +10212,7 @@ function weeklyEntry() {
   });
   /* 1차 시험지 문항 그대로 + 90분 시계 (대표님 2026-09-30 "주간시험 일단 그대로 넣어줘봐. 시간도") — data/exam1.json */
   { const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, esc(tr('1차 시험지 그대로')) + ' <span class="exmeta">' + esc(tr('실제 문항 82 · 90분')) + '</span>'));
+    btn.append(el('b', null, esc(tr('1차 시험지 그대로')) + ' <span class="exmeta">' + esc(tr('실제 문항 86 · 90분')) + '</span>'));
     btn.onclick = () => { dive(weeklyEntry); startExam1(); };
     b.append(btn); }
   show('exam', '주간 시험', true);
