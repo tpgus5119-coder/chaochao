@@ -50,7 +50,7 @@ def main():
         for s_, m in zip(ss, kos):
             if s_["pos"] == "Numeral" and m in NUM: m = NUM[m]          # 숫자 뜻은 숫자로 (대표님 2026-09-30 "통일감": 여덟 → 8)
             t = (TAG.get(s_["pos"], s_["pos"]), m)
-            if m and m != "-" and t not in seen_s: seen_s.add(t); keep.append(t)      # 같은 품사·같은 뜻이 두 번 옮겨진 것(úc '뇌 · 뇌')은 하나로
+            if m and m != "-" and m not in {x[1] for x in keep}: keep.append(t)      # 같은 뜻이 두 번(úc '뇌 · 뇌', thứ hai [명]·[고유] '월요일')이면 하나로
         # 한자음 — 위키의 'Sino-Vietnamese reading of 三' 줄(뜻 줄이 아니라 따로 둔 것)을 [한자] 로 (tam → 三 석 삼: 합성어 tam giác 삼각형의 tam)
         hv = re.findall(r"\{\{sino-vietnamese reading of\|([^}|]+)", (g.get(k) or {}).get("raw") or "") if v["lang"] == "en" else []
         if hv:
