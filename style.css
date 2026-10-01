@@ -2958,3 +2958,7 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .dfull .dfpos.pj{border-style:dashed;opacity:.8}   /* 판정한 품사 (2026-10-01) */
 .appexmore{display:grid;gap:8px}
 .appex .appexbtn{justify-self:start}
+.dictrow.sentrow{grid-template-columns:1fr auto}
+.dictrow.sentrow .dvi{grid-column:1;font-weight:600}
+.dictrow.sentrow .dko{grid-column:1}
+.dictrow.sentrow .dspk{grid-column:2;grid-row:1 / span 2}

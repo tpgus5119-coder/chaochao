@@ -68,6 +68,12 @@ def main():
         with mp.Pool(6) as pool:
             r = [x[1] for x in pool.imap_unordered(trim_audio.one, [(p, False) for p in paths], chunksize=10)]
         print("무음 자름", {k: r.count(k) for k in set(r)}, flush=True)
+    # 16kbps 로 줄인다 (대표님 2026-10-01 "모든 소리 그냥 16k로" — tools/audio_16k.py)
+    if ok:
+        import audio_16k
+        paths16 = [R / f"audio/{v}/n/{k12(t)}.mp3" for t in ok for v in VOICES if (R / f"audio/{v}/n/{k12(t)}.mp3").exists()]
+        r16 = [audio_16k.one(p) for p in paths16]
+        print("16k", {k: r16.count(k) for k in set(r16)}, flush=True)
 
 
 if __name__ == "__main__":

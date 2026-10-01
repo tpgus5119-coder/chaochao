@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -8313,7 +8313,7 @@ async function dictReady() {
   if (!DSKIP) jobs.push(get('data/_dict_skip.json', j => { DSKIP = new Set(j.map(viCanon)); }));
   if (!DEN) jobs.push(get('data/_dict_en.json', j => { DEN = j; }));
   if (!DFREQ) jobs.push(get('data/_dict_freq.json', j => { DFREQ = j; }));
-  jobs.push(southLoad(), sensesLoad());   // 남부 딱지·검수된 뜻 목록 (2026-09-29 밤)
+  jobs.push(southLoad(), sensesLoad(), dexLoad());   // 사전 예문은 '문장 속에서' 찾기에도 쓴다 (2026-10-01)   // 남부 딱지·검수된 뜻 목록 (2026-09-29 밤)
   await Promise.all(jobs);
   DICT = null;
 }
@@ -8512,6 +8512,16 @@ function dictEntry(q0) {
     row.onclick = () => { dictRemember(x); openWordCard(x, () => dictEntry(inp.value)); };   // 누르면 단어 카드 — 뒤로 가면 찾던 말 그대로. 누른 말은 기록에 남는다 (2026-09-30)
     return row;
   };
+  /* 문장 한 줄 — '문장 속에서' 칸. 누르면 그 문장 소리(우리 소리가 없으면 기기 소리) */
+  const sentRow = m => {
+    const row = el('div', 'dictrow sentrow');
+    row.append(tapLine(m.vi, 'dvi tapline'), el('span', 'dko', esc(m.ko)));
+    const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
+    spk.setAttribute('role', 'button'); spk.title = tr('듣기');
+    spk.onclick = ev => { ev.stopPropagation(); const k = recKey(m.vi); k ? play(k, false, voiceDir()) : speakVi(m.vi, false, 0, S.voice); };
+    row.append(spk);
+    return row;
+  };
   /* 최근 찾은 말 (대표님 지시 2026-09-30) — 입력칸이 비어 있을 때. 이 기기(localStorage)에만 남고 서버로는 안 간다(PROGKEYS 밖). 최대 DICT_HIST_MAX 개 */
   const histDraw = () => {
     const h = S.dictHist || [];
@@ -8584,6 +8594,22 @@ function dictEntry(q0) {
       const inVi = new Set(vi.map(x => x.vi));
       const enRank = x => { const t = dictEnTerms(x), i2 = t.indexOf(qk); return i2 < 0 ? 99 : i2; };   // 그 말 그대로인 뜻이 앞 뜻일수록 먼저
       const en = enq ? d.filter(x => !inVi.has(x.vi) && enHit(x)).sort((a, b2) => enRank(a) - enRank(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || a.vi.length - b2.vi.length) : [];
+      /* 사전에 없는 구(trời mưa) — 문장 속에서 찾아 그 문장의 한국어를 보인다 (대표님 2026-10-01 "사전에 없더라도 그 말로 검색하면 뜻이 나오면 안 됨?").
+         번역기를 쓰지 않는다 — 앱 예문·교재 원문·사전 예문 가운데 그 구가 낱말 단위로 들어 있는 문장만(성조 없이 쳐도 됨). 그 구 자체가 문장이면 맨 위 */
+      const nq = qb.split(' ').length;
+      if (nq >= 2 && !vi.some(x => x.b === qb)) {
+        const X = appExIndex(), pool = [...X.list.map(m => [m.vi, m.ko])];
+        if (DEX) Object.values(DEX).forEach(a => a.forEach(p => pool.push(p)));
+        const seenS = new Set(), hitS = [];
+        for (const [v, k] of pool) {
+          const b = ' ' + dictBare(v) + ' ';
+          if (!k || !b.includes(' ' + qb + ' ') || seenS.has(v.toLowerCase())) continue;
+          seenS.add(v.toLowerCase()); hitS.push({ vi: v, ko: k, n: b.trim().split(' ').length });
+          if (hitS.length > 200) break;
+        }
+        hitS.sort((a, b2) => (a.n === nq ? 0 : 1) - (b2.n === nq ? 0 : 1) || a.n - b2.n);
+        if (hitS.length) secs.push([tr('문장 속에서'), hitS.slice(0, 20).map(m => ({ vi: m.vi, ko: m.ko, sent: 1 }))]);
+      }
       secs.push([tr('베트남어 낱말'), vi], [tr('영어 뜻으로 찾은 낱말'), en]);
     }
     const live = secs.filter(s2 => s2[1].length);
@@ -8591,7 +8617,7 @@ function dictEntry(q0) {
     const CAP = 40;
     live.forEach(([name, list]) => {
       out.append(el('p', 'dsec', esc(name) + ' <small>' + tr('N개').replace('N', list.length) + '</small>'));
-      list.slice(0, CAP).forEach(x => out.append(dictRow(x)));
+      list.slice(0, CAP).forEach(x => out.append(x.sent ? sentRow(x) : dictRow(x)));
       if (list.length > CAP) {
         const more = el('button', 'ghost sm dmore', tr('N개 더 보기').replace('N', list.length - CAP)); more.type = 'button';
         more.onclick = () => { const frag = document.createDocumentFragment(); list.slice(CAP).forEach(x => frag.append(dictRow(x))); more.replaceWith(frag); };

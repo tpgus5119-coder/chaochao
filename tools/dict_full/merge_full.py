@@ -59,9 +59,9 @@ def main():
             if m and m != "-" and m not in {x[1] for x in keep}: keep.append(t)      # 같은 뜻이 두 번(úc '뇌 · 뇌', thứ hai [명]·[고유] '월요일')이면 하나로
         # 한자음 — 위키의 'Sino-Vietnamese reading of 三' 줄(뜻 줄이 아니라 따로 둔 것)을 [한자] 로 (tam → 三 석 삼: 합성어 tam giác 삼각형의 tam)
         hv = re.findall(r"\{\{sino-vietnamese reading of\|([^}|]+)", (g.get(k) or {}).get("raw") or "") if v["lang"] == "en" else []
-        if hv:
-            hs = " · ".join(c + ("(" + " ".join(hun[c][0]) + ")" if c in hun and hun[c] else "") for c in dict.fromkeys(hv))
-            keep.append(("한자", hs))
+        # [한자] 뜻 줄은 뺐다 (대표님 2026-10-01 "凌(업신여길 릉) · 稜 이런 식으로 단어 뜻을 넣으면 안 되지") — 그 음으로 읽히는 한자 목록일 뿐 낱말 뜻이 아니다.
+        # 낱말의 한자 뿌리는 한자 알약(data/_roots.json, 근거 확인한 것)으로만 보인다
+        hv = []
         if not keep: continue
         e = {"h": k, "p": [a for a, _ in keep], "s": [b for _, b in keep]}
         if v["syn"]: e["y"] = v["syn"][:12]
