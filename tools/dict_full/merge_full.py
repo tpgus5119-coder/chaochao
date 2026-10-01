@@ -42,6 +42,12 @@ def main():
         for l in pf.read_text(encoding="utf-8").splitlines():
             c = l.split("\t")
             if len(c) >= 3 and not l.startswith("#"): POSFIX[(c[0], int(c[1]))] = c[2]
+    KOFIX = {}                                             # 한국어 뜻 바로잡기 (tools/dict_full/ko_fix.tsv, 2026-10-01 밤 앱 낱말 품사 전체 점검) — 표제어는 대소문자 구별
+    kf = R / "tools/dict_full/ko_fix.tsv"
+    if kf.exists():
+        for l in kf.read_text(encoding="utf-8").splitlines():
+            c = l.split("\t")
+            if len(c) >= 3 and not l.startswith("#"): KOFIX[(U.normalize("NFC", c[0]), int(c[1]))] = c[2].strip()
     out, en, miss = {}, {}, 0
     for k, v in src.items():
         if not re.search(r"[A-Za-zÀ-ỹđĐ]", k): continue      # 한자 표제어(布政使·日本 — 한자 꼴)는 베트남 글자 사전에서 뺀다
@@ -54,6 +60,7 @@ def main():
         else: kos = ["-"] * len(ss); miss += 1
         keep, seen_s = [], set()
         for si, (s_, m) in enumerate(zip(ss, kos)):
+            if (k, si) in KOFIX: m = KOFIX[(k, si)]                        # '-' 이면 아래에서 빠진다
             if s_["pos"] == "Numeral" and m in NUM: m = NUM[m]          # 숫자 뜻은 숫자로 (대표님 2026-09-30 "통일감": 여덟 → 8)
             t = (POSFIX.get((k.lower(), si)) or TAG.get(s_["pos"], s_["pos"]), m)   # 위키 품사 제목·틀이 어긋난 곳 바로잡기 (tools/dict_full/pos_fix.tsv, 2026-10-01 tự tin)
             if m and m != "-" and m not in {x[1] for x in keep}: keep.append(t)      # 같은 뜻이 두 번(úc '뇌 · 뇌', thứ hai [명]·[고유] '월요일')이면 하나로

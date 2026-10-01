@@ -10,8 +10,9 @@ nfc = lambda s: U.normalize('NFC', str(s)).strip()
 REJECT = {'bạch mã': '지명 표제어(Bạch Mã 산맥)에 보통명사 뜻을 붙이는 것', 'choang': '민족 이름(좡족) 표제어', 'cờ đỏ': '지명(꺼도 현) 표제어',
           'cắc': "의성어 '딱' 근거 약함", 'hua': "'휘두르다' 근거 약함", 'qui': '홀로는 그 뜻으로 안 씀(quy 의 옛 철자는 합성어에서만)'}
 RELABEL = {'anh hai': ['(북부) 둘째 형'], 'váy': ['드레스, 원피스'], 'tự nhiên': ['(cứ tự nhiên) 편하게 하세요'], 'chanh': ['레몬(넓게, 라임과 함께)'],
-           'gôm': ['(남부) 헤어 스프레이'], 'kêu': ['(남부) (음식·음료를) 주문하다']}
-POSK = {'명': '명', '동': '동', '형': '형', '부': '부', '대': '대', '수': '수', '조': '조', '감': '감', '구': '구'}
+           'gôm': ['(남부) 헤어 스프레이'], 'kêu': ['(남부) (음식·음료를) 주문하다'],
+           'kỷ luật': ['징계']}                                    # '징계, 징계하다' 한 줄에 명사·동사가 섞였었다 — 동사는 split.tsv (2026-10-01 밤)
+POSK = {'명': '명', '동': '동', '형': '형', '부': '부', '대': '대', '수': '수', '조': '조', '감': '감', '구': '구', '전': '전'}
 
 
 def main():
@@ -38,6 +39,18 @@ def main():
                 e['s'].insert(at, s); e['p'].insert(at, p)
                 e['b'] = sorted([i + 1 if i >= at else i for i in e.get('b', [])] + [at])
                 n += 1
+    # 다른 품사 뜻 떼어 붙이기 (tools/dict_sup/split.tsv, 2026-10-01 밤) — ko_fix.tsv 로 한 줄에서 걷어 낸 말 가운데 근거 있는 것
+    for l in (R / 'tools/dict_sup/split.tsv').read_text(encoding='utf-8').splitlines():
+        c = l.split('\t')
+        if l.startswith('#') or len(c) < 3: continue
+        k = nfc(c[0]).lower(); p = POSK[c[1].strip()]; s = c[2].strip()
+        if k not in F: skip += 1; continue
+        e = F[k]
+        if re.sub(r'\s', '', s) in {re.sub(r'\s', '', x) for x in e['s']}: continue
+        at = max([i for i, q in enumerate(e['p']) if q == p], default=len(e['s']) - 1) + 1
+        e['s'].insert(at, s); e['p'].insert(at, p)
+        e['b'] = sorted([i + 1 if i >= at else i for i in e.get('b', [])] + [at])
+        n += 1
     (R / 'data/_dict_full.json').write_text(json.dumps(F, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     print(f'보충 뜻 {n} · 뺌 {skip} · 표제어 {sum(1 for e in F.values() if e.get("b"))}')
 

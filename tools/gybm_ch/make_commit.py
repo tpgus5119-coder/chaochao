@@ -36,6 +36,7 @@ MY += ["data/cohort22.json"] + [f"tools/ex_source/{n}" for n in ("cand.py", "PRO
 MY += ["tools/dict_full/pos_live.py", "tools/dict_full/pos_fix.tsv", "tools/dict_full/pos_amb.json"]   # 위키 품사 제목·틀 어긋남 (2026-10-01)
 MY += ["tools/dict_pos/compare.py", "tools/dict_pos/verify_tagger.py", "tools/dict_pos/검산_태거.tsv", "tools/dict_pos/불일치.tsv"] + [f"tools/dict_pos/pos_{i:02d}.b.tsv" for i in range(10)]   # 품사 판정 검산 (2026-10-01)
 MY += ["tools/dict_pos/make_sheets.py", "tools/dict_pos/PROMPT.md", "tools/dict_pos/chk.py", "tools/dict_pos/apply.py"] + [f"tools/dict_pos/pos_{i:02d}.ko.tsv" for i in range(10)] + [f"tools/dict_pos/pos_{i:02d}.json" for i in range(10)]   # 품사 없던 뜻 판정 (2026-10-01)
+MY += ["tools/dict_full/ko_fix.tsv", "tools/dict_sup/split.tsv", "tools/dict_pos/fetch_vi.py", "tools/dict_pos/app_compare.py", "tools/dict_pos/app_compare.tsv", "tools/dict_pos/fetch_en_live.py", "tools/dict_pos/en_live_compare.py", "tools/dict_pos/en_live_diff.tsv"]   # 앱 낱말 품사 전체 다시 점검 (2026-10-01 밤)
 # 카드뉴스 그림 — 이름을 앱이 계산해(img/card/<날짜>-<n>-{1,2}.webp) 데이터에 이름이 없어 '쓰이지 않는 그림'으로 지워지고 있었다(사이트에 0장).
 # 최근 10일 치를 늘 함께 올린다 → 홈 '베트남 기사'(최근 5일) (2026-10-01)
 _cd = sorted({q.name[:10] for q in (ROOT / "img/card").glob("20??-??-??-*.webp")})[-10:]

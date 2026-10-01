@@ -1,0 +1,79 @@
+# 한국어 뜻 바로잡기 (2026-10-01 밤, 앱 낱말 품사 전체 점검). 칸: 표제어(src.json 그대로, 대소문자 구별) ⇥ 뜻 번호(0부터) ⇥ 새 한국어('-' 이면 그 뜻 줄을 뺌) ⇥ 근거
+# 까닭 ① 한 뜻 표제어는 옛 참고 사전 줄을 그대로 썼는데, 그 줄에 다른 품사의 뜻이 함께 붙어 있었다(báo cáo [동] '보고하다 · 보고서').
+#   → 그 품사에 맞는 말만 남긴다. 다른 품사 뜻은 근거(기초사전 대역·베트남어판 위키)가 있으면 tools/dict_sup/split.tsv 로 따로 떼어 [보충] 으로 붙이고, 없으면 뺀다.
+# 까닭 ② 대문자 표제어(Ly '= Li' 여자 이름)가 소문자 낱말의 한국어 줄(잔, 컵…)을 빌려 썼다.
+# 까닭 ③ 뜻 번역 칸이 뒤바뀌었다(lau 갈대 ↔ 닦다) · 뜻풀이를 문장째 옮겼다(xảy ra '…일어나는 행동').
+báo cáo	0	보고하다, 알리다	영어판 'to report, to inform' — '보고서'는 split.tsv 명사로
+chuẩn mực	0	표준적인, 모범적인	영어판 Adjective 'standard' — '표준, 규범'은 split.tsv 명사로
+cơ động	0	기동성	영어판 Noun 'mobility' — '기동성 있는'은 형용사 근거 없어 뺌
+cấp cứu	0	응급 처치하다	영어판 Verb — '응급'(명사)은 근거 없어 뺌
+gợi ý	0	제안하다	영어판 Verb 'to suggest' — 명사는 split.tsv
+hô hấp	0	(공식) 호흡하다	영어판 Verb — '호흡'은 split.tsv 명사로(베트남어판 명사 뜻)
+hùng biện	0	말을 잘하는, 웅변적인	영어판 Adjective 'eloquent, convincing' — 동사는 split.tsv, '웅변'(명사)은 근거 없어 뺌
+họp mặt	0	모이다, 만나다	영어판 Verb 'to get together; to meet' — '모임'(명사)은 근거 없어 뺌
+hội thoại	0	대화하다	영어판 Verb 'to talk, to converse' — '대화'(명사)는 근거 없어 뺌
+khác biệt	0	다른	영어판 Adjective 'different' — '차이'는 split.tsv 명사로
+khẳng định	0	단언하다, 확인하다	영어판 Verb 'to affirm; to confirm' — '긍정'(명사)은 근거 없어 뺌
+kiên nhẫn	0	참을성 있는	영어판 Adjective 'patient' — '인내심'(명사 = sự kiên nhẫn)은 뺌
+nhận định	0	판단하다	영어판 Verb 'to judge' — 명사는 split.tsv
+nội trợ	0	집안일의, 가사의	영어판 Adjective 'related to household chores' — '가정주부'(명사)는 근거 없어 뺌, 동사는 split.tsv
+nữ tính	0	여성스러운, 여성적인	영어판 Adjective 'feminine' — '여성성'(명사)은 근거 없어 뺌
+phiên dịch	0	통역하다, 번역하다	영어판 Verb 'to translate' — '통역사'는 split.tsv 명사로(베트남어판)
+phác thảo	0	초안, 스케치	영어판 Noun 'sketch' — 동사는 split.tsv
+phục vụ	0	봉사하다, 시중들다	영어판 Verb 'to serve, to attend to' — '종업원'(명사)은 근거 없어 뺌
+quy hoạch	0	(도시를) 계획하다	영어판 Verb 'to plan (a city)' — '계획, 기획'(명사)은 근거 없어 뺌
+quyết tâm	0	결심하다	영어판 Verb — '결심'은 split.tsv 명사로
+tinh thần	0	정신, 마음	영어판 Noun 'mind, spirit' — '정신적인'(형용사)은 뺌
+trong suốt	0	투명한	영어판 Adjective 'transparent' — '~ 내내'는 split.tsv
+trung bình	0	평균, 중간, (성적) 보통	영어판 Noun 'average' — 명사 꼴로
+tráng miệng	0	후식을 먹다	영어판 Verb — '디저트'(명사)는 근거 없어 뺌
+tuyệt đối	0	절대적인	영어판 Adjective 'absolute' — '절대로'는 split.tsv 부사로
+tình cờ	0	우연한	영어판 Adjective 'by chance; accidental' — '우연히'는 split.tsv 부사로
+xung đột	0	충돌하다	영어판 Verb 'to conflict, to clash' — '갈등'(명사)은 근거 없어 뺌
+đau đầu	0	(본뜻·비유) 머리가 아프다, 골치 아프다	영어판 Verb — '두통'은 split.tsv 명사로
+đình công	0	파업하다	영어판 Verb — '파업'(명사)은 근거 없어 뺌
+đúng	0	맞는, 옳은, 정확한	영어판 Adjective 'right, correct, accurate' — '정확히·정각'은 split.tsv 부사로
+đặc biệt	0	특별한	영어판 Adjective 'special' — '특별히'는 split.tsv 부사로
+đề kháng	0	(병리) 저항하다	영어판 Verb — '저항력'(명사 = sức đề kháng)은 뺌
+đề nghị	0	제안하다, 요청하다	영어판 Verb — '제안'은 split.tsv 명사로
+ơi	0	~야, 여보세요(부름)	영어판 Particle 'vocative particle' — '네(대답)'은 split.tsv 감탄사로
+tỷ	0	십억 (= tỉ)	영어판 Numeral '= tỉ' — '비율(tỷ lệ)'은 합성어 속 한자 뜻이라 뺌
+liên quan	0	관련, 연관	영어판 Noun 'a relevant connection, association' — '관련되다'는 split.tsv 동사로
+ngập	0	물에 잠긴, 침수된	영어판 Adjective 'be flooded' — 형용사 꼴로
+ngập	1	뒤덮인, 가득한	영어판 Adjective 'be covered in; abounded by' — 형용사 꼴로
+xin chào	0	(정중히) 인사하다	영어판 Verb 'to cordially greet' — '안녕하세요'는 split.tsv 감탄사로
+cười	0	웃음, 미소	영어판 Noun 'smile' — 번역이 동사 꼴('웃다')이었음
+lau	0	갈대	영어판 Noun 'reed' — 번역 칸이 뒤바뀌어 있었음(0 닦다 ↔ 1 갈대)
+lau	1	(젖은 천으로) 닦다	영어판 Verb 'to clean by wiping or rubbing with a wet cloth'
+bộ	11	(옛, 합성어) 장부, 등록부 (= bạ)	영어판 Noun '= bạ (register)' — 명사(장부)인데 '등록하다'로 옮겼었음
+tiếp theo	0	이어지다, 다음에 오다	영어판 Verb 'to follow; to be next' — 동사 꼴로
+giải trí	0	즐기다, 기분 전환하다	영어판 Verb 'to amuse; to relax' — '오락'(명사)은 근거 없어 뺌
+khuyến mãi	0	판촉하다, 할인 행사를 하다	영어판 Verb 'to encourage customers to buy' — 명사 꼴 뺌
+khuyến mại	0	판촉하다	영어판 Verb 'to promote the sales' — '프로모션'(명사) 뺌
+may mặc	0	옷을 짓다	영어판 Verb 'to make clothes' — '의류'(명사) 뺌
+mất ngủ	0	잠을 못 자다, 불면증이 있다	영어판 Verb 'to be unable to sleep; to have insomnia'
+sơ cứu	0	응급 처치하다	베트남어판 뜻풀이('더 연구하다')는 잘못 — 기초사전 '응급 치료' 대역, 동사 제목
+cám ơn	0	감사하다, 고마워하다	영어판 Verb 'to thank' — '고마워요'는 split.tsv 감탄사로
+cảm ơn	0	감사하다, 고마워하다 (= cám ơn)	영어판 Verb '= cám ơn (thank you)' — '고마워요'는 split.tsv 감탄사로
+cãi nhau	0	말다툼하다, 서로 다투다	베트남어판 뜻풀이(남의 의견을 반박하는 행동)를 문장째 옮겼었음 · 기초사전 대역 말싸움하다(동사)
+gặp nhau	0	서로 만나다	베트남어판 뜻풀이(서로 얼굴을 보는 행동)를 문장째 옮겼었음
+uốn cong	0	구부리다	베트남어판 뜻풀이(곧은 것을 굽게 하는 행동)를 문장째 옮겼었음
+vay tiền	0	돈을 빌리다	베트남어판 뜻풀이(빌리고 빌려주는 신용 거래)를 문장째 옮겼었음
+xảy ra	0	일어나다, 발생하다	베트남어판 뜻풀이(일이 처음 일어나는 행동)를 문장째 옮겼었음 · 기초사전 대역 일어나다·벌어지다(동사)
+đóng gói	0	포장하다, 꾸리다	베트남어판 뜻풀이(상품을 포장재에 담다)를 문장째 옮겼었음 · 기초사전 대역 포장하다(동사)
+thương mại hóa	0	상품화하다	베트남어판 뜻풀이 'Làm cho trở thành hàng hoá' · 기초사전 대역 상품화하다(동사)
+tua vít	0	드라이버, 나사돌리개 (머리가 일자나 십자 모양)	베트남어판 뜻풀이 한 문장이 두 줄로 쪼개져 있었음 — 하나로
+tua vít	1	-	위와 같은 뜻풀이의 뒷부분('나사를 풀고 조이는 데 씀') — 앞 줄에 합침
+nước sôi	0	(남부) 비켜요, 비켜	영어판 Interjection 'out of my way' — '끓는 물'은 split.tsv 명사로
+Ly	0	여자 이름 (= Li)	영어판 Proper noun '= Li'(Li: a female given name) — 소문자 ly 의 줄(잔, 컵…)을 빌려 썼었음
+Thủy	0	투이(성씨·남녀 공용 이름, = Thuỷ)	영어판 '= Thuỷ'(성씨 · 남녀 공용 이름) — '수(水)'는 뺌
+Văn Hóa	0	(지명) 반호아(꽝빈성 뚜옌호아현의 사)	영어판 'a commune in Tuyên Hóa district, Quảng Bình' — '문화'는 소문자 낱말 뜻
+Bồ Tát	0	관음보살 (= Quan Âm)	영어판 '= Quan Âm (Avalokiteshvara)'
+Kinh	0	낀족의(베트남 민족의)	영어판 Adjective 'ethnically Vietnamese'
+đo lường	0	측정하다, 재다	영어판 뜻풀이 'to measure' — 동사 꼴로, '계량'(명사)은 split.tsv 명사 줄에
+chát	3	채팅하다 (= chat)	영어판 Verb '= chat (exchange of text…)' — 동사 꼴로
+chịu	3	(거래를) 외상으로 하다	영어판 Verb 'to be on credit (of a transaction)' — 동사 꼴로
+giây	1	더럽히다, 번지다 (= dây)	영어판 Verb '= dây (to stain; to spread)' — 번역이 '줄'로 섞여 있었음
+huỷ	1	(합성어에서) 되돌리다, 거꾸로 하다	영어판 Verb 'reverse' — 동사 꼴로
+hủy	1	(합성어에서) 되돌리다, 거꾸로 하다	영어판 Verb 'reverse' — 동사 꼴로
+thiếu	1	(음력 달이) 29일로 끝나다, 작은달이다	영어판 Verb 'having 29 days a month' — 동사 꼴로
