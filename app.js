@@ -6783,6 +6783,10 @@ function homeSettings() {
   }
   const rs = el('button', 'metext danger', tr('초기화')); rs.type = 'button'; rs.onclick = resetProgress; acct.append(rs);
   if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
+  /* 자료 출처 — 사전 결과 밑 문구를 뺀 대신(대표님 2026-10-01) 여기 둔다. 위키낱말사전·한국어기초사전은 CC BY-SA 라 출처를 밝혀야 한다 */
+  { const cr = el('button', 'metext', tr('출처')); cr.type = 'button';
+    cr.onclick = () => popup(tr('사전 자료') + ': Wiktionary(영어판·베트남어판, CC BY-SA 4.0) · 국립국어원 한국어기초사전(CC BY-SA 2.0 KR)을 바탕으로 한국어 뜻을 옮겼습니다.');
+    acct.append(cr); }
   row(tr('계정') + (S.acct ? '' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
   if (S.admin) row(tr('운영 현황'), null, () => { dive(renderHome); showAdmin(); });
   return box;
@@ -8225,8 +8229,7 @@ function dictEntry(q0) {
     hit.slice(0, 60).forEach(x => out.append(dictRow(x)));
     out.append(el('p', 'dicthint', tr('단어을 누르면 단어 카드가 열립니다')));
     if (hit.length > 60) out.append(el('p', 'note', tr('앞 60개만 보입니다 — 더 적어 보세요')));
-    if (hit.slice(0, 60).some(x => x.ref))       // 근거 밝히기 — 옮긴 뜻의 바탕 자료(공개 허락된 사전)
-      out.append(el('p', 'note', tr('참고 사전 뜻: 영어 위키낱말사전(CC BY-SA)·국립국어원 한국어기초사전(CC BY-SA)을 근거로 한국어로 옮긴 것')));
+    // 참고 사전 출처 문구는 뺐다 (대표님 2026-10-01). 위키낱말사전·한국어기초사전 출처(CC BY-SA 조건)는 '내 정보'의 자료 출처에 둔다
   };
   let tm = null;
   inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };

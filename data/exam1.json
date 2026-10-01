@@ -1,5 +1,5 @@
 {
-"note": "1차 시험지(Học viện Daewoosky, Bài kiểm tra số 1, 원본자료/…/주간시험 IMG_7001~7011) 그대로 옮김. 배점 듣기30·읽기30·쓰기20·말하기20, 90분(말하기 제외). made:true 인 듣기 문항의 들려주는 문장은 시험지에 대본이 없어 앱이 정답에 맞춰 지은 것. 듣기 4의 6~9번은 정답을 확인할 수 없어 뺐다. 쓰기 3(그림 5문장)은 모범 답안을 보고 스스로 매긴다.",
+"note": "1차 시험지(Học viện Daewoosky, Bài kiểm tra số 1, 원본자료/…/주간시험 IMG_7001~7011) 그대로 옮김. 배점 듣기30·읽기30·쓰기20·말하기20, 90분(말하기 제외). made:true 인 듣기 문항의 들려주는 문장은 시험지에 대본이 없어 앱이 정답에 맞춰 지은 것. 듣기 4의 6~9번은 대본이 없어 정답이 든 한 문장을 앱이 지어 읽어 준다(대표님 방식, 2026-10-01). 쓰기 3(그림 5문장)은 모범 답안을 보고 스스로 매긴다.",
 "time": 90,
 "pts": {
 "A": 30,
@@ -318,6 +318,66 @@
 "cũng",
 "không",
 "đã"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "A: Chị học tiếng Việt mấy tháng? B: Tôi học ____ tháng.",
+"audio": "Tôi học sáu tháng.",
+"opts": [
+"sáu",
+"hai",
+"mười",
+"một"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "A: Anh ấy là người nước nào? B: Anh ấy là người ____.",
+"audio": "Anh ấy là người Đức.",
+"opts": [
+"Đức",
+"Pháp",
+"Anh",
+"Mỹ"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "A: Tiếng Việt thế nào? B: Tiếng Việt khó nhưng ____.",
+"audio": "Tiếng Việt khó nhưng thú vị.",
+"opts": [
+"thú vị",
+"dễ",
+"mệt",
+"bận"
+],
+"ans": 0,
+"shuffle": true,
+"made": true
+},
+{
+"sec": "A 듣기 · 4 듣고 빈칸",
+"k": "choice",
+"prompt": "A: Các anh muốn gặp ai? B: Chúng tôi muốn gặp ____.",
+"audio": "Chúng tôi muốn gặp cô Hoa.",
+"opts": [
+"cô Hoa",
+"anh Long",
+"chị Mai",
+"ông Kim"
 ],
 "ans": 0,
 "shuffle": true,
