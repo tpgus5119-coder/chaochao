@@ -1026,7 +1026,7 @@ const toneAlt = s => String(s).replace(TONE_ALT_RE, x => TONE_ALT[x]);
 let DKO = null, DKH = null;          // 참고 사전 뜻 · 표제어 대문자 꼴 (소문자 열쇠 → 원래 꼴)
 /* 사전 한 벌 (2026-10-01, 대표님: "위키는 그대로 — 품사·모든 뜻·차례 그대로·유의어·반의어·영어로도 검색") — data/_dict_full.json
    {소문자 표제어: {h 표제어, p [품사 표시], s [한국어 뜻], y [유의어], a [반의어], v 다른 표기의 원래 꼴, k 위키 밖 굳은 말}} (tools/dict_full/merge_full.py) */
-let DFULL = null;
+let DFULL = null, KO2VI = null;     // KO2VI = 한국어 → 베트남어 (국립국어원 한국어기초사전 대역, data/_ko2vi.json)
 /* 품사가 같은 뜻끼리 묶어 한 줄 글로: "[명] 탁자 · 판 · [동] 의논하다" — 사전 목록 줄과 검색에 쓴다 */
 function dfullText(e) {
   let out = '', last = null;
@@ -8029,6 +8029,7 @@ async function dictReady() {
   if (!COURSE) jobs.push(get('data/order.json', j => { COURSE = j; loadCWords(); }));
   if (!DKO) jobs.push(get('data/_dict_ko.json', j => { DKO = j; }));
   if (!DFULL) jobs.push(get('data/_dict_full.json', j => { DFULL = j; }));
+  if (!KO2VI) jobs.push(get('data/_ko2vi.json', j => { KO2VI = j; }));
   if (!DKH) jobs.push(get('data/_dict_head.json', j => { DKH = j; }));
   if (!KRSYL) jobs.push(get('data/_kr_syl.json', j => { KRSYL = j; }));
   if (!DSKIP) jobs.push(get('data/_dict_skip.json', j => { DSKIP = new Set(j.map(viCanon)); }));
@@ -8227,15 +8228,17 @@ function dictEntry(q0) {
     clr.hidden = !q;
     if (q.length < 1) { histDraw(); return; }
     const qb = dictBare(q), qk = q.toLowerCase(), qh = dictHat(q);
-    const kor = /[가-힣]/.test(q);
+    const num = /^\d[\d.,]*$/.test(q);              // 숫자로 찾기(8 → tám) — 뜻에 그 숫자가 있는 낱말 (대표님 2026-10-01)
+    const kor = /[가-힣]/.test(q) || num;
+    const k2v = (kor && !num && KO2VI && KO2VI[qk]) || [];   // 한→베: 국립국어원 한국어기초사전 대역 (2026-10-01) — 맨 위로
     /* 정확한 것부터 (대표님 지시 2026-09-29: "병원이라고 검색하면 병원이 최상단에 나와야지 왜 병원비가 최상단에 있냐").
        한국어: 뜻이 그 말 자체(병원) 0 → 여러 뜻 중 하나가 그 말 1 → 그 말로 시작(병원비) 2 → 어딘가 들어 있음 3.
        앞서는 '시작하면 0' 한 갈래뿐이라 '병원'과 '병원비'가 같은 등급이 되고, 베트남어 길이(viện phí 8 < bệnh viện 9)로 병원비가 위로 올라갔다.
        베트남어: 그 말 자체 0 → 그 말로 시작 1 → 들어 있음 2. 같은 등급이면 수업 낱말이 참고 사전보다 먼저, 그다음 짧은 것. */
     // 뜻은 구절 단위로 견준다 — '학교 정문'의 첫 낱말이 '학교'라고 병원·학교와 같은 등급이 되지 않게. 괄호 설명은 빼고 본다: '학교(기관)' = '학교'
-    const phrs = s => s.toLowerCase().replace(/\([^)]*\)/g, '').split(/\s*[·\/,;]\s*/).map(p => p.trim()).filter(Boolean);   // 괄호는 자르기 전에 뺀다 — 괄호 안 ·,/ 로 찢기면 괄호가 안 닫혀 못 뺐다 (2026-09-29 밤)
+    const phrs = s => s.toLowerCase().replace(/\[[^\]]*\]\s*/g, '').replace(/\([^)]*\)/g, '').split(/\s*[·\/,;]\s*/).map(p => p.trim()).filter(Boolean);   // 괄호는 자르기 전에 뺀다 — 괄호 안 ·,/ 로 찢기면 괄호가 안 닫혀 못 뺐다 (2026-09-29 밤)
     const enq = !kor && ENQ(q);                     // 영어로 찾기(hospital) — 영어는 열쇠일 뿐 화면엔 안 나온다
-    const hit = d.filter(x => kor ? x.ko.toLowerCase().includes(qk)
+    const hit = d.filter(x => kor ? (num ? phrs(x.ko).includes(qk) : x.ko.toLowerCase().includes(qk) || k2v.includes(x.vi.toLowerCase()))
                                   : (x.b.includes(qb) || x.vi.toLowerCase().includes(qk) || (enq && x.en && x.en.some(e => e === qk || e.startsWith(qk + ' ')))))
                  .sort((a, b2) => {
                    /* 베트남어 차례 (2026-09-29 밤, 대표님: "a만 검색해도 모자 쓴 것들도 다 검색 · 우선순위는 근거 기반으로") — docs/기준.md §14-33
@@ -8244,7 +8247,7 @@ function dictEntry(q0) {
                       점수 = 범위×3 + 정확도 — 범위가 먼저: 친 말 그 자체인 낱말(ăn)이 그 말을 품은 낱말(an toàn)보다 앞, 같은 범위면 친 글자와 더 똑같은 것(an > án > ăn) */
                    const ext = (s, t) => s === t ? 0 : s.startsWith(t + ' ') ? 1 : (s.includes(' ' + t + ' ') || s.endsWith(' ' + t)) ? 2 : s.startsWith(t) ? 3 : s.includes(t) ? 4 : 9;
                    const sc = x => {
-                     if (kor) { const p = phrs(x.ko); return p[0] === qk ? 0 : p.includes(qk) ? 1 : p.some(v => v.startsWith(qk)) ? 2 : 3; }
+                     if (kor) { const i2 = k2v.indexOf(x.vi.toLowerCase()); if (i2 >= 0) return -10 + i2; const p = phrs(x.ko); return p[0] === qk ? 0 : p.includes(qk) ? 1 : p.some(v => v.startsWith(qk)) ? 2 : 3; }
                      let best = 99;
                      [[x.vi.toLowerCase(), qk], [x.h, qh], [x.b, qb]].forEach(([s, t], f) => { const e = ext(s, t); if (e < 9) best = Math.min(best, e * 3 + f); });
                      if (best < 99) return best;
@@ -8909,6 +8912,13 @@ function drawCard() {
     const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
     if (dfe) { kob.textContent = ''; if (isCore(x)) kob.append(el('span', 'corepill', tr('핵심'))); kob.append(dfullBox(dfe, () => openWordCard(x))); }   // 사전 카드: 품사별 모든 뜻·유의어·반의어 (2026-10-01)
     else senseLine(kob, x);                                // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
+    /* 큰 사전 바로가기 (대표님 2026-10-01 "인터넷 대형 사전 연결 — 무료") — 네이버 베트남어사전·구글 번역을 새 창으로. 자료를 가져오지 않고 그 사이트를 여는 것이라 무료·저작권 문제 없음 */
+    if (L.dict) {
+      const lk = el('div', 'dflinks'), q0 = encodeURIComponent(x.vi);
+      [['네이버 사전', 'https://dict.naver.com/vikodict/#/search?query=' + q0], ['구글 번역', 'https://translate.google.com/?sl=vi&tl=ko&op=translate&text=' + q0]].forEach(([t, u]) => {
+        const a = document.createElement('a'); a.className = 'dflink'; a.href = u; a.target = '_blank'; a.rel = 'noopener'; a.textContent = tr(t) + ' ↗'; lk.append(a); });
+      kob.append(lk);
+    }
     if (so) cf.append(southLine(so));                       // 남부 말 · 북부에서는 ○○ (2026-09-29)
     else if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).

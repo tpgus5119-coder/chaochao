@@ -2903,3 +2903,5 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .dfrl{font-size:12px; font-weight:800; color:var(--dim); margin-right:2px}
 .dfw{font:inherit; font-size:14px; padding:3px 9px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--fg); cursor:pointer}
 .dfnote{font-size:12px; color:var(--dim); margin-top:6px}
+.dflinks{display:flex; gap:8px; justify-content:center; margin-top:10px}
+.dflink{font-size:13px; padding:4px 10px; border-radius:999px; border:1px solid var(--line); color:var(--dim); text-decoration:none; background:var(--card)}

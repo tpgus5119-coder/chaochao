@@ -29,6 +29,8 @@ def vi_section(t):
         t = t[m.end():]; m2 = re.search(r"\n==\s*\{\{langname\|", t); return t[:m2.start()] if m2 else t
     m = re.search(r"\{\{-vie-\}\}", t)
     if m: t = t[m.end():]
+    m3 = re.search(r"\n==\s*\{\{langname\|", t)              # {{-vie-}} 뒤에 다른 언어 절(=={{langname|uuu}}==)이 오는 꼴 (thà 의 'U어' 숫자 tám)
+    if m3: t = t[:m3.start()]
     # 다른 언어 절의 머리 — 품사 머리({{-noun-}} 등)와 헷갈리지 않게 언어 부호만 (전에 품사 머리에서 잘려 1만 4천 개를 잃었다)
     m2 = re.search(r"\{\{-(?:eng|fra|zho|jpn|kor|deu|spa|rus|ita|por|tha|khm|lao|cmn|nan|yue|hak|lat|tgl|msa|ind|nld|swe|pol|tur|ara|hin|mya|ceb|fin|hun|ces|ell|heb|vie-old|tày|tay|mnw|cjy)-\}\}", t)
     return t[:m2.start()] if m2 else t
@@ -40,9 +42,13 @@ def vclean(s):
 def parse_vi(txt):
     t = vi_section(txt); out, syn, ant, cur, sec = [], [], [], None, None
     for line in t.split("\n"):
+        if re.match(r"\s*\{\{-[^}a-z-]*[^\x00-\x7f][^}]*-\}\}", line): break     # {{-tày-}} 처럼 알파벳 밖 글자가 든 언어 머리 — 베트남어 절 끝
         pm = re.match(r"\s*(?:===\s*\{\{ĐM\|([a-z-]+)\}\}\s*===|\{\{-([a-z-]+)-\}\})", line)
         if pm:
-            key = pm.group(1) or pm.group(2); sec = key
+            key = pm.group(1) or pm.group(2)
+            # 처음 보는 머리(언어 부호 — {{-tay-}}·{{-mol-}} 등)면 베트남어 절이 끝난 것: 다른 언어의 뜻(thà '8' 같은)이 섞이지 않게 멈춘다
+            if len(key) == 3 and key not in ("ref", "syn", "ant", "drv", "see", "dfn", "adj", "adv", "num", "alt", "rel", "vie"): break   # 세 글자 언어 부호(eng·fra·tyz 따이·mtq 므엉 …)
+            sec = key
             if key in ("pron", "trans", "ref", "etym", "see", "also", "der", "rel", "dev", "syn", "ant"): cur = None if key not in ("syn", "ant") else cur
             else: cur = VPOS.get(key, "")
             continue

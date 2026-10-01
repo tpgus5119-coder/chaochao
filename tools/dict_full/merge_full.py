@@ -21,19 +21,41 @@ def main():
             p = l.rstrip("\n").split("\t")
             if len(p) < 3: continue
             it = items[int(p[0])]; ko.setdefault(it["vi"], {})[int(p[1])] = p[2].strip()
+    fix = {}                                               # 한 뜻 표제어 검수(fv_NN.ko.tsv: n<탭>새 뜻) — 옛 참고 사전 줄이 위키 뜻과 다른 것
+    for f in sorted(glob.glob(str(D / "fv_*.json"))):
+        items = {it[0]: it[1] for it in json.load(open(f))}
+        t = f[:-5] + ".ko.tsv"
+        if not pathlib.Path(t).exists(): continue
+        for l in open(t, encoding="utf-8"):
+            p = l.rstrip("\n").split("\t")
+            if len(p) >= 2 and p[0].strip().isdigit() and int(p[0]) in items: fix[items[int(p[0])]] = p[1].strip()
+    hun = json.load(open(R / "data/_hanja_hun.json")); g = json.load(open(R / "data/_dict_gloss.json"))
+    for c, hu in {"二": ["두", "이"], "三": ["석", "삼"], "四": ["넉", "사"], "五": ["다섯", "오"], "六": ["여섯", "육"], "七": ["일곱", "칠"], "八": ["여덟", "팔"],
+                  "九": ["아홉", "구"], "十": ["열", "십"], "百": ["일백", "백"], "千": ["일천", "천"], "萬": ["일만", "만"]}.items():
+        hun.setdefault(c, [hu])                            # 수 한자의 훈·음(표준) — 위키 훈음 표에 빠진 것
+    NUM = {"영": "0", "공": "0", "하나": "1", "한": "1", "일": "1", "둘": "2", "두": "2", "이": "2", "셋": "3", "세": "3", "삼": "3", "넷": "4", "네": "4", "사": "4", "다섯": "5", "오": "5",
+           "여섯": "6", "육": "6", "일곱": "7", "칠": "7", "여덟": "8", "팔": "8", "아홉": "9", "구": "9", "열": "10", "십": "10", "스물": "20", "서른": "30", "마흔": "40", "쉰": "50",
+           "예순": "60", "일흔": "70", "여든": "80", "아흔": "90", "백": "100", "천": "1000", "만": "10000", "십만": "100000", "백만": "1000000", "천만": "10000000", "억": "100000000", "십억": "1000000000"}
     out, en, miss = {}, {}, 0
     for k, v in src.items():
         if not re.search(r"[A-Za-zÀ-ỹđĐ]", k): continue      # 한자 표제어(布政使·日本 — 한자 꼴)는 베트남 글자 사전에서 뺀다
         ss = v["s"]
         if k in ko: kos = [ko[k].get(i + 1, "-") for i in range(len(ss))]
         elif v.get("alt") and v["alt"] in ko: kos = [ko[v["alt"]].get(i + 1, "-") for i in range(len(ss))]
+        elif len(ss) == 1 and k in fix: kos = [fix[k]]
         elif len(ss) == 1 and key(k) in dk: kos = [dk[key(k)]]
         elif v.get("alt") and key(v["alt"]) in dk and len(ss) == 1: kos = [dk[key(v["alt"])]]
         else: kos = ["-"] * len(ss); miss += 1
         keep, seen_s = [], set()
         for s_, m in zip(ss, kos):
+            if s_["pos"] == "Numeral" and m in NUM: m = NUM[m]          # 숫자 뜻은 숫자로 (대표님 2026-09-30 "통일감": 여덟 → 8)
             t = (TAG.get(s_["pos"], s_["pos"]), m)
             if m and m != "-" and t not in seen_s: seen_s.add(t); keep.append(t)      # 같은 품사·같은 뜻이 두 번 옮겨진 것(úc '뇌 · 뇌')은 하나로
+        # 한자음 — 위키의 'Sino-Vietnamese reading of 三' 줄(뜻 줄이 아니라 따로 둔 것)을 [한자] 로 (tam → 三 석 삼: 합성어 tam giác 삼각형의 tam)
+        hv = re.findall(r"\{\{sino-vietnamese reading of\|([^}|]+)", (g.get(k) or {}).get("raw") or "") if v["lang"] == "en" else []
+        if hv:
+            hs = " · ".join(c + ("(" + " ".join(hun[c][0]) + ")" if c in hun and hun[c] else "") for c in dict.fromkeys(hv))
+            keep.append(("한자", hs))
         if not keep: continue
         e = {"h": k, "p": [a for a, _ in keep], "s": [b for _, b in keep]}
         if v["syn"]: e["y"] = v["syn"][:12]
