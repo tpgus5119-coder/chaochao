@@ -28,6 +28,7 @@ MY += ["data/daily22.json", "tools/daily22/build.py", "tools/daily22/문장.tsv"
 MY += ["tools/word_check/tone_check.py", "data/_tone_check.json"]   # 성조 잣대 (2026-09-30)   # 매일 단어 시험 (2026-09-30)
 MY += ["tools/notes/필기_낱말.tsv", "tools/notes/add.py", "tools/notes/img.py"]   # 대표님 필기 낱말 → 일상회화 (2026-09-30)   # 남부 딱지·뜻풀이 전부 뽑기 (2026-09-29 밤)
 MY += ["tools/senior_topic/결과.tsv", "tools/senior_topic/일상_넣기.tsv", "tools/senior_topic/add_senior.py", "tools/senior_topic/add_work.py"]   # 선배 시험 낱말 → 일상·직무 주제 + 자주 쓰는 기본 낱말 (2026-10-01)
+MY += ["tools/roots/dict_han.py", "tools/roots/hanmulti.py", "tools/roots/사전_한자.tsv", "tools/roots/사전_한자_뺌.tsv", "data/_dict_ex.json", "data/_dict_freq.json", "tools/dict_ex/make_sheets.py", "tools/dict_ex/PROMPT.md", "tools/dict_ex/chk.py", "tools/dict_ex/merge.py", "tools/dict_freq/fetch_wiki.py", "tools/dict_freq/count.py"] + [f"tools/dict_ex/ex_{i:02d}.ko.tsv" for i in range(26)] + [f"tools/dict_ex/ex_{i:02d}.json" for i in range(26)]   # 사전: 한자 뿌리 전체·예문·빈도 (2026-10-01)
 MY += [f"tools/rel_mine/{n}" for n in ("apply.py", "짝.tsv", "뜻_새로.tsv")] + [f"tools/word_check/{n}" for n in ("asr.py", "sheet.py", "apply_k.py", "carrier.mp3", "검사표.tsv", "k_고침.tsv", "짝_삭제.tsv", "_main_words.json")] + ["data/_asr_word.jsonl"]
 # 위키낱말사전에 표시된 유의어·반의어 넣기 + 클로드 뜻별 판정 (2026-09-29)
 MY += ["tools/rel_parse.py"] + [f"tools/rel_import/{n}" for n in ("apply.py", "pairs.tsv", "뜻판정.tsv", "뜻_새로.tsv", "갈래.tsv")]

@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -7945,6 +7945,60 @@ let WB = 'star';                       // 단어장에서 보고 있는 칸
    베트남어로도 한국어로도 찾을 수 있고, 성조를 안 찍어도 찾아진다(뼈대로 견준다).
    AI 를 쓰지 않으므로 돈이 들지 않는다. */
 let DICT = null;
+/* 앱 예문 (대표님 2026-10-01 "사전에 예문이 없다 → 앱 속 예문 연결") — 사전 낱말 카드에 앱에 이미 있는 문장(일상·직무·교재·선배·22기·문법 예문·대화)
+   가운데 그 낱말이 **낱말로** 쓰인 것을 보인다. 문장을 사전 표제어로 왼쪽부터 가장 긴 것부터 잘라(an toàn 은 한 덩어리) 그 조각이 찾는 낱말과 같을 때만 —
+   an 을 찾을 때 an toàn 속 an 은 안 센다. 새 문장을 만들지 않는다(지어내지 않는다). 처음 열 때 한 번 만든다 */
+let APPEX = null;
+function appExIndex() {
+  if (APPEX) return APPEX;
+  const heads = new Set(dictBuild().map(x => x.vi.toLowerCase()));
+  const list = [], seenV = new Set();
+  const add = o => {
+    const v = String(o.vi).trim(), k = v.toLowerCase();
+    if (v.split(/\s+/).length < 3 || seenV.has(k) || !/[a-zà-ỹđ]/i.test(v)) return;
+    seenV.add(k); list.push({ vi: v, ko: String(o.ko).trim(), kr: o.kr || '', au: !!(AIDX && (AIDX[v] || AIDX[k])) });   // 우리 소리 있는 문장 먼저 (recKey 는 느려 미리 센다)
+  };
+  const walk = (o, dep) => {
+    if (!o || dep > 16) return;                                  // order.json 은 권→트랙→챕터→과→낱말→예문 으로 깊다
+    if (Array.isArray(o)) { o.forEach(v => walk(v, dep + 1)); return; }
+    if (typeof o !== 'object') return;
+    if (typeof o.vi === 'string' && typeof o.ko === 'string' && o.ko) add(o);
+    for (const v of Object.values(o)) if (v && typeof v === 'object') walk(v, dep + 1);
+  };
+  walk(ALL, 0); walk(COURSE, 0); walk(GYBM, 0); walk(GRAM, 0);
+  const idx = new Map();
+  list.forEach((s2, i) => {
+    const raw = s2.vi.replace(/[.,!?;:"“”‘’()…–—]/g, ' ').split(/\s+/).filter(Boolean), t = raw.map(x => x.toLowerCase());
+    for (let a = 0; a < t.length;) {
+      let n = Math.min(4, t.length - a);
+      for (; n > 1; n--) if (heads.has(t.slice(a, a + n).join(' '))) break;
+      /* 문장 가운데 대문자로 시작하면 이름(bé An·Hà Nội)이다 — 소문자 낱말(an)의 예문으로 세지 않고 대문자 열쇠로 둔다 */
+      const cap = a > 0 && raw[a][0] !== t[a][0];
+      const base = t.slice(a, a + n).join(' ');
+      const keys = cap ? ['^' + base] : a === 0 && raw[0][0] !== t[0][0] ? [base, '^' + base] : [base];   // 문장 첫 낱말은 이름일 수도(Hà Nội là …) — 두 열쇠 다
+      keys.forEach(w => { if (!idx.has(w)) idx.set(w, []); const arr = idx.get(w); if (arr[arr.length - 1] !== i) arr.push(i); });
+      a += n;
+    }
+  });
+  APPEX = { list, idx };
+  return APPEX;
+}
+const sentRank = s2 => /[.!?]$/.test(s2.vi) || (s2.vi[0] !== s2.vi[0].toLowerCase()) ? 0 : 1;   // 온전한 문장이 짧은 구(ăn tại chỗ)보다 먼저
+function appExFor(vi, skip) {
+  const v0 = String(vi).trim(), X = appExIndex();
+  const ids = X.idx.get((v0 !== v0.toLowerCase() ? '^' : '') + v0.toLowerCase()) || [];   // 대문자 든 표제어(Hà Nội)는 이름 열쇠로 — [À-Ỹ] 범위는 소문자도 품어 쓰지 않는다
+  const sk = String(skip || '').trim().toLowerCase();
+  return ids.map(i => X.list[i]).filter(s2 => s2.vi.toLowerCase() !== sk)
+    .sort((a, b) => sentRank(a) - sentRank(b) || (a.au ? 0 : 1) - (b.au ? 0 : 1) || a.vi.length - b.vi.length).slice(0, 3);
+}
+let DFREQ = null;   // 낱말 빈도 순위 (data/_dict_freq.json — tools/dict_freq/count.py, 위키백과 + 앱 예문, 2026-10-01)
+const FREQ_TOP = 3000;   // 이 순위 안이면 '자주 쓰는 말' 표시
+let DEX = null, DEX_P = null;   // 사전 예문 (data/_dict_ex.json, 2026-10-01)
+function dexLoad() {
+  if (DEX) return Promise.resolve();
+  if (!DEX_P) DEX_P = fetch('data/_dict_ex.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { DEX = j; }).catch(() => { DEX = {}; });
+  return DEX_P;
+}
 let DSKIP = null;   // 사전에서 뺄 문장 (data/_dict_skip.json — 대표님 지시 2026-09-29: "사전 검색했는데 왜 문장도 검색되니")
 let DEN = null;     // 영어 검색 열쇠 (data/_dict_en.json — 영어는 열쇠일 뿐, 화면에는 한국어만)
 const ENQ = q => /^[a-z][a-z' -]*$/i.test(q);
@@ -8014,7 +8068,7 @@ function dictBuild() {
     const add = ss.map(t => t.trim()).filter(p => p && !have.some(h => h === p || h.includes(p) || p.includes(h)));
     if (add.length && have.length < 8) o.ko += ' · ' + add.slice(0, 8 - have.length).join(' · ');
   });
-  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi), h: dictHat(x.vi), en: (DEN && DEN[x.vi.toLowerCase()]) || null }));
+  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi), h: dictHat(x.vi), en: (DEN && DEN[x.vi.toLowerCase()]) || null, fr: (DFREQ && DFREQ[x.vi.toLowerCase()]) || 99999 }));
   DICT.sort((a, b) => a.b.localeCompare(b.b));
   return DICT;
 }
@@ -8034,6 +8088,7 @@ async function dictReady() {
   if (!KRSYL) jobs.push(get('data/_kr_syl.json', j => { KRSYL = j; }));
   if (!DSKIP) jobs.push(get('data/_dict_skip.json', j => { DSKIP = new Set(j.map(viCanon)); }));
   if (!DEN) jobs.push(get('data/_dict_en.json', j => { DEN = j; }));
+  if (!DFREQ) jobs.push(get('data/_dict_freq.json', j => { DFREQ = j; }));
   jobs.push(southLoad(), sensesLoad());   // 남부 딱지·검수된 뜻 목록 (2026-09-29 밤)
   await Promise.all(jobs);
   DICT = null;
@@ -8053,6 +8108,27 @@ function openWordCard(x, back) {
 }
 /* 사전 검색 기록 (대표님 지시 2026-09-30: "각자 폰에 남기면 서버비 부담 없지? 몇 개까지?") — 누른 낱말을 이 기기에만 50개.
    S 에 두지만 PROGKEYS 밖이라 서버로 안 올라간다(진도 해시에도 안 든다). 같은 말은 맨 위로 올린다. 50개 ≈ 3KB — 크기는 문제가 아니고, 그보다 길면 아무도 안 내려 본다 */
+/* 사전 낱말의 한글 발음 열쇠(띄어쓰기 뺌) — 발음으로 찾기 (대표님 2026-10-01 "발음으로 검색해도 나올 수 있게").
+   북부(kr·kr_read)와 남부(krs) 발음, 없으면 음절 표(_kr_syl.json, tools/vi_kr.py 규칙)로 만든 발음. 처음 한 번 만들어 둔다 */
+function dictKrKeys(x) {
+  if (x.kk) return x.kk;
+  const made = /[fjwz]/i.test(x.vi) || /[A-Z]{2}/.test(x.vi) ? '' : krOf(x.vi);   // 베트남어에 없는 글자(fan·jeans)·머리글자(ANTV)는 음절 표로 만들면 반쪽 발음('안')이 된다 — 안 만든다
+  const ks = [x.kr_read, x.kr, x.krs, made].filter(Boolean).map(k => String(k).replace(/[\s\[\]]+/g, ''));
+  x.kk = [...new Set(ks)];
+  return x.kk;
+}
+/* 영어 열쇠를 뜻 하나하나로 — 'to prohibit; to forbid' → prohibit · forbid. 앞의 to·a·an·the 와 괄호는 뺀다.
+   전에는 열쇠 통째로 'to …' 로 시작하는지 봐서 to 를 치면 동사 7천 개가 걸렸다 (2026-10-01) */
+function dictEnTerms(x) {
+  if (x.et) return x.et;
+  const t = [];
+  (x.en || []).forEach(e => String(e).toLowerCase().replace(/\([^)]*\)/g, ' ').split(/\s*[;,/]\s*/).forEach(p => {
+    p = p.replace(/^(to|a|an|the)\s+/, '').replace(/\s+/g, ' ').trim();
+    if (p && !t.includes(p)) t.push(p);
+  }));
+  x.et = t;
+  return t;
+}
 const DICT_HIST_MAX = 50;
 function dictRemember(x) {
   const h = (S.dictHist || []).filter(e => e.vi !== x.vi);
@@ -8202,7 +8278,7 @@ function dictEntry(q0) {
     row.type = 'button';
     const kr = krShow(x) || krOf(x.vi);
     // 참고 사전(앱 수업에는 없는 말)은 작은 표시를 단다 — 배운 단어와 섞여 보이지 않게 (2026-09-29)
-    row.append(el('b', 'dvi', esc(x.vi) + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (southOf(x.vi) ? ' <small class="dref southtag">' + tr('남부') + '</small>' : '')));
+    row.append(el('b', 'dvi', esc(x.vi) + (x.fr <= FREQ_TOP ? ' <small class="dref freqtag">' + tr('자주 쓰는 말') + '</small>' : '') + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (southOf(x.vi) ? ' <small class="dref southtag">' + tr('남부') + '</small>' : '')));
     row.append(el('span', 'dkr', kr ? '[' + esc(kr) + ']' : ''));   // 발음이 없어도 칸은 둔다 — 스피커가 늘 오른쪽 끝
     row.append(el('span', 'dko', esc(x.ko)));
     const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
@@ -8238,9 +8314,10 @@ function dictEntry(q0) {
     // 뜻은 구절 단위로 견준다 — '학교 정문'의 첫 낱말이 '학교'라고 병원·학교와 같은 등급이 되지 않게. 괄호 설명은 빼고 본다: '학교(기관)' = '학교'
     const phrs = s => s.toLowerCase().replace(/\[[^\]]*\]\s*/g, '').replace(/\([^)]*\)/g, '').split(/\s*[·\/,;]\s*/).map(p => p.trim()).filter(Boolean);   // 괄호는 자르기 전에 뺀다 — 괄호 안 ·,/ 로 찢기면 괄호가 안 닫혀 못 뺐다 (2026-09-29 밤)
     const enq = !kor && ENQ(q);                     // 영어로 찾기(hospital) — 영어는 열쇠일 뿐 화면엔 안 나온다
-    const hit = d.filter(x => kor ? (num ? phrs(x.ko).includes(qk) : x.ko.toLowerCase().includes(qk) || k2v.includes(x.vi.toLowerCase()))
-                                  : (x.b.includes(qb) || x.vi.toLowerCase().includes(qk) || (enq && x.en && x.en.some(e => e === qk || e.startsWith(qk + ' ')))))
-                 .sort((a, b2) => {
+    /* 칸을 나눠 보인다 (대표님 2026-10-01 "영어로 뜻을 검색하는 것과 단어를 검색하는 것 중복되어 검색될 수도"):
+       로마자로 치면 ① 베트남어 낱말 ② 영어 뜻으로 찾은 낱말(①에 나온 것은 빼고) — ban 을 치면 bạn·bán 이 위 칸, 영어 ban(금지하다) 뜻의 cấm 은 아래 칸.
+       한글로 치면 ① 뜻으로 찾은 낱말 ② 발음으로 찾은 낱말(깜언 → cảm ơn, ①에 나온 것은 빼고). 한 낱말은 한 칸에만 나온다 */
+    const cmp = (a, b2) => {
                    /* 베트남어 차례 (2026-09-29 밤, 대표님: "a만 검색해도 모자 쓴 것들도 다 검색 · 우선순위는 근거 기반으로") — docs/기준.md §14-33
                       ① 범위: 낱말 전체가 그 말 0 · 첫 낱말이 그 말 1 · 다른 자리의 한 낱말이 그 말 2 · 앞부분만 3 · 안에 들어 있음 4
                       ② 정확도: 성조·모자까지 똑같음 0 · 모자까지(성조 빼고) 1 · 모자·성조 다 빼고 2
@@ -8255,13 +8332,49 @@ function dictEntry(q0) {
                    };
                    const lesson = x => x.src && x.src.some(s => !['예문', '사전', '참고 사전'].includes(s)) ? 0 : 1;   // 수업에 나온 말이 먼저 (trường học 이 học hiệu 보다 위)
                    const nw = x => x.vi.split(/\s+/).length;   // 같은 등급이면 낱말 수가 적은 것(trường)이 붙은 말(trường học)보다 먼저
-                   return sc(a) - sc(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || lesson(a) - lesson(b2) || nw(a) - nw(b2) || (kor ? a.ko.length - b2.ko.length : 0) || a.vi.length - b2.vi.length;
-                 });
-    if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
-    out.append(el('p', 'note', tr('N개 찾음').replace('N', hit.length)));
-    hit.slice(0, 60).forEach(x => out.append(dictRow(x)));
+                   return sc(a) - sc(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || lesson(a) - lesson(b2) || (a.fr || 99999) - (b2.fr || 99999) || nw(a) - nw(b2) || (kor ? a.ko.length - b2.ko.length : 0) || a.vi.length - b2.vi.length;
+                 };
+    const viHit = x => x.b.includes(qb) || x.vi.toLowerCase().includes(qk);
+    const enHit = x => enq && dictEnTerms(x).some(e => e === qk || e.startsWith(qk + ' '));
+    const secs = [];
+    if (kor) {
+      let mean = d.filter(x => num ? phrs(x.ko).includes(qk) : x.ko.toLowerCase().includes(qk) || k2v.includes(x.vi.toLowerCase())).sort(cmp);
+      const qp = q.replace(/\s+/g, '');
+      let pron = [];
+      if (!num && /^[가-힣]+$/.test(qp)) {
+        /* 발음이 **딱 맞는** 낱말(안 → an·ăn·ẩn)은 발음 칸에 모은다 — 뜻에 '안'이 들어 있을 뿐인(편안하다) an 이 뜻 칸 아래로 묻히지 않게.
+           뜻이 그 말 그대로인 것(안 = trong)은 뜻 칸에 남는다. 발음이 그 말로 시작만 하는 것(안 → an toàn)은 뜻 칸에 없을 때만 */
+        const exact = x => dictKrKeys(x).includes(qp);
+        mean = mean.filter(x => !exact(x) || phrs(x.ko).includes(qk) || k2v.includes(x.vi.toLowerCase()));
+        const inMean = new Set(mean.map(x => x.vi));
+        pron = d.filter(x => !inMean.has(x.vi) && dictKrKeys(x).some(k => k.startsWith(qp)))
+          .sort((a, b2) => (exact(a) ? 0 : 1) - (exact(b2) ? 0 : 1) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0)
+            || a.vi.split(/\s+/).length - b2.vi.split(/\s+/).length || a.vi.length - b2.vi.length);
+      }
+      /* 발음과 딱 맞는 낱말이 있고, 뜻으로는 그 말 그대로인 낱말이 없으면(깜언·씬짜오) 발음 칸을 위로 */
+      const pronFirst = pron.length && dictKrKeys(pron[0]).includes(qp) && !k2v.length && !mean.some(x => phrs(x.ko).includes(qk));
+      const S1 = [tr('뜻으로 찾은 낱말'), mean], S2 = [tr('발음으로 찾은 낱말'), pron];
+      secs.push(...(pronFirst ? [S2, S1] : [S1, S2]));
+    } else {
+      const vi = d.filter(viHit).sort(cmp);
+      const inVi = new Set(vi.map(x => x.vi));
+      const enRank = x => { const t = dictEnTerms(x), i2 = t.indexOf(qk); return i2 < 0 ? 99 : i2; };   // 그 말 그대로인 뜻이 앞 뜻일수록 먼저
+      const en = enq ? d.filter(x => !inVi.has(x.vi) && enHit(x)).sort((a, b2) => enRank(a) - enRank(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || a.vi.length - b2.vi.length) : [];
+      secs.push([tr('베트남어 낱말'), vi], [tr('영어 뜻으로 찾은 낱말'), en]);
+    }
+    const live = secs.filter(s2 => s2[1].length);
+    if (!live.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
+    const CAP = 40;
+    live.forEach(([name, list]) => {
+      out.append(el('p', 'dsec', esc(name) + ' <small>' + tr('N개').replace('N', list.length) + '</small>'));
+      list.slice(0, CAP).forEach(x => out.append(dictRow(x)));
+      if (list.length > CAP) {
+        const more = el('button', 'ghost sm dmore', tr('N개 더 보기').replace('N', list.length - CAP)); more.type = 'button';
+        more.onclick = () => { const frag = document.createDocumentFragment(); list.slice(CAP).forEach(x => frag.append(dictRow(x))); more.replaceWith(frag); };
+        out.append(more);
+      }
+    });
     out.append(el('p', 'dicthint', tr('단어을 누르면 단어 카드가 열립니다')));
-    if (hit.length > 60) out.append(el('p', 'note', tr('앞 60개만 보입니다 — 더 적어 보세요')));
     // 참고 사전 출처 문구는 뺐다 (대표님 2026-10-01). 위키낱말사전·한국어기초사전 출처(CC BY-SA 조건)는 '내 정보'의 자료 출처에 둔다
   };
   let tm = null;
@@ -8910,7 +9023,7 @@ function drawCard() {
     rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
     caiNote(cf, x);                                        // 'cái nhà' 처럼 분류사가 붙은 표제어 (2026-09-29)
     const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
-    if (dfe) { kob.textContent = ''; if (isCore(x)) kob.append(el('span', 'corepill', tr('핵심'))); kob.append(dfullBox(dfe, () => openWordCard(x))); }   // 사전 카드: 품사별 모든 뜻·유의어·반의어 (2026-10-01)
+    if (dfe) { kob.textContent = ''; if (isCore(x)) kob.append(el('span', 'corepill', tr('핵심'))); kob.append(dfullBox(dfe, () => openWordCard(x))); rootPills(kob, x); }   // 사전 카드: 품사별 모든 뜻·유의어·반의어 (2026-10-01) — 한자 알약은 뜻 목록 밑에 다시(위에서 단 것은 지워진다)
     else senseLine(kob, x);                                // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
     /* 큰 사전 바로가기 (대표님 2026-10-01 "인터넷 대형 사전 연결 — 무료") — 네이버 베트남어사전·구글 번역을 새 창으로. 자료를 가져오지 않고 그 사이트를 여는 것이라 무료·저작권 문제 없음 */
     if (L.dict) {
@@ -8939,6 +9052,44 @@ function drawCard() {
       ectl.append(listenGroup(spd => { eck ? play(eck, false, null, spd) : speakVi(exm.vi, false, spd); }));
       eb.append(ectl);
       cf.append(eb);
+    }
+    if (L.dict) {                                           // 사전 카드: 앱 속 예문 + 사전 예문 (2026-10-01)
+      const more = appExFor(x.vi, exm && exm.vi);
+      const exRow = m => {
+        const r = el('div', 'appexrow');
+        r.append(tapLine(m.vi, 'appexvi tapline'));
+        if (m.ko) r.append(el('div', 'appexko', esc(m.ko)));
+        const spk = el('button', 'appexspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>');
+        spk.type = 'button'; spk.title = tr('듣기');
+        spk.onclick = ev => { ev.stopPropagation(); const k = recKey(m.vi); k ? play(k, false) : speakVi(m.vi); };
+        r.append(spk);
+        return r;
+      };
+      /* 사전 예문 — 위키낱말사전 예문 그대로 + 한국어(data/_dict_ex.json, tools/dict_ex). 앱 속 예문과 같은 문장은 뺀다. 카드를 열 때 처음 한 번 받는다 */
+      const dhost = el('div', 'appex');
+      dexLoad().then(() => {
+        const have = new Set([exm && exm.vi, ...more.map(m => m.vi)].filter(Boolean).map(v => v.toLowerCase()));
+        const ds = ((DEX && DEX[String(x.vi).trim().toLowerCase()]) || []).filter(([v]) => !have.has(v.toLowerCase())).slice(0, 2);
+        if (!ds.length) { dhost.remove(); return; }
+        dhost.append(el('div', 'appexh', tr('사전 예문')));
+        ds.forEach(([v, k]) => dhost.append(exRow({ vi: v, ko: k })));
+      });
+      if (more.length) {
+        const ab = el('div', 'appex');
+        ab.append(el('div', 'appexh', tr('앱 속 예문')));
+        more.forEach(m => {
+          const r = el('div', 'appexrow');
+          r.append(tapLine(m.vi, 'appexvi tapline'));
+          if (m.ko) r.append(el('div', 'appexko', esc(m.ko)));
+          const spk = el('button', 'appexspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>');
+          spk.type = 'button'; spk.title = tr('듣기');
+          spk.onclick = ev => { ev.stopPropagation(); const k = recKey(m.vi); k ? play(k, false) : speakVi(m.vi); };
+          r.append(spk);
+          ab.append(r);
+        });
+        cf.append(ab);
+      }
+      cf.append(dhost);
     }
     // 카드 안의 '헷갈리는 짝 ▾' 줄은 뺐다 — 단어을 누르면 같은 것이 팝업으로 뜬다 (대표님 지시 2026-09-27 저녁)
     cf.append(pitchGraph(x.vi, { img: x.img }));   // 하나뿐인 높낮이 그래프 — 단어이 따라가고, 말하면 내 곡선이 겹친다

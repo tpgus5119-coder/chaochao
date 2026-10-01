@@ -11,12 +11,13 @@
 쓰기: python3 tools/make_roots.py"""
 import json, pathlib, sys
 R = pathlib.Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(R / 'tools'))
+sys.path.insert(0, str(R / 'tools')); sys.path.insert(0, str(R / 'tools/roots'))
 from attach_hanviet import reading
 from build_roots import LANG_KO
 
 LANG_KO = dict(LANG_KO, lo='라오어', kpm='코호어', cjm='짬어')
 import hanja
+from hanmulti import fix_multi   # 음이 여럿인 한자 — 베트남어 읽기로 가른다(身份 신분, 2026-10-01)
 
 # 여러 음을 가진 한자는 꾸러미가 기본음만 단다 — 이 낱말의 뜻에 맞는 우리 음으로 바로잡는다 (클로드가 142개를 하나씩 봄, 2026-09-28 밤)
 KO_FIX = {'giản dị': '간이', 'kế hoạch': '계획', 'thập phương': '시방', 'tiểu tiện': '소변', 'đại tiện': '대변', 'tỉnh lược': '생략',
@@ -24,6 +25,11 @@ KO_FIX = {'giản dị': '간이', 'kế hoạch': '계획', 'thập phương': 
 
 
 def ko_reading(word, han):
+    r = _ko_reading(word, han)
+    return fix_multi(word, han, r) if r and word not in KO_FIX and len(r) == len(han) == len(word.split()) else r
+
+
+def _ko_reading(word, han):
     if word in KO_FIX:
         return KO_FIX[word]
     if len(han) == 1:                       # 한 글자는 본음(力 력) — 밑의 훈음('힘 력')과 맞춘다. 두음법칙은 낱말 첫머리에만
@@ -67,6 +73,15 @@ def main():
         if part.strip():
             a['p'] = part.strip(); stat['일부 음절'] += 1
         out.setdefault(w, []).append(a); stat['한자'] += 1
+    # 사전 낱말 전체 (2026-10-01, tools/roots/dict_han.py — 위키 어원 표시 + 한자음 검산). 클로드가 낱말마다 본 위 표가 이긴다
+    dict_n = 0
+    for w, han, ko, why, old, _, _, _ in rows('사전_한자.tsv'):
+        w = w.strip().lower()
+        if w in skip or w in out or not han or not ko: continue
+        a = {'h': han, 'r': ko}
+        if old.strip(): a['o'] = 1; a['s'] = old.strip()
+        out[w] = [a]; dict_n += 1
+    stat['사전 낱말'] = dict_n
     for w, lg, orig, part, cond, why, _, _ in rows('외래어_판정.tsv'):
         w = w.strip().lower()
         if w in skip or not lg.strip():
@@ -92,7 +107,7 @@ def main():
                     a = dict(whole[seg][0]); a['p'] = seg; parts.append(a); i += n; break
             else:
                 i += 1
-        if parts and ' '.join(p['p'] for p in parts) != w:
+        if parts and not (len(parts) == 1 and parts[0]['p'] == w):   # 두 낱말이 구를 꼭 채워도(điện thoại + di động) 싣는다 — 전엔 빠졌다 (2026-10-01)
             out[w] = parts[:4]; comp += 1
     stat['구 안의 낱말로'] = comp
     (R / 'data/_roots.json').write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
