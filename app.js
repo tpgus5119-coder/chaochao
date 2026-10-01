@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -1048,13 +1048,7 @@ function dfullBox(e, back) {
     /* [보충] — 위키에 없던 흔한 뜻(nhạc nhẹ 경음악). 수업 자료·국립국어원 한국어기초사전 대역에서 찾아 클로드가 검사해 넣은 것(tools/dict_sup, 2026-10-01) */
     ol.append(el('li', null, esc(t) + ((e.b || []).includes(i) ? ' <small class="dfsup">' + tr('보충') + '</small>' : '')));
   });
-  const rel = (lab, list) => {
-    if (!list || !list.length) return;
-    const r = el('div', 'dfrel'); r.append(el('span', 'dfrl', tr(lab)));
-    list.forEach(w => { const b = el('button', 'dfw', esc(w)); b.type = 'button'; b.onclick = ev => { ev.stopPropagation(); const d = (DICT || dictBuild()).find(x => viCanon(x.vi) === viCanon(w)) || { vi: w, ko: (DFULL[w.toLowerCase()] ? dfullText(DFULL[w.toLowerCase()]) : '') }; openWordCard(d, back); }; r.append(b); });
-    box.append(r);
-  };
-  rel('유의어', e.y); rel('반의어', e.a);
+  // 유의어·반의어 줄은 '헷갈리는 짝'으로 옮겼다 (대표님 2026-10-01 밤 "유의어와 반의어는 헷갈리는 짝에 넣는 게 좋을 것 같은데?") — dictRel()
   if (e.v) box.append(el('div', 'dfnote', tr('다른 표기') + ': ' + esc(e.v)));
   return box;
 }
@@ -1144,6 +1138,25 @@ function sibFams(vi) {
   return out;
 }
 /* 단어의 동의어·반의어 (없으면 null) */
+/* 사전(위키낱말사전 Synonyms·Antonyms 칸)의 유의어·반의어 — 헷갈리는 짝 자료(sib.json)에 이미 있는 것은 빼고.
+   'vô#Prefix' 같은 접두사·접미사 표시는 낱말이 아니라 뺀다. 우리 사전에 없는 낱말(뜻을 보일 수 없음, Bạch Hải)도 뺀다. 사전(DFULL)을 불러 둔 때만(사전 카드) */
+/* 짝 줄에 붙일 사전 뜻 — 대문자로 시작하면(Bơn 베른) 고유명사 뜻만, 아니면 고유명사가 아닌 첫 뜻. 사전은 대소문자를 한 표제어에 합쳐 두어서(bơn 모래톱 + Bơn 베른) 그냥 첫 뜻을 쓰면 남의 뜻이 붙는다 */
+function dictGloss(w) {
+  const e = typeof DFULL !== 'undefined' && DFULL && DFULL[String(w).toLowerCase().trim()];
+  if (!e) return '';
+  const cap = /^[A-ZÀ-ỸĐ]/.test(String(w).trim()) && String(w).trim() !== String(w).trim().toLowerCase();
+  const i = e.p.findIndex(p => cap ? p === '고유' : p !== '고유');
+  return i < 0 ? '' : e.s[i];
+}
+function dictRel(vi) {
+  const e = typeof DFULL !== 'undefined' && DFULL && DFULL[String(vi).toLowerCase().trim()];
+  if (!e || !(e.y || e.a)) return null;
+  const sr = SIB && sibRel(vi), have = new Set([...((sr && sr.s) || []), ...((sr && sr.a) || [])].map(w => w.toLowerCase()));
+  const clean = l => [...new Set((l || []).filter(w => !/#(Prefix|Suffix)/i.test(w)).map(w => w.split('#')[0].trim())
+    .filter(w => w && w.toLowerCase() !== String(vi).toLowerCase().trim() && !have.has(w.toLowerCase()) && dictGloss(w)))];   // 뜻을 보일 수 있는(사전에 있는) 낱말만
+  const r = { s: clean(e.y), a: clean(e.a) };
+  return r.s.length || r.a.length ? r : null;
+}
 function sibRel(vi) {
   const w = SIB.w[vi.toLowerCase().trim()];
   return w && ((w.s && w.s.length) || (w.a && w.a.length)) ? w : null;
@@ -1167,6 +1180,7 @@ function pairRow(word, cur, mode) {
   const m = el('span', 'pmn');
   if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
   else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
+  else if (dictGloss(word)) m.append(el('span', 'pko', esc(dictGloss(word))));   // 사전 유의어·반의어(짝 자료 밖) — 사전 첫 뜻
   // 성조 이름(ngang · 평평하게 …) 글은 뺐다 (대표님 지시 2026-09-27 밤) — 화살표만
   /* 낱말을 누르면 그 낱말의 카드로 (대표님 지시 2026-09-30: "헷갈리는 짝 팝업에서 단어 누르면 그 단어 카드로") — 뒤로 가면 원래 화면 */
   w.classList.add('tapword'); w.title = tr('이 낱말 카드로');
@@ -1228,8 +1242,8 @@ function pairPanel(vi, opt) {
   let sel = null;                                   // 지금 고른 뜻 번호 — 처음엔 기본 뜻
   sibLoad().then(() => sensesLoad()).then(() => sdefLoad()).then(() => {          // 뜻 목록·기본 뜻도 같이 — 동의어·반의어를 뜻별로 나누는 데 쓴다
     if (!SIB || !wrap.isConnected) return;
-    const fams = sibFams(vi), rel = sibRel(vi);
-    if (!fams.length && !rel) return;
+    const fams = sibFams(vi), rel = sibRel(vi), drel = dictRel(vi);
+    if (!fams.length && !rel && !drel) return;
     const head = el('button', 'pairhead', '<span>' + tr('헷갈리는 짝') + '</span><i class="pchev">▾</i>');
     head.type = 'button';
     const body = el('div', 'pairbody');
@@ -1282,6 +1296,11 @@ function pairPanel(vi, opt) {
           if (syn.length) body.append(section('유의어', '뜻이 비슷함', syn, '', 'rel'));
           if (ant.length) body.append(section('반의어', '뜻이 반대', ant, '', 'rel'));
         }
+      }
+      /* 사전의 유의어·반의어 (2026-10-01 밤) — 위키는 뜻별로 나뉘어 있지 않아 '뜻 구분 없음'으로 따로 */
+      if (drel) {
+        if (drel.s.length) body.append(section('유의어', rel ? '사전, 뜻 구분 없음' : '뜻이 비슷함', drel.s, '', 'rel'));
+        if (drel.a.length) body.append(section('반의어', rel ? '사전, 뜻 구분 없음' : '뜻이 반대', drel.a, '', 'rel'));
       }
       if (fams.length > 1) {
         const sel = el('div', 'psel');
@@ -1357,7 +1376,7 @@ function pairPopup(vi, info) {
   document.body.append(back);
   sibLoad().then(() => {
     if (!SIB) { body.append(el('div', 'pnote', tr('불러오지 못했습니다'))); return; }
-    if (!sibFams(vi).length && !sibRel(vi)) { body.append(el('div', 'pnote', tr('이 단어과 헷갈리는 짝이 없습니다.'))); return; }
+    if (!sibFams(vi).length && !sibRel(vi) && !dictRel(vi)) { body.append(el('div', 'pnote', tr('이 단어과 헷갈리는 짝이 없습니다.'))); return; }
     body.append(pairPanel(vi, { bare: true, ko: inf.ko, lk, api: a => { panelApi = a; } }));   // 골라진 뜻(처음엔 기본 뜻)의 동의어·반의어만 (2026-09-28)
   });
 }
@@ -9276,13 +9295,6 @@ function drawCard() {
     const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
     if (dfe) { kob.textContent = ''; if (isCore(x)) kob.append(el('span', 'corepill', tr('핵심'))); kob.append(dfullBox(dfe, () => openWordCard(x))); rootPills(kob, x); }   // 사전 카드: 품사별 모든 뜻·유의어·반의어 (2026-10-01) — 한자 알약은 뜻 목록 밑에 다시(위에서 단 것은 지워진다)
     else senseLine(kob, x);                                // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
-    /* 큰 사전 바로가기 (대표님 2026-10-01 "인터넷 대형 사전 연결 — 무료") — 네이버 베트남어사전·구글 번역을 새 창으로. 자료를 가져오지 않고 그 사이트를 여는 것이라 무료·저작권 문제 없음 */
-    if (L.dict) {
-      const lk = el('div', 'dflinks'), q0 = encodeURIComponent(x.vi);
-      [['네이버 사전', 'https://dict.naver.com/vikodict/#/search?query=' + q0], ['구글 번역', 'https://translate.google.com/?sl=vi&tl=ko&op=translate&text=' + q0]].forEach(([t, u]) => {
-        const a = document.createElement('a'); a.className = 'dflink'; a.href = u; a.target = '_blank'; a.rel = 'noopener'; a.textContent = tr(t) + ' ↗'; lk.append(a); });
-      kob.append(lk);
-    }
     if (so) cf.append(southLine(so));                       // 남부 말 · 북부에서는 ○○ (2026-09-29)
     else if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
@@ -9346,6 +9358,14 @@ function drawCard() {
     }
     // 카드 안의 '헷갈리는 짝 ▾' 줄은 뺐다 — 단어을 누르면 같은 것이 팝업으로 뜬다 (대표님 지시 2026-09-27 저녁)
     cf.append(pitchGraph(x.vi, { img: x.img }));   // 하나뿐인 높낮이 그래프 — 단어이 따라가고, 말하면 내 곡선이 겹친다
+    /* 큰 사전 바로가기 — 네이버 베트남어사전을 새 창으로(자료를 가져오지 않고 그 사이트를 여는 것이라 무료·저작권 문제 없음, 2026-10-01).
+       자리: 카드 맨 아래 그래프 밑 (대표님 2026-10-01 밤 "그래프 밑, 최하단으로"). 구글 번역 단추는 뺐다("너무 버퍼링 걸린다") */
+    if (L.dict) {
+      const lk = el('div', 'dflinks'), a = document.createElement('a');
+      a.className = 'dflink'; a.href = 'https://dict.naver.com/vikodict/#/search?query=' + encodeURIComponent(x.vi);
+      a.target = '_blank'; a.rel = 'noopener'; a.textContent = tr('네이버 사전') + ' ↗';
+      lk.append(a); cf.append(lk);
+    }
 
     /* ── 발음 면 ──
        단어 → [듣기 · 말하기] (단어 면과 같은 자리) → 뜻 → 재생 막대 → 입모양 → 단어이 따라 움직이는 높낮이 */
