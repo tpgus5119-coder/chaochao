@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -2613,7 +2613,7 @@ function studyHubEntry() {
   card(HUB_ICO.basic, '기본기', st.basic, studyBasicsEntry);
   card(HUB_ICO.words, '단어', st.words, studyWordsEntry);       // 내 단어장은 단어 안으로 옮겼다 (대표님 지시 2026-09-30)
   card(HUB_ICO.gram, '문법', st.gram, studyGramEntry);
-  card(HUB_ICO.test, '매일 단어 시험', null, () => dailyEntry('study'));   // 22기 반 시험 — 학습에서는 카드로 학습만, 시험은 테스트 탭 (2026-09-30)
+  card(HUB_ICO.test, '단어 시험', null, () => dailyEntry('study'));   // 이름 '매일 단어 시험' → '단어 시험' (대표님 2026-10-01) · 22기 반 시험 — 학습에서는 카드로 학습만, 시험은 테스트 탭 (2026-09-30)
   card(HUB_ICO.han, '한자어 맞히기', null, hanQuizEntry);   // 한국 한자어로 베트남어 추측 (2026-10-01, 선배 한월어 엑셀 '패턴 정리' → 우리 한자 자료로 검산)
   /* 학습 탭의 '주간 시험'은 뺐다 (대표님 2026-10-01: 주간 시험은 범위 낱말+문법의 종합이라 단어·문법에서 이미 배운다). 쓰기 연습은 테스트 탭 회차 화면으로 */
   show('sub', '학습', true);
@@ -3202,7 +3202,7 @@ function renderAnalysis(host, mode) {
       const d = el('div', 'anadetail');
       const put = (title, rows, note) => { if (!rows.length) return; d.append(el('p', 'anasec', esc(title))); d.append(bars(rows)); if (note) d.append(el('p', 'dimtxt', esc(note))); };
       put(tr('문제 유형별'), boxRows(cur, 'smd', k => MODE_NM[k] || k));
-      put(tr('쓰인 문법별'), boxRows(cur, 'gr', gramName), tr('문장 속 문형으로 셉니다 — 매일 단어 시험·주간 시험 문장'));
+      put(tr('쓰인 문법별'), boxRows(cur, 'gr', gramName), tr('문장 속 문형으로 셉니다 — 단어 시험·주간 시험 문장'));
       if (!d.children.length) d.append(el('p', 'dimtxt', tr('아직 푼 문장 문제가 없습니다')));
       list.append(d);
     }
@@ -3256,7 +3256,7 @@ function renderRx(host, cur, prev) {
     '쓰기': ['<b>손글씨</b>를 며칠 이어서 해 보세요. 부호 위치는 손으로 써야 붙습니다.',
              '<b>타이핑</b>에서 글자 보기를 누르지 말고 먼저 쳐 보세요 — 보고 치면 기억에 안 남습니다.'],
     '문장': ['테스트의 <b>문장</b>을 하루 한 판 — 낱말을 알아도 차례(어순)를 모르면 문장이 안 됩니다.',
-             '틀린 문장은 <b>쓰인 문법 카드</b>를 다시 보세요 — 매일 단어 시험 결과에서 바로 갈 수 있습니다.'],
+             '틀린 문장은 <b>쓰인 문법 카드</b>를 다시 보세요 — 단어 시험 결과에서 바로 갈 수 있습니다.'],
     '말하기': ['단어 카드의 <b>말하기</b>를 누른 뒤 원어민 곡선과 겹쳐 보세요.',
                '<b>AI가 듣기</b>를 눌러 알아듣는 발음인지 확인하세요 — 안 알아들으면 조금 크게, 또박또박.'],
   };
@@ -6718,29 +6718,64 @@ async function newsDatesEntry() {
     b.append(btn);
   });
 }
-/* 그날 카드뉴스 그대로 — 기사마다 카드 두 장(길게 누르면 저장) + 기사 보러가기. 그림이 없는 기사는 통째로 뺀다 */
-function newsDayCards(ts, list) {
+/* 그날 카드뉴스 — 단어 카드처럼 한 장씩 옆으로 넘긴다 (대표님 2026-10-01 "단어카드처럼 옆으로 넘기는 형태 — 어플에 통일감").
+   화면 양옆 붙박이 ‹ › 단추(.pagearrow, 단어 카드와 같은 것) + 손가락·마우스로 밀기 + 화살표 키. 밑에 '3 / 20'.
+   그 날 기사들의 카드(기사마다 두 장)를 차례로 잇는다. 그림이 없는 장은 미리 걸러 뺀다. 그림은 길게 누르면 폰에 저장된다 */
+async function newsDayCards(ts, list) {
   const b = $('#subBody'); b.textContent = '';
   const dt = new Date(ts + 'T00:00:00');
   show('sub', (dt.getMonth() + 1) + tr('월') + ' ' + dt.getDate() + tr('일'), true);
-  list.forEach((d, i) => {
-    const art = el('div', 'newsart');
-    const top = el('div', 'newstop');
-    if (d.cat) top.append(el('i', 'newscat', esc(d.cat)));
-    top.append(el('b', null, esc(d.theme || '')));
-    art.append(top);
-    const box = el('div', 'cardbox');
-    let bad = 0;
-    [1, 2].forEach(n => {
-      const im = el('img', 'cardimg');
-      im.src = `img/card/${ts}-${i + 1}-${n}.webp`; im.alt = tr('카드뉴스') + ' ' + n; im.loading = 'lazy';
-      im.onerror = () => { im.remove(); if (++bad === 2) art.remove(); };
-      box.append(im);
-    });
-    art.append(box);
-    if (d.u) { const go = el('a', 'ghost newslink', '🔗 ' + tr('기사 보러가기')); go.href = d.u; go.target = '_blank'; go.rel = 'noopener'; art.append(go); }
-    b.append(art);
+  b.append(el('p', 'lede', tr('불러오는 중…')));
+  const all = [];
+  list.forEach((d, i) => [1, 2].forEach(n => all.push({ d, src: `img/card/${ts}-${i + 1}-${n}.webp` })));
+  const ok = await Promise.all(all.map(x => cardOk(x.src)));
+  const pages = all.filter((x, k) => ok[k]);
+  b.textContent = '';
+  if (!pages.length) { b.append(el('p', 'note', tr('카드뉴스가 아직 없습니다'))); return; }
+  let i = 0;
+  const head = el('div', 'newstop newshead');
+  const frame = el('div', 'card newscard');
+  const im = el('img', 'cardimg'); im.alt = tr('카드뉴스');
+  frame.append(im);
+  const link = el('a', 'ghost newslink'); link.target = '_blank'; link.rel = 'noopener';
+  const pos = el('div', 'newspos');
+  const prev = el('button', 'pagearrow left', '‹'); prev.type = 'button'; prev.setAttribute('aria-label', tr('이전'));
+  const next = el('button', 'pagearrow right', '›'); next.type = 'button'; next.setAttribute('aria-label', tr('다음'));
+  const draw = () => {
+    const pg = pages[i], d = pg.d;
+    head.textContent = '';
+    if (d.cat) head.append(el('i', 'newscat', esc(d.cat)));
+    head.append(el('b', null, esc(d.theme || '')));
+    im.src = pg.src;
+    if (pages[i + 1]) { const pre = new Image(); pre.src = pages[i + 1].src; }   // 다음 장을 미리 받아 둔다
+    if (d.u) { link.hidden = false; link.href = d.u; link.textContent = '🔗 ' + tr('기사 보러가기'); } else link.hidden = true;
+    pos.textContent = (i + 1) + ' / ' + pages.length;
+    prev.disabled = i <= 0; next.disabled = i >= pages.length - 1;
+  };
+  const go = dir => { const j = i + dir; if (j < 0 || j >= pages.length) return; i = j; draw(); };
+  prev.onclick = () => go(-1); next.onclick = () => go(1);
+  /* 밀기 — 단어 카드와 같은 규칙: 가로가 40px 넘고 세로의 1.5배 넘을 때만(긴 화면을 스크롤하다 넘어가지 않게) */
+  let x0 = null, y0 = null;
+  frame.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  frame.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
+  }, { passive: true });
+  let m0 = null, my0 = null;
+  frame.addEventListener('mousedown', e => { m0 = e.clientX; my0 = e.clientY; e.preventDefault(); });   // 그림 끌기(드래그 저장) 대신 넘기기
+  frame.addEventListener('mouseup', e => {
+    if (m0 === null) return;
+    const dx = e.clientX - m0, dy = e.clientY - my0; m0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
   });
+  const onKey = e => {
+    if (!b.contains(frame)) { window.removeEventListener('keydown', onKey); return; }   // 다른 화면으로 가면 풀린다
+    if (e.key === 'ArrowLeft') go(-1); else if (e.key === 'ArrowRight') go(1);
+  };
+  window.addEventListener('keydown', onKey);
+  b.append(head, frame, pos, link, prev, next);
+  draw();
 }
 /* ---------- 짜오 살림 — 돈(동)·먹이·둥지·알 상점 (대표님 지시 2026-09-27 저녁) ----------
    돈 = 기존 점수 창고(credits: earn/spend. 값의 근거는 tools/pricing.py · docs/scoring-basis.md). 화면 이름만 '동'(đồng).
@@ -10759,8 +10794,8 @@ function dailyEntry(mode) {
   /* mode 'study' = 학습 탭(카드로 학습만) · 그 밖 = 테스트 탭(실제 시험처럼) — 대표님 지시 2026-09-30 */
   const study = mode === 'study';
   const b = $(study ? '#subBody' : '#examBody'); b.textContent = '';
-  show(study ? 'sub' : 'exam', tr('매일 단어 시험'), true);
-  if (!DAILY22) { b.append(el('p', 'lede', tr('불러오는 중…'))); dailyLoad(() => { if ($('#title').textContent === tr('매일 단어 시험')) dailyEntry(mode); }); return; }
+  show(study ? 'sub' : 'exam', tr('단어 시험'), true);
+  if (!DAILY22) { b.append(el('p', 'lede', tr('불러오는 중…'))); dailyLoad(() => { if ($('#title').textContent === tr('단어 시험')) dailyEntry(mode); }); return; }
   const cls = S.dcls || 'B';
   const pick = el('div', 'rolepick');
   ['A', 'B'].forEach(c => { const bb = el('button', 'ghost sm' + (cls === c ? ' pick' : ''), (cls === c ? '✓ ' : '') + c + tr('반')); bb.onclick = () => { S.dcls = c; save(); dailyEntry(mode); }; pick.append(bb); });

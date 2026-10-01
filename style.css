@@ -2948,3 +2948,10 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .newsart{display:grid;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
 .newsart:last-child{border-bottom:0}
 .newsart .newslink{justify-self:start;font-size:14px;text-decoration:none}
+
+/* 카드뉴스 넘기기 — 단어 카드와 같은 틀 (2026-10-01) */
+.newshead{margin:2px 0 10px}
+.card.newscard{padding:0;overflow:hidden;touch-action:pan-y;user-select:none}
+.card.newscard .cardimg{display:block;width:100%;height:auto;margin:0;border-radius:inherit;-webkit-user-drag:none}
+.newspos{text-align:center;font-size:13px;color:var(--dim);margin:10px 0 4px;font-variant-numeric:tabular-nums}
+#subBody .newslink{display:block;text-align:center;margin:6px auto 0;font-size:14px;text-decoration:none}
