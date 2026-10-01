@@ -57,7 +57,10 @@ def rows(name):
 def main():
     out, stat = {}, {'한자': 0, '옛 한자음': 0, '일부 음절': 0, '뜻 조건': 0, '외래어': 0, '음 없음(뺌)': []}
     skip = {r[0].strip().lower() for r in rows('뺀_낱말.tsv')}
-    for w, han, old, sv, cond, part, why, _ in rows('한자_판정.tsv'):
+    def judged():   # 클로드 판정표 + 선배 한월어 엑셀에서 검산 통과한 것(tools/roots/excel_han.py, 2026-10-01) — 같은 칸
+        yield from rows('한자_판정.tsv')
+        yield from rows('엑셀_한자.tsv')
+    for w, han, old, sv, cond, part, why, _ in judged():
         w = w.strip().lower()
         if w in skip or not han:
             continue

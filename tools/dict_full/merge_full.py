@@ -82,3 +82,5 @@ def main():
     print("표제어", len(out), "· 뜻", ns, "· 한국어 없는 표제어(뺌)", miss, "· 영어 열쇠", len(en), "· 크기", (R / "data/_dict_full.json").stat().st_size // 1024, "KB")
 if __name__ == "__main__":
     main()
+    # [보충] 뜻은 merge 뒤에 다시 얹는다 (tools/dict_sup/apply.py, 2026-10-01) — 빼먹으면 보충 뜻이 사라진다
+    import runpy; runpy.run_path(str(pathlib.Path(__file__).resolve().parent.parent / "dict_sup/apply.py"), run_name="__main__")

@@ -2919,3 +2919,27 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .appexko{margin-top:3px;font-size:13px;color:var(--muted)}
 .appexspk{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:0;border-radius:50%;background:var(--chip);color:var(--fg);display:grid;place-items:center;cursor:pointer}
 .appexspk svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dfull .dfsup{font-size:11px;font-weight:600;color:var(--dim);border:1px solid var(--line);border-radius:6px;padding:0 5px;margin-left:4px;vertical-align:1px}   /* 사전 [보충] 뜻 (2026-10-01) */
+/* 선배 메모 (2026-10-01) */
+.snote{margin-top:10px;padding:8px 12px;border-radius:10px;background:var(--chip);text-align:left;display:grid;gap:3px}
+.snoteh{font-size:12px;font-weight:700;color:var(--dim)}
+.snotel{font-size:13px;line-height:1.5;color:var(--fg)}
+
+/* 한자어 맞히기 (2026-10-01) */
+.hanqtop{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.hanqpane{display:grid;gap:10px;text-align:left}
+.hanrh{margin-top:6px;font-size:13px;font-weight:700;color:var(--dim)}
+.hanrow{display:grid;grid-template-columns:44px 1fr;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.hanrk{font-size:20px;align-self:center;text-align:center}
+.hanrto{display:grid;gap:3px}
+.hanrv{font-size:14px}.hanrv small{color:var(--dim);margin:0 4px}.hanrv span{font-size:12px;color:var(--dim)}
+.hanqn{font-size:13px;color:var(--dim);text-align:center}
+.hanqh{font-size:44px;font-weight:700;text-align:center;letter-spacing:.06em}
+.hanqr{font-size:20px;text-align:center;color:var(--dim)}
+.hanqopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hanqopt{padding:14px 8px;font-size:17px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg)}
+.hanqopt.ok{border-color:var(--ok);background:var(--okbg);color:var(--okfg)}
+.hanqopt.no{border-color:var(--bad);background:var(--badbg)}
+.hanqans{padding:10px 12px;border-radius:12px;background:var(--chip)}
+.hanqmap{font-size:15px}.hanqko{margin-top:4px;font-size:14px;color:var(--dim)}
+.hanqend{font-size:32px;text-align:center;padding:16px}

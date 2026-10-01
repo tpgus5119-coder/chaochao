@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -1040,7 +1040,8 @@ function dfullBox(e, back) {
   e.s.forEach((t, i) => {
     const p = e.p[i] || '';
     if (p !== last || !ol) { const g = el('div', 'dfg'); if (p) g.append(el('span', 'dfpos', esc(p))); ol = el('ol', 'dfol'); g.append(ol); box.append(g); last = p; }
-    ol.append(el('li', null, esc(t)));
+    /* [보충] — 위키에 없던 흔한 뜻(nhạc nhẹ 경음악). 수업 자료·국립국어원 한국어기초사전 대역에서 찾아 클로드가 검사해 넣은 것(tools/dict_sup, 2026-10-01) */
+    ol.append(el('li', null, esc(t) + ((e.b || []).includes(i) ? ' <small class="dfsup">' + tr('보충') + '</small>' : '')));
   });
   const rel = (lab, list) => {
     if (!list || !list.length) return;
@@ -2576,6 +2577,7 @@ const HUB_ICO = {
   gram: '<svg viewBox="0 0 24 24"><path d="M4 6h16M4 11h10M4 16h7"/><path d="m15 19 5-5-2-2-5 5v2z"/></svg>',
   book: '<svg viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
   test: '<svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M8.5 10l1.5 1.5 3-3M8.5 16h7"/></svg>',
+  han: '<svg viewBox="0 0 24 24"><text x="12" y="17.5" text-anchor="middle" font-size="15" font-weight="700" fill="currentColor" stroke="none">漢</text></svg>',
 };
 let WOPEN = null;                                   // 단어 화면에서 펼쳐 둔 갈래
 let GOPEN = null;                                   // 문법 화면에서 펼쳐 둔 책
@@ -2612,6 +2614,7 @@ function studyHubEntry() {
   card(HUB_ICO.words, '단어', st.words, studyWordsEntry);       // 내 단어장은 단어 안으로 옮겼다 (대표님 지시 2026-09-30)
   card(HUB_ICO.gram, '문법', st.gram, studyGramEntry);
   card(HUB_ICO.test, '매일 단어 시험', null, () => dailyEntry('study'));   // 22기 반 시험 — 학습에서는 카드로 학습만, 시험은 테스트 탭 (2026-09-30)
+  card(HUB_ICO.han, '한자어 맞히기', null, hanQuizEntry);   // 한국 한자어로 베트남어 추측 (2026-10-01, 선배 한월어 엑셀 '패턴 정리' → 우리 한자 자료로 검산)
   /* 학습 탭의 '주간 시험'은 뺐다 (대표님 2026-10-01: 주간 시험은 범위 낱말+문법의 종합이라 단어·문법에서 이미 배운다). 쓰기 연습은 테스트 탭 회차 화면으로 */
   show('sub', '학습', true);
   // 자료가 아직 안 왔으면 받아서 이 화면을 다시 그린다 (진도 숫자가 채워진다). 다른 데로 갔으면 건드리지 않는다.
@@ -2619,6 +2622,95 @@ function studyHubEntry() {
   if (!GRAM) fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { GRAM = gramReady(j); if (still()) studyHubEntry(); }).catch(() => {});
   if (!GYBM) gybmBuild(() => { if (still()) studyHubEntry(); });
   if (!COURSE) withCourse(() => { if (still()) studyHubEntry(); });
+}
+/* ── 한자어 맞히기 (2026-10-01) ──
+   한국 사람만 쓸 수 있는 지름길: 經濟 '경제'를 보면 베트남어 kinh tế 를 추측할 수 있다(글자마다 음이 규칙적으로 대응).
+   문제: 우리 한자 자료(data/_roots.json — 위키 어원 표시·클로드 판정)에서 온전한 한자어(옛 한자음·일부 음절·뜻 조건 없는 것) 가운데
+   자주 쓰는 말 5,000위 안(data/_dict_freq.json)의 두세 음절 낱말. 보기 넷은 같은 음절 수, 되도록 한 음절을 같이 가진 낱말(추측이 필요하게).
+   규칙 표: data/_hanviet_patterns.json (tools/hanviet_quiz/patterns.py 가 글자 짝 2만여 개를 센 것) */
+let HANPAT = null;
+async function hanPool() {
+  await Promise.all([dictReady(), rootsLoad()]);
+  const out = [];
+  Object.entries(ROOTS || {}).forEach(([w, alts]) => {
+    const a = alts[0];
+    if (alts.length !== 1 || !a.h || a.o || a.p || a.c) return;
+    const n = w.split(' ').length;
+    if (n < 2 || n > 3 || [...a.h].length !== n || [...a.r].length !== n) return;
+    const fr = DFREQ && DFREQ[w];
+    if (!fr) return;
+    if (KO2VI && !KO2VI[a.r]) return;                        // 우리 음이 실제 한국어 낱말(한국어기초사전 표제어)일 때만 — '常直 상직'처럼 한국어에 없는 말은 추측이 안 된다
+    const e = DFULL && DFULL[w];
+    out.push({ vi: (e && e.h) || w, h: a.h, r: a.r, fr, ko: e ? (e.s.find(x => x && !/^\(/.test(x)) || e.s[0]) : '' });
+  });
+  return out;
+}
+async function hanQuizEntry() {
+  const b = $('#subBody'); b.textContent = '';
+  show('sub', '한자어 맞히기', true);
+  const top = el('div', 'hanqtop');
+  const go = el('button', 'primary big', tr('맞히기 시작')); go.type = 'button';
+  const rule = el('button', 'ghost', tr('발음 규칙 표')); rule.type = 'button';
+  top.append(go, rule); b.append(top);
+  const pane = el('div', 'hanqpane'); b.append(pane);
+  rule.onclick = () => hanRules(pane);
+  go.onclick = async () => { go.disabled = true; pane.textContent = tr('불러오는 중…'); const pool = await hanPool(); go.disabled = false; hanQuiz(pane, pool); };
+  hanRules(pane);
+}
+async function hanRules(pane) {
+  pane.textContent = '';
+  if (!HANPAT) HANPAT = await fetch('data/_hanviet_patterns.json', { cache: 'no-cache' }).then(r => r.json()).catch(() => null);
+  if (!HANPAT) { pane.append(el('p', 'note', tr('불러오지 못했습니다'))); return; }
+  const sec = (title, rows) => {
+    pane.append(el('div', 'hanrh', esc(tr(title))));
+    rows.forEach(r => {
+      const row = el('div', 'hanrow');
+      row.append(el('b', 'hanrk', esc(r.k)));
+      const to = el('div', 'hanrto');
+      r.to.forEach(([v, pct, exs]) => to.append(el('div', 'hanrv', '<b>' + esc(v) + '</b> <small>' + pct + '%</small> <span>' + esc((exs || []).join(' · ')) + '</span>')));
+      row.append(to); pane.append(row);
+    });
+  };
+  sec('첫소리', HANPAT.onset); sec('받침', HANPAT.coda.filter(r => r.k !== '(없음)'));
+  pane.append(el('p', 'note', tr('한자 글자 N쌍을 세어 낸 비율입니다').replace('N', HANPAT.pairs.toLocaleString())));
+}
+function hanQuiz(pane, pool) {
+  const N = 10, pick = [...pool].sort(() => Math.random() - .5).slice(0, N);
+  let i = 0, ok = 0;
+  const draw = () => {
+    pane.textContent = '';
+    if (i >= pick.length) {
+      pane.append(el('div', 'hanqend', '<b>' + ok + ' / ' + pick.length + '</b>'));
+      const again = el('button', 'primary', tr('다시')); again.type = 'button'; again.onclick = () => hanQuiz(pane, pool);
+      pane.append(again); return;
+    }
+    const q = pick[i], n = q.vi.split(' ').length, sy = new Set(q.vi.toLowerCase().split(' '));
+    const same = pool.filter(x => x !== q && x.vi.split(' ').length === n);
+    const near = same.filter(x => x.vi.toLowerCase().split(' ').some(t => sy.has(t))).sort(() => Math.random() - .5);
+    const opts = [q, ...near.slice(0, 2)];
+    same.sort(() => Math.random() - .5).forEach(x => { if (opts.length < 4 && !opts.includes(x)) opts.push(x); });
+    opts.sort(() => Math.random() - .5);
+    pane.append(el('div', 'hanqn', (i + 1) + ' / ' + pick.length));
+    pane.append(el('div', 'hanqh', esc(q.h)), el('div', 'hanqr', esc(q.r)));
+    const box = el('div', 'hanqopts');
+    opts.forEach(o => {
+      const bt = el('button', 'hanqopt', esc(o.vi)); bt.type = 'button'; bt.dataset.v = o.vi;
+      bt.onclick = () => {
+        [...box.children].forEach(c => { c.disabled = true; });
+        const good = o === q; if (good) ok++;
+        bt.classList.add(good ? 'ok' : 'no');
+        [...box.children].find(c => c.dataset.v === q.vi).classList.add('ok');
+        const k = recKey(q.vi); if (k) play(k, false, voiceDir()); else speakVi(q.vi, false, 0, S.voice);
+        const map = [...q.h].map((c, j) => esc(c) + ' ' + esc([...q.r][j]) + ' → <b>' + esc(q.vi.split(' ')[j]) + '</b>').join(' · ');
+        pane.append(el('div', 'hanqans', '<div class="hanqmap">' + map + '</div>' + (q.ko ? '<div class="hanqko">' + esc(q.ko) + '</div>' : '')));
+        const nx = el('button', 'primary', tr('다음')); nx.type = 'button'; nx.onclick = () => { i++; draw(); };
+        pane.append(nx);
+      };
+      box.append(bt);
+    });
+    pane.append(box);
+  };
+  draw();
 }
 /* 기본기 — 자음 · 모음 · 성조 · 타이핑, 단추 넷 (대표님 지시 2026-09-27).
    · 차례의 근거: 자음(첫소리) → 모음(가운뎃소리) → 성조(음절 전체에 얹힘) — 베트남 초등 국어(Tiếng Việt 1)가
@@ -6813,7 +6905,7 @@ function homeSettings() {
   if (S.acct) { const q = el('button', 'metext danger', tr('탈퇴')); q.type = 'button'; q.onclick = quitForm; acct.append(q); }
   /* 자료 출처 — 사전 결과 밑 문구를 뺀 대신(대표님 2026-10-01) 여기 둔다. 위키낱말사전·한국어기초사전은 CC BY-SA 라 출처를 밝혀야 한다 */
   { const cr = el('button', 'metext', tr('출처')); cr.type = 'button';
-    cr.onclick = () => popup(tr('사전 자료') + ': Wiktionary(영어판·베트남어판, CC BY-SA 4.0) · 국립국어원 한국어기초사전(CC BY-SA 2.0 KR)을 바탕으로 한국어 뜻을 옮겼습니다.');
+    cr.onclick = () => popup(tr('사전 자료') + ': Wiktionary(영어판·베트남어판, CC BY-SA 4.0)의 뜻·예문·한자 어원과 국립국어원 한국어기초사전(CC BY-SA 2.0 KR)을 바탕으로 한국어로 옮겼습니다. [보충] 뜻은 수업 자료와 한국어기초사전 대역에서 더했습니다. 자주 쓰는 말 순위는 베트남어 위키백과(CC BY-SA 4.0) 글로 셌습니다.');
     acct.append(cr); }
   row(tr('계정') + (S.acct ? '' : ' <small>' + tr('기기에만 저장') + '</small>'), acct);
   if (S.admin) row(tr('운영 현황'), null, () => { dive(renderHome); showAdmin(); });
@@ -7248,7 +7340,8 @@ function rootPills(host, x) {
   const box = el('span', 'roots');                 // 자리를 먼저 잡아 둔다 — 파일이 늦게 와도 뜻 목록과 순서가 바뀌지 않게
   host.append(box);
   const draw = () => {
-    const alts = ROOTS && ROOTS[String(x.vi || '').trim().toLowerCase()];
+    const k0 = String(x.vi || '').trim().toLowerCase();
+    const alts = ROOTS && (ROOTS[k0] || ROOTS[canonFind(ROOTS, k0)]);   // 철자 꼴만 다른 것(kỹ/kĩ thuật · hoá/hóa)도 같은 낱말로 (2026-10-01)
     if (!alts) return;
     const ko = String(x.ko || '');
     alts.filter(a => !a.c || a.c.some(k => ko.includes(k))).forEach(a => {
@@ -7998,6 +8091,23 @@ function dexLoad() {
   if (DEX) return Promise.resolve();
   if (!DEX_P) DEX_P = fetch('data/_dict_ex.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { DEX = j; }).catch(() => { DEX = {}; });
   return DEX_P;
+}
+let SNOTE = null, SNOTE_P = null;   // 선배 한월어 엑셀 메모·예문 (data/_senior_notes.json — tools/roots/excel_notes.py, 클로드가 하나씩 검사, 2026-10-01)
+function snoteLoad() {
+  if (SNOTE) return Promise.resolve();
+  if (!SNOTE_P) SNOTE_P = fetch('data/_senior_notes.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : { n: {}, x: {} }).then(j => { SNOTE = j; }).catch(() => { SNOTE = { n: {}, x: {} }; });
+  return SNOTE_P;
+}
+const snoteGet = (part, vi) => { if (!SNOTE) return null; const o = SNOTE[part] || {}, k = String(vi || '').trim().toLowerCase(); return o[k] || o[canonFind(o, k)] || null; };
+/* 선배 메모 — '사진은 보통 hình ảnh'·'xe cấp cứu = 구급차' 같은 쓰임 팁. 자리를 먼저 잡고 파일이 오면 채운다 */
+function seniorNote(host, x) {
+  const box = el('div', 'snote'); host.append(box);
+  snoteLoad().then(() => {
+    const ns = snoteGet('n', x.vi);
+    if (!ns || !ns.length) { box.remove(); return; }
+    box.append(el('span', 'snoteh', tr('선배 메모')));
+    ns.forEach(t => box.append(el('div', 'snotel', esc(t))));
+  });
 }
 let DSKIP = null;   // 사전에서 뺄 문장 (data/_dict_skip.json — 대표님 지시 2026-09-29: "사전 검색했는데 왜 문장도 검색되니")
 let DEN = null;     // 영어 검색 열쇠 (data/_dict_en.json — 영어는 열쇠일 뿐, 화면에는 한국어만)
@@ -9022,6 +9132,7 @@ function drawCard() {
                   x.work.map(t2 => esc(t2)).join(' · ')));
     rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
     caiNote(cf, x);                                        // 'cái nhà' 처럼 분류사가 붙은 표제어 (2026-09-29)
+    seniorNote(cf, x);                                     // 선배 한월어 엑셀 메모 (2026-10-01)
     const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
     if (dfe) { kob.textContent = ''; if (isCore(x)) kob.append(el('span', 'corepill', tr('핵심'))); kob.append(dfullBox(dfe, () => openWordCard(x))); rootPills(kob, x); }   // 사전 카드: 품사별 모든 뜻·유의어·반의어 (2026-10-01) — 한자 알약은 뜻 목록 밑에 다시(위에서 단 것은 지워진다)
     else senseLine(kob, x);                                // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
@@ -9067,12 +9178,14 @@ function drawCard() {
       };
       /* 사전 예문 — 위키낱말사전 예문 그대로 + 한국어(data/_dict_ex.json, tools/dict_ex). 앱 속 예문과 같은 문장은 뺀다. 카드를 열 때 처음 한 번 받는다 */
       const dhost = el('div', 'appex');
-      dexLoad().then(() => {
+      Promise.all([dexLoad(), snoteLoad()]).then(() => {
         const have = new Set([exm && exm.vi, ...more.map(m => m.vi)].filter(Boolean).map(v => v.toLowerCase()));
+        const sx = (snoteGet('x', x.vi) || []).filter(([v]) => !have.has(v.toLowerCase())).slice(0, 2);   // 선배 예문 먼저 (사람이 쓴 것)
+        sx.forEach(([v]) => have.add(v.toLowerCase()));
         const ds = ((DEX && DEX[String(x.vi).trim().toLowerCase()]) || []).filter(([v]) => !have.has(v.toLowerCase())).slice(0, 2);
-        if (!ds.length) { dhost.remove(); return; }
-        dhost.append(el('div', 'appexh', tr('사전 예문')));
-        ds.forEach(([v, k]) => dhost.append(exRow({ vi: v, ko: k })));
+        if (!sx.length && !ds.length) { dhost.remove(); return; }
+        if (sx.length) { dhost.append(el('div', 'appexh', tr('선배 예문'))); sx.forEach(([v, k]) => dhost.append(exRow({ vi: v, ko: k }))); }
+        if (ds.length) { dhost.append(el('div', 'appexh', tr('사전 예문'))); ds.forEach(([v, k]) => dhost.append(exRow({ vi: v, ko: k }))); }
       });
       if (more.length) {
         const ab = el('div', 'appex');

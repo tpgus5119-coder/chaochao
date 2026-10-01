@@ -27,9 +27,15 @@ def dueum(ch):
     return chr(0xAC00 + cho * 588 + jung * 28 + jong)
 
 
+# 꾸러미 음이 틀린 글자 — 읽기와 상관없이 늘 이 음 (鬥 = 鬪 싸울 투, 꾸러미는 '두' → 戰鬥 '전두'가 됐다, 2026-10-01 한월어 엑셀 대조로 찾음)
+CHAR_KO = {'鬥': '투'}
+
+
 def fix_multi(w, h, ko):
     syl = w.lower().split()
     out = list(ko)
+    for i, c in enumerate(h[:len(out)]):
+        if c in CHAR_KO: out[i] = CHAR_KO[c]
     for i, (c, sy) in enumerate(zip(h, syl)):
         v = MULTI.get((c, U.normalize('NFC', sy)))
         if v: out[i] = dueum(v) if i == 0 else v

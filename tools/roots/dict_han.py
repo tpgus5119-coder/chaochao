@@ -20,11 +20,16 @@ nfc = lambda s: U.normalize('NFC', s).strip()
 TONES = '\u0300\u0301\u0309\u0303\u0323'
 
 
+ONSET_Y = re.compile(r'^(b|c|ch|d|đ|g|gh|h|k|kh|l|m|n|ng|ngh|nh|p|ph|r|s|t|th|tr|v|x|qu)y$')
+
+
 def canon(syl):
-    """성조 찍는 자리만 다른 꼴(uý·úy, hoá·hóa)을 같게 — 성조를 떼어 뒤에 붙인다"""
+    """성조 찍는 자리만 다른 꼴(uý·úy, hoá·hóa)과 자음 뒤 홀로 쓴 y·i(kỹ·kĩ, lý·lí)를 같게 — 앱 viCanon 과 같은 규칙"""
     d = U.normalize('NFD', syl.lower())
     t = ''.join(c for c in d if c in TONES)
-    return U.normalize('NFC', ''.join(c for c in d if c not in TONES)) + t
+    b = U.normalize('NFC', ''.join(c for c in d if c not in TONES))
+    if ONSET_Y.match(b): b = b[:-1] + 'i'
+    return b + t
 
 # 한자음 검산에 걸렸지만 클로드가 하나씩 보고 표준 한자어로 확인한 것 (2026-10-01) — 드문 읽기·남부 읽기(tánh·nhơn)·변이음(uý/úy) 때문에 걸렸다.
 # 민간 어원이 의심되는 것(bủn xỉn 貧賤·tỉ mỉ 細密·thiêng liêng 精靈 …)·외국 지명 음역(a lịch sơn·tân gia ba …)·위키 글자가 틀려 보이는 것(nạn dân 戁民·tiến thoái 先退)은 살리지 않는다.
