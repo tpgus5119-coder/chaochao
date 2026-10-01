@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -8158,6 +8158,9 @@ function appExIndex() {
     if (typeof o.vi === 'string' && typeof o.ko === 'string' && o.ko) add(o);
     for (const v of Object.values(o)) if (v && typeof v === 'object') walk(v, dep + 1);
   };
+  /* 교재 원문 먼저 — 메인 교재 낱말의 예문 가운데 쪽 이미지로 대조해 교재 문장으로 확인한 것(ex_src = main_book, tools/book_ex, 2,094문장).
+     나머지(일상·직무·선배·22기·문법 예문)는 대부분 AI·클로드가 쓴 문장이다 — '만든 예문'(대표님 2026-10-01 "거의 대부분 지어낸 문장일걸?" → 출처 표시로 확인) */
+  (GYBM || []).forEach(src => { if (src.key === 'main') src.lessons.forEach(l => l.words.forEach(w => { if (w.ex_src === 'main_book' && w.ex && w.ex.vi) { add(w.ex); list[list.length - 1] && list[list.length - 1].vi === String(w.ex.vi).trim() && (list[list.length - 1].bk = 1); } })); });
   walk(ALL, 0); walk(COURSE, 0); walk(GYBM, 0); walk(GRAM, 0);
   const idx = new Map();
   list.forEach((s2, i) => {
@@ -8177,11 +8180,11 @@ function appExIndex() {
   return APPEX;
 }
 const sentRank = s2 => /[.!?]$/.test(s2.vi) || (s2.vi[0] !== s2.vi[0].toLowerCase()) ? 0 : 1;   // 온전한 문장이 짧은 구(ăn tại chỗ)보다 먼저
-function appExFor(vi, skip) {
+function appExFor(vi, skip, book) {
   const v0 = String(vi).trim(), X = appExIndex();
   const ids = X.idx.get((v0 !== v0.toLowerCase() ? '^' : '') + v0.toLowerCase()) || [];   // 대문자 든 표제어(Hà Nội)는 이름 열쇠로 — [À-Ỹ] 범위는 소문자도 품어 쓰지 않는다
   const sk = String(skip || '').trim().toLowerCase();
-  return ids.map(i => X.list[i]).filter(s2 => s2.vi.toLowerCase() !== sk)
+  return ids.map(i => X.list[i]).filter(s2 => s2.vi.toLowerCase() !== sk && (book === undefined || !!s2.bk === book))
     .sort((a, b) => sentRank(a) - sentRank(b) || (a.au ? 0 : 1) - (b.au ? 0 : 1) || a.vi.length - b.vi.length).slice(0, 3);
 }
 let DFREQ = null;   // 낱말 빈도 순위 (data/_dict_freq.json — tools/dict_freq/count.py, 위키백과 + 앱 예문, 2026-10-01)
@@ -8225,7 +8228,7 @@ function dictBuild() {
   const seen = new Map();
   /* 문장은 사전에 안 나온다 (대표님 지시 2026-09-27) — 단어·구만. 다섯 단어 이상이거나 문장 부호가 들어 있으면 문장으로 본다. */
   const isSent = v => v.split(/\s+/).length >= 5 || /[.!?…]$/.test(v) || /[,;:"“”]/.test(v);
-  const KEEP = ['ex', 'img', 'kr', 'kr_read', 'tones', 'alt', 'hanja', 'south', 'work', 'gl', 'form', 'fex'];
+  const KEEP = ['ex', 'ex_src', 'img', 'kr', 'kr_read', 'tones', 'alt', 'hanja', 'south', 'work', 'gl', 'form', 'fex'];
   // 괄호 안의 ·,/; 는 구절 경계가 아니다 — '운동하다(헬스·체조: tập gym·tập thể dục)' 이 세 조각으로 찢기지 않게 (2026-09-29 밤)
   const SEP = { '·': '\u0001', ',': '\u0002', '/': '\u0003', ';': '\u0004' }, UNSEP = { '\u0001': '·', '\u0002': ',', '\u0003': '/', '\u0004': ';' };
   const phr = g => g.replace(/\([^)]*\)/g, m => m.replace(/[·,\/;]/g, c => SEP[c])).split(/\s*[·\/,;]\s*/).map(s => s.replace(/[\u0001-\u0004]/g, c => UNSEP[c]).trim()).filter(Boolean);
@@ -9251,7 +9254,7 @@ function drawCard() {
     /* 새 짜임에서는 예문이 **단어 안에** 들어 있다(course.json). 없으면 옛 방식대로
        그날 대화에서 그 단어이 든 문장을 찾아 쓴다. */
     const exm = x.ex || exampleFor(L.day, x);
-    if (exm) {
+    if (exm && !L.dict) {                                   // 수업 카드: 그 낱말의 예문 그대로
       const eb = el('div', 'wex wexplay');
       eb.onclick = () => { const k = recKey(exm.vi); k ? play(k, false) : speakVi(exm.vi); };
       eb.append(tapLine(exm.vi, 'wexvi tapline'));
@@ -9264,8 +9267,12 @@ function drawCard() {
       eb.append(ectl);
       cf.append(eb);
     }
-    if (L.dict) {                                           // 사전 카드: 앱 속 예문 + 사전 예문 (2026-10-01)
-      const more = appExFor(x.vi, exm && exm.vi);
+    /* 사전 카드의 예문 — 차례 (대표님 2026-10-01 "1순위 메인 교재 문장, 2순위 사전 문장, 둘 다 없으면 그때 만든 예문"):
+       ① 교재 예문: 메인 교재 원문(쪽 이미지로 확인한 2,094문장) 가운데 그 낱말이 낱말로 쓰인 것
+       ② 사전 예문: 위키낱말사전 예문 그대로 + 한국어(data/_dict_ex.json)
+       ③ 만든 예문: ①② 가 하나도 없을 때만 — 그 낱말의 수업 예문과 앱의 다른 문장(일상·직무·선배·22기, 대부분 AI·클로드가 쓴 것).
+       세 칸 합쳐 3문장. 선배 엑셀 예문은 뺐다(대표님 2026-10-01). 칸 이름으로 출처를 밝힌다 */
+    if (L.dict) {
       const exRow = m => {
         const r = el('div', 'appexrow');
         r.append(tapLine(m.vi, 'appexvi tapline'));
@@ -9276,33 +9283,22 @@ function drawCard() {
         r.append(spk);
         return r;
       };
-      /* 사전 예문 — 위키낱말사전 예문 그대로 + 한국어(data/_dict_ex.json, tools/dict_ex). 앱 속 예문과 같은 문장은 뺀다. 카드를 열 때 처음 한 번 받는다 */
-      const dhost = el('div', 'appex');
-      Promise.all([dexLoad(), snoteLoad()]).then(() => {
-        const have = new Set([exm && exm.vi, ...more.map(m => m.vi)].filter(Boolean).map(v => v.toLowerCase()));
-        const sx = (snoteGet('x', x.vi) || []).filter(([v]) => !have.has(v.toLowerCase())).slice(0, 2);   // 선배 예문 먼저 (사람이 쓴 것)
-        sx.forEach(([v]) => have.add(v.toLowerCase()));
-        const ds = ((DEX && DEX[String(x.vi).trim().toLowerCase()]) || []).filter(([v]) => !have.has(v.toLowerCase())).slice(0, 2);
-        if (!sx.length && !ds.length) { dhost.remove(); return; }
-        if (sx.length) { dhost.append(el('div', 'appexh', tr('선배 예문'))); sx.forEach(([v, k]) => dhost.append(exRow({ vi: v, ko: k }))); }
-        if (ds.length) { dhost.append(el('div', 'appexh', tr('사전 예문'))); ds.forEach(([v, k]) => dhost.append(exRow({ vi: v, ko: k }))); }
-      });
-      if (more.length) {
-        const ab = el('div', 'appex');
-        ab.append(el('div', 'appexh', tr('앱 속 예문')));
-        more.forEach(m => {
-          const r = el('div', 'appexrow');
-          r.append(tapLine(m.vi, 'appexvi tapline'));
-          if (m.ko) r.append(el('div', 'appexko', esc(m.ko)));
-          const spk = el('button', 'appexspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>');
-          spk.type = 'button'; spk.title = tr('듣기');
-          spk.onclick = ev => { ev.stopPropagation(); const k = recKey(m.vi); k ? play(k, false) : speakVi(m.vi); };
-          r.append(spk);
-          ab.append(r);
+      const host = el('div', 'appex');
+      cf.append(host);
+      dexLoad().then(() => {
+        const have = new Set(), MAX = 3;
+        const take = (list, n) => list.filter(m => { const k = m.vi.toLowerCase(); if (have.has(k)) return false; have.add(k); return true; }).slice(0, n);
+        const own = exm && exm.vi ? [{ vi: exm.vi, ko: exm.ko || '', bk: x.ex_src === 'main_book' }] : [];
+        const t1 = take([...own.filter(m => m.bk), ...appExFor(x.vi, null, true)], MAX);
+        const t2 = take(((DEX && DEX[String(x.vi).trim().toLowerCase()]) || []).map(([v, k]) => ({ vi: v, ko: k })), MAX - t1.length);
+        const t3 = t1.length || t2.length ? [] : take([...own.filter(m => !m.bk), ...appExFor(x.vi, null, false)], MAX);
+        [[tr('교재 예문'), t1], [tr('사전 예문'), t2], [tr('만든 예문'), t3]].forEach(([h, ms]) => {
+          if (!ms.length) return;
+          host.append(el('div', 'appexh', h));
+          ms.forEach(m => host.append(exRow(m)));
         });
-        cf.append(ab);
-      }
-      cf.append(dhost);
+        if (!host.children.length) host.remove();
+      });
     }
     // 카드 안의 '헷갈리는 짝 ▾' 줄은 뺐다 — 단어을 누르면 같은 것이 팝업으로 뜬다 (대표님 지시 2026-09-27 저녁)
     cf.append(pitchGraph(x.vi, { img: x.img }));   // 하나뿐인 높낮이 그래프 — 단어이 따라가고, 말하면 내 곡선이 겹친다
