@@ -1,6 +1,2614 @@
 {
  "days": [
   {
+   "ts": "2026-10-02",
+   "day": "Nno=83855",
+   "track": "news",
+   "theme": "전통 문화 마을",
+   "title": "[관광] 빈홈즈 하롱에 456조 6천억 동 규모 '헤리티지 빌리지' 조성",
+   "u": "https://www.goodmorningvietnam.co.kr/news/article.html?no=83855",
+   "cat": "문화·생활",
+   "intro": "빈홈즈가 하롱 신도시에 헤리티지 빌리지를 만들어요",
+   "words": [
+    {
+     "vi": "làng",
+     "ko": "마을",
+     "kr_read": "랑",
+     "emoji": "🏘️",
+     "tones": [
+      {
+       "syl": "làng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "văn hóa",
+     "ko": "문화",
+     "kr_read": "반 호아",
+     "emoji": "🎭",
+     "tones": [
+      {
+       "syl": "văn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hóa",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "áo dài",
+     "ko": "아오자이",
+     "kr_read": "아오 자이",
+     "emoji": "👗",
+     "tones": [
+      {
+       "syl": "áo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "dài",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "nhà hát",
+     "ko": "극장",
+     "kr_read": "냐 핫",
+     "emoji": "🎟️",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hát",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "món ăn",
+     "ko": "음식",
+     "kr_read": "몬 안",
+     "emoji": "🍜",
+     "tones": [
+      {
+       "syl": "món",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "전통 문화 마을",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Ở làng này có gì vui?",
+      "ko": "이 마을에는 뭐가 재미있어요?",
+      "kr_read": "어 랑 나이 꼬 지 부이",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "làng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "gì",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "vui?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Xem biểu diễn và may áo dài.",
+      "ko": "공연을 보고 아오자이를 맞춰요.",
+      "kr_read": "쌤 비에우 지엔 바 마이 아오 자이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Xem",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "biểu",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "diễn",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "và",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "may",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "áo",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "dài.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "빈홈즈가 하롱 신도시에 헤리티지 빌리지를 만들어요",
+    "마을 넓이는 18.5헥타르예요",
+    "한국과 일본의 민속촌을 본보기로 삼았어요",
+    "베트남 북부, 중부, 남부의 문화와 음식을 한곳에서 즐겨요",
+    "약 500석 규모의 베트남 국립극장이 들어서요",
+    "세 지역 요리를 맛보는 음식 마을도 생겨요",
+    "아오자이를 그 자리에서 맞춤 제작해 줘요",
+    "800헥타르 맹그로브 생태공원과 같은 구역에 자리해요",
+    "용인 한국민속촌은 1974년부터 운영되고 있어요",
+    "전체 단지에는 456조 6,390억 동이 들어가요"
+   ],
+   "title_card": "빈홈즈 하롱에 한국민속촌 본뜬 전통 문화 마을 조성",
+   "pub": "2026-10-02",
+   "n": 61
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "N894.html",
+   "track": "news",
+   "theme": "간 이식",
+   "title": "Brain-dead donor's liver gives boy new chance after 7 years of cirrhosis",
+   "u": "https://e.vnexpress.net/news/news/brain-dead-donor-s-liver-gives-boy-new-chance-after-7-years-of-cirrhosis-5126894.html",
+   "cat": "사회",
+   "intro": "7년 동안 간 질환을 앓던 소년이 간 이식으로 건강을 찾았어요",
+   "words": [
+    {
+     "vi": "ghép gan",
+     "ko": "간 이식",
+     "kr_read": "갭 간",
+     "emoji": "🏥",
+     "tones": [
+      {
+       "syl": "ghép",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "gan",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "bệnh viện",
+     "ko": "병원",
+     "kr_read": "벤 비엔",
+     "emoji": "🏨",
+     "tones": [
+      {
+       "syl": "bệnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "viện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "phẫu thuật",
+     "ko": "수술",
+     "kr_read": "퍼우 투엇",
+     "emoji": "🩺",
+     "tones": [
+      {
+       "syl": "phẫu",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "thuật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "hiến tạng",
+     "ko": "장기 기증",
+     "kr_read": "히엔 땅",
+     "emoji": "❤️",
+     "tones": [
+      {
+       "syl": "hiến",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "tạng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "con trai",
+     "ko": "아들",
+     "kr_read": "꼰 짜이",
+     "emoji": "👦",
+     "tones": [
+      {
+       "syl": "con",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "trai",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "khỏe mạnh",
+     "ko": "건강하다",
+     "kr_read": "코애 마인",
+     "emoji": "💪",
+     "tones": [
+      {
+       "syl": "khỏe",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "mạnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "간 이식",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Sau khi ghép gan, cháu bé thế nào?",
+      "ko": "간 이식 뒤 아이는 어때요?",
+      "kr_read": "싸우 키 갭 간 짜우 배 테 나오",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Sau",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "khi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ghép",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "gan,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cháu",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bé",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "thế",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nào?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Cháu khỏe hơn và ăn ngon miệng.",
+      "ko": "더 건강해지고 밥도 잘 먹어요.",
+      "kr_read": "짜우 코애 헌 바 안 응온 미엥",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Cháu",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "khỏe",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "hơn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "và",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ngon",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "miệng.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "7년 동안 간 질환을 앓던 소년이 간 이식으로 건강을 찾았어요",
+    "소년 히에우는 2019년에 태어났어요",
+    "태어난 지 한 달 열흘 만에 담도폐쇄증 진단을 받았어요",
+    "쓸개즙이 막혀 고이면서 간이 굳을 수 있는 병이에요",
+    "의사들은 간 이식만이 살릴 방법이라고 했어요",
+    "이식 비용은 약 5억 동으로 가족이 감당할 수 없었어요",
+    "엄마는 한 달에 약 500만 동을 벌며 아들을 돌봤어요",
+    "6월에 희망의 태양 사업이 비용 일부를 도왔어요",
+    "뇌사자의 간을 받아 11시간 동안 수술했어요",
+    "이식 두 달 뒤 황달이 사라지고 입맛도 돌아왔어요"
+   ],
+   "title_card": "뇌사자 간 기증으로 7년 간경화 앓던 소년 새 삶",
+   "pub": "2026-10-02",
+   "n": 60
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "N783.html",
+   "track": "news",
+   "theme": "유통 확장",
+   "title": "Japanese retail giant Aeon targets 300 supermarkets, 30 shopping malls in Vietnam",
+   "u": "https://e.vnexpress.net/news/business/companies/japanese-retail-giant-aeon-targets-300-supermarkets-30-shopping-malls-in-vietnam-5126783.html",
+   "cat": "경제",
+   "intro": "일본 유통 대기업 이온이 베트남 사업을 크게 넓혀요",
+   "words": [
+    {
+     "vi": "siêu thị",
+     "ko": "슈퍼마켓",
+     "kr_read": "씨에우 티",
+     "emoji": "🛒",
+     "tones": [
+      {
+       "syl": "siêu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "thị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "trung tâm thương mại",
+     "ko": "쇼핑몰",
+     "kr_read": "쭝 떰 트엉 마이",
+     "emoji": "🏬",
+     "tones": [
+      {
+       "syl": "trung",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tâm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "thương",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "mại",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "mua sắm",
+     "ko": "쇼핑하다",
+     "kr_read": "무어 쌈",
+     "emoji": "🛍️",
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "sắm",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "Nhật Bản",
+     "ko": "일본",
+     "kr_read": "녓 반",
+     "emoji": "🗾",
+     "tones": [
+      {
+       "syl": "Nhật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "Bản",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "khách hàng",
+     "ko": "손님",
+     "kr_read": "칵 항",
+     "emoji": "🧑",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "mở",
+     "ko": "열다",
+     "kr_read": "머",
+     "emoji": "🔓",
+     "tones": [
+      {
+       "syl": "mở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "유통 확장",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Gần nhà bạn có siêu thị Aeon không?",
+      "ko": "집 근처에 이온 슈퍼마켓 있어요?",
+      "kr_read": "건 냐 반 꼬 씨에우 티 아 애오 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Gần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bạn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "siêu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "Aeon",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Chưa có, nhưng sắp có nhiều hơn.",
+      "ko": "아직 없지만 곧 더 많이 생겨요.",
+      "kr_read": "쯔어 꼬 능 쌉 꼬 니에우 헌",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Chưa",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhưng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sắp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhiều",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "hơn.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "일본 유통 대기업 이온이 베트남 사업을 크게 넓혀요",
+    "슈퍼마켓은 약 60곳에서 300곳으로 늘릴 계획이에요",
+    "쇼핑몰은 2030 회계연도 말까지 30곳으로 늘려요",
+    "하롱, 타인호아, 다낭에 새 시설을 지어요",
+    "2031년 3월까지 베트남 매출 3,000억 엔이 목표예요",
+    "동남아 투자의 약 60%를 베트남에 쏟아요",
+    "올해 2월 기준 베트남 매장은 모두 302곳이에요",
+    "자체 상표 상품 비중을 6%에서 20%로 높여요",
+    "이온은 2014년 베트남에 처음 들어왔어요",
+    "와온 회원 제도와 금융 서비스로 고객을 늘릴 계획이에요"
+   ],
+   "title_card": "일본 이온, 베트남 슈퍼마켓 300곳·쇼핑몰 30곳 목표",
+   "pub": "2026-10-02",
+   "n": 59
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "N/190041/",
+   "track": "news",
+   "theme": "중국 패스트푸드",
+   "title": "중국계 패스트푸드 ‘월리스’, 베트남 시장 침투 가속화… 2만 개 매장 노하우 이식",
+   "u": "https://chaovietnam.co.kr/190041/",
+   "cat": "경제",
+   "intro": "중국 패스트푸드 체인 월리스가 베트남 매장을 빠르게 늘려요",
+   "words": [
+    {
+     "vi": "gà rán",
+     "ko": "치킨",
+     "kr_read": "가 잔",
+     "emoji": "🍗",
+     "tones": [
+      {
+       "syl": "gà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "rán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "bánh mì kẹp",
+     "ko": "버거",
+     "kr_read": "바인 미 깹",
+     "emoji": "🍔",
+     "tones": [
+      {
+       "syl": "bánh",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "mì",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "kẹp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "giá rẻ",
+     "ko": "싼값",
+     "kr_read": "자 재",
+     "emoji": "💲",
+     "tones": [
+      {
+       "syl": "giá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "rẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "cửa hàng",
+     "ko": "가게",
+     "kr_read": "끄어 항",
+     "emoji": "🏪",
+     "tones": [
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "thức ăn nhanh",
+     "ko": "패스트푸드",
+     "kr_read": "특 안 나인",
+     "emoji": "🍟",
+     "tones": [
+      {
+       "syl": "thức",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "thực đơn",
+     "ko": "메뉴",
+     "kr_read": "특 던",
+     "emoji": "📋",
+     "tones": [
+      {
+       "syl": "thực",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "đơn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "중국 패스트푸드",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Bánh mì kẹp gà ở đây bao nhiêu tiền?",
+      "ko": "여기 치킨 버거는 얼마예요?",
+      "kr_read": "바인 미 깹 가 어 더이 바오 니에우 띠엔",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Bánh",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mì",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "kẹp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "gà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bao",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhiêu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tiền?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Năm mươi nghìn đồng, rẻ lắm.",
+      "ko": "5만 동이에요, 아주 싸요.",
+      "kr_read": "남 므어이 응인 동 재 람",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Năm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mươi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nghìn",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đồng,",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rẻ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "lắm.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "중국 패스트푸드 체인 월리스가 베트남 매장을 빠르게 늘려요",
+    "월리스는 중국에서 매장 2만 개 넘게 운영해요",
+    "2001년 중국 푸저우에서 형제가 함께 세웠어요",
+    "콜라 1위안, 닭다리 2위안 같은 싼값으로 컸어요",
+    "2023년부터 동남아 시장에 본격 진출했어요",
+    "베트남 북부에만 벌써 매장이 26개 있어요",
+    "호찌민시 투득, 빈탄 같은 지역으로도 넓히고 있어요",
+    "치킨 버거는 5만 동, 조각 치킨은 3만 8,000동이에요",
+    "덮밥과 랍쩌웅 같은 현지 입맛 메뉴도 넣었어요",
+    "올해 5월 흥옌성에 버거 생산 법인도 세웠어요"
+   ],
+   "title_card": "중국 패스트푸드 월리스, 싼값 앞세워 베트남 매장 확대",
+   "pub": "2026-10-02",
+   "n": 58
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "Nno=83871",
+   "track": "news",
+   "theme": "당뇨와 감염",
+   "title": "[사회] 당뇨병 환자, 대상포진 발병 위험 약 38% 더 높아",
+   "u": "https://www.goodmorningvietnam.co.kr/news/article.html?no=83871",
+   "cat": "문화·생활",
+   "intro": "당뇨병 환자는 대상포진에 걸릴 위험이 약 38% 높아요",
+   "words": [
+    {
+     "vi": "bệnh tiểu đường",
+     "ko": "당뇨병",
+     "kr_read": "벤 띠에우 드엉",
+     "emoji": "🩸",
+     "tones": [
+      {
+       "syl": "bệnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "tiểu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "tiêm phòng",
+     "ko": "예방접종",
+     "kr_read": "띠엠 퐁",
+     "emoji": "💉",
+     "tones": [
+      {
+       "syl": "tiêm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "phòng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "bác sĩ",
+     "ko": "의사",
+     "kr_read": "박 씨",
+     "emoji": "🩺",
+     "tones": [
+      {
+       "syl": "bác",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sĩ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ]
+    },
+    {
+     "vi": "người già",
+     "ko": "노인",
+     "kr_read": "응으어이 자",
+     "emoji": "👴",
+     "tones": [
+      {
+       "syl": "người",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "già",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "sức khỏe",
+     "ko": "건강",
+     "kr_read": "쓱 코애",
+     "emoji": "💪",
+     "tones": [
+      {
+       "syl": "sức",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "khỏe",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "huyết áp",
+     "ko": "혈압",
+     "kr_read": "후옛 압",
+     "emoji": "❤️",
+     "tones": [
+      {
+       "syl": "huyết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "áp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "당뇨와 감염",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Bà tôi bị tiểu đường, có cần tiêm phòng không?",
+      "ko": "할머니가 당뇨가 있는데 예방접종을 해야 해요?",
+      "kr_read": "바 또이 비 띠에우 드엉 꼬 껀 띠엠 퐁 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Bà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tiểu",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đường,",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tiêm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "phòng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, bác sĩ khuyên nên tiêm.",
+      "ko": "네, 의사가 맞으라고 권해요.",
+      "kr_read": "꼬 박 씨 쿠옌 넨 띠엠",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bác",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sĩ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "khuyên",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nên",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tiêm.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "당뇨병 환자는 대상포진에 걸릴 위험이 약 38% 높아요",
+    "베트남 비뇨기·신장학회 학술회의에서 나온 경고예요",
+    "만성 신장병 환자도 대상포진 위험이 약 29% 높아요",
+    "당뇨병 환자는 폐렴 같은 호흡기 감염도 잘 걸려요",
+    "나이가 들면 면역력이 떨어져 감염에 더 약해져요",
+    "2030년 베트남 60세 이상 인구는 약 1800만 명이 될 거예요",
+    "그중 3분의 2쯤은 지병이 하나 이상 있어요",
+    "전문가들은 혈당, 혈압, 혈중 지질을 잘 관리하라고 했어요",
+    "예방접종으로 감염병을 미리 막으라고 권했어요",
+    "미국당뇨병학회도 당뇨병 환자에게 접종을 권해요"
+   ],
+   "title_card": "당뇨병 환자, 대상포진 걸릴 위험 약 38% 더 높아",
+   "pub": "2026-10-02",
+   "n": 57
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "Nno=83873",
+   "track": "news",
+   "theme": "금융 중심지",
+   "title": "[국제] 호치민시, 세계 금융 중심지 순위 17계단 도약…다낭은 71위로 첫 신규 진입",
+   "u": "https://www.goodmorningvietnam.co.kr/news/article.html?no=83873",
+   "cat": "경제",
+   "intro": "호치민시가 세계 금융 중심지 순위에서 67위에 올랐어요",
+   "words": [
+    {
+     "vi": "tài chính",
+     "ko": "금융",
+     "kr_read": "따이 찐",
+     "emoji": "💹",
+     "tones": [
+      {
+       "syl": "tài",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "chính",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "trung tâm",
+     "ko": "중심",
+     "kr_read": "쭝 떰",
+     "emoji": "🎯",
+     "tones": [
+      {
+       "syl": "trung",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tâm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "thành phố",
+     "ko": "도시",
+     "kr_read": "타인 포",
+     "emoji": "🏙️",
+     "tones": [
+      {
+       "syl": "thành",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "phố",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "xếp hạng",
+     "ko": "순위를 매기다",
+     "kr_read": "쎕 항",
+     "emoji": "🏆",
+     "tones": [
+      {
+       "syl": "xếp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "hạng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "tăng",
+     "ko": "오르다",
+     "kr_read": "땅",
+     "emoji": "📈",
+     "tones": [
+      {
+       "syl": "tăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "ngân hàng",
+     "ko": "은행",
+     "kr_read": "응언 항",
+     "emoji": "🏦",
+     "tones": [
+      {
+       "syl": "ngân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "금융 중심지",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Thành phố Hồ Chí Minh xếp hạng bao nhiêu?",
+      "ko": "호치민시는 몇 위예요?",
+      "kr_read": "타인 포 호 찌 민 쎕 항 바오 니에우",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Thành",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "phố",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Hồ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Chí",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Minh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xếp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "hạng",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "bao",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhiêu?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Sáu mươi bảy, tăng mười bảy bậc.",
+      "ko": "67위예요, 17계단 올랐어요.",
+      "kr_read": "싸우 므어이 바이 땅 므어이 바이 벅",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Sáu",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mươi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bảy,",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tăng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mười",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bảy",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "bậc.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "호치민시가 세계 금융 중심지 순위에서 67위에 올랐어요",
+    "지난 평가보다 17계단이나 뛰었어요",
+    "조사 대상 117개 도시 가운데 순위예요",
+    "오른 폭은 코펜하겐 다음으로 두 번째로 커요",
+    "점수는 692점으로 약 4.1% 올랐어요",
+    "동남아에서는 싱가포르, 쿠알라룸푸르 다음 3위예요",
+    "핀테크 분야는 12계단 오른 71위예요",
+    "다낭은 처음으로 순위에 들어 71위를 했어요",
+    "다낭은 방콕, 마닐라, 자카르타보다 앞섰어요",
+    "1위는 뉴욕이고 런던, 홍콩, 싱가포르가 그 뒤예요"
+   ],
+   "title_card": "호치민시 세계 금융 중심지 순위 67위, 17계단 올라",
+   "pub": "2026-10-02",
+   "n": 56
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "Nno=44179",
+   "track": "news",
+   "theme": "유치원 영어",
+   "title": "호치민시, 향후 3년간 유치원 ‘통합영어교육’ 시범사업 실시",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44179",
+   "cat": "사회",
+   "intro": "호치민시가 유치원 통합 영어교육 시범사업을 시작해요",
+   "words": [
+    {
+     "vi": "tiếng Anh",
+     "ko": "영어",
+     "kr_read": "띠엥 아인",
+     "emoji": "🔤",
+     "tones": [
+      {
+       "syl": "tiếng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "Anh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "mẫu giáo",
+     "ko": "유치원",
+     "kr_read": "머우 자오",
+     "emoji": "🧸",
+     "tones": [
+      {
+       "syl": "mẫu",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "giáo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "trẻ em",
+     "ko": "어린이",
+     "kr_read": "째 앰",
+     "emoji": "👶",
+     "tones": [
+      {
+       "syl": "trẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "em",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "phụ huynh",
+     "ko": "학부모",
+     "kr_read": "푸 후인",
+     "emoji": "👪",
+     "tones": [
+      {
+       "syl": "phụ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "huynh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "học",
+     "ko": "배우다",
+     "kr_read": "혹",
+     "emoji": "📚",
+     "tones": [
+      {
+       "syl": "học",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "chơi",
+     "ko": "놀다",
+     "kr_read": "쩌이",
+     "emoji": "🎈",
+     "tones": [
+      {
+       "syl": "chơi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "유치원 영어",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Con tôi học tiếng Anh ở trường mẫu giáo.",
+      "ko": "우리 아이는 유치원에서 영어를 배워요.",
+      "kr_read": "꼰 또이 혹 띠엥 아인 어 쯔엉 머우 자오",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Con",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "học",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tiếng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "trường",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "mẫu",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "giáo.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Học qua trò chơi thì vui lắm.",
+      "ko": "놀이로 배우면 아주 재미있어요.",
+      "kr_read": "혹 꽈 쪼 쩌이 티 부이 람",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Học",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "qua",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "trò",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "chơi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thì",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "vui",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lắm.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "호치민시가 유치원 통합 영어교육 시범사업을 시작해요",
+    "시 교육훈련국이 지난달 30일 계획을 발표했어요",
+    "시범사업은 3년 동안 이어져요",
+    "대상은 만 3~5세 아이들이에요",
+    "올해는 조건을 갖춘 공립 유치원부터 시작해요",
+    "부모가 동의하고 스스로 신청한 아이만 참여해요",
+    "나랏돈은 쓰지 않고 기업과 단체의 후원금으로 운영해요",
+    "외워서 배우는 대신 놀이와 프로젝트로 영어를 익혀요",
+    "만 5~6세 반은 일주일에 6번 영어 활동을 해요",
+    "영어를 학교의 제2언어로 만들려는 계획의 하나예요"
+   ],
+   "title_card": "호치민시, 유치원 통합 영어교육 3년 시범사업",
+   "pub": "2026-10-02",
+   "n": 55
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "Nno=44180",
+   "track": "news",
+   "theme": "배터리 재활용",
+   "title": "베트남, 2029년부터 ‘전기차배터리’ 재활용 의무화 추진…판매량 기준 최소 8%",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44180",
+   "cat": "공장·산업",
+   "intro": "베트남이 전기차 배터리 재활용 의무화를 추진해요",
+   "words": [
+    {
+     "vi": "pin",
+     "ko": "배터리",
+     "kr_read": "삔",
+     "emoji": "🔋",
+     "tones": [
+      {
+       "syl": "pin",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "xe điện",
+     "ko": "전기차",
+     "kr_read": "쌔 디엔",
+     "emoji": "🚗",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "tái chế",
+     "ko": "재활용하다",
+     "kr_read": "따이 쩨",
+     "emoji": "♻️",
+     "tones": [
+      {
+       "syl": "tái",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "chế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "môi trường",
+     "ko": "환경",
+     "kr_read": "모이 쯔엉",
+     "emoji": "🌿",
+     "tones": [
+      {
+       "syl": "môi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "doanh nghiệp",
+     "ko": "기업",
+     "kr_read": "조아인 응이엡",
+     "emoji": "🏢",
+     "tones": [
+      {
+       "syl": "doanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nghiệp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "thu hồi",
+     "ko": "회수하다",
+     "kr_read": "투 호이",
+     "emoji": "📥",
+     "tones": [
+      {
+       "syl": "thu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hồi",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "배터리 재활용",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Pin xe điện cũ sẽ đi đâu?",
+      "ko": "낡은 전기차 배터리는 어디로 가요?",
+      "kr_read": "삔 쌔 디엔 꾸 쌔 디 더우",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Pin",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "điện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "cũ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "sẽ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đâu?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Doanh nghiệp phải thu hồi và tái chế.",
+      "ko": "기업이 회수해서 재활용해야 해요.",
+      "kr_read": "조아인 응이엡 파이 투 호이 바 따이 쩨",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Doanh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nghiệp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "phải",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "thu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hồi",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "và",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tái",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chế.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "베트남이 전기차 배터리 재활용 의무화를 추진해요",
+    "2029년부터 기업은 판매량의 8%를 재활용할 의무가 생겨요",
+    "지금은 의무 재활용 비율이 0%예요",
+    "대상은 배터리를 만들거나 수입하는 기업이에요",
+    "2029~2031년은 8%, 그 뒤 3년은 15%로 높여요",
+    "배터리를 분해해 플라스틱과 리튬 같은 금속을 되찾아요",
+    "다 쓴 배터리를 외국에 보내 재활용해도 돼요",
+    "업계는 국내 기술로 리튬과 니켈을 회수할 수 없다고 걱정했어요",
+    "그래서 못 채운 몫은 최대 5년까지 넘길 수 있게 했어요",
+    "개정안은 이달 열리는 정기국회에 올라갈 예정이에요"
+   ],
+   "title_card": "베트남, 2029년부터 전기차 배터리 8% 재활용 의무화 추진",
+   "pub": "2026-10-02",
+   "n": 54
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "Nno=44183",
+   "track": "news",
+   "theme": "오염육 통조림",
+   "title": "‘돼지열병 통조림 파문’ 베트남 식품社 관계자들, 무더기 징역형…최고 19년",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44183",
+   "cat": "사회",
+   "intro": "돼지열병 걸린 고기로 통조림을 만든 사건에 판결이 나왔어요",
+   "words": [
+    {
+     "vi": "thịt lợn",
+     "ko": "돼지고기",
+     "kr_read": "팃 런",
+     "emoji": "🥩",
+     "tones": [
+      {
+       "syl": "thịt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "lợn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "đồ hộp",
+     "ko": "통조림",
+     "kr_read": "도 홉",
+     "emoji": "🥫",
+     "tones": [
+      {
+       "syl": "đồ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hộp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "tòa án",
+     "ko": "법원",
+     "kr_read": "또아 안",
+     "emoji": "⚖️",
+     "tones": [
+      {
+       "syl": "tòa",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "án",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "nhà tù",
+     "ko": "감옥",
+     "kr_read": "냐 뚜",
+     "emoji": "🔒",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "tù",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "an toàn thực phẩm",
+     "ko": "식품 안전",
+     "kr_read": "안 또안 특 펌",
+     "emoji": "🛡️",
+     "tones": [
+      {
+       "syl": "an",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "toàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "thực",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "phẩm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "hối lộ",
+     "ko": "뇌물",
+     "kr_read": "호이 로",
+     "emoji": "💵",
+     "tones": [
+      {
+       "syl": "hối",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "lộ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "오염육 통조림",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Công ty đó bị phạt thế nào?",
+      "ko": "그 회사는 어떤 벌을 받았어요?",
+      "kr_read": "꽁 띠 도 비 팟 테 나오",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đó",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "phạt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "thế",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nào?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Cựu giám đốc bị tù mười chín năm.",
+      "ko": "전 대표가 징역 19년을 받았어요.",
+      "kr_read": "끄우 잠 독 비 뚜 므어이 찐 남",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Cựu",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "giám",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đốc",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tù",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "mười",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "chín",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "năm.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "돼지열병 걸린 고기로 통조림을 만든 사건에 판결이 나왔어요",
+    "하이퐁 법원이 지난달 30일 공판에서 형을 선고했어요",
+    "식품회사 하롱캔포코의 전 대표는 징역 19년을 받았어요",
+    "다른 피고인들도 식품안전 위반과 뇌물 혐의로 유죄를 받았어요",
+    "회사는 지난해 5월부터 9월 8일까지 감염된 고기를 샀어요",
+    "사들인 고기는 197톤이 넘고 값은 약 174억 동이에요",
+    "직원들은 샘플 검사와 안전 점검을 일부러 건너뛰었어요",
+    "검역소 부소장은 뇌물을 받고 거짓 인증서를 내줬어요",
+    "수사 당국은 97억 동어치 고기를 더 찾아내 폐기했어요",
+    "하롱캔포코는 1957년 세워진 약 70년 된 식품회사예요"
+   ],
+   "title_card": "돼지열병 고기로 통조림 만든 회사 전 대표 징역 19년",
+   "pub": "2026-10-02",
+   "n": 53
+  },
+  {
+   "ts": "2026-10-02",
+   "day": "Nno=44185",
+   "track": "news",
+   "theme": "유류세 면제",
+   "title": "베트남, ‘유류세’ 0% 한시적 면세 조치 연장…9→12월 말까지",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44185",
+   "cat": "경제",
+   "intro": "베트남이 기름에 붙는 세금 면제를 3개월 더 늘렸어요",
+   "words": [
+    {
+     "vi": "xăng",
+     "ko": "휘발유",
+     "kr_read": "쌍",
+     "emoji": "⛽",
+     "tones": [
+      {
+       "syl": "xăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "dầu",
+     "ko": "기름",
+     "kr_read": "저우",
+     "emoji": "🛢️",
+     "tones": [
+      {
+       "syl": "dầu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "thuế",
+     "ko": "세금",
+     "kr_read": "투에",
+     "emoji": "💰",
+     "tones": [
+      {
+       "syl": "thuế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "miễn thuế",
+     "ko": "면세",
+     "kr_read": "미엔 투에",
+     "emoji": "🆓",
+     "tones": [
+      {
+       "syl": "miễn",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "thuế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "nhập khẩu",
+     "ko": "수입하다",
+     "kr_read": "녑 커우",
+     "emoji": "🚢",
+     "tones": [
+      {
+       "syl": "nhập",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "khẩu",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    },
+    {
+     "vi": "gia hạn",
+     "ko": "연장하다",
+     "kr_read": "자 한",
+     "emoji": "📅",
+     "tones": [
+      {
+       "syl": "gia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "유류세 면제",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Thuế xăng có được miễn tiếp không?",
+      "ko": "휘발유 세금은 계속 면제돼요?",
+      "kr_read": "투에 쌍 꼬 드억 미엔 띠엡 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Thuế",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "xăng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "miễn",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "tiếp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, được gia hạn đến cuối năm.",
+      "ko": "네, 연말까지 연장됐어요.",
+      "kr_read": "꼬 드억 자 한 덴 꾸오이 남",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "gia",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hạn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đến",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cuối",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "năm.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "sum5": [
+    "베트남이 기름에 붙는 세금 면제를 3개월 더 늘렸어요",
+    "정부는 지난달 30일 결의안으로 연장을 정했어요",
+    "휘발유와 경유의 환경세·부가세 면제가 12월 31일까지 가요",
+    "석유제품 수입 관세 0%도 연말까지 유지돼요",
+    "휘발유 수입 관세는 원래 10%였는데 0%로 내렸어요",
+    "경유와 항공유, 등유의 수입 관세는 7%에서 0%가 됐어요",
+    "이 조치는 지난 3월 9일 처음 시행됐어요",
+    "2월 말 중동 분쟁으로 기름값이 급등한 게 계기였어요",
+    "그 뒤 6월 30일, 9월 30일 등으로 계속 연장됐어요",
+    "재무부는 물가 관리와 연료 공급 안정에 도움이 된다고 했어요"
+   ],
+   "title_card": "베트남, 유류세 면제 연말까지 3개월 연장",
+   "pub": "2026-10-02",
+   "n": 52
+  },
+  {
    "ts": "2026-10-01",
    "day": "Nno=83868",
    "track": "news",
@@ -1813,478 +4421,6 @@
    "title_card": "베트남 증시 0.5% 하락, 외국인 6거래일 연속 순매도",
    "pub": "2026-10-01",
    "n": 45
-  },
-  {
-   "ts": "2026-10-01",
-   "day": "Nno=44180",
-   "track": "news",
-   "theme": "배터리 재활용",
-   "title": "베트남, 2029년부터 ‘전기차배터리’ 재활용 의무화 추진…판매량 기준 최소 8%",
-   "u": "https://www.insidevina.com/news/articleView.html?idxno=44180",
-   "cat": "정치",
-   "intro": "베트남이 전기차 배터리 재활용을 의무화합니다. 2029년부터 판매량의 8% 이상을 재활용해야 합니다.",
-   "words": [
-    {
-     "vi": "xe điện",
-     "ko": "전기차",
-     "kr_read": "쌔 디엔",
-     "emoji": "🚗",
-     "en": "a modern electric car",
-     "tones": [
-      {
-       "syl": "xe",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "điện",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "n-xe-dien.webp"
-    },
-    {
-     "vi": "pin",
-     "ko": "배터리",
-     "kr_read": "삔",
-     "emoji": "🔋",
-     "en": "a battery",
-     "tones": [
-      {
-       "syl": "pin",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-pin.webp"
-    },
-    {
-     "vi": "tái chế",
-     "ko": "재활용하다",
-     "kr_read": "따이 쩨",
-     "emoji": "♻️",
-     "en": "a green recycling symbol",
-     "tones": [
-      {
-       "syl": "tái",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "chế",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-tai-che.webp"
-    },
-    {
-     "vi": "môi trường",
-     "ko": "환경",
-     "kr_read": "모이 쯔엉",
-     "emoji": "🌳",
-     "en": "green trees and nature",
-     "tones": [
-      {
-       "syl": "môi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "trường",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-moi-truong.webp"
-    },
-    {
-     "vi": "rác thải",
-     "ko": "폐기물",
-     "kr_read": "작 타이",
-     "emoji": "🗑️",
-     "en": "a trash bin with waste",
-     "tones": [
-      {
-       "syl": "rác",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "thải",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "n-rac-thai.webp"
-    },
-    {
-     "vi": "luật",
-     "ko": "법",
-     "kr_read": "루엇",
-     "emoji": "📜",
-     "en": "a legal document with a stamp",
-     "tones": [
-      {
-       "syl": "luật",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "n-luat.webp"
-    }
-   ],
-   "dialog": {
-    "title": "배터리 재활용",
-    "emoji": "📰",
-    "lines": [
-     {
-      "vi": "Pin cũ này bỏ ở đâu?",
-      "ko": "이 헌 배터리는 어디에 버려요?",
-      "kr_read": "삔 꾸 나이 보 어 더우",
-      "who": "A",
-      "tones": [
-       {
-        "syl": "Pin",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "cũ",
-        "name": "ngã",
-        "ko": "끊었다 올림",
-        "shape": "∿"
-       },
-       {
-        "syl": "này",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "bỏ",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "ở",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "đâu?",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       }
-      ],
-      "gloss": []
-     },
-     {
-      "vi": "Bỏ vào thùng tái chế nhé.",
-      "ko": "재활용 통에 넣으세요.",
-      "kr_read": "보 바오 퉁 따이 쩨 냬",
-      "who": "B",
-      "tones": [
-       {
-        "syl": "Bỏ",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "vào",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "thùng",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "tái",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "chế",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "nhé.",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       }
-      ],
-      "gloss": []
-     }
-    ],
-    "extra": []
-   },
-   "n": 44
-  },
-  {
-   "ts": "2026-10-01",
-   "day": "N783.html",
-   "track": "news",
-   "theme": "마트와 쇼핑",
-   "title": "Japanese retail giant Aeon targets 300 supermarkets, 30 shopping malls in Vietnam",
-   "u": "https://e.vnexpress.net/news/business/companies/japanese-retail-giant-aeon-targets-300-supermarkets-30-shopping-malls-in-vietnam-5126783.html",
-   "cat": "소식",
-   "intro": "일본 이온이 베트남 매장을 대폭 늘립니다. 슈퍼마켓 300개와 쇼핑몰 30개를 목표합니다.",
-   "words": [
-    {
-     "vi": "siêu thị",
-     "ko": "슈퍼마켓, 마트",
-     "kr_read": "씨에우 티",
-     "emoji": "🛒",
-     "en": "a modern supermarket aisle with grocery shelves",
-     "tones": [
-      {
-       "syl": "siêu",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "thị",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "n-sieu-thi.webp"
-    },
-    {
-     "vi": "cửa hàng",
-     "ko": "가게, 매장",
-     "kr_read": "끄어 항",
-     "emoji": "🏪",
-     "en": "a small store front with a glass door",
-     "tones": [
-      {
-       "syl": "cửa",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      },
-      {
-       "syl": "hàng",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-cua-hang.webp"
-    },
-    {
-     "vi": "mua sắm",
-     "ko": "쇼핑하다",
-     "kr_read": "무어 쌈",
-     "emoji": "🛍️",
-     "en": "a person holding shopping bags",
-     "tones": [
-      {
-       "syl": "mua",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "sắm",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-mua-sam.webp"
-    },
-    {
-     "vi": "đồ ăn",
-     "ko": "음식",
-     "kr_read": "도 안",
-     "emoji": "🍲",
-     "en": "a plate of fresh and tasty food",
-     "tones": [
-      {
-       "syl": "đồ",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "ăn",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-do-an.webp"
-    },
-    {
-     "vi": "sản phẩm",
-     "ko": "제품, 상품",
-     "kr_read": "싼 펌",
-     "emoji": "📦",
-     "en": "retail goods neatly arranged on a shelf",
-     "tones": [
-      {
-       "syl": "sản",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      },
-      {
-       "syl": "phẩm",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "n-san-pham.webp"
-    },
-    {
-     "vi": "khách hàng",
-     "ko": "손님, 고객",
-     "kr_read": "칵 항",
-     "emoji": "👥",
-     "en": "customers walking inside a store",
-     "tones": [
-      {
-       "syl": "khách",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "hàng",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-khach-hang.webp"
-    }
-   ],
-   "dialog": {
-    "title": "마트와 쇼핑",
-    "emoji": "📰",
-    "lines": [
-     {
-      "vi": "Gần đây có siêu thị không?",
-      "ko": "여기 근처에 마트 있어요?",
-      "kr_read": "건 더이 꼬 씨에우 티 콩",
-      "who": "A",
-      "tones": [
-       {
-        "syl": "Gần",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "đây",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "có",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "siêu",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "thị",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "không?",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       }
-      ],
-      "gloss": []
-     },
-     {
-      "vi": "Có, siêu thị ở đằng kia.",
-      "ko": "네, 마트 저쪽에 있어요.",
-      "kr_read": "꼬 씨에우 티 어 당 끼어",
-      "who": "B",
-      "tones": [
-       {
-        "syl": "Có,",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "siêu",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "thị",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "ở",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "đằng",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "kia.",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       }
-      ],
-      "gloss": []
-     }
-    ],
-    "extra": []
-   },
-   "n": 43
   },
   {
    "ts": "2026-10-01",
@@ -12912,5 +15048,5 @@
    "title_card": "베트남 수출 늘었으나 기업 글로벌 진출 더뎌"
   }
  ],
- "updated": "2026-10-02 02:19"
+ "updated": "2026-10-02 08:04"
 }
