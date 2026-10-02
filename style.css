@@ -2711,7 +2711,8 @@ header > #goBug{margin-left:auto}
 /* 손글씨 겹쳐 쓰기 (2026-09-28 밤) — 화면 전체 위 투명 캔버스. 평소엔 손가락을 통과시키고, ✍ 를 켜면 받는다 */
 #inkcv{position:fixed; inset:0; width:100vw; height:100vh; z-index:45; pointer-events:none; touch-action:none}
 body.inking #inkcv{pointer-events:auto; cursor:crosshair}
-#inkBtn{position:fixed; right:14px; bottom:calc(var(--tabbar-h) + 14px); z-index:46; width:46px; height:46px; border-radius:50%;
+#inkBtn{position:fixed; right:14px; bottom:calc(var(--tabbar-h) + 4px);   /* 10px 아래로 (대표님 2026-10-02 "필기 버튼 약간 아래로") */
+  z-index:46; width:46px; height:46px; border-radius:50%;
   border:1px solid var(--line); background:var(--card); color:var(--fg); box-shadow:var(--shadow); display:grid; place-items:center; padding:0; cursor:pointer}
 #inkBtn[hidden]{display:none}
 #inkBtn svg{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}

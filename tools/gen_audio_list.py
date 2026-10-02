@@ -22,6 +22,10 @@ def main():
     idx = json.loads(idxp.read_text(encoding="utf-8"))
     low = {k.lower() for k in idx}
     need = [t for t in texts if t not in idx and t.lower() not in low]
+    if "--redo" in sys.argv:                                   # 이미 있는 소리도 새로 (2026-10-02 — 16k 로 줄였던 것을 32k 로 다시 만들 때)
+        need = texts
+        for t in need:
+            for v in VOICES: (R / "audio" / v / "n" / f"{k12(t)}.mp3").unlink(missing_ok=True)
     print(f"목록 {len(texts)} · 만들 것 {len(need)}", flush=True)
     sem = asyncio.Semaphore(jobs)
     done = [0]
@@ -68,12 +72,12 @@ def main():
         with mp.Pool(6) as pool:
             r = [x[1] for x in pool.imap_unordered(trim_audio.one, [(p, False) for p in paths], chunksize=10)]
         print("무음 자름", {k: r.count(k) for k in set(r)}, flush=True)
-    # 16kbps 로 줄인다 (대표님 2026-10-01 "모든 소리 그냥 16k로" — tools/audio_16k.py)
+    # 32kbps(모노·24kHz)로 (2026-10-02 대표님 "음질이 너무 안 좋은데?" → 32kbps 로 되돌림. 10-01 의 16kbps 는 높은 소리가 잘려 뭉개졌다 — tools/reencode_32k.py)
     if ok:
-        import audio_16k
-        paths16 = [R / f"audio/{v}/n/{k12(t)}.mp3" for t in ok for v in VOICES if (R / f"audio/{v}/n/{k12(t)}.mp3").exists()]
-        r16 = [audio_16k.one(p) for p in paths16]
-        print("16k", {k: r16.count(k) for k in set(r16)}, flush=True)
+        import reencode_32k
+        p32 = [R / f"audio/{v}/n/{k12(t)}.mp3" for t in ok for v in VOICES if (R / f"audio/{v}/n/{k12(t)}.mp3").exists()]
+        r32 = [reencode_32k.one(p)[0] for p in p32]
+        print("32k", {k: r32.count(k) for k in set(r32)}, flush=True)
 
 
 if __name__ == "__main__":

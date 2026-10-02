@@ -3036,7 +3036,6 @@ function show(v, title, canBack) {
     : v === 'quiz' ? (ACTIVE_TAB === 'test' ? tr('테스트') + '-' + tr(title) : LCRUMB ? LCRUMB + ' · ' + tr(title) : tr(title)) : '');
   $('#back').hidden = !canBack;
   if (v !== 'learn') { $('#face').hidden = true; FACE = null; }
-  { const ab = $('#autoSnd'); if (ab) { ab.hidden = v !== 'learn' && v !== 'quiz'; autoSndDraw(); } }   // 소리 자동 재생 단추 (2026-10-02)
   if (v === 'learn') inkSetup();                                  // 손글씨 겹쳐 쓰기 (2026-09-28 밤)
   if (INK.btn) { INK.btn.hidden = v !== 'learn'; if (v !== 'learn') { inkFinger(false); inkClear(); } }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
   /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 아래 탭의 [홈]이 어디서든 한 번에 나가는 길이다. */
@@ -13383,15 +13382,7 @@ const viVoice = () => viVoices()[0] || null;
 /* 소리 자동 재생 (대표님 2026-10-02: "단어카드를 넘기든, 단어 테스트를 넘기든 단어가 화면에 보이면 자동으로 소리 재생") —
    단어 카드가 뜰 때 · 베트남어를 보여 주는 문제가 뜰 때. 한국어를 보고 베트남어를 맞히는 문제는 답을 들려주는 셈이라 안 튼다(답한 뒤에는 원래대로 소리가 난다).
    머리띠 스피커 단추로 끈다(수업 중·지하철). 기본은 켜짐 */
-const autoOn = () => S.autoSnd !== false;
-function autoSndDraw() {
-  const b = $('#autoSnd'); if (!b) return;
-  const on = autoOn();
-  b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/>' + (on ? '<path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>' : '<path d="m17 9 5 6M22 9l-5 6"/>') + '</svg>';
-  b.classList.toggle('off', !on);
-  b.setAttribute('aria-pressed', on ? 'true' : 'false');
-  b.title = tr(on ? '소리 자동 재생 켜짐 — 누르면 끔' : '소리 자동 재생 꺼짐 — 누르면 켬');
-}
+const autoOn = () => true;   // 머리띠 스피커(켜기/끄기) 단추는 뺐다 (대표님 2026-10-02 "최상단 스피커 버튼 왜 있냐 없애") — 늘 켜짐. 예전에 끈 사람(S.autoSnd=false)도 다시 켜짐
 function autoSay(vi) {
   if (!autoOn() || !vi) return;
   const k = recKey(vi); k ? play(k, false) : speakVi(vi);
@@ -13639,7 +13630,6 @@ async function bugFlush() {
 $('#goBug').onclick = () => bugReport();
 addEventListener('load', () => setTimeout(bugFlush, 4000));
 $('#face').innerHTML = '<span data-f="card">' + tr('단어') + '</span><span data-f="pron">' + tr('발음') + '</span>';
-$('#autoSnd').onclick = () => { S.autoSnd = !autoOn(); save(); autoSndDraw(); if (autoOn() && CURV === 'learn' && L && L.items && L.items[L.i] && L.items[L.i].k === 'word') autoSay(L.items[L.i].d.vi); };
 $('#face').onclick = () => { if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron'); };
 /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 홈은 아래 탭의 [홈]이 맡는다 (renderHome). */
 
