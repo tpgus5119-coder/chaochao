@@ -11,7 +11,7 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(R / "tools"))
 from vi_kr import word as vi_kr  # noqa: E402
 SRC = pathlib.Path.home() / "짜오짜오/원본자료/베트남어 학습자료/22기 자료"
-DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2']      # 1~10회 (일요일 9/27 없음)
+DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/3']      # 1~11회 (11회는 B반만) (일요일 9/27 없음)
 nfc = lambda s: unicodedata.normalize('NFC', s)
 def bare(s):
     s = unicodedata.normalize('NFD', nfc(s).lower().replace('đ', 'd'))
@@ -65,6 +65,7 @@ def main():
         key = cls.lower() + str(DATES.index(date) + 1)
         fs = [p for p in (SRC / (cls.lower() + '반')).glob(key + '.*') if not p.name.startswith('.')]
         raw = text_of(fs[0]) if fs else ''
+        if '정답 및 해설지' in raw: raw = raw.split('정답 및 해설지')[0]   # 문제 + 답지가 한 파일(b11) — 방향은 문제 쪽만 보고 읽는다. 답지의 '21. trường học' 은 베트남어→뜻 문제가 아니다
         t, tx = bare(raw), nfc(raw).lower()
         # 방향: 시험지에 '번호 베트남어'(문제지·A반 정답지) 또는 줄 머리 '베트남어 :'(B반 정답지)로 적혀 있으면 베트남어를 보고 뜻(to_ko), 아니면 뜻을 보고 베트남어(to_vi).
         # 번호로 짝짓지 않는다 — 39·49낱말 회차는 번호가 한 칸씩 밀린다. 시험지의 'A / B' 꼴(không ngon / dở)은 못 찾으므로,
@@ -74,7 +75,7 @@ def main():
             for txt, key_ in ((tx, nfc(vi).lower()), (t, bare(vi))):
                 if key_ not in txt: continue
                 b = re.escape(key_)
-                end = r'(?=[ \t]*(:|_|/|\n|$)|[ \t]{2,})'       # 낱말 뒤가 칸 나눔 — 'làm' 이 '40 Làm thêm' 에 걸리지 않게, 'Heo / lợn' 은 걸리게
+                end = r'(?=[ \t]*(:|_|/|\n|$)|[ \t]{2,}|[ \t]*답)'   # '1. ngân hàng답: ____' 꼴(b11 — 워드 글에서는 띄어쓰기 없이 붙는다)       # 낱말 뒤가 칸 나눔 — 'làm' 이 '40 Làm thêm' 에 걸리지 않게, 'Heo / lợn' 은 걸리게
                 if re.search(r'(?<![a-z0-9])\d{1,2}[.)]?\s+' + b + end, txt): return 'to_ko'      # '번호 베트남어'
                 if re.search(r'(^|\n)\s*' + b + r'\s*:', txt): return 'to_ko'                   # 줄 머리 '베트남어 :' (B반 정답지)
                 return OVR.get((key, vi), 'to_vi')

@@ -106702,12 +106702,12 @@
        "vi": "ca sĩ",
        "ko": "가수",
        "kr_read": "까 씨",
-       "img": "w-112941bdae.webp",
        "ex": {
         "vi": "Cô ấy là ca sĩ nổi tiếng.",
         "ko": "그녀는 유명한 가수예요.",
         "kr": "꼬 어이 라 까 씨 노이 띠엥"
-       }
+       },
+       "img": "w-112941bdae.webp"
       }
      ]
     },
@@ -106861,12 +106861,12 @@
        "vi": "đói quá",
        "ko": "너무 배고프다",
        "kr_read": "도이 꽈",
-       "img": "w-5cd1c146af.webp",
        "ex": {
         "vi": "Tôi đói quá, đi ăn thôi.",
         "ko": "너무 배고파요, 밥 먹으러 가요.",
         "kr": "또이 도이 꽈 디 안 토이"
-       }
+       },
+       "img": "w-5cd1c146af.webp"
       },
       {
        "vi": "đáng yêu",
@@ -107354,12 +107354,12 @@
        "vi": "ca sĩ",
        "ko": "가수",
        "kr_read": "까 씨",
-       "img": "w-112941bdae.webp",
        "ex": {
         "vi": "Cô ấy là ca sĩ nổi tiếng.",
         "ko": "그녀는 유명한 가수예요.",
         "kr": "꼬 어이 라 까 씨 노이 띠엥"
-       }
+       },
+       "img": "w-112941bdae.webp"
       },
       {
        "vi": "diễn viên",
@@ -107388,23 +107388,23 @@
        "vi": "họa sĩ",
        "ko": "화가",
        "kr_read": "호아 씨",
-       "img": "bo-6859870d0f.webp",
        "ex": {
         "vi": "Chú tôi là họa sĩ.",
         "ko": "우리 삼촌은 화가예요.",
         "kr": "쭈 또이 라 호아 씨"
-       }
+       },
+       "img": "bo-6859870d0f.webp"
       },
       {
        "vi": "thợ may",
        "ko": "재단사",
        "kr_read": "터 마이",
-       "img": "bo-2297e0a3dd.webp",
        "ex": {
         "vi": "Tôi nhờ thợ may sửa cái áo này.",
         "ko": "저는 재단사에게 이 옷을 고쳐 달라고 부탁해요.",
         "kr": "또이 녀 터 마이 쓰어 까이 아오 나이"
-       }
+       },
+       "img": "bo-2297e0a3dd.webp"
       },
       {
        "vi": "thợ cắt tóc",
@@ -107626,6 +107626,591 @@
        "ex_chk": "source_fix",
        "img": "b-co-quan.webp",
        "star": 1
+      }
+     ]
+    },
+    {
+     "title": "B반 10/3 단어 시험 (1/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "ngân hàng",
+       "ko": "은행",
+       "kr_read": "응언 항",
+       "ex": {
+        "vi": "Tôi làm kế toán ở ngân hàng.",
+        "ko": "저는 은행에서 회계사로 일해요.",
+        "kr": "또이 람 께 또안 어 응언 항",
+        "krs": "또이 람 께 또앙 어 응엉 항",
+        "src": "main_book",
+        "where": "1권 4과 53쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "ngan-hang.webp",
+       "star": 1
+      },
+      {
+       "vi": "nhân viên công ty",
+       "ko": "회사원",
+       "kr_read": "년 비엔 꽁 띠",
+       "ex": {
+        "vi": "Anh trai tôi là nhân viên công ty.",
+        "ko": "우리 형은 회사원이에요.",
+        "kr": "아인 짜이 또이 라 년 비엔 꽁 띠"
+       },
+       "img": "w-be4c38c205.webp"
+      },
+      {
+       "vi": "đồng nghiệp",
+       "ko": "동료",
+       "kr_read": "동 응이엡",
+       "ex": {
+        "vi": "Mỗi buổi chiều, sau giờ làm, tôi đều đi uống bia với các đồng nghiệp.",
+        "ko": "매일 오후 퇴근 후에 저는 동료들과 맥주를 마시러 가요.",
+        "kr": "모이 부오이 찌에우 싸우 저 람 또이 데우 디 우옹 비어 버이 깍 동 응이엡",
+        "krs": "모이 부오이 찌에우 사우 여 람 또이 데우 디 우옹 비어 버이 깍 동 응이엡",
+        "src": "main_book",
+        "where": "2권 8과 84쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "dong-nghiep.webp",
+       "star": 1
+      },
+      {
+       "vi": "phòng tập thể dục",
+       "ko": "헬스장",
+       "kr_read": "퐁 떱 테 죽",
+       "img": "c22-phongtaptheduc.webp",
+       "ex": {
+        "vi": "Tối nay tôi đi phòng tập thể dục.",
+        "ko": "오늘 저녁에 나는 헬스장에 가요.",
+        "kr": "또이 나이 또이 디 퐁 떱 테 죽"
+       }
+      },
+      {
+       "vi": "nhà sách",
+       "ko": "서점",
+       "kr_read": "냐 싹",
+       "ex": {
+        "vi": "Hôm nay nhà sách giảm giá 30%.",
+        "ko": "오늘 서점은 30% 할인해요.",
+        "kr": "홈 나이 냐 싹 잠 자",
+        "krs": "홈 나이 냐 삿 얌 야",
+        "src": "main_book",
+        "where": "1권 5과 70쪽"
+       },
+       "img": "b-nha-sach.webp",
+       "weekly": true
+      },
+      {
+       "vi": "giám đốc",
+       "ko": "사장·이사",
+       "kr_read": "잠 독",
+       "ex": {
+        "vi": "Ông giám đốc muốn gặp cả anh lẫn tôi.",
+        "ko": "사장님은 당신과 나 모두를 만나고 싶어 하신다.",
+        "kr": "옹 잠 독 무온 갑 까 아인 런 또이",
+        "krs": "옹 얌 독 무옹 갑 까 아인 렁 또이",
+        "src": "main_book",
+        "where": "2권 9과 108쪽"
+       },
+       "img": "giam-doc.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "lái xe",
+       "ko": "운전사·운전하다",
+       "kr_read": "라이 쌔",
+       "ex": {
+        "vi": "Hôm qua ông ấy lái xe đi đâu?",
+        "ko": "어제 그분은 차를 운전해서 어디에 갔어요?",
+        "kr": "홈 꽈 옹 어이 라이 쌔 디 더우",
+        "krs": "홈 꽈 옹 어이 라이 쌔 디 더우",
+        "src": "main_book",
+        "where": "1권 4과 56쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "b-lai-xe.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "bảo vệ",
+       "ko": "경비원·보안요원",
+       "kr_read": "바오 베",
+       "ex": {
+        "vi": "Nếu vào công ty này, anh đồng ý làm bảo vệ không?",
+        "ko": "이 회사에 들어오면 경비원으로 일하는 데 동의하시겠어요?",
+        "kr": "네우 바오 꽁 띠 나이 아인 동 이 람 바오 베 콩",
+        "krs": "네우 바오 꽁 띠 나이 아인 동 이 람 바오 베 콩",
+        "src": "main_book",
+        "where": "2권 9과 104쪽"
+       },
+       "img": "b-bao-ve.webp",
+       "star": 1
+      },
+      {
+       "vi": "nhà máy",
+       "ko": "공장",
+       "kr_read": "냐 마이",
+       "ex": {
+        "vi": "Bố tôi làm việc ở nhà máy.",
+        "ko": "우리 아빠는 공장에서 일한다.",
+        "kr": "보 또이 람 비엑 어 냐 마이"
+       },
+       "img": "b-nha-may.webp",
+       "star": 1
+      },
+      {
+       "vi": "hiệu thuốc",
+       "ko": "약국",
+       "kr_read": "히에우 투옥",
+       "ex": {
+        "vi": "Hiệu thuốc ở đâu?",
+        "ko": "약국은 어디에 있습니까?",
+        "kr": "히에우 투옥 어 더우"
+       },
+       "img": "d47-hieu-thuoc.webp"
+      },
+      {
+       "vi": "công viên",
+       "ko": "공원",
+       "kr_read": "꽁 비엔",
+       "ex": {
+        "vi": "Mỗi buổi sáng tôi đều chạy bộ trong công viên.",
+        "ko": "저는 아침마다 공원에서 조깅해요.",
+        "kr": "모이 부오이 쌍 또이 데우 짜이 보 쫑 꽁 비엔",
+        "krs": "모이 부오이 상 또이 데우 짜이 보 쫑 꽁 비엥",
+        "src": "main_book",
+        "where": "2권 10과 117쪽"
+       },
+       "img": "b-cong-vien.webp"
+      },
+      {
+       "vi": "quán cà phê",
+       "ko": "카페",
+       "kr_read": "꽌 까 페",
+       "ex": {
+        "vi": "Gần nhà tôi có một quán cà phê ngon và rẻ.",
+        "ko": "우리 집 근처에 맛있고 값싼 카페가 하나 있어요.",
+        "kr": "건 냐 또이 꼬 못 꽌 까 페 응온 바 재",
+        "krs": "겅 냐 또이 꼬 목 꽝 까 페 응옹 바 래",
+        "src": "main_book",
+        "where": "1권 4과 52쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "quan-ca-phe.webp"
+      },
+      {
+       "vi": "thời tiết",
+       "ko": "날씨",
+       "kr_read": "터이 띠엣",
+       "ex": {
+        "vi": "Hôm nay thời tiết đẹp quá.",
+        "ko": "오늘 날씨가 정말 좋네요.",
+        "kr": "홈 나이 터이 띠엣 댑 꽈"
+       },
+       "img": "rv-a99457ef32.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "tập thể dục",
+       "ko": "운동하다",
+       "kr_read": "떱 테 죽",
+       "ex": {
+        "vi": "Ông ấy tập thể dục mỗi ngày nên ông ấy khỏe.",
+        "ko": "그분은 매일 운동해서 건강하시다.",
+        "kr": "옹 어이 떱 테 죽 모이 응아이 넨 옹 어이 코애",
+        "krs": "옹 어이 떱 테 육 모이 응아이 넨 옹 어이 코애",
+        "src": "main_book",
+        "where": "1권 7과 118쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "tap-the-duc.webp"
+      }
+     ]
+    },
+    {
+     "title": "B반 10/3 단어 시험 (2/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "đi mua sắm",
+       "ko": "쇼핑하러 가다",
+       "kr_read": "디 무어 쌈",
+       "ex": {
+        "vi": "Các chị ấy đi mua sắm một tiếng rồi.",
+        "ko": "그녀들은 쇼핑하러 간 지 한 시간 됐다."
+       },
+       "img": "w-e7d57630a3.webp",
+       "star": 1
+      },
+      {
+       "vi": "bài kiểm tra",
+       "ko": "시험",
+       "kr_read": "바이 끼엠 짜",
+       "ex": {
+        "vi": "Chúng tôi có nửa tiếng để làm bài kiểm tra, cả nói lẫn viết.",
+        "ko": "우리는 말하기와 쓰기를 합쳐 시험 볼 시간이 30분 있어요.",
+        "kr": "쭝 또이 꼬 느어 띠엥 데 람 바이 끼엠 짜 까 노이 런 비엣"
+       },
+       "img": "b-bai-kiem-tra.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "món ăn tốt cho sức khỏe",
+       "ko": "건강에 좋은 음식",
+       "kr_read": "몬 안 똣 쪼 쓱 코애",
+       "ex": {
+        "vi": "Rau là món ăn tốt cho sức khỏe.",
+        "ko": "채소는 건강에 좋은 음식이에요.",
+        "kr": "자우 라 몬 안 똣 쪼 쓱 코애"
+       },
+       "img": "c22-monantotchosuckhoe.webp"
+      },
+      {
+       "vi": "cửa hàng tiện lợi",
+       "ko": "편의점",
+       "kr_read": "끄어 항 띠엔 러이",
+       "ex": {
+        "vi": "Vậy, gần đây có siêu thị hoặc cửa hàng tiện lợi nào không, anh?",
+        "ko": "그럼 이 근처에 슈퍼마켓이나 편의점이 있나요?",
+        "kr": "버이 건 더이 꼬 씨에우 티 호악 끄어 항 띠엔 러이 나오 콩 아인",
+        "krs": "버이 겅 더이 꼬 시에우 티 호악 끄어 항 띠엥 러이 나오 콩 아인",
+        "src": "main_book",
+        "where": "2권 7과 71쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "b-cua-hang-tien-loi.webp",
+       "weekly": true
+      },
+      {
+       "vi": "họp",
+       "ko": "회의하다·회의",
+       "kr_read": "홉",
+       "ex": {
+        "vi": "Bây giờ em phải đi họp.",
+        "ko": "지금 저는 회의하러 가야 해요.",
+        "kr": "버이 저 앰 파이 디 홉",
+        "krs": "버이 여 앰 파이 디 홉",
+        "src": "main_book",
+        "where": "2권 7과 81쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "w-599058631c.webp"
+      },
+      {
+       "vi": "ngoài trời",
+       "ko": "야외·바깥",
+       "kr_read": "응오아이 쩌이",
+       "img": "bo-cf1395dc3b.webp",
+       "ex": {
+        "vi": "Tối nay ta ăn ngoài trời nhé.",
+        "ko": "오늘 저녁은 야외에서 먹어요.",
+        "kr": "또이 나이 따 안 응오아이 쩌이 냬"
+       }
+      },
+      {
+       "vi": "trường học",
+       "ko": "학교",
+       "kr_read": "쯔엉 혹",
+       "ex": {
+        "vi": "Trường học của con tôi rất gần nhà.",
+        "ko": "우리 아이의 학교는 집에서 매우 가깝다.",
+        "kr": "쯔엉 혹 꾸어 꼰 또이 젓 건 냐"
+       },
+       "img": "b-truong-hoc.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "văn phòng",
+       "ko": "사무실",
+       "kr_read": "반 퐁",
+       "ex": {
+        "vi": "Trong văn phòng này có 9 nhân viên.",
+        "ko": "이 사무실에는 직원이 9명 있어요.",
+        "kr": "쫑 반 퐁 나이 꼬 년 비엔",
+        "krs": "쫑 방 퐁 나이 꼬 녕 비엥",
+        "src": "main_book",
+        "where": "1권 6과 101쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "b-van-phong.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "đầu bếp",
+       "ko": "요리사",
+       "kr_read": "더우 벱",
+       "ex": {
+        "vi": "Anh ấy là đầu bếp giỏi.",
+        "ko": "그는 뛰어난 요리사이다.",
+        "kr": "아인 어이 라 더우 벱 조이"
+       },
+       "img": "b-dau-bep.webp",
+       "weekly": true
+      },
+      {
+       "vi": "kế toán",
+       "ko": "회계사",
+       "kr_read": "께 또안",
+       "ex": {
+        "vi": "Trước đây tôi làm kế toán ở ngân hàng.",
+        "ko": "예전에 저는 은행에서 회계사로 일했어요.",
+        "kr": "쯔억 더이 또이 람 께 또안 어 응언 항",
+        "krs": "쯔억 더이 또이 람 께 또앙 어 응엉 항",
+        "src": "main_book",
+        "where": "1권 4과 65쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "b-ke-toan.webp"
+      },
+      {
+       "vi": "cảnh sát",
+       "ko": "경찰",
+       "kr_read": "까인 쌋",
+       "ex": {
+        "vi": "Nếu bạn cần sự giúp đỡ của cảnh sát, hãy gọi đến số 113.",
+        "ko": "경찰의 도움이 필요하면 113번으로 전화하세요.",
+        "kr": "네우 반 껀 쓰 줍 더 꾸어 까인 쌋 하이 고이 덴 쏘",
+        "krs": "네우 방 껑 스 윱 더 꾸어 까인 삭 하이 고이 덴 소",
+        "src": "main_book",
+        "where": "2권 4과 52쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "b-canh-sat.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "nhà báo",
+       "ko": "기자",
+       "kr_read": "냐 바오",
+       "ex": {
+        "vi": "Cô ấy là một nhà báo nổi tiếng.",
+        "ko": "그녀는 유명한 기자이다."
+       },
+       "img": "b-nha-bao.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "máy bay",
+       "ko": "비행기",
+       "kr_read": "마이 바이",
+       "ex": {
+        "vi": "Máy bay sẽ cất cánh trễ.",
+        "ko": "비행기가 늦게 이륙할 거예요.",
+        "kr": "마이 바이 쌔 껏 까인 쩨",
+        "krs": "마이 바이 새 꺽 까인 쩨",
+        "src": "main_book",
+        "where": "1권 6과 104쪽"
+       },
+       "img": "b-may-bay.webp",
+       "star": 2
+      }
+     ]
+    },
+    {
+     "title": "B반 10/3 단어 시험 (3/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "bảo tàng",
+       "ko": "박물관",
+       "kr_read": "바오 땅",
+       "ex": {
+        "vi": "Bảo tàng Lịch sử ở gần Trường Đại học Khoa học Xã hội và Nhân văn, phải không?",
+        "ko": "역사박물관은 사회인문과학대학교 근처에 있죠?",
+        "kr": "바오 땅 릭 쓰 어 건 쯔엉 다이 혹 코아 혹 싸 호이 바 년 반 파이 콩",
+        "krs": "바오 땅 릿 스 어 겅 쯔엉 다이 혹 코아 혹 싸 호이 바 녕 방 파이 콩",
+        "src": "main_book",
+        "where": "1권 6과 90쪽"
+       },
+       "img": "b-bao-tang.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "cửa hàng hoa",
+       "ko": "꽃가게",
+       "kr_read": "끄어 항 호아",
+       "ex": {
+        "vi": "Tôi mua hoa ở cửa hàng hoa.",
+        "ko": "나는 꽃집에서 꽃을 산다.",
+        "kr": "또이 무어 호아 어 끄어 항 호아"
+       },
+       "img": "b-cua-hang-hoa.webp",
+       "weekly": true
+      },
+      {
+       "vi": "hầm gửi xe",
+       "ko": "지하 주차장",
+       "kr_read": "험 그이 쌔",
+       "img": "w-c25063424a.webp",
+       "ex": {
+        "vi": "Xe máy để ở hầm gửi xe.",
+        "ko": "오토바이는 지하 주차장에 세워요.",
+        "kr": "쌔 마이 데 어 험 그이 쌔"
+       }
+      },
+      {
+       "vi": "bể bơi",
+       "ko": "수영장",
+       "kr_read": "베 버이",
+       "ex": {
+        "vi": "Khách sạn có bể bơi ngoài trời.",
+        "ko": "호텔에는 야외 수영장이 있다."
+       },
+       "img": "b-be-boi.webp"
+      },
+      {
+       "vi": "địa chỉ",
+       "ko": "주소",
+       "kr_read": "디어 찌",
+       "ex": {
+        "vi": "Anh biết địa chỉ nhà sách không đấy?",
+        "ko": "서점 주소를 알아요?",
+        "kr": "아인 비엣 디어 찌 냐 싹 콩 더이",
+        "krs": "아인 비엑 디어 찌 냐 삿 콩 더이",
+        "src": "main_book",
+        "where": "1권 5과 70쪽"
+       },
+       "img": "x-dia-chi.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "hút thuốc",
+       "ko": "담배를 피우다",
+       "kr_read": "훗 투옥",
+       "ex": {
+        "vi": "Ông Hoàng luôn luôn hút thuốc sau bữa cơm.",
+        "ko": "Hoàng 씨는 늘 식사 후에 담배를 피운다.",
+        "kr": "옹 호앙 루온 루온 훗 투옥 싸우 브어 껌"
+       },
+       "img": "b-hut-thuoc.webp"
+      },
+      {
+       "vi": "gặp bạn",
+       "ko": "친구를 만나다",
+       "kr_read": "갑 반",
+       "ex": {
+        "vi": "Cuối tuần tôi gặp bạn ở quán cà phê.",
+        "ko": "주말에 나는 카페에서 친구를 만나요.",
+        "kr": "꾸오이 뚜언 또이 갑 반 어 꽌 까 페"
+       },
+       "img": "c22-gapban.webp"
+      },
+      {
+       "vi": "hát",
+       "ko": "노래 부르다",
+       "kr_read": "핫",
+       "ex": {
+        "vi": "Tất cả chúng tôi đều thích hát karaoke.",
+        "ko": "우리는 모두 노래방에서 노래하기를 좋아한다.",
+        "kr": "떳 까 쭝 또이 데우 틱 핫 까 라 오 께",
+        "krs": "떡 까 쭝 또이 데우 팃 학 까 라 오 께",
+        "src": "main_book",
+        "where": "2권 4과 52쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "b-hat.webp",
+       "weekly": true
+      },
+      {
+       "vi": "năm ngoái",
+       "ko": "작년",
+       "kr_read": "남 응오아이",
+       "ex": {
+        "vi": "Còn mẹ tôi mới về hưu năm ngoái.",
+        "ko": "그리고 우리 어머니는 작년에 막 퇴직하셨어요.",
+        "kr": "꼰 매 또이 머이 베 흐우 남 응오아이",
+        "krs": "꽁 매 또이 머이 베 흐우 남 응오아이",
+        "src": "main_book",
+        "where": "1권 10과 163쪽"
+       },
+       "img": "b-nam-ngoai.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "gió",
+       "ko": "바람",
+       "kr_read": "조",
+       "ex": {
+        "vi": "Hôm nay gió mát.",
+        "ko": "오늘은 바람이 선선해요.",
+        "kr": "홈 나이 조 맛"
+       },
+       "img": "d41-gio.webp",
+       "star": 1
+      },
+      {
+       "vi": "nghỉ ngơi",
+       "ko": "쉬다·휴식",
+       "kr_read": "응이 응어이",
+       "ex": {
+        "vi": "Chị phải nghỉ ngơi, giữ ấm, uống nhiều nước.",
+        "ko": "언니는 쉬고 몸을 따뜻하게 하고 물을 많이 마셔야 해요.",
+        "kr": "찌 파이 응이 응어이 즈 엄 우옹 니에우 느억",
+        "krs": "찌 파이 응이 응어이 으 엄 우옹 니에우 느억",
+        "src": "main_book",
+        "where": "2권 6과 70쪽"
+       },
+       "img": "b-nghi-ngoi.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "vất vả",
+       "ko": "힘들다·고생스럽다",
+       "kr_read": "벗 바",
+       "ex": {
+        "vi": "Cha mẹ càng làm việc vất vả thì con cái càng học chăm chỉ.",
+        "ko": "부모가 힘들게 일할수록 자녀는 더 열심히 공부해요.",
+        "kr": "짜 매 깡 람 비엑 벗 바 티 꼰 까이 깡 혹 짬 찌",
+        "krs": "짜 매 깡 람 비엑 벅 바 티 꽁 까이 깡 혹 짬 찌",
+        "src": "main_book",
+        "where": "2권 4과 51쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "b-vat-va.webp",
+       "star": 3,
+       "weekly": true
+      },
+      {
+       "vi": "tự tin",
+       "ko": "자신감·자신 있다",
+       "kr_read": "뜨 띤",
+       "ex": {
+        "vi": "Chị không tự tin sao?",
+        "ko": "자신 없으세요?",
+        "kr": "찌 콩 뜨 띤 싸오",
+        "krs": "찌 콩 뜨 띤 사오",
+        "src": "main_book",
+        "where": "2권 8과 96쪽"
+       },
+       "img": "tu-tin.webp",
+       "star": 1,
+       "weekly": true
       }
      ]
     }
