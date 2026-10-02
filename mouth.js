@@ -14,7 +14,7 @@ const MOUTH = (() => {
   const lerp = (a, b, t) => a + (b - a) * t;
   const sm = t => { t = clamp(t, 0, 1); return t * t * (3 - 2 * t); };
   const f1 = v => Math.round(v * 10) / 10;
-  const PX = 312, PY = 152, JMAX = 11, WX = 314;
+  const PX = 312, PY = 152, JMAX = 17, WX = 314;   // 옆 단면 턱 벌림 11°→17° (대표님 2026-10-02 "옆모습에서도 입 과장되게 벌려줘")
   const ROOF = [[96, 172], [104, 156], [122, 143], [150, 134], [182, 129], [214, 130], [244, 137], [270, 139], [298, 138]];
   const FLOOR = [[302, 270], [268, 266], [232, 260], [196, 250], [160, 238], [128, 224], [108, 214]];
   const TIPS = { low: [102, 207, 1], lowb: [110, 211, 1], dent: [99, 189, 0], alv: [106, 161, 0], alvf: [102, 172, 0], post: [124, 148, 0] };
@@ -320,8 +320,9 @@ const MOUTH = (() => {
          이제 턱을 벌리면 폭도 조금 넓어지고, 높이 배율을 110→46 으로 줄여 틀 안에 든다. 값의 차례(i>ê>e 옆 벌림, u>ô>o 오므림,
          i·ư·u < ê·ơ·ô < e·â·o < ă·a 위아래)는 하노이 모음의 높이·둥글기(Kirby 2011)를 따른 것이고 수치 자체는 그림용(모식도)이다 */
       const sp = Math.max(0, pz.lipR), rd = Math.max(0, -pz.lipR);
-      const cy = 116, rw = rd > 0 ? lerp(42 + pz.jaw * 14, 11, clamp(rd, 0, 1)) : Math.min(72, 42 + sp * 30 + pz.jaw * 14);
-      let oh = (pz.jaw * 46 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);
+      /* (2026-10-02 대표님 "입 좀 더 크게, 좀 더 과장") 위아래 46→62 · 옆 벌림 30→34 · 턱에 따른 폭 14→18 · 가장 오므린 입 11→9 */
+      const cy = 116, rw = rd > 0 ? lerp(42 + pz.jaw * 18, 9, clamp(rd, 0, 1)) : Math.min(76, 42 + sp * 34 + pz.jaw * 18);
+      let oh = (pz.jaw * 62 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);
       if (rd > .4) oh = Math.max(oh, rw * .85 * (1 - pz.lipC));
       if (pz.lipR > .3) oh = oh * (1 - .35 * pz.lipR);
       const lt = pz.lipC > .5 ? 8 : (4 + rd * 6 - sp * 2);   // 입술은 얇게 — 벌림이 주인공

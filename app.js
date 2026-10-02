@@ -2320,33 +2320,19 @@ function mouthPanel(text) {
   [['front', '정면'], ['side', '옆 단면']].forEach(([v, lab]) => {
     const b = el('button', 'ghost sm', tr(lab)); b.type = 'button'; b.dataset.v = v; b.onclick = () => setV(v); sw.append(b);
   });
-  /* 투명 보기 — 혀를 입술 위에 점선으로 겹친다(입을 다문 소리에서도 혀 자리가 보인다). 고른 것은 저장(S.mxray) (2026-10-02) */
-  const xb = el('button', 'ghost sm', tr('혀 투명')); xb.type = 'button';
-  const setX = on => { S.mxray = !!on; save(); M.xray(!!on); xb.classList.toggle('on', !!on); };
-  xb.onclick = () => setX(!S.mxray); sw.append(xb);
+  /* '혀 투명' 단추는 뺐다 (대표님 2026-10-02) */
   M.setWord(text);
   setV(S.mview === 'side' ? 'side' : 'front');
-  M.xray(!!S.mxray); xb.classList.toggle('on', !!S.mxray);
-  /* 세 축 막대 (대표님 2026-10-02 "위아래로 얼마나, 좌우로 얼마나, 얼마나 오므리는지") — 그림과 같은 값. 소리가 날 때는 따라 움직이고,
-     멈춰 있을 때는 첫 모음 자세(따라 할 입)를 보여 준다 */
-  const bars = el('div', 'mbars');
-  const BAR = [['open', '위아래 벌림'], ['spread', '좌우 벌림'], ['round', '오므림']].map(([k, lab]) => {
-    const r = el('div', 'mbar'); r.append(el('span', 'mbk', tr(lab)));
-    const tr2 = el('i', 'mbt'), fill = el('i', 'mbf'); tr2.append(fill); r.append(tr2);
-    const n = el('span', 'mbn', '0'); r.append(n); bars.append(r);
-    return [k, fill, n];
-  });
-  wrap.insertBefore(bars, cap);
-  const drawBars = () => { const m = M.metrics(); if (!m) return; BAR.forEach(([k, fill, n]) => { const v = Math.round((m[k] || 0) * 100); fill.style.width = v + '%'; n.textContent = v; }); };
+  /* 세 축 막대(수치)는 뺐다 (대표님 2026-10-02 "발음 그림 밑에 수치로 어느 정도 벌리는지 표시해 주는 것은 빼") — 그림 자체를 크게 과장해 보인다 */
   body.classList.add('slowtap');                     // 입모양 그림을 눌러도 0.2배 고정 (2026-09-28)
   body.onclick = () => play(text, false, null, SLOW_TAP);
   const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : ''; };
-  const idle = () => { const id = M.at(M.vowelT()); cap.innerHTML = capOf(id); drawBars(); };   // 멈춰 있을 때 — 입을 다문 그림 대신 첫 모음의 입 (2026-10-02)
+  const idle = () => { const id = M.at(M.vowelT()); cap.innerHTML = capOf(id); };   // 멈춰 있을 때 — 입을 다문 그림 대신 첫 모음의 입 (2026-10-02)
   idle();
   const h = AIDX[text] || AIDX[text.toLowerCase()];
   let nat = null, lastId = '';
   nativeCurve(text).then(n => { nat = n; });
-  const show = t => { const id = M.at(t); drawBars(); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
+  const show = t => { const id = M.at(t); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
   PB.views.add({ root: wrap, update(playing) {
     if (pbLive(h, playing) && nat && nat.raw) {
       const span = nat.raw.length * nat.hop, a = Math.max(0, nat.t0 - .06), b = Math.min(nat.total, nat.t0 + span + .05);
@@ -2824,7 +2810,8 @@ function studyWordsEntry(scroll) {
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track).sort((x, y) => (x.n || 0) - (y.n || 0));
   rows.push({ key: 'days', title: '일상', sub: days.length + tr('일차') + ' · ' + days.reduce((a, d) => a + (d.words || []).length, 0) + tr('단어'),
     done: days.filter(d => S.done[d.day]).length, all: days.length,
-    nodes: days.map((d, i) => ({ key: d.day, title: d.theme, rel: tlinkDay(d.theme), num: i + 1, done: !!S.done[d.day],
+    nodes: days.map((d, i) => ({ key: d.day, title: d.theme, rel: '', num: i + 1,   // '교재 1권 1과' 작은 줄은 뺐다 (대표님 2026-10-02)
+                                 done: !!S.done[d.day],
                                  fn: () => { SBOX = 'srs'; dive(back); startLearn(d); } })) });
   // ② 직무 — 갈래별 레슨 전부를 한 길로 (갈래 이름 · 레슨 이름)
   const jv = COURSE ? jobVol(0) : null;
@@ -9037,7 +9024,7 @@ function inkSetup() {
   document.body.append(btn); INK.btn = btn;
   const here = () => CURV === 'learn';
   // 손가락(켰을 때) — 캔버스가 받는다
-  cv.addEventListener('pointerdown', e => { if (!INK.finger || !here()) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
+  cv.addEventListener('pointerdown', e => { if (!INK.finger || !here() || (window.TWO && TWO.on)) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
   cv.addEventListener('pointermove', e => { if (INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } });
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, e => { if (INK.cur && INK.cur.id === e.pointerId) inkEnd(); }));
   // 펜 — 켜기 없이 문서 전체에서 먼저 받는다
@@ -9064,26 +9051,14 @@ function inkEnd() {
   const s = INK.cur; if (!s) return;
   INK.cur = null; INK.last = performance.now(); s.t1 = INK.last;                    // 획마다 제 끝난 때 — 획 하나하나 따로 사라진다 (대표님 2026-09-30)
   if (s.pen && s.tap && INK.last - s.t0 < 350) { INK.strokes.pop(); return; }   // 펜으로 톡 — 글씨가 아니라 누르기
-  if (inkFlick(s)) { INK.strokes = INK.strokes.filter(x => x !== s); INK.block = !!s.pen; inkLoop(); return; }   // 휙 — 글씨가 아니라 넘기기 (2026-10-02)
   if (s.pen) INK.block = true;                                                      // 펜 획 끝의 클릭은 막는다
   inkLoop();
 }
-/* 손글씨를 켠 채로 넘기기 (대표님 지시 2026-10-02: "좌우 스와이프로 다음·이전 — 버튼 유지 · 너무 민감하지 않게").
-   켜 있으면 손가락이 글씨를 쓰므로, 글씨와 헷갈리지 않는 **길고 빠르고 곧은 휙**만 넘기기로 본다:
-   가로 140px(세로 160px) 넘게 · 다른 쪽 움직임의 3배 넘게 · 0.35초 안에 · 곧은 줄(줄에서 벗어난 거리 ≤ 길이의 12%).
-   ← 다음 · → 이전 · ↑ 단어 면↔발음 면 · ↓ 손글씨 끄기. 휙 그은 획은 지운다 */
-function inkFlick(s) {
-  if (CURV !== 'learn' || !s.pts || s.pts.length < 2) return false;
-  const a = s.pts[0], z = s.pts[s.pts.length - 1], dx = z.x - a.x, dy = z.y - a.y, len = Math.hypot(dx, dy);
-  if ((s.t1 - s.t0) > 350) return false;
-  const horiz = Math.abs(dx) >= 140 && Math.abs(dx) >= Math.abs(dy) * 3, vert = Math.abs(dy) >= 160 && Math.abs(dy) >= Math.abs(dx) * 3;
-  if (!horiz && !vert) return false;
-  const off = Math.max(...s.pts.map(p => Math.abs((p.x - a.x) * dy - (p.y - a.y) * dx) / len));
-  if (off > len * 0.12) return false;
-  if (horiz) { if (window.cardGo) window.cardGo(dx < 0 ? 1 : -1); }
-  else if (dy < 0) { if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron'); }
-  else inkFinger(false);
-  return true;
+/* 두 손가락이 닿으면 막 그리던 획(첫 손가락·둘째 손가락)을 지운다 — 두 손가락 밀기는 글씨가 아니다 (2026-10-02) */
+function inkCancel() {
+  const now = performance.now();
+  INK.strokes = INK.strokes.filter(x => x !== INK.cur && !(x.t0 && now - x.t0 < 600 && !x.t1));
+  INK.cur = null; INK.block = false; inkLoop();
 }
 function inkLoop() { if (!INK.raf && INK.g) INK.raf = requestAnimationFrame(inkDraw); }
 function inkDraw() {
@@ -9392,10 +9367,7 @@ function drawCard() {
       const ekr = exm.kr;
       if (ekr) eb.append(el('div', 'wexkr', '[' + esc(ekr) + ']'));
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
-      const eck = recKey(exm.vi);              // 예문 뜻 밑 [듣기][속도] — 단어 것과 같은 속도를 쓴다 (2026-09-27)
-      const ectl = el('div', 'wctl exctl');
-      ectl.append(listenGroup(spd => { eck ? play(eck, false, null, spd) : speakVi(exm.vi, false, spd); }));
-      eb.append(ectl);
+      /* 예문 밑 [듣기][속도] 단추는 뺐다 (대표님 2026-10-02 "예문의 듣기 버튼 없애자 — 예문 박스 누르면 소리") */
       cf.append(eb);
     }
     /* 사전 카드의 예문 — 차례 (대표님 2026-10-01 "1순위 메인 교재 문장, 2순위 사전 문장, 둘 다 없으면 그때 만든 예문"):
@@ -9611,8 +9583,10 @@ $('#next').onclick = () => {
   let x0 = null;
   const goto = dir => {                       // dir: -1 이전, +1 다음
     if ($('#learn').hidden) return;
+    L.keepFace = L.face;                      // 발음 면을 보다가 넘기면 다음 카드도 발음 면 (대표님 2026-10-02)
     if (dir < 0 && L.i > 0) { L.i--; drawCard(); }
     else if (dir > 0 && L.i < L.items.length - 1) { L.i++; drawCard(); }
+    L.keepFace = null;
     if (window.cardArrows) window.cardArrows();
   };
   /* 좌우 붙박이 단추 — 밀기를 모르는 사람을 위한 길 (대표님 지시 2026-08-31) */
@@ -9625,39 +9599,40 @@ $('#next').onclick = () => {
     prevB.disabled = L.i <= 0;
     nextB.disabled = L.i >= L.items.length - 1;
   };
-  window.cardGo = goto;                       // 손글씨 켠 채 가로로 휙 — inkFlick 이 부른다 (2026-10-02)
   if (prevB) prevB.onclick = () => goto(-1);
   if (nextB) nextB.onclick = () => goto(1);
   /* 세로로 밀면(스크롤) 넘어가지 않는다 (대표님 지시 2026-09-30: "위아래로 스와이프해서 이전·이후 이동하는 거 안 되게").
      전에는 가로 움직임만 40px 넘으면 넘겨서, 긴 카드를 비스듬히 스크롤하다 카드가 넘어갔다.
      이제 가로가 세로의 1.5배 넘게 움직였을 때만 — 단어 면·발음 면 모두. */
-  let y0 = null;
-  $('#learn').addEventListener('touchstart', e => { x0 = e.target.closest('input, .pbar') ? null : e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });   // 재생 막대를 끌 때 카드가 넘어가면 안 된다 · 카드 밖 빈자리도 (2026-10-02)
-  $('#learn').addEventListener('touchend', e => {
-    if (x0 === null) return;
-    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
-    x0 = null;
-    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) goto(dx < 0 ? 1 : -1);   // 왼쪽으로 밀면 다음(+1), 오른쪽으로 밀면 이전(-1)
-  }, { passive: true });
-  /* 세로로 밀기 (대표님 지시 2026-10-02: "위에서 아래로 스와이프하면 필기 활성화 · 아래에서 위로 올리면 단어 면 ↔ 발음 면 — 너무 민감하지 않게").
-     세로 밀기는 원래 스크롤이라 **더 밀 데가 없을 때만** 받는다: 아래로는 맨 위에서 시작해 맨 위에서 끝날 때, 위로는 맨 아래(짧은 카드는 늘)에서
-     시작해 맨 아래에서 끝날 때. 그리고 세로 90px 넘게 · 가로의 2.5배 넘게 · 0.7초 안에. 긴 카드를 스크롤하다 끝에 닿는 것으로는 안 바뀐다 */
-  const atTop = () => (window.scrollY || 0) <= 1;
-  const atBottom = () => (window.scrollY || 0) + innerHeight >= document.documentElement.scrollHeight - 2;
-  let vs = null;
-  const lv = $('#learn');                      // 카드 밖 빈자리에서 밀어도 되게 — 학습 화면 전체가 받는다 (2026-10-02)
-  lv.addEventListener('touchstart', e => {
-    if (e.touches.length !== 1 || e.target.closest('input, textarea, .pbar')) { vs = null; return; }
-    vs = { x: e.touches[0].clientX, y: e.touches[0].clientY, t: performance.now(), top: atTop(), bot: atBottom() };
-  }, { passive: true });
-  lv.addEventListener('touchend', e => {
-    const v = vs; vs = null;
-    if (!v || $('#learn').hidden || INK.finger) return;
-    const dx = e.changedTouches[0].clientX - v.x, dy = e.changedTouches[0].clientY - v.y;
-    if (Math.abs(dy) < 90 || Math.abs(dy) < Math.abs(dx) * 2.5 || performance.now() - v.t > 700) return;
-    if (dy > 0 && v.top && atTop()) { inkSetup(); inkFinger(true); }                                  // 위 → 아래: 손글씨 켜기
-    else if (dy < 0 && v.bot && atBottom() && FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron');  // 아래 → 위: 단어 면 ↔ 발음 면
-  }, { passive: true });
+  /* 두 손가락으로 밀기 (대표님 2026-10-02 "손가락 스와이프로 하는 동작, 두 손가락으로 바꾸자. 대신 덜 민감해도 됨").
+     한 손가락은 스크롤·손글씨만 한다 — 전에 쓰던 한 손가락 좌우 밀기·세로 밀기(맨 위/맨 아래에서만)·손글씨 중 휙 긋기는 뺐다.
+     두 손가락을 함께 60px 넘게(다른 쪽 움직임의 1.5배 넘게): ← 다음 · → 이전 · ↓ 손글씨 켜기/끄기 · ↑ 단어 면 ↔ 발음 면.
+     손글씨가 켜져 있어도 같다 — 두 번째 손가락이 닿는 순간 막 그리던 획은 지운다. 단추·마우스 끌기·화살표 키는 그대로 */
+  const TWO = window.TWO = { on: false, x0: 0, y0: 0, x: 0, y: 0 };
+  const mid = ts => [(ts[0].clientX + ts[1].clientX) / 2, (ts[0].clientY + ts[1].clientY) / 2];
+  document.addEventListener('touchstart', e => {
+    if ($('#learn').hidden) return;
+    if (e.touches.length === 2) { const [x, y] = mid(e.touches); Object.assign(TWO, { on: true, x0: x, y0: y, x, y }); inkCancel(); }
+    else if (e.touches.length > 2) TWO.on = false;
+  }, { passive: true, capture: true });
+  document.addEventListener('touchmove', e => {
+    if (!TWO.on || e.touches.length < 2) return;
+    const [x, y] = mid(e.touches); TWO.x = x; TWO.y = y;
+    e.preventDefault();                                   // 두 손가락 동안은 화면 확대·스크롤을 막는다
+  }, { passive: false, capture: true });
+  const twoEnd = e => {
+    if (!TWO.on || e.touches.length >= 2) return;
+    TWO.on = false;
+    if ($('#learn').hidden) return;
+    const dx = TWO.x - TWO.x0, dy = TWO.y - TWO.y0;
+    if (Math.abs(dx) >= 60 && Math.abs(dx) >= Math.abs(dy) * 1.5) goto(dx < 0 ? 1 : -1);
+    else if (Math.abs(dy) >= 60 && Math.abs(dy) >= Math.abs(dx) * 1.5) {
+      if (dy > 0) { inkSetup(); inkFinger(!INK.finger); }
+      else if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron');
+    }
+  };
+  document.addEventListener('touchend', twoEnd, { capture: true });
+  document.addEventListener('touchcancel', () => { TWO.on = false; }, { capture: true });
   /* 컴퓨터에서도 넘어가야 한다 — 손가락만 받으면 마우스로는 아무 일도 안 일어난다.
      단추·입력칸 위에서 시작한 끌기는 무시한다(마이크 단추를 끌다가 넘어가면 안 된다). */
   let m0 = null, my0 = null;
