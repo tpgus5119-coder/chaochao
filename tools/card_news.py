@@ -560,6 +560,11 @@ def main():
                "a large cargo ship docked at a shipyard under a clear sky"),
               # 2026-10-02 아침(예약 작업): 키워드가 없어 통조림·간 이식·이온·패스트푸드 기사가 갈래 기본
               # 그림으로, 민속 마을은 '관광'에 걸려 해변으로, 배터리 재활용은 '전기차'에 걸려 조립 공장으로 갈 판이었다.
+              # 2026-10-02 다시 짠 묶음: 디지털 노마드·AI 센터 기사는 갈래 기본(일자리) 그림만 깔릴 판이었다.
+              (("디지털노마드", "디지털 노마드", "원격 근무"),
+               "a laptop and an iced coffee on a cafe table by a sunny window"),
+              (("ai 우수센터", "인공지능"),
+               "a glowing computer chip on a circuit board in a modern lab"),
               (("배터리", "재활용"),
                "stacked battery packs beside a green recycling bin"),
               (("통조림", "돼지열병", "오염육"),
