@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
+  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '혀 투명': 'Lưỡi trong suốt', '위아래 벌림': 'Mở dọc', '좌우 벌림': 'Mở ngang', '오므림': 'Tròn môi', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -2315,28 +2315,45 @@ function mouthPanel(text) {
   const M = MOUTH.create(body);
   const setV = v => {
     S.mview = v; save(); M.setView(v); body.dataset.v = v;
-    sw.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+    sw.querySelectorAll('button[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === v));   // 혀 투명 단추는 건드리지 않는다
   };
   [['front', '정면'], ['side', '옆 단면']].forEach(([v, lab]) => {
     const b = el('button', 'ghost sm', tr(lab)); b.type = 'button'; b.dataset.v = v; b.onclick = () => setV(v); sw.append(b);
   });
+  /* 투명 보기 — 혀를 입술 위에 점선으로 겹친다(입을 다문 소리에서도 혀 자리가 보인다). 고른 것은 저장(S.mxray) (2026-10-02) */
+  const xb = el('button', 'ghost sm', tr('혀 투명')); xb.type = 'button';
+  const setX = on => { S.mxray = !!on; save(); M.xray(!!on); xb.classList.toggle('on', !!on); };
+  xb.onclick = () => setX(!S.mxray); sw.append(xb);
   M.setWord(text);
   setV(S.mview === 'side' ? 'side' : 'front');
+  M.xray(!!S.mxray); xb.classList.toggle('on', !!S.mxray);
+  /* 세 축 막대 (대표님 2026-10-02 "위아래로 얼마나, 좌우로 얼마나, 얼마나 오므리는지") — 그림과 같은 값. 소리가 날 때는 따라 움직이고,
+     멈춰 있을 때는 첫 모음 자세(따라 할 입)를 보여 준다 */
+  const bars = el('div', 'mbars');
+  const BAR = [['open', '위아래 벌림'], ['spread', '좌우 벌림'], ['round', '오므림']].map(([k, lab]) => {
+    const r = el('div', 'mbar'); r.append(el('span', 'mbk', tr(lab)));
+    const tr2 = el('i', 'mbt'), fill = el('i', 'mbf'); tr2.append(fill); r.append(tr2);
+    const n = el('span', 'mbn', '0'); r.append(n); bars.append(r);
+    return [k, fill, n];
+  });
+  wrap.insertBefore(bars, cap);
+  const drawBars = () => { const m = M.metrics(); if (!m) return; BAR.forEach(([k, fill, n]) => { const v = Math.round((m[k] || 0) * 100); fill.style.width = v + '%'; n.textContent = v; }); };
   body.classList.add('slowtap');                     // 입모양 그림을 눌러도 0.2배 고정 (2026-09-28)
   body.onclick = () => play(text, false, null, SLOW_TAP);
   const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : ''; };
-  M.at(0);
+  const idle = () => { const id = M.at(M.vowelT()); cap.innerHTML = capOf(id); drawBars(); };   // 멈춰 있을 때 — 입을 다문 그림 대신 첫 모음의 입 (2026-10-02)
+  idle();
   const h = AIDX[text] || AIDX[text.toLowerCase()];
   let nat = null, lastId = '';
   nativeCurve(text).then(n => { nat = n; });
-  const show = t => { const id = M.at(t); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
+  const show = t => { const id = M.at(t); drawBars(); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
   PB.views.add({ root: wrap, update(playing) {
     if (pbLive(h, playing) && nat && nat.raw) {
       const span = nat.raw.length * nat.hop, a = Math.max(0, nat.t0 - .06), b = Math.min(nat.total, nat.t0 + span + .05);
       show(clamp((audio.currentTime - a) / ((b - a) || 1), 0, 1));
     } else if (pbLive(h, playing)) {
       show(clamp(audio.currentTime / (audio.duration || 1), 0, 1));
-    } else { M.at(0); lastId = ''; cap.innerHTML = ''; }
+    } else if (lastId !== 'idle') { lastId = 'idle'; idle(); }
   } });
   return wrap;
 }

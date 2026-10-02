@@ -166,6 +166,7 @@ const MOUTH = (() => {
 <title>입모양</title>
 <defs>
 <clipPath id="${f('fclip')}"><ellipse id="${f('fce')}" cx="561" cy="116" rx="40" ry="20"/></clipPath>
+<clipPath id="${f('xclip')}"><ellipse id="${f('xce')}" cx="561" cy="116" rx="40" ry="22"/></clipPath>
 <radialGradient id="${f('glow')}"><stop offset="0" stop-color="#E24B4A" stop-opacity=".55"/><stop offset=".55" stop-color="#E24B4A" stop-opacity=".22"/><stop offset="1" stop-color="#E24B4A" stop-opacity="0"/></radialGradient>
 <marker id="${f('ar')}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#378ADD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
@@ -210,11 +211,21 @@ const MOUTH = (() => {
 <ellipse id="${f('lipO')}" cx="561" cy="116" rx="52" ry="26" fill="#D4537E" stroke="#993556" stroke-width="1.6"/>
 <ellipse id="${f('opn')}" cx="561" cy="116" rx="40" ry="20" fill="#4A1B0C"/>
 <g clip-path="url(#${f('fclip')})">
-<rect id="${f('tU')}" x="520" y="96" width="80" height="8" rx="2" fill="#F1EFE8"/>
-<rect id="${f('tL')}" x="520" y="130" width="80" height="6" rx="2" fill="#F1EFE8"/>
-<rect id="${f('tT')}" x="520" y="120" width="80" height="40" rx="12" fill="#ED93B1"/>
+<ellipse id="${f('tB')}" cx="561" cy="150" rx="20" ry="30" fill="#C9668A"/>
+<ellipse id="${f('tT')}" cx="561" cy="150" rx="40" ry="30" fill="#ED93B1" stroke="#C9668A" stroke-width=".8"/>
+<ellipse id="${f('tP')}" cx="561" cy="120" rx="8" ry="10" fill="#F2A6C0" stroke="#C9668A" stroke-width=".8" opacity="0"/>
+<rect id="${f('tU')}" x="480" y="96" width="162" height="8" rx="2" fill="#F1EFE8"/>
+<rect id="${f('tL')}" x="480" y="130" width="162" height="6" rx="2" fill="#F1EFE8"/>
 </g>
 <ellipse id="${f('opl')}" cx="561" cy="116" rx="40" ry="20" fill="none" stroke="#993556" stroke-width="1.2"/>
+<g id="${f('xr')}" opacity="0">
+<ellipse id="${f('xO')}" cx="561" cy="116" rx="40" ry="22" fill="#4A1B0C" fill-opacity=".12" stroke="#993556" stroke-width="1" stroke-dasharray="3 3"/>
+<g clip-path="url(#${f('xclip')})" fill="#ED93B1" fill-opacity=".45" stroke="#993556" stroke-width="1.3" stroke-dasharray="4 3">
+<ellipse id="${f('xB')}" cx="561" cy="150" rx="20" ry="30"/>
+<ellipse id="${f('xT')}" cx="561" cy="150" rx="40" ry="30"/>
+<ellipse id="${f('xP')}" cx="561" cy="120" rx="8" ry="10" opacity="0"/>
+</g>
+</g>
 </g>
 </g>
 <g id="${f('leg')}" font-size="15" fill="var(--dim)">
@@ -245,7 +256,7 @@ const MOUTH = (() => {
     const set = (e, k, v) => e.setAttribute(k, v);
     const els = {};
     ['nas', 'nasArr', 'tg', 'jawg', 'roof', 'v1', 'v2', 'lar', 'lu1', 'lu2', 'll1', 'll2', 'airO', 'g1', 'g2', 'z1', 'z2', 'm1', 'm1d', 'm2', 'm2d',
-      'lipO', 'opn', 'opl', 'fce', 'tU', 'tL', 'tT', 'names'].forEach(k => { els[k] = $(k); });
+      'lipO', 'opn', 'opl', 'fce', 'tU', 'tL', 'tT', 'tB', 'tP', 'xr', 'xB', 'xT', 'xP', 'xO', 'xce', 'names'].forEach(k => { els[k] = $(k); });
     const placeNames = [...els.names.querySelectorAll('text[data-p]')];
     function cap(a, b, x1, y1, x2, y2, w) {
       const d = 'M' + f1(x1) + ' ' + f1(y1) + 'L' + f1(x2) + ' ' + f1(y2);
@@ -303,24 +314,45 @@ const MOUTH = (() => {
         const hit = t.dataset.p.split(' ').some(x => on.has(x));
         t.setAttribute('fill', hit ? '#E24B4A' : 'var(--dim)'); t.setAttribute('font-weight', hit ? '700' : '400');
       });
-      /* 정면 입술 — 움직임을 **과장**해서 구별이 잘 되게 한다(대표님 지시 2026-09-27):
-         벌림(i·ê·e)은 옆으로 아주 넓게, 오므림(u·ô·o)은 작고 동그랗게, 턱은 크게 벌린다. */
-      const cy = 116, rw = pz.lipR >= 0 ? lerp(40, 78, clamp(pz.lipR, 0, 1)) : lerp(40, 11, clamp(-pz.lipR, 0, 1));   // 09-27 오후: 조금 더 과장(70→78, 13→11)
-      /* 벌림을 과장한다 — 입술 두께가 아니라 **입 자체**가 크게 열리게 (대표님 지시 2026-09-27 "입술만 두꺼워졌잖아"): 턱 46→82 */
-      let oh = (pz.jaw * 110 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);   // 턱 90→110 (대표님 2026-09-27 오후 '약간 더 과장')
-      if (pz.lipR < -.4) oh = Math.max(oh, rw * .85 * (1 - pz.lipC));
+      /* 정면 입 — 세 축을 따로 (대표님 2026-10-02 "위아래로 얼마나 벌리는지, 좌우로 얼마나 벌리는지, 얼마나 오므리는지가 표현되어야"):
+         ① 위아래 벌림 = 턱(jaw) × (입술 닫힘·윗니-아랫입술이면 줄어듦)  ② 좌우 벌림 = lipR(+)  ③ 오므림 = lipR(−)
+         전에는 폭이 좌우 벌림·오므림으로만 정해져 a·ă 가 좁고 긴 세로 타원이 되고 틀 위아래가 잘렸다 — 실제 a 는 위아래·옆이 함께 크게 벌어진다.
+         이제 턱을 벌리면 폭도 조금 넓어지고, 높이 배율을 110→46 으로 줄여 틀 안에 든다. 값의 차례(i>ê>e 옆 벌림, u>ô>o 오므림,
+         i·ư·u < ê·ơ·ô < e·â·o < ă·a 위아래)는 하노이 모음의 높이·둥글기(Kirby 2011)를 따른 것이고 수치 자체는 그림용(모식도)이다 */
+      const sp = Math.max(0, pz.lipR), rd = Math.max(0, -pz.lipR);
+      const cy = 116, rw = rd > 0 ? lerp(42 + pz.jaw * 14, 11, clamp(rd, 0, 1)) : Math.min(72, 42 + sp * 30 + pz.jaw * 14);
+      let oh = (pz.jaw * 46 + 1.2) * (1 - pz.lipC) * (1 - pz.lipD * .75);
+      if (rd > .4) oh = Math.max(oh, rw * .85 * (1 - pz.lipC));
       if (pz.lipR > .3) oh = oh * (1 - .35 * pz.lipR);
-      const lt = pz.lipC > .5 ? 8 : (4 + Math.max(0, -pz.lipR) * 6 - Math.max(0, pz.lipR) * 2);   // 입술은 얇게 — 벌림이 주인공
+      const lt = pz.lipC > .5 ? 8 : (4 + rd * 6 - sp * 2);   // 입술은 얇게 — 벌림이 주인공
       set(els.lipO, 'rx', f1(rw + lt)); set(els.lipO, 'ry', f1(oh + lt * .85));
       ['opn', 'opl', 'fce'].forEach(id => { set(els[id], 'rx', f1(rw)); set(els[id], 'ry', f1(Math.max(oh, .8))); });
-      const tu = Math.min(oh * .9, 16), tl = oh > 16 ? Math.min(oh * .5, 11) : 0;
+      const tu = Math.min(oh * .9, 12), tl = oh > 14 ? Math.min(oh * .45, 9) : 0;
       set(els.tU, 'y', f1(cy - oh)); set(els.tU, 'height', f1(tu));
       set(els.tL, 'y', f1(cy + oh - tl)); set(els.tL, 'height', f1(tl));
-      let lv = clamp((.6 - pz.gF) / .6, 0, 1); if (pz.ty < 180) lv = Math.max(lv, .85);
-      set(els.tT, 'y', f1(cy + oh - oh * 2 * (.22 + .62 * lv)));
-      set(els.tT, 'opacity', oh > 4 ? 1 : 0); set(els.tU, 'opacity', oh > 3 ? 1 : 0);
+      set(els.tU, 'opacity', oh > 3 ? 1 : 0);
+      /* 정면에서 보이는 혀 (대표님 2026-10-02 "입모양에서 혀도 보여줄 수 있냐? 정면에서"):
+         혀 앞 몸통(gF가 작을수록 높다) · 혀 뒤쪽(gB가 작을수록 높다 — 안쪽에 짙은 색) · 혀끝(혀끝이 윗니·잇몸에 닿는 t·th·đ·n·l·s·d…는 들어 올려져 보인다).
+         투명 보기(xray)는 같은 혀를 입술 위에 점선으로 겹쳐, 입을 다문 소리에서도 혀 자리가 보인다 */
+      const lv = clamp((.6 - pz.gF) / .6, 0, 1), bv = clamp((.6 - pz.gB) / .6, 0, 1), up = clamp((200 - pz.ty) / 40, 0, 1);
+      const tongue = (T, B, P, h, w, op) => {
+        const yT = cy + h - 2 * h * (.18 + .55 * lv), yB = cy + h - 2 * h * (.12 + .62 * bv);
+        /* 혀 폭은 입술 벌림과 따로 — 혀는 입술 뒤에 늘 넓게 있고 입이 열린 만큼만 보인다(오므린 입에서 혀가 뾰족하게 보이지 않게) */
+        const tw = Math.max(46, w * .8), tr2 = 60;
+        set(T, 'cx', 561); set(T, 'rx', f1(tw)); set(T, 'ry', tr2); set(T, 'cy', f1(yT + tr2));
+        set(B, 'cx', 561); set(B, 'rx', 22); set(B, 'ry', 40); set(B, 'cy', f1(yB + 40));
+        const top = lerp(yT, cy - h + Math.min(h * .9, 12), up), bot = yT + 10;
+        set(P, 'cx', 561); set(P, 'rx', f1(Math.max(5, w * .2))); set(P, 'ry', f1(Math.max(2, (bot - top) / 2))); set(P, 'cy', f1((top + bot) / 2));
+        set(P, 'opacity', up > .15 && op ? 1 : 0);
+      };
+      tongue(els.tT, els.tB, els.tP, oh, rw, oh > 4);
+      set(els.tT, 'opacity', oh > 4 ? 1 : 0); set(els.tB, 'opacity', oh > 4 ? 1 : 0);
+      const xh = Math.max(oh, 22), xw = Math.max(rw, 34);
+      ['xO', 'xce'].forEach(id => { set(els[id], 'rx', f1(xw)); set(els[id], 'ry', f1(xh)); });
+      tongue(els.xT, els.xB, els.xP, xh, xw, true);
+      LAST = { open: clamp(pz.jaw * (1 - pz.lipC) * (1 - pz.lipD * .75), 0, 1), spread: clamp(sp, 0, 1), round: clamp(rd, 0, 1), tongue: lv, back: bv, tip: up };
     }
-    let cur = null;
+    let cur = null, LAST = null;
     const api = {
       root: host,
       setView,
@@ -337,6 +369,17 @@ const MOUTH = (() => {
         return key;
       },
       names(on) { els.names.style.display = on ? '' : 'none'; },
+      /* 지금 그린 자세의 세 축(0~1) — 입모양 칸 막대가 읽는다 */
+      metrics() { return LAST; },
+      /* 투명 보기 — 혀를 입술 위에 점선으로 */
+      xray(on) { set(els.xr, 'opacity', on ? .95 : 0); },
+      /* 낱말의 첫 모음 한가운데 시각 — 소리 안 날 때 보여 줄 '따라 할 입' */
+      vowelT() {
+        if (!cur) return 0;
+        const kf = cur.kf;
+        for (let i = 0; i < kf.length - 1; i++) if (SI[kf[i][1]] && SI[kf[i][1]].g === 'v' && kf[i + 1][1] === kf[i][1]) return (kf[i][0] + kf[i + 1][0]) / 2;
+        return 0;
+      },
     };
     render(POSE.rest, null);
     return api;

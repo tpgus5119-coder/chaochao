@@ -2972,3 +2972,9 @@ body.inking #learn .pager{position:relative; z-index:47}
 .dictout .dtab{flex:1; padding:9px 8px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--fg); font-weight:700; font-size:14px}
 .dictout .dtab small{font-weight:500; opacity:.7; margin-left:4px}
 .dictout .dtab.on{background:var(--accent); border-color:var(--accent); color:var(--accent-fg, #fff)}
+/* 입모양 세 축 막대 (2026-10-02) */
+.mbars{display:grid; gap:5px; margin:6px 2px 4px}
+.mbar{display:grid; grid-template-columns:5.5em 1fr 2.2em; align-items:center; gap:8px; font-size:12.5px; color:var(--dim)}
+.mbar .mbt{display:block; height:8px; border-radius:4px; background:var(--line); overflow:hidden}
+.mbar .mbf{display:block; height:100%; width:0; border-radius:4px; background:#D4537E; transition:width .08s linear}
+.mbar .mbn{text-align:right; font-variant-numeric:tabular-nums}
