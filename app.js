@@ -7069,7 +7069,7 @@ function resumeNext() {
   if (t === 'gram' && GRAM) {
     /* 문법 화면과 같은 '자주 쓰는 순서'로 (tools/grammar_order/순서.tsv, 2026-10-01) */
     const ord = [2, 3, 4, 7, 6, 8, 12, 13, 9, 10, 22, 11, 16, 17, 18, 14, 26, 15, 45, 20, 21, 39, 32, 28, 19, 23, 5, 27, 24, 30, 41, 25, 29, 31, 33, 34, 35, 36, 37, 38, 40, 42, 43, 44];
-    for (const ni of ord) if (GRAM.books[0].bai[ni] && !S.done[gkey(0, ni)]) return { gram: [0, ni], name: GRAM.books[0].bai[ni].t, kind: '문법' };
+    for (const ni of ord) if (GRAM.books[0].bai[ni] && !GRAM.books[0].bai[ni].ng && !S.done[gkey(0, ni)]) return { gram: [0, ni], name: GRAM.books[0].bai[ni].t, kind: '문법' };
   }
   const life = q.find(d => d.kind !== '직무');
   if (life) return { d: life, name: life.theme || (trackName(life) + label(life)), kind: '일상' };
@@ -9096,8 +9096,7 @@ function inkClear() { INK.strokes = []; INK.cur = null; if (INK.g) INK.g.clearRe
    같은 주제끼리 묶은 표: 기본기 과(day) · 문법 과 번호(no) · 일상 주제 이름. 교재 과 ↔ 일상 주제는 data/topic_links.json(TLINK) 을 같이 쓴다.
    묶음은 클로드가 과 내용(문형 제목·낱말)을 보고 같은 주제끼리 이었다 — 숫자·인사·묻기·시간·빈도·색·길·이어 주는 말·정도·부탁·주문·의견·소리 */
 const REL_GROUPS = [
-  { basic: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7'], gram: [1] },
-  { basic: ['P8'], gram: [7, 8, 9], life: ['숫자 세기'] },
+  { basic: ['P8'], gram: [8, 9], life: ['숫자 세기'] },   // 문법 1과(소리)·7과(숫자 읽기)는 기본기로 옮겼다(grammar.json ng) — 목록에 없는 과는 단추로도 안 보낸다
   { gram: [2, 3], life: ['인사와 자기소개'] },
   { gram: [5], life: ['가리키기와 묻기'] },
   { gram: [13, 14], life: ['시간과 요일', '달 이름'] },
@@ -9121,7 +9120,7 @@ function relChips() {
     const pick = ds.find(x => !S.done[x.day]) || ds[0];
     return () => { SBOX = 'srs'; startLearn(pick); };
   };
-  const gramGo = no => { if (!GRAM) return null; const ni = GRAM.books[0].bai.findIndex(b => b.no === no); return ni < 0 ? null : () => startGram(0, ni); };
+  const gramGo = no => { if (!GRAM) return null; const ni = GRAM.books[0].bai.findIndex(b => b.no === no); return ni < 0 || GRAM.books[0].bai[ni].ng ? null : () => startGram(0, ni); };
   const basicGo = k => { const x = ALL.find(y => y.day === k); return x ? () => startLearn(x) : null; };
   const mainLessons = base => { const src = GYBM && GYBM.find(x => x.key === 'main'); if (!src) return null;
     const li = src.lessons.findIndex((l, i) => String(l.title).split(' · ')[0] === base && !bdone()[gybmKey('main', i)]);
