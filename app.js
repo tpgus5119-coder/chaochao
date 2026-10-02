@@ -9591,8 +9591,8 @@ $('#next').onclick = () => {
      전에는 가로 움직임만 40px 넘으면 넘겨서, 긴 카드를 비스듬히 스크롤하다 카드가 넘어갔다.
      이제 가로가 세로의 1.5배 넘게 움직였을 때만 — 단어 면·발음 면 모두. */
   let y0 = null;
-  card.addEventListener('touchstart', e => { x0 = e.target.closest('input, .pbar') ? null : e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });   // 재생 막대를 끌 때 카드가 넘어가면 안 된다
-  card.addEventListener('touchend', e => {
+  $('#learn').addEventListener('touchstart', e => { x0 = e.target.closest('input, .pbar') ? null : e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });   // 재생 막대를 끌 때 카드가 넘어가면 안 된다 · 카드 밖 빈자리도 (2026-10-02)
+  $('#learn').addEventListener('touchend', e => {
     if (x0 === null) return;
     const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
     x0 = null;
@@ -9604,11 +9604,12 @@ $('#next').onclick = () => {
   const atTop = () => (window.scrollY || 0) <= 1;
   const atBottom = () => (window.scrollY || 0) + innerHeight >= document.documentElement.scrollHeight - 2;
   let vs = null;
-  card.addEventListener('touchstart', e => {
+  const lv = $('#learn');                      // 카드 밖 빈자리에서 밀어도 되게 — 학습 화면 전체가 받는다 (2026-10-02)
+  lv.addEventListener('touchstart', e => {
     if (e.touches.length !== 1 || e.target.closest('input, textarea, .pbar')) { vs = null; return; }
     vs = { x: e.touches[0].clientX, y: e.touches[0].clientY, t: performance.now(), top: atTop(), bot: atBottom() };
   }, { passive: true });
-  card.addEventListener('touchend', e => {
+  lv.addEventListener('touchend', e => {
     const v = vs; vs = null;
     if (!v || $('#learn').hidden || INK.finger) return;
     const dx = e.changedTouches[0].clientX - v.x, dy = e.changedTouches[0].clientY - v.y;
