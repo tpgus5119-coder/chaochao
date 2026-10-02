@@ -345,13 +345,13 @@ const UIVI = {
   '아래 조각을 눌러 보세요': 'Hãy nhấn các mảnh bên dưới',
   'N개 중 M개를 한 번에 맞혔어요': 'Bạn đúng M/N ngay lần đầu',
   '보통 속도': 'Tốc độ thường',
-  '📚 배운 것 모두': '📚 Tất cả đã học', '★ 담은 것': '★ Đã lưu',
-  '여기까지 배운 단어 N개입니다': 'Bạn đã học N từ',
+  '📚 학습한 모든 단어': '📚 Tất cả từ đã học', '★ 담은 것': '★ Đã lưu',
+  '여기까지 학습한 단어 N개입니다': 'Bạn đã học N từ',
   '여기 있는 단어로 복습하기': 'Ôn tập các từ này',
   '자주 틀린 것만 복습하기': 'Chỉ ôn những từ hay sai',
   '찾을 말 (베트남어·한국어)': 'Tìm từ (tiếng Việt · tiếng Hàn)',
   '앞 200개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 200 từ đầu — hãy gõ thêm',
-  '아직 배운 단어이 없습니다. 학습을 한 세트 끝내면 여기에 모입니다.':
+  '아직 학습한 단어가 없습니다. 학습을 한 세트 끝내면 여기에 모입니다.':
     'Chưa có từ nào. Hoàn thành một phần học thì từ sẽ xuất hiện ở đây.',
   '단어 N개쯤 외운 뒤에 보면 더 잘 듣습니다': 'Học khoảng N từ rồi xem sẽ hiểu hơn',
   '듣기로 넘어가기 ›': 'Sang phần nghe ›',
@@ -8157,7 +8157,7 @@ function rankRow(i, name, val, top, mine, sub) {
   r.append(bar, el('span', 'crval', String(val)));
   return r;
 }
-let WB = 'star';                       // 단어장에서 보고 있는 칸
+let WB = 'all';                        // 단어장에서 보고 있는 칸 — 학습한 모든 단어 · 자주 틀린 것 · 담은 것 (2026-10-02 차례)
 /* 단어장은 **하루 5분 것만** 담는다 (대표님 지시: 섞지 마라).
    실전 단어는 제 화면에서 회차별로 보므로 여기 섞으면 목록만 길어진다. */
 /* ---------- 베트남어 사전 ----------
@@ -8844,7 +8844,6 @@ function gybmSearch() {
   setTimeout(() => inp.focus(), 60);
 }
 
-function wordbookEntry() { SBOX = 'srs'; WB = 'star'; drawWordbook(); }
 /* 단어 한 줄 — **뜻·발음·두 속도 단추**를 한 줄에 (대표님 지시 2026-09-03:
    "단어와 발음과 뜻 보여줘 … 원재생속도와 느린재생속도버전").
    meta 가 있으면 오른쪽에 곁들인다 (틀린 횟수 같은 것). */
@@ -8867,24 +8866,38 @@ function wbRow(vi, ko, meta) {
    대표님 지시 (2026-09-03): "지금까지 학습한 모든 단어들을 리스트업한 단어장과
    그 대상으로도 복습할 수 있도록." */
 function learnedAll() {
+  /* (2026-10-02 대표님 "학습한 모든 단어에 단어가 하나도 없는데?") 전에는 하루5분 창고(S.srs)·실전 창고(S.ssrs)만 셌다.
+     교재·선배·22기(GYBM, 진도 S.bdone·창고 S.bsrs)나 일상·직무 레슨으로 공부한 단어는 빠져 0개로 보였다.
+     이제 **끝낸 세트·레슨의 단어 전부** + 세 창고에서 한 번이라도 답한 단어. 문장(복습 창고에 든 예문)은 뺀다 */
   const out = new Map();
-  const add = (k, box) => {
-    const v = String(k || '').trim();
-    if (!v || out.has(v)) return;
-    const w = allWords().find(x => x.vi === v)
-           || (typeof seniorItems === 'function' ? seniorItems().find(x => x.vi === v) : null);
-    out.set(v, { vi: v, ko: w ? w.ko : '', box });
+  const words = allWords(), gy = GYBM ? gybmAllWords() : [], sen = typeof seniorItems === 'function' && SENIOR ? seniorItems() : [];
+  const add = (w, box) => {
+    const v = String(w && w.vi || '').trim();
+    if (!v || out.has(v.toLowerCase()) || w.sent) return;
+    out.set(v.toLowerCase(), { vi: v, ko: w.ko || '', box });
   };
-  Object.keys(S.srs || {}).forEach(k => add(k, 'srs'));
-  Object.keys(S.ssrs || {}).forEach(k => add(k, 'ssrs'));
+  ALL.forEach(d => { if (typeof d.day === 'number' && !d.track && S.done[d.day]) (d.words || []).forEach(w => add(w, 'srs')); });
+  if (COURSE) freeUnits().forEach(u => (u[2] || []).forEach(w => add(w, 'srs')));
+  if (GYBM) GYBM.forEach(src => src.lessons.forEach((l, li) => { if (bdone()[gybmKey(src.key, li)]) (l.words || []).forEach(w => add(w, 'bsrs')); }));
+  const look = (k, ...lists) => { for (const L2 of lists) { const w = L2.find(x => x.vi === k); if (w) return w; } return null; };
+  Object.keys(S.srs || {}).forEach(k => add(look(k, words, gy), 'srs'));
+  Object.keys(S.ssrs || {}).forEach(k => add(look(k, sen, words) || { vi: k }, 'ssrs'));
+  Object.keys(S.bsrs || {}).forEach(k => add(look(k, gy, words), 'bsrs'));
   return [...out.values()];
 }
 
-function wordbookEntry() { SBOX = 'srs'; WB = 'star'; drawWordbook(); }
+function wordbookEntry() { SBOX = 'srs'; WB = 'all'; drawWordbook(); }   // 열면 '학습한 모든 단어'부터 (대표님 2026-10-02)
 function drawWordbook() {
   const ko = learnKo();
   const host = ko ? $('#examBody') : $('#subBody');
   host.textContent = '';
+  if (WB === 'all' && (!GYBM || !COURSE)) {                 // 교재·직무 레슨 단어를 세려면 자료가 있어야 한다 — 받고 다시 그린다
+    host.append(el('p', 'note', tr('불러오는 중…')));
+    show(ko ? 'exam' : 'sub', '단어장', true);
+    const again = () => { if (GYBM && COURSE && $('#title').textContent === tr('단어장')) drawWordbook(); };
+    if (!GYBM) gybmBuild(again); if (!COURSE) withCourse(again);
+    return;
+  }
 
   const tabs = el('div', 'wbtabs');
   const mk = (k, label) => {
@@ -8894,9 +8907,9 @@ function drawWordbook() {
   };
   const misses = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1);
   const learned = learnedAll();
-  tabs.append(mk('star', tr('★ 담은 것') + ' ' + Object.keys(starOf()).length),
+  tabs.append(mk('all', tr('📚 학습한 모든 단어') + ' ' + learned.length),       // 차례: 학습한 모든 단어 · 자주 틀린 것 · 담은 것 (대표님 2026-10-02)
               mk('miss', tr('⚠ 자주 틀린 것') + ' ' + misses.length),
-              mk('all', tr('📚 배운 것 모두') + ' ' + learned.length));
+              mk('star', tr('★ 담은 것') + ' ' + Object.keys(starOf()).length));
   host.append(tabs);
 
   if (WB === 'star') {
@@ -8928,11 +8941,11 @@ function drawWordbook() {
     if (!learned.length) {
       host.append(el('p', 'note', '아직 배운 단어이 없습니다. 학습을 한 세트 끝내면 여기에 모입니다.'));
     } else {
-      host.append(el('p', 'lede', tr('여기까지 배운 단어 N개입니다')
+      host.append(el('p', 'lede', tr('여기까지 학습한 단어 N개입니다')
         .replace('N', learned.length.toLocaleString('ko-KR'))));
       const go = el('button', 'primary big', tr('여기 있는 단어로 복습하기') + ' ›');
       go.style.width = '100%'; go.style.marginBottom = '12px';
-      go.onclick = () => startWordbookQuiz(learned.map(x => x.vi), '배운 단어 모두');
+      go.onclick = () => startWordbookQuiz(learned.map(x => x.vi), '학습한 모든 단어');
       host.append(go);
 
       // 많으면 찾기가 있어야 쓸 수 있다
@@ -9901,16 +9914,19 @@ function buildQuestions(words, forced) {
 function startWordbookQuiz(viList, name) {
   const all = allWords();
   const sen = typeof seniorItems === 'function' ? seniorItems() : [];
-  const src = [];
+  const gy = GYBM ? gybmAllWords() : [];                 // 교재·선배·22기 단어도 (2026-10-02) — 채점은 제 창고(bsrs)로
+  const src = [], boxOf = {};
   const seen = {};
   viList.forEach(vi => {
     if (seen[vi]) return;
-    const w = all.find(x => x.vi === vi) || sen.find(x => x.vi === vi);
-    if (w) { seen[vi] = 1; src.push(w); }
+    let w = all.find(x => x.vi === vi), box = 'srs';
+    if (!w) { w = sen.find(x => x.vi === vi); box = 'ssrs'; }
+    if (!w) { w = gy.find(x => x.vi === vi); box = 'bsrs'; }
+    if (w) { seen[vi] = 1; src.push(w); boxOf[vi] = box; }
   });
   if (!src.length) { popup('복습할 단어을 못 찾았습니다.'); return; }
   src.sort(() => Math.random() - .5);
-  startQuiz(src, null, qN(), false);
+  startQuiz(src, null, qN(), false, { boxOf: vi => boxOf[vi] || 'srs' });
   show('quiz', name || '단어장 복습', true);
 }
 
