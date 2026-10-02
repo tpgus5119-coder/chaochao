@@ -2621,6 +2621,8 @@ const HUB_ICO = {
 let WOPEN = null;                                   // 단어 화면에서 펼쳐 둔 갈래
 let GOPEN = null;                                   // 문법 화면에서 펼쳐 둔 책
 let ANA_OPEN = null;                                // 실력 분석에서 펼쳐 둔 영역
+/* 영역을 눌러 펼치는 세부 분석은 잠시 뺐다 (대표님 2026-10-02 "일단은 세부적인 성적 분석은 빼 봐") — 기록은 그대로 쌓이고, true 로 바꾸면 다시 보인다 */
+const ANA_DETAIL = false;
 function studyStats() {
   const basicKeys = [...BASIC_ORDER, 'TYPE'];          // 자음 · 모음 · 겹모음 · 받침 · 성조 · 헷갈리는 소리 · 타이핑(24판을 끝내면 끝냄)
   const basic = [basicKeys.filter(k => S.done[k]).length, basicKeys.length];
@@ -3191,7 +3193,7 @@ function renderAnalysis(host, mode) {
   const firstDay = Object.keys((S.stats && S.stats.day) || {}).sort()[0];
   if (mode !== 'all') host.append(el('p', 'dimtxt', firstDay ? tr('날짜별 기록은 N부터 쌓입니다 — 그 전 것은 전체에만 있습니다').replace('N', firstDay.slice(5).replace('-', '/')) : tr('날짜별 기록이 아직 없습니다 — 오늘부터 쌓입니다')));
   const avg = {};                                           // 다른 사람들의 평균 (받아 오면 채운다)
-  host.append(el('p', 'anasec', tr('영역별') + ' <span>' + tr('누르면 자세히 · 작은 선은 12주 흐름') + '</span>'));
+  host.append(el('p', 'anasec', tr('영역별') + ' <span>' + (ANA_DETAIL ? tr('누르면 자세히 · 작은 선은 12주 흐름') : tr('작은 선은 12주 흐름')) + '</span>'));
   const list = el('div', 'analist'); host.append(list);
   const detail = (sb, x) => {
     const d = el('div', 'anadetail');
@@ -3235,9 +3237,9 @@ function renderAnalysis(host, mode) {
       head.append(el('span', 'anan', c.n ? c.ok + '/' + c.n : ''));
       if (avg[RANKKEY[i]] != null) head.append(el('span', 'anaavg', tr('다른 사람 평균') + ' ' + avg[RANKKEY[i]] + '%'));
       row.append(head, sparkline(weekSeries(x.ok, x.all)));
-      row.onclick = () => { ANA_OPEN = ANA_OPEN === sb ? null : sb; drawList(); };
+      if (ANA_DETAIL) row.onclick = () => { ANA_OPEN = ANA_OPEN === sb ? null : sb; drawList(); };
       list.append(row);
-      if (ANA_OPEN === sb) list.append(detail(sb, x));
+      if (ANA_DETAIL && ANA_OPEN === sb) list.append(detail(sb, x));
     });
     /* 문장 (2026-09-30, 대표님 "문장 학습 분석도 필요하지?") — 낱말이 아니라 **문장 문제**만: 조각 배열·문장 뜻 고르기·빈칸·받아쓰기·문법 문제.
        다섯 영역과 겹쳐 세지만(문장 조각은 쓰기에도 든다) 문장만 따로 모아 보는 줄이다. 세부는 문제 유형별 · 쓰인 문법별 */
@@ -3248,9 +3250,9 @@ function renderAnalysis(host, mode) {
     if (p && p.pct !== null && c.pct !== null && c.n >= 5 && p.n >= 5) { const dd = c.pct - p.pct; head.append(el('span', 'anadelta ' + (dd > 0 ? 'up' : dd < 0 ? 'down' : ''), (dd > 0 ? '▲ ' : dd < 0 ? '▼ ' : '± ') + Math.abs(dd))); }
     head.append(el('span', 'anan', c.n ? c.ok + '/' + c.n : ''));
     row.append(head, sparkline(weekSeries('sentOk', 'sentAll')));
-    row.onclick = () => { ANA_OPEN = ANA_OPEN === 'sent' ? null : 'sent'; drawList(); };
+    if (ANA_DETAIL) row.onclick = () => { ANA_OPEN = ANA_OPEN === 'sent' ? null : 'sent'; drawList(); };
     list.append(row);
-    if (ANA_OPEN === 'sent') {
+    if (ANA_DETAIL && ANA_OPEN === 'sent') {
       const d = el('div', 'anadetail');
       const put = (title, rows, note) => { if (!rows.length) return; d.append(el('p', 'anasec', esc(title))); d.append(bars(rows)); if (note) d.append(el('p', 'dimtxt', esc(note))); };
       put(tr('문제 유형별'), boxRows(cur, 'smd', k => MODE_NM[k] || k));
