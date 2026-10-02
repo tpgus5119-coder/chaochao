@@ -2962,3 +2962,8 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 .dictrow.sentrow .dvi{grid-column:1;font-weight:600}
 .dictrow.sentrow .dko{grid-column:1}
 .dictrow.sentrow .dspk{grid-column:2;grid-row:1 / span 2}
+/* 손글씨를 켠 채로도 넘김 단추·머리띠 단추·'다음' 단추는 바로 눌린다 (대표님 지시 2026-10-02) — 글씨판(45)보다 위로 */
+body.inking header, body.inking .pagearrow{z-index:47}
+body.inking #learn .pager{position:relative; z-index:47}
+#autoSnd svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+#autoSnd.off{color:var(--dim)}

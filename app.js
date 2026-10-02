@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng',
+  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -3018,6 +3018,7 @@ function show(v, title, canBack) {
     : v === 'quiz' ? (ACTIVE_TAB === 'test' ? tr('테스트') + '-' + tr(title) : LCRUMB ? LCRUMB + ' · ' + tr(title) : tr(title)) : '');
   $('#back').hidden = !canBack;
   if (v !== 'learn') { $('#face').hidden = true; FACE = null; }
+  { const ab = $('#autoSnd'); if (ab) { ab.hidden = v !== 'learn' && v !== 'quiz'; autoSndDraw(); } }   // 소리 자동 재생 단추 (2026-10-02)
   if (v === 'learn') inkSetup();                                  // 손글씨 겹쳐 쓰기 (2026-09-28 밤)
   if (INK.btn) { INK.btn.hidden = v !== 'learn'; if (v !== 'learn') { inkFinger(false); inkClear(); } }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
   /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 아래 탭의 [홈]이 어디서든 한 번에 나가는 길이다. */
@@ -4176,12 +4177,12 @@ function testHubEntry(sub) {
   const due = dueCount();
   const pool = learnedPool();
   b.append(qnPicker());                                   // 문제 수 10·20·30 — 학습 뒤 확인 문제와 같은 값 (2026-09-28 밤)
-  /* 여섯 갈래 (대표님 지시 2026-09-30): 복습(오늘 복습·배운 단어 전체·내 단어장·선택 복습) · 성조·모자 · 문장(단어 학습의 연장) · 문법(문법 학습의 연장) · 단어 시험(매일) · 주간 시험.
-     문장과 문법은 합치지 않는다 — 문장은 배운 **낱말의 예문**, 문법은 끝낸 **문법 과의 문형**이라 재료도 약점 처방도 다르다 */
+  /* 다섯 갈래: 복습(오늘 복습·배운 단어 전체·내 단어장·선택 복습) · 성조·모자 · 문장 · 단어 시험(매일) · 주간 시험.
+     (2026-10-02 대표님 "문장이란 단어와 문법의 조합") 문법 테스트는 문장 테스트로 합쳤다 — 재료(끝낸 문법 과 예문)와 '문법 고르기' 문제,
+     틀리면 그 과 문법 카드로 가는 단추는 문장 테스트 안에 그대로 있다 */
   row(ICO.today, '복습', due, () => testReviewEntry(), { today: !!due });
   row(ICO.tone, '성조·모자', 0, startToneTest);      // 성조·모음 모자를 귀로 가리기 — 여남 목소리·틀리면 비교 듣기·단계 (2026-09-28, 모자 2026-09-29)
-  row(ICO.write, '문장', 0, testSents);             // 배운 단어 예문·복습 창고 문장 (2026-09-28 밤)
-  row(ICO.write, '문법', 0, testGram);              // 끝낸 문법 과의 문형 (2026-09-28 밤)
+  row(ICO.write, '문장', 0, () => testSents());       // 배운 단어 예문 + 끝낸 문법 과 예문 (2026-10-02 문법 테스트를 합침)
   row(ICO.pick, '단어 시험', 0, () => dailyEntry('test'));   // 22기 매일 단어 시험 — 실제 시험처럼 (2026-09-30)
   row(ICO.pick, '주간 시험', 0, weeklyEntry);   // 회차별(범위별) 모의시험 — 실제 반 시험 짜임 (2026-09-28)
   show('exam', '테스트', true);
@@ -4263,8 +4264,13 @@ function learnedSents() {
 }
 function testSents(mode) {
   /* 문장 = 단어 학습의 연장 (대표님 2026-09-30: "학습은 단어로 하고, 테스트에서 문장을 만드는 것까지") — 배운 낱말의 예문으로 문장을 **만든다**.
-     조각 배열(기본)·뜻 보고 쳐서 쓰기·듣고 조각·뜻 고르기·섞어서. buildQuestions 의 forced 에 문제 유형을 넘긴다 */
-  const pool = learnedSents().sort(() => Math.random() - .5);
+     (2026-10-02 대표님 "문장이란 단어와 문법의 조합 — 문장 테스트와 문법 테스트가 따로 있어야 하나?") → 문법 테스트를 여기로 합쳤다:
+     재료 = 배운 낱말의 예문 + 끝낸 문법 과의 예문. 문제 꼴에 '문법 고르기'(이 문장에 쓰인 문형은?)를 더했고,
+     문법 과 예문을 틀리면 '○과 문법 카드' 단추가 뜬다(nextBtn). 조각 배열·쳐서 쓰기·듣고 조각·뜻 고르기는 buildQuestions 의 forced 로 */
+  if (!GRAM) { gramEnsure(() => testSents(mode)); return; }
+  const gsents = learnedGramSents();
+  const seen = new Set(gsents.map(x => x.vi));
+  const pool = [...learnedSents().filter(x => !seen.has(x.vi)), ...gsents].sort(() => Math.random() - .5);
   if (pool.length < 4) { popup(tr('아직 배운 문장이 적습니다 — 학습을 조금 더 하면 여기서 풀 수 있습니다')); return; }
   if (!mode) {
     const b = $('#examBody'); b.textContent = '';
@@ -4274,13 +4280,35 @@ function testSents(mode) {
     mk('뜻 보고 쓰기', '뜻을 보고 자판으로 문장을 친다 (성조까지)', 'write_ko');
     mk('듣고 만들기', '문장을 듣고 조각으로 만든다', 'puzzle_vi');
     mk('뜻 고르기', '문장을 읽고 뜻을 고른다', 'read');
-    mk('섞어서', '위 넷을 섞는다', ['puzzle', 'write_ko', 'puzzle_vi', 'read']);
+    if (gsents.length) mk('문법 고르기', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)', 'gpat');
+    mk('섞어서', '위 문제를 섞는다', 'mix');
     show('exam', tr('문장'), true);
     return;
   }
   SBOX = 'srs';
-  startQuiz(pool, null, qN(), true, { kind: 'sent', skill: mode });
-  if (Q) Q.noMore = true;
+  const N = qN(), mix = a => a.slice().sort(() => Math.random() - .5);
+  const gpatQ = s => {
+    const wrong = [], ks = new Set([s.gk]);
+    [...mix(learnedGram()), ...mix(gramPool())].forEach(p => { if (wrong.length < 3 && !ks.has(p.k)) { ks.add(p.k); wrong.push({ k: p.k, t: p.t }); } });   // 오답 보기는 배운 문법에서 먼저 — 모자라면 전체에서
+    return { w: s, mode: 'gpat', opts: [], popts: mix([{ k: s.gk, t: s.gt }, ...wrong]) };
+  };
+  if (mode !== 'gpat' && mode !== 'mix') {
+    startQuiz(pool, null, N, true, { kind: 'sent', skill: mode });
+    if (Q) Q.noMore = true;
+    return;
+  }
+  let L;
+  if (mode === 'gpat') L = mix(gsents).slice(0, N).map(gpatQ);
+  else {
+    const src = pool.slice(0, N);
+    L = buildQuestions(src, ['puzzle', 'write_ko', 'puzzle_vi', 'read']);
+    let k = 0;
+    L = L.map(q => (q.w && q.w.gk && k++ % 2 === 0 ? gpatQ(q.w) : q));   // 문법 과 예문은 둘에 하나꼴로 '문법 고르기'
+  }
+  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: { kind: 'sent' }, noMore: true };
+  sensesLoad();
+  drawQuiz();
+  show('quiz', tr('문장'), true);
 }
 function learnedGram() {
   const out = [];
@@ -4290,36 +4318,17 @@ function learnedGram() {
   }));
   return out;
 }
-function testGram() {
-  gramEnsure(() => {
-    const gs = learnedGram();
-    if (!gs.length) { popup(tr('끝낸 문법 과가 아직 없습니다 — 학습의 문법에서 한 과를 끝내면 여기서 풀 수 있습니다')); return; }
-    const mix = a => a.slice().sort(() => Math.random() - .5), N = qN();
-    const all = gramPool();
-    const sents = [], seen = new Set();
-    gs.forEach(g => g.ex.forEach(e => { if (e.vi && !seen.has(e.vi)) { seen.add(e.vi); sents.push({ vi: e.vi, ko: e.ko || '', kr_read: e.kr || '', sent: true, nograde: true, gk: g.k, gt: g.t }); } }));
-    const L = [], modes = ['gpat', 'read_ko', 'puzzle'];
-    let i = 0;
-    for (const s of mix(sents)) {
-      if (L.length >= N) break;
-      let md = modes[i++ % 3];
-      const nw = s.vi.replace(/[.?!]+$/, '').split(/\s+/).length;
-      if (md === 'puzzle' && (nw < 3 || nw > 9 || /[.!?]\s/.test(s.vi))) md = 'gpat';
-      if (md === 'read_ko' && (sents.length < 4 || !s.ko)) md = 'gpat';
-      if (md === 'gpat') {
-        const wrong = [], ks = new Set([s.gk]);
-        [...mix(gs), ...mix(all)].forEach(p => { if (wrong.length < 3 && !ks.has(p.k)) { ks.add(p.k); wrong.push({ k: p.k, t: p.t }); } });   // 오답 보기는 배운 문법에서 먼저 — 모자라면 전체에서
-        L.push({ w: s, mode: 'gpat', opts: [], popts: mix([{ k: s.gk, t: s.gt }, ...wrong]) });
-      } else if (md === 'read_ko') {
-        L.push({ w: s, mode: 'read_ko', opts: mix([s, ...mix(sents.filter(x => x.vi !== s.vi && x.ko && x.ko !== s.ko)).slice(0, 3)]) });
-      } else L.push({ w: s, mode: 'puzzle', opts: [] });
-    }
-    SBOX = 'srs';
-    Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, noMore: true };
-    drawQuiz();
-    show('quiz', tr('문법'), true);
-  });
+/* 끝낸 문법 과의 예문 — 문형(gk·gt)과 과 자리(gbi·gni)를 단다. 문장 테스트가 쓴다 (2026-10-02, 문법 테스트를 문장으로 합침) */
+function learnedGramSents() {
+  const out = [], seen = new Set();
+  if (!GRAM) return out;
+  (GRAM.books || []).forEach((b, bi) => b.bai.forEach((x, ni) => {
+    if (!S.done[gkey(bi, ni)]) return;
+    x.g.forEach(g => { if (g.k && g.t && g.ex) g.ex.forEach(e => { if (e.vi && e.ko && !seen.has(e.vi)) { seen.add(e.vi); out.push({ vi: e.vi, ko: e.ko, kr_read: e.kr || '', sent: true, nograde: true, gk: g.k, gt: g.t, gbi: bi, gni: ni }); } }); });
+  }));
+  return out;
 }
+function testGram() { testSents('gpat'); }   // 옛 이름 — 문법 테스트는 문장 테스트의 '문법 고르기'로 합쳤다 (2026-10-02)
 function testPickEntry() {
   const b = $('#examBody'); b.textContent = '';
   /* 부제 글줄 없이 제목만 (2026-09-27). 내 단어장은 테스트 첫 화면으로 올렸다 */
@@ -9001,8 +9010,26 @@ function inkEnd() {
   const s = INK.cur; if (!s) return;
   INK.cur = null; INK.last = performance.now(); s.t1 = INK.last;                    // 획마다 제 끝난 때 — 획 하나하나 따로 사라진다 (대표님 2026-09-30)
   if (s.pen && s.tap && INK.last - s.t0 < 350) { INK.strokes.pop(); return; }   // 펜으로 톡 — 글씨가 아니라 누르기
+  if (inkFlick(s)) { INK.strokes = INK.strokes.filter(x => x !== s); INK.block = !!s.pen; inkLoop(); return; }   // 휙 — 글씨가 아니라 넘기기 (2026-10-02)
   if (s.pen) INK.block = true;                                                      // 펜 획 끝의 클릭은 막는다
   inkLoop();
+}
+/* 손글씨를 켠 채로 넘기기 (대표님 지시 2026-10-02: "좌우 스와이프로 다음·이전 — 버튼 유지 · 너무 민감하지 않게").
+   켜 있으면 손가락이 글씨를 쓰므로, 글씨와 헷갈리지 않는 **길고 빠르고 곧은 휙**만 넘기기로 본다:
+   가로 140px(세로 160px) 넘게 · 다른 쪽 움직임의 3배 넘게 · 0.35초 안에 · 곧은 줄(줄에서 벗어난 거리 ≤ 길이의 12%).
+   ← 다음 · → 이전 · ↑ 단어 면↔발음 면 · ↓ 손글씨 끄기. 휙 그은 획은 지운다 */
+function inkFlick(s) {
+  if (CURV !== 'learn' || !s.pts || s.pts.length < 2) return false;
+  const a = s.pts[0], z = s.pts[s.pts.length - 1], dx = z.x - a.x, dy = z.y - a.y, len = Math.hypot(dx, dy);
+  if ((s.t1 - s.t0) > 350) return false;
+  const horiz = Math.abs(dx) >= 140 && Math.abs(dx) >= Math.abs(dy) * 3, vert = Math.abs(dy) >= 160 && Math.abs(dy) >= Math.abs(dx) * 3;
+  if (!horiz && !vert) return false;
+  const off = Math.max(...s.pts.map(p => Math.abs((p.x - a.x) * dy - (p.y - a.y) * dx) / len));
+  if (off > len * 0.12) return false;
+  if (horiz) { if (window.cardGo) window.cardGo(dx < 0 ? 1 : -1); }
+  else if (dy < 0) { if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron'); }
+  else inkFinger(false);
+  return true;
 }
 function inkLoop() { if (!INK.raf && INK.g) INK.raf = requestAnimationFrame(inkDraw); }
 function inkDraw() {
@@ -9242,6 +9269,7 @@ function drawCard() {
       tg.setAttribute('aria-label', f === 'card' ? tr('발음 면으로 넘기기') : tr('단어 면으로 넘기기'));
     };
     FACE = setFace;
+    autoSay(x.vi);                            // 카드가 뜨면 소리 (2026-10-02) — 면을 바꿀 때는 다시 안 튼다
     const tapPair = () => pairPopup(x.vi, { kr: krShow(x), ko: x.ko });
 
     /* ── 단어 면 ──
@@ -9543,6 +9571,7 @@ $('#next').onclick = () => {
     prevB.disabled = L.i <= 0;
     nextB.disabled = L.i >= L.items.length - 1;
   };
+  window.cardGo = goto;                       // 손글씨 켠 채 가로로 휙 — inkFlick 이 부른다 (2026-10-02)
   if (prevB) prevB.onclick = () => goto(-1);
   if (nextB) nextB.onclick = () => goto(1);
   /* 세로로 밀면(스크롤) 넘어가지 않는다 (대표님 지시 2026-09-30: "위아래로 스와이프해서 이전·이후 이동하는 거 안 되게").
@@ -9555,6 +9584,24 @@ $('#next').onclick = () => {
     const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
     x0 = null;
     if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) goto(dx < 0 ? 1 : -1);   // 왼쪽으로 밀면 다음(+1), 오른쪽으로 밀면 이전(-1)
+  }, { passive: true });
+  /* 세로로 밀기 (대표님 지시 2026-10-02: "위에서 아래로 스와이프하면 필기 활성화 · 아래에서 위로 올리면 단어 면 ↔ 발음 면 — 너무 민감하지 않게").
+     세로 밀기는 원래 스크롤이라 **더 밀 데가 없을 때만** 받는다: 아래로는 맨 위에서 시작해 맨 위에서 끝날 때, 위로는 맨 아래(짧은 카드는 늘)에서
+     시작해 맨 아래에서 끝날 때. 그리고 세로 90px 넘게 · 가로의 2.5배 넘게 · 0.7초 안에. 긴 카드를 스크롤하다 끝에 닿는 것으로는 안 바뀐다 */
+  const atTop = () => (window.scrollY || 0) <= 1;
+  const atBottom = () => (window.scrollY || 0) + innerHeight >= document.documentElement.scrollHeight - 2;
+  let vs = null;
+  card.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1 || e.target.closest('input, textarea, .pbar')) { vs = null; return; }
+    vs = { x: e.touches[0].clientX, y: e.touches[0].clientY, t: performance.now(), top: atTop(), bot: atBottom() };
+  }, { passive: true });
+  card.addEventListener('touchend', e => {
+    const v = vs; vs = null;
+    if (!v || $('#learn').hidden || INK.finger) return;
+    const dx = e.changedTouches[0].clientX - v.x, dy = e.changedTouches[0].clientY - v.y;
+    if (Math.abs(dy) < 90 || Math.abs(dy) < Math.abs(dx) * 2.5 || performance.now() - v.t > 700) return;
+    if (dy > 0 && v.top && atTop()) { inkSetup(); inkFinger(true); }                                  // 위 → 아래: 손글씨 켜기
+    else if (dy < 0 && v.bot && atBottom() && FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron');  // 아래 → 위: 단어 면 ↔ 발음 면
   }, { passive: true });
   /* 컴퓨터에서도 넘어가야 한다 — 손가락만 받으면 마우스로는 아무 일도 안 일어난다.
      단추·입력칸 위에서 시작한 끌기는 무시한다(마이크 단추를 끌다가 넘어가면 안 된다). */
@@ -10237,6 +10284,7 @@ function drawQuiz() {
     const main = el('button', 'qmain qtap' + (q.w.sent ? ' sent' : ''), esc(koQ ? koShow(q.w.ko) : q.w.vi));
     main.type = 'button';
     if (!koQ) main.onclick = () => sound(q.w.vi);   // 뜻 물음에서는 아무 소리도 안 낸다 (한국어 읽어 주기 없음)
+    if (!koQ) autoSay(q.w.vi);                       // 베트남어가 보이는 문제는 뜰 때 소리 (2026-10-02). 뜻 보고 베트남어 고르기는 답한 뒤에만
     const qc = el('div', 'qcard');                   // 물음 카드 (캔버스 시안 2026-09-27)
     qc.append(body.querySelector('.q'), main);
     body.append(qc);
@@ -10257,6 +10305,14 @@ function drawQuiz() {
 function nextBtn(box, fn) {
   hideSkip();                                        // 답이 났으니 '넘기기'는 치운다
   if (typeof Q !== 'undefined' && Q && Q.blind && CURV === 'quiz') { setTimeout(fn, 0); return; }   // 실제 시험처럼 — 맞았는지 안 보여 주고 바로 다음 문제 (2026-09-30)
+  { const qw = Q && Q.list && Q.list[Q.i] && Q.list[Q.i].w;   // 문법 과 예문을 틀렸으면 그 과로 가는 단추 (2026-10-02, 문장·문법 테스트 합침)
+    if (qw && qw.gni != null && Q._lastOk === false && GRAM && GRAM.books[qw.gbi] && GRAM.books[qw.gbi].bai[qw.gni]) {
+      const x = GRAM.books[qw.gbi].bai[qw.gni], Qs = Q, tt = $('#title').textContent;
+      const g = el('button', 'ghost', tr('문법 카드') + ' · ' + esc(String(x.t).split(' — ')[0]) + ' ›');
+      g.type = 'button'; g.style.width = '100%'; g.style.marginTop = '14px';
+      g.onclick = () => { dive(() => { Q = Qs; Q.i++; drawQuiz(); show('quiz', tt, true); }); startGram(qw.gbi, qw.gni); };
+      box.append(g);
+    } }
   const b = el('button', 'primary big', '다음 ›');
   b.style.width = '100%'; b.style.marginTop = '14px';
   b.onclick = fn;
@@ -11562,6 +11618,7 @@ function optInfo(o, showsVi) {
 /* 얼마나 빨리 답했나 — 정답만 센다(틀린 건 고민 시간이 뒤섞인다).
    정답률이 같아도 느리면 아직 '자동'이 안 된 것이다. */
 function markSpeed(ok, mode) {
+  if (typeof Q !== 'undefined' && Q) Q._lastOk = !!ok;         // 문법 과 예문을 틀리면 nextBtn 이 그 과 단추를 띄운다 (2026-10-02)
   if (typeof Q !== 'undefined' && Q) Q._answered = true;       // 답이 났다 — 시험(blind)이면 이 뒤 효과음·소리·축하를 끈다
   bump('md', mode, ok);
   { const qw = (typeof Q !== 'undefined' && Q && Q.list && Q.list[Q.i]) ? Q.list[Q.i].w : null;   // 문장 문제 (분석 v2 '문장' 영역, 2026-09-30)
@@ -13127,6 +13184,22 @@ const viVoice = () => viVoices()[0] || null;
 
 /* 소리 한 군데로 — 녹음이 있으면 녹음, 없으면 기기 목소리.
    전에는 문제 화면이 play() 를 바로 불러서, 녹음 없는 단어은 **아무 소리도 안 났다**. */
+/* 소리 자동 재생 (대표님 2026-10-02: "단어카드를 넘기든, 단어 테스트를 넘기든 단어가 화면에 보이면 자동으로 소리 재생") —
+   단어 카드가 뜰 때 · 베트남어를 보여 주는 문제가 뜰 때. 한국어를 보고 베트남어를 맞히는 문제는 답을 들려주는 셈이라 안 튼다(답한 뒤에는 원래대로 소리가 난다).
+   머리띠 스피커 단추로 끈다(수업 중·지하철). 기본은 켜짐 */
+const autoOn = () => S.autoSnd !== false;
+function autoSndDraw() {
+  const b = $('#autoSnd'); if (!b) return;
+  const on = autoOn();
+  b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/>' + (on ? '<path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/>' : '<path d="m17 9 5 6M22 9l-5 6"/>') + '</svg>';
+  b.classList.toggle('off', !on);
+  b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  b.title = tr(on ? '소리 자동 재생 켜짐 — 누르면 끔' : '소리 자동 재생 꺼짐 — 누르면 켬');
+}
+function autoSay(vi) {
+  if (!autoOn() || !vi) return;
+  const k = recKey(vi); k ? play(k, false) : speakVi(vi);
+}
 function sound(t) {
   if (typeof Q !== 'undefined' && Q && Q.blind && Q._answered && CURV === 'quiz') return;   // 시험 중 답한 뒤 정답 소리를 안 들려준다
   if (AIDX[t]) { play(t, false); return; }
@@ -13370,6 +13443,7 @@ async function bugFlush() {
 $('#goBug').onclick = () => bugReport();
 addEventListener('load', () => setTimeout(bugFlush, 4000));
 $('#face').innerHTML = '<span data-f="card">' + tr('단어') + '</span><span data-f="pron">' + tr('발음') + '</span>';
+$('#autoSnd').onclick = () => { S.autoSnd = !autoOn(); save(); autoSndDraw(); if (autoOn() && CURV === 'learn' && L && L.items && L.items[L.i] && L.items[L.i].k === 'word') autoSay(L.items[L.i].d.vi); };
 $('#face').onclick = () => { if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron'); };
 /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 홈은 아래 탭의 [홈]이 맡는다 (renderHome). */
 
