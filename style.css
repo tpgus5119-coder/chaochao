@@ -2967,3 +2967,8 @@ body.inking header, body.inking .pagearrow{z-index:47}
 body.inking #learn .pager{position:relative; z-index:47}
 #autoSnd svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
 #autoSnd.off{color:var(--dim)}
+/* 사전 로마자 검색 — [베트남 단어] [영어 뜻] 단추 (2026-10-02) */
+.dictout .dtabs{display:flex; gap:8px; margin:4px 0 6px}
+.dictout .dtab{flex:1; padding:9px 8px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--fg); font-weight:700; font-size:14px}
+.dictout .dtab small{font-weight:500; opacity:.7; margin-left:4px}
+.dictout .dtab.on{background:var(--accent); border-color:var(--accent); color:var(--accent-fg, #fff)}

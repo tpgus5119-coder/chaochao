@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
+  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -8170,6 +8170,30 @@ let DICT = null;
    가운데 그 낱말이 **낱말로** 쓰인 것을 보인다. 문장을 사전 표제어로 왼쪽부터 가장 긴 것부터 잘라(an toàn 은 한 덩어리) 그 조각이 찾는 낱말과 같을 때만 —
    an 을 찾을 때 an toàn 속 an 은 안 센다. 새 문장을 만들지 않는다(지어내지 않는다). 처음 열 때 한 번 만든다 */
 let APPEX = null;
+/* 사전 '문장' 칸 (2026-10-02) — 앱 예문·교재 원문(appExIndex) + 사전 예문(DEX). 낱말 단위로 찾으려고 모자·성조 뗀 글을 한 번만 만들어 둔다 */
+let DSENT = null, DTAB = 'vi', DTABQ = '';
+function dictSentPool() {
+  if (DSENT && DSENT.dex === !!DEX) return DSENT.list;
+  const list = [], seen = new Set();
+  const put = (v, k) => { v = String(v || '').trim(); k = String(k || '').trim(); const lk = v.toLowerCase(); if (!v || !k || seen.has(lk)) return; seen.add(lk); list.push({ vi: v, ko: k, b: ' ' + dictBare(v) + ' ', n: v.split(/\s+/).length }); };
+  appExIndex().list.forEach(m => put(m.vi, m.ko));
+  if (DEX) Object.values(DEX).forEach(a => a.forEach(p => put(p[0], p[1])));
+  DSENT = { dex: !!DEX, list };
+  return list;
+}
+/* keys: 모자 뗀 낱말(구)들 — 그 가운데 하나라도 낱말 단위로 든 문장. 친 말 그 자체인 문장 먼저, 그다음 짧은 문장. 20개까지 */
+function dictSents(keys) {
+  keys = keys.filter(Boolean); if (!keys.length) return [];
+  const hit = [];
+  for (const m of dictSentPool()) { if (keys.some(k => m.b.includes(' ' + k + ' '))) hit.push(m); }
+  hit.sort((a, b) => (keys.includes(a.b.trim()) ? 0 : 1) - (keys.includes(b.b.trim()) ? 0 : 1) || a.n - b.n);
+  return hit.slice(0, 20).map(m => ({ vi: m.vi, ko: m.ko, sent: 1 }));
+}
+function dictSentsKo(q) {
+  const hit = dictSentPool().filter(m => m.ko.toLowerCase().includes(q));
+  hit.sort((a, b) => a.n - b.n);
+  return hit.slice(0, 20).map(m => ({ vi: m.vi, ko: m.ko, sent: 1 }));
+}
 function appExIndex() {
   if (APPEX) return APPEX;
   const heads = new Set(dictBuild().map(x => x.vi.toLowerCase()));
@@ -8617,28 +8641,28 @@ function dictEntry(q0) {
       const pronFirst = pron.length && dictKrKeys(pron[0]).includes(qp) && !k2v.length && !mean.some(x => phrs(x.ko).includes(qk));
       const S1 = [tr('뜻으로 찾은 낱말'), mean], S2 = [tr('발음으로 찾은 낱말'), pron];
       secs.push(...(pronFirst ? [S2, S1] : [S1, S2]));
+      if (!num && qp.length >= 2) secs.push([tr('문장'), dictSentsKo(qk)]);   // 단어 뒤에 문장 — 한국어 뜻에 그 말이 든 문장 (2026-10-02)
     } else {
       const vi = d.filter(viHit).sort(cmp);
       const inVi = new Set(vi.map(x => x.vi));
       const enRank = x => { const t = dictEnTerms(x), i2 = t.indexOf(qk); return i2 < 0 ? 99 : i2; };   // 그 말 그대로인 뜻이 앞 뜻일수록 먼저
       const en = enq ? d.filter(x => !inVi.has(x.vi) && enHit(x)).sort((a, b2) => enRank(a) - enRank(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || a.vi.length - b2.vi.length) : [];
-      /* 사전에 없는 구(trời mưa) — 문장 속에서 찾아 그 문장의 한국어를 보인다 (대표님 2026-10-01 "사전에 없더라도 그 말로 검색하면 뜻이 나오면 안 됨?").
-         번역기를 쓰지 않는다 — 앱 예문·교재 원문·사전 예문 가운데 그 구가 낱말 단위로 들어 있는 문장만(성조 없이 쳐도 됨). 그 구 자체가 문장이면 맨 위 */
-      const nq = qb.split(' ').length;
-      if (nq >= 2 && !vi.some(x => x.b === qb)) {
-        const X = appExIndex(), pool = [...X.list.map(m => [m.vi, m.ko])];
-        if (DEX) Object.values(DEX).forEach(a => a.forEach(p => pool.push(p)));
-        const seenS = new Set(), hitS = [];
-        for (const [v, k] of pool) {
-          const b = ' ' + dictBare(v) + ' ';
-          if (!k || !b.includes(' ' + qb + ' ') || seenS.has(v.toLowerCase())) continue;
-          seenS.add(v.toLowerCase()); hitS.push({ vi: v, ko: k, n: b.trim().split(' ').length });
-          if (hitS.length > 200) break;
-        }
-        hitS.sort((a, b2) => (a.n === nq ? 0 : 1) - (b2.n === nq ? 0 : 1) || a.n - b2.n);
-        if (hitS.length) secs.push([tr('문장 속에서'), hitS.slice(0, 20).map(m => ({ vi: m.vi, ko: m.ko, sent: 1 }))]);
-      }
-      secs.push([tr('베트남어 낱말'), vi], [tr('영어 뜻으로 찾은 낱말'), en]);
+      /* (대표님 2026-10-02) 로마자는 베트남어와 영어가 같이 쓰니 칸 대신 **단추 둘**: [베트남 단어] [영어 뜻] — 고른 쪽만 보인다.
+         기본은 베트남 단어. 베트남어 쪽에 아무것도 없고 영어 뜻만 있으면 저절로 영어 뜻. 새로 칠 때마다 다시 정한다.
+         단어를 다 보인 **뒤에** 문장(앱 예문·교재 원문·사전 예문): 베트남 단어 쪽은 친 말이 낱말 단위로 든 문장,
+         영어 뜻 쪽은 그 영어 뜻으로 찾은 낱말(앞 5개)이 든 문장. 사전에 없는 구(trời mưa)도 문장으로 뜻을 본다 */
+      const viS = dictSents([qb]);
+      const enS = en.length ? dictSents(en.slice(0, 5).map(x => dictBare(x.vi))) : [];
+      if (DTABQ !== qk) { DTABQ = qk; DTAB = (vi.length || viS.length) ? 'vi' : en.length ? 'en' : 'vi'; }
+      const tabs = el('div', 'dtabs');
+      [['vi', tr('베트남 단어'), vi.length], ['en', tr('영어 뜻'), en.length]].forEach(([k, nm, n]) => {
+        const t = el('button', 'dtab' + (DTAB === k ? ' on' : ''), esc(nm) + ' <small>' + n + '</small>'); t.type = 'button';
+        t.onclick = () => { DTAB = k; draw(); };
+        tabs.append(t);
+      });
+      out.append(tabs);
+      if (DTAB === 'en') secs.push([tr('영어 뜻으로 찾은 낱말'), en], [tr('문장'), enS]);
+      else secs.push([tr('베트남어 낱말'), vi], [tr('문장'), viS]);
     }
     const live = secs.filter(s2 => s2[1].length);
     if (!live.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
