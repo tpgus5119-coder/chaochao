@@ -3184,6 +3184,46 @@ const gramName = k => /^\d+$/.test(k) ? (k + tr('과') + (GRAM ? ' ' + ((GRAM.bo
 const TN_NM = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감', 'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
 const tnName = k => (TN_NM[k] || k) + ' ' + toneArrow(k);
 const stoneName = k => ({ flat: '평평·내려감·짧고무겁게', rise: '올라감', dip: '내렸다 올림' })[k] || k;   // pitch.js 세 무리 (ngang·huyền·nặng / sắc / hỏi·ngã)
+/* ── 시안 A·B (대표님 2026-10-02 "a,b") ──
+   A 성장: 이 기간 문제 정답률(+앞 기간 대비) · 12주 주별 정답률 선 · 외운 낱말(+이 기간에 늘어난 수) · 최근 7일 공부한 날 · 약한 곳 하나와 바로 가기.
+   B 영역 비교: 다섯 영역 오각형(이 기간 vs 앞 기간) — 그 밑 영역별 막대는 원래 목록. 10문제 미만인 영역은 오각형에서 0 으로 두고 점선 표시 */
+function anaSummary(host, ps, mode) {
+  const box = el('div', 'anasum');
+  const c = pctOf(ps.cur, 'qOk', 'qAll'), p = ps.prev ? pctOf(ps.prev, 'qOk', 'qAll') : null;
+  const top = el('div', 'anatop');
+  const lab = mode === 'all' ? tr('지금까지 문제 정답률') : tr('최근 N 문제 정답률').replace('N', tr(ps.label));
+  let delta = '';
+  if (p && p.n >= 5 && c.n >= 5 && c.pct !== null && p.pct !== null) { const d = c.pct - p.pct; delta = ' <span class="anadelta ' + (d > 0 ? 'up' : d < 0 ? 'down' : '') + '">' + (d > 0 ? '▲ ' : d < 0 ? '▼ ' : '± ') + Math.abs(d) + '</span>'; }
+  top.append(el('div', 'analab', esc(lab)), el('div', 'anabig', (c.pct === null ? tr('아직') : c.pct + '%') + delta + (c.n ? ' <small>' + c.ok + '/' + c.n + '</small>' : '')));
+  box.append(top);
+  const ser = weekSeries('qOk', 'qAll');
+  if (ser.some(v => v != null)) { const sp = sparkline(ser, 300, 54); sp.classList.add('anabigspark'); box.append(sp, el('div', 'anaspklab', '<span>' + tr('12주 전') + '</span><span>' + tr('이번 주') + '</span>')); }
+  const memo = memoCount();
+  let grow = '';
+  if (ps.days) { const day = (S.stats && S.stats.day) || {}, start = dayKeys(ps.days + 1).pop(), keys = Object.keys(day).filter(k => k <= start && day[k].memo2 != null).sort(); if (keys.length) { const g = memo - day[keys[keys.length - 1]].memo2; if (g) grow = ' <span class="anadelta ' + (g > 0 ? 'up' : 'down') + '">' + (g > 0 ? '+' : '') + g + '</span>'; } }
+  box.append(el('div', 'anamemo', '<span>' + tr('외운 낱말') + '</span><b>' + memo.toLocaleString('ko-KR') + '</b>' + grow));
+  const dots = el('div', 'anadays'); const ks = dayKeys(7).reverse();
+  ks.forEach(k => { const on = !!(S.act && S.act[k]); const d = el('i', on ? 'on' : ''); d.title = k.slice(5).replace('-', '/'); dots.append(d); });
+  box.append(el('div', 'analab', tr('최근 7일 공부한 날') + ' ' + ks.filter(k => S.act && S.act[k]).length + '/7'), dots);
+  host.append(box);
+}
+function anaRadar(host, cur, prev) {
+  const ax = SUBJ.map(x => ({ k: x.k, c: pctOf(cur, x.ok, x.all), p: prev ? pctOf(prev, x.ok, x.all) : null }));
+  if (ax.filter(a => a.c.n >= 1).length < 2) return;                 // 두 영역 넘게 풀어야 모양이 된다
+  const W = 260, H = 210, cx = 130, cy = 112, R = 78, n = ax.length;
+  const pt = (i, v) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [cx + Math.cos(a) * R * v, cy + Math.sin(a) * R * v]; };
+  const poly = vals => vals.map((v, i) => pt(i, v).map(z => z.toFixed(1)).join(',')).join(' ');
+  const grid = [1, .5].map(f => `<polygon points="${poly(ax.map(() => f))}" fill="none" stroke="var(--line)" stroke-width="${f === 1 ? 1 : .7}"/>`).join('');
+  const spokes = ax.map((a, i) => { const [x, y] = pt(i, 1); return `<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="var(--line)" stroke-width=".6"/>`; }).join('');
+  const prevP = prev && ax.some(a => a.p && a.p.n) ? `<polygon points="${poly(ax.map(a => a.p && a.p.pct != null ? a.p.pct / 100 : 0))}" fill="var(--dim)" fill-opacity=".12" stroke="var(--dim)" stroke-width="1.2" stroke-dasharray="3 3"/>` : '';
+  const curP = `<polygon points="${poly(ax.map(a => a.c.pct != null ? a.c.pct / 100 : 0))}" fill="var(--ok, #2a9d5c)" fill-opacity=".22" stroke="var(--ok, #2a9d5c)" stroke-width="2"/>`;
+  const labels = ax.map((a, i) => { const [x, y] = pt(i, 1.2); const anc = Math.abs(x - cx) < 5 ? 'middle' : x > cx ? 'start' : 'end';
+    return `<text x="${x.toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="${anc}" font-size="12" fill="var(--fg)">${esc(tr(a.k))}${a.c.pct != null ? ' ' + a.c.pct : ''}</text>`; }).join('');
+  const box = el('div', 'anaradar');
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(tr('다섯 영역 정답률'))}">${grid}${spokes}${prevP}${curP}${labels}</svg>` +
+    `<div class="analeg"><span><i class="cur"></i>${tr('이번 기간')}</span>${prevP ? `<span><i class="prev"></i>${tr('앞 기간')}</span>` : ''}</div>`;
+  host.append(box);
+}
 function renderAnalysis(host, mode) {
   host.textContent = '';
   const tab = el('div', 'rolepick');
@@ -3192,8 +3232,10 @@ function renderAnalysis(host, mode) {
   const ps = periodStats(mode), cur = ps.cur, prev = ps.prev;
   const firstDay = Object.keys((S.stats && S.stats.day) || {}).sort()[0];
   if (mode !== 'all') host.append(el('p', 'dimtxt', firstDay ? tr('날짜별 기록은 N부터 쌓입니다 — 그 전 것은 전체에만 있습니다').replace('N', firstDay.slice(5).replace('-', '/')) : tr('날짜별 기록이 아직 없습니다 — 오늘부터 쌓입니다')));
+  anaSummary(host, ps, mode);                               // 시안 A 성장 (2026-10-02)
   const avg = {};                                           // 다른 사람들의 평균 (받아 오면 채운다)
   host.append(el('p', 'anasec', tr('영역별') + ' <span>' + (ANA_DETAIL ? tr('누르면 자세히 · 작은 선은 12주 흐름') : tr('작은 선은 12주 흐름')) + '</span>'));
+  anaRadar(host, cur, prev);                                // 시안 B 영역 비교 오각형 (2026-10-02)
   const list = el('div', 'analist'); host.append(list);
   const detail = (sb, x) => {
     const d = el('div', 'anadetail');
@@ -3883,9 +3925,11 @@ const SUBJ = [
   { k: '쓰기', ok: 'spellOk', all: 'spellAll', tip: '받아쓰기·타이핑으로 철자 맞히기' },
   { k: '암기', ok: 'qOk', all: 'qAll', tip: '배운 것이 얼마나 남아 있는가 (전체 정답률)' },
 ];
+/* 외운 낱말 = 세 복습 창고(일상 srs · 실전 ssrs · 교재·선배·22기 bsrs)에서 2단계 넘은 것 (2026-10-02: 전에는 일상 창고만 세서 교재로 공부하면 0) */
+const memoCount = () => ['srs', 'ssrs', 'bsrs'].reduce((a, k) => a + Object.values(S[k] || {}).filter(v => v.lv >= 2).length, 0);
 function snapshot() {
   const t = S.stats || {};
-  const o = { memo: Object.values(S.srs).filter(v => v.lv >= 2).length,
+  const o = { memo: memoCount(),
               days: Object.keys(S.act).length, drill: t.drill || 0,
               sets: Object.keys(S.done).filter(k => +k >= 1).length, said: t.said || 0 };
   SUBJ.forEach(x => { o[x.ok] = t[x.ok] || 0; o[x.all] = t[x.all] || 0; });
@@ -11864,7 +11908,7 @@ function dayTally() {
     if (dv > 0) { if (!b) { const day = t.day || (t.day = {}), d = ymd(); b = day[d] || (day[d] = {}); } b[k] = (b[k] || 0) + dv; }
   }
   t._last = cur;
-  if (b) { b.memo = Object.values(S.srs || {}).filter(v => v.lv >= 2).length; b.learned = Object.keys(S.srs || {}).length; }
+  if (b) { b.memo = Object.values(S.srs || {}).filter(v => v.lv >= 2).length; b.learned = Object.keys(S.srs || {}).length; b.memo2 = memoCount(); }   // memo2: 세 창고 다 (2026-10-02)
 }
 /* 채점은 잘게 나눌수록 분석이 깊어진다. 다만 한 문제에 조회는 한 번만 한다 —
    allWords()가 1000개짜리 배열을 훑기 때문에 문제마다 여러 번 부르면 폰이 느려진다. */
