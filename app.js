@@ -1797,12 +1797,14 @@ async function aiListen(text, blobUrl, box) {
       verdict(box, 0, null, '발음', '소리를 견주는 중…');
       const r = await soundP;
       if (r && r.ok !== null) {
-        S.stats.pronAll = (S.stats.pronAll || 0) + 1; if (r.ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1; if (!r.ok && r.heard) noteLetters(text, r.heard, 'ltrs'); save();
+        S.stats.pronAll = (S.stats.pronAll || 0) + 1; if (r.ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1; if (!r.ok && r.heard) noteLetters(text, r.heard, 'ltrs');
+        bump('pj', 'snd', r.ok); if (CURV !== 'quiz') bump('md', 'card', r.ok); save();   // 판정 방식별 · 카드에서 한 말하기 (2026-10-02)
         verdict(box, 0, r.ok, '발음', (r.ok ? '알아들었습니다' : esc(r.heard) + ' 처럼 들립니다 (목표 ' + esc(text) + ')') + ' <small>(소리 비교)</small>');
         heardLine(box, { letters: r.heard || (r.ok ? text : '') });
         if (!r.ok) box.append(el('div', 'fixtip', '↳ ' + sayTip(text, r.heard)));
         return;
       }
+      bump('pj', 'none', false); save();                // 폰도 소리 비교도 판정 못 함 — 점수에는 안 넣고 횟수만 (2026-10-02)
       verdict(box, 0, null, '발음', r && r.why ? r.why : asrFailText()); return;
     }
     const { heard, ok, pick } = judgeLocalHeard(text, REC.localHeard);
@@ -1811,6 +1813,7 @@ async function aiListen(text, blobUrl, box) {
       S.stats.pronAll = (S.stats.pronAll || 0) + 1;
       if (ok) S.stats.pronOk = (S.stats.pronOk || 0) + 1;
       if (!ok && heard) noteLetters(text, heard, 'ltrs');          // 말하기 글자별 (2026-09-30 밤)
+      bump('pj', 'asr', ok); if (CURV !== 'quiz') bump('md', 'card', ok);   // 판정 방식별 · 카드에서 한 말하기 (2026-10-02)
       save();
     }
     // 받아쓰기일 때는 **성조 부호를 떼고** 보여준다. AI는 실제로 낸 높낮이가 아니라
@@ -2461,6 +2464,10 @@ async function showTone(text, blobUrl, box, hostBox) {
   const j = want && PITCH.judge(mine, want);
   { const c = j && j.v !== 'unsure' ? j.fam : null; if (c && text.trim().split(/\s+/).length === 1) sibLoad().then(() => heardLine(host, { fam: c })); }
   if (!j) { verdict(host, 1, null, '높낮이', '이번엔 높낮이를 못 읽었습니다'); return; }
+  /* 성조 판정을 분석에 쌓는다 (2026-10-02 대표님 "말하기 세부 — 소리 인식을 잘 못하던데 방해 아님?") — 폰 음성 인식과 상관없이 앱이 직접 잰 높낮이.
+     목표 무리(flat·rise·dip)마다 맞음/다르게 들림. '못 가리겠음'은 점수에 안 넣고 stone_u 에 따로 센다 */
+  if (j.v === 'unsure') bump('stone_u', want, false); else bump('stone', want, j.v === 'ok');
+  save();
   if (j.v === 'ok') {
     verdict(host, 1, true, '높낮이', `${j.ko} — 모양이 맞습니다`);
   } else if (j.v === 'miss') {
@@ -3159,7 +3166,7 @@ function sparkline(series, w, h) {
   pts.forEach(p => { if (p) { x.beginPath(); x.arc(p[0], p[1], 2.2, 0, 7); x.fill(); } });
   return cv;
 }
-const MODE_NM = { write_ko: '뜻 보고 베트남어 쓰기', listen: '듣고 뜻 고르기', listen_ko: '뜻 듣고 낱말 고르기', tone: '성조 부호 고르기', pic_tf: '그림 맞다·틀리다', pic4: '그림 고르기', read: '읽고 뜻 고르기', read_ko: '뜻 보고 낱말 고르기', match: '짝 맞추기', cloze: '빈칸', tf: '문장 맞다·틀리다', err: '틀린 글자 찾기', gpat: '문법 고르기', gcloze: '문법 빈칸', type: '타이핑', dictation: '받아쓰기', hand: '손글씨', dict: '글자 조각 만들기', say: '말하기', say_ko: '뜻 듣고 말하기', shadow: '따라 말하기', say_pic: '그림 보고 말하기', sayself: '말하기(스스로 판정)', recall: '말하기', puzzle: '문장 조각', puzzle_ko: '뜻 듣고 문장 조각', puzzle_vi: '문장 듣고 조각' };
+const MODE_NM = { card: '카드에서 말하기', write_ko: '뜻 보고 베트남어 쓰기', listen: '듣고 뜻 고르기', listen_ko: '뜻 듣고 낱말 고르기', tone: '성조 부호 고르기', pic_tf: '그림 맞다·틀리다', pic4: '그림 고르기', read: '읽고 뜻 고르기', read_ko: '뜻 보고 낱말 고르기', match: '짝 맞추기', cloze: '빈칸', tf: '문장 맞다·틀리다', err: '틀린 글자 찾기', gpat: '문법 고르기', gcloze: '문법 빈칸', type: '타이핑', dictation: '받아쓰기', hand: '손글씨', dict: '글자 조각 만들기', say: '말하기', say_ko: '뜻 듣고 말하기', shadow: '따라 말하기', say_pic: '그림 보고 말하기', sayself: '말하기(스스로 판정)', recall: '말하기', puzzle: '문장 조각', puzzle_ko: '뜻 듣고 문장 조각', puzzle_vi: '문장 듣고 조각' };
 const SUBJ_KEY = { '말하기': 'say', '듣기': 'ear', '읽기': 'read', '쓰기': 'spell', '암기': 'memo' };
 const SUBJ_SKILL = { say: 'say', ear: 'listen', read: 'read', spell: 'write' };
 /* 상자(box)의 갈래별 줄 — o 는 평평한 열쇠('tn_ear:ngang:ok')의 합. keep(열쇠)로 고르고 map(열쇠)로 이름을 붙인다 */
@@ -3174,6 +3181,7 @@ function boxRows(o, box, map, keep) {
 const gramName = k => /^\d+$/.test(k) ? (k + tr('과') + (GRAM ? ' ' + ((GRAM.books[0].bai.find(x => x.no === +k) || {}).t || '').split(' — ')[0] : '')) : String(k).split(' — ')[0];
 const TN_NM = { 'ngang': '평평', 'huyền': '내려감', 'sắc': '올라감', 'hỏi': '내렸다올림', 'ngã': '끊었다올림', 'nặng': '짧고무겁게' };
 const tnName = k => (TN_NM[k] || k) + ' ' + toneArrow(k);
+const stoneName = k => ({ flat: '평평·내려감·짧고무겁게', rise: '올라감', dip: '내렸다 올림' })[k] || k;   // pitch.js 세 무리 (ngang·huyền·nặng / sắc / hỏi·ngã)
 function renderAnalysis(host, mode) {
   host.textContent = '';
   const tab = el('div', 'rolepick');
@@ -3193,7 +3201,15 @@ function renderAnalysis(host, mode) {
       d.append(el('p', 'anasec', esc(title))); d.append(el('p', 'anachips', rows.map(r => '<span>' + esc(r[0]) + ' <b>' + r[2] + '</b></span>').join(''))); if (note) d.append(el('p', 'dimtxt', esc(note)));
     };
     if (sb !== 'memo') put(tr('문제 유형별'), boxRows(cur, 'md', k => MODE_NM[k] || k, k => MODE_SUBJ[k] === sb));
-    put(tr('성조별'), boxRows(cur, 'tn_' + sb, tnName), tr('낱말 첫 음절의 성조로 셉니다'));
+    if (sb === 'say') {
+      /* 말하기 세부 (2026-10-02): 성조는 폰 음성 인식이 아니라 앱이 잰 높낮이 곡선 판정으로. 소리로 실제 갈리는 세 무리로만 가린다(pitch.js — 원어민 실측 87%).
+         예전 '성조별'은 '폰이 낱말을 알아들었나'를 첫 음절 성조로 나눈 것이라 성조 점수가 아니었다 */
+      const und = boxRows(cur, 'stone_u', k => k).reduce((a, r) => a + r[2], 0);
+      put(tr('성조 — 높낮이 곡선 판정'), boxRows(cur, 'stone', stoneName), tr('원어민 본보기와 곡선 모양을 견줍니다. 평평·내려감·짧고무겁게는 소리로 거의 같아 한 무리로 봅니다.') + (und ? ' ' + tr('못 가리겠다고 한 N번은 넣지 않았습니다.').replace('N', und) : ''));
+      const pj = boxRows(cur, 'pj', k => k === 'asr' ? tr('폰 음성 인식') : k === 'snd' ? tr('소리 비교') : k).filter(r => r[6] !== 'none');
+      const none = boxRows(cur, 'pj', k => k).filter(r => r[6] === 'none').reduce((a, r) => a + r[2], 0);
+      put(tr('낱말을 알아들었나 — 판정 방식별'), pj, tr('폰 음성 인식은 짧은 낱말 하나를 잘 못 알아듣기도 합니다 — 틀림이 꼭 발음 탓은 아닙니다.') + (none ? ' ' + tr('둘 다 판정 못 한 N번은 점수에 넣지 않았습니다.').replace('N', none) : ''));
+    } else put(tr('성조별'), boxRows(cur, 'tn_' + sb, tnName), tr('낱말 첫 음절의 성조로 셉니다'));
     if (sb === 'spell') { put(tr('오답의 종류'), boxRows(cur, 'serr')); chips(tr('자주 틀리는 글자'), 'ltrw', tr('음절마다 처음 어긋난 글자 · 횟수')); }
     if (sb === 'say') chips(tr('잘 못 알아듣는 글자'), 'ltrs', tr('폰이 알아들은 것과 목표를 견줘 처음 어긋난 글자 · 횟수'));
     if (sb === 'ear') {
@@ -3294,14 +3310,14 @@ function renderRx(host, cur, prev) {
     '문장': ['테스트의 <b>문장</b>을 하루 한 판 — 낱말을 알아도 차례(어순)를 모르면 문장이 안 됩니다.',
              '틀린 문장은 <b>쓰인 문법 카드</b>를 다시 보세요 — 단어 시험 결과에서 바로 갈 수 있습니다.'],
     '말하기': ['단어 카드의 <b>말하기</b>를 누른 뒤 원어민 곡선과 겹쳐 보세요.',
-               '<b>AI가 듣기</b>를 눌러 알아듣는 발음인지 확인하세요 — 안 알아들으면 조금 크게, 또박또박.'],
+               '말한 뒤 나오는 <b>높낮이</b> 판정을 보세요 — 다르게 들린다고 하면 원어민 곡선과 겹쳐 듣기로 비교하세요.'],
   };
   lines.unshift(worst.pct >= 80 ? `<b>모두 좋습니다.</b> 더 올릴 곳 — <b>${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)` : `<b>약한 곳 — ${esc(worst.name)} ${worst.pct}%</b> (${worst.n}문제)`,
                 ...(RX[worst.name] || []).map(t => '· ' + t));
   if (worst.sb === 'sent') btn(tr('문장 연습'), () => testSents());
   else if (SUBJ_SKILL[worst.sb]) btn(tr('N 훈련 20문제').replace('N', worst.name), () => { const ws = pool20(); if (ws.length) startQuiz(ws, null, 20, true, { skill: SUBJ_SKILL[worst.sb] }); else popup(tr('아직 배운 단어가 없습니다')); });
   else btn(tr('복습 시작'), () => startQuiz(null, null));
-  const tn = boxRows(cur, 'tn_' + worst.sb, tnName).filter(t => t[2] >= NEED);
+  const tn = (worst.sb === 'say' ? boxRows(cur, 'stone', stoneName) : boxRows(cur, 'tn_' + worst.sb, tnName)).filter(t => t[2] >= NEED);   // 말하기는 높낮이 곡선 판정 (2026-10-02)
   if (tn.length && tn[0][1] < 70) { lines.push(`· ${esc(worst.name)}${tr('에서 성조는')} <b>${esc(tn[0][0])}</b>${tr('이')} ${tn[0][1]}%${tr('로 가장 약합니다 — 기본기 성조에서 그 소리만 골라 들어 보세요.')}`); btn(tr('성조 훈련'), () => startTone()); }
   const gw = boxRows(cur, 'gr', gramName).filter(r => r[2] >= 5 && r[1] < 70);   // 문장 속에서 약한 문법 (5문제 넘은 것만)
   if (gw.length) {
@@ -3859,7 +3875,7 @@ const weekKey = t => { const d = t ? new Date(t) : new Date();
 /* 네 가지 힘을 말하기 → 듣기 → 읽기 → 쓰기 순으로 본다(입 → 귀 → 눈 → 손).
    맨 아래 '암기'는 넷을 통틀어 "배운 것이 실제로 남아 있는가"만 따로 센다. */
 const SUBJ = [
-  { k: '말하기', ok: 'pronOk', all: 'pronAll', tip: '내 발음을 AI가 알아듣는 비율' },
+  { k: '말하기', ok: 'pronOk', all: 'pronAll', tip: '내가 말한 낱말을 폰(음성 인식·소리 비교)이 알아들은 비율 — 성조는 세부의 높낮이 판정' },
   { k: '듣기', ok: 'earOk', all: 'earAll', tip: '소리만 듣고 뜻·성조를 가리기' },
   { k: '읽기', ok: 'readOk', all: 'readAll', tip: '글자를 보고 뜻을 바로 떠올리기' },
   { k: '쓰기', ok: 'spellOk', all: 'spellAll', tip: '받아쓰기·타이핑으로 철자 맞히기' },
@@ -11803,7 +11819,7 @@ function bump(box, key, ok) {
   c.all++; if (ok) c.ok++;
 }
 /* ── 문제 유형 → 영역 (성조별·글자별을 영역마다 따로 세려고, 2026-09-30 밤) ── */
-const MODE_SUBJ = { write_ko: 'spell', say: 'say', say_ko: 'say', shadow: 'say', say_pic: 'say', recall: 'say', sayself: 'say',
+const MODE_SUBJ = { card: 'say', write_ko: 'spell', say: 'say', say_ko: 'say', shadow: 'say', say_pic: 'say', recall: 'say', sayself: 'say',
                     listen: 'ear', listen_ko: 'ear', tone: 'ear', pic_tf: 'ear', pic4: 'ear',
                     read: 'read', read_ko: 'read', match: 'read', cloze: 'read', tf: 'read', err: 'read', gpat: 'read', gcloze: 'read', puzzle: 'read', puzzle_ko: 'read', puzzle_vi: 'read',
                     type: 'spell', dictation: 'spell', hand: 'spell', dict: 'spell' };
@@ -11825,7 +11841,7 @@ function noteLetters(want, got, box) {
    save() 한 곳에서만 잰다 — 계수기가 30군데 흩어져 있어 하나씩 손대면 빠뜨린다. 다른 기기 진도를 받아 합친 직후에는 늘어난 것이 내가 오늘 한 게 아니므로
    tallyReset() 으로 기준만 새로 잡는다. 그날의 외운 단어 수(memo)·배운 단어 수(learned)는 상태값이라 그대로 적는다.
    하루 30~60개 숫자(0.5~1KB) → 1년 300KB. 기기끼리는 날짜별 열쇠마다 큰 쪽을 취한다(mergeProg deep). */
-const TALLY_BOX = ['tn', 'md', 'lvt', 'serr', 'od', 'ltrw', 'ltrs', 'tn_say', 'tn_ear', 'tn_read', 'tn_spell', 'tn_memo', 'smd', 'gr'];
+const TALLY_BOX = ['tn', 'md', 'lvt', 'serr', 'od', 'ltrw', 'ltrs', 'tn_say', 'tn_ear', 'tn_read', 'tn_spell', 'tn_memo', 'smd', 'gr', 'stone', 'stone_u', 'pj'];   // stone·stone_u·pj: 말하기 세부 (2026-10-02)
 function tallyCur() {
   const t = S.stats || {}, cur = {};
   SUBJ.forEach(x => { cur[x.ok] = t[x.ok] || 0; cur[x.all] = t[x.all] || 0; });
