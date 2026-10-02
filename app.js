@@ -1148,7 +1148,12 @@ function dictGloss(w) {
   const i = e.p.findIndex(p => cap ? p === '고유' : p !== '고유');
   return i < 0 ? '' : e.s[i];
 }
+/* 사전(위키) 유의어·반의어를 '헷갈리는 짝'에 보이는 것은 **껐다** (2026-10-02). 위키의 {{syn}}·{{ant}} 는 뜻 하나에 붙는데 우리 자료(src.json y·a)는
+   표제어 단위로 합쳐 받아, 다른 뜻·다른 낱말(동형어)의 짝이 섞였다 — chim(새) 유의어에 비속어, ông(할아버지) 유의어에 vì(왜냐하면), tủ(장)↔phủ(덮다).
+   앱 낱말 3,738 가운데 이 자료로 짝이 더해지던 146개를 다 보니 대부분 틀렸다. 뜻별로 다시 뽑아 검수하기 전까지는 검수된 짝(data/sib.json)만 보인다 */
+const DICT_REL_ON = false;
 function dictRel(vi) {
+  if (!DICT_REL_ON) return null;
   const e = typeof DFULL !== 'undefined' && DFULL && DFULL[String(vi).toLowerCase().trim()];
   if (!e || !(e.y || e.a)) return null;
   const sr = SIB && sibRel(vi), have = new Set([...((sr && sr.s) || []), ...((sr && sr.a) || [])].map(w => w.toLowerCase()));
