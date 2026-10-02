@@ -518,7 +518,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '혀 투명': 'Lưỡi trong suốt', '위아래 벌림': 'Mở dọc', '좌우 벌림': 'Mở ngang', '오므림': 'Tròn môi', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
+  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '관련': 'Liên quan', '혀 투명': 'Lưỡi trong suốt', '위아래 벌림': 'Mở dọc', '좌우 벌림': 'Mở ngang', '오므림': 'Tròn môi', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -9092,11 +9092,86 @@ function inkFinger(on) {
 }
 function inkClear() { INK.strokes = []; INK.cur = null; if (INK.g) INK.g.clearRect(0, 0, innerWidth, innerHeight); }
 
+/* 관련 챕터로 바로 가기 (대표님 지시 2026-10-02 "기본기·문법·단어 모두 연관된 챕터를 바로 갈 수 있게 — 기본기에서 숫자를 배우면 숫자 단어 챕터로 가는 버튼").
+   같은 주제끼리 묶은 표: 기본기 과(day) · 문법 과 번호(no) · 일상 주제 이름. 교재 과 ↔ 일상 주제는 data/topic_links.json(TLINK) 을 같이 쓴다.
+   묶음은 클로드가 과 내용(문형 제목·낱말)을 보고 같은 주제끼리 이었다 — 숫자·인사·묻기·시간·빈도·색·길·이어 주는 말·정도·부탁·주문·의견·소리 */
+const REL_GROUPS = [
+  { basic: ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7'], gram: [1] },
+  { basic: ['P8'], gram: [7, 8, 9], life: ['숫자 세기'] },
+  { gram: [2, 3], life: ['인사와 자기소개'] },
+  { gram: [5], life: ['가리키기와 묻기'] },
+  { gram: [13, 14], life: ['시간과 요일', '달 이름'] },
+  { gram: [15], life: ['얼마나 자주, 언제'] },
+  { gram: [16], life: ['색깔'] },
+  { gram: [17, 18], life: ['오고 가기와 길 묻기', '길과 교통'] },
+  { gram: [27, 29, 31], life: ['이어 주는 말'] },
+  { gram: [12, 43], life: ['자리와 정도를 나타내는 말'] },
+  { gram: [21, 22, 24], life: ['부탁하고 약속하기'] },
+  { gram: [46], life: ['식당과 카페'] },
+  { gram: [42], life: ['느낌과 생각 말하기', '감정과 의견'] },
+];
+function relChips() {
+  if (!L || !L.day) return [];
+  const d = L.day, out = [], seen = new Set();
+  const lifeBase = t => String(t || '').split(' (')[0];
+  const add = (label, go, key) => { if (seen.has(key)) return; seen.add(key); out.push({ label, go }); };
+  const lifeGo = theme => {
+    const ds = ALL.filter(x => typeof x.day === 'number' && !x.track && lifeBase(x.theme) === theme).sort((a, b) => (a.n || 0) - (b.n || 0));
+    if (!ds.length) return null;
+    const pick = ds.find(x => !S.done[x.day]) || ds[0];
+    return () => { SBOX = 'srs'; startLearn(pick); };
+  };
+  const gramGo = no => { if (!GRAM) return null; const ni = GRAM.books[0].bai.findIndex(b => b.no === no); return ni < 0 ? null : () => startGram(0, ni); };
+  const basicGo = k => { const x = ALL.find(y => y.day === k); return x ? () => startLearn(x) : null; };
+  const mainLessons = base => { const src = GYBM && GYBM.find(x => x.key === 'main'); if (!src) return null;
+    const li = src.lessons.findIndex((l, i) => String(l.title).split(' · ')[0] === base && !bdone()[gybmKey('main', i)]);
+    const i2 = li >= 0 ? li : src.lessons.findIndex(l => String(l.title).split(' · ')[0] === base);
+    if (i2 < 0) return null; const l = src.lessons[i2];
+    return () => { SBOX = 'bsrs'; startLearn({ theme: l.title, day: gybmKey('main', i2), basic: 1, words: l.words }); }; };
+  // 지금 과가 어느 묶음에 드는가
+  let me = null;
+  if (typeof d.day === 'string' && d.day[0] === 'P') me = { basic: d.day };
+  else if (d.gram && GRAM) { const x = GRAM.books[0].bai.find(b => b.t === d.theme); if (x) me = { gram: x.no }; }
+  else if (typeof d.day === 'number' && !d.track) me = { life: lifeBase(d.theme) };
+  else if (typeof d.day === 'string' && d.day.startsWith('B:main')) me = { main: String(d.theme).split(' · ')[0] };
+  if (!me) return out;
+  REL_GROUPS.forEach(g => {
+    const hit = (me.basic && (g.basic || []).includes(me.basic)) || (me.gram && (g.gram || []).includes(me.gram)) || (me.life && (g.life || []).includes(me.life));
+    if (!hit) return;
+    (g.basic || []).forEach(k => { if (k === me.basic) return; const x = ALL.find(y => y.day === k), go = basicGo(k); if (x && go) add(tr('기본기') + ' · ' + tr(x.theme), go, 'b' + k); });
+    (g.gram || []).forEach(no => { if (no === me.gram) return; const go = gramGo(no), x = GRAM && GRAM.books[0].bai.find(b => b.no === no); if (go && x) add(tr('문법') + ' ' + no + tr('과') + ' · ' + tr(String(x.t).split(' — ')[0]), go, 'g' + no); });
+    (g.life || []).forEach(t => { if (t === me.life) return; const go = lifeGo(t); if (go) add(tr('일상') + ' · ' + tr(t), go, 'l' + t); });
+  });
+  // 교재 ↔ 일상 (topic_links)
+  if (TLINK && me.life) Object.entries(TLINK).forEach(([title, x]) => { if (x.days.includes(me.life)) { const go = mainLessons(title); if (go) add(tr('교재') + ' ' + x.book + ' · ' + title, go, 'm' + title); } });
+  if (TLINK && me.main && TLINK[me.main]) TLINK[me.main].days.forEach(t => { const go = lifeGo(t); if (go) add(tr('일상') + ' · ' + tr(t), go, 'l' + t); });
+  return out.slice(0, 6);
+}
+function drawRelLinks() {
+  let box = $('#relLinks');
+  if (!box) { box = el('div', 'rellinks'); box.id = 'relLinks'; $('#card').after(box); }
+  box.textContent = '';
+  if (!TLINK) tlinkLoad(() => { if (!$('#learn').hidden) drawRelLinks(); });
+  if (!GYBM) gybmBuild(() => { if (!$('#learn').hidden) drawRelLinks(); });
+  if (!GRAM) gramEnsure(() => { if (!$('#learn').hidden) drawRelLinks(); });
+  const chips = relChips();
+  box.hidden = !chips.length;
+  if (!chips.length) return;
+  box.append(el('span', 'rellab', tr('관련')));
+  const snap = L;
+  chips.forEach(c => {
+    const b = el('button', 'relchip', esc(c.label) + ' ›'); b.type = 'button';
+    b.onclick = () => { const title = $('#title').textContent, crumb = LCRUMB, at = snap.i;   // 제목은 누를 때 — drawCard 는 show() 보다 먼저 돈다
+      dive(() => { L = snap; L.i = at; LCRUMB = crumb; drawCard(); show('learn', title, true); }); c.go(); };
+    box.append(b);
+  });
+}
 function drawCard() {
   spdResetFor('L:' + (L && L.day ? L.day.day : '') + ':' + (L ? L.i : ''));
   resetRec();
   inkClear();                                  // 카드를 넘기면 앞 카드에 쓴 글씨는 바로 지운다
   if (window.cardArrows) setTimeout(window.cardArrows, 0);
+  drawRelLinks();                              // 관련 챕터 단추 (2026-10-02)
   const c = $('#card');
   $('#face').hidden = true; FACE = null;
   c.textContent = '';
