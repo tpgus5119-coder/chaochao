@@ -8630,7 +8630,21 @@ function dictEntry(q0) {
                    return sc(a) - sc(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || lesson(a) - lesson(b2) || (a.fr || 99999) - (b2.fr || 99999) || nw(a) - nw(b2) || (kor ? a.ko.length - b2.ko.length : 0) || a.vi.length - b2.vi.length;
                  };
     const viHit = x => x.b.includes(qb) || x.vi.toLowerCase().includes(qk);
-    const enHit = x => enq && dictEnTerms(x).some(e => e === qk || e.startsWith(qk + ' '));
+    /* 영어 뜻 찾기 (2026-10-02 대표님 "왜 영어로 사전 검색 못 하냐 — skil 같은 거"): 전에는 뜻 하나가 친 말과 **똑같을 때만** 잡혀
+       덜 친 말(skil)·복수·과거형(skills·walked)은 0개였다. 이제 ① 똑같음 ② 그 말로 시작하는 구(skill set) ③ 뜻 안의 한 낱말 ④ 세 글자 넘게 친 말로 시작(skil → skill).
+       복수·-ed·-ing 는 밑꼴로도 찾는다(skills → skill, studies → study) */
+    const enForms = enq ? [...new Set([qk, qk.replace(/ies$/, 'y'), qk.replace(/es$/, ''), qk.replace(/s$/, ''), qk.replace(/ed$/, ''), qk.replace(/ed$/, 'e'), qk.replace(/ing$/, ''), qk.replace(/ing$/, 'e')].filter(f => f.length >= 2))] : [];
+    const enScore = x => {
+      let best = 9999;
+      dictEnTerms(x).forEach((e, i) => {
+        const ws = e.split(' ');
+        const lv = enForms.some(f => e === f) ? 0 : enForms.some(f => e.startsWith(f + ' ')) ? 1 : enForms.some(f => ws.includes(f)) ? 2
+          : qk.length >= 3 && (e.startsWith(qk) || ws.some(w => w.startsWith(qk))) ? 3 : 9;
+        if (lv < 9) best = Math.min(best, lv * 100 + i);
+      });
+      return best;
+    };
+    const enHit = x => enq && enScore(x) < 9999;
     const secs = [];
     if (kor) {
       let mean = d.filter(x => num ? phrs(x.ko).includes(qk) : x.ko.toLowerCase().includes(qk) || k2v.includes(x.vi.toLowerCase())).sort(cmp);
@@ -8654,15 +8668,22 @@ function dictEntry(q0) {
     } else {
       const vi = d.filter(viHit).sort(cmp);
       const inVi = new Set(vi.map(x => x.vi));
-      const enRank = x => { const t = dictEnTerms(x), i2 = t.indexOf(qk); return i2 < 0 ? 99 : i2; };   // 그 말 그대로인 뜻이 앞 뜻일수록 먼저
-      const en = enq ? d.filter(x => !inVi.has(x.vi) && enHit(x)).sort((a, b2) => enRank(a) - enRank(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || a.vi.length - b2.vi.length) : [];
+      const lessonW = x => x.src && x.src.some(t => !['예문', '사전', '참고 사전'].includes(t)) ? 0 : 1;
+      /* 차례(2026-10-02): ① 뜻이 친 말과 똑같은 낱말(참고 사전 아님) ② 그 말로 시작하는 구이거나 그 말이 낱말로 든 **수업 낱말**(kỹ năng 'technical skill', trâu 'water buffalo')
+         ③ 똑같지만 참고 사전 낱말 ④ 뜻 안에 든 나머지 ⑤ 덜 친 말(skil → skill)로만 잡힌 것. 같은 칸 안에서는 수업 낱말 → 자주 쓰는 말 → 더 똑같은 뜻.
+         똑같음만 앞세우면 skill 에 thân thủ(문어·참고 사전)가 먼저였고, 수업 낱말만 앞세우면 water 에 trâu('water buffalo')가 nước 바로 뒤였다 */
+      const enT = x => { const lv = Math.floor(enScore(x) / 100); return lv === 0 && !x.ref ? 0 : lv <= 2 && !lessonW(x) ? 1 : lv === 0 ? 2 : lv <= 2 ? 3 : 4; };   // 'water buffalo'(trâu)처럼 그 말로 시작하는 구는 똑같음(nước·tưới) 뒤로
+      const en = enq ? d.filter(x => !inVi.has(x.vi) && enHit(x)).sort((a, b2) => enT(a) - enT(b2) || lessonW(a) - lessonW(b2) || (a.fr || 99999) - (b2.fr || 99999) || enScore(a) - enScore(b2) || a.vi.length - b2.vi.length) : [];
       /* (대표님 2026-10-02) 로마자는 베트남어와 영어가 같이 쓰니 칸 대신 **단추 둘**: [베트남 단어] [영어 뜻] — 고른 쪽만 보인다.
          기본은 베트남 단어. 베트남어 쪽에 아무것도 없고 영어 뜻만 있으면 저절로 영어 뜻. 새로 칠 때마다 다시 정한다.
          단어를 다 보인 **뒤에** 문장(앱 예문·교재 원문·사전 예문): 베트남 단어 쪽은 친 말이 낱말 단위로 든 문장,
          영어 뜻 쪽은 그 영어 뜻으로 찾은 낱말(앞 5개)이 든 문장. 사전에 없는 구(trời mưa)도 문장으로 뜻을 본다 */
       const viS = dictSents([qb]);
       const enS = en.length ? dictSents(en.slice(0, 5).map(x => dictBare(x.vi))) : [];
-      if (DTABQ !== qk) { DTABQ = qk; DTAB = (vi.length || viS.length) ? 'vi' : en.length ? 'en' : 'vi'; }
+      /* 기본 단추: 친 말과 **똑같은** 베트남어 낱말이 있으면 베트남 단어(ban → bạn·bán). 없고 영어 뜻이 낱말로 맞는 게 있으면 영어 뜻(car → xe hơi, money → tiền).
+         둘 다 아니면 결과가 있는 쪽 — 덜 친 말(hap)은 베트남어 쪽. 전에는 베트남어가 하나라도 걸리면(car → ca-ra, house → Vinahouse) 베트남 단어로 가 영어 뜻이 가려졌다 */
+      const viExact = vi.some(x => x.b === qb || x.vi.toLowerCase() === qk), enGood = en.some(x => enT(x) < 4);
+      if (DTABQ !== qk) { DTABQ = qk; DTAB = viExact ? 'vi' : enGood ? 'en' : (vi.length || viS.length) ? 'vi' : en.length ? 'en' : 'vi'; }
       const tabs = el('div', 'dtabs');
       [['vi', tr('베트남 단어'), vi.length], ['en', tr('영어 뜻'), en.length]].forEach(([k, nm, n]) => {
         const t = el('button', 'dtab' + (DTAB === k ? ' on' : ''), esc(nm) + ' <small>' + n + '</small>'); t.type = 'button';
