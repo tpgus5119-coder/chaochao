@@ -8631,7 +8631,7 @@ function dictEntry(q0) {
                  };
     const viHit = x => x.b.includes(qb) || x.vi.toLowerCase().includes(qk);
     /* 영어 뜻 찾기 (2026-10-02 대표님 "왜 영어로 사전 검색 못 하냐 — skil 같은 거"): 전에는 뜻 하나가 친 말과 **똑같을 때만** 잡혀
-       덜 친 말(skil)·복수·과거형(skills·walked)은 0개였다. 이제 ① 똑같음 ② 그 말로 시작하는 구(skill set) ③ 뜻 안의 한 낱말 ④ 세 글자 넘게 친 말로 시작(skil → skill).
+       덜 친 말(skil)·복수·과거형(skills·walked)은 0개였다. 이제 ① 똑같음 ② 그 말로 시작하는 구(skill set) ③ 뜻 안의 한 낱말 ④ 친 말로 시작(한 글자부터, skil → skill).
        복수·-ed·-ing 는 밑꼴로도 찾는다(skills → skill, studies → study) */
     const enForms = enq ? [...new Set([qk, qk.replace(/ies$/, 'y'), qk.replace(/es$/, ''), qk.replace(/s$/, ''), qk.replace(/ed$/, ''), qk.replace(/ed$/, 'e'), qk.replace(/ing$/, ''), qk.replace(/ing$/, 'e')].filter(f => f.length >= 2))] : [];
     const enScore = x => {
@@ -8639,7 +8639,7 @@ function dictEntry(q0) {
       dictEnTerms(x).forEach((e, i) => {
         const ws = e.split(' ');
         const lv = enForms.some(f => e === f) ? 0 : enForms.some(f => e.startsWith(f + ' ')) ? 1 : enForms.some(f => ws.includes(f)) ? 2
-          : qk.length >= 3 && (e.startsWith(qk) || ws.some(w => w.startsWith(qk))) ? 3 : 9;
+          : e.startsWith(qk) || ws.some(w => w.startsWith(qk)) ? 3 : 9;   // 한 글자부터 (대표님 2026-10-02 "영어 뜻도 1글자만 해도 나와야지")
         if (lv < 9) best = Math.min(best, lv * 100 + i);
       });
       return best;
@@ -8682,8 +8682,9 @@ function dictEntry(q0) {
       const enS = en.length ? dictSents(en.slice(0, 5).map(x => dictBare(x.vi))) : [];
       /* 기본 단추: 친 말과 **똑같은** 베트남어 낱말이 있으면 베트남 단어(ban → bạn·bán). 없고 영어 뜻이 낱말로 맞는 게 있으면 영어 뜻(car → xe hơi, money → tiền).
          둘 다 아니면 결과가 있는 쪽 — 덜 친 말(hap)은 베트남어 쪽. 전에는 베트남어가 하나라도 걸리면(car → ca-ra, house → Vinahouse) 베트남 단어로 가 영어 뜻이 가려졌다 */
-      const viExact = vi.some(x => x.b === qb || x.vi.toLowerCase() === qk), enGood = en.some(x => enT(x) < 4);
-      if (DTABQ !== qk) { DTABQ = qk; DTAB = viExact ? 'vi' : enGood ? 'en' : (vi.length || viS.length) ? 'vi' : en.length ? 'en' : 'vi'; }
+      /* 기본 단추는 베트남 단어 (대표님 2026-10-02 다시 "디폴트 값은 베트남 단어 검색") — 베트남어 쪽에 낱말·문장이 하나도 없을 때만 영어 뜻.
+         (잠깐 '똑같은 베트남어 낱말이 없으면 영어 뜻'으로 바꿨다가 되돌림) */
+      if (DTABQ !== qk) { DTABQ = qk; DTAB = (vi.length || viS.length) ? 'vi' : en.length ? 'en' : 'vi'; }
       const tabs = el('div', 'dtabs');
       [['vi', tr('베트남 단어'), vi.length], ['en', tr('영어 뜻'), en.length]].forEach(([k, nm, n]) => {
         const t = el('button', 'dtab' + (DTAB === k ? ' on' : ''), esc(nm) + ' <small>' + n + '</small>'); t.type = 'button';
