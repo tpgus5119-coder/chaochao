@@ -2206,8 +2206,10 @@ svg.curve.pw .pwword{transition:none}
 
 /* ── 머리띠 [단어|발음] — 낱말 카드에서만 · 남/여 왼쪽 · 내 정보 오른쪽 (2026-09-27) ── */
 /* 좁은 폰(375px)에서 겹치지 않게 절대 위치 대신 흐름 안에 둔다: [홈][‹][남|여] … [단어|발음] … [내 정보] */
-header > #face{margin:0 auto; padding:2px; background:var(--card); flex:0 0 auto}
-header > #face span{padding:4px 11px; font-size:13px}
+/* (2026-10-03) [단어|발음] 도 남/여 단추와 같은 꼴 — 글자 둘, 지금 면만 진하게 */
+header > #face{margin:0 auto; flex:0 0 auto}
+#face i{font-style:normal; opacity:.38; padding:0 3px}
+#face[data-f="card"] i[data-f="card"], #face[data-f="pron"] i[data-f="pron"]{opacity:1; font-weight:700}
 header > #face:not([hidden]) ~ #goMe{margin-left:0}
 
 /* ── 입모양: [정면 | 옆 단면] 단추, 정면은 크게 ── */
@@ -3003,3 +3005,5 @@ body.inking #learn .pager{position:relative; z-index:47}
 .anaradar .analeg i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:5px; vertical-align:-1px}
 .anaradar .analeg i.cur{background:var(--ok, #2a9d5c)}
 .anaradar .analeg i.prev{border:1.5px dashed var(--dim)}
+/* 긴 낱말은 음절 단위로 줄을 바꾼다 (대표님 2026-10-03 "길이가 긴 단어는 2줄로") — 전에는 한 줄로 카드 밖까지 넘쳤다 */
+button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}

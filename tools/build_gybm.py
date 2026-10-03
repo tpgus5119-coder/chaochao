@@ -317,6 +317,7 @@ if c22p.exists():
 for _src in gybm["sources"]:
     if _src["key"] == "senior":
         for _i, _l in enumerate(_src["lessons"], 1): _l["title"] = str(_i)   # 선배 자료: 과 이름은 번호만 (대표님 지시 2026-09-27 밤)
+gybm["sources"] = [s_ for s_ in gybm["sources"] if s_["key"] != "senior"]   # 선배 단어 시험 자료는 앱에서 지웠다 (대표님 2026-10-03 "선배 단어 완전 삭제") — 원자료(basicwords)는 맥에 그대로, 일상·직무에 섞인 낱말도 그대로
 with open(f"{DATA}/gybm.json", "w", encoding="utf-8") as f:
     json.dump(gybm, f, ensure_ascii=False, indent=1)
 

@@ -2841,7 +2841,7 @@ function studyWordsEntry(scroll) {
   } else rows.push({ key: 'job', title: '직무', sub: '8갈래', done: 0, all: 0, nodes: null });
   // ③④⑤ 교재 · 단어시험 · 수업 단어
   /* 22기 단어 시험 자료는 테스트 → 매일 단어 시험으로 옮겼다 (대표님 결정 2026-09-30: 같은 자료로 들어가는 문이 둘이면 헷갈린다). 복습 창고(bsrs)·지난 진도는 그대로 */
-  [['main', '교재'], ['senior', '선배 단어 시험 자료']].forEach(([key, title]) => {
+  [['main', '교재']].forEach(([key, title]) => {   // '선배 단어 시험 자료' 칸은 지웠다 (대표님 2026-10-03 "선배 단어 완전 삭제") — 일상·직무에 섞여 들어간 낱말은 그대로
     const src = GYBM && GYBM.find(s => s.key === key);
     if (!src) { rows.push({ key, title, sub: '', done: 0, all: 0, nodes: null }); return; }
     const nodes = src.lessons.map((l, li) => ({ key: gybmKey(key, li), title: l.title,
@@ -4415,7 +4415,6 @@ function testPickEntry() {
   row('일상', 0, () => pickUnits('days'));
   row('직무', 0, () => withCourse(() => pickUnits('job')));
   row('교재', 0, () => gybmBuild(() => pickUnits('main')));
-  row('선배 단어 시험 자료', 0, () => gybmBuild(() => pickUnits('senior')));
   row('22기 단어 시험 자료', 0, () => gybmBuild(() => pickUnits('c22')));
   show('exam', '선택 복습', true);
 }
@@ -8328,23 +8327,7 @@ function dexLoad() {
   if (!DEX_P) DEX_P = fetch('data/_dict_ex.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { DEX = j; }).catch(() => { DEX = {}; });
   return DEX_P;
 }
-let SNOTE = null, SNOTE_P = null;   // 선배 한월어 엑셀 메모·예문 (data/_senior_notes.json — tools/roots/excel_notes.py, 클로드가 하나씩 검사, 2026-10-01)
-function snoteLoad() {
-  if (SNOTE) return Promise.resolve();
-  if (!SNOTE_P) SNOTE_P = fetch('data/_senior_notes.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : { n: {}, x: {} }).then(j => { SNOTE = j; }).catch(() => { SNOTE = { n: {}, x: {} }; });
-  return SNOTE_P;
-}
-const snoteGet = (part, vi) => { if (!SNOTE) return null; const o = SNOTE[part] || {}, k = String(vi || '').trim().toLowerCase(); return o[k] || o[canonFind(o, k)] || null; };
-/* 선배 메모 — '사진은 보통 hình ảnh'·'xe cấp cứu = 구급차' 같은 쓰임 팁. 자리를 먼저 잡고 파일이 오면 채운다 */
-function seniorNote(host, x) {
-  const box = el('div', 'snote'); host.append(box);
-  snoteLoad().then(() => {
-    const ns = snoteGet('n', x.vi);
-    if (!ns || !ns.length) { box.remove(); return; }
-    box.append(el('span', 'snoteh', tr('선배 메모')));
-    ns.forEach(t => box.append(el('div', 'snotel', esc(t))));
-  });
-}
+/* 선배 메모(선배 한월어 엑셀 메모 파일)는 지웠다 (대표님 2026-10-03 "단어 카드에 선배 메모라는 것이 남아 있네 — 선배 단어 완전 삭제") */
 let DSKIP = null;   // 사전에서 뺄 문장 (data/_dict_skip.json — 대표님 지시 2026-09-29: "사전 검색했는데 왜 문장도 검색되니")
 let DEN = null;     // 영어 검색 열쇠 (data/_dict_en.json — 영어는 열쇠일 뿐, 화면에는 한국어만)
 const ENQ = q => /^[a-z][a-z' -]*$/i.test(q);
@@ -8395,9 +8378,8 @@ function dictBuild() {
   /* 앱에 있는 단어은 **전부** (대표님 지시 2026-09-27: "최소한 우리 어플에 있는 모든 단어는 들어가야 함") */
   ALL.forEach(d => (d.words || []).forEach(w => put(w.vi, w.ko, w, false, /^P/.test(String(d.day)) ? '기본기' : '일상')));   // 기본기·일상
   CWORDS.forEach(w => put(w.vi, w.ko, w, false, '직무'));                                                              // 직무(order.json)
-  const GSRC = { main: '교재', senior: '선배', c22: '22기' };
+  const GSRC = { main: '교재', c22: '22기' };
   (GYBM || []).forEach(g => g.lessons.forEach(l => l.words.forEach(w => put(w.vi, w.ko, w, false, GSRC[g.key] || 'GYBM'))));   // GYBM 교재·선배·22기
-  seniorItems().forEach(w => put(w.vi, w.ko, w, false, '선배'));            // 선배 시험 단어
   if (GRAM) GRAM.books.forEach(b => b.bai.forEach(c => c.g.forEach(g =>
     (g.kw || []).forEach(([w, m]) => put(String(w).replace(/[.…]/g, '').trim(), m, null, false, '문법')))));   // 문법 핵심 단어
   Object.entries(EXG || {}).forEach(([k, v]) => put(k, typeof v === 'string' ? v : v.ko, typeof v === 'object' ? { kr: v.kr } : null, false, '예문'));   // 예문 단어
@@ -8424,7 +8406,6 @@ async function dictReady() {
   const jobs = [];
   if (!SIB) jobs.push(sibLoad());
   if (!GRAM) jobs.push(get('data/grammar.json', j => { GRAM = gramReady(j); }));
-  if (!SENIOR) jobs.push(get('data/senior.json', j => { SENIOR = j; }));
   if (typeof GYBM !== 'undefined' && !GYBM) jobs.push(get('data/gybm.json', j => { GYBM = j.sources; GYBM_ALL = null; }));   // gybmBuild 와 같이 sources 배열만 (2026-09-27: 통째로 넣어 사전이 멈췄다)
   if (!COURSE) jobs.push(get('data/order.json', j => { COURSE = j; loadCWords(); }));
   if (!DKO) jobs.push(get('data/_dict_ko.json', j => { DKO = j; }));
@@ -8784,9 +8765,9 @@ function dictEntry(q0) {
   setTimeout(() => inp.focus(), 60);
 }
 
-/* data/basicwords.json(GYBM 17~20기 선배 시험 원자료, 별·빨간 밑줄 값의 출처)은
+/* 선배 시험 원자료(basicwords, GYBM 17~20기 — 별·빨간 밑줄 값의 출처)는
    이제 앱이 직접 안 읽는다 — tools/build_gybm.py가 미리 대조해서 data/gybm.json에
-   별·밑줄·예문·그림을 구워 넣어 두기 때문이다(2026-09-22 GYBM 개편). basicwords.json
+   별·밑줄·예문·그림을 구워 넣어 두기 때문이다(2026-09-22 GYBM 개편). 그 원자료
    자체는 그 스크립트의 입력 자료로만 남는다. */
 function basicWordRow(x) {
   const row = el('button', 'dictrow basicrow');
@@ -8829,7 +8810,7 @@ function gybmBuild(cb) {
 }
 const gybmKey = (srcKey, i) => 'B:' + srcKey + i;
 /* GYBM 단어 전체를 한 배열로 — 복습 화면(findItem)과 객관식 오답 보기(buildQuestions)가
-   예전엔 BASICWORDS(basicwords.json)만 봤는데, 이제 GYBM 단어은 메인교재·서브교재·
+   예전엔 BASICWORDS(선배 원자료)만 봤는데, 이제 GYBM 단어은 메인교재·서브교재·
    수업자료에서 온 것도 많아 BASICWORDS에 없을 수 있다. 그래서 GYBM 전체를 대신 쓴다. */
 let GYBM_ALL = null;
 function gybmAllWords() {
@@ -9112,7 +9093,7 @@ function inkSetup() {
   document.body.append(btn); INK.btn = btn;
   const here = () => CURV === 'learn';
   // 손가락(켰을 때) — 캔버스가 받는다
-  cv.addEventListener('pointerdown', e => { if (!INK.finger || !here() || (window.TWO && TWO.on)) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
+  cv.addEventListener('pointerdown', e => { if (!INK.finger || !here()) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
   cv.addEventListener('pointermove', e => { if (INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } });
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, e => { if (INK.cur && INK.cur.id === e.pointerId) inkEnd(); }));
   // 펜 — 켜기 없이 문서 전체에서 먼저 받는다
@@ -9141,12 +9122,6 @@ function inkEnd() {
   if (s.pen && s.tap && INK.last - s.t0 < 350) { INK.strokes.pop(); return; }   // 펜으로 톡 — 글씨가 아니라 누르기
   if (s.pen) INK.block = true;                                                      // 펜 획 끝의 클릭은 막는다
   inkLoop();
-}
-/* 두 손가락이 닿으면 막 그리던 획(첫 손가락·둘째 손가락)을 지운다 — 두 손가락 밀기는 글씨가 아니다 (2026-10-02) */
-function inkCancel() {
-  const now = performance.now();
-  INK.strokes = INK.strokes.filter(x => x !== INK.cur && !(x.t0 && now - x.t0 < 600 && !x.t1));
-  INK.cur = null; INK.block = false; inkLoop();
 }
 function inkLoop() { if (!INK.raf && INK.g) INK.raf = requestAnimationFrame(inkDraw); }
 function inkDraw() {
@@ -9510,7 +9485,6 @@ function drawCard() {
                   x.work.map(t2 => esc(t2)).join(' · ')));
     rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
     caiNote(cf, x);                                        // 'cái nhà' 처럼 분류사가 붙은 표제어 (2026-09-29)
-    seniorNote(cf, x);                                     // 선배 한월어 엑셀 메모 (2026-10-01)
     const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
     if (dfe) { kob.textContent = ''; if (isCore(x)) kob.append(el('span', 'corepill', tr('핵심'))); kob.append(dfullBox(dfe, () => openWordCard(x))); rootPills(kob, x); }   // 사전 카드: 품사별 모든 뜻·유의어·반의어 (2026-10-01) — 한자 알약은 뜻 목록 밑에 다시(위에서 단 것은 지워진다)
     else senseLine(kob, x);                                // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
@@ -9766,35 +9740,24 @@ $('#next').onclick = () => {
   /* 세로로 밀면(스크롤) 넘어가지 않는다 (대표님 지시 2026-09-30: "위아래로 스와이프해서 이전·이후 이동하는 거 안 되게").
      전에는 가로 움직임만 40px 넘으면 넘겨서, 긴 카드를 비스듬히 스크롤하다 카드가 넘어갔다.
      이제 가로가 세로의 1.5배 넘게 움직였을 때만 — 단어 면·발음 면 모두. */
-  /* 두 손가락으로 밀기 (대표님 2026-10-02 "손가락 스와이프로 하는 동작, 두 손가락으로 바꾸자. 대신 덜 민감해도 됨").
-     한 손가락은 스크롤·손글씨만 한다 — 전에 쓰던 한 손가락 좌우 밀기·세로 밀기(맨 위/맨 아래에서만)·손글씨 중 휙 긋기는 뺐다.
-     두 손가락을 함께 60px 넘게(다른 쪽 움직임의 1.5배 넘게): ← 다음 · → 이전 · ↓ 손글씨 켜기/끄기 · ↑ 단어 면 ↔ 발음 면.
-     손글씨가 켜져 있어도 같다 — 두 번째 손가락이 닿는 순간 막 그리던 획은 지운다. 단추·마우스 끌기·화살표 키는 그대로 */
-  const TWO = window.TWO = { on: false, x0: 0, y0: 0, x: 0, y: 0 };
-  const mid = ts => [(ts[0].clientX + ts[1].clientX) / 2, (ts[0].clientY + ts[1].clientY) / 2];
-  document.addEventListener('touchstart', e => {
-    if ($('#learn').hidden) return;
-    if (e.touches.length === 2) { const [x, y] = mid(e.touches); Object.assign(TWO, { on: true, x0: x, y0: y, x, y }); inkCancel(); }
-    else if (e.touches.length > 2) TWO.on = false;
-  }, { passive: true, capture: true });
-  document.addEventListener('touchmove', e => {
-    if (!TWO.on || e.touches.length < 2) return;
-    const [x, y] = mid(e.touches); TWO.x = x; TWO.y = y;
-    e.preventDefault();                                   // 두 손가락 동안은 화면 확대·스크롤을 막는다
-  }, { passive: false, capture: true });
-  const twoEnd = e => {
-    if (!TWO.on || e.touches.length >= 2) return;
-    TWO.on = false;
-    if ($('#learn').hidden) return;
-    const dx = TWO.x - TWO.x0, dy = TWO.y - TWO.y0;
-    if (Math.abs(dx) >= 60 && Math.abs(dx) >= Math.abs(dy) * 1.5) goto(dx < 0 ? 1 : -1);
-    else if (Math.abs(dy) >= 60 && Math.abs(dy) >= Math.abs(dx) * 1.5) {
-      if (dy > 0) { inkSetup(); inkFinger(!INK.finger); }
-      else if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron');
-    }
-  };
-  document.addEventListener('touchend', twoEnd, { capture: true });
-  document.addEventListener('touchcancel', () => { TWO.on = false; }, { capture: true });
+  /* 한 손가락 밀기 (대표님 2026-10-03 "2손가락 제스처 없애자. 필기 모드 아닐 때 좌우 스와이프로 이전·이후, 위로 손가락 올리면 카드면 전환. 필기 켜고 끄기는 제스처 없애자").
+     필기가 켜져 있으면 손가락은 글씨만 쓴다(밀기 없음 — 단추로 넘긴다).
+     좌우: 가로 40px 넘게, 세로의 1.5배 넘게 → ← 다음 · → 이전.
+     위로: 세로 90px 넘게, 가로의 2.5배 넘게, 0.7초 안 — 세로 밀기는 원래 스크롤이라 **맨 아래에서 시작해 맨 아래에서 끝날 때만**(짧은 카드는 늘) → 단어 면 ↔ 발음 면 */
+  const atBottom = () => (window.scrollY || 0) + innerHeight >= document.documentElement.scrollHeight - 2;
+  const lv = $('#learn');
+  let sw = null;
+  lv.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1 || INK.finger || e.target.closest('input, textarea, .pbar')) { sw = null; return; }
+    sw = { x: e.touches[0].clientX, y: e.touches[0].clientY, t: performance.now(), bot: atBottom() };
+  }, { passive: true });
+  lv.addEventListener('touchend', e => {
+    const v = sw; sw = null;
+    if (!v || lv.hidden || INK.finger) return;
+    const dx = e.changedTouches[0].clientX - v.x, dy = e.changedTouches[0].clientY - v.y;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { goto(dx < 0 ? 1 : -1); return; }
+    if (dy < -90 && Math.abs(dy) >= Math.abs(dx) * 2.5 && performance.now() - v.t <= 700 && v.bot && atBottom() && FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron');
+  }, { passive: true });
   /* 컴퓨터에서도 넘어가야 한다 — 손가락만 받으면 마우스로는 아무 일도 안 일어난다.
      단추·입력칸 위에서 시작한 끌기는 무시한다(마이크 단추를 끌다가 넘어가면 안 된다). */
   let m0 = null, my0 = null;
@@ -11335,6 +11298,7 @@ function drawExamKind(body, q) {
     bx.append(tapLine(w.vi, 'wexvi tapline'));
     if (w.ko) bx.append(el('div', 'wexko', esc(koShow(w.ko))));
     body.append(bx);
+    autoSay(w.vi);                                          // 문장이 보이면 소리 (2026-10-03 대표님 "테스트 문장은 화면 넘어오면 자동 재생")
     const box = el('div', 'opts');
     (q.popts || []).forEach(o => { const b = el('button', null, esc(o.k) + ' — ' + esc(o.t)); const good = o.k === w.gk; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
     body.append(box); return;
@@ -11351,6 +11315,7 @@ function drawExamKind(body, q) {
     const other = q.opts.find(o => o.vi !== w.vi && o.ko) || w;
     const isTrue = Math.random() < .5;
     body.append(el('div', 'qmain sent', esc(w.vi)), el('div', 'q mid', esc(koShow(isTrue ? w.ko : other.ko))));
+    autoSay(w.vi);                                          // 2026-10-03 자동 재생
     tfBtns(isTrue); return;
   }
   if (md === 'err') {
@@ -12049,79 +12014,6 @@ let SENIOR = null;
 const SKIND = { d: '일일', w: '주간', x: '모음' };
 const sdone = () => (S.sdone = S.sdone || {});
 const skey = t => 'S:' + t.k + t.no;
-function drawSenior() {
-  SBOX = 'ssrs';
-  const list = $('#dayList');
-  list.textContent = '';
-
-  // 머리말은 뺐다 (2026-08-29, 대표님 지시) — 목록 위에 설명이 길게 붙어 있으면 눈이 먼저 지친다.
-  const rev = el('li', 'catpick');
-  const due = Object.values(S.ssrs || {}).filter(v => v.due <= now()).length;
-  const all = SENIOR.words.length, met = Object.keys(S.ssrs || {}).length;
-  rev.append(el('span', 'msub', tr('익힌 단어') + ' ' + met + '/' + all + '  ·  '));
-  const rb = el('button', 'primary sm', tr('실전 단어 복습') + (due ? ' (' + due + ')' : ''));
-  /* 복습은 **기존 틀 그대로** 쓴다 (대표님 지시): 랜덤 · 말하기 · 듣기 · 읽기 · 쓰기 · 3분 · 오답노트.
-     따로 만들면 화면이 둘로 갈라지고, 한쪽만 고쳐지는 일이 생긴다. */
-  rb.onclick = () => { SBOX = 'ssrs'; dive(drawSenior); reviewMenu('word'); };
-  rev.append(rb);
-  rev.append(el('span', 'msub', tr('하루 5분 복습과 섞이지 않습니다')));
-  list.append(rev);
-
-  /* 진행이 **보여야** 한다 (대표님 지적, 2026-08-29).
-     전에는 서른 문제를 다 끝내야만 '완료'가 떴다. 열 개쯤 풀고 나가면 아무 표시가 없어
-     '아예 진행이 안 된다'로 보였다. 이제 회차마다 **몇 개를 익혔는지** 적는다.
-     기준은 복습 창고(S.ssrs)에 들어간 단어 수다 — 한 번이라도 답한 것. */
-  const box = S.ssrs || {};
-  SENIOR.sets.forEach(t => {
-    const k = skey(t), done = !!sdone()[k];
-    const ni = t.w.filter(i => SENIOR.words[i][2] & 1).length;
-    const got = t.w.filter(i => box[SENIOR.words[i][0]]).length;
-    const b = el('button');
-    b.dataset.done = done ? '1' : '0';
-    b.append(el('span', 'num', SKIND[t.k] + ' ' + t.no),
-             el('span', 'nm', t.w.length + tr('단어') +
-                (ni ? '<i class="catchip">' + tr('중요') + ' ' + ni + '</i>' : '')),
-             el('span', 'st', done ? tr('완료 ✔')
-                : got ? got + '/' + t.w.length : tr('보기')));
-    b.onclick = () => { dive(drawSenior); drawSeniorSet(t); };
-    const li = el('li'); li.append(b);
-    list.append(li);
-  });
-  show('course', '실전 단어', true);
-}
-/* 한 회차 — 단어을 먼저 훑고 나서 시험을 본다.
-   먼저 보여주는 이유: 실전 단어은 '배운 것을 확인'하는 자리가 아니라 처음 보는 말이 대부분이다.
-   아무것도 안 보여주고 물으면 그냥 다 틀리고, 그건 배움이 아니라 좌절이다. */
-function drawSeniorSet(t) {
-  SBOX = 'ssrs';
-  const list = $('#dayList');
-  list.textContent = '';
-  const ws = t.w.map(i => SENIOR.words[i]);
-  const go = el('li', 'catpick');
-  const gb = el('button', 'primary sm', tr('이 회차 시험 보기'));
-  gb.onclick = () => {
-    SBOX = 'ssrs';
-    dive(() => drawSeniorSet(t));
-    startQuiz(ws.map(w => ({ vi: w[0], ko: w[1] })), { day: skey(t), senior: 1 }, null, false, { kind: 'word' });
-  };
-  go.append(gb);
-  /* 색이 무슨 뜻인지 한 줄로 적는다 (대표님 물음, 2026-08-29).
-     색만으로 알리지 않는다 — 초록 줄에는 왼쪽에 굵은 띠도 같이 붙는다(색각 배려). */
-  go.append(el('span', 'msub', ws.length + tr('단어') + ' · ' + tr('초록 = 앱에서 이미 배운 말')));
-  list.append(go);
-  ws.forEach(w => {
-    const li = el('li');
-    const b = el('button');
-    b.append(el('span', 'nm', esc(w[0])), el('span', 'st', esc(w[1])));
-    if (w[2] & 1) b.querySelector('.nm').append(el('i', 'catchip', tr('중요')));
-    if (learntSet().has(w[0].toLowerCase())) b.dataset.done = '1';   // **내가 끝낸 강**에서 배운 말
-    b.onclick = () => say(w[0]);
-    li.append(b);
-    list.append(li);
-  });
-  show('course', SKIND[t.k] + ' ' + t.no, true);
-}
-
 /* ---------- 성조 훈련 (미니멀 페어) ----------
    성조만 다르고 나머지는 같은 단어를 소리로만 구별시킨다.
    시판 앱 대부분이 빠뜨린 부분이고, 성조 습득 연구가 가리키는 표준 훈련법이다. */
@@ -13629,7 +13521,7 @@ async function bugFlush() {
 }
 $('#goBug').onclick = () => bugReport();
 addEventListener('load', () => setTimeout(bugFlush, 4000));
-$('#face').innerHTML = '<span data-f="card">' + tr('단어') + '</span><span data-f="pron">' + tr('발음') + '</span>';
+$('#face').innerHTML = '<i data-f="card">' + tr('단어') + '</i><i data-f="pron">' + tr('발음') + '</i>';   // 남/여 단추와 같은 꼴 (대표님 2026-10-03 "디자인 통일")
 $('#face').onclick = () => { if (FACE && L) FACE(L.face === 'pron' ? 'card' : 'pron'); };
 /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 홈은 아래 탭의 [홈]이 맡는다 (renderHome). */
 
