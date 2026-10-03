@@ -185,7 +185,10 @@ print(f"교재 원문 뺌 {len(book_src)}")
 _origin_all = git("-c", "core.quotePath=false", "ls-tree", "-r", "--name-only", "origin/main").splitlines()
 _app_txt = "".join((ROOT / f).read_text(encoding="utf-8") for f in ("app.js", "sw.js", "index.html") if (ROOT / f).exists())
 _data_unused = [q for q in _origin_all if q.startswith("data/") and q.rsplit("/", 1)[-1] not in _app_txt]
-_unused = [q for q in _origin_all if q.startswith(("audio/ko-qwen/", "audio/ko-qwen2/", "scratchpad/", "_보관/", "audio/ko-f/", "audio/ko-m/")) or q == "data/compound.json"] + _data_unused   # compound.json = 걷어낸 붙은 말 접기 자료 (2026-09-29 밤)
+_unused = [q for q in _origin_all if q.startswith(("audio/ko-qwen/", "audio/ko-qwen2/", "scratchpad/", "_보관/", "audio/ko-f/", "audio/ko-m/")) or q == "data/compound.json"] + _data_unused
+# (2026-10-03 대표님 "불필요한 코드와 파일 · 과거의 코드와 파일 없애") — 맥에서 ~/짜오짜오/_보관/베트남어-어플_정리_20261003/ 로 옮긴 옛 도구·화면도 서버에서 뺀다:
+#   맥에 더는 없는 tools/ 파일과 옛 화면(_pet_preview·dev·lab.html)·시험소리/. 뉴스 봇이 쓰는 도구는 맥에 그대로라 안 빠진다
+_unused += [q for q in _origin_all if (q.startswith(("tools/", "시험소리/")) or q in ("_pet_preview.html", "dev.html", "lab.html")) and not (ROOT / q).exists()]   # compound.json = 걷어낸 붙은 말 접기 자료 (2026-09-29 밤)
 if _unused:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in _unused)
     subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)

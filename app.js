@@ -705,12 +705,6 @@ const UIVI = {
    'dev' 는 만드는 사람용 — 베트남어 뒤에 한국어 원문을 ⟨ ⟩ 로 같이 붙인다.
    태그(<span>)가 아니라 그냥 글자로 붙이는 이유: 이 함수의 결과가
    innerHTML 로도 가고 textContent 로도 가기 때문이다. 태그를 쓰면 한쪽에서 글자로 새어 나온다. */
-/* 만든 사람 아이디 — 개발용 칸('나란히')은 이 아이디로 들어왔을 때만 보인다.
-   막는 장치가 아니라 **화면을 깨끗하게 두려는 것**이다: 손님이 개발용 칸을 눌러
-   글자가 겹쳐 나오면 앱이 고장 난 줄 안다.
-   쓰이는 자리(설정 화면)보다 **앞에** 두어야 한다 — const 는 끌어올려지지만
-   선언 전에 읽으면 터진다. */
-const DEV_ID = 'tpgus5119';
 
 const tr = h => {
   if (!S || typeof h !== 'string') return h;
@@ -757,10 +751,6 @@ const audio = new Audio();
    다 해줘. 재생 가능하도록." 느린 소리를 **따로 만들지 않는다.** playbackRate 는
    높낮이를 지켜 주므로 성조가 안 뭉개지고, 파일이 한 벌이면 저장소도 반이다
    (전에 느린 파일 16,000개로 1GB에 닿았던 적이 있다). */
-/* 기본 재생 속도 자체를 0.8배로 (대표님 지시, 2026-09-09) — 원어민 속도(1배)가
-   초보에게 너무 빠르다. '느리게' 단추는 이 기본값보다 항상 더 느려야 한다
-   (아래 play()의 rate()*.7 계산이 그걸 보장한다 — 0.8*.7=0.56, 0.6*.7=0.42). */
-const RATES = [['0.8', '보통'], ['0.6', '느리게']];
 const rate = () => Number(S.rate || 0.8);
 const myVoice = new Audio();          // 내가 녹음한 것 재생용 (따로 둔다)
 /* 아주 느리게(0.4·0.2배) 틀어도 높낮이(성조)는 그대로 — 브라우저 기본값이지만 옛 사파리는 접두어가 필요하다 (2026-09-27) */
@@ -858,17 +848,6 @@ function playMine() {
   myVoice.src = REC.url;
   myVoice.currentTime = 0;
   myVoice.play().catch(() => { });
-}
-/* 소리 줄 — **보통과 느리게, 두 단추를 나란히** 둔다.
-   한때 '느리게'를 뺐었는데(2026-08-30), 듀오링고를 써 본 분들이 두 단추가 있어야
-   따라 말하기 쉽다고 하셨다 (대표님 전달 2026-09-03). 되살린다.
-   느린 파일을 따로 만들지 않고 재생 속도만 늦춘다 — 성조가 안 뭉개지고 저장소도 안 는다. */
-function soundRow(text, withSlow) {
-  const row = el('div', 'sound');
-  const a = el('button', 'ghost', '🔊 듣기');
-  a.onclick = () => play(text, false);
-  row.append(a);                                   // 🐢 느리게 단추는 뺐다 (대표님 지시 2026-09-27 밤: 옛 디자인). 속도는 카드의 듣기▾ 로
-  return row;
 }
 
 /* 정답·오답 소리 — 답한 '즉시' 오는 피드백이 늦게 오는 피드백보다 낫다.
@@ -2664,57 +2643,6 @@ function studyHubEntry() {
   if (!GYBM) gybmBuild(() => { if (still()) studyHubEntry(); });
   if (!COURSE) withCourse(() => { if (still()) studyHubEntry(); });
 }
-/* ── 한자어 맞히기 (2026-10-01) ──
-   한국 사람만 쓸 수 있는 지름길: 經濟 '경제'를 보면 베트남어 kinh tế 를 추측할 수 있다(글자마다 음이 규칙적으로 대응).
-   문제: 우리 한자 자료(data/_roots.json — 위키 어원 표시·클로드 판정)에서 온전한 한자어(옛 한자음·일부 음절·뜻 조건 없는 것) 가운데
-   자주 쓰는 말 5,000위 안(data/_dict_freq.json)의 두세 음절 낱말. 보기 넷은 같은 음절 수, 되도록 한 음절을 같이 가진 낱말(추측이 필요하게).
-   규칙 표: data/_hanviet_patterns.json (tools/hanviet_quiz/patterns.py 가 글자 짝 2만여 개를 센 것) */
-let HANPAT = null;
-async function hanPool() {
-  await Promise.all([dictReady(), rootsLoad()]);
-  const out = [];
-  Object.entries(ROOTS || {}).forEach(([w, alts]) => {
-    const a = alts[0];
-    if (alts.length !== 1 || !a.h || a.o || a.p || a.c) return;
-    const n = w.split(' ').length;
-    if (n < 2 || n > 3 || [...a.h].length !== n || [...a.r].length !== n) return;
-    const fr = DFREQ && DFREQ[w];
-    if (!fr) return;
-    if (KO2VI && !KO2VI[a.r]) return;                        // 우리 음이 실제 한국어 낱말(한국어기초사전 표제어)일 때만 — '常直 상직'처럼 한국어에 없는 말은 추측이 안 된다
-    const e = DFULL && DFULL[w];
-    out.push({ vi: (e && e.h) || w, h: a.h, r: a.r, fr, ko: e ? (e.s.find(x => x && !/^\(/.test(x)) || e.s[0]) : '' });
-  });
-  return out;
-}
-async function hanQuizEntry() {
-  const b = $('#subBody'); b.textContent = '';
-  show('sub', '한자어 맞히기', true);
-  const top = el('div', 'hanqtop');
-  const go = el('button', 'primary big', tr('맞히기 시작')); go.type = 'button';
-  const rule = el('button', 'ghost', tr('발음 규칙 표')); rule.type = 'button';
-  top.append(go, rule); b.append(top);
-  const pane = el('div', 'hanqpane'); b.append(pane);
-  rule.onclick = () => hanRules(pane);
-  go.onclick = async () => { go.disabled = true; pane.textContent = tr('불러오는 중…'); const pool = await hanPool(); go.disabled = false; hanQuiz(pane, pool); };
-  hanRules(pane);
-}
-async function hanRules(pane) {
-  pane.textContent = '';
-  if (!HANPAT) HANPAT = await fetch('data/_hanviet_patterns.json', { cache: 'no-cache' }).then(r => r.json()).catch(() => null);
-  if (!HANPAT) { pane.append(el('p', 'note', tr('불러오지 못했습니다'))); return; }
-  const sec = (title, rows) => {
-    pane.append(el('div', 'hanrh', esc(tr(title))));
-    rows.forEach(r => {
-      const row = el('div', 'hanrow');
-      row.append(el('b', 'hanrk', esc(r.k)));
-      const to = el('div', 'hanrto');
-      r.to.forEach(([v, pct, exs]) => to.append(el('div', 'hanrv', '<b>' + esc(v) + '</b> <small>' + pct + '%</small> <span>' + esc((exs || []).join(' · ')) + '</span>')));
-      row.append(to); pane.append(row);
-    });
-  };
-  sec('첫소리', HANPAT.onset); sec('받침', HANPAT.coda.filter(r => r.k !== '(없음)'));
-  pane.append(el('p', 'note', tr('한자 글자 N쌍을 세어 낸 비율입니다').replace('N', HANPAT.pairs.toLocaleString())));
-}
 function hanQuiz(pane, pool) {
   const N = 10, pick = [...pool].sort(() => Math.random() - .5).slice(0, N);
   let i = 0, ok = 0;
@@ -2808,12 +2736,6 @@ function tlinkLoad(fn) {
   TLINK_P.then(() => fn && fn());
 }
 const tlinkMain = title => { const x = TLINK && TLINK[String(title).split(' · ')[0]]; return x ? tr('관련') + ': ' + tr('일상') + ' ' + x.days.slice(0, 3).map(t => tr(t)).join('·') : ''; };
-const tlinkDay = theme => {
-  if (!TLINK) return '';
-  const base = String(theme || '').split(' (')[0];
-  const bks = Object.values(TLINK).filter(x => x.days.includes(base)).map(x => x.book);
-  return bks.length ? tr('교재') + ' ' + bks.slice(0, 3).join('·') + (bks.length > 3 ? ' …' : '') : '';
-};
 function studyWordsEntry(scroll) {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyWordsEntry();
@@ -4398,7 +4320,6 @@ function learnedGramSents() {
   }));
   return out;
 }
-function testGram() { testSents('gpat'); }   // 옛 이름 — 문법 테스트는 문장 테스트의 '문법 고르기'로 합쳤다 (2026-10-02)
 function testPickEntry() {
   const b = $('#examBody'); b.textContent = '';
   /* 부제 글줄 없이 제목만 (2026-09-27). 내 단어장은 테스트 첫 화면으로 올렸다 */
@@ -6474,21 +6395,6 @@ function renderMenu(id) {
   if (m.foot) b.append(el('p', 'note', m.foot));
   show('sub', m.name, true);
 }
-function drawMenu() {
-  const box = $('#menu');
-  box.textContent = '';
-  Object.entries(MENUS).forEach(([id, m]) => {
-    const t = el('button', 'mtile');
-    t.append(el('b', null, m.name));
-    if (id === 'rev') {
-      const n = dueWords().length;
-      // 쪽지 알림과 같은 빨간 동그라미로 — 알림은 앱 안에서 한 가지 모양이어야 눈에 익는다
-      if (n) t.append(el('span', 'mbadge red', String(n)));
-    }
-    t.onclick = () => openMenu(id);   // 아래 탭과 같은 동작 (openMenu 로 한곳에 모았다)
-    box.append(t);
-  });
-}
 
 
 /* ---------- 홈 ---------- */
@@ -6504,17 +6410,6 @@ const lessonSents = () => [...(typeof RULES === 'undefined' ? [] : RULES),
                            ...(typeof GRAMMAR === 'undefined' ? [] : GRAMMAR)]
   .flatMap(r => (r.cards || []).map(c => ({ vi: c.vi, ko: c.ko, kr_read: c.kr, tones: c.tones, sent: true })));
 const seniorItems = () => SENIOR ? SENIOR.words.map(w => ({ vi: w[0], ko: w[1], imp: !!(w[2] & 1) })) : [];
-/* **내가 끝낸 강**의 단어 (2026-08-29 대표님 지적).
-   전에는 자료를 구울 때 '앱 교육과정에 있는 말'에 표를 해 두고 그걸 초록으로 칠했다.
-   그래서 Day 1 만 배운 사람에게도 실전 단어가 온통 초록이었다 — 배운 적이 없는데도.
-   '있다'와 '배웠다'는 다른 일이다. 화면에서 쓰는 것은 **배웠다** 쪽이라야 한다. */
-let LEARNT = null;
-function learntSet() {
-  if (LEARNT) return LEARNT;
-  LEARNT = new Set();
-  ALL.forEach(d => { if (S.done[d.day]) (d.words || []).forEach(w => LEARNT.add(w.vi.toLowerCase())); });
-  return LEARNT;
-}
 /* 단어의 예문을 문장 항목으로 (2026-09-28 대표님 지시 "문장 테스트 ㄱㄱ"): days.json 에 대화(dialog)가 없어 문장 문제가 한 번도 안 나오고 있었다.
    세트를 끝내면 그 과 예문 가운데 소리 있는 것 3개가 복습 창고에 문장으로 들어가고, 문장 문제(듣고 뜻·말하기·따라 말하기·퍼즐 셋)로 나온다 */
 let EXSENTS = null;
@@ -7683,7 +7578,7 @@ function loadCWords() {
   const eat = chs => chs.forEach(c => c.lessons.forEach(l => l.words.forEach(w => out.push(w))));
   COURSE.vols.forEach(v => v.tracks ? v.tracks.forEach(t => eat(t.chapters)) : eat(v.chapters));
   CWORDS = out;
-  GVOC = null; GKR = null; LEARNT = null;
+  GVOC = null; GKR = null;
 }
 
 addEventListener('load', () => {
@@ -9699,7 +9594,7 @@ $('#next').onclick = () => {
     show('rules', L.day.rule.title, true);
     return;
   }
-  S.done[L.day.day] = now(); LEARNT = null; touchToday(); save();
+  S.done[L.day.day] = now(); touchToday(); save();
   // 소개가 끝나면 바로 귀 훈련으로 이어진다 — 배우기와 시험하기가 한 흐름
   const d0 = L.day, at0 = L.i;
   const backToCards = () => { startLearn(d0); L.i = Math.min(at0, L.items.length - 1); drawCard(); };
@@ -10072,7 +9967,6 @@ function startWordbookQuiz(viList, name) {
   show('quiz', name || '단어장 복습', true);
 }
 
-const REV_CHUNK = 20;                          // (옛 값) 이제는 qN() — 사용자가 고른 문제 수
 /* 문제 수 — 10·20·30 중 사용자가 고른다 (대표님 지시 2026-09-28 밤: "학습 후 30문제 너무 많다. 학습 후와 테스트 모두 같게, 고를 수 있게").
    S.qn 에 남아 학습 뒤 확인 문제·테스트가 같은 수를 쓴다. 처음엔 20 */
 function qN() { return [10, 20, 30].includes(S.qn) ? S.qn : 20; }
@@ -11996,7 +11890,7 @@ function finishQuiz() {
     if (hasDlg) { startDialog(Q.day); return; }
     if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : Q.day.basic ? (S.bdone = S.bdone || {}) : S.done)[Q.day.day] = now();
                  addSetSentences(Q.day.words);           // 그 과 예문 3개를 문장 문제로 (2026-09-28)
-                 LEARNT = null; touchToday(); save();
+                 touchToday(); save();
                  r.textContent = ''; r.append(el('div', 'n', tr('세트 완료'))); afterSetBtns(r); return; }   // 다음 세트 · 목록으로 (2026-09-27 밤)
     dailyFlowEntry();
   };
@@ -12011,9 +11905,7 @@ function finishQuiz() {
    창고도 따로(S.ssrs), 진도도 따로(S.sdone)다 — 위 SBOX 주석을 보라.
    자료는 228KB 라 **누를 때 받는다.** 홈 화면을 늦추면 안 된다. */
 let SENIOR = null;
-const SKIND = { d: '일일', w: '주간', x: '모음' };
 const sdone = () => (S.sdone = S.sdone || {});
-const skey = t => 'S:' + t.k + t.no;
 /* ---------- 성조 훈련 (미니멀 페어) ----------
    성조만 다르고 나머지는 같은 단어를 소리로만 구별시킨다.
    시판 앱 대부분이 빠뜨린 부분이고, 성조 습득 연구가 가리키는 표준 훈련법이다. */
@@ -12039,7 +11931,6 @@ function startEar(key) {
   const d = ALL.find(x => x.day === k);
   show('tone', d ? d.theme : '모음', true);
 }
-function startVowel() { startEar('P1'); }
 function drawVowel() {
   const body = $('#toneBody');
   body.textContent = '';
@@ -13336,17 +13227,6 @@ const KBROWS = [
 ];
 
 
-/* ── 자판 쓰는 법 ────────────────────────────────────────────────
-   베트남 자판에는 성조 글쇠가 없다. 글자를 다 치고 **열쇠 글자**를 뒤에 붙인다(텔렉스).
-   베트남 사람 대다수가 이렇게 친다 — 우리 자판도 똑같이 만들었다. */
-const TLXHELP = [
-  ['성조 여섯', [['(그대로)', 'ma', 'ma', '평평하게'], ['f', 'maf', 'mà', '낮게 내려감'],
-                 ['s', 'mas', 'má', '짧게 올라감'], ['r', 'mar', 'mả', '내렸다 올림'],
-                 ['x', 'max', 'mã', '흔들며 올림'], ['j', 'maj', 'mạ', '뚝 떨어짐']]],
-  ['모자 일곱', [['aa', 'aa', 'â', ''], ['aw', 'aw', 'ă', ''], ['ee', 'ee', 'ê', ''],
-                 ['oo', 'oo', 'ô', ''], ['ow', 'ow', 'ơ', ''], ['uw', 'uw', 'ư', ''],
-                 ['dd', 'dd', 'đ', '']]],
-];
 
 /* ── 텔렉스 ──────────────────────────────────────────────────
    베트남 사람들이 실제로 치는 방식. 글자를 치고 뒤에 열쇠 글자를 붙인다.
@@ -13772,14 +13652,6 @@ function seg(a, b, first) {
 function drawVoiceBtn() {
   $('#voice').innerHTML = seg('남', '여', S.voice === 'm');   // 남·여 차례 (대표님 지시 2026-09-27)
 }
-/* 진도 초기화 — 처음부터 다시. 되돌릴 수 없어서 두 번 묻는다 */
-async function doReset() {
-  if (!await askYN(tr('배운 기록을 모두 지우고 처음부터 다시 시작할까요?'), '지우기', true)) return;
-  if (!await askYN(tr('되돌릴 수 없습니다. 정말 지울까요?'), '정말 지웁니다', true)) return;
-  const nick = S.nick;
-  S.done = {}; S.srs = {}; S.act = {}; S.stats = {}; S.wk = { k: weekKey(), base: snapshot() };
-  S.nick = nick; save(); dailyFlowEntry();
-}
 
 $('#voice').onclick = () => {
   S.voice = S.voice === 'f' ? 'm' : 'f'; save(); drawVoiceBtn();
@@ -13802,7 +13674,6 @@ const RANKKEY = ['say', 'ear', 'read', 'spell', 'memo'];
 /* 순위표의 자리표. 별명은 겹칠 수 있어서 기기마다 다른 표를 하나 만들어 쓴다.
    이 표에는 아무 뜻이 없다 — 누구인지 알 수 있는 정보가 아니다. */
 const myUid = () => S.uid || (S.uid = Math.random().toString(36).slice(2, 10), save(), S.uid);
-const RANKNM = { say: '말하기', ear: '듣기', read: '읽기', spell: '쓰기', memo: '암기' };
 function myPcts() {
   const cur = snapshot(), o = {};
   SUBJ.forEach((x, i) => {
