@@ -27,7 +27,16 @@ def call(**kw):
 
 
 def key():
-    return os.environ.get("PUSH_KEY") or getpass.getpass("관리자 열쇠(PUSH_KEY): ")
+    if os.environ.get("PUSH_KEY"): return os.environ["PUSH_KEY"]
+    # 맥 키체인에 한 번 저장해 두면(대표님 2026-10-04 "오류 보고 니가 다이렉트로 보고 고칠 수 있게") 묻지 않고 꺼내 쓴다 — 열쇠 값은 화면·기록에 안 남는다.
+    #   저장: security add-generic-password -U -a "$USER" -s chaochao-push-key -w   (값은 숨긴 채 묻는다)
+    try:
+        import subprocess
+        k = subprocess.run(["security", "find-generic-password", "-a", os.environ.get("USER", ""), "-s", "chaochao-push-key", "-w"],
+                           capture_output=True, text=True, timeout=20).stdout.strip()
+        if k: return k
+    except Exception: pass
+    return getpass.getpass("관리자 열쇠(PUSH_KEY): ")
 
 
 def when(ms):
