@@ -11,7 +11,7 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(R / "tools"))
 from vi_kr import word as vi_kr  # noqa: E402
 SRC = pathlib.Path.home() / "짜오짜오/원본자료/베트남어 학습자료/22기 자료"
-DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/3']      # 1~11회 (11회는 B반만) (일요일 9/27 없음)
+DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/3', '10/5']      # 시험 날짜들 (B반 11회 10/3 · A반 11회 10/5) (일요일 9/27 없음)
 nfc = lambda s: unicodedata.normalize('NFC', s)
 def bare(s):
     s = unicodedata.normalize('NFD', nfc(s).lower().replace('đ', 'd'))
@@ -60,9 +60,10 @@ def main():
         sents.setdefault(f, []).append({"no": int(no), "dir": d, "vi": vi.strip(), "ko": ko.strip(), "alt": [a.strip() for a in alt.split(' / ') if a.strip()],
                                         "kr": kr_of(vi.strip()), "gram": gram_of(vi), "src": src.strip()})
     tests, audio, seen = [], [], {}
+    nth = {}
     for d in sorted(C['days'], key=lambda d: d['no']):
         m = re.match(r'([AB])반 (\d+/\d+) 단어 시험', d['label']); cls, date = m.group(1), m.group(2)
-        key = cls.lower() + str(DATES.index(date) + 1)
+        nth[cls] = nth.get(cls, 0) + 1; key = cls.lower() + str(nth[cls])   # 반마다 회차를 센다 — B반은 10/3(토)에 11회, A반 11회는 10/5(월) (2026-10-04)
         fs = [p for p in (SRC / (cls.lower() + '반')).glob(key + '.*') if not p.name.startswith('.')]
         raw = text_of(fs[0]) if fs else ''
         if '정답 및 해설지' in raw: raw = raw.split('정답 및 해설지')[0]   # 문제 + 답지가 한 파일(b11) — 방향은 문제 쪽만 보고 읽는다. 답지의 '21. trường học' 은 베트남어→뜻 문제가 아니다
