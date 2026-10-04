@@ -537,6 +537,9 @@ def main():
                "a flooded country road with rice fields under gray rain clouds"),
               (("차량호출", "택시", "그랩"),
                "small electric cars parked in a row at a charging station"),
+              # 2026-10-04: '에어버스'가 아래 '버스'에 걸리지 않게 버스 줄보다 먼저 둔다.
+              (("항공기", "비엣젯", "에어버스"),
+               "a passenger airplane parked at an airport gate under a clear sky"),
               (("버스", "지하철", "도시철도", "승차권", "환승"),
                "a modern city bus at an empty bus stop"),
               # 2026-09-29: '고속철도'가 키워드에 없어 빈스피드·지멘스 기사에 은행 건물이 깔렸다.
@@ -561,9 +564,17 @@ def main():
               # 2026-10-02 아침(예약 작업): 키워드가 없어 통조림·간 이식·이온·패스트푸드 기사가 갈래 기본
               # 그림으로, 민속 마을은 '관광'에 걸려 해변으로, 배터리 재활용은 '전기차'에 걸려 조립 공장으로 갈 판이었다.
               # 2026-10-02 다시 짠 묶음: 디지털 노마드·AI 센터 기사는 갈래 기본(일자리) 그림만 깔릴 판이었다.
+              # 2026-10-04(예약 작업): 비엣젯 기사가 '에어버스'의 '버스'에 걸려 버스 그림이, 발전소·뗏 연휴·
+              # 체류 서류·생성형 AI 기사는 키워드가 없어 갈래 기본 그림이 깔렸다.
+              (("발전소", "가스터빈"),
+               "a gas power plant with cooling towers and steam under a clear sky"),
+              (("뗏 연휴", "tet break"),
+               "red lucky envelopes and a peach blossom branch beside a desk calendar"),
+              (("불법체류", "체류 서류"),
+               "a passport and stamped visa documents on a desk"),
               (("디지털노마드", "디지털 노마드", "원격 근무"),
                "a laptop and an iced coffee on a cafe table by a sunny window"),
-              (("ai 우수센터", "인공지능"),
+              (("ai 우수센터", "인공지능", "생성형 ai"),
                "a glowing computer chip on a circuit board in a modern lab"),
               (("배터리", "재활용"),
                "stacked battery packs beside a green recycling bin"),
