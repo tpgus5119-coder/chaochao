@@ -8492,7 +8492,7 @@ function dictEntry(q0) {
   /* 입력칸 + 지우기(×), 줄마다 오른쪽에 스피커. 돋보기는 뺐다 (대표님 지시 2026-09-27: '찾을 말' 글자와 겹친다) */
   const box = el('div', 'dictsearch');
   const inp = el('input', 'keyin dictin');
-  inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
+  inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');   // 아래 성조·모자 단추로 찍을 수도 있다 (2026-10-05)
   if (typeof q0 === 'string' && q0) inp.value = q0;   // 내 정보 → 사전 에서는 click 이벤트가 넘어온다
   const clr = el('button', 'dsclear', '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>');
   clr.type = 'button'; clr.title = tr('지우기');
@@ -8683,7 +8683,7 @@ function dictEntry(q0) {
   };
   let tm = null;
   inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
-  b.append(lede, box, out);
+  b.append(lede, box, viKeys(inp, draw), out);
   show('sub', '사전', true);
   dictReady().then(() => {
     if ($('#sub').hidden) return;
@@ -8841,7 +8841,7 @@ function gybmSearch() {
   b.append(el('p', 'lede', tr('GYBM 단어 N개 · 핵심 = 교재 단어장·선배 시험·주간 시험에 나온 단어')
     .replace('N', words.length.toLocaleString('ko-KR'))));
   const inp = el('input', 'keyin dictin');
-  inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');
+  inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');   // 아래 성조·모자 단추로 찍을 수도 있다 (2026-10-05)
   const out = el('div', 'dictout');
   const draw = () => {
     const q = inp.value.trim();
@@ -12206,7 +12206,7 @@ function ttLabel(c) {                           // 표·안내에 쓰는 이름
 }
 /* '둘 다'는 보기가 셋부터다 — 정답과 **모자만** 다른 보기 하나, **성조만** 다른 보기 하나가 함께 있어야
    한쪽만 들어서는 못 맞힌다(보기 둘이면 어느 한쪽만 듣고도 가려진다). 그런 짝이 둘 다 있는 낱말만 정답으로 낸다. */
-const ttMinLv = () => ttMode() === 'k' ? 3 : 2;
+const ttMinLv = () => 3;   // 난이도 올림 (대표님 2026-10-05 "성조와 모자 테스트 난이도 약간 더 높여도 된다") — 보기 둘(반반 찍기)은 없앴다
 const ttAnchor = (f, x) => ttMode() !== 'k'
   || (f.some(y => y[1] === x[1] && y[3] !== x[3]) && f.some(y => y[3] === x[3] && y[1] !== x[1]));
 function ttMaxLv() {
@@ -12219,7 +12219,8 @@ function startToneTest() {
   ttLoad().then(() => {
     if (!ttFams().length) { popup(tr('성조 문제를 불러오지 못했습니다')); return; }
     const st = ttS();
-    st.lv = Math.max(ttMinLv(), Math.min(st.lv || 2, ttMaxLv()));
+    if (!st.v2) { st.v2 = 1; st.lv = Math.max(st.lv || 0, 4); st.r = []; }   // 2026-10-05: 처음엔 보기 4개부터 (전엔 2개). 한 번만 올려 둔다
+    st.lv = Math.max(ttMinLv(), Math.min(st.lv || 4, ttMaxLv()));
     TT = { i: 0, n: qN(), ok: 0, used: new Set(), log: [], tok: 0 };
     show('tone', '성조·모자 테스트', true);     // show 가 소리를 멈추므로 화면부터 연다 — 그다음 첫 소리
     drawToneTest();
@@ -12348,7 +12349,7 @@ function ttPair(a, b, dir, tok) {
 function ttLevel(st, good) {
   st.r = (st.r || []).concat(good ? 1 : 0).slice(-10);
   const sum = a => a.reduce((x, y) => x + y, 0), mx = ttMaxLv();
-  if (st.r.length >= 10 && sum(st.r) >= 8 && st.lv < mx) { st.lv++; st.r = []; return `잘하고 있어요 — 이제 보기 ${st.lv}개로 늘립니다`; }
+  if (st.r.length >= 10 && sum(st.r) >= 7 && st.lv < mx) { st.lv++; st.r = []; return `잘하고 있어요 — 이제 보기 ${st.lv}개로 늘립니다`; }
   if (st.r.length >= 6 && sum(st.r.slice(-6)) <= 2 && st.lv > ttMinLv()) { st.lv--; st.r = []; return `조금 쉽게 — 보기 ${st.lv}개로 줄입니다`; }
   return '';
 }
@@ -12401,6 +12402,40 @@ const MARKS = [
   { m: '\u0323', name: 'nặng',  ko: '짧고 무겁게', ex: 'ạ' }
 ];
 
+/* 성조·모자 단추 (대표님 2026-10-05 "사전 검색에서 베트남어로 검색할 수 있게도 해 주라 — 성조와 모자") — 한국 키보드로는 à·ơ 를 못 친다.
+   단추를 누르면 **지금 치고 있는 낱말(맨 끝 음절)**에 붙는다: 성조는 그 음절의 주모음(tonePos 규칙)에, 모자는 그 음절의 맨 뒤 a·e·o·u·d 에.
+   같은 단추를 한 번 더 누르면 뗀다. 모자를 바꾸면 성조는 새 자리로 옮겨 다시 단다 */
+const VK_TONES = [['\u0300', 'à'], ['\u0301', 'á'], ['\u0309', 'ả'], ['\u0303', 'ã'], ['\u0323', 'ạ']];
+const VK_HATS = { 'â': ['a', '\u0302'], 'ă': ['a', '\u0306'], 'ê': ['e', '\u0302'], 'ô': ['o', '\u0302'], 'ơ': ['o', '\u031b'], 'ư': ['u', '\u031b'], 'đ': ['d', ''] };
+function vkEdit(word, kind, key) {
+  const nfd = word.normalize('NFD'), tm = (nfd.match(/[\u0300\u0301\u0309\u0303\u0323]/) || [''])[0];
+  let bare = stripTone(word);
+  if (kind === 'tone') { const m = tm === key ? '' : key; return m ? withMark(bare, m, tonePos(bare)) : bare; }
+  const [base, mark] = VK_HATS[key];
+  const chars = [...bare];
+  for (let i = chars.length - 1; i >= 0; i--) {
+    const c = chars[i], lo = c.toLowerCase(), up = c !== lo;
+    const root = lo.normalize('NFD')[0] === 'đ' ? 'd' : lo === 'đ' ? 'd' : lo.normalize('NFD')[0];
+    if (root !== base) continue;
+    let n = lo === key ? base : key;                    // 이미 그 모자면 뗀다
+    chars[i] = up ? n.toUpperCase() : n; break;
+  }
+  bare = chars.join('');
+  return tm ? withMark(bare, tm, tonePos(bare)) : bare;
+}
+function viKeys(inp, after) {
+  const row = el('div', 'vkeys');
+  const hit = (kind, key) => {
+    const v = inp.value, m = v.match(/(\S+)(\s*)$/);
+    if (!m) { inp.focus(); return; }
+    inp.value = v.slice(0, m.index) + vkEdit(m[1], kind, key) + m[2];
+    inp.focus(); after();
+  };
+  VK_TONES.forEach(([mk, show]) => { const b = el('button', 'vk', show); b.type = 'button'; b.onmousedown = e => e.preventDefault(); b.onclick = () => hit('tone', mk); row.append(b); });
+  row.append(el('span', 'vksep'));
+  Object.keys(VK_HATS).forEach(h => { const b = el('button', 'vk', h); b.type = 'button'; b.onmousedown = e => e.preventDefault(); b.onclick = () => hit('hat', h); row.append(b); });
+  return row;
+}
 function stripTone(syl) {
   return syl.normalize('NFD').replace(/[\u0300\u0301\u0309\u0303\u0323]/g, '').normalize('NFC');
 }

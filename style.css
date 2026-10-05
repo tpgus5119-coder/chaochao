@@ -3007,3 +3007,8 @@ body.inking #learn .pager{position:relative; z-index:47}
 .anaradar .analeg i.prev{border:1.5px dashed var(--dim)}
 /* 긴 낱말은 음절 단위로 줄을 바꾼다 (대표님 2026-10-03 "길이가 긴 단어는 2줄로") — 전에는 한 줄로 카드 밖까지 넘쳤다 */
 button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
+/* 사전 성조·모자 단추 (2026-10-05) */
+.vkeys{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 4px; align-items:center}
+.vkeys .vk{min-width:36px; height:36px; padding:0 8px; border-radius:10px; border:1px solid var(--line, #ddd); background:var(--card, #fff); color:var(--fg); font-size:18px; line-height:1; cursor:pointer}
+.vkeys .vk:active{background:var(--accent); color:#fff}
+.vkeys .vksep{width:6px}
