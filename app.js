@@ -8570,6 +8570,8 @@ function dictEntry(q0) {
     clr.hidden = !q;
     if (q.length < 1) { histDraw(); return; }
     const qb = dictBare(q), qk = q.toLowerCase(), qh = dictHat(q);
+    /* 띄어쓰기 틀려도 찾는다 (대표님 2026-10-05) — 빈칸을 다 뺀 글자로도 견준다: 'bệnhviện'·'benh vien' → bệnh viện, '병원 비' → 병원비 */
+    const nsp = t => t.replace(/\s+/g, ''), qbN = nsp(qb), qkN = nsp(qk);
     const num = /^\d[\d.,]*$/.test(q);              // 숫자로 찾기(8 → tám) — 뜻에 그 숫자가 있는 낱말 (대표님 2026-10-01)
     const kor = /[가-힣]/.test(q) || num;
     const k2v = (kor && !num && KO2VI && KO2VI[qk]) || [];   // 한→베: 국립국어원 한국어기초사전 대역 (2026-10-01) — 맨 위로
@@ -8594,13 +8596,14 @@ function dictEntry(q0) {
                      let best = 99;
                      [[x.vi.toLowerCase(), qk], [x.h, qh], [x.b, qb]].forEach(([s, t], f) => { const e = ext(s, t); if (e < 9) best = Math.min(best, e * 3 + f); });
                      if (best < 99) return best;
+                     if (qbN.length >= 2) { const xb = nsp(x.b); if (xb === qbN) return 1; if (xb.startsWith(qbN)) return 10; if (xb.includes(qbN)) return 13; }   // 띄어쓰기만 다른 것
                      return x.en && x.en[0] === qk ? 20 : 21;   // 영어 열쇠로만 잡힌 것은 맨 뒤 — 첫 뜻이 딱 그 말이면 먼저
                    };
                    const lesson = x => x.src && x.src.some(s => !['예문', '사전', '참고 사전'].includes(s)) ? 0 : 1;   // 수업에 나온 말이 먼저 (trường học 이 học hiệu 보다 위)
                    const nw = x => x.vi.split(/\s+/).length;   // 같은 등급이면 낱말 수가 적은 것(trường)이 붙은 말(trường học)보다 먼저
                    return sc(a) - sc(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || lesson(a) - lesson(b2) || (a.fr || 99999) - (b2.fr || 99999) || nw(a) - nw(b2) || (kor ? a.ko.length - b2.ko.length : 0) || a.vi.length - b2.vi.length;
                  };
-    const viHit = x => x.b.includes(qb) || x.vi.toLowerCase().includes(qk);
+    const viHit = x => x.b.includes(qb) || x.vi.toLowerCase().includes(qk) || (qbN.length >= 2 && nsp(x.b).includes(qbN));
     /* 영어 뜻 찾기 (2026-10-02 대표님 "왜 영어로 사전 검색 못 하냐 — skil 같은 거"): 전에는 뜻 하나가 친 말과 **똑같을 때만** 잡혀
        덜 친 말(skil)·복수·과거형(skills·walked)은 0개였다. 이제 ① 똑같음 ② 그 말로 시작하는 구(skill set) ③ 뜻 안의 한 낱말 ④ 친 말로 시작(한 글자부터, skil → skill).
        복수·-ed·-ing 는 밑꼴로도 찾는다(skills → skill, studies → study) */
@@ -8618,7 +8621,7 @@ function dictEntry(q0) {
     const enHit = x => enq && enScore(x) < 9999;
     const secs = [];
     if (kor) {
-      let mean = d.filter(x => num ? phrs(x.ko).includes(qk) : x.ko.toLowerCase().includes(qk) || k2v.includes(x.vi.toLowerCase())).sort(cmp);
+      let mean = d.filter(x => num ? phrs(x.ko).includes(qk) : x.ko.toLowerCase().includes(qk) || k2v.includes(x.vi.toLowerCase()) || (qkN.length >= 2 && nsp(x.ko.toLowerCase()).includes(qkN))).sort(cmp);
       const qp = q.replace(/\s+/g, '');
       let pron = [];
       if (!num && /^[가-힣]+$/.test(qp)) {
@@ -8853,8 +8856,9 @@ function gybmSearch() {
     } else {
       const qb = dictBare(q), qk = q.toLowerCase();
       const kor = /[가-힣]/.test(q);
-      list = words.filter(x => kor ? x.ko.toLowerCase().includes(qk)
-                                    : (dictBare(x.vi).includes(qb) || x.vi.toLowerCase().includes(qk)));
+      const nsp = t => t.replace(/\s+/g, ''), qbN = nsp(qb), qkN = nsp(qk);   // 띄어쓰기 틀려도 (2026-10-05)
+      list = words.filter(x => kor ? (x.ko.toLowerCase().includes(qk) || nsp(x.ko.toLowerCase()).includes(qkN))
+                                    : (dictBare(x.vi).includes(qb) || x.vi.toLowerCase().includes(qk) || nsp(dictBare(x.vi)).includes(qbN)));
       note = tr('N개 찾음').replace('N', list.length);
     }
     out.append(el('p', 'note', note));
