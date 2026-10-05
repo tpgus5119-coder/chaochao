@@ -3012,3 +3012,9 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 .vkeys .vk{min-width:36px; height:36px; padding:0 8px; border-radius:10px; border:1px solid var(--line, #ddd); background:var(--card, #fff); color:var(--fg); font-size:18px; line-height:1; cursor:pointer}
 .vkeys .vk:active{background:var(--accent); color:#fff}
 .vkeys .vksep{width:6px}
+/* 사전 줄의 별(나만의 단어장) — 스피커 왼쪽 (2026-10-05) */
+.dictrow:has(.dstar){grid-template-columns:auto auto 1fr auto auto}
+.dictrow:has(.dstar) .dstar{grid-column:4; justify-self:end}
+.dictrow:has(.dstar) .dspk{grid-column:5}
+.dstar{width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:22px; color:var(--dim); cursor:pointer}
+.dstar.on{color:#f5b400}

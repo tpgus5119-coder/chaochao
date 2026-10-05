@@ -8540,7 +8540,11 @@ function dictEntry(q0) {
     const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
     spk.setAttribute('role', 'button'); spk.title = tr('듣기');
     spk.onclick = ev => { ev.stopPropagation(); const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
-    row.append(spk);
+    /* 별(나만의 단어장) — 들어가지 않고 줄에서 바로 담는다 (대표님 2026-10-05). 카드의 ☆ 와 같은 열쇠(vi). 줄이 단추라 안에 단추를 못 넣어 span */
+    const st = el('span', 'dstar' + (isStar(x.vi) ? ' on' : ''), isStar(x.vi) ? '★' : '☆');
+    st.setAttribute('role', 'button'); st.title = tr('단어장에 담기');
+    st.onclick = ev => { ev.stopPropagation(); const on = toggleStar(x.vi, x.ko, x.vi); st.textContent = on ? '★' : '☆'; st.classList.toggle('on', on); };
+    row.append(st, spk);
     row.onclick = () => { dictRemember(x); openWordCard(x, () => dictEntry(inp.value)); };   // 누르면 단어 카드 — 뒤로 가면 찾던 말 그대로. 누른 말은 기록에 남는다 (2026-09-30)
     return row;
   };
