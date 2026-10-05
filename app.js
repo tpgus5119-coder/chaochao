@@ -2949,6 +2949,9 @@ function show(v, title, canBack) {
   if (v === 'home') { NAV.length = 0; SBOX = 'srs'; }   // 홈에 서면 복습 창고는 늘 하루 5분 것
 
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
+  /* 첫 화면 소리 살리기 (대표님 2026-10-05 "테스트 첫 화면 나올 때 그 단어(문장)도 소리 나라") — 문제·카드는 화면을 그리면서 autoSay 를 부르고
+     그 **뒤에** show 가 불려, 위 pause 가 방금 튼 첫 소리를 끊었다. 방금(0.6초 안) 자동 재생을 부탁한 것이 있으면 다시 튼다 */
+  if (AS_PEND && Date.now() - AS_PEND.t < 600) { const vi = AS_PEND.vi; AS_PEND = null; setTimeout(() => { autoSay(vi); AS_PEND = null; }, 0); }
   resetRec();
   if (v !== 'learn' && v !== 'quiz') releaseMic(true);   // 카드·테스트 밖으로 나가면 마이크를 놓는다
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
@@ -4233,7 +4236,7 @@ function testAllLearned(pool) {
   ns.forEach(n => {
     const btn = el('button', 'bigmenu', n + tr('문제'));
     btn.onclick = () => {
-      if ([10, 20, 30].includes(n)) { S.qn = n; save(); }
+      if ([10, 20, 30].includes(n)) QN = n;
       const ws = pool.slice().sort(() => Math.random() - .5).slice(0, n);
       dive(() => testAllLearned(pool));
       startQuiz(ws, null, n, false, { kind: 'word', boxOf: vi => boxOf[vi] || 'srs' });
@@ -7012,6 +7015,38 @@ function noteTrack(d) {
   else if (typeof d.day === 'string' && (d.day[0] === 'G' || d.day[0] === 'P')) t = 'gram';
   if (t && S.lastTrack !== t) { S.lastTrack = t; save(); }
 }
+const GRAM_ORD = [2, 3, 4, 7, 6, 8, 12, 13, 9, 10, 22, 11, 16, 17, 18, 14, 26, 15, 45, 20, 21, 39, 32, 28, 19, 23, 5, 27, 24, 30, 41, 25, 29, 31, 33, 34, 35, 36, 37, 38, 40, 42, 43, 44];
+/* 방금 끝낸 세트의 **바로 다음** 세트 — 같은 갈래·같은 차례에서 하나 뒤. 마지막이면 없음(null).
+   대표님 지시 2026-10-05: "다음 세트 누르면 그 챕터의 다음 챕터를 학습할 수 있어야지. 왜 다른 학습으로 가냐 · 마지막 챕터면 다음 챕터가 없는 거지"
+   (전에는 resumeNext 로 '마지막 갈래의 안 끝난 첫 세트'를 골라, 22기·다 끝낸 갈래에서는 일상으로 넘어갔다) */
+function nextAfter(d) {
+  const k = d && d.day;
+  if (typeof k === 'number') {
+    const L = ALL.filter(x => typeof x.day === 'number' && !x.track && visibleDay(x)).sort((a, b) => (a.n || 0) - (b.n || 0));
+    const i = L.findIndex(x => x.day === k), n = i >= 0 && L[i + 1];
+    return n ? { d: n, name: n.theme || (trackName(n) + label(n)), kind: '일상' } : null;
+  }
+  if (typeof k !== 'string') return null;
+  if (k.startsWith('J0.')) {
+    const jv = jobVol(0); if (!jv) return null;
+    const pick = S.jobpick || {}, any = jv.tracks.some(t => pick[t.track]), all = [];
+    jv.tracks.forEach((t, ti) => { if (any && !pick[t.track]) return;
+      t.chapters.forEach((c, ci) => c.lessons.forEach((l, li) => all.push({ day: jkey(ti, ci, li), theme: t.track + ' · ' + lsName(l, li), words: l.words, course: 1, kind: '직무' }))); });
+    const i = all.findIndex(x => x.day === k), n = i >= 0 && all[i + 1];
+    return n ? { d: n, name: n.theme, kind: '직무' } : null;
+  }
+  if (k.startsWith('B:') && GYBM) {
+    const src = GYBM.find(x => k.startsWith('B:' + x.key) && /^\d+$/.test(k.slice(2 + x.key.length)));
+    if (!src) return null;
+    const ni = +k.slice(2 + src.key.length) + 1, l = src.lessons[ni];
+    return l ? { d: { theme: l.title, day: gybmKey(src.key, ni), basic: 1, words: l.words }, name: l.title, kind: src.label, box: 'bsrs' } : null;
+  }
+  if (/^H\d+$/.test(k) && GRAM) {
+    const i = GRAM_ORD.indexOf(+k.slice(1));
+    for (const ni of i >= 0 ? GRAM_ORD.slice(i + 1) : []) { const b = GRAM.books[0].bai[ni]; if (b && !b.ng) return { gram: [0, ni], name: b.t, kind: '문법' }; }
+  }
+  return null;
+}
 function resumeNext() {
   const t = S.lastTrack || 'life';
   const q = COURSE ? courseQueue(999) : [];
@@ -7023,8 +7058,7 @@ function resumeNext() {
   }
   if (t === 'gram' && GRAM) {
     /* 문법 화면과 같은 '자주 쓰는 순서'로 (tools/grammar_order/순서.tsv, 2026-10-01) */
-    const ord = [2, 3, 4, 7, 6, 8, 12, 13, 9, 10, 22, 11, 16, 17, 18, 14, 26, 15, 45, 20, 21, 39, 32, 28, 19, 23, 5, 27, 24, 30, 41, 25, 29, 31, 33, 34, 35, 36, 37, 38, 40, 42, 43, 44];
-    for (const ni of ord) if (GRAM.books[0].bai[ni] && !GRAM.books[0].bai[ni].ng && !S.done[gkey(0, ni)]) return { gram: [0, ni], name: GRAM.books[0].bai[ni].t, kind: '문법' };
+    for (const ni of GRAM_ORD) if (GRAM.books[0].bai[ni] && !GRAM.books[0].bai[ni].ng && !S.done[gkey(0, ni)]) return { gram: [0, ni], name: GRAM.books[0].bai[ni].t, kind: '문법' };
   }
   const life = q.find(d => d.kind !== '직무');
   if (life) return { d: life, name: life.theme || (trackName(life) + label(life)), kind: '일상' };
@@ -9794,16 +9828,16 @@ function finishDay(d) {
   r.append(el('div', null, '단어 → 확인 문제 → 문장까지, 한 세트를 다 했습니다'));
   /* AI 선생님과 자유 대화(역할극)는 뺐다 (대표님 지시 2026-08-31). */
   b.append(r);
-  afterSetBtns(b);                          // [다음 세트 ›][목록으로] (2026-09-27 밤)
+  afterSetBtns(b, d);                       // [다음 세트 ›][목록으로] (2026-09-27 밤)
   missionCard(b, d);
   show('quiz', '오늘 완료', true);
 }
 
 /* 세트를 끝낸 뒤의 두 단추 (대표님 물음 2026-09-27 밤 "어떤 화면이 나오게 할까?") — 저절로 다음 세트로 가지 않는다(숨 돌릴 틈·짜오 동 확인).
    [다음 세트 ›]는 같은 갈래의 다음 과를 바로 시작, [목록으로]는 학습 탭 단어 목록에서 그 갈래를 펼치고 다음 과로 굴려 둔다 */
-function afterSetBtns(host) {
+function afterSetBtns(host, d) {
   const row = el('div', 'hact');
-  const nx = resumeNext();
+  const nx = nextAfter(d);
   if (nx) {
     const b1 = el('button', 'primary big', tr('다음 세트') + ' › ' + esc(nx.name));
     b1.onclick = () => { if (nx.gram) startGram(nx.gram[0], nx.gram[1]); else { SBOX = nx.box || 'srs'; if (nx.kind === '직무') JOBI = 0; startLearn(nx.d); } };
@@ -9969,14 +10003,17 @@ function startWordbookQuiz(viList, name) {
 
 /* 문제 수 — 10·20·30 중 사용자가 고른다 (대표님 지시 2026-09-28 밤: "학습 후 30문제 너무 많다. 학습 후와 테스트 모두 같게, 고를 수 있게").
    S.qn 에 남아 학습 뒤 확인 문제·테스트가 같은 수를 쓴다. 처음엔 20 */
-function qN() { return [10, 20, 30].includes(S.qn) ? S.qn : 20; }
+/* 2026-10-05 대표님 "테스트 갯수 20개 디폴트로 일단 선택되어라. 유저가 변동은 할 수 있음" — 고른 수를 저장하지 않는다.
+   앱을 열 때마다 20 에서 시작하고, 바꾸면 그때(앱을 닫기 전까지)만 그 수. 전에 10 을 골라 둔 사람도 다시 20 부터 */
+let QN = 20;
+function qN() { return QN; }
 function qnPicker(onPick) {
   const row = el('div', 'qnpick');
   row.append(el('span', 'qnlab', tr('문제 수')));
   [10, 20, 30].forEach(n => {
     const b = el('button', 'qnchip' + (qN() === n ? ' on' : ''), String(n));
     b.type = 'button';
-    b.onclick = e => { e.stopPropagation(); S.qn = n; save(); row.querySelectorAll('.qnchip').forEach(x => x.classList.toggle('on', x === b)); if (onPick) onPick(n); };
+    b.onclick = e => { e.stopPropagation(); QN = n; row.querySelectorAll('.qnchip').forEach(x => x.classList.toggle('on', x === b)); if (onPick) onPick(n); };
     row.append(b);
   });
   return row;
@@ -10331,7 +10368,7 @@ function drawQuiz() {
     wrap.append(b);
     if (!koQ) { const m = addMic(); if (m) wrap.append(m); }
     body.append(wrap, sayBox);
-    koQ ? setTimeout(() => speakKo(koShow(q.w.ko)), 150) : sound(q.w.vi);
+    koQ ? setTimeout(() => speakKo(koShow(q.w.ko)), 150) : (sound(q.w.vi), AS_PEND = { vi: q.w.vi, t: Date.now() });   // 첫 문제도 화면 바뀜에 안 끊기게 (2026-10-05)
   } else {                             // 눈으로 — 글자(또는 뜻)를 보여주고 고른다
     const main = el('button', 'qmain qtap' + (q.w.sent ? ' sent' : ''), esc(koQ ? koShow(q.w.ko) : q.w.vi));
     main.type = 'button';
@@ -11891,7 +11928,7 @@ function finishQuiz() {
     if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : Q.day.basic ? (S.bdone = S.bdone || {}) : S.done)[Q.day.day] = now();
                  addSetSentences(Q.day.words);           // 그 과 예문 3개를 문장 문제로 (2026-09-28)
                  touchToday(); save();
-                 r.textContent = ''; r.append(el('div', 'n', tr('세트 완료'))); afterSetBtns(r); return; }   // 다음 세트 · 목록으로 (2026-09-27 밤)
+                 r.textContent = ''; r.append(el('div', 'n', tr('세트 완료'))); afterSetBtns(r, Q.day); return; }   // 다음 세트 · 목록으로 (2026-09-27 밤)
     dailyFlowEntry();
   };
   r.append(b);
@@ -13166,8 +13203,10 @@ const viVoice = () => viVoices()[0] || null;
    단어 카드가 뜰 때 · 베트남어를 보여 주는 문제가 뜰 때. 한국어를 보고 베트남어를 맞히는 문제는 답을 들려주는 셈이라 안 튼다(답한 뒤에는 원래대로 소리가 난다).
    머리띠 스피커 단추로 끈다(수업 중·지하철). 기본은 켜짐 */
 const autoOn = () => true;   // 머리띠 스피커(켜기/끄기) 단추는 뺐다 (대표님 2026-10-02 "최상단 스피커 버튼 왜 있냐 없애") — 늘 켜짐. 예전에 끈 사람(S.autoSnd=false)도 다시 켜짐
+let AS_PEND = null;
 function autoSay(vi) {
   if (!autoOn() || !vi) return;
+  AS_PEND = { vi, t: Date.now() };
   const k = recKey(vi); k ? play(k, false) : speakVi(vi);
 }
 function sound(t) {
