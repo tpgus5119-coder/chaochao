@@ -50737,13 +50737,13 @@
        "vi": "dũng cảm",
        "ko": "용감하다",
        "kr_read": "중 깜",
-       "star": 1,
        "ex": {
         "vi": "Anh ấy rất dũng cảm.",
         "ko": "그는 아주 용감해요.",
         "kr": "아인 어이 젓 중 깜"
        },
-       "img": "c22-dungcam.webp"
+       "img": "c22-dungcam.webp",
+       "star": 1
       },
       {
        "vi": "dịch vụ",
@@ -50789,13 +50789,13 @@
        "vi": "lạnh lùng",
        "ko": "(성격이) 차갑다",
        "kr_read": "라인 룽",
-       "weekly": true,
-       "img": "b-lanh-lung.webp",
        "ex": {
         "vi": "Anh ấy trông lạnh lùng nhưng rất tốt bụng.",
         "ko": "그는 차가워 보이지만 아주 착해요.",
         "kr": "아인 어이 쫑 라인 룽 능 젓 똣 붕"
-       }
+       },
+       "img": "b-lanh-lung.webp",
+       "weekly": true
       },
       {
        "vi": "chụp ảnh",
@@ -50864,12 +50864,12 @@
        "vi": "xuất phát",
        "ko": "출발하다",
        "kr_read": "쑤엇 팟",
-       "img": "c22-xuatphat.webp",
        "ex": {
         "vi": "Chúng ta xuất phát lúc 8 giờ sáng.",
         "ko": "우리는 아침 8시에 출발해요.",
         "kr": "쭝 따 쑤엇 팟 룩 저 쌍"
-       }
+       },
+       "img": "c22-xuatphat.webp"
       },
       {
        "vi": "bao gồm",
@@ -51194,27 +51194,27 @@
        "vi": "mỏng",
        "ko": "얇다",
        "kr_read": "몽",
-       "star": 2,
-       "weekly": true,
-       "img": "w-35b600e252.webp",
        "ex": {
         "vi": "Chiếc áo này khá mỏng.",
         "ko": "이 옷은 꽤 얇습니다.",
         "kr": "찌엑 아오 나이 카 몽"
-       }
+       },
+       "img": "w-35b600e252.webp",
+       "star": 2,
+       "weekly": true
       },
       {
        "vi": "dày",
        "ko": "두껍다",
        "kr_read": "자이",
-       "star": 2,
-       "weekly": true,
-       "img": "b-day.webp",
        "ex": {
         "vi": "Cuốn sách này khá dày.",
         "ko": "이 책은 꽤 두껍습니다.",
         "kr": "꾸온 싹 나이 카 자이"
-       }
+       },
+       "img": "b-day.webp",
+       "star": 2,
+       "weekly": true
       },
       {
        "vi": "ít hơn",
@@ -51266,6 +51266,599 @@
        },
        "img": "b-bi-om.webp",
        "star": 1
+      }
+     ]
+    },
+    {
+     "title": "B반 10/6 단어 시험 (1/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "trong",
+       "ko": "~안에·~동안",
+       "kr_read": "쫑",
+       "ex": {
+        "vi": "Trong món lẩu có nhiều rau.",
+        "ko": "전골 안에는 채소가 많아요.",
+        "kr": "쫑 몬 러우 꼬 니에우 자우",
+        "krs": "쫑 몽 러우 꼬 니에우 라우",
+        "src": "main_book",
+        "where": "2권 1과 8쪽"
+       },
+       "img": "b-trong.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "để",
+       "ko": "두다·~하기 위해",
+       "kr_read": "데",
+       "ex": {
+        "vi": "Có người để chia sẻ vui buồn.",
+        "ko": "기쁨과 슬픔을 나눌 사람이 있어요.",
+        "kr": "꼬 응으어이 데 찌어 쌔 부이 부온",
+        "krs": "꼬 응으어이 데 찌어 새 부이 부옹",
+        "src": "main_book",
+        "where": "2권 11과 125쪽"
+       },
+       "img": "w-248ca02416.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "đó",
+       "ko": "그것·그 사람·거기",
+       "kr_read": "도",
+       "ex": {
+        "vi": "Quán ăn đó gần nhà tôi.",
+        "ko": "그 식당은 우리 집 근처예요.",
+        "kr": "꽌 안 도 건 냐 또이",
+        "krs": "꽝 앙 도 겅 냐 또이",
+        "src": "main_book",
+        "where": "1권 6과 98쪽"
+       },
+       "img": "w-8e5bd1d897.webp"
+      },
+      {
+       "vi": "trên",
+       "ko": "~위에",
+       "kr_read": "쩬",
+       "ex": {
+        "vi": "Quyển sách ở trên bàn.",
+        "ko": "책은 책상 위에 있어요.",
+        "kr": "꾸이엔 싹 어 쩬 반"
+       },
+       "img": "b-tren.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "sau",
+       "ko": "~뒤에·~후에",
+       "kr_read": "싸우",
+       "ex": {
+        "vi": "Tôi thường/hay uống cà phê sau bữa cơm.",
+        "ko": "저는 보통 식사 후에 커피를 마셔요.",
+        "kr": "또이 트언 가이 우옹 까 페 싸우 브어 껌",
+        "krs": "또이 트엉 가이 우옹 까 페 사우 브어 껌",
+        "src": "main_book",
+        "where": "2권 10과 122쪽"
+       },
+       "img": "b-sau.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "bằng",
+       "ko": "~로(수단)·같다",
+       "kr_read": "방",
+       "ex": {
+        "vi": "Chúng ta sẽ đi Vũng Tàu bằng xe máy.",
+        "ko": "우리는 오토바이로 붕따우에 갈 거예요.",
+        "kr": "쭝 따 쌔 디 붕 따우 방 쌔 마이",
+        "krs": "쭝 따 새 디 붕 따우 방 쌔 마이",
+        "src": "main_book",
+        "where": "1권 11과 168쪽"
+       },
+       "img": "w-bf8a141261.webp",
+       "star": 3,
+       "weekly": true
+      },
+      {
+       "vi": "nên",
+       "ko": "그래서·~해야 한다",
+       "kr_read": "넨",
+       "ex": {
+        "vi": "Nó đã cao lại gầy nên trông càng cao.",
+        "ko": "그 아이는 키가 크고 또 말라서 더 커 보여요.",
+        "kr": "노 다 까오 라이 거이 넨 쫑 깡 까오",
+        "krs": "노 다 까오 라이 거이 넨 쫑 깡 까오",
+        "src": "main_book",
+        "where": "2권 11과 138쪽"
+       },
+       "img": "b-nen.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "trước",
+       "ko": "~전에·~앞에",
+       "kr_read": "쯔억",
+       "ex": {
+        "vi": "Trước nhà tôi có một cây lớn.",
+        "ko": "우리 집 앞에 큰 나무가 있어요.",
+        "kr": "쯔억 냐 또이 꼬 못 꺼이 런"
+       },
+       "img": "b-truoc.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "chưa",
+       "ko": "아직 ~않다",
+       "kr_read": "쯔어",
+       "ex": {
+        "vi": "Cô ấy dọn dẹp nhà xong chưa?",
+        "ko": "그녀는 집 정리를 다 했나요?",
+        "kr": "꼬 어이 존 잽 냐 쏭 쯔어",
+        "krs": "꼬 어이 용 얩 냐 쏭 쯔어",
+        "src": "main_book",
+        "where": "1권 9과 146쪽"
+       },
+       "img": "w-d4317c525f.webp",
+       "star": 1
+      },
+      {
+       "vi": "trước khi",
+       "ko": "~하기 전에",
+       "kr_read": "쯔억 키",
+       "ex": {
+        "vi": "Chúng tôi sẽ điện thoại trước khi đến.",
+        "ko": "저희는 도착하기 전에 전화드릴게요.",
+        "kr": "쭝 또이 쌔 디엔 토아이 쯔억 키 덴",
+        "krs": "쭝 또이 새 디엥 토아이 쯔억 키 덴",
+        "src": "main_book",
+        "where": "2권 6과 63쪽"
+       },
+       "img": "b-truoc-khi.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "nơi",
+       "ko": "곳·장소",
+       "kr_read": "너이",
+       "ex": {
+        "vi": "Buổi tối anh ấy làm gì ở nơi đó?",
+        "ko": "저녁에 그는 그곳에서 무엇을 해요?",
+        "kr": "부오이 또이 아인 어이 람 지 어 너이 도",
+        "krs": "부오이 또이 아인 어이 람 이 어 너이 도",
+        "src": "main_book",
+        "where": "2권 2과 19쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "w-8af2ab4ee9.webp"
+      },
+      {
+       "vi": "vậy",
+       "ko": "그렇게·그럼",
+       "kr_read": "버이",
+       "ex": {
+        "vi": "Vậy à? Cám ơn cô.",
+        "ko": "그래요? 고맙습니다.",
+        "kr": "버이 아 깜 언 꼬",
+        "krs": "버이 아 깜 엉 꼬",
+        "src": "main_book",
+        "where": "2권 2과 14쪽"
+       },
+       "img": "w-1ec97dc4b1.webp"
+      },
+      {
+       "vi": "hơi",
+       "ko": "약간·조금",
+       "kr_read": "허이",
+       "ex": {
+        "vi": "Nhà hàng đó ngon nhưng hơi mắc.",
+        "ko": "그 식당은 맛있지만 조금 비싸요.",
+        "kr": "냐 항 도 응온 능 허이 막",
+        "krs": "냐 항 도 응옹 능 허이 막",
+        "src": "main_book",
+        "where": "1권 9과 146쪽"
+       },
+       "img": "w-482a132a1f.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "hết",
+       "ko": "끝나다·다하다·모두",
+       "kr_read": "헷",
+       "ex": {
+        "vi": "Hoa ơi, hết giờ rồi!",
+        "ko": "호아야, 시간이 다 됐어!",
+        "kr": "호아 어이 헷 저 조이",
+        "krs": "호아 어이 헷 여 로이",
+        "src": "main_book",
+        "where": "2권 10과 120쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "b-het.webp"
+      }
+     ]
+    },
+    {
+     "title": "B반 10/6 단어 시험 (2/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "à",
+       "ko": "아(감탄)·~인가요?(되묻기)",
+       "kr_read": "아",
+       "ex": {
+        "vi": "À, xin lỗi.",
+        "ko": "아, 미안해요."
+       },
+       "img": "w-f70df446e3.webp"
+      },
+      {
+       "vi": "đặc biệt",
+       "ko": "특별한·특별히",
+       "kr_read": "닥 비엣",
+       "ex": {
+        "vi": "Hàng hóa ở đây không những đẹp mà còn đặc biệt, vì ở các chợ khác không có.",
+        "ko": "여기 상품은 예쁠 뿐 아니라 다른 시장에는 없어서 특별하다.",
+        "kr": "항 호아 어 더이 콩 능 댑 마 꼰 닥 비엣 비 어 깍 쩌 칵 콩 꼬",
+        "krs": "항 호아 어 더이 콩 능 댑 마 꽁 닥 비엑 비 어 깍 쩌 칵 콩 꼬",
+        "src": "main_book",
+        "where": "2권 3과 33쪽"
+       },
+       "img": "b-dac-biet.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "tham quan",
+       "ko": "관광하다·견학하다",
+       "kr_read": "탐 꽌",
+       "ex": {
+        "vi": "Chị ấy muốn đi tham quan Thành phố Hồ Chí Minh.",
+        "ko": "그녀는 호찌민시를 관광하고 싶어 해요.",
+        "kr": "찌 어이 무온 디 탐 꽌 타인 포 호 찌 민",
+        "krs": "찌 어이 무옹 디 탐 꽝 타인 포 호 찌 민",
+        "src": "main_book",
+        "where": "1권 5과 77쪽"
+       },
+       "img": "b-tham-quan.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "bản thân",
+       "ko": "자기 자신·본인",
+       "kr_read": "반 턴",
+       "ex": {
+        "vi": "Hãy tin vào bản thân.",
+        "ko": "자기 자신을 믿으세요.",
+        "kr": "하이 띤 바오 반 턴"
+       },
+       "img": "c22-banthan.webp"
+      },
+      {
+       "vi": "anh chị em",
+       "ko": "형제자매",
+       "kr_read": "아인 찌 앰",
+       "ex": {
+        "vi": "Không, tôi chẳng có anh chị em gì cả.",
+        "ko": "아니요, 저는 형제자매가 전혀 없어요.",
+        "kr": "콩 또이 짱 꼬 아인 찌 앰 지 까",
+        "krs": "콩 또이 짱 꼬 아인 찌 앰 이 까",
+        "src": "main_book",
+        "where": "2권 11과 125쪽"
+       },
+       "img": "w-3b2ba86d56.webp"
+      },
+      {
+       "vi": "ga",
+       "ko": "기차역",
+       "kr_read": "가",
+       "ex": {
+        "vi": "Ga Sài Gòn ở đâu vậy, anh?",
+        "ko": "사이공역은 어디에 있나요?",
+        "kr": "가 싸이 곤 어 더우 버이 아인",
+        "krs": "가 사이 공 어 더우 버이 아인",
+        "src": "main_book",
+        "where": "1권 5과 203쪽"
+       },
+       "ex_src": "main_book",
+       "ex_chk": "source_fix",
+       "img": "ga-station.webp"
+      },
+      {
+       "vi": "giúp",
+       "ko": "돕다",
+       "kr_read": "줍",
+       "ex": {
+        "vi": "Chị em cô ấy cùng giúp mẹ nấu ăn.",
+        "ko": "그녀의 자매들은 함께 어머니가 요리하는 것을 돕는다.",
+        "kr": "찌 앰 꼬 어이 꿍 줍 매 너우 안",
+        "krs": "찌 앰 꼬 어이 꿍 윱 매 너우 앙",
+        "src": "main_book",
+        "where": "1권 10과 164쪽"
+       },
+       "img": "d17-giup.webp",
+       "star": 1
+      },
+      {
+       "vi": "chuyển",
+       "ko": "옮기다·이사하다",
+       "kr_read": "쭈옌",
+       "ex": {
+        "vi": "Anh định chuyển công ty à?",
+        "ko": "당신은 회사를 옮길 생각이에요?",
+        "kr": "아인 딘 쭈옌 꽁 띠 아",
+        "krs": "아인 딘 쭈옝 꽁 띠 아",
+        "src": "main_book",
+        "where": "2권 3과 35쪽"
+       },
+       "img": "w-6fdd862836.webp"
+      },
+      {
+       "vi": "gửi",
+       "ko": "보내다",
+       "kr_read": "그이",
+       "ex": {
+        "vi": "Tôi sẽ gửi cho anh mấy bức ảnh tôi đã chụp ở Đà Lạt.",
+        "ko": "달랏에서 찍은 사진 몇 장을 보내 드릴게요."
+       },
+       "img": "b-gui.webp"
+      },
+      {
+       "vi": "mời",
+       "ko": "초대하다",
+       "kr_read": "머이",
+       "ex": {
+        "vi": "Chàng trai mời cô gái đi ăn tối.",
+        "ko": "청년은 아가씨에게 저녁 식사를 함께 하자고 청했다.",
+        "kr": "짱 짜이 머이 꼬 가이 디 안 또이",
+        "krs": "짱 짜이 머이 꼬 가이 디 앙 또이",
+        "src": "main_book",
+        "where": "2권 5과 57쪽"
+       },
+       "img": "x-mowif.webp",
+       "star": 3,
+       "weekly": true
+      },
+      {
+       "vi": "quên",
+       "ko": "잊다",
+       "kr_read": "꾸엔",
+       "ex": {
+        "vi": "Ô, điện thoại mình hết pin rồi mà mình quên sạc.",
+        "ko": "어, 내 휴대폰 배터리가 다 됐는데 충전하는 걸 잊었어.",
+        "kr": "오 디엔 토아이 민 헷 삔 조이 마 민 꾸엔 싹",
+        "krs": "오 디엥 토아이 민 헷 삔 로이 마 민 꾸엔 삭",
+        "src": "main_book",
+        "where": "2권 4과 52쪽"
+       },
+       "img": "quen-forget.webp"
+      },
+      {
+       "vi": "đổi",
+       "ko": "바꾸다",
+       "kr_read": "도이",
+       "ex": {
+        "vi": "Tôi muốn đổi số đô la này ra tiền Việt.",
+        "ko": "저는 이 달러를 베트남 돈으로 바꾸고 싶습니다.",
+        "kr": "또이 무온 도이 쏘 도 라 나이 자 띠엔 비엣",
+        "krs": "또이 무옹 도이 소 도 라 나이 라 띠엥 비엑",
+        "src": "main_book",
+        "where": "2권 9과 106쪽"
+       },
+       "img": "w-6f8d7b7217.webp",
+       "star": 1
+      },
+      {
+       "vi": "thư",
+       "ko": "편지",
+       "kr_read": "트",
+       "ex": {
+        "vi": "Hôm qua tôi nhận được thư của mẹ.",
+        "ko": "어제 나는 엄마의 편지를 받았다.",
+        "kr": "홈 꽈 또이 년 드억 트 꾸어 매"
+       },
+       "img": "w-dac0860da5.webp"
+      }
+     ]
+    },
+    {
+     "title": "B반 10/6 단어 시험 (3/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "chờ",
+       "ko": "기다리다",
+       "kr_read": "쩌",
+       "ex": {
+        "vi": "Chờ tôi một chút.",
+        "ko": "저를 잠깐 기다려 주세요.",
+        "kr": "쩌 또이 못 쭛",
+        "krs": "쩌 또이 목 쭉",
+        "src": "main_book",
+        "where": "1권 8과 123쪽"
+       },
+       "img": "w-886c48df89.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "chuẩn bị",
+       "ko": "준비하다",
+       "kr_read": "쭈언 비",
+       "ex": {
+        "vi": "Tôi phải về chuẩn bị bữa tối cho gia đình.",
+        "ko": "나는 돌아가서 가족을 위해 저녁을 준비해야 한다.",
+        "kr": "또이 파이 베 쭈언 비 브어 또이 쪼 자 딘",
+        "krs": "또이 파이 베 쭈엉 비 브어 또이 쪼 야 딘",
+        "src": "main_book",
+        "where": "2권 1과 12쪽"
+       },
+       "img": "b-chuan-bi.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "ăn trưa",
+       "ko": "점심을 먹다",
+       "kr_read": "안 쯔어",
+       "ex": {
+        "vi": "Học xong, tôi ăn trưa ở căng tin của trường.",
+        "ko": "공부가 끝나고 저는 학교 식당에서 점심을 먹어요.",
+        "kr": "혹 쏭 또이 안 쯔어 어 깡 띤 꾸어 쯔엉",
+        "krs": "혹 쏭 또이 앙 쯔어 어 깡 띤 꾸어 쯔엉",
+        "src": "main_book",
+        "where": "1권 7과 119쪽"
+       },
+       "img": "an-trua.webp"
+      },
+      {
+       "vi": "ốm",
+       "ko": "아프다",
+       "kr_read": "옴",
+       "ex": {
+        "vi": "Hôm nay tôi ốm.",
+        "ko": "오늘 저는 아픕니다(몸살).",
+        "kr": "홈 나이 또이 옴"
+       },
+       "img": "d16-om.webp",
+       "star": 2
+      },
+      {
+       "vi": "thứ bảy",
+       "ko": "토요일",
+       "kr_read": "트 바이",
+       "ex": {
+        "vi": "Hôm nay là thứ bảy nên các chị ấy đi mua sắm.",
+        "ko": "오늘은 토요일이라서 그 언니들은 쇼핑하러 가요.",
+        "kr": "홈 나이 라 트 바이 넨 깍 찌 어이 디 무어 쌈",
+        "krs": "홈 나이 라 트 바이 넨 깍 찌 어이 디 무어 삼",
+        "src": "main_book",
+        "where": "1권 7과 117쪽"
+       },
+       "img": "thu-bay.webp"
+      },
+      {
+       "vi": "bạn thân",
+       "ko": "친한 친구",
+       "kr_read": "반 턴",
+       "ex": {
+        "vi": "Tôi có một người bạn thân.",
+        "ko": "나는 친한 친구가 한 명 있다.",
+        "kr": "또이 꼬 못 응으어이 반 턴",
+        "krs": "또이 꼬 목 응으어이 방 텅",
+        "src": "main_book",
+        "where": "1권 8과 133쪽"
+       },
+       "img": "b-ban-than.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "sân vận động",
+       "ko": "경기장·운동장",
+       "kr_read": "썬 번 동",
+       "star": 1,
+       "weekly": true,
+       "img": "b-san-van-dong.webp",
+       "ex": {
+        "vi": "Trận đấu diễn ra tại sân vận động lớn.",
+        "ko": "경기는 큰 경기장에서 열렸다.",
+        "kr": "쩐 더우 지엔 자 따이 썬 번 동 런"
+       }
+      },
+      {
+       "vi": "hộ chiếu",
+       "ko": "여권",
+       "kr_read": "호 찌에우",
+       "ex": {
+        "vi": "Ông làm ơn cho mượn hộ chiếu.",
+        "ko": "여권 좀 빌려 주시겠어요?",
+        "kr": "옹 람 언 쪼 므언 호 찌에우",
+        "krs": "옹 람 엉 쪼 므엉 호 찌에우",
+        "src": "main_book",
+        "where": "2권 2과 13쪽"
+       },
+       "img": "w-8e5becc12e.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "chùa",
+       "ko": "절(불교 사원)",
+       "kr_read": "쭈어",
+       "ex": {
+        "vi": "Cuối tuần tôi đi chùa với mẹ.",
+        "ko": "주말에 엄마와 절에 가요.",
+        "kr": "꾸오이 뚜언 또이 디 쭈어 버이 매"
+       },
+       "img": "w-805c802edb.webp",
+       "star": 1
+      },
+      {
+       "vi": "nhà thờ",
+       "ko": "성당·교회",
+       "kr_read": "냐 터",
+       "ex": {
+        "vi": "Nhà thờ Đức Bà Sài Gòn đẹp.",
+        "ko": "사이공 노트르담 성당은 아름다워요.",
+        "kr": "냐 터 득 바 싸이 곤 댑",
+        "krs": "냐 터 득 바 사이 공 댑",
+        "src": "main_book",
+        "where": "1권 5과 74쪽"
+       },
+       "img": "b-nha-tho.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "tắm",
+       "ko": "목욕하다·샤워하다",
+       "kr_read": "땀",
+       "ex": {
+        "vi": "Tôi tắm vào buổi sáng.",
+        "ko": "나는 아침에 샤워한다.",
+        "kr": "또이 땀 바오 부오이 쌍"
+       },
+       "img": "d46-tam.webp",
+       "star": 1
+      },
+      {
+       "vi": "béo",
+       "ko": "뚱뚱하다",
+       "kr_read": "배오",
+       "ex": {
+        "vi": "Dáng người nó thấp, có vẻ béo.",
+        "ko": "그는 키가 작고 뚱뚱해 보인다.",
+        "kr": "장 응으어이 노 텁 꼬 배 배오",
+        "krs": "양 응으어이 노 텁 꼬 배 배오",
+        "src": "main_book",
+        "where": "2권 12과 143쪽"
+       },
+       "img": "b-beo.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "nhà hát",
+       "ko": "극장·공연장",
+       "kr_read": "냐 핫",
+       "ex": {
+        "vi": "Tối nay chúng tôi đi xem kịch ở nhà hát.",
+        "ko": "오늘 밤 우리는 극장에 연극을 보러 가요.",
+        "kr": "또이 나이 쭝 또이 디 쌤 끽 어 냐 핫"
+       },
+       "img": "b-nha-hat.webp"
       }
      ]
     }
