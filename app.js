@@ -8999,7 +8999,7 @@ function drawWordbook() {
 
 /* ── 손글씨 겹쳐 쓰기 (대표님 지시 2026-09-28 밤: "단어 카드·발음 카드 화면 위에 펜·손가락으로 필기, 몇 초 뒤 스르르 사라지게.
    외울 때 손도 같이 외우면 도움") ──
-   · 애플펜슬·S펜(pointerType 'pen')은 켜기 없이 늘 쓴다. 펜으로 살짝 톡 치면 원래대로 단추가 눌린다.
+   · 애플펜슬·S펜도 손가락과 같이 ✍ 단추를 켰을 때만 쓴다(2026-10-05; 전엔 펜은 늘 썼다).
    · 손가락은 ✍ 단추를 켰을 때만 — 늘 켜 두면 카드 넘기기·단추 누르기를 막는다.
    · 획마다 따로, 그 획을 끝내고 1초 뒤 0.6초에 걸쳐 사라진다(2026-09-30 대표님 "획 단위로"; 그 전엔 마지막 획 뒤 전체가 함께).
      다 사라지면 그리기를 멈춘다(배터리·발열 없음).
@@ -9025,8 +9025,8 @@ function inkSetup() {
   cv.addEventListener('pointerdown', e => { if (!INK.finger || !here()) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
   cv.addEventListener('pointermove', e => { if (INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } });
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, e => { if (INK.cur && INK.cur.id === e.pointerId) inkEnd(); }));
-  // 펜 — 켜기 없이 문서 전체에서 먼저 받는다
-  document.addEventListener('pointerdown', e => { if (e.pointerType !== 'pen' || !here() || INK.finger || e.target === btn) return; inkStart(e); }, true);
+  // 펜도 ✍ 를 켰을 때만 쓴다 (대표님 2026-10-05 "필기 모드 키지도 않았는데 왜 필기가 되니? 애플펜슬로 하니까 그냥 되던데") — 켜면 위 캔버스가 펜·손가락을 함께 받는다.
+  //   전에는 펜(pointerType 'pen')은 켜기 없이 늘 썼다
   document.addEventListener('pointermove', e => { if (e.pointerType === 'pen' && INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } }, true);
   ['pointerup', 'pointercancel'].forEach(ev => document.addEventListener(ev, e => { if (e.pointerType === 'pen' && INK.cur && INK.cur.id === e.pointerId) inkEnd(); }, true));
   // 글씨를 쓴 획이 단추 위에서 끝나도 그 단추가 눌리지 않게 — 톡 친 것만 눌린다
