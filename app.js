@@ -8646,11 +8646,12 @@ function dictEntry(q0) {
                       ② 정확도: 성조·모자까지 똑같음 0 · 모자까지(성조 빼고) 1 · 모자·성조 다 빼고 2
                       점수 = 범위×3 + 정확도 — 범위가 먼저: 친 말 그 자체인 낱말(ăn)이 그 말을 품은 낱말(an toàn)보다 앞, 같은 범위면 친 글자와 더 똑같은 것(an > án > ăn) */
                    const ext = (s, t) => s === t ? 0 : s.startsWith(t + ' ') ? 1 : (s.includes(' ' + t + ' ') || s.endsWith(' ' + t)) ? 2 : s.startsWith(t) ? 3 : s.includes(t) ? 4 : 9;
+                   const abbr = x => /\./.test(x.vi) ? 1 : 0;   // 'Đ.'·'Đ.C.G.' 같은 약어 표제어 — 점 뗀 글자(d)가 친 말과 똑같아 'đ' 한 글자에 맨 위로 왔다 (2026-10-06)
                    const sc = x => {
                      if (kor) { const i2 = k2v.indexOf(x.vi.toLowerCase()); if (i2 >= 0) return -10 + i2; const p = phrs(x.ko); return p[0] === qk ? 0 : p.includes(qk) ? 1 : p.some(v => v.startsWith(qk)) ? 2 : 3; }
                      let best = 99;
                      [[x.vi.toLowerCase(), qk], [x.h, qh], [x.b, qb]].forEach(([s, t], f) => { const e = ext(s, t); if (e < 9) best = Math.min(best, e * 3 + f); });
-                     if (best < 99) return best;
+                     if (best < 99) return best + (abbr(x) ? 15 : 0);   // 약어는 앞·안에 든 낱말(최대 14)보다 뒤로
                      if (qbN.length >= 2) { const xb = nsp(x.b); if (xb === qbN) return 1; if (xb.startsWith(qbN)) return 10; if (xb.includes(qbN)) return 13; }   // 띄어쓰기만 다른 것
                      return x.en && x.en[0] === qk ? 20 : 21;   // 영어 열쇠로만 잡힌 것은 맨 뒤 — 첫 뜻이 딱 그 말이면 먼저
                    };
@@ -9960,8 +9961,7 @@ let Q = null;
      쓰기 = 소리 듣고 → 자판으로 쓰기     (듣기와 철자를 한 번에)
    고르는 문제는 쉽고, 만들어 내는 문제는 어렵다. 어려운 쪽이 기억에 더 남는다.
    그래서 처음 만난 단어는 듣기·읽기부터, 익숙해질수록 말하기·쓰기가 많아진다. */
-const SKILLS = [
-  { k: 'say',    name: '말하기', how: '뜻만 보고 베트남어로 말하기 — AI가 듣고 채점' },
+const SKILLS = [                                           // 말하기 갈래는 뺐다 (2026-10-06 대표님 "말하기 테스트는 빼자") — 복습 메뉴의 [말하기] 단추도 사라진다
   { k: 'listen', name: '듣기', how: '소리 듣고 뜻 고르기' },
   { k: 'read',   name: '읽기', how: '글자 보고 뜻 고르기' },
   { k: 'write',  name: '쓰기', how: '소리 듣고 자판으로 · 가끔 손으로 쓰기' },
@@ -9979,12 +9979,13 @@ function pickMode(w, lv) {
   const r = Math.random();
   // 문장은 알아듣기·말하기 위주, 그리고 **퍼즐**로 어순을 만져 본다
   // 2026-09-28: 뜻 듣고 말하기(say_ko)·뜻 듣고 고르기(listen_ko)·뜻 보고 고르기(read_ko)·성조 부호 고르기(tone)·따라 말하기(shadow)·뜻 듣고/문장 듣고 퍼즐 추가. 손글씨는 뺐다
-  if (w.sent) return r < .22 ? 'listen' : r < .40 ? 'say' : r < .58 ? 'shadow' : r < .80 ? 'puzzle' : 'puzzle_vi';   // 뜻 듣고 배열(puzzle_ko)은 뺐다 — 듣는 것은 베트남어만 (2026-09-28)
+  /* 말하기(say·shadow)는 문제에서 뺐다 (대표님 2026-10-06 "말하기 테스트는 빼자 — 기기가 잘 인식 못 한다. 단어 학습(카드)에서 말하기 연습만") */
+  if (w.sent) return r < .30 ? 'listen' : r < .70 ? 'puzzle' : 'puzzle_vi';   // 뜻 듣고 배열(puzzle_ko)은 뺐다 — 듣는 것은 베트남어만 (2026-09-28)
   // 뜻 듣고 단어 고르기(listen_ko)는 뺐다 (대표님 지시 2026-09-28)
   // 뜻 듣고 말하기(say_ko)도 뺐다 (대표님 지시 2026-09-28)
-  if (lv >= 2) return r < .24 ? 'say' : r < .44 ? 'type' : r < .58 ? 'listen' : r < .70 ? 'read' : r < .80 ? 'read_ko' : r < .90 ? 'tone' : 'match';
-  if (lv >= 1) return r < .18 ? 'say' : r < .40 ? 'type' : r < .56 ? 'listen' : r < .72 ? 'read' : r < .82 ? 'read_ko' : r < .92 ? 'tone' : 'match';
-  return r < .12 ? 'say' : r < .28 ? 'type' : r < .50 ? 'listen' : r < .72 ? 'read' : r < .84 ? 'read_ko' : r < .92 ? 'tone' : 'match';
+  if (lv >= 2) return r < .24 ? 'type' : r < .44 ? 'listen' : r < .62 ? 'read' : r < .76 ? 'read_ko' : r < .90 ? 'tone' : 'match';
+  if (lv >= 1) return r < .22 ? 'type' : r < .44 ? 'listen' : r < .64 ? 'read' : r < .78 ? 'read_ko' : r < .90 ? 'tone' : 'match';
+  return r < .16 ? 'type' : r < .44 ? 'listen' : r < .68 ? 'read' : r < .82 ? 'read_ko' : r < .92 ? 'tone' : 'match';
 }
 /* 단어 → 속한 세트 색인. 오답 보기를 같은 세트에서 뽑기 위한 것 —
    엉뚱한 세트의 단어가 보기로 나오면 뜻만 슬쩍 봐도 답이 티가 난다. */
@@ -10086,7 +10087,7 @@ function buildSetQuestions(words) {
   const recW = words.length <= N ? words : mix(words).slice(0, N);
   const rec = buildQuestions(recW, ['listen', 'read', 'read_ko', 'match', 'tone', 'listen', 'read']);
   const k = Math.min(words.length, N - recW.length);
-  const prod = k > 0 ? buildQuestions(mix(words).slice(0, k), canRecord() ? ['type', 'say', 'type'] : ['type']) : [];
+  const prod = k > 0 ? buildQuestions(mix(words).slice(0, k), ['type']) : [];   // 말하기는 뺐다 (2026-10-06) — 만들어 내기는 타이핑만
   return rec.concat(prod);
 }
 function startQuiz(words, day, cap, early, opt) {
@@ -10885,7 +10886,7 @@ function startExam1(key) {
       if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles }, mode: 'puzzle', sec: x.sec, opts: [] };
       if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '' }, mode: 'say', sec: x.sec, opts: [] };
       return { w, mode: 'fx', sec: x.sec, opts: [] };
-    }).filter(q => q.mode !== 'say' || canRecord());
+    }).filter(q => q.mode !== 'say');                      // 시험지의 D 말하기는 앱에서 안 낸다 (2026-10-06)
     SBOX = 'bsrs';
     Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, fixed: key, deadline: Date.now() + J.time * 60000 };
     drawQuiz();
@@ -11265,11 +11266,7 @@ function startWeeklyExam(round) {
   const c1 = prefer(5, shortS(gsIn), shortS(sentsIn), shortS(gs), shortS(sents));
   c1.forEach(x => L.push(mk(x, 'puzzle', 'C 쓰기 · 1 낱말 배열')));
   prefer(5, gsIn, sentsIn, sents).forEach(x => L.push(mk(x, 'err', 'C 쓰기 · 2 틀린 곳')));
-  if (canRecord()) {
-    pick(withAud, 10).forEach(w => L.push(mk(w, 'say', 'D 말하기 · 1 낱말 읽기')));
-    if (r.speak !== 'pron') pick(sents.filter(x => x.aud), 5).forEach(x => L.push(mk(x, 'shadow', 'D 말하기 · 2 문장 읽기')));
-    else pick(sents.filter(x => x.aud && x.vi.split(/\s+/).length <= 7), 5).forEach(x => L.push(mk(x, 'shadow', 'D 말하기 · 2 문장 읽기')));   // 1회차 말하기 = 발음(낱말 10 · 짧은 문장 5, 시험지 D1)
-  }
+  // D 말하기(낱말 읽기 10·문장 읽기 5)는 뺐다 (대표님 2026-10-06 "말하기 테스트는 빼자 — 기기 인식을 못 믿는다"). 말하기 연습은 단어 카드에서
   if (L.length < 10) { popup(tr('시험을 만들 재료가 모자랍니다')); return; }
   SBOX = round ? 'bsrs' : 'srs';                     // 교재 단어는 교재 창고에 채점
   Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: r.no };   // blind: 실제 시험처럼 끝에 채점 (2026-09-30)
@@ -12521,10 +12518,13 @@ function vkEdit(word, kind, key) {
 }
 function viKeys(inp, after) {
   const row = el('div', 'vkeys');
+  /* 2026-10-06 고침(대표님 "đ 검색도 할 수 있어야"): 빈칸이거나 끝에 공백이 있으면(새 낱말) 모자 단추는 그 글자를 **넣는다**(đ·â…),
+     치고 있는 낱말에 바꿀 글자가 없으면(ch + ê) 그 글자를 덧붙인다(chê). 전에는 셋 다 아무 일도 안 했다. 성조 단추는 모음이 있어야 찍힌다 */
   const hit = (kind, key) => {
-    const v = inp.value, m = v.match(/(\S+)(\s*)$/);
-    if (!m) { inp.focus(); return; }
-    inp.value = v.slice(0, m.index) + vkEdit(m[1], kind, key) + m[2];
+    const v = inp.value, m = v.match(/(\S+)$/);
+    if (!m) { if (kind === 'hat') inp.value = v + key; inp.focus(); after(); return; }
+    const w = m[1], e = vkEdit(w, kind, key);
+    inp.value = v.slice(0, m.index) + (e === w && kind === 'hat' ? w + key : e);
     inp.focus(); after();
   };
   VK_TONES.forEach(([mk, show]) => { const b = el('button', 'vk', show); b.type = 'button'; b.onmousedown = e => e.preventDefault(); b.onclick = () => hit('tone', mk); row.append(b); });
