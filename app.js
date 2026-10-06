@@ -10897,7 +10897,7 @@ function weeklyEntry() {
 const FIXED_EXAMS = { exam1: { file: 'data/exam1.json', name: '실제 시험지 (1차)', round: 1 },
   m2_1: { file: 'data/mock2_1.json', name: '모의고사 1', round: 2 }, m2_2: { file: 'data/mock2_2.json', name: '모의고사 2', round: 2 }, m2_3: { file: 'data/mock2_3.json', name: '모의고사 3', round: 2 },
   m2_4: { file: 'data/mock2_4.json', name: '모의고사 4', round: 2 }, m2_5: { file: 'data/mock2_5.json', name: '모의고사 5', round: 2 } };
-/* 주간시험 1 = 실제 1차 시험지 그대로, 주간시험 2 = 2차 시험 안내 틀(tools/mock2/common.py)로 낸 모의고사 다섯(1~7과). 옛 2차 예상 시험지(exam2.json)는 모의고사 1 로 다시 냈다 (2026-10-06) */   // 파일 이름을 글자 그대로 적어야 배포 목록에 든다. 2차는 교재 1권 1~7과로 클로드가 냄 (2026-10-06)
+/* 주간시험 1 = 실제 1차 시험지 그대로, 주간시험 2 = 2차 시험 안내 틀(tools/mock2/common.py)로 낸 모의고사 다섯(1~7과). 옛 2차 예상 시험지(exam2)는 모의고사 1 로 다시 냈다 (2026-10-06) */   // 파일 이름을 글자 그대로 적어야 배포 목록에 든다. 2차는 교재 1권 1~7과로 클로드가 냄 (2026-10-06)
 let EXAM1_TIMER = 0, FIXED = {};
 function startExam1(key) {
   key = key || 'exam1';
