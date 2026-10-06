@@ -24,7 +24,7 @@ MY += ["tools/word_check/asr_recheck.py", "data/_asr_recheck.jsonl"]
 MY += ["tools/word_check/asr_num.py", "data/_asr_num.jsonl"]
 MY += ["tools/dict_keep.tsv", "tools/dict_skip_2026-09-30.txt", "data/_dict_skip.json", "data/_dict_en.json", "tools/dict_en/build.py", "tools/word_check/fix_kr.py", "tools/compound/판정.tsv", "tools/compound/_후보.tsv"]   # 사전 문장 빼기·영어 열쇠·발음 고침·붙은 말 판정 (2026-09-29)
 MY += ["data/_south.json", "tools/south/남부.tsv", "tools/south/참고사전_남부.tsv", "tools/south/build.py", "tools/south/make_dict_south.py", "tools/gloss_all.py", "tools/fetch_raw_more.py"]
-MY += ["data/daily22.json", "tools/daily22/build.py", "tools/daily22/문장.tsv", "data/exam2.json"]   # 2차 시험지 (2026-10-06)
+MY += ["data/daily22.json", "tools/daily22/build.py", "tools/daily22/문장.tsv", "data/exam2.json", "data/exam_pics.json"]   # 2차 시험지·주간 시험 듣기 그림 문장 (2026-10-06)
 MY += ["tools/word_check/tone_check.py", "data/_tone_check.json"]   # 성조 잣대 (2026-09-30)   # 매일 단어 시험 (2026-09-30)
 MY += ["tools/notes/필기_낱말.tsv", "tools/notes/add.py", "tools/notes/img.py"]   # 대표님 필기 낱말 → 일상회화 (2026-09-30)   # 남부 딱지·뜻풀이 전부 뽑기 (2026-09-29 밤)
 MY += ["tools/senior_topic/결과.tsv", "tools/senior_topic/일상_넣기.tsv", "tools/senior_topic/add_senior.py", "tools/senior_topic/add_work.py"]   # 선배 시험 낱말 → 일상·직무 주제 + 자주 쓰는 기본 낱말 (2026-10-01)
@@ -73,7 +73,7 @@ def walk(o):
         for v in o.values(): walk(v)
     elif isinstance(o, list):
         for v in o: walk(v)
-for f in ("gybm", "days", "order", "grammar", "weekly", "daily22", "exam1", "exam2"): walk(   # weekly: 주간 시험 그림   # grammar: 줌 수업 문법 예문 소리도 올린다 (2026-09-27)   # daily22·exam1: 단어 시험·1차 시험지 문장 소리 — 빠져서 404 였다 (2026-10-02)
+for f in ("gybm", "days", "order", "grammar", "weekly", "daily22", "exam1", "exam2", "exam_pics"): walk(   # weekly: 주간 시험 그림   # grammar: 줌 수업 문법 예문 소리도 올린다 (2026-09-27)   # daily22·exam1: 단어 시험·1차 시험지 문장 소리 — 빠져서 404 였다 (2026-10-02)
     json.loads((ROOT / f"data/{f}.json").read_text(encoding="utf-8")))
 sys.path.insert(0, str(ROOT / "tools"))
 import build_gram_main            # 메인 교재 문법의 소리(예문·문장 안 낱말·핵심 낱말)도 같이 올린다

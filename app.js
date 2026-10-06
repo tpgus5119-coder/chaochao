@@ -4259,11 +4259,20 @@ function learnedSents() {
 }
 /* 대답 만들기 (대표님 2026-10-06 "문장을 보고 대답을 작성하는 테스트") — 교재 대화에서 '물음 → 대답' 짝을 뽑아,
    물음을 보여 주고(누르면 소리) 그 대답을 조각으로 만든다. 범위: 교재(메인) 과 가운데 한 세트라도 끝낸 과까지(최소 1과). 대답은 3~9낱말 */
-let REALBOOK = null;
-function replyLoad(cb) {
-  const go = () => gybmBuild(() => cb(replyPairs()));
-  if (REALBOOK) { go(); return; }
-  fetch('data/realbook.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { REALBOOK = j; go(); }).catch(() => popup(tr('교재 대화를 불러오지 못했습니다')));
+let REALBOOK = null, REALBOOK_P = null;
+function realbookLoad() {
+  if (REALBOOK) return Promise.resolve();
+  if (!REALBOOK_P) REALBOOK_P = fetch('data/realbook.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { REALBOOK = j; }).catch(() => { REALBOOK_P = null; popup(tr('교재 대화를 불러오지 못했습니다')); });
+  return REALBOOK_P;
+}
+function replyLoad(cb) { realbookLoad().then(() => { if (REALBOOK) gybmBuild(() => cb(replyPairs())); }); }
+/* 주간 시험 듣기 그림 문제(A1·A2)에 들려줄 문장 — data/exam_pics.json. 낱말마다 **그 그림을 판정할 수 있는 문장**을 1차 시험지 꼴로 미리 써 두었다(2026-10-06,
+   대표님 "아무 문장이나 말고 시험에 맞게 — 정답을 고를 수 있도록"). 품사 자료(_pos.json)로 틀에 끼워 짓는 방법은 'Đây là buổi.' 같은 말이 되어 버렸다 */
+let EXPICS = null, EXPICS_P = null;
+function expicsLoad() {
+  if (EXPICS) return Promise.resolve();
+  if (!EXPICS_P) EXPICS_P = fetch('data/exam_pics.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { EXPICS = {}; (j.items || []).forEach(x => { EXPICS[x.vi.toLowerCase()] = x.audio; }); }).catch(() => { EXPICS = {}; });
+  return EXPICS_P;
 }
 function replyPairs() {
   const chs = ((REALBOOK.books || [])[0] || {}).chapters || [];
@@ -11178,11 +11187,16 @@ function finishDaily() {
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
 function startWeeklyExam(round) {
+  if (!EXPICS) { expicsLoad().then(() => startWeeklyExam(round)); return; }   // 듣기 그림 문제 문장 (2026-10-06)
   const r = round || WEEKLY_ROUNDS[0];
   const words = (round ? weeklyRoundWords(r) : weeklyMaterial()).sort(() => Math.random() - .5);
   const withImg = words.filter(w => w.img), withAud = words.filter(w => AIDX[w.vi]);
+  /* 시험 문장은 교재 **공식 단어장(gl) 낱말**의 예문만, 그리고 지시문·문법 설명 글은 뺀다 (대표님 2026-10-06 "아무 문장이나 말고 시험에 맞게") —
+     교재 낱말에는 'từ ngữ·tự xưng·sự' 같은 연습 지시문·문법 설명에서 온 말이 섞여 있어 "Chọn từ ngữ đúng."·"Đại từ nhân xưng … được dùng để tự xưng." 이 시험에 나왔다 */
+  const META = /^(viết|chọn|xem|điền|đọc|nghe|trả lời|dùng|hoàn thành|chuyển|đánh dấu|khoanh|thực hành|sử dụng|tìm|đặt|hỏi|hãy)\b|dưới đây|theo mẫu|chỗ trống|đoạn văn|bài tập|đại từ|ngôi thứ|từ ngữ|nghi vấn|phát âm|thanh điệu|nguyên âm|phụ âm|hội thoại|ngữ pháp|chính tả|được dùng để|kết cấu|^học viên\b/i;
+  const glW = words.filter(w => w.gl), srcW = glW.length >= 40 ? glW : words;
   const sents = []; const ss = new Set();
-  words.forEach(w => { const e = w.ex; if (e && e.vi && e.vi.split(/\s+/).length >= 4 && !ss.has(e.vi)) { ss.add(e.vi); sents.push({ vi: e.vi, ko: e.ko || '', kr_read: e.kr || '', sent: true, of: w.vi, aud: !!AIDX[e.vi] }); } });
+  srcW.forEach(w => { const e = w.ex; if (e && e.vi && e.vi.split(/\s+/).length >= 4 && !ss.has(e.vi) && !META.test(e.vi)) { ss.add(e.vi); sents.push({ vi: e.vi, ko: e.ko || '', kr_read: e.kr || '', sent: true, of: w.vi, aud: !!AIDX[e.vi] }); } });
   const pick = (arr, n) => arr.slice().sort(() => Math.random() - .5).slice(0, n);
   const others = (pool, w, n, ok) => pick(pool.filter(x => x.vi !== w.vi && (!ok || ok(x))), n);
   const mk = (w, mode, sec, pool, ok) => ({ w, mode, sec, opts: [w, ...others(pool || words, w, 3, ok)].sort(() => Math.random() - .5) });
@@ -11202,13 +11216,15 @@ function startWeeklyExam(round) {
      D 말하기 20 — 1 낱말 읽기 10 · 2 문장 읽기 5 (녹음이 되는 기기만)
      재료가 모자라면 있는 만큼만 낸다. 앱 문제 형식이 시험지와 1:1로 같지 않은 곳: 그림 짝(A2)은 소리 하나에 그림 넷, 듣고 쓰기(A4)는 낱말 받아쓰기, 알맞은 문장(B4)은 뜻 보고 문장 고르기 */
   const L = [];
-  /* 듣기는 낱말이 아니라 **문장**을 들려준다 (대표님 2026-10-06 "리스닝 각 문제마다 한 문장(길면 두 문장)") — 그 낱말의 예문. 녹음이 없으면 기계 소리 */
+  /* 듣기는 낱말이 아니라 **문장**을 들려준다 (대표님 2026-10-06 "리스닝 각 문제마다 한 문장(길면 두 문장) — 아무 문장이나 말고 시험에 맞게, 정답을 고를 수 있도록").
+     A1·A2 는 data/exam_pics.json 에 **그 그림을 판정할 수 있게 미리 써 둔 문장**(1차 시험지 꼴 — "Anh ấy là bác sĩ. Anh ấy làm việc ở bệnh viện.")이 있는 낱말만 낸다. 녹음이 없으면 기계 소리 */
   const exOf = w => (w.ex && w.ex.vi && w.ex.vi.replace(/[.?!]+$/, '').split(/\s+/).length >= 3) ? w.ex.vi : null;
-  const imgAud = withImg.filter(w => exOf(w));
-  pick(imgAud, 5).forEach(w => L.push(Object.assign(mk(w, 'pic_tf', 'A 듣기 · 1 그림 맞다/틀리다', withImg, x => !!x.img), { say: exOf(w) })));
-  pick(imgAud, 5).forEach(w => L.push(Object.assign(mk(w, 'pic4', 'A 듣기 · 2 맞는 그림', withImg, x => !!x.img), { say: exOf(w) })));
+  const picW = withImg.filter(w => EXPICS[w.vi.toLowerCase()]);
+  pick(picW, 5).forEach(w => L.push(Object.assign(mk(w, 'pic_tf', 'A 듣기 · 1 그림 맞다/틀리다', picW, x => !!x.img), { say: EXPICS[w.vi.toLowerCase()] })));
+  pick(picW, 5).forEach(w => L.push(Object.assign(mk(w, 'pic4', 'A 듣기 · 2 맞는 그림', picW, x => !!x.img), { say: EXPICS[w.vi.toLowerCase()] })));
   prefer(10, gsIn, sentsIn, sents.filter(x => x.aud)).forEach(x => L.push(mk(withTts(x), 'listen', 'A 듣기 · 3 듣고 고르기', [...gsIn, ...sentsIn, ...sents])));   // 범위 낱말+문법 문장 먼저
-  pick(words.filter(w => exOf(w)), 10).forEach(w => L.push({ w: { vi: w.ex.vi, ko: w.ex.ko || '', of: w.vi, sent: true, nograde: true }, mode: 'cloze', sec: 'A 듣기 · 4 듣고 빈칸', opts: [], say: w.ex.vi }));   // 시험지 A4 꼴: 문장을 듣고 빈칸 낱말 고르기 (2026-10-06)
+  { const a4all = srcW.filter(w => exOf(w) && !META.test(w.ex.vi)), a4in = a4all.filter(w => inRange0({ vi: w.ex.vi }));   // 공식 단어장 낱말의 예문, 범위 낱말로만 된 것 먼저 (2026-10-06)
+    pick(a4in.length >= 10 ? a4in : a4all, 10).forEach(w => L.push({ w: { vi: w.ex.vi, ko: w.ex.ko || '', of: w.vi, sent: true, nograde: true }, mode: 'cloze', sec: 'A 듣기 · 4 듣고 빈칸', opts: [], say: w.ex.vi })); }   // 시험지 A4 꼴: 문장을 듣고 빈칸 낱말 고르기
   /* B1 빈칸 — 시험지 지시문 그대로 '낱말과 문법을 본다': 회차 문법 빈칸을 먼저, 모자라면 낱말 빈칸 */
   let gs = round ? roundGramSents(r) : [];
   const b1 = [];
