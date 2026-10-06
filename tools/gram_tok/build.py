@@ -56,7 +56,7 @@ for li, l in enumerate(G['books'][0]['bai']):
                 if t in ('_', '?', '!', '^', '$', ','): continue
                 w = (t[1:-1].split('|')[0] if t.startswith('(') else t).replace('+', ' ')
                 if w and not w.startswith('\\') and w not in toks: toks.append(w)
-        if l['no'] in (1, 2, 3, 7, 13, 14, 16, 46): toks = []   # 인사·호칭·숫자·시각·날짜·옷·카페 말은 낱말 목록이라 문법 빈칸으로 안 뚫는다 ('Xin chào!' 빈칸이 나왔다)
+        if l['no'] in (1, 2, 3, 7, 13, 14, 16, 46) or k in ('39.4', '39.2', '39.3', '46.0'): toks = []   # 통째로 외우는 말(Không sao·Thế ạ)도 — 문장 전체가 빈칸이 됐다   # 인사·호칭·숫자·시각·날짜·옷·카페 말은 낱말 목록이라 문법 빈칸으로 안 뚫는다 ('Xin chào!' 빈칸이 나왔다)
         items.append({'id': k, 'no': l['no'], 'li': li, 'gi': gi, 't': x['t'], 're': rs, 'always': not rs, 'tok': toks})
 # ① 검산 — 예문
 bad = []

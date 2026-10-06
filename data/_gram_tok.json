@@ -3547,10 +3547,7 @@
 "(?<![A-Za-zÀ-ỹĐđ])cái\\s+gì\\s+thế(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])này(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])kia(?![A-Za-zÀ-ỹĐđ]))"
 ],
 "always": false,
-"tok": [
-"cái gì thế",
-"này"
-],
+"tok": [],
 "selftest": "2/4",
 "first": null
 },
@@ -3564,9 +3561,7 @@
 "(?:(?<![A-Za-zÀ-ỹĐđ])thế\\s+ạ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thế\\s+à(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ra\\s+thế(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ra\\s+vậy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])vậy\\s+à(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])vậy\\s+ạ(?![A-Za-zÀ-ỹĐđ]))"
 ],
 "always": false,
-"tok": [
-"thế ạ"
-],
+"tok": [],
 "selftest": "3/3",
 "first": "1-8"
 },
@@ -3580,9 +3575,7 @@
 "(?:(?<![A-Za-zÀ-ỹĐđ])không\\s+sao(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])được\\s+rồi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tất\\s+nhiên(?![A-Za-zÀ-ỹĐđ]))"
 ],
 "always": false,
-"tok": [
-"không sao"
-],
+"tok": [],
 "selftest": "3/3",
 "first": "1-1"
 },
