@@ -11,7 +11,7 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(R / "tools"))
 from vi_kr import word as vi_kr  # noqa: E402
 SRC = pathlib.Path.home() / "짜오짜오/원본자료/베트남어 학습자료/22기 자료"
-DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/5', '10/6']      # 시험 날짜들 (2026-10-05 대표님: 10/2 다음 시험은 10/5 — 11회 두 반 다 10/5, 12회 10/6) (일요일 9/27 없음)
+DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/5', '10/6', '10/7']      # 시험 날짜들 (2026-10-05 대표님: 10/2 다음 시험은 10/5 — 11회 두 반 다 10/5, 12회 10/6) (일요일 9/27 없음)
 nfc = lambda s: unicodedata.normalize('NFC', s)
 def bare(s):
     s = unicodedata.normalize('NFD', nfc(s).lower().replace('đ', 'd'))
@@ -25,6 +25,7 @@ GRAM = [(r'không phải là', 4), (r'\blà\b', 4), (r'\bcủa\b', 4), (r'\bcũn
         (r'\bgì\b', 5), (r'\bai\b', 5), (r'nước nào', 5), (r'thế nào', 5), (r'\bmấy\b', 8), (r'bao nhiêu', 8), (r'\bđã\b|\bđang\b|\bsẽ\b', 10),
         (r'\bchưa\b', 11), (r'\brất\b|\bquá\b', 12), (r'ở đâu|đi đâu|từ đâu', 17), (r'\bđều\b', 28), (r'\bđược\b|\bbiết\b|có thể|\bmuốn\b', 19)]
 SPLIT = {'b12': 20}
+DIRS = {'b13': ('to_ko', {'mở', 'đông', 'báo'})}   # 표 꼴 시험지(낱말 칸이 문단으로 쪼개져 방향을 못 읽음): 기본 방향, 뜻→베트남어인 낱말들 (2026-10-07)
 OVR = {('b1', 'tắc xi'): 'to_ko', ('a12', 'nên'): 'to_ko'}   # a12 '39 Nên (단독)' — 뒤 괄호 때문에 못 읽음   # 시험지 'Taxi'(베트남어 칸) — 앱 표제어는 tắc xi 라 글자로 못 찾는다
 # 문장 속 이름(한국·영어 이름·약자)은 베트남어 읽기 규칙으로 읽으면 이상해진다('Seung Bin' → 쌔우 빈) — 발음 칸에서만 바로잡는다
 NAME_KR = {'Seung Bin': '승빈', 'Yeo Jeong': '여정', 'Eun Ji': '은지', 'GYBM': '지와이비엠', 'Brian': '브라이언', 'David': '데이비드',
@@ -87,6 +88,9 @@ def main():
             words.append({k: w[k] for k in ('vi', 'ko', 'kr_read', 'img', 'ex') if k in w} | {"dir": direction(w['vi'])})
         if sum(x['dir'] == 'to_ko' for x in words) >= 0.85 * len(words):
             for x in words: x['dir'] = 'to_ko'
+        if key in DIRS:
+            d0, tv = DIRS[key]
+            for x in words: x['dir'] = 'to_vi' if x['vi'].lower() in tv else d0
         if key in SPLIT:                       # 우리가 낸 시험지(b12 — 대표님 단어장으로 클로드 출제, 2026-10-05): 앞 절반 베트남어→뜻, 뒤 절반 뜻→베트남어로 정해져 있다.
             for i, x in enumerate(words): x['dir'] = 'to_ko' if i < SPLIT[key] else 'to_vi'   # 성조 뗀 글자가 앞 문제와 겹쳐(chùa~chưa) 방향을 잘못 읽었다
         nv = sum(x['dir'] == 'to_vi' for x in words)
