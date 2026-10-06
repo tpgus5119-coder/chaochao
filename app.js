@@ -2843,7 +2843,45 @@ function studyGramEntry(scroll) {
     const nodes = us.map(u => Object.assign(node(u, ''), { num: ++num }));
     accRow(b, { key: k, title: tr(k), sub: us.length + tr('과') + ' · ' + tr(sub), done: nodes.filter(n => n.done).length, all: nodes.length, nodes }, GOPEN === k, toggle(k), scroll);
   });
+  /* ③ 교재별 — 책의 과마다 **그 과에 실제로 나오는 문형**(문법 상자 + 대화에 녹아 있는 것, data/_gram_ch.json) (대표님 2026-10-06 "교재별 보기에도 과별 지도") */
+  if (!GTOK) gramTokLoad().then(() => { if (CURV === 'sub' && $('#title').textContent === tr('문법')) studyGramEntry(true); });
+  else {
+    b.append(el('p', 'anasec', tr('교재별') + ' <span>' + tr('과마다 실제로 나오는 문형') + '</span>'));
+    const byId = {}; GTOK.forEach(x => { byId[x.id] = x; });
+    const chDone = v => (v.items || []).every(id => !byId[id] || byId[id].always || S.done[gkey(0, byId[id].li)]);
+    GCH_BOOKS.forEach(([pre, name]) => {
+      const keys = Object.keys(GCH).filter(k => k.split('-')[0] === pre).sort((a, b2) => +a.split('-')[1] - +b2.split('-')[1]);
+      const nodes = keys.map((k, i) => { const v = GCH[k]; const n = (v.items || []).length, nf = (v.first || []).length;
+        return { key: 'ch:' + k, num: i + 1, title: (v.title_ko || v.title || (k.split('-')[1] + tr('과'))) + (v.title && v.title_ko ? ' · ' + v.title : ''),
+                 sub: n ? n + tr('개 문형') + (nf ? ' · ' + tr('새로') + ' ' + nf : '') : tr('문형 없음(복습·발음)'), done: n ? chDone(v) : false,
+                 fn: n ? () => { dive(back); chapterGramList(k, name) } : null }; });
+      const ak = 'bk:' + pre;
+      accRow(b, { key: ak, title: name, sub: nodes.length + tr('과'), done: nodes.filter(n => n.done).length, all: nodes.length, nodes }, GOPEN === ak, toggle(ak), scroll);
+    });
+  }
   show('sub', '문법', true);
+}
+/* 교재 한 과의 문형 목록 — 처음 나오는 것부터, 누르면 그 문형 카드로 (2026-10-06) */
+function chapterGramList(k, bookName) {
+  const b = $('#subBody'); b.textContent = '';
+  const v = GCH[k] || { items: [] }, byId = {}; GTOK.forEach(x => { byId[x.id] = x; });
+  const back = () => chapterGramList(k, bookName);
+  b.append(el('p', 'lede', esc(bookName) + ' · ' + esc(v.title_ko || '') + (v.title ? ' <small>' + esc(v.title) + '</small>' : '')));
+  const firstSet = new Set(v.first || []);
+  const sec = (title, ids) => {
+    if (!ids.length) return;
+    b.append(el('p', 'anasec', tr(title) + ' <span>' + ids.length + '</span>'));
+    ids.forEach(id => { const x = byId[id]; if (!x) return;
+      const l = GRAM.books[0].bai[x.li], it = l && l.g[x.gi]; if (!it) return;
+      const btn = el('button', 'bigmenu' + (S.done[gkey(0, x.li)] ? ' done' : ''));
+      const ex = (v.ex || {})[id];
+      btn.append(el('b', null, esc(it.t) + ' <span class="exmeta">' + tr('문법') + ' ' + l.no + tr('과') + (S.done[gkey(0, x.li)] ? ' ✓' : '') + '</span>' + (ex ? '<br><small class="dimtxt">' + esc(ex) + '</small>' : '')));
+      btn.onclick = () => { dive(back); startGram(0, x.li); L.i = x.gi; drawCard(); };
+      b.append(btn); });
+  };
+  sec('이 과에서 처음 나오는 문형', (v.items || []).filter(id => firstSet.has(id)));
+  sec('앞 과에서 이미 나온 문형', (v.items || []).filter(id => !firstSet.has(id)));
+  show('sub', v.title_ko || v.title || k, true);
 }
 /* 과정 자료(order.json)가 있어야 하는 문 — 없으면 받아 온 뒤 연다 */
 function withCourse(fn) {
@@ -4365,11 +4403,11 @@ function testSents(mode) {
 /* 문형 알아보기 (2026-10-06, 대표님 "메인 교재에 녹아 있는 문법도 모두 앱에 · 주간 시험 범위에 맞는 문법 · 문장 테스트를 문법 학습 순서에 맞게"):
    data/_gram_tok.json = 문형마다 문장에서 알아보는 정규식(tools/gram_tok/규칙.tsv → build.py, 예문으로 검산), data/_gram_ch.json = 메인 교재 권-과 → 그 과 대화·문법 상자에 나오는 문형.
    gramDetect(문장) → 문형 id(과.번) 목록. 글자·소리처럼 늘 아는 문형(always)은 안 센다 */
-let GTOK = null, GCH = null, GTOK_P = null;
+let GTOK = null, GCH = null, GCH_BOOKS = [], GTOK_P = null;
 function gramTokLoad() {
   if (GTOK && GCH) return Promise.resolve();
   if (!GTOK_P) GTOK_P = Promise.all([fetch('data/_gram_tok.json', { cache: 'no-cache' }).then(r => r.json()), fetch('data/_gram_ch.json', { cache: 'no-cache' }).then(r => r.json())])
-    .then(([t, c]) => { GTOK = (t.items || []).map(x => Object.assign({}, x, { rx: (x.re || []).map(r => new RegExp(r, 'i')) })); GCH = c.chapters || {}; })
+    .then(([t, c]) => { GTOK = (t.items || []).map(x => Object.assign({}, x, { rx: (x.re || []).map(r => new RegExp(r, 'i')) })); GCH = c.chapters || {}; GCH_BOOKS = c.books || []; })
     .catch(() => { GTOK = []; GCH = {}; });
   return GTOK_P;
 }

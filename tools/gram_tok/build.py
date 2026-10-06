@@ -89,6 +89,43 @@ for b in RB['books']:
         for k in found:
             if k not in first: first[k] = key
 for it in items: it['first'] = first.get(it['id'])
+for c in RB['books'][0]['chapters'] + RB['books'][1]['chapters']: pass
+for key, v in ch_map.items():
+    b = RB['books'][int(key.split('-')[0]) - 1]; c = next(x for x in b['chapters'] if str(x['bai']) == key.split('-')[1])
+    v['title_ko'] = c.get('title_ko', '')
+# ②-2 사이드 교재 1권 (data/_gybm_src/sub_v1_bai*.json — 대화·문법 상자 예문을 규칙으로)
+import glob
+for f in sorted(glob.glob(str(R / 'data/_gybm_src/sub_v1_bai*.json')), key=lambda x: int(x.split('bai')[1].split('.')[0])):
+    d = json.load(open(f, encoding='utf-8'))
+    sents = []
+    for dl in d.get('dialogues', []): sents += [strip(x) for x in str(dl['vi']).split('\n') if x.strip()]
+    for g in d.get('grammar', []): sents += [m.strip() for m in re.findall(r'([A-ZĐÂĂÊÔƠƯ][^()]{5,}?[.?!])', g.get('note_ko', ''))]
+    found = {}
+    for s0 in sents:
+        for k in detect(s0): found.setdefault(k, s0)
+    ch_map[f"s1-{d['bai']}"] = {'title': d['title'], 'title_ko': d.get('title_ko', ''), 'items': sorted(found, key=lambda k: (int(k.split('.')[0]), int(k.split('.')[1]))), 'ex': found}
+# ②-3 사이드 2~4권·줌 — 46과로 합치기 전 원본 책(_보관 grammar_before_flat.json)의 과별 문형 제목을 지금 번호로
+OB = json.load(open(pathlib.Path.home() / '짜오짜오/_보관/베트남어-어플_정리_20261003/scratchpad/grammar_before_flat.json', encoding='utf-8'))
+t2id = {}
+for it in items:
+    x = G['books'][0]['bai'][it['li']]['g'][it['gi']]
+    t2id.setdefault(x['t'], it['id'])
+    for m in x.get('merged', []): t2id.setdefault(m, it['id'])
+ZOOM_NO = [1, 2, 3, 4, 5, 6, 9, 10]
+for bi, pre in ((0, 's2'), (1, 's3'), (2, 's4'), (5, 'z')):
+    for li, l in enumerate(OB['books'][bi]['bai']):
+        ids = [t2id[x['t']] for x in l['g'] if x['t'] in t2id]
+        no = ZOOM_NO[li] if pre == 'z' else li + 1
+        ch_map[f"{pre}-{no}"] = {'title': '', 'title_ko': l.get('t', ''), 'items': sorted(set(ids), key=lambda k: (int(k.split('.')[0]), int(k.split('.')[1]))), 'ex': {}}
+# 책마다 '이 과에서 처음 나오는 문형'
+BOOKS = [('1', 12), ('2', 12), ('s1', 7), ('s2', 10), ('s3', 10), ('s4', 10), ('z', None)]
+for pre, n in BOOKS:
+    seen_b = set()
+    nos = ZOOM_NO if pre == 'z' else range(1, n + 1)
+    for no in nos:
+        v = ch_map.get(f"{pre}-{no}")
+        if not v: continue
+        v['first'] = [k for k in v['items'] if k not in seen_b]; seen_b.update(v['items'])
 # ③ 기능어 가운데 어느 규칙에도 안 잡히는 것
 FUNC = ['và', 'nhưng', 'rồi', 'ơi', 'này', 'ấy', 'kia', 'ở', 'thì', 'nữa', 'dạ', 'vâng', 'ừ', 'lúc', 'khi', 'với', 'cho', 'để', 'đâu', 'được', 'rồi', 'hả', 'nhé', 'ạ', 'à', 'thật', 'luôn', 'nhiều', 'ít', 'lắm', 'hay', 'sao', 'vì', 'nên', 'mà', 'còn', 'cũng', 'đều', 'vẫn', 'đang', 'đã', 'sẽ', 'sắp', 'mới', 'vừa', 'chưa', 'xong', 'hơi', 'khá', 'quá', 'rất', 'không', 'chẳng', 'chả', 'có', 'là', 'của', 'bằng', 'từ', 'đến', 'về', 'ra', 'vào', 'lên', 'xuống', 'trên', 'dưới', 'trong', 'ngoài', 'trước', 'sau', 'giữa', 'gần', 'xa', 'bên', 'cạnh', 'đối+diện', 'nếu', 'hãy', 'đừng', 'xin', 'mời', 'cứ', 'phải', 'cần', 'muốn', 'thích', 'biết', 'có+thể', 'định', 'bị', 'hết', 'lại', 'thêm', 'ngay', 'luôn', 'thôi', 'chỉ', 'mỗi', 'mọi', 'tất+cả', 'cả', 'những', 'các', 'mấy', 'bao+nhiêu', 'bao+giờ', 'bao+lâu', 'thế+nào', 'nào', 'gì', 'ai', 'tại+sao', 'vì+sao', 'ở+đâu', 'đấy', 'chứ', 'nhỉ', 'cơ', 'đi', 'nha', 'nhá', 'thế', 'vậy', 'như+vậy', 'như+thế', 'thế+này', 'kìa', 'ơ', 'ồ', 'ôi', 'trời+ơi', 'hình+như', 'chắc', 'có+lẽ', 'chắc+chắn', 'tất+nhiên', 'dĩ+nhiên', 'đúng', 'sai', 'không+sao', 'được+rồi', 'thôi+được', 'càng', 'hơn', 'nhất', 'bằng', 'như', 'giống', 'khác', 'cùng', 'nhau', 'tự', 'giúp', 'nhờ', 'kẻo', 'thử', 'xem', 'coi', 'lần', 'nữa']
 seen = {}
@@ -112,5 +149,5 @@ missing.sort(key=lambda x: -x[1])
 print('\n규칙에 없는 기능어(교재 대화에 나온 횟수 · 처음 과 · 보기):')
 for m in missing: print('  ', m[0], m[1], m[2], '|', m[3][:70])
 json.dump({'note': '문법 문형 알아보기 규칙(tools/gram_tok/규칙.tsv → build.py). re: 정규식(소문자 문장에 i 플래그), always: 글자·소리처럼 늘 아는 것, first: 메인 교재에서 처음 나오는 권-과', 'items': items}, open(R / 'data/_gram_tok.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
-json.dump({'note': '메인 교재 권-과 → 그 과의 대화·문법 상자 예문에 나오는 앱 문형(id = 과.번) (tools/gram_tok/build.py)', 'chapters': ch_map}, open(R / 'data/_gram_ch.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+json.dump({'note': '교재 과 → 앱 문형(id = 과.번). 열쇠: 1-N·2-N 메인 1·2권(대화·문법 상자 예문을 규칙으로 찾음) · s1-N 사이드 1권 Cơ sở 1(같은 방법) · s2/s3/s4-N 사이드 2~4권 = Cơ sở 2·Nâng cao 1·2(원본 책의 과별 문형) · z-N 줌 N강. first = 그 책에서 처음 나오는 문형 (tools/gram_tok/build.py)', 'books': [['1', '메인 교재 1권'], ['2', '메인 교재 2권'], ['s1', '사이드 1권 — Tiếng Việt Cơ sở 1'], ['s2', '사이드 2권 — Tiếng Việt Cơ sở 2'], ['s3', '사이드 3권 — Nâng cao 1'], ['s4', '사이드 4권 — Nâng cao 2'], ['z', '줌 수업']], 'chapters': ch_map}, open(R / 'data/_gram_ch.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
 print('\n과별 문형 수:', {k: len(v['items']) for k, v in ch_map.items()})

@@ -1,5 +1,35 @@
 {
-"note": "메인 교재 권-과 → 그 과의 대화·문법 상자 예문에 나오는 앱 문형(id = 과.번) (tools/gram_tok/build.py)",
+"note": "교재 과 → 앱 문형(id = 과.번). 열쇠: 1-N·2-N 메인 1·2권(대화·문법 상자 예문을 규칙으로 찾음) · s1-N 사이드 1권 Cơ sở 1(같은 방법) · s2/s3/s4-N 사이드 2~4권 = Cơ sở 2·Nâng cao 1·2(원본 책의 과별 문형) · z-N 줌 N강. first = 그 책에서 처음 나오는 문형 (tools/gram_tok/build.py)",
+"books": [
+[
+"1",
+"메인 교재 1권"
+],
+[
+"2",
+"메인 교재 2권"
+],
+[
+"s1",
+"사이드 1권 — Tiếng Việt Cơ sở 1"
+],
+[
+"s2",
+"사이드 2권 — Tiếng Việt Cơ sở 2"
+],
+[
+"s3",
+"사이드 3권 — Nâng cao 1"
+],
+[
+"s4",
+"사이드 4권 — Nâng cao 2"
+],
+[
+"z",
+"줌 수업"
+]
+],
 "chapters": {
 "1-1": {
 "title": "Xin chào!",
@@ -54,7 +84,34 @@
 "4.3": "Đây là lớp của Eun Ji.",
 "6.5": "Dạ, tôi khỏe.",
 "4.8": "Dạ/có, tôi gặp bà Lệ."
-}
+},
+"title_ko": "안녕하세요!",
+"first": [
+"2.0",
+"3.0",
+"3.1",
+"4.0",
+"4.2",
+"4.3",
+"4.4",
+"4.5",
+"4.6",
+"4.8",
+"5.0",
+"5.3",
+"6.5",
+"12.0",
+"12.3",
+"14.0",
+"19.3",
+"25.2",
+"25.5",
+"27.0",
+"27.1",
+"29.0",
+"39.4",
+"40.1"
+]
 },
 "1-2": {
 "title": "Chị ấy là người Hàn Quốc",
@@ -72,6 +129,7 @@
 "4.4",
 "4.6",
 "4.7",
+"4.9",
 "5.0",
 "5.2",
 "5.3",
@@ -119,9 +177,27 @@
 "27.1": "Hôm qua tôi gặp Brian và David. Các anh ấy đi với hai người bạn. Một người tên là Eun Ji, người Trung Quốc. Còn một người tên là Hiroki, người Nhật.",
 "27.7": "Hôm qua tôi gặp Brian và David. Các anh ấy đi với hai người bạn. Một người tên là Eun Ji, người Trung Quốc. Còn một người tên là Hiroki, người Nhật.",
 "4.1": "Eun Ji không phải là người Trung Quốc. Chị ấy là người Hàn Quốc.",
+"4.9": "Eun Ji không phải là người Trung Quốc. Chị ấy là người Hàn Quốc.",
 "4.3": "Đó/đấy là sách của tôi.",
 "7.1": "Kia là bà Mây và cô Tư."
-}
+},
+"title_ko": "그녀는 한국 사람입니다",
+"first": [
+"3.2",
+"3.3",
+"3.6",
+"4.1",
+"4.7",
+"4.9",
+"5.2",
+"5.5",
+"5.6",
+"7.1",
+"9.1",
+"19.1",
+"20.0",
+"27.7"
+]
 },
 "1-3": {
 "title": "Em học tiếng Việt",
@@ -140,6 +216,7 @@
 "4.6",
 "4.7",
 "4.8",
+"4.9",
 "5.2",
 "5.3",
 "5.6",
@@ -160,6 +237,7 @@
 "17.2",
 "17.4",
 "17.5",
+"17.7",
 "19.0",
 "19.1",
 "27.7",
@@ -182,6 +260,7 @@
 "17.4": "Trước đây em học tiếng Việt ở đâu?",
 "10.1": "Em đã học ở Hàn Quốc ạ.",
 "10.3": "Em đã học ở Hàn Quốc ạ.",
+"17.7": "Em đã học ở Hàn Quốc ạ.",
 "4.7": "Đó là Eun Ji, phải không?",
 "5.2": "Đó là Eun Ji, phải không?",
 "6.2": "Ừ, đúng rồi. Eun Ji! Em đi đâu vậy?",
@@ -205,8 +284,29 @@
 "3.3": "Các em đều mệt à?",
 "6.1": "Các em đều mệt à?",
 "9.1": "Các em đều mệt à?",
+"4.9": "Sinh viên lớp này đều học chăm chỉ, phải không?",
 "35.0": "Sinh viên lớp này đều học chăm chỉ, phải không?"
-}
+},
+"title_ko": "저는 베트남어를 배워요",
+"first": [
+"3.4",
+"6.0",
+"6.1",
+"6.2",
+"8.0",
+"9.3",
+"10.1",
+"10.3",
+"11.5",
+"17.0",
+"17.2",
+"17.4",
+"17.5",
+"17.7",
+"19.0",
+"28.0",
+"35.0"
+]
 },
 "1-4": {
 "title": "Anh làm nghề gì?",
@@ -220,6 +320,7 @@
 "4.3",
 "4.4",
 "4.8",
+"4.9",
 "5.0",
 "5.2",
 "5.3",
@@ -243,6 +344,7 @@
 "17.3",
 "17.4",
 "17.5",
+"17.7",
 "18.0",
 "18.3",
 "23.5",
@@ -261,6 +363,7 @@
 "27.1": "Tôi làm kế toán ở ngân hàng. Còn chị? Dạo này chị làm gì?",
 "4.4": "Tôi làm kỹ sư ở công ty máy tính. Cô Vân cũng làm việc ở đó.",
 "17.2": "Tôi làm kỹ sư ở công ty máy tính. Cô Vân cũng làm việc ở đó.",
+"17.7": "Tôi làm kỹ sư ở công ty máy tính. Cô Vân cũng làm việc ở đó.",
 "3.2": "Cô ấy cũng làm kỹ sư, phải không?",
 "5.2": "Cô ấy cũng làm kỹ sư, phải không?",
 "4.0": "Không. Cô ấy là thư ký. Ở Nhật, ngân hàng của anh có bao nhiêu nhân viên?",
@@ -289,11 +392,29 @@
 "27.7": "B: Em học Trường Đại học Khoa học Xã hội và Nhân văn. / A: Hôm qua anh vào phòng nào?",
 "5.4": "A: Tiếng Việt thế nào?",
 "3.3": "A: Trong lớp này, các sinh viên học thế nào?",
+"4.9": "A: Trong lớp này, các sinh viên học thế nào?",
 "9.1": "A: Trong lớp này, các sinh viên học thế nào?",
 "17.4": "A: Trong lớp này, các sinh viên học thế nào?",
 "35.0": "B: Họ học chăm chỉ.",
 "8.2": "B: Hơn 100 người. / A: Ông ấy bao nhiêu tuổi?"
-}
+},
+"title_ko": "당신은 무슨 일을 하세요?",
+"first": [
+"5.4",
+"7.0",
+"8.2",
+"9.4",
+"10.0",
+"12.1",
+"13.0",
+"13.2",
+"15.1",
+"17.3",
+"18.0",
+"18.3",
+"23.5",
+"33.0"
+]
 },
 "1-5": {
 "title": "Bây giờ chúng ta đi đâu?",
@@ -327,6 +448,7 @@
 "17.2",
 "17.5",
 "17.6",
+"17.7",
 "19.0",
 "19.1",
 "19.2",
@@ -380,6 +502,7 @@
 "12.1": "Tôi biết một nhà hàng ở Quận 1. Món ăn ngon lắm. Đặc biệt, bia tươi rất ngon.",
 "6.1": "Bia à? Tốt quá! Tối nay tôi mời anh và anh Min đến đó uống bia. Không say không về.",
 "13.2": "Bia à? Tốt quá! Tối nay tôi mời anh và anh Min đến đó uống bia. Không say không về.",
+"17.7": "Anh và tôi, chúng ta sẽ làm việc ở đó 6 tháng.",
 "3.3": "Ông ấy nói đã gặp các chị và tôi. Nhưng tôi không nhớ chúng ta đã gặp ông ấy ở đâu.",
 "9.1": "Ông ấy nói đã gặp các chị và tôi. Nhưng tôi không nhớ chúng ta đã gặp ông ấy ở đâu.",
 "22.2": "Ông ấy nói đã gặp các chị và tôi. Nhưng tôi không nhớ chúng ta đã gặp ông ấy ở đâu.",
@@ -392,7 +515,24 @@
 "17.5": "Hôm qua tôi mệt quá nên đã đi ngủ sớm.",
 "20.2": "Hôm qua tôi mệt quá nên đã đi ngủ sớm.",
 "33.0": "Sống ở gần trường sẽ tiện lợi hơn."
-}
+},
+"title_ko": "지금 우리는 어디로 가나요?",
+"first": [
+"3.5",
+"10.2",
+"12.2",
+"15.2",
+"17.6",
+"19.2",
+"20.2",
+"22.2",
+"27.6",
+"37.3",
+"38.0",
+"38.3",
+"39.0",
+"46.2"
+]
 },
 "1-6": {
 "title": "Bài ôn",
@@ -497,7 +637,13 @@
 "6.1": "Địa chỉ à? Chúng ta sẽ xem trong Google.",
 "10.2": "Địa chỉ à? Chúng ta sẽ xem trong Google.",
 "16.3": "Địa chỉ à? Chúng ta sẽ xem trong Google."
-}
+},
+"title_ko": "복습",
+"first": [
+"16.3",
+"27.3",
+"27.5"
+]
 },
 "1-7": {
 "title": "Tôi thường không ăn sáng",
@@ -604,7 +750,21 @@
 "10.0": "Đang xem phim mới hả?",
 "35.5": "Đang xem phim mới hả?",
 "29.1": "Vì ăn sáng trễ nên bây giờ tôi còn no lắm."
-}
+},
+"title_ko": "저는 보통 아침을 안 먹어요",
+"first": [
+"6.3",
+"9.0",
+"10.4",
+"11.1",
+"12.4",
+"12.6",
+"13.1",
+"15.3",
+"24.1",
+"29.1",
+"35.5"
+]
 },
 "1-8": {
 "title": "Anh ấy nói được tiếng gì?",
@@ -642,6 +802,7 @@
 "15.2",
 "16.3",
 "17.2",
+"17.7",
 "18.2",
 "19.2",
 "19.3",
@@ -676,6 +837,7 @@
 "43.2": "Anh ấy nói tiếng Hàn Quốc không được.",
 "10.1": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
 "10.3": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
+"17.7": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
 "6.1": "Thế à? Anh ấy đã làm ở đó bao lâu?",
 "11.3": "Thế à? Anh ấy đã làm ở đó bao lâu?",
 "13.4": "Thế à? Anh ấy đã làm ở đó bao lâu?",
@@ -717,7 +879,25 @@
 "9.1": "Các bạn nghỉ một chút đi!",
 "3.5": "Chúng ta luyện phát âm đi!",
 "38.6": "Chị đừng ngồi đây!"
-}
+},
+"title_ko": "그는 무슨 언어를 할 수 있어요?",
+"first": [
+"9.5",
+"10.5",
+"11.3",
+"13.4",
+"18.2",
+"19.4",
+"21.0",
+"22.0",
+"22.1",
+"24.3",
+"25.4",
+"28.6",
+"38.6",
+"39.3",
+"43.2"
+]
 },
 "1-9": {
 "title": "Thứ năm tôi đi Hà Nội",
@@ -832,7 +1012,17 @@
 "12.4": "Người khách hàng đó hơi khó tính đấy.",
 "12.6": "Người khách hàng đó hơi khó tính đấy.",
 "17.5": "Anh Tony chuẩn bị về nước đấy!"
-}
+},
+"title_ko": "나는 목요일에 하노이에 간다",
+"first": [
+"11.0",
+"14.1",
+"14.2",
+"14.3",
+"15.0",
+"29.4",
+"40.0"
+]
 },
 "1-10": {
 "title": "Gia đình tôi có bốn người",
@@ -844,6 +1034,7 @@
 "4.0",
 "4.6",
 "4.8",
+"4.9",
 "5.0",
 "6.1",
 "6.2",
@@ -870,6 +1061,7 @@
 "17.2",
 "17.4",
 "17.6",
+"17.7",
 "24.3",
 "25.0",
 "25.1",
@@ -915,6 +1107,7 @@
 "25.0": "Có chứ. Bà ngoại tôi là người Việt. Tôi sẽ cùng bố mẹ đi thăm bà ngoại.",
 "25.1": "Có chứ. Bà ngoại tôi là người Việt. Tôi sẽ cùng bố mẹ đi thăm bà ngoại.",
 "10.0": "Anh trai anh Brian đang làm việc ở Thành phố Hồ Chí Minh hả, chị?",
+"17.7": "Anh trai anh Brian đang làm việc ở Thành phố Hồ Chí Minh hả, chị?",
 "3.2": "Ừ, anh trai anh ấy đã làm việc ở đây ba năm rồi.",
 "4.6": "Ừ, anh trai anh ấy đã làm việc ở đây ba năm rồi.",
 "17.2": "Ừ, anh trai anh ấy đã làm việc ở đây ba năm rồi.",
@@ -928,10 +1121,19 @@
 "24.3": "Chị em cô ấy cùng giúp mẹ nấu ăn.",
 "25.2": "Sơn cùng đi uống cà phê với em trai.",
 "3.4": "Chúng tôi cùng đi thăm ông bà.",
+"4.9": "Nhà anh ấy khá xa công ty.",
 "17.6": "Nhà anh ấy khá xa công ty.",
 "38.1": "A: Thế, anh có cùng đi du lịch với bố mẹ không? B: Có chứ.",
 "38.3": "A: Thế, anh có cùng đi du lịch với bố mẹ không? B: Có chứ."
-}
+},
+"title_ko": "우리 가족은 네 명이다",
+"first": [
+"8.3",
+"12.5",
+"25.0",
+"25.1",
+"38.1"
+]
 },
 "1-11": {
 "title": "Tôi đi bằng xe máy",
@@ -974,6 +1176,7 @@
 "17.0",
 "17.4",
 "17.5",
+"17.7",
 "18.0",
 "18.2",
 "18.3",
@@ -1060,6 +1263,7 @@
 "16.3": "Mẹ tôi thường xem lại các ảnh cũ của gia đình.",
 "33.0": "Nếu đi bằng tắc xi thì em sẽ đến sân bay nhanh hơn.",
 "43.4": "Nếu chị không sợ, tôi sẽ tập cho chị đi bằng xe máy.",
+"17.7": "Nếu giỏi tiếng Việt, anh ấy sẽ vào làm việc ở công ty Samsung.",
 "9.0": "Chúng ta đi bộ đến đó đi. / Tôi không đi đâu.",
 "17.0": "Chúng ta đi bộ đến đó đi. / Tôi không đi đâu.",
 "12.1": "Mua vé trên mạng phức tạp lắm. / Không phức tạp đâu.",
@@ -1068,7 +1272,16 @@
 "18.3": "Trời vẫn mưa từ hôm qua đến giờ.",
 "28.4": "Trời vẫn mưa từ hôm qua đến giờ.",
 "6.1": "Chị vẫn đi bằng xe ôm à?"
-}
+},
+"title_ko": "저는 오토바이로 다녀요",
+"first": [
+"24.0",
+"28.1",
+"28.4",
+"31.0",
+"42.5",
+"43.4"
+]
 },
 "1-12": {
 "title": "Bài ôn (Review)",
@@ -1119,6 +1332,7 @@
 "17.4",
 "17.5",
 "17.6",
+"17.7",
 "18.0",
 "18.2",
 "18.7",
@@ -1159,6 +1373,7 @@
 "3.0": "Hình gì vậy, chị?",
 "5.3": "Hình gì vậy, chị?",
 "17.5": "Hình gia đình tôi đi chơi ở Bến Tre.",
+"17.7": "Hình gia đình tôi đi chơi ở Bến Tre.",
 "15.0": "Gia đình chị đi khi nào?",
 "4.8": "Tháng 7, dịp nghỉ hè. Lúc đó có nhiều trái cây lắm.",
 "9.0": "Tháng 7, dịp nghỉ hè. Lúc đó có nhiều trái cây lắm.",
@@ -1225,7 +1440,15 @@
 "36.0": "Bao nhiêu는 많은 수량을 물을 때 쓰며, 가격을 물을 때도 쓴다. 예: Trường này có tất cả bao nhiêu lớp?",
 "36.1": "Bao nhiêu는 많은 수량을 물을 때 쓰며, 가격을 물을 때도 쓴다. 예: Trường này có tất cả bao nhiêu lớp?",
 "8.1": "Nước suối bao nhiêu tiền?"
-}
+},
+"title_ko": "복습 (12과)",
+"first": [
+"8.1",
+"13.3",
+"18.7",
+"36.0",
+"36.1"
+]
 },
 "2-1": {
 "title": "Cơm sen vừa thơm vừa ngon!",
@@ -1241,6 +1464,7 @@
 "4.3",
 "4.6",
 "4.8",
+"4.9",
 "5.0",
 "5.1",
 "5.2",
@@ -1272,6 +1496,7 @@
 "17.2",
 "17.4",
 "17.5",
+"17.7",
 "19.0",
 "19.1",
 "20.0",
@@ -1319,6 +1544,7 @@
 "11.6": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
 "12.1": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
 "12.3": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
+"17.7": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
 "5.0": "Ở đó có cần đặt bàn trước không?",
 "20.1": "Ở đó có cần đặt bàn trước không?",
 "19.0": "Nếu muốn có phòng riêng thì chị nên đặt trước.",
@@ -1332,6 +1558,7 @@
 "3.3": "Dạ, mời các anh chị vào.",
 "9.1": "Dạ, mời các anh chị vào.",
 "46.1": "Dạ, mời các anh chị vào.",
+"4.9": "Nhà hàng này có món gì ngon, em?",
 "24.0": "Ừ. Cho tôi ba món đó trước đi. À, có món gì ăn no không, em?",
 "46.3": "Ừ. Cho tôi ba món đó trước đi. À, có món gì ăn no không, em?",
 "10.1": "Anh John, anh đã ăn cơm sen bao giờ chưa?",
@@ -1372,7 +1599,82 @@
 "7.2": "X, Y 자리에는 보통 동작·상태·성질을 나타내는 동사나 형용사가 오지만, 때로는 명사구가 올 수도 있다. 예: Vừa thức ăn vừa thức uống, tất cả là một triệu đồng.",
 "36.0": "X, Y 자리에는 보통 동작·상태·성질을 나타내는 동사나 형용사가 오지만, 때로는 명사구가 올 수도 있다. 예: Vừa thức ăn vừa thức uống, tất cả là một triệu đồng.",
 "36.1": "X, Y 자리에는 보통 동작·상태·성질을 나타내는 동사나 형용사가 오지만, 때로는 명사구가 올 수도 있다. 예: Vừa thức ăn vừa thức uống, tất cả là một triệu đồng."
-}
+},
+"title_ko": "연잎밥은 향긋하고 맛있어요!",
+"first": [
+"2.0",
+"3.0",
+"3.1",
+"3.2",
+"3.3",
+"3.6",
+"4.0",
+"4.2",
+"4.3",
+"4.6",
+"4.8",
+"4.9",
+"5.0",
+"5.1",
+"5.2",
+"5.3",
+"5.4",
+"6.3",
+"6.5",
+"7.2",
+"8.0",
+"9.1",
+"9.3",
+"9.5",
+"10.1",
+"10.2",
+"10.3",
+"10.5",
+"11.0",
+"11.2",
+"11.5",
+"11.6",
+"12.0",
+"12.1",
+"12.3",
+"12.4",
+"12.6",
+"15.0",
+"15.1",
+"16.3",
+"17.2",
+"17.4",
+"17.5",
+"17.7",
+"19.0",
+"19.1",
+"20.0",
+"20.1",
+"20.2",
+"23.1",
+"23.5",
+"24.0",
+"25.2",
+"27.0",
+"27.1",
+"27.3",
+"27.7",
+"28.6",
+"31.0",
+"33.0",
+"33.7",
+"33.8",
+"34.0",
+"34.1",
+"36.0",
+"36.1",
+"39.0",
+"44.5",
+"46.1",
+"46.2",
+"46.3",
+"46.4"
+]
 },
 "2-2": {
 "title": "Tôi mới đi du lịch về.",
@@ -1388,6 +1690,7 @@
 "4.4",
 "4.6",
 "4.8",
+"4.9",
 "5.0",
 "5.3",
 "5.4",
@@ -1420,6 +1723,7 @@
 "17.4",
 "17.5",
 "17.6",
+"17.7",
 "18.0",
 "18.2",
 "18.3",
@@ -1460,6 +1764,7 @@
 "3.1": "Chào cô. Tôi tên là Watanabe Taro. Tôi có đặt phòng ở khách sạn này.",
 "4.0": "Chào cô. Tôi tên là Watanabe Taro. Tôi có đặt phòng ở khách sạn này.",
 "4.8": "Chào cô. Tôi tên là Watanabe Taro. Tôi có đặt phòng ở khách sạn này.",
+"4.9": "Chào cô. Tôi tên là Watanabe Taro. Tôi có đặt phòng ở khách sạn này.",
 "4.2": "Chào ông Watanabe. Xin ông chờ một chút, tôi sẽ kiểm tra trong máy... Sao tôi không thấy tên của ông?",
 "4.3": "Chào ông Watanabe. Xin ông chờ một chút, tôi sẽ kiểm tra trong máy... Sao tôi không thấy tên của ông?",
 "9.5": "Chào ông Watanabe. Xin ông chờ một chút, tôi sẽ kiểm tra trong máy... Sao tôi không thấy tên của ông?",
@@ -1511,6 +1816,7 @@
 "27.1": "Anh xem ảnh tôi chụp này. Cái hồ bơi này ở sau khách sạn. Còn đây là bãi biển, suối Tranh, chùa Sư Muôn…",
 "5.0": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
 "17.2": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
+"17.7": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
 "27.7": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
 "33.2": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
 "42.5": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
@@ -1531,7 +1837,46 @@
 "27.3": "Hồi nãy tôi có hơi buồn, nhưng bây giờ thì vui rồi.",
 "17.5": "Hôm qua anh có đi học không?",
 "26.2": "Về kỹ năng Nói thì Nam hơn Lan, nhưng về kỹ năng Nghe thì Lan hơn Nam."
-}
+},
+"title_ko": "저 방금 여행 갔다 왔어요.",
+"first": [
+"4.4",
+"6.1",
+"9.0",
+"9.4",
+"10.0",
+"11.3",
+"13.2",
+"13.4",
+"14.0",
+"14.1",
+"17.0",
+"17.3",
+"17.6",
+"18.0",
+"18.2",
+"18.3",
+"19.3",
+"19.4",
+"21.3",
+"22.4",
+"22.5",
+"24.1",
+"24.3",
+"26.2",
+"28.4",
+"29.0",
+"29.4",
+"33.2",
+"35.5",
+"38.0",
+"38.3",
+"38.6",
+"39.3",
+"39.4",
+"40.1",
+"42.5"
+]
 },
 "2-3": {
 "title": "Anh thường mua sắm ở đâu?",
@@ -1547,6 +1892,7 @@
 "4.4",
 "4.6",
 "4.8",
+"4.9",
 "5.3",
 "5.5",
 "6.1",
@@ -1579,11 +1925,13 @@
 "15.3",
 "16.0",
 "16.3",
+"16.5",
 "17.0",
 "17.2",
 "17.4",
 "17.5",
 "17.6",
+"17.7",
 "19.3",
 "19.4",
 "20.0",
@@ -1630,6 +1978,7 @@
 "12.2": "Cái áo đẹp quá! Anh mới mua hả? Trông nó rất sang trọng.",
 "12.3": "Cái áo đẹp quá! Anh mới mua hả? Trông nó rất sang trọng.",
 "16.3": "Cái áo đẹp quá! Anh mới mua hả? Trông nó rất sang trọng.",
+"16.5": "Cái áo đẹp quá! Anh mới mua hả? Trông nó rất sang trọng.",
 "35.5": "Cái áo đẹp quá! Anh mới mua hả? Trông nó rất sang trọng.",
 "2.0": "Cảm ơn chị. Tôi mới mua đấy!",
 "3.1": "Cảm ơn chị. Tôi mới mua đấy!",
@@ -1645,7 +1994,9 @@
 "11.2": "Anh đã mua ở Saigon Square bao giờ chưa?",
 "15.0": "Anh đã mua ở Saigon Square bao giờ chưa?",
 "15.1": "Anh đã mua ở Saigon Square bao giờ chưa?",
+"17.7": "Anh đã mua ở Saigon Square bao giờ chưa?",
 "4.6": "Rồi. Đây, cái áo sơ mi này tôi mới mua ở Saigon Square đấy! Khi đến Việt Nam, tôi chỉ mang theo áo thun thôi nên bây giờ phải mua áo sơ mi để mặc đi làm.",
+"4.9": "Rồi. Đây, cái áo sơ mi này tôi mới mua ở Saigon Square đấy! Khi đến Việt Nam, tôi chỉ mang theo áo thun thôi nên bây giờ phải mua áo sơ mi để mặc đi làm.",
 "11.5": "Rồi. Đây, cái áo sơ mi này tôi mới mua ở Saigon Square đấy! Khi đến Việt Nam, tôi chỉ mang theo áo thun thôi nên bây giờ phải mua áo sơ mi để mặc đi làm.",
 "14.0": "Rồi. Đây, cái áo sơ mi này tôi mới mua ở Saigon Square đấy! Khi đến Việt Nam, tôi chỉ mang theo áo thun thôi nên bây giờ phải mua áo sơ mi để mặc đi làm.",
 "17.5": "Rồi. Đây, cái áo sơ mi này tôi mới mua ở Saigon Square đấy! Khi đến Việt Nam, tôi chỉ mang theo áo thun thôi nên bây giờ phải mua áo sơ mi để mặc đi làm.",
@@ -1706,7 +2057,36 @@
 "12.1": "Mây đen nhiều quá! Mưa to lắm đây!",
 "25.4": "Nó đánh nhau với bạn nữa đây!",
 "10.0": "Tôi đang xem lại phim Forrest Gump. Tôi thích phim đó lắm."
-}
+},
+"title_ko": "당신은 보통 어디서 쇼핑하세요?",
+"first": [
+"3.4",
+"5.5",
+"6.2",
+"7.0",
+"7.1",
+"8.1",
+"9.2",
+"12.2",
+"15.2",
+"15.3",
+"16.0",
+"16.5",
+"21.0",
+"22.1",
+"25.4",
+"26.0",
+"27.2",
+"28.1",
+"28.3",
+"28.5",
+"34.3",
+"35.0",
+"35.1",
+"37.0",
+"40.0",
+"43.2"
+]
 },
 "2-4": {
 "title": "Alô, quán cơm 39 xin nghe!",
@@ -1724,6 +2104,7 @@
 "4.4",
 "4.6",
 "4.8",
+"4.9",
 "5.0",
 "5.3",
 "5.5",
@@ -1865,6 +2246,7 @@
 "7.2": "Tất cả là 500 ngàn đồng.",
 "23.4": "Tôi quen với cả ba người đó.",
 "25.2": "Tôi quen với cả ba người đó.",
+"4.9": "Cả ba cuốn sách này đều khó đọc.",
 "14.0": "Hôm qua cả lớp nghỉ học.",
 "3.2": "Cả nhà anh ấy đã đi Vũng Tàu.",
 "15.2": "Uống rượu hay uống bia đều không tốt cho sức khỏe.",
@@ -1873,7 +2255,23 @@
 "27.7": "Món ăn Việt và món ăn Thái tôi đều thích.",
 "3.4": "Tất cả chúng tôi đều thích hát karaoke.",
 "40.1": "Hôm qua và hôm nay đều có mưa."
-}
+},
+"title_ko": "여보세요, 39번 식당입니다!",
+"first": [
+"3.5",
+"6.0",
+"14.2",
+"16.2",
+"21.1",
+"22.2",
+"23.4",
+"27.6",
+"28.0",
+"33.3",
+"33.4",
+"36.2",
+"46.0"
+]
 },
 "2-5": {
 "title": "Anh bị sao vậy?",
@@ -2000,7 +2398,17 @@
 "3.2": "Nửa tháng nay ông ấy nằm bệnh viện.",
 "12.0": "Trong ngày sinh nhật, Nam được rất nhiều quà.",
 "14.1": "Chủ nhật Nam được ngủ nướng, vì không phải đi học."
-}
+},
+"title_ko": "어디가 아프세요?",
+"first": [
+"16.1",
+"22.6",
+"24.4",
+"25.5",
+"39.1",
+"40.2",
+"41.0"
+]
 },
 "2-6": {
 "title": "Ôn tập (Bài 6)",
@@ -2075,7 +2483,13 @@
 "27.7": "(Nhân viên tiếp tân khách sạn (NV) nói chuyện với khách)\nNV: Alô. Khách sạn Hoà Bình xin nghe.\nKhách: Alô. Tôi muốn đặt 4 phòng đôi, 3 đêm.\nNV: Dạ, anh muốn đặt ngày nào?\nKhách: Ngày 5, 6, 7 tháng 9.\nNV: Làm ơn đợi một chút. ... Dạ, mấy ngày đó còn phòng.\nKhách: Giá thế nào cô?\nNV: Dạ, phòng Suite giá 800 ngàn một đêm, còn phòng thường thì 500 ngàn.\nKhách: Tôi lấy phòng thường.\nNV: Anh làm ơn cho em tên và số điện thoại liên lạc đi ạ.\nKhách: Tôi là Lê Văn. Số điện thoại là 0933.112.233.\nNV: Dạ, anh làm ơn chuyển trước 50% tiền phòng.\nKhách: Rồi, rồi, tôi sẽ chuyển liền. Cô nhớ gửi xác nhận đặt phòng cho tôi nhé!\nNV: Dạ. Giờ nhận phòng là sau một giờ trưa ngày 5, anh nhé!\nKhách: Rồi, tôi biết rồi. Chúng tôi sẽ điện thoại trước khi đến.\nNV: Dạ. Chào anh. Hẹn gặp lại anh.\nKhách: Chào cô.",
 "28.1": "(Nhân viên tiếp tân khách sạn (NV) nói chuyện với khách)\nNV: Alô. Khách sạn Hoà Bình xin nghe.\nKhách: Alô. Tôi muốn đặt 4 phòng đôi, 3 đêm.\nNV: Dạ, anh muốn đặt ngày nào?\nKhách: Ngày 5, 6, 7 tháng 9.\nNV: Làm ơn đợi một chút. ... Dạ, mấy ngày đó còn phòng.\nKhách: Giá thế nào cô?\nNV: Dạ, phòng Suite giá 800 ngàn một đêm, còn phòng thường thì 500 ngàn.\nKhách: Tôi lấy phòng thường.\nNV: Anh làm ơn cho em tên và số điện thoại liên lạc đi ạ.\nKhách: Tôi là Lê Văn. Số điện thoại là 0933.112.233.\nNV: Dạ, anh làm ơn chuyển trước 50% tiền phòng.\nKhách: Rồi, rồi, tôi sẽ chuyển liền. Cô nhớ gửi xác nhận đặt phòng cho tôi nhé!\nNV: Dạ. Giờ nhận phòng là sau một giờ trưa ngày 5, anh nhé!\nKhách: Rồi, tôi biết rồi. Chúng tôi sẽ điện thoại trước khi đến.\nNV: Dạ. Chào anh. Hẹn gặp lại anh.\nKhách: Chào cô.",
 "46.0": "(Nhân viên tiếp tân khách sạn (NV) nói chuyện với khách)\nNV: Alô. Khách sạn Hoà Bình xin nghe.\nKhách: Alô. Tôi muốn đặt 4 phòng đôi, 3 đêm.\nNV: Dạ, anh muốn đặt ngày nào?\nKhách: Ngày 5, 6, 7 tháng 9.\nNV: Làm ơn đợi một chút. ... Dạ, mấy ngày đó còn phòng.\nKhách: Giá thế nào cô?\nNV: Dạ, phòng Suite giá 800 ngàn một đêm, còn phòng thường thì 500 ngàn.\nKhách: Tôi lấy phòng thường.\nNV: Anh làm ơn cho em tên và số điện thoại liên lạc đi ạ.\nKhách: Tôi là Lê Văn. Số điện thoại là 0933.112.233.\nNV: Dạ, anh làm ơn chuyển trước 50% tiền phòng.\nKhách: Rồi, rồi, tôi sẽ chuyển liền. Cô nhớ gửi xác nhận đặt phòng cho tôi nhé!\nNV: Dạ. Giờ nhận phòng là sau một giờ trưa ngày 5, anh nhé!\nKhách: Rồi, tôi biết rồi. Chúng tôi sẽ điện thoại trước khi đến.\nNV: Dạ. Chào anh. Hẹn gặp lại anh.\nKhách: Chào cô."
-}
+},
+"title_ko": "복습",
+"first": [
+"13.0",
+"14.3",
+"18.7"
+]
 },
 "2-7": {
 "title": "Chị cứ đi thẳng đường này!",
@@ -2092,6 +2506,7 @@
 "4.4",
 "4.6",
 "4.8",
+"4.9",
 "5.0",
 "5.3",
 "6.0",
@@ -2178,6 +2593,7 @@
 "22.5": "Anh bảo vệ ơi, làm ơn cho tôi hỏi, chợ Tân Định ở đâu ạ?",
 "23.1": "Anh bảo vệ ơi, làm ơn cho tôi hỏi, chợ Tân Định ở đâu ạ?",
 "24.1": "Anh bảo vệ ơi, làm ơn cho tôi hỏi, chợ Tân Định ở đâu ạ?",
+"4.9": "Cô có thấy trạm xe buýt ở đằng kia không? Cô đón xe buýt số 18. Khi nào nó đi ngang chợ Tân Định thì cô xuống.",
 "5.0": "Cô có thấy trạm xe buýt ở đằng kia không? Cô đón xe buýt số 18. Khi nào nó đi ngang chợ Tân Định thì cô xuống.",
 "5.3": "Cô có thấy trạm xe buýt ở đằng kia không? Cô đón xe buýt số 18. Khi nào nó đi ngang chợ Tân Định thì cô xuống.",
 "15.0": "Cô có thấy trạm xe buýt ở đằng kia không? Cô đón xe buýt số 18. Khi nào nó đi ngang chợ Tân Định thì cô xuống.",
@@ -2252,7 +2668,17 @@
 "29.4": "Chủ nhật tôi sẽ làm mấy món ăn Thái để mời bạn bè đến ăn.",
 "46.2": "Chủ nhật tôi sẽ làm mấy món ăn Thái để mời bạn bè đến ăn.",
 "3.2": "Hình như cô ấy là người Nhật."
-}
+},
+"title_ko": "이 길로 쭉 직진하세요!",
+"first": [
+"11.1",
+"17.1",
+"18.5",
+"21.4",
+"31.1",
+"32.1",
+"42.0"
+]
 },
 "2-8": {
 "title": "Anh cảm thấy không khỏe à?",
@@ -2266,6 +2692,7 @@
 "4.3",
 "4.4",
 "4.8",
+"4.9",
 "5.0",
 "5.3",
 "5.4",
@@ -2289,6 +2716,7 @@
 "15.3",
 "16.2",
 "16.3",
+"16.5",
 "17.3",
 "17.4",
 "17.6",
@@ -2336,6 +2764,7 @@
 "4.2": "Sao trông anh không được vui? Anh cảm thấy không khoẻ à?",
 "6.1": "Sao trông anh không được vui? Anh cảm thấy không khoẻ à?",
 "16.3": "Sao trông anh không được vui? Anh cảm thấy không khoẻ à?",
+"16.5": "Sao trông anh không được vui? Anh cảm thấy không khoẻ à?",
 "19.3": "Sao trông anh không được vui? Anh cảm thấy không khoẻ à?",
 "29.0": "Sao trông anh không được vui? Anh cảm thấy không khoẻ à?",
 "43.2": "Sao trông anh không được vui? Anh cảm thấy không khoẻ à?",
@@ -2376,6 +2805,7 @@
 "35.5": "Chị Hương này, nhà mới của chị thế nào? Chị cảm thấy thoải mái chứ?",
 "38.1": "Chị Hương này, nhà mới của chị thế nào? Chị cảm thấy thoải mái chứ?",
 "38.3": "Chị Hương này, nhà mới của chị thế nào? Chị cảm thấy thoải mái chứ?",
+"4.9": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
 "12.4": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
 "12.6": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
 "34.0": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
@@ -2405,7 +2835,16 @@
 "36.0": "Trừ món phở, tôi không ăn được gì cả.",
 "12.1": "Món bánh xèo ở quán này không được ngon lắm.",
 "12.3": "Món bánh xèo ở quán này không được ngon lắm."
-}
+},
+"title_ko": "컨디션이 안 좋으세요?",
+"first": [
+"22.0",
+"32.0",
+"34.5",
+"34.6",
+"36.3",
+"38.1"
+]
 },
 "2-9": {
 "title": "Em muốn làm gì cũng được.",
@@ -2552,7 +2991,14 @@
 "3.4": "Chúng tôi có nửa tiếng để làm bài kiểm tra, cả nói lẫn viết.",
 "13.3": "Chúng tôi có nửa tiếng để làm bài kiểm tra, cả nói lẫn viết.",
 "29.4": "Chúng tôi có nửa tiếng để làm bài kiểm tra, cả nói lẫn viết."
-}
+},
+"title_ko": "당신이 뭘 하고 싶든 다 괜찮아.",
+"first": [
+"13.3",
+"34.4",
+"37.1",
+"37.2"
+]
 },
 "2-10": {
 "title": "Cậu bỏ thói quen đó đi nhé!",
@@ -2567,6 +3013,7 @@
 "4.4",
 "4.6",
 "4.8",
+"4.9",
 "5.0",
 "5.3",
 "5.4",
@@ -2712,6 +3159,7 @@
 "16.1": "A gì cũng V: A에 해당하는 모든 종류가 다 V함을 뜻함. Đi đám cưới mặc áo gì cũng được.",
 "19.3": "A gì cũng V: A에 해당하는 모든 종류가 다 V함을 뜻함. Đi đám cưới mặc áo gì cũng được.",
 "37.1": "A gì cũng V: A에 해당하는 모든 종류가 다 V함을 뜻함. Đi đám cưới mặc áo gì cũng được.",
+"4.9": "A nào cũng V: 한정되어 있거나 이미 알고 있는 집합 안에서 고를 때 씀. Trong tủ áo dài của chị ấy, cái nào cũng đắt tiền.",
 "9.0": "A nào cũng V: 한정되어 있거나 이미 알고 있는 집합 안에서 고를 때 씀. Trong tủ áo dài của chị ấy, cái nào cũng đắt tiền.",
 "37.2": "A nào cũng V: 한정되어 있거나 이미 알고 있는 집합 안에서 고를 때 씀. Trong tủ áo dài của chị ấy, cái nào cũng đắt tiền.",
 "11.6": "Mỗi lần nhìn thấy bức ảnh cô ấy lại buồn.",
@@ -2723,7 +3171,15 @@
 "2.0": "Chào anh. Tôi về trước nhé!",
 "6.0": "Xin lỗi, hết phở gà rồi, chỉ còn phở bò thôi ạ.",
 "28.3": "Xin lỗi, hết phở gà rồi, chỉ còn phở bò thôi ạ."
-}
+},
+"title_ko": "너 그 버릇 좀 버려!",
+"first": [
+"11.4",
+"23.2",
+"28.2",
+"35.4",
+"46.5"
+]
 },
 "2-11": {
 "title": "Có anh trai thích quá nhỉ?",
@@ -2737,6 +3193,7 @@
 "4.3",
 "4.4",
 "4.8",
+"4.9",
 "5.0",
 "5.1",
 "5.3",
@@ -2766,8 +3223,10 @@
 "15.3",
 "16.2",
 "16.3",
+"16.5",
 "17.4",
 "17.5",
+"17.7",
 "18.5",
 "18.6",
 "18.7",
@@ -2819,6 +3278,7 @@
 "4.3": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "4.4": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "4.8": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
+"4.9": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "5.0": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "5.1": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "5.3": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
@@ -2837,6 +3297,7 @@
 "15.0": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "16.2": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "16.3": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
+"16.5": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "17.5": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "18.5": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "19.1": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
@@ -2889,8 +3350,22 @@
 "36.4": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
 "40.1": "Hôm nay bà giám đốc có vẻ khó chịu nhỉ?",
 "7.1": "Ông Tư có vẻ già đi.",
-"21.0": "Ông Tư có vẻ già đi."
-}
+"21.0": "Ông Tư có vẻ già đi.",
+"17.7": "Ăn ở ngoài thì mắc, ăn ở nhà thì không ngon."
+},
+"title_ko": "오빠(형)가 있으면 좋겠어요, 그렇죠?",
+"first": [
+"6.4",
+"12.5",
+"18.6",
+"19.2",
+"23.0",
+"25.0",
+"25.1",
+"33.5",
+"36.4",
+"41.1"
+]
 },
 "2-12": {
 "title": "Ôn tập (Bài 12)",
@@ -3071,7 +3546,1379 @@
 "33.2": "BẠN MỚI\n\nTrời mưa rất to. Khi bố tôi chở tôi đi học về thì thấy có hai đứa nhỏ đứng trú mưa trước cửa nhà tôi. Một đứa khoảng 9, 10 tuổi, dáng người nhỏ gầy, nước da đen. Nó mặc quần jean, áo sơ mi ngắn tay. Nước mưa làm mái tóc của nó bị ướt. Một đứa thì lớn hơn, khoảng 12, 13 tuổi. Nó mặc một bộ đồng phục học sinh, chân mang đôi giày thể thao trắng. Dáng người nó thấp, có vẻ béo. Cả hai đều có vẻ hiền lành.\n\nBố tôi mở cửa, bảo hai đứa vào nhà trú mưa và hỏi chuyện. Chúng nói chúng là hai anh em, anh tên là Hiếu, em tên là Thảo. Hiếu bằng tuổi tôi, nhưng năm nay học lớp 6, sau tôi một lớp. Mặc dù mới gặp nhau lần đầu nhưng chúng tôi nói chuyện với nhau rất vui vẻ, giống như hai đứa bạn thân.\n\nTrời tạnh mưa, chúng chào bố tôi và tôi rồi đi về. Tôi rất vui vì có thêm một người bạn mới.",
 "36.2": "BẠN MỚI\n\nTrời mưa rất to. Khi bố tôi chở tôi đi học về thì thấy có hai đứa nhỏ đứng trú mưa trước cửa nhà tôi. Một đứa khoảng 9, 10 tuổi, dáng người nhỏ gầy, nước da đen. Nó mặc quần jean, áo sơ mi ngắn tay. Nước mưa làm mái tóc của nó bị ướt. Một đứa thì lớn hơn, khoảng 12, 13 tuổi. Nó mặc một bộ đồng phục học sinh, chân mang đôi giày thể thao trắng. Dáng người nó thấp, có vẻ béo. Cả hai đều có vẻ hiền lành.\n\nBố tôi mở cửa, bảo hai đứa vào nhà trú mưa và hỏi chuyện. Chúng nói chúng là hai anh em, anh tên là Hiếu, em tên là Thảo. Hiếu bằng tuổi tôi, nhưng năm nay học lớp 6, sau tôi một lớp. Mặc dù mới gặp nhau lần đầu nhưng chúng tôi nói chuyện với nhau rất vui vẻ, giống như hai đứa bạn thân.\n\nTrời tạnh mưa, chúng chào bố tôi và tôi rồi đi về. Tôi rất vui vì có thêm một người bạn mới.",
 "41.0": "BẠN MỚI\n\nTrời mưa rất to. Khi bố tôi chở tôi đi học về thì thấy có hai đứa nhỏ đứng trú mưa trước cửa nhà tôi. Một đứa khoảng 9, 10 tuổi, dáng người nhỏ gầy, nước da đen. Nó mặc quần jean, áo sơ mi ngắn tay. Nước mưa làm mái tóc của nó bị ướt. Một đứa thì lớn hơn, khoảng 12, 13 tuổi. Nó mặc một bộ đồng phục học sinh, chân mang đôi giày thể thao trắng. Dáng người nó thấp, có vẻ béo. Cả hai đều có vẻ hiền lành.\n\nBố tôi mở cửa, bảo hai đứa vào nhà trú mưa và hỏi chuyện. Chúng nói chúng là hai anh em, anh tên là Hiếu, em tên là Thảo. Hiếu bằng tuổi tôi, nhưng năm nay học lớp 6, sau tôi một lớp. Mặc dù mới gặp nhau lần đầu nhưng chúng tôi nói chuyện với nhau rất vui vẻ, giống như hai đứa bạn thân.\n\nTrời tạnh mưa, chúng chào bố tôi và tôi rồi đi về. Tôi rất vui vì có thêm một người bạn mới."
-}
+},
+"title_ko": "복습",
+"first": [
+"19.5"
+]
+},
+"s1-1": {
+"title": "Chào cô ạ",
+"title_ko": "선생님, 안녕하세요",
+"items": [
+"2.0",
+"3.0",
+"3.1",
+"3.3",
+"3.4",
+"4.0",
+"4.2",
+"4.4",
+"4.8",
+"5.0",
+"6.0",
+"6.5",
+"9.0",
+"9.1",
+"12.0",
+"12.1",
+"12.3",
+"12.4",
+"12.6",
+"15.2",
+"15.3",
+"19.3",
+"23.4",
+"25.2",
+"27.0",
+"27.1",
+"27.7",
+"28.1",
+"28.4"
+],
+"ex": {
+"2.0": "Chào anh. Tôi là Mary.",
+"3.0": "Chào anh. Tôi là Mary.",
+"3.1": "Chào anh. Tôi là Mary.",
+"4.0": "Chào anh. Tôi là Mary.",
+"6.0": "Chào ông ạ. Cháu là Linda.",
+"3.3": "Chào các bạn. Tôi là Ly.",
+"9.0": "Chào các bạn. Tôi là Ly.",
+"9.1": "Chào các bạn. Tôi là Ly.",
+"3.4": "Chào Ly. Chúng tôi là Mary, David, Bell và Tú.",
+"27.7": "Chào Ly. Chúng tôi là Mary, David, Bell và Tú.",
+"4.2": "Ông có khỏe không ạ?",
+"4.8": "Ông có khỏe không ạ?",
+"5.0": "Cám ơn cháu. Ông khỏe. Còn cháu, cháu có khỏe không?",
+"27.0": "Cám ơn cháu. Ông khỏe. Còn cháu, cháu có khỏe không?",
+"27.1": "Cám ơn cháu. Ông khỏe. Còn cháu, cháu có khỏe không?",
+"4.4": "Cám ơn ông. Cháu cũng khỏe ạ.",
+"12.1": "Cám ơn chị. Em không khỏe lắm.",
+"12.3": "Cám ơn chị. Em không khỏe lắm.",
+"15.2": "Cám ơn em. Tôi vẫn bình thường.",
+"15.3": "Cám ơn em. Tôi vẫn bình thường.",
+"28.4": "Cám ơn em. Tôi vẫn bình thường.",
+"12.4": "Tôi hơi mệt.",
+"12.6": "Tôi hơi mệt.",
+"28.1": "Tạm biệt Hải. Hẹn gặp lại bạn.",
+"6.5": "Dạ. Cám ơn các ông các bà. Chúng cháu khỏe ạ.",
+"12.0": "Chào anh. Rất vui được gặp anh.",
+"19.3": "Chào anh. Rất vui được gặp anh.",
+"23.4": "Mình cũng rất vui được làm quen với các bạn.",
+"25.2": "Mình cũng rất vui được làm quen với các bạn."
+},
+"first": [
+"2.0",
+"3.0",
+"3.1",
+"3.3",
+"3.4",
+"4.0",
+"4.2",
+"4.4",
+"4.8",
+"5.0",
+"6.0",
+"6.5",
+"9.0",
+"9.1",
+"12.0",
+"12.1",
+"12.3",
+"12.4",
+"12.6",
+"15.2",
+"15.3",
+"19.3",
+"23.4",
+"25.2",
+"27.0",
+"27.1",
+"27.7",
+"28.1",
+"28.4"
+]
+},
+"s1-2": {
+"title": "Tên bạn là gì?",
+"title_ko": "이름이 뭐예요?",
+"items": [
+"2.0",
+"3.0",
+"3.1",
+"3.2",
+"3.3",
+"3.4",
+"3.5",
+"4.0",
+"4.1",
+"4.2",
+"4.4",
+"4.5",
+"4.6",
+"4.8",
+"5.0",
+"5.1",
+"5.2",
+"5.3",
+"6.0",
+"6.5",
+"9.1",
+"12.0",
+"12.3",
+"19.3",
+"23.4",
+"25.2",
+"25.5",
+"27.0",
+"27.1"
+],
+"ex": {
+"2.0": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
+"3.0": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
+"3.1": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
+"4.0": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
+"25.5": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
+"4.6": "Chào anh. Xin giới thiệu với anh: Đây là anh Long, bạn tôi.",
+"25.2": "Chào anh. Xin giới thiệu với anh: Đây là anh Long, bạn tôi.",
+"12.0": "Chào anh Long. Rất vui được gặp anh.",
+"12.3": "Chào anh Long. Rất vui được gặp anh.",
+"19.3": "Chào anh Long. Rất vui được gặp anh.",
+"4.4": "Chào anh. Tôi cũng rất vui được gặp anh.",
+"5.0": "Chào anh Huy. Anh có khỏe không?",
+"27.0": "Cám ơn. Tôi khỏe. Còn chị?",
+"27.1": "Cám ơn. Tôi khỏe. Còn chị?",
+"23.4": "Chào anh. Tôi cũng rất vui được làm quen với anh.",
+"4.5": "Tên chị là gì?",
+"5.3": "Tên chị là gì?",
+"5.2": "Xin lỗi. Chị là Lan phải không?",
+"6.0": "Chào bà. Xin lỗi, tên bà là gì ạ?",
+"5.1": "Xin lỗi. Chị có phải là Kim Chi không?",
+"6.5": "Vâng. Tôi là Kim Chi. Còn anh, anh là Tony phải không?",
+"4.1": "Không. Tôi không phải là Tony.",
+"4.2": "Thầy có khỏe không ạ?",
+"4.8": "Thầy có khỏe không ạ?",
+"3.2": "Các ông ấy/bà ấy/chị ấy/anh ấy.",
+"3.3": "Các ông ấy/bà ấy/chị ấy/anh ấy.",
+"9.1": "Các ông ấy/bà ấy/chị ấy/anh ấy.",
+"3.4": "Chúng tôi 외에 Chúng ta가 추가된다.",
+"3.5": "Chúng tôi 외에 Chúng ta가 추가된다."
+},
+"first": [
+"3.2",
+"3.5",
+"4.1",
+"4.5",
+"4.6",
+"5.1",
+"5.2",
+"5.3",
+"25.5"
+]
+},
+"s1-3": {
+"title": "Bạn làm nghề gì?",
+"title_ko": "당신은 무슨 일을 하세요?",
+"items": [
+"2.0",
+"3.0",
+"3.1",
+"3.2",
+"3.5",
+"4.0",
+"4.1",
+"4.4",
+"4.7",
+"5.0",
+"5.1",
+"5.2",
+"5.3",
+"5.6",
+"6.0",
+"6.5",
+"20.0",
+"27.0",
+"27.1",
+"27.4",
+"27.7",
+"28.0"
+],
+"ex": {
+"2.0": "Xin lỗi. Chị có phải là giáo viên không?",
+"3.0": "Xin lỗi. Chị có phải là giáo viên không?",
+"4.0": "Xin lỗi. Chị có phải là giáo viên không?",
+"5.0": "Xin lỗi. Chị có phải là giáo viên không?",
+"5.1": "Xin lỗi. Chị có phải là giáo viên không?",
+"3.1": "Vâng. Tôi là giáo viên. Còn anh, anh là nhà báo, phải không?",
+"5.2": "Vâng. Tôi là giáo viên. Còn anh, anh là nhà báo, phải không?",
+"6.5": "Vâng. Tôi là giáo viên. Còn anh, anh là nhà báo, phải không?",
+"27.0": "Vâng. Tôi là giáo viên. Còn anh, anh là nhà báo, phải không?",
+"27.1": "Vâng. Tôi là giáo viên. Còn anh, anh là nhà báo, phải không?",
+"4.1": "Không. Tôi không phải là nhà báo.",
+"5.3": "Anh làm nghề gì?",
+"20.0": "Phải. Tôi là Nicolas. Còn bạn, bạn là...?",
+"4.4": "Mình là Jenny Trần, sinh viên tiếng Việt. Bạn cũng là sinh viên phải không?",
+"5.6": "Xin lỗi. Bà là người nước nào?",
+"6.0": "Ông làm gì ạ?",
+"3.5": "A, chúng ta đều là người Úc.",
+"28.0": "A, chúng ta đều là người Úc.",
+"4.7": "Thế còn kia là...?",
+"27.4": "Thế còn kia là...?",
+"27.7": "A, đó là chị Kyoko và anh Nishi.",
+"3.2": "Còn anh ấy?"
+},
+"first": [
+"4.7",
+"5.6",
+"20.0",
+"27.4",
+"28.0"
+]
+},
+"s1-4": {
+"title": "Đây là cái gì?",
+"title_ko": "이것은 무엇입니까?",
+"items": [
+"3.0",
+"3.6",
+"4.0",
+"4.2",
+"4.4",
+"4.6",
+"4.7",
+"4.8",
+"4.9",
+"5.0",
+"5.1",
+"5.3",
+"5.4",
+"6.5",
+"9.0",
+"12.0",
+"12.1",
+"12.2",
+"12.3",
+"12.4",
+"12.6",
+"15.2",
+"16.2",
+"27.0",
+"27.1",
+"27.4",
+"27.6",
+"35.5",
+"46.2"
+],
+"ex": {
+"3.6": "Thủy ơi, đây là cái gì?",
+"4.0": "Thủy ơi, đây là cái gì?",
+"4.6": "Thủy ơi, đây là cái gì?",
+"5.3": "Thủy ơi, đây là cái gì?",
+"9.0": "Thủy ơi, đây là cái gì?",
+"4.7": "Thế còn kia là con gì?",
+"27.1": "Thế còn kia là con gì?",
+"27.4": "Thế còn kia là con gì?",
+"4.9": "Còn đây, cái này tiếng Việt gọi là cái gì?",
+"27.0": "Còn đây, cái này tiếng Việt gọi là cái gì?",
+"5.4": "Cái máy này thế nào?",
+"12.0": "Nó cũ nhưng rất tốt.",
+"12.3": "Nó cũ nhưng rất tốt.",
+"5.0": "Còn kia, kia có phải là quyển từ điển Việt-Nhật không?",
+"5.1": "Còn kia, kia có phải là quyển từ điển Việt-Nhật không?",
+"6.5": "Ừ. Đó là quyển từ điển Việt-Nhật.",
+"12.4": "Tốt, nhưng chữ hơi nhỏ.",
+"12.6": "Tốt, nhưng chữ hơi nhỏ.",
+"4.4": "Nó cũng rất tốt.",
+"3.0": "Đây là anh Bill.",
+"16.2": "Con gà béo.",
+"35.5": "Quyển sách mới.",
+"4.2": "Con gà không béo.",
+"4.8": "Có, mới.",
+"15.2": "Tiếng Việt rất hay.",
+"27.6": "Tiếng Việt rất hay.",
+"12.1": "Lắm: 형용사 '뒤'에 오며 주로 구어체.",
+"12.2": "Quá: 형용사 '뒤'에 오며 구어체로 감탄을 나타냄.",
+"46.2": "Nem ngon quá!"
+},
+"first": [
+"3.6",
+"4.9",
+"5.4",
+"12.2",
+"16.2",
+"27.6",
+"35.5",
+"46.2"
+]
+},
+"s1-5": {
+"title": "Đây là ai?",
+"title_ko": "이 사람은 누구예요?",
+"items": [
+"3.0",
+"3.1",
+"3.2",
+"3.6",
+"4.0",
+"4.2",
+"4.3",
+"4.6",
+"4.7",
+"4.8",
+"5.0",
+"5.1",
+"5.2",
+"5.3",
+"5.4",
+"5.5",
+"6.5",
+"12.0",
+"12.1",
+"12.2",
+"12.3",
+"16.2",
+"16.3",
+"16.4",
+"16.5",
+"20.0",
+"27.0",
+"27.1",
+"27.7",
+"38.0",
+"38.3"
+],
+"ex": {
+"3.6": "Hà ơi! Đây là ai?",
+"4.0": "Hà ơi! Đây là ai?",
+"4.6": "Hà ơi! Đây là ai?",
+"5.5": "Hà ơi! Đây là ai?",
+"3.1": "Bố mình đấy.",
+"38.0": "Bố mình đấy.",
+"38.3": "Bố mình đấy.",
+"4.7": "Còn kia, kia là mẹ cậu phải không?",
+"5.2": "Còn kia, kia là mẹ cậu phải không?",
+"27.0": "Còn kia, kia là mẹ cậu phải không?",
+"27.1": "Còn kia, kia là mẹ cậu phải không?",
+"6.5": "Ừ. Đó là mẹ mình.",
+"3.0": "Mẹ cậu trẻ và đẹp quá! Còn đây có phải là em trai cậu không?",
+"5.0": "Mẹ cậu trẻ và đẹp quá! Còn đây có phải là em trai cậu không?",
+"5.1": "Mẹ cậu trẻ và đẹp quá! Còn đây có phải là em trai cậu không?",
+"12.2": "Mẹ cậu trẻ và đẹp quá! Còn đây có phải là em trai cậu không?",
+"12.3": "Mẹ cậu trẻ và đẹp quá! Còn đây có phải là em trai cậu không?",
+"27.7": "Mẹ cậu trẻ và đẹp quá! Còn đây có phải là em trai cậu không?",
+"20.0": "Phải. Em trai mình đấy.",
+"3.2": "Anh cậu trông đẹp trai quá! Thế anh ấy là người thế nào?",
+"5.3": "Anh cậu trông đẹp trai quá! Thế anh ấy là người thế nào?",
+"5.4": "Anh cậu trông đẹp trai quá! Thế anh ấy là người thế nào?",
+"16.2": "Anh cậu trông đẹp trai quá! Thế anh ấy là người thế nào?",
+"16.3": "Anh cậu trông đẹp trai quá! Thế anh ấy là người thế nào?",
+"16.4": "Anh cậu trông đẹp trai quá! Thế anh ấy là người thế nào?",
+"16.5": "Anh cậu trông đẹp trai quá! Thế anh ấy là người thế nào?",
+"12.0": "Anh ấy trông rất thông minh. Thế anh ấy có dễ tính không?",
+"12.1": "Không. Anh ấy khó tính lắm.",
+"4.3": "Kia là cô giáo của tôi đấy.",
+"4.2": "Cô ấy không trẻ.",
+"4.8": "Có, cô ấy rất trẻ."
+},
+"first": [
+"4.3",
+"5.5",
+"16.3",
+"16.4",
+"16.5",
+"38.0",
+"38.3"
+]
+},
+"s1-6": {
+"title": "Quyển sách này của ai?",
+"title_ko": "이 책은 누구 거예요?",
+"items": [
+"3.0",
+"3.1",
+"3.2",
+"4.0",
+"4.2",
+"4.3",
+"4.4",
+"4.6",
+"4.8",
+"4.9",
+"5.0",
+"5.2",
+"5.3",
+"5.4",
+"5.5",
+"6.0",
+"6.1",
+"6.5",
+"8.0",
+"9.0",
+"9.3",
+"12.0",
+"12.1",
+"12.2",
+"12.3",
+"12.7",
+"15.1",
+"16.2",
+"16.3",
+"16.5",
+"17.6",
+"18.2",
+"20.0",
+"25.4",
+"26.0",
+"26.1",
+"27.0",
+"27.1",
+"27.3",
+"27.4",
+"27.5",
+"27.7",
+"33.0",
+"33.7",
+"33.9",
+"35.0",
+"35.1",
+"35.2",
+"39.3"
+],
+"ex": {
+"3.0": "Ngôi nhà này của chị phải không?",
+"4.3": "Ngôi nhà này của chị phải không?",
+"4.9": "Ngôi nhà này của chị phải không?",
+"5.2": "Ngôi nhà này của chị phải không?",
+"9.0": "Ngôi nhà này của chị phải không?",
+"3.1": "Vâng. Đây là phòng của tôi. Bên cạnh là phòng của con trai tôi.",
+"4.0": "Vâng. Đây là phòng của tôi. Bên cạnh là phòng của con trai tôi.",
+"4.6": "Vâng. Đây là phòng của tôi. Bên cạnh là phòng của con trai tôi.",
+"6.5": "Vâng. Đây là phòng của tôi. Bên cạnh là phòng của con trai tôi.",
+"17.6": "Vâng. Đây là phòng của tôi. Bên cạnh là phòng của con trai tôi.",
+"4.8": "Nhà chị có mấy phòng?",
+"8.0": "Nhà chị có mấy phòng?",
+"9.3": "Nhà chị có mấy phòng?",
+"12.2": "Chà! Trông rộng và đẹp quá!",
+"12.3": "Chà! Trông rộng và đẹp quá!",
+"16.3": "Chà! Trông rộng và đẹp quá!",
+"16.5": "Chà! Trông rộng và đẹp quá!",
+"27.7": "Chà! Trông rộng và đẹp quá!",
+"5.5": "Cái bút này của ai?",
+"6.0": "Dạ, của em ạ.",
+"5.0": "Nó có đắt không?",
+"4.2": "Không đắt lắm cô ạ.",
+"12.1": "Không đắt lắm cô ạ.",
+"27.0": "Còn quyển từ điển kia của ai? Của Nga phải không?",
+"27.1": "Còn quyển từ điển kia của ai? Của Nga phải không?",
+"20.0": "Không phải của em. Của anh Nam ạ.",
+"15.1": "Quyển từ điển ấy có bao nhiêu trang?",
+"12.0": "Rất tốt ạ.",
+"5.3": "Thế còn tiếng Việt thế nào?",
+"5.4": "Thế còn tiếng Việt thế nào?",
+"27.4": "Thế còn tiếng Việt thế nào?",
+"4.4": "Tiếng Việt cũng khó nhưng tiếng Nhật khó hơn tiếng Việt.",
+"33.0": "Tiếng Việt cũng khó nhưng tiếng Nhật khó hơn tiếng Việt.",
+"6.1": "Thế à? Thế tiếng Anh và tiếng Việt, tiếng nào dễ hơn?",
+"39.3": "Thế à? Thế tiếng Anh và tiếng Việt, tiếng nào dễ hơn?",
+"26.0": "Theo mình, tiếng Anh dễ hơn.",
+"26.1": "Theo mình, tiếng Anh dễ hơn.",
+"12.7": "Tomy, cậu cao bao nhiêu?",
+"16.2": "Tomy, cậu cao bao nhiêu?",
+"18.2": "Ô, chúng mình cao bằng nhau. Còn Martin cao 1m70.",
+"25.4": "Ô, chúng mình cao bằng nhau. Còn Martin cao 1m70.",
+"33.9": "Ô, chúng mình cao bằng nhau. Còn Martin cao 1m70.",
+"35.0": "Ừ. Nhưng quyển từ điển của Mary chỉ có 800 trang thôi.",
+"35.1": "Ừ. Nhưng quyển từ điển của Mary chỉ có 800 trang thôi.",
+"35.2": "Ừ. Nhưng quyển từ điển của Mary chỉ có 800 trang thôi.",
+"27.3": "Thế thì quyển của tớ dày nhất, của Mary mỏng nhất.",
+"27.5": "Thế thì quyển của tớ dày nhất, của Mary mỏng nhất.",
+"33.7": "Thế thì quyển của tớ dày nhất, của Mary mỏng nhất.",
+"3.2": "Anh ấy có ô tô."
+},
+"first": [
+"6.1",
+"8.0",
+"9.3",
+"12.7",
+"15.1",
+"17.6",
+"18.2",
+"25.4",
+"26.0",
+"26.1",
+"27.3",
+"27.5",
+"33.0",
+"33.7",
+"33.9",
+"35.0",
+"35.1",
+"35.2",
+"39.3"
+]
+},
+"s1-7": {
+"title": "Bạn đang học ở đâu?",
+"title_ko": "당신은 지금 어디에서 공부하고 있어요?",
+"items": [
+"2.0",
+"3.0",
+"3.1",
+"3.2",
+"3.4",
+"3.6",
+"4.0",
+"4.2",
+"4.3",
+"4.6",
+"4.7",
+"4.8",
+"4.9",
+"5.0",
+"5.2",
+"5.3",
+"6.0",
+"6.4",
+"6.5",
+"9.0",
+"10.0",
+"10.2",
+"10.3",
+"11.3",
+"11.5",
+"12.1",
+"12.2",
+"12.3",
+"13.2",
+"14.0",
+"15.2",
+"15.3",
+"16.2",
+"16.3",
+"16.5",
+"17.0",
+"17.4",
+"17.6",
+"17.7",
+"27.0",
+"27.1",
+"27.7",
+"28.4",
+"38.0",
+"38.3"
+],
+"ex": {
+"3.0": "Sáng nay em có học tiếng Việt không?",
+"3.1": "Sáng nay em có học tiếng Việt không?",
+"5.0": "Sáng nay em có học tiếng Việt không?",
+"13.2": "Sáng nay em có học tiếng Việt không?",
+"14.0": "Sáng nay em có học tiếng Việt không?",
+"4.8": "Có ạ.",
+"6.0": "Có ạ.",
+"5.2": "Còn chiều nay, em học tiếng Anh phải không?",
+"27.0": "Còn chiều nay, em học tiếng Anh phải không?",
+"27.1": "Còn chiều nay, em học tiếng Anh phải không?",
+"17.0": "Em học vẽ ở đâu?",
+"5.3": "Thế ngày mai em sẽ làm gì?",
+"10.2": "Thế ngày mai em sẽ làm gì?",
+"10.3": "Thế ngày mai em sẽ làm gì?",
+"2.0": "Chào Mary. Lâu lắm không gặp em. Em khoẻ không?",
+"4.2": "Chào Mary. Lâu lắm không gặp em. Em khoẻ không?",
+"11.3": "Chào Mary. Lâu lắm không gặp em. Em khoẻ không?",
+"12.1": "Chào Mary. Lâu lắm không gặp em. Em khoẻ không?",
+"12.3": "Chào Mary. Lâu lắm không gặp em. Em khoẻ không?",
+"27.7": "Chào anh Huy. Em khoẻ. Anh và gia đình có khoẻ không?",
+"3.4": "Cám ơn. Chúng tôi bình thường.",
+"15.2": "Cám ơn. Chúng tôi bình thường.",
+"15.3": "Cám ơn. Chúng tôi bình thường.",
+"17.7": "Bây giờ anh chị sống ở đâu?",
+"28.4": "Chúng tôi vẫn sống ở Bách Khoa.",
+"3.2": "Chị ấy làm việc ở đâu ạ?",
+"3.6": "Hà ơi, em đang làm gì đấy?",
+"10.0": "Hà ơi, em đang làm gì đấy?",
+"38.0": "Hà ơi, em đang làm gì đấy?",
+"38.3": "Hà ơi, em đang làm gì đấy?",
+"9.0": "Em đang tìm quyển sách tiếng Anh.",
+"4.9": "Nó ở trên bàn kia kìa.",
+"17.4": "Nó ở trên bàn kia kìa.",
+"4.3": "Đây rồi. Còn cái bút, cái bút của em ở đâu?",
+"4.6": "Đây rồi. Còn cái bút, cái bút của em ở đâu?",
+"11.5": "Đây rồi. Còn cái bút, cái bút của em ở đâu?",
+"6.5": "Ừ nhỉ. Thế cái kính của em đâu?",
+"6.4": "Anna ơi, bức ảnh kia đẹp nhỉ?",
+"4.0": "Lớp mình đấy. Thầy Thành ngồi cạnh mình. Bill đứng trước Pier. Còn kia là thầy Ân. Thầy ấy đứng giữa Mary và Tina.",
+"4.7": "Lớp mình đấy. Thầy Thành ngồi cạnh mình. Bill đứng trước Pier. Còn kia là thầy Ân. Thầy ấy đứng giữa Mary và Tina.",
+"17.6": "Lớp mình đấy. Thầy Thành ngồi cạnh mình. Bill đứng trước Pier. Còn kia là thầy Ân. Thầy ấy đứng giữa Mary và Tina.",
+"12.2": "Thầy ấy trông đẹp trai quá nhỉ?",
+"16.2": "Thầy ấy trông đẹp trai quá nhỉ?",
+"16.3": "Thầy ấy trông đẹp trai quá nhỉ?",
+"16.5": "Thầy ấy trông đẹp trai quá nhỉ?"
+},
+"first": [
+"6.4",
+"10.0",
+"10.2",
+"10.3",
+"11.3",
+"11.5",
+"13.2",
+"14.0",
+"17.0",
+"17.4",
+"17.7"
+]
+},
+"s1-8": {
+"title": "Ôn tập",
+"title_ko": "복습",
+"items": [],
+"ex": {}
+},
+"s2-1": {
+"title": "",
+"title_ko": "베트남어 할 줄 아세요?",
+"items": [
+"10.1",
+"11.0",
+"19.1",
+"19.2",
+"19.3",
+"21.3"
+],
+"ex": {},
+"first": [
+"10.1",
+"11.0",
+"19.1",
+"19.2",
+"19.3",
+"21.3"
+]
+},
+"s2-2": {
+"title": "",
+"title_ko": "책을 펴세요",
+"items": [
+"9.1",
+"21.1",
+"21.2",
+"28.3"
+],
+"ex": {},
+"first": [
+"9.1",
+"21.1",
+"21.2",
+"28.3"
+]
+},
+"s2-3": {
+"title": "",
+"title_ko": "어디 가?",
+"items": [
+"10.5",
+"17.3",
+"29.4",
+"31.0",
+"36.3"
+],
+"ex": {},
+"first": [
+"10.5",
+"17.3",
+"29.4",
+"31.0",
+"36.3"
+]
+},
+"s2-4": {
+"title": "",
+"title_ko": "이 펜 얼마예요?",
+"items": [
+"5.3",
+"8.1",
+"16.0",
+"19.4",
+"21.0",
+"24.0",
+"24.1"
+],
+"ex": {},
+"first": [
+"5.3",
+"8.1",
+"16.0",
+"19.4",
+"21.0",
+"24.0",
+"24.1"
+]
+},
+"s2-5": {
+"title": "",
+"title_ko": "가족 있으세요?",
+"items": [
+"8.2",
+"8.3",
+"33.3",
+"33.4",
+"33.5"
+],
+"ex": {},
+"first": [
+"8.2",
+"8.3",
+"33.3",
+"33.4",
+"33.5"
+]
+},
+"s2-6": {
+"title": "",
+"title_ko": "우체국이 어디예요?",
+"items": [
+"17.0",
+"17.1",
+"17.2",
+"18.0",
+"18.2",
+"22.4",
+"29.0",
+"29.1"
+],
+"ex": {},
+"first": [
+"17.0",
+"17.1",
+"17.2",
+"18.0",
+"18.2",
+"22.4",
+"29.0",
+"29.1"
+]
+},
+"s2-7": {
+"title": "",
+"title_ko": "지금 몇 시예요?",
+"items": [
+"6.1",
+"13.0",
+"13.1",
+"13.2",
+"13.3",
+"13.4",
+"15.0"
+],
+"ex": {},
+"first": [
+"6.1",
+"13.0",
+"13.1",
+"13.2",
+"13.3",
+"13.4",
+"15.0"
+]
+},
+"s2-8": {
+"title": "",
+"title_ko": "오늘 무슨 요일이에요?",
+"items": [
+"14.0",
+"14.1",
+"14.2",
+"14.3",
+"14.4"
+],
+"ex": {},
+"first": [
+"14.0",
+"14.1",
+"14.2",
+"14.3",
+"14.4"
+]
+},
+"s2-9": {
+"title": "",
+"title_ko": "오늘 날씨 어때요?",
+"items": [
+"10.4",
+"14.5",
+"20.2",
+"21.4",
+"27.2",
+"35.0"
+],
+"ex": {},
+"first": [
+"10.4",
+"14.5",
+"20.2",
+"21.4",
+"27.2",
+"35.0"
+]
+},
+"s2-10": {
+"title": "",
+"title_ko": "레 선생님 좀 바꿔 주세요",
+"items": [
+"18.5",
+"22.5",
+"22.6",
+"42.2",
+"46.0"
+],
+"ex": {},
+"first": [
+"18.5",
+"22.5",
+"22.6",
+"42.2",
+"46.0"
+]
+},
+"s3-1": {
+"title": "",
+"title_ko": "베트남 갈 준비",
+"items": [
+"20.0",
+"20.1",
+"25.5",
+"27.4",
+"27.5"
+],
+"ex": {},
+"first": [
+"20.0",
+"20.1",
+"25.5",
+"27.4",
+"27.5"
+]
+},
+"s3-2": {
+"title": "",
+"title_ko": "호텔에서",
+"items": [
+"18.1",
+"18.6",
+"24.3",
+"24.4",
+"34.0",
+"34.2",
+"37.0"
+],
+"ex": {},
+"first": [
+"18.1",
+"18.6",
+"24.3",
+"24.4",
+"34.0",
+"34.2",
+"37.0"
+]
+},
+"s3-3": {
+"title": "",
+"title_ko": "식당에서",
+"items": [
+"19.5",
+"28.5",
+"34.1",
+"34.3",
+"37.2"
+],
+"ex": {},
+"first": [
+"19.5",
+"28.5",
+"34.1",
+"34.3",
+"37.2"
+]
+},
+"s3-4": {
+"title": "",
+"title_ko": "여러 서비스",
+"items": [
+"11.1",
+"15.4",
+"27.6",
+"34.4",
+"35.5"
+],
+"ex": {},
+"first": [
+"11.1",
+"15.4",
+"27.6",
+"34.4",
+"35.5"
+]
+},
+"s3-5": {
+"title": "",
+"title_ko": "집 구하기",
+"items": [
+"24.5",
+"29.2",
+"30.0",
+"34.5",
+"36.4"
+],
+"ex": {},
+"first": [
+"24.5",
+"29.2",
+"30.0",
+"34.5",
+"36.4"
+]
+},
+"s3-6": {
+"title": "",
+"title_ko": "입학 신청",
+"items": [
+"11.2",
+"11.3",
+"19.5",
+"20.4",
+"37.5",
+"45.2"
+],
+"ex": {},
+"first": [
+"11.2",
+"11.3",
+"20.4",
+"37.5",
+"45.2"
+]
+},
+"s3-7": {
+"title": "",
+"title_ko": "베트남 생활 적응",
+"items": [
+"15.2",
+"18.3",
+"25.2",
+"26.1",
+"30.2",
+"42.1",
+"42.3",
+"42.4"
+],
+"ex": {},
+"first": [
+"15.2",
+"18.3",
+"25.2",
+"26.1",
+"30.2",
+"42.1",
+"42.3",
+"42.4"
+]
+},
+"s3-8": {
+"title": "",
+"title_ko": "습관·취미·바람",
+"items": [
+"23.0",
+"23.4",
+"23.5",
+"31.1",
+"33.1",
+"33.6",
+"42.2"
+],
+"ex": {},
+"first": [
+"23.0",
+"23.4",
+"23.5",
+"31.1",
+"33.1",
+"33.6",
+"42.2"
+]
+},
+"s3-9": {
+"title": "",
+"title_ko": "우정",
+"items": [
+"9.4",
+"15.5",
+"16.2",
+"30.1",
+"39.1",
+"42.0"
+],
+"ex": {},
+"first": [
+"9.4",
+"15.5",
+"16.2",
+"30.1",
+"39.1",
+"42.0"
+]
+},
+"s3-10": {
+"title": "",
+"title_ko": "손님 맞기",
+"items": [
+"18.2",
+"28.2",
+"29.3",
+"31.1",
+"37.5",
+"46.1",
+"46.2"
+],
+"ex": {},
+"first": [
+"18.2",
+"28.2",
+"29.3",
+"46.1",
+"46.2"
+]
+},
+"s4-1": {
+"title": "",
+"title_ko": "건강 관리",
+"items": [
+"18.7",
+"22.0",
+"22.2",
+"22.3",
+"41.0",
+"43.1"
+],
+"ex": {},
+"first": [
+"18.7",
+"22.0",
+"22.2",
+"22.3",
+"41.0",
+"43.1"
+]
+},
+"s4-2": {
+"title": "",
+"title_ko": "안부·병문안",
+"items": [
+"26.0",
+"31.2",
+"38.0",
+"38.1",
+"40.0",
+"40.2"
+],
+"ex": {},
+"first": [
+"26.0",
+"31.2",
+"38.0",
+"38.1",
+"40.0",
+"40.2"
+]
+},
+"s4-3": {
+"title": "",
+"title_ko": "옷 사기",
+"items": [
+"16.1",
+"23.2",
+"29.3",
+"43.3",
+"43.4",
+"44.4"
+],
+"ex": {},
+"first": [
+"16.1",
+"23.2",
+"29.3",
+"43.3",
+"43.4",
+"44.4"
+]
+},
+"s4-4": {
+"title": "",
+"title_ko": "관광",
+"items": [
+"12.7",
+"18.4",
+"25.4",
+"33.2",
+"35.2",
+"35.3"
+],
+"ex": {},
+"first": [
+"12.7",
+"18.4",
+"25.4",
+"33.2",
+"35.2",
+"35.3"
+]
+},
+"s4-5": {
+"title": "",
+"title_ko": "여가",
+"items": [
+"24.2",
+"26.2",
+"32.1",
+"35.5",
+"37.4",
+"38.2",
+"43.0"
+],
+"ex": {},
+"first": [
+"24.2",
+"26.2",
+"32.1",
+"35.5",
+"37.4",
+"38.2",
+"43.0"
+]
+},
+"s4-6": {
+"title": "",
+"title_ko": "운동",
+"items": [
+"23.1",
+"23.3",
+"25.2",
+"32.0",
+"45.0"
+],
+"ex": {},
+"first": [
+"23.1",
+"23.3",
+"25.2",
+"32.0",
+"45.0"
+]
+},
+"s4-7": {
+"title": "",
+"title_ko": "교통",
+"items": [
+"25.0",
+"25.1",
+"25.3",
+"41.1",
+"44.5"
+],
+"ex": {},
+"first": [
+"25.0",
+"25.1",
+"25.3",
+"41.1",
+"44.5"
+]
+},
+"s4-8": {
+"title": "",
+"title_ko": "베트남 생활",
+"items": [
+"35.1",
+"37.3",
+"38.4",
+"38.5",
+"39.2",
+"45.1"
+],
+"ex": {},
+"first": [
+"35.1",
+"37.3",
+"38.4",
+"38.5",
+"39.2",
+"45.1"
+]
+},
+"s4-9": {
+"title": "",
+"title_ko": "큰 도시들",
+"items": [
+"30.0",
+"32.2",
+"32.3",
+"36.0",
+"39.3"
+],
+"ex": {},
+"first": [
+"30.0",
+"32.2",
+"32.3",
+"36.0",
+"39.3"
+]
+},
+"s4-10": {
+"title": "",
+"title_ko": "공부",
+"items": [
+"20.3",
+"35.4",
+"44.0",
+"44.1",
+"44.2",
+"44.3"
+],
+"ex": {},
+"first": [
+"20.3",
+"35.4",
+"44.0",
+"44.1",
+"44.2",
+"44.3"
+]
+},
+"z-1": {
+"title": "",
+"title_ko": "인사말과 모음",
+"items": [
+"1.0",
+"1.1",
+"2.0"
+],
+"ex": {},
+"first": [
+"1.0",
+"1.1",
+"2.0"
+]
+},
+"z-2": {
+"title": "",
+"title_ko": "자음 — 홑자음과 겹자음",
+"items": [
+"1.2",
+"1.3"
+],
+"ex": {},
+"first": [
+"1.2",
+"1.3"
+]
+},
+"z-3": {
+"title": "",
+"title_ko": "단수 인칭대명사와 자기소개",
+"items": [
+"3.0",
+"3.1",
+"3.2",
+"4.5"
+],
+"ex": {},
+"first": [
+"3.0",
+"3.1",
+"3.2",
+"4.5"
+]
+},
+"z-4": {
+"title": "",
+"title_ko": "숫자 10~100과 돈",
+"items": [
+"7.0",
+"7.1",
+"7.2"
+],
+"ex": {},
+"first": [
+"7.0",
+"7.1",
+"7.2"
+]
+},
+"z-5": {
+"title": "",
+"title_ko": "방향과 길 묻기",
+"items": [
+"17.0",
+"17.1"
+],
+"ex": {},
+"first": [
+"17.0",
+"17.1"
+]
+},
+"z-6": {
+"title": "",
+"title_ko": "음료 주문하기",
+"items": [
+"46.3",
+"46.4",
+"46.5",
+"46.6"
+],
+"ex": {},
+"first": [
+"46.3",
+"46.4",
+"46.5",
+"46.6"
+]
+},
+"z-9": {
+"title": "",
+"title_ko": "색깔 묻기",
+"items": [
+"16.0"
+],
+"ex": {},
+"first": [
+"16.0"
+]
+},
+"z-10": {
+"title": "",
+"title_ko": "이름과 나이 묻기",
+"items": [
+"4.5",
+"8.0",
+"8.2"
+],
+"ex": {},
+"first": [
+"8.0",
+"8.2"
+]
 }
 }
 }
