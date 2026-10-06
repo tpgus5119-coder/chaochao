@@ -1,0 +1,259 @@
+# 문법 문형 → 문장에서 알아보는 규칙 (2026-10-06, 대표님 "메인 교재에 녹아 있는 문법도 모두 앱에 · 주간 시험 범위 · 문장 테스트를 문법 학습 순서에 맞게")
+# 칸: 문형 번호(과.번) | 규칙(;로 여럿). 규칙 토막: 낱말(소문자) · 여러 낱말은 +로 잇기 · _ = 사이 아무 말 · (a|b) 고르기 · ? ! = 문장 끝 부호 · ^ = 문장 처음 · $ = 문장 끝 · re: = 정규식 그대로
+# '-' 는 글자·소리처럼 문장으로 못 알아보는 문형(늘 아는 것으로 본다)
+1.0	-
+1.1	-
+1.2	-
+1.3	-
+2.0	(xin+chào|chào|cảm+ơn|cám+ơn|xin+lỗi|tạm+biệt|hẹn+gặp+lại)
+3.0	(anh|chị|em|ông|bà|cô|chú|cháu|thầy|bác)
+3.1	(tôi|em|cháu|mình|tớ)
+3.2	(anh|chị|ông|bà|cô|em|thầy|chú|bác) ấy
+3.3	các
+3.4	chúng+tôi
+3.5	chúng+ta
+4.0	là
+4.1	không+phải+là
+4.2	re:(?<![A-Za-zÀ-ỹĐđ])không(?![A-Za-zÀ-ỹĐđ])(?!\s*(phải\s+là|\?|$|[.!]))
+4.3	của
+4.4	cũng
+4.5	tên _ gì ?;tên gì ?
+4.6	đây
+4.7	^ (đó|đấy|kia) là;(đó|đấy|kia) là
+4.8	re:(?<![A-Za-zÀ-ỹĐđ])có(?![A-Za-zÀ-ỹĐđ])(?![^.?!]*không\s*\?)
+5.0	có _ không ?
+5.1	có+phải _ không ?;, có+phải+không ?
+5.2	phải+không ?
+5.3	gì;nào
+5.4	thế+nào ?
+5.5	ai
+5.6	người+nước+nào
+6.0	ạ
+6.1	à ?
+6.2	vậy ?
+6.3	(hả|há|hở) ?
+6.4	nhỉ ?
+7.0	(mười|mươi|trăm)
+7.1	(mốt|tư|lăm)
+7.2	(nghìn|ngàn|triệu) _ đồng;đồng
+8.0	(bao+nhiêu|mấy) _ ?
+8.1	bao+nhiêu+tiền
+8.2	(bao+nhiêu|mấy)+tuổi
+8.3	(gia+đình|kết+hôn|lập+gia+đình|người+con|đứa+con) _ (chưa|mấy)
+9.0	(cái|con|cuốn|quyển|chiếc|bức|tờ|ly|cốc|bát|tô|đĩa|chai|trái|quả|căn|ngôi|bộ|đôi|tấm|cây|chùm)
+9.1	các
+9.2	những
+9.3	mấy
+9.4	(khoảng|độ|chừng|vài)
+9.5	một (ít|chút|số)
+10.0	đang
+10.1	đã
+10.2	sẽ
+10.3	(đã|đang|sẽ)
+10.4	sắp
+10.5	(vừa|vừa+mới|mới) _ (rồi|xong|về|đến|đi|ăn|làm|học|gặp|mua|nói)
+11.0	chưa ?
+11.1	xong
+11.2	bao+giờ+chưa
+11.3	lâu
+11.4	đã !
+12.0	rất
+12.1	lắm
+12.2	quá
+12.3	(rất|quá|lắm)
+12.4	hơi
+12.5	khá
+12.6	(hơi|khá)
+12.7	(cao|dài|rộng|sâu|nặng|xa) bao+nhiêu
+13.0	mấy+giờ;giờ (rưỡi|sáng|chiều|tối|trưa|đêm|kém)
+13.1	lúc _ giờ
+13.2	(buổi+sáng|buổi+trưa|buổi+chiều|buổi+tối|ban+đêm|sáng|trưa|chiều|tối|đêm)
+13.3	re:(?<![A-Za-zÀ-ỹĐđ])(mấy|bao nhiêu|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|nửa)\s+tiếng(?![A-Za-zÀ-ỹĐđ])(?!\s+(việt|anh|hàn|nhật|pháp|trung|đức))
+13.4	bao+lâu
+14.0	(hôm+qua|hôm+nay|ngày+mai|ngày+kia|hôm+kia|tuần+trước|tuần+sau|tuần+này|năm+ngoái|năm+nay|năm+sau|tháng+trước|tháng+sau|tháng+này|tối+nay|sáng+nay|chiều+nay|bây+giờ|dạo+này)
+14.1	(thứ+hai|thứ+ba|thứ+tư|thứ+năm|thứ+sáu|thứ+bảy|chủ+nhật|thứ+mấy)
+14.2	ngày _ tháng;re:năm\s+(19|20)\d\d
+14.3	tháng (một|hai|ba|tư|năm|sáu|bảy|tám|chín|mười|mấy|giêng|chạp|\d+)
+14.4	vào (thứ|ngày|tháng|năm|buổi|lúc|mùa|chủ+nhật|sáng|chiều|tối|cuối|dịp|tuần)
+14.5	mùa
+15.0	(bao+giờ|lúc+nào|khi+nào)
+15.1	bao (giờ|lâu|nhiêu|xa)
+15.2	(luôn+luôn|luôn|thường|hay|thỉnh+thoảng|ít+khi|hiếm+khi|không+bao+giờ|đôi+khi)
+15.3	thường
+15.4	(bao+giờ|lúc+nào|khi+nào) cũng
+15.5	không+mấy+khi
+16.0	màu
+16.1	(mặc|đội|đeo|thắt) _ (áo|quần|mũ|nón|kính|giày|dép|cà+vạt|đồng+hồ|váy|đầm)
+16.2	(cao|thấp|gầy|béo|mập|tóc|hiền|vui+tính|đẹp+trai|xinh|dễ+thương)
+16.3	(nhìn|trông|xem|thấy|ngắm)
+17.0	ở+đâu;đi+đâu;đâu ?
+17.1	đi+thế+nào;(rẽ|quẹo) (trái|phải);đi+thẳng
+17.2	ở (đây|kia|đó|đấy)
+17.3	(ra|vào|lên|xuống) (chợ|nhà|phòng|lớp|xe|núi|phố|ngoài|trong|tầng|thành+phố|hà+nội|sài+gòn|đà+lạt|sân|biển|đây|đó)
+17.4	re:(?<![A-Za-zÀ-ỹĐđ])(trên|dưới|trong|ngoài|trước|sau)(?![A-Za-zÀ-ỹĐđ])(?!\s+khi)
+17.5	đi (học|làm|chơi|chợ|về|ngủ|dạo|bộ);(đến|tới) (nhà|trường|công+ty|lớp|văn+phòng|sân+bay);về (nhà|quê|nước|phòng)
+18.0	từ _ đến;từ _ tới
+18.1	từ _ sang
+18.2	bằng
+18.3	(đến|tới) (\d|mấy|giờ|ngày|tháng|năm|cuối|hết|khi|tận|bây+giờ)
+18.4	tận
+18.5	cách
+18.6	trong (\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|vài|mấy|bao+lâu|suốt|khoảng)
+18.7	(trước|trong|sau)+khi
+19.0	muốn
+19.1	biết
+19.2	(nói|biết) _ (một+chút|khá|giỏi|tốt|kém)
+19.3	có+thể;được
+19.4	được+không ?
+19.5	nào+cũng+được
+20.0	re:(?<![A-Za-zÀ-ỹĐđ])phải(?![A-Za-zÀ-ỹĐđ])(?!\s*(không|là))
+20.1	cần
+20.2	nên
+20.3	chứ+không (nên|cần)
+20.4	đáng
+21.0	đi !;đi nhé;đi $
+21.1	hãy
+21.2	nào !
+21.3	nhé
+21.4	cứ
+22.0	đừng
+22.1	đừng;đi !
+22.2	nhớ
+22.3	kẻo
+22.4	làm+ơn
+22.5	làm+ơn+cho
+22.6	xin+phép
+23.0	(mong|hy+vọng|hi+vọng|ước)
+23.1	định
+23.2	thử
+23.3	dám
+23.4	(thói+quen|quen)
+23.5	(sở+thích|thích)
+24.0	cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|con|bạn) _ (một|hai|ba|cái|ly|cốc|bát|phần|chút|ít|quyển|cuốn|chiếc|\d)
+24.1	(nói|gửi|mua|tặng|viết|gọi|đưa|làm|dạy|kể|để+lại|chuyển) _ cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|con|bạn|cô|ông|bà|họ|mẹ|bố|ai)
+24.2	cho (đẹp|nhanh|sạch|kỹ|rõ|tốt|chắc|vui|khỏe|dễ|đúng|cẩn+thận)
+24.3	(giúp|hộ|giùm)
+24.4	để (tôi|em|anh|chị|mình|con|nó|họ|cháu|chúng+tôi|bạn)
+24.5	dành
+25.0	cùng
+25.1	cùng
+25.2	(với|đối+với)
+25.3	với $;với !
+25.4	nhau
+25.5	tự;lấy $
+26.0	theo
+26.1	^ theo
+26.2	(nói|viết|hỏi|kể|nghĩ|biết|học|đọc|nghe|bàn) _ về
+27.0	^ còn;còn (anh|chị|em|ông|bà|cô|bạn|tôi|họ|cậu|mình|cháu|thầy)
+27.1	còn
+27.2	mà
+27.3	thì _ , _ thì;thì
+27.4	thế+còn
+27.5	thế+thì
+27.6	(hay|hoặc)
+28.0	đều
+28.1	lại
+28.2	thêm
+28.3	hết
+28.4	vẫn
+28.5	ngay
+29.0	(vì+sao|tại+sao|sao)
+29.1	vì _ nên
+29.2	bởi _ nên;vì+vậy
+29.3	do _ nên
+29.4	để
+30.0	nhờ
+30.1	là nhờ
+30.2	sở+dĩ
+31.0	nếu
+31.1	khi _ thì
+31.2	không+thì
+32.0	hễ
+32.1	cứ _ (là|thì)
+32.2	(phải+chi|ước+gì)
+32.3	(lẽ+ra|đáng+ra|đáng+lẽ)
+33.0	hơn
+33.1	thích _ hơn
+33.2	như
+33.3	càng _ càng
+33.4	ngày+càng
+33.5	(béo|gầy|đẹp|xấu|trẻ|già|khỏe|tốt|lớn|nhỏ|cao|thấp|nhanh|chậm|nóng|lạnh|giỏi|xinh|mập|ốm) (ra|đi|lên|lại)
+33.6	(trở+thành|trở+nên)
+34.0	vừa _ vừa
+34.1	vừa _ vừa
+34.2	không _ cũng+không
+34.3	không+những _ mà+còn
+34.4	cả _ lẫn
+34.5	ngoài _ còn
+34.6	trừ
+35.0	chỉ;thôi
+35.1	thôi
+35.2	có (một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|\d) _ thôi
+35.3	những (hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|trăm|\d)
+35.4	chỉ _ mới
+35.5	mới
+36.0	(cả|tất+cả|toàn+bộ|toàn+thể)
+36.1	tất+cả
+36.2	cả (hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|ngày|tuần|tháng|năm|nhà|lớp|gia+đình|thành+phố|\d)
+36.3	(mỗi|mọi)
+36.4	mỗi _ một
+37.0	(nào|gì|ai|đâu) cũng
+37.1	gì cũng
+37.2	nào _ ấy
+37.3	đâu _ đấy;bao+nhiêu _ bấy+nhiêu
+37.4	nào+đó
+37.5	cả _ cũng
+38.0	đấy $
+38.1	chứ $;chứ ?
+38.2	chứ+không
+38.3	(đấy|chứ) $
+38.4	mà $
+38.5	(người|cái|việc|món|chỗ|nơi|quyển|cuốn|nhà|sách|phim|bài) _ mà
+38.6	đây !
+39.0	không _ đâu
+39.1	có _ gì+đâu
+39.2	cái+gì+thế (này|kia)
+39.3	(thế+ạ|thế+à|ra+thế|ra+vậy|vậy+à|vậy+ạ)
+40.0	bị;được (khen|tặng|cho|mời|thưởng|nhận|điểm|giải|nghỉ)
+40.1	(hôm|tuần|tháng|năm|dạo|lâu|bao+lâu|mấy+hôm) nay
+40.2	đỡ
+41.0	(mặc+dù|tuy|dù) _ nhưng
+41.1	đã _ lại
+42.0	(hình+như|dường+như)
+42.1	hẳn+là
+42.2	thế+nào _ cũng
+42.3	chính
+42.4	lấy+làm
+43.0	đến+nỗi
+43.1	một+cách
+43.2	không+được _ lắm;không+được
+43.3	không _ nào _ như
+43.4	không _ bằng
+44.0	không+thể+không
+44.1	không+tránh+khỏi
+44.2	không+thể _ mà+nếu+không
+44.3	không+thể _ mà+nếu+thiếu
+44.4	không+thể _ (vào+đâu+được|được)
+44.5	(nổi|xuể)
+45.0	(chẳng|chả) _ là+gì
+45.1	không+nhằm _ mà+là+để
+45.2	không+phải+chỉ+vì _ mà+còn
+46.0	(a+lô|alô|ai+đấy|cho+tôi+gặp|gọi+điện|nghe+máy)
+46.1	mời _ vào;ngồi+đi;dùng+gì
+46.2	mời _ ăn;ăn+thêm;ngon+quá
+46.3	uống+gì;cho (tôi|em|anh|chị|mình) (một|hai|ba|\d)
+46.4	(tính+tiền|mang+về|dùng+ở+đây|đợi+một+lát|hay+mang+về)
+46.5	cà+phê (sữa|đen) (nóng|đá)
+46.6	(ít|nhiều|thêm|không) (đường|sữa|đá)
+# ── 2026-10-06 add2.py 로 넣은 문형(교재 대화에 녹아 있던 것) — 과 맨 끝 번호
+3.6	ơi
+6.5	^ (dạ|vâng|ừ|ừm|ờ)
+11.5	rồi
+11.6	lần
+17.6	(gần|xa|bên+phải|bên+trái|bên+cạnh|đối+diện|bao+xa)
+27.7	và
+28.6	nữa
+33.7	nhất
+33.8	(giống|khác)
+39.4	(không+sao|được+rồi|tất+nhiên)
+42.5	(có+lẽ|chắc+là|chắc)

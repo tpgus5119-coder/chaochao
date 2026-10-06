@@ -4306,13 +4306,19 @@ function testSents(mode) {
      재료 = 배운 낱말의 예문 + 끝낸 문법 과의 예문. 문제 꼴에 '문법 고르기'(이 문장에 쓰인 문형은?)를 더했고,
      문법 과 예문을 틀리면 '○과 문법 카드' 단추가 뜬다(nextBtn). 조각 배열·쳐서 쓰기·듣고 조각·뜻 고르기는 buildQuestions 의 forced 로 */
   if (!GRAM) { gramEnsure(() => testSents(mode)); return; }
+  if (!GTOK) { gramTokLoad().then(() => testSents(mode)); return; }
   const gsents = learnedGramSents();
   const seen = new Set(gsents.map(x => x.vi));
-  const pool = [...learnedSents().filter(x => !seen.has(x.vi)), ...gsents].sort(() => Math.random() - .5);
-  if (pool.length < 4) { popup(tr('아직 배운 문장이 적습니다 — 학습을 조금 더 하면 여기서 풀 수 있습니다')); return; }
+  /* 문장은 **끝낸 문법 과의 문형으로만 된 것** (대표님 2026-10-06 "문장 테스트의 문장들이 유저의 문법 학습 순서와 매치가 안 되지?") —
+     배운 낱말의 예문이라도 아직 안 배운 문형(예: nếu … thì)이 들어 있으면 뺀다. 문법 과를 하나도 안 끝냈으면 문형이 하나도 안 잡히는 문장만 남는다 */
+  const okIds = knownGramIds();
+  const all0 = [...learnedSents().filter(x => !seen.has(x.vi)), ...gsents];
+  const pool = all0.filter(x => sentWithinKnown(x.vi, okIds)).sort(() => Math.random() - .5);
+  if (pool.length < 4) { popup(tr('지금까지 끝낸 문법 과로 풀 수 있는 문장이 적습니다 — 문법 과를 더 끝내면 늘어납니다') + ' (' + pool.length + '/' + all0.length + ')'); return; }
   if (!mode) {
     const b = $('#examBody'); b.textContent = '';
     b.append(qnPicker());
+    b.append(el('p', 'note', tr('끝낸 문법 과의 문형으로만 된 문장 N개 (전체 M개)').replace('N', pool.length).replace('M', all0.length)));   // 문법 학습 순서에 맞춘 범위 (2026-10-06)
     const mk = (t, meta, m) => { const x = el('button', 'bigmenu'); x.append(el('b', null, esc(tr(t)) + ' <span class="exmeta">' + esc(tr(meta)) + '</span>')); x.onclick = () => { dive(() => testSents()); testSents(m); }; b.append(x); };
     mk('문장 만들기', '뜻을 보고 조각을 차례대로 눌러 문장을 만든다', 'puzzle');
     // '뜻 보고 쓰기'(자판으로 치기)는 뺐다 — 대표님 2026-10-06 "직접 쓰면 너무 어렵다, 단어 블록을 조립하도록"
@@ -4356,6 +4362,30 @@ function testSents(mode) {
   drawQuiz();
   show('quiz', tr('문장'), true);
 }
+/* 문형 알아보기 (2026-10-06, 대표님 "메인 교재에 녹아 있는 문법도 모두 앱에 · 주간 시험 범위에 맞는 문법 · 문장 테스트를 문법 학습 순서에 맞게"):
+   data/_gram_tok.json = 문형마다 문장에서 알아보는 정규식(tools/gram_tok/규칙.tsv → build.py, 예문으로 검산), data/_gram_ch.json = 메인 교재 권-과 → 그 과 대화·문법 상자에 나오는 문형.
+   gramDetect(문장) → 문형 id(과.번) 목록. 글자·소리처럼 늘 아는 문형(always)은 안 센다 */
+let GTOK = null, GCH = null, GTOK_P = null;
+function gramTokLoad() {
+  if (GTOK && GCH) return Promise.resolve();
+  if (!GTOK_P) GTOK_P = Promise.all([fetch('data/_gram_tok.json', { cache: 'no-cache' }).then(r => r.json()), fetch('data/_gram_ch.json', { cache: 'no-cache' }).then(r => r.json())])
+    .then(([t, c]) => { GTOK = (t.items || []).map(x => Object.assign({}, x, { rx: (x.re || []).map(r => new RegExp(r, 'i')) })); GCH = c.chapters || {}; })
+    .catch(() => { GTOK = []; GCH = {}; });
+  return GTOK_P;
+}
+function gramDetect(vi) {
+  if (!GTOK) return [];
+  const s = String(vi || '').toLowerCase();
+  return GTOK.filter(x => !x.always && x.rx.some(r => r.test(s))).map(x => x.id);
+}
+/* 끝낸 문법 과의 문형 id 들 + 늘 아는 것 — 문장이 이 안의 문형만 쓰면 '배운 문법으로 된 문장' */
+function knownGramIds() {
+  const ok = new Set();
+  if (!GTOK || !GRAM) return ok;
+  GTOK.forEach(x => { if (x.always || S.done[gkey(0, x.li)]) ok.add(x.id); });
+  return ok;
+}
+function sentWithinKnown(vi, ok) { return gramDetect(vi).every(id => ok.has(id)); }
 function learnedGram() {
   const out = [];
   if (!GRAM) return out;
@@ -11029,7 +11059,15 @@ function gramEnsure(cb) {
 /* 회차의 문법 항목 — weekly.json 의 gram[{t, tok}] 을 앱 문법 항목(제목 t 로 찾음)에 잇는다 */
 function roundGram(r) {
   const out = [];
-  if (!GRAM || !r.gram) return out;
+  if (!GRAM) return out;
+  /* 교재 과별 지도(_gram_ch.json)가 있으면 그 회차 과들(메인 1권)에 나오는 문형 전부 — 문법 상자뿐 아니라 대화에 녹아 있는 것까지 (대표님 2026-10-06 "주간 시험에도 그 범위에 맞는 단어와 문법") */
+  if (GTOK && GCH && r.chapters) {
+    const ids = new Set();
+    r.chapters.forEach(ci => ((GCH[(r.vol || 1) + '-' + (ci + 1)] || {}).items || []).forEach(id => ids.add(id)));
+    GTOK.forEach(x => { if (!ids.has(x.id) || x.always) return; const l = GRAM.books[0].bai[x.li]; const it = l && l.g[x.gi]; if (it) out.push({ it, tok: x.tok || [], bi: 0, ni: x.li, gi: x.gi, no: l.no }); });
+    if (out.length) return out;
+  }
+  if (!r.gram) return out;
   r.gram.forEach(e => {
     (GRAM.books || []).forEach((b, bi) => b.bai.forEach((x, ni) => x.g.forEach((it, gi) => {
       if (it.t === e.t || it.t.startsWith(e.t)) out.push({ it, tok: e.tok || [], bi, ni, gi, no: x.no });
@@ -11198,7 +11236,7 @@ function finishDaily() {
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
 function startWeeklyExam(round) {
-  if (!EXPICS) { expicsLoad().then(() => startWeeklyExam(round)); return; }   // 듣기 그림 문제 문장 (2026-10-06)
+  if (!EXPICS || !GTOK) { Promise.all([expicsLoad(), gramTokLoad()]).then(() => startWeeklyExam(round)); return; }   // 듣기 그림 문제 문장 · 문형 지도 (2026-10-06)
   const r = round || WEEKLY_ROUNDS[0];
   const words = (round ? weeklyRoundWords(r) : weeklyMaterial()).sort(() => Math.random() - .5);
   const withImg = words.filter(w => w.img), withAud = words.filter(w => AIDX[w.vi]);
