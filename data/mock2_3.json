@@ -1,0 +1,925 @@
+{
+ "note": "주간시험 2 모의고사 3 — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기는 앱에서 안 낸다.",
+ "title": "모의고사 3",
+ "time": 90,
+ "pts": {
+  "A": 30,
+  "B": 30,
+  "C": 20,
+  "D": 20
+ },
+ "q": [
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-ky-su.webp",
+   "audio": "Bố tôi là kỹ sư. Ông ấy làm việc ở công ty máy tính.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-noi-tro.webp",
+   "audio": "Mẹ tôi là giáo viên. Mẹ tôi dạy tiếng Anh.",
+   "ans": false,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-e8c966943e.webp",
+   "audio": "Gia đình tôi đang ăn tối.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-xem-phim.webp",
+   "audio": "Hai người bạn đang nói chuyện ở quán cà phê.",
+   "ans": false,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-572c467085.webp",
+   "audio": "Chị ấy đang mua sắm ở siêu thị.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Anh ấy là luật sư. Anh ấy rất bận.",
+   "opts": [
+    "b-luat-su.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
+    "w-f7b9dddb08.webp",
+    "b-giao-vien.webp"
+   ],
+   "ans": 0,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Cô ấy là thư ký. Cô ấy làm việc ở văn phòng.",
+   "opts": [
+    "b-luat-su.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
+    "w-f7b9dddb08.webp",
+    "b-giao-vien.webp"
+   ],
+   "ans": 2,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Anh Nam là tài xế tắc xi.",
+   "opts": [
+    "b-luat-su.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
+    "w-f7b9dddb08.webp",
+    "b-giao-vien.webp"
+   ],
+   "ans": 1,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Chị ấy là giáo viên. Chị ấy dạy ở trường đại học.",
+   "opts": [
+    "b-luat-su.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
+    "w-f7b9dddb08.webp",
+    "b-giao-vien.webp"
+   ],
+   "ans": 4,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Em tôi là nhân viên ngân hàng.",
+   "opts": [
+    "b-luat-su.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
+    "w-f7b9dddb08.webp",
+    "b-giao-vien.webp"
+   ],
+   "ans": 3,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Gia đình Lan có mấy người?",
+   "audio": "Gia đình tôi có bốn người: bố mẹ, em và tôi.",
+   "opts": [
+    "bốn người",
+    "ba người",
+    "năm người"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Bố của Lan làm nghề gì?",
+   "audio": "Bố tôi là bác sĩ. Ông ấy làm việc ở bệnh viện.",
+   "opts": [
+    "bác sĩ",
+    "giáo viên",
+    "kỹ sư"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Mẹ của Nam làm gì?",
+   "audio": "Mẹ tôi là nội trợ. Mẹ tôi ở nhà và nấu ăn.",
+   "opts": [
+    "nội trợ",
+    "thư ký",
+    "bác sĩ"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Em của Nam học ở đâu?",
+   "audio": "Em tôi là sinh viên. Em ấy học ở Trường Đại học Khoa học Xã hội và Nhân văn.",
+   "opts": [
+    "trường đại học",
+    "công ty",
+    "ngân hàng"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Brian là người nước nào?",
+   "audio": "Brian là bạn tôi. Anh ấy là người Mỹ.",
+   "opts": [
+    "Mỹ",
+    "Anh",
+    "Úc"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Hiroki và Yumi là người nước nào?",
+   "audio": "Hiroki và Yumi đều là người Nhật.",
+   "opts": [
+    "Nhật",
+    "Hàn Quốc",
+    "Trung Quốc"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Cô giáo của Lan tên là gì?",
+   "audio": "Cô giáo tiếng Việt của tôi tên là Hoa.",
+   "opts": [
+    "Hoa",
+    "Mai",
+    "Lan"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Chị của Nam bao nhiêu tuổi?",
+   "audio": "Chị tôi 25 tuổi. Chị ấy là kế toán.",
+   "opts": [
+    "25 tuổi",
+    "20 tuổi",
+    "30 tuổi"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Ông bà của Lan sống ở đâu?",
+   "audio": "Ông bà tôi sống ở Đà Nẵng.",
+   "opts": [
+    "Đà Nẵng",
+    "Hà Nội",
+    "Huế"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Bạn của Nam là ai?",
+   "audio": "Kate là bạn của tôi. Chị ấy là người Úc.",
+   "opts": [
+    "Kate",
+    "Brian",
+    "David"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Gia đình anh có mấy người?",
+   "opts": [
+    "Gia đình tôi có năm người.",
+    "Tôi là sinh viên.",
+    "Ở Hà Nội."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Bố chị làm nghề gì?",
+   "opts": [
+    "Bố tôi là kỹ sư.",
+    "Bố tôi 50 tuổi.",
+    "Ở công ty."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Mẹ em có đi làm không?",
+   "opts": [
+    "Không, mẹ em là nội trợ.",
+    "Mẹ em tên là Hoa.",
+    "Lúc 7 giờ."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Anh có em không?",
+   "opts": [
+    "Có, tôi có một em.",
+    "Tôi là người Việt Nam.",
+    "Rất vui."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Bạn anh là người nước nào?",
+   "opts": [
+    "Bạn tôi là người Nhật.",
+    "Bạn tôi là bác sĩ.",
+    "Bạn tôi ở Quận 1."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Chị anh bao nhiêu tuổi?",
+   "opts": [
+    "Chị ấy 28 tuổi.",
+    "Chị ấy là thư ký.",
+    "Chị ấy ở nhà."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Ông bà chị sống ở đâu?",
+   "opts": [
+    "Ông bà tôi sống ở Huế.",
+    "Ông bà tôi rất khỏe.",
+    "Ông bà tôi 70 tuổi."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Cô ấy là ai?",
+   "opts": [
+    "Cô ấy là cô giáo của tôi.",
+    "Cô ấy rất đẹp.",
+    "Cô ấy ở Hà Nội."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Em anh làm việc ở đâu?",
+   "opts": [
+    "Em ấy làm việc ở ngân hàng.",
+    "Em ấy 22 tuổi.",
+    "Em ấy là người Việt."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Bố mẹ chị có khỏe không?",
+   "opts": [
+    "Cám ơn, bố mẹ tôi khỏe.",
+    "Bố mẹ tôi là bác sĩ.",
+    "Bố mẹ tôi ở Đà Nẵng."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Đây là mẹ ____ tôi.",
+   "opts": [
+    "của",
+    "đều",
+    "cũng",
+    "ấy",
+    "có"
+   ],
+   "ans": 0
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Bố mẹ tôi ____ là giáo viên.",
+   "opts": [
+    "của",
+    "đều",
+    "cũng",
+    "ấy",
+    "có"
+   ],
+   "ans": 1
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Tôi là sinh viên. Em tôi ____ là sinh viên.",
+   "opts": [
+    "của",
+    "đều",
+    "cũng",
+    "ấy",
+    "có"
+   ],
+   "ans": 2
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Kia là chị Mai. Chị ____ là bạn tôi.",
+   "opts": [
+    "của",
+    "đều",
+    "cũng",
+    "ấy",
+    "có"
+   ],
+   "ans": 3
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Gia đình tôi ____ bốn người.",
+   "opts": [
+    "của",
+    "đều",
+    "cũng",
+    "ấy",
+    "có"
+   ],
+   "ans": 4
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Gia đình Nam có bốn người: bố, mẹ, chị và Nam. Bố Nam là luật sư. Mẹ Nam là nội trợ. Chị Nam là kế toán ở ngân hàng.",
+   "prompt": "Chị Nam làm nghề gì?",
+   "opts": [
+    "kế toán",
+    "luật sư",
+    "nội trợ"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Yumi là người Nhật. Chị ấy là bạn của Lan. Yumi học tiếng Việt ở Hà Nội hai năm rồi. Bây giờ chị ấy nói tiếng Việt rất giỏi.",
+   "prompt": "Yumi học tiếng Việt ở đâu?",
+   "opts": [
+    "Hà Nội",
+    "Nhật",
+    "Đà Nẵng"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Ông bà tôi sống ở quê. Ông tôi 75 tuổi, bà tôi 72 tuổi. Ông bà tôi đều khỏe.",
+   "prompt": "Bà tôi bao nhiêu tuổi?",
+   "opts": [
+    "72 tuổi",
+    "75 tuổi",
+    "70 tuổi"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Đây là Brian và David. Brian là người Mỹ. David là người Anh. Họ đều là sinh viên tiếng Việt ở lớp tôi.",
+   "prompt": "David là người nước nào?",
+   "opts": [
+    "Anh",
+    "Mỹ",
+    "Úc"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Cô Hoa là cô giáo tiếng Việt của tôi. Cô ấy là người Việt Nam. Cô ấy rất thân thiện và dạy rất hay.",
+   "prompt": "Cô Hoa dạy gì?",
+   "opts": [
+    "tiếng Việt",
+    "tiếng Anh",
+    "tiếng Hàn"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tôi tên là Min. Tôi là người Hàn Quốc. Gia đình tôi có ba người: bố, mẹ và tôi. Bố tôi là kỹ sư, mẹ tôi là giáo viên.",
+   "prompt": "Min là người Hàn Quốc.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tôi tên là Min. Tôi là người Hàn Quốc. Gia đình tôi có ba người: bố, mẹ và tôi. Bố tôi là kỹ sư, mẹ tôi là giáo viên.",
+   "prompt": "Gia đình Min có bốn người.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tôi tên là Min. Tôi là người Hàn Quốc. Gia đình tôi có ba người: bố, mẹ và tôi. Bố tôi là kỹ sư, mẹ tôi là giáo viên.",
+   "prompt": "Mẹ Min là giáo viên.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Bạn thân của tôi là Hiroki. Anh ấy là người Nhật. Anh ấy làm kế toán ở một ngân hàng ở Quận 1.",
+   "prompt": "Hiroki là người Nhật.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Bạn thân của tôi là Hiroki. Anh ấy là người Nhật. Anh ấy làm kế toán ở một ngân hàng ở Quận 1.",
+   "prompt": "Hiroki làm việc ở bệnh viện.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Bạn thân của tôi là Hiroki. Anh ấy là người Nhật. Anh ấy làm kế toán ở một ngân hàng ở Quận 1.",
+   "prompt": "Hiroki là bạn thân của tôi.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Chị Mai có hai em. Một em là sinh viên. Một em 10 tuổi, em ấy đi học ở gần nhà.",
+   "prompt": "Chị Mai có hai em.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Chị Mai có hai em. Một em là sinh viên. Một em 10 tuổi, em ấy đi học ở gần nhà.",
+   "prompt": "Hai em của chị Mai đều là sinh viên.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Ông bà của Lan sống ở Huế. Cuối tuần Lan thường về Huế thăm ông bà. Ông bà Lan rất vui.",
+   "prompt": "Ông bà Lan sống ở Hà Nội.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Ông bà của Lan sống ở Huế. Cuối tuần Lan thường về Huế thăm ông bà. Ông bà Lan rất vui.",
+   "prompt": "Cuối tuần Lan thường thăm ông bà.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Gia đình chị có mấy người?",
+   "opts": [
+    "Gia đình tôi có bốn người.",
+    "Tôi là người Hàn Quốc.",
+    "Tôi 25 tuổi.",
+    "Ở Hà Nội."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Đây là ai?",
+   "opts": [
+    "Đây là bố tôi.",
+    "Đây là lớp học.",
+    "Lúc 8 giờ.",
+    "Tôi là sinh viên."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Anh có chị không?",
+   "opts": [
+    "Không, tôi có một em.",
+    "Chị ấy là bác sĩ.",
+    "Chị ấy 30 tuổi.",
+    "Ở Đà Nẵng."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Mẹ anh làm nghề gì?",
+   "opts": [
+    "Mẹ tôi là nội trợ.",
+    "Mẹ tôi 55 tuổi.",
+    "Mẹ tôi ở quê.",
+    "Mẹ tôi rất khỏe."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Em ấy bao nhiêu tuổi?",
+   "opts": [
+    "Em ấy 20 tuổi.",
+    "Em ấy là sinh viên.",
+    "Em ấy ở Quận 1.",
+    "Em ấy rất chăm chỉ."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Bạn anh tên là gì?",
+   "opts": [
+    "Bạn tôi tên là Hiroki.",
+    "Bạn tôi là người Nhật.",
+    "Bạn tôi ở Hà Nội.",
+    "Bạn tôi là kế toán."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Chị ấy là người nước nào?",
+   "opts": [
+    "Chị ấy là người Úc.",
+    "Chị ấy là giáo viên.",
+    "Chị ấy rất đẹp.",
+    "Chị ấy ở Quận 2."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Ông bà anh có khỏe không?",
+   "opts": [
+    "Có, ông bà tôi đều khỏe.",
+    "Ông bà tôi ở Huế.",
+    "Ông bà tôi 70 tuổi.",
+    "Ông bà tôi có ba người con."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Rất vui được gặp chị.",
+   "opts": [
+    "Rất vui được gặp anh.",
+    "Chị ấy là bạn tôi.",
+    "Tôi có hai em.",
+    "Tôi là người Mỹ."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Bố mẹ anh sống ở đâu?",
+   "opts": [
+    "Bố mẹ tôi sống ở Busan.",
+    "Bố mẹ tôi là bác sĩ.",
+    "Bố mẹ tôi rất bận.",
+    "Bố mẹ tôi có hai con."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Gia đình tôi có bốn người.",
+   "tiles": [
+    "có",
+    "gia đình",
+    "bốn",
+    "tôi",
+    "người"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Bố tôi là kỹ sư.",
+   "tiles": [
+    "là",
+    "bố",
+    "kỹ sư",
+    "tôi"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Chị ấy là bạn của tôi.",
+   "tiles": [
+    "của",
+    "chị ấy",
+    "bạn",
+    "là",
+    "tôi"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Họ đều là người Nhật.",
+   "tiles": [
+    "đều",
+    "họ",
+    "là",
+    "người",
+    "Nhật"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Em tôi là sinh viên.",
+   "tiles": [
+    "sinh viên",
+    "em",
+    "là",
+    "tôi"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Đây là của bố tôi.",
+   "bad": 2,
+   "fix": "Đây là bố tôi.",
+   "ko": "이분은 제 아버지예요. (가족 관계에는 của를 안 쓴다)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Bố mẹ tôi là đều giáo viên.",
+   "bad": 3,
+   "fix": "Bố mẹ tôi đều là giáo viên.",
+   "ko": "부모님은 모두 선생님이에요. (đều는 là 앞)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Chị tôi tuổi 25.",
+   "bad": 2,
+   "fix": "Chị tôi 25 tuổi.",
+   "ko": "제 언니는 25살이에요. (숫자 + tuổi)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Em ấy không là sinh viên.",
+   "bad": 2,
+   "fix": "Em ấy không phải là sinh viên.",
+   "ko": "그 애는 대학생이 아니에요. (không phải là)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Ông bà tôi khỏe rất.",
+   "bad": 4,
+   "fix": "Ông bà tôi rất khỏe.",
+   "ko": "조부모님은 아주 건강하세요. (rất는 형용사 앞)"
+  },
+  {
+   "sec": "C 쓰기 · 3 한 주제로 10문장",
+   "k": "free",
+   "prompt": "우리 가족과 친구 소개 — 몇 명인지, 누구인지, 무슨 일을 하는지, 어디에 사는지 (10문장)",
+   "model": [
+    "Gia đình tôi có bốn người.",
+    "Bố tôi là kỹ sư. Ông ấy làm việc ở công ty máy tính.",
+    "Mẹ tôi là nội trợ.",
+    "Em tôi là sinh viên. Em ấy 20 tuổi.",
+    "Gia đình tôi sống ở Busan.",
+    "Bạn thân của tôi tên là Hiroki.",
+    "Anh ấy là người Nhật.",
+    "Anh ấy làm kế toán ở ngân hàng.",
+    "Cuối tuần chúng tôi thường đi uống cà phê.",
+    "Tôi rất thích gia đình và bạn bè của tôi."
+   ],
+   "n": 10,
+   "pts": 10
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "gia đình"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "bố mẹ"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "ông bà"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "con gái"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "bạn thân"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "luật sư"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "tài xế"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "nhân viên"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "tuổi"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "thân thiện"
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Gia đình tôi có bốn người."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Bố mẹ tôi đều là giáo viên."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Chị tôi 25 tuổi."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Bạn tôi là người Nhật."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Ông bà anh có khỏe không?"
+  }
+ ]
+}

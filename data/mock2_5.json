@@ -1,0 +1,921 @@
+{
+ "note": "주간시험 2 모의고사 5 — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기는 앱에서 안 낸다.",
+ "title": "모의고사 5",
+ "time": 90,
+ "pts": {
+  "A": 30,
+  "B": 30,
+  "C": 20,
+  "D": 20
+ },
+ "q": [
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-c388775af9.webp",
+   "audio": "Em ấy đang đi ngủ. Bây giờ là 11 giờ đêm.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-936f3fbca6.webp",
+   "audio": "Anh ấy đang nấu ăn.",
+   "ans": false,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-nghe-nhac.webp",
+   "audio": "Chị ấy đang nghe nhạc.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-an-sang.webp",
+   "audio": "Anh ấy đang ăn trưa ở căng tin công ty.",
+   "ans": false,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-buon-ngu.webp",
+   "audio": "Em ấy buồn ngủ quá vì hôm qua thức khuya.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Buổi sáng tôi thường tập thể dục ở gần nhà.",
+   "opts": [
+    "b-xem-phim.webp",
+    "b-nghe-nhac.webp",
+    "w-ca301a7708.webp",
+    "b-tap-the-duc.webp",
+    "b-di-bo.webp"
+   ],
+   "ans": 3,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Tối thứ bảy chúng tôi đi xem phim.",
+   "opts": [
+    "b-xem-phim.webp",
+    "b-nghe-nhac.webp",
+    "w-ca301a7708.webp",
+    "b-tap-the-duc.webp",
+    "b-di-bo.webp"
+   ],
+   "ans": 0,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Ông tôi thường đọc báo vào buổi sáng.",
+   "opts": [
+    "b-xem-phim.webp",
+    "b-nghe-nhac.webp",
+    "w-ca301a7708.webp",
+    "b-tap-the-duc.webp",
+    "b-di-bo.webp"
+   ],
+   "ans": 2,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Tôi thích nghe nhạc Việt Nam.",
+   "opts": [
+    "b-xem-phim.webp",
+    "b-nghe-nhac.webp",
+    "w-ca301a7708.webp",
+    "b-tap-the-duc.webp",
+    "b-di-bo.webp"
+   ],
+   "ans": 1,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Chị ấy đi bộ đến trường vì trường gần nhà.",
+   "opts": [
+    "b-xem-phim.webp",
+    "b-nghe-nhac.webp",
+    "w-ca301a7708.webp",
+    "b-tap-the-duc.webp",
+    "b-di-bo.webp"
+   ],
+   "ans": 4,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Anh ấy thường làm gì sau khi ăn tối?",
+   "audio": "Sau khi ăn tối tôi thường xem tivi với gia đình.",
+   "opts": [
+    "xem tivi",
+    "học tiếng Việt",
+    "đi ngủ"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Chị ấy thích làm gì?",
+   "audio": "Tôi rất thích nghe nhạc và đọc sách.",
+   "opts": [
+    "nghe nhạc và đọc sách",
+    "xem phim",
+    "tập thể dục"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Hôm qua em ấy đi ngủ lúc mấy giờ?",
+   "audio": "Hôm qua em thức khuya học bài nên đi ngủ lúc 1 giờ.",
+   "opts": [
+    "1 giờ",
+    "11 giờ",
+    "10 giờ"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Cuối tuần Nam thường làm gì?",
+   "audio": "Cuối tuần tôi thường đi chơi với bạn bè hay xem phim ở nhà.",
+   "opts": [
+    "đi chơi hay xem phim",
+    "đi làm",
+    "học tiếng Anh"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Ai nấu ăn trong gia đình?",
+   "audio": "Mẹ tôi thường nấu ăn. Thỉnh thoảng bố tôi cũng nấu ăn.",
+   "opts": [
+    "mẹ",
+    "bố",
+    "em"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Buổi sáng anh ấy làm gì?",
+   "audio": "Buổi sáng tôi thức dậy lúc 6 giờ, tập thể dục rồi ăn sáng.",
+   "opts": [
+    "tập thể dục",
+    "xem tivi",
+    "đi ngủ"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Tối nay họ sẽ làm gì?",
+   "audio": "Tối nay chúng ta đi xem phim nhé. Phim mới hay lắm.",
+   "opts": [
+    "đi xem phim",
+    "đi uống bia",
+    "đi ăn tối"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Chị ấy có thường ăn sáng không?",
+   "audio": "Tôi thường không ăn sáng vì tôi đi làm sớm.",
+   "opts": [
+    "không",
+    "có",
+    "thỉnh thoảng"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Em ấy học tiếng Việt lúc nào?",
+   "audio": "Buổi tối em thường học tiếng Việt khoảng một tiếng.",
+   "opts": [
+    "buổi tối",
+    "buổi sáng",
+    "buổi trưa"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Sao hôm nay anh ấy mệt?",
+   "audio": "Hôm nay tôi hơi mệt vì tối qua tôi thức khuya xem phim.",
+   "opts": [
+    "vì thức khuya xem phim",
+    "vì đi làm sớm",
+    "vì không ăn sáng"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Buổi tối anh thường làm gì?",
+   "opts": [
+    "Tôi thường xem tivi.",
+    "Tôi là kỹ sư.",
+    "Lúc 7 giờ sáng."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Chị thích nghe nhạc không?",
+   "opts": [
+    "Có, tôi rất thích.",
+    "Tôi là người Hàn Quốc.",
+    "Ở nhà."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Em đi ngủ lúc mấy giờ?",
+   "opts": [
+    "Lúc 11 giờ.",
+    "Ở phòng em.",
+    "Em rất buồn ngủ."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Anh có tập thể dục không?",
+   "opts": [
+    "Có, tôi tập thể dục mỗi buổi sáng.",
+    "Tôi ăn sáng ở nhà.",
+    "Tôi đi làm bằng xe buýt."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Cuối tuần chị thường đi đâu?",
+   "opts": [
+    "Tôi thường đi xem phim.",
+    "Tôi là giáo viên.",
+    "Lúc 9 giờ."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Hôm qua anh thức khuya hả?",
+   "opts": [
+    "Ừ, tôi đi ngủ lúc 1 giờ.",
+    "Tôi ăn sáng lúc 7 giờ.",
+    "Tôi là sinh viên."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Ai nấu ăn trong gia đình chị?",
+   "opts": [
+    "Mẹ tôi nấu ăn.",
+    "Lúc 6 giờ tối.",
+    "Ở nhà."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Em có thích học tiếng Việt không?",
+   "opts": [
+    "Có, em rất thích.",
+    "Em học lúc 8 giờ.",
+    "Em là người Hàn Quốc."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Anh thường ăn sáng ở đâu?",
+   "opts": [
+    "Ở nhà.",
+    "Lúc 7 giờ.",
+    "Với gia đình."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Sao hôm nay chị mệt vậy?",
+   "opts": [
+    "Vì tối qua tôi thức khuya.",
+    "Tôi đi làm lúc 7 giờ.",
+    "Tôi là thư ký."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Tôi ____ không ăn sáng.",
+   "opts": [
+    "thường",
+    "hơi",
+    "nên",
+    "sắp",
+    "quá"
+   ],
+   "ans": 0
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Bây giờ tôi ____ mệt.",
+   "opts": [
+    "thường",
+    "hơi",
+    "nên",
+    "sắp",
+    "quá"
+   ],
+   "ans": 1
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Tối qua tôi thức khuya ____ hôm nay tôi buồn ngủ.",
+   "opts": [
+    "thường",
+    "hơi",
+    "nên",
+    "sắp",
+    "quá"
+   ],
+   "ans": 2
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Tôi ____ đi ngủ.",
+   "opts": [
+    "thường",
+    "hơi",
+    "nên",
+    "sắp",
+    "quá"
+   ],
+   "ans": 3
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Phim này hay ____!",
+   "opts": [
+    "thường",
+    "hơi",
+    "nên",
+    "sắp",
+    "quá"
+   ],
+   "ans": 4
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Buổi sáng tôi thức dậy lúc 6 giờ. Tôi tập thể dục khoảng 30 phút, sau đó đánh răng, rửa mặt và ăn sáng. Tôi đi làm lúc 7 giờ rưỡi.",
+   "prompt": "Tôi tập thể dục bao lâu?",
+   "opts": [
+    "khoảng 30 phút",
+    "khoảng một tiếng",
+    "khoảng 10 phút"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Cuối tuần Lan thường ở nhà. Buổi sáng Lan nấu ăn với mẹ. Buổi chiều Lan nghe nhạc và đọc sách. Buổi tối Lan xem phim với gia đình.",
+   "prompt": "Buổi chiều Lan làm gì?",
+   "opts": [
+    "nghe nhạc và đọc sách",
+    "nấu ăn",
+    "xem phim"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Hôm qua Nam thức khuya học bài. Nam đi ngủ lúc 2 giờ sáng. Hôm nay Nam buồn ngủ quá nên không đi tập thể dục.",
+   "prompt": "Hôm qua Nam đi ngủ lúc mấy giờ?",
+   "opts": [
+    "2 giờ sáng",
+    "11 giờ",
+    "12 giờ"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Tôi thích nghe nhạc Việt Nam. Tôi thường nghe nhạc trên mạng sau khi học tiếng Việt. Nghe nhạc Việt Nam rất thú vị.",
+   "prompt": "Tôi thường nghe nhạc lúc nào?",
+   "opts": [
+    "sau khi học tiếng Việt",
+    "sau khi ăn sáng",
+    "trước khi đi ngủ"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Mỗi tối gia đình tôi ăn tối lúc 7 giờ. Sau khi ăn tối, bố tôi đọc báo, mẹ tôi xem tivi, còn tôi học bài.",
+   "prompt": "Sau khi ăn tối, bố tôi làm gì?",
+   "opts": [
+    "đọc báo",
+    "xem tivi",
+    "học bài"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tôi tên là Hoa. Tôi là sinh viên. Buổi sáng tôi đi học, buổi chiều tôi làm thêm ở quán cà phê. Buổi tối tôi học tiếng Anh khoảng một tiếng.",
+   "prompt": "Hoa là sinh viên.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tôi tên là Hoa. Tôi là sinh viên. Buổi sáng tôi đi học, buổi chiều tôi làm thêm ở quán cà phê. Buổi tối tôi học tiếng Anh khoảng một tiếng.",
+   "prompt": "Buổi chiều Hoa đi học.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tôi tên là Hoa. Tôi là sinh viên. Buổi sáng tôi đi học, buổi chiều tôi làm thêm ở quán cà phê. Buổi tối tôi học tiếng Anh khoảng một tiếng.",
+   "prompt": "Buổi tối Hoa học tiếng Anh.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Anh Nam thích tập thể dục. Mỗi sáng anh ấy đi bộ ở gần nhà khoảng 30 phút. Anh ấy rất khỏe.",
+   "prompt": "Anh Nam thích tập thể dục.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Anh Nam thích tập thể dục. Mỗi sáng anh ấy đi bộ ở gần nhà khoảng 30 phút. Anh ấy rất khỏe.",
+   "prompt": "Anh Nam đi bộ buổi tối.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Anh Nam thích tập thể dục. Mỗi sáng anh ấy đi bộ ở gần nhà khoảng 30 phút. Anh ấy rất khỏe.",
+   "prompt": "Anh Nam rất khỏe.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Cuối tuần chúng tôi thường đi xem phim ở gần trung tâm thành phố. Sau khi xem phim, chúng tôi đi ăn tối.",
+   "prompt": "Cuối tuần chúng tôi đi xem phim.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Cuối tuần chúng tôi thường đi xem phim ở gần trung tâm thành phố. Sau khi xem phim, chúng tôi đi ăn tối.",
+   "prompt": "Chúng tôi ăn tối trước khi xem phim.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tối qua tôi thức khuya xem phim trên mạng. Tôi đi ngủ lúc 1 giờ. Sáng nay tôi thức dậy trễ nên không ăn sáng.",
+   "prompt": "Tối qua tôi đi ngủ sớm.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tối qua tôi thức khuya xem phim trên mạng. Tôi đi ngủ lúc 1 giờ. Sáng nay tôi thức dậy trễ nên không ăn sáng.",
+   "prompt": "Sáng nay tôi không ăn sáng.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Buổi tối anh thường làm gì?",
+   "opts": [
+    "Tôi thường xem tivi với gia đình.",
+    "Tôi là kỹ sư.",
+    "Lúc 7 giờ sáng.",
+    "Ở công ty."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Chị thích nghe nhạc không?",
+   "opts": [
+    "Có, tôi rất thích nghe nhạc.",
+    "Tôi là người Hàn Quốc.",
+    "Tôi đi làm bằng xe buýt.",
+    "Lúc 9 giờ."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Em đi ngủ lúc mấy giờ?",
+   "opts": [
+    "Em đi ngủ lúc 11 giờ.",
+    "Em là sinh viên.",
+    "Em học ở trường Nhân văn.",
+    "Em rất thích."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Hôm qua anh thức khuya hả?",
+   "opts": [
+    "Ừ, tôi xem phim đến 1 giờ.",
+    "Tôi là bác sĩ.",
+    "Tôi ăn sáng lúc 7 giờ.",
+    "Ở nhà tôi."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Sao hôm nay chị mệt vậy?",
+   "opts": [
+    "Vì tối qua tôi thức khuya.",
+    "Tôi là thư ký.",
+    "Tôi đi làm lúc 8 giờ.",
+    "Ở công ty."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Cuối tuần anh thường làm gì?",
+   "opts": [
+    "Tôi thường đi chơi với bạn bè.",
+    "Tôi là người Nhật.",
+    "Lúc 10 giờ sáng.",
+    "Ở Quận 1."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Ai nấu ăn trong gia đình anh?",
+   "opts": [
+    "Mẹ tôi thường nấu ăn.",
+    "Gia đình tôi có bốn người.",
+    "Lúc 6 giờ tối.",
+    "Ở nhà tôi."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Anh có tập thể dục không?",
+   "opts": [
+    "Có, tôi tập thể dục mỗi buổi sáng.",
+    "Tôi ăn sáng ở nhà.",
+    "Tôi là sinh viên.",
+    "Lúc 6 giờ."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Tối nay chúng ta đi xem phim nhé?",
+   "opts": [
+    "Ừ, phim mới hay lắm.",
+    "Tôi là giáo viên.",
+    "Ở Quận 1.",
+    "Lúc 7 giờ sáng."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Em có thích học tiếng Việt không?",
+   "opts": [
+    "Có, em rất thích.",
+    "Em là người Hàn Quốc.",
+    "Em đi học lúc 8 giờ.",
+    "Ở trường."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Tôi thường xem tivi buổi tối.",
+   "tiles": [
+    "thường",
+    "tôi",
+    "buổi tối",
+    "xem tivi"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Hôm qua tôi thức khuya.",
+   "tiles": [
+    "thức khuya",
+    "hôm qua",
+    "tôi"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Mẹ tôi đang nấu ăn.",
+   "tiles": [
+    "đang",
+    "mẹ",
+    "nấu ăn",
+    "tôi"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Cuối tuần chúng tôi đi xem phim.",
+   "tiles": [
+    "cuối tuần",
+    "đi",
+    "chúng tôi",
+    "xem phim"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Tôi rất thích nghe nhạc.",
+   "tiles": [
+    "rất",
+    "tôi",
+    "nghe nhạc",
+    "thích"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Tôi thường tập thể dục vào buổi sáng lắm.",
+   "bad": 7,
+   "fix": "Tôi thường tập thể dục vào buổi sáng.",
+   "ko": "저는 보통 아침에 운동해요. (lắm은 형용사 뒤에만)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Hôm qua tôi đi ngủ sẽ lúc 1 giờ.",
+   "bad": 4,
+   "fix": "Hôm qua tôi đi ngủ lúc 1 giờ.",
+   "ko": "어제 저는 1시에 잤어요. (지난 일에 sẽ를 안 쓴다)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Em thích rất nghe nhạc.",
+   "bad": 2,
+   "fix": "Em rất thích nghe nhạc.",
+   "ko": "저는 음악 듣는 걸 아주 좋아해요. (rất는 thích 앞)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Tôi mệt hôm nay hơi.",
+   "bad": 3,
+   "fix": "Hôm nay tôi hơi mệt.",
+   "ko": "오늘 저는 좀 피곤해요. (hơi는 형용사 앞)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Tối qua tôi thức khuya nên đi ngủ sớm.",
+   "bad": 6,
+   "fix": "Tối qua tôi thức khuya nên đi ngủ trễ.",
+   "ko": "어젯밤 늦게까지 깨어 있어서 늦게 잤어요. (앞뒤가 맞아야 한다)"
+  },
+  {
+   "sec": "C 쓰기 · 3 한 주제로 10문장",
+   "k": "free",
+   "prompt": "내 주말과 취미 — 주말에 보통 무엇을 하는지, 무엇을 좋아하는지, 누구와 하는지 (10문장)",
+   "model": [
+    "Cuối tuần tôi thường ở nhà.",
+    "Buổi sáng tôi thức dậy trễ, khoảng 9 giờ.",
+    "Tôi tập thể dục khoảng 30 phút.",
+    "Sau đó tôi ăn sáng với gia đình.",
+    "Buổi chiều tôi thích đọc sách và nghe nhạc.",
+    "Thỉnh thoảng tôi đi uống cà phê với bạn bè.",
+    "Tối thứ bảy chúng tôi thường đi xem phim.",
+    "Tôi rất thích xem phim Việt Nam.",
+    "Buổi tối tôi học tiếng Việt khoảng hai tiếng.",
+    "Cuối tuần của tôi rất vui."
+   ],
+   "n": 10,
+   "pts": 10
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "xem phim"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "nghe nhạc"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "đọc báo"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "tập thể dục"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "thức khuya"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "buồn ngủ"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "nấu ăn"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "cuối tuần"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "thỉnh thoảng"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "một mình"
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Tôi thường xem tivi buổi tối."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Hôm qua tôi thức khuya nên hôm nay tôi mệt."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Cuối tuần chúng tôi đi xem phim."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Mẹ tôi đang nấu ăn."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Em đi ngủ lúc mấy giờ?"
+  }
+ ]
+}

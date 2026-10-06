@@ -1,0 +1,926 @@
+{
+ "note": "주간시험 2 모의고사 4 — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기는 앱에서 안 낸다.",
+ "title": "모의고사 4",
+ "time": 90,
+ "pts": {
+  "A": 30,
+  "B": 30,
+  "C": 20,
+  "D": 20
+ },
+ "q": [
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-buu-dien.webp",
+   "audio": "Đây là bưu điện. Tôi đến đây để gửi thư.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-ngan-hang.webp",
+   "audio": "Đây là nhà sách. Ở đây có nhiều sách tiếng Việt.",
+   "ans": false,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "quan-ca-phe.webp",
+   "audio": "Họ đang uống cà phê ở quán cà phê.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-8b78607617.webp",
+   "audio": "Em ấy đang đi ngủ.",
+   "ans": false,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-san-bay.webp",
+   "audio": "Đây là sân bay. Máy bay sắp bay.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Cuối tuần tôi thường đi nhà sách mua sách.",
+   "opts": [
+    "quan-ca-phe.webp",
+    "b-nha-sach.webp",
+    "b-san-bay.webp",
+    "b-sieu-thi.webp",
+    "b-benh-vien.webp"
+   ],
+   "ans": 1,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Bố tôi là bác sĩ. Ông ấy làm việc ở đây từ 8 giờ sáng.",
+   "opts": [
+    "quan-ca-phe.webp",
+    "b-nha-sach.webp",
+    "b-san-bay.webp",
+    "b-sieu-thi.webp",
+    "b-benh-vien.webp"
+   ],
+   "ans": 4,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Chúng ta đi uống cà phê nhé? Quán này gần công ty.",
+   "opts": [
+    "quan-ca-phe.webp",
+    "b-nha-sach.webp",
+    "b-san-bay.webp",
+    "b-sieu-thi.webp",
+    "b-benh-vien.webp"
+   ],
+   "ans": 0,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Mẹ tôi đi siêu thị mua cà phê và sữa.",
+   "opts": [
+    "quan-ca-phe.webp",
+    "b-nha-sach.webp",
+    "b-san-bay.webp",
+    "b-sieu-thi.webp",
+    "b-benh-vien.webp"
+   ],
+   "ans": 3,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Tuần sau tôi đi Hà Nội. Tôi sẽ đi bằng máy bay.",
+   "opts": [
+    "quan-ca-phe.webp",
+    "b-nha-sach.webp",
+    "b-san-bay.webp",
+    "b-sieu-thi.webp",
+    "b-benh-vien.webp"
+   ],
+   "ans": 2,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Nhà sách ở đâu?",
+   "audio": "Nhà sách FAHASA ở đường Nguyễn Huệ, Quận 1.",
+   "opts": [
+    "đường Nguyễn Huệ",
+    "Quận 2",
+    "Quận 7"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Từ nhà Lan đến công ty mất bao lâu?",
+   "audio": "Từ nhà tôi đến công ty mất khoảng 30 phút.",
+   "opts": [
+    "khoảng 30 phút",
+    "khoảng 10 phút",
+    "khoảng một tiếng"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Họ sẽ gặp nhau lúc mấy giờ?",
+   "audio": "Chúng ta gặp nhau lúc 7 giờ tối ở quán cà phê nhé.",
+   "opts": [
+    "7 giờ tối",
+    "7 giờ sáng",
+    "2 giờ chiều"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Anh ấy đi Đà Nẵng bằng gì?",
+   "audio": "Tuần sau tôi đi Đà Nẵng bằng máy bay.",
+   "opts": [
+    "máy bay",
+    "xe buýt",
+    "tắc xi"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Siêu thị mở cửa lúc mấy giờ?",
+   "audio": "Siêu thị mở cửa lúc 8 giờ sáng.",
+   "opts": [
+    "8 giờ sáng",
+    "9 giờ sáng",
+    "7 giờ tối"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Cô ấy đang ở đâu?",
+   "audio": "Bây giờ tôi đang ở bưu điện. Tôi gửi thư cho bố mẹ.",
+   "opts": [
+    "bưu điện",
+    "ngân hàng",
+    "nhà sách"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Nhà của Nam gần hay xa công ty?",
+   "audio": "Nhà tôi gần công ty lắm. Tôi đi bộ đi làm.",
+   "opts": [
+    "gần",
+    "xa",
+    "rất xa"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Hôm nay nhà sách giảm giá bao nhiêu?",
+   "audio": "Hôm nay nhà sách giảm giá 20%.",
+   "opts": [
+    "20%",
+    "30%",
+    "10%"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Chị ấy đi làm lúc mấy giờ?",
+   "audio": "Tôi đi làm lúc 7 giờ rưỡi sáng.",
+   "opts": [
+    "7 giờ rưỡi",
+    "7 giờ",
+    "8 giờ rưỡi"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Cuối tuần họ đi đâu?",
+   "audio": "Cuối tuần chúng tôi đi phố đi bộ. Ở đó rất đông và vui.",
+   "opts": [
+    "phố đi bộ",
+    "siêu thị",
+    "bệnh viện"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Nhà sách ở đâu?",
+   "opts": [
+    "Ở Quận 1.",
+    "Lúc 8 giờ.",
+    "Rất rẻ."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Từ đây đến sân bay mất bao lâu?",
+   "opts": [
+    "Khoảng 30 phút.",
+    "Lúc 9 giờ.",
+    "Bằng tắc xi."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Chị đi Hà Nội bằng gì?",
+   "opts": [
+    "Bằng máy bay.",
+    "Tuần sau.",
+    "Ở Hà Nội."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Mấy giờ chúng ta gặp nhau?",
+   "opts": [
+    "Lúc 6 giờ tối.",
+    "Ở quán cà phê.",
+    "Hai người."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Bây giờ anh đang ở đâu?",
+   "opts": [
+    "Tôi đang ở bưu điện.",
+    "Tôi đi bằng xe buýt.",
+    "Tôi là kỹ sư."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Siêu thị mở cửa lúc mấy giờ?",
+   "opts": [
+    "Lúc 8 giờ sáng.",
+    "Ở gần nhà tôi.",
+    "Rất đông."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Đi đến đó mất bao lâu?",
+   "opts": [
+    "Mất khoảng 20 phút.",
+    "Đi bằng xe buýt.",
+    "Lúc 3 giờ."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Cuối tuần anh thường đi đâu?",
+   "opts": [
+    "Tôi thường đi nhà sách.",
+    "Tôi là sinh viên.",
+    "Lúc 10 giờ."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Nhà chị có gần công ty không?",
+   "opts": [
+    "Không, nhà tôi hơi xa.",
+    "Nhà tôi ở Quận 7.",
+    "Tôi đi làm lúc 7 giờ."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Tối nay chúng ta ăn ở đâu?",
+   "opts": [
+    "Ở quán ăn gần công ty.",
+    "Lúc 7 giờ tối.",
+    "Ăn với bạn."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Tôi đi làm ____ 8 giờ sáng.",
+   "opts": [
+    "lúc",
+    "từ",
+    "bằng",
+    "ở đâu",
+    "gần"
+   ],
+   "ans": 0
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Tôi làm việc ____ 8 giờ đến 5 giờ.",
+   "opts": [
+    "lúc",
+    "từ",
+    "bằng",
+    "ở đâu",
+    "gần"
+   ],
+   "ans": 1
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Tôi đi làm ____ xe buýt.",
+   "opts": [
+    "lúc",
+    "từ",
+    "bằng",
+    "ở đâu",
+    "gần"
+   ],
+   "ans": 2
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Nhà sách FAHASA ____?",
+   "opts": [
+    "lúc",
+    "từ",
+    "bằng",
+    "ở đâu",
+    "gần"
+   ],
+   "ans": 3
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Quán cà phê này ____ công ty tôi.",
+   "opts": [
+    "lúc",
+    "từ",
+    "bằng",
+    "ở đâu",
+    "gần"
+   ],
+   "ans": 4
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Nhà tôi ở Quận 7. Công ty tôi ở Quận 1. Từ nhà đến công ty mất khoảng 40 phút. Tôi thường đi làm bằng xe buýt.",
+   "prompt": "Từ nhà đến công ty mất bao lâu?",
+   "opts": [
+    "khoảng 40 phút",
+    "khoảng 10 phút",
+    "khoảng 4 tiếng"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Siêu thị gần nhà tôi mở cửa lúc 7 giờ sáng. Buổi tối ở đó rất đông. Tôi thường đi siêu thị vào buổi sáng.",
+   "prompt": "Tôi thường đi siêu thị lúc nào?",
+   "opts": [
+    "buổi sáng",
+    "buổi tối",
+    "buổi chiều"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Tuần sau Lan đi Hà Nội thăm ông bà. Lan sẽ đi bằng máy bay. Từ Thành phố Hồ Chí Minh đến Hà Nội mất khoảng hai tiếng.",
+   "prompt": "Lan đi Hà Nội bằng gì?",
+   "opts": [
+    "máy bay",
+    "xe buýt",
+    "tắc xi"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Quán cà phê này ở gần trường đại học. Cà phê ở đây ngon và rẻ. Sinh viên thường đến đây học và nói chuyện.",
+   "prompt": "Ai thường đến quán cà phê này?",
+   "opts": [
+    "sinh viên",
+    "bác sĩ",
+    "tài xế"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Hôm nay là thứ bảy. Nhà sách giảm giá 30%. Tôi và bạn tôi đi nhà sách mua sách tiếng Việt.",
+   "prompt": "Hôm nay nhà sách giảm giá bao nhiêu?",
+   "opts": [
+    "30%",
+    "20%",
+    "10%"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Công ty tôi ở Quận 1, gần Đài Truyền hình Thành phố. Tôi làm việc từ 8 giờ sáng đến 5 giờ chiều. Buổi trưa tôi ăn trưa ở căng tin công ty.",
+   "prompt": "Công ty tôi ở Quận 1.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Công ty tôi ở Quận 1, gần Đài Truyền hình Thành phố. Tôi làm việc từ 8 giờ sáng đến 5 giờ chiều. Buổi trưa tôi ăn trưa ở căng tin công ty.",
+   "prompt": "Tôi làm việc đến 7 giờ tối.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Công ty tôi ở Quận 1, gần Đài Truyền hình Thành phố. Tôi làm việc từ 8 giờ sáng đến 5 giờ chiều. Buổi trưa tôi ăn trưa ở căng tin công ty.",
+   "prompt": "Buổi trưa tôi ăn ở căng tin công ty.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Nhà Mai ở xa công ty nên Mai đi làm bằng xe buýt. Từ nhà đến công ty mất một tiếng. Mai phải đi làm lúc 7 giờ.",
+   "prompt": "Nhà Mai gần công ty.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Nhà Mai ở xa công ty nên Mai đi làm bằng xe buýt. Từ nhà đến công ty mất một tiếng. Mai phải đi làm lúc 7 giờ.",
+   "prompt": "Mai đi làm bằng xe buýt.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Nhà Mai ở xa công ty nên Mai đi làm bằng xe buýt. Từ nhà đến công ty mất một tiếng. Mai phải đi làm lúc 7 giờ.",
+   "prompt": "Từ nhà Mai đến công ty mất một tiếng.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Cuối tuần tôi thường đi nhà sách ở đường Nguyễn Huệ. Sau đó tôi đi uống cà phê với bạn ở phố đi bộ.",
+   "prompt": "Cuối tuần tôi thường đi nhà sách.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Cuối tuần tôi thường đi nhà sách ở đường Nguyễn Huệ. Sau đó tôi đi uống cà phê với bạn ở phố đi bộ.",
+   "prompt": "Tôi uống cà phê một mình.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Bệnh viện ở gần nhà tôi. Bố tôi là bác sĩ ở đó. Ông ấy làm việc năm ngày một tuần, thứ bảy ông ấy ở nhà.",
+   "prompt": "Bố tôi là bác sĩ.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Bệnh viện ở gần nhà tôi. Bố tôi là bác sĩ ở đó. Ông ấy làm việc năm ngày một tuần, thứ bảy ông ấy ở nhà.",
+   "prompt": "Thứ bảy bố tôi đi làm.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Nhà sách ở đâu?",
+   "opts": [
+    "Ở đường Nguyễn Huệ, Quận 1.",
+    "Lúc 8 giờ sáng.",
+    "Bằng xe buýt.",
+    "Khoảng 30 phút."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Từ đây đến sân bay mất bao lâu?",
+   "opts": [
+    "Khoảng 30 phút.",
+    "Lúc 7 giờ.",
+    "Rất rẻ.",
+    "Tôi đi bằng tắc xi."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Anh đi làm bằng gì?",
+   "opts": [
+    "Tôi đi làm bằng xe buýt.",
+    "Tôi đi làm lúc 8 giờ.",
+    "Công ty tôi ở Quận 1.",
+    "Tôi là kỹ sư."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Chúng ta gặp nhau lúc mấy giờ?",
+   "opts": [
+    "Lúc 6 giờ tối nhé.",
+    "Ở quán cà phê.",
+    "Với bạn tôi.",
+    "Hai người."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Siêu thị mở cửa lúc mấy giờ?",
+   "opts": [
+    "Lúc 8 giờ sáng.",
+    "Ở gần nhà tôi.",
+    "Siêu thị rất đông.",
+    "Tôi đi siêu thị."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Đi đến đó mất bao lâu?",
+   "opts": [
+    "Mất khoảng 20 phút.",
+    "Lúc 3 giờ chiều.",
+    "Bằng xe buýt.",
+    "Ở Quận 2."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Tối nay chúng ta ăn ở đâu?",
+   "opts": [
+    "Ở quán ăn gần công ty nhé.",
+    "Lúc 7 giờ tối.",
+    "Món ăn ngon lắm.",
+    "Tôi không đói."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Nhà anh có gần công ty không?",
+   "opts": [
+    "Không, nhà tôi hơi xa.",
+    "Nhà tôi có bốn người.",
+    "Tôi đi làm lúc 7 giờ.",
+    "Công ty tôi rất đông người."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Bây giờ chị đang ở đâu?",
+   "opts": [
+    "Tôi đang ở bưu điện.",
+    "Tôi đi bằng xe buýt.",
+    "Lúc 9 giờ.",
+    "Tôi là thư ký."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Cuối tuần anh thường đi đâu?",
+   "opts": [
+    "Tôi thường đi phố đi bộ.",
+    "Tôi là sinh viên.",
+    "Lúc 10 giờ sáng.",
+    "Tôi rất bận."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Nhà tôi gần công ty.",
+   "tiles": [
+    "gần",
+    "nhà",
+    "công ty",
+    "tôi"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Tôi đi Hà Nội bằng máy bay.",
+   "tiles": [
+    "bằng",
+    "tôi",
+    "máy bay",
+    "đi",
+    "Hà Nội"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Siêu thị mở cửa lúc 8 giờ.",
+   "tiles": [
+    "lúc",
+    "siêu thị",
+    "8 giờ",
+    "mở cửa"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Từ nhà đến công ty mất 30 phút.",
+   "tiles": [
+    "mất",
+    "từ",
+    "nhà",
+    "đến",
+    "công ty",
+    "30 phút"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Chúng ta gặp nhau ở quán cà phê nhé.",
+   "tiles": [
+    "nhé",
+    "chúng ta",
+    "gặp nhau",
+    "ở",
+    "quán cà phê"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Tôi đi làm bằng lúc 8 giờ.",
+   "bad": 3,
+   "fix": "Tôi đi làm lúc 8 giờ.",
+   "ko": "저는 8시에 출근해요. (시각 앞은 lúc)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Nhà tôi ở gần đến công ty.",
+   "bad": 4,
+   "fix": "Nhà tôi ở gần công ty.",
+   "ko": "우리 집은 회사 근처예요. (gần + 장소)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Tôi làm việc từ 8 giờ và 5 giờ.",
+   "bad": 6,
+   "fix": "Tôi làm việc từ 8 giờ đến 5 giờ.",
+   "ko": "저는 8시부터 5시까지 일해요. (từ … đến)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Chúng ta đi bằng xe buýt đi.",
+   "bad": 1,
+   "fix": "Chúng ta đi bằng xe buýt.",
+   "ko": "우리 버스로 가요. (đi 가 두 번)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Siêu thị ở đâu mở cửa lúc 8 giờ?",
+   "bad": 2,
+   "fix": "Siêu thị mở cửa lúc 8 giờ.",
+   "ko": "슈퍼마켓은 8시에 문을 열어요. (ở đâu 는 물을 때만)"
+  },
+  {
+   "sec": "C 쓰기 · 3 한 주제로 10문장",
+   "k": "free",
+   "prompt": "우리 동네와 회사(학교) 가는 길 — 어디에 있는지, 무엇으로 가는지, 얼마나 걸리는지, 근처에 무엇이 있는지 (10문장)",
+   "model": [
+    "Nhà tôi ở Quận 7, Thành phố Hồ Chí Minh.",
+    "Công ty tôi ở Quận 1.",
+    "Từ nhà đến công ty mất khoảng 40 phút.",
+    "Tôi thường đi làm bằng xe buýt.",
+    "Thỉnh thoảng tôi đi tắc xi.",
+    "Gần nhà tôi có một siêu thị và một bưu điện.",
+    "Siêu thị mở cửa lúc 7 giờ sáng.",
+    "Gần công ty có nhiều quán cà phê.",
+    "Buổi trưa tôi ăn ở quán ăn gần công ty.",
+    "Cuối tuần tôi thường đi nhà sách ở đường Nguyễn Huệ."
+   ],
+   "n": 10,
+   "pts": 10
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "nhà sách"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "quán cà phê"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "phố đi bộ"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "máy bay"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "tắc xi"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "địa chỉ"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "giảm giá"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "bao lâu"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "mở cửa"
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "gần"
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Nhà sách ở đâu?"
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Tôi đi làm bằng xe buýt."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Từ nhà đến công ty mất 30 phút."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Siêu thị mở cửa lúc 8 giờ sáng."
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Chúng ta gặp nhau lúc 6 giờ tối nhé."
+  }
+ ]
+}

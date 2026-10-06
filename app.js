@@ -4270,12 +4270,6 @@ function realbookLoad() {
 function replyLoad(cb) { realbookLoad().then(() => { if (REALBOOK) gybmBuild(() => cb(replyPairs())); }); }
 /* 주간 시험 듣기 그림 문제(A1·A2)에 들려줄 문장 — data/exam_pics.json. 낱말마다 **그 그림을 판정할 수 있는 문장**을 1차 시험지 꼴로 미리 써 두었다(2026-10-06,
    대표님 "아무 문장이나 말고 시험에 맞게 — 정답을 고를 수 있도록"). 품사 자료(_pos.json)로 틀에 끼워 짓는 방법은 'Đây là buổi.' 같은 말이 되어 버렸다 */
-let EXPICS = null, EXPICS_P = null;
-function expicsLoad() {
-  if (EXPICS) return Promise.resolve();
-  if (!EXPICS_P) EXPICS_P = fetch('data/exam_pics.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { EXPICS = {}; (j.items || []).forEach(x => { EXPICS[x.vi.toLowerCase()] = x.audio; }); }).catch(() => { EXPICS = {}; });
-  return EXPICS_P;
-}
 function replyPairs() {
   const chs = ((REALBOOK.books || [])[0] || {}).chapters || [];
   const main = GYBM && GYBM.find(x => x.key === 'main');
@@ -10895,21 +10889,15 @@ function weeklyEntry() {
     btn.onclick = () => { dive(weeklyEntry); weeklyRound(r); };
     b.append(btn);
   });
-  /* 1차 시험지 문항 그대로 + 90분 시계 (대표님 2026-09-30 "주간시험 일단 그대로 넣어줘봐. 시간도") — data/exam1.json */
-  { const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, esc(tr('1차 시험지 그대로')) + ' <span class="exmeta">' + esc(tr('실제 문항 86 · 90분')) + '</span>'));
-    btn.onclick = () => { dive(weeklyEntry); startExam1(); };
-    b.append(btn); }
-  { const btn = el('button', 'bigmenu');                 // 2차 시험지 — 교재 1권 1~7과, 1차와 같은 짜임 (2026-10-06)
-    btn.append(el('b', null, esc(tr('2차 시험지 (1~7과)')) + ' <span class="exmeta">' + esc(tr('문항 86 · 90분 · 교재 1권 1~7과')) + '</span>'));
-    btn.onclick = () => { dive(weeklyEntry); startExam1('exam2'); };
-    b.append(btn); }
   show('exam', '주간 시험', true);
 }
 /* ── 1차 시험지 그대로 (2026-09-30) ──
    data/exam1.json 의 문항을 차례대로. 듣기는 시험지에 대본이 없어 앱이 정답에 맞춰 지은 문장을 기계 소리로 들려준다(made).
    쓰기 3(그림 보고 5문장)은 모범 답안을 보고 스스로 매긴다(_score 0~1). 90분(말하기 제외)이 지나면 남은 문제는 0점으로 끝난다. */
-const FIXED_EXAMS = { exam1: { file: 'data/exam1.json', name: '1차 시험지' }, exam2: { file: 'data/exam2.json', name: '2차 시험지' } };   // 파일 이름을 글자 그대로 적어야 배포 목록에 든다. 2차는 교재 1권 1~7과로 클로드가 냄 (2026-10-06)
+const FIXED_EXAMS = { exam1: { file: 'data/exam1.json', name: '실제 시험지 (1차)', round: 1 },
+  m2_1: { file: 'data/mock2_1.json', name: '모의고사 1', round: 2 }, m2_2: { file: 'data/mock2_2.json', name: '모의고사 2', round: 2 }, m2_3: { file: 'data/mock2_3.json', name: '모의고사 3', round: 2 },
+  m2_4: { file: 'data/mock2_4.json', name: '모의고사 4', round: 2 }, m2_5: { file: 'data/mock2_5.json', name: '모의고사 5', round: 2 } };
+/* 주간시험 1 = 실제 1차 시험지 그대로, 주간시험 2 = 2차 시험 안내 틀(tools/mock2/common.py)로 낸 모의고사 다섯(1~7과). 옛 2차 예상 시험지(exam2.json)는 모의고사 1 로 다시 냈다 (2026-10-06) */   // 파일 이름을 글자 그대로 적어야 배포 목록에 든다. 2차는 교재 1권 1~7과로 클로드가 냄 (2026-10-06)
 let EXAM1_TIMER = 0, FIXED = {};
 function startExam1(key) {
   key = key || 'exam1';
@@ -10966,6 +10954,24 @@ function drawFixed(body, q) {
     x.opts.forEach((im0, i) => { const b = el('button', 'picopt'); const good = i === x.ans; b.dataset.vi = good ? w.vi : '-'; const im = new Image(); im.src = 'img/' + im0; im.alt = ''; b.append(im, el('small', null, 'ABCDE'[i])); b.onclick = () => answer(b, good, w); grid.append(b); });
     body.append(grid); return;
   }
+  if (x.k === 'errpick') {                                   // 틀린 곳 찾기 (2차 시험 틀 'Tìm lỗi sai') — 낱말을 눌러 틀린 자리를 짚는다 (2026-10-06)
+    const toks = x.vi.replace(/[.?!]+$/, '').split(/\s+/);
+    const line = el('div', 'errline'); let done = false;
+    toks.forEach((t, i) => {
+      const bt = el('button', 'errtok', esc(t)); bt.type = 'button';
+      bt.onclick = () => {
+        if (done) return; done = true;
+        const good = i === x.bad;
+        [...line.children].forEach((c, k2) => { c.disabled = true; if (k2 === x.bad) c.dataset.r = 'ok'; });
+        if (!good) bt.dataset.r = 'no';
+        fxTone(good); if (good) Q.ok++;
+        body.append(el('div', 'q mid', '→ ' + esc(x.fix) + (x.ko ? '<br><small class="dimtxt">' + esc(x.ko) + '</small>' : '')));
+        nextBtn(body, () => { Q.i++; drawQuiz(); });
+      };
+      line.append(bt);
+    });
+    body.append(el('p', 'note', tr('틀린 낱말을 누르세요')), line); return;
+  }
   if (x.k === 'free') {
     const ta = el('textarea', 'fxfree'); ta.rows = x.n + 1; ta.placeholder = tr('문장을 한 줄에 하나씩');
     body.append(ta);
@@ -10997,25 +11003,27 @@ function weeklyStudyRound(r) {
   const mk = (t, meta, fn) => { const x = el('button', 'bigmenu'); x.append(el('b', null, esc(tr(t)) + ' <span class="exmeta">' + meta + '</span>')); x.onclick = fn; b.append(x); };
   mk('낱말 카드', esc(tr('이 회차 범위 낱말')), () => gybmBuild(() => { dive(() => weeklyStudyRound(r)); SBOX = 'bsrs';
     flashRun(weeklyRoundWords(r), r.name + ' ' + tr('낱말'), { nextLabel: tr('회차로 돌아가기'), next: () => weeklyStudyRound(r) }); }));
-  if (r.gram && r.gram.length) mk('이 회차 문법', r.gram.length + tr('개 · 누르면 문법 카드'), () => { dive(() => weeklyStudyRound(r)); gramEnsure(() => weeklyGramList(r)); });
+  mk('이 회차 문법', esc(tr('범위 과의 문형 · 누르면 문법 카드')), () => { dive(() => weeklyStudyRound(r)); gramEnsure(() => gramTokLoad().then(() => weeklyGramList(r))); });   // 과별 지도에서 (2026-10-06)
   mk('쓰기 연습', esc(tr('상황 그림 보고 문장 · 주제로 10문장 (채점 없음)')), () => { dive(() => weeklyStudyRound(r)); gybmBuild(() => gramEnsure(() => writingPractice(r))); });
   show('sub', tr('주간 시험') + ' · ' + r.name, true);
 }
 /* 테스트 탭의 회차 — **시험만** (대표님 지시 2026-09-30: "테스트에서는 실제 시험지처럼. 단어 카드 말고"). 문법 카드·쓰기 연습은 학습 탭으로 옮겼다 */
 function weeklyRound(r) {
   const b = $('#examBody'); b.textContent = '';
-  const eb = el('button', 'bigmenu');
-  eb.append(el('b', null, esc(tr('시험 보기')) + ' <span class="exmeta">' + tr('실제 시험지 짜임 — 듣기 30 · 읽기 30 · 쓰기 · 말하기 20 · 끝에 채점') + '</span>'));
-  eb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => gramEnsure(() => startWeeklyExam(r))); };
-  b.append(eb);
+  /* 시험지 — 주간시험 1 은 실제 1차 시험지 그대로, 주간시험 2 는 모의고사 다섯 (대표님 2026-10-06). 풀 때마다 같은 문제, 90분, 끝에 채점 */
+  Object.entries(FIXED_EXAMS).filter(([k, e]) => e.round === r.no).forEach(([k, e]) => {
+    const eb = el('button', 'bigmenu');
+    const done = (S.stats.wexam || []).filter(x => x.round === k).slice(-1)[0];
+    eb.append(el('b', null, esc(tr(e.name)) + ' <span class="exmeta">' + esc(r.desc) + ' · ' + tr('90분 · 끝에 채점') + (done ? ' · ' + tr('지난 결과') + ' ' + done.ok + '/' + done.tot : '') + '</span>'));
+    eb.onclick = () => { dive(() => weeklyRound(r)); startExam1(k); };
+    b.append(eb);
+  });
   /* 쓰기 연습(상황 그림·문법마다 한 문장·주제 10문장, 채점 없음)은 시험 준비라 여기 둔다 (2026-10-01, 학습 탭 주간 시험을 없애면서 옮김) */
   { const wb = el('button', 'bigmenu');
     wb.append(el('b', null, esc(tr('쓰기 연습')) + ' <span class="exmeta">' + esc(tr('상황 그림 보고 문장 · 문법마다 한 문장 · 주제로 10문장 (채점 없음)')) + '</span>'));
     wb.onclick = () => { dive(() => weeklyRound(r)); gybmBuild(() => gramEnsure(() => writingPractice(r))); };
     b.append(wb); }
-  const last = (S.stats.wexam || []).filter(x => (x.round || 1) === r.no).slice(-1)[0];
-  if (last) b.append(el('p', 'note', tr('지난 결과') + ' · ' + esc(last.d) + ' · ' + last.ok + ' / ' + last.tot));
-  show('exam', tr('주간 시험') + ' · ' + r.name, true);
+  show('exam', r.name, true);
 }
 /* 쓰기 연습 — 실제 시험의 '그림 보고 말하기'·'한 주제로 10문장'을 손으로 연습한다. 채점은 없고 쓴 것은 폰에 남는다 (2026-09-28) */
 function writingPractice(r) {
@@ -11237,85 +11245,7 @@ function finishDaily() {
   r.append(re, ls, hm);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
-function startWeeklyExam(round) {
-  if (!EXPICS || !GTOK) { Promise.all([expicsLoad(), gramTokLoad()]).then(() => startWeeklyExam(round)); return; }   // 듣기 그림 문제 문장 · 문형 지도 (2026-10-06)
-  const r = round || WEEKLY_ROUNDS[0];
-  const words = (round ? weeklyRoundWords(r) : weeklyMaterial()).sort(() => Math.random() - .5);
-  const withImg = words.filter(w => w.img), withAud = words.filter(w => AIDX[w.vi]);
-  /* 시험 문장은 교재 **공식 단어장(gl) 낱말**의 예문만, 그리고 지시문·문법 설명 글은 뺀다 (대표님 2026-10-06 "아무 문장이나 말고 시험에 맞게") —
-     교재 낱말에는 'từ ngữ·tự xưng·sự' 같은 연습 지시문·문법 설명에서 온 말이 섞여 있어 "Chọn từ ngữ đúng."·"Đại từ nhân xưng … được dùng để tự xưng." 이 시험에 나왔다 */
-  const META = /^(viết|chọn|xem|điền|đọc|nghe|trả lời|dùng|hoàn thành|chuyển|đánh dấu|khoanh|thực hành|sử dụng|tìm|đặt|hỏi|hãy)\b|dưới đây|theo mẫu|chỗ trống|đoạn văn|bài tập|đại từ|ngôi thứ|từ ngữ|nghi vấn|phát âm|thanh điệu|nguyên âm|phụ âm|hội thoại|ngữ pháp|chính tả|được dùng để|kết cấu|^học viên\b/i;
-  const glW = words.filter(w => w.gl), srcW = glW.length >= 40 ? glW : words;
-  const sents = []; const ss = new Set();
-  srcW.forEach(w => { const e = w.ex; if (e && e.vi && e.vi.split(/\s+/).length >= 4 && !ss.has(e.vi) && !META.test(e.vi)) { ss.add(e.vi); sents.push({ vi: e.vi, ko: e.ko || '', kr_read: e.kr || '', sent: true, of: w.vi, aud: !!AIDX[e.vi] }); } });
-  const pick = (arr, n) => arr.slice().sort(() => Math.random() - .5).slice(0, n);
-  const others = (pool, w, n, ok) => pick(pool.filter(x => x.vi !== w.vi && (!ok || ok(x))), n);
-  const mk = (w, mode, sec, pool, ok) => ({ w, mode, sec, opts: [w, ...others(pool || words, w, 3, ok)].sort(() => Math.random() - .5) });
-  /* 문장은 **시험 범위 낱말로만 된 것**, 그중에서도 **범위 문법이 든 예문**을 먼저 (대표님 2026-09-30: "듣기는 범위 단어로만 된 문장 + 가급적 문법 포함").
-     범위 판정: 문장의 낱말이 모두 회차 낱말(음절 단위로도)이거나 기능어(FN)면 범위 안. 범위 안 문장이 모자랄 때만 범위 밖 예문으로 채운다 */
-  const knownSet = new Set(); words.forEach(w => { const v = w.vi.toLowerCase(); knownSet.add(v); v.split(/\s+/).forEach(t => knownSet.add(t)); });
-  const FN0 = new Set(['tôi', 'anh', 'chị', 'em', 'ông', 'bà', 'cô', 'thầy', 'cháu', 'họ', 'nó', 'ấy', 'các', 'chúng', 'là', 'không', 'phải', 'có', 'cũng', 'đều', 'đã', 'ạ', 'vậy', 'à', 'gì', 'ai', 'nào', 'đâu', 'này', 'kia', 'đó', 'đấy', 'và', 'của', 'với', 'ở', 'thì', 'mà', 'nhé', 'rồi', 'chưa', 'đang', 'sẽ', 'rất', 'lắm', 'quá', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín', 'mười', 'dạ', 'vâng', 'ừ', 'ơi', 'nhỉ', 'thế', 'sao', 'được', 'cho', 'để', 'từ', 'đến', 'về', 'đi', 'nhưng', 'hay', 'hoặc', 'vì', 'nên', 'mình', 'ta', 'người']);
-  const inRange0 = x => x.vi.toLowerCase().replace(/[.,!?;:…"“”()]/g, ' ').split(/\s+/).filter(Boolean).every(t => knownSet.has(t) || FN0.has(t));
-  const gsAll = round ? roundGramSents(r) : [];
-  const gsIn = gsAll.filter(inRange0), sentsIn = sents.filter(inRange0);
-  const prefer = (n, ...pools) => { const out = [], seen = new Set(); for (const pl of pools) { for (const x of pick(pl, pl.length)) { if (out.length >= n) break; if (seen.has(x.vi)) continue; seen.add(x.vi); out.push(x); } } return out; };
-  const withTts = x => Object.assign({}, x, { aud: true });    // 녹음이 없는 문법 예문은 기계 소리로 (sound() 이 알아서 넘긴다)
-  /* 1차 시험지(2026-09-29, 원본자료/…/주간시험) 짜임 그대로 (대표님 지시 2026-09-30: "실제 시험지처럼, 최대한 동일한 틀로. 내용은 시험 범위에 따라"):
-     A 듣기 30 — 1 그림 맞다/틀리다 5 · 2 맞는 그림 5 · 3 듣고 고르기 10 · 4 듣고 쓰기 10
-     B 읽기 30 — 1 빈칸(낱말·문법) 5 · 2 읽고 고르기 5 · 3 맞다/틀리다 10 · 4 알맞은 문장 10
-     C 쓰기 20 — 1 낱말 배열 5 · 2 틀린 곳 5 · (3 그림 보고 5문장 10점은 선생님 채점 — 학습 탭 '쓰기 연습'으로)
-     D 말하기 20 — 1 낱말 읽기 10 · 2 문장 읽기 5 (녹음이 되는 기기만)
-     재료가 모자라면 있는 만큼만 낸다. 앱 문제 형식이 시험지와 1:1로 같지 않은 곳: 그림 짝(A2)은 소리 하나에 그림 넷, 듣고 쓰기(A4)는 낱말 받아쓰기, 알맞은 문장(B4)은 뜻 보고 문장 고르기 */
-  const L = [];
-  /* 듣기는 낱말이 아니라 **문장**을 들려준다 (대표님 2026-10-06 "리스닝 각 문제마다 한 문장(길면 두 문장) — 아무 문장이나 말고 시험에 맞게, 정답을 고를 수 있도록").
-     A1·A2 는 data/exam_pics.json 에 **그 그림을 판정할 수 있게 미리 써 둔 문장**(1차 시험지 꼴 — "Anh ấy là bác sĩ. Anh ấy làm việc ở bệnh viện.")이 있는 낱말만 낸다. 녹음이 없으면 기계 소리 */
-  const exOf = w => (w.ex && w.ex.vi && w.ex.vi.replace(/[.?!]+$/, '').split(/\s+/).length >= 3) ? w.ex.vi : null;
-  const picW = withImg.filter(w => EXPICS[w.vi.toLowerCase()]);
-  pick(picW, 5).forEach(w => L.push(Object.assign(mk(w, 'pic_tf', 'A 듣기 · 1 그림 맞다/틀리다', picW, x => !!x.img), { say: EXPICS[w.vi.toLowerCase()] })));
-  pick(picW, 5).forEach(w => L.push(Object.assign(mk(w, 'pic4', 'A 듣기 · 2 맞는 그림', picW, x => !!x.img), { say: EXPICS[w.vi.toLowerCase()] })));
-  prefer(10, gsIn, sentsIn, sents.filter(x => x.aud)).forEach(x => L.push(mk(withTts(x), 'listen', 'A 듣기 · 3 듣고 고르기', [...gsIn, ...sentsIn, ...sents])));   // 범위 낱말+문법 문장 먼저
-  { const a4all = srcW.filter(w => exOf(w) && !META.test(w.ex.vi)), a4in = a4all.filter(w => inRange0({ vi: w.ex.vi }));   // 공식 단어장 낱말의 예문, 범위 낱말로만 된 것 먼저 (2026-10-06)
-    pick(a4in.length >= 10 ? a4in : a4all, 10).forEach(w => L.push({ w: { vi: w.ex.vi, ko: w.ex.ko || '', of: w.vi, sent: true, nograde: true }, mode: 'cloze', sec: 'A 듣기 · 4 듣고 빈칸', opts: [], say: w.ex.vi })); }   // 시험지 A4 꼴: 문장을 듣고 빈칸 낱말 고르기
-  /* B1 빈칸 — 시험지 지시문 그대로 '낱말과 문법을 본다': 회차 문법 빈칸을 먼저, 모자라면 낱말 빈칸 */
-  let gs = round ? roundGramSents(r) : [];
-  const b1 = [];
-  if (gs.length) {
-    /* 회차 범위 단어로만 된 예문을 먼저 쓴다 — 시험 범위 밖 단어가 섞이면 문법이 아니라 단어를 묻는 셈이 된다. 모자라면 전부 쓴다 */
-    const known = new Set(); words.forEach(w => { const v = w.vi.toLowerCase(); known.add(v); v.split(/\s+/).forEach(t => known.add(t)); });
-    const FN = new Set(['tôi', 'anh', 'chị', 'em', 'ông', 'bà', 'cô', 'thầy', 'cháu', 'họ', 'nó', 'ấy', 'các', 'chúng', 'là', 'không', 'phải', 'có', 'cũng', 'đều', 'đã', 'ạ', 'vậy', 'à', 'gì', 'ai', 'nào', 'đâu', 'ở', 'này', 'đó', 'đây', 'kia', 'mấy', 'bao nhiêu', 'người', 'của']);
-    const inRange = x => x.vi.toLowerCase().replace(/[.,!?;:…"“”()]/g, ' ').split(/\s+/).filter(Boolean).every(t => known.has(t) || FN.has(t));
-    const gsIn = gs.filter(inRange);
-    if (gsIn.filter(x => x.tok).length >= 8) gs = gsIn;
-    const toks = [...new Set(gs.map(x => x.tok).filter(Boolean).map(t => t.toLowerCase()))];
-    const gOf = t => (gs.find(x => x.tok && x.tok.toLowerCase() === t) || {}).gram;
-    /* 서로 바꿔 넣어도 말이 되는 것끼리는 오답으로 안 쓴다 — 'Họ đều/cũng là…', 'Em đi đâu vậy/ạ?' 처럼 둘 다 맞는 문장이 되면 시험이 아니다 */
-    const CF = [['đây', 'đó', 'đấy', 'kia', 'ấy'], ['đã', 'cũng', 'đều', 'có'], ['ạ', 'vậy'], ['ai', 'gì']];
-    const grp = t => CF.findIndex(g => g.includes(t));
-    pick(gs.filter(x => x.tok), 5).forEach(x => {
-      const ans = x.tok.toLowerCase(), same = gOf(ans), ga = grp(ans);
-      const wrong = pick(toks.filter(t => t !== ans && gOf(t) !== same && (ga < 0 || grp(t) !== ga)), 3);
-      if (wrong.length < 3) return;
-      b1.push({ w: x, mode: 'gcloze', sec: 'B 읽기 · 1 빈칸(낱말·문법)', opts: [], topts: [x.tok.toLowerCase(), ...wrong].sort(() => Math.random() - .5) });
-    });
-  }
-  pick(sents, 5 - b1.length).forEach(x => b1.push(mk(x, 'cloze', 'B 읽기 · 1 빈칸(낱말·문법)')));
-  L.push(...b1);
-  const sPool = [...gsIn, ...sentsIn, ...sents];
-  prefer(5, gsIn, sentsIn, sents).forEach(x => L.push(mk(x, 'read', 'B 읽기 · 2 읽고 고르기', sPool)));
-  prefer(10, gsIn, sentsIn, sents).forEach(x => L.push(mk(x, 'tf', 'B 읽기 · 3 맞다/틀리다', sPool)));
-  const b4 = gs.length >= 10 ? gs : [...gs, ...sents];
-  pick(b4, 10).forEach(x => L.push(mk(x, 'read_ko', 'B 읽기 · 4 알맞은 문장', b4)));
-  const shortS = arr => arr.filter(x => { const n = x.vi.replace(/[.?!]+$/, '').split(/\s+/).length; return n >= 3 && n <= 9 && !/[.!?]\s/.test(x.vi); });
-  const c1 = prefer(5, shortS(gsIn), shortS(sentsIn), shortS(gs), shortS(sents));
-  c1.forEach(x => L.push(mk(x, 'puzzle', 'C 쓰기 · 1 낱말 배열')));
-  prefer(5, gsIn, sentsIn, sents).forEach(x => L.push(mk(x, 'err', 'C 쓰기 · 2 틀린 곳')));
-  // D 말하기(낱말 읽기 10·문장 읽기 5)는 뺐다 (대표님 2026-10-06 "말하기 테스트는 빼자 — 기기 인식을 못 믿는다"). 말하기 연습은 단어 카드에서
-  if (L.length < 10) { popup(tr('시험을 만들 재료가 모자랍니다')); return; }
-  SBOX = round ? 'bsrs' : 'srs';                     // 교재 단어는 교재 창고에 채점
-  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: r.no };   // blind: 실제 시험처럼 끝에 채점 (2026-09-30)
-  drawQuiz();
-  show('quiz', '주간 시험 ' + r.name, true);
-}
+/* 앱이 만들던 주간 시험(startWeeklyExam)은 뺐다 (대표님 2026-10-06 "주간시험 1에는 실제 시험지만, 주간시험 2에는 모의고사 5개") — 시험은 모두 고정 시험지(FIXED_EXAMS) */
 /* 시험 전용 문제들 — 그림 맞다/틀리다 · 그림 고르기 · 빈칸 · 문장 맞다/틀리다 · 틀린 곳 찾기 */
 /* 시험 듣기 문제의 [문장 보기] (대표님 2026-10-06 "듣기 문제는 문장 보기 버튼도 — 주간 시험") — 누르면 들려준 문장이 글자로 보인다. 주간 시험·시험지에서만 */
 function sentPeek(host, text) {
