@@ -4268,8 +4268,6 @@ function realbookLoad() {
   return REALBOOK_P;
 }
 function replyLoad(cb) { realbookLoad().then(() => { if (REALBOOK) gybmBuild(() => cb(replyPairs())); }); }
-/* 주간 시험 듣기 그림 문제(A1·A2)에 들려줄 문장 — data/exam_pics.json. 낱말마다 **그 그림을 판정할 수 있는 문장**을 1차 시험지 꼴로 미리 써 두었다(2026-10-06,
-   대표님 "아무 문장이나 말고 시험에 맞게 — 정답을 고를 수 있도록"). 품사 자료(_pos.json)로 틀에 끼워 짓는 방법은 'Đây là buổi.' 같은 말이 되어 버렸다 */
 function replyPairs() {
   const chs = ((REALBOOK.books || [])[0] || {}).chapters || [];
   const main = GYBM && GYBM.find(x => x.key === 'main');
