@@ -2843,45 +2843,9 @@ function studyGramEntry(scroll) {
     const nodes = us.map(u => Object.assign(node(u, ''), { num: ++num }));
     accRow(b, { key: k, title: tr(k), sub: us.length + tr('과') + ' · ' + tr(sub), done: nodes.filter(n => n.done).length, all: nodes.length, nodes }, GOPEN === k, toggle(k), scroll);
   });
-  /* ③ 교재별 — 책의 과마다 **그 과에 실제로 나오는 문형**(문법 상자 + 대화에 녹아 있는 것, data/_gram_ch.json) (대표님 2026-10-06 "교재별 보기에도 과별 지도") */
-  if (!GTOK) gramTokLoad().then(() => { if (CURV === 'sub' && $('#title').textContent === tr('문법')) studyGramEntry(true); });
-  else {
-    b.append(el('p', 'anasec', tr('교재별') + ' <span>' + tr('과마다 실제로 나오는 문형') + '</span>'));
-    const byId = {}; GTOK.forEach(x => { byId[x.id] = x; });
-    const chDone = v => (v.items || []).every(id => !byId[id] || byId[id].always || S.done[gkey(0, byId[id].li)]);
-    GCH_BOOKS.forEach(([pre, name]) => {
-      const keys = Object.keys(GCH).filter(k => k.split('-')[0] === pre).sort((a, b2) => +a.split('-')[1] - +b2.split('-')[1]);
-      const nodes = keys.map((k, i) => { const v = GCH[k]; const n = (v.items || []).length, nf = (v.first || []).length;
-        return { key: 'ch:' + k, num: i + 1, title: (v.title_ko || v.title || (k.split('-')[1] + tr('과'))) + (v.title && v.title_ko ? ' · ' + v.title : ''),
-                 sub: n ? n + tr('개 문형') + (nf ? ' · ' + tr('새로') + ' ' + nf : '') : tr('문형 없음(복습·발음)'), done: n ? chDone(v) : false,
-                 fn: n ? () => { dive(back); chapterGramList(k, name) } : null }; });
-      const ak = 'bk:' + pre;
-      accRow(b, { key: ak, title: name, sub: nodes.length + tr('과'), done: nodes.filter(n => n.done).length, all: nodes.length, nodes }, GOPEN === ak, toggle(ak), scroll);
-    });
-  }
+  /* 교재별 묶음은 넣지 않는다 (대표님 2026-10-01 "출처로 구분하지 말고 자주 쓰이는 순서로" · 2026-10-06 "문법 파트에 교재별 구분 하지 말라니까") —
+     과별 문법 지도(data/_gram_ch.json)는 주간 시험 범위·문장 테스트 범위에만 쓴다 */
   show('sub', '문법', true);
-}
-/* 교재 한 과의 문형 목록 — 처음 나오는 것부터, 누르면 그 문형 카드로 (2026-10-06) */
-function chapterGramList(k, bookName) {
-  const b = $('#subBody'); b.textContent = '';
-  const v = GCH[k] || { items: [] }, byId = {}; GTOK.forEach(x => { byId[x.id] = x; });
-  const back = () => chapterGramList(k, bookName);
-  b.append(el('p', 'lede', esc(bookName) + ' · ' + esc(v.title_ko || '') + (v.title ? ' <small>' + esc(v.title) + '</small>' : '')));
-  const firstSet = new Set(v.first || []);
-  const sec = (title, ids) => {
-    if (!ids.length) return;
-    b.append(el('p', 'anasec', tr(title) + ' <span>' + ids.length + '</span>'));
-    ids.forEach(id => { const x = byId[id]; if (!x) return;
-      const l = GRAM.books[0].bai[x.li], it = l && l.g[x.gi]; if (!it) return;
-      const btn = el('button', 'bigmenu' + (S.done[gkey(0, x.li)] ? ' done' : ''));
-      const ex = (v.ex || {})[id];
-      btn.append(el('b', null, esc(it.t) + ' <span class="exmeta">' + tr('문법') + ' ' + l.no + tr('과') + (S.done[gkey(0, x.li)] ? ' ✓' : '') + '</span>' + (ex ? '<br><small class="dimtxt">' + esc(ex) + '</small>' : '')));
-      btn.onclick = () => { dive(back); startGram(0, x.li); L.i = x.gi; drawCard(); };
-      b.append(btn); });
-  };
-  sec('이 과에서 처음 나오는 문형', (v.items || []).filter(id => firstSet.has(id)));
-  sec('앞 과에서 이미 나온 문형', (v.items || []).filter(id => !firstSet.has(id)));
-  show('sub', v.title_ko || v.title || k, true);
 }
 /* 과정 자료(order.json)가 있어야 하는 문 — 없으면 받아 온 뒤 연다 */
 function withCourse(fn) {
