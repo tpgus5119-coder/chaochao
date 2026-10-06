@@ -10017,6 +10017,8 @@ function buildQuestions(words, forced) {
     // 쪼그라들면 기존 복습과 다른 물건이 된다(대표님 지시: 틀을 그대로 가져와라).
     if ((mode === 'listen' || mode === 'type' || mode === 'tone' || mode === 'shadow' || mode === 'puzzle_vi') && !AIDX[w.vi] && !viVoice()) mode = w.sent ? 'puzzle' : 'read';
     if ((mode === 'listen_ko' || mode === 'say_ko' || mode === 'puzzle_ko') && !('speechSynthesis' in window)) mode = mode === 'puzzle_ko' ? 'puzzle' : mode === 'say_ko' ? 'say' : 'read_ko';
+    /* 문장은 자판으로 안 친다 (대표님 2026-10-06 "문장에서는 타이핑 빼야겠지") — 복습 메뉴 [쓰기]·받아쓰기·말하기로 문장이 걸리면 조각 배열로(소리가 있으면 절반은 듣고 조각) */
+    if (w.sent && ['type', 'write_ko', 'dictation', 'say', 'shadow', 'say_ko', 'hand'].includes(mode)) mode = (AIDX[w.vi] || viVoice()) && Math.random() < .5 ? 'puzzle_vi' : 'puzzle';
     let src = w.sent ? spool : pool;
     if (src.length < 4) src = [...src, ...(w.sent ? pool : spool)];             // 모자라면 채운다
     const seen = new Set([w.vi]);
@@ -11143,7 +11145,8 @@ function startDaily(t) {
   ss.forEach(x => {
     if (x.dir === 'to_ko') { L.push(mk(x, tr('문장 · 뜻 고르기'), ss)); return; }
     const n = x.vi.replace(/[.?!]+$/, '').split(/\s+/).length;
-    L.push({ w: x, mode: n >= 3 ? 'puzzle' : 'write_ko', sec: tr('문장 · 베트남어로') });   // 두 낱말 이하는 조각이 안 되니 쳐서
+    if (n >= 3) L.push({ w: x, mode: 'puzzle', sec: tr('문장 · 베트남어로') });
+    else L.push({ w: x, mode: 'read_ko', sec: tr('문장 · 베트남어로'), opts: [x, ...pick(ss.filter(y => y.vi !== x.vi), 3)].sort(() => Math.random() - .5) });   // 두 낱말 이하(Chào bạn.)는 조각이 안 되니 뜻 보고 문장 고르기 — 자판 치기는 뺐다 (2026-10-06)
   });
   SBOX = 'bsrs';
   Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: false, opt: {}, exam: true, blind: true, daily: t.key, dtest: t };   // blind: 실제 시험처럼 끝에 채점
