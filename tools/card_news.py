@@ -537,6 +537,15 @@ def main():
                "a flooded country road with rice fields under gray rain clouds"),
               (("차량호출", "택시", "그랩"),
                "small electric cars parked in a row at a charging station"),
+              # 2026-10-06 아침(예약 작업): 공항 공사 기사 제목의 'airport' 가 아래 '수출' 줄의 'port' 에
+              # 걸려 항만 그림(이미 쓰임)→공장 기본 그림이 깔렸다. QR 결제는 '관광'에 걸려 해변이,
+              # 노동법은 갈래 기본(안전모)이 깔렸다. 셋을 위에 둔다.
+              (("공항 공사", "새 터미널", "공항 확장"),
+               "a large airport terminal under construction with cranes and a curved steel roof"),
+              (("qr", "결제"),
+               "a card payment terminal and a smartphone on a small shop counter"),
+              (("노동법", "해고", "근로계약"),
+               "a signed employment contract and a pen on a wooden desk"),
               # 2026-10-04: '에어버스'가 아래 '버스'에 걸리지 않게 버스 줄보다 먼저 둔다.
               (("항공기", "비엣젯", "에어버스"),
                "a passenger airplane parked at an airport gate under a clear sky"),
