@@ -2146,9 +2146,9 @@ function examSpdSet(v) { EXAM_SPD = v; if (!audio.paused) audio.playbackRate = v
 function spdChip(opt) {
   const pr = !!(opt && opt.pair), ex = !!(opt && opt.exam);
   const get = pr ? pairSpd : ex ? examSpd : spdOf, set = pr ? pairSpdSet : ex ? examSpdSet : spdSet;
-  const b = el('button', 'spdchip' + (pr ? ' pair' : '') + (ex ? ' pair exam' : ''));   // 듣기 옆 ▾ — 누르면 1·0.8·0.6·0.4·0.2배 목록. 시험지(exam)는 값이 보이고 1배 기본
+  const b = el('button', 'spdchip' + (pr ? ' pair' : '') + (ex ? ' exam' : ''));   // 듣기 옆 ▾ — 누르면 1·0.8·0.6·0.4·0.2배 목록. 시험지(exam)는 1배 기본, 모양은 카드와 같게 ▾ 만
   b.type = 'button';
-  if (pr || ex) b.append(el('span', 'spdval', spdLab(get())));    // 짝·시험에서는 값도 같이 보인다 — 카드 속도와 다른 값임을 알 수 있게
+  if (pr) b.append(el('span', 'spdval', spdLab(get())));    // 짝에서는 값도 같이 보인다 — 카드 속도와 다른 값임을 알 수 있게
   b.append(el('i', 'spdcaret', '▾'));
   b.title = tr('듣기 속도') + ' ' + spdLab(get());
   b.setAttribute('aria-label', tr('듣기 속도') + ' ' + spdLab(get()));
@@ -2183,13 +2183,27 @@ addEventListener('scroll', spdMenuClose, true);
 addEventListener('resize', spdMenuClose);
 addEventListener('keydown', e => { if (e.key === 'Escape') spdMenuClose(); });
 /* [▶ 듣기][0.8배] — fn(속도) 를 부른다 */
-function listenGroup(fn) {
+function listenGroup(fn, opt) {
+  const ex = !!(opt && opt.exam);                              // 시험지는 제 속도(1배 기본)
   const g = el('div', 'lgrp');
-  const b = el('button', 'ghost lbtn', '▶ ' + tr('듣기'));
+  const b = el('button', 'ghost lbtn', '▶ ' + tr((opt && opt.label) || '듣기'));
   b.type = 'button';
-  b.onclick = ev => { ev.stopPropagation(); fn(spdOf()); };
-  g.append(b, spdChip());
+  b.onclick = ev => { ev.stopPropagation(); fn(ex ? examSpd() : spdOf()); };
+  g.append(b, spdChip(ex ? { exam: true } : undefined));
   return g;
+}
+/* 테스트·시험지의 듣기·말하기 단추는 **단어 카드와 같은 모양**으로 (대표님 2026-10-06 "모두 단어 카드와 동일하게 — 최대한 통일성"):
+   듣기 = listenGroup([▶ 듣기][▾], 속도 칩은 카드 속도·시험지는 시험 속도), 말하기 = recBtn(빨간 테두리 🎙 말하기). 전에는 파란 큰 단추·아이콘 단추였다 */
+function playAt(t, spd, dir) {
+  if (typeof Q !== 'undefined' && Q && Q.blind && Q._answered && CURV === 'quiz') return;   // 시험 중 답한 뒤 정답 소리를 안 들려준다 (sound 과 같음)
+  const k = AIDX[t] ? t : recKey(t);
+  k ? play(k, false, dir || null, spd) : speakVi(t, false, spd, S.voice);
+}
+function recBtn(text, box) {
+  const mic = el('button', 'rec', ICON.mic + '<span>' + tr('말하기') + '</span>');
+  mic.type = 'button';
+  mic.onclick = () => toggleRec(text, mic, box);
+  return mic;
 }
 
 /* 단어 밑 단추 줄 — [▶ 듣기 0.8배] [🔴 말하기] (대표님 지시 2026-09-26·27). 뜻 바로 아래, 단어 면·발음 면 같은 자리.
@@ -9421,9 +9435,7 @@ function drawCard() {
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     const rbox = el('div', 'cmpbox');
     if (canRecord()) {
-      const mic = iconBtn('mic', '따라 말하기', null);
-      mic.onclick = () => toggleRec(x.vi, mic, rbox);
-      row.append(mic);
+      row.append(recBtn(x.vi, rbox));
     } else {
       /* 마이크 단추를 그냥 안 그리기만 하면 대표님 표현대로 "아예 반응없음"이 된다
          — 왜 안 되는지도 안 보인다(2026-09-09 지적). 이유를 보여준다. */
@@ -10447,16 +10459,13 @@ function drawQuiz() {
   const sayBox = el('div', 'qsay');
   const addMic = () => {
     if (!canRecord()) return;
-    const mic = iconBtn('mic', '따라 말하기', null);
-    mic.onclick = () => toggleRec(q.w.vi, mic, sayBox);
-    return mic;
+    return recBtn(q.w.vi, sayBox);                           // 카드와 같은 [🎙 말하기] (2026-10-06)
   };
   const koQ = q.mode === 'read_ko' || q.mode === 'listen_ko';          // 뜻이 물음, 보기는 베트남어
   if (q.mode === 'listen' || q.mode === 'listen_ko') {   // 귀로만 — 글자는 답한 뒤에 보여준다
     const wrap = el('div', 'qplay');
-    const b = el('button', 'primary big', koQ ? '뜻 듣기' : '듣기');
-    b.onclick = () => koQ ? speakKo(koShow(q.w.ko)) : sound(q.w.vi);
-    wrap.append(b);
+    if (koQ) { const g = el('div', 'lgrp'), b = el('button', 'ghost lbtn', '▶ ' + tr('뜻 듣기')); b.type = 'button'; b.onclick = () => speakKo(koShow(q.w.ko)); g.append(b); wrap.append(g); }
+    else wrap.append(listenGroup(spd => playAt(q.w.vi, spd)));   // 카드와 같은 [▶ 듣기][▾] (2026-10-06)
     if (!koQ) { const m = addMic(); if (m) wrap.append(m); }
     if (!koQ) sentPeek(wrap, q.w.vi);                       // 주간 시험 듣기 — 문장 보기 (2026-10-06)
     body.append(wrap, sayBox);
@@ -10646,8 +10655,8 @@ function drawPuzzle(body, q) {
   }
   if (md === 'puzzle') body.append(el('div', 'puzzhint', (w.ask ? tr('대답') + ': ' : '') + esc(koShow(w.ko))));      // 뜻은 보여준다 — 어순을 묻는 문제니까
   const row0 = el('div', 'qplay');
-  if (md === 'puzzle_ko') { const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(koShow(w.ko)); row0.append(kb); setTimeout(() => speakKo(koShow(w.ko)), 150); }   // 뜻을 듣고 만든다 (2026-09-28)
-  else if (md === 'puzzle_vi') { const pb = el('button', 'primary big', '🔊 듣기'); pb.onclick = () => play(w.vi, false); row0.append(pb); if (md === 'puzzle_vi') setTimeout(() => play(w.vi, false), 150); }   // 문장을 듣고 만든다
+  if (md === 'puzzle_ko') { const kb = el('button', 'ghost lbtn', '▶ ' + tr('뜻 듣기')); kb.type = 'button'; kb.onclick = () => speakKo(koShow(w.ko)); { const g0 = el('div', 'lgrp'); g0.append(kb); row0.append(g0); } setTimeout(() => speakKo(koShow(w.ko)), 150); }   // 뜻을 듣고 만든다 (2026-09-28)
+  else if (md === 'puzzle_vi') { row0.append(listenGroup(spd => playAt(w.vi, spd))); setTimeout(() => play(w.vi, false), 150); }   // 문장을 듣고 만든다
   body.append(row0);
 
   /* 마침표\u00b7물음표는 조각에서 뗀다 — 'gỗ.' 처럼 붙어 있으면
@@ -10705,9 +10714,7 @@ function drawPuzzle(body, q) {
    보고 베끼기는 인출이 없어 효과가 약하다 — 소리→철자 인출이라야 남는다. */
 function drawDict(body, q) {
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '듣기');
-  b.onclick = () => sound(q.w.vi);
-  wrap.append(b);
+  wrap.append(listenGroup(spd => playAt(q.w.vi, spd)));
   body.append(wrap);
   sound(q.w.vi);
   body.append(el('div', 'q mid', esc(koShow(q.w.ko))));   // 뜻은 보여준다 — 철자와 성조를 시험하는 것이니까
@@ -10939,7 +10946,8 @@ function exam1Clock() {
 function drawFixed(body, q) {
   const x = q.w.fx, w = q.w;
   const say = t => { const k = recKey(t); k ? play(k, false, undefined, examSpd()) : speakVi(t, false, examSpd()); };   // 시험 속도(1배 기본, 칩으로 바꿈)
-  if (x.audio) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '🔊 ' + tr('듣기')); lb.onclick = () => say(x.audio); row.append(lb, spdChip({ exam: true })); sentPeek(row, x.audio); body.append(row); setTimeout(() => say(x.audio), 200); }
+  if (x.audio) {                                             // [▶ 듣기][▾] — 단어 카드의 듣기 묶음과 같은 모양 (대표님 2026-10-06 그림)
+    const row = el('div', 'qplay'); row.append(listenGroup(() => say(x.audio), { exam: true })); sentPeek(row, x.audio); body.append(row); setTimeout(() => say(x.audio), 200); }
   if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; body.append(im); }
   if (x.text) body.append(el('div', 'fxtext', esc(x.text)));
   if (x.prompt) body.append(el('div', 'qmain sent', esc(x.prompt)));
@@ -11165,7 +11173,7 @@ function drawExamKind(body, q) {
   };
   if (md === 'pic_tf' || md === 'pic4') {
     const sayT = q.say || w.vi;                             // 주간 시험은 낱말의 예문을 들려준다 (2026-10-06)
-    const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(sayT); row.append(lb); sentPeek(row, sayT); body.append(row);
+    const row = el('div', 'qplay'); row.append(listenGroup(spd => playAt(sayT, spd))); sentPeek(row, sayT); body.append(row);
     sound(sayT);
     if (md === 'pic_tf') {
       const other = q.opts.find(o => o.vi !== w.vi && o.img) || w;
@@ -11183,7 +11191,7 @@ function drawExamKind(body, q) {
     const tok = w.of || '';
     const re = new RegExp('(^|\\s)' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i');
     const shown = re.test(w.vi) ? w.vi.replace(re, '$1____') : w.vi;
-    if (q.say) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(q.say); row.append(lb); sentPeek(row, q.say); body.append(row, el('div', 'qmain sent', esc(shown))); sound(q.say); }   // 듣고 빈칸 — 뜻은 안 보여 준다 (2026-10-06)
+    if (q.say) { const row = el('div', 'qplay'); row.append(listenGroup(spd => playAt(q.say, spd))); sentPeek(row, q.say); body.append(row, el('div', 'qmain sent', esc(shown))); sound(q.say); }   // 듣고 빈칸 — 뜻은 안 보여 준다 (2026-10-06)
     else body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(koShow(w.ko))));
     const target = findItem(tok) || { vi: tok, ko: '' };
     const pool = (Q.round ? weeklyRoundWords(WEEKLY_ROUNDS.find(r => r.no === Q.round) || WEEKLY_ROUNDS[0]) : weeklyMaterial()).filter(x => x.vi !== tok);
@@ -11315,7 +11323,7 @@ function drawSay(body, q) {
   const tapQ = txt => { const b = el('button', 'qmain qtap' + (w.sent ? ' sent' : ''), esc(txt)); b.type = 'button'; b.onclick = () => sound(w.vi); return b; };   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   if (shadow) body.append(tapQ(w.vi));          // 따라 말하기 — 베트남어를 보며 듣고 따라 한다
   else if (picOnly) { /* 그림만 보고 말한다 (주간 시험 D2) — 뜻 글은 없다 */ }
-  else if (koMode) { const kr = el('div', 'qplay'); const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(koShow(w.ko)); kr.append(kb); body.append(kr); setTimeout(() => speakKo(koShow(w.ko)), 150); }
+  else if (koMode) { const kr = el('div', 'qplay'); const kb = el('button', 'ghost lbtn', '▶ ' + tr('뜻 듣기')); kb.type = 'button'; kb.onclick = () => speakKo(koShow(w.ko)); { const g0 = el('div', 'lgrp'); g0.append(kb); kr.append(g0); } body.append(kr); setTimeout(() => speakKo(koShow(w.ko)), 150); }
   else if (!picOnly) body.append(tapQ(koShow(w.ko)));
   let done = false;
   const finish = (ok, judged) => {
@@ -11958,8 +11966,7 @@ function drawVowel() {
   body.append(el('div', 'q', `${VD.i + 1} / ${VD.list.length} · 소리를 듣고 고르세요`));
   body.append(el('div', 'tonehint', esc(g.note)));
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '듣기'); b.onclick = () => play(it.vi, false);
-  wrap.append(b); body.append(wrap);
+  wrap.append(listenGroup(spd => play(it.vi, false, null, spd))); body.append(wrap);
   play(it.vi, false);
   const opts = el('div', 'opts tonelist');
   g.items.forEach(o => {
@@ -12018,13 +12025,11 @@ function drawTone() {
   body.append(el('div', 'tonehint', `글자는 모두 <b>${esc(g.base)}</b> 로 같습니다. 성조만 다릅니다.`));
 
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '듣기');
   /* 성조 문제만은 **일부러 북부 소리로** 낸다 (고치지 마라).
      남부는 hỏi 와 ngã 를 한 소리로 합쳐 버린다. 그런데 이 훈련에는 둘 다 나온다
      (days.json tonedrill: ngang·huyền·sắc·hỏi·ngã·nặng). 남부로 내면 두 답이
      똑같이 들려 **문제 자체가 성립하지 않는다.** 남녀는 고른 대로 따라간다. */
-  b.onclick = () => play(it.vi, false, S.voice);
-  wrap.append(b);
+  wrap.append(listenGroup(spd => play(it.vi, false, S.voice, spd)));   // 카드와 같은 [▶ 듣기][▾] (2026-10-06)
   body.append(wrap);
   play(it.vi, false, S.voice);
 
@@ -12070,9 +12075,7 @@ function drawToneMark(body, w) {
   body.append(el('div', 'markbare', esc(bare)));
 
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '듣기');
-  b.onclick = () => play(w.vi, false);
-  wrap.append(b);
+  wrap.append(listenGroup(spd => play(w.vi, false, null, spd)));   // 카드와 같은 [▶ 듣기][▾] (2026-10-06)
   body.append(wrap);
 
   const opts = el('div', 'opts markopts');
@@ -12243,11 +12246,7 @@ function drawToneTest() {
   body.append(el('div', 'q', `${TT.i + 1} / ${TT.n} · 소리를 듣고 고르세요`));
   body.append(el('div', 'tonehint', `보기 ${st.lv}개 · ${q.dir === 'f' ? '여자' : '남자'} 목소리`));
   const wrap = el('div', 'qplay');
-  const b = el('button', 'primary big', '듣기');
-  b.onclick = () => play(q.ans[0], false, q.dir);
-  const sl = el('button', 'ghost', '느리게');
-  sl.onclick = () => play(q.ans[0], true, q.dir);
-  wrap.append(b, sl);
+  wrap.append(listenGroup(spd => play(q.ans[0], false, q.dir, spd)));   // 카드와 같은 [▶ 듣기][▾] — '느리게' 단추는 속도 칩으로 (2026-10-06)
   body.append(wrap);
   // 보기 소리도 미리 받아 둔다 — 틀렸을 때 이어 듣기가 끊기지 않게
   q.opts.forEach(o => { const h = AIDX[o[0]]; if (h) fetch(`audio/${q.dir}/n/${h}.mp3`).catch(() => { }); });
@@ -12770,9 +12769,7 @@ function drawRule() {
         const row = el('div', 'wrow');
         row.append(bigWord(q.say, (findItem(q.say) || {}).tones));
         if (canRecord()) {
-          const mic = iconBtn('mic', '따라 말하기', null);
-          mic.onclick = () => toggleRec(q.say, mic, box);
-          row.append(mic);
+          row.append(recBtn(q.say, box));
         }
         box.append(row);
         b.append(box);
