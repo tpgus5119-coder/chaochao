@@ -2137,13 +2137,18 @@ function spdSet(v) {
 /* 헷갈리는 짝은 **제 속도**를 따로 둔다 (대표님 지시 2026-09-27: "별개로 속도 조절"). 기본은 0.8배(2026-09-29 밤 "디폴트값은 0.8로. 모두 고정"). 카드의 듣기 속도(S.wspd)와 무관하다. */
 const pairSpd = () => SPDS.includes(Number(S.pspd)) ? Number(S.pspd) : .8;   // 기본 0.8배 (대표님 지시 2026-09-29 밤: "디폴트값은 0.8로. 모두 고정" — 전에는 1배)
 function pairSpdSet(v) { S.pspd = v; save(); document.querySelectorAll('.spdchip.pair').forEach(x => { x.title = tr('짝 듣기 속도') + ' ' + spdLab(v); }); }
+/* 시험지(실제 시험지·모의고사) 듣기는 **1배가 기본** (대표님 2026-10-06 "모의고사는 실전 같은 거니까 1배속을 디폴트로, 마찬가지로 속도 조절") —
+   시험을 시작할 때 1배로 돌아가고, 시험 안에서 고른 속도는 그 시험이 끝날 때까지만 산다(저장 안 함). 카드 듣기 속도(0.8 기본)와 따로 */
+let EXAM_SPD = 1;
+const examSpd = () => EXAM_SPD;
+function examSpdSet(v) { EXAM_SPD = v; if (!audio.paused) audio.playbackRate = v; document.querySelectorAll('.spdchip.exam').forEach(x => { x.title = tr('듣기 속도') + ' ' + spdLab(v); }); }
 /* opt.pair 이면 헷갈리는 짝 속도(pairSpd)를 읽고 쓴다. 아니면 카드 듣기 속도 */
 function spdChip(opt) {
-  const pr = !!(opt && opt.pair);
-  const get = pr ? pairSpd : spdOf, set = pr ? pairSpdSet : spdSet;
-  const b = el('button', 'spdchip' + (pr ? ' pair' : ''));   // 듣기 옆 ▾ — 누르면 1·0.8·0.6·0.4·0.2배 목록
+  const pr = !!(opt && opt.pair), ex = !!(opt && opt.exam);
+  const get = pr ? pairSpd : ex ? examSpd : spdOf, set = pr ? pairSpdSet : ex ? examSpdSet : spdSet;
+  const b = el('button', 'spdchip' + (pr ? ' pair' : '') + (ex ? ' pair exam' : ''));   // 듣기 옆 ▾ — 누르면 1·0.8·0.6·0.4·0.2배 목록. 시험지(exam)는 값이 보이고 1배 기본
   b.type = 'button';
-  if (pr) b.append(el('span', 'spdval', spdLab(get())));    // 짝에서는 값도 같이 보인다 — 카드 속도와 다른 값임을 알 수 있게
+  if (pr || ex) b.append(el('span', 'spdval', spdLab(get())));    // 짝·시험에서는 값도 같이 보인다 — 카드 속도와 다른 값임을 알 수 있게
   b.append(el('i', 'spdcaret', '▾'));
   b.title = tr('듣기 속도') + ' ' + spdLab(get());
   b.setAttribute('aria-label', tr('듣기 속도') + ' ' + spdLab(get()));
@@ -10901,6 +10906,7 @@ function startExam1(key) {
   key = key || 'exam1';
   const go = () => {
     const J = FIXED[key];
+    EXAM_SPD = 1;                                          // 시험지 듣기는 1배부터 (2026-10-06)
     const L = J.q.map(x => {
       const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
       if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles }, mode: 'puzzle', sec: x.sec, opts: [] };
@@ -10932,8 +10938,8 @@ function exam1Clock() {
 /* 시험지 문항 그리기 — tf(맞다/틀리다) · choice(보기 고르기) · pick(그림 고르기) · free(그림 보고 5문장, 스스로 매김) */
 function drawFixed(body, q) {
   const x = q.w.fx, w = q.w;
-  const say = t => { const k = recKey(t); k ? play(k, false) : speakVi(t, false); };
-  if (x.audio) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '🔊 ' + tr('듣기')); lb.onclick = () => say(x.audio); row.append(lb); sentPeek(row, x.audio); body.append(row); setTimeout(() => say(x.audio), 200); }
+  const say = t => { const k = recKey(t); k ? play(k, false, undefined, examSpd()) : speakVi(t, false, examSpd()); };   // 시험 속도(1배 기본, 칩으로 바꿈)
+  if (x.audio) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '🔊 ' + tr('듣기')); lb.onclick = () => say(x.audio); row.append(lb, spdChip({ exam: true })); sentPeek(row, x.audio); body.append(row); setTimeout(() => say(x.audio), 200); }
   if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; body.append(im); }
   if (x.text) body.append(el('div', 'fxtext', esc(x.text)));
   if (x.prompt) body.append(el('div', 'qmain sent', esc(x.prompt)));
