@@ -196,7 +196,7 @@ print(f"앱이 안 쓰는 파일 뺌 {len(_unused)} (그중 data/ {len(_data_unu
 print(f"올릴 파일 {n_new} · origin 과 같아 건너뜀 {n_same} · 소리 목록 {before} → {len(oi)}")
 if dry: raise SystemExit("dry")
 tree = git("write-tree", env=env)
-c = git("commit-tree", tree, "-p", "origin/main", "-m", msg + "\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
+c = git("commit-tree", tree, "-p", "origin/main", "-m", msg + "\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>")
 git("push", "origin", f"{c}:refs/heads/main")
 print("올림", c)
 if "--no-prune" not in sys.argv:

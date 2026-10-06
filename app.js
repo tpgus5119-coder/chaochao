@@ -4257,6 +4257,41 @@ function learnedSents() {
   learnedPool().forEach(w => { const e = w.ex; if (e && e.vi && e.ko && e.vi.split(/\s+/).length >= 3) put(e, false); });   // 배운 단어의 예문 — 창고에는 안 넣는다
   return out.filter(x => x.ko);
 }
+/* 대답 만들기 (대표님 2026-10-06 "문장을 보고 대답을 작성하는 테스트") — 교재 대화에서 '물음 → 대답' 짝을 뽑아,
+   물음을 보여 주고(누르면 소리) 그 대답을 조각으로 만든다. 범위: 교재(메인) 과 가운데 한 세트라도 끝낸 과까지(최소 1과). 대답은 3~9낱말 */
+let REALBOOK = null;
+function replyLoad(cb) {
+  const go = () => gybmBuild(() => cb(replyPairs()));
+  if (REALBOOK) { go(); return; }
+  fetch('data/realbook.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { REALBOOK = j; go(); }).catch(() => popup(tr('교재 대화를 불러오지 못했습니다')));
+}
+function replyPairs() {
+  const chs = ((REALBOOK.books || [])[0] || {}).chapters || [];
+  const main = GYBM && GYBM.find(x => x.key === 'main');
+  let maxCh = 1;                                            // 적어도 1·2과 — 1과만으론 짝이 넷뿐이다
+  if (main) {
+    const base = t => String(t).replace(/\s*·\s*\d+부$/, ''), order = [...new Set(main.lessons.map(l => base(l.title)))];
+    main.lessons.forEach((l, i) => { if (bdone()[gybmKey('main', i)]) maxCh = Math.max(maxCh, order.indexOf(base(l.title))); });
+  }
+  const out = [], seen = new Set();
+  const strip = t => String(t).replace(/^[^:：]{1,24}[:：]\s*/, '').trim();   // 'David: ' 같은 말하는 사람 이름을 뗀다
+  /* 뜻 안의 사람 이름은 한글로 — koShow 가 로마자를 모두 지워 '저는 를 만나지' 가 되기 때문. 없는 이름은 베트남어 읽기(krOf) */
+  const NM = { 'David': '데이비드', 'Brian': '브라이언', 'Eun Ji': '은지', 'Hiroki': '히로키', 'Kate': '케이트', 'Vân': '번', 'Loan': '로안', 'Dorothy': '도로시', 'Dũng': '중', 'Min': '민', 'Lệ': '레', 'Mây': '머이', 'Tư': '뜨', 'Hoa': '호아', 'Hà': '하', 'Mai': '마이', 'Yumiko': '유미코', 'Linda': '린다', 'James': '제임스', 'Tom': '톰', 'Hiroko': '히로코', 'So Jeong': '소정', 'Emily': '에밀리', 'Jack': '잭', 'Lee': '이', 'FAHASA': '파하사' };
+  const koNm = t => String(t).replace(/[A-ZÀ-Ỹ][A-Za-zÀ-ỹđ]*(?:\s[A-ZÀ-Ỹ][A-Za-zÀ-ỹđ]*)?/g, m => NM[m] || (NM[m.split(' ')[0]] ? NM[m.split(' ')[0]] + m.slice(m.split(' ')[0].length) : (krOf(m) || m)));
+  chs.slice(0, maxCh + 1).forEach(c => {
+    const vs = [], ks = [];
+    (c.dialogues || []).forEach(dl => { const a = String(dl.vi).split(' / '), b = String(dl.ko || '').split(' / '); a.forEach((x, i) => { vs.push(strip(x)); ks.push(strip(b[i] || '')); }); });
+    for (let i = 0; i + 1 < vs.length; i++) {
+      const qv = vs[i], av = vs[i + 1];
+      if (!/\?$/.test(qv) || /\?$/.test(av) || seen.has(av)) continue;
+      const n = av.replace(/[.!?]+$/, '').split(/\s+/).length;
+      if (n < 3 || n > 9 || qv.split(/\s+/).length > 14) continue;
+      seen.add(av);
+      out.push({ vi: av, ko: koNm(ks[i + 1]), ask: qv, askKo: koNm(ks[i]), sent: true, nograde: true });
+    }
+  });
+  return out;
+}
 function testSents(mode) {
   /* 문장 = 단어 학습의 연장 (대표님 2026-09-30: "학습은 단어로 하고, 테스트에서 문장을 만드는 것까지") — 배운 낱말의 예문으로 문장을 **만든다**.
      (2026-10-02 대표님 "문장이란 단어와 문법의 조합 — 문장 테스트와 문법 테스트가 따로 있어야 하나?") → 문법 테스트를 여기로 합쳤다:
@@ -4272,7 +4307,8 @@ function testSents(mode) {
     b.append(qnPicker());
     const mk = (t, meta, m) => { const x = el('button', 'bigmenu'); x.append(el('b', null, esc(tr(t)) + ' <span class="exmeta">' + esc(tr(meta)) + '</span>')); x.onclick = () => { dive(() => testSents()); testSents(m); }; b.append(x); };
     mk('문장 만들기', '뜻을 보고 조각을 차례대로 눌러 문장을 만든다', 'puzzle');
-    mk('뜻 보고 쓰기', '뜻을 보고 자판으로 문장을 친다 (성조까지)', 'write_ko');
+    // '뜻 보고 쓰기'(자판으로 치기)는 뺐다 — 대표님 2026-10-06 "직접 쓰면 너무 어렵다, 단어 블록을 조립하도록"
+    mk('대답 만들기', '질문을 읽고 조각으로 대답을 만든다 (교재 대화)', 'reply');
     mk('듣고 만들기', '문장을 듣고 조각으로 만든다', 'puzzle_vi');
     mk('뜻 고르기', '문장을 읽고 뜻을 고른다', 'read');
     if (gsents.length) mk('문법 고르기', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)', 'gpat');
@@ -4287,6 +4323,13 @@ function testSents(mode) {
     [...mix(learnedGram()), ...mix(gramPool())].forEach(p => { if (wrong.length < 3 && !ks.has(p.k)) { ks.add(p.k); wrong.push({ k: p.k, t: p.t }); } });   // 오답 보기는 배운 문법에서 먼저 — 모자라면 전체에서
     return { w: s, mode: 'gpat', opts: [], popts: mix([{ k: s.gk, t: s.gt }, ...wrong]) };
   };
+  if (mode === 'reply') {
+    replyLoad(pairs => {
+      if (pairs.length < 4) { popup(tr('대답을 만들 교재 대화가 아직 적습니다 — 교재 과를 더 끝내면 늘어납니다')); return; }
+      startQuiz(mix(pairs), null, N, true, { kind: 'sent', skill: 'puzzle' }); if (Q) Q.noMore = true;
+    });
+    return;
+  }
   if (mode !== 'gpat' && mode !== 'mix') {
     startQuiz(pool, null, N, true, { kind: 'sent', skill: mode });
     if (Q) Q.noMore = true;
@@ -4296,7 +4339,7 @@ function testSents(mode) {
   if (mode === 'gpat') L = mix(gsents).slice(0, N).map(gpatQ);
   else {
     const src = pool.slice(0, N);
-    L = buildQuestions(src, ['puzzle', 'write_ko', 'puzzle_vi', 'read']);
+    L = buildQuestions(src, ['puzzle', 'puzzle_vi', 'read']);
     let k = 0;
     L = L.map(q => (q.w && q.w.gk && k++ % 2 === 0 ? gpatQ(q.w) : q));   // 문법 과 예문은 둘에 하나꼴로 '문법 고르기'
   }
@@ -10549,7 +10592,11 @@ function tileText(want, i) {
 }
 function drawPuzzle(body, q) {
   const w = q.w, md = q.mode;
-  if (md === 'puzzle') body.append(el('div', 'puzzhint', esc(koShow(w.ko))));      // 뜻은 보여준다 — 어순을 묻는 문제니까
+  if (w.ask) {                                              // 대답 만들기 — 물음을 보여 주고(누르면 소리) 그 대답을 조각으로 (2026-10-06)
+    const bx = el('div', 'wex'); bx.append(tapLine(w.ask, 'wexvi tapline')); if (w.askKo) bx.append(el('div', 'wexko', esc(koShow(w.askKo)))); body.append(bx);
+    autoSay(w.ask);
+  }
+  if (md === 'puzzle') body.append(el('div', 'puzzhint', (w.ask ? tr('대답') + ': ' : '') + esc(koShow(w.ko))));      // 뜻은 보여준다 — 어순을 묻는 문제니까
   const row0 = el('div', 'qplay');
   if (md === 'puzzle_ko') { const kb = el('button', 'primary big', '🔊 뜻 듣기'); kb.onclick = () => speakKo(koShow(w.ko)); row0.append(kb); setTimeout(() => speakKo(koShow(w.ko)), 150); }   // 뜻을 듣고 만든다 (2026-09-28)
   else if (md === 'puzzle_vi') { const pb = el('button', 'primary big', '🔊 듣기'); pb.onclick = () => play(w.vi, false); row0.append(pb); if (md === 'puzzle_vi') setTimeout(() => play(w.vi, false), 150); }   // 문장을 듣고 만든다
@@ -10802,27 +10849,34 @@ function weeklyEntry() {
     btn.append(el('b', null, esc(tr('1차 시험지 그대로')) + ' <span class="exmeta">' + esc(tr('실제 문항 86 · 90분')) + '</span>'));
     btn.onclick = () => { dive(weeklyEntry); startExam1(); };
     b.append(btn); }
+  { const btn = el('button', 'bigmenu');                 // 2차 시험지 — 교재 1권 1~7과, 1차와 같은 짜임 (2026-10-06)
+    btn.append(el('b', null, esc(tr('2차 시험지 (1~7과)')) + ' <span class="exmeta">' + esc(tr('문항 86 · 90분 · 교재 1권 1~7과')) + '</span>'));
+    btn.onclick = () => { dive(weeklyEntry); startExam1('exam2'); };
+    b.append(btn); }
   show('exam', '주간 시험', true);
 }
 /* ── 1차 시험지 그대로 (2026-09-30) ──
    data/exam1.json 의 문항을 차례대로. 듣기는 시험지에 대본이 없어 앱이 정답에 맞춰 지은 문장을 기계 소리로 들려준다(made).
    쓰기 3(그림 보고 5문장)은 모범 답안을 보고 스스로 매긴다(_score 0~1). 90분(말하기 제외)이 지나면 남은 문제는 0점으로 끝난다. */
-let EXAM1 = null, EXAM1_TIMER = 0;
-function startExam1() {
+const FIXED_EXAMS = { exam1: { file: 'data/exam1.json', name: '1차 시험지' }, exam2: { file: 'data/exam2.json', name: '2차 시험지' } };   // 파일 이름을 글자 그대로 적어야 배포 목록에 든다. 2차는 교재 1권 1~7과로 클로드가 냄 (2026-10-06)
+let EXAM1_TIMER = 0, FIXED = {};
+function startExam1(key) {
+  key = key || 'exam1';
   const go = () => {
-    const L = EXAM1.q.map(x => {
+    const J = FIXED[key];
+    const L = J.q.map(x => {
       const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
       if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles }, mode: 'puzzle', sec: x.sec, opts: [] };
       if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '' }, mode: 'say', sec: x.sec, opts: [] };
       return { w, mode: 'fx', sec: x.sec, opts: [] };
     }).filter(q => q.mode !== 'say' || canRecord());
     SBOX = 'bsrs';
-    Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, deadline: Date.now() + EXAM1.time * 60000 };
+    Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, fixed: key, deadline: Date.now() + J.time * 60000 };
     drawQuiz();
-    show('quiz', '1차 시험지', true);
+    show('quiz', FIXED_EXAMS[key].name, true);
     exam1Clock();
   };
-  if (EXAM1) go(); else fetch('data/exam1.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { EXAM1 = j; go(); }).catch(() => popup(tr('시험지를 불러오지 못했습니다')));
+  if (FIXED[key]) go(); else fetch(FIXED_EXAMS[key].file, { cache: 'no-cache' }).then(r => r.json()).then(j => { FIXED[key] = j; go(); }).catch(() => popup(tr('시험지를 불러오지 못했습니다')));
 }
 function exam1Clock() {
   clearInterval(EXAM1_TIMER);
@@ -11148,11 +11202,13 @@ function startWeeklyExam(round) {
      D 말하기 20 — 1 낱말 읽기 10 · 2 문장 읽기 5 (녹음이 되는 기기만)
      재료가 모자라면 있는 만큼만 낸다. 앱 문제 형식이 시험지와 1:1로 같지 않은 곳: 그림 짝(A2)은 소리 하나에 그림 넷, 듣고 쓰기(A4)는 낱말 받아쓰기, 알맞은 문장(B4)은 뜻 보고 문장 고르기 */
   const L = [];
-  const imgAud = withImg.filter(w => AIDX[w.vi]);
-  pick(imgAud, 5).forEach(w => L.push(mk(w, 'pic_tf', 'A 듣기 · 1 그림 맞다/틀리다', withImg, x => !!x.img)));
-  pick(imgAud, 5).forEach(w => L.push(mk(w, 'pic4', 'A 듣기 · 2 맞는 그림', withImg, x => !!x.img)));
+  /* 듣기는 낱말이 아니라 **문장**을 들려준다 (대표님 2026-10-06 "리스닝 각 문제마다 한 문장(길면 두 문장)") — 그 낱말의 예문. 녹음이 없으면 기계 소리 */
+  const exOf = w => (w.ex && w.ex.vi && w.ex.vi.replace(/[.?!]+$/, '').split(/\s+/).length >= 3) ? w.ex.vi : null;
+  const imgAud = withImg.filter(w => exOf(w));
+  pick(imgAud, 5).forEach(w => L.push(Object.assign(mk(w, 'pic_tf', 'A 듣기 · 1 그림 맞다/틀리다', withImg, x => !!x.img), { say: exOf(w) })));
+  pick(imgAud, 5).forEach(w => L.push(Object.assign(mk(w, 'pic4', 'A 듣기 · 2 맞는 그림', withImg, x => !!x.img), { say: exOf(w) })));
   prefer(10, gsIn, sentsIn, sents.filter(x => x.aud)).forEach(x => L.push(mk(withTts(x), 'listen', 'A 듣기 · 3 듣고 고르기', [...gsIn, ...sentsIn, ...sents])));   // 범위 낱말+문법 문장 먼저
-  pick(withAud, 10).forEach(w => L.push(mk(w, 'dictation', 'A 듣기 · 4 듣고 쓰기')));
+  pick(words.filter(w => exOf(w)), 10).forEach(w => L.push({ w: { vi: w.ex.vi, ko: w.ex.ko || '', of: w.vi, sent: true, nograde: true }, mode: 'cloze', sec: 'A 듣기 · 4 듣고 빈칸', opts: [], say: w.ex.vi }));   // 시험지 A4 꼴: 문장을 듣고 빈칸 낱말 고르기 (2026-10-06)
   /* B1 빈칸 — 시험지 지시문 그대로 '낱말과 문법을 본다': 회차 문법 빈칸을 먼저, 모자라면 낱말 빈칸 */
   let gs = round ? roundGramSents(r) : [];
   const b1 = [];
@@ -11206,8 +11262,9 @@ function drawExamKind(body, q) {
     body.append(box);
   };
   if (md === 'pic_tf' || md === 'pic4') {
-    const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(w.vi); row.append(lb); body.append(row);
-    sound(w.vi);
+    const sayT = q.say || w.vi;                             // 주간 시험은 낱말의 예문을 들려준다 (2026-10-06)
+    const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(sayT); row.append(lb); body.append(row);
+    sound(sayT);
     if (md === 'pic_tf') {
       const other = q.opts.find(o => o.vi !== w.vi && o.img) || w;
       const shown = Math.random() < .5 ? w : other;
@@ -11224,7 +11281,8 @@ function drawExamKind(body, q) {
     const tok = w.of || '';
     const re = new RegExp('(^|\\s)' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i');
     const shown = re.test(w.vi) ? w.vi.replace(re, '$1____') : w.vi;
-    body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(koShow(w.ko))));
+    if (q.say) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(q.say); row.append(lb); body.append(row, el('div', 'qmain sent', esc(shown))); sound(q.say); }   // 듣고 빈칸 — 뜻은 안 보여 준다 (2026-10-06)
+    else body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(koShow(w.ko))));
     const target = findItem(tok) || { vi: tok, ko: '' };
     const pool = (Q.round ? weeklyRoundWords(WEEKLY_ROUNDS.find(r => r.no === Q.round) || WEEKLY_ROUNDS[0]) : weeklyMaterial()).filter(x => x.vi !== tok);
     const opts = [target, ...pool.sort(() => Math.random() - .5).slice(0, 3)].sort(() => Math.random() - .5);
@@ -11308,7 +11366,7 @@ function finishWeekly() {
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
   r.append(tb);
-  S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs, round: Q.exam1 ? 'exam1' : (Q.round || 0), pts: got, max }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
+  S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs, round: Q.fixed || (Q.round || 0), pts: got, max }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
   examWrongList(r, Q.list);
   const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = () => { ACTIVE_TAB = 'home'; renderHome(); }; r.append(b);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
