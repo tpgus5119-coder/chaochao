@@ -4285,8 +4285,7 @@ function replyPairs() {
   const out = [], seen = new Set();
   const strip = t => String(t).replace(/^[^:：]{1,24}[:：]\s*/, '').trim();   // 'David: ' 같은 말하는 사람 이름을 뗀다
   /* 뜻 안의 사람 이름은 한글로 — koShow 가 로마자를 모두 지워 '저는 를 만나지' 가 되기 때문. 없는 이름은 베트남어 읽기(krOf) */
-  const NM = { 'David': '데이비드', 'Brian': '브라이언', 'Eun Ji': '은지', 'Hiroki': '히로키', 'Kate': '케이트', 'Vân': '번', 'Loan': '로안', 'Dorothy': '도로시', 'Dũng': '중', 'Min': '민', 'Lệ': '레', 'Mây': '머이', 'Tư': '뜨', 'Hoa': '호아', 'Hà': '하', 'Mai': '마이', 'Yumiko': '유미코', 'Linda': '린다', 'James': '제임스', 'Tom': '톰', 'Hiroko': '히로코', 'So Jeong': '소정', 'Emily': '에밀리', 'Jack': '잭', 'Lee': '이', 'FAHASA': '파하사' };
-  const koNm = t => String(t).replace(/[A-ZÀ-Ỹ][A-Za-zÀ-ỹđ]*(?:\s[A-ZÀ-Ỹ][A-Za-zÀ-ỹđ]*)?/g, m => NM[m] || (NM[m.split(' ')[0]] ? NM[m.split(' ')[0]] + m.slice(m.split(' ')[0].length) : (krOf(m) || m)));
+  const koNm = koNames;                                      // 이름표는 전역 NAME_KO (koShow 와 같이 씀)
   chs.slice(0, maxCh + 1).forEach(c => {
     const vs = [], ks = [];
     (c.dialogues || []).forEach(dl => { const a = String(dl.vi).split(' / '), b = String(dl.ko || '').split(' / '); a.forEach((x, i) => { vs.push(strip(x)); ks.push(strip(b[i] || '')); }); });
@@ -10427,6 +10426,7 @@ function drawQuiz() {
     b.onclick = () => koQ ? speakKo(koShow(q.w.ko)) : sound(q.w.vi);
     wrap.append(b);
     if (!koQ) { const m = addMic(); if (m) wrap.append(m); }
+    if (!koQ) sentPeek(wrap, q.w.vi);                       // 주간 시험 듣기 — 문장 보기 (2026-10-06)
     body.append(wrap, sayBox);
     koQ ? setTimeout(() => speakKo(koShow(q.w.ko)), 150) : (sound(q.w.vi), AS_PEND = { vi: q.w.vi, t: Date.now() });   // 첫 문제도 화면 바뀜에 안 끊기게 (2026-10-05)
   } else {                             // 눈으로 — 글자(또는 뜻)를 보여주고 고른다
@@ -10555,11 +10555,18 @@ function drawMatch(body, q) {
    조각을 눌러 문장을 만든다. 어순은 설명으로 안 붙는다 — 손으로 놓아 봐야 붙는다. */
 /* 뜻 글에서 베트남어 낱말을 뺀다 — 문제로 보일 때 힌트가 되지 않게 (대표님 2026-09-30: "cô giáo 뜻이 '선생님 (여자) cô 라고도' 면 퀴즈 힌트").
    괄호 안에 로마자가 있으면 괄호째, 맨몸 로마자 낱말은 뒤의 '라고도'와 함께 뺀다. 카드·결과 화면은 그대로(배울 때는 봐야 하니까). 다 빠지면 원래 글 */
+/* 교재·시험에 나오는 사람 이름 → 한글 (2026-10-06 오류 보고 "오늘 를 만났어요 — 누구를 만났는지 왜 표시 안 하니": koShow 가 로마자를 모두 지워 이름이 사라졌다) */
+const NAME_KO = { 'David': '데이비드', 'Brian': '브라이언', 'Eun Ji': '은지', 'EunJi': '은지', 'Hiroki': '히로키', 'Kate': '케이트', 'Vân': '번', 'Loan': '로안', 'Dorothy': '도로시', 'Dũng': '중', 'Min': '민', 'Lệ': '레', 'Mây': '머이', 'Tư': '뜨', 'Hoa': '호아', 'Hà': '하', 'Mai': '마이', 'Yumiko': '유미코', 'Linda': '린다', 'James': '제임스', 'Tom': '톰', 'Hiroko': '히로코', 'So Jeong': '소정', 'Emily': '에밀리', 'Jack': '잭', 'Lee': '이', 'FAHASA': '파하사', 'Hiroshi': '히로시', 'John': '존', 'Jenny': '제니', 'Anna': '안나', 'Peter': '피터', 'Lan': '란', 'Nam': '남', 'Hùng': '훙', 'Thu': '투', 'Long': '롱', 'Kim': '김', 'Park': '박', 'Seoul': '서울', 'Hà Nội': '하노이', 'Đà Nẵng': '다낭', 'Huế': '후에', 'Sài Gòn': '사이공' };
+const koNames = t => String(t).replace(/[A-ZÀ-Ỹ][A-Za-zÀ-ỹđ]*(?:\s[A-ZÀ-Ỹ][A-Za-zÀ-ỹđ]*)?/g, m => NAME_KO[m] || (NAME_KO[m.split(' ')[0]] ? NAME_KO[m.split(' ')[0]] + m.slice(m.split(' ')[0].length) : m));
 function koShow(ko) {
   let s = String(ko || '');
   if (!/[A-Za-zÀ-ỹđĐ]/.test(s)) return s;
+  s = koNames(s);                                              // 아는 이름은 한글로
   s = s.replace(/\([^()]*[A-Za-zÀ-ỹđĐ][^()]*\)/g, '');
+  /* 모르는 이름이라도 뒤에 한글(조사·'입니다')이 바로 붙은 로마자 덩어리(Eun Ji를·David입니다)는 이름이라 남긴다 — 영어 뜻풀이는 그렇게 붙지 않는다 */
+  const keep = []; s = s.replace(/[A-ZÀ-Ỹ][A-Za-zÀ-ỹđĐ'’.-]*(?:\s[A-ZÀ-Ỹ][A-Za-zÀ-ỹđĐ'’.-]*)*(?=[가-힣])/g, m => { keep.push(m); return '\u0001' + (keep.length - 1) + '\u0001'; });
   s = s.replace(/[A-Za-zÀ-ỹđĐ][A-Za-zÀ-ỹđĐ'’.-]*(\s+[A-Za-zÀ-ỹđĐ][A-Za-zÀ-ỹđĐ'’.-]*)*\s*(이?라고도|이?라고|=)?/g, '');
+  s = s.replace(/\u0001(\d+)\u0001/g, (_, i) => keep[+i]);
   s = s.replace(/\(\s*\)/g, '').replace(/\s*([·,;/])\s*(?=[·,;/])/g, '').replace(/^\s*[·,;/=]+\s*|\s*[·,;/=]+\s*$/g, '').replace(/\s{2,}/g, ' ').replace(/\s+([,;)])/g, '$1').trim();
   return s || String(ko || '');
 }
@@ -10905,7 +10912,7 @@ function exam1Clock() {
 function drawFixed(body, q) {
   const x = q.w.fx, w = q.w;
   const say = t => { const k = recKey(t); k ? play(k, false) : speakVi(t, false); };
-  if (x.audio) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '🔊 ' + tr('듣기')); lb.onclick = () => say(x.audio); row.append(lb); body.append(row); setTimeout(() => say(x.audio), 200); }
+  if (x.audio) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '🔊 ' + tr('듣기')); lb.onclick = () => say(x.audio); row.append(lb); sentPeek(row, x.audio); body.append(row); setTimeout(() => say(x.audio), 200); }
   if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; body.append(im); }
   if (x.text) body.append(el('div', 'fxtext', esc(x.text)));
   if (x.prompt) body.append(el('div', 'qmain sent', esc(x.prompt)));
@@ -11270,6 +11277,13 @@ function startWeeklyExam(round) {
   show('quiz', '주간 시험 ' + r.name, true);
 }
 /* 시험 전용 문제들 — 그림 맞다/틀리다 · 그림 고르기 · 빈칸 · 문장 맞다/틀리다 · 틀린 곳 찾기 */
+/* 시험 듣기 문제의 [문장 보기] (대표님 2026-10-06 "듣기 문제는 문장 보기 버튼도 — 주간 시험") — 누르면 들려준 문장이 글자로 보인다. 주간 시험·시험지에서만 */
+function sentPeek(host, text) {
+  if (!(Q && Q.exam && (Q.round || Q.exam1)) || !text) return;
+  const b = el('button', 'ghost', tr('문장 보기')); b.type = 'button';
+  b.onclick = () => { b.replaceWith(el('div', 'q mid sentpeek', esc(text))); };
+  host.append(b);
+}
 function drawExamKind(body, q) {
   const w = q.w, md = q.mode;
   const tfBtns = (isTrue) => {
@@ -11279,7 +11293,7 @@ function drawExamKind(body, q) {
   };
   if (md === 'pic_tf' || md === 'pic4') {
     const sayT = q.say || w.vi;                             // 주간 시험은 낱말의 예문을 들려준다 (2026-10-06)
-    const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(sayT); row.append(lb); body.append(row);
+    const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(sayT); row.append(lb); sentPeek(row, sayT); body.append(row);
     sound(sayT);
     if (md === 'pic_tf') {
       const other = q.opts.find(o => o.vi !== w.vi && o.img) || w;
@@ -11297,7 +11311,7 @@ function drawExamKind(body, q) {
     const tok = w.of || '';
     const re = new RegExp('(^|\\s)' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[\\s.,!?])', 'i');
     const shown = re.test(w.vi) ? w.vi.replace(re, '$1____') : w.vi;
-    if (q.say) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(q.say); row.append(lb); body.append(row, el('div', 'qmain sent', esc(shown))); sound(q.say); }   // 듣고 빈칸 — 뜻은 안 보여 준다 (2026-10-06)
+    if (q.say) { const row = el('div', 'qplay'); const lb = el('button', 'primary big', '듣기'); lb.onclick = () => sound(q.say); row.append(lb); sentPeek(row, q.say); body.append(row, el('div', 'qmain sent', esc(shown))); sound(q.say); }   // 듣고 빈칸 — 뜻은 안 보여 준다 (2026-10-06)
     else body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(koShow(w.ko))));
     const target = findItem(tok) || { vi: tok, ko: '' };
     const pool = (Q.round ? weeklyRoundWords(WEEKLY_ROUNDS.find(r => r.no === Q.round) || WEEKLY_ROUNDS[0]) : weeklyMaterial()).filter(x => x.vi !== tok);

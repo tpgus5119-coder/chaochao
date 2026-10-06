@@ -3018,3 +3018,5 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 .dictrow:has(.dstar) .dspk{grid-column:5}
 .dstar{width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:22px; color:var(--dim); cursor:pointer}
 .dstar.on{color:#f5b400}
+/* 시험 듣기 문장 보기 (2026-10-06) */
+.sentpeek{width:100%; font-size:17px; line-height:1.5; margin-top:6px}
