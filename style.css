@@ -2676,11 +2676,6 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .wrow2 textarea{flex:1}
 .wrow2 .pic, .wrow2 .pic.sm{width:84px; height:84px; flex:none; margin:0; overflow:hidden; border-radius:10px}
 .wrow2 .pic img{width:84px; height:84px; object-fit:contain; display:block}
-.wrow2.scene{flex-direction:column; align-items:stretch; gap:6px; margin:14px 0}
-.scenepic{width:100%; max-width:440px; aspect-ratio:1; object-fit:contain; border-radius:14px; background:#fff; margin:0 auto; display:block}
-.scenecol{display:flex; flex-direction:column; gap:6px}
-.sceneko{font-size:14px; color:var(--dim)}
-.gramrow{margin:10px 0; padding:10px 12px; border:1px solid var(--line); border-radius:12px}
 .gramt b{display:block; font-size:15px}
 .gramt small{display:block; font-size:12px; color:var(--dim); margin-top:2px}
 /* 문제 수 10·20·30 (2026-09-28 밤) — 학습 마지막 장 '확인 문제' 옆과 테스트 첫 화면 */
