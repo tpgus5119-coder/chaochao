@@ -33,6 +33,8 @@ def compile_rule(r):
         out.append(s)
     return ''.join(out)
 nfc = lambda s: U.normalize('NFC', s)
+# 문법 상자 설명에서 뽑은 '예문'이 베트남어 문장인가 — 한글이 섞이거나(Quá: 형용사 '뒤'에…) 한 낱말이면 뺀다
+viSent = lambda m: not re.search('[가-힣]', m) and len(m.split()) >= 2 and not re.search(r'[:：]', m)
 def clean(s): return nfc(s).lower().strip()
 rules = {}; rules_raw = {}
 for line in (R / 'tools/gram_tok/규칙.tsv').read_text(encoding='utf-8').splitlines():
@@ -80,7 +82,7 @@ for b in RB['books']:
         sents = []
         for dl in c['dialogues']: sents += [strip(x) for x in str(dl['vi']).split(' / ')]
         for g in c['grammar']:
-            sents += [m.strip() for m in re.findall(r'([A-ZĐÂĂÊÔƠƯ][^()]{6,}?[.?!])\s*\(', g.get('note_ko', ''))]
+            sents += [m.strip() for m in re.findall(r'([A-ZĐÂĂÊÔƠƯ][^()]{6,}?[.?!])\s*\(', g.get('note_ko', '')) if viSent(m)]
         found = {}
         for s in sents:
             for k in detect(s): found.setdefault(k, s)
@@ -99,7 +101,7 @@ for f in sorted(glob.glob(str(R / 'data/_gybm_src/sub_v1_bai*.json')), key=lambd
     d = json.load(open(f, encoding='utf-8'))
     sents = []
     for dl in d.get('dialogues', []): sents += [strip(x) for x in str(dl['vi']).split('\n') if x.strip()]
-    for g in d.get('grammar', []): sents += [m.strip() for m in re.findall(r'([A-ZĐÂĂÊÔƠƯ][^()]{5,}?[.?!])', g.get('note_ko', ''))]
+    for g in d.get('grammar', []): sents += [m.strip() for m in re.findall(r'([A-ZĐÂĂÊÔƠƯ][^()]{5,}?[.?!])', g.get('note_ko', '')) if viSent(m)]
     found = {}
     for s0 in sents:
         for k in detect(s0): found.setdefault(k, s0)
