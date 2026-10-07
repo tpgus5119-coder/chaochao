@@ -3043,3 +3043,29 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 
 /* 낱말 카드 머리줄의 소묶음 칩 · 세트 목록의 소묶음 줄 (2026-10-07 재편) */
 .flgrp{font-size:12px; font-weight:700; padding:4px 9px; border-radius:999px; background:var(--chip); color:var(--dim)}
+
+/* 발음 면: 정면·옆 단면을 위아래로 (2026-10-08) */
+.mouthsvg.stack{display:flex; flex-direction:column; gap:6px}
+.mouthsvg.stack .mouthsvg svg{max-width:none; width:100%}
+
+/* 내 단어장 폴더 (2026-10-08) */
+.hwb{font-size:13px; color:var(--dim); margin:-2px 0 4px}
+.hwb b{color:var(--fg)}
+.forowwrap{position:relative}
+.forowwrap .fomore{position:absolute; right:52px; top:50%; transform:translateY(-50%); width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--bg); color:var(--dim); font-size:18px; cursor:pointer}
+.wbcard{min-height:76px}
+.wbcard .accpill{margin-left:auto}
+.wbopts{display:flex; gap:10px; margin:6px 0 12px}
+.wbopts button{flex:1; min-width:0}
+.fbtn{border:1px solid var(--line); background:var(--bg); border-radius:999px; padding:4px 9px; font-size:13px; cursor:pointer; color:var(--dim)}
+.fbtn.on{background:color-mix(in srgb, var(--accent) 12%, var(--card)); color:var(--accent); border-color:var(--accent)}
+.folist{display:flex; flex-direction:column; gap:6px; max-height:46vh; overflow:auto; margin:8px 0 12px}
+.forow{display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:10px 12px; font:inherit; color:inherit; cursor:pointer}
+.forow.on{border-color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, var(--card))}
+.forow .fochk{font-size:18px}
+.forow .foname{flex:1; font-weight:700}
+.fodel{margin-left:auto; border:0; background:transparent; color:var(--dim); font-size:16px; cursor:pointer; padding:4px 8px}
+.flauto{font-size:12px; font-weight:700; padding:4px 9px; border-radius:999px; background:color-mix(in srgb, var(--accent) 12%, var(--card)); color:var(--accent)}
+.flauto.off{background:var(--chip); color:var(--dim)}
+
+.forowwrap:has(.fomore) .wbcard .accpill{margin-right:44px}   /* ⋯ 단추와 겹치지 않게 */

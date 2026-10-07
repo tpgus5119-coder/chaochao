@@ -514,7 +514,7 @@ const UIVI = {
   '안 올라갔습니다': 'Không tải lên được',
   '아직 읽은 기사가 없습니다. 기사를 먼저 보세요.': 'Bạn chưa đọc bản tin nào. Hãy xem bản tin trước.', '카드뉴스': 'Thẻ tin',
   '그림을 길게 누르면 폰에 저장됩니다.': 'Nhấn giữ ảnh để lưu vào máy.',
-  '기사 복습': 'Ôn bản tin', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi',
+  '기사 복습': 'Ôn bản tin', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi', '폴더': 'Thư mục', '새 폴더': 'Thư mục mới', '새 폴더 만들기': 'Tạo thư mục mới', '폴더 이름': 'Tên thư mục', '카드로 학습': 'Học bằng thẻ', '쇼츠 재생': 'Phát tự động (shorts)', '자주 틀리는 것': 'Hay sai', '담은 단어': 'Từ đã lưu', '학습한 모든 단어': 'Tất cả từ đã học', '폴더에 담기': 'Thêm vào thư mục', '폴더에서 빼기': 'Bỏ khỏi thư mục', '닫기': 'Đóng',
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
@@ -2433,30 +2433,41 @@ function mouthPanel(text, opt) {
   const body = el('div', 'mouthsvg');
   const cap = el('div', 'mouthcap');
   wrap.append(sw, body, cap);
-  const M = MOUTH.create(body);
-  const setV = v => {
-    S.mview = v; save(); M.setView(v); body.dataset.v = v;
-    /* 발음 면(big)의 정면은 입술이 최대로 벌어지는 범위(입술 바깥선 실측 x 50~267 · y 54~228, 'ba'·'chào' 등 11낱말 0~1 훑음)만 보여
-       입술이 1.27배 크게 보인다 — 기본 틀(10 6 297 300)은 위아래가 비었다 (대표님 2026-10-07 "입모양 박스 대폭 키워·꽉 채워") */
-    if (sing && v === 'front') { const sv = body.querySelector('svg'); if (sv) sv.setAttribute('viewBox', '40 44 237 196'); }
-    sw.querySelectorAll('button[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === v));   // 혀 투명 단추는 건드리지 않는다
-  };
-  [['front', '정면'], ['side', '옆 단면']].forEach(([v, lab]) => {
-    const b = el('button', 'ghost sm', tr(lab)); b.type = 'button'; b.dataset.v = v; b.onclick = () => setV(v); sw.append(b);
-  });
-  /* '혀 투명' 단추는 뺐다 (대표님 2026-10-02) */
-  M.setWord(text);
-  setV(S.mview === 'side' ? 'side' : 'front');
+  /* 발음 면(big)은 **정면과 옆 단면을 위아래로 둘 다 크게** (대표님 2026-10-08 "폰이 세로로 기니까 정면·측면을 최대화해 위아래로") — [정면|옆 단면] 단추 없음.
+     정면 틀은 입술이 최대로 벌어지는 범위(입술 바깥선 실측 x 50~267 · y 54~228)만 보여 입술이 1.27배 크다.
+     다른 곳(기본기 글자 카드 등)은 전처럼 정면 하나 + [정면|옆 단면] 단추. */
+  let M, MS = null;
+  if (sing) {
+    body.classList.add('stack');
+    const bF = el('div', 'mouthsvg mfront'), bS = el('div', 'mouthsvg mside');
+    body.append(bF, bS);
+    M = MOUTH.create(bF); M.setView('front'); { const sv = bF.querySelector('svg'); if (sv) sv.setAttribute('viewBox', '40 44 237 196'); }
+    MS = MOUTH.create(bS); MS.setView('side');
+    sw.remove();
+  } else {
+    M = MOUTH.create(body);
+    const setV = v => {
+      S.mview = v; save(); M.setView(v); body.dataset.v = v;
+      sw.querySelectorAll('button[data-v]').forEach(b => b.classList.toggle('on', b.dataset.v === v));   // 혀 투명 단추는 건드리지 않는다
+    };
+    [['front', '정면'], ['side', '옆 단면']].forEach(([v, lab]) => {
+      const b = el('button', 'ghost sm', tr(lab)); b.type = 'button'; b.dataset.v = v; b.onclick = () => setV(v); sw.append(b);
+    });
+    /* '혀 투명' 단추는 뺐다 (대표님 2026-10-02) */
+    setV(S.mview === 'side' ? 'side' : 'front');
+  }
+  M.setWord(text); if (MS) MS.setWord(text);
+  const atBoth = t => { const id = M.at(t); if (MS) MS.at(t); return id; };
   /* 세 축 막대(수치)는 뺐다 (대표님 2026-10-02 "발음 그림 밑에 수치로 어느 정도 벌리는지 표시해 주는 것은 빼") — 그림 자체를 크게 과장해 보인다 */
   body.classList.add('slowtap');                     // 입모양 그림을 눌러도 0.2배 고정 (2026-09-28)
   body.onclick = () => play(text, false, null, SLOW_TAP);
   const capOf = id => { const q = MOUTH.SI[id]; return q ? `<b>${q.sp}</b> [${q.ipa}] · ${q.tg} · ${q.pl}` : ''; };
-  const idle = () => { const id = M.at(M.vowelT()); cap.innerHTML = capOf(id); if (sing) sing.at(null); };   // 멈춰 있을 때 — 입을 다문 그림 대신 첫 모음의 입 (2026-10-02)
+  const idle = () => { const id = atBoth(M.vowelT()); cap.innerHTML = capOf(id); if (sing) sing.at(null); };   // 멈춰 있을 때 — 입을 다문 그림 대신 첫 모음의 입 (2026-10-02)
   idle();
   const h = AIDX[text] || AIDX[text.toLowerCase()];
   let nat = null, lastId = '';
   nativeCurve(text).then(n => { nat = n; });
-  const show = t => { const id = M.at(t); if (sing) sing.at(t); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
+  const show = t => { const id = atBoth(t); if (sing) sing.at(t); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
   PB.views.add({ root: wrap, update(playing) {
     if (pbLive(h, playing) && nat && nat.raw) {
       const span = nat.raw.length * nat.hop, a = Math.max(0, nat.t0 - .06), b = Math.min(nat.total, nat.t0 + span + .05);
@@ -2912,9 +2923,7 @@ function studyWordsEntry(scroll) {
       done: nodes.filter(x => x.done).length, all: nodes.length, nodes });
   });
   // 처음엔 다 접혀 있다 — 갈래를 눌러야 그 안이 보인다 (대표님 지시 2026-09-27)
-  { const wb = el('button', 'hubcard');                  // 내 단어장 — 단어 안 맨 위 (대표님 지시 2026-09-30)
-    wb.innerHTML = `<span class="hubico">${HUB_ICO.book}</span><span class="hubbody"><b class="hubt2">${esc(tr('내 단어장'))}</b></span><svg class="hubchev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>`;
-    wb.onclick = () => { dive(back); wordbookEntry(); }; b.append(wb); }
+  /* 내 단어장 카드는 홈(베트남 기사 위)으로 옮겼다 (대표님 2026-10-08) */
   rows.forEach(r => accRow(b, r, WOPEN === r.key, () => { WOPEN = WOPEN === r.key ? null : r.key; studyWordsEntry(true); }, scroll));
   show('sub', '단어', true);
   if (!COURSE) withCourse(() => { if (still()) studyWordsEntry(); });
@@ -3510,7 +3519,7 @@ async function analysisCard(mode) {
 /* ── 진도 서버 저장 ──────────────────────────────────────────
    로그인한 사람만. 하루 한 번 + 세트를 끝낼 때 올린다.
    서버 쓰기 한도(무료 1,000/일)를 아끼려고 그 이상은 안 올린다. */
-const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick', 'cr', 'pet', 'petName',   // 돈(cr)·짜오 살림(pet)도 같이 (2026-09-27 저녁)   // 실전·GYBM 창고와 별표도 같이 올린다 (2026-09-27)
+const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'folders', 'act', 'stats', 'shield', 'shieldWk', 'nat', 'learn', 'region', 'nick', 'cr', 'pet', 'petName',   // 돈(cr)·짜오 살림(pet)도 같이 (2026-09-27 저녁)   // 실전·GYBM 창고와 별표도 같이 올린다 (2026-09-27)
   /* 2026-09-29 (대표님 "아이패드와 폰에서 진도 연동 안되는듯"): 실전·GYBM 과를 끝낸 기록(sdone·bdone)이
      여기 빠져 있어서 폰에서 끝낸 GYBM 과가 아이패드에 **한 번도** 가지 않았다. 시험 성적·문항 창고·성조 테스트도 같이. */
   'sdone', 'bdone', 'kbank', 'qbank', 'exam', 'anchor', 'vlpt', 'tt', 'kday', 'revDay', 'lastTrack',
@@ -6902,6 +6911,16 @@ function homeSkills() {
 }
 /* 베트남 기사 — 실력 분석 밑 (대표님 2026-10-01: "누르면 최근 5일 날짜 버튼 → 누르면 카드뉴스 그대로").
    카드뉴스 그림(img/card/<날짜>-<n>-{1,2}.webp, tools/card_news.py)이 실제로 있는 날만 센다 — 만들지 못한 날(9/27·9/29)은 빈 화면이 되니까. */
+/* 내 단어장 — 베트남 기사 위 (대표님 2026-10-08 "내 단어장을 학습 탭에서 빼라. 홈의 베트남 기사 위에 넣어라") */
+function homeWordbook() {
+  const box = el('div', 'hskill');
+  const hd = el('button', 'hsttl go'); hd.type = 'button'; hd.append(el('span', null, tr('내 단어장')), el('span', 'parrow', '›'));
+  hd.onclick = () => { dive(renderHome); wordbookEntry(); };
+  box.append(hd);
+  const miss = Object.values(S.stats.miss || {}).filter(n => n >= 1).length, star = Object.keys(starOf()).length, fo = foldersOf();
+  box.append(el('div', 'hwb', esc(tr('자주 틀리는 것')) + ' <b>' + miss + '</b> · ' + esc(tr('담은 단어')) + ' <b>' + star + '</b> · ' + esc(tr('폴더')) + ' <b>' + fo.length + '</b>'));
+  return box;
+}
 function homeNews() {
   const box = el('div', 'hskill');
   const hd = el('button', 'hsttl go'); hd.type = 'button'; hd.append(el('span', null, tr('베트남 기사')), el('span', 'parrow', '›'));
@@ -7289,6 +7308,16 @@ function homeActions() {
   box.append(b2);
   return box;
 }
+/* 일상·직무 진도 초기화 — 한 번만 (대표님 2026-10-08 "진도 초기화해라. 어차피 일상과 직무 학습한 사람 별로 없을걸").
+   10-07 일상 재편으로 세트 구성이 바뀌어 옛 '끝냄' 표시가 뜻이 없다. 끝낸 일상(숫자 열쇠)·직무('J0.') 세트와 일상·직무 낱말 창고(srs)만 비운다.
+   교재·22기 진도(bdone·bsrs)·별표·자주 틀린 것·통계·짜오는 그대로. 로그인돼 있으면 서버도 덮어쓴다(합치면 옛 진도가 되살아나므로). */
+(function mig1008() {
+  if (S.mig1008) return;
+  Object.keys(S.done || {}).forEach(k => { if (/^\d+$/.test(k) || /^J0\./.test(k)) delete S.done[k]; });
+  S.srs = {}; S.mig1008 = 1; save();
+  setTimeout(() => { try { if (S.acct && S.acct.tok && typeof cloudSync === 'function') cloudSync(true, true); } catch (e) { } }, 1500);
+})();
+
 function renderHome() {
   /* 홈에 설 때 다른 기기 진도를 받아 본다(받은 게 있으면 홈을 다시 그린다). 하루 첫 번에는 올리기도 한다.
      홈은 자주 다시 그려지므로 30초 안에 또 받지는 않는다 (2026-09-29) */
@@ -7303,7 +7332,7 @@ function renderHome() {
   const plan = $('#plan');
   plan.textContent = '';
   // '복습 시작' 단추(homeActions)는 뺐다 (대표님 2026-10-01 "홈에 복습시작 그 버튼은 없애자") — 복습은 테스트 탭
-  plan.append(homeGreet(), petCard(), homeProgress(), homeSkills(), homeNews(), homeSettings());
+  plan.append(homeGreet(), petCard(), homeProgress(), homeSkills(), homeWordbook(), homeNews(), homeSettings());   // 내 단어장은 기사 위 (대표님 2026-10-08)
   show('home', '짜오짜오', false);
 }
 
@@ -7781,6 +7810,54 @@ function toggleStar(k, ko, vi) {
   else st[k] = { ko, vi, t: now() };
   save();
   return !!st[k];
+}
+/* 내 단어장 폴더 (대표님 2026-10-08: "챕터를 유저가 추가 — 폴더 같은 것. 단어에 들어가면 각 폴더에 자유롭게 넣을 수 있게.
+   복붙이냐 이동이냐, 용량 고려") — 폴더는 낱말의 **열쇠(vi)만** 담는다(참조). 자료는 복사되지 않으니 용량은 낱말당 몇 바이트이고,
+   한 낱말이 여러 폴더에 들어갈 수 있다(태그처럼). 옮길 필요가 없다. S.folders = [{id, name, t, w:[vi…]}] — 서버에도 올린다(PROGKEYS). */
+const foldersOf = () => (Array.isArray(S.folders) ? S.folders : (S.folders = []));
+function folderAdd(name) {
+  const f = { id: 'f' + Date.now().toString(36), name: String(name || '').trim().slice(0, 20) || tr('새 폴더'), t: now(), w: [] };
+  foldersOf().push(f); save(); cloudSave(true); return f;
+}
+const folderHas = (f, vi) => (f.w || []).includes(vi);
+function folderToggle(f, vi) {
+  f.w = f.w || [];
+  const i = f.w.indexOf(vi);
+  if (i >= 0) f.w.splice(i, 1); else f.w.push(vi);
+  save(); cloudSave(true); return i < 0;
+}
+/* 낱말 하나를 어느 폴더에 넣을지 고르는 창 — 여러 폴더에 동시에 담을 수 있다 */
+function folderPopup(vi, ko, onChange) {
+  const back = el('div', 'modalback'), box = el('div', 'modalbox');
+  box.append(el('div', 'pairpophd', '<b>' + esc(vi) + '</b><span>' + esc(ko || '') + '</span>'));
+  const list = el('div', 'folist');
+  const draw = () => {
+    list.textContent = '';
+    const fo = foldersOf();
+    if (!fo.length) list.append(el('p', 'note', tr('아직 폴더가 없습니다. 아래에서 만들어 보세요.')));
+    fo.forEach(f => {
+      const r = el('button', 'forow' + (folderHas(f, vi) ? ' on' : '')); r.type = 'button';
+      r.append(el('span', 'fochk', folderHas(f, vi) ? '☑' : '☐'), el('span', 'foname', esc(f.name)), el('small', 'dimtxt', (f.w || []).length + tr('개')));
+      r.onclick = () => { folderToggle(f, vi); draw(); if (onChange) onChange(); };
+      list.append(r);
+    });
+  };
+  draw();
+  const add = el('button', 'ghost', '＋ ' + tr('새 폴더')); add.type = 'button';
+  add.onclick = async () => { const nm = await askText(tr('폴더 이름'), '', 20); if (nm) { const f = folderAdd(nm); folderToggle(f, vi); draw(); if (onChange) onChange(); } };
+  const ok = el('button', 'primary', tr('닫기')); ok.type = 'button'; ok.onclick = () => back.remove();
+  const row = el('div', 'bugbtns'); row.append(add, ok);
+  box.append(list, row); back.append(box);
+  back.onclick = e => { if (e.target === back) back.remove(); };
+  document.body.append(back);
+}
+/* 📁 단추 — 별 단추 옆. 담긴 폴더가 하나라도 있으면 색이 든다 */
+function folderBtn(vi, ko) {
+  const b = el('button', 'fbtn'); b.type = 'button'; b.title = tr('폴더에 담기');
+  const paint = () => { const n = foldersOf().filter(f => folderHas(f, vi)).length; b.textContent = n ? '📁' + n : '📁'; b.classList.toggle('on', n > 0); };
+  paint();
+  b.onclick = ev => { ev.stopPropagation(); folderPopup(vi, ko, paint); };
+  return b;
 }
 /* 별 단추 — 학습 화면 어디서든 단어 옆에 붙인다 */
 // 선배 별표(seniorStar)는 완전히 없앴다 (대표님 지시, 2026-09-09).
@@ -9106,7 +9183,7 @@ function wbRow(vi, ko, meta) {
   const p1 = el('button', 'iconbtn', '🔊');
   p1.title = tr('보통 속도');
   p1.onclick = () => { const k = recKey(vi); k ? play(k, false) : speakVi(vi, false, 0, S.voice); };
-  top.append(p1, starBtn(vi, ko || '', vi));   // 🐢 는 뺐다 (2026-09-27 밤)
+  top.append(p1, starBtn(vi, ko || '', vi), folderBtn(vi, ko || ''));   // 🐢 는 뺐다 (2026-09-27 밤) · 📁 폴더 (2026-10-08)
   r.append(top, el('div', 'wbko', esc(ko || '')));
   return r;
 }
@@ -9135,89 +9212,106 @@ function learnedAll() {
   return [...out.values()];
 }
 
-function wordbookEntry() { SBOX = 'srs'; WB = 'all'; drawWordbook(); }   // 열면 '학습한 모든 단어'부터 (대표님 2026-10-02)
+/* 내 단어장 (대표님 2026-10-08) — 들어가면 챕터처럼: 학습한 모든 단어 · 자주 틀리는 것 · 담은 단어 · 사용자 폴더들 · [+ 새 폴더].
+   각 묶음은 [카드로 학습]과 [쇼츠 재생](소리만 나고 저절로 다음 카드) 둘 중 하나로 익힌다. */
+function wordbookEntry() { SBOX = 'srs'; drawWordbook(); }
+function wbHost() { const ko = learnKo(); return [ko ? $('#examBody') : $('#subBody'), ko ? 'exam' : 'sub']; }
+function wbMiss() { return Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1).sort((a, b) => b[1] - a[1]); }
+/* 열쇠(vi) 목록 → 낱말 자료(일상·직무 → 교재·22기 차례로 찾음), 겹침 제거 */
+function wbResolve(viList) {
+  const all = allWords(), gy = GYBM ? gybmAllWords() : [], out = [], seen = new Set();
+  viList.forEach(vi => {
+    const k = String(vi || '').trim(); if (!k || seen.has(k.toLowerCase())) return;
+    const w = all.find(x => x.vi === k) || gy.find(x => x.vi === k) || all.find(x => x.vi.toLowerCase() === k.toLowerCase());
+    if (w) { seen.add(k.toLowerCase()); out.push(w); }
+  });
+  return out;
+}
 function drawWordbook() {
-  const ko = learnKo();
-  const host = ko ? $('#examBody') : $('#subBody');
+  const [host, view] = wbHost();
   host.textContent = '';
-  if (WB === 'all' && (!GYBM || !COURSE)) {                 // 교재·직무 레슨 단어를 세려면 자료가 있어야 한다 — 받고 다시 그린다
+  if (!GYBM || !COURSE) {                 // 교재·직무 레슨 단어를 세려면 자료가 있어야 한다 — 받고 다시 그린다
     host.append(el('p', 'note', tr('불러오는 중…')));
-    show(ko ? 'exam' : 'sub', '단어장', true);
-    const again = () => { if (GYBM && COURSE && $('#title').textContent === tr('단어장')) drawWordbook(); };
+    show(view, '내 단어장', true);
+    const again = () => { if (GYBM && COURSE && $('#title').textContent === tr('내 단어장')) drawWordbook(); };
     if (!GYBM) gybmBuild(again); if (!COURSE) withCourse(again);
     return;
   }
-
-  const tabs = el('div', 'wbtabs');
-  const mk = (k, label) => {
-    const t = el('button', 'wbtab' + (WB === k ? ' on' : ''), label);
-    t.onclick = () => { WB = k; drawWordbook(); };
-    return t;
+  const learned = learnedAll(), miss = wbMiss(), stars = Object.keys(starOf()).length;
+  const rowBtn = (ico, name, n, fn, extra) => {
+    const r = el('div', 'forowwrap');
+    const c = el('button', 'hubcard wbcard'); c.type = 'button';
+    c.innerHTML = `<span class="hubico">${ico}</span><span class="hubbody"><b class="hubt2">${esc(name)}</b></span><span class="accpill">${n}</span><svg class="hubchev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>`;
+    c.onclick = fn; r.append(c);
+    if (extra) r.append(extra);
+    host.append(r);
   };
-  const misses = Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1);
-  const learned = learnedAll();
-  tabs.append(mk('all', tr('📚 학습한 모든 단어') + ' ' + learned.length),       // 차례: 학습한 모든 단어 · 자주 틀린 것 · 담은 것 (대표님 2026-10-02)
-              mk('miss', tr('⚠ 자주 틀린 것') + ' ' + misses.length),
-              mk('star', tr('★ 담은 것') + ' ' + Object.keys(starOf()).length));
-  host.append(tabs);
-
-  if (WB === 'star') {
-    const list = Object.entries(starOf()).sort((a, b) => b[1].t - a[1].t);
-    if (!list.length) {
-      host.append(el('p', 'note', '아직 담은 단어이 없습니다. 배우는 화면에서 단어 옆 <b>☆</b>를 누르면 여기에 모입니다.'));
-    }
-    list.forEach(([k, v]) => host.append(
-      ko ? wbRow(v.ko || k, v.vi || '', '') : wbRow(v.vi || k, v.ko || '', '')));
-
-  } else if (WB === 'miss') {
-    if (!misses.length) {
-      host.append(el('p', 'note', '아직 자주 틀린 단어이 없습니다. 퀴즈에서 틀린 단어이 여기에 저절로 모입니다.'));
-    }
-    // 많이 틀린 것부터 — 맞히면 점수가 깎여 스스로 사라진다
-    misses.sort((a, b) => b[1] - a[1]).forEach(([vi, n]) => {
-      const w = allWords().find(x => x.vi === vi);
-      host.append(wbRow(vi, w ? w.ko : '', tr('틀림') + ' ' + Math.round(n) + tr('번')));
-    });
-    if (misses.length) {
-      host.append(el('p', 'note', '퀴즈에서 <b>맞힐 때마다 횟수가 줄어</b> 저절로 사라집니다 — 지울 필요가 없습니다.'));
-      const go = el('button', 'primary big', tr('자주 틀린 것만 복습하기') + ' ›');
-      go.style.width = '100%';
-      go.onclick = () => startWordbookQuiz(misses.map(([vi]) => vi), '자주 틀린 단어');
-      host.append(go);
-    }
-
-  } else {
-    if (!learned.length) {
-      host.append(el('p', 'note', '아직 배운 단어이 없습니다. 학습을 한 세트 끝내면 여기에 모입니다.'));
-    } else {
-      host.append(el('p', 'lede', tr('여기까지 학습한 단어 N개입니다')
-        .replace('N', learned.length.toLocaleString('ko-KR'))));
-      const go = el('button', 'primary big', tr('여기 있는 단어로 복습하기') + ' ›');
-      go.style.width = '100%'; go.style.marginBottom = '12px';
-      go.onclick = () => startWordbookQuiz(learned.map(x => x.vi), '학습한 모든 단어');
-      host.append(go);
-
-      // 많으면 찾기가 있어야 쓸 수 있다
-      const inp = el('input', 'keyin dictin');
-      inp.type = 'search'; inp.placeholder = tr('찾을 말 (베트남어·한국어)');
-      const out = el('div');
-      const draw = () => {
-        const q = inp.value.trim().toLowerCase();
-        out.textContent = '';
-        const hit = q ? learned.filter(x => x.vi.toLowerCase().includes(q)
-                                         || (x.ko || '').toLowerCase().includes(q))
-                      : learned;
-        if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
-        hit.slice(0, 200).forEach(x => out.append(wbRow(x.vi, x.ko, '')));
-        if (hit.length > 200) out.append(el('p', 'note', tr('앞 200개만 보입니다 — 더 적어 보세요')));
-      };
-      let tm = null;
-      inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
-      host.append(inp, out);
-      draw();
-    }
+  rowBtn('📚', tr('학습한 모든 단어'), learned.length, () => { dive(drawWordbook); wordbookList('all'); });
+  rowBtn('⚠️', tr('자주 틀리는 것'), miss.length, () => { dive(drawWordbook); wordbookList('miss'); });
+  rowBtn('★', tr('담은 단어'), stars, () => { dive(drawWordbook); wordbookList('star'); });
+  foldersOf().forEach(f => {
+    const more = el('button', 'fomore'); more.type = 'button'; more.textContent = '⋯'; more.title = tr('이름 바꾸기 · 지우기');
+    more.onclick = async ev => {
+      ev.stopPropagation();
+      const nm = await askText(tr('폴더 이름 (비우면 지움)'), f.name, 20);
+      if (nm === null) return;
+      if (!nm) { if (await askYN(tr('<b>폴더를 지울까요?</b><br>폴더만 없어지고 낱말 자료는 그대로입니다.'), '지우기', true)) { S.folders = foldersOf().filter(x => x.id !== f.id); save(); cloudSave(true); drawWordbook(); } return; }
+      f.name = nm; save(); cloudSave(true); drawWordbook();
+    };
+    rowBtn('📁', f.name, (f.w || []).length, () => { dive(drawWordbook); wordbookList('folder', f.id); }, more);
+  });
+  const add = el('button', 'ghost big', '＋ ' + tr('새 폴더 만들기')); add.type = 'button'; add.style.width = '100%';
+  add.onclick = async () => { const nm = await askText(tr('폴더 이름'), '', 20); if (nm) { folderAdd(nm); drawWordbook(); } };
+  host.append(add);
+  host.append(el('p', 'note', tr('낱말 카드의 📁 를 누르면 어느 폴더에든 담을 수 있습니다 — 한 낱말을 여러 폴더에 넣어도 됩니다.')));
+  show(view, '내 단어장', true);
+}
+/* 한 묶음의 낱말 목록 — 위에 [카드로 학습][쇼츠 재생], 아래 낱말 줄 */
+function wordbookList(kind, fid) {
+  const [host, view] = wbHost();
+  host.textContent = '';
+  const f = kind === 'folder' ? foldersOf().find(x => x.id === fid) : null;
+  if (kind === 'folder' && !f) { drawWordbook(); return; }
+  let title, words;
+  if (kind === 'all') { title = tr('학습한 모든 단어'); words = wbResolve(learnedAll().map(x => x.vi)); }
+  else if (kind === 'miss') { title = tr('자주 틀리는 것'); words = wbResolve(wbMiss().map(([vi]) => vi)); }
+  else if (kind === 'star') { title = tr('담은 단어'); words = wbResolve(Object.entries(starOf()).sort((a, b) => b[1].t - a[1].t).map(([k, v]) => (v && v.vi) || k)); }
+  else { title = f.name; words = wbResolve(f.w || []); }
+  const redraw = () => wordbookList(kind, fid);
+  host.append(el('p', 'lede', esc(title) + ' · ' + words.length + tr('개')));
+  if (!words.length) {
+    host.append(el('p', 'note', kind === 'folder' ? tr('비어 있습니다. 낱말 카드나 목록의 📁 를 눌러 이 폴더에 담으세요.') :
+      kind === 'miss' ? tr('아직 자주 틀린 단어가 없습니다. 퀴즈에서 틀린 단어가 여기에 저절로 모입니다.') :
+      kind === 'star' ? tr('아직 담은 단어가 없습니다. 배우는 화면에서 단어 옆 ☆ 를 누르면 여기에 모입니다.') : tr('아직 배운 단어가 없습니다. 학습을 한 세트 끝내면 여기에 모입니다.')));
+    show(view, title, true); return;
   }
-  show(ko ? 'exam' : 'sub', '단어장', true);
+  const opts = el('div', 'wbopts');
+  const b1 = el('button', 'primary big', '🃏 ' + tr('카드로 학습')); b1.type = 'button';
+  b1.onclick = () => { dive(redraw); flashRun(words.slice(), title + ' ' + tr('카드')); };
+  const b2 = el('button', 'primary big', '⚡ ' + tr('쇼츠 재생')); b2.type = 'button';
+  b2.onclick = () => { dive(redraw); flashRun(words.slice(), title, { auto: true }); };
+  opts.append(b1, b2); host.append(opts);
+  if (kind === 'miss') { const q = el('button', 'ghost', tr('퀴즈로 복습 — 맞히면 횟수가 줄어 사라집니다')); q.type = 'button'; q.style.width = '100%'; q.onclick = () => { dive(redraw); startWordbookQuiz(words.map(w => w.vi), tr('자주 틀린 단어')); }; host.append(q); }
+  const missN = S.stats.miss || {};
+  const out = el('div');
+  const draw = q => {
+    out.textContent = '';
+    const hit = q ? words.filter(x => x.vi.toLowerCase().includes(q) || (x.ko || '').toLowerCase().includes(q)) : words;
+    if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
+    hit.slice(0, 200).forEach(w => {
+      const r = wbRow(w.vi, w.ko, kind === 'miss' && missN[w.vi] ? tr('틀림') + ' ' + Math.round(missN[w.vi]) + tr('번') : '');
+      if (kind === 'folder') { const x = el('button', 'fodel'); x.type = 'button'; x.textContent = '✕'; x.title = tr('폴더에서 빼기'); x.onclick = () => { folderToggle(f, w.vi); redraw(); }; r.querySelector('.wbtop').append(x); }
+      out.append(r);
+    });
+    if (hit.length > 200) out.append(el('p', 'note', tr('앞 200개만 보입니다 — 더 적어 보세요')));
+  };
+  if (words.length > 30) {
+    const inp = el('input', 'keyin dictin'); inp.type = 'search'; inp.placeholder = tr('찾을 말 (베트남어·한국어)');
+    let tm = null; inp.oninput = () => { clearTimeout(tm); tm = setTimeout(() => draw(inp.value.trim().toLowerCase()), 120); };
+    host.append(inp);
+  }
+  host.append(out); draw('');
+  show(view, title, true);
 }
 
 /* ── 손글씨 겹쳐 쓰기 (대표님 지시 2026-09-28 밤: "단어 카드·발음 카드 화면 위에 펜·손가락으로 필기, 몇 초 뒤 스르르 사라지게.
@@ -9603,6 +9697,7 @@ function drawCard() {
     if (so) row.append(el('span', 'southpill', tr('남부')));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
+    row.append(folderBtn(x.vi, x.ko));        // 내 단어장 폴더에 담기 (2026-10-08)
     cf.append(row);
     /* 뜻이 같은 다른 단어 — 지우지 않고 **같이 보여 준다** (대표님 지시, 2026-08-30).
        ngang vai 와 rộng vai 는 둘 다 '어깨 넓이'다. 하나만 두면 나머지를 못 배운다. */
@@ -9936,7 +10031,7 @@ const FLSEEN = new Set();      // 오늘 이 목록에서 이미 저절로 넘�
 function flashRun(words, title, opt) {
   const ws = (words || []).filter(w => w && w.vi && (AIDX[w.vi] || (opt && opt.next)));
   if (!ws.length) { if (opt && opt.next) opt.next(); return; }
-  FL = { list: ws, i: 0, next: opt && opt.next, nextLabel: opt && opt.nextLabel, title };
+  FL = { list: ws, i: 0, next: opt && opt.next, nextLabel: opt && opt.nextLabel, title, auto: !!(opt && opt.auto), paused: false };   // auto: 쇼츠처럼 소리만 나고 저절로 다음 (2026-10-08)
   show('quiz', title, true);
   drawFlash();
 }
@@ -9972,6 +10067,8 @@ function drawFlash() {
   const top = el('div', 'flhead');
   top.append(el('span', 'flcount', tr('카드') + ' ' + (FL.i + 1) + ' / ' + FL.list.length), el('span', 'flpill', esc($('#title').textContent.replace(/ 카드$/, ''))));
   if (w && w.g) top.append(el('span', 'flgrp', esc(w.g)));   // 소묶음(과일 · 채소 …) — 2026-10-07 재편
+  let chip = null;
+  if (FL.auto) { chip = el('span', 'flauto' + (FL.paused ? ' off' : ''), FL.paused ? '⏸ ' + tr('멈춤 — 누르면 계속') : '⚡ ' + tr('자동 재생 — 누르면 멈춤')); top.append(chip); }
   c.append(top);
   const p = pic(w, 'pic'); if (p) c.append(p);
   c.append(el('div', 'vi', esc(w.vi)));
@@ -10014,7 +10111,7 @@ function drawFlash() {
     x0 = null;
     if (Math.abs(dy) > 40 && Math.abs(dy) >= Math.abs(dx)) return;   // 세로 스크롤은 넘기지 않는다 (2026-09-30)
     if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
-    else if (!e.target.closest('button')) go(1);   // [▶ 듣기]·속도 단추를 누른 건 넘기라는 뜻이 아니다
+    else if (!e.target.closest('button') && !FL.auto) go(1);   // [▶ 듣기]·속도 단추를 누른 건 넘기라는 뜻이 아니다 · 쇼츠는 누르면 멈춤/계속(c.onclick)
   }, { passive: true });
   audio.pause();
   audio.src = `audio/${voiceDir()}/n/${AIDX[w.vi]}.mp3`;
@@ -10025,6 +10122,19 @@ function drawFlash() {
      뒤로 돌아와 다시 보거나 나갔다가 다시 들어와 보는 카드는 들여다보려고 온 것이니 멈춰 둔다
      (대표님 지시 2026-09-29) — 밀거나 눌러야 넘어간다. */
   clearTimeout(FLTM);
+  if (FL.auto) {
+    /* 쇼츠 재생 (대표님 2026-10-08): 소리가 끝나면 0.5초 뒤 저절로 다음. 카드를 누르면 멈춤/계속. 밀기는 그대로 */
+    const nextAuto = () => { if (FL && FL.auto && !FL.paused) go(1); };
+    audio.onended = () => { FLTM = setTimeout(nextAuto, 500); };
+    if (!AIDX[w.vi]) FLTM = setTimeout(nextAuto, 2200);                // 소리 없는 낱말은 2.2초
+    c.onclick = ev => {
+      if (ev.target.closest('button')) return;
+      FL.paused = !FL.paused; clearTimeout(FLTM);
+      if (chip) { chip.textContent = FL.paused ? '⏸ ' + tr('멈춤 — 누르면 계속') : '⚡ ' + tr('자동 재생 — 누르면 멈춤'); chip.classList.toggle('off', FL.paused); }
+      if (!FL.paused) { if (audio.ended || audio.paused) go(1); }
+    };
+    return;
+  }
   const seenKey = ymd() + '|' + FL.title + '|' + w.vi;
   if (!FLSEEN.has(seenKey)) { FLSEEN.add(seenKey); FLTM = setTimeout(go, 3000); }
   c.onclick = go;                        // 급하면 눌러서 바로 다음

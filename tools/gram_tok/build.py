@@ -119,6 +119,11 @@ for bi, pre in ((0, 's2'), (1, 's3'), (2, 's4'), (5, 'z')):
         ids = [t2id[x['t']] for x in l['g'] if x['t'] in t2id]
         no = ZOOM_NO[li] if pre == 'z' else li + 1
         ch_map[f"{pre}-{no}"] = {'title': '', 'title_ko': l.get('t', ''), 'items': sorted(set(ids), key=lambda k: (int(k.split('.')[0]), int(k.split('.')[1]))), 'ex': {}}
+# 수업에서 가르치나 교재 대화 글에는 그 과에 없는 문형 — 손으로 더함 (대표님 2026-10-08: "sắp … chưa? 도 7과에서 배우는 중, 시험에 나옴")
+FORCE = {'1-7': ['10.6']}
+for _k, _ids in FORCE.items():
+    _v = ch_map.get(_k)
+    if _v: _v['items'] = sorted(set(_v['items']) | set(_ids), key=lambda k: (int(k.split('.')[0]), int(k.split('.')[1])))
 # 책마다 '이 과에서 처음 나오는 문형'
 BOOKS = [('1', 12), ('2', 12), ('s1', 7), ('s2', 10), ('s3', 10), ('s4', 10), ('z', None)]
 for pre, n in BOOKS:
