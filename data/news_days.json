@@ -204,7 +204,7 @@
     ],
     "extra": []
    },
-   "n": 90
+   "n": 95
   },
   {
    "ts": "2026-10-06",
@@ -454,7 +454,7 @@
     ],
     "extra": []
    },
-   "n": 89
+   "n": 94
   },
   {
    "ts": "2026-10-06",
@@ -710,7 +710,254 @@
     ],
     "extra": []
    },
-   "n": 88
+   "n": 93
+  },
+  {
+   "ts": "2026-10-06",
+   "day": "N566.html",
+   "track": "news",
+   "theme": "카페 가기",
+   "title": "8 garden cafes to enjoy Hanoi autumn",
+   "u": "https://e.vnexpress.net/photo/places/8-garden-cafes-to-enjoy-hanoi-autumn-5128566.html",
+   "cat": "소식",
+   "intro": "하노이의 가을을 즐기기 좋은 정원이 아름다운 카페 8곳을 소개합니다.",
+   "words": [
+    {
+     "vi": "cà phê",
+     "ko": "커피",
+     "kr_read": "까 페",
+     "emoji": "☕",
+     "en": "a cup of hot coffee with latte art",
+     "tones": [
+      {
+       "syl": "cà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "phê",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ca-phe.webp"
+    },
+    {
+     "vi": "trà",
+     "ko": "차",
+     "kr_read": "짜",
+     "emoji": "🍵",
+     "en": "a cup of hot green tea",
+     "tones": [
+      {
+       "syl": "trà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tra.webp"
+    },
+    {
+     "vi": "sân vườn",
+     "ko": "정원",
+     "kr_read": "썬 브언",
+     "emoji": "🏡",
+     "en": "a small beautiful garden with green plants",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "vườn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-san-vuon.webp"
+    },
+    {
+     "vi": "thời tiết",
+     "ko": "날씨",
+     "kr_read": "터이 띠엣",
+     "emoji": "☀️",
+     "en": "sunny sky with white clouds",
+     "tones": [
+      {
+       "syl": "thời",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "tiết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thoi-tiet.webp"
+    },
+    {
+     "vi": "mùa thu",
+     "ko": "가을",
+     "kr_read": "무어 투",
+     "emoji": "🍁",
+     "en": "maple leaves falling in autumn",
+     "tones": [
+      {
+       "syl": "mùa",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "thu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua-thu.webp"
+    },
+    {
+     "vi": "đẹp",
+     "ko": "예쁘다",
+     "kr_read": "댑",
+     "emoji": "✨",
+     "en": "",
+     "tones": [
+      {
+       "syl": "đẹp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "카페 가기",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Thời tiết đẹp quá, đi cà phê nhé?",
+      "ko": "날씨가 정말 좋네요, 카페 가실래요?",
+      "kr_read": "터이 띠엣 댑 꽈 디 까 페 냬",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Thời",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tiết",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đẹp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "quá,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "phê",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhé?",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Được, quán này có sân vườn đẹp.",
+      "ko": "좋아요, 이 가게는 예쁜 정원이 있어요.",
+      "kr_read": "드억 꽌 나이 꼬 썬 브언 댑",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Được,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "quán",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "vườn",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đẹp.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 92
   },
   {
    "ts": "2026-10-06",
@@ -940,7 +1187,7 @@
     ],
     "extra": []
    },
-   "n": 87
+   "n": 91
   },
   {
    "ts": "2026-10-06",
@@ -1208,7 +1455,7 @@
     ],
     "extra": []
    },
-   "n": 86
+   "n": 90
   },
   {
    "ts": "2026-10-06",
@@ -1482,7 +1729,7 @@
     ],
     "extra": []
    },
-   "n": 85
+   "n": 89
   },
   {
    "ts": "2026-10-06",
@@ -1732,7 +1979,7 @@
     ],
     "extra": []
    },
-   "n": 84
+   "n": 88
   },
   {
    "ts": "2026-10-06",
@@ -1962,7 +2209,467 @@
     ],
     "extra": []
    },
-   "n": 83
+   "n": 87
+  },
+  {
+   "ts": "2026-10-06",
+   "day": "Nno=44208",
+   "track": "news",
+   "theme": "불량품 적발",
+   "title": "베트남서 짝퉁 ‘발포비타민’ 유통한 제약사 적발…방부제 허용치 33배 초과",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44208",
+   "cat": "사회",
+   "intro": "베트남 제약사가 가짜 발포비타민을 유통하다 적발됐습니다. 방부제 33배 초과, 불법 제조·판매로 대표가 구속되었습니다.",
+   "words": [
+    {
+     "vi": "thuốc",
+     "ko": "약",
+     "kr_read": "투옥",
+     "emoji": "💊",
+     "en": "a pill",
+     "tones": [
+      {
+       "syl": "thuốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thuoc.webp"
+    },
+    {
+     "vi": "giả",
+     "ko": "가짜",
+     "kr_read": "자",
+     "emoji": "🚫",
+     "en": "a fake product",
+     "tones": [
+      {
+       "syl": "giả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-gia.webp"
+    },
+    {
+     "vi": "sản phẩm",
+     "ko": "제품",
+     "kr_read": "싼 펌",
+     "emoji": "📦",
+     "en": "a product package",
+     "tones": [
+      {
+       "syl": "sản",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "phẩm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-san-pham.webp"
+    },
+    {
+     "vi": "kiểm tra",
+     "ko": "점검하다, 확인하다",
+     "kr_read": "끼엠 짜",
+     "emoji": "✅",
+     "en": "a checklist with a checkmark",
+     "tones": [
+      {
+       "syl": "kiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "tra",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-kiem-tra.webp"
+    },
+    {
+     "vi": "bán",
+     "ko": "팔다",
+     "kr_read": "반",
+     "emoji": "💲",
+     "en": "a person selling something",
+     "tones": [
+      {
+       "syl": "bán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ban.webp"
+    },
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꽁 띠",
+     "emoji": "🏢",
+     "en": "a company building",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ty",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-ty.webp"
+    }
+   ],
+   "dialog": {
+    "title": "불량품 적발",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Sản phẩm này cần kiểm tra không?",
+      "ko": "이 제품 점검해야 하나요?",
+      "kr_read": "싼 펌 나이 껀 끼엠 짜 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Sản",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "phẩm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "cần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "kiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tra",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, chúng ta phải kiểm tra.",
+      "ko": "네, 저희가 점검해야 합니다.",
+      "kr_read": "벙 쭝 따 파이 끼엠 짜",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "chúng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ta",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "phải",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "kiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tra.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 86
+  },
+  {
+   "ts": "2026-10-06",
+   "day": "Nno=44203",
+   "track": "news",
+   "theme": "복권 구매",
+   "title": "베트남서 ‘100억 원대’ 로또 당첨자 1명 탄생…역대 최대 당첨금",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44203",
+   "cat": "사회",
+   "intro": "베트남에서 약 100억 원 상당의 역대 최대 로또 당첨자가 나왔습니다.",
+   "words": [
+    {
+     "vi": "vé số",
+     "ko": "복권",
+     "kr_read": "배 쏘",
+     "emoji": "🎫",
+     "en": "a single paper lottery ticket with numbers",
+     "tones": [
+      {
+       "syl": "vé",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "số",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ve-so.webp"
+    },
+    {
+     "vi": "trúng số",
+     "ko": "복권에 당첨되다",
+     "kr_read": "쭝 쏘",
+     "emoji": "🎉",
+     "en": "colorful confetti exploding in celebration",
+     "tones": [
+      {
+       "syl": "trúng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "số",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-trung-so.webp"
+    },
+    {
+     "vi": "tiền thưởng",
+     "ko": "당첨금",
+     "kr_read": "띠엔 트엉",
+     "emoji": "💵",
+     "en": "a large stack of money bills",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "thưởng",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-tien-thuong.webp"
+    },
+    {
+     "vi": "may mắn",
+     "ko": "운이 좋다",
+     "kr_read": "마이 만",
+     "emoji": "🍀",
+     "en": "a green four-leaf clover",
+     "tones": [
+      {
+       "syl": "may",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "mắn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-may-man.webp"
+    },
+    {
+     "vi": "mua",
+     "ko": "사다",
+     "kr_read": "무어",
+     "emoji": "🛒",
+     "en": "a shopping cart",
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua.webp"
+    },
+    {
+     "vi": "giàu",
+     "ko": "부유하다",
+     "kr_read": "자우",
+     "emoji": "💰",
+     "en": "a brown money bag with a dollar sign",
+     "tones": [
+      {
+       "syl": "giàu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-giau.webp"
+    }
+   ],
+   "dialog": {
+    "title": "복권 구매",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Hôm nay anh mua vé số không?",
+      "ko": "오늘 복권 살 거예요?",
+      "kr_read": "홈 나이 아인 무어 배 쏘 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mua",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "vé",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "số",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, tôi muốn trúng số.",
+      "ko": "네, 저 복권에 당첨되고 싶어요.",
+      "kr_read": "꼬 또이 무온 쭝 쏘",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "muốn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "trúng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "số.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 85
   },
   {
    "ts": "2026-10-06",
@@ -2248,7 +2955,249 @@
     ],
     "extra": []
    },
-   "n": 82
+   "n": 84
+  },
+  {
+   "ts": "2026-10-06",
+   "day": "N976.html",
+   "track": "news",
+   "theme": "베트남 관광",
+   "title": "Easier entry, connectivity key for Vietnam tourism to compete in competitive neighborhood",
+   "u": "https://e.vnexpress.net/news/travel/easier-entry-connectivity-key-for-vietnam-tourism-to-compete-in-competitive-neighborhood-5126976.html",
+   "cat": "문화·생활",
+   "intro": "베트남 관광 경쟁력이 동남아 국가 중 뒤처지고 있습니다. 비자 면제 확대와 인프라, 환경 개선이 시급한 상황입니다.",
+   "words": [
+    {
+     "vi": "du lịch",
+     "ko": "관광",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "en": "a person traveling with a suitcase and camera",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "hộ chiếu",
+     "ko": "여권",
+     "kr_read": "호 찌에우",
+     "emoji": "🛂",
+     "en": "a blue passport booklet",
+     "tones": [
+      {
+       "syl": "hộ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "chiếu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ho-chieu.webp"
+    },
+    {
+     "vi": "máy bay",
+     "ko": "비행기",
+     "kr_read": "마이 바이",
+     "emoji": "✈️",
+     "en": "a passenger airplane in the blue sky",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-may-bay.webp"
+    },
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "🛫",
+     "en": "a modern airport terminal building",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "dịch vụ",
+     "ko": "서비스",
+     "kr_read": "직 부",
+     "emoji": "🛎️",
+     "en": "a hand ringing a service bell on a counter",
+     "tones": [
+      {
+       "syl": "dịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "vụ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-dich-vu.webp"
+    },
+    {
+     "vi": "môi trường",
+     "ko": "환경",
+     "kr_read": "모이 쯔엉",
+     "emoji": "🌱",
+     "en": "a small green plant growing out of soil",
+     "tones": [
+      {
+       "syl": "môi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-moi-truong.webp"
+    }
+   ],
+   "dialog": {
+    "title": "베트남 관광",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Phong cảnh ở đây rất đẹp.",
+      "ko": "여기 풍경이 아주 예뻐요.",
+      "kr_read": "퐁 까인 어 더이 젓 댑",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Phong",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cảnh",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đẹp.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Nhưng vẫn còn nhiều rác quá.",
+      "ko": "하지만 아직 쓰레기가 너무 많아요.",
+      "kr_read": "능 번 꼰 니에우 작 꽈",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Nhưng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "vẫn",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "còn",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nhiều",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rác",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "quá.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 83
   },
   {
    "ts": "2026-10-06",
@@ -2509,6 +3458,218 @@
         "name": "ngang",
         "ko": "평평하게 그대로",
         "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 82
+  },
+  {
+   "ts": "2026-10-06",
+   "day": "N952.html",
+   "track": "news",
+   "theme": "도움 요청",
+   "title": "British man stranded in forest rescued by police, praises Vietnam's kindness",
+   "u": "https://e.vnexpress.net/news/news/british-man-stranded-in-forest-rescued-by-police-praises-vietnam-s-kindness-5128952.html",
+   "cat": "사회",
+   "intro": "영국인 남성 베트남 숲길서 조난당해 경찰과 주민 도움으로 무사히 구조되다",
+   "words": [
+    {
+     "vi": "lạc",
+     "ko": "길을 잃다",
+     "kr_read": "락",
+     "emoji": "🗺️",
+     "en": "a person looking confused on a path",
+     "tones": [
+      {
+       "syl": "lạc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-lac.webp"
+    },
+    {
+     "vi": "đường",
+     "ko": "길",
+     "kr_read": "드엉",
+     "emoji": "🛣️",
+     "en": "a road sign",
+     "tones": [
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-duong.webp"
+    },
+    {
+     "vi": "giúp",
+     "ko": "돕다",
+     "kr_read": "줍",
+     "emoji": "🙏",
+     "en": "two hands helping each other",
+     "tones": [
+      {
+       "syl": "giúp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-giup.webp"
+    },
+    {
+     "vi": "tìm",
+     "ko": "찾다",
+     "kr_read": "띰",
+     "emoji": "🔍",
+     "en": "a magnifying glass searching",
+     "tones": [
+      {
+       "syl": "tìm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tim.webp"
+    },
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🏍️",
+     "en": "a motor bike",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    },
+    {
+     "vi": "cảnh sát",
+     "ko": "경찰",
+     "kr_read": "까인 쌋",
+     "emoji": "🚨",
+     "en": "a police officer",
+     "tones": [
+      {
+       "syl": "cảnh",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "sát",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-canh-sat.webp"
+    }
+   ],
+   "dialog": {
+    "title": "도움 요청",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Tôi bị lạc đường. Xin giúp!",
+      "ko": "제가 길을 잃었어요. 도와주세요!",
+      "kr_read": "또이 비 락 드엉 씬 줍",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "lạc",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đường.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Xin",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giúp!",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Anh muốn tìm đường nào?",
+      "ko": "어느 길을 찾으세요?",
+      "kr_read": "아인 무온 띰 드엉 나오",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "muốn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tìm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đường",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nào?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
        }
       ],
       "gloss": []
@@ -22402,5 +23563,5 @@
    "n": 1
   }
  ],
- "updated": "2026-10-07 02:16"
+ "updated": "2026-10-07 10:02"
 }
