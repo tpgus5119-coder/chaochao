@@ -537,6 +537,24 @@ def main():
                "a flooded country road with rice fields under gray rain clouds"),
               (("차량호출", "택시", "그랩"),
                "small electric cars parked in a row at a charging station"),
+              # 2026-10-07 아침(10/7 펴낼 카드): 게임사 기사는 '결제'에 걸려 카드 단말기가, 세계은행 기사는
+              # '은행'에 걸려 동전 그림이 깔렸다. 암호화폐·산업생산·바이오 원료·희토류·메트로는 맞는 줄이 없어
+              # 갈래 기본 그림이 깔렸다('지하철' 줄은 제목에 '메트로'만 있어 못 걸렸다). 일곱 줄을 위에 둔다.
+              # 10-06 줄의 '결제'보다 먼저 걸려야 해서 그 묶음보다 위에 둔다.
+              (("게임사", "게임 개발"),
+               "a game developer desk with two monitors showing colorful game screens and a controller"),
+              (("세계은행", "성장률 전망"),
+               "a world map and a rising bar chart on a large wall screen in an empty meeting room"),
+              (("암호화폐", "가상자산"),
+               "a golden crypto coin beside a laptop showing a price chart on a dark desk"),
+              (("산업생산",),
+               "a manufacturing floor with robotic arms and conveyor belts"),
+              (("바이오 원료", "사탕수수", "스판덱스"),
+               "sugarcane stalks in front of a modern chemical plant with steel tanks"),
+              (("희토류", "사마륨"),
+               "shiny metal ingots and round magnets on a laboratory bench"),
+              (("메트로", "도시철도 노선"),
+               "an elevated metro train crossing a viaduct over a city at dawn"),
               # 2026-10-06 아침(예약 작업): 공항 공사 기사 제목의 'airport' 가 아래 '수출' 줄의 'port' 에
               # 걸려 항만 그림(이미 쓰임)→공장 기본 그림이 깔렸다. QR 결제는 '관광'에 걸려 해변이,
               # 노동법은 갈래 기본(안전모)이 깔렸다. 셋을 위에 둔다.
