@@ -64,4 +64,12 @@ q.append(C3("자기소개 — 이름 · 나라 · 직업 · 지금 배우는 것
              "Tiếng Việt khó nhưng rất thú vị.", "Gia đình tôi có bốn người.", "Mẹ tôi là nội trợ. Bố mẹ tôi sống ở Busan.", "Dạo này tôi rất bận.", "Rất vui được gặp các bạn."]))
 q += D1(["ăn sáng", "buồn ngủ", "thức khuya", "kỹ sư", "bận", "thú vị", "chăm chỉ", "giảm giá", "đặc biệt", "ngân hàng"],
         ["Tôi thường không ăn sáng.", "Dạo này tôi rất bận.", "Hôm qua tôi đi ngủ hơi trễ.", "Chúng ta sẽ đi mua sách.", "Em học tiếng Việt ở đâu?"])
+q += [D2("giáo viên người Việt Nam", "그림을 보고 말해 보세요 — 이 사람은 누구이고 무슨 일을 하나요? 어디에서 일하나요? (3문장)",
+         ["Đây là cô Lan.", "Cô ấy là giáo viên.", "Cô ấy dạy tiếng Việt ở trường đại học."], ["이분은 란 선생님이에요.", "그분은 선생님이에요.", "그분은 대학교에서 베트남어를 가르쳐요."]),
+      D2("sinh viên", "그림을 보고 말해 보세요 — 이 사람은 무엇을 하는 사람이고, 어디에서 무엇을 배우나요? (3문장)",
+         ["Anh ấy là sinh viên.", "Anh ấy học tiếng Việt ở Thành phố Hồ Chí Minh.", "Lớp anh ấy có mười người."], ["그는 대학생이에요.", "그는 호찌민시에서 베트남어를 배워요.", "그의 반은 열 명이에요."])]
+q += [D3("처음 만난 베트남 친구에게 자기소개를 해 보세요 — 이름·국적·직업. (3문장)",
+         ["Xin chào. Tôi tên là Min.", "Tôi là người Hàn Quốc.", "Tôi là nhân viên công ty."], ["안녕하세요. 제 이름은 민이에요.", "저는 한국 사람이에요.", "저는 회사원이에요."]),
+      D3("친구가 '베트남어를 어디에서 배워요?'라고 묻습니다. 어디에서, 누구에게, 반은 몇 명인지 답해 보세요. (3문장)",
+         ["Tôi học tiếng Việt ở trường đại học.", "Cô giáo của tôi là cô Hoa.", "Lớp tôi có tám người."], ["저는 대학교에서 베트남어를 배워요.", "제 선생님은 호아 선생님이에요.", "우리 반은 여덟 명이에요."])]
 AUD = build(1, "모의고사 1", q)

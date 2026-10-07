@@ -1,5 +1,5 @@
 {
- "note": "주간시험 2 모의고사 5 — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기는 앱에서 안 낸다.",
+ "note": "주간시험 2 모의고사 5 — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).",
  "title": "모의고사 5",
  "time": 90,
  "pts": {
@@ -845,77 +845,178 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "xem phim"
+   "vi": "xem phim",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "nghe nhạc"
+   "vi": "nghe nhạc",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "đọc báo"
+   "vi": "đọc báo",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "tập thể dục"
+   "vi": "tập thể dục",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "thức khuya"
+   "vi": "thức khuya",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "buồn ngủ"
+   "vi": "buồn ngủ",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "nấu ăn"
+   "vi": "nấu ăn",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "cuối tuần"
+   "vi": "cuối tuần",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "thỉnh thoảng"
+   "vi": "thỉnh thoảng",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "một mình"
+   "vi": "một mình",
+   "pts": 1
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Tôi thường xem tivi buổi tối."
+   "vi": "Tôi thường xem tivi buổi tối.",
+   "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Hôm qua tôi thức khuya nên hôm nay tôi mệt."
+   "vi": "Hôm qua tôi thức khuya nên hôm nay tôi mệt.",
+   "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Cuối tuần chúng tôi đi xem phim."
+   "vi": "Cuối tuần chúng tôi đi xem phim.",
+   "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Mẹ tôi đang nấu ăn."
+   "vi": "Mẹ tôi đang nấu ăn.",
+   "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Em đi ngủ lúc mấy giờ?"
+   "vi": "Em đi ngủ lúc mấy giờ?",
+   "pts": 2
+  },
+  {
+   "sec": "D 말하기 · 3 그림 보고 말하기",
+   "k": "speak",
+   "img": "b-xem-phim.webp",
+   "ask": "그림을 보고 말해 보세요 — 주말에 보통 무엇을 하나요? 누구와 하나요? 어떤 영화를 좋아하나요? (3문장)",
+   "model": [
+    {
+     "vi": "Cuối tuần tôi thường xem phim ở nhà.",
+     "ko": "주말에 저는 보통 집에서 영화를 봐요."
+    },
+    {
+     "vi": "Tôi xem phim với bạn.",
+     "ko": "친구와 영화를 봐요."
+    },
+    {
+     "vi": "Tôi thích xem phim Việt Nam.",
+     "ko": "저는 베트남 영화를 좋아해요."
+    }
+   ],
+   "n": 3,
+   "pts": 5
+  },
+  {
+   "sec": "D 말하기 · 3 그림 보고 말하기",
+   "k": "speak",
+   "img": "b-nau-an.webp",
+   "ask": "그림을 보고 말해 보세요 — 이 사람은 무엇을 하고 있나요? 요리를 잘하나요? 어디에서 일하나요? (3문장)",
+   "model": [
+    {
+     "vi": "Anh ấy đang nấu ăn.",
+     "ko": "그는 요리를 하고 있어요."
+    },
+    {
+     "vi": "Anh ấy nấu ăn rất ngon.",
+     "ko": "그는 요리를 아주 맛있게 해요."
+    },
+    {
+     "vi": "Anh ấy làm việc ở tiệm ăn.",
+     "ko": "그는 식당에서 일해요."
+    }
+   ],
+   "n": 3,
+   "pts": 5
+  },
+  {
+   "sec": "D 말하기 · 4 상황 읽고 말하기",
+   "k": "speak",
+   "ask": "친구가 '주말에 보통 뭐 해요?'라고 묻습니다. 주말에 하는 일 세 가지를 말해 보세요. (3문장)",
+   "model": [
+    {
+     "vi": "Cuối tuần tôi thường đi dạo.",
+     "ko": "주말에 저는 보통 산책을 해요."
+    },
+    {
+     "vi": "Thỉnh thoảng tôi đi xem phim với bạn.",
+     "ko": "가끔 친구와 영화를 보러 가요."
+    },
+    {
+     "vi": "Buổi tối tôi nghe nhạc ở nhà.",
+     "ko": "저녁에는 집에서 음악을 들어요."
+    }
+   ],
+   "n": 3,
+   "pts": 5
+  },
+  {
+   "sec": "D 말하기 · 4 상황 읽고 말하기",
+   "k": "speak",
+   "ask": "친구가 '아침에 보통 몇 시에 일어나요?'라고 묻습니다. 아침 일과를 말해 보세요 — 일어나는 시간, 아침밥, 그다음 하는 일. (3문장)",
+   "model": [
+    {
+     "vi": "Tôi thường thức dậy lúc sáu giờ.",
+     "ko": "저는 보통 6시에 일어나요."
+    },
+    {
+     "vi": "Tôi ăn sáng ở nhà, rồi đi làm.",
+     "ko": "집에서 아침을 먹고 출근해요."
+    },
+    {
+     "vi": "Tôi thường không uống cà phê.",
+     "ko": "저는 보통 커피를 마시지 않아요."
+    }
+   ],
+   "n": 3,
+   "pts": 5
   }
  ]
 }

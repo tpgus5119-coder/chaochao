@@ -65,4 +65,12 @@ q.append(C3("우리 동네와 회사(학교) 가는 길 — 어디에 있는지,
              "Gần nhà tôi có một siêu thị và một bưu điện.", "Siêu thị mở cửa lúc 7 giờ sáng.", "Gần công ty có nhiều quán cà phê.", "Buổi trưa tôi ăn ở quán ăn gần công ty.", "Cuối tuần tôi thường đi nhà sách ở đường Nguyễn Huệ."]))
 q += D1(["nhà sách", "quán cà phê", "phố đi bộ", "máy bay", "tắc xi", "địa chỉ", "giảm giá", "bao lâu", "mở cửa", "gần"],
         ["Nhà sách ở đâu?", "Tôi đi làm bằng xe buýt.", "Từ nhà đến công ty mất 30 phút.", "Siêu thị mở cửa lúc 8 giờ sáng.", "Chúng ta gặp nhau lúc 6 giờ tối nhé."])
+q += [D2("nhà sách", "그림을 보고 말해 보세요 — 여기는 어디이고, 어디에 있고, 몇 시에 문을 여나요? (3문장)",
+         ["Đây là nhà sách.", "Nhà sách ở gần trường.", "Nhà sách mở cửa lúc tám giờ."], ["여기는 서점이에요.", "서점은 학교 근처에 있어요.", "서점은 8시에 문을 열어요."]),
+      D2("xe buýt", "그림을 보고 말해 보세요 — 이것은 무엇이고, 당신은 무엇을 타고 학교에 가며, 얼마나 걸리나요? (3문장)",
+         ["Đây là xe buýt.", "Tôi đi học bằng xe buýt.", "Từ nhà đến trường mất ba mươi phút."], ["이것은 버스예요.", "저는 버스를 타고 학교에 가요.", "집에서 학교까지 30분 걸려요."])]
+q += [D3("길에서 어떤 사람이 '은행이 어디예요?'라고 묻습니다. 위치를 말해 주세요 — 가까운지, 몇 번지인지, 얼마나 걸리는지. (3문장)",
+         ["Ngân hàng ở gần đây.", "Ngân hàng ở số 10 đường Nguyễn Huệ.", "Từ đây đến ngân hàng mất năm phút."], ["은행은 이 근처에 있어요.", "은행은 응우옌후에 거리 10번지에 있어요.", "여기서 은행까지 5분 걸려요."]),
+      D3("친구와 만날 약속을 정해 보세요 — 어디에서, 몇 시에, 그곳은 어디 근처인지. (3문장)",
+         ["Chúng ta gặp nhau ở quán cà phê nhé.", "Lúc sáu giờ tối.", "Quán cà phê ở gần nhà sách."], ["우리 카페에서 만나요.", "저녁 6시에요.", "카페는 서점 근처에 있어요."])]
 AUD = build(4, "모의고사 4", q)

@@ -65,4 +65,12 @@ q.append(C3("나의 하루 — 몇 시에 일어나고, 아침·점심·저녁�
              "Tôi thường ăn trưa ở căng tin công ty.", "Buổi tối tôi ăn tối với gia đình.", "Sau đó tôi học tiếng Việt khoảng một tiếng.", "Thỉnh thoảng tôi xem phim trên mạng.", "Tôi đi ngủ lúc 11 giờ."]))
 q += D1(["ngân hàng", "bệnh viện", "siêu thị", "bưu điện", "sân bay", "xe buýt", "cuối tuần", "đi dạo", "thư ký", "vất vả"],
         ["Tôi đi làm bằng xe buýt.", "Cuối tuần chúng tôi đi dạo ở phố đi bộ.", "Hôm nay tôi hơi mệt.", "Chị ấy làm việc ở ngân hàng.", "Anh làm việc từ mấy giờ đến mấy giờ?"])
+q += [D2("xe buýt", "그림을 보고 말해 보세요 — 당신은 이것을 타고 어디에 가나요? 어디에서 일하고, 몇 시에 출근하나요? (3문장)",
+         ["Tôi đi làm bằng xe buýt.", "Tôi làm việc ở ngân hàng.", "Tôi đi làm lúc bảy giờ sáng."], ["저는 버스를 타고 출근해요.", "저는 은행에서 일해요.", "저는 아침 7시에 출근해요."]),
+      D2("bác sĩ", "그림을 보고 말해 보세요 — 이 사람의 직업은 무엇이고, 어디에서 일하나요? 요즘 어떤가요? (3문장)",
+         ["Anh ấy là bác sĩ.", "Anh ấy làm việc ở bệnh viện.", "Dạo này anh ấy rất bận."], ["그는 의사예요.", "그는 병원에서 일해요.", "요즘 그는 아주 바빠요."])]
+q += [D3("동료가 '몇 시부터 몇 시까지 일해요?'라고 묻습니다. 일하는 시간과 점심을 어디에서 먹는지 말해 보세요. (3문장)",
+         ["Tôi làm việc từ tám giờ đến năm giờ.", "Buổi trưa tôi ăn cơm ở căng tin.", "Dạo này tôi hơi bận."], ["저는 8시부터 5시까지 일해요.", "점심에는 구내식당에서 밥을 먹어요.", "요즘 조금 바빠요."]),
+      D3("친구가 '요즘 어때요?'라고 묻습니다. 요즘 생활을 말해 보세요 — 바쁜지, 몇 시에 자는지, 오늘 기분. (3문장)",
+         ["Dạo này tôi rất bận.", "Tôi thường đi ngủ lúc mười hai giờ.", "Hôm nay tôi hơi mệt."], ["요즘 저는 아주 바빠요.", "저는 보통 12시에 자러 가요.", "오늘은 조금 피곤해요."])]
 AUD = build(2, "모의고사 2", q)

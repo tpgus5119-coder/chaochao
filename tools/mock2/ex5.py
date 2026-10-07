@@ -65,4 +65,12 @@ q.append(C3("내 주말과 취미 — 주말에 보통 무엇을 하는지, 무�
              "Thỉnh thoảng tôi đi uống cà phê với bạn bè.", "Tối thứ bảy chúng tôi thường đi xem phim.", "Tôi rất thích xem phim Việt Nam.", "Buổi tối tôi học tiếng Việt khoảng hai tiếng.", "Cuối tuần của tôi rất vui."]))
 q += D1(["xem phim", "nghe nhạc", "đọc báo", "tập thể dục", "thức khuya", "buồn ngủ", "nấu ăn", "cuối tuần", "thỉnh thoảng", "một mình"],
         ["Tôi thường xem tivi buổi tối.", "Hôm qua tôi thức khuya nên hôm nay tôi mệt.", "Cuối tuần chúng tôi đi xem phim.", "Mẹ tôi đang nấu ăn.", "Em đi ngủ lúc mấy giờ?"])
+q += [D2("xem phim", "그림을 보고 말해 보세요 — 주말에 보통 무엇을 하나요? 누구와 하나요? 어떤 영화를 좋아하나요? (3문장)",
+         ["Cuối tuần tôi thường xem phim ở nhà.", "Tôi xem phim với bạn.", "Tôi thích xem phim Việt Nam."], ["주말에 저는 보통 집에서 영화를 봐요.", "친구와 영화를 봐요.", "저는 베트남 영화를 좋아해요."]),
+      D2("nấu ăn", "그림을 보고 말해 보세요 — 이 사람은 무엇을 하고 있나요? 요리를 잘하나요? 어디에서 일하나요? (3문장)",
+         ["Anh ấy đang nấu ăn.", "Anh ấy nấu ăn rất ngon.", "Anh ấy làm việc ở tiệm ăn."], ["그는 요리를 하고 있어요.", "그는 요리를 아주 맛있게 해요.", "그는 식당에서 일해요."])]
+q += [D3("친구가 '주말에 보통 뭐 해요?'라고 묻습니다. 주말에 하는 일 세 가지를 말해 보세요. (3문장)",
+         ["Cuối tuần tôi thường đi dạo.", "Thỉnh thoảng tôi đi xem phim với bạn.", "Buổi tối tôi nghe nhạc ở nhà."], ["주말에 저는 보통 산책을 해요.", "가끔 친구와 영화를 보러 가요.", "저녁에는 집에서 음악을 들어요."]),
+      D3("친구가 '아침에 보통 몇 시에 일어나요?'라고 묻습니다. 아침 일과를 말해 보세요 — 일어나는 시간, 아침밥, 그다음 하는 일. (3문장)",
+         ["Tôi thường thức dậy lúc sáu giờ.", "Tôi ăn sáng ở nhà, rồi đi làm.", "Tôi thường không uống cà phê."], ["저는 보통 6시에 일어나요.", "집에서 아침을 먹고 출근해요.", "저는 보통 커피를 마시지 않아요."])]
 AUD = build(5, "모의고사 5", q)

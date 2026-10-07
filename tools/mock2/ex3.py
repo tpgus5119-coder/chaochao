@@ -65,4 +65,12 @@ q.append(C3("우리 가족과 친구 소개 — 몇 명인지, 누구인지, 무
              "Bạn thân của tôi tên là Hiroki.", "Anh ấy là người Nhật.", "Anh ấy làm kế toán ở ngân hàng.", "Cuối tuần chúng tôi thường đi uống cà phê.", "Tôi rất thích gia đình và bạn bè của tôi."]))
 q += D1(["gia đình", "bố mẹ", "ông bà", "con gái", "bạn thân", "luật sư", "tài xế", "nhân viên", "tuổi", "thân thiện"],
         ["Gia đình tôi có bốn người.", "Bố mẹ tôi đều là giáo viên.", "Chị tôi 25 tuổi.", "Bạn tôi là người Nhật.", "Ông bà anh có khỏe không?"])
+q += [D2("gia đình", "그림을 보고 가족을 소개해 보세요 — 몇 명인지, 누구누구인지, 아버지 직업. (3문장)",
+         ["Gia đình tôi có bốn người.", "Bố mẹ tôi, chị tôi và tôi.", "Bố tôi là kỹ sư."], ["우리 가족은 네 명이에요.", "부모님, 언니(누나) 그리고 저예요.", "아버지는 엔지니어예요."]),
+      D2("bác sĩ", "그림 속 사람은 당신의 형(오빠)입니다. 소개해 보세요 — 직업, 일하는 곳, 바쁜지. (3문장)",
+         ["Đây là anh tôi.", "Anh ấy là bác sĩ ở bệnh viện.", "Anh ấy rất bận."], ["이 사람은 제 형(오빠)이에요.", "그는 병원 의사예요.", "그는 아주 바빠요."])]
+q += [D3("친구가 '가족이 몇 명이에요?'라고 묻습니다. 가족 수와 부모님이 무슨 일을 하시는지 말해 보세요. (3문장)",
+         ["Gia đình tôi có năm người.", "Bố tôi là giáo viên.", "Mẹ tôi là nội trợ."], ["우리 가족은 다섯 명이에요.", "아버지는 선생님이에요.", "어머니는 주부예요."]),
+      D3("친한 친구를 소개해 보세요 — 이름, 어느 나라 사람인지, 무엇을 하는지. (3문장)",
+         ["Bạn thân của tôi tên là Brian.", "Anh ấy là người Mỹ.", "Anh ấy là sinh viên."], ["제 친한 친구 이름은 브라이언이에요.", "그는 미국 사람이에요.", "그는 대학생이에요."])]
 AUD = build(3, "모의고사 3", q)

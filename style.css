@@ -3036,3 +3036,7 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 /* 시험 이어 하기 — 들어가는 화면의 안내 줄 (2026-10-07) */
 .resumerow{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:-6px 0 12px; padding:0 4px; font-size:13px}
 .resumetag{color:var(--accent)}
+
+/* 시험지 말하기 — 모범 답안 줄 (2026-10-07) */
+.fxmrow{display:flex; gap:8px; align-items:flex-start; margin:6px 0; text-align:left; line-height:1.4}
+.fxmrow > button{flex:0 0 auto}

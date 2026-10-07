@@ -451,7 +451,7 @@ const UIVI = {
   '이번 주': 'Tuần này',
   '이번 주 (': 'Tuần này (',
   '이번 주 시작하기': 'Bắt đầu tuần này',
-  '이어서': 'Tiếp tục', '이어서 풀기': 'Làm tiếp', '처음부터': 'Làm lại từ đầu', '푼 자리가 저장돼 있습니다': 'Đã lưu chỗ đang làm',
+  '이어서': 'Tiếp tục', '원어민 듣기': 'Nghe người bản xứ', '맞게 읽었어요': 'Đọc đúng', '틀렸어요': 'Đọc sai', '소리 내어 읽은 뒤 스스로 매기세요': 'Đọc to rồi tự chấm', '다 말했어요 — 모범 답안 보기': 'Đã nói xong — xem đáp án mẫu', '맞게 말한 문장이 몇 개인가요?': 'Bạn nói đúng mấy câu?', '내 소리 듣기': 'Nghe lại giọng tôi', '이어서 풀기': 'Làm tiếp', '처음부터': 'Làm lại từ đầu', '푼 자리가 저장돼 있습니다': 'Đã lưu chỗ đang làm',
   '읽기 + 질문 5개': 'Đọc to + 5 câu hỏi',
   '자랑 카드 만들기': 'Tạo thẻ khoe thành tích',
   '자주 헷갈리는 짝 (귀 훈련)': 'Cặp hay nhầm (luyện tai)',
@@ -2393,6 +2393,28 @@ function singRow(text, kr) {
   };
   api.at(null);
   return api;
+}
+
+/* 자유 녹음 — 시험지 말하기(그림·상황)용. 견줄 글이 없으니 녹음해 다시 듣기만 한다(최대 20초, 서버로 안 감) (2026-10-07) */
+async function freeRec(btn, box) {
+  if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
+  try { if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+  catch (e) { box.textContent = tr('마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.'); return; }
+  const chunks = [], mr = new MediaRecorder(REC.stream); REC.mr = mr; REC.key = null;
+  mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+  const secs = 20;
+  const kill = liveRec(box, REC.stream, secs, () => { if (mr.state === 'recording') mr.stop(); });
+  mr.onstop = () => {
+    kill(); releaseMic();
+    if (REC.url) URL.revokeObjectURL(REC.url);
+    REC.url = URL.createObjectURL(new Blob(chunks, { type: mr.mimeType }));
+    btn.dataset.on = '0'; btn.classList.remove('rec-on');
+    box.textContent = '';
+    const pb = el('button', 'ghost', '▶ ' + tr('내 소리 듣기')); pb.type = 'button'; pb.onclick = () => { const a = new Audio(REC.url); a.play().catch(() => { }); };
+    box.append(pb);
+  };
+  mr.start(); btn.dataset.on = '1'; btn.classList.add('rec-on');
+  setTimeout(() => { if (mr.state === 'recording') mr.stop(); }, secs * 1000);
 }
 
 /* 입모양 2D — 정면 입술(왼쪽)과 옆 단면(오른쪽: 혀·입천장·연구개·콧길·성대) (대표님 지시 2026-09-25 #6, 09-26 배치·글자 정리).
@@ -11045,9 +11067,10 @@ function startExam1(key, r) {
     const L = J.q.map(x => {
       const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
       if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles }, mode: 'puzzle', sec: x.sec, opts: [] };
-      if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '' }, mode: 'say', sec: x.sec, opts: [] };
+      if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '', fx: x }, mode: 'fx', sec: x.sec, opts: [] };   // D1 발음 — 읽고 녹음해 스스로 매김 (2026-10-07)
+      if (x.k === 'speak') return { w: { vi: x.ask, ko: '', nograde: true, fx: x }, mode: 'fx', sec: x.sec, opts: [] };                      // D2 그림·D3 상황 말하기
       return { w, mode: 'fx', sec: x.sec, opts: [] };
-    }).filter(q => q.mode !== 'say');                      // 시험지의 D 말하기는 앱에서 안 낸다 (2026-10-06)
+    });                                                    // D 말하기도 낸다 (2026-10-07, 대표님 "말하기 시험은 니가 창조") — 폰 판정은 참고만, 점수는 스스로 매긴다
     SBOX = 'bsrs';
     Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, fixed: key, deadline: Date.now() + J.time * 60000 };
     if (r) resumeApply(r);                                 // 이어서 — 푼 자리·답·남은 시간 (2026-10-07)
@@ -11112,6 +11135,36 @@ function drawFixed(body, q) {
       line.append(bt);
     });
     body.append(el('p', 'note', tr('틀린 낱말을 누르세요')), line); return;
+  }
+  if (x.k === 'say') {                                     // D1 발음 — 글을 보고 소리 내어 읽는다. 녹음해 원어민과 견주고(폰 판정은 참고) 스스로 매긴다 (2026-10-07)
+    body.append(el('div', 'qmain' + (x.vi.split(/\s+/).length > 2 ? ' sent' : ''), esc(x.vi)));
+    const row = el('div', 'qplay'), cb = el('div', 'cmpbox');
+    if (canRecord()) row.append(recBtn(x.vi, cb));
+    { const lb = el('button', 'ghost', '▶ ' + tr('원어민 듣기')); lb.type = 'button'; lb.onclick = () => say(x.vi); row.append(lb); }
+    body.append(row, cb, el('p', 'q mid', tr('소리 내어 읽은 뒤 스스로 매기세요')));
+    const g = el('div', 'opts');
+    [['맞게 읽었어요', true], ['틀렸어요', false]].forEach(([t, v]) => {
+      const b = el('button', null, tr(t)); b.onclick = () => { [...g.children].forEach(c => c.disabled = true); b.dataset.r = v ? 'ok' : 'no'; q._ok = v; q._ans = true; hideSkip(); if (v) Q.ok++; nextBtn(body, () => { Q.i++; drawQuiz(); }); };
+      g.append(b);
+    });
+    body.append(g); return;
+  }
+  if (x.k === 'speak') {                                   // D2 그림 보고 말하기 · D3 상황 읽고 말하기 — 자유 녹음 → 모범 답안 → 맞게 말한 문장 수를 스스로 (2026-10-07)
+    body.append(el('div', 'fxtext', esc(x.ask)));            // 그림은 위에서 이미 붙였다(x.img)
+    const row = el('div', 'qplay'), cb = el('div', 'cmpbox');
+    if (canRecord()) { const mic = el('button', 'rec', ICON.mic + '<span>' + tr('말하기') + '</span>'); mic.type = 'button'; mic.onclick = () => freeRec(mic, cb); row.append(mic); }
+    body.append(row, cb);
+    const done = el('button', 'primary big', tr('다 말했어요 — 모범 답안 보기')); done.style.width = '100%';
+    done.onclick = () => {
+      done.disabled = true;
+      const md = el('div', 'fxmodel'); md.append(el('b', null, tr('모범 답안')));
+      x.model.forEach(m => { const r = el('div', 'fxmrow'); const b = el('button', 'ghost sm', '▶'); b.type = 'button'; b.onclick = () => say(m.vi); r.append(b, el('span', null, esc(m.vi) + '<br><small class="dimtxt">' + esc(m.ko) + '</small>')); md.append(r); });
+      body.append(md, el('p', 'q mid', tr('맞게 말한 문장이 몇 개인가요?')));
+      const g = el('div', 'opts');
+      for (let n = 0; n <= x.n; n++) { const b = el('button', null, String(n)); b.onclick = () => { [...g.children].forEach(c => c.disabled = true); b.dataset.r = 'ok'; q._score = n / x.n; q._ok = n === x.n; q._ans = true; hideSkip(); if (q._ok) Q.ok++; nextBtn(body, () => { Q.i++; drawQuiz(); }); }; g.append(b); }
+      body.append(g);
+    };
+    body.append(done); return;
   }
   if (x.k === 'free') {
     const ta = el('textarea', 'fxfree'); ta.rows = x.n + 1; ta.placeholder = tr('문장을 한 줄에 하나씩');
@@ -11405,7 +11458,8 @@ function finishWeekly() {
      말하기를 못 본 기기(녹음 안 됨)는 말하기를 빼고 만점을 줄인다 */
   const W = { A: 30, B: 30, C: Q.exam1 ? 20 : 10, D: 20 }, NM = { A: '듣기', B: '읽기', C: '쓰기', D: '말하기' };   // 1차 시험지 그대로면 쓰기 20 (그림 5문장은 스스로 매김)
   const sc = q => q._score !== undefined ? q._score : (q._ok ? 1 : 0);
-  const part = {}; Q.list.forEach(q => { const k = (q.sec || '')[0]; if (!W[k]) return; const p0 = part[k] = part[k] || [0, 0]; p0[1]++; p0[0] += sc(q); });
+  const wt = q => (q.w && q.w.fx && q.w.fx.pts) || 1;   // 시험지 배점(pts): C3 10문장 10 · D 낱말 1·문장 2·그림/상황 5 — 전에는 문항마다 같은 무게라 C3 이 11분의 1이었다 (2026-10-07)
+  const part = {}; Q.list.forEach(q => { const k = (q.sec || '')[0]; if (!W[k]) return; const p0 = part[k] = part[k] || [0, 0]; p0[1] += wt(q); p0[0] += sc(q) * wt(q); });
   const pts = Object.entries(part).map(([k, [o, n]]) => [k, Math.round(o / n * W[k] * 4) / 4, W[k]]);
   const got = pts.reduce((a, x) => a + x[1], 0), max = pts.reduce((a, x) => a + x[2], 0);
   const r = el('div', 'result');
