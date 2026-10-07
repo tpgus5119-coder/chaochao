@@ -2827,7 +2827,7 @@ function hanQuiz(pane, pool) {
    차례: 첫소리 → 모음 → 겹모음 → 받침(모음을 알아야 연습됨) → 성조 → 헷갈리는 소리. 자료 원본은 tools/build_basics.py */
 /* 2026-09-29 대표님 지시 "i와 y의 차이 · 각 모음 위의 모자·성조 · gio 같은 결합 — 관련된 모든 것 / 숫자 읽는 규칙 자세하게 / 긴 글을 나누는 기준(학문적으로)"
    → 철자·성조 부호 규칙(P7)·숫자 읽기(P8)·끊어 읽기(P9). 숫자·끊어 읽기 카드는 입모양 대신 규칙이 주인공이라 입모양 판을 안 그린다(x.nomouth). */
-const BASIC_ORDER = ['P3', 'P1', 'P4', 'P5', 'P2', 'P6', 'P7', 'P8', 'P9'];
+const BASIC_ORDER = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'];   // 모음 → 성조 → 자음 → 겹모음 → 받침 → … (2026-10-07 검증: Tiếng Việt 1 은 모음 a 로 시작해 성조 다섯을 첫 2주 안에 다 가르침 — 전의 '첫소리→운→성조'는 음절 짜임이지 단원 차례가 아니었다)
 function studyBasicsEntry() {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyBasicsEntry();
@@ -12623,6 +12623,7 @@ function tonePos(syl) {
   const V = [];
   [...bare].forEach((ch, k) => { if (/[aăâeêioôơuưy]/i.test(ch)) V.push(k); });
   if (!V.length) return -1;
+  if (/^(qu|gi)/i.test(bare) && V.length > 1 && V[0] === 1) V.shift();   // qu·gi 의 u·i 는 주 모음이 아니다 — quas→quá, gias→giá (검증 보고 2026-10-07; 전에는 qúa·gía 로 찍혔다)
   for (const k of V) if (/[ơê]/i.test(bare[k])) return k;   // ơ·ê 가 있으면 무조건 거기
   if (V.length === 1) return V[0];
   const last = V[V.length - 1];
