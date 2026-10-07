@@ -2982,7 +2982,7 @@ function studyGramEntry(scroll) {
      그 문법이 처음 나오는 과가 이른 것부터 — 근거는 tools/grammar_order/순서.tsv. 과 열쇠(gkey)는 그대로라 진도는 안 깨진다. 출처 글은 뺐다 */
   /* 단계 재배치 (2026-10-07, 대표님 "현업 — 베스트셀러·스테디셀러 교재와 어플 — 을 참고해 근거를 가지고"): 근거는 tools/grammar_order/순서.tsv (핵심패턴 233 번호·첫걸음 책 과·듀오링고 단원) */
   const GSTAGE = [['1단계', '처음 말하기', [2, 3, 4, 7, 6, 8, 12, 13, 5]], ['2단계', '때·일상·할 수 있다·왜', [9, 10, 22, 11, 16, 17, 18, 19, 14, 28, 26, 15]],
-                  ['3단계', '부탁·비교·말투', [45, 20, 21, 25, 39, 32, 33, 23, 27, 37, 38, 24, 30, 40, 41]], ['4단계', '더 자연스럽게', [29, 31, 34, 35, 36, 42, 43, 44]]];
+                  ['3단계', '부탁·비교·말투', [45, 20, 21, 25, 39, 32, 33, 23, 27, 37, 38, 24, 30, 40, 41]], ['4단계', '더 자연스럽게', [29, 31, 46, 34, 35, 36, 42, 43, 44]]];   // 46 = 47과 갈수록·~해지다 (33과에서 쪼갬, 2026-10-07)
   const byNi = {}; units.forEach(u => { byNi[u.ni] = u; });
   let num = 0;
   GSTAGE.forEach(([k, sub, nis]) => {
@@ -7247,7 +7247,8 @@ function noteTrack(d) {
   else if (typeof d.day === 'string' && (d.day[0] === 'G' || d.day[0] === 'P')) t = 'gram';
   if (t && S.lastTrack !== t) { S.lastTrack = t; save(); }
 }
-const GRAM_ORD = [2, 3, 4, 7, 6, 8, 12, 13, 9, 10, 22, 11, 16, 17, 18, 14, 26, 15, 45, 20, 21, 39, 32, 28, 19, 23, 5, 27, 24, 30, 41, 25, 29, 31, 33, 34, 35, 36, 37, 38, 40, 42, 43, 44];
+/* 문법 화면(GSTAGE)과 같은 차례 — 2026-10-07 단계 재배치·47과 추가에 맞춤. GSTAGE 를 고치면 여기도 같이 */
+const GRAM_ORD = [2, 3, 4, 7, 6, 8, 12, 13, 5, 9, 10, 22, 11, 16, 17, 18, 19, 14, 28, 26, 15, 45, 20, 21, 25, 39, 32, 33, 23, 27, 37, 38, 24, 30, 40, 41, 29, 31, 46, 34, 35, 36, 42, 43, 44];
 /* 방금 끝낸 세트의 **바로 다음** 세트 — 같은 갈래·같은 차례에서 하나 뒤. 마지막이면 없음(null).
    대표님 지시 2026-10-05: "다음 세트 누르면 그 챕터의 다음 챕터를 학습할 수 있어야지. 왜 다른 학습으로 가냐 · 마지막 챕터면 다음 챕터가 없는 거지"
    (전에는 resumeNext 로 '마지막 갈래의 안 끝난 첫 세트'를 골라, 22기·다 끝낸 갈래에서는 일상으로 넘어갔다) */
@@ -11234,6 +11235,21 @@ function resumeApply(r) {
   return true;
 }
 /* 시험 들어가는 화면의 [이어서 풀기 n/N] 안내 줄 + [처음부터] */
+/* 시험 단추를 누를 때 — 푼 자리가 있으면 [이어서 n/N] / [처음부터] 를 고르고, 없으면 바로 시작 (대표님 2026-10-07 "모의고사 누르면 그때 처음부터 할지 이어서 할지 선택하게") */
+function resumeAsk(k, start) {
+  const r = resumeGet(k);
+  if (!r) { start(null); return; }
+  const back = el('div', 'modalback'), box = el('div', 'modalbox');
+  box.append(el('div', 'modalb', '<b>' + r.i + ' / ' + r.items.length + '</b>'));
+  const row = el('div', 'rolepick');
+  const fresh = el('button', 'ghost', tr('처음부터')); fresh.type = 'button';
+  const cont = el('button', 'primary', tr('이어서')); cont.type = 'button';
+  fresh.onclick = () => { back.remove(); resumeClear(k); start(null); };
+  cont.onclick = () => { back.remove(); start(r); };
+  row.append(fresh, cont); box.append(row); back.append(box);
+  back.onclick = e => { if (e.target === back) back.remove(); };
+  document.body.append(back);
+}
 function resumeRow(k, onFresh) {
   const r = resumeGet(k); if (!r) return null;
   const row = el('div', 'resumerow');                      // 안내 글은 안 쓴다 — 큰 단추에 '이어서 n/N' 이 이미 보인다 (대표님 2026-10-07 "푼 자리가 저장돼 있습니다 이딴 글자 다 빼라")
@@ -11375,9 +11391,8 @@ function weeklyRound(r) {
     /* 범위·시간·채점 방식 글은 안 쓴다 (대표님 2026-10-07 "메인교재 1권 1~7과 · 끝에 채점 이런 글자들 다 빼라") — 지난 결과와 이어서 n/N 만 */
     const meta = [done ? tr('지난 결과') + ' ' + done.ok + '/' + done.tot : '', rs ? '<b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b>' : ''].filter(Boolean).join(' · ');
     eb.append(el('b', null, esc(tr(e.name)) + (meta ? ' <span class="exmeta">' + meta + '</span>' : '')));
-    eb.onclick = () => { dive(() => weeklyRound(r)); startExam1(k, resumeGet('fixed:' + k)); };
+    eb.onclick = () => resumeAsk('fixed:' + k, rs2 => { dive(() => weeklyRound(r)); startExam1(k, rs2); });   // 푼 자리가 있으면 누를 때 이어서/처음부터 고르기 (대표님 2026-10-07)
     b.append(eb);
-    const rr = resumeRow('fixed:' + k, () => { dive(() => weeklyRound(r)); startExam1(k); }); if (rr) b.append(rr);
   });
   show('exam', r.name, true);
 }
@@ -11454,10 +11469,9 @@ function dailyRound(t) {
   b.append(el('p', 'lede', esc(t.cls + tr('반') + ' ' + t.date + ' ' + tr('단어 시험'))));
   b.append(el('p', 'note', tr('낱말 N개 · 문장 10개 · 모두 M문제').replace('N', t.words.length).replace('M', tot)));
   const rs = resumeGet('daily:' + t.key);                   // 푼 자리가 있으면 [이어서 풀기 n/N] + [처음부터] (2026-10-07)
-  const go = el('button', 'primary big', rs ? tr('이어서 풀기') + ' ' + rs.i + ' / ' + rs.items.length : tr('시험 보기')); go.style.width = '100%';
-  go.onclick = () => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t, resumeGet('daily:' + t.key))); };
+  const go = el('button', 'primary big', tr('시험 보기') + (rs ? ' <span class="exmeta"><b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b></span>' : '')); go.style.width = '100%';
+  go.onclick = () => resumeAsk('daily:' + t.key, r2 => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t, r2)); });   // 누를 때 이어서/처음부터 고르기 (대표님 2026-10-07)
   b.append(go);
-  const rr = resumeRow('daily:' + t.key, () => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t)); }); if (rr) b.append(rr);
   if (rec && rec.runs && rec.runs.length) {
     b.append(el('p', 'anasec', tr('지난 결과') + ' <span>' + tr('최고') + ' ' + rec.best + ' / ' + tot + '</span>'));
     b.append(el('p', 'dimtxt', rec.runs.slice(-5).reverse().map(r => esc(String(r.d).slice(5).replace('-', '/')) + ' · ' + r.ok + ' / ' + r.tot).join('<br>')));

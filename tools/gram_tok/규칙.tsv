@@ -100,12 +100,12 @@
 18.5	cách
 18.6	trong (\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|vài|mấy|bao+lâu|suốt|khoảng)
 18.7	(trước|trong|sau)+khi
-19.0	muốn
-19.1	biết
-19.2	(nói|biết) _ (một+chút|khá|giỏi|tốt|kém)
-19.3	có+thể;được
-19.4	được+không ?
-19.5	nào+cũng+được
+23.0	muốn
+19.0	biết
+19.1	(nói|biết) _ (một+chút|khá|giỏi|tốt|kém)
+19.2	có+thể;được
+19.3	được+không ?
+19.4	nào+cũng+được
 20.0	re:(?<![A-Za-zÀ-ỹĐđ])phải(?![A-Za-zÀ-ỹĐđ])(?!\s*(không|là))
 20.1	cần
 20.2	nên
@@ -123,12 +123,12 @@
 22.4	làm+ơn
 22.5	làm+ơn+cho
 22.6	xin+phép
-23.0	(mong|hy+vọng|hi+vọng|ước)
-23.1	định
-23.2	thử
-23.3	dám
-23.4	(thói+quen|quen)
-23.5	(sở+thích|thích)
+23.1	(mong|hy+vọng|hi+vọng|ước)
+23.2	định
+23.3	thử
+23.4	dám
+23.5	(thói+quen|quen)
+23.6	(sở+thích|thích)
 24.0	cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|con|bạn) _ (một|hai|ba|cái|ly|cốc|bát|phần|chút|ít|quyển|cuốn|chiếc|\d)
 24.1	(nói|gửi|mua|tặng|viết|gọi|đưa|làm|dạy|kể|để+lại|chuyển) _ cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|con|bạn|cô|ông|bà|họ|mẹ|bố|ai)
 24.2	cho (đẹp|nhanh|sạch|kỹ|rõ|tốt|chắc|vui|khỏe|dễ|đúng|cẩn+thận)
@@ -175,10 +175,10 @@
 33.0	hơn
 33.1	thích _ hơn
 33.2	như
-33.3	càng _ càng
-33.4	ngày+càng
-33.5	(béo|gầy|đẹp|xấu|trẻ|già|khỏe|tốt|lớn|nhỏ|cao|thấp|nhanh|chậm|nóng|lạnh|giỏi|xinh|mập|ốm) (ra|đi|lên|lại)
-33.6	(trở+thành|trở+nên)
+47.0	càng _ càng
+47.1	ngày+càng
+47.2	(béo|gầy|đẹp|xấu|trẻ|già|khỏe|tốt|lớn|nhỏ|cao|thấp|nhanh|chậm|nóng|lạnh|giỏi|xinh|mập|ốm) (ra|đi|lên|lại)
+47.3	(trở+thành|trở+nên)
 34.0	vừa _ vừa
 34.1	vừa _ vừa
 34.2	không _ cũng+không
@@ -253,8 +253,8 @@
 17.6	(gần|xa|bên+phải|bên+trái|bên+cạnh|cạnh|giữa|đối+diện|bao+xa)
 27.7	và
 28.6	nữa
-33.7	nhất
-33.8	(giống|khác)
+33.3	nhất
+33.4	(giống|khác)
 39.4	(không+sao|được+rồi|tất+nhiên)
 42.5	(có+lẽ|chắc+là|chắc)
 # ── add3.py (사이드 1권 문법 상자에서)
@@ -262,5 +262,5 @@
 16.4	là+người (tốt|xấu|hiền|vui+tính|thông+minh|chăm+chỉ|lười|tử+tế|thế+nào|như+thế+nào|rất|khá|hơi)
 16.5	trông
 17.7	(sống|làm+việc|học|dạy|ở|làm|ăn|gặp|mua|chơi|ngủ|nghỉ) (ở|tại) _
-33.9	bằng (nhau|anh|chị|em|tôi|bạn|cô|ông|bà|nó|họ|cái|con|người|mình|cậu)
+33.5	bằng (nhau|anh|chị|em|tôi|bạn|cô|ông|bà|nó|họ|cái|con|người|mình|cậu)
 10.6	sắp _ chưa ?

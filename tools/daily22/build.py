@@ -23,7 +23,7 @@ def text_of(p):
                                  for para in re.findall(r'<w:p(?:\s[^>]*)?>.*?</w:p>', x, flags=re.S)) if t)
 GRAM = [(r'không phải là', 4), (r'\blà\b', 4), (r'\bcủa\b', 4), (r'\bcũng\b', 4), (r'\bcó\b[^?]*\bkhông\?', 5), (r'phải không', 5),
         (r'\bgì\b', 5), (r'\bai\b', 5), (r'nước nào', 5), (r'thế nào', 5), (r'\bmấy\b', 8), (r'bao nhiêu', 8), (r'\bđã\b|\bđang\b|\bsẽ\b', 10),
-        (r'\bchưa\b', 11), (r'\brất\b|\bquá\b', 12), (r'ở đâu|đi đâu|từ đâu', 17), (r'\bđều\b', 28), (r'\bđược\b|\bbiết\b|có thể|\bmuốn\b', 19)]
+        (r'\bchưa\b', 11), (r'\brất\b|\bquá\b', 12), (r'ở đâu|đi đâu|từ đâu', 17), (r'\bđều\b', 28), (r'\bđược\b|\bbiết\b|có thể', 19), (r'\bmuốn\b', 23)]   # muốn 은 23과로 옮김 (2026-10-07)
 SPLIT = {'b12': 20}
 DIRS = {'b14': ('to_ko', {"bài học", "bạn thân", "bản thân", "bẩn", "bận", "bật", "chương trình", "chỉ", "căng tin", "già", "hai lần", "hết game", "kết hôn", "lát nữa", "lên mạng", "màn hình", "mát", "mùa", "mượn", "mạng", "ngày thường", "nhỏ", "nửa đêm", "phim tình cảm", "rảnh", "sạch", "thơm", "thường", "thối", "thời gian", "tin tức", "trung tâm mua sắm", "trở thành", "tám giờ đúng", "tầng", "tắt", "vay", "đánh răng", "đặt", "để"}), 'b13': ('to_ko', {'mở', 'đông', 'báo'}), 'a13': ('to_ko', {w.lower() for w in ['ngồi','thử','bằng','đặc biệt','cuối tuần','phố đi bộ','mắc','mời','cảm xúc','giỏi','khách','đài truyền hình','sau khi','yếu','nói chuyện','đi dạo','vì ... nên','thân thiện','nên','khen']})}   # a13: 표에서 흘린 줄 때문에   # 표 꼴 시험지(낱말 칸이 문단으로 쪼개져 방향을 못 읽음): 기본 방향, 뜻→베트남어인 낱말들 (2026-10-07)
 OVR = {('b1', 'tắc xi'): 'to_ko', ('a12', 'nên'): 'to_ko'}   # a12 '39 Nên (단독)' — 뒤 괄호 때문에 못 읽음   # 시험지 'Taxi'(베트남어 칸) — 앱 표제어는 tắc xi 라 글자로 못 찾는다
