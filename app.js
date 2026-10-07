@@ -7324,7 +7324,9 @@ function renderDays() {
     .sort((a, b) => (a.n || 0) - (b.n || 0));
 
   /* 단추 목록 (2026-09-27: 길 그림 없앰). 번호·제목·끝냄 표시만 */
+  /* 세트 줄 밑에 그 세트의 소묶음(뜻 묶음: 과일 · 채소 …) — 챕터 안 낱말이 어떤 묶음으로 어떤 차례인지 보이게 (2026-10-07 재편) */
   const nodes = days.map((d, i) => ({ key: d.day, title: d.theme, num: i + 1, done: !!S.done[d.day],
+                                      rel: [...new Set((d.words || []).map(w => w.g).filter(Boolean))].join(' · '),
                                       fn: () => { dive(renderDays); startLearn(d); } }));
   roadInList(list, nodes);
   show('course', '일상 단어', true);
@@ -9313,9 +9315,9 @@ const REL_GROUPS = [
   { gram: [17, 18], life: ['오고 가기', '길 묻기', '길', '교통'] },
   { gram: [27, 29, 31], life: ['이어 주는 말'] },
   { gram: [12, 43], life: ['자리를 나타내는 말', '정도·관계를 나타내는 말'] },
-  { gram: [21, 22, 24], life: ['부탁하고 약속하기'] },
+  { gram: [21, 22, 24], life: ['부탁과 약속'] },   // 2026-10-07 재편 이름
   { gram: [46], life: ['식당', '카페'] },
-  { gram: [42], life: ['생각 말하기', '의견'] },
+  { gram: [42], life: ['생각과 의견'] },
 ];
 function relChips() {
   if (!L || !L.day) return [];
@@ -9969,6 +9971,7 @@ function drawFlash() {
   const c = el('div', 'card flcard' + (w.sent ? ' flsent' : ''));
   const top = el('div', 'flhead');
   top.append(el('span', 'flcount', tr('카드') + ' ' + (FL.i + 1) + ' / ' + FL.list.length), el('span', 'flpill', esc($('#title').textContent.replace(/ 카드$/, ''))));
+  if (w && w.g) top.append(el('span', 'flgrp', esc(w.g)));   // 소묶음(과일 · 채소 …) — 2026-10-07 재편
   c.append(top);
   const p = pic(w, 'pic'); if (p) c.append(p);
   c.append(el('div', 'vi', esc(w.vi)));
