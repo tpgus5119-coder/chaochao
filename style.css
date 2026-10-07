@@ -2137,10 +2137,14 @@ svg.curve.pw .pwword{transition:none}
 .wctl button{padding:8px 14px; font-size:14px; font-weight:650; min-width:0}
 .wfcard .cmpbox, .wfpron .cmpbox{margin-top:2px}
 /* 재생 막대 */
-.pbar{display:flex; align-items:center; gap:10px; margin-top:12px; padding:8px 12px;
+.pbar{display:flex; align-items:center; gap:10px; margin-top:12px; padding:8px 12px 8px 8px; width:100%; box-sizing:border-box;
   border:1px solid var(--line); border-radius:14px; background:var(--card)}
 .prng{flex:1; min-width:0; height:28px; accent-color:var(--accent); cursor:pointer}
-.ptm{flex:0 0 auto; min-width:78px; text-align:right; font-size:12px; color:var(--dim); font-variant-numeric:tabular-nums}
+/* 재생 막대 왼쪽 ▶/⏸ (2026-10-07) — 시간 표시(.ptm)는 뺐다 */
+.pbtn{flex:0 0 auto; width:44px; height:44px; border-radius:50%; border:0; background:var(--accent); color:var(--accent-fg);
+  display:inline-flex; align-items:center; justify-content:center; padding:0; cursor:pointer}
+.pbtn svg{width:24px; height:24px; fill:currentColor; stroke:none; display:block}
+.pbtn.on{background:var(--fg); color:var(--bg)}
 /* 헷갈리는 짝 팝업 */
 .pairpop{max-width:380px; max-height:82vh; overflow:auto; display:flex; flex-direction:column; gap:12px}
 .pairpophd{display:flex; align-items:baseline; gap:10px}
@@ -2173,7 +2177,8 @@ svg.curve.pw .pwword{transition:none}
 .pgwrap{margin-top:12px; width:100%}
 .pgraph{position:relative; padding:6px 4px 2px}
 .slowtap{cursor:pointer; -webkit-tap-highlight-color:transparent}
-.slowtaphint{font-size:12px; color:var(--dim); text-align:center; margin-top:2px}
+/* 발음 면의 그래프(big) — 따라가는 입도 크게 (2026-10-07) */
+.pgraph.big .pgmk.mouth{width:86px; height:74px}
 .pgsvg svg{display:block; width:100%; height:auto}
 .pgsvg svg.curve.pw .played{stroke:var(--fg); stroke-width:3.2}
 .pgsvg svg.curve.pw .mine{stroke:var(--accent); stroke-width:2.6; opacity:.6}
@@ -2218,6 +2223,18 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 .mouthsw button.on{background:var(--accent); color:var(--accent-fg); border-color:var(--accent)}
 .mouthsvg[data-v="front"] svg{max-width:360px; margin:0 auto}
 .mouthsvg[data-v="side"] svg{max-width:420px; margin:0 auto}
+/* 발음 면(big): 발음 면 자체를 카드 안쪽 여백까지 넓히고, 입모양·재생 막대·그래프가 그 폭을 꽉 채운다 (대표님 2026-10-07 "최대한 꽉 채워") */
+.wfpron{width:calc(100% + 28px); margin-left:-14px; margin-right:-14px}
+.mouthbox.big{width:100%; box-sizing:border-box; padding:8px 6px 10px}
+.mouthbox.big .mouthsvg svg{max-width:none}
+/* 소리 따라 칠해지는 낱말·한글 발음 (singRow, 2026-10-07) — 같은 글 두 겹, 위 겹은 강조색이고 clip-path 로 왼쪽부터 보인다 */
+.sing{display:flex; flex-direction:column; align-items:center; gap:2px; margin:0 0 8px}
+.sing > div{position:relative; display:inline-block; line-height:1.2; white-space:nowrap}
+.sing .sbase{display:inline-block}
+.sing .sover{position:absolute; left:0; top:0; color:var(--accent); clip-path:inset(0 100% 0 0); pointer-events:none}
+.singvi{font-size:34px; font-weight:800; letter-spacing:.01em; color:var(--fg)}
+.singkr{font-size:19px; font-weight:700; color:var(--dim)}
+.sing.on .singvi{color:color-mix(in srgb, var(--fg) 55%, var(--card))}
 
 /* ── 홈: 인사 · 앵무 '짜오' · 오늘 학습/복습 (2026-09-27) ── */
 .hgreet{padding:6px 2px 0}

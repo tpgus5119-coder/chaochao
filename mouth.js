@@ -106,50 +106,72 @@ const MOUTH = (() => {
     'uyê': ['u', 'i', 'aa'], 'iêu': ['i', 'aa', 'u'], 'yêu': ['i', 'aa', 'u'], 'ươi': ['uw', 'ow', 'i'], 'ươu': ['uw', 'ow', 'u'],
     'uôi': ['u', 'aa', 'i'], 'oeo': ['u', 'e', 'u'], 'uyu': ['u', 'i', 'u'],
   };
-  /* 음절 하나 → [{id, w}] (w = 상대 길이) */
+  /* 음절 하나 → [{id, w, n}] (w = 상대 길이, n = 그 소리를 적는 철자 수 — 철자 칠해 가기용, 2026-10-07).
+     n 의 합은 성조 부호를 뗀 음절 글자 수와 같다(qu → q·u, gì 는 g·ì — gi 의 i 가 모음도 겸할 때). */
   function sylPhonemes(sy) {
     let s = baseOf(sy), out = [], m;
     m = s.match(/^(ngh|ng|nh|ph|th|tr|ch|gh|gi|kh|qu|[bcdđghklmnpqrstvx])/);
     let onset = m ? m[1] : '';
-    let rest = s.slice(onset.length);
-    if (onset === 'gi' && !/^gi[aăâeêioôơuưy]/.test(s)) rest = 'i' + s.slice(2);    // gì·gìn: gi 의 i 가 모음도 겸한다 → z + i
-    if (onset === 'qu') { out.push({ id: 'k', w: .18 }, { id: 'u', w: .12 }); }
-    else if (onset) out.push({ id: ONSET[onset] || 'b', w: onset === 'h' ? .18 : .22 });
+    let rest = s.slice(onset.length), onN = onset.length;
+    if (onset === 'gi' && !/^gi[aăâeêioôơuưy]/.test(s)) { rest = 'i' + s.slice(2); onN = 1; }    // gì·gìn: gi 의 i 가 모음도 겸한다 → z + i
+    if (onset === 'qu') { out.push({ id: 'k', w: .18, n: 1 }, { id: 'u', w: .12, n: 1 }); }
+    else if (onset) out.push({ id: ONSET[onset] || 'b', w: onset === 'h' ? .18 : .22, n: onN });
     m = rest.match(/(ch|c|ng|nh|n|m|p|t)$/);
     let coda = m ? m[1] : '';
     let nuc = coda ? rest.slice(0, rest.length - coda.length) : rest;
     if (!nuc && coda) { nuc = coda; coda = ''; }
-    let seq = VSEQ[nuc];
-    if (!seq) { seq = []; for (const ch of nuc) { const id = VOW1[ch]; if (id && seq[seq.length - 1] !== id) seq.push(id); } }
-    if (!seq.length) seq = ['a'];
+    let seq = VSEQ[nuc], ns = null;
+    if (seq) ns = seq.map(() => 1);                                  // 겹모음 표의 글자 수 = 소리 수
+    else {
+      seq = []; ns = []; let pend = 0;                               // 표에 없는 모음 줄 — 같은 소리가 이어지면 한 소리에 글자를 보탠다
+      for (const ch of nuc) {
+        const id = VOW1[ch];
+        if (!id) { pend++; continue; }
+        if (seq[seq.length - 1] === id) ns[ns.length - 1] += 1 + pend;
+        else { seq.push(id); ns.push(1 + pend); }
+        pend = 0;
+      }
+      if (pend) { if (ns.length) ns[ns.length - 1] += pend; else { seq = ['a']; ns = [pend]; } }
+    }
+    if (!seq.length) { seq = ['a']; ns = [nuc.length]; }
     const round = /[oôu]$/.test(nuc);
-    seq.forEach((id, i) => out.push({ id, w: (coda ? .5 : .68) / seq.length }));
+    seq.forEach((id, i) => out.push({ id, w: (coda ? .5 : .68) / seq.length, n: ns[i] }));
     if (coda) {
       const id = coda === 'p' ? 'p' : coda === 't' ? 'tf' : coda === 'c' ? (round ? 'kp' : 'kf') : coda === 'ch' ? 'kf' :
         coda === 'm' ? 'm' : coda === 'n' ? 'n' : coda === 'ng' ? (round ? 'ngm' : 'ng') : 'nh';
-      out.push({ id, w: .22 });
+      out.push({ id, w: .22, n: coda.length });
     }
+    const used = out.reduce((a, p) => a + p.n, 0);                   // 글자 수가 안 맞으면(낯선 글자) 마지막 소리에 몰아 준다
+    if (used !== s.length && out.length) out[out.length - 1].n += s.length - used;
     return out;
   }
-  /* 낱말 → 키프레임 [[t, 자세], ...] (0~1) — 음절마다 같은 몫, 그 안에서는 소리 무게대로 */
+  /* 낱말 → 키프레임 [[t, 자세], ...] (0~1) — 음절마다 같은 몫, 그 안에서는 소리 무게대로.
+     segs 에는 소리마다 시작·끝(a·b, 0~1)과 철자 자리(li = 낱말 안 글자 번호, len = 글자 수, si = 음절 번호),
+     syl 에는 음절마다 a·b·li·len 을 같이 돌려준다 — 철자 칠해 가기(app.js singRow)가 읽는다 (2026-10-07). */
   function wordKeys(word) {
     const sy = String(word || '').trim().split(/\s+/).filter(Boolean);
-    const segs = [];
-    sy.forEach(s => {
-      const ph = sylPhonemes(s), tot = ph.reduce((a, p) => a + p.w, 0) || 1;
-      ph.forEach(p => segs.push({ id: p.id, w: p.w / tot / sy.length }));
+    const segs = [], syl = [];
+    let off = 0;
+    sy.forEach((s, si) => {
+      const ph = sylPhonemes(s), tot = ph.reduce((a, p) => a + p.w, 0) || 1, len = baseOf(s).length;
+      let li = off;
+      ph.forEach(p => { segs.push({ id: p.id, w: p.w / tot / sy.length, n: p.n, li, si }); li += p.n; });
+      syl.push({ li: off, len, i0: segs.length - ph.length, i1: segs.length - 1 });
+      off += len + 1;                                                // 음절 사이 띄어쓰기 한 칸
     });
-    if (!segs.length) segs.push({ id: 'a', w: 1 });
+    if (!segs.length) segs.push({ id: 'a', w: 1, n: 1, li: 0, si: 0 });
     const kf = [[0, 'rest']];
     let t = 0.04;
     const scale = 0.92;
     segs.forEach(sg => {
       const a = t, b = t + sg.w * scale;
+      sg.a = a; sg.b = b;
       kf.push([a + (b - a) * .38, sg.id], [b - (b - a) * .12, sg.id]);
       t = b;
     });
+    syl.forEach(q => { q.a = segs[q.i0] ? segs[q.i0].a : 0; q.b = segs[q.i1] ? segs[q.i1].b : 1; });
     kf.push([Math.min(.999, t + .04), 'rest'], [1, 'rest']);
-    return { kf, segs };
+    return { kf, segs, syl };
   }
   function domKey(kf, t) {
     let i = 0;
