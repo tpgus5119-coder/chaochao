@@ -11143,12 +11143,14 @@ let EXAM1_TIMER = 0, FIXED = {};
    — 문제를 그릴 때마다(drawQuiz) 적고, 끝나거나 처음부터 다시 하면 지운다. 폰 안에만 둔다(서버 진도 PROGKEYS 에 없음). 6개까지. */
 const RESUME_MAX = 6;
 const resumeKey = () => (Q && Q.exam) ? (Q.fixed ? 'fixed:' + Q.fixed : Q.daily ? 'daily:' + Q.daily : null) : null;
+/* 문항 목록 지문 — 시험지 자료가 바뀌면(모의고사 낱말 4~7과로 다시 냄, 2026-10-07) 옛 저장을 엉뚱한 문항에 붙이지 않으려고 글 전체를 해시한다 */
+const qSig = list => { const s = (list || []).map(q => (q.w && q.w.vi) || '').join('|'); let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return h; };
 function resumeSave() {
   const k = resumeKey(); if (!k) return;
   S.resume = S.resume || {};
   if (Q.i <= 0 || Q.i >= Q.list.length) { if (S.resume[k]) { delete S.resume[k]; save(); } return; }
   const items = Q.list.map(q => [q._ok === undefined ? null : (q._ok ? 1 : 0), q._score === undefined ? null : q._score, q._ans ? 1 : 0, q._skip ? 1 : 0, q._okBefore === undefined ? null : q._okBefore]);
-  S.resume[k] = { i: Q.i, ok: Q.ok, skip: Q.skip || 0, left: Q.deadline ? Math.max(0, Q.deadline - Date.now()) : null, items, gen: Q.gen || null, t: Date.now() };
+  S.resume[k] = { i: Q.i, ok: Q.ok, skip: Q.skip || 0, left: Q.deadline ? Math.max(0, Q.deadline - Date.now()) : null, items, gen: Q.gen || null, sig: qSig(Q.list), t: Date.now() };
   const ks = Object.keys(S.resume);
   if (ks.length > RESUME_MAX) ks.sort((a, b) => S.resume[a].t - S.resume[b].t).slice(0, ks.length - RESUME_MAX).forEach(x => { delete S.resume[x]; });
   save();
@@ -11158,6 +11160,7 @@ function resumeGet(k) { const r = S.resume && S.resume[k]; return r && r.i > 0 &
 /* Q 를 새로 만든 뒤 — 푼 자리·답을 되살린다. 문항 수가 다르면(자료가 바뀜) 되살리지 않는다 */
 function resumeApply(r) {
   if (!r || !Q || r.items.length !== Q.list.length) return false;
+  if (r.sig !== qSig(Q.list)) return false;                  // 글이 다르면(자료가 바뀜·지문 없는 옛 저장) 되살리지 않는다
   Q.list.forEach((q, i) => { const it = r.items[i]; if (!it) return; if (it[0] !== null) q._ok = !!it[0]; if (it[1] !== null) q._score = it[1]; if (it[2]) q._ans = true; if (it[3]) q._skip = true; if (it[4] !== null) q._okBefore = it[4]; });
   Q.i = r.i; Q.ok = r.ok; Q.skip = r.skip || 0;
   if (Q.deadline && r.left !== null && r.left !== undefined) Q.deadline = Date.now() + r.left;
@@ -11186,7 +11189,7 @@ function startExam1(key, r) {
     });                                                    // D 말하기도 낸다 (2026-10-07, 대표님 "말하기 시험은 니가 창조") — 폰 판정은 참고만, 점수는 스스로 매긴다
     SBOX = 'bsrs';
     Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, fixed: key, deadline: Date.now() + J.time * 60000 };
-    if (r) resumeApply(r);                                 // 이어서 — 푼 자리·답·남은 시간 (2026-10-07)
+    if (r && !resumeApply(r)) resumeClear('fixed:' + key);  // 이어서 — 푼 자리·답·남은 시간 (2026-10-07); 자료가 바뀐 저장은 버린다
     drawQuiz();
     show('quiz', FIXED_EXAMS[key].name, true);
     exam1Clock();
@@ -11415,7 +11418,7 @@ function startDaily(t, r) {
   SBOX = 'bsrs';
   Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: false, opt: {}, exam: true, blind: true, daily: t.key, dtest: t,   // blind: 실제 시험처럼 끝에 채점
         gen: L.map(q => ({ w: ref(q.w), mode: q.mode, sec: q.sec, opts: (q.opts || []).map(ref) })) };
-  if (r) resumeApply(r);
+  if (r && !resumeApply(r)) resumeClear('daily:' + t.key);
   sensesLoad();
   drawQuiz();
   show('quiz', t.date + ' ' + tr('단어 시험'), true);

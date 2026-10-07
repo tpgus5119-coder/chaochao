@@ -1,5 +1,5 @@
 {
- "note": "주간시험 2 모의고사 1 — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).",
+ "note": "주간시험 2 모의고사 1 — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).",
  "title": "모의고사 1",
  "time": 90,
  "pts": {
@@ -12,66 +12,52 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
+   "img": "w-81eaf9dd0c.webp",
+   "audio": "Ông ấy là tài xế tắc xi. Ông ấy lái xe từ 6 giờ sáng.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-thu-ky.webp",
+   "audio": "Cô ấy là kế toán. Cô ấy làm việc ở ngân hàng.",
+   "ans": false,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-ky-su.webp",
+   "audio": "Anh ấy là kỹ sư ở công ty máy tính.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-noi-tro.webp",
+   "audio": "Bà ấy là nội trợ. Bà ấy đang nấu ăn ở nhà.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
    "img": "b-bac-si.webp",
-   "audio": "Anh ấy là bác sĩ. Anh ấy làm việc ở bệnh viện.",
-   "ans": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 1 그림 맞다/틀리다",
-   "k": "tf",
-   "img": "b-giao-vien.webp",
-   "audio": "Cô ấy là kỹ sư. Cô ấy làm việc ở công ty máy tính.",
+   "audio": "Anh ấy là luật sư. Dạo này anh ấy rất bận.",
    "ans": false,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 1 그림 맞다/틀리다",
-   "k": "tf",
-   "img": "w-936f3fbca6.webp",
-   "audio": "Anh ấy đang xem tivi ở nhà.",
-   "ans": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 1 그림 맞다/틀리다",
-   "k": "tf",
-   "img": "b-tap-the-duc.webp",
-   "audio": "Chị ấy đang ăn sáng.",
-   "ans": false,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 1 그림 맞다/틀리다",
-   "k": "tf",
-   "img": "d45-doc-sach.webp",
-   "audio": "Anh ấy đang đọc sách ở nhà.",
-   "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Chị ấy là giáo viên. Chị ấy dạy tiếng Việt.",
+   "audio": "Chị ấy là thư ký. Chị ấy làm việc ở văn phòng công ty.",
    "opts": [
     "b-bac-si.webp",
-    "b-giao-vien.webp",
     "b-ky-su.webp",
-    "b-sinh-vien.webp",
-    "b-noi-tro.webp"
-   ],
-   "ans": 1,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
-   "audio": "Anh ấy là sinh viên. Anh ấy học ở trường đại học.",
-   "opts": [
-    "b-bac-si.webp",
-    "b-giao-vien.webp",
-    "b-ky-su.webp",
-    "b-sinh-vien.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
     "b-noi-tro.webp"
    ],
    "ans": 3,
@@ -80,26 +66,12 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Cô ấy là nội trợ. Cô ấy làm việc ở nhà.",
+   "audio": "Ông ấy lái xe tắc xi ở Quận 1.",
    "opts": [
     "b-bac-si.webp",
-    "b-giao-vien.webp",
     "b-ky-su.webp",
-    "b-sinh-vien.webp",
-    "b-noi-tro.webp"
-   ],
-   "ans": 4,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
-   "audio": "Anh ấy làm kỹ sư ở công ty máy tính.",
-   "opts": [
-    "b-bac-si.webp",
-    "b-giao-vien.webp",
-    "b-ky-su.webp",
-    "b-sinh-vien.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
     "b-noi-tro.webp"
    ],
    "ans": 2,
@@ -108,40 +80,54 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Ông ấy là bác sĩ. Dạo này ông ấy rất bận.",
+   "audio": "Anh ấy làm việc ở bệnh viện. Công việc hơi vất vả.",
    "opts": [
     "b-bac-si.webp",
-    "b-giao-vien.webp",
     "b-ky-su.webp",
-    "b-sinh-vien.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
     "b-noi-tro.webp"
    ],
    "ans": 0,
    "made": true
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
-   "k": "choice",
-   "prompt": "Chị Vân là người nước nào?",
-   "audio": "Chị Vân là người Việt Nam. Chị ấy là giáo viên.",
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Mẹ tôi là nội trợ. Mẹ tôi nấu ăn rất ngon.",
    "opts": [
-    "Việt Nam",
-    "Hàn Quốc",
-    "Nhật"
+    "b-bac-si.webp",
+    "b-ky-su.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
+    "b-noi-tro.webp"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 4,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Anh tôi làm kỹ sư ở công ty máy tính.",
+   "opts": [
+    "b-bac-si.webp",
+    "b-ky-su.webp",
+    "w-81eaf9dd0c.webp",
+    "b-thu-ky.webp",
+    "b-noi-tro.webp"
+   ],
+   "ans": 1,
    "made": true
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Anh ấy làm nghề gì?",
-   "audio": "Tôi làm kế toán ở ngân hàng.",
+   "prompt": "Ở Nhật anh Hiroki làm nghề gì?",
+   "audio": "Ở Nhật tôi làm kế toán ở ngân hàng.",
    "opts": [
     "kế toán",
     "kỹ sư",
-    "bác sĩ"
+    "thư ký"
    ],
    "ans": 0,
    "shuffle": true,
@@ -150,12 +136,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Em ấy học tiếng gì?",
-   "audio": "Em học tiếng Việt ở Trường Đại học Khoa học Xã hội và Nhân văn.",
+   "prompt": "Ngân hàng của anh ấy có bao nhiêu nhân viên?",
+   "audio": "Ngân hàng của tôi có hơn 100 nhân viên.",
    "opts": [
-    "tiếng Việt",
-    "tiếng Anh",
-    "tiếng Hàn"
+    "hơn 100 người",
+    "khoảng 50 người",
+    "hơn 200 người"
    ],
    "ans": 0,
    "shuffle": true,
@@ -164,12 +150,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Lớp chị ấy có mấy người?",
-   "audio": "Lớp tôi có 11 người.",
+   "prompt": "Brian dạy tiếng Anh ở quận nào?",
+   "audio": "Tôi dạy ở trường ILA, Quận 2.",
    "opts": [
-    "11 người",
-    "9 người",
-    "12 người"
+    "Quận 2",
+    "Quận 1",
+    "Quận 7"
    ],
    "ans": 0,
    "shuffle": true,
@@ -178,12 +164,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Họ sẽ đi đâu?",
-   "audio": "Bây giờ chúng ta đi đâu? Chúng ta sẽ đi mua sách.",
+   "prompt": "Anh ấy dạy mấy ngày một tuần?",
+   "audio": "Tôi dạy năm ngày một tuần, từ 9 giờ sáng đến 11 giờ rưỡi.",
    "opts": [
-    "nhà sách",
-    "bệnh viện",
-    "siêu thị"
+    "5 ngày",
+    "2 ngày",
+    "7 ngày"
    ],
    "ans": 0,
    "shuffle": true,
@@ -192,12 +178,40 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Anh ấy thường ăn sáng lúc mấy giờ?",
-   "audio": "Tôi thường ăn sáng lúc 7 giờ.",
+   "prompt": "Buổi chiều Hiroki làm việc từ mấy giờ đến mấy giờ?",
+   "audio": "Buổi chiều tôi làm việc từ 2 giờ đến 7 giờ tối.",
    "opts": [
-    "7 giờ",
-    "9 giờ",
-    "11 giờ rưỡi"
+    "từ 2 giờ đến 7 giờ",
+    "từ 8 giờ đến 5 giờ",
+    "từ 9 giờ đến 11 giờ"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Hôm qua anh ấy vào phòng số mấy?",
+   "audio": "Hôm qua tôi vào nhầm phòng. Tôi vào phòng số 308.",
+   "opts": [
+    "phòng số 308",
+    "phòng số 301",
+    "phòng số 318"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Chị Loan làm việc ở đâu?",
+   "audio": "Tôi làm kỹ sư ở công ty máy tính. Cô Vân cũng làm việc ở đó.",
+   "opts": [
+    "công ty máy tính",
+    "ngân hàng",
+    "bệnh viện"
    ],
    "ans": 0,
    "shuffle": true,
@@ -210,8 +224,8 @@
    "audio": "Dạo này tôi rất bận. Buổi sáng tôi đi học, buổi chiều tôi đi làm.",
    "opts": [
     "rất bận",
-    "rất vui",
-    "rất khỏe"
+    "rất rảnh",
+    "hơi mệt"
    ],
    "ans": 0,
    "shuffle": true,
@@ -220,12 +234,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Tối hôm qua anh ấy làm gì?",
-   "audio": "Tối hôm qua tôi xem phim trên mạng nên đi ngủ hơi trễ.",
+   "prompt": "Cô ấy sắp đi đâu?",
+   "audio": "Tôi sắp đi ăn trưa với anh Brian.",
    "opts": [
-    "xem phim",
-    "đọc sách",
-    "nghe nhạc"
+    "đi ăn trưa",
+    "đi làm",
+    "đi ngủ"
    ],
    "ans": 0,
    "shuffle": true,
@@ -234,26 +248,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Hiroki là người nước nào?",
-   "audio": "Đây là Hiroki. Anh ấy là người Nhật.",
+   "prompt": "Siêu thị có bao nhiêu nhân viên?",
+   "audio": "Siêu thị này nhỏ, chỉ có khoảng 20 nhân viên.",
    "opts": [
-    "Nhật",
-    "Mỹ",
-    "Úc"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
-   "k": "choice",
-   "prompt": "Anh ấy dạy mấy ngày một tuần?",
-   "audio": "Tôi dạy tiếng Anh năm ngày một tuần.",
-   "opts": [
-    "5 ngày",
-    "2 ngày",
-    "7 ngày"
+    "khoảng 20 người",
+    "khoảng 100 người",
+    "hơn 200 người"
    ],
    "ans": 0,
    "shuffle": true,
@@ -265,9 +265,9 @@
    "prompt": "(들은 질문에 알맞은 답)",
    "audio": "Anh làm nghề gì?",
    "opts": [
-    "Tôi là kỹ sư.",
-    "Tôi là người Mỹ.",
-    "Tôi ở Quận 1."
+    "Tôi là kế toán ở ngân hàng.",
+    "Tôi làm việc từ 8 giờ.",
+    "Khoảng 100 nhân viên."
    ],
    "ans": 0,
    "shuffle": true,
@@ -277,108 +277,10 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Chị là người nước nào?",
+   "audio": "Chị làm việc ở đâu?",
    "opts": [
-    "Tôi là người Hàn Quốc.",
-    "Tôi là sinh viên.",
-    "Tôi học tiếng Việt."
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
-   "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Em học tiếng Việt ở đâu?",
-   "opts": [
-    "Ở trường Nhân văn.",
-    "Lúc 9 giờ sáng.",
-    "Với bạn tôi."
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
-   "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Lớp anh có mấy người?",
-   "opts": [
-    "Mười một người.",
-    "Rất vui.",
-    "Ở Quận 1."
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
-   "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Chị thường ăn sáng lúc mấy giờ?",
-   "opts": [
-    "Lúc 7 giờ.",
-    "Ở nhà.",
-    "Vì tôi bận."
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
-   "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Bây giờ chúng ta đi đâu?",
-   "opts": [
-    "Đi mua sách.",
-    "Tôi là giáo viên.",
-    "Hôm qua."
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
-   "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Tiếng Việt thế nào?",
-   "opts": [
-    "Khó nhưng thú vị.",
-    "Mười một người.",
-    "Lúc 9 giờ."
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
-   "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Anh có khỏe không?",
-   "opts": [
-    "Cám ơn, tôi khỏe.",
-    "Tôi tên là Nam.",
-    "Tôi ở Quận 1."
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
-   "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Hôm qua anh có đi học không?",
-   "opts": [
-    "Có, tôi có đi học.",
-    "Tôi là kế toán.",
+    "Ở công ty máy tính.",
+    "Từ 2 giờ chiều.",
     "Năm ngày một tuần."
    ],
    "ans": 0,
@@ -389,11 +291,109 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Dạo này chị làm gì?",
+   "audio": "Anh dạy mấy ngày một tuần?",
    "opts": [
-    "Tôi làm kỹ sư ở công ty máy tính.",
-    "Tôi là người Nhật.",
-    "Lúc 2 giờ chiều."
+    "Năm ngày một tuần.",
+    "Ở Quận 2.",
+    "Khoảng 8 người."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Công ty anh có bao nhiêu nhân viên?",
+   "opts": [
+    "Khoảng 50 người.",
+    "Lúc 8 giờ sáng.",
+    "Ở văn phòng."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Buổi chiều chị làm việc từ mấy giờ đến mấy giờ?",
+   "opts": [
+    "Từ 2 giờ đến 7 giờ tối.",
+    "Ở ngân hàng.",
+    "Hơi vất vả."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Dạo này anh làm gì?",
+   "opts": [
+    "Tôi đang làm thư ký ở một công ty.",
+    "Lúc 7 giờ rưỡi.",
+    "Phòng số 308."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Cô ấy cũng làm kỹ sư, phải không?",
+   "opts": [
+    "Không, cô ấy là thư ký.",
+    "Năm ngày một tuần.",
+    "Ở Quận 1."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Hôm qua anh có đi làm không?",
+   "opts": [
+    "Có, nhưng tôi đến hơi trễ.",
+    "Tôi làm kế toán.",
+    "Hơn 100 người."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Anh sắp đi làm chưa?",
+   "opts": [
+    "Sắp rồi. Tôi đi ngay.",
+    "Tôi là tài xế.",
+    "Ở cơ quan."
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "k": "choice",
+   "prompt": "(들은 질문에 알맞은 답)",
+   "audio": "Công việc của chị thế nào?",
+   "opts": [
+    "Hơi vất vả nhưng thú vị.",
+    "Ở bệnh viện.",
+    "Từ 8 giờ sáng."
    ],
    "ans": 0,
    "shuffle": true,
@@ -402,77 +402,77 @@
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Đây là David. Anh ____ là người Anh.",
+   "prompt": "Tôi ____ làm kế toán ở ngân hàng.",
    "opts": [
-    "ấy",
-    "cũng",
-    "phải không",
-    "đều",
-    "thế nào"
+    "đang",
+    "bao nhiêu",
+    "từ",
+    "sắp",
+    "lắm"
    ],
    "ans": 0
   },
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Tôi là sinh viên. Anh Brian ____ là sinh viên.",
+   "prompt": "Công ty anh có ____ nhân viên?",
    "opts": [
-    "ấy",
-    "cũng",
-    "phải không",
-    "đều",
-    "thế nào"
+    "đang",
+    "bao nhiêu",
+    "từ",
+    "sắp",
+    "lắm"
    ],
    "ans": 1
   },
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Chị Kate là người Úc, ____?",
+   "prompt": "Tôi làm việc ____ 8 giờ sáng đến 5 giờ chiều.",
    "opts": [
-    "ấy",
-    "cũng",
-    "phải không",
-    "đều",
-    "thế nào"
+    "đang",
+    "bao nhiêu",
+    "từ",
+    "sắp",
+    "lắm"
    ],
    "ans": 2
   },
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Họ ____ là người nước ngoài.",
+   "prompt": "Tôi và anh Brian ____ đi ăn trưa.",
    "opts": [
-    "ấy",
-    "cũng",
-    "phải không",
-    "đều",
-    "thế nào"
+    "đang",
+    "bao nhiêu",
+    "từ",
+    "sắp",
+    "lắm"
    ],
    "ans": 3
   },
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Tiếng Việt ____? — Tiếng Việt khó nhưng thú vị.",
+   "prompt": "Dạo này công việc của tôi bận ____.",
    "opts": [
-    "ấy",
-    "cũng",
-    "phải không",
-    "đều",
-    "thế nào"
+    "đang",
+    "bao nhiêu",
+    "từ",
+    "sắp",
+    "lắm"
    ],
    "ans": 4
   },
   {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Eun Ji là người Hàn Quốc. Em ấy học tiếng Việt ở Thành phố Hồ Chí Minh. Lớp em ấy có 11 người.",
-   "prompt": "Eun Ji học tiếng Việt ở đâu?",
+   "text": "Anh Nam là tài xế tắc xi. Anh ấy lái xe từ 6 giờ sáng đến 2 giờ chiều. Công việc hơi vất vả nhưng anh ấy rất thích.",
+   "prompt": "Anh Nam làm việc đến mấy giờ?",
    "opts": [
-    "Thành phố Hồ Chí Minh",
-    "Hà Nội",
-    "Hàn Quốc"
+    "2 giờ chiều",
+    "6 giờ sáng",
+    "7 giờ tối"
    ],
    "ans": 0,
    "shuffle": true
@@ -480,12 +480,12 @@
   {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Hiroki là người Nhật. Anh ấy làm kế toán ở ngân hàng. Dạo này anh ấy rất bận.",
-   "prompt": "Hiroki làm nghề gì?",
+   "text": "Chị Loan là kỹ sư ở công ty máy tính. Công ty của chị ấy ở Quận 1, có khoảng 200 nhân viên.",
+   "prompt": "Công ty của chị Loan có bao nhiêu nhân viên?",
    "opts": [
-    "kế toán",
-    "kỹ sư",
-    "bác sĩ"
+    "khoảng 200 người",
+    "khoảng 20 người",
+    "hơn 100 người"
    ],
    "ans": 0,
    "shuffle": true
@@ -493,8 +493,21 @@
   {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Buổi sáng tôi đi học tiếng Việt, buổi chiều tôi đi làm. Tôi làm việc từ 2 giờ chiều đến 7 giờ tối.",
-   "prompt": "Buổi chiều tôi làm gì?",
+   "text": "Brian dạy tiếng Anh ở trường ILA, Quận 2. Anh ấy dạy năm ngày một tuần, từ 9 giờ sáng đến 11 giờ rưỡi trưa.",
+   "prompt": "Brian dạy đến mấy giờ?",
+   "opts": [
+    "11 giờ rưỡi",
+    "9 giờ",
+    "5 giờ chiều"
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "k": "choice",
+   "text": "Dạo này Hiroki rất bận. Buổi sáng anh ấy đi học tiếng Việt, buổi chiều anh ấy đi làm ở ngân hàng.",
+   "prompt": "Buổi chiều Hiroki làm gì?",
    "opts": [
     "đi làm",
     "đi học",
@@ -506,25 +519,12 @@
   {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Hôm nay nhà sách giảm giá 30%. Vân và David sẽ đi mua sách lịch sử Việt Nam.",
-   "prompt": "Họ sẽ mua gì?",
+   "text": "Bà Lan đã nghỉ hưu. Trước đây bà ấy là giáo viên. Bây giờ buổi sáng bà ấy tập thể dục rồi đọc báo.",
+   "prompt": "Trước đây bà Lan làm nghề gì?",
    "opts": [
-    "sách",
-    "bia",
-    "cà phê"
-   ],
-   "ans": 0,
-   "shuffle": true
-  },
-  {
-   "sec": "B 읽기 · 2 읽고 질문에 답하기",
-   "k": "choice",
-   "text": "Dorothy thường không ăn sáng. Chị ấy thường ăn trưa lúc 11 giờ rưỡi hay 12 giờ.",
-   "prompt": "Dorothy thường ăn trưa lúc mấy giờ?",
-   "opts": [
-    "11 giờ rưỡi hay 12 giờ",
-    "9 giờ",
-    "7 giờ sáng"
+    "giáo viên",
+    "bác sĩ",
+    "nội trợ"
    ],
    "ans": 0,
    "shuffle": true
@@ -532,82 +532,82 @@
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Đây là Brian. Anh ấy là người Mỹ. Anh ấy là bạn của David. Trước đây Brian đã học tiếng Việt ở trường Nhân văn một năm.",
-   "prompt": "Brian là người Mỹ.",
+   "text": "Ở Nhật, Hiroki làm kế toán ở một ngân hàng. Ngân hàng của anh ấy có hơn 100 nhân viên. Bây giờ anh ấy học tiếng Việt ở Thành phố Hồ Chí Minh.",
+   "prompt": "Hiroki là kế toán.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Đây là Brian. Anh ấy là người Mỹ. Anh ấy là bạn của David. Trước đây Brian đã học tiếng Việt ở trường Nhân văn một năm.",
-   "prompt": "Brian là bạn của David.",
-   "ans": true
-  },
-  {
-   "sec": "B 읽기 · 3 맞다/틀리다",
-   "k": "tf",
-   "text": "Đây là Brian. Anh ấy là người Mỹ. Anh ấy là bạn của David. Trước đây Brian đã học tiếng Việt ở trường Nhân văn một năm.",
-   "prompt": "Brian đã học tiếng Việt ở Hàn Quốc.",
+   "text": "Ở Nhật, Hiroki làm kế toán ở một ngân hàng. Ngân hàng của anh ấy có hơn 100 nhân viên. Bây giờ anh ấy học tiếng Việt ở Thành phố Hồ Chí Minh.",
+   "prompt": "Ngân hàng của Hiroki có khoảng 50 nhân viên.",
    "ans": false
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Chị Loan làm kỹ sư ở công ty máy tính. Cô Vân cũng làm việc ở đó. Cô ấy là thư ký.",
-   "prompt": "Chị Loan là kỹ sư.",
+   "text": "Ở Nhật, Hiroki làm kế toán ở một ngân hàng. Ngân hàng của anh ấy có hơn 100 nhân viên. Bây giờ anh ấy học tiếng Việt ở Thành phố Hồ Chí Minh.",
+   "prompt": "Bây giờ Hiroki học tiếng Việt.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Chị Loan làm kỹ sư ở công ty máy tính. Cô Vân cũng làm việc ở đó. Cô ấy là thư ký.",
-   "prompt": "Cô Vân là kỹ sư.",
+   "text": "Chị Mai là thư ký ở công ty máy tính. Chị ấy làm việc từ 8 giờ sáng đến 5 giờ chiều, năm ngày một tuần. Thứ bảy chị ấy ở nhà.",
+   "prompt": "Chị Mai là kỹ sư.",
    "ans": false
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Chị Loan làm kỹ sư ở công ty máy tính. Cô Vân cũng làm việc ở đó. Cô ấy là thư ký.",
-   "prompt": "Cô Vân làm việc ở công ty máy tính.",
+   "text": "Chị Mai là thư ký ở công ty máy tính. Chị ấy làm việc từ 8 giờ sáng đến 5 giờ chiều, năm ngày một tuần. Thứ bảy chị ấy ở nhà.",
+   "prompt": "Chị Mai làm việc đến 5 giờ chiều.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Tôi thường đi ngủ lúc 11 giờ. Tối hôm qua tôi xem phim trên mạng nên đi ngủ hơi trễ. Hôm nay tôi buồn ngủ quá.",
-   "prompt": "Tối hôm qua tôi đi ngủ sớm.",
+   "text": "Chị Mai là thư ký ở công ty máy tính. Chị ấy làm việc từ 8 giờ sáng đến 5 giờ chiều, năm ngày một tuần. Thứ bảy chị ấy ở nhà.",
+   "prompt": "Thứ bảy chị Mai đi làm.",
    "ans": false
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Tôi thường đi ngủ lúc 11 giờ. Tối hôm qua tôi xem phim trên mạng nên đi ngủ hơi trễ. Hôm nay tôi buồn ngủ quá.",
-   "prompt": "Hôm nay tôi buồn ngủ.",
+   "text": "Bố tôi là bác sĩ ở bệnh viện. Dạo này có nhiều việc nên bố tôi rất bận. Ông ấy thường về nhà hơi trễ.",
+   "prompt": "Bố tôi làm việc ở bệnh viện.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Tối nay David mời Vân và anh Min đi uống bia ở một quán ăn ở Quận 1. Món ăn ở đó ngon lắm.",
-   "prompt": "Tối nay họ sẽ đi uống bia.",
+   "text": "Bố tôi là bác sĩ ở bệnh viện. Dạo này có nhiều việc nên bố tôi rất bận. Ông ấy thường về nhà hơi trễ.",
+   "prompt": "Dạo này bố tôi rất rảnh.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Ông Long là tài xế. Hôm qua ông ấy lái xe đi sân bay lúc 5 giờ sáng. Hôm nay ông ấy nghỉ ở nhà.",
+   "prompt": "Hôm qua ông Long đi sân bay.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Tối nay David mời Vân và anh Min đi uống bia ở một quán ăn ở Quận 1. Món ăn ở đó ngon lắm.",
-   "prompt": "Quán ăn ở Quận 2.",
+   "text": "Ông Long là tài xế. Hôm qua ông ấy lái xe đi sân bay lúc 5 giờ sáng. Hôm nay ông ấy nghỉ ở nhà.",
+   "prompt": "Hôm nay ông Long đi làm.",
    "ans": false
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Chào chị. Xin lỗi, chị tên là gì?",
+   "prompt": "Anh làm nghề gì?",
    "opts": [
-    "Tôi tên là Vân.",
-    "Tôi là người Việt Nam.",
-    "Tôi khỏe. Cám ơn.",
-    "Tôi làm kế toán."
+    "Tôi làm kế toán ở ngân hàng.",
+    "Tôi đi làm lúc 8 giờ.",
+    "Công ty tôi ở Quận 1.",
+    "Tôi làm việc năm ngày một tuần."
    ],
    "ans": 0,
    "shuffle": true
@@ -615,25 +615,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Anh có khỏe không?",
+   "prompt": "Chị làm việc ở đâu?",
    "opts": [
-    "Cám ơn. Tôi khỏe.",
-    "Tôi tên là David.",
-    "Tôi là sinh viên.",
-    "Tôi đi học."
-   ],
-   "ans": 0,
-   "shuffle": true
-  },
-  {
-   "sec": "B 읽기 · 4 알맞은 문장",
-   "k": "choice",
-   "prompt": "Anh là người nước nào?",
-   "opts": [
-    "Tôi là người Mỹ.",
+    "Tôi làm việc ở công ty máy tính.",
     "Tôi là kỹ sư.",
-    "Tôi học tiếng Việt.",
-    "Tôi ở Quận 1."
+    "Từ 8 giờ đến 5 giờ.",
+    "Khoảng 200 nhân viên."
    ],
    "ans": 0,
    "shuffle": true
@@ -641,12 +628,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Chị làm nghề gì?",
+   "prompt": "Anh dạy mấy ngày một tuần?",
    "opts": [
-    "Tôi làm kỹ sư ở công ty máy tính.",
-    "Tôi là người Hàn Quốc.",
-    "Tôi học ở trường Nhân văn.",
-    "Tôi đi ngủ lúc 11 giờ."
+    "Năm ngày một tuần.",
+    "Ở trường ILA.",
+    "Từ 9 giờ sáng.",
+    "Khoảng 8 giáo viên."
    ],
    "ans": 0,
    "shuffle": true
@@ -654,12 +641,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Lớp em có mấy người?",
+   "prompt": "Công ty chị có bao nhiêu nhân viên?",
    "opts": [
-    "Lớp em có 11 người.",
-    "Em học tiếng Việt.",
-    "Em là người Hàn Quốc.",
-    "Em đi học lúc 8 giờ."
+    "Khoảng 50 người.",
+    "Ở Quận 2.",
+    "Lúc 8 giờ sáng.",
+    "Công việc hơi vất vả."
    ],
    "ans": 0,
    "shuffle": true
@@ -667,12 +654,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Bây giờ chúng ta đi đâu?",
+   "prompt": "Dạo này anh thế nào?",
    "opts": [
-    "Chúng ta sẽ đi mua sách.",
-    "Tôi là sinh viên.",
-    "Hôm qua tôi mệt quá.",
-    "Tôi không ăn sáng."
+    "Dạo này tôi rất bận.",
+    "Tôi là tài xế.",
+    "Ở cơ quan.",
+    "Từ 2 giờ chiều."
    ],
    "ans": 0,
    "shuffle": true
@@ -680,12 +667,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Anh thường ăn sáng lúc mấy giờ?",
+   "prompt": "Hôm qua anh có đi học không?",
    "opts": [
-    "Lúc 7 giờ.",
-    "Ở nhà.",
-    "Với bạn tôi.",
-    "Vì tôi bận."
+    "Có, nhưng tôi vào nhầm phòng.",
+    "Tôi là bác sĩ.",
+    "Hơn 100 người.",
+    "Lúc 5 giờ chiều."
    ],
    "ans": 0,
    "shuffle": true
@@ -693,12 +680,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Tiếng Việt thế nào?",
+   "prompt": "Anh vào phòng số mấy?",
    "opts": [
-    "Khó nhưng thú vị.",
-    "Ở Việt Nam.",
-    "11 người.",
-    "Lúc 9 giờ."
+    "Phòng số 308.",
+    "Lúc 2 giờ chiều.",
+    "Ở ngân hàng.",
+    "Năm ngày."
    ],
    "ans": 0,
    "shuffle": true
@@ -706,12 +693,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Cô nói tiếng Việt giỏi quá!",
+   "prompt": "Cô ấy cũng là kỹ sư, phải không?",
    "opts": [
-    "Cám ơn anh.",
-    "Không sao.",
-    "Tôi là người Mỹ.",
-    "Lúc 7 giờ sáng."
+    "Không, cô ấy là thư ký.",
+    "Từ 9 giờ sáng.",
+    "Ở Quận 2.",
+    "Khoảng 20 người."
    ],
    "ans": 0,
    "shuffle": true
@@ -719,12 +706,25 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Xin lỗi, tôi đến trễ.",
+   "prompt": "Các anh sắp đi ăn trưa chưa?",
    "opts": [
-    "Không sao.",
-    "Cám ơn.",
-    "Rất vui được gặp anh.",
-    "Tôi khỏe."
+    "Sắp rồi. Chị đi với chúng tôi không?",
+    "Tôi là kế toán.",
+    "Công ty tôi có 50 nhân viên.",
+    "Từ 8 giờ đến 5 giờ."
+   ],
+   "ans": 0,
+   "shuffle": true
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Công việc của anh thế nào?",
+   "opts": [
+    "Hơi vất vả nhưng rất thú vị.",
+    "Tôi làm ở bệnh viện.",
+    "Lúc 7 giờ sáng.",
+    "Khoảng 100 người."
    ],
    "ans": 0,
    "shuffle": true
@@ -732,24 +732,49 @@
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Chúng tôi đều là sinh viên.",
+   "vi": "Tôi làm kế toán ở ngân hàng.",
    "tiles": [
-    "đều",
-    "chúng tôi",
-    "là",
-    "sinh viên"
+    "ở",
+    "tôi",
+    "ngân hàng",
+    "làm",
+    "kế toán"
    ]
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Anh ấy đang làm việc ở ngân hàng.",
+   "vi": "Anh dạy mấy ngày một tuần?",
    "tiles": [
-    "đang",
-    "ở",
-    "anh ấy",
-    "làm việc",
-    "ngân hàng"
+    "mấy ngày",
+    "anh",
+    "một tuần",
+    "dạy"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Tôi làm việc từ 8 giờ đến 5 giờ.",
+   "tiles": [
+    "từ",
+    "tôi",
+    "8 giờ",
+    "đến",
+    "5 giờ",
+    "làm việc"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Xe sắp đến chưa anh?",
+   "tiles": [
+    "sắp",
+    "xe",
+    "chưa",
+    "đến",
+    "anh"
    ]
   },
   {
@@ -758,57 +783,26 @@
    "vi": "Dạo này tôi rất bận.",
    "tiles": [
     "rất",
-    "tôi",
     "dạo này",
-    "bận"
-   ]
-  },
-  {
-   "sec": "C 쓰기 · 1 낱말 배열",
-   "k": "puzzle",
-   "vi": "Tôi thường không ăn sáng.",
-   "tiles": [
-    "không",
-    "thường",
-    "tôi",
-    "ăn sáng"
-   ]
-  },
-  {
-   "sec": "C 쓰기 · 1 낱말 배열",
-   "k": "puzzle",
-   "vi": "Chúng ta sẽ đi uống cà phê.",
-   "tiles": [
-    "sẽ",
-    "chúng ta",
-    "đi",
-    "uống",
-    "cà phê"
+    "bận",
+    "tôi"
    ]
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Tôi rất bận lắm.",
-   "bad": 3,
-   "fix": "Tôi rất bận.",
-   "ko": "저는 아주 바빠요. (rất와 lắm을 함께 쓰지 않는다)"
-  },
-  {
-   "sec": "C 쓰기 · 2 틀린 곳 찾기",
-   "k": "errpick",
-   "vi": "Em học đã tiếng Việt một năm.",
-   "bad": 2,
-   "fix": "Em đã học tiếng Việt một năm.",
-   "ko": "저는 베트남어를 1년 배웠어요. (đã는 동사 앞)"
-  },
-  {
-   "sec": "C 쓰기 · 2 틀린 곳 찾기",
-   "k": "errpick",
-   "vi": "Chị là người Nhật không phải?",
+   "vi": "Ngân hàng của anh có mấy nhân viên?",
    "bad": 5,
-   "fix": "Chị là người Nhật phải không?",
-   "ko": "당신은 일본 사람이죠? (phải không 차례)"
+   "fix": "Ngân hàng của anh có bao nhiêu nhân viên?",
+   "ko": "은행에 직원이 몇 명이에요? (열을 넘을 수 있으면 bao nhiêu)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Tôi đang là kỹ sư ở công ty máy tính.",
+   "bad": 1,
+   "fix": "Tôi là kỹ sư ở công ty máy tính.",
+   "ko": "저는 컴퓨터 회사 엔지니어예요. (là 앞에 đang 을 안 쓴다)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
@@ -816,31 +810,39 @@
    "vi": "Anh ấy sắp đi ăn trưa lúc 12 giờ.",
    "bad": 2,
    "fix": "Anh ấy sẽ đi ăn trưa lúc 12 giờ.",
-   "ko": "그는 12시에 점심을 먹으러 갈 거예요. (sắp에는 시각을 붙이지 않는다)"
+   "ko": "그는 12시에 점심을 먹으러 갈 거예요. (sắp 에는 시각을 붙이지 않는다)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Các anh ấy là đều người Mỹ.",
+   "vi": "Dạo này tôi bận rất.",
    "bad": 4,
-   "fix": "Các anh ấy đều là người Mỹ.",
-   "ko": "그들은 모두 미국 사람이에요. (đều는 là 앞)"
+   "fix": "Dạo này tôi rất bận.",
+   "ko": "요즘 저는 아주 바빠요. (rất 는 형용사 앞)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Cô ấy cũng làm kỹ sư, không phải?",
+   "bad": 6,
+   "fix": "Cô ấy cũng làm kỹ sư, phải không?",
+   "ko": "그녀도 엔지니어죠? (phải không 차례)"
   },
   {
    "sec": "C 쓰기 · 3 한 주제로 10문장",
    "k": "free",
-   "prompt": "자기소개 — 이름 · 나라 · 직업 · 지금 배우는 것 · 가족 (10문장)",
+   "prompt": "나의 직업과 일 — 무슨 일을 하는지, 어디에서, 몇 시부터 몇 시까지, 일주일에 며칠, 요즘 어떤지 (10문장)",
    "model": [
-    "Xin chào. Tôi tên là Min.",
-    "Tôi là người Hàn Quốc.",
-    "Tôi là sinh viên.",
-    "Hiện nay tôi học tiếng Việt ở Thành phố Hồ Chí Minh.",
-    "Lớp tôi có mười người.",
-    "Tiếng Việt khó nhưng rất thú vị.",
-    "Gia đình tôi có bốn người.",
-    "Mẹ tôi là nội trợ. Bố mẹ tôi sống ở Busan.",
-    "Dạo này tôi rất bận.",
-    "Rất vui được gặp các bạn."
+    "Tôi là nhân viên công ty.",
+    "Tôi làm việc ở một công ty máy tính ở Quận 1.",
+    "Công ty tôi có khoảng 200 nhân viên.",
+    "Tôi làm việc từ 8 giờ sáng đến 5 giờ chiều.",
+    "Tôi đi làm năm ngày một tuần.",
+    "Buổi trưa tôi ăn trưa ở căng tin công ty.",
+    "Dạo này công việc của tôi hơi bận.",
+    "Buổi tối tôi học tiếng Việt khoảng một tiếng.",
+    "Thứ bảy tôi thường nghỉ ở nhà.",
+    "Công việc vất vả nhưng rất thú vị."
    ],
    "n": 10,
    "pts": 10
@@ -848,110 +850,110 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "ăn sáng",
+   "vi": "kế toán",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "buồn ngủ",
+   "vi": "luật sư",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "thức khuya",
+   "vi": "tài xế",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "kỹ sư",
+   "vi": "thư ký",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "bận",
+   "vi": "nhân viên",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "thú vị",
+   "vi": "văn phòng",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "chăm chỉ",
+   "vi": "cơ quan",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "giảm giá",
+   "vi": "vất vả",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "đặc biệt",
+   "vi": "dạo này",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "ngân hàng",
+   "vi": "nghỉ hưu",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Tôi thường không ăn sáng.",
+   "vi": "Anh làm nghề gì?",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Dạo này tôi rất bận.",
+   "vi": "Tôi làm kế toán ở ngân hàng.",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Hôm qua tôi đi ngủ hơi trễ.",
+   "vi": "Buổi chiều tôi làm việc từ 2 giờ đến 7 giờ.",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Chúng ta sẽ đi mua sách.",
+   "vi": "Dạo này công việc của tôi bận lắm.",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Em học tiếng Việt ở đâu?",
+   "vi": "Xe sắp đến chưa anh?",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "w-562f80ee62.webp",
-   "ask": "그림을 보고 말해 보세요 — 이 사람은 누구이고 무슨 일을 하나요? 어디에서 일하나요? (3문장)",
+   "img": "b-bac-si.webp",
+   "ask": "그림을 보고 말해 보세요 — 이 사람의 직업은 무엇이고, 어디에서 일하나요? 요즘 어떤가요? (3문장)",
    "model": [
     {
-     "vi": "Đây là cô Lan.",
-     "ko": "이분은 란 선생님이에요."
+     "vi": "Anh ấy là bác sĩ.",
+     "ko": "그는 의사예요."
     },
     {
-     "vi": "Cô ấy là giáo viên.",
-     "ko": "그분은 선생님이에요."
+     "vi": "Anh ấy làm việc ở bệnh viện.",
+     "ko": "그는 병원에서 일해요."
     },
     {
-     "vi": "Cô ấy dạy tiếng Việt ở trường đại học.",
-     "ko": "그분은 대학교에서 베트남어를 가르쳐요."
+     "vi": "Dạo này anh ấy rất bận.",
+     "ko": "요즘 그는 아주 바빠요."
     }
    ],
    "n": 3,
@@ -960,20 +962,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-sinh-vien.webp",
-   "ask": "그림을 보고 말해 보세요 — 이 사람은 무엇을 하는 사람이고, 어디에서 무엇을 배우나요? (3문장)",
+   "img": "b-thu-ky.webp",
+   "ask": "그림을 보고 말해 보세요 — 이 사람은 무슨 일을 하고, 어디에서, 몇 시부터 몇 시까지 일하나요? (3문장)",
    "model": [
     {
-     "vi": "Anh ấy là sinh viên.",
-     "ko": "그는 대학생이에요."
+     "vi": "Chị ấy là thư ký.",
+     "ko": "그녀는 비서예요."
     },
     {
-     "vi": "Anh ấy học tiếng Việt ở Thành phố Hồ Chí Minh.",
-     "ko": "그는 호찌민시에서 베트남어를 배워요."
+     "vi": "Chị ấy làm việc ở văn phòng công ty.",
+     "ko": "그녀는 회사 사무실에서 일해요."
     },
     {
-     "vi": "Lớp anh ấy có mười người.",
-     "ko": "그의 반은 열 명이에요."
+     "vi": "Chị ấy làm việc từ tám giờ đến năm giờ.",
+     "ko": "그녀는 8시부터 5시까지 일해요."
     }
    ],
    "n": 3,
@@ -982,19 +984,19 @@
   {
    "sec": "D 말하기 · 4 상황 읽고 말하기",
    "k": "speak",
-   "ask": "처음 만난 베트남 친구에게 자기소개를 해 보세요 — 이름·국적·직업. (3문장)",
+   "ask": "새 동료가 '무슨 일 해요? 어디에서 일해요?'라고 묻습니다. 직업·일터·일하는 시간을 말해 보세요. (3문장)",
    "model": [
     {
-     "vi": "Xin chào. Tôi tên là Min.",
-     "ko": "안녕하세요. 제 이름은 민이에요."
+     "vi": "Tôi là kỹ sư.",
+     "ko": "저는 엔지니어예요."
     },
     {
-     "vi": "Tôi là người Hàn Quốc.",
-     "ko": "저는 한국 사람이에요."
+     "vi": "Tôi làm việc ở công ty máy tính.",
+     "ko": "저는 컴퓨터 회사에서 일해요."
     },
     {
-     "vi": "Tôi là nhân viên công ty.",
-     "ko": "저는 회사원이에요."
+     "vi": "Tôi làm việc từ tám giờ sáng đến năm giờ chiều.",
+     "ko": "저는 아침 8시부터 오후 5시까지 일해요."
     }
    ],
    "n": 3,
@@ -1003,19 +1005,19 @@
   {
    "sec": "D 말하기 · 4 상황 읽고 말하기",
    "k": "speak",
-   "ask": "친구가 '베트남어를 어디에서 배워요?'라고 묻습니다. 어디에서, 누구에게, 반은 몇 명인지 답해 보세요. (3문장)",
+   "ask": "친구가 '요즘 바빠요?'라고 묻습니다. 요즘 생활을 말해 보세요 — 오전·오후에 무엇을 하는지, 바쁜지. (3문장)",
    "model": [
     {
-     "vi": "Tôi học tiếng Việt ở trường đại học.",
-     "ko": "저는 대학교에서 베트남어를 배워요."
+     "vi": "Dạo này tôi rất bận.",
+     "ko": "요즘 저는 아주 바빠요."
     },
     {
-     "vi": "Cô giáo của tôi là cô Hoa.",
-     "ko": "제 선생님은 호아 선생님이에요."
+     "vi": "Buổi sáng tôi đi học tiếng Việt.",
+     "ko": "오전에는 베트남어를 배우러 가요."
     },
     {
-     "vi": "Lớp tôi có tám người.",
-     "ko": "우리 반은 여덟 명이에요."
+     "vi": "Buổi chiều tôi đi làm ở ngân hàng.",
+     "ko": "오후에는 은행에 일하러 가요."
     }
    ],
    "n": 3,

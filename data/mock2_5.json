@@ -1,5 +1,5 @@
 {
- "note": "주간시험 2 모의고사 5 — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).",
+ "note": "주간시험 2 모의고사 5 — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).",
  "title": "모의고사 5",
  "time": 90,
  "pts": {
@@ -266,7 +266,7 @@
    "audio": "Buổi tối anh thường làm gì?",
    "opts": [
     "Tôi thường xem tivi.",
-    "Tôi là kỹ sư.",
+    "Ở căng tin.",
     "Lúc 7 giờ sáng."
    ],
    "ans": 0,
@@ -280,7 +280,7 @@
    "audio": "Chị thích nghe nhạc không?",
    "opts": [
     "Có, tôi rất thích.",
-    "Tôi là người Hàn Quốc.",
+    "Hơi buồn ngủ.",
     "Ở nhà."
    ],
    "ans": 0,
@@ -322,7 +322,7 @@
    "audio": "Cuối tuần chị thường đi đâu?",
    "opts": [
     "Tôi thường đi xem phim.",
-    "Tôi là giáo viên.",
+    "Hôm qua tôi thức khuya.",
     "Lúc 9 giờ."
    ],
    "ans": 0,
@@ -337,7 +337,7 @@
    "opts": [
     "Ừ, tôi đi ngủ lúc 1 giờ.",
     "Tôi ăn sáng lúc 7 giờ.",
-    "Tôi là sinh viên."
+    "Tôi tập thể dục ở gần nhà."
    ],
    "ans": 0,
    "shuffle": true,
@@ -361,11 +361,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Em có thích học tiếng Việt không?",
+   "audio": "Anh sắp đi ngủ chưa?",
    "opts": [
-    "Có, em rất thích.",
-    "Em học lúc 8 giờ.",
-    "Em là người Hàn Quốc."
+    "Sắp rồi. Tôi buồn ngủ quá.",
+    "Tôi thức dậy lúc 6 giờ.",
+    "Ở phòng tôi."
    ],
    "ans": 0,
    "shuffle": true,
@@ -393,7 +393,7 @@
    "opts": [
     "Vì tối qua tôi thức khuya.",
     "Tôi đi làm lúc 7 giờ.",
-    "Tôi là thư ký."
+    "Tôi ăn trưa ở căng tin."
    ],
    "ans": 0,
    "shuffle": true,
@@ -605,7 +605,7 @@
    "prompt": "Buổi tối anh thường làm gì?",
    "opts": [
     "Tôi thường xem tivi với gia đình.",
-    "Tôi là kỹ sư.",
+    "Hơi đói.",
     "Lúc 7 giờ sáng.",
     "Ở công ty."
    ],
@@ -618,7 +618,7 @@
    "prompt": "Chị thích nghe nhạc không?",
    "opts": [
     "Có, tôi rất thích nghe nhạc.",
-    "Tôi là người Hàn Quốc.",
+    "Tôi thức dậy lúc 6 giờ.",
     "Tôi đi làm bằng xe buýt.",
     "Lúc 9 giờ."
    ],
@@ -631,8 +631,8 @@
    "prompt": "Em đi ngủ lúc mấy giờ?",
    "opts": [
     "Em đi ngủ lúc 11 giờ.",
-    "Em là sinh viên.",
-    "Em học ở trường Nhân văn.",
+    "Em ăn sáng ở căng tin.",
+    "Em thường lên mạng.",
     "Em rất thích."
    ],
    "ans": 0,
@@ -644,7 +644,7 @@
    "prompt": "Hôm qua anh thức khuya hả?",
    "opts": [
     "Ừ, tôi xem phim đến 1 giờ.",
-    "Tôi là bác sĩ.",
+    "Tôi đi làm lúc 8 giờ.",
     "Tôi ăn sáng lúc 7 giờ.",
     "Ở nhà tôi."
    ],
@@ -657,7 +657,7 @@
    "prompt": "Sao hôm nay chị mệt vậy?",
    "opts": [
     "Vì tối qua tôi thức khuya.",
-    "Tôi là thư ký.",
+    "Tôi ăn trưa lúc 12 giờ.",
     "Tôi đi làm lúc 8 giờ.",
     "Ở công ty."
    ],
@@ -670,7 +670,7 @@
    "prompt": "Cuối tuần anh thường làm gì?",
    "opts": [
     "Tôi thường đi chơi với bạn bè.",
-    "Tôi là người Nhật.",
+    "Hôm nay tôi hơi mệt.",
     "Lúc 10 giờ sáng.",
     "Ở Quận 1."
    ],
@@ -697,7 +697,7 @@
    "opts": [
     "Có, tôi tập thể dục mỗi buổi sáng.",
     "Tôi ăn sáng ở nhà.",
-    "Tôi là sinh viên.",
+    "Tôi thường xem tin tức.",
     "Lúc 6 giờ."
    ],
    "ans": 0,
@@ -709,7 +709,7 @@
    "prompt": "Tối nay chúng ta đi xem phim nhé?",
    "opts": [
     "Ừ, phim mới hay lắm.",
-    "Tôi là giáo viên.",
+    "Tôi thường không ăn sáng.",
     "Ở Quận 1.",
     "Lúc 7 giờ sáng."
    ],
@@ -719,12 +719,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Em có thích học tiếng Việt không?",
+   "prompt": "Chị sắp ăn trưa chưa?",
    "opts": [
-    "Có, em rất thích.",
-    "Em là người Hàn Quốc.",
-    "Em đi học lúc 8 giờ.",
-    "Ở trường."
+    "Sắp rồi. Bây giờ tôi hơi đói.",
+    "Tôi thường không ăn sáng.",
+    "Ở căng tin.",
+    "Hôm qua tôi thức khuya."
    ],
    "ans": 0,
    "shuffle": true

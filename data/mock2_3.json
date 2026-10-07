@@ -1,5 +1,5 @@
 {
- "note": "주간시험 2 모의고사 3 — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).",
+ "note": "주간시험 2 모의고사 3 — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).",
  "title": "모의고사 3",
  "time": 90,
  "pts": {
@@ -12,81 +12,53 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-ky-su.webp",
-   "audio": "Bố tôi là kỹ sư. Ông ấy làm việc ở công ty máy tính.",
+   "img": "b-nha-sach.webp",
+   "audio": "Đây là nhà sách. Hôm nay nhà sách giảm giá 30%.",
    "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-noi-tro.webp",
-   "audio": "Mẹ tôi là giáo viên. Mẹ tôi dạy tiếng Anh.",
+   "img": "b-buu-dien.webp",
+   "audio": "Đây là bệnh viện. Bác sĩ ở đây rất giỏi.",
    "ans": false,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "w-e8c966943e.webp",
-   "audio": "Gia đình tôi đang ăn tối.",
+   "img": "quan-ca-phe.webp",
+   "audio": "Chúng tôi đang ngồi nói chuyện ở quán cà phê.",
    "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-xem-phim.webp",
-   "audio": "Hai người bạn đang nói chuyện ở quán cà phê.",
+   "img": "b-san-bay.webp",
+   "audio": "Đây là Bưu điện Thành phố. Có nhiều khách đến tham quan.",
    "ans": false,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "w-572c467085.webp",
-   "audio": "Chị ấy đang mua sắm ở siêu thị.",
+   "img": "b-sieu-thi.webp",
+   "audio": "Mẹ tôi đang mua sắm ở siêu thị gần nhà.",
    "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Anh ấy là luật sư. Anh ấy rất bận.",
+   "audio": "Tôi đến đây để gửi thư cho bố mẹ.",
    "opts": [
-    "b-luat-su.webp",
-    "w-81eaf9dd0c.webp",
-    "b-thu-ky.webp",
-    "w-f7b9dddb08.webp",
-    "b-giao-vien.webp"
-   ],
-   "ans": 0,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
-   "audio": "Cô ấy là thư ký. Cô ấy làm việc ở văn phòng.",
-   "opts": [
-    "b-luat-su.webp",
-    "w-81eaf9dd0c.webp",
-    "b-thu-ky.webp",
-    "w-f7b9dddb08.webp",
-    "b-giao-vien.webp"
-   ],
-   "ans": 2,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
-   "audio": "Anh Nam là tài xế tắc xi.",
-   "opts": [
-    "b-luat-su.webp",
-    "w-81eaf9dd0c.webp",
-    "b-thu-ky.webp",
-    "w-f7b9dddb08.webp",
-    "b-giao-vien.webp"
+    "b-nha-sach.webp",
+    "b-buu-dien.webp",
+    "b-benh-vien.webp",
+    "quan-ca-phe.webp",
+    "b-san-bay.webp"
    ],
    "ans": 1,
    "made": true
@@ -94,40 +66,68 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Chị ấy là giáo viên. Chị ấy dạy ở trường đại học.",
+   "audio": "Tôi muốn mua sách lịch sử Việt Nam.",
    "opts": [
-    "b-luat-su.webp",
-    "w-81eaf9dd0c.webp",
-    "b-thu-ky.webp",
-    "w-f7b9dddb08.webp",
-    "b-giao-vien.webp"
+    "b-nha-sach.webp",
+    "b-buu-dien.webp",
+    "b-benh-vien.webp",
+    "quan-ca-phe.webp",
+    "b-san-bay.webp"
    ],
-   "ans": 4,
+   "ans": 0,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Em tôi là nhân viên ngân hàng.",
+   "audio": "Bác sĩ làm việc ở đây. Hôm nay có nhiều người đến.",
    "opts": [
-    "b-luat-su.webp",
-    "w-81eaf9dd0c.webp",
-    "b-thu-ky.webp",
-    "w-f7b9dddb08.webp",
-    "b-giao-vien.webp"
+    "b-nha-sach.webp",
+    "b-buu-dien.webp",
+    "b-benh-vien.webp",
+    "quan-ca-phe.webp",
+    "b-san-bay.webp"
+   ],
+   "ans": 2,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Chúng ta gặp nhau ở đây uống cà phê nhé.",
+   "opts": [
+    "b-nha-sach.webp",
+    "b-buu-dien.webp",
+    "b-benh-vien.webp",
+    "quan-ca-phe.webp",
+    "b-san-bay.webp"
    ],
    "ans": 3,
    "made": true
   },
   {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Máy bay sắp cất cánh rồi.",
+   "opts": [
+    "b-nha-sach.webp",
+    "b-buu-dien.webp",
+    "b-benh-vien.webp",
+    "quan-ca-phe.webp",
+    "b-san-bay.webp"
+   ],
+   "ans": 4,
+   "made": true
+  },
+  {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Gia đình Lan có mấy người?",
-   "audio": "Gia đình tôi có bốn người: bố mẹ, em và tôi.",
+   "prompt": "Bây giờ họ đi đâu?",
+   "audio": "Bây giờ chúng ta sẽ đi mua sách ở nhà sách FAHASA.",
    "opts": [
-    "bốn người",
-    "ba người",
-    "năm người"
+    "nhà sách",
+    "bưu điện",
+    "siêu thị"
    ],
    "ans": 0,
    "shuffle": true,
@@ -136,12 +136,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Bố của Lan làm nghề gì?",
-   "audio": "Bố tôi là bác sĩ. Ông ấy làm việc ở bệnh viện.",
+   "prompt": "Nhà sách FAHASA số mấy?",
+   "audio": "Nhà sách FAHASA ở số 40 đường Nguyễn Huệ.",
    "opts": [
-    "bác sĩ",
-    "giáo viên",
-    "kỹ sư"
+    "số 40",
+    "số 14",
+    "số 4"
    ],
    "ans": 0,
    "shuffle": true,
@@ -150,12 +150,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Mẹ của Nam làm gì?",
-   "audio": "Mẹ tôi là nội trợ. Mẹ tôi ở nhà và nấu ăn.",
+   "prompt": "Hôm nay nhà sách giảm giá bao nhiêu?",
+   "audio": "Hôm nay nhà sách giảm giá 30%.",
    "opts": [
-    "nội trợ",
-    "thư ký",
-    "bác sĩ"
+    "30%",
+    "13%",
+    "3%"
    ],
    "ans": 0,
    "shuffle": true,
@@ -164,11 +164,25 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Em của Nam học ở đâu?",
-   "audio": "Em tôi là sinh viên. Em ấy học ở Trường Đại học Khoa học Xã hội và Nhân văn.",
+   "prompt": "Sao David biết nhà sách giảm giá?",
+   "audio": "Vì anh Brian nói với tôi. Hôm qua anh ấy đã mua sách ở đó.",
    "opts": [
-    "trường đại học",
-    "công ty",
+    "vì anh Brian nói",
+    "vì xem tivi",
+    "vì đọc báo"
+   ],
+   "ans": 0,
+   "shuffle": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "k": "choice",
+   "prompt": "Dorothy đi đâu?",
+   "audio": "Trường Đại học Khoa học Xã hội và Nhân văn, số 10, Quận 1.",
+   "opts": [
+    "trường Nhân văn",
+    "bệnh viện",
     "ngân hàng"
    ],
    "ans": 0,
@@ -178,12 +192,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Brian là người nước nào?",
-   "audio": "Brian là bạn tôi. Anh ấy là người Mỹ.",
+   "prompt": "Nhà hàng đó ở đâu?",
+   "audio": "Tôi biết một nhà hàng ở Quận 1. Món ăn ngon lắm, đặc biệt bia tươi rất ngon.",
    "opts": [
-    "Mỹ",
-    "Anh",
-    "Úc"
+    "Quận 1",
+    "Quận 2",
+    "Quận 7"
    ],
    "ans": 0,
    "shuffle": true,
@@ -192,12 +206,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Hiroki và Yumi là người nước nào?",
-   "audio": "Hiroki và Yumi đều là người Nhật.",
+   "prompt": "Tối nay Lee mời ai đi uống bia?",
+   "audio": "Tối nay tôi mời anh Min và anh Hiroki đến đó uống bia.",
    "opts": [
-    "Nhật",
-    "Hàn Quốc",
-    "Trung Quốc"
+    "anh Min và anh Hiroki",
+    "chị Vân",
+    "cô Loan"
    ],
    "ans": 0,
    "shuffle": true,
@@ -206,12 +220,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Cô giáo của Lan tên là gì?",
-   "audio": "Cô giáo tiếng Việt của tôi tên là Hoa.",
+   "prompt": "Hiroki đã đi tham quan ở đâu?",
+   "audio": "Ở Thành phố Hồ Chí Minh tôi đã đi tham quan Nhà thờ Đức Bà và Bảo tàng Lịch sử.",
    "opts": [
-    "Hoa",
-    "Mai",
-    "Lan"
+    "Nhà thờ Đức Bà",
+    "sân bay",
+    "siêu thị"
    ],
    "ans": 0,
    "shuffle": true,
@@ -220,12 +234,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Chị của Nam bao nhiêu tuổi?",
-   "audio": "Chị tôi 25 tuổi. Chị ấy là kế toán.",
+   "prompt": "Ngày mai Vân rảnh từ mấy giờ?",
+   "audio": "Ngày mai tôi rảnh từ 2 giờ chiều.",
    "opts": [
-    "25 tuổi",
-    "20 tuổi",
-    "30 tuổi"
+    "từ 2 giờ chiều",
+    "từ 9 giờ sáng",
+    "từ 7 giờ tối"
    ],
    "ans": 0,
    "shuffle": true,
@@ -234,26 +248,12 @@
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
-   "prompt": "Ông bà của Lan sống ở đâu?",
-   "audio": "Ông bà tôi sống ở Đà Nẵng.",
+   "prompt": "Từ đây đến sân bay mất bao lâu?",
+   "audio": "Từ đây đến sân bay mất khoảng 30 phút bằng tắc xi.",
    "opts": [
-    "Đà Nẵng",
-    "Hà Nội",
-    "Huế"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
-   "k": "choice",
-   "prompt": "Bạn của Nam là ai?",
-   "audio": "Kate là bạn của tôi. Chị ấy là người Úc.",
-   "opts": [
-    "Kate",
-    "Brian",
-    "David"
+    "khoảng 30 phút",
+    "khoảng 3 phút",
+    "khoảng 3 tiếng"
    ],
    "ans": 0,
    "shuffle": true,
@@ -263,11 +263,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Gia đình anh có mấy người?",
+   "audio": "Bây giờ chúng ta đi đâu?",
    "opts": [
-    "Gia đình tôi có năm người.",
-    "Tôi là sinh viên.",
-    "Ở Hà Nội."
+    "Chúng ta đi mua sách.",
+    "Lúc 8 giờ sáng.",
+    "Khoảng 20 nhân viên."
    ],
    "ans": 0,
    "shuffle": true,
@@ -277,11 +277,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Bố chị làm nghề gì?",
+   "audio": "Nhà sách ở đâu?",
    "opts": [
-    "Bố tôi là kỹ sư.",
-    "Bố tôi 50 tuổi.",
-    "Ở công ty."
+    "Ở số 40 đường Nguyễn Huệ.",
+    "Giảm giá 30%.",
+    "Bằng tắc xi."
    ],
    "ans": 0,
    "shuffle": true,
@@ -291,11 +291,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Mẹ em có đi làm không?",
+   "audio": "Anh muốn mua sách gì?",
    "opts": [
-    "Không, mẹ em là nội trợ.",
-    "Mẹ em tên là Hoa.",
-    "Lúc 7 giờ."
+    "Sách lịch sử Việt Nam.",
+    "Ở nhà sách FAHASA.",
+    "Hôm qua."
    ],
    "ans": 0,
    "shuffle": true,
@@ -305,11 +305,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Anh có em không?",
+   "audio": "Gần Đài Truyền hình Thành phố, phải không cô?",
    "opts": [
-    "Có, tôi có một em.",
-    "Tôi là người Việt Nam.",
-    "Rất vui."
+    "Đúng rồi, anh.",
+    "Khoảng 30 phút.",
+    "Tôi muốn mua sách."
    ],
    "ans": 0,
    "shuffle": true,
@@ -319,11 +319,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Bạn anh là người nước nào?",
+   "audio": "Anh có biết nhà hàng nào ngon không?",
    "opts": [
-    "Bạn tôi là người Nhật.",
-    "Bạn tôi là bác sĩ.",
-    "Bạn tôi ở Quận 1."
+    "Có, tôi biết một nhà hàng ở Quận 1.",
+    "Lúc 7 giờ tối.",
+    "Tôi là tài xế."
    ],
    "ans": 0,
    "shuffle": true,
@@ -333,11 +333,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Chị anh bao nhiêu tuổi?",
+   "audio": "Ngày mai chị có rảnh không?",
    "opts": [
-    "Chị ấy 28 tuổi.",
-    "Chị ấy là thư ký.",
-    "Chị ấy ở nhà."
+    "Có, tôi rảnh từ 2 giờ chiều.",
+    "Ở bảo tàng.",
+    "Giảm giá 20%."
    ],
    "ans": 0,
    "shuffle": true,
@@ -347,11 +347,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Ông bà chị sống ở đâu?",
+   "audio": "Anh có biết chỗ đó địa chỉ số mấy không?",
    "opts": [
-    "Ông bà tôi sống ở Huế.",
-    "Ông bà tôi rất khỏe.",
-    "Ông bà tôi 70 tuổi."
+    "Số 125, Quận 1.",
+    "Rất đẹp.",
+    "Từ 9 giờ sáng."
    ],
    "ans": 0,
    "shuffle": true,
@@ -361,11 +361,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Cô ấy là ai?",
+   "audio": "Tối nay chúng ta ăn ở đâu?",
    "opts": [
-    "Cô ấy là cô giáo của tôi.",
-    "Cô ấy rất đẹp.",
-    "Cô ấy ở Hà Nội."
+    "Ở quán ăn gần trường nhé.",
+    "Khoảng 40 phút.",
+    "Vì tôi bận."
    ],
    "ans": 0,
    "shuffle": true,
@@ -375,11 +375,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Em anh làm việc ở đâu?",
+   "audio": "Xe sắp đến chưa anh?",
    "opts": [
-    "Em ấy làm việc ở ngân hàng.",
-    "Em ấy 22 tuổi.",
-    "Em ấy là người Việt."
+    "Sắp đến rồi, cô.",
+    "Ở Quận 7.",
+    "Tôi đi bằng xe buýt."
    ],
    "ans": 0,
    "shuffle": true,
@@ -389,11 +389,11 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Bố mẹ chị có khỏe không?",
+   "audio": "Cô nói tiếng Việt giỏi quá!",
    "opts": [
-    "Cám ơn, bố mẹ tôi khỏe.",
-    "Bố mẹ tôi là bác sĩ.",
-    "Bố mẹ tôi ở Đà Nẵng."
+    "Cám ơn anh.",
+    "Không, tôi đi tắc xi.",
+    "Ở gần đây."
    ],
    "ans": 0,
    "shuffle": true,
@@ -402,77 +402,77 @@
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Đây là mẹ ____ tôi.",
+   "prompt": "Bây giờ ____ đi đâu?",
    "opts": [
-    "của",
-    "đều",
-    "cũng",
-    "ấy",
-    "có"
+    "sẽ",
+    "quá",
+    "à",
+    "tại sao",
+    "chúng ta"
+   ],
+   "ans": 4
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "k": "choice",
+   "prompt": "Chúng ta ____ đi mua sách.",
+   "opts": [
+    "sẽ",
+    "quá",
+    "à",
+    "tại sao",
+    "chúng ta"
    ],
    "ans": 0
   },
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Bố mẹ tôi ____ là giáo viên.",
+   "prompt": "Cô nói tiếng Việt giỏi ____!",
    "opts": [
-    "của",
-    "đều",
-    "cũng",
-    "ấy",
-    "có"
+    "sẽ",
+    "quá",
+    "à",
+    "tại sao",
+    "chúng ta"
    ],
    "ans": 1
   },
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Tôi là sinh viên. Em tôi ____ là sinh viên.",
+   "prompt": "Hôm nay nhà sách giảm giá 30% ____?",
    "opts": [
-    "của",
-    "đều",
-    "cũng",
-    "ấy",
-    "có"
+    "sẽ",
+    "quá",
+    "à",
+    "tại sao",
+    "chúng ta"
    ],
    "ans": 2
   },
   {
    "sec": "B 읽기 · 1 빈칸(낱말·문법)",
    "k": "choice",
-   "prompt": "Kia là chị Mai. Chị ____ là bạn tôi.",
+   "prompt": "____ hôm qua anh không đến lớp? — Vì tôi bận.",
    "opts": [
-    "của",
-    "đều",
-    "cũng",
-    "ấy",
-    "có"
+    "sẽ",
+    "quá",
+    "à",
+    "tại sao",
+    "chúng ta"
    ],
    "ans": 3
   },
   {
-   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
-   "k": "choice",
-   "prompt": "Gia đình tôi ____ bốn người.",
-   "opts": [
-    "của",
-    "đều",
-    "cũng",
-    "ấy",
-    "có"
-   ],
-   "ans": 4
-  },
-  {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Gia đình Nam có bốn người: bố, mẹ, chị và Nam. Bố Nam là luật sư. Mẹ Nam là nội trợ. Chị Nam là kế toán ở ngân hàng.",
-   "prompt": "Chị Nam làm nghề gì?",
+   "text": "Hôm nay nhà sách FAHASA ở số 40 đường Nguyễn Huệ giảm giá 30%. David và Vân sẽ đi mua sách lịch sử Việt Nam ở đó.",
+   "prompt": "Họ sẽ mua gì?",
    "opts": [
-    "kế toán",
-    "luật sư",
-    "nội trợ"
+    "sách lịch sử",
+    "bia tươi",
+    "cà phê"
    ],
    "ans": 0,
    "shuffle": true
@@ -480,12 +480,12 @@
   {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Yumi là người Nhật. Chị ấy là bạn của Lan. Yumi học tiếng Việt ở Hà Nội hai năm rồi. Bây giờ chị ấy nói tiếng Việt rất giỏi.",
-   "prompt": "Yumi học tiếng Việt ở đâu?",
+   "text": "Dorothy đi tắc xi đến trường Nhân văn. Trường ở số 10 đường Đinh Tiên Hoàng, Quận 1, gần Đài Truyền hình Thành phố.",
+   "prompt": "Trường Nhân văn ở gần đâu?",
    "opts": [
-    "Hà Nội",
-    "Nhật",
-    "Đà Nẵng"
+    "Đài Truyền hình Thành phố",
+    "sân bay",
+    "Nhà thờ Đức Bà"
    ],
    "ans": 0,
    "shuffle": true
@@ -493,12 +493,12 @@
   {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Ông bà tôi sống ở quê. Ông tôi 75 tuổi, bà tôi 72 tuổi. Ông bà tôi đều khỏe.",
-   "prompt": "Bà tôi bao nhiêu tuổi?",
+   "text": "Tối nay Lee mời anh Min đi uống bia ở một nhà hàng Việt Nam ở Quận 1. Món ăn ở đó ngon lắm, đặc biệt bia tươi rất ngon.",
+   "prompt": "Tối nay họ đi đâu?",
    "opts": [
-    "72 tuổi",
-    "75 tuổi",
-    "70 tuổi"
+    "đi uống bia",
+    "đi mua sách",
+    "đi tham quan bảo tàng"
    ],
    "ans": 0,
    "shuffle": true
@@ -506,12 +506,12 @@
   {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Đây là Brian và David. Brian là người Mỹ. David là người Anh. Họ đều là sinh viên tiếng Việt ở lớp tôi.",
-   "prompt": "David là người nước nào?",
+   "text": "Hiroki đã đi tham quan Nhà thờ Đức Bà, Bưu điện Thành phố và Bảo tàng Lịch sử. Ngày mai anh ấy muốn mời Vân đi Bảo tàng Áo dài.",
+   "prompt": "Ngày mai Hiroki muốn đi đâu?",
    "opts": [
-    "Anh",
-    "Mỹ",
-    "Úc"
+    "Bảo tàng Áo dài",
+    "Bưu điện Thành phố",
+    "Nhà thờ Đức Bà"
    ],
    "ans": 0,
    "shuffle": true
@@ -519,12 +519,12 @@
   {
    "sec": "B 읽기 · 2 읽고 질문에 답하기",
    "k": "choice",
-   "text": "Cô Hoa là cô giáo tiếng Việt của tôi. Cô ấy là người Việt Nam. Cô ấy rất thân thiện và dạy rất hay.",
-   "prompt": "Cô Hoa dạy gì?",
+   "text": "Nhà tôi ở Quận 7. Từ nhà tôi đến trung tâm thành phố mất khoảng 40 phút bằng xe buýt. Đi tắc xi mất 20 phút nhưng hơi mắc.",
+   "prompt": "Đi tắc xi mất bao lâu?",
    "opts": [
-    "tiếng Việt",
-    "tiếng Anh",
-    "tiếng Hàn"
+    "20 phút",
+    "40 phút",
+    "4 phút"
    ],
    "ans": 0,
    "shuffle": true
@@ -532,82 +532,82 @@
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Tôi tên là Min. Tôi là người Hàn Quốc. Gia đình tôi có ba người: bố, mẹ và tôi. Bố tôi là kỹ sư, mẹ tôi là giáo viên.",
-   "prompt": "Min là người Hàn Quốc.",
+   "text": "Nhà sách FAHASA ở số 40 đường Nguyễn Huệ, Quận 1. Hôm nay nhà sách giảm giá 30%. David muốn mua sách lịch sử Việt Nam.",
+   "prompt": "Nhà sách FAHASA ở Quận 1.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Tôi tên là Min. Tôi là người Hàn Quốc. Gia đình tôi có ba người: bố, mẹ và tôi. Bố tôi là kỹ sư, mẹ tôi là giáo viên.",
-   "prompt": "Gia đình Min có bốn người.",
+   "text": "Nhà sách FAHASA ở số 40 đường Nguyễn Huệ, Quận 1. Hôm nay nhà sách giảm giá 30%. David muốn mua sách lịch sử Việt Nam.",
+   "prompt": "Hôm nay nhà sách giảm giá 13%.",
    "ans": false
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Tôi tên là Min. Tôi là người Hàn Quốc. Gia đình tôi có ba người: bố, mẹ và tôi. Bố tôi là kỹ sư, mẹ tôi là giáo viên.",
-   "prompt": "Mẹ Min là giáo viên.",
+   "text": "Nhà sách FAHASA ở số 40 đường Nguyễn Huệ, Quận 1. Hôm nay nhà sách giảm giá 30%. David muốn mua sách lịch sử Việt Nam.",
+   "prompt": "David muốn mua sách lịch sử.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Bạn thân của tôi là Hiroki. Anh ấy là người Nhật. Anh ấy làm kế toán ở một ngân hàng ở Quận 1.",
-   "prompt": "Hiroki là người Nhật.",
-   "ans": true
-  },
-  {
-   "sec": "B 읽기 · 3 맞다/틀리다",
-   "k": "tf",
-   "text": "Bạn thân của tôi là Hiroki. Anh ấy là người Nhật. Anh ấy làm kế toán ở một ngân hàng ở Quận 1.",
-   "prompt": "Hiroki làm việc ở bệnh viện.",
+   "text": "Tôi biết một nhà hàng Việt Nam ở Quận 1. Món ăn ở đó ngon lắm. Đặc biệt, bia tươi rất ngon. Tối nay tôi mời bạn tôi đến đó.",
+   "prompt": "Nhà hàng đó ở Quận 7.",
    "ans": false
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Bạn thân của tôi là Hiroki. Anh ấy là người Nhật. Anh ấy làm kế toán ở một ngân hàng ở Quận 1.",
-   "prompt": "Hiroki là bạn thân của tôi.",
+   "text": "Tôi biết một nhà hàng Việt Nam ở Quận 1. Món ăn ở đó ngon lắm. Đặc biệt, bia tươi rất ngon. Tối nay tôi mời bạn tôi đến đó.",
+   "prompt": "Bia tươi ở đó rất ngon.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Chị Mai có hai em. Một em là sinh viên. Một em 10 tuổi, em ấy đi học ở gần nhà.",
-   "prompt": "Chị Mai có hai em.",
-   "ans": true
-  },
-  {
-   "sec": "B 읽기 · 3 맞다/틀리다",
-   "k": "tf",
-   "text": "Chị Mai có hai em. Một em là sinh viên. Một em 10 tuổi, em ấy đi học ở gần nhà.",
-   "prompt": "Hai em của chị Mai đều là sinh viên.",
+   "text": "Tôi biết một nhà hàng Việt Nam ở Quận 1. Món ăn ở đó ngon lắm. Đặc biệt, bia tươi rất ngon. Tối nay tôi mời bạn tôi đến đó.",
+   "prompt": "Tối nay tôi đi nhà hàng một mình.",
    "ans": false
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Ông bà của Lan sống ở Huế. Cuối tuần Lan thường về Huế thăm ông bà. Ông bà Lan rất vui.",
-   "prompt": "Ông bà Lan sống ở Hà Nội.",
+   "text": "Hôm qua Hiroki đã đi tham quan Bảo tàng Lịch sử. Bảo tàng ở gần trường Nhân văn. Anh ấy thấy rất thú vị.",
+   "prompt": "Bảo tàng Lịch sử ở gần trường Nhân văn.",
+   "ans": true
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Hôm qua Hiroki đã đi tham quan Bảo tàng Lịch sử. Bảo tàng ở gần trường Nhân văn. Anh ấy thấy rất thú vị.",
+   "prompt": "Hiroki thấy bảo tàng chán.",
    "ans": false
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Ông bà của Lan sống ở Huế. Cuối tuần Lan thường về Huế thăm ông bà. Ông bà Lan rất vui.",
-   "prompt": "Cuối tuần Lan thường thăm ông bà.",
+   "text": "Ngày mai Vân rảnh từ 2 giờ chiều. Hiroki mời Vân đi Bảo tàng Áo dài. Họ sẽ hỏi địa chỉ.",
+   "prompt": "Ngày mai Vân rảnh buổi sáng.",
+   "ans": false
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Ngày mai Vân rảnh từ 2 giờ chiều. Hiroki mời Vân đi Bảo tàng Áo dài. Họ sẽ hỏi địa chỉ.",
+   "prompt": "Hiroki mời Vân đi bảo tàng.",
    "ans": true
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Gia đình chị có mấy người?",
+   "prompt": "Bây giờ chúng ta đi đâu?",
    "opts": [
-    "Gia đình tôi có bốn người.",
-    "Tôi là người Hàn Quốc.",
-    "Tôi 25 tuổi.",
-    "Ở Hà Nội."
+    "Chúng ta sẽ đi mua sách.",
+    "Tôi đi bằng tắc xi.",
+    "Khoảng 30 phút.",
+    "Giảm giá 30%."
    ],
    "ans": 0,
    "shuffle": true
@@ -615,12 +615,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Đây là ai?",
+   "prompt": "Anh biết địa chỉ nhà sách không đấy?",
    "opts": [
-    "Đây là bố tôi.",
-    "Đây là lớp học.",
-    "Lúc 8 giờ.",
-    "Tôi là sinh viên."
+    "Biết. Số 40 đường Nguyễn Huệ.",
+    "Hôm qua tôi đã mua sách.",
+    "Tôi muốn mua sách lịch sử.",
+    "Rất rẻ."
    ],
    "ans": 0,
    "shuffle": true
@@ -628,12 +628,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Anh có chị không?",
+   "prompt": "Sao anh biết?",
    "opts": [
-    "Không, tôi có một em.",
-    "Chị ấy là bác sĩ.",
-    "Chị ấy 30 tuổi.",
-    "Ở Đà Nẵng."
+    "Vì anh Brian nói với tôi.",
+    "Lúc 9 giờ sáng.",
+    "Ở Quận 1.",
+    "Tôi mua sách tiếng Việt."
    ],
    "ans": 0,
    "shuffle": true
@@ -641,12 +641,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Mẹ anh làm nghề gì?",
+   "prompt": "Đi đâu, cô?",
    "opts": [
-    "Mẹ tôi là nội trợ.",
-    "Mẹ tôi 55 tuổi.",
-    "Mẹ tôi ở quê.",
-    "Mẹ tôi rất khỏe."
+    "Trường Nhân văn, Quận 1, anh.",
+    "Cám ơn anh.",
+    "Rất ngon.",
+    "Tối nay."
    ],
    "ans": 0,
    "shuffle": true
@@ -654,12 +654,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Em ấy bao nhiêu tuổi?",
+   "prompt": "Cô nói tiếng Việt giỏi quá!",
    "opts": [
-    "Em ấy 20 tuổi.",
-    "Em ấy là sinh viên.",
-    "Em ấy ở Quận 1.",
-    "Em ấy rất chăm chỉ."
+    "Cám ơn anh.",
+    "Đúng rồi, anh.",
+    "Số 10, Quận 1.",
+    "Khoảng 20 phút."
    ],
    "ans": 0,
    "shuffle": true
@@ -667,12 +667,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Bạn anh tên là gì?",
+   "prompt": "Anh có biết nhà hàng nào ngon không?",
    "opts": [
-    "Bạn tôi tên là Hiroki.",
-    "Bạn tôi là người Nhật.",
-    "Bạn tôi ở Hà Nội.",
-    "Bạn tôi là kế toán."
+    "Tôi biết một nhà hàng ở Quận 1. Bia tươi rất ngon.",
+    "Tôi là tài xế tắc xi.",
+    "Nhà sách giảm giá 30%.",
+    "Từ 2 giờ chiều."
    ],
    "ans": 0,
    "shuffle": true
@@ -680,12 +680,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Chị ấy là người nước nào?",
+   "prompt": "Ngày mai Vân có rảnh không?",
    "opts": [
-    "Chị ấy là người Úc.",
-    "Chị ấy là giáo viên.",
-    "Chị ấy rất đẹp.",
-    "Chị ấy ở Quận 2."
+    "Tôi rảnh từ 2 giờ chiều. Có việc gì không, anh?",
+    "Tôi đã đi tham quan bảo tàng.",
+    "Bảo tàng ở gần trường.",
+    "Bằng xe buýt."
    ],
    "ans": 0,
    "shuffle": true
@@ -693,12 +693,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Ông bà anh có khỏe không?",
+   "prompt": "Anh có biết chỗ đó địa chỉ số mấy không?",
    "opts": [
-    "Có, ông bà tôi đều khỏe.",
-    "Ông bà tôi ở Huế.",
-    "Ông bà tôi 70 tuổi.",
-    "Ông bà tôi có ba người con."
+    "Địa chỉ à? Số 125, Quận 1.",
+    "Rất thú vị.",
+    "Tôi mời Vân đi với tôi.",
+    "Lúc 2 giờ."
    ],
    "ans": 0,
    "shuffle": true
@@ -706,12 +706,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Rất vui được gặp chị.",
+   "prompt": "Xe sắp đến chưa anh?",
    "opts": [
-    "Rất vui được gặp anh.",
-    "Chị ấy là bạn tôi.",
-    "Tôi có hai em.",
-    "Tôi là người Mỹ."
+    "Sắp đến rồi, cô.",
+    "Tôi đi bộ.",
+    "Nhà hàng ở Quận 1.",
+    "Khoảng 100 người."
    ],
    "ans": 0,
    "shuffle": true
@@ -719,12 +719,12 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Bố mẹ anh sống ở đâu?",
+   "prompt": "Tối nay tôi mời anh đi uống bia.",
    "opts": [
-    "Bố mẹ tôi sống ở Busan.",
-    "Bố mẹ tôi là bác sĩ.",
-    "Bố mẹ tôi rất bận.",
-    "Bố mẹ tôi có hai con."
+    "Tốt quá! Không say không về.",
+    "Nhà sách ở đâu?",
+    "Số 40.",
+    "Từ đây đến đó 30 phút."
    ],
    "ans": 0,
    "shuffle": true
@@ -732,116 +732,113 @@
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Gia đình tôi có bốn người.",
+   "vi": "Bây giờ chúng ta đi đâu?",
    "tiles": [
-    "có",
-    "gia đình",
-    "bốn",
+    "đi đâu",
+    "bây giờ",
+    "chúng ta"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Hôm nay nhà sách giảm giá 30%.",
+   "tiles": [
+    "giảm giá",
+    "hôm nay",
+    "30%",
+    "nhà sách"
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Tôi muốn mua sách lịch sử Việt Nam.",
+   "tiles": [
+    "muốn",
     "tôi",
-    "người"
+    "mua",
+    "sách lịch sử",
+    "Việt Nam"
    ]
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Bố tôi là kỹ sư.",
+   "vi": "Cô nói tiếng Việt giỏi quá!",
    "tiles": [
-    "là",
-    "bố",
-    "kỹ sư",
-    "tôi"
+    "giỏi quá",
+    "cô",
+    "nói",
+    "tiếng Việt"
    ]
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Chị ấy là bạn của tôi.",
+   "vi": "Anh sắp về chưa?",
    "tiles": [
-    "của",
-    "chị ấy",
-    "bạn",
-    "là",
-    "tôi"
-   ]
-  },
-  {
-   "sec": "C 쓰기 · 1 낱말 배열",
-   "k": "puzzle",
-   "vi": "Họ đều là người Nhật.",
-   "tiles": [
-    "đều",
-    "họ",
-    "là",
-    "người",
-    "Nhật"
-   ]
-  },
-  {
-   "sec": "C 쓰기 · 1 낱말 배열",
-   "k": "puzzle",
-   "vi": "Em tôi là sinh viên.",
-   "tiles": [
-    "sinh viên",
-    "em",
-    "là",
-    "tôi"
+    "sắp",
+    "anh",
+    "về",
+    "chưa"
    ]
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Đây là của bố tôi.",
+   "vi": "Nhà sách ở đâu số 40 đường Nguyễn Huệ.",
    "bad": 2,
-   "fix": "Đây là bố tôi.",
-   "ko": "이분은 제 아버지예요. (가족 관계에는 của를 안 쓴다)"
+   "fix": "Nhà sách ở số 40 đường Nguyễn Huệ.",
+   "ko": "서점은 응우옌후에 거리 40번지에 있어요. (ở đâu 는 물을 때만)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Bố mẹ tôi là đều giáo viên.",
+   "vi": "Hôm qua anh ấy sẽ mua sách ở đó.",
    "bad": 3,
-   "fix": "Bố mẹ tôi đều là giáo viên.",
-   "ko": "부모님은 모두 선생님이에요. (đều는 là 앞)"
+   "fix": "Hôm qua anh ấy đã mua sách ở đó.",
+   "ko": "어제 그는 거기서 책을 샀어요. (지난 일은 đã)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Chị tôi tuổi 25.",
-   "bad": 2,
-   "fix": "Chị tôi 25 tuổi.",
-   "ko": "제 언니는 25살이에요. (숫자 + tuổi)"
+   "vi": "Anh biết địa chỉ nhà sách không có?",
+   "bad": 7,
+   "fix": "Anh có biết địa chỉ nhà sách không?",
+   "ko": "서점 주소를 아세요? (có … không 차례)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Em ấy không là sinh viên.",
-   "bad": 2,
-   "fix": "Em ấy không phải là sinh viên.",
-   "ko": "그 애는 대학생이 아니에요. (không phải là)"
-  },
-  {
-   "sec": "C 쓰기 · 2 틀린 곳 찾기",
-   "k": "errpick",
-   "vi": "Ông bà tôi khỏe rất.",
+   "vi": "Món ăn ở đó rất ngon lắm.",
    "bad": 4,
-   "fix": "Ông bà tôi rất khỏe.",
-   "ko": "조부모님은 아주 건강하세요. (rất는 형용사 앞)"
+   "fix": "Món ăn ở đó ngon lắm.",
+   "ko": "거기 음식은 아주 맛있어요. (rất 와 lắm 을 함께 쓰지 않는다)"
+  },
+  {
+   "sec": "C 쓰기 · 2 틀린 곳 찾기",
+   "k": "errpick",
+   "vi": "Tối nay tôi mời anh đến đó uống bia tối nay.",
+   "bad": 9,
+   "fix": "Tối nay tôi mời anh đến đó uống bia.",
+   "ko": "오늘 밤 거기서 맥주 한잔 살게요. (tối nay 가 두 번)"
   },
   {
    "sec": "C 쓰기 · 3 한 주제로 10문장",
    "k": "free",
-   "prompt": "우리 가족과 친구 소개 — 몇 명인지, 누구인지, 무슨 일을 하는지, 어디에 사는지 (10문장)",
+   "prompt": "베트남에서 가 본 곳 — 어디를 구경했는지(성당·우체국·박물관), 누구와, 무엇으로, 어땠는지, 다음에 가고 싶은 곳 (10문장)",
    "model": [
-    "Gia đình tôi có bốn người.",
-    "Bố tôi là kỹ sư. Ông ấy làm việc ở công ty máy tính.",
-    "Mẹ tôi là nội trợ.",
-    "Em tôi là sinh viên. Em ấy 20 tuổi.",
-    "Gia đình tôi sống ở Busan.",
-    "Bạn thân của tôi tên là Hiroki.",
-    "Anh ấy là người Nhật.",
-    "Anh ấy làm kế toán ở ngân hàng.",
-    "Cuối tuần chúng tôi thường đi uống cà phê.",
-    "Tôi rất thích gia đình và bạn bè của tôi."
+    "Tuần trước tôi đã đi tham quan Nhà thờ Đức Bà.",
+    "Nhà thờ Đức Bà ở Quận 1, gần Bưu điện Thành phố.",
+    "Tôi đi với bạn cùng lớp của tôi.",
+    "Chúng tôi đi bằng tắc xi, mất khoảng 20 phút.",
+    "Sau đó chúng tôi đi Bảo tàng Lịch sử.",
+    "Bảo tàng ở gần trường Nhân văn.",
+    "Bảo tàng rất thú vị.",
+    "Buổi tối chúng tôi ăn tối ở một quán ăn ở phố đi bộ.",
+    "Món ăn ở đó ngon lắm.",
+    "Tuần sau tôi muốn đi Bảo tàng Áo dài."
    ],
    "n": 10,
    "pts": 10
@@ -849,55 +846,55 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "gia đình",
+   "vi": "địa chỉ",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "bố mẹ",
+   "vi": "giảm giá",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "ông bà",
+   "vi": "nhà sách",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "con gái",
+   "vi": "tắc xi",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "bạn thân",
+   "vi": "bảo tàng",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "luật sư",
+   "vi": "tham quan",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "tài xế",
+   "vi": "rảnh",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "nhân viên",
+   "vi": "mời",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "tuổi",
+   "vi": "đặc biệt",
    "pts": 1
   },
   {
@@ -909,50 +906,50 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Gia đình tôi có bốn người.",
+   "vi": "Bây giờ chúng ta đi đâu?",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Bố mẹ tôi đều là giáo viên.",
+   "vi": "Hôm nay nhà sách giảm giá 30%.",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Chị tôi 25 tuổi.",
+   "vi": "Cô nói tiếng Việt giỏi quá!",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Bạn tôi là người Nhật.",
+   "vi": "Ngày mai anh có rảnh không?",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Ông bà anh có khỏe không?",
+   "vi": "Anh sắp về chưa?",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-gia-dinh.webp",
-   "ask": "그림을 보고 가족을 소개해 보세요 — 몇 명인지, 누구누구인지, 아버지 직업. (3문장)",
+   "img": "quan-ca-phe.webp",
+   "ask": "그림을 보고 말해 보세요 — 여기는 어디이고, 어디 근처에 있고, 무엇이 맛있나요? (3문장)",
    "model": [
     {
-     "vi": "Gia đình tôi có bốn người.",
-     "ko": "우리 가족은 네 명이에요."
+     "vi": "Đây là quán cà phê.",
+     "ko": "여기는 카페예요."
     },
     {
-     "vi": "Bố mẹ tôi, chị tôi và tôi.",
-     "ko": "부모님, 언니(누나) 그리고 저예요."
+     "vi": "Quán ở gần trường Nhân văn.",
+     "ko": "카페는 인문대 근처에 있어요."
     },
     {
-     "vi": "Bố tôi là kỹ sư.",
-     "ko": "아버지는 엔지니어예요."
+     "vi": "Cà phê ở đây ngon lắm.",
+     "ko": "여기 커피는 아주 맛있어요."
     }
    ],
    "n": 3,
@@ -961,20 +958,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-bac-si.webp",
-   "ask": "그림 속 사람은 당신의 형(오빠)입니다. 소개해 보세요 — 직업, 일하는 곳, 바쁜지. (3문장)",
+   "img": "b-san-bay.webp",
+   "ask": "그림을 보고 말해 보세요 — 여기는 어디이고, 여기서 시내까지 얼마나 걸리며, 무엇으로 가나요? (3문장)",
    "model": [
     {
-     "vi": "Đây là anh tôi.",
-     "ko": "이 사람은 제 형(오빠)이에요."
+     "vi": "Đây là sân bay.",
+     "ko": "여기는 공항이에요."
     },
     {
-     "vi": "Anh ấy là bác sĩ ở bệnh viện.",
-     "ko": "그는 병원 의사예요."
+     "vi": "Từ sân bay đến trung tâm thành phố mất khoảng ba mươi phút.",
+     "ko": "공항에서 시내까지 30분쯤 걸려요."
     },
     {
-     "vi": "Anh ấy rất bận.",
-     "ko": "그는 아주 바빠요."
+     "vi": "Tôi đi bằng tắc xi.",
+     "ko": "저는 택시로 가요."
     }
    ],
    "n": 3,
@@ -983,19 +980,19 @@
   {
    "sec": "D 말하기 · 4 상황 읽고 말하기",
    "k": "speak",
-   "ask": "친구가 '가족이 몇 명이에요?'라고 묻습니다. 가족 수와 부모님이 무슨 일을 하시는지 말해 보세요. (3문장)",
+   "ask": "택시를 탔습니다. 기사가 '어디 가세요?'라고 묻습니다. 목적지·번지·어디 근처인지 말해 보세요. (3문장)",
    "model": [
     {
-     "vi": "Gia đình tôi có năm người.",
-     "ko": "우리 가족은 다섯 명이에요."
+     "vi": "Trường Nhân văn, anh.",
+     "ko": "인문대요, 기사님."
     },
     {
-     "vi": "Bố tôi là giáo viên.",
-     "ko": "아버지는 선생님이에요."
+     "vi": "Số 10 đường Đinh Tiên Hoàng, Quận 1.",
+     "ko": "딘띠엔호앙 거리 10번지, 1군이요."
     },
     {
-     "vi": "Mẹ tôi là nội trợ.",
-     "ko": "어머니는 주부예요."
+     "vi": "Gần Đài Truyền hình Thành phố.",
+     "ko": "시 방송국 근처예요."
     }
    ],
    "n": 3,
@@ -1004,19 +1001,19 @@
   {
    "sec": "D 말하기 · 4 상황 읽고 말하기",
    "k": "speak",
-   "ask": "친한 친구를 소개해 보세요 — 이름, 어느 나라 사람인지, 무엇을 하는지. (3문장)",
+   "ask": "친구를 식당에 초대해 보세요 — 어디에 있는지, 무엇이 맛있는지, 몇 시에 만날지. (3문장)",
    "model": [
     {
-     "vi": "Bạn thân của tôi tên là Brian.",
-     "ko": "제 친한 친구 이름은 브라이언이에요."
+     "vi": "Tối nay tôi mời bạn đi ăn ở một nhà hàng ở Quận 1.",
+     "ko": "오늘 저녁 1군에 있는 식당에서 제가 살게요."
     },
     {
-     "vi": "Anh ấy là người Mỹ.",
-     "ko": "그는 미국 사람이에요."
+     "vi": "Món ăn ở đó ngon lắm, đặc biệt là bia tươi.",
+     "ko": "거기 음식 아주 맛있어요, 특히 생맥주요."
     },
     {
-     "vi": "Anh ấy là sinh viên.",
-     "ko": "그는 대학생이에요."
+     "vi": "Chúng ta gặp nhau lúc bảy giờ tối nhé.",
+     "ko": "저녁 7시에 만나요."
     }
    ],
    "n": 3,

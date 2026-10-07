@@ -20,10 +20,10 @@ q += [A4("Nhà sách ở đâu?", ["Ở Quận 1.", "Lúc 8 giờ.", "Rất rẻ
       A4("Từ đây đến sân bay mất bao lâu?", ["Khoảng 30 phút.", "Lúc 9 giờ.", "Bằng tắc xi."]),
       A4("Chị đi Hà Nội bằng gì?", ["Bằng máy bay.", "Tuần sau.", "Ở Hà Nội."]),
       A4("Mấy giờ chúng ta gặp nhau?", ["Lúc 6 giờ tối.", "Ở quán cà phê.", "Hai người."]),
-      A4("Bây giờ anh đang ở đâu?", ["Tôi đang ở bưu điện.", "Tôi đi bằng xe buýt.", "Tôi là kỹ sư."]),
+      A4("Bây giờ anh đang ở đâu?", ["Tôi đang ở bưu điện.", "Tôi đi bằng xe buýt.", "Khoảng 10 phút."]),
       A4("Siêu thị mở cửa lúc mấy giờ?", ["Lúc 8 giờ sáng.", "Ở gần nhà tôi.", "Rất đông."]),
       A4("Đi đến đó mất bao lâu?", ["Mất khoảng 20 phút.", "Đi bằng xe buýt.", "Lúc 3 giờ."]),
-      A4("Cuối tuần anh thường đi đâu?", ["Tôi thường đi nhà sách.", "Tôi là sinh viên.", "Lúc 10 giờ."]),
+      A4("Máy bay sắp cất cánh chưa?", ["Sắp rồi. Chúng ta đi ngay nhé.", "Ở sân bay.", "Bằng tắc xi."]),
       A4("Nhà chị có gần công ty không?", ["Không, nhà tôi hơi xa.", "Nhà tôi ở Quận 7.", "Tôi đi làm lúc 7 giờ."]),
       A4("Tối nay chúng ta ăn ở đâu?", ["Ở quán ăn gần công ty.", "Lúc 7 giờ tối.", "Ăn với bạn."])]
 bank = ["lúc", "từ", "bằng", "ở đâu", "gần"]
@@ -44,14 +44,14 @@ q += [B3(T1, "Công ty tôi ở Quận 1.", True), B3(T1, "Tôi làm việc đ�
       B3(T4, "Bố tôi là bác sĩ.", True), B3(T4, "Thứ bảy bố tôi đi làm.", False)]
 q += [B4("Nhà sách ở đâu?", ["Ở đường Nguyễn Huệ, Quận 1.", "Lúc 8 giờ sáng.", "Bằng xe buýt.", "Khoảng 30 phút."]),
       B4("Từ đây đến sân bay mất bao lâu?", ["Khoảng 30 phút.", "Lúc 7 giờ.", "Rất rẻ.", "Tôi đi bằng tắc xi."]),
-      B4("Anh đi làm bằng gì?", ["Tôi đi làm bằng xe buýt.", "Tôi đi làm lúc 8 giờ.", "Công ty tôi ở Quận 1.", "Tôi là kỹ sư."]),
+      B4("Anh đi làm bằng gì?", ["Tôi đi làm bằng xe buýt.", "Tôi đi làm lúc 8 giờ.", "Công ty tôi ở Quận 1.", "Khoảng 40 phút."]),
       B4("Chúng ta gặp nhau lúc mấy giờ?", ["Lúc 6 giờ tối nhé.", "Ở quán cà phê.", "Với bạn tôi.", "Hai người."]),
       B4("Siêu thị mở cửa lúc mấy giờ?", ["Lúc 8 giờ sáng.", "Ở gần nhà tôi.", "Siêu thị rất đông.", "Tôi đi siêu thị."]),
       B4("Đi đến đó mất bao lâu?", ["Mất khoảng 20 phút.", "Lúc 3 giờ chiều.", "Bằng xe buýt.", "Ở Quận 2."]),
       B4("Tối nay chúng ta ăn ở đâu?", ["Ở quán ăn gần công ty nhé.", "Lúc 7 giờ tối.", "Món ăn ngon lắm.", "Tôi không đói."]),
       B4("Nhà anh có gần công ty không?", ["Không, nhà tôi hơi xa.", "Nhà tôi có bốn người.", "Tôi đi làm lúc 7 giờ.", "Công ty tôi rất đông người."]),
-      B4("Bây giờ chị đang ở đâu?", ["Tôi đang ở bưu điện.", "Tôi đi bằng xe buýt.", "Lúc 9 giờ.", "Tôi là thư ký."]),
-      B4("Cuối tuần anh thường đi đâu?", ["Tôi thường đi phố đi bộ.", "Tôi là sinh viên.", "Lúc 10 giờ sáng.", "Tôi rất bận."])]
+      B4("Bây giờ chị đang ở đâu?", ["Tôi đang ở bưu điện.", "Tôi đi bằng xe buýt.", "Lúc 9 giờ.", "Hơi xa."]),
+      B4("Xe buýt sắp đến chưa?", ["Sắp đến rồi.", "Tôi đi làm lúc 7 giờ.", "Ở Quận 7.", "Khoảng 40 phút."])]
 q += [C1("Nhà tôi gần công ty.", ["gần", "nhà", "công ty", "tôi"]), C1("Tôi đi Hà Nội bằng máy bay.", ["bằng", "tôi", "máy bay", "đi", "Hà Nội"]),
       C1("Siêu thị mở cửa lúc 8 giờ.", ["lúc", "siêu thị", "8 giờ", "mở cửa"]), C1("Từ nhà đến công ty mất 30 phút.", ["mất", "từ", "nhà", "đến", "công ty", "30 phút"]),
       C1("Chúng ta gặp nhau ở quán cà phê nhé.", ["nhé", "chúng ta", "gặp nhau", "ở", "quán cà phê"])]

@@ -14,7 +14,7 @@ IMG = {}
 for b, v, k, i in W:
     if i and (R / 'img' / i).exists(): IMG.setdefault(U.normalize('NFC', v).lower(), i)
 ALLOW = {'bố', 'mẹ'}   # 'bố mẹ'(4과)·'mẹ'(6과)에서 — 낱개 bố 도 교재 대화에 나온다
-NAMES = {'david', 'brian', 'eun', 'ji', 'hiroki', 'vân', 'kate', 'loan', 'min', 'dorothy', 'hồ', 'chí', 'minh', 'quận', 'mỹ', 'anh', 'nhật', 'úc', 'hàn', 'quốc', 'việt', 'nam', 'đúng', 'lan', 'hoa', 'mai', 'nga', 'hùng', 'linh', 'tuấn', 'thu', 'long', 'kim', 'lee', 'park', 'tom', 'mary', 'john', 'anna', 'yumi', 'đà', 'nẵng', 'sài', 'gòn', 'huế', 'busan', 'seoul', 'tokyo', 'pháp', 'đức', 'thái', 'trung', 'nhân', 'văn', 'fahasa', 'nguyễn', 'huệ', 'ila', 'samsung', 'lg', 'hyundai'}
+NAMES = {'david', 'brian', 'eun', 'ji', 'hiroki', 'vân', 'kate', 'loan', 'min', 'dorothy', 'hồ', 'chí', 'minh', 'quận', 'mỹ', 'anh', 'nhật', 'úc', 'hàn', 'quốc', 'việt', 'nam', 'đúng', 'lan', 'hoa', 'mai', 'nga', 'hùng', 'linh', 'tuấn', 'thu', 'long', 'kim', 'lee', 'park', 'tom', 'mary', 'john', 'anna', 'yumi', 'đà', 'nẵng', 'sài', 'gòn', 'huế', 'busan', 'seoul', 'tokyo', 'pháp', 'đức', 'thái', 'trung', 'nhân', 'văn', 'fahasa', 'nguyễn', 'huệ', 'ila', 'đinh', 'tiên', 'hoàng', 'toàn', 'dũng', 'grab', 'samsung', 'lg', 'hyundai'}
 def img(word):
     k = U.normalize('NFC', word).lower()
     if k not in IMG: raise SystemExit(f'그림 없음: {word}')
@@ -62,7 +62,7 @@ def build(no, title, q):
             assert 0 <= x['bad'] < len(x['vi'].replace('.', '').replace('?', '').split()), (no, x['vi'])
         if x['k'] == 'puzzle': assert sorted(' '.join(x['tiles']).lower().split()) == sorted(x['vi'].rstrip('.?!').lower().split()), (no, x['vi'])
     if bad: raise SystemExit(f'모의고사 {no} 범위 밖 낱말: ' + ' | '.join(f'{k} ← {v[:50]}' for k, v in bad.items()))
-    out = {"note": f"주간시험 2 모의고사 {no} — 교재 1권 1~7과 범위, 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).", "title": title, "time": 90, "pts": {"A": 30, "B": 30, "C": 20, "D": 20}, "q": q}
+    out = {"note": f"주간시험 2 모의고사 {no} — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).", "title": title, "time": 90, "pts": {"A": 30, "B": 30, "C": 20, "D": 20}, "q": q}
     json.dump(out, open(R / f'data/mock2_{no}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     aud = []
     for x in q:

@@ -16,16 +16,16 @@ q += [A3("Anh ấy thường làm gì sau khi ăn tối?", "Sau khi ăn tối t�
       A3("Chị ấy có thường ăn sáng không?", "Tôi thường không ăn sáng vì tôi đi làm sớm.", ["không", "có", "thỉnh thoảng"]),
       A3("Em ấy học tiếng Việt lúc nào?", "Buổi tối em thường học tiếng Việt khoảng một tiếng.", ["buổi tối", "buổi sáng", "buổi trưa"]),
       A3("Sao hôm nay anh ấy mệt?", "Hôm nay tôi hơi mệt vì tối qua tôi thức khuya xem phim.", ["vì thức khuya xem phim", "vì đi làm sớm", "vì không ăn sáng"])]
-q += [A4("Buổi tối anh thường làm gì?", ["Tôi thường xem tivi.", "Tôi là kỹ sư.", "Lúc 7 giờ sáng."]),
-      A4("Chị thích nghe nhạc không?", ["Có, tôi rất thích.", "Tôi là người Hàn Quốc.", "Ở nhà."]),
+q += [A4("Buổi tối anh thường làm gì?", ["Tôi thường xem tivi.", "Ở căng tin.", "Lúc 7 giờ sáng."]),
+      A4("Chị thích nghe nhạc không?", ["Có, tôi rất thích.", "Hơi buồn ngủ.", "Ở nhà."]),
       A4("Em đi ngủ lúc mấy giờ?", ["Lúc 11 giờ.", "Ở phòng em.", "Em rất buồn ngủ."]),
       A4("Anh có tập thể dục không?", ["Có, tôi tập thể dục mỗi buổi sáng.", "Tôi ăn sáng ở nhà.", "Tôi đi làm bằng xe buýt."]),
-      A4("Cuối tuần chị thường đi đâu?", ["Tôi thường đi xem phim.", "Tôi là giáo viên.", "Lúc 9 giờ."]),
-      A4("Hôm qua anh thức khuya hả?", ["Ừ, tôi đi ngủ lúc 1 giờ.", "Tôi ăn sáng lúc 7 giờ.", "Tôi là sinh viên."]),
+      A4("Cuối tuần chị thường đi đâu?", ["Tôi thường đi xem phim.", "Hôm qua tôi thức khuya.", "Lúc 9 giờ."]),
+      A4("Hôm qua anh thức khuya hả?", ["Ừ, tôi đi ngủ lúc 1 giờ.", "Tôi ăn sáng lúc 7 giờ.", "Tôi tập thể dục ở gần nhà."]),
       A4("Ai nấu ăn trong gia đình chị?", ["Mẹ tôi nấu ăn.", "Lúc 6 giờ tối.", "Ở nhà."]),
-      A4("Em có thích học tiếng Việt không?", ["Có, em rất thích.", "Em học lúc 8 giờ.", "Em là người Hàn Quốc."]),
+      A4("Anh sắp đi ngủ chưa?", ["Sắp rồi. Tôi buồn ngủ quá.", "Tôi thức dậy lúc 6 giờ.", "Ở phòng tôi."]),
       A4("Anh thường ăn sáng ở đâu?", ["Ở nhà.", "Lúc 7 giờ.", "Với gia đình."]),
-      A4("Sao hôm nay chị mệt vậy?", ["Vì tối qua tôi thức khuya.", "Tôi đi làm lúc 7 giờ.", "Tôi là thư ký."])]
+      A4("Sao hôm nay chị mệt vậy?", ["Vì tối qua tôi thức khuya.", "Tôi đi làm lúc 7 giờ.", "Tôi ăn trưa ở căng tin."])]
 bank = ["thường", "hơi", "nên", "sắp", "quá"]
 q += [B1("Tôi ____ không ăn sáng.", bank, 0), B1("Bây giờ tôi ____ mệt.", bank, 1), B1("Tối qua tôi thức khuya ____ hôm nay tôi buồn ngủ.", bank, 2),
       B1("Tôi ____ đi ngủ.", bank, 3), B1("Phim này hay ____!", bank, 4)]
@@ -42,16 +42,16 @@ q += [B3(T1, "Hoa là sinh viên.", True), B3(T1, "Buổi chiều Hoa đi học.
       B3(T2, "Anh Nam thích tập thể dục.", True), B3(T2, "Anh Nam đi bộ buổi tối.", False), B3(T2, "Anh Nam rất khỏe.", True),
       B3(T3, "Cuối tuần chúng tôi đi xem phim.", True), B3(T3, "Chúng tôi ăn tối trước khi xem phim.", False),
       B3(T4, "Tối qua tôi đi ngủ sớm.", False), B3(T4, "Sáng nay tôi không ăn sáng.", True)]
-q += [B4("Buổi tối anh thường làm gì?", ["Tôi thường xem tivi với gia đình.", "Tôi là kỹ sư.", "Lúc 7 giờ sáng.", "Ở công ty."]),
-      B4("Chị thích nghe nhạc không?", ["Có, tôi rất thích nghe nhạc.", "Tôi là người Hàn Quốc.", "Tôi đi làm bằng xe buýt.", "Lúc 9 giờ."]),
-      B4("Em đi ngủ lúc mấy giờ?", ["Em đi ngủ lúc 11 giờ.", "Em là sinh viên.", "Em học ở trường Nhân văn.", "Em rất thích."]),
-      B4("Hôm qua anh thức khuya hả?", ["Ừ, tôi xem phim đến 1 giờ.", "Tôi là bác sĩ.", "Tôi ăn sáng lúc 7 giờ.", "Ở nhà tôi."]),
-      B4("Sao hôm nay chị mệt vậy?", ["Vì tối qua tôi thức khuya.", "Tôi là thư ký.", "Tôi đi làm lúc 8 giờ.", "Ở công ty."]),
-      B4("Cuối tuần anh thường làm gì?", ["Tôi thường đi chơi với bạn bè.", "Tôi là người Nhật.", "Lúc 10 giờ sáng.", "Ở Quận 1."]),
+q += [B4("Buổi tối anh thường làm gì?", ["Tôi thường xem tivi với gia đình.", "Hơi đói.", "Lúc 7 giờ sáng.", "Ở công ty."]),
+      B4("Chị thích nghe nhạc không?", ["Có, tôi rất thích nghe nhạc.", "Tôi thức dậy lúc 6 giờ.", "Tôi đi làm bằng xe buýt.", "Lúc 9 giờ."]),
+      B4("Em đi ngủ lúc mấy giờ?", ["Em đi ngủ lúc 11 giờ.", "Em ăn sáng ở căng tin.", "Em thường lên mạng.", "Em rất thích."]),
+      B4("Hôm qua anh thức khuya hả?", ["Ừ, tôi xem phim đến 1 giờ.", "Tôi đi làm lúc 8 giờ.", "Tôi ăn sáng lúc 7 giờ.", "Ở nhà tôi."]),
+      B4("Sao hôm nay chị mệt vậy?", ["Vì tối qua tôi thức khuya.", "Tôi ăn trưa lúc 12 giờ.", "Tôi đi làm lúc 8 giờ.", "Ở công ty."]),
+      B4("Cuối tuần anh thường làm gì?", ["Tôi thường đi chơi với bạn bè.", "Hôm nay tôi hơi mệt.", "Lúc 10 giờ sáng.", "Ở Quận 1."]),
       B4("Ai nấu ăn trong gia đình anh?", ["Mẹ tôi thường nấu ăn.", "Gia đình tôi có bốn người.", "Lúc 6 giờ tối.", "Ở nhà tôi."]),
-      B4("Anh có tập thể dục không?", ["Có, tôi tập thể dục mỗi buổi sáng.", "Tôi ăn sáng ở nhà.", "Tôi là sinh viên.", "Lúc 6 giờ."]),
-      B4("Tối nay chúng ta đi xem phim nhé?", ["Ừ, phim mới hay lắm.", "Tôi là giáo viên.", "Ở Quận 1.", "Lúc 7 giờ sáng."]),
-      B4("Em có thích học tiếng Việt không?", ["Có, em rất thích.", "Em là người Hàn Quốc.", "Em đi học lúc 8 giờ.", "Ở trường."])]
+      B4("Anh có tập thể dục không?", ["Có, tôi tập thể dục mỗi buổi sáng.", "Tôi ăn sáng ở nhà.", "Tôi thường xem tin tức.", "Lúc 6 giờ."]),
+      B4("Tối nay chúng ta đi xem phim nhé?", ["Ừ, phim mới hay lắm.", "Tôi thường không ăn sáng.", "Ở Quận 1.", "Lúc 7 giờ sáng."]),
+      B4("Chị sắp ăn trưa chưa?", ["Sắp rồi. Bây giờ tôi hơi đói.", "Tôi thường không ăn sáng.", "Ở căng tin.", "Hôm qua tôi thức khuya."])]
 q += [C1("Tôi thường xem tivi buổi tối.", ["thường", "tôi", "buổi tối", "xem tivi"]), C1("Hôm qua tôi thức khuya.", ["thức khuya", "hôm qua", "tôi"]),
       C1("Mẹ tôi đang nấu ăn.", ["đang", "mẹ", "nấu ăn", "tôi"]), C1("Cuối tuần chúng tôi đi xem phim.", ["cuối tuần", "đi", "chúng tôi", "xem phim"]),
       C1("Tôi rất thích nghe nhạc.", ["rất", "tôi", "nghe nhạc", "thích"])]

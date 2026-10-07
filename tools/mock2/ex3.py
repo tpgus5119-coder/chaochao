@@ -1,76 +1,77 @@
 # -*- coding: utf-8 -*-
+# 모의고사 3 — 장소·주소·초대·구경 (교재 5·6과 중심). 2026-10-07 대표님 "단어만 4~7 위주로" 에 따라 가족 소개(2~3과) 중심이던 것을 다시 씀.
 from common import *
-PICS = ["luật sư", "tài xế", "thư ký", "nhân viên ngân hàng", "giáo viên"]
+PICS = ["nhà sách", "bưu điện", "bệnh viện", "quán cà phê", "sân bay"]
 q = []
-q += [TF("kỹ sư", "Bố tôi là kỹ sư. Ông ấy làm việc ở công ty máy tính.", True), TF("nội trợ", "Mẹ tôi là giáo viên. Mẹ tôi dạy tiếng Anh.", False),
-      TF("ăn cơm", "Gia đình tôi đang ăn tối.", True), TF("xem phim", "Hai người bạn đang nói chuyện ở quán cà phê.", False), TF("mua sắm", "Chị ấy đang mua sắm ở siêu thị.", True)]
-q += [PK(PICS, "Anh ấy là luật sư. Anh ấy rất bận.", 0), PK(PICS, "Cô ấy là thư ký. Cô ấy làm việc ở văn phòng.", 2), PK(PICS, "Anh Nam là tài xế tắc xi.", 1),
-      PK(PICS, "Chị ấy là giáo viên. Chị ấy dạy ở trường đại học.", 4), PK(PICS, "Em tôi là nhân viên ngân hàng.", 3)]
-q += [A3("Gia đình Lan có mấy người?", "Gia đình tôi có bốn người: bố mẹ, em và tôi.", ["bốn người", "ba người", "năm người"]),
-      A3("Bố của Lan làm nghề gì?", "Bố tôi là bác sĩ. Ông ấy làm việc ở bệnh viện.", ["bác sĩ", "giáo viên", "kỹ sư"]),
-      A3("Mẹ của Nam làm gì?", "Mẹ tôi là nội trợ. Mẹ tôi ở nhà và nấu ăn.", ["nội trợ", "thư ký", "bác sĩ"]),
-      A3("Em của Nam học ở đâu?", "Em tôi là sinh viên. Em ấy học ở Trường Đại học Khoa học Xã hội và Nhân văn.", ["trường đại học", "công ty", "ngân hàng"]),
-      A3("Brian là người nước nào?", "Brian là bạn tôi. Anh ấy là người Mỹ.", ["Mỹ", "Anh", "Úc"]),
-      A3("Hiroki và Yumi là người nước nào?", "Hiroki và Yumi đều là người Nhật.", ["Nhật", "Hàn Quốc", "Trung Quốc"]),
-      A3("Cô giáo của Lan tên là gì?", "Cô giáo tiếng Việt của tôi tên là Hoa.", ["Hoa", "Mai", "Lan"]),
-      A3("Chị của Nam bao nhiêu tuổi?", "Chị tôi 25 tuổi. Chị ấy là kế toán.", ["25 tuổi", "20 tuổi", "30 tuổi"]),
-      A3("Ông bà của Lan sống ở đâu?", "Ông bà tôi sống ở Đà Nẵng.", ["Đà Nẵng", "Hà Nội", "Huế"]),
-      A3("Bạn của Nam là ai?", "Kate là bạn của tôi. Chị ấy là người Úc.", ["Kate", "Brian", "David"])]
-q += [A4("Gia đình anh có mấy người?", ["Gia đình tôi có năm người.", "Tôi là sinh viên.", "Ở Hà Nội."]),
-      A4("Bố chị làm nghề gì?", ["Bố tôi là kỹ sư.", "Bố tôi 50 tuổi.", "Ở công ty."]),
-      A4("Mẹ em có đi làm không?", ["Không, mẹ em là nội trợ.", "Mẹ em tên là Hoa.", "Lúc 7 giờ."]),
-      A4("Anh có em không?", ["Có, tôi có một em.", "Tôi là người Việt Nam.", "Rất vui."]),
-      A4("Bạn anh là người nước nào?", ["Bạn tôi là người Nhật.", "Bạn tôi là bác sĩ.", "Bạn tôi ở Quận 1."]),
-      A4("Chị anh bao nhiêu tuổi?", ["Chị ấy 28 tuổi.", "Chị ấy là thư ký.", "Chị ấy ở nhà."]),
-      A4("Ông bà chị sống ở đâu?", ["Ông bà tôi sống ở Huế.", "Ông bà tôi rất khỏe.", "Ông bà tôi 70 tuổi."]),
-      A4("Cô ấy là ai?", ["Cô ấy là cô giáo của tôi.", "Cô ấy rất đẹp.", "Cô ấy ở Hà Nội."]),
-      A4("Em anh làm việc ở đâu?", ["Em ấy làm việc ở ngân hàng.", "Em ấy 22 tuổi.", "Em ấy là người Việt."]),
-      A4("Bố mẹ chị có khỏe không?", ["Cám ơn, bố mẹ tôi khỏe.", "Bố mẹ tôi là bác sĩ.", "Bố mẹ tôi ở Đà Nẵng."])]
-bank = ["của", "đều", "cũng", "ấy", "có"]
-q += [B1("Đây là mẹ ____ tôi.", bank, 0), B1("Bố mẹ tôi ____ là giáo viên.", bank, 1), B1("Tôi là sinh viên. Em tôi ____ là sinh viên.", bank, 2),
-      B1("Kia là chị Mai. Chị ____ là bạn tôi.", bank, 3), B1("Gia đình tôi ____ bốn người.", bank, 4)]
-q += [B2("Gia đình Nam có bốn người: bố, mẹ, chị và Nam. Bố Nam là luật sư. Mẹ Nam là nội trợ. Chị Nam là kế toán ở ngân hàng.", "Chị Nam làm nghề gì?", ["kế toán", "luật sư", "nội trợ"]),
-      B2("Yumi là người Nhật. Chị ấy là bạn của Lan. Yumi học tiếng Việt ở Hà Nội hai năm rồi. Bây giờ chị ấy nói tiếng Việt rất giỏi.", "Yumi học tiếng Việt ở đâu?", ["Hà Nội", "Nhật", "Đà Nẵng"]),
-      B2("Ông bà tôi sống ở quê. Ông tôi 75 tuổi, bà tôi 72 tuổi. Ông bà tôi đều khỏe.", "Bà tôi bao nhiêu tuổi?", ["72 tuổi", "75 tuổi", "70 tuổi"]),
-      B2("Đây là Brian và David. Brian là người Mỹ. David là người Anh. Họ đều là sinh viên tiếng Việt ở lớp tôi.", "David là người nước nào?", ["Anh", "Mỹ", "Úc"]),
-      B2("Cô Hoa là cô giáo tiếng Việt của tôi. Cô ấy là người Việt Nam. Cô ấy rất thân thiện và dạy rất hay.", "Cô Hoa dạy gì?", ["tiếng Việt", "tiếng Anh", "tiếng Hàn"])]
-T1 = "Tôi tên là Min. Tôi là người Hàn Quốc. Gia đình tôi có ba người: bố, mẹ và tôi. Bố tôi là kỹ sư, mẹ tôi là giáo viên."
-T2 = "Bạn thân của tôi là Hiroki. Anh ấy là người Nhật. Anh ấy làm kế toán ở một ngân hàng ở Quận 1."
-T3 = "Chị Mai có hai em. Một em là sinh viên. Một em 10 tuổi, em ấy đi học ở gần nhà."
-T4 = "Ông bà của Lan sống ở Huế. Cuối tuần Lan thường về Huế thăm ông bà. Ông bà Lan rất vui."
-q += [B3(T1, "Min là người Hàn Quốc.", True), B3(T1, "Gia đình Min có bốn người.", False), B3(T1, "Mẹ Min là giáo viên.", True),
-      B3(T2, "Hiroki là người Nhật.", True), B3(T2, "Hiroki làm việc ở bệnh viện.", False), B3(T2, "Hiroki là bạn thân của tôi.", True),
-      B3(T3, "Chị Mai có hai em.", True), B3(T3, "Hai em của chị Mai đều là sinh viên.", False),
-      B3(T4, "Ông bà Lan sống ở Hà Nội.", False), B3(T4, "Cuối tuần Lan thường thăm ông bà.", True)]
-q += [B4("Gia đình chị có mấy người?", ["Gia đình tôi có bốn người.", "Tôi là người Hàn Quốc.", "Tôi 25 tuổi.", "Ở Hà Nội."]),
-      B4("Đây là ai?", ["Đây là bố tôi.", "Đây là lớp học.", "Lúc 8 giờ.", "Tôi là sinh viên."]),
-      B4("Anh có chị không?", ["Không, tôi có một em.", "Chị ấy là bác sĩ.", "Chị ấy 30 tuổi.", "Ở Đà Nẵng."]),
-      B4("Mẹ anh làm nghề gì?", ["Mẹ tôi là nội trợ.", "Mẹ tôi 55 tuổi.", "Mẹ tôi ở quê.", "Mẹ tôi rất khỏe."]),
-      B4("Em ấy bao nhiêu tuổi?", ["Em ấy 20 tuổi.", "Em ấy là sinh viên.", "Em ấy ở Quận 1.", "Em ấy rất chăm chỉ."]),
-      B4("Bạn anh tên là gì?", ["Bạn tôi tên là Hiroki.", "Bạn tôi là người Nhật.", "Bạn tôi ở Hà Nội.", "Bạn tôi là kế toán."]),
-      B4("Chị ấy là người nước nào?", ["Chị ấy là người Úc.", "Chị ấy là giáo viên.", "Chị ấy rất đẹp.", "Chị ấy ở Quận 2."]),
-      B4("Ông bà anh có khỏe không?", ["Có, ông bà tôi đều khỏe.", "Ông bà tôi ở Huế.", "Ông bà tôi 70 tuổi.", "Ông bà tôi có ba người con."]),
-      B4("Rất vui được gặp chị.", ["Rất vui được gặp anh.", "Chị ấy là bạn tôi.", "Tôi có hai em.", "Tôi là người Mỹ."]),
-      B4("Bố mẹ anh sống ở đâu?", ["Bố mẹ tôi sống ở Busan.", "Bố mẹ tôi là bác sĩ.", "Bố mẹ tôi rất bận.", "Bố mẹ tôi có hai con."])]
-q += [C1("Gia đình tôi có bốn người.", ["có", "gia đình", "bốn", "tôi", "người"]), C1("Bố tôi là kỹ sư.", ["là", "bố", "kỹ sư", "tôi"]),
-      C1("Chị ấy là bạn của tôi.", ["của", "chị ấy", "bạn", "là", "tôi"]), C1("Họ đều là người Nhật.", ["đều", "họ", "là", "người", "Nhật"]),
-      C1("Em tôi là sinh viên.", ["sinh viên", "em", "là", "tôi"])]
-q += [C2("Đây là của bố tôi.", 2, "Đây là bố tôi.", "이분은 제 아버지예요. (가족 관계에는 của를 안 쓴다)"),
-      C2("Bố mẹ tôi là đều giáo viên.", 3, "Bố mẹ tôi đều là giáo viên.", "부모님은 모두 선생님이에요. (đều는 là 앞)"),
-      C2("Chị tôi tuổi 25.", 2, "Chị tôi 25 tuổi.", "제 언니는 25살이에요. (숫자 + tuổi)"),
-      C2("Em ấy không là sinh viên.", 2, "Em ấy không phải là sinh viên.", "그 애는 대학생이 아니에요. (không phải là)"),
-      C2("Ông bà tôi khỏe rất.", 4, "Ông bà tôi rất khỏe.", "조부모님은 아주 건강하세요. (rất는 형용사 앞)")]
-q.append(C3("우리 가족과 친구 소개 — 몇 명인지, 누구인지, 무슨 일을 하는지, 어디에 사는지 (10문장)",
-            ["Gia đình tôi có bốn người.", "Bố tôi là kỹ sư. Ông ấy làm việc ở công ty máy tính.", "Mẹ tôi là nội trợ.", "Em tôi là sinh viên. Em ấy 20 tuổi.", "Gia đình tôi sống ở Busan.",
-             "Bạn thân của tôi tên là Hiroki.", "Anh ấy là người Nhật.", "Anh ấy làm kế toán ở ngân hàng.", "Cuối tuần chúng tôi thường đi uống cà phê.", "Tôi rất thích gia đình và bạn bè của tôi."]))
-q += D1(["gia đình", "bố mẹ", "ông bà", "con gái", "bạn thân", "luật sư", "tài xế", "nhân viên", "tuổi", "thân thiện"],
-        ["Gia đình tôi có bốn người.", "Bố mẹ tôi đều là giáo viên.", "Chị tôi 25 tuổi.", "Bạn tôi là người Nhật.", "Ông bà anh có khỏe không?"])
-q += [D2("gia đình", "그림을 보고 가족을 소개해 보세요 — 몇 명인지, 누구누구인지, 아버지 직업. (3문장)",
-         ["Gia đình tôi có bốn người.", "Bố mẹ tôi, chị tôi và tôi.", "Bố tôi là kỹ sư."], ["우리 가족은 네 명이에요.", "부모님, 언니(누나) 그리고 저예요.", "아버지는 엔지니어예요."]),
-      D2("bác sĩ", "그림 속 사람은 당신의 형(오빠)입니다. 소개해 보세요 — 직업, 일하는 곳, 바쁜지. (3문장)",
-         ["Đây là anh tôi.", "Anh ấy là bác sĩ ở bệnh viện.", "Anh ấy rất bận."], ["이 사람은 제 형(오빠)이에요.", "그는 병원 의사예요.", "그는 아주 바빠요."])]
-q += [D3("친구가 '가족이 몇 명이에요?'라고 묻습니다. 가족 수와 부모님이 무슨 일을 하시는지 말해 보세요. (3문장)",
-         ["Gia đình tôi có năm người.", "Bố tôi là giáo viên.", "Mẹ tôi là nội trợ."], ["우리 가족은 다섯 명이에요.", "아버지는 선생님이에요.", "어머니는 주부예요."]),
-      D3("친한 친구를 소개해 보세요 — 이름, 어느 나라 사람인지, 무엇을 하는지. (3문장)",
-         ["Bạn thân của tôi tên là Brian.", "Anh ấy là người Mỹ.", "Anh ấy là sinh viên."], ["제 친한 친구 이름은 브라이언이에요.", "그는 미국 사람이에요.", "그는 대학생이에요."])]
+q += [TF("nhà sách", "Đây là nhà sách. Hôm nay nhà sách giảm giá 30%.", True), TF("bưu điện", "Đây là bệnh viện. Bác sĩ ở đây rất giỏi.", False),
+      TF("quán cà phê", "Chúng tôi đang ngồi nói chuyện ở quán cà phê.", True), TF("sân bay", "Đây là Bưu điện Thành phố. Có nhiều khách đến tham quan.", False), TF("siêu thị", "Mẹ tôi đang mua sắm ở siêu thị gần nhà.", True)]
+q += [PK(PICS, "Tôi đến đây để gửi thư cho bố mẹ.", 1), PK(PICS, "Tôi muốn mua sách lịch sử Việt Nam.", 0), PK(PICS, "Bác sĩ làm việc ở đây. Hôm nay có nhiều người đến.", 2),
+      PK(PICS, "Chúng ta gặp nhau ở đây uống cà phê nhé.", 3), PK(PICS, "Máy bay sắp cất cánh rồi.", 4)]
+q += [A3("Bây giờ họ đi đâu?", "Bây giờ chúng ta sẽ đi mua sách ở nhà sách FAHASA.", ["nhà sách", "bưu điện", "siêu thị"]),
+      A3("Nhà sách FAHASA số mấy?", "Nhà sách FAHASA ở số 40 đường Nguyễn Huệ.", ["số 40", "số 14", "số 4"]),
+      A3("Hôm nay nhà sách giảm giá bao nhiêu?", "Hôm nay nhà sách giảm giá 30%.", ["30%", "13%", "3%"]),
+      A3("Sao David biết nhà sách giảm giá?", "Vì anh Brian nói với tôi. Hôm qua anh ấy đã mua sách ở đó.", ["vì anh Brian nói", "vì xem tivi", "vì đọc báo"]),
+      A3("Dorothy đi đâu?", "Trường Đại học Khoa học Xã hội và Nhân văn, số 10, Quận 1.", ["trường Nhân văn", "bệnh viện", "ngân hàng"]),
+      A3("Nhà hàng đó ở đâu?", "Tôi biết một nhà hàng ở Quận 1. Món ăn ngon lắm, đặc biệt bia tươi rất ngon.", ["Quận 1", "Quận 2", "Quận 7"]),
+      A3("Tối nay Lee mời ai đi uống bia?", "Tối nay tôi mời anh Min và anh Hiroki đến đó uống bia.", ["anh Min và anh Hiroki", "chị Vân", "cô Loan"]),
+      A3("Hiroki đã đi tham quan ở đâu?", "Ở Thành phố Hồ Chí Minh tôi đã đi tham quan Nhà thờ Đức Bà và Bảo tàng Lịch sử.", ["Nhà thờ Đức Bà", "sân bay", "siêu thị"]),
+      A3("Ngày mai Vân rảnh từ mấy giờ?", "Ngày mai tôi rảnh từ 2 giờ chiều.", ["từ 2 giờ chiều", "từ 9 giờ sáng", "từ 7 giờ tối"]),
+      A3("Từ đây đến sân bay mất bao lâu?", "Từ đây đến sân bay mất khoảng 30 phút bằng tắc xi.", ["khoảng 30 phút", "khoảng 3 phút", "khoảng 3 tiếng"])]
+q += [A4("Bây giờ chúng ta đi đâu?", ["Chúng ta đi mua sách.", "Lúc 8 giờ sáng.", "Khoảng 20 nhân viên."]),
+      A4("Nhà sách ở đâu?", ["Ở số 40 đường Nguyễn Huệ.", "Giảm giá 30%.", "Bằng tắc xi."]),
+      A4("Anh muốn mua sách gì?", ["Sách lịch sử Việt Nam.", "Ở nhà sách FAHASA.", "Hôm qua."]),
+      A4("Gần Đài Truyền hình Thành phố, phải không cô?", ["Đúng rồi, anh.", "Khoảng 30 phút.", "Tôi muốn mua sách."]),
+      A4("Anh có biết nhà hàng nào ngon không?", ["Có, tôi biết một nhà hàng ở Quận 1.", "Lúc 7 giờ tối.", "Tôi là tài xế."]),
+      A4("Ngày mai chị có rảnh không?", ["Có, tôi rảnh từ 2 giờ chiều.", "Ở bảo tàng.", "Giảm giá 20%."]),
+      A4("Anh có biết chỗ đó địa chỉ số mấy không?", ["Số 125, Quận 1.", "Rất đẹp.", "Từ 9 giờ sáng."]),
+      A4("Tối nay chúng ta ăn ở đâu?", ["Ở quán ăn gần trường nhé.", "Khoảng 40 phút.", "Vì tôi bận."]),
+      A4("Xe sắp đến chưa anh?", ["Sắp đến rồi, cô.", "Ở Quận 7.", "Tôi đi bằng xe buýt."]),
+      A4("Cô nói tiếng Việt giỏi quá!", ["Cám ơn anh.", "Không, tôi đi tắc xi.", "Ở gần đây."])]
+bank = ["sẽ", "quá", "à", "tại sao", "chúng ta"]
+q += [B1("Bây giờ ____ đi đâu?", bank, 4), B1("Chúng ta ____ đi mua sách.", bank, 0), B1("Cô nói tiếng Việt giỏi ____!", bank, 1),
+      B1("Hôm nay nhà sách giảm giá 30% ____?", bank, 2), B1("____ hôm qua anh không đến lớp? — Vì tôi bận.", bank, 3)]
+q += [B2("Hôm nay nhà sách FAHASA ở số 40 đường Nguyễn Huệ giảm giá 30%. David và Vân sẽ đi mua sách lịch sử Việt Nam ở đó.", "Họ sẽ mua gì?", ["sách lịch sử", "bia tươi", "cà phê"]),
+      B2("Dorothy đi tắc xi đến trường Nhân văn. Trường ở số 10 đường Đinh Tiên Hoàng, Quận 1, gần Đài Truyền hình Thành phố.", "Trường Nhân văn ở gần đâu?", ["Đài Truyền hình Thành phố", "sân bay", "Nhà thờ Đức Bà"]),
+      B2("Tối nay Lee mời anh Min đi uống bia ở một nhà hàng Việt Nam ở Quận 1. Món ăn ở đó ngon lắm, đặc biệt bia tươi rất ngon.", "Tối nay họ đi đâu?", ["đi uống bia", "đi mua sách", "đi tham quan bảo tàng"]),
+      B2("Hiroki đã đi tham quan Nhà thờ Đức Bà, Bưu điện Thành phố và Bảo tàng Lịch sử. Ngày mai anh ấy muốn mời Vân đi Bảo tàng Áo dài.", "Ngày mai Hiroki muốn đi đâu?", ["Bảo tàng Áo dài", "Bưu điện Thành phố", "Nhà thờ Đức Bà"]),
+      B2("Nhà tôi ở Quận 7. Từ nhà tôi đến trung tâm thành phố mất khoảng 40 phút bằng xe buýt. Đi tắc xi mất 20 phút nhưng hơi mắc.", "Đi tắc xi mất bao lâu?", ["20 phút", "40 phút", "4 phút"])]
+T1 = "Nhà sách FAHASA ở số 40 đường Nguyễn Huệ, Quận 1. Hôm nay nhà sách giảm giá 30%. David muốn mua sách lịch sử Việt Nam."
+T2 = "Tôi biết một nhà hàng Việt Nam ở Quận 1. Món ăn ở đó ngon lắm. Đặc biệt, bia tươi rất ngon. Tối nay tôi mời bạn tôi đến đó."
+T3 = "Hôm qua Hiroki đã đi tham quan Bảo tàng Lịch sử. Bảo tàng ở gần trường Nhân văn. Anh ấy thấy rất thú vị."
+T4 = "Ngày mai Vân rảnh từ 2 giờ chiều. Hiroki mời Vân đi Bảo tàng Áo dài. Họ sẽ hỏi địa chỉ."
+q += [B3(T1, "Nhà sách FAHASA ở Quận 1.", True), B3(T1, "Hôm nay nhà sách giảm giá 13%.", False), B3(T1, "David muốn mua sách lịch sử.", True),
+      B3(T2, "Nhà hàng đó ở Quận 7.", False), B3(T2, "Bia tươi ở đó rất ngon.", True), B3(T2, "Tối nay tôi đi nhà hàng một mình.", False),
+      B3(T3, "Bảo tàng Lịch sử ở gần trường Nhân văn.", True), B3(T3, "Hiroki thấy bảo tàng chán.", False),
+      B3(T4, "Ngày mai Vân rảnh buổi sáng.", False), B3(T4, "Hiroki mời Vân đi bảo tàng.", True)]
+q += [B4("Bây giờ chúng ta đi đâu?", ["Chúng ta sẽ đi mua sách.", "Tôi đi bằng tắc xi.", "Khoảng 30 phút.", "Giảm giá 30%."]),
+      B4("Anh biết địa chỉ nhà sách không đấy?", ["Biết. Số 40 đường Nguyễn Huệ.", "Hôm qua tôi đã mua sách.", "Tôi muốn mua sách lịch sử.", "Rất rẻ."]),
+      B4("Sao anh biết?", ["Vì anh Brian nói với tôi.", "Lúc 9 giờ sáng.", "Ở Quận 1.", "Tôi mua sách tiếng Việt."]),
+      B4("Đi đâu, cô?", ["Trường Nhân văn, Quận 1, anh.", "Cám ơn anh.", "Rất ngon.", "Tối nay."]),
+      B4("Cô nói tiếng Việt giỏi quá!", ["Cám ơn anh.", "Đúng rồi, anh.", "Số 10, Quận 1.", "Khoảng 20 phút."]),
+      B4("Anh có biết nhà hàng nào ngon không?", ["Tôi biết một nhà hàng ở Quận 1. Bia tươi rất ngon.", "Tôi là tài xế tắc xi.", "Nhà sách giảm giá 30%.", "Từ 2 giờ chiều."]),
+      B4("Ngày mai Vân có rảnh không?", ["Tôi rảnh từ 2 giờ chiều. Có việc gì không, anh?", "Tôi đã đi tham quan bảo tàng.", "Bảo tàng ở gần trường.", "Bằng xe buýt."]),
+      B4("Anh có biết chỗ đó địa chỉ số mấy không?", ["Địa chỉ à? Số 125, Quận 1.", "Rất thú vị.", "Tôi mời Vân đi với tôi.", "Lúc 2 giờ."]),
+      B4("Xe sắp đến chưa anh?", ["Sắp đến rồi, cô.", "Tôi đi bộ.", "Nhà hàng ở Quận 1.", "Khoảng 100 người."]),
+      B4("Tối nay tôi mời anh đi uống bia.", ["Tốt quá! Không say không về.", "Nhà sách ở đâu?", "Số 40.", "Từ đây đến đó 30 phút."])]
+q += [C1("Bây giờ chúng ta đi đâu?", ["đi đâu", "bây giờ", "chúng ta"]), C1("Hôm nay nhà sách giảm giá 30%.", ["giảm giá", "hôm nay", "30%", "nhà sách"]),
+      C1("Tôi muốn mua sách lịch sử Việt Nam.", ["muốn", "tôi", "mua", "sách lịch sử", "Việt Nam"]), C1("Cô nói tiếng Việt giỏi quá!", ["giỏi quá", "cô", "nói", "tiếng Việt"]),
+      C1("Anh sắp về chưa?", ["sắp", "anh", "về", "chưa"])]
+q += [C2("Nhà sách ở đâu số 40 đường Nguyễn Huệ.", 2, "Nhà sách ở số 40 đường Nguyễn Huệ.", "서점은 응우옌후에 거리 40번지에 있어요. (ở đâu 는 물을 때만)"),
+      C2("Hôm qua anh ấy sẽ mua sách ở đó.", 3, "Hôm qua anh ấy đã mua sách ở đó.", "어제 그는 거기서 책을 샀어요. (지난 일은 đã)"),
+      C2("Anh biết địa chỉ nhà sách không có?", 7, "Anh có biết địa chỉ nhà sách không?", "서점 주소를 아세요? (có … không 차례)"),
+      C2("Món ăn ở đó rất ngon lắm.", 4, "Món ăn ở đó ngon lắm.", "거기 음식은 아주 맛있어요. (rất 와 lắm 을 함께 쓰지 않는다)"),
+      C2("Tối nay tôi mời anh đến đó uống bia tối nay.", 9, "Tối nay tôi mời anh đến đó uống bia.", "오늘 밤 거기서 맥주 한잔 살게요. (tối nay 가 두 번)")]
+q.append(C3("베트남에서 가 본 곳 — 어디를 구경했는지(성당·우체국·박물관), 누구와, 무엇으로, 어땠는지, 다음에 가고 싶은 곳 (10문장)",
+            ["Tuần trước tôi đã đi tham quan Nhà thờ Đức Bà.", "Nhà thờ Đức Bà ở Quận 1, gần Bưu điện Thành phố.", "Tôi đi với bạn cùng lớp của tôi.", "Chúng tôi đi bằng tắc xi, mất khoảng 20 phút.", "Sau đó chúng tôi đi Bảo tàng Lịch sử.",
+             "Bảo tàng ở gần trường Nhân văn.", "Bảo tàng rất thú vị.", "Buổi tối chúng tôi ăn tối ở một quán ăn ở phố đi bộ.", "Món ăn ở đó ngon lắm.", "Tuần sau tôi muốn đi Bảo tàng Áo dài."]))
+q += D1(["địa chỉ", "giảm giá", "nhà sách", "tắc xi", "bảo tàng", "tham quan", "rảnh", "mời", "đặc biệt", "thân thiện"],
+        ["Bây giờ chúng ta đi đâu?", "Hôm nay nhà sách giảm giá 30%.", "Cô nói tiếng Việt giỏi quá!", "Ngày mai anh có rảnh không?", "Anh sắp về chưa?"])
+q += [D2("quán cà phê", "그림을 보고 말해 보세요 — 여기는 어디이고, 어디 근처에 있고, 무엇이 맛있나요? (3문장)",
+         ["Đây là quán cà phê.", "Quán ở gần trường Nhân văn.", "Cà phê ở đây ngon lắm."], ["여기는 카페예요.", "카페는 인문대 근처에 있어요.", "여기 커피는 아주 맛있어요."]),
+      D2("sân bay", "그림을 보고 말해 보세요 — 여기는 어디이고, 여기서 시내까지 얼마나 걸리며, 무엇으로 가나요? (3문장)",
+         ["Đây là sân bay.", "Từ sân bay đến trung tâm thành phố mất khoảng ba mươi phút.", "Tôi đi bằng tắc xi."], ["여기는 공항이에요.", "공항에서 시내까지 30분쯤 걸려요.", "저는 택시로 가요."])]
+q += [D3("택시를 탔습니다. 기사가 '어디 가세요?'라고 묻습니다. 목적지·번지·어디 근처인지 말해 보세요. (3문장)",
+         ["Trường Nhân văn, anh.", "Số 10 đường Đinh Tiên Hoàng, Quận 1.", "Gần Đài Truyền hình Thành phố."], ["인문대요, 기사님.", "딘띠엔호앙 거리 10번지, 1군이요.", "시 방송국 근처예요."]),
+      D3("친구를 식당에 초대해 보세요 — 어디에 있는지, 무엇이 맛있는지, 몇 시에 만날지. (3문장)",
+         ["Tối nay tôi mời bạn đi ăn ở một nhà hàng ở Quận 1.", "Món ăn ở đó ngon lắm, đặc biệt là bia tươi.", "Chúng ta gặp nhau lúc bảy giờ tối nhé."], ["오늘 저녁 1군에 있는 식당에서 제가 살게요.", "거기 음식 아주 맛있어요, 특히 생맥주요.", "저녁 7시에 만나요."])]
 AUD = build(3, "모의고사 3", q)
