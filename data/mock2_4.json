@@ -54,11 +54,10 @@
    "k": "pick",
    "audio": "Cuối tuần tôi thường đi nhà sách mua sách.",
    "opts": [
-    "quan-ca-phe.webp",
+    "b-benh-vien.webp",
     "b-nha-sach.webp",
-    "b-san-bay.webp",
-    "b-sieu-thi.webp",
-    "b-benh-vien.webp"
+    "w-e43ed87d43.webp",
+    "b-bao-tang.webp"
    ],
    "ans": 1,
    "made": true
@@ -66,27 +65,25 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Bố tôi là bác sĩ. Ông ấy làm việc ở đây từ 8 giờ sáng.",
+   "audio": "Bố tôi là bác sĩ. Ông ấy rất bận.",
    "opts": [
-    "quan-ca-phe.webp",
-    "b-nha-sach.webp",
-    "b-san-bay.webp",
-    "b-sieu-thi.webp",
-    "b-benh-vien.webp"
+    "w-81eaf9dd0c.webp",
+    "b-giao-vien.webp",
+    "b-bac-si.webp",
+    "b-ky-su.webp"
    ],
-   "ans": 4,
+   "ans": 2,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Chúng ta đi uống cà phê nhé? Quán này gần công ty.",
+   "audio": "Tối nay chúng ta ăn ở quán ăn gần công ty nhé.",
    "opts": [
-    "quan-ca-phe.webp",
-    "b-nha-sach.webp",
-    "b-san-bay.webp",
-    "b-sieu-thi.webp",
-    "b-benh-vien.webp"
+    "quan-an.webp",
+    "b-van-phong.webp",
+    "b-cong-ty.webp",
+    "b-ga.webp"
    ],
    "ans": 0,
    "made": true
@@ -94,29 +91,27 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Mẹ tôi đi siêu thị mua cà phê và sữa.",
+   "audio": "Tuần sau tôi đi Hà Nội. Tôi sẽ đi bằng máy bay.",
    "opts": [
-    "quan-ca-phe.webp",
-    "b-nha-sach.webp",
-    "b-san-bay.webp",
-    "b-sieu-thi.webp",
-    "b-benh-vien.webp"
+    "b-tac-xi.webp",
+    "w-f352785b24.webp",
+    "b-may-bay.webp",
+    "b-di-lam.webp"
    ],
-   "ans": 3,
+   "ans": 2,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Tuần sau tôi đi Hà Nội. Tôi sẽ đi bằng máy bay.",
+   "audio": "Nhà tôi gần công ty nên tôi đi bộ đi làm.",
    "opts": [
-    "quan-ca-phe.webp",
-    "b-nha-sach.webp",
-    "b-san-bay.webp",
-    "b-sieu-thi.webp",
-    "b-benh-vien.webp"
+    "b-lai-xe.webp",
+    "b-di-bo.webp",
+    "w-c388775af9.webp",
+    "b-buon-ngu.webp"
    ],
-   "ans": 2,
+   "ans": 1,
    "made": true
   },
   {
@@ -823,10 +818,10 @@
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Siêu thị ở đâu mở cửa lúc 8 giờ?",
+   "vi": "Nhà sách ở đâu mở cửa lúc 9 giờ?",
    "bad": 2,
-   "fix": "Siêu thị mở cửa lúc 8 giờ.",
-   "ko": "슈퍼마켓은 8시에 문을 열어요. (ở đâu 는 물을 때만)"
+   "fix": "Nhà sách mở cửa lúc 9 giờ.",
+   "ko": "서점은 9시에 문을 열어요. (ở đâu 는 물을 때만)"
   },
   {
    "sec": "C 쓰기 · 3 한 주제로 10문장",
@@ -910,7 +905,7 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Nhà sách ở đâu?",
+   "vi": "Bưu điện ở đâu?",
    "pts": 2
   },
   {
@@ -922,13 +917,13 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Từ nhà đến công ty mất 30 phút.",
+   "vi": "Từ đây đến sân bay mất 30 phút.",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Siêu thị mở cửa lúc 8 giờ sáng.",
+   "vi": "Bưu điện mở cửa lúc 7 giờ rưỡi.",
    "pts": 2
   },
   {
@@ -940,20 +935,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-nha-sach.webp",
+   "img": "b-sieu-thi.webp",
    "ask": "그림을 보고 말해 보세요 — 여기는 어디이고, 어디에 있고, 몇 시에 문을 여나요? (3문장)",
    "model": [
     {
-     "vi": "Đây là nhà sách.",
-     "ko": "여기는 서점이에요."
+     "vi": "Đây là siêu thị.",
+     "ko": "여기는 슈퍼마켓이에요."
     },
     {
-     "vi": "Nhà sách ở gần trường.",
-     "ko": "서점은 학교 근처에 있어요."
+     "vi": "Siêu thị ở gần nhà tôi.",
+     "ko": "슈퍼마켓은 우리 집 근처에 있어요."
     },
     {
-     "vi": "Nhà sách mở cửa lúc tám giờ.",
-     "ko": "서점은 8시에 문을 열어요."
+     "vi": "Siêu thị mở cửa lúc bảy giờ sáng.",
+     "ko": "슈퍼마켓은 아침 7시에 문을 열어요."
     }
    ],
    "n": 3,
@@ -1008,7 +1003,7 @@
    "ask": "친구와 만날 약속을 정해 보세요 — 어디에서, 몇 시에, 그곳은 어디 근처인지. (3문장)",
    "model": [
     {
-     "vi": "Chúng ta gặp nhau ở quán cà phê nhé.",
+     "vi": "Chúng ta gặp nhau ở phố đi bộ nhé.",
      "ko": "우리 카페에서 만나요."
     },
     {
@@ -1016,7 +1011,7 @@
      "ko": "저녁 6시에요."
     },
     {
-     "vi": "Quán cà phê ở gần nhà sách.",
+     "vi": "Phố đi bộ ở gần nhà sách.",
      "ko": "카페는 서점 근처에 있어요."
     }
    ],

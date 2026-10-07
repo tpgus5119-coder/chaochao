@@ -56,9 +56,8 @@
    "opts": [
     "b-ngan-hang.webp",
     "b-benh-vien.webp",
-    "b-sieu-thi.webp",
     "b-buu-dien.webp",
-    "b-san-bay.webp"
+    "b-cong-ty.webp"
    ],
    "ans": 0,
    "made": true
@@ -66,27 +65,12 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Mẹ tôi đang mua sắm ở siêu thị.",
+   "audio": "Mẹ tôi đang nấu ăn ở nhà.",
    "opts": [
-    "b-ngan-hang.webp",
-    "b-benh-vien.webp",
-    "b-sieu-thi.webp",
-    "b-buu-dien.webp",
-    "b-san-bay.webp"
-   ],
-   "ans": 2,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
-   "audio": "Anh ấy là bác sĩ. Anh ấy làm việc ở đây.",
-   "opts": [
-    "b-ngan-hang.webp",
-    "b-benh-vien.webp",
-    "b-sieu-thi.webp",
-    "b-buu-dien.webp",
-    "b-san-bay.webp"
+    "w-936f3fbca6.webp",
+    "b-nau-an.webp",
+    "w-ca301a7708.webp",
+    "b-tap-the-duc.webp"
    ],
    "ans": 1,
    "made": true
@@ -94,29 +78,40 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Ngày mai tôi đi sân bay gặp bạn.",
+   "audio": "Anh ấy là bác sĩ. Dạo này anh ấy rất bận.",
    "opts": [
-    "b-ngan-hang.webp",
-    "b-benh-vien.webp",
-    "b-sieu-thi.webp",
-    "b-buu-dien.webp",
-    "b-san-bay.webp"
+    "b-ky-su.webp",
+    "b-thu-ky.webp",
+    "b-noi-tro.webp",
+    "b-bac-si.webp"
    ],
-   "ans": 4,
+   "ans": 3,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Tôi đến bưu điện để gửi thư cho bố mẹ.",
+   "audio": "Ngày mai tôi đi sân bay gặp bạn.",
    "opts": [
-    "b-ngan-hang.webp",
-    "b-benh-vien.webp",
-    "b-sieu-thi.webp",
-    "b-buu-dien.webp",
-    "b-san-bay.webp"
+    "quan-ca-phe.webp",
+    "b-nha-hang.webp",
+    "b-san-bay.webp",
+    "w-2fa6fbb660.webp"
    ],
-   "ans": 3,
+   "ans": 2,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Tuần sau tôi đi Hà Nội bằng máy bay.",
+   "opts": [
+    "b-may-bay.webp",
+    "b-tac-xi.webp",
+    "w-f352785b24.webp",
+    "b-di-lam.webp"
+   ],
+   "ans": 0,
    "made": true
   },
   {
@@ -794,10 +789,10 @@
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Hôm nay tôi hơi mệt lắm.",
+   "vi": "Hôm nay tôi hơi đói lắm.",
    "bad": 4,
-   "fix": "Hôm nay tôi hơi mệt.",
-   "ko": "오늘 조금 피곤해요. (hơi 와 lắm 을 함께 쓰지 않는다)"
+   "fix": "Hôm nay tôi hơi đói.",
+   "ko": "오늘 조금 배고파요. (hơi 와 lắm 을 함께 쓰지 않는다)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
@@ -905,7 +900,7 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Tôi đi làm bằng xe buýt.",
+   "vi": "Chị ấy đi làm bằng tắc xi.",
    "pts": 2
   },
   {
@@ -917,13 +912,13 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Hôm nay tôi hơi mệt.",
+   "vi": "Hôm nay tôi hơi bận.",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Chị ấy làm việc ở ngân hàng.",
+   "vi": "Anh ấy làm việc ở bệnh viện.",
    "pts": 2
   },
   {
@@ -939,7 +934,7 @@
    "ask": "그림을 보고 말해 보세요 — 당신은 이것을 타고 어디에 가나요? 어디에서 일하고, 몇 시에 출근하나요? (3문장)",
    "model": [
     {
-     "vi": "Tôi đi làm bằng xe buýt.",
+     "vi": "Mỗi ngày tôi đi làm bằng xe buýt.",
      "ko": "저는 버스를 타고 출근해요."
     },
     {
@@ -1011,7 +1006,7 @@
      "ko": "저는 보통 12시에 자러 가요."
     },
     {
-     "vi": "Hôm nay tôi hơi mệt.",
+     "vi": "Hôm nay tôi hơi buồn ngủ.",
      "ko": "오늘은 조금 피곤해요."
     }
    ],

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from common import *
-PICS = ["xem phim", "nghe nhạc", "đọc báo", "tập thể dục", "đi bộ"]
 q = []
 q += [TF("đi ngủ", "Em ấy đang đi ngủ. Bây giờ là 11 giờ đêm.", True), TF("xem tivi", "Anh ấy đang nấu ăn.", False),
       TF("nghe nhạc", "Chị ấy đang nghe nhạc.", True), TF("ăn sáng", "Anh ấy đang ăn trưa ở căng tin công ty.", False), TF("buồn ngủ", "Em ấy buồn ngủ quá vì hôm qua thức khuya.", True)]
-q += [PK(PICS, "Buổi sáng tôi thường tập thể dục ở gần nhà.", 3), PK(PICS, "Tối thứ bảy chúng tôi đi xem phim.", 0), PK(PICS, "Ông tôi thường đọc báo vào buổi sáng.", 2),
-      PK(PICS, "Tôi thích nghe nhạc Việt Nam.", 1), PK(PICS, "Chị ấy đi bộ đến trường vì trường gần nhà.", 4)]
+q += [PK(["đọc báo", "tập thể dục", "đi bộ", "chờ"], "Buổi sáng tôi thường tập thể dục ở gần nhà.", 1),
+      PK(["thức dậy", "ăn cơm", "đọc sách", "chuẩn bị"], "Sau khi ăn tối, bố tôi thường đọc sách.", 2),
+      PK(["lên mạng", "đánh răng", "rửa mặt", "ăn trưa"], "Buổi tối tôi thường lên mạng xem tin tức.", 0),
+      PK(["đi dạo", "ăn tối", "mua sắm", "xem tin tức"], "Cuối tuần tôi đi mua sắm với mẹ.", 2),
+      PK(["đi làm", "đi học", "về nhà", "thức khuya"], "Hôm qua tôi thức khuya học bài.", 3)]
 q += [A3("Anh ấy thường làm gì sau khi ăn tối?", "Sau khi ăn tối tôi thường xem tivi với gia đình.", ["xem tivi", "học tiếng Việt", "đi ngủ"]),
       A3("Chị ấy thích làm gì?", "Tôi rất thích nghe nhạc và đọc sách.", ["nghe nhạc và đọc sách", "xem phim", "tập thể dục"]),
       A3("Hôm qua em ấy đi ngủ lúc mấy giờ?", "Hôm qua em thức khuya học bài nên đi ngủ lúc 1 giờ.", ["1 giờ", "11 giờ", "10 giờ"]),
@@ -64,11 +66,11 @@ q.append(C3("내 주말과 취미 — 주말에 보통 무엇을 하는지, 무�
             ["Cuối tuần tôi thường ở nhà.", "Buổi sáng tôi thức dậy trễ, khoảng 9 giờ.", "Tôi tập thể dục khoảng 30 phút.", "Sau đó tôi ăn sáng với gia đình.", "Buổi chiều tôi thích đọc sách và nghe nhạc.",
              "Thỉnh thoảng tôi đi uống cà phê với bạn bè.", "Tối thứ bảy chúng tôi thường đi xem phim.", "Tôi rất thích xem phim Việt Nam.", "Buổi tối tôi học tiếng Việt khoảng hai tiếng.", "Cuối tuần của tôi rất vui."]))
 q += D1(["xem phim", "nghe nhạc", "đọc báo", "tập thể dục", "thức khuya", "buồn ngủ", "nấu ăn", "cuối tuần", "thỉnh thoảng", "một mình"],
-        ["Tôi thường xem tivi buổi tối.", "Hôm qua tôi thức khuya nên hôm nay tôi mệt.", "Cuối tuần chúng tôi đi xem phim.", "Mẹ tôi đang nấu ăn.", "Em đi ngủ lúc mấy giờ?"])
+        ["Buổi tối tôi thường nghe nhạc.", "Hôm qua tôi thức khuya nên hôm nay tôi mệt.", "Thỉnh thoảng tôi đi dạo một mình.", "Bố tôi thường đọc báo.", "Hôm qua tôi đi ngủ lúc 12 giờ."])
 q += [D2("xem phim", "그림을 보고 말해 보세요 — 주말에 보통 무엇을 하나요? 누구와 하나요? 어떤 영화를 좋아하나요? (3문장)",
          ["Cuối tuần tôi thường xem phim ở nhà.", "Tôi xem phim với bạn.", "Tôi thích xem phim Việt Nam."], ["주말에 저는 보통 집에서 영화를 봐요.", "친구와 영화를 봐요.", "저는 베트남 영화를 좋아해요."]),
       D2("nấu ăn", "그림을 보고 말해 보세요 — 이 사람은 무엇을 하고 있나요? 요리를 잘하나요? 어디에서 일하나요? (3문장)",
-         ["Anh ấy đang nấu ăn.", "Anh ấy nấu ăn rất ngon.", "Anh ấy làm việc ở tiệm ăn."], ["그는 요리를 하고 있어요.", "그는 요리를 아주 맛있게 해요.", "그는 식당에서 일해요."])]
+         ["Anh ấy đang nấu ăn ở nhà.", "Anh ấy nấu ăn rất ngon.", "Anh ấy làm việc ở tiệm ăn."], ["그는 요리를 하고 있어요.", "그는 요리를 아주 맛있게 해요.", "그는 식당에서 일해요."])]
 q += [D3("친구가 '주말에 보통 뭐 해요?'라고 묻습니다. 주말에 하는 일 세 가지를 말해 보세요. (3문장)",
          ["Cuối tuần tôi thường đi dạo.", "Thỉnh thoảng tôi đi xem phim với bạn.", "Buổi tối tôi nghe nhạc ở nhà."], ["주말에 저는 보통 산책을 해요.", "가끔 친구와 영화를 보러 가요.", "저녁에는 집에서 음악을 들어요."]),
       D3("친구가 '아침에 보통 몇 시에 일어나요?'라고 묻습니다. 아침 일과를 말해 보세요 — 일어나는 시간, 아침밥, 그다음 하는 일. (3문장)",

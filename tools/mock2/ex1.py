@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 # 모의고사 1 — 직업·일터·일하는 시간 (교재 4과 중심 + 7과 sắp). 2026-10-07 대표님 "시험은 4~7과, 문법은 1~7 그대로, 단어만 4~7 위주로" 에 따라 1~3과(자기소개·국적) 중심이던 것을 다시 씀.
 from common import *
-PICS = ["bác sĩ", "kỹ sư", "tài xế", "thư ký", "nội trợ"]
 q = []
-q += [TF("tài xế", "Ông ấy là tài xế tắc xi. Ông ấy lái xe từ 6 giờ sáng.", True), TF("thư ký", "Cô ấy là kế toán. Cô ấy làm việc ở ngân hàng.", False),
-      TF("kỹ sư", "Anh ấy là kỹ sư ở công ty máy tính.", True), TF("nội trợ", "Bà ấy là nội trợ. Bà ấy đang nấu ăn ở nhà.", True), TF("bác sĩ", "Anh ấy là luật sư. Dạo này anh ấy rất bận.", False)]
-q += [PK(PICS, "Chị ấy là thư ký. Chị ấy làm việc ở văn phòng công ty.", 3), PK(PICS, "Ông ấy lái xe tắc xi ở Quận 1.", 2), PK(PICS, "Anh ấy làm việc ở bệnh viện. Công việc hơi vất vả.", 0),
-      PK(PICS, "Mẹ tôi là nội trợ. Mẹ tôi nấu ăn rất ngon.", 4), PK(PICS, "Anh tôi làm kỹ sư ở công ty máy tính.", 1)]
+# A1 그림 5·A2 문항마다 보기 4(모두 다른 그림)·D2 그림 2 — 한 벌 안에서 같은 그림·같은 소리는 한 번만 (대표님 2026-10-07)
+q += [TF("tài xế", "Ông ấy là tài xế tắc xi. Ông ấy lái xe từ 6 giờ sáng.", True), TF("ngân hàng", "Chị ấy làm kế toán ở ngân hàng.", True),
+      TF("kỹ sư", "Anh ấy là kỹ sư ở công ty máy tính.", True), TF("bệnh viện", "Đây là công ty máy tính. Công ty có 200 nhân viên.", False), TF("luật sư", "Anh ấy là bác sĩ. Dạo này anh ấy rất bận.", False)]
+q += [PK(["nội trợ", "thư ký", "bác sĩ", "sinh viên"], "Chị ấy là thư ký. Chị ấy làm việc ở văn phòng công ty.", 1),
+      PK(["đi làm", "ăn trưa", "nấu ăn", "đọc báo"], "Mẹ tôi là nội trợ. Mẹ tôi đang nấu ăn ở nhà.", 2),
+      PK(["siêu thị", "quán cà phê", "bưu điện", "nhà sách"], "Anh ấy là nhân viên siêu thị. Anh ấy làm việc ở siêu thị từ 7 giờ sáng.", 0),
+      PK(["tắc xi", "máy bay", "xe buýt", "đi bộ"], "Tôi đi làm bằng xe buýt lúc 7 giờ rưỡi.", 2),
+      PK(["văn phòng", "công ty", "giáo viên", "căng tin"], "Buổi trưa tôi ăn trưa ở căng tin công ty.", 3)]
 q += [A3("Ở Nhật anh Hiroki làm nghề gì?", "Ở Nhật tôi làm kế toán ở ngân hàng.", ["kế toán", "kỹ sư", "thư ký"]),
       A3("Ngân hàng của anh ấy có bao nhiêu nhân viên?", "Ngân hàng của tôi có hơn 100 nhân viên.", ["hơn 100 người", "khoảng 50 người", "hơn 200 người"]),
       A3("Brian dạy tiếng Anh ở quận nào?", "Tôi dạy ở trường ILA, Quận 2.", ["Quận 2", "Quận 1", "Quận 7"]),
@@ -52,25 +55,25 @@ q += [B4("Anh làm nghề gì?", ["Tôi làm kế toán ở ngân hàng.", "Tôi
       B4("Cô ấy cũng là kỹ sư, phải không?", ["Không, cô ấy là thư ký.", "Từ 9 giờ sáng.", "Ở Quận 2.", "Khoảng 20 người."]),
       B4("Các anh sắp đi ăn trưa chưa?", ["Sắp rồi. Chị đi với chúng tôi không?", "Tôi là kế toán.", "Công ty tôi có 50 nhân viên.", "Từ 8 giờ đến 5 giờ."]),
       B4("Công việc của anh thế nào?", ["Hơi vất vả nhưng rất thú vị.", "Tôi làm ở bệnh viện.", "Lúc 7 giờ sáng.", "Khoảng 100 người."])]
-q += [C1("Tôi làm kế toán ở ngân hàng.", ["ở", "tôi", "ngân hàng", "làm", "kế toán"]), C1("Anh dạy mấy ngày một tuần?", ["mấy ngày", "anh", "một tuần", "dạy"]),
+q += [C1("Tôi làm kế toán ở ngân hàng.", ["ở", "tôi", "ngân hàng", "làm", "kế toán"]), C1("Tôi dạy năm ngày một tuần.", ["năm ngày", "tôi", "một tuần", "dạy"]),
       C1("Tôi làm việc từ 8 giờ đến 5 giờ.", ["từ", "tôi", "8 giờ", "đến", "5 giờ", "làm việc"]), C1("Xe sắp đến chưa anh?", ["sắp", "xe", "chưa", "đến", "anh"]),
       C1("Dạo này tôi rất bận.", ["rất", "dạo này", "bận", "tôi"])]
 q += [C2("Ngân hàng của anh có mấy nhân viên?", 5, "Ngân hàng của anh có bao nhiêu nhân viên?", "은행에 직원이 몇 명이에요? (열을 넘을 수 있으면 bao nhiêu)"),
       C2("Tôi đang là kỹ sư ở công ty máy tính.", 1, "Tôi là kỹ sư ở công ty máy tính.", "저는 컴퓨터 회사 엔지니어예요. (là 앞에 đang 을 안 쓴다)"),
       C2("Anh ấy sắp đi ăn trưa lúc 12 giờ.", 2, "Anh ấy sẽ đi ăn trưa lúc 12 giờ.", "그는 12시에 점심을 먹으러 갈 거예요. (sắp 에는 시각을 붙이지 않는다)"),
-      C2("Dạo này tôi bận rất.", 4, "Dạo này tôi rất bận.", "요즘 저는 아주 바빠요. (rất 는 형용사 앞)"),
-      C2("Cô ấy cũng làm kỹ sư, không phải?", 6, "Cô ấy cũng làm kỹ sư, phải không?", "그녀도 엔지니어죠? (phải không 차례)")]
+      C2("Hôm nay tôi mệt rất.", 4, "Hôm nay tôi rất mệt.", "오늘 저는 아주 피곤해요. (rất 는 형용사 앞)"),
+      C2("Anh ấy cũng làm kế toán, không phải?", 6, "Anh ấy cũng làm kế toán, phải không?", "그도 회계사죠? (phải không 차례)")]
 q.append(C3("나의 직업과 일 — 무슨 일을 하는지, 어디에서, 몇 시부터 몇 시까지, 일주일에 며칠, 요즘 어떤지 (10문장)",
             ["Tôi là nhân viên công ty.", "Tôi làm việc ở một công ty máy tính ở Quận 1.", "Công ty tôi có khoảng 200 nhân viên.", "Tôi làm việc từ 8 giờ sáng đến 5 giờ chiều.", "Tôi đi làm năm ngày một tuần.",
              "Buổi trưa tôi ăn trưa ở căng tin công ty.", "Dạo này công việc của tôi hơi bận.", "Buổi tối tôi học tiếng Việt khoảng một tiếng.", "Thứ bảy tôi thường nghỉ ở nhà.", "Công việc vất vả nhưng rất thú vị."]))
 q += D1(["kế toán", "luật sư", "tài xế", "thư ký", "nhân viên", "văn phòng", "cơ quan", "vất vả", "dạo này", "nghỉ hưu"],
-        ["Anh làm nghề gì?", "Tôi làm kế toán ở ngân hàng.", "Buổi chiều tôi làm việc từ 2 giờ đến 7 giờ.", "Dạo này công việc của tôi bận lắm.", "Xe sắp đến chưa anh?"])
-q += [D2("bác sĩ", "그림을 보고 말해 보세요 — 이 사람의 직업은 무엇이고, 어디에서 일하나요? 요즘 어떤가요? (3문장)",
-         ["Anh ấy là bác sĩ.", "Anh ấy làm việc ở bệnh viện.", "Dạo này anh ấy rất bận."], ["그는 의사예요.", "그는 병원에서 일해요.", "요즘 그는 아주 바빠요."]),
-      D2("thư ký", "그림을 보고 말해 보세요 — 이 사람은 무슨 일을 하고, 어디에서, 몇 시부터 몇 시까지 일하나요? (3문장)",
-         ["Chị ấy là thư ký.", "Chị ấy làm việc ở văn phòng công ty.", "Chị ấy làm việc từ tám giờ đến năm giờ."], ["그녀는 비서예요.", "그녀는 회사 사무실에서 일해요.", "그녀는 8시부터 5시까지 일해요."])]
+        ["Công ty tôi có khoảng 200 nhân viên.", "Chị ấy là thư ký ở văn phòng.", "Buổi chiều tôi làm việc từ 2 giờ đến 7 giờ.", "Dạo này công việc của tôi bận lắm.", "Chị sắp đi ăn trưa chưa?"])
+q += [D2("nhân viên ngân hàng", "그림을 보고 말해 보세요 — 이 사람의 직업은 무엇이고, 어디에서 일하나요? 요즘 어떤가요? (3문장)",
+         ["Chị ấy là nhân viên ngân hàng.", "Chị ấy làm việc ở ngân hàng ở Quận 1.", "Dạo này chị ấy rất bận."], ["그녀는 은행 직원이에요.", "그녀는 1군에 있는 은행에서 일해요.", "요즘 그녀는 아주 바빠요."]),
+      D2("giáo viên người Việt Nam", "그림을 보고 말해 보세요 — 이 사람은 무슨 일을 하고, 어디에서, 일주일에 며칠 일하나요? (3문장)",
+         ["Cô ấy là giáo viên.", "Cô ấy dạy tiếng Việt ở trường đại học.", "Cô ấy dạy năm ngày một tuần."], ["그녀는 선생님이에요.", "그녀는 대학교에서 베트남어를 가르쳐요.", "그녀는 일주일에 5일 가르쳐요."])]
 q += [D3("새 동료가 '무슨 일 해요? 어디에서 일해요?'라고 묻습니다. 직업·일터·일하는 시간을 말해 보세요. (3문장)",
          ["Tôi là kỹ sư.", "Tôi làm việc ở công ty máy tính.", "Tôi làm việc từ tám giờ sáng đến năm giờ chiều."], ["저는 엔지니어예요.", "저는 컴퓨터 회사에서 일해요.", "저는 아침 8시부터 오후 5시까지 일해요."]),
       D3("친구가 '요즘 바빠요?'라고 묻습니다. 요즘 생활을 말해 보세요 — 오전·오후에 무엇을 하는지, 바쁜지. (3문장)",
-         ["Dạo này tôi rất bận.", "Buổi sáng tôi đi học tiếng Việt.", "Buổi chiều tôi đi làm ở ngân hàng."], ["요즘 저는 아주 바빠요.", "오전에는 베트남어를 배우러 가요.", "오후에는 은행에 일하러 가요."])]
+         ["Dạo này tôi bận lắm.", "Buổi sáng tôi đi học tiếng Việt.", "Buổi chiều tôi đi làm ở ngân hàng."], ["요즘 저는 아주 바빠요.", "오전에는 베트남어를 배우러 가요.", "오후에는 은행에 일하러 가요."])]
 AUD = build(1, "모의고사 1", q)

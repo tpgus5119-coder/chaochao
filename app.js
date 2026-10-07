@@ -11103,8 +11103,9 @@ function scoreCard(host) {
   const L = scoreList();
   // 앱 모의시험 — 회차마다 마지막 결과를 100점으로 바꿔 (맞힌 수 / 문항 수)
   const mock = {};
-  (S.stats.wexam || []).forEach(x => { if (x.tot) mock[x.round || 1] = Math.round(x.ok / x.tot * 1000) / 10; });
-  const rounds = [...new Set([...L.map(x => x.r), ...Object.keys(mock).map(Number)])].sort((a, b) => a - b);
+  const rno = k => (FIXED_EXAMS[k] ? FIXED_EXAMS[k].round : +k);   // 시험지 열쇠(m2_1)는 회차 번호로 — 전에는 Number('m2_1') 이라 축에 'NaN회' 가 찍혔다 (2026-10-07)
+  (S.stats.wexam || []).forEach(x => { const r = rno(x.round || 1); if (x.tot && Number.isFinite(r)) mock[r] = Math.round(x.ok / x.tot * 1000) / 10; });
+  const rounds = [...new Set([...L.map(x => x.r), ...Object.keys(mock).map(Number)])].filter(Number.isFinite).sort((a, b) => a - b);
   if (!rounds.length) {
     card.append(el('p', 'note', tr('반 시험 점수를 적으면 회차마다 곡선으로 보여 줍니다. 앱의 모의시험 점수도 같이 그립니다.')));
     host.append(card); return;
@@ -11189,7 +11190,7 @@ function weeklyEntry() {
   scoreCard(b);                                         // 내 시험 성적 · 성장 곡선 (2026-09-29)
   WEEKLY_ROUNDS.forEach(r => {
     const btn = el('button', 'bigmenu');
-    btn.append(el('b', null, esc(tr(r.name)) + ' <span class="exmeta">' + esc(r.desc) + '</span>'));
+    btn.append(el('b', null, esc(tr(r.name))));          // 범위 글(메인 교재 1권 1~7과)은 안 쓴다 (대표님 2026-10-07)
     btn.onclick = () => { dive(weeklyEntry); weeklyRound(r); };
     b.append(btn);
   });
@@ -11235,8 +11236,7 @@ function resumeApply(r) {
 /* 시험 들어가는 화면의 [이어서 풀기 n/N] 안내 줄 + [처음부터] */
 function resumeRow(k, onFresh) {
   const r = resumeGet(k); if (!r) return null;
-  const row = el('div', 'resumerow');
-  row.append(el('span', 'dimtxt', tr('푼 자리가 저장돼 있습니다') + ' · ' + r.i + ' / ' + r.items.length));
+  const row = el('div', 'resumerow');                      // 안내 글은 안 쓴다 — 큰 단추에 '이어서 n/N' 이 이미 보인다 (대표님 2026-10-07 "푼 자리가 저장돼 있습니다 이딴 글자 다 빼라")
   const b = el('button', 'ghost sm', tr('처음부터')); b.type = 'button'; b.onclick = () => { resumeClear(k); onFresh(); }; row.append(b);
   return row;
 }
@@ -11372,7 +11372,9 @@ function weeklyRound(r) {
     const eb = el('button', 'bigmenu');
     const done = (S.stats.wexam || []).filter(x => x.round === k).slice(-1)[0];
     const rs = resumeGet('fixed:' + k);                     // 푼 자리가 있으면 누르면 이어서, 밑의 [처음부터]로 새로 (2026-10-07)
-    eb.append(el('b', null, esc(tr(e.name)) + ' <span class="exmeta">' + esc(r.desc) + ' · ' + tr('90분 · 끝에 채점') + (done ? ' · ' + tr('지난 결과') + ' ' + done.ok + '/' + done.tot : '') + (rs ? ' · <b class="resumetag">' + tr('이어서 풀기') + ' ' + rs.i + '/' + rs.items.length + '</b>' : '') + '</span>'));
+    /* 범위·시간·채점 방식 글은 안 쓴다 (대표님 2026-10-07 "메인교재 1권 1~7과 · 끝에 채점 이런 글자들 다 빼라") — 지난 결과와 이어서 n/N 만 */
+    const meta = [done ? tr('지난 결과') + ' ' + done.ok + '/' + done.tot : '', rs ? '<b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b>' : ''].filter(Boolean).join(' · ');
+    eb.append(el('b', null, esc(tr(e.name)) + (meta ? ' <span class="exmeta">' + meta + '</span>' : '')));
     eb.onclick = () => { dive(() => weeklyRound(r)); startExam1(k, resumeGet('fixed:' + k)); };
     b.append(eb);
     const rr = resumeRow('fixed:' + k, () => { dive(() => weeklyRound(r)); startExam1(k); }); if (rr) b.append(rr);

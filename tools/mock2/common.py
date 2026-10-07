@@ -62,6 +62,17 @@ def build(no, title, q):
             assert 0 <= x['bad'] < len(x['vi'].replace('.', '').replace('?', '').split()), (no, x['vi'])
         if x['k'] == 'puzzle': assert sorted(' '.join(x['tiles']).lower().split()) == sorted(x['vi'].rstrip('.?!').lower().split()), (no, x['vi'])
     if bad: raise SystemExit(f'모의고사 {no} 범위 밖 낱말: ' + ' | '.join(f'{k} ← {v[:50]}' for k, v in bad.items()))
+    # 한 벌 안에서 같은 소리·같은 그림은 한 번만 (대표님 2026-10-07: "1번에 나왔던 오디오가 6번에 또 나오지 말라, 그림도 1~10번이 계속 같은 것만 — 참고 사진의 문제 형태는 그렇지 않다")
+    snd, pic = collections.Counter(), collections.Counter()
+    for x in q:
+        if x.get('audio'): snd[x['audio']] += 1
+        if x['k'] in ('say', 'puzzle'): snd[x['vi']] += 1
+        if x['k'] == 'errpick': snd[x['fix']] += 1
+        if x['k'] == 'speak': [snd.update([m['vi']]) for m in x['model']]
+        if x.get('img'): pic[x['img']] += 1
+        if x['k'] == 'pick': pic.update(x['opts'])
+    dup = [f'{t} ×{n}' for t, n in snd.items() if n > 1] + [f'그림 {t} ×{n}' for t, n in pic.items() if n > 1]
+    if dup: raise SystemExit(f'모의고사 {no} 겹침: ' + ' | '.join(dup))
     out = {"note": f"주간시험 2 모의고사 {no} — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).", "title": title, "time": 90, "pts": {"A": 30, "B": 30, "C": 20, "D": 20}, "q": q}
     json.dump(out, open(R / f'data/mock2_{no}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     aud = []
