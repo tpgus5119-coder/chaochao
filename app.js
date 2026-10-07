@@ -451,7 +451,7 @@ const UIVI = {
   '이번 주': 'Tuần này',
   '이번 주 (': 'Tuần này (',
   '이번 주 시작하기': 'Bắt đầu tuần này',
-  '이어서': 'Tiếp tục',
+  '이어서': 'Tiếp tục', '이어서 풀기': 'Làm tiếp', '처음부터': 'Làm lại từ đầu', '푼 자리가 저장돼 있습니다': 'Đã lưu chỗ đang làm',
   '읽기 + 질문 5개': 'Đọc to + 5 câu hỏi',
   '자랑 카드 만들기': 'Tạo thẻ khoe thành tích',
   '자주 헷갈리는 짝 (귀 훈련)': 'Cặp hay nhầm (luyện tai)',
@@ -10509,6 +10509,7 @@ function drawQuiz() {
   const body = $('#quizBody');
   body.textContent = '';
   $('#quizFill').style.width = (Q.i / Q.list.length * 100) + '%';
+  if (Q.exam && (Q.fixed || Q.daily)) resumeSave();     // 시험지·단어 시험은 푼 자리를 저장 (끝나면 지움) (2026-10-07)
   if (Q.i >= Q.list.length) return finishQuiz();
 
   const q = Q.list[Q.i];
@@ -11001,7 +11002,42 @@ const FIXED_EXAMS = { exam1: { file: 'data/exam1.json', name: '실제 시험지 
   m2_4: { file: 'data/mock2_4.json', name: '모의고사 4', round: 2 }, m2_5: { file: 'data/mock2_5.json', name: '모의고사 5', round: 2 } };
 /* 주간시험 1 = 실제 1차 시험지 그대로, 주간시험 2 = 2차 시험 안내 틀(tools/mock2/common.py)로 낸 모의고사 다섯(1~7과). 옛 2차 예상 시험지(exam2)는 모의고사 1 로 다시 냈다 (2026-10-06) */   // 파일 이름을 글자 그대로 적어야 배포 목록에 든다. 2차는 교재 1권 1~7과로 클로드가 냄 (2026-10-06)
 let EXAM1_TIMER = 0, FIXED = {};
-function startExam1(key) {
+/* 시험 이어 하기 (대표님 2026-10-07 "테스트들은 중간에 나가도 시험 보던 곳이 기억되도록") — **주간시험(시험지)과 22기 단어 시험만**.
+   둘은 문항이 정해진 시험지라 푼 자리·답을 그대로 둘 수 있다. 복습·문장·성조·학습 뒤 테스트는 20문항 안팎이고 문제를 그때그때 뽑으니 뺐다.
+   저장: S.resume['fixed:<시험지>' | 'daily:<회차>'] = { i, ok, skip, left(남은 시간 ms), items[문항마다 ok·점수·답함·스킵·okBefore], gen(단어 시험의 문제 목록) }
+   — 문제를 그릴 때마다(drawQuiz) 적고, 끝나거나 처음부터 다시 하면 지운다. 폰 안에만 둔다(서버 진도 PROGKEYS 에 없음). 6개까지. */
+const RESUME_MAX = 6;
+const resumeKey = () => (Q && Q.exam) ? (Q.fixed ? 'fixed:' + Q.fixed : Q.daily ? 'daily:' + Q.daily : null) : null;
+function resumeSave() {
+  const k = resumeKey(); if (!k) return;
+  S.resume = S.resume || {};
+  if (Q.i <= 0 || Q.i >= Q.list.length) { if (S.resume[k]) { delete S.resume[k]; save(); } return; }
+  const items = Q.list.map(q => [q._ok === undefined ? null : (q._ok ? 1 : 0), q._score === undefined ? null : q._score, q._ans ? 1 : 0, q._skip ? 1 : 0, q._okBefore === undefined ? null : q._okBefore]);
+  S.resume[k] = { i: Q.i, ok: Q.ok, skip: Q.skip || 0, left: Q.deadline ? Math.max(0, Q.deadline - Date.now()) : null, items, gen: Q.gen || null, t: Date.now() };
+  const ks = Object.keys(S.resume);
+  if (ks.length > RESUME_MAX) ks.sort((a, b) => S.resume[a].t - S.resume[b].t).slice(0, ks.length - RESUME_MAX).forEach(x => { delete S.resume[x]; });
+  save();
+}
+function resumeClear(k) { if (S.resume && S.resume[k]) { delete S.resume[k]; save(); } }
+function resumeGet(k) { const r = S.resume && S.resume[k]; return r && r.i > 0 && r.items && r.i < r.items.length ? r : null; }
+/* Q 를 새로 만든 뒤 — 푼 자리·답을 되살린다. 문항 수가 다르면(자료가 바뀜) 되살리지 않는다 */
+function resumeApply(r) {
+  if (!r || !Q || r.items.length !== Q.list.length) return false;
+  Q.list.forEach((q, i) => { const it = r.items[i]; if (!it) return; if (it[0] !== null) q._ok = !!it[0]; if (it[1] !== null) q._score = it[1]; if (it[2]) q._ans = true; if (it[3]) q._skip = true; if (it[4] !== null) q._okBefore = it[4]; });
+  Q.i = r.i; Q.ok = r.ok; Q.skip = r.skip || 0;
+  if (Q.deadline && r.left !== null && r.left !== undefined) Q.deadline = Date.now() + r.left;
+  return true;
+}
+/* 시험 들어가는 화면의 [이어서 풀기 n/N] 안내 줄 + [처음부터] */
+function resumeRow(k, onFresh) {
+  const r = resumeGet(k); if (!r) return null;
+  const row = el('div', 'resumerow');
+  row.append(el('span', 'dimtxt', tr('푼 자리가 저장돼 있습니다') + ' · ' + r.i + ' / ' + r.items.length));
+  const b = el('button', 'ghost sm', tr('처음부터')); b.type = 'button'; b.onclick = () => { resumeClear(k); onFresh(); }; row.append(b);
+  return row;
+}
+
+function startExam1(key, r) {
   key = key || 'exam1';
   const go = () => {
     const J = FIXED[key];
@@ -11014,6 +11050,7 @@ function startExam1(key) {
     }).filter(q => q.mode !== 'say');                      // 시험지의 D 말하기는 앱에서 안 낸다 (2026-10-06)
     SBOX = 'bsrs';
     Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, fixed: key, deadline: Date.now() + J.time * 60000 };
+    if (r) resumeApply(r);                                 // 이어서 — 푼 자리·답·남은 시간 (2026-10-07)
     drawQuiz();
     show('quiz', FIXED_EXAMS[key].name, true);
     exam1Clock();
@@ -11099,9 +11136,11 @@ function weeklyRound(r) {
   Object.entries(FIXED_EXAMS).filter(([k, e]) => e.round === r.no).forEach(([k, e]) => {
     const eb = el('button', 'bigmenu');
     const done = (S.stats.wexam || []).filter(x => x.round === k).slice(-1)[0];
-    eb.append(el('b', null, esc(tr(e.name)) + ' <span class="exmeta">' + esc(r.desc) + ' · ' + tr('90분 · 끝에 채점') + (done ? ' · ' + tr('지난 결과') + ' ' + done.ok + '/' + done.tot : '') + '</span>'));
-    eb.onclick = () => { dive(() => weeklyRound(r)); startExam1(k); };
+    const rs = resumeGet('fixed:' + k);                     // 푼 자리가 있으면 누르면 이어서, 밑의 [처음부터]로 새로 (2026-10-07)
+    eb.append(el('b', null, esc(tr(e.name)) + ' <span class="exmeta">' + esc(r.desc) + ' · ' + tr('90분 · 끝에 채점') + (done ? ' · ' + tr('지난 결과') + ' ' + done.ok + '/' + done.tot : '') + (rs ? ' · <b class="resumetag">' + tr('이어서 풀기') + ' ' + rs.i + '/' + rs.items.length + '</b>' : '') + '</span>'));
+    eb.onclick = () => { dive(() => weeklyRound(r)); startExam1(k, resumeGet('fixed:' + k)); };
     b.append(eb);
+    const rr = resumeRow('fixed:' + k, () => { dive(() => weeklyRound(r)); startExam1(k); }); if (rr) b.append(rr);
   });
   show('exam', r.name, true);
 }
@@ -11177,29 +11216,40 @@ function dailyRound(t) {
   const tot = t.words.length + t.sents.length, rec = (S.daily || {})[t.key];
   b.append(el('p', 'lede', esc(t.cls + tr('반') + ' ' + t.date + ' ' + tr('단어 시험'))));
   b.append(el('p', 'note', tr('낱말 N개 · 문장 10개 · 모두 M문제').replace('N', t.words.length).replace('M', tot)));
-  const go = el('button', 'primary big', tr('시험 보기')); go.style.width = '100%';
-  go.onclick = () => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t)); };
+  const rs = resumeGet('daily:' + t.key);                   // 푼 자리가 있으면 [이어서 풀기 n/N] + [처음부터] (2026-10-07)
+  const go = el('button', 'primary big', rs ? tr('이어서 풀기') + ' ' + rs.i + ' / ' + rs.items.length : tr('시험 보기')); go.style.width = '100%';
+  go.onclick = () => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t, resumeGet('daily:' + t.key))); };
   b.append(go);
+  const rr = resumeRow('daily:' + t.key, () => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t)); }); if (rr) b.append(rr);
   if (rec && rec.runs && rec.runs.length) {
     b.append(el('p', 'anasec', tr('지난 결과') + ' <span>' + tr('최고') + ' ' + rec.best + ' / ' + tot + '</span>'));
     b.append(el('p', 'dimtxt', rec.runs.slice(-5).reverse().map(r => esc(String(r.d).slice(5).replace('-', '/')) + ' · ' + r.ok + ' / ' + r.tot).join('<br>')));
   }
   show('exam', t.date + ' ' + tr('단어 시험'), true);
 }
-function startDaily(t) {
+function startDaily(t, r) {
   const ws = dailyWords(t), ss = dailySents(t);
-  const pick = (arr, n) => arr.slice().sort(() => Math.random() - .5).slice(0, n);
-  const mk = (w, sec, pool) => ({ w, mode: 'read', sec, opts: [w, ...pick(pool.filter(x => x.vi !== w.vi && x.ko !== w.ko), 3)].sort(() => Math.random() - .5) });
-  const L = [];
-  ws.forEach(w => L.push(w.dir === 'to_vi' ? { w, mode: 'write_ko', sec: tr('낱말 · 베트남어로 쓰기') } : mk(w, tr('낱말 · 뜻 고르기'), ws)));
-  ss.forEach(x => {
-    if (x.dir === 'to_ko') { L.push(mk(x, tr('문장 · 뜻 고르기'), ss)); return; }
-    const n = x.vi.replace(/[.?!]+$/, '').split(/\s+/).length;
-    if (n >= 3) L.push({ w: x, mode: 'puzzle', sec: tr('문장 · 베트남어로') });
-    else L.push({ w: x, mode: 'read_ko', sec: tr('문장 · 베트남어로'), opts: [x, ...pick(ss.filter(y => y.vi !== x.vi), 3)].sort(() => Math.random() - .5) });   // 두 낱말 이하(Chào bạn.)는 조각이 안 되니 뜻 보고 문장 고르기 — 자판 치기는 뺐다 (2026-10-06)
-  });
+  /* 문제 목록은 보기를 무작위로 뽑으므로, 이어서 풀려면 그 목록을 저장해 둬야 한다(Q.gen: 낱말은 'w번호'·문장은 's번호') (2026-10-07) */
+  const ref = x => { let i = ws.indexOf(x); if (i >= 0) return 'w' + i; i = ss.indexOf(x); return i >= 0 ? 's' + i : null; };
+  const deref = s => typeof s === 'string' && s[0] === 'w' ? ws[+s.slice(1)] : typeof s === 'string' && s[0] === 's' ? ss[+s.slice(1)] : null;
+  let L = null;
+  if (r && r.gen) { L = r.gen.map(g => ({ w: deref(g.w), mode: g.mode, sec: g.sec, opts: (g.opts || []).map(deref) })); if (L.some(q => !q.w || q.opts.some(o => !o))) { L = null; r = null; } }   // 자료가 바뀌어 못 맞추면 새로
+  if (!L) {
+    const pick = (arr, n) => arr.slice().sort(() => Math.random() - .5).slice(0, n);
+    const mk = (w, sec, pool) => ({ w, mode: 'read', sec, opts: [w, ...pick(pool.filter(x => x.vi !== w.vi && x.ko !== w.ko), 3)].sort(() => Math.random() - .5) });
+    L = [];
+    ws.forEach(w => L.push(w.dir === 'to_vi' ? { w, mode: 'write_ko', sec: tr('낱말 · 베트남어로 쓰기') } : mk(w, tr('낱말 · 뜻 고르기'), ws)));
+    ss.forEach(x => {
+      if (x.dir === 'to_ko') { L.push(mk(x, tr('문장 · 뜻 고르기'), ss)); return; }
+      const n = x.vi.replace(/[.?!]+$/, '').split(/\s+/).length;
+      if (n >= 3) L.push({ w: x, mode: 'puzzle', sec: tr('문장 · 베트남어로') });
+      else L.push({ w: x, mode: 'read_ko', sec: tr('문장 · 베트남어로'), opts: [x, ...pick(ss.filter(y => y.vi !== x.vi), 3)].sort(() => Math.random() - .5) });   // 두 낱말 이하(Chào bạn.)는 조각이 안 되니 뜻 보고 문장 고르기 — 자판 치기는 뺐다 (2026-10-06)
+    });
+  }
   SBOX = 'bsrs';
-  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: false, opt: {}, exam: true, blind: true, daily: t.key, dtest: t };   // blind: 실제 시험처럼 끝에 채점
+  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: false, opt: {}, exam: true, blind: true, daily: t.key, dtest: t,   // blind: 실제 시험처럼 끝에 채점
+        gen: L.map(q => ({ w: ref(q.w), mode: q.mode, sec: q.sec, opts: (q.opts || []).map(ref) })) };
+  if (r) resumeApply(r);
   sensesLoad();
   drawQuiz();
   show('quiz', t.date + ' ' + tr('단어 시험'), true);

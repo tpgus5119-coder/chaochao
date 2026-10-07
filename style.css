@@ -3032,3 +3032,7 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 .dstar.on{color:#f5b400}
 /* 시험 듣기 문장 보기 (2026-10-06) */
 .sentpeek{width:100%; font-size:17px; line-height:1.5; margin-top:6px}
+
+/* 시험 이어 하기 — 들어가는 화면의 안내 줄 (2026-10-07) */
+.resumerow{display:flex; align-items:center; justify-content:space-between; gap:10px; margin:-6px 0 12px; padding:0 4px; font-size:13px}
+.resumetag{color:var(--accent)}
