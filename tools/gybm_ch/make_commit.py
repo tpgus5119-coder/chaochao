@@ -30,6 +30,7 @@ MY += ["tools/notes/필기_낱말.tsv", "tools/notes/add.py", "tools/notes/img.p
 MY += ["tools/senior_topic/결과.tsv", "tools/senior_topic/일상_넣기.tsv", "tools/senior_topic/add_senior.py", "tools/senior_topic/add_work.py"]   # 선배 시험 낱말 → 일상·직무 주제 + 자주 쓰는 기본 낱말 (2026-10-01)
 MY += ["tools/roots/dict_han.py", "tools/roots/hanmulti.py", "tools/roots/사전_한자.tsv", "tools/roots/사전_한자_뺌.tsv", "data/_dict_ex.json", "data/_dict_freq.json", "tools/dict_ex/make_sheets.py", "tools/dict_ex/PROMPT.md", "tools/dict_ex/chk.py", "tools/dict_ex/merge.py", "tools/dict_freq/fetch_wiki.py", "tools/dict_freq/count.py"] + [f"tools/dict_ex/ex_{i:02d}.ko.tsv" for i in range(26)] + [f"tools/dict_ex/ex_{i:02d}.json" for i in range(26)]   # 사전: 한자 뿌리 전체·예문·빈도 (2026-10-01)
 MY += ["data/_senior_notes.json", "data/_hanviet_patterns.json", "tools/roots/excel_han.py", "tools/roots/excel_notes.py", "tools/roots/엑셀_한자.tsv", "tools/roots/엑셀_한자_뺌.tsv", "tools/hanviet_quiz/patterns.py", "tools/dict_sup/make_sheets.py", "tools/dict_sup/PROMPT.md", "tools/dict_sup/chk.py", "tools/dict_sup/apply.py"] + [f"tools/dict_sup/sup_{i:02d}.ko.tsv" for i in range(25)] + [f"tools/dict_sup/sup_{i:02d}.json" for i in range(25)]   # 사전 [보충]·선배 한월어 엑셀·한자어 맞히기 (2026-10-01)
+MY += ["tools/daily22/b14.py", "tools/day_reorg/move_topics.py"]   # 22기 B반 14회 · 일상 주제 차례 손질 (2026-10-07)
 MY += ["tools/job_scene/scenes.py", "tools/job_scene/build.py"]   # 직무 낱말 일의 장면으로 (2026-10-07)
 MY += ["tools/grammar_order/순서.tsv"]   # 문법 자주 쓰는 순서 근거 (2026-10-01)
 MY += ["tools/audio_16k.py"]   # 소리 16k (2026-10-01)

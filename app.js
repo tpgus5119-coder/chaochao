@@ -7852,6 +7852,38 @@ function folderPopup(vi, ko, onChange) {
   back.onclick = e => { if (e.target === back) back.remove(); };
   document.body.append(back);
 }
+/* 여러 낱말을 한꺼번에 — 폴더마다 ☑(다 들어 있음)·◪(일부)·☐(없음). 누르면 다 들어 있을 땐 전부 빼고, 아니면 빠진 것만 더한다 (대표님 2026-10-08 "한번에 다중 선택") */
+function folderSetMany(f, vis, on) {
+  f.w = f.w || [];
+  if (on) vis.forEach(v => { if (!f.w.includes(v)) f.w.push(v); });
+  else f.w = f.w.filter(v => !vis.includes(v));
+  save(); cloudSave(true);
+}
+function folderPopupMany(vis, onChange) {
+  const back = el('div', 'modalback'), box = el('div', 'modalbox');
+  box.append(el('div', 'pairpophd', '<b>' + vis.length + tr('개') + '</b><span>' + esc(tr('고른 낱말을 담을 폴더')) + '</span>'));
+  const list = el('div', 'folist');
+  const draw = () => {
+    list.textContent = '';
+    const fo = foldersOf();
+    if (!fo.length) list.append(el('p', 'note', tr('아직 폴더가 없습니다. 아래에서 만들어 보세요.')));
+    fo.forEach(f => {
+      const n = vis.filter(v => folderHas(f, v)).length, all = n === vis.length && n > 0;
+      const r = el('button', 'forow' + (all ? ' on' : '')); r.type = 'button';
+      r.append(el('span', 'fochk', all ? '☑' : n ? '◪' : '☐'), el('span', 'foname', esc(f.name)), el('small', 'dimtxt', (n ? n + '/' + vis.length + ' · ' : '') + (f.w || []).length + tr('개')));
+      r.onclick = () => { folderSetMany(f, vis, !all); draw(); if (onChange) onChange(); };
+      list.append(r);
+    });
+  };
+  draw();
+  const add = el('button', 'ghost', '＋ ' + tr('새 폴더')); add.type = 'button';
+  add.onclick = async () => { const nm = await askText(tr('폴더 이름'), '', 20); if (nm) { const f = folderAdd(nm); folderSetMany(f, vis, true); draw(); if (onChange) onChange(); } };
+  const ok = el('button', 'primary', tr('닫기')); ok.type = 'button'; ok.onclick = () => back.remove();
+  const row = el('div', 'bugbtns'); row.append(add, ok);
+  box.append(list, row); back.append(box);
+  back.onclick = e => { if (e.target === back) back.remove(); };
+  document.body.append(back);
+}
 /* 📁 단추 — 별 단추 옆. 담긴 폴더가 하나라도 있으면 색이 든다 */
 function folderBtn(vi, ko) {
   const b = el('button', 'fbtn'); b.type = 'button'; b.title = tr('폴더에 담기');
@@ -9288,30 +9320,63 @@ function wordbookList(kind, fid) {
   }
   const opts = el('div', 'wbopts');
   const b1 = el('button', 'primary big', '🃏 ' + tr('카드로 학습')); b1.type = 'button';
-  b1.onclick = () => { dive(redraw); flashRun(words.slice(), title + ' ' + tr('카드')); };
+  /* 일반 단어 카드(startLearn)와 똑같이 — 저절로 넘어가지 않고 밀거나 ‹ › 로만 넘긴다. 확인 문제·진도 표시는 없다 (대표님 2026-10-08 "자동으로 넘어가면 안 되지, 유저가 넘겨야") */
+  b1.onclick = () => { dive(redraw); startLearn({ day: 'WB:' + kind + ':' + (fid || ''), theme: title, words: words.slice(), cardsOnly: true }); };
   const b2 = el('button', 'primary big', '⚡ ' + tr('쇼츠 재생')); b2.type = 'button';
   b2.onclick = () => { dive(redraw); flashRun(words.slice(), title, { auto: true }); };
   opts.append(b1, b2); host.append(opts);
   if (kind === 'miss') { const q = el('button', 'ghost', tr('퀴즈로 복습 — 맞히면 횟수가 줄어 사라집니다')); q.type = 'button'; q.style.width = '100%'; q.onclick = () => { dive(redraw); startWordbookQuiz(words.map(w => w.vi), tr('자주 틀린 단어')); }; host.append(q); }
   const missN = S.stats.miss || {};
+  /* 여러 개 골라 폴더에 담기 (대표님 2026-10-08 "한번에 다중 선택할 수 있게, 마우스로 주욱 선택하듯 — 단어가 많아서 일일이 넣기 힘들다"):
+     [고르기] 를 켜면 줄마다 ☐ 가 생긴다. 줄을 누르면 하나씩, 왼쪽 ☐ 띠를 누른 채 위아래로 끌면 지나는 줄이 죽 골라진다. 아래 막대에서 폴더에 담기·빼기 */
+  let selMode = false, curQ = '', lastHit = words; const SEL = new Set();
+  const selBtn = el('button', 'ghost', '☑ ' + tr('여러 개 골라 폴더에 담기')); selBtn.type = 'button'; selBtn.style.width = '100%';
+  const bar = el('div', 'wbselbar'); bar.hidden = true;
   const out = el('div');
+  const paintBar = () => {
+    bar.textContent = ''; bar.hidden = !selMode; if (!selMode) return;
+    bar.append(el('b', null, SEL.size + tr('개 골랐습니다')));
+    const all = el('button', 'ghost sm', tr('전체')); all.type = 'button'; all.onclick = () => { const every = lastHit.every(w => SEL.has(w.vi)); lastHit.forEach(w => every ? SEL.delete(w.vi) : SEL.add(w.vi)); draw(curQ); };
+    const put = el('button', 'primary sm', '📁 ' + tr('폴더에 담기')); put.type = 'button'; put.disabled = !SEL.size;
+    put.onclick = () => folderPopupMany([...SEL], () => draw(curQ));
+    bar.append(all, put);
+    if (kind === 'folder') { const rm = el('button', 'ghost sm', '✕ ' + tr('이 폴더에서 빼기')); rm.type = 'button'; rm.disabled = !SEL.size;
+      rm.onclick = async () => { if (await askYN(tr('고른 낱말 ') + SEL.size + tr('개를 이 폴더에서 뺄까요?'), tr('빼기'), true)) { folderSetMany(f, [...SEL], false); SEL.clear(); redraw(); } }; bar.append(rm); }
+    const done = el('button', 'ghost sm', tr('끝내기')); done.type = 'button'; done.onclick = () => { selMode = false; SEL.clear(); selBtn.hidden = false; draw(curQ); };
+    bar.append(done);
+  };
+  const setSel = (r, on) => { const vi = r.dataset.vi; if (!vi) return; if (on) SEL.add(vi); else SEL.delete(vi); r.classList.toggle('sel', on); const c = r.querySelector('.wbchk'); if (c) c.textContent = on ? '☑' : '☐'; paintBar(); };
   const draw = q => {
-    out.textContent = '';
+    curQ = q; out.textContent = '';
     const hit = q ? words.filter(x => x.vi.toLowerCase().includes(q) || (x.ko || '').toLowerCase().includes(q)) : words;
-    if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
+    lastHit = hit;
+    if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); paintBar(); return; }
     hit.slice(0, 200).forEach(w => {
       const r = wbRow(w.vi, w.ko, kind === 'miss' && missN[w.vi] ? tr('틀림') + ' ' + Math.round(missN[w.vi]) + tr('번') : '');
       if (kind === 'folder') { const x = el('button', 'fodel'); x.type = 'button'; x.textContent = '✕'; x.title = tr('폴더에서 빼기'); x.onclick = () => { folderToggle(f, w.vi); redraw(); }; r.querySelector('.wbtop').append(x); }
+      if (selMode) {
+        r.dataset.vi = w.vi; r.classList.add('selmode'); r.classList.toggle('sel', SEL.has(w.vi));
+        const chk = el('span', 'wbchk', SEL.has(w.vi) ? '☑' : '☐'); r.prepend(chk);
+        r.onclick = e => { if (e.target.closest('button') || e.target.closest('.wbchk')) return; setSel(r, !SEL.has(w.vi)); };
+        /* ☐ 띠를 누른 채 끌기 — 지나는 줄을 모두 같은 상태로 (처음 누른 줄이 꺼져 있었으면 켜고, 켜져 있었으면 끈다) */
+        let dragOn = null;
+        chk.onpointerdown = e => { e.preventDefault(); dragOn = !SEL.has(w.vi); setSel(r, dragOn); try { chk.setPointerCapture(e.pointerId); } catch (x) { } };
+        chk.onpointermove = e => { if (dragOn === null) return; const t = document.elementFromPoint(e.clientX, e.clientY); const row = t && t.closest && t.closest('.wbrow.selmode'); if (row && row.classList.contains('sel') !== dragOn) setSel(row, dragOn); };
+        chk.onpointerup = chk.onpointercancel = () => { dragOn = null; };
+      }
       out.append(r);
     });
     if (hit.length > 200) out.append(el('p', 'note', tr('앞 200개만 보입니다 — 더 적어 보세요')));
+    paintBar();
   };
+  selBtn.onclick = () => { selMode = true; SEL.clear(); selBtn.hidden = true; host.insertBefore(el('p', 'wbselhint', tr('줄을 누르면 하나씩, 왼쪽 ☐ 를 누른 채 위아래로 끌면 죽 골라집니다')), out); draw(curQ); };
+  host.append(selBtn);
   if (words.length > 30) {
     const inp = el('input', 'keyin dictin'); inp.type = 'search'; inp.placeholder = tr('찾을 말 (베트남어·한국어)');
     let tm = null; inp.oninput = () => { clearTimeout(tm); tm = setTimeout(() => draw(inp.value.trim().toLowerCase()), 120); };
     host.append(inp);
   }
-  host.append(out); draw('');
+  host.append(out, bar); draw('');
   show(view, title, true);
 }
 
@@ -9893,9 +9958,9 @@ function drawCard() {
      마지막 장의 단추는 '다음'이 아니라 진도를 확정하는 자리라 남긴다. */
   if (L.dict) $('#pos').textContent = tr('사전');
   const last = L.i === L.items.length - 1;
-  $('#next').hidden = !last || !!L.dict;      // 사전에서 연 단어 카드는 확인 문제로 안 간다
+  $('#next').hidden = !last || !!L.dict || !!L.day.cardsOnly;      // 사전에서 연 단어 카드·내 단어장 카드는 확인 문제로 안 간다
   const qnr = $('#qnRow');                       // 단어 확인 문제로 가는 마지막 장에만 문제 수 고르기 (2026-09-28 밤)
-  if (qnr) { qnr.textContent = ''; const toQuiz = last && !L.dict && !L.day.gram && !L.cult && !L.day.know && !L.news && !L.dlg && (L.day.words || []).length;
+  if (qnr) { qnr.textContent = ''; const toQuiz = last && !L.dict && !L.day.cardsOnly && !L.day.gram && !L.cult && !L.day.know && !L.news && !L.dlg && (L.day.words || []).length;
              qnr.hidden = !toQuiz; if (toQuiz) qnr.append(qnPicker()); }
   $('#next').textContent = L.day.gram ? '확인 문제 ›'
     : L.cult || L.day.know ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'

@@ -3069,3 +3069,12 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 .flauto.off{background:var(--chip); color:var(--dim)}
 
 .forowwrap:has(.fomore) .wbcard .accpill{margin-right:44px}   /* ⋯ 단추와 겹치지 않게 */
+/* 내 단어장 여러 개 고르기 (대표님 2026-10-08 "한번에 다중 선택, 마우스로 주욱 선택하듯") */
+.wbrow.selmode{cursor:pointer; padding-left:48px; position:relative; user-select:none; -webkit-user-select:none}
+.wbrow.selmode .wbchk{position:absolute; left:0; top:0; bottom:0; width:44px; display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--dim); touch-action:none; border-right:1px dashed var(--line)}
+.wbrow.sel{border-color:var(--accent); background:color-mix(in srgb, var(--accent) 10%, var(--card))}
+.wbrow.sel .wbchk{color:var(--accent)}
+.wbselbar{position:sticky; bottom:0; z-index:5; display:flex; gap:8px; align-items:center; flex-wrap:wrap; padding:10px 12px; margin-top:10px; background:var(--card); border:1px solid var(--line); border-radius:14px; box-shadow:0 -4px 16px rgba(0,0,0,.08)}
+.wbselbar b{margin-right:auto; font-size:14px}
+.wbselbar button{padding:8px 12px; font-size:14px}
+.wbselhint{font-size:12px; color:var(--dim); margin:0 0 8px}
