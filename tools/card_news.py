@@ -348,6 +348,16 @@ def card1(d, bg, bgsave=None, force_sz=None, sizeonly=False):
         dtext(dr, (PAD, y), nfc(ln), f_t, FG, LS_TITLE); y += lh_t
     # 줄 간격 상한에 걸려 남은 자리는 위아래로 나눈다 — 아래가 텅 비는 것을 막는다
     y = y_body + max(0, (room - lh_b * len(b_lines))) // 3   # 남는 자리는 아래에 더 준다
+    # 2026-10-08 대표님 지적(빈그룹 지하철 카드): 배경 그림의 노란 선이 마지막 줄 글자 밑에 밑줄처럼 비쳤다.
+    # 막을 전체로 더 올리면 그림이 '너무 희미'해지므로(2026-09-02), 본문 **글자 모양대로만** 번지는
+    # 연한 후광을 글자 밑에 깐다. 그림은 글 밖에서 그대로 살아 있다.
+    if bg:
+        from PIL import ImageFilter
+        mk = Image.new("L", (W, H), 0); md = ImageDraw.Draw(mk); hy = y
+        for ln, cont in b_lines:
+            dtext(md, (PAD + (26 if cont else 0), hy), nfc(ln), f_b, 255, LS_BODY); hy += lh_b
+        mk = mk.filter(ImageFilter.MaxFilter(11)).filter(ImageFilter.GaussianBlur(8)).point(lambda v: int(v * 0.85))
+        im.paste(Image.new("RGB", (W, H), BG), (0, 0), mk)
     for ln, cont in b_lines:
         dtext(dr, (PAD + (26 if cont else 0), y), nfc(ln), f_b, (38, 42, 50), LS_BODY); y += lh_b
     foot(dr, d, f_s, PAD)
@@ -438,8 +448,9 @@ def card2(d):
                 vl = wrap(dr, nfc(ln.get("vi") or ""), fv2, vw)[:2]
                 if do_draw:
                     for k, t in enumerate(vl):
-                        dr.text((tx, y + k * lv), t, font=fv2, fill=FG)
-                yy = y + len(vl) * lv + 4
+                        dr.text((tx, y + 6 + k * lv), t, font=fv2, fill=FG)
+                # 2026-10-08: 성조가 겹겹이 붙은 글자(Rồi·nhiều)의 부호가 윗줄에 닿을 듯해 위 6px·아래 6px 더 띄운다
+                yy = y + len(vl) * lv + 10
                 kr = vi_kr.word(nfc(ln.get("vi") or "")) or ""
                 if kr:
                     kl = wrap(dr, "[" + kr + "]", fk2, vw, LS_SMALL)[:2]
@@ -451,7 +462,7 @@ def card2(d):
                 if do_draw:
                     for k, t in enumerate(kol):
                         dtext(dr, (tx, yy + k * lo), t, fo2, (78, 82, 90), LS_BODY)
-                y = yy + lo * max(1, len(kol)) + int(20 * scale)
+                y = yy + lo * max(1, len(kol)) + int(30 * scale)
             return y
 
         sc = next((x for x in (1.0, 0.94, 0.88, 0.82, 0.76, 0.7)
