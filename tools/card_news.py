@@ -540,6 +540,19 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-09 새벽(예약 작업): 롱탄 공항 기사는 'airport'의 'port'가 아래 수출 줄에 먼저 걸려 컨테이너가,
+              # 출퇴근 기사는 '고향'에 걸려 침실이 깔릴 판이었다. 후추·부동산 사기·소득 기사는 맞는 줄이 없거나
+              # 같은 날 '부동산' 그림과 겹쳤다. 다섯 줄을 맨 위에 둔다.
+              (("롱탄", "신공항"),
+               "an airport terminal window with a plane outside"),
+              (("출퇴근", "commute"),
+               "a country road leading toward a distant city skyline at sunrise"),
+              (("후추", "pepper"),
+               "black peppercorns in a wooden bowl on a table"),
+              (("부동산 사기", "사기 주의", "사기 수법"),
+               "a house key on top of signed contract papers on a desk"),
+              (("월평균 소득", "근로자 소득"),
+               "an envelope of banknotes and a payslip on a desk"),
               (("영화", "극장", "시네마", "cgv"),
                "an empty cinema hall with red seats facing a big screen"),
               (("화재", "소방"),
