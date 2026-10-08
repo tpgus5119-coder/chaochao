@@ -3571,6 +3571,23 @@ function progHash(d) {                      // 진도 지문 — 바뀌었는지
   for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
   return (h >>> 0).toString(36) + '.' + s.length;
 }
+/* 별표·폴더 합치기 (2026-10-08 밤 사고 뒤) — 두 기기 것의 **합집합**. 지운 것이 다른 기기에서 되살아날 수는 있지만, 통째로 사라지는 것보다 낫다.
+   별표: 같은 낱말은 서버(R) 기록을 둔다. 폴더: 같은 id 는 낱말 합집합(이름은 이 기기 것), 한쪽에만 있는 폴더는 그대로. */
+function mergeStar(a, b) {
+  const o = Object.assign({}, b || {});
+  for (const [k, v] of Object.entries(a || {})) if (!(k in o)) o[k] = v;
+  return o;
+}
+function mergeFolders(a, b) {
+  const out = [], idx = {};
+  [...(Array.isArray(a) ? a : []), ...(Array.isArray(b) ? b : [])].forEach(f => {
+    if (!f || !f.id) return;
+    const o = idx[f.id];
+    if (!o) { const c = Object.assign({}, f, { w: [...(f.w || [])] }); idx[f.id] = c; out.push(c); return; }
+    (f.w || []).forEach(v => { if (!o.w.includes(v)) o.w.push(v); });
+  });
+  return out;
+}
 /* 두 기기 진도 합치기. L = 이 기기, R = 서버. 지우는 쪽보다 **잃지 않는 쪽**을 고른다. */
 function mergeProg(L, R) {
   const out = {};
@@ -3610,6 +3627,7 @@ function mergeProg(L, R) {
         [...b, ...a].forEach(x => { const kk = x.r + '|' + x.d; const o = m.get(kk); if (!o || (x.at || 0) >= (o.at || 0)) m.set(kk, x); });
         out[k] = [...m.values()]; break;
       }
+      case 'folders': out[k] = mergeFolders(a, b); break;   // 폴더는 합집합 (2026-10-08 밤 — 전에는 이 기기 것이 이겨 서버 폴더가 통째로 사라졌다)
       default: out[k] = a;                  // 별명·말씨·국적 같은 설정은 지금 손에 든 기기 것
     }
   }
@@ -3628,7 +3646,9 @@ function cloudSync(push, overwrite) {
       const srvAt = j.at || 0;
       if (j.data && srvAt > (S.cloudSeen || 0)) {            // 다른 기기가 그 뒤에 올린 것이 있다
         const dirty = progHash(progData()) !== S.cloudHash;
-        const got = dirty ? mergeProg(progData(), j.data) : j.data;
+        const got = dirty ? mergeProg(progData(), j.data) : Object.assign({}, j.data);
+        /* 별표·폴더는 바뀐 게 없어 서버 것을 그대로 받을 때도 **합친다** — 서버가 다른 기기의 옛 진도로 덮였을 때 이 기기 것까지 잃지 않게 (2026-10-08 밤 사고) */
+        got.star = mergeStar(S.star, j.data.star); got.folders = mergeFolders(S.folders, j.data.folders);
         PROGKEYS.forEach(k => { if (got[k] !== undefined) S[k] = got[k]; });
         tallyReset();                                            // 받아 합친 것은 내가 오늘 한 게 아니다 — 집계 기준만 새로
         S.cloudSeen = srvAt;
@@ -3700,9 +3720,11 @@ async function loginPull() {
 async function cloudLoad() {
   const j = await cCall({ act: 'load', id: S.acct.id, tok: S.acct.tok });
   if (!j.data) return false;
+  const st0 = S.star, fo0 = S.folders;
   PROGKEYS.forEach(k => { if (j.data[k] !== undefined) S[k] = j.data[k]; });
+  S.star = mergeStar(st0, j.data.star); S.folders = mergeFolders(fo0, j.data.folders);   // 손님으로 담아 둔 별표·폴더도 잃지 않는다 (2026-10-08 밤)
   tallyReset();
-  S.cloudSeen = j.at || Date.now(); S.cloudHash = progHash(progData());
+  S.cloudSeen = j.at || Date.now(); S.cloudHash = progHash(j.data);   // 합쳐서 서버에 없는 것이 생겼으면 다음 저장 때 올라간다
   save();
   popup('<b>진도를 불러왔습니다.</b> 화면을 새로 그립니다.');
   setTimeout(() => location.reload(), 900);
@@ -7346,7 +7368,8 @@ function homeActions() {
   if (S.mig1008) return;
   Object.keys(S.done || {}).forEach(k => { if (/^\d+$/.test(k) || /^J0\./.test(k)) delete S.done[k]; });
   S.srs = {}; S.mig1008 = 1; save();
-  setTimeout(() => { try { if (S.acct && S.acct.tok && typeof cloudSync === 'function') cloudSync(true, true); } catch (e) { } }, 1500);
+  /* 서버 덮어쓰기(cloudSync(true, true))는 뺐다 (2026-10-08 밤 사고): 한동안 안 열던 기기(이 맥의 시험 브라우저, 대표님 계정으로 로그인돼 있던 것)가
+     처음 켜지며 **그 기기의 옛 진도로 서버를 통째로 덮어** 폰의 별표·폴더가 사라졌다. 이제는 이 기기 것만 비우고 서버와는 평소대로 합친다. */
 })();
 
 function renderHome() {
