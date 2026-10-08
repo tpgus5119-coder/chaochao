@@ -9370,14 +9370,14 @@ function wordbookList(kind, fid) {
     if (hit.length > 200) out.append(el('p', 'note', tr('앞 200개만 보입니다 — 더 적어 보세요')));
     paintBar();
   };
-  selBtn.onclick = () => { selMode = true; SEL.clear(); selBtn.hidden = true; host.insertBefore(el('p', 'wbselhint', tr('줄을 누르면 하나씩, 왼쪽 ☐ 를 누른 채 위아래로 끌면 죽 골라집니다')), out); draw(curQ); };
+  selBtn.onclick = () => { selMode = true; SEL.clear(); selBtn.hidden = true; host.insertBefore(el('p', 'wbselhint', tr('줄을 누르면 하나씩, 왼쪽 ☐ 를 누른 채 위아래로 끌면 죽 골라집니다')), bar); draw(curQ); };
   host.append(selBtn);
   if (words.length > 30) {
     const inp = el('input', 'keyin dictin'); inp.type = 'search'; inp.placeholder = tr('찾을 말 (베트남어·한국어)');
     let tm = null; inp.oninput = () => { clearTimeout(tm); tm = setTimeout(() => draw(inp.value.trim().toLowerCase()), 120); };
     host.append(inp);
   }
-  host.append(out, bar); draw('');
+  host.append(bar, out); draw('');                          // 막대는 목록 위(머리띠 밑에 붙음) — 아래 탭 줄에 안 가리게 (2026-10-08)
   show(view, title, true);
 }
 
