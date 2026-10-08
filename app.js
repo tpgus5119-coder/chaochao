@@ -839,7 +839,8 @@ function play(text, slow, dir, spd) {
      playbackRate 를 조용히 1배로 되돌린다 — 그래서 설정을 0.8로 바꿔도 실제로는
      계속 1배로 나고 있었다. 이 파일 다른 다섯 곳(예: 8783줄)은 이미 src 먼저였는데
      제일 많이 쓰이는 이 자리만 거꾸로였다. 순서만 바꾼다. */
-  audio.src = `audio/${d}/n/${h}.mp3`;
+  { const u = new URL(`audio/${d}/n/${h}.mp3`, location.href).href;
+    if (audio.src !== u || audio.readyState < 2) audio.src = u; }         // 이미 물고 있는 같은 소리면 그대로 (warmSnd 가 미리 물려 둔 것 — 2026-10-08 밤 "예문 누르면 바로")
   const r = spd ? spd : (slow ? Math.max(.5, rate() * .7) : rate());
   /* 그래프를 누르면 **무조건 0.2배** (대표님 지시 2026-09-29) — 사파리는 새 소리를 불러오면서 속도를 기본값(1배)으로
      되돌리는 일이 있다. 기본 속도(defaultPlaybackRate)까지 같이 넣고, 소리가 실제로 시작되면 한 번 더 맞춘다 */
@@ -854,12 +855,24 @@ function play(text, slow, dir, spd) {
 /* 소리 미리 받기 (2026-09-28 밤, 대표님: "단어 누르면 소리가 바로 나오게 — 재생 시작이 늦다. 속도 말고").
    누를 때 받기 시작하면 인터넷 왕복만큼 늦다 → 화면에 낱말이 뜨는 순간 그 소리를 미리 받아 둔다(서비스 워커 캐시에 남는다).
    같은 파일은 한 번만. 폰 TTS(녹음 없는 낱말)는 첫 터치 때 소리 없이 한 번 깨워 둔다 — 첫 호출이 씹혀 0.45초 늦던 것 */
+/* 예문 소리를 재생 요소에 **미리 물려 두기** (2026-10-08 밤, 대표님 "예문 누르면 왜 바로 시작 안 하냐"): 캐시에 있어도 src 를 새로 넣으면
+   불러오고 푸는 데 0.3초쯤 걸린다(실측 319ms). 같은 src 를 다시 틀면 10~30ms. 그래서 카드의 낱말 소리가 끝난 뒤(아무것도 안 날 때) 예문 파일을 넣어 둔다 */
+let WARM = null;
+function warmSnd(text) {
+  const h = text && (AIDX[text] || AIDX[String(text).toLowerCase()]);
+  if (!h || !audio.paused) return;
+  const u = new URL(`audio/${voiceDir()}/n/${h}.mp3`, location.href).href;
+  if (audio.src === u) return;
+  audio.onerror = null; PB.spdSrc = null;
+  audio.src = u; audio.load();
+}
+audio.addEventListener('ended', () => { if (WARM && CURV === 'learn') setTimeout(() => { if (audio.paused) warmSnd(WARM); }, 150); });
 const PREF = new Set();
 function prefetchSnd(texts) {
   setTimeout(() => (texts || []).forEach(t => {
-    const s = String(t || '').replace(/[,.!?;:"“”‘’'()]/g, '').trim();
+    const raw = String(t || '').trim(), s = raw.replace(/[,.!?;:"“”‘’'()]/g, '').trim();
     if (!s) return;
-    const h = AIDX[s] || AIDX[s.toLowerCase()];
+    const h = AIDX[raw] || AIDX[raw.toLowerCase()] || AIDX[s] || AIDX[s.toLowerCase()];   // 문장(물음표·마침표 포함)도 찾는다 (2026-10-08 밤) — 전에는 떼고만 찾아 예문을 한 번도 미리 못 받았다
     if (!h) return;
     const url = `audio/${voiceDir()}/n/${h}.mp3`;
     if (PREF.has(url)) return;
@@ -9940,6 +9953,7 @@ function drawCard() {
     /* 새 짜임에서는 예문이 **단어 안에** 들어 있다(course.json). 없으면 옛 방식대로
        그날 대화에서 그 단어이 든 문장을 찾아 쓴다. */
     const exm = x.ex || exampleFor(L.day, x);
+    WARM = exm && !L.dict ? exm.vi : null;                  // 낱말 소리가 끝나면 이 예문을 미리 물려 둔다 (2026-10-08 밤)
     if (exm && !L.dict) {                                   // 수업 카드: 그 낱말의 예문 그대로
       const eb = el('div', 'wex wexplay');
       eb.onclick = () => { const k = recKey(exm.vi); k ? play(k, false) : speakVi(exm.vi); };
