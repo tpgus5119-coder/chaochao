@@ -47,7 +47,7 @@ if (location.hash.startsWith('#k=')) {
 }
 /* 공유 링크 #s=… (대표님 2026-10-08: 내 단어장 묶음을 카드 학습·쇼츠로 공유 — 받은 사람은 로그인 없이 딱 그 화면만, 카드 뒤엔 문제까지).
    내용은 {t: 이름, m: 'cards'|'shorts', w: [낱말 열쇠…]} 를 base64url 로 — 서버 없이 주소에 다 담긴다. 해시는 지우지 않는다(다시 열어도 그 화면) */
-let SHARE = null;
+let SHARE = null, SHAREBAR = null;   // SHAREBAR: 공유 카드의 고정 단추 줄 글자 맞추기 (2026-10-08 밤)
 /* 묶음 글 부호화 (2026-10-08 "링크 좀 짧게"): [2][이름 길이][이름 UTF-8][낱말마다 FNV-1a 32비트 해시 4바이트] → base64url. 낱말 56개가 1,100자 → 300자쯤.
    옛 링크(JSON)는 첫 글자가 '{' 라 그대로 읽는다. 해시는 받는 쪽이 앱 낱말 전체(일상·직무·교재)를 돌며 되찾는다 */
 const fnv32 = str => { let h = 0x811c9dc5; for (const c of new TextEncoder().encode(U_NFC(str).toLowerCase())) { h ^= c; h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; };
@@ -3134,6 +3134,7 @@ function show(v, title, canBack) {
   resetRec();
   if (v !== 'learn' && v !== 'quiz') releaseMic(true);   // 카드·테스트 밖으로 나가면 마이크를 놓는다
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
+  { const sbar = $('#sharebar'); if (sbar) sbar.hidden = v !== 'learn'; }   // 공유 카드의 고정 단추 줄은 카드 화면에서만
   $('#title').textContent = tr(title);
   if (v !== 'learn' && v !== 'quiz') LCRUMB = '';           // 학습·문제 흐름 밖으로 나가면 지난 과 이름을 지운다
   setCrumb(v === 'learn' ? (LCRUMB || tr(title))
@@ -9861,6 +9862,7 @@ function drawCard() {
     tg.hidden = false;
     const setFace = f => {
       L.face = f;
+      if (L.day && L.day.share && typeof SHAREBAR === 'function') SHAREBAR();
       cf.hidden = f !== 'card'; pf.hidden = f !== 'pron';
       tg.dataset.f = f;
       tg.setAttribute('aria-label', f === 'card' ? tr('발음 면으로 넘기기') : tr('단어 면으로 넘기기'));
@@ -9884,11 +9886,13 @@ function drawCard() {
     if (so) row.append(el('span', 'southpill', tr('남부')));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     if (L.day.share) {                        // 공유로 받은 카드: ☆·📁 없음. 카드 우측 맨 위에 [발음]·[쇼츠], 발음 면엔 [단어]·[쇼츠] (대표님 2026-10-08)
-      const tools = (lbl, f) => { const g = el('div', 'sharetools');
-        const fb = el('button', 'facebtn', tr(lbl)); fb.type = 'button'; fb.onclick = ev => { ev.stopPropagation(); setFace(f); };
-        const sb = el('button', 'facebtn', '⚡ ' + tr('쇼츠')); sb.type = 'button'; sb.onclick = ev => { ev.stopPropagation(); shareShorts(); };
-        g.append(fb, sb); return g; };
-      cf.prepend(tools('발음', 'pron')); pf.prepend(tools('단어', 'card'));
+      /* 단추 줄은 카드 안이 아니라 **화면 우측 맨 위에 고정**(body 에 하나) — 카드 안에 두면 카드 너비에 따라 자리가 옮겨져 그림을 가렸다 (대표님 2026-10-08 밤 "항상 우측상단에 고정") */
+      let bar = $('#sharebar'); if (!bar) { bar = el('div', 'sharetools'); bar.id = 'sharebar'; document.body.append(bar); }
+      bar.textContent = ''; bar.hidden = false;
+      const fb = el('button', 'facebtn'); fb.type = 'button'; fb.onclick = ev => { ev.stopPropagation(); setFace(L.face === 'pron' ? 'card' : 'pron'); };
+      const sb = el('button', 'facebtn', '⚡ ' + tr('쇼츠')); sb.type = 'button'; sb.onclick = ev => { ev.stopPropagation(); shareShorts(); };
+      bar.append(fb, sb);
+      SHAREBAR = () => { fb.textContent = tr(L.face === 'pron' ? '단어' : '발음'); };   // 단어 면엔 [발음], 발음 면엔 [단어]
     } else {
       row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
       row.append(folderBtn(x.vi, x.ko));        // 내 단어장 폴더에 담기 (2026-10-08)
