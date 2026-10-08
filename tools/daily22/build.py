@@ -11,7 +11,7 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(R / "tools"))
 from vi_kr import word as vi_kr  # noqa: E402
 SRC = pathlib.Path.home() / "짜오짜오/원본자료/베트남어 학습자료/22기 자료"
-DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/5', '10/6', '10/7', '10/8']      # 시험 날짜들 (2026-10-05 대표님: 10/2 다음 시험은 10/5 — 11회 두 반 다 10/5, 12회 10/6) (일요일 9/27 없음)
+DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/5', '10/6', '10/7', '10/8', '10/9']      # 시험 날짜들 (2026-10-05 대표님: 10/2 다음 시험은 10/5 — 11회 두 반 다 10/5, 12회 10/6) (일요일 9/27 없음)
 nfc = lambda s: unicodedata.normalize('NFC', s)
 def bare(s):
     s = unicodedata.normalize('NFD', nfc(s).lower().replace('đ', 'd'))
@@ -25,7 +25,7 @@ GRAM = [(r'không phải là', 4), (r'\blà\b', 4), (r'\bcủa\b', 4), (r'\bcũn
         (r'\bgì\b', 5), (r'\bai\b', 5), (r'nước nào', 5), (r'thế nào', 5), (r'\bmấy\b', 8), (r'bao nhiêu', 8), (r'\bđã\b|\bđang\b|\bsẽ\b', 10),
         (r'\bchưa\b', 11), (r'\brất\b|\bquá\b', 12), (r'ở đâu|đi đâu|từ đâu', 17), (r'\bđều\b', 28), (r'\bđược\b|\bbiết\b|có thể', 19), (r'\bmuốn\b', 23)]   # muốn 은 23과로 옮김 (2026-10-07)
 SPLIT = {'b12': 20}
-DIRS = {'a14': ('to_ko', set()), 'b14': ('to_ko', {"bài học", "bạn thân", "bản thân", "bẩn", "bận", "bật", "chương trình", "chỉ", "căng tin", "già", "hai lần", "hết game", "kết hôn", "lát nữa", "lên mạng", "màn hình", "mát", "mùa", "mượn", "mạng", "ngày thường", "nhỏ", "nửa đêm", "phim tình cảm", "rảnh", "sạch", "thơm", "thường", "thối", "thời gian", "tin tức", "trung tâm mua sắm", "trở thành", "tám giờ đúng", "tầng", "tắt", "vay", "đánh răng", "đặt", "để"}), 'b13': ('to_ko', {'mở', 'đông', 'báo'}), 'a13': ('to_ko', {w.lower() for w in ['ngồi','thử','bằng','đặc biệt','cuối tuần','phố đi bộ','mắc','mời','cảm xúc','giỏi','khách','đài truyền hình','sau khi','yếu','nói chuyện','đi dạo','vì ... nên','thân thiện','nên','khen']})}   # a13: 표에서 흘린 줄 때문에   # 표 꼴 시험지(낱말 칸이 문단으로 쪼개져 방향을 못 읽음): 기본 방향, 뜻→베트남어인 낱말들 (2026-10-07)
+DIRS = {'a15': ('to_ko', {'bị mắng', 'cay', 'chuẩn bị', 'chán', 'dạo này', 'dễ tính', 'gần đây', 'hiện nay', 'hơn', 'khó tính', 'luôn luôn', 'luật', 'lâu', 'lười', 'mách', 'mắng', 'mặc', 'ngọt', 'quy định', 'đắng'}), 'a14': ('to_ko', set()), 'b14': ('to_ko', {"bài học", "bạn thân", "bản thân", "bẩn", "bận", "bật", "chương trình", "chỉ", "căng tin", "già", "hai lần", "hết game", "kết hôn", "lát nữa", "lên mạng", "màn hình", "mát", "mùa", "mượn", "mạng", "ngày thường", "nhỏ", "nửa đêm", "phim tình cảm", "rảnh", "sạch", "thơm", "thường", "thối", "thời gian", "tin tức", "trung tâm mua sắm", "trở thành", "tám giờ đúng", "tầng", "tắt", "vay", "đánh răng", "đặt", "để"}), 'b13': ('to_ko', {'mở', 'đông', 'báo'}), 'a13': ('to_ko', {w.lower() for w in ['ngồi','thử','bằng','đặc biệt','cuối tuần','phố đi bộ','mắc','mời','cảm xúc','giỏi','khách','đài truyền hình','sau khi','yếu','nói chuyện','đi dạo','vì ... nên','thân thiện','nên','khen']})}   # a13: 표에서 흘린 줄 때문에   # 표 꼴 시험지(낱말 칸이 문단으로 쪼개져 방향을 못 읽음): 기본 방향, 뜻→베트남어인 낱말들 (2026-10-07)
 OVR = {('b1', 'tắc xi'): 'to_ko', ('a12', 'nên'): 'to_ko'}   # a12 '39 Nên (단독)' — 뒤 괄호 때문에 못 읽음   # 시험지 'Taxi'(베트남어 칸) — 앱 표제어는 tắc xi 라 글자로 못 찾는다
 # 문장 속 이름(한국·영어 이름·약자)은 베트남어 읽기 규칙으로 읽으면 이상해진다('Seung Bin' → 쌔우 빈) — 발음 칸에서만 바로잡는다
 NAME_KR = {'Seung Bin': '승빈', 'Yeo Jeong': '여정', 'Eun Ji': '은지', 'GYBM': '지와이비엠', 'Brian': '브라이언', 'David': '데이비드',

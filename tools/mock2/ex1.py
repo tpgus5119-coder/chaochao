@@ -9,7 +9,7 @@ q += [PK(["nội trợ", "thư ký", "bác sĩ", "sinh viên"], "Chị ấy là 
       PK(["nhân viên siêu thị", "nhân viên quán cà phê", "nhân viên trường đại học", "nhân viên công ty"], "Anh ấy là nhân viên siêu thị. Anh ấy làm việc ở siêu thị từ 7 giờ sáng.", 0),
       PK(["lái xe", "đi làm", "máy tính", "bận"], "Ông ấy lái xe tắc xi ở Quận 1.", 0),
       PK(["văn phòng", "công ty", "căng tin", "phòng"], "Buổi trưa tôi ăn trưa ở căng tin công ty.", 2),
-      PK(["giáo viên", "trường đại học", "cơ quan", "nghề"], "Cô ấy là giáo viên ở trường đại học này.", 1)]
+      PK(["giáo viên", "trường đại học", "cơ quan", "nghề"], "Đây là trường đại học. Tôi học ở đây.", 1)]   # 10-08 밤: 옛 소리 'Cô ấy là giáo viên ở trường đại học này' 는 선생님 그림도 맞아 답이 둘이었다
 q += [A3("Ở Nhật anh Hiroki làm nghề gì?", "Ở Nhật tôi làm kế toán ở ngân hàng.", ["kế toán", "kỹ sư", "thư ký"]),
       A3("Ngân hàng của anh ấy có bao nhiêu nhân viên?", "Ngân hàng của tôi có hơn 100 nhân viên.", ["hơn 100 người", "khoảng 50 người", "hơn 200 người"]),
       A3("Brian dạy tiếng Anh ở quận nào?", "Tôi dạy ở trường ILA, Quận 2.", ["Quận 2", "Quận 1", "Quận 7"]),

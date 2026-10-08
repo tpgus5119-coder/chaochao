@@ -9540,7 +9540,7 @@ function inkSetup() {
   document.body.append(btn); INK.btn = btn;
   const here = () => CURV === 'learn';
   // 손가락(켰을 때) — 캔버스가 받는다
-  cv.addEventListener('pointerdown', e => { if (!INK.finger || !here()) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });
+  cv.addEventListener('pointerdown', e => { if (!INK.finger || !here() || (e.pointerType === 'touch' && !e.isPrimary)) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });   // 두 번째 손가락은 획이 아니다
   cv.addEventListener('pointermove', e => { if (INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } });
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, e => { if (INK.cur && INK.cur.id === e.pointerId) inkEnd(); }));
   // 펜도 ✍ 를 켰을 때만 쓴다 (대표님 2026-10-05 "필기 모드 키지도 않았는데 왜 필기가 되니? 애플펜슬로 하니까 그냥 되던데") — 켜면 위 캔버스가 펜·손가락을 함께 받는다.
@@ -9550,6 +9550,24 @@ function inkSetup() {
   // 글씨를 쓴 획이 단추 위에서 끝나도 그 단추가 눌리지 않게 — 톡 친 것만 눌린다
   document.addEventListener('click', e => { if (INK.block) { INK.block = false; e.preventDefault(); e.stopPropagation(); } }, true);
   document.addEventListener('touchmove', e => { if (INK.cur) e.preventDefault(); }, { passive: false });   // 펜으로 쓰는 동안 화면이 밀리지 않게
+  /* 두 손가락으로 위에서 아래로 쓸면 필기 켜기·끄기 (대표님 2026-10-08 밤) — 단어 카드 화면에서만.
+     두 번째 손가락이 닿는 순간 첫 손가락이 긋던 획은 지운다(필기가 켜져 있을 때). 세로 70px 넘게, 가로는 세로의 0.6배 안 → 한 번만 바꾼다 */
+  let two = null;
+  const mid = t => ({ x: (t[0].clientX + t[1].clientX) / 2, y: (t[0].clientY + t[1].clientY) / 2 });
+  document.addEventListener('touchstart', e => {
+    if (e.touches.length !== 2 || !here() || SHARE) { if (e.touches.length > 2) two = null; return; }
+    two = Object.assign(mid(e.touches), { done: false });
+    if (INK.cur && !INK.cur.pen) { INK.strokes = INK.strokes.filter(x => x !== INK.cur); INK.cur = null; inkLoop(); }
+  }, { capture: true, passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!two || e.touches.length !== 2) return;
+    e.preventDefault();                                                            // 두 손가락 쓸기가 화면을 밀거나 키우지 않게
+    if (two.done) return;
+    const m = mid(e.touches), dy = m.y - two.y, dx = Math.abs(m.x - two.x);
+    if (dy > 70 && dx < dy * .6) { two.done = true; INK.cur = null; inkFinger(!INK.finger); try { navigator.vibrate && navigator.vibrate(12); } catch (x) { } }
+  }, { capture: true, passive: false });
+  ['touchend', 'touchcancel'].forEach(ev => document.addEventListener(ev, e => { if (two && e.touches.length < 2) { if (two.done) INK.block = true; two = null; } }, { capture: true, passive: true }));
+  cv.addEventListener('pointerdown', e => { if (two) { INK.cur = null; } }, true);
 }
 function inkStart(e) {
   const pen = e.pointerType === 'pen';

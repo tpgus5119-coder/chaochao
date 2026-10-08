@@ -2726,10 +2726,10 @@ header > #goBug{margin-left:auto}
 #inkcv{position:fixed; inset:0; width:100vw; height:100vh; z-index:45; pointer-events:none; touch-action:none}
 body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 #inkBtn{position:fixed; right:14px; bottom:calc(var(--tabbar-h) + 4px);   /* 10px 아래로 (대표님 2026-10-02 "필기 버튼 약간 아래로") */
-  z-index:46; width:46px; height:46px; border-radius:50%;
+  z-index:46; width:60px; height:60px; border-radius:50%;   /* 46 → 60 (대표님 2026-10-08 밤 "펜 버튼 더 키워") */
   border:1px solid var(--line); background:var(--card); color:var(--fg); box-shadow:var(--shadow); display:grid; place-items:center; padding:0; cursor:pointer}
 #inkBtn[hidden]{display:none}
-#inkBtn svg{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+#inkBtn svg{width:30px; height:30px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
 #inkBtn.on{background:var(--accent); border-color:var(--accent); color:var(--accent-fg)}
 #inkBtn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 /* '들린 말' — 발음(글자)과 높낮이(성조 무리)를 합친 한 줄 (2026-09-28 밤). 채점 줄(.vrow)과 따로 둔다 — 점수 셈에 끼지 않게 */
