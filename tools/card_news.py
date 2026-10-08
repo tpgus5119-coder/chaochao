@@ -537,6 +537,19 @@ def main():
                "a flooded country road with rice fields under gray rain clouds"),
               (("차량호출", "택시", "그랩"),
                "small electric cars parked in a row at a charging station"),
+              # 2026-10-08 새벽(예약 작업): 물가·5G 기사는 맞는 줄이 없어 경제 기본(동전) 그림이, 가짜뉴스 기사는
+              # 사회 기본(거리) 그림이 깔릴 판이었다. 빈그룹 지하철 열차 생산 기사는 '지하철'이 아래 버스 줄에 먼저
+              # 걸려 버스가, 미쉐린 기사는 '식당'에 걸려 쌀국수가 깔릴 판이었다. 다섯 줄을 위에 둔다.
+              (("소비자물가", "물가 상승", "고물가"),
+               "a shopping basket with vegetables and a paper receipt on a market table"),
+              (("5g", "통신망", "모바일 인터넷"),
+               "a tall telecom tower with antennas against a clear blue sky"),
+              (("가짜뉴스", "허위정보", "신상공개"),
+               "a smartphone and a laptop on a desk, a large red exclamation mark icon on the phone screen"),
+              (("지하철 열차", "열차 생산", "열차 제작"),
+               "a metro train car being assembled inside a bright factory workshop"),
+              (("미쉐린", "michelin"),
+               "an elegant restaurant table with a white tablecloth, wine glasses and a plated seafood dish"),
               # 2026-10-07 아침(10/7 펴낼 카드): 게임사 기사는 '결제'에 걸려 카드 단말기가, 세계은행 기사는
               # '은행'에 걸려 동전 그림이 깔렸다. 암호화폐·산업생산·바이오 원료·희토류·메트로는 맞는 줄이 없어
               # 갈래 기본 그림이 깔렸다('지하철' 줄은 제목에 '메트로'만 있어 못 걸렸다). 일곱 줄을 위에 둔다.
