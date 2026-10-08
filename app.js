@@ -59,9 +59,11 @@ function shareEncode(title, words) {
   words.forEach(w => { const h = fnv32(w.vi); out.push((h >>> 24) & 255, (h >>> 16) & 255, (h >>> 8) & 255, h & 255); });
   return b64u(Uint8Array.from(out));
 }
+function shareEncodeTest(key) { const kb = new TextEncoder().encode(String(key || '').slice(0, 30)); return b64u(Uint8Array.from([3, kb.length, ...kb])); }   // 단어 시험 한 벌 [3][열쇠 길이][열쇠] (2026-10-08 밤)
 function shareDecode(str) {
   const bytes = unb64u(str);
   if (bytes[0] === 0x7B) { const j = JSON.parse(new TextDecoder().decode(bytes)); return j && Array.isArray(j.w) ? j : null; }   // 옛 JSON 링크
+  if (bytes[0] === 3) { const n = bytes[1]; return { test: new TextDecoder().decode(bytes.slice(2, 2 + n)) }; }                  // 단어 시험 한 벌(회차 열쇠)
   if (bytes[0] !== 2) return null;
   const n = bytes[1], t = new TextDecoder().decode(bytes.slice(2, 2 + n)), hs = [];
   for (let i = 2 + n; i + 3 < bytes.length; i += 4) hs.push(((bytes[i] << 24) | (bytes[i + 1] << 16) | (bytes[i + 2] << 8) | bytes[i + 3]) >>> 0);
@@ -9305,17 +9307,18 @@ function wordbookEntry() { SBOX = 'srs'; drawWordbook(); }
 /* ── 공유 (대표님 2026-10-08) ── */
 function shareLink(title, mode, words) { return location.origin + location.pathname + '#s=' + shareEncode(title, words); }
 /* 짧은 링크 — 서버(워커 v18)에 묶음 글을 맡기고 7자 표만 주소에 쓴다. 서버가 옛 판이거나 안 되면 긴 링크로 물러난다 */
-async function shareShortLink(title, words) {
-  try { const r = await cCall({ act: 'share_put', p: shareEncode(title, words) }); if (r && r.id) return location.origin + location.pathname + '?s=' + r.id; } catch (e) { }
-  return shareLink(title, 'cards', words);
+async function shareShortLink(title, words, payload) {
+  const p = payload || shareEncode(title, words);                                      // payload: 단어 시험 한 벌처럼 낱말 목록이 아닌 묶음 글
+  try { const r = await cCall({ act: 'share_put', p }); if (r && r.id) return location.origin + location.pathname + '?s=' + r.id; } catch (e) { }
+  return payload ? location.origin + location.pathname + '#s=' + payload : shareLink(title, 'cards', words);
 }
-function sharePopup(title, words) {
+function sharePopup(title, words, payload, sub) {
   const back = el('div', 'modalback'), box = el('div', 'modalbox');
-  box.append(el('div', 'pairpophd', '<b>' + esc(title) + '</b><span>' + words.length + tr('개') + '</span>'));
+  box.append(el('div', 'pairpophd', '<b>' + esc(title) + '</b><span>' + (sub ? esc(sub) : words.length + tr('개')) + '</span>'));
   const out = el('div');
   const send = async () => {                              // 링크 하나 — 열면 카드, 카드 안 [쇼츠]로 바꿈 (대표님 2026-10-08 "링크 하나로 합치자")
     out.textContent = ''; out.append(el('p', 'note', tr('링크 만드는 중…')));
-    const url = await shareShortLink(title, words);
+    const url = await shareShortLink(title, words, payload);
     out.textContent = '';
     if (navigator.share) { try { await navigator.share({ title, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     try { await navigator.clipboard.writeText(url); out.append(el('p', 'note', tr('링크를 복사했습니다 — 붙여 넣어 보내세요'))); } catch (e) { out.append(el('p', 'note', tr('아래 링크를 길게 눌러 복사하세요'))); }
@@ -9335,15 +9338,20 @@ function shareWords(cb) {
     cb(out);
   };
   const go1 = () => { if (!GYBM) gybmBuild(go2); else go2(); };
-  const go0 = () => { if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { COURSE = j; loadCWords(); go1(); }).catch(go1); else go1(); };
-  if (SHARE.id && !SHARE.h && !SHARE.w) {                                            // 서버 짧은 링크 — 묶음 글부터 받는다
+  const goTest = () => dailyLoad(() => {                                              // 단어 시험 한 벌 (2026-10-08 밤 "단어시험 링크도 공유") — 낱말 전부를 한 세트 카드로, 끝 장에서 [시험 보기 ›]
+    const t = (DAILY22 || []).find(x => x.key === SHARE.test);
+    if (t) { SHARE.dtest = t; SHARE.t = t.label; }
+    cb(t ? dailyWords(t) : []);
+  });
+  const go0 = () => { if (SHARE.test) return goTest(); if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { COURSE = j; loadCWords(); go1(); }).catch(go1); else go1(); };
+  if (SHARE.id && !SHARE.h && !SHARE.w && !SHARE.test) {                                            // 서버 짧은 링크 — 묶음 글부터 받는다
     cCall({ act: 'share_get', id: SHARE.id }).then(r => { const d = r && r.p ? shareDecode(r.p) : null; if (!d) throw new Error('없는 링크'); Object.assign(SHARE, d); go0(); })
       .catch(() => { const b = $('#subBody'); b.textContent = ''; b.append(el('p', 'note', tr('링크를 열지 못했습니다 — 인터넷을 확인하고 다시 열어 주세요'))); show('sub', tr('공유'), false); });
     return;
   }
   go0();
 }
-function shareCards() { NAV.length = 0; startLearn({ day: 'SH:' + SHARE.title, theme: SHARE.title, words: SHARE.words.slice(), share: true }); }
+function shareCards() { NAV.length = 0; startLearn({ day: 'SH:' + SHARE.title, theme: SHARE.title, words: SHARE.words.slice(), share: true, test: SHARE.dtest || null }); }
 function shareShorts() { NAV.length = 0; flashRun(SHARE.words.slice(), SHARE.title, { auto: true }); }
 function shareEntry() {
   shareWords(words => {
@@ -9353,7 +9361,9 @@ function shareEntry() {
     if (!words.length) { b.append(el('p', 'note', tr('이 링크의 낱말을 찾지 못했습니다'))); show('sub', t, false); return; }
     /* 고르는 화면 없이 바로 카드 (대표님 2026-10-08 "오로지 학습카드로 학습만 하고 끝나도록") — 카드 안 [쇼츠]로 바꿀 수 있다. 끝나고 '홈으로'를 누르면 [다시 보기] 하나뿐 */
     if (!SHARE.started) { SHARE.started = true; (SHARE.m === 'shorts' ? shareShorts : shareCards)(); return; }
-    const box = el('div', 'sharebox'); const again = el('button', 'primary big', tr('다시 보기')); again.type = 'button'; again.onclick = shareCards; box.append(again); b.append(box);
+    const box = el('div', 'sharebox'); const again = el('button', 'primary big', tr('다시 보기')); again.type = 'button'; again.onclick = shareCards; box.append(again);
+    const app = el('button', 'ghost big', tr('짜오짜오 시작하기')); app.type = 'button'; app.onclick = () => { location.href = location.pathname; }; box.append(app);   // 공유로 온 사람이 앱으로 (2026-10-08 밤)
+    b.append(box);
     show('sub', t, false);
   });
 }
@@ -10082,7 +10092,7 @@ function drawCard() {
   if (qnr) { qnr.textContent = ''; const toQuiz = last && !L.dict && !L.day.cardsOnly && !L.day.share && !L.day.gram && !L.cult && !L.day.know && !L.news && !L.dlg && (L.day.words || []).length;
              qnr.hidden = !toQuiz; if (toQuiz) qnr.append(qnPicker()); }
   $('#next').textContent = L.day.gram ? '확인 문제 ›'
-    : L.cult || L.day.know ? '다 봤어요' : L.day.share ? '문제 풀기 ›' : (L.day.words || []).length ? '확인 문제 ›'
+    : L.cult || L.day.know ? '다 봤어요' : L.day.share ? (L.day.test ? '시험 보기 ›' : '문제 풀기 ›') : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
     : ['P1', 'P2', 'P4', 'P5', 'P6'].includes(L.day.day) ? '귀로 구별하기 ›' : '완료 ›';
 }
@@ -10091,7 +10101,7 @@ $('#next').onclick = () => {
   // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
-  if (L.day.share) { const d0 = L.day; startWordbookQuiz(d0.words.map(w => w.vi), d0.theme); return; }   // 공유 카드 → 그 낱말로 문제 (2026-10-08)
+  if (L.day.share) { const d0 = L.day; if (d0.test) { gramEnsure(() => startDaily(d0.test)); return; } startWordbookQuiz(d0.words.map(w => w.vi), d0.theme); return; }   // 공유 카드 → 그 낱말로 문제 · 단어 시험 한 벌이면 실제 시험 (2026-10-08)
   if (L.cult) { dailyFlowEntry(); return; }
   if (L.day.gram) { startGramQuiz(L.day.day, L.day.theme, L.items.map(it => it.d)); return; }
   if (L.day.know) { S.done[L.day.day] = now(); save(); dailyFlowEntry(); return; }
@@ -11611,6 +11621,11 @@ function dailyRound(t) {
   const go = el('button', 'primary big', tr('시험 보기') + (rs ? ' <span class="exmeta"><b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b></span>' : '')); go.style.width = '100%';
   go.onclick = () => resumeAsk('daily:' + t.key, r2 => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t, r2)); });   // 누를 때 이어서/처음부터 고르기 (대표님 2026-10-07)
   b.append(go);
+  if (!SHARE) {                                                 // 단어 시험 한 벌 공유 (대표님 2026-10-08 밤 "단어시험 링크도 공유") — 받는 사람: 로그인 없이 카드(낱말 전부 한 세트) → 실제 시험
+    const sh = el('button', 'ghost big', '🔗 ' + tr('공유')); sh.type = 'button'; sh.style.width = '100%'; sh.style.marginTop = '8px';
+    sh.onclick = () => sharePopup(t.label, dailyWords(t), shareEncodeTest(t.key), tr('낱말') + ' ' + t.words.length + ' · ' + tr('문장') + ' ' + t.sents.length);
+    b.append(sh);
+  }
   if (rec && rec.runs && rec.runs.length) {
     b.append(el('p', 'anasec', tr('지난 결과') + ' <span>' + tr('최고') + ' ' + rec.best + ' / ' + tot + '</span>'));
     b.append(el('p', 'dimtxt', rec.runs.slice(-5).reverse().map(r => esc(String(r.d).slice(5).replace('-', '/')) + ' · ' + r.ok + ' / ' + r.tot).join('<br>')));
@@ -11684,7 +11699,7 @@ function finishDaily() {
   const re = el('button', wrong.length ? 'ghost big' : 'primary big', tr('다시 풀기')); re.style.width = '100%'; re.style.marginTop = '10px'; re.onclick = () => startDaily(t);
   const ls = el('button', 'ghost big', tr('날짜 목록으로')); ls.style.width = '100%'; ls.style.marginTop = '10px'; ls.onclick = () => { ACTIVE_TAB = 'test'; dailyEntry(); };
   const hm = el('button', 'ghost big', tr('홈으로')); hm.style.width = '100%'; hm.style.marginTop = '10px'; hm.onclick = () => { ACTIVE_TAB = 'home'; renderHome(); };   // 시험 결과에서 바로 홈 (2026-09-30 밤)
-  r.append(re, ls, hm);
+  r.append(re); if (!SHARE) r.append(ls); r.append(hm);   // 공유로 온 사람에겐 날짜 목록이 없다 (2026-10-08 밤)
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
 /* 앱이 만들던 주간 시험(startWeeklyExam)은 뺐다 (대표님 2026-10-06 "주간시험 1에는 실제 시험지만, 주간시험 2에는 모의고사 5개") — 시험은 모두 고정 시험지(FIXED_EXAMS) */
