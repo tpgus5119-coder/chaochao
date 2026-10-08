@@ -54565,11 +54565,11 @@
        "vi": "đắng",
        "ko": "쓰다(맛)",
        "kr_read": "당",
-       "img": "c22-dang.webp",
        "ex": {
         "vi": "Cà phê này đắng quá.",
         "ko": "이 커피는 너무 써요."
-       }
+       },
+       "img": "c22-dang.webp"
       },
       {
        "vi": "ngọt",
@@ -54617,12 +54617,12 @@
        "vi": "mắng",
        "ko": "혼내다·꾸짖다",
        "kr_read": "망",
-       "weekly": true,
-       "img": "w-7e23adc437.webp",
        "ex": {
         "vi": "Mẹ mắng tôi vì về trễ.",
         "ko": "엄마가 늦게 와서 나를 혼내셨다."
-       }
+       },
+       "img": "w-7e23adc437.webp",
+       "weekly": true
       },
       {
        "vi": "hơn",
@@ -54688,23 +54688,23 @@
        "vi": "luật",
        "ko": "법",
        "kr_read": "루엇",
-       "star": 2,
-       "weekly": true,
-       "img": "b-luat.webp",
        "ex": {
         "vi": "Mọi người phải tuân theo luật.",
         "ko": "모든 사람은 법을 따라야 해요."
-       }
+       },
+       "img": "b-luat.webp",
+       "star": 2,
+       "weekly": true
       },
       {
        "vi": "quy định",
        "ko": "규정·규칙",
        "kr_read": "꾸이 딘",
-       "img": "b-quy-dinh.webp",
        "ex": {
         "vi": "Hãy tuân thủ quy định của công ty.",
         "ko": "회사 규정을 준수하세요."
-       }
+       },
+       "img": "b-quy-dinh.webp"
       },
       {
        "vi": "luôn luôn",
@@ -54752,11 +54752,11 @@
        "vi": "ngủ gật",
        "ko": "졸다",
        "kr_read": "응우 것",
-       "img": "b-ngu-gat.webp",
        "ex": {
         "vi": "Học sinh ngủ gật trong lớp.",
         "ko": "학생이 수업 시간에 꾸벅꾸벅 졸았다."
-       }
+       },
+       "img": "b-ngu-gat.webp"
       },
       {
        "vi": "lo lắng",
@@ -54951,6 +54951,443 @@
        "img": "b-mot-minh.webp",
        "star": 1,
        "weekly": true
+      }
+     ]
+    },
+    {
+     "title": "B반 10/9 단어 시험 (1/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "vui",
+       "ko": "기쁘다",
+       "kr_read": "부이",
+       "ex": {
+        "vi": "Rất vui được gặp chị.",
+        "ko": "만나서 아주 반가워요."
+       },
+       "img": "d02-vui.webp",
+       "weekly": true
+      },
+      {
+       "vi": "buồn",
+       "ko": "슬프다",
+       "kr_read": "부온",
+       "ex": {
+        "vi": "Hồi nãy tôi có hơi buồn, nhưng bây giờ thì vui rồi.",
+        "ko": "아까는 조금 슬펐는데, 지금은 즐거워요."
+       },
+       "img": "d44-buon.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "to",
+       "ko": "크다",
+       "kr_read": "또",
+       "ex": {
+        "vi": "Nhà của bạn tôi rất to.",
+        "ko": "제 친구의 집은 아주 커요."
+       },
+       "img": "w-fc68424ccb.webp"
+      },
+      {
+       "vi": "nhỏ",
+       "ko": "작다",
+       "kr_read": "뇨",
+       "ex": {
+        "vi": "Tôi làm nhân viên ở một công ty nhỏ.",
+        "ko": "나는 작은 회사에서 직원으로 일한다."
+       },
+       "img": "w-dbb7f546c7.webp"
+      },
+      {
+       "vi": "đắt",
+       "ko": "비싸다",
+       "kr_read": "닷",
+       "ex": {
+        "vi": "Cái áo này đắt quá.",
+        "ko": "이 옷은 너무 비싸요."
+       },
+       "img": "d13-dat.webp"
+      },
+      {
+       "vi": "rẻ",
+       "ko": "싸다",
+       "kr_read": "재",
+       "ex": {
+        "vi": "Gần nhà tôi có một quán cà phê ngon và rẻ.",
+        "ko": "우리 집 근처에 맛있고 싼 카페가 하나 있다."
+       },
+       "img": "rv-c943b9efee.webp"
+      },
+      {
+       "vi": "bận",
+       "ko": "바쁘다",
+       "kr_read": "번",
+       "ex": {
+        "vi": "Dạo này tôi rất bận.",
+        "ko": "요즘 저는 아주 바빠요."
+       },
+       "img": "ban-busy.webp",
+       "star": 1
+      },
+      {
+       "vi": "rảnh",
+       "ko": "한가하다",
+       "kr_read": "자인",
+       "ex": {
+        "vi": "À, ngày mai Vân có rảnh không?",
+        "ko": "아, 내일 Vân 한가해요?"
+       },
+       "img": "b-ranh.webp"
+      },
+      {
+       "vi": "nhanh",
+       "ko": "빠르다",
+       "kr_read": "나인",
+       "ex": {
+        "vi": "Anh ấy đi bộ rất nhanh.",
+        "ko": "그는 걸음이 아주 빠르다."
+       },
+       "img": "b-nhanh.webp"
+      },
+      {
+       "vi": "chậm",
+       "ko": "느리다",
+       "kr_read": "쩜",
+       "ex": {
+        "vi": "Có người lái xe rất nhanh nhưng có người lái xe chậm, cẩn thận.",
+        "ko": "어떤 사람은 차를 아주 빨리 몰고, 어떤 사람은 느리고 조심스럽게 몰아요."
+       },
+       "img": "b-cham.webp"
+      },
+      {
+       "vi": "viết",
+       "ko": "쓰다(글을)",
+       "kr_read": "비엣",
+       "ex": {
+        "vi": "Chị viết tiếng Việt rất tốt.",
+        "ko": "당신은 베트남어를 아주 잘 씁니다."
+       },
+       "img": "b-viet.webp"
+      },
+      {
+       "vi": "đọc",
+       "ko": "읽다",
+       "kr_read": "독",
+       "ex": {
+        "vi": "Tôi đọc báo mạng mỗi ngày.",
+        "ko": "저는 매일 인터넷 신문을 읽어요."
+       },
+       "img": "b-doc.webp"
+      },
+      {
+       "vi": "mua",
+       "ko": "사다",
+       "kr_read": "무어",
+       "ex": {
+        "vi": "Bố sẽ mua hoa và về nhà sớm.",
+        "ko": "아빠는 꽃을 사서 일찍 집에 올 것이다."
+       },
+       "img": "mua-buy.webp"
+      },
+      {
+       "vi": "bán",
+       "ko": "팔다",
+       "kr_read": "반",
+       "ex": {
+        "vi": "Cửa hàng đó có bán quần áo trẻ em không?",
+        "ko": "그 가게는 아동복을 팔아요?"
+       },
+       "img": "d13-ban.webp"
+      }
+     ]
+    },
+    {
+     "title": "B반 10/9 단어 시험 (2/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "mở",
+       "ko": "열다",
+       "kr_read": "머",
+       "ex": {
+        "vi": "Anh mở cửa giúp tôi nhé.",
+        "ko": "문 좀 열어 주세요."
+       },
+       "img": "w-d3cacd66a8.webp"
+      },
+      {
+       "vi": "đóng",
+       "ko": "닫다",
+       "kr_read": "동",
+       "ex": {
+        "vi": "Em đóng cửa sổ giúp anh nhé.",
+        "ko": "창문 좀 닫아 줘."
+       },
+       "img": "w-6f359f84e2.webp"
+      },
+      {
+       "vi": "bật",
+       "ko": "켜다",
+       "kr_read": "벗",
+       "ex": {
+        "vi": "Làm ơn bật đèn giúp tôi.",
+        "ko": "부디 불 좀 켜주세요."
+       },
+       "img": "b-bat.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "tắt",
+       "ko": "끄다",
+       "kr_read": "땃",
+       "ex": {
+        "vi": "Mẹ tắt đèn nhé!",
+        "ko": "엄마가 불 끌게!"
+       },
+       "img": "w-0b1adf767d.webp"
+      },
+      {
+       "vi": "cười",
+       "ko": "웃다",
+       "kr_read": "끄어이",
+       "ex": {
+        "vi": "Hôm nay, gặp tôi cô Hoa cười rất tươi.",
+        "ko": "오늘 나를 만나자 Hoa 씨가 아주 환하게 웃었다."
+       },
+       "img": "w-d14a2b250d.webp",
+       "star": 1
+      },
+      {
+       "vi": "khóc",
+       "ko": "울다",
+       "kr_read": "콕",
+       "ex": {
+        "vi": "Nó mới khóc.",
+        "ko": "그 아이는 방금 울었다."
+       },
+       "img": "b-khoc.webp",
+       "star": 1
+      },
+      {
+       "vi": "yêu",
+       "ko": "사랑하다",
+       "kr_read": "이에우",
+       "ex": {
+        "vi": "Hai người yêu nhau nhưng không kết hôn được.",
+        "ko": "두 사람은 서로 사랑했지만 결혼하지 못했다."
+       },
+       "img": "b-yeu.webp"
+      },
+      {
+       "vi": "ghét",
+       "ko": "싫어하다",
+       "kr_read": "갯",
+       "ex": {
+        "vi": "Tôi rất ghét rau.",
+        "ko": "나는 채소를 무척 싫어한다."
+       },
+       "img": "ghet.webp"
+      },
+      {
+       "vi": "sáng",
+       "ko": "밝다",
+       "kr_read": "쌍",
+       "ex": {
+        "vi": "Phòng này rất sáng.",
+        "ko": "이 방은 아주 밝아요."
+       },
+       "img": "c22-sang-bright.webp"
+      },
+      {
+       "vi": "tối",
+       "ko": "어둡다",
+       "kr_read": "또이",
+       "ex": {
+        "vi": "Trời tối rồi, chúng ta về nhà đi.",
+        "ko": "날이 어두워졌어요, 우리 집에 가요."
+       },
+       "img": "c22-toi-dark.webp"
+      },
+      {
+       "vi": "cao",
+       "ko": "높다",
+       "kr_read": "까오",
+       "ex": {
+        "vi": "Nó đã cao lại gầy nên trông càng cao.",
+        "ko": "그 애는 키가 큰 데다 말라서 더 커 보인다."
+       },
+       "img": "b-cao.webp"
+      },
+      {
+       "vi": "thấp",
+       "ko": "낮다",
+       "kr_read": "텁",
+       "ex": {
+        "vi": "Dáng người nó thấp, có vẻ béo.",
+        "ko": "그 아이는 키가 작고 뚱뚱해 보여요."
+       },
+       "img": "w-7129157bac.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "ngắn",
+       "ko": "짧다",
+       "kr_read": "응안",
+       "ex": {
+        "vi": "Anh có khuôn mặt tròn và mái tóc ngắn.",
+        "ko": "그는 얼굴이 둥글고 머리가 짧다."
+       },
+       "img": "b-ngan.webp",
+       "star": 1,
+       "weekly": true
+      }
+     ]
+    },
+    {
+     "title": "B반 10/9 단어 시험 (3/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "dài",
+       "ko": "길다",
+       "kr_read": "자이",
+       "ex": {
+        "vi": "Mai có mái tóc quăn, dài ngang lưng.",
+        "ko": "마이는 허리까지 오는 긴 곱슬머리를 가졌다."
+       },
+       "img": "w-23ea1f15ad.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "đẹp",
+       "ko": "아름답다",
+       "kr_read": "댑",
+       "ex": {
+        "vi": "Nhà thờ Đức Bà Sài Gòn đẹp.",
+        "ko": "사이공 성모 성당은 아름답다."
+       },
+       "img": "w-db83e5f93d.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "xấu",
+       "ko": "못생기다",
+       "kr_read": "써우",
+       "ex": {
+        "vi": "Cái áo này hơi xấu.",
+        "ko": "이 옷은 좀 안 예뻐요."
+       },
+       "img": "b-xau.webp"
+      },
+      {
+       "vi": "thức dậy",
+       "ko": "일어나다",
+       "kr_read": "특 저이",
+       "ex": {
+        "vi": "Bà thức dậy sớm, tập thể dục, ăn sáng, uống cà phê, đọc báo.",
+        "ko": "할머니는 일찍 일어나 운동하고, 아침을 먹고, 커피를 마시고, 신문을 읽으신다."
+       },
+       "img": "thuc-day.webp"
+      },
+      {
+       "vi": "đánh răng",
+       "ko": "이를 닦다",
+       "kr_read": "다인 장",
+       "ex": {
+        "vi": "Tôi đánh răng, rửa mặt, ăn sáng rồi đi đến trường.",
+        "ko": "나는 이를 닦고 세수하고 아침을 먹은 뒤 학교에 간다."
+       },
+       "img": "b-danh-rang.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "đi tắm",
+       "ko": "샤워하다",
+       "kr_read": "디 땀",
+       "ex": {
+        "vi": "Tôi đi tắm ngay bây giờ.",
+        "ko": "저는 지금 바로 샤워하러 가요."
+       },
+       "img": "w-b46b273284.webp"
+      },
+      {
+       "vi": "thay quần áo",
+       "ko": "옷 갈아입다",
+       "kr_read": "타이 꾸언 아오",
+       "ex": {
+        "vi": "Tôi thay quần áo rồi đi làm.",
+        "ko": "저는 옷을 갈아입고 출근해요."
+       },
+       "img": "w-0c43a0698b.webp"
+      },
+      {
+       "vi": "dậy muộn",
+       "ko": "늦게 일어나다",
+       "kr_read": "저이 무온",
+       "img": "c22-day-muon.webp",
+       "ex": {
+        "vi": "Chủ nhật tôi thường dậy muộn.",
+        "ko": "일요일에 저는 보통 늦게 일어나요."
+       }
+      },
+      {
+       "vi": "dậy sớm",
+       "ko": "일찍 일어나다",
+       "kr_read": "저이 썸",
+       "ex": {
+        "vi": "Hôm nay tôi dậy sớm.",
+        "ko": "오늘 저는 일찍 일어났어요."
+       },
+       "img": "w-6fe2c1e676.webp"
+      },
+      {
+       "vi": "ngủ muộn",
+       "ko": "늦게 자다",
+       "kr_read": "응우 무온",
+       "ex": {
+        "vi": "Tối qua tôi ngủ muộn.",
+        "ko": "어젯밤 저는 늦게 잤어요."
+       },
+       "img": "c22-ngu-muon.webp"
+      },
+      {
+       "vi": "ngủ sớm",
+       "ko": "일찍 자다",
+       "kr_read": "응우 썸",
+       "ex": {
+        "vi": "Tôi mệt nên tối nay tôi ngủ sớm.",
+        "ko": "피곤해서 오늘 밤 저는 일찍 자요."
+       },
+       "img": "c22-ngu-som.webp"
+      },
+      {
+       "vi": "thức khuya",
+       "ko": "늦게까지 깨어 있다",
+       "kr_read": "특 쿠여",
+       "ex": {
+        "vi": "Tối hôm qua tôi thức khuya.",
+        "ko": "어젯밤 나는 늦게까지 깨어 있었다."
+       },
+       "img": "b-thuc-khuya.webp",
+       "star": 2
+      },
+      {
+       "vi": "đi ngủ",
+       "ko": "자러 가다",
+       "kr_read": "디 응우",
+       "ex": {
+        "vi": "Hôm qua tôi mệt quá nên đã đi ngủ sớm.",
+        "ko": "어제 너무 피곤해서 일찍 자러 갔어요."
+       },
+       "img": "w-c388775af9.webp"
       }
      ]
     }
