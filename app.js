@@ -51,6 +51,9 @@ let SHARE = null;
 if (location.hash.startsWith('#s=')) {
   try { const b = location.hash.slice(3).replace(/-/g, '+').replace(/_/g, '/'); SHARE = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b), c => c.charCodeAt(0)))); if (!SHARE || !Array.isArray(SHARE.w)) SHARE = null; } catch (e) { SHARE = null; }
 }
+/* 이미 열려 있는 앱에 공유 링크가 들어오면(주소창에 붙여 넣기·열린 탭에서 링크 탭) 페이지가 다시 뜨지 않고 주소 뒷부분만 바뀐다 —
+   그러면 공유 화면이 안 나온다 (대표님 2026-10-08 "링크 눌러도 첫 화면이 나온다"). 주소가 바뀌면 다시 띄워 처음부터 읽는다 */
+window.addEventListener('hashchange', () => { if (location.hash.startsWith('#s=') || SHARE) location.reload(); });
 
 const DAY = 864e5;
 const STEPS = [1, 3, 7, 14, 30, 60];   // 일 단위. 반년~1년 기억을 목표로 한 간격
