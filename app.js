@@ -48,9 +48,27 @@ if (location.hash.startsWith('#k=')) {
 /* 공유 링크 #s=… (대표님 2026-10-08: 내 단어장 묶음을 카드 학습·쇼츠로 공유 — 받은 사람은 로그인 없이 딱 그 화면만, 카드 뒤엔 문제까지).
    내용은 {t: 이름, m: 'cards'|'shorts', w: [낱말 열쇠…]} 를 base64url 로 — 서버 없이 주소에 다 담긴다. 해시는 지우지 않는다(다시 열어도 그 화면) */
 let SHARE = null;
-if (location.hash.startsWith('#s=')) {
-  try { const b = location.hash.slice(3).replace(/-/g, '+').replace(/_/g, '/'); SHARE = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b), c => c.charCodeAt(0)))); if (!SHARE || !Array.isArray(SHARE.w)) SHARE = null; } catch (e) { SHARE = null; }
+/* 묶음 글 부호화 (2026-10-08 "링크 좀 짧게"): [2][이름 길이][이름 UTF-8][낱말마다 FNV-1a 32비트 해시 4바이트] → base64url. 낱말 56개가 1,100자 → 300자쯤.
+   옛 링크(JSON)는 첫 글자가 '{' 라 그대로 읽는다. 해시는 받는 쪽이 앱 낱말 전체(일상·직무·교재)를 돌며 되찾는다 */
+const fnv32 = str => { let h = 0x811c9dc5; for (const c of new TextEncoder().encode(U_NFC(str).toLowerCase())) { h ^= c; h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; };
+const U_NFC = t => String(t || '').normalize('NFC').trim();
+const b64u = bytes => { let bin = ''; bytes.forEach(c => { bin += String.fromCharCode(c); }); return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+const unb64u = str => Uint8Array.from(atob(str.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+function shareEncode(title, words) {
+  const tb = new TextEncoder().encode(String(title || '').slice(0, 30)); const out = [2, tb.length, ...tb];
+  words.forEach(w => { const h = fnv32(w.vi); out.push((h >>> 24) & 255, (h >>> 16) & 255, (h >>> 8) & 255, h & 255); });
+  return b64u(Uint8Array.from(out));
 }
+function shareDecode(str) {
+  const bytes = unb64u(str);
+  if (bytes[0] === 0x7B) { const j = JSON.parse(new TextDecoder().decode(bytes)); return j && Array.isArray(j.w) ? j : null; }   // 옛 JSON 링크
+  if (bytes[0] !== 2) return null;
+  const n = bytes[1], t = new TextDecoder().decode(bytes.slice(2, 2 + n)), hs = [];
+  for (let i = 2 + n; i + 3 < bytes.length; i += 4) hs.push(((bytes[i] << 24) | (bytes[i + 1] << 16) | (bytes[i + 2] << 8) | bytes[i + 3]) >>> 0);
+  return { t, m: 'cards', h: hs };
+}
+if (location.hash.startsWith('#s=')) { try { SHARE = shareDecode(location.hash.slice(3)); } catch (e) { SHARE = null; } }
+else { const sid = new URLSearchParams(location.search).get('s'); if (sid && /^[a-z0-9]{4,12}$/.test(sid)) SHARE = { id: sid }; }   // 서버 짧은 링크 ?s=표 — 묶음 글은 열 때 받는다
 /* 이미 열려 있는 앱에 공유 링크가 들어오면(주소창에 붙여 넣기·열린 탭에서 링크 탭) 페이지가 다시 뜨지 않고 주소 뒷부분만 바뀐다 —
    그러면 공유 화면이 안 나온다 (대표님 2026-10-08 "링크 눌러도 첫 화면이 나온다"). 주소가 바뀌면 다시 띄워 처음부터 읽는다 */
 window.addEventListener('hashchange', () => { if (location.hash.startsWith('#s=') || SHARE) location.reload(); });
@@ -9262,17 +9280,19 @@ function learnedAll() {
    각 묶음은 [카드로 학습]과 [쇼츠 재생](소리만 나고 저절로 다음 카드) 둘 중 하나로 익힌다. */
 function wordbookEntry() { SBOX = 'srs'; drawWordbook(); }
 /* ── 공유 (대표님 2026-10-08) ── */
-function shareLink(title, mode, words) {
-  const bytes = new TextEncoder().encode(JSON.stringify({ t: title, m: mode, w: words.map(w => w.vi) }));
-  let bin = ''; bytes.forEach(c => { bin += String.fromCharCode(c); });
-  return location.origin + location.pathname + '#s=' + btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+function shareLink(title, mode, words) { return location.origin + location.pathname + '#s=' + shareEncode(title, words); }
+/* 짧은 링크 — 서버(워커 v18)에 묶음 글을 맡기고 7자 표만 주소에 쓴다. 서버가 옛 판이거나 안 되면 긴 링크로 물러난다 */
+async function shareShortLink(title, words) {
+  try { const r = await cCall({ act: 'share_put', p: shareEncode(title, words) }); if (r && r.id) return location.origin + location.pathname + '?s=' + r.id; } catch (e) { }
+  return shareLink(title, 'cards', words);
 }
 function sharePopup(title, words) {
   const back = el('div', 'modalback'), box = el('div', 'modalbox');
   box.append(el('div', 'pairpophd', '<b>' + esc(title) + '</b><span>' + words.length + tr('개') + '</span>'));
   const out = el('div');
   const send = async () => {                              // 링크 하나 — 열면 카드, 카드 안 [쇼츠]로 바꿈 (대표님 2026-10-08 "링크 하나로 합치자")
-    const url = shareLink(title, 'cards', words);
+    out.textContent = ''; out.append(el('p', 'note', tr('링크 만드는 중…')));
+    const url = await shareShortLink(title, words);
     out.textContent = '';
     if (navigator.share) { try { await navigator.share({ title, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     try { await navigator.clipboard.writeText(url); out.append(el('p', 'note', tr('링크를 복사했습니다 — 붙여 넣어 보내세요'))); } catch (e) { out.append(el('p', 'note', tr('아래 링크를 길게 눌러 복사하세요'))); }
@@ -9285,9 +9305,20 @@ function sharePopup(title, words) {
 }
 /* 받은 사람의 화면 — 그 묶음의 카드·쇼츠·문제만. 카드는 끝 장에서 [문제 풀기 ›] 로 이어진다 */
 function shareWords(cb) {
-  const go2 = () => cb(wbResolve(SHARE.w || []));
+  const go2 = () => {
+    if (Array.isArray(SHARE.w)) return cb(wbResolve(SHARE.w));                       // 옛 링크(낱말 글자)
+    const map = {}; [...allWords(), ...(GYBM ? gybmAllWords() : [])].forEach(w => { if (w && w.vi && !w.sent) { const k = fnv32(w.vi); if (!(k in map)) map[k] = w; } });
+    const out = [], seen = new Set(); (SHARE.h || []).forEach(h => { const w = map[h]; if (w && !seen.has(w.vi)) { seen.add(w.vi); out.push(w); } });
+    cb(out);
+  };
   const go1 = () => { if (!GYBM) gybmBuild(go2); else go2(); };
-  if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { COURSE = j; loadCWords(); go1(); }).catch(go1); else go1();
+  const go0 = () => { if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { COURSE = j; loadCWords(); go1(); }).catch(go1); else go1(); };
+  if (SHARE.id && !SHARE.h && !SHARE.w) {                                            // 서버 짧은 링크 — 묶음 글부터 받는다
+    cCall({ act: 'share_get', id: SHARE.id }).then(r => { const d = r && r.p ? shareDecode(r.p) : null; if (!d) throw new Error('없는 링크'); Object.assign(SHARE, d); go0(); })
+      .catch(() => { const b = $('#subBody'); b.textContent = ''; b.append(el('p', 'note', tr('링크를 열지 못했습니다 — 인터넷을 확인하고 다시 열어 주세요'))); show('sub', tr('공유'), false); });
+    return;
+  }
+  go0();
 }
 function shareCards() { NAV.length = 0; startLearn({ day: 'SH:' + SHARE.title, theme: SHARE.title, words: SHARE.words.slice(), share: true }); }
 function shareShorts() { NAV.length = 0; flashRun(SHARE.words.slice(), SHARE.title, { auto: true }); }
