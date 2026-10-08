@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from common import *
 q = []
-q += [TF("tài xế", "Ông ấy là tài xế. Ông ấy đang lái xe.", True), TF("nghe nhạc", "Chị ấy đang đọc sách.", False),
-      TF("đi bộ", "Anh ấy đi bộ đến trường.", True), TF("ăn sáng", "Anh ấy đang ăn sáng ở nhà.", True), TF("nhà sách", "Đây là bệnh viện.", False)]
-q += [PK(["ngân hàng", "bệnh viện", "bưu điện", "công ty"], "Chị ấy làm việc ở ngân hàng. Chị ấy là kế toán.", 0),
-      PK(["xem tivi", "nấu ăn", "đọc báo", "tập thể dục"], "Mẹ tôi đang nấu ăn ở nhà.", 1),
-      PK(["kỹ sư", "thư ký", "nội trợ", "bác sĩ"], "Anh ấy là bác sĩ. Dạo này anh ấy rất bận.", 3),
-      PK(["quán cà phê", "nhà hàng", "sân bay", "căng tin"], "Ngày mai tôi đi sân bay gặp bạn.", 2),
-      PK(["máy bay", "tắc xi", "xe", "đi làm"], "Tuần sau tôi đi Hà Nội bằng máy bay.", 0)]
+q += [TF("thức dậy", "Tôi thức dậy lúc 6 giờ sáng.", True), TF("đánh răng", "Em ấy đang đánh răng.", True),
+      TF("ăn sáng", "Anh ấy đang ăn trưa ở căng tin.", False), TF("xem tivi", "Buổi tối gia đình tôi xem tivi.", True), TF("ngủ", "Em ấy đang học bài.", False)]
+q += [PK(["rửa mặt", "nấu ăn", "đọc báo", "mua sắm"], "Buổi sáng tôi rửa mặt rồi ăn sáng.", 0),
+      PK(["ăn cơm", "chuẩn bị", "mang", "chờ"], "Gia đình tôi đang ăn cơm.", 0),
+      PK(["lên mạng", "điện thoại", "tin tức", "email"], "Buổi tối tôi thường lên mạng.", 0),
+      PK(["đi ngủ", "về nhà", "thức khuya", "buồn ngủ"], "Hôm qua tôi đi ngủ lúc 12 giờ đêm.", 0),
+      PK(["nhà", "gia đình", "bố mẹ", "ông bà"], "Cuối tuần tôi ở nhà với gia đình.", 0)]
 q += [A3("Chị ấy làm việc ở đâu?", "Tôi làm thư ký ở một công ty máy tính.", ["công ty máy tính", "ngân hàng", "bệnh viện"]),
       A3("Anh ấy thường làm gì vào cuối tuần?", "Cuối tuần tôi thường đi chơi với bạn bè.", ["đi chơi với bạn bè", "đi làm", "học tiếng Việt"]),
       A3("Hôm nay chị ấy ăn sáng lúc mấy giờ?", "Hôm nay tôi ăn sáng trễ, lúc 9 giờ.", ["9 giờ", "7 giờ", "11 giờ"]),
@@ -65,14 +65,14 @@ q += [C2("Chị ấy rất đẹp lắm.", 3, "Chị ấy rất đẹp.", "그�
 q.append(C3("나의 하루 — 몇 시에 일어나고, 아침·점심·저녁에 무엇을 하는지 (10문장)",
             ["Buổi sáng tôi thường thức dậy lúc 6 giờ rưỡi.", "Tôi đánh răng, rửa mặt và tập thể dục.", "Tôi ăn sáng lúc 7 giờ.", "Tôi đi làm bằng xe buýt.", "Tôi làm việc ở công ty từ 8 giờ đến 5 giờ.",
              "Tôi thường ăn trưa ở căng tin công ty.", "Buổi tối tôi ăn tối với gia đình.", "Sau đó tôi học tiếng Việt khoảng một tiếng.", "Thỉnh thoảng tôi xem phim trên mạng.", "Tôi đi ngủ lúc 11 giờ."]))
-q += D1(["ngân hàng", "bệnh viện", "siêu thị", "bưu điện", "sân bay", "xe buýt", "cuối tuần", "đi dạo", "thư ký", "vất vả"],
+q += D1(["thức dậy", "đánh răng", "rửa mặt", "ăn cơm", "lên mạng", "tin tức", "chuẩn bị", "bữa sáng", "hàng ngày", "gia đình"],
         ["Chị ấy đi làm bằng tắc xi.", "Cuối tuần chúng tôi đi dạo ở phố đi bộ.", "Hôm nay tôi hơi bận.", "Anh ấy làm việc ở bệnh viện.", "Anh làm việc từ mấy giờ đến mấy giờ?"])
-q += [D2("xe buýt", "그림을 보고 말해 보세요 — 당신은 이것을 타고 어디에 가나요? 어디에서 일하고, 몇 시에 출근하나요? (3문장)",
-         ["Mỗi ngày tôi đi làm bằng xe buýt.", "Tôi làm việc ở ngân hàng.", "Tôi đi làm lúc bảy giờ sáng."], ["저는 버스를 타고 출근해요.", "저는 은행에서 일해요.", "저는 아침 7시에 출근해요."]),
-      D2("siêu thị", "그림을 보고 말해 보세요 — 여기는 어디이고, 몇 시에 문을 열고, 당신은 언제 여기에 오나요? (3문장)",
-         ["Đây là siêu thị gần nhà tôi.", "Siêu thị mở cửa lúc bảy giờ sáng.", "Tôi thường đi siêu thị vào buổi tối."], ["여기는 우리 집 근처 슈퍼마켓이에요.", "슈퍼마켓은 아침 7시에 문을 열어요.", "저는 보통 저녁에 슈퍼마켓에 가요."])]
+q += [D2("chợ", "그림을 보고 말해 보세요 — 여기는 어디이고, 누가 언제 여기에 오며, 여기엔 무엇이 많나요? (3문장)",
+         ["Đây là chợ gần nhà tôi.", "Mẹ tôi đi chợ mỗi sáng.", "Ở chợ có nhiều người."], ["여기는 우리 집 근처 시장이에요.", "어머니는 매일 아침 시장에 가요.", "시장에는 사람이 많아요."]),
+      D2("bàn ăn", "그림을 보고 말해 보세요 — 가족이 무엇을 하고 있고, 몇 시에 저녁을 먹으며, 누가 요리하나요? (3문장)",
+         ["Gia đình tôi đang ngồi ở bàn ăn.", "Chúng tôi ăn tối lúc bảy giờ.", "Mẹ tôi nấu ăn rất ngon."], ["우리 가족은 식탁에 앉아 있어요.", "우리는 7시에 저녁을 먹어요.", "어머니는 요리를 아주 맛있게 해요."])]
 q += [D3("동료가 '몇 시부터 몇 시까지 일해요?'라고 묻습니다. 일하는 시간과 점심을 어디에서 먹는지 말해 보세요. (3문장)",
          ["Tôi làm việc từ tám giờ đến năm giờ.", "Buổi trưa tôi ăn cơm ở căng tin.", "Dạo này tôi hơi bận."], ["저는 8시부터 5시까지 일해요.", "점심에는 구내식당에서 밥을 먹어요.", "요즘 조금 바빠요."]),
       D3("친구가 '요즘 어때요?'라고 묻습니다. 요즘 생활을 말해 보세요 — 바쁜지, 몇 시에 자는지, 오늘 기분. (3문장)",
-         ["Dạo này tôi rất bận.", "Tôi thường đi ngủ lúc mười hai giờ.", "Hôm nay tôi hơi buồn ngủ."], ["요즘 저는 아주 바빠요.", "저는 보통 12시에 자러 가요.", "오늘은 조금 피곤해요."])]
+         ["Dạo này công việc của tôi rất bận.", "Tôi thường đi ngủ lúc mười hai giờ.", "Hôm nay tôi hơi buồn ngủ."], ["요즘 저는 아주 바빠요.", "저는 보통 12시에 자러 가요.", "오늘은 조금 피곤해요."])]
 AUD = build(2, "모의고사 2", q)

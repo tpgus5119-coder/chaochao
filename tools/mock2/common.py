@@ -73,6 +73,20 @@ def build(no, title, q):
         if x['k'] == 'pick': pic.update(x['opts'])
     dup = [f'{t} ×{n}' for t, n in snd.items() if n > 1] + [f'그림 {t} ×{n}' for t, n in pic.items() if n > 1]
     if dup: raise SystemExit(f'모의고사 {no} 겹침: ' + ' | '.join(dup))
+    # 다른 벌과도 겹치면 안 된다 (대표님 2026-10-08) — 이미 지어진 data/mock2_N.json 과 견준다
+    for other in range(1, 6):
+        op = R / f'data/mock2_{other}.json'
+        if other == no or not op.exists(): continue
+        s2, p2 = collections.Counter(), collections.Counter()
+        for x in json.load(open(op, encoding='utf-8'))['q']:
+            if x.get('audio'): s2[x['audio']] += 1
+            if x['k'] in ('say', 'puzzle'): s2[x['vi']] += 1
+            if x['k'] == 'errpick': s2[x['fix']] += 1
+            if x['k'] == 'speak': [s2.update([m['vi']]) for m in x['model']]
+            if x.get('img'): p2[x['img']] += 1
+            if x['k'] == 'pick': p2.update(x['opts'])
+        cross = [t for t in snd if t in s2] + ['그림 ' + t for t in pic if t in p2]
+        if cross: raise SystemExit(f'모의고사 {no} 가 {other} 과 겹침: ' + ' | '.join(cross))
     out = {"note": f"주간시험 2 모의고사 {no} — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).", "title": title, "time": 90, "pts": {"A": 30, "B": 30, "C": 20, "D": 20}, "q": q}
     json.dump(out, open(R / f'data/mock2_{no}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     aud = []

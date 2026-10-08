@@ -12,22 +12,6 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "w-c388775af9.webp",
-   "audio": "Em ấy đang đi ngủ. Bây giờ là 11 giờ đêm.",
-   "ans": true,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 1 그림 맞다/틀리다",
-   "k": "tf",
-   "img": "w-936f3fbca6.webp",
-   "audio": "Anh ấy đang nấu ăn.",
-   "ans": false,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 1 그림 맞다/틀리다",
-   "k": "tf",
    "img": "b-nghe-nhac.webp",
    "audio": "Chị ấy đang nghe nhạc.",
    "ans": true,
@@ -36,41 +20,44 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-an-sang.webp",
-   "audio": "Anh ấy đang ăn trưa ở căng tin công ty.",
+   "img": "b-xem-phim.webp",
+   "audio": "Anh ấy đang tập thể dục.",
    "ans": false,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-buon-ngu.webp",
-   "audio": "Em ấy buồn ngủ quá vì hôm qua thức khuya.",
+   "img": "d45-doc-sach.webp",
+   "audio": "Ông tôi đang đọc sách.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-a9c8671222.webp",
+   "audio": "Cuối tuần tôi đi chơi với bạn bè.",
+   "ans": true,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-ao-dai.webp",
+   "audio": "Chị ấy đang mặc áo dài rất đẹp.",
    "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Buổi sáng tôi thường tập thể dục ở gần nhà.",
+   "audio": "Chị ấy hát rất hay.",
    "opts": [
-    "w-ca301a7708.webp",
-    "b-tap-the-duc.webp",
-    "b-di-bo.webp",
-    "w-886c48df89.webp"
-   ],
-   "ans": 1,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
-   "audio": "Sau khi ăn tối, bố tôi thường đọc sách.",
-   "opts": [
-    "thuc-day.webp",
-    "w-e8c966943e.webp",
-    "d45-doc-sach.webp",
-    "b-chuan-bi.webp"
+    "x-choi.webp",
+    "b-hoc.webp",
+    "b-hat.webp",
+    "b-viet.webp"
    ],
    "ans": 2,
    "made": true
@@ -78,12 +65,12 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Buổi tối tôi thường lên mạng xem tin tức.",
+   "audio": "Mỗi sáng tôi uống cà phê.",
    "opts": [
-    "b-len-mang.webp",
-    "b-danh-rang.webp",
-    "b-rua-mat.webp",
-    "b-an-trua.webp"
+    "d12-ca-phe.webp",
+    "b-tra.webp",
+    "w-1e623a7697.webp",
+    "w-61ba822d4d.webp"
    ],
    "ans": 0,
    "made": true
@@ -91,27 +78,40 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Cuối tuần tôi đi mua sắm với mẹ.",
+   "audio": "Bài hát này hay quá!",
    "opts": [
-    "b-di-dao.webp",
-    "b-an-toi.webp",
-    "w-572c467085.webp",
-    "w-7851675579.webp"
+    "w-510e0409db.webp",
+    "b-phim.webp",
+    "w-76949b64b2.webp",
+    "b-bai-hat.webp"
    ],
-   "ans": 2,
+   "ans": 3,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Hôm qua tôi thức khuya học bài.",
+   "audio": "Hôm nay là thứ bảy.",
    "opts": [
-    "b-di-lam.webp",
-    "w-8b78607617.webp",
-    "b-ve-nha.webp",
-    "b-thuc-khuya.webp"
+    "thu-bay.webp",
+    "b-nghi.webp",
+    "b-cuoi-tuan.webp",
+    "w-1a2eb53b40.webp"
    ],
-   "ans": 3,
+   "ans": 0,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Chúng tôi đi du lịch Đà Nẵng.",
+   "opts": [
+    "b-du-lich.webp",
+    "b-tham.webp",
+    "b-mong.webp",
+    "w-a2a3336c2b.webp"
+   ],
+   "ans": 0,
    "made": true
   },
   {
@@ -805,10 +805,10 @@
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Tôi mệt hôm nay hơi.",
+   "vi": "Tôi chán hôm nay hơi.",
    "bad": 3,
-   "fix": "Hôm nay tôi hơi mệt.",
-   "ko": "오늘 저는 좀 피곤해요. (hơi는 형용사 앞)"
+   "fix": "Hôm nay tôi hơi chán.",
+   "ko": "오늘 저는 좀 지루해요. (hơi는 형용사 앞)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
@@ -930,20 +930,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-xem-phim.webp",
-   "ask": "그림을 보고 말해 보세요 — 주말에 보통 무엇을 하나요? 누구와 하나요? 어떤 영화를 좋아하나요? (3문장)",
+   "img": "b-tap-the-duc.webp",
+   "ask": "그림을 보고 말해 보세요 — 이 사람은 언제 무엇을 하고, 얼마나 하며, 그다음엔 무엇을 하나요? (3문장)",
    "model": [
     {
-     "vi": "Cuối tuần tôi thường xem phim ở nhà.",
-     "ko": "주말에 저는 보통 집에서 영화를 봐요."
+     "vi": "Buổi sáng anh ấy thường tập thể dục.",
+     "ko": "아침에 그는 보통 운동해요."
     },
     {
-     "vi": "Tôi xem phim với bạn.",
-     "ko": "친구와 영화를 봐요."
+     "vi": "Anh ấy tập thể dục khoảng ba mươi phút.",
+     "ko": "그는 30분쯤 운동해요."
     },
     {
-     "vi": "Tôi thích xem phim Việt Nam.",
-     "ko": "저는 베트남 영화를 좋아해요."
+     "vi": "Sau đó anh ấy ăn sáng rồi đi làm.",
+     "ko": "그다음 아침을 먹고 출근해요."
     }
    ],
    "n": 3,
@@ -952,20 +952,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-nau-an.webp",
-   "ask": "그림을 보고 말해 보세요 — 이 사람은 무엇을 하고 있나요? 요리를 잘하나요? 어디에서 일하나요? (3문장)",
+   "img": "w-2b12519c6e.webp",
+   "ask": "그림을 보고 말해 보세요 — 이것은 무엇이고, 누구에게 사 주며, 그 사람은 좋아하나요? (3문장)",
    "model": [
     {
-     "vi": "Anh ấy đang nấu ăn ở nhà.",
-     "ko": "그는 요리를 하고 있어요."
+     "vi": "Đây là hoa.",
+     "ko": "이것은 꽃이에요."
     },
     {
-     "vi": "Anh ấy nấu ăn rất ngon.",
-     "ko": "그는 요리를 아주 맛있게 해요."
+     "vi": "Tôi mua hoa cho mẹ.",
+     "ko": "저는 어머니께 꽃을 사 드려요."
     },
     {
-     "vi": "Anh ấy làm việc ở tiệm ăn.",
-     "ko": "그는 식당에서 일해요."
+     "vi": "Mẹ tôi rất thích hoa.",
+     "ko": "어머니는 꽃을 아주 좋아해요."
     }
    ],
    "n": 3,

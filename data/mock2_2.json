@@ -12,24 +12,16 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "w-81eaf9dd0c.webp",
-   "audio": "Ông ấy là tài xế. Ông ấy đang lái xe.",
+   "img": "thuc-day.webp",
+   "audio": "Tôi thức dậy lúc 6 giờ sáng.",
    "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-nghe-nhac.webp",
-   "audio": "Chị ấy đang đọc sách.",
-   "ans": false,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 1 그림 맞다/틀리다",
-   "k": "tf",
-   "img": "b-di-bo.webp",
-   "audio": "Anh ấy đi bộ đến trường.",
+   "img": "b-danh-rang.webp",
+   "audio": "Em ấy đang đánh răng.",
    "ans": true,
    "made": true
   },
@@ -37,27 +29,35 @@
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
    "img": "b-an-sang.webp",
-   "audio": "Anh ấy đang ăn sáng ở nhà.",
+   "audio": "Anh ấy đang ăn trưa ở căng tin.",
+   "ans": false,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-936f3fbca6.webp",
+   "audio": "Buổi tối gia đình tôi xem tivi.",
    "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-nha-sach.webp",
-   "audio": "Đây là bệnh viện.",
+   "img": "b-ngu.webp",
+   "audio": "Em ấy đang học bài.",
    "ans": false,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Chị ấy làm việc ở ngân hàng. Chị ấy là kế toán.",
+   "audio": "Buổi sáng tôi rửa mặt rồi ăn sáng.",
    "opts": [
-    "b-ngan-hang.webp",
-    "b-benh-vien.webp",
-    "b-buu-dien.webp",
-    "b-cong-ty.webp"
+    "b-rua-mat.webp",
+    "b-nau-an.webp",
+    "w-ca301a7708.webp",
+    "w-572c467085.webp"
    ],
    "ans": 0,
    "made": true
@@ -65,51 +65,51 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Mẹ tôi đang nấu ăn ở nhà.",
+   "audio": "Gia đình tôi đang ăn cơm.",
    "opts": [
-    "w-936f3fbca6.webp",
-    "b-nau-an.webp",
-    "w-ca301a7708.webp",
-    "b-tap-the-duc.webp"
+    "w-e8c966943e.webp",
+    "b-chuan-bi.webp",
+    "b-mang.webp",
+    "w-886c48df89.webp"
    ],
-   "ans": 1,
+   "ans": 0,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Anh ấy là bác sĩ. Dạo này anh ấy rất bận.",
+   "audio": "Buổi tối tôi thường lên mạng.",
    "opts": [
-    "b-ky-su.webp",
-    "b-thu-ky.webp",
-    "b-noi-tro.webp",
-    "b-bac-si.webp"
+    "b-len-mang.webp",
+    "b-dien-thoai.webp",
+    "w-eb5c8b3809.webp",
+    "b-email.webp"
    ],
-   "ans": 3,
+   "ans": 0,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Ngày mai tôi đi sân bay gặp bạn.",
+   "audio": "Hôm qua tôi đi ngủ lúc 12 giờ đêm.",
    "opts": [
-    "quan-ca-phe.webp",
-    "b-nha-hang.webp",
-    "b-san-bay.webp",
-    "w-2fa6fbb660.webp"
+    "w-c388775af9.webp",
+    "b-ve-nha.webp",
+    "b-thuc-khuya.webp",
+    "b-buon-ngu.webp"
    ],
-   "ans": 2,
+   "ans": 0,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Tuần sau tôi đi Hà Nội bằng máy bay.",
+   "audio": "Cuối tuần tôi ở nhà với gia đình.",
    "opts": [
-    "b-may-bay.webp",
-    "b-tac-xi.webp",
-    "w-f352785b24.webp",
-    "b-di-lam.webp"
+    "b-nha.webp",
+    "b-gia-dinh.webp",
+    "w-ad94e8a1b8.webp",
+    "w-32ce1a70a5.webp"
    ],
    "ans": 0,
    "made": true
@@ -840,61 +840,61 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "ngân hàng",
+   "vi": "thức dậy",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "bệnh viện",
+   "vi": "đánh răng",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "siêu thị",
+   "vi": "rửa mặt",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "bưu điện",
+   "vi": "ăn cơm",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "sân bay",
+   "vi": "lên mạng",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "xe buýt",
+   "vi": "tin tức",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "cuối tuần",
+   "vi": "chuẩn bị",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "đi dạo",
+   "vi": "bữa sáng",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "thư ký",
+   "vi": "hàng ngày",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "vất vả",
+   "vi": "gia đình",
    "pts": 1
   },
   {
@@ -930,20 +930,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-xe-buyt.webp",
-   "ask": "그림을 보고 말해 보세요 — 당신은 이것을 타고 어디에 가나요? 어디에서 일하고, 몇 시에 출근하나요? (3문장)",
+   "img": "w-e43ed87d43.webp",
+   "ask": "그림을 보고 말해 보세요 — 여기는 어디이고, 누가 언제 여기에 오며, 여기엔 무엇이 많나요? (3문장)",
    "model": [
     {
-     "vi": "Mỗi ngày tôi đi làm bằng xe buýt.",
-     "ko": "저는 버스를 타고 출근해요."
+     "vi": "Đây là chợ gần nhà tôi.",
+     "ko": "여기는 우리 집 근처 시장이에요."
     },
     {
-     "vi": "Tôi làm việc ở ngân hàng.",
-     "ko": "저는 은행에서 일해요."
+     "vi": "Mẹ tôi đi chợ mỗi sáng.",
+     "ko": "어머니는 매일 아침 시장에 가요."
     },
     {
-     "vi": "Tôi đi làm lúc bảy giờ sáng.",
-     "ko": "저는 아침 7시에 출근해요."
+     "vi": "Ở chợ có nhiều người.",
+     "ko": "시장에는 사람이 많아요."
     }
    ],
    "n": 3,
@@ -952,20 +952,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-sieu-thi.webp",
-   "ask": "그림을 보고 말해 보세요 — 여기는 어디이고, 몇 시에 문을 열고, 당신은 언제 여기에 오나요? (3문장)",
+   "img": "w-cb02a117dd.webp",
+   "ask": "그림을 보고 말해 보세요 — 가족이 무엇을 하고 있고, 몇 시에 저녁을 먹으며, 누가 요리하나요? (3문장)",
    "model": [
     {
-     "vi": "Đây là siêu thị gần nhà tôi.",
-     "ko": "여기는 우리 집 근처 슈퍼마켓이에요."
+     "vi": "Gia đình tôi đang ngồi ở bàn ăn.",
+     "ko": "우리 가족은 식탁에 앉아 있어요."
     },
     {
-     "vi": "Siêu thị mở cửa lúc bảy giờ sáng.",
-     "ko": "슈퍼마켓은 아침 7시에 문을 열어요."
+     "vi": "Chúng tôi ăn tối lúc bảy giờ.",
+     "ko": "우리는 7시에 저녁을 먹어요."
     },
     {
-     "vi": "Tôi thường đi siêu thị vào buổi tối.",
-     "ko": "저는 보통 저녁에 슈퍼마켓에 가요."
+     "vi": "Mẹ tôi nấu ăn rất ngon.",
+     "ko": "어머니는 요리를 아주 맛있게 해요."
     }
    ],
    "n": 3,
@@ -998,7 +998,7 @@
    "ask": "친구가 '요즘 어때요?'라고 묻습니다. 요즘 생활을 말해 보세요 — 바쁜지, 몇 시에 자는지, 오늘 기분. (3문장)",
    "model": [
     {
-     "vi": "Dạo này tôi rất bận.",
+     "vi": "Dạo này công việc của tôi rất bận.",
      "ko": "요즘 저는 아주 바빠요."
     },
     {

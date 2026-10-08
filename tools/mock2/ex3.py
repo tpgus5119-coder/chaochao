@@ -2,13 +2,13 @@
 # 모의고사 3 — 장소·주소·초대·구경 (교재 5·6과 중심). 2026-10-07 대표님 "단어만 4~7 위주로" 에 따라 가족 소개(2~3과) 중심이던 것을 다시 씀.
 from common import *
 q = []
-q += [TF("nhà sách", "Đây là nhà sách. Hôm nay nhà sách giảm giá 30%.", True), TF("bệnh viện", "Đây là bưu điện. Tôi đến đây để gửi thư.", False),
-      TF("quán cà phê", "Chúng tôi đang ngồi nói chuyện ở quán cà phê.", True), TF("xe buýt", "Đây là tắc xi. Tôi đi sân bay bằng tắc xi.", False), TF("siêu thị", "Mẹ tôi đang mua sắm ở siêu thị gần nhà.", True)]
-q += [PK(["ngân hàng", "bưu điện", "sân bay", "công ty"], "Tôi đến đây để gửi thư cho bố mẹ.", 1),
-      PK(["máy bay", "xe", "đi bộ", "đi làm"], "Máy bay sắp cất cánh rồi.", 0),
-      PK(["chợ", "căng tin", "bảo tàng", "ga"], "Hôm nay tôi đi tham quan bảo tàng với bạn cùng lớp.", 2),
-      PK(["văn phòng", "đài truyền hình", "nhà thờ", "phố đi bộ"], "Cuối tuần tôi thường đi dạo ở phố đi bộ.", 3),
-      PK(["quán ăn", "gia đình", "bạn bè", "máy tính"], "Tối nay chúng ta đi ăn tối ở quán ăn gần trường nhé.", 0)]
+q += [TF("nhà sách", "Đây là nhà sách. Hôm nay nhà sách giảm giá 30%.", True), TF("bưu điện", "Đây là bệnh viện. Bác sĩ ở đây rất giỏi.", False),
+      TF("quán cà phê", "Chúng tôi đang ngồi nói chuyện ở quán cà phê.", True), TF("nhà hàng", "Đây là bưu điện. Tôi đến đây để gửi thư.", False), TF("bia", "Bia tươi ở đây rất ngon.", True)]
+q += [PK(["bảo tàng", "nhà thờ", "phố đi bộ", "đài truyền hình"], "Hôm nay tôi đi tham quan bảo tàng với bạn cùng lớp.", 0),
+      PK(["đi dạo", "tham quan", "nói chuyện", "uống"], "Chúng tôi đang nói chuyện ở quán cà phê.", 2),
+      PK(["mời", "ăn tối", "khen", "hỏi"], "Tối nay tôi mời anh đi ăn tối.", 0),
+      PK(["mua", "sách", "giảm giá", "địa chỉ"], "Sách ở đây giảm giá 30%.", 2),
+      PK(["giỏi", "du khách", "thân thiện", "trẻ"], "Anh ấy nói tiếng Việt rất giỏi.", 0)]
 q += [A3("Bây giờ họ đi đâu?", "Bây giờ chúng ta sẽ đi mua sách ở nhà sách FAHASA.", ["nhà sách", "bưu điện", "siêu thị"]),
       A3("Nhà sách FAHASA số mấy?", "Nhà sách FAHASA ở số 40 đường Nguyễn Huệ.", ["số 40", "số 14", "số 4"]),
       A3("Hôm nay nhà sách giảm giá bao nhiêu?", "Hôm nay nhà sách giảm giá 30%.", ["30%", "13%", "3%"]),
@@ -27,7 +27,7 @@ q += [A4("Bây giờ chúng ta đi đâu?", ["Chúng ta đi mua sách.", "Lúc 8
       A4("Ngày mai chị có rảnh không?", ["Có, tôi rảnh từ 2 giờ chiều.", "Ở bảo tàng.", "Giảm giá 20%."]),
       A4("Anh có biết chỗ đó địa chỉ số mấy không?", ["Số 125, Quận 1.", "Rất đẹp.", "Từ 9 giờ sáng."]),
       A4("Tối nay chúng ta ăn ở đâu?", ["Ở quán ăn gần trường nhé.", "Khoảng 40 phút.", "Vì tôi bận."]),
-      A4("Xe sắp đến chưa anh?", ["Sắp đến rồi, cô.", "Ở Quận 7.", "Tôi đi bằng xe buýt."]),
+      A4("Tắc xi sắp đến chưa anh?", ["Sắp đến rồi, cô.", "Ở Quận 7.", "Tôi đi bằng xe buýt."]),
       A4("Cô nói tiếng Việt giỏi quá!", ["Cám ơn anh.", "Không, tôi đi tắc xi.", "Ở gần đây."])]
 bank = ["sẽ", "quá", "à", "tại sao", "chúng ta"]
 q += [B1("Bây giờ ____ đi đâu?", bank, 4), B1("Chúng ta ____ đi mua sách.", bank, 0), B1("Cô nói tiếng Việt giỏi ____!", bank, 1),
@@ -67,11 +67,11 @@ q.append(C3("베트남에서 가 본 곳 — 어디를 구경했는지(성당·�
             ["Tuần trước tôi đã đi tham quan Nhà thờ Đức Bà.", "Nhà thờ Đức Bà ở Quận 1, gần Bưu điện Thành phố.", "Tôi đi với bạn cùng lớp của tôi.", "Chúng tôi đi bằng tắc xi, mất khoảng 20 phút.", "Sau đó chúng tôi đi Bảo tàng Lịch sử.",
              "Bảo tàng ở gần trường Nhân văn.", "Bảo tàng rất thú vị.", "Buổi tối chúng tôi ăn tối ở một quán ăn ở phố đi bộ.", "Món ăn ở đó ngon lắm.", "Tuần sau tôi muốn đi Bảo tàng Áo dài."]))
 q += D1(["địa chỉ", "giảm giá", "nhà sách", "tắc xi", "bảo tàng", "tham quan", "rảnh", "mời", "đặc biệt", "thân thiện"],
-        ["Chúng ta sẽ đi mua sách.", "Hôm nay nhà sách giảm giá 20%.", "Chị ấy nói tiếng Việt rất giỏi.", "Ngày mai anh có rảnh không?", "Chị sắp đi chưa?"])
-q += [D2("nhà hàng", "그림을 보고 말해 보세요 — 여기는 어디이고, 어디에 있고, 무엇이 맛있나요? (3문장)",
-         ["Đây là nhà hàng Việt Nam.", "Nhà hàng ở Quận 1.", "Món ăn ở đây ngon lắm."], ["여기는 베트남 식당이에요.", "식당은 1군에 있어요.", "여기 음식은 아주 맛있어요."]),
-      D2("tắc xi", "그림을 보고 말해 보세요 — 이것은 무엇이고, 당신은 이것을 타고 어디에 가며, 얼마나 걸리나요? (3문장)",
-         ["Đây là tắc xi.", "Tôi đi sân bay bằng tắc xi.", "Từ đây đến sân bay mất khoảng ba mươi phút."], ["이것은 택시예요.", "저는 택시로 공항에 가요.", "여기서 공항까지 30분쯤 걸려요."])]
+        ["Chúng ta sẽ đi mua sách.", "Hôm nay siêu thị giảm giá 10%.", "Chị ấy nói tiếng Việt rất giỏi.", "Ngày mai anh có rảnh không?", "Chị sắp đi chưa?"])
+q += [D2("khách", "그림을 보고 말해 보세요 — 이 사람들은 누구이고, 어디를 구경하며, 베트남어를 어떻게 하나요? (3문장)",
+         ["Đây là khách du lịch.", "Họ đi tham quan Nhà thờ Đức Bà.", "Họ nói tiếng Việt rất giỏi."], ["이 사람들은 관광객이에요.", "그들은 노트르담 성당을 구경해요.", "그들은 베트남어를 아주 잘해요."]),
+      D2("tiệm ăn", "그림을 보고 말해 보세요 — 여기는 어디이고, 어디에 있고, 무엇이 맛있나요? (3문장)",
+         ["Đây là tiệm ăn ở Quận 1.", "Món ăn ở đây ngon lắm.", "Tối nay tôi mời bạn đến đây ăn tối."], ["여기는 1군에 있는 식당이에요.", "여기 음식은 아주 맛있어요.", "오늘 저녁 친구를 여기로 초대할 거예요."])]
 q += [D3("택시를 탔습니다. 기사가 '어디 가세요?'라고 묻습니다. 목적지·번지·어디 근처인지 말해 보세요. (3문장)",
          ["Trường Nhân văn, anh.", "Số 10 đường Đinh Tiên Hoàng, Quận 1.", "Gần Đài Truyền hình Thành phố."], ["인문대요, 기사님.", "딘띠엔호앙 거리 10번지, 1군이요.", "시 방송국 근처예요."]),
       D3("친구를 식당에 초대해 보세요 — 어디에 있는지, 무엇이 맛있는지, 몇 시에 만날지. (3문장)",

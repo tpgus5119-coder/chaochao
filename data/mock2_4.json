@@ -12,78 +12,52 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-buu-dien.webp",
-   "audio": "Đây là bưu điện. Tôi đến đây để gửi thư.",
+   "img": "b-xe-buyt.webp",
+   "audio": "Anh ấy đi làm bằng xe buýt số 8.",
    "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-ngan-hang.webp",
-   "audio": "Đây là nhà sách. Ở đây có nhiều sách tiếng Việt.",
+   "img": "b-tac-xi.webp",
+   "audio": "Đây là xe buýt số 8.",
    "ans": false,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "quan-ca-phe.webp",
-   "audio": "Họ đang uống cà phê ở quán cà phê.",
+   "img": "b-may-bay.webp",
+   "audio": "Tuần sau tôi đi Hà Nội bằng máy bay.",
    "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "w-8b78607617.webp",
-   "audio": "Em ấy đang đi ngủ.",
-   "ans": false,
+   "img": "b-di-bo.webp",
+   "audio": "Nhà tôi gần công ty nên tôi đi bộ đi làm.",
+   "ans": true,
    "made": true
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
    "img": "b-san-bay.webp",
-   "audio": "Đây là sân bay. Máy bay sắp bay.",
-   "ans": true,
+   "audio": "Đây là ga Sài Gòn.",
+   "ans": false,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Cuối tuần tôi thường đi nhà sách mua sách.",
+   "audio": "Đây là ga. Tôi đi Đà Nẵng từ đây.",
    "opts": [
-    "b-benh-vien.webp",
-    "b-nha-sach.webp",
-    "w-e43ed87d43.webp",
-    "b-bao-tang.webp"
-   ],
-   "ans": 1,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
-   "audio": "Bố tôi là bác sĩ. Ông ấy rất bận.",
-   "opts": [
-    "w-81eaf9dd0c.webp",
-    "b-giao-vien.webp",
-    "b-bac-si.webp",
-    "b-ky-su.webp"
-   ],
-   "ans": 2,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
-   "audio": "Tối nay chúng ta ăn ở quán ăn gần công ty nhé.",
-   "opts": [
-    "quan-an.webp",
-    "b-van-phong.webp",
-    "b-cong-ty.webp",
-    "b-ga.webp"
+    "b-ga.webp",
+    "w-4811a1f585.webp",
+    "w-2fa5ca02be.webp",
+    "w-b32ddf0cb5.webp"
    ],
    "ans": 0,
    "made": true
@@ -91,27 +65,53 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Tuần sau tôi đi Hà Nội. Tôi sẽ đi bằng máy bay.",
+   "audio": "Máy bay sắp cất cánh.",
    "opts": [
-    "b-tac-xi.webp",
-    "w-f352785b24.webp",
-    "b-may-bay.webp",
-    "b-di-lam.webp"
+    "b-cat-canh.webp",
+    "b-bay.webp",
+    "b-phut.webp",
+    "w-46683ebf01.webp"
    ],
-   "ans": 2,
+   "ans": 0,
    "made": true
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Nhà tôi gần công ty nên tôi đi bộ đi làm.",
+   "audio": "Em ấy đi học lúc 7 giờ.",
    "opts": [
-    "b-lai-xe.webp",
-    "b-di-bo.webp",
-    "w-c388775af9.webp",
-    "b-buon-ngu.webp"
+    "w-8b78607617.webp",
+    "w-345d386122.webp",
+    "b-di-den.webp",
+    "w-1f5458b281.webp"
    ],
-   "ans": 1,
+   "ans": 0,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Mẹ tôi đang mua sắm ở siêu thị.",
+   "opts": [
+    "b-sieu-thi.webp",
+    "b-mo-cua.webp",
+    "b-trung-tam.webp",
+    "b-tien-loi.webp"
+   ],
+   "ans": 0,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Các sinh viên đang học trong lớp.",
+   "opts": [
+    "w-1b8ee8a47f.webp",
+    "w-dcbadde318.webp",
+    "ban.webp",
+    "ghe.webp"
+   ],
+   "ans": 0,
    "made": true
   },
   {
@@ -258,9 +258,9 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Nhà sách ở đâu?",
+   "audio": "Siêu thị ở đâu?",
    "opts": [
-    "Ở Quận 1.",
+    "Ở Quận 7.",
     "Lúc 8 giờ.",
     "Rất rẻ."
    ],
@@ -384,9 +384,9 @@
    "sec": "A 듣기 · 4 듣고 질문에 답하기",
    "k": "choice",
    "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Tối nay chúng ta ăn ở đâu?",
+   "audio": "Tối nay chúng ta đi đâu?",
    "opts": [
-    "Ở quán ăn gần công ty.",
+    "Đi quán ăn gần công ty.",
     "Lúc 7 giờ tối.",
     "Ăn với bạn."
    ],
@@ -786,10 +786,10 @@
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Tôi đi làm bằng lúc 8 giờ.",
+   "vi": "Tôi đi học bằng lúc 8 giờ.",
    "bad": 3,
-   "fix": "Tôi đi làm lúc 8 giờ.",
-   "ko": "저는 8시에 출근해요. (시각 앞은 lúc)"
+   "fix": "Tôi đi học lúc 8 giờ.",
+   "ko": "저는 8시에 학교에 가요. (시각 앞은 lúc)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
@@ -802,10 +802,10 @@
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
    "k": "errpick",
-   "vi": "Tôi làm việc từ 8 giờ và 5 giờ.",
-   "bad": 6,
-   "fix": "Tôi làm việc từ 8 giờ đến 5 giờ.",
-   "ko": "저는 8시부터 5시까지 일해요. (từ … đến)"
+   "vi": "Tôi học từ 8 giờ và 11 giờ.",
+   "bad": 5,
+   "fix": "Tôi học từ 8 giờ đến 11 giờ.",
+   "ko": "저는 8시부터 11시까지 공부해요. (từ … đến)"
   },
   {
    "sec": "C 쓰기 · 2 틀린 곳 찾기",
@@ -845,19 +845,7 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "nhà sách",
-   "pts": 1
-  },
-  {
-   "sec": "D 말하기 · 1 낱말 읽기",
-   "k": "say",
-   "vi": "quán cà phê",
-   "pts": 1
-  },
-  {
-   "sec": "D 말하기 · 1 낱말 읽기",
-   "k": "say",
-   "vi": "phố đi bộ",
+   "vi": "xe buýt",
    "pts": 1
   },
   {
@@ -869,25 +857,13 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "tắc xi",
+   "vi": "sân bay",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "địa chỉ",
-   "pts": 1
-  },
-  {
-   "sec": "D 말하기 · 1 낱말 읽기",
-   "k": "say",
-   "vi": "giảm giá",
-   "pts": 1
-  },
-  {
-   "sec": "D 말하기 · 1 낱말 읽기",
-   "k": "say",
-   "vi": "bao lâu",
+   "vi": "ga",
    "pts": 1
   },
   {
@@ -899,7 +875,31 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
+   "vi": "xa",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
    "vi": "gần",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "phút",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "bao lâu",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "đường",
    "pts": 1
   },
   {
@@ -911,7 +911,7 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Tôi đi làm bằng xe buýt.",
+   "vi": "Chị ấy đi học bằng xe buýt.",
    "pts": 2
   },
   {
@@ -935,20 +935,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-sieu-thi.webp",
-   "ask": "그림을 보고 말해 보세요 — 여기는 어디이고, 어디에 있고, 몇 시에 문을 여나요? (3문장)",
+   "img": "w-f352785b24.webp",
+   "ask": "그림을 보고 말해 보세요 — 이것은 누구의 차이고, 누가 무엇에 쓰며, 집에서 회사까지 얼마나 걸리나요? (3문장)",
    "model": [
     {
-     "vi": "Đây là siêu thị.",
-     "ko": "여기는 슈퍼마켓이에요."
+     "vi": "Đây là xe của bố tôi.",
+     "ko": "이것은 아버지 차예요."
     },
     {
-     "vi": "Siêu thị ở gần nhà tôi.",
-     "ko": "슈퍼마켓은 우리 집 근처에 있어요."
+     "vi": "Bố tôi lái xe đi làm mỗi ngày.",
+     "ko": "아버지는 매일 차로 출근해요."
     },
     {
-     "vi": "Siêu thị mở cửa lúc bảy giờ sáng.",
-     "ko": "슈퍼마켓은 아침 7시에 문을 열어요."
+     "vi": "Từ nhà đến công ty mất khoảng ba mươi phút.",
+     "ko": "집에서 회사까지 30분쯤 걸려요."
     }
    ],
    "n": 3,
@@ -957,20 +957,20 @@
   {
    "sec": "D 말하기 · 3 그림 보고 말하기",
    "k": "speak",
-   "img": "b-xe-buyt.webp",
-   "ask": "그림을 보고 말해 보세요 — 이것은 무엇이고, 당신은 무엇을 타고 학교에 가며, 얼마나 걸리나요? (3문장)",
+   "img": "b-duong.webp",
+   "ask": "그림을 보고 말해 보세요 — 여기는 어느 거리이고, 무엇이 많으며, 주말엔 어떤가요? (3문장)",
    "model": [
     {
-     "vi": "Đây là xe buýt.",
-     "ko": "이것은 버스예요."
+     "vi": "Đây là đường Nguyễn Huệ.",
+     "ko": "여기는 응우옌후에 거리예요."
     },
     {
-     "vi": "Tôi đi học bằng xe buýt.",
-     "ko": "저는 버스를 타고 학교에 가요."
+     "vi": "Ở đây có nhiều quán cà phê.",
+     "ko": "여기엔 카페가 많아요."
     },
     {
-     "vi": "Từ nhà đến trường mất ba mươi phút.",
-     "ko": "집에서 학교까지 30분 걸려요."
+     "vi": "Cuối tuần có nhiều người đi dạo.",
+     "ko": "주말엔 산책하는 사람이 많아요."
     }
    ],
    "n": 3,

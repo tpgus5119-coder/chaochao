@@ -65,25 +65,12 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Mẹ tôi là nội trợ. Mẹ tôi đang nấu ăn ở nhà.",
-   "opts": [
-    "b-di-lam.webp",
-    "b-an-trua.webp",
-    "b-nau-an.webp",
-    "w-ca301a7708.webp"
-   ],
-   "ans": 2,
-   "made": true
-  },
-  {
-   "sec": "A 듣기 · 2 맞는 그림",
-   "k": "pick",
    "audio": "Anh ấy là nhân viên siêu thị. Anh ấy làm việc ở siêu thị từ 7 giờ sáng.",
    "opts": [
-    "b-sieu-thi.webp",
-    "quan-ca-phe.webp",
-    "b-buu-dien.webp",
-    "b-nha-sach.webp"
+    "w-43975b9eea.webp",
+    "w-5044d81a3d.webp",
+    "w-ff7bcf928d.webp",
+    "w-be4c38c205.webp"
    ],
    "ans": 0,
    "made": true
@@ -91,14 +78,14 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Tôi đi làm bằng xe buýt lúc 7 giờ rưỡi.",
+   "audio": "Ông ấy lái xe tắc xi ở Quận 1.",
    "opts": [
-    "b-tac-xi.webp",
-    "b-may-bay.webp",
-    "b-xe-buyt.webp",
-    "b-di-bo.webp"
+    "b-lai-xe.webp",
+    "b-di-lam.webp",
+    "b-may-tinh.webp",
+    "w-9cd5b4f036.webp"
    ],
-   "ans": 2,
+   "ans": 0,
    "made": true
   },
   {
@@ -108,10 +95,23 @@
    "opts": [
     "b-van-phong.webp",
     "b-cong-ty.webp",
-    "b-giao-vien.webp",
-    "w-2fa6fbb660.webp"
+    "w-2fa6fbb660.webp",
+    "w-6633539de9.webp"
    ],
-   "ans": 3,
+   "ans": 2,
+   "made": true
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Cô ấy là giáo viên ở trường đại học này.",
+   "opts": [
+    "b-giao-vien.webp",
+    "w-37d71cfca2.webp",
+    "b-co-quan.webp",
+    "b-nghe.webp"
+   ],
+   "ans": 1,
    "made": true
   },
   {
@@ -917,7 +917,7 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Buổi chiều tôi làm việc từ 2 giờ đến 7 giờ.",
+   "vi": "Tôi làm việc năm ngày một tuần.",
    "pts": 2
   },
   {
@@ -929,7 +929,7 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Chị sắp đi ăn trưa chưa?",
+   "vi": "Các anh sắp đi ăn trưa chưa?",
    "pts": 2
   },
   {
