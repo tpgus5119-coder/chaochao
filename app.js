@@ -9270,17 +9270,16 @@ function shareLink(title, mode, words) {
 function sharePopup(title, words) {
   const back = el('div', 'modalback'), box = el('div', 'modalbox');
   box.append(el('div', 'pairpophd', '<b>' + esc(title) + '</b><span>' + words.length + tr('개') + '</span>'));
-  const col = el('div', 'sharebox'); const out = el('div'); 
-  const send = async (mode, label) => {
-    const url = shareLink(title, mode, words);
+  const out = el('div');
+  const send = async () => {                              // 링크 하나 — 열면 카드, 카드 안 [쇼츠]로 바꿈 (대표님 2026-10-08 "링크 하나로 합치자")
+    const url = shareLink(title, 'cards', words);
     out.textContent = '';
-    if (navigator.share) { try { await navigator.share({ title: title + ' · ' + label, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+    if (navigator.share) { try { await navigator.share({ title, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     try { await navigator.clipboard.writeText(url); out.append(el('p', 'note', tr('링크를 복사했습니다 — 붙여 넣어 보내세요'))); } catch (e) { out.append(el('p', 'note', tr('아래 링크를 길게 눌러 복사하세요'))); }
     out.append(el('div', 'sharelink', esc(url)));
   };
-  const c = el('button', 'primary big', '🃏 ' + tr('카드 학습 링크')); c.type = 'button'; c.onclick = () => send('cards', tr('카드 학습'));
-  const sh = el('button', 'primary big', '⚡ ' + tr('쇼츠 링크')); sh.type = 'button'; sh.onclick = () => send('shorts', tr('쇼츠'));
-  col.append(c, sh); box.append(col, out);
+  const c = el('button', 'primary big', '🔗 ' + tr('공유 링크')); c.type = 'button'; c.style.width = '100%'; c.onclick = send;
+  box.append(c, out);
   const ok = el('button', 'ghost', tr('닫기')); ok.type = 'button'; ok.onclick = () => back.remove(); const row = el('div', 'bugbtns'); row.append(ok); box.append(row);
   back.append(box); back.onclick = e => { if (e.target === back) back.remove(); }; document.body.append(back);
 }
@@ -9290,15 +9289,17 @@ function shareWords(cb) {
   const go1 = () => { if (!GYBM) gybmBuild(go2); else go2(); };
   if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { COURSE = j; loadCWords(); go1(); }).catch(go1); else go1();
 }
+function shareCards() { NAV.length = 0; startLearn({ day: 'SH:' + SHARE.title, theme: SHARE.title, words: SHARE.words.slice(), share: true }); }
+function shareShorts() { NAV.length = 0; flashRun(SHARE.words.slice(), SHARE.title, { auto: true }); }
 function shareEntry() {
   shareWords(words => {
     const t = SHARE.t || tr('단어');
+    SHARE.words = words; SHARE.title = t;
     const b = $('#subBody'); b.textContent = '';
     if (!words.length) { b.append(el('p', 'note', tr('이 링크의 낱말을 찾지 못했습니다'))); show('sub', t, false); return; }
-    /* 고르는 화면 없이 바로 그 모드만 (대표님 2026-10-08 "오로지 학습카드로 학습만 하고 끝나도록, 쇼츠도") — 끝나고 '홈으로'를 누르면 [다시 보기] 하나뿐 */
-    const run = () => { NAV.length = 0; if (SHARE.m === 'shorts') flashRun(words.slice(), t, { auto: true }); else startLearn({ day: 'SH:' + t, theme: t, words: words.slice(), share: true }); };
-    if (!SHARE.started) { SHARE.started = true; run(); return; }
-    const box = el('div', 'sharebox'); const again = el('button', 'primary big', tr('다시 보기')); again.type = 'button'; again.onclick = run; box.append(again); b.append(box);
+    /* 고르는 화면 없이 바로 카드 (대표님 2026-10-08 "오로지 학습카드로 학습만 하고 끝나도록") — 카드 안 [쇼츠]로 바꿀 수 있다. 끝나고 '홈으로'를 누르면 [다시 보기] 하나뿐 */
+    if (!SHARE.started) { SHARE.started = true; (SHARE.m === 'shorts' ? shareShorts : shareCards)(); return; }
+    const box = el('div', 'sharebox'); const again = el('button', 'primary big', tr('다시 보기')); again.type = 'button'; again.onclick = shareCards; box.append(again); b.append(box);
     show('sub', t, false);
   });
 }
@@ -9818,9 +9819,12 @@ function drawCard() {
     const so = southOf(x.vi);                                // 남부 말이면 작은 딱지 — 북부 기준 (2026-09-29)
     if (so) row.append(el('span', 'southpill', tr('남부')));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
-    if (L.day.share) {                        // 공유로 받은 카드: ☆·📁 대신 면 바꾸는 단추만 (대표님 2026-10-08 "별표와 폴더 버튼 없애고 카드 면 전환 버튼만")
-      const fb = el('button', 'facebtn', tr('발음 면') + ' ›'); fb.type = 'button'; fb.onclick = ev => { ev.stopPropagation(); setFace('pron'); }; row.append(fb);
-      const back2 = el('div', 'facerow'); const bb = el('button', 'facebtn', '‹ ' + tr('단어 면')); bb.type = 'button'; bb.onclick = ev => { ev.stopPropagation(); setFace('card'); }; back2.append(bb); pf.prepend(back2);
+    if (L.day.share) {                        // 공유로 받은 카드: ☆·📁 없음. 카드 우측 맨 위에 [발음]·[쇼츠], 발음 면엔 [단어]·[쇼츠] (대표님 2026-10-08)
+      const tools = (lbl, f) => { const g = el('div', 'sharetools');
+        const fb = el('button', 'facebtn', tr(lbl)); fb.type = 'button'; fb.onclick = ev => { ev.stopPropagation(); setFace(f); };
+        const sb = el('button', 'facebtn', '⚡ ' + tr('쇼츠')); sb.type = 'button'; sb.onclick = ev => { ev.stopPropagation(); shareShorts(); };
+        g.append(fb, sb); return g; };
+      cf.prepend(tools('발음', 'pron')); pf.prepend(tools('단어', 'card'));
     } else {
       row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
       row.append(folderBtn(x.vi, x.ko));        // 내 단어장 폴더에 담기 (2026-10-08)
@@ -10197,6 +10201,7 @@ function drawFlash() {
   if (w && w.g) top.append(el('span', 'flgrp', esc(w.g)));   // 소묶음(과일 · 채소 …) — 2026-10-07 재편
   let chip = null;
   if (FL.auto) { chip = el('span', 'flauto' + (FL.paused ? ' off' : ''), FL.paused ? '⏸ ' + tr('멈춤 — 누르면 계속') : '⚡ ' + tr('자동 재생 — 누르면 멈춤')); top.append(chip); }
+  if (SHARE && FL.auto) { const cb = el('button', 'facebtn', '🃏 ' + tr('카드')); cb.type = 'button'; cb.onclick = ev => { ev.stopPropagation(); clearTimeout(FLTM); shareCards(); }; top.append(cb); }   // 공유 쇼츠 → 카드로 (2026-10-08)
   c.append(top);
   const p = pic(w, 'pic'); if (p) c.append(p);
   c.append(el('div', 'vi', esc(w.vi)));

@@ -3093,3 +3093,6 @@ body.sharemode .pagearrow{top:50%}
 .facebtn{border:1px solid var(--accent); color:var(--accent); background:var(--card); border-radius:999px; padding:4px 10px; font-size:13px; cursor:pointer; margin-left:auto}
 .facerow{display:flex; justify-content:flex-start; margin:0 0 8px}
 .facerow .facebtn{margin-left:0}
+body.sharemode .wfcard, body.sharemode .wfpron{position:relative}
+.sharetools{position:absolute; top:6px; right:8px; display:flex; gap:6px; z-index:3}
+.sharetools .facebtn{margin-left:0}
