@@ -11610,6 +11610,11 @@ function dailyStudyOnly(t) {
     }));
     renderRoadmap(box, nodes, null, { freeNav: true });
     b.append(box);
+    if (!SHARE) {                                               // 학습 탭에서도 같은 링크 (대표님 2026-10-08 밤 "학습-단어시험 공유") — 받는 사람은 낱말 전부 한 세트 카드 → 실제 시험
+      const sh = el('button', 'ghost big', '🔗 ' + tr('공유')); sh.type = 'button'; sh.style.width = '100%'; sh.style.marginTop = '10px';
+      sh.onclick = () => sharePopup(t.label, dailyWords(t), shareEncodeTest(t.key), tr('낱말') + ' ' + t.words.length + ' · ' + tr('문장') + ' ' + t.sents.length);
+      b.append(sh);
+    }
   });
 }
 function dailyRound(t) {
