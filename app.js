@@ -3127,6 +3127,7 @@ function show(v, title, canBack) {
   CURV = v;
   if (v === 'home') ACTIVE_TAB = 'home';
   topBtns();
+  if (SHARE) { $('#top').hidden = true; document.body.classList.add('sharemode'); if (INK.btn) INK.btn.hidden = true; }   // 공유로 받은 화면엔 머리띠·손글씨 단추도 없다 — 카드(쇼츠)만 (대표님 2026-10-08)
   /* 카드·테스트 화면에서는 아래 탭 4개를 숨긴다 (대표님 지시 2026-09-30: "하단은 손이 자주 가서 실수로 눌러 학습 중에 빠져나가는 일이 비일비재할 것" —
      나가는 길은 머리띠의 [‹ 뒤로] 하나뿐). 진도는 세트를 끝내야 확정되므로 실수로 나가면 그 세트가 날아간다. */
   if (v === 'learn' || v === 'quiz') { $('#tabbar').hidden = true; document.body.classList.remove('has-tabbar'); }
@@ -9291,18 +9292,14 @@ function shareWords(cb) {
 }
 function shareEntry() {
   shareWords(words => {
-    const b = $('#subBody'); b.textContent = '';
     const t = SHARE.t || tr('단어');
-    b.append(el('p', 'lede', esc(t) + ' · ' + words.length + tr('개')));
+    const b = $('#subBody'); b.textContent = '';
     if (!words.length) { b.append(el('p', 'note', tr('이 링크의 낱말을 찾지 못했습니다'))); show('sub', t, false); return; }
-    const box = el('div', 'sharebox');
-    const cards = () => { dive(shareEntry); startLearn({ day: 'SH:' + t, theme: t, words: words.slice(), share: true }); };
-    const shorts = () => { dive(shareEntry); flashRun(words.slice(), t, { auto: true }); };
-    const quiz = () => { dive(shareEntry); startWordbookQuiz(words.map(w => w.vi), t); };
-    [['🃏 ' + tr('카드로 학습'), cards, 'primary'], ['⚡ ' + tr('쇼츠 재생'), shorts, 'primary'], ['✍ ' + tr('문제 풀기'), quiz, 'ghost']].forEach(([lb, fn, cls]) => { const x = el('button', cls + ' big', lb); x.type = 'button'; x.onclick = fn; box.append(x); });
-    b.append(box);
+    /* 고르는 화면 없이 바로 그 모드만 (대표님 2026-10-08 "오로지 학습카드로 학습만 하고 끝나도록, 쇼츠도") — 끝나고 '홈으로'를 누르면 [다시 보기] 하나뿐 */
+    const run = () => { NAV.length = 0; if (SHARE.m === 'shorts') flashRun(words.slice(), t, { auto: true }); else startLearn({ day: 'SH:' + t, theme: t, words: words.slice(), share: true }); };
+    if (!SHARE.started) { SHARE.started = true; run(); return; }
+    const box = el('div', 'sharebox'); const again = el('button', 'primary big', tr('다시 보기')); again.type = 'button'; again.onclick = run; box.append(again); b.append(box);
     show('sub', t, false);
-    if (!SHARE.started) { SHARE.started = true; (SHARE.m === 'shorts' ? shorts : cards)(); }   // 링크를 열면 바로 그 모드로
   });
 }
 function wbHost() { const ko = learnKo(); return [ko ? $('#examBody') : $('#subBody'), ko ? 'exam' : 'sub']; }
@@ -9821,8 +9818,13 @@ function drawCard() {
     const so = southOf(x.vi);                                // 남부 말이면 작은 딱지 — 북부 기준 (2026-09-29)
     if (so) row.append(el('span', 'southpill', tr('남부')));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
-    row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
-    row.append(folderBtn(x.vi, x.ko));        // 내 단어장 폴더에 담기 (2026-10-08)
+    if (L.day.share) {                        // 공유로 받은 카드: ☆·📁 대신 면 바꾸는 단추만 (대표님 2026-10-08 "별표와 폴더 버튼 없애고 카드 면 전환 버튼만")
+      const fb = el('button', 'facebtn', tr('발음 면') + ' ›'); fb.type = 'button'; fb.onclick = ev => { ev.stopPropagation(); setFace('pron'); }; row.append(fb);
+      const back2 = el('div', 'facerow'); const bb = el('button', 'facebtn', '‹ ' + tr('단어 면')); bb.type = 'button'; bb.onclick = ev => { ev.stopPropagation(); setFace('card'); }; back2.append(bb); pf.prepend(back2);
+    } else {
+      row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
+      row.append(folderBtn(x.vi, x.ko));        // 내 단어장 폴더에 담기 (2026-10-08)
+    }
     cf.append(row);
     /* 뜻이 같은 다른 단어 — 지우지 않고 **같이 보여 준다** (대표님 지시, 2026-08-30).
        ngang vai 와 rộng vai 는 둘 다 '어깨 넓이'다. 하나만 두면 나머지를 못 배운다. */

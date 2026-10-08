@@ -3087,3 +3087,9 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 .wbselbar b{margin-right:auto; font-size:14px}
 .wbselbar button{padding:8px 12px; font-size:14px}
 .wbselhint{font-size:12px; color:var(--dim); margin:0 0 8px}
+/* 공유로 받은 화면 — 머리띠·탭 줄 없이 카드만 (2026-10-08) */
+body.sharemode main{padding-top:calc(env(safe-area-inset-top) + 12px)}
+body.sharemode .pagearrow{top:50%}
+.facebtn{border:1px solid var(--accent); color:var(--accent); background:var(--card); border-radius:999px; padding:4px 10px; font-size:13px; cursor:pointer; margin-left:auto}
+.facerow{display:flex; justify-content:flex-start; margin:0 0 8px}
+.facerow .facebtn{margin-left:0}
