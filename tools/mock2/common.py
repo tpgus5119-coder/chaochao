@@ -19,8 +19,8 @@ def img(word):
     k = U.normalize('NFC', word).lower()
     if k not in IMG: raise SystemExit(f'그림 없음: {word}')
     return IMG[k]
-def TF(word, audio, ans): return {"sec": "A 듣기 · 1 그림 맞다/틀리다", "k": "tf", "img": img(word), "audio": audio, "ans": ans, "made": True}
-def PK(pics, audio, ans): return {"sec": "A 듣기 · 2 맞는 그림", "k": "pick", "audio": audio, "opts": [img(w) for w in pics], "ans": ans, "made": True}
+def TF(word, audio, ans): return {"sec": "A 듣기 · 1 그림 맞다/틀리다", "k": "tf", "img": img(word), "audio": audio, "ans": ans, "made": True, "word": word}
+def PK(pics, audio, ans): return {"sec": "A 듣기 · 2 맞는 그림", "k": "pick", "audio": audio, "opts": [img(w) for w in pics], "ans": ans, "made": True, "words": list(pics)}
 def A3(p, a, o): return {"sec": "A 듣기 · 3 듣고 답 고르기", "k": "choice", "prompt": p, "audio": a, "opts": o, "ans": 0, "shuffle": True, "made": True}
 def A4(a, o): return {"sec": "A 듣기 · 4 듣고 질문에 답하기", "k": "choice", "prompt": "(들은 질문에 알맞은 답)", "audio": a, "opts": o, "ans": 0, "shuffle": True, "made": True}
 def B1(p, bank, ans): return {"sec": "B 읽기 · 1 빈칸(낱말·문법)", "k": "choice", "prompt": p, "opts": bank, "ans": ans}
@@ -87,6 +87,33 @@ def build(no, title, q):
             if x['k'] == 'pick': p2.update(x['opts'])
         cross = [t for t in snd if t in s2] + ['그림 ' + t for t in pic if t in p2]
         if cross: raise SystemExit(f'모의고사 {no} 가 {other} 과 겹침: ' + ' | '.join(cross))
+    # 답 보기·해설 (대표님 2026-10-08 "문제마다 답 보기 버튼 누르면 답을 알 수 있도록, 해설도 함께") — 뜻은 tools/mock2/ko_N.tsv(문장)·ch17_words.json(낱말)
+    KOS = {}
+    for kp in sorted(pathlib.Path(__file__).parent.glob('ko_*.tsv')):
+        for ln in kp.read_text(encoding='utf-8').splitlines():
+            if ln.strip() and not ln.startswith('#') and '\t' in ln:
+                v, k = ln.split('\t', 1); KOS.setdefault(U.normalize('NFC', v.strip()), k.strip())
+    WKO = {U.normalize('NFC', v).lower(): k for b, v, k, i in W}
+    lack = []
+    def ko(t):
+        t2 = U.normalize('NFC', t.strip())
+        r = KOS.get(t2) or WKO.get(t2.lower())
+        if not r: lack.append(t)
+        return r or ''
+    def wko(wd): return f'{wd}({WKO.get(U.normalize("NFC", wd).lower(), "")})'
+    for x in q:
+        k, sec = x['k'], x['sec']
+        if k == 'tf' and x.get('audio'): x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n그림: {wko(x['word'])} → {'맞다' if x['ans'] else '틀리다'}"
+        elif k == 'pick': x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n답: {'ABCD'[x['ans']]} {wko(x['words'][x['ans']])}"
+        elif k == 'choice' and sec.startswith('A 듣기 · 3'): x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n물음: {x['prompt']} — {ko(x['prompt'])}\n답: {x['opts'][x['ans']]}"
+        elif k == 'choice' and sec.startswith('A 듣기 · 4'): a = x['opts'][x['ans']]; x['exp'] = f"들은 질문: {x['audio']}\n{ko(x['audio'])}\n답: {a} — {ko(a)}"
+        elif sec.startswith('B 읽기 · 1'): full = x['prompt'].replace('____', x['opts'][x['ans']]); x['exp'] = f"{full}\n{ko(full)}"
+        elif sec.startswith('B 읽기 · 2'): x['exp'] = f"물음: {x['prompt']} — {ko(x['prompt'])}\n글: {ko(x['text'])}\n답: {x['opts'][x['ans']]}"
+        elif sec.startswith('B 읽기 · 3'): x['exp'] = f"{x['prompt']} — {ko(x['prompt'])}\n글: {ko(x['text'])}\n→ {'맞다' if x['ans'] else '틀리다'}"
+        elif sec.startswith('B 읽기 · 4'): a = x['opts'][x['ans']]; x['exp'] = f"{x['prompt']} — {ko(x['prompt'])}\n답: {a} — {ko(a)}"
+        elif k == 'puzzle': x['exp'] = f"{x['vi']}\n{ko(x['vi'])}"
+        elif k == 'errpick': x['exp'] = f"{x['fix']}\n{x.get('ko', '')}"
+    if lack: raise SystemExit(f'모의고사 {no} 해설 뜻 없음 {len(set(lack))}: ' + ' | '.join(sorted(set(lack))[:12]))
     out = {"note": f"주간시험 2 모의고사 {no} — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).", "title": title, "time": 90, "pts": {"A": 30, "B": 30, "C": 20, "D": 20}, "q": q}
     json.dump(out, open(R / f'data/mock2_{no}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     aud = []

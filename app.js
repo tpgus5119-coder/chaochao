@@ -45,6 +45,12 @@ if (location.hash.startsWith('#k=')) {
   save();
   history.replaceState(null, '', location.pathname + location.search);
 }
+/* 공유 링크 #s=… (대표님 2026-10-08: 내 단어장 묶음을 카드 학습·쇼츠로 공유 — 받은 사람은 로그인 없이 딱 그 화면만, 카드 뒤엔 문제까지).
+   내용은 {t: 이름, m: 'cards'|'shorts', w: [낱말 열쇠…]} 를 base64url 로 — 서버 없이 주소에 다 담긴다. 해시는 지우지 않는다(다시 열어도 그 화면) */
+let SHARE = null;
+if (location.hash.startsWith('#s=')) {
+  try { const b = location.hash.slice(3).replace(/-/g, '+').replace(/_/g, '/'); SHARE = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b), c => c.charCodeAt(0)))); if (!SHARE || !Array.isArray(SHARE.w)) SHARE = null; } catch (e) { SHARE = null; }
+}
 
 const DAY = 864e5;
 const STEPS = [1, 3, 7, 14, 30, 60];   // 일 단위. 반년~1년 기억을 목표로 한 간격
@@ -2686,6 +2692,7 @@ function topBtns() {
    (style.css의 --tabbar-h, .chatin/.tonebar 참고). */
 let ACTIVE_TAB = 'home';
 function syncTabBar() {
+  if (SHARE) { $('#tabbar').hidden = true; document.body.classList.remove('has-tabbar'); return; }   // 공유로 받은 화면엔 탭 줄 없음
   $('#tabbar').hidden = false;
   document.body.classList.add('has-tabbar');
   $$('#tabbar .tabbtn').forEach(b => b.classList.toggle('on', b.dataset.tab === ACTIVE_TAB));
@@ -7321,6 +7328,7 @@ function homeActions() {
 })();
 
 function renderHome() {
+  if (SHARE) { shareEntry(); return; }                   // 공유로 받은 화면 — 홈 대신 그 묶음만 (2026-10-08)
   /* 홈에 설 때 다른 기기 진도를 받아 본다(받은 게 있으면 홈을 다시 그린다). 하루 첫 번에는 올리기도 한다.
      홈은 자주 다시 그려지므로 30초 안에 또 받지는 않는다 (2026-09-29) */
   if (Date.now() - cloudPulled > 30e3 || S.cloudAt !== ymd()) cloudPull();
@@ -9249,6 +9257,51 @@ function learnedAll() {
 /* 내 단어장 (대표님 2026-10-08) — 들어가면 챕터처럼: 학습한 모든 단어 · 자주 틀리는 것 · 담은 단어 · 사용자 폴더들 · [+ 새 폴더].
    각 묶음은 [카드로 학습]과 [쇼츠 재생](소리만 나고 저절로 다음 카드) 둘 중 하나로 익힌다. */
 function wordbookEntry() { SBOX = 'srs'; drawWordbook(); }
+/* ── 공유 (대표님 2026-10-08) ── */
+function shareLink(title, mode, words) {
+  const bytes = new TextEncoder().encode(JSON.stringify({ t: title, m: mode, w: words.map(w => w.vi) }));
+  let bin = ''; bytes.forEach(c => { bin += String.fromCharCode(c); });
+  return location.origin + location.pathname + '#s=' + btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function sharePopup(title, words) {
+  const back = el('div', 'modalback'), box = el('div', 'modalbox');
+  box.append(el('div', 'pairpophd', '<b>' + esc(title) + '</b><span>' + words.length + tr('개') + '</span>'));
+  const col = el('div', 'sharebox'); const out = el('div'); 
+  const send = async (mode, label) => {
+    const url = shareLink(title, mode, words);
+    out.textContent = '';
+    if (navigator.share) { try { await navigator.share({ title: title + ' · ' + label, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+    try { await navigator.clipboard.writeText(url); out.append(el('p', 'note', tr('링크를 복사했습니다 — 붙여 넣어 보내세요'))); } catch (e) { out.append(el('p', 'note', tr('아래 링크를 길게 눌러 복사하세요'))); }
+    out.append(el('div', 'sharelink', esc(url)));
+  };
+  const c = el('button', 'primary big', '🃏 ' + tr('카드 학습 링크')); c.type = 'button'; c.onclick = () => send('cards', tr('카드 학습'));
+  const sh = el('button', 'primary big', '⚡ ' + tr('쇼츠 링크')); sh.type = 'button'; sh.onclick = () => send('shorts', tr('쇼츠'));
+  col.append(c, sh); box.append(col, out);
+  const ok = el('button', 'ghost', tr('닫기')); ok.type = 'button'; ok.onclick = () => back.remove(); const row = el('div', 'bugbtns'); row.append(ok); box.append(row);
+  back.append(box); back.onclick = e => { if (e.target === back) back.remove(); }; document.body.append(back);
+}
+/* 받은 사람의 화면 — 그 묶음의 카드·쇼츠·문제만. 카드는 끝 장에서 [문제 풀기 ›] 로 이어진다 */
+function shareWords(cb) {
+  const go2 = () => cb(wbResolve(SHARE.w || []));
+  const go1 = () => { if (!GYBM) gybmBuild(go2); else go2(); };
+  if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { COURSE = j; loadCWords(); go1(); }).catch(go1); else go1();
+}
+function shareEntry() {
+  shareWords(words => {
+    const b = $('#subBody'); b.textContent = '';
+    const t = SHARE.t || tr('단어');
+    b.append(el('p', 'lede', esc(t) + ' · ' + words.length + tr('개')));
+    if (!words.length) { b.append(el('p', 'note', tr('이 링크의 낱말을 찾지 못했습니다'))); show('sub', t, false); return; }
+    const box = el('div', 'sharebox');
+    const cards = () => { dive(shareEntry); startLearn({ day: 'SH:' + t, theme: t, words: words.slice(), share: true }); };
+    const shorts = () => { dive(shareEntry); flashRun(words.slice(), t, { auto: true }); };
+    const quiz = () => { dive(shareEntry); startWordbookQuiz(words.map(w => w.vi), t); };
+    [['🃏 ' + tr('카드로 학습'), cards, 'primary'], ['⚡ ' + tr('쇼츠 재생'), shorts, 'primary'], ['✍ ' + tr('문제 풀기'), quiz, 'ghost']].forEach(([lb, fn, cls]) => { const x = el('button', cls + ' big', lb); x.type = 'button'; x.onclick = fn; box.append(x); });
+    b.append(box);
+    show('sub', t, false);
+    if (!SHARE.started) { SHARE.started = true; (SHARE.m === 'shorts' ? shorts : cards)(); }   // 링크를 열면 바로 그 모드로
+  });
+}
 function wbHost() { const ko = learnKo(); return [ko ? $('#examBody') : $('#subBody'), ko ? 'exam' : 'sub']; }
 function wbMiss() { return Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1).sort((a, b) => b[1] - a[1]); }
 /* 열쇠(vi) 목록 → 낱말 자료(일상·직무 → 교재·22기 차례로 찾음), 겹침 제거 */
@@ -9371,7 +9424,9 @@ function wordbookList(kind, fid) {
     paintBar();
   };
   selBtn.onclick = () => { selMode = true; SEL.clear(); selBtn.hidden = true; host.insertBefore(el('p', 'wbselhint', tr('줄을 누르면 하나씩, 왼쪽 ☐ 를 누른 채 위아래로 끌면 죽 골라집니다')), bar); draw(curQ); };
-  host.append(selBtn);
+  const shBtn = el('button', 'ghost', '🔗 ' + tr('공유 — 카드 학습·쇼츠 링크')); shBtn.type = 'button'; shBtn.style.width = '100%';   // 받은 사람은 로그인 없이 그 화면만 (2026-10-08)
+  shBtn.onclick = () => sharePopup(title, words);
+  host.append(selBtn, shBtn);
   if (words.length > 30) {
     const inp = el('input', 'keyin dictin'); inp.type = 'search'; inp.placeholder = tr('찾을 말 (베트남어·한국어)');
     let tm = null; inp.oninput = () => { clearTimeout(tm); tm = setTimeout(() => draw(inp.value.trim().toLowerCase()), 120); };
@@ -9961,10 +10016,10 @@ function drawCard() {
   const last = L.i === L.items.length - 1;
   $('#next').hidden = !last || !!L.dict || !!L.day.cardsOnly;      // 사전에서 연 단어 카드·내 단어장 카드는 확인 문제로 안 간다
   const qnr = $('#qnRow');                       // 단어 확인 문제로 가는 마지막 장에만 문제 수 고르기 (2026-09-28 밤)
-  if (qnr) { qnr.textContent = ''; const toQuiz = last && !L.dict && !L.day.cardsOnly && !L.day.gram && !L.cult && !L.day.know && !L.news && !L.dlg && (L.day.words || []).length;
+  if (qnr) { qnr.textContent = ''; const toQuiz = last && !L.dict && !L.day.cardsOnly && !L.day.share && !L.day.gram && !L.cult && !L.day.know && !L.news && !L.dlg && (L.day.words || []).length;
              qnr.hidden = !toQuiz; if (toQuiz) qnr.append(qnPicker()); }
   $('#next').textContent = L.day.gram ? '확인 문제 ›'
-    : L.cult || L.day.know ? '다 봤어요' : (L.day.words || []).length ? '확인 문제 ›'
+    : L.cult || L.day.know ? '다 봤어요' : L.day.share ? '문제 풀기 ›' : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
     : ['P1', 'P2', 'P4', 'P5', 'P6'].includes(L.day.day) ? '귀로 구별하기 ›' : '완료 ›';
 }
@@ -9973,6 +10028,7 @@ $('#next').onclick = () => {
   // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
+  if (L.day.share) { const d0 = L.day; startWordbookQuiz(d0.words.map(w => w.vi), d0.theme); return; }   // 공유 카드 → 그 낱말로 문제 (2026-10-08)
   if (L.cult) { dailyFlowEntry(); return; }
   if (L.day.gram) { startGramQuiz(L.day.day, L.day.theme, L.items.map(it => it.d)); return; }
   if (L.day.know) { S.done[L.day.day] = now(); save(); dailyFlowEntry(); return; }
@@ -10741,12 +10797,12 @@ function drawQuiz() {
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
   if (q.mode === 'type' || q.mode === 'dictation' || q.mode === 'write_ko') return drawTypeQ(body, q);
   if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err' || q.mode === 'gpat') return drawExamKind(body, q);
-  if (q.mode === 'fx') return drawFixed(body, q);   // 1차 시험지 그대로 (2026-09-30)
+  if (q.mode === 'fx') { drawFixed(body, q); peekBtn(body, q); return; }   // 1차 시험지 그대로 (2026-09-30) · [답 보기] (2026-10-08)
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
   if (q.mode === 'match') return drawMatch(body, q);
   if (q.mode === 'tone') return drawToneQ(body, q);
-  if (q.mode === 'puzzle' || q.mode === 'puzzle_ko' || q.mode === 'puzzle_vi') return drawPuzzle(body, q);
+  if (q.mode === 'puzzle' || q.mode === 'puzzle_ko' || q.mode === 'puzzle_vi') { drawPuzzle(body, q); if (Q.fixed) peekBtn(body, q); return; }
 
   /* 소리를 듣는 자리에는 **말하는 길**도 같이 둔다. 듣기만 하면 입이 안 열린다.
      시험 흐름을 흐트러뜨리지 않게, 누를 사람만 누르는 작은 마이크로 둔다.
@@ -11293,6 +11349,25 @@ function exam1Clock() {
   tick(); EXAM1_TIMER = setInterval(tick, 1000);
 }
 /* 시험지 문항 그리기 — tf(맞다/틀리다) · choice(보기 고르기) · pick(그림 고르기) · free(그림 보고 5문장, 스스로 매김) */
+/* [답 보기] — 시험지 문항마다 답을 열고 해설을 본다 (대표님 2026-10-08 "문제마다 답 보기 버튼, 해설도 함께"). 답하기 전에 열면 그 문항은 0점 */
+function peekBtn(body, q) {
+  const x = q.w && q.w.fx; if (!x || !x.exp) return;
+  const row = el('div', 'peekrow'); const b = el('button', 'peekbtn', tr('답 보기')); b.type = 'button';
+  b.onclick = () => {
+    row.remove();
+    if (!q._ans) {
+      q._ans = true; q._ok = false; q._peek = true; hideSkip();
+      [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay')) bt.disabled = true; });
+      [...body.querySelectorAll('.opts button, .picgrid button')].forEach(bt => { if (bt.dataset.vi === q.w.vi) bt.dataset.r = 'ok'; });
+      const toks = body.querySelectorAll('.errtok'); if (toks.length && x.bad !== undefined && toks[x.bad]) toks[x.bad].dataset.r = 'ok';
+    }
+    body.append(el('div', 'fxexp', esc(x.exp)));
+    const nb = el('button', 'primary big', tr('다음') + ' ›'); nb.type = 'button'; nb.style.width = '100%';   // nextBtn 은 시험 모드에서 바로 넘겨 버리므로 따로 — 해설을 읽고 넘긴다
+    nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
+    resumeSave();
+  };
+  row.append(b); body.append(row);
+}
 function drawFixed(body, q) {
   const x = q.w.fx, w = q.w;
   const say = t => { const k = recKey(t); k ? play(k, false, undefined, examSpd()) : speakVi(t, false, examSpd()); };   // 시험 속도(1배 기본, 칩으로 바꿈)
@@ -14289,6 +14364,7 @@ Promise.all([
   // 로그인 관문 — 안 되어 있으면 어느 기기든 열자마자 계정 화면부터, 다른 데로 못 나간다
   // (대표님 지시, 2026-09-12: '나중에 둘러보기' 없앰). 로그인된 기기는 로그아웃 전까지
   // 그대로 유지된다(S.acct 가 기기에 남는다).
+  if (SHARE) { shareEntry(); return; }                // 공유로 받은 화면 — 로그인 없이 그 묶음만 (대표님 2026-10-08)
   if (!S.acct || !S.acct.tok) { acctForm(true, 'login'); return; }
   if (!S.nick) { askNick(); return; }                 // 최초 1회
   if (S.wk && S.wk.k !== weekKey()) { showWeek(weekReport(S.wk.base)); return; }
