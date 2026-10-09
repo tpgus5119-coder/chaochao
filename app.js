@@ -3349,7 +3349,7 @@ function renderAnalysis(host, mode) {
   host.append(el('p', 'anahead', '실력 분석'), tab);
   const ps = periodStats(mode), cur = ps.cur, prev = ps.prev;
   const firstDay = Object.keys((S.stats && S.stats.day) || {}).sort()[0];
-  if (mode !== 'all') host.append(el('p', 'dimtxt', firstDay ? tr('날짜별 기록은 N부터 쌓입니다 — 그 전 것은 전체에만 있습니다').replace('N', firstDay.slice(5).replace('-', '/')) : tr('날짜별 기록이 아직 없습니다 — 오늘부터 쌓입니다')));
+
   anaSummary(host, ps, mode);                               // 시안 A 성장 (2026-10-02)
   const avg = {};                                           // 다른 사람들의 평균 (받아 오면 채운다)
   host.append(el('p', 'anasec', tr('영역별') + ' <span>' + (ANA_DETAIL ? tr('누르면 자세히 · 작은 선은 12주 흐름') : tr('작은 선은 12주 흐름')) + '</span>'));
@@ -3357,10 +3357,10 @@ function renderAnalysis(host, mode) {
   const list = el('div', 'analist'); host.append(list);
   const detail = (sb, x) => {
     const d = el('div', 'anadetail');
-    const put = (title, rows, note) => { if (!rows.length) return; d.append(el('p', 'anasec', esc(title))); d.append(bars(rows)); if (note) d.append(el('p', 'dimtxt', esc(note))); };
+    const put = (title, rows, note) => { if (!rows.length) return; d.append(el('p', 'anasec', esc(title))); d.append(bars(rows));  };
     const chips = (title, box, note) => {
       const rows = boxRows(cur, box).sort((a, b) => b[2] - a[2]).slice(0, 8); if (!rows.length) return;
-      d.append(el('p', 'anasec', esc(title))); d.append(el('p', 'anachips', rows.map(r => '<span>' + esc(r[0]) + ' <b>' + r[2] + '</b></span>').join(''))); if (note) d.append(el('p', 'dimtxt', esc(note)));
+      d.append(el('p', 'anasec', esc(title))); d.append(el('p', 'anachips', rows.map(r => '<span>' + esc(r[0]) + ' <b>' + r[2] + '</b></span>').join(''))); 
     };
     if (sb !== 'memo') put(tr('문제 유형별'), boxRows(cur, 'md', k => MODE_NM[k] || k, k => MODE_SUBJ[k] === sb));
     if (sb === 'say') {
@@ -3414,7 +3414,7 @@ function renderAnalysis(host, mode) {
     list.append(row);
     if (ANA_DETAIL && ANA_OPEN === 'sent') {
       const d = el('div', 'anadetail');
-      const put = (title, rows, note) => { if (!rows.length) return; d.append(el('p', 'anasec', esc(title))); d.append(bars(rows)); if (note) d.append(el('p', 'dimtxt', esc(note))); };
+      const put = (title, rows, note) => { if (!rows.length) return; d.append(el('p', 'anasec', esc(title))); d.append(bars(rows));  };
       put(tr('문제 유형별'), boxRows(cur, 'smd', k => MODE_NM[k] || k));
       put(tr('쓰인 문법별'), boxRows(cur, 'gr', gramName), tr('문장 속 문형으로 셉니다 — 단어 시험·주간 시험 문장'));
       if (!d.children.length) d.append(el('p', 'dimtxt', tr('아직 푼 문장 문제가 없습니다')));
@@ -4180,7 +4180,7 @@ function showWeek(rep) {
        : '<b>복습</b>을 밀리지 않게 하는 것이 제일 빠릅니다 — 잊기 직전에 꺼내야 오래 남습니다.')));
     b.append(c);
   } else {
-    b.append(el('p', 'note', '아직 문제 수가 적어 강점·약점을 말할 수 없습니다. 한 주만 더 해 보세요 — 과목마다 10문제가 넘으면 판정합니다.'));
+
   }
 
   const go = el('button', 'primary big', '이번 주 시작하기');
@@ -4212,7 +4212,7 @@ function askNick() {
   b.textContent = '';
   b.append(el('p', 'lede', '이름이 뭐예요?'));
   b.append(el('p', 'vi mid', 'Tên bạn là gì?'));
-  b.append(el('p', 'note', '언제든 바꿀 수 있습니다. <b>먼저 쓴 사람이 임자</b>라 겹치는 별명은 못 씁니다.'));
+
   const inp = el('input', 'keyin'); inp.type = 'text'; inp.placeholder = tr('별명 (2~10글자)'); inp.maxLength = 10;
   const go = el('button', 'primary big', '시작하기');
   go.style.width = '100%';
@@ -4445,7 +4445,7 @@ function learnedPool() {
 function testAllLearned(pool) {
   pool = pool || learnedPool();
   const b = $('#examBody'); b.textContent = '';
-  b.append(el('p', 'lede', tr('지금까지 배운') + ' ' + pool.length + tr('단어') + ' — ' + tr('몇 문제를 풀까요?')));
+  b.append(el('p', 'lede', pool.length + tr('단어')));   // 설명 글자 뺌 (대표님 2026-10-09 네 번째 지적 — 이름과 숫자만)
   const boxOf = {}; pool.forEach(w => { boxOf[w.vi] = w._box; });
   const ns = [10, 20, 30].filter(n => n <= pool.length);          // 학습 뒤 확인 문제와 같은 10·20·30 (2026-09-28 밤)
   if (!ns.length) ns.push(pool.length);
@@ -4526,8 +4526,7 @@ function testSents(mode) {
   if (!mode) {
     const b = $('#examBody'); b.textContent = '';
     b.append(qnPicker());
-    b.append(el('p', 'note', tr('끝낸 문법 과의 문형으로만 된 문장 N개 (전체 M개)').replace('N', pool.length).replace('M', all0.length)));   // 문법 학습 순서에 맞춘 범위 (2026-10-06)
-    const mk = (t, meta, m) => { const x = el('button', 'bigmenu'); x.append(el('b', null, esc(tr(t)) + ' <span class="exmeta">' + esc(tr(meta)) + '</span>')); x.onclick = () => { dive(() => testSents()); testSents(m); }; b.append(x); };
+    const mk = (t, meta, m) => { const x = el('button', 'bigmenu'); x.append(el('b', null, esc(tr(t)))); x.onclick = () => { dive(() => testSents()); testSents(m); }; b.append(x); };   // 범위 글·문제 꼴 설명은 뺌 (대표님 2026-10-09) — 이름만
     mk('문장 만들기', '뜻을 보고 조각을 차례대로 눌러 문장을 만든다', 'puzzle');
     // '뜻 보고 쓰기'(자판으로 치기)는 뺐다 — 대표님 2026-10-06 "직접 쓰면 너무 어렵다, 단어 블록을 조립하도록"
     mk('대답 만들기', '질문을 읽고 조각으로 대답을 만든다 (교재 대화)', 'reply');
@@ -4643,7 +4642,7 @@ function pickUnits(kind) {
   PICK = PICK && PICK.kind === kind ? PICK : { kind, set: new Set() };
   const title = { days: '일상', job: '직무', main: '교재', senior: '선배 단어 시험 자료', c22: '22기 단어 시험 자료' }[kind] || kind;
   const b = $('#examBody'); b.textContent = '';
-  b.append(el('p', 'lede', tr('복습할 것을 고르세요') + ' — ' + units.length + tr('개') + ' (✓ ' + tr('끝낸 것') + ')'));
+  b.append(el('p', 'lede', units.length + tr('개')));
   const list = el('div', 'freelist');
   units.forEach(([k, nm, ws, done]) => {
     const on = PICK.set.has(k);
@@ -7915,7 +7914,7 @@ function folderPopup(vi, ko, onChange) {
   const draw = () => {
     list.textContent = '';
     const fo = foldersOf();
-    if (!fo.length) list.append(el('p', 'note', tr('아직 폴더가 없습니다. 아래에서 만들어 보세요.')));
+
     fo.forEach(f => {
       const r = el('button', 'forow' + (folderHas(f, vi) ? ' on' : '')); r.type = 'button';
       r.append(el('span', 'fochk', folderHas(f, vi) ? '☑' : '☐'), el('span', 'foname', esc(f.name)), el('small', 'dimtxt', (f.w || []).length + tr('개')));
@@ -7947,7 +7946,7 @@ function folderPopupMany(vis, onChange) {
   const draw = () => {
     list.textContent = '';
     const fo = foldersOf();
-    if (!fo.length) list.append(el('p', 'note', tr('아직 폴더가 없습니다. 아래에서 만들어 보세요.')));
+
     fo.forEach(f => {
       const n = vis.filter(v => folderHas(f, v)).length, all = n === vis.length && n > 0;
       const r = el('button', 'forow' + (all ? ' on' : '')); r.type = 'button';
@@ -8971,7 +8970,7 @@ function dictEntry(q0) {
   /* 최근 찾은 말 (대표님 지시 2026-09-30) — 입력칸이 비어 있을 때. 이 기기(localStorage)에만 남고 서버로는 안 간다(PROGKEYS 밖). 최대 DICT_HIST_MAX 개 */
   const histDraw = () => {
     const h = S.dictHist || [];
-    if (!h.length) { out.append(el('p', 'note', tr('한 글자만 넣어도 찾습니다'))); return; }
+    if (!h.length) return;
     out.append(el('p', 'note', tr('최근 검색한 단어')));          // 개수·'이 기기에만' 글은 뺐다 (대표님 2026-09-30)
     h.forEach(e => out.append(dictRow(d.find(y => y.vi === e.vi) || { vi: e.vi, ko: e.ko })));
     const cl = el('button', 'ghost sm', tr('기록 지우기')); cl.type = 'button'; cl.style.marginTop = '10px';
@@ -9256,8 +9255,7 @@ function gybmSearch() {
   show('sub', tr('GYBM 단어 찾기'), true);
   const words = [];
   GYBM.forEach(src => src.lessons.forEach(l => l.words.forEach(w => words.push(w))));
-  b.append(el('p', 'lede', tr('GYBM 단어 N개 · 핵심 = 교재 단어장·선배 시험·주간 시험에 나온 단어')
-    .replace('N', words.length.toLocaleString('ko-KR'))));
+  b.append(el('p', 'lede', tr('GYBM 단어 N개').replace('N', words.length.toLocaleString('ko-KR'))));
   const inp = el('input', 'keyin dictin');
   inp.type = 'search'; inp.placeholder = tr('찾을 말 (성조는 안 찍어도 됩니다)');   // 아래 성조·모자 단추로 찍을 수도 있다 (2026-10-05)
   const out = el('div', 'dictout');
@@ -9280,7 +9278,7 @@ function gybmSearch() {
     list = list.slice(0, 80);
     if (!list.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
     list.forEach(x => out.append(basicWordRow(x)));
-    if (list.length >= 80) out.append(el('p', 'note', tr('앞 80개만 보입니다 — 더 적어 보세요')));
+
   };
   let tm = null;
   inp.oninput = () => { clearTimeout(tm); tm = setTimeout(draw, 120); };
@@ -9351,7 +9349,7 @@ function sharePopup(title, words, payload, sub) {
     const url = await shareShortLink(title, words, payload);
     out.textContent = '';
     if (navigator.share) { try { await navigator.share({ title, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
-    try { await navigator.clipboard.writeText(url); out.append(el('p', 'note', tr('링크를 복사했습니다 — 붙여 넣어 보내세요'))); } catch (e) { out.append(el('p', 'note', tr('아래 링크를 길게 눌러 복사하세요'))); }
+    try { await navigator.clipboard.writeText(url); out.append(el('p', 'note', tr('링크를 복사했습니다'))); } catch (e) { out.append(el('p', 'note', tr('아래 링크를 길게 눌러 복사하세요'))); }
     out.append(el('div', 'sharelink', esc(url)));
   };
   const c = el('button', 'primary big', '🔗 ' + tr('공유 링크')); c.type = 'button'; c.style.width = '100%'; c.onclick = send;
@@ -9445,7 +9443,7 @@ function drawWordbook() {
   const add = el('button', 'ghost big', '＋ ' + tr('새 폴더 만들기')); add.type = 'button'; add.style.width = '100%';
   add.onclick = async () => { const nm = await askText(tr('폴더 이름'), '', 20); if (nm) { folderAdd(nm); drawWordbook(); } };
   host.append(add);
-  host.append(el('p', 'note', tr('낱말 카드의 📁 를 누르면 어느 폴더에든 담을 수 있습니다 — 한 낱말을 여러 폴더에 넣어도 됩니다.')));
+
   show(view, '내 단어장', true);
 }
 /* 한 묶음의 낱말 목록 — 위에 [카드로 학습][쇼츠 재생], 아래 낱말 줄 */
@@ -9489,9 +9487,7 @@ function wordbookList(kind, fid) {
   const redraw = () => wordbookList(kind, fid);
   host.append(el('p', 'lede', esc(title) + ' · ' + words.length + tr('개')));
   if (!words.length) {
-    host.append(el('p', 'note', kind === 'folder' ? tr('비어 있습니다. 낱말 카드나 목록의 📁 를 눌러 이 폴더에 담으세요.') :
-      kind === 'miss' ? tr('아직 자주 틀린 단어가 없습니다. 퀴즈에서 틀린 단어가 여기에 저절로 모입니다.') :
-      kind === 'star' ? tr('아직 담은 단어가 없습니다. 배우는 화면에서 단어 옆 ☆ 를 누르면 여기에 모입니다.') : tr('아직 배운 단어가 없습니다. 학습을 한 세트 끝내면 여기에 모입니다.')));
+    host.append(el('p', 'note', tr('0개')));   // 빈 묶음 — 설명 글은 뺌 (2026-10-09)
     show(view, title, true); return;
   }
   const opts = el('div', 'wbopts');
@@ -9542,10 +9538,10 @@ function wordbookList(kind, fid) {
       }
       out.append(r);
     });
-    if (hit.length > 200) out.append(el('p', 'note', tr('앞 200개만 보입니다 — 더 적어 보세요')));
+
     paintBar();
   };
-  selBtn.onclick = () => { selMode = true; SEL.clear(); selBtn.hidden = true; host.insertBefore(el('p', 'wbselhint', tr('줄을 누르면 하나씩, 왼쪽 ☐ 를 누른 채 위아래로 끌면 죽 골라집니다')), bar); draw(curQ); };
+  selBtn.onclick = () => { selMode = true; SEL.clear(); selBtn.hidden = true; draw(curQ); };   // 고르는 법 설명 줄은 뺌 (2026-10-09)
   const shBtn = el('button', 'ghost', '🔗 ' + tr('공유 — 카드 학습·쇼츠 링크')); shBtn.type = 'button'; shBtn.style.width = '100%';   // 받은 사람은 로그인 없이 그 화면만 (2026-10-08)
   shBtn.onclick = () => sharePopup(title, words);
   host.append(selBtn, shBtn);
@@ -10476,7 +10472,7 @@ function missionCard(host, d) {
   c.append(el('div', 'msgoal', bold(m.goal)));
   if (m.how) c.append(el('div', 'gexp', bold(m.how)));
   if (m.a || m.b) {
-    c.append(el('p', 'note', tr('자기 것만 여십시오 — 서로 보면 물어볼 것이 없어집니다.')));
+
     const row = el('div', 'msrow');
     [['A', m.a], ['B', m.b]].forEach(([who, txt]) => {
       if (!txt) return;
@@ -10656,9 +10652,7 @@ function noItems(o) {
   b.textContent = '';
   $('#quizFill').style.width = '0%';
   b.append(el('p', 'lede', (o && o.kind === 'sent' ? '문장' : '단어') + ' 복습이 아직 없습니다'));
-  b.append(el('p', 'note', o && o.kind === 'sent'
-    ? '하루 학습을 끝내면 그날 대화 문장이 복습 창고에 들어옵니다.'
-    : '오늘은 꺼낼 단어가 없습니다. 없는 날은 정상입니다.'));
+
   const h = el('button', 'primary big', '홈으로');
   h.style.width = '100%'; h.onclick = renderHome;
   b.append(h);
@@ -10719,10 +10713,10 @@ function drawFreePick() {
   const b = $('#quizBody'); b.textContent = '';
   $('#quizFill').style.width = '0%';
   if (!us.length) {
-    b.append(el('p', 'lede', tr('아직 끝낸 레슨이 없습니다. 학습에서 한 레슨을 끝내면 여기에 나옵니다.')));
+    b.append(el('p', 'lede', tr('아직 끝낸 레슨이 없습니다')));
     show('quiz', '자유 복습', true); return;
   }
-  b.append(el('p', 'lede', tr('풀고 싶은 레슨을 고르세요') + ' — ' + us.length + tr('개 끝냄')));
+  b.append(el('p', 'lede', us.length + tr('개')));   // 설명 글자 뺌 (대표님 2026-10-09 네 번째 지적 — 이름과 숫자만)
   const list = el('div', 'freelist');
   us.forEach(([k, nm, ws]) => {
     const row = el('button', 'freerow' + (FREE.has(k) ? ' on' : ''));
@@ -10765,7 +10759,7 @@ function freshMenu(kind) {
   const d = freshDay();
   if (!d) {
     b.append(el('p', 'lede', '아직 끝낸 세트가 없습니다'));
-    b.append(el('p', 'note', '하루 5분에서 한 세트를 끝내면 여기서 바로 다시 볼 수 있습니다.'));
+
     const h = el('button', 'primary big', '홈으로'); h.style.width = '100%'; h.onclick = renderHome;
     b.append(h);
     show('quiz', '최근 학습', true); return;
@@ -10773,7 +10767,7 @@ function freshMenu(kind) {
   const src = freshItems(kind);
   b.append(el('p', 'lede', esc(label(d)) + ' · ' + esc(d.theme) + ' — ' +
     (kind === 'sent' ? '문장' : '단어') + ' ' + src.length + '개'));
-  b.append(el('p', 'note', '복습 때가 아니어도 <b>언제든</b> 다시 볼 수 있습니다.'));
+
   const back = () => freshMenu(kind);
   const go = (opt, list) => { dive(back); startQuiz(list || src, null, null, false, opt); };
   const all = el('button', 'bigmenu', '랜덤');
@@ -10940,7 +10934,8 @@ function drawQuiz() {
      넘기면 어느 통계에도 들지 않고 창고 사다리도 안 움직인다 — 틀린 게 아니라 '아직 안 재 본' 것. 답한 뒤에는 단추가 사라진다 (skipQ) */
   const qc0 = el('div', 'qcount');
   qc0.append(el('span', null, (Q.i + 1) + ' / ' + Q.list.length));
-  const sk = el('button', 'qskip', tr('스킵') + ' ›'); sk.type = 'button'; sk.onclick = skipQ; qc0.append(sk);
+  const qt = el('div', 'qtools');                        // [답 보기][스킵] — 머리띠의 남/여·단어/발음 단추와 같은 모양 (대표님 2026-10-09)
+  const sk = el('button', 'ghost qskip', tr('스킵')); sk.type = 'button'; sk.onclick = skipQ; qt.append(sk); qc0.append(qt);
   body.append(qc0);
   { const lb = q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : (LABEL[q.mode] || '');   // 시험지 문항(fx)은 지시문이 없다
     body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + (lb ? ' · ' : '') : '') + lb)); }
@@ -11318,7 +11313,7 @@ function scoreCard(host) {
   (S.stats.wexam || []).forEach(x => { const r = rno(x.round || 1); if (x.tot && Number.isFinite(r)) mock[r] = Math.round(x.ok / x.tot * 1000) / 10; });
   const rounds = [...new Set([...L.map(x => x.r), ...Object.keys(mock).map(Number)])].filter(Number.isFinite).sort((a, b) => a - b);
   if (!rounds.length) {
-    card.append(el('p', 'note', tr('반 시험 점수를 적으면 회차마다 곡선으로 보여 줍니다. 앱의 모의시험 점수도 같이 그립니다.')));
+
     host.append(card); return;
   }
   const W = 320, H = 170, pl = 30, pr = 34, pt = 14, pb = 26;
@@ -11387,7 +11382,7 @@ function scoreForm(e) {
     save(); cloudSave(true);
     weeklyEntry();
   };
-  b.append(el('p', 'lede', tr('반 시험 점수를 적어 주세요 — 부분 점수를 적으면 총점은 저절로 채워집니다')), rIn, dIn, ...parts, tIn, err, ok);
+  b.append(el('p', 'lede', tr('반 시험 점수')), rIn, dIn, ...parts, tIn, err, ok);
   if (e) {
     const del = el('button', 'ghost danger', tr('이 점수 지우기')); del.style.width = '100%'; del.style.marginTop = '10px';
     // 지운 자리에 '지움' 표시를 남긴다 — 그래야 다른 기기와 합칠 때 되살아나지 않는다(나중에 적은 것이 이긴다)
@@ -11506,9 +11501,9 @@ function exam1Clock() {
 /* [답 보기] — 시험지 문항마다 답을 열고 해설을 본다 (대표님 2026-10-08 "문제마다 답 보기 버튼, 해설도 함께"). 답하기 전에 열면 그 문항은 0점 */
 function peekBtn(body, q) {
   const x = q.w && q.w.fx; if (!x || !x.exp) return;
-  const row = el('div', 'peekrow'); const b = el('button', 'peekbtn', tr('답 보기')); b.type = 'button';
+  const b = el('button', 'ghost peekbtn', tr('답 보기')); b.type = 'button';
   b.onclick = () => {
-    row.remove();
+    b.remove();
     if (!q._ans) {
       q._ans = true; q._ok = false; q._peek = true; hideSkip();
       [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay')) bt.disabled = true; });
@@ -11520,15 +11515,16 @@ function peekBtn(body, q) {
     nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
     resumeSave();
   };
-  row.append(b); body.append(row);
+  peekPut(body, b);
 }
+function peekPut(body, b) { const t = body.querySelector('.qtools'); if (t) t.prepend(b); else body.append(b); }   // [스킵] 왼쪽 (2026-10-09)
 /* 단어 시험의 [답 보기] (대표님 2026-10-09 "모의고사처럼 단어 시험 탭에서도 문제마다 답 확인") — 모의고사 peekBtn 과 같은 모양.
    누르면 그 문제는 틀린 것으로 치고(점수에 안 든다) 정답(베트남어·다른 답·뜻)을 보여 준 뒤 [다음 ›] 로 넘긴다 */
 function peekDaily(body, q) {
   const w = q.w; if (!w || !w.vi) return;
-  const row = el('div', 'peekrow'); const b = el('button', 'peekbtn', tr('답 보기')); b.type = 'button';
+  const b = el('button', 'ghost peekbtn', tr('답 보기')); b.type = 'button';
   b.onclick = () => {
-    row.remove();
+    b.remove();
     if (!q._ans) {
       q._ans = true; q._ok = false; q._peek = true; Q._answered = true; hideSkip();
       [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay') && !bt.classList.contains('qtap')) bt.disabled = true; });
@@ -11543,7 +11539,7 @@ function peekDaily(body, q) {
     nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
     resumeSave();
   };
-  row.append(b); body.append(row);
+  peekPut(body, b);
 }
 function drawFixed(body, q) {
   const x = q.w.fx, w = q.w;
@@ -11683,14 +11679,16 @@ function dailyEntry(mode) {
   const b = $(study ? '#subBody' : '#examBody'); b.textContent = '';
   show(study ? 'sub' : 'exam', tr('단어 시험'), true);
   if (!DAILY22) { b.append(el('p', 'lede', tr('불러오는 중…'))); dailyLoad(() => { if ($('#title').textContent === tr('단어 시험')) dailyEntry(mode); }); return; }
-  const cls = S.dcls || 'B';
+  if (!S.dclsA) { S.dclsA = 1; S.dcls = 'A'; save(); }   // 기본은 A반 (대표님 2026-10-09 "B반 디폴트로 하지 마") — 전에 B로 남은 것도 한 번 A로
+  const cls = S.dcls || 'A';
   const pick = el('div', 'rolepick');
   ['A', 'B'].forEach(c => { const bb = el('button', 'ghost sm' + (cls === c ? ' pick' : ''), (cls === c ? '✓ ' : '') + c + tr('반')); bb.onclick = () => { S.dcls = c; save(); dailyEntry(mode); }; pick.append(bb); });
   b.append(pick);
   DAILY22.filter(t => t.cls === cls).slice().reverse().forEach(t => {        // 최신 날짜가 위
     const rec = (S.daily || {})[t.key], tot = t.words.length + t.sents.length;
+    const rs = study ? null : resumeGet('daily:' + t.key);   // 보던 시험은 목록에서 바로 보이게 — 모의고사 목록과 같은 '이어서 n/N' (대표님 2026-10-09)
     const c = el('button', 'hubcard');
-    c.innerHTML = `<span class="hubbody"><b class="hubt2">${esc(t.date)} ${esc(tr('단어 시험'))}</b></span>` +
+    c.innerHTML = `<span class="hubbody"><b class="hubt2">${esc(t.date)} ${esc(tr('단어 시험'))}` + (rs ? ` <span class="exmeta"><b class="resumetag">${tr('이어서')} ${rs.i}/${rs.items.length}</b></span>` : '') + `</b></span>` +
       (rec && rec.best != null ? `<span class="accpill">${rec.best}/${tot}</span>` : '') + `<svg class="hubchev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>`;
     c.onclick = study ? () => { dive(() => dailyEntry('study')); dailyStudyOnly(t); } : () => { dive(() => dailyEntry()); dailyRound(t); };
     b.append(c);
@@ -11723,10 +11721,10 @@ function dailyStudyOnly(t) {
 function dailyRound(t) {
   const b = $('#examBody'); b.textContent = '';
   const tot = t.words.length + t.sents.length, rec = (S.daily || {})[t.key];
-  b.append(el('p', 'lede', esc(t.cls + tr('반') + ' ' + t.date + ' ' + tr('단어 시험'))));
-  b.append(el('p', 'note', tr('낱말 N개 · 문장 10개 · 모두 M문제').replace('N', t.words.length).replace('M', tot)));
+  b.append(el('p', 'lede', tr('낱말') + ' ' + t.words.length + ' · ' + tr('문장') + ' ' + t.sents.length));   // 설명 글자 뺌 (대표님 2026-10-09 네 번째 지적 — 이름과 숫자만)
   const rs = resumeGet('daily:' + t.key);                   // 푼 자리가 있으면 [이어서 풀기 n/N] + [처음부터] (2026-10-07)
-  const go = el('button', 'primary big', tr('시험 보기') + (rs ? ' <span class="exmeta"><b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b></span>' : '')); go.style.width = '100%';
+  const go = el('button', 'primary big', tr('시험 보기')); go.style.width = '100%'; go.style.textAlign = 'center';   // 글자 가운데 (대표님 2026-10-09)
+  if (rs) b.append(el('p', 'resumeline', '<b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b>'));
   go.onclick = () => resumeAsk('daily:' + t.key, r2 => { dive(() => dailyRound(t)); gramEnsure(() => startDaily(t, r2)); });   // 누를 때 이어서/처음부터 고르기 (대표님 2026-10-07)
   b.append(go);
   if (!SHARE) {                                                 // 단어 시험 한 벌 공유 (대표님 2026-10-08 밤 "단어시험 링크도 공유") — 받는 사람: 로그인 없이 카드(낱말 전부 한 세트) → 실제 시험
@@ -12542,7 +12540,7 @@ function finishQuiz() {
   const soon = Object.values(srsBox()).map(v => v.due).filter(d => d > now()).sort((a, b) => a - b)[0];
   if (soon) {
     const days = Math.max(1, Math.round((soon - now()) / DAY));
-    r.append(el('p', 'note', `다음 복습은 ${days}일 뒤입니다. 잊기 직전에 다시 꺼내야 오래 남습니다.`));
+    r.append(el('p', 'note', `다음 복습 ${days}일 뒤`));
   }
   const left = Q.day || Q.noMore ? 0 : dueWords().length;
   if (left) {
@@ -12550,7 +12548,7 @@ function finishQuiz() {
     more.style.marginTop = '20px'; more.style.width = '100%';
     more.onclick = () => startQuiz(null, null);
     r.append(more);
-    r.append(el('p', 'note', '남은 복습 ' + left + '개. 지금 끝내도 됩니다 — 답한 단어는 이미 저장됐습니다.'));
+    r.append(el('p', 'note', '남은 복습 ' + left + '개'));
   }
   const hasDlg = Q.day && Q.day.dialog;
   const b = el('button', 'primary big', hasDlg ? '문장으로 써먹기 ›' : Q.day ? '오늘 완료' : '홈으로');
@@ -12613,14 +12611,12 @@ function drawVowel() {
   }
   const { g, it } = VD.list[VD.i];
   if (VD.i === 0) {
-    body.append(el('div', 'intro', EAR_INTRO[VD.key] || EAR_INTRO.P1));
     const d0 = ALL.find(d => d.day === VD.key);
     const rb = el('button', 'ghost sm', (d0 ? d0.theme : '모음') + ' 소개 다시 보기');
     rb.onclick = () => startLearn(d0 || ALL.find(d => d.day === 'P1'));
     body.append(rb);
   }
-  body.append(el('div', 'q', `${VD.i + 1} / ${VD.list.length} · 소리를 듣고 고르세요`));
-  body.append(el('div', 'tonehint', esc(g.note)));
+  body.append(el('div', 'q', `${VD.i + 1} / ${VD.list.length}`));   // 설명 글자 뺌 (대표님 2026-10-09 네 번째 지적 — 이름과 숫자만)
   const wrap = el('div', 'qplay');
   wrap.append(listenGroup(spd => play(it.vi, false, null, spd))); body.append(wrap);
   play(it.vi, false);
@@ -12672,13 +12668,10 @@ function drawTone() {
   body.textContent = '';
   if (T.i >= T.list.length) return finishTone();
   const item = T.list[T.i];
-  if (T.i === 0) body.append(el('div', 'intro',
-    '같은 글자에 성조만 다른 단어들입니다. 높낮이만 귀로 가립니다 — 부호 붙이기 문제도 섞여 나옵니다.'));
   if (item.kind === 'mark') return drawToneMark(body, item.w);
   const { g, it } = item;
 
-  body.append(el('div', 'q', `${T.i + 1} / ${T.list.length} · 소리를 듣고 고르세요`));
-  body.append(el('div', 'tonehint', `글자는 모두 <b>${esc(g.base)}</b> 로 같습니다. 성조만 다릅니다.`));
+  body.append(el('div', 'q', `${T.i + 1} / ${T.list.length}`));   // 설명 글자 뺌 (대표님 2026-10-09 네 번째 지적 — 이름과 숫자만)
 
   const wrap = el('div', 'qplay');
   /* 성조 문제만은 **일부러 북부 소리로** 낸다 (고치지 마라).
@@ -12772,7 +12765,7 @@ function finishTone() {
   r.append(el('div', null, n >= 7 ? '소리가 들리기 시작했습니다'
     : n >= 4 ? '보통입니다. 성조는 몇 주 걸립니다'
     : '괜찮습니다. 처음엔 아무도 못 구별합니다'));
-  r.append(el('p', 'note', '가장 어려운 건 hỏi(내렸다 올림)와 ngã(끊었다 올림)입니다. 이 둘은 원어민도 지역에 따라 섞어 씁니다.'));
+
   r.append(el('div', 'rule',
     '<b>✍️ 일주일에 한 번은 손으로 써보세요.</b><br>' +
     '종이에 <b>à á ả ã ạ</b> 를 다섯 번씩. 눈으로만 보면 hỏi와 ngã가 끝까지 안 구별됩니다.'));
@@ -12893,14 +12886,8 @@ function drawToneTest() {
       pick.append(c);
     });
     body.append(pick);
-    body.append(el('div', 'intro', m === 't'
-      ? '소리 하나를 듣고, 글자는 같고 성조만 다른 보기 중에서 고르세요. 틀리면 정답과 고른 것을 이어서 들려줍니다.'
-      : m === 's'
-      ? '소리 하나를 듣고, 성조는 같고 모음 모자(ă·â·ê·ô·ơ·ư)만 다른 보기 중에서 고르세요. 틀리면 정답과 고른 것을 이어서 들려줍니다.'
-      : '소리 하나를 듣고, 모음 모자도 성조도 섞인 보기 중에서 고르세요. 틀리면 정답과 고른 것을 이어서 들려줍니다.'));
   }
-  body.append(el('div', 'q', `${TT.i + 1} / ${TT.n} · 소리를 듣고 고르세요`));
-  body.append(el('div', 'tonehint', `보기 ${st.lv}개 · ${q.dir === 'f' ? '여자' : '남자'} 목소리`));
+  body.append(el('div', 'q', `${TT.i + 1} / ${TT.n}`));   // 설명 글자 뺌 (대표님 2026-10-09 네 번째 지적 — 이름과 숫자만)
   const wrap = el('div', 'qplay');
   wrap.append(listenGroup(spd => play(q.ans[0], false, q.dir, spd)));   // 카드와 같은 [▶ 듣기][▾] — '느리게' 단추는 속도 칩으로 (2026-10-06)
   body.append(wrap);
@@ -12999,9 +12986,9 @@ function finishToneTest() {
   const top = Object.entries(pairs).sort((a, b) => b[1] - a[1])[0];
   if (top) {
     const [a, b] = top[0].split('|');
-    r.append(el('p', 'note', `지금까지 가장 헷갈린 쌍: ${ttLabel(a)} ↔ ${ttLabel(b)} — ${top[1]}번. 이 쌍을 보기로 더 자주 냅니다.`));
+    r.append(el('p', 'note', `${ttLabel(a)} ↔ ${ttLabel(b)} — ${top[1]}번`));
   }
-  r.append(el('p', 'note', `지금 갈래: ${esc(tr(TT_MODES.find(x => x[0] === ttMode())[1]))} · 보기 ${st.lv}개 · 여·남 목소리를 섞어 들려줍니다(북부 발음)`));
+
   const again = el('button', 'primary big', '한 판 더');
   again.style.marginTop = '18px';
   again.onclick = startToneTest;
@@ -14274,10 +14261,10 @@ function showNewsLearn() {
     b.textContent = '';
     if (!days.length) {
       b.append(el('p', 'lede', '아직 기사 세트가 없습니다'));
-      b.append(el('p', 'note', '매일 새벽 6시 30분에 어제 기사 다섯 편으로 만들어집니다.'));
+
       return;
     }
-    b.append(el('p', 'note', '어제 베트남 소식을 읽으면서 말도 익힙니다. 여기 단어는 <b>복습에 안 들어갑니다</b>.'));
+
     let last = null;
     days.forEach(d => {
       if (d.ts !== last) { b.append(el('p', 'newsday', esc(d.ts.slice(5).replace('-', '월 ') + '일'))); last = d.ts; }
@@ -14323,7 +14310,7 @@ function showCards(d) {
     go.style.display = 'block'; go.style.textAlign = 'center'; go.style.margin = '14px 0';
     b.append(go);
   }
-  b.append(el('p', 'note', tr('그림을 길게 누르면 폰에 저장됩니다.')));
+
   show('sub', '카드뉴스', true);
 }
 

@@ -2476,7 +2476,9 @@ header > #face:not([hidden]) ~ #goMe{margin-left:0}
 /* 테스트 */
 .qcount{display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--dim); margin:-4px 0 6px}
 /* 이번엔 넘기기 — 답 단추와 헷갈리지 않게 글자 단추로, 오른쪽 위 한구석 (2026-09-30) */
-.qskip{background:none; border:0; box-shadow:none; color:var(--dim); font-size:13px; font-weight:600; padding:6px 0 6px 12px; min-height:0; border-radius:8px; text-decoration:underline; text-underline-offset:3px}
+/* [답 보기][스킵] — 머리띠의 남/여·단어/발음 단추(.ghost)와 같은 모양 그대로 (대표님 2026-10-09 "버튼 디자인 통일") */
+.qtools{display:flex; gap:8px; align-items:center}
+.qcount .qtools .ghost{color:var(--fg); font-size:16px}   /* 머리띠 단추와 같은 16px */
 .qskip:active{opacity:.6}
 .qcard{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:12px}
 .qcard .q{margin:0 0 4px}
@@ -3074,8 +3076,7 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 
 .forowwrap:has(.fomore) .wbcard .accpill{margin-right:44px}   /* ⋯ 단추와 겹치지 않게 */
 /* 모의고사 [답 보기] — 답을 열고 해설을 보여 준다 (대표님 2026-10-08) */
-.peekrow{display:flex; justify-content:flex-end; margin:6px 0}
-.peekbtn{border:1px solid var(--line); background:var(--bg); color:var(--dim); border-radius:999px; padding:6px 12px; font-size:13px; cursor:pointer}
+.resumeline{margin:-8px 0 10px; text-align:center; font-size:14px}
 .fxexp{white-space:pre-line; background:color-mix(in srgb, var(--accent) 8%, var(--card)); border:1px solid color-mix(in srgb, var(--accent) 30%, var(--line)); border-radius:12px; padding:10px 12px; margin:10px 0; font-size:14px; line-height:1.55}
 /* 공유로 받은 화면 (대표님 2026-10-08 "공유 받은 사람은 로그인 없이 딱 그 화면만") */
 .sharebox{display:flex; flex-direction:column; gap:10px; margin-top:8px}

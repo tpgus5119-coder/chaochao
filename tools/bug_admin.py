@@ -90,7 +90,7 @@ def main():
             p = out / (a[1].replace(":", "_") + ".html")
             p.write_text(html, encoding="utf-8")
             print(f"  화면 HTML → {p}  (열어서 그 사람이 본 화면을 본다)")
-            webbrowser.open(p.as_uri())
+            if "--no-open" not in a: webbrowser.open(p.as_uri())   # 자동 감시(bug_watch)는 브라우저를 안 띄운다
         return
     if cmd == "지우기":
         if input(f"  {a[1]} 을(를) 지울까요? (y/N) ").strip().lower() != "y": return
