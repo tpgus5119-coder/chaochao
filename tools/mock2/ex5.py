@@ -5,7 +5,7 @@ q += [TF("nghe nhạc", "Chị ấy đang nghe nhạc.", True), TF("xem phim", "
       TF("đọc sách", "Ông tôi đang đọc sách.", True), TF("bạn bè", "Cuối tuần tôi đi chơi với bạn bè.", True), TF("áo dài", "Chị ấy đang mặc áo dài rất đẹp.", True)]
 q += [PK(["chơi", "học", "hát", "viết"], "Chị ấy hát rất hay.", 2),
       PK(["cà phê", "nước", "sữa", "nước mía"], "Mỗi sáng tôi uống cà phê.", 0),
-      PK(["tivi", "phim", "đọc", "bài hát"], "Bài hát này hay quá!", 3),
+      PK(["tivi", "phim", "đọc", "nghỉ"], "Hôm nay tôi nghỉ.", 3),   # 10-09: 1차 꼴(그림 다섯 같이 씀)에서 다른 그림과 헷갈려 바꿈
       PK(["thứ bảy", "nghỉ", "mưa", "ngày"], "Hôm nay là thứ bảy.", 0),
       PK(["du lịch", "thăm", "mong", "gặp"], "Chúng tôi đi du lịch Đà Nẵng.", 0)]
 q += [A3("Anh ấy thường làm gì sau khi ăn tối?", "Sau khi ăn tối anh thường học tiếng Việt à?\nKhông, tôi thường xem tivi với gia đình.", ["xem tivi", "học tiếng Việt", "đi ngủ"]),

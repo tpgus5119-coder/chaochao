@@ -7,7 +7,7 @@ q += [PK(["rửa mặt", "nấu ăn", "đọc báo", "mua sắm"], "Buổi sáng
       PK(["ăn cơm", "chuẩn bị", "mang", "chờ"], "Gia đình tôi đang ăn cơm.", 0),
       PK(["lên mạng", "vẽ", "tin tức", "hát hò"], "Buổi tối tôi thường lên mạng.", 0),
       PK(["đi ngủ", "về nhà", "ăn trưa", "đi mua sắm"], "Hôm qua tôi đi ngủ lúc 12 giờ đêm.", 0),
-      PK(["ở nhà", "biển", "quán ăn", "thành phố"], "Cuối tuần tôi ở nhà với gia đình.", 0)]
+      PK(["ở nhà", "biển", "quán ăn", "thành phố"], "Cuối tuần gia đình tôi chơi ở nhà.", 0)]   # 10-09: 1차 꼴(그림 다섯 같이 씀)에서 다른 그림과 헷갈려 바꿈
 q += [A3("Chị ấy làm việc ở đâu?", "Tôi làm thư ký ở một công ty máy tính, còn anh?\nTôi làm việc ở ngân hàng.", ["công ty máy tính", "ngân hàng", "bệnh viện"]),
       A3("Anh ấy thường làm gì vào cuối tuần?", "Cuối tuần anh thường học tiếng Việt à?\nKhông, cuối tuần tôi thường đi chơi với bạn bè.", ["đi chơi với bạn bè", "đi làm", "học tiếng Việt"]),
       A3("Hôm nay chị ấy ăn sáng lúc mấy giờ?", "Hôm nay tôi ăn sáng trễ, lúc 9 giờ.\nCòn tôi ăn sáng lúc 7 giờ.", ["9 giờ", "7 giờ", "11 giờ"]),

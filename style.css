@@ -3105,3 +3105,13 @@ body.sharemode .wfcard, body.sharemode .wfpron{position:relative}
 /* 내 단어장 줄 — 누르면 단어 카드 (2026-10-09) */
 .wbrow.wbopen{cursor:pointer}
 .wbrow.wbopen:active{background:color-mix(in srgb, var(--accent) 6%, var(--bg))}
+/* 말하기 녹음 중 — 화면 전체 표시 대신 말하기 단추가 천천히 빨갛게 반짝 (대표님 2026-10-09) */
+button.rec.rec-on, .ibtn.rec-on{animation:recpulse 1.4s ease-in-out infinite}
+@keyframes recpulse{0%,100%{background:var(--bad); color:#fff; border-color:var(--bad)} 50%{background:color-mix(in srgb, var(--bad) 18%, var(--card)); color:var(--bad); border-color:var(--bad)}}
+@media (prefers-reduced-motion: reduce){button.rec.rec-on, .ibtn.rec-on{animation:none}}
+/* 시험지 [‹ 이전] — 머리띠 단추와 같은 모양 · 돌아온 문제에서 전에 고른 보기 */
+.qcount .qprev{font-size:16px; color:var(--fg)}
+.opts button.picked, .picgrid button.picked{outline:2.5px solid var(--accent); outline-offset:-2px}
+/* 결과의 틀린 문제 — 누르면 그 문제 화면 */
+.dwrow.dwopen{cursor:pointer}
+.dwrow.dwopen:active{background:color-mix(in srgb, var(--accent) 6%, var(--bg))}

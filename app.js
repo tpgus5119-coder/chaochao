@@ -1633,7 +1633,8 @@ function liveRec(box, stream, secs, onStop) {
   const tip = el('div', 'livetip', '<b>폰을 입 가까이</b> 대고 또박또박 말하세요');
   const hint = el('div', 'rechint', '다 말했으면 <b>가운데 빨간 네모</b>를 누르세요');
   wrap.append(head, stop, cv, tip, hint);
-  document.body.append(wrap);
+  /* 화면 전체 녹음 표시(빨간 네모)는 띄우지 않는다 (대표님 2026-10-09 "빨간 녹음 버튼 화면에 안 보여도 된다 — 말하기 버튼이 빨갛게 천천히 반짝이게만").
+     소리 크기·말이 끝났나는 그대로 재서 다 말하면 저절로 멈춘다. 멈추고 싶으면 반짝이는 말하기 단추를 한 번 더 누른다 */
 
   const ctx = getCtx();
   const src = ctx.createMediaStreamSource(stream);
@@ -1882,6 +1883,7 @@ function verdict(box, i, ok, name, sub) {
     '<span class="vsub">' + sub + '</span>';
   sayCredit(box);
   if (box.onVerdict) box.onVerdict(i, ok);            // 말하기 테스트가 판정을 받아 채점한다 (2026-09-27 밤)
+  for (let n = box; n; n = n.parentElement) if (n.onJudge) { n.onJudge(i, ok); break; }   // 시험 말하기(2번 기회) — 발음(said)·높낮이(cmpbox) 판정을 다 받는다 (2026-10-09)
 }
 
 /* 따라 말하기 점수 — **발음과 높낮이가 둘 다 O 일 때만** 준다 (사용자 지시).
@@ -10961,6 +10963,12 @@ function drawQuiz() {
   if (Q.i >= Q.list.length) return finishQuiz();
 
   const q = Q.list[Q.i];
+  if (Q.fixed && Q.exam && !Q.review && q._ans) {         // 시험지에서 돌아온 문제 — 전 답은 _prev 에 두고 다시 풀 수 있게. 안 고치고 [다음 ›] 이면 전 답 그대로 (examGo)
+    if (q._ok === undefined) q._ok = Q.ok > (q._okBefore || 0);
+    q._prev = { ok: q._ok, score: q._score, pickT: q._pickT };
+    if (q._ok) Q.ok--;
+    delete q._ans; delete q._ok; delete q._score; delete q._peek;
+  }
   Q._answered = false;
   Q.t0 = Date.now();                                   // 이 문제를 언제 봤는지 (반응 속도)
   { const nx = Q.list[Q.i + 1]; prefetchSnd([q.w && q.w.vi, ...(q.opts || []).map(o => o && o.vi), nx && nx.w && nx.w.vi]); }   // 소리 미리 (2026-09-28 밤)
@@ -10979,6 +10987,10 @@ function drawQuiz() {
   qc0.append(el('span', null, (Q.i + 1) + ' / ' + Q.list.length));
   const qt = el('div', 'qtools');                        // [답 보기][스킵] — 머리띠의 남/여·단어/발음 단추와 같은 모양 (대표님 2026-10-09)
   const sk = el('button', 'ghost qskip', tr('스킵')); sk.type = 'button'; sk.onclick = skipQ; qt.append(sk); qc0.append(qt);
+  if (Q.fixed && Q.exam && !Q.review) {                   // 시험지: [‹ 이전] — 지나간 문제로 돌아간다 (대표님 2026-10-09 "다음 문제로 넘어가도 이전 문제로 돌아갈 수 있게")
+    if (Q.i > 0) { const pv = el('button', 'ghost qprev', '‹ ' + tr('이전')); pv.type = 'button'; pv.onclick = () => examGo(-1); qc0.prepend(pv); }
+    if (q._prev) { sk.textContent = tr('다음') + ' ›'; sk.classList.remove('qskip'); sk.onclick = () => examGo(1); }   // 돌아온 문제는 [스킵] 대신 [다음 ›] — 전 답 그대로 넘어간다
+  }
   body.append(qc0);
   { const lb = q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : (LABEL[q.mode] || '');   // 시험지 문항(fx)은 지시문이 없다
     body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + (lb ? ' · ' : '') : '') + lb)); }
@@ -10988,12 +11000,12 @@ function drawQuiz() {
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
   if (q.mode === 'type' || q.mode === 'dictation' || q.mode === 'write_ko') { drawTypeQ(body, q); if (Q.daily) peekDaily(body, q); return; }   // 단어 시험 [답 보기] (2026-10-09)
   if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err' || q.mode === 'gpat') return drawExamKind(body, q);
-  if (q.mode === 'fx') { drawFixed(body, q); peekBtn(body, q); return; }   // 1차 시험지 그대로 (2026-09-30) · [답 보기] (2026-10-08)
+  if (q.mode === 'fx') { drawFixed(body, q); peekBtn(body, q); examPrevMark(body, q); return; }   // 1차 시험지 그대로 (2026-09-30) · [답 보기] (2026-10-08)
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
   if (q.mode === 'match') return drawMatch(body, q);
   if (q.mode === 'tone') return drawToneQ(body, q);
-  if (q.mode === 'puzzle' || q.mode === 'puzzle_ko' || q.mode === 'puzzle_vi') { drawPuzzle(body, q); if (Q.fixed) peekBtn(body, q); else if (Q.daily) peekDaily(body, q); return; }
+  if (q.mode === 'puzzle' || q.mode === 'puzzle_ko' || q.mode === 'puzzle_vi') { drawPuzzle(body, q); if (Q.fixed) { peekBtn(body, q); examPrevMark(body, q); } else if (Q.daily) peekDaily(body, q); return; }
 
   /* 소리를 듣는 자리에는 **말하는 길**도 같이 둔다. 듣기만 하면 입이 안 열린다.
      시험 흐름을 흐트러뜨리지 않게, 누를 사람만 누르는 작은 마이크로 둔다.
@@ -11512,7 +11524,7 @@ function startExam1(key, r) {
     EXAM_SPD = 1;                                          // 시험지 듣기는 1배부터 (2026-10-06)
     const L = J.q.map(x => {
       const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
-      if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles }, mode: 'puzzle', sec: x.sec, opts: [] };
+      if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles, fx: x }, mode: 'puzzle', sec: x.sec, opts: [] };
       if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '', fx: x }, mode: 'fx', sec: x.sec, opts: [] };   // D1 발음 — 읽고 녹음해 스스로 매김 (2026-10-07)
       if (x.k === 'speak') return { w: { vi: x.ask, ko: '', nograde: true, fx: x }, mode: 'fx', sec: x.sec, opts: [] };                      // D2 그림·D3 상황 말하기
       return { w, mode: 'fx', sec: x.sec, opts: [] };
@@ -11542,8 +11554,18 @@ function exam1Clock() {
 }
 /* 시험지 문항 그리기 — tf(맞다/틀리다) · choice(보기 고르기) · pick(그림 고르기) · free(그림 보고 5문장, 스스로 매김) */
 /* [답 보기] — 시험지 문항마다 답을 열고 해설을 본다 (대표님 2026-10-08 "문제마다 답 보기 버튼, 해설도 함께"). 답하기 전에 열면 그 문항은 0점 */
+function autoExp(x) {                                         // 해설이 없는 문항의 답 (대표님 2026-10-09 "답 보기 없는 문제도 있네")
+  const heard = x.audio ? tr('들은 말') + ': ' + x.audio + '\n' : '';
+  if (x.k === 'tf') return heard + (x.text ? x.prompt + '\n' : '') + tr('답') + ': ' + tr(x.ans ? '맞다' : '틀리다');
+  if (x.k === 'pick') return heard + tr('답') + ': ' + 'ABCDE'[x.ans];
+  if (x.k === 'choice') return heard + tr('답') + ': ' + x.opts[x.ans];
+  if (x.k === 'puzzle' || x.k === 'say') return x.vi;
+  if (x.k === 'free') return (x.model || []).map((m, i) => m + (x.model_ko && x.model_ko[i] ? ' — ' + x.model_ko[i] : '')).join('\n');
+  return '';
+}
 function peekBtn(body, q) {
-  const x = q.w && q.w.fx; if (!x || !x.exp) return;
+  const x0 = q.w && q.w.fx; if (!x0) return;
+  const x = x0.exp ? x0 : Object.assign({}, x0, { exp: autoExp(x0) }); if (!x.exp) return;
   const b = el('button', 'ghost peekbtn', tr('답 보기')); b.type = 'button';
   b.onclick = () => {
     b.remove();
@@ -11552,7 +11574,9 @@ function peekBtn(body, q) {
       [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay')) bt.disabled = true; });
       [...body.querySelectorAll('.opts button, .picgrid button')].forEach(bt => { if (bt.dataset.vi === q.w.vi) bt.dataset.r = 'ok'; });
       const toks = body.querySelectorAll('.errtok'); if (toks.length && x.bad !== undefined && toks[x.bad]) toks[x.bad].dataset.r = 'ok';
+      body.querySelectorAll('textarea').forEach(t => { t.readOnly = true; });
     }
+    if (x.k === 'say') { const k = recKey(x.vi); k ? play(k, false) : speakVi(x.vi); }
     body.append(el('div', 'fxexp', esc(x.exp)));
     const nb = el('button', 'primary big', tr('다음') + ' ›'); nb.type = 'button'; nb.style.width = '100%';   // nextBtn 은 시험 모드에서 바로 넘겨 버리므로 따로 — 해설을 읽고 넘긴다
     nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
@@ -11630,13 +11654,28 @@ function drawFixed(body, q) {
     const row = el('div', 'qplay'), cb = el('div', 'cmpbox');
     if (canRecord()) row.append(recBtn(x.vi, cb));
     { const lb = el('button', 'ghost', '▶ ' + tr('원어민 듣기')); lb.type = 'button'; lb.onclick = () => say(x.vi); row.append(lb); }
-    body.append(row, cb, el('p', 'q mid', tr('소리 내어 읽은 뒤 스스로 매기세요')));
-    const g = el('div', 'opts');
-    [['맞게 읽었어요', true], ['틀렸어요', false]].forEach(([t, v]) => {
-      const b = el('button', null, tr(t)); b.onclick = () => { [...g.children].forEach(c => c.disabled = true); b.dataset.r = v ? 'ok' : 'no'; q._ok = v; q._ans = true; hideSkip(); if (v) Q.ok++; nextBtn(body, () => { Q.i++; drawQuiz(); }); };
-      g.append(b);
-    });
-    body.append(g); return;
+    body.append(row, cb);
+    /* 두 번 안에 **발음과 높낮이 둘 다** 통과하면 맞음, 못 하면 틀림으로 확정 (대표님 2026-10-09). 한 번에 통과하면 바로 [다음], 두 번째가 끝나면 통과 여부와 상관없이 [다음].
+       판정이 안 나오면(폰이 못 알아들음) 녹음 뒤 몇 초 기다렸다 통과 못 한 것으로 본다 */
+    const mic = row.querySelector('button.rec');
+    let tries = 0, settled = false, aDone = true, v = [], tm = 0;
+    const end = ok => {
+      if (settled) return; settled = true; clearTimeout(tm);
+      q._ans = true; q._ok = ok; hideSkip(); if (ok) Q.ok++;
+      if (mic) mic.disabled = true;
+      const nb = el('button', 'primary big', tr('다음') + ' ›'); nb.type = 'button'; nb.style.width = '100%'; nb.style.marginTop = '12px';
+      nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
+      resumeSave();
+    };
+    const attemptEnd = pass => { if (aDone || q._peek) return; aDone = true; clearTimeout(tm); if (pass) end(true); else if (tries >= 2) end(false); };
+    cb.onJudge = (i, ok) => { if (settled || aDone || q._peek || ok === null) return; if (ok === false) return attemptEnd(false); v[i] = true; if (v[0] && v[1]) attemptEnd(true); };
+    if (mic) mic.onclick = () => {
+      const recording = REC.mr && REC.mr.state === 'recording';
+      if (!recording) { if (settled || tries >= 2) return; tries++; v = []; aDone = false; clearTimeout(tm); tm = setTimeout(() => attemptEnd(false), (RECSEC(x.vi) + 10) * 1000); }
+      toggleRec(x.vi, mic, cb);
+    };
+    if (!mic) end(false);                                   // 녹음이 안 되는 기기 — 말하기는 0점으로 넘어간다
+    return;
   }
   if (x.k === 'speak') {                                   // D2 그림 보고 말하기 · D3 상황 읽고 말하기 — 자유 녹음 → 모범 답안 → 맞게 말한 문장 수를 스스로 (2026-10-07)
     body.append(el('div', 'fxtext', esc(x.ask)));            // 그림은 위에서 이미 붙였다(x.img)
@@ -11661,7 +11700,7 @@ function drawFixed(body, q) {
     const done = el('button', 'primary big', tr('다 썼어요 — 모범 답안 보기')); done.style.width = '100%';
     done.onclick = () => {
       done.disabled = true; ta.readOnly = true;
-      body.append(el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map(esc).join('<br>')));
+      body.append(el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map((m, i) => esc(m) + (x.model_ko && x.model_ko[i] ? ' <small class="dimtxt">' + esc(x.model_ko[i]) + '</small>' : '')).join('<br>')));
       body.append(el('p', 'q mid', tr('맞게 쓴 문장이 몇 개인가요?')));
       const g = el('div', 'opts');
       for (let n = 0; n <= x.n; n++) { const b = el('button', null, String(n)); b.onclick = () => { [...g.children].forEach(c => c.disabled = true); b.dataset.r = 'ok'; q._score = n / x.n; q._ok = n === x.n; q._ans = true; if (q._ok) Q.ok++; nextBtn(body, () => { Q.i++; drawQuiz(); }); }; g.append(b); }
@@ -11823,7 +11862,6 @@ function finishDaily() {
   const r = el('div', 'result');
   if (ok === tot) { r.classList.add('perfect'); const cf = el('div', 'confetti'); for (let i = 0; i < 14; i++) { const s0 = el('i'); s0.style.setProperty('--i', i); cf.append(s0); } r.append(cf); fxTone(true); }
   r.append(el('div', 'n', ok + ' / ' + tot), el('div', null, esc(t.cls + tr('반') + ' ' + t.date + ' ' + tr('단어 시험')) + ' · ' + Math.round(ok * 100 / Math.max(1, tot)) + '% · ' + tr('최고') + ' ' + rec.best));
-  if (Q.skip) r.append(el('div', 'sub', tr('스킵한 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다').replace('N', Q.skip)));
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
   r.append(tb);
@@ -11832,7 +11870,8 @@ function finishDaily() {
     r.append(el('p', 'anasec', tr('틀린 것') + ' <span>' + wrong.length + '</span>'));
     const box = el('div', 'dwrong');
     wrong.forEach(q => {
-      const w = q.w, row = el('div', 'dwrow');
+      const w = q.w, row = el('div', 'dwrow dwopen');
+      row.onclick = e => { if (e.target.closest('button')) return; reviewQ(q, r, $('#title').textContent); };   // 누르면 그 문제 화면 (2026-10-09)
       row.append(el('div', 'dwq', esc(w.vi) + (w.alt && w.alt.length ? ' <small>' + tr('또는') + ' ' + w.alt.map(esc).join(' · ') + '</small>' : '')));
       row.append(el('div', 'dwa', esc(w.ko) + (q._skip ? ' <small class="dimtxt">' + tr('스킵') + '</small>' : '')));
       const gb = el('div', 'dwgram');
@@ -11974,7 +12013,6 @@ function finishWeekly() {
   const tp = el('div', 'exsec');
   pts.forEach(([k, g, m]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(tr(NM[k]))), el('b', null, g + ' / ' + m)); tp.append(row); });
   r.append(tp);
-  if (Q.skip) r.append(el('div', 'sub', tr('스킵한 N문제는 0점입니다 — 시험 점수에만 들고, 실력 분석에는 들지 않습니다').replace('N', Q.skip)));
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
   r.append(tb);
@@ -11982,6 +12020,20 @@ function finishWeekly() {
   examWrongList(r, Q.list);
   const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = () => { ACTIVE_TAB = 'home'; renderHome(); }; r.append(b);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
+}
+/* 결과 화면의 틀린 문제를 누르면 그 문제를 다시 그려 답까지 열어 보인다(점수·진도에는 안 든다). 뒤로(머리띠 ‹ 또는 [다음 ›])가면 결과 화면 그대로 */
+function reviewQ(q0, r, title) {
+  const Qs = Q;
+  const q = Object.assign({}, q0); ['_ans', '_ok', '_peek', '_skip', '_score', '_prev', '_pickT', '_okBefore'].forEach(k => { delete q[k]; });
+  const back = () => { Q = Qs; const qb = $('#quizBody'); qb.textContent = ''; qb.append(r); show('quiz', title, true); };
+  dive(back);
+  Q = { list: [q], i: 0, ok: 0, total: 1, exam: false, review: true, blind: false, opt: {}, fixed: Qs.fixed || null, daily: Qs.daily || null, dtest: Qs.dtest };
+  drawQuiz(); show('quiz', title, true);
+  const qb = $('#quizBody');
+  qb.querySelectorAll('.qtools .qskip, .qprev, button.rec').forEach(b => b.remove());
+  const pb = qb.querySelector('.peekbtn'); if (pb) pb.click();
+  const nb = [...qb.querySelectorAll('button.primary')].pop();
+  if (nb) { nb.textContent = tr('돌아가기'); nb.onclick = () => { NAV.pop(); back(); }; }
 }
 /* 시험 뒤 '틀린 것' — 문제 → 정답(다른 정답)·스킵 표시 (매일·주간 시험이 같이 쓴다) */
 function examWrongList(r, list) {
@@ -11993,6 +12045,7 @@ function examWrongList(r, list) {
     const w = q.w, row = el('div', 'dwrow');
     row.append(el('div', 'dwq', esc(w.vi) + (w.alt && w.alt.length ? ' <small>' + tr('또는') + ' ' + w.alt.map(esc).join(' · ') + '</small>' : '')));
     row.append(el('div', 'dwa', esc(w.ko || '') + (q.sec ? ' <small class="dimtxt">' + esc(q.sec) + '</small>' : '') + (q._skip ? ' <small class="dimtxt">' + tr('스킵') + '</small>' : '')));
+    row.classList.add('dwopen'); row.onclick = () => reviewQ(q, r, $('#title').textContent);   // 누르면 그 문제 화면 (2026-10-09)
     box.append(row);
   });
   r.append(box);
@@ -12316,6 +12369,7 @@ function sayOpts(target) {
 
 function answer(btn, correct, w) {
   const md = Q.list[Q.i].mode;
+  Q.list[Q.i]._pickT = btn.textContent.trim();          // 시험지에서 돌아왔을 때 전에 고른 보기 표시 (2026-10-09)
   Q.list[Q.i]._ans = true; hideSkip();          // 문법 예문(nograde)도 답한 뒤에는 못 넘긴다
   markSpeed(correct, md);
   // 눈으로 푼 것은 읽기, 귀로 푼 것은 듣기로 센다 (전에는 둘 다 '암기'에만 쌓였다)
@@ -12411,6 +12465,22 @@ function markSpeed(ok, mode) {
    다음 복습에 다시 나옴) · 이번 판 끝에 다시 안 물음. 대신 '넘긴 수'만 따로 센다(S.stats.skipN, 낱말별 S.stats.skipW) — 자꾸 넘기는 낱말은
    분석에서 '아직 안 재 본 것'으로 따로 보여 준다. 주간 시험에서는 그 문제가 0점이다(점수 시험이니까). 다 넘기면 외운 단어는 그대로 0 —
    넘김은 앎이 아니다. 답한 뒤(_ans)에는 넘길 수 없다 — 이미 통계에 들어갔다. */
+/* 시험지에서 문제 옮기기 — 지금 문제를 마무리(답했으면 맞았나 적고, 돌아와서 안 고쳤으면 전 답을 되살림)한 뒤 옮긴다 */
+function examGo(d) {
+  const q = Q.list[Q.i];
+  if (q) {
+    if (q._ans && q._ok === undefined) q._ok = Q.ok > (q._okBefore || 0);
+    if (!q._ans && q._prev) { const p = q._prev; q._ans = true; q._ok = p.ok; if (p.score !== undefined) q._score = p.score; q._pickT = p.pickT; if (p.ok) Q.ok++; }
+    delete q._prev;
+  }
+  Q.i = Math.max(0, Math.min(Q.list.length - 1, Q.i + d));
+  drawQuiz();
+}
+/* 돌아온 문제 — 전에 고른 보기를 표시 (맞았는지는 시험이 끝날 때까지 안 보인다) */
+function examPrevMark(body, q) {
+  const p = q._prev; if (!p || !p.pickT) return;
+  body.querySelectorAll('.opts button, .picgrid button').forEach(b => { if (b.textContent.trim() === p.pickT) b.classList.add('picked'); });
+}
 function hideSkip() { const s = $('#quizBody') && $('#quizBody').querySelector('.qskip'); if (s) s.remove(); }
 function skipQ() {
   if (!Q || Q.i >= Q.list.length) return;

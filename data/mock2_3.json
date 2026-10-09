@@ -64,80 +64,88 @@
    "k": "pick",
    "audio": "Hôm nay tôi đi tham quan bảo tàng với bạn cùng lớp.",
    "opts": [
+    "b-gioi.webp",
+    "w-934a3a8f0f.webp",
     "b-bao-tang.webp",
-    "b-nha-tho.webp",
-    "w-5fec2d5cca.webp",
-    "w-8fc7ed6a89.webp"
+    "b-an-toi.webp",
+    "b-giam-gia.webp"
    ],
-   "ans": 0,
+   "ans": 2,
    "made": true,
    "words": [
+    "giỏi",
+    "nói chuyện",
     "bảo tàng",
-    "nhà thờ",
-    "phố đi bộ",
-    "đài truyền hình"
+    "ăn tối",
+    "giảm giá"
    ],
-   "exp": "들은 말: Hôm nay tôi đi tham quan bảo tàng với bạn cùng lớp.\n오늘 저는 같은 반 친구와 박물관을 구경하러 가요.\n답: A bảo tàng(박물관)"
+   "exp": "들은 말: Hôm nay tôi đi tham quan bảo tàng với bạn cùng lớp.\n오늘 저는 같은 반 친구와 박물관을 구경하러 가요.\n답: C bảo tàng(박물관)"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
    "audio": "Chúng tôi đang nói chuyện ở quán cà phê.",
    "opts": [
-    "b-di-dao.webp",
-    "b-tham-quan.webp",
+    "b-gioi.webp",
     "w-934a3a8f0f.webp",
-    "b-uong.webp"
+    "b-bao-tang.webp",
+    "b-an-toi.webp",
+    "b-giam-gia.webp"
    ],
-   "ans": 2,
+   "ans": 1,
    "made": true,
    "words": [
-    "đi dạo",
-    "tham quan",
+    "giỏi",
     "nói chuyện",
-    "uống"
+    "bảo tàng",
+    "ăn tối",
+    "giảm giá"
    ],
-   "exp": "들은 말: Chúng tôi đang nói chuyện ở quán cà phê.\n우리는 카페에서 이야기하고 있어요.\n답: C nói chuyện(이야기하다)"
+   "exp": "들은 말: Chúng tôi đang nói chuyện ở quán cà phê.\n우리는 카페에서 이야기하고 있어요.\n답: B nói chuyện(이야기하다)"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
    "audio": "Tối nay tôi mời anh đi ăn tối.",
    "opts": [
-    "b-uong-thuoc.webp",
+    "b-gioi.webp",
+    "w-934a3a8f0f.webp",
+    "b-bao-tang.webp",
     "b-an-toi.webp",
-    "b-khen.webp",
-    "b-hoi.webp"
+    "b-giam-gia.webp"
    ],
-   "ans": 1,
+   "ans": 3,
    "made": true,
    "words": [
-    "uống thuốc",
+    "giỏi",
+    "nói chuyện",
+    "bảo tàng",
     "ăn tối",
-    "khen",
-    "hỏi"
+    "giảm giá"
    ],
-   "exp": "들은 말: Tối nay tôi mời anh đi ăn tối.\n오늘 저녁 제가 저녁을 살게요.\n답: B ăn tối(저녁을 먹다)"
+   "exp": "들은 말: Tối nay tôi mời anh đi ăn tối.\n오늘 저녁 제가 저녁을 살게요.\n답: D ăn tối(저녁을 먹다)"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
    "audio": "Sách ở đây giảm giá 30%.",
    "opts": [
-    "b-mua.webp",
-    "w-667e20a456.webp",
-    "b-giam-gia.webp",
-    "b-dia-chi.webp"
+    "b-gioi.webp",
+    "w-934a3a8f0f.webp",
+    "b-bao-tang.webp",
+    "b-an-toi.webp",
+    "b-giam-gia.webp"
    ],
-   "ans": 2,
+   "ans": 4,
    "made": true,
    "words": [
-    "mua",
-    "cây",
-    "giảm giá",
-    "địa chỉ"
+    "giỏi",
+    "nói chuyện",
+    "bảo tàng",
+    "ăn tối",
+    "giảm giá"
    ],
-   "exp": "들은 말: Sách ở đây giảm giá 30%.\n여기 책은 30% 할인해요.\n답: C giảm giá(할인하다)"
+   "exp": "들은 말: Sách ở đây giảm giá 30%.\n여기 책은 30% 할인해요.\n답: E giảm giá(할인하다)"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
@@ -145,22 +153,24 @@
    "audio": "Anh ấy nói tiếng Việt rất giỏi.",
    "opts": [
     "b-gioi.webp",
-    "b-du-khach.webp",
-    "b-than-thien.webp",
-    "b-tre.webp"
+    "w-934a3a8f0f.webp",
+    "b-bao-tang.webp",
+    "b-an-toi.webp",
+    "b-giam-gia.webp"
    ],
    "ans": 0,
    "made": true,
    "words": [
     "giỏi",
-    "du khách",
-    "thân thiện",
-    "trẻ"
+    "nói chuyện",
+    "bảo tàng",
+    "ăn tối",
+    "giảm giá"
    ],
    "exp": "들은 말: Anh ấy nói tiếng Việt rất giỏi.\n그는 베트남어를 아주 잘해요.\n답: A giỏi(잘하는, 능숙한)"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Bây giờ họ đi đâu?",
    "audio": "Bây giờ chúng ta đi bưu điện hả anh?\nKhông, chúng ta đi mua sách ở nhà sách FAHASA.",
@@ -175,7 +185,7 @@
    "exp": "들은 대화\n여: Bây giờ chúng ta đi bưu điện hả anh? — 지금 우리 우체국에 가는 거죠?\n남: Không, chúng ta đi mua sách ở nhà sách FAHASA. — 아니요, 우리는 파하사 서점에 책 사러 가요.\n물음: Bây giờ họ đi đâu? — 지금 그들은 어디에 가요?\n답: nhà sách"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Nhà sách FAHASA số mấy?",
    "audio": "Nhà sách FAHASA ở số 14 phải không?\nKhông, ở số 40 đường Nguyễn Huệ.",
@@ -190,7 +200,7 @@
    "exp": "들은 대화\n여: Nhà sách FAHASA ở số 14 phải không? — 파하사 서점은 14번지에 있죠?\n남: Không, ở số 40 đường Nguyễn Huệ. — 아니요, 응우옌후에 거리 40번지에 있어요.\n물음: Nhà sách FAHASA số mấy? — 파하사 서점은 몇 번지예요?\n답: số 40"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Hôm nay nhà sách giảm giá bao nhiêu?",
    "audio": "Hôm nay nhà sách giảm giá 13% à?\nKhông, hôm nay nhà sách giảm giá 30%.",
@@ -205,7 +215,7 @@
    "exp": "들은 대화\n여: Hôm nay nhà sách giảm giá 13% à? — 오늘 서점이 13% 할인해요?\n남: Không, hôm nay nhà sách giảm giá 30%. — 아니요, 오늘 서점은 30% 할인해요.\n물음: Hôm nay nhà sách giảm giá bao nhiêu? — 오늘 서점은 얼마나 할인해요?\n답: 30%"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Sao David biết nhà sách giảm giá?",
    "audio": "Sao anh biết nhà sách giảm giá?\nVì anh Brian nói với tôi.",
@@ -220,7 +230,7 @@
    "exp": "들은 대화\n여: Sao anh biết nhà sách giảm giá? — 서점이 할인하는 걸 어떻게 알아요?\n남: Vì anh Brian nói với tôi. — 브라이언 씨가 말해 줬거든요.\n물음: Sao David biết nhà sách giảm giá? — 데이비드는 서점이 할인하는 걸 어떻게 알아요?\n답: vì anh Brian nói"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Dorothy đi đâu?",
    "audio": "Anh cho tôi đến trường Nhân văn, số 10, Quận 1.\nVâng, được ạ.",
@@ -235,7 +245,7 @@
    "exp": "들은 대화\n여: Anh cho tôi đến trường Nhân văn, số 10, Quận 1. — 1군 10번지 인문대로 가 주세요.\n남: Vâng, được ạ. — 네, 알겠습니다.\n물음: Dorothy đi đâu? — 도로시는 어디에 가요?\n답: trường Nhân văn"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Nhà hàng đó ở đâu?",
    "audio": "Nhà hàng đó ở Quận 7 à?\nKhông, ở Quận 1, bia tươi ở đó rất ngon.",
@@ -250,7 +260,7 @@
    "exp": "들은 대화\n여: Nhà hàng đó ở Quận 7 à? — 그 식당은 7군에 있어요?\n남: Không, ở Quận 1, bia tươi ở đó rất ngon. — 아니요, 1군에 있어요, 거기 생맥주가 아주 맛있어요.\n물음: Nhà hàng đó ở đâu? — 그 식당은 어디에 있어요?\n답: Quận 1"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Tối nay Lee mời ai đi uống bia?",
    "audio": "Tối nay anh mời ai đi uống bia?\nTôi mời anh Min và anh Hiroki.",
@@ -265,7 +275,7 @@
    "exp": "들은 대화\n여: Tối nay anh mời ai đi uống bia? — 오늘 저녁 누구를 맥주 마시러 초대해요?\n남: Tôi mời anh Min và anh Hiroki. — 민 씨와 히로키 씨를 초대해요.\n물음: Tối nay Lee mời ai đi uống bia? — 오늘 저녁 리는 누구를 맥주 마시러 초대해요?\n답: anh Min và anh Hiroki"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Hiroki đã đi tham quan ở đâu?",
    "audio": "Anh Hiroki đã đi tham quan ở đâu?\nTôi đã đi tham quan Nhà thờ Đức Bà và Bảo tàng Lịch sử.",
@@ -280,7 +290,7 @@
    "exp": "들은 대화\n여: Anh Hiroki đã đi tham quan ở đâu? — 히로키 씨는 어디를 구경했어요?\n남: Tôi đã đi tham quan Nhà thờ Đức Bà và Bảo tàng Lịch sử. — 저는 노트르담 성당과 역사박물관을 구경했어요.\n물음: Hiroki đã đi tham quan ở đâu? — 히로키는 어디를 구경했어요?\n답: Nhà thờ Đức Bà"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Ngày mai Vân rảnh từ mấy giờ?",
    "audio": "Ngày mai tôi bận buổi sáng, nhưng tôi rảnh từ 2 giờ chiều.\nVậy 3 giờ chúng ta gặp nhau nhé.",
@@ -295,7 +305,7 @@
    "exp": "들은 대화\n여: Ngày mai tôi bận buổi sáng, nhưng tôi rảnh từ 2 giờ chiều. — 내일 저는 오전엔 바쁘지만 오후 2시부터 한가해요.\n남: Vậy 3 giờ chúng ta gặp nhau nhé. — 그럼 3시에 만나요.\n물음: Ngày mai Vân rảnh từ mấy giờ? — 내일 번은 몇 시부터 한가해요?\n답: từ 2 giờ chiều"
   },
   {
-   "sec": "A 듣기 · 3 듣고 답 고르기",
+   "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Từ đây đến sân bay mất bao lâu?",
    "audio": "Từ đây đến sân bay mất bao lâu, anh?\nĐi tắc xi mất khoảng 30 phút.",
@@ -310,157 +320,167 @@
    "exp": "들은 대화\n여: Từ đây đến sân bay mất bao lâu, anh? — 여기서 공항까지 얼마나 걸려요?\n남: Đi tắc xi mất khoảng 30 phút. — 택시로 30분쯤 걸려요.\n물음: Từ đây đến sân bay mất bao lâu? — 여기서 공항까지 얼마나 걸려요?\n답: khoảng 30 phút"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Bây giờ chúng ta đi đâu?",
+   "prompt": "A: Bây giờ chúng ta đi đâu? B: Chúng ta đi mua ____.",
+   "audio": "Chúng ta đi mua sách.",
    "opts": [
-    "Chúng ta đi mua sách.",
-    "Lúc 8 giờ sáng.",
-    "Khoảng 20 nhân viên."
+    "sách",
+    "bia",
+    "cà phê",
+    "áo dài"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Bây giờ chúng ta đi đâu?\n지금 우리 어디 가요?\n답: Chúng ta đi mua sách. — 우리 책 사러 가요."
+   "exp": "들은 말: Chúng ta đi mua sách.\n우리 책 사러 가요.\n답: sách"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Nhà sách ở đâu?",
+   "prompt": "A: Nhà sách ở đâu? B: Ở số ____ đường Nguyễn Huệ.",
+   "audio": "Ở số 40 đường Nguyễn Huệ.",
    "opts": [
-    "Ở số 40 đường Nguyễn Huệ.",
-    "Giảm giá 30%.",
-    "Bằng tắc xi."
+    "40",
+    "14",
+    "4",
+    "44"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Nhà sách ở đâu?\n서점은 어디에 있어요?\n답: Ở số 40 đường Nguyễn Huệ. — 응우옌후에 거리 40번지요."
+   "exp": "들은 말: Ở số 40 đường Nguyễn Huệ.\n응우옌후에 거리 40번지요.\n답: 40"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Anh muốn mua sách gì?",
+   "prompt": "A: Anh muốn mua sách gì? B: Sách ____ Việt Nam.",
+   "audio": "Sách lịch sử Việt Nam.",
    "opts": [
-    "Sách lịch sử Việt Nam.",
-    "Ở nhà sách FAHASA.",
-    "Hôm qua."
+    "lịch sử",
+    "tiếng Việt",
+    "tiếng Anh",
+    "tiếng Nhật"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Anh muốn mua sách gì?\n무슨 책을 사고 싶어요?\n답: Sách lịch sử Việt Nam. — 베트남 역사책이요."
+   "exp": "들은 말: Sách lịch sử Việt Nam.\n베트남 역사책이요.\n답: lịch sử"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Gần Đài Truyền hình Thành phố, phải không cô?",
+   "prompt": "A: Gần Đài Truyền hình Thành phố, phải không cô? B: ____ rồi, anh.",
+   "audio": "Đúng rồi, anh.",
    "opts": [
-    "Đúng rồi, anh.",
-    "Khoảng 30 phút.",
-    "Tôi muốn mua sách."
+    "Đúng",
+    "Sắp",
+    "Có",
+    "Không"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Gần Đài Truyền hình Thành phố, phải không cô?\n시 방송국 근처죠?\n답: Đúng rồi, anh. — 맞아요."
+   "exp": "들은 말: Đúng rồi, anh.\n맞아요.\n답: Đúng"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Anh có biết nhà hàng nào ngon không?",
+   "prompt": "A: Anh có biết nhà hàng nào ngon không? B: Có, tôi biết một nhà hàng ở ____.",
+   "audio": "Có, tôi biết một nhà hàng ở Quận 1.",
    "opts": [
-    "Có, tôi biết một nhà hàng ở Quận 1.",
-    "Lúc 7 giờ tối.",
-    "Tôi là tài xế."
+    "Quận 1",
+    "Quận 2",
+    "Quận 7",
+    "Quận 3"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Anh có biết nhà hàng nào ngon không?\n맛있는 식당 아는 데 있어요?\n답: Có, tôi biết một nhà hàng ở Quận 1. — 네, 1군에 있는 식당을 하나 알아요."
+   "exp": "들은 말: Có, tôi biết một nhà hàng ở Quận 1.\n네, 1군에 있는 식당을 하나 알아요.\n답: Quận 1"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Ngày mai chị có rảnh không?",
+   "prompt": "A: Ngày mai chị có rảnh không? B: Có, tôi rảnh từ ____ giờ chiều.",
+   "audio": "Có, tôi rảnh từ 2 giờ chiều.",
    "opts": [
-    "Có, tôi rảnh từ 2 giờ chiều.",
-    "Ở bảo tàng.",
-    "Giảm giá 20%."
+    "2",
+    "3",
+    "4",
+    "5"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Ngày mai chị có rảnh không?\n내일 한가해요?\n답: Có, tôi rảnh từ 2 giờ chiều. — 네, 오후 2시부터 한가해요."
+   "exp": "들은 말: Có, tôi rảnh từ 2 giờ chiều.\n네, 오후 2시부터 한가해요.\n답: 2"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Anh có biết chỗ đó địa chỉ số mấy không?",
+   "prompt": "A: Anh có biết chỗ đó địa chỉ số mấy không? B: Số ____, Quận 1.",
+   "audio": "Số 125, Quận 1.",
    "opts": [
-    "Số 125, Quận 1.",
-    "Rất đẹp.",
-    "Từ 9 giờ sáng."
+    "125",
+    "152",
+    "25",
+    "215"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Anh có biết chỗ đó địa chỉ số mấy không?\n거기 주소가 몇 번지인지 알아요?\n답: Số 125, Quận 1. — 1군 125번지요."
+   "exp": "들은 말: Số 125, Quận 1.\n1군 125번지요.\n답: 125"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Tối nay chúng ta ăn ở đâu?",
+   "prompt": "A: Tối nay chúng ta ăn ở đâu? B: Ở quán ăn gần ____ nhé.",
+   "audio": "Ở quán ăn gần trường nhé.",
    "opts": [
-    "Ở quán ăn gần trường nhé.",
-    "Khoảng 40 phút.",
-    "Vì tôi bận."
+    "trường",
+    "nhà",
+    "công ty",
+    "ngân hàng"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Tối nay chúng ta ăn ở đâu?\n오늘 저녁 어디에서 먹을까요?\n답: Ở quán ăn gần trường nhé. — 학교 근처 식당에서요."
+   "exp": "들은 말: Ở quán ăn gần trường nhé.\n학교 근처 식당에서요.\n답: trường"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Tắc xi sắp đến chưa anh?",
+   "prompt": "A: Tắc xi sắp đến chưa anh? B: Sắp ____ rồi, cô.",
+   "audio": "Sắp đến rồi, cô.",
    "opts": [
-    "Sắp đến rồi, cô.",
-    "Ở Quận 7.",
-    "Tôi đi bằng xe buýt."
+    "đến",
+    "đi",
+    "về",
+    "ăn"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Tắc xi sắp đến chưa anh?\n택시 곧 와요?\n답: Sắp đến rồi, cô. — 곧 와요."
+   "exp": "들은 말: Sắp đến rồi, cô.\n곧 와요.\n답: đến"
   },
   {
-   "sec": "A 듣기 · 4 듣고 질문에 답하기",
+   "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "choice",
-   "prompt": "(들은 질문에 알맞은 답)",
-   "audio": "Cô nói tiếng Việt giỏi quá!",
+   "prompt": "A: Cô nói tiếng Việt giỏi quá! B: ____ anh.",
+   "audio": "Cám ơn anh.",
    "opts": [
-    "Cám ơn anh.",
-    "Không, tôi đi tắc xi.",
-    "Ở gần đây."
+    "Cám ơn",
+    "Xin lỗi",
+    "Chào",
+    "Tạm biệt"
    ],
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 질문: Cô nói tiếng Việt giỏi quá!\n베트남어 정말 잘하시네요!\n답: Cám ơn anh. — 고마워요."
+   "exp": "들은 말: Cám ơn anh.\n고마워요.\n답: Cám ơn"
   },
   {
-   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
    "prompt": "Bây giờ ____ đi đâu?",
    "opts": [
@@ -474,7 +494,7 @@
    "exp": "Bây giờ chúng ta đi đâu?\n지금 우리 어디 가요?"
   },
   {
-   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
    "prompt": "Chúng ta ____ đi mua sách.",
    "opts": [
@@ -488,7 +508,7 @@
    "exp": "Chúng ta sẽ đi mua sách.\n우리는 책을 사러 갈 거예요. (sẽ: ~할 것이다)"
   },
   {
-   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
    "prompt": "Cô nói tiếng Việt giỏi ____!",
    "opts": [
@@ -502,7 +522,7 @@
    "exp": "Cô nói tiếng Việt giỏi quá!\n베트남어 정말 잘하시네요!"
   },
   {
-   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
    "prompt": "Hôm nay nhà sách giảm giá 30% ____?",
    "opts": [
@@ -516,7 +536,7 @@
    "exp": "Hôm nay nhà sách giảm giá 30% à?\n오늘 서점이 30% 할인한다고요? (à: 되묻기)"
   },
   {
-   "sec": "B 읽기 · 1 빈칸(낱말·문법)",
+   "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
    "prompt": "____ hôm qua anh không đến lớp? — Vì tôi bận.",
    "opts": [
@@ -530,7 +550,7 @@
    "exp": "tại sao hôm qua anh không đến lớp? — Vì tôi bận.\n어제 왜 수업에 안 왔어요? — 바빠서요. (tại sao: 왜)"
   },
   {
-   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
    "text": "Hôm nay nhà sách FAHASA ở số 40 đường Nguyễn Huệ giảm giá 30%. David và Vân sẽ đi mua sách lịch sử Việt Nam ở đó.",
    "prompt": "Họ sẽ mua gì?",
@@ -544,7 +564,7 @@
    "exp": "물음: Họ sẽ mua gì? — 그들은 무엇을 살 거예요?\n글: 오늘 응우옌후에 거리 40번지 파하사 서점이 30% 할인해요. 데이비드와 번은 거기서 베트남 역사책을 살 거예요.\n답: sách lịch sử"
   },
   {
-   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
    "text": "Dorothy đi tắc xi đến trường Nhân văn. Trường ở số 10 đường Đinh Tiên Hoàng, Quận 1, gần Đài Truyền hình Thành phố.",
    "prompt": "Trường Nhân văn ở gần đâu?",
@@ -558,7 +578,7 @@
    "exp": "물음: Trường Nhân văn ở gần đâu? — 인문대는 어디 근처에 있어요?\n글: 도로시는 택시를 타고 인문대에 가요. 학교는 1군 딘띠엔호앙 거리 10번지, 시 방송국 근처에 있어요.\n답: Đài Truyền hình Thành phố"
   },
   {
-   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
    "text": "Tối nay Lee mời anh Min đi uống bia ở một nhà hàng Việt Nam ở Quận 1. Món ăn ở đó ngon lắm, đặc biệt bia tươi rất ngon.",
    "prompt": "Tối nay họ đi đâu?",
@@ -572,7 +592,7 @@
    "exp": "물음: Tối nay họ đi đâu? — 오늘 저녁 그들은 어디에 가요?\n글: 오늘 저녁 리는 민 씨를 1군의 베트남 식당으로 맥주 마시러 초대해요. 거기 음식은 아주 맛있고, 특히 생맥주가 아주 맛있어요.\n답: đi uống bia"
   },
   {
-   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
    "text": "Hiroki đã đi tham quan Nhà thờ Đức Bà, Bưu điện Thành phố và Bảo tàng Lịch sử. Ngày mai anh ấy muốn mời Vân đi Bảo tàng Áo dài.",
    "prompt": "Ngày mai Hiroki muốn đi đâu?",
@@ -586,7 +606,7 @@
    "exp": "물음: Ngày mai Hiroki muốn đi đâu? — 내일 히로키는 어디에 가고 싶어 해요?\n글: 히로키는 노트르담 성당, 중앙우체국, 역사박물관을 구경했어요. 내일 그는 번을 아오자이 박물관에 초대하고 싶어 해요.\n답: Bảo tàng Áo dài"
   },
   {
-   "sec": "B 읽기 · 2 읽고 질문에 답하기",
+   "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
    "text": "Nhà tôi ở Quận 7. Từ nhà tôi đến trung tâm thành phố mất khoảng 40 phút bằng xe buýt. Đi tắc xi mất 20 phút nhưng hơi mắc.",
    "prompt": "Đi tắc xi mất bao lâu?",
@@ -682,142 +702,142 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Bây giờ chúng ta đi đâu?",
+   "prompt": "Chúng ta sẽ đi mua sách.",
    "opts": [
-    "Chúng ta sẽ đi mua sách.",
-    "Tôi đi bằng tắc xi.",
-    "Khoảng 30 phút.",
-    "Giảm giá 30%."
+    "Bây giờ chúng ta đi đâu?",
+    "Anh biết địa chỉ nhà sách không đấy?",
+    "Sao anh biết?",
+    "Đi đâu, cô?"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Bây giờ chúng ta đi đâu? — 지금 우리 어디 가요?\n답: Chúng ta sẽ đi mua sách. — 우리는 책을 사러 갈 거예요. (sẽ: ~할 것이다)"
+   "exp": "Chúng ta sẽ đi mua sách. — 우리는 책을 사러 갈 거예요. (sẽ: ~할 것이다)\n답: Bây giờ chúng ta đi đâu? — 지금 우리 어디 가요?"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Anh biết địa chỉ nhà sách không đấy?",
+   "prompt": "Biết. Số 40 đường Nguyễn Huệ.",
    "opts": [
-    "Biết. Số 40 đường Nguyễn Huệ.",
-    "Hôm qua tôi đã mua sách.",
-    "Tôi muốn mua sách lịch sử.",
-    "Rất rẻ."
+    "Anh biết địa chỉ nhà sách không đấy?",
+    "Sao anh biết?",
+    "Đi đâu, cô?",
+    "Cô nói tiếng Việt giỏi quá!"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Anh biết địa chỉ nhà sách không đấy? — 서점 주소 알아요?\n답: Biết. Số 40 đường Nguyễn Huệ. — 알아요. 응우옌후에 거리 40번지요."
+   "exp": "Biết. Số 40 đường Nguyễn Huệ. — 알아요. 응우옌후에 거리 40번지요.\n답: Anh biết địa chỉ nhà sách không đấy? — 서점 주소 알아요?"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Sao anh biết?",
+   "prompt": "Vì anh Brian nói với tôi.",
    "opts": [
-    "Vì anh Brian nói với tôi.",
-    "Lúc 9 giờ sáng.",
-    "Ở Quận 1.",
-    "Tôi mua sách tiếng Việt."
+    "Sao anh biết?",
+    "Đi đâu, cô?",
+    "Cô nói tiếng Việt giỏi quá!",
+    "Anh có biết nhà hàng nào ngon không?"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Sao anh biết? — 어떻게 알아요?\n답: Vì anh Brian nói với tôi. — 브라이언 씨가 말해 줬거든요."
+   "exp": "Vì anh Brian nói với tôi. — 브라이언 씨가 말해 줬거든요.\n답: Sao anh biết? — 어떻게 알아요?"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Đi đâu, cô?",
+   "prompt": "Trường Nhân văn, Quận 1, anh.",
    "opts": [
-    "Trường Nhân văn, Quận 1, anh.",
-    "Cám ơn anh.",
-    "Rất ngon.",
-    "Tối nay."
+    "Đi đâu, cô?",
+    "Cô nói tiếng Việt giỏi quá!",
+    "Anh có biết nhà hàng nào ngon không?",
+    "Ngày mai Vân có rảnh không?"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Đi đâu, cô? — 어디 가세요?\n답: Trường Nhân văn, Quận 1, anh. — 1군 인문대요."
+   "exp": "Trường Nhân văn, Quận 1, anh. — 1군 인문대요.\n답: Đi đâu, cô? — 어디 가세요?"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Cô nói tiếng Việt giỏi quá!",
+   "prompt": "Cám ơn anh.",
    "opts": [
-    "Cám ơn anh.",
-    "Đúng rồi, anh.",
-    "Số 10, Quận 1.",
-    "Khoảng 20 phút."
+    "Cô nói tiếng Việt giỏi quá!",
+    "Anh có biết nhà hàng nào ngon không?",
+    "Ngày mai Vân có rảnh không?",
+    "Anh có biết chỗ đó địa chỉ số mấy không?"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Cô nói tiếng Việt giỏi quá! — 베트남어 정말 잘하시네요!\n답: Cám ơn anh. — 고마워요."
+   "exp": "Cám ơn anh. — 고마워요.\n답: Cô nói tiếng Việt giỏi quá! — 베트남어 정말 잘하시네요!"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Anh có biết nhà hàng nào ngon không?",
+   "prompt": "Tôi biết một nhà hàng ở Quận 1. Bia tươi rất ngon.",
    "opts": [
-    "Tôi biết một nhà hàng ở Quận 1. Bia tươi rất ngon.",
-    "Tôi là tài xế tắc xi.",
-    "Nhà sách giảm giá 30%.",
-    "Từ 2 giờ chiều."
+    "Anh có biết nhà hàng nào ngon không?",
+    "Ngày mai Vân có rảnh không?",
+    "Anh có biết chỗ đó địa chỉ số mấy không?",
+    "Xe sắp đến chưa anh?"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Anh có biết nhà hàng nào ngon không? — 맛있는 식당 아는 데 있어요?\n답: Tôi biết một nhà hàng ở Quận 1. Bia tươi rất ngon. — 1군에 있는 식당을 하나 알아요. 생맥주가 아주 맛있어요."
+   "exp": "Tôi biết một nhà hàng ở Quận 1. Bia tươi rất ngon. — 1군에 있는 식당을 하나 알아요. 생맥주가 아주 맛있어요.\n답: Anh có biết nhà hàng nào ngon không? — 맛있는 식당 아는 데 있어요?"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Ngày mai Vân có rảnh không?",
+   "prompt": "Tôi rảnh từ 2 giờ chiều. Có việc gì không, anh?",
    "opts": [
-    "Tôi rảnh từ 2 giờ chiều. Có việc gì không, anh?",
-    "Tôi đã đi tham quan bảo tàng.",
-    "Bảo tàng ở gần trường.",
-    "Bằng xe buýt."
+    "Ngày mai Vân có rảnh không?",
+    "Anh có biết chỗ đó địa chỉ số mấy không?",
+    "Xe sắp đến chưa anh?",
+    "Tối nay tôi mời anh đi uống bia."
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Ngày mai Vân có rảnh không? — 내일 번 씨 한가해요?\n답: Tôi rảnh từ 2 giờ chiều. Có việc gì không, anh? — 오후 2시부터 한가해요. 무슨 일 있어요?"
+   "exp": "Tôi rảnh từ 2 giờ chiều. Có việc gì không, anh? — 오후 2시부터 한가해요. 무슨 일 있어요?\n답: Ngày mai Vân có rảnh không? — 내일 번 씨 한가해요?"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Anh có biết chỗ đó địa chỉ số mấy không?",
+   "prompt": "Địa chỉ à? Số 125, Quận 1.",
    "opts": [
-    "Địa chỉ à? Số 125, Quận 1.",
-    "Rất thú vị.",
-    "Tôi mời Vân đi với tôi.",
-    "Lúc 2 giờ."
+    "Anh có biết chỗ đó địa chỉ số mấy không?",
+    "Xe sắp đến chưa anh?",
+    "Tối nay tôi mời anh đi uống bia.",
+    "Bây giờ chúng ta đi đâu?"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Anh có biết chỗ đó địa chỉ số mấy không? — 거기 주소가 몇 번지인지 알아요?\n답: Địa chỉ à? Số 125, Quận 1. — 주소요? 1군 125번지요."
+   "exp": "Địa chỉ à? Số 125, Quận 1. — 주소요? 1군 125번지요.\n답: Anh có biết chỗ đó địa chỉ số mấy không? — 거기 주소가 몇 번지인지 알아요?"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Xe sắp đến chưa anh?",
+   "prompt": "Sắp đến rồi, cô.",
    "opts": [
-    "Sắp đến rồi, cô.",
-    "Tôi đi bộ.",
-    "Nhà hàng ở Quận 1.",
-    "Khoảng 100 người."
+    "Xe sắp đến chưa anh?",
+    "Tối nay tôi mời anh đi uống bia.",
+    "Bây giờ chúng ta đi đâu?",
+    "Anh biết địa chỉ nhà sách không đấy?"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Xe sắp đến chưa anh? — 차 곧 와요?\n답: Sắp đến rồi, cô. — 곧 와요."
+   "exp": "Sắp đến rồi, cô. — 곧 와요.\n답: Xe sắp đến chưa anh? — 차 곧 와요?"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Tối nay tôi mời anh đi uống bia.",
+   "prompt": "Tốt quá! Không say không về.",
    "opts": [
-    "Tốt quá! Không say không về.",
-    "Nhà sách ở đâu?",
-    "Số 40.",
-    "Từ đây đến đó 30 phút."
+    "Tối nay tôi mời anh đi uống bia.",
+    "Bây giờ chúng ta đi đâu?",
+    "Anh biết địa chỉ nhà sách không đấy?",
+    "Sao anh biết?"
    ],
    "ans": 0,
    "shuffle": true,
-   "exp": "Tối nay tôi mời anh đi uống bia. — 오늘 저녁 제가 맥주 살게요.\n답: Tốt quá! Không say không về. — 좋아요! 취할 때까지 마셔요."
+   "exp": "Tốt quá! Không say không về. — 좋아요! 취할 때까지 마셔요.\n답: Tối nay tôi mời anh đi uống bia. — 오늘 저녁 제가 맥주 살게요."
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",
@@ -880,68 +900,102 @@
    "exp": "Anh sắp về chưa?\n곧 돌아가요?"
   },
   {
-   "sec": "C 쓰기 · 2 틀린 곳 찾기",
-   "k": "errpick",
-   "vi": "Nhà sách ở đâu số 40 đường Nguyễn Huệ.",
-   "bad": 2,
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "choice",
+   "prompt": "Nhà sách ở đâu số 40 đường Nguyễn Huệ.",
+   "opts": [
+    "Nhà sách ở số 40 đường Nguyễn Huệ.",
+    "Đúng — 맞는 문장",
+    "Nhà sách ở số 40 đường Huệ Nguyễn."
+   ],
+   "ans": 0,
+   "shuffle": true,
    "fix": "Nhà sách ở số 40 đường Nguyễn Huệ.",
    "ko": "서점은 응우옌후에 거리 40번지에 있어요. (ở đâu 는 물을 때만)",
-   "exp": "Nhà sách ở số 40 đường Nguyễn Huệ.\n서점은 응우옌후에 거리 40번지에 있어요. (ở đâu 는 물을 때만)"
+   "exp": "Nhà sách ở đâu số 40 đường Nguyễn Huệ.\n답: Nhà sách ở số 40 đường Nguyễn Huệ.\nNhà sách ở số 40 đường Nguyễn Huệ. — 서점은 응우옌후에 거리 40번지에 있어요. (ở đâu 는 물을 때만)"
   },
   {
-   "sec": "C 쓰기 · 2 틀린 곳 찾기",
-   "k": "errpick",
-   "vi": "Hôm qua anh ấy sẽ mua sách ở đó.",
-   "bad": 3,
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "choice",
+   "prompt": "Hôm qua anh ấy sẽ mua sách ở đó.",
+   "opts": [
+    "Hôm qua anh ấy đã mua sách ở đó.",
+    "Đúng — 맞는 문장",
+    "Hôm qua anh ấy đã mua ở đó sách."
+   ],
+   "ans": 0,
+   "shuffle": true,
    "fix": "Hôm qua anh ấy đã mua sách ở đó.",
    "ko": "어제 그는 거기서 책을 샀어요. (지난 일은 đã)",
-   "exp": "Hôm qua anh ấy đã mua sách ở đó.\n어제 그는 거기서 책을 샀어요. (지난 일은 đã)"
+   "exp": "Hôm qua anh ấy sẽ mua sách ở đó.\n답: Hôm qua anh ấy đã mua sách ở đó.\nHôm qua anh ấy đã mua sách ở đó. — 어제 그는 거기서 책을 샀어요. (지난 일은 đã)"
   },
   {
-   "sec": "C 쓰기 · 2 틀린 곳 찾기",
-   "k": "errpick",
-   "vi": "Anh biết địa chỉ nhà sách không có?",
-   "bad": 7,
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "choice",
+   "prompt": "Anh biết địa chỉ nhà sách không có?",
+   "opts": [
+    "Anh có biết địa chỉ nhà sách không?",
+    "Đúng — 맞는 문장",
+    "Anh có biết địa chỉ không nhà sách?"
+   ],
+   "ans": 0,
+   "shuffle": true,
    "fix": "Anh có biết địa chỉ nhà sách không?",
    "ko": "서점 주소를 아세요? (có … không 차례)",
-   "exp": "Anh có biết địa chỉ nhà sách không?\n서점 주소를 아세요? (có … không 차례)"
+   "exp": "Anh biết địa chỉ nhà sách không có?\n답: Anh có biết địa chỉ nhà sách không?\nAnh có biết địa chỉ nhà sách không? — 서점 주소를 아세요? (có … không 차례)"
   },
   {
-   "sec": "C 쓰기 · 2 틀린 곳 찾기",
-   "k": "errpick",
-   "vi": "Món ăn ở đó rất ngon lắm.",
-   "bad": 4,
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "choice",
+   "prompt": "Món ăn ở đó ngon lắm.",
+   "opts": [
+    "Đúng — 맞는 문장",
+    "Món ăn ở đó rất ngon lắm.",
+    "Món ăn ở đó lắm ngon."
+   ],
+   "ans": 0,
+   "shuffle": true,
    "fix": "Món ăn ở đó ngon lắm.",
    "ko": "거기 음식은 아주 맛있어요. (rất 와 lắm 을 함께 쓰지 않는다)",
-   "exp": "Món ăn ở đó ngon lắm.\n거기 음식은 아주 맛있어요. (rất 와 lắm 을 함께 쓰지 않는다)"
+   "exp": "Món ăn ở đó ngon lắm.\n답: Đúng — 맞는 문장\nMón ăn ở đó ngon lắm. — 거기 음식은 아주 맛있어요. (rất 와 lắm 을 함께 쓰지 않는다)"
   },
   {
-   "sec": "C 쓰기 · 2 틀린 곳 찾기",
-   "k": "errpick",
-   "vi": "Tối nay tôi mời anh đến đó uống bia tối nay.",
-   "bad": 9,
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "choice",
+   "prompt": "Tối nay tôi mời anh đến đó uống bia.",
+   "opts": [
+    "Đúng — 맞는 문장",
+    "Tối nay tôi mời anh đến đó uống bia tối nay.",
+    "Tối nay tôi mời anh đến đó bia uống."
+   ],
+   "ans": 0,
+   "shuffle": true,
    "fix": "Tối nay tôi mời anh đến đó uống bia.",
    "ko": "오늘 밤 거기서 맥주 한잔 살게요. (tối nay 가 두 번)",
-   "exp": "Tối nay tôi mời anh đến đó uống bia.\n오늘 밤 거기서 맥주 한잔 살게요. (tối nay 가 두 번)"
+   "exp": "Tối nay tôi mời anh đến đó uống bia.\n답: Đúng — 맞는 문장\nTối nay tôi mời anh đến đó uống bia. — 오늘 밤 거기서 맥주 한잔 살게요. (tối nay 가 두 번)"
   },
   {
-   "sec": "C 쓰기 · 3 한 주제로 10문장",
+   "sec": "C 쓰기 · 3 그림 보고 5문장",
    "k": "free",
-   "prompt": "베트남에서 가 본 곳 — 어디를 구경했는지(성당·우체국·박물관), 누구와, 무엇으로, 어땠는지, 다음에 가고 싶은 곳 (10문장)",
+   "img": "mock3-w3.webp",
+   "prompt": "그림을 보고 문장 5개를 쓰세요.",
    "model": [
-    "Tuần trước tôi đã đi tham quan Nhà thờ Đức Bà.",
-    "Nhà thờ Đức Bà ở Quận 1, gần Bưu điện Thành phố.",
-    "Tôi đi với bạn cùng lớp của tôi.",
-    "Chúng tôi đi bằng tắc xi, mất khoảng 20 phút.",
-    "Sau đó chúng tôi đi Bảo tàng Lịch sử.",
-    "Bảo tàng ở gần trường Nhân văn.",
-    "Bảo tàng rất thú vị.",
-    "Buổi tối chúng tôi ăn tối ở một quán ăn ở phố đi bộ.",
-    "Món ăn ở đó ngon lắm.",
-    "Tuần sau tôi muốn đi Bảo tàng Áo dài."
+    "Đây là nhà sách.",
+    "Hôm nay nhà sách giảm giá 30%.",
+    "Có nhiều người mua sách.",
+    "Một cô gái đang đọc sách.",
+    "Sách ở đây rẻ và hay."
    ],
-   "n": 10,
-   "pts": 10
+   "model_ko": [
+    "여기는 서점이에요.",
+    "오늘 서점이 30% 할인해요.",
+    "책을 사는 사람이 많아요.",
+    "한 아가씨가 책을 읽고 있어요.",
+    "여기 책은 싸고 재미있어요."
+   ],
+   "n": 5,
+   "pts": 10,
+   "exp": "Đây là nhà sách. — 여기는 서점이에요.\nHôm nay nhà sách giảm giá 30%. — 오늘 서점이 30% 할인해요.\nCó nhiều người mua sách. — 책을 사는 사람이 많아요.\nMột cô gái đang đọc sách. — 한 아가씨가 책을 읽고 있어요.\nSách ở đây rẻ và hay. — 여기 책은 싸고 재미있어요."
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
@@ -1032,92 +1086,6 @@
    "k": "say",
    "vi": "Chị sắp đi chưa?",
    "pts": 2
-  },
-  {
-   "sec": "D 말하기 · 3 그림 보고 말하기",
-   "k": "speak",
-   "img": "b-khach.webp",
-   "ask": "그림을 보고 말해 보세요 — 이 사람들은 누구이고, 어디를 구경하며, 베트남어를 어떻게 하나요? (3문장)",
-   "model": [
-    {
-     "vi": "Đây là khách du lịch.",
-     "ko": "이 사람들은 관광객이에요."
-    },
-    {
-     "vi": "Họ đi tham quan Nhà thờ Đức Bà.",
-     "ko": "그들은 노트르담 성당을 구경해요."
-    },
-    {
-     "vi": "Họ nói tiếng Việt rất giỏi.",
-     "ko": "그들은 베트남어를 아주 잘해요."
-    }
-   ],
-   "n": 3,
-   "pts": 5
-  },
-  {
-   "sec": "D 말하기 · 3 그림 보고 말하기",
-   "k": "speak",
-   "img": "w-79280f2eb1.webp",
-   "ask": "그림을 보고 말해 보세요 — 여기는 어디이고, 어디에 있고, 무엇이 맛있나요? (3문장)",
-   "model": [
-    {
-     "vi": "Đây là tiệm ăn ở Quận 1.",
-     "ko": "여기는 1군에 있는 식당이에요."
-    },
-    {
-     "vi": "Món ăn ở đây ngon lắm.",
-     "ko": "여기 음식은 아주 맛있어요."
-    },
-    {
-     "vi": "Tối nay tôi mời bạn đến đây ăn tối.",
-     "ko": "오늘 저녁 친구를 여기로 초대할 거예요."
-    }
-   ],
-   "n": 3,
-   "pts": 5
-  },
-  {
-   "sec": "D 말하기 · 4 상황 읽고 말하기",
-   "k": "speak",
-   "ask": "택시를 탔습니다. 기사가 '어디 가세요?'라고 묻습니다. 목적지·번지·어디 근처인지 말해 보세요. (3문장)",
-   "model": [
-    {
-     "vi": "Trường Nhân văn, anh.",
-     "ko": "인문대요, 기사님."
-    },
-    {
-     "vi": "Số 10 đường Đinh Tiên Hoàng, Quận 1.",
-     "ko": "딘띠엔호앙 거리 10번지, 1군이요."
-    },
-    {
-     "vi": "Gần Đài Truyền hình Thành phố.",
-     "ko": "시 방송국 근처예요."
-    }
-   ],
-   "n": 3,
-   "pts": 5
-  },
-  {
-   "sec": "D 말하기 · 4 상황 읽고 말하기",
-   "k": "speak",
-   "ask": "친구를 식당에 초대해 보세요 — 어디에 있는지, 무엇이 맛있는지, 몇 시에 만날지. (3문장)",
-   "model": [
-    {
-     "vi": "Tối nay tôi mời bạn đi ăn ở một nhà hàng ở Quận 1.",
-     "ko": "오늘 저녁 1군에 있는 식당에서 제가 살게요."
-    },
-    {
-     "vi": "Món ăn ở đó ngon lắm, đặc biệt là bia tươi.",
-     "ko": "거기 음식 아주 맛있어요, 특히 생맥주요."
-    },
-    {
-     "vi": "Chúng ta gặp nhau lúc bảy giờ tối nhé.",
-     "ko": "저녁 7시에 만나요."
-    }
-   ],
-   "n": 3,
-   "pts": 5
   }
  ]
 }
