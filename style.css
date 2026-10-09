@@ -3101,3 +3101,6 @@ body.sharemode .pagearrow{top:50%}
 body.sharemode .wfcard, body.sharemode .wfpron{position:relative}
 .sharetools{position:fixed; top:calc(env(safe-area-inset-top) + 10px); right:12px; display:flex; gap:6px; z-index:45}   /* 화면 우측 맨 위 고정 (2026-10-08 밤) */
 .sharetools .facebtn{margin-left:0}
+/* 내 단어장 줄 — 누르면 단어 카드 (2026-10-09) */
+.wbrow.wbopen{cursor:pointer}
+.wbrow.wbopen:active{background:color-mix(in srgb, var(--accent) 6%, var(--bg))}

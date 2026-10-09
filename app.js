@@ -8755,11 +8755,11 @@ async function dictReady() {
 }
 /* 사전에서 단어을 누르면 **단어 카드와 완전히 같은 화면**으로 연다 (대표님 지시 2026-09-27) —
    단어/발음 면·헷갈리는 짝·듣기·말하기·입모양·높낮이 전부. 학습 진도와는 상관없다(L.dict). */
-function openWordCard(x, back) {
+function openWordCard(x, back, crumb) {
   const w = Object.assign({}, x);
   delete w.b;
   if (!w.vi) return;
-  LCRUMB = tr('사전') + '-' + (x.src && x.src.length ? x.src.map(t => tr(t)).join('·') + '-' : '') + w.vi;   // 사전-일상-cái nhà (2026-09-29)
+  LCRUMB = crumb ? crumb + '-' + w.vi : tr('사전') + '-' + (x.src && x.src.length ? x.src.map(t => tr(t)).join('·') + '-' : '') + w.vi;   // 사전-일상-cái nhà (2026-09-29) · 단어장-… (2026-10-09)
   L = { day: { day: 'dict', theme: tr('사전'), words: [w] }, items: [{ k: 'word', d: w }], i: 0, dict: true };
   if (back) dive(back);
   drawCard();
@@ -9526,6 +9526,10 @@ function wordbookList(kind, fid) {
     hit.slice(0, 200).forEach(w => {
       const r = wbRow(w.vi, w.ko, kind === 'miss' && missN[w.vi] ? tr('틀림') + ' ' + Math.round(missN[w.vi]) + tr('번') : '');
       if (kind === 'folder') { const x = el('button', 'fodel'); x.type = 'button'; x.textContent = '✕'; x.title = tr('폴더에서 빼기'); x.onclick = () => { folderToggle(f, w.vi); redraw(); }; r.querySelector('.wbtop').append(x); }
+      if (!selMode) {                                          // 줄을 누르면 단어 카드 (대표님 2026-10-09 "단어장의 단어도 누르면 단어 카드") — 뒤로 가면 찾던 말·자리 그대로
+        r.classList.add('wbopen');
+        r.onclick = e => { if (e.target.closest('button')) return; WB_BACK = { kind, fid, q: curQ, y: window.scrollY }; openWordCard(w, redraw, tr('단어장')); };
+      }
       if (selMode) {
         r.dataset.vi = w.vi; r.classList.add('selmode'); r.classList.toggle('sel', SEL.has(w.vi));
         const chk = el('span', 'wbchk', SEL.has(w.vi) ? '☑' : '☐'); r.prepend(chk);
@@ -9542,17 +9546,21 @@ function wordbookList(kind, fid) {
     paintBar();
   };
   selBtn.onclick = () => { selMode = true; SEL.clear(); selBtn.hidden = true; draw(curQ); };   // 고르는 법 설명 줄은 뺌 (2026-10-09)
-  const shBtn = el('button', 'ghost', '🔗 ' + tr('공유 — 카드 학습·쇼츠 링크')); shBtn.type = 'button'; shBtn.style.width = '100%';   // 받은 사람은 로그인 없이 그 화면만 (2026-10-08)
+  const shBtn = el('button', 'ghost', '🔗 ' + tr('공유')); shBtn.type = 'button'; shBtn.style.width = '100%';   // 받은 사람은 로그인 없이 그 화면만 (2026-10-08)
   shBtn.onclick = () => sharePopup(title, words);
   host.append(selBtn, shBtn);
+  const back0 = WB_BACK && WB_BACK.kind === kind && WB_BACK.fid === fid ? WB_BACK : null; WB_BACK = null;   // 단어 카드에서 돌아온 경우
   if (words.length > 30) {
     const inp = el('input', 'keyin dictin'); inp.type = 'search'; inp.placeholder = tr('찾을 말 (베트남어·한국어)');
     let tm = null; inp.oninput = () => { clearTimeout(tm); tm = setTimeout(() => draw(inp.value.trim().toLowerCase()), 120); };
+    if (back0 && back0.q) inp.value = back0.q;
     host.append(inp);
   }
-  host.append(bar, out); draw('');                          // 막대는 목록 위(머리띠 밑에 붙음) — 아래 탭 줄에 안 가리게 (2026-10-08)
+  host.append(bar, out); draw(back0 && back0.q ? back0.q : '');   // 막대는 목록 위(머리띠 밑에 붙음) — 아래 탭 줄에 안 가리게 (2026-10-08)
   show(view, title, true);
+  if (back0) setTimeout(() => window.scrollTo(0, back0.y || 0), 0);
 }
+let WB_BACK = null;
 
 /* ── 손글씨 겹쳐 쓰기 (대표님 지시 2026-09-28 밤: "단어 카드·발음 카드 화면 위에 펜·손가락으로 필기, 몇 초 뒤 스르르 사라지게.
    외울 때 손도 같이 외우면 도움") ──
