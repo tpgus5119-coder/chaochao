@@ -1385,7 +1385,7 @@ function pairPopup(vi, info) {
   box.append(hd);
   const lk = inf.lk !== undefined ? inf.lk : curLessonKey();       // 이 팝업이 열린 수업 — 기본 뜻을 고르는 데 쓴다
   let panelApi = null;
-  if (inf.ko) { const pk = el('div', 'pairpopko', esc(inf.ko)); box.append(pk); sensePick(pk, vi, inf.ko, lk, i => { if (panelApi) panelApi.setSense(i); }); rootPills(pk, { vi, ko: inf.ko }); }   // 뜻 여러 개 — 골라서 짝 바꾸기 (2026-09-28) · 한자·외래어 뿌리
+  if (inf.ko) { const pk = el('div', 'pairpopko', esc(inf.ko)); box.append(pk); sensePick(pk, vi, inf.ko, lk, i => { if (panelApi) panelApi.setSense(i); }, { dict: inf.dict, dfe: inf.dict && DFULL && DFULL[String(vi).trim().toLowerCase()] }); rootPills(pk, { vi, ko: inf.ko }); }   // 뜻 여러 개 — 골라서 짝 바꾸기 (2026-09-28) · 한자·외래어 뿌리
   { const so = southOf(vi); if (so) box.append(southLine(so)); }   // 남부 말이면 북부 말도 (2026-09-29)
   const sub = el('div', 'pairpopsub', tr('헷갈리는 짝'));
   const body = el('div', 'pairpopbody');
@@ -7707,27 +7707,30 @@ function senseDefault(vi, ko, lk) {
   const mine = new Set(senseParts(ko));
   return ss.findIndex(t => senseParts(t).some(p => mine.has(p))) + 1;   // 못 찾으면 0
 }
-function senseLine(host, x) {
+function senseLine(host, x, o) {
+  const opt = o || {};
   /* 뜻이 여럿이면 **가진 뜻 모두를 흔히 쓰는 차례로** 번호를 붙여 보여 준다 (대표님 지시 2026-09-28).
      이 과(카드)의 **기본 뜻**(senseDefault)은 색으로 — 기본 뜻이 첫째가 아닐 수도 있다. data/_senses.json 은 클로드가 사전 뜻풀이를 근거로 낱말마다 적은 것 */
   const draw = () => {
     const ss = SENSES && SENSES[String(x.vi || '').trim().toLowerCase()];
-    if (!ss || ss.length < 2) return;
+    const tn0 = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+    if (!ss || ss.length < 2) { if (opt.dfe && tn0) tn0.replaceWith(dfullBox(opt.dfe)); return; }   // 뜻 목록이 없으면 사전 전체 뜻 — 팝업도 같은 규칙
     const hit = senseDefault(x.vi, x.ko, x.lk !== undefined ? x.lk : curLessonKey()) - 1;
     const list = el('div', 'senselist');
     ss.forEach((t, i) => { const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp); });   // 3개까지 → 가진 뜻 모두 (대표님 지시 2026-09-28 밤)
     const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
-    if (hit >= 0 && tn) tn.replaceWith(list);          // 이 과의 뜻이 목록 안에 있으면 목록이 뜻 자리를 대신한다
+    if ((hit >= 0 || opt.dict) && tn) tn.replaceWith(list);   // 이 과의 뜻이 목록 안에 있으면(사전 카드는 늘) 목록이 뜻 자리를 대신한다
     else host.append(list);                             // 없으면(이 과만의 특수한 뜻) 원래 뜻을 두고 밑에 목록
   };
   if (SENSES && SDEF) draw(); else Promise.all([sensesLoad(), sdefLoad()]).then(draw);
 }
 /* 팝업의 뜻 고르개 — 뜻을 누르면 그 뜻이 골라지고(onPick) 동의어·반의어가 그 뜻 기준으로 바뀐다 (대표님 지시 2026-09-28).
    처음 골라진 것은 기본 뜻. 기본 뜻은 옅은 색, 골라진 뜻은 진한 색 */
-function sensePick(host, vi, ko, lk, onPick) {
+function sensePick(host, vi, ko, lk, onPick, o) {
+  const opt = o || {};
   Promise.all([sensesLoad(), sdefLoad()]).then(() => {
     const ss = SENSES && SENSES[String(vi || '').trim().toLowerCase()];
-    if (!ss || ss.length < 2) return;
+    if (!ss || ss.length < 2) { const tn0 = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim()); if (opt.dfe && tn0) tn0.replaceWith(dfullBox(opt.dfe)); return; }
     const def = senseDefault(vi, ko, lk);
     let sel = def || 1;
     const list = el('div', 'senselist pick');
@@ -7742,8 +7745,7 @@ function sensePick(host, vi, ko, lk, onPick) {
     };
     draw();
     const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
-    if (def && tn) tn.replaceWith(list); else host.append(list);
-    list.before(el('div', 'snhint', tr('뜻을 누르면 그 뜻의 유의어·반의어로 바뀝니다')));
+    if ((def || opt.dict) && tn) tn.replaceWith(list); else host.append(list);   // 카드(senseLine)와 같은 자리 규칙 · 설명 줄은 뺌 (2026-10-09)
   });
 }
 let HUN = null, HUN_P = null;
@@ -9980,7 +9982,7 @@ function drawCard() {
     };
     FACE = setFace;
     autoSay(x.vi);                            // 카드가 뜨면 소리 (2026-10-02) — 면을 바꿀 때는 다시 안 튼다
-    const tapPair = () => pairPopup(x.vi, { kr: krShow(x), ko: x.ko });
+    const tapPair = () => pairPopup(x.vi, { kr: krShow(x), ko: x.ko, dict: !!L.dict });   // 카드와 같은 뜻 목록 규칙으로 (2026-10-09)
 
     /* ── 단어 면 ──
        그림 → [단어 · 발음 · 별] → [듣기 · 말하기] → 뜻 → 예문(누르면 소리) → 높낮이 그래프 */
@@ -10041,8 +10043,8 @@ function drawCard() {
     rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
     caiNote(cf, x);                                        // 'cái nhà' 처럼 분류사가 붙은 표제어 (2026-09-29)
     const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
-    if (dfe) { kob.textContent = ''; if (isCore(x)) kob.append(el('span', 'corepill', tr('핵심'))); kob.append(dfullBox(dfe, () => openWordCard(x))); rootPills(kob, x); }   // 사전 카드: 품사별 모든 뜻·유의어·반의어 (2026-10-01) — 한자 알약은 뜻 목록 밑에 다시(위에서 단 것은 지워진다)
-    else senseLine(kob, x);                                // 뜻이 여럿이면 최대 3개 (검수된 data/_senses.json)
+    senseLine(kob, x, { dict: !!L.dict, dfe });           // 카드와 '헷갈리는 짝' 팝업이 같은 뜻 목록을 쓴다 (대표님 2026-10-09 "왜 다르냐") — 뜻 목록(_senses.json)이 먼저, 없을 때만 사전 전체 뜻(dfull)
+    // (옛) 사전 카드는 품사별 모든 뜻(dfullBox)을 따로 그렸다(2026-10-01) — 팝업과 달라 위 한 줄로 합침. 한자 알약은 뜻 목록 밑에 다시(위에서 단 것은 지워진다)
     if (so) cf.append(southLine(so));                       // 남부 말 · 북부에서는 ○○ (2026-09-29)
     else if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
