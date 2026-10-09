@@ -7891,10 +7891,20 @@ function folderAdd(name) {
   foldersOf().push(f); save(); cloudSave(true); return f;
 }
 const folderHas = (f, vi) => (f.w || []).includes(vi);
-function folderToggle(f, vi) {
+/* 폴더에 넣으면 별표도 (대표님 2026-10-09 "폴더에 단어를 넣으면 내 단어장에도 — 폴더 단추로 넣어도 별표가 동시에") — 폴더에서 뺄 때 별은 그대로 둔다 */
+function starOnWith(vi, ko) {
+  if (isStar(vi)) return;
+  if (ko == null) { try { const w = wbResolve([vi])[0]; ko = w ? w.ko : ''; } catch (e) { ko = ''; } }
+  starOf()[vi] = { ko: ko || '', vi, t: now() };
+  starPaint(vi);
+}
+function starPaint(vi) {                                     // 화면에 떠 있는 그 낱말의 ☆ 들을 다시 칠한다
+  document.querySelectorAll('[data-star]').forEach(b => { if (b.dataset.star !== vi) return; const on = isStar(vi); b.textContent = on ? '★' : '☆'; b.classList.toggle('on', on); });
+}
+function folderToggle(f, vi, ko) {
   f.w = f.w || [];
   const i = f.w.indexOf(vi);
-  if (i >= 0) f.w.splice(i, 1); else f.w.push(vi);
+  if (i >= 0) f.w.splice(i, 1); else { f.w.push(vi); starOnWith(vi, ko); }
   save(); cloudSave(true); return i < 0;
 }
 /* 낱말 하나를 어느 폴더에 넣을지 고르는 창 — 여러 폴더에 동시에 담을 수 있다 */
@@ -7909,13 +7919,13 @@ function folderPopup(vi, ko, onChange) {
     fo.forEach(f => {
       const r = el('button', 'forow' + (folderHas(f, vi) ? ' on' : '')); r.type = 'button';
       r.append(el('span', 'fochk', folderHas(f, vi) ? '☑' : '☐'), el('span', 'foname', esc(f.name)), el('small', 'dimtxt', (f.w || []).length + tr('개')));
-      r.onclick = () => { folderToggle(f, vi); draw(); if (onChange) onChange(); };
+      r.onclick = () => { folderToggle(f, vi, ko); draw(); if (onChange) onChange(); };
       list.append(r);
     });
   };
   draw();
   const add = el('button', 'ghost', '＋ ' + tr('새 폴더')); add.type = 'button';
-  add.onclick = async () => { const nm = await askText(tr('폴더 이름'), '', 20); if (nm) { const f = folderAdd(nm); folderToggle(f, vi); draw(); if (onChange) onChange(); } };
+  add.onclick = async () => { const nm = await askText(tr('폴더 이름'), '', 20); if (nm) { const f = folderAdd(nm); folderToggle(f, vi, ko); draw(); if (onChange) onChange(); } };
   const ok = el('button', 'primary', tr('닫기')); ok.type = 'button'; ok.onclick = () => back.remove();
   const row = el('div', 'bugbtns'); row.append(add, ok);
   box.append(list, row); back.append(box);
@@ -7925,7 +7935,8 @@ function folderPopup(vi, ko, onChange) {
 /* 여러 낱말을 한꺼번에 — 폴더마다 ☑(다 들어 있음)·◪(일부)·☐(없음). 누르면 다 들어 있을 땐 전부 빼고, 아니면 빠진 것만 더한다 (대표님 2026-10-08 "한번에 다중 선택") */
 function folderSetMany(f, vis, on) {
   f.w = f.w || [];
-  if (on) vis.forEach(v => { if (!f.w.includes(v)) f.w.push(v); });
+  if (on) { const ko = {}; try { wbResolve(vis.filter(v => !isStar(v))).forEach(w => { ko[w.vi] = w.ko; }); } catch (e) { }
+            vis.forEach(v => { if (!f.w.includes(v)) f.w.push(v); starOnWith(v, ko[v] || ''); }); }   // 별표도 같이 (2026-10-09)
   else f.w = f.w.filter(v => !vis.includes(v));
   save(); cloudSave(true);
 }
@@ -8379,7 +8390,7 @@ function drawGramQuiz() {
 
 function starBtn(k, ko, vi) {
   const b = el('button', 'starb' + (isStar(k) ? ' on' : ''));
-  b.type = 'button';
+  b.type = 'button'; b.dataset.star = k;
   b.textContent = isStar(k) ? '★' : '☆';
   b.title = tr('단어장에 담기');
   b.onclick = e => {
@@ -8938,7 +8949,12 @@ function dictEntry(q0) {
     const st = el('span', 'dstar' + (isStar(x.vi) ? ' on' : ''), isStar(x.vi) ? '★' : '☆');
     st.setAttribute('role', 'button'); st.title = tr('단어장에 담기');
     st.onclick = ev => { ev.stopPropagation(); const on = toggleStar(x.vi, x.ko, x.vi); st.textContent = on ? '★' : '☆'; st.classList.toggle('on', on); };
-    row.append(st, spk);
+    st.dataset.star = x.vi;
+    /* 폴더(내 단어장 폴더) — 별 옆에서 바로 담는다 (대표님 2026-10-09). 넣으면 별표도 같이 켜진다(folderToggle) */
+    const fo = el('span', 'dfold'); fo.setAttribute('role', 'button'); fo.title = tr('폴더에 담기');
+    const fpaint = () => { const n = foldersOf().filter(f => folderHas(f, x.vi)).length; fo.textContent = n ? '📁' + n : '📁'; fo.classList.toggle('on', n > 0); };
+    fpaint(); fo.onclick = ev => { ev.stopPropagation(); folderPopup(x.vi, x.ko, fpaint); };
+    row.append(st, fo, spk);
     row.onclick = () => { dictRemember(x); openWordCard(x, () => dictEntry(inp.value)); };   // 누르면 단어 카드 — 뒤로 가면 찾던 말 그대로. 누른 말은 기록에 남는다 (2026-09-30)
     return row;
   };
@@ -9433,6 +9449,33 @@ function drawWordbook() {
   show(view, '내 단어장', true);
 }
 /* 한 묶음의 낱말 목록 — 위에 [카드로 학습][쇼츠 재생], 아래 낱말 줄 */
+/* 내 단어장 찾기 (대표님 2026-10-09 "성조·모자 완벽하게 안 쳐도 — 사전 검색과 같게"): 사전(dictEntry)과 같은 열쇠·차례.
+   베트남어: 그대로 0 → 첫 낱말 1 → 다른 자리 한 낱말 2 → 앞부분 3 → 안에 4 (각각 성조·모자까지 같음 < 모자만 < 다 뺌), 띄어쓰기만 다른 것은 그 뒤.
+   한글: 뜻이 그 말 0 → 뜻 하나가 그 말 1 → 그 말로 시작 2 → 안에 3 → 한글 발음이 딱 맞음(깜언) 4 → 발음이 그 말로 시작 5 */
+function wbFind(words, q0) {
+  const qt = String(q0 || '').trim(); if (!qt) return words;
+  const nsp = t => t.replace(/\s+/g, ''), qk = qt.toLowerCase(), qb = dictBare(qt), qh = dictHat(qt), qbN = nsp(qb), qkN = nsp(qk), qp = nsp(qt);
+  const kor = /[가-힣]/.test(qt);
+  const phrs = s => s.toLowerCase().replace(/\[[^\]]*\]\s*/g, '').replace(/\([^)]*\)/g, '').split(/\s*[·\/,;]\s*/).map(p => p.trim()).filter(Boolean);
+  const ext = (s, t) => s === t ? 0 : s.startsWith(t + ' ') ? 1 : (s.includes(' ' + t + ' ') || s.endsWith(' ' + t)) ? 2 : s.startsWith(t) ? 3 : s.includes(t) ? 4 : 9;
+  const sc = x => {
+    const ko = String(x.ko || '').toLowerCase();
+    if (kor) {
+      const p = phrs(ko);
+      if (p[0] === qk) return 0; if (p.includes(qk)) return 1; if (p.some(v => v.startsWith(qk))) return 2;
+      if (ko.includes(qk) || (qkN.length >= 2 && nsp(ko).includes(qkN))) return 3;
+      const ks = dictKrKeys(x); if (ks.includes(qp)) return 4; if (ks.some(k => k.startsWith(qp))) return 5;
+      return 99;
+    }
+    const v = String(x.vi || '').toLowerCase(), b = dictBare(x.vi), h = dictHat(x.vi);
+    let best = 99;
+    [[v, qk], [h, qh], [b, qb]].forEach(([s2, t], f) => { const e = ext(s2, t); if (e < 9) best = Math.min(best, e * 3 + f); });
+    if (best < 99) return best;
+    if (qbN.length >= 2 && nsp(b).includes(qbN)) return 20;   // 띄어쓰기만 다른 것
+    return 99;
+  };
+  return words.map(x => [x, sc(x)]).filter(([, n]) => n < 99).sort((a, b2) => a[1] - b2[1] || a[0].vi.length - b2[0].vi.length).map(([x]) => x);
+}
 function wordbookList(kind, fid) {
   const [host, view] = wbHost();
   host.textContent = '';
@@ -9481,7 +9524,7 @@ function wordbookList(kind, fid) {
   const setSel = (r, on) => { const vi = r.dataset.vi; if (!vi) return; if (on) SEL.add(vi); else SEL.delete(vi); r.classList.toggle('sel', on); const c = r.querySelector('.wbchk'); if (c) c.textContent = on ? '☑' : '☐'; paintBar(); };
   const draw = q => {
     curQ = q; out.textContent = '';
-    const hit = q ? words.filter(x => x.vi.toLowerCase().includes(q) || (x.ko || '').toLowerCase().includes(q)) : words;
+    const hit = q ? wbFind(words, q) : words;                 // 사전과 같은 찾기 (2026-10-09)
     lastHit = hit;
     if (!hit.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); paintBar(); return; }
     hit.slice(0, 200).forEach(w => {
@@ -10905,14 +10948,14 @@ function drawQuiz() {
 
   if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
-  if (q.mode === 'type' || q.mode === 'dictation' || q.mode === 'write_ko') return drawTypeQ(body, q);
+  if (q.mode === 'type' || q.mode === 'dictation' || q.mode === 'write_ko') { drawTypeQ(body, q); if (Q.daily) peekDaily(body, q); return; }   // 단어 시험 [답 보기] (2026-10-09)
   if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err' || q.mode === 'gpat') return drawExamKind(body, q);
   if (q.mode === 'fx') { drawFixed(body, q); peekBtn(body, q); return; }   // 1차 시험지 그대로 (2026-09-30) · [답 보기] (2026-10-08)
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
   if (q.mode === 'match') return drawMatch(body, q);
   if (q.mode === 'tone') return drawToneQ(body, q);
-  if (q.mode === 'puzzle' || q.mode === 'puzzle_ko' || q.mode === 'puzzle_vi') { drawPuzzle(body, q); if (Q.fixed) peekBtn(body, q); return; }
+  if (q.mode === 'puzzle' || q.mode === 'puzzle_ko' || q.mode === 'puzzle_vi') { drawPuzzle(body, q); if (Q.fixed) peekBtn(body, q); else if (Q.daily) peekDaily(body, q); return; }
 
   /* 소리를 듣는 자리에는 **말하는 길**도 같이 둔다. 듣기만 하면 입이 안 열린다.
      시험 흐름을 흐트러뜨리지 않게, 누를 사람만 누르는 작은 마이크로 둔다.
@@ -10950,6 +10993,7 @@ function drawQuiz() {
     opts.append(b);
   });
   body.append(opts);
+  if (Q.daily) peekDaily(body, q);                     // 단어 시험 [답 보기] (2026-10-09)
 }
 
 /* 오답 뒤에는 스스로 넘긴다 — 틀린 걸 볼 시간이 필요하다. 정답은 자동으로 넘어간다. */
@@ -11473,6 +11517,29 @@ function peekBtn(body, q) {
     }
     body.append(el('div', 'fxexp', esc(x.exp)));
     const nb = el('button', 'primary big', tr('다음') + ' ›'); nb.type = 'button'; nb.style.width = '100%';   // nextBtn 은 시험 모드에서 바로 넘겨 버리므로 따로 — 해설을 읽고 넘긴다
+    nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
+    resumeSave();
+  };
+  row.append(b); body.append(row);
+}
+/* 단어 시험의 [답 보기] (대표님 2026-10-09 "모의고사처럼 단어 시험 탭에서도 문제마다 답 확인") — 모의고사 peekBtn 과 같은 모양.
+   누르면 그 문제는 틀린 것으로 치고(점수에 안 든다) 정답(베트남어·다른 답·뜻)을 보여 준 뒤 [다음 ›] 로 넘긴다 */
+function peekDaily(body, q) {
+  const w = q.w; if (!w || !w.vi) return;
+  const row = el('div', 'peekrow'); const b = el('button', 'peekbtn', tr('답 보기')); b.type = 'button';
+  b.onclick = () => {
+    row.remove();
+    if (!q._ans) {
+      q._ans = true; q._ok = false; q._peek = true; Q._answered = true; hideSkip();
+      [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay') && !bt.classList.contains('qtap')) bt.disabled = true; });
+      [...body.querySelectorAll('.opts button')].forEach(bt => { if (bt.dataset.vi === w.vi) bt.dataset.r = 'ok'; });
+      body.querySelectorAll('input, textarea').forEach(i => { i.disabled = true; });
+    }
+    const ex = el('div', 'fxexp');
+    ex.innerHTML = '<b>' + esc(w.vi) + '</b>' + (w.alt && w.alt.length ? ' <small>' + tr('또는') + ' ' + w.alt.map(esc).join(' · ') + '</small>' : '') + '<br>' + esc(koShow(w.ko));
+    body.append(ex);
+    sound(w.vi);
+    const nb = el('button', 'primary big', tr('다음') + ' ›'); nb.type = 'button'; nb.style.width = '100%';
     nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
     resumeSave();
   };
