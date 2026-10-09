@@ -212,6 +212,8 @@ def chunk_chapters(chapters, seen, size=15, skey=None):
     for ch in chapters:
         # 22기 시험 자료는 **파일 그대로** — 앞 회차에 나온 낱말도 다시 넣는다 (대표님 지시 2026-09-27 저녁: "그냥 파일 그대로 단어 넣어")
         kept = [enrich(w, skey) for w in ch["words"] if w.get("vi") and w.get("ko")] if skey == "c22" else dedupe(ch["words"], seen, skey)
+        if skey == "c22":   # 한 회차 안에서 같은 낱말이 두 번(시험지에 두 방향으로 나온 a15 의 hơn)이면 카드는 한 번만 (2026-10-09) — 시험(daily22)은 두 문제 그대로
+            _s = set(); kept = [w for w in kept if not (w["vi"].lower() in _s or _s.add(w["vi"].lower()))]
         if not kept:
             continue
         if skey == "main":

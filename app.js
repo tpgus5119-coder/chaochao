@@ -9404,7 +9404,7 @@ function shareWords(cb) {
   const goTest = () => dailyLoad(() => {                                              // 단어 시험 한 벌 (2026-10-08 밤 "단어시험 링크도 공유") — 낱말 전부를 한 세트 카드로, 끝 장에서 [시험 보기 ›]
     const t = (DAILY22 || []).find(x => x.key === SHARE.test);
     if (t) { SHARE.dtest = t; SHARE.t = t.label; }
-    cb(t ? dailyWords(t) : []);
+    const seen = new Set(); cb(t ? dailyWords(t).filter(w => { const k = w.vi.toLowerCase(); return !seen.has(k) && seen.add(k); }) : []);   // 카드는 같은 낱말 한 번 (a15 hơn 두 방향 — 2026-10-09)
   });
   const go0 = () => { if (SHARE.test) return goTest(); if (!COURSE) fetch('data/order.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { COURSE = j; loadCWords(); go1(); }).catch(go1); else go1(); };
   if (SHARE.id && !SHARE.h && !SHARE.w && !SHARE.test) {                                            // 서버 짧은 링크 — 묶음 글부터 받는다
@@ -11747,11 +11747,16 @@ function dailyStudyOnly(t) {
     const src = (GYBM || []).find(g => g.key === 'c22');
     const sets = src ? src.lessons.map((l, li) => [l, li]).filter(([l]) => String(l.title).startsWith(t.label)) : [];
     if (!sets.length) { startLearn({ theme: t.label, day: 'daily:' + t.key, basic: 1, words: dailyWords(t) }); return; }   // 잘라 둔 것이 없으면 통째로 한 세트
+    /* 세 세트로 나누지 않고 **한 세트**로 (대표님 2026-10-09 "학습에서 단어 시험 — 하나로 합쳐 줘, 3개로 나누지 말고") — 낱말 전부를 카드 → 확인 문제 한 번에.
+       진도는 예전 세 세트 열쇠(B:c22N) 모두에 적는다(Q.day.also) — 단어 탭 22기 목록·통계와 맞게 */
+    const keys = sets.map(([, li]) => gybmKey('c22', li));
+    const seen = new Set(), all = [];
+    sets.forEach(([l]) => l.words.forEach(w => { const k = String(w.vi).toLowerCase(); if (!seen.has(k)) { seen.add(k); all.push(w); } }));
     const box = el('div', 'ulist');
-    const nodes = sets.map(([l, li], n) => ({
-      key: gybmKey('c22', li), num: n + 1, title: tr('세트') + ' ' + (n + 1) + '/' + sets.length + ' · ' + l.words.length + tr('단어'), done: !!bdone()[gybmKey('c22', li)],
-      fn: () => { SBOX = 'bsrs'; dive(() => dailyStudyOnly(t)); startLearn({ theme: l.title, day: gybmKey('c22', li), basic: 1, words: l.words }); },
-    }));
+    const nodes = [{
+      key: keys[keys.length - 1], num: 1, title: tr('낱말') + ' ' + all.length, done: keys.every(k => !!bdone()[k]),
+      fn: () => { SBOX = 'bsrs'; dive(() => dailyStudyOnly(t)); startLearn({ theme: t.label, day: keys[keys.length - 1], also: keys.slice(0, -1), basic: 1, words: all }); },
+    }];
     renderRoadmap(box, nodes, null, { freeNav: true });
     b.append(box);
     if (!SHARE) {                                               // 학습 탭에서도 같은 링크 (대표님 2026-10-08 밤 "학습-단어시험 공유") — 받는 사람은 낱말 전부 한 세트 카드 → 실제 시험
@@ -12599,6 +12604,7 @@ function finishQuiz() {
   b.onclick = () => {
     if (hasDlg) { startDialog(Q.day); return; }
     if (Q.day) { (Q.day.senior ? (S.sdone = S.sdone || {}) : Q.day.basic ? (S.bdone = S.bdone || {}) : S.done)[Q.day.day] = now();
+                 (Q.day.also || []).forEach(k => { (S.bdone = S.bdone || {})[k] = now(); });   // 합친 단어 시험 한 세트 — 예전 세 세트 열쇠 모두 끝냄 (2026-10-09)
                  addSetSentences(Q.day.words);           // 그 과 예문 3개를 문장 문제로 (2026-09-28)
                  touchToday(); save();
                  r.textContent = ''; r.append(el('div', 'n', tr('세트 완료'))); afterSetBtns(r, Q.day); return; }   // 다음 세트 · 목록으로 (2026-09-27 밤)

@@ -91,6 +91,8 @@ def main():
         if key in DIRS:
             d0, tv = DIRS[key]
             for x in words: x['dir'] = 'to_vi' if x['vi'].lower() in tv else d0
+        for x, w0 in zip(words, d['words']):   # 회차 자료에 dir 이 적힌 낱말 — 같은 낱말이 두 방향으로 나온 시험지(a15 의 Hơn 11번 영→베 · 25번 베→영, 2026-10-09)
+            if w0.get('dir'): x['dir'] = w0['dir']
         if key in SPLIT:                       # 우리가 낸 시험지(b12 — 대표님 단어장으로 클로드 출제, 2026-10-05): 앞 절반 베트남어→뜻, 뒤 절반 뜻→베트남어로 정해져 있다.
             for i, x in enumerate(words): x['dir'] = 'to_ko' if i < SPLIT[key] else 'to_vi'   # 성조 뗀 글자가 앞 문제와 겹쳐(chùa~chưa) 방향을 잘못 읽었다
         nv = sum(x['dir'] == 'to_vi' for x in words)
