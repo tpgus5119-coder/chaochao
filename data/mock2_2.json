@@ -163,7 +163,7 @@
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Chị ấy làm việc ở đâu?",
-   "audio": "Tôi làm thư ký ở một công ty máy tính.",
+   "audio": "Tôi làm thư ký ở một công ty máy tính, còn anh?\nTôi làm việc ở ngân hàng.",
    "opts": [
     "công ty máy tính",
     "ngân hàng",
@@ -172,13 +172,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Tôi làm thư ký ở một công ty máy tính.\n저는 한 컴퓨터 회사에서 비서로 일해요.\n물음: Chị ấy làm việc ở đâu? — 그녀는 어디에서 일해요?\n답: công ty máy tính"
+   "exp": "들은 대화\n여: Tôi làm thư ký ở một công ty máy tính, còn anh? — 저는 컴퓨터 회사에서 비서로 일해요, 당신은요?\n남: Tôi làm việc ở ngân hàng. — 저는 은행에서 일해요.\n물음: Chị ấy làm việc ở đâu? — 그녀는 어디에서 일해요?\n답: công ty máy tính"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Anh ấy thường làm gì vào cuối tuần?",
-   "audio": "Cuối tuần tôi thường đi chơi với bạn bè.",
+   "audio": "Cuối tuần anh thường học tiếng Việt à?\nKhông, cuối tuần tôi thường đi chơi với bạn bè.",
    "opts": [
     "đi chơi với bạn bè",
     "đi làm",
@@ -187,13 +187,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Cuối tuần tôi thường đi chơi với bạn bè.\n주말에 저는 보통 친구들과 놀러 가요.\n물음: Anh ấy thường làm gì vào cuối tuần? — 그는 주말에 보통 뭐 해요?\n답: đi chơi với bạn bè"
+   "exp": "들은 대화\n여: Cuối tuần anh thường học tiếng Việt à? — 주말에 보통 베트남어를 공부해요?\n남: Không, cuối tuần tôi thường đi chơi với bạn bè. — 아니요, 주말에 저는 보통 친구들과 놀러 가요.\n물음: Anh ấy thường làm gì vào cuối tuần? — 그는 주말에 보통 뭐 해요?\n답: đi chơi với bạn bè"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Hôm nay chị ấy ăn sáng lúc mấy giờ?",
-   "audio": "Hôm nay tôi ăn sáng trễ, lúc 9 giờ.",
+   "audio": "Hôm nay tôi ăn sáng trễ, lúc 9 giờ.\nCòn tôi ăn sáng lúc 7 giờ.",
    "opts": [
     "9 giờ",
     "7 giờ",
@@ -202,13 +202,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Hôm nay tôi ăn sáng trễ, lúc 9 giờ.\n오늘 저는 아침을 늦게, 9시에 먹었어요.\n물음: Hôm nay chị ấy ăn sáng lúc mấy giờ? — 오늘 그녀는 몇 시에 아침을 먹었어요?\n답: 9 giờ"
+   "exp": "들은 대화\n여: Hôm nay tôi ăn sáng trễ, lúc 9 giờ. — 오늘 저는 아침을 늦게, 9시에 먹었어요.\n남: Còn tôi ăn sáng lúc 7 giờ. — 저는 7시에 아침을 먹었어요.\n물음: Hôm nay chị ấy ăn sáng lúc mấy giờ? — 오늘 그녀는 몇 시에 아침을 먹었어요?\n답: 9 giờ"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Anh ấy đi làm bằng gì?",
-   "audio": "Tôi thường đi làm bằng xe buýt.",
+   "audio": "Anh đi làm bằng tắc xi hả?\nKhông, tôi thường đi làm bằng xe buýt.",
    "opts": [
     "xe buýt",
     "tắc xi",
@@ -217,13 +217,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Tôi thường đi làm bằng xe buýt.\n저는 보통 버스로 출근해요.\n물음: Anh ấy đi làm bằng gì? — 그는 무엇으로 출근해요?\n답: xe buýt"
+   "exp": "들은 대화\n여: Anh đi làm bằng tắc xi hả? — 택시로 출근해요?\n남: Không, tôi thường đi làm bằng xe buýt. — 아니요, 저는 보통 버스로 출근해요.\n물음: Anh ấy đi làm bằng gì? — 그는 무엇으로 출근해요?\n답: xe buýt"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Chị ấy đến công ty lúc mấy giờ?",
-   "audio": "Nhà tôi hơi xa nên tôi thường đến công ty lúc 7 giờ 40.",
+   "audio": "Nhà tôi hơi xa nên tôi thường đến công ty lúc 7 giờ 40.\nCòn tôi thường đến lúc 8 giờ.",
    "opts": [
     "7 giờ 40",
     "7 giờ",
@@ -232,13 +232,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Nhà tôi hơi xa nên tôi thường đến công ty lúc 7 giờ 40.\n집이 조금 멀어서 저는 보통 7시 40분에 회사에 도착해요.\n물음: Chị ấy đến công ty lúc mấy giờ? — 그녀는 몇 시에 회사에 도착해요?\n답: 7 giờ 40"
+   "exp": "들은 대화\n여: Nhà tôi hơi xa nên tôi thường đến công ty lúc 7 giờ 40. — 집이 조금 멀어서 저는 보통 7시 40분에 회사에 도착해요.\n남: Còn tôi thường đến lúc 8 giờ. — 저는 보통 8시에 도착해요.\n물음: Chị ấy đến công ty lúc mấy giờ? — 그녀는 몇 시에 회사에 도착해요?\n답: 7 giờ 40"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Cô ấy dạy ở đâu?",
-   "audio": "Tôi đang dạy tiếng Anh ở Trường ILA, Quận 2.",
+   "audio": "Tôi đang dạy tiếng Anh ở Trường ILA, Quận 2.\nCông ty tôi ở Quận 1.",
    "opts": [
     "Quận 2",
     "Quận 1",
@@ -247,13 +247,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Tôi đang dạy tiếng Anh ở Trường ILA, Quận 2.\n저는 2군 ILA 학원에서 영어를 가르치고 있어요.\n물음: Cô ấy dạy ở đâu? — 그녀는 어디에서 가르쳐요?\n답: Quận 2"
+   "exp": "들은 대화\n여: Tôi đang dạy tiếng Anh ở Trường ILA, Quận 2. — 저는 2군 ILA 학원에서 영어를 가르치고 있어요.\n남: Công ty tôi ở Quận 1. — 우리 회사는 1군에 있어요.\n물음: Cô ấy dạy ở đâu? — 그녀는 어디에서 가르쳐요?\n답: Quận 2"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Tối nay họ sẽ làm gì?",
-   "audio": "Tối nay chúng ta đi ăn tối ở quán ăn gần công ty nhé.",
+   "audio": "Tối nay chúng ta đi ăn tối ở quán ăn gần công ty nhé?\nỪ, quán đó ngon lắm.",
    "opts": [
     "đi ăn tối",
     "đi mua sách",
@@ -262,13 +262,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Tối nay chúng ta đi ăn tối ở quán ăn gần công ty nhé.\n오늘 저녁에 회사 근처 식당에서 저녁 먹어요.\n물음: Tối nay họ sẽ làm gì? — 오늘 저녁에 그들은 뭐 할 거예요?\n답: đi ăn tối"
+   "exp": "들은 대화\n여: Tối nay chúng ta đi ăn tối ở quán ăn gần công ty nhé? — 오늘 저녁 회사 근처 식당에 저녁 먹으러 갈까요?\n남: Ừ, quán đó ngon lắm. — 응, 그 식당 아주 맛있어요.\n물음: Tối nay họ sẽ làm gì? — 오늘 저녁에 그들은 뭐 할 거예요?\n답: đi ăn tối"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Nhà hàng ở đâu?",
-   "audio": "Tôi biết một nhà hàng ở Quận 1. Món ăn ngon lắm.",
+   "audio": "Anh có biết nhà hàng nào ngon không?\nTôi biết một nhà hàng ở Quận 1, món ăn ngon lắm.",
    "opts": [
     "Quận 1",
     "Quận 2",
@@ -277,13 +277,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Tôi biết một nhà hàng ở Quận 1. Món ăn ngon lắm.\n저는 1군에 있는 식당을 하나 알아요. 음식이 아주 맛있어요.\n물음: Nhà hàng ở đâu? — 식당은 어디에 있어요?\n답: Quận 1"
+   "exp": "들은 대화\n여: Anh có biết nhà hàng nào ngon không? — 맛있는 식당 아는 데 있어요?\n남: Tôi biết một nhà hàng ở Quận 1, món ăn ngon lắm. — 1군에 있는 식당을 하나 알아요, 음식이 아주 맛있어요.\n물음: Nhà hàng ở đâu? — 식당은 어디에 있어요?\n답: Quận 1"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Chị ấy thế nào?",
-   "audio": "Hôm nay tôi hơi mệt nên không đi chơi.",
+   "audio": "Hôm nay tôi hơi mệt nên không đi chơi.\nVậy chị nghỉ nhé.",
    "opts": [
     "hơi mệt",
     "rất vui",
@@ -292,13 +292,13 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Hôm nay tôi hơi mệt nên không đi chơi.\n오늘 조금 피곤해서 놀러 안 가요.\n물음: Chị ấy thế nào? — 그녀는 어때요?\n답: hơi mệt"
+   "exp": "들은 대화\n여: Hôm nay tôi hơi mệt nên không đi chơi. — 오늘 조금 피곤해서 놀러 안 가요.\n남: Vậy chị nghỉ nhé. — 그럼 쉬세요.\n물음: Chị ấy thế nào? — 그녀는 어때요?\n답: hơi mệt"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",
    "k": "choice",
    "prompt": "Anh ấy làm việc từ mấy giờ đến mấy giờ?",
-   "audio": "Buổi chiều tôi làm việc từ 2 giờ đến 7 giờ.",
+   "audio": "Anh làm việc cả ngày à?\nKhông, tôi làm việc từ 2 giờ đến 7 giờ, buổi sáng tôi đi học.",
    "opts": [
     "từ 2 giờ đến 7 giờ",
     "từ 9 giờ đến 11 giờ",
@@ -307,7 +307,7 @@
    "ans": 0,
    "shuffle": true,
    "made": true,
-   "exp": "들은 말: Buổi chiều tôi làm việc từ 2 giờ đến 7 giờ.\n오후에 저는 2시부터 7시까지 일해요.\n물음: Anh ấy làm việc từ mấy giờ đến mấy giờ? — 그는 몇 시부터 몇 시까지 일해요?\n답: từ 2 giờ đến 7 giờ"
+   "exp": "들은 대화\n여: Anh làm việc cả ngày à? — 하루 종일 일해요?\n남: Không, tôi làm việc từ 2 giờ đến 7 giờ, buổi sáng tôi đi học. — 아니요, 저는 2시부터 7시까지 일하고, 오전엔 학교에 가요.\n물음: Anh ấy làm việc từ mấy giờ đến mấy giờ? — 그는 몇 시부터 몇 시까지 일해요?\n답: từ 2 giờ đến 7 giờ"
   },
   {
    "sec": "A 듣기 · 4 듣고 질문에 답하기",

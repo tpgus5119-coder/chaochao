@@ -2,6 +2,7 @@
 """주간시험 2(교재 1권 1~7과) 모의고사 5벌의 공통 틀 (2026-10-06, 대표님 "주간시험2에는 모의고사 5개 — 억지로 말고 실제 범위 낱말·문법으로, 동일한 틀").
 틀은 2차 시험 안내 슬라이드(원본자료/…/주간시험/KakaoTalk 사진 둘) 그대로:
   A 듣기 30 — 1 그림 맞다/틀리다 5 · 2 맞는 그림 5 · 3 듣고 답 고르기 10 · 4 듣고 질문에 답하기(짧은 답) 10
+    (듣기 3 은 2026-10-09 부터 교재 듣기 1번 꼴 — 여·남이 한 마디씩 주고받는 두 줄 대화 + 질문, 대화는 dialogs.py · 소리는 dialog_audio.py)
   B 읽기 30 — 1 빈칸(낱말·문법, 보기 다섯) 5 · 2 읽고 질문에 답하기 5 · 3 맞다/틀리다 10 · 4 알맞은 문장 10
   C 쓰기 20 — 1 낱말 배열 5 · 2 틀린 곳 찾기 5 · 3 한 주제로 10문장
   D 말하기 20 — 1 발음(낱말 10·문장 5, pts 1·2) · 2 그림 보고 말하기 2(pts 5) · 3 상황 읽고 말하기 2(pts 5) — 앱에서는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다 (대표님 2026-10-07 "말하기는 니가 창조")
@@ -96,6 +97,7 @@ def build(no, title, q):
     WKO = {U.normalize('NFC', v).lower(): k for b, v, k, i in W}
     lack = []
     def ko(t):
+        if '\n' in t: return '\n'.join(ko(x) for x in t.split('\n'))   # 두 사람 대화(듣기 3) — 줄마다 (2026-10-09)
         t2 = U.normalize('NFC', t.strip())
         r = KOS.get(t2) or WKO.get(t2.lower())
         if not r: lack.append(t)
@@ -105,6 +107,8 @@ def build(no, title, q):
         k, sec = x['k'], x['sec']
         if k == 'tf' and x.get('audio'): x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n그림: {wko(x['word'])} → {'맞다' if x['ans'] else '틀리다'}"
         elif k == 'pick': x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n답: {'ABCD'[x['ans']]} {wko(x['words'][x['ans']])}"
+        elif k == 'choice' and sec.startswith('A 듣기 · 3') and '\n' in x['audio']:   # 두 사람 대화 — 여: … / 남: … 줄마다 뜻
+            ls = x['audio'].split('\n'); x['exp'] = '들은 대화\n' + '\n'.join(f"{'여' if i % 2 == 0 else '남'}: {l} — {ko(l)}" for i, l in enumerate(ls)) + f"\n물음: {x['prompt']} — {ko(x['prompt'])}\n답: {x['opts'][x['ans']]}"
         elif k == 'choice' and sec.startswith('A 듣기 · 3'): x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n물음: {x['prompt']} — {ko(x['prompt'])}\n답: {x['opts'][x['ans']]}"
         elif k == 'choice' and sec.startswith('A 듣기 · 4'): a = x['opts'][x['ans']]; x['exp'] = f"들은 질문: {x['audio']}\n{ko(x['audio'])}\n답: {a} — {ko(a)}"
         elif sec.startswith('B 읽기 · 1'): full = x['prompt'].replace('____', x['opts'][x['ans']]); x['exp'] = f"{full}\n{ko(full)}"
@@ -118,7 +122,7 @@ def build(no, title, q):
     json.dump(out, open(R / f'data/mock2_{no}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     aud = []
     for x in q:
-        if x.get('audio'): aud.append(x['audio'])
+        if x.get('audio') and '\n' not in x['audio']: aud.append(x['audio'])   # 두 사람 대화는 tools/mock2/dialog_audio.py 가 여·남 소리를 이어 붙여 만든다
         if x['k'] in ('say', 'puzzle'): aud.append(x['vi'])
         if x['k'] == 'speak': aud += [m['vi'] for m in x['model']]
         if x['k'] == 'errpick': aud.append(x['fix'])
