@@ -7,7 +7,7 @@ q += [PK(["ga", "cổng", "phố", "phường"], "Đây là ga. Tôi đi Đà N�
       PK(["cất cánh", "bay", "phút", "giờ"], "Máy bay sắp cất cánh.", 0),
       PK(["đi học", "đi chơi", "đi đến", "đi ra ngoài"], "Em ấy đi học lúc 7 giờ.", 0),
       PK(["siêu thị", "mở cửa", "trung tâm", "tiện lợi"], "Mẹ tôi đang mua sắm ở siêu thị.", 0),
-      PK(["lớp", "trường", "bàn", "ghế"], "Các sinh viên đang học trong lớp.", 0)]
+      PK(["lớp", "táo", "bàn", "ghế"], "Các sinh viên đang học trong lớp.", 0)]
 q += [A3("Nhà sách ở đâu?", "Nhà sách FAHASA ở đường Nguyễn Huệ, Quận 1.", ["đường Nguyễn Huệ", "Quận 2", "Quận 7"]),
       A3("Từ nhà Lan đến công ty mất bao lâu?", "Từ nhà tôi đến công ty mất khoảng 30 phút.", ["khoảng 30 phút", "khoảng 10 phút", "khoảng một tiếng"]),
       A3("Họ sẽ gặp nhau lúc mấy giờ?", "Chúng ta gặp nhau lúc 7 giờ tối ở quán cà phê nhé.", ["7 giờ tối", "7 giờ sáng", "2 giờ chiều"]),

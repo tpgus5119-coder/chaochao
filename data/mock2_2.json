@@ -52,12 +52,12 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-ngu.webp",
+   "img": "b-dung.webp",
    "audio": "Em ấy đang học bài.",
    "ans": false,
    "made": true,
-   "word": "ngủ",
-   "exp": "들은 말: Em ấy đang học bài.\n그 애는 공부하고 있어요.\n그림: ngủ(자다) → 틀리다"
+   "word": "đứng",
+   "exp": "들은 말: Em ấy đang học bài.\n그 애는 공부하고 있어요.\n그림: đứng(서다; (đứng sau: ~뒤에 오다)) → 틀리다"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
@@ -105,17 +105,17 @@
    "audio": "Buổi tối tôi thường lên mạng.",
    "opts": [
     "b-len-mang.webp",
-    "b-dien-thoai.webp",
+    "w-bf5217e165.webp",
     "w-eb5c8b3809.webp",
-    "b-email.webp"
+    "w-93acb1fe51.webp"
    ],
    "ans": 0,
    "made": true,
    "words": [
     "lên mạng",
-    "điện thoại",
+    "vẽ",
     "tin tức",
-    "email"
+    "hát hò"
    ],
    "exp": "들은 말: Buổi tối tôi thường lên mạng.\n저녁에 저는 보통 인터넷을 해요.\n답: A lên mạng(인터넷을 하다)"
   },
@@ -126,16 +126,16 @@
    "opts": [
     "w-c388775af9.webp",
     "b-ve-nha.webp",
-    "b-thuc-khuya.webp",
-    "b-buon-ngu.webp"
+    "b-an-trua.webp",
+    "w-e7d57630a3.webp"
    ],
    "ans": 0,
    "made": true,
    "words": [
     "đi ngủ",
     "về nhà",
-    "thức khuya",
-    "buồn ngủ"
+    "ăn trưa",
+    "đi mua sắm"
    ],
    "exp": "들은 말: Hôm qua tôi đi ngủ lúc 12 giờ đêm.\n어제 저는 밤 12시에 잤어요.\n답: A đi ngủ(자러 가다)"
   },
@@ -144,20 +144,20 @@
    "k": "pick",
    "audio": "Cuối tuần tôi ở nhà với gia đình.",
    "opts": [
-    "b-nha.webp",
-    "b-gia-dinh.webp",
-    "w-ad94e8a1b8.webp",
-    "w-32ce1a70a5.webp"
+    "b-o-nha.webp",
+    "b-bien.webp",
+    "quan-an.webp",
+    "b-thanh-pho.webp"
    ],
    "ans": 0,
    "made": true,
    "words": [
-    "nhà",
-    "gia đình",
-    "bố mẹ",
-    "ông bà"
+    "ở nhà",
+    "biển",
+    "quán ăn",
+    "thành phố"
    ],
-   "exp": "들은 말: Cuối tuần tôi ở nhà với gia đình.\n주말에 저는 가족과 집에 있어요.\n답: A nhà(집)"
+   "exp": "들은 말: Cuối tuần tôi ở nhà với gia đình.\n주말에 저는 가족과 집에 있어요.\n답: A ở nhà(집에(서))"
   },
   {
    "sec": "A 듣기 · 3 듣고 답 고르기",

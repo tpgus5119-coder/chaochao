@@ -3,11 +3,11 @@
 from common import *
 q = []
 q += [TF("nhà sách", "Đây là nhà sách. Hôm nay nhà sách giảm giá 30%.", True), TF("bưu điện", "Đây là bệnh viện. Bác sĩ ở đây rất giỏi.", False),
-      TF("quán cà phê", "Chúng tôi đang ngồi nói chuyện ở quán cà phê.", True), TF("nhà hàng", "Đây là bưu điện. Tôi đến đây để gửi thư.", False), TF("bia", "Bia tươi ở đây rất ngon.", True)]
+      TF("quán cà phê", "Chúng tôi đang ngồi nói chuyện ở quán cà phê.", True), TF("cây cầu", "Đây là bưu điện. Tôi đến đây để gửi thư.", False), TF("bia", "Bia tươi ở đây rất ngon.", True)]
 q += [PK(["bảo tàng", "nhà thờ", "phố đi bộ", "đài truyền hình"], "Hôm nay tôi đi tham quan bảo tàng với bạn cùng lớp.", 0),
       PK(["đi dạo", "tham quan", "nói chuyện", "uống"], "Chúng tôi đang nói chuyện ở quán cà phê.", 2),
-      PK(["mời", "ăn tối", "khen", "hỏi"], "Tối nay tôi mời anh đi ăn tối.", 0),
-      PK(["mua", "sách", "giảm giá", "địa chỉ"], "Sách ở đây giảm giá 30%.", 2),
+      PK(["uống thuốc", "ăn tối", "khen", "hỏi"], "Tối nay tôi mời anh đi ăn tối.", 1),
+      PK(["mua", "cây", "giảm giá", "địa chỉ"], "Sách ở đây giảm giá 30%.", 2),
       PK(["giỏi", "du khách", "thân thiện", "trẻ"], "Anh ấy nói tiếng Việt rất giỏi.", 0)]
 q += [A3("Bây giờ họ đi đâu?", "Bây giờ chúng ta sẽ đi mua sách ở nhà sách FAHASA.", ["nhà sách", "bưu điện", "siêu thị"]),
       A3("Nhà sách FAHASA số mấy?", "Nhà sách FAHASA ở số 40 đường Nguyễn Huệ.", ["số 40", "số 14", "số 4"]),

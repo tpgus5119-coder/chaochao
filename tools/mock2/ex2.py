@@ -2,12 +2,12 @@
 from common import *
 q = []
 q += [TF("thức dậy", "Tôi thức dậy lúc 6 giờ sáng.", True), TF("đánh răng", "Em ấy đang đánh răng.", True),
-      TF("ăn sáng", "Anh ấy đang ăn trưa ở căng tin.", False), TF("xem tivi", "Buổi tối gia đình tôi xem tivi.", True), TF("ngủ", "Em ấy đang học bài.", False)]
+      TF("ăn sáng", "Anh ấy đang ăn trưa ở căng tin.", False), TF("xem tivi", "Buổi tối gia đình tôi xem tivi.", True), TF("đứng", "Em ấy đang học bài.", False)]
 q += [PK(["rửa mặt", "nấu ăn", "đọc báo", "mua sắm"], "Buổi sáng tôi rửa mặt rồi ăn sáng.", 0),
       PK(["ăn cơm", "chuẩn bị", "mang", "chờ"], "Gia đình tôi đang ăn cơm.", 0),
-      PK(["lên mạng", "điện thoại", "tin tức", "email"], "Buổi tối tôi thường lên mạng.", 0),
-      PK(["đi ngủ", "về nhà", "thức khuya", "buồn ngủ"], "Hôm qua tôi đi ngủ lúc 12 giờ đêm.", 0),
-      PK(["nhà", "gia đình", "bố mẹ", "ông bà"], "Cuối tuần tôi ở nhà với gia đình.", 0)]
+      PK(["lên mạng", "vẽ", "tin tức", "hát hò"], "Buổi tối tôi thường lên mạng.", 0),
+      PK(["đi ngủ", "về nhà", "ăn trưa", "đi mua sắm"], "Hôm qua tôi đi ngủ lúc 12 giờ đêm.", 0),
+      PK(["ở nhà", "biển", "quán ăn", "thành phố"], "Cuối tuần tôi ở nhà với gia đình.", 0)]
 q += [A3("Chị ấy làm việc ở đâu?", "Tôi làm thư ký ở một công ty máy tính.", ["công ty máy tính", "ngân hàng", "bệnh viện"]),
       A3("Anh ấy thường làm gì vào cuối tuần?", "Cuối tuần tôi thường đi chơi với bạn bè.", ["đi chơi với bạn bè", "đi làm", "học tiếng Việt"]),
       A3("Hôm nay chị ấy ăn sáng lúc mấy giờ?", "Hôm nay tôi ăn sáng trễ, lúc 9 giờ.", ["9 giờ", "7 giờ", "11 giờ"]),

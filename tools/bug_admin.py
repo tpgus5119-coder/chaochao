@@ -5,6 +5,8 @@
 쓰기
   python3 tools/bug_admin.py 목록                 — 최근 보고 목록 (언제·누가·종류·화면·낱말·한 줄)
   python3 tools/bug_admin.py 보기 <id>            — 하나를 자세히: 상황 전부 + 화면 HTML 을 파일로 만들어 연다
+  python3 tools/bug_admin.py 새것                 — 아직 처리 안 한 보고만 (처리됨.tsv 에 없는 것)
+  python3 tools/bug_admin.py 처리 <id> <한 줄>     — 처리했다고 적어 둔다(서버 보고는 지우지 않는다) — tools/_bugs/처리됨.tsv
   python3 tools/bug_admin.py 지우기 <id>          — 처리한 보고 지우기
   python3 tools/bug_admin.py 진도초기화 <아이디>   — 그 계정의 서버 진도(prog:)를 지운다 (워커 새 판 필요)
 
@@ -39,6 +41,14 @@ def key():
     return getpass.getpass("관리자 열쇠(PUSH_KEY): ")
 
 
+DONE = R / "tools" / "_bugs" / "처리됨.tsv"   # id ⇥ 처리한 때 ⇥ 한 줄 (2026-10-09) — 이 맥에만, 공개 저장소엔 안 올림(.gitignore)
+
+
+def done_ids():
+    try: return {l.split("\t")[0] for l in DONE.read_text(encoding="utf-8").splitlines() if l.strip()}
+    except FileNotFoundError: return set()
+
+
 def when(ms):
     return time.strftime("%m-%d %H:%M", time.localtime(ms / 1000))
 
@@ -46,15 +56,20 @@ def when(ms):
 def main():
     a = sys.argv[1:] or ["목록"]
     cmd = a[0]
-    if cmd == "목록":
+    if cmd == "처리":
+        DONE.parent.mkdir(exist_ok=True)
+        with DONE.open("a", encoding="utf-8") as f: f.write(f"{a[1]}\t{time.strftime('%Y-%m-%d %H:%M')}\t{' '.join(a[2:])}\n")
+        print("  ✓ 처리됨으로 적음", a[1]); return
+    if cmd in ("목록", "새것"):
         j = call(act="bugs", key=key())
         if j.get("error"): print("  ✗", j["error"], "(워커가 옛 판이면 tools/club_worker.js 를 다시 붙여넣어 Deploy)"); return
-        bugs = j.get("bugs", [])
-        print(f"  보고 {len(bugs)}건")
+        bugs = j.get("bugs", []); dn = done_ids()
+        if cmd == "새것": bugs = [b for b in bugs if b["id"] not in dn]
+        print(f"  보고 {len(bugs)}건" + ("(처리 안 한 것)" if cmd == "새것" else f" · 처리함 {sum(b['id'] in dn for b in bugs)}"))
         for b in bugs:
             c = b.get("ctx", {}) or {}
             w = (c.get("item") or {}).get("vi") or (c.get("quiz") or {}).get("word") or (c.get("flash") or {}).get("vi") or c.get("pair") or ""
-            print(f"  {when(b['at'])}  {b.get('nick') or '-':<8} {KIND.get(b.get('kind'), b.get('kind')):<5} {c.get('title', '')[:14]:<14} {w[:16]:<16} {b.get('note', '')[:40]}   id={b['id']}")
+            print(f"  {when(b['at'])}  {b.get('nick') or '-':<8} {KIND.get(b.get('kind'), b.get('kind')):<5} {c.get('title', '')[:14]:<14} {w[:16]:<16} {b.get('note', '')[:40]}   id={b['id']}{'  ✓' if b['id'] in dn else ''}")
         return
     if cmd == "보기":
         j = call(act="bug1", id=a[1], key=key())

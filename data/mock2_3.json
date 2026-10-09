@@ -42,12 +42,12 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-nha-hang.webp",
+   "img": "w-4cf9cb9723.webp",
    "audio": "Đây là bưu điện. Tôi đến đây để gửi thư.",
    "ans": false,
    "made": true,
-   "word": "nhà hàng",
-   "exp": "들은 말: Đây là bưu điện. Tôi đến đây để gửi thư.\n여기는 우체국이에요. 저는 편지를 부치러 왔어요.\n그림: nhà hàng(식당) → 틀리다"
+   "word": "cây cầu",
+   "exp": "들은 말: Đây là bưu điện. Tôi đến đây để gửi thư.\n여기는 우체국이에요. 저는 편지를 부치러 왔어요.\n그림: cây cầu(다리(교량)) → 틀리다"
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
@@ -104,20 +104,20 @@
    "k": "pick",
    "audio": "Tối nay tôi mời anh đi ăn tối.",
    "opts": [
-    "b-moi.webp",
+    "b-uong-thuoc.webp",
     "b-an-toi.webp",
     "b-khen.webp",
     "b-hoi.webp"
    ],
-   "ans": 0,
+   "ans": 1,
    "made": true,
    "words": [
-    "mời",
+    "uống thuốc",
     "ăn tối",
     "khen",
     "hỏi"
    ],
-   "exp": "들은 말: Tối nay tôi mời anh đi ăn tối.\n오늘 저녁 제가 저녁을 살게요.\n답: A mời(초대하다, 권하다)"
+   "exp": "들은 말: Tối nay tôi mời anh đi ăn tối.\n오늘 저녁 제가 저녁을 살게요.\n답: B ăn tối(저녁을 먹다)"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
@@ -125,7 +125,7 @@
    "audio": "Sách ở đây giảm giá 30%.",
    "opts": [
     "b-mua.webp",
-    "b-sach.webp",
+    "w-667e20a456.webp",
     "b-giam-gia.webp",
     "b-dia-chi.webp"
    ],
@@ -133,7 +133,7 @@
    "made": true,
    "words": [
     "mua",
-    "sách",
+    "cây",
     "giảm giá",
     "địa chỉ"
    ],
