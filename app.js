@@ -7757,10 +7757,13 @@ function hunLoad() {
    · 옛 한자어: 표준 한자음과 소리가 다른 옛 차용(tuổi ← 歲 tuế) — '옛 한자어 · 한자음 tuế' 를 밝힌다
    · 일부 음절만 한자어·외래어: 그 음절을 앞에 적는다(giá = 價 · xe buýt 의 buýt ← 프랑스어 bus)
    · 뜻마다 뿌리가 다르면(thư 편지 書 / 쉬다 舒) 카드 뜻에 든 말로 고른다 */
-let ROOTS = null, ROOTS_P = null;
+let ROOTS = null, ROOTS_P = null, REST_KO = {};
 function rootsLoad() {
   if (ROOTS) return Promise.resolve();
-  if (!ROOTS_P) ROOTS_P = fetch('data/_roots.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { ROOTS = j; }).catch(() => { ROOTS = {}; });
+  if (!ROOTS_P) ROOTS_P = Promise.all([
+    fetch('data/_roots.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => ({})),
+    fetch('data/_rest_ko.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => ({}))   // 뿌리 밖 부분의 뜻 고친 표 (tools/roots/나머지_뜻.tsv, 2026-10-09)
+  ]).then(([j, k]) => { REST_KO = k; ROOTS = j; });
   return ROOTS_P;
 }
 /* 분류사 cái 가 붙은 표제어 (대표님 물음 2026-09-29: "cái nhà 이거 집이라고 나오는데 맞냐? nhà 만 집 아님?")
@@ -7790,8 +7793,38 @@ function rootPills(host, x) {
       }));
       else if (a.l) box.append(el('span', 'loanpill', (a.p ? esc(a.p) + ' ← ' : '') + esc(tr(a.l)) + ' <b>' + esc(a.w) + '</b>'));
     });
+    /* 뿌리가 낱말의 일부에만 있을 때(việc nội trợ 의 nội trợ = 內助) 나머지 부분(việc)의 뜻도 붙인다 (대표님 2026-10-09 "việc이 무슨 뜻인지는 안 알려 줌?") */
+    restGloss(k0, alts.filter(a => !a.c || a.c.some(k => ko.includes(k)))).forEach(g => box.append(el('span', 'partpill', esc(g.w) + ' = ' + esc(g.m))));
   };
   if (ROOTS) draw(); else rootsLoad().then(draw);
+}
+/* 낱말에서 뿌리(p)가 설명하지 않는 나머지 부분 → [{w, m}] (첫 뜻만, 품사 표시·괄호 뺌). 뜻을 못 찾으면 빼고 돌려준다 */
+function restGloss(vi, alts) {
+  const MV = { 'oá': 'óa', 'oà': 'òa', 'oả': 'ỏa', 'oã': 'õa', 'oạ': 'ọa', 'oé': 'óe', 'oè': 'òe', 'oẻ': 'ỏe', 'oẽ': 'õe', 'oẹ': 'ọe', 'uý': 'úy', 'uỳ': 'ùy', 'uỷ': 'ủy', 'uỹ': 'ũy', 'uỵ': 'ụy' };
+  const cn = t => (MV[t.slice(-2)] && !t.startsWith('qu') ? t.slice(0, -2) + MV[t.slice(-2)] : t);   // hoá = hóa 로 견준다
+  const ws = String(vi || '').toLowerCase().split(/\s+/).filter(Boolean), wc = ws.map(cn);
+  const ps = (alts || []).filter(a => a.p).map(a => String(a.p).toLowerCase().split(/\s+/).map(cn));
+  if (!ps.length || ws.length < 2) return [];
+  const key = ws.join(' ');
+  const whole = REST_KO[key + '|*'];                           // 그 낱말은 고친 목록으로 통째로 (비어 있으면 안 붙임)
+  if (whole) return whole.map(([w, m]) => ({ w, m }));
+  const cover = new Array(ws.length).fill(false);
+  ps.forEach(p => { for (let i = 0; i + p.length <= wc.length; i++) if (p.every((t, j) => wc[i + j] === t)) { for (let j = 0; j < p.length; j++) cover[i + j] = true; break; } });
+  const first = m => String(m).replace(/\[[^\]]*\]\s*/g, '').replace(/\([^)]*\)/g, '').split(/\s*[·,;\/]\s*/).map(t => t.trim()).filter(Boolean)[0] || '';
+  gvocBuild();
+  const look = ph => { const fix = REST_KO[key + '|' + ph] ?? REST_KO[ph]; if (fix != null) return fix; const m = GVOC[ph] || EXTRAG[ph] || exgKo(ph); return m ? first(m) : ''; };   // 문맥에 맞게 고친 뜻이 먼저
+  const out = [];
+  for (let i = 0; i < ws.length;) {
+    if (cover[i]) { i++; continue; }
+    let hit = null;
+    for (let n = 3; n >= 1 && !hit; n--) {
+      if (i + n > ws.length || cover.slice(i, i + n).some(Boolean)) continue;
+      const ph = ws.slice(i, i + n).join(' '), m = look(ph);
+      if (m) hit = { w: ph, m, n };
+    }
+    if (hit) { out.push({ w: hit.w, m: hit.m }); i += hit.n; } else i++;
+  }
+  return out;
 }
 function hanjaPill(h, o) {
   const opt = o || {};

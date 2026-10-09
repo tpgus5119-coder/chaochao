@@ -2670,6 +2670,7 @@ button.hsttl{width:100%; background:none; border:0; font:inherit; color:inherit;
 .hanja .rpart{font-size:11px; font-weight:600; opacity:.9}
 .hanja .rold{display:block; font-size:10.5px; font-weight:600; opacity:.8; margin-top:1px}
 .loanpill{display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:600; padding:3px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); vertical-align:middle; white-space:nowrap}
+.partpill{display:inline-flex; align-items:center; gap:4px; font-size:13px; font-weight:600; padding:3px 9px; border-radius:999px; background:var(--accent-soft); color:var(--accent); vertical-align:middle; white-space:nowrap}   /* 뿌리 밖 나머지 부분의 뜻 (2026-10-09) — 외래어 알약과 같은 모양 */
 .loanpill b{font-weight:800}
 .senses{font-size:14px; color:var(--dim); margin-top:2px}
 /* 뜻 여러 개 — 자주 쓰는 차례, 이 과의 뜻은 굵게 (2026-09-28) */

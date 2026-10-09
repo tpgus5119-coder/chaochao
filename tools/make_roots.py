@@ -98,18 +98,37 @@ def main():
     from fetch_etym import app_words
     whole = {k: v for k, v in out.items() if len(k.split()) >= 2 and len(v) == 1 and 'c' not in v[0] and 'p' not in v[0]}
     comp = 0
+    AW = set(app_words())
+    # 성조 자리만 다른 꼴(hoá/hóa · uý/úy)도 같은 낱말로 — 'đa văn hoá' 가 [đa văn 多聞][hoá] 로 갈리던 것 (2026-10-09 점검)
+    import re as _re
+    _MV = {'oá': 'óa', 'oà': 'òa', 'oả': 'ỏa', 'oã': 'õa', 'oạ': 'ọa', 'oé': 'óe', 'oè': 'òe', 'oẻ': 'ỏe', 'oẽ': 'õe', 'oẹ': 'ọe',
+           'uý': 'úy', 'uỳ': 'ùy', 'uỷ': 'ủy', 'uỹ': 'ũy', 'uỵ': 'ụy'}
+    def canon(t): return ' '.join((_MV[x[-2:]] and (x[:-2] + _MV[x[-2:]])) if x[-2:] in _MV and not x.startswith('qu') else x for x in t.split())
+    whole = {canon(k): v for k, v in whole.items()}
+    outc = {canon(k): v for k, v in out.items()}
+    AFFIX = {'hóa', 'hoá', 'tính', 'sự', 'viên', 'gia', 'học', 'sĩ', 'trưởng', 'phó', 'đa', 'phi', 'bất', 'vô', 'siêu', 'tái', 'tổng', 'giả', 'nhà', 'người'}
+    def split_best(syl):
+        # 가르는 길을 다 늘어놓고 고른다 (2026-10-09 점검 — 왼쪽부터 가장 긴 것을 먼저 잡으면 'tập thể dục' 이 [tập thể 集體][dục] 로 갈렸다):
+        # ① 덮는 음절이 많은 것 ② 남는 음절이 낱말(앱 낱말·접사 hóa·tính…)이 아닌 수가 적은 것 ③ 조각이 적은 것 ④ 왼쪽부터 긴 것(예전 방식)
+        # → tập thể dục = [tập][thể dục 體育] · cá nhân hóa = [cá nhân 個人][hóa] (남는 hóa 는 접사)
+        L, ways = len(syl), []
+        def go(i, segs, unc):
+            if i == L: ways.append((segs, unc)); return
+            go(i + 1, segs, unc + [syl[i]])
+            for n in range(2, min(4, L - i) + 1):
+                seg = ' '.join(syl[i:i + n])
+                if seg in whole: go(i + n, segs + [(i, n, seg)], unc)
+        go(0, [], [])
+        key = lambda w: (-sum(n for _, n, _ in w[0]), sum(1 for u in w[1] if u not in AW and u not in AFFIX), len(w[0]), [(i, -n) for i, n, _ in w[0]])
+        return [seg for _, _, seg in min(ways, key=key)[0]]
     for w in app_words():
         if w in out or w in skip: continue
-        syl = w.split()
+        if canon(w) in outc: out[w] = outc[canon(w)]; comp += 1; continue   # 꼴만 다른 같은 낱말(đa văn hoá = đa văn hóa · tự động hóa = tự động hoá)
+        syl = canon(w).split()
         if not 2 <= len(syl) <= 8: continue
-        i, parts = 0, []
-        while i < len(syl):
-            for n in range(min(4, len(syl) - i), 1, -1):
-                seg = ' '.join(syl[i:i + n])
-                if seg in whole:
-                    a = dict(whole[seg][0]); a['p'] = seg; parts.append(a); i += n; break
-            else:
-                i += 1
+        parts = []
+        for seg in split_best(syl):
+            a = dict(whole[seg][0]); a['p'] = seg; parts.append(a)
         if parts and not (len(parts) == 1 and parts[0]['p'] == w):   # 두 낱말이 구를 꼭 채워도(điện thoại + di động) 싣는다 — 전엔 빠졌다 (2026-10-01)
             out[w] = parts[:4]; comp += 1
     stat['구 안의 낱말로'] = comp
