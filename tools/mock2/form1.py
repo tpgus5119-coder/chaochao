@@ -98,3 +98,42 @@ C3F = {
                       ("Mẹ tôi đang nấu ăn.", "어머니는 요리하고 있어요."),
                       ("Em tôi đang nghe nhạc.", "동생은 음악을 듣고 있어요.")]),
 }
+
+# 읽기 4 — 대답을 보고 물음 고르기에서, 오답 보기로 쓰면 그 물음에도 맞는 대답이 되는 짝 (2026-10-09 대표님 "답 하나 맞냐? 모든 문제 체크")
+B4_AVOID = {
+1: {"Tôi làm kế toán ở ngân hàng.": ["Chị làm việc ở đâu?"]},
+2: {"Ở căng tin công ty.": ["Tối nay chúng ta ăn tối ở đâu?"]},
+3: {"Chúng ta sẽ đi mua sách.": ["Đi đâu, cô?"]},
+4: {"Lúc 6 giờ tối nhé.": ["Siêu thị mở cửa lúc mấy giờ?"], "Ở quán ăn gần công ty nhé.": ["Bây giờ chị đang ở đâu?"]},
+5: {"Em đi ngủ lúc 11 giờ.": ["Hôm qua anh thức khuya hả?"]},
+}
+OK = 'Đúng — 맞는 문장'
+# 쓰기 2 — 1차 꼴 다섯(셋은 틀린 문장, 둘은 맞는 문장). (보여 줄 문장, 정답 보기, [틀린 보기 둘], 바른 문장, 뜻).
+# 10-09 점검: 'có mấy nhân viên'·'đang là'·'sắp … lúc 12 giờ'·'… đi bằng xe buýt đi'·'… uống bia tối nay' 처럼 말이 되는 문장을 틀렸다고 하거나 틀린 보기로 쓰던 것을 바꿈
+C2F = {
+1: [("Tôi làm việc ở ngân hàng từ 8 giờ sáng và 5 giờ chiều.", "Tôi làm việc ở ngân hàng từ 8 giờ sáng đến 5 giờ chiều.", [OK, "Tôi làm việc ở ngân hàng đến 8 giờ sáng từ 5 giờ chiều."], "Tôi làm việc ở ngân hàng từ 8 giờ sáng đến 5 giờ chiều.", "저는 은행에서 아침 8시부터 오후 5시까지 일해요."),
+    ("Tôi là kỹ sư ở máy tính công ty.", "Tôi là kỹ sư ở công ty máy tính.", [OK, "Tôi kỹ sư là ở công ty máy tính."], "Tôi là kỹ sư ở công ty máy tính.", "저는 컴퓨터 회사의 엔지니어예요."),
+    ("Anh ấy đi ăn trưa lúc giờ 12.", "Anh ấy đi ăn trưa lúc 12 giờ.", [OK, "Anh ấy ăn đi trưa lúc 12 giờ."], "Anh ấy đi ăn trưa lúc 12 giờ.", "그는 12시에 점심을 먹으러 가요."),
+    ("Hôm nay tôi rất mệt.", OK, ["Hôm nay tôi mệt rất.", "Hôm nay rất tôi mệt."], "Hôm nay tôi rất mệt.", "오늘 저는 아주 피곤해요."),
+    ("Anh ấy cũng làm kế toán, phải không?", OK, ["Anh ấy cũng làm kế toán, không phải?", "Anh ấy làm cũng kế toán, phải không?"], "Anh ấy cũng làm kế toán, phải không?", "그도 회계사로 일하죠?")],
+2: [("Chị ấy rất đẹp lắm.", "Chị ấy rất đẹp.", [OK, "Chị ấy đẹp rất."], "Chị ấy rất đẹp.", "그녀는 아주 예뻐요."),
+    ("Hôm nay tôi hơi đói lắm.", "Hôm nay tôi hơi đói.", [OK, "Hôm nay tôi đói hơi."], "Hôm nay tôi hơi đói.", "오늘 저는 조금 배고파요."),
+    ("Tôi đi làm bằng lúc 8 giờ.", "Tôi đi làm lúc 8 giờ.", [OK, "Tôi đi làm lúc giờ 8."], "Tôi đi làm lúc 8 giờ.", "저는 8시에 출근해요."),
+    ("Chị ấy làm việc ở ngân hàng, phải không?", OK, ["Chị ấy làm việc ở ngân hàng, không phải?", "Chị ấy ở làm việc ngân hàng, phải không?"], "Chị ấy làm việc ở ngân hàng, phải không?", "그녀는 은행에서 일하죠?"),
+    ("Buổi sáng tôi thường tập thể dục.", OK, ["Buổi sáng tôi tập thể dục thường.", "Buổi sáng thường tôi tập thể dục."], "Buổi sáng tôi thường tập thể dục.", "아침에 저는 보통 운동해요.")],
+3: [("Nhà sách ở đâu số 40 đường Nguyễn Huệ.", "Nhà sách ở số 40 đường Nguyễn Huệ.", [OK, "Nhà sách ở số 40 đường Huệ Nguyễn."], "Nhà sách ở số 40 đường Nguyễn Huệ.", "서점은 응우옌후에 거리 40번지에 있어요."),
+    ("Hôm qua anh ấy sẽ mua sách ở đó.", "Hôm qua anh ấy đã mua sách ở đó.", [OK, "Hôm qua anh ấy đã mua ở đó sách."], "Hôm qua anh ấy đã mua sách ở đó.", "어제 그는 거기서 책을 샀어요."),
+    ("Anh biết địa chỉ nhà sách không có?", "Anh có biết địa chỉ nhà sách không?", [OK, "Anh có biết địa chỉ không nhà sách?"], "Anh có biết địa chỉ nhà sách không?", "서점 주소를 알아요?"),
+    ("Món ăn ở đó ngon lắm.", OK, ["Món ăn ở đó rất ngon lắm.", "Món ăn ở đó lắm ngon."], "Món ăn ở đó ngon lắm.", "거기 음식은 아주 맛있어요."),
+    ("Tối nay tôi mời anh đến đó uống bia.", OK, ["Tối nay tôi anh mời đến đó uống bia.", "Tối nay tôi mời anh đến đó bia uống."], "Tối nay tôi mời anh đến đó uống bia.", "오늘 저녁 당신을 거기로 맥주 마시러 초대해요.")],
+4: [("Tôi đi học bằng lúc 8 giờ.", "Tôi đi học lúc 8 giờ.", [OK, "Tôi đi học lúc giờ 8."], "Tôi đi học lúc 8 giờ.", "저는 8시에 학교에 가요."),
+    ("Nhà tôi ở gần đến công ty.", "Nhà tôi ở gần công ty.", [OK, "Nhà tôi ở công ty gần."], "Nhà tôi ở gần công ty.", "우리 집은 회사 근처에 있어요."),
+    ("Tôi học từ 8 giờ và 11 giờ.", "Tôi học từ 8 giờ đến 11 giờ.", [OK, "Tôi học từ 8 giờ đến giờ 11."], "Tôi học từ 8 giờ đến 11 giờ.", "저는 8시부터 11시까지 공부해요."),
+    ("Chúng ta đi bằng xe buýt.", OK, ["Chúng ta bằng đi xe buýt.", "Chúng ta đi xe buýt bằng."], "Chúng ta đi bằng xe buýt.", "우리 버스로 가요."),
+    ("Nhà sách mở cửa lúc 9 giờ.", OK, ["Nhà sách mở cửa 9 lúc giờ.", "Nhà sách mở cửa lúc giờ 9."], "Nhà sách mở cửa lúc 9 giờ.", "서점은 9시에 문을 열어요.")],
+5: [("Tôi thường tập thể dục vào buổi sáng lắm.", "Tôi thường tập thể dục vào buổi sáng.", [OK, "Tôi thường tập thể dục buổi sáng vào."], "Tôi thường tập thể dục vào buổi sáng.", "저는 보통 아침에 운동해요."),
+    ("Hôm qua tôi đi ngủ sẽ lúc 1 giờ.", "Hôm qua tôi đi ngủ lúc 1 giờ.", [OK, "Hôm qua tôi đi ngủ lúc giờ 1."], "Hôm qua tôi đi ngủ lúc 1 giờ.", "어제 저는 1시에 잤어요."),
+    ("Em thích rất nghe nhạc.", "Em rất thích nghe nhạc.", [OK, "Em rất nghe nhạc thích."], "Em rất thích nghe nhạc.", "저는 음악 듣는 걸 아주 좋아해요."),
+    ("Hôm nay tôi hơi chán.", OK, ["Tôi chán hôm nay hơi.", "Hôm nay tôi chán hơi."], "Hôm nay tôi hơi chán.", "오늘 저는 조금 심심해요."),
+    ("Tối qua tôi thức khuya nên đi ngủ trễ.", OK, ["Tối qua tôi thức khuya nên ngủ đi trễ.", "Tối qua tôi thức khuya đi ngủ nên trễ."], "Tối qua tôi thức khuya nên đi ngủ trễ.", "어젯밤 늦게까지 깨어 있어서 늦게 잤어요.")],
+}

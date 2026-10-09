@@ -30,7 +30,7 @@ q += [A4("Bây giờ chúng ta đi đâu?", ["Chúng ta đi mua sách.", "Lúc 8
       A4("Tắc xi sắp đến chưa anh?", ["Sắp đến rồi, cô.", "Ở Quận 7.", "Tôi đi bằng xe buýt."]),
       A4("Cô nói tiếng Việt giỏi quá!", ["Cám ơn anh.", "Không, tôi đi tắc xi.", "Ở gần đây."])]
 bank = ["sẽ", "quá", "à", "tại sao", "chúng ta"]
-q += [B1("Bây giờ ____ đi đâu?", bank, 4), B1("Chúng ta ____ đi mua sách.", bank, 0), B1("Cô nói tiếng Việt giỏi ____!", bank, 1),
+q += [B1("Anh và tôi, ____ đều là sinh viên.", bank, 4), B1("Chúng ta ____ đi mua sách.", bank, 0), B1("Cô nói tiếng Việt giỏi ____!", bank, 1),
       B1("Hôm nay nhà sách giảm giá 30% ____?", bank, 2), B1("____ hôm qua anh không đến lớp? — Vì tôi bận.", bank, 3)]
 q += [B2("Hôm nay nhà sách FAHASA ở số 40 đường Nguyễn Huệ giảm giá 30%. David và Vân sẽ đi mua sách lịch sử Việt Nam ở đó.", "Họ sẽ mua gì?", ["sách lịch sử", "bia tươi", "cà phê"]),
       B2("Dorothy đi tắc xi đến trường Nhân văn. Trường ở số 10 đường Đinh Tiên Hoàng, Quận 1, gần Đài Truyền hình Thành phố.", "Trường Nhân văn ở gần đâu?", ["Đài Truyền hình Thành phố", "sân bay", "Nhà thờ Đức Bà"]),

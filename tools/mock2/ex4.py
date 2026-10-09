@@ -28,9 +28,9 @@ q += [A4("Siêu thị ở đâu?", ["Ở Quận 7.", "Lúc 8 giờ.", "Rất r�
       A4("Máy bay sắp cất cánh chưa?", ["Sắp rồi. Chúng ta đi ngay nhé.", "Ở sân bay.", "Bằng tắc xi."]),
       A4("Nhà chị có gần công ty không?", ["Không, nhà tôi hơi xa.", "Nhà tôi ở Quận 7.", "Tôi đi làm lúc 7 giờ."]),
       A4("Tối nay chúng ta đi đâu?", ["Đi quán ăn gần công ty.", "Lúc 7 giờ tối.", "Ăn với bạn."])]
-bank = ["lúc", "từ", "bằng", "ở đâu", "gần"]
-q += [B1("Tôi đi làm ____ 8 giờ sáng.", bank, 0), B1("Tôi làm việc ____ 8 giờ đến 5 giờ.", bank, 1), B1("Tôi đi làm ____ xe buýt.", bank, 2),
-      B1("Nhà sách FAHASA ____?", bank, 3), B1("Quán cà phê này ____ công ty tôi.", bank, 4)]
+bank = ["lúc", "từ", "bằng", "ở đâu", "với"]   # 10-09 오류 보고 "답 하나 맞냐? 모든 문제 체크" — 보기 다섯 중 둘이 들어가던 빈칸 고침
+q += [B1("____ nào anh đi Hà Nội?", bank, 0), B1("Tôi làm việc ____ 8 giờ đến 5 giờ.", bank, 1), B1("Tôi đi làm ____ xe buýt.", bank, 2),
+      B1("Nhà sách FAHASA ____?", bank, 3), B1("Chiều nay tôi đi siêu thị ____ mẹ.", bank, 4)]
 q += [B2("Nhà tôi ở Quận 7. Công ty tôi ở Quận 1. Từ nhà đến công ty mất khoảng 40 phút. Tôi thường đi làm bằng xe buýt.", "Từ nhà đến công ty mất bao lâu?", ["khoảng 40 phút", "khoảng 10 phút", "khoảng 4 tiếng"]),
       B2("Siêu thị gần nhà tôi mở cửa lúc 7 giờ sáng. Buổi tối ở đó rất đông. Tôi thường đi siêu thị vào buổi sáng.", "Tôi thường đi siêu thị lúc nào?", ["buổi sáng", "buổi tối", "buổi chiều"]),
       B2("Tuần sau Lan đi Hà Nội thăm ông bà. Lan sẽ đi bằng máy bay. Từ Thành phố Hồ Chí Minh đến Hà Nội mất khoảng hai tiếng.", "Lan đi Hà Nội bằng gì?", ["máy bay", "xe buýt", "tắc xi"]),

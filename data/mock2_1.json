@@ -487,7 +487,7 @@
     "đang",
     "bao nhiêu",
     "từ",
-    "sắp",
+    "ở",
     "lắm"
    ],
    "ans": 0,
@@ -501,7 +501,7 @@
     "đang",
     "bao nhiêu",
     "từ",
-    "sắp",
+    "ở",
     "lắm"
    ],
    "ans": 1,
@@ -515,7 +515,7 @@
     "đang",
     "bao nhiêu",
     "từ",
-    "sắp",
+    "ở",
     "lắm"
    ],
    "ans": 2,
@@ -524,16 +524,16 @@
   {
    "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
-   "prompt": "Tôi và anh Brian ____ đi ăn trưa.",
+   "prompt": "Chúng tôi ăn trưa ____ căng tin công ty.",
    "opts": [
     "đang",
     "bao nhiêu",
     "từ",
-    "sắp",
+    "ở",
     "lắm"
    ],
    "ans": 3,
-   "exp": "Tôi và anh Brian sắp đi ăn trưa.\n저와 브라이언 씨는 곧 점심 먹으러 가요. (sắp: 곧)"
+   "exp": "Chúng tôi ăn trưa ở căng tin công ty.\n우리는 회사 구내식당에서 점심을 먹어요."
   },
   {
    "sec": "B 읽기 · 1 빈칸",
@@ -543,7 +543,7 @@
     "đang",
     "bao nhiêu",
     "từ",
-    "sắp",
+    "ở",
     "lắm"
    ],
    "ans": 4,
@@ -705,9 +705,9 @@
    "prompt": "Tôi làm kế toán ở ngân hàng.",
    "opts": [
     "Anh làm nghề gì?",
-    "Chị làm việc ở đâu?",
     "Anh dạy mấy ngày một tuần?",
-    "Công ty chị có bao nhiêu nhân viên?"
+    "Công ty chị có bao nhiêu nhân viên?",
+    "Dạo này anh thế nào?"
    ],
    "ans": 0,
    "shuffle": true,
@@ -906,47 +906,47 @@
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
    "k": "choice",
-   "prompt": "Ngân hàng của anh có mấy nhân viên?",
+   "prompt": "Tôi làm việc ở ngân hàng từ 8 giờ sáng và 5 giờ chiều.",
    "opts": [
-    "Ngân hàng của anh có bao nhiêu nhân viên?",
+    "Tôi làm việc ở ngân hàng từ 8 giờ sáng đến 5 giờ chiều.",
     "Đúng — 맞는 문장",
-    "Ngân hàng của anh có nhân viên bao nhiêu?"
+    "Tôi làm việc ở ngân hàng đến 8 giờ sáng từ 5 giờ chiều."
    ],
    "ans": 0,
    "shuffle": true,
-   "fix": "Ngân hàng của anh có bao nhiêu nhân viên?",
-   "ko": "은행에 직원이 몇 명이에요? (열을 넘을 수 있으면 bao nhiêu)",
-   "exp": "Ngân hàng của anh có mấy nhân viên?\n답: Ngân hàng của anh có bao nhiêu nhân viên?\nNgân hàng của anh có bao nhiêu nhân viên? — 은행에 직원이 몇 명이에요? (열을 넘을 수 있으면 bao nhiêu)"
+   "fix": "Tôi làm việc ở ngân hàng từ 8 giờ sáng đến 5 giờ chiều.",
+   "ko": "저는 은행에서 아침 8시부터 오후 5시까지 일해요.",
+   "exp": "Tôi làm việc ở ngân hàng từ 8 giờ sáng và 5 giờ chiều.\n답: Tôi làm việc ở ngân hàng từ 8 giờ sáng đến 5 giờ chiều.\nTôi làm việc ở ngân hàng từ 8 giờ sáng đến 5 giờ chiều. — 저는 은행에서 아침 8시부터 오후 5시까지 일해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
    "k": "choice",
-   "prompt": "Tôi đang là kỹ sư ở công ty máy tính.",
+   "prompt": "Tôi là kỹ sư ở máy tính công ty.",
    "opts": [
     "Tôi là kỹ sư ở công ty máy tính.",
     "Đúng — 맞는 문장",
-    "Tôi là kỹ sư công ty máy tính ở."
+    "Tôi kỹ sư là ở công ty máy tính."
    ],
    "ans": 0,
    "shuffle": true,
    "fix": "Tôi là kỹ sư ở công ty máy tính.",
-   "ko": "저는 컴퓨터 회사 엔지니어예요. (là 앞에 đang 을 안 쓴다)",
-   "exp": "Tôi đang là kỹ sư ở công ty máy tính.\n답: Tôi là kỹ sư ở công ty máy tính.\nTôi là kỹ sư ở công ty máy tính. — 저는 컴퓨터 회사 엔지니어예요. (là 앞에 đang 을 안 쓴다)"
+   "ko": "저는 컴퓨터 회사의 엔지니어예요.",
+   "exp": "Tôi là kỹ sư ở máy tính công ty.\n답: Tôi là kỹ sư ở công ty máy tính.\nTôi là kỹ sư ở công ty máy tính. — 저는 컴퓨터 회사의 엔지니어예요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
    "k": "choice",
-   "prompt": "Anh ấy sắp đi ăn trưa lúc 12 giờ.",
+   "prompt": "Anh ấy đi ăn trưa lúc giờ 12.",
    "opts": [
-    "Anh ấy sẽ đi ăn trưa lúc 12 giờ.",
+    "Anh ấy đi ăn trưa lúc 12 giờ.",
     "Đúng — 맞는 문장",
-    "Anh ấy sẽ đi ăn trưa lúc giờ 12."
+    "Anh ấy ăn đi trưa lúc 12 giờ."
    ],
    "ans": 0,
    "shuffle": true,
-   "fix": "Anh ấy sẽ đi ăn trưa lúc 12 giờ.",
-   "ko": "그는 12시에 점심을 먹으러 갈 거예요. (sắp 에는 시각을 붙이지 않는다)",
-   "exp": "Anh ấy sắp đi ăn trưa lúc 12 giờ.\n답: Anh ấy sẽ đi ăn trưa lúc 12 giờ.\nAnh ấy sẽ đi ăn trưa lúc 12 giờ. — 그는 12시에 점심을 먹으러 갈 거예요. (sắp 에는 시각을 붙이지 않는다)"
+   "fix": "Anh ấy đi ăn trưa lúc 12 giờ.",
+   "ko": "그는 12시에 점심을 먹으러 가요.",
+   "exp": "Anh ấy đi ăn trưa lúc giờ 12.\n답: Anh ấy đi ăn trưa lúc 12 giờ.\nAnh ấy đi ăn trưa lúc 12 giờ. — 그는 12시에 점심을 먹으러 가요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -960,8 +960,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Hôm nay tôi rất mệt.",
-   "ko": "오늘 저는 아주 피곤해요. (rất 는 형용사 앞)",
-   "exp": "Hôm nay tôi rất mệt.\n답: Đúng — 맞는 문장\nHôm nay tôi rất mệt. — 오늘 저는 아주 피곤해요. (rất 는 형용사 앞)"
+   "ko": "오늘 저는 아주 피곤해요.",
+   "exp": "Hôm nay tôi rất mệt.\n답: Đúng — 맞는 문장\nHôm nay tôi rất mệt. — 오늘 저는 아주 피곤해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -975,8 +975,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Anh ấy cũng làm kế toán, phải không?",
-   "ko": "그도 회계사죠? (phải không 차례)",
-   "exp": "Anh ấy cũng làm kế toán, phải không?\n답: Đúng — 맞는 문장\nAnh ấy cũng làm kế toán, phải không? — 그도 회계사죠? (phải không 차례)"
+   "ko": "그도 회계사로 일하죠?",
+   "exp": "Anh ấy cũng làm kế toán, phải không?\n답: Đúng — 맞는 문장\nAnh ấy cũng làm kế toán, phải không? — 그도 회계사로 일하죠?"
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",

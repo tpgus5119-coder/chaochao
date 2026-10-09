@@ -28,9 +28,9 @@ q += [A4("Buổi tối anh thường làm gì?", ["Tôi thường xem tivi.", "�
       A4("Anh sắp đi ngủ chưa?", ["Sắp rồi. Tôi buồn ngủ quá.", "Tôi thức dậy lúc 6 giờ.", "Ở phòng tôi."]),
       A4("Anh thường ăn sáng ở đâu?", ["Ở nhà.", "Lúc 7 giờ.", "Với gia đình."]),
       A4("Sao hôm nay chị mệt vậy?", ["Vì tối qua tôi thức khuya.", "Tôi đi làm lúc 7 giờ.", "Tôi ăn trưa ở căng tin."])]
-bank = ["thường", "hơi", "nên", "sắp", "quá"]
+bank = ["thường", "hơi", "nên", "sắp", "lắm"]   # 10-09 오류 보고 "답 하나 맞냐? 모든 문제 체크" — 보기 다섯 중 둘이 들어가던 빈칸 고침
 q += [B1("Tôi ____ không ăn sáng.", bank, 0), B1("Bây giờ tôi ____ mệt.", bank, 1), B1("Tối qua tôi thức khuya ____ hôm nay tôi buồn ngủ.", bank, 2),
-      B1("Tôi ____ đi ngủ.", bank, 3), B1("Phim này hay ____!", bank, 4)]
+      B1("Xe buýt ____ đến rồi.", bank, 3), B1("Phim này hay ____!", bank, 4)]
 q += [B2("Buổi sáng tôi thức dậy lúc 6 giờ. Tôi tập thể dục khoảng 30 phút, sau đó đánh răng, rửa mặt và ăn sáng. Tôi đi làm lúc 7 giờ rưỡi.", "Tôi tập thể dục bao lâu?", ["khoảng 30 phút", "khoảng một tiếng", "khoảng 10 phút"]),
       B2("Cuối tuần Lan thường ở nhà. Buổi sáng Lan nấu ăn với mẹ. Buổi chiều Lan nghe nhạc và đọc sách. Buổi tối Lan xem phim với gia đình.", "Buổi chiều Lan làm gì?", ["nghe nhạc và đọc sách", "nấu ăn", "xem phim"]),
       B2("Hôm qua Nam thức khuya học bài. Nam đi ngủ lúc 2 giờ sáng. Hôm nay Nam buồn ngủ quá nên không đi tập thể dục.", "Hôm qua Nam đi ngủ lúc mấy giờ?", ["2 giờ sáng", "11 giờ", "12 giờ"]),

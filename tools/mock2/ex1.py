@@ -30,9 +30,9 @@ q += [A4("Anh làm nghề gì?", ["Tôi là kế toán ở ngân hàng.", "Tôi 
       A4("Hôm qua anh có đi làm không?", ["Có, nhưng tôi đến hơi trễ.", "Tôi làm kế toán.", "Hơn 100 người."]),
       A4("Anh sắp đi làm chưa?", ["Sắp rồi. Tôi đi ngay.", "Tôi là tài xế.", "Ở cơ quan."]),
       A4("Công việc của chị thế nào?", ["Hơi vất vả nhưng thú vị.", "Ở bệnh viện.", "Từ 8 giờ sáng."])]
-bank = ["đang", "bao nhiêu", "từ", "sắp", "lắm"]
+bank = ["đang", "bao nhiêu", "từ", "ở", "lắm"]   # 10-09 오류 보고 "답 하나 맞냐? 모든 문제 체크" — 보기 다섯 중 둘이 들어가던 빈칸 고침
 q += [B1("Tôi ____ làm kế toán ở ngân hàng.", bank, 0), B1("Công ty anh có ____ nhân viên?", bank, 1), B1("Tôi làm việc ____ 8 giờ sáng đến 5 giờ chiều.", bank, 2),
-      B1("Tôi và anh Brian ____ đi ăn trưa.", bank, 3), B1("Dạo này công việc của tôi bận ____.", bank, 4)]
+      B1("Chúng tôi ăn trưa ____ căng tin công ty.", bank, 3), B1("Dạo này công việc của tôi bận ____.", bank, 4)]
 q += [B2("Anh Nam là tài xế tắc xi. Anh ấy lái xe từ 6 giờ sáng đến 2 giờ chiều. Công việc hơi vất vả nhưng anh ấy rất thích.", "Anh Nam làm việc đến mấy giờ?", ["2 giờ chiều", "6 giờ sáng", "7 giờ tối"]),
       B2("Chị Loan là kỹ sư ở công ty máy tính. Công ty của chị ấy ở Quận 1, có khoảng 200 nhân viên.", "Công ty của chị Loan có bao nhiêu nhân viên?", ["khoảng 200 người", "khoảng 20 người", "hơn 100 người"]),
       B2("Brian dạy tiếng Anh ở trường ILA, Quận 2. Anh ấy dạy năm ngày một tuần, từ 9 giờ sáng đến 11 giờ rưỡi trưa.", "Brian dạy đến mấy giờ?", ["11 giờ rưỡi", "9 giờ", "5 giờ chiều"]),

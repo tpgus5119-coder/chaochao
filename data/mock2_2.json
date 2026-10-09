@@ -488,7 +488,7 @@
     "lắm",
     "không phải là",
     "mấy",
-    "sắp"
+    "ở đâu"
    ],
    "ans": 0,
    "exp": "Tôi đang làm thư ký ở một công ty máy tính.\n저는 한 컴퓨터 회사에서 비서로 일하고 있어요. (đang: ~하는 중)"
@@ -502,7 +502,7 @@
     "lắm",
     "không phải là",
     "mấy",
-    "sắp"
+    "ở đâu"
    ],
    "ans": 1,
    "exp": "Dạo này tôi bận lắm.\n요즘 저는 아주 바빠요. (lắm: 형용사 뒤)"
@@ -516,7 +516,7 @@
     "lắm",
     "không phải là",
     "mấy",
-    "sắp"
+    "ở đâu"
    ],
    "ans": 2,
    "exp": "Tôi không phải là kỹ sư. Tôi là thư ký.\n저는 엔지니어가 아니에요. 비서예요. (không phải là: ~이 아니다)"
@@ -530,7 +530,7 @@
     "lắm",
     "không phải là",
     "mấy",
-    "sắp"
+    "ở đâu"
    ],
    "ans": 3,
    "exp": "Lớp em có mấy sinh viên người Mỹ?\n반에 미국인 학생이 몇 명 있어요? (mấy: 몇, 적은 수)"
@@ -538,16 +538,16 @@
   {
    "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
-   "prompt": "Tôi ____ đi ăn trưa.",
+   "prompt": "Công ty của chị ____?",
    "opts": [
     "đang",
     "lắm",
     "không phải là",
     "mấy",
-    "sắp"
+    "ở đâu"
    ],
    "ans": 4,
-   "exp": "Tôi sắp đi ăn trưa.\n저는 곧 점심 먹으러 가요. (sắp: 곧)"
+   "exp": "Công ty của chị ở đâu?\n당신 회사는 어디에 있어요?"
   },
   {
    "sec": "B 읽기 · 2 읽고 고르기",
@@ -763,7 +763,7 @@
     "Chị thường ăn trưa ở đâu?",
     "Hôm nay anh đi làm trễ hả?",
     "Buổi tối anh thường làm gì?",
-    "Tối nay chúng ta ăn tối ở đâu?"
+    "Chúng ta đi uống cà phê nhé?"
    ],
    "ans": 0,
    "shuffle": true,
@@ -910,8 +910,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Chị ấy rất đẹp.",
-   "ko": "그녀는 아주 예뻐요. (rất와 lắm을 함께 쓰지 않는다)",
-   "exp": "Chị ấy rất đẹp lắm.\n답: Chị ấy rất đẹp.\nChị ấy rất đẹp. — 그녀는 아주 예뻐요. (rất와 lắm을 함께 쓰지 않는다)"
+   "ko": "그녀는 아주 예뻐요.",
+   "exp": "Chị ấy rất đẹp lắm.\n답: Chị ấy rất đẹp.\nChị ấy rất đẹp. — 그녀는 아주 예뻐요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -925,8 +925,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Hôm nay tôi hơi đói.",
-   "ko": "오늘 조금 배고파요. (hơi 와 lắm 을 함께 쓰지 않는다)",
-   "exp": "Hôm nay tôi hơi đói lắm.\n답: Hôm nay tôi hơi đói.\nHôm nay tôi hơi đói. — 오늘 조금 배고파요. (hơi 와 lắm 을 함께 쓰지 않는다)"
+   "ko": "오늘 저는 조금 배고파요.",
+   "exp": "Hôm nay tôi hơi đói lắm.\n답: Hôm nay tôi hơi đói.\nHôm nay tôi hơi đói. — 오늘 저는 조금 배고파요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -940,8 +940,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Tôi đi làm lúc 8 giờ.",
-   "ko": "저는 8시에 출근해요. (시각 앞은 lúc)",
-   "exp": "Tôi đi làm bằng lúc 8 giờ.\n답: Tôi đi làm lúc 8 giờ.\nTôi đi làm lúc 8 giờ. — 저는 8시에 출근해요. (시각 앞은 lúc)"
+   "ko": "저는 8시에 출근해요.",
+   "exp": "Tôi đi làm bằng lúc 8 giờ.\n답: Tôi đi làm lúc 8 giờ.\nTôi đi làm lúc 8 giờ. — 저는 8시에 출근해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -955,8 +955,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Chị ấy làm việc ở ngân hàng, phải không?",
-   "ko": "그녀는 은행에서 일하죠? (phải không 차례)",
-   "exp": "Chị ấy làm việc ở ngân hàng, phải không?\n답: Đúng — 맞는 문장\nChị ấy làm việc ở ngân hàng, phải không? — 그녀는 은행에서 일하죠? (phải không 차례)"
+   "ko": "그녀는 은행에서 일하죠?",
+   "exp": "Chị ấy làm việc ở ngân hàng, phải không?\n답: Đúng — 맞는 문장\nChị ấy làm việc ở ngân hàng, phải không? — 그녀는 은행에서 일하죠?"
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -964,14 +964,14 @@
    "prompt": "Buổi sáng tôi thường tập thể dục.",
    "opts": [
     "Đúng — 맞는 문장",
-    "Buổi sáng tôi thường sẽ tập thể dục.",
-    "Buổi sáng tôi tập thể dục thường."
+    "Buổi sáng tôi tập thể dục thường.",
+    "Buổi sáng thường tôi tập thể dục."
    ],
    "ans": 0,
    "shuffle": true,
    "fix": "Buổi sáng tôi thường tập thể dục.",
-   "ko": "아침에 저는 보통 운동해요. (습관에는 sẽ를 안 쓴다)",
-   "exp": "Buổi sáng tôi thường tập thể dục.\n답: Đúng — 맞는 문장\nBuổi sáng tôi thường tập thể dục. — 아침에 저는 보통 운동해요. (습관에는 sẽ를 안 쓴다)"
+   "ko": "아침에 저는 보통 운동해요.",
+   "exp": "Buổi sáng tôi thường tập thể dục.\n답: Đúng — 맞는 문장\nBuổi sáng tôi thường tập thể dục. — 아침에 저는 보통 운동해요."
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",

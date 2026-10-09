@@ -28,9 +28,9 @@ q += [A4("Chị sắp đi ăn trưa chưa?", ["Sắp rồi. Bây giờ tôi hơi
       A4("Hôm nay chị có bận không?", ["Có, hôm nay tôi rất bận.", "Lúc 7 giờ rưỡi.", "Ở công ty."]),
       A4("Buổi trưa anh thường ăn ở đâu?", ["Ở căng tin công ty.", "Lúc 12 giờ.", "Hơi đói."]),
       A4("Hôm qua chị đi ngủ lúc mấy giờ?", ["Lúc 12 giờ đêm.", "Ở nhà.", "Vì tôi mệt."])]
-bank = ["đang", "lắm", "không phải là", "mấy", "sắp"]
+bank = ["đang", "lắm", "không phải là", "mấy", "ở đâu"]   # 10-09 오류 보고 "답 하나 맞냐? 모든 문제 체크" — 보기 다섯 중 둘이 들어가던 빈칸 고침
 q += [B1("Tôi ____ làm thư ký ở một công ty máy tính.", bank, 0), B1("Dạo này tôi bận ____.", bank, 1), B1("Tôi ____ kỹ sư. Tôi là thư ký.", bank, 2),
-      B1("Lớp em có ____ sinh viên người Mỹ?", bank, 3), B1("Tôi ____ đi ăn trưa.", bank, 4)]
+      B1("Lớp em có ____ sinh viên người Mỹ?", bank, 3), B1("Công ty của chị ____?", bank, 4)]
 q += [B2("Chị Hoa là nhân viên siêu thị. Siêu thị mở cửa lúc 7 giờ sáng nên chị ấy đi làm rất sớm, lúc 6 giờ rưỡi.", "Chị Hoa đi làm lúc mấy giờ?", ["6 giờ rưỡi", "7 giờ", "9 giờ"]),
       B2("Anh Nam là tài xế tắc xi. Anh ấy làm việc từ 6 giờ sáng đến 2 giờ chiều. Công việc hơi vất vả.", "Anh Nam làm việc đến mấy giờ?", ["2 giờ chiều", "6 giờ sáng", "7 giờ tối"]),
       B2("Buổi sáng tôi thường tập thể dục, sau đó ăn sáng và đi làm. Buổi tối tôi xem tivi với gia đình.", "Buổi tối tôi làm gì?", ["xem tivi", "tập thể dục", "đi làm"]),

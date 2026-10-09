@@ -55,7 +55,7 @@ OKTXT = 'Đúng — 맞는 문장'
 def form1(no, q):
     """exN.py 의 문항을 실제 1차 시험지 꼴로 옮긴다 (대표님 2026-10-09 "시험 형식 틀은 그대로 동일하게 — 단어와 문법만 범위 다르게"). 새로 쓴 것은 form1.py(듣기 4·쓰기 3)"""
     import random
-    from form1 import A4F, C3F
+    from form1 import A4F, C3F, B4_AVOID, C2F
     rnd = random.Random(1000 + no)
     out = []
     pks = [x for x in q if x['k'] == 'pick']
@@ -93,10 +93,15 @@ def form1(no, q):
         elif sec.startswith('B 읽기 · 1'): x = dict(x, sec='B 읽기 · 1 빈칸')
         elif sec.startswith('B 읽기 · 2'): x = dict(x, sec='B 읽기 · 2 읽고 고르기')
         elif sec.startswith('B 읽기 · 4'):                               # 1차: 대답을 보여 주고 앞의 물음을 고른다
-            i = b4.index(x); n = len(b4)
-            x = {"sec": "B 읽기 · 4 알맞은 문장", "k": "choice", "prompt": rs[i], "opts": [qs[i]] + [qs[(i + d) % n] for d in (1, 2, 3)], "ans": 0, "shuffle": True}
+            i = b4.index(x); n = len(b4); av = B4_AVOID.get(no, {}).get(rs[i], [])
+            ds = [qs[(i + d) % n] for d in range(1, n) if qs[(i + d) % n] not in av][:3]   # 그 대답이 들어맞는 다른 물음은 오답 보기로 안 쓴다
+            x = {"sec": "B 읽기 · 4 알맞은 문장", "k": "choice", "prompt": rs[i], "opts": [qs[i]] + ds, "ans": 0, "shuffle": True}
         elif k == 'errpick':                                            # 1차: 맞으면 Đúng, 틀리면 바른 문장 고르기 — 다섯 중 둘은 맞는 문장
             i = c2.index(x)
+            if no in C2F:                                               # 손으로 검토해 적은 다섯(form1.C2F) — 답이 하나뿐인지 확인한 것 (2026-10-09)
+                pr, a, ws, fx, kk = C2F[no][i]
+                x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": pr, "opts": [a] + ws, "ans": 0, "shuffle": True, "fix": fx, "ko": kk}
+                out.append(x); continue
             if i < 3: x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": x['vi'], "opts": [x['fix'], OKTXT, alt(x['fix'], x['vi'])], "ans": 0, "shuffle": True, "fix": x['fix'], "ko": x['ko']}
             else:     x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": x['fix'], "opts": [OKTXT, x['vi'], alt(x['fix'], x['vi'])], "ans": 0, "shuffle": True, "fix": x['fix'], "ko": x['ko']}
         elif k == 'free':
@@ -159,7 +164,7 @@ def build(no, title, q):
     def ko(t):
         if '\n' in t: return '\n'.join(ko(x) for x in t.split('\n'))   # 두 사람 대화(듣기 3) — 줄마다 (2026-10-09)
         t2 = U.normalize('NFC', t.strip())
-        r = KOS.get(t2) or WKO.get(t2.lower())
+        r = KOS.get(t2) or KOS.get(t2[:1].upper() + t2[1:]) or WKO.get(t2.lower())   # 빈칸이 맨 앞이면 'lúc nào …' 처럼 소문자로 시작한다
         if not r: lack.append(t)
         return r or ''
     def wko(wd): return f'{wd}({WKO.get(U.normalize("NFC", wd).lower(), "")})'

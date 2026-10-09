@@ -488,7 +488,7 @@
     "hơi",
     "nên",
     "sắp",
-    "quá"
+    "lắm"
    ],
    "ans": 0,
    "exp": "Tôi thường không ăn sáng.\n저는 보통 아침을 안 먹어요. (thường: 보통)"
@@ -502,7 +502,7 @@
     "hơi",
     "nên",
     "sắp",
-    "quá"
+    "lắm"
    ],
    "ans": 1,
    "exp": "Bây giờ tôi hơi mệt.\n지금 저는 조금 피곤해요. (hơi: 조금)"
@@ -516,7 +516,7 @@
     "hơi",
     "nên",
     "sắp",
-    "quá"
+    "lắm"
    ],
    "ans": 2,
    "exp": "Tối qua tôi thức khuya nên hôm nay tôi buồn ngủ.\n어젯밤 늦게 자서 오늘 졸려요. (nên: 그래서)"
@@ -524,16 +524,16 @@
   {
    "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
-   "prompt": "Tôi ____ đi ngủ.",
+   "prompt": "Xe buýt ____ đến rồi.",
    "opts": [
     "thường",
     "hơi",
     "nên",
     "sắp",
-    "quá"
+    "lắm"
    ],
    "ans": 3,
-   "exp": "Tôi sắp đi ngủ.\n저는 곧 자요. (sắp: 곧)"
+   "exp": "Xe buýt sắp đến rồi.\n버스가 곧 와요."
   },
   {
    "sec": "B 읽기 · 1 빈칸",
@@ -544,10 +544,10 @@
     "hơi",
     "nên",
     "sắp",
-    "quá"
+    "lắm"
    ],
    "ans": 4,
-   "exp": "Phim này hay quá!\n이 영화 정말 재미있네요! (quá: 감탄)"
+   "exp": "Phim này hay lắm!\n이 영화 아주 재미있어요!"
   },
   {
    "sec": "B 읽기 · 2 읽고 고르기",
@@ -733,9 +733,9 @@
    "prompt": "Em đi ngủ lúc 11 giờ.",
    "opts": [
     "Em đi ngủ lúc mấy giờ?",
-    "Hôm qua anh thức khuya hả?",
     "Sao hôm nay chị mệt vậy?",
-    "Cuối tuần anh thường làm gì?"
+    "Cuối tuần anh thường làm gì?",
+    "Ai nấu ăn trong gia đình anh?"
    ],
    "ans": 0,
    "shuffle": true,
@@ -910,8 +910,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Tôi thường tập thể dục vào buổi sáng.",
-   "ko": "저는 보통 아침에 운동해요. (lắm은 형용사 뒤에만)",
-   "exp": "Tôi thường tập thể dục vào buổi sáng lắm.\n답: Tôi thường tập thể dục vào buổi sáng.\nTôi thường tập thể dục vào buổi sáng. — 저는 보통 아침에 운동해요. (lắm은 형용사 뒤에만)"
+   "ko": "저는 보통 아침에 운동해요.",
+   "exp": "Tôi thường tập thể dục vào buổi sáng lắm.\n답: Tôi thường tập thể dục vào buổi sáng.\nTôi thường tập thể dục vào buổi sáng. — 저는 보통 아침에 운동해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -925,8 +925,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Hôm qua tôi đi ngủ lúc 1 giờ.",
-   "ko": "어제 저는 1시에 잤어요. (지난 일에 sẽ를 안 쓴다)",
-   "exp": "Hôm qua tôi đi ngủ sẽ lúc 1 giờ.\n답: Hôm qua tôi đi ngủ lúc 1 giờ.\nHôm qua tôi đi ngủ lúc 1 giờ. — 어제 저는 1시에 잤어요. (지난 일에 sẽ를 안 쓴다)"
+   "ko": "어제 저는 1시에 잤어요.",
+   "exp": "Hôm qua tôi đi ngủ sẽ lúc 1 giờ.\n답: Hôm qua tôi đi ngủ lúc 1 giờ.\nHôm qua tôi đi ngủ lúc 1 giờ. — 어제 저는 1시에 잤어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -940,8 +940,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Em rất thích nghe nhạc.",
-   "ko": "저는 음악 듣는 걸 아주 좋아해요. (rất는 thích 앞)",
-   "exp": "Em thích rất nghe nhạc.\n답: Em rất thích nghe nhạc.\nEm rất thích nghe nhạc. — 저는 음악 듣는 걸 아주 좋아해요. (rất는 thích 앞)"
+   "ko": "저는 음악 듣는 걸 아주 좋아해요.",
+   "exp": "Em thích rất nghe nhạc.\n답: Em rất thích nghe nhạc.\nEm rất thích nghe nhạc. — 저는 음악 듣는 걸 아주 좋아해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -955,8 +955,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Hôm nay tôi hơi chán.",
-   "ko": "오늘 저는 좀 지루해요. (hơi는 형용사 앞)",
-   "exp": "Hôm nay tôi hơi chán.\n답: Đúng — 맞는 문장\nHôm nay tôi hơi chán. — 오늘 저는 좀 지루해요. (hơi는 형용사 앞)"
+   "ko": "오늘 저는 조금 심심해요.",
+   "exp": "Hôm nay tôi hơi chán.\n답: Đúng — 맞는 문장\nHôm nay tôi hơi chán. — 오늘 저는 조금 심심해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -964,14 +964,14 @@
    "prompt": "Tối qua tôi thức khuya nên đi ngủ trễ.",
    "opts": [
     "Đúng — 맞는 문장",
-    "Tối qua tôi thức khuya nên đi ngủ sớm.",
-    "Tối qua tôi thức khuya nên trễ đi ngủ."
+    "Tối qua tôi thức khuya nên ngủ đi trễ.",
+    "Tối qua tôi thức khuya đi ngủ nên trễ."
    ],
    "ans": 0,
    "shuffle": true,
    "fix": "Tối qua tôi thức khuya nên đi ngủ trễ.",
-   "ko": "어젯밤 늦게까지 깨어 있어서 늦게 잤어요. (앞뒤가 맞아야 한다)",
-   "exp": "Tối qua tôi thức khuya nên đi ngủ trễ.\n답: Đúng — 맞는 문장\nTối qua tôi thức khuya nên đi ngủ trễ. — 어젯밤 늦게까지 깨어 있어서 늦게 잤어요. (앞뒤가 맞아야 한다)"
+   "ko": "어젯밤 늦게까지 깨어 있어서 늦게 잤어요.",
+   "exp": "Tối qua tôi thức khuya nên đi ngủ trễ.\n답: Đúng — 맞는 문장\nTối qua tôi thức khuya nên đi ngủ trễ. — 어젯밤 늦게까지 깨어 있어서 늦게 잤어요."
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",

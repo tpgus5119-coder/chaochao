@@ -482,7 +482,7 @@
   {
    "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
-   "prompt": "Bây giờ ____ đi đâu?",
+   "prompt": "Anh và tôi, ____ đều là sinh viên.",
    "opts": [
     "sẽ",
     "quá",
@@ -491,7 +491,7 @@
     "chúng ta"
    ],
    "ans": 4,
-   "exp": "Bây giờ chúng ta đi đâu?\n지금 우리 어디 가요?"
+   "exp": "Anh và tôi, chúng ta đều là sinh viên.\n당신과 나, 우리는 둘 다 대학생이에요."
   },
   {
    "sec": "B 읽기 · 1 빈칸",
@@ -707,7 +707,7 @@
     "Bây giờ chúng ta đi đâu?",
     "Anh biết địa chỉ nhà sách không đấy?",
     "Sao anh biết?",
-    "Đi đâu, cô?"
+    "Cô nói tiếng Việt giỏi quá!"
    ],
    "ans": 0,
    "shuffle": true,
@@ -911,8 +911,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Nhà sách ở số 40 đường Nguyễn Huệ.",
-   "ko": "서점은 응우옌후에 거리 40번지에 있어요. (ở đâu 는 물을 때만)",
-   "exp": "Nhà sách ở đâu số 40 đường Nguyễn Huệ.\n답: Nhà sách ở số 40 đường Nguyễn Huệ.\nNhà sách ở số 40 đường Nguyễn Huệ. — 서점은 응우옌후에 거리 40번지에 있어요. (ở đâu 는 물을 때만)"
+   "ko": "서점은 응우옌후에 거리 40번지에 있어요.",
+   "exp": "Nhà sách ở đâu số 40 đường Nguyễn Huệ.\n답: Nhà sách ở số 40 đường Nguyễn Huệ.\nNhà sách ở số 40 đường Nguyễn Huệ. — 서점은 응우옌후에 거리 40번지에 있어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -926,8 +926,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Hôm qua anh ấy đã mua sách ở đó.",
-   "ko": "어제 그는 거기서 책을 샀어요. (지난 일은 đã)",
-   "exp": "Hôm qua anh ấy sẽ mua sách ở đó.\n답: Hôm qua anh ấy đã mua sách ở đó.\nHôm qua anh ấy đã mua sách ở đó. — 어제 그는 거기서 책을 샀어요. (지난 일은 đã)"
+   "ko": "어제 그는 거기서 책을 샀어요.",
+   "exp": "Hôm qua anh ấy sẽ mua sách ở đó.\n답: Hôm qua anh ấy đã mua sách ở đó.\nHôm qua anh ấy đã mua sách ở đó. — 어제 그는 거기서 책을 샀어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -941,8 +941,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Anh có biết địa chỉ nhà sách không?",
-   "ko": "서점 주소를 아세요? (có … không 차례)",
-   "exp": "Anh biết địa chỉ nhà sách không có?\n답: Anh có biết địa chỉ nhà sách không?\nAnh có biết địa chỉ nhà sách không? — 서점 주소를 아세요? (có … không 차례)"
+   "ko": "서점 주소를 알아요?",
+   "exp": "Anh biết địa chỉ nhà sách không có?\n답: Anh có biết địa chỉ nhà sách không?\nAnh có biết địa chỉ nhà sách không? — 서점 주소를 알아요?"
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -956,8 +956,8 @@
    "ans": 0,
    "shuffle": true,
    "fix": "Món ăn ở đó ngon lắm.",
-   "ko": "거기 음식은 아주 맛있어요. (rất 와 lắm 을 함께 쓰지 않는다)",
-   "exp": "Món ăn ở đó ngon lắm.\n답: Đúng — 맞는 문장\nMón ăn ở đó ngon lắm. — 거기 음식은 아주 맛있어요. (rất 와 lắm 을 함께 쓰지 않는다)"
+   "ko": "거기 음식은 아주 맛있어요.",
+   "exp": "Món ăn ở đó ngon lắm.\n답: Đúng — 맞는 문장\nMón ăn ở đó ngon lắm. — 거기 음식은 아주 맛있어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -965,14 +965,14 @@
    "prompt": "Tối nay tôi mời anh đến đó uống bia.",
    "opts": [
     "Đúng — 맞는 문장",
-    "Tối nay tôi mời anh đến đó uống bia tối nay.",
+    "Tối nay tôi anh mời đến đó uống bia.",
     "Tối nay tôi mời anh đến đó bia uống."
    ],
    "ans": 0,
    "shuffle": true,
    "fix": "Tối nay tôi mời anh đến đó uống bia.",
-   "ko": "오늘 밤 거기서 맥주 한잔 살게요. (tối nay 가 두 번)",
-   "exp": "Tối nay tôi mời anh đến đó uống bia.\n답: Đúng — 맞는 문장\nTối nay tôi mời anh đến đó uống bia. — 오늘 밤 거기서 맥주 한잔 살게요. (tối nay 가 두 번)"
+   "ko": "오늘 저녁 당신을 거기로 맥주 마시러 초대해요.",
+   "exp": "Tối nay tôi mời anh đến đó uống bia.\n답: Đúng — 맞는 문장\nTối nay tôi mời anh đến đó uống bia. — 오늘 저녁 당신을 거기로 맥주 마시러 초대해요."
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",
