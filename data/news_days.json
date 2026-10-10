@@ -242,7 +242,7 @@
     ],
     "extra": []
    },
-   "n": 107
+   "n": 104
   },
   {
    "ts": "2026-10-10",
@@ -522,7 +522,201 @@
     ],
     "extra": []
    },
-   "n": 106
+   "n": 103
+  },
+  {
+   "ts": "2026-10-10",
+   "day": "N788.html",
+   "track": "news",
+   "theme": "침수와 출근",
+   "title": "Residents wade through half-meter floodwaters as year's highest tide swamps Ho Chi Minh City streets",
+   "u": "https://e.vnexpress.net/photo/environment/residents-wade-through-half-meter-floodwaters-as-years-highest-tide-swamps-ho-chi-minh-city-streets-5130788.html",
+   "cat": "사회",
+   "intro": "호치민 시내에 기록적인 폭우와 만조로 침수가 발생했습니다. 도로가 물에 잠겨 시민들이 이동에 큰 불편을 겪고 있습니다.",
+   "words": [
+    {
+     "vi": "nước",
+     "ko": "물",
+     "kr_read": "느억",
+     "emoji": "💧",
+     "en": "a glass of clear water",
+     "tones": [
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nuoc.webp"
+    },
+    {
+     "vi": "đường",
+     "ko": "길",
+     "kr_read": "드엉",
+     "emoji": "🛣️",
+     "en": "an asphalt road",
+     "tones": [
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-duong.webp"
+    },
+    {
+     "vi": "xe",
+     "ko": "차",
+     "kr_read": "쌔",
+     "emoji": "🚗",
+     "en": "a motorbike on the street",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-xe.webp"
+    },
+    {
+     "vi": "ngập",
+     "ko": "침수되다",
+     "kr_read": "응업",
+     "emoji": "🌊",
+     "en": "a flooded street with water",
+     "tones": [
+      {
+       "syl": "ngập",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-ngap.webp"
+    },
+    {
+     "vi": "đi",
+     "ko": "가다",
+     "kr_read": "디",
+     "emoji": "🚶",
+     "en": "a person walking forward",
+     "tones": [
+      {
+       "syl": "đi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-di.webp"
+    },
+    {
+     "vi": "hỏng",
+     "ko": "고장 나다",
+     "kr_read": "홍",
+     "emoji": "🛠️",
+     "en": "a broken motorbike",
+     "tones": [
+      {
+       "syl": "hỏng",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-hong.webp"
+    }
+   ],
+   "dialog": {
+    "title": "침수와 출근",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Đường ngập, xe hỏng rồi.",
+      "ko": "길이 침수돼서 차가 고장 났어요.",
+      "kr_read": "드엉 응업 쌔 홍 조이",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Đường",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ngập,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hỏng",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vậy đi làm muộn rồi.",
+      "ko": "그럼 출근이 늦겠네요.",
+      "kr_read": "버이 디 람 무온 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vậy",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "muộn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 102
   },
   {
    "ts": "2026-10-10",
@@ -754,7 +948,7 @@
     ],
     "extra": []
    },
-   "n": 105
+   "n": 101
   },
   {
    "ts": "2026-10-10",
@@ -1010,7 +1204,225 @@
     ],
     "extra": []
    },
-   "n": 104
+   "n": 100
+  },
+  {
+   "ts": "2026-10-10",
+   "day": "N838.html",
+   "track": "news",
+   "theme": "유학 비자",
+   "title": "How Australia's tighter visa rules might affect international students' study and migration pathways",
+   "u": "https://e.vnexpress.net/news/news/education/how-australia-s-tighter-visa-rules-might-affect-international-students-study-and-migration-pathways-5128838.html",
+   "cat": "일자리",
+   "intro": "호주 유학 비자 정책이 강화되어 학생들의 영주권 취득이 어려워졌습니다. 하지만 일부 학생들은 여전히 가족 동반 및 영주권 기회가 있습니다.",
+   "words": [
+    {
+     "vi": "học",
+     "ko": "공부하다",
+     "kr_read": "혹",
+     "emoji": "📚",
+     "en": "a person studying a book",
+     "tones": [
+      {
+       "syl": "học",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-hoc.webp"
+    },
+    {
+     "vi": "sinh viên",
+     "ko": "학생",
+     "kr_read": "씬 비엔",
+     "emoji": "🧑‍🎓",
+     "en": "a student wearing a graduation cap",
+     "tones": [
+      {
+       "syl": "sinh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "viên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-sinh-vien.webp"
+    },
+    {
+     "vi": "gia đình",
+     "ko": "가족",
+     "kr_read": "자 딘",
+     "emoji": "👨‍👩‍👧‍👦",
+     "en": "a family holding hands",
+     "tones": [
+      {
+       "syl": "gia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "đình",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-gia-dinh.webp"
+    },
+    {
+     "vi": "làm việc",
+     "ko": "일하다",
+     "kr_read": "람 비엑",
+     "emoji": "👷",
+     "en": "a person working at a desk",
+     "tones": [
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "việc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-lam-viec.webp"
+    },
+    {
+     "vi": "nước",
+     "ko": "나라",
+     "kr_read": "느억",
+     "emoji": "🌍",
+     "en": "a globe showing countries",
+     "tones": [
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nuoc.webp"
+    },
+    {
+     "vi": "chính sách",
+     "ko": "정책",
+     "kr_read": "찐 싹",
+     "emoji": "📜",
+     "en": "a scroll with text",
+     "tones": [
+      {
+       "syl": "chính",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-chinh-sach.webp"
+    }
+   ],
+   "dialog": {
+    "title": "유학 비자",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Visa sinh viên khó không?",
+      "ko": "학생 비자 어렵나요?",
+      "kr_read": "비 싸 씬 비엔 코 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Visa",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "sinh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "viên",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "khó",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, chính sách khó hơn.",
+      "ko": "네, 정책이 더 어려워요.",
+      "kr_read": "꼬 찐 싹 코 헌",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chính",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sách",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "khó",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "hơn.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 99
   },
   {
    "ts": "2026-10-10",
@@ -1254,7 +1666,7 @@
     ],
     "extra": []
    },
-   "n": 103
+   "n": 98
   },
   {
    "ts": "2026-10-10",
@@ -1510,7 +1922,7 @@
     ],
     "extra": []
    },
-   "n": 102
+   "n": 97
   },
   {
    "ts": "2026-10-10",
@@ -1772,7 +2184,7 @@
     ],
     "extra": []
    },
-   "n": 101
+   "n": 96
   },
   {
    "ts": "2026-10-10",
@@ -2046,7 +2458,7 @@
     ],
     "extra": []
    },
-   "n": 100
+   "n": 95
   },
   {
    "ts": "2026-10-10",
@@ -2314,7 +2726,7 @@
     ],
     "extra": []
    },
-   "n": 99
+   "n": 94
   },
   {
    "ts": "2026-10-10",
@@ -2564,7 +2976,7 @@
     ],
     "extra": []
    },
-   "n": 98
+   "n": 93
   },
   {
    "ts": "2026-10-09",
@@ -2826,7 +3238,7 @@
     ],
     "extra": []
    },
-   "n": 97
+   "n": 92
   },
   {
    "ts": "2026-10-09",
@@ -3112,7 +3524,7 @@
     ],
     "extra": []
    },
-   "n": 96
+   "n": 91
   },
   {
    "ts": "2026-10-09",
@@ -3342,7 +3754,7 @@
     ],
     "extra": []
    },
-   "n": 95
+   "n": 90
   },
   {
    "ts": "2026-10-09",
@@ -3628,7 +4040,7 @@
     ],
     "extra": []
    },
-   "n": 94
+   "n": 89
   },
   {
    "ts": "2026-10-09",
@@ -3855,7 +4267,7 @@
     ],
     "extra": []
    },
-   "n": 93
+   "n": 88
   },
   {
    "ts": "2026-10-09",
@@ -4117,7 +4529,7 @@
     ],
     "extra": []
    },
-   "n": 92
+   "n": 87
   },
   {
    "ts": "2026-10-09",
@@ -4377,7 +4789,7 @@
     ],
     "extra": []
    },
-   "n": 91
+   "n": 86
   },
   {
    "ts": "2026-10-09",
@@ -4633,7 +5045,7 @@
     ],
     "extra": []
    },
-   "n": 90
+   "n": 85
   },
   {
    "ts": "2026-10-09",
@@ -4925,7 +5337,7 @@
     ],
     "extra": []
    },
-   "n": 89
+   "n": 84
   },
   {
    "ts": "2026-10-09",
@@ -5161,7 +5573,7 @@
     ],
     "extra": []
    },
-   "n": 88
+   "n": 83
   },
   {
    "ts": "2026-10-09",
@@ -5435,7 +5847,7 @@
     ],
     "extra": []
    },
-   "n": 87
+   "n": 82
   },
   {
    "ts": "2026-10-09",
@@ -5709,7 +6121,7 @@
     ],
     "extra": []
    },
-   "n": 86
+   "n": 81
   },
   {
    "ts": "2026-10-09",
@@ -5947,7 +6359,7 @@
     ],
     "extra": []
    },
-   "n": 85
+   "n": 80
   },
   {
    "ts": "2026-10-09",
@@ -6209,7 +6621,7 @@
     ],
     "extra": []
    },
-   "n": 84
+   "n": 79
   },
   {
    "ts": "2026-10-08",
@@ -6417,7 +6829,7 @@
     ],
     "extra": []
    },
-   "n": 83
+   "n": 78
   },
   {
    "ts": "2026-10-08",
@@ -6703,7 +7115,7 @@
     ],
     "extra": []
    },
-   "n": 82
+   "n": 77
   },
   {
    "ts": "2026-10-08",
@@ -6909,7 +7321,7 @@
     ],
     "extra": []
    },
-   "n": 81
+   "n": 76
   },
   {
    "ts": "2026-10-08",
@@ -7159,7 +7571,7 @@
     ],
     "extra": []
    },
-   "n": 80
+   "n": 75
   },
   {
    "ts": "2026-10-08",
@@ -7400,7 +7812,7 @@
     ],
     "extra": []
    },
-   "n": 79
+   "n": 74
   },
   {
    "ts": "2026-10-08",
@@ -7686,7 +8098,7 @@
     ],
     "extra": []
    },
-   "n": 78
+   "n": 73
   },
   {
    "ts": "2026-10-08",
@@ -7966,7 +8378,7 @@
     ],
     "extra": []
    },
-   "n": 77
+   "n": 72
   },
   {
    "ts": "2026-10-08",
@@ -8258,7 +8670,7 @@
     ],
     "extra": []
    },
-   "n": 76
+   "n": 71
   },
   {
    "ts": "2026-10-08",
@@ -8476,7 +8888,7 @@
     ],
     "extra": []
    },
-   "n": 75
+   "n": 70
   },
   {
    "ts": "2026-10-08",
@@ -8711,7 +9123,7 @@
     ],
     "extra": []
    },
-   "n": 74
+   "n": 69
   },
   {
    "ts": "2026-10-08",
@@ -8985,7 +9397,7 @@
     ],
     "extra": []
    },
-   "n": 73
+   "n": 68
   },
   {
    "ts": "2026-10-08",
@@ -9214,7 +9626,7 @@
     ],
     "extra": []
    },
-   "n": 72
+   "n": 67
   },
   {
    "ts": "2026-10-08",
@@ -9474,7 +9886,7 @@
     ],
     "extra": []
    },
-   "n": 71
+   "n": 66
   },
   {
    "ts": "2026-10-08",
@@ -9748,7 +10160,7 @@
     ],
     "extra": []
    },
-   "n": 70
+   "n": 65
   },
   {
    "ts": "2026-10-08",
@@ -10010,7 +10422,7 @@
     ],
     "extra": []
    },
-   "n": 69
+   "n": 64
   },
   {
    "ts": "2026-10-08",
@@ -10245,7 +10657,7 @@
     ],
     "extra": []
    },
-   "n": 68
+   "n": 63
   },
   {
    "ts": "2026-10-08",
@@ -10493,7 +10905,7 @@
     ],
     "extra": []
    },
-   "n": 67
+   "n": 62
   },
   {
    "ts": "2026-10-08",
@@ -10791,7 +11203,7 @@
     ],
     "extra": []
    },
-   "n": 66
+   "n": 61
   },
   {
    "ts": "2026-10-08",
@@ -11029,7 +11441,7 @@
     ],
     "extra": []
    },
-   "n": 65
+   "n": 60
   },
   {
    "ts": "2026-10-07",
@@ -11327,7 +11739,7 @@
     ],
     "extra": []
    },
-   "n": 64
+   "n": 59
   },
   {
    "ts": "2026-10-07",
@@ -11631,7 +12043,7 @@
     ],
     "extra": []
    },
-   "n": 63
+   "n": 58
   },
   {
    "ts": "2026-10-07",
@@ -11899,7 +12311,7 @@
     ],
     "extra": []
    },
-   "n": 62
+   "n": 57
   },
   {
    "ts": "2026-10-07",
@@ -12146,7 +12558,7 @@
     ],
     "extra": []
    },
-   "n": 61
+   "n": 56
   },
   {
    "ts": "2026-10-07",
@@ -12400,7 +12812,7 @@
     ],
     "extra": []
    },
-   "n": 60
+   "n": 55
   },
   {
    "ts": "2026-10-07",
@@ -12710,7 +13122,7 @@
     ],
     "extra": []
    },
-   "n": 59
+   "n": 54
   },
   {
    "ts": "2026-10-07",
@@ -12990,7 +13402,7 @@
     ],
     "extra": []
    },
-   "n": 58
+   "n": 53
   },
   {
    "ts": "2026-10-07",
@@ -13199,7 +13611,7 @@
     ],
     "extra": []
    },
-   "n": 57
+   "n": 52
   },
   {
    "ts": "2026-10-07",
@@ -13497,7 +13909,7 @@
     ],
     "extra": []
    },
-   "n": 56
+   "n": 51
   },
   {
    "ts": "2026-10-07",
@@ -13747,7 +14159,7 @@
     ],
     "extra": []
    },
-   "n": 55
+   "n": 50
   },
   {
    "ts": "2026-10-07",
@@ -13967,7 +14379,7 @@
     ],
     "extra": []
    },
-   "n": 54
+   "n": 49
   },
   {
    "ts": "2026-10-07",
@@ -14211,7 +14623,7 @@
     ],
     "extra": []
    },
-   "n": 53
+   "n": 48
   },
   {
    "ts": "2026-10-07",
@@ -14447,7 +14859,7 @@
     ],
     "extra": []
    },
-   "n": 52
+   "n": 47
   },
   {
    "ts": "2026-10-07",
@@ -14659,7 +15071,7 @@
     ],
     "extra": []
    },
-   "n": 51
+   "n": 46
   },
   {
    "ts": "2026-10-07",
@@ -14852,7 +15264,7 @@
     ],
     "extra": []
    },
-   "n": 50
+   "n": 45
   },
   {
    "ts": "2026-10-07",
@@ -15150,7 +15562,7 @@
     ],
     "extra": []
    },
-   "n": 49
+   "n": 44
   },
   {
    "ts": "2026-10-06",
@@ -15356,7 +15768,7 @@
     ],
     "extra": []
    },
-   "n": 48
+   "n": 43
   },
   {
    "ts": "2026-10-06",
@@ -15606,7 +16018,7 @@
     ],
     "extra": []
    },
-   "n": 47
+   "n": 42
   },
   {
    "ts": "2026-10-06",
@@ -15862,7 +16274,7 @@
     ],
     "extra": []
    },
-   "n": 46
+   "n": 41
   },
   {
    "ts": "2026-10-06",
@@ -16109,7 +16521,7 @@
     ],
     "extra": []
    },
-   "n": 45
+   "n": 40
   },
   {
    "ts": "2026-10-06",
@@ -16339,7 +16751,7 @@
     ],
     "extra": []
    },
-   "n": 44
+   "n": 39
   },
   {
    "ts": "2026-10-06",
@@ -16575,7 +16987,7 @@
     ],
     "extra": []
    },
-   "n": 43
+   "n": 38
   },
   {
    "ts": "2026-10-06",
@@ -16843,7 +17255,7 @@
     ],
     "extra": []
    },
-   "n": 42
+   "n": 37
   },
   {
    "ts": "2026-10-06",
@@ -17117,7 +17529,7 @@
     ],
     "extra": []
    },
-   "n": 41
+   "n": 36
   },
   {
    "ts": "2026-10-06",
@@ -17367,7 +17779,7 @@
     ],
     "extra": []
    },
-   "n": 40
+   "n": 35
   },
   {
    "ts": "2026-10-06",
@@ -17597,7 +18009,7 @@
     ],
     "extra": []
    },
-   "n": 39
+   "n": 34
   },
   {
    "ts": "2026-10-06",
@@ -17827,7 +18239,7 @@
     ],
     "extra": []
    },
-   "n": 38
+   "n": 33
   },
   {
    "ts": "2026-10-06",
@@ -18057,7 +18469,7 @@
     ],
     "extra": []
    },
-   "n": 37
+   "n": 32
   },
   {
    "ts": "2026-10-06",
@@ -18343,7 +18755,7 @@
     ],
     "extra": []
    },
-   "n": 36
+   "n": 31
   },
   {
    "ts": "2026-10-06",
@@ -18585,7 +18997,7 @@
     ],
     "extra": []
    },
-   "n": 35
+   "n": 30
   },
   {
    "ts": "2026-10-06",
@@ -18853,7 +19265,7 @@
     ],
     "extra": []
    },
-   "n": 34
+   "n": 29
   },
   {
    "ts": "2026-10-06",
@@ -19065,7 +19477,7 @@
     ],
     "extra": []
    },
-   "n": 33
+   "n": 28
   },
   {
    "ts": "2026-10-06",
@@ -19277,7 +19689,7 @@
     ],
     "extra": []
    },
-   "n": 32
+   "n": 27
   },
   {
    "ts": "2026-10-06",
@@ -19515,7 +19927,7 @@
     ],
     "extra": []
    },
-   "n": 31
+   "n": 26
   },
   {
    "ts": "2026-10-06",
@@ -19763,7 +20175,7 @@
     ],
     "extra": []
    },
-   "n": 30
+   "n": 25
   },
   {
    "ts": "2026-10-06",
@@ -20019,7 +20431,7 @@
     ],
     "extra": []
    },
-   "n": 29
+   "n": 24
   },
   {
    "ts": "2026-10-06",
@@ -20261,7 +20673,7 @@
     ],
     "extra": []
    },
-   "n": 28
+   "n": 23
   },
   {
    "ts": "2026-10-06",
@@ -20511,7 +20923,7 @@
     ],
     "extra": []
    },
-   "n": 27
+   "n": 22
   },
   {
    "ts": "2026-10-05",
@@ -20703,7 +21115,7 @@
     ],
     "extra": []
    },
-   "n": 26
+   "n": 21
   },
   {
    "ts": "2026-10-05",
@@ -20939,7 +21351,7 @@
     ],
     "extra": []
    },
-   "n": 25
+   "n": 20
   },
   {
    "ts": "2026-10-05",
@@ -21149,7 +21561,7 @@
     ],
     "extra": []
    },
-   "n": 24
+   "n": 19
   },
   {
    "ts": "2026-10-05",
@@ -21367,7 +21779,7 @@
     ],
     "extra": []
    },
-   "n": 23
+   "n": 18
   },
   {
    "ts": "2026-10-05",
@@ -21583,7 +21995,7 @@
     ],
     "extra": []
    },
-   "n": 22
+   "n": 17
   },
   {
    "ts": "2026-10-05",
@@ -21819,7 +22231,7 @@
     ],
     "extra": []
    },
-   "n": 21
+   "n": 16
   },
   {
    "ts": "2026-10-05",
@@ -22055,7 +22467,7 @@
     ],
     "extra": []
    },
-   "n": 20
+   "n": 15
   },
   {
    "ts": "2026-10-05",
@@ -22315,7 +22727,7 @@
     ],
     "extra": []
    },
-   "n": 19
+   "n": 14
   },
   {
    "ts": "2026-10-04",
@@ -22541,7 +22953,7 @@
     ],
     "extra": []
    },
-   "n": 18
+   "n": 13
   },
   {
    "ts": "2026-10-04",
@@ -22797,7 +23209,7 @@
     ],
     "extra": []
    },
-   "n": 17
+   "n": 12
   },
   {
    "ts": "2026-10-04",
@@ -23077,7 +23489,7 @@
     ],
     "extra": []
    },
-   "n": 16
+   "n": 11
   },
   {
    "ts": "2026-10-04",
@@ -23363,7 +23775,7 @@
     ],
     "extra": []
    },
-   "n": 15
+   "n": 10
   },
   {
    "ts": "2026-10-04",
@@ -23613,7 +24025,7 @@
     ],
     "extra": []
    },
-   "n": 14
+   "n": 9
   },
   {
    "ts": "2026-10-04",
@@ -23881,7 +24293,7 @@
     ],
     "extra": []
    },
-   "n": 13
+   "n": 8
   },
   {
    "ts": "2026-10-04",
@@ -24137,7 +24549,7 @@
     ],
     "extra": []
    },
-   "n": 12
+   "n": 7
   },
   {
    "ts": "2026-10-04",
@@ -24383,7 +24795,7 @@
     ],
     "extra": []
    },
-   "n": 11
+   "n": 6
   },
   {
    "ts": "2026-10-04",
@@ -24663,7 +25075,7 @@
     ],
     "extra": []
    },
-   "n": 10
+   "n": 5
   },
   {
    "ts": "2026-10-04",
@@ -24910,7 +25322,7 @@
     ],
     "extra": []
    },
-   "n": 9
+   "n": 4
   },
   {
    "ts": "2026-10-04",
@@ -25134,7 +25546,7 @@
     ],
     "extra": []
    },
-   "n": 8
+   "n": 3
   },
   {
    "ts": "2026-10-04",
@@ -25378,7 +25790,7 @@
     ],
     "extra": []
    },
-   "n": 7
+   "n": 2
   },
   {
    "ts": "2026-10-04",
@@ -25652,1098 +26064,8 @@
     ],
     "extra": []
    },
-   "n": 6
-  },
-  {
-   "ts": "2026-10-03",
-   "day": "N836.html",
-   "track": "news",
-   "theme": "장거리 여행",
-   "title": "Driving from Hanoi to Paris: 68 days through 20 countries",
-   "u": "https://e.vnexpress.net/news/travel/driving-from-hanoi-to-paris-68-days-through-20-countries-5123836.html",
-   "cat": "소식",
-   "intro": "베트남인들이 차량으로 하노이-파리 68일간 여행. 문화 탐방과 경치 즐기며 20개국을 지났습니다.",
-   "words": [
-    {
-     "vi": "đi",
-     "ko": "가다",
-     "kr_read": "디",
-     "emoji": "🚶‍♀️",
-     "en": "a person walking",
-     "tones": [
-      {
-       "syl": "đi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-di.webp"
-    },
-    {
-     "vi": "xe",
-     "ko": "차",
-     "kr_read": "쌔",
-     "emoji": "🚗",
-     "en": "a car",
-     "tones": [
-      {
-       "syl": "xe",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-xe.webp"
-    },
-    {
-     "vi": "đường",
-     "ko": "길",
-     "kr_read": "드엉",
-     "emoji": "🛣️",
-     "en": "a road stretching into the distance",
-     "tones": [
-      {
-       "syl": "đường",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-duong.webp"
-    },
-    {
-     "vi": "nước",
-     "ko": "나라",
-     "kr_read": "느억",
-     "emoji": "🗺️",
-     "en": "a map of countries",
-     "tones": [
-      {
-       "syl": "nước",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-nuoc.webp"
-    },
-    {
-     "vi": "ngày",
-     "ko": "날",
-     "kr_read": "응아이",
-     "emoji": "☀️",
-     "en": "a sun shining",
-     "tones": [
-      {
-       "syl": "ngày",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-ngay.webp"
-    },
-    {
-     "vi": "thích",
-     "ko": "좋아하다",
-     "kr_read": "틱",
-     "emoji": "😊",
-     "en": "a smiling face",
-     "tones": [
-      {
-       "syl": "thích",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-thich.webp"
-    }
-   ],
-   "dialog": {
-    "title": "장거리 여행",
-    "emoji": "📰",
-    "lines": [
-     {
-      "vi": "Khách sạn ở đây tốt không?",
-      "ko": "여기 호텔은 괜찮아요?",
-      "kr_read": "칵 싼 어 더이 똣 콩",
-      "who": "A",
-      "tones": [
-       {
-        "syl": "Khách",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "sạn",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "ở",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "đây",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "tốt",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "không?",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       }
-      ],
-      "gloss": []
-     },
-     {
-      "vi": "Vâng, khách sạn rất tốt.",
-      "ko": "네, 호텔이 아주 좋아요.",
-      "kr_read": "벙 칵 싼 젓 똣",
-      "who": "B",
-      "tones": [
-       {
-        "syl": "Vâng,",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "khách",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "sạn",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "rất",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "tốt.",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       }
-      ],
-      "gloss": []
-     }
-    ],
-    "extra": []
-   },
-   "n": 5
-  },
-  {
-   "ts": "2026-10-03",
-   "day": "N932.html",
-   "track": "news",
-   "theme": "외국인 관광",
-   "title": "Vietnam records nearly 15% rise in foreign tourists as Southeast Asian countries suffer tourism decline",
-   "u": "https://e.vnexpress.net/news/travel/vietnam-records-nearly-15-rise-in-foreign-tourists-as-southeast-asian-countries-suffer-tourism-decline-vnepre-5127932.html",
-   "cat": "문화·생활",
-   "intro": "베트남 외국인 관광객이 15% 증가했습니다. 한국인 관광객은 약 305만 명으로 2위입니다.",
-   "words": [
-    {
-     "vi": "du lịch",
-     "ko": "여행",
-     "kr_read": "주 릭",
-     "emoji": "🧳",
-     "en": "a travel suitcase with luggage tags",
-     "tones": [
-      {
-       "syl": "du",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "lịch",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "n-du-lich.webp"
-    },
-    {
-     "vi": "khách",
-     "ko": "손님",
-     "kr_read": "칵",
-     "emoji": "👤",
-     "en": "a hotel guest at the front desk",
-     "tones": [
-      {
-       "syl": "khách",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-khach.webp"
-    },
-    {
-     "vi": "khách sạn",
-     "ko": "호텔",
-     "kr_read": "칵 싼",
-     "emoji": "🏨",
-     "en": "a modern hotel building",
-     "tones": [
-      {
-       "syl": "khách",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "sạn",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      }
-     ],
-     "img": "n-khach-san.webp"
-    },
-    {
-     "vi": "sân bay",
-     "ko": "공항",
-     "kr_read": "썬 바이",
-     "emoji": "🛫",
-     "en": "an airport departure terminal",
-     "tones": [
-      {
-       "syl": "sân",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "bay",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-san-bay.webp"
-    },
-    {
-     "vi": "vé máy bay",
-     "ko": "비행기 표",
-     "kr_read": "배 마이 바이",
-     "emoji": "🎫",
-     "en": "an airplane boarding pass ticket",
-     "tones": [
-      {
-       "syl": "vé",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "máy",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      },
-      {
-       "syl": "bay",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-ve-may-bay.webp"
-    },
-    {
-     "vi": "hộ chiếu",
-     "ko": "여권",
-     "kr_read": "호 찌에우",
-     "emoji": "🛂",
-     "en": "a passport book on a desk",
-     "tones": [
-      {
-       "syl": "hộ",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "chiếu",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-ho-chieu.webp"
-    }
-   ],
-   "dialog": {
-    "title": "외국인 관광",
-    "emoji": "📰",
-    "lines": [
-     {
-      "vi": "Hôm nay sân bay đông quá.",
-      "ko": "오늘 공항이 너무 붐비네요.",
-      "kr_read": "홈 나이 썬 바이 동 꽈",
-      "who": "A",
-      "tones": [
-       {
-        "syl": "Hôm",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "nay",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "sân",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "bay",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "đông",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "quá.",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       }
-      ],
-      "gloss": []
-     },
-     {
-      "vi": "Vâng, khách du lịch rất nhiều.",
-      "ko": "네, 관광객이 정말 많아요.",
-      "kr_read": "벙 칵 주 릭 젓 니에우",
-      "who": "B",
-      "tones": [
-       {
-        "syl": "Vâng,",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "khách",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "du",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "lịch",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "rất",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "nhiều.",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       }
-      ],
-      "gloss": []
-     }
-    ],
-    "extra": []
-   },
-   "n": 4
-  },
-  {
-   "ts": "2026-10-03",
-   "day": "N231.html",
-   "track": "news",
-   "theme": "섬 생활의 즐거움",
-   "title": "Vietnamese man trades city life for eight years alone on deserted island",
-   "u": "https://e.vnexpress.net/news/life/vietnamese-man-trades-city-life-for-eight-years-alone-on-deserted-island-5124231.html",
-   "cat": "소식",
-   "intro": "베트남의 한 남성이 무인도에서 8년째 홀로 생활하고 있습니다. 그는 농사와 낚시를 하며 자연 속 자급자족 삶에 만족해합니다.",
-   "words": [
-    {
-     "vi": "đảo",
-     "ko": "섬",
-     "kr_read": "다오",
-     "emoji": "🏝️",
-     "en": "a small green island in the blue ocean",
-     "tones": [
-      {
-       "syl": "đảo",
-       "name": "hỏi",
-       "ko": "내렸다 올림",
-       "shape": "∨"
-      }
-     ],
-     "img": "n-dao.webp"
-    },
-    {
-     "vi": "nước",
-     "ko": "물",
-     "kr_read": "느억",
-     "emoji": "💧",
-     "en": "a glass of clean water",
-     "tones": [
-      {
-       "syl": "nước",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-nuoc.webp"
-    },
-    {
-     "vi": "cá",
-     "ko": "물고기",
-     "kr_read": "까",
-     "emoji": "🐟",
-     "en": "a silver fish",
-     "tones": [
-      {
-       "syl": "cá",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-ca.webp"
-    },
-    {
-     "vi": "gà",
-     "ko": "닭",
-     "kr_read": "가",
-     "emoji": "🐔",
-     "en": "a chicken in a farm",
-     "tones": [
-      {
-       "syl": "gà",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-ga.webp"
-    },
-    {
-     "vi": "rau",
-     "ko": "채소",
-     "kr_read": "자우",
-     "emoji": "🥬",
-     "en": "fresh green leafy vegetables",
-     "tones": [
-      {
-       "syl": "rau",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-rau.webp"
-    },
-    {
-     "vi": "thuyền",
-     "ko": "배",
-     "kr_read": "투옌",
-     "emoji": "⛵",
-     "en": "a small wooden boat",
-     "tones": [
-      {
-       "syl": "thuyền",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-thuyen.webp"
-    }
-   ],
-   "dialog": {
-    "title": "섬 생활의 즐거움",
-    "emoji": "📰",
-    "lines": [
-     {
-      "vi": "Bạn đi đảo một mình à?",
-      "ko": "혼자 섬에 가요?",
-      "kr_read": "반 디 다오 못 민 아",
-      "who": "A",
-      "tones": [
-       {
-        "syl": "Bạn",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "đi",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "đảo",
-        "name": "hỏi",
-        "ko": "내렸다 올림",
-        "shape": "∨"
-       },
-       {
-        "syl": "một",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "mình",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "à?",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       }
-      ],
-      "gloss": []
-     },
-     {
-      "vi": "Vâng, tôi đi câu cá.",
-      "ko": "네, 낚시하러 가요.",
-      "kr_read": "벙 또이 디 꺼우 까",
-      "who": "B",
-      "tones": [
-       {
-        "syl": "Vâng,",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "tôi",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "đi",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "câu",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "cá.",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       }
-      ],
-      "gloss": []
-     }
-    ],
-    "extra": []
-   },
-   "n": 3
-  },
-  {
-   "ts": "2026-10-03",
-   "day": "N832.html",
-   "track": "news",
-   "theme": "베트남 음료",
-   "title": "Vietnam's latest coffee experiment comes with fermented shrimp paste",
-   "u": "https://e.vnexpress.net/news/travel/food-recipes/vietnam-s-latest-coffee-experiment-comes-with-fermented-shrimp-paste-5123832.html",
-   "cat": "문화·생활",
-   "intro": "베트남 후에에서 새우젓 커피가 큰 인기를 얻고 있습니다. 전통 식재료를 활용한 이색 음료로 주목받고 있습니다.",
-   "words": [
-    {
-     "vi": "cà phê",
-     "ko": "커피",
-     "kr_read": "까 페",
-     "emoji": "☕️",
-     "en": "a cup of coffee",
-     "tones": [
-      {
-       "syl": "cà",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      },
-      {
-       "syl": "phê",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-ca-phe.webp"
-    },
-    {
-     "vi": "mắm",
-     "ko": "젓갈/소스",
-     "kr_read": "맘",
-     "emoji": "🥫",
-     "en": "a jar of fermented paste",
-     "tones": [
-      {
-       "syl": "mắm",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-mam.webp"
-    },
-    {
-     "vi": "tôm",
-     "ko": "새우",
-     "kr_read": "똠",
-     "emoji": "🦐",
-     "en": "a shrimp",
-     "tones": [
-      {
-       "syl": "tôm",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-tom.webp"
-    },
-    {
-     "vi": "quán",
-     "ko": "가게",
-     "kr_read": "꽌",
-     "emoji": "🏬",
-     "en": "a small shop building",
-     "tones": [
-      {
-       "syl": "quán",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-quan.webp"
-    },
-    {
-     "vi": "khách",
-     "ko": "손님",
-     "kr_read": "칵",
-     "emoji": "🧑‍🤝‍🧑",
-     "en": "a person",
-     "tones": [
-      {
-       "syl": "khách",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-khach.webp"
-    },
-    {
-     "vi": "uống",
-     "ko": "마시다",
-     "kr_read": "우옹",
-     "emoji": "🥤",
-     "en": "a person drinking",
-     "tones": [
-      {
-       "syl": "uống",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-uong.webp"
-    }
-   ],
-   "dialog": {
-    "title": "베트남 음료",
-    "emoji": "📰",
-    "lines": [
-     {
-      "vi": "Cà phê mắm này ngon không?",
-      "ko": "이 새우젓 커피 맛있나요?",
-      "kr_read": "까 페 맘 나이 응온 콩",
-      "who": "A",
-      "tones": [
-       {
-        "syl": "Cà",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "phê",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "mắm",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "này",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "ngon",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "không?",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       }
-      ],
-      "gloss": []
-     },
-     {
-      "vi": "Có, vị rất đặc biệt.",
-      "ko": "네, 맛이 아주 특별해요.",
-      "kr_read": "꼬 비 젓 닥 비엣",
-      "who": "B",
-      "tones": [
-       {
-        "syl": "Có,",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "vị",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "rất",
-        "name": "sắc",
-        "ko": "짧게 올라감",
-        "shape": "／"
-       },
-       {
-        "syl": "đặc",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "biệt.",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       }
-      ],
-      "gloss": []
-     }
-    ],
-    "extra": []
-   },
-   "n": 2
-  },
-  {
-   "ts": "2026-10-03",
-   "day": "N601.html",
-   "track": "news",
-   "theme": "도로 공사",
-   "title": "2 central HCMC roads to become one-way from Oct 10 for metro construction",
-   "u": "https://e.vnexpress.net/news/news/traffic/2-central-hcmc-roads-to-become-one-way-from-oct-10-for-metro-construction-5127601.html",
-   "cat": "소식",
-   "intro": "지하철 공사로 호치민 시내 도로가 10월 10일부터 일방통행으로 바뀝니다.",
-   "words": [
-    {
-     "vi": "đường",
-     "ko": "길, 도로",
-     "kr_read": "드엉",
-     "emoji": "🛣️",
-     "en": "a wide paved road with lane markings",
-     "tones": [
-      {
-       "syl": "đường",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-duong.webp"
-    },
-    {
-     "vi": "xe máy",
-     "ko": "오토바이",
-     "kr_read": "쌔 마이",
-     "emoji": "🛵",
-     "en": "a modern scooter motorcycle",
-     "tones": [
-      {
-       "syl": "xe",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "máy",
-       "name": "sắc",
-       "ko": "짧게 올라감",
-       "shape": "／"
-      }
-     ],
-     "img": "n-xe-may.webp"
-    },
-    {
-     "vi": "kẹt xe",
-     "ko": "교통 체증",
-     "kr_read": "깻 쌔",
-     "emoji": "🚗",
-     "en": "cars stuck in a traffic jam on a city street",
-     "tones": [
-      {
-       "syl": "kẹt",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "xe",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-ket-xe.webp"
-    },
-    {
-     "vi": "một chiều",
-     "ko": "일방통행",
-     "kr_read": "못 찌에우",
-     "emoji": "➡️",
-     "en": "a blue one-way traffic sign with an arrow",
-     "tones": [
-      {
-       "syl": "một",
-       "name": "nặng",
-       "ko": "짧고 무겁게",
-       "shape": "↓"
-      },
-      {
-       "syl": "chiều",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-mot-chieu.webp"
-    },
-    {
-     "vi": "thi công",
-     "ko": "공사, 시공",
-     "kr_read": "티 꽁",
-     "emoji": "🚧",
-     "en": "orange construction barriers on a street",
-     "tones": [
-      {
-       "syl": "thi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "công",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      }
-     ],
-     "img": "n-thi-cong.webp"
-    },
-    {
-     "vi": "đi làm",
-     "ko": "출근하다",
-     "kr_read": "디 람",
-     "emoji": "💼",
-     "en": "a person carrying a briefcase walking to an office building",
-     "tones": [
-      {
-       "syl": "đi",
-       "name": "ngang",
-       "ko": "평평하게 그대로",
-       "shape": "—"
-      },
-      {
-       "syl": "làm",
-       "name": "huyền",
-       "ko": "낮게 내려감",
-       "shape": "＼"
-      }
-     ],
-     "img": "n-di-lam.webp"
-    }
-   ],
-   "dialog": {
-    "title": "도로 공사",
-    "emoji": "📰",
-    "lines": [
-     {
-      "vi": "Đường này là một chiều à?",
-      "ko": "이 길은 일방통행이에요?",
-      "kr_read": "드엉 나이 라 못 찌에우 아",
-      "who": "A",
-      "tones": [
-       {
-        "syl": "Đường",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "này",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "là",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "một",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "chiều",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "à?",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       }
-      ],
-      "gloss": []
-     },
-     {
-      "vi": "Vâng, vì thi công nên một chiều.",
-      "ko": "네, 공사 때문에 일방통행이에요.",
-      "kr_read": "벙 비 티 꽁 넨 못 찌에우",
-      "who": "B",
-      "tones": [
-       {
-        "syl": "Vâng,",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "vì",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       },
-       {
-        "syl": "thi",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "công",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "nên",
-        "name": "ngang",
-        "ko": "평평하게 그대로",
-        "shape": "—"
-       },
-       {
-        "syl": "một",
-        "name": "nặng",
-        "ko": "짧고 무겁게",
-        "shape": "↓"
-       },
-       {
-        "syl": "chiều.",
-        "name": "huyền",
-        "ko": "낮게 내려감",
-        "shape": "＼"
-       }
-      ],
-      "gloss": []
-     }
-    ],
-    "extra": []
-   },
    "n": 1
   }
  ],
- "updated": "2026-10-10 10:14"
+ "updated": "2026-10-11 01:06"
 }
