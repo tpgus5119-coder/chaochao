@@ -11578,6 +11578,7 @@ function autoExp(x) {                                         // 해설이 없�
   if (x.k === 'tf') return heard + (x.text ? x.prompt + '\n' : '') + tr('답') + ': ' + tr(x.ans ? '맞다' : '틀리다');
   if (x.k === 'pick') return heard + tr('답') + ': ' + 'ABCDE'[x.ans];
   if (x.k === 'choice') return heard + tr('답') + ': ' + (x.abc ? 'ABCDEFGHIJ'[x.ans] + '. ' : '') + x.opts[x.ans];
+  if (x.k === 'type') return heard + (x.audio ? '' : x.prompt + '\n') + tr('답') + ': ' + (x.acc && x.acc[0] === 'Đúng' ? 'Đúng' : (x.fix || (x.acc || [])[0] || ''));
   if (x.k === 'puzzle' || x.k === 'say') return x.vi;
   if (x.k === 'free') return (x.model || []).map((m, i) => m + (x.model_ko && x.model_ko[i] ? ' — ' + x.model_ko[i] : '')).join('\n');
   return '';
@@ -11631,7 +11632,7 @@ function drawFixed(body, q) {
   const x = q.w.fx, w = q.w;
   const say = t => { const k = recKey(t); k ? play(k, false, undefined, examSpd()) : speakVi(t, false, examSpd()); };   // 시험 속도(1배 기본, 칩으로 바꿈)
   if (x.audio) {                                             // [▶ 듣기][▾] — 단어 카드의 듣기 묶음과 같은 모양 (대표님 2026-10-06 그림)
-    const row = el('div', 'qplay'); row.append(listenGroup(() => say(x.audio), { exam: true })); sentPeek(row, x.audio); body.append(row); setTimeout(() => say(x.audio), 200); }
+    const row = el('div', 'qplay'); row.append(listenGroup(() => say(x.audio), { exam: true })); if (x.k !== 'type') sentPeek(row, x.audio); body.append(row); setTimeout(() => say(x.audio), 200); }   // 받아 쓰는 문항엔 [문장 보기] 없음 — 답이 보인다 (2026-10-11)
   if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; body.append(im); }
   if (x.text) body.append(el('div', 'fxtext', esc(x.text)));
   if (x.prompt) body.append(el('div', 'qmain sent', esc(x.prompt)));
@@ -11644,6 +11645,21 @@ function drawFixed(body, q) {
     let idx = x.opts.map((o, i) => i); if (x.shuffle) idx = idx.sort(() => Math.random() - .5);
     idx.forEach(i => { const b = el('button', null, (x.abc ? 'ABCDEFGHIJ'[i] + '. ' : '') + esc(x.opts[i])); const good = i === x.ans; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });   // abc: 1차 읽기 4 처럼 물음 A~J 한 목록 (2026-10-11)
     body.append(box); return;
+  }
+  if (x.k === 'type') {                                     // 듣기 4 빈칸 · 쓰기 2 'Đúng 또는 고쳐 쓰기' — 종이처럼 직접 쳐서 쓴다 (대표님 2026-10-11 "직접 쳐서 쓰도록해라")
+    let txt = (q._prev && q._prev.pickT) || '';               // 돌아온 문제는 전에 쓴 것을 그대로 보인다
+    body.append(telexHint());
+    const out = el('div', 'dictans'); const draw = () => { out.textContent = txt || '· · ·'; }; draw(); body.append(out);
+    if (x.dung) { const d = el('button', 'ghost dungchip', 'Đúng'); d.type = 'button'; d.onclick = () => { if (!q._ans) { txt = 'Đúng'; draw(); } }; body.append(d); }
+    body.append(viKeypad(() => txt, v => { if (!q._ans) { txt = v; draw(); } }, () => {
+      if (!txt.trim() || q._ans) return;
+      const good = (x.acc || []).some(a => viCanon(txt) === viCanon(a));   // 큰·작은 글자, 문장부호, 성조 자리(hoà/hòa)는 안 따진다 · 숫자는 글자로 써도(8 = tám)
+      q._ans = true; q._ok = good; q._pickT = txt.trim(); hideSkip(); if (good) Q.ok++;
+      if (!Q.blind) out.dataset.r = good ? 'ok' : 'no';
+      resumeSave();
+      nextBtn(body, () => { Q.i++; drawQuiz(); });
+    }));
+    return;
   }
   if (x.k === 'pick') {
     const grid = el('div', 'picgrid five');

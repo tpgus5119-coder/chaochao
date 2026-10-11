@@ -55,6 +55,34 @@ def check_range(s, bad):
         if t[i] in ALLOW or t[i] in NAMES or re.fullmatch(r'\d+', t[i]) or re.search('[가-힣]', t[i]) or t[i] in ('·', '—', '-'): i += 1; continue
         bad[t[i]] = s; i += 1
 OKTXT = 'Đúng — 맞는 문장'
+_U = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín']
+def n2v(n):
+    """숫자를 베트남어 글자로 (북부, 0~999) — 같은 수의 여러 꼴(24 hai mươi bốn/tư, 105 một trăm linh/lẻ năm)을 다 돌려준다"""
+    if n < 10: return [_U[n]]
+    if n < 20: return ['mười'] if n == 10 else ['mười ' + ('lăm' if n % 10 == 5 else _U[n % 10])]
+    if n < 100:
+        t, u = divmod(n, 10); h = _U[t] + ' mươi'
+        return [h] if u == 0 else [h + ' mốt'] if u == 1 else [h + ' tư', h + ' bốn'] if u == 4 else [h + ' lăm'] if u == 5 else [h + ' ' + _U[u]]
+    h, r = divmod(n, 100); a = _U[h] + ' trăm'
+    if r == 0: return [a]
+    if r < 10: return [a + ' linh ' + _U[r], a + ' lẻ ' + _U[r]]
+    return [a + ' ' + x for x in n2v(r)]
+_W2N = {w: str(i) for i, w in enumerate(_U)} | {'mười': '10'}
+SAME = [('cám ơn', 'cảm ơn')]
+def accs(a):
+    """직접 쳐서 쓴 답을 받아 줄 꼴들 — 숫자는 글자로도(8 → tám), 글자 수는 숫자로도(ba → 3), 같은 말 다른 꼴(cám ơn·cảm ơn). 맞춤은 앱 viCanon(작은·큰 글자, 성조 자리, 문장부호 무시)"""
+    out = [a]
+    toks = a.split(' ')
+    for i, t in enumerate(toks):
+        core = t.strip('.,?!')
+        if core.isdigit() and int(core) < 1000:
+            for v in n2v(int(core)): out += [' '.join(o.split(' ')[:i] + [t.replace(core, v)] + o.split(' ')[i + 1:]) for o in list(out) if len(o.split(' ')) == len(toks)]
+    if a.strip('.,?!').lower() in _W2N: out.append(_W2N[a.strip('.,?!').lower()])
+    for x, y in SAME:
+        for o in list(out):
+            if x in o.lower(): out.append(o.lower().replace(x, y))
+            if y in o.lower(): out.append(o.lower().replace(y, x))
+    return list(dict.fromkeys(out))
 def form1(no, q):
     """exN.py 의 문항을 실제 1차 시험지 꼴로 옮긴다 (대표님 2026-10-09 "시험 형식 틀은 그대로 동일하게 — 단어와 문법만 범위 다르게"). 새로 쓴 것은 form1.py(듣기 4·쓰기 3)"""
     import random
@@ -92,8 +120,8 @@ def form1(no, q):
             a4done = True
             for qa, b, d in A4F[no]:
                 m = re.search(r'\[([^\]]+)\]', b); full = b.replace('[', '').replace(']', '')
-                out.append({"sec": "A 듣기 · 4 듣고 빈칸", "k": "choice", "prompt": f"A: {qa} B: " + b[:m.start()] + '____' + b[m.end():],
-                            "audio": full, "opts": [m.group(1)] + d, "ans": 0, "shuffle": True, "made": True})
+                out.append({"sec": "A 듣기 · 4 듣고 빈칸", "k": "type", "prompt": f"A: {qa} B: " + b[:m.start()] + '____' + b[m.end():],
+                            "audio": full, "acc": accs(m.group(1)), "made": True})   # 종이처럼 들은 말을 직접 쳐서 쓴다 (대표님 2026-10-11 "직접 쳐서 쓰도록")
             continue
         elif sec.startswith('B 읽기 · 1'): x = dict(x, sec='B 읽기 · 1 빈칸')
         elif sec.startswith('B 읽기 · 2'): x = dict(x, sec='B 읽기 · 2 읽고 고르기')
@@ -120,8 +148,8 @@ def form1(no, q):
         elif k == 'errpick':                                            # 1차: 맞으면 Đúng, 틀리면 바른 문장 고르기 — 다섯 중 둘은 맞는 문장
             i = c2.index(x)
             if no in C2F:                                               # 손으로 검토해 적은 다섯(form1.C2F) — 답이 하나뿐인지 확인한 것 (2026-10-09)
-                pr, a, ws, fx, kk = C2F[no][i]
-                x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": pr, "opts": [a] + ws, "ans": 0, "shuffle": True, "fix": fx, "ko": kk}
+                pr, a, ws, fx, kk = C2F[no][i]                              # 종이처럼 맞으면 'Đúng', 틀리면 바른 문장을 직접 쳐서 쓴다 (2026-10-11)
+                x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "type", "prompt": pr, "acc": (["Đúng", "Đ"] + accs(pr)) if a == OKTXT else accs(fx), "fix": fx, "ko": kk, "dung": True}
                 out.append(x); continue
             if i < 3: x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": x['vi'], "opts": [x['fix'], OKTXT, alt(x['fix'], x['vi'])], "ans": 0, "shuffle": True, "fix": x['fix'], "ko": x['ko']}
             else:     x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": x['fix'], "opts": [OKTXT, x['vi'], alt(x['fix'], x['vi'])], "ans": 0, "shuffle": True, "fix": x['fix'], "ko": x['ko']}
@@ -174,6 +202,7 @@ def build(no, title, q):
         tx = [x[f] for f in ('audio', 'text', 'vi', 'fix') if isinstance(x.get(f), str)]
         pr = x.get('prompt', '')
         if pr and '____' in pr and x['k'] == 'choice' and not x.get('fix'): tx.append(pr.replace('____', x['opts'][x['ans']]))
+        elif pr and '____' in pr and x['k'] == 'type': tx.append(pr.replace('____', x['acc'][0]))
         elif pr and not re.search('[가-힣]', pr): tx.append(pr)
         if x['sec'].startswith('B 읽기 · 4'): tx.append(x['opts'][x['ans']])
         tx += [m if isinstance(m, str) else m['vi'] for m in x.get('model', [])]
@@ -218,6 +247,8 @@ def build(no, title, q):
             ls = x['audio'].split('\n'); x['exp'] = '들은 대화\n' + '\n'.join(f"{'여' if i % 2 == 0 else '남'}: {l} — {ko(l)}" for i, l in enumerate(ls)) + f"\n물음: {x['prompt']} — {ko(x['prompt'])}\n답: {x['opts'][x['ans']]}"
         elif k == 'choice' and sec.startswith('A 듣기 · 3'): x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n물음: {x['prompt']} — {ko(x['prompt'])}\n답: {x['opts'][x['ans']]}"
         elif k == 'choice' and sec.startswith('A 듣기 · 4'): x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n답: {x['opts'][x['ans']]}"
+        elif k == 'type' and sec.startswith('A 듣기 · 4'): x['exp'] = f"들은 말: {x['audio']}\n{ko(x['audio'])}\n답: {x['acc'][0]}"
+        elif k == 'type' and sec.startswith('C 쓰기 · 2'): x['exp'] = f"{x['prompt']}\n답: {'Đúng' if x['acc'][0] == 'Đúng' else x['fix']}\n{x['fix']} — {x.get('ko', '')}"
         elif sec.startswith('B 읽기 · 1'): full = x['prompt'].replace('____', x['opts'][x['ans']]); x['exp'] = f"{full}\n{ko(full)}"
         elif sec.startswith('B 읽기 · 2'): x['exp'] = f"물음: {x['prompt']} — {ko(x['prompt'])}\n글: {ko(x['text'])}\n답: {x['opts'][x['ans']]}"
         elif sec.startswith('B 읽기 · 3'): x['exp'] = f"{x['prompt']} — {ko(x['prompt'])}\n글: {ko(x['text'])}\n→ {'맞다' if x['ans'] else '틀리다'}"

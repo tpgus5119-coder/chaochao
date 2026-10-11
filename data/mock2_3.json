@@ -321,161 +321,116 @@
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Bây giờ chúng ta đi đâu? B: Chúng ta đi mua ____.",
    "audio": "Chúng ta đi mua sách.",
-   "opts": [
-    "sách",
-    "bia",
-    "cà phê",
-    "áo dài"
+   "acc": [
+    "sách"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Chúng ta đi mua sách.\n우리 책 사러 가요.\n답: sách"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Nhà sách ở đâu? B: Ở số ____ đường Nguyễn Huệ.",
    "audio": "Ở số 40 đường Nguyễn Huệ.",
-   "opts": [
+   "acc": [
     "40",
-    "14",
-    "4",
-    "44"
+    "bốn mươi"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Ở số 40 đường Nguyễn Huệ.\n응우옌후에 거리 40번지요.\n답: 40"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh muốn mua sách gì? B: Sách ____ Việt Nam.",
    "audio": "Sách lịch sử Việt Nam.",
-   "opts": [
-    "lịch sử",
-    "tiếng Việt",
-    "tiếng Anh",
-    "tiếng Nhật"
+   "acc": [
+    "lịch sử"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Sách lịch sử Việt Nam.\n베트남 역사책이요.\n답: lịch sử"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Gần Đài Truyền hình Thành phố, phải không cô? B: ____ rồi, anh.",
    "audio": "Đúng rồi, anh.",
-   "opts": [
-    "Đúng",
-    "Sắp",
-    "Có",
-    "Không"
+   "acc": [
+    "Đúng"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Đúng rồi, anh.\n맞아요.\n답: Đúng"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh có biết nhà hàng nào ngon không? B: Có, tôi biết một nhà hàng ở ____.",
    "audio": "Có, tôi biết một nhà hàng ở Quận 1.",
-   "opts": [
+   "acc": [
     "Quận 1",
-    "Quận 2",
-    "Quận 7",
-    "Quận 3"
+    "Quận một"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Có, tôi biết một nhà hàng ở Quận 1.\n네, 1군에 있는 식당을 하나 알아요.\n답: Quận 1"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Ngày mai chị có rảnh không? B: Có, tôi rảnh từ ____ giờ chiều.",
    "audio": "Có, tôi rảnh từ 2 giờ chiều.",
-   "opts": [
+   "acc": [
     "2",
-    "3",
-    "4",
-    "5"
+    "hai"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Có, tôi rảnh từ 2 giờ chiều.\n네, 오후 2시부터 한가해요.\n답: 2"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh có biết chỗ đó địa chỉ số mấy không? B: Số ____, Quận 1.",
    "audio": "Số 125, Quận 1.",
-   "opts": [
+   "acc": [
     "125",
-    "152",
-    "25",
-    "215"
+    "một trăm hai mươi lăm"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Số 125, Quận 1.\n1군 125번지요.\n답: 125"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Tối nay chúng ta ăn ở đâu? B: Ở quán ăn gần ____ nhé.",
    "audio": "Ở quán ăn gần trường nhé.",
-   "opts": [
-    "trường",
-    "nhà",
-    "công ty",
-    "ngân hàng"
+   "acc": [
+    "trường"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Ở quán ăn gần trường nhé.\n학교 근처 식당에서요.\n답: trường"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Tắc xi sắp đến chưa anh? B: Sắp ____ rồi, cô.",
    "audio": "Sắp đến rồi, cô.",
-   "opts": [
-    "đến",
-    "đi",
-    "về",
-    "ăn"
+   "acc": [
+    "đến"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Sắp đến rồi, cô.\n곧 와요.\n답: đến"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Cô nói tiếng Việt giỏi quá! B: ____ anh.",
    "audio": "Cám ơn anh.",
-   "opts": [
+   "acc": [
     "Cám ơn",
-    "Xin lỗi",
-    "Chào",
-    "Tạm biệt"
+    "cảm ơn"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Cám ơn anh.\n고마워요.\n답: Cám ơn"
   },
@@ -964,78 +919,67 @@
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Bảo tàng ở đâu gần trường Nhân văn.",
-   "opts": [
-    "Bảo tàng ở gần trường Nhân văn.",
-    "Đúng — 맞는 문장",
-    "Bảo tàng ở gần Nhân văn trường."
+   "acc": [
+    "Bảo tàng ở gần trường Nhân văn."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Bảo tàng ở gần trường Nhân văn.",
    "ko": "박물관은 인문대학 근처에 있어요.",
+   "dung": true,
    "exp": "Bảo tàng ở đâu gần trường Nhân văn.\n답: Bảo tàng ở gần trường Nhân văn.\nBảo tàng ở gần trường Nhân văn. — 박물관은 인문대학 근처에 있어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Hôm qua anh ấy sẽ mua sách ở đó.",
-   "opts": [
-    "Hôm qua anh ấy đã mua sách ở đó.",
-    "Đúng — 맞는 문장",
-    "Hôm qua anh ấy đã mua ở đó sách."
+   "acc": [
+    "Hôm qua anh ấy đã mua sách ở đó."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Hôm qua anh ấy đã mua sách ở đó.",
    "ko": "어제 그는 거기서 책을 샀어요.",
+   "dung": true,
    "exp": "Hôm qua anh ấy sẽ mua sách ở đó.\n답: Hôm qua anh ấy đã mua sách ở đó.\nHôm qua anh ấy đã mua sách ở đó. — 어제 그는 거기서 책을 샀어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Anh biết địa chỉ nhà sách không có?",
-   "opts": [
-    "Anh có biết địa chỉ nhà sách không?",
-    "Đúng — 맞는 문장",
-    "Anh có biết địa chỉ không nhà sách?"
+   "acc": [
+    "Anh có biết địa chỉ nhà sách không?"
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Anh có biết địa chỉ nhà sách không?",
    "ko": "서점 주소를 알아요?",
+   "dung": true,
    "exp": "Anh biết địa chỉ nhà sách không có?\n답: Anh có biết địa chỉ nhà sách không?\nAnh có biết địa chỉ nhà sách không? — 서점 주소를 알아요?"
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Cà phê ở đây ngon lắm.",
-   "opts": [
-    "Đúng — 맞는 문장",
-    "Cà phê ở đây rất ngon lắm.",
-    "Cà phê ở đây lắm ngon."
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Cà phê ở đây ngon lắm."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Cà phê ở đây ngon lắm.",
    "ko": "여기 커피는 아주 맛있어요.",
-   "exp": "Cà phê ở đây ngon lắm.\n답: Đúng — 맞는 문장\nCà phê ở đây ngon lắm. — 여기 커피는 아주 맛있어요."
+   "dung": true,
+   "exp": "Cà phê ở đây ngon lắm.\n답: Đúng\nCà phê ở đây ngon lắm. — 여기 커피는 아주 맛있어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Ngày mai tôi sẽ đi tham quan bảo tàng.",
-   "opts": [
-    "Đúng — 맞는 문장",
-    "Ngày mai tôi đi sẽ tham quan bảo tàng.",
-    "Ngày mai sẽ tôi đi tham quan bảo tàng."
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Ngày mai tôi sẽ đi tham quan bảo tàng."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Ngày mai tôi sẽ đi tham quan bảo tàng.",
    "ko": "내일 저는 박물관을 구경하러 갈 거예요.",
-   "exp": "Ngày mai tôi sẽ đi tham quan bảo tàng.\n답: Đúng — 맞는 문장\nNgày mai tôi sẽ đi tham quan bảo tàng. — 내일 저는 박물관을 구경하러 갈 거예요."
+   "dung": true,
+   "exp": "Ngày mai tôi sẽ đi tham quan bảo tàng.\n답: Đúng\nNgày mai tôi sẽ đi tham quan bảo tàng. — 내일 저는 박물관을 구경하러 갈 거예요."
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",

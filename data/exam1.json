@@ -250,153 +250,104 @@
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "Trước đây Tom học tiếng Thái Lan ở ____.",
    "audio": "Trước đây Tom học tiếng Thái Lan ở Mỹ.",
-   "opts": [
-    "Mỹ",
-    "Nhật",
-    "Úc",
-    "Hàn Quốc"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "Mỹ"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "Chị Linda không ____ anh James.",
    "audio": "Chị Linda không gặp anh James.",
-   "opts": [
-    "gặp",
-    "biết",
-    "chào",
-    "giới thiệu"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "gặp"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "Bạn ông ấy là người ____.",
    "audio": "Bạn ông ấy là người Nhật.",
-   "opts": [
-    "Nhật",
-    "Mỹ",
-    "Đức",
-    "Pháp"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "Nhật"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "Anh ấy ____ là Jack.",
    "audio": "Anh ấy không phải là Jack.",
-   "opts": [
-    "không phải",
-    "cũng",
-    "đều",
-    "đã"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "không phải"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "Học sinh lớp em ấy ____ là người Hàn Quốc.",
    "audio": "Học sinh lớp em ấy đều là người Hàn Quốc.",
-   "opts": [
-    "đều",
-    "cũng",
-    "không",
-    "đã"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "đều"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Chị học tiếng Việt mấy tháng? B: Tôi học ____ tháng.",
    "audio": "Tôi học sáu tháng.",
-   "opts": [
+   "made": true,
+   "acc": [
     "sáu",
-    "hai",
-    "mười",
-    "một"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+    "6"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh ấy là người nước nào? B: Anh ấy là người ____.",
    "audio": "Anh ấy là người Đức.",
-   "opts": [
-    "Đức",
-    "Pháp",
-    "Anh",
-    "Mỹ"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "Đức"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Tiếng Việt thế nào? B: Tiếng Việt khó nhưng ____.",
    "audio": "Tiếng Việt khó nhưng thú vị.",
-   "opts": [
-    "thú vị",
-    "dễ",
-    "mệt",
-    "bận"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "thú vị"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Các anh muốn gặp ai? B: Chúng tôi muốn gặp ____.",
    "audio": "Chúng tôi muốn gặp cô Hoa.",
-   "opts": [
-    "cô Hoa",
-    "anh Long",
-    "chị Mai",
-    "ông Kim"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "cô Hoa"
+   ]
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "Không, bà ấy rất ____.",
    "audio": "Không, bà ấy rất mệt.",
-   "opts": [
-    "mệt",
-    "khỏe",
-    "vui",
-    "bận"
-   ],
-   "ans": 0,
-   "shuffle": true,
-   "made": true
+   "made": true,
+   "acc": [
+    "mệt"
+   ]
   },
   {
    "sec": "B 읽기 · 1 빈칸",
@@ -849,58 +800,57 @@
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Chị là người Việt không phải?",
-   "opts": [
-    "Chị là người Việt phải không?",
-    "Đúng — 맞는 문장",
-    "Chị không phải là người Việt?"
+   "acc": [
+    "Chị là người Việt phải không?"
    ],
-   "ans": 0
+   "fix": "Chị là người Việt phải không?",
+   "dung": true
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Giáo viên của tôi là người nước Úc.",
-   "opts": [
-    "Đúng — 맞는 문장",
-    "Giáo viên của tôi là người Úc.",
-    "Giáo viên tôi là nước Úc."
+   "acc": [
+    "Giáo viên của tôi là người Úc."
    ],
-   "ans": 1
+   "fix": "Giáo viên của tôi là người Úc.",
+   "dung": true
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Hôm qua chị có gặp anh Hòa không?",
-   "opts": [
-    "Đúng — 맞는 문장",
-    "Hôm qua chị gặp anh Hòa có không?",
-    "Hôm qua chị có gặp không anh Hòa?"
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Hôm qua chị có gặp anh Hòa không?"
    ],
-   "ans": 0
+   "fix": "Hôm qua chị có gặp anh Hòa không?",
+   "dung": true
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Em đã học tiếng Việt ở Hàn Quốc.",
-   "opts": [
-    "Em học đã tiếng Việt ở Hàn Quốc.",
-    "Đúng — 맞는 문장",
-    "Em đã học ở Hàn Quốc tiếng Việt."
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Em đã học tiếng Việt ở Hàn Quốc."
    ],
-   "ans": 1
+   "fix": "Em đã học tiếng Việt ở Hàn Quốc.",
+   "dung": true
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Chúng tôi khỏe đều.",
-   "opts": [
-    "Chúng tôi đều khỏe.",
-    "Đúng — 맞는 문장",
-    "Đều chúng tôi khỏe."
+   "acc": [
+    "Chúng tôi đều khỏe."
    ],
-   "ans": 0
+   "fix": "Chúng tôi đều khỏe.",
+   "dung": true
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",

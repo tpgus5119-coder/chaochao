@@ -321,161 +321,114 @@
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh làm nghề gì? B: Tôi là ____ ở ngân hàng.",
    "audio": "Tôi là kế toán ở ngân hàng.",
-   "opts": [
-    "kế toán",
-    "kỹ sư",
-    "thư ký",
-    "bác sĩ"
+   "acc": [
+    "kế toán"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Tôi là kế toán ở ngân hàng.\n저는 은행 회계사예요.\n답: kế toán"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Chị làm việc ở đâu? B: Ở ____.",
    "audio": "Ở công ty máy tính.",
-   "opts": [
-    "công ty máy tính",
-    "ngân hàng",
-    "bệnh viện",
-    "siêu thị"
+   "acc": [
+    "công ty máy tính"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Ở công ty máy tính.\n컴퓨터 회사에서요.\n답: công ty máy tính"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh học tiếng Việt mấy tháng rồi? B: Tôi học được ____ tháng rồi.",
    "audio": "Tôi học được ba tháng rồi.",
-   "opts": [
+   "acc": [
     "ba",
-    "hai",
-    "năm",
-    "bảy"
+    "3"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Tôi học được ba tháng rồi.\n3개월 배웠어요.\n답: ba"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Lớp của anh có bao nhiêu học viên? B: Khoảng ____ người.",
    "audio": "Khoảng 15 người.",
-   "opts": [
+   "acc": [
     "15",
-    "50",
-    "5",
-    "500"
+    "mười lăm"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Khoảng 15 người.\n15명쯤이요.\n답: 15"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Buổi chiều chị làm việc từ mấy giờ đến mấy giờ? B: Từ 2 giờ đến ____ giờ tối.",
    "audio": "Từ 2 giờ đến 7 giờ tối.",
-   "opts": [
+   "acc": [
     "7",
-    "6",
-    "9",
-    "11"
+    "bảy"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Từ 2 giờ đến 7 giờ tối.\n2시부터 저녁 7시까지요.\n답: 7"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Dạo này anh làm gì? B: Tôi đang làm ____ ở một công ty.",
    "audio": "Tôi đang làm thư ký ở một công ty.",
-   "opts": [
-    "thư ký",
-    "kế toán",
-    "kỹ sư",
-    "nhân viên"
+   "acc": [
+    "thư ký"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Tôi đang làm thư ký ở một công ty.\n저는 한 회사에서 비서로 일하고 있어요.\n답: thư ký"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Cô ấy cũng làm kỹ sư, phải không? B: Không, cô ấy ____ thư ký.",
    "audio": "Không, cô ấy là thư ký.",
-   "opts": [
-    "là",
-    "có",
-    "ở",
-    "đi"
+   "acc": [
+    "là"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Không, cô ấy là thư ký.\n아니요, 그녀는 비서예요.\n답: là"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Hôm qua anh có đi làm không? B: Có, nhưng tôi đến ____ trễ.",
    "audio": "Có, nhưng tôi đến hơi trễ.",
-   "opts": [
-    "hơi",
-    "rất",
-    "cũng",
-    "đã"
+   "acc": [
+    "hơi"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Có, nhưng tôi đến hơi trễ.\n네, 그런데 조금 늦게 갔어요.\n답: hơi"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh sắp đi làm chưa? B: ____ rồi. Tôi đi ngay.",
    "audio": "Sắp rồi. Tôi đi ngay.",
-   "opts": [
-    "Sắp",
-    "Chưa",
-    "Có",
-    "Không"
+   "acc": [
+    "Sắp"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Sắp rồi. Tôi đi ngay.\n곧이요. 바로 가요.\n답: Sắp"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Công việc của chị thế nào? B: Hơi vất vả nhưng ____.",
    "audio": "Hơi vất vả nhưng thú vị.",
-   "opts": [
-    "thú vị",
-    "dễ",
-    "bận",
-    "mệt"
+   "acc": [
+    "thú vị"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Hơi vất vả nhưng thú vị.\n조금 힘들지만 재미있어요.\n답: thú vị"
   },
@@ -965,78 +918,72 @@
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Chị ấy học tiếng Việt từ 2 giờ và 4 giờ.",
-   "opts": [
+   "acc": [
     "Chị ấy học tiếng Việt từ 2 giờ đến 4 giờ.",
-    "Đúng — 맞는 문장",
-    "Chị ấy học tiếng Việt đến 2 giờ từ 4 giờ."
+    "Chị ấy học tiếng Việt từ hai giờ đến 4 giờ.",
+    "Chị ấy học tiếng Việt từ 2 giờ đến bốn giờ.",
+    "Chị ấy học tiếng Việt từ hai giờ đến bốn giờ."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Chị ấy học tiếng Việt từ 2 giờ đến 4 giờ.",
    "ko": "그녀는 2시부터 4시까지 베트남어를 배워요.",
+   "dung": true,
    "exp": "Chị ấy học tiếng Việt từ 2 giờ và 4 giờ.\n답: Chị ấy học tiếng Việt từ 2 giờ đến 4 giờ.\nChị ấy học tiếng Việt từ 2 giờ đến 4 giờ. — 그녀는 2시부터 4시까지 베트남어를 배워요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Công ty của tôi có nhân viên 30.",
-   "opts": [
+   "acc": [
     "Công ty của tôi có 30 nhân viên.",
-    "Đúng — 맞는 문장",
-    "Công ty của tôi 30 có nhân viên."
+    "Công ty của tôi có ba mươi nhân viên."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Công ty của tôi có 30 nhân viên.",
    "ko": "우리 회사에는 직원이 30명 있어요.",
+   "dung": true,
    "exp": "Công ty của tôi có nhân viên 30.\n답: Công ty của tôi có 30 nhân viên.\nCông ty của tôi có 30 nhân viên. — 우리 회사에는 직원이 30명 있어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Anh ấy đi ăn trưa lúc giờ 12.",
-   "opts": [
+   "acc": [
     "Anh ấy đi ăn trưa lúc 12 giờ.",
-    "Đúng — 맞는 문장",
-    "Anh ấy ăn đi trưa lúc 12 giờ."
+    "Anh ấy đi ăn trưa lúc mười hai giờ."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Anh ấy đi ăn trưa lúc 12 giờ.",
    "ko": "그는 12시에 점심을 먹으러 가요.",
+   "dung": true,
    "exp": "Anh ấy đi ăn trưa lúc giờ 12.\n답: Anh ấy đi ăn trưa lúc 12 giờ.\nAnh ấy đi ăn trưa lúc 12 giờ. — 그는 12시에 점심을 먹으러 가요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Hôm nay tôi rất mệt.",
-   "opts": [
-    "Đúng — 맞는 문장",
-    "Hôm nay tôi mệt rất.",
-    "Hôm nay rất tôi mệt."
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Hôm nay tôi rất mệt."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Hôm nay tôi rất mệt.",
    "ko": "오늘 저는 아주 피곤해요.",
-   "exp": "Hôm nay tôi rất mệt.\n답: Đúng — 맞는 문장\nHôm nay tôi rất mệt. — 오늘 저는 아주 피곤해요."
+   "dung": true,
+   "exp": "Hôm nay tôi rất mệt.\n답: Đúng\nHôm nay tôi rất mệt. — 오늘 저는 아주 피곤해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Anh ấy cũng làm kế toán, phải không?",
-   "opts": [
-    "Đúng — 맞는 문장",
-    "Anh ấy cũng làm kế toán, không phải?",
-    "Anh ấy làm cũng kế toán, phải không?"
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Anh ấy cũng làm kế toán, phải không?"
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Anh ấy cũng làm kế toán, phải không?",
    "ko": "그도 회계사로 일하죠?",
-   "exp": "Anh ấy cũng làm kế toán, phải không?\n답: Đúng — 맞는 문장\nAnh ấy cũng làm kế toán, phải không? — 그도 회계사로 일하죠?"
+   "dung": true,
+   "exp": "Anh ấy cũng làm kế toán, phải không?\n답: Đúng\nAnh ấy cũng làm kế toán, phải không? — 그도 회계사로 일하죠?"
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",

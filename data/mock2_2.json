@@ -321,161 +321,115 @@
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Chị sắp đi ăn trưa chưa? B: Sắp rồi. Bây giờ tôi hơi ____.",
    "audio": "Sắp rồi. Bây giờ tôi hơi đói.",
-   "opts": [
-    "đói",
-    "mệt",
-    "bận",
-    "buồn ngủ"
+   "acc": [
+    "đói"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Sắp rồi. Bây giờ tôi hơi đói.\n곧이요. 지금 조금 배고파요.\n답: đói"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh làm việc ở đâu? B: Ở ____.",
    "audio": "Ở ngân hàng.",
-   "opts": [
-    "ngân hàng",
-    "bệnh viện",
-    "siêu thị",
-    "bưu điện"
+   "acc": [
+    "ngân hàng"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Ở ngân hàng.\n은행에서요.\n답: ngân hàng"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Em đi học lúc mấy giờ? B: Lúc ____ giờ sáng.",
    "audio": "Lúc 8 giờ sáng.",
-   "opts": [
+   "acc": [
     "8",
-    "7",
-    "9",
-    "10"
+    "tám"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Lúc 8 giờ sáng.\n아침 8시에요.\n답: 8"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Từ nhà đến công ty mất bao lâu? B: Khoảng ____ phút.",
    "audio": "Khoảng 40 phút.",
-   "opts": [
+   "acc": [
     "40",
-    "14",
-    "30",
-    "50"
+    "bốn mươi"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Khoảng 40 phút.\n40분쯤이요.\n답: 40"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Cuối tuần chị thường làm gì? B: Tôi thường đi chơi với ____.",
    "audio": "Tôi thường đi chơi với bạn.",
-   "opts": [
-    "bạn",
-    "mẹ",
-    "bố",
-    "em"
+   "acc": [
+    "bạn"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Tôi thường đi chơi với bạn.\n보통 친구와 놀러 가요.\n답: bạn"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Lớp anh có bao nhiêu sinh viên? B: Khoảng ____ sinh viên.",
    "audio": "Khoảng 20 sinh viên.",
-   "opts": [
+   "acc": [
     "20",
-    "12",
-    "25",
-    "200"
+    "hai mươi"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Khoảng 20 sinh viên.\n학생 20명쯤이요.\n답: 20"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Anh đi làm bằng gì? B: Bằng ____.",
    "audio": "Bằng xe buýt.",
-   "opts": [
-    "xe buýt",
-    "tắc xi",
-    "máy bay",
-    "đi bộ"
+   "acc": [
+    "xe buýt"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Bằng xe buýt.\n버스로요.\n답: xe buýt"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Hôm nay chị có bận không? B: Có, hôm nay tôi ____ bận.",
    "audio": "Có, hôm nay tôi rất bận.",
-   "opts": [
-    "rất",
-    "hơi",
-    "không",
-    "cũng"
+   "acc": [
+    "rất"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Có, hôm nay tôi rất bận.\n네, 오늘 아주 바빠요.\n답: rất"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Buổi trưa anh thường ăn ở đâu? B: Ở ____ công ty.",
    "audio": "Ở căng tin công ty.",
-   "opts": [
-    "căng tin",
-    "văn phòng",
-    "nhà hàng",
-    "quán ăn"
+   "acc": [
+    "căng tin"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Ở căng tin công ty.\n회사 구내식당에서요.\n답: căng tin"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
-   "k": "choice",
+   "k": "type",
    "prompt": "A: Hôm qua chị đi ngủ lúc mấy giờ? B: Lúc ____ giờ đêm.",
    "audio": "Lúc 12 giờ đêm.",
-   "opts": [
+   "acc": [
     "12",
-    "10",
-    "11",
-    "1"
+    "mười hai"
    ],
-   "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 말: Lúc 12 giờ đêm.\n밤 12시에요.\n답: 12"
   },
@@ -961,78 +915,68 @@
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Chị ấy rất đẹp lắm.",
-   "opts": [
-    "Chị ấy rất đẹp.",
-    "Đúng — 맞는 문장",
-    "Chị ấy đẹp rất."
+   "acc": [
+    "Chị ấy rất đẹp."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Chị ấy rất đẹp.",
    "ko": "그녀는 아주 예뻐요.",
+   "dung": true,
    "exp": "Chị ấy rất đẹp lắm.\n답: Chị ấy rất đẹp.\nChị ấy rất đẹp. — 그녀는 아주 예뻐요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Anh ấy hơi mệt lắm.",
-   "opts": [
-    "Anh ấy hơi mệt.",
-    "Đúng — 맞는 문장",
-    "Anh ấy mệt hơi."
+   "acc": [
+    "Anh ấy hơi mệt."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Anh ấy hơi mệt.",
    "ko": "그는 조금 피곤해요.",
+   "dung": true,
    "exp": "Anh ấy hơi mệt lắm.\n답: Anh ấy hơi mệt.\nAnh ấy hơi mệt. — 그는 조금 피곤해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Tôi đi làm bằng lúc 8 giờ.",
-   "opts": [
+   "acc": [
     "Tôi đi làm lúc 8 giờ.",
-    "Đúng — 맞는 문장",
-    "Tôi đi làm lúc giờ 8."
+    "Tôi đi làm lúc tám giờ."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Tôi đi làm lúc 8 giờ.",
    "ko": "저는 8시에 출근해요.",
+   "dung": true,
    "exp": "Tôi đi làm bằng lúc 8 giờ.\n답: Tôi đi làm lúc 8 giờ.\nTôi đi làm lúc 8 giờ. — 저는 8시에 출근해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Anh ấy là bác sĩ, phải không?",
-   "opts": [
-    "Đúng — 맞는 문장",
-    "Anh ấy là bác sĩ, không phải?",
-    "Anh ấy bác sĩ là, phải không?"
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Anh ấy là bác sĩ, phải không?"
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Anh ấy là bác sĩ, phải không?",
    "ko": "그는 의사죠?",
-   "exp": "Anh ấy là bác sĩ, phải không?\n답: Đúng — 맞는 문장\nAnh ấy là bác sĩ, phải không? — 그는 의사죠?"
+   "dung": true,
+   "exp": "Anh ấy là bác sĩ, phải không?\n답: Đúng\nAnh ấy là bác sĩ, phải không? — 그는 의사죠?"
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "choice",
+   "k": "type",
    "prompt": "Em ấy thường đi học sớm.",
-   "opts": [
-    "Đúng — 맞는 문장",
-    "Em ấy đi học thường sớm.",
-    "Em ấy thường sớm đi học."
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Em ấy thường đi học sớm."
    ],
-   "ans": 0,
-   "shuffle": true,
    "fix": "Em ấy thường đi học sớm.",
    "ko": "그 아이는 보통 일찍 학교에 가요.",
-   "exp": "Em ấy thường đi học sớm.\n답: Đúng — 맞는 문장\nEm ấy thường đi học sớm. — 그 아이는 보통 일찍 학교에 가요."
+   "dung": true,
+   "exp": "Em ấy thường đi học sớm.\n답: Đúng\nEm ấy thường đi học sớm. — 그 아이는 보통 일찍 학교에 가요."
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",
