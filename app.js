@@ -1575,6 +1575,13 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) relea
 
 const canRecord = () => !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
 
+/* 녹음 중에는 화면 전체를 큰 빨간 테두리로 천천히 반짝인다 (대표님 2026-10-11 "녹음되고 있다는 표시로") — 녹음기 시작·끝에 맞춰 body.recording */
+function recGlow(mr) {
+  document.body.classList.add('recording');                 // 녹음기는 만든 바로 다음에 켠다(네 곳 모두) — 'start' 사건은 늦거나 안 오는 기기가 있다
+  const off = () => document.body.classList.remove('recording');
+  mr.addEventListener('stop', off); mr.addEventListener('error', off);
+  setTimeout(() => { if (mr.state === 'inactive') off(); }, 1500);   // 켜지지 못했으면 끈다
+}
 async function toggleRec(text, btn, box) {
   if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
   // '녹음은 어디에 남나요' 안내창은 뺐다 (대표님 지시 2026-09-28). 녹음은 서버로 가지 않고 폰 안에서만 잠깐 쓴다는 사실은 그대로다
@@ -1585,7 +1592,7 @@ async function toggleRec(text, btn, box) {
     return;
   }
   const chunks = [];
-  const mr = new MediaRecorder(REC.stream);
+  const mr = new MediaRecorder(REC.stream); recGlow(mr);
   REC.mr = mr; REC.key = text;
   mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
   mr.onstop = () => {
@@ -2446,7 +2453,7 @@ async function freeRec(btn, box) {
   if (REC.mr && REC.mr.state === 'recording') { REC.mr.stop(); return; }
   try { if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
   catch (e) { box.textContent = tr('마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.'); return; }
-  const chunks = [], mr = new MediaRecorder(REC.stream); REC.mr = mr; REC.key = null;
+  const chunks = [], mr = new MediaRecorder(REC.stream); recGlow(mr); REC.mr = mr; REC.key = null;
   mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
   const secs = 20;
   const kill = liveRec(box, REC.stream, secs, () => { if (mr.state === 'recording') mr.stop(); });
@@ -6365,7 +6372,7 @@ async function recordAndGrade(question, passage, out, btn) {
     if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   } catch (e) { out.textContent = '마이크를 쓸 수 없습니다. 브라우저 설정에서 허용해 주세요.'; return; }
   const chunks = [];
-  const mr = new MediaRecorder(REC.stream);
+  const mr = new MediaRecorder(REC.stream); recGlow(mr);
   REC.mr = mr;
   mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
   mr.onstop = async () => {
@@ -6450,7 +6457,7 @@ function t2SpeakRun(q, host, out) {
       if (!REC.stream) REC.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     } catch (e) { out.textContent = tr('마이크를 쓸 수 없습니다.'); host.textContent = ''; return; }
     const chunks = [];
-    mr = new MediaRecorder(REC.stream);
+    mr = new MediaRecorder(REC.stream); recGlow(mr);
     REC.mr = mr;
     mr.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
     mr.onstop = async () => {
@@ -11738,17 +11745,22 @@ function drawFixed(body, q) {
     let tries = 0, settled = false, aDone = true, v = [], tm = 0;
     const end = ok => {
       if (settled) return; settled = true; clearTimeout(tm);
-      q._ans = true; q._ok = ok; hideSkip(); if (ok) Q.ok++;
-      if (mic) mic.disabled = true;
+      q._ans = true; q._ok = ok; hideSkip(); if (ok) Q.ok++;   // 마이크는 그대로 — 그 뒤로는 연습 (대표님 2026-10-11 "더 연습할 수 있게, 2번 초과는 점수에 안 넣고")
       const nb = el('button', 'primary big', tr('다음') + ' ›'); nb.type = 'button'; nb.style.width = '100%'; nb.style.marginTop = '12px';
       nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
       resumeSave();
     };
     const attemptEnd = pass => { if (aDone || q._peek) return; aDone = true; clearTimeout(tm); if (pass) end(true); else if (tries >= 2) end(false); };
+    if (q._prev) {                                          // [‹ 이전] 으로 돌아온 말하기 문항 — 두 번 기회는 이미 썼다. 점수는 그대로 두고 마이크는 연습만 (2026-10-11)
+      const pv = q._prev; delete q._prev; settled = true; tries = 2;
+      q._ans = true; q._ok = pv.ok; if (pv.ok) Q.ok++;
+      const nb = el('button', 'primary big', tr('다음') + ' ›'); nb.type = 'button'; nb.style.width = '100%'; nb.style.marginTop = '12px';
+      nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
+    }
     cb.onJudge = (i, ok) => { if (settled || aDone || q._peek || ok === null) return; if (ok === false) return attemptEnd(false); v[i] = true; if (v[0] && v[1]) attemptEnd(true); };
     if (mic) mic.onclick = () => {
       const recording = REC.mr && REC.mr.state === 'recording';
-      if (!recording) { if (settled || tries >= 2) return; tries++; v = []; aDone = false; clearTimeout(tm); tm = setTimeout(() => attemptEnd(false), (RECSEC(x.vi) + 10) * 1000); }
+      if (!recording && !settled) { if (tries >= 2) return; tries++; v = []; aDone = false; clearTimeout(tm); tm = setTimeout(() => attemptEnd(false), (RECSEC(x.vi) + 10) * 1000); }   // 점수가 정해진 뒤(settled)의 녹음은 연습 — 발음·높낮이 O/X 는 그대로 보인다
       toggleRec(x.vi, mic, cb);
     };
     if (!mic) end(false);                                   // 녹음이 안 되는 기기 — 말하기는 0점으로 넘어간다

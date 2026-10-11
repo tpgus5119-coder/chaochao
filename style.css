@@ -3130,4 +3130,8 @@ button.rec.rec-on, .ibtn.rec-on{animation:recpulse 1.4s ease-in-out infinite}
 @keyframes vcblink{50%{opacity:0}}
 @media (prefers-reduced-motion: reduce){.vcaret{animation:none}}
 .vk.mv{flex:0 0 auto; min-width:40px}
+/* 녹음 중 — 화면 전체 큰 빨간 테두리가 천천히 반짝 (2026-10-11) */
+body.recording::after{content:''; position:fixed; inset:0; border:8px solid #e0384a; border-radius:14px; pointer-events:none; z-index:99999; animation:recglow 1.4s ease-in-out infinite}
+@keyframes recglow{0%,100%{opacity:1} 50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){body.recording::after{animation:none}}
 
