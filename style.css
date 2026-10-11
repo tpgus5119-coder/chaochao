@@ -3145,4 +3145,23 @@ body.recording::after{content:''; position:fixed; inset:0; border:8px solid #e03
 .marow i[data-r="ok"]{color:var(--ok); font-style:normal; font-weight:800}
 .marow i[data-r="no"]{color:var(--bad); font-style:normal; font-weight:800}
 .picgrid .picopt[data-r]{cursor:default}
+/* 챕터 단어 목록 카드 · 틀린 단어/문법 목록 (2026-10-11) */
+.wlist{display:flex; flex-direction:column; gap:6px; max-height:58vh; overflow:auto; margin:4px 0 10px; text-align:left; width:100%; align-self:stretch; box-sizing:border-box}
+.wwlist{max-height:none}
+.wlrow{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px; padding:10px 12px; border:1px solid var(--line); border-radius:12px; background:var(--card); color:var(--fg); text-align:left; cursor:pointer; font-size:17px}
+.wlrow b{font-size:18px}
+.wlkr{color:var(--dim); font-size:14px}
+.wlko{flex-basis:100%; color:var(--dim); font-size:14px}
+.gwrow{position:relative; padding-right:48px}
+.gwrow .accpill{position:absolute; right:12px; top:50%; transform:translateY(-50%)}
+.wlgo{width:100%; margin-top:6px}
+.extools{display:flex; flex-direction:column; gap:8px; margin-top:16px}
+/* 채점된 시험지 전체 */
+.ppsec{margin:18px 0 6px; font-weight:800; color:var(--dim); font-size:14px}
+.ppitem{border:1px solid var(--line); border-left:5px solid var(--bad); border-radius:12px; padding:10px 12px; margin-bottom:10px; background:var(--card)}
+.ppitem.ok{border-left-color:var(--ok)}
+.pphead{display:flex; align-items:center; gap:8px; margin-bottom:6px}
+.ppmark{font-weight:800}
+.ppitem.ok .ppmark{color:var(--ok)} .ppitem.no .ppmark{color:var(--bad)}
+.ppitem .fximg{max-height:180px}
 

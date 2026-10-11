@@ -7470,6 +7470,7 @@ function startLearn(d) {
   (d.tones || []).forEach(x => items.push({ k: 'tone', d: x }));
   (d.cmp || []).forEach(x => items.push({ k: 'cmp', d: x }));        // 헷갈리는 소리 짝 (기본기 P6)
   (d.after || []).forEach(x => items.push({ k: 'know', d: x }));     // 장 끝 읽을거리 한 장 (받침 규칙 등)
+  if ((d.words || []).length >= 2 && !d.share && !d.gram && !d.know) items.push({ k: 'wlist', d: { words: d.words } });   // 맨 앞에 이 챕터의 단어 목록 (대표님 2026-10-11 "단어 학습 챕터 시작할 때 어떤 단어들이 있는지")
   (d.words || []).forEach(x => items.push({ k: 'word', d: x }));
   L = { day: d, items, i: 0 };
   drawCard();
@@ -9847,6 +9848,19 @@ function drawCard() {
     }
   }
 
+  if (it.k === 'wlist') {                    // 단어 목록 — 줄을 누르면 그 단어 카드로 (2026-10-11)
+    const box = el('div', 'wlist');
+    x.words.forEach(w => {
+      const r = el('button', 'wlrow'); r.type = 'button';
+      const kr = krShow(w);
+      r.innerHTML = '<b>' + esc(w.vi) + '</b>' + (kr ? '<span class="wlkr">[' + esc(kr) + ']</span>' : '') + '<span class="wlko">' + esc(koShow(w.ko || '')) + '</span>';
+      r.onclick = () => { const j = L.items.findIndex(t => t.k === 'word' && t.d === w); if (j >= 0) { L.i = j; drawCard(); } };
+      box.append(r);
+    });
+    c.append(box);
+    const go = el('button', 'primary big wlgo', tr('학습 시작') + ' ›'); go.type = 'button'; go.onclick = () => { L.i++; drawCard(); }; c.append(go);
+  }
+
   if (it.k === 'letter') {
     c.append(el('div', 'vi', esc(x.vi)));
     c.append(el('div', 'ko', esc(x.ko)));   // ko에 발음이 이미 있어 따로 안 겹쳐 쓴다
@@ -10222,6 +10236,8 @@ function drawCard() {
   const kinds = L.items.map(x => x.k);
   if (it.k === 'cover') {
     $('#pos').textContent = '';
+  } else if (it.k === 'wlist') {
+    $('#pos').textContent = tr('단어') + ' ' + it.d.words.length;
   } else if (it.k === 'dialog') {
     $('#pos').textContent = '오늘의 대화';
   } else {
@@ -11858,6 +11874,8 @@ function examRound(r, k) {
     sh.onclick = () => sharePopup(tr(e.name), [], shareEncodeExam(k), n + tr('문제'));
     b.append(sh);
   }
+  const last = wexamLoad(k);
+  if (last) b.append(examTools(last, tr(e.name), () => examRound(r, k)));   // 지난 시험지 — 채점된 시험지 · 틀린 단어 · 틀린 문법 (2026-10-11)
   const runs = (S.stats.wexam || []).filter(x => x.round === k);
   if (runs.length) {
     const best = runs.reduce((a, x) => Math.max(a, x.pts !== undefined ? x.pts : x.ok), 0), mx = runs[runs.length - 1].max || runs[runs.length - 1].tot;
@@ -12158,6 +12176,7 @@ function finishWeekly() {
   r.append(tb);
   S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs, round: Q.fixed || (Q.round || 0), pts: got, max }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
   examWrongList(r, Q.list);
+  if (Q.fixed) { wexamSave(Q.fixed, Q.list); r.append(examTools(Q.list, FIXED_EXAMS[Q.fixed] ? tr(FIXED_EXAMS[Q.fixed].name) : $('#title').textContent, (() => { const qb = $('#quizBody'), tt = $('#title').textContent; return () => { qb.textContent = ''; qb.append(r); show('quiz', tt, true); }; })())); }   // 채점된 시험지 · 틀린 단어 · 틀린 문법 (2026-10-11)
   const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = () => { ACTIVE_TAB = 'home'; renderHome(); }; r.append(b);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
@@ -12183,8 +12202,14 @@ function reviewFx(q0, r, title) {
   const back = () => { Q = Qs; const qb = $('#quizBody'); qb.textContent = ''; qb.append(r); show('quiz', title, true); };
   dive(back);
   const qb = $('#quizBody'); qb.textContent = '';
+  qb.append(fxReviewBlock(q0, true));
+  show('quiz', title, true);
+}
+/* 한 문항 다시 보기 묶음 — 문제 그대로 + 내 답 · 정답 (틀린 것 다시 보기 · 채점된 시험지 전체가 같이 쓴다) */
+function fxReviewBlock(q0, withSec) {
+  const x = q0.w.fx, qb = el('div', 'fxrev');
   const say = t => { const k = recKey(t); k ? play(k, false, undefined, examSpd()) : speakVi(t, false, examSpd()); };
-  qb.append(el('div', 'q', esc(q0.sec || '')));
+  if (withSec) qb.append(el('div', 'q', esc(q0.sec || '')));
   if (x.audio) { const row = el('div', 'qplay'); row.append(listenGroup(() => say(x.audio), { exam: true })); qb.append(row); }   // 듣기 문항은 들은 소리가 곧 지문
   if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; qb.append(im); }
   if (x.k === 'pick') {                                      // 그림 다섯 — 내가 고른 것은 빨강, 맞는 것은 초록
@@ -12197,7 +12222,128 @@ function reviewFx(q0, r, title) {
   const main = x.k === 'puzzle' ? (x.tiles || []).join(' / ') : x.k === 'say' ? x.vi : x.prompt;   // 쓰기 1 은 종이처럼 'Nhật / đều / là …'
   if (main) qb.append(el('div', 'qmain' + (x.k === 'say' && x.vi.split(/\s+/).length <= 2 ? '' : ' sent'), esc(main)));
   const my = myAnsBox(q0, x); if (my) qb.append(my);
-  show('quiz', title, true);
+  return qb;
+}
+/* 시험 뒤 — 채점된 시험지 전체 · 틀린 단어 · 틀린 문법 (대표님 2026-10-11) */
+/* 마지막으로 푼 시험지의 답을 이 기기에 남긴다(서버로는 안 올림) — 시험지 화면에서 다시 볼 수 있게 */
+function wexamSave(k, list) {
+  S.wlast = S.wlast || {};
+  S.wlast[k] = { d: ymd(), a: list.map(q => [q._ok ? 1 : 0, q._pickT || '', q._txt || '', q._fb || null, q._skip ? 1 : 0, q._peek ? 1 : 0, q._ans ? 1 : 0]) };
+  save();
+}
+function wexamLoad(k) {
+  const s0 = S.wlast && S.wlast[k], J = FIXED[k];
+  if (!s0 || !J || s0.a.length !== J.q.length) return null;
+  return J.q.map((x, i) => { const a = s0.a[i]; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: !!a[0], _pickT: a[1], _txt: a[2], _fb: a[3], _skip: !!a[4], _peek: !!a[5], _ans: !!a[6] }; });
+}
+function examTools(list, title, back) {
+  const box = el('div', 'extools');
+  const mk = (t, fn) => { const b = el('button', 'ghost big', t); b.type = 'button'; b.style.width = '100%'; b.onclick = () => { dive(back); fn(); }; box.append(b); };
+  mk('📄 ' + tr('채점된 시험지'), () => paperView(list, title));
+  mk('🃏 ' + tr('틀린 단어'), () => wrongWordsView(list, title));
+  mk('📘 ' + tr('틀린 문법'), () => wrongGramView(list, title));
+  return box;
+}
+function paperView(list, title) {                    // 처음부터 끝까지 — 맞은 것 ✓ · 틀린 것 ✗, 문항마다 문제 그대로 + 내 답 · 정답
+  const qb = $('#quizBody'); qb.textContent = '';
+  let sec = null;
+  list.forEach((q, i) => {
+    if (!q.w || !q.w.fx) return;
+    if (q.sec !== sec) { sec = q.sec; qb.append(el('div', 'ppsec', esc(sec))); }
+    const it = el('div', 'ppitem' + (q._ok ? ' ok' : ' no'));
+    it.append(el('div', 'pphead', '<b>' + (i + 1) + '</b><span class="ppmark">' + (q._ok ? '✓' : '✗') + '</span>'));
+    it.append(fxReviewBlock(q, false));
+    qb.append(it);
+  });
+  show('quiz', title + ' · ' + tr('채점된 시험지'), true);
+}
+/* 틀린 문항에서 단어 — 정답 낱말(빈칸·그림·보기)과 문항 글에서, 교재·앱 낱말과 맞는 것(대명사·조사 같은 기본 말은 빼고) */
+const WW_STOP = new Set(['tôi', 'anh', 'chị', 'em', 'ông', 'bà', 'cô', 'ấy', 'anh ấy', 'chị ấy', 'em ấy', 'cô ấy', 'ông ấy', 'bà ấy', 'là', 'có', 'không', 'ở', 'và', 'của', 'này', 'đó', 'đây', 'rất', 'đang', 'cũng', 'các', 'một', 'những', 'với', 'cho', 'được', 'đã', 'sẽ', 'thì', 'mà', 'nhé', 'à', 'hả', 'ạ', 'ơi', 'phải', 'gì', 'ai', 'đâu', 'nào', 'mấy', 'rồi', 'chưa', 'lắm', 'quá', 'họ', 'chúng tôi', 'chúng ta', 'nó', 'người', 'a', 'b', 'phải không', 'đúng']);
+function fxKeyTexts(x) {                              // [정답 칸(한 음절 낱말도 넣는다), 문항 글(두 음절 이상만)]
+  const fill = p => String(p || '').replace('____', (x.acc && x.acc[0]) || (x.opts && x.opts[x.ans]) || '');
+  if (x.k === 'tf') return x.text ? [[], [x.prompt]] : [[x.word], [x.audio]];
+  if (x.k === 'pick') return [[x.words && x.words[x.ans]], [x.audio]];
+  if (x.k === 'choice') return /^B 읽기 · 4/.test(x.sec || '') ? [[], [x.opts[x.ans], x.prompt]] : [[x.opts[x.ans]], [fill(x.prompt)]];
+  if (x.k === 'type') return x.audio ? [[x.acc && x.acc[0]], [fill(x.prompt)]] : [[], [x.fix]];
+  if (x.k === 'say') return x.vi.split(/\s+/).length <= 3 && !/[.?!]$/.test(x.vi) ? [[x.vi], []] : [[], [x.vi]];
+  if (x.k === 'puzzle') return [[], [x.vi]];
+  return [[], []];
+}
+function wrongWordsOf(list) {
+  /* 교재(메인) 낱말로만 찾는다 — 일상 주제 목록의 '구절'(giờ đến 같은 것)이 끼지 않게. 정답 칸이 교재에 없을 때만 다른 목록에서 */
+  const map = new Map(), alt = new Map(), put = m => w => { if (!w || !w.vi || w.sent) return; const k = w.vi.normalize('NFC').toLowerCase().trim(); if (!m.has(k)) m.set(k, w); };
+  const main = (GYBM || []).find(z => z.key === 'main'); if (main) main.lessons.forEach(l => l.words.forEach(put(map)));
+  (GYBM ? gybmAllWords() : []).forEach(put(alt)); allWords().forEach(put(alt));
+  const out = new Map();
+  const scan = (t, keyText) => {
+    const toks = String(t).normalize('NFC').toLowerCase().replace(/[.,!?;:"“”()%]/g, ' ').split(/\s+/).filter(Boolean);
+    if (keyText) { const k = toks.join(' '); const w = map.get(k) || alt.get(k); if (w && !WW_STOP.has(k)) { if (!out.has(k)) out.set(k, w); return; } }   // 정답 칸이 통째로 한 낱말이면 그대로
+    for (let i = 0; i < toks.length;) {
+      let hit = 0;
+      for (let n = Math.min(4, toks.length - i); n >= 1; n--) { const k = toks.slice(i, i + n).join(' '); if (map.has(k)) { if ((n > 1 || keyText) && !WW_STOP.has(k) && !out.has(k)) out.set(k, map.get(k)); hit = n; break; } }
+      i += hit || 1;
+    }
+  };
+  list.filter(q => !q._ok && q.w && q.w.fx).forEach(q => { const [keys, rest] = fxKeyTexts(q.w.fx); keys.filter(Boolean).forEach(t => scan(t, true)); rest.filter(Boolean).forEach(t => scan(t, false)); });
+  return [...out.values()];
+}
+function wrongWordsView(list, title) {
+  const qb = $('#quizBody'); qb.textContent = '';
+  const go = () => {
+    const ws = wrongWordsOf(list);
+    qb.textContent = '';
+    qb.append(el('p', 'lede', tr('틀린 단어') + ' ' + ws.length));
+    if (ws.length) {
+      const study = el('button', 'primary big', '🃏 ' + tr('카드로 학습')); study.type = 'button'; study.style.width = '100%';
+      study.onclick = () => { dive(() => wrongWordsView(list, title)); startLearn({ day: 'WX:' + title, theme: title + ' · ' + tr('틀린 단어'), words: ws.slice(), cardsOnly: true }); };
+      qb.append(study);
+      const box = el('div', 'wlist wwlist');
+      ws.forEach(w => {
+        const r = el('button', 'wlrow'); r.type = 'button'; const kr = krShow(w);
+        r.innerHTML = '<b>' + esc(w.vi) + '</b>' + (kr ? '<span class="wlkr">[' + esc(kr) + ']</span>' : '') + '<span class="wlko">' + esc(koShow(w.ko || '')) + '</span>';
+        r.onclick = () => openWordCard(w, () => wrongWordsView(list, title), tr('틀린 단어'));
+        box.append(r);
+      });
+      qb.append(box);
+    }
+    show('quiz', title + ' · ' + tr('틀린 단어'), true);
+  };
+  if (!GYBM) { qb.append(el('p', 'note', tr('불러오는 중…'))); show('quiz', title + ' · ' + tr('틀린 단어'), true); gybmBuild(go); } else go();
+}
+/* 틀린 문항에 쓰인 문형(문법) — 문형 알아보기(gramDetect)로 찾고, 누르면 그 문법 과로 */
+function fxGramTexts(x) {
+  const fill = p => String(p || '').replace('____', (x.acc && x.acc[0]) || (x.opts && x.opts[x.ans]) || '');
+  const t = [];
+  if (x.audio) t.push(...String(x.audio).split('\n'));
+  if (x.k === 'choice' || x.k === 'type' || x.k === 'tf') t.push(fill(x.prompt));
+  if (x.k === 'choice' && x.opts && /^B 읽기 · 4/.test(x.sec || '')) t.push(x.opts[x.ans]);
+  if (x.fix) t.push(x.fix);
+  if (x.k === 'puzzle' || x.k === 'say') t.push(x.vi);
+  return t.filter(Boolean);
+}
+function wrongGramView(list, title) {
+  const qb = $('#quizBody'); qb.textContent = '';
+  qb.append(el('p', 'note', tr('불러오는 중…'))); show('quiz', title + ' · ' + tr('틀린 문법'), true);
+  gramEnsure(() => gramTokLoad().then(() => {
+    /* 문형마다 이 시험지에 나온 문항 수(all)와 그중 틀린 문항 수(n). 시험지 문항 4분의 1 넘게 들어간 기본 문형(부르는 말 등)은 빼고, 틀린 비율이 높은 차례로 */
+    const cnt = new Map(), all = new Map(), fx = list.filter(q => q.w && q.w.fx);
+    fx.forEach(q => { const ids = new Set(); fxGramTexts(q.w.fx).forEach(t => gramDetect(t).forEach(id => ids.add(id))); ids.forEach(id => { all.set(id, (all.get(id) || 0) + 1); if (!q._ok) cnt.set(id, (cnt.get(id) || 0) + 1); }); });
+    const rows = [...cnt.entries()].map(([id, n]) => ({ g: GTOK.find(z => z.id === id), n, m: all.get(id) }))
+      .filter(z => z.g && GRAM.books[0] && GRAM.books[0].bai[z.g.li] && z.m <= fx.length * 0.25)
+      .sort((a, b) => b.n / b.m - a.n / a.m || b.n - a.n || a.g.li - b.g.li || a.g.gi - b.g.gi);
+    qb.textContent = '';
+    qb.append(el('p', 'lede', tr('틀린 문법') + ' ' + rows.length));
+    const box = el('div', 'wlist');
+    rows.forEach(({ g, n, m }) => {
+      const bai = GRAM.books[0].bai[g.li];
+      const r = el('button', 'wlrow gwrow'); r.type = 'button';
+      r.innerHTML = '<b>' + esc(g.t) + '</b><span class="wlko">' + esc(tr('문법') + ' ' + bai.no + '과 · ' + tr(bai.t)) + '</span><span class="accpill">' + n + '/' + m + '</span>';
+      r.onclick = () => { dive(() => wrongGramView(list, title)); startGram(0, g.li); };
+      box.append(r);
+    });
+    qb.append(box);
+    show('quiz', title + ' · ' + tr('틀린 문법'), true);
+  }));
 }
 function fxRight(x) {
   if (x.k === 'tf') return tr(x.ans ? '맞다' : '틀리다');
@@ -12222,7 +12368,7 @@ function myAnsBox(q0, x) {
     fb.forEach((a, i) => row((i + 1) + tr('번째'), ['발음', '높낮이'].map((nm, j) => a[j] ? esc(tr(nm)) + ' ' + (a[j][0] === null ? '—' : a[j][0] ? 'O' : 'X') + (a[j][1] ? ' · ' + esc(a[j][1]) : '') : '').filter(Boolean).join('<br>'), a.every(z => z && z[0]) ? 'ok' : 'no'));
     return el('div', 'myans', rows.join(''));
   }
-  row('내 답', q0._skip || !q0._ans ? '—' : q0._peek && !q0._pickT ? esc(tr('답 보기')) : esc(q0._pickT || '—'), 'no');
+  row('내 답', q0._skip || !q0._ans ? '—' : q0._peek && !q0._pickT ? esc(tr('답 보기')) : esc(q0._pickT || '—'), q0._ok ? 'ok' : 'no');
   row('정답', esc(fxRight(x)), 'ok');
   return el('div', 'myans', rows.join(''));
 }
