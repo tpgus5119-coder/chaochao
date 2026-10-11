@@ -59,11 +59,13 @@ function shareEncode(title, words) {
   words.forEach(w => { const h = fnv32(w.vi); out.push((h >>> 24) & 255, (h >>> 16) & 255, (h >>> 8) & 255, h & 255); });
   return b64u(Uint8Array.from(out));
 }
+function shareEncodeExam(key) { const kb = new TextEncoder().encode(String(key || '').slice(0, 30)); return b64u(Uint8Array.from([4, kb.length, ...kb])); }   // 주간시험 시험지(모의고사) 한 벌 [4][열쇠 길이][열쇠] (대표님 2026-10-11 "공유 기능 없냐")
 function shareEncodeTest(key) { const kb = new TextEncoder().encode(String(key || '').slice(0, 30)); return b64u(Uint8Array.from([3, kb.length, ...kb])); }   // 단어 시험 한 벌 [3][열쇠 길이][열쇠] (2026-10-08 밤)
 function shareDecode(str) {
   const bytes = unb64u(str);
   if (bytes[0] === 0x7B) { const j = JSON.parse(new TextDecoder().decode(bytes)); return j && Array.isArray(j.w) ? j : null; }   // 옛 JSON 링크
   if (bytes[0] === 3) { const n = bytes[1]; return { test: new TextDecoder().decode(bytes.slice(2, 2 + n)) }; }                  // 단어 시험 한 벌(회차 열쇠)
+  if (bytes[0] === 4) { const n = bytes[1]; return { exam: new TextDecoder().decode(bytes.slice(2, 2 + n)) }; }                  // 주간시험 시험지 한 벌(모의고사 열쇠)
   if (bytes[0] !== 2) return null;
   const n = bytes[1], t = new TextDecoder().decode(bytes.slice(2, 2 + n)), hs = [];
   for (let i = 2 + n; i + 3 < bytes.length; i += 4) hs.push(((bytes[i] << 24) | (bytes[i + 1] << 16) | (bytes[i + 2] << 8) | bytes[i + 3]) >>> 0);
@@ -9419,6 +9421,12 @@ function shareWords(cb) {
 function shareCards() { NAV.length = 0; startLearn({ day: 'SH:' + SHARE.title, theme: SHARE.title, words: SHARE.words.slice(), share: true, test: SHARE.dtest || null }); }
 function shareShorts() { NAV.length = 0; flashRun(SHARE.words.slice(), SHARE.title, { auto: true }); }
 function shareEntry() {
+  if (SHARE.id && !SHARE.h && !SHARE.w && !SHARE.test && !SHARE.exam) {                               // 짧은 링크 — 묶음 글부터 받고 다시
+    cCall({ act: 'share_get', id: SHARE.id }).then(r => { const d = r && r.p ? shareDecode(r.p) : null; if (!d) throw new Error('없는 링크'); Object.assign(SHARE, d); shareEntry(); })
+      .catch(() => { const b = $('#subBody'); b.textContent = ''; b.append(el('p', 'note', tr('링크를 열지 못했습니다 — 인터넷을 확인하고 다시 열어 주세요'))); show('sub', tr('공유'), false); });
+    return;
+  }
+  if (SHARE.exam) { shareExam(); return; }
   shareWords(words => {
     const t = SHARE.t || tr('단어');
     SHARE.words = words; SHARE.title = t;
@@ -9431,6 +9439,17 @@ function shareEntry() {
     b.append(box);
     show('sub', t, false);
   });
+}
+/* 받은 사람의 화면 — 모의고사(시험지) 한 벌: 로그인 없이 바로 시험, 끝나고 [홈으로]를 누르면 [다시 풀기]·[짜오짜오 시작하기] (대표님 2026-10-11) */
+function shareExam() {
+  const k = SHARE.exam, e = FIXED_EXAMS[k], b = $('#subBody'); b.textContent = '';
+  if (!e) { b.append(el('p', 'note', tr('이 링크의 시험지를 찾지 못했습니다'))); show('sub', tr('공유'), false); return; }
+  if (!SHARE.started) { SHARE.started = true; NAV.length = 0; startExam1(k); return; }
+  const box = el('div', 'sharebox');
+  const again = el('button', 'primary big', tr('다시 풀기')); again.type = 'button'; again.onclick = () => { NAV.length = 0; startExam1(k); }; box.append(again);
+  const app = el('button', 'ghost big', tr('짜오짜오 시작하기')); app.type = 'button'; app.onclick = () => { location.href = location.pathname; }; box.append(app);
+  b.append(box);
+  show('sub', tr(e.name), false);
 }
 function wbHost() { const ko = learnKo(); return [ko ? $('#examBody') : $('#subBody'), ko ? 'exam' : 'sub']; }
 function wbMiss() { return Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1).sort((a, b) => b[1] - a[1]); }
@@ -11558,7 +11577,7 @@ function autoExp(x) {                                         // 해설이 없�
   const heard = x.audio ? tr('들은 말') + ': ' + x.audio + '\n' : '';
   if (x.k === 'tf') return heard + (x.text ? x.prompt + '\n' : '') + tr('답') + ': ' + tr(x.ans ? '맞다' : '틀리다');
   if (x.k === 'pick') return heard + tr('답') + ': ' + 'ABCDE'[x.ans];
-  if (x.k === 'choice') return heard + tr('답') + ': ' + x.opts[x.ans];
+  if (x.k === 'choice') return heard + tr('답') + ': ' + (x.abc ? 'ABCDEFGHIJ'[x.ans] + '. ' : '') + x.opts[x.ans];
   if (x.k === 'puzzle' || x.k === 'say') return x.vi;
   if (x.k === 'free') return (x.model || []).map((m, i) => m + (x.model_ko && x.model_ko[i] ? ' — ' + x.model_ko[i] : '')).join('\n');
   return '';
@@ -11623,7 +11642,7 @@ function drawFixed(body, q) {
   }
   if (x.k === 'choice') {
     let idx = x.opts.map((o, i) => i); if (x.shuffle) idx = idx.sort(() => Math.random() - .5);
-    idx.forEach(i => { const b = el('button', null, esc(x.opts[i])); const good = i === x.ans; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });
+    idx.forEach(i => { const b = el('button', null, (x.abc ? 'ABCDEFGHIJ'[i] + '. ' : '') + esc(x.opts[i])); const good = i === x.ans; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });   // abc: 1차 읽기 4 처럼 물음 A~J 한 목록 (2026-10-11)
     body.append(box); return;
   }
   if (x.k === 'pick') {
@@ -11722,7 +11741,13 @@ function weeklyRound(r) {
     const meta = [done ? tr('지난 결과') + ' ' + done.ok + '/' + done.tot : '', rs ? '<b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b>' : ''].filter(Boolean).join(' · ');
     eb.append(el('b', null, esc(tr(e.name)) + (meta ? ' <span class="exmeta">' + meta + '</span>' : '')));
     eb.onclick = () => resumeAsk('fixed:' + k, rs2 => { dive(() => weeklyRound(r)); startExam1(k, rs2); });   // 푼 자리가 있으면 누를 때 이어서/처음부터 고르기 (대표님 2026-10-07)
-    b.append(eb);
+    const row = el('div', 'exrow'); row.append(eb);
+    if (!SHARE) {                                           // 시험지 한 벌 공유 (대표님 2026-10-11 "공유 기능 없냐") — 받는 사람: 로그인 없이 바로 이 시험지
+      const sh = el('button', 'exshare', '🔗'); sh.type = 'button'; sh.title = tr('공유');
+      sh.onclick = () => { const go = j => sharePopup(tr(e.name), [], shareEncodeExam(k), j.q.length + tr('문제')); if (FIXED[k]) go(FIXED[k]); else fetch(e.file, { cache: 'no-cache' }).then(x => x.json()).then(j => { FIXED[k] = j; go(j); }).catch(() => popup(tr('시험지를 불러오지 못했습니다'))); };
+      row.append(sh);
+    }
+    b.append(row);
   });
   show('exam', r.name, true);
 }

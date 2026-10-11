@@ -3,11 +3,11 @@
 from common import *
 q = []
 # 그림 27장: 다섯 벌이 서로 다른 그림·소리를 쓴다 (대표님 2026-10-08 "다른 모의고사에 나온 오디오·이미지도 쓰지 말라") — check_all.py 로 검사
-q += [TF("tài xế", "Ông ấy là tài xế tắc xi. Ông ấy lái xe từ 6 giờ sáng.", True), TF("ngân hàng", "Chị ấy làm kế toán ở ngân hàng.", True),
-      TF("kỹ sư", "Anh ấy là kỹ sư ở công ty máy tính.", True), TF("bệnh viện", "Đây là công ty máy tính. Công ty có 200 nhân viên.", False), TF("luật sư", "Anh ấy là bác sĩ. Dạo này anh ấy rất bận.", False)]
+q += [TF("tài xế", "Ông ấy là tài xế tắc xi.", True), TF("nhân viên ngân hàng", "Chị ấy là nhân viên ngân hàng.", True, im="mock1-l1-2.webp"),
+      TF("kỹ sư", "Anh ấy là kỹ sư.", True), TF("bệnh viện", "Đây là công ty máy tính.", False), TF("luật sư", "Chị ấy là giáo viên.", False)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈
 q += [PK(["nội trợ", "thư ký", "bác sĩ", "sinh viên"], "Chị ấy là thư ký. Chị ấy làm việc ở văn phòng công ty.", 1),
-      PK(["nhân viên siêu thị", "nhân viên quán cà phê", "nhân viên trường đại học", "nhân viên công ty"], "Anh ấy là nhân viên siêu thị. Anh ấy làm việc ở siêu thị từ 7 giờ sáng.", 0),
-      PK(["lái xe", "đi làm", "máy tính", "bận"], "Ông ấy lái xe tắc xi ở Quận 1.", 0),
+      PK(["nhân viên siêu thị", "nhân viên quán cà phê", "nhân viên trường đại học", "nhân viên công ty"], "Anh ấy là nhân viên siêu thị.", 0),
+      PK(["bác sĩ", "đi làm", "máy tính", "bận"], "Anh ấy là bác sĩ.", 0),
       PK(["văn phòng", "công ty", "căng tin", "phòng"], "Buổi trưa tôi ăn trưa ở căng tin công ty.", 2),
       PK(["giáo viên", "trường đại học", "bài tập", "nghề"], "Đây là trường đại học. Tôi học ở đây.", 1)]   # 10-08 밤: 옛 소리 'Cô ấy là giáo viên ở trường đại học này' 는 선생님 그림도 맞아 답이 둘이었다
 q += [A3("Ở Nhật anh Hiroki làm nghề gì?", "Ở Nhật anh làm kỹ sư phải không, anh Hiroki?\nKhông, ở Nhật tôi làm kế toán ở ngân hàng.", ["kế toán", "kỹ sư", "thư ký"]),

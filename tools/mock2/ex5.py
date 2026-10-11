@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from common import *
 q = []
-q += [TF("nghe nhạc", "Chị ấy đang nghe nhạc.", True), TF("xem phim", "Anh ấy đang tập thể dục.", False),
-      TF("đọc sách", "Ông tôi đang đọc sách.", True), TF("bạn bè", "Cuối tuần tôi đi chơi với bạn bè.", True), TF("áo dài", "Chị ấy đang mặc áo dài rất đẹp.", True)]
+q += [TF("nghe nhạc", "Chị ấy đang nghe nhạc.", True, im="mock5-l1-1.webp"), TF("xem phim", "Anh ấy đang tập thể dục.", False),
+      TF("đọc sách", "Anh ấy đang xem tivi.", False), TF("buồn ngủ", "Em ấy buồn ngủ quá.", True), TF("áo dài", "Chị ấy mặc áo dài.", True, im="mock5-l1-5.webp")]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈 (헤드셋·뒷모습 셋·치파오 같던 그림을 뺌)
 q += [PK(["chơi", "học", "hát", "viết"], "Chị ấy hát rất hay.", 2),
       PK(["cà phê", "nước", "sữa", "nước mía"], "Mỗi sáng tôi uống cà phê.", 0),
       PK(["tivi", "phim", "đọc", "nghỉ"], "Hôm nay tôi nghỉ.", 3),   # 10-09: 1차 꼴(그림 다섯 같이 씀)에서 다른 그림과 헷갈려 바꿈

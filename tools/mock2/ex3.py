@@ -2,13 +2,13 @@
 # 모의고사 3 — 장소·주소·초대·구경 (교재 5·6과 중심). 2026-10-07 대표님 "단어만 4~7 위주로" 에 따라 가족 소개(2~3과) 중심이던 것을 다시 씀.
 from common import *
 q = []
-q += [TF("nhà sách", "Đây là nhà sách. Hôm nay nhà sách giảm giá 30%.", True), TF("bưu điện", "Đây là bệnh viện. Bác sĩ ở đây rất giỏi.", False),
-      TF("quán cà phê", "Chúng tôi đang ngồi nói chuyện ở quán cà phê.", True), TF("cây cầu", "Đây là bưu điện. Tôi đến đây để gửi thư.", False), TF("bia", "Bia tươi ở đây rất ngon.", True)]
-q += [PK(["bảo tàng", "nhà thờ", "phố đi bộ", "đài truyền hình"], "Hôm nay tôi đi tham quan bảo tàng với bạn cùng lớp.", 0),
+q += [TF("nhà sách", "Đây là một nhà sách.", True), TF("bưu điện", "Đây là bệnh viện.", False),
+      TF("quán cà phê", "Đây là một quán cà phê.", True), TF("cây cầu", "Đây là trường đại học.", False), TF("bia", "Hai người đang uống bia.", True, im="mock3-l1-5.webp")]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 것만 말하게 줄이고, 안 맞는 그림은 Draw Things 로 문장에 맞게 새로 그림
+q += [PK(["nhà thờ", "bảo tàng", "phố đi bộ", "đài truyền hình"], "Đây là một nhà thờ rất đẹp.", 0),
       PK(["đi dạo", "tham quan", "nói chuyện", "uống"], "Chúng tôi đang nói chuyện ở quán cà phê.", 2),
       PK(["uống thuốc", "ăn tối", "khen", "hỏi"], "Tối nay tôi mời anh đi ăn tối.", 1),
-      PK(["mua", "cây", "giảm giá", "địa chỉ"], "Sách ở đây giảm giá 30%.", 2),
-      PK(["giỏi", "du khách", "thân thiện", "trẻ"], "Anh ấy nói tiếng Việt rất giỏi.", 0)]
+      PK(["mua", "cây", "giảm giá", "địa chỉ"], "Hôm nay sách giảm giá.", 2),
+      PK(["đi dạo", "du khách", "thân thiện", "trẻ"], "Họ đang đi dạo.", 0)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈
 q += [A3("Bây giờ họ đi đâu?", "Bây giờ chúng ta đi bưu điện hả anh?\nKhông, chúng ta đi mua sách ở nhà sách FAHASA.", ["nhà sách", "bưu điện", "siêu thị"]),
       A3("Nhà sách FAHASA số mấy?", "Nhà sách FAHASA ở số 14 phải không?\nKhông, ở số 40 đường Nguyễn Huệ.", ["số 40", "số 14", "số 4"]),
       A3("Hôm nay nhà sách giảm giá bao nhiêu?", "Hôm nay nhà sách giảm giá 13% à?\nKhông, hôm nay nhà sách giảm giá 30%.", ["30%", "13%", "3%"]),
@@ -30,7 +30,7 @@ q += [A4("Bây giờ chúng ta đi đâu?", ["Chúng ta đi mua sách.", "Lúc 8
       A4("Tắc xi sắp đến chưa anh?", ["Sắp đến rồi, cô.", "Ở Quận 7.", "Tôi đi bằng xe buýt."]),
       A4("Cô nói tiếng Việt giỏi quá!", ["Cám ơn anh.", "Không, tôi đi tắc xi.", "Ở gần đây."])]
 bank = ["sẽ", "quá", "à", "tại sao", "chúng ta"]
-q += [B1("Anh và tôi, ____ đều là sinh viên.", bank, 4), B1("Chúng ta ____ đi mua sách.", bank, 0), B1("Cô nói tiếng Việt giỏi ____!", bank, 1),
+q += [B1("Anh và tôi, ____ đều là sinh viên.", bank, 4), B1("Chúng ta ____ đi mua sách.", bank, 0), B1("Món ăn này ngon ____!", bank, 1),
       B1("Hôm nay nhà sách giảm giá 30% ____?", bank, 2), B1("____ hôm qua anh không đến lớp? — Vì tôi bận.", bank, 3)]
 q += [B2("Hôm nay nhà sách FAHASA ở số 40 đường Nguyễn Huệ giảm giá 30%. David và Vân sẽ đi mua sách lịch sử Việt Nam ở đó.", "Họ sẽ mua gì?", ["sách lịch sử", "bia tươi", "cà phê"]),
       B2("Dorothy đi tắc xi đến trường Nhân văn. Trường ở số 10 đường Đinh Tiên Hoàng, Quận 1, gần Đài Truyền hình Thành phố.", "Trường Nhân văn ở gần đâu?", ["Đài Truyền hình Thành phố", "sân bay", "Nhà thờ Đức Bà"]),

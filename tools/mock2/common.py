@@ -20,8 +20,11 @@ def img(word):
     k = U.normalize('NFC', word).lower()
     if k not in IMG: raise SystemExit(f'그림 없음: {word}')
     return IMG[k]
-def TF(word, audio, ans): return {"sec": "A 듣기 · 1 그림 맞다/틀리다", "k": "tf", "img": img(word), "audio": audio, "ans": ans, "made": True, "word": word}
-def PK(pics, audio, ans): return {"sec": "A 듣기 · 2 맞는 그림", "k": "pick", "audio": audio, "opts": [img(w) for w in pics], "ans": ans, "made": True, "words": list(pics)}
+def TF(word, audio, ans, im=None): return {"sec": "A 듣기 · 1 그림 맞다/틀리다", "k": "tf", "img": im or img(word), "audio": audio, "ans": ans, "made": True, "word": word}   # im: 그 문장에 맞게 따로 그린 그림 (2026-10-11)
+def PK(pics, audio, ans, im=None):
+    x = {"sec": "A 듣기 · 2 맞는 그림", "k": "pick", "audio": audio, "opts": [img(w) for w in pics], "ans": ans, "made": True, "words": list(pics)}
+    if im: x["im"] = im                                              # 정답 그림을 따로 그린 것으로 (2026-10-11)
+    return x
 def A3(p, a, o): return {"sec": "A 듣기 · 3 듣고 답 고르기", "k": "choice", "prompt": p, "audio": a, "opts": o, "ans": 0, "shuffle": True, "made": True}
 def A4(a, o): return {"sec": "A 듣기 · 4 듣고 질문에 답하기", "k": "choice", "prompt": "(들은 질문에 알맞은 답)", "audio": a, "opts": o, "ans": 0, "shuffle": True, "made": True}
 def B1(p, bank, ans): return {"sec": "B 읽기 · 1 빈칸(낱말·문법)", "k": "choice", "prompt": p, "opts": bank, "ans": ans}
@@ -55,12 +58,13 @@ OKTXT = 'Đúng — 맞는 문장'
 def form1(no, q):
     """exN.py 의 문항을 실제 1차 시험지 꼴로 옮긴다 (대표님 2026-10-09 "시험 형식 틀은 그대로 동일하게 — 단어와 문법만 범위 다르게"). 새로 쓴 것은 form1.py(듣기 4·쓰기 3)"""
     import random
-    from form1 import A4F, C3F, B4_AVOID, C2F
+    from form1 import A4F, C3F, B4_AVOID, C2F, B3F, B4J, C1N, DN
     rnd = random.Random(1000 + no)
     out = []
     pks = [x for x in q if x['k'] == 'pick']
     words5 = [x['words'][x['ans']] for x in pks]; order = list(range(5)); rnd.shuffle(order)
-    pw = [words5[k] for k in order]; po = [img(w) for w in pw]          # 그림 다섯(A~E)을 다섯 문항이 같이 쓴다 — 1차처럼
+    ims5 = [x.get("im") or img(x["words"][x["ans"]]) for x in pks]
+    pw = [words5[k] for k in order]; po = [ims5[k] for k in order]      # 그림 다섯(A~E)을 다섯 문항이 같이 쓴다 — 1차처럼
     b4 = [x for x in q if x['sec'].startswith('B 읽기 · 4')]
     qs, rs = [x['prompt'] for x in b4], [x['opts'][x['ans']] for x in b4]
     c2 = [x for x in q if x['k'] == 'errpick']
@@ -75,12 +79,13 @@ def form1(no, q):
             t2 = spans[:]; t2[j], t2[j + 1] = t2[j + 1], t2[j]; c = ' '.join(w for sp in t2 for w in sp) + end
             if c not in (fix, wrong): return c
         raise SystemExit(f'틀린 보기를 못 만듦: {fix}')
-    a4done = c3done = False
+    a4done = c3done = b3done = b4done = False
+    c1s = [x for x in q if x['k'] == 'puzzle']; dss = [x for x in q if x['k'] == 'say' and x['sec'].startswith('D 말하기 · 2')]
     for x in q:
         sec, k = x['sec'], x['k']
         if k == 'speak': continue                                       # 1차 말하기는 낱말 10 · 문장 5 읽기뿐
         if k == 'pick':
-            i = pks.index(x); x = dict(x, opts=po, words=pw, ans=pw.index(words5[i]))
+            i = pks.index(x); x = dict(x, opts=po, words=pw, ans=order.index(i)); x.pop("im", None)
         elif sec.startswith('A 듣기 · 3'): x = dict(x, sec='A 듣기 · 3 듣고 고르기')
         elif sec.startswith('A 듣기 · 4'):
             if a4done: continue
@@ -92,6 +97,22 @@ def form1(no, q):
             continue
         elif sec.startswith('B 읽기 · 1'): x = dict(x, sec='B 읽기 · 1 빈칸')
         elif sec.startswith('B 읽기 · 2'): x = dict(x, sec='B 읽기 · 2 읽고 고르기')
+        elif sec.startswith('B 읽기 · 3') and no in B3F:                 # 1차: 지문 다섯 × 문장 둘 (2026-10-11)
+            if b3done: continue
+            b3done = True
+            for t, sts in B3F[no]:
+                for st, a in sts: out.append({"sec": "B 읽기 · 3 맞다/틀리다", "k": "tf", "text": t, "prompt": st, "ans": a})
+            continue
+        elif sec.startswith('B 읽기 · 4') and no in B4J:                 # 1차: 물음 A~J 한 목록 + 대답 열 — 대답마다 목록에서 하나 (2026-10-11)
+            if b4done: continue
+            b4done = True
+            qs4 = [a for a, _ in B4J[no]]; idx = list(range(len(qs4))); random.Random(2000 + no).shuffle(idx)
+            for k in idx: out.append({"sec": "B 읽기 · 4 알맞은 문장", "k": "choice", "prompt": B4J[no][k][1], "opts": qs4, "ans": k, "abc": True})
+            continue
+        elif k == 'puzzle' and no in C1N:                                # 쓰기 1 — 다른 갈래와 겹치지 않게 새로 (2026-10-11)
+            v, t = C1N[no][c1s.index(x)]; x = dict(x, vi=v, tiles=t)
+        elif k == 'say' and sec.startswith('D 말하기 · 2') and no in DN:  # 말하기 문장 — 같은 까닭 (2026-10-11)
+            x = dict(x, vi=DN[no][dss.index(x)])
         elif sec.startswith('B 읽기 · 4'):                               # 1차: 대답을 보여 주고 앞의 물음을 고른다
             i = b4.index(x); n = len(b4); av = B4_AVOID.get(no, {}).get(rs[i], [])
             ds = [qs[(i + d) % n] for d in range(1, n) if qs[(i + d) % n] not in av][:3]   # 그 대답이 들어맞는 다른 물음은 오답 보기로 안 쓴다
@@ -139,6 +160,27 @@ def build(no, title, q):
         if x['k'] == 'pick': pic.update(o for o in x['opts'] if o not in pk1); pk1.update(x['opts'])
     dup = [f'{t} ×{n}' for t, n in snd.items() if n > 1] + [f'그림 {t} ×{n}' for t, n in pic.items() if n > 1]
     if dup: raise SystemExit(f'모의고사 {no} 겹침: ' + ' | '.join(dup))
+    # 같은 문장이 다른 갈래에 다시 나오면 안 된다 (2026-10-11 대표님 "그림과 문장을 한 번만 쓰는 게 아니라 몇 번 쓰네" — 실제 1차는 이런 문장이 3개뿐이었다).
+    # 같은 갈래 안에서 같이 쓰는 지문·목록(듣기 2 그림 다섯, 읽기 1 낱말 다섯, 읽기 3 지문, 읽기 4 물음 목록)은 1차 꼴 그대로라 뺀다
+    def _ss(t):
+        o = []
+        for line in U.normalize('NFC', t).split('\n'):
+            for z in re.split(r'(?<=[.?!])\s+|\s+(?=B:)', line):
+                z = re.sub(r'^(A|B):\s*', '', z).strip().lower(); z = ' '.join(re.sub(r'[.,!?;:"“”]', ' ', z).split())
+                if len(z.split()) >= 3: o.append(z)
+        return o
+    where = collections.defaultdict(set)
+    for i, x in enumerate(q):
+        tx = [x[f] for f in ('audio', 'text', 'vi', 'fix') if isinstance(x.get(f), str)]
+        pr = x.get('prompt', '')
+        if pr and '____' in pr and x['k'] == 'choice' and not x.get('fix'): tx.append(pr.replace('____', x['opts'][x['ans']]))
+        elif pr and not re.search('[가-힣]', pr): tx.append(pr)
+        if x['sec'].startswith('B 읽기 · 4'): tx.append(x['opts'][x['ans']])
+        tx += [m if isinstance(m, str) else m['vi'] for m in x.get('model', [])]
+        for t in tx:
+            for z in _ss(t): where[z].add(x['sec'])
+    same = {z: v for z, v in where.items() if len(v) > 1}
+    if same: raise SystemExit(f'모의고사 {no} 다른 갈래에 같은 문장 {len(same)}: ' + ' | '.join(f'{z} ← {sorted(v)}' for z, v in list(same.items())[:12]))
     # 다른 벌과도 겹치면 안 된다 (대표님 2026-10-08) — 이미 지어진 data/mock2_N.json 과 견준다
     for other in range(1, 6):
         op = R / f'data/mock2_{other}.json'
@@ -179,12 +221,12 @@ def build(no, title, q):
         elif sec.startswith('B 읽기 · 1'): full = x['prompt'].replace('____', x['opts'][x['ans']]); x['exp'] = f"{full}\n{ko(full)}"
         elif sec.startswith('B 읽기 · 2'): x['exp'] = f"물음: {x['prompt']} — {ko(x['prompt'])}\n글: {ko(x['text'])}\n답: {x['opts'][x['ans']]}"
         elif sec.startswith('B 읽기 · 3'): x['exp'] = f"{x['prompt']} — {ko(x['prompt'])}\n글: {ko(x['text'])}\n→ {'맞다' if x['ans'] else '틀리다'}"
-        elif sec.startswith('B 읽기 · 4'): a = x['opts'][x['ans']]; x['exp'] = f"{x['prompt']} — {ko(x['prompt'])}\n답: {a} — {ko(a)}"
+        elif sec.startswith('B 읽기 · 4'): a = x['opts'][x['ans']]; lab = ('ABCDEFGHIJ'[x['ans']] + '. ') if x.get('abc') else ''; x['exp'] = f"{x['prompt']} — {ko(x['prompt'])}\n답: {lab}{a} — {ko(a)}"
         elif k == 'puzzle': x['exp'] = f"{x['vi']}\n{ko(x['vi'])}"
         elif k == 'errpick': x['exp'] = f"{x['fix']}\n{x.get('ko', '')}"
         elif sec.startswith('C 쓰기 · 2'): a = x['opts'][x['ans']]; x['exp'] = f"{x['prompt']}\n답: {a}\n{x['fix']} — {x.get('ko', '')}"
         elif k == 'free': x['exp'] = '\n'.join(f"{v} — {k2}" for v, k2 in zip(x['model'], x.get('model_ko') or [''] * len(x['model'])))
-    if lack: raise SystemExit(f'모의고사 {no} 해설 뜻 없음 {len(set(lack))}: ' + ' | '.join(sorted(set(lack))[:12]))
+    if lack: raise SystemExit(f'모의고사 {no} 해설 뜻 없음 {len(set(lack))}: ' + ' | '.join(sorted(set(lack))))
     out = {"note": f"주간시험 2 모의고사 {no} — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).", "title": title, "time": 90, "pts": {"A": 30, "B": 30, "C": 20, "D": 20}, "q": q}
     json.dump(out, open(R / f'data/mock2_{no}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     aud = []

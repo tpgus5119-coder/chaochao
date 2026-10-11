@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from common import *
 q = []
-q += [TF("xe buýt", "Anh ấy đi làm bằng xe buýt số 8.", True), TF("tắc xi", "Đây là xe buýt số 8.", False),
-      TF("máy bay", "Tuần sau tôi đi Hà Nội bằng máy bay.", True), TF("đi bộ", "Nhà tôi gần công ty nên tôi đi bộ đi làm.", True), TF("sân bay", "Đây là ga Sài Gòn.", False)]
+q += [TF("xe buýt", "Xe buýt đến rồi, anh ơi.", True), TF("tắc xi", "Đây là xe buýt số 8.", False),
+      TF("máy bay", "Đây là máy bay.", True), TF("đi bộ", "Anh ấy đang đi bộ.", True), TF("sân bay", "Đây là bưu điện.", False)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈
 q += [PK(["ga", "cổng", "phố", "phường"], "Đây là ga. Tôi đi Đà Nẵng từ đây.", 0),
-      PK(["cất cánh", "bay", "phút", "giờ"], "Máy bay sắp cất cánh.", 0),
-      PK(["đi học", "đi chơi", "đi đến", "đi ra ngoài"], "Em ấy đi học lúc 7 giờ.", 0),
+      PK(["cất cánh", "bay", "phút", "giờ"], "Máy bay đang cất cánh.", 0),
+      PK(["đi học", "đi chơi", "đi đến", "đi ra ngoài"], "Em ấy đang đi đến trường.", 0),
       PK(["siêu thị", "mở cửa", "trung tâm", "tiện lợi"], "Mẹ tôi đang mua sắm ở siêu thị.", 0),
       PK(["lớp", "táo", "bàn", "ghế"], "Các sinh viên đang học trong lớp.", 0)]
 q += [A3("Nhà sách ở đâu?", "Nhà sách FAHASA ở Quận 7 phải không anh?\nKhông, ở đường Nguyễn Huệ, Quận 1.", ["đường Nguyễn Huệ", "Quận 2", "Quận 7"]),
@@ -35,7 +35,7 @@ q += [B2("Nhà tôi ở Quận 7. Công ty tôi ở Quận 1. Từ nhà đến c
       B2("Siêu thị gần nhà tôi mở cửa lúc 7 giờ sáng. Buổi tối ở đó rất đông. Tôi thường đi siêu thị vào buổi sáng.", "Tôi thường đi siêu thị lúc nào?", ["buổi sáng", "buổi tối", "buổi chiều"]),
       B2("Tuần sau Lan đi Hà Nội thăm ông bà. Lan sẽ đi bằng máy bay. Từ Thành phố Hồ Chí Minh đến Hà Nội mất khoảng hai tiếng.", "Lan đi Hà Nội bằng gì?", ["máy bay", "xe buýt", "tắc xi"]),
       B2("Quán cà phê này ở gần trường đại học. Cà phê ở đây ngon và rẻ. Sinh viên thường đến đây học và nói chuyện.", "Ai thường đến quán cà phê này?", ["sinh viên", "bác sĩ", "tài xế"]),
-      B2("Hôm nay là thứ bảy. Nhà sách giảm giá 30%. Tôi và bạn tôi đi nhà sách mua sách tiếng Việt.", "Hôm nay nhà sách giảm giá bao nhiêu?", ["30%", "20%", "10%"])]
+      B2("Hôm nay là thứ bảy. Nhà sách giảm giá 30%. Tôi và bạn tôi đi nhà sách mua sách tiếng Việt.", "Nhà sách giảm giá mấy phần trăm?", ["30%", "20%", "10%"])]   # 10-11: 듣기 3 물음과 같아 바꿈
 T1 = "Công ty tôi ở Quận 1, gần Đài Truyền hình Thành phố. Tôi làm việc từ 8 giờ sáng đến 5 giờ chiều. Buổi trưa tôi ăn trưa ở căng tin công ty."
 T2 = "Nhà Mai ở xa công ty nên Mai đi làm bằng xe buýt. Từ nhà đến công ty mất một tiếng. Mai phải đi làm lúc 7 giờ."
 T3 = "Cuối tuần tôi thường đi nhà sách ở đường Nguyễn Huệ. Sau đó tôi đi uống cà phê với bạn ở phố đi bộ."

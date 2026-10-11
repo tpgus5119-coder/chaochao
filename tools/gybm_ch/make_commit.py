@@ -76,6 +76,7 @@ def walk(o):
             if isinstance(o.get("snd"), str): texts.add(o["snd"])      # 글자 소리(모음 하나·자음 학교식 bờ·cờ…) (2026-09-27)
         if isinstance(o.get("audio"), str): texts.add(o["audio"])                                   # 시험지 듣기 문장 (exam1·exam2 — ko 없이 audio 만 있다, 2026-10-06)
         if o.get("k") in ("say", "puzzle") and isinstance(o.get("vi"), str): texts.add(o["vi"])          # 시험지 말하기·조각 문장
+        if o.get("k") == "pick" and isinstance(o.get("opts"), list): imgs.update(x for x in o["opts"] if isinstance(x, str) and x.endswith(".webp"))   # 그림 고르기 보기 그림 — 모의고사 듣기 2 에 새로 그린 그림 (2026-10-11)
         if o.get("k") == "errpick" and isinstance(o.get("fix"), str): texts.add(o["fix"])                 # 틀린 곳 찾기의 바른 문장(답에서 들려줌) — 2026-10-08 빠져 있던 것(22문장) 발견
         for v in o.values(): walk(v)
     elif isinstance(o, list):
