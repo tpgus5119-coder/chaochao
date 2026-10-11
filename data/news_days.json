@@ -242,7 +242,7 @@
     ],
     "extra": []
    },
-   "n": 104
+   "n": 107
   },
   {
    "ts": "2026-10-10",
@@ -522,7 +522,7 @@
     ],
     "extra": []
    },
-   "n": 103
+   "n": 106
   },
   {
    "ts": "2026-10-10",
@@ -716,7 +716,7 @@
     ],
     "extra": []
    },
-   "n": 102
+   "n": 105
   },
   {
    "ts": "2026-10-10",
@@ -948,7 +948,7 @@
     ],
     "extra": []
    },
-   "n": 101
+   "n": 104
   },
   {
    "ts": "2026-10-10",
@@ -1204,7 +1204,7 @@
     ],
     "extra": []
    },
-   "n": 100
+   "n": 103
   },
   {
    "ts": "2026-10-10",
@@ -1422,7 +1422,491 @@
     ],
     "extra": []
    },
-   "n": 99
+   "n": 102
+  },
+  {
+   "ts": "2026-10-10",
+   "day": "N345.html",
+   "track": "news",
+   "theme": "외국어 공부",
+   "title": "HCMC teen with IELTS 9.0 and top English awards for gifted students chooses teaching career",
+   "u": "https://e.vnexpress.net/news/news/education/hcmc-teen-with-ielts-9-0-and-top-english-awards-for-gifted-students-chooses-teaching-career-5128345.html",
+   "cat": "사회",
+   "intro": "호찌민시 학생이 영어 만점을 받고 교사를 꿈꿉니다. 그는 꾸준한 연습과 실천의 중요성을 강조했습니다.",
+   "words": [
+    {
+     "vi": "tiếng Anh",
+     "ko": "영어",
+     "kr_read": "띠엥 아인",
+     "emoji": "🔤",
+     "en": "letters A B C written on a chalkboard",
+     "tones": [
+      {
+       "syl": "tiếng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "Anh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tieng-anh.webp"
+    },
+    {
+     "vi": "giáo viên",
+     "ko": "선생님",
+     "kr_read": "자오 비엔",
+     "emoji": "👨‍🏫",
+     "en": "a teacher standing in front of a classroom",
+     "tones": [
+      {
+       "syl": "giáo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "viên",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-giao-vien.webp"
+    },
+    {
+     "vi": "học sinh",
+     "ko": "학생",
+     "kr_read": "혹 씬",
+     "emoji": "🎒",
+     "en": "a student carrying a backpack",
+     "tones": [
+      {
+       "syl": "học",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "sinh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-hoc-sinh.webp"
+    },
+    {
+     "vi": "trường học",
+     "ko": "학교",
+     "kr_read": "쯔엉 혹",
+     "emoji": "🏫",
+     "en": "a school building exterior",
+     "tones": [
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "học",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-truong-hoc.webp"
+    },
+    {
+     "vi": "bài thi",
+     "ko": "시험",
+     "kr_read": "바이 티",
+     "emoji": "📝",
+     "en": "a test paper with a pencil on a desk",
+     "tones": [
+      {
+       "syl": "bài",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "thi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-bai-thi.webp"
+    },
+    {
+     "vi": "điểm số",
+     "ko": "점수",
+     "kr_read": "디엠 쏘",
+     "emoji": "💯",
+     "en": "a score number 100 written in red ink",
+     "tones": [
+      {
+       "syl": "điểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "số",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-diem-so.webp"
+    }
+   ],
+   "dialog": {
+    "title": "외국어 공부",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Em nói tiếng Anh giỏi quá!",
+      "ko": "너 영어 정말 잘한다!",
+      "kr_read": "앰 노이 띠엥 아인 조이 꽈",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nói",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tiếng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giỏi",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "quá!",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Em luyện tập mỗi ngày ạ.",
+      "ko": "저 매일 연습해요.",
+      "kr_read": "앰 루옌 떱 모이 응아이 아",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "luyện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tập",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "mỗi",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "ngày",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ạ.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 101
+  },
+  {
+   "ts": "2026-10-10",
+   "day": "N640.html",
+   "track": "news",
+   "theme": "숙소 찾기",
+   "title": "Da Nang accommodation options cater to different travel needs",
+   "u": "https://e.vnexpress.net/news/travel/da-nang-accommodation-options-cater-to-different-travel-needs-5128640.html",
+   "cat": "문화·생활",
+   "intro": "다낭 숙소는 인원과 일정에 맞춰 골라야 합니다. 장기 체류 시 가전제품과 공과금을 확인해야 합니다.",
+   "words": [
+    {
+     "vi": "khách sạn",
+     "ko": "호텔",
+     "kr_read": "칵 싼",
+     "emoji": "🏨",
+     "en": "a modern hotel building",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-khach-san.webp"
+    },
+    {
+     "vi": "căn hộ",
+     "ko": "아파트",
+     "kr_read": "깐 호",
+     "emoji": "🏢",
+     "en": "a residential apartment building",
+     "tones": [
+      {
+       "syl": "căn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hộ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-can-ho.webp"
+    },
+    {
+     "vi": "phòng",
+     "ko": "방",
+     "kr_read": "퐁",
+     "emoji": "🚪",
+     "en": "a bedroom door inside an apartment",
+     "tones": [
+      {
+       "syl": "phòng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-phong.webp"
+    },
+    {
+     "vi": "nhà bếp",
+     "ko": "주방",
+     "kr_read": "냐 벱",
+     "emoji": "🍳",
+     "en": "a clean kitchen with a stove",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "bếp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nha-bep.webp"
+    },
+    {
+     "vi": "máy giặt",
+     "ko": "세탁기",
+     "kr_read": "마이 잣",
+     "emoji": "🧼",
+     "en": "a white washing machine",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "giặt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-may-giat.webp"
+    },
+    {
+     "vi": "tiền điện",
+     "ko": "전기세",
+     "kr_read": "띠엔 디엔",
+     "emoji": "💡",
+     "en": "an electric light bulb",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tien-dien.webp"
+    }
+   ],
+   "dialog": {
+    "title": "숙소 찾기",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Căn hộ này có máy giặt không?",
+      "ko": "이 아파트에 세탁기 있어요?",
+      "kr_read": "깐 호 나이 꼬 마이 잣 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Căn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hộ",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "máy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "giặt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, có cả nhà bếp nữa.",
+      "ko": "네, 주방도 같이 있어요.",
+      "kr_read": "꼬 꼬 까 냐 벱 느어",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cả",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bếp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nữa.",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 100
   },
   {
    "ts": "2026-10-10",
@@ -1666,7 +2150,7 @@
     ],
     "extra": []
    },
-   "n": 98
+   "n": 99
   },
   {
    "ts": "2026-10-10",
@@ -1922,7 +2406,7 @@
     ],
     "extra": []
    },
-   "n": 97
+   "n": 98
   },
   {
    "ts": "2026-10-10",
@@ -2184,7 +2668,7 @@
     ],
     "extra": []
    },
-   "n": 96
+   "n": 97
   },
   {
    "ts": "2026-10-10",
@@ -2451,6 +2935,223 @@
         "name": "sắc",
         "ko": "짧게 올라감",
         "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 96
+  },
+  {
+   "ts": "2026-10-10",
+   "day": "N559.html",
+   "track": "news",
+   "theme": "관광객 감소",
+   "title": "Why are Korean visitors to Vietnam declining?",
+   "u": "https://e.vnexpress.net/news/travel/why-are-korean-visitors-to-vietnam-declining-5130559.html",
+   "cat": "소식",
+   "intro": "베트남을 찾는 한국인 관광객이 최근 줄었습니다. 일본과 중국 선호 및 비용 변동이 주요 원인입니다.",
+   "words": [
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "en": "a travel suitcase and sunglasses",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "khách",
+     "ko": "손님",
+     "kr_read": "칵",
+     "emoji": "👤",
+     "en": "a hotel guest with luggage",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-khach.webp"
+    },
+    {
+     "vi": "máy bay",
+     "ko": "비행기",
+     "kr_read": "마이 바이",
+     "emoji": "✈️",
+     "en": "an airplane flying in the sky",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-may-bay.webp"
+    },
+    {
+     "vi": "vé",
+     "ko": "표",
+     "kr_read": "배",
+     "emoji": "🎟️",
+     "en": "a paper boarding pass ticket",
+     "tones": [
+      {
+       "syl": "vé",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ve.webp"
+    },
+    {
+     "vi": "giá",
+     "ko": "가격",
+     "kr_read": "자",
+     "emoji": "🏷️",
+     "en": "a price tag on merchandise",
+     "tones": [
+      {
+       "syl": "giá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-gia.webp"
+    },
+    {
+     "vi": "đắt",
+     "ko": "비싸다",
+     "kr_read": "닷",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "đắt",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "관광객 감소",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Vé máy bay có đắt không?",
+      "ko": "비행기 표 비싸요?",
+      "kr_read": "배 마이 바이 꼬 닷 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Vé",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "máy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đắt",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Không đắt, bây giờ khá rẻ.",
+      "ko": "안 비싸요, 지금 꽤 싸요.",
+      "kr_read": "콩 닷 버이 저 카 재",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Không",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đắt,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "khá",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "rẻ.",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
        }
       ],
       "gloss": []
@@ -26067,5 +26768,5 @@
    "n": 1
   }
  ],
- "updated": "2026-10-11 01:06"
+ "updated": "2026-10-11 09:28"
 }
