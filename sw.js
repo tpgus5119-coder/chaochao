@@ -1,7 +1,7 @@
 /* 오프라인 캐시.
    앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
    음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
-const V = 'vn-d7e50354';
+const V = 'vn-24d87732';
 const SHELL = ['./', './index.html', './app.js', './pitch.js', './mouth.js', './pet.js', './judge.js', './style.css',
                './manifest.json', './icon.png',
                // 새 짜임(일곱 권)의 알맹이 — 이것이 없으면 비행기 모드에서 과정이 안 열린다
@@ -17,7 +17,8 @@ const MEDIA = 'vn-media-2';   // 2026-09-28 밤: 낱말 글자가 박힌 그림 
    2026-10-04: 오류 보고(손가락 여섯·다리 하나·뒷모습·뭉개진 손) 다섯 장 */
 const STALE = ['b-dem', 'b-chi', 'b-hanh-dong', 'tap-the-duc', 'w-fd9a0f67e5',
                'b-tap-the-duc', 'w-3b2ba86d56', 'd17-giup', 'b-truoc-khi', 'b-truoc', 'w-c4e6a72555', 'b-giao-vien',
-               'b-nghe-nhac', 'b-ao-dai', 'b-bao-tang', 'w-a9c8671222'].map(n => '/img/' + n + '.webp');   // 2026-10-06 오류 보고 여섯 장(손 없음·볼 빨감·뜻과 안 맞음) · 2026-10-11 뜻과 안 맞던 넷(헤드셋·치파오·은행 같은 건물·뒷모습)
+               'b-nghe-nhac', 'b-ao-dai', 'b-bao-tang', 'w-a9c8671222',
+               'b-giam-gia', 'b-luat-su', 'b-o-nha', 'b-sieu-thi', 'b-thu', 'w-0b1adf767d', 'w-1b8ee8a47f', 'w-1be9643e4f', 'w-2fa6fbb660', 'w-43975b9eea', 'w-5044d81a3d', 'w-81eaf9dd0c', 'w-936f3fbca6', 'w-be4c38c205', 'w-c388775af9', 'w-e8c966943e', 'w-ff7bcf928d'].map(n => '/img/' + n + '.webp');   // 2026-10-06 오류 보고 여섯 장(손 없음·볼 빨감·뜻과 안 맞음) · 2026-10-11 뜻과 안 맞던 넷(헤드셋·치파오·은행 같은 건물·뒷모습)
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });

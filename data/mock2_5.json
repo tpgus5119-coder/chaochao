@@ -180,7 +180,6 @@
     "đi ngủ"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Sau khi ăn tối anh thường học tiếng Việt à? — 저녁 먹은 뒤에 보통 베트남어를 공부해요?\n남: Không, tôi thường xem tivi với gia đình. — 아니요, 저는 보통 가족과 TV를 봐요.\n물음: Anh ấy thường làm gì sau khi ăn tối? — 그는 저녁을 먹은 뒤 보통 뭐 해요?\n답: xem tivi"
   },
@@ -190,12 +189,11 @@
    "prompt": "Chị ấy thích làm gì?",
    "audio": "Tôi rất thích nghe nhạc và đọc sách.\nCòn tôi thích xem phim.",
    "opts": [
-    "nghe nhạc và đọc sách",
+    "tập thể dục",
     "xem phim",
-    "tập thể dục"
+    "nghe nhạc và đọc sách"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Tôi rất thích nghe nhạc và đọc sách. — 저는 음악 듣기와 책 읽기를 아주 좋아해요.\n남: Còn tôi thích xem phim. — 저는 영화 보는 걸 좋아해요.\n물음: Chị ấy thích làm gì? — 그녀는 무엇을 하기 좋아해요?\n답: nghe nhạc và đọc sách"
   },
@@ -205,12 +203,11 @@
    "prompt": "Hôm qua em ấy đi ngủ lúc mấy giờ?",
    "audio": "Hôm qua em đi ngủ lúc mấy giờ?\nEm thức khuya học bài nên đi ngủ lúc 1 giờ.",
    "opts": [
+    "10 giờ",
     "1 giờ",
-    "11 giờ",
-    "10 giờ"
+    "11 giờ"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Hôm qua em đi ngủ lúc mấy giờ? — 어제 몇 시에 잤어?\n남: Em thức khuya học bài nên đi ngủ lúc 1 giờ. — 늦게까지 공부해서 1시에 잤어요.\n물음: Hôm qua em ấy đi ngủ lúc mấy giờ? — 어제 그 애는 몇 시에 잤어요?\n답: 1 giờ"
   },
@@ -220,12 +217,11 @@
    "prompt": "Cuối tuần Nam thường làm gì?",
    "audio": "Anh Nam, cuối tuần anh thường làm gì?\nTôi thường đi chơi với bạn bè hay xem phim ở nhà.",
    "opts": [
-    "đi chơi hay xem phim",
     "đi làm",
+    "đi chơi hay xem phim",
     "học tiếng Anh"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Anh Nam, cuối tuần anh thường làm gì? — 남 씨, 주말에 보통 뭐 해요?\n남: Tôi thường đi chơi với bạn bè hay xem phim ở nhà. — 보통 친구들과 놀러 가거나 집에서 영화를 봐요.\n물음: Cuối tuần Nam thường làm gì? — 주말에 남은 보통 뭐 해요?\n답: đi chơi hay xem phim"
   },
@@ -235,12 +231,11 @@
    "prompt": "Ai nấu ăn trong gia đình?",
    "audio": "Ai nấu ăn trong gia đình anh?\nMẹ tôi thường nấu ăn, thỉnh thoảng bố tôi cũng nấu ăn.",
    "opts": [
-    "mẹ",
     "bố",
-    "em"
+    "em",
+    "mẹ"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Ai nấu ăn trong gia đình anh? — 가족 중 누가 요리해요?\n남: Mẹ tôi thường nấu ăn, thỉnh thoảng bố tôi cũng nấu ăn. — 보통 어머니가 요리하고, 가끔 아버지도 해요.\n물음: Ai nấu ăn trong gia đình? — 가족 중 누가 요리해요?\n답: mẹ"
   },
@@ -251,11 +246,10 @@
    "audio": "Buổi sáng anh thường làm gì?\nTôi thức dậy lúc 6 giờ, tập thể dục rồi ăn sáng.",
    "opts": [
     "tập thể dục",
-    "xem tivi",
-    "đi ngủ"
+    "đi ngủ",
+    "xem tivi"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Buổi sáng anh thường làm gì? — 아침에 보통 뭐 해요?\n남: Tôi thức dậy lúc 6 giờ, tập thể dục rồi ăn sáng. — 6시에 일어나서 운동하고 아침을 먹어요.\n물음: Buổi sáng anh ấy làm gì? — 아침에 그는 뭐 해요?\n답: tập thể dục"
   },
@@ -266,11 +260,10 @@
    "audio": "Tối nay chúng ta đi xem phim nhé, phim mới hay lắm.\nĐược, mấy giờ?",
    "opts": [
     "đi xem phim",
-    "đi uống bia",
-    "đi ăn tối"
+    "đi ăn tối",
+    "đi uống bia"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Tối nay chúng ta đi xem phim nhé, phim mới hay lắm. — 오늘 저녁 영화 보러 가요, 새 영화가 아주 재미있어요.\n남: Được, mấy giờ? — 좋아요, 몇 시에요?\n물음: Tối nay họ sẽ làm gì? — 오늘 저녁에 그들은 뭐 할 거예요?\n답: đi xem phim"
   },
@@ -281,11 +274,10 @@
    "audio": "Tôi thường không ăn sáng vì tôi đi làm sớm.\nVậy chị uống cà phê nhé.",
    "opts": [
     "không",
-    "có",
-    "thỉnh thoảng"
+    "thỉnh thoảng",
+    "có"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Tôi thường không ăn sáng vì tôi đi làm sớm. — 저는 일찍 출근해서 보통 아침을 안 먹어요.\n남: Vậy chị uống cà phê nhé. — 그럼 커피라도 드세요.\n물음: Chị ấy có thường ăn sáng không? — 그녀는 보통 아침을 먹어요?\n답: không"
   },
@@ -295,12 +287,11 @@
    "prompt": "Em ấy học tiếng Việt lúc nào?",
    "audio": "Em học tiếng Việt lúc nào?\nBuổi tối em thường học khoảng một tiếng.",
    "opts": [
-    "buổi tối",
+    "buổi trưa",
     "buổi sáng",
-    "buổi trưa"
+    "buổi tối"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Em học tiếng Việt lúc nào? — 베트남어는 언제 공부해?\n남: Buổi tối em thường học khoảng một tiếng. — 저녁에 보통 한 시간쯤 공부해요.\n물음: Em ấy học tiếng Việt lúc nào? — 그 애는 언제 베트남어를 공부해요?\n답: buổi tối"
   },
@@ -311,11 +302,10 @@
    "audio": "Sao hôm nay anh mệt vậy?\nVì tối qua tôi thức khuya xem phim.",
    "opts": [
     "vì thức khuya xem phim",
-    "vì đi làm sớm",
-    "vì không ăn sáng"
+    "vì không ăn sáng",
+    "vì đi làm sớm"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Sao hôm nay anh mệt vậy? — 오늘 왜 그렇게 피곤해요?\n남: Vì tối qua tôi thức khuya xem phim. — 어젯밤 늦게까지 영화를 봤거든요.\n물음: Sao hôm nay anh ấy mệt? — 오늘 그는 왜 피곤해요?\n답: vì thức khuya xem phim"
   },
@@ -507,12 +497,11 @@
    "text": "Buổi sáng tôi thức dậy lúc 6 giờ. Tôi tập thể dục khoảng 30 phút, sau đó đánh răng, rửa mặt và ăn sáng. Tôi đi làm lúc 7 giờ rưỡi.",
    "prompt": "Tôi tập thể dục bao lâu?",
    "opts": [
-    "khoảng 30 phút",
+    "khoảng 10 phút",
     "khoảng một tiếng",
-    "khoảng 10 phút"
+    "khoảng 30 phút"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "exp": "물음: Tôi tập thể dục bao lâu? — 나는 얼마나 운동하나?\n글: 아침에 저는 6시에 일어나요. 30분쯤 운동하고, 그다음 이를 닦고 세수하고 아침을 먹어요. 7시 반에 출근해요.\n답: khoảng 30 phút"
   },
   {
@@ -522,11 +511,10 @@
    "prompt": "Buổi chiều Lan làm gì?",
    "opts": [
     "nghe nhạc và đọc sách",
-    "nấu ăn",
-    "xem phim"
+    "xem phim",
+    "nấu ăn"
    ],
    "ans": 0,
-   "shuffle": true,
    "exp": "물음: Buổi chiều Lan làm gì? — 오후에 란은 뭐 해요?\n글: 주말에 란은 보통 집에 있어요. 아침엔 어머니와 요리하고, 오후엔 음악을 듣고 책을 읽고, 저녁엔 가족과 영화를 봐요.\n답: nghe nhạc và đọc sách"
   },
   {
@@ -535,12 +523,11 @@
    "text": "Hôm qua Nam thức khuya học bài. Nam đi ngủ lúc 2 giờ sáng. Hôm nay Nam buồn ngủ quá nên không đi tập thể dục.",
    "prompt": "Hôm qua Nam đi ngủ lúc mấy giờ?",
    "opts": [
-    "2 giờ sáng",
     "11 giờ",
+    "2 giờ sáng",
     "12 giờ"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "exp": "물음: Hôm qua Nam đi ngủ lúc mấy giờ? — 어제 남은 몇 시에 잤어요?\n글: 어제 남은 공부하느라 늦게까지 깨어 있었어요. 새벽 2시에 잤어요. 오늘 너무 졸려서 운동하러 안 갔어요.\n답: 2 giờ sáng"
   },
   {
@@ -549,12 +536,11 @@
    "text": "Tôi thích nghe nhạc Việt Nam. Tôi thường nghe nhạc trên mạng sau khi học tiếng Việt. Nghe nhạc Việt Nam rất thú vị.",
    "prompt": "Tôi thường nghe nhạc lúc nào?",
    "opts": [
-    "sau khi học tiếng Việt",
     "sau khi ăn sáng",
+    "sau khi học tiếng Việt",
     "trước khi đi ngủ"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "exp": "물음: Tôi thường nghe nhạc lúc nào? — 나는 보통 언제 음악을 듣나?\n글: 저는 베트남 음악을 좋아해요. 베트남어 공부를 한 뒤 보통 인터넷으로 음악을 들어요. 베트남 음악 듣기는 아주 재미있어요.\n답: sau khi học tiếng Việt"
   },
   {
@@ -563,12 +549,11 @@
    "text": "Mỗi tối gia đình tôi ăn tối lúc 7 giờ. Sau khi ăn tối, bố tôi đọc báo, mẹ tôi xem tivi, còn tôi học bài.",
    "prompt": "Sau khi ăn tối, bố tôi làm gì?",
    "opts": [
-    "đọc báo",
     "xem tivi",
+    "đọc báo",
     "học bài"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "exp": "물음: Sau khi ăn tối, bố tôi làm gì? — 저녁을 먹은 뒤 아버지는 뭐 해요?\n글: 매일 저녁 우리 가족은 7시에 저녁을 먹어요. 저녁을 먹은 뒤 아버지는 신문을 읽고, 어머니는 TV를 보고, 저는 공부해요.\n답: đọc báo"
   },
   {

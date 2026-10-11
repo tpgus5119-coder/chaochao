@@ -175,12 +175,11 @@
    "prompt": "Ở Nhật anh Hiroki làm nghề gì?",
    "audio": "Ở Nhật anh làm kỹ sư phải không, anh Hiroki?\nKhông, ở Nhật tôi làm kế toán ở ngân hàng.",
    "opts": [
+    "thư ký",
     "kế toán",
-    "kỹ sư",
-    "thư ký"
+    "kỹ sư"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Ở Nhật anh làm kỹ sư phải không, anh Hiroki? — 히로키 씨, 일본에서 엔지니어로 일하셨죠?\n남: Không, ở Nhật tôi làm kế toán ở ngân hàng. — 아니요, 일본에서 저는 은행에서 회계사로 일했어요.\n물음: Ở Nhật anh Hiroki làm nghề gì? — 일본에서 히로키 씨는 무슨 일을 해요?\n답: kế toán"
   },
@@ -195,7 +194,6 @@
     "hơn 200 người"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Ngân hàng của anh có khoảng 50 nhân viên à? — 당신 은행은 직원이 50명쯤이에요?\n남: Không, ngân hàng của tôi có hơn 100 nhân viên. — 아니요, 우리 은행은 직원이 100명이 넘어요.\n물음: Ngân hàng của anh ấy có bao nhiêu nhân viên? — 그의 은행에는 직원이 몇 명 있어요?\n답: hơn 100 người"
   },
@@ -205,12 +203,11 @@
    "prompt": "Brian dạy tiếng Anh ở quận nào?",
    "audio": "Anh Brian dạy tiếng Anh ở Quận 1 hả?\nKhông, tôi dạy ở trường ILA, Quận 2.",
    "opts": [
-    "Quận 2",
+    "Quận 7",
     "Quận 1",
-    "Quận 7"
+    "Quận 2"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Anh Brian dạy tiếng Anh ở Quận 1 hả? — 브라이언 씨는 1군에서 영어를 가르치죠?\n남: Không, tôi dạy ở trường ILA, Quận 2. — 아니요, 저는 2군 ILA 학교에서 가르쳐요.\n물음: Brian dạy tiếng Anh ở quận nào? — 브라이언은 몇 군에서 영어를 가르쳐요?\n답: Quận 2"
   },
@@ -220,12 +217,11 @@
    "prompt": "Anh ấy dạy mấy ngày một tuần?",
    "audio": "Anh dạy mấy ngày một tuần?\nTôi dạy năm ngày một tuần, từ 9 giờ sáng đến 11 giờ rưỡi.",
    "opts": [
-    "5 ngày",
+    "7 ngày",
     "2 ngày",
-    "7 ngày"
+    "5 ngày"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Anh dạy mấy ngày một tuần? — 일주일에 며칠 가르치세요?\n남: Tôi dạy năm ngày một tuần, từ 9 giờ sáng đến 11 giờ rưỡi. — 저는 일주일에 5일, 아침 9시부터 11시 반까지 가르쳐요.\n물음: Anh ấy dạy mấy ngày một tuần? — 그는 일주일에 며칠 가르쳐요?\n답: 5 ngày"
   },
@@ -235,12 +231,11 @@
    "prompt": "Buổi chiều Hiroki làm việc từ mấy giờ đến mấy giờ?",
    "audio": "Buổi chiều anh làm việc từ mấy giờ đến mấy giờ?\nBuổi chiều tôi làm việc từ 2 giờ đến 7 giờ tối.",
    "opts": [
-    "từ 2 giờ đến 7 giờ",
+    "từ 9 giờ đến 11 giờ",
     "từ 8 giờ đến 5 giờ",
-    "từ 9 giờ đến 11 giờ"
+    "từ 2 giờ đến 7 giờ"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Buổi chiều anh làm việc từ mấy giờ đến mấy giờ? — 오후에는 몇 시부터 몇 시까지 일해요?\n남: Buổi chiều tôi làm việc từ 2 giờ đến 7 giờ tối. — 오후에 저는 2시부터 저녁 7시까지 일해요.\n물음: Buổi chiều Hiroki làm việc từ mấy giờ đến mấy giờ? — 오후에 히로키는 몇 시부터 몇 시까지 일해요?\n답: từ 2 giờ đến 7 giờ"
   },
@@ -255,7 +250,6 @@
     "phòng số 318"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Hôm qua anh vào phòng số 301 à? — 어제 301호에 들어갔어요?\n남: Không, hôm qua tôi vào nhầm phòng số 308. — 아니요, 어제 저는 308호에 잘못 들어갔어요.\n물음: Hôm qua anh ấy vào phòng số mấy? — 어제 그는 몇 호실에 들어갔어요?\n답: phòng số 308"
   },
@@ -266,11 +260,10 @@
    "audio": "Chị Loan làm việc ở ngân hàng phải không?\nKhông, chị ấy làm kỹ sư ở công ty máy tính.",
    "opts": [
     "công ty máy tính",
-    "ngân hàng",
-    "bệnh viện"
+    "bệnh viện",
+    "ngân hàng"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Chị Loan làm việc ở ngân hàng phải không? — 로안 씨는 은행에서 일하죠?\n남: Không, chị ấy làm kỹ sư ở công ty máy tính. — 아니요, 그녀는 컴퓨터 회사에서 엔지니어로 일해요.\n물음: Chị Loan làm việc ở đâu? — 로안 씨는 어디에서 일해요?\n답: công ty máy tính"
   },
@@ -280,12 +273,11 @@
    "prompt": "Dạo này chị ấy thế nào?",
    "audio": "Dạo này tôi rất bận vì buổi sáng tôi đi học, buổi chiều tôi đi làm.\nChị cố gắng nhé!",
    "opts": [
+    "hơi mệt",
     "rất bận",
-    "rất rảnh",
-    "hơi mệt"
+    "rất rảnh"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Dạo này tôi rất bận vì buổi sáng tôi đi học, buổi chiều tôi đi làm. — 요즘 저는 오전엔 학교에 가고 오후엔 일하러 가서 아주 바빠요.\n남: Chị cố gắng nhé! — 힘내세요!\n물음: Dạo này chị ấy thế nào? — 요즘 그녀는 어때요?\n답: rất bận"
   },
@@ -295,12 +287,11 @@
    "prompt": "Cô ấy sắp đi đâu?",
    "audio": "Anh ơi, tôi sắp đi ăn trưa với anh Brian.\nỪ, chị đi nhé.",
    "opts": [
-    "đi ăn trưa",
     "đi làm",
+    "đi ăn trưa",
     "đi ngủ"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Anh ơi, tôi sắp đi ăn trưa với anh Brian. — 저기요, 저 곧 브라이언 씨와 점심 먹으러 가요.\n남: Ừ, chị đi nhé. — 네, 다녀오세요.\n물음: Cô ấy sắp đi đâu? — 그녀는 곧 어디에 가요?\n답: đi ăn trưa"
   },
@@ -310,12 +301,11 @@
    "prompt": "Siêu thị có bao nhiêu nhân viên?",
    "audio": "Siêu thị này có khoảng 100 nhân viên phải không?\nKhông, siêu thị này nhỏ, chỉ có khoảng 20 nhân viên.",
    "opts": [
-    "khoảng 20 người",
     "khoảng 100 người",
+    "khoảng 20 người",
     "hơn 200 người"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Siêu thị này có khoảng 100 nhân viên phải không? — 이 마트는 직원이 100명쯤 되죠?\n남: Không, siêu thị này nhỏ, chỉ có khoảng 20 nhân viên. — 아니요, 이 마트는 작아서 직원이 20명쯤뿐이에요.\n물음: Siêu thị có bao nhiêu nhân viên? — 마트에는 직원이 몇 명 있어요?\n답: khoảng 20 người"
   },
@@ -509,11 +499,10 @@
    "prompt": "Anh Nam làm việc đến mấy giờ?",
    "opts": [
     "2 giờ chiều",
-    "6 giờ sáng",
-    "7 giờ tối"
+    "7 giờ tối",
+    "6 giờ sáng"
    ],
    "ans": 0,
-   "shuffle": true,
    "exp": "물음: Anh Nam làm việc đến mấy giờ? — 남 씨는 몇 시까지 일해요?\n글: 남 씨는 택시 기사예요. 아침 6시부터 오후 2시까지 운전해요. 일은 조금 힘들지만 그는 아주 좋아해요.\n답: 2 giờ chiều"
   },
   {
@@ -522,12 +511,11 @@
    "text": "Chị Loan là kỹ sư ở công ty máy tính. Công ty của chị ấy ở Quận 1, có khoảng 200 nhân viên.",
    "prompt": "Công ty của chị Loan có bao nhiêu nhân viên?",
    "opts": [
-    "khoảng 200 người",
+    "hơn 100 người",
     "khoảng 20 người",
-    "hơn 100 người"
+    "khoảng 200 người"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "exp": "물음: Công ty của chị Loan có bao nhiêu nhân viên? — 로안 씨의 회사는 직원이 몇 명이에요?\n글: 로안 씨는 컴퓨터 회사 엔지니어예요. 그녀의 회사는 1군에 있고 직원이 200명쯤 돼요.\n답: khoảng 200 người"
   },
   {
@@ -536,12 +524,11 @@
    "text": "Brian dạy tiếng Anh ở trường ILA, Quận 2. Anh ấy dạy năm ngày một tuần, từ 9 giờ sáng đến 11 giờ rưỡi trưa.",
    "prompt": "Brian dạy đến mấy giờ?",
    "opts": [
-    "11 giờ rưỡi",
     "9 giờ",
+    "11 giờ rưỡi",
     "5 giờ chiều"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "exp": "물음: Brian dạy đến mấy giờ? — 브라이언은 몇 시까지 가르쳐요?\n글: 브라이언은 2군 ILA 학원에서 영어를 가르쳐요. 일주일에 5일, 아침 9시부터 11시 반까지 가르쳐요.\n답: 11 giờ rưỡi"
   },
   {
@@ -550,12 +537,11 @@
    "text": "Dạo này Hiroki rất bận. Buổi sáng anh ấy đi học tiếng Việt, buổi chiều anh ấy đi làm ở ngân hàng.",
    "prompt": "Buổi chiều Hiroki làm gì?",
    "opts": [
-    "đi làm",
+    "đi ngủ",
     "đi học",
-    "đi ngủ"
+    "đi làm"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "exp": "물음: Buổi chiều Hiroki làm gì? — 오후에 히로키는 뭐 해요?\n글: 요즘 히로키는 아주 바빠요. 오전엔 베트남어를 배우러 가고 오후엔 은행에 일하러 가요.\n답: đi làm"
   },
   {
@@ -564,12 +550,11 @@
    "text": "Bà Lan đã nghỉ hưu. Trước đây bà ấy là giáo viên. Bây giờ buổi sáng bà ấy tập thể dục rồi đọc báo.",
    "prompt": "Trước đây bà Lan làm nghề gì?",
    "opts": [
+    "nội trợ",
     "giáo viên",
-    "bác sĩ",
-    "nội trợ"
+    "bác sĩ"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "exp": "물음: Trước đây bà Lan làm nghề gì? — 전에 란 할머니는 무슨 일을 했어요?\n글: 란 할머니는 은퇴했어요. 전에는 선생님이었어요. 지금은 아침에 운동하고 신문을 읽어요.\n답: giáo viên"
   },
   {

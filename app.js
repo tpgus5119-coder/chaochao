@@ -11239,7 +11239,8 @@ function drawPuzzle(body, q) {
   const want = String(w.vi).trim().replace(/[.?!]+$/, '').split(/\s+/);
   if (want.length < 3) { q.mode = 'listen'; return drawQuiz(); }   // 조각이 둘이면 퍼즐이 아니다
   /* 시험지가 조각을 정해 준 문제(1차 시험지 'anh John'·'sinh viên' 처럼 여러 낱말이 한 조각)는 그 조각 그대로 (2026-09-30) */
-  const tiles = (w.tiles && w.tiles.length ? w.tiles.slice() : want.map((x, i) => tileText(want, i))).sort(() => Math.random() - .5);   // 시험지 조각은 대소문자도 시험지 그대로   // 첫 낱말 대문자는 소문자로 (고유명사 빼고)
+  const tiles = (w.tiles && w.tiles.length ? w.tiles.slice() : want.map((x, i) => tileText(want, i)));
+  if (!(Q.fixed && w.tiles && w.tiles.length)) tiles.sort(() => Math.random() - .5);   // 시험지 조각은 시험지에 적힌 차례 그대로 — 기기마다 같게 (2026-10-11)   // 시험지 조각은 대소문자도 시험지 그대로   // 첫 낱말 대문자는 소문자로 (고유명사 빼고)
 
   const ans = el('div', 'puzzans');
   const pool = el('div', 'puzztiles');

@@ -175,12 +175,11 @@
    "prompt": "Nhà sách ở đâu?",
    "audio": "Nhà sách FAHASA ở Quận 7 phải không anh?\nKhông, ở đường Nguyễn Huệ, Quận 1.",
    "opts": [
+    "Quận 7",
     "đường Nguyễn Huệ",
-    "Quận 2",
-    "Quận 7"
+    "Quận 2"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Nhà sách FAHASA ở Quận 7 phải không anh? — 파하사 서점은 7군에 있죠?\n남: Không, ở đường Nguyễn Huệ, Quận 1. — 아니요, 1군 응우옌후에 거리에 있어요.\n물음: Nhà sách ở đâu? — 서점은 어디에 있어요?\n답: đường Nguyễn Huệ"
   },
@@ -190,12 +189,11 @@
    "prompt": "Từ nhà Lan đến công ty mất bao lâu?",
    "audio": "Từ nhà tôi đến công ty mất khoảng 30 phút.\nNhà tôi gần, chỉ mất 10 phút.",
    "opts": [
-    "khoảng 30 phút",
+    "khoảng một tiếng",
     "khoảng 10 phút",
-    "khoảng một tiếng"
+    "khoảng 30 phút"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Từ nhà tôi đến công ty mất khoảng 30 phút. — 우리 집에서 회사까지 30분쯤 걸려요.\n남: Nhà tôi gần, chỉ mất 10 phút. — 우리 집은 가까워서 10분밖에 안 걸려요.\n물음: Từ nhà Lan đến công ty mất bao lâu? — 란의 집에서 회사까지 얼마나 걸려요?\n답: khoảng 30 phút"
   },
@@ -205,12 +203,11 @@
    "prompt": "Họ sẽ gặp nhau lúc mấy giờ?",
    "audio": "Chúng ta gặp nhau lúc 7 giờ tối ở quán cà phê nhé?\nĐược, 7 giờ tối nhé.",
    "opts": [
+    "2 giờ chiều",
     "7 giờ tối",
-    "7 giờ sáng",
-    "2 giờ chiều"
+    "7 giờ sáng"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Chúng ta gặp nhau lúc 7 giờ tối ở quán cà phê nhé? — 우리 저녁 7시에 카페에서 만날까요?\n남: Được, 7 giờ tối nhé. — 좋아요, 저녁 7시에요.\n물음: Họ sẽ gặp nhau lúc mấy giờ? — 그들은 몇 시에 만날 거예요?\n답: 7 giờ tối"
   },
@@ -220,12 +217,11 @@
    "prompt": "Anh ấy đi Đà Nẵng bằng gì?",
    "audio": "Tuần sau anh đi Đà Nẵng bằng xe buýt à?\nKhông, tôi đi bằng máy bay.",
    "opts": [
+    "tắc xi",
     "máy bay",
-    "xe buýt",
-    "tắc xi"
+    "xe buýt"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Tuần sau anh đi Đà Nẵng bằng xe buýt à? — 다음 주에 버스로 다낭에 가요?\n남: Không, tôi đi bằng máy bay. — 아니요, 비행기로 가요.\n물음: Anh ấy đi Đà Nẵng bằng gì? — 그는 무엇으로 다낭에 가요?\n답: máy bay"
   },
@@ -236,11 +232,10 @@
    "audio": "Siêu thị mở cửa lúc mấy giờ, anh?\nSiêu thị mở cửa từ 8 giờ sáng đến 10 giờ tối.",
    "opts": [
     "8 giờ sáng",
-    "9 giờ sáng",
-    "7 giờ tối"
+    "7 giờ tối",
+    "9 giờ sáng"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Siêu thị mở cửa lúc mấy giờ, anh? — 마트는 몇 시에 문을 열어요?\n남: Siêu thị mở cửa từ 8 giờ sáng đến 10 giờ tối. — 마트는 아침 8시부터 밤 10시까지 열어요.\n물음: Siêu thị mở cửa lúc mấy giờ? — 마트는 몇 시에 문을 열어요?\n답: 8 giờ sáng"
   },
@@ -251,11 +246,10 @@
    "audio": "Bây giờ tôi đang ở bưu điện, tôi gửi thư cho bố mẹ.\nVậy tôi chờ chị ở nhà sách nhé.",
    "opts": [
     "bưu điện",
-    "ngân hàng",
-    "nhà sách"
+    "nhà sách",
+    "ngân hàng"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Bây giờ tôi đang ở bưu điện, tôi gửi thư cho bố mẹ. — 지금 저는 우체국에서 부모님께 편지를 부치고 있어요.\n남: Vậy tôi chờ chị ở nhà sách nhé. — 그럼 서점에서 기다릴게요.\n물음: Cô ấy đang ở đâu? — 그녀는 지금 어디에 있어요?\n답: bưu điện"
   },
@@ -265,12 +259,11 @@
    "prompt": "Nhà của Nam gần hay xa công ty?",
    "audio": "Nhà anh có xa công ty không, anh Nam?\nKhông, nhà tôi gần lắm, tôi đi bộ đi làm.",
    "opts": [
-    "gần",
     "xa",
+    "gần",
     "rất xa"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 1,
    "made": true,
    "exp": "들은 대화\n여: Nhà anh có xa công ty không, anh Nam? — 남 씨, 집이 회사에서 멀어요?\n남: Không, nhà tôi gần lắm, tôi đi bộ đi làm. — 아니요, 우리 집은 아주 가까워서 걸어서 출근해요.\n물음: Nhà của Nam gần hay xa công ty? — 남의 집은 회사와 가까워요, 멀어요?\n답: gần"
   },
@@ -281,11 +274,10 @@
    "audio": "Hôm nay nhà sách giảm giá 10% phải không?\nKhông, hôm nay giảm giá 20%.",
    "opts": [
     "20%",
-    "30%",
-    "10%"
+    "10%",
+    "30%"
    ],
    "ans": 0,
-   "shuffle": true,
    "made": true,
    "exp": "들은 대화\n여: Hôm nay nhà sách giảm giá 10% phải không? — 오늘 서점이 10% 할인하죠?\n남: Không, hôm nay giảm giá 20%. — 아니요, 오늘은 20% 할인해요.\n물음: Hôm nay nhà sách giảm giá bao nhiêu? — 오늘 서점은 얼마나 할인해요?\n답: 20%"
   },
@@ -295,12 +287,11 @@
    "prompt": "Chị ấy đi làm lúc mấy giờ?",
    "audio": "Tôi đi làm lúc 7 giờ rưỡi sáng, còn anh?\nTôi đi làm lúc 8 giờ rưỡi.",
    "opts": [
-    "7 giờ rưỡi",
     "7 giờ",
-    "8 giờ rưỡi"
+    "8 giờ rưỡi",
+    "7 giờ rưỡi"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Tôi đi làm lúc 7 giờ rưỡi sáng, còn anh? — 저는 아침 7시 반에 출근해요, 당신은요?\n남: Tôi đi làm lúc 8 giờ rưỡi. — 저는 8시 반에 출근해요.\n물음: Chị ấy đi làm lúc mấy giờ? — 그녀는 몇 시에 출근해요?\n답: 7 giờ rưỡi"
   },
@@ -310,12 +301,11 @@
    "prompt": "Cuối tuần họ đi đâu?",
    "audio": "Cuối tuần chúng ta đi phố đi bộ nhé?\nỪ, ở đó rất đông và vui.",
    "opts": [
-    "phố đi bộ",
+    "bệnh viện",
     "siêu thị",
-    "bệnh viện"
+    "phố đi bộ"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "made": true,
    "exp": "들은 대화\n여: Cuối tuần chúng ta đi phố đi bộ nhé? — 주말에 우리 보행자 거리에 갈까요?\n남: Ừ, ở đó rất đông và vui. — 응, 거기는 사람이 많고 즐거워요.\n물음: Cuối tuần họ đi đâu? — 주말에 그들은 어디에 가요?\n답: phố đi bộ"
   },
@@ -510,12 +500,11 @@
    "text": "Nhà tôi ở Quận 7. Công ty tôi ở Quận 1. Từ nhà đến công ty mất khoảng 40 phút. Tôi thường đi làm bằng xe buýt.",
    "prompt": "Từ nhà đến công ty mất bao lâu?",
    "opts": [
-    "khoảng 40 phút",
     "khoảng 10 phút",
-    "khoảng 4 tiếng"
+    "khoảng 4 tiếng",
+    "khoảng 40 phút"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "exp": "물음: Từ nhà đến công ty mất bao lâu? — 집에서 회사까지 얼마나 걸려요?\n글: 우리 집은 7군, 회사는 1군에 있어요. 집에서 회사까지 40분쯤 걸려요. 저는 보통 버스로 출근해요.\n답: khoảng 40 phút"
   },
   {
@@ -529,7 +518,6 @@
     "buổi chiều"
    ],
    "ans": 0,
-   "shuffle": true,
    "exp": "물음: Tôi thường đi siêu thị lúc nào? — 나는 보통 언제 마트에 가나?\n글: 우리 집 근처 마트는 아침 7시에 문을 열어요. 저녁엔 거기 사람이 아주 많아요. 저는 보통 아침에 마트에 가요.\n답: buổi sáng"
   },
   {
@@ -539,11 +527,10 @@
    "prompt": "Lan đi Hà Nội bằng gì?",
    "opts": [
     "máy bay",
-    "xe buýt",
-    "tắc xi"
+    "tắc xi",
+    "xe buýt"
    ],
    "ans": 0,
-   "shuffle": true,
    "exp": "물음: Lan đi Hà Nội bằng gì? — 란은 무엇으로 하노이에 가요?\n글: 다음 주에 란은 조부모님을 뵈러 하노이에 가요. 비행기로 갈 거예요. 호찌민시에서 하노이까지 두 시간쯤 걸려요.\n답: máy bay"
   },
   {
@@ -552,12 +539,11 @@
    "text": "Quán cà phê này ở gần trường đại học. Cà phê ở đây ngon và rẻ. Sinh viên thường đến đây học và nói chuyện.",
    "prompt": "Ai thường đến quán cà phê này?",
    "opts": [
-    "sinh viên",
     "bác sĩ",
-    "tài xế"
+    "tài xế",
+    "sinh viên"
    ],
-   "ans": 0,
-   "shuffle": true,
+   "ans": 2,
    "exp": "물음: Ai thường đến quán cà phê này? — 누가 이 카페에 자주 와요?\n글: 이 카페는 대학교 근처에 있어요. 여기 커피는 맛있고 싸요. 학생들이 자주 와서 공부하고 이야기해요.\n답: sinh viên"
   },
   {
@@ -571,7 +557,6 @@
     "10%"
    ],
    "ans": 0,
-   "shuffle": true,
    "exp": "물음: Nhà sách giảm giá mấy phần trăm? — 서점은 몇 퍼센트 할인해요?\n글: 오늘은 토요일이에요. 서점이 30% 할인해요. 저와 친구는 베트남어 책을 사러 서점에 가요.\n답: 30%"
   },
   {

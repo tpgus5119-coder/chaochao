@@ -257,6 +257,12 @@ def build(no, title, q):
         elif k == 'errpick': x['exp'] = f"{x['fix']}\n{x.get('ko', '')}"
         elif sec.startswith('C 쓰기 · 2'): a = x['opts'][x['ans']]; x['exp'] = f"{x['prompt']}\n답: {a}\n{x['fix']} — {x.get('ko', '')}"
         elif k == 'free': x['exp'] = '\n'.join(f"{v} — {k2}" for v, k2 in zip(x['model'], x.get('model_ko') or [''] * len(x['model'])))
+    # 보기 차례를 한 번 섞어 고정 — 앱이 풀 때마다 섞으면 기기마다(풀 때마다) 차례가 달랐다. 종이처럼 누구에게나 같게 (2026-10-11 대표님 "기기마다 다르냐? 동일해야지")
+    import random as _rd
+    for i, x in enumerate(q):
+        if x['k'] == 'choice' and x.get('shuffle'):
+            idx = list(range(len(x['opts']))); _rd.Random(3000 + no * 100 + i).shuffle(idx)
+            x['ans'] = idx.index(x['ans']); x['opts'] = [x['opts'][j] for j in idx]; x.pop('shuffle')
     if lack: raise SystemExit(f'모의고사 {no} 해설 뜻 없음 {len(set(lack))}: ' + ' | '.join(sorted(set(lack))))
     out = {"note": f"주간시험 2 모의고사 {no} — 교재 1권 1~7과 범위(문법은 1~7과, 낱말은 4~7과 위주 — 대표님 2026-10-07), 2차 시험 안내 슬라이드의 틀(tools/mock2/common.py 머리글) 그대로. 클로드가 냄(2026-10-06). 듣기는 문항마다 문장 하나(길면 둘), 듣기 4는 질문을 듣고 짧은 답을 고른다. 쓰기 2는 틀린 낱말 자리를 짚는다. 쓰기 3은 모범 답안을 보고 스스로 매긴다. 말하기(D)는 녹음해 듣고 모범 답안을 본 뒤 스스로 매긴다(2026-10-07).", "title": title, "time": 90, "pts": {"A": 30, "B": 30, "C": 20, "D": 20}, "q": q}
     json.dump(out, open(R / f'data/mock2_{no}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
