@@ -3122,4 +3122,12 @@ button.rec.rec-on, .ibtn.rec-on{animation:recpulse 1.4s ease-in-out infinite}
 .fxmarks{margin:10px 0; line-height:1.8; font-size:16px}
 .fxmarks span[data-r="ok"]{color:var(--good,#2e7d32); font-weight:800}
 .fxmarks span[data-r="no"]{color:var(--bad); font-weight:800}
+/* 앱 자판 글 — 커서 (2026-10-11 "커서 이동해서 고칠 수 있게") */
+.dictans.vedit{white-space:pre-wrap; word-break:break-word; cursor:text}
+.vedit .vch{cursor:text}
+.vedit .vph{color:var(--dim)}
+.vcaret{display:inline-block; width:2px; height:1.05em; margin:0 -1px; vertical-align:-0.15em; background:var(--accent); animation:vcblink 1s steps(1) infinite}
+@keyframes vcblink{50%{opacity:0}}
+@media (prefers-reduced-motion: reduce){.vcaret{animation:none}}
+.vk.mv{flex:0 0 auto; min-width:40px}
 

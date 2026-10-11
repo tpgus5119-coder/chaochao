@@ -11686,19 +11686,21 @@ function drawFixed(body, q) {
     body.append(box); return;
   }
   if (x.k === 'type') {                                     // 듣기 4 빈칸 · 쓰기 2 'Đúng 또는 고쳐 쓰기' — 종이처럼 직접 쳐서 쓴다 (대표님 2026-10-11 "직접 쳐서 쓰도록해라")
-    let txt = (q._prev && q._prev.pickT) || '';               // 돌아온 문제는 전에 쓴 것을 그대로 보인다
     body.append(telexHint());
-    const out = el('div', 'dictans'); const draw = () => { out.textContent = txt || '· · ·'; }; draw(); body.append(out);
+    const out = el('div', 'dictans'); body.append(out);
+    const ed = viEdit(out, (q._prev && q._prev.pickT) || '');   // 돌아온 문제는 전에 쓴 것을 그대로 보인다 · 커서로 고친다
     let submit = null;
-    if (x.dung) { const d = el('button', 'ghost dungchip', 'Đúng'); d.type = 'button'; d.onclick = () => { if (!q._ans) { txt = 'Đúng'; draw(); submit(); } }; body.append(d); }   // 누르면 바로 답하고 다음으로 (대표님 2026-10-11)
-    body.append(viKeypad(() => txt, v => { if (!q._ans) { txt = v; draw(); } }, submit = () => {
+    if (x.dung) { const d = el('button', 'ghost dungchip', 'Đúng'); d.type = 'button'; d.onclick = () => { if (!q._ans) { ed.setAll('Đúng'); submit(); } }; body.append(d); }   // 누르면 바로 답하고 다음으로 (대표님 2026-10-11)
+    body.append(viKeypad(ed.get, v => { if (!q._ans) ed.set(v); }, submit = () => {
+      const txt = ed.val();
       if (!txt.trim() || q._ans) return;
+      ed.lock();
       const good = (x.acc || []).some(a => viCanon(txt) === viCanon(a));   // 큰·작은 글자, 문장부호, 성조 자리(hoà/hòa)는 안 따진다 · 숫자는 글자로 써도(8 = tám)
       q._ans = true; q._ok = good; q._pickT = txt.trim(); hideSkip(); if (good) Q.ok++;
       if (!Q.blind) out.dataset.r = good ? 'ok' : 'no';
       resumeSave();
       nextBtn(body, () => { Q.i++; drawQuiz(); });
-    }));
+    }, { move: ed.move }));
     return;
   }
   if (x.k === 'pick') {
@@ -11770,20 +11772,21 @@ function drawFixed(body, q) {
     body.append(done); return;
   }
   if (x.k === 'free') {                                     // 그림 보고 문장 쓰기 — 다른 쓰기처럼 앱 자판으로 (대표님 2026-10-11 "문장 쓸 때 동일하게 가상 키보드"). ↵ = 다음 줄
-    let txt = q._txt || '', locked = false;
-    const out = el('div', 'dictans fxfreeout'); const draw = () => { out.textContent = txt || '· · ·'; }; draw();
-    body.append(telexHint(), out, viKeypad(() => txt, v => { if (!locked) { txt = v; q._txt = v; draw(); } }, () => { if (!locked && txt && !txt.endsWith('\n')) { txt += '\n'; q._txt = txt; draw(); } }, { ret: true }));
+    let locked = false;
+    const out = el('div', 'dictans fxfreeout');
+    const ed = viEdit(out, q._txt || '', v => { q._txt = v; });            // 커서로 가운데를 고친다 (2026-10-11)
+    body.append(telexHint(), out, viKeypad(ed.get, v => { if (!locked) ed.set(v); }, () => { const L = ed.get(); if (!locked && L && !L.endsWith('\n')) ed.set(L + '\n'); }, { ret: true, move: ed.move }));
     /* 앱이 채점 (대표님 2026-10-11 "스스로 채점") — 그림마다 미리 만든 맞는 문장 목록(x.acc)과 줄마다 맞대 본다(큰·작은 글자·문장부호·성조 자리 무시). 같은 문장 두 번은 한 번만 */
     const okLine = x.gram ? w3Matcher(x.gram) : (s => false);
     const grade5 = () => {
       const seen = new Set();
-      return txt.split('\n').map(z => z.trim()).filter(Boolean).map(l => { const c = viCanon(l), g = okLine(l) && !seen.has(c); if (g) seen.add(c); return [l, g]; });
+      return ed.val().split('\n').map(z => z.trim()).filter(Boolean).map(l => { const c = viCanon(l), g = okLine(l) && !seen.has(c); if (g) seen.add(c); return [l, g]; });
     };
     const marks = m => el('div', 'fxmarks', m.map(([l, g]) => '<span data-r="' + (g ? 'ok' : 'no') + '">' + (g ? '✓' : '✗') + '</span> ' + esc(l)).join('<br>'));
-    if (Q.review && txt && x.gram) body.append(marks(grade5()));            // 결과에서 다시 볼 때 — 줄마다 맞음·틀림
+    if (Q.review && ed.val() && x.gram) body.append(marks(grade5()));            // 결과에서 다시 볼 때 — 줄마다 맞음·틀림
     const done = el('button', 'primary big', tr('다 썼어요')); done.style.width = '100%'; done.style.marginTop = '10px';
     if (x.gram) { done.onclick = () => {
-      done.disabled = true; locked = true;
+      done.disabled = true; locked = true; ed.lock();
       const m = grade5(), n = Math.min(x.n, m.filter(([, g]) => g).length);
       q._score = n / x.n; q._ok = n === x.n; q._ans = true; hideSkip(); if (q._ok) Q.ok++;
       if (!Q.blind) { body.append(marks(m), el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map((mm, i) => esc(mm) + (x.model_ko && x.model_ko[i] ? ' <small class="dimtxt">' + esc(x.model_ko[i]) + '</small>' : '')).join('<br>'))); }
@@ -11792,7 +11795,7 @@ function drawFixed(body, q) {
     }; body.append(done); return; }
     done.textContent = tr('다 썼어요 — 모범 답안 보기');
     done.onclick = () => {
-      done.disabled = true; locked = true;
+      done.disabled = true; locked = true; ed.lock();
       body.append(el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map((m, i) => esc(m) + (x.model_ko && x.model_ko[i] ? ' <small class="dimtxt">' + esc(x.model_ko[i]) + '</small>' : '')).join('<br>')));
       body.append(el('p', 'q mid', tr('맞게 쓴 문장이 몇 개인가요?')));
       const g = el('div', 'opts');
@@ -12329,7 +12332,37 @@ function drawHandQ(body, q) {
 const KB_NUM = [['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], ['-', '/', ':', ';', '(', ')', '$', '&', '@', '"'], ['.', ',', '?', '!', "'"]];
 const KB_SYM = [['[', ']', '{', '}', '#', '%', '^', '*', '+', '='], ['_', '\\', '|', '~', '<', '>', '€', '£', '¥', '•'], ['.', ',', '?', '!', "'"]];
 const KB_HOLD = { a: 'à á ả ã ạ ă â', e: 'è é ẻ ẽ ẹ ê', i: 'ì í ỉ ĩ ị', o: 'ò ó ỏ õ ọ ô ơ', u: 'ù ú ủ ũ ụ ư', y: 'ỳ ý ỷ ỹ ỵ', d: 'đ' };
-function viKeypad(get, set, onGo, opt) {   // opt.ret: ✓ 자리에 '↵'(줄 바꿈) — 여러 문장 쓰기 (2026-10-11)
+/* 앱 자판으로 친 글 — 커서(|)를 옮겨 가운데를 고칠 수 있게 (대표님 2026-10-11 "커서 위치 조정 — 수정할 수 있도록").
+   글자를 누르면 그 자리로(글자 왼쪽 반 = 앞, 오른쪽 반 = 뒤), 자판의 ◀ ▶ 로 한 칸씩, 빈 곳을 누르면 끝으로.
+   자판(viKeypad)은 **커서 앞쪽 글만** 받아 다룬다 — 그래서 telex 성조·⌫ 가 커서 자리에서 되고, 커서 뒤 글은 그대로 남는다 */
+function viEdit(out, init, onChange) {
+  let chars = [...String(init || '')], cur = chars.length, locked = false;
+  out.classList.add('vedit');
+  const render = () => {
+    if (locked) return;
+    out.textContent = '';
+    if (!chars.length) { out.append(el('span', 'vcaret'), el('span', 'vph', '· · ·')); return; }
+    chars.forEach((c, i) => {
+      if (i === cur) out.append(el('span', 'vcaret'));
+      const sp = el('span', 'vch'); sp.textContent = c;
+      sp.onclick = e => { e.stopPropagation(); if (locked) return; const r = sp.getBoundingClientRect(); cur = e.clientX - r.left < r.width / 2 ? i : i + 1; render(); };
+      out.append(sp);
+    });
+    if (cur === chars.length) out.append(el('span', 'vcaret'));
+  };
+  out.onclick = () => { if (!locked) { cur = chars.length; render(); } };
+  const api = {
+    get: () => chars.slice(0, cur).join(''),
+    set: v => { if (locked) return; const L = [...v]; chars = L.concat(chars.slice(cur)); cur = L.length; render(); if (onChange) onChange(api.val()); },
+    setAll: v => { if (locked) return; chars = [...v]; cur = chars.length; render(); if (onChange) onChange(api.val()); },
+    val: () => chars.join(''),
+    move: d => { if (locked) return; cur = Math.max(0, Math.min(chars.length, cur + d)); render(); },
+    lock: () => { locked = true; out.querySelectorAll('.vcaret').forEach(c => c.remove()); out.onclick = null; },
+  };
+  render();
+  return api;
+}
+function viKeypad(get, set, onGo, opt) {   // opt.move: ◀ ▶ 커서 단추 (viEdit) · opt.ret: ✓ 자리에 '↵'   // opt.ret: ✓ 자리에 '↵'(줄 바꿈) — 여러 문장 쓰기 (2026-10-11)
   const kb = el('div', 'vkb ios');
   let shift = 0, layer = 'abc', shiftAt = 0;          // shift: 0 없음 · 1 다음 한 글자 · 2 고정(두 번 연달아)
   const key = (label, fn, cls) => {
@@ -12372,7 +12405,11 @@ function viKeypad(get, set, onGo, opt) {   // opt.ret: ✓ 자리에 '↵'(줄 �
   document.addEventListener('pointerdown', e => { if (pop && !e.target.closest('.vkpop')) closePop(); }, true);
   const bottom = (lab, fn) => {
     const row = el('div', 'vkrow bottom');
-    row.append(key(lab, fn, 'fn abc'), key('', () => { set(get() + ' '); if (shift === 1) { shift = 0; draw(); } }, 'space'), key(opt && opt.ret ? '↵' : '✓', onGo, 'go ret'));
+    row.append(key(lab, fn, 'fn abc'));
+    if (opt && opt.move) row.append(key('◀', () => opt.move(-1), 'fn mv'));
+    row.append(key('', () => { set(get() + ' '); if (shift === 1) { shift = 0; draw(); } }, 'space'));
+    if (opt && opt.move) row.append(key('▶', () => opt.move(1), 'fn mv'));
+    row.append(key(opt && opt.ret ? '↵' : '✓', onGo, 'go ret'));
     kb.append(row);
   };
   const draw = () => {
@@ -12432,12 +12469,12 @@ function drawTypeQ(body, q) {
   qm.onclick = () => { if (!silent || typed) play(w.vi, false); }; body.append(qm);   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   if (!silent) play(w.vi, false);
   body.append(telexHint());          // 성조·모자 치는 법 (접힘) — 대표님 지시 2026-09-27 밤
-  const out = el('div', 'dictans');
-  const draw = () => { out.textContent = txt || '· · ·'; };
-  draw(); body.append(out);
-  body.append(viKeypad(() => txt, v => { txt = v; draw(); }, () => {
+  const out = el('div', 'dictans'); body.append(out);
+  const ed = viEdit(out, '');                                    // 커서로 가운데를 고친다 (2026-10-11)
+  body.append(viKeypad(ed.get, v => { if (!typed) ed.set(v); }, () => {
+    txt = ed.val();
     if (!txt.trim()) return;
-    if (typed) return; typed = true;   // 확인을 두 번 눌러도 한 번만 (대표님 지적 2026-09-27 밤)
+    if (typed) return; typed = true; ed.lock();   // 확인을 두 번 눌러도 한 번만 (대표님 지적 2026-09-27 밤)
     const good = [w.vi, ...(w.alt || [])].some(a => viCanon(txt) === viCanon(a));   // 성조 자리(hoà/hòa)·i/y(lý/lí) 두 꼴 다 정답 (2026-09-29) · 시험지의 다른 정답(alt)도 정답
     markSpeed(good, 'type');
     fxTone(good); sound(w.vi);
@@ -12461,7 +12498,7 @@ function drawTypeQ(body, q) {
     if (!w.nograde) grade(w.vi, good, Q.early);                       // 시험 문장(nograde)은 낱말 창고에 안 넣는다
     if (good) Q.ok++; else requeue(q);
     nextBtn(body, () => { Q.i++; drawQuiz(); });
-  }));
+  }, { move: ed.move }));
 }
 
 
