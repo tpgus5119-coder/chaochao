@@ -11740,16 +11740,38 @@ function weeklyRound(r) {
     /* 범위·시간·채점 방식 글은 안 쓴다 (대표님 2026-10-07 "메인교재 1권 1~7과 · 끝에 채점 이런 글자들 다 빼라") — 지난 결과와 이어서 n/N 만 */
     const meta = [done ? tr('지난 결과') + ' ' + done.ok + '/' + done.tot : '', rs ? '<b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b>' : ''].filter(Boolean).join(' · ');
     eb.append(el('b', null, esc(tr(e.name)) + (meta ? ' <span class="exmeta">' + meta + '</span>' : '')));
-    eb.onclick = () => resumeAsk('fixed:' + k, rs2 => { dive(() => weeklyRound(r)); startExam1(k, rs2); });   // 푼 자리가 있으면 누를 때 이어서/처음부터 고르기 (대표님 2026-10-07)
-    const row = el('div', 'exrow'); row.append(eb);
-    if (!SHARE) {                                           // 시험지 한 벌 공유 (대표님 2026-10-11 "공유 기능 없냐") — 받는 사람: 로그인 없이 바로 이 시험지
-      const sh = el('button', 'exshare', '🔗'); sh.type = 'button'; sh.title = tr('공유');
-      sh.onclick = () => { const go = j => sharePopup(tr(e.name), [], shareEncodeExam(k), j.q.length + tr('문제')); if (FIXED[k]) go(FIXED[k]); else fetch(e.file, { cache: 'no-cache' }).then(x => x.json()).then(j => { FIXED[k] = j; go(j); }).catch(() => popup(tr('시험지를 불러오지 못했습니다'))); };
-      row.append(sh);
-    }
-    b.append(row);
+    eb.onclick = () => { dive(() => weeklyRound(r)); examRound(r, k); };   // 누르면 시험지 화면 — [시험 보기]·[🔗 공유] (대표님 2026-10-11 "단어 시험처럼 이런 UI")
+    b.append(eb);
   });
   show('exam', r.name, true);
+}
+/* 시험지 한 벌 화면 — 단어 시험(dailyRound)과 같은 꼴: 문제 수 · 이어서 n/N · [시험 보기] · [🔗 공유] · 지난 결과 (대표님 2026-10-11) */
+function examRound(r, k) {
+  const e = FIXED_EXAMS[k], b = $('#examBody'); b.textContent = '';
+  if (!FIXED[k]) {
+    b.append(el('p', 'note', tr('불러오는 중…'))); show('exam', tr(e.name), true);
+    fetch(e.file, { cache: 'no-cache' }).then(x => x.json()).then(j => { FIXED[k] = j; if ($('#title').textContent === tr(e.name)) examRound(r, k); }).catch(() => popup(tr('시험지를 불러오지 못했습니다')));
+    return;
+  }
+  const J = FIXED[k], n = J.q.length;
+  b.append(el('p', 'lede', n + tr('문제') + ' · ' + (J.time || 90) + tr('분')));
+  const rs = resumeGet('fixed:' + k);
+  if (rs) b.append(el('p', 'resumeline', '<b class="resumetag">' + tr('이어서') + ' ' + rs.i + '/' + rs.items.length + '</b>'));
+  const go = el('button', 'primary big', tr('시험 보기')); go.style.width = '100%'; go.style.textAlign = 'center';
+  go.onclick = () => resumeAsk('fixed:' + k, rs2 => { dive(() => examRound(r, k)); startExam1(k, rs2); });   // 푼 자리가 있으면 이어서/처음부터 고르기 (2026-10-07)
+  b.append(go);
+  if (!SHARE) {                                               // 받는 사람: 로그인 없이 바로 이 시험지 (shareExam)
+    const sh = el('button', 'ghost big', '🔗 ' + tr('공유')); sh.type = 'button'; sh.style.width = '100%'; sh.style.marginTop = '8px';
+    sh.onclick = () => sharePopup(tr(e.name), [], shareEncodeExam(k), n + tr('문제'));
+    b.append(sh);
+  }
+  const runs = (S.stats.wexam || []).filter(x => x.round === k);
+  if (runs.length) {
+    const best = runs.reduce((a, x) => Math.max(a, x.pts !== undefined ? x.pts : x.ok), 0), mx = runs[runs.length - 1].max || runs[runs.length - 1].tot;
+    b.append(el('p', 'anasec', tr('지난 결과') + ' <span>' + tr('최고') + ' ' + best + ' / ' + mx + '</span>'));
+    b.append(el('p', 'dimtxt', runs.slice(-5).reverse().map(x => esc(String(x.d).slice(5).replace('-', '/')) + ' · ' + (x.pts !== undefined ? x.pts + ' / ' + x.max : x.ok + ' / ' + x.tot)).join('<br>')));
+  }
+  show('exam', tr(e.name), true);
 }
 /* 문법 자료가 아직 없으면 불러온 뒤 이어 간다 */
 function gramEnsure(cb) {

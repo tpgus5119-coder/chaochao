@@ -3115,7 +3115,3 @@ button.rec.rec-on, .ibtn.rec-on{animation:recpulse 1.4s ease-in-out infinite}
 /* 결과의 틀린 문제 — 누르면 그 문제 화면 */
 .dwrow.dwopen{cursor:pointer}
 .dwrow.dwopen:active{background:color-mix(in srgb, var(--accent) 6%, var(--bg))}
-/* 주간시험 시험지 줄 — 오른쪽 [🔗] 공유 (2026-10-11) */
-.exrow{display:flex; gap:8px; align-items:stretch; margin-bottom:8px}
-.exrow .bigmenu{flex:1; margin-bottom:0; min-width:0}
-.exrow .exshare{flex:none; width:56px; border:1px solid var(--line); border-radius:12px; background:transparent; color:var(--fg); font-size:20px; cursor:pointer}
