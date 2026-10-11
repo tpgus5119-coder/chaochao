@@ -15035,6 +15035,23 @@ async function stopPush() {
 if ('serviceWorker' in navigator) {
   addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));
 }
+/* 새 판 저절로 받기 (대표님 2026-10-11 "시킨 작업 적용 안 된 것 같다") — 홈 화면 앱은 끄지 않으면 옛 판이 몇 시간이고 그대로 돈다.
+   앱으로 돌아올 때(그리고 10분마다) index.html 의 판번호를 서버에 물어, 다르면 새로 띄운다.
+   시험·카드·녹음·자판 입력 중에는 끼어들지 않고 홈·메뉴 화면에 설 때 띄운다(시험은 푼 자리가 저장돼 있다) */
+const MY_VER = ((document.querySelector('script[src*="app.js?v="]') || {}).src || '').split('v=')[1] || '';
+let NEW_VER = '';
+function verSafe() { return !SHARE && ['home', 'exam', 'sub', 'week', 'course', 'news'].includes(CURV) && !(REC.mr && REC.mr.state === 'recording'); }
+function verCheck() {
+  if (!MY_VER || location.protocol === 'file:') return;
+  fetch('index.html?t=' + Date.now(), { cache: 'no-store' }).then(r => r.text()).then(t => {
+    const m = t.match(/app\.js\?v=([0-9a-f]+)/); if (!m || m[1] === MY_VER) return;
+    NEW_VER = m[1];
+    if (verSafe()) location.reload();
+  }).catch(() => { });
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden) verCheck(); });
+setInterval(() => { if (!document.hidden) verCheck(); }, 10 * 60 * 1000);
+setInterval(() => { if (NEW_VER && !document.hidden && verSafe()) location.reload(); }, 5000);   // 새 판이 있으면 홈·메뉴에 섰을 때 바로
 
 Promise.all([
   fetch('data/days.json', { cache: 'no-cache' }).then(r => r.json()),
