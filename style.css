@@ -3134,4 +3134,11 @@ button.rec.rec-on, .ibtn.rec-on{animation:recpulse 1.4s ease-in-out infinite}
 body.recording::after{content:''; position:fixed; inset:0; border:8px solid #e0384a; border-radius:14px; pointer-events:none; z-index:99999; animation:recglow 1.4s ease-in-out infinite}
 @keyframes recglow{0%,100%{opacity:1} 50%{opacity:.25}}
 @media (prefers-reduced-motion: reduce){body.recording::after{animation:none}}
+/* 틀린 것 다시 보기 — 내 답 · 정답 (2026-10-11) */
+.myans{margin:8px 0 12px; border:1px solid var(--line); border-radius:12px; background:var(--card); overflow:hidden}
+.marow{display:flex; gap:10px; align-items:baseline; padding:9px 12px; font-size:16px; line-height:1.5}
+.marow + .marow{border-top:1px solid var(--line)}
+.marow b{flex:none; min-width:56px; font-size:14px; color:var(--dim)}
+.marow[data-r="no"] span{color:var(--bad)}
+.marow[data-r="ok"] span{color:var(--ok); font-weight:700}
 
