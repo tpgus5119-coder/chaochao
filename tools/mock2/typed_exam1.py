@@ -5,6 +5,7 @@ import json, pathlib, sys
 R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from common import accs, OKTXT
+from form1 import C1ALT, C2ALT
 def main():
     p = R / 'data/exam1.json'; J = json.loads(p.read_text(encoding='utf-8')); n = 0
     for x in J['q']:
@@ -17,6 +18,13 @@ def main():
             a = x['opts'][x['ans']]; ok = a == OKTXT; fx = x['prompt'] if ok else a
             for k in ('opts', 'ans', 'shuffle'): x.pop(k, None)
             x.update(k='type', acc=(['Đúng', 'Đ'] + accs(x['prompt'])) if ok else accs(fx), fix=fx, dung=True); n += 1
+    from w3_accept import accept
+    for x in J['q']:
+        if x['k'] == 'free': x['acc'] = accept('exam1', x.get('model', []))   # 쓰기 3 앱 채점용 맞는 문장 (2026-10-11)
+    for x in J['q']:                                   # 다른 바른 답 (2026-10-11 "여러 문장이 정답이 될 수 있다") — 조각의 다른 차례 · 다른 고침
+        if x['k'] == 'puzzle' and x['vi'] in C1ALT: x['alts'] = C1ALT[x['vi']]
+        if x['k'] == 'type' and x.get('dung') and x.get('fix') in C2ALT and x['acc'][0] != 'Đúng':
+            x['acc'] = list(dict.fromkeys(x['acc'] + [z for alt in C2ALT[x['fix']] for z in accs(alt)]))
     p.write_text(json.dumps(J, ensure_ascii=False, indent=1), encoding='utf-8')
     print('직접 쓰기로 바꾼 문항', n)
 if __name__ == '__main__':

@@ -86,7 +86,7 @@ def accs(a):
 def form1(no, q):
     """exN.py 의 문항을 실제 1차 시험지 꼴로 옮긴다 (대표님 2026-10-09 "시험 형식 틀은 그대로 동일하게 — 단어와 문법만 범위 다르게"). 새로 쓴 것은 form1.py(듣기 4·쓰기 3)"""
     import random
-    from form1 import A4F, C3F, B4_AVOID, C2F, B3F, B4J, C1N, DN
+    from form1 import A4F, C3F, B4_AVOID, C2F, B3F, B4J, C1N, DN, C1ALT, C2ALT
     rnd = random.Random(1000 + no)
     out = []
     pks = [x for x in q if x['k'] == 'pick']
@@ -139,6 +139,7 @@ def form1(no, q):
             continue
         elif k == 'puzzle' and no in C1N:                                # 쓰기 1 — 다른 갈래와 겹치지 않게 새로 (2026-10-11)
             v, t = C1N[no][c1s.index(x)]; x = dict(x, vi=v, tiles=t)
+            if v in C1ALT: x['alts'] = C1ALT[v]                       # 같은 조각의 다른 바른 차례도 정답 (2026-10-11)
         elif k == 'say' and sec.startswith('D 말하기 · 2') and no in DN:  # 말하기 문장 — 같은 까닭 (2026-10-11)
             x = dict(x, vi=DN[no][dss.index(x)])
         elif sec.startswith('B 읽기 · 4'):                               # 1차: 대답을 보여 주고 앞의 물음을 고른다
@@ -149,7 +150,7 @@ def form1(no, q):
             i = c2.index(x)
             if no in C2F:                                               # 손으로 검토해 적은 다섯(form1.C2F) — 답이 하나뿐인지 확인한 것 (2026-10-09)
                 pr, a, ws, fx, kk = C2F[no][i]                              # 종이처럼 맞으면 'Đúng', 틀리면 바른 문장을 직접 쳐서 쓴다 (2026-10-11)
-                x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "type", "prompt": pr, "acc": (["Đúng", "Đ"] + accs(pr)) if a == OKTXT else accs(fx), "fix": fx, "ko": kk, "dung": True}
+                x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "type", "prompt": pr, "acc": (["Đúng", "Đ"] + accs(pr)) if a == OKTXT else accs(fx) + [z for alt in C2ALT.get(fx, []) for z in accs(alt)], "fix": fx, "ko": kk, "dung": True}
                 out.append(x); continue
             if i < 3: x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": x['vi'], "opts": [x['fix'], OKTXT, alt(x['fix'], x['vi'])], "ans": 0, "shuffle": True, "fix": x['fix'], "ko": x['ko']}
             else:     x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": x['fix'], "opts": [OKTXT, x['vi'], alt(x['fix'], x['vi'])], "ans": 0, "shuffle": True, "fix": x['fix'], "ko": x['ko']}
@@ -159,6 +160,7 @@ def form1(no, q):
             f, mk = C3F[no]
             assert (R / 'img' / f).exists(), ('쓰기 3 그림 없음', f)
             x = {"sec": "C 쓰기 · 3 그림 보고 5문장", "k": "free", "img": f, "prompt": "그림을 보고 문장 5개를 쓰세요.", "model": [v for v, _ in mk], "model_ko": [k2 for _, k2 in mk], "n": 5, "pts": 10}
+            from w3_accept import accept; x['acc'] = accept(no, x['model'])   # 앱 채점용 맞는 문장 목록 (2026-10-11 "스스로 채점")
         out.append(x)
     return out
 def build(no, title, q):

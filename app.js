@@ -11268,7 +11268,8 @@ function drawPuzzle(body, q) {
   chk.onclick = () => {
     if (!picked.length || ans.dataset.r) return;
     const mine = picked.map(x => x.word).join(' ');
-    const good = mine.toLowerCase().replace(/\s+/g, ' ') === want.join(' ').toLowerCase();
+    const nz = t => String(t).toLowerCase().replace(/[.,!?]/g, ' ').replace(/\s+/g, ' ').trim();
+    const good = nz(mine) === nz(want.join(' ')) || (w.alt || []).some(a => nz(a) === nz(mine));   // 같은 조각으로 만든 다른 바른 차례도 정답 (대표님 2026-10-11 "여러 문장이 정답이 될 수 있다")
     if (good && tail) ans.dataset.tail = tail;
     markSpeed(good, 'puzzle'); sound(w.vi);
     fxTone(good);
@@ -11544,7 +11545,7 @@ function startExam1(key, r) {
     EXAM_SPD = 1;                                          // 시험지 듣기는 1배부터 (2026-10-06)
     const L = J.q.map(x => {
       const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
-      if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles, fx: x }, mode: 'puzzle', sec: x.sec, opts: [] };
+      if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles, alt: x.alts || [], fx: x }, mode: 'puzzle', sec: x.sec, opts: [] };   // alt: 같은 조각의 다른 바른 차례 (2026-10-11)
       if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '', fx: x }, mode: 'fx', sec: x.sec, opts: [] };   // D1 발음 — 읽고 녹음해 스스로 매김 (2026-10-07)
       if (x.k === 'speak') return { w: { vi: x.ask, ko: '', nograde: true, fx: x }, mode: 'fx', sec: x.sec, opts: [] };                      // D2 그림·D3 상황 말하기
       return { w, mode: 'fx', sec: x.sec, opts: [] };
@@ -11651,8 +11652,9 @@ function drawFixed(body, q) {
     let txt = (q._prev && q._prev.pickT) || '';               // 돌아온 문제는 전에 쓴 것을 그대로 보인다
     body.append(telexHint());
     const out = el('div', 'dictans'); const draw = () => { out.textContent = txt || '· · ·'; }; draw(); body.append(out);
-    if (x.dung) { const d = el('button', 'ghost dungchip', 'Đúng'); d.type = 'button'; d.onclick = () => { if (!q._ans) { txt = 'Đúng'; draw(); } }; body.append(d); }
-    body.append(viKeypad(() => txt, v => { if (!q._ans) { txt = v; draw(); } }, () => {
+    let submit = null;
+    if (x.dung) { const d = el('button', 'ghost dungchip', 'Đúng'); d.type = 'button'; d.onclick = () => { if (!q._ans) { txt = 'Đúng'; draw(); submit(); } }; body.append(d); }   // 누르면 바로 답하고 다음으로 (대표님 2026-10-11)
+    body.append(viKeypad(() => txt, v => { if (!q._ans) { txt = v; draw(); } }, submit = () => {
       if (!txt.trim() || q._ans) return;
       const good = (x.acc || []).some(a => viCanon(txt) === viCanon(a));   // 큰·작은 글자, 문장부호, 성조 자리(hoà/hòa)는 안 따진다 · 숫자는 글자로 써도(8 = tám)
       q._ans = true; q._ok = good; q._pickT = txt.trim(); hideSkip(); if (good) Q.ok++;
@@ -11734,7 +11736,23 @@ function drawFixed(body, q) {
     let txt = q._txt || '', locked = false;
     const out = el('div', 'dictans fxfreeout'); const draw = () => { out.textContent = txt || '· · ·'; }; draw();
     body.append(telexHint(), out, viKeypad(() => txt, v => { if (!locked) { txt = v; q._txt = v; draw(); } }, () => { if (!locked && txt && !txt.endsWith('\n')) { txt += '\n'; q._txt = txt; draw(); } }, { ret: true }));
-    const done = el('button', 'primary big', tr('다 썼어요 — 모범 답안 보기')); done.style.width = '100%'; done.style.marginTop = '10px';
+    /* 앱이 채점 (대표님 2026-10-11 "스스로 채점") — 그림마다 미리 만든 맞는 문장 목록(x.acc)과 줄마다 맞대 본다(큰·작은 글자·문장부호·성조 자리 무시). 같은 문장 두 번은 한 번만 */
+    const grade5 = () => {
+      const ok = new Set((x.acc || []).map(viCanon)), seen = new Set();
+      return txt.split('\n').map(z => z.trim()).filter(Boolean).map(l => { const c = viCanon(l), g = ok.has(c) && !seen.has(c); if (g) seen.add(c); return [l, g]; });
+    };
+    const marks = m => el('div', 'fxmarks', m.map(([l, g]) => '<span data-r="' + (g ? 'ok' : 'no') + '">' + (g ? '✓' : '✗') + '</span> ' + esc(l)).join('<br>'));
+    if (Q.review && txt && x.acc) body.append(marks(grade5()));            // 결과에서 다시 볼 때 — 줄마다 맞음·틀림
+    const done = el('button', 'primary big', tr('다 썼어요')); done.style.width = '100%'; done.style.marginTop = '10px';
+    if (x.acc && x.acc.length) { done.onclick = () => {
+      done.disabled = true; locked = true;
+      const m = grade5(), n = Math.min(x.n, m.filter(([, g]) => g).length);
+      q._score = n / x.n; q._ok = n === x.n; q._ans = true; hideSkip(); if (q._ok) Q.ok++;
+      if (!Q.blind) { body.append(marks(m), el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map((mm, i) => esc(mm) + (x.model_ko && x.model_ko[i] ? ' <small class="dimtxt">' + esc(x.model_ko[i]) + '</small>' : '')).join('<br>'))); }
+      resumeSave();
+      nextBtn(body, () => { Q.i++; drawQuiz(); });
+    }; body.append(done); return; }
+    done.textContent = tr('다 썼어요 — 모범 답안 보기');
     done.onclick = () => {
       done.disabled = true; locked = true;
       body.append(el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map((m, i) => esc(m) + (x.model_ko && x.model_ko[i] ? ' <small class="dimtxt">' + esc(x.model_ko[i]) + '</small>' : '')).join('<br>')));

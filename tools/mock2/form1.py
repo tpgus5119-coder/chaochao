@@ -207,3 +207,37 @@ DN = {
 4: ["Nhà sách ở bên cạnh bưu điện.", "Hôm nay đường rất đông.", "Máy bay sắp đến Hà Nội.", "Tôi không thích đi xe buýt.", "Chúng ta đi lúc mấy giờ?"],
 5: ["Anh ấy hay xem phim một mình.", "Tôi rất buồn ngủ.", "Ông bà tôi sống ở Huế.", "Chúng tôi thích đi du lịch.", "Bây giờ em đang làm gì?"],
 }
+
+# ── 2026-10-11 대표님 "단어 조각으로 만드는 건 문법에 맞는지만 보면 된다 — 여러 문장이 정답이 될 수 있다" ──
+# 쓰기 1: 같은 조각으로 만들 수 있는 **다른 바른 차례**(때를 나타내는 말을 앞·뒤로, 주어·목적어를 바꿔도 말이 되는 것). 열쇠 = 정답 문장
+C1ALT = {
+ "Tôi bắt đầu làm việc lúc 9 giờ.": ["Lúc 9 giờ tôi bắt đầu làm việc."],
+ "Xe sắp đến chưa anh?": ["Anh, xe sắp đến chưa?"],
+ "Mỗi ngày tôi đọc báo.": ["Tôi đọc báo mỗi ngày."],
+ "Chúng tôi ăn tối lúc 7 giờ.": ["Lúc 7 giờ chúng tôi ăn tối."],
+ "Tôi rửa mặt rồi đánh răng.": ["Tôi đánh răng rồi rửa mặt."],
+ "Tôi mời bạn tôi đi ăn tối.": ["Bạn tôi mời tôi đi ăn tối."],
+ "Ga ở gần nhà tôi.": ["Nhà tôi ở gần ga."],
+ "Máy bay đến lúc 9 giờ tối.": ["Lúc 9 giờ tối máy bay đến."],
+ "Sân bay ở xa trung tâm.": ["Trung tâm ở xa sân bay."],
+ "Mỗi tối tôi xem tin tức.": ["Tôi xem tin tức mỗi tối."],
+ "Hôm qua tôi không gặp em Vi.": ["Tôi không gặp em Vi hôm qua."],
+}
+# 쓰기 2: 틀린 문장을 고치는 **다른 바른 방법** (열쇠 = 바른 문장)
+C2ALT = {
+ "Chị ấy học tiếng Việt từ 2 giờ đến 4 giờ.": ["Chị ấy học tiếng Việt lúc 2 giờ và 4 giờ."],
+ "Công ty của tôi có 30 nhân viên.": ["Công ty tôi có 30 nhân viên."],
+ "Chị ấy rất đẹp.": ["Chị ấy đẹp lắm."],
+ "Anh ấy hơi mệt.": ["Anh ấy mệt lắm."],
+ "Bảo tàng ở gần trường Nhân văn.": ["Bảo tàng gần trường Nhân văn."],
+ "Hôm qua anh ấy đã mua sách ở đó.": ["Hôm qua anh ấy mua sách ở đó.", "Ngày mai anh ấy sẽ mua sách ở đó."],
+ "Anh có biết địa chỉ nhà sách không?": ["Anh biết địa chỉ nhà sách không?"],
+ "Nhà tôi ở gần công ty.": ["Nhà tôi gần công ty."],
+ "Tôi học từ 8 giờ đến 11 giờ.": ["Tôi học lúc 8 giờ và 11 giờ."],
+ "Tôi thường tập thể dục vào buổi sáng.": ["Tôi thường tập thể dục buổi sáng."],
+ "Tối nay tôi sẽ đọc sách.": ["Tối nay tôi đọc sách."],
+ "Anh ấy rất thích xem phim.": ["Anh ấy thích xem phim lắm.", "Anh ấy thích xem phim."],
+ "Chị là người Việt phải không?": ["Chị có phải là người Việt không?", "Chị là người Việt Nam phải không?"],
+ "Giáo viên của tôi là người Úc.": ["Giáo viên tôi là người Úc."],
+}
+
