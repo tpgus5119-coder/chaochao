@@ -5,9 +5,9 @@ q += [TF("nghe nhạc", "Chị ấy đang nghe nhạc.", True, im="mock5-l1-1.we
       TF("đọc sách", "Anh ấy đang xem tivi.", False), TF("buồn ngủ", "Em ấy buồn ngủ quá.", True), TF("áo dài", "Chị ấy mặc áo dài.", True, im="mock5-l1-5.webp")]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈 (헤드셋·뒷모습 셋·치파오 같던 그림을 뺌)
 q += [PK(["chơi", "học", "hát", "viết"], "Chị ấy hát rất hay.", 2),
       PK(["cà phê", "nước", "sữa", "nước mía"], "Mỗi sáng tôi uống cà phê.", 0),
-      PK(["tivi", "phim", "đọc", "nghỉ"], "Hôm nay tôi nghỉ.", 3),   # 10-09: 1차 꼴(그림 다섯 같이 씀)에서 다른 그림과 헷갈려 바꿈
+      PK(["tivi", "phim", "đọc", "nghỉ"], "Anh ấy đang nghỉ ngơi.", 3),   # 10-09: 1차 꼴(그림 다섯 같이 씀)에서 다른 그림과 헷갈려 바꿈
       PK(["thứ bảy", "nghỉ", "mưa", "ngày"], "Hôm nay là thứ bảy.", 0),
-      PK(["du lịch", "thăm", "mong", "gặp"], "Chúng tôi đi du lịch Đà Nẵng.", 0)]
+      PK(["du lịch", "thăm", "mong", "gặp"], "Chúng tôi sắp đi du lịch.", 0)]
 q += [A3("Anh ấy thường làm gì sau khi ăn tối?", "Sau khi ăn tối anh thường học tiếng Việt à?\nKhông, tôi thường xem tivi với gia đình.", ["xem tivi", "học tiếng Việt", "đi ngủ"]),
       A3("Chị ấy thích làm gì?", "Tôi rất thích nghe nhạc và đọc sách.\nCòn tôi thích xem phim.", ["nghe nhạc và đọc sách", "xem phim", "tập thể dục"]),
       A3("Hôm qua em ấy đi ngủ lúc mấy giờ?", "Hôm qua em đi ngủ lúc mấy giờ?\nEm thức khuya học bài nên đi ngủ lúc 1 giờ.", ["1 giờ", "11 giờ", "10 giờ"]),

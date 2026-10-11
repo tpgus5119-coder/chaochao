@@ -4,7 +4,7 @@ from common import *
 q = []
 # 그림 27장: 다섯 벌이 서로 다른 그림·소리를 쓴다 (대표님 2026-10-08 "다른 모의고사에 나온 오디오·이미지도 쓰지 말라") — check_all.py 로 검사
 q += [TF("tài xế", "Ông ấy là tài xế tắc xi.", True), TF("nhân viên ngân hàng", "Chị ấy là nhân viên ngân hàng.", True, im="mock1-l1-2.webp"),
-      TF("kỹ sư", "Anh ấy là kỹ sư.", True), TF("bệnh viện", "Đây là công ty máy tính.", False), TF("luật sư", "Chị ấy là giáo viên.", False)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈
+      TF("kỹ sư", "Anh ấy là kỹ sư.", True), TF("bệnh viện", "Đây là công ty máy tính.", False), TF("nấu ăn", "Chị ấy là giáo viên.", False, im="mock1-l1-5.webp")]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈
 q += [PK(["nội trợ", "thư ký", "bác sĩ", "sinh viên"], "Chị ấy là thư ký. Chị ấy làm việc ở văn phòng công ty.", 1),
       PK(["nhân viên siêu thị", "nhân viên quán cà phê", "nhân viên trường đại học", "nhân viên công ty"], "Anh ấy là nhân viên siêu thị.", 0),
       PK(["bác sĩ", "đi làm", "máy tính", "bận"], "Anh ấy là bác sĩ.", 0),

@@ -2,8 +2,8 @@
 from common import *
 q = []
 q += [TF("xe buýt", "Xe buýt đến rồi, anh ơi.", True), TF("tắc xi", "Đây là xe buýt số 8.", False),
-      TF("máy bay", "Đây là máy bay.", True), TF("đi bộ", "Anh ấy đang đi bộ.", True), TF("sân bay", "Đây là bưu điện.", False)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈
-q += [PK(["ga", "cổng", "phố", "phường"], "Đây là ga. Tôi đi Đà Nẵng từ đây.", 0),
+      TF("máy bay", "Đây là máy bay.", True), TF("đi bộ", "Anh ấy đang đi bộ.", True, im="mock4-l1-4.webp"), TF("sân bay", "Đây là bưu điện.", False)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈
+q += [PK(["ga", "cổng", "phố", "phường"], "Đây là ga.", 0),
       PK(["cất cánh", "bay", "phút", "giờ"], "Máy bay đang cất cánh.", 0),
       PK(["đi học", "đi chơi", "đi đến", "đi ra ngoài"], "Em ấy đang đi đến trường.", 0),
       PK(["siêu thị", "mở cửa", "trung tâm", "tiện lợi"], "Mẹ tôi đang mua sắm ở siêu thị.", 0),

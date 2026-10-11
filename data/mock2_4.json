@@ -42,7 +42,7 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-di-bo.webp",
+   "img": "mock4-l1-4.webp",
    "audio": "Anh ấy đang đi bộ.",
    "ans": true,
    "made": true,
@@ -62,7 +62,7 @@
   {
    "sec": "A 듣기 · 2 맞는 그림",
    "k": "pick",
-   "audio": "Đây là ga. Tôi đi Đà Nẵng từ đây.",
+   "audio": "Đây là ga.",
    "opts": [
     "b-cat-canh.webp",
     "w-1b8ee8a47f.webp",
@@ -79,7 +79,7 @@
     "ga",
     "siêu thị"
    ],
-   "exp": "들은 말: Đây là ga. Tôi đi Đà Nẵng từ đây.\n여기는 기차역이에요. 저는 여기서 다낭에 가요.\n답: D ga(기차역)"
+   "exp": "들은 말: Đây là ga.\n여기는 역이에요.\n답: D ga(기차역)"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",

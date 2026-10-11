@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from common import *
 q = []
-q += [TF("thức dậy", "Anh ấy đang thức dậy.", True), TF("đánh răng", "Em ấy đang đánh răng.", True, im="mock2-l1-2.webp"),
+q += [TF("thức dậy", "Anh ấy đang thức dậy.", True, im="mock2-l1-1.webp"), TF("đánh răng", "Em ấy đang đánh răng.", True, im="mock2-l1-2.webp"),
       TF("ăn sáng", "Anh ấy đang gọi điện thoại.", False, im="mock2-l1-3.webp"), TF("xem tivi", "Họ đang xem tivi.", True), TF("đứng", "Em ấy đang học bài.", False)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 것만 말하게 줄이고, 안 맞는 그림은 Draw Things 로 문장에 맞게 새로 그림
 q += [PK(["rửa mặt", "nấu ăn", "đọc báo", "mua sắm"], "Mỗi sáng tôi rửa mặt.", 0),
       PK(["ăn cơm", "chuẩn bị", "mang", "chờ"], "Gia đình tôi đang ăn cơm.", 0),
       PK(["lên mạng", "vẽ", "tin tức", "hát hò"], "Buổi tối tôi thường lên mạng.", 0, im="mock2-p-b.webp"),
-      PK(["đi ngủ", "về nhà", "ăn trưa", "đi mua sắm"], "Hôm qua tôi đi ngủ lúc 12 giờ đêm.", 0),
+      PK(["đi ngủ", "về nhà", "ăn trưa", "đi mua sắm"], "Anh ấy đang ngủ.", 0),
       PK(["chờ", "biển", "quán ăn", "thành phố"], "Anh ấy đang chờ xe buýt.", 0)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈   # 10-09: 1차 꼴(그림 다섯 같이 씀)에서 다른 그림과 헷갈려 바꿈
 q += [A3("Chị ấy làm việc ở đâu?", "Tôi làm thư ký ở một công ty máy tính, còn anh?\nTôi làm việc ở ngân hàng.", ["công ty máy tính", "ngân hàng", "bệnh viện"]),
       A3("Anh ấy thường làm gì vào cuối tuần?", "Cuối tuần anh thường học tiếng Việt à?\nKhông, cuối tuần tôi thường đi chơi với bạn bè.", ["đi chơi với bạn bè", "đi làm", "học tiếng Việt"]),

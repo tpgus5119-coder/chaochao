@@ -6,7 +6,7 @@ q += [TF("nhà sách", "Đây là một nhà sách.", True), TF("bưu điện", 
       TF("quán cà phê", "Đây là một quán cà phê.", True), TF("cây cầu", "Đây là trường đại học.", False), TF("bia", "Hai người đang uống bia.", True, im="mock3-l1-5.webp")]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 것만 말하게 줄이고, 안 맞는 그림은 Draw Things 로 문장에 맞게 새로 그림
 q += [PK(["nhà thờ", "bảo tàng", "phố đi bộ", "đài truyền hình"], "Đây là một nhà thờ rất đẹp.", 0),
       PK(["đi dạo", "tham quan", "nói chuyện", "uống"], "Chúng tôi đang nói chuyện ở quán cà phê.", 2),
-      PK(["uống thuốc", "ăn tối", "khen", "hỏi"], "Tối nay tôi mời anh đi ăn tối.", 1),
+      PK(["uống thuốc", "ăn tối", "khen", "hỏi"], "Gia đình tôi đang ăn tối ở nhà hàng.", 1),
       PK(["mua", "cây", "giảm giá", "địa chỉ"], "Hôm nay sách giảm giá.", 2),
       PK(["đi dạo", "du khách", "thân thiện", "trẻ"], "Họ đang đi dạo.", 0)]   # 10-11 대표님 "그림 헷갈리는 다른 보기 없을 것, 정답 그림은 정답이 명확하게" — 그림에 보이는 대로 소리를 바꿈
 q += [A3("Bây giờ họ đi đâu?", "Bây giờ chúng ta đi bưu điện hả anh?\nKhông, chúng ta đi mua sách ở nhà sách FAHASA.", ["nhà sách", "bưu điện", "siêu thị"]),
