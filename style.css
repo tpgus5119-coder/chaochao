@@ -3117,3 +3117,6 @@ button.rec.rec-on, .ibtn.rec-on{animation:recpulse 1.4s ease-in-out infinite}
 .dwrow.dwopen:active{background:color-mix(in srgb, var(--accent) 6%, var(--bg))}
 /* 쓰기 2 — [Đúng] 한 번에 넣기 (2026-10-11) */
 .dungchip{display:block; margin:8px auto 0; font-size:16px; padding:6px 18px}
+/* 쓰기 3 — 앱 자판으로 여러 줄 (2026-10-11) */
+.dictans.fxfreeout{white-space:pre-line; text-align:left; min-height:6.5em; line-height:1.6}
+

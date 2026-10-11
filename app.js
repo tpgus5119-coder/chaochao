@@ -11730,12 +11730,13 @@ function drawFixed(body, q) {
     };
     body.append(done); return;
   }
-  if (x.k === 'free') {
-    const ta = el('textarea', 'fxfree'); ta.rows = x.n + 1; ta.placeholder = tr('문장을 한 줄에 하나씩');
-    body.append(ta);
-    const done = el('button', 'primary big', tr('다 썼어요 — 모범 답안 보기')); done.style.width = '100%';
+  if (x.k === 'free') {                                     // 그림 보고 문장 쓰기 — 다른 쓰기처럼 앱 자판으로 (대표님 2026-10-11 "문장 쓸 때 동일하게 가상 키보드"). ↵ = 다음 줄
+    let txt = q._txt || '', locked = false;
+    const out = el('div', 'dictans fxfreeout'); const draw = () => { out.textContent = txt || '· · ·'; }; draw();
+    body.append(telexHint(), out, viKeypad(() => txt, v => { if (!locked) { txt = v; q._txt = v; draw(); } }, () => { if (!locked && txt && !txt.endsWith('\n')) { txt += '\n'; q._txt = txt; draw(); } }, { ret: true }));
+    const done = el('button', 'primary big', tr('다 썼어요 — 모범 답안 보기')); done.style.width = '100%'; done.style.marginTop = '10px';
     done.onclick = () => {
-      done.disabled = true; ta.readOnly = true;
+      done.disabled = true; locked = true;
       body.append(el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map((m, i) => esc(m) + (x.model_ko && x.model_ko[i] ? ' <small class="dimtxt">' + esc(x.model_ko[i]) + '</small>' : '')).join('<br>')));
       body.append(el('p', 'q mid', tr('맞게 쓴 문장이 몇 개인가요?')));
       const g = el('div', 'opts');
@@ -12272,7 +12273,7 @@ function drawHandQ(body, q) {
 const KB_NUM = [['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], ['-', '/', ':', ';', '(', ')', '$', '&', '@', '"'], ['.', ',', '?', '!', "'"]];
 const KB_SYM = [['[', ']', '{', '}', '#', '%', '^', '*', '+', '='], ['_', '\\', '|', '~', '<', '>', '€', '£', '¥', '•'], ['.', ',', '?', '!', "'"]];
 const KB_HOLD = { a: 'à á ả ã ạ ă â', e: 'è é ẻ ẽ ẹ ê', i: 'ì í ỉ ĩ ị', o: 'ò ó ỏ õ ọ ô ơ', u: 'ù ú ủ ũ ụ ư', y: 'ỳ ý ỷ ỹ ỵ', d: 'đ' };
-function viKeypad(get, set, onGo) {
+function viKeypad(get, set, onGo, opt) {   // opt.ret: ✓ 자리에 '↵'(줄 바꿈) — 여러 문장 쓰기 (2026-10-11)
   const kb = el('div', 'vkb ios');
   let shift = 0, layer = 'abc', shiftAt = 0;          // shift: 0 없음 · 1 다음 한 글자 · 2 고정(두 번 연달아)
   const key = (label, fn, cls) => {
@@ -12315,7 +12316,7 @@ function viKeypad(get, set, onGo) {
   document.addEventListener('pointerdown', e => { if (pop && !e.target.closest('.vkpop')) closePop(); }, true);
   const bottom = (lab, fn) => {
     const row = el('div', 'vkrow bottom');
-    row.append(key(lab, fn, 'fn abc'), key('', () => { set(get() + ' '); if (shift === 1) { shift = 0; draw(); } }, 'space'), key('✓', onGo, 'go ret'));
+    row.append(key(lab, fn, 'fn abc'), key('', () => { set(get() + ' '); if (shift === 1) { shift = 0; draw(); } }, 'space'), key(opt && opt.ret ? '↵' : '✓', onGo, 'go ret'));
     kb.append(row);
   };
   const draw = () => {
