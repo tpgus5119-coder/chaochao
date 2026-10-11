@@ -174,6 +174,10 @@ for f in files:
 _names = set(_re.findall(r"[^\s\"'<>()\[\]{},:]+\.(?:webp|svg|png|jpg|jpeg|gif)", _ref))
 _imgs = [l for l in git("ls-tree", "-r", "--name-only", "origin/main", "img").splitlines()]
 img_orphans = [q for q in _imgs if q.rsplit("/", 1)[1] not in _names and q not in files]
+# 카드뉴스는 다른 작업 폴더(아침 카드 작업)에서 올라와 이 맥에 없을 수 있다 — origin 에 있는 최근 10일 치 카드는 지우지 않는다
+# (2026-10-11 사고: 10-11 카드 20장이 이 맥에 없어 '쓰이지 않는 그림'으로 빠졌다 → 되살림)
+_ocd = sorted({q.rsplit("/", 1)[1][:10] for q in _imgs if q.startswith("img/card/20")} | set(_cd))[-10:]
+img_orphans = [q for q in img_orphans if not (q.startswith("img/card/20") and q.rsplit("/", 1)[1][:10] in _ocd)]
 if "--no-prune" not in sys.argv and img_orphans:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in img_orphans)
     subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
