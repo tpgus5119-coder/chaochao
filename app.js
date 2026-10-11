@@ -12163,6 +12163,7 @@ function finishWeekly() {
 }
 /* 결과 화면의 틀린 문제를 누르면 그 문제를 다시 그려 답까지 열어 보인다(점수·진도에는 안 든다). 뒤로(머리띠 ‹ 또는 [다음 ›])가면 결과 화면 그대로 */
 function reviewQ(q0, r, title) {
+  if (q0.w && q0.w.fx) return reviewFx(q0, r, title);         // 시험지 문항은 읽기만 하는 화면 (2026-10-11)
   const Qs = Q;
   const q = Object.assign({}, q0); ['_ans', '_ok', '_peek', '_skip', '_score', '_prev', '_pickT', '_okBefore'].forEach(k => { delete q[k]; });
   const back = () => { Q = Qs; const qb = $('#quizBody'); qb.textContent = ''; qb.append(r); show('quiz', title, true); };
@@ -12174,13 +12175,29 @@ function reviewQ(q0, r, title) {
   const pb = qb.querySelector('.peekbtn'); if (pb) pb.click();
   const nb = [...qb.querySelectorAll('button.primary')].pop();
   if (nb) { nb.textContent = tr('돌아가기'); nb.onclick = () => { NAV.pop(); back(); }; }
-  /* 내가 어떻게 답했나 (대표님 2026-10-11 "내가 쓴 답과 실제 답 — 말하기는 기계가 들은 피드백 그대로") */
-  const x = q0.w && q0.w.fx;
-  if (x) {
-    const my = myAnsBox(q0, x), lab = qb.querySelector('.q');
-    if (my) (lab ? lab.after(my) : qb.prepend(my));
-    if (q0._pickT) qb.querySelectorAll('.opts button, .picgrid button').forEach(b => { if (b.textContent.trim() === q0._pickT && b.dataset.r !== 'ok') b.dataset.r = 'no'; });   // 내가 고른 틀린 보기는 빨갛게
+}
+/* 시험지의 틀린 문항 다시 보기 — 맨 위에 문제 그대로(시험 때와 같은 모양), 그 밑에 내가 쓴 답 · 실제 답만.
+   보기 단추·조각·확인·자판·[돌아가기] 없음 — 뒤로는 머리띠 왼쪽 ‹ (대표님 2026-10-11) */
+function reviewFx(q0, r, title) {
+  const x = q0.w.fx, Qs = Q;
+  const back = () => { Q = Qs; const qb = $('#quizBody'); qb.textContent = ''; qb.append(r); show('quiz', title, true); };
+  dive(back);
+  const qb = $('#quizBody'); qb.textContent = '';
+  const say = t => { const k = recKey(t); k ? play(k, false, undefined, examSpd()) : speakVi(t, false, examSpd()); };
+  qb.append(el('div', 'q', esc(q0.sec || '')));
+  if (x.audio) { const row = el('div', 'qplay'); row.append(listenGroup(() => say(x.audio), { exam: true })); qb.append(row); }   // 듣기 문항은 들은 소리가 곧 지문
+  if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; qb.append(im); }
+  if (x.k === 'pick') {                                      // 그림 다섯 — 내가 고른 것은 빨강, 맞는 것은 초록
+    const grid = el('div', 'picgrid five');
+    x.opts.forEach((im0, i) => { const c = el('div', 'picopt'); const im = new Image(); im.src = 'img/' + im0; im.alt = ''; c.append(im, el('small', null, 'ABCDE'[i]));
+      if (i === x.ans) c.dataset.r = 'ok'; else if (q0._pickT === 'ABCDE'[i]) c.dataset.r = 'no'; grid.append(c); });
+    qb.append(grid);
   }
+  if (x.text) qb.append(el('div', 'fxtext', esc(x.text)));
+  const main = x.k === 'puzzle' ? (x.tiles || []).join(' / ') : x.k === 'say' ? x.vi : x.prompt;   // 쓰기 1 은 종이처럼 'Nhật / đều / là …'
+  if (main) qb.append(el('div', 'qmain' + (x.k === 'say' && x.vi.split(/\s+/).length <= 2 ? '' : ' sent'), esc(main)));
+  const my = myAnsBox(q0, x); if (my) qb.append(my);
+  show('quiz', title, true);
 }
 function fxRight(x) {
   if (x.k === 'tf') return tr(x.ans ? '맞다' : '틀리다');
@@ -12192,7 +12209,13 @@ function fxRight(x) {
 }
 function myAnsBox(q0, x) {
   const rows = [], row = (k, v, r) => rows.push('<div class="marow" data-r="' + r + '"><b>' + esc(tr(k)) + '</b><span>' + v + '</span></div>');
-  if (x.k === 'free') return null;                                          // 쓰기 3 은 줄마다 ✓/✗ 가 이미 나온다
+  if (x.k === 'free') {                                                    // 쓰기 3 — 내가 쓴 줄마다 ✓/✗ · 실제 답은 모범 문장
+    const ok = x.gram ? w3Matcher(x.gram) : (() => false), seen = new Set();
+    const lines = String(q0._txt || '').split('\n').map(z => z.trim()).filter(Boolean);
+    row('내 답', lines.length ? lines.map(l => { const c = viCanon(l), g = ok(l) && !seen.has(c); if (g) seen.add(c); return '<i data-r="' + (g ? 'ok' : 'no') + '">' + (g ? '✓' : '✗') + '</i> ' + esc(l); }).join('<br>') : '—', 'mix');
+    row('정답', (x.model || []).map(esc).join('<br>'), 'ok');
+    return el('div', 'myans', rows.join(''));
+  }
   if (x.k === 'say') {
     const fb = (q0._fb || []).filter(Boolean);
     if (!fb.length) row('내 답', '—', 'no');
