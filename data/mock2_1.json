@@ -65,21 +65,21 @@
    "audio": "Chị ấy là thư ký. Chị ấy làm việc ở văn phòng công ty.",
    "opts": [
     "b-bac-si.webp",
-    "w-2fa6fbb660.webp",
+    "b-thu-ky.webp",
     "w-37d71cfca2.webp",
     "w-43975b9eea.webp",
-    "b-thu-ky.webp"
+    "w-2fa6fbb660.webp"
    ],
-   "ans": 4,
+   "ans": 1,
    "made": true,
    "words": [
     "bác sĩ",
-    "căng tin",
+    "thư ký",
     "trường đại học",
     "nhân viên siêu thị",
-    "thư ký"
+    "căng tin"
    ],
-   "exp": "들은 말: Chị ấy là thư ký. Chị ấy làm việc ở văn phòng công ty.\n그녀는 비서예요. 회사 사무실에서 일해요.\n답: E thư ký(비서)"
+   "exp": "들은 말: Chị ấy là thư ký. Chị ấy làm việc ở văn phòng công ty.\n그녀는 비서예요. 회사 사무실에서 일해요.\n답: B thư ký(비서)"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
@@ -87,19 +87,19 @@
    "audio": "Anh ấy là nhân viên siêu thị.",
    "opts": [
     "b-bac-si.webp",
-    "w-2fa6fbb660.webp",
+    "b-thu-ky.webp",
     "w-37d71cfca2.webp",
     "w-43975b9eea.webp",
-    "b-thu-ky.webp"
+    "w-2fa6fbb660.webp"
    ],
    "ans": 3,
    "made": true,
    "words": [
     "bác sĩ",
-    "căng tin",
+    "thư ký",
     "trường đại học",
     "nhân viên siêu thị",
-    "thư ký"
+    "căng tin"
    ],
    "exp": "들은 말: Anh ấy là nhân viên siêu thị.\n그는 마트 직원이에요.\n답: D nhân viên siêu thị(마트 직원)"
   },
@@ -109,19 +109,19 @@
    "audio": "Anh ấy là bác sĩ.",
    "opts": [
     "b-bac-si.webp",
-    "w-2fa6fbb660.webp",
+    "b-thu-ky.webp",
     "w-37d71cfca2.webp",
     "w-43975b9eea.webp",
-    "b-thu-ky.webp"
+    "w-2fa6fbb660.webp"
    ],
    "ans": 0,
    "made": true,
    "words": [
     "bác sĩ",
-    "căng tin",
+    "thư ký",
     "trường đại học",
     "nhân viên siêu thị",
-    "thư ký"
+    "căng tin"
    ],
    "exp": "들은 말: Anh ấy là bác sĩ.\n그는 의사예요.\n답: A bác sĩ(의사)"
   },
@@ -131,21 +131,21 @@
    "audio": "Buổi trưa tôi ăn trưa ở căng tin công ty.",
    "opts": [
     "b-bac-si.webp",
-    "w-2fa6fbb660.webp",
+    "b-thu-ky.webp",
     "w-37d71cfca2.webp",
     "w-43975b9eea.webp",
-    "b-thu-ky.webp"
+    "w-2fa6fbb660.webp"
    ],
-   "ans": 1,
+   "ans": 4,
    "made": true,
    "words": [
     "bác sĩ",
-    "căng tin",
+    "thư ký",
     "trường đại học",
     "nhân viên siêu thị",
-    "thư ký"
+    "căng tin"
    ],
-   "exp": "들은 말: Buổi trưa tôi ăn trưa ở căng tin công ty.\n점심에 저는 회사 구내식당에서 점심을 먹어요.\n답: B căng tin(구내식당)"
+   "exp": "들은 말: Buổi trưa tôi ăn trưa ở căng tin công ty.\n점심에 저는 회사 구내식당에서 점심을 먹어요.\n답: E căng tin(구내식당)"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
@@ -153,19 +153,19 @@
    "audio": "Đây là trường đại học. Tôi học ở đây.",
    "opts": [
     "b-bac-si.webp",
-    "w-2fa6fbb660.webp",
+    "b-thu-ky.webp",
     "w-37d71cfca2.webp",
     "w-43975b9eea.webp",
-    "b-thu-ky.webp"
+    "w-2fa6fbb660.webp"
    ],
    "ans": 2,
    "made": true,
    "words": [
     "bác sĩ",
-    "căng tin",
+    "thư ký",
     "trường đại học",
     "nhân viên siêu thị",
-    "thư ký"
+    "căng tin"
    ],
    "exp": "들은 말: Đây là trường đại học. Tôi học ở đây.\n여기는 대학교예요. 저는 여기서 공부해요.\n답: C trường đại học(대학교)"
   },
@@ -427,13 +427,13 @@
    "k": "choice",
    "prompt": "Tôi ____ làm kế toán ở ngân hàng.",
    "opts": [
-    "đang",
     "bao nhiêu",
+    "đang",
     "từ",
-    "ở",
-    "lắm"
+    "lắm",
+    "ở"
    ],
-   "ans": 0,
+   "ans": 1,
    "exp": "Tôi đang làm kế toán ở ngân hàng.\n저는 은행에서 회계 일을 하고 있어요. (đang: ~하는 중)"
   },
   {
@@ -441,13 +441,13 @@
    "k": "choice",
    "prompt": "Công ty anh có ____ nhân viên?",
    "opts": [
-    "đang",
     "bao nhiêu",
+    "đang",
     "từ",
-    "ở",
-    "lắm"
+    "lắm",
+    "ở"
    ],
-   "ans": 1,
+   "ans": 0,
    "exp": "Công ty anh có bao nhiêu nhân viên?\n회사에 직원이 몇 명이에요?"
   },
   {
@@ -455,11 +455,11 @@
    "k": "choice",
    "prompt": "Tôi làm việc ____ 8 giờ sáng đến 5 giờ chiều.",
    "opts": [
-    "đang",
     "bao nhiêu",
+    "đang",
     "từ",
-    "ở",
-    "lắm"
+    "lắm",
+    "ở"
    ],
    "ans": 2,
    "exp": "Tôi làm việc từ 8 giờ sáng đến 5 giờ chiều.\n저는 아침 8시부터 오후 5시까지 일해요. (từ … đến: ~부터 ~까지)"
@@ -469,13 +469,13 @@
    "k": "choice",
    "prompt": "Chúng tôi ăn trưa ____ căng tin công ty.",
    "opts": [
-    "đang",
     "bao nhiêu",
+    "đang",
     "từ",
-    "ở",
-    "lắm"
+    "lắm",
+    "ở"
    ],
-   "ans": 3,
+   "ans": 4,
    "exp": "Chúng tôi ăn trưa ở căng tin công ty.\n우리는 회사 구내식당에서 점심을 먹어요."
   },
   {
@@ -483,13 +483,13 @@
    "k": "choice",
    "prompt": "Dạo này công việc của tôi bận ____.",
    "opts": [
-    "đang",
     "bao nhiêu",
+    "đang",
     "từ",
-    "ở",
-    "lắm"
+    "lắm",
+    "ở"
    ],
-   "ans": 4,
+   "ans": 3,
    "exp": "Dạo này công việc của tôi bận lắm.\n요즘 제 일이 아주 바빠요. (lắm: 형용사 뒤에서 '아주')"
   },
   {
@@ -561,17 +561,17 @@
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
    "text": "Anh Park là người Hàn Quốc. Trước đây anh ấy là kỹ sư ở Seoul. Bây giờ anh ấy dạy tiếng Hàn ở Thành phố Hồ Chí Minh.",
-   "prompt": "Bây giờ anh Park là kỹ sư.",
-   "ans": false,
-   "exp": "Bây giờ anh Park là kỹ sư. — 지금 박 씨는 엔지니어예요.\n글: 박 씨는 한국 사람이에요. 전에 그는 서울에서 엔지니어였어요. 지금 그는 호찌민시에서 한국어를 가르쳐요.\n→ 틀리다"
+   "prompt": "Anh Park dạy tiếng Hàn.",
+   "ans": true,
+   "exp": "Anh Park dạy tiếng Hàn. — 박 씨는 한국어를 가르쳐요.\n글: 박 씨는 한국 사람이에요. 전에 그는 서울에서 엔지니어였어요. 지금 그는 호찌민시에서 한국어를 가르쳐요.\n→ 맞다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
    "text": "Anh Park là người Hàn Quốc. Trước đây anh ấy là kỹ sư ở Seoul. Bây giờ anh ấy dạy tiếng Hàn ở Thành phố Hồ Chí Minh.",
-   "prompt": "Anh Park dạy tiếng Hàn.",
-   "ans": true,
-   "exp": "Anh Park dạy tiếng Hàn. — 박 씨는 한국어를 가르쳐요.\n글: 박 씨는 한국 사람이에요. 전에 그는 서울에서 엔지니어였어요. 지금 그는 호찌민시에서 한국어를 가르쳐요.\n→ 맞다"
+   "prompt": "Bây giờ anh Park là kỹ sư.",
+   "ans": false,
+   "exp": "Bây giờ anh Park là kỹ sư. — 지금 박 씨는 엔지니어예요.\n글: 박 씨는 한국 사람이에요. 전에 그는 서울에서 엔지니어였어요. 지금 그는 호찌민시에서 한국어를 가르쳐요.\n→ 틀리다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
@@ -593,17 +593,17 @@
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
    "text": "Bố tôi làm việc ở bệnh viện gần nhà. Dạo này bố tôi rất bận nên thường về nhà trễ.",
-   "prompt": "Bố tôi làm việc ở bệnh viện.",
-   "ans": true,
-   "exp": "Bố tôi làm việc ở bệnh viện. — 우리 아버지는 병원에서 일한다.\n글: 아버지는 집 근처 병원에서 일해요. 요즘 아버지는 아주 바빠서 보통 집에 늦게 와요.\n→ 맞다"
+   "prompt": "Dạo này bố tôi rất rảnh.",
+   "ans": false,
+   "exp": "Dạo này bố tôi rất rảnh. — 요즘 우리 아버지는 아주 한가하다.\n글: 아버지는 집 근처 병원에서 일해요. 요즘 아버지는 아주 바빠서 보통 집에 늦게 와요.\n→ 틀리다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
    "text": "Bố tôi làm việc ở bệnh viện gần nhà. Dạo này bố tôi rất bận nên thường về nhà trễ.",
-   "prompt": "Dạo này bố tôi rất rảnh.",
-   "ans": false,
-   "exp": "Dạo này bố tôi rất rảnh. — 요즘 우리 아버지는 아주 한가하다.\n글: 아버지는 집 근처 병원에서 일해요. 요즘 아버지는 아주 바빠서 보통 집에 늦게 와요.\n→ 틀리다"
+   "prompt": "Bố tôi làm việc ở bệnh viện.",
+   "ans": true,
+   "exp": "Bố tôi làm việc ở bệnh viện. — 우리 아버지는 병원에서 일한다.\n글: 아버지는 집 근처 병원에서 일해요. 요즘 아버지는 아주 바빠서 보통 집에 늦게 와요.\n→ 맞다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
@@ -910,6 +910,20 @@
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
    "k": "type",
+   "prompt": "Anh ấy cũng làm kế toán, phải không?",
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Anh ấy cũng làm kế toán, phải không?"
+   ],
+   "fix": "Anh ấy cũng làm kế toán, phải không?",
+   "ko": "그도 회계사로 일하죠?",
+   "dung": true,
+   "exp": "Anh ấy cũng làm kế toán, phải không?\n답: Đúng\nAnh ấy cũng làm kế toán, phải không? — 그도 회계사로 일하죠?"
+  },
+  {
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "type",
    "prompt": "Chị ấy học tiếng Việt từ 2 giờ và 4 giờ.",
    "acc": [
     "Chị ấy học tiếng Việt từ 2 giờ đến 4 giờ.",
@@ -925,6 +939,20 @@
    "ko": "그녀는 2시부터 4시까지 베트남어를 배워요.",
    "dung": true,
    "exp": "Chị ấy học tiếng Việt từ 2 giờ và 4 giờ.\n답: Chị ấy học tiếng Việt từ 2 giờ đến 4 giờ.\nChị ấy học tiếng Việt từ 2 giờ đến 4 giờ. — 그녀는 2시부터 4시까지 베트남어를 배워요."
+  },
+  {
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "type",
+   "prompt": "Hôm nay tôi rất mệt.",
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Hôm nay tôi rất mệt."
+   ],
+   "fix": "Hôm nay tôi rất mệt.",
+   "ko": "오늘 저는 아주 피곤해요.",
+   "dung": true,
+   "exp": "Hôm nay tôi rất mệt.\n답: Đúng\nHôm nay tôi rất mệt. — 오늘 저는 아주 피곤해요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -953,34 +981,6 @@
    "ko": "그는 12시에 점심을 먹으러 가요.",
    "dung": true,
    "exp": "Anh ấy đi ăn trưa lúc giờ 12.\n답: Anh ấy đi ăn trưa lúc 12 giờ.\nAnh ấy đi ăn trưa lúc 12 giờ. — 그는 12시에 점심을 먹으러 가요."
-  },
-  {
-   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "type",
-   "prompt": "Hôm nay tôi rất mệt.",
-   "acc": [
-    "Đúng",
-    "Đ",
-    "Hôm nay tôi rất mệt."
-   ],
-   "fix": "Hôm nay tôi rất mệt.",
-   "ko": "오늘 저는 아주 피곤해요.",
-   "dung": true,
-   "exp": "Hôm nay tôi rất mệt.\n답: Đúng\nHôm nay tôi rất mệt. — 오늘 저는 아주 피곤해요."
-  },
-  {
-   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "type",
-   "prompt": "Anh ấy cũng làm kế toán, phải không?",
-   "acc": [
-    "Đúng",
-    "Đ",
-    "Anh ấy cũng làm kế toán, phải không?"
-   ],
-   "fix": "Anh ấy cũng làm kế toán, phải không?",
-   "ko": "그도 회계사로 일하죠?",
-   "dung": true,
-   "exp": "Anh ấy cũng làm kế toán, phải không?\n답: Đúng\nAnh ấy cũng làm kế toán, phải không? — 그도 회계사로 일하죠?"
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",

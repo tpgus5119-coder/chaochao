@@ -430,12 +430,12 @@
    "prompt": "Anh và tôi, ____ đều là sinh viên.",
    "opts": [
     "sẽ",
-    "quá",
     "à",
+    "chúng ta",
     "tại sao",
-    "chúng ta"
+    "quá"
    ],
-   "ans": 4,
+   "ans": 2,
    "exp": "Anh và tôi, chúng ta đều là sinh viên.\n당신과 나, 우리는 둘 다 대학생이에요."
   },
   {
@@ -444,10 +444,10 @@
    "prompt": "Chúng ta ____ đi mua sách.",
    "opts": [
     "sẽ",
-    "quá",
     "à",
+    "chúng ta",
     "tại sao",
-    "chúng ta"
+    "quá"
    ],
    "ans": 0,
    "exp": "Chúng ta sẽ đi mua sách.\n우리는 책을 사러 갈 거예요. (sẽ: ~할 것이다)"
@@ -458,12 +458,12 @@
    "prompt": "Món ăn này ngon ____!",
    "opts": [
     "sẽ",
-    "quá",
     "à",
+    "chúng ta",
     "tại sao",
-    "chúng ta"
+    "quá"
    ],
-   "ans": 1,
+   "ans": 4,
    "exp": "Món ăn này ngon quá!\n이 음식 정말 맛있어요!"
   },
   {
@@ -472,12 +472,12 @@
    "prompt": "Hôm nay nhà sách giảm giá 30% ____?",
    "opts": [
     "sẽ",
-    "quá",
     "à",
+    "chúng ta",
     "tại sao",
-    "chúng ta"
+    "quá"
    ],
-   "ans": 2,
+   "ans": 1,
    "exp": "Hôm nay nhà sách giảm giá 30% à?\n오늘 서점이 30% 할인한다고요? (à: 되묻기)"
   },
   {
@@ -486,10 +486,10 @@
    "prompt": "____ hôm qua anh không đến lớp? — Vì tôi bận.",
    "opts": [
     "sẽ",
-    "quá",
     "à",
+    "chúng ta",
     "tại sao",
-    "chúng ta"
+    "quá"
    ],
    "ans": 3,
    "exp": "tại sao hôm qua anh không đến lớp? — Vì tôi bận.\n어제 왜 수업에 안 왔어요? — 바빠서요. (tại sao: 왜)"
@@ -595,14 +595,6 @@
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
    "text": "Dorothy là người Mỹ. Chị ấy đến Việt Nam để học tiếng Việt. Chị ấy nói tiếng Việt khá giỏi.",
-   "prompt": "Dorothy là người Việt Nam.",
-   "ans": false,
-   "exp": "Dorothy là người Việt Nam. — 도로시는 베트남 사람이에요.\n글: 도로시는 미국 사람이에요. 그녀는 베트남어를 배우러 베트남에 왔어요. 그녀는 베트남어를 꽤 잘해요.\n→ 틀리다"
-  },
-  {
-   "sec": "B 읽기 · 3 맞다/틀리다",
-   "k": "tf",
-   "text": "Dorothy là người Mỹ. Chị ấy đến Việt Nam để học tiếng Việt. Chị ấy nói tiếng Việt khá giỏi.",
    "prompt": "Dorothy học tiếng Việt.",
    "ans": true,
    "exp": "Dorothy học tiếng Việt. — 도로시는 베트남어를 배워요.\n글: 도로시는 미국 사람이에요. 그녀는 베트남어를 배우러 베트남에 왔어요. 그녀는 베트남어를 꽤 잘해요.\n→ 맞다"
@@ -610,10 +602,10 @@
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Tối nay anh Min mời bạn bè đến nhà ăn tối. Anh ấy nấu ăn rất ngon. Bạn của anh ấy đều là người Việt Nam.",
-   "prompt": "Anh Min mời bạn bè đi nhà hàng.",
+   "text": "Dorothy là người Mỹ. Chị ấy đến Việt Nam để học tiếng Việt. Chị ấy nói tiếng Việt khá giỏi.",
+   "prompt": "Dorothy là người Việt Nam.",
    "ans": false,
-   "exp": "Anh Min mời bạn bè đi nhà hàng. — 민 씨는 친구들을 식당에 초대해요.\n글: 오늘 저녁 민 씨는 친구들을 집에 초대해 저녁을 먹어요. 그는 요리를 아주 잘해요. 그의 친구들은 모두 베트남 사람이에요.\n→ 틀리다"
+   "exp": "Dorothy là người Việt Nam. — 도로시는 베트남 사람이에요.\n글: 도로시는 미국 사람이에요. 그녀는 베트남어를 배우러 베트남에 왔어요. 그녀는 베트남어를 꽤 잘해요.\n→ 틀리다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
@@ -622,6 +614,14 @@
    "prompt": "Anh Min nấu ăn rất ngon.",
    "ans": true,
    "exp": "Anh Min nấu ăn rất ngon. — 민 씨는 요리를 아주 잘해요.\n글: 오늘 저녁 민 씨는 친구들을 집에 초대해 저녁을 먹어요. 그는 요리를 아주 잘해요. 그의 친구들은 모두 베트남 사람이에요.\n→ 맞다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Tối nay anh Min mời bạn bè đến nhà ăn tối. Anh ấy nấu ăn rất ngon. Bạn của anh ấy đều là người Việt Nam.",
+   "prompt": "Anh Min mời bạn bè đi nhà hàng.",
+   "ans": false,
+   "exp": "Anh Min mời bạn bè đi nhà hàng. — 민 씨는 친구들을 식당에 초대해요.\n글: 오늘 저녁 민 씨는 친구들을 집에 초대해 저녁을 먹어요. 그는 요리를 아주 잘해요. 그의 친구들은 모두 베트남 사람이에요.\n→ 틀리다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
@@ -921,16 +921,16 @@
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
    "k": "type",
-   "prompt": "Hôm qua anh ấy sẽ mua sách ở đó.",
+   "prompt": "Cà phê ở đây ngon lắm.",
    "acc": [
-    "Hôm qua anh ấy đã mua sách ở đó.",
-    "Hôm qua anh ấy mua sách ở đó.",
-    "Ngày mai anh ấy sẽ mua sách ở đó."
+    "Đúng",
+    "Đ",
+    "Cà phê ở đây ngon lắm."
    ],
-   "fix": "Hôm qua anh ấy đã mua sách ở đó.",
-   "ko": "어제 그는 거기서 책을 샀어요.",
+   "fix": "Cà phê ở đây ngon lắm.",
+   "ko": "여기 커피는 아주 맛있어요.",
    "dung": true,
-   "exp": "Hôm qua anh ấy sẽ mua sách ở đó.\n답: Hôm qua anh ấy đã mua sách ở đó.\nHôm qua anh ấy đã mua sách ở đó. — 어제 그는 거기서 책을 샀어요."
+   "exp": "Cà phê ở đây ngon lắm.\n답: Đúng\nCà phê ở đây ngon lắm. — 여기 커피는 아주 맛있어요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -948,20 +948,6 @@
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
    "k": "type",
-   "prompt": "Cà phê ở đây ngon lắm.",
-   "acc": [
-    "Đúng",
-    "Đ",
-    "Cà phê ở đây ngon lắm."
-   ],
-   "fix": "Cà phê ở đây ngon lắm.",
-   "ko": "여기 커피는 아주 맛있어요.",
-   "dung": true,
-   "exp": "Cà phê ở đây ngon lắm.\n답: Đúng\nCà phê ở đây ngon lắm. — 여기 커피는 아주 맛있어요."
-  },
-  {
-   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
-   "k": "type",
    "prompt": "Ngày mai tôi sẽ đi tham quan bảo tàng.",
    "acc": [
     "Đúng",
@@ -972,6 +958,20 @@
    "ko": "내일 저는 박물관을 구경하러 갈 거예요.",
    "dung": true,
    "exp": "Ngày mai tôi sẽ đi tham quan bảo tàng.\n답: Đúng\nNgày mai tôi sẽ đi tham quan bảo tàng. — 내일 저는 박물관을 구경하러 갈 거예요."
+  },
+  {
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "type",
+   "prompt": "Hôm qua anh ấy sẽ mua sách ở đó.",
+   "acc": [
+    "Hôm qua anh ấy đã mua sách ở đó.",
+    "Hôm qua anh ấy mua sách ở đó.",
+    "Ngày mai anh ấy sẽ mua sách ở đó."
+   ],
+   "fix": "Hôm qua anh ấy đã mua sách ở đó.",
+   "ko": "어제 그는 거기서 책을 샀어요.",
+   "dung": true,
+   "exp": "Hôm qua anh ấy sẽ mua sách ở đó.\n답: Hôm qua anh ấy đã mua sách ở đó.\nHôm qua anh ấy đã mua sách ở đó. — 어제 그는 거기서 책을 샀어요."
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",

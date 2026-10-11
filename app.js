@@ -12228,21 +12228,20 @@ function fxReviewBlock(q0, withSec) {
 /* 시험지마다 틀린 기록을 이 기기에 남긴다(서버로는 안 올림) */
 function wexamSave(k, list) {
   /* 오답 현황 — 같은 시험지를 여러 번 보면 문항마다 틀린 횟수(c)와 가장 최근의 틀린 답(a)을 쌓는다 (대표님 2026-10-11) */
-  const W = (S.wx = S.wx || {})[k] = S.wx[k] || { n: 0, len: list.length, c: {}, a: {} };
-  if (W.len !== list.length) { W.n = 0; W.len = list.length; W.c = {}; W.a = {}; }   // 시험지가 바뀌었으면 새로
+  const sig = wexamSig(list.map(q => q.w && q.w.fx));
+  const W = (S.wx = S.wx || {})[k] = S.wx[k] || { n: 0, len: list.length, sig, c: {}, a: {} };
+  if (W.len !== list.length || (W.sig && W.sig !== sig)) { W.n = 0; W.len = list.length; W.c = {}; W.a = {}; }   // 시험지(문항·차례)가 바뀌었으면 새로 — 틀린 횟수가 다른 문항에 붙지 않게
+  W.sig = sig;
   W.n++;
   list.forEach((q, i) => { if (q._ok) return; W.c[i] = (W.c[i] || 0) + 1; W.a[i] = [q._pickT || '', q._txt || '', q._fb || null, q._skip ? 1 : 0, q._peek ? 1 : 0, q._ans ? 1 : 0]; });
   save();
 }
+function wexamSig(xs) { return fnv32(xs.map(x => x ? (x.sec || '') + '|' + (x.prompt || x.audio || x.vi || '') + '|' + (x.ans === undefined ? '' : x.ans) : '').join('\n')); }
 function wexamWrong(k) {                              // 오답 현황 — 틀린 적 있는 문항(틀린 횟수 _cnt, 최근 틀린 답)
   const J = FIXED[k];
-  if (J && !(S.wx && S.wx[k]) && S.wlast && S.wlast[k] && S.wlast[k].a.length === J.q.length) {   // 이 기능 전(오늘 낮)에 남긴 마지막 시험 한 번을 오답 현황으로 옮긴다
-    const W0 = (S.wx = S.wx || {})[k] = { n: 1, len: J.q.length, c: {}, a: {} };
-    S.wlast[k].a.forEach((a, i) => { if (!a[0]) { W0.c[i] = 1; W0.a[i] = [a[1], a[2], a[3], a[4], a[5], a[6]]; } });
-    delete S.wlast[k]; save();
-  }
+  if (S.wlast) { delete S.wlast; save(); }               // 낮에 잠깐 쓰던 '마지막 시험' 기록 — 그 뒤 시험지 차례가 바뀌어(정답 규칙 없애기) 옮기지 않고 버린다 (2026-10-11)
   const W = S.wx && S.wx[k];
-  if (!W || !J || W.len !== J.q.length) return [];
+  if (!W || !J || W.len !== J.q.length || (W.sig && W.sig !== wexamSig(J.q))) return [];
   return Object.keys(W.c).map(Number).sort((a, b) => a - b).map(i => { const x = J.q[i], a = W.a[i] || []; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: false, _pickT: a[0] || '', _txt: a[1] || '', _fb: a[2] || null, _skip: !!a[3], _peek: !!a[4], _ans: !!a[5], _cnt: W.c[i] }; });
 }
 function wrongHistoryView(k, title, back) {          // 시험지 하나의 오답 현황 — 시험 끝의 '틀린 것'과 같은 꼴, 두 번 이상 틀린 것은 빨갛게 · 틀린 단어·문법 학습

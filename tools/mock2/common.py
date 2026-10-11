@@ -55,6 +55,11 @@ def check_range(s, bad):
         if t[i] in ALLOW or t[i] in NAMES or re.fullmatch(r'\d+', t[i]) or re.search('[가-힣]', t[i]) or t[i] in ('·', '—', '-'): i += 1; continue
         bad[t[i]] = s; i += 1
 OKTXT = 'Đúng — 맞는 문장'
+def patterned(ans, n):
+    """정답 자리 줄(0부터)에 눈에 띄는 규칙이 있나 — 제자리 둘 이상 · 한 칸씩 민 꼴(BCDEA) · 1씩 오르는 셋 연속(a,b,c) (2026-10-11)"""
+    if sum(a == i for i, a in enumerate(ans)) > 1: return True
+    if len({(a - i) % n for i, a in enumerate(ans)}) == 1: return True
+    return any(ans[i + 1] == ans[i] + 1 and ans[i + 2] == ans[i] + 2 for i in range(len(ans) - 2))
 _U = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín']
 def n2v(n):
     """숫자를 베트남어 글자로 (북부, 0~999) — 같은 수의 여러 꼴(24 hai mươi bốn/tư, 105 một trăm linh/lẻ năm)을 다 돌려준다"""
@@ -91,6 +96,7 @@ def form1(no, q):
     out = []
     pks = [x for x in q if x['k'] == 'pick']
     words5 = [x['words'][x['ans']] for x in pks]; order = list(range(5)); rnd.shuffle(order)
+    while patterned([order.index(i) for i in range(5)], 5): rnd.shuffle(order)   # 정답이 A·B·C… 차례대로·한 칸씩 민 꼴이 안 되게 (2026-10-11 대표님 "설마 순서대로 정답?")
     ims5 = [x.get("im") or img(x["words"][x["ans"]]) for x in pks]
     pw = [words5[k] for k in order]; po = [ims5[k] for k in order]      # 그림 다섯(A~E)을 다섯 문항이 같이 쓴다 — 1차처럼
     b4 = [x for x in q if x['sec'].startswith('B 읽기 · 4')]
@@ -163,9 +169,41 @@ def form1(no, q):
             from w3_accept import gram; x['gram'] = gram(no, x['model'])   # 앱 채점용 문법 틀 (2026-10-11 "스스로 채점" · "넉넉하게, 순서를 달리해도")
         out.append(x)
     return out
+def unpattern(no, q):
+    """정답 차례에 규칙이 안 보이게 (2026-10-11 대표님 "읽기 1 — 설마 보기 랜덤이 아니고 순서대로 정답?" 확인하니 a·b·c·d·e 그대로였다).
+    읽기 1: 낱말 다섯의 차례를 섞어 정답이 a,b,c… 로 안 가게(제자리 하나 이하, 한 칸씩 밀린 꼴 아님) · 읽기 3: 지문마다 두 문장 차례를 섞기 ·
+    쓰기 2: 맞는 문장 둘이 늘 끝(S S S Đ Đ)에 가지 않게 다섯의 차례를 섞기. 실제 1차 시험지(exam1)는 건드리지 않는다"""
+    import random
+    rnd = random.Random(5000 + no)
+    b1 = [x for x in q if x['sec'].startswith('B 읽기 · 1')]
+    if b1:
+        bank = b1[0]['opts']; n = len(bank)
+        while True:
+            perm = list(range(n)); rnd.shuffle(perm)                 # 새 차례의 j번째 = 옛 perm[j]
+            ans = [perm.index(x['ans']) for x in b1]
+            if not patterned(ans, n): break
+        for x, a in zip(b1, ans): x['opts'] = [bank[j] for j in perm]; x['ans'] = a
+    b3i = [i for i, x in enumerate(q) if x['sec'].startswith('B 읽기 · 3')]
+    pairs = [(b3i[j], b3i[j + 1]) for j in range(0, len(b3i) - 1, 2) if q[b3i[j]]['text'] == q[b3i[j + 1]]['text']]
+    orig = {i: q[i] for p_ in pairs for i in p_}
+    while pairs:
+        flips = [rnd.random() < 0.5 for _ in pairs]
+        seq = ''.join(('O' if orig[(b if f else a)]['ans'] else 'X') + ('O' if orig[(a if f else b)]['ans'] else 'X') for (a, b), f in zip(pairs, flips))
+        if seq not in ('OX' * len(pairs), 'XO' * len(pairs)): break     # 지문마다 같은 차례(OXOX… 번갈아)가 아니게
+    for (a, b), f in zip(pairs, flips if pairs else []):
+        q[a], q[b] = (orig[b], orig[a]) if f else (orig[a], orig[b])
+    c2i = [i for i, x in enumerate(q) if x['sec'].startswith('C 쓰기 · 2')]
+    if c2i:
+        items = [q[i] for i in c2i]
+        while True:
+            order = items[:]; rnd.shuffle(order)
+            pat = ''.join('Đ' if x.get('acc', [''])[0] == 'Đúng' else 'S' for x in order)
+            if pat not in ('SSSĐĐ', 'ĐĐSSS') and 'ĐĐ' != pat[-2:]: break
+        for i, x in zip(c2i, order): q[i] = x
+    return q
 def build(no, title, q):
     import collections
-    q = form1(no, q)
+    q = unpattern(no, form1(no, q))
     c = collections.Counter(x['sec'] for x in q)
     for s, n in SECN.items(): assert c[s] == n, (no, s, c[s], n)
     bad = {}
