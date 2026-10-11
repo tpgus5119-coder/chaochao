@@ -11575,6 +11575,43 @@ function exam1Clock() {
 }
 /* 시험지 문항 그리기 — tf(맞다/틀리다) · choice(보기 고르기) · pick(그림 고르기) · free(그림 보고 5문장, 스스로 매김) */
 /* [답 보기] — 시험지 문항마다 답을 열고 해설을 본다 (대표님 2026-10-08 "문제마다 답 보기 버튼, 해설도 함께"). 답하기 전에 열면 그 문항은 0점 */
+/* 쓰기 3 채점 — 그림마다 미리 적어 둔 문법 틀(tools/mock2/w3_accept.py)로 한 줄이 맞는지 본다 (대표님 2026-10-11 "넉넉하게, 순서를 달리해도 문법에 맞으면")
+   한 줄 = [앞말] + (통째 문장 | 주어 + [cũng/đều] + 술어(đang 은 빼도)) + [뒷말], 또는 그런 것 둘을 쉼표·và·còn 으로 이은 것. 숫자는 글자로 바꿔 견준다(3 = ba) */
+function numVi(n) {
+  const U = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'];
+  if (n < 10) return U[n];
+  if (n < 20) return n === 10 ? 'mười' : 'mười ' + (n % 10 === 5 ? 'lăm' : U[n % 10]);
+  if (n < 100) { const t = Math.floor(n / 10), u = n % 10, h = U[t] + ' mươi'; return u === 0 ? h : u === 1 ? h + ' mốt' : u === 4 ? h + ' tư' : u === 5 ? h + ' lăm' : h + ' ' + U[u]; }
+  if (n < 1000) { const h = Math.floor(n / 100), r = n % 100, a = U[h] + ' trăm'; return r === 0 ? a : r < 10 ? a + ' linh ' + U[r] : a + ' ' + numVi(r); }
+  return String(n);
+}
+function w3Matcher(g) {
+  const nc = t => viCanon(String(t).replace(/(^|\s)(\d+)(?=\s|[.,!?]|$)/g, (m, sp, d) => sp + numVi(+d)));
+  const say = new Set((g.say || []).map(nc)), core = new Set();
+  (g.facts || []).forEach(([subs, preds, pl]) => subs.forEach(s => preds.forEach(p => {
+    const ps = [p]; if (/^đang /.test(p)) ps.push(p.slice(5));
+    ps.slice().forEach(v => { ps.push('cũng ' + v); if (pl) ps.push('đều ' + v); });
+    ps.forEach(v => { core.add(nc(s + ' ' + v)); if (/^(một|nhiều|rất nhiều|hai|ba|bốn|năm|các|những) /.test(s)) core.add(nc('có ' + s + ' ' + v)); });   // 'Có một/nhiều/ba … đang …' 꼴도
+  })));
+  const pre = ['', ...(g.pre || []).map(nc)], post = ['', ...(g.post || []).map(nc)];
+  const clause = c => {
+    for (const a of pre) {
+      if (a && !c.startsWith(a + ' ')) continue; const r = a ? c.slice(a.length + 1) : c;
+      for (const b of post) { if (b && !r.endsWith(' ' + b)) continue; const m = b ? r.slice(0, -(b.length + 1)) : r; if (m && (say.has(m) || core.has(m))) return true; }
+    }
+    return false;
+  };
+  const JOIN = new Set(['và', 'còn', 'rồi', 'nhưng'].map(viCanon));
+  return line => {
+    const c = nc(line); if (!c) return false;
+    if (clause(c)) return true;
+    const parts = String(line).split(/[,;]/).map(z => z.trim()).filter(Boolean);
+    if (parts.length > 1 && parts.every(z => { const zc = nc(z).split(' '); if (JOIN.has(zc[0])) zc.shift(); return clause(zc.join(' ')); })) return true;
+    const w = c.split(' ');
+    for (let i = 1; i < w.length - 1; i++) if (JOIN.has(w[i]) && clause(w.slice(0, i).join(' ')) && clause(w.slice(i + 1).join(' '))) return true;
+    return false;
+  };
+}
 function autoExp(x) {                                         // 해설이 없는 문항의 답 (대표님 2026-10-09 "답 보기 없는 문제도 있네")
   const heard = x.audio ? tr('들은 말') + ': ' + x.audio + '\n' : '';
   if (x.k === 'tf') return heard + (x.text ? x.prompt + '\n' : '') + tr('답') + ': ' + tr(x.ans ? '맞다' : '틀리다');
@@ -11737,14 +11774,15 @@ function drawFixed(body, q) {
     const out = el('div', 'dictans fxfreeout'); const draw = () => { out.textContent = txt || '· · ·'; }; draw();
     body.append(telexHint(), out, viKeypad(() => txt, v => { if (!locked) { txt = v; q._txt = v; draw(); } }, () => { if (!locked && txt && !txt.endsWith('\n')) { txt += '\n'; q._txt = txt; draw(); } }, { ret: true }));
     /* 앱이 채점 (대표님 2026-10-11 "스스로 채점") — 그림마다 미리 만든 맞는 문장 목록(x.acc)과 줄마다 맞대 본다(큰·작은 글자·문장부호·성조 자리 무시). 같은 문장 두 번은 한 번만 */
+    const okLine = x.gram ? w3Matcher(x.gram) : (s => false);
     const grade5 = () => {
-      const ok = new Set((x.acc || []).map(viCanon)), seen = new Set();
-      return txt.split('\n').map(z => z.trim()).filter(Boolean).map(l => { const c = viCanon(l), g = ok.has(c) && !seen.has(c); if (g) seen.add(c); return [l, g]; });
+      const seen = new Set();
+      return txt.split('\n').map(z => z.trim()).filter(Boolean).map(l => { const c = viCanon(l), g = okLine(l) && !seen.has(c); if (g) seen.add(c); return [l, g]; });
     };
     const marks = m => el('div', 'fxmarks', m.map(([l, g]) => '<span data-r="' + (g ? 'ok' : 'no') + '">' + (g ? '✓' : '✗') + '</span> ' + esc(l)).join('<br>'));
-    if (Q.review && txt && x.acc) body.append(marks(grade5()));            // 결과에서 다시 볼 때 — 줄마다 맞음·틀림
+    if (Q.review && txt && x.gram) body.append(marks(grade5()));            // 결과에서 다시 볼 때 — 줄마다 맞음·틀림
     const done = el('button', 'primary big', tr('다 썼어요')); done.style.width = '100%'; done.style.marginTop = '10px';
-    if (x.acc && x.acc.length) { done.onclick = () => {
+    if (x.gram) { done.onclick = () => {
       done.disabled = true; locked = true;
       const m = grade5(), n = Math.min(x.n, m.filter(([, g]) => g).length);
       q._score = n / x.n; q._ok = n === x.n; q._ans = true; hideSkip(); if (q._ok) Q.ok++;

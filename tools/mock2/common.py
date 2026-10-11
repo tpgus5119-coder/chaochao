@@ -160,7 +160,7 @@ def form1(no, q):
             f, mk = C3F[no]
             assert (R / 'img' / f).exists(), ('쓰기 3 그림 없음', f)
             x = {"sec": "C 쓰기 · 3 그림 보고 5문장", "k": "free", "img": f, "prompt": "그림을 보고 문장 5개를 쓰세요.", "model": [v for v, _ in mk], "model_ko": [k2 for _, k2 in mk], "n": 5, "pts": 10}
-            from w3_accept import accept; x['acc'] = accept(no, x['model'])   # 앱 채점용 맞는 문장 목록 (2026-10-11 "스스로 채점")
+            from w3_accept import gram; x['gram'] = gram(no, x['model'])   # 앱 채점용 문법 틀 (2026-10-11 "스스로 채점" · "넉넉하게, 순서를 달리해도")
         out.append(x)
     return out
 def build(no, title, q):
