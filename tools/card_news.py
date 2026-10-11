@@ -540,6 +540,21 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-11 새벽(예약 작업): 하노이 투자·캄보디아 교역·오픈AI·문 매너 기사는 맞는 줄이 없어 갈래 기본
+              # 그림이, 유학생 알바·영어 교사는 둘 다 '학생·교육'에 걸려 같은 교실이, 다낭 우기 기사는 '관광'에 걸려
+              # 맑은 해변이 깔릴 판이었다. 여섯 줄을 맨 위에 둔다.
+              (("우기", "장맛비", "monsoon"),
+               "a winding coastal mountain road in heavy rain with dark clouds over the sea"),
+              (("순환도로", "핵심 사업"),
+               "a wide ring road with an overpass and new buildings under a clear sky"),
+              (("캄보디아", "cambodia"),
+               "cargo trucks waiting at a border gate checkpoint under a clear sky"),
+              (("아르바이트", "알바", "part-time"),
+               "a cafe counter with an apron hanging beside a coffee machine"),
+              (("오픈ai", "openai"),
+               "rows of server racks with blue lights in a data center"),
+              (("문 매너", "문을 잡아"),
+               "a glass door at a building entrance with a brass handle"),
               # 2026-10-09 새벽(예약 작업): 롱탄 공항 기사는 'airport'의 'port'가 아래 수출 줄에 먼저 걸려 컨테이너가,
               # 출퇴근 기사는 '고향'에 걸려 침실이 깔릴 판이었다. 후추·부동산 사기·소득 기사는 맞는 줄이 없거나
               # 같은 날 '부동산' 그림과 겹쳤다. 다섯 줄을 맨 위에 둔다.
