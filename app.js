@@ -1623,7 +1623,7 @@ async function toggleRec(text, btn, box) {
    말하는 동안 음높이가 그려진다. 끝나고 나서야 보는 것보다, 말하면서 보는 쪽이
    자기 소리를 고치는 데 낫다. 45ms 창으로 60ms마다 한 점 — 폰에서도 가볍다.
    함께 하는 일: 남은 시간 표시 · **폰을 입 가까이 대라**는 안내 · 너무 작으면 알려 주기. */
-const RECSEC = t => (String(t || '').trim().split(/\s+/).length > 1 ? 7 : 3.5);   // 문장 7초 · 단어 3.5초
+const RECSEC = t => { const s = String(t || '').trim(), n = s.split(/\s+/).length; return /[.?!]$/.test(s) || n >= 4 ? 10 : n > 1 ? 7 : 3.5; };   // 문장 10초(대표님 2026-10-11 "문장 말하기 10초로") · 두세 음절 낱말 7초 · 한 음절 3.5초
 
 function liveRec(box, stream, secs, onStop) {
   /* 녹음은 **화면 전체**로 알린다. 작은 상자 안에서 하니 사람들이
@@ -12180,7 +12180,7 @@ function examWrongList(r, list) {
   wrong.forEach(q => {
     const w = q.w, row = el('div', 'dwrow');
     row.append(el('div', 'dwq', esc(w.vi) + (w.alt && w.alt.length ? ' <small>' + tr('또는') + ' ' + w.alt.map(esc).join(' · ') + '</small>' : '')));
-    row.append(el('div', 'dwa', esc(w.ko || '') + (q.sec ? ' <small class="dimtxt">' + esc(q.sec) + '</small>' : '') + (q._skip ? ' <small class="dimtxt">' + tr('스킵') + '</small>' : '')));
+    row.append(el('div', 'dwa', esc(w.fx ? '' : (w.ko || '')) + (q.sec ? ' <small class="dimtxt">' + esc(q.sec) + '</small>' : '') + (q._skip ? ' <small class="dimtxt">' + tr('스킵') + '</small>' : '')));   // 시험지 문항(fx)은 뜻을 안 보인다 — 쓰기 2 만 해설용 뜻이 붙어 나왔다 (대표님 2026-10-11)
     row.classList.add('dwopen'); row.onclick = () => reviewQ(q, r, $('#title').textContent);   // 누르면 그 문제 화면 (2026-10-09)
     box.append(row);
   });
