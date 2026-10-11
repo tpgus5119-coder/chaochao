@@ -11874,8 +11874,8 @@ function examRound(r, k) {
     sh.onclick = () => sharePopup(tr(e.name), [], shareEncodeExam(k), n + tr('문제'));
     b.append(sh);
   }
-  const last = wexamLoad(k);
-  if (last) b.append(examTools(last, tr(e.name), () => examRound(r, k)));   // 지난 시험지 — 채점된 시험지 · 틀린 단어 · 틀린 문법 (2026-10-11)
+  const wn = wexamWrong(k).length;                         // 오답 현황 — 시험지마다 틀린 것을 모아 본다 (대표님 2026-10-11 "각 시험지마다 틀린 것을 확인할 수 있는 버튼만")
+  if (wn) { const wb = el('button', 'ghost big', '📋 ' + tr('오답 현황') + ' ' + wn); wb.type = 'button'; wb.style.width = '100%'; wb.style.marginTop = '8px'; wb.onclick = () => { dive(() => examRound(r, k)); wrongHistoryView(k, tr(e.name)); }; b.append(wb); }
   const runs = (S.stats.wexam || []).filter(x => x.round === k);
   if (runs.length) {
     const best = runs.reduce((a, x) => Math.max(a, x.pts !== undefined ? x.pts : x.ok), 0), mx = runs[runs.length - 1].max || runs[runs.length - 1].tot;
@@ -12225,16 +12225,38 @@ function fxReviewBlock(q0, withSec) {
   return qb;
 }
 /* 시험 뒤 — 채점된 시험지 전체 · 틀린 단어 · 틀린 문법 (대표님 2026-10-11) */
-/* 마지막으로 푼 시험지의 답을 이 기기에 남긴다(서버로는 안 올림) — 시험지 화면에서 다시 볼 수 있게 */
+/* 시험지마다 틀린 기록을 이 기기에 남긴다(서버로는 안 올림) */
 function wexamSave(k, list) {
-  S.wlast = S.wlast || {};
-  S.wlast[k] = { d: ymd(), a: list.map(q => [q._ok ? 1 : 0, q._pickT || '', q._txt || '', q._fb || null, q._skip ? 1 : 0, q._peek ? 1 : 0, q._ans ? 1 : 0]) };
+  /* 오답 현황 — 같은 시험지를 여러 번 보면 문항마다 틀린 횟수(c)와 가장 최근의 틀린 답(a)을 쌓는다 (대표님 2026-10-11) */
+  const W = (S.wx = S.wx || {})[k] = S.wx[k] || { n: 0, len: list.length, c: {}, a: {} };
+  if (W.len !== list.length) { W.n = 0; W.len = list.length; W.c = {}; W.a = {}; }   // 시험지가 바뀌었으면 새로
+  W.n++;
+  list.forEach((q, i) => { if (q._ok) return; W.c[i] = (W.c[i] || 0) + 1; W.a[i] = [q._pickT || '', q._txt || '', q._fb || null, q._skip ? 1 : 0, q._peek ? 1 : 0, q._ans ? 1 : 0]; });
   save();
 }
-function wexamLoad(k) {
-  const s0 = S.wlast && S.wlast[k], J = FIXED[k];
-  if (!s0 || !J || s0.a.length !== J.q.length) return null;
-  return J.q.map((x, i) => { const a = s0.a[i]; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: !!a[0], _pickT: a[1], _txt: a[2], _fb: a[3], _skip: !!a[4], _peek: !!a[5], _ans: !!a[6] }; });
+function wexamWrong(k) {                              // 오답 현황 — 틀린 적 있는 문항(틀린 횟수 _cnt, 최근 틀린 답)
+  const J = FIXED[k];
+  if (J && !(S.wx && S.wx[k]) && S.wlast && S.wlast[k] && S.wlast[k].a.length === J.q.length) {   // 이 기능 전(오늘 낮)에 남긴 마지막 시험 한 번을 오답 현황으로 옮긴다
+    const W0 = (S.wx = S.wx || {})[k] = { n: 1, len: J.q.length, c: {}, a: {} };
+    S.wlast[k].a.forEach((a, i) => { if (!a[0]) { W0.c[i] = 1; W0.a[i] = [a[1], a[2], a[3], a[4], a[5], a[6]]; } });
+    delete S.wlast[k]; save();
+  }
+  const W = S.wx && S.wx[k];
+  if (!W || !J || W.len !== J.q.length) return [];
+  return Object.keys(W.c).map(Number).sort((a, b) => a - b).map(i => { const x = J.q[i], a = W.a[i] || []; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: false, _pickT: a[0] || '', _txt: a[1] || '', _fb: a[2] || null, _skip: !!a[3], _peek: !!a[4], _ans: !!a[5], _cnt: W.c[i] }; });
+}
+function wrongHistoryView(k, title, back) {          // 시험지 하나의 오답 현황 — 시험 끝의 '틀린 것'과 같은 꼴, 두 번 이상 틀린 것은 빨갛게 · 틀린 단어·문법 학습
+  const list = wexamWrong(k), qb = $('#quizBody'); qb.textContent = '';
+  const r = el('div', 'result whist');
+  const tt = title + ' · ' + tr('오답 현황');
+  const tools = el('div', 'extools');
+  const mk = (t, fn) => { const b = el('button', 'ghost big', t); b.type = 'button'; b.style.width = '100%'; b.onclick = () => { dive(() => { const q2 = $('#quizBody'); q2.textContent = ''; q2.append(r); show('quiz', tt, true); }); fn(); }; tools.append(b); };
+  mk('🃏 ' + tr('틀린 단어'), () => wrongWordsView(list, title));
+  mk('📘 ' + tr('틀린 문법'), () => wrongGramView(list, title));
+  r.append(tools);
+  examWrongList(r, list);
+  qb.append(r);
+  show('quiz', tt, true);
 }
 function examTools(list, title, back) {
   const box = el('div', 'extools');
@@ -12382,6 +12404,7 @@ function examWrongList(r, list) {
     const w = q.w, row = el('div', 'dwrow');
     row.append(el('div', 'dwq', esc(w.vi) + (w.alt && w.alt.length ? ' <small>' + tr('또는') + ' ' + w.alt.map(esc).join(' · ') + '</small>' : '')));
     row.append(el('div', 'dwa', esc(w.fx ? '' : (w.ko || '')) + (q.sec ? ' <small class="dimtxt">' + esc(q.sec) + '</small>' : '') + (q._skip ? ' <small class="dimtxt">' + tr('스킵') + '</small>' : '')));   // 시험지 문항(fx)은 뜻을 안 보인다 — 쓰기 2 만 해설용 뜻이 붙어 나왔다 (대표님 2026-10-11)
+    if (q._cnt >= 2) { row.classList.add('rep'); row.append(el('span', 'repcnt', '×' + q._cnt)); }   // 오답 현황: 두 번 이상 틀린 문항 (2026-10-11)
     row.classList.add('dwopen'); row.onclick = () => reviewQ(q, r, $('#title').textContent);   // 누르면 그 문제 화면 (2026-10-09)
     box.append(row);
   });

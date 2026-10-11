@@ -3164,4 +3164,8 @@ body.recording::after{content:''; position:fixed; inset:0; border:8px solid #e03
 .ppmark{font-weight:800}
 .ppitem.ok .ppmark{color:var(--ok)} .ppitem.no .ppmark{color:var(--bad)}
 .ppitem .fximg{max-height:180px}
+/* 오답 현황 — 두 번 이상 틀린 문항 (2026-10-11) */
+.dwrow.rep{position:relative; border-color:var(--bad); background:color-mix(in srgb, var(--bad) 12%, var(--card)); padding-right:52px}
+.dwrow .repcnt{position:absolute; right:12px; top:50%; transform:translateY(-50%); font-weight:800; color:var(--bad); font-size:16px}
+.whist .extools{margin:0 0 14px}
 
