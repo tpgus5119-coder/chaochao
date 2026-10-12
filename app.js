@@ -100,6 +100,8 @@ function viCanon(s) {
     return (VI_ONSET_Y.test(base) ? base.slice(0, -1) + 'i' : base) + (t || '');
   }).join(' ');
 }
+/* 쳐서 쓴 답 견주기 — viCanon 에 더해 숫자와 글자 사이 띄어쓰기는 안 따진다(4giờ = 4 giờ, 30 % = 30%) (오류 보고 2026-10-12 "숫자와 글자 사이 띄어쓰기는 안 해도 맞게") */
+function ansCanon(s) { return viCanon(String(s || '').normalize('NFC').replace(/(\d)(?=\p{L})/gu, '$1 ').replace(/(\p{L})(?=\d)/gu, '$1 ').replace(/\s+%/g, '%')); }
 /* 열쇠 → 실제 표제어 색인 (자료 하나마다 한 번만 만든다) */
 const CANON_IX = new WeakMap();
 function canonFind(obj, t) {
@@ -11688,7 +11690,7 @@ function numVi(n) {
   return String(n);
 }
 function w3Matcher(g) {
-  const nc = t => viCanon(String(t).replace(/(^|\s)(\d+)(?=\s|[.,!?]|$)/g, (m, sp, d) => sp + numVi(+d)));
+  const nc = t => viCanon(String(ansCanon(t)).replace(/(^|\s)(\d+)(?=\s|[.,!?]|$)/g, (m, sp, d) => sp + numVi(+d)));   // ansCanon: 4giờ = 4 giờ (2026-10-12)
   const say = new Set((g.say || []).map(nc)), core = new Set();
   (g.facts || []).forEach(([subs, preds, pl]) => subs.forEach(s => preds.forEach(p => {
     const ps = [p]; if (/^đang /.test(p)) ps.push(p.slice(5));
@@ -11803,7 +11805,7 @@ function drawFixed(body, q) {
       const txt = ed.val();
       if (!txt.trim() || q._ans) return;
       ed.lock();
-      const good = (x.acc || []).some(a => viCanon(txt) === viCanon(a));   // 큰·작은 글자, 문장부호, 성조 자리(hoà/hòa)는 안 따진다 · 숫자는 글자로 써도(8 = tám)
+      const good = (x.acc || []).some(a => ansCanon(txt) === ansCanon(a));   // 큰·작은 글자, 문장부호, 성조 자리(hoà/hòa)는 안 따진다 · 숫자는 글자로 써도(8 = tám)
       q._ans = true; q._ok = good; q._pickT = txt.trim(); hideSkip(); if (good) Q.ok++;
       if (!Q.blind) out.dataset.r = good ? 'ok' : 'no'; else out.classList.add('chosen');
       resumeSave();
@@ -11896,7 +11898,7 @@ function drawFixed(body, q) {
     const okLine = x.gram ? w3Matcher(x.gram) : (s => false);
     const grade5 = () => {
       const seen = new Set();
-      return ed.val().split('\n').map(z => z.trim()).filter(Boolean).map(l => { const c = viCanon(l), g = okLine(l) && !seen.has(c); if (g) seen.add(c); return [l, g]; });
+      return ed.val().split('\n').map(z => z.trim()).filter(Boolean).map(l => { const c = ansCanon(l), g = okLine(l) && !seen.has(c); if (g) seen.add(c); return [l, g]; });
     };
     const marks = m => el('div', 'fxmarks', m.map(([l, g]) => '<span data-r="' + (g ? 'ok' : 'no') + '">' + (g ? '✓' : '✗') + '</span> ' + esc(l)).join('<br>'));
     if (Q.review && ed.val() && x.gram) body.append(marks(grade5()));            // 결과에서 다시 볼 때 — 줄마다 맞음·틀림
@@ -12514,8 +12516,8 @@ function w3AnsHtml(x) {
 function fxAnsRight(x, t) {                           // 적힌 내 답이 정답인가 (옛 기록 바로잡기)
   t = String(t || '').trim(); if (!t) return false;
   if (x.k === 'tf' || x.k === 'pick' || x.k === 'choice') return t === fxRight(x);
-  if (x.k === 'type') return (x.acc || []).some(a => viCanon(a) === viCanon(t));
-  if (x.k === 'puzzle') return [x.vi, ...(x.alts || [])].some(a => viCanon(a) === viCanon(t));
+  if (x.k === 'type') return (x.acc || []).some(a => ansCanon(a) === ansCanon(t));
+  if (x.k === 'puzzle') return [x.vi, ...(x.alts || [])].some(a => ansCanon(a) === ansCanon(t));
   return false;
 }
 function myAnsBox(q0, x) {
@@ -12523,7 +12525,7 @@ function myAnsBox(q0, x) {
   if (x.k === 'free') {                                                    // 쓰기 3 — 내가 쓴 줄마다 ✓/✗ · 실제 답은 모범 문장
     const ok = x.gram ? w3Matcher(x.gram) : (() => false), seen = new Set();
     const lines = String(q0._txt || '').split('\n').map(z => z.trim()).filter(Boolean);
-    row('내 답', lines.length ? lines.map(l => { const c = viCanon(l), g = ok(l) && !seen.has(c); if (g) seen.add(c); return '<i data-r="' + (g ? 'ok' : 'no') + '">' + (g ? '✓' : '✗') + '</i> ' + esc(l); }).join('<br>') : '—', 'mix');
+    row('내 답', lines.length ? lines.map(l => { const c = ansCanon(l), g = ok(l) && !seen.has(c); if (g) seen.add(c); return '<i data-r="' + (g ? 'ok' : 'no') + '">' + (g ? '✓' : '✗') + '</i> ' + esc(l); }).join('<br>') : '—', 'mix');
     rows.push('<div class="marow stack" data-r="ok"><b>' + esc(tr('정답')) + '</b>' + w3AnsHtml(x) + '</div>');   // 받아 주는 문장 전부 (2026-10-12)
     return el('div', 'myans', rows.join(''));
   }
@@ -12854,7 +12856,7 @@ function drawTypeQ(body, q) {
     txt = ed.val();
     if (!txt.trim()) return;
     if (typed) return; typed = true; ed.lock();   // 확인을 두 번 눌러도 한 번만 (대표님 지적 2026-09-27 밤)
-    const good = [w.vi, ...(w.alt || [])].some(a => viCanon(txt) === viCanon(a));   // 성조 자리(hoà/hòa)·i/y(lý/lí) 두 꼴 다 정답 (2026-09-29) · 시험지의 다른 정답(alt)도 정답
+    const good = [w.vi, ...(w.alt || [])].some(a => ansCanon(txt) === ansCanon(a));   // 성조 자리(hoà/hòa)·i/y(lý/lí) 두 꼴 다 정답 (2026-09-29) · 시험지의 다른 정답(alt)도 정답
     markSpeed(good, 'type');
     fxTone(good); sound(w.vi);
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
