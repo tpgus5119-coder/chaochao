@@ -545,7 +545,7 @@ const UIVI = {
   '안 올라갔습니다': 'Không tải lên được',
   '아직 읽은 기사가 없습니다. 기사를 먼저 보세요.': 'Bạn chưa đọc bản tin nào. Hãy xem bản tin trước.', '카드뉴스': 'Thẻ tin',
   '그림을 길게 누르면 폰에 저장됩니다.': 'Nhấn giữ ảnh để lưu vào máy.',
-  '기사 복습': 'Ôn bản tin', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi', '폴더': 'Thư mục', '새 폴더': 'Thư mục mới', '새 폴더 만들기': 'Tạo thư mục mới', '폴더 이름': 'Tên thư mục', '카드로 학습': 'Học bằng thẻ', '쇼츠 재생': 'Phát tự động (shorts)', '자주 틀리는 것': 'Hay sai', '담은 단어': 'Từ đã lưu', '학습한 모든 단어': 'Tất cả từ đã học', '폴더에 담기': 'Thêm vào thư mục', '폴더에서 빼기': 'Bỏ khỏi thư mục', '닫기': 'Đóng',
+  '기사 복습': 'Ôn bản tin', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi', '폴더': 'Thư mục', '새 폴더': 'Thư mục mới', '새 폴더 만들기': 'Tạo thư mục mới', '폴더 이름': 'Tên thư mục', '카드로 학습': 'Học bằng thẻ', '쇼츠 재생': 'Phát tự động (shorts)', '자주 틀리는 것': 'Hay sai', '담은 단어': 'Từ đã lưu', '학습한 모든 단어': 'Tất cả từ đã học', '폴더에 담기': 'Thêm vào thư mục', '폴더에서 빼기': 'Bỏ khỏi thư mục', '폴더에서도 뺄까요?': 'Bỏ cả khỏi thư mục?', '닫기': 'Đóng',
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
@@ -3688,6 +3688,7 @@ function cloudSync(push, overwrite) {
         /* 별표·폴더는 바뀐 게 없어 서버 것을 그대로 받을 때도 **합친다** — 서버가 다른 기기의 옛 진도로 덮였을 때 이 기기 것까지 잃지 않게 (2026-10-08 밤 사고) */
         got.star = mergeStar(S.star, j.data.star); got.folders = mergeFolders(S.folders, j.data.folders);
         PROGKEYS.forEach(k => { if (got[k] !== undefined) S[k] = got[k]; });
+        starFromFolders();                                       // 합쳐 온 폴더 낱말도 별표 (2026-10-12)
         tallyReset();                                            // 받아 합친 것은 내가 오늘 한 게 아니다 — 집계 기준만 새로
         S.cloudSeen = srvAt;
         S.cloudHash = progHash(j.data);                        // 서버 판의 지문
@@ -3761,6 +3762,7 @@ async function cloudLoad() {
   const st0 = S.star, fo0 = S.folders;
   PROGKEYS.forEach(k => { if (j.data[k] !== undefined) S[k] = j.data[k]; });
   S.star = mergeStar(st0, j.data.star); S.folders = mergeFolders(fo0, j.data.folders);   // 손님으로 담아 둔 별표·폴더도 잃지 않는다 (2026-10-08 밤)
+  starFromFolders();                                                                     // 폴더 낱말은 별표 (2026-10-12)
   tallyReset();
   S.cloudSeen = j.at || Date.now(); S.cloudHash = progHash(j.data);   // 합쳐서 서버에 없는 것이 생겼으면 다음 저장 때 올라간다
   save();
@@ -7955,6 +7957,26 @@ function starOnWith(vi, ko) {
   starOf()[vi] = { ko: ko || '', vi, t: now() };
   starPaint(vi);
 }
+/* 폴더에 든 낱말은 늘 별표 (대표님 2026-10-12 "폴더 안에 있는 단어도 별표 — 단어장에 들어 있다는 뜻으로") —
+   10-09 전에 폴더에 넣은 것·다른 기기에서 합쳐 온 폴더 낱말까지. 켤 때·서버와 합칠 때·단어장을 열 때 맞춘다 */
+function starFromFolders() {
+  const need = [...new Set(foldersOf().flatMap(f => f.w || []).filter(v => v && !isStar(v)))];
+  if (!need.length) return 0;
+  const ko = {}; try { wbResolve(need).forEach(w => { ko[w.vi] = w.ko; }); } catch (e) { }
+  need.forEach(v => { starOf()[v] = { ko: ko[v] || '', vi: v, t: now() }; });
+  save(); return need.length;
+}
+/* 별 단추 — 끌 때 그 낱말이 폴더에 들어 있으면 폴더에서도 뺄지 묻는다(별표 = 단어장에 있음이므로 폴더에만 남겨 두지 않는다, 2026-10-12) */
+async function starTap(k, ko, vi) {
+  if (isStar(k)) {
+    const fs = foldersOf().filter(f => folderHas(f, k));
+    if (fs.length) {
+      if (!(await askYN('<b>' + esc(k) + '</b><br>' + fs.map(f => '📁 ' + esc(f.name)).join(' · ') + '<br>' + tr('폴더에서도 뺄까요?'), tr('빼기'), true))) return true;
+      fs.forEach(f => { f.w = f.w.filter(v => v !== k); }); cloudSave(true);
+    }
+  }
+  const on = toggleStar(k, ko, vi); starPaint(k); return on;
+}
 function starPaint(vi) {                                     // 화면에 떠 있는 그 낱말의 ☆ 들을 다시 칠한다
   document.querySelectorAll('[data-star]').forEach(b => { if (b.dataset.star !== vi) return; const on = isStar(vi); b.textContent = on ? '★' : '☆'; b.classList.toggle('on', on); });
 }
@@ -8450,9 +8472,9 @@ function starBtn(k, ko, vi) {
   b.type = 'button'; b.dataset.star = k;
   b.textContent = isStar(k) ? '★' : '☆';
   b.title = tr('단어장에 담기');
-  b.onclick = e => {
+  b.onclick = async e => {
     e.stopPropagation();
-    const onNow = toggleStar(k, ko, vi);
+    const onNow = await starTap(k, ko, vi);
     b.textContent = onNow ? '★' : '☆';
     b.classList.toggle('on', onNow);
   };
@@ -9002,12 +9024,12 @@ function dictEntry(q0) {
     /* 별(나만의 단어장) — 들어가지 않고 줄에서 바로 담는다 (대표님 2026-10-05). 카드의 ☆ 와 같은 열쇠(vi). 줄이 단추라 안에 단추를 못 넣어 span */
     const st = el('span', 'dstar' + (isStar(x.vi) ? ' on' : ''), isStar(x.vi) ? '★' : '☆');
     st.setAttribute('role', 'button'); st.title = tr('단어장에 담기');
-    st.onclick = ev => { ev.stopPropagation(); const on = toggleStar(x.vi, x.ko, x.vi); st.textContent = on ? '★' : '☆'; st.classList.toggle('on', on); };
     st.dataset.star = x.vi;
     /* 폴더(내 단어장 폴더) — 별 옆에서 바로 담는다 (대표님 2026-10-09). 넣으면 별표도 같이 켜진다(folderToggle) */
     const fo = el('span', 'dfold'); fo.setAttribute('role', 'button'); fo.title = tr('폴더에 담기');
     const fpaint = () => { const n = foldersOf().filter(f => folderHas(f, x.vi)).length; fo.textContent = n ? '📁' + n : '📁'; fo.classList.toggle('on', n > 0); };
     fpaint(); fo.onclick = ev => { ev.stopPropagation(); folderPopup(x.vi, x.ko, fpaint); };
+    st.onclick = async ev => { ev.stopPropagation(); const on = await starTap(x.vi, x.ko, x.vi); st.textContent = on ? '★' : '☆'; st.classList.toggle('on', on); fpaint(); };
     row.append(st, fo);   // 듣기 단추는 뺐다 (대표님 2026-10-12 "사전 검색 단어 목록에서는 듣기 버튼 없애자") — 누르면 단어 카드에서 듣는다
     row.onclick = () => { dictRemember(x); openWordCard(x, () => dictEntry(inp.value)); };   // 누르면 단어 카드 — 뒤로 가면 찾던 말 그대로. 누른 말은 기록에 남는다 (2026-09-30)
     return row;
@@ -9489,6 +9511,7 @@ function drawWordbook() {
     if (!GYBM) gybmBuild(again); if (!COURSE) withCourse(again);
     return;
   }
+  if (starFromFolders()) cloudTouch();                   // 폴더 낱말은 별표 (2026-10-12)
   const learned = learnedAll(), miss = wbMiss(), stars = Object.keys(starOf()).length;
   const rowBtn = (ico, name, n, fn, extra) => {
     const r = el('div', 'forowwrap');
@@ -15205,6 +15228,7 @@ Promise.all([
      기기 목소리로 넘어가 북부·고른 목소리가 아니었다(2026-09-26). 소문자 별칭을 달아 둔다. */
   for (const k of Object.keys(a)) { const l = k.toLowerCase(); if (l !== k && !(l in a)) a[l] = a[k]; }
   drawRegion();
+  try { if (starFromFolders()) cloudTouch(); } catch (e) { }   // 폴더 낱말은 별표 (2026-10-12)
   try { tallyReset(); } catch (e) { }                   // 하루 집계의 기준을 켤 때 잡아 둔다 — 첫 문제부터 오늘 칸에 들어가게 (2026-09-30 밤)
   // 메일 속 재설정 링크(?reset=토큰)로 들어온 경우 — 다른 무엇보다 먼저 처리한다.
   const resetTok = new URLSearchParams(location.search).get('reset');
