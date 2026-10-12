@@ -3203,3 +3203,8 @@ body.recording::after{content:''; position:fixed; inset:0; border:8px solid #e03
 .fxalts b{display:block; font-size:12px; color:var(--dim)}
 .w3exp{white-space:normal}
 .marow[data-r="ok"] .w3all span{color:var(--fg); font-weight:500}
+/* 테스트·시험의 필기 단추 — 문제 번호 줄 [✎][답 보기][스킵] (2026-10-12). 켜면 떠 있는 단추처럼 파랑 */
+.qcount .qtools .qpen{width:40px; height:36px; padding:0; display:grid; place-items:center; border-radius:10px}
+.qcount .qtools .qpen svg{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round}
+.qcount .qtools .qpen.on{background:var(--accent); border-color:var(--accent); color:var(--accent-fg)}
+body.inking #quiz .qcount{position:relative; z-index:47}

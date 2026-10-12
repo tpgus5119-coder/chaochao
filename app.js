@@ -3165,8 +3165,8 @@ function show(v, title, canBack) {
     : v === 'quiz' ? (ACTIVE_TAB === 'test' ? tr('테스트') + '-' + tr(title) : LCRUMB ? LCRUMB + ' · ' + tr(title) : tr(title)) : '');
   $('#back').hidden = !canBack;
   if (v !== 'learn') { $('#face').hidden = true; FACE = null; }
-  if (v === 'learn') inkSetup();                                  // 손글씨 겹쳐 쓰기 (2026-09-28 밤)
-  if (INK.btn) { INK.btn.hidden = v !== 'learn'; if (v !== 'learn') { inkFinger(false); inkClear(); } }   // [단어|발음]은 단어 카드에서만 — drawCard 가 show() 보다 먼저 켜 두므로 learn 에서는 건드리지 않는다
+  if (INK_VIEWS.includes(v)) inkSetup();                          // 손글씨 겹쳐 쓰기 (2026-09-28 밤) — 학습·테스트(시험 포함) 화면 모두 (대표님 2026-10-12)
+  if (INK.btn) { INK.btn.hidden = !INK_VIEWS.includes(v) || v === 'quiz'; if (v !== CURV) { inkFinger(false); inkClear(); } }   // 다른 화면으로 옮기면 끄고 지운다 · 테스트(quiz)는 문제 줄의 ✎ 단추(qpen)
   /* 머리띠의 홈 단추는 뺐다 (대표님 지시 2026-09-27) — 아래 탭의 [홈]이 어디서든 한 번에 나가는 길이다. */
   if (window.cardArrows) setTimeout(window.cardArrows, 0);   // 좌우 넘김 단추는 학습 화면에서만
   CURV = v;
@@ -9667,6 +9667,7 @@ let WB_BACK = null;
      빨강은 앱에서 '틀림' 색이고, 검정은 어두운 화면에서 안 보이고 인쇄 글씨와 섞인다. 앱 강조색(--accent)을 써서 밝은·어두운 화면 둘 다 보인다 */
 const INK = { cv: null, g: null, strokes: [], cur: null, raf: 0, finger: false, btn: null, last: 0, block: false };
 const INK_HOLD = 1000, INK_FADE = 600;
+const INK_VIEWS = ['learn', 'quiz', 'tone', 'type'];   // 필기 단추가 보이는 화면 — 단어 카드·학습 / 테스트·시험 / 성조·모음 / 타이핑 (대표님 2026-10-12 "학습할 때와 테스트(시험 포함) 때 모두")
 const inkBlue = () => getComputedStyle(document.body).getPropertyValue('--accent').trim() || '#1877f2';
 const inkPt = e => ({ x: e.clientX, y: e.clientY });
 function inkSetup() {
@@ -9680,9 +9681,25 @@ function inkSetup() {
   btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 7 3 3"/></svg>';
   btn.onclick = () => inkFinger(!INK.finger);
   document.body.append(btn); INK.btn = btn;
-  const here = () => CURV === 'learn';
-  // 손가락(켰을 때) — 캔버스가 받는다
-  cv.addEventListener('pointerdown', e => { if (!INK.finger || !here() || (e.pointerType === 'touch' && !e.isPrimary)) return; e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e); });   // 두 번째 손가락은 획이 아니다
+  const here = () => CURV === 'learn';                       // 두 손가락 쓸기(켜기·끄기)는 단어 카드에서만
+  const inkHere = () => INK_VIEWS.includes(CURV);
+  /* 테스트·시험에서는 필기를 켜도 **단추·자판·답 칸은 눌린다** (2026-10-12) — 그 위에서 시작한 손길은 글씨가 아니라 누르기로 넘긴다.
+     단어 카드(learn)는 전처럼 화면 전체가 글씨(머리띠·넘김 단추만 위로 올려 둠) */
+  const TAPPABLE = 'button, [role="button"], input, textarea, select, a, .dictans, .puzztile, .puzzpick, .errtok, .picopt';
+  cv.addEventListener('pointerdown', e => {
+    if (!INK.finger || !inkHere() || (e.pointerType === 'touch' && !e.isPrimary)) return;
+    if (CURV !== 'learn') {
+      const under = document.elementsFromPoint(e.clientX, e.clientY).find(x => x !== cv);
+      const hit = under && under.closest && under.closest(TAPPABLE);
+      if (hit && !hit.closest('#inkBtn')) { e.preventDefault(); INK.pass = { el: hit, id: e.pointerId, x: e.clientX, y: e.clientY }; return; }
+    }
+    e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) { } inkStart(e);
+  });   // 두 번째 손가락은 획이 아니다
+  cv.addEventListener('pointerup', e => {
+    const ps = INK.pass; if (!ps || ps.id !== e.pointerId) return; INK.pass = null;
+    if (Math.hypot(e.clientX - ps.x, e.clientY - ps.y) < 12 && ps.el.isConnected && !ps.el.disabled) { INK.block = false; if (ps.el.focus) ps.el.focus({ preventScroll: true }); ps.el.click(); }
+  });
+  cv.addEventListener('pointercancel', () => { INK.pass = null; });
   cv.addEventListener('pointermove', e => { if (INK.cur && INK.cur.id === e.pointerId) { e.preventDefault(); inkMove(e); } });
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, e => { if (INK.cur && INK.cur.id === e.pointerId) inkEnd(); }));
   // 펜도 ✍ 를 켰을 때만 쓴다 (대표님 2026-10-05 "필기 모드 키지도 않았는데 왜 필기가 되니? 애플펜슬로 하니까 그냥 되던데") — 켜면 위 캔버스가 펜·손가락을 함께 받는다.
@@ -9754,6 +9771,7 @@ function inkFinger(on) {
   INK.finger = !!on;
   document.body.classList.toggle('inking', INK.finger);
   if (INK.btn) { INK.btn.classList.toggle('on', INK.finger); INK.btn.setAttribute('aria-pressed', INK.finger ? 'true' : 'false'); }
+  document.querySelectorAll('.qpen').forEach(b => { b.classList.toggle('on', INK.finger); b.setAttribute('aria-pressed', INK.finger ? 'true' : 'false'); });
 }
 function inkClear() { INK.strokes = []; INK.cur = null; if (INK.g) INK.g.clearRect(0, 0, innerWidth, innerHeight); }
 
@@ -11060,7 +11078,14 @@ function drawQuiz() {
   const qc0 = el('div', 'qcount');
   qc0.append(el('span', null, (Q.i + 1) + ' / ' + Q.list.length));
   const qt = el('div', 'qtools');                        // [답 보기][스킵] — 머리띠의 남/여·단어/발음 단추와 같은 모양 (대표님 2026-10-09)
-  const sk = el('button', 'ghost qskip', tr('스킵')); sk.type = 'button'; sk.onclick = skipQ; qt.append(sk); qc0.append(qt);
+  const sk = el('button', 'ghost qskip', tr('스킵')); sk.type = 'button'; sk.onclick = skipQ;
+  if (!SHARE) {                                          // 필기 단추 — 테스트·시험에서는 떠 있는 단추가 자판 [↵] 를 가려서 이 줄에 둔다 (대표님 2026-10-12 "학습·테스트 모두")
+    const pen = el('button', 'ghost qpen' + (INK.finger ? ' on' : '')); pen.type = 'button'; pen.title = tr('손가락으로 쓰기'); pen.setAttribute('aria-label', tr('손가락으로 쓰기')); pen.setAttribute('aria-pressed', INK.finger ? 'true' : 'false');
+    pen.innerHTML = '<svg viewBox="0 0 24 24"><path d="m4 20 4-1 11-11-3-3L5 16z"/><path d="m14 7 3 3"/></svg>';
+    pen.onclick = () => { inkSetup(); inkFinger(!INK.finger); };
+    qt.append(pen);
+  }
+  qt.append(sk); qc0.append(qt);
   if (Q.fixed && Q.exam && !Q.review) {                   // 시험지: [‹ 이전] — 지나간 문제로 돌아간다 (대표님 2026-10-09 "다음 문제로 넘어가도 이전 문제로 돌아갈 수 있게")
     if (Q.i > 0) { const pv = el('button', 'ghost qprev', '‹ ' + tr('이전')); pv.type = 'button'; pv.onclick = () => examGo(-1); qc0.prepend(pv); }
     if (q._prev) { sk.textContent = tr('다음') + ' ›'; sk.classList.remove('qskip'); sk.onclick = () => examGo(1); }   // 돌아온 문제는 [스킵] 대신 [다음 ›] — 전 답 그대로 넘어간다
