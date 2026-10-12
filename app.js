@@ -9932,11 +9932,11 @@ function drawCard() {
     /* 기본기 글자 카드 = **발음 면** (대표님 지시 2026-09-28: "기본기는 발음 카드면만 보여줘도 된다. 특별한 사항만 글로") —
        소리 단추가 트는 말(snd)로 움직이는 입모양(정면·옆 단면, 누르면 0.2배) + 알아 둘 것(뒤에 무엇이 오나·철자 규칙) */
     if (!x.nomouth) c.append(mouthPanel(snd));
-    if (x.rules && x.rules.length) {
+    if ((x.rules && x.rules.length) || (x.more && x.more.length)) {   // more: 자세히 덧붙인 줄 (대표님 2026-10-12 "기본기도 자세하게")
       const rb = el('div', 'lrules');
       rb.append(el('div', 'lrulet', tr('알아 둘 것')));
       const ul = el('ul');
-      x.rules.forEach(r => ul.append(el('li', null, r)));
+      [...(x.rules || []), ...(x.more || [])].forEach(r => ul.append(el('li', null, r)));
       rb.append(ul);
       c.append(rb);
     }
@@ -9978,6 +9978,10 @@ function drawCard() {
     c.append(el('div', 'tone-shape', toneArrow(x.mark)));
     c.append(reveal(krShow(x)));
     c.append(el('div', 'ko', esc(x.ko)));
+    if (x.more && x.more.length) {          // 성조 내는 법·헷갈리는 짝 (대표님 2026-10-12 "기본기도 자세하게")
+      const rb = el('div', 'lrules'); rb.append(el('div', 'lrulet', tr('알아 둘 것')));
+      const ul = el('ul'); x.more.forEach(r => ul.append(el('li', null, r))); rb.append(ul); c.append(rb);
+    }
     c.append(speakRow(x.vi, true));         // 듣기·느리게 + 따라 말하기 + 곡선 비교
   }
 

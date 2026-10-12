@@ -464,6 +464,9 @@ def main():
         for _x in _d["letters"]:
             _x["nomouth"] = 1
     prep = [P3, P1, P4, P5, P2, P6, P7, P8, P9]        # 자음 → 모음 → 겹모음 → 받침 → 성조 → 헷갈리는 소리 → 철자·부호 규칙 → 숫자 읽기 → 끊어 읽기 (2026-09-29)
+    import importlib.util as _iu                         # 카드마다 '알아 둘 것' 덧붙임 (2026-10-12) — tools/gram_detail/basics_more.json
+    _sp = _iu.spec_from_file_location("apply_basics", R / "tools/gram_detail/apply_basics.py"); _m = _iu.module_from_spec(_sp); _sp.loader.exec_module(_m)
+    _m.add_more(prep)
     doc["prep"] = prep
     doc["voweldrill"] = EAR["P1"]
     doc["eardrill"] = EAR
