@@ -547,7 +547,7 @@ const UIVI = {
   '안 올라갔습니다': 'Không tải lên được',
   '아직 읽은 기사가 없습니다. 기사를 먼저 보세요.': 'Bạn chưa đọc bản tin nào. Hãy xem bản tin trước.', '카드뉴스': 'Thẻ tin',
   '그림을 길게 누르면 폰에 저장됩니다.': 'Nhấn giữ ảnh để lưu vào máy.',
-  '기사 복습': 'Ôn bản tin', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi', '폴더': 'Thư mục', '새 폴더': 'Thư mục mới', '새 폴더 만들기': 'Tạo thư mục mới', '폴더 이름': 'Tên thư mục', '카드로 학습': 'Học bằng thẻ', '쇼츠 재생': 'Phát tự động (shorts)', '자주 틀리는 것': 'Hay sai', '담은 단어': 'Từ đã lưu', '학습한 모든 단어': 'Tất cả từ đã học', '폴더에 담기': 'Thêm vào thư mục', '폴더에서 빼기': 'Bỏ khỏi thư mục', '폴더에서도 뺄까요?': 'Bỏ cả khỏi thư mục?', '닫기': 'Đóng',
+  '기사 복습': 'Ôn bản tin', '사전': 'Từ điển', '내 단어장': 'Sổ từ của tôi', '폴더': 'Thư mục', '새 폴더': 'Thư mục mới', '새 폴더 만들기': 'Tạo thư mục mới', '폴더 이름': 'Tên thư mục', '카드로 학습': 'Học bằng thẻ', '쇼츠 재생': 'Phát tự động (shorts)', '자주 틀리는 것': 'Hay sai', '담은 단어': 'Từ đã lưu', '학습한 모든 단어': 'Tất cả từ đã học', '폴더에 담기': 'Thêm vào thư mục', '폴더에서 빼기': 'Bỏ khỏi thư mục', '폴더에서도 뺄까요?': 'Bỏ cả khỏi thư mục?', '쓰임': 'Cách dùng', '자리': 'Vị trí', '비교': 'So sánh', '주의': 'Lưu ý', '닫기': 'Đóng',
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
@@ -10019,6 +10019,14 @@ function drawCard() {
       c.append(kb);
     }
     c.append(el('div', 'rulenote', x.b));
+    if (x.d) {                                   // 자세히 — 쓰임·자리·비교·주의 (대표님 2026-10-12 "어디에 놓는지, 비슷한 말과 비교까지 자세하게 — 모든 문법")
+      const dd = el('div', 'gramd');
+      if (x.d.use) dd.append(el('div', 'gdrow', '<b>' + esc(tr('쓰임')) + '</b><span>' + x.d.use + '</span>'));
+      if (x.d.pos) dd.append(el('div', 'gdrow', '<b>' + esc(tr('자리')) + '</b><span>' + x.d.pos + '</span>'));
+      if (x.d.cmp && x.d.cmp.length) dd.append(el('div', 'gdrow', '<b>' + esc(tr('비교')) + '</b><span>' + x.d.cmp.map(([w, m]) => '<i class="gdw">' + esc(w) + '</i> ' + m).join('<br>') + '</span>'));
+      if (x.d.warn) dd.append(el('div', 'gdrow gdwarn', '<b>' + esc(tr('주의')) + '</b><span>' + x.d.warn + '</span>'));
+      c.append(dd);
+    }
     if (x.tip) c.append(el('div', 'gramtip', '💡 ' + esc(x.tip)));
     x.ex.forEach(e => {
       const box = el('div', 'wex wexplay');
