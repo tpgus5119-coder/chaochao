@@ -540,6 +540,34 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-12 새벽(예약 작업): 홍콩 사채 기사가 '포 '(체포 )에 걸려 쌀국수가, 인천공항 기사가
+              # 'airport'의 'port'에 걸려 컨테이너가, 유학생 실습·AI 손글씨 둘 다 '학생'에 걸려 같은 교실이,
+              # 세금·조종사·밤문화 기사는 맞는 줄이 없어 갈래 기본 그림이 깔릴 판이었다. 여덟 줄을 맨 위에 둔다.
+              # 같은 날 다시 짤 때(베트남 기사만으로 바꿈) 넷 더: 콘서트·감·심장학회·암병원.
+              (("빅뱅", "콘서트", "concert"),
+               "a concert stage with colorful spotlights over an empty stadium at night"),
+              (("초콜릿 감", "persimmon"),
+               "a wooden crate of ripe orange persimmons at a fruit market"),
+              (("심장학회", "의료진 교육"),
+               "a hospital training room with a heart model and medical monitors"),
+              (("암병원", "방사선 치료"),
+               "a long hospital corridor with rows of empty waiting chairs at dawn"),
+              (("사채", "홍콩달러", "loan shark"),
+               "stacks of banknotes and a pair of handcuffs on a dark wooden table"),
+              (("인천공항", "출국 이용료"),
+               "an airport departure hall with empty check-in counters and large windows"),
+              (("유학생 취업", "졸업 뒤"),
+               "a graduation cap on a stack of books beside an open laptop"),
+              (("손글씨", "진료 기록"),
+               "a smartphone scanning a handwritten paper record on a desk"),
+              (("조종사", "pilot"),
+               "an airplane cockpit with instrument panels and a runway ahead"),
+              (("세금 정책", "이중과세"),
+               "a calculator, a pen and blank sheets of paper on an office desk"),
+              (("밤문화", "맥주 거리", "nightlife"),
+               "an old quarter street at night with small plastic stools and glasses of beer"),
+              (("골목 주택", "호찌민 집값"),
+               "narrow tube houses along a quiet alley under a clear sky"),
               # 2026-10-11 새벽(예약 작업): 하노이 투자·캄보디아 교역·오픈AI·문 매너 기사는 맞는 줄이 없어 갈래 기본
               # 그림이, 유학생 알바·영어 교사는 둘 다 '학생·교육'에 걸려 같은 교실이, 다낭 우기 기사는 '관광'에 걸려
               # 맑은 해변이 깔릴 판이었다. 여섯 줄을 맨 위에 둔다.
