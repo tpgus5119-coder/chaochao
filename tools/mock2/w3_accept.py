@@ -27,7 +27,7 @@ SPEC = {
   'pre': ['bây giờ', 'hôm nay', 'ở văn phòng', 'trong văn phòng', 'ở đây', 'ở công ty', 'trong công ty'],
   'post': ['ở văn phòng', 'trong văn phòng', 'ở đây', 'ở công ty', 'trong công ty', 'bây giờ']},
  2: {  # 아침 식탁 — 신문 읽는 아버지 · 어머니 · 우유 마시는 두 아이, 벽시계 (img/mock2-w3.webp)
-  'say': ['bây giờ là buổi sáng', 'đây là buổi sáng', 'bây giờ là 7 giờ sáng', 'bây giờ là 7 giờ', 'gia đình tôi có bốn người', 'gia đình có bốn người', 'có bốn người', 'đây là gia đình tôi',
+  'say': ['bây giờ là buổi sáng', 'đây là buổi sáng', 'bây giờ là 9 giờ sáng', 'bây giờ là 9 giờ', 'gia đình tôi có bốn người', 'gia đình có bốn người', 'có bốn người', 'đây là gia đình tôi',
           'đây là một gia đình', 'đây là bữa sáng', 'đây là bữa ăn sáng', 'trên bàn có nhiều món ăn', 'có nhiều món ăn', 'trên bàn có nhiều đồ ăn', 'bữa sáng rất ngon', 'món ăn rất ngon',
           'có bố mẹ và hai em', 'gia đình tôi có bố mẹ và hai em', 'trên bàn có sữa', 'có sữa', 'đây là nhà tôi', 'gia đình tôi rất vui', 'cả nhà rất vui', 'tôi có hai em'],
   'facts': [(['gia đình tôi', 'cả gia đình', 'cả nhà', 'cả nhà tôi', 'họ', 'gia đình này', 'bốn người', 'cả gia đình tôi', 'mọi người', 'gia đình', 'bố mẹ và hai em', 'bố mẹ tôi và hai em'],

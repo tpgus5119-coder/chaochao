@@ -3169,3 +3169,8 @@ body.recording::after{content:''; position:fixed; inset:0; border:8px solid #e03
 .dwrow .repcnt{position:absolute; right:12px; top:50%; transform:translateY(-50%); font-weight:800; color:var(--bad); font-size:16px}
 .whist .extools{margin:0 0 14px}
 
+
+/* 사전 성조·모자 줄 — 모자 단추 하나 (2026-10-12) */
+.vkeys .vk.vkhat{white-space:nowrap; min-width:3.6em; padding-left:10px; padding-right:10px}
+.extools.exinl{flex-direction:row; margin:6px 0 10px} .extools.exinl button{flex:1}
+

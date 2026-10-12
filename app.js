@@ -3619,10 +3619,10 @@ function mergeFolders(a, b) {
 /* 오답 현황 합치기 — 시험지 서명이 같으면 두 기기의 '푼 회차'(runs, 시각 t 로 구별)를 합치고, 문항마다 최근 틀린 답은 나중 것. 서명이 다르면 새 시험지 쪽 */
 function mergeWx(x, y) {
   if (!x || !y) return x || y;
-  if (x.sig !== y.sig) return ((x.runs || []).slice(-1)[0] || {}).t > ((y.runs || []).slice(-1)[0] || {}).t ? x : y;
+  if (x.sig !== undefined || y.sig !== undefined) { if (x.sig !== undefined && y.sig === undefined) return y; if (y.sig !== undefined && x.sig === undefined) return x; }   // 옛 자리 번호 기록과 새 열쇠 기록이 섞이면 새 것
   const runs = new Map(); [...(y.runs || []), ...(x.runs || [])].forEach(r => runs.set(r.t, r));
   const a = Object.assign({}, y.a || {}); Object.entries(x.a || {}).forEach(([i, v]) => { if (!a[i] || (v[6] || 0) > (a[i][6] || 0)) a[i] = v; });
-  return { sig: x.sig, len: x.len, runs: [...runs.values()].sort((p, q) => p.t - q.t), a };
+  return Object.assign({ runs: [...runs.values()].sort((p, q) => p.t - q.t), a }, x.sig !== undefined ? { sig: x.sig, len: x.len } : {});
 }
 /* 두 기기 진도 합치기. L = 이 기기, R = 서버. 지우는 쪽보다 **잃지 않는 쪽**을 고른다. */
 function mergeProg(L, R) {
@@ -8999,9 +8999,6 @@ function dictEntry(q0) {
     row.append(el('b', 'dvi', esc(x.vi) + (x.fr <= FREQ_TOP ? ' <small class="dref freqtag">' + tr('자주 쓰는 말') + '</small>' : '') + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (southOf(x.vi) ? ' <small class="dref southtag">' + tr('남부') + '</small>' : '')));
     row.append(el('span', 'dkr', kr ? '[' + esc(kr) + ']' : ''));   // 발음이 없어도 칸은 둔다 — 스피커가 늘 오른쪽 끝
     row.append(el('span', 'dko', esc(x.ko)));
-    const spk = el('span', 'dspk', '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>');
-    spk.setAttribute('role', 'button'); spk.title = tr('듣기');
-    spk.onclick = ev => { ev.stopPropagation(); const k = recKey(x.vi); k ? play(k, false, voiceDir()) : speakVi(x.vi, false, 0, S.voice); };
     /* 별(나만의 단어장) — 들어가지 않고 줄에서 바로 담는다 (대표님 2026-10-05). 카드의 ☆ 와 같은 열쇠(vi). 줄이 단추라 안에 단추를 못 넣어 span */
     const st = el('span', 'dstar' + (isStar(x.vi) ? ' on' : ''), isStar(x.vi) ? '★' : '☆');
     st.setAttribute('role', 'button'); st.title = tr('단어장에 담기');
@@ -9011,7 +9008,7 @@ function dictEntry(q0) {
     const fo = el('span', 'dfold'); fo.setAttribute('role', 'button'); fo.title = tr('폴더에 담기');
     const fpaint = () => { const n = foldersOf().filter(f => folderHas(f, x.vi)).length; fo.textContent = n ? '📁' + n : '📁'; fo.classList.toggle('on', n > 0); };
     fpaint(); fo.onclick = ev => { ev.stopPropagation(); folderPopup(x.vi, x.ko, fpaint); };
-    row.append(st, fo, spk);
+    row.append(st, fo);   // 듣기 단추는 뺐다 (대표님 2026-10-12 "사전 검색 단어 목록에서는 듣기 버튼 없애자") — 누르면 단어 카드에서 듣는다
     row.onclick = () => { dictRemember(x); openWordCard(x, () => dictEntry(inp.value)); };   // 누르면 단어 카드 — 뒤로 가면 찾던 말 그대로. 누른 말은 기록에 남는다 (2026-09-30)
     return row;
   };
@@ -11888,13 +11885,30 @@ function examRound(r, k) {
     sh.onclick = () => sharePopup(tr(e.name), [], shareEncodeExam(k), n + tr('문제'));
     b.append(sh);
   }
-  const wn = wexamWrong(k).length;                         // 오답 현황 — 시험지마다 틀린 것을 모아 본다 (대표님 2026-10-11 "각 시험지마다 틀린 것을 확인할 수 있는 버튼만")
-  if (wn) { const wb = el('button', 'ghost big', '📋 ' + tr('오답 현황') + ' ' + wn); wb.type = 'button'; wb.style.width = '100%'; wb.style.marginTop = '8px'; wb.onclick = () => { dive(() => examRound(r, k)); wrongHistoryView(k, tr(e.name)); }; b.append(wb); }
   const runs = (S.stats.wexam || []).filter(x => x.round === k);
   if (runs.length) {
     const best = runs.reduce((a, x) => Math.max(a, x.pts !== undefined ? x.pts : x.ok), 0), mx = runs[runs.length - 1].max || runs[runs.length - 1].tot;
     b.append(el('p', 'anasec', tr('지난 결과') + ' <span>' + tr('최고') + ' ' + best + ' / ' + mx + '</span>'));
     b.append(el('p', 'dimtxt', runs.slice(-5).reverse().map(x => esc(String(x.d).slice(5).replace('-', '/')) + ' · ' + (x.pts !== undefined ? x.pts + ' / ' + x.max : x.ok + ' / ' + x.tot)).join('<br>')));
+  }
+  /* 틀린 것 — 지난 결과 바로 밑에 (대표님 2026-10-12 "과거 점수 밑에 어떤 문제를 틀렸는지, 틀린 단어와 문법도"). 이 시험지를 볼 때마다 쌓이고 두 번 이상 틀린 것은 빨갛게 ×N */
+  const wl = wexamWrong(k);
+  if (wl.length) {
+    const back = () => examRound(r, k), name = tr(e.name);
+    b.append(el('p', 'anasec', tr('틀린 것') + ' <span>' + wl.length + '</span>'));
+    const tools = el('div', 'extools exinl');
+    [['🃏 ' + tr('틀린 단어'), () => wrongWordsView(wl, name)], ['📘 ' + tr('틀린 문법'), () => wrongGramView(wl, name)]].forEach(([t, fn]) => {
+      const bt = el('button', 'ghost big', t); bt.type = 'button'; bt.onclick = () => { dive(back); fn(); }; tools.append(bt); });
+    b.append(tools);
+    const box = el('div', 'dwrong');
+    wl.forEach(q => {
+      const row = el('div', 'dwrow dwopen' + (q._cnt >= 2 ? ' rep' : ''));
+      row.append(el('div', 'dwq', esc(q.w.vi)), el('div', 'dwa', '<small class="dimtxt">' + esc(q.sec) + '</small>'));
+      if (q._cnt >= 2) row.append(el('span', 'repcnt', '×' + q._cnt));
+      row.onclick = () => { dive(back); const qb = $('#quizBody'); qb.textContent = ''; qb.append(fxReviewBlock(q, true)); show('quiz', name, true); };
+      box.append(row);
+    });
+    b.append(box);
   }
   show('exam', tr(e.name), true);
 }
@@ -12242,35 +12256,33 @@ function fxReviewBlock(q0, withSec) {
 /* 시험지마다 틀린 기록을 이 기기에 남긴다(서버로는 안 올림) */
 function wexamSave(k, list) {
   /* 오답 현황 — 같은 시험지를 여러 번 보면 문항마다 틀린 횟수(c)와 가장 최근의 틀린 답(a)을 쌓는다 (대표님 2026-10-11) */
-  const sig = wexamSig(list.map(q => q.w && q.w.fx)), t = Date.now();
+  const xs = list.map(q => q.w && q.w.fx), t = Date.now();
   let W = (S.wx = S.wx || {})[k];
-  if (!W || !W.runs || W.len !== list.length || W.sig !== sig) W = S.wx[k] = { sig, len: list.length, runs: [], a: {} };   // 시험지(문항·차례)가 바뀌었으면 새로 — 틀린 횟수가 다른 문항에 붙지 않게
+  W = S.wx[k] = wxNorm(W, xs) || { runs: [], a: {} };
   const wrong = [];
-  list.forEach((q, i) => { if (q._ok) return; wrong.push(i); W.a[i] = [q._pickT || '', q._txt || '', q._fb || null, q._skip ? 1 : 0, q._peek ? 1 : 0, q._ans ? 1 : 0, t]; });
+  list.forEach((q, i) => { if (q._ok || !xs[i]) return; const key = wxKey(xs[i]); wrong.push(key); W.a[key] = [q._pickT || '', q._txt || '', q._fb || null, q._skip ? 1 : 0, q._peek ? 1 : 0, q._ans ? 1 : 0, t]; });
   W.runs.push({ t, w: wrong });                                   // 한 번 본 시험 = 한 회차 (기기끼리 합칠 때 시각으로 구별)
   save(); cloudTouch();
+}
+/* 오답 현황은 문항을 **자리 번호가 아니라 문항 글(열쇠)**로 센다 (2026-10-12) — 시험지 차례를 바꿔도(정답 규칙 없애기) 틀린 기록이 그 문항을 따라간다 */
+function wxKey(x) { return fnv32((x.sec || '') + '|' + (x.prompt || x.audio || x.vi || '') + '|' + (x.text || '')).toString(36); }
+function wxNorm(W, xs) {                              // 옛 자리 번호 기록 → 열쇠로 (그 시험지 그대로일 때만, 아니면 그 기록은 버림)
+  if (!W || !W.runs) return null;
+  const sameOld = W.sig !== undefined && W.sig === wexamSig(xs);
+  const conv = v => typeof v === 'number' ? (sameOld && xs[v] ? wxKey(xs[v]) : null) : v;
+  const runs = W.runs.map(r => ({ t: r.t, w: r.w.map(conv).filter(Boolean) }));
+  const a = {}; Object.entries(W.a || {}).forEach(([i, v]) => { const kk = /^\d+$/.test(i) && W.sig !== undefined ? conv(+i) : i; if (kk) a[kk] = v; });
+  return { runs, a };
 }
 function wexamSig(xs) { return fnv32(xs.map(x => x ? (x.sec || '') + '|' + (x.prompt || x.audio || x.vi || '') + '|' + (x.ans === undefined ? '' : x.ans) : '').join('\n')); }
 function wexamWrong(k) {                              // 오답 현황 — 틀린 적 있는 문항(틀린 횟수 _cnt, 최근 틀린 답)
   const J = FIXED[k];
   if (S.wlast) { delete S.wlast; save(); }               // 낮에 잠깐 쓰던 '마지막 시험' 기록 — 그 뒤 시험지 차례가 바뀌어(정답 규칙 없애기) 옮기지 않고 버린다 (2026-10-11)
-  const W = S.wx && S.wx[k];
-  if (!W || !W.runs || !J || W.len !== J.q.length || W.sig !== wexamSig(J.q)) return [];
-  const cnt = {}; W.runs.forEach(r => r.w.forEach(i => { cnt[i] = (cnt[i] || 0) + 1; }));
-  return Object.keys(cnt).map(Number).sort((a, b) => a - b).map(i => { const x = J.q[i], a = W.a[i] || []; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: false, _pickT: a[0] || '', _txt: a[1] || '', _fb: a[2] || null, _skip: !!a[3], _peek: !!a[4], _ans: !!a[5], _cnt: cnt[i] }; });
-}
-function wrongHistoryView(k, title, back) {          // 시험지 하나의 오답 현황 — 시험 끝의 '틀린 것'과 같은 꼴, 두 번 이상 틀린 것은 빨갛게 · 틀린 단어·문법 학습
-  const list = wexamWrong(k), qb = $('#quizBody'); qb.textContent = '';
-  const r = el('div', 'result whist');
-  const tt = title + ' · ' + tr('오답 현황');
-  const tools = el('div', 'extools');
-  const mk = (t, fn) => { const b = el('button', 'ghost big', t); b.type = 'button'; b.style.width = '100%'; b.onclick = () => { dive(() => { const q2 = $('#quizBody'); q2.textContent = ''; q2.append(r); show('quiz', tt, true); }); fn(); }; tools.append(b); };
-  mk('🃏 ' + tr('틀린 단어'), () => wrongWordsView(list, title));
-  mk('📘 ' + tr('틀린 문법'), () => wrongGramView(list, title));
-  r.append(tools);
-  examWrongList(r, list);
-  qb.append(r);
-  show('quiz', tt, true);
+  const W0 = S.wx && S.wx[k];
+  if (!W0 || !J) return [];
+  const W = wxNorm(W0, J.q); if (!W) return [];
+  const cnt = {}; W.runs.forEach(r => r.w.forEach(kk => { cnt[kk] = (cnt[kk] || 0) + 1; }));
+  return J.q.map((x, i) => ({ x, i, kk: wxKey(x) })).filter(z => cnt[z.kk]).map(({ x, kk }) => { const a = W.a[kk] || []; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: false, _pickT: a[0] || '', _txt: a[1] || '', _fb: a[2] || null, _skip: !!a[3], _peek: !!a[4], _ans: !!a[5], _cnt: cnt[kk] }; });
 }
 function examTools(list, title, back) {
   const box = el('div', 'extools');
@@ -13579,8 +13591,39 @@ function viKeys(inp, after) {
   };
   VK_TONES.forEach(([mk, show]) => { const b = el('button', 'vk', show); b.type = 'button'; b.onmousedown = e => e.preventDefault(); b.onclick = () => hit('tone', mk); row.append(b); });
   row.append(el('span', 'vksep'));
-  Object.keys(VK_HATS).forEach(h => { const b = el('button', 'vk', h); b.type = 'button'; b.onmousedown = e => e.preventDefault(); b.onclick = () => hit('hat', h); row.append(b); });
+  /* 모자는 단추 하나 (대표님 2026-10-12 "a o e 에 모자만 더하는 것인데 왜 나누냐") — 누를 때마다 치고 있는 낱말의 마지막 모음이 돌아간다:
+     a→â→ă→a · e→ê→e · o→ô→ơ→o · u→ư→u, 'uo' 는 uô→ươ→uo. 성조는 새 자리로 옮겨 다시 단다. đ 는 모음이 아니라 따로 둔다 */
+  const hat = el('button', 'vk vkhat', tr('모자')); hat.type = 'button'; hat.onmousedown = e => e.preventDefault();
+  hat.onclick = () => { const v = inp.value, m = v.match(/(\S+)$/); if (!m) { inp.focus(); return; } inp.value = v.slice(0, m.index) + hatCycle(m[1]); inp.focus(); after(); };
+  const dd = el('button', 'vk', 'đ'); dd.type = 'button'; dd.onmousedown = e => e.preventDefault(); dd.onclick = () => hit('hat', 'đ');
+  row.append(hat, dd);
   return row;
+}
+let HATSYL = null;                                   // 모자까지 있는(성조는 뗀) 실제 음절들 — 음절 표(_kr_syl.json)에서
+function hatCycle(word) {
+  /* 누를 때마다 그 낱말의 모음에 모자를 바꿔 단 꼴 가운데 **실제로 있는 음절**만 차례로: mua → mưa → mua · an → ân → ăn → an · nguoi → nguôi → ngươi.
+     음절 표가 아직 없으면 마지막 모음만 돌린다(a→â→ă · e→ê · o→ô→ơ · u→ư) */
+  const tm = (word.normalize('NFD').match(/[̣̀́̉̃]/) || [''])[0];
+  const bare = stripTone(word), chars = [...bare];
+  const OPT = { a: ['a', 'â', 'ă'], 'â': ['a', 'â', 'ă'], 'ă': ['a', 'â', 'ă'], e: ['e', 'ê'], 'ê': ['e', 'ê'], o: ['o', 'ô', 'ơ'], 'ô': ['o', 'ô', 'ơ'], 'ơ': ['o', 'ô', 'ơ'], u: ['u', 'ư'], 'ư': ['u', 'ư'] };
+  const fin = b0 => tm ? withMark(b0, tm, tonePos(b0)) : b0;
+  if (!HATSYL && typeof KRSYL !== 'undefined' && KRSYL) { HATSYL = new Set(); Object.keys(KRSYL).forEach(k => String(k).normalize('NFC').toLowerCase().split(/\s+/).forEach(t => HATSYL.add(stripTone(t)))); }
+  if (HATSYL) {
+    let combos = [''];
+    chars.forEach(c => { const lo = c.toLowerCase(), up = c !== lo, o = OPT[lo] || [lo]; combos = combos.flatMap(p => o.map(x => p + (up ? x.toUpperCase() : x))); });
+    const ok = combos.filter(c => c === bare || HATSYL.has(c.toLowerCase()));                     // 모자 없는 처음 꼴도 돌아올 수 있게
+    if (ok.length > 1) { const i = ok.indexOf(bare); return fin(ok[(i + 1) % ok.length]); }
+  }
+  const NEXT = { a: 'â', 'â': 'ă', 'ă': 'a', e: 'ê', 'ê': 'e', o: 'ô', 'ô': 'ơ', 'ơ': 'o', u: 'ư', 'ư': 'u' };
+  for (let i = chars.length - 1; i >= 0; i--) {
+    const lo = chars[i].toLowerCase(), up = chars[i] !== lo;
+    if (!(lo in NEXT)) continue;
+    const n = NEXT[lo]; chars[i] = up ? n.toUpperCase() : n;
+    const pl = i > 0 ? chars[i - 1].toLowerCase() : '';
+    if ('oôơ'.includes(lo) && 'uư'.includes(pl)) chars[i - 1] = n === 'ơ' ? 'ư' : 'u';   // uô ↔ ươ
+    break;
+  }
+  return fin(chars.join(''));
 }
 function stripTone(syl) {
   return syl.normalize('NFD').replace(/[\u0300\u0301\u0309\u0303\u0323]/g, '').normalize('NFC');
