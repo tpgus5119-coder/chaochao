@@ -34,3 +34,28 @@
 - Google vi-VN 목소리 이름·성별 표
 - VieNeu-TTS 저자가 모델 가중치의 상업 이용을 따로 허락한다는 문구가 있는지(문의)
 - 북부 억양이 실제로 북부인지는 **귀로 확인**해야 한다(우리 앱의 HoaiMy·NamMinh 는 Whisper 표본 검수·사람 귀 확인을 거쳤다)
+
+## 2026-10-12 다시 조사 — "사람 같은, 상업 이용 가능, 북부 남녀" (돈을 내도 됨)
+대표님 물음: "tts 목소리 사람 같은 걸로 바꾸려고 — 북부만, 상업 사용 가능, 가장 사람 같은 것, 남녀".
+**바뀐 것: VieNeu-TTS v3 Turbo·Nano 는 이제 Apache-2.0 이고 '미리 든 목소리로 만든 소리는 상업·수익 콘텐츠(제품·서비스)에 써도 된다'고 모델 카드에 적혀 있다** (확인함 · https://huggingface.co/pnnbao-ump/VieNeu-TTS-v3-Turbo). 북부 목소리 남 Minh Quân·Minh Đức·Anh Khôi·Xuân Vĩnh, 여 Mai Anh·Quỳnh Anh·Ngọc Linh · 48kHz · 맥 CPU(ONNX) — 무료·이 맥에서. (옛 0.3B 는 여전히 비상업, v4 는 유료 API 전용)
+| 후보 | 북부 남녀 | 상업 | 값(우리 소리 약 40만 자 × 남녀 2 = 80만 자) | 근거 |
+|---|---|---|---|---|
+| VieNeu-TTS v3 Turbo | 남 4 · 여 3 | Apache-2.0, 생성 소리 상업 OK | 무료(이 맥에서 굽기) | 위 모델 카드 — 확인함 |
+| Google Chirp 3 HD | vi-VN 지원, 목소리 30개(남녀) — 북부인지는 귀로 확인 필요 | 출력물 앱에 사용 가능(GCP 약관) | 100만 자당 $30, 매달 100만 자 무료 → 한 번 굽기는 무료 한도 안 | https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd · 가격은 검색 요약 |
+| ElevenLabs | 북부(하노이) 목소리 여 Nhu·Mai, 남 Đặng Thanh Hoàng 등(라이브러리) | 유료 요금제면 상업 이용 | 글자당 1크레딧 → Pro($99/월 50만)×2달 또는 Scale($330/월 200만) | 검색 요약 |
+| Azure (지금 쓰는 HoaiMy·NamMinh 를 공식으로) | 여·남 1명씩 | 공식 API 면 상업 OK | 100만 자당 $16, 매달 50만 자 무료 | 앞 표 |
+| Viettel AI | 북부 여 5 · 남 3 | 유료 API | 가격 미확인 | https://viettelgroup.ai/en/service/tts — 검색 요약 |
+| FPT.AI | 북·중·남 남녀 | 유료 API | 가격 미확인 | https://fptcloud.com/en/product/fpt-ai-text-to-speech-en/ — 검색 요약 |
+| Zalo AI | 북부 2 · 남부 2 | API | 가격 미확인 | 검색 요약 |
+'가장 사람 같은지'는 글로 못 가린다 — 같은 문장 몇 개를 후보마다 북부 남녀로 구워 **귀로 견주고**, Whisper 로 발음이 맞는지 검산하는 차례가 맞다.
+
+### 2026-10-12 덧붙임 — "후보 또 있었던 것 같은데?" (대표님)
+위 표에 빠졌던 것. 모두 **검색 요약**(원문 확인 못함), 북부인지는 귀로 확인해야 한다.
+| 후보 | 북부 남녀 | 상업 | 값 | 출처 |
+|---|---|---|---|---|
+| Vbee AIVoice (베트남 1위 업체) | 북·중·남 남녀, 베트남 목소리 15+ | 유료 API(자기 앱에 넣는 용도) | API 월 79.9만~239.9만 동(약 $31~92) | https://www.getapp.com/all-software/a/vbee-aivoice/ |
+| VNPT SmartVoice | female_north · male_north (중·남부도) | 유료 API | 값 미확인 | https://smartvoice.vnpt.vn/vi/experience/text-to-speech |
+| Gemini TTS (Google) | vi-VN 정식 지원, 목소리 30개(여러 언어 공용) — 북부 억양 지정 문구 없음 | Google Cloud 약관 | 무료 한도 있음 | https://docs.cloud.google.com/text-to-speech/docs/gemini-tts |
+| MiniMax Speech-02 | 베트남어 지원, 북부 따로 표시 없음 | 유료 | 미확인 | https://www.minimax.io/audio/text-to-speech/vietnamese |
+| OpenAI TTS | 베트남어는 되나 영어에 맞춘 목소리라고 스스로 밝힘 — 뺌 | 유료 | — | 검색 요약 |
+9/26 표의 오픈소스(viet-tts·F5-TTS-Vietnamese·Piper vivos = 비상업, Piper vais1000 = 화자 1명, NTT123 vietTTS = 라이선스 불명)는 그대로 탈락.

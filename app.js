@@ -11007,12 +11007,13 @@ function missRow(list, back) {
 
 function drawQuiz() {
   const body = $('#quizBody');
-  body.textContent = '';
+  body.textContent = ''; body.classList.remove('qsent', 'qout');
   $('#quizFill').style.width = (Q.i / Q.list.length * 100) + '%';
   if (Q.exam && (Q.fixed || Q.daily)) resumeSave();     // 시험지·단어 시험은 푼 자리를 저장 (끝나면 지움) (2026-10-07)
   if (Q.i >= Q.list.length) return finishQuiz();
 
   const q = Q.list[Q.i];
+  if (Q.exam) { const pq = Q.i > 0 ? Q.list[Q.i - 1] : null; if (pq && pq._ok === undefined) pq._ok = Q.ok > (pq._okBefore || 0); }   // 시험 채점용 — 아래에서 돌아온 문항의 맞힌 수를 빼기 전에 센다
   if (Q.fixed && Q.exam && !Q.review && q._ans && !q._peek) {   // 시험지에서 돌아온 문제 (답 보기로 연 문항은 빼고 — 0점 그대로, 2026-10-11) — 전 답은 _prev 에 두고 다시 풀 수 있게. 안 고치고 [다음 ›] 이면 전 답 그대로 (examGo)
     if (q._ok === undefined) q._ok = Q.ok > (q._okBefore || 0);
     q._prev = { ok: q._ok, score: q._score, pickT: q._pickT };
@@ -11044,7 +11045,7 @@ function drawQuiz() {
   body.append(qc0);
   { const lb = q.w && q.w.sent && q.mode === 'read_ko' ? '뜻을 보고 문장을 고르세요' : (LABEL[q.mode] || '');   // 시험지 문항(fx)은 지시문이 없다
     body.append(el('div', 'q', (Q.exam && q.sec ? q.sec + (lb ? ' · ' : '') : '') + lb)); }
-  if (Q.exam) { q._okBefore = Q.ok; const pq = Q.i > 0 ? Q.list[Q.i - 1] : null; if (pq && pq._ok === undefined) pq._ok = Q.ok > (pq._okBefore || 0); }   // 시험 채점용
+  if (Q.exam) q._okBefore = Q.ok;
 
   if (q.mode === 'recall') return drawSay(body, q);   // 옛 이름 호환
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
@@ -11097,9 +11098,26 @@ function drawQuiz() {
 }
 
 /* 오답 뒤에는 스스로 넘긴다 — 틀린 걸 볼 시간이 필요하다. 정답은 자동으로 넘어간다. */
+/* 시험에서 답한 뒤 — 고른 것을 잠깐(0.4초) 보이고, 문제가 왼쪽으로 빠지며 다음 문제가 들어온다 (대표님 2026-10-12 "답이 선택됐고 다음 문제로 넘어가는 걸 알 수 있게").
+   그사이 다른 화면으로 갔거나 문제를 옮겼으면 넘기지 않는다 */
+function examNext(fn) {
+  const qb = $('#quizBody'), Q0 = Q, q0 = Q.list[Q.i];
+  const same = () => Q === Q0 && CURV === 'quiz' && Q.list[Q.i] === q0;
+  qb.classList.add('qsent');
+  setTimeout(() => {
+    if (!same()) { qb.classList.remove('qsent'); return; }
+    qb.classList.add('qout');
+    setTimeout(() => {
+      qb.classList.remove('qsent', 'qout');
+      if (!same()) return;
+      fn();
+      qb.classList.add('qin'); setTimeout(() => qb.classList.remove('qin'), 260);
+    }, 150);
+  }, 400);
+}
 function nextBtn(box, fn) {
   hideSkip();                                        // 답이 났으니 '넘기기'는 치운다
-  if (typeof Q !== 'undefined' && Q && Q.blind && CURV === 'quiz') { setTimeout(fn, 0); return; }   // 실제 시험처럼 — 맞았는지 안 보여 주고 바로 다음 문제 (2026-09-30)
+  if (typeof Q !== 'undefined' && Q && Q.blind && CURV === 'quiz') { examNext(fn); return; }   // 실제 시험처럼 — 맞았는지 안 보여 주고 다음 문제 (2026-09-30)
   { const qw = Q && Q.list && Q.list[Q.i] && Q.list[Q.i].w;   // 문법 과 예문을 틀렸으면 그 과로 가는 단추 (2026-10-02, 문장·문법 테스트 합침)
     if (qw && qw.gni != null && Q._lastOk === false && GRAM && GRAM.books[qw.gbi] && GRAM.books[qw.gbi].bai[qw.gni]) {
       const x = GRAM.books[qw.gbi].bai[qw.gni], Qs = Q, tt = $('#title').textContent;
@@ -11301,16 +11319,16 @@ function drawPuzzle(body, q) {
     const mine = picked.map(x => x.word).join(' ');
     const nz = t => String(t).toLowerCase().replace(/[.,!?]/g, ' ').replace(/\s+/g, ' ').trim();
     const good = nz(mine) === nz(want.join(' ')) || (w.alt || []).some(a => nz(a) === nz(mine));   // 같은 조각으로 만든 다른 바른 차례도 정답 (대표님 2026-10-11 "여러 문장이 정답이 될 수 있다")
-    if (good && tail) ans.dataset.tail = tail;
+    if (good && tail && !Q.blind) ans.dataset.tail = tail;
     markSpeed(good, 'puzzle'); sound(w.vi);
     fxTone(good);
-    ans.dataset.r = good ? 'ok' : 'no';
+    if (Q.blind) ans.classList.add('chosen'); else ans.dataset.r = good ? 'ok' : 'no';   // 시험이면 맞았나는 숨기고 '냈다'만 (2026-10-12)
     chk.disabled = true;
     [...pool.children].forEach(t => t.disabled = true);
     { const qq = Q.list[Q.i]; if (qq) { qq._ans = true; qq._ok = good; qq._pickT = mine; } hideSkip(); }   // 답한 것을 적는다 — 전에는 안 적어서 [‹ 이전]으로 고친 답이 영역별 채점에 안 들었다 (2026-10-11)
     if (good) Q.ok++; else requeue(Q.list[Q.i]);
     if (!w.nograde) grade(w.vi, good, Q.early);
-    if (!good) ans.after(el('div', 'puzzright', '→ ' + esc(w.vi)));   // 바른 문장은 내 답 줄 바로 밑에 한 줄로 (아래 따로 상자 없이, 2026-09-28 밤)
+    if (!good && !Q.blind) ans.after(el('div', 'puzzright', '→ ' + [w.vi, ...(w.alt || [])].map(esc).join('<br>→ ')));   // 바른 문장은 내 답 줄 바로 밑에 한 줄로 (아래 따로 상자 없이, 2026-09-28 밤)
     save();
     nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
   };
@@ -11530,9 +11548,10 @@ function resumeSave() {
   const k = resumeKey(); if (!k) return;
   S.resume = S.resume || {};
   if (Q.i <= 0 || Q.i >= Q.list.length) { if (S.resume[k] && !S.resume[k].done) { S.resume[k] = { done: 1, t: Date.now() }; save(); cloudTouch(); } return; }
-  const items = Q.list.map(q => [q._ok === undefined ? null : (q._ok ? 1 : 0), q._score === undefined ? null : q._score, q._ans ? 1 : 0, q._skip ? 1 : 0, q._okBefore === undefined ? null : q._okBefore, q._tries || 0, q._peek ? 1 : 0,
+  const P = q => !q._ans && q._prev ? Object.assign({}, q, { _ans: true, _ok: q._prev.ok, _score: q._prev.score, _pickT: q._prev.pickT }) : q;   // 돌아와 아직 안 고친 문항은 전 답으로 적는다
+  const items = Q.list.map(P).map(q => [q._ok === undefined ? null : (q._ok ? 1 : 0), q._score === undefined ? null : q._score, q._ans ? 1 : 0, q._skip ? 1 : 0, q._okBefore === undefined ? null : q._okBefore, q._tries || 0, q._peek ? 1 : 0,
     q._pickT || '', q._txt || '', q._fb || null]);   // 5: 말하기에 쓴 기회 · 6: 답 보기로 연 문항 · 7~9: 내 답(고른 것·쓴 글·말하기 판정) — 다른 기기에서 이어도 결과에 내 답이 나오게 (2026-10-12)
-  S.resume[k] = { i: Q.i, ok: Q.ok, skip: Q.skip || 0, left: Q.deadline ? Math.max(0, Q.deadline - Date.now()) : null, items, gen: Q.gen || null, sig: qSig(Q.list), t: Date.now() };
+  S.resume[k] = { i: Q.i, ok: Q.ok + Q.list.filter(q => !q._ans && q._prev && q._prev.ok).length, skip: Q.skip || 0, left: Q.deadline ? Math.max(0, Q.deadline - Date.now()) : null, items, gen: Q.gen || null, sig: qSig(Q.list), t: Date.now() };
   const ks = Object.keys(S.resume), old = Date.now() - 30 * 864e5;
   ks.forEach(x => { if (S.resume[x].done && S.resume[x].t < old) delete S.resume[x]; });          // 끝낸 표시는 한 달 뒤 지운다
   const live = ks.filter(x => S.resume[x] && !S.resume[x].done);
@@ -11671,7 +11690,13 @@ function peekBtn(body, q) {
       body.querySelectorAll('textarea').forEach(t => { t.readOnly = true; });
     }
     if (x.k === 'say') { const k = recKey(x.vi); k ? play(k, false) : speakVi(x.vi); }
-    body.append(el('div', 'fxexp', esc(x.exp)));
+    if (x0.k === 'free' && x0.gram) body.append(el('div', 'fxexp w3exp', w3AnsHtml(x0)));   // 쓰기 3 — 받아 주는 문장 전부 (2026-10-12)
+    else {
+      const ex = el('div', 'fxexp', esc(x.exp));
+      const more = x0.k === 'puzzle' || x0.k === 'type' ? fxAnswers(x0).filter(a => a !== 'Đúng' && !String(x.exp).includes(a)) : [];   // 다른 바른 답 모두 (2026-10-12)
+      if (more.length) ex.append(el('div', 'fxalts', '<b>' + esc(tr('또는')) + '</b>' + more.map(esc).join('<br>')));
+      body.append(ex);
+    }
     const nb = el('button', 'primary big', tr('다음') + ' ›'); nb.type = 'button'; nb.style.width = '100%';   // nextBtn 은 시험 모드에서 바로 넘겨 버리므로 따로 — 해설을 읽고 넘긴다
     nb.onclick = () => { Q.i++; drawQuiz(); }; body.append(nb);
     resumeSave();
@@ -11732,7 +11757,7 @@ function drawFixed(body, q) {
       ed.lock();
       const good = (x.acc || []).some(a => viCanon(txt) === viCanon(a));   // 큰·작은 글자, 문장부호, 성조 자리(hoà/hòa)는 안 따진다 · 숫자는 글자로 써도(8 = tám)
       q._ans = true; q._ok = good; q._pickT = txt.trim(); hideSkip(); if (good) Q.ok++;
-      if (!Q.blind) out.dataset.r = good ? 'ok' : 'no';
+      if (!Q.blind) out.dataset.r = good ? 'ok' : 'no'; else out.classList.add('chosen');
       resumeSave();
       nextBtn(body, () => { Q.i++; drawQuiz(); });
     }, { move: ed.move }));
@@ -11829,7 +11854,7 @@ function drawFixed(body, q) {
     if (Q.review && ed.val() && x.gram) body.append(marks(grade5()));            // 결과에서 다시 볼 때 — 줄마다 맞음·틀림
     const done = el('button', 'primary big', tr('다 썼어요')); done.style.width = '100%'; done.style.marginTop = '10px';
     if (x.gram) { done.onclick = () => {
-      done.disabled = true; locked = true; ed.lock();
+      done.disabled = true; locked = true; ed.lock(); if (Q.blind) out.classList.add('chosen');
       const m = grade5(), n = Math.min(x.n, m.filter(([, g]) => g).length);
       q._score = n / x.n; q._ok = n === x.n; q._ans = true; hideSkip(); if (q._ok) Q.ok++;
       if (!Q.blind) { body.append(marks(m), el('div', 'fxmodel', '<b>' + tr('모범 답안') + '</b><br>' + x.model.map((mm, i) => esc(mm) + (x.model_ko && x.model_ko[i] ? ' <small class="dimtxt">' + esc(x.model_ko[i]) + '</small>' : '')).join('<br>'))); }
@@ -12039,6 +12064,7 @@ function startDaily(t, r) {
   show('quiz', t.date + ' ' + tr('단어 시험'), true);
 }
 function finishDaily() {
+  Q.list.forEach(examSettle);
   const last = Q.list[Q.list.length - 1]; if (last && last._ok === undefined) last._ok = Q.ok > (last._okBefore || 0);
   const t = Q.dtest, tot = Q.list.length, ok = Q.list.filter(q => q._ok).length;
   const secs = {}; Q.list.forEach(q => { const s0 = secs[q.sec] = secs[q.sec] || [0, 0]; s0[1]++; if (q._ok) s0[0]++; });
@@ -12182,6 +12208,7 @@ function drawExamKind(body, q) {
   }
 }
 function finishWeekly() {
+  Q.list.forEach(examSettle);
   clearInterval(EXAM1_TIMER); { const ec = $('#examClock'); if (ec) ec.hidden = true; }   // 1차 시험지 시계 끄기
   const last = Q.list[Q.list.length - 1]; if (last && last._ok === undefined) last._ok = Q.ok > (last._okBefore || 0);
   const secs = {}; Q.list.forEach(q => { const s0 = secs[q.sec] = secs[q.sec] || [0, 0]; s0[1]++; if (q._ok) s0[0]++; });
@@ -12282,7 +12309,9 @@ function wexamWrong(k) {                              // 오답 현황 — 틀�
   if (!W0 || !J) return [];
   const W = wxNorm(W0, J.q); if (!W) return [];
   const cnt = {}; W.runs.forEach(r => r.w.forEach(kk => { cnt[kk] = (cnt[kk] || 0) + 1; }));
-  return J.q.map((x, i) => ({ x, i, kk: wxKey(x) })).filter(z => cnt[z.kk]).map(({ x, kk }) => { const a = W.a[kk] || []; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: false, _pickT: a[0] || '', _txt: a[1] || '', _fb: a[2] || null, _skip: !!a[3], _peek: !!a[4], _ans: !!a[5], _cnt: cnt[kk] }; });
+  const bad = new Set();                                 // 맞힌 답인데 틀림으로 적힌 회차(이전으로 고친 답의 셈 오류, 2026-10-12 고침)는 빼고 센다 — 기록은 그대로 두고 보일 때만
+  J.q.forEach(x => { const kk = wxKey(x), a = W.a[kk]; if (cnt[kk] && a && a[5] && !a[3] && !a[4] && fxAnsRight(x, a[0])) { cnt[kk]--; bad.add(kk); } });
+  return J.q.map((x, i) => ({ x, i, kk: wxKey(x) })).filter(z => cnt[z.kk]).map(({ x, kk }) => { const a = bad.has(kk) ? [] : W.a[kk] || []; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: false, _pickT: a[0] || '', _txt: a[1] || '', _fb: a[2] || null, _skip: !!a[3], _peek: !!a[4], _ans: !!a[5], _cnt: cnt[kk] }; });
 }
 function examTools(list, title, back) {
   const box = el('div', 'extools');
@@ -12401,13 +12430,53 @@ function fxRight(x) {
   if (x.k === 'puzzle') return x.vi;
   return '';
 }
+/* 준비한 정답 모두 (대표님 2026-10-12 "답을 보여 줄 때 준비한 모든 답을 보여 줘야지 — 채점도 모든 답 중에서") */
+function fxAnswers(x) {
+  if (x.k === 'puzzle') return [x.vi, ...(x.alts || [])];
+  if (x.k === 'type') {
+    const first = x.acc && x.acc[0] === 'Đúng' ? 'Đúng' : x.fix, seen = new Set(), out = [];
+    [first, ...(x.acc || [])].forEach(a => { if (!a || a === 'Đ') return; const c = viCanon(a); if (seen.has(c)) return; seen.add(c); out.push(a); });
+    return out;
+  }
+  const r = fxRight(x); return r ? [r] : [];
+}
+/* 쓰기 3(그림 보고 5문장)의 정답 전부 — 받아 주는 문장이 수만 개라 한 줄씩 늘어놓지 않고, 채점에 쓰는 틀(w3Matcher) 그대로 보인다:
+   통째 문장 · 주어 칸 하나 + 술어 칸 하나 · 앞·뒤에 붙여도 되는 말 · 두 문장 잇는 말 */
+const W3CAP = [['thành phố hồ chí minh', 'Thành phố Hồ Chí Minh'], ['hồ chí minh', 'Hồ Chí Minh'], ['hàn quốc', 'Hàn Quốc'], ['việt nam', 'Việt Nam'], ['tiếng việt', 'tiếng Việt'], ['người việt', 'người Việt'], ['người mỹ', 'người Mỹ'], ['người anh', 'người Anh'], ['eun ji', 'Eun Ji'], ['eunji', 'EunJi'], ['brian', 'Brian'], ['david', 'David']];
+function w3Cap(s, first) {
+  let t = ' ' + String(s) + ' ';
+  W3CAP.forEach(([a, b]) => { t = t.split(' ' + a + ' ').join(' ' + b + ' '); });
+  t = t.trim(); return first ? t.charAt(0).toUpperCase() + t.slice(1) : t;
+}
+function w3AnsHtml(x) {
+  const g = x.gram; if (!g) return (x.model || []).map(esc).join('<br>');
+  const C = s => esc(w3Cap(s, true)), L = s => esc(w3Cap(s, false));
+  const say = [...new Set([...(x.model || []).map(m => m.replace(/[.!?]+$/, '').toLowerCase()), ...(g.say || [])])];
+  let h = '<div class="w3say">' + say.map(z => C(z) + '.').join('<br>') + '</div>';
+  (g.facts || []).forEach(([subs, preds, pl]) => {
+    h += '<div class="w3fact"><div class="w3col">' + subs.map(z => /^(một|nhiều|rất nhiều|hai|ba|bốn|năm|các|những) /.test(z) ? '(Có) ' + L(z) : C(z)).join('<br>') + '</div>'
+       + '<div class="w3mid">' + (pl ? '(cũng · đều)' : '(cũng)') + '</div>'
+       + '<div class="w3col">' + preds.map(z => /^đang /.test(z) ? '(đang) ' + L(z.slice(5)) : L(z)).join('<br>') + '</div></div>';
+  });
+  if ((g.pre || []).length) h += '<div class="w3pp"><b>' + tr('앞') + '</b><span>' + g.pre.map(C).join(' · ') + '</span></div>';
+  if ((g.post || []).length) h += '<div class="w3pp"><b>' + tr('뒤') + '</b><span>' + g.post.map(L).join(' · ') + '</span></div>';
+  h += '<div class="w3pp"><b>' + tr('잇기') + '</b><span>, · và · còn · rồi · nhưng</span></div>';
+  return '<div class="w3all">' + h + '</div>';
+}
+function fxAnsRight(x, t) {                           // 적힌 내 답이 정답인가 (옛 기록 바로잡기)
+  t = String(t || '').trim(); if (!t) return false;
+  if (x.k === 'tf' || x.k === 'pick' || x.k === 'choice') return t === fxRight(x);
+  if (x.k === 'type') return (x.acc || []).some(a => viCanon(a) === viCanon(t));
+  if (x.k === 'puzzle') return [x.vi, ...(x.alts || [])].some(a => viCanon(a) === viCanon(t));
+  return false;
+}
 function myAnsBox(q0, x) {
   const rows = [], row = (k, v, r) => rows.push('<div class="marow" data-r="' + r + '"><b>' + esc(tr(k)) + '</b><span>' + v + '</span></div>');
   if (x.k === 'free') {                                                    // 쓰기 3 — 내가 쓴 줄마다 ✓/✗ · 실제 답은 모범 문장
     const ok = x.gram ? w3Matcher(x.gram) : (() => false), seen = new Set();
     const lines = String(q0._txt || '').split('\n').map(z => z.trim()).filter(Boolean);
     row('내 답', lines.length ? lines.map(l => { const c = viCanon(l), g = ok(l) && !seen.has(c); if (g) seen.add(c); return '<i data-r="' + (g ? 'ok' : 'no') + '">' + (g ? '✓' : '✗') + '</i> ' + esc(l); }).join('<br>') : '—', 'mix');
-    row('정답', (x.model || []).map(esc).join('<br>'), 'ok');
+    rows.push('<div class="marow stack" data-r="ok"><b>' + esc(tr('정답')) + '</b>' + w3AnsHtml(x) + '</div>');   // 받아 주는 문장 전부 (2026-10-12)
     return el('div', 'myans', rows.join(''));
   }
   if (x.k === 'say') {
@@ -12417,7 +12486,7 @@ function myAnsBox(q0, x) {
     return el('div', 'myans', rows.join(''));
   }
   row('내 답', q0._skip || !q0._ans ? '—' : q0._peek && !q0._pickT ? esc(tr('답 보기')) : esc(q0._pickT || '—'), q0._ok ? 'ok' : 'no');
-  row('정답', esc(fxRight(x)), 'ok');
+  row('정답', fxAnswers(x).map(esc).join('<br>'), 'ok');               // 준비한 정답 모두 (2026-10-12)
   return el('div', 'myans', rows.join(''));
 }
 /* 시험 뒤 '틀린 것' — 문제 → 정답(다른 정답)·스킵 표시 (매일·주간 시험이 같이 쓴다) */
@@ -12748,15 +12817,18 @@ function drawTypeQ(body, q) {
     const toneOnly = !good && bare(txt) === bare(w.vi);
     if (!good) bump('serr', toneOnly ? '성조만 틀림' : '글자를 틀림', false);
     if (!good) noteLetters(w.vi, txt, 'ltrw');
-    out.dataset.r = good ? 'ok' : (toneOnly ? 'tone' : 'no');
-    if (!good) {
-      out.textContent = txt.trim() + '  →  ' + w.vi;
-      body.append(el('div', 'tonemiss', toneOnly
-        ? tr('성조만 틀렸어요 — 글자는 맞았습니다')
-        : tr('글자가 틀렸어요')));
+    if (Q.blind) out.classList.add('chosen');                         // 시험이면 맞았나는 숨기고 '냈다'만 (2026-10-12)
+    else {
+      out.dataset.r = good ? 'ok' : (toneOnly ? 'tone' : 'no');
+      if (!good) {
+        out.textContent = txt.trim() + '  →  ' + w.vi;
+        body.append(el('div', 'tonemiss', toneOnly
+          ? tr('성조만 틀렸어요 — 글자는 맞았습니다')
+          : tr('글자가 틀렸어요')));
+      }
+      const kr1 = w.sent ? '' : (krShow(w) || krOf(w.vi) || '');
+      if (kr1) out.append(el('span', 'oikr', ' [' + esc(kr1) + ']'));   // 발음은 답 줄 옆에 (2026-09-28 밤)
     }
-    const kr1 = w.sent ? '' : (krShow(w) || krOf(w.vi) || '');
-    if (kr1) out.append(el('span', 'oikr', ' [' + esc(kr1) + ']'));   // 발음은 답 줄 옆에 (2026-09-28 밤)
     if (!w.nograde) grade(w.vi, good, Q.early);                       // 시험 문장(nograde)은 낱말 창고에 안 넣는다
     if (good) Q.ok++; else requeue(q);
     nextBtn(body, () => { Q.i++; drawQuiz(); });
@@ -12790,13 +12862,21 @@ function sayOpts(target) {
 function answer(btn, correct, w) {
   const md = Q.list[Q.i].mode;
   Q.list[Q.i]._pickT = btn.textContent.trim();          // 시험지에서 돌아왔을 때 전에 고른 보기 표시 (2026-10-09)
-  Q.list[Q.i]._ans = true; hideSkip();          // 문법 예문(nograde)도 답한 뒤에는 못 넘긴다
+  Q.list[Q.i]._ans = true; hideSkip();
+  if (Q.exam) Q.list[Q.i]._ok = !!correct;      // 맞았나를 답하는 자리에서 바로 적는다 — 전에는 다음 문제로 갈 때 '맞힌 수가 늘었나'로 셈해서, [‹ 이전]으로 돌아가 고친 뒤 넘어가면 맞힌 답도 틀림이 됐다 (오류 보고 2026-10-12)          // 문법 예문(nograde)도 답한 뒤에는 못 넘긴다
   markSpeed(correct, md);
   // 눈으로 푼 것은 읽기, 귀로 푼 것은 듣기로 센다 (전에는 둘 다 '암기'에만 쌓였다)
   const bx = (md === 'read' || md === 'read_ko') ? 'read' : (md === 'listen' || md === 'listen_ko' || md === 'tone') ? 'ear' : null;
   if (bx) { S.stats[bx + 'All'] = (S.stats[bx + 'All'] || 0) + 1;
             if (correct) S.stats[bx + 'Ok'] = (S.stats[bx + 'Ok'] || 0) + 1; }
   [...btn.parentNode.children].forEach(b => b.disabled = true);
+  if (Q.blind) {                                 // 시험 — 맞았는지는 숨기고 '이걸 골랐다'만 보인 뒤 넘어간다 (대표님 2026-10-12 "답이 선택됐고 다음 문제로 넘어가는 걸 알 수 있게")
+    btn.classList.add('chosen'); btn.append(el('i', 'chosenmk', '✓'));
+    if (correct) Q.ok++; else requeue(Q.list[Q.i]);
+    if (!w.nograde) grade(w.vi, correct, Q.early);
+    nextBtn($('#quizBody'), () => { Q.i++; drawQuiz(); });
+    return;
+  }
   btn.dataset.r = correct ? 'ok' : 'no';
   fxTone(correct);
   if (!correct) {
@@ -12888,13 +12968,14 @@ function markSpeed(ok, mode) {
 /* 시험지에서 문제 옮기기 — 지금 문제를 마무리(답했으면 맞았나 적고, 돌아와서 안 고쳤으면 전 답을 되살림)한 뒤 옮긴다 */
 function examGo(d) {
   const q = Q.list[Q.i];
-  if (q) {
-    if (q._ans && q._ok === undefined) q._ok = Q.ok > (q._okBefore || 0);
-    if (!q._ans && q._prev) { const p = q._prev; q._ans = true; q._ok = p.ok; if (p.score !== undefined) q._score = p.score; q._pickT = p.pickT; if (p.ok) Q.ok++; }
-    delete q._prev;
-  }
+  if (q) { if (q._ans && q._ok === undefined) q._ok = Q.ok > (q._okBefore || 0); examSettle(q); }
   Q.i = Math.max(0, Math.min(Q.list.length - 1, Q.i + d));
   drawQuiz();
+}
+function examSettle(q) {                                // 돌아온 문항을 안 고쳤으면 전 답으로 되돌린다 — 그 자리에서 시간이 끝나도 답이 사라지지 않게 (오류 보고 2026-10-12 "내 답이 표시 안 된다")
+  if (!q) return;
+  if (!q._ans && q._prev) { const p = q._prev; q._ans = true; q._ok = p.ok; if (p.score !== undefined) q._score = p.score; q._pickT = p.pickT; if (p.ok) Q.ok++; }
+  delete q._prev;
 }
 /* 돌아온 문제 — 전에 고른 보기를 표시 (맞았는지는 시험이 끝날 때까지 안 보인다) */
 function examPrevMark(body, q) {

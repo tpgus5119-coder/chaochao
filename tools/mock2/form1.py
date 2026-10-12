@@ -210,18 +210,21 @@ DN = {
 
 # ── 2026-10-11 대표님 "단어 조각으로 만드는 건 문법에 맞는지만 보면 된다 — 여러 문장이 정답이 될 수 있다" ──
 # 쓰기 1: 같은 조각으로 만들 수 있는 **다른 바른 차례**(때를 나타내는 말을 앞·뒤로, 주어·목적어를 바꿔도 말이 되는 것). 열쇠 = 정답 문장
-C1ALT = {
+C1ALT = {   # 2026-10-12 대표님 "가능한 모든 문장은 답으로 갖고 있어야" — 조각 30문항마다 모든 차례를 따져 바른 것을 다 적음(뜻이 달라져도 문법·말이 되면 정답 — 시험지에 뜻이 없으니)
+ "Anh John cũng là sinh viên lớp tôi.": ["Tôi cũng là sinh viên lớp anh John."],
+ "Sinh viên lớp này đều học chăm chỉ.": ["Sinh viên lớp này đều chăm chỉ học.", "Lớp này sinh viên đều học chăm chỉ.", "Lớp này sinh viên đều chăm chỉ học."],
+ "Hôm qua tôi không gặp em Vi.": ["Tôi không gặp em Vi hôm qua.", "Tôi hôm qua không gặp em Vi.", "Hôm qua em Vi không gặp tôi.", "Em Vi không gặp tôi hôm qua.", "Em Vi hôm qua không gặp tôi."],
+ "Bệnh viện này có nhiều bác sĩ.": ["Bác sĩ này có nhiều bệnh viện."],
  "Tôi bắt đầu làm việc lúc 9 giờ.": ["Lúc 9 giờ tôi bắt đầu làm việc."],
- "Xe sắp đến chưa anh?": ["Anh, xe sắp đến chưa?"],
- "Mỗi ngày tôi đọc báo.": ["Tôi đọc báo mỗi ngày."],
+ "Xe sắp đến chưa anh?": ["Anh, xe sắp đến chưa?", "Xe anh sắp đến chưa?"],
+ "Mỗi ngày tôi đọc báo.": ["Tôi đọc báo mỗi ngày.", "Tôi mỗi ngày đọc báo."],
  "Chúng tôi ăn tối lúc 7 giờ.": ["Lúc 7 giờ chúng tôi ăn tối."],
  "Tôi rửa mặt rồi đánh răng.": ["Tôi đánh răng rồi rửa mặt."],
  "Tôi mời bạn tôi đi ăn tối.": ["Bạn tôi mời tôi đi ăn tối."],
- "Ga ở gần nhà tôi.": ["Nhà tôi ở gần ga."],
+ "Ga ở gần nhà tôi.": ["Nhà tôi ở gần ga.", "Nhà ga ở gần tôi.", "Tôi ở gần nhà ga."],
  "Máy bay đến lúc 9 giờ tối.": ["Lúc 9 giờ tối máy bay đến."],
  "Sân bay ở xa trung tâm.": ["Trung tâm ở xa sân bay."],
- "Mỗi tối tôi xem tin tức.": ["Tôi xem tin tức mỗi tối."],
- "Hôm qua tôi không gặp em Vi.": ["Tôi không gặp em Vi hôm qua."],
+ "Mỗi tối tôi xem tin tức.": ["Tôi xem tin tức mỗi tối.", "Tôi mỗi tối xem tin tức."],
 }
 # 쓰기 2: 틀린 문장을 고치는 **다른 바른 방법** (열쇠 = 바른 문장)
 C2ALT = {
