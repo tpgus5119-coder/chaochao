@@ -3581,7 +3581,8 @@ const PROGKEYS = ['done', 'srs', 'ssrs', 'bsrs', 'star', 'folders', 'act', 'stat
      여기 빠져 있어서 폰에서 끝낸 GYBM 과가 아이패드에 **한 번도** 가지 않았다. 시험 성적·문항 창고·성조 테스트도 같이. */
   'sdone', 'bdone', 'kbank', 'qbank', 'exam', 'anchor', 'vlpt', 'tt', 'kday', 'revDay', 'lastTrack',
   'score',   // 실제 반 시험 점수 (2026-09-29)
-  'daily'];  // 매일 단어 시험 최고점·지난 결과 (2026-09-30)
+  'daily',   // 매일 단어 시험 최고점·지난 결과 (2026-09-30)
+  'resume', 'wx'];  // 시험 이어서 하기 · 모의고사 오답 현황 — 같은 아이디면 기기끼리 이어지게 (대표님 2026-10-12)
 /* 진도 서버 맞추기 (2026-09-29 다시 짬).
    예전에는 서버에서 **받는 것이 로그인하는 순간 한 번뿐**이었다 — 폰과 아이패드가 둘 다 로그인된 채로 쓰면
    서로의 진도를 영영 못 받았고, 올릴 때는 나중에 올린 기기가 서버 것을 통째로 덮었다(앞 기기 진도가 사라짐).
@@ -3614,6 +3615,14 @@ function mergeFolders(a, b) {
     (f.w || []).forEach(v => { if (!o.w.includes(v)) o.w.push(v); });
   });
   return out;
+}
+/* 오답 현황 합치기 — 시험지 서명이 같으면 두 기기의 '푼 회차'(runs, 시각 t 로 구별)를 합치고, 문항마다 최근 틀린 답은 나중 것. 서명이 다르면 새 시험지 쪽 */
+function mergeWx(x, y) {
+  if (!x || !y) return x || y;
+  if (x.sig !== y.sig) return ((x.runs || []).slice(-1)[0] || {}).t > ((y.runs || []).slice(-1)[0] || {}).t ? x : y;
+  const runs = new Map(); [...(y.runs || []), ...(x.runs || [])].forEach(r => runs.set(r.t, r));
+  const a = Object.assign({}, y.a || {}); Object.entries(x.a || {}).forEach(([i, v]) => { if (!a[i] || (v[6] || 0) > (a[i][6] || 0)) a[i] = v; });
+  return { sig: x.sig, len: x.len, runs: [...runs.values()].sort((p, q) => p.t - q.t), a };
 }
 /* 두 기기 진도 합치기. L = 이 기기, R = 서버. 지우는 쪽보다 **잃지 않는 쪽**을 고른다. */
 function mergeProg(L, R) {
@@ -3654,7 +3663,9 @@ function mergeProg(L, R) {
         [...b, ...a].forEach(x => { const kk = x.r + '|' + x.d; const o = m.get(kk); if (!o || (x.at || 0) >= (o.at || 0)) m.set(kk, x); });
         out[k] = [...m.values()]; break;
       }
-      case 'folders': out[k] = mergeFolders(a, b); break;   // 폴더는 합집합 (2026-10-08 밤 — 전에는 이 기기 것이 이겨 서버 폴더가 통째로 사라졌다)
+      case 'folders': out[k] = mergeFolders(a, b); break;
+      case 'resume': out[k] = byKey(a, b, (x, y) => ((y && y.t) || 0) > ((x && x.t) || 0) ? y : x); break;   // 시험지마다 나중에 손댄 기기 것 — 끝낸 시험은 {done, t} 표시라 되살아나지 않는다
+      case 'wx': out[k] = byKey(a, b, mergeWx); break;   // 폴더는 합집합 (2026-10-08 밤 — 전에는 이 기기 것이 이겨 서버 폴더가 통째로 사라졌다)
       default: out[k] = a;                  // 별명·말씨·국적 같은 설정은 지금 손에 든 기기 것
     }
   }
@@ -11521,20 +11532,23 @@ const qSig = list => { const s = (list || []).map(q => (q.w && q.w.vi) || '').jo
 function resumeSave() {
   const k = resumeKey(); if (!k) return;
   S.resume = S.resume || {};
-  if (Q.i <= 0 || Q.i >= Q.list.length) { if (S.resume[k]) { delete S.resume[k]; save(); } return; }
-  const items = Q.list.map(q => [q._ok === undefined ? null : (q._ok ? 1 : 0), q._score === undefined ? null : q._score, q._ans ? 1 : 0, q._skip ? 1 : 0, q._okBefore === undefined ? null : q._okBefore, q._tries || 0, q._peek ? 1 : 0]);   // 5: 말하기에 쓴 기회 · 6: 답 보기로 연 문항
+  if (Q.i <= 0 || Q.i >= Q.list.length) { if (S.resume[k] && !S.resume[k].done) { S.resume[k] = { done: 1, t: Date.now() }; save(); cloudTouch(); } return; }
+  const items = Q.list.map(q => [q._ok === undefined ? null : (q._ok ? 1 : 0), q._score === undefined ? null : q._score, q._ans ? 1 : 0, q._skip ? 1 : 0, q._okBefore === undefined ? null : q._okBefore, q._tries || 0, q._peek ? 1 : 0,
+    q._pickT || '', q._txt || '', q._fb || null]);   // 5: 말하기에 쓴 기회 · 6: 답 보기로 연 문항 · 7~9: 내 답(고른 것·쓴 글·말하기 판정) — 다른 기기에서 이어도 결과에 내 답이 나오게 (2026-10-12)
   S.resume[k] = { i: Q.i, ok: Q.ok, skip: Q.skip || 0, left: Q.deadline ? Math.max(0, Q.deadline - Date.now()) : null, items, gen: Q.gen || null, sig: qSig(Q.list), t: Date.now() };
-  const ks = Object.keys(S.resume);
-  if (ks.length > RESUME_MAX) ks.sort((a, b) => S.resume[a].t - S.resume[b].t).slice(0, ks.length - RESUME_MAX).forEach(x => { delete S.resume[x]; });
-  save();
+  const ks = Object.keys(S.resume), old = Date.now() - 30 * 864e5;
+  ks.forEach(x => { if (S.resume[x].done && S.resume[x].t < old) delete S.resume[x]; });          // 끝낸 표시는 한 달 뒤 지운다
+  const live = ks.filter(x => S.resume[x] && !S.resume[x].done);
+  if (live.length > RESUME_MAX) live.sort((a, b) => S.resume[a].t - S.resume[b].t).slice(0, live.length - RESUME_MAX).forEach(x => { S.resume[x] = { done: 1, t: Date.now() }; });
+  save(); cloudTouch();                                                                           // 몇 분 안에(앱을 떠날 땐 바로) 서버로 — 다른 기기에서 이어서 (2026-10-12)
 }
-function resumeClear(k) { if (S.resume && S.resume[k]) { delete S.resume[k]; save(); } }
+function resumeClear(k) { if (S.resume && S.resume[k] && !S.resume[k].done) { S.resume[k] = { done: 1, t: Date.now() }; save(); cloudTouch(); } }
 function resumeGet(k) { const r = S.resume && S.resume[k]; return r && r.i > 0 && r.items && r.i < r.items.length ? r : null; }
 /* Q 를 새로 만든 뒤 — 푼 자리·답을 되살린다. 문항 수가 다르면(자료가 바뀜) 되살리지 않는다 */
 function resumeApply(r) {
   if (!r || !Q || r.items.length !== Q.list.length) return false;
   if (r.sig !== qSig(Q.list)) return false;                  // 글이 다르면(자료가 바뀜·지문 없는 옛 저장) 되살리지 않는다
-  Q.list.forEach((q, i) => { const it = r.items[i]; if (!it) return; if (it[0] !== null) q._ok = !!it[0]; if (it[1] !== null) q._score = it[1]; if (it[2]) q._ans = true; if (it[3]) q._skip = true; if (it[4] !== null) q._okBefore = it[4]; if (it[5]) q._tries = it[5]; if (it[6]) q._peek = true; });
+  Q.list.forEach((q, i) => { const it = r.items[i]; if (!it) return; if (it[0] !== null) q._ok = !!it[0]; if (it[1] !== null) q._score = it[1]; if (it[2]) q._ans = true; if (it[3]) q._skip = true; if (it[4] !== null) q._okBefore = it[4]; if (it[5]) q._tries = it[5]; if (it[6]) q._peek = true; if (it[7]) q._pickT = it[7]; if (it[8]) q._txt = it[8]; if (it[9]) q._fb = it[9]; });
   Q.i = r.i; Q.ok = r.ok; Q.skip = r.skip || 0;
   if (Q.deadline && r.left !== null && r.left !== undefined) Q.deadline = Date.now() + r.left;
   return true;
@@ -12228,21 +12242,22 @@ function fxReviewBlock(q0, withSec) {
 /* 시험지마다 틀린 기록을 이 기기에 남긴다(서버로는 안 올림) */
 function wexamSave(k, list) {
   /* 오답 현황 — 같은 시험지를 여러 번 보면 문항마다 틀린 횟수(c)와 가장 최근의 틀린 답(a)을 쌓는다 (대표님 2026-10-11) */
-  const sig = wexamSig(list.map(q => q.w && q.w.fx));
-  const W = (S.wx = S.wx || {})[k] = S.wx[k] || { n: 0, len: list.length, sig, c: {}, a: {} };
-  if (W.len !== list.length || (W.sig && W.sig !== sig)) { W.n = 0; W.len = list.length; W.c = {}; W.a = {}; }   // 시험지(문항·차례)가 바뀌었으면 새로 — 틀린 횟수가 다른 문항에 붙지 않게
-  W.sig = sig;
-  W.n++;
-  list.forEach((q, i) => { if (q._ok) return; W.c[i] = (W.c[i] || 0) + 1; W.a[i] = [q._pickT || '', q._txt || '', q._fb || null, q._skip ? 1 : 0, q._peek ? 1 : 0, q._ans ? 1 : 0]; });
-  save();
+  const sig = wexamSig(list.map(q => q.w && q.w.fx)), t = Date.now();
+  let W = (S.wx = S.wx || {})[k];
+  if (!W || !W.runs || W.len !== list.length || W.sig !== sig) W = S.wx[k] = { sig, len: list.length, runs: [], a: {} };   // 시험지(문항·차례)가 바뀌었으면 새로 — 틀린 횟수가 다른 문항에 붙지 않게
+  const wrong = [];
+  list.forEach((q, i) => { if (q._ok) return; wrong.push(i); W.a[i] = [q._pickT || '', q._txt || '', q._fb || null, q._skip ? 1 : 0, q._peek ? 1 : 0, q._ans ? 1 : 0, t]; });
+  W.runs.push({ t, w: wrong });                                   // 한 번 본 시험 = 한 회차 (기기끼리 합칠 때 시각으로 구별)
+  save(); cloudTouch();
 }
 function wexamSig(xs) { return fnv32(xs.map(x => x ? (x.sec || '') + '|' + (x.prompt || x.audio || x.vi || '') + '|' + (x.ans === undefined ? '' : x.ans) : '').join('\n')); }
 function wexamWrong(k) {                              // 오답 현황 — 틀린 적 있는 문항(틀린 횟수 _cnt, 최근 틀린 답)
   const J = FIXED[k];
   if (S.wlast) { delete S.wlast; save(); }               // 낮에 잠깐 쓰던 '마지막 시험' 기록 — 그 뒤 시험지 차례가 바뀌어(정답 규칙 없애기) 옮기지 않고 버린다 (2026-10-11)
   const W = S.wx && S.wx[k];
-  if (!W || !J || W.len !== J.q.length || (W.sig && W.sig !== wexamSig(J.q))) return [];
-  return Object.keys(W.c).map(Number).sort((a, b) => a - b).map(i => { const x = J.q[i], a = W.a[i] || []; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: false, _pickT: a[0] || '', _txt: a[1] || '', _fb: a[2] || null, _skip: !!a[3], _peek: !!a[4], _ans: !!a[5], _cnt: W.c[i] }; });
+  if (!W || !W.runs || !J || W.len !== J.q.length || W.sig !== wexamSig(J.q)) return [];
+  const cnt = {}; W.runs.forEach(r => r.w.forEach(i => { cnt[i] = (cnt[i] || 0) + 1; }));
+  return Object.keys(cnt).map(Number).sort((a, b) => a - b).map(i => { const x = J.q[i], a = W.a[i] || []; return { w: { vi: x.vi || x.prompt || x.audio || x.sec, fx: x }, sec: x.sec, _ok: false, _pickT: a[0] || '', _txt: a[1] || '', _fb: a[2] || null, _skip: !!a[3], _peek: !!a[4], _ans: !!a[5], _cnt: cnt[i] }; });
 }
 function wrongHistoryView(k, title, back) {          // 시험지 하나의 오답 현황 — 시험 끝의 '틀린 것'과 같은 꼴, 두 번 이상 틀린 것은 빨갛게 · 틀린 단어·문법 학습
   const list = wexamWrong(k), qb = $('#quizBody'); qb.textContent = '';

@@ -67,13 +67,32 @@ def n2v(n):
     if n < 20: return ['mười'] if n == 10 else ['mười ' + ('lăm' if n % 10 == 5 else _U[n % 10])]
     if n < 100:
         t, u = divmod(n, 10); h = _U[t] + ' mươi'
-        return [h] if u == 0 else [h + ' mốt'] if u == 1 else [h + ' tư', h + ' bốn'] if u == 4 else [h + ' lăm'] if u == 5 else [h + ' ' + _U[u]]
+        return [h] if u == 0 else [h + ' mốt'] if u == 1 else [h + ' tư', h + ' bốn'] if u == 4 else [h + ' lăm'] if u == 5 else [h + ' ' + _U[u]]   # 표준 꼴만 (21 mốt · 24 tư/bốn · 25 lăm)
     h, r = divmod(n, 100); a = _U[h] + ' trăm'
     if r == 0: return [a]
     if r < 10: return [a + ' linh ' + _U[r], a + ' lẻ ' + _U[r]]
     return [a + ' ' + x for x in n2v(r)]
 _W2N = {w: str(i) for i, w in enumerate(_U)} | {'mười': '10'}
 SAME = [('cám ơn', 'cảm ơn')]
+# 때를 나타내는 말은 문장 앞에도 뒤에도 올 수 있다 — 'Anh ấy đi ăn trưa lúc 12 giờ.' = 'Lúc 12 giờ anh ấy đi ăn trưa.' (대표님 2026-10-12 "순서를 바꿔도 문법에 지장 없고 말이 되면 답")
+_TIME = r'(?:từ \S+ giờ(?: \S+)? đến \S+ giờ(?: (?:sáng|trưa|chiều|tối))?|lúc \S+ giờ(?: rưỡi)?(?: (?:sáng|trưa|chiều|tối|đêm))?|vào buổi (?:sáng|trưa|chiều|tối)|buổi (?:sáng|trưa|chiều|tối)|hôm qua|hôm nay|tối nay|sáng nay|chiều nay|tối qua|ngày mai|tuần sau|cuối tuần|mỗi ngày|mỗi sáng|mỗi tối)'
+def time_moves(sent):
+    """문장 끝의 때 말을 앞으로, 앞의 때 말을 끝으로 옮긴 꼴들 (쉼표를 붙인 꼴도 받는 것은 앱 viCanon 이 문장부호를 안 따지기 때문)"""
+    m = re.match(r'^(.*?)[ ,]+(' + _TIME + r')([.?!]*)$', sent, re.I)
+    out = []
+    cap = lambda t: t[:1].upper() + t[1:]
+    low = lambda t: t if re.match(r'^(Anh|Chị|Em|Ông|Bà|Cô) [A-ZĐ]', t) else t[:1].lower() + t[1:]
+    if m:
+        body, tp, end = m.group(1), m.group(2), m.group(3) or '.'
+        front = re.sub(r'^vào ', '', tp, flags=re.I)
+        out += [cap(tp) + ' ' + low(body) + end, cap(front) + ' ' + low(body) + end]
+    m2 = re.match(r'^(' + _TIME + r')[ ,]+(.*?)([.?!]*)$', sent, re.I)
+    if m2:
+        tp, body, end = m2.group(1), m2.group(2), m2.group(3) or '.'
+        q = re.match(r'^(.*?)((?:,? phải không|,? không|,? chưa|,? à|,? hả|,? nhé))$', body)   # 물음·권유 끝말 앞에 넣는다 — '… anh Hòa hôm qua không?' ('… không hôm qua?' 는 틀림)
+        out.append(cap(q.group(1)) + ' ' + tp.lower() + q.group(2) + end if q else cap(body) + ' ' + tp.lower() + end)
+    return [o for o in dict.fromkeys(out) if o != sent]
+
 def accs(a):
     """직접 쳐서 쓴 답을 받아 줄 꼴들 — 숫자는 글자로도(8 → tám), 글자 수는 숫자로도(ba → 3), 같은 말 다른 꼴(cám ơn·cảm ơn). 맞춤은 앱 viCanon(작은·큰 글자, 성조 자리, 문장부호 무시)"""
     out = [a]
@@ -156,7 +175,7 @@ def form1(no, q):
             i = c2.index(x)
             if no in C2F:                                               # 손으로 검토해 적은 다섯(form1.C2F) — 답이 하나뿐인지 확인한 것 (2026-10-09)
                 pr, a, ws, fx, kk = C2F[no][i]                              # 종이처럼 맞으면 'Đúng', 틀리면 바른 문장을 직접 쳐서 쓴다 (2026-10-11)
-                x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "type", "prompt": pr, "acc": (["Đúng", "Đ"] + accs(pr)) if a == OKTXT else accs(fx) + [z for alt in C2ALT.get(fx, []) for z in accs(alt)], "fix": fx, "ko": kk, "dung": True}
+                x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "type", "prompt": pr, "acc": (["Đúng", "Đ"] + [z for v in [pr] + time_moves(pr) for z in accs(v)]) if a == OKTXT else [z for v in [fx] + C2ALT.get(fx, []) for v2 in [v] + time_moves(v) for z in accs(v2)], "fix": fx, "ko": kk, "dung": True}
                 out.append(x); continue
             if i < 3: x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": x['vi'], "opts": [x['fix'], OKTXT, alt(x['fix'], x['vi'])], "ans": 0, "shuffle": True, "fix": x['fix'], "ko": x['ko']}
             else:     x = {"sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기", "k": "choice", "prompt": x['fix'], "opts": [OKTXT, x['vi'], alt(x['fix'], x['vi'])], "ans": 0, "shuffle": True, "fix": x['fix'], "ko": x['ko']}

@@ -934,6 +934,10 @@
     "Tôi học từ tám giờ đến 11 giờ.",
     "Tôi học từ 8 giờ đến mười một giờ.",
     "Tôi học từ tám giờ đến mười một giờ.",
+    "Từ 8 giờ đến 11 giờ tôi học.",
+    "Từ tám giờ đến 11 giờ tôi học.",
+    "Từ 8 giờ đến mười một giờ tôi học.",
+    "Từ tám giờ đến mười một giờ tôi học.",
     "Tôi học lúc 8 giờ và 11 giờ.",
     "Tôi học lúc tám giờ và 11 giờ.",
     "Tôi học lúc 8 giờ và mười một giờ.",
@@ -964,7 +968,9 @@
    "prompt": "Tôi đi học bằng lúc 8 giờ.",
    "acc": [
     "Tôi đi học lúc 8 giờ.",
-    "Tôi đi học lúc tám giờ."
+    "Tôi đi học lúc tám giờ.",
+    "Lúc 8 giờ tôi đi học.",
+    "Lúc tám giờ tôi đi học."
    ],
    "fix": "Tôi đi học lúc 8 giờ.",
    "ko": "저는 8시에 학교에 가요.",

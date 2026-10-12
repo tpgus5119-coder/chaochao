@@ -4,7 +4,7 @@
 import json, pathlib, sys
 R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from common import accs, OKTXT
+from common import accs, OKTXT, time_moves
 from form1 import C1ALT, C2ALT
 def main():
     p = R / 'data/exam1.json'; J = json.loads(p.read_text(encoding='utf-8')); n = 0
@@ -25,6 +25,9 @@ def main():
         if x['k'] == 'puzzle' and x['vi'] in C1ALT: x['alts'] = C1ALT[x['vi']]
         if x['k'] == 'type' and x.get('dung') and x.get('fix') in C2ALT and x['acc'][0] != 'Đúng':
             x['acc'] = list(dict.fromkeys(x['acc'] + [z for alt in C2ALT[x['fix']] for z in accs(alt)]))
+        if x['k'] == 'type' and x.get('dung'):                      # 때 말 앞뒤로 옮긴 꼴도 (2026-10-12)
+            base = [x['prompt']] if x['acc'][0] == 'Đúng' else [x['fix']] + C2ALT.get(x['fix'], [])
+            x['acc'] = list(dict.fromkeys(x['acc'] + [z for v in base for v2 in time_moves(v) for z in accs(v2)]))
     p.write_text(json.dumps(J, ensure_ascii=False, indent=1), encoding='utf-8')
     print('직접 쓰기로 바꾼 문항', n)
 if __name__ == '__main__':
