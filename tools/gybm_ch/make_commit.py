@@ -205,7 +205,8 @@ _data_unused = [q for q in _origin_all if q.startswith("data/") and q.rsplit("/"
 _unused = [q for q in _origin_all if q.startswith(("audio/ko-qwen/", "audio/ko-qwen2/", "scratchpad/", "_보관/", "audio/ko-f/", "audio/ko-m/")) or q == "data/compound.json"] + _data_unused
 # (2026-10-03 대표님 "불필요한 코드와 파일 · 과거의 코드와 파일 없애") — 맥에서 ~/짜오짜오/_보관/베트남어-어플_정리_20261003/ 로 옮긴 옛 도구·화면도 서버에서 뺀다:
 #   맥에 더는 없는 tools/ 파일과 옛 화면(_pet_preview·dev·lab.html)·시험소리/. 뉴스 봇이 쓰는 도구는 맥에 그대로라 안 빠진다
-_unused += [q for q in _origin_all if (q.startswith(("tools/", "시험소리/")) or q in ("_pet_preview.html", "dev.html", "lab.html")) and not (ROOT / q).exists()]   # compound.json = 걷어낸 붙은 말 접기 자료 (2026-09-29 밤)
+_unused += [q for q in _origin_all if (q.startswith(("tools/", "시험소리/")) or q in ("_pet_preview.html", "dev.html", "lab.html", "giong.html", "voice-vi.html", "voice-ko.html", "icon-fb-1024.png", "mascot-parrot.png", "mascot-parrot-512.png")) and not (ROOT / q).exists()]
+_unused += [q for q in _origin_all if q.startswith("img/exam1-")]   # 실제 1차 시험지 그림 — 학교 자료 (2026-10-13 정리)   # compound.json = 걷어낸 붙은 말 접기 자료 (2026-09-29 밤)
 if _unused:
     gone = "".join(f"0 {'0' * 40}\t{q}\n" for q in _unused)
     subprocess.run(["git", "update-index", "--index-info"], cwd=ROOT, input=gone, text=True, capture_output=True, check=True, env=env)
