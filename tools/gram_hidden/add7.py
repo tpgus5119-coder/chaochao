@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """교재 속 숨은 문법 15개 넣기 (2026-10-13, 대표님 "문법 상자에 없는 문법들도 교재 안에 숨어 있다니까? 찾아내 봐").
 tools/gram_hidden/scan.py 로 교재 1·2권 24과 모든 문장(대화·읽기·연습·발음 문장·듣기 대본)을 훑어, 쓰였는데 앱에 문형이 없던 것.
-문형마다 과 **맨 끝**에 붙인다(앞 번호가 밀리지 않게). 자세히 상자(d)는 tools/gram_detail/d_XX.json 에 같이 적는다.
+문형마다 과 **맨 끝**에 붙인다(앞 번호가 밀리지 않게). 문법 화면에서 숨는 과(grammar.json ng: 1·2·7과)에는 넣지 않는다 — thứ + 수 는 처음에 7과에 넣었다가 9과로 옮김. 자세히 상자(d)는 tools/gram_detail/d_XX.json 에 같이 적는다.
 쓰기: python3 tools/gram_hidden/add7.py → 새 예문 tools/gram_hidden/_new_ex7.json (소리: python3 tools/gen_audio_list.py tools/gram_hidden/_new_ex7.json)"""
 import json, pathlib, sys
 R = pathlib.Path(__file__).resolve().parent.parent.parent
@@ -78,7 +78,7 @@ NEW = [
            ["… cũng (37과)", "'무엇이든 다': Tôi ăn <b>gì cũng</b> được ↔ Tôi <b>không</b> ăn <b>gì</b>."],
            ["không … đâu (39과)", "형용사·동사 뒤 đâu 는 반박 '아니에요': Tôi không mệt <b>đâu</b>."], ["chẳng", "입말 강한 부정: Tôi <b>chẳng</b> biết."]],
    'warn': "Tôi không đi đâu 는 '아무 데도 안 가요'와 '안 간다니까요(반박)' 둘로 읽힙니다 — cả 를 붙이면 '아무 데도'가 또렷합니다."}),
- (7, {'t': 'thứ + 수 — ~번째', 'k': 'thứ + 수 (thứ nhất · thứ hai · thứ ba · thứ tư …)  ·  … thứ mấy?',
+ (9, {'t': 'thứ + 수 — ~번째', 'k': 'thứ + 수 (thứ nhất · thứ hai · thứ ba · thứ tư …)  ·  … thứ mấy?',
    'b': '차례(~번째)는 수 앞에 <b>thứ</b> 를 붙이고 명사 뒤에 둡니다(con thứ hai — 둘째). 1번째는 <b>thứ nhất</b>, 4번째는 <b>thứ tư</b> 입니다(thứ một·thứ bốn 이 아님). 몇 번째인지는 <b>thứ mấy?</b> 로 묻습니다. 요일 이름(thứ hai = 월요일)도 같은 꼴입니다. 교재 1권 10과 대화("Anh là con thứ mấy?")에 나오지만 문법 상자에는 없습니다.',
    'ex': [EX('Chị là con thứ mấy?', '몇째예요?'), EX('Tôi là con thứ ba.', '셋째예요.'), EX('Đây là lần thứ nhất tôi đến Việt Nam.', '베트남은 이번이 처음이에요.'), EX('Nhà tôi ở tầng thứ tư.', '우리 집은 4층이에요.')],
    'kw': [['thứ', '~번째'], ['thứ nhất', '첫째'], ['thứ tư', '넷째'], ['lần', '번'], ['tầng', '층']], 'tip': '1번째 thứ nhất · 4번째 thứ tư — 예외 둘.'},

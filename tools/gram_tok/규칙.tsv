@@ -275,7 +275,7 @@
 24.6	re:(?<![A-Za-zÀ-ỹĐđ])(mời|nhờ|bảo|khuyên)\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó)(?![A-Za-zÀ-ỹĐđ])(?!\s+(ấy\s+)?mà(?![A-Za-zÀ-ỹĐđ]))\s+[A-Za-zÀ-ỹĐđ]
 24.7	re:(?<!cầu )(?<![A-Za-zÀ-ỹĐđ])khiến(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])làm\s+(cho\s+)?([A-Za-zÀ-ỹĐđ]+\s+){1,3}?(vui|buồn|lo|lo lắng|ngạc nhiên|mệt|sợ|nhớ|thích|cười|khóc|giận|bực|bực mình|hạnh phúc|thất vọng|xấu hổ|cảm động|khó chịu|thoải mái|yên tâm|hiểu|đau|chán|thú vị|bất ngờ|quan tâm)(?![A-Za-zÀ-ỹĐđ])
 37.6	không _ (gì|ai|đâu) cả;không+ai;re:(?<![A-Za-zÀ-ỹĐđ])chẳng(?![A-Za-zÀ-ỹĐđ])(?!\s+(hạn|lẽ)(?![A-Za-zÀ-ỹĐđ]));re:(?<![A-Za-zÀ-ỹĐđ])không\s+(?!có gì\s*[.!]?\s*$)([A-Za-zÀ-ỹĐđ]+\s+){1,3}(gì|ai)(?![A-Za-zÀ-ỹĐđ])(?!\s+(không|chưa|à|vậy|thế|đấy|đó|nhỉ|hả|ạ)(?![A-Za-zÀ-ỹĐđ]))\s*[.!]?\s*$
-7.3	re:(?<!ngôi )(?<![A-Za-zÀ-ỹĐđ])thứ\s+nhất(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])(con|lần|tầng|người|bài|năm|cái|quyển|chương|phần|trang|câu|giải|lớp|hàng|đứa|tuần|học kỳ|ngày thứ)\s+thứ\s+(hai|ba|tư|năm|sáu|bảy|tám|chín|mười|mấy|\d+)(?![A-Za-zÀ-ỹĐđ])
+9.7	re:(?<!ngôi )(?<![A-Za-zÀ-ỹĐđ])thứ\s+nhất(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])(con|lần|tầng|người|bài|năm|cái|quyển|chương|phần|trang|câu|giải|lớp|hàng|đứa|tuần|học kỳ|ngày thứ)\s+thứ\s+(hai|ba|tư|năm|sáu|bảy|tám|chín|mười|mấy|\d+)(?![A-Za-zÀ-ỹĐđ])
 12.8	re:(?<!sự )(?<![A-Za-zÀ-ỹĐđ])thật(?![A-Za-zÀ-ỹĐđ])(?!\s+ra(?![A-Za-zÀ-ỹĐđ]))
 38.7	kìa
 39.5	trời+ơi;re:^\s*(à|ồ|ôi|ủa|ơ|ối|ô|a)\s*[,!]

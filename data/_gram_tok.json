@@ -590,21 +590,6 @@
 "first": "2-3"
 },
 {
-"id": "7.3",
-"no": 7,
-"li": 6,
-"gi": 3,
-"t": "thứ + 수 — ~번째",
-"re": [
-"(?<!ngôi )(?<![A-Za-zÀ-ỹĐđ])thứ\\s+nhất(?![A-Za-zÀ-ỹĐđ])",
-"(?<![A-Za-zÀ-ỹĐđ])(con|lần|tầng|người|bài|năm|cái|quyển|chương|phần|trang|câu|giải|lớp|hàng|đứa|tuần|học kỳ|ngày thứ)\\s+thứ\\s+(hai|ba|tư|năm|sáu|bảy|tám|chín|mười|mấy|\\d+)(?![A-Za-zÀ-ỹĐđ])"
-],
-"always": false,
-"tok": [],
-"selftest": "4/4",
-"first": "1-10"
-},
-{
 "id": "8.0",
 "no": 8,
 "li": 7,
@@ -780,6 +765,21 @@
 "tok": [],
 "selftest": "5/5",
 "first": "1-4"
+},
+{
+"id": "9.7",
+"no": 9,
+"li": 8,
+"gi": 7,
+"t": "thứ + 수 — ~번째",
+"re": [
+"(?<!ngôi )(?<![A-Za-zÀ-ỹĐđ])thứ\\s+nhất(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(con|lần|tầng|người|bài|năm|cái|quyển|chương|phần|trang|câu|giải|lớp|hàng|đứa|tuần|học kỳ|ngày thứ)\\s+thứ\\s+(hai|ba|tư|năm|sáu|bảy|tám|chín|mười|mấy|\\d+)(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [],
+"selftest": "4/4",
+"first": "1-10"
 },
 {
 "id": "10.0",

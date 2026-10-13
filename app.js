@@ -551,7 +551,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '관련': 'Liên quan', '혀 투명': 'Lưỡi trong suốt', '위아래 벌림': 'Mở dọc', '좌우 벌림': 'Mở ngang', '오므림': 'Tròn môi', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
+  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '관련': 'Liên quan', '문법 상자': 'Hộp ngữ pháp', '상자 밖 문법': 'Ngữ pháp ngoài hộp', '혀 투명': 'Lưỡi trong suốt', '위아래 벌림': 'Mở dọc', '좌우 벌림': 'Mở ngang', '오므림': 'Tròn môi', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -9861,6 +9861,21 @@ function relChips() {
     (g.gram || []).forEach(no => { if (no === me.gram) return; const go = gramGo(no), x = GRAM && GRAM.books[0].bai.find(b => b.no === no); if (go && x) add(tr('문법') + ' ' + no + tr('과') + ' · ' + tr(String(x.t).split(' — ')[0]), go, 'g' + no); });
     (g.life || []).forEach(t => { if (t === me.life) return; const go = lifeGo(t); if (go) add(tr('일상') + ' · ' + tr(t), go, 'l' + t); });
   });
+  // 교재 과 → 그 과 문법 상자 · 상자 밖 문법 · 그 과 발음 부분이 다루는 기본기 (대표님 2026-10-13 "단어 카드 연관에 문법도·기본기도?" → "ㄱㄱ")
+  if (me.main && TLINK && TLINK[me.main]) {
+    const m = /^(\d)권 (\d+)과$/.exec(TLINK[me.main].book || ''), key = m ? m[1] + '-' + m[2] : '', book = TLINK[me.main].book;
+    const ch = GCH && GCH[key];
+    if (ch && GRAM && GTOK) {
+      const cards = ids => (ids || []).map(id => { const t = GTOK.find(z => z.id === id), b = t && GRAM.books[0].bai[t.li];
+        return b && !b.ng ? b.g.find(g => g.t === t.t) : null; }).filter(Boolean);   // 문법 화면에서 숨긴 과·항목(ng)은 뺀다
+      const gramSet = (gs, label) => () => { LCRUMB = label; L = { day: { day: 'X:' + key, theme: label, gram: 1, cardsOnly: 1 }, i: 0, items: gs.map(g => ({ k: 'gram', d: g })) }; drawCard(); show('learn', label, true); };
+      [['문법 상자', ch.box], ['상자 밖 문법', ch.hidden]].forEach(([nm, ids]) => { const gs = cards(ids);
+        if (gs.length) add(book + ' ' + tr(nm) + ' · ' + gs.length, gramSet(gs, book + ' ' + tr(nm)), 'x' + nm); });
+    }
+    // 교재 1권 1~6과 발음(PHÁT ÂM)이 다루는 소리·숫자 — 7과부터는 '새 낱말·문장 따라 읽기'라 잇지 않는다
+    ({ '1-1': ['P1', 'P3', 'P2'], '1-2': ['P1', 'P6', 'P8'], '1-3': ['P4', 'P8'], '1-4': ['P7', 'P3', 'P8'], '1-5': ['P3', 'P5', 'P8'], '1-6': ['P6'] }[key] || []).forEach(k => {
+      const x = ALL.find(y => y.day === k), go = basicGo(k); if (x && go) add(tr('기본기') + ' · ' + tr(x.theme), go, 'b' + k); });
+  }
   // 교재 ↔ 일상 (topic_links)
   if (TLINK && me.life) Object.entries(TLINK).forEach(([title, x]) => { if (x.days.includes(me.life)) { const go = mainLessons(title); if (go) add(tr('교재') + ' ' + x.book + ' · ' + title, go, 'm' + title); } });
   if (TLINK && me.main && TLINK[me.main]) TLINK[me.main].days.forEach(t => { const go = lifeGo(t); if (go) add(tr('일상') + ' · ' + tr(t), go, 'l' + t); });
@@ -9873,6 +9888,7 @@ function drawRelLinks() {
   if (!TLINK) tlinkLoad(() => { if (!$('#learn').hidden) drawRelLinks(); });
   if (!GYBM) gybmBuild(() => { if (!$('#learn').hidden) drawRelLinks(); });
   if (!GRAM) gramEnsure(() => { if (!$('#learn').hidden) drawRelLinks(); });
+  if (!GTOK || !GCH) gramTokLoad().then(() => { if (!$('#learn').hidden && GTOK && GCH && GCH['1-1']) drawRelLinks(); });
   const chips = relChips();
   box.hidden = !chips.length;
   if (!chips.length) return;
