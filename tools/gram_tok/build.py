@@ -121,9 +121,28 @@ for bi, pre in ((0, 's2'), (1, 's3'), (2, 's4'), (5, 'z')):
         ch_map[f"{pre}-{no}"] = {'title': '', 'title_ko': l.get('t', ''), 'items': sorted(set(ids), key=lambda k: (int(k.split('.')[0]), int(k.split('.')[1]))), 'ex': {}}
 # 수업에서 가르치나 교재 대화 글에는 그 과에 없는 문형 — 손으로 더함 (대표님 2026-10-08: "sắp … chưa? 도 7과에서 배우는 중, 시험에 나옴")
 FORCE = {'1-7': ['10.6']}
+# 교재 문법 상자(tools/gram_audit/교재_문법목록.tsv 97항목) → 앱 문형 — 눈으로 맞춘 것 (2026-10-13, 대표님 "각 챕터에서 어떤 문법을 배우는지 파악한 자료에도 들어 있니? 파악 왜 이렇게 못 하니").
+# 규칙(낱말 모양)만으로 만든 지도는 'Rất vui được gặp'(1과)의 được 을 '할 수 있다'로, 'chuẩn bị'(9과)의 bị 를 '당하다'로 세었다 —
+# 그래서 과마다 'box'(그 과 문법 상자에서 배우는 문형)를 따로 두고, 상자 문형은 반드시 그 과 items 에 들어가게 한다. 헷갈리는 짝을 가르는 구별 카드도 같이 넣는다.
+BOX = {
+ '1-1': ['3.0', '3.1', '5.3', '5.0', '4.2', '4.6'], '1-2': ['3.2', '3.3', '5.2', '5.5', '4.7', '4.4'],
+ '1-3': ['3.4', '17.0', '8.0', '9.3', '6.2', '6.0', '28.0', '10.1'], '1-4': ['10.0', '10.3', '12.0', '12.1', '12.3', '5.3', '8.0', '8.1'],
+ '1-5': ['3.5', '10.2', '10.3', '12.2', '12.3', '29.0', '6.1'], '1-7': ['10.4', '10.6', '12.4', '12.6', '6.3', '20.2'],
+ '1-8': ['19.2', '19.3', '19.5', '19.6', '13.4', '15.1', '10.5', '21.0', '22.0', '22.1'], '1-9': ['15.0', '15.1', '11.1', '38.0', '38.3', '11.0'],
+ '1-10': ['27.0', '27.7', '25.0', '25.1', '12.5', '12.6', '38.1', '38.3'], '1-11': ['28.1', '28.4', '31.0', '39.0'], '1-12': ['15.1', '17.6'],
+ '2-1': ['5.1', '11.2', '34.0', '34.1'], '2-2': ['17.4', '17.3', '28.4', '4.8', '33.0', '43.4'], '2-3': ['9.0', '39.0', '35.0', '35.1', '34.3', '38.6', '28.1'],
+ '2-4': ['47.0', '47.1', '36.0', '36.1', '36.2', '28.0', '15.2'], '2-5': ['41.0', '40.1', '40.0'], '2-7': ['9.2', '9.1', '9.3', '21.4', '42.0'],
+ '2-8': ['9.5', '34.5', '34.6', '43.2', '19.6'], '2-9': ['21.1', '37.1', '34.4'], '2-10': ['15.3', '37.0', '28.1', '11.4', '21.3', '32.0', '24.4', '27.1'],
+ '2-11': ['41.1', '6.4', '47.2', '27.3', '16.3'],
+}
+for _k, _ids in BOX.items(): FORCE[_k] = list(dict.fromkeys(FORCE.get(_k, []) + _ids))
+_ids_all = {it['id'] for it in items}
+_bad = [(k, i) for k, v in BOX.items() for i in v if i not in _ids_all]
+if _bad: raise SystemExit(f'BOX 에 없는 문형 번호: {_bad}')
 for _k, _ids in FORCE.items():
     _v = ch_map.get(_k)
     if _v: _v['items'] = sorted(set(_v['items']) | set(_ids), key=lambda k: (int(k.split('.')[0]), int(k.split('.')[1])))
+    if _v and _k in BOX: _v['box'] = BOX[_k]
 # 책마다 '이 과에서 처음 나오는 문형'
 BOOKS = [('1', 12), ('2', 12), ('s1', 7), ('s2', 10), ('s3', 10), ('s4', 10), ('z', None)]
 for pre, n in BOOKS:
@@ -133,6 +152,20 @@ for pre, n in BOOKS:
         v = ch_map.get(f"{pre}-{no}")
         if not v: continue
         v['first'] = [k for k in v['items'] if k not in seen_b]; seen_b.update(v['items'])
+# 상자 문형의 '처음 나오는 과'는 대화에 같은 글자가 먼저 나와도 상자가 있는 과로 (예: 1과 Rất vui được gặp 은 '할 수 있다'가 아님)
+for pre in ('1', '2'):
+    boxed = {}
+    for no in range(1, 13):
+        for k in BOX.get(f'{pre}-{no}', []): boxed.setdefault(k, f'{pre}-{no}')
+    seen_b = set()
+    for no in range(1, 13):
+        key = f'{pre}-{no}'; v = ch_map.get(key)
+        if not v: continue
+        v['first'] = [k for k in v['items'] if k not in seen_b and boxed.get(k, key) == key]
+        seen_b.update(k for k in v['items'] if boxed.get(k, key) == key or int(boxed[k].split('-')[1]) < no)
+    if pre == '1':
+        for it in items:
+            if it['id'] in boxed: it['first'] = boxed[it['id']]
 # ③ 기능어 가운데 어느 규칙에도 안 잡히는 것
 FUNC = ['và', 'nhưng', 'rồi', 'ơi', 'này', 'ấy', 'kia', 'ở', 'thì', 'nữa', 'dạ', 'vâng', 'ừ', 'lúc', 'khi', 'với', 'cho', 'để', 'đâu', 'được', 'rồi', 'hả', 'nhé', 'ạ', 'à', 'thật', 'luôn', 'nhiều', 'ít', 'lắm', 'hay', 'sao', 'vì', 'nên', 'mà', 'còn', 'cũng', 'đều', 'vẫn', 'đang', 'đã', 'sẽ', 'sắp', 'mới', 'vừa', 'chưa', 'xong', 'hơi', 'khá', 'quá', 'rất', 'không', 'chẳng', 'chả', 'có', 'là', 'của', 'bằng', 'từ', 'đến', 'về', 'ra', 'vào', 'lên', 'xuống', 'trên', 'dưới', 'trong', 'ngoài', 'trước', 'sau', 'giữa', 'gần', 'xa', 'bên', 'cạnh', 'đối+diện', 'nếu', 'hãy', 'đừng', 'xin', 'mời', 'cứ', 'phải', 'cần', 'muốn', 'thích', 'biết', 'có+thể', 'định', 'bị', 'hết', 'lại', 'thêm', 'ngay', 'luôn', 'thôi', 'chỉ', 'mỗi', 'mọi', 'tất+cả', 'cả', 'những', 'các', 'mấy', 'bao+nhiêu', 'bao+giờ', 'bao+lâu', 'thế+nào', 'nào', 'gì', 'ai', 'tại+sao', 'vì+sao', 'ở+đâu', 'đấy', 'chứ', 'nhỉ', 'cơ', 'đi', 'nha', 'nhá', 'thế', 'vậy', 'như+vậy', 'như+thế', 'thế+này', 'kìa', 'ơ', 'ồ', 'ôi', 'trời+ơi', 'hình+như', 'chắc', 'có+lẽ', 'chắc+chắn', 'tất+nhiên', 'dĩ+nhiên', 'đúng', 'sai', 'không+sao', 'được+rồi', 'thôi+được', 'càng', 'hơn', 'nhất', 'bằng', 'như', 'giống', 'khác', 'cùng', 'nhau', 'tự', 'giúp', 'nhờ', 'kẻo', 'thử', 'xem', 'coi', 'lần', 'nữa']
 seen = {}

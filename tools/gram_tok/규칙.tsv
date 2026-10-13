@@ -103,9 +103,11 @@
 23.0	muốn
 19.0	biết
 19.1	(nói|biết) _ (một+chút|khá|giỏi|tốt|kém)
-19.2	có+thể;được
+19.2	có+thể;re:(?<=[A-Za-zÀ-ỹĐđ] )(?<!vui )(?<!không )(?<![A-Za-zÀ-ỹĐđ])được(?![A-Za-zÀ-ỹĐđ])(?!\s+(khen|tặng|cho|mời|thưởng|nhận|điểm|giải|nghỉ|gặp|đi\s+chơi|ngủ\s+nướng));re:(?<![A-Za-zÀ-ỹĐđ])không\s+được\s*([.!?,]|$)
 19.3	được+không ?
 19.4	nào+cũng+được
+19.5	biết;có+thể;re:(?<=[A-Za-zÀ-ỹĐđ] )(?<!vui )(?<!không )(?<![A-Za-zÀ-ỹĐđ])được(?![A-Za-zÀ-ỹĐđ])(?!\s+(khen|tặng|cho|mời|thưởng|nhận|điểm|giải|nghỉ|gặp|đi\s+chơi|ngủ\s+nướng));re:(?<![A-Za-zÀ-ỹĐđ])không\s+được\s*([.!?,]|$)
+19.6	re:(?<![A-Za-zÀ-ỹĐđ])không\s+thể(?![A-Za-zÀ-ỹĐđ])(?!\s+không);re:(?<![A-Za-zÀ-ỹĐđ])không(?![A-Za-zÀ-ỹĐđ])(\s+[A-Za-zÀ-ỹĐđ]+){1,3}\s+được(?![A-Za-zÀ-ỹĐđ]);không+được
 20.0	re:(?<![A-Za-zÀ-ỹĐđ])phải(?![A-Za-zÀ-ỹĐđ])(?!\s*(không|là))
 20.1	cần
 20.2	nên
@@ -214,7 +216,7 @@
 39.1	có _ gì+đâu
 39.2	cái+gì+thế (này|kia)
 39.3	(thế+ạ|thế+à|ra+thế|ra+vậy|vậy+à|vậy+ạ)
-40.0	bị;được (khen|tặng|cho|mời|thưởng|nhận|điểm|giải|nghỉ)
+40.0	re:(?<![A-Za-zÀ-ỹĐđ])(?<!chuẩn )(?<!thiết )(?<!dự )(?<!trang )bị(?![A-Za-zÀ-ỹĐđ]);được (khen|tặng|cho|mời|thưởng|nhận|điểm|giải|nghỉ|ngủ|đi|xem|ăn|về|học|làm)
 40.1	(hôm|tuần|tháng|năm|dạo|lâu|bao+lâu|mấy+hôm) nay
 40.2	đỡ
 41.0	(mặc+dù|tuy|dù) _ nhưng
@@ -226,14 +228,14 @@
 42.4	lấy+làm
 43.0	đến+nỗi
 43.1	một+cách
-43.2	không+được _ lắm;không+được
+43.2	không+được _ lắm;không+được (khỏe|tốt|ngon|đẹp|vui|hay|rẻ|đúng|rõ|nhiều|cao|lớn)
 43.3	không _ nào _ như
 43.4	không _ bằng
 44.0	không+thể+không
 44.1	không+tránh+khỏi
-44.2	không+thể _ mà+nếu+không
-44.3	không+thể _ mà+nếu+thiếu
-44.4	không+thể _ (vào+đâu+được|được)
+44.2	không+thể _ nếu+không
+44.3	không+thể _ nếu+thiếu
+44.4	không+chê+vào+đâu+được
 44.5	(nổi|xuể)
 45.0	(chẳng|chả) _ là+gì
 45.1	không+nhằm _ mà+là+để

@@ -10037,7 +10037,7 @@ function drawCard() {
       const dd = el('div', 'gramd');
       if (x.d.use) dd.append(el('div', 'gdrow', '<b>' + esc(tr('쓰임')) + '</b><span>' + x.d.use + '</span>'));
       if (x.d.pos) dd.append(el('div', 'gdrow', '<b>' + esc(tr('자리')) + '</b><span>' + x.d.pos + '</span>'));
-      if (x.d.cmp && x.d.cmp.length) dd.append(el('div', 'gdrow', '<b>' + esc(tr('비교')) + '</b><span>' + x.d.cmp.map(([w, m]) => '<i class="gdw">' + esc(w) + '</i> ' + m).join('<br>') + '</span>'));
+      if (x.d.cmp && x.d.cmp.length) dd.append(el('div', 'gdrow', '<b>' + esc(tr('비교')) + '</b><div>' + x.d.cmp.map(([w, m]) => '<p class="gdc"><i class="gdw">' + esc(w) + '</i> ' + m + '</p>').join('') + '</div>'));
       if (x.d.warn) dd.append(el('div', 'gdrow gdwarn', '<b>' + esc(tr('주의')) + '</b><span>' + x.d.warn + '</span>'));
       c.append(dd);
     }
