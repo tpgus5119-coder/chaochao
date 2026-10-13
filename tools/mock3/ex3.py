@@ -65,13 +65,13 @@ q += B4S(NO, [("Gia đình chị có mấy người?", "가족이 몇 명이에�
 q += [C1("Gia đình tôi có bốn người.", "우리 가족은 네 명이에요.", ["có", "gia đình", "bốn người", "tôi"]),
       C1("Em gái tôi là con út.", "제 여동생은 막내예요.", ["con út", "là", "em gái", "tôi"]),
       C1("Chúng tôi cùng đi thăm ông bà.", "우리는 함께 조부모님을 뵈러 가요.", ["ông bà", "chúng tôi", "đi thăm", "cùng"]),
-      C1("Nhà anh ấy khá xa.", "그의 집은 꽤 멀어요.", ["khá", "nhà", "xa", "anh ấy"]),
+      C1("Anh về nhà sớm đi!", "일찍 집에 가세요!", ["đi", "anh", "sớm", "về nhà"]),   # 문장 끝 đi — 8과 (대표님 2026-10-13)
       C1("Anh trai tôi còn độc thân.", "제 오빠는 아직 미혼이에요.", ["độc thân", "anh trai", "còn", "tôi"])]
 q += [C2("Hai chị em tôi tuổi cùng.", "Hai chị em tôi cùng tuổi.", "우리 자매는 동갑이에요. (cùng tuổi 차례)", ["Hai chị em tôi bằng tuổi nhau."]),
       C2("Anh ấy có đông khá anh em.", "Anh ấy có khá đông anh em.", "그는 형제가 꽤 많아요. (khá 는 형용사 앞)"),
       C2("Tôi là con thứ hai trong gia đình.", "Tôi là con thứ hai trong gia đình.", "저는 집에서 둘째예요.", dung=True),
       C2("Chị ấy nhỏ tôi hơn hai tuổi.", "Chị ấy nhỏ hơn tôi hai tuổi.", "그녀는 저보다 두 살 어려요. (nhỏ hơn + 사람 + 나이)"),
-      C2("Có chứ, tôi có hai em trai.", "Có chứ, tôi có hai em trai.", "있죠, 남동생이 둘 있어요.", dung=True)]
+      C2("Chị đừng lo, em sẽ đón bà ngoại.", "Chị đừng lo, em sẽ đón bà ngoại.", "걱정 마세요, 제가 외할머니를 마중할게요.", dung=True)]   # đừng — 8과
 q.append(C3("mock3-3-w3.webp",
             [("Gia đình này có năm người.", "이 가족은 다섯 명이에요."), ("Ông bà đang ngồi.", "할아버지와 할머니가 앉아 계세요."),
              ("Bố đang ngồi với ông bà.", "아버지는 조부모님과 함께 앉아 있어요."), ("Mẹ và bé Na đang đứng.", "엄마와 나는 서 있어요."), ("Họ đang ở công viên.", "그들은 공원에 있어요.")],

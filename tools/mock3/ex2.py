@@ -64,7 +64,7 @@ q += B4S(NO, [("Bao giờ anh đi Hà Nội?", "언제 하노이에 가요?", "T
               ("Chúng ta đi bằng xe lửa hay máy bay?", "우리 기차로 가요, 비행기로 가요?", "Đi bằng xe lửa nhé, rẻ hơn.", "기차로 가요, 더 싸요.")])
 q += [C1("Bao giờ chị đi Nha Trang?", "언제 나트랑에 가요?", ["đi", "bao giờ", "Nha Trang", "chị"], ["Chị đi Nha Trang bao giờ?"]),
       C1("Chị ấy nấu ăn xong rồi.", "그녀는 요리를 다 했어요.", ["xong", "chị ấy", "rồi", "nấu ăn"]),
-      C1("Hôm qua là thứ tư.", "어제는 수요일이었어요.", ["thứ tư", "là", "hôm qua"], ["Thứ tư là hôm qua."]),
+      C1("Chị đừng đến muộn nhé.", "늦게 오지 마세요.", ["đừng", "chị", "nhé", "đến muộn"]),   # đừng — 8과 (대표님 2026-10-13)
       C1("Anh ấy đã đi công tác chưa?", "그는 출장을 갔어요?", ["chưa", "anh ấy", "đi công tác", "đã"]),
       C1("Chủ nhật tuần trước là sinh nhật tôi.", "지난주 일요일이 제 생일이었어요.", ["sinh nhật", "chủ nhật", "là", "tôi", "tuần trước"], ["Sinh nhật tôi là chủ nhật tuần trước."])]
 q += [C2("Chị ấy đã gọi điện thoại cho khách hàng rồi chưa?", "Chị ấy đã gọi điện thoại cho khách hàng chưa?", "그녀는 고객에게 전화했어요? (rồi 와 chưa 를 함께 쓰지 않는다)", ["Chị ấy gọi điện thoại cho khách hàng chưa?"]),

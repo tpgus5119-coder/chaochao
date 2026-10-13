@@ -886,14 +886,14 @@
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Nhà anh ấy khá xa.",
+   "vi": "Anh về nhà sớm đi!",
    "tiles": [
-    "khá",
-    "nhà",
-    "xa",
-    "anh ấy"
+    "đi",
+    "anh",
+    "sớm",
+    "về nhà"
    ],
-   "exp": "Nhà anh ấy khá xa.\n그의 집은 꽤 멀어요."
+   "exp": "Anh về nhà sớm đi!\n일찍 집에 가세요!"
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",
@@ -961,16 +961,16 @@
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
    "k": "type",
-   "prompt": "Có chứ, tôi có hai em trai.",
+   "prompt": "Chị đừng lo, em sẽ đón bà ngoại.",
    "acc": [
     "Đúng",
     "Đ",
-    "Có chứ, tôi có hai em trai."
+    "Chị đừng lo, em sẽ đón bà ngoại."
    ],
-   "fix": "Có chứ, tôi có hai em trai.",
-   "ko": "있죠, 남동생이 둘 있어요.",
+   "fix": "Chị đừng lo, em sẽ đón bà ngoại.",
+   "ko": "걱정 마세요, 제가 외할머니를 마중할게요.",
    "dung": true,
-   "exp": "Có chứ, tôi có hai em trai.\n답: Đúng\nCó chứ, tôi có hai em trai. — 있죠, 남동생이 둘 있어요."
+   "exp": "Chị đừng lo, em sẽ đón bà ngoại.\n답: Đúng\nChị đừng lo, em sẽ đón bà ngoại. — 걱정 마세요, 제가 외할머니를 마중할게요."
   },
   {
    "sec": "C 쓰기 · 3 그림 보고 5문장",
