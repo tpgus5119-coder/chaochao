@@ -9,6 +9,7 @@
   · 대화 목소리를 번갈아 — 문항마다 여→남 / 남→여 를 바꾸고(x['voices']), 물음과 대답 사이 1초(dialog_audio3.py).
 2차 시험지 사진(2026-10-13)을 보고 더 맞춘 것: 읽기 4 를 2차 꼴(대답 목록 + 먼저 하는 말, 평서문 섞음)으로 · 듣기 4 빈칸에 두 음절 말·숫자 · 듣기 2 는 한 사람의 장면 그림 · 쓰기 3 그림에 이름표·간판 · 말하기는 교재 발음 목록(8~10과 PHÁT ÂM)에서.
 낱말은 교재 1권 1~10과 안(ch110_words.json — 1~7과는 주간시험 2 의 ch17_words, 8~10과는 앱 교재 낱말·부록 낱말표), 8~10과 위주.
+**빌드 입구는 tools/mock3/mix.py** — ex1~ex5 는 재료일 뿐, mix.py 가 벌 사이를 고르게 섞어 data/mock3_N.json 을 쓴다(2026-10-13 밤, 대표님 "같은 회차 모의고사 사이에 차별점 두지 마라").
 문항마다 뜻(ko)을 같이 적어 '답 보기' 해설을 만든다(주간시험 2 의 ko_N.tsv 를 따로 두지 않음)."""
 import json, re, random, collections, pathlib, sys, unicodedata as U
 R = pathlib.Path(__file__).resolve().parent.parent.parent
