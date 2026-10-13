@@ -1094,22 +1094,44 @@ const sibToneOf = s => {
 /* 성조 부호 자리만 다른 표기(hòa/hoà)는 같은 단어로 본다 */
 const sibKey = s => stripTone(s) + '|' + sibToneOf(s);
 const sibBase = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
-/* 비슷한 소리·모양 단어 (대표님 지시 2026-09-27: "o·u·d 만 넣지 말고 비슷한 건 다") —
-   음절을 [첫 자음][모음][받침]+성조로 쪼개어, 한 부분만 헷갈리기 쉬운 짝으로 바꿔 본다. 성조는 그대로 둔다.
-   바꾼 결과가 sib.json 에 있는 진짜 음절일 때만 보여 준다(없는 글자는 안 나온다). */
+/* 비슷한 소리·모양 단어 (대표님 지시 2026-09-27: "o·u·d 만 넣지 말고 비슷한 건 다" · 2026-10-13: "tr-th, b-v 등등 모양 비슷한 것 모두 — 성조 같고 다르고 모두") —
+   음절을 [첫 자음][모음][받침]+성조로 쪼개어, 한 부분만 헷갈리기 쉬운 짝으로 바꿔 본다. 바꾼 결과가 sib.json 에 있는 진짜 음절일 때만 보여 준다.
+   짝의 범주는 **규칙**으로 정한다(보기만 넣지 않는다):
+     ① 글자 하나만 다른 것 — 한 글자를 더하거나 빼거나 바꿈: t·th·tr, c·ch, n·nh·ng, g·gh·gi, ng·ngh, p·ph, ch·kh·nh·th·ph·gh(h 앞 글자만 다름), m·n·ng·nh(받침)…
+     ② 생김새가 비슷한 글자를 바꾼 것 — b·d·p, d·đ, m·n, n·h, b·h, i·y, o·ô·ơ, a·ă·â, u·ư, e·ê
+     ③ 소리가 같거나 비슷해 헷갈리는 것 — 북부에서 같은 소리 d·gi·r, s·x, ch·tr, c·k·qu, g·gh, ng·ngh / 학습자가 헷갈리는 t·th, đ·d·t, b·v, l·n, kh·h·k, n·ng·nh, o·u, e·a·i, 같은 자리 받침 m·p, n·t, ng·c, nh·ch
+   성조는 같은 것을 앞에, 다른 것을 뒤에 보인다(2026-10-13 전엔 같은 성조만). */
 const SIB_SYL = /^(ngh|ng|nh|ph|th|tr|ch|gh|gi|kh|qu|[bcdđghklmnpqrstvx])?([aăâeêioôơuưy]+)(ch|c|ng|nh|n|m|p|t)?$/;
 function sibParse(s) {
   const m = SIB_SYL.exec(stripTone(s.toLowerCase()));
   return m ? { i: m[1] || '', v: m[2], f: m[3] || '', t: sibToneOf(s) } : null;
 }
-const sibPairMap = pairs => { const m = {}; pairs.forEach(([a, b]) => { (m[a] = m[a] || new Set()).add(b); (m[b] = m[b] || new Set()).add(a); }); return m; };
-const SIB_VOW = sibPairMap([['a', 'ă'], ['a', 'â'], ['ă', 'â'], ['e', 'ê'], ['ê', 'i'], ['e', 'i'], ['i', 'y'], ['o', 'ô'], ['o', 'ơ'], ['ô', 'ơ'],
-                            ['u', 'ư'], ['o', 'u'], ['ô', 'u'], ['ơ', 'ư'], ['â', 'ơ'], ['a', 'o'], ['e', 'a']]);
-const SIB_VGRP = [['ia', 'iê', 'yê', 'ya'], ['ua', 'uô'], ['ưa', 'ươ'], ['uy', 'ui'], ['oa', 'ua'], ['ai', 'ay'], ['ao', 'au'], ['âu', 'ao'], ['ây', 'ai']];
-const SIB_INI = sibPairMap([['ch', 'tr'], ['s', 'x'], ['d', 'gi'], ['d', 'r'], ['gi', 'r'], ['d', 'đ'], ['l', 'n'], ['n', 'nh'], ['ng', 'nh'], ['ng', 'n'],
-                            ['kh', 'h'], ['kh', 'c'], ['kh', 'k'], ['t', 'th'], ['t', 'đ'], ['t', 'tr'], ['c', 'k'], ['c', 'q'], ['g', 'gh'], ['ng', 'ngh'],
-                            ['b', 'd'], ['b', 'đ'], ['b', 'p'], ['b', 'v'], ['m', 'n'], ['b', 'm'], ['ph', 'b'], ['th', 'kh'], ['x', 'ch'], ['', 'h'], ['g', 'ng']]);
-const SIB_FIN = sibPairMap([['n', 'ng'], ['ng', 'nh'], ['n', 'nh'], ['n', 'm'], ['t', 'c'], ['c', 'ch'], ['t', 'ch'], ['p', 't'], ['m', 'p'], ['', 'n'], ['', 'ng'], ['', 'nh'], ['', 'm'], ['', 'c'], ['', 't']]);
+const sibPairMap = pairs => { const m = {}; pairs.forEach(([a, b]) => { if (a === b) return; (m[a] = m[a] || new Set()).add(b); (m[b] = m[b] || new Set()).add(a); }); return m; };
+/* ① 글자 하나 차이 — 더하기·빼기·바꾸기 가운데 하나. 한 글자짜리끼리의 바꾸기는 ②③ 목록으로만(모든 글자가 서로 '한 글자 차이'가 되어 버리므로) */
+const sibEdit1 = (a, b) => {
+  if (a === b) return false;
+  if (Math.abs(a.length - b.length) === 1) { const [s, l] = a.length < b.length ? [a, b] : [b, a]; for (let i = 0; i < l.length; i++) if (l.slice(0, i) + l.slice(i + 1) === s) return true; return false; }
+  if (a.length !== b.length || a.length < 2) return false;
+  let d = 0; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) d++; return d === 1;
+};
+const sibAllPairs = (list, extra) => { const out = []; list.forEach((a, i) => list.slice(i + 1).forEach(b => { if (a && b && sibEdit1(a, b)) out.push([a, b]); })); return out.concat(extra); };   // 첫 자음 없음('')은 ③의 h 짝만 — 안 그러면 an 이 ban·can·dan… 전부와 짝이 된다
+const SIB_INIS = ['', 'b', 'c', 'ch', 'd', 'đ', 'g', 'gh', 'gi', 'h', 'k', 'kh', 'l', 'm', 'n', 'ng', 'ngh', 'nh', 'p', 'ph', 'qu', 'r', 's', 't', 'th', 'tr', 'v', 'x'];
+const SIB_INI = sibPairMap(sibAllPairs(SIB_INIS, [
+  ['b', 'd'], ['b', 'p'], ['d', 'p'], ['d', 'đ'], ['m', 'n'], ['n', 'h'], ['b', 'h'],                                   // ② 생김새
+  ['ch', 'tr'], ['s', 'x'], ['d', 'gi'], ['d', 'r'], ['gi', 'r'], ['c', 'k'], ['c', 'qu'], ['k', 'qu'], ['g', 'gh'], ['ng', 'ngh'],   // ③ 북부 같은 소리
+  ['t', 'th'], ['đ', 't'], ['b', 'v'], ['l', 'n'], ['kh', 'h'], ['kh', 'c'], ['kh', 'k'], ['n', 'ng'], ['n', 'nh'], ['ng', 'nh'], ['b', 'm'], ['ph', 'b'], ['ph', 'v'], ['th', 'kh'], ['', 'h'], ['g', 'ng'], ['tr', 't']]));
+const SIB_VOW = sibPairMap([['a', 'ă'], ['a', 'â'], ['ă', 'â'], ['e', 'ê'], ['o', 'ô'], ['o', 'ơ'], ['ô', 'ơ'], ['u', 'ư'], ['i', 'y'],   // ② 모자·생김새
+                            ['ê', 'i'], ['e', 'i'], ['o', 'u'], ['ô', 'u'], ['ơ', 'ư'], ['â', 'ơ'], ['a', 'o'], ['e', 'a'], ['ô', 'ê'], ['â', 'ê']]);   // ③ 소리
+/* 겹모음끼리 — 같은 소리로 적는 짝(ia·iê·yê·ya …)과, 한 자리만 ②③ 모음 짝으로 바뀐 것(ai·ay, ao·au, oi·ôi·ơi, uôi·ươi …)은 규칙으로 */
+const SIB_VGRP = [['ia', 'iê', 'yê', 'ya'], ['ua', 'uô'], ['ưa', 'ươ'], ['uy', 'ui'], ['oa', 'ua'], ['iêu', 'yêu'], ['uyê', 'uya'], ['uơ', 'ươ'], ['oe', 'uê'], ['uâ', 'uây']];
+const sibVowNear = v => { const out = new Set();
+  [...v].forEach((ch, x) => (SIB_VOW[ch] || []).forEach(c => out.add(v.slice(0, x) + c + v.slice(x + 1))));
+  SIB_VGRP.forEach(g => { if (g.includes(v)) g.forEach(c => c !== v && out.add(c)); });
+  out.delete(v); return out; };
+const SIB_FINS = ['', 'm', 'n', 'ng', 'nh', 'p', 't', 'c', 'ch'];
+const SIB_FIN = sibPairMap(sibAllPairs(SIB_FINS, [['m', 'n'], ['m', 'ng'], ['m', 'nh'], ['p', 't'], ['p', 'c'], ['p', 'ch'], ['t', 'c'], ['t', 'ch'],   // 콧소리끼리·막힌 소리끼리
+                                                   ['m', 'p'], ['n', 't'], ['ng', 'c'], ['nh', 'ch'],                                            // 같은 자리
+                                                   ['', 'n'], ['', 'ng'], ['', 'nh'], ['', 'm'], ['', 'c'], ['', 't'], ['', 'p'], ['', 'ch']]));
 let SIB_IDX = null;
 function sibIndex(j) {
   SIB_IDX = new Map();
@@ -1121,24 +1143,21 @@ function sibIndex(j) {
     (SIB_IDX.get(k) || SIB_IDX.set(k, []).get(k)).push(w);
   });
 }
-/* 단어 s 에서 한 부분만 바꾼 진짜 음절들 — {v: 모음, i: 첫 자음, f: 받침} 각각 배열 */
+/* 단어 s 에서 한 부분만 바꾼 진짜 음절들 — {v: 모음, i: 첫 자음, f: 받침} 각각 배열. 성조가 같은 것 → 다른 것, 그 안에서 앱 낱말 → 사전 낱말 차례 */
 function sibNear(s, exclude) {
   const p = sibParse(s), out = { v: [], i: [], f: [] };
   if (!p || !SIB_IDX) return out;
-  const seen = new Set([s]);
-  const grab = (kind, i, v, f) => {
-    (SIB_IDX.get(i + '|' + v + '|' + f + '|' + p.t) || []).forEach(w => {
+  const seen = new Set([s]), same = new Set();
+  const grab = (kind, i, v, f) => SIB_T.forEach(t => {
+    (SIB_IDX.get(i + '|' + v + '|' + f + '|' + t) || []).forEach(w => {
       if (seen.has(w) || (exclude && exclude(w))) return;
-      seen.add(w); out[kind].push(w);
+      seen.add(w); out[kind].push(w); if (t === p.t) same.add(w);
     });
-  };
-  const vs = new Set();
-  [...p.v].forEach((ch, x) => (SIB_VOW[ch] || []).forEach(c => vs.add(p.v.slice(0, x) + c + p.v.slice(x + 1))));
-  SIB_VGRP.forEach(g => { if (g.includes(p.v)) g.forEach(c => c !== p.v && vs.add(c)); });
-  vs.forEach(v => grab('v', p.i, v, p.f));
+  });
+  sibVowNear(p.v).forEach(v => grab('v', p.i, v, p.f));
   (SIB_INI[p.i] || []).forEach(i => grab('i', i, p.v, p.f));
   (SIB_FIN[p.f] || []).forEach(f => grab('f', p.i, p.v, f));
-  const rank = w => (SIB.w[w] && SIB.w[w].p ? 0 : 1);
+  const rank = w => (same.has(w) ? 0 : 2) + (SIB.w[w] && SIB.w[w].p ? 0 : 1);
   Object.keys(out).forEach(k => out[k].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b, 'vi')));
   return out;
 }
@@ -1347,9 +1366,9 @@ function pairPanel(vi, opt) {
       if (F) {
         if (F.tf) body.append(section('성조만 다른 단어', '글자는 같고 높낮이만 다름', F.tf, F.s, 'tone'));
         if (F.sf) body.append(section('모양이 조금 다른 글자', '성조는 같음', F.sf, F.s, 'shape'));
-        if (F.vf) body.append(section('모음이 비슷한 단어', 'o·u · ô·ơ · a·ă·â · e·ê·i 처럼 모음만 바뀜', F.vf, F.s, 'sim'));
-        if (F.if_) body.append(section('첫 자음이 비슷한 단어', 'ch·tr · s·x · d·gi·r · l·n · d·đ 처럼 첫소리만 바뀜', F.if_, F.s, 'sim'));
-        if (F.ff) body.append(section('받침이 비슷한 단어', 'n·ng·nh · t·c·ch · m·p 처럼 받침만 바뀜', F.ff, F.s, 'sim'));
+        if (F.vf) body.append(section('모음이 비슷한 단어', 'o·u · ô·ơ · a·ă·â · e·ê·i · ai·ay 처럼 모음만 바뀜 — 성조 같은 것 먼저', F.vf, F.s, 'sim'));
+        if (F.if_) body.append(section('첫 자음이 비슷한 단어', 't·th·tr · ch·tr · b·v · s·x · d·gi·r · l·n · d·đ 처럼 첫소리만 바뀜 — 성조 같은 것 먼저', F.if_, F.s, 'sim'));
+        if (F.ff) body.append(section('받침이 비슷한 단어', 'n·ng·nh · t·c·ch · m·p 처럼 받침만 바뀜 — 성조 같은 것 먼저', F.ff, F.s, 'sim'));
         if (F.kf) body.append(section('비슷하게 생긴 다른 글자', '글자 모양·성조가 모두 다름', F.kf, F.s, 'skel'));
         const tn = F.tf ? F.tf.map(x => sibToneOf(x)) : [];
         if (tn.includes('hỏi') && tn.includes('ngã'))
