@@ -11,7 +11,7 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(R / "tools"))
 from vi_kr import word as vi_kr  # noqa: E402
 SRC = pathlib.Path.home() / "짜오짜오/원본자료/베트남어 학습자료/22기 자료"
-DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/5', '10/6', '10/7', '10/8', '10/9']      # 시험 날짜들 (2026-10-05 대표님: 10/2 다음 시험은 10/5 — 11회 두 반 다 10/5, 12회 10/6) (일요일 9/27 없음)
+DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/5', '10/6', '10/7', '10/8', '10/9', '10/13']      # 시험 날짜들 (2026-10-05 대표님: 10/2 다음 시험은 10/5 — 11회 두 반 다 10/5, 12회 10/6) (일요일 9/27 없음)
 nfc = lambda s: unicodedata.normalize('NFC', s)
 def bare(s):
     s = unicodedata.normalize('NFD', nfc(s).lower().replace('đ', 'd'))
@@ -29,7 +29,7 @@ DIRS = {'b15': ('to_ko', {'buồn', 'bán', 'bận', 'bật', 'chậm', 'cười
 OVR = {('b1', 'tắc xi'): 'to_ko', ('a12', 'nên'): 'to_ko'}   # a12 '39 Nên (단독)' — 뒤 괄호 때문에 못 읽음   # 시험지 'Taxi'(베트남어 칸) — 앱 표제어는 tắc xi 라 글자로 못 찾는다
 # 문장 속 이름(한국·영어 이름·약자)은 베트남어 읽기 규칙으로 읽으면 이상해진다('Seung Bin' → 쌔우 빈) — 발음 칸에서만 바로잡는다
 NAME_KR = {'Seung Bin': '승빈', 'Yeo Jeong': '여정', 'Eun Ji': '은지', 'GYBM': '지와이비엠', 'Brian': '브라이언', 'David': '데이비드',
-           'James': '제임스', 'Kate': '케이트', 'BJ': '비제이', 'WP': '더블유피', 'MJ': '엠제이', 'Seoul': '서울'}
+           'James': '제임스', 'Kate': '케이트', 'BJ': '비제이', 'WP': '더블유피', 'MJ': '엠제이', 'Seoul': '서울', 'Sang-hyeon': '상현'}
 def kr_of(vi):
     """이름이 없으면 vi_kr 그대로. 있으면 낱말마다 읽되 이름 자리는 NAME_KR 로 — vi_kr 은 이름을 빈 글자로 읽어 통째 치환하면 번진다"""
     if not any(n in vi for n in NAME_KR): return vi_kr(vi)
@@ -85,7 +85,7 @@ def main():
             return OVR.get((key, vi), 'to_vi')
         words = []
         for w in d['words']:
-            words.append({k: w[k] for k in ('vi', 'ko', 'kr_read', 'img', 'ex') if k in w} | {"dir": direction(w['vi'])})
+            words.append({k: w[k] for k in ('vi', 'ko', 'kr_read', 'img', 'ex', 'alt') if k in w} | {"dir": direction(w['vi'])})
         if sum(x['dir'] == 'to_ko' for x in words) >= 0.85 * len(words):
             for x in words: x['dir'] = 'to_ko'
         if key in DIRS:
