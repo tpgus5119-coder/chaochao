@@ -586,6 +586,21 @@
 "first": "2-3"
 },
 {
+"id": "7.3",
+"no": 7,
+"li": 6,
+"gi": 3,
+"t": "thứ + 수 — ~번째",
+"re": [
+"(?<!ngôi )(?<![A-Za-zÀ-ỹĐđ])thứ\\s+nhất(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(con|lần|tầng|người|bài|năm|cái|quyển|chương|phần|trang|câu|giải|lớp|hàng|đứa|tuần|học kỳ|ngày thứ)\\s+thứ\\s+(hai|ba|tư|năm|sáu|bảy|tám|chín|mười|mấy|\\d+)(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [],
+"selftest": "4/4",
+"first": "1-10"
+},
+{
 "id": "8.0",
 "no": 8,
 "li": 7,
@@ -744,6 +759,21 @@
 ],
 "selftest": "4/4",
 "first": "1-8"
+},
+{
+"id": "9.6",
+"no": 9,
+"li": 8,
+"gi": 6,
+"t": "nhiều · ít — 많은 · 적은 / 많이 · 조금",
+"re": [
+"(?<!một )(?<!số )(?<![A-Za-zÀ-ỹĐđ])nhiều(?![A-Za-zÀ-ỹĐđ])",
+"(?<!một )(?<!số )(?<![A-Za-zÀ-ỹĐđ])ít(?![A-Za-zÀ-ỹĐđ])(?!\\s+(khi|nhất)(?![A-Za-zÀ-ỹĐđ]))"
+],
+"always": false,
+"tok": [],
+"selftest": "5/5",
+"first": "1-4"
 },
 {
 "id": "10.0",
@@ -1095,6 +1125,20 @@
 "first": null
 },
 {
+"id": "12.8",
+"no": 12,
+"li": 11,
+"gi": 8,
+"t": "thật · thật là — 정말",
+"re": [
+"(?<!sự )(?<![A-Za-zÀ-ỹĐđ])thật(?![A-Za-zÀ-ỹĐđ])(?!\\s+ra(?![A-Za-zÀ-ỹĐđ]))"
+],
+"always": false,
+"tok": [],
+"selftest": "4/4",
+"first": "2-10"
+},
+{
 "id": "13.0",
 "no": 13,
 "li": 12,
@@ -1268,6 +1312,21 @@
 "tok": [],
 "selftest": "3/3",
 "first": null
+},
+{
+"id": "14.6",
+"no": 14,
+"li": 13,
+"gi": 6,
+"t": "hiện nay · trước đây · gần đây · hồi nãy · sau này — 지금·예전·요즘·아까·나중",
+"re": [
+"(?:(?<![A-Za-zÀ-ỹĐđ])hiện\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hiện\\s+tại(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])trước\\s+đây(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hồi\\s+nãy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])lúc\\s+nãy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ban\\s+nãy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])sau\\s+này(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngày\\s+xưa(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hồi\\s+trước(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạo\\s+gần\\s+đây(?![A-Za-zÀ-ỹĐđ]))",
+"^\\s*gần đây\\s*,?\\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó)(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [],
+"selftest": "5/5",
+"first": "1-3"
 },
 {
 "id": "15.0",
@@ -2108,6 +2167,23 @@
 "first": "2-5"
 },
 {
+"id": "22.7",
+"no": 22,
+"li": 21,
+"gi": 7,
+"t": "xin + 동사 — 공손하게 ~하다",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])xin(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])tự\\s+giới\\s+thiệu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])giới\\s+thiệu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mời(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cảm\\s+ơn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chúc(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hỏi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cho\\s+phép(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gửi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])trình\\s+bày(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])báo(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])được(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nhắc(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thông\\s+báo(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đợi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chờ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])lưu\\s+ý(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chia\\s+buồn(?![A-Za-zÀ-ỹĐđ]))"
+],
+"always": false,
+"tok": [
+"xin",
+"tự giới thiệu"
+],
+"selftest": "4/4",
+"first": "1-1"
+},
+{
 "id": "23.0",
 "no": 23,
 "li": 22,
@@ -2218,6 +2294,24 @@
 "first": "1-4"
 },
 {
+"id": "23.7",
+"no": 23,
+"li": 22,
+"gi": 7,
+"t": "bắt đầu · tiếp tục · cố gắng · thôi + 동사 — 시작·계속·노력·그만",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])(bắt đầu|tiếp tục|cố gắng)\\s+(?!(lúc|từ|vào|rồi|nhé|nhá|nha|nào|à|mà|và|thì|khi|năm|ngày|tháng|tuần|hôm|sáng|chiều|tối|lên|đi\\s*[.!?]?\\s*$)(?![A-Za-zÀ-ỹĐđ]))[A-Za-zÀ-ỹĐđ]",
+"(?<![A-Za-zÀ-ỹĐđ])thôi(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])hút\\s+thuốc(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])học(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])làm\\s+việc(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])việc(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])uống\\s+rượu(?![A-Za-zÀ-ỹĐđ]))"
+],
+"always": false,
+"tok": [
+"thôi",
+"hút thuốc"
+],
+"selftest": "4/4",
+"first": "2-4"
+},
+{
 "id": "24.0",
 "no": 24,
 "li": 23,
@@ -2312,6 +2406,35 @@
 ],
 "selftest": "3/3",
 "first": null
+},
+{
+"id": "24.6",
+"no": 24,
+"li": 23,
+"gi": 6,
+"t": "mời · nhờ · bảo · khuyên + 사람 + 동사 — ~하자고·해 달라고·하라고",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])(mời|nhờ|bảo|khuyên)\\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó)(?![A-Za-zÀ-ỹĐđ])(?!\\s+(ấy\\s+)?mà(?![A-Za-zÀ-ỹĐđ]))\\s+[A-Za-zÀ-ỹĐđ]"
+],
+"always": false,
+"tok": [],
+"selftest": "4/4",
+"first": "1-5"
+},
+{
+"id": "24.7",
+"no": 24,
+"li": 23,
+"gi": 7,
+"t": "làm cho · khiến + 사람 + 형용사/동사 — ~하게 만들다",
+"re": [
+"(?<!cầu )(?<![A-Za-zÀ-ỹĐđ])khiến(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])làm\\s+(cho\\s+)?([A-Za-zÀ-ỹĐđ]+\\s+){1,3}?(vui|buồn|lo|lo lắng|ngạc nhiên|mệt|sợ|nhớ|thích|cười|khóc|giận|bực|bực mình|hạnh phúc|thất vọng|xấu hổ|cảm động|khó chịu|thoải mái|yên tâm|hiểu|đau|chán|thú vị|bất ngờ|quan tâm)(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [],
+"selftest": "4/4",
+"first": "2-12"
 },
 {
 "id": "25.0",
@@ -2456,6 +2579,41 @@
 "first": "2-2"
 },
 {
+"id": "26.3",
+"no": 26,
+"li": 25,
+"gi": 3,
+"t": "nghe nói — 듣자 하니 ~래요",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])nghe\\s+nói(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [
+"nghe nói"
+],
+"selftest": "4/4",
+"first": "1-8"
+},
+{
+"id": "26.4",
+"no": 26,
+"li": 25,
+"gi": 4,
+"t": "nói · nghĩ · thấy · biết + là / rằng + 문장 — ~라고",
+"re": [
+"(?:(?<![A-Za-zÀ-ỹĐđ])nói(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nghĩ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thấy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])biết(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hy\\s+vọng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hi\\s+vọng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tin(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nhớ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bảo(?![A-Za-zÀ-ỹĐđ]))\\s+(?:(?<![A-Za-zÀ-ỹĐđ])là(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])rằng(?![A-Za-zÀ-ỹĐđ]))",
+"(?<![A-Za-zÀ-ỹĐđ])rằng(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [
+"nói",
+"là",
+"rằng"
+],
+"selftest": "5/5",
+"first": "1-11"
+},
+{
 "id": "27.0",
 "no": 27,
 "li": 26,
@@ -2579,6 +2737,44 @@
 ],
 "selftest": "3/3",
 "first": "1-10"
+},
+{
+"id": "27.8",
+"no": 27,
+"li": 26,
+"gi": 8,
+"t": "nhưng — 하지만, 그런데",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])nhưng(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [
+"nhưng"
+],
+"selftest": "4/4",
+"first": "1-3"
+},
+{
+"id": "27.9",
+"no": 27,
+"li": 26,
+"gi": 9,
+"t": "tuy nhiên · hơn nữa · đặc biệt · chẳng hạn như · thật ra — 글 잇는 말",
+"re": [
+"(?:(?<![A-Za-zÀ-ỹĐđ])tuy\\s+nhiên(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chẳng\\s+hạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thật\\s+ra(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thực\\s+ra(?![A-Za-zÀ-ỹĐđ]))",
+"^\\s*(?<![A-Za-zÀ-ỹĐđ])hơn\\s+nữa(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])đặc\\s+biệt\\s+là(?![A-Za-zÀ-ỹĐđ])",
+"^\\s*(?<![A-Za-zÀ-ỹĐđ])đặc\\s+biệt(?![A-Za-zÀ-ỹĐđ])\\s*,"
+],
+"always": false,
+"tok": [
+"tuy nhiên",
+"hơn nữa",
+"đặc biệt là",
+"đặc biệt"
+],
+"selftest": "4/5",
+"first": "2-8"
 },
 {
 "id": "28.0",
@@ -2767,7 +2963,7 @@
 "t": "để làm gì? — 뭐 하러?",
 "re": [
 "(?<![A-Za-zÀ-ỹĐđ])để\\s+làm\\s+gì(?![A-Za-zÀ-ỹĐđ])",
-"(?<=[A-Za-zÀ-ỹĐđ] )(?<!nam )(?<!lan )để(?![A-Za-zÀ-ỹĐđ])(?!\\s+(tôi|em|anh|chị|mình|cuốn|cái|quyển|nó|dành))"
+"(?<=[A-Za-zÀ-ỹĐđ] )(?:(?<=việt nam )|(?<!nam ))(?<!lan )để(?![A-Za-zÀ-ỹĐđ])(?!\\s+(tôi|em|anh|chị|mình|cuốn|cái|quyển|nó|dành))"
 ],
 "always": false,
 "tok": [],
@@ -3417,6 +3613,28 @@
 "first": null
 },
 {
+"id": "37.6",
+"no": 37,
+"li": 36,
+"gi": 6,
+"t": "không … gì / ai / đâu (cả) · chẳng — 아무것도·아무도·아무 데도",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])không(?![A-Za-zÀ-ỹĐđ]).*?(?:(?<![A-Za-zÀ-ỹĐđ])gì(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ai(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đâu(?![A-Za-zÀ-ỹĐđ]))\\s+(?<![A-Za-zÀ-ỹĐđ])cả(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])không\\s+ai(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])chẳng(?![A-Za-zÀ-ỹĐđ])(?!\\s+(hạn|lẽ)(?![A-Za-zÀ-ỹĐđ]))",
+"(?<![A-Za-zÀ-ỹĐđ])không\\s+(?!có gì\\s*[.!]?\\s*$)([A-Za-zÀ-ỹĐđ]+\\s+){1,3}(gì|ai)(?![A-Za-zÀ-ỹĐđ])(?!\\s+(không|chưa|à|vậy|thế|đấy|đó|nhỉ|hả|ạ)(?![A-Za-zÀ-ỹĐđ]))\\s*[.!]?\\s*$"
+],
+"always": false,
+"tok": [
+"không",
+"gì",
+"cả",
+"không ai"
+],
+"selftest": "5/5",
+"first": "2-8"
+},
+{
 "id": "38.0",
 "no": 38,
 "li": 37,
@@ -3529,6 +3747,22 @@
 "first": "2-2"
 },
 {
+"id": "38.7",
+"no": 38,
+"li": 37,
+"gi": 7,
+"t": "kìa — 저기 (봐)!",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])kìa(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [
+"kìa"
+],
+"selftest": "3/3",
+"first": "1-11"
+},
+{
 "id": "39.0",
 "no": 39,
 "li": 38,
@@ -3601,6 +3835,23 @@
 "tok": [],
 "selftest": "3/3",
 "first": "1-1"
+},
+{
+"id": "39.5",
+"no": 39,
+"li": 38,
+"gi": 5,
+"t": "À · Ồ · Ôi · Ủa · Trời ơi — 놀람·생각남",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])trời\\s+ơi(?![A-Za-zÀ-ỹĐđ])",
+"^\\s*(à|ồ|ôi|ủa|ơ|ối|ô|a)\\s*[,!]"
+],
+"always": false,
+"tok": [
+"trời ơi"
+],
+"selftest": "5/5",
+"first": "1-2"
 },
 {
 "id": "40.0",

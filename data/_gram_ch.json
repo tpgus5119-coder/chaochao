@@ -51,6 +51,7 @@
 "12.0",
 "12.3",
 "14.0",
+"22.7",
 "25.2",
 "25.5",
 "27.0",
@@ -63,6 +64,7 @@
 "4.5": "Chào anh. Xin lỗi, anh tên là gì?",
 "5.3": "Chào anh. Xin lỗi, anh tên là gì?",
 "3.1": "Tôi xin tự giới thiệu, tôi tên là David.",
+"22.7": "Tôi xin tự giới thiệu, tôi tên là David.",
 "25.5": "Tôi xin tự giới thiệu, tôi tên là David.",
 "4.2": "Không sao.",
 "39.4": "Không sao.",
@@ -102,6 +104,19 @@
 "5.3",
 "6.5",
 "14.0",
+"22.7",
+"25.2",
+"25.5",
+"39.4"
+],
+"hidden": [
+"2.0",
+"4.0",
+"4.3",
+"4.5",
+"6.5",
+"14.0",
+"22.7",
 "25.2",
 "25.5",
 "39.4"
@@ -135,7 +150,8 @@
 "12.3",
 "14.0",
 "19.0",
-"27.7"
+"27.7",
+"39.5"
 ],
 "ex": {
 "2.0": "Chào các anh.",
@@ -155,6 +171,7 @@
 "3.6": "Chị Vân ơi! Kia là ai?",
 "4.7": "Chị Vân ơi! Kia là ai?",
 "5.5": "Chị Vân ơi! Kia là ai?",
+"39.5": "À, đó là Kate.",
 "5.2": "Chị Kate là bạn anh David, phải không?",
 "3.2": "Vâng, chị ấy là bạn anh David.",
 "4.2": "Anh David là người Anh. Chị Kate cũng là người Anh phải không, chị?",
@@ -185,7 +202,15 @@
 "5.5",
 "5.6",
 "9.1",
-"19.0"
+"19.0",
+"39.5"
+],
+"hidden": [
+"3.6",
+"4.1",
+"5.6",
+"19.0",
+"39.5"
 ]
 },
 "1-3": {
@@ -222,6 +247,7 @@
 "12.0",
 "12.3",
 "14.0",
+"14.6",
 "17.0",
 "17.2",
 "17.5",
@@ -229,6 +255,7 @@
 "19.0",
 "23.0",
 "27.7",
+"27.8",
 "28.0"
 ],
 "ex": {
@@ -242,6 +269,7 @@
 "4.0": "Em tên là Eun Ji.",
 "5.6": "Em là người nước nào?",
 "6.5": "Dạ, em là người Hàn Quốc.",
+"14.6": "Trước đây em học tiếng Việt ở đâu?",
 "17.0": "Trước đây em học tiếng Việt ở đâu?",
 "10.1": "Em đã học ở Hàn Quốc ạ.",
 "10.3": "Em đã học ở Hàn Quốc ạ.",
@@ -258,6 +286,7 @@
 "17.2": "Trước đây Brian và tôi cũng học tiếng Việt ở trường Nhân văn. Chúng tôi đã học ở đó một năm.",
 "4.2": "Học tiếng Việt có khó không, Eun Ji?",
 "4.8": "Học tiếng Việt có khó không, Eun Ji?",
+"27.8": "Khó nhưng thú vị.",
 "3.2": "Vâng, em và anh ấy đều học tiếng Việt ở Hàn Quốc.",
 "28.0": "Vâng, em và anh ấy đều học tiếng Việt ở Hàn Quốc.",
 "4.3": "Hiện nay lớp tiếng Việt của Eun Ji có mấy người?",
@@ -292,12 +321,24 @@
 "9.3",
 "10.1",
 "11.5",
+"14.6",
 "17.0",
 "17.2",
 "17.5",
 "17.7",
 "23.0",
+"27.8",
 "28.0"
+],
+"hidden": [
+"4.9",
+"11.5",
+"14.6",
+"17.2",
+"17.5",
+"17.7",
+"23.0",
+"27.8"
 ]
 },
 "1-4": {
@@ -321,6 +362,7 @@
 "8.1",
 "9.3",
 "9.4",
+"9.6",
 "10.0",
 "10.3",
 "12.0",
@@ -337,7 +379,8 @@
 "18.0",
 "18.3",
 "23.6",
-"27.0"
+"27.0",
+"27.8"
 ],
 "ex": {
 "3.0": "Ở Nhật anh Hiroki làm nghề gì?",
@@ -365,12 +408,14 @@
 "13.2": "Năm ngày một tuần, từ chín giờ sáng đến mười một giờ rưỡi trưa.",
 "18.0": "Năm ngày một tuần, từ chín giờ sáng đến mười một giờ rưỡi trưa.",
 "5.0": "Trường anh có nhiều giáo viên người Mỹ không?",
+"9.6": "Trường anh có nhiều giáo viên người Mỹ không?",
 "9.4": "Không nhiều lắm. Khoảng 8 người.",
 "12.1": "Không nhiều lắm. Khoảng 8 người.",
 "12.3": "Không nhiều lắm. Khoảng 8 người.",
 "12.0": "Dạo này tôi rất bận. Buổi sáng tôi đi học tiếng Việt, còn buổi chiều tôi đi làm.",
 "17.5": "Dạo này tôi rất bận. Buổi sáng tôi đi học tiếng Việt, còn buổi chiều tôi đi làm.",
 "18.3": "Buổi chiều anh làm việc từ mấy giờ đến mấy giờ?",
+"27.8": "Có, nhưng tôi vào nhầm phòng.",
 "17.3": "Anh vào phòng số mấy?",
 "23.6": "Cô ấy rất thích học ngoại ngữ."
 },
@@ -391,6 +436,7 @@
 "7.0",
 "8.1",
 "9.4",
+"9.6",
 "10.0",
 "10.3",
 "12.0",
@@ -399,6 +445,16 @@
 "13.0",
 "13.2",
 "17.3",
+"18.0",
+"18.3",
+"23.6"
+],
+"hidden": [
+"7.0",
+"9.4",
+"9.6",
+"13.0",
+"13.2",
 "18.0",
 "18.3",
 "23.6"
@@ -441,9 +497,11 @@
 "19.1",
 "20.2",
 "23.0",
+"24.6",
 "25.2",
 "27.6",
 "27.7",
+"27.8",
 "29.0",
 "33.0",
 "38.0",
@@ -483,9 +541,11 @@
 "12.1": "Tôi biết một nhà hàng ở Quận 1. Món ăn ngon lắm. Đặc biệt, bia tươi rất ngon.",
 "6.1": "Bia à? Tốt quá! Tối nay tôi mời anh và anh Min đến đó uống bia. Không say không về.",
 "13.2": "Bia à? Tốt quá! Tối nay tôi mời anh và anh Min đến đó uống bia. Không say không về.",
+"24.6": "Bia à? Tốt quá! Tối nay tôi mời anh và anh Min đến đó uống bia. Không say không về.",
 "17.7": "Anh và tôi, chúng ta sẽ làm việc ở đó 6 tháng.",
 "3.3": "Ông ấy nói đã gặp các chị và tôi. Nhưng tôi không nhớ chúng ta đã gặp ông ấy ở đâu.",
 "9.1": "Ông ấy nói đã gặp các chị và tôi. Nhưng tôi không nhớ chúng ta đã gặp ông ấy ở đâu.",
+"27.8": "Ông ấy nói đã gặp các chị và tôi. Nhưng tôi không nhớ chúng ta đã gặp ông ấy ở đâu.",
 "6.2": "Họ đi đâu đấy/vậy?",
 "4.0": "Trường em học là trường gì đấy/vậy?",
 "4.6": "Món ăn ở đây ngon quá!",
@@ -512,10 +572,17 @@
 "10.2",
 "12.2",
 "19.1",
+"24.6",
 "27.6",
 "29.0",
 "33.0",
 "38.0",
+"46.2"
+],
+"hidden": [
+"19.1",
+"24.6",
+"27.6",
 "46.2"
 ]
 },
@@ -629,6 +696,9 @@
 "17.4",
 "27.5",
 "35.0"
+],
+"hidden": [
+"27.5"
 ]
 },
 "1-7": {
@@ -653,6 +723,7 @@
 "8.0",
 "9.1",
 "9.3",
+"9.6",
 "10.0",
 "10.2",
 "10.3",
@@ -709,6 +780,7 @@
 "6.5": "Ừ.",
 "4.8": "Có nhiều bài tập quá há?",
 "6.3": "Có nhiều bài tập quá há?",
+"9.6": "Có nhiều bài tập quá há?",
 "12.4": "Không. Tối hôm qua tôi xem phim trên mạng nên đi ngủ hơi trễ. Còn anh, anh thường đi ngủ lúc mấy giờ?",
 "12.6": "Không. Tối hôm qua tôi xem phim trên mạng nên đi ngủ hơi trễ. Còn anh, anh thường đi ngủ lúc mấy giờ?",
 "16.3": "Không. Tối hôm qua tôi xem phim trên mạng nên đi ngủ hơi trễ. Còn anh, anh thường đi ngủ lúc mấy giờ?",
@@ -755,6 +827,10 @@
 "24.1",
 "27.1",
 "29.1"
+],
+"hidden": [
+"13.1",
+"24.1"
 ]
 },
 "1-8": {
@@ -777,6 +853,7 @@
 "6.2",
 "9.1",
 "9.5",
+"9.6",
 "10.0",
 "10.1",
 "10.2",
@@ -805,15 +882,18 @@
 "22.0",
 "22.1",
 "25.4",
+"26.3",
 "27.1",
 "27.6",
 "27.7",
+"27.8",
 "28.6",
 "33.0",
 "35.5",
 "39.3"
 ],
 "ex": {
+"9.6": "Brian nói được nhiều thứ tiếng lắm.",
 "12.1": "Brian nói được nhiều thứ tiếng lắm.",
 "12.3": "Brian nói được nhiều thứ tiếng lắm.",
 "19.2": "Brian nói được nhiều thứ tiếng lắm.",
@@ -827,6 +907,8 @@
 "10.1": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
 "10.3": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
 "17.7": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
+"26.3": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
+"27.8": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
 "6.1": "Thế à? Anh ấy đã làm ở đó bao lâu?",
 "11.3": "Thế à? Anh ấy đã làm ở đó bao lâu?",
 "13.4": "Thế à? Anh ấy đã làm ở đó bao lâu?",
@@ -896,8 +978,17 @@
 "22.0",
 "22.1",
 "25.4",
+"26.3",
 "28.6",
 "35.5",
+"39.3"
+],
+"hidden": [
+"11.3",
+"18.2",
+"25.4",
+"26.3",
+"28.6",
 "39.3"
 ]
 },
@@ -945,6 +1036,7 @@
 "19.2",
 "19.3",
 "23.0",
+"24.6",
 "27.1",
 "27.7",
 "28.0",
@@ -952,6 +1044,7 @@
 "29.4",
 "38.0",
 "38.3",
+"39.5",
 "46.2"
 ],
 "ex": {
@@ -984,10 +1077,12 @@
 "4.2": "Trời ơi! Sao tôi không nhớ vậy?",
 "6.2": "Trời ơi! Sao tôi không nhớ vậy?",
 "29.0": "Trời ơi! Sao tôi không nhớ vậy?",
+"39.5": "Trời ơi! Sao tôi không nhớ vậy?",
 "27.7": "Lúc đó chị và anh David đều đi công tác ở Hà Nội.",
 "28.0": "Lúc đó chị và anh David đều đi công tác ở Hà Nội.",
 "19.2": "Vậy, hôm nay tôi mời anh đi ăn trưa để chúc mừng sinh nhật được không?",
 "19.3": "Vậy, hôm nay tôi mời anh đi ăn trưa để chúc mừng sinh nhật được không?",
+"24.6": "Vậy, hôm nay tôi mời anh đi ăn trưa để chúc mừng sinh nhật được không?",
 "29.4": "Vậy, hôm nay tôi mời anh đi ăn trưa để chúc mừng sinh nhật được không?",
 "46.2": "Vậy, hôm nay tôi mời anh đi ăn trưa để chúc mừng sinh nhật được không?",
 "2.0": "Xin lỗi. Tôi có hẹn với bạn rồi.",
@@ -1023,6 +1118,12 @@
 "15.0",
 "29.4",
 "38.3"
+],
+"hidden": [
+"14.1",
+"14.2",
+"14.3",
+"29.4"
 ]
 },
 "1-10": {
@@ -1040,6 +1141,7 @@
 "6.1",
 "6.2",
 "6.5",
+"7.3",
 "8.0",
 "8.2",
 "8.3",
@@ -1066,13 +1168,17 @@
 "27.0",
 "27.1",
 "27.7",
+"27.8",
+"29.4",
 "33.0",
 "38.1",
-"38.3"
+"38.3",
+"39.5"
 ],
 "ex": {
 "3.0": "Anh là con thứ mấy trong gia đình?",
 "4.0": "Anh là con thứ mấy trong gia đình?",
+"7.3": "Anh là con thứ mấy trong gia đình?",
 "8.0": "Anh là con thứ mấy trong gia đình?",
 "9.3": "Anh là con thứ mấy trong gia đình?",
 "17.4": "Anh là con thứ mấy trong gia đình?",
@@ -1090,10 +1196,13 @@
 "10.1": "Gia đình tôi có bốn người. Nhưng ba tôi mất rồi. Còn mẹ tôi đã về hưu.",
 "10.3": "Gia đình tôi có bốn người. Nhưng ba tôi mất rồi. Còn mẹ tôi đã về hưu.",
 "11.5": "Gia đình tôi có bốn người. Nhưng ba tôi mất rồi. Còn mẹ tôi đã về hưu.",
+"27.8": "Gia đình tôi có bốn người. Nhưng ba tôi mất rồi. Còn mẹ tôi đã về hưu.",
 "6.2": "Anh đi đâu vậy?",
 "17.0": "Anh đi đâu vậy?",
 "6.1": "Bố mẹ anh đến Việt Nam du lịch à?",
 "6.5": "Ừ, bố mẹ tôi đến Việt Nam để du lịch và thăm họ hàng.",
+"29.4": "Ừ, bố mẹ tôi đến Việt Nam để du lịch và thăm họ hàng.",
+"39.5": "Ồ, anh có họ hàng người Việt à?",
 "10.2": "Có chứ. Bà ngoại tôi là người Việt. Tôi sẽ cùng bố mẹ đi thăm bà ngoại.",
 "25.0": "Có chứ. Bà ngoại tôi là người Việt. Tôi sẽ cùng bố mẹ đi thăm bà ngoại.",
 "25.1": "Có chứ. Bà ngoại tôi là người Việt. Tôi sẽ cùng bố mẹ đi thăm bà ngoại.",
@@ -1123,6 +1232,7 @@
 "38.3"
 ],
 "first": [
+"7.3",
 "8.2",
 "8.3",
 "12.5",
@@ -1131,6 +1241,11 @@
 "27.0",
 "27.7",
 "38.1"
+],
+"hidden": [
+"7.3",
+"8.2",
+"8.3"
 ]
 },
 "1-11": {
@@ -1152,6 +1267,7 @@
 "6.5",
 "9.1",
 "9.4",
+"9.6",
 "10.0",
 "10.2",
 "10.3",
@@ -1185,13 +1301,17 @@
 "24.1",
 "25.0",
 "25.1",
+"26.3",
+"26.4",
 "27.6",
+"27.8",
 "28.1",
 "28.4",
 "28.6",
 "29.4",
 "31.0",
 "33.0",
+"38.7",
 "39.0",
 "42.5"
 ],
@@ -1200,8 +1320,10 @@
 "4.8": "Ở Hàn Quốc có phương tiện giao thông gì vậy, anh?",
 "5.3": "Ở Hàn Quốc có phương tiện giao thông gì vậy, anh?",
 "4.2": "Có xe máy không, anh?",
+"9.6": "Có. Nhưng rất ít.",
 "12.0": "Có. Nhưng rất ít.",
 "12.3": "Có. Nhưng rất ít.",
+"27.8": "Có. Nhưng rất ít.",
 "15.2": "Ở Việt Nam anh thường đi làm bằng gì?",
 "15.3": "Ở Việt Nam anh thường đi làm bằng gì?",
 "17.5": "Ở Việt Nam anh thường đi làm bằng gì?",
@@ -1217,6 +1339,7 @@
 "15.0": "Vé một chiều. Vì tôi chưa biết bao giờ sẽ trở lại Anh. À, nghe nói dạo này chị đi bằng xe đạp điện phải không?",
 "15.1": "Vé một chiều. Vì tôi chưa biết bao giờ sẽ trở lại Anh. À, nghe nói dạo này chị đi bằng xe đạp điện phải không?",
 "19.0": "Vé một chiều. Vì tôi chưa biết bao giờ sẽ trở lại Anh. À, nghe nói dạo này chị đi bằng xe đạp điện phải không?",
+"26.3": "Vé một chiều. Vì tôi chưa biết bao giờ sẽ trở lại Anh. À, nghe nói dạo này chị đi bằng xe đạp điện phải không?",
 "4.0": "Vâng, nhưng hôm nay xe của tôi hư. Tôi đi bằng xe ôm. Chắc là tôi phải đi xe máy lại.",
 "4.3": "Vâng, nhưng hôm nay xe của tôi hư. Tôi đi bằng xe ôm. Chắc là tôi phải đi xe máy lại.",
 "6.5": "Vâng, nhưng hôm nay xe của tôi hư. Tôi đi bằng xe ôm. Chắc là tôi phải đi xe máy lại.",
@@ -1231,11 +1354,13 @@
 "10.5": "Sắp đến rồi. Tài xế mới gọi cho tôi. Anh ấy nói là khoảng 10 phút nữa sẽ đến. Đang kẹt xe.",
 "11.5": "Sắp đến rồi. Tài xế mới gọi cho tôi. Anh ấy nói là khoảng 10 phút nữa sẽ đến. Đang kẹt xe.",
 "24.1": "Sắp đến rồi. Tài xế mới gọi cho tôi. Anh ấy nói là khoảng 10 phút nữa sẽ đến. Đang kẹt xe.",
+"26.4": "Sắp đến rồi. Tài xế mới gọi cho tôi. Anh ấy nói là khoảng 10 phút nữa sẽ đến. Đang kẹt xe.",
 "28.6": "Sắp đến rồi. Tài xế mới gọi cho tôi. Anh ấy nói là khoảng 10 phút nữa sẽ đến. Đang kẹt xe.",
 "3.5": "Hôm nay chúng ta cùng ăn tối với bố mẹ anh Brian. Nếu đến trễ thì ngại quá!",
 "12.2": "Hôm nay chúng ta cùng ăn tối với bố mẹ anh Brian. Nếu đến trễ thì ngại quá!",
 "25.0": "Hôm nay chúng ta cùng ăn tối với bố mẹ anh Brian. Nếu đến trễ thì ngại quá!",
 "25.1": "Hôm nay chúng ta cùng ăn tối với bố mẹ anh Brian. Nếu đến trễ thì ngại quá!",
+"38.7": "Không trễ đâu. Kìa, xe đến rồi kìa!",
 "13.2": "Sáng nay anh ấy lên mạng để đặt vé nhưng không được. Bây giờ anh ấy sẽ đặt lại.",
 "19.2": "Sáng nay anh ấy lên mạng để đặt vé nhưng không được. Bây giờ anh ấy sẽ đặt lại.",
 "19.6": "Sáng nay anh ấy lên mạng để đặt vé nhưng không được. Bây giờ anh ấy sẽ đặt lại.",
@@ -1264,10 +1389,18 @@
 ],
 "first": [
 "20.0",
+"26.4",
 "28.1",
 "28.4",
 "31.0",
+"38.7",
 "39.0",
+"42.5"
+],
+"hidden": [
+"20.0",
+"26.4",
+"38.7",
 "42.5"
 ]
 },
@@ -1295,6 +1428,7 @@
 "9.0",
 "9.1",
 "9.4",
+"9.6",
 "10.0",
 "10.1",
 "10.2",
@@ -1336,6 +1470,7 @@
 "25.1",
 "27.1",
 "27.6",
+"27.8",
 "28.1",
 "28.6",
 "31.0",
@@ -1356,6 +1491,7 @@
 "17.7": "Hình gia đình tôi đi chơi ở Bến Tre.",
 "15.0": "Gia đình chị đi khi nào?",
 "4.8": "Tháng 7, dịp nghỉ hè. Lúc đó có nhiều trái cây lắm.",
+"9.6": "Tháng 7, dịp nghỉ hè. Lúc đó có nhiều trái cây lắm.",
 "12.1": "Tháng 7, dịp nghỉ hè. Lúc đó có nhiều trái cây lắm.",
 "12.3": "Tháng 7, dịp nghỉ hè. Lúc đó có nhiều trái cây lắm.",
 "14.3": "Tháng 7, dịp nghỉ hè. Lúc đó có nhiều trái cây lắm.",
@@ -1372,6 +1508,7 @@
 "22.0": "Được, nhưng mệt lắm. Đừng đi bằng xe máy. Thuê xe hoặc đi bằng xe khách tốt hơn.",
 "22.1": "Được, nhưng mệt lắm. Đừng đi bằng xe máy. Thuê xe hoặc đi bằng xe khách tốt hơn.",
 "27.6": "Được, nhưng mệt lắm. Đừng đi bằng xe máy. Thuê xe hoặc đi bằng xe khách tốt hơn.",
+"27.8": "Được, nhưng mệt lắm. Đừng đi bằng xe máy. Thuê xe hoặc đi bằng xe khách tốt hơn.",
 "33.0": "Được, nhưng mệt lắm. Đừng đi bằng xe máy. Thuê xe hoặc đi bằng xe khách tốt hơn.",
 "3.5": "Vậy, cuối tuần sau chúng ta thuê xe đi Bến Tre chơi đi!",
 "14.0": "Vậy, cuối tuần sau chúng ta thuê xe đi Bến Tre chơi đi!",
@@ -1429,6 +1566,10 @@
 "13.3",
 "17.6",
 "18.7"
+],
+"hidden": [
+"13.3",
+"18.7"
 ]
 },
 "2-1": {
@@ -1458,6 +1599,7 @@
 "9.1",
 "9.3",
 "9.5",
+"9.6",
 "10.1",
 "10.2",
 "10.3",
@@ -1470,6 +1612,7 @@
 "12.3",
 "12.4",
 "12.6",
+"14.6",
 "15.0",
 "15.1",
 "16.3",
@@ -1485,6 +1628,7 @@
 "24.0",
 "27.0",
 "27.7",
+"27.8",
 "28.6",
 "31.0",
 "33.0",
@@ -1510,6 +1654,7 @@
 "17.2": "Vâng. Tôi định mời hai người bạn nước ngoài đi ăn món ăn Việt Nam. Ở đó món gì ngon vậy, anh?",
 "46.2": "Vâng. Tôi định mời hai người bạn nước ngoài đi ăn món ăn Việt Nam. Ở đó món gì ngon vậy, anh?",
 "9.3": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
+"9.6": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
 "11.6": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
 "12.1": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
 "12.3": "Nhiều món ngon lắm. Tôi ăn ở đó mấy lần rồi.",
@@ -1553,12 +1698,14 @@
 "12.4": "Ngon lắm, chị. Tôi thích nhất là cơm sen. Tôi thấy gỏi cá hơi chua, nhưng rất ngon.",
 "12.6": "Ngon lắm, chị. Tôi thích nhất là cơm sen. Tôi thấy gỏi cá hơi chua, nhưng rất ngon.",
 "23.6": "Ngon lắm, chị. Tôi thích nhất là cơm sen. Tôi thấy gỏi cá hơi chua, nhưng rất ngon.",
+"27.8": "Ngon lắm, chị. Tôi thích nhất là cơm sen. Tôi thấy gỏi cá hơi chua, nhưng rất ngon.",
 "33.3": "Ngon lắm, chị. Tôi thích nhất là cơm sen. Tôi thấy gỏi cá hơi chua, nhưng rất ngon.",
 "33.0": "Không phải đâu. Ở Việt Nam, nhiều nơi có bánh xèo, nhưng bánh xèo miền Nam nổi tiếng hơn.",
 "39.0": "Không phải đâu. Ở Việt Nam, nhiều nơi có bánh xèo, nhưng bánh xèo miền Nam nổi tiếng hơn.",
 "5.1": "Anh Lee là người Trung Quốc, có phải không?",
 "5.2": "Anh Lee là người Trung Quốc, có phải không?",
 "3.2": "Anh ấy vừa ăn cơm vừa xem tivi.",
+"14.6": "Hiện nay tôi vừa đi học vừa đi làm nên rất bận.",
 "17.5": "Hiện nay tôi vừa đi học vừa đi làm nên rất bận."
 },
 "title_ko": "연잎밥은 향긋하고 맛있어요!",
@@ -1588,6 +1735,7 @@
 "6.3",
 "6.5",
 "8.0",
+"9.6",
 "10.1",
 "10.2",
 "10.3",
@@ -1600,6 +1748,7 @@
 "12.3",
 "12.4",
 "12.6",
+"14.6",
 "15.0",
 "15.1",
 "17.2",
@@ -1614,6 +1763,7 @@
 "24.0",
 "27.0",
 "27.7",
+"27.8",
 "28.6",
 "31.0",
 "33.3",
@@ -1622,6 +1772,16 @@
 "34.1",
 "46.1",
 "46.2",
+"46.4"
+],
+"hidden": [
+"11.6",
+"20.1",
+"23.2",
+"24.0",
+"33.3",
+"33.4",
+"46.1",
 "46.4"
 ]
 },
@@ -1649,6 +1809,7 @@
 "9.0",
 "9.4",
 "9.5",
+"9.6",
 "10.0",
 "10.2",
 "10.3",
@@ -1664,6 +1825,7 @@
 "14.0",
 "14.1",
 "14.2",
+"14.6",
 "15.1",
 "16.3",
 "17.0",
@@ -1689,6 +1851,7 @@
 "26.2",
 "27.3",
 "27.7",
+"27.8",
 "28.4",
 "29.0",
 "33.0",
@@ -1699,6 +1862,7 @@
 "38.6",
 "39.3",
 "39.4",
+"39.5",
 "42.5",
 "43.4"
 ],
@@ -1723,6 +1887,7 @@
 "11.5": "À, tôi thấy rồi. Xin lỗi ông. Ông làm ơn cho mượn hộ chiếu.",
 "22.4": "À, tôi thấy rồi. Xin lỗi ông. Ông làm ơn cho mượn hộ chiếu.",
 "22.5": "À, tôi thấy rồi. Xin lỗi ông. Ông làm ơn cho mượn hộ chiếu.",
+"39.5": "À, tôi thấy rồi. Xin lỗi ông. Ông làm ơn cho mượn hộ chiếu.",
 "4.6": "Passport phải không cô? Đây, hộ chiếu của tôi đây!",
 "38.6": "Passport phải không cô? Đây, hộ chiếu của tôi đây!",
 "6.5": "Dạ. Cảm ơn ông... Phòng của ông ở tầng 5, phòng 512.",
@@ -1735,6 +1900,7 @@
 "12.0": "Dạ, phải. Nhưng... trên đường Hai Bà Trưng có một nhà hàng đặc sản rất nổi tiếng, nổi tiếng hơn nhà hàng này, nhưng bà phải đi taxi.",
 "12.3": "Dạ, phải. Nhưng... trên đường Hai Bà Trưng có một nhà hàng đặc sản rất nổi tiếng, nổi tiếng hơn nhà hàng này, nhưng bà phải đi taxi.",
 "20.0": "Dạ, phải. Nhưng... trên đường Hai Bà Trưng có một nhà hàng đặc sản rất nổi tiếng, nổi tiếng hơn nhà hàng này, nhưng bà phải đi taxi.",
+"27.8": "Dạ, phải. Nhưng... trên đường Hai Bà Trưng có một nhà hàng đặc sản rất nổi tiếng, nổi tiếng hơn nhà hàng này, nhưng bà phải đi taxi.",
 "33.0": "Dạ, phải. Nhưng... trên đường Hai Bà Trưng có một nhà hàng đặc sản rất nổi tiếng, nổi tiếng hơn nhà hàng này, nhưng bà phải đi taxi.",
 "11.3": "Đi bằng taxi mất bao lâu?",
 "13.4": "Đi bằng taxi mất bao lâu?",
@@ -1756,6 +1922,7 @@
 "9.0": "Anh xem ảnh tôi chụp này. Cái hồ bơi này ở sau khách sạn. Còn đây là bãi biển, suối Tranh, chùa Sư Muôn…",
 "5.0": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
 "5.7": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
+"9.6": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
 "17.2": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
 "17.7": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
 "27.7": "Ồ, Phú Quốc vẫn đẹp như hai năm trước. Anh có vào ăn ở Chợ Đêm không? Ở đó có nhiều món hải sản, có lẽ tươi và ngon hơn ở Mũi Né.",
@@ -1767,6 +1934,7 @@
 "39.4": "Tất nhiên là có! Đây, ảnh Chợ Đêm đây. Bức ảnh đẹp nhất của tôi đấy!",
 "3.2": "Cô ấy đang ngồi trên xe.",
 "10.0": "Cô ấy đang ngồi trên xe.",
+"14.6": "Trước đây anh ấy thích đi biển. Bây giờ anh ấy vẫn thích đi biển.",
 "21.3": "Vẫn chỗ cũ nhé!",
 "24.1": "Hôm qua anh ấy có đưa cho tôi cái chìa khóa phòng này.",
 "14.1": "Chủ nhật cô ấy có ở nhà.",
@@ -1823,8 +1991,16 @@
 "38.3",
 "39.3",
 "39.4",
+"39.5",
 "42.5",
 "43.4"
+],
+"hidden": [
+"22.4",
+"22.5",
+"24.3",
+"26.2",
+"33.2"
 ]
 },
 "2-3": {
@@ -1854,6 +2030,7 @@
 "8.1",
 "9.0",
 "9.2",
+"9.6",
 "10.0",
 "10.1",
 "10.2",
@@ -1886,6 +2063,7 @@
 "20.2",
 "21.0",
 "22.1",
+"22.7",
 "23.6",
 "24.0",
 "24.1",
@@ -1909,6 +2087,7 @@
 "38.3",
 "38.6",
 "39.0",
+"39.5",
 "40.0"
 ],
 "ex": {
@@ -1986,9 +2165,12 @@
 "38.6": "Đây! Tiền của anh đây!",
 "3.4": "Xin giới thiệu với chị, anh Nam đây là giám đốc của chúng tôi.",
 "4.0": "Xin giới thiệu với chị, anh Nam đây là giám đốc của chúng tôi.",
+"22.7": "Xin giới thiệu với chị, anh Nam đây là giám đốc của chúng tôi.",
 "25.2": "Xin giới thiệu với chị, anh Nam đây là giám đốc của chúng tôi.",
 "28.5": "Tôi sẽ đến ngay đây!",
+"9.6": "Mây đen nhiều quá! Mưa to lắm đây!",
 "12.1": "Mây đen nhiều quá! Mưa to lắm đây!",
+"39.5": "Ô, có anh Nam thì sẽ vui lắm đây!",
 "25.4": "Nó đánh nhau với bạn nữa đây!",
 "10.0": "Tôi đang xem lại phim Forrest Gump. Tôi thích phim đó lắm."
 },
@@ -2014,6 +2196,7 @@
 "16.5",
 "21.0",
 "22.1",
+"22.7",
 "25.4",
 "26.0",
 "28.1",
@@ -2025,6 +2208,13 @@
 "35.1",
 "38.6",
 "39.0"
+],
+"hidden": [
+"7.2",
+"16.5",
+"26.0",
+"28.3",
+"28.5"
 ]
 },
 "2-4": {
@@ -2084,6 +2274,7 @@
 "23.0",
 "23.5",
 "23.6",
+"23.7",
 "24.1",
 "24.3",
 "25.2",
@@ -2102,6 +2293,7 @@
 "36.1",
 "36.2",
 "38.6",
+"39.5",
 "46.0",
 "47.0",
 "47.1"
@@ -2136,6 +2328,7 @@
 "36.1": "Dạ, em đã gọi cho chị tất cả bốn lần mà điện thoại bận, không liên lạc được.",
 "9.5": "Ủa, sao kỳ vậy? Chị không nghe điện thoại reng. Em chờ một chút, chị xuống ngay.",
 "28.5": "Ủa, sao kỳ vậy? Chị không nghe điện thoại reng. Em chờ một chút, chị xuống ngay.",
+"39.5": "Ủa, sao kỳ vậy? Chị không nghe điện thoại reng. Em chờ một chút, chị xuống ngay.",
 "22.4": "Dạ, đây! Tất cả bốn món chị đặt đây! Chị làm ơn kiểm tra lại giùm em.",
 "24.3": "Dạ, đây! Tất cả bốn món chị đặt đây! Chị làm ơn kiểm tra lại giùm em.",
 "28.1": "Dạ, đây! Tất cả bốn món chị đặt đây! Chị làm ơn kiểm tra lại giùm em.",
@@ -2171,6 +2364,7 @@
 "3.3": "Tất cả các bạn hãy cố gắng hơn nữa!",
 "9.1": "Tất cả các bạn hãy cố gắng hơn nữa!",
 "21.1": "Tất cả các bạn hãy cố gắng hơn nữa!",
+"23.7": "Tất cả các bạn hãy cố gắng hơn nữa!",
 "7.2": "Tất cả là 500 ngàn đồng.",
 "23.5": "Tôi quen với cả ba người đó.",
 "25.2": "Tôi quen với cả ba người đó.",
@@ -2197,6 +2391,7 @@
 "15.2",
 "22.2",
 "23.5",
+"23.7",
 "27.2",
 "27.6",
 "28.0",
@@ -2206,6 +2401,13 @@
 "46.0",
 "47.0",
 "47.1"
+],
+"hidden": [
+"22.2",
+"23.5",
+"23.7",
+"27.2",
+"46.0"
 ]
 },
 "2-5": {
@@ -2225,6 +2427,7 @@
 "5.7",
 "6.2",
 "9.0",
+"9.6",
 "10.1",
 "10.2",
 "10.3",
@@ -2250,9 +2453,12 @@
 "22.6",
 "24.1",
 "24.4",
+"24.6",
 "25.5",
 "26.2",
+"26.4",
 "27.7",
+"27.8",
 "28.1",
 "28.4",
 "28.6",
@@ -2289,6 +2495,7 @@
 "24.4": "1. (Tại phòng khám)\nBác sĩ: Chào anh. Anh bị sao vậy?\nNam: Dạ, tôi hay bị chóng mặt và đau đầu.\nBác sĩ: Anh bị như vậy từ khi nào?\nNam: Dạ, hai tháng nay rồi. Mặc dù tôi đã tự mua thuốc uống nhưng vẫn chưa đỡ.\nBác sĩ: Anh không nên tự uống thuốc như vậy. Nguy hiểm lắm!\nNam: Dạ, dạ. Thỉnh thoảng tôi cũng bị buồn nôn nữa.\nBác sĩ: Huyết áp anh 150. Anh bị cao huyết áp. Để tôi khám xem.\nNam: Có gì nghiêm trọng không bác sĩ?\nBác sĩ: Anh yên tâm đi! Không có vấn đề gì đâu. Tôi sẽ kê đơn thuốc cho anh.\nNam: Cám ơn bác sĩ.",
 "25.5": "1. (Tại phòng khám)\nBác sĩ: Chào anh. Anh bị sao vậy?\nNam: Dạ, tôi hay bị chóng mặt và đau đầu.\nBác sĩ: Anh bị như vậy từ khi nào?\nNam: Dạ, hai tháng nay rồi. Mặc dù tôi đã tự mua thuốc uống nhưng vẫn chưa đỡ.\nBác sĩ: Anh không nên tự uống thuốc như vậy. Nguy hiểm lắm!\nNam: Dạ, dạ. Thỉnh thoảng tôi cũng bị buồn nôn nữa.\nBác sĩ: Huyết áp anh 150. Anh bị cao huyết áp. Để tôi khám xem.\nNam: Có gì nghiêm trọng không bác sĩ?\nBác sĩ: Anh yên tâm đi! Không có vấn đề gì đâu. Tôi sẽ kê đơn thuốc cho anh.\nNam: Cám ơn bác sĩ.",
 "27.7": "1. (Tại phòng khám)\nBác sĩ: Chào anh. Anh bị sao vậy?\nNam: Dạ, tôi hay bị chóng mặt và đau đầu.\nBác sĩ: Anh bị như vậy từ khi nào?\nNam: Dạ, hai tháng nay rồi. Mặc dù tôi đã tự mua thuốc uống nhưng vẫn chưa đỡ.\nBác sĩ: Anh không nên tự uống thuốc như vậy. Nguy hiểm lắm!\nNam: Dạ, dạ. Thỉnh thoảng tôi cũng bị buồn nôn nữa.\nBác sĩ: Huyết áp anh 150. Anh bị cao huyết áp. Để tôi khám xem.\nNam: Có gì nghiêm trọng không bác sĩ?\nBác sĩ: Anh yên tâm đi! Không có vấn đề gì đâu. Tôi sẽ kê đơn thuốc cho anh.\nNam: Cám ơn bác sĩ.",
+"27.8": "1. (Tại phòng khám)\nBác sĩ: Chào anh. Anh bị sao vậy?\nNam: Dạ, tôi hay bị chóng mặt và đau đầu.\nBác sĩ: Anh bị như vậy từ khi nào?\nNam: Dạ, hai tháng nay rồi. Mặc dù tôi đã tự mua thuốc uống nhưng vẫn chưa đỡ.\nBác sĩ: Anh không nên tự uống thuốc như vậy. Nguy hiểm lắm!\nNam: Dạ, dạ. Thỉnh thoảng tôi cũng bị buồn nôn nữa.\nBác sĩ: Huyết áp anh 150. Anh bị cao huyết áp. Để tôi khám xem.\nNam: Có gì nghiêm trọng không bác sĩ?\nBác sĩ: Anh yên tâm đi! Không có vấn đề gì đâu. Tôi sẽ kê đơn thuốc cho anh.\nNam: Cám ơn bác sĩ.",
 "28.4": "1. (Tại phòng khám)\nBác sĩ: Chào anh. Anh bị sao vậy?\nNam: Dạ, tôi hay bị chóng mặt và đau đầu.\nBác sĩ: Anh bị như vậy từ khi nào?\nNam: Dạ, hai tháng nay rồi. Mặc dù tôi đã tự mua thuốc uống nhưng vẫn chưa đỡ.\nBác sĩ: Anh không nên tự uống thuốc như vậy. Nguy hiểm lắm!\nNam: Dạ, dạ. Thỉnh thoảng tôi cũng bị buồn nôn nữa.\nBác sĩ: Huyết áp anh 150. Anh bị cao huyết áp. Để tôi khám xem.\nNam: Có gì nghiêm trọng không bác sĩ?\nBác sĩ: Anh yên tâm đi! Không có vấn đề gì đâu. Tôi sẽ kê đơn thuốc cho anh.\nNam: Cám ơn bác sĩ.",
 "28.6": "1. (Tại phòng khám)\nBác sĩ: Chào anh. Anh bị sao vậy?\nNam: Dạ, tôi hay bị chóng mặt và đau đầu.\nBác sĩ: Anh bị như vậy từ khi nào?\nNam: Dạ, hai tháng nay rồi. Mặc dù tôi đã tự mua thuốc uống nhưng vẫn chưa đỡ.\nBác sĩ: Anh không nên tự uống thuốc như vậy. Nguy hiểm lắm!\nNam: Dạ, dạ. Thỉnh thoảng tôi cũng bị buồn nôn nữa.\nBác sĩ: Huyết áp anh 150. Anh bị cao huyết áp. Để tôi khám xem.\nNam: Có gì nghiêm trọng không bác sĩ?\nBác sĩ: Anh yên tâm đi! Không có vấn đề gì đâu. Tôi sẽ kê đơn thuốc cho anh.\nNam: Cám ơn bác sĩ.",
 "39.1": "1. (Tại phòng khám)\nBác sĩ: Chào anh. Anh bị sao vậy?\nNam: Dạ, tôi hay bị chóng mặt và đau đầu.\nBác sĩ: Anh bị như vậy từ khi nào?\nNam: Dạ, hai tháng nay rồi. Mặc dù tôi đã tự mua thuốc uống nhưng vẫn chưa đỡ.\nBác sĩ: Anh không nên tự uống thuốc như vậy. Nguy hiểm lắm!\nNam: Dạ, dạ. Thỉnh thoảng tôi cũng bị buồn nôn nữa.\nBác sĩ: Huyết áp anh 150. Anh bị cao huyết áp. Để tôi khám xem.\nNam: Có gì nghiêm trọng không bác sĩ?\nBác sĩ: Anh yên tâm đi! Không có vấn đề gì đâu. Tôi sẽ kê đơn thuốc cho anh.\nNam: Cám ơn bác sĩ.",
@@ -2309,13 +2516,16 @@
 "20.0": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
 "22.6": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
 "24.1": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
+"24.6": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
 "26.2": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
+"26.4": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
 "28.1": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
 "35.1": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
 "42.5": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
 "46.0": "2. (Lan và Nam nói chuyện về bệnh của con)\nLan: Con bị sao vậy, anh?\nNam: Mắt của nó bị đỏ từ hồi sáng. Có lẽ nó bị đau mắt.\nLan: Nó cũng bị sốt nữa. Anh đi mua thuốc cho con đi!\nNam: Thôi, hôm qua anh đã bị bác sĩ phê bình vì tự mua thuốc uống rồi.\nLan: Vậy để em đưa con đi bác sĩ. Chiều nay em được công ty cho nghỉ.\n…\nNam: Bác sĩ nói thế nào, em?\nLan: Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm. Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.\nNam: Chắc là nó sẽ được nhà trường cho nghỉ học. Anh sẽ gọi điện xin phép. À, bác sĩ có cho thuốc không?\nLan: Có chứ, một chai thuốc nhỏ mắt và 20 viên vitamin.",
 "17.5": "Mặc dù trời mưa nhưng Nam vẫn đi học.",
 "3.2": "Nửa tháng nay ông ấy nằm bệnh viện.",
+"9.6": "Trong ngày sinh nhật, Nam được rất nhiều quà.",
 "12.0": "Trong ngày sinh nhật, Nam được rất nhiều quà.",
 "17.4": "Trong ngày sinh nhật, Nam được rất nhiều quà.",
 "14.1": "Chủ nhật Nam được ngủ nướng, vì không phải đi học."
@@ -2330,12 +2540,20 @@
 "13.2",
 "16.1",
 "22.6",
+"24.6",
 "25.5",
+"26.4",
 "39.1",
 "40.0",
 "40.1",
 "40.2",
 "41.0"
+],
+"hidden": [
+"16.1",
+"22.6",
+"39.1",
+"40.2"
 ]
 },
 "2-6": {
@@ -2403,7 +2621,8 @@
 "13.0",
 "14.3",
 "18.7"
-]
+],
+"hidden": []
 },
 "2-7": {
 "title": "Chị cứ đi thẳng đường này!",
@@ -2433,6 +2652,7 @@
 "9.2",
 "9.3",
 "9.4",
+"9.6",
 "10.2",
 "10.3",
 "11.5",
@@ -2466,6 +2686,7 @@
 "22.4",
 "22.5",
 "24.1",
+"24.6",
 "25.5",
 "27.6",
 "28.0",
@@ -2478,6 +2699,7 @@
 "38.0",
 "38.3",
 "39.4",
+"39.5",
 "40.0",
 "42.0",
 "46.2"
@@ -2509,6 +2731,7 @@
 "12.2": "Ồ, xa quá! Vậy, gần đây có siêu thị hoặc cửa hàng tiện lợi nào không, anh?",
 "12.3": "Ồ, xa quá! Vậy, gần đây có siêu thị hoặc cửa hàng tiện lợi nào không, anh?",
 "27.6": "Ồ, xa quá! Vậy, gần đây có siêu thị hoặc cửa hàng tiện lợi nào không, anh?",
+"39.5": "Ồ, xa quá! Vậy, gần đây có siêu thị hoặc cửa hàng tiện lợi nào không, anh?",
 "7.0": "Cô đi siêu thị Co.opmart đi! Nó cách đây chỉ mấy trăm mét. Cô đi bộ được.",
 "9.3": "Cô đi siêu thị Co.opmart đi! Nó cách đây chỉ mấy trăm mét. Cô đi bộ được.",
 "17.5": "Cô đi siêu thị Co.opmart đi! Nó cách đây chỉ mấy trăm mét. Cô đi bộ được.",
@@ -2526,6 +2749,7 @@
 "38.3": "Cô cứ đi thẳng đường này, qua hai ngã tư là thấy. Nó nằm ở cuối đường. À, cửa hàng tiện lợi trong chung cư cũng có bán đủ thứ đấy!",
 "2.0": "Vâng, cảm ơn anh rất nhiều.",
 "6.5": "Vâng, cảm ơn anh rất nhiều.",
+"9.6": "Vâng, cảm ơn anh rất nhiều.",
 "12.0": "Vâng, cảm ơn anh rất nhiều.",
 "19.0": "Anh cho tôi đến nhà hàng Phương Nam, Quận 6. Anh biết nhà hàng đó không?",
 "9.2": "Dạ, biết chứ! Những nhà hàng nào nổi tiếng tôi đều biết cả.",
@@ -2553,6 +2777,7 @@
 "10.2": "Chủ nhật tôi sẽ làm mấy món ăn Thái để mời bạn bè đến ăn.",
 "10.3": "Chủ nhật tôi sẽ làm mấy món ăn Thái để mời bạn bè đến ăn.",
 "14.1": "Chủ nhật tôi sẽ làm mấy món ăn Thái để mời bạn bè đến ăn.",
+"24.6": "Chủ nhật tôi sẽ làm mấy món ăn Thái để mời bạn bè đến ăn.",
 "29.4": "Chủ nhật tôi sẽ làm mấy món ăn Thái để mời bạn bè đến ăn.",
 "46.2": "Chủ nhật tôi sẽ làm mấy món ăn Thái để mời bạn bè đến ăn.",
 "3.2": "Hình như cô ấy là người Nhật."
@@ -2574,6 +2799,11 @@
 "21.4",
 "31.1",
 "42.0"
+],
+"hidden": [
+"17.1",
+"18.5",
+"31.1"
 ]
 },
 "2-8": {
@@ -2624,6 +2854,8 @@
 "23.6",
 "27.1",
 "27.6",
+"27.8",
+"27.9",
 "28.0",
 "28.4",
 "28.6",
@@ -2636,9 +2868,11 @@
 "35.0",
 "35.1",
 "36.3",
+"37.6",
 "38.1",
 "38.3",
 "39.4",
+"39.5",
 "42.0",
 "42.5",
 "43.2"
@@ -2668,6 +2902,7 @@
 "23.0": "Cô ấy muốn chia tay. Hình như cô ấy không chịu được một số thói quen của tôi.",
 "23.5": "Cô ấy muốn chia tay. Hình như cô ấy không chịu được một số thói quen của tôi.",
 "42.0": "Cô ấy muốn chia tay. Hình như cô ấy không chịu được một số thói quen của tôi.",
+"27.9": "Chẳng hạn như...?",
 "3.3": "Mỗi buổi chiều, sau giờ làm, tôi đều đi uống bia với các đồng nghiệp.",
 "9.1": "Mỗi buổi chiều, sau giờ làm, tôi đều đi uống bia với các đồng nghiệp.",
 "13.2": "Mỗi buổi chiều, sau giờ làm, tôi đều đi uống bia với các đồng nghiệp.",
@@ -2680,12 +2915,14 @@
 "28.6": "Ừ, chỉ trừ những ngày cuối tuần. Ngoài ra, tôi còn hay trễ hẹn với cô ấy nữa...",
 "34.5": "Ừ, chỉ trừ những ngày cuối tuần. Ngoài ra, tôi còn hay trễ hẹn với cô ấy nữa...",
 "34.6": "Ừ, chỉ trừ những ngày cuối tuần. Ngoài ra, tôi còn hay trễ hẹn với cô ấy nữa...",
+"39.5": "À! Tôi hiểu rồi.",
 "5.4": "Chị Hương này, nhà mới của chị thế nào? Chị cảm thấy thoải mái chứ?",
 "38.1": "Chị Hương này, nhà mới của chị thế nào? Chị cảm thấy thoải mái chứ?",
 "38.3": "Chị Hương này, nhà mới của chị thế nào? Chị cảm thấy thoải mái chứ?",
 "4.9": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
 "12.4": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
 "12.6": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
+"27.8": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
 "34.0": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
 "34.1": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
 "39.4": "Tất nhiên rồi. Nhà này vừa rộng rãi vừa mát mẻ. Nhưng tôi hơi khó chịu.",
@@ -2705,6 +2942,7 @@
 "42.5": "Có lẽ không.",
 "23.6": "Vì tôi thấy hai đứa nhỏ của tôi đều có vẻ thích trường lớp mới, bạn bè mới.",
 "28.4": "Trong công việc, vẫn còn một chút/một số/một ít thiếu sót.",
+"37.6": "Trừ món phở, tôi không ăn được gì cả.",
 "12.1": "Món bánh xèo ở quán này không được ngon lắm.",
 "12.3": "Món bánh xèo ở quán này không được ngon lắm."
 },
@@ -2720,11 +2958,18 @@
 "9.5",
 "19.6",
 "22.0",
+"27.9",
 "34.5",
 "34.6",
 "36.3",
+"37.6",
 "38.1",
 "43.2"
+],
+"hidden": [
+"27.9",
+"36.3",
+"37.6"
 ]
 },
 "2-9": {
@@ -2776,6 +3021,7 @@
 "22.5",
 "23.0",
 "24.1",
+"26.3",
 "27.7",
 "28.0",
 "28.1",
@@ -2807,6 +3053,7 @@
 "12.1": "Gửi tiết kiệm ngân hàng nhé? Em nghe nói hiện giờ có một vài ngân hàng lãi suất cao lắm.",
 "12.3": "Gửi tiết kiệm ngân hàng nhé? Em nghe nói hiện giờ có một vài ngân hàng lãi suất cao lắm.",
 "21.3": "Gửi tiết kiệm ngân hàng nhé? Em nghe nói hiện giờ có một vài ngân hàng lãi suất cao lắm.",
+"26.3": "Gửi tiết kiệm ngân hàng nhé? Em nghe nói hiện giờ có một vài ngân hàng lãi suất cao lắm.",
 "4.9": "Nếu vậy thì gửi cả tiền thưởng lẫn tiền lương tháng này của anh đi!",
 "21.0": "Nếu vậy thì gửi cả tiền thưởng lẫn tiền lương tháng này của anh đi!",
 "22.1": "Nếu vậy thì gửi cả tiền thưởng lẫn tiền lương tháng này của anh đi!",
@@ -2864,9 +3111,11 @@
 "first": [
 "13.3",
 "21.1",
+"26.3",
 "34.4",
 "37.1"
-]
+],
+"hidden": []
 },
 "2-10": {
 "title": "Cậu bỏ thói quen đó đi nhé!",
@@ -2902,6 +3151,7 @@
 "12.1",
 "12.2",
 "12.3",
+"12.8",
 "13.3",
 "14.0",
 "14.1",
@@ -2919,11 +3169,13 @@
 "23.3",
 "23.5",
 "23.6",
+"23.7",
 "24.1",
 "24.4",
 "27.1",
 "27.2",
 "27.6",
+"27.8",
 "28.1",
 "28.2",
 "28.3",
@@ -2939,6 +3191,7 @@
 "35.4",
 "36.3",
 "37.0",
+"39.5",
 "46.0",
 "46.5"
 ],
@@ -2977,12 +3230,14 @@
 "11.5": "Không. Dạo này, mình chuyển qua chơi đá cầu rồi.",
 "6.1": "Ủa, cậu thay đổi sở thích rồi à?",
 "23.6": "Ủa, cậu thay đổi sở thích rồi à?",
+"39.5": "Ủa, cậu thay đổi sở thích rồi à?",
 "6.5": "Ừ. Chủ nhật nào mình cũng chơi đá cầu. Vì ở Việt Nam, môn đá cầu rất phổ biến.",
 "12.0": "Ừ. Chủ nhật nào mình cũng chơi đá cầu. Vì ở Việt Nam, môn đá cầu rất phổ biến.",
 "21.3": "Vậy mai mốt cậu dạy cho mình đá cầu nhé!",
 "24.1": "Vậy mai mốt cậu dạy cho mình đá cầu nhé!",
 "10.1": "Ừ, nhưng để mình chơi giỏi đã. Mình chỉ mới tập thôi.",
 "24.4": "Ừ, nhưng để mình chơi giỏi đã. Mình chỉ mới tập thôi.",
+"27.8": "Ừ, nhưng để mình chơi giỏi đã. Mình chỉ mới tập thôi.",
 "35.0": "Ừ, nhưng để mình chơi giỏi đã. Mình chỉ mới tập thôi.",
 "35.4": "Ừ, nhưng để mình chơi giỏi đã. Mình chỉ mới tập thôi.",
 "27.2": "Alô, sao hồi chiều mình gọi mà cậu không nghe máy?",
@@ -2996,9 +3251,11 @@
 "28.2": "Ừ. Nhưng mà cà phê sữa đá của Việt Nam rất ngon. Hễ rảnh là mình lại ra quán cà phê. Mình có thêm một thói quen xấu nữa rồi.",
 "46.5": "Ừ. Nhưng mà cà phê sữa đá của Việt Nam rất ngon. Hễ rảnh là mình lại ra quán cà phê. Mình có thêm một thói quen xấu nữa rồi.",
 "9.2": "Thường thì uống cà phê không xấu. Nhưng thú thật là ngày nào mình cũng mất ba, bốn tiếng ở quán cà phê! Không những tốn thời gian mà còn tốn tiền nữa.",
+"12.8": "Thường thì uống cà phê không xấu. Nhưng thú thật là ngày nào mình cũng mất ba, bốn tiếng ở quán cà phê! Không những tốn thời gian mà còn tốn tiền nữa.",
 "13.3": "Thường thì uống cà phê không xấu. Nhưng thú thật là ngày nào mình cũng mất ba, bốn tiếng ở quán cà phê! Không những tốn thời gian mà còn tốn tiền nữa.",
 "34.3": "Thường thì uống cà phê không xấu. Nhưng thú thật là ngày nào mình cũng mất ba, bốn tiếng ở quán cà phê! Không những tốn thời gian mà còn tốn tiền nữa.",
 "21.0": "À! Nếu vậy thì cậu cố gắng bỏ thói quen đó đi nhé!",
+"23.7": "À! Nếu vậy thì cậu cố gắng bỏ thói quen đó đi nhé!",
 "31.0": "À! Nếu vậy thì cậu cố gắng bỏ thói quen đó đi nhé!",
 "23.3": "Ừm... ừm! Để mình thử.",
 "17.4": "Tôi thường/hay uống cà phê sau bữa cơm.",
@@ -3027,6 +3284,7 @@
 ],
 "first": [
 "11.4",
+"12.8",
 "15.3",
 "21.3",
 "23.3",
@@ -3036,6 +3294,13 @@
 "32.0",
 "35.4",
 "37.0",
+"46.5"
+],
+"hidden": [
+"12.8",
+"23.3",
+"28.2",
+"35.4",
 "46.5"
 ]
 },
@@ -3062,6 +3327,7 @@
 "6.4",
 "9.0",
 "9.4",
+"9.6",
 "10.1",
 "10.2",
 "10.3",
@@ -3094,9 +3360,12 @@
 "25.0",
 "25.1",
 "25.4",
+"26.4",
 "27.0",
 "27.3",
 "27.7",
+"27.8",
+"27.9",
 "28.0",
 "28.1",
 "28.2",
@@ -3110,6 +3379,7 @@
 "36.2",
 "36.3",
 "37.0",
+"37.6",
 "39.3",
 "41.1",
 "47.2"
@@ -3134,6 +3404,7 @@
 "6.1": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "6.4": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "9.0": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
+"9.6": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "10.1": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "10.3": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "11.5": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
@@ -3152,6 +3423,8 @@
 "25.4": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "27.0": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "27.7": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
+"27.8": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
+"27.9": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "28.1": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "28.6": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "29.0": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
@@ -3161,6 +3434,7 @@
 "35.0": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "35.1": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "37.0": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
+"37.6": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "39.3": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "41.1": "Cái anh chàng ngồi đọc sách ở cái bàn kia có phải là anh trai của anh không?\nSơn: Ừ, đúng rồi. Sao chị biết?\nVy: Anh ấy trông có vẻ rất giống anh.\nSơn: Ừ. Ai cũng nói vậy. Thật ra, chúng tôi chỉ giống nhau ở dáng người và khuôn mặt thôi.\nVy: Vậy à?\nSơn: Ừ, mắt tôi thì một mí còn mắt ảnh thì 2 mí. Tóc tôi thì thẳng, còn tóc ảnh thì quăn.\nVy: Anh ấy có vẻ siêng học nhỉ? Ngày nào tôi cũng thấy anh ấy có mặt ở thư viện.\nSơn: Ừ, ảnh học giỏi lắm, không như tôi, tôi chỉ \"siêng\" đi chơi thôi.\nVy: Còn tính cách của anh ấy thế nào?\nSơn: Ảnh đã vui tính lại thân thiện nên được nhiều người thích. Tôi thì trái lại, đã ít nói lại nóng tính nữa...\nVy: Hai anh em anh khác nhau quá nhỉ?\nSơn: Ừ, nhưng lúc nào chúng tôi cũng đi với nhau. Chuyện gì tôi cũng hỏi ý kiến ảnh.\nVy: Có anh trai thích quá nhỉ? Có người để chia sẻ vui buồn.\nSơn: Còn chị thì sao, chị có anh chị em gì không?\nVy: Không, tôi chẳng có anh chị em gì cả. Tôi thấy ghen tị với anh quá!",
 "9.4": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
@@ -3178,6 +3452,7 @@
 "24.3": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
 "25.0": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
 "25.1": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
+"26.4": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
 "28.0": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
 "28.2": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
 "36.2": "TÂM SỰ CỦA NGUYÊN\n\nMình tên là Nguyên, 33 tuổi, sinh ra và lớn lên ở Hải Dương, là con út trong một gia đình nông dân bình thường.\n\nHọc xong đại học, mình đi làm cho một công ty thương mại, lương rất khá. Mình cao khoảng 1m75, dáng người cân đối. Nhiều đồng nghiệp nói là mình hiền lành, trung thực, tốt bụng. Bạn gái của mình làm cùng công ty. Cô ấy trắng trẻo, xinh đẹp, dáng người thon thả. Cô ấy rất quan tâm đến bề ngoài, thường đi spa và mua sắm quần áo.\n\nHiện giờ mình là nhân viên IT, còn cô ấy làm kế toán. Cả hai đều có công việc ổn định. Mình mơ ước lập gia đình với cô ấy nên đã đi làm thêm vào mỗi cuối tuần và tháng trước mình đã mua được một căn hộ chung cư.\n\nTối qua mình cầu hôn cô ấy nhưng cô ấy không đồng ý. Cô ấy bảo rằng cô ấy sợ sau khi kết hôn và sinh con, dáng người cô ấy sẽ béo ra và cô ấy sẽ xấu đi.\n\nMình thất vọng quá! Trước khi cầu hôn mình đã hy vọng rất nhiều...",
@@ -3207,6 +3482,10 @@
 "27.3",
 "41.1",
 "47.2"
+],
+"hidden": [
+"16.2",
+"23.1"
 ]
 },
 "2-12": {
@@ -3261,10 +3540,12 @@
 "24.0",
 "24.1",
 "24.4",
+"24.7",
 "25.4",
 "27.1",
 "27.6",
 "27.7",
+"27.8",
 "28.0",
 "28.1",
 "28.2",
@@ -3283,6 +3564,7 @@
 "36.1",
 "36.2",
 "37.0",
+"37.6",
 "39.0",
 "40.0",
 "40.1",
@@ -3320,12 +3602,15 @@
 "19.2": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "19.6": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "20.2": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
+"24.7": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "27.6": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
+"27.8": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "28.6": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "29.0": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "33.4": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "34.4": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "34.5": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
+"37.6": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "39.0": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "40.0": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
 "40.1": "Chị khoẻ không?\nMai: Không được khoẻ lắm. Con trai tôi làm tôi lo lắng quá!\nLâm: Có chuyện gì vậy?\nMai: Nghe cô giáo nói nó không đi học hai hôm nay rồi.\nLâm: Sao vậy? Chị có biết lý do không?\nMai: Không. Tôi cảm thấy nó có vẻ căng thẳng lắm.\nLâm: Chắc là nó bị cô giáo phạt hay là bị điểm kém nên nó chán học...\nMai: Không phải đâu! Tuần trước nó mới được cô giáo khen.\nLâm: Vậy ngoài chuyện học ra, nó còn có chuyện gì khác nữa không?\nMai: Tôi không biết. Tôi đã hỏi cả cô giáo lẫn bạn bè của nó, nhưng không ai biết.\nLâm: Vậy sao chị không nói chuyện với nó?\nMai: Ừ, chiều nay tôi sẽ nói.",
@@ -3376,6 +3661,12 @@
 "title_ko": "복습",
 "first": [
 "19.4",
+"24.7",
+"46.3"
+],
+"hidden": [
+"19.4",
+"24.7",
 "46.3"
 ]
 },
@@ -3490,6 +3781,7 @@
 "9.1",
 "12.0",
 "12.3",
+"22.7",
 "23.5",
 "25.2",
 "25.5",
@@ -3501,6 +3793,7 @@
 "3.0": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
 "3.1": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
 "4.0": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
+"22.7": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
 "25.5": "Chào anh. Xin tự giới thiệu: Tôi là Hương.",
 "4.6": "Chào anh. Xin giới thiệu với anh: Đây là anh Long, bạn tôi.",
 "25.2": "Chào anh. Xin giới thiệu với anh: Đây là anh Long, bạn tôi.",
@@ -3533,6 +3826,7 @@
 "5.1",
 "5.2",
 "5.3",
+"22.7",
 "25.5"
 ]
 },
@@ -3561,7 +3855,8 @@
 "27.1",
 "27.4",
 "27.7",
-"28.0"
+"28.0",
+"39.5"
 ],
 "ex": {
 "2.0": "Xin lỗi. Chị có phải là giáo viên không?",
@@ -3581,6 +3876,7 @@
 "6.0": "Ông làm gì ạ?",
 "3.5": "A, chúng ta đều là người Úc.",
 "28.0": "A, chúng ta đều là người Úc.",
+"39.5": "A, chúng ta đều là người Úc.",
 "4.7": "Thế còn kia là...?",
 "27.1": "Thế còn kia là...?",
 "27.4": "Thế còn kia là...?",
@@ -3593,7 +3889,8 @@
 "5.6",
 "27.1",
 "27.4",
-"28.0"
+"28.0",
+"39.5"
 ]
 },
 "s1-4": {
@@ -3625,6 +3922,8 @@
 "27.0",
 "27.1",
 "27.4",
+"27.8",
+"39.5",
 "46.2"
 ],
 "ex": {
@@ -3635,12 +3934,14 @@
 "4.7": "Thế còn kia là con gì?",
 "27.1": "Thế còn kia là con gì?",
 "27.4": "Thế còn kia là con gì?",
+"39.5": "À, đó là con bò.",
 "4.9": "Còn đây, cái này tiếng Việt gọi là cái gì?",
 "27.0": "Còn đây, cái này tiếng Việt gọi là cái gì?",
 "5.4": "Cái máy này thế nào?",
 "9.0": "Cái máy này thế nào?",
 "12.0": "Nó cũ nhưng rất tốt.",
 "12.3": "Nó cũ nhưng rất tốt.",
+"27.8": "Nó cũ nhưng rất tốt.",
 "5.0": "Còn kia, kia có phải là quyển từ điển Việt-Nhật không?",
 "5.1": "Còn kia, kia có phải là quyển từ điển Việt-Nhật không?",
 "5.7": "Còn kia, kia có phải là quyển từ điển Việt-Nhật không?",
@@ -3661,6 +3962,7 @@
 "5.4",
 "9.0",
 "12.2",
+"27.8",
 "46.2"
 ]
 },
@@ -3763,6 +4065,7 @@
 "8.0",
 "9.0",
 "9.3",
+"9.6",
 "12.0",
 "12.1",
 "12.2",
@@ -3782,13 +4085,15 @@
 "27.4",
 "27.5",
 "27.7",
+"27.8",
 "33.0",
 "33.3",
 "33.5",
 "35.0",
 "35.1",
 "35.2",
-"39.3"
+"39.3",
+"39.5"
 ],
 "ex": {
 "3.0": "Ngôi nhà này của chị phải không?",
@@ -3822,6 +4127,7 @@
 "27.1": "Thế còn tiếng Việt thế nào?",
 "27.4": "Thế còn tiếng Việt thế nào?",
 "4.4": "Tiếng Việt cũng khó nhưng tiếng Nhật khó hơn tiếng Việt.",
+"27.8": "Tiếng Việt cũng khó nhưng tiếng Nhật khó hơn tiếng Việt.",
 "33.0": "Tiếng Việt cũng khó nhưng tiếng Nhật khó hơn tiếng Việt.",
 "5.3": "Thế à? Thế tiếng Anh và tiếng Việt, tiếng nào dễ hơn?",
 "6.1": "Thế à? Thế tiếng Anh và tiếng Việt, tiếng nào dễ hơn?",
@@ -3833,17 +4139,20 @@
 "18.2": "Ô, chúng mình cao bằng nhau. Còn Martin cao 1m70.",
 "25.4": "Ô, chúng mình cao bằng nhau. Còn Martin cao 1m70.",
 "33.5": "Ô, chúng mình cao bằng nhau. Còn Martin cao 1m70.",
+"39.5": "Ô, chúng mình cao bằng nhau. Còn Martin cao 1m70.",
 "35.0": "Ừ. Nhưng quyển từ điển của Mary chỉ có 800 trang thôi.",
 "35.1": "Ừ. Nhưng quyển từ điển của Mary chỉ có 800 trang thôi.",
 "35.2": "Ừ. Nhưng quyển từ điển của Mary chỉ có 800 trang thôi.",
 "27.5": "Thế thì quyển của tớ dày nhất, của Mary mỏng nhất.",
 "33.3": "Thế thì quyển của tớ dày nhất, của Mary mỏng nhất.",
-"3.2": "Anh ấy có ô tô."
+"3.2": "Anh ấy có ô tô.",
+"9.6": "Lớp tôi có nhiều sinh viên Nhật."
 },
 "first": [
 "6.1",
 "8.0",
 "9.3",
+"9.6",
 "12.7",
 "15.1",
 "16.2",
@@ -3907,7 +4216,8 @@
 "27.7",
 "28.4",
 "38.0",
-"38.3"
+"38.3",
+"38.7"
 ],
 "ex": {
 "3.0": "Sáng nay em có học tiếng Việt không?",
@@ -3940,6 +4250,7 @@
 "38.3": "Hà ơi, em đang làm gì đấy?",
 "4.9": "Nó ở trên bàn kia kìa.",
 "17.4": "Nó ở trên bàn kia kìa.",
+"38.7": "Nó ở trên bàn kia kìa.",
 "4.3": "Đây rồi. Còn cái bút, cái bút của em ở đâu?",
 "4.6": "Đây rồi. Còn cái bút, cái bút của em ở đâu?",
 "11.5": "Đây rồi. Còn cái bút, cái bút của em ở đâu?",
@@ -3964,7 +4275,8 @@
 "14.0",
 "17.0",
 "17.4",
-"17.7"
+"17.7",
+"38.7"
 ]
 },
 "s1-8": {
