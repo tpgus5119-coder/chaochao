@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """주간시험 3 모의고사 2 — 날짜·일정 (교재 1권 9과 중심: thứ·ngày tháng · bao giờ · xong · 끝말 đấy · đã … chưa)"""
 from common3 import *
+from a3_trap import A3T
 NO = 2
 q = []
 q += [TF("đi công tác", "Anh ấy đang đi công tác.", "그는 출장을 가고 있어요.", True),
@@ -13,16 +14,7 @@ q += PKS(NO, [("vé máy bay", "Cô ấy đang đặt vé máy bay trên mạng.
               ("đi chợ", "Chủ nhật cô ấy đi chợ.", "일요일에 그녀는 장을 보러 가요.", "mock3-2-pc.webp"),
               ("khách hàng", "Cô ấy đang chờ khách hàng ở quán cà phê.", "그녀는 카페에서 고객을 기다리고 있어요.", "mock3-2-pd.webp"),
               ("sinh nhật", "Hôm nay là sinh nhật cô ấy.", "오늘은 그녀의 생일이에요.", "mock3-2-pe.webp")])   # 듣기 2 — 실제 2차 시험지처럼 한 사람의 다섯 장면(새로 그림, 2026-10-13)
-q += [A3s("Bao giờ chị Loan đi Hà Nội?", "로안 씨는 언제 하노이에 가요?", "Thứ năm tuần này chị Loan đi Hà Nội để gặp khách hàng.", "이번 주 목요일에 로안 씨는 고객을 만나러 하노이에 가요.", ["thứ năm tuần này", "thứ năm tuần sau", "thứ ba tuần này"]),
-      A3s("Sinh nhật anh Hiroki là ngày nào?", "히로키 씨의 생일은 언제예요?", "Sinh nhật của anh Hiroki là ngày 20 tháng 8.", "히로키 씨의 생일은 8월 20일이에요.", ["ngày 20 tháng 8", "ngày 28 tháng 2", "ngày 8 tháng 12"]),
-      A3s("Anh David đi công tác ở đâu?", "데이비드 씨는 어디로 출장을 갔어요?", "Anh David đi công tác ở Đà Nẵng từ thứ hai.", "데이비드 씨는 월요일부터 다낭에 출장 중이에요.", ["Đà Nẵng", "Hà Nội", "Nha Trang"]),
-      A3s("Hôm qua tôi đi chợ với ai?", "어제 나는 누구와 시장에 갔어요?", "Hôm qua tôi dọn dẹp nhà xong rồi đi chợ với mẹ.", "어제 저는 집 청소를 끝내고 어머니와 시장에 갔어요.", ["với mẹ", "với bạn", "một mình"]),
-      A3s("Bạn tôi không nhớ gì?", "내 친구는 무엇을 기억하지 못했어요?", "Chủ nhật tuần trước là sinh nhật của tôi nhưng bạn tôi không nhớ.", "지난주 일요일이 제 생일이었는데 친구가 기억하지 못했어요.", ["sinh nhật của tôi", "tên của tôi", "nhà của tôi"]),
-      A3d("Anh ấy đặt vé bao giờ?", "그는 언제 표를 예약했어요?", [("Anh đã đặt vé máy bay chưa?", "비행기 표 예약했어요?"), ("Rồi, tôi đặt xong hôm qua.", "네, 어제 예약했어요.")], ["hôm qua", "hôm nay", "tuần trước"], 'fm'),
-      A3d("Hôm nay là thứ mấy?", "오늘은 무슨 요일이에요?", [("Hôm nay thứ mấy vậy anh?", "오늘 무슨 요일이에요?"), ("Thứ sáu. Sắp cuối tuần rồi đấy!", "금요일이요. 곧 주말이에요!")], ["thứ sáu", "thứ bảy", "chủ nhật"], 'mf'),
-      A3d("Bao giờ ba mẹ anh ấy đến Việt Nam?", "그의 부모님은 언제 베트남에 와요?", [("Bao giờ ba mẹ anh đến Việt Nam?", "부모님은 언제 베트남에 오세요?"), ("Thứ ba tuần sau.", "다음 주 화요일이요.")], ["thứ ba tuần sau", "thứ ba tuần này", "thứ hai tuần sau"], 'fm'),
-      A3d("Tối nay anh ấy làm gì?", "오늘 저녁 그는 무엇을 해요?", [("Tối nay chúng ta đi ăn nhé?", "오늘 저녁 우리 밥 먹으러 갈까요?"), ("Xin lỗi, tôi có hẹn với bạn rồi.", "미안해요, 친구와 약속이 있어요.")], ["gặp bạn", "đi ăn với chị ấy", "ở nhà"], 'mf'),
-      A3d("Bao giờ chị ấy gọi điện thoại cho khách hàng?", "그녀는 언제 고객에게 전화해요?", [("Chị đã gọi điện thoại cho khách hàng chưa?", "고객에게 전화했어요?"), ("Chưa, chiều nay tôi sẽ gọi.", "아직이요, 오늘 오후에 할 거예요.")], ["chiều nay", "sáng nay", "hôm qua"], 'fm')]
+q += A3T[2]   # 듣기 3 — 실제 시험처럼 오답 보기도 들리게 (tools/mock3/a3_trap.py, 2026-10-13)
 q += [A4s("Thứ [hai] tuần sau tôi đi Nha Trang.", "다음 주 월요일에 저는 나트랑에 가요."),
       A4s("Ngày mai tôi đi [Huế] đấy!", "내일 저 후에에 가요!"),
       A4s("Chị ấy [làm việc] xong rồi.", "그녀는 일을 다 끝냈어요."),

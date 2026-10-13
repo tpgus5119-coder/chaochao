@@ -1,5 +1,5 @@
 {
- "note": "주간시험 3 모의고사 4 — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1차 시험지 꼴(tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화. 클로드가 냄(2026-10-13).",
+ "note": "주간시험 3 모의고사 4 — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1·2차 시험지 꼴(둘은 틀이 같다 — 다른 곳은 읽기 4 방향·쓰기 시간·말하기 낱말 출처뿐, tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화, 듣기 3 은 오답 보기도 들리게(a3_trap.py), 소리는 두 번. 클로드가 냄(2026-10-13).",
  "title": "모의고사 4",
  "time": 90,
  "pts": {
@@ -173,35 +173,35 @@
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Bao giờ tôi đặt tour?",
-   "audio": "Thứ bảy này tôi sẽ đặt tour đi Đà Nẵng.",
+   "audio": "Hôm nay là thứ năm. Thứ bảy này tôi sẽ đặt tour đi Đà Nẵng.",
    "opts": [
-    "thứ bảy tuần sau",
+    "chủ nhật này",
     "thứ bảy này",
-    "chủ nhật này"
+    "thứ năm"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Thứ bảy này tôi sẽ đặt tour đi Đà Nẵng.\n이번 토요일에 다낭 가는 여행 상품을 예약할 거예요.\n물음: Bao giờ tôi đặt tour? — 나는 언제 여행 상품을 예약해요?\n답: thứ bảy này"
+   "exp": "들은 말: Hôm nay là thứ năm. Thứ bảy này tôi sẽ đặt tour đi Đà Nẵng.\n오늘은 목요일이에요. 이번 토요일에 다낭 가는 여행 상품을 예약할 거예요.\n물음: Bao giờ tôi đặt tour? — 나는 언제 여행 상품을 예약해요?\n답: thứ bảy này"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Sơn học tiếng Hàn bao lâu?",
-   "audio": "Sơn đã học tiếng Hàn ở Seoul hơn một năm.",
+   "audio": "Sơn đã sống ở Seoul hai năm và học tiếng Hàn ở đó hơn một năm.",
    "opts": [
-    "hai năm",
     "một tháng",
+    "hai năm",
     "hơn một năm"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 말: Sơn đã học tiếng Hàn ở Seoul hơn một năm.\n선은 서울에서 1년 넘게 한국어를 배웠어요.\n물음: Sơn học tiếng Hàn bao lâu? — 선은 한국어를 얼마나 배웠어요?\n답: hơn một năm"
+   "exp": "들은 말: Sơn đã sống ở Seoul hai năm và học tiếng Hàn ở đó hơn một năm.\n선은 서울에서 2년 살았고, 거기서 1년 넘게 한국어를 배웠어요.\n물음: Sơn học tiếng Hàn bao lâu? — 선은 한국어를 얼마나 배웠어요?\n답: hơn một năm"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Tại sao hôm nay tôi không đi làm?",
-   "audio": "Hôm nay tôi không đi làm vì phải đến sân bay đón mẹ.",
+   "audio": "Hôm nay tôi không mệt, nhưng tôi không đi làm vì phải đến sân bay đón mẹ.",
    "opts": [
     "vì đi du lịch",
     "vì phải đón mẹ",
@@ -209,27 +209,27 @@
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Hôm nay tôi không đi làm vì phải đến sân bay đón mẹ.\n오늘은 엄마를 마중하러 공항에 가야 해서 출근하지 않아요.\n물음: Tại sao hôm nay tôi không đi làm? — 왜 오늘 나는 출근하지 않아요?\n답: vì phải đón mẹ"
+   "exp": "들은 말: Hôm nay tôi không mệt, nhưng tôi không đi làm vì phải đến sân bay đón mẹ.\n오늘 피곤하지는 않지만, 엄마를 마중하러 공항에 가야 해서 출근하지 않아요.\n물음: Tại sao hôm nay tôi không đi làm? — 왜 오늘 나는 출근하지 않아요?\n답: vì phải đón mẹ"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Chị Lan thế nào?",
-   "audio": "Chị Lan khá bận nên chưa đi chợ.",
+   "prompt": "Dạo này chị Lan thế nào?",
+   "audio": "Dạo này chị Lan khá bận nên chưa đi chợ được.",
    "opts": [
-    "hơi mệt",
+    "khá rảnh",
     "khá bận",
-    "khá rảnh"
+    "khá buồn"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Chị Lan khá bận nên chưa đi chợ.\n란 씨는 꽤 바빠서 아직 장을 보러 가지 못했어요.\n물음: Chị Lan thế nào? — 란 씨는 어때요?\n답: khá bận"
+   "exp": "들은 말: Dạo này chị Lan khá bận nên chưa đi chợ được.\n요즘 란 씨는 꽤 바빠서 아직 장을 보러 가지 못했어요.\n물음: Dạo này chị Lan thế nào? — 요즘 란 씨는 어때요?\n답: khá bận"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Tối thứ sáu tôi đi với ai?",
-   "audio": "Tối thứ sáu tôi cùng bạn thân đi uống cà phê.",
+   "prompt": "Tối thứ sáu tôi đi uống cà phê với ai?",
+   "audio": "Chị gái tôi bận nên tối thứ sáu tôi đi uống cà phê với bạn thân.",
    "opts": [
     "với bạn thân",
     "một mình",
@@ -237,13 +237,13 @@
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 말: Tối thứ sáu tôi cùng bạn thân đi uống cà phê.\n금요일 저녁에 저는 친한 친구와 함께 커피 마시러 가요.\n물음: Tối thứ sáu tôi đi với ai? — 금요일 저녁에 나는 누구와 가요?\n답: với bạn thân"
+   "exp": "들은 말: Chị gái tôi bận nên tối thứ sáu tôi đi uống cà phê với bạn thân.\n언니가 바빠서 금요일 저녁에는 친한 친구와 커피를 마시러 가요.\n물음: Tối thứ sáu tôi đi uống cà phê với ai? — 금요일 저녁에 나는 누구와 커피를 마시러 가요?\n답: với bạn thân"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Anh ấy làm việc xong chưa?",
-   "audio": "Anh làm việc xong chưa?\nChưa, tôi còn nhiều việc lắm.",
+   "audio": "Anh làm việc xong chưa?\nChưa. Việc này xong rồi, nhưng tôi còn hai việc nữa.",
    "voices": "fm",
    "opts": [
     "chưa xong",
@@ -252,67 +252,67 @@
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n여: Anh làm việc xong chưa? — 일 다 끝났어요?\n남: Chưa, tôi còn nhiều việc lắm. — 아니요, 아직 일이 많아요.\n물음: Anh ấy làm việc xong chưa? — 그는 일을 다 끝냈어요?\n답: chưa xong"
+   "exp": "들은 대화\n여: Anh làm việc xong chưa? — 일 다 끝났어요?\n남: Chưa. Việc này xong rồi, nhưng tôi còn hai việc nữa. — 아직이요. 이 일은 끝났는데 두 가지가 더 남았어요.\n물음: Anh ấy làm việc xong chưa? — 그는 일을 다 끝냈어요?\n답: chưa xong"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Thứ bảy này chị ấy thế nào?",
-   "audio": "Thứ bảy này chị rảnh chứ?\nKhông, thứ bảy tôi có hẹn rồi.",
+   "prompt": "Chiều thứ bảy chị ấy thế nào?",
+   "audio": "Thứ bảy này chị rảnh chứ?\nSáng thứ bảy tôi có hẹn, nhưng buổi chiều tôi rảnh.",
    "voices": "mf",
    "opts": [
-    "rảnh",
     "có hẹn",
+    "rảnh",
     "đi làm"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 대화\n남: Thứ bảy này chị rảnh chứ? — 이번 토요일에 한가하죠?\n여: Không, thứ bảy tôi có hẹn rồi. — 아니요, 토요일엔 약속이 있어요.\n물음: Thứ bảy này chị ấy thế nào? — 이번 토요일에 그녀는 어때요?\n답: có hẹn"
+   "exp": "들은 대화\n남: Thứ bảy này chị rảnh chứ? — 이번 토요일에 한가하죠?\n여: Sáng thứ bảy tôi có hẹn, nhưng buổi chiều tôi rảnh. — 토요일 아침엔 약속이 있는데, 오후엔 한가해요.\n물음: Chiều thứ bảy chị ấy thế nào? — 토요일 오후에 그녀는 어때요?\n답: rảnh"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Anh ấy đặt vé bao giờ?",
-   "audio": "Anh đặt vé xe lửa chưa?\nRồi, tôi đặt hôm qua.",
+   "prompt": "Anh ấy đi xe lửa ngày nào?",
+   "audio": "Anh đặt vé xe lửa ngày 15 phải không?\nKhông, ngày 16. Ngày 15 tôi còn làm việc.",
    "voices": "fm",
    "opts": [
-    "hôm qua",
-    "ngày mai",
-    "hôm nay"
+    "ngày 16",
+    "ngày 6",
+    "ngày 15"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n여: Anh đặt vé xe lửa chưa? — 기차표 예약했어요?\n남: Rồi, tôi đặt hôm qua. — 네, 어제 예약했어요.\n물음: Anh ấy đặt vé bao giờ? — 그는 표를 언제 예약했어요?\n답: hôm qua"
+   "exp": "들은 대화\n여: Anh đặt vé xe lửa ngày 15 phải không? — 15일 기차표 예약했죠?\n남: Không, ngày 16. Ngày 15 tôi còn làm việc. — 아니요, 16일이요. 15일에는 아직 일해요.\n물음: Anh ấy đi xe lửa ngày nào? — 그는 언제 기차를 타요?\n답: ngày 16"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Bao giờ chị ấy trở lại Việt Nam?",
-   "audio": "Bao giờ chị trở lại Việt Nam?\nTháng sau.",
+   "prompt": "Họ đang ở đâu?",
+   "audio": "Chào chị, chị muốn mua vé đi đâu?\nCho tôi một vé đi Nha Trang thứ sáu này.",
    "voices": "mf",
    "opts": [
-    "tuần sau",
-    "năm sau",
-    "tháng sau"
+    "ở bệnh viện",
+    "ở trường học",
+    "ở ga xe lửa"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 대화\n남: Bao giờ chị trở lại Việt Nam? — 언제 베트남에 돌아와요?\n여: Tháng sau. — 다음 달이요.\n물음: Bao giờ chị ấy trở lại Việt Nam? — 그녀는 언제 베트남에 돌아와요?\n답: tháng sau"
+   "exp": "들은 대화\n남: Chào chị, chị muốn mua vé đi đâu? — 안녕하세요, 어디 가는 표를 사시겠어요?\n여: Cho tôi một vé đi Nha Trang thứ sáu này. — 이번 금요일 나트랑 가는 표 한 장 주세요.\n물음: Họ đang ở đâu? — 그들은 어디에 있어요?\n답: ở ga xe lửa"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Khi nào em ấy gọi cho mẹ?",
-   "audio": "Em nhớ gọi điện thoại cho mẹ nhé.\nVâng, tối nay em sẽ gọi.",
+   "prompt": "Em ấy gọi điện thoại cho mẹ chưa?",
+   "audio": "Em gọi điện thoại cho mẹ rồi à?\nDạ chưa, tối nay em sẽ gọi.",
    "voices": "fm",
    "opts": [
-    "bây giờ",
-    "sáng mai",
-    "tối nay"
+    "Có",
+    "Rồi",
+    "Chưa"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 대화\n여: Em nhớ gọi điện thoại cho mẹ nhé. — 엄마한테 꼭 전화해.\n남: Vâng, tối nay em sẽ gọi. — 네, 오늘 저녁에 할게요.\n물음: Khi nào em ấy gọi cho mẹ? — 그는 언제 엄마에게 전화해요?\n답: tối nay"
+   "exp": "들은 대화\n여: Em gọi điện thoại cho mẹ rồi à? — 엄마한테 벌써 전화했어?\n남: Dạ chưa, tối nay em sẽ gọi. — 아직이요, 오늘 저녁에 할게요.\n물음: Em ấy gọi điện thoại cho mẹ chưa? — 그는 엄마에게 전화했어요?\n답: Chưa"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",

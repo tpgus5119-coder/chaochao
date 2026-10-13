@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """주간시험 3 모의고사 5 — 8~10과 섞기 2 (được·không V được · mới · bao lâu · đừng · đi · đã … chưa · xong · còn · khá · 가족)"""
 from common3 import *
+from a3_trap import A3T
 NO = 5
 q = []
 q += [TF("tặng", "Anh ấy đang ăn cơm.", "그는 밥을 먹고 있어요.", False),
@@ -13,16 +14,7 @@ q += PKS(NO, [("dọn dẹp", "Anh ấy đang dọn dẹp phòng.", "그는 방�
               ("đi dạo", "Anh ấy đang đi dạo ở biển.", "그는 바닷가를 산책하고 있어요.", "mock3-5-pc.webp"),
               ("ngủ", "Anh ấy đang ngủ.", "그는 자고 있어요.", "mock3-5-pd.webp"),
               ("làm việc", "Anh ấy đang làm việc ở công ty.", "그는 회사에서 일하고 있어요.", "mock3-5-pe.webp")])   # 듣기 2 — 실제 2차 시험지처럼 한 사람의 다섯 장면(새로 그림, 2026-10-13)
-q += [A3s("Anh Tom nói được mấy thứ tiếng?", "톰 씨는 몇 나라 말을 할 수 있어요?", "Anh Tom nói được tiếng Anh, tiếng Pháp và tiếng Việt.", "톰 씨는 영어, 프랑스어, 베트남어를 할 수 있어요.", ["ba thứ tiếng", "hai thứ tiếng", "bốn thứ tiếng"]),
-      A3s("Tôi đã làm ở công ty này bao lâu?", "나는 이 회사에서 얼마나 일했어요?", "Tôi đã làm việc ở công ty này được năm năm.", "저는 이 회사에서 일한 지 5년 됐어요.", ["năm năm", "năm tháng", "một năm"]),
-      A3s("Chủ nhật tuần trước tôi đi thăm ai?", "지난주 일요일에 나는 누구를 찾아갔어요?", "Chủ nhật tuần trước tôi cùng vợ đi thăm bố mẹ.", "지난주 일요일에 저는 아내와 함께 부모님을 뵈러 갔어요.", ["bố mẹ", "bạn thân", "khách hàng"]),
-      A3s("Em trai tôi về nước bao giờ?", "남동생은 언제 귀국했어요?", "Em trai tôi mới về nước tuần trước.", "남동생은 지난주에 막 귀국했어요.", ["tuần trước", "tháng trước", "hôm qua"]),
-      A3s("Ngày mai là thứ mấy?", "내일은 무슨 요일이에요?", "Ngày mai là thứ năm, ngày 15 tháng 10.", "내일은 목요일, 10월 15일이에요.", ["thứ năm", "thứ tư", "thứ sáu"]),
-      A3d("Chị ấy có ai?", "그녀에게는 누가 있어요?", [("Chị có anh chị em không?", "형제 있어요?"), ("Có, tôi có một anh trai.", "네, 오빠가 한 명 있어요.")], ["một anh trai", "một em gái", "không có ai"], 'fm'),
-      A3d("Anh ấy còn ở Hà Nội bao lâu nữa?", "그는 하노이에 얼마나 더 있어요?", [("Anh còn ở Hà Nội bao lâu nữa?", "하노이에 얼마나 더 있어요?"), ("Khoảng một tuần nữa.", "일주일쯤 더요.")], ["khoảng một tuần nữa", "khoảng một tháng nữa", "hai ngày nữa"], 'mf'),
-      A3d("Em ấy làm bài tập chưa?", "그 아이는 숙제를 했어요?", [("Em làm bài tập xong chưa?", "숙제 다 했어?"), ("Em làm xong rồi.", "다 했어요.")], ["xong rồi", "chưa xong", "chưa làm"], 'fm'),
-      A3d("Chị ấy nói tiếng Anh thế nào?", "그녀는 영어를 어떻게 해요?", [("Chị nói tiếng Anh được không?", "영어 할 수 있어요?"), ("Được, nhưng không giỏi lắm.", "네, 하지만 아주 잘하지는 못해요.")], ["được nhưng không giỏi", "rất giỏi", "không nói được"], 'mf'),
-      A3d("Tại sao hôm nay anh ấy vui?", "왜 오늘 그는 기뻐요?", [("Sao hôm nay anh vui thế?", "오늘 왜 이렇게 기뻐요?"), ("Hôm nay là sinh nhật tôi.", "오늘 제 생일이에요.")], ["vì là sinh nhật anh ấy", "vì gặp bạn thân", "vì đi du lịch"], 'fm')]
+q += A3T[5]   # 듣기 3 — 실제 시험처럼 오답 보기도 들리게 (tools/mock3/a3_trap.py, 2026-10-13)
 q += [A4s("Tôi mới học tiếng Hàn [ba] tháng.", "저는 한국어를 배운 지 석 달밖에 안 됐어요."),
       A4s("Chị đừng [lo lắng] quá.", "너무 걱정하지 마세요."),
       A4s("Món này khá [ngon].", "이 음식은 꽤 맛있어요."),

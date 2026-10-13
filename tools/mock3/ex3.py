@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """주간시험 3 모의고사 3 — 가족 (교재 1권 10과 중심: còn · cùng · khá · 끝말 chứ · 가족 낱말·나이 견주기)"""
 from common3 import *
+from a3_trap import A3T
 NO = 3
 q = []
 q += [TF("kết hôn", "Hôm nay họ kết hôn.", "오늘 그들은 결혼해요.", True),
@@ -13,16 +14,7 @@ q += PKS(NO, [("con trai", "Ông ấy đang chơi với con trai.", "그는 아�
               ("vợ", "Ông ấy đang xem tivi với vợ.", "그는 아내와 텔레비전을 보고 있어요.", "mock3-3-pc.webp"),
               ("đón", "Ông ấy đang đón vợ ở sân bay.", "그는 공항에서 아내를 마중하고 있어요.", "mock3-3-pd.webp"),
               ("đọc báo", "Ông ấy đang đọc báo.", "그는 신문을 읽고 있어요.", "mock3-3-pe.webp")])   # 듣기 2 — 실제 2차 시험지처럼 한 사람의 다섯 장면(새로 그림, 2026-10-13)
-q += [A3s("Gia đình anh David có mấy người?", "데이비드 씨 가족은 몇 명이에요?", "Gia đình anh David có sáu người: bố mẹ, anh ấy, một chị, một em gái và một em trai.", "데이비드 씨 가족은 여섯 명이에요. 부모님, 데이비드 씨, 누나 한 명, 여동생 한 명, 남동생 한 명이에요.", ["sáu người", "năm người", "bốn người"]),
-      A3s("Năm nay tôi bao nhiêu tuổi?", "올해 나는 몇 살이에요?", "Em trai út của tôi năm nay 23 tuổi, nhỏ hơn tôi 4 tuổi.", "제 막내 남동생은 올해 스물세 살이고, 저보다 네 살 어려요.", ["27 tuổi", "23 tuổi", "19 tuổi"]),
-      A3s("Mẹ tôi thế nào?", "우리 어머니는 어때요?", "Bố tôi mất rồi. Còn mẹ tôi đã về hưu.", "아버지는 돌아가셨어요. 그리고 어머니는 은퇴하셨어요.", ["đã về hưu", "còn làm việc", "mất rồi"]),
-      A3s("Ai còn độc thân?", "누가 아직 미혼이에요?", "Chị gái tôi lập gia đình rồi. Còn anh trai tôi vẫn độc thân.", "언니는 결혼했어요. 그런데 오빠는 여전히 미혼이에요.", ["anh trai tôi", "chị gái tôi", "em gái tôi"]),
-      A3s("Cuối tuần tôi đi bộ với ai?", "주말에 나는 누구와 걸어요?", "Cuối tuần tôi thường cùng bố đi bộ ở công viên.", "주말에 저는 보통 아버지와 함께 공원을 걸어요.", ["với bố", "với mẹ", "một mình"]),
-      A3d("Anh ấy là con thứ mấy?", "그는 몇째예요?", [("Anh là con thứ mấy trong gia đình?", "집에서 몇째예요?"), ("Tôi là con cả.", "저는 맏이예요.")], ["con cả", "con út", "con thứ hai"], 'fm'),
-      A3d("Anh ấy đi sân bay làm gì?", "그는 공항에 무엇을 하러 가요?", [("Anh đi đâu vậy?", "어디 가요?"), ("Tôi đi sân bay đón bà ngoại.", "외할머니를 마중하러 공항에 가요.")], ["đón bà ngoại", "đi du lịch", "đi công tác"], 'mf'),
-      A3d("Bố mẹ chị ấy làm nghề gì?", "그녀의 부모님은 무슨 일을 해요?", [("Bố mẹ chị còn làm việc không?", "부모님은 아직 일하세요?"), ("Còn chứ! Bố mẹ tôi đều là giáo viên.", "물론이죠! 부모님 두 분 다 교사예요.")], ["giáo viên", "bác sĩ", "đã về hưu"], 'fm'),
-      A3d("Chị ấy có mấy anh chị em?", "그녀는 형제가 몇이에요?", [("Chị có mấy anh chị em?", "형제가 몇이에요?"), ("Tôi là con một.", "저는 외동이에요.")], ["không có", "một người", "hai người"], 'mf'),
-      A3d("Em gái anh ấy đã kết hôn chưa?", "그의 여동생은 결혼했어요?", [("Em gái anh có gia đình chưa?", "여동생은 결혼했어요?"), ("Rồi, em ấy có gia đình hai năm rồi.", "네, 결혼한 지 2년 됐어요.")], ["rồi", "chưa", "sắp kết hôn"], 'fm')]
+q += A3T[3]   # 듣기 3 — 실제 시험처럼 오답 보기도 들리게 (tools/mock3/a3_trap.py, 2026-10-13)
 q += [A4s("Gia đình tôi có [năm] người.", "우리 가족은 다섯 명이에요."),
       A4s("Nhà tôi khá xa [trường].", "우리 집은 학교에서 꽤 멀어요."),
       A4s("Tôi và [bạn thân] cùng tuổi.", "저와 친한 친구는 동갑이에요."),

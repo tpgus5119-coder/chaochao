@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """주간시험 3(교재 1권 8~10과 — 대표님 2026-10-13 "범위는 일단 8~10으로 해봐, 주간시험 ㄱㄱ") 모의고사 공통 틀.
 틀은 주간시험 2 모의고사와 같은 **실제 1차 시험지 꼴**(tools/mock2/common.py 머리글) — 86문항, 90분, A30·B30·C20·D20.
+실제 1·2차 시험지를 맞대 보니 틀은 같다(2026-10-13). 다른 곳: ① 읽기 4 — 1차는 A~J 가 물음·1~10 이 대답, 2차는 A~J 가 대답·1~10 이 먼저 하는 말(제목도 'Ghép các câu thành hội thoại phù hợp') → 2차 꼴(B4S)
+② 쓰기 시간 40분 → 30분(합계 90분은 그대로) ③ 말하기 — 1차는 배운 낱말, 2차는 교재 발음 목록(PHÁT ÂM) 낱말·문장 → 2차 꼴(D).
+2회차 녹음: 문항마다 두 번 읽음(앱도 두 번 틂), 듣기 3 은 오답 보기도 들리게(a3_trap.py).
 주간시험 2 와 다른 두 곳 (대표님 2026-10-12, 실제 2회차 듣기 녹음과 견주고 고른 2·3번):
   · 듣기 3·4 의 1~5번은 한 사람이 읽는 문장, 6~10번만 두 사람 짧은 대화(한 줄 5~9음절쯤). 듣기 4 의 6~10번은 물음·대답을 **둘 다** 들려준다.
   · 대화 목소리를 번갈아 — 문항마다 여→남 / 남→여 를 바꾸고(x['voices']), 물음과 대답 사이 1초(dialog_audio3.py).
@@ -146,6 +149,8 @@ def build(no, q):
     a3 = [x for x in q if x['sec'].startswith('A 듣기 · 3')]; a4 = [x for x in q if x['sec'].startswith('A 듣기 · 4')]
     for L in (a3, a4):                                             # 1~5 한 사람 문장 · 6~10 두 사람 대화 (2026-10-12 2번)
         assert all('\n' not in x['audio'] for x in L[:5]) and all(x['audio'].count('\n') == 1 for x in L[5:]), (no, '듣기 3·4 꼴')
+    trap = sum(1 for x in a3 if any(i != 0 and o.lower() in x['audio'].lower() for i, o in enumerate(x['opts'])))   # 실제 시험처럼 오답 보기도 들리게 — 열에 다섯 이상 (a3_trap.py, 2026-10-13)
+    assert trap >= 5, (no, '듣기 3 함정', trap)
     vs = [x['voices'] for x in q if x.get('voices')]
     assert len(set(vs)) == 2 and abs(vs.count('fm') - vs.count('mf')) <= 1, (no, '대화 목소리 번갈아', vs)   # 2026-10-12 3번
     bad = {}
@@ -202,7 +207,7 @@ def build(no, q):
                         if k in LES: kinds[k] = LES[k]; i += n; break
                     else: i += 1
     share = round(100 * sum(1 for k, b in kinds.items() if b >= 8) / max(1, len(kinds)))
-    out = {"note": f"주간시험 3 모의고사 {no} — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1차 시험지 꼴(tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화. 클로드가 냄(2026-10-13).",
+    out = {"note": f"주간시험 3 모의고사 {no} — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1·2차 시험지 꼴(둘은 틀이 같다 — 다른 곳은 읽기 4 방향·쓰기 시간·말하기 낱말 출처뿐, tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화, 듣기 3 은 오답 보기도 들리게(a3_trap.py), 소리는 두 번. 클로드가 냄(2026-10-13).",
            "title": f"모의고사 {no}", "time": 90, "pts": {"A": 30, "B": 30, "C": 20, "D": 20}, "q": q}
     json.dump(out, open(R / f'data/mock3_{no}.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     aud = []

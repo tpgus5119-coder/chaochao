@@ -1,5 +1,5 @@
 {
- "note": "주간시험 3 모의고사 3 — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1차 시험지 꼴(tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화. 클로드가 냄(2026-10-13).",
+ "note": "주간시험 3 모의고사 3 — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1·2차 시험지 꼴(둘은 틀이 같다 — 다른 곳은 읽기 4 방향·쓰기 시간·말하기 낱말 출처뿐, tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화, 듣기 3 은 오답 보기도 들리게(a3_trap.py), 소리는 두 번. 클로드가 냄(2026-10-13).",
  "title": "모의고사 3",
  "time": 90,
  "pts": {
@@ -173,7 +173,7 @@
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Gia đình anh David có mấy người?",
-   "audio": "Gia đình anh David có sáu người: bố mẹ, anh ấy, một chị, một em gái và một em trai.",
+   "audio": "Gia đình anh David có bố mẹ, anh ấy, một chị gái và hai em trai.",
    "opts": [
     "bốn người",
     "sáu người",
@@ -181,7 +181,7 @@
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Gia đình anh David có sáu người: bố mẹ, anh ấy, một chị, một em gái và một em trai.\n데이비드 씨 가족은 여섯 명이에요. 부모님, 데이비드 씨, 누나 한 명, 여동생 한 명, 남동생 한 명이에요.\n물음: Gia đình anh David có mấy người? — 데이비드 씨 가족은 몇 명이에요?\n답: sáu người"
+   "exp": "들은 말: Gia đình anh David có bố mẹ, anh ấy, một chị gái và hai em trai.\n데이비드 씨 가족은 부모님, 데이비드 씨, 누나 한 명, 남동생 두 명이에요.\n물음: Gia đình anh David có mấy người? — 데이비드 씨 가족은 몇 명이에요?\n답: sáu người"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
@@ -229,7 +229,7 @@
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Cuối tuần tôi đi bộ với ai?",
-   "audio": "Cuối tuần tôi thường cùng bố đi bộ ở công viên.",
+   "audio": "Bố tôi thích đi bộ, còn mẹ tôi thích đọc sách. Cuối tuần tôi thường cùng bố đi bộ ở công viên.",
    "opts": [
     "với mẹ",
     "với bố",
@@ -237,37 +237,37 @@
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Cuối tuần tôi thường cùng bố đi bộ ở công viên.\n주말에 저는 보통 아버지와 함께 공원을 걸어요.\n물음: Cuối tuần tôi đi bộ với ai? — 주말에 나는 누구와 걸어요?\n답: với bố"
+   "exp": "들은 말: Bố tôi thích đi bộ, còn mẹ tôi thích đọc sách. Cuối tuần tôi thường cùng bố đi bộ ở công viên.\n아버지는 걷기를, 어머니는 책 읽기를 좋아해요. 주말에 저는 보통 아버지와 함께 공원을 걸어요.\n물음: Cuối tuần tôi đi bộ với ai? — 주말에 나는 누구와 걸어요?\n답: với bố"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Anh ấy là con thứ mấy?",
-   "audio": "Anh là con thứ mấy trong gia đình?\nTôi là con cả.",
+   "audio": "Anh là con cả phải không?\nKhông, tôi là con thứ hai. Anh trai tôi là con cả.",
    "voices": "fm",
    "opts": [
-    "con thứ hai",
     "con út",
-    "con cả"
+    "con cả",
+    "con thứ hai"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 대화\n여: Anh là con thứ mấy trong gia đình? — 집에서 몇째예요?\n남: Tôi là con cả. — 저는 맏이예요.\n물음: Anh ấy là con thứ mấy? — 그는 몇째예요?\n답: con cả"
+   "exp": "들은 대화\n여: Anh là con cả phải không? — 맏이죠?\n남: Không, tôi là con thứ hai. Anh trai tôi là con cả. — 아니요, 저는 둘째예요. 형이 맏이예요.\n물음: Anh ấy là con thứ mấy? — 그는 몇째예요?\n답: con thứ hai"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Anh ấy đi sân bay làm gì?",
-   "audio": "Anh đi đâu vậy?\nTôi đi sân bay đón bà ngoại.",
+   "prompt": "Hôm nay anh ấy đi sân bay đón ai?",
+   "audio": "Anh đi sân bay đón bố mẹ à?\nKhông, tuần sau bố mẹ tôi mới đến. Hôm nay tôi đón bà ngoại.",
    "voices": "mf",
    "opts": [
-    "đi du lịch",
-    "đi công tác",
-    "đón bà ngoại"
+    "bố mẹ",
+    "ông bà",
+    "bà ngoại"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 대화\n남: Anh đi đâu vậy? — 어디 가요?\n여: Tôi đi sân bay đón bà ngoại. — 외할머니를 마중하러 공항에 가요.\n물음: Anh ấy đi sân bay làm gì? — 그는 공항에 무엇을 하러 가요?\n답: đón bà ngoại"
+   "exp": "들은 대화\n남: Anh đi sân bay đón bố mẹ à? — 부모님 마중하러 공항에 가요?\n여: Không, tuần sau bố mẹ tôi mới đến. Hôm nay tôi đón bà ngoại. — 아니요, 부모님은 다음 주에 오세요. 오늘은 외할머니를 마중해요.\n물음: Hôm nay anh ấy đi sân bay đón ai? — 오늘 그는 공항에 누구를 마중하러 가요?\n답: bà ngoại"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
@@ -303,16 +303,16 @@
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Em gái anh ấy đã kết hôn chưa?",
-   "audio": "Em gái anh có gia đình chưa?\nRồi, em ấy có gia đình hai năm rồi.",
+   "audio": "Em gái anh có gia đình chưa?\nChưa, nhưng năm sau em ấy sẽ kết hôn.",
    "voices": "fm",
    "opts": [
-    "chưa",
     "rồi",
-    "sắp kết hôn"
+    "chưa",
+    "kết hôn hai năm rồi"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 대화\n여: Em gái anh có gia đình chưa? — 여동생은 결혼했어요?\n남: Rồi, em ấy có gia đình hai năm rồi. — 네, 결혼한 지 2년 됐어요.\n물음: Em gái anh ấy đã kết hôn chưa? — 그의 여동생은 결혼했어요?\n답: rồi"
+   "exp": "들은 대화\n여: Em gái anh có gia đình chưa? — 여동생은 결혼했어요?\n남: Chưa, nhưng năm sau em ấy sẽ kết hôn. — 아직이요, 하지만 내년에 결혼할 거예요.\n물음: Em gái anh ấy đã kết hôn chưa? — 그의 여동생은 결혼했어요?\n답: chưa"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",

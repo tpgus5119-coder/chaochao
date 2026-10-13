@@ -1,5 +1,5 @@
 {
- "note": "주간시험 3 모의고사 5 — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1차 시험지 꼴(tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화. 클로드가 냄(2026-10-13).",
+ "note": "주간시험 3 모의고사 5 — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1·2차 시험지 꼴(둘은 틀이 같다 — 다른 곳은 읽기 4 방향·쓰기 시간·말하기 낱말 출처뿐, tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화, 듣기 3 은 오답 보기도 들리게(a3_trap.py), 소리는 두 번. 클로드가 냄(2026-10-13).",
  "title": "모의고사 5",
  "time": 90,
  "pts": {
@@ -172,36 +172,36 @@
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Anh Tom nói được mấy thứ tiếng?",
-   "audio": "Anh Tom nói được tiếng Anh, tiếng Pháp và tiếng Việt.",
+   "prompt": "Anh Tom đang học tiếng gì?",
+   "audio": "Anh Tom nói được tiếng Anh và tiếng Pháp. Bây giờ anh ấy đang học tiếng Việt.",
    "opts": [
-    "ba thứ tiếng",
-    "hai thứ tiếng",
-    "bốn thứ tiếng"
+    "tiếng Việt",
+    "tiếng Anh",
+    "tiếng Pháp"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 말: Anh Tom nói được tiếng Anh, tiếng Pháp và tiếng Việt.\n톰 씨는 영어, 프랑스어, 베트남어를 할 수 있어요.\n물음: Anh Tom nói được mấy thứ tiếng? — 톰 씨는 몇 나라 말을 할 수 있어요?\n답: ba thứ tiếng"
+   "exp": "들은 말: Anh Tom nói được tiếng Anh và tiếng Pháp. Bây giờ anh ấy đang học tiếng Việt.\n톰 씨는 영어와 프랑스어를 할 수 있어요. 지금은 베트남어를 배우고 있어요.\n물음: Anh Tom đang học tiếng gì? — 톰 씨는 무슨 언어를 배우고 있어요?\n답: tiếng Việt"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Tôi đã làm ở công ty này bao lâu?",
-   "audio": "Tôi đã làm việc ở công ty này được năm năm.",
+   "audio": "Tôi làm ở công ty này năm năm rồi. Trước đó tôi làm ở ngân hàng một năm.",
    "opts": [
+    "sáu năm",
     "một năm",
-    "năm tháng",
     "năm năm"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 말: Tôi đã làm việc ở công ty này được năm năm.\n저는 이 회사에서 일한 지 5년 됐어요.\n물음: Tôi đã làm ở công ty này bao lâu? — 나는 이 회사에서 얼마나 일했어요?\n답: năm năm"
+   "exp": "들은 말: Tôi làm ở công ty này năm năm rồi. Trước đó tôi làm ở ngân hàng một năm.\n이 회사에서 일한 지 5년 됐어요. 그 전에는 은행에서 1년 일했어요.\n물음: Tôi đã làm ở công ty này bao lâu? — 나는 이 회사에서 얼마나 일했어요?\n답: năm năm"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Chủ nhật tuần trước tôi đi thăm ai?",
-   "audio": "Chủ nhật tuần trước tôi cùng vợ đi thăm bố mẹ.",
+   "audio": "Thứ bảy tuần trước tôi gặp bạn thân. Chủ nhật tôi cùng vợ đi thăm bố mẹ.",
    "opts": [
     "khách hàng",
     "bố mẹ",
@@ -209,13 +209,13 @@
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Chủ nhật tuần trước tôi cùng vợ đi thăm bố mẹ.\n지난주 일요일에 저는 아내와 함께 부모님을 뵈러 갔어요.\n물음: Chủ nhật tuần trước tôi đi thăm ai? — 지난주 일요일에 나는 누구를 찾아갔어요?\n답: bố mẹ"
+   "exp": "들은 말: Thứ bảy tuần trước tôi gặp bạn thân. Chủ nhật tôi cùng vợ đi thăm bố mẹ.\n지난주 토요일에는 친한 친구를 만났어요. 일요일에는 아내와 함께 부모님을 뵈러 갔어요.\n물음: Chủ nhật tuần trước tôi đi thăm ai? — 지난주 일요일에 나는 누구를 찾아갔어요?\n답: bố mẹ"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Em trai tôi về nước bao giờ?",
-   "audio": "Em trai tôi mới về nước tuần trước.",
+   "audio": "Em trai tôi định về nước tháng trước, nhưng tuần trước em ấy mới về.",
    "opts": [
     "tháng trước",
     "tuần trước",
@@ -223,13 +223,13 @@
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Em trai tôi mới về nước tuần trước.\n남동생은 지난주에 막 귀국했어요.\n물음: Em trai tôi về nước bao giờ? — 남동생은 언제 귀국했어요?\n답: tuần trước"
+   "exp": "들은 말: Em trai tôi định về nước tháng trước, nhưng tuần trước em ấy mới về.\n남동생은 지난달에 귀국하려고 했는데, 지난주에야 돌아왔어요.\n물음: Em trai tôi về nước bao giờ? — 남동생은 언제 귀국했어요?\n답: tuần trước"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Ngày mai là thứ mấy?",
-   "audio": "Ngày mai là thứ năm, ngày 15 tháng 10.",
+   "audio": "Hôm nay là thứ tư, ngày 14 tháng 10.",
    "opts": [
     "thứ tư",
     "thứ sáu",
@@ -237,82 +237,82 @@
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 말: Ngày mai là thứ năm, ngày 15 tháng 10.\n내일은 목요일, 10월 15일이에요.\n물음: Ngày mai là thứ mấy? — 내일은 무슨 요일이에요?\n답: thứ năm"
+   "exp": "들은 말: Hôm nay là thứ tư, ngày 14 tháng 10.\n오늘은 수요일, 10월 14일이에요.\n물음: Ngày mai là thứ mấy? — 내일은 무슨 요일이에요?\n답: thứ năm"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Chị ấy có ai?",
-   "audio": "Chị có anh chị em không?\nCó, tôi có một anh trai.",
+   "prompt": "Chị ấy có anh chị em không?",
+   "audio": "Chị có anh chị em không?\nCó, tôi có một anh trai. Chồng tôi có hai em gái.",
    "voices": "fm",
    "opts": [
     "một anh trai",
     "không có ai",
-    "một em gái"
+    "hai em gái"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n여: Chị có anh chị em không? — 형제 있어요?\n남: Có, tôi có một anh trai. — 네, 오빠가 한 명 있어요.\n물음: Chị ấy có ai? — 그녀에게는 누가 있어요?\n답: một anh trai"
+   "exp": "들은 대화\n여: Chị có anh chị em không? — 형제 있어요?\n남: Có, tôi có một anh trai. Chồng tôi có hai em gái. — 네, 오빠가 한 명 있어요. 남편은 여동생이 둘 있고요.\n물음: Chị ấy có anh chị em không? — 그녀는 형제가 있어요?\n답: một anh trai"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Anh ấy còn ở Hà Nội bao lâu nữa?",
-   "audio": "Anh còn ở Hà Nội bao lâu nữa?\nKhoảng một tuần nữa.",
+   "audio": "Anh còn ở Hà Nội bao lâu nữa?\nTôi ở đây hai tuần rồi. Khoảng một tuần nữa tôi về.",
    "voices": "mf",
    "opts": [
     "khoảng một tuần nữa",
-    "hai ngày nữa",
-    "khoảng một tháng nữa"
+    "ba tuần nữa",
+    "hai tuần nữa"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n남: Anh còn ở Hà Nội bao lâu nữa? — 하노이에 얼마나 더 있어요?\n여: Khoảng một tuần nữa. — 일주일쯤 더요.\n물음: Anh ấy còn ở Hà Nội bao lâu nữa? — 그는 하노이에 얼마나 더 있어요?\n답: khoảng một tuần nữa"
-  },
-  {
-   "sec": "A 듣기 · 3 듣고 고르기",
-   "k": "choice",
-   "prompt": "Em ấy làm bài tập chưa?",
-   "audio": "Em làm bài tập xong chưa?\nEm làm xong rồi.",
-   "voices": "fm",
-   "opts": [
-    "xong rồi",
-    "chưa làm",
-    "chưa xong"
-   ],
-   "ans": 0,
-   "made": true,
-   "exp": "들은 대화\n여: Em làm bài tập xong chưa? — 숙제 다 했어?\n남: Em làm xong rồi. — 다 했어요.\n물음: Em ấy làm bài tập chưa? — 그 아이는 숙제를 했어요?\n답: xong rồi"
+   "exp": "들은 대화\n남: Anh còn ở Hà Nội bao lâu nữa? — 하노이에 얼마나 더 있어요?\n여: Tôi ở đây hai tuần rồi. Khoảng một tuần nữa tôi về. — 여기 온 지 2주 됐어요. 일주일쯤 뒤에 돌아가요.\n물음: Anh ấy còn ở Hà Nội bao lâu nữa? — 그는 하노이에 얼마나 더 있어요?\n답: khoảng một tuần nữa"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Chị ấy nói tiếng Anh thế nào?",
    "audio": "Chị nói tiếng Anh được không?\nĐược, nhưng không giỏi lắm.",
-   "voices": "mf",
+   "voices": "fm",
    "opts": [
-    "không nói được",
-    "rất giỏi",
-    "được nhưng không giỏi"
+    "không giỏi lắm",
+    "không được",
+    "không dễ lắm"
    ],
-   "ans": 2,
+   "ans": 0,
    "made": true,
-   "exp": "들은 대화\n남: Chị nói tiếng Anh được không? — 영어 할 수 있어요?\n여: Được, nhưng không giỏi lắm. — 네, 하지만 아주 잘하지는 못해요.\n물음: Chị ấy nói tiếng Anh thế nào? — 그녀는 영어를 어떻게 해요?\n답: được nhưng không giỏi"
+   "exp": "들은 대화\n여: Chị nói tiếng Anh được không? — 영어 할 수 있어요?\n남: Được, nhưng không giỏi lắm. — 네, 하지만 아주 잘하지는 못해요.\n물음: Chị ấy nói tiếng Anh thế nào? — 그녀는 영어를 어떻게 해요?\n답: không giỏi lắm"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Tại sao hôm nay anh ấy vui?",
-   "audio": "Sao hôm nay anh vui thế?\nHôm nay là sinh nhật tôi.",
+   "prompt": "Họ đang ở đâu?",
+   "audio": "Tôi muốn gửi thư này đi Hàn Quốc.\nDạ, ba mươi nghìn đồng ạ.",
+   "voices": "mf",
+   "opts": [
+    "ở trường học",
+    "ở ngân hàng",
+    "ở bưu điện"
+   ],
+   "ans": 2,
+   "made": true,
+   "exp": "들은 대화\n남: Tôi muốn gửi thư này đi Hàn Quốc. — 이 편지를 한국에 보내고 싶어요.\n여: Dạ, ba mươi nghìn đồng ạ. — 네, 3만 동입니다.\n물음: Họ đang ở đâu? — 그들은 어디에 있어요?\n답: ở bưu điện"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Hôm nay là sinh nhật anh ấy phải không?",
+   "audio": "Sao hôm nay anh vui thế? Sinh nhật anh à?\nKhông, sinh nhật tôi là tuần sau. Hôm nay tôi gặp lại bạn thân.",
    "voices": "fm",
    "opts": [
-    "vì là sinh nhật anh ấy",
-    "vì đi du lịch",
-    "vì gặp bạn thân"
+    "Không",
+    "Có",
+    "Phải"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n여: Sao hôm nay anh vui thế? — 오늘 왜 이렇게 기뻐요?\n남: Hôm nay là sinh nhật tôi. — 오늘 제 생일이에요.\n물음: Tại sao hôm nay anh ấy vui? — 왜 오늘 그는 기뻐요?\n답: vì là sinh nhật anh ấy"
+   "exp": "들은 대화\n여: Sao hôm nay anh vui thế? Sinh nhật anh à? — 오늘 왜 이렇게 기뻐요? 생일이에요?\n남: Không, sinh nhật tôi là tuần sau. Hôm nay tôi gặp lại bạn thân. — 아니요, 생일은 다음 주예요. 오늘 친한 친구를 다시 만났어요.\n물음: Hôm nay là sinh nhật anh ấy phải không? — 오늘이 그의 생일이에요?\n답: Không"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",

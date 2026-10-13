@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """주간시험 3 모의고사 1 — 외국어·배우기 (교재 1권 8과 중심: được · bao lâu · mới · 끝말 đi · đừng · ngoại ngữ)"""
 from common3 import *
+from a3_trap import A3T
 NO = 1
 q = []
 q += [TF("khóc", "Em ấy đang khóc.", "그 아이가 울고 있어요.", True),
@@ -13,16 +14,7 @@ q += PKS(NO, [("đơn", "Anh ấy đang viết đơn.", "그는 신청서를 쓰
               ("giáo viên", "Anh ấy đang nói chuyện với giáo viên.", "그는 선생님과 이야기하고 있어요.", "mock3-1-pc.webp"),
               ("xe buýt", "Anh ấy đang chờ xe buýt.", "그는 버스를 기다리고 있어요.", "mock3-1-pd.webp"),
               ("ăn sáng", "Anh ấy đang ăn sáng.", "그는 아침을 먹고 있어요.", "mock3-1-pe.webp")])   # 듣기 2 — 실제 2차 시험지처럼 한 사람의 다섯 장면(새로 그림, 2026-10-13)
-q += [A3s("Chị Mai nói được mấy thứ tiếng?", "마이 씨는 몇 개 언어를 할 수 있어요?", "Chị Mai nói được ba thứ tiếng: tiếng Anh, tiếng Pháp và tiếng Việt.", "마이 씨는 영어, 프랑스어, 베트남어 세 언어를 할 수 있어요.", ["ba", "hai", "bốn"]),
-      A3s("Anh Tony học tiếng Việt bao lâu rồi?", "토니 씨는 베트남어를 얼마나 배웠어요?", "Anh Tony đã học tiếng Việt sáu tháng rồi.", "토니 씨는 베트남어를 여섯 달 배웠어요.", ["sáu tháng", "một năm", "hai tháng"]),
-      A3s("Sao em Sơn nói tiếng Hàn chưa giỏi?", "선은 왜 한국어를 아직 잘 못 해요?", "Em Sơn mới học tiếng Hàn nên em ấy nói chưa giỏi.", "선은 한국어를 배운 지 얼마 안 돼서 아직 잘 못 해요.", ["vì em ấy mới học", "vì tiếng Hàn rất dễ", "vì em ấy là người Hàn"]),
-      A3s("Chị Kate dạy tiếng Anh ở đâu?", "케이트 씨는 어디에서 영어를 가르쳐요?", "Chị Kate dạy tiếng Anh ở một trung tâm ngoại ngữ ở Quận 3.", "케이트 씨는 3군의 한 외국어 학원에서 영어를 가르쳐요.", ["ở trung tâm ngoại ngữ", "ở trường đại học", "ở công ty"]),
-      A3s("Anh Lee không làm được gì?", "리 씨는 무엇을 못 해요?", "Anh Lee đọc được tiếng Việt nhưng không viết được.", "리 씨는 베트남어를 읽을 수는 있지만 쓰지는 못해요.", ["viết tiếng Việt", "đọc tiếng Việt", "nói tiếng Anh"]),
-      A3d("Anh ấy nói được tiếng gì?", "그는 무슨 언어를 할 수 있어요?", [("Anh nói tiếng Nhật được không?", "일본어 할 수 있어요?"), ("Không được. Tôi chỉ nói được tiếng Anh.", "못 해요. 저는 영어만 할 수 있어요.")], ["tiếng Anh", "tiếng Nhật", "tiếng Nhật và tiếng Anh"], 'fm'),
-      A3d("Chị ấy làm phiên dịch bao lâu rồi?", "그녀는 통역을 얼마나 했어요?", [("Chị làm phiên dịch ở đây bao lâu rồi?", "여기서 통역 일을 얼마나 했어요?"), ("Hai năm rồi.", "2년 됐어요.")], ["hai năm", "hai tháng", "một năm"], 'mf'),
-      A3d("Em ấy viết đơn bằng tiếng gì?", "그 학생은 신청서를 무슨 말로 써요?", [("Em viết đơn bằng tiếng Việt hả?", "신청서를 베트남어로 쓰는 거야?"), ("Dạ, nhưng em viết sai nhiều lắm.", "네, 그런데 많이 틀리게 써요.")], ["tiếng Việt", "tiếng Anh", "tiếng Hàn"], 'fm'),
-      A3d("Ai nói 'Đừng lo'?", "누가 '걱정하지 마'라고 말해요?", [("Đừng lo, từ từ em sẽ giỏi hơn.", "걱정하지 마, 천천히 하면 더 잘하게 될 거야."), ("Dạ, cám ơn thầy.", "네, 고맙습니다, 선생님.")], ["thầy", "học viên", "người bán"], 'mf'),
-      A3d("Bạn anh ấy nói được mấy thứ tiếng?", "그의 친구는 몇 개 언어를 해요?", [("Bạn anh nói được mấy thứ tiếng?", "당신 친구는 몇 개 언어를 해요?"), ("Nó nói được bốn thứ tiếng, giỏi lắm.", "걔는 네 개 언어를 해요, 아주 잘해요.")], ["bốn", "ba", "hai"], 'fm')]
+q += A3T[1]   # 듣기 3 — 실제 시험처럼 오답 보기도 들리게 (tools/mock3/a3_trap.py, 2026-10-13)
 q += [A4s("Chị ấy nói được tiếng [Pháp].", "그녀는 프랑스어를 할 수 있어요."),
       A4s("Tôi mới học tiếng Việt [hai] tuần.", "저는 베트남어를 배운 지 2주밖에 안 됐어요."),
       A4s("Các em đọc [bài hội thoại] đi!", "여러분, 회화문을 읽어 보세요!"),

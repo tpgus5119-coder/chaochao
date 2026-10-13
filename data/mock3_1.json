@@ -1,5 +1,5 @@
 {
- "note": "주간시험 3 모의고사 1 — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1차 시험지 꼴(tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화. 클로드가 냄(2026-10-13).",
+ "note": "주간시험 3 모의고사 1 — 교재 1권 8~10과 범위(문법은 1~10과, 낱말은 8~10과 위주 — 대표님 2026-10-13 '범위는 일단 8~10'). 실제 1·2차 시험지 꼴(둘은 틀이 같다 — 다른 곳은 읽기 4 방향·쓰기 시간·말하기 낱말 출처뿐, tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화, 듣기 3 은 오답 보기도 들리게(a3_trap.py), 소리는 두 번. 클로드가 냄(2026-10-13).",
  "title": "모의고사 1",
  "time": 90,
  "pts": {
@@ -172,22 +172,22 @@
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Chị Mai nói được mấy thứ tiếng?",
-   "audio": "Chị Mai nói được ba thứ tiếng: tiếng Anh, tiếng Pháp và tiếng Việt.",
+   "prompt": "Bây giờ chị Mai nói được mấy thứ tiếng?",
+   "audio": "Chị Mai nói được ba thứ tiếng. Bây giờ chị ấy đang học thêm tiếng Nhật.",
    "opts": [
-    "bốn",
+    "hai",
     "ba",
-    "hai"
+    "bốn"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Chị Mai nói được ba thứ tiếng: tiếng Anh, tiếng Pháp và tiếng Việt.\n마이 씨는 영어, 프랑스어, 베트남어 세 언어를 할 수 있어요.\n물음: Chị Mai nói được mấy thứ tiếng? — 마이 씨는 몇 개 언어를 할 수 있어요?\n답: ba"
+   "exp": "들은 말: Chị Mai nói được ba thứ tiếng. Bây giờ chị ấy đang học thêm tiếng Nhật.\n마이 씨는 세 개 언어를 할 수 있어요. 지금은 일본어를 더 배우고 있어요.\n물음: Bây giờ chị Mai nói được mấy thứ tiếng? — 지금 마이 씨는 몇 개 언어를 할 수 있어요?\n답: ba"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Anh Tony học tiếng Việt bao lâu rồi?",
-   "audio": "Anh Tony đã học tiếng Việt sáu tháng rồi.",
+   "audio": "Anh Tony đến Việt Nam một năm rồi, nhưng mới học tiếng Việt sáu tháng.",
    "opts": [
     "sáu tháng",
     "một năm",
@@ -195,27 +195,27 @@
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 말: Anh Tony đã học tiếng Việt sáu tháng rồi.\n토니 씨는 베트남어를 여섯 달 배웠어요.\n물음: Anh Tony học tiếng Việt bao lâu rồi? — 토니 씨는 베트남어를 얼마나 배웠어요?\n답: sáu tháng"
+   "exp": "들은 말: Anh Tony đến Việt Nam một năm rồi, nhưng mới học tiếng Việt sáu tháng.\n토니 씨는 베트남에 온 지 1년 됐지만, 베트남어는 배운 지 여섯 달밖에 안 됐어요.\n물음: Anh Tony học tiếng Việt bao lâu rồi? — 토니 씨는 베트남어를 얼마나 배웠어요?\n답: sáu tháng"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Sao em Sơn nói tiếng Hàn chưa giỏi?",
-   "audio": "Em Sơn mới học tiếng Hàn nên em ấy nói chưa giỏi.",
+   "prompt": "Anh Lee không làm được gì?",
+   "audio": "Anh Lee nói tiếng Việt khá giỏi và đọc tiếng Việt được, nhưng chưa viết được.",
    "opts": [
-    "vì em ấy là người Hàn",
-    "vì tiếng Hàn rất dễ",
-    "vì em ấy mới học"
+    "nói tiếng Việt",
+    "đọc tiếng Việt",
+    "viết tiếng Việt"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 말: Em Sơn mới học tiếng Hàn nên em ấy nói chưa giỏi.\n선은 한국어를 배운 지 얼마 안 돼서 아직 잘 못 해요.\n물음: Sao em Sơn nói tiếng Hàn chưa giỏi? — 선은 왜 한국어를 아직 잘 못 해요?\n답: vì em ấy mới học"
+   "exp": "들은 말: Anh Lee nói tiếng Việt khá giỏi và đọc tiếng Việt được, nhưng chưa viết được.\n리 씨는 베트남어를 꽤 잘 말하고 읽을 수도 있지만, 아직 쓰지는 못해요.\n물음: Anh Lee không làm được gì? — 리 씨는 무엇을 못 해요?\n답: viết tiếng Việt"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Chị Kate dạy tiếng Anh ở đâu?",
-   "audio": "Chị Kate dạy tiếng Anh ở một trung tâm ngoại ngữ ở Quận 3.",
+   "prompt": "Bây giờ chị Kate dạy tiếng Anh ở đâu?",
+   "audio": "Trước đây chị Kate dạy tiếng Anh ở trường đại học. Bây giờ chị ấy dạy ở trung tâm ngoại ngữ.",
    "opts": [
     "ở công ty",
     "ở trường đại học",
@@ -223,96 +223,96 @@
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 말: Chị Kate dạy tiếng Anh ở một trung tâm ngoại ngữ ở Quận 3.\n케이트 씨는 3군의 한 외국어 학원에서 영어를 가르쳐요.\n물음: Chị Kate dạy tiếng Anh ở đâu? — 케이트 씨는 어디에서 영어를 가르쳐요?\n답: ở trung tâm ngoại ngữ"
+   "exp": "들은 말: Trước đây chị Kate dạy tiếng Anh ở trường đại học. Bây giờ chị ấy dạy ở trung tâm ngoại ngữ.\n전에는 케이트 씨가 대학교에서 영어를 가르쳤어요. 지금은 외국어 학원에서 가르쳐요.\n물음: Bây giờ chị Kate dạy tiếng Anh ở đâu? — 지금 케이트 씨는 어디에서 영어를 가르쳐요?\n답: ở trung tâm ngoại ngữ"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Anh Lee không làm được gì?",
-   "audio": "Anh Lee đọc được tiếng Việt nhưng không viết được.",
+   "prompt": "Em Sơn học tiếng Hàn mấy buổi một tuần?",
+   "audio": "Em Sơn học tiếng Hàn ba buổi một tuần, mỗi buổi hai tiếng.",
    "opts": [
-    "nói tiếng Anh",
-    "đọc tiếng Việt",
-    "viết tiếng Việt"
+    "năm buổi",
+    "hai buổi",
+    "ba buổi"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 말: Anh Lee đọc được tiếng Việt nhưng không viết được.\n리 씨는 베트남어를 읽을 수는 있지만 쓰지는 못해요.\n물음: Anh Lee không làm được gì? — 리 씨는 무엇을 못 해요?\n답: viết tiếng Việt"
+   "exp": "들은 말: Em Sơn học tiếng Hàn ba buổi một tuần, mỗi buổi hai tiếng.\n선은 일주일에 세 번, 한 번에 두 시간씩 한국어를 배워요.\n물음: Em Sơn học tiếng Hàn mấy buổi một tuần? — 선은 일주일에 몇 번 한국어를 배워요?\n답: ba buổi"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Anh ấy nói được tiếng gì?",
-   "audio": "Anh nói tiếng Nhật được không?\nKhông được. Tôi chỉ nói được tiếng Anh.",
+   "audio": "Anh nói tiếng Nhật được không?\nKhông được. Tôi chỉ nói được tiếng Anh và tiếng Pháp.",
    "voices": "fm",
    "opts": [
-    "tiếng Anh",
+    "tiếng Anh và tiếng Pháp",
     "tiếng Nhật",
-    "tiếng Nhật và tiếng Anh"
+    "tiếng Anh và tiếng Nhật"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n여: Anh nói tiếng Nhật được không? — 일본어 할 수 있어요?\n남: Không được. Tôi chỉ nói được tiếng Anh. — 못 해요. 저는 영어만 할 수 있어요.\n물음: Anh ấy nói được tiếng gì? — 그는 무슨 언어를 할 수 있어요?\n답: tiếng Anh"
+   "exp": "들은 대화\n여: Anh nói tiếng Nhật được không? — 일본어 할 수 있어요?\n남: Không được. Tôi chỉ nói được tiếng Anh và tiếng Pháp. — 못 해요. 저는 영어와 프랑스어만 할 수 있어요.\n물음: Anh ấy nói được tiếng gì? — 그는 무슨 언어를 할 수 있어요?\n답: tiếng Anh và tiếng Pháp"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Chị ấy làm phiên dịch bao lâu rồi?",
-   "audio": "Chị làm phiên dịch ở đây bao lâu rồi?\nHai năm rồi.",
+   "audio": "Chị làm phiên dịch ở đây bao lâu rồi?\nHai năm rồi. Trước đó tôi làm giáo viên một năm.",
    "voices": "mf",
    "opts": [
     "hai năm",
-    "một năm",
-    "hai tháng"
+    "ba năm",
+    "một năm"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n남: Chị làm phiên dịch ở đây bao lâu rồi? — 여기서 통역 일을 얼마나 했어요?\n여: Hai năm rồi. — 2년 됐어요.\n물음: Chị ấy làm phiên dịch bao lâu rồi? — 그녀는 통역을 얼마나 했어요?\n답: hai năm"
+   "exp": "들은 대화\n남: Chị làm phiên dịch ở đây bao lâu rồi? — 여기서 통역 일을 얼마나 했어요?\n여: Hai năm rồi. Trước đó tôi làm giáo viên một năm. — 2년 됐어요. 그 전에는 1년 동안 교사였어요.\n물음: Chị ấy làm phiên dịch bao lâu rồi? — 그녀는 통역을 얼마나 했어요?\n답: hai năm"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Em ấy viết đơn bằng tiếng gì?",
-   "audio": "Em viết đơn bằng tiếng Việt hả?\nDạ, nhưng em viết sai nhiều lắm.",
+   "prompt": "Họ đang ở đâu?",
+   "audio": "Em muốn đăng ký học tiếng Việt ạ.\nLớp buổi tối học ba buổi một tuần. Em viết đơn này nhé.",
    "voices": "fm",
    "opts": [
-    "tiếng Hàn",
-    "tiếng Việt",
-    "tiếng Anh"
+    "ở bưu điện",
+    "ở trung tâm ngoại ngữ",
+    "ở nhà hàng"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 대화\n여: Em viết đơn bằng tiếng Việt hả? — 신청서를 베트남어로 쓰는 거야?\n남: Dạ, nhưng em viết sai nhiều lắm. — 네, 그런데 많이 틀리게 써요.\n물음: Em ấy viết đơn bằng tiếng gì? — 그 학생은 신청서를 무슨 말로 써요?\n답: tiếng Việt"
+   "exp": "들은 대화\n여: Em muốn đăng ký học tiếng Việt ạ. — 베트남어 수업을 등록하고 싶어요.\n남: Lớp buổi tối học ba buổi một tuần. Em viết đơn này nhé. — 저녁반은 일주일에 세 번이에요. 이 신청서를 써 주세요.\n물음: Họ đang ở đâu? — 그들은 어디에 있어요?\n답: ở trung tâm ngoại ngữ"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Ai nói 'Đừng lo'?",
-   "audio": "Đừng lo, từ từ em sẽ giỏi hơn.\nDạ, cám ơn thầy.",
+   "prompt": "Phát âm tiếng Việt thế nào?",
+   "audio": "Phát âm tiếng Việt có khó không anh?\nKhông khó lắm. Em luyện mỗi ngày là được.",
    "voices": "mf",
    "opts": [
-    "học viên",
-    "thầy",
-    "người bán"
+    "Không lâu lắm",
+    "Không khó lắm",
+    "Không vui lắm"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 대화\n남: Đừng lo, từ từ em sẽ giỏi hơn. — 걱정하지 마, 천천히 하면 더 잘하게 될 거야.\n여: Dạ, cám ơn thầy. — 네, 고맙습니다, 선생님.\n물음: Ai nói 'Đừng lo'? — 누가 '걱정하지 마'라고 말해요?\n답: thầy"
+   "exp": "들은 대화\n남: Phát âm tiếng Việt có khó không anh? — 베트남어 발음은 어려워요?\n여: Không khó lắm. Em luyện mỗi ngày là được. — 그렇게 어렵지 않아요. 매일 연습하면 돼요.\n물음: Phát âm tiếng Việt thế nào? — 베트남어 발음은 어때요?\n답: Không khó lắm"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Bạn anh ấy nói được mấy thứ tiếng?",
-   "audio": "Bạn anh nói được mấy thứ tiếng?\nNó nói được bốn thứ tiếng, giỏi lắm.",
+   "prompt": "Chị ấy đã từng sống ở Nhật phải không?",
+   "audio": "Nghe nói chị đã từng sống ở Nhật?\nKhông, tôi chưa đi Nhật bao giờ. Tôi học tiếng Nhật ở Seoul.",
    "voices": "fm",
    "opts": [
-    "ba",
-    "bốn",
-    "hai"
+    "Phải",
+    "Không",
+    "Có"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 대화\n여: Bạn anh nói được mấy thứ tiếng? — 당신 친구는 몇 개 언어를 해요?\n남: Nó nói được bốn thứ tiếng, giỏi lắm. — 걔는 네 개 언어를 해요, 아주 잘해요.\n물음: Bạn anh ấy nói được mấy thứ tiếng? — 그의 친구는 몇 개 언어를 해요?\n답: bốn"
+   "exp": "들은 대화\n여: Nghe nói chị đã từng sống ở Nhật? — 일본에서 산 적이 있다고 들었어요.\n남: Không, tôi chưa đi Nhật bao giờ. Tôi học tiếng Nhật ở Seoul. — 아니요, 일본에 가 본 적이 없어요. 일본어는 서울에서 배웠어요.\n물음: Chị ấy đã từng sống ở Nhật phải không? — 그녀는 일본에서 산 적이 있어요?\n답: Không"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",

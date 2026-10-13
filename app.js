@@ -11847,7 +11847,11 @@ function drawFixed(body, q) {
   const x = q.w.fx, w = q.w;
   const say = t => { const k = recKey(t); k ? play(k, false, undefined, examSpd()) : speakVi(t, false, examSpd()); };   // 시험 속도(1배 기본, 칩으로 바꿈)
   if (x.audio) {                                             // [▶ 듣기][▾] — 단어 카드의 듣기 묶음과 같은 모양 (대표님 2026-10-06 그림)
-    const row = el('div', 'qplay'); row.append(listenGroup(() => say(x.audio), { exam: true })); if (x.k !== 'type') sentPeek(row, x.audio); body.append(row); setTimeout(() => say(x.audio), 200); }   // 받아 쓰는 문항엔 [문장 보기] 없음 — 답이 보인다 (2026-10-11)
+    const row = el('div', 'qplay'); row.append(listenGroup(() => say(x.audio), { exam: true })); if (x.k !== 'type') sentPeek(row, x.audio); body.append(row);
+    /* 실제 시험처럼 **두 번** 들려준다 (대표님 2026-10-13 "오디오 파일도 참고하고" — 2회차 녹음은 문항마다 두 번, 사이 2초쯤). 다음 문항으로 넘어갔거나 이미 답했으면 두 번째는 안 튼다 */
+    const tok = drawFixed.n = (drawFixed.n || 0) + 1;
+    setTimeout(() => { if (drawFixed.n !== tok) return; say(x.audio);
+      audio.addEventListener('ended', () => setTimeout(() => { if (drawFixed.n === tok && body.isConnected && !q._ans) say(x.audio); }, 2000), { once: true }); }, 200); }   // 받아 쓰는 문항엔 [문장 보기] 없음 — 답이 보인다 (2026-10-11)
   if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; body.append(im); }
   if (x.text) body.append(el('div', 'fxtext', esc(x.text)));
   if (x.prompt) body.append(el('div', 'qmain sent', esc(x.prompt)));
