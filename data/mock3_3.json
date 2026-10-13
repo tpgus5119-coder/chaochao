@@ -329,13 +329,13 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "Nhà tôi khá xa ____.",
-   "audio": "Nhà tôi khá xa trường.",
+   "prompt": "Em gái tôi nấu ăn giúp ____.",
+   "audio": "Em gái tôi nấu ăn giúp mẹ.",
    "acc": [
-    "trường"
+    "mẹ"
    ],
    "made": true,
-   "exp": "들은 말: Nhà tôi khá xa trường.\n우리 집은 학교에서 꽤 멀어요.\n답: trường"
+   "exp": "들은 말: Em gái tôi nấu ăn giúp mẹ.\n여동생이 엄마 대신 요리해 줘요.\n답: mẹ"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",

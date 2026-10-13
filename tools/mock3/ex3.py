@@ -16,7 +16,7 @@ q += PKS(NO, [("con trai", "Ông ấy đang chơi với con trai.", "그는 아�
               ("đọc báo", "Ông ấy đang đọc báo.", "그는 신문을 읽고 있어요.", "mock3-3-pe.webp")])   # 듣기 2 — 실제 2차 시험지처럼 한 사람의 다섯 장면(새로 그림, 2026-10-13)
 q += A3T[3]   # 듣기 3 — 실제 시험처럼 오답 보기도 들리게 (tools/mock3/a3_trap.py, 2026-10-13)
 q += [A4s("Gia đình tôi có [năm] người.", "우리 가족은 다섯 명이에요."),
-      A4s("Nhà tôi khá xa [trường].", "우리 집은 학교에서 꽤 멀어요."),
+      A4s("Em gái tôi nấu ăn giúp [mẹ].", "여동생이 엄마 대신 요리해 줘요."),   # giúp 어순 — 8과 (대표님 2026-10-13)
       A4s("Tôi và [bạn thân] cùng tuổi.", "저와 친한 친구는 동갑이에요."),
       A4s("Ông tôi đã [về hưu] năm trước.", "할아버지는 작년에 은퇴하셨어요."),
       A4s("Chị gái tôi lớn hơn tôi [ba] tuổi.", "언니는 저보다 세 살 많아요."),

@@ -136,7 +136,7 @@
 24.0	re:(?<!gọi )(?<!mua )(?<!làm )(?<!nấu )(?<!gửi )(?<!dạy )(?<!viết )(?<!mang )(?<!lấy )(?<!đưa )(?<!bán )(?<!ơn )(?<!xin )(?<!để )(?<![A-Za-zÀ-ỹĐđ])cho\s+(anh|chị|em|ông|bà|cô|thầy|chú|bác|nó|họ|tôi|mình|cậu|bạn)\s+(\d+|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|mấy|vài|nửa|những|các|mỗi|mọi|từng)(?![A-Za-zÀ-ỹĐđ])
 24.1	(nói|gửi|mua|tặng|viết|gọi|đưa|làm|dạy|kể|để+lại|chuyển) _ cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|con|bạn|cô|ông|bà|họ|mẹ|bố|ai);(giải+thích|chỉ+đường|hướng+dẫn|trả|nấu|đặt|mang|đem|lấy|bán|mở|đọc|hát|chụp|gọi+điện|nhắn|cho+mượn|giới+thiệu|đổi|sửa|chuẩn+bị|dịch|kiểm+tra) _ cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|chúng+ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi+người|các+bạn|cậu|nó|gia+đình|vợ|chồng|ai|người+yêu|đồng+nghiệp|sếp)
 24.2	cho (đẹp|nhanh|sạch|kỹ|rõ|tốt|chắc|vui|khỏe|dễ|đúng|cẩn+thận)
-24.3	re:(?<!tôi )(?<!em )(?<!anh )(?<!chị )(?<!cùng )(?<!sẽ )(?<!mình )(?<!muốn )(?<=[A-Za-zÀ-ỹĐđ] )(giúp|hộ|giùm)(?![A-Za-zÀ-ỹĐđ])(?!\s+(chiếu|đỡ|việc|gia))
+24.3	re:(?<!^tôi )(?<! tôi )(?<!^em )(?<! em )(?<!^anh )(?<! anh )(?<!^chị )(?<! chị )(?<!^cùng )(?<! cùng )(?<!^sẽ )(?<! sẽ )(?<!^mình )(?<! mình )(?<!^muốn )(?<! muốn )(?<=[A-Za-zÀ-ỹĐđ] )(giúp|hộ|giùm)(?![A-Za-zÀ-ỹĐđ])(?!\s+(chiếu|đỡ|việc|gia))
 24.4	để (tôi|em|anh|chị|mình|con|nó|họ|cháu|chúng+tôi|bạn)
 24.5	dành
 25.0	cùng

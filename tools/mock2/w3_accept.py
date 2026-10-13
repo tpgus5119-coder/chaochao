@@ -74,21 +74,6 @@ SPEC = {
             (['gia đình tôi', 'cả nhà', 'họ', 'cả gia đình', 'mọi người', 'ba người', 'cả nhà tôi'], ['đang ở nhà', 'rất vui', 'đang nghỉ ngơi'], True)],
   'pre': ['bây giờ', 'buổi tối', 'tối nay', 'hôm nay', 'cuối tuần', 'ở nhà', 'mỗi tối', 'thứ bảy'],
   'post': ['ở nhà', 'bây giờ', 'vào buổi tối', 'buổi tối', 'tối nay']},
- 'exam1': {  # 실제 1차 — 교실, Brian(미국) · David(영국) · EunJi(한국), 베트남어 공부 (img/exam1-w3.webp)
-  'say': ['đây là lớp học', 'đây là một lớp học', 'đây là lớp học tiếng việt', 'đây là lớp tiếng việt', 'có ba người', 'có ba sinh viên', 'lớp học có ba người', 'lớp có ba sinh viên',
-          'lớp học có ba sinh viên', 'có ba học viên', 'lớp học có hai anh và một chị', 'có hai anh và một chị', 'trên bàn có nhiều sách', 'có nhiều sách', 'có sách tiếng việt'],
-  'facts': [(['anh brian', 'brian'], ['là người mỹ', 'đang học tiếng việt', 'là sinh viên', 'là học viên', 'đang viết', 'đang viết bài', 'học tiếng việt chăm chỉ', 'rất chăm chỉ',
-                                       'là bạn của anh david', 'là bạn của chị eunji', 'đang cười', 'rất vui', 'đang học'], False),
-            (['anh david', 'david'], ['là người anh', 'đang học tiếng việt', 'là sinh viên', 'là học viên', 'đang nói', 'đang nói tiếng việt', 'nói tiếng việt', 'đang nói chuyện',
-                                       'học tiếng việt chăm chỉ', 'đang cầm sách', 'rất vui', 'đang cười', 'đang học'], False),
-            (['chị eunji', 'eunji', 'chị eun ji', 'cô eunji', 'chị ấy'], ['là người hàn quốc', 'đang học tiếng việt', 'là sinh viên', 'là học viên', 'đang nghe', 'học tiếng việt chăm chỉ',
-                                                                         'đang cười', 'rất vui', 'đang học', 'đang nghe anh david nói'], False),
-            (['họ', 'ba người', 'các bạn ấy', 'ba sinh viên', 'ba bạn', 'ba học viên', 'mọi người', 'ba người bạn', 'anh brian anh david và chị eunji', 'anh brian và anh david',
-              'anh brian và chị eunji', 'anh david và chị eunji'],
-             ['đang học tiếng việt', 'là sinh viên', 'là học viên', 'học tiếng việt chăm chỉ', 'là bạn', 'là bạn cùng lớp', 'là người nước ngoài', 'rất vui', 'đang học',
-              'đang học tiếng việt cùng nhau', 'đang ngồi học', 'thích tiếng việt', 'học cùng lớp'], True)],
-  'pre': ['bây giờ', 'hôm nay', 'ở lớp học', 'trong lớp học', 'ở đây', 'ở lớp'],
-  'post': ['ở lớp học', 'trong lớp học', 'ở đây', 'ở lớp', 'cùng nhau']},
 }
 
 def gram(key, model=()):

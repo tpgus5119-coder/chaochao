@@ -2388,12 +2388,12 @@
 "gi": 3,
 "t": "동사 + giúp / hộ / giùm — ~해 주다",
 "re": [
-"(?<!tôi )(?<!em )(?<!anh )(?<!chị )(?<!cùng )(?<!sẽ )(?<!mình )(?<!muốn )(?<=[A-Za-zÀ-ỹĐđ] )(giúp|hộ|giùm)(?![A-Za-zÀ-ỹĐđ])(?!\\s+(chiếu|đỡ|việc|gia))"
+"(?<!^tôi )(?<! tôi )(?<!^em )(?<! em )(?<!^anh )(?<! anh )(?<!^chị )(?<! chị )(?<!^cùng )(?<! cùng )(?<!^sẽ )(?<! sẽ )(?<!^mình )(?<! mình )(?<!^muốn )(?<! muốn )(?<=[A-Za-zÀ-ỹĐđ] )(giúp|hộ|giùm)(?![A-Za-zÀ-ỹĐđ])(?!\\s+(chiếu|đỡ|việc|gia))"
 ],
 "always": false,
 "tok": [],
-"selftest": "3/3",
-"first": "2-2"
+"selftest": "7/7",
+"first": "1-8"
 },
 {
 "id": "24.4",

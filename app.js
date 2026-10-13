@@ -11663,7 +11663,7 @@ function weeklyEntry() {
 /* ── 1차 시험지 그대로 (2026-09-30) ──
    data/exam1.json 의 문항을 차례대로. 듣기는 시험지에 대본이 없어 앱이 정답에 맞춰 지은 문장을 기계 소리로 들려준다(made).
    쓰기 3(그림 보고 5문장)은 모범 답안을 보고 스스로 매긴다(_score 0~1). 90분(말하기 제외)이 지나면 남은 문제는 0점으로 끝난다. */
-const FIXED_EXAMS = { exam1: { file: 'data/exam1.json', name: '실제 시험지 (1차)', round: 1 },
+const FIXED_EXAMS = { m1_1: { file: 'data/mock1_1.json', name: '모의고사 1', round: 1 },   // 주간시험 1 = 1권 1~3과 모의고사(tools/mock1) — 실제 1차 시험지(exam1.json)는 학교 자료라 뺐다 (대표님 2026-10-13)
   m2_1: { file: 'data/mock2_1.json', name: '모의고사 1', round: 2 }, m2_2: { file: 'data/mock2_2.json', name: '모의고사 2', round: 2 }, m2_3: { file: 'data/mock2_3.json', name: '모의고사 3', round: 2 },
   m2_4: { file: 'data/mock2_4.json', name: '모의고사 4', round: 2 }, m2_5: { file: 'data/mock2_5.json', name: '모의고사 5', round: 2 },
   /* 주간시험 3 (교재 1권 8~10과, 2026-10-13) — tools/mock3. 실제 2차 시험지 꼴(듣기 3·4 의 6~10 대화, 읽기 4 는 대답 목록, 쓰기 3 그림에 이름표) */
@@ -11720,15 +11720,9 @@ function resumeAsk(k, start) {
   back.onclick = e => { if (e.target === back) back.remove(); };
   document.body.append(back);
 }
-function resumeRow(k, onFresh) {
-  const r = resumeGet(k); if (!r) return null;
-  const row = el('div', 'resumerow');                      // 안내 글은 안 쓴다 — 큰 단추에 '이어서 n/N' 이 이미 보인다 (대표님 2026-10-07 "푼 자리가 저장돼 있습니다 이딴 글자 다 빼라")
-  const b = el('button', 'ghost sm', tr('처음부터')); b.type = 'button'; b.onclick = () => { resumeClear(k); onFresh(); }; row.append(b);
-  return row;
-}
 
 function startExam1(key, r) {
-  key = key || 'exam1';
+  key = key || 'm1_1';
   const go = () => {
     const J = FIXED[key];
     EXAM_SPD = 1;                                          // 시험지 듣기는 1배부터 (2026-10-06)
@@ -13843,31 +13837,6 @@ function hatApply(word, k) {
   return tm ? withMark(pick, tm, tonePos(pick)) : pick;
 }
 let HATSYL = null;                                   // 모자까지 있는(성조는 뗀) 실제 음절들 — 음절 표(_kr_syl.json)에서
-function hatCycle(word) {
-  /* 누를 때마다 그 낱말의 모음에 모자를 바꿔 단 꼴 가운데 **실제로 있는 음절**만 차례로: mua → mưa → mua · an → ân → ăn → an · nguoi → nguôi → ngươi.
-     음절 표가 아직 없으면 마지막 모음만 돌린다(a→â→ă · e→ê · o→ô→ơ · u→ư) */
-  const tm = (word.normalize('NFD').match(/[̣̀́̉̃]/) || [''])[0];
-  const bare = stripTone(word), chars = [...bare];
-  const OPT = { a: ['a', 'â', 'ă'], 'â': ['a', 'â', 'ă'], 'ă': ['a', 'â', 'ă'], e: ['e', 'ê'], 'ê': ['e', 'ê'], o: ['o', 'ô', 'ơ'], 'ô': ['o', 'ô', 'ơ'], 'ơ': ['o', 'ô', 'ơ'], u: ['u', 'ư'], 'ư': ['u', 'ư'] };
-  const fin = b0 => tm ? withMark(b0, tm, tonePos(b0)) : b0;
-  if (!HATSYL && typeof KRSYL !== 'undefined' && KRSYL) { HATSYL = new Set(); Object.keys(KRSYL).forEach(k => String(k).normalize('NFC').toLowerCase().split(/\s+/).forEach(t => HATSYL.add(stripTone(t)))); }
-  if (HATSYL) {
-    let combos = [''];
-    chars.forEach(c => { const lo = c.toLowerCase(), up = c !== lo, o = OPT[lo] || [lo]; combos = combos.flatMap(p => o.map(x => p + (up ? x.toUpperCase() : x))); });
-    const ok = combos.filter(c => c === bare || HATSYL.has(c.toLowerCase()));                     // 모자 없는 처음 꼴도 돌아올 수 있게
-    if (ok.length > 1) { const i = ok.indexOf(bare); return fin(ok[(i + 1) % ok.length]); }
-  }
-  const NEXT = { a: 'â', 'â': 'ă', 'ă': 'a', e: 'ê', 'ê': 'e', o: 'ô', 'ô': 'ơ', 'ơ': 'o', u: 'ư', 'ư': 'u' };
-  for (let i = chars.length - 1; i >= 0; i--) {
-    const lo = chars[i].toLowerCase(), up = chars[i] !== lo;
-    if (!(lo in NEXT)) continue;
-    const n = NEXT[lo]; chars[i] = up ? n.toUpperCase() : n;
-    const pl = i > 0 ? chars[i - 1].toLowerCase() : '';
-    if ('oôơ'.includes(lo) && 'uư'.includes(pl)) chars[i - 1] = n === 'ơ' ? 'ư' : 'u';   // uô ↔ ươ
-    break;
-  }
-  return fin(chars.join(''));
-}
 function stripTone(syl) {
   return syl.normalize('NFD').replace(/[\u0300\u0301\u0309\u0303\u0323]/g, '').normalize('NFC');
 }

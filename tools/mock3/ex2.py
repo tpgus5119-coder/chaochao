@@ -17,7 +17,7 @@ q += PKS(NO, [("vé máy bay", "Cô ấy đang đặt vé máy bay trên mạng.
 q += A3T[2]   # 듣기 3 — 실제 시험처럼 오답 보기도 들리게 (tools/mock3/a3_trap.py, 2026-10-13)
 q += [A4s("Thứ [hai] tuần sau tôi đi Nha Trang.", "다음 주 월요일에 저는 나트랑에 가요."),
       A4s("Ngày mai tôi đi [Huế] đấy!", "내일 저 후에에 가요!"),
-      A4s("Chị ấy [làm việc] xong rồi.", "그녀는 일을 다 끝냈어요."),
+      A4s("Chị mua giúp tôi một [vé] nhé.", "표 한 장만 대신 사 줘요."),   # giúp/hộ/giùm 어순 — 8과 대화 (대표님 2026-10-13)
       A4s("Sinh nhật của tôi là ngày [15] tháng 3.", "제 생일은 3월 15일이에요."),
       A4s("Anh ấy đi công tác ở Hà Nội [bốn] ngày.", "그는 하노이로 나흘 동안 출장을 가요."),
       A4d("Em đã ăn trưa chưa?", "점심 먹었니?", "Dạ, em ăn [cơm] rồi.", "네, 먹었어요.", 'mf'),

@@ -15,7 +15,7 @@ GAP = 1.0
 
 def main():
     dlg = {}
-    for p in sorted((R / 'data').glob('mock3_*.json')):
+    for p in sorted(list((R / 'data').glob('mock3_*.json')) + list((R / 'data').glob('mock1_*.json'))):   # 주간시험 1 모의고사도 (2026-10-13)
         for x in json.loads(p.read_text(encoding='utf-8'))['q']:
             a = x.get('audio')
             if isinstance(a, str) and '\n' in a:
