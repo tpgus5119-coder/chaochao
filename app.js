@@ -13772,13 +13772,36 @@ function viKeys(inp, after) {
   };
   VK_TONES.forEach(([mk, show]) => { const b = el('button', 'vk', show); b.type = 'button'; b.onmousedown = e => e.preventDefault(); b.onclick = () => hit('tone', mk); row.append(b); });
   row.append(el('span', 'vksep'));
-  /* 모자는 단추 하나 (대표님 2026-10-12 "a o e 에 모자만 더하는 것인데 왜 나누냐") — 누를 때마다 치고 있는 낱말의 마지막 모음이 돌아간다:
-     a→â→ă→a · e→ê→e · o→ô→ơ→o · u→ư→u, 'uo' 는 uô→ươ→uo. 성조는 새 자리로 옮겨 다시 단다. đ 는 모음이 아니라 따로 둔다 */
-  const hat = el('button', 'vk vkhat', tr('모자')); hat.type = 'button'; hat.onmousedown = e => e.preventDefault();
-  hat.onclick = () => { const v = inp.value, m = v.match(/(\S+)$/); if (!m) { inp.focus(); return; } inp.value = v.slice(0, m.index) + hatCycle(m[1]); inp.focus(); after(); };
+  /* 모자는 **모양이 같은 것끼리 단추 하나** (대표님 2026-10-13 "모자의 종류가 많잖아 — 하나로 합치면 안 되지. 똑같은 모양의 모자만 하나의 버튼으로"):
+     ^ = â·ê·ô · ˘ = ă · 갈고리 = ơ·ư. 누르면 치고 있는 낱말에서 그 모자를 달아 **실제로 있는 음절**이 되는 모음에 단다(nguoi + 갈고리 → nguơi 가 아니라 người),
+     이미 그 모자면 뗀다. 성조는 새 자리로 옮겨 다시 단다. (10-12 의 단추 하나로 돌리기는 대표님 뜻과 달랐다) */
+  [['c', 'âêô'], ['b', 'ă'], ['h', 'ơư']].forEach(([k, show]) => {
+    const b = el('button', 'vk vkhat', show); b.type = 'button'; b.onmousedown = e => e.preventDefault();
+    b.onclick = () => { const v = inp.value, m = v.match(/(\S+)$/); if (!m) { inp.focus(); return; } const r = hatApply(m[1], k); if (r) inp.value = v.slice(0, m.index) + r; inp.focus(); after(); };
+    row.append(b);
+  });
   const dd = el('button', 'vk', 'đ'); dd.type = 'button'; dd.onmousedown = e => e.preventDefault(); dd.onclick = () => hit('hat', 'đ');
-  row.append(hat, dd);
+  row.append(dd);
   return row;
+}
+/* 모양별 모자 달기 — k: 'c' ^(â ê ô) · 'b' ˘(ă) · 'h' 갈고리(ơ ư, 'uo' 는 ươ 로 둘 다) */
+const HAT_KIND = { c: { a: 'â', e: 'ê', o: 'ô' }, b: { a: 'ă' }, h: { o: 'ơ', u: 'ư' } };
+const HAT_BASE = { 'â': 'a', 'ă': 'a', 'ê': 'e', 'ô': 'o', 'ơ': 'o', 'ư': 'u' };
+function hatApply(word, k) {
+  const tm = (word.normalize('NFD').match(/[\u0300\u0301\u0309\u0303\u0323]/) || [''])[0];
+  const bare = stripTone(word), chars = [...bare], map = HAT_KIND[k];
+  const base = c => HAT_BASE[c] || c;
+  const pos = [];
+  chars.forEach((c, i) => { if (map[base(c.toLowerCase())]) pos.push(i); });
+  if (!pos.length) return null;
+  const mk = idxs => { const cs = [...chars]; idxs.forEach(i => { const lo = cs[i].toLowerCase(), up = cs[i] !== lo, b0 = base(lo), t = map[b0], n = lo === t ? b0 : t; cs[i] = up ? n.toUpperCase() : n; }); return cs.join(''); };
+  const cands = pos.slice().reverse().map(i => mk([i]));
+  if (k === 'h') for (let j = pos.length - 1; j > 0; j--)
+    if (pos[j] === pos[j - 1] + 1 && base(chars[pos[j - 1]].toLowerCase()) === 'u' && base(chars[pos[j]].toLowerCase()) === 'o') cands.unshift(mk([pos[j - 1], pos[j]]));   // uo → ươ
+  if (!HATSYL && typeof KRSYL !== 'undefined' && KRSYL) { HATSYL = new Set(); Object.keys(KRSYL).forEach(t => String(t).normalize('NFC').toLowerCase().split(/\s+/).forEach(x => HATSYL.add(stripTone(x)))); }
+  const real = HATSYL ? cands.filter(c => HATSYL.has(c.toLowerCase())) : [];
+  const pick = real[0] || cands[0];
+  return tm ? withMark(pick, tm, tonePos(pick)) : pick;
 }
 let HATSYL = null;                                   // 모자까지 있는(성조는 뗀) 실제 음절들 — 음절 표(_kr_syl.json)에서
 function hatCycle(word) {

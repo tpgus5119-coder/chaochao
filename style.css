@@ -3171,7 +3171,21 @@ body.recording::after{content:''; position:fixed; inset:0; border:8px solid #e03
 
 
 /* 사전 성조·모자 줄 — 모자 단추 하나 (2026-10-12) */
-.vkeys .vk.vkhat{white-space:nowrap; min-width:3.6em; padding-left:10px; padding-right:10px}
+.vkeys .vk.vkhat{white-space:nowrap; min-width:3.2em; padding-left:8px; padding-right:8px}
+/* 모자 단추가 모양별 셋이 되어(2026-10-13) 성조 다섯 + 모자 셋 + đ = 아홉 — 폰 폭에서도 한 줄에 */
+@media (max-width: 560px){
+  .vkeys{flex-wrap:nowrap; gap:4px}
+  .vkeys .vk{flex:1 1 0; min-width:0; padding:0 2px; font-size:17px}
+  .vkeys .vk.vkhat{flex:1.35 1 0; min-width:0; padding:0 2px; font-size:15px; letter-spacing:-.5px}
+  .vkeys .vksep{width:2px; flex:none}
+  /* 사전 결과 줄 — 좁은 화면에서 뜻이 가는 칸에 세로로 찌그러지지 않게 뜻은 아랫줄 전체로 */
+  .dictrow:has(.dstar){grid-template-columns:auto 1fr auto auto}
+  .dictrow:has(.dstar) .dvi{grid-column:1; grid-row:1}
+  .dictrow:has(.dstar) .dkr{grid-column:2; grid-row:1; white-space:normal}
+  .dictrow:has(.dstar) .dstar{grid-column:3; grid-row:1}
+  .dictrow:has(.dstar) .dfold{grid-column:4; grid-row:1}
+  .dictrow:has(.dstar) .dko{grid-column:1 / -1; grid-row:2}
+}
 .extools.exinl{flex-direction:row; margin:6px 0 10px} .extools.exinl button{flex:1}
 
 
