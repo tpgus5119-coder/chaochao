@@ -11630,7 +11630,10 @@ function weeklyEntry() {
    쓰기 3(그림 보고 5문장)은 모범 답안을 보고 스스로 매긴다(_score 0~1). 90분(말하기 제외)이 지나면 남은 문제는 0점으로 끝난다. */
 const FIXED_EXAMS = { exam1: { file: 'data/exam1.json', name: '실제 시험지 (1차)', round: 1 },
   m2_1: { file: 'data/mock2_1.json', name: '모의고사 1', round: 2 }, m2_2: { file: 'data/mock2_2.json', name: '모의고사 2', round: 2 }, m2_3: { file: 'data/mock2_3.json', name: '모의고사 3', round: 2 },
-  m2_4: { file: 'data/mock2_4.json', name: '모의고사 4', round: 2 }, m2_5: { file: 'data/mock2_5.json', name: '모의고사 5', round: 2 } };
+  m2_4: { file: 'data/mock2_4.json', name: '모의고사 4', round: 2 }, m2_5: { file: 'data/mock2_5.json', name: '모의고사 5', round: 2 },
+  /* 주간시험 3 (교재 1권 8~10과, 2026-10-13) — tools/mock3. 실제 2차 시험지 꼴(듣기 3·4 의 6~10 대화, 읽기 4 는 대답 목록, 쓰기 3 그림에 이름표) */
+  m3_1: { file: 'data/mock3_1.json', name: '모의고사 1', round: 3 }, m3_2: { file: 'data/mock3_2.json', name: '모의고사 2', round: 3 }, m3_3: { file: 'data/mock3_3.json', name: '모의고사 3', round: 3 },
+  m3_4: { file: 'data/mock3_4.json', name: '모의고사 4', round: 3 }, m3_5: { file: 'data/mock3_5.json', name: '모의고사 5', round: 3 } };
 /* 주간시험 1 = 실제 1차 시험지 그대로, 주간시험 2 = 2차 시험 안내 틀(tools/mock2/common.py)로 낸 모의고사 다섯(1~7과). 옛 2차 예상 시험지(exam2)는 모의고사 1 로 다시 냈다 (2026-10-06) */   // 파일 이름을 글자 그대로 적어야 배포 목록에 든다. 2차는 교재 1권 1~7과로 클로드가 냄 (2026-10-06)
 let EXAM1_TIMER = 0, FIXED = {};
 /* 시험 이어 하기 (대표님 2026-10-07 "테스트들은 중간에 나가도 시험 보던 곳이 기억되도록") — **주간시험(시험지)과 22기 단어 시험만**.

@@ -71,6 +71,7 @@
 13.2	(buổi+sáng|buổi+trưa|buổi+chiều|buổi+tối|ban+đêm|sáng|trưa|chiều|tối|đêm)
 13.3	re:(?<![A-Za-zÀ-ỹĐđ])(mấy|bao nhiêu|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|nửa)\s+tiếng(?![A-Za-zÀ-ỹĐđ])(?!\s+(việt|anh|hàn|nhật|pháp|trung|đức))
 13.4	bao+lâu
+13.5	bao+lâu+rồi;bao+lâu+nữa;đã _ bao+lâu
 14.0	(hôm+qua|hôm+nay|ngày+mai|ngày+kia|hôm+kia|tuần+trước|tuần+sau|tuần+này|năm+ngoái|năm+nay|năm+sau|tháng+trước|tháng+sau|tháng+này|tối+nay|sáng+nay|chiều+nay|bây+giờ|dạo+này)
 14.1	(thứ+hai|thứ+ba|thứ+tư|thứ+năm|thứ+sáu|thứ+bảy|chủ+nhật|thứ+mấy)
 14.2	ngày _ tháng;re:năm\s+(19|20)\d\d

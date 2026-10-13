@@ -1179,7 +1179,23 @@
 ],
 "always": false,
 "tok": [],
-"selftest": "5/5",
+"selftest": "7/8",
+"first": "1-8"
+},
+{
+"id": "13.5",
+"no": 13,
+"li": 12,
+"gi": 5,
+"t": "bao lâu · bao lâu rồi · bao lâu nữa — 구별",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])bao\\s+lâu\\s+rồi(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])bao\\s+lâu\\s+nữa(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])đã(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])bao\\s+lâu(?![A-Za-zÀ-ỹĐđ])"
+],
+"always": false,
+"tok": [],
+"selftest": "3/6",
 "first": "1-8"
 },
 {

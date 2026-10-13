@@ -35,7 +35,7 @@ MY += ["tools/daily22/a14.py", "tools/mock2/check_all.py"]   # 22기 A반 14회 
 MY += ["tools/daily22/a15.py", "tools/daily22/b15.py", "tools/mock2/dialogs.py", "tools/mock2/dialog_audio.py", "tools/mock2/form1.py"]
 MY += ["tools/mock2/typed_exam1.py"]
 MY += ["tools/stale_imgs.py", "tools/deploy.sh"]
-MY += ["data/_dict_var.json", "tools/dict_var/build.py", "tools/gram_audit/add4.py", "tools/gram_audit/_new_ex4.json", "tools/gram_audit/add5.py", "tools/gram_audit/_new_ex5.json", "tools/gram_audit/교재_문법_세부.tsv"]   # 사전 다른 표기 한 줄로 · 19과 구별 카드 (2026-10-13)
+MY += ["data/_dict_var.json", "tools/dict_var/build.py", "tools/gram_audit/add4.py", "tools/gram_audit/_new_ex4.json", "tools/gram_audit/add5.py", "tools/gram_audit/_new_ex5.json", "tools/gram_audit/add6.py", "tools/gram_audit/_new_ex6.json", "tools/gram_audit/교재_문법_세부.tsv", "data/mock3_1.json", "data/mock3_2.json", "data/mock3_3.json", "data/mock3_4.json", "data/mock3_5.json", "tools/mock3/common3.py", "tools/mock3/ch110_words.json", "tools/mock3/dialog_audio3.py", "tools/mock3/w3_labels.py", "tools/mock3/ex1.py", "tools/mock3/ex2.py", "tools/mock3/ex3.py", "tools/mock3/ex4.py", "tools/mock3/ex5.py"]   # 사전 다른 표기 한 줄로 · 19과 구별 카드 (2026-10-13)
 MY += ["tools/mock2/w3_accept.py"]   # 쓰기 3 앱 채점용 맞는 문장 (2026-10-11)   # 같은 이름 그림 캐시 빼기 (2026-10-11)   # 1차 시험지 듣기 4·쓰기 2 직접 쳐서 쓰기 (2026-10-11)   # 22기 A반 15회 (2026-10-08 밤)
 MY += ["tools/gram_split/apply.py", "tools/gram_split/idmap.json"]   # 문법 33과 쪼개기·muốn 옮기기 (2026-10-07)
 MY += ["tools/daily22/b14.py", "tools/day_reorg/move_topics.py"]   # 22기 B반 14회 · 일상 주제 차례 손질 (2026-10-07)
@@ -85,7 +85,7 @@ def walk(o):
         for v in o.values(): walk(v)
     elif isinstance(o, list):
         for v in o: walk(v)
-for f in ("gybm", "days", "order", "grammar", "weekly", "daily22", "exam1", "mock2_1", "mock2_2", "mock2_3", "mock2_4", "mock2_5"): walk(   # weekly: 주간 시험 그림   # grammar: 줌 수업 문법 예문 소리도 올린다 (2026-09-27)   # daily22·exam1: 단어 시험·1차 시험지 문장 소리 — 빠져서 404 였다 (2026-10-02)
+for f in ("gybm", "days", "order", "grammar", "weekly", "daily22", "exam1", "mock2_1", "mock2_2", "mock2_3", "mock2_4", "mock2_5", "mock3_1", "mock3_2", "mock3_3", "mock3_4", "mock3_5"): walk(   # weekly: 주간 시험 그림   # grammar: 줌 수업 문법 예문 소리도 올린다 (2026-09-27)   # daily22·exam1: 단어 시험·1차 시험지 문장 소리 — 빠져서 404 였다 (2026-10-02)
     json.loads((ROOT / f"data/{f}.json").read_text(encoding="utf-8")))
 sys.path.insert(0, str(ROOT / "tools"))
 import build_gram_main            # 메인 교재 문법의 소리(예문·문장 안 낱말·핵심 낱말)도 같이 올린다
