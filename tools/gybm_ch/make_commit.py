@@ -35,6 +35,7 @@ MY += ["tools/daily22/a14.py", "tools/mock2/check_all.py"]   # 22기 A반 14회 
 MY += ["tools/daily22/a15.py", "tools/daily22/b15.py", "tools/mock2/dialogs.py", "tools/mock2/dialog_audio.py", "tools/mock2/form1.py"]
 MY += ["tools/mock2/typed_exam1.py"]
 MY += ["tools/stale_imgs.py", "tools/deploy.sh"]
+MY += ["data/_dict_var.json", "tools/dict_var/build.py", "tools/gram_audit/add4.py", "tools/gram_audit/_new_ex4.json"]   # 사전 다른 표기 한 줄로 · 19과 구별 카드 (2026-10-13)
 MY += ["tools/mock2/w3_accept.py"]   # 쓰기 3 앱 채점용 맞는 문장 (2026-10-11)   # 같은 이름 그림 캐시 빼기 (2026-10-11)   # 1차 시험지 듣기 4·쓰기 2 직접 쳐서 쓰기 (2026-10-11)   # 22기 A반 15회 (2026-10-08 밤)
 MY += ["tools/gram_split/apply.py", "tools/gram_split/idmap.json"]   # 문법 33과 쪼개기·muốn 옮기기 (2026-10-07)
 MY += ["tools/daily22/b14.py", "tools/day_reorg/move_topics.py"]   # 22기 B반 14회 · 일상 주제 차례 손질 (2026-10-07)

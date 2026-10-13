@@ -8734,6 +8734,26 @@ function appExFor(vi, skip, book) {
   return ids.map(i => X.list[i]).filter(s2 => s2.vi.toLowerCase() !== sk && (book === undefined || !!s2.bk === book))
     .sort((a, b) => sentRank(a) - sentRank(b) || (a.au ? 0 : 1) - (b.au ? 0 : 1) || a.vi.length - b.vi.length).slice(0, 3);
 }
+/* 같은 낱말의 다른 표기 (2026-10-13, 대표님 "킬로미터 검색했을 때 같은 뜻인데 단어가 5개나 나온다 — 하나만 나와야지, 다 하나로 통일시켜"):
+   위키 사전이 표기마다 따로 둔 표제어(kilomet · ki lô mét · kilômét · kilômet · ki-lô-mét)를 대표 꼴 한 줄로. 묶음은 tools/dict_var/build.py → data/_dict_var.json
+   ({대표: {v: [다른 꼴], add: [[품사, 다른 꼴에만 있던 뜻]]}}). 다른 꼴은 줄이 따로 안 생기고 대표 카드의 '다른 표기'에 적히며, 그 꼴로 쳐도 대표 줄이 나온다 */
+let DVAR = null, VFOLD = null, VBARE = null, NSPF = null;
+const nspKey = t => String(t).toLowerCase().normalize('NFC').replace(/[\s.\-–]/g, '');
+function dvarApply() {
+  if (VFOLD || !DVAR || !DFULL) return;
+  VFOLD = new Map(); VBARE = new Map();
+  Object.entries(DVAR).forEach(([m, o]) => {
+    const e = DFULL[m]; if (!e) return;
+    const vs = (o.v || []).filter(v => DFULL[v]), forms = vs.map(v => DFULL[v].h || v);
+    if ((o.add || []).length) { e.p = e.p || []; while (e.p.length < e.s.length) e.p.push(''); o.add.forEach(([pp, t]) => { e.s.push(t); e.p.push(pp || ''); }); }
+    e.v = [...new Set([...(e.v ? String(e.v).split(/\s*·\s*/) : []), ...forms])].join(' · ');
+    vs.forEach(v => VFOLD.set(v, e.h || m));
+    VBARE.set(viCanon(e.h || m), forms.map(dictBare));
+  });
+  /* 수업 자료의 낱말도 사전 표제어와 띄어쓰기·하이픈만 다르면 같은 줄로 (sô cô la → sôcôla) */
+  NSPF = new Map();
+  Object.keys(DFULL).forEach(k => { const n = nspKey(k); if (!NSPF.has(n)) NSPF.set(n, VFOLD.get(k) || DFULL[k].h || k); });
+}
 let DFREQ = null;   // 낱말 빈도 순위 (data/_dict_freq.json — tools/dict_freq/count.py, 위키백과 + 앱 예문, 2026-10-01)
 const FREQ_TOP = 3000;   // 이 순위 안이면 '자주 쓰는 말' 표시
 let DEX = null, DEX_P = null;   // 사전 예문 (data/_dict_ex.json, 2026-10-01)
@@ -8764,7 +8784,8 @@ function dictBuild() {
   const SEP = { '·': '\u0001', ',': '\u0002', '/': '\u0003', ';': '\u0004' }, UNSEP = { '\u0001': '·', '\u0002': ',', '\u0003': '/', '\u0004': ';' };
   const phr = g => g.replace(/\([^)]*\)/g, m => m.replace(/[·,\/;]/g, c => SEP[c])).split(/\s*[·\/,;]\s*/).map(s => s.replace(/[\u0001-\u0004]/g, c => UNSEP[c]).trim()).filter(Boolean);
   const put = (vi, ko, w, onlyNew, src) => {
-    const k = String(vi || '').trim();
+    let k = String(vi || '').trim();
+    if (VFOLD) { const kl = k.toLowerCase(), f = VFOLD.get(kl) || NSPF.get(nspKey(kl)); if (f && f.toLowerCase() !== kl) k = f; }   // 다른 표기는 대표 꼴 줄로 (2026-10-13)
     if (!k || !ko || (isSent(k) && !onlyNew)) return;   // 참고 사전의 속담·관용구(4낱말 이상)는 사전 표제어라 문장 걸개를 안 탄다 (2026-09-30)
     const kk = viCanon(k);                  // quản lý/quản lí·hoà/hòa 는 한 줄로 (2026-09-29)
     /* 문장·문형·글자 묶음은 사전에 안 나온다 (2026-09-29): 다섯 낱말 미만이라 위 걸개를 빠져나온 문장(tôi đi nhé·có sao không …)은
@@ -8801,7 +8822,7 @@ function dictBuild() {
   if (SIB) Object.entries(SIB.w).forEach(([k, v]) => { if (v.k) put(k, v.k, null, false, '사전'); });   // 헷갈리는 짝 자료(사전 단어 — 한국어 뜻 있는 것)
   /* 참고 사전 (2026-09-29, 대표님 "사전 작업 다 못했니?") — 뜻 25,835개를 다 옮겨 놓고도 사전 탭이 찾지 않았다.
      앱·짝 자료에 없는 말만 '참고' 표시를 달아 넣는다. 열쇠가 소문자라 대문자 꼴은 _dict_head.json 에서 되살린다. */
-  if (DFULL) Object.entries(DFULL).forEach(([k, e]) => put(e.h || k, dfullText(e), null, true, '참고 사전'));   // 사전 한 벌(위키 그대로, 2026-10-01)
+  if (DFULL) Object.entries(DFULL).forEach(([k, e]) => { if (!(VFOLD && VFOLD.has(k))) put(e.h || k, dfullText(e), null, true, '참고 사전'); });   // 사전 한 벌(위키 그대로, 2026-10-01)
   else if (DKO) Object.entries(DKO).forEach(([k, v]) => put((DKH && DKH[k]) || k, Array.isArray(v) ? v.join(' · ') : v, null, true, '참고 사전'));
   /* 검수된 뜻 목록(data/_senses.json)의 뜻도 사전 뜻에 넣는다 — 한국어로 찾을 때 '운동하다' 로 tập 이 나오게 (대표님 지시 2026-09-29 밤: "모든 뜻을 가져와서 표기"). 여덟 구절까지 */
   if (SENSES) seen.forEach(o => {
@@ -8811,7 +8832,7 @@ function dictBuild() {
     const add = ss.map(t => t.trim()).filter(p => p && !have.some(h => h === p || h.includes(p) || p.includes(h)));
     if (add.length && have.length < 8) o.ko += ' · ' + add.slice(0, 8 - have.length).join(' · ');
   });
-  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi), h: dictHat(x.vi), en: (DEN && DEN[x.vi.toLowerCase()]) || null, fr: (DFREQ && DFREQ[x.vi.toLowerCase()]) || 99999 }));
+  DICT = [...seen.values()].map(x => ({ ...x, b: dictBare(x.vi), h: dictHat(x.vi), en: (DEN && DEN[x.vi.toLowerCase()]) || null, fr: (DFREQ && DFREQ[x.vi.toLowerCase()]) || 99999, vb: (VBARE && VBARE.get(viCanon(x.vi))) || null }));
   DICT.sort((a, b) => a.b.localeCompare(b.b));
   return DICT;
 }
@@ -8825,6 +8846,7 @@ async function dictReady() {
   if (!COURSE) jobs.push(get('data/order.json', j => { COURSE = j; loadCWords(); }));
   if (!DKO) jobs.push(get('data/_dict_ko.json', j => { DKO = j; }));
   if (!DFULL) jobs.push(get('data/_dict_full.json', j => { DFULL = j; }));
+  if (!DVAR) jobs.push(get('data/_dict_var.json', j => { DVAR = j; }));
   if (!KO2VI) jobs.push(get('data/_ko2vi.json', j => { KO2VI = j; }));
   if (!DKH) jobs.push(get('data/_dict_head.json', j => { DKH = j; }));
   if (!KRSYL) jobs.push(get('data/_kr_syl.json', j => { KRSYL = j; }));
@@ -8833,6 +8855,7 @@ async function dictReady() {
   if (!DFREQ) jobs.push(get('data/_dict_freq.json', j => { DFREQ = j; }));
   jobs.push(southLoad(), sensesLoad(), dexLoad());   // 사전 예문은 '문장 속에서' 찾기에도 쓴다 (2026-10-01)   // 남부 딱지·검수된 뜻 목록 (2026-09-29 밤)
   await Promise.all(jobs);
+  dvarApply();
   DICT = null;
 }
 /* 사전에서 단어을 누르면 **단어 카드와 완전히 같은 화면**으로 연다 (대표님 지시 2026-09-27) —
@@ -9088,15 +9111,17 @@ function dictEntry(q0) {
                      if (kor) { const i2 = k2v.indexOf(x.vi.toLowerCase()); if (i2 >= 0) return -10 + i2; const p = phrs(x.ko); return p[0] === qk ? 0 : p.includes(qk) ? 1 : p.some(v => v.startsWith(qk)) ? 2 : 3; }
                      let best = 99;
                      [[x.vi.toLowerCase(), qk], [x.h, qh], [x.b, qb]].forEach(([s, t], f) => { const e = ext(s, t); if (e < 9) best = Math.min(best, e * 3 + f); });
+                     (x.vb || []).forEach(v => { const e = ext(v, qb); if (e < 9) best = Math.min(best, e * 3 + 2); });   // 다른 표기로 쳐도 (ki lo met → kilômét)
                      if (best < 99) return best + (abbr(x) ? 15 : 0);   // 약어는 앞·안에 든 낱말(최대 14)보다 뒤로
-                     if (qbN.length >= 2) { const xb = nsp(x.b); if (xb === qbN) return 1; if (xb.startsWith(qbN)) return 10; if (xb.includes(qbN)) return 13; }   // 띄어쓰기만 다른 것
+                     if (qbN.length >= 2) for (const b0 of [x.b, ...(x.vb || [])]) { const xb = nsp(b0); if (xb === qbN) return 1; if (xb.startsWith(qbN)) return 10; if (xb.includes(qbN)) return 13; }   // 띄어쓰기만 다른 것
                      return x.en && x.en[0] === qk ? 20 : 21;   // 영어 열쇠로만 잡힌 것은 맨 뒤 — 첫 뜻이 딱 그 말이면 먼저
                    };
                    const lesson = x => x.src && x.src.some(s => !['예문', '사전', '참고 사전'].includes(s)) ? 0 : 1;   // 수업에 나온 말이 먼저 (trường học 이 học hiệu 보다 위)
                    const nw = x => x.vi.split(/\s+/).length;   // 같은 등급이면 낱말 수가 적은 것(trường)이 붙은 말(trường học)보다 먼저
                    return sc(a) - sc(b2) || (a.ref ? 1 : 0) - (b2.ref ? 1 : 0) || lesson(a) - lesson(b2) || (a.fr || 99999) - (b2.fr || 99999) || nw(a) - nw(b2) || (kor ? a.ko.length - b2.ko.length : 0) || a.vi.length - b2.vi.length;
                  };
-    const viHit = x => x.b.includes(qb) || x.vi.toLowerCase().includes(qk) || (qbN.length >= 2 && nsp(x.b).includes(qbN));
+    const viHit = x => x.b.includes(qb) || x.vi.toLowerCase().includes(qk) || (qbN.length >= 2 && nsp(x.b).includes(qbN))
+      || (x.vb && x.vb.some(v => v.includes(qb) || (qbN.length >= 2 && nsp(v).includes(qbN))));   // 다른 표기 (2026-10-13)
     /* 영어 뜻 찾기 (2026-10-02 대표님 "왜 영어로 사전 검색 못 하냐 — skil 같은 거"): 전에는 뜻 하나가 친 말과 **똑같을 때만** 잡혀
        덜 친 말(skil)·복수·과거형(skills·walked)은 0개였다. 이제 ① 똑같음 ② 그 말로 시작하는 구(skill set) ③ 뜻 안의 한 낱말 ④ 친 말로 시작(한 글자부터, skil → skill).
        복수·-ed·-ing 는 밑꼴로도 찾는다(skills → skill, studies → study) */
