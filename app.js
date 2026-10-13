@@ -9494,15 +9494,21 @@ function shareExam() {
 function wbHost() { const ko = learnKo(); return [ko ? $('#examBody') : $('#subBody'), ko ? 'exam' : 'sub']; }
 function wbMiss() { return Object.entries(S.stats.miss || {}).filter(([, n]) => n >= 1).sort((a, b) => b[1] - a[1]); }
 /* 열쇠(vi) 목록 → 낱말 자료(일상·직무 → 교재·22기 차례로 찾음), 겹침 제거 */
-function wbResolve(viList) {
+/* keep: 담은 단어·폴더처럼 사용자가 직접 담은 목록 — 과정 자료에 없는 낱말(사전에서 담은 것)도 빠뜨리지 않는다 (대표님 2026-10-13 "폴더에 5개가 들어 있는데 3개만 보인다").
+   과정 자료 → 사전(받아 와 있으면) → 그래도 없으면 담을 때 적어 둔 뜻으로 글자만 */
+function wbResolve(viList, keep) {
   const all = allWords(), gy = GYBM ? gybmAllWords() : [], out = [], seen = new Set();
+  let dict = null;
   viList.forEach(vi => {
-    const k = String(vi || '').trim(); if (!k || seen.has(k.toLowerCase())) return;
-    const w = all.find(x => x.vi === k) || gy.find(x => x.vi === k) || all.find(x => x.vi.toLowerCase() === k.toLowerCase());
-    if (w) { seen.add(k.toLowerCase()); out.push(w); }
+    const k = String(vi || '').trim(), lc = k.toLowerCase(); if (!k || seen.has(lc)) return;
+    let w = all.find(x => x.vi === k) || gy.find(x => x.vi === k) || all.find(x => x.vi.toLowerCase() === lc) || gy.find(x => x.vi.toLowerCase() === lc);
+    if (!w && keep && DFULL) { dict = dict || dictBuild(); const c = viCanon(k); w = dict.find(x => !x.ref && viCanon(x.vi) === c) || dict.find(x => viCanon(x.vi) === c); }
+    if (!w && keep) { const st = starOf()[k]; w = { vi: k, ko: (st && st.ko) || '' }; }
+    if (w) { seen.add(lc); out.push(w); }
   });
   return out;
 }
+const wbInCourse = vi => { const k = String(vi || '').trim(), lc = k.toLowerCase(); return allWords().some(x => x.vi.toLowerCase() === lc) || (GYBM ? gybmAllWords() : []).some(x => x.vi.toLowerCase() === lc); };
 function drawWordbook() {
   const [host, view] = wbHost();
   host.textContent = '';
@@ -9571,6 +9577,7 @@ function wbFind(words, q0) {
   };
   return words.map(x => [x, sc(x)]).filter(([, n]) => n < 99).sort((a, b2) => a[1] - b2[1] || a[0].vi.length - b2[0].vi.length).map(([x]) => x);
 }
+let WB_REDRAWN = false;
 function wordbookList(kind, fid) {
   const [host, view] = wbHost();
   host.textContent = '';
@@ -9579,8 +9586,11 @@ function wordbookList(kind, fid) {
   let title, words;
   if (kind === 'all') { title = tr('학습한 모든 단어'); words = wbResolve(learnedAll().map(x => x.vi)); }
   else if (kind === 'miss') { title = tr('자주 틀리는 것'); words = wbResolve(wbMiss().map(([vi]) => vi)); }
-  else if (kind === 'star') { title = tr('담은 단어'); words = wbResolve(Object.entries(starOf()).sort((a, b) => b[1].t - a[1].t).map(([k, v]) => (v && v.vi) || k)); }
-  else { title = f.name; words = wbResolve(f.w || []); }
+  else if (kind === 'star') { title = tr('담은 단어'); words = wbResolve(Object.entries(starOf()).sort((a, b) => b[1].t - a[1].t).map(([k, v]) => (v && v.vi) || k), true); }
+  else { title = f.name; words = wbResolve(f.w || [], true); }
+  if ((kind === 'star' || kind === 'folder') && !DFULL && words.some(w => !wbInCourse(w.vi))) {   // 사전에서 담은 낱말 — 사전 자료를 받아 와 뜻·그림을 채운 뒤 다시 그린다 (2026-10-13)
+    dictReady().then(() => { if ($('#title').textContent === tr(title) && !WB_REDRAWN) { WB_REDRAWN = true; wordbookList(kind, fid); WB_REDRAWN = false; } });   // 아직 이 목록을 보고 있으면
+  }
   const redraw = () => wordbookList(kind, fid);
   host.append(el('p', 'lede', esc(title) + ' · ' + words.length + tr('개')));
   if (!words.length) {
