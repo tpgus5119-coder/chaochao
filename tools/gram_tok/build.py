@@ -71,8 +71,10 @@ for it in items:
     if exs and len(hit) < max(1, len(exs) // 2): bad.append((it['id'], it['t'][:40], it['selftest'], [e for e in exs if e not in hit][:2]))
 print(f"문형 {len(items)} · 규칙 없는(늘 아는) {sum(1 for i in items if i['always'])} · 예문 검산 못 미침 {len(bad)}")
 for b in bad: print('  ✗', *b)
+# 규칙 정규식을 한 번만 짓는다 — 규칙이 500개를 넘자 re 모듈의 저장칸이 넘쳐 문장마다 다시 지어 몇 분씩 걸렸다 (2026-10-13)
+RX = {it['id']: [re.compile(r, re.I) for r in it['re']] for it in items}
 def detect(s):
-    s = clean(s); return [it['id'] for it in items if not it['always'] and any(re.search(r, s, re.I) for r in it['re'])]
+    s = clean(s); return [it['id'] for it in items if not it['always'] and any(x.search(s) for x in RX[it['id']])]
 # ② 메인 교재 과별 지도
 RB = json.load(open(R / 'data/realbook.json', encoding='utf-8'))
 strip = lambda t: re.sub(r'^[^:：]{1,24}[:：]\s*', '', t).strip()

@@ -356,11 +356,13 @@
 "gi": 2,
 "t": "…, phải không? — ~맞죠?",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])phải\\s+không(?![A-Za-zÀ-ỹĐđ])\\s*\\?"
+"(?<![A-Za-zÀ-ỹĐđ])phải\\s+không(?![A-Za-zÀ-ỹĐđ])\\s*\\?",
+"(?<![A-Za-zÀ-ỹĐđ])phải\\s+không(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])anh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ông(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cô(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cậu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thầy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ạ(?![A-Za-zÀ-ỹĐđ]))\\s*\\?"
 ],
 "always": false,
 "tok": [
-"phải không"
+"phải không",
+"anh"
 ],
 "selftest": "4/5",
 "first": "1-2"
@@ -501,11 +503,13 @@
 "gi": 3,
 "t": "… hả? — ~지? ~라고?",
 "re": [
-"(?:(?<![A-Za-zÀ-ỹĐđ])hả(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])há(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hở(?![A-Za-zÀ-ỹĐđ]))\\s*\\?"
+"(?:(?<![A-Za-zÀ-ỹĐđ])hả(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])há(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hở(?![A-Za-zÀ-ỹĐđ]))\\s*\\?",
+"(?:(?<![A-Za-zÀ-ỹĐđ])hả(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])há(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hở(?![A-Za-zÀ-ỹĐđ]))\\s+(?:(?<![A-Za-zÀ-ỹĐđ])anh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ông(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cô(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cậu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thầy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ạ(?![A-Za-zÀ-ỹĐđ]))\\s*\\?"
 ],
 "always": false,
 "tok": [
-"hả"
+"hả",
+"anh"
 ],
 "selftest": "3/3",
 "first": "1-7"
@@ -736,11 +740,13 @@
 "gi": 4,
 "t": "어림수 말하기",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])(khoảng|chừng|độ|vài)(?![A-Za-zÀ-ỹĐđ])\\s+(\\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|người|ngày|tháng|năm|phút|giờ|tiếng|cây|lần)"
+"(?<![A-Za-zÀ-ỹĐđ])(khoảng|chừng|độ|vài)(?![A-Za-zÀ-ỹĐđ])\\s+(\\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|người|ngày|tháng|năm|phút|giờ|tiếng|cây|lần)",
+"(?<![A-Za-zÀ-ỹĐđ])(hơn|gần)\\s+(\\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|trăm|nghìn|ngàn|triệu)(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(trên|dưới)\\s+(\\d|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|trăm|nghìn|ngàn|triệu)(?![A-Za-zÀ-ỹĐđ])"
 ],
 "always": false,
 "tok": [],
-"selftest": "3/3",
+"selftest": "4/4",
 "first": "1-4"
 },
 {
@@ -893,13 +899,14 @@
 "gi": 0,
 "t": "đã … chưa? — 했어요, 안 했어요?",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])chưa(?![A-Za-zÀ-ỹĐđ])\\s*\\?"
+"(?<![A-Za-zÀ-ỹĐđ])chưa(?![A-Za-zÀ-ỹĐđ])\\s*\\?",
+"(?<![A-Za-zÀ-ỹĐđ])chưa(?![A-Za-zÀ-ỹĐđ])\\s+(?!(ạ|anh|chị|em|ông|bà|cô|nhỉ|vậy|thế|hả|à|nhé|bạn|cậu|em nhỉ|anh nhỉ)\\s*[.?!]?\\s*$)(?!(rồi|xong)(?![A-Za-zÀ-ỹĐđ]))[A-Za-zÀ-ỹĐđ]"
 ],
 "always": false,
 "tok": [
 "chưa"
 ],
-"selftest": "4/7",
+"selftest": "7/9",
 "first": "1-9"
 },
 {
@@ -1235,11 +1242,15 @@
 "gi": 0,
 "t": "때를 나타내는 말",
 "re": [
-"(?:(?<![A-Za-zÀ-ỹĐđ])hôm\\s+qua(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hôm\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngày\\s+mai(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngày\\s+kia(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hôm\\s+kia(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tuần\\s+trước(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tuần\\s+sau(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tuần\\s+này(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])năm\\s+ngoái(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])năm\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])năm\\s+sau(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tháng\\s+trước(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tháng\\s+sau(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tháng\\s+này(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tối\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])sáng\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chiều\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bây\\s+giờ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạo\\s+này(?![A-Za-zÀ-ỹĐđ]))"
+"(?:(?<![A-Za-zÀ-ỹĐđ])hôm\\s+qua(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hôm\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngày\\s+mai(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngày\\s+kia(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hôm\\s+kia(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tuần\\s+trước(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tuần\\s+sau(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tuần\\s+này(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])năm\\s+ngoái(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])năm\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])năm\\s+sau(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tháng\\s+trước(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tháng\\s+sau(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tháng\\s+này(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tối\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])sáng\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chiều\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bây\\s+giờ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạo\\s+này(?![A-Za-zÀ-ỹĐđ]))",
+"(?:(?<![A-Za-zÀ-ỹĐđ])sáng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])trưa(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chiều(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tối(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đêm)\\s+(nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])qua(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mai(?![A-Za-zÀ-ỹĐđ]))",
+"(?<![A-Za-zÀ-ỹĐđ])(tuần|tháng|năm)\\s+tới(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])cuối\\s+tuần(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])tối\\s+hôm\\s+qua(?![A-Za-zÀ-ỹĐđ])"
 ],
 "always": false,
 "tok": [],
-"selftest": "2/2",
+"selftest": "3/3",
 "first": "1-1"
 },
 {
@@ -1321,11 +1332,12 @@
 "t": "hiện nay · trước đây · gần đây · hồi nãy · sau này — 지금·예전·요즘·아까·나중",
 "re": [
 "(?:(?<![A-Za-zÀ-ỹĐđ])hiện\\s+nay(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hiện\\s+tại(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])trước\\s+đây(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hồi\\s+nãy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])lúc\\s+nãy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ban\\s+nãy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])sau\\s+này(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngày\\s+xưa(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hồi\\s+trước(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạo\\s+gần\\s+đây(?![A-Za-zÀ-ỹĐđ]))",
-"^\\s*gần đây\\s*,?\\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó)(?![A-Za-zÀ-ỹĐđ])"
+"^\\s*gần đây\\s*,?\\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó)(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(lúc|khi|hồi)\\s+đó(?![A-Za-zÀ-ỹĐđ])"
 ],
 "always": false,
 "tok": [],
-"selftest": "5/5",
+"selftest": "6/6",
 "first": "1-3"
 },
 {
@@ -1369,7 +1381,8 @@
 "t": "빈도부사 — 항상 · 보통 · 가끔 · 좀처럼 · 전혀",
 "re": [
 "(?<![A-Za-zÀ-ỹĐđ])(luôn luôn|thỉnh thoảng|ít khi|hiếm khi|không bao giờ)(?![A-Za-zÀ-ỹĐđ])",
-"(?<![A-Za-zÀ-ỹĐđ])(anh|chị|em|ông|bà|cô|thầy|chú|bác|nó|họ|tôi|mình|cậu|bạn)\\s+(hay|thường)(?![A-Za-zÀ-ỹĐđ])\\s+(?!là|không)"
+"(?<![A-Za-zÀ-ỹĐđ])(anh|chị|em|ông|bà|cô|thầy|chú|bác|nó|họ|tôi|mình|cậu|bạn)\\s+(hay|thường)(?![A-Za-zÀ-ỹĐđ])\\s+(?!là|không)",
+"(?<![A-Za-zÀ-ỹĐđ])(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó|gia đình|vợ|chồng|ai|người yêu|đồng nghiệp|sếp|ấy)\\s+(luôn|thường xuyên)\\s+(?!luôn)[A-Za-zÀ-ỹĐđ]"
 ],
 "always": false,
 "tok": [],
@@ -1606,7 +1619,8 @@
 "re": [
 "(?<![A-Za-zÀ-ỹĐđ])đi(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])học(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])làm(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chơi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chợ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])về(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngủ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạo(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bộ(?![A-Za-zÀ-ỹĐđ]))",
 "(?:(?<![A-Za-zÀ-ỹĐđ])đến(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tới(?![A-Za-zÀ-ỹĐđ]))\\s+(?:(?<![A-Za-zÀ-ỹĐđ])nhà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])trường(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])công\\s+ty(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])lớp(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])văn\\s+phòng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])sân\\s+bay(?![A-Za-zÀ-ỹĐđ]))",
-"(?<![A-Za-zÀ-ỹĐđ])về(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])nhà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])quê(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nước(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])phòng(?![A-Za-zÀ-ỹĐđ]))"
+"(?<![A-Za-zÀ-ỹĐđ])về(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])nhà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])quê(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nước(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])phòng(?![A-Za-zÀ-ỹĐđ]))",
+"(?<![A-Za-zÀ-ỹĐđ])đi\\s+(ăn|uống|mua|xem|gặp|thăm|khám|bơi|du lịch|công tác|dạo|câu cá|tập|chạy|nhậu|hát|dự|đón|lấy|rút|gửi|tắm|cắt|giao|mua sắm|ngắm|leo|thuê|đổi|chụp|nghe|tham quan|picnic|dã ngoại|siêu thị|nhà hàng|ngân hàng|bệnh viện|bưu điện)(?![A-Za-zÀ-ỹĐđ])"
 ],
 "always": false,
 "tok": [
@@ -1616,7 +1630,7 @@
 "nhà",
 "về"
 ],
-"selftest": "5/6",
+"selftest": "8/8",
 "first": "1-3"
 },
 {
@@ -1642,12 +1656,14 @@
 "gi": 7,
 "t": "ở · tại + 장소 — ~에(서)",
 "re": [
-"(?:(?<![A-Za-zÀ-ỹĐđ])sống(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])làm\\s+việc(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])học(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ở(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])làm(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ăn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gặp(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mua(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chơi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngủ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nghỉ(?![A-Za-zÀ-ỹĐđ]))\\s+(?:(?<![A-Za-zÀ-ỹĐđ])ở(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tại(?![A-Za-zÀ-ỹĐđ])).*?"
+"(?:(?<![A-Za-zÀ-ỹĐđ])sống(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])làm\\s+việc(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])học(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ở(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])làm(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ăn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gặp(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mua(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chơi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngủ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nghỉ(?![A-Za-zÀ-ỹĐđ]))\\s+(?:(?<![A-Za-zÀ-ỹĐđ])ở(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tại(?![A-Za-zÀ-ỹĐđ])).*?",
+"(?:(?<![A-Za-zÀ-ỹĐđ])sinh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])lớn\\s+lên(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])du\\s+học(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đỗ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đậu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gặp\\s+nhau(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mua\\s+sắm(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ăn\\s+trưa(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ăn\\s+tối(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ăn\\s+sáng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])xem\\s+phim(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đợi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chờ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tập(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bơi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ngồi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đứng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nằm(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thuê(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bán(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nấu(?![A-Za-zÀ-ỹĐđ]))\\s+(?:(?<![A-Za-zÀ-ỹĐđ])ở(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tại(?![A-Za-zÀ-ỹĐđ])).*?"
 ],
 "always": false,
 "tok": [
 "sống",
-"ở"
+"ở",
+"sinh"
 ],
 "selftest": "2/3",
 "first": "1-3"
@@ -1771,13 +1787,15 @@
 "gi": 7,
 "t": "trước · trong · sau — 전·중·후",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])(trước|trong|sau)\\s+khi(?![A-Za-zÀ-ỹĐđ])"
+"(?<![A-Za-zÀ-ỹĐđ])(trước|trong|sau)\\s+khi(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(sau|trước)\\s+đó(?![A-Za-zÀ-ỹĐđ])"
 ],
 "always": false,
 "tok": [
-"trước"
+"trước",
+"sau"
 ],
-"selftest": "3/3",
+"selftest": "4/4",
 "first": "1-12"
 },
 {
@@ -2206,7 +2224,8 @@
 "gi": 1,
 "t": "바람 말하기",
 "re": [
-"(?:(?<![A-Za-zÀ-ỹĐđ])mong(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hy\\s+vọng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hi\\s+vọng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ước(?![A-Za-zÀ-ỹĐđ]))"
+"(?:(?<![A-Za-zÀ-ỹĐđ])mong(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hy\\s+vọng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hi\\s+vọng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ước(?![A-Za-zÀ-ỹĐđ]))",
+"(?<![A-Za-zÀ-ỹĐđ])chúc(?![A-Za-zÀ-ỹĐđ])(?!\\s+mừng)"
 ],
 "always": false,
 "tok": [
@@ -2332,13 +2351,15 @@
 "gi": 1,
 "t": "cho — ~에게 (전치사)",
 "re": [
-"(?:(?<![A-Za-zÀ-ỹĐđ])nói(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gửi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mua(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tặng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])viết(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gọi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đưa(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])làm(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])kể(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])để\\s+lại(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chuyển(?![A-Za-zÀ-ỹĐđ])).*?(?<![A-Za-zÀ-ỹĐđ])cho(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])anh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mình(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cháu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chúng\\s+tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])con(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cô(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ông(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])họ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mẹ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bố(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ai(?![A-Za-zÀ-ỹĐđ]))"
+"(?:(?<![A-Za-zÀ-ỹĐđ])nói(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gửi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mua(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tặng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])viết(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gọi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đưa(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])làm(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dạy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])kể(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])để\\s+lại(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chuyển(?![A-Za-zÀ-ỹĐđ])).*?(?<![A-Za-zÀ-ỹĐđ])cho(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])anh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mình(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cháu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chúng\\s+tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])con(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cô(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ông(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])họ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mẹ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bố(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ai(?![A-Za-zÀ-ỹĐđ]))",
+"(?:(?<![A-Za-zÀ-ỹĐđ])giải\\s+thích(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chỉ\\s+đường(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hướng\\s+dẫn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])trả(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nấu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đặt(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mang(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đem(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])lấy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bán(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mở(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đọc(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])hát(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chụp(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gọi\\s+điện(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nhắn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cho\\s+mượn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])giới\\s+thiệu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đổi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])sửa(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chuẩn\\s+bị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dịch(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])kiểm\\s+tra(?![A-Za-zÀ-ỹĐđ])).*?(?<![A-Za-zÀ-ỹĐđ])cho(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])anh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mình(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cháu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chúng\\s+tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chúng\\s+ta(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])con(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cô(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ông(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])họ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mẹ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bố(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thầy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chú(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bác(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mọi\\s+người(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])các\\s+bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cậu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nó(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])gia\\s+đình(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])vợ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chồng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ai(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])người\\s+yêu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])đồng\\s+nghiệp(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])sếp(?![A-Za-zÀ-ỹĐđ]))"
 ],
 "always": false,
 "tok": [
 "nói",
 "cho",
-"tôi"
+"tôi",
+"giải thích"
 ],
 "selftest": "2/2",
 "first": "1-7"
@@ -2459,7 +2480,8 @@
 "gi": 1,
 "t": "주어 + 동사 + cùng + 명사 — ~와 함께",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])cùng(?![A-Za-zÀ-ỹĐđ])"
+"(?<![A-Za-zÀ-ỹĐđ])cùng(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(đi|ăn|uống|học|sống|chơi|nói chuyện|gặp|xem|làm việc|ở|đến|về|du lịch|tập|nhảy|hát|cười|cãi nhau|kết hôn|lấy nhau)(\\s+[A-Za-zÀ-ỹĐđ]+){0,3}\\s+với\\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó|gia đình|vợ|chồng|ai|người yêu|đồng nghiệp|sếp)(?![A-Za-zÀ-ỹĐđ])"
 ],
 "always": false,
 "tok": [
@@ -2571,7 +2593,8 @@
 "t": "về — ~에 대해",
 "re": [
 "(?<![A-Za-zÀ-ỹĐđ])(nói|hỏi|biết|kể|nghĩ|đọc|viết|tìm hiểu|nói chuyện|lo lắng|thảo luận|học|giới thiệu|thông tin|sách|phim|bài)\\s+về(?![A-Za-zÀ-ỹĐđ])(?!\\s*(nhà|nước|quê|thì|rồi|muộn|sớm|trễ|$|[.,!?]))",
-"^\\s*về\\s+(kỹ năng|vấn đề|chuyện|việc)(?![A-Za-zÀ-ỹĐđ])"
+"^\\s*về\\s+(kỹ năng|vấn đề|chuyện|việc)(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(câu hỏi|bài viết|câu chuyện|chuyện|ý kiến|kiến thức|hiểu biết|quan tâm|lo|suy nghĩ|bàn|trao đổi|hỏi thăm|tin tức|tin|bài báo|nghiên cứu|giải thích|cảm nghĩ|ấn tượng)\\s+về(?![A-Za-zÀ-ỹĐđ])(?!\\s*(nhà|nước|quê|thì|rồi|muộn|sớm|trễ|$|[.,!?]))"
 ],
 "always": false,
 "tok": [],
@@ -2621,12 +2644,14 @@
 "t": "còn — 그런데, ~는(대조)",
 "re": [
 "^\\s*(?<![A-Za-zÀ-ỹĐđ])còn(?![A-Za-zÀ-ỹĐđ])",
-"(?<![A-Za-zÀ-ỹĐđ])còn(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])anh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ông(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cô(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])họ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cậu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mình(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cháu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thầy(?![A-Za-zÀ-ỹĐđ]))"
+"(?<![A-Za-zÀ-ỹĐđ])còn(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])anh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ông(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cô(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])họ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cậu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mình(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cháu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thầy(?![A-Za-zÀ-ỹĐđ]))",
+"\\s*,\\s*(?<![A-Za-zÀ-ỹĐđ])còn(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])bố(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])mẹ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])vợ(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chồng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])con(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])người(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ở(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cái(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])món(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tiếng(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em\\s+gái(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em\\s+trai(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])anh\\s+trai(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị\\s+gái(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn\\s+tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chúng\\s+tôi(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])buổi(?![A-Za-zÀ-ỹĐđ]))"
 ],
 "always": false,
 "tok": [
 "còn",
-"anh"
+"anh",
+"bố"
 ],
 "selftest": "2/3",
 "first": "1-10"
@@ -2698,11 +2723,14 @@
 "gi": 5,
 "t": "Thế thì … — 그러면",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])thế\\s+thì(?![A-Za-zÀ-ỹĐđ])"
+"(?<![A-Za-zÀ-ỹĐđ])thế\\s+thì(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(vậy|thế)\\s+thì(?![A-Za-zÀ-ỹĐđ])",
+"^\\s*(?:(?<![A-Za-zÀ-ỹĐđ])vậy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thế(?![A-Za-zÀ-ỹĐđ]))\\s*,"
 ],
 "always": false,
 "tok": [
-"thế thì"
+"thế thì",
+"vậy"
 ],
 "selftest": "3/3",
 "first": "1-6"
@@ -3042,7 +3070,9 @@
 "gi": 1,
 "t": "Khi … thì … — ~할 때는",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])khi(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])thì(?![A-Za-zÀ-ỹĐđ])"
+"(?<![A-Za-zÀ-ỹĐđ])khi(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])thì(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])(?<!trước )(?<!trong )(?<!sau )(?<!ít )(?<!hiếm )(?<!có )(?<!đôi )(?<!một )khi(?![A-Za-zÀ-ỹĐđ])(?!\\s+(nào|đó|ấy)(?![A-Za-zÀ-ỹĐđ]))\\s+[A-Za-zÀ-ỹĐđ]",
+"(?<![A-Za-zÀ-ỹĐđ])lúc\\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó|gia đình|vợ|chồng|ai|người yêu|đồng nghiệp|sếp)\\s+(?!ơi)[A-Za-zÀ-ỹĐđ]"
 ],
 "always": false,
 "tok": [
@@ -3050,7 +3080,7 @@
 "thì"
 ],
 "selftest": "5/5",
-"first": "2-7"
+"first": "1-11"
 },
 {
 "id": "31.2",
@@ -3137,10 +3167,13 @@
 "gi": 0,
 "t": "… hơn … — ~보다 더",
 "re": [
-"(?<!xe )(?<![A-Za-zÀ-ỹĐđ])hơn(?![A-Za-zÀ-ỹĐđ])(?!\\s+(\\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|nửa|trăm|nữa))"
+"(?<!xe )(?<![A-Za-zÀ-ỹĐđ])hơn(?![A-Za-zÀ-ỹĐđ])(?!\\s+(\\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|nửa|trăm|nữa))",
+"(?<![A-Za-zÀ-ỹĐđ])so\\s+với(?![A-Za-zÀ-ỹĐđ])"
 ],
 "always": false,
-"tok": [],
+"tok": [
+"so với"
+],
 "selftest": "3/3",
 "first": "1-5"
 },
@@ -3168,7 +3201,8 @@
 "gi": 2,
 "t": "như — ~처럼",
 "re": [
-"(?<!hình )(?<!dường )(?<!ví )(?<!hạn )(?<![A-Za-zÀ-ỹĐđ])như(?![A-Za-zÀ-ỹĐđ])(?!\\s+(vậy|thế|nhau))"
+"(?<!hình )(?<!dường )(?<!ví )(?<!hạn )(?<![A-Za-zÀ-ỹĐđ])như(?![A-Za-zÀ-ỹĐđ])(?!\\s+(vậy|thế|nhau))",
+"(?<![A-Za-zÀ-ỹĐđ])(làm|nói|nghĩ|sống|viết|học|nấu)\\s+như\\s+(vậy|thế)(?![A-Za-zÀ-ỹĐđ])(?!\\s+nào)"
 ],
 "always": false,
 "tok": [],
@@ -3280,14 +3314,16 @@
 "gi": 3,
 "t": "không những X mà còn Y — X뿐 아니라 Y도",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])không\\s+những(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])mà\\s+còn(?![A-Za-zÀ-ỹĐđ])"
+"(?<![A-Za-zÀ-ỹĐđ])không\\s+những(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])mà\\s+còn(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])không\\s+chỉ(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])mà\\s+còn(?![A-Za-zÀ-ỹĐđ])"
 ],
 "always": false,
 "tok": [
 "không những",
-"mà còn"
+"mà còn",
+"không chỉ"
 ],
-"selftest": "3/5",
+"selftest": "4/5",
 "first": "2-3"
 },
 {
@@ -3658,13 +3694,15 @@
 "t": "… chứ — 물론이죠",
 "re": [
 "(?<![A-Za-zÀ-ỹĐđ])chứ(?![A-Za-zÀ-ỹĐđ])\\s*[.!?]?\\s*$",
-"(?<![A-Za-zÀ-ỹĐđ])chứ(?![A-Za-zÀ-ỹĐđ])\\s*\\?"
+"(?<![A-Za-zÀ-ỹĐđ])chứ(?![A-Za-zÀ-ỹĐđ])\\s*\\?",
+"(?<![A-Za-zÀ-ỹĐđ])chứ(?![A-Za-zÀ-ỹĐđ])\\s+(?:(?<![A-Za-zÀ-ỹĐđ])anh(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])chị(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])em(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ông(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bà(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cô(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])bạn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])cậu(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])thầy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])ạ(?![A-Za-zÀ-ỹĐđ]))\\s*[.!?]?\\s*$"
 ],
 "always": false,
 "tok": [
-"chứ"
+"chứ",
+"anh"
 ],
-"selftest": "3/5",
+"selftest": "4/5",
 "first": "1-10"
 },
 {
@@ -3909,14 +3947,16 @@
 "gi": 0,
 "t": "mặc dù X nhưng (vẫn) Y — 비록 X지만 (그래도) Y",
 "re": [
-"(?:(?<![A-Za-zÀ-ỹĐđ])mặc\\s+dù(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tuy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dù(?![A-Za-zÀ-ỹĐđ])).*?(?<![A-Za-zÀ-ỹĐđ])nhưng(?![A-Za-zÀ-ỹĐđ])"
+"(?:(?<![A-Za-zÀ-ỹĐđ])mặc\\s+dù(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])tuy(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])dù(?![A-Za-zÀ-ỹĐđ])).*?(?<![A-Za-zÀ-ỹĐđ])nhưng(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])mặc\\s+dù(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])tuy(?![A-Za-zÀ-ỹĐđ])(?!\\s+nhiên)"
 ],
 "always": false,
 "tok": [
 "mặc dù",
 "nhưng"
 ],
-"selftest": "4/5",
+"selftest": "5/5",
 "first": "2-5"
 },
 {
@@ -4373,13 +4413,14 @@
 "gi": 0,
 "t": "càng … càng … — ~할수록 더 ~",
 "re": [
-"(?<![A-Za-zÀ-ỹĐđ])càng(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])càng(?![A-Za-zÀ-ỹĐđ])"
+"(?<![A-Za-zÀ-ỹĐđ])càng(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])càng(?![A-Za-zÀ-ỹĐđ])",
+"(?<!ngày )(?<![A-Za-zÀ-ỹĐđ])càng(?![A-Za-zÀ-ỹĐđ])(?!\\s+(ngày|lúc)(?![A-Za-zÀ-ỹĐđ]))"
 ],
 "always": false,
 "tok": [
 "càng"
 ],
-"selftest": "5/5",
+"selftest": "6/6",
 "first": "2-4"
 },
 {

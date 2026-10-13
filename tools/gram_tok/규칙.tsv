@@ -23,7 +23,7 @@
 4.8	re:(?<![A-Za-zÀ-ỹĐđ])có(?![A-Za-zÀ-ỹĐđ])(?![^.?!]*không\s*\?)
 5.0	có _ không ?
 5.1	có+phải _ không ?;, có+phải+không ?
-5.2	phải+không ?
+5.2	phải+không ?;phải+không (anh|chị|em|ông|bà|cô|bạn|cậu|thầy|ạ) ?
 5.3	re:(?<!thế )(?<!như thế )(?<![A-Za-zÀ-ỹĐđ])(gì|nào)(?![A-Za-zÀ-ỹĐđ])(?!\s+(cũng|đó|cả))
 5.4	thế+nào ?
 5.5	ai
@@ -32,7 +32,7 @@
 6.0	ạ
 6.1	à ?
 6.2	vậy ?
-6.3	(hả|há|hở) ?
+6.3	(hả|há|hở) ?;(hả|há|hở) (anh|chị|em|ông|bà|cô|bạn|cậu|thầy|ạ) ?
 6.4	nhỉ ?
 7.0	(mười|mươi|trăm)
 7.1	re:(?<![A-Za-zÀ-ỹĐđ])mươi\s+(mốt|tư|lăm)(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])mười\s+lăm(?![A-Za-zÀ-ỹĐđ])
@@ -45,7 +45,7 @@
 9.1	các
 9.2	những
 9.3	mấy
-9.4	re:(?<![A-Za-zÀ-ỹĐđ])(khoảng|chừng|độ|vài)(?![A-Za-zÀ-ỹĐđ])\s+(\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|người|ngày|tháng|năm|phút|giờ|tiếng|cây|lần)
+9.4	re:(?<![A-Za-zÀ-ỹĐđ])(khoảng|chừng|độ|vài)(?![A-Za-zÀ-ỹĐđ])\s+(\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|người|ngày|tháng|năm|phút|giờ|tiếng|cây|lần);re:(?<![A-Za-zÀ-ỹĐđ])(hơn|gần)\s+(\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|trăm|nghìn|ngàn|triệu)(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])(trên|dưới)\s+(\d|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|trăm|nghìn|ngàn|triệu)(?![A-Za-zÀ-ỹĐđ])
 9.5	một (ít|chút|số)
 10.0	đang
 10.1	đã
@@ -53,7 +53,7 @@
 10.3	(đã|đang|sẽ)
 10.4	sắp
 10.5	re:^(?![^.?!]*(?<![A-Za-zÀ-ỹĐđ])vừa(?![A-Za-zÀ-ỹĐđ])[^.?!]*(?<![A-Za-zÀ-ỹĐđ])vừa(?![A-Za-zÀ-ỹĐđ])).*?(?<![A-Za-zÀ-ỹĐđ])(vừa mới|vừa|mới)(?![A-Za-zÀ-ỹĐđ])\s+(rồi|xong|về|đến|đi|ăn|làm|học|gặp|mua|nói|gọi|khóc|biết|xem|uống|ngủ|dậy|được)(?![A-Za-zÀ-ỹĐđ])
-11.0	chưa ?
+11.0	chưa ?;re:(?<![A-Za-zÀ-ỹĐđ])chưa(?![A-Za-zÀ-ỹĐđ])\s+(?!(ạ|anh|chị|em|ông|bà|cô|nhỉ|vậy|thế|hả|à|nhé|bạn|cậu|em nhỉ|anh nhỉ)\s*[.?!]?\s*$)(?!(rồi|xong)(?![A-Za-zÀ-ỹĐđ]))[A-Za-zÀ-ỹĐđ]
 11.1	xong
 11.2	bao+giờ+chưa
 11.3	lâu
@@ -72,7 +72,7 @@
 13.3	re:(?<![A-Za-zÀ-ỹĐđ])(mấy|bao nhiêu|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|nửa)\s+tiếng(?![A-Za-zÀ-ỹĐđ])(?!\s+(việt|anh|hàn|nhật|pháp|trung|đức))
 13.4	bao+lâu
 13.5	bao+lâu+rồi;bao+lâu+nữa;đã _ bao+lâu
-14.0	(hôm+qua|hôm+nay|ngày+mai|ngày+kia|hôm+kia|tuần+trước|tuần+sau|tuần+này|năm+ngoái|năm+nay|năm+sau|tháng+trước|tháng+sau|tháng+này|tối+nay|sáng+nay|chiều+nay|bây+giờ|dạo+này)
+14.0	(hôm+qua|hôm+nay|ngày+mai|ngày+kia|hôm+kia|tuần+trước|tuần+sau|tuần+này|năm+ngoái|năm+nay|năm+sau|tháng+trước|tháng+sau|tháng+này|tối+nay|sáng+nay|chiều+nay|bây+giờ|dạo+này);(sáng|trưa|chiều|tối|đêm)+(nay|qua|mai);(tuần|tháng|năm)+tới;cuối+tuần;tối+hôm+qua
 14.1	re:(?<!con )(?<!lần )(?<![A-Za-zÀ-ỹĐđ])(thứ\s+(hai|ba|tư|năm|sáu|bảy|mấy)|chủ\s+nhật)(?![A-Za-zÀ-ỹĐđ])
 14.2	re:(?<![A-Za-zÀ-ỹĐđ])(ngày|mồng|mùng)\s+\d+;re:(?<![A-Za-zÀ-ỹĐđ])(ngày|hôm nay là ngày)\s+mấy(?![A-Za-zÀ-ỹĐđ])
 14.3	tháng (một|hai|ba|tư|năm|sáu|bảy|tám|chín|mười|mấy|giêng|chạp|\d+)
@@ -80,7 +80,7 @@
 14.5	mùa
 15.0	(bao+giờ|lúc+nào|khi+nào)
 15.1	bao (giờ|lâu|nhiêu|xa)
-15.2	re:(?<![A-Za-zÀ-ỹĐđ])(luôn luôn|thỉnh thoảng|ít khi|hiếm khi|không bao giờ)(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])(anh|chị|em|ông|bà|cô|thầy|chú|bác|nó|họ|tôi|mình|cậu|bạn)\s+(hay|thường)(?![A-Za-zÀ-ỹĐđ])\s+(?!là|không)
+15.2	re:(?<![A-Za-zÀ-ỹĐđ])(luôn luôn|thỉnh thoảng|ít khi|hiếm khi|không bao giờ)(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])(anh|chị|em|ông|bà|cô|thầy|chú|bác|nó|họ|tôi|mình|cậu|bạn)\s+(hay|thường)(?![A-Za-zÀ-ỹĐđ])\s+(?!là|không);re:(?<![A-Za-zÀ-ỹĐđ])(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó|gia đình|vợ|chồng|ai|người yêu|đồng nghiệp|sếp|ấy)\s+(luôn|thường xuyên)\s+(?!luôn)[A-Za-zÀ-ỹĐđ]
 15.3	re:(?<!bình )(?<!phòng )(?<!khác )(?<!lạ )(?<!phi )(?<![A-Za-zÀ-ỹĐđ])thường(?![A-Za-zÀ-ỹĐđ])(?!\s+(thì|xuyên)\s*$)
 15.4	(bao+giờ|lúc+nào|khi+nào) cũng
 15.5	không+mấy+khi
@@ -93,7 +93,7 @@
 17.2	ở (đây|kia|đó|đấy)
 17.3	(ra|vào|lên|xuống) (chợ|nhà|phòng|lớp|xe|núi|phố|ngoài|trong|tầng|thành+phố|hà+nội|sài+gòn|đà+lạt|sân|biển|đây|đó)
 17.4	re:(?<!nước )(?<!người )(?<!tuần )(?<!tháng )(?<!năm )(?<!ngày )(?<!hôm )(?<!lần )(?<!giờ )(?<!phút )(?<![A-Za-zÀ-ỹĐđ])(trên|dưới|trong|ngoài|trước|sau)(?![A-Za-zÀ-ỹĐđ])(?!\s+(khi|đây|đó|này|nữa|cùng|hết|không|đi|rồi))(?!\s*[.,?!])
-17.5	đi (học|làm|chơi|chợ|về|ngủ|dạo|bộ);(đến|tới) (nhà|trường|công+ty|lớp|văn+phòng|sân+bay);về (nhà|quê|nước|phòng)
+17.5	đi (học|làm|chơi|chợ|về|ngủ|dạo|bộ);(đến|tới) (nhà|trường|công+ty|lớp|văn+phòng|sân+bay);về (nhà|quê|nước|phòng);re:(?<![A-Za-zÀ-ỹĐđ])đi\s+(ăn|uống|mua|xem|gặp|thăm|khám|bơi|du lịch|công tác|dạo|câu cá|tập|chạy|nhậu|hát|dự|đón|lấy|rút|gửi|tắm|cắt|giao|mua sắm|ngắm|leo|thuê|đổi|chụp|nghe|tham quan|picnic|dã ngoại|siêu thị|nhà hàng|ngân hàng|bệnh viện|bưu điện)(?![A-Za-zÀ-ỹĐđ])
 18.0	từ _ đến;từ _ tới
 18.1	từ _ sang
 18.2	bằng
@@ -101,7 +101,7 @@
 18.4	tận
 18.5	re:(?<!tính )(?<!phong )(?<!một )(?<![A-Za-zÀ-ỹĐđ])cách(?![A-Za-zÀ-ỹĐđ])\s+(đây|\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|mấy|khoảng|bao|nhà|trường|công ty)
 18.6	re:(?<![A-Za-zÀ-ỹĐđ])trong\s+(khi|(\d+|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|mấy|vài|nửa|những|các|mỗi|mọi|từng)\s+(ngày|tuần|tháng|năm|giờ|tiếng|phút|lúc)|lúc)(?![A-Za-zÀ-ỹĐđ])
-18.7	(trước|trong|sau)+khi
+18.7	(trước|trong|sau)+khi;(sau|trước)+đó
 23.0	muốn
 19.0	biết
 19.1	re:(?<![A-Za-zÀ-ỹĐđ])(nói|viết|đọc|nghe|biết)(\s+[A-Za-zÀ-ỹĐđ]+){0,3}\s+(một chút|khá|giỏi|tốt|kém|không giỏi)(?![A-Za-zÀ-ỹĐđ])
@@ -127,33 +127,33 @@
 22.4	làm+ơn
 22.5	làm+ơn+cho
 22.6	xin+phép
-23.1	(mong|hy+vọng|hi+vọng|ước)
+23.1	(mong|hy+vọng|hi+vọng|ước);re:(?<![A-Za-zÀ-ỹĐđ])chúc(?![A-Za-zÀ-ỹĐđ])(?!\s+mừng)
 23.2	re:(?<!tân )(?<!quyết )(?<!nhất )(?<!ổn )(?<!xác )(?<!cố )(?<!chỉ )(?<!dự )(?<!khẳng )(?<!giả )(?<!thiết )(?<!quy )(?<!bình )(?<![A-Za-zÀ-ỹĐđ])định(?![A-Za-zÀ-ỹĐđ])
 23.3	thử
 23.4	dám
 23.5	(thói+quen|quen)
 23.6	(sở+thích|thích)
 24.0	re:(?<!gọi )(?<!mua )(?<!làm )(?<!nấu )(?<!gửi )(?<!dạy )(?<!viết )(?<!mang )(?<!lấy )(?<!đưa )(?<!bán )(?<!ơn )(?<!xin )(?<!để )(?<![A-Za-zÀ-ỹĐđ])cho\s+(anh|chị|em|ông|bà|cô|thầy|chú|bác|nó|họ|tôi|mình|cậu|bạn)\s+(\d+|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|mấy|vài|nửa|những|các|mỗi|mọi|từng)(?![A-Za-zÀ-ỹĐđ])
-24.1	(nói|gửi|mua|tặng|viết|gọi|đưa|làm|dạy|kể|để+lại|chuyển) _ cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|con|bạn|cô|ông|bà|họ|mẹ|bố|ai)
+24.1	(nói|gửi|mua|tặng|viết|gọi|đưa|làm|dạy|kể|để+lại|chuyển) _ cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|con|bạn|cô|ông|bà|họ|mẹ|bố|ai);(giải+thích|chỉ+đường|hướng+dẫn|trả|nấu|đặt|mang|đem|lấy|bán|mở|đọc|hát|chụp|gọi+điện|nhắn|cho+mượn|giới+thiệu|đổi|sửa|chuẩn+bị|dịch|kiểm+tra) _ cho (tôi|em|anh|chị|mình|cháu|chúng+tôi|chúng+ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi+người|các+bạn|cậu|nó|gia+đình|vợ|chồng|ai|người+yêu|đồng+nghiệp|sếp)
 24.2	cho (đẹp|nhanh|sạch|kỹ|rõ|tốt|chắc|vui|khỏe|dễ|đúng|cẩn+thận)
 24.3	re:(?<!tôi )(?<!em )(?<!anh )(?<!chị )(?<!cùng )(?<!sẽ )(?<!mình )(?<!muốn )(?<=[A-Za-zÀ-ỹĐđ] )(giúp|hộ|giùm)(?![A-Za-zÀ-ỹĐđ])(?!\s+(chiếu|đỡ|việc|gia))
 24.4	để (tôi|em|anh|chị|mình|con|nó|họ|cháu|chúng+tôi|bạn)
 24.5	dành
 25.0	cùng
-25.1	cùng
+25.1	cùng;re:(?<![A-Za-zÀ-ỹĐđ])(đi|ăn|uống|học|sống|chơi|nói chuyện|gặp|xem|làm việc|ở|đến|về|du lịch|tập|nhảy|hát|cười|cãi nhau|kết hôn|lấy nhau)(\s+[A-Za-zÀ-ỹĐđ]+){0,3}\s+với\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó|gia đình|vợ|chồng|ai|người yêu|đồng nghiệp|sếp)(?![A-Za-zÀ-ỹĐđ])
 25.2	re:(?<![A-Za-zÀ-ỹĐđ])đối\s+với(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])(nói|giới thiệu|hỏi|kể|tốt|thân thiện|lịch sự|quen|hợp|hứa|xin lỗi|cười)\s+với(?![A-Za-zÀ-ỹĐđ])(?!\s+nhau)
 25.3	với $;với !
 25.4	nhau
 25.5	re:(?<!thứ )(?<!số )(?<![A-Za-zÀ-ỹĐđ])tự(?![A-Za-zÀ-ỹĐđ])(?!\s+(do|nhiên|tin|động|hào|điển|sát|tại|nguyện|tử|vệ|chủ|lập));re:(?<![A-Za-zÀ-ỹĐđ])lấy(?![A-Za-zÀ-ỹĐđ])(?=\s+(làm|nấu|viết|đi))
 26.0	theo
 26.1	^ theo
-26.2	re:(?<![A-Za-zÀ-ỹĐđ])(nói|hỏi|biết|kể|nghĩ|đọc|viết|tìm hiểu|nói chuyện|lo lắng|thảo luận|học|giới thiệu|thông tin|sách|phim|bài)\s+về(?![A-Za-zÀ-ỹĐđ])(?!\s*(nhà|nước|quê|thì|rồi|muộn|sớm|trễ|$|[.,!?]));re:^\s*về\s+(kỹ năng|vấn đề|chuyện|việc)(?![A-Za-zÀ-ỹĐđ])
-27.0	^ còn;còn (anh|chị|em|ông|bà|cô|bạn|tôi|họ|cậu|mình|cháu|thầy)
+26.2	re:(?<![A-Za-zÀ-ỹĐđ])(nói|hỏi|biết|kể|nghĩ|đọc|viết|tìm hiểu|nói chuyện|lo lắng|thảo luận|học|giới thiệu|thông tin|sách|phim|bài)\s+về(?![A-Za-zÀ-ỹĐđ])(?!\s*(nhà|nước|quê|thì|rồi|muộn|sớm|trễ|$|[.,!?]));re:^\s*về\s+(kỹ năng|vấn đề|chuyện|việc)(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])(câu hỏi|bài viết|câu chuyện|chuyện|ý kiến|kiến thức|hiểu biết|quan tâm|lo|suy nghĩ|bàn|trao đổi|hỏi thăm|tin tức|tin|bài báo|nghiên cứu|giải thích|cảm nghĩ|ấn tượng)\s+về(?![A-Za-zÀ-ỹĐđ])(?!\s*(nhà|nước|quê|thì|rồi|muộn|sớm|trễ|$|[.,!?]))
+27.0	^ còn;còn (anh|chị|em|ông|bà|cô|bạn|tôi|họ|cậu|mình|cháu|thầy);, còn (bố|mẹ|vợ|chồng|con|người|ở|cái|món|tiếng|em+gái|em+trai|anh+trai|chị+gái|bạn+tôi|chúng+tôi|buổi)
 27.1	re:^(?![^.?!]*(?<![A-Za-zÀ-ỹĐđ])(những|ngoài|chỉ)(?![A-Za-zÀ-ỹĐđ])).*?(?<=[A-Za-zÀ-ỹĐđ] )(?<!mà )(?<!không )(?<!thì )còn(?![A-Za-zÀ-ỹĐđ])(?!\s+(anh|chị|em|ông|bà|cô|thầy|chú|bác|nó|họ|tôi|mình|cậu|bạn)(?![A-Za-zÀ-ỹĐđ]))(?!\s+lại);re:(?<![A-Za-zÀ-ỹĐđ])không còn(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])chỉ còn(?![A-Za-zÀ-ỹĐđ])
 27.2	re:^(?![^.?!]*(?<![A-Za-zÀ-ỹĐđ])không (những|chỉ|phải)(?![A-Za-zÀ-ỹĐđ])).*?(?<=[A-Za-zÀ-ỹĐđ] )mà(?![A-Za-zÀ-ỹĐđ])(?!\s+(còn|là|thôi))
 27.3	re:^(?!.*(?<![A-Za-zÀ-ỹĐđ])(nếu|khi|hễ|cứ)(?![A-Za-zÀ-ỹĐđ]))(?!\s*thế thì).*?(?<![A-Za-zÀ-ỹĐđ])thì(?![A-Za-zÀ-ỹĐđ]).*?(,|(?<![A-Za-zÀ-ỹĐđ])còn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nhưng(?![A-Za-zÀ-ỹĐđ])).*?(?<![A-Za-zÀ-ỹĐđ])thì(?![A-Za-zÀ-ỹĐđ])
 27.4	thế+còn
-27.5	thế+thì
+27.5	thế+thì;(vậy|thế)+thì;^ (vậy|thế) ,
 27.6	re:(?<!tôi )(?<!anh )(?<!chị )(?<!em )(?<!nó )(?<!họ )(?<!mình )(?<!ông )(?<!bà )(?<!cô )(?<!cũng )(?<!thường )(?<!rất )(?<![A-Za-zÀ-ỹĐđ])hay(?![A-Za-zÀ-ỹĐđ])(?!\s+(lắm|quá|không));re:(?<![A-Za-zÀ-ỹĐđ])hoặc(?![A-Za-zÀ-ỹĐđ])
 28.0	đều
 28.1	re:(?<!trở )(?<!gặp )(?<!quay )(?<![A-Za-zÀ-ỹĐđ])lại(?![A-Za-zÀ-ỹĐđ])(?!\s+(đây|nhé))
@@ -170,23 +170,23 @@
 30.1	là nhờ
 30.2	sở+dĩ
 31.0	nếu
-31.1	khi _ thì
+31.1	khi _ thì;re:(?<![A-Za-zÀ-ỹĐđ])(?<!trước )(?<!trong )(?<!sau )(?<!ít )(?<!hiếm )(?<!có )(?<!đôi )(?<!một )khi(?![A-Za-zÀ-ỹĐđ])(?!\s+(nào|đó|ấy)(?![A-Za-zÀ-ỹĐđ]))\s+[A-Za-zÀ-ỹĐđ];re:(?<![A-Za-zÀ-ỹĐđ])lúc\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó|gia đình|vợ|chồng|ai|người yêu|đồng nghiệp|sếp)\s+(?!ơi)[A-Za-zÀ-ỹĐđ]
 31.2	không+thì
 32.0	hễ
 32.1	re:(^|(?<=[A-Za-zÀ-ỹĐđ] ))(?<![A-Za-zÀ-ỹĐđ])cứ\s+[A-Za-zÀ-ỹĐđ]+(\s+[A-Za-zÀ-ỹĐđ]+)?\s+(là|thì)(?![A-Za-zÀ-ỹĐđ])
 32.2	(phải+chi|ước+gì)
 32.3	(lẽ+ra|đáng+ra|đáng+lẽ)
-33.0	re:(?<!xe )(?<![A-Za-zÀ-ỹĐđ])hơn(?![A-Za-zÀ-ỹĐđ])(?!\s+(\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|nửa|trăm|nữa))
+33.0	re:(?<!xe )(?<![A-Za-zÀ-ỹĐđ])hơn(?![A-Za-zÀ-ỹĐđ])(?!\s+(\d|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|nửa|trăm|nữa));so+với
 33.1	thích _ hơn
-33.2	re:(?<!hình )(?<!dường )(?<!ví )(?<!hạn )(?<![A-Za-zÀ-ỹĐđ])như(?![A-Za-zÀ-ỹĐđ])(?!\s+(vậy|thế|nhau))
-47.0	càng _ càng
+33.2	re:(?<!hình )(?<!dường )(?<!ví )(?<!hạn )(?<![A-Za-zÀ-ỹĐđ])như(?![A-Za-zÀ-ỹĐđ])(?!\s+(vậy|thế|nhau));re:(?<![A-Za-zÀ-ỹĐđ])(làm|nói|nghĩ|sống|viết|học|nấu)\s+như\s+(vậy|thế)(?![A-Za-zÀ-ỹĐđ])(?!\s+nào)
+47.0	càng _ càng;re:(?<!ngày )(?<![A-Za-zÀ-ỹĐđ])càng(?![A-Za-zÀ-ỹĐđ])(?!\s+(ngày|lúc)(?![A-Za-zÀ-ỹĐđ]))
 47.1	ngày+càng
 47.2	(béo|gầy|đẹp|xấu|trẻ|già|khỏe|tốt|lớn|nhỏ|cao|thấp|nhanh|chậm|nóng|lạnh|giỏi|xinh|mập|ốm) (ra|đi|lên|lại)
 47.3	(trở+thành|trở+nên)
 34.0	vừa _ vừa
 34.1	vừa _ vừa
 34.2	không _ cũng+không
-34.3	không+những _ mà+còn
+34.3	không+những _ mà+còn;không+chỉ _ mà+còn
 34.4	cả _ lẫn
 34.5	ngoài _ còn
 34.6	trừ
@@ -208,7 +208,7 @@
 37.4	nào+đó
 37.5	cả _ cũng
 38.0	đấy $
-38.1	chứ $;chứ ?
+38.1	chứ $;chứ ?;chứ (anh|chị|em|ông|bà|cô|bạn|cậu|thầy|ạ) $
 38.2	chứ+không
 38.3	(đấy|chứ) $
 38.4	mà $
@@ -221,7 +221,7 @@
 40.0	re:(?<![A-Za-zÀ-ỹĐđ])(?<!chuẩn )(?<!thiết )(?<!dự )(?<!trang )bị(?![A-Za-zÀ-ỹĐđ]);được (khen|tặng|cho|mời|thưởng|nhận|điểm|giải|nghỉ|ngủ|đi|xem|ăn|về|học|làm)
 40.1	re:(?<!tháng )(?<![A-Za-zÀ-ỹĐđ])(\d+|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười|mấy|vài|nửa|những|các|mỗi|mọi|từng)\s+(hôm|ngày|tuần|tháng|năm|bữa)\s+nay(?![A-Za-zÀ-ỹĐđ]);re:(?<![A-Za-zÀ-ỹĐđ])(lâu|dạo)\s+nay(?![A-Za-zÀ-ỹĐđ])
 40.2	đỡ
-41.0	(mặc+dù|tuy|dù) _ nhưng
+41.0	(mặc+dù|tuy|dù) _ nhưng;mặc+dù;re:(?<![A-Za-zÀ-ỹĐđ])tuy(?![A-Za-zÀ-ỹĐđ])(?!\s+nhiên)
 41.1	đã _ lại
 42.0	(hình+như|dường+như)
 42.1	hẳn+là
@@ -265,7 +265,7 @@
 4.9	re:(?<![A-Za-zÀ-ỹĐđ])(cái|con|quyển|cuốn|chiếc|cây|ngôi|căn|bức|tờ|người|nhà|xe|bàn|ghế|bút|sách|áo|phòng|món|việc|chỗ|lớp|trường|nhà hàng|khách sạn|công ty|quán|thành phố|bài|phim|ngày|tuần|tháng|năm)(?![A-Za-zÀ-ỹĐđ])(\s+[A-Za-zÀ-ỹĐđ]+)?\s+(?<!anh )(?<!chị )(?<!em )(?<!ông )(?<!bà )(?<!cô )(?<!thầy )(này|kia|ấy)(?![A-Za-zÀ-ỹĐđ])
 16.4	là+người (tốt|xấu|hiền|vui+tính|thông+minh|chăm+chỉ|lười|tử+tế|thế+nào|như+thế+nào|rất|khá|hơi)
 16.5	trông
-17.7	(sống|làm+việc|học|dạy|ở|làm|ăn|gặp|mua|chơi|ngủ|nghỉ) (ở|tại) _
+17.7	(sống|làm+việc|học|dạy|ở|làm|ăn|gặp|mua|chơi|ngủ|nghỉ) (ở|tại) _;(sinh|lớn+lên|du+học|đỗ|đậu|gặp+nhau|mua+sắm|ăn+trưa|ăn+tối|ăn+sáng|xem+phim|đợi|chờ|tập|bơi|ngồi|đứng|nằm|thuê|bán|nấu) (ở|tại) _
 33.5	bằng (nhau|anh|chị|em|tôi|bạn|cô|ông|bà|nó|họ|cái|con|người|mình|cậu)
 10.6	sắp _ chưa ?
 27.8	nhưng
@@ -282,4 +282,4 @@
 27.9	(tuy+nhiên|chẳng+hạn|thật+ra|thực+ra);^ hơn+nữa;đặc+biệt+là;^ đặc+biệt ,
 22.7	xin (tự+giới+thiệu|giới+thiệu|mời|cảm+ơn|chúc|hỏi|cho+phép|gửi|trình+bày|báo|được|nhắc|thông+báo|đợi|chờ|lưu+ý|chia+buồn)
 23.7	re:(?<![A-Za-zÀ-ỹĐđ])(bắt đầu|tiếp tục|cố gắng)\s+(?!(lúc|từ|vào|rồi|nhé|nhá|nha|nào|à|mà|và|thì|khi|năm|ngày|tháng|tuần|hôm|sáng|chiều|tối|lên|đi\s*[.!?]?\s*$)(?![A-Za-zÀ-ỹĐđ]))[A-Za-zÀ-ỹĐđ];thôi (hút+thuốc|học|làm+việc|việc|uống+rượu)
-14.6	(hiện+nay|hiện+tại|trước+đây|hồi+nãy|lúc+nãy|ban+nãy|sau+này|ngày+xưa|hồi+trước|dạo+gần+đây);re:^\s*gần đây\s*,?\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó)(?![A-Za-zÀ-ỹĐđ])
+14.6	(hiện+nay|hiện+tại|trước+đây|hồi+nãy|lúc+nãy|ban+nãy|sau+này|ngày+xưa|hồi+trước|dạo+gần+đây);re:^\s*gần đây\s*,?\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó)(?![A-Za-zÀ-ỹĐđ]);(lúc|khi|hồi)+đó
