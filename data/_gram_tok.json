@@ -437,6 +437,25 @@
 "first": "1-2"
 },
 {
+"id": "5.7",
+"no": 5,
+"li": 4,
+"gi": 7,
+"t": "có … không? · …, phải không? — 구별",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])có(?![A-Za-zÀ-ỹĐđ]).*?(?<![A-Za-zÀ-ỹĐđ])không(?![A-Za-zÀ-ỹĐđ])\\s*\\?",
+"(?<![A-Za-zÀ-ỹĐđ])phải\\s+không(?![A-Za-zÀ-ỹĐđ])\\s*\\?"
+],
+"always": false,
+"tok": [
+"có",
+"không",
+"phải không"
+],
+"selftest": "5/6",
+"first": "1-6"
+},
+{
 "id": "6.0",
 "no": 6,
 "li": 5,
@@ -864,7 +883,7 @@
 "tok": [
 "chưa"
 ],
-"selftest": "3/5",
+"selftest": "4/7",
 "first": "1-9"
 },
 {
@@ -1261,7 +1280,7 @@
 "tok": [
 "bao giờ"
 ],
-"selftest": "5/5",
+"selftest": "6/7",
 "first": "1-9"
 },
 {
@@ -2330,7 +2349,7 @@
 "tok": [
 "cùng"
 ],
-"selftest": "5/5",
+"selftest": "6/6",
 "first": "1-10"
 },
 {
@@ -3470,7 +3489,7 @@
 "đấy"
 ],
 "selftest": "5/5",
-"first": "1-9"
+"first": "1-5"
 },
 {
 "id": "38.1",
