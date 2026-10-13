@@ -540,6 +540,22 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-13 아침: 원전 기사가 '수출'에 걸려 컨테이너가, VNeID·코참 기사가 '증권'·'금융'에 걸려
+              # 동전 그림이, IT 취업상담회·폭스콘 채용·고속열차는 맞는 줄이 없었다. 일곱 줄을 맨 위에 둔다.
+              (("원전", "원자력"),
+               "a nuclear power plant with cooling towers beside the sea under a clear sky"),
+              (("vneid", "전자신분증"),
+               "a smartphone and a blank plastic card on a desk"),
+              (("코참", "한인상공인"),
+               "an empty meeting room with a long table and chairs"),
+              (("취업상담회", "면접"),
+               "rows of laptops on desks in a bright exhibition hall"),
+              (("폭스콘", "생산직"),
+               "a large electronics factory floor with assembly workstations"),
+              (("고속열차", "현대로템"),
+               "a sleek high-speed train at a modern station platform"),
+              (("신차", "수입차"),
+               "new cars parked in a bright showroom"),
               # 2026-10-12 새벽(예약 작업): 홍콩 사채 기사가 '포 '(체포 )에 걸려 쌀국수가, 인천공항 기사가
               # 'airport'의 'port'에 걸려 컨테이너가, 유학생 실습·AI 손글씨 둘 다 '학생'에 걸려 같은 교실이,
               # 세금·조종사·밤문화 기사는 맞는 줄이 없어 갈래 기본 그림이 깔릴 판이었다. 여덟 줄을 맨 위에 둔다.
