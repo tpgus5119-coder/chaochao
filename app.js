@@ -47,7 +47,7 @@ if (location.hash.startsWith('#k=')) {
 }
 /* 공유 링크 #s=… (대표님 2026-10-08: 내 단어장 묶음을 카드 학습·쇼츠로 공유 — 받은 사람은 로그인 없이 딱 그 화면만, 카드 뒤엔 문제까지).
    내용은 {t: 이름, m: 'cards'|'shorts', w: [낱말 열쇠…]} 를 base64url 로 — 서버 없이 주소에 다 담긴다. 해시는 지우지 않는다(다시 열어도 그 화면) */
-let SHARE = null, SHAREBAR = null;   // SHAREBAR: 공유 카드의 고정 단추 줄 글자 맞추기 (2026-10-08 밤)
+let SHARE = null, SHAREBAR = null;   // SHAREBAR: 공유 카드 상자 안 우측 위 단추 줄의 글자 맞추기 (2026-10-08 밤, 상자 안으로 2026-10-13 밤)
 /* 묶음 글 부호화 (2026-10-08 "링크 좀 짧게"): [2][이름 길이][이름 UTF-8][낱말마다 FNV-1a 32비트 해시 4바이트] → base64url. 낱말 56개가 1,100자 → 300자쯤.
    옛 링크(JSON)는 첫 글자가 '{' 라 그대로 읽는다. 해시는 받는 쪽이 앱 낱말 전체(일상·직무·교재)를 돌며 되찾는다 */
 const fnv32 = str => { let h = 0x811c9dc5; for (const c of new TextEncoder().encode(U_NFC(str).toLowerCase())) { h ^= c; h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; };
@@ -2193,6 +2193,7 @@ function pitchGraph(text, opt) {
 
 /* 듣기 속도 — 1·0.8·0.6·0.4·0.2배 (대표님 지시 2026-09-27, 0.4·0.2 추가). 고른 값은 저장하고, 단어 카드·예문·'원어민 듣기'가 모두 같은 값을 쓴다. */
 const SPDS = [1, .8, .6, .4, .2];
+const EXAM_SPDS = [1, .8, .7, .6, .4, .2];   // 시험지 칩에는 0.7배도 — 실제 시험 녹음 속도(아래 EXAM_REAL_SPD) 가 그 사이라서 (2026-10-13 밤)
 const SLOW_TAP = .2;                 // 그래프·입모양 그림을 누르면 이 속도로 (2026-09-28)
 const spdOf = () => SPDS.includes(Number(S.wspd)) ? Number(S.wspd) : .8;
 /* 카드가 바뀌면 듣기(단어·예문) 속도는 다시 0.8배 (대표님 지시 2026-09-30: "0.4로 재생하고 다음 카드로 넘겼어도 0.8, 뒤로 가서 다시 재생해도 0.8").
@@ -2215,13 +2216,17 @@ function pairSpdSet(v) { S.pspd = v; save(); document.querySelectorAll('.spdchip
 /* 시험지(실제 시험지·모의고사) 듣기는 **1배가 기본** (대표님 2026-10-06 "모의고사는 실전 같은 거니까 1배속을 디폴트로, 마찬가지로 속도 조절") —
    시험을 시작할 때 1배로 돌아가고, 시험 안에서 고른 속도는 그 시험이 끝날 때까지만 산다(저장 안 함). 카드 듣기 속도(0.8 기본)와 따로 */
 let EXAM_SPD = 1;
+/* 모의고사는 **실제 시험 녹음 속도**로 튼다 (대표님 2026-10-13 밤 "모의고사와 실제 시험이 최대한 비슷하도록 — 말하기 속도 등 다"):
+   실제 2차 주간시험 녹음(Whisper 낱말 시각으로 잰 92덩어리) 중앙값 2.6음절/초, 우리 edge-tts 소리(모의 3 듣기 문장 여·남 20개) 3.6음절/초 → 0.72배. 따로 느린 소리를 만들지 않고 playbackRate 로(높낮이 유지).
+   일일 시험(dtest)은 그대로 1배 */
+const EXAM_REAL_SPD = .7;
 const examSpd = () => EXAM_SPD;
 function examSpdSet(v) { EXAM_SPD = v; if (!audio.paused) audio.playbackRate = v; document.querySelectorAll('.spdchip.exam').forEach(x => { x.title = tr('듣기 속도') + ' ' + spdLab(v); }); }
 /* opt.pair 이면 헷갈리는 짝 속도(pairSpd)를 읽고 쓴다. 아니면 카드 듣기 속도 */
 function spdChip(opt) {
   const pr = !!(opt && opt.pair), ex = !!(opt && opt.exam);
   const get = pr ? pairSpd : ex ? examSpd : spdOf, set = pr ? pairSpdSet : ex ? examSpdSet : spdSet;
-  const b = el('button', 'spdchip' + (pr ? ' pair' : '') + (ex ? ' exam' : ''));   // 듣기 옆 ▾ — 누르면 1·0.8·0.6·0.4·0.2배 목록. 시험지(exam)는 1배 기본, 모양은 카드와 같게 ▾ 만
+  const b = el('button', 'spdchip' + (pr ? ' pair' : '') + (ex ? ' exam' : ''));   // 듣기 옆 ▾ — 누르면 1·0.8·0.6·0.4·0.2배 목록(시험지는 0.7배도). 모의고사는 0.7배 기본(EXAM_REAL_SPD), 모양은 카드와 같게 ▾ 만
   b.type = 'button';
   if (pr) b.append(el('span', 'spdval', spdLab(get())));    // 짝에서는 값도 같이 보인다 — 카드 속도와 다른 값임을 알 수 있게
   b.append(el('i', 'spdcaret', '▾'));
@@ -2233,7 +2238,7 @@ function spdChip(opt) {
     if (SPDMENU) { const same = b.classList.contains('open'); spdMenuClose(); if (same) return; }
     const m = el('div', 'spdmenu');
     m.setAttribute('role', 'listbox');
-    SPDS.forEach(v => {
+    (ex ? EXAM_SPDS : SPDS).forEach(v => {
       const o = el('button', 'spdopt' + (v === get() ? ' on' : ''), '<span>' + spdLab(v) + '</span><i>' + (v === get() ? '✓' : '') + '</i>');
       o.type = 'button';
       o.setAttribute('role', 'option');
@@ -3179,7 +3184,6 @@ function show(v, title, canBack) {
   resetRec();
   if (v !== 'learn' && v !== 'quiz') releaseMic(true);   // 카드·테스트 밖으로 나가면 마이크를 놓는다
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
-  { const sbar = $('#sharebar'); if (sbar) sbar.hidden = v !== 'learn'; }   // 공유 카드의 고정 단추 줄은 카드 화면에서만
   $('#title').textContent = tr(title);
   if (v !== 'learn' && v !== 'quiz') LCRUMB = '';           // 학습·문제 흐름 밖으로 나가면 지난 과 이름을 지운다
   setCrumb(v === 'learn' ? (LCRUMB || tr(title))
@@ -4230,7 +4234,7 @@ function showWeek(rep) {
 
   const go = el('button', 'primary big', '이번 주 시작하기');
   go.style.width = '100%'; go.style.marginTop = '18px';
-  go.onclick = () => { S.wk = { k: weekKey(), base: snapshot() }; save(); ACTIVE_TAB = 'home'; renderHome(); };   // 성적표 다음은 홈 (2026-09-27)
+  go.onclick = () => { S.wk = { k: weekKey(), base: snapshot() }; save(); ACTIVE_TAB = 'home'; if (!reopenLast()) renderHome(); };   // 성적표 다음은 홈 (2026-09-27) — 풀던 시험이 있으면 그 화면 (2026-10-13 밤)
   b.append(go);
   show('week', '주간 성적표', false);
 }
@@ -10174,12 +10178,12 @@ function drawCard() {
     if (so) row.append(el('span', 'southpill', tr('남부')));
     if (krShow(x)) row.append(el('span', 'wkr', '[' + esc(krShow(x)) + ']'));
     if (L.day.share) {                        // 공유로 받은 카드: ☆·📁 없음. 카드 우측 맨 위에 [발음]·[쇼츠], 발음 면엔 [단어]·[쇼츠] (대표님 2026-10-08)
-      /* 단추 줄은 카드 안이 아니라 **화면 우측 맨 위에 고정**(body 에 하나) — 카드 안에 두면 카드 너비에 따라 자리가 옮겨져 그림을 가렸다 (대표님 2026-10-08 밤 "항상 우측상단에 고정") */
-      let bar = $('#sharebar'); if (!bar) { bar = el('div', 'sharetools'); bar.id = 'sharebar'; document.body.append(bar); }
-      bar.textContent = ''; bar.hidden = false;
+      /* 단추 줄은 **단어 카드 상자(#card) 안 우측 맨 위**에 고정 — 카드마다 새로 만들어 상자에 붙인다(position:absolute, style.css .sharetools).
+         2026-10-08 밤엔 화면 우측 맨 위(body 고정)에 두었는데, 대표님 2026-10-13 밤 "단어카드 박스 안에서의 우측상단에 고정하라는 말이야" → 상자 안으로 */
+      const bar = el('div', 'sharetools');
       const fb = el('button', 'facebtn'); fb.type = 'button'; fb.onclick = ev => { ev.stopPropagation(); setFace(L.face === 'pron' ? 'card' : 'pron'); };
       const sb = el('button', 'facebtn', '⚡ ' + tr('쇼츠')); sb.type = 'button'; sb.onclick = ev => { ev.stopPropagation(); shareShorts(); };
-      bar.append(fb, sb);
+      bar.append(fb, sb); c.append(bar);
       SHAREBAR = () => { fb.textContent = tr(L.face === 'pron' ? '단어' : '발음'); };   // 단어 면엔 [발음], 발음 면엔 [단어]
     } else {
       row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
@@ -11695,6 +11699,24 @@ function resumeSave() {
 }
 function resumeClear(k) { if (S.resume && S.resume[k] && !S.resume[k].done) { S.resume[k] = { done: 1, t: Date.now() }; save(); cloudTouch(); } }
 function resumeGet(k) { const r = S.resume && S.resume[k]; return r && r.i > 0 && r.items && r.i < r.items.length ? r : null; }
+/* 앱이 다시 켜졌을 때(폰이 뒤에서 내렸거나 새 판을 띄움) **풀던 시험 화면으로 바로** (유저 피드백 2026-10-13 밤 "잠깐 나갔다 오면 처음 창부터") —
+   30분 안에 손댄 시험지(fixed:)·단어 시험(daily:)이 있으면 홈 대신 그 시험의 들어가는 화면([이어서 n/N]·[시험 보기])을 띄운다. 뒤로는 시험 목록 → 홈 */
+function reopenLast() {
+  const live = Object.entries(S.resume || {}).filter(([k, v]) => v && !v.done && resumeGet(k) && Date.now() - (v.t || 0) < 30 * 60e3).sort((a, b) => b[1].t - a[1].t)[0];
+  if (!live) return false;
+  const k = live[0];
+  if (k.startsWith('fixed:')) {
+    const key = k.slice(6), e = FIXED_EXAMS[key], r = e && WEEKLY_ROUNDS.find(x => x.no === e.round);
+    if (!r) return false;
+    ACTIVE_TAB = 'test'; NAV.length = 0; NAV.push(weeklyEntry, () => weeklyRound(r)); examRound(r, key); return true;
+  }
+  if (k.startsWith('daily:')) {
+    const key = k.slice(6);
+    dailyLoad(() => { const t = (DAILY22 || []).find(x => x.key === key); if (!t) { renderHome(); return; } ACTIVE_TAB = 'test'; NAV.length = 0; NAV.push(() => dailyEntry('test')); dailyRound(t); });
+    return true;
+  }
+  return false;
+}
 /* Q 를 새로 만든 뒤 — 푼 자리·답을 되살린다. 문항 수가 다르면(자료가 바뀜) 되살리지 않는다 */
 function resumeApply(r) {
   if (!r || !Q || r.items.length !== Q.list.length) return false;
@@ -11725,7 +11747,7 @@ function startExam1(key, r) {
   key = key || 'm1_1';
   const go = () => {
     const J = FIXED[key];
-    EXAM_SPD = 1;                                          // 시험지 듣기는 1배부터 (2026-10-06)
+    EXAM_SPD = EXAM_REAL_SPD;                              // 모의고사 듣기는 실제 시험 녹음 속도(0.7배)부터 (2026-10-13 밤; 전엔 1배, 2026-10-06)
     const L = J.q.map(x => {
       const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
       if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles, alt: x.alts || [], fx: x }, mode: 'puzzle', sec: x.sec, opts: [] };   // alt: 같은 조각의 다른 바른 차례 (2026-10-11)
@@ -12188,7 +12210,7 @@ function startDaily(t, r) {
       else L.push({ w: x, mode: 'read_ko', sec: tr('문장 · 베트남어로'), opts: [x, ...pick(ss.filter(y => y.vi !== x.vi), 3)].sort(() => Math.random() - .5) });   // 두 낱말 이하(Chào bạn.)는 조각이 안 되니 뜻 보고 문장 고르기 — 자판 치기는 뺐다 (2026-10-06)
     });
   }
-  SBOX = 'bsrs';
+  SBOX = 'bsrs'; EXAM_SPD = 1;                              // 일일 시험 듣기는 1배 (모의고사만 0.7배)
   Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: false, opt: {}, exam: true, blind: true, daily: t.key, dtest: t,   // blind: 실제 시험처럼 끝에 채점
         gen: L.map(q => ({ w: ref(q.w), mode: q.mode, sec: q.sec, opts: (q.opts || []).map(ref) })) };
   if (r && !resumeApply(r)) resumeClear('daily:' + t.key);
@@ -15310,7 +15332,9 @@ if ('serviceWorker' in navigator) {
    시험·카드·녹음·자판 입력 중에는 끼어들지 않고 홈·메뉴 화면에 설 때 띄운다(시험은 푼 자리가 저장돼 있다) */
 const MY_VER = ((document.querySelector('script[src*="app.js?v="]') || {}).src || '').split('v=')[1] || '';
 let NEW_VER = '';
-function verSafe() { return !SHARE && ['home', 'exam', 'sub', 'week', 'course', 'news'].includes(CURV) && !(REC.mr && REC.mr.state === 'recording'); }
+/* 홈에 섰을 때만 새 판을 띄운다 (유저 피드백 2026-10-13 밤 "잠깐 나갔다 오면 다시 처음 창부터 열린다" — 전엔 시험 목록·메뉴 화면에서도 돌아오자마자 다시 띄워,
+   깊이 들어간 화면이 홈으로 튀었다. 홈은 어차피 첫 화면이라 다시 띄워도 잃는 것이 없다) */
+function verSafe() { return !SHARE && CURV === 'home' && !(REC.mr && REC.mr.state === 'recording'); }
 function verCheck() {
   if (!MY_VER || location.protocol === 'file:') return;
   fetch('index.html?t=' + Date.now(), { cache: 'no-store' }).then(r => r.text()).then(t => {
@@ -15350,5 +15374,6 @@ Promise.all([
   if (S.wk && S.wk.k !== weekKey()) { showWeek(weekReport(S.wk.base)); return; }
   // 앱을 켜면 **홈**이 뜬다 — 앵무 '짜오'와 [오늘 학습][오늘 복습] 단추가 바로 보인다 (대표님 지시 2026-09-27, 09-09 지시를 뒤집음).
   ACTIVE_TAB = 'home';
+  if (reopenLast()) return;                            // 풀던 시험이 있으면 그 화면부터 (2026-10-13 밤)
   renderHome();
 }).catch(e => { $('#title').textContent = '불러오기 실패'; console.error(e); });

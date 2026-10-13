@@ -667,6 +667,8 @@ svg.curve .mine{fill:none; stroke:var(--accent); stroke-width:3; stroke-linecap:
 .vk{
   flex:1; max-width:42px; min-width:0; padding:11px 0; font-size:17px;
   background:var(--card); color:var(--fg); border-radius:8px; text-align:center;
+  touch-action:manipulation; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
+  /* 유저 피드백 2026-10-13 밤 "타자가 아예 안 쳐진다·느리다": 글쇠에 이 넷이 없어 아이폰이 길게 누르면 글자 고르기·돋보기를 띄우고 그 뒤 누름을 삼켰고, 빨리 두 번 누르면 확대로 보고 한 박자 기다렸다. 성조 자판(.tk)엔 이미 있던 것 */
 }
 .vk.tonek{max-width:50px}
 .vk.tonek .tarr{width:17px; height:17px; vertical-align:-3px}
@@ -2842,6 +2844,7 @@ body.inking #inkcv{pointer-events:auto; cursor:crosshair}
 /* 화면 자판 — 아이폰 베트남어 자판 배열 (2026-09-30). 글쇠 비율: 글자 1 · ⇧⌫ 1.4 · 123/ABC 1.3 · 띄어쓰기 4.4 · Xong 1.6, 둘째 줄은 반 칸 들여쓰기 */
 .vkb.ios{gap:9px; padding:8px 4px 10px; border-radius:12px; background:color-mix(in srgb, var(--fg) 8%, var(--bg))}
 .vkb.ios .vkrow{gap:6px; position:relative}
+.vkpk, .vedit{-webkit-user-select:none; user-select:none; -webkit-touch-callout:none}   /* 길게 누른 글자 목록·답 칸도 글자 고르기가 안 뜨게 (2026-10-13 밤) */
 .vkb.ios .vkrow.r2{padding:0 5%}
 .vkb.ios .vkrow.n3{padding:0 5%}
 .vkb.ios .vk{flex:1; max-width:none; padding:12px 0; font-size:20px; line-height:1; border-radius:6px; box-shadow:0 1px 0 rgba(0,0,0,.25); font-weight:400; position:relative; font-family:"Be Vietnam Pro", system-ui, sans-serif}
@@ -3094,13 +3097,12 @@ button.bigw{flex-wrap:wrap; justify-content:center; row-gap:6px; max-width:100%}
 .wbselbar button{padding:8px 12px; font-size:14px}
 .wbselhint{font-size:12px; color:var(--dim); margin:0 0 8px}
 /* 공유로 받은 화면 — 머리띠·탭 줄 없이 카드만 (2026-10-08) */
-body.sharemode main{padding-top:calc(env(safe-area-inset-top) + 50px)}   /* 위 고정 단추 줄 자리 — 카드·그림을 안 가린다 */
 body.sharemode .pagearrow{top:50%}
 .facebtn{border:1px solid var(--accent); color:var(--accent); background:var(--card); border-radius:999px; padding:4px 10px; font-size:13px; cursor:pointer; margin-left:auto}
 .facerow{display:flex; justify-content:flex-start; margin:0 0 8px}
 .facerow .facebtn{margin-left:0}
-body.sharemode .wfcard, body.sharemode .wfpron{position:relative}
-.sharetools{position:fixed; top:calc(env(safe-area-inset-top) + 10px); right:12px; display:flex; gap:6px; z-index:45}   /* 화면 우측 맨 위 고정 (2026-10-08 밤) */
+body.sharemode #card{position:relative}   /* 공유 카드 단추 줄(.sharetools)의 기준 상자 */
+.sharetools{position:absolute; top:10px; right:10px; display:flex; gap:6px; z-index:5}   /* 단어 카드 상자 안 우측 맨 위 고정 (대표님 2026-10-13 밤 "단어카드 박스 안에서의 우측상단" — 전엔 화면 고정) */
 .sharetools .facebtn{margin-left:0}
 /* 내 단어장 줄 — 누르면 단어 카드 (2026-10-09) */
 .wbrow.wbopen{cursor:pointer}

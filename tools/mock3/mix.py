@@ -19,17 +19,18 @@ for n in range(1, 6):
     exec(compile(src, f'ex{n}.py', 'exec'), {'__name__': f'ex{n}', '__file__': str(R / f'tools/mock3/ex{n}.py')})
 assert sorted(CAP) == [1, 2, 3, 4, 5]
 SEC = lambda q, p: [x for x in q if x['sec'].startswith(p)]
-# 읽기 1 — 벌마다 8·9·10과 문법 낱말 섞은 보기·문장
-B1 = {1: (["được", "bao giờ", "còn", "xong", "khá"], [("Anh ấy nói ____ tiếng Pháp.", "được", "그는 프랑스어를 할 수 있어요."), ("____ chị đi Đà Nẵng?", "bao giờ", "언제 다낭에 가요?"),
-                                                   ("Bố tôi ____ làm việc.", "còn", "아버지는 아직 일하세요."), ("Tôi ăn tối ____ rồi.", "xong", "저는 저녁을 다 먹었어요."), ("Em gái tôi ____ cao.", "khá", "제 여동생은 키가 꽤 커요.")]),
-      2: (["mới", "đấy", "cùng", "đừng", "mấy"], [("Tôi ____ đến Hà Nội hôm qua.", "mới", "저는 어제 막 하노이에 왔어요."), ("Ngày mai là thứ bảy ____!", "đấy", "내일은 토요일이에요!"),
-                                                ("Chúng tôi ____ đi thăm ông bà.", "cùng", "우리는 함께 조부모님을 뵈러 가요."), ("Anh ____ quên sinh nhật mẹ nhé.", "đừng", "엄마 생신 잊지 마세요."), ("Gia đình chị có ____ người?", "mấy", "가족이 몇 명이에요?")]),
-      3: (["bao lâu", "chưa", "chứ", "đi", "giúp"], [("Chị học tiếng Việt ____ rồi?", "bao lâu", "베트남어를 얼마나 배웠어요?"), ("Anh ấy ____ về nước.", "chưa", "그는 아직 귀국하지 않았어요."),
-                                                   ("Tôi hiểu ____!", "chứ", "물론 이해하죠!"), ("Chúng ta ăn trưa ____!", "đi", "우리 점심 먹어요!"), ("Anh xem ____ tôi được không?", "giúp", "저 대신 좀 봐 줄 수 있어요?")]),
-      4: (["đã từng", "đấy", "cùng", "khá", "mới"], [("Tôi ____ sống ở Huế.", "đã từng", "저는 후에에 산 적이 있어요."), ("Sắp đến sinh nhật anh ấy ____!", "đấy", "곧 그의 생일이에요!"),
-                                                    ("Hai chị em ____ học một trường.", "cùng", "두 자매는 같은 학교에 다녀요."), ("Nhà tôi ____ xa trường.", "khá", "우리 집은 학교에서 꽤 멀어요."), ("Em ấy ____ học tiếng Việt hai tuần.", "mới", "그 아이는 베트남어를 배운 지 2주밖에 안 됐어요.")]),
-      5: (["đừng", "chưa", "còn", "bao lâu", "chứ"], [("____ thức khuya nhé!", "đừng", "밤늦게까지 깨어 있지 마세요!"), ("Tôi ____ làm xong bài tập.", "chưa", "저는 아직 숙제를 다 못 했어요."),
-                                                     ("Anh trai tôi ____ độc thân.", "còn", "제 오빠는 아직 미혼이에요."), ("Anh đã làm ở đó ____?", "bao lâu", "거기서 얼마나 일했어요?"), ("Có ____, tôi biết anh ấy.", "chứ", "물론이죠, 저 그 사람 알아요.")])}
+# 읽기 1 — 벌마다 **헷갈리는 짝**으로 보기 다섯 (2026-10-13 밤, 유저 피드백 "빈칸 넣기 상향 조정" + 실제 2차 보기가 sẽ/sắp·lắm/quá 같은 짝이었다):
+#   1 물음말(bao giờ·bao lâu·bao nhiêu·thứ mấy·thế nào) · 2 때 부사(mới·đã·sẽ·đang·sắp) · 3 가능·부정(được·được không·chưa·không·đừng) · 4 잇는 말(còn·cùng·với·cũng·nhưng) · 5 정도·끝말(khá·lắm·chứ·đấy·nhé)
+B1 = {1: (["bao giờ", "bao lâu", "bao nhiêu", "thứ mấy", "thế nào"], [("____ anh đi công tác Đà Nẵng?", "bao giờ", "언제 다낭으로 출장 가요?"), ("Chị học ở trung tâm này ____ rồi?", "bao lâu", "이 학원에서 배운 지 얼마나 됐어요?"),
+                                                                 ("Vé xe lửa đi Huế ____ tiền?", "bao nhiêu", "후에 가는 기차표는 얼마예요?"), ("Sinh nhật chị là ____?", "thứ mấy", "생일이 무슨 요일이에요?"), ("Phát âm tiếng Nga ____?", "thế nào", "러시아어 발음은 어때요?")]),
+      2: (["mới", "đã", "sẽ", "đang", "sắp"], [("Năm sau tôi ____ về nước.", "sẽ", "내년에 저는 귀국할 거예요."), ("Bây giờ chị ấy ____ dọn dẹp nhà.", "đang", "지금 그녀는 집을 청소하고 있어요."),
+                                               ("Anh ấy ____ đi công tác chưa?", "đã", "그는 출장을 갔어요?"), ("____ đến sinh nhật bà ngoại rồi!", "sắp", "곧 외할머니 생신이에요!"), ("Tôi ____ đến Việt Nam, chưa quen ai.", "mới", "저는 베트남에 막 와서 아직 아는 사람이 없어요.")]),
+      3: (["được", "được không", "chưa", "không", "đừng"], [("Chị ấy đọc ____ tiếng Hàn.", "được", "그녀는 한국어를 읽을 수 있어요."), ("Chị dạy giùm em ____?", "được không", "저 대신 가르쳐 줄 수 있어요?"),
+                                                           ("Tôi ____ bao giờ ăn món ăn Ấn Độ.", "chưa", "저는 인도 음식을 먹어 본 적이 없어요."), ("Anh ấy ____ phải là người Nga.", "không", "그는 러시아 사람이 아니에요."), ("Em ____ lo lắng quá!", "đừng", "너무 걱정하지 마!")]),
+      4: (["còn", "cùng", "với", "cũng", "nhưng"], [("Bố tôi là bác sĩ, ____ mẹ tôi là giáo viên.", "còn", "아버지는 의사이고, 어머니는 교사예요."), ("Hai anh em tôi ____ học một trường.", "cùng", "우리 형제는 같은 학교에 다녀요."),
+                                                    ("Tôi đi chợ ____ bà ngoại.", "với", "저는 외할머니와 장을 보러 가요."), ("Anh ấy là con út, tôi ____ là con út.", "cũng", "그는 막내이고, 저도 막내예요."), ("Chị ấy nhỏ tuổi ____ rất tự tin.", "nhưng", "그녀는 어리지만 아주 자신 있어요.")]),
+      5: (["khá", "lắm", "chứ", "đấy", "nhé"], [("Nhà anh ấy ____ xa trung tâm.", "khá", "그의 집은 시내에서 꽤 멀어요."), ("Vé máy bay mắc ____!", "lắm", "비행기 표가 아주 비싸요!"),
+                                                ("Anh biết chị Lan ____?", "chứ", "란 씨 알죠?"), ("Ngày mai là ngày nghỉ ____!", "đấy", "내일은 쉬는 날이에요!"), ("Chị gọi điện thoại cho mẹ ____.", "nhé", "엄마한테 전화해요.")])}
 # 읽기 4 는 보기 목록이 벌마다 다시 만들어지므로 짝(먼저 하는 말·뜻·대답·뜻)으로 되돌린다
 def b4_pairs(items):
     out = []
