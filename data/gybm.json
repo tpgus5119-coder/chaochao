@@ -56682,11 +56682,11 @@
        "vi": "Mê-hi-cô",
        "ko": "멕시코",
        "kr_read": "메 히 꼬",
-       "img": "w-b0e06d098e.webp",
        "ex": {
         "vi": "Tôi muốn đi Mê-hi-cô.",
         "ko": "나는 멕시코에 가고 싶어요."
-       }
+       },
+       "img": "w-b0e06d098e.webp"
       },
       {
        "vi": "Ý",
@@ -56746,21 +56746,21 @@
        "vi": "Hà Lan",
        "ko": "네덜란드",
        "kr_read": "하 란",
-       "img": "w-7a5ca87bed.webp",
        "ex": {
         "vi": "Hà Lan nổi tiếng về hoa tulip.",
         "ko": "네덜란드는 튤립으로 유명해요."
-       }
+       },
+       "img": "w-7a5ca87bed.webp"
       },
       {
        "vi": "đất nước",
        "ko": "나라",
        "kr_read": "덧 느억",
-       "img": "b-quoc-gia.webp",
        "ex": {
         "vi": "Việt Nam là đất nước của tôi.",
         "ko": "베트남은 제 나라예요."
-       }
+       },
+       "img": "b-quoc-gia.webp"
       },
       {
        "vi": "quốc tịch",
@@ -56803,12 +56803,12 @@
        "vi": "người bản ngữ",
        "ko": "원어민",
        "kr_read": "응으어이 반 응으",
-       "star": 2,
        "ex": {
         "vi": "Tôi học phát âm với người bản ngữ.",
         "ko": "저는 원어민과 발음을 배워요."
        },
-       "img": "b-tieng-me-de.webp"
+       "img": "b-tieng-me-de.webp",
+       "star": 2
       },
       {
        "vi": "phát âm",
@@ -56836,11 +56836,11 @@
        "vi": "không được",
        "ko": "~할 수 없다, ~하면 안 된다",
        "kr_read": "콩 드억",
-       "img": "w-0d39261f0b.webp",
        "ex": {
         "vi": "Vì sao khi học trung học, Phúc không được dùng điện thoại thông minh?",
         "ko": "푹은 고등학교 때 왜 스마트폰을 쓸 수 없었나요?"
-       }
+       },
+       "img": "w-0d39261f0b.webp"
       },
       {
        "vi": "được không",
@@ -56888,21 +56888,21 @@
        "vi": "Ca-na-đa",
        "ko": "캐나다",
        "kr_read": "까 나 다",
-       "img": "b-canada.webp",
        "ex": {
         "vi": "Anh Tom là người Ca-na-đa.",
         "ko": "톰 씨는 캐나다 사람이에요."
-       }
+       },
+       "img": "b-canada.webp"
       },
       {
        "vi": "Bra-xin",
        "ko": "브라질",
        "kr_read": "브라 씬",
-       "img": "w-432b9eb55d.webp",
        "ex": {
         "vi": "Anh ấy là người Bra-xin.",
         "ko": "그는 브라질 사람이에요."
-       }
+       },
+       "img": "w-432b9eb55d.webp"
       },
       {
        "vi": "Đức",
@@ -56928,11 +56928,11 @@
        "vi": "Ai-len",
        "ko": "아일랜드",
        "kr_read": "아이 렌",
-       "img": "w-7584d2eef4.webp",
        "ex": {
         "vi": "Cô ấy đến từ Ai-len.",
         "ko": "그녀는 아일랜드에서 왔어요."
-       }
+       },
+       "img": "w-7584d2eef4.webp"
       }
      ]
     },
@@ -56956,11 +56956,11 @@
        "vi": "Ba Lan",
        "ko": "폴란드",
        "kr_read": "바 란",
-       "img": "w-01ac7b0e84.webp",
        "ex": {
         "vi": "Bạn tôi sống ở Ba Lan.",
         "ko": "내 친구는 폴란드에 살아요."
-       }
+       },
+       "img": "w-01ac7b0e84.webp"
       },
       {
        "vi": "Thái Lan",
@@ -57078,6 +57078,909 @@
         "ko": "베트남어 배운 지 얼마나 됐어요?"
        },
        "img": "b-bao-lau.webp"
+      }
+     ]
+    },
+    {
+     "title": "A반 10/14 단어 시험 (1/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "quảng cáo",
+       "ko": "광고",
+       "kr_read": "꽝 까오",
+       "ex": {
+        "vi": "Tôi xem quảng cáo trên tivi.",
+        "ko": "저는 TV에서 광고를 봐요."
+       },
+       "img": "c22-quang-cao.webp"
+      },
+      {
+       "vi": "ngủ gật",
+       "ko": "졸다",
+       "kr_read": "응우 것",
+       "ex": {
+        "vi": "Học sinh ngủ gật trong lớp.",
+        "ko": "학생이 수업 시간에 꾸벅꾸벅 졸았다."
+       },
+       "img": "b-ngu-gat.webp"
+      },
+      {
+       "vi": "lo lắng",
+       "ko": "걱정하다",
+       "kr_read": "로 랑",
+       "ex": {
+        "vi": "Mẹ tôi rất lo lắng cho tôi.",
+        "ko": "우리 어머니는 저를 많이 걱정하세요."
+       },
+       "img": "b-lo-lang.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "phổ biến",
+       "ko": "흔하다·대중적이다",
+       "kr_read": "포 비엔",
+       "ex": {
+        "vi": "Vì ở Việt Nam, môn đá cầu rất phổ biến.",
+        "ko": "베트남에서는 제기차기가 아주 흔하거든."
+       },
+       "img": "b-pho-bien.webp",
+       "star": 3,
+       "weekly": true
+      },
+      {
+       "vi": "hơn",
+       "ko": "~보다 더",
+       "kr_read": "헌",
+       "ex": {
+        "vi": "Xe hơi chạy nhanh hơn xe máy.",
+        "ko": "자동차는 오토바이보다 더 빨리 달려요."
+       },
+       "img": "b-hon.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "đứng lên",
+       "ko": "일어서다",
+       "kr_read": "등 렌",
+       "ex": {
+        "vi": "Các em đứng lên chào cô giáo.",
+        "ko": "여러분, 일어서서 선생님께 인사하세요."
+       },
+       "img": "c22-dung-len.webp"
+      },
+      {
+       "vi": "ngồi xuống",
+       "ko": "앉다",
+       "kr_read": "응오이 쑤옹",
+       "ex": {
+        "vi": "Mời anh ngồi xuống.",
+        "ko": "앉으세요."
+       },
+       "img": "c22-ngoi-xuong.webp"
+      },
+      {
+       "vi": "không cần",
+       "ko": "필요 없다",
+       "kr_read": "콩 껀",
+       "ex": {
+        "vi": "Anh không cần lo lắng.",
+        "ko": "걱정할 필요 없어요."
+       },
+       "img": "c22-khong-can.webp"
+      },
+      {
+       "vi": "gầy",
+       "ko": "마르다",
+       "kr_read": "거이",
+       "ex": {
+        "vi": "Nó đã cao lại gầy nên trông càng cao.",
+        "ko": "그 아이는 키도 큰 데다 말라서 더 커 보인다."
+       },
+       "img": "b-gay.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "béo",
+       "ko": "뚱뚱하다",
+       "kr_read": "배오",
+       "ex": {
+        "vi": "Dáng người nó thấp, có vẻ béo.",
+        "ko": "그는 키가 작고 뚱뚱해 보인다."
+       },
+       "img": "b-beo.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "hơi",
+       "ko": "조금·약간",
+       "kr_read": "허이",
+       "ex": {
+        "vi": "Nhà hàng đó ngon nhưng hơi mắc.",
+        "ko": "그 식당은 맛있지만 조금 비싸요."
+       },
+       "img": "w-482a132a1f.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "thời gian",
+       "ko": "시간",
+       "kr_read": "터이 잔",
+       "ex": {
+        "vi": "Không những tốn thời gian mà còn tốn tiền nữa.",
+        "ko": "시간이 들 뿐만 아니라 돈도 들어요."
+       },
+       "img": "thoi-gian.webp",
+       "star": 1
+      },
+      {
+       "vi": "trước khi",
+       "ko": "~하기 전에",
+       "kr_read": "쯔억 키",
+       "ex": {
+        "vi": "Chúng tôi sẽ điện thoại trước khi đến.",
+        "ko": "저희는 도착하기 전에 전화드릴게요."
+       },
+       "img": "b-truoc-khi.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "thứ bảy",
+       "ko": "토요일",
+       "kr_read": "트 바이",
+       "ex": {
+        "vi": "Hôm nay là thứ bảy nên các chị ấy đi mua sắm.",
+        "ko": "오늘은 토요일이라서 그 언니들은 쇼핑하러 가요."
+       },
+       "img": "thu-bay.webp"
+      }
+     ]
+    },
+    {
+     "title": "A반 10/14 단어 시험 (2/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "no",
+       "ko": "배부르다",
+       "kr_read": "노",
+       "ex": {
+        "vi": "Vì ăn sáng trễ nên bây giờ tôi còn no lắm.",
+        "ko": "아침을 늦게 먹어서 지금도 아주 배가 부르다."
+       },
+       "img": "d12-no.webp"
+      },
+      {
+       "vi": "căng tin",
+       "ko": "구내식당",
+       "kr_read": "깡 띤",
+       "ex": {
+        "vi": "Anh thường ăn trưa ở căng tin hay về nhà ăn cơm?",
+        "ko": "보통 구내식당에서 점심을 먹어요, 아니면 집에 가서 밥을 먹어요?"
+       },
+       "img": "w-2fa6fbb660.webp"
+      },
+      {
+       "vi": "thường",
+       "ko": "보통·자주",
+       "kr_read": "트엉",
+       "ex": {
+        "vi": "Buổi tối tôi thường nghe nhạc hay xem phim.",
+        "ko": "저녁에 저는 보통 음악을 듣거나 영화를 봐요."
+       },
+       "img": "w-19a15c38e0.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "tin tức",
+       "ko": "뉴스·소식",
+       "kr_read": "띤 뜩",
+       "ex": {
+        "vi": "Chị ấy muốn xem tin tức nên chị ấy lên mạng.",
+        "ko": "그녀는 뉴스를 보고 싶어서 인터넷에 접속한다."
+       },
+       "img": "w-eb5c8b3809.webp"
+      },
+      {
+       "vi": "thức khuya",
+       "ko": "밤늦게까지 깨어 있다",
+       "kr_read": "특 쿠여",
+       "ex": {
+        "vi": "Tối hôm qua tôi thức khuya.",
+        "ko": "어젯밤 나는 늦게까지 깨어 있었다."
+       },
+       "img": "b-thuc-khuya.webp",
+       "star": 2
+      },
+      {
+       "vi": "một mình",
+       "ko": "혼자",
+       "kr_read": "못 민",
+       "ex": {
+        "vi": "Anh học một mình à?",
+        "ko": "혼자 공부하세요?"
+       },
+       "img": "b-mot-minh.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "đơn",
+       "ko": "신청서",
+       "kr_read": "던",
+       "ex": {
+        "vi": "Tôi viết đơn xin dạy tiếng Hàn ở một trung tâm ngoại ngữ.",
+        "ko": "어학원에 한국어 강사 지원서를 쓰고 있어요."
+       },
+       "img": "w-63ced0df1d.webp",
+       "star": 1
+      },
+      {
+       "vi": "xin",
+       "ko": "청하다·부탁하다",
+       "kr_read": "씬",
+       "ex": {
+        "vi": "Em xin nghỉ một ngày.",
+        "ko": "하루 쉬겠다고 부탁드려요."
+       },
+       "img": "b-xin.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "chờ",
+       "ko": "기다리다",
+       "kr_read": "쩌",
+       "ex": {
+        "vi": "Chờ tôi một chút.",
+        "ko": "저를 잠깐 기다려 주세요."
+       },
+       "img": "w-886c48df89.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "nghe nói",
+       "ko": "듣자 하니·~라고 들었다",
+       "kr_read": "응애 노이",
+       "ex": {
+        "vi": "Nghe nói ông Kim học ở đây một tháng.",
+        "ko": "듣자 하니 Kim 씨는 여기서 한 달 공부한대요."
+       },
+       "img": "b-nghe-noi.webp",
+       "star": 1
+      },
+      {
+       "vi": "hình như",
+       "ko": "~인 것 같다",
+       "kr_read": "힌 느",
+       "ex": {
+        "vi": "Hình như cháu bị lạc đường, phải không?",
+        "ko": "길을 잃은 것 같은데, 맞니?"
+       },
+       "img": "b-hinh-nhu.webp",
+       "star": 1
+      },
+      {
+       "vi": "bằng",
+       "ko": "~로(수단)",
+       "kr_read": "방",
+       "ex": {
+        "vi": "Chúng ta sẽ đi Vũng Tàu bằng xe máy.",
+        "ko": "우리는 오토바이로 붕따우에 갈 거예요."
+       },
+       "img": "w-bf8a141261.webp",
+       "star": 3,
+       "weekly": true
+      },
+      {
+       "vi": "giùm",
+       "ko": "(대신) ~해 주다",
+       "kr_read": "줌",
+       "ex": {
+        "vi": "Anh xem giùm tôi được không?",
+        "ko": "좀 봐 주실 수 있어요?"
+       },
+       "img": "w-d88f725f8b.webp",
+       "star": 1
+      }
+     ]
+    },
+    {
+     "title": "A반 10/14 단어 시험 (3/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "quen",
+       "ko": "익숙하다",
+       "kr_read": "꾸앤",
+       "ex": {
+        "vi": "Tôi đã quen ăn cay rồi.",
+        "ko": "저는 매운 음식에 익숙해졌어요."
+       },
+       "img": "b-quen.webp"
+      },
+      {
+       "vi": "bao lâu",
+       "ko": "얼마나 오래",
+       "kr_read": "바오 러우",
+       "ex": {
+        "vi": "Anh ấy đã làm ở đó bao lâu?",
+        "ko": "그는 거기서 얼마나 일했어요?"
+       },
+       "img": "b-bao-lau.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "đừng",
+       "ko": "~하지 마",
+       "kr_read": "등",
+       "ex": {
+        "vi": "Em đừng giải thích bằng tiếng Việt!",
+        "ko": "베트남어로 설명하지 마!"
+       },
+       "img": "w-91919d36d6.webp"
+      },
+      {
+       "vi": "trung tâm",
+       "ko": "센터·학원",
+       "kr_read": "쭝 떰",
+       "ex": {
+        "vi": "Tôi học tiếng Anh ở trung tâm ngoại ngữ.",
+        "ko": "저는 외국어 학원에서 영어를 배워요."
+       },
+       "img": "b-trung-tam.webp",
+       "star": 2
+      },
+      {
+       "vi": "đã từng",
+       "ko": "~해 본 적 있다",
+       "kr_read": "다 뜽",
+       "ex": {
+        "vi": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
+        "ko": "그런데 듣자 하니 Brian 씨는 서울에서 일한 적이 있대요."
+       },
+       "img": "b-da-tung.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "được",
+       "ko": "~할 수 있다",
+       "kr_read": "드억",
+       "ex": {
+        "vi": "Tôi nói được tiếng Việt.",
+        "ko": "저는 베트남어를 할 수 있어요."
+       },
+       "img": "b-duoc.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "tiếng mẹ đẻ",
+       "ko": "모국어",
+       "kr_read": "띠엥 매 대",
+       "ex": {
+        "vi": "Tiếng Việt là tiếng mẹ đẻ của tôi.",
+        "ko": "베트남어는 제 모국어입니다."
+       },
+       "img": "b-tieng-me-de.webp",
+       "star": 2
+      },
+      {
+       "vi": "Nga",
+       "ko": "러시아",
+       "kr_read": "응아",
+       "ex": {
+        "vi": "Anh ấy đến từ Nga.",
+        "ko": "그는 러시아에서 왔다."
+       },
+       "img": "b-nga.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "có khi",
+       "ko": "~할 때가 있다",
+       "kr_read": "꼬 키",
+       "ex": {
+        "vi": "Có khi tôi đi làm bằng xe buýt.",
+        "ko": "저는 가끔 버스로 출근할 때가 있어요."
+       },
+       "img": "c22-co-khi.webp"
+      },
+      {
+       "vi": "đừng lo",
+       "ko": "걱정하지 마",
+       "kr_read": "등 로",
+       "ex": {
+        "vi": "Đừng lo, tôi sẽ giúp anh.",
+        "ko": "걱정하지 마세요, 제가 도와줄게요."
+       },
+       "img": "c22-dung-lo.webp"
+      },
+      {
+       "vi": "ngoại ngữ",
+       "ko": "외국어",
+       "kr_read": "응오아이 응으",
+       "ex": {
+        "vi": "Cô Cẩm biết ba ngoại ngữ.",
+        "ko": "Cẩm 씨는 외국어를 세 개 안다."
+       },
+       "img": "b-ngoai-ngu.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "đi ra ngoài",
+       "ko": "밖에 나가다",
+       "kr_read": "디 자 응오아이",
+       "ex": {
+        "vi": "Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.",
+        "ko": "의사는 그 아이에게 학교를 쉬고, 밖에 나갈 때는 안경을 쓰라고 권했다."
+       },
+       "img": "w-1f5458b281.webp"
+      },
+      {
+       "vi": "sau đó",
+       "ko": "그 후에·그다음에",
+       "kr_read": "싸우 도",
+       "ex": {
+        "vi": "Tôi ăn sáng, sau đó đi làm.",
+        "ko": "저는 아침을 먹고 그다음에 출근해요."
+       },
+       "img": "b-sau-do.webp",
+       "star": 2
+      }
+     ]
+    },
+    {
+     "title": "A반 10/15 단어 시험 (1/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "đơn",
+       "ko": "신청서",
+       "kr_read": "던",
+       "ex": {
+        "vi": "Tôi viết đơn xin dạy tiếng Hàn ở một trung tâm ngoại ngữ.",
+        "ko": "어학원에 한국어 강사 지원서를 쓰고 있어요."
+       },
+       "img": "w-63ced0df1d.webp",
+       "star": 1
+      },
+      {
+       "vi": "xin",
+       "ko": "청하다·부탁하다",
+       "kr_read": "씬",
+       "ex": {
+        "vi": "Em xin nghỉ một ngày.",
+        "ko": "하루 쉬겠다고 부탁드려요."
+       },
+       "img": "b-xin.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "chờ",
+       "ko": "기다리다",
+       "kr_read": "쩌",
+       "ex": {
+        "vi": "Chờ tôi một chút.",
+        "ko": "저를 잠깐 기다려 주세요."
+       },
+       "img": "w-886c48df89.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "nghe nói",
+       "ko": "듣자 하니·~라고 들었다",
+       "kr_read": "응애 노이",
+       "ex": {
+        "vi": "Nghe nói ông Kim học ở đây một tháng.",
+        "ko": "듣자 하니 Kim 씨는 여기서 한 달 공부한대요."
+       },
+       "img": "b-nghe-noi.webp",
+       "star": 1
+      },
+      {
+       "vi": "hình như",
+       "ko": "~인 것 같다",
+       "kr_read": "힌 느",
+       "ex": {
+        "vi": "Hình như cháu bị lạc đường, phải không?",
+        "ko": "길을 잃은 것 같은데, 맞니?"
+       },
+       "img": "b-hinh-nhu.webp",
+       "star": 1
+      },
+      {
+       "vi": "bằng",
+       "ko": "~로(수단)",
+       "kr_read": "방",
+       "ex": {
+        "vi": "Chúng ta sẽ đi Vũng Tàu bằng xe máy.",
+        "ko": "우리는 오토바이로 붕따우에 갈 거예요."
+       },
+       "img": "w-bf8a141261.webp",
+       "star": 3,
+       "weekly": true
+      },
+      {
+       "vi": "giùm",
+       "ko": "(대신) ~해 주다",
+       "kr_read": "줌",
+       "ex": {
+        "vi": "Anh xem giùm tôi được không?",
+        "ko": "좀 봐 주실 수 있어요?"
+       },
+       "img": "w-d88f725f8b.webp",
+       "star": 1
+      },
+      {
+       "vi": "quen",
+       "ko": "익숙하다",
+       "kr_read": "꾸앤",
+       "ex": {
+        "vi": "Anh Quý quen cô Cúc.",
+        "ko": "꾸이 씨는 꾹 씨를 안다."
+       },
+       "img": "b-quen.webp"
+      },
+      {
+       "vi": "bao lâu",
+       "ko": "얼마나 오래",
+       "kr_read": "바오 러우",
+       "ex": {
+        "vi": "Anh ấy đã làm ở đó bao lâu?",
+        "ko": "그는 거기서 얼마나 일했어요?"
+       },
+       "img": "b-bao-lau.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "đừng",
+       "ko": "~하지 마",
+       "kr_read": "등",
+       "ex": {
+        "vi": "Em đừng giải thích bằng tiếng Việt!",
+        "ko": "베트남어로 설명하지 마!"
+       },
+       "img": "w-91919d36d6.webp"
+      },
+      {
+       "vi": "trung tâm",
+       "ko": "센터·학원",
+       "kr_read": "쭝 떰",
+       "ex": {
+        "vi": "Xe buýt đi vào trung tâm thành phố vẫn đông khách.",
+        "ko": "시내 중심으로 들어가는 버스는 여전히 손님이 많아요."
+       },
+       "img": "b-trung-tam.webp",
+       "star": 2
+      },
+      {
+       "vi": "đã từng",
+       "ko": "~해 본 적 있다",
+       "kr_read": "다 뜽",
+       "ex": {
+        "vi": "Nhưng nghe nói anh Brian đã từng làm việc ở Seoul.",
+        "ko": "그런데 듣자 하니 Brian 씨는 서울에서 일한 적이 있대요."
+       },
+       "img": "b-da-tung.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "được",
+       "ko": "~할 수 있다",
+       "kr_read": "드억",
+       "ex": {
+        "vi": "Tôi nói được tiếng Việt.",
+        "ko": "저는 베트남어를 할 수 있어요."
+       },
+       "img": "b-duoc.webp",
+       "star": 1,
+       "weekly": true
+      }
+     ]
+    },
+    {
+     "title": "A반 10/15 단어 시험 (2/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "tiếng mẹ đẻ",
+       "ko": "모국어",
+       "kr_read": "띠엥 매 대",
+       "ex": {
+        "vi": "Tiếng Việt là tiếng mẹ đẻ của tôi.",
+        "ko": "베트남어는 제 모국어입니다."
+       },
+       "img": "b-tieng-me-de.webp",
+       "star": 2
+      },
+      {
+       "vi": "Nga",
+       "ko": "러시아",
+       "kr_read": "응아",
+       "ex": {
+        "vi": "Anh ấy đến từ Nga.",
+        "ko": "그는 러시아에서 왔다."
+       },
+       "img": "b-nga.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "có khi",
+       "ko": "~할 때가 있다",
+       "kr_read": "꼬 키",
+       "ex": {
+        "vi": "Có khi tôi đi làm bằng xe buýt.",
+        "ko": "저는 가끔 버스로 출근할 때가 있어요."
+       },
+       "img": "c22-co-khi.webp"
+      },
+      {
+       "vi": "đừng lo",
+       "ko": "걱정하지 마",
+       "kr_read": "등 로",
+       "ex": {
+        "vi": "Đừng lo, tôi sẽ giúp anh.",
+        "ko": "걱정하지 마세요, 제가 도와줄게요."
+       },
+       "img": "c22-dung-lo.webp"
+      },
+      {
+       "vi": "ngoại ngữ",
+       "ko": "외국어",
+       "kr_read": "응오아이 응으",
+       "ex": {
+        "vi": "Cô Cẩm biết ba ngoại ngữ.",
+        "ko": "Cẩm 씨는 외국어를 세 개 안다."
+       },
+       "img": "b-ngoai-ngu.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "đi ra ngoài",
+       "ko": "밖에 나가다",
+       "kr_read": "디 자 응오아이",
+       "ex": {
+        "vi": "Bác sĩ khuyên nó nghỉ học, với lại phải đeo kính khi đi ra ngoài.",
+        "ko": "의사는 그 아이에게 학교를 쉬고, 밖에 나갈 때는 안경을 쓰라고 권했다."
+       },
+       "img": "w-1f5458b281.webp"
+      },
+      {
+       "vi": "sau đó",
+       "ko": "그 후에·그다음에",
+       "kr_read": "싸우 도",
+       "ex": {
+        "vi": "Tôi ăn sáng, sau đó đi làm.",
+        "ko": "저는 아침을 먹고 그다음에 출근해요."
+       },
+       "img": "b-sau-do.webp",
+       "star": 2
+      },
+      {
+       "vi": "bối rối",
+       "ko": "당황하다·어쩔 줄 모르다",
+       "kr_read": "보이 조이",
+       "ex": {
+        "vi": "Cô ấy bối rối khi bị hỏi.",
+        "ko": "그녀는 질문을 받고 당황했어요."
+       },
+       "img": "w-9f1b3f6dcc.webp"
+      },
+      {
+       "vi": "quá khứ",
+       "ko": "과거",
+       "kr_read": "꽈 크",
+       "ex": {
+        "vi": "Nếu hỏi và trả lời về một hành động quá khứ, có là bắt buộc.",
+        "ko": "과거의 행동에 대해 묻고 답할 때는 có가 반드시 들어가야 한다."
+       },
+       "img": "b-qua-khu.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "hiện tại",
+       "ko": "현재",
+       "kr_read": "히엔 따이",
+       "ex": {
+        "vi": "NAY: dùng để biểu thị thời gian từ quá khứ kéo dài đến hiện tại.",
+        "ko": "(nay는) 과거부터 지금까지 이어지는 시간을 나타낼 때 쓴다."
+       },
+       "img": "b-hien-tai.webp",
+       "weekly": true
+      },
+      {
+       "vi": "tương lai",
+       "ko": "미래",
+       "kr_read": "뜨엉 라이",
+       "ex": {
+        "vi": "Được dùng để biểu thị sự việc nào đó dự kiến xảy ra trong tương lai gần.",
+        "ko": "(sắp은) 가까운 미래에 일어날 것으로 예상되는 일을 나타낼 때 쓴다."
+       },
+       "img": "b-tuong-lai.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "đau",
+       "ko": "아프다",
+       "kr_read": "다우",
+       "ex": {
+        "vi": "Bác sĩ nói là nó bị đau mắt, nhưng không nặng lắm.",
+        "ko": "의사는 그 애가 눈병이 났지만 심하지 않다고 했다."
+       },
+       "img": "d16-dau.webp"
+      },
+      {
+       "vi": "lòng",
+       "ko": "마음·속",
+       "kr_read": "롱",
+       "ex": {
+        "vi": "Mẹ tôi có tấm lòng rất tốt.",
+        "ko": "우리 어머니는 마음씨가 아주 좋아요."
+       },
+       "img": "c22-long.webp"
+      }
+     ]
+    },
+    {
+     "title": "A반 10/15 단어 시험 (3/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "đau lòng",
+       "ko": "가슴 아프다",
+       "kr_read": "다우 롱",
+       "ex": {
+        "vi": "Nghe tin đó, tôi rất đau lòng.",
+        "ko": "그 소식을 듣고 저는 아주 가슴이 아팠어요."
+       },
+       "img": "c22-dau-long.webp"
+      },
+      {
+       "vi": "nhắn",
+       "ko": "(메시지를) 남기다·전하다",
+       "kr_read": "냔",
+       "ex": {
+        "vi": "Chị có nhắn gì không?",
+        "ko": "전하실 말씀 있으세요?"
+       },
+       "img": "w-1cccce96c0.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "tin",
+       "ko": "소식·뉴스, 믿다",
+       "kr_read": "띤",
+       "ex": {
+        "vi": "Tôi tin bạn.",
+        "ko": "나는 너를 믿는다."
+       },
+       "img": "b-tin.webp"
+      },
+      {
+       "vi": "nhắn tin",
+       "ko": "문자를 보내다",
+       "kr_read": "냔 띤",
+       "ex": {
+        "vi": "Tôi dùng điện thoại để gọi, nhắn tin, chụp ảnh, và vào Youtube để nghe nhạc.",
+        "ko": "나는 전화로 통화하고 문자 보내고 사진 찍고 유튜브에 들어가 음악을 듣는다."
+       },
+       "img": "b-nhan-tin.webp",
+       "star": 2
+      },
+      {
+       "vi": "tin nhắn",
+       "ko": "문자 메시지",
+       "kr_read": "띤 냔",
+       "ex": {
+        "vi": "Trong cái điện thoại này, tôi lưu lại tất cả những tin nhắn và hình ảnh của bạn bè.",
+        "ko": "이 전화기 안에 나는 친구들의 문자와 사진을 모두 저장해 두었다."
+       },
+       "img": "b-tin-nhan.webp"
+      },
+      {
+       "vi": "tiến bộ",
+       "ko": "발전하다·향상되다",
+       "kr_read": "띠엔 보",
+       "ex": {
+        "vi": "Học tập ngày càng tiến bộ.",
+        "ko": "공부가 날이 갈수록 나아진다."
+       },
+       "img": "b-tien-bo.webp",
+       "star": 3,
+       "weekly": true
+      },
+      {
+       "vi": "biển",
+       "ko": "바다",
+       "kr_read": "비엔",
+       "ex": {
+        "vi": "Các ông ấy muốn đi chơi ở biển.",
+        "ko": "그분들은 바다에 놀러 가고 싶어 한다."
+       },
+       "img": "b-bien.webp"
+      },
+      {
+       "vi": "núi",
+       "ko": "산",
+       "kr_read": "누이",
+       "ex": {
+        "vi": "(một ngọn) núi cao",
+        "ko": "높은 산 (한 봉우리)"
+       },
+       "img": "bo-be167a9102.webp"
+      },
+      {
+       "vi": "đỉnh",
+       "ko": "정상·꼭대기(산)",
+       "kr_read": "딘",
+       "ex": {
+        "vi": "Chúng tôi leo lên đỉnh núi.",
+        "ko": "우리는 산 정상에 올라갔다."
+       },
+       "img": "w-d0a37914a0.webp",
+       "weekly": true
+      },
+      {
+       "vi": "khám phá",
+       "ko": "탐험하다·발견하다",
+       "kr_read": "캄 파",
+       "ex": {
+        "vi": "Chúng tôi muốn khám phá thành phố này.",
+        "ko": "우리는 이 도시를 탐험하고 싶어요."
+       },
+       "img": "c22-kham-pha.webp"
+      },
+      {
+       "vi": "sai",
+       "ko": "틀리다",
+       "kr_read": "싸이",
+       "ex": {
+        "vi": "Chị ấy viết tiếng Pháp sai nhiều.",
+        "ko": "그녀는 프랑스어를 쓸 때 틀린 데가 많다."
+       },
+       "img": "sai-wrong.webp"
+      },
+      {
+       "vi": "rảnh",
+       "ko": "한가하다",
+       "kr_read": "자인",
+       "ex": {
+        "vi": "À, ngày mai Vân có rảnh không?",
+        "ko": "아, 내일 Vân 한가해요?"
+       },
+       "img": "b-ranh.webp"
+      },
+      {
+       "vi": "kỳ thi",
+       "ko": "시험",
+       "kr_read": "끼 티",
+       "ex": {
+        "vi": "Kỳ thi sắp đến gần.",
+        "ko": "시험이 가까워지고 있다."
+       },
+       "img": "b-ky-thi.webp"
       }
      ]
     }

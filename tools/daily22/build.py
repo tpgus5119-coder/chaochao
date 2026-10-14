@@ -29,7 +29,7 @@ DIRS = {'b15': ('to_ko', {'buồn', 'bán', 'bận', 'bật', 'chậm', 'cười
 OVR = {('b1', 'tắc xi'): 'to_ko', ('a12', 'nên'): 'to_ko'}   # a12 '39 Nên (단독)' — 뒤 괄호 때문에 못 읽음   # 시험지 'Taxi'(베트남어 칸) — 앱 표제어는 tắc xi 라 글자로 못 찾는다
 # 문장 속 이름(한국·영어 이름·약자)은 베트남어 읽기 규칙으로 읽으면 이상해진다('Seung Bin' → 쌔우 빈) — 발음 칸에서만 바로잡는다
 NAME_KR = {'Seung Bin': '승빈', 'Yeo Jeong': '여정', 'Eun Ji': '은지', 'GYBM': '지와이비엠', 'Brian': '브라이언', 'David': '데이비드',
-           'James': '제임스', 'Kate': '케이트', 'BJ': '비제이', 'WP': '더블유피', 'MJ': '엠제이', 'Seoul': '서울', 'Sang-hyeon': '상현'}
+           'James': '제임스', 'Kate': '케이트', 'BJ': '비제이', 'WP': '더블유피', 'MJ': '엠제이', 'Seoul': '서울', 'Sang-hyeon': '상현', 'Sang Hyun': '상현', 'Minjun': '민준', 'Bong Jun': '봉준', 'Dong Ha': '동하', 'G-Dragon': '지드래곤'}
 def kr_of(vi):
     """이름이 없으면 vi_kr 그대로. 있으면 낱말마다 읽되 이름 자리는 NAME_KR 로 — vi_kr 은 이름을 빈 글자로 읽어 통째 치환하면 번진다"""
     if not any(n in vi for n in NAME_KR): return vi_kr(vi)
