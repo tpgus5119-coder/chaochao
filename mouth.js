@@ -351,7 +351,7 @@ const MOUTH = (() => {
       if (pz.lipR > .3) oh = oh * (1 - .35 * pz.lipR);
       const lt = pz.lipC > .5 ? 8 : (4 + rd * 6 - sp * 2);   // 입술은 얇게 — 벌림이 주인공
       const dn = clamp(pz.lipD, 0, 1);
-      set(els.lipO, 'rx', f1(rw + lt)); set(els.lipO, 'ry', f1(oh + lt * .85 + dn * 7));   // 윗니-아랫입술 소리는 아랫입술이 윗니 아래로 보이게 입술 테를 조금 키운다
+      set(els.lipO, 'rx', f1(rw + lt)); set(els.lipO, 'ry', f1(oh + lt * .85 + dn * 4));   // 윗니-아랫입술 소리는 아랫입술이 윗니 아래로 보이게 입술 테를 조금 키운다
       ['opn', 'opl', 'fce'].forEach(id => { set(els[id], 'rx', f1(rw)); set(els[id], 'ry', f1(Math.max(oh, .8))); });
       const tu = Math.min(oh * .9, 12), tl = oh > 14 ? Math.min(oh * .45, 9) : 0;
       set(els.tU, 'y', f1(cy - oh)); set(els.tU, 'height', f1(tu));
@@ -359,11 +359,12 @@ const MOUTH = (() => {
       set(els.tU, 'opacity', oh > 3 ? 1 : 0);
       /* 윗니가 아랫입술을 누르는 소리(v·ph, lipD) — 정면에서 입은 거의 닫히지만 **윗니가 아랫입술 위에 얹혀** 보여야 한다. 안의 윗니(tU)는 입 구멍에
          가려(clip) 안 보였다 → 구멍 밖에 따로 둔 윗니(tD)를 입술 위로 내려 그린다 (대표님 2026-10-14 "vậy 는 윗니로 아랫입술을 누르는데 정면에서는 안 보임") */
-      set(els.tD, 'x', f1(561 - rw * .8)); set(els.tD, 'width', f1(rw * 1.6)); set(els.tD, 'y', f1(cy - oh - 1)); set(els.tD, 'height', f1(oh + 1 + dn * 9));
+      /* 살짝만 — 윗니 끝이 아랫입술에 가볍게 닿는 정도(대표님 2026-10-14 "이빨이 너무 과하다, 누가 말할 때 이빨을 그렇게 누르냐" — 전엔 입 폭 전체를 덮는 두꺼운 줄) */
+      set(els.tD, 'x', f1(561 - rw * .55)); set(els.tD, 'width', f1(rw * 1.1)); set(els.tD, 'y', f1(cy - oh - 1)); set(els.tD, 'height', f1(oh + 1 + dn * 3.5));
       set(els.tD, 'opacity', dn > .2 ? f1(Math.min(1, dn * 1.3)) : 0);
-      { const y0 = cy - oh - 1, y1 = y0 + oh + 1 + dn * 9, w8 = rw * .8; let d = '';   // 이 사이 금 — 네모 한 덩어리가 아니라 윗니 줄로 보이게
-        for (let x = 561 - w8 + 9; x < 561 + w8 - 4; x += 9) d += 'M' + f1(x) + ' ' + f1(y0 + 1) + 'L' + f1(x) + ' ' + f1(y1 - 1);
-        set(els.tDl, 'd', d); set(els.tDl, 'opacity', dn > .2 ? f1(Math.min(1, dn * 1.3)) : 0); }
+      { const y0 = cy - oh - 1, y1 = y0 + oh + 1 + dn * 3.5, w8 = rw * .55; let d = '';   // 이 사이 금 — 네모 한 덩어리가 아니라 윗니 줄로 보이게
+        for (let x = 561 - w8 + 7; x < 561 + w8 - 3; x += 7) d += 'M' + f1(x) + ' ' + f1(y0 + 1) + 'L' + f1(x) + ' ' + f1(y1 - .5);
+        set(els.tDl, 'd', d); set(els.tDl, 'opacity', dn > .2 ? f1(Math.min(.6, dn * .8)) : 0); }
       /* 정면에서 보이는 혀 (대표님 2026-10-02 "입모양에서 혀도 보여줄 수 있냐? 정면에서"):
          혀 앞 몸통(gF가 작을수록 높다) · 혀 뒤쪽(gB가 작을수록 높다 — 안쪽에 짙은 색) · 혀끝(혀끝이 윗니·잇몸에 닿는 t·th·đ·n·l·s·d…는 들어 올려져 보인다).
          투명 보기(xray)는 같은 혀를 입술 위에 점선으로 겹쳐, 입을 다문 소리에서도 혀 자리가 보인다 */
