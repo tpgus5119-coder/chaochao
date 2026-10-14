@@ -58,6 +58,7 @@ MY += ["tools/rel_parse.py"] + [f"tools/rel_import/{n}" for n in ("apply.py", "p
 # 일상·직무·선배·22기 예문이 기본 뜻(자료에 적힌 뜻)으로 쓰였나 검사·새로 쓴 예문 (2026-09-29)
 MY += [f"tools/sense_review/{n}" for n in ("ex_check.py", "ex_write.py", "예문_새로씀.tsv")]
 MY += ['tools/mock3/metrics.py', 'tools/gram_audit/add_moi.py', 'tools/gram_audit/_new_ex_moi.json']   # 2026-10-13 밤: 실제 시험 수치 도구·mới 예문
+MY += ["tools/daily22/add17.py", "tools/daily22/add18.py"]   # 2026-10-14 b17·b18
 MY = [f for f in MY if (ROOT / f).exists()]   # 아직 없는 파일(_senses.json 은 검수 뒤 생김)은 건너뛴다
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
