@@ -540,6 +540,14 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-14 새벽(예약 작업): 항공사 신규 노선 기사가 원제의 'tourism'에 걸려 해변이, 졸업생 역량
+              # 기사가 'report'의 'port'에 걸려 컨테이너가 깔렸고, 셋방공주(월세방) 기사는 맞는 줄이 없었다. 셋을 맨 위에.
+              (("항공사", "국제노선", "직항", "airline", "carrier"),
+               "a passenger airplane taking off from a runway at sunrise"),
+              (("졸업생", "신입", "graduate", "역량"),
+               "a bright office desk with a laptop, a notebook and a stack of documents"),
+              (("셋방", "월세방", "월세", "phòng trọ"),
+               "a small tidy rented room with a bed, a desk and a window"),
               # 2026-10-13 아침: 원전 기사가 '수출'에 걸려 컨테이너가, VNeID·코참 기사가 '증권'·'금융'에 걸려
               # 동전 그림이, IT 취업상담회·폭스콘 채용·고속열차는 맞는 줄이 없었다. 일곱 줄을 맨 위에 둔다.
               (("원전", "원자력"),
