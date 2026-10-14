@@ -2022,7 +2022,7 @@ function pitchStage(text, nat) {
     clip.setAttribute('width', playing ? q[0].toFixed(1) : 0);
   };
   place(t0, false);
-  gW.onclick = () => play(text, false, null, SLOW_TAP);   // 그래프를 누르면 0.2배 고정 (대표님 지시 2026-09-29 밤: "발음 그래프 박스·입모양 박스는 0.2배 고정")
+  gW.onclick = () => play(text, false, null, SLOW_TAP);   // 그래프를 누르면 SLOW_TAP(0.1배) 고정 (대표님 지시 2026-09-29 밤 0.2배 → 2026-10-14 0.1배)
   gW.style.cursor = 'pointer';
   PB.views.add({ root: box, update(playing) {
     if (pbLive(h, playing)) place(clamp(audio.currentTime, t0, t0 + span), true);
@@ -2194,10 +2194,10 @@ function pitchGraph(text, opt) {
 /* 듣기 속도 — 1·0.8·0.6·0.4·0.2배 (대표님 지시 2026-09-27, 0.4·0.2 추가). 고른 값은 저장하고, 단어 카드·예문·'원어민 듣기'가 모두 같은 값을 쓴다. */
 const SPDS = [1, .8, .6, .4, .2];
 const EXAM_SPDS = [1, .8, .7, .6, .4, .2];   // 시험지 칩에는 0.7배도 — 실제 시험 녹음 속도(아래 EXAM_REAL_SPD) 가 그 사이라서 (2026-10-13 밤)
-const SLOW_TAP = .2;                 // 그래프·입모양 그림을 누르면 이 속도로 (2026-09-28)
+const SLOW_TAP = .1;                 // 그래프·입모양 그림을 누르면 이 속도로 (2026-09-28 0.2배 → 2026-10-14 대표님 "정면·측면 발음 0.2배는 빠르다, 0.1배 고정")
 const spdOf = () => SPDS.includes(Number(S.wspd)) ? Number(S.wspd) : .8;
 /* 카드가 바뀌면 듣기(단어·예문) 속도는 다시 0.8배 (대표님 지시 2026-09-30: "0.4로 재생하고 다음 카드로 넘겼어도 0.8, 뒤로 가서 다시 재생해도 0.8").
-   한 카드 안에서 고른 속도는 그 카드에서만 산다. 그래프·입모양 상자를 누르면 0.2배(SLOW_TAP)는 그대로 */
+   한 카드 안에서 고른 속도는 그 카드에서만 산다. 그래프·입모양 상자를 누르면 0.1배(SLOW_TAP)는 그대로 */
 let SPD_CARD = null;
 function spdResetFor(id) { if (id !== SPD_CARD) { SPD_CARD = id; S.wspd = .8; } }
 const spdLab = v => v + '배';
