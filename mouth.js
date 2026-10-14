@@ -240,6 +240,8 @@ const MOUTH = (() => {
 <rect id="${f('tL')}" x="480" y="130" width="162" height="6" rx="2" fill="#F1EFE8"/>
 </g>
 <ellipse id="${f('opl')}" cx="561" cy="116" rx="40" ry="20" fill="none" stroke="#993556" stroke-width="1.2"/>
+<rect id="${f('tD')}" x="520" y="110" width="82" height="0" rx="2" fill="#F1EFE8" stroke="#b9b3a6" stroke-width=".7" opacity="0"/>
+<path id="${f('tDl')}" d="" fill="none" stroke="#cfc9bd" stroke-width=".8" opacity="0"/>
 <g id="${f('xr')}" opacity="0">
 <ellipse id="${f('xO')}" cx="561" cy="116" rx="40" ry="22" fill="#4A1B0C" fill-opacity=".12" stroke="#993556" stroke-width="1" stroke-dasharray="3 3"/>
 <g clip-path="url(#${f('xclip')})" fill="#ED93B1" fill-opacity=".45" stroke="#993556" stroke-width="1.3" stroke-dasharray="4 3">
@@ -278,7 +280,7 @@ const MOUTH = (() => {
     const set = (e, k, v) => e.setAttribute(k, v);
     const els = {};
     ['nas', 'nasArr', 'tg', 'jawg', 'roof', 'v1', 'v2', 'lar', 'lu1', 'lu2', 'll1', 'll2', 'airO', 'g1', 'g2', 'z1', 'z2', 'm1', 'm1d', 'm2', 'm2d',
-      'lipO', 'opn', 'opl', 'fce', 'tU', 'tL', 'tT', 'tB', 'tP', 'xr', 'xB', 'xT', 'xP', 'xO', 'xce', 'names'].forEach(k => { els[k] = $(k); });
+      'lipO', 'opn', 'opl', 'fce', 'tU', 'tL', 'tD', 'tDl', 'tT', 'tB', 'tP', 'xr', 'xB', 'xT', 'xP', 'xO', 'xce', 'names'].forEach(k => { els[k] = $(k); });
     const placeNames = [...els.names.querySelectorAll('text[data-p]')];
     function cap(a, b, x1, y1, x2, y2, w) {
       const d = 'M' + f1(x1) + ' ' + f1(y1) + 'L' + f1(x2) + ' ' + f1(y2);
@@ -348,12 +350,20 @@ const MOUTH = (() => {
       if (rd > .4) oh = Math.max(oh, rw * .85 * (1 - pz.lipC));
       if (pz.lipR > .3) oh = oh * (1 - .35 * pz.lipR);
       const lt = pz.lipC > .5 ? 8 : (4 + rd * 6 - sp * 2);   // 입술은 얇게 — 벌림이 주인공
-      set(els.lipO, 'rx', f1(rw + lt)); set(els.lipO, 'ry', f1(oh + lt * .85));
+      const dn = clamp(pz.lipD, 0, 1);
+      set(els.lipO, 'rx', f1(rw + lt)); set(els.lipO, 'ry', f1(oh + lt * .85 + dn * 7));   // 윗니-아랫입술 소리는 아랫입술이 윗니 아래로 보이게 입술 테를 조금 키운다
       ['opn', 'opl', 'fce'].forEach(id => { set(els[id], 'rx', f1(rw)); set(els[id], 'ry', f1(Math.max(oh, .8))); });
       const tu = Math.min(oh * .9, 12), tl = oh > 14 ? Math.min(oh * .45, 9) : 0;
       set(els.tU, 'y', f1(cy - oh)); set(els.tU, 'height', f1(tu));
       set(els.tL, 'y', f1(cy + oh - tl)); set(els.tL, 'height', f1(tl));
       set(els.tU, 'opacity', oh > 3 ? 1 : 0);
+      /* 윗니가 아랫입술을 누르는 소리(v·ph, lipD) — 정면에서 입은 거의 닫히지만 **윗니가 아랫입술 위에 얹혀** 보여야 한다. 안의 윗니(tU)는 입 구멍에
+         가려(clip) 안 보였다 → 구멍 밖에 따로 둔 윗니(tD)를 입술 위로 내려 그린다 (대표님 2026-10-14 "vậy 는 윗니로 아랫입술을 누르는데 정면에서는 안 보임") */
+      set(els.tD, 'x', f1(561 - rw * .8)); set(els.tD, 'width', f1(rw * 1.6)); set(els.tD, 'y', f1(cy - oh - 1)); set(els.tD, 'height', f1(oh + 1 + dn * 9));
+      set(els.tD, 'opacity', dn > .2 ? f1(Math.min(1, dn * 1.3)) : 0);
+      { const y0 = cy - oh - 1, y1 = y0 + oh + 1 + dn * 9, w8 = rw * .8; let d = '';   // 이 사이 금 — 네모 한 덩어리가 아니라 윗니 줄로 보이게
+        for (let x = 561 - w8 + 9; x < 561 + w8 - 4; x += 9) d += 'M' + f1(x) + ' ' + f1(y0 + 1) + 'L' + f1(x) + ' ' + f1(y1 - 1);
+        set(els.tDl, 'd', d); set(els.tDl, 'opacity', dn > .2 ? f1(Math.min(1, dn * 1.3)) : 0); }
       /* 정면에서 보이는 혀 (대표님 2026-10-02 "입모양에서 혀도 보여줄 수 있냐? 정면에서"):
          혀 앞 몸통(gF가 작을수록 높다) · 혀 뒤쪽(gB가 작을수록 높다 — 안쪽에 짙은 색) · 혀끝(혀끝이 윗니·잇몸에 닿는 t·th·đ·n·l·s·d…는 들어 올려져 보인다).
          투명 보기(xray)는 같은 혀를 입술 위에 점선으로 겹쳐, 입을 다문 소리에서도 혀 자리가 보인다 */
