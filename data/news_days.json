@@ -239,7 +239,7 @@
     ],
     "extra": []
    },
-   "n": 106
+   "n": 109
   },
   {
    "ts": "2026-10-15",
@@ -443,7 +443,7 @@
     ],
     "extra": []
    },
-   "n": 105
+   "n": 108
   },
   {
    "ts": "2026-10-15",
@@ -649,7 +649,7 @@
     ],
     "extra": []
    },
-   "n": 104
+   "n": 107
   },
   {
    "ts": "2026-10-15",
@@ -934,7 +934,194 @@
      }
     ]
    },
-   "n": 103
+   "n": 106
+  },
+  {
+   "ts": "2026-10-15",
+   "day": "Nno=44272",
+   "track": "news",
+   "theme": "전력 투자",
+   "title": "베트남, 데이터센터 성장 속 ‘전력수요 대응’ 과제 급부상…대규모 인프라 투자 불가피",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44272",
+   "cat": "경제",
+   "intro": "베트남 데이터센터 성장으로 전력 수요가 급증하고 있습니다. 정부는 전력 인프라 확충에 막대한 투자를 계획 중입니다.",
+   "words": [
+    {
+     "vi": "điện",
+     "ko": "전기",
+     "kr_read": "디엔",
+     "emoji": "⚡",
+     "en": "electricity bolt",
+     "tones": [
+      {
+       "syl": "điện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-dien.webp"
+    },
+    {
+     "vi": "tăng",
+     "ko": "증가하다",
+     "kr_read": "땅",
+     "emoji": "📈",
+     "en": "a graph showing increase",
+     "tones": [
+      {
+       "syl": "tăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tang.webp"
+    },
+    {
+     "vi": "chợ",
+     "ko": "시장",
+     "kr_read": "쩌",
+     "emoji": "🛍️",
+     "en": "a shopping bag",
+     "tones": [
+      {
+       "syl": "chợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-cho.webp"
+    },
+    {
+     "vi": "có",
+     "ko": "있다",
+     "kr_read": "꼬",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "có",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "làm",
+     "ko": "일하다",
+     "kr_read": "람",
+     "emoji": "🧑‍🏭",
+     "en": "a person working",
+     "tones": [
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-lam.webp"
+    },
+    {
+     "vi": "tiền",
+     "ko": "돈",
+     "kr_read": "띠엔",
+     "emoji": "💰",
+     "en": "money bag",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tien.webp"
+    }
+   ],
+   "dialog": {
+    "title": "전력 투자",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Điện có đủ làm không?",
+      "ko": "전기 충분히 있나요?",
+      "kr_read": "디엔 꼬 두 람 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Điện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đủ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, điện tăng rồi.",
+      "ko": "네, 전기 상황이 나아졌어요.",
+      "kr_read": "꼬 디엔 땅 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "điện",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tăng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 105
   },
   {
    "ts": "2026-10-15",
@@ -1243,7 +1430,7 @@
      }
     ]
    },
-   "n": 102
+   "n": 104
   },
   {
    "ts": "2026-10-15",
@@ -1449,7 +1636,7 @@
     ],
     "extra": []
    },
-   "n": 101
+   "n": 103
   },
   {
    "ts": "2026-10-15",
@@ -1746,7 +1933,7 @@
      }
     ]
    },
-   "n": 100
+   "n": 102
   },
   {
    "ts": "2026-10-15",
@@ -1969,7 +2156,7 @@
     ],
     "extra": []
    },
-   "n": 99
+   "n": 101
   },
   {
    "ts": "2026-10-15",
@@ -2242,7 +2429,7 @@
      }
     ]
    },
-   "n": 98
+   "n": 100
   },
   {
    "ts": "2026-10-15",
@@ -2503,7 +2690,7 @@
      }
     ]
    },
-   "n": 97
+   "n": 99
   },
   {
    "ts": "2026-10-15",
@@ -2764,7 +2951,7 @@
      }
     ]
    },
-   "n": 96
+   "n": 98
   },
   {
    "ts": "2026-10-15",
@@ -3018,7 +3205,7 @@
     ],
     "extra": []
    },
-   "n": 95
+   "n": 97
   },
   {
    "ts": "2026-10-15",
@@ -3327,7 +3514,7 @@
      }
     ]
    },
-   "n": 94
+   "n": 96
   },
   {
    "ts": "2026-10-15",
@@ -3588,7 +3775,7 @@
      }
     ]
    },
-   "n": 93
+   "n": 95
   },
   {
    "ts": "2026-10-15",
@@ -3861,7 +4048,7 @@
      }
     ]
    },
-   "n": 92
+   "n": 94
   },
   {
    "ts": "2026-10-15",
@@ -4158,7 +4345,7 @@
      }
     ]
    },
-   "n": 91
+   "n": 93
   },
   {
    "ts": "2026-10-14",
@@ -4385,7 +4572,7 @@
     ],
     "extra": []
    },
-   "n": 90
+   "n": 92
   },
   {
    "ts": "2026-10-14",
@@ -4653,7 +4840,7 @@
     ],
     "extra": []
    },
-   "n": 89
+   "n": 91
   },
   {
    "ts": "2026-10-14",
@@ -4903,7 +5090,7 @@
     ],
     "extra": []
    },
-   "n": 88
+   "n": 90
   },
   {
    "ts": "2026-10-14",
@@ -5147,7 +5334,7 @@
     ],
     "extra": []
    },
-   "n": 87
+   "n": 89
   },
   {
    "ts": "2026-10-14",
@@ -5341,7 +5528,7 @@
     ],
     "extra": []
    },
-   "n": 86
+   "n": 88
   },
   {
    "ts": "2026-10-14",
@@ -5621,7 +5808,7 @@
     ],
     "extra": []
    },
-   "n": 85
+   "n": 87
   },
   {
    "ts": "2026-10-14",
@@ -5949,7 +6136,7 @@
     ],
     "extra": []
    },
-   "n": 84
+   "n": 86
   },
   {
    "ts": "2026-10-14",
@@ -6217,7 +6404,7 @@
     ],
     "extra": []
    },
-   "n": 83
+   "n": 85
   },
   {
    "ts": "2026-10-14",
@@ -6473,7 +6660,219 @@
     ],
     "extra": []
    },
-   "n": 82
+   "n": 84
+  },
+  {
+   "ts": "2026-10-14",
+   "day": "N098.html",
+   "track": "news",
+   "theme": "베트남 경제",
+   "title": "Singapore lender UOB raises Vietnam’s growth forecast to 9.2%",
+   "u": "https://e.vnexpress.net/news/business/economy/singapore-lender-uob-raises-vietnam-s-growth-forecast-to-9-2-5132098.html",
+   "cat": "경제",
+   "intro": "UOB, 베트남 경제성장률 전망치를 9.2%로 상향 발표 제조업 및 투자 호황으로 물가·환율 안정성 유지 전망",
+   "words": [
+    {
+     "vi": "kinh tế",
+     "ko": "경제",
+     "kr_read": "낀 떼",
+     "emoji": "📈",
+     "en": "a growing bar chart",
+     "tones": [
+      {
+       "syl": "kinh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-kinh-te.webp"
+    },
+    {
+     "vi": "nhà máy",
+     "ko": "공장",
+     "kr_read": "냐 마이",
+     "emoji": "🏭",
+     "en": "a factory building",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nha-may.webp"
+    },
+    {
+     "vi": "làm",
+     "ko": "일하다",
+     "kr_read": "람",
+     "emoji": "👷",
+     "en": "a person working",
+     "tones": [
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-lam.webp"
+    },
+    {
+     "vi": "tiền",
+     "ko": "돈",
+     "kr_read": "띠엔",
+     "emoji": "💰",
+     "en": "a stack of money",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tien.webp"
+    },
+    {
+     "vi": "lớn",
+     "ko": "크다",
+     "kr_read": "런",
+     "emoji": "⬆️",
+     "en": "an up arrow",
+     "tones": [
+      {
+       "syl": "lớn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-lon.webp"
+    },
+    {
+     "vi": "nhanh",
+     "ko": "빠르다",
+     "kr_read": "나인",
+     "emoji": "⚡",
+     "en": "a lightning bolt",
+     "tones": [
+      {
+       "syl": "nhanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nhanh.webp"
+    }
+   ],
+   "dialog": {
+    "title": "베트남 경제",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Anh làm ở đây à?",
+      "ko": "여기서 일하세요?",
+      "kr_read": "아인 람 어 더이 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, tôi làm ở nhà máy.",
+      "ko": "네, 저는 공장에서 일해요.",
+      "kr_read": "벙 또이 람 어 냐 마이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "máy.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 83
   },
   {
    "ts": "2026-10-14",
@@ -6741,7 +7140,7 @@
     ],
     "extra": []
    },
-   "n": 81
+   "n": 82
   },
   {
    "ts": "2026-10-14",
@@ -6991,7 +7390,7 @@
     ],
     "extra": []
    },
-   "n": 80
+   "n": 81
   },
   {
    "ts": "2026-10-14",
@@ -7249,6 +7648,236 @@
        },
        {
         "syl": "hai.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 80
+  },
+  {
+   "ts": "2026-10-14",
+   "day": "Nno=44261",
+   "track": "news",
+   "theme": "교통사고 대처",
+   "title": "베트남에서 오토바이 사고가 났다면? [알면 든든! 베트남 법률 7]",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44261",
+   "cat": "사회",
+   "intro": "베트남 내 오토바이 운전 시 면허 요건을 준수해야 합니다. 사고 발생 시 현장 보존과 신속한 신고가 필수적입니다.",
+   "words": [
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🛵",
+     "en": "a modern scooter on a street",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    },
+    {
+     "vi": "tai nạn",
+     "ko": "사고",
+     "kr_read": "따이 난",
+     "emoji": "💥",
+     "en": "a car collision scene with warning signs",
+     "tones": [
+      {
+       "syl": "tai",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tai-nan.webp"
+    },
+    {
+     "vi": "công an",
+     "ko": "경찰",
+     "kr_read": "꽁 안",
+     "emoji": "👮",
+     "en": "a police officer standing in uniform",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "an",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-an.webp"
+    },
+    {
+     "vi": "bệnh viện",
+     "ko": "병원",
+     "kr_read": "벤 비엔",
+     "emoji": "🏥",
+     "en": "a hospital building with a red cross",
+     "tones": [
+      {
+       "syl": "bệnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "viện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-benh-vien.webp"
+    },
+    {
+     "vi": "bảo hiểm",
+     "ko": "보험",
+     "kr_read": "바오 히엠",
+     "emoji": "📄",
+     "en": "an official insurance document on a desk",
+     "tones": [
+      {
+       "syl": "bảo",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-bao-hiem.webp"
+    },
+    {
+     "vi": "bằng lái",
+     "ko": "운전면허증",
+     "kr_read": "방 라이",
+     "emoji": "🪪",
+     "en": "a plastic driver license card",
+     "tones": [
+      {
+       "syl": "bằng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "lái",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-bang-lai.webp"
+    }
+   ],
+   "dialog": {
+    "title": "교통사고 대처",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Có ai bị thương không?",
+      "ko": "다친 사람 있어요?",
+      "kr_read": "꼬 아이 비 트엉 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ai",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "thương",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Gọi công an ngay đi!",
+      "ko": "경찰을 바로 부르세요!",
+      "kr_read": "고이 꽁 안 응아이 디",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Gọi",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "an",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ngay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi!",
         "name": "ngang",
         "ko": "평평하게 그대로",
         "shape": "—"
@@ -26573,5 +27202,5 @@
    "n": 1
   }
  ],
- "updated": "2026-10-16 00:30"
+ "updated": "2026-10-16 08:52"
 }
