@@ -540,6 +540,14 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-15 새벽(예약 작업): 숙련 인재 채용 설문 기사는 맞는 줄이 없었고, 마이크로소프트 감원 기사는
+              # '해고'의 근로계약서가, IBK 법인 출범 기사는 '은행' 이 없어 동전 그림이 깔렸다. 셋을 맨 위에.
+              (("숙련 인재", "인재 채용", "맨파워", "채용 어렵"),
+               "a bright job interview room with two chairs across a wooden desk"),
+              (("마이크로소프트", "microsoft", "연구개발 인력", "감원"),
+               "an open-plan tech office with rows of empty desks and monitors"),
+              (("기업은행", "은행 법인", "현지법인", "ibk"),
+               "a modern bank branch entrance with glass doors on a city street"),
               # 2026-10-14 새벽(예약 작업): 항공사 신규 노선 기사가 원제의 'tourism'에 걸려 해변이, 졸업생 역량
               # 기사가 'report'의 'port'에 걸려 컨테이너가 깔렸고, 셋방공주(월세방) 기사는 맞는 줄이 없었다. 셋을 맨 위에.
               (("항공사", "국제노선", "직항", "airline", "carrier"),
