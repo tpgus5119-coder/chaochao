@@ -62,6 +62,7 @@ MY += ["tools/daily22/add17.py", "tools/daily22/add18.py", "tools/daily22/adda18
 MY += ["tools/gram_audit/add_duoc_biet.py", "tools/gram_audit/_new_ex_duoc_biet.json"]   # 2026-10-14 8과 능력 셋
 MY += ["tools/handout/make_1_8.py"]   # 2026-10-14 동기 공유 정리 파일 만드는 도구
 MY += ["tools/gram_audit/add_vsl_notes.py", "tools/gram_audit/_new_ex_vsl.json"]   # 2026-10-15 쌤 문법 안내서 대조
+MY += ["tools/daily22/adda19.py"]   # 2026-10-15 a19
 MY = [f for f in MY if (ROOT / f).exists()]   # 아직 없는 파일(_senses.json 은 검수 뒤 생김)은 건너뛴다
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
