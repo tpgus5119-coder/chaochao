@@ -9183,6 +9183,17 @@ function dictEntry(q0) {
     } else {
       const vi = d.filter(viHit).sort(cmp);
       const inVi = new Set(vi.map(x => x.vi));
+      /* 두 낱말 넘는 말이 사전에 없으면 **낱말별**로 보인다 (대표님 2026-10-15 "khi đó 가 at that time 인데 왜 사전에 없니" — 사전 원본(위키낱말 46,112 표제어)엔
+         khi ấy·lúc đó 만 있고 khi đó 처럼 그냥 이어 쓴 말은 없다. 2026-09-30 결정대로 이어 쓴 말은 표제어로 안 넣고, 대신 낱말 하나하나의 뜻을 보인다) */
+      let parts = [];
+      if (/\s/.test(qk) && !vi.some(x => x.vi.toLowerCase() === qk || x.b === qb)) {   // 친 말 그대로인 표제어가 없을 때 — 품은 말(trong khi đó)만 걸려도 낱말별을 먼저
+        const seen = new Set();
+        qk.split(/\s+/).forEach(w => {
+          const wb = dictBare(w);
+          const hit = d.filter(x => x.vi.toLowerCase() === w).sort(cmp).concat(d.filter(x => x.b === wb).sort(cmp)).find(x => !seen.has(x.vi));
+          if (hit) { seen.add(hit.vi); parts.push(hit); }
+        });
+      }
       const lessonW = x => x.src && x.src.some(t => !['예문', '사전', '참고 사전'].includes(t)) ? 0 : 1;
       /* 차례(2026-10-02): ① 뜻이 친 말과 똑같은 낱말(참고 사전 아님) ② 그 말로 시작하는 구이거나 그 말이 낱말로 든 **수업 낱말**(kỹ năng 'technical skill', trâu 'water buffalo')
          ③ 똑같지만 참고 사전 낱말 ④ 뜻 안에 든 나머지 ⑤ 덜 친 말(skil → skill)로만 잡힌 것. 같은 칸 안에서는 수업 낱말 → 자주 쓰는 말 → 더 똑같은 뜻.
@@ -9199,7 +9210,7 @@ function dictEntry(q0) {
          둘 다 아니면 결과가 있는 쪽 — 덜 친 말(hap)은 베트남어 쪽. 전에는 베트남어가 하나라도 걸리면(car → ca-ra, house → Vinahouse) 베트남 단어로 가 영어 뜻이 가려졌다 */
       /* 기본 단추는 베트남 단어 (대표님 2026-10-02 다시 "디폴트 값은 베트남 단어 검색") — 베트남어 쪽에 낱말·문장이 하나도 없을 때만 영어 뜻.
          (잠깐 '똑같은 베트남어 낱말이 없으면 영어 뜻'으로 바꿨다가 되돌림) */
-      if (DTABQ !== qk) { DTABQ = qk; DTAB = (vi.length || viS.length) ? 'vi' : en.length ? 'en' : 'vi'; }
+      if (DTABQ !== qk) { DTABQ = qk; DTAB = (vi.length || parts.length || viS.length) ? 'vi' : en.length ? 'en' : 'vi'; }
       const tabs = el('div', 'dtabs');
       [['vi', tr('베트남 단어'), vi.length], ['en', tr('영어 뜻'), en.length]].forEach(([k, nm, n]) => {
         const t = el('button', 'dtab' + (DTAB === k ? ' on' : ''), esc(nm) + ' <small>' + n + '</small>'); t.type = 'button';
@@ -9208,7 +9219,7 @@ function dictEntry(q0) {
       });
       out.append(tabs);
       if (DTAB === 'en') secs.push([tr('영어 뜻으로 찾은 낱말'), en], [tr('문장'), enS]);
-      else secs.push([tr('베트남어 낱말'), vi], [tr('문장'), viS]);
+      else secs.push([tr('낱말별'), parts], [tr('베트남어 낱말'), vi], [tr('문장'), viS]);
     }
     const live = secs.filter(s2 => s2[1].length);
     if (!live.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
