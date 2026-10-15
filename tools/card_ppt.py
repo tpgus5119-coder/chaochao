@@ -59,6 +59,57 @@ def put(tf, text, size_px, color, bold=False, font=KO, space_after=0, first=Fals
     return para
 
 
+def slide_from_layout(prs, items, bg=None):
+    """카드를 구울 때 남긴 글자 자리 기록(img/card/bg/<ts>-<i>.json)대로 **한 줄에 한 글상자**를 놓는다.
+    2026-10-15 대표님 지적 "글자들이 겹친다": 전에는 제목 140px·본문 330px·대화 100px 간격의 고정 상자에
+    여러 줄을 넣어, 글이 길면 아랫상자를 덮었다(재 보니 제목↔본문 0.10인치·대화 A↔B 0.21인치 겹침).
+    이제 좌표가 카드(webp)와 같으니 겹칠 수 없고, 상자마다 한 줄이라 줄바꿈으로 밀려 내려갈 것도 없다."""
+    from pptx.enum.shapes import MSO_SHAPE, MSO_CONNECTOR
+    from pptx.enum.text import MSO_AUTO_SIZE
+    s = prs.slides.add_slide(prs.slide_layouts[6])
+    s.background.fill.solid(); s.background.fill.fore_color.rgb = BG
+    if bg and bg.exists():
+        s.shapes.add_picture(str(bg), 0, 0, E(1080), E(1080))
+    for it in items:
+        k = it["k"]
+        if k == "rrect":
+            x0, y0, x1, y1 = it["xy"]
+            sh = s.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, E(x0), E(y0), E(x1 - x0), E(y1 - y0))
+            sh.fill.solid(); sh.fill.fore_color.rgb = RGBColor(*it["fill"]); sh.line.fill.background(); sh.shadow.inherit = False
+            sh.adjustments[0] = min(0.5, it["r"] / max(1, min(x1 - x0, y1 - y0)))
+        elif k == "ellipse":
+            x0, y0, x1, y1 = it["xy"]
+            sh = s.shapes.add_shape(MSO_SHAPE.OVAL, E(x0), E(y0), E(x1 - x0), E(y1 - y0))
+            sh.fill.solid(); sh.fill.fore_color.rgb = RGBColor(*it["fill"]); sh.line.fill.background(); sh.shadow.inherit = False
+        elif k == "line":
+            x0, y0, x1, y1 = it["xy"]
+            ln = s.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, E(x0), E(y0), E(x1), E(y1))
+            ln.line.color.rgb = RGBColor(*it["fill"]); ln.line.width = PT(it.get("w", 1))
+        elif k == "text":
+            sz = it["sz"]
+            # PIL 은 글자 윗선(ascender)을 y 에 맞춘다. 파워포인트는 줄상자 꼭대기를 y 에 맞추므로
+            # 줄상자 여유(글꼴 크기의 약 10%)만큼 위로 올려 같은 자리에 보이게 한다.
+            # 상자 폭은 **글줄의 실제 폭**(카드와 같은 글꼴로 잰다) — 오른쪽 끝까지 늘이면 왼쪽 칸 상자가
+            # 오른쪽 칸을 덮어 겹침 검사(ppt_overlap)에 걸리고, 파워포인트에서 고를 때도 헷갈린다.
+            from card_news import font as cfont
+            f = cfont(sz, it["idx"] if not it["vi"] else 0, vi=it["vi"])
+            wpx = f.getlength(it["t"]) + it.get("ls", 0) * sz * max(0, len(it["t"]) - 1) + sz * 0.35
+            tb = s.shapes.add_textbox(E(it["x"]), E(it["y"] - sz * 0.10), E(min(wpx, 1080 - it["x"])), E(sz * 1.2))
+            tf = tb.text_frame
+            tf.word_wrap = False                       # 한 줄 한 상자 — 줄바꿈으로 내려앉지 않게
+            tf.auto_size = MSO_AUTO_SIZE.NONE
+            tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
+            para = tf.paragraphs[0]; para.line_spacing = 1.0
+            r = para.add_run(); r.text = it["t"]
+            r.font.size = PT(sz); r.font.name = VI if it["vi"] else KO
+            r.font.bold = bool(it["idx"]) if it["vi"] else it["idx"] == 1
+            fill = it["fill"]
+            r.font.color.rgb = RGBColor(*fill) if isinstance(fill, list) else RGBColor(fill, fill, fill)
+            if it.get("ls"):                           # 자간(카드의 letter-spacing)을 1/100pt 단위로
+                r.font._element.set("spc", str(int(round(it["ls"] * sz * 0.75 * 100))))
+    return s
+
+
 def slide1(prs, d, ts, i):
     s = prs.slides.add_slide(prs.slide_layouts[6])
     s.background.fill.solid(); s.background.fill.fore_color.rgb = BG
@@ -157,8 +208,14 @@ def main():
         prs = Presentation()
         prs.slide_width, prs.slide_height = E(1080), E(1080)
         for d in arts:
-            slide1(prs, d, d.get("ts"), d["_i"])
-            slide2(prs, d, d.get("ts"))
+            lay = CARD / "bg" / f"{d.get('ts')}-{d['_i']}.json"
+            if lay.exists():        # 2026-10-15부터: 카드와 같은 좌표에 한 줄 한 상자 (겹침 없음)
+                L = json.loads(lay.read_text(encoding="utf-8"))
+                slide_from_layout(prs, L["1"], CARD / "bg" / f"{d.get('ts')}-{d['_i']}.png")
+                slide_from_layout(prs, L["2"])
+            else:                   # 옛 카드(기록 없음)는 예전 방식 그대로
+                slide1(prs, d, d.get("ts"), d["_i"])
+                slide2(prs, d, d.get("ts"))
         out = DESK / pub
         out.mkdir(parents=True, exist_ok=True)
         f = out / f"카드뉴스-{pub}.pptx"

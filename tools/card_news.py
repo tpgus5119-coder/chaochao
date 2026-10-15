@@ -68,6 +68,30 @@ def tw(dr, text, f, ls=0.0):
     return dr.textlength(text, font=f) + ls * f.size * (len(text) - 1)
 
 
+class Rec:
+    """그린 글자·선·도형을 **좌표째 기록**하는 ImageDraw 겉옷.
+    2026-10-15 대표님 지적: 파워포인트에서 글자가 겹쳤다 — card_ppt.py 가 카드와 다른 고정 좌표에
+    글상자를 놓고(제목 140px·본문 330px·대화 100px 간격) 글이 길면 아랫상자를 덮었다.
+    그래서 카드를 구울 때 글자마다 **실제 찍힌 자리**를 img/card/bg/<ts>-<i>.json 에 남기고,
+    파워포인트는 그 자리에 한 줄 한 상자로 얹는다 — 좌표가 카드와 같으니 겹칠 수가 없다."""
+    def __init__(self, dr):
+        self.dr, self.rec, self.mute = dr, [], False
+    def __getattr__(self, k):
+        return getattr(self.dr, k)
+    def text(self, xy, text, font=None, fill=None, **kw):
+        if not self.mute:
+            self.rec.append({"k": "text", "x": xy[0], "y": xy[1], "t": text, "sz": font.size,
+                             "idx": getattr(font, "index", 0), "vi": font.path == FONT_VI,
+                             "fill": list(fill) if isinstance(fill, tuple) else fill, "ls": 0.0})
+        self.dr.text(xy, text, font=font, fill=fill, **kw)
+    def line(self, xy, fill=None, width=1):
+        self.rec.append({"k": "line", "xy": list(xy), "fill": list(fill), "w": width}); self.dr.line(xy, fill=fill, width=width)
+    def ellipse(self, xy, fill=None, **kw):
+        self.rec.append({"k": "ellipse", "xy": list(xy), "fill": list(fill)}); self.dr.ellipse(xy, fill=fill, **kw)
+    def rounded_rectangle(self, xy, radius=0, fill=None, **kw):
+        self.rec.append({"k": "rrect", "xy": list(xy), "r": radius, "fill": list(fill)}); self.dr.rounded_rectangle(xy, radius, fill=fill, **kw)
+
+
 def dtext(dr, xy, text, f, fill, ls=0.0):
     """자간을 넣어 그린다. 자간이 0이면 한 번에 그린다(글꼴의 커닝을 살린다).
 
@@ -75,11 +99,19 @@ def dtext(dr, xy, text, f, fill, ls=0.0):
     글자를 낱자로 쪼개면 부호가 어긋난다. 한국어·숫자에만 쓴다."""
     if not ls:
         dr.text(xy, text, font=f, fill=fill); return
+    rec = getattr(dr, "rec", None)          # 자간 글줄은 낱자로 찍으므로 **한 줄로** 기록한다
+    if rec is not None:
+        rec.append({"k": "text", "x": xy[0], "y": xy[1], "t": text, "sz": f.size,
+                    "idx": getattr(f, "index", 0), "vi": f.path == FONT_VI,
+                    "fill": list(fill) if isinstance(fill, tuple) else fill, "ls": ls})
+        dr.mute = True
     x, y = xy
     step = ls * f.size
     for ch in text:
         dr.text((x, y), ch, font=f, fill=fill)
         x += dr.textlength(ch, font=f) + step
+    if rec is not None:
+        dr.mute = False
 
 
 def wrap_balanced(dr, text, f, width, ls=0.0):
@@ -337,7 +369,8 @@ def card1(d, bg, bgsave=None, force_sz=None, sizeonly=False):
         bgsave.parent.mkdir(parents=True, exist_ok=True)
         im.save(bgsave, "PNG")
 
-    dr = ImageDraw.Draw(im)
+    dr = Rec(ImageDraw.Draw(im))             # 파워포인트용으로 글자 자리를 기록한다
+    im.layout = dr.rec
     cat = d.get("cat") or "소식"
     c = CAT_COLOR.get(cat, (60, 60, 60))
     cw = tw(dr, nfc(cat), f_cat, LS_SMALL)
@@ -378,7 +411,8 @@ def card2(d):
     쏠림도 고쳤다 — 오른쪽 칸 뜻이 짧아 오른쪽이 휑했다. 좌우 여백을 키우고
     두 칸을 안쪽으로 모아 덩어리가 가운데 오게 했다."""
     im = Image.new("RGB", (W, H), BG)
-    dr = ImageDraw.Draw(im)
+    dr = Rec(ImageDraw.Draw(im))             # 파워포인트용으로 글자 자리를 기록한다
+    im.layout = dr.rec
     f_h, f_vi, f_kr, f_ko, f_s = font(34, 1), font(44, vi=True), font(25), font(29), font(24)
     f_dvi, f_dko, f_who = font(29, vi=True), font(26), font(23, 1)
     f_dkr = font(23)          # 문장 아래 한글 발음
@@ -825,10 +859,15 @@ def main():
         if c1 is None:      # 10줄 요약이 없는 기사는 카드를 안 만든다
             print(f"  건너뜀(풀이 없음): {(d.get('title') or '')[:26]}", flush=True)
             continue
-        for n, im in ((1, c1), (2, card2(d))):
+        c2 = card2(d)
+        for n, im in ((1, c1), (2, c2)):
             p = OUT / f"{base}-{n}.webp"
             im.save(p, "WEBP", quality=88, method=6)
             made.append(p.name)
+        # 글자 자리 기록 — card_ppt.py 가 이 좌표에 그대로 글상자를 놓는다 (겹침 방지, 2026-10-15)
+        (OUT / "bg").mkdir(parents=True, exist_ok=True)
+        (OUT / "bg" / f"{base}.json").write_text(json.dumps(
+            {"1": getattr(c1, "layout", []), "2": getattr(c2, "layout", [])}, ensure_ascii=False))
         print(f"  {i}/{len(D)} {d.get('theme','')}", flush=True)
     print("만든 카드:", len(made), "→", OUT)
 
