@@ -1021,9 +1021,14 @@ function toneRow(tones, small) {
    접어 두고 퀴즈에서 틀렸을 때만 펼쳐 보여 준다. */
 let SIB = null, SIBP = null;
 /* 낱말 뜻 찾기 — 여러 자료를 차례로: 앱 낱말(DICT) → 뜻 목록(_senses, 흔한 차례) → 짝 사전(sib.json 한국어 뜻) → 참고 사전(_dict_ko, 검수본) */
+/* 카드 뜻 — 수업 자료(기본기·일상·직무·교재·선배·22기)에 있는 낱말의 뜻. 사전 줄·짝 팝업·문장 낱말 팝업이 모두 이것을 첫 뜻으로 쓴다 (대표님 2026-10-15 "하나로 통일") */
+function koCard(vi) {
+  try { const k = String(vi || '').trim().toLowerCase(); const d = dictBuild(); const hit = Array.isArray(d) && d.find(x => String(x.vi).toLowerCase() === k || (toneAlt(k) !== k && String(x.vi).toLowerCase() === toneAlt(k))); return (hit && hit.cko) || ''; } catch (e) { return ''; }
+}
 async function meaningOf(vi) {
   const k0 = String(vi || '').trim().toLowerCase();
   if (!k0) return '';
+  { const c = koCard(k0); if (c) return c; }
   for (const k of (toneAlt(k0) === k0 ? [k0] : [k0, toneAlt(k0)])) {      // toà 로 적힌 말도 tòa 로 찾는다
     try { const d = dictBuild(); const hit = Array.isArray(d) && d.find(x => String(x.vi).toLowerCase() === k); if (hit && hit.ko) return hit.ko; } catch (e) { }
     try { await sensesLoad(); const ss = SENSES && SENSES[k]; if (ss && ss.length) return ss.join(' · '); } catch (e) { }
@@ -1228,7 +1233,9 @@ function pairRow(word, cur, mode) {
   w.append(el('b', null, (mode === 'shape' || mode === 'sim') && word !== cur ? sibDiff(word, cur) : esc(word)));
   if (one) w.append(el('i', null, toneArrow(tn)));
   const m = el('span', 'pmn');
-  if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
+  const cko = koCard(word);                                              // 수업 낱말이면 카드 뜻이 먼저 — 짝 자료의 뜻(w0.k)과 달라 세 곳이 어긋났다 (2026-10-15)
+  if (cko) m.append(el('span', 'pko', esc(cko)));
+  else if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
   else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
   else if (dictGloss(word)) m.append(el('span', 'pko', esc(dictGloss(word))));   // 사전 유의어·반의어(짝 자료 밖) — 사전 첫 뜻
   // 성조 이름(ngang · 평평하게 …) 글은 뺐다 (대표님 지시 2026-09-27 밤) — 화살표만
@@ -8802,7 +8809,8 @@ function dictBuild() {
   const seen = new Map();
   /* 문장은 사전에 안 나온다 (대표님 지시 2026-09-27) — 단어·구만. 다섯 단어 이상이거나 문장 부호가 들어 있으면 문장으로 본다. */
   const isSent = v => v.split(/\s+/).length >= 5 || /[.!?…]$/.test(v) || /[,;:"“”]/.test(v);
-  const KEEP = ['ex', 'ex_src', 'img', 'kr', 'kr_read', 'tones', 'alt', 'hanja', 'south', 'work', 'gl', 'form', 'fex'];
+  const KEEP = ['ex', 'ex_src', 'img', 'kr', 'kr_read', 'tones', 'alt', 'hanja', 'south', 'work', 'gl', 'form', 'fex', 'sup'];   // sup: 위키 밖 보충 표제어 (2026-10-15)
+  const LESSON_SRC = ['기본기', '일상', '직무', '교재', '선배', '22기', 'GYBM'];   // 수업 자료 — 여기서 온 뜻이 '카드 뜻'(cko)이고 어디서나 첫 뜻 (2026-10-15)
   // 괄호 안의 ·,/; 는 구절 경계가 아니다 — '운동하다(헬스·체조: tập gym·tập thể dục)' 이 세 조각으로 찢기지 않게 (2026-09-29 밤)
   const SEP = { '·': '\u0001', ',': '\u0002', '/': '\u0003', ';': '\u0004' }, UNSEP = { '\u0001': '·', '\u0002': ',', '\u0003': '/', '\u0004': ';' };
   const phr = g => g.replace(/\([^)]*\)/g, m => m.replace(/[·,\/;]/g, c => SEP[c])).split(/\s*[·\/,;]\s*/).map(s => s.replace(/[\u0001-\u0004]/g, c => UNSEP[c]).trim()).filter(Boolean);
@@ -8820,11 +8828,25 @@ function dictBuild() {
        수업 자료끼리는 뜻을 이어 붙이지 않는다(전엔 '책상 · 책상, 탁자 · 테이블·탁자' 처럼 겹쳤다). 수업 자료의 첫 뜻이 사전 줄에 없으면 그 하나만 뒤에 보탠다 */
     if (onlyNew && seen.has(kk)) {
       const o = seen.get(kk), first = phr(o.ko)[0] || '', dko = String(ko);
-      o.ko = dko; if (first && !phr(dko).some(h => h === first || h.includes(first) || first.includes(h))) o.ko += ' · ' + first;
+      /* **카드 뜻이 첫 뜻** (대표님 2026-10-15 "사전 목록·단어 카드·짝 팝업의 뜻이 다 다르냐, 하나로 통일해야") — 수업 낱말이면 수업 자료의 뜻(cko)을 앞에 두고,
+         참고 사전(위키)의 다른 뜻을 겹치지 않는 것만 뒤에 잇는다. 전엔 위키 첫 뜻이 앞이라 đó 가 카드는 '그것, 그곳', 사전 줄은 '저쪽 그곳'으로 달랐다.
+         위키 품사 꼬리표([명]…)는 그 묶음의 첫 구절이 빠지면 다음 구절로 옮겨 붙인다 */
+      if (o.cko) {
+        const cph = phr(o.cko), keep = []; let carry = '';
+        phr(dko).forEach(q0 => {
+          const mt = q0.match(/^(\[[^\]]+\]\s*)(.*)$/), tag = mt ? mt[1] : '', core = mt ? mt[2] : q0;
+          if (tag) carry = tag;
+          if (cph.some(h => h === core || h.includes(core) || core.includes(h))) return;
+          keep.push(carry + core); carry = '';
+        });
+        o.ko = [...cph, ...keep].join(' · ');
+      } else { o.ko = dko; if (first && !phr(dko).some(h => h === first || h.includes(first) || first.includes(h))) o.ko += ' · ' + first; }
+      if (w && w.sup) o.sup = 1;
       return;
     }
     if (!seen.has(kk)) seen.set(kk, onlyNew ? { vi: k, ko: String(ko), ref: 1 } : { vi: k, ko: String(ko) });
     const o = seen.get(kk);
+    if (!o.cko && LESSON_SRC.includes(src)) o.cko = String(ko);   // 처음 넣은 수업 자료의 뜻 = 카드 뜻
     /* 어느 파트에서 나온 단어인지 (대표님 지시 2026-09-29: "사전-일상-cái nhà 이런 식으로") — 먼저 넣은 파트부터 둘까지 */
     // '예문·사전·참고 사전'은 수업 파트가 없을 때만 — '선배·사전'처럼 군더더기가 붙지 않게
     const part = !['예문', '사전', '참고 사전'].includes(src);
@@ -8845,7 +8867,7 @@ function dictBuild() {
   if (SIB) Object.entries(SIB.w).forEach(([k, v]) => { if (v.k) put(k, v.k, null, false, '사전'); });   // 헷갈리는 짝 자료(사전 단어 — 한국어 뜻 있는 것)
   /* 참고 사전 (2026-09-29, 대표님 "사전 작업 다 못했니?") — 뜻 25,835개를 다 옮겨 놓고도 사전 탭이 찾지 않았다.
      앱·짝 자료에 없는 말만 '참고' 표시를 달아 넣는다. 열쇠가 소문자라 대문자 꼴은 _dict_head.json 에서 되살린다. */
-  if (DFULL) Object.entries(DFULL).forEach(([k, e]) => { if (!(VFOLD && VFOLD.has(k))) put(e.h || k, dfullText(e), null, true, '참고 사전'); });   // 사전 한 벌(위키 그대로, 2026-10-01)
+  if (DFULL) Object.entries(DFULL).forEach(([k, e]) => { if (!(VFOLD && VFOLD.has(k))) put(e.h || k, dfullText(e), e.k ? { sup: 1 } : null, true, '참고 사전'); });   // 사전 한 벌(위키 그대로, 2026-10-01) · k = 위키 밖 보충 표제어
   else if (DKO) Object.entries(DKO).forEach(([k, v]) => put((DKH && DKH[k]) || k, Array.isArray(v) ? v.join(' · ') : v, null, true, '참고 사전'));
   /* 검수된 뜻 목록(data/_senses.json)의 뜻도 사전 뜻에 넣는다 — 한국어로 찾을 때 '운동하다' 로 tập 이 나오게 (대표님 지시 2026-09-29 밤: "모든 뜻을 가져와서 표기"). 여덟 구절까지 */
   if (SENSES) seen.forEach(o => {
@@ -9066,7 +9088,7 @@ function dictEntry(q0) {
     row.type = 'button';
     const kr = krShow(x) || krOf(x.vi);
     // 참고 사전(앱 수업에는 없는 말)은 작은 표시를 단다 — 배운 단어와 섞여 보이지 않게 (2026-09-29)
-    row.append(el('b', 'dvi', esc(x.vi) + (x.fr <= FREQ_TOP ? ' <small class="dref freqtag">' + tr('자주 쓰는 말') + '</small>' : '') + (x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (southOf(x.vi) ? ' <small class="dref southtag">' + tr('남부') + '</small>' : '')));
+    row.append(el('b', 'dvi', esc(x.vi) + (x.fr <= FREQ_TOP ? ' <small class="dref freqtag">' + tr('자주 쓰는 말') + '</small>' : '') + (x.sup ? ' <small class="dref dfsup">' + tr('보충') + '</small>' : x.ref ? ' <small class="dref">' + tr('참고 사전') + '</small>' : '') + (southOf(x.vi) ? ' <small class="dref southtag">' + tr('남부') + '</small>' : '')));
     row.append(el('span', 'dkr', kr ? '[' + esc(kr) + ']' : ''));   // 발음이 없어도 칸은 둔다 — 스피커가 늘 오른쪽 끝
     row.append(el('span', 'dko', esc(x.ko)));
     /* 별(나만의 단어장) — 들어가지 않고 줄에서 바로 담는다 (대표님 2026-10-05). 카드의 ☆ 와 같은 열쇠(vi). 줄이 단추라 안에 단추를 못 넣어 span */
