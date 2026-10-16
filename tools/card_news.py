@@ -574,6 +574,16 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-16 새벽(예약 작업): 편의점 기사에 은행 건물이, 바닷모래 산업단지 기사에 아파트가, 데이터센터
+              # 기사에 서류 더미가, 마이스 기사에 시장 좌판이 깔렸다. 넷을 맨 위에.
+              (("편의점", "convenience store", "minimart"),
+               "a bright convenience store interior with shelves of snacks and drinks"),
+              (("바닷모래", "강모래", "cát biển"),
+               "a wide flat construction site with piles of sand and excavators"),
+              (("데이터센터", "data center"),
+               "rows of server racks in a data center with soft blue lights"),
+              (("마이스", "컨벤션"),
+               "a large empty convention hall with exhibition booths"),
               # 2026-10-15 새벽(예약 작업): 숙련 인재 채용 설문 기사는 맞는 줄이 없었고, 마이크로소프트 감원 기사는
               # '해고'의 근로계약서가, IBK 법인 출범 기사는 '은행' 이 없어 동전 그림이 깔렸다. 셋을 맨 위에.
               (("숙련 인재", "인재 채용", "맨파워", "채용 어렵"),
