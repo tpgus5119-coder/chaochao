@@ -10216,7 +10216,8 @@ function drawCard() {
       const bar = el('div', 'sharetools');
       const fb = el('button', 'facebtn'); fb.type = 'button'; fb.onclick = ev => { ev.stopPropagation(); setFace(L.face === 'pron' ? 'card' : 'pron'); };
       const sb = el('button', 'facebtn', '⚡ ' + tr('쇼츠')); sb.type = 'button'; sb.onclick = ev => { ev.stopPropagation(); shareShorts(); };
-      bar.append(fb, sb); c.append(bar);
+      const tb = el('button', 'facebtn', '📝 ' + tr('테스트')); tb.type = 'button'; tb.onclick = ev => { ev.stopPropagation(); shareTest(); };   // 카드를 안 넘기고 바로 시험 (2026-10-16)
+      bar.append(fb, sb, tb); c.append(bar);
       SHAREBAR = () => { fb.textContent = tr(L.face === 'pron' ? '단어' : '발음'); };   // 단어 면엔 [발음], 발음 면엔 [단어]
     } else {
       row.append(starBtn(x.vi, x.ko, x.vi));    // 나만의 단어장에 담기
@@ -10428,12 +10429,14 @@ function drawCard() {
     : L.day.rule ? '연습 문제 ›'
     : ['P1', 'P2', 'P4', 'P5', 'P6'].includes(L.day.day) ? '귀로 구별하기 ›' : '완료 ›';
 }
+/* 공유 카드 → 그 낱말(또는 그 시험 한 벌)로 시험 — 카드를 다 넘긴 뒤와 카드 위 [테스트] 단추가 같이 쓴다 (2026-10-16 대표님 "바로 시험 보고 싶은 사람을 위해 테스트 버튼") */
+function shareTest() { const d0 = L.day; if (d0.test) { gramEnsure(() => startDaily(d0.test)); return; } startWordbookQuiz(d0.words.map(w => w.vi), d0.theme); }
 $('#next').onclick = () => {
   // 연타 방지는 시간이 아니라 '아직 이 화면에 있는가'로 판단한다.
   // 시간으로 막으면 앞 화면에서 막 넘어온 사람까지 막힌다.
   if ($('#learn').hidden) return;
   if (L.i < L.items.length - 1) { L.i++; drawCard(); return; }
-  if (L.day.share) { const d0 = L.day; if (d0.test) { gramEnsure(() => startDaily(d0.test)); return; } startWordbookQuiz(d0.words.map(w => w.vi), d0.theme); return; }   // 공유 카드 → 그 낱말로 문제 · 단어 시험 한 벌이면 실제 시험 (2026-10-08)
+  if (L.day.share) { shareTest(); return; }   // 공유 카드 → 그 낱말로 문제 · 단어 시험 한 벌이면 실제 시험 (2026-10-08)
   if (L.cult) { dailyFlowEntry(); return; }
   if (L.day.gram) { startGramQuiz(L.day.day, L.day.theme, L.items.map(it => it.d)); return; }
   if (L.day.know) { S.done[L.day.day] = now(); save(); dailyFlowEntry(); return; }
