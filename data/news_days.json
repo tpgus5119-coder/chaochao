@@ -271,7 +271,7 @@
      }
     ]
    },
-   "n": 112
+   "n": 116
   },
   {
    "ts": "2026-10-16",
@@ -586,7 +586,7 @@
      }
     ]
    },
-   "n": 111
+   "n": 115
   },
   {
    "ts": "2026-10-16",
@@ -889,7 +889,7 @@
      }
     ]
    },
-   "n": 110
+   "n": 114
   },
   {
    "ts": "2026-10-16",
@@ -1174,7 +1174,7 @@
      }
     ]
    },
-   "n": 109
+   "n": 113
   },
   {
    "ts": "2026-10-16",
@@ -1374,7 +1374,7 @@
     ],
     "extra": []
    },
-   "n": 108
+   "n": 112
   },
   {
    "ts": "2026-10-16",
@@ -1628,7 +1628,7 @@
     ],
     "extra": []
    },
-   "n": 107
+   "n": 111
   },
   {
    "ts": "2026-10-16",
@@ -1907,7 +1907,255 @@
      }
     ]
    },
-   "n": 106
+   "n": 110
+  },
+  {
+   "ts": "2026-10-16",
+   "day": "N333.html",
+   "track": "news",
+   "theme": "새 다리 건설",
+   "title": "Ho Chi Minh City unveils $193M wave-shaped bridge across Saigon River",
+   "u": "https://e.vnexpress.net/photo/traffic/ho-chi-minh-city-unveils-193m-wave-shaped-bridge-across-saigon-river-5131333.html",
+   "cat": "소식",
+   "intro": "호찌민시가 사이공강을 지나는 투티엠 4 교량을 건설합니다. 올해 4분기에 공사를 시작해 2028년에 완공할 예정입니다.",
+   "words": [
+    {
+     "vi": "cây cầu",
+     "ko": "다리",
+     "kr_read": "꺼이 꺼우",
+     "emoji": "🌉",
+     "en": "a long bridge over a river",
+     "tones": [
+      {
+       "syl": "cây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "cầu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-cay-cau.webp"
+    },
+    {
+     "vi": "con sông",
+     "ko": "강",
+     "kr_read": "꼰 쏭",
+     "emoji": "🌊",
+     "en": "a wide flowing river",
+     "tones": [
+      {
+       "syl": "con",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "sông",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-con-song.webp"
+    },
+    {
+     "vi": "xây dựng",
+     "ko": "건설하다",
+     "kr_read": "써이 증",
+     "emoji": "🏗️",
+     "en": "a construction site with a crane",
+     "tones": [
+      {
+       "syl": "xây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "dựng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-xay-dung.webp"
+    },
+    {
+     "vi": "giao thông",
+     "ko": "교통",
+     "kr_read": "자오 통",
+     "emoji": "🚗",
+     "en": "cars driving on a road",
+     "tones": [
+      {
+       "syl": "giao",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "thông",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-giao-thong.webp"
+    },
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🛵",
+     "en": "a motor scooter",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    },
+    {
+     "vi": "ô tô",
+     "ko": "자동차",
+     "kr_read": "오 또",
+     "emoji": "🚘",
+     "en": "a modern automobile",
+     "tones": [
+      {
+       "syl": "ô",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tô",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-o-to.webp"
+    }
+   ],
+   "dialog": {
+    "title": "새 다리 건설",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Cầu này có cho xe máy đi không?",
+      "ko": "이 다리에 오토바이 지나갈 수 있나요?",
+      "kr_read": "꺼우 나이 꼬 쪼 쌔 마이 디 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Cầu",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cho",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "máy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, xe máy đi được.",
+      "ko": "네, 오토바이 통행 가능해요.",
+      "kr_read": "꼬 쌔 마이 디 드억",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "máy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "được.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 109
   },
   {
    "ts": "2026-10-16",
@@ -2192,7 +2440,7 @@
      }
     ]
    },
-   "n": 105
+   "n": 108
   },
   {
    "ts": "2026-10-16",
@@ -2434,7 +2682,7 @@
     ],
     "extra": []
    },
-   "n": 104
+   "n": 107
   },
   {
    "ts": "2026-10-16",
@@ -2731,7 +2979,7 @@
      }
     ]
    },
-   "n": 103
+   "n": 106
   },
   {
    "ts": "2026-10-16",
@@ -3064,7 +3312,7 @@
      }
     ]
    },
-   "n": 102
+   "n": 105
   },
   {
    "ts": "2026-10-16",
@@ -3373,7 +3621,7 @@
      }
     ]
    },
-   "n": 101
+   "n": 104
   },
   {
    "ts": "2026-10-16",
@@ -3590,7 +3838,243 @@
     ],
     "extra": []
    },
-   "n": 100
+   "n": 103
+  },
+  {
+   "ts": "2026-10-16",
+   "day": "N174.html",
+   "track": "news",
+   "theme": "다리 공사 현장",
+   "title": "Saigon River pedestrian bridge's 3,400-ton steel arch moves onto barge in 4-hour operation",
+   "u": "https://e.vnexpress.net/photo/traffic/saigon-river-pedestrian-bridges-3400-ton-steel-arch-moves-onto-barge-in-4-hour-operation-5133174.html",
+   "cat": "소식",
+   "intro": "사이공강 보행교의 대형 강철 아치가 4시간 만에 바지선으로 옮겨졌습니다.",
+   "words": [
+    {
+     "vi": "cây cầu",
+     "ko": "다리",
+     "kr_read": "꺼이 꺼우",
+     "emoji": "🌉",
+     "en": "a large bridge over a river",
+     "tones": [
+      {
+       "syl": "cây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "cầu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-cay-cau.webp"
+    },
+    {
+     "vi": "con sông",
+     "ko": "강",
+     "kr_read": "꼰 쏭",
+     "emoji": "🌊",
+     "en": "a wide flowing river",
+     "tones": [
+      {
+       "syl": "con",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "sông",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-con-song.webp"
+    },
+    {
+     "vi": "chiếc thuyền",
+     "ko": "배",
+     "kr_read": "찌엑 투옌",
+     "emoji": "⛵",
+     "en": "a small boat on the water",
+     "tones": [
+      {
+       "syl": "chiếc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "thuyền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-chiec-thuyen.webp"
+    },
+    {
+     "vi": "thép",
+     "ko": "강철",
+     "kr_read": "탭",
+     "emoji": "🔩",
+     "en": "steel metal beams",
+     "tones": [
+      {
+       "syl": "thép",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thep.webp"
+    },
+    {
+     "vi": "công nhân",
+     "ko": "노동자",
+     "kr_read": "꽁 년",
+     "emoji": "👷",
+     "en": "a factory worker in safety helmet",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-nhan.webp"
+    },
+    {
+     "vi": "kỹ sư",
+     "ko": "엔지니어",
+     "kr_read": "끼 쓰",
+     "emoji": "🧑‍💼",
+     "en": "an engineer holding a blueprint",
+     "tones": [
+      {
+       "syl": "kỹ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "sư",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ky-su.webp"
+    }
+   ],
+   "dialog": {
+    "title": "다리 공사 현장",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Cầu này làm ban đêm à?",
+      "ko": "이 다리는 밤에 작업해요?",
+      "kr_read": "꺼우 나이 람 반 뎀 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Cầu",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ban",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đêm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, làm đêm cho an toàn.",
+      "ko": "네, 안전을 위해 밤에 일해요.",
+      "kr_read": "벙 람 뎀 쪼 안 또안",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đêm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cho",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "an",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "toàn.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 102
   },
   {
    "ts": "2026-10-16",
@@ -3857,7 +4341,7 @@
      }
     ]
    },
-   "n": 99
+   "n": 101
   },
   {
    "ts": "2026-10-16",
@@ -4081,7 +4565,7 @@
     ],
     "extra": []
    },
-   "n": 98
+   "n": 100
   },
   {
    "ts": "2026-10-16",
@@ -4311,7 +4795,229 @@
     ],
     "extra": []
    },
-   "n": 97
+   "n": 99
+  },
+  {
+   "ts": "2026-10-16",
+   "day": "Nno=44253",
+   "track": "news",
+   "theme": "계약서 작성",
+   "title": "베트남 업체와 계약할 때 분쟁이 생기면 한국에서 재판하도록 정할 수 있을까?  [양원준 변호사의 리걸 비나]",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44253",
+   "cat": "경제",
+   "intro": "베트남 업체와 계약 시 분쟁을 대비해 관할 법원과 준거법을 명시해야 합니다.",
+   "words": [
+    {
+     "vi": "hợp đồng",
+     "ko": "계약서",
+     "kr_read": "헙 동",
+     "emoji": "📄",
+     "en": "a paper business contract document",
+     "tones": [
+      {
+       "syl": "hợp",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "đồng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-hop-dong.webp"
+    },
+    {
+     "vi": "luật",
+     "ko": "법",
+     "kr_read": "루엇",
+     "emoji": "⚖️",
+     "en": "a golden scale of justice",
+     "tones": [
+      {
+       "syl": "luật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-luat.webp"
+    },
+    {
+     "vi": "xem",
+     "ko": "보다",
+     "kr_read": "쌤",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "xem",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "vấn đề",
+     "ko": "문제",
+     "kr_read": "번 데",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "vấn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "đề",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "ký",
+     "ko": "서명하다",
+     "kr_read": "끼",
+     "emoji": "✍️",
+     "en": "a hand signing a paper with a pen",
+     "tones": [
+      {
+       "syl": "ký",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ky.webp"
+    },
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꽁 띠",
+     "emoji": "🏢",
+     "en": "a modern office company building",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ty",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-ty.webp"
+    }
+   ],
+   "dialog": {
+    "title": "계약서 작성",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Anh xem hợp đồng này chưa?",
+      "ko": "이 계약서 확인해 보셨어요?",
+      "kr_read": "아인 쌤 헙 동 나이 쯔어",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xem",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hợp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đồng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "chưa?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Tôi đang xem rất cẩn thận.",
+      "ko": "제가 아주 신중하게 보는 중이에요.",
+      "kr_read": "또이 당 쌤 젓 껀 턴",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đang",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xem",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cẩn",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "thận.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 98
   },
   {
    "ts": "2026-10-15",
@@ -4552,7 +5258,7 @@
     ],
     "extra": []
    },
-   "n": 96
+   "n": 97
   },
   {
    "ts": "2026-10-15",
@@ -4756,7 +5462,7 @@
     ],
     "extra": []
    },
-   "n": 95
+   "n": 96
   },
   {
    "ts": "2026-10-15",
@@ -4962,7 +5668,7 @@
     ],
     "extra": []
    },
-   "n": 94
+   "n": 95
   },
   {
    "ts": "2026-10-15",
@@ -5247,7 +5953,7 @@
      }
     ]
    },
-   "n": 93
+   "n": 94
   },
   {
    "ts": "2026-10-15",
@@ -5556,7 +6262,7 @@
      }
     ]
    },
-   "n": 92
+   "n": 93
   },
   {
    "ts": "2026-10-15",
@@ -5853,7 +6559,7 @@
      }
     ]
    },
-   "n": 91
+   "n": 92
   },
   {
    "ts": "2026-10-15",
@@ -6076,7 +6782,7 @@
     ],
     "extra": []
    },
-   "n": 90
+   "n": 91
   },
   {
    "ts": "2026-10-15",
@@ -6348,6 +7054,206 @@
       "gloss": []
      }
     ]
+   },
+   "n": 90
+  },
+  {
+   "ts": "2026-10-15",
+   "day": "N853.html",
+   "track": "news",
+   "theme": "여행 정보",
+   "title": "Sa Pa offers autumn, winter escapes as Vietnam makes Lonely Planet travel list",
+   "u": "https://e.vnexpress.net/news/travel/sa-pa-offers-autumn-winter-escapes-as-vietnam-makes-lonely-planet-travel-list-5132853.html",
+   "cat": "문화·생활",
+   "intro": "사파는 베트남의 아름다운 가을/겨울 여행지입니다. 론리 플래닛에 소개된 산 풍경, 문화, 음식을 즐기세요.",
+   "words": [
+    {
+     "vi": "núi",
+     "ko": "산",
+     "kr_read": "누이",
+     "emoji": "⛰️",
+     "en": "a mountain peak",
+     "tones": [
+      {
+       "syl": "núi",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nui.webp"
+    },
+    {
+     "vi": "lạnh",
+     "ko": "춥다/차가운",
+     "kr_read": "라인",
+     "emoji": "🥶",
+     "en": "a person shivering from cold",
+     "tones": [
+      {
+       "syl": "lạnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-lanh.webp"
+    },
+    {
+     "vi": "ăn",
+     "ko": "먹다",
+     "kr_read": "안",
+     "emoji": "🍽️",
+     "en": "a plate with fork and knife",
+     "tones": [
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-an.webp"
+    },
+    {
+     "vi": "uống",
+     "ko": "마시다",
+     "kr_read": "우옹",
+     "emoji": "🥤",
+     "en": "a hand holding a drink",
+     "tones": [
+      {
+       "syl": "uống",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-uong.webp"
+    },
+    {
+     "vi": "món",
+     "ko": "음식/요리",
+     "kr_read": "몬",
+     "emoji": "🍲",
+     "en": "a bowl of soup/food",
+     "tones": [
+      {
+       "syl": "món",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-mon.webp"
+    },
+    {
+     "vi": "làng",
+     "ko": "마을",
+     "kr_read": "랑",
+     "emoji": "🏘️",
+     "en": "a small village with houses",
+     "tones": [
+      {
+       "syl": "làng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-lang.webp"
+    }
+   ],
+   "dialog": {
+    "title": "여행 정보",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Món này ngon không?",
+      "ko": "이 요리 맛있어요?",
+      "kr_read": "몬 나이 응온 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Món",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ngon",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, rất ngon. Anh ăn thử đi.",
+      "ko": "네, 아주 맛있어요. 한번 드셔보세요.",
+      "kr_read": "꼬 젓 응온 아인 안 트 디",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thử",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đi.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
    },
    "n": 89
   },
@@ -28200,5 +29106,5 @@
    "n": 1
   }
  ],
- "updated": "2026-10-17 00:09"
+ "updated": "2026-10-17 08:53"
 }
