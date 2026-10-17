@@ -26,5 +26,23 @@ def main():
         t = t[:m.start(1)] + body + t[m.end(1):]
         sw.write_text(t, encoding='utf-8')
     print(f'같은 이름으로 바뀐 그림 → 캐시에서 뺄 목록에 더함 {len(add)}' + (': ' + ' '.join(add) if add else ''))
+    # 소리도 (2026-10-17 소리 점검으로 같은 이름 파일을 다시 만듦) — 'f/n/<이름>.mp3' 꼴로 STALE_SND 에
+    tree = {}
+    for ln in subprocess.run(['git', 'ls-tree', '-r', 'origin/main', 'audio'], cwd=R, capture_output=True, text=True).stdout.splitlines():
+        meta, path = ln.split('\t', 1); tree[path] = meta.split()[2]
+    snd = []
+    for path, h in tree.items():
+        if not path.endswith('.mp3'): continue
+        f = R / path
+        if not f.exists(): continue
+        b = f.read_bytes()
+        if hashlib.sha1(b'blob %d\0' % len(b) + b).hexdigest() != h: snd.append(path[6:])
+    t = sw.read_text(encoding='utf-8'); m = re.search(r"const STALE_SND = \[(.*?)\];", t, re.S)
+    if m:
+        have = set(re.findall(r"'([^']+)'", m.group(1))); add2 = [n for n in snd if n not in have]
+        if add2:
+            body = (m.group(1).rstrip() + ',' if m.group(1).strip() else '') + '\n  ' + ', '.join(f"'{n}'" for n in add2)
+            t = t[:m.start(1)] + body + t[m.end(1):]; sw.write_text(t, encoding='utf-8')
+        print(f'같은 이름으로 바뀐 소리 → 캐시에서 뺄 목록에 더함 {len(add2)}')
 if __name__ == '__main__':
     main()
