@@ -10424,6 +10424,7 @@ function drawCard() {
   const qnr = $('#qnRow');                       // 단어 확인 문제로 가는 마지막 장에만 문제 수 고르기 (2026-09-28 밤)
   if (qnr) { qnr.textContent = ''; const toQuiz = last && !L.dict && !L.day.cardsOnly && !L.day.share && !L.day.gram && !L.cult && !L.day.know && !L.news && !L.dlg && (L.day.words || []).length;
              qnr.hidden = !toQuiz; if (toQuiz) qnr.append(qnPicker()); }
+  if (window.cardArrows) setTimeout(window.cardArrows, 0);   // #next 가 보이고 나서 오른쪽 단추를 [테스트]로
   $('#next').textContent = L.day.gram ? '확인 문제 ›'
     : L.cult || L.day.know ? '다 봤어요' : L.day.share ? (L.day.test ? '시험 보기 ›' : '문제 풀기 ›') : (L.day.words || []).length ? '확인 문제 ›'
     : L.day.rule ? '연습 문제 ›'
@@ -10505,10 +10506,16 @@ $('#next').onclick = () => {
     prevB.hidden = nextB.hidden = !on;
     if (!on) return;
     prevB.disabled = L.i <= 0;
-    nextB.disabled = L.i >= L.items.length - 1;
+    /* 마지막 장 — 오른쪽 넘김 단추 자리가 그대로 [테스트] 단추가 된다 (대표님 2026-10-17 "마지막 학습 후 테스트 버튼도 기존 다음 넘기는 버튼 그 위치 그대로, 다만 이 다음은 테스트구나 알 수 있게 다르게").
+       아래 #next 가 보이는(그다음이 확인 문제·시험인) 장에서만. 누르면 #next 와 같은 길 */
+    const last = L.i >= L.items.length - 1, toTest = last && !$('#next').hidden;
+    nextB.classList.toggle('totest', toTest);
+    nextB.textContent = toTest ? tr('테스트') : '›';
+    nextB.setAttribute('aria-label', toTest ? tr('테스트') : tr('다음'));
+    nextB.disabled = last && !toTest;
   };
   if (prevB) prevB.onclick = () => goto(-1);
-  if (nextB) nextB.onclick = () => goto(1);
+  if (nextB) nextB.onclick = () => { if (nextB.classList.contains('totest')) { $('#next').click(); return; } goto(1); };
   /* 세로로 밀면(스크롤) 넘어가지 않는다 (대표님 지시 2026-09-30: "위아래로 스와이프해서 이전·이후 이동하는 거 안 되게").
      전에는 가로 움직임만 40px 넘으면 넘겨서, 긴 카드를 비스듬히 스크롤하다 카드가 넘어갔다.
      이제 가로가 세로의 1.5배 넘게 움직였을 때만 — 단어 면·발음 면 모두. */
