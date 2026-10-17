@@ -66,6 +66,7 @@ MY += ["tools/daily22/adda19.py"]   # 2026-10-15 a19
 MY += ["tools/daily22/addb19.py"]   # 2026-10-15 b19
 MY += ["tools/daily22/fix_a17_19.py"]   # 2026-10-16 A반 17~19 바로잡기
 MY += ["tools/mock3/textbook3.py", "tools/daily22/add20.py"]   # 2026-10-17
+MY += ["tools/sound_fix.py"]   # 2026-10-17 소리 점검
 MY = [f for f in MY if (ROOT / f).exists()]   # 아직 없는 파일(_senses.json 은 검수 뒤 생김)은 건너뛴다
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
 # origin 쪽에서 내 파일이 바뀌지 않았는지 (index.html·sw.js 는 판번호만)
