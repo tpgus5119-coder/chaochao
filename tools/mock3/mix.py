@@ -49,6 +49,9 @@ def b4_pairs(items):
 OLD = {n: {'A1': SEC(q, 'A 듣기 · 1'), 'A2': SEC(q, 'A 듣기 · 2'), 'A3': SEC(q, 'A 듣기 · 3'), 'A4': SEC(q, 'A 듣기 · 4'), 'B2': SEC(q, 'B 읽기 · 2'),
             'B3': [SEC(q, 'B 읽기 · 3')[i:i + 2] for i in range(0, 10, 2)], 'B4': b4_pairs(SEC(q, 'B 읽기 · 4')), 'C1': SEC(q, 'C 쓰기 · 1'), 'C2': SEC(q, 'C 쓰기 · 2'), 'C3': SEC(q, 'C 쓰기 · 3'),
             'D1': SEC(q, 'D 말하기 · 1'), 'D2': SEC(q, 'D 말하기 · 2')} for n, q in CAP.items()}
+import textbook3                                                   # 교재 8~10과 문장 그대로 쓰는 갈래(듣기 4·읽기 4·쓰기 1·2)로 갈아 끼움 (2026-10-17 대표님 "교재의 문장을 가급적 사용")
+for _n, _g in textbook3.sets().items():
+    for _k, _v in _g.items(): OLD[_n][_k] = _v
 def rot(key, k, m, lo=0, hi=None):
     """새 k벌의 key 갈래: j번째 자리는 옛 (k+m*j)%5 벌의 j번째 (lo~hi 자리만)"""
     L = OLD[1][key]; hi = len(L) if hi is None else hi
