@@ -17,13 +17,13 @@ q += PKS(NO, [("công viên", "Buổi sáng cô ấy tập thể dục ở công
 q += A3T[4]   # 듣기 3 — 실제 시험처럼 오답 보기도 들리게 (tools/mock3/a3_trap.py, 2026-10-13)
 q += [A4s("Chúng ta cùng đi [công viên] nhé.", "우리 같이 공원에 가요."),
       A4s("Tôi đã [đặt tour] đi Nha Trang rồi.", "저는 나트랑 여행 상품을 예약했어요."),
-      A4s("Chị ấy viết được [tiếng Nhật] rồi.", "그녀는 이제 일본어를 쓸 수 있어요."),
+      A4s("Chị ấy [viết được] tiếng Nhật rồi.", "그녀는 이제 일본어를 쓸 수 있어요."),
       A4s("Tối nay tôi có hẹn với [bạn thân].", "오늘 저녁에 친한 친구와 약속이 있어요."),
       A4s("Bà ngoại tôi năm nay [70] tuổi.", "외할머니는 올해 일흔이세요."),
       A4d("Anh đi du lịch với ai?", "누구와 여행 가요?", "Với [gia đình] tôi.", "우리 가족이랑요.", 'mf'),
       A4d("Bao giờ anh đi Hà Nội?", "언제 하노이에 가요?", "Thứ [tư] tuần sau.", "다음 주 수요일이요.", 'fm'),
       A4d("Chị học ở đây bao lâu rồi?", "여기서 배운 지 얼마나 됐어요?", "Được [ba] năm rồi.", "3년 됐어요.", 'mf'),
-      A4d("Anh thích đi du lịch không?", "여행 좋아해요?", "Có, tôi thích đi [Huế].", "네, 후에에 가는 걸 좋아해요.", 'fm'),
+      A4d("Anh thích đi du lịch không?", "여행 좋아해요?", "Có, tôi [thích] đi Huế.", "네, 후에에 가는 걸 좋아해요.", 'fm'),
       A4d("Em đang làm gì vậy?", "뭐 하고 있어?", "Em đang viết [đơn] xin việc.", "입사 지원서를 쓰고 있어요.", 'mf')]
 q += B1S(NO, ["đã từng", "xong", "cùng", "đừng", "bao giờ"], [     # 재료용 — mix.py 가 벌마다 헷갈리는 보기로 다시 쓴다
       ("Tôi ____ sống ở Seoul hai năm.", "đã từng", "저는 서울에서 2년 산 적이 있어요."),

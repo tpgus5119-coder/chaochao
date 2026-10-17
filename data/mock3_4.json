@@ -399,26 +399,26 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Em viết bằng tiếng gì? B: Bằng tiếng ____ ạ.",
-   "audio": "Em viết bằng tiếng gì?\nBằng tiếng Nga ạ.",
+   "prompt": "A: Em đang viết gì vậy? B: Em viết ____ ạ.",
+   "audio": "Em đang viết gì vậy?\nEm viết đơn xin học ạ.",
    "voices": "mf",
    "acc": [
-    "Nga"
+    "đơn xin học"
    ],
    "made": true,
-   "exp": "들은 대화\n남: Em viết bằng tiếng gì? — 무슨 말로 써?\n여: Bằng tiếng Nga ạ. — 러시아어로요.\n답: Nga"
+   "exp": "들은 대화\n남: Em đang viết gì vậy? — 뭐 쓰고 있어?\n여: Em viết đơn xin học ạ. — 수강 신청서를 써요.\n답: đơn xin học"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Anh định đi đâu? B: Tôi định đi ____.",
-   "audio": "Anh định đi đâu?\nTôi định đi Nha Trang.",
+   "prompt": "A: Anh định đi đâu? B: Tôi định đi ____ ở Nha Trang.",
+   "audio": "Anh định đi đâu?\nTôi định đi du lịch ở Nha Trang.",
    "voices": "fm",
    "acc": [
-    "Nha Trang"
+    "du lịch"
    ],
    "made": true,
-   "exp": "들은 대화\n여: Anh định đi đâu? — 어디에 갈 생각이에요?\n남: Tôi định đi Nha Trang. — 나트랑에 갈 생각이에요.\n답: Nha Trang"
+   "exp": "들은 대화\n여: Anh định đi đâu? — 어디에 갈 생각이에요?\n남: Tôi định đi du lịch ở Nha Trang. — 나트랑에 갈 생각이에요.\n답: du lịch"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",

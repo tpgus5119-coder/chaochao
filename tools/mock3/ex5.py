@@ -19,7 +19,7 @@ q += [A4s("Tôi mới học tiếng Hàn [ba] tháng.", "저는 한국어를 배
       A4s("Chị đừng [lo lắng] quá, em làm được.", "너무 걱정하지 마세요, 제가 할 수 있어요."),
       A4s("Món ăn Ấn Độ này khá [ngon].", "이 인도 음식은 꽤 맛있어요."),
       A4s("Anh ấy là [con út] trong gia đình.", "그는 집에서 막내예요."),
-      A4s("Thứ năm này tôi đi công tác ở [Đà Nẵng].", "이번 목요일에 저는 다낭으로 출장 가요."),
+      A4s("Thứ năm này tôi đi [công tác] ở Đà Nẵng.", "이번 목요일에 저는 다낭으로 출장 가요."),
       A4d("Chị đi chợ chưa?", "장 보러 갔어요?", "Chưa, [chiều nay] tôi đi.", "아직이요, 오늘 오후에 가요.", 'mf'),
       A4d("Anh làm ở đây bao lâu rồi?", "여기서 일한 지 얼마나 됐어요?", "Hơn [hai] năm rồi.", "2년 넘었어요.", 'fm'),
       A4d("Chị có mấy con?", "자녀가 몇이에요?", "Tôi có một [con trai].", "아들 하나 있어요.", 'mf'),

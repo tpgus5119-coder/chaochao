@@ -17,14 +17,14 @@ q += PKS(NO, [("đơn", "Anh ấy đang viết đơn.", "그는 신청서를 쓰
               ("xe buýt", "Anh ấy đang chờ xe buýt.", "그는 버스를 기다리고 있어요.", "mock3-1-pd.webp"),
               ("ăn sáng", "Anh ấy đang ăn sáng.", "그는 아침을 먹고 있어요.", "mock3-1-pe.webp")])   # 듣기 2 — 실제 2차 시험지처럼 한 사람의 다섯 장면(새로 그림, 2026-10-13)
 q += A3T[1]   # 듣기 3 — 실제 시험처럼 오답 보기도 들리게 (tools/mock3/a3_trap.py, 2026-10-13)
-q += [A4s("Chị ấy nói được tiếng [Tây Ban Nha].", "그녀는 스페인어를 할 수 있어요."),
+q += [A4s("Chị ấy [nói được] tiếng Tây Ban Nha.", "그녀는 스페인어를 할 수 있어요."),
       A4s("Tôi mới học tiếng Việt [hai] tháng.", "저는 베트남어를 배운 지 두 달밖에 안 됐어요."),
       A4s("Các em đọc [bài hội thoại] đi!", "여러분, 회화문을 읽어 보세요!"),
       A4s("Em đừng [lo lắng], kiểm tra không khó.", "걱정하지 마, 시험은 어렵지 않아."),
       A4s("Anh ấy đã từng làm [phiên dịch] ở Seoul.", "그는 서울에서 통역을 한 적이 있어요."),
       A4d("Anh học tiếng Việt bao lâu rồi?", "베트남어를 얼마나 배웠어요?", "Được [năm] tháng rồi.", "다섯 달 됐어요.", 'mf'),
       A4d("Chị nói được tiếng Hàn không?", "한국어 할 수 있어요?", "Được, nhưng chưa [tự tin].", "할 수 있어요, 그런데 아직 자신은 없어요.", 'fm'),
-      A4d("Em viết bằng tiếng gì?", "무슨 말로 써?", "Bằng tiếng [Nga] ạ.", "러시아어로요.", 'mf'),
+      A4d("Em đang viết gì vậy?", "뭐 쓰고 있어?", "Em viết [đơn xin học] ạ.", "수강 신청서를 써요.", 'mf'),
       A4d("Chị xem giùm em được không?", "저 대신 좀 봐 줄 수 있어요?", "Được, chờ [một chút] nhé.", "그래, 잠깐만 기다려.", 'fm'),
       A4d("Tiếng Việt có khó không?", "베트남어는 어려워요?", "Hơi khó nhưng rất [thú vị].", "좀 어렵지만 아주 재미있어요.", 'mf')]
 q += B1S(NO, ["được", "bao lâu", "mới", "đừng", "đi"], [     # 재료용 — mix.py 가 벌마다 헷갈리는 보기로 다시 쓴다

@@ -23,7 +23,7 @@ q += [A4s("Thứ [hai] tuần sau tôi đi công tác.", "다음 주 월요일�
       A4d("Em ăn trưa chưa?", "점심 먹었니?", "Dạ, em ăn [xong] rồi.", "네, 다 먹었어요.", 'mf'),
       A4d("Hôm qua là thứ mấy?", "어제는 무슨 요일이었어요?", "Hôm qua là [chủ nhật].", "어제는 일요일이었어요.", 'fm'),
       A4d("Bao giờ chị về nước?", "언제 귀국해요?", "Tháng [sáu] năm nay.", "올해 6월이요.", 'mf'),
-      A4d("Anh định đi đâu?", "어디에 갈 생각이에요?", "Tôi định đi [Nha Trang].", "나트랑에 갈 생각이에요.", 'fm'),
+      A4d("Anh định đi đâu?", "어디에 갈 생각이에요?", "Tôi định đi [du lịch] ở Nha Trang.", "나트랑에 갈 생각이에요.", 'fm'),
       A4d("Chị chuẩn bị xong chưa?", "준비 다 됐어요?", "Chưa, đang [dọn dẹp] nhà.", "아직이요, 집 청소 중이에요.", 'mf')]
 q += B1S(NO, ["bao giờ", "xong", "đấy", "chưa", "khó tính"], [     # 재료용 — mix.py 가 벌마다 헷갈리는 보기로 다시 쓴다
       ("____ anh đi công tác?", "bao giờ", "언제 출장 가요?"),

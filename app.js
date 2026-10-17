@@ -11786,7 +11786,7 @@ function startExam1(key, r) {
     EXAM_SPD = EXAM_REAL_SPD;                              // 모의고사 듣기는 실제 시험 녹음 속도(0.7배)부터 (2026-10-13 밤; 전엔 1배, 2026-10-06)
     const L = J.q.map(x => {
       const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
-      if (x.k === 'puzzle') return { w: { vi: x.vi, ko: '', nograde: true, sent: true, tiles: x.tiles, alt: x.alts || [], fx: x }, mode: 'puzzle', sec: x.sec, opts: [] };   // alt: 같은 조각의 다른 바른 차례 (2026-10-11)
+      if (x.k === 'puzzle') return { w: { vi: x.vi, ko: String(x.exp || '').split('\n')[1] || '', nograde: true, sent: true, tiles: x.tiles, alt: x.alts || [], fx: x }, mode: 'puzzle', sec: x.sec, opts: [] };   // alt: 같은 조각의 다른 바른 차례 (2026-10-11)
       if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '', fx: x }, mode: 'fx', sec: x.sec, opts: [] };   // D1 발음 — 읽고 녹음해 스스로 매김 (2026-10-07)
       if (x.k === 'speak') return { w: { vi: x.ask, ko: '', nograde: true, fx: x }, mode: 'fx', sec: x.sec, opts: [] };                      // D2 그림·D3 상황 말하기
       return { w, mode: 'fx', sec: x.sec, opts: [] };
@@ -11926,6 +11926,7 @@ function drawFixed(body, q) {
   if (x.img && x.k !== 'pick') { const im = new Image(); im.src = 'img/' + x.img; im.alt = ''; im.className = 'fximg'; body.append(im); }
   if (x.text) body.append(el('div', 'fxtext', esc(x.text)));
   if (x.prompt) body.append(el('div', 'qmain sent', esc(x.prompt)));
+  if (x.k === 'type' && x.fix && x.ko) body.append(el('div', 'puzzhint', esc(String(x.ko).replace(/\s*\([^)]*\)\s*$/, ''))));   // 쓰기 2 — 바른 문장의 뜻(고칠 곳을 알려 주는 괄호 설명은 뺌) (2026-10-17)
   const box = el('div', 'opts');
   if (x.k === 'tf') {
     [['맞다', true], ['틀리다', false]].forEach(([t, v]) => { const b = el('button', null, tr(t)); const good = v === x.ans; b.dataset.vi = good ? w.vi : '-'; b.onclick = () => answer(b, good, w); box.append(b); });

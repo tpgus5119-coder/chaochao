@@ -1,7 +1,7 @@
 /* 오프라인 캐시.
    앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
    음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
-const V = 'vn-5524499e';
+const V = 'vn-6bebba9b';
 const SHELL = ['./', './index.html', './app.js', './pitch.js', './mouth.js', './pet.js', './judge.js', './style.css',
                './manifest.json', './icon.png',
                // 새 짜임(일곱 권)의 알맹이 — 이것이 없으면 비행기 모드에서 과정이 안 열린다
@@ -20,7 +20,8 @@ const STALE = ['b-dem', 'b-chi', 'b-hanh-dong', 'tap-the-duc', 'w-fd9a0f67e5',
                'b-nghe-nhac', 'b-ao-dai', 'b-bao-tang', 'w-a9c8671222',
                'b-giam-gia', 'b-luat-su', 'b-o-nha', 'b-sieu-thi', 'b-thu', 'w-0b1adf767d', 'w-1b8ee8a47f', 'w-1be9643e4f', 'w-2fa6fbb660', 'w-43975b9eea', 'w-5044d81a3d', 'w-81eaf9dd0c', 'w-936f3fbca6', 'w-be4c38c205', 'w-c388775af9', 'w-e8c966943e', 'w-ff7bcf928d',
                'mock1-w3',
-               'mock2-w3'].map(n => '/img/' + n + '.webp');   // 2026-10-06 오류 보고 여섯 장(손 없음·볼 빨감·뜻과 안 맞음) · 2026-10-11 뜻과 안 맞던 넷(헤드셋·치파오·은행 같은 건물·뒷모습)
+               'mock2-w3',
+               'b-duc', 'b-duoc', 'b-nguyen-am', 'b-phu-am', 'w-0d39261f0b', 'w-200a82aec7', 'w-63ced0df1d', 'w-7584d2eef4', 'w-91919d36d6', 'w-b0e06d098e', 'w-bfd6c3d4e6'].map(n => '/img/' + n + '.webp');   // 2026-10-06 오류 보고 여섯 장(손 없음·볼 빨감·뜻과 안 맞음) · 2026-10-11 뜻과 안 맞던 넷(헤드셋·치파오·은행 같은 건물·뒷모습)
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });

@@ -317,13 +317,13 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "Chị ấy nói được tiếng ____.",
+   "prompt": "Chị ấy ____ tiếng Tây Ban Nha.",
    "audio": "Chị ấy nói được tiếng Tây Ban Nha.",
    "acc": [
-    "Tây Ban Nha"
+    "nói được"
    ],
    "made": true,
-   "exp": "들은 말: Chị ấy nói được tiếng Tây Ban Nha.\n그녀는 스페인어를 할 수 있어요.\n답: Tây Ban Nha"
+   "exp": "들은 말: Chị ấy nói được tiếng Tây Ban Nha.\n그녀는 스페인어를 할 수 있어요.\n답: nói được"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
@@ -362,13 +362,13 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "Thứ năm này tôi đi công tác ở ____.",
+   "prompt": "Thứ năm này tôi đi ____ ở Đà Nẵng.",
    "audio": "Thứ năm này tôi đi công tác ở Đà Nẵng.",
    "acc": [
-    "Đà Nẵng"
+    "công tác"
    ],
    "made": true,
-   "exp": "들은 말: Thứ năm này tôi đi công tác ở Đà Nẵng.\n이번 목요일에 저는 다낭으로 출장 가요.\n답: Đà Nẵng"
+   "exp": "들은 말: Thứ năm này tôi đi công tác ở Đà Nẵng.\n이번 목요일에 저는 다낭으로 출장 가요.\n답: công tác"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
@@ -410,14 +410,14 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Anh thích đi du lịch không? B: Có, tôi thích đi ____.",
+   "prompt": "A: Anh thích đi du lịch không? B: Có, tôi ____ đi Huế.",
    "audio": "Anh thích đi du lịch không?\nCó, tôi thích đi Huế.",
    "voices": "fm",
    "acc": [
-    "Huế"
+    "thích"
    ],
    "made": true,
-   "exp": "들은 대화\n여: Anh thích đi du lịch không? — 여행 좋아해요?\n남: Có, tôi thích đi Huế. — 네, 후에에 가는 걸 좋아해요.\n답: Huế"
+   "exp": "들은 대화\n여: Anh thích đi du lịch không? — 여행 좋아해요?\n남: Có, tôi thích đi Huế. — 네, 후에에 가는 걸 좋아해요.\n답: thích"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
