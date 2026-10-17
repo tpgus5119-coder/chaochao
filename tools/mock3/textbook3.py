@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """주간시험 3 모의고사 — 교재 1권 8~10과 **문장 그대로** 쓰는 갈래 (2026-10-17, 대표님 "교재의 낱말 말고 교재의 문장을 가급적 사용하라고").
 듣기 4(빈칸 문장·대화) · 읽기 4(말-대답 짝) · 쓰기 1(낱말 배열) · 쓰기 2(Đúng/고치기)를 교재 8~10과 문장(tools/book_ex/pool.json)으로 — 숫자는 글로(6 → sáu), 대답이 없는 교재 물음만 대답을 지음.
-다섯 벌이라 교재 문장만으로 모자란 읽기 2·3(지문)·듣기 3(함정)·그림 갈래는 지은 문장 그대로. mix.py 가 이 파일의 목록으로 ex1~5 의 같은 갈래를 갈아 끼운다.
+**시험 취지에 맞는 문장이 먼저, 그 문장을 교재에서 먼저 찾는다 — 억지로 넣지 않는다**(대표님 2026-10-17 다시: 맥락 없이는 뜻이 안 서는 교재 문장 — "Còn mẹ chị ấy?"·"Đang là sinh viên à?"·"Loan không muốn ăn"·따옴표 빈칸 — 은 지은 문장으로 바꿈). 다섯 벌이라 교재 문장만으로 모자란 읽기 2·3(지문)·듣기 3(함정)·그림 갈래는 지은 문장 그대로. mix.py 가 이 파일의 목록으로 ex1~5 의 같은 갈래를 갈아 끼운다.
 읽기 4 는 자리마다 물음 꼴을 하나씩(0 언어 · 1 기간 · 2 때 · 3 chưa · 4 가족 · 5~9 말-대꾸) 두어 어느 벌에서도 한 대답이 두 말에 맞지 않게."""
 import sys, pathlib, re
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -21,7 +21,7 @@ A4S = [("Nó đã học tiếng Pháp [sáu] tháng.", "그 아이는 프랑스�
  ("Cô ấy đã đi công tác ở Đà Nẵng vào tháng [mười một] năm trước.", "그녀는 작년 11월에 다낭으로 출장을 갔어요."),
  ("Trong gia đình, có lẽ mẹ sẽ chuẩn bị [bữa ăn tối] đặc biệt.", "집에서는 아마 엄마가 특별한 저녁 식사를 준비할 거예요."),
  ("Bố sẽ mua [hoa] và về nhà sớm.", "아빠는 꽃을 사서 일찍 집에 올 거예요."),
- ("Nhưng học sinh không đi học vì đang [nghỉ hè].", "하지만 학생들은 여름방학이라 학교에 안 가요."),
+ ("Học sinh không đi học vì đang [nghỉ hè].", "학생들은 여름방학이라 학교에 안 가요."),
  ("Chị thứ hai của anh Nam [lập gia đình] sớm.", "남 씨의 둘째 누나는 일찍 결혼했어요."),
  ("Trước đây ba của Toàn là [giáo viên] tiếng Pháp.", "전에 또안의 아버지는 프랑스어 교사였어요."),
  ("Tôi có một em trai, năm nay [mười sáu] tuổi.", "저는 남동생이 하나 있는데, 올해 열여섯 살이에요."),
@@ -34,13 +34,13 @@ A4S = [("Nó đã học tiếng Pháp [sáu] tháng.", "그 아이는 프랑스�
  ("Hôm nay là [sinh nhật] mẹ chị Loan.", "오늘은 로안 씨 어머니의 생신이에요.")]
 A4D = [("Eun Ji đang viết gì vậy?", "은지는 뭘 쓰고 있어요?", "Tôi viết [đơn] xin dạy tiếng Hàn.", "한국어를 가르치겠다는 신청서를 써요."),
  ("Có sai nhiều không anh?", "많이 틀렸어요?", "Chị viết tiếng Việt rất [tốt].", "베트남어를 아주 잘 쓰시네요."),
- ("Từ này tiếng Việt nghĩa là gì, anh?", "이 낱말은 베트남어로 무슨 뜻이에요?", "Nghĩa là \"[phát âm]\".", "'발음'이라는 뜻이에요."),
+ ("Chị học tiếng Việt ở đâu?", "베트남어를 어디서 배워요?", "Tôi học ở [trung tâm ngoại ngữ].", "외국어 학원에서 배워요."),
  ("Họ đăng ký vé trên mạng bao giờ?", "그들은 언제 인터넷으로 표를 예약했어요?", "Từ [sáu] tháng trước.", "여섯 달 전에요."),
  ("Chị biết mấy ngoại ngữ?", "외국어를 몇 개 알아요?", "Tôi biết [hai] ngoại ngữ, tiếng Nhật và tiếng Việt.", "두 개요, 일본어와 베트남어요."),
  ("Anh xem tin tức tiếng Việt hay tiếng Anh?", "베트남어 뉴스를 봐요, 영어 뉴스를 봐요?", "Tôi xem [tin tức] tiếng Anh.", "영어 뉴스를 봐요."),
  ("Anh ấy đã làm ở đó bao lâu?", "그는 거기서 얼마나 일했어요?", "Hơn một [năm].", "1년 넘게요."),
  ("Anh ấy đi bao giờ vậy, chị?", "그는 언제 갔어요?", "[Hai] ngày trước.", "이틀 전에요."),
- ("Còn sinh nhật anh là tháng này, phải không?", "그리고 당신 생일은 이번 달이죠?", "Vâng, chủ nhật [tuần trước] đấy!", "네, 지난주 일요일이었어요!"),
+ ("Sinh nhật anh là tháng này, phải không?", "그리고 당신 생일은 이번 달이죠?", "Vâng, chủ nhật [tuần trước] đấy!", "네, 지난주 일요일이었어요!"),
  ("Anh đã đặt tour du lịch chưa?", "여행 상품 예약했어요?", "Rồi, tôi đã đặt [xong] hôm qua.", "네, 어제 다 예약했어요."),
  ("Em đặt tour du lịch chưa?", "여행 상품 예약했니?", "Em đặt rồi, năm ngày bốn [đêm].", "예약했어요, 4박 5일이요."),
  ("Anh đi du lịch hả?", "여행 가요?", "Tôi đi Thái để [làm việc].", "일하러 태국에 가요."),
@@ -49,14 +49,14 @@ A4D = [("Eun Ji đang viết gì vậy?", "은지는 뭘 쓰고 있어요?", "T�
  ("Anh đi đâu vậy?", "어디 가요?", "Tôi đi sân bay [đón] bố mẹ.", "부모님을 마중하러 공항에 가요."),
  ("Ồ, anh có họ hàng người Việt à?", "오, 베트남 친척이 있어요?", "[Bà ngoại] tôi là người Việt.", "외할머니가 베트남 사람이에요."),
  ("Anh Brian có mấy anh chị em, vậy chị?", "브라이언 씨는 형제가 몇이에요?", "Anh ấy có khá đông anh em, một anh trai, [bốn] chị gái.", "형제가 꽤 많아요, 형 하나와 누나 넷이요."),
- ("Vậy, anh trai anh ấy đã có gia đình chưa?", "그럼 그의 형은 결혼했어요?", "Chưa, anh ấy còn [độc thân].", "아니요, 아직 미혼이에요."),
+ ("Anh trai anh Brian đã có gia đình chưa?", "브라이언 씨 형은 결혼했어요?", "Chưa, anh ấy còn [độc thân].", "아니요, 아직 미혼이에요."),
  ("Sáng mai chị gặp tôi ở văn phòng được không?", "내일 아침에 사무실에서 만날 수 있어요?", "Sáng mai tôi sẽ gặp anh ở [văn phòng].", "내일 아침에 사무실에서 만나요."),
- ("Đang là sinh viên à?", "대학생이에요?", "Cô ấy làm [nhân viên] siêu thị.", "마트 직원으로 일해요."),
+ ("Em gái anh Dũng là sinh viên à?", "중 씨 여동생은 대학생이에요?", "Không, cô ấy làm [nhân viên] siêu thị.", "아니요, 마트 직원으로 일해요."),
  ("Chồng cô ấy làm gì?", "그녀의 남편은 무슨 일을 해요?", "[Bác sĩ] bệnh viện Sài Gòn.", "사이공 병원 의사예요."),
  ("Cô ấy có gia đình chưa?", "그녀는 결혼했어요?", "Có gia đình [hai] năm rồi, lúc mười chín tuổi.", "결혼한 지 2년 됐어요, 열아홉 살 때요."),
  ("Ông ấy có mấy con?", "그분은 자녀가 몇이에요?", "Ông ấy có hai [con gái], một con trai.", "딸 둘, 아들 하나예요."),
  ("Anh đi thăm ông bà với ai?", "누구와 조부모님을 뵈러 가요?", "Tôi sẽ cùng đi với [em trai].", "남동생과 같이 가요."),
- ("Còn mẹ chị ấy?", "그럼 그녀의 어머니는요?", "Mẹ chị ấy cũng [sáu mươi tám] tuổi.", "어머니도 예순여덟 살이에요.")]
+ ("Mẹ chị năm nay bao nhiêu tuổi?", "어머니는 올해 몇 살이세요?", "Mẹ tôi năm nay [sáu mươi tám] tuổi.", "어머니는 올해 예순여덟 살이에요.")]
 B4 = {'L': [("Chị ấy nói được tiếng gì?", "그녀는 무슨 언어를 할 수 있어요?", "Tiếng Đức và tiếng Ý.", "독일어와 이탈리아어요."),
             ("Chị ấy biết ngoại ngữ gì?", "그녀는 무슨 외국어를 알아요?", "Tiếng Anh, tiếng Nhật.", "영어, 일본어요."),
             ("Chị xem gì?", "뭘 봐요?", "Xem phim Hàn Quốc.", "한국 영화를 봐요."),
@@ -85,9 +85,9 @@ B4 = {'L': [("Chị ấy nói được tiếng gì?", "그녀는 무슨 언어�
       'S': [("Tôi gặp ba mẹ chị Hà rồi.", "하 씨 부모님을 만났어요.", "Thế à? Ba mẹ chị ấy khỏe không?", "그래요? 그분들 건강하세요?"),
             ("Tháng mười hai năm nay tôi sẽ đi Thái Lan.", "올해 12월에 태국에 가요.", "Anh đi du lịch hả?", "여행 가요?"),
             ("Em đã học tiếng Việt một tháng rồi nhưng em nói không giỏi.", "베트남어를 한 달 배웠는데 말을 잘 못해요.", "Từ từ em sẽ giỏi hơn.", "차차 더 잘하게 될 거야."),
-            ("Loan không muốn ăn.", "로안이 먹고 싶어 하지 않아요.", "Loan ơi, chị ăn đi!", "로안, 먹어요!"),
-            ("Chị Hà thấy buồn ngủ.", "하 씨가 졸려 해요.", "Chị Hà ơi, chị nghỉ một chút đi!", "하 씨, 좀 쉬세요!"),
-            ("Hôm nay ông Kim không khỏe.", "오늘 김 선생님이 몸이 안 좋아요.", "Ông Kim ơi, ông về nhà nghỉ đi!", "김 선생님, 집에 가서 쉬세요!"),
+            ("Tôi không muốn ăn.", "먹고 싶지 않아요.", "Ăn một chút đi!", "조금만 먹어요!"),
+            ("Tôi buồn ngủ quá.", "너무 졸려요.", "Vậy chị đi ngủ sớm đi!", "그럼 일찍 자요!"),
+            ("Hôm nay tôi không khỏe.", "오늘 몸이 안 좋아요.", "Anh đi bệnh viện đi!", "병원에 가 봐요!"),
             ("Anh có đi với tôi không?", "저랑 같이 갈래요?", "Tôi đi với anh chứ.", "당연히 같이 가죠."),
             ("Anh chờ tôi ở đây được không?", "여기서 저 기다려 줄 수 있어요?", "Được, tôi chờ anh ở đây.", "네, 여기서 기다릴게요."),
             ("Hiểu không, em?", "이해했니?", "Dạ, em hiểu chứ!", "네, 당연히 이해했어요!"),
@@ -120,7 +120,7 @@ C1L = [("Tôi viết đơn xin dạy tiếng Hàn ở một trung tâm ngoại n
  ("Tôi sẽ cùng bố mẹ đi thăm bà ngoại.", "저는 부모님과 함께 외할머니를 뵈러 갈 거예요."),
  ("Các con sẽ vẽ tranh để tặng bố mẹ.", "아이들은 부모님께 드리려고 그림을 그릴 거예요."),
  ("Sơn làm việc và sống một mình ở Thành phố Hồ Chí Minh.", "선은 호찌민시에서 혼자 일하고 살아요."),
- ("Mẹ cô Kim nấu ăn ngon lắm.", "김 선생님 어머니는 요리를 아주 잘하세요."),
+ ("Các học viên trong lớp ngạc nhiên vì Andy phát âm tiếng Việt tốt.", "반 학생들은 앤디가 베트남어 발음을 잘해서 놀랐어요."),
  ("Chị em cô ấy cùng giúp mẹ nấu ăn.", "그녀의 자매들은 함께 엄마의 요리를 도와요."),
  ("Chị Dung rất thích học ngoại ngữ.", "중 씨는 외국어 배우기를 아주 좋아해요."),
  ("Anh ấy muốn nói tiếng Việt như người Việt.", "그는 베트남 사람처럼 베트남어를 하고 싶어 해요."),
@@ -130,7 +130,7 @@ C1L = [("Tôi viết đơn xin dạy tiếng Hàn ở một trung tâm ngoại n
  ("Bố mẹ tôi đến Việt Nam để du lịch và thăm họ hàng.", "부모님은 여행하고 친척을 만나러 베트남에 와요."),
  ("Nhà anh ấy khá xa công ty.", "그의 집은 회사에서 꽤 멀어요."),
  ("Chị thứ hai của Toàn lập gia đình khá trễ.", "또안의 둘째 누나는 꽤 늦게 결혼했어요."),
- ("Ông Lưu và vợ ông ấy sắp về hưu.", "르우 씨와 부인은 곧 은퇴해요.") if False else ("Tôi có một người bạn thân.", "저는 친한 친구가 한 명 있어요."),
+ ("Ông Lưu và vợ ông ấy sắp về hưu.", "르우 씨와 부인은 곧 은퇴해요.") if False else ("Hôm qua tôi mới đi uống cà phê với anh Dũng.", "어제 저는 중 씨와 막 커피를 마시고 왔어요."),
  ("Ông ấy biết tiếng Anh và tiếng Đức.", "그분은 영어와 독일어를 알아요.")]
 C2E = [("Bà Bảy được nói tiếng Đức một chút.", "Bà Bảy nói tiếng Đức được một chút.", "바이 씨는 독일어를 조금 할 수 있어요. (được 은 동사 뒤)", ["Bà Bảy nói được tiếng Đức một chút."]),
  ("Anh ấy được không nói tiếng Hàn Quốc.", "Anh ấy không nói được tiếng Hàn Quốc.", "그는 한국어를 못 해요. (không 은 동사 앞, được 은 동사 뒤)", ["Anh ấy nói tiếng Hàn Quốc không được."]),

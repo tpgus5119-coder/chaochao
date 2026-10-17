@@ -340,13 +340,13 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "Nhưng học sinh không đi học vì đang ____.",
-   "audio": "Nhưng học sinh không đi học vì đang nghỉ hè.",
+   "prompt": "Học sinh không đi học vì đang ____.",
+   "audio": "Học sinh không đi học vì đang nghỉ hè.",
    "acc": [
     "nghỉ hè"
    ],
    "made": true,
-   "exp": "들은 말: Nhưng học sinh không đi học vì đang nghỉ hè.\n하지만 학생들은 여름방학이라 학교에 안 가요.\n답: nghỉ hè"
+   "exp": "들은 말: Học sinh không đi học vì đang nghỉ hè.\n학생들은 여름방학이라 학교에 안 가요.\n답: nghỉ hè"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
@@ -653,7 +653,7 @@
    "prompt": "Anh ấy lên mạng để làm gì?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -673,7 +673,7 @@
    "prompt": "Chị ấy đã ở Hà Nội bao lâu?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -693,7 +693,7 @@
    "prompt": "Bao giờ chị đi Nha Trang?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -713,7 +713,7 @@
    "prompt": "Cô ấy dọn dẹp nhà xong chưa?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -733,7 +733,7 @@
    "prompt": "Chị Loan có em gái không?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -750,10 +750,10 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Loan không muốn ăn.",
+   "prompt": "Tôi không muốn ăn.",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -765,7 +765,7 @@
    ],
    "ans": 1,
    "abc": true,
-   "exp": "Loan không muốn ăn. — 로안이 먹고 싶어 하지 않아요.\n답: B. Loan ơi, chị ăn đi! — 로안, 먹어요!"
+   "exp": "Tôi không muốn ăn. — 먹고 싶지 않아요.\n답: B. Ăn một chút đi! — 조금만 먹어요!"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
@@ -773,7 +773,7 @@
    "prompt": "Anh có đi du lịch với gia đình không?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -793,7 +793,7 @@
    "prompt": "Người đang nói chuyện với chị Loan là ai vậy, chị?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -813,7 +813,7 @@
    "prompt": "Tuần này, ba có về quê thăm ông bà không, ba?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",
@@ -833,7 +833,7 @@
    "prompt": "Nó có đi tham quan với bố mẹ không?",
    "opts": [
     "Có, tôi đi du lịch với gia đình chứ!",
-    "Loan ơi, chị ăn đi!",
+    "Ăn một chút đi!",
     "Em gái của anh Dũng đấy!",
     "Bốn ngày.",
     "Có, chị ấy có một em gái.",

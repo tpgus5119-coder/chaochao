@@ -409,14 +409,14 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Vậy, anh trai anh ấy đã có gia đình chưa? B: Chưa, anh ấy còn ____.",
-   "audio": "Vậy, anh trai anh ấy đã có gia đình chưa?\nChưa, anh ấy còn độc thân.",
+   "prompt": "A: Anh trai anh Brian đã có gia đình chưa? B: Chưa, anh ấy còn ____.",
+   "audio": "Anh trai anh Brian đã có gia đình chưa?\nChưa, anh ấy còn độc thân.",
    "voices": "fm",
    "acc": [
     "độc thân"
    ],
    "made": true,
-   "exp": "들은 대화\n여: Vậy, anh trai anh ấy đã có gia đình chưa? — 그럼 그의 형은 결혼했어요?\n남: Chưa, anh ấy còn độc thân. — 아니요, 아직 미혼이에요.\n답: độc thân"
+   "exp": "들은 대화\n여: Anh trai anh Brian đã có gia đình chưa? — 브라이언 씨 형은 결혼했어요?\n남: Chưa, anh ấy còn độc thân. — 아니요, 아직 미혼이에요.\n답: độc thân"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
@@ -650,11 +650,11 @@
    "k": "choice",
    "prompt": "Anh Brian nói được tiếng gì?",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -670,11 +670,11 @@
    "k": "choice",
    "prompt": "Em Sơn học tiếng Nhật bao lâu rồi?",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -690,11 +690,11 @@
    "k": "choice",
    "prompt": "Anh ấy đặt vé máy bay bao giờ?",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -710,11 +710,11 @@
    "k": "choice",
    "prompt": "Tắc xi đến chưa?",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -730,11 +730,11 @@
    "k": "choice",
    "prompt": "Ba mẹ chị ấy sinh năm nào?",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -748,13 +748,13 @@
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Chị Hà thấy buồn ngủ.",
+   "prompt": "Tôi buồn ngủ quá.",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -763,18 +763,18 @@
    ],
    "ans": 0,
    "abc": true,
-   "exp": "Chị Hà thấy buồn ngủ. — 하 씨가 졸려 해요.\n답: A. Chị Hà ơi, chị nghỉ một chút đi! — 하 씨, 좀 쉬세요!"
+   "exp": "Tôi buồn ngủ quá. — 너무 졸려요.\n답: A. Vậy chị đi ngủ sớm đi! — 그럼 일찍 자요!"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
-   "prompt": "Hôm nay ông Kim không khỏe.",
+   "prompt": "Hôm nay tôi không khỏe.",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -783,18 +783,18 @@
    ],
    "ans": 4,
    "abc": true,
-   "exp": "Hôm nay ông Kim không khỏe. — 오늘 김 선생님이 몸이 안 좋아요.\n답: E. Ông Kim ơi, ông về nhà nghỉ đi! — 김 선생님, 집에 가서 쉬세요!"
+   "exp": "Hôm nay tôi không khỏe. — 오늘 몸이 안 좋아요.\n답: E. Anh đi bệnh viện đi! — 병원에 가 봐요!"
   },
   {
    "sec": "B 읽기 · 4 알맞은 문장",
    "k": "choice",
    "prompt": "Anh trai của cô ấy là nhân viên văn phòng à?",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -810,11 +810,11 @@
    "k": "choice",
    "prompt": "Chị của cô Lành giỏi ngoại ngữ không?",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -830,11 +830,11 @@
    "k": "choice",
    "prompt": "Hôm qua ông ấy đi đâu?",
    "opts": [
-    "Chị Hà ơi, chị nghỉ một chút đi!",
+    "Vậy chị đi ngủ sớm đi!",
     "Hôm qua.",
     "Giỏi chứ! Chị ấy nói được ba thứ tiếng.",
     "Hai người đều sinh năm 1964.",
-    "Ông Kim ơi, ông về nhà nghỉ đi!",
+    "Anh đi bệnh viện đi!",
     "Ông ấy đi bệnh viện.",
     "Rồi, tắc xi đến rồi.",
     "Tám tháng rồi.",
@@ -874,15 +874,15 @@
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Mẹ cô Kim nấu ăn ngon lắm.",
+   "vi": "Các học viên trong lớp ngạc nhiên vì Andy phát âm tiếng Việt tốt.",
    "tiles": [
-    "ngon",
-    "Mẹ cô",
-    "lắm",
-    "Kim",
-    "nấu ăn"
+    "phát âm",
+    "Các học viên",
+    "tiếng Việt tốt",
+    "trong lớp ngạc nhiên",
+    "vì Andy"
    ],
-   "exp": "Mẹ cô Kim nấu ăn ngon lắm.\n김 선생님 어머니는 요리를 아주 잘하세요."
+   "exp": "Các học viên trong lớp ngạc nhiên vì Andy phát âm tiếng Việt tốt.\n반 학생들은 앤디가 베트남어 발음을 잘해서 놀랐어요."
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",

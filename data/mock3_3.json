@@ -372,26 +372,26 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Từ này tiếng Việt nghĩa là gì, anh? B: Nghĩa là \"____\".",
-   "audio": "Từ này tiếng Việt nghĩa là gì, anh?\nNghĩa là \"phát âm\".",
+   "prompt": "A: Chị học tiếng Việt ở đâu? B: Tôi học ở ____.",
+   "audio": "Chị học tiếng Việt ở đâu?\nTôi học ở trung tâm ngoại ngữ.",
    "voices": "mf",
    "acc": [
-    "phát âm"
+    "trung tâm ngoại ngữ"
    ],
    "made": true,
-   "exp": "들은 대화\n남: Từ này tiếng Việt nghĩa là gì, anh? — 이 낱말은 베트남어로 무슨 뜻이에요?\n여: Nghĩa là \"phát âm\". — '발음'이라는 뜻이에요.\n답: phát âm"
+   "exp": "들은 대화\n남: Chị học tiếng Việt ở đâu? — 베트남어를 어디서 배워요?\n여: Tôi học ở trung tâm ngoại ngữ. — 외국어 학원에서 배워요.\n답: trung tâm ngoại ngữ"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Còn sinh nhật anh là tháng này, phải không? B: Vâng, chủ nhật ____ đấy!",
-   "audio": "Còn sinh nhật anh là tháng này, phải không?\nVâng, chủ nhật tuần trước đấy!",
+   "prompt": "A: Sinh nhật anh là tháng này, phải không? B: Vâng, chủ nhật ____ đấy!",
+   "audio": "Sinh nhật anh là tháng này, phải không?\nVâng, chủ nhật tuần trước đấy!",
    "voices": "fm",
    "acc": [
     "tuần trước"
    ],
    "made": true,
-   "exp": "들은 대화\n여: Còn sinh nhật anh là tháng này, phải không? — 그리고 당신 생일은 이번 달이죠?\n남: Vâng, chủ nhật tuần trước đấy! — 네, 지난주 일요일이었어요!\n답: tuần trước"
+   "exp": "들은 대화\n여: Sinh nhật anh là tháng này, phải không? — 그리고 당신 생일은 이번 달이죠?\n남: Vâng, chủ nhật tuần trước đấy! — 네, 지난주 일요일이었어요!\n답: tuần trước"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",

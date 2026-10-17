@@ -423,14 +423,14 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Còn mẹ chị ấy? B: Mẹ chị ấy cũng ____ tuổi.",
-   "audio": "Còn mẹ chị ấy?\nMẹ chị ấy cũng sáu mươi tám tuổi.",
+   "prompt": "A: Mẹ chị năm nay bao nhiêu tuổi? B: Mẹ tôi năm nay ____ tuổi.",
+   "audio": "Mẹ chị năm nay bao nhiêu tuổi?\nMẹ tôi năm nay sáu mươi tám tuổi.",
    "voices": "mf",
    "acc": [
     "sáu mươi tám"
    ],
    "made": true,
-   "exp": "들은 대화\n남: Còn mẹ chị ấy? — 그럼 그녀의 어머니는요?\n여: Mẹ chị ấy cũng sáu mươi tám tuổi. — 어머니도 예순여덟 살이에요.\n답: sáu mươi tám"
+   "exp": "들은 대화\n남: Mẹ chị năm nay bao nhiêu tuổi? — 어머니는 올해 몇 살이세요?\n여: Mẹ tôi năm nay sáu mươi tám tuổi. — 어머니는 올해 예순여덟 살이에요.\n답: sáu mươi tám"
   },
   {
    "sec": "B 읽기 · 1 빈칸",
@@ -902,15 +902,18 @@
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Tôi có một người bạn thân.",
+   "vi": "Hôm qua tôi mới đi uống cà phê với anh Dũng.",
    "tiles": [
-    "người bạn",
-    "Tôi",
-    "thân",
-    "có",
-    "một"
+    "cà phê",
+    "Hôm qua",
+    "với anh Dũng",
+    "tôi mới",
+    "đi uống"
    ],
-   "exp": "Tôi có một người bạn thân.\n저는 친한 친구가 한 명 있어요."
+   "exp": "Hôm qua tôi mới đi uống cà phê với anh Dũng.\n어제 저는 중 씨와 막 커피를 마시고 왔어요.",
+   "alts": [
+    "Tôi mới đi uống cà phê với anh Dũng hôm qua."
+   ]
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",

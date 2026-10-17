@@ -409,14 +409,14 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Đang là sinh viên à? B: Cô ấy làm ____ siêu thị.",
-   "audio": "Đang là sinh viên à?\nCô ấy làm nhân viên siêu thị.",
+   "prompt": "A: Em gái anh Dũng là sinh viên à? B: Không, cô ấy làm ____ siêu thị.",
+   "audio": "Em gái anh Dũng là sinh viên à?\nKhông, cô ấy làm nhân viên siêu thị.",
    "voices": "fm",
    "acc": [
     "nhân viên"
    ],
    "made": true,
-   "exp": "들은 대화\n여: Đang là sinh viên à? — 대학생이에요?\n남: Cô ấy làm nhân viên siêu thị. — 마트 직원으로 일해요.\n답: nhân viên"
+   "exp": "들은 대화\n여: Em gái anh Dũng là sinh viên à? — 중 씨 여동생은 대학생이에요?\n남: Không, cô ấy làm nhân viên siêu thị. — 아니요, 마트 직원으로 일해요.\n답: nhân viên"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
