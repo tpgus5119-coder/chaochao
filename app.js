@@ -1170,6 +1170,14 @@ function sibNear(s, exclude) {
    가족 셋(대표님 지시 2026-09-27: 모양 비슷한 것·성조 다른 것 다 넣는다):
      tone  글자는 같고 성조만 다름(ma·mà·má…)        shape 성조는 같고 모음·đ 모양만 다름(mua·mưa)
      skel  글자 뼈대(부호 뺀 글자)가 같은 나머지 전부(mua·mùa·mưa·múa·mừa…) — 위 둘에 안 든 것만 따로 보여 준다 */
+/* 여러 음절 낱말 — 성조·모자·đ 를 다 뗀 뼈대가 같은 다른 낱말들 (data/sib.json g, tools/sib_more.py). 자기 자신이 맨 앞 */
+function sibWhole(vi) {
+  const k = String(vi || '').toLowerCase().trim();
+  if (!SIB || !SIB.g || k.indexOf(' ') < 0) return null;
+  const g = SIB.g[sibBase(k)];
+  if (!g || !g.some(x => x !== k)) return null;
+  return [k, ...g.filter(x => x !== k)];
+}
 function sibFams(vi) {
   const seen = new Set(), out = [];
   vi.toLowerCase().replace(/[.,!?;:…"'“”‘’()]/g, ' ').split(/\s+/).filter(Boolean).forEach(s => {
@@ -1182,8 +1190,12 @@ function sibFams(vi) {
     const b0 = sibBase(s);
     const nr = sibNear(s, x => sibBase(x) === b0);          // 글자 뼈대가 같은 것(위 세 가족)은 빼고, 다른 글자로 바뀐 것만
     const has = a => (a.length ? a : null);
-    if (other(tf) || other(sf) || rest.length || nr.v.length || nr.i.length || nr.f.length)
-      out.push({ s, tf: other(tf) ? tf : null, sf: other(sf) ? sf : null, kf: rest.length ? rest : null, vf: has(nr.v), if_: has(nr.i), ff: has(nr.f) });
+    /* 성조·모자를 한 칸에 (대표님 2026-10-18 "초보자 입장에서는 모자랑 성조랑 똑같음 — 다 보여 줘") — 성조만 다른 것(같은 글자) 먼저, 그다음 모자가 다른 것 */
+    const all = [...(tf || []), ...(sf || []).filter(x => !inT.has(x)), ...rest];
+    const allU = [...new Set(all)];
+    if (allU.length && !allU.includes(s)) allU.unshift(s);
+    if (other(allU) || nr.v.length || nr.i.length || nr.f.length)
+      out.push({ s, af: other(allU) ? allU : null, tn: tf, vf: has(nr.v), if_: has(nr.i), ff: has(nr.f) });
   });
   return out;
 }
@@ -1299,8 +1311,8 @@ function pairPanel(vi, opt) {
   let sel = null;                                   // 지금 고른 뜻 번호 — 처음엔 기본 뜻
   sibLoad().then(() => sensesLoad()).then(() => sdefLoad()).then(() => {          // 뜻 목록·기본 뜻도 같이 — 동의어·반의어를 뜻별로 나누는 데 쓴다
     if (!SIB || !wrap.isConnected) return;
-    const fams = sibFams(vi), rel = sibRel(vi), drel = dictRel(vi);
-    if (!fams.length && !rel && !drel) return;
+    const fams = sibFams(vi), rel = sibRel(vi), drel = dictRel(vi), gw = sibWhole(vi);
+    if (!fams.length && !rel && !drel && !gw) return;
     const head = el('button', 'pairhead', '<span>' + tr('헷갈리는 짝') + '</span><i class="pchev">▾</i>');
     head.type = 'button';
     const body = el('div', 'pairbody');
@@ -1359,6 +1371,7 @@ function pairPanel(vi, opt) {
         if (drel.s.length) body.append(section('유의어', rel ? '사전, 뜻 구분 없음' : '뜻이 비슷함', drel.s, '', 'rel'));
         if (drel.a.length) body.append(section('반의어', rel ? '사전, 뜻 구분 없음' : '뜻이 반대', drel.a, '', 'rel'));
       }
+      if (gw) body.append(section('성조·모자가 다른 낱말', '', gw, vi.toLowerCase().trim(), 'tone'));   // 여러 음절 낱말 통째로 (bần cùng ↔ bắn cung)
       if (fams.length > 1) {
         const sel = el('div', 'psel');
         fams.forEach((f, i) => {
@@ -1371,13 +1384,11 @@ function pairPanel(vi, opt) {
       }
       const F = fams[cur];
       if (F) {
-        if (F.tf) body.append(section('성조만 다른 단어', '글자는 같고 높낮이만 다름', F.tf, F.s, 'tone'));
-        if (F.sf) body.append(section('모양이 조금 다른 글자', '성조는 같음', F.sf, F.s, 'shape'));
+        if (F.af) body.append(section('성조·모자가 다른 단어', '', F.af, F.s, 'tone'));
         if (F.vf) body.append(section('모음이 비슷한 단어', 'o·u · ô·ơ · a·ă·â · e·ê·i · ai·ay 처럼 모음만 바뀜 — 성조 같은 것 먼저', F.vf, F.s, 'sim'));
         if (F.if_) body.append(section('첫 자음이 비슷한 단어', 't·th·tr · ch·tr · b·v · s·x · d·gi·r · l·n · d·đ 처럼 첫소리만 바뀜 — 성조 같은 것 먼저', F.if_, F.s, 'sim'));
         if (F.ff) body.append(section('받침이 비슷한 단어', 'n·ng·nh · t·c·ch · m·p 처럼 받침만 바뀜 — 성조 같은 것 먼저', F.ff, F.s, 'sim'));
-        if (F.kf) body.append(section('비슷하게 생긴 다른 글자', '글자 모양·성조가 모두 다름', F.kf, F.s, 'skel'));
-        const tn = F.tf ? F.tf.map(x => sibToneOf(x)) : [];
+        const tn = F.tn ? F.tn.map(x => sibToneOf(x)) : [];
         if (tn.includes('hỏi') && tn.includes('ngã'))
           body.append(el('div', 'pnote', '<b>hỏi</b>와 <b>ngã</b>는 남부·중부에서 한 소리로 합쳐집니다. 북부 소리로는 다릅니다.'));
         if (/(p|t|c|ch)$/.test(F.s) && ['sắc', 'nặng'].includes(sibToneOf(F.s)))
@@ -1433,7 +1444,7 @@ function pairPopup(vi, info) {
   document.body.append(back);
   sibLoad().then(() => {
     if (!SIB) { body.append(el('div', 'pnote', tr('불러오지 못했습니다'))); return; }
-    if (!sibFams(vi).length && !sibRel(vi) && !dictRel(vi)) { body.append(el('div', 'pnote', tr('이 단어과 헷갈리는 짝이 없습니다.'))); return; }
+    if (!sibFams(vi).length && !sibRel(vi) && !dictRel(vi) && !sibWhole(vi)) { body.append(el('div', 'pnote', tr('이 단어과 헷갈리는 짝이 없습니다.'))); return; }
     body.append(pairPanel(vi, { bare: true, ko: inf.ko, lk, api: a => { panelApi = a; } }));   // 골라진 뜻(처음엔 기본 뜻)의 동의어·반의어만 (2026-09-28)
   });
 }
@@ -1526,7 +1537,7 @@ function jgCands(text) {
   if (!h) return null;
   const out = [{ vi: text, h }], seen = new Set([key(text)]);
   const add = v => { if (!v || typeof v !== 'string' || seen.has(key(v))) return; const hh = AIDX[v] || AIDX[key(v)]; if (!hh) return; seen.add(key(v)); out.push({ vi: v, h: hh }); };
-  try { if (typeof SIB !== 'undefined' && SIB) sibFams(text).forEach(f => [f.tf, f.sf, f.kf, f.vf, f.if_, f.ff].forEach(a => (a || []).forEach(add))); } catch (e) { }
+  try { if (typeof SIB !== 'undefined' && SIB) sibFams(text).forEach(f => [f.af, f.vf, f.if_, f.ff].forEach(a => (a || []).forEach(add))); } catch (e) { }
   const syl = key(text).split(/\s+/).length;
   const pool = allWords().map(w => w.vi).filter(v => v && key(v).split(/\s+/).length === syl);
   for (let i = 0; i < 60 && out.length < 8 && pool.length; i++) add(pool[Math.floor(Math.random() * pool.length)]);
