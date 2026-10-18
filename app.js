@@ -10564,9 +10564,17 @@ $('#next').onclick = () => {
     if ($('#learn').hidden) return;
     if (/^(INPUT|TEXTAREA)$/.test(document.activeElement?.tagName || '')) return;
     if (e.key === 'ArrowLeft') goto(-1);
-    else if (e.key === 'ArrowRight') goto(1);
+    else if (e.key === 'ArrowRight') { if (nextB && nextB.classList.contains('totest')) $('#next').click(); else goto(1); }   // 마지막 장(TEST)에서 → = 테스트로 (대표님 2026-10-18)
   });
 })();
+
+/* 문제·시험 화면에서 → 키 = 보이는 '다음 ›' 단추 (대표님 2026-10-18 "테스트로 넘어갈 때도 키보드 방향키로") — 글자를 치는 중이면 건드리지 않는다 */
+window.addEventListener('keydown', e => {
+  if (e.key !== 'ArrowRight' || e.repeat || !$('#learn').hidden) return;
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '') || document.activeElement?.isContentEditable) return;
+  const bs = [...document.querySelectorAll('button.kbnext')].filter(b => b.offsetParent && !b.disabled);
+  if (bs.length) { e.preventDefault(); bs[bs.length - 1].click(); }
+});
 
 /* ---------- 훑기 엔진 (예습·간략 복습) ----------
    카드가 소리와 함께 저절로 넘어간다 — 인출이 없어 외우는 효과는 약하지만,
@@ -11316,7 +11324,7 @@ function nextBtn(box, fn) {
       g.onclick = () => { dive(() => { Q = Qs; Q.i++; drawQuiz(); show('quiz', tt, true); }); startGram(qw.gbi, qw.gni); };
       box.append(g);
     } }
-  const b = el('button', 'primary big', '다음 ›');
+  const b = el('button', 'primary big kbnext', '다음 ›');   // kbnext: → 키로도 누른다 (2026-10-18)
   b.style.width = '100%'; b.style.marginTop = '14px';
   b.onclick = fn;
   box.append(b);
