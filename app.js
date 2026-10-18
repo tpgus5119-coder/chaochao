@@ -10855,18 +10855,29 @@ function buildQuestions(words, forced) {
        괄호 앞의 알맹이로 견준다 — '아프다 (병이 나다)' 와 '아프다' 는 같은 말이다. */
     const stem = s => String(s || '').split(/[,;(·]/)[0].trim();
     const mine = stem(w.ko);
-    const okOpt = x => !seen.has(x.vi) && stem(x.ko) !== mine && seen.add(x.vi);
+    const picked = [w.ko];
+    const okOpt = x => !seen.has(x.vi) && stem(x.ko) !== mine && !picked.some(k => koClash(k, x.ko)) && seen.add(x.vi) && picked.push(x.ko);   // 정답·이미 고른 보기와 뜻이 겹치면 빼기 (2026-10-18)
     // 같은 세트 이웃부터 — 주제가 같아야 헷갈리는 진짜 보기가 된다. 모자라면 전체에서 채운다.
     const home = w.sent ? undefined : chapOf(w.vi);
-    const near = home === undefined ? []
-      : src.filter(x => chapOf(x.vi) === home && okOpt(x))
-           .sort(() => Math.random() - .5).slice(0, 3);
-    const others = near.concat(
-      src.filter(okOpt).sort(() => Math.random() - .5).slice(0, 3 - near.length));
+    /* 셋을 채우면 멈춘다 — 전체를 다 견주면(뜻 겹침 검사) 한 판에 몇 초가 걸린다 */
+    const take = (list, n, out) => { for (let t = 0; t < 400 && out.length < n && list.length; t++) { const x = list[Math.floor(Math.random() * list.length)]; if (okOpt(x)) out.push(x); } return out; };
+    const near = home === undefined ? [] : take(src.filter(x => chapOf(x.vi) === home), 3, []);
+    const others = take(src, 3, near.slice());
     return { w, mode, opts: [w, ...others].sort(() => Math.random() - .5) };
   }).sort(() => Math.random() - .5);
 }
 
+/* 두 뜻이 겹치나 — 보기 하나에 정답이 둘이 되지 않게 (대표님 2026-10-18 오류 보고 tắt: 켜다 / 끄다 / 불을 끄다 / 불을 끄다).
+   뜻을 , ; · / 괄호로 조각내고(빈칸·~ 뗌), 조각이 같거나 한 조각이 다른 조각을 품으면(두 글자 이상, 끄다 ⊂ 불을끄다) 겹친다.
+   전에는 첫 조각끼리 같을 때만 막아서 '끄다; 지름길의' 와 '불을 끄다' 가 한 문제에 같이 나왔다 */
+function koPieces(ko) {
+  return String(ko || '').replace(/\[[^\]]*\]/g, ' ').split(/[,;·\/()]/).map(t => t.replace(/[\s~…]/g, '')).filter(t => t.length >= 2);
+}
+function koClash(a, b) {
+  const A = koPieces(a), B = koPieces(b);
+  if (!A.length || !B.length) return String(a || '').trim() === String(b || '').trim();
+  return A.some(x => B.some(y => x === y || x.includes(y) || y.includes(x)));
+}
 /* 단어장에서 바로 복습 (대표님 지시 2026-09-03: "그 대상으로도 복습할 수 있도록").
    단어 글자만 갖고 있으므로 **뜻·예문이 붙은 원래 단어**을 찾아 문제로 만든다.
    섞어서 스무 개씩 낸다 — 늘 앞에서 스무 개면 뒤쪽 단어은 영영 안 나온다. */
@@ -11336,19 +11347,13 @@ function nextBtn(box, fn) {
    다섯을 다 맞춰야 넘어간다. 한 문제로 다섯 단어을 만지니 복습이 빨리 돈다. */
 function drawMatch(body, q) {
   // 같은 판의 다른 단어을 짝으로 쓴다 — 같은 세트라 진짜로 헷갈린다
+  /* 짝은 **판 전체에서 고르게 섞어** 고른다 (대표님 2026-10-18 "짝짓는 문제는 항상 나오는 단어만 나오는 것 같다 — 골고루") — 전에는 판의 앞쪽 넷을 늘 썼다.
+     뜻이 겹치는 짝은 빼다(어느 쪽을 이어도 맞는 칸이 생긴다) */
   const seen = new Set([q.w.vi]);
   const mates = [];
-  Q.list.forEach(x => {
-    if (mates.length >= 4 || !x.w || seen.has(x.w.vi) || !x.w.ko) return;
-    if (x.w.sent) return;                       // 문장은 칸이 넘쳐 짝 맞추기에 안 맞는다
-    seen.add(x.w.vi); mates.push(x.w);
-  });
-  if (mates.length < 3) {                       // 그래도 모자라면 보기에서 채운다
-    (q.opts || []).forEach(o => {
-      if (mates.length >= 4 || seen.has(o.vi) || !o.ko) return;
-      seen.add(o.vi); mates.push(o);
-    });
-  }
+  const fits = x => x && x.ko && !x.sent && !seen.has(x.vi) && !koClash(q.w.ko, x.ko) && !mates.some(m => koClash(m.ko, x.ko));
+  Q.list.map(x => x.w).sort(() => Math.random() - .5).forEach(x => { if (mates.length < 4 && fits(x)) { seen.add(x.vi); mates.push(x); } });
+  if (mates.length < 3) (q.opts || []).forEach(o => { if (mates.length < 4 && fits(o)) { seen.add(o.vi); mates.push(o); } });   // 모자라면 보기에서
   if (mates.length < 3) {                       // 짝을 못 채우면 평범한 고르기로 되돌린다
     q.mode = 'read'; return drawQuiz();
   }
@@ -12263,7 +12268,7 @@ function startDaily(t, r) {
   if (r && r.gen) { L = r.gen.map(g => ({ w: deref(g.w), mode: g.mode, sec: g.sec, opts: (g.opts || []).map(deref) })); if (L.some(q => !q.w || q.opts.some(o => !o))) { L = null; r = null; } }   // 자료가 바뀌어 못 맞추면 새로
   if (!L) {
     const pick = (arr, n) => arr.slice().sort(() => Math.random() - .5).slice(0, n);
-    const mk = (w, sec, pool) => ({ w, mode: 'read', sec, opts: [w, ...pick(pool.filter(x => x.vi !== w.vi && x.ko !== w.ko), 3)].sort(() => Math.random() - .5) });
+    const mk = (w, sec, pool) => { const os = [w]; pool.filter(x => x.vi !== w.vi).sort(() => Math.random() - .5).forEach(x => { if (os.length < 4 && !os.some(o => koClash(o.ko, x.ko))) os.push(x); }); return { w, mode: 'read', sec, opts: os.sort(() => Math.random() - .5) }; };   // 뜻 겹치는 보기 빼기 (2026-10-18)
     L = [];
     ws.forEach(w => L.push(w.dir === 'to_vi' ? { w, mode: 'write_ko', sec: tr('낱말 · 베트남어로 쓰기') } : mk(w, tr('낱말 · 뜻 고르기'), ws)));
     ss.forEach(x => {
@@ -12365,7 +12370,16 @@ function drawExamKind(body, q) {
     else body.append(el('div', 'qmain sent', esc(shown)), el('div', 'q mid', esc(koShow(w.ko))));
     const target = findItem(tok) || { vi: tok, ko: '' };
     const pool = (Q.round ? weeklyRoundWords(WEEKLY_ROUNDS.find(r => r.no === Q.round) || WEEKLY_ROUNDS[0]) : weeklyMaterial()).filter(x => x.vi !== tok);
-    const opts = [target, ...pool.sort(() => Math.random() - .5).slice(0, 3)].sort(() => Math.random() - .5);
+    /* 빈칸 보기 — 그 자리에 들어가도 말이 되는 보기는 또 하나의 정답이다 (대표님 2026-10-18 "보기에 답이 2개 — 모든 어플 다 점검").
+       품사가 정답과 **다른** 낱말을 먼저(그 자리에 문법상 안 맞는다), 뜻이 겹치는 것은 빼고. 품사를 모르면 그다음 */
+    posLoad();
+    const pt = POS && POS[tok.toLowerCase()];
+    const cands = pool.filter(x => !koClash(target.ko, x.ko)).sort(() => Math.random() - .5);
+    const px = x => POS && POS[String(x.vi).toLowerCase()];
+    const diff = pt ? cands.filter(x => px(x) && px(x) !== pt) : [];
+    const wr = [];
+    [...diff, ...(pt ? [] : cands)].forEach(x => { if (wr.length < 3 && !wr.some(y => y.vi === x.vi || koClash(y.ko, x.ko))) wr.push(x); });
+    const opts = [target, ...wr].sort(() => Math.random() - .5);
     const box = el('div', 'opts');
     opts.forEach(o => { const b = el('button', null, esc(o.vi)); b.dataset.vi = o.vi === tok ? w.vi : '-'; b.onclick = () => answer(b, o.vi === tok, w); box.append(b); });
     body.append(box); return;
