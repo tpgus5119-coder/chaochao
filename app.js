@@ -2936,7 +2936,8 @@ function hanQuiz(pane, pool) {
    차례: 첫소리 → 모음 → 겹모음 → 받침(모음을 알아야 연습됨) → 성조 → 헷갈리는 소리. 자료 원본은 tools/build_basics.py */
 /* 2026-09-29 대표님 지시 "i와 y의 차이 · 각 모음 위의 모자·성조 · gio 같은 결합 — 관련된 모든 것 / 숫자 읽는 규칙 자세하게 / 긴 글을 나누는 기준(학문적으로)"
    → 철자·성조 부호 규칙(P7)·숫자 읽기(P8)·끊어 읽기(P9). 숫자·끊어 읽기 카드는 입모양 대신 규칙이 주인공이라 입모양 판을 안 그린다(x.nomouth). */
-const BASIC_ORDER = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9'];   // 모음 → 성조 → 자음 → 겹모음 → 받침 → … (2026-10-07 검증: Tiếng Việt 1 은 모음 a 로 시작해 성조 다섯을 첫 2주 안에 다 가르침 — 전의 '첫소리→운→성조'는 음절 짜임이지 단원 차례가 아니었다)
+const BASIC_ORDER = ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10'];   // P10 한자어 읽기 (2026-10-18)
+//   // 모음 → 성조 → 자음 → 겹모음 → 받침 → … (2026-10-07 검증: Tiếng Việt 1 은 모음 a 로 시작해 성조 다섯을 첫 2주 안에 다 가르침 — 전의 '첫소리→운→성조'는 음절 짜임이지 단원 차례가 아니었다)
 function studyBasicsEntry() {
   const b = $('#subBody'); b.textContent = '';
   const back = () => studyBasicsEntry();
@@ -10413,7 +10414,7 @@ function drawCard() {
 
   // '1 / 12'만 보면 외울 게 12개인 줄 안다. 무엇을 세는지 붙여준다.
   const KIND = { letter: '글자', tone: '성조', word: '단어', dialog: '대화', rule: '예문', cult: '문화', cmp: '소리 짝', know: '알아 두기' };
-  if (L.day && ['P7', 'P8', 'P9'].includes(L.day.day)) KIND.letter = '규칙';   // 철자·숫자·끊어 읽기 카드는 글자가 아니라 규칙 (2026-09-29)
+  if (L.day && ['P7', 'P8', 'P9', 'P10'].includes(L.day.day)) KIND.letter = '규칙';   // 철자·숫자·끊어 읽기 카드는 글자가 아니라 규칙 (2026-09-29)
   // 표지는 세는 대상에서 빼야 '단어 1 / 10'이 맞는다
   const kinds = L.items.map(x => x.k);
   if (it.k === 'cover') {

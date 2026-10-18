@@ -406,6 +406,43 @@ P9 = {"day": "P9", "theme": "끊어 읽기",
 
 
 # ── 귀로 구별하기 (각 장 끝) ────────────────────────────────────
+# ── 10. 한자어 읽기 (대표님 2026-10-18 "한문으로 일이 nhất 같고 — 규칙화할 수 있니? 기본기 탭에 넣어라") ──
+# 비율은 우리 앱 한자어에서 베트남 음절과 맞춘 한자 1,108자를 센 값(tools/hanviet_rule/count.py → 표.json). 예는 앱 낱말(소리 있음).
+P10 = {"day": "P10", "theme": "한자어 읽기",
+       "intro": "베트남어 낱말의 많은 부분이 한자어(Hán Việt)입니다. 한자 한 글자마다 베트남어로 읽는 소리가 거의 하나로 정해져 있어서, "
+                "<b>한국 한자음</b>을 알면 베트남어 소리를 꽤 맞힐 수 있습니다. 특히 <b>받침</b>은 거의 규칙대로 갑니다. "
+                "아래 비율은 이 앱의 한자어 1,108자를 센 값입니다.",
+       "letters": [
+    L("-n · -m · -t · -p", "① 받침 ㄴ·ㅁ·ㄹ·ㅂ → -n · -m · -t · -p", "pháp luật", "pháp luật", "법률 (法律)", [
+        "<b>ㄴ → -n</b> (98%) — 韓 한 → hà<b>n</b> · 文 문 → vă<b>n</b> · 人 인 → nhâ<b>n</b>",
+        "<b>ㅁ → -m</b> (100%) — 心 심 → tâ<b>m</b> · 南 남 → na<b>m</b>",
+        "<b>ㄹ → -t</b> (98%) — 日 일 → nhậ<b>t</b> · 越 월 → việ<b>t</b> · 律 률 → luậ<b>t</b>",
+        "<b>ㅂ → -p</b> (94%) — 法 법 → phá<b>p</b> · 入 입 → nhậ<b>p</b> · 合 합 → hợ<b>p</b>"]),
+    L("-c · -ch / -ng · -nh", "② 받침 ㄱ → -c·-ch · ㅇ → -ng·-nh · 받침 없음 → 모음", "quốc gia", "quốc gia", "국가 (國家)", [
+        "<b>ㄱ → -c</b> (72%) · <b>-ch</b> (25%) — 國 국 → quố<b>c</b> · 學 학 → họ<b>c</b> · 客 객 → khá<b>ch</b> · 歷 력 → lị<b>ch</b>",
+        "<b>ㅇ → -ng</b> (68%) · <b>-nh</b> (31%) — 公 공 → cô<b>ng</b> · 中 중 → tru<b>ng</b> · 名 명 → da<b>nh</b> · 情 정 → tì<b>nh</b>",
+        "<b>-ch · -nh</b> 는 모음 <b>a · i · ê</b> 뒤에만 옵니다 — i 뒤면 늘 -ch·-nh (tình · lịch · kinh).",
+        "<b>받침 없음 → 모음으로 끝</b> (99%) — 家 가 → gia · 自 자 → tự · 意 의 → ý"]),
+    L("ㄱ·ㄹ·ㅂ → sắc · nặng", "③ 받침 ㄱ·ㄹ·ㅂ 이면 성조는 sắc 아니면 nặng", "đặc biệt", "đặc biệt", "특별 (特別)", [
+        "한국 한자음 받침이 <b>ㄱ · ㄹ · ㅂ</b> 이면 베트남어 성조는 <b>sắc(올라감)</b> 아니면 <b>nặng(짧고 무겁게)</b> 입니다 (98%).",
+        "法 법 → ph<b>á</b>p · 國 국 → qu<b>ố</b>c · 日 일 → nh<b>ậ</b>t · 學 학 → h<b>ọ</b>c · 特別 특별 → đ<b>ặ</b>c bi<b>ệ</b>t",
+        "이 받침들이 베트남어 -c·-ch·-t·-p 가 되기 때문입니다 — 받침이 p·t·c·ch 인 음절은 원래 sắc·nặng 만 씁니다.",
+        "다른 받침·받침 없음은 성조를 미리 알 수 없습니다 (여섯 성조가 고루 나옵니다)."]),
+    L("đ · l · n · h · th", "④ 첫소리 — 잘 맞는 것", "đại học", "đại học", "대학 (大學)", [
+        "<b>ㄴ → n</b> (100%) · <b>ㄹ → l</b> (93%) — 律 률 → <b>l</b>uật · 理 리 → <b>l</b>ý",
+        "<b>ㄷ → đ</b> (92%) — 大 대 → <b>đ</b>ại · 同 동 → <b>đ</b>ồng · 電 전 → <b>đ</b>iện",
+        "<b>ㅎ → h</b> (82%) — 韓 한 → <b>h</b>àn · 學 학 → <b>h</b>ọc · 幸福 행복 → <b>h</b>ạnh phúc",
+        "<b>ㅌ → th</b> (71%) — 體 체 → <b>th</b>ể · <b>ㅁ → m</b> (70%) · v (20%) — 文 문 → <b>v</b>ăn · 問 문 → <b>v</b>ấn",
+        "<b>ㅂ → ph</b> (54%) · <b>b</b> (41%) — 法 법 → <b>ph</b>áp · 福 복 → <b>ph</b>úc · 平 평 → <b>b</b>ình · 本 본 → <b>b</b>ản"]),
+    L("ㅅ · ㅈ · ㄱ · ㅇ", "⑤ 첫소리 — 갈래가 여럿인 것", "thời gian", "thời gian", "시간 (時間)", [
+        "<b>ㅅ → th</b> (48%) · <b>t</b> (33%) · s (11%) — 時 시 → <b>th</b>ời · 心 심 → <b>t</b>âm · 史 사 → <b>s</b>ử",
+        "<b>ㅈ → t</b> (34%) · <b>ch</b> (24%) · <b>tr</b> (22%) · đ (13%) — 自 자 → <b>t</b>ự · 政 정 → <b>ch</b>ính · 中 중 → <b>tr</b>ung · 電 전 → <b>đ</b>iện",
+        "<b>ㄱ → c</b> (38%) · <b>kh</b> (22%) · <b>qu</b> (12%) · gi — 公 공 → <b>c</b>ông · 科 과 → <b>kh</b>oa · 國 국 → <b>qu</b>ốc · 家 가 → <b>gi</b>a",
+        "<b>ㅇ → 첫소리 없음</b> (24%) · <b>d</b> (19%) · <b>ng</b> (16%) · <b>v</b> (14%) — 意 의 → ý · 越 월 → <b>v</b>iệt · 人 인 → <b>nh</b>ân",
+        "이 넷은 외우기보다, 새 한자어를 만날 때 한국 한자음과 견줘 보는 데 씁니다."]),
+       ]}
+
+
 def G(base, note, items):
     return {"base": base, "note": note, "items": [{"vi": v, "ko": k} for v, k in items]}
 
@@ -462,10 +499,10 @@ def main():
     doc = json.loads(p.read_text(encoding="utf-8"))
     old = {d["day"]: d for d in doc.get("prep", [])}
     P2 = old.get("P2") or json.loads((R / "data/_basics.json").read_text(encoding="utf-8"))["prep"][4]
-    for _d in (P8, P9):                                # 숫자·끊어 읽기는 입모양 판 대신 규칙이 주인공 (앱 x.nomouth)
+    for _d in (P8, P9, P10):                           # 숫자·끊어 읽기·한자어 읽기는 입모양 판 대신 규칙이 주인공 (앱 x.nomouth)
         for _x in _d["letters"]:
             _x["nomouth"] = 1
-    prep = [P3, P1, P4, P5, P2, P6, P7, P8, P9]        # 자음 → 모음 → 겹모음 → 받침 → 성조 → 헷갈리는 소리 → 철자·부호 규칙 → 숫자 읽기 → 끊어 읽기 (2026-09-29)
+    prep = [P3, P1, P4, P5, P2, P6, P7, P8, P9, P10]   # … → 한자어 읽기(2026-10-18) · 자음 → 모음 → 겹모음 → 받침 → 성조 → 헷갈리는 소리 → 철자·부호 규칙 → 숫자 읽기 → 끊어 읽기 (2026-09-29)
     import importlib.util as _iu                         # 카드마다 '알아 둘 것' 덧붙임 (2026-10-12) — tools/gram_detail/basics_more.json
     _sp = _iu.spec_from_file_location("apply_basics", R / "tools/gram_detail/apply_basics.py"); _m = _iu.module_from_spec(_sp); _sp.loader.exec_module(_m)
     _m.add_more(prep)
