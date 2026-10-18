@@ -2,6 +2,228 @@
  "days": [
   {
    "ts": "2026-10-17",
+   "day": "N953.html",
+   "track": "news",
+   "theme": "옷 쇼핑",
+   "title": "Local fashion is turning Ho Chi Minh City into tourists' shopping 'paradise'",
+   "u": "https://e.vnexpress.net/news/travel/local-fashion-is-turning-ho-chi-minh-city-into-tourists-shopping-paradise-vnepre-5129953.html",
+   "cat": "소식",
+   "intro": "호치민시가 저렴하고 질 좋은 패션으로 외국인 관광객의 쇼핑 성지가 되었다.",
+   "words": [
+    {
+     "vi": "quần áo",
+     "ko": "옷, 의류",
+     "kr_read": "꾸언 아오",
+     "emoji": "👕",
+     "en": "colorful clothes hanging on a rack",
+     "tones": [
+      {
+       "syl": "quần",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "áo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-quan-ao.webp"
+    },
+    {
+     "vi": "va li",
+     "ko": "캐리어, 여행가방",
+     "kr_read": "바 리",
+     "emoji": "🧳",
+     "en": "a travel luggage suitcase on wheels",
+     "tones": [
+      {
+       "syl": "va",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "li",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-va-li.webp"
+    },
+    {
+     "vi": "cửa hàng",
+     "ko": "가게, 상점",
+     "kr_read": "끄어 항",
+     "emoji": "🏪",
+     "en": "front of a stylish fashion shop",
+     "tones": [
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-cua-hang.webp"
+    },
+    {
+     "vi": "khách",
+     "ko": "손님, 고객",
+     "kr_read": "칵",
+     "emoji": "👤",
+     "en": "a customer shopping in a boutique",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-khach.webp"
+    },
+    {
+     "vi": "mua",
+     "ko": "사다, 구매하다",
+     "kr_read": "무어",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "giá",
+     "ko": "가격",
+     "kr_read": "자",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "giá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "옷 쇼핑",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Tôi thử áo này được không?",
+      "ko": "저 이 옷 입어봐도 돼요?",
+      "kr_read": "또이 트 아오 나이 드억 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thử",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "áo",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Được chứ, áo này đẹp lắm.",
+      "ko": "물론이죠, 이 옷 아주 예뻐요.",
+      "kr_read": "드억 쯔 아오 나이 댑 람",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chứ,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "áo",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đẹp",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "lắm.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 111
+  },
+  {
+   "ts": "2026-10-17",
    "day": "N529.html",
    "track": "news",
    "theme": "메트로 정전",
@@ -228,7 +450,494 @@
     ],
     "extra": []
    },
-   "n": 107
+   "n": 110
+  },
+  {
+   "ts": "2026-10-17",
+   "day": "N785.html",
+   "track": "news",
+   "theme": "기기 점검",
+   "title": "Hidden spy chip turns up in crypto wallet bought in Singapore, triggers investigation across 7 Asian markets",
+   "u": "https://e.vnexpress.net/news/news/hidden-spy-chip-turns-up-in-crypto-wallet-bought-in-singapore-triggers-investigation-across-7-asian-markets-5132785.html",
+   "cat": "소식",
+   "intro": "아시아에서 암호화폐 지갑 해킹 칩이 발견되었습니다. 제조사는 기기 조사를 위해 판매를 중단했습니다.",
+   "words": [
+    {
+     "vi": "thiết bị",
+     "ko": "기기",
+     "kr_read": "티엣 비",
+     "emoji": "📱",
+     "en": "electronic devices on a desk",
+     "tones": [
+      {
+       "syl": "thiết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-thiet-bi.webp"
+    },
+    {
+     "vi": "mua",
+     "ko": "사다",
+     "kr_read": "무어",
+     "emoji": "🛒",
+     "en": "a person pushing a shopping cart",
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua.webp"
+    },
+    {
+     "vi": "bán",
+     "ko": "팔다",
+     "kr_read": "반",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "bán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "kiểm tra",
+     "ko": "확인하다",
+     "kr_read": "끼엠 짜",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "kiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "tra",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "an toàn",
+     "ko": "안전하다",
+     "kr_read": "안 또안",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "an",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "toàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ]
+    },
+    {
+     "vi": "tiền",
+     "ko": "돈",
+     "kr_read": "띠엔",
+     "emoji": "💵",
+     "en": "paper money banknotes",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tien.webp"
+    }
+   ],
+   "dialog": {
+    "title": "기기 점검",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Thiết bị này có an toàn không?",
+      "ko": "이 기기 안전한가요?",
+      "kr_read": "티엣 비 나이 꼬 안 또안 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Thiết",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "an",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "toàn",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Hãy kiểm tra cẩn thận trước nhé.",
+      "ko": "먼저 꼼꼼히 확인해 보세요.",
+      "kr_read": "하이 끼엠 짜 껀 턴 쯔억 냬",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Hãy",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "kiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tra",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cẩn",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "thận",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "trước",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 109
+  },
+  {
+   "ts": "2026-10-17",
+   "day": "N207.html",
+   "track": "news",
+   "theme": "공항과 기념품",
+   "title": "IPP Travel Retail opens Travel Essentials store at Cam Ranh airport",
+   "u": "https://e.vnexpress.net/news/travel/ipp-travel-retail-opens-travel-essentials-store-at-cam-ranh-airport-5133207.html",
+   "cat": "문화·생활",
+   "intro": "깜라인 공항에 여행용품 및 기념품 매장이 열렸습니다. 여행객을 위한 필수품과 지역 특산물을 판매합니다.",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport terminal building",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "cửa hàng",
+     "ko": "가게, 매장",
+     "kr_read": "끄어 항",
+     "emoji": "🏪",
+     "en": "a convenience store front",
+     "tones": [
+      {
+       "syl": "cửa",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-cua-hang.webp"
+    },
+    {
+     "vi": "quà lưu niệm",
+     "ko": "기념품",
+     "kr_read": "꽈 르우 니엠",
+     "emoji": "🎁",
+     "en": "a wrapped gift box",
+     "tones": [
+      {
+       "syl": "quà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "lưu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "niệm",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-qua-luu-niem.webp"
+    },
+    {
+     "vi": "du khách",
+     "ko": "여행객",
+     "kr_read": "주 칵",
+     "emoji": "🧳",
+     "en": "a traveler with luggage",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-du-khach.webp"
+    },
+    {
+     "vi": "mua sắm",
+     "ko": "쇼핑하다",
+     "kr_read": "무어 쌈",
+     "emoji": "🛍️",
+     "en": "shopping bags on a table",
+     "tones": [
+      {
+       "syl": "mua",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "sắm",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-mua-sam.webp"
+    },
+    {
+     "vi": "đồ dùng",
+     "ko": "용품, 소지품",
+     "kr_read": "도 중",
+     "emoji": "📦",
+     "en": "travel amenities on a desk",
+     "tones": [
+      {
+       "syl": "đồ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "dùng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-do-dung.webp"
+    }
+   ],
+   "dialog": {
+    "title": "공항과 기념품",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Ở đây có quà lưu niệm không?",
+      "ko": "여기 기념품 있어요?",
+      "kr_read": "어 더이 꼬 꽈 르우 니엠 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "quà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "lưu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "niệm",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, ở cửa hàng đằng kia.",
+      "ko": "네, 저쪽 매장에 있어요.",
+      "kr_read": "꼬 어 끄어 항 당 끼어",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "cửa",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "hàng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đằng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "kia.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 108
   },
   {
    "ts": "2026-10-17",
@@ -463,7 +1172,7 @@
     ],
     "extra": []
    },
-   "n": 106
+   "n": 107
   },
   {
    "ts": "2026-10-16",
@@ -721,7 +1430,7 @@
     ],
     "extra": []
    },
-   "n": 105
+   "n": 106
   },
   {
    "ts": "2026-10-16",
@@ -993,6 +1702,229 @@
       "gloss": []
      }
     ]
+   },
+   "n": 105
+  },
+  {
+   "ts": "2026-10-16",
+   "day": "Nno=44278",
+   "track": "news",
+   "theme": "회사 서류 업무",
+   "title": "베트남 진출 유럽기업 10곳 중 6곳 ‘경영성과 좋음’…3분기 BCI 78.3",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44278",
+   "cat": "경제",
+   "intro": "유럽 기업 64%가 베트남 경영 성과를 긍정 평가함. 다만 복잡한 행정 서류 절차는 부담으로 꼽힘.",
+   "words": [
+    {
+     "vi": "giấy tờ",
+     "ko": "서류",
+     "kr_read": "저이 떠",
+     "emoji": "📄",
+     "en": "a stack of paper documents",
+     "tones": [
+      {
+       "syl": "giấy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "tờ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-giay-to.webp"
+    },
+    {
+     "vi": "báo cáo",
+     "ko": "보고서",
+     "kr_read": "바오 까오",
+     "emoji": "📊",
+     "en": "a printed report paper with charts",
+     "tones": [
+      {
+       "syl": "báo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "cáo",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-bao-cao.webp"
+    },
+    {
+     "vi": "nhanh",
+     "ko": "빠르다",
+     "kr_read": "나인",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "nhanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꽁 띠",
+     "emoji": "🏢",
+     "en": "a modern office building",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ty",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-ty.webp"
+    },
+    {
+     "vi": "công việc",
+     "ko": "일, 업무",
+     "kr_read": "꽁 비엑",
+     "emoji": "💼",
+     "en": "a briefcase on an office desk",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "việc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-cong-viec.webp"
+    },
+    {
+     "vi": "giám đốc",
+     "ko": "사장, 이사",
+     "kr_read": "잠 독",
+     "emoji": "👔",
+     "en": "a business person in a suit",
+     "tones": [
+      {
+       "syl": "giám",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "đốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-giam-doc.webp"
+    }
+   ],
+   "dialog": {
+    "title": "회사 서류 업무",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Giấy tờ này xong chưa?",
+      "ko": "이 서류 다 끝났어요?",
+      "kr_read": "저이 떠 나이 쏭 쯔어",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Giấy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "xong",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "chưa?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Xong rồi, làm rất nhanh!",
+      "ko": "끝났어요, 아주 빨리 처리했어요!",
+      "kr_read": "쏭 조이 람 젓 나인",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Xong",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rồi,",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "làm",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhanh!",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
    },
    "n": 104
   },
@@ -26863,5 +27795,5 @@
    "n": 1
   }
  ],
- "updated": "2026-10-18 08:23"
+ "updated": "2026-10-18 23:16"
 }
