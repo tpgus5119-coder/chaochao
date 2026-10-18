@@ -13468,7 +13468,10 @@ function finishQuiz() {
     r.append(el('p', 'note', '남은 복습 ' + left + '개'));
   }
   const hasDlg = Q.day && Q.day.dialog;
-  const b = el('button', 'primary big', hasDlg ? '문장으로 써먹기 ›' : Q.day ? '오늘 완료' : '홈으로');
+  /* 복습·테스트 탭에서 온 문제(세트가 아닌 것)는 끝나면 **온 곳으로** (대표님 2026-10-18 "복습 다 하고 다음 화면에 왜 일상이 나오냐 — 종료 누르면 테스트-복습 탭으로").
+     전에는 '홈으로'가 dailyFlowEntry(일상 과정 목록)로 갔다. NAV 맨 위 = 들어온 목록(dive), 없으면 테스트 탭에서 왔을 때 테스트 첫 화면 */
+  const backTo = !Q.day ? (NAV.length ? NAV[NAV.length - 1] : ACTIVE_TAB === 'test' ? testHubEntry : null) : null;
+  const b = el('button', 'primary big', hasDlg ? '문장으로 써먹기 ›' : Q.day ? '오늘 완료' : backTo ? '종료' : '홈으로');
   b.style.marginTop = '24px';
   b.onclick = () => {
     if (hasDlg) { startDialog(Q.day); return; }
@@ -13477,6 +13480,7 @@ function finishQuiz() {
                  addSetSentences(Q.day.words);           // 그 과 예문 3개를 문장 문제로 (2026-09-28)
                  touchToday(); save();
                  r.textContent = ''; r.append(el('div', 'n', tr('세트 완료'))); afterSetBtns(r, Q.day); return; }   // 다음 세트 · 목록으로 (2026-09-27 밤)
+    if (backTo) { if (NAV.length && NAV[NAV.length - 1] === backTo) NAV.pop(); backTo(); return; }
     dailyFlowEntry();
   };
   r.append(b);
