@@ -108,8 +108,20 @@ def _featjob(a):
     p, v, w = a; return (w, v, feat(p, v))
 FORCE = {'đầy'}   # 오류 보고로 들어온 낱말 — 판정이 괜찮다고 해도 다섯 꼴을 견줘 본다
 
+U9 = 'không một hai ba bốn năm sáu bảy tám chín'.split()
+def n2w(n):
+    """숫자 → 베트남어 글 (0~9999). Whisper 는 tháng 12 처럼 숫자로 적는다"""
+    if n < 10: return U9[n]
+    if n < 20: return 'mười' + ('' if n == 10 else ' ' + ('lăm' if n % 10 == 5 else U9[n % 10]))
+    if n < 100:
+        t, u = divmod(n, 10); return U9[t] + ' mươi' + ('' if u == 0 else ' ' + ('mốt' if u == 1 else 'lăm' if u == 5 else 'tư' if u == 4 else U9[u]))
+    if n < 1000:
+        h, r = divmod(n, 100); return U9[h] + ' trăm' + ('' if r == 0 else (' lẻ ' + U9[r] if r < 10 else ' ' + n2w(r)))
+    th, r = divmod(n, 1000); return U9[th] + ' nghìn' + ('' if r == 0 else ' ' + (('không trăm ' + ('lẻ ' if r < 10 else '') + n2w(r)) if r < 100 else n2w(r)))
 def bare_words(s):
-    return re.sub(r'[^\w\s]', ' ', U.normalize('NFC', s.lower())).split()
+    s = re.sub(r'\d+', lambda m: n2w(int(m.group())) if int(m.group()) < 10000 else m.group(), s)
+    EQ = {'tư': 'bốn', 'mốt': 'một', 'lăm': 'năm', 'ngàn': 'nghìn', 'linh': 'lẻ'}   # 같은 수의 다른 말(tháng tư = tháng 4)
+    return [EQ.get(w, w) for w in re.sub(r'[^\w\s]', ' ', U.normalize('NFC', s.lower())).split()]
 def match(a, b):
     import difflib
     A, B = bare_words(a), bare_words(b)

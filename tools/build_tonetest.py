@@ -78,6 +78,79 @@ def hat_fams(groups, ok, need_tones):
     return out
 
 
+# ── 비슷한 소리 (대표님 2026-10-18 오류 보고: "듣고 어떤 단어인지 고르는 시험 — d 도 ㅈ 소리, gi 도 ㅈ 소리. 비슷한 소리들 테스트해 줘") ──
+# 성조·모음은 같고 **첫소리나 받침만** 헷갈리는 무리 안에서 다른 낱말들을 한 묶음으로.
+#   첫소리 무리: d·gi·r (북부는 셋 다 'ㅈ') · s·x · ch·tr (북부는 같은 소리) · t·th · c(k)·kh · n·nh·ng·l
+#   받침 무리:   n·ng·nh · t·c·ch
+# 북부 표준에서 소리가 **같은** 무리(d·gi·r, s·x, ch·tr)는 귀로는 가릴 수 없다 — 그래서 이 갈래는 문제에 정답의 뜻을 함께 보여 준다(앱 쪽).
+# 같은 뜻의 두 표기(뜻이 같은 낱말)는 하나만 남긴다 — 정답이 둘이 되지 않게.
+INIT = ['ngh', 'ng', 'nh', 'ch', 'tr', 'th', 'kh', 'ph', 'gh', 'gi', 'qu', 'b', 'c', 'd', 'đ', 'g', 'h', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'x']
+IGRP = {'d': 'z', 'gi': 'z', 'r': 'z', 's': 's', 'x': 's', 'ch': 'c', 'tr': 'c', 't': 't', 'th': 't',
+        'c': 'k', 'k': 'k', 'kh': 'k', 'n': 'n', 'nh': 'n', 'ng': 'n', 'ngh': 'n', 'l': 'n'}
+FGRP = {'n': 'n', 'ng': 'n', 'nh': 'n', 't': 't', 'c': 't', 'ch': 't'}
+VOW = 'aăâeêioôơuưy'
+# 북부에서 소리가 같은데 뜻까지 비슷하거나(정답이 둘), 사투리·외래어라 보기로 부적절한 것 — 2026-10-18 눈으로 43쌍 확인
+C_DROP = {'chuyền', 'truyện', 'giai', 'tray', 'dời'}
+
+
+def split_syl(v):
+    """(첫소리, 모음, 받침, 성조) — 성조를 뗀 소문자로. 모음이 없으면 None"""
+    t = unicodedata.normalize('NFC', ''.join(c for c in unicodedata.normalize('NFD', v.lower()) if c not in MARK))
+    if ' ' in t or not t:
+        return None
+    ini = ''
+    for i0 in INIT:
+        if t.startswith(i0):
+            ini = i0
+            break
+    rest = t[len(ini):]
+    if ini == 'gi' and (not rest or rest[0] not in VOW):     # gì·gìn — i 가 모음이다
+        rest = 'i' + rest
+    if not rest or rest[0] not in VOW:
+        return None
+    j = len(rest)
+    while j > 0 and rest[j - 1] not in VOW:
+        j -= 1
+    nuc, fin = rest[:j], rest[j:]
+    if fin not in ('', 'c', 'ch', 'm', 'n', 'ng', 'nh', 'p', 't'):
+        return None
+    return ini, nuc, fin, tone_of(v)
+
+
+def c_fams(words, ok):
+    groups = {}
+    for v in words:
+        sp = split_syl(v)
+        if not sp:
+            continue
+        ini, nuc, fin, tn = sp
+        ig = IGRP.get(ini, ini) if ini != 'k' else 'k'
+        if ini in ('ngh',):
+            ig = 'n'
+        fg = FGRP.get(fin, fin)
+        groups.setdefault((ig, nuc.replace('y', 'i') if False else nuc, fg, tn), []).append((v, ini, fin))
+    out = []
+    for key, vs in groups.items():
+        seen, kos, row = set(), set(), []
+        for v, ini, fin in sorted(vs):
+            if v in C_DROP:
+                continue
+            it = ok(v)
+            if not it:
+                continue
+            ini_s = {'k': 'c', 'ngh': 'ng'}.get(ini, ini)   # c·k, ng·ngh 는 같은 소리의 다른 표기
+            lab = (ini or '∅') + ('·' + fin if fin else '')
+            sig = (ini_s, fin)
+            if sig in seen or it[2] in kos:
+                continue
+            seen.add(sig)
+            kos.add(it[2])
+            row.append(it + [lab])
+        if len({r[3] for r in row}) >= 2:
+            out.append(row)
+    return out
+
+
 def main():
     sib = json.load(open(os.path.join(ROOT, 'data/sib.json'), encoding='utf-8'))
     ai = json.load(open(os.path.join(ROOT, 'data/audio_index.json'), encoding='utf-8'))
@@ -120,9 +193,10 @@ def main():
         return [v, tone_of(v), ko] if ko else None
     s_fams = hat_fams(sib['s'], ok, False)      # 모자만 — 같은 성조
     k_fams = hat_fams(sib['k'], ok, True)       # 둘 다 — 모자도 성조도 다른 말이 섞인 묶음
+    c_fam = c_fams([v for v in ai if ' ' not in v.strip()], ok)   # 비슷한 소리 (2026-10-18)
     out = os.path.join(ROOT, 'data/tonetest.json')
-    json.dump({'f': fams, 's': s_fams, 'k': k_fams}, open(out, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-    for name, fs in (('성조 묶음', fams), ('모자 묶음', s_fams), ('모자+성조 묶음', k_fams)):
+    json.dump({'f': fams, 's': s_fams, 'k': k_fams, 'c': c_fam}, open(out, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+    for name, fs in (('성조 묶음', fams), ('모자 묶음', s_fams), ('모자+성조 묶음', k_fams), ('비슷한 소리 묶음', c_fam)):
         size = {}
         for f in fs:
             size[len(f)] = size.get(len(f), 0) + 1

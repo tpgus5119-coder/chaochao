@@ -10510,7 +10510,7 @@ $('#next').onclick = () => {
        아래 #next 가 보이는(그다음이 확인 문제·시험인) 장에서만. 누르면 #next 와 같은 길 */
     const last = L.i >= L.items.length - 1, toTest = last && !$('#next').hidden;
     nextB.classList.toggle('totest', toTest);
-    nextB.textContent = toTest ? tr('테스트') : '›';
+    nextB.textContent = toTest ? 'TEST' : '›';   // 대표님 2026-10-18 "영어로 test" (화면 영어 금지의 예외 — 대표님 지시)
     nextB.setAttribute('aria-label', toTest ? tr('테스트') : tr('다음'));
     nextB.disabled = last && !toTest;
   };
@@ -11200,7 +11200,7 @@ function drawQuiz() {
                   dict: '듣고 글자를 만들어 보세요',
                   match: '뜻과 단어를 짝지어 보세요', puzzle: '조각을 눌러 문장을 만들어 보세요',
                   read_ko: '뜻을 보고 단어를 고르세요', listen_ko: '뜻을 듣고 단어를 고르세요', say_ko: '뜻을 듣고 베트남어로 말해 보세요',
-                  tone: '성조 부호가 맞는 것을 고르세요', shadow: '듣고 따라 말해 보세요', write_ko: '뜻을 보고 베트남어로 쳐 보세요',
+                  tone: '성조·모자가 맞는 것을 고르세요', shadow: '듣고 따라 말해 보세요', write_ko: '뜻을 보고 베트남어로 쳐 보세요',
                   puzzle_ko: '뜻을 듣고 조각으로 문장을 만들어 보세요', puzzle_vi: '문장을 듣고 조각으로 만들어 보세요',
                   pic_tf: '듣고 그림이 맞으면 맞다, 아니면 틀리다', pic4: '듣고 맞는 그림을 고르세요', dictation: '듣고 그대로 쳐 보세요',
                   cloze: '빈칸에 들어갈 단어를 고르세요', gpat: '이 문장에 쓰인 문법을 고르세요', gcloze: '빈칸에 들어갈 말을 고르세요 (문법)', tf: '문장과 뜻이 맞으면 맞다, 아니면 틀리다', err: '틀리게 적힌 단어를 누르세요', say_pic: '그림을 보고 베트남어로 말해 보세요' };
@@ -12709,22 +12709,96 @@ function examWrongList(r, list) {
    틀린 보기는 음절 하나의 성조만 바꾼 것 — 그래야 성조를 듣는 문제가 된다 */
 function drawToneQ(body, q) {
   const w = q.w, syls = String(w.vi).trim().split(/\s+/);
-  const bare = syls.map(stripTone).join(' ');
+  const bare = syls.map(x => stripHats(stripTone(x))).join(' ');   // 성조도 모자도 뗀 글자 (대표님 2026-10-18 "성조만 시험하지 말고 모자도 시험해라")
   const main = el('button', 'qmain qtap', esc(bare)); main.type = 'button'; main.onclick = () => sound(w.vi);
   const qc = el('div', 'qcard'); qc.append(body.querySelector('.q'), main, el('div', 'q mid', esc(koShow(w.ko)))); body.append(qc);   // 뜻도 보여 준다 (대표님 지시 2026-09-28: 소리만 듣고 맞추라는 건 너무 어렵다)
   // 듣기 단추는 뺐다 — 글자를 누르면 소리가 난다 (대표님 지시 2026-09-28)
   sound(w.vi);
-  const MK = ['', '\u0300', '\u0301', '\u0309', '\u0303', '\u0323'];
-  const seen = new Set([w.vi.toLowerCase()]), opts = [w.vi];
-  for (let g = 0; g < 80 && opts.length < 4; g++) {
-    const i = Math.floor(Math.random() * syls.length), b = stripTone(syls[i]);
-    const c = [...syls]; c[i] = withMark(b, MK[Math.floor(Math.random() * 6)], tonePos(b));
-    const cand = c.join(' ');
-    if (!seen.has(cand.toLowerCase())) { seen.add(cand.toLowerCase()); opts.push(cand); }
-  }
+  const opts = toneQOpts(syls);
   const box = el('div', 'opts');
   opts.sort(() => Math.random() - .5).forEach(o => { const b = el('button', null, esc(o)); b.dataset.vi = o; b.onclick = () => answer(b, o === w.vi, w); box.append(b); });
   body.append(box);
+}
+/* 성조·모자 보기 만들기 (대표님 2026-10-18 오류 보고: "왜 마지막 단어에만 성조 다른 것을 테스트하니 — 첫 번째·두 번째 단어에서도 있어야지. 모자도 시험해라").
+   전에는 음절을 무작위로 골라 sự tồn tài·tải·tai 처럼 한 음절에만 몰릴 수 있었다.
+   · 음절마다 '틀린 꼴' 하나를 정한다 — 성조를 바꾸거나 모자를 바꾼다(반반, 실제 있는 음절만: 음절 표 KRSYL).
+     받침 p·t·c·ch 음절은 sắc↔nặng 만(다른 성조는 베트남어에 없는 음절이라 바로 티가 난다).
+   · 보기 셋은 '어느 음절을 틀리게 하나'의 조합 — 음절마다 맞는 꼴과 틀린 꼴이 보기 넷 중 반반씩 나오게 고른다.
+     (한 음절씩만 바꾸면 음절마다 셋이 같은 쪽이 정답이라 다수결로 맞힌다.) 한 음절이면 그 음절의 틀린 꼴 셋. */
+const TQ_MK = ['', '\u0300', '\u0301', '\u0309', '\u0303', '\u0323'];
+const TQ_FAM = { a: 'aăâ', 'ă': 'aăâ', 'â': 'aăâ', e: 'eê', 'ê': 'eê', o: 'oôơ', 'ô': 'oôơ', 'ơ': 'oôơ', u: 'uư', 'ư': 'uư' };
+function stripHats(syl) { return [...syl].map(c => { const lo = c.toLowerCase(), b = HAT_BASE[lo]; return b ? (c === lo ? b : b.toUpperCase()) : c; }).join(''); }
+function tqReal(x) {
+  const k = x.toLowerCase();
+  if (typeof KRSYL !== 'undefined' && KRSYL) return !!KRSYL[k];
+  return true;
+}
+function tqVariants(syl) {                        // 그 음절의 틀린 꼴들 — [성조 바꾼 것들, 모자 바꾼 것들]
+  const tm = (syl.normalize('NFD').match(/[\u0300\u0301\u0309\u0303\u0323]/) || [''])[0];
+  const b = stripTone(syl), checked = /(p|t|c|ch)$/i.test(b);
+  const tones = TQ_MK.filter(m => m !== tm && (!checked || m === '\u0301' || m === '\u0323'))
+    .map(m => withMark(b, m, tonePos(b))).filter(tqReal);
+  const hats = new Set(), cs = [...b];
+  cs.forEach((c, i) => {
+    const lo = c.toLowerCase(), fam = TQ_FAM[lo]; if (!fam) return;
+    [...fam].forEach(n => { if (n === lo) return; const a = [...cs]; a[i] = c === lo ? n : n.toUpperCase(); hats.add(a.join('')); });
+  });
+  if (/uo/i.test(stripHats(b))) hats.add(b.replace(/[uư][oôơ]/i, m => (m[0] === m[0].toLowerCase() ? 'ươ' : 'ƯƠ')));   // uo → ươ (người·được)
+  const hv = [...hats].filter(x => x !== b).map(x => tm ? withMark(x, tm, tonePos(x)) : x)
+    .filter(x => (!checked || !tm || tm === '\u0301' || tm === '\u0323') && tqReal(x));
+  return [tones, hv];
+}
+function toneQOpts(syls) {
+  const ans = syls.join(' '), n = syls.length;
+  const pickAlt = (i, avoid) => {                 // 음절 i 의 틀린 꼴 하나 — 성조·모자 반반
+    const [t, h] = tqVariants(syls[i]);
+    const tt = t.filter(x => !avoid.has(x)), hh = h.filter(x => !avoid.has(x));
+    const from = hh.length && (!tt.length || Math.random() < .5) ? hh : tt;
+    return from.length ? from[Math.floor(Math.random() * from.length)] : null;
+  };
+  const out = [ans], seen = new Set([ans.toLowerCase()]);
+  if (n === 1) {
+    const used = new Set([syls[0]]);
+    for (let g = 0; g < 40 && out.length < 4; g++) { const a = pickAlt(0, used); if (!a) break; used.add(a); if (!seen.has(a.toLowerCase())) { seen.add(a.toLowerCase()); out.push(a); } }
+    if (out.length < 4) {                         // 모자라면 모자·성조 둘 다 바꾼 꼴(người → ngưởi 는 없고 ngươi·ngửi… 처럼 실제 음절만), 그래도 모자라면 성조만 바꾼 꼴 아무거나
+      const [, hv] = tqVariants(syls[0]), more = [];
+      hv.forEach(h => tqVariants(h)[0].forEach(x => more.push(x)));
+      const b = stripTone(syls[0]);
+      const any = TQ_MK.filter(mk => !/(p|t|c|ch)$/i.test(b) || mk === '\u0301' || mk === '\u0323').map(mk => withMark(b, mk, tonePos(b)));   // 받침 p·t·c·ch 는 sắc·nặng 뿐 — 없으면 보기 셋
+      const raw = [];                               // 마지막: 모자만 바꾼 꼴(사전에 없어도 — 철자 실수를 가려내는 보기), 받침 규칙은 지킨다
+      { const tm = (syls[0].normalize('NFD').match(/[\u0300\u0301\u0309\u0303\u0323]/) || [''])[0];
+        [...b].forEach((c, i) => { const f = TQ_FAM[c.toLowerCase()]; if (f) [...f].forEach(n => { if (n !== c.toLowerCase()) { const a = [...b]; a[i] = n; const x = a.join(''); raw.push(tm ? withMark(x, tm, tonePos(x)) : x); } }); }); }
+      [...more.sort(() => Math.random() - .5), ...any.sort(() => Math.random() - .5), ...raw.sort(() => Math.random() - .5)].forEach(a => { if (out.length < 4 && !seen.has(a.toLowerCase())) { seen.add(a.toLowerCase()); out.push(a); } });
+    }
+    return out;
+  }
+  const alt = syls.map((_, i) => pickAlt(i, new Set([syls[i]])));
+  const can = alt.map(a => !!a), m = can.filter(Boolean).length;
+  if (!m) return out;
+  // 틀리게 할 음절의 조합 셋 — 음절마다 '틀린 쪽'이 두 번(보기 넷 중 반) 나오도록 가장 고르게
+  const idx = can.map((c, i) => c ? i : -1).filter(i => i >= 0);
+  let best = null, bs = 1e9;
+  for (let g = 0; g < 300; g++) {
+    const vs = [];
+    for (let k = 0; k < 3; k++) { const v = idx.filter(() => Math.random() < .5); if (!v.length) v.push(idx[Math.floor(Math.random() * idx.length)]); vs.push(v); }
+    const keys = vs.map(v => v.join(','));
+    if (new Set(keys).size < 3 && (1 << m) - 1 >= 3) continue;
+    const sc = idx.reduce((a, i) => a + Math.abs(vs.filter(v => v.includes(i)).length - 2), 0);
+    if (sc < bs) { bs = sc; best = vs; if (!sc) break; }
+  }
+  // 음절이 하나만 바뀔 수 있으면 그 음절의 다른 틀린 꼴로 채운다
+  (best || []).forEach(v => {
+    const c = [...syls]; v.forEach(i => { c[i] = alt[i]; });
+    let s0 = c.join(' ');
+    if (seen.has(s0.toLowerCase()) && v.length === 1) { const a = pickAlt(v[0], new Set([syls[v[0]], ...out.map(o => o.split(' ')[v[0]])])); if (a) { c[v[0]] = a; s0 = c.join(' '); } }
+    if (!seen.has(s0.toLowerCase())) { seen.add(s0.toLowerCase()); out.push(s0); }
+  });
+  for (let g = 0; g < 40 && out.length < 4; g++) {   // 모자라면(음절 하나만 바뀔 수 있을 때) 아무 음절의 다른 꼴로
+    const i = idx[Math.floor(Math.random() * idx.length)], a = pickAlt(i, new Set([syls[i]]));
+    if (!a) continue; const c = [...syls]; c[i] = a; const s0 = c.join(' ');
+    if (!seen.has(s0.toLowerCase())) { seen.add(s0.toLowerCase()); out.push(s0); }
+  }
+  return out;
 }
 function drawSay(body, q) {
   const w = q.w, koMode = q.mode === 'say_ko', shadow = q.mode === 'shadow', picOnly = q.mode === 'say_pic';
@@ -13632,7 +13706,7 @@ function ttLoad() {
     .then(j => (TTJ = j)).catch(() => { TTP = null; return null; });
   return TTP;
 }
-const TT_MODES = [['t', '성조만'], ['s', '모자만'], ['k', '둘 다']];
+const TT_MODES = [['t', '성조만'], ['s', '모자만'], ['k', '둘 다'], ['c', '비슷한 소리']];   // c: 첫소리·받침만 다른 낱말 (대표님 2026-10-18 "d 도 gi 도 ㅈ 소리 — 비슷한 소리 테스트") — tools/build_tonetest.py c_fams
 const ttMode = () => (TT_MODES.some(m => m[0] === S.ttMode) ? S.ttMode : 't');
 const ttFams = () => (TTJ && TTJ[ttMode() === 't' ? 'f' : ttMode()]) || [];
 const ttS = () => {
@@ -13641,17 +13715,18 @@ const ttS = () => {
   return m === 't' ? b : (b[m] || (b[m] = { lv: 2, r: [], tn: {}, cf: {} }));
 };
 /* 문제의 '갈래 값' — 성조만이면 성조, 모자만이면 모음, 둘 다면 모음+성조. 보기끼리 이것이 다르다 */
-const ttCat = x => { const m = ttMode(); return m === 't' ? x[1] : m === 's' ? x[3] : x[3] + ' ' + x[1]; };
+const ttCat = x => { const m = ttMode(); return m === 't' ? x[1] : (m === 's' || m === 'c') ? x[3] : x[3] + ' ' + x[1]; };
 function ttLabel(c) {                           // 표·안내에 쓰는 이름
   const m = ttMode();
   if (m === 't') return toneArrow(c) + ' ' + esc(c) + ' <small>' + esc(SIB_KO[c]) + '</small>';
   if (m === 's') return tr('모음') + ' <b>' + esc(c) + '</b>';
+  if (m === 'c') return '<b>' + esc(c) + '</b>';
   const [v, t] = c.split(' ');
   return tr('모음') + ' <b>' + esc(v) + '</b> · ' + toneArrow(t) + ' <small>' + esc(SIB_KO[t]) + '</small>';
 }
 /* '둘 다'는 보기가 셋부터다 — 정답과 **모자만** 다른 보기 하나, **성조만** 다른 보기 하나가 함께 있어야
    한쪽만 들어서는 못 맞힌다(보기 둘이면 어느 한쪽만 듣고도 가려진다). 그런 짝이 둘 다 있는 낱말만 정답으로 낸다. */
-const ttMinLv = () => 3;   // 난이도 올림 (대표님 2026-10-05 "성조와 모자 테스트 난이도 약간 더 높여도 된다") — 보기 둘(반반 찍기)은 없앴다
+const ttMinLv = () => ttMode() === 'c' ? 2 : 3;   // 비슷한 소리는 묶음이 거의 둘이라 보기 2개부터   // 난이도 올림 (대표님 2026-10-05 "성조와 모자 테스트 난이도 약간 더 높여도 된다") — 보기 둘(반반 찍기)은 없앴다
 const ttAnchor = (f, x) => ttMode() !== 'k'
   || (f.some(y => y[1] === x[1] && y[3] !== x[3]) && f.some(y => y[3] === x[3] && y[1] !== x[1]));
 function ttMaxLv() {
@@ -13716,6 +13791,7 @@ function drawToneTest() {
   const wrap = el('div', 'qplay');
   wrap.append(listenGroup(spd => play(q.ans[0], false, q.dir, spd)));   // 카드와 같은 [▶ 듣기][▾] — '느리게' 단추는 속도 칩으로 (2026-10-06)
   body.append(wrap);
+  if (m === 'c') body.append(el('div', 'q mid', esc(q.ans[2])));   // 북부에서 d·gi·r, s·x, ch·tr 는 소리가 같다 — 뜻이 있어야 하나로 정해진다
   // 보기 소리도 미리 받아 둔다 — 틀렸을 때 이어 듣기가 끊기지 않게
   q.opts.forEach(o => { const h = AIDX[o[0]]; if (h) fetch(`audio/${q.dir}/n/${h}.mp3`).catch(() => { }); });
   const opts = el('div', 'opts tonelist ttopts');
@@ -13723,7 +13799,7 @@ function drawToneTest() {
     const btn = el('button');
     btn.dataset.vi = o[0];
     btn.append(el('span', 'tvi', esc(o[0])),
-               el('span', 'tmark', m === 't' ? toneArrow(o[1]) + ' ' + esc(SIB_KO[o[1]])
+               el('span', 'tmark', m === 'c' ? '' : m === 't' ? toneArrow(o[1]) + ' ' + esc(SIB_KO[o[1]])
                                  : m === 's' ? tr('모음') + ' ' + esc(o[3])
                                  : tr('모음') + ' ' + esc(o[3]) + ' · ' + toneArrow(o[1]) + ' ' + esc(SIB_KO[o[1]])),
                el('span', 'tko', ''));

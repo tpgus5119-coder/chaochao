@@ -1987,7 +1987,7 @@ button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color
 .pagearrow.left{left:6px}
 .pagearrow.right{right:6px}
 .pagearrow:disabled{opacity:.28; cursor:default}
-#goNext.pagearrow.totest, #goNext.pagearrow.totest:hover{background:var(--accent); color:#fff; border-color:var(--accent); font-size:12px; font-weight:800; letter-spacing:-.03em; opacity:1; width:50px; height:64px; padding:0; white-space:nowrap}   /* 마지막 장 — 넘김 자리 그대로 [테스트], 채운 색으로 다르게 (2026-10-17) */
+#goNext.pagearrow.totest, #goNext.pagearrow.totest:hover{background:var(--accent); color:#fff; border-color:var(--accent); font-size:13px; font-weight:800; line-height:1.05; opacity:1; width:38px; height:76px; padding:0; writing-mode:vertical-rl; text-orientation:upright; letter-spacing:0}   /* 마지막 장 — 넘김 자리 그대로 TEST 세로 글자 (2026-10-17·18 대표님 "영어로 test, 세로로") */
 @media (max-width:420px){ .pagearrow{width:38px; height:56px; font-size:23px} }
 
 /* 문장 소리 단추 — 잘 안 보인다고 하셔서 크고 뚜렷하게 (2026-08-31).
