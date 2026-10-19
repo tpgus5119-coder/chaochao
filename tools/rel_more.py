@@ -116,8 +116,9 @@ def verify():
         for r in (res if isinstance(res, list) else []):
             try: a, b = part[int(r['id'])][:2]
             except Exception: continue
-            if r.get('ok') in (True, False): got[f'{a}|{b}'] = r['ok']
-        if (i // 8) % 20 == 0: vp.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8'); print(f'  {i + 8}/{len(todo)}', flush=True)
+            v = r.get('ok'); v = {'true': True, 'false': False, '예': True, '아니오': False}.get(str(v).strip().lower(), v) if not isinstance(v, bool) else v
+            if v in (True, False): got[f'{a}|{b}'] = v
+        if (i // 8) % 20 == 0: vp.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8'); print(f'  {i + 8}/{len(todo)} · 답 {len(got)}', flush=True)   # 답 수도 찍는다 — 1차 때 1,593쌍 중 1개만 남은 조용한 실패(2026-10-19)
     vp.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8'); print('끝', sum(got.values()), '/', len(got), flush=True)
 def apply():
     p = R / 'data/sib.json'; sib = json.loads(p.read_text(encoding='utf-8')); W2 = sib['w']; n = collections.Counter()
