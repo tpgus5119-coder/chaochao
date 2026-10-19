@@ -38,7 +38,8 @@ const STALE_SND = [
   'f/n/86cf77547629.mp3', 'f/n/ab5604d39661.mp3', 'm/n/24ae842645fb.mp3', 'm/n/5cb70c58c7ec.mp3', 'm/n/6f7b4f82db6e.mp3', 'm/n/ae198497587f.mp3', 'm/n/f1f674842027.mp3',
   'f/n/00b9ec089d9f.mp3', 'f/n/12c9a5798cd3.mp3', 'f/n/2e09cfc71355.mp3', 'f/n/347db4158ae3.mp3', 'f/n/38e397891296.mp3', 'f/n/42cbfd6ddb7b.mp3', 'f/n/4a6a65e1de16.mp3', 'f/n/4b71679b819a.mp3', 'f/n/63c816cb13f9.mp3', 'f/n/6df624e22429.mp3', 'f/n/797359ed73ee.mp3', 'f/n/7eac93f0eeaa.mp3', 'f/n/84018c6b4bb6.mp3', 'f/n/89aef108e355.mp3', 'f/n/a022c5147e17.mp3', 'f/n/a5e1a0d0203a.mp3', 'f/n/adbdc6287e8b.mp3', 'f/n/af8deb25533c.mp3', 'f/n/b20d6170d91d.mp3', 'f/n/ea7e6922a6e7.mp3', 'f/n/fa01cd6279e1.mp3', 'm/n/33474096d1ad.mp3', 'm/n/4eb35766f467.mp3', 'm/n/5115b213b073.mp3', 'm/n/a07804112ec1.mp3', 'm/n/a5c13eb67d50.mp3', 'm/n/fa01cd6279e1.mp3',
   'm/n/c4106e436f4a.mp3',
-  'm/n/2bd19756d9f4.mp3', 'm/n/a2fdc4bcba16.mp3', 'm/n/f0ec0a4f817f.mp3'];
+  'm/n/2bd19756d9f4.mp3', 'm/n/a2fdc4bcba16.mp3', 'm/n/f0ec0a4f817f.mp3',
+  'f/n/32b124b9018b.mp3', 'f/n/3af2d547f8d5.mp3'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });
