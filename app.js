@@ -10876,7 +10876,10 @@ function buildQuestions(words, forced) {
    뜻을 , ; · / 괄호로 조각내고(빈칸·~ 뗌), 조각이 같거나 한 조각이 다른 조각을 품으면(두 글자 이상, 끄다 ⊂ 불을끄다) 겹친다.
    전에는 첫 조각끼리 같을 때만 막아서 '끄다; 지름길의' 와 '불을 끄다' 가 한 문제에 같이 나왔다 */
 function koPieces(ko) {
-  return String(ko || '').replace(/\[[^\]]*\]/g, ' ').split(/[,;·\/()]/).map(t => t.replace(/[\s~…]/g, '')).filter(t => t.length >= 2);
+  /* 나·저(제가·내가) 같은 주어와 끝의 '요'는 떼고 견준다 — '나 갈게'(tôi đi nhé)와 '저 갈게요'(tôi đi đây)가 짝 맞추기에 같이 나와 어느 쪽을 이어도 맞았다 (오류 보고 2026-10-18) */
+  return String(ko || '').replace(/\[[^\]]*\]/g, ' ').split(/[,;·\/()]/)
+    .map(t => t.trim().replace(/^(나는|저는|제가|내가|나|저)\s+/, '').replace(/[\s~…!?.]/g, '').replace(/요$/, ''))
+    .filter(t => t.length >= 2);
 }
 function koClash(a, b) {
   const A = koPieces(a), B = koPieces(b);
@@ -12484,6 +12487,14 @@ function reviewQ(q0, r, title) {
   const qb = $('#quizBody');
   qb.querySelectorAll('.qtools .qskip, .qprev, button.rec').forEach(b => b.remove());
   const pb = qb.querySelector('.peekbtn'); if (pb) pb.click();
+  /* 내가 쓴(고른) 답도 (대표님 2026-10-19 오류 보고 "내가 쓴 오답도 표시해 주라고 했잖아") — 전에는 다시 그리며 _pickT 를 지워 정답만 보였다.
+     조각 맞추기는 내가 만든 차례 그대로, 고르기는 고른 보기, 쓰기는 쓴 글 — 정답 풀이(.fxexp) 바로 위에 */
+  const mine = q0._skip || !q0._ans ? '' : (q0._pickT || q0._txt || '');
+  if (mine && !q0._ok) {
+    const m = el('div', 'reviewmine', '<span>' + esc(tr('내 답')) + '</span> <b>' + esc(mine) + '</b>');
+    const fx = qb.querySelector('.fxexp'), nb0 = [...qb.querySelectorAll('button.primary')].pop();
+    if (fx) fx.before(m); else if (nb0) nb0.before(m); else qb.append(m);
+  }
   const nb = [...qb.querySelectorAll('button.primary')].pop();
   if (nb) { nb.textContent = tr('돌아가기'); nb.onclick = () => { NAV.pop(); back(); }; }
 }
