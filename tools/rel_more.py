@@ -98,9 +98,33 @@ def ok_pairs():
         if (SEN.get(a) and sa is None) or (SEN.get(b) and sb is None): continue
         out.append((a, b, 's' if x[0] == '유의어' else 'a', sa, sb))
     return out
+VINSTR = ('베트남어 낱말 두 개(a, b)와 그 뜻이 있다. 질문(q)에 엄격하게 답하라. 유의어 질문: "이 뜻에서 a 대신 b 를 써도 같은 말이 되나?" — 뜻이 비슷하기만 하거나 관련만 있으면 false. '
+          '반의어 질문: "a 와 b 가 크다-작다, 춥다-따뜻하다, 남자-여자 처럼 정반대인가?" — 그냥 다른 말이거나 관계만 있는 말(질문-답, 오다-돌아가다)이면 false. '
+          '출력은 JSON 배열, 원소는 {"id":..., "ok": true|false}. 다른 말은 쓰지 마라.')
+def verify():
+    """3차: 1·2차를 통과한 쌍만, 낱말 하나씩 '고른 뜻'만 보여 주고 엄격하게 다시 묻는다(견본: 반의어 15개 중 5개가 틀림 — tới/về, hủy/xây, chắc hẳn/nhất định)"""
+    sys.path.insert(0, str(R / 'tools'))
+    from qwen import ask_json
+    vp = C / 'verify.json'; got = json.loads(vp.read_text(encoding='utf-8')) if vp.exists() else {}
+    todo = [x for x in ok_pairs() if f'{x[0]}|{x[1]}' not in got]
+    print('다시 물을 쌍', len(todo), flush=True)
+    for i in range(0, len(todo), 8):
+        part = todo[i:i + 8]
+        items = [{'id': j, 'q': '유의어' if k == 's' else '반의어', 'a': a, 'a_뜻': senses(a)[(sa or 1) - 1], 'b': b, 'b_뜻': senses(b)[(sb or 1) - 1]} for j, (a, b, k, sa, sb) in enumerate(part)]
+        try: res = ask_json(VINSTR, items, chunk=8, max_tokens=400)
+        except Exception as e: print('  실패', repr(e)[:80], flush=True); time.sleep(3); continue
+        for r in (res if isinstance(res, list) else []):
+            try: a, b = part[int(r['id'])][:2]
+            except Exception: continue
+            if r.get('ok') in (True, False): got[f'{a}|{b}'] = r['ok']
+        if (i // 8) % 20 == 0: vp.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8'); print(f'  {i + 8}/{len(todo)}', flush=True)
+    vp.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8'); print('끝', sum(got.values()), '/', len(got), flush=True)
 def apply():
     p = R / 'data/sib.json'; sib = json.loads(p.read_text(encoding='utf-8')); W2 = sib['w']; n = collections.Counter()
+    vf = json.loads((C / 'verify.json').read_text(encoding='utf-8'))
     for a, b, k, sa, sb in ok_pairs():
+        if vf.get(f'{a}|{b}') is not True: continue          # 3차(엄격)까지 '맞다' 인 것만
+        if k == 'a' and (cores(a) & cores(b)): continue      # 같은 뜻 말을 나눠 가진 것은 반의어일 수 없다(chắc hẳn/nhất định)
         for x, y, sx in ((a, b, sa), (b, a, sb)):
             g = W2[x]; L = g.setdefault(k, [])
             if y in L: continue
@@ -109,4 +133,4 @@ def apply():
     p.write_text(json.dumps(sib, ensure_ascii=False, separators=(',', ':'), sort_keys=True), encoding='utf-8')
     print('넣음(양쪽 합)', dict(n))
 if __name__ == '__main__':
-    {'cand': cand, 'judge': judge, 'apply': apply}[sys.argv[1]]()
+    {'cand': cand, 'judge': judge, 'verify': verify, 'apply': apply}[sys.argv[1]]()

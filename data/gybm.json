@@ -59313,13 +59313,13 @@
        "vi": "tàu thủy",
        "ko": "배",
        "kr_read": "따우 투이",
-       "star": 1,
-       "weekly": true,
-       "img": "b-tau-thuy.webp",
        "ex": {
         "vi": "Chúng tôi đi du lịch bằng tàu thủy.",
         "ko": "우리는 배를 타고 여행했다."
-       }
+       },
+       "img": "b-tau-thuy.webp",
+       "star": 1,
+       "weekly": true
       },
       {
        "vi": "máy tính bảng",
@@ -59405,21 +59405,21 @@
        "vi": "cháo",
        "ko": "죽",
        "kr_read": "짜오",
-       "img": "w-7940d151ac.webp",
        "ex": {
         "vi": "Cơm gì nhão như cháo thế này!",
         "ko": "이게 무슨 밥이 죽처럼 질척해!"
-       }
+       },
+       "img": "w-7940d151ac.webp"
       },
       {
        "vi": "dưa chuột",
        "ko": "오이",
        "kr_read": "즈어 쭈옷",
-       "img": "b-dua-chuot.webp",
        "ex": {
         "vi": "Tôi thích ăn dưa chuột.",
         "ko": "나는 오이 먹는 것을 좋아한다."
-       }
+       },
+       "img": "b-dua-chuot.webp"
       },
       {
        "vi": "vịt quay",
@@ -59461,11 +59461,11 @@
        "vi": "buồn ngủ quá",
        "ko": "매우 졸리다",
        "kr_read": "부온 응우 꽈",
-       "img": "w-7aebea880a.webp",
        "ex": {
         "vi": "Tôi buồn ngủ quá, đi ngủ thôi.",
         "ko": "너무 졸려요, 자러 가요."
-       }
+       },
+       "img": "w-7aebea880a.webp"
       },
       {
        "vi": "mệt",
@@ -59514,11 +59514,11 @@
        "vi": "tàu điện",
        "ko": "전기 기차(지하철)",
        "kr_read": "따우 디엔",
-       "img": "w-4e74ee7169.webp",
        "ex": {
         "vi": "Tôi đi làm bằng tàu điện.",
         "ko": "나는 전철로 출근해요."
-       }
+       },
+       "img": "w-4e74ee7169.webp"
       },
       {
        "vi": "cay",
@@ -59713,12 +59713,455 @@
        "vi": "khô",
        "ko": "건조하다",
        "kr_read": "코",
-       "star": 2,
-       "img": "w-ff462296cb.webp",
        "ex": {
         "vi": "Quần áo đã khô rồi.",
         "ko": "옷이 다 말랐습니다."
+       },
+       "img": "w-ff462296cb.webp",
+       "star": 2
+      }
+     ]
+    },
+    {
+     "title": "B반 10/19 단어 시험 (1/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "Tháng Giêng",
+       "ko": "(음력) 1월, 정월",
+       "kr_read": "탕 젱",
+       "img": "b-thang-gieng.webp",
+       "ex": {
+        "vi": "Tháng Giêng có Tết Nguyên Đán.",
+        "ko": "음력 1월에는 설날이 있다."
        }
+      },
+      {
+       "vi": "năm kia",
+       "ko": "재작년",
+       "kr_read": "남 끼어",
+       "ex": {
+        "vi": "Năm kia tôi đã đến Việt Nam.",
+        "ko": "재작년에 저는 베트남에 왔어요."
+       }
+      },
+      {
+       "vi": "hôm kia",
+       "ko": "그저께",
+       "kr_read": "홈 끼어",
+       "img": "b-hom-kia.webp",
+       "ex": {
+        "vi": "Hôm kia tôi gặp anh ấy.",
+        "ko": "그저께 나는 그를 만났다."
+       }
+      },
+      {
+       "vi": "sang năm",
+       "ko": "내년",
+       "kr_read": "쌍 남",
+       "star": 1,
+       "weekly": true,
+       "img": "b-sang-nam.webp",
+       "ex": {
+        "vi": "Sang năm tôi sẽ về nước.",
+        "ko": "내년에 나는 귀국할 것이다."
+       }
+      },
+      {
+       "vi": "ngày kia",
+       "ko": "모레",
+       "kr_read": "응아이 끼어",
+       "img": "bo-cf73746122.webp",
+       "ex": {
+        "vi": "Ngày kia tôi đi Hà Nội.",
+        "ko": "모레 저는 하노이에 가요."
+       }
+      },
+      {
+       "vi": "tiếp theo",
+       "ko": "다음, 이어서",
+       "kr_read": "띠엡 태오",
+       "star": 1,
+       "weekly": true,
+       "img": "b-tiep-theo.webp",
+       "ex": {
+        "vi": "Bài học tiếp theo sẽ khó hơn.",
+        "ko": "다음 수업은 더 어려울 것이다."
+       }
+      },
+      {
+       "vi": "đáp",
+       "ko": "대답하다",
+       "kr_read": "답",
+       "img": "b-tra-loi.webp",
+       "ex": {
+        "vi": "Cô giáo hỏi, học sinh đáp.",
+        "ko": "선생님이 묻고 학생이 대답해요."
+       }
+      },
+      {
+       "vi": "trận",
+       "ko": "(경기·비·재난 등의) 한 차례, 한 판",
+       "kr_read": "쩐",
+       "star": 2,
+       "weekly": true,
+       "img": "w-27e2078df4.webp",
+       "ex": {
+        "vi": "Vùng này vừa qua một trận bão lớn.",
+        "ko": "이 지역은 방금 큰 폭풍을 겪었습니다."
+       }
+      },
+      {
+       "vi": "xe lửa",
+       "ko": "기차",
+       "kr_read": "쌔 르어",
+       "ex": {
+        "vi": "Từ Thành phố Hồ Chí Minh đến Đà Lạt có xe lửa không chị?",
+        "ko": "호치민시에서 달랏까지 기차가 있어요?"
+       },
+       "img": "b-xe-lua.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "thế kỷ",
+       "ko": "세기(100년)",
+       "kr_read": "테 끼",
+       "weekly": true,
+       "img": "b-the-ky.webp",
+       "ex": {
+        "vi": "Chúng ta đang sống ở thế kỷ hai mươi mốt.",
+        "ko": "우리는 21세기에 살고 있다."
+       }
+      },
+      {
+       "vi": "phụ đề",
+       "ko": "자막",
+       "kr_read": "푸 데",
+       "star": 2,
+       "img": "b-phu-de.webp",
+       "ex": {
+        "vi": "Cái video này có phụ đề hơn chục thứ tiếng.",
+        "ko": "이 영상에는 열 개가 넘는 언어로 자막이 있다."
+       }
+      },
+      {
+       "vi": "cả nhà",
+       "ko": "온 가족",
+       "kr_read": "까 냐",
+       "ex": {
+        "vi": "Đi gặp bạn bè hoặc nấu ăn cho cả nhà.",
+        "ko": "친구를 만나러 가거나 온 가족을 위해 요리해요."
+       },
+       "img": "b-ca-nha.webp"
+      },
+      {
+       "vi": "thực phẩm",
+       "ko": "식품",
+       "kr_read": "특 펌",
+       "ex": {
+        "vi": "Siêu thị này bán nhiều thực phẩm tươi.",
+        "ko": "이 슈퍼마켓은 신선한 식품을 많이 팔아요."
+       }
+      },
+      {
+       "vi": "chăm sóc",
+       "ko": "돌보다, 보살피다",
+       "kr_read": "짬 쏙",
+       "ex": {
+        "vi": "Tác giả muốn bị bệnh, vì được ở nhà xem tivi và được mẹ chăm sóc.",
+        "ko": "글쓴이는 집에서 TV를 보고 엄마의 보살핌을 받을 수 있어서 아프고 싶어 한다."
+       },
+       "img": "b-cham-soc.webp",
+       "star": 2
+      }
+     ]
+    },
+    {
+     "title": "B반 10/19 단어 시험 (2/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "tháng trước",
+       "ko": "지난달",
+       "kr_read": "탕 쯔억",
+       "ex": {
+        "vi": "Ba tôi mới về hưu tháng trước.",
+        "ko": "우리 아빠는 지난달에 막 은퇴하셨다."
+       },
+       "img": "w-759b2c7b9c.webp"
+      },
+      {
+       "vi": "thủy thủ",
+       "ko": "선원",
+       "kr_read": "투이 투",
+       "ex": {
+        "vi": "Anh ấy là thủy thủ trên một con tàu lớn.",
+        "ko": "그는 큰 배의 선원이에요."
+       }
+      },
+      {
+       "vi": "kiến trúc sư",
+       "ko": "건축가",
+       "kr_read": "끼엔 쭉 쓰",
+       "ex": {
+        "vi": "Chị tôi là kiến trúc sư.",
+        "ko": "우리 언니는 건축가예요."
+       }
+      },
+      {
+       "vi": "phi công",
+       "ko": "조종사, 파일럿",
+       "kr_read": "피 꽁",
+       "ex": {
+        "vi": "Phi công lái máy bay.",
+        "ko": "조종사가 비행기를 조종해요."
+       }
+      },
+      {
+       "vi": "quay phim",
+       "ko": "촬영하다",
+       "kr_read": "꽈이 핌",
+       "ex": {
+        "vi": "Họ đang quay phim ở đó.",
+        "ko": "그들은 그곳에서 영화를 찍고 있어요."
+       },
+       "img": "w-66370f8bd7.webp"
+      },
+      {
+       "vi": "khách hàng",
+       "ko": "고객",
+       "kr_read": "칵 항",
+       "ex": {
+        "vi": "Tôi đi gặp một khách hàng của công ty.",
+        "ko": "회사 고객 한 분을 만나러 가요."
+       },
+       "img": "b-khach-hang.webp"
+      },
+      {
+       "vi": "mùng",
+       "ko": "(날짜 앞) 초 (초하루의 초)",
+       "kr_read": "뭉",
+       "ex": {
+        "vi": "Hôm nay là mùng một Tết.",
+        "ko": "오늘은 설 초하루예요."
+       }
+      },
+      {
+       "vi": "bao giờ",
+       "ko": "언제",
+       "kr_read": "바오 저",
+       "ex": {
+        "vi": "Anh ấy đi bao giờ vậy, chị?",
+        "ko": "그는 언제 갔어요, 언니?"
+       },
+       "img": "b-bao-gio.webp",
+       "star": 1
+      },
+      {
+       "vi": "vé",
+       "ko": "표, 티켓",
+       "kr_read": "배",
+       "ex": {
+        "vi": "Em đặt vé xong chưa?",
+        "ko": "표 예약 다 했어?"
+       },
+       "img": "w-abb96eb23f.webp",
+       "star": 1
+      },
+      {
+       "vi": "xuân",
+       "ko": "봄",
+       "kr_read": "쑤언",
+       "ex": {
+        "vi": "Mùa xuân hoa nở khắp nơi.",
+        "ko": "봄에는 꽃이 곳곳에 피어요."
+       },
+       "img": "w-5a0a90d2f7.webp"
+      },
+      {
+       "vi": "hè",
+       "ko": "여름",
+       "kr_read": "해",
+       "img": "b-he.webp",
+       "ex": {
+        "vi": "Mùa hè ở Việt Nam rất nóng.",
+        "ko": "베트남의 여름은 매우 덥다."
+       }
+      },
+      {
+       "vi": "thu",
+       "ko": "가을",
+       "kr_read": "투",
+       "img": "b-mua-thu.webp",
+       "ex": {
+        "vi": "Mùa thu ở Hà Nội rất đẹp.",
+        "ko": "하노이의 가을은 정말 아름다워요."
+       }
+      },
+      {
+       "vi": "thập kỷ",
+       "ko": "10년 (십 년)",
+       "kr_read": "텁 끼",
+       "weekly": true,
+       "img": "b-thap-ky.webp",
+       "ex": {
+        "vi": "Công nghệ thay đổi nhanh trong thập kỷ qua.",
+        "ko": "지난 10년간 기술이 빠르게 변했다."
+       }
+      }
+     ]
+    },
+    {
+     "title": "B반 10/19 단어 시험 (3/3)",
+     "sub": "",
+     "words": [
+      {
+       "vi": "tương lai",
+       "ko": "미래",
+       "kr_read": "뜨엉 라이",
+       "ex": {
+        "vi": "Trong tương lai, tôi muốn sống ở Việt Nam.",
+        "ko": "미래에 저는 베트남에서 살고 싶어요."
+       },
+       "img": "b-tuong-lai.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "quá khứ",
+       "ko": "과거",
+       "kr_read": "꽈 크",
+       "ex": {
+        "vi": "Đó là chuyện quá khứ rồi.",
+        "ko": "그건 이미 지난 일이에요."
+       },
+       "img": "b-qua-khu.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "chồng",
+       "ko": "남편",
+       "kr_read": "쫑",
+       "ex": {
+        "vi": "Chồng cô ấy làm gì?",
+        "ko": "그녀의 남편은 무슨 일을 해요?"
+       },
+       "img": "w-65e70c09bc.webp",
+       "star": 2,
+       "weekly": true
+      },
+      {
+       "vi": "đón",
+       "ko": "마중 나가다",
+       "kr_read": "돈",
+       "ex": {
+        "vi": "Tôi đi sân bay đón bố mẹ.",
+        "ko": "부모님 마중하러 공항에 가요."
+       },
+       "img": "w-759641dde0.webp",
+       "star": 1,
+       "weekly": true
+      },
+      {
+       "vi": "bánh",
+       "ko": "빵, 과자",
+       "kr_read": "바인",
+       "ex": {
+        "vi": "Con ơi, ăn bánh mì đi!",
+        "ko": "얘야, 빵 먹어!"
+       },
+       "img": "b-banh.webp",
+       "weekly": true
+      },
+      {
+       "vi": "quay lại",
+       "ko": "되돌아오다",
+       "kr_read": "꽈이 라이",
+       "ex": {
+        "vi": "Đúng giờ hẹn, tôi quay lại phố Hai Bà Trưng.",
+        "ko": "약속 시간에 맞춰 나는 하이바쯩 거리로 돌아갔다."
+       },
+       "img": "b-quay-lai.webp",
+       "weekly": true
+      },
+      {
+       "vi": "lính cứu hỏa",
+       "ko": "소방관",
+       "kr_read": "린 끄우 호아",
+       "star": 2,
+       "weekly": true,
+       "img": "b-linh-cuu-hoa.webp",
+       "ex": {
+        "vi": "Lính cứu hỏa đến rất nhanh.",
+        "ko": "소방관이 매우 빨리 도착했습니다."
+       }
+      },
+      {
+       "vi": "công nhân",
+       "ko": "노동자",
+       "kr_read": "꽁 년",
+       "star": 1,
+       "weekly": true,
+       "img": "b-cong-nhan.webp",
+       "ex": {
+        "vi": "Bố tôi là công nhân nhà máy.",
+        "ko": "우리 아빠는 공장 노동자다."
+       }
+      },
+      {
+       "vi": "khám bệnh",
+       "ko": "진찰받다",
+       "kr_read": "캄 벤",
+       "ex": {
+        "vi": "Sao chị không đi khám bệnh?",
+        "ko": "왜 병원에 안 가요?"
+       },
+       "img": "b-kham-benh.webp",
+       "weekly": true
+      },
+      {
+       "vi": "tàu điện ngầm",
+       "ko": "지하철",
+       "kr_read": "따우 디엔 응엄",
+       "weekly": true,
+       "img": "b-tau-dien-ngam.webp",
+       "ex": {
+        "vi": "Tôi đi làm bằng tàu điện ngầm.",
+        "ko": "나는 지하철로 출근한다."
+       }
+      },
+      {
+       "vi": "thợ mộc",
+       "ko": "목수",
+       "kr_read": "터 목",
+       "img": "w-727f243ad5.webp",
+       "ex": {
+        "vi": "Bố tôi là thợ mộc.",
+        "ko": "아버지는 목수예요."
+       }
+      },
+      {
+       "vi": "sinh nhật",
+       "ko": "생일",
+       "kr_read": "씬 녓",
+       "ex": {
+        "vi": "Còn sinh nhật anh là tháng này, phải không?",
+        "ko": "그런데 당신 생일은 이번 달이죠?"
+       },
+       "img": "b-sinh-nhat.webp",
+       "weekly": true
+      },
+      {
+       "vi": "chúc mừng",
+       "ko": "축하하다",
+       "kr_read": "쭉 믕",
+       "ex": {
+        "vi": "Vậy, hôm nay tôi mời anh đi ăn trưa để chúc mừng sinh nhật được không?",
+        "ko": "그럼 오늘 생일 축하로 점심 대접해도 될까요?"
+       },
+       "img": "b-chuc-mung.webp"
       }
      ]
     }
