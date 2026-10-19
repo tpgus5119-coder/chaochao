@@ -7063,6 +7063,10 @@ function homeNews() {
   box.append(hd);
   return box;
 }
+/* 카드 그림 번호 — 구울 때 자료에 적은 d.card 를 쓴다(2026-10-19). 목록 자리로 세면 news-bot 이 주제순으로
+   다시 정렬하고 학습 세트를 끼워 넣을 때 그림과 '기사 보러가기' 주소가 엉뚱한 기사에 붙었다.
+   그날 card 가 하나라도 있으면 card 없는 항목(학습 세트)은 카드가 없다. 옛 날짜는 예전처럼 자리로 센다 */
+const cardNo = (d, i, list) => list.some(x => x.card) ? d.card : i + 1;
 const cardOk = src => new Promise(res => { const im = new Image(); const t = setTimeout(() => res(false), 8000); im.onload = () => { clearTimeout(t); res(true); }; im.onerror = () => { clearTimeout(t); res(false); }; im.src = src; });
 async function newsDatesEntry() {
   const b = $('#subBody'); b.textContent = '';
@@ -7072,7 +7076,7 @@ async function newsDatesEntry() {
   const by = {};
   days.forEach(d => { (by[d.ts] = by[d.ts] || []).push(d); });
   const dates = Object.keys(by).sort().reverse().slice(0, 12);
-  const has = await Promise.all(dates.map(async ts => (await Promise.all(by[ts].map((d, i) => cardOk(`img/card/${ts}-${i + 1}-1.webp`)))).filter(Boolean).length));
+  const has = await Promise.all(dates.map(async ts => (await Promise.all(by[ts].map((d, i) => cardNo(d, i, by[ts]) ? cardOk(`img/card/${ts}-${cardNo(d, i, by[ts])}-1.webp`) : false))).filter(Boolean).length));
   const pick = dates.map((ts, i) => [ts, has[i]]).filter(x => x[1] > 0).slice(0, 5);
   if ($('#title').textContent !== tr('베트남 기사')) return;          // 그새 다른 화면으로 갔으면 그대로 둔다
   b.textContent = '';
@@ -7095,7 +7099,7 @@ async function newsDayCards(ts, list) {
   show('sub', (dt.getMonth() + 1) + tr('월') + ' ' + dt.getDate() + tr('일'), true);
   b.append(el('p', 'lede', tr('불러오는 중…')));
   const all = [];
-  list.forEach((d, i) => [1, 2].forEach(n => all.push({ d, src: `img/card/${ts}-${i + 1}-${n}.webp` })));
+  list.forEach((d, i) => { const c = cardNo(d, i, list); if (c) [1, 2].forEach(n => all.push({ d, src: `img/card/${ts}-${c}-${n}.webp` })); });
   const ok = await Promise.all(all.map(x => cardOk(x.src)));
   const pages = all.filter((x, k) => ok[k]);
   b.textContent = '';
@@ -15254,7 +15258,7 @@ function showNewsLearn() {
 /* 카드뉴스 두 장 — 눌러서 크게 보고, 길게 누르면 폰에 저장된다(브라우저 기본 동작). */
 function cardName(d, n) {
   const day = (NEWSD || []).filter(x => x.ts === d.ts);
-  const i = day.indexOf(d) + 1;
+  const i = cardNo(d, day.indexOf(d), day);
   return `img/card/${d.ts}-${i}-${n}.webp`;
 }
 function showCards(d) {

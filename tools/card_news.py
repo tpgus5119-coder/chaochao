@@ -548,10 +548,13 @@ def main():
     # 펴낸 날을 자료에 적어 둔다 — card_export.py 가 이 날짜로 폴더를 만든다
     _f = R / "data" / "news_days.json"
     _j = json.loads(_f.read_text(encoding="utf-8"))
-    _by = {(x.get("ts"), x.get("title")): x for x in D}
+    _by = {(x.get("ts"), x.get("title")): i for i, x in enumerate(D, 1)}
     for x in _j["days"]:
         if (x.get("ts"), x.get("title")) in _by:
             x["pub"] = pub
+            # 그림 번호를 적어 둔다(2026-10-19) — news-bot 이 날마다 주제순으로 다시 정렬해서
+            # 목록 자리로 세면 앱·내보내기가 다른 기사 그림을 붙였다. 앱(cardNo)·card_export·card_ppt 가 이 번호를 쓴다.
+            x["card"] = _by[(x.get("ts"), x.get("title"))]
     _f.write_text(json.dumps(_j, ensure_ascii=False, indent=1), encoding="utf-8")
     OUT.mkdir(parents=True, exist_ok=True)
     print(f"카드뉴스 {len(D)}편 × 2장", flush=True)
@@ -574,6 +577,9 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-19: 하노이 지하철 노선 계약 기사에 버스 정류장이 깔렸다(맞는 줄이 없어 교통 기본 장면).
+              (("지하철", "도시철도", "tàu điện ngầm", "metro"),
+               "an empty modern subway station platform with a train arriving"),
               # 2026-10-16 새벽(예약 작업): 편의점 기사에 은행 건물이, 바닷모래 산업단지 기사에 아파트가, 데이터센터
               # 기사에 서류 더미가, 마이스 기사에 시장 좌판이 깔렸다. 넷을 맨 위에.
               (("편의점", "convenience store", "minimart"),

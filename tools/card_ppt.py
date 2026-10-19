@@ -199,7 +199,7 @@ def main():
         # 그림 파일 번호는 **기사 날짜 안에서** 매겨진다
         cnt = {}
         for d in arts:
-            k = d.get("ts"); cnt[k] = cnt.get(k, 0) + 1; d["_i"] = cnt[k]
+            k = d.get("ts"); cnt[k] = cnt.get(k, 0) + 1; d["_i"] = d.get("card") or cnt[k]
         arts = [d for d in arts if (CARD / f"{d.get('ts')}-{d['_i']}-1.webp").exists()]
         ORDER = ['일자리', '경제', '사회', '공장·산업', '문화·생활', '정치']
         arts.sort(key=lambda d: (ORDER.index(d.get('cat')) if d.get('cat') in ORDER
