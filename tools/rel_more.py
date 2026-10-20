@@ -66,7 +66,7 @@ def judge():
         for j, (a, b, rnd) in enumerate(part):
             x, y = (a, b) if rnd == 0 else (b, a)
             items.append({'id': j, 'a': x, 'a_뜻': senses(x), 'b': y, 'b_뜻': senses(y)})
-        try: res = ask_json(INSTR, items, chunk=8, max_tokens=700)
+        try: res = ask_json(INSTR, items, chunk=8, max_tokens=2000)   # 700 이면 잘려 빈 답이 많았다(9,392 중 5,759만, 2026-10-19)
         except Exception as e: print('  실패', repr(e)[:80], flush=True); time.sleep(3); continue
         for r in (res if isinstance(res, list) else []):
             try: a, b, rnd = part[int(r['id'])]
@@ -111,7 +111,7 @@ def verify():
     for i in range(0, len(todo), 8):
         part = todo[i:i + 8]
         items = [{'id': j, 'q': '유의어' if k == 's' else '반의어', 'a': a, 'a_뜻': senses(a)[(sa or 1) - 1], 'b': b, 'b_뜻': senses(b)[(sb or 1) - 1]} for j, (a, b, k, sa, sb) in enumerate(part)]
-        try: res = ask_json(VINSTR, items, chunk=8, max_tokens=400)
+        try: res = ask_json(VINSTR, items, chunk=8, max_tokens=1600)   # 400 이면 Qwen 이 입력을 되풀이해 적다 잘려 빈 답(1차 1,593쌍 중 1개만 남음, 2026-10-19)
         except Exception as e: print('  실패', repr(e)[:80], flush=True); time.sleep(3); continue
         for r in (res if isinstance(res, list) else []):
             try: a, b = part[int(r['id'])][:2]

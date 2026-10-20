@@ -11,7 +11,7 @@ R = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(R / "tools"))
 from vi_kr import word as vi_kr  # noqa: E402
 SRC = pathlib.Path.home() / "짜오짜오/원본자료/베트남어 학습자료/22기 자료"
-DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/5', '10/6', '10/7', '10/8', '10/9', '10/13', '10/14', '10/15', '10/16', '10/17', '10/19']      # 시험 날짜들 (2026-10-05 대표님: 10/2 다음 시험은 10/5 — 11회 두 반 다 10/5, 12회 10/6) (일요일 9/27 없음)
+DATES = ['9/22', '9/23', '9/24', '9/25', '9/26', '9/28', '9/29', '9/30', '10/1', '10/2', '10/5', '10/6', '10/7', '10/8', '10/9', '10/13', '10/14', '10/15', '10/16', '10/17', '10/19', '10/20']      # 시험 날짜들 (2026-10-05 대표님: 10/2 다음 시험은 10/5 — 11회 두 반 다 10/5, 12회 10/6) (일요일 9/27 없음)
 nfc = lambda s: unicodedata.normalize('NFC', s)
 def bare(s):
     s = unicodedata.normalize('NFD', nfc(s).lower().replace('đ', 'd'))
@@ -65,7 +65,7 @@ def main():
     nth = {}
     for d in sorted(C['days'], key=lambda d: d['no']):
         m = re.match(r'([AB])반 (\d+/\d+) 단어 시험', d['label']); cls, date = m.group(1), m.group(2)
-        nth[cls] = nth.get(cls, 0) + 1; key = cls.lower() + str(nth[cls])   # 반마다 회차를 센다 — B반은 10/3(토)에 11회, A반 11회는 10/5(월) (2026-10-04)
+        nth[cls] = nth.get(cls, 0) + 1; key = d.get('key') or (cls.lower() + str(nth[cls]))   # 회차 자료에 key 가 있으면 그것 — A반 21회 파일이 없는데 22회가 와서(2026-10-20) 차례로 세면 a21 이 된다   # 반마다 회차를 센다 — B반은 10/3(토)에 11회, A반 11회는 10/5(월) (2026-10-04)
         fs = [p for p in (SRC / (cls.lower() + '반')).glob(key + '.*') if not p.name.startswith('.')]
         raw = text_of(fs[0]) if fs else ''
         if '정답 및 해설지' in raw: raw = raw.split('정답 및 해설지')[0]   # 문제 + 답지가 한 파일(b11) — 방향은 문제 쪽만 보고 읽는다. 답지의 '21. trường học' 은 베트남어→뜻 문제가 아니다
