@@ -577,6 +577,20 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-21 새벽(예약 작업): 송금·전자상거래·귀국 노동자·카펫 공장·대기질·보행교 기사는 맞는 줄이
+              # 없어 갈래 기본(경제 동전·일자리·공장 안전모·사회·생활 좌판)이 깔릴 판이었다. 여섯을 맨 위에.
+              (("송금", "kiều hối", "remittance"),
+               "a smartphone showing a money transfer screen beside a passport and dollar banknotes on a desk"),
+              (("전자상거래", "이커머스", "아마존", "amazon", "e-commerce"),
+               "cardboard parcels on a packing table beside a laptop showing an online shop"),
+              (("귀국 노동자", "해외 노동자", "guest worker", "해외 취업"),
+               "a packed suitcase and a passport by an apartment window overlooking a city at dusk"),
+              (("카펫", "원사", "carpet"),
+               "large rolls of carpet and spools of yarn inside a bright modern textile factory"),
+              (("대기질", "대기오염", "미세먼지", "배출가스", "air quality"),
+               "a hazy city skyline over a wide road full of motorbikes at dawn"),
+              (("보행교", "pedestrian bridge", "사이공강"),
+               "a modern arched pedestrian bridge over a wide river with a city skyline at sunset"),
               # 2026-10-19: 하노이 지하철 노선 계약 기사에 버스 정류장이 깔렸다(맞는 줄이 없어 교통 기본 장면).
               (("지하철", "도시철도", "tàu điện ngầm", "metro"),
                "an empty modern subway station platform with a train arriving"),
