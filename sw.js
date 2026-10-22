@@ -1,7 +1,7 @@
 /* 오프라인 캐시.
    앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
    음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
-const V = 'vn-5fd8af72';
+const V = 'vn-b8b1d935';
 const SHELL = ['./', './index.html', './app.js', './pitch.js', './mouth.js', './pet.js', './judge.js', './style.css',
                './manifest.json', './icon.png',
                // 새 짜임(일곱 권)의 알맹이 — 이것이 없으면 비행기 모드에서 과정이 안 열린다
@@ -41,7 +41,8 @@ const STALE_SND = [
   'm/n/2bd19756d9f4.mp3', 'm/n/a2fdc4bcba16.mp3', 'm/n/f0ec0a4f817f.mp3',
   'f/n/32b124b9018b.mp3', 'f/n/3af2d547f8d5.mp3',
   'f/n/1de4843ca53d.mp3', 'f/n/332056feb676.mp3', 'f/n/44bc89d5144f.mp3', 'f/n/53a2107c4ce4.mp3', 'f/n/57d1a2b6184f.mp3', 'f/n/dfefedbe7f0f.mp3', 'f/n/e2908b7ad337.mp3', 'm/n/4bee9c866167.mp3', 'm/n/7da291f1de9c.mp3', 'm/n/c26a7716cae1.mp3',
-  'f/n/18ca7c325d9b.mp3', 'f/n/1a2f257360ed.mp3', 'f/n/2dbaca11cc38.mp3', 'f/n/3d696472ed0a.mp3', 'f/n/4a25dddc6b18.mp3', 'f/n/5c46c3ea794c.mp3', 'f/n/c0cb93f56a89.mp3', 'f/n/e5356830c347.mp3', 'f/n/f47c604908ec.mp3', 'f/n/f4a99d1eddee.mp3', 'f/n/f4d79b8e5938.mp3', 'm/n/00ff0fe8068e.mp3', 'm/n/0e6607661d8a.mp3', 'm/n/1ea54d9d046c.mp3', 'm/n/1f472cc123f3.mp3', 'm/n/45051e9f5256.mp3', 'm/n/4c18fde0c059.mp3', 'm/n/506ea51fc143.mp3', 'm/n/658f59e1ee5a.mp3', 'm/n/866b23bc3d83.mp3', 'm/n/aeee8c006b79.mp3', 'm/n/c81903db34f6.mp3', 'm/n/f4a99d1eddee.mp3'];
+  'f/n/18ca7c325d9b.mp3', 'f/n/1a2f257360ed.mp3', 'f/n/2dbaca11cc38.mp3', 'f/n/3d696472ed0a.mp3', 'f/n/4a25dddc6b18.mp3', 'f/n/5c46c3ea794c.mp3', 'f/n/c0cb93f56a89.mp3', 'f/n/e5356830c347.mp3', 'f/n/f47c604908ec.mp3', 'f/n/f4a99d1eddee.mp3', 'f/n/f4d79b8e5938.mp3', 'm/n/00ff0fe8068e.mp3', 'm/n/0e6607661d8a.mp3', 'm/n/1ea54d9d046c.mp3', 'm/n/1f472cc123f3.mp3', 'm/n/45051e9f5256.mp3', 'm/n/4c18fde0c059.mp3', 'm/n/506ea51fc143.mp3', 'm/n/658f59e1ee5a.mp3', 'm/n/866b23bc3d83.mp3', 'm/n/aeee8c006b79.mp3', 'm/n/c81903db34f6.mp3', 'm/n/f4a99d1eddee.mp3',
+  'f/n/00b1d469d44a.mp3', 'f/n/10fb98ed08db.mp3', 'f/n/17526bb8904b.mp3', 'f/n/2649369ff8a6.mp3', 'f/n/2bd5e1da7f20.mp3', 'f/n/2d5c01b43040.mp3', 'f/n/2feb5cf75fe3.mp3', 'f/n/35c2865a14e7.mp3', 'f/n/37653c9d0884.mp3', 'f/n/419555c94c0c.mp3', 'f/n/4e833db45f0b.mp3', 'f/n/537a3243218f.mp3', 'f/n/55a927e13ba8.mp3', 'f/n/777583abef98.mp3', 'f/n/77d191bf0e56.mp3', 'f/n/7b203ebbf99e.mp3', 'f/n/7e900cff0f17.mp3', 'f/n/81bad86c3bba.mp3', 'f/n/8253ca0af5ac.mp3', 'f/n/82c6e4994d6c.mp3', 'f/n/8d84fb5fda7b.mp3', 'f/n/b249df37b9ad.mp3', 'f/n/c64944c09563.mp3', 'f/n/cb19d6d7dcc7.mp3', 'f/n/ce264e1ab490.mp3', 'f/n/cfefafd9ae98.mp3', 'f/n/d31d5def1853.mp3', 'f/n/eb555c2788fa.mp3', 'f/n/f9c1e5312fb4.mp3', 'f/n/fe84e35787cb.mp3', 'f/n/fecaaebb081e.mp3', 'm/n/736098c22e8e.mp3', 'm/n/77a5042e460f.mp3', 'm/n/90e6c8a4d07f.mp3', 'm/n/f3edff9cc2d6.mp3'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
 });
