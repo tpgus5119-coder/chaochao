@@ -2,6 +2,229 @@
  "days": [
   {
    "ts": "2026-10-23",
+   "day": "Nno=44335",
+   "track": "news",
+   "theme": "호텔 예약 매진",
+   "title": "하노이시, 빅뱅 콘서트 앞두고 인근 호텔 ‘만실’…국내 여행 검색량 평소 4배↑",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44335",
+   "cat": "문화·생활",
+   "intro": "빅뱅 하노이 공연으로 주변 호텔이 매진되었습니다. 여행 검색량이 4배 폭증하며 관광 산업이 활발합니다.",
+   "words": [
+    {
+     "vi": "khách sạn",
+     "ko": "호텔",
+     "kr_read": "칵 싼",
+     "emoji": "🏨",
+     "en": "a luxury hotel building",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-khach-san.webp"
+    },
+    {
+     "vi": "đặt",
+     "ko": "예약하다/두다",
+     "kr_read": "닷",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "đặt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "phòng",
+     "ko": "방",
+     "kr_read": "퐁",
+     "emoji": "🛏️",
+     "en": "a hotel room with a bed",
+     "tones": [
+      {
+       "syl": "phòng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-phong.webp"
+    },
+    {
+     "vi": "vé",
+     "ko": "표",
+     "kr_read": "배",
+     "emoji": "🎫",
+     "en": "a concert ticket",
+     "tones": [
+      {
+       "syl": "vé",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ve.webp"
+    },
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "en": "a travel suitcase",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "hết",
+     "ko": "다 되다/끝나다",
+     "kr_read": "헷",
+     "emoji": "🚫",
+     "en": "a no vacancy sign",
+     "tones": [
+      {
+       "syl": "hết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-het.webp"
+    }
+   ],
+   "dialog": {
+    "title": "호텔 예약 매진",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Tôi muốn đặt phòng khách sạn.",
+      "ko": "호텔 방을 예약하고 싶어요.",
+      "kr_read": "또이 무온 닷 퐁 칵 싼",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "muốn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đặt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "phòng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "khách",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sạn.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Xin lỗi, khách sạn hết phòng rồi.",
+      "ko": "죄송합니다, 호텔 방이 다 찼어요.",
+      "kr_read": "씬 로이 칵 싼 헷 퐁 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Xin",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lỗi,",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "khách",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sạn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "hết",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "phòng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 102
+  },
+  {
+   "ts": "2026-10-23",
    "day": "Nno=44329",
    "track": "news",
    "theme": "해외송금 반등",
@@ -243,7 +466,7 @@
    "title_card": "호치민시 해외송금 3분기에 28억 달러로 반등",
    "pub": "2026-10-23",
    "card": 4,
-   "n": 97
+   "n": 101
   },
   {
    "ts": "2026-10-23",
@@ -518,7 +741,497 @@
    "title_card": "한국 기업, 베트남에 새 규정 시행 6~12개월 전 통보 요청",
    "pub": "2026-10-23",
    "card": 1,
-   "n": 96
+   "n": 100
+  },
+  {
+   "ts": "2026-10-23",
+   "day": "N699.html",
+   "track": "news",
+   "theme": "크루즈 여행",
+   "title": "Vietnam takes Asia's best cruise destination title from Hong Kong",
+   "u": "https://e.vnexpress.net/news/travel/places/vietnam-takes-asia-s-best-cruise-destination-title-from-hong-kong-5135699.html",
+   "cat": "소식",
+   "intro": "베트남이 아시아 최고의 크루즈 여행지로 선정되었습니다. 항구 시설 투자와 서비스 개선이 과제로 꼽혔습니다.",
+   "words": [
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "en": "a travel suitcase with flight tickets",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "tàu",
+     "ko": "배",
+     "kr_read": "따우",
+     "emoji": "🚢",
+     "en": "a large cruise ship on the water",
+     "tones": [
+      {
+       "syl": "tàu",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tau.webp"
+    },
+    {
+     "vi": "đảo",
+     "ko": "섬",
+     "kr_read": "다오",
+     "emoji": "🏝️",
+     "en": "a small tropical island with a palm tree",
+     "tones": [
+      {
+       "syl": "đảo",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-dao.webp"
+    },
+    {
+     "vi": "biển",
+     "ko": "바다",
+     "kr_read": "비엔",
+     "emoji": "🌊",
+     "en": "blue ocean waves under the blue sky",
+     "tones": [
+      {
+       "syl": "biển",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-bien.webp"
+    },
+    {
+     "vi": "chợ",
+     "ko": "시장",
+     "kr_read": "쩌",
+     "emoji": "🏪",
+     "en": "a local outdoor market stall",
+     "tones": [
+      {
+       "syl": "chợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-cho.webp"
+    },
+    {
+     "vi": "hoa quả",
+     "ko": "과일",
+     "kr_read": "호아 꽈",
+     "emoji": "🍎",
+     "en": "a bowl of fresh tropical fruits",
+     "tones": [
+      {
+       "syl": "hoa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "quả",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-hoa-qua.webp"
+    }
+   ],
+   "dialog": {
+    "title": "크루즈 여행",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Cuối tuần này đi du lịch ở đâu?",
+      "ko": "이번 주말에 어디로 여행 가요?",
+      "kr_read": "꾸오이 뚜언 나이 디 주 릭 어 더우",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Cuối",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tuần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "du",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lịch",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đâu?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Đi du lịch bằng tàu rất vui.",
+      "ko": "배 타고 여행 가면 정말 재미있어요.",
+      "kr_read": "디 주 릭 방 따우 젓 부이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "du",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lịch",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "bằng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tàu",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "vui.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 99
+  },
+  {
+   "ts": "2026-10-23",
+   "day": "N895.html",
+   "track": "news",
+   "theme": "치안 강화",
+   "title": "Vietnam's largest island Phu Quoc strengthens security as APEC 2027 draws 10,000 delegates",
+   "u": "https://e.vnexpress.net/news/news/vietnam-s-largest-island-phu-quoc-strengthens-security-as-apec-2027-draws-10-000-delegates-5135895.html",
+   "cat": "소식",
+   "intro": "베트남 푸꾸옥이 2027 APEC을 앞두고 치안을 강화합니다. 범죄 단속과 시설 검사 등 안전 대책을 대폭 확대합니다.",
+   "words": [
+    {
+     "vi": "an toàn",
+     "ko": "안전",
+     "kr_read": "안 또안",
+     "emoji": "🛡️",
+     "en": "a green shield icon for security",
+     "tones": [
+      {
+       "syl": "an",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "toàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-an-toan.webp"
+    },
+    {
+     "vi": "công an",
+     "ko": "경찰",
+     "kr_read": "꽁 안",
+     "emoji": "👮",
+     "en": "a police officer in uniform",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "an",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-an.webp"
+    },
+    {
+     "vi": "kiểm tra",
+     "ko": "검사하다",
+     "kr_read": "끼엠 짜",
+     "emoji": "🔍",
+     "en": "a magnifying glass inspecting a document",
+     "tones": [
+      {
+       "syl": "kiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "tra",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-kiem-tra.webp"
+    },
+    {
+     "vi": "giấy tờ",
+     "ko": "신분증",
+     "kr_read": "저이 떠",
+     "emoji": "📄",
+     "en": "an official identity paper document",
+     "tones": [
+      {
+       "syl": "giấy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "tờ",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-giay-to.webp"
+    },
+    {
+     "vi": "bảo vệ",
+     "ko": "경비원",
+     "kr_read": "바오 베",
+     "emoji": "💂",
+     "en": "a security guard standing in uniform",
+     "tones": [
+      {
+       "syl": "bảo",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "vệ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-bao-ve.webp"
+    },
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport terminal building with a plane",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    }
+   ],
+   "dialog": {
+    "title": "치안 강화",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Có cần kiểm tra giấy tờ không?",
+      "ko": "신분증 검사를 해야 하나요?",
+      "kr_read": "꼬 껀 끼엠 짜 저이 떠 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "cần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "kiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tra",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giấy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, bảo vệ đang kiểm tra đấy.",
+      "ko": "네, 경비원이 검사하고 있어요.",
+      "kr_read": "꼬 바오 베 당 끼엠 짜 더이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bảo",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "vệ",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đang",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "kiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tra",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đấy.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 98
   },
   {
    "ts": "2026-10-23",
@@ -725,7 +1438,7 @@
     ],
     "extra": []
    },
-   "n": 95
+   "n": 97
   },
   {
    "ts": "2026-10-23",
@@ -976,7 +1689,7 @@
    "title_card": "중앙은행, 은행권에 예금금리 0.5%포인트 인하 거듭 촉구",
    "pub": "2026-10-23",
    "card": 3,
-   "n": 94
+   "n": 96
   },
   {
    "ts": "2026-10-23",
@@ -1188,7 +1901,237 @@
     ],
     "extra": []
    },
-   "n": 93
+   "n": 95
+  },
+  {
+   "ts": "2026-10-23",
+   "day": "Nno=44302",
+   "track": "news",
+   "theme": "양육권 결정",
+   "title": "한국인-베트남인 부부가 이혼하면 아이의 양육권은 누가 정할까? [양원준 변호사의 리걸 비나]",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44302",
+   "cat": "경제",
+   "intro": "한국-베트남 부부 이혼 시 양육권은 국적보다 아이의 복리를 우선합니다.",
+   "words": [
+    {
+     "vi": "con",
+     "ko": "아이, 자녀",
+     "kr_read": "꼰",
+     "emoji": "👶",
+     "en": "a small baby smiling",
+     "tones": [
+      {
+       "syl": "con",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-con.webp"
+    },
+    {
+     "vi": "vợ",
+     "ko": "아내",
+     "kr_read": "버",
+     "emoji": "👩",
+     "en": "a woman smiling",
+     "tones": [
+      {
+       "syl": "vợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-vo.webp"
+    },
+    {
+     "vi": "chồng",
+     "ko": "남편",
+     "kr_read": "쫑",
+     "emoji": "👨",
+     "en": "a man smiling",
+     "tones": [
+      {
+       "syl": "chồng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-chong.webp"
+    },
+    {
+     "vi": "gia đình",
+     "ko": "가족",
+     "kr_read": "자 딘",
+     "emoji": "👪",
+     "en": "a family standing together",
+     "tones": [
+      {
+       "syl": "gia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "đình",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-gia-dinh.webp"
+    },
+    {
+     "vi": "tòa án",
+     "ko": "법원",
+     "kr_read": "또아 안",
+     "emoji": "🏛️",
+     "en": "a courthouse building",
+     "tones": [
+      {
+       "syl": "tòa",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "án",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-toa-an.webp"
+    },
+    {
+     "vi": "hộ chiếu",
+     "ko": "여권",
+     "kr_read": "호 찌에우",
+     "emoji": "📕",
+     "en": "a passport book",
+     "tones": [
+      {
+       "syl": "hộ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "chiếu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ho-chieu.webp"
+    }
+   ],
+   "dialog": {
+    "title": "양육권 결정",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Vợ anh là người Việt Nam à?",
+      "ko": "당신의 아내는 베트남 사람인가요?",
+      "kr_read": "버 아인 라 응으어이 비엣 남 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Vợ",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "người",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Việt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "Nam",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, chúng tôi có một con.",
+      "ko": "네, 우리는 아이가 한 명 있어요.",
+      "kr_read": "벙 쭝 또이 꼬 못 꼰",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "chúng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "con.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 94
   },
   {
    "ts": "2026-10-23",
@@ -1411,7 +2354,7 @@
     ],
     "extra": []
    },
-   "n": 92
+   "n": 93
   },
   {
    "ts": "2026-10-23",
@@ -1656,7 +2599,7 @@
    "title_card": "호치민시 수막구균 감염 5건…학생 1명 사망",
    "pub": "2026-10-23",
    "card": 10,
-   "n": 91
+   "n": 92
   },
   {
    "ts": "2026-10-23",
@@ -1889,7 +2832,7 @@
    "title_card": "베트남 새우 수출 9개월 37억 달러…중국이 최대 시장",
    "pub": "2026-10-23",
    "card": 5,
-   "n": 90
+   "n": 91
   },
   {
    "ts": "2026-10-23",
@@ -2119,7 +3062,7 @@
     ],
     "extra": []
    },
-   "n": 89
+   "n": 90
   },
   {
    "ts": "2026-10-23",
@@ -2370,7 +3313,7 @@
    "title_card": "빈그룹, 필리핀에 5억 달러 규모 전기차 공장 추진",
    "pub": "2026-10-23",
    "card": 7,
-   "n": 88
+   "n": 89
   },
   {
    "ts": "2026-10-23",
@@ -2639,6 +3582,266 @@
    "title_card": "빅뱅 하노이 콘서트 앞두고 호텔 객실 매진",
    "pub": "2026-10-23",
    "card": 9,
+   "n": 88
+  },
+  {
+   "ts": "2026-10-23",
+   "day": "N140.html",
+   "track": "news",
+   "theme": "베트남 여행",
+   "title": "Sun Group promotes Phu Quoc, Visit Vietnam platform at ITB Asia 2026",
+   "u": "https://e.vnexpress.net/photo/travel/sun-group-promotes-phu-quoc-visit-vietnam-platform-at-itb-asia-2026-5136140.html",
+   "cat": "소식",
+   "intro": "썬그룹이 ITB 아시아에서 관광 앱을 공개했습니다. AI를 통해 여행 예약과 결제가 더 쉬워질 전망입니다.",
+   "words": [
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "✈️",
+     "en": "a suitcase and a passport",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "ứng dụng",
+     "ko": "앱",
+     "kr_read": "응 중",
+     "emoji": "📱",
+     "en": "a smartphone screen with colorful icons",
+     "tones": [
+      {
+       "syl": "ứng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "dụng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-ung-dung.webp"
+    },
+    {
+     "vi": "máy bay",
+     "ko": "비행기",
+     "kr_read": "마이 바이",
+     "emoji": "🛫",
+     "en": "a white airplane flying in the sky",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-may-bay.webp"
+    },
+    {
+     "vi": "khách sạn",
+     "ko": "호텔",
+     "kr_read": "칵 싼",
+     "emoji": "🏨",
+     "en": "a tall luxury hotel building",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-khach-san.webp"
+    },
+    {
+     "vi": "đặt",
+     "ko": "예약하다",
+     "kr_read": "닷",
+     "emoji": "📅",
+     "en": "a finger tapping a calendar on a phone screen",
+     "tones": [
+      {
+       "syl": "đặt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-dat.webp"
+    },
+    {
+     "vi": "thanh toán",
+     "ko": "결제하다",
+     "kr_read": "타인 또안",
+     "emoji": "💳",
+     "en": "a hand holding a credit card near a terminal",
+     "tones": [
+      {
+       "syl": "thanh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "toán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thanh-toan.webp"
+    }
+   ],
+   "dialog": {
+    "title": "베트남 여행",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Anh đặt khách sạn bằng ứng dụng gì?",
+      "ko": "당신은 어떤 앱으로 호텔을 예약하나요?",
+      "kr_read": "아인 닷 칵 싼 방 응 중 지",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đặt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "khách",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sạn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "bằng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ứng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "dụng",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "gì?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Tôi dùng ứng dụng du lịch mới này.",
+      "ko": "저는 이 새로운 여행 앱을 사용해요.",
+      "kr_read": "또이 중 응 중 주 릭 머이 나이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "dùng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ứng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "dụng",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "du",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lịch",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "mới",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "này.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
    "n": 87
   },
   {
@@ -25146,5 +26349,5 @@
    "n": 1
   }
  ],
- "updated": "2026-10-24 00:46"
+ "updated": "2026-10-24 09:02"
 }
