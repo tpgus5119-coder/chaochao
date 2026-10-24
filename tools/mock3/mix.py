@@ -24,21 +24,34 @@ SEC = lambda q, p: [x for x in q if x['sec'].startswith(p)]
 # 2026-10-17 대표님 "문법상 답이 될 수 있는 게 2개 이상 아님? 답이 2개 이상이면 절대 안 된다" — 문장마다 보기 다섯을 다 넣어 보고 하나만 맞게 다시 짬
 #   (전: Sinh nhật chị là ____(thứ mấy·bao giờ 둘 다) · ____ anh đi công tác(bao giờ·thứ mấy) · Anh ấy ____ đi công tác chưa(đã·sắp) · Bố là bác sĩ, ____ mẹ(còn·nhưng) ·
 #    Hai anh em ____ học(cùng·cũng) · đi chợ ____ bà(với·cùng) · mắc ____!(lắm·đấy·chứ) 등). 같은 자리에 오는 말(끝말끼리·때 부사끼리)을 한 벌에 몰지 않는다.
-B1 = {1: (["bao giờ", "bao lâu", "bao nhiêu", "thứ mấy", "ở đâu"], [("Anh đi công tác Đà Nẵng ____, tháng này hay tháng sau?", "bao giờ", "다낭 출장은 언제 가요, 이번 달이에요 다음 달이에요?"),
-                                                                 ("Chị sống ở Hà Nội ____ rồi?", "bao lâu", "하노이에 산 지 얼마나 됐어요?"), ("Vé xe lửa đi Huế ____ tiền?", "bao nhiêu", "후에 가는 기차표는 얼마예요?"),
-                                                                 ("Hôm nay là ____?", "thứ mấy", "오늘은 무슨 요일이에요?"), ("Bưu điện ____ vậy anh?", "ở đâu", "우체국이 어디에 있어요?")]),
-      2: (["đang", "xong", "từng", "nữa", "rồi"], [("Tôi ăn sáng ____ rồi.", "xong", "저는 아침을 다 먹었어요."), ("Tôi đã ____ sống ở Huế hai năm.", "từng", "저는 후에에서 2년 산 적이 있어요."),
-                                                   ("Anh còn ở Hà Nội bao lâu ____?", "nữa", "하노이에 얼마나 더 있어요?"), ("Tôi đã đến Việt Nam một năm ____.", "rồi", "베트남에 온 지 1년 됐어요."),
-                                                   ("Bây giờ chị ấy ____ xem phim, đừng gọi chị ấy.", "đang", "지금 그녀는 영화를 보고 있으니 부르지 마세요.")]),
-      3: (["được", "được không", "chưa bao giờ", "không phải", "đừng"], [("Chị ấy đọc ____ tiếng Hàn.", "được", "그녀는 한국어를 읽을 수 있어요."), ("Chị dạy giùm em ____?", "được không", "저 대신 가르쳐 줄 수 있어요?"),
-                                                   ("Tôi ____ đi Nhật, tôi muốn đi một lần.", "chưa bao giờ", "저는 일본에 가 본 적이 없어서 한 번 가 보고 싶어요."), ("Anh ấy ____ là người Nga.", "không phải", "그는 러시아 사람이 아니에요."),
-                                                   ("____ lo lắng quá, em làm được mà!", "đừng", "너무 걱정하지 마, 너는 할 수 있어!")]),
-      4: (["còn", "cùng", "với", "cũng", "nhưng"], [("Tôi là người Hàn. ____ anh?", "còn", "저는 한국 사람이에요. 당신은요?"), ("Chúng tôi học ____ một lớp.", "cùng", "우리는 같은 반에서 공부해요."),
-                                                    ("Anh nói ____ cô ấy chưa?", "với", "그녀에게 말했어요?"), ("Anh ấy là con út, tôi ____ là con út.", "cũng", "그는 막내이고, 저도 막내예요."),
-                                                    ("Chị ấy nhỏ tuổi ____ rất tự tin.", "nhưng", "그녀는 어리지만 아주 자신 있어요.")]),
-      5: (["khá", "mấy", "nhất", "bằng", "từ"], [("Nhà anh ấy ____ xa trung tâm.", "khá", "그의 집은 시내에서 꽤 멀어요."), ("Gia đình anh có ____ người?", "mấy", "가족이 몇 명이에요?"),
-                                                ("Nam cao ____ lớp.", "nhất", "남이 반에서 키가 제일 커요."), ("Tôi đi làm ____ xe buýt.", "bằng", "저는 버스로 출근해요."),
-                                                ("Tôi học ____ thứ hai đến thứ sáu.", "từ", "저는 월요일부터 금요일까지 공부해요.")])}
+# 2026-10-24 대표님 "나이 비교와 còn·cùng·khá·chứ 는 왜 안 넣었냐 · 쌤이 bằng·như 는 10과 문법이라 했다" — 전 짜임은 벌마다 주제 하나라 10과가 4·5벌에 몰리고 chứ 는 0.
+#   이제 벌마다 8과 하나 · 9과 하나 · 10과 상자(còn·cùng·khá·chứ) 둘 · 비교(bằng·hơn·như·bằng nhau·나이 hơn) 하나. 문장마다 보기 다섯을 다 넣어 보고 하나만 되게 짬
+#   (còn 은 '아직'으로도 들어가 버리는 자리(còn mệt·còn sống)를 피해 'A. Còn B' 꼴에만, chứ 는 물음 끝(…chứ?)이 아닌 대답 'Có chứ!' 꼴에만).
+B1 = {1: (["được", "bao giờ", "còn", "khá", "bằng"], [("Chị ấy nói ____ ba thứ tiếng.", "được", "그녀는 세 언어를 할 수 있어요."),
+                                                  ("A: Anh đặt vé máy bay ____? B: Hôm qua.", "bao giờ", "비행기 표는 언제 예약했어요? – 어제요."),
+                                                  ("Bố tôi là bác sĩ. ____ mẹ tôi là giáo viên.", "còn", "아빠는 의사예요. 그리고 엄마는 선생님이에요."),
+                                                  ("Nhà anh ấy ____ xa công ty.", "khá", "그의 집은 회사에서 꽤 멀어요."),
+                                                  ("Tôi cao ____ chị Lan.", "bằng", "저는 란 언니만큼 키가 커요.")]),
+      2: (["bao lâu", "xong", "cùng", "chứ", "hơn"], [("Anh ở Hà Nội ____ rồi?", "bao lâu", "하노이에 산 지 얼마나 됐어요?"),
+                                                 ("Tôi làm bài tập ____ rồi.", "xong", "저는 숙제를 다 했어요."),
+                                                 ("Hai chị em tôi ____ thích nấu ăn.", "cùng", "우리 자매는 둘 다 요리를 좋아해요."),
+                                                 ("A: Ngày mai anh có đi làm không? B: Có ____!", "chứ", "내일 출근해요? – 물론이죠!"),
+                                                 ("Tôi ____ em tôi 4 tuổi.", "hơn", "저는 동생보다 네 살 많아요.")]),
+      3: (["mới", "bao giờ", "chứ", "còn", "như"], [("Tôi ____ đến Việt Nam hôm qua.", "mới", "저는 어제 막 베트남에 왔어요."),
+                                                ("A: Chị đi Nha Trang ____? B: Tuần trước.", "bao giờ", "냐짱에 언제 갔어요? – 지난주에요."),
+                                                ("A: Chị có khỏe không? B: Khỏe ____!", "chứ", "잘 지내요? – 그럼요, 잘 지내죠!"),
+                                                ("Mẹ tôi là giáo viên. ____ bố tôi là bác sĩ.", "còn", "엄마는 선생님이에요. 그리고 아빠는 의사예요."),
+                                                ("Cô ấy đẹp ____ hoa.", "như", "그녀는 꽃처럼 예뻐요.")]),
+      4: (["được không", "xong", "cùng", "khá", "bằng nhau"], [("Anh xem giùm tôi ____?", "được không", "좀 봐 줄 수 있어요?"),
+                                                         ("Tôi ăn sáng ____ rồi.", "xong", "저는 아침을 다 먹었어요."),
+                                                         ("Chúng tôi ____ đi thăm ông bà.", "cùng", "우리는 함께 조부모님을 뵈러 갔어요."),
+                                                         ("Nhà tôi ____ xa trường.", "khá", "우리 집은 학교에서 꽤 멀어요."),
+                                                         ("Tôi và chị Lan cao ____.", "bằng nhau", "저와 란 언니는 키가 같아요.")]),
+      5: (["đừng", "từng", "còn", "chứ", "lớn hơn"], [("____ lo! Từ từ em sẽ giỏi hơn.", "đừng", "걱정하지 마! 차차 더 잘하게 될 거야."),
+                                                 ("Anh đã ____ đi Hà Nội chưa?", "từng", "하노이에 가 본 적 있어요?"),
+                                                 ("Tôi là con cả. ____ anh?", "còn", "저는 첫째예요. 당신은요?"),
+                                                 ("A: Anh có yêu vợ không? B: Có ____!", "chứ", "아내를 사랑해요? – 물론이죠!"),
+                                                 ("Hoa ____ Lan 5 tuổi.", "lớn hơn", "호아는 란보다 다섯 살 많아요.")])}
 # 읽기 4 는 보기 목록이 벌마다 다시 만들어지므로 짝(먼저 하는 말·뜻·대답·뜻)으로 되돌린다
 def b4_pairs(items):
     out = []
