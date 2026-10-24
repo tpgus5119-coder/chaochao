@@ -24,22 +24,23 @@ SEC = lambda q, p: [x for x in q if x['sec'].startswith(p)]
 # 2026-10-17 대표님 "문법상 답이 될 수 있는 게 2개 이상 아님? 답이 2개 이상이면 절대 안 된다" — 문장마다 보기 다섯을 다 넣어 보고 하나만 맞게 다시 짬
 #   (전: Sinh nhật chị là ____(thứ mấy·bao giờ 둘 다) · ____ anh đi công tác(bao giờ·thứ mấy) · Anh ấy ____ đi công tác chưa(đã·sắp) · Bố là bác sĩ, ____ mẹ(còn·nhưng) ·
 #    Hai anh em ____ học(cùng·cũng) · đi chợ ____ bà(với·cùng) · mắc ____!(lắm·đấy·chứ) 등). 같은 자리에 오는 말(끝말끼리·때 부사끼리)을 한 벌에 몰지 않는다.
+# 문장 순위(대표님 2026-09-23): 1 교재 원문 · 2 교재 변형 · 3 수업 자료 원문 · 4 수업 자료 변형 · 5 새로 지음 — 정답이 하나뿐인 문장 안에서 이 차례로 고름 (10-24 다시 고름)
 # 2026-10-24 대표님 "나이 비교와 còn·cùng·khá·chứ 는 왜 안 넣었냐 · 쌤이 bằng·như 는 10과 문법이라 했다" — 전 짜임은 벌마다 주제 하나라 10과가 4·5벌에 몰리고 chứ 는 0.
 #   이제 벌마다 8과 하나 · 9과 하나 · 10과 상자(còn·cùng·khá·chứ) 둘 · 비교(bằng·hơn·như·bằng nhau·나이 hơn) 하나. 문장마다 보기 다섯을 다 넣어 보고 하나만 되게 짬
 #   (còn 은 '아직'으로도 들어가 버리는 자리(còn mệt·còn sống)를 피해 'A. Còn B' 꼴에만, chứ 는 물음 끝(…chứ?)이 아닌 대답 'Có chứ!' 꼴에만).
-B1 = {1: (["được", "bao giờ", "còn", "khá", "bằng"], [("Chị ấy nói ____ ba thứ tiếng.", "được", "그녀는 세 언어를 할 수 있어요."),
+B1 = {1: (["được", "bao giờ", "còn", "khá", "bằng"], [("Em nói tiếng Pháp ____ không?", "được", "프랑스어 할 수 있어요?"),
                                                   ("A: Anh đặt vé máy bay ____? B: Hôm qua.", "bao giờ", "비행기 표는 언제 예약했어요? – 어제요."),
-                                                  ("Bố tôi là bác sĩ. ____ mẹ tôi là giáo viên.", "còn", "아빠는 의사예요. 그리고 엄마는 선생님이에요."),
+                                                  ("Bố tôi mất rồi. ____ mẹ tôi đã về hưu.", "còn", "아빠는 돌아가셨어요. 그리고 엄마는 은퇴하셨어요."),
                                                   ("Nhà anh ấy ____ xa công ty.", "khá", "그의 집은 회사에서 꽤 멀어요."),
                                                   ("Tôi cao ____ chị Lan.", "bằng", "저는 란 언니만큼 키가 커요.")]),
-      2: (["bao lâu", "xong", "cùng", "chứ", "hơn"], [("Anh ở Hà Nội ____ rồi?", "bao lâu", "하노이에 산 지 얼마나 됐어요?"),
+      2: (["bao lâu", "xong", "cùng", "chứ", "hơn"], [("Anh còn ở đây ____ nữa?", "bao lâu", "여기 얼마나 더 계세요?"),
                                                  ("Tôi làm bài tập ____ rồi.", "xong", "저는 숙제를 다 했어요."),
-                                                 ("Hai chị em tôi ____ thích nấu ăn.", "cùng", "우리 자매는 둘 다 요리를 좋아해요."),
-                                                 ("A: Ngày mai anh có đi làm không? B: Có ____!", "chứ", "내일 출근해요? – 물론이죠!"),
+                                                 ("Bố mẹ tôi ____ nghỉ hưu.", "cùng", "부모님은 함께 은퇴하셨어요."),
+                                                 ("A: Anh có đi du lịch với bố mẹ không? B: Có ____.", "chứ", "부모님과 여행 가요? – 물론이죠."),
                                                  ("Tôi ____ em tôi 4 tuổi.", "hơn", "저는 동생보다 네 살 많아요.")]),
       3: (["mới", "bao giờ", "chứ", "còn", "như"], [("Tôi ____ đến Việt Nam hôm qua.", "mới", "저는 어제 막 베트남에 왔어요."),
                                                 ("A: Chị đi Nha Trang ____? B: Tuần trước.", "bao giờ", "냐짱에 언제 갔어요? – 지난주에요."),
-                                                ("A: Chị có khỏe không? B: Khỏe ____!", "chứ", "잘 지내요? – 그럼요, 잘 지내죠!"),
+                                                ("A: Anh Sơn có em gái không? B: Có ____!", "chứ", "선 씨는 여동생이 있어요? – 그럼요!"),
                                                 ("Mẹ tôi là giáo viên. ____ bố tôi là bác sĩ.", "còn", "엄마는 선생님이에요. 그리고 아빠는 의사예요."),
                                                 ("Cô ấy đẹp ____ hoa.", "như", "그녀는 꽃처럼 예뻐요.")]),
       4: (["được không", "xong", "cùng", "khá", "bằng nhau"], [("Anh xem giùm tôi ____?", "được không", "좀 봐 줄 수 있어요?"),
@@ -48,7 +49,7 @@ B1 = {1: (["được", "bao giờ", "còn", "khá", "bằng"], [("Chị ấy nó
                                                          ("Nhà tôi ____ xa trường.", "khá", "우리 집은 학교에서 꽤 멀어요."),
                                                          ("Tôi và chị Lan cao ____.", "bằng nhau", "저와 란 언니는 키가 같아요.")]),
       5: (["đừng", "từng", "còn", "chứ", "lớn hơn"], [("____ lo! Từ từ em sẽ giỏi hơn.", "đừng", "걱정하지 마! 차차 더 잘하게 될 거야."),
-                                                 ("Anh đã ____ đi Hà Nội chưa?", "từng", "하노이에 가 본 적 있어요?"),
+                                                 ("Nghe nói anh Brian đã ____ làm việc ở Seoul.", "từng", "브라이언 씨가 서울에서 일한 적이 있대요."),
                                                  ("Tôi là con cả. ____ anh?", "còn", "저는 첫째예요. 당신은요?"),
                                                  ("A: Anh có yêu vợ không? B: Có ____!", "chứ", "아내를 사랑해요? – 물론이죠!"),
                                                  ("Hoa ____ Lan 5 tuổi.", "lớn hơn", "호아는 란보다 다섯 살 많아요.")])}
@@ -132,6 +133,15 @@ def swap_units(q):
         while j < len(q) and q[j]['sec'] == x['sec'] and x.get('text') and q[j].get('text') == x.get('text'): j += 1
         out.append((i, j)); i = j
     return out
+def dup(q):
+    seen = {}
+    for x in q:
+        for u in gram_cover.units([x]):
+            k = re.sub(r'[^\w\s]', '', u.lower()).strip()
+            if len(k.split()) < 4: continue
+            if k in seen and seen[k] != x['sec'][:9]: return True
+            seen.setdefault(k, x['sec'][:9])
+    return False
 def polish(sets, seed):
     """같은 칸 같은 자리 문항을 벌 사이에서 맞바꿔 문법 차이를 줄인다(문장·꼴은 그대로, 어느 벌로 가는지만)"""
     r = random.Random(seed); best = spread(sets); U = swap_units(sets[1])
@@ -139,7 +149,7 @@ def polish(sets, seed):
         i, j = U[r.randrange(len(U))]; a, b = r.sample(range(1, 6), 2)
         if [x['sec'] for x in sets[a][i:j]] != [x['sec'] for x in sets[b][i:j]]: continue
         sets[a][i:j], sets[b][i:j] = sets[b][i:j], sets[a][i:j]
-        sc = spread(sets)
+        sc = spread(sets) if not (dup(sets[a]) or dup(sets[b])) else 10 ** 9   # 한 벌 안 다른 칸에 같은 문장이 생기는 맞바꾸기는 하지 않는다(빌드가 막는다)
         if sc <= best: best = sc
         else: sets[a][i:j], sets[b][i:j] = sets[b][i:j], sets[a][i:j]
     return best
@@ -154,7 +164,7 @@ while not ok and tried < min(400, len(order)):
         ok = True; print('섞기 성공 M =', M, '시도', tried)
     except (SystemExit, AssertionError) as e:
         for n in range(1, 6): (R / f'data/mock3_{n}.json').unlink(missing_ok=True)
-        if tried <= 3: print('실패', tried, str(e)[:160])
+        print('실패', tried, str(e)[:160], flush=True)
 if not ok:
     for f in bak.glob('*.json'): shutil.move(str(f), str(R / 'data' / f.name))
     raise SystemExit('섞기 실패 — 옛 파일 되돌림')

@@ -22,42 +22,42 @@
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "w-6c359b081b.webp",
-   "audio": "Đây là điện thoại.",
+   "img": "b-phien-dich.webp",
+   "audio": "Anh ấy làm phiên dịch.",
    "ans": true,
    "made": true,
-   "word": "gọi điện thoại",
-   "exp": "들은 말: Đây là điện thoại.\n이것은 전화기예요.\n그림: gọi điện thoại(전화를 걸다) → 맞다"
+   "word": "phiên dịch",
+   "exp": "들은 말: Anh ấy làm phiên dịch.\n그는 통역을 해요.\n그림: phiên dịch(통역하다, 통역사) → 맞다"
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-song-mot-minh.webp",
-   "audio": "Anh ấy sống một mình.",
-   "ans": true,
+   "img": "b-xe-lua.webp",
+   "audio": "Đây là máy bay.",
+   "ans": false,
    "made": true,
-   "word": "sống một mình",
-   "exp": "들은 말: Anh ấy sống một mình.\n그는 혼자 살아요.\n그림: sống một mình(혼자 살다) → 맞다"
+   "word": "xe lửa",
+   "exp": "들은 말: Đây là máy bay.\n이것은 비행기예요.\n그림: xe lửa(기차) → 틀리다"
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "b-ve-huu.webp",
-   "audio": "Ông ấy về hưu rồi.",
-   "ans": true,
+   "img": "b-ve-tranh.webp",
+   "audio": "Anh ấy đang nấu ăn.",
+   "ans": false,
    "made": true,
-   "word": "về hưu",
-   "exp": "들은 말: Ông ấy về hưu rồi.\n그분은 은퇴하셨어요.\n그림: về hưu(은퇴하다) → 맞다"
+   "word": "vẽ tranh",
+   "exp": "들은 말: Anh ấy đang nấu ăn.\n그는 요리하고 있어요.\n그림: vẽ tranh(그림을 그리다) → 틀리다"
   },
   {
    "sec": "A 듣기 · 1 그림 맞다/틀리다",
    "k": "tf",
-   "img": "w-3b2ba86d56.webp",
-   "audio": "Đây là ba anh chị em.",
-   "ans": true,
+   "img": "b-bia-hoi.webp",
+   "audio": "Đây là cà phê.",
+   "ans": false,
    "made": true,
-   "word": "anh chị em",
-   "exp": "들은 말: Đây là ba anh chị em.\n이 사람들은 삼 남매예요.\n그림: anh chị em(형제자매) → 맞다"
+   "word": "bia hơi",
+   "exp": "들은 말: Đây là cà phê.\n이것은 커피예요.\n그림: bia hơi(생맥주(베트남식)) → 틀리다"
   },
   {
    "sec": "A 듣기 · 2 맞는 그림",
@@ -172,16 +172,16 @@
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Gia đình anh David có mấy người?",
-   "audio": "Gia đình anh David chỉ có bốn người, không phải năm người.",
+   "prompt": "Anh Tom đang học tiếng gì?",
+   "audio": "Anh Tom nói được tiếng Anh, bây giờ đang học tiếng Việt.",
    "opts": [
-    "ba người",
-    "bốn người",
-    "năm người"
+    "tiếng Pháp",
+    "tiếng Việt",
+    "tiếng Anh"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 말: Gia đình anh David chỉ có bốn người, không phải năm người.\n데이비드 씨 가족은 네 명뿐이에요, 다섯 명이 아니에요.\n물음: Gia đình anh David có mấy người? — 데이비드 씨 가족은 몇 명이에요?\n답: bốn người"
+   "exp": "들은 말: Anh Tom nói được tiếng Anh, bây giờ đang học tiếng Việt.\n톰 씨는 영어를 할 수 있고, 지금은 베트남어를 배우고 있어요.\n물음: Anh Tom đang học tiếng gì? — 톰 씨는 무슨 언어를 배우고 있어요?\n답: tiếng Việt"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
@@ -200,16 +200,16 @@
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Thứ hai anh David ở đâu?",
-   "audio": "Thứ hai anh David ở Đà Nẵng, thứ tư ở Hà Nội.",
+   "prompt": "Chủ nhật tuần trước tôi đi thăm ai?",
+   "audio": "Thứ bảy tôi gặp bạn thân, chủ nhật đi thăm bố mẹ.",
    "opts": [
-    "Nha Trang",
-    "Hà Nội",
-    "Đà Nẵng"
+    "khách hàng",
+    "bạn thân",
+    "bố mẹ"
    ],
    "ans": 2,
    "made": true,
-   "exp": "들은 말: Thứ hai anh David ở Đà Nẵng, thứ tư ở Hà Nội.\n데이비드 씨는 월요일에 다낭에, 수요일에 하노이에 있어요.\n물음: Thứ hai anh David ở đâu? — 월요일에 데이비드 씨는 어디에 있어요?\n답: Đà Nẵng"
+   "exp": "들은 말: Thứ bảy tôi gặp bạn thân, chủ nhật đi thăm bố mẹ.\n토요일에는 친한 친구를 만났고, 일요일에는 부모님을 뵈러 갔어요.\n물음: Chủ nhật tuần trước tôi đi thăm ai? — 지난주 일요일에 나는 누구를 찾아갔어요?\n답: bố mẹ"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
@@ -242,68 +242,68 @@
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Chị ấy có mấy anh trai?",
-   "audio": "Chị có hai anh trai phải không?\nKhông, một anh trai và hai em gái.",
+   "prompt": "Anh ấy là con thứ mấy?",
+   "audio": "Anh là con cả phải không?\nKhông, tôi là con thứ hai.",
    "voices": "fm",
    "opts": [
-    "một",
-    "hai",
-    "ba"
+    "con thứ hai",
+    "con cả",
+    "con út"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n여: Chị có hai anh trai phải không? — 오빠가 둘이죠?\n남: Không, một anh trai và hai em gái. — 아니요, 오빠 하나와 여동생 둘이에요.\n물음: Chị ấy có mấy anh trai? — 그녀는 오빠가 몇 명이에요?\n답: một"
+   "exp": "들은 대화\n여: Anh là con cả phải không? — 맏이죠?\n남: Không, tôi là con thứ hai. — 아니요, 저는 둘째예요.\n물음: Anh ấy là con thứ mấy? — 그는 몇째예요?\n답: con thứ hai"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Hôm nay là thứ mấy vậy?",
-   "audio": "Thứ năm đi gặp khách hàng nhé!\nThứ năm là ngày mai đấy!",
+   "prompt": "Anh ấy còn ở Hà Nội bao lâu nữa?",
+   "audio": "Anh ở Hà Nội bao lâu nữa?\nMột tuần nữa, không phải hai tuần.",
    "voices": "mf",
    "opts": [
-    "thứ tư",
-    "thứ sáu",
-    "thứ năm"
+    "một tuần nữa",
+    "ba tuần nữa",
+    "hai tuần nữa"
    ],
    "ans": 0,
    "made": true,
-   "exp": "들은 대화\n남: Thứ năm đi gặp khách hàng nhé! — 목요일에 고객 만나러 가요!\n여: Thứ năm là ngày mai đấy! — 목요일은 내일이에요!\n물음: Hôm nay là thứ mấy vậy? — 오늘은 무슨 요일이에요?\n답: thứ tư"
+   "exp": "들은 대화\n남: Anh ở Hà Nội bao lâu nữa? — 하노이에 얼마나 더 있어요?\n여: Một tuần nữa, không phải hai tuần. — 일주일 더요, 2주가 아니에요.\n물음: Anh ấy còn ở Hà Nội bao lâu nữa? — 그는 하노이에 얼마나 더 있어요?\n답: một tuần nữa"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Chị ấy nói tiếng Anh thế nào?",
+   "audio": "Chị nói tiếng Anh được không?\nĐược, nhưng không giỏi lắm.",
+   "voices": "fm",
+   "opts": [
+    "không được",
+    "không giỏi lắm",
+    "không dễ lắm"
+   ],
+   "ans": 1,
+   "made": true,
+   "exp": "들은 대화\n여: Chị nói tiếng Anh được không? — 영어 할 수 있어요?\n남: Được, nhưng không giỏi lắm. — 네, 하지만 아주 잘하지는 못해요.\n물음: Chị ấy nói tiếng Anh thế nào? — 그녀는 영어를 어떻게 해요?\n답: không giỏi lắm"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
    "prompt": "Họ đang ở đâu?",
-   "audio": "Em muốn đăng ký học tiếng Việt.\nVậy em điền đơn này nhé.",
-   "voices": "fm",
-   "opts": [
-    "ở bưu điện",
-    "ở trung tâm ngoại ngữ",
-    "ở khách sạn"
-   ],
-   "ans": 1,
-   "made": true,
-   "exp": "들은 대화\n여: Em muốn đăng ký học tiếng Việt. — 베트남어 수업을 등록하고 싶어요.\n남: Vậy em điền đơn này nhé. — 그럼 이 신청서를 써 주세요.\n물음: Họ đang ở đâu? — 그들은 어디에 있어요?\n답: ở trung tâm ngoại ngữ"
-  },
-  {
-   "sec": "A 듣기 · 3 듣고 고르기",
-   "k": "choice",
-   "prompt": "Phát âm tiếng Việt thế nào?",
-   "audio": "Phát âm tiếng Việt khó không?\nKhông khó lắm, em luyện mỗi ngày.",
+   "audio": "Chị muốn mua vé đi đâu?\nCho tôi một vé đi Nha Trang.",
    "voices": "mf",
    "opts": [
-    "Không lâu lắm",
-    "Không khó lắm",
-    "Không vui lắm"
+    "ở bệnh viện",
+    "ở ga xe lửa",
+    "ở trường"
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 대화\n남: Phát âm tiếng Việt khó không? — 베트남어 발음은 어려워요?\n여: Không khó lắm, em luyện mỗi ngày. — 그렇게 어렵지 않아요, 저는 매일 연습해요.\n물음: Phát âm tiếng Việt thế nào? — 베트남어 발음은 어때요?\n답: Không khó lắm"
+   "exp": "들은 대화\n남: Chị muốn mua vé đi đâu? — 어디 가는 표를 사시겠어요?\n여: Cho tôi một vé đi Nha Trang. — 나트랑 가는 표 한 장 주세요.\n물음: Họ đang ở đâu? — 그들은 어디에 있어요?\n답: ở ga xe lửa"
   },
   {
    "sec": "A 듣기 · 3 듣고 고르기",
    "k": "choice",
-   "prompt": "Chị ấy gọi điện thoại cho khách hàng chưa?",
-   "audio": "Chị gọi cho khách hàng rồi chứ?\nChưa, chiều nay tôi sẽ gọi.",
+   "prompt": "Em ấy gọi cho mẹ chưa?",
+   "audio": "Em gọi cho mẹ rồi à?\nDạ chưa, tối nay em gọi.",
    "voices": "fm",
    "opts": [
     "Rồi",
@@ -312,40 +312,41 @@
    ],
    "ans": 1,
    "made": true,
-   "exp": "들은 대화\n여: Chị gọi cho khách hàng rồi chứ? — 고객한테 전화했죠?\n남: Chưa, chiều nay tôi sẽ gọi. — 아직이요, 오늘 오후에 할 거예요.\n물음: Chị ấy gọi điện thoại cho khách hàng chưa? — 그녀는 고객에게 전화했어요?\n답: Chưa"
+   "exp": "들은 대화\n여: Em gọi cho mẹ rồi à? — 엄마한테 벌써 전화했어?\n남: Dạ chưa, tối nay em gọi. — 아직이요, 오늘 저녁에 할게요.\n물음: Em ấy gọi cho mẹ chưa? — 그 아이는 엄마에게 전화했어요?\n답: Chưa"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "Hôm qua ông Jack luyện ____ tiếng Việt với một người bạn.",
-   "audio": "Hôm qua ông Jack luyện phát âm tiếng Việt với một người bạn.",
+   "prompt": "Nó đã học tiếng Pháp ____ tháng.",
+   "audio": "Nó đã học tiếng Pháp sáu tháng.",
    "acc": [
-    "phát âm"
+    "sáu",
+    "6"
    ],
    "made": true,
-   "exp": "들은 말: Hôm qua ông Jack luyện phát âm tiếng Việt với một người bạn.\n어제 잭 씨는 친구와 베트남어 발음을 연습했어요.\n답: phát âm"
+   "exp": "들은 말: Nó đã học tiếng Pháp sáu tháng.\n그 아이는 프랑스어를 여섯 달 배웠어요.\n답: sáu"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "Thứ tư tuần trước tôi đã đăng ký ____ đi Hà Nội.",
-   "audio": "Thứ tư tuần trước tôi đã đăng ký vé xe lửa đi Hà Nội.",
+   "prompt": "Trong ngày đầu tuần, Hà luôn cảm thấy mệt và ____.",
+   "audio": "Trong ngày đầu tuần, Hà luôn cảm thấy mệt và buồn ngủ.",
    "acc": [
-    "vé xe lửa"
+    "buồn ngủ"
    ],
    "made": true,
-   "exp": "들은 말: Thứ tư tuần trước tôi đã đăng ký vé xe lửa đi Hà Nội.\n지난주 수요일에 저는 하노이 가는 기차표를 예약했어요.\n답: vé xe lửa"
+   "exp": "들은 말: Trong ngày đầu tuần, Hà luôn cảm thấy mệt và buồn ngủ.\n주초에 하는 늘 피곤하고 졸려요.\n답: buồn ngủ"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "Học sinh không đi học vì đang ____.",
-   "audio": "Học sinh không đi học vì đang nghỉ hè.",
+   "prompt": "Trong gia đình, có lẽ mẹ sẽ chuẩn bị ____ đặc biệt.",
+   "audio": "Trong gia đình, có lẽ mẹ sẽ chuẩn bị bữa ăn tối đặc biệt.",
    "acc": [
-    "nghỉ hè"
+    "bữa ăn tối"
    ],
    "made": true,
-   "exp": "들은 말: Học sinh không đi học vì đang nghỉ hè.\n학생들은 여름방학이라 학교에 안 가요.\n답: nghỉ hè"
+   "exp": "들은 말: Trong gia đình, có lẽ mẹ sẽ chuẩn bị bữa ăn tối đặc biệt.\n집에서는 아마 엄마가 특별한 저녁 식사를 준비할 거예요.\n답: bữa ăn tối"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
@@ -361,80 +362,79 @@
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "Cuối tuần mọi người trong gia đình anh Dũng đều ____.",
-   "audio": "Cuối tuần mọi người trong gia đình anh Dũng đều rảnh.",
+   "prompt": "Em gái chị Hoài thích ____.",
+   "audio": "Em gái chị Hoài thích nghe nhạc.",
    "acc": [
-    "rảnh"
+    "nghe nhạc"
    ],
    "made": true,
-   "exp": "들은 말: Cuối tuần mọi người trong gia đình anh Dũng đều rảnh.\n주말에 중 씨 가족은 모두 한가해요.\n답: rảnh"
+   "exp": "들은 말: Em gái chị Hoài thích nghe nhạc.\n호아이 씨의 여동생은 음악 듣기를 좋아해요.\n답: nghe nhạc"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Chị biết mấy ngoại ngữ? B: Tôi biết ____ ngoại ngữ, tiếng Nhật và tiếng Việt.",
-   "audio": "Chị biết mấy ngoại ngữ?\nTôi biết hai ngoại ngữ, tiếng Nhật và tiếng Việt.",
+   "prompt": "A: Eun Ji đang viết gì vậy? B: Tôi viết ____ xin dạy tiếng Hàn.",
+   "audio": "Eun Ji đang viết gì vậy?\nTôi viết đơn xin dạy tiếng Hàn.",
    "voices": "mf",
    "acc": [
-    "hai",
-    "2"
+    "đơn"
    ],
    "made": true,
-   "exp": "들은 대화\n남: Chị biết mấy ngoại ngữ? — 외국어를 몇 개 알아요?\n여: Tôi biết hai ngoại ngữ, tiếng Nhật và tiếng Việt. — 두 개요, 일본어와 베트남어요.\n답: hai"
+   "exp": "들은 대화\n남: Eun Ji đang viết gì vậy? — 은지는 뭘 쓰고 있어요?\n여: Tôi viết đơn xin dạy tiếng Hàn. — 한국어를 가르치겠다는 신청서를 써요.\n답: đơn"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Anh ấy đi bao giờ vậy, chị? B: ____ ngày trước.",
-   "audio": "Anh ấy đi bao giờ vậy, chị?\nHai ngày trước.",
+   "prompt": "A: Sinh nhật anh là tháng này, phải không? B: Vâng, chủ nhật ____ đấy!",
+   "audio": "Sinh nhật anh là tháng này, phải không?\nVâng, chủ nhật tuần trước đấy!",
    "voices": "fm",
    "acc": [
-    "Hai",
-    "2"
+    "tuần trước"
    ],
    "made": true,
-   "exp": "들은 대화\n여: Anh ấy đi bao giờ vậy, chị? — 그는 언제 갔어요?\n남: Hai ngày trước. — 이틀 전에요.\n답: Hai"
+   "exp": "들은 대화\n여: Sinh nhật anh là tháng này, phải không? — 그리고 당신 생일은 이번 달이죠?\n남: Vâng, chủ nhật tuần trước đấy! — 네, 지난주 일요일이었어요!\n답: tuần trước"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Em đặt tour du lịch chưa? B: Em đặt rồi, năm ngày bốn ____.",
-   "audio": "Em đặt tour du lịch chưa?\nEm đặt rồi, năm ngày bốn đêm.",
+   "prompt": "A: Anh đi du lịch hả? B: Tôi đi Thái để ____.",
+   "audio": "Anh đi du lịch hả?\nTôi đi Thái để làm việc.",
    "voices": "mf",
    "acc": [
-    "đêm"
+    "làm việc"
    ],
    "made": true,
-   "exp": "들은 대화\n남: Em đặt tour du lịch chưa? — 여행 상품 예약했니?\n여: Em đặt rồi, năm ngày bốn đêm. — 예약했어요, 4박 5일이요.\n답: đêm"
+   "exp": "들은 대화\n남: Anh đi du lịch hả? — 여행 가요?\n여: Tôi đi Thái để làm việc. — 일하러 태국에 가요.\n답: làm việc"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Ồ, anh có họ hàng người Việt à? B: ____ tôi là người Việt.",
-   "audio": "Ồ, anh có họ hàng người Việt à?\nBà ngoại tôi là người Việt.",
+   "prompt": "A: Anh Brian có mấy anh chị em, vậy chị? B: Anh ấy có khá đông anh em, một anh trai, ____ chị gái.",
+   "audio": "Anh Brian có mấy anh chị em, vậy chị?\nAnh ấy có khá đông anh em, một anh trai, bốn chị gái.",
    "voices": "fm",
    "acc": [
-    "Bà ngoại"
+    "bốn",
+    "4"
    ],
    "made": true,
-   "exp": "들은 대화\n여: Ồ, anh có họ hàng người Việt à? — 오, 베트남 친척이 있어요?\n남: Bà ngoại tôi là người Việt. — 외할머니가 베트남 사람이에요.\n답: Bà ngoại"
+   "exp": "들은 대화\n여: Anh Brian có mấy anh chị em, vậy chị? — 브라이언 씨는 형제가 몇이에요?\n남: Anh ấy có khá đông anh em, một anh trai, bốn chị gái. — 형제가 꽤 많아요, 형 하나와 누나 넷이요.\n답: bốn"
   },
   {
    "sec": "A 듣기 · 4 듣고 빈칸",
    "k": "type",
-   "prompt": "A: Ông ấy có mấy con? B: Ông ấy có hai ____, một con trai.",
-   "audio": "Ông ấy có mấy con?\nÔng ấy có hai con gái, một con trai.",
+   "prompt": "A: Anh đi thăm ông bà với ai? B: Tôi sẽ cùng đi với ____.",
+   "audio": "Anh đi thăm ông bà với ai?\nTôi sẽ cùng đi với em trai.",
    "voices": "mf",
    "acc": [
-    "con gái"
+    "em trai"
    ],
    "made": true,
-   "exp": "들은 대화\n남: Ông ấy có mấy con? — 그분은 자녀가 몇이에요?\n여: Ông ấy có hai con gái, một con trai. — 딸 둘, 아들 하나예요.\n답: con gái"
+   "exp": "들은 대화\n남: Anh đi thăm ông bà với ai? — 누구와 조부모님을 뵈러 가요?\n여: Tôi sẽ cùng đi với em trai. — 남동생과 같이 가요.\n답: em trai"
   },
   {
    "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
-   "prompt": "Chị ấy nói ____ ba thứ tiếng.",
+   "prompt": "Em nói tiếng Pháp ____ không?",
    "opts": [
     "bao giờ",
     "được",
@@ -443,7 +443,7 @@
     "khá"
    ],
    "ans": 1,
-   "exp": "Chị ấy nói được ba thứ tiếng.\n그녀는 세 언어를 할 수 있어요."
+   "exp": "Em nói tiếng Pháp được không?\n프랑스어 할 수 있어요?"
   },
   {
    "sec": "B 읽기 · 1 빈칸",
@@ -462,7 +462,7 @@
   {
    "sec": "B 읽기 · 1 빈칸",
    "k": "choice",
-   "prompt": "Bố tôi là bác sĩ. ____ mẹ tôi là giáo viên.",
+   "prompt": "Bố tôi mất rồi. ____ mẹ tôi đã về hưu.",
    "opts": [
     "bao giờ",
     "được",
@@ -471,7 +471,7 @@
     "khá"
    ],
    "ans": 2,
-   "exp": "Bố tôi là bác sĩ. còn mẹ tôi là giáo viên.\n아빠는 의사예요. 그리고 엄마는 선생님이에요."
+   "exp": "Bố tôi mất rồi. còn mẹ tôi đã về hưu.\n아빠는 돌아가셨어요. 그리고 엄마는 은퇴하셨어요."
   },
   {
    "sec": "B 읽기 · 1 빈칸",
@@ -504,28 +504,28 @@
   {
    "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
-   "text": "Chị May làm phiên dịch ở khách sạn. Chị ấy nói được tiếng Thái Lan, tiếng Anh và tiếng Việt.",
-   "prompt": "Chị May nói được mấy thứ tiếng?",
+   "text": "Chị Mai là giáo viên tiếng Anh. Chị ấy dạy ở một trung tâm ngoại ngữ ở Quận 1.",
+   "prompt": "Chị Mai dạy ở đâu?",
    "opts": [
-    "ba thứ tiếng",
-    "bốn thứ tiếng",
-    "hai thứ tiếng"
+    "ở trung tâm ngoại ngữ",
+    "ở công ty",
+    "ở bệnh viện"
    ],
    "ans": 0,
-   "exp": "물음: Chị May nói được mấy thứ tiếng? — 메이 씨는 몇 개 언어를 할 수 있어요?\n글: 메이 씨는 호텔에서 통역을 해요. 태국어, 영어, 베트남어를 할 수 있어요.\n답: ba thứ tiếng"
+   "exp": "물음: Chị Mai dạy ở đâu? — 마이 씨는 어디에서 가르쳐요?\n글: 마이 씨는 영어 교사예요. 1군에 있는 어학원에서 가르쳐요.\n답: ở trung tâm ngoại ngữ"
   },
   {
    "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
-   "text": "Chị Hoa mới học tiếng Việt hai tháng nên nói chưa tự tin, nhưng đọc được nhiều từ.",
-   "prompt": "Chị Hoa học tiếng Việt bao lâu rồi?",
+   "text": "Anh Long mới đến Hà Nội tháng trước. Anh ấy chưa quen nên hình như cảm thấy hơi lo lắng.",
+   "prompt": "Anh Long đến Hà Nội bao giờ?",
    "opts": [
-    "hai tuần",
-    "hai năm",
-    "hai tháng"
+    "năm trước",
+    "tuần trước",
+    "tháng trước"
    ],
    "ans": 2,
-   "exp": "물음: Chị Hoa học tiếng Việt bao lâu rồi? — 호아 씨는 베트남어를 배운 지 얼마나 됐어요?\n글: 호아 씨는 베트남어를 배운 지 두 달밖에 안 돼서 말할 때 자신이 없지만, 낱말은 많이 읽을 수 있어요.\n답: hai tháng"
+   "exp": "물음: Anh Long đến Hà Nội bao giờ? — 롱 씨는 언제 하노이에 왔어요?\n글: 롱 씨는 지난달에 하노이에 막 왔어요. 아직 익숙하지 않아서 좀 걱정하는 것 같아요.\n답: tháng trước"
   },
   {
    "sec": "B 읽기 · 2 읽고 고르기",
@@ -543,92 +543,92 @@
   {
    "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
-   "text": "Eun Ji viết đơn xin dạy tiếng Hàn bằng tiếng Việt. Chị ấy ngại viết sai nên anh Toàn xem giùm.",
-   "prompt": "Ai xem đơn giùm Eun Ji?",
+   "text": "Anh Brian đã đặt tour cho ba mẹ. Tháng sáu ba mẹ anh ấy sẽ đi Đà Nẵng một tuần.",
+   "prompt": "Ai đặt tour du lịch?",
    "opts": [
-    "cô giáo",
-    "chị Loan",
-    "anh Toàn"
+    "chị Vân",
+    "ba mẹ anh Brian",
+    "anh Brian"
    ],
    "ans": 2,
-   "exp": "물음: Ai xem đơn giùm Eun Ji? — 누가 은지 씨 대신 신청서를 봐 줘요?\n글: 은지 씨는 한국어를 가르치겠다는 신청서를 베트남어로 써요. 틀리게 쓸까 봐 걱정돼서 또안 씨가 대신 봐 줘요.\n답: anh Toàn"
+   "exp": "물음: Ai đặt tour du lịch? — 누가 여행 상품을 예약했어요?\n글: 브라이언 씨는 부모님을 위해 여행 상품을 예약했어요. 6월에 부모님은 다낭에 일주일 가요.\n답: anh Brian"
   },
   {
    "sec": "B 읽기 · 2 읽고 고르기",
    "k": "choice",
-   "text": "Ngày Gia đình Việt Nam là ngày 28 tháng 6. Ngày này mọi người trong gia đình cùng ăn tối.",
-   "prompt": "Ngày Gia đình Việt Nam là ngày nào?",
+   "text": "Ông Jack mới đến Việt Nam một tháng. Ông ấy chưa nói được tiếng Việt nhưng đọc được một chút.",
+   "prompt": "Ông Jack làm được gì?",
    "opts": [
-    "ngày 6 tháng 8",
-    "ngày 28 tháng 6",
-    "ngày 26 tháng 8"
+    "viết được tiếng Việt",
+    "đọc được một chút",
+    "nói tiếng Việt giỏi"
    ],
    "ans": 1,
-   "exp": "물음: Ngày Gia đình Việt Nam là ngày nào? — 베트남 가족의 날은 언제예요?\n글: 베트남 가족의 날은 6월 28일이에요. 이날 가족 모두가 함께 저녁을 먹어요.\n답: ngày 28 tháng 6"
+   "exp": "물음: Ông Jack làm được gì? — 잭 씨는 무엇을 할 수 있어요?\n글: 잭 씨는 베트남에 온 지 한 달밖에 안 됐어요. 아직 베트남어를 못 하지만 조금 읽을 수는 있어요.\n답: đọc được một chút"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Anh Nam đang viết đơn xin việc bằng tiếng Anh. Anh ấy ngại viết sai nên bạn thân xem giúp anh ấy.",
-   "prompt": "Bạn thân xem đơn giúp anh Nam.",
-   "ans": true,
-   "exp": "Bạn thân xem đơn giúp anh Nam. — 친한 친구가 남 씨 대신 지원서를 봐 줘요.\n글: 남 씨는 영어로 입사 지원서를 쓰고 있어요. 틀리게 쓸까 봐 걱정돼서 친한 친구가 봐 줘요.\n→ 맞다"
-  },
-  {
-   "sec": "B 읽기 · 3 맞다/틀리다",
-   "k": "tf",
-   "text": "Anh Nam đang viết đơn xin việc bằng tiếng Anh. Anh ấy ngại viết sai nên bạn thân xem giúp anh ấy.",
-   "prompt": "Anh Nam viết đơn bằng tiếng Việt.",
+   "text": "Toàn có hai chị gái. Chị cả năm nay 34 tuổi, đã lập gia đình. Chị thứ hai nhỏ hơn chị cả hai tuổi và còn độc thân.",
+   "prompt": "Toàn có hai anh trai.",
    "ans": false,
-   "exp": "Anh Nam viết đơn bằng tiếng Việt. — 남 씨는 베트남어로 지원서를 써요.\n글: 남 씨는 영어로 입사 지원서를 쓰고 있어요. 틀리게 쓸까 봐 걱정돼서 친한 친구가 봐 줘요.\n→ 틀리다"
+   "exp": "Toàn có hai anh trai. — 또안에게는 형이 둘 있어요.\n글: 또안에게는 누나가 둘 있어요. 큰누나는 올해 서른네 살이고 결혼했어요. 둘째 누나는 큰누나보다 두 살 어리고 아직 미혼이에요.\n→ 틀리다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Hôm qua chị Linh mới đi công tác Hà Nội về. Chị ấy ở đó một tuần và gặp nhiều khách hàng khó tính.",
-   "prompt": "Chị Linh ở Hà Nội một tuần.",
+   "text": "Toàn có hai chị gái. Chị cả năm nay 34 tuổi, đã lập gia đình. Chị thứ hai nhỏ hơn chị cả hai tuổi và còn độc thân.",
+   "prompt": "Chị thứ hai của Toàn 32 tuổi.",
    "ans": true,
-   "exp": "Chị Linh ở Hà Nội một tuần. — 링 씨는 하노이에 일주일 있었어요.\n글: 링 씨는 어제 하노이 출장에서 막 돌아왔어요. 거기서 일주일 있었고 까다로운 고객을 많이 만났어요.\n→ 맞다"
+   "exp": "Chị thứ hai của Toàn 32 tuổi. — 또안의 둘째 누나는 서른두 살이에요.\n글: 또안에게는 누나가 둘 있어요. 큰누나는 올해 서른네 살이고 결혼했어요. 둘째 누나는 큰누나보다 두 살 어리고 아직 미혼이에요.\n→ 맞다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Hôm qua chị Linh mới đi công tác Hà Nội về. Chị ấy ở đó một tuần và gặp nhiều khách hàng khó tính.",
-   "prompt": "Bây giờ chị Linh đang ở Hà Nội.",
+   "text": "Hôm nay chị Hà không đi làm. Chị ấy ở nhà nấu bữa ăn tối cho cả gia đình vì bà ngoại đến thăm.",
+   "prompt": "Hôm nay chị Hà đi làm.",
    "ans": false,
-   "exp": "Bây giờ chị Linh đang ở Hà Nội. — 지금 링 씨는 하노이에 있어요.\n글: 링 씨는 어제 하노이 출장에서 막 돌아왔어요. 거기서 일주일 있었고 까다로운 고객을 많이 만났어요.\n→ 틀리다"
+   "exp": "Hôm nay chị Hà đi làm. — 오늘 하 씨는 출근해요.\n글: 오늘 하 씨는 출근하지 않아요. 외할머니가 오셔서 집에서 온 가족의 저녁을 요리해요.\n→ 틀리다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Bố mẹ tôi cùng tuổi. Năm nay bố mẹ tôi 60 tuổi và vẫn còn làm việc. Họ chưa muốn về hưu.",
-   "prompt": "Bố và mẹ tôi cùng tuổi.",
+   "text": "Hôm nay chị Hà không đi làm. Chị ấy ở nhà nấu bữa ăn tối cho cả gia đình vì bà ngoại đến thăm.",
+   "prompt": "Tối nay bà ngoại đến thăm chị Hà.",
    "ans": true,
-   "exp": "Bố và mẹ tôi cùng tuổi. — 아버지와 어머니는 동갑이에요.\n글: 우리 부모님은 동갑이에요. 올해 예순이시고 아직 일하세요. 아직 은퇴하고 싶어 하지 않으세요.\n→ 맞다"
+   "exp": "Tối nay bà ngoại đến thăm chị Hà. — 오늘 저녁에 외할머니가 하 씨를 보러 와요.\n글: 오늘 하 씨는 출근하지 않아요. 외할머니가 오셔서 집에서 온 가족의 저녁을 요리해요.\n→ 맞다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Bố mẹ tôi cùng tuổi. Năm nay bố mẹ tôi 60 tuổi và vẫn còn làm việc. Họ chưa muốn về hưu.",
-   "prompt": "Bố mẹ tôi đã về hưu.",
+   "text": "Tôi và bạn thân cùng tuổi. Chúng tôi đều là sinh viên năm thứ hai và cùng học tiếng Nga.",
+   "prompt": "Bạn thân tôi lớn hơn tôi.",
    "ans": false,
-   "exp": "Bố mẹ tôi đã về hưu. — 부모님은 은퇴하셨어요.\n글: 우리 부모님은 동갑이에요. 올해 예순이시고 아직 일하세요. 아직 은퇴하고 싶어 하지 않으세요.\n→ 틀리다"
+   "exp": "Bạn thân tôi lớn hơn tôi. — 제 친한 친구는 저보다 나이가 많아요.\n글: 저와 친한 친구는 동갑이에요. 우리 둘 다 2학년 대학생이고 함께 러시아어를 배워요.\n→ 틀리다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Sơn sống một mình ở Thành phố Hồ Chí Minh. Sơn rất nhớ bữa ăn tối của gia đình nên mỗi tháng đều về quê.",
-   "prompt": "Sơn thường về quê.",
+   "text": "Tôi và bạn thân cùng tuổi. Chúng tôi đều là sinh viên năm thứ hai và cùng học tiếng Nga.",
+   "prompt": "Tôi và bạn thân đều là sinh viên.",
    "ans": true,
-   "exp": "Sơn thường về quê. — 선은 자주 고향에 가요.\n글: 선은 호찌민시에서 혼자 살아요. 가족의 저녁 식사가 아주 그리워서 달마다 고향에 가요.\n→ 맞다"
+   "exp": "Tôi và bạn thân đều là sinh viên. — 저와 친한 친구는 둘 다 대학생이에요.\n글: 저와 친한 친구는 동갑이에요. 우리 둘 다 2학년 대학생이고 함께 러시아어를 배워요.\n→ 맞다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
    "k": "tf",
-   "text": "Sơn sống một mình ở Thành phố Hồ Chí Minh. Sơn rất nhớ bữa ăn tối của gia đình nên mỗi tháng đều về quê.",
-   "prompt": "Sơn sống với bố mẹ.",
+   "text": "Chủ nhật tuần trước là sinh nhật mẹ tôi. Gia đình tôi đi ăn tối ở nhà hàng và tặng hoa cho mẹ.",
+   "prompt": "Sinh nhật mẹ tôi là chủ nhật tuần trước.",
+   "ans": true,
+   "exp": "Sinh nhật mẹ tôi là chủ nhật tuần trước. — 어머니 생신은 지난주 일요일이었어요.\n글: 지난주 일요일은 어머니 생신이었어요. 우리 가족은 식당에 저녁을 먹으러 가고 어머니께 꽃을 드렸어요.\n→ 맞다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Chủ nhật tuần trước là sinh nhật mẹ tôi. Gia đình tôi đi ăn tối ở nhà hàng và tặng hoa cho mẹ.",
+   "prompt": "Gia đình tôi ăn tối ở nhà.",
    "ans": false,
-   "exp": "Sơn sống với bố mẹ. — 선은 부모님과 함께 살아요.\n글: 선은 호찌민시에서 혼자 살아요. 가족의 저녁 식사가 아주 그리워서 달마다 고향에 가요.\n→ 틀리다"
+   "exp": "Gia đình tôi ăn tối ở nhà. — 우리 가족은 집에서 저녁을 먹었어요.\n글: 지난주 일요일은 어머니 생신이었어요. 우리 가족은 식당에 저녁을 먹으러 가고 어머니께 꽃을 드렸어요.\n→ 틀리다"
   },
   {
    "sec": "B 읽기 · 3 맞다/틀리다",
@@ -862,52 +862,56 @@
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Các bạn đừng nghỉ!",
+   "vi": "Các bạn đừng nói chuyện trong lớp!",
    "tiles": [
-    "nghỉ",
+    "nói chuyện",
     "Các bạn",
+    "trong lớp",
     "đừng"
    ],
-   "exp": "Các bạn đừng nghỉ!\n여러분, 쉬지 마세요!"
+   "exp": "Các bạn đừng nói chuyện trong lớp!\n여러분, 수업 중에 떠들지 마세요!"
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Chị em cô ấy cùng giúp mẹ nấu ăn.",
+   "vi": "Tôi sẽ cùng bố mẹ đi thăm bà ngoại.",
    "tiles": [
-    "mẹ",
-    "Chị em",
-    "nấu ăn",
-    "cô ấy",
-    "cùng giúp"
+    "đi thăm",
+    "Tôi sẽ",
+    "bà ngoại",
+    "cùng",
+    "bố mẹ"
    ],
-   "exp": "Chị em cô ấy cùng giúp mẹ nấu ăn.\n그녀의 자매들은 함께 엄마의 요리를 도와요."
+   "exp": "Tôi sẽ cùng bố mẹ đi thăm bà ngoại.\n저는 부모님과 함께 외할머니를 뵈러 갈 거예요."
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Tôi mới đến Việt Nam một tháng.",
+   "vi": "Em mới học tiếng Việt một tháng.",
    "tiles": [
-    "Việt Nam",
-    "Tôi",
+    "tiếng Việt",
+    "Em",
     "một tháng",
     "mới",
-    "đến"
+    "học"
    ],
-   "exp": "Tôi mới đến Việt Nam một tháng.\n저는 베트남에 온 지 한 달밖에 안 됐어요."
+   "exp": "Em mới học tiếng Việt một tháng.\n저는 베트남어를 배운 지 한 달밖에 안 됐어요."
   },
   {
    "sec": "C 쓰기 · 1 낱말 배열",
    "k": "puzzle",
-   "vi": "Chị thứ hai của Toàn lập gia đình khá trễ.",
+   "vi": "Ông ấy biết tiếng Anh và tiếng Đức.",
    "tiles": [
-    "lập gia đình",
-    "Chị",
-    "khá trễ",
-    "thứ hai",
-    "của Toàn"
+    "và",
+    "Ông ấy",
+    "tiếng Đức",
+    "biết",
+    "tiếng Anh"
    ],
-   "exp": "Chị thứ hai của Toàn lập gia đình khá trễ.\n또안의 둘째 누나는 꽤 늦게 결혼했어요."
+   "exp": "Ông ấy biết tiếng Anh và tiếng Đức.\n그분은 영어와 독일어를 알아요.",
+   "alts": [
+    "Ông ấy biết tiếng Đức và tiếng Anh."
+   ]
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -937,17 +941,16 @@
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
    "k": "type",
-   "prompt": "Tối nay bà ấy về nước.",
+   "prompt": "Chị ấy viết tiếng Pháp sai nhiều.",
    "acc": [
     "Đúng",
     "Đ",
-    "Tối nay bà ấy về nước.",
-    "Bà ấy về nước tối nay."
+    "Chị ấy viết tiếng Pháp sai nhiều."
    ],
-   "fix": "Tối nay bà ấy về nước.",
-   "ko": "오늘 밤 그분은 귀국해요.",
+   "fix": "Chị ấy viết tiếng Pháp sai nhiều.",
+   "ko": "그녀는 프랑스어를 많이 틀리게 써요.",
    "dung": true,
-   "exp": "Tối nay bà ấy về nước.\n답: Đúng\nTối nay bà ấy về nước. — 오늘 밤 그분은 귀국해요."
+   "exp": "Chị ấy viết tiếng Pháp sai nhiều.\n답: Đúng\nChị ấy viết tiếng Pháp sai nhiều. — 그녀는 프랑스어를 많이 틀리게 써요."
   },
   {
    "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
@@ -1104,7 +1107,7 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "thứ bảy",
+   "vi": "thứ hai",
    "pts": 1
   },
   {
@@ -1116,37 +1119,37 @@
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "hình như",
+   "vi": "trung tâm",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "cuối tuần",
+   "vi": "tuần này",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "con cả",
+   "vi": "con trai",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "chuẩn bị",
+   "vi": "anh trai",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "kết hôn",
+   "vi": "chúc mừng",
    "pts": 1
   },
   {
    "sec": "D 말하기 · 1 낱말 읽기",
    "k": "say",
-   "vi": "thứ mấy",
+   "vi": "về hưu",
    "pts": 1
   },
   {
@@ -1158,13 +1161,13 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Anh ấy nói được tiếng gì?",
+   "vi": "Anh xem giùm tôi được không?",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Chị đã học ở đây bao lâu?",
+   "vi": "Anh ấy đã đi công tác chưa chị?",
    "pts": 2
   },
   {
@@ -1176,13 +1179,13 @@
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Anh là con thứ mấy trong gia đình?",
+   "vi": "Gia đình chị có mấy người?",
    "pts": 2
   },
   {
    "sec": "D 말하기 · 2 문장 읽기",
    "k": "say",
-   "vi": "Anh ấy có khá đông anh em.",
+   "vi": "Cô ấy đã có gia đình chưa?",
    "pts": 2
   }
  ]

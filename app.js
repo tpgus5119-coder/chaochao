@@ -7797,6 +7797,12 @@ function senseDefault(vi, ko, lk) {
   const mine = new Set(senseParts(ko));
   return ss.findIndex(t => senseParts(t).some(p => mine.has(p))) + 1;   // 못 찾으면 0
 }
+let SENSE_EX = null, SENSE_EX_P = null;
+function senseExLoad() {
+  if (SENSE_EX) return Promise.resolve();
+  if (!SENSE_EX_P) SENSE_EX_P = fetch('data/_sense_ex.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { SENSE_EX = j; }).catch(() => { SENSE_EX = {}; });
+  return SENSE_EX_P;
+}
 function senseLine(host, x, o) {
   const opt = o || {};
   /* 뜻이 여럿이면 **가진 뜻 모두를 흔히 쓰는 차례로** 번호를 붙여 보여 준다 (대표님 지시 2026-09-28).
@@ -7807,10 +7813,31 @@ function senseLine(host, x, o) {
     if (!ss || ss.length < 2) { if (opt.dfe && tn0) tn0.replaceWith(dfullBox(opt.dfe)); return; }   // 뜻 목록이 없으면 사전 전체 뜻 — 팝업도 같은 규칙
     const hit = senseDefault(x.vi, x.ko, x.lk !== undefined ? x.lk : curLessonKey()) - 1;
     const list = el('div', 'senselist');
-    ss.forEach((t, i) => { const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp); });   // 3개까지 → 가진 뜻 모두 (대표님 지시 2026-09-28 밤)
+    /* 뜻을 누르면 그 뜻의 예문이 뜻 목록 밑에 (대표님 2026-10-24 "chứ 는 '~고 말고요'·'(물음 끝) ~지요?' — 의미별로 예문"). data/_sense_ex.json(tools/sense_ex.py, 문맥 뜻 + Qwen 확인) */
+    const exBox = el('div', 'senseex'); exBox.hidden = true;
+    let open = -1;
+    const showEx = i => {
+      const row = SENSE_EX && SENSE_EX[String(x.vi || '').trim().toLowerCase()];
+      exBox.textContent = '';
+      if (open === i || !row || !row[i] || !row[i].length) { open = -1; exBox.hidden = true; list.querySelectorAll('.sn').forEach(n => n.classList.remove('open')); return; }
+      open = i; exBox.hidden = false;
+      list.querySelectorAll('.sn').forEach((n, j) => n.classList.toggle('open', j === i));
+      row[i].forEach(([vi, ko]) => {
+        const r = el('div', 'senseexrow');
+        r.onclick = () => { const k = recKey(vi); k ? play(k, false) : speakVi(vi); };
+        r.append(tapLine(vi, 'senseexvi tapline'), el('div', 'senseexko', esc(ko)));
+        exBox.append(r);
+      });
+    };
+    ss.forEach((t, i) => {
+      const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp);   // 3개까지 → 가진 뜻 모두 (대표님 지시 2026-09-28 밤)
+      senseExLoad().then(() => { const row = SENSE_EX && SENSE_EX[String(x.vi || '').trim().toLowerCase()];
+        if (row && row[i] && row[i].length) { sp.classList.add('hasex'); sp.onclick = ev => { ev.stopPropagation(); showEx(i); }; } });
+    });
     const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
     if ((hit >= 0 || opt.dict) && tn) tn.replaceWith(list);   // 이 과의 뜻이 목록 안에 있으면(사전 카드는 늘) 목록이 뜻 자리를 대신한다
     else host.append(list);                             // 없으면(이 과만의 특수한 뜻) 원래 뜻을 두고 밑에 목록
+    list.after(exBox);
   };
   if (SENSES && SDEF) draw(); else Promise.all([sensesLoad(), sdefLoad()]).then(draw);
 }
