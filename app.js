@@ -9922,7 +9922,7 @@ function relChips() {
   if (!L || !L.day) return [];
   const d = L.day, out = [], seen = new Set();
   const lifeBase = t => String(t || '').split(' (')[0];
-  const add = (label, go, key) => { if (seen.has(key)) return; seen.add(key); out.push({ label, go }); };
+  const add = (label, go, key, cat) => { if (seen.has(key)) return; seen.add(key); out.push({ label, go, cat: cat || (key[0] === 'g' || key[0] === 'x' ? 'gram' : key[0] === 'b' ? 'basic' : 'word') }); };   // cat: 문법·단어·기본기 줄 나눔 (2026-10-24)
   const lifeGo = theme => {
     const ds = ALL.filter(x => typeof x.day === 'number' && !x.track && lifeBase(x.theme) === theme).sort((a, b) => (a.n || 0) - (b.n || 0));
     if (!ds.length) return null;
@@ -9968,7 +9968,7 @@ function relChips() {
   // 교재 ↔ 일상 (topic_links)
   if (TLINK && me.life) Object.entries(TLINK).forEach(([title, x]) => { if (x.days.includes(me.life)) { const go = mainLessons(title); if (go) add(tr('교재') + ' ' + x.book + ' · ' + title, go, 'm' + title); } });
   if (TLINK && me.main && TLINK[me.main]) TLINK[me.main].days.forEach(t => { const go = lifeGo(t); if (go) add(tr('일상') + ' · ' + tr(t), go, 'l' + t); });
-  return out.slice(0, 6);
+  return out;
 }
 function drawRelLinks() {
   let box = $('#relLinks');
@@ -9981,13 +9981,20 @@ function drawRelLinks() {
   const chips = relChips();
   box.hidden = !chips.length;
   if (!chips.length) return;
-  box.append(el('span', 'rellab', tr('관련')));
+  /* 문법 · 단어 · 기본기 줄을 나눈다 (대표님 2026-10-24 "하단에 관련 표시, 문법과 단어 나눠서") — 줄마다 넷까지 */
   const snap = L;
-  chips.forEach(c => {
-    const b = el('button', 'relchip', esc(c.label) + ' ›'); b.type = 'button';
-    b.onclick = () => { const title = $('#title').textContent, crumb = LCRUMB, at = snap.i;   // 제목은 누를 때 — drawCard 는 show() 보다 먼저 돈다
-      dive(() => { L = snap; L.i = at; LCRUMB = crumb; drawCard(); show('learn', title, true); }); c.go(); };
-    box.append(b);
+  [['gram', '문법'], ['word', '단어'], ['basic', '기본기']].forEach(([cat, name]) => {
+    const cs = chips.filter(c => c.cat === cat).slice(0, 4);
+    if (!cs.length) return;
+    const row = el('div', 'relrow');
+    row.append(el('span', 'rellab', tr(name)));
+    cs.forEach(c => {
+      const b = el('button', 'relchip', esc(c.label) + ' ›'); b.type = 'button';
+      b.onclick = () => { const title = $('#title').textContent, crumb = LCRUMB, at = snap.i;   // 제목은 누를 때 — drawCard 는 show() 보다 먼저 돈다
+        dive(() => { L = snap; L.i = at; LCRUMB = crumb; drawCard(); show('learn', title, true); }); c.go(); };
+      row.append(b);
+    });
+    box.append(row);
   });
 }
 function drawCard() {
