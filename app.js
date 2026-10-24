@@ -7829,15 +7829,14 @@ function senseLine(host, x, o) {
     let open = -1;
     const pick = i => {
       const row = SENSE_EX && SENSE_EX[String(x.vi || '').trim().toLowerCase()];
-      const back = open === i || i === hit || !row || !row[i] || !row[i].length;
-      open = back ? -1 : i;
+      const same = open === i, has = row && row[i] && row[i].length;
+      open = same ? -1 : i;                                  // 모든 뜻을 누를 수 있다 (대표님 2026-10-24 "뜻 선택 안 되는 건 뭐냐") — 예문이 아직 없는 뜻은 예문은 그대로, 관련 단어만 그 뜻으로
       list.querySelectorAll('.sn').forEach((n, j) => n.classList.toggle('open', j === open));
-      if (opt.onSense) opt.onSense(back ? null : row[i]);
+      if (opt.onSense) opt.onSense(same || !has || i === hit ? null : row[i], same ? null : i + 1);
     };
     ss.forEach((t, i) => {
       const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp);   // 3개까지 → 가진 뜻 모두 (대표님 지시 2026-09-28 밤)
-      senseExLoad().then(() => { const row = SENSE_EX && SENSE_EX[String(x.vi || '').trim().toLowerCase()];
-        if (row && row[i] && row[i].length) { sp.classList.add('hasex'); sp.onclick = ev => { ev.stopPropagation(); pick(i); }; } });
+      sp.classList.add('hasex'); sp.onclick = ev => { ev.stopPropagation(); senseExLoad().then(() => pick(i)); };
     });
     const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
     if ((hit >= 0 || opt.dict) && tn) tn.replaceWith(list);   // 이 과의 뜻이 목록 안에 있으면(사전 카드는 늘) 목록이 뜻 자리를 대신한다
@@ -9980,6 +9979,15 @@ function relChips() {
       add(label, () => { LCRUMB = label; L = { day: { day: 'X:g' + id, theme: label, gram: 1, cardsOnly: 1 }, i: 0, items: [{ k: 'gram', d: g }] }; drawCard(); show('learn', label, true); }, 'g:' + id, 'gram');
     });
   }
+  /* 관련 단어 — 지금 뜻(누른 뜻, 없으면 이 과의 뜻)의 유의어·반의어 (대표님 2026-10-24 "하단 관련에 단어는 왜 뜻이 바뀌는데 안 바뀌냐 — 관련된 거로").
+     짝 자료 SIB.w[낱말].m = {짝: 뜻 번호}. 누르면 그 낱말 카드 */
+  { const it = L.items[L.i], wv = it && it.k === 'word' && it.d && String(it.d.vi || '').toLowerCase().trim(), g0 = wv && SIB && SIB.w[wv];
+    if (g0 && SENSES && SENSES[wv]) {
+      const sel = L.curSense || senseDefault(wv, it.d.ko, it.d.lk !== undefined ? it.d.lk : curLessonKey()) || 1;
+      const of = list => (list || []).filter(y => { const v = g0.m && g0.m[y]; return Array.isArray(v) ? v.includes(sel) : (v || 0) === sel; });
+      of(g0.s).slice(0, 3).forEach(y => add(tr('유의어') + ' · ' + y, () => pairToCard(y), 'w:s' + y, 'word'));
+      of(g0.a).slice(0, 2).forEach(y => add(tr('반의어') + ' · ' + y, () => pairToCard(y), 'w:a' + y, 'word'));
+    } }
   // 지금 과가 어느 묶음에 드는가
   let me = null;
   if (typeof d.day === 'string' && d.day[0] === 'P') me = { basic: d.day };
@@ -10022,6 +10030,7 @@ function drawRelLinks() {
   if (!GYBM) gybmBuild(() => { if (!$('#learn').hidden) drawRelLinks(); });
   if (!GRAM) gramEnsure(() => { if (!$('#learn').hidden) drawRelLinks(); });
   if (!GTOK || !GCH) gramTokLoad().then(() => { if (!$('#learn').hidden && GTOK && GCH && GCH['1-1']) drawRelLinks(); });
+  if (typeof SIB === 'undefined' || !SIB || !SENSES) Promise.all([sibLoad(), sensesLoad(), sdefLoad()]).then(() => { if (!$('#learn').hidden && SIB) drawRelLinks(); });   // 관련 단어(그 뜻의 유의어·반의어)에 짝 자료가 필요
   const chips = relChips();
   box.hidden = !chips.length;
   if (!chips.length) return;
@@ -10047,7 +10056,7 @@ function drawCard() {
   resetRec();
   inkClear();                                  // 카드를 넘기면 앞 카드에 쓴 글씨는 바로 지운다
   if (window.cardArrows) setTimeout(window.cardArrows, 0);
-  if (L) L.curEx = null;                       // 예문 문법은 카드마다 새로 (아래 예문 자리를 그린 뒤 다시 그린다)
+  if (L) { L.curEx = null; L.curSense = null; }   // 예문 문법·뜻은 카드마다 새로 (아래 예문 자리를 그린 뒤 다시 그린다)
   drawRelLinks();                              // 관련 챕터 단추 (2026-10-02)
   const c = $('#card');
   $('#face').hidden = true; FACE = null;
@@ -10344,8 +10353,9 @@ function drawCard() {
     const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
     /* 예문 자리 — 뜻을 누르면 이 자리 예문이 그 뜻 예문으로 바뀌고, 아래 '관련'의 문법도 그 예문 기준으로 다시 (2026-10-24) */
     const EXH = { host: null, orig: null };
-    const onSense = rows => {
-      if (!EXH.host) return;
+    const onSense = (rows, sn) => {
+      L.curSense = sn || null;                              // 관련 단어(그 뜻의 유의어·반의어)도 이 뜻으로
+      if (!EXH.host) { drawRelLinks(); return; }
       if (!rows) { EXH.host.replaceChildren(...EXH.orig); EXH.host.classList.remove('bysense'); L.curEx = EXH.origEx; drawRelLinks(); return; }
       EXH.host.classList.add('bysense');
       EXH.host.replaceChildren(...rows.map(([vi, ko]) => {
@@ -10354,8 +10364,7 @@ function drawCard() {
         r.append(tapLine(vi, 'wexvi tapline'), el('div', 'wexko', esc(ko)));
         return r;
       }));
-      L.curEx = rows.map(r => r[0]); drawRelLinks();
-      const k0 = recKey(rows[0][0]); k0 ? play(k0, false) : speakVi(rows[0][0]);
+      L.curEx = rows.map(r => r[0]); drawRelLinks();   // 뜻을 바꿔도 소리는 안 튼다 (대표님 2026-10-24 "자동 재생되지 마라") — 예문을 누르면 난다
     };
     senseLine(kob, x, { dict: !!L.dict, dfe, onSense });           // 카드와 '헷갈리는 짝' 팝업이 같은 뜻 목록을 쓴다 (대표님 2026-10-09 "왜 다르냐") — 뜻 목록(_senses.json)이 먼저, 없을 때만 사전 전체 뜻(dfull)
     // (옛) 사전 카드는 품사별 모든 뜻(dfullBox)을 따로 그렸다(2026-10-01) — 팝업과 달라 위 한 줄로 합침. 한자 알약은 뜻 목록 밑에 다시(위에서 단 것은 지워진다)

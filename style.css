@@ -3246,11 +3246,9 @@ body.inking #quiz .qcount{position:relative; z-index:47}
 
 /* 뜻별 예문 (2026-10-24) — 예문이 있는 뜻은 누를 수 있게, 연 뜻은 밑줄 */
 .senselist .sn.hasex{cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px}
-.senselist .sn.open{background:var(--accent); color:#fff; border-color:var(--accent)}
-.senselist .sn.open i{color:#fff}
+.senselist .sn.open{font-weight:700; color:var(--fg)}   /* 고른 뜻은 굵게만 (대표님 2026-10-24 "파란색으로 표시하지 마라") */
 .senseex{margin:8px 0 4px; padding:8px 10px; border:1px solid var(--line); border-radius:12px; background:var(--card); display:flex; flex-direction:column; gap:8px; text-align:left}
 .senseexrow{cursor:pointer}
 .senseexko{font-size:13px; color:var(--dim); margin-top:2px}
 
 .rellinks .relhead{font-size:13px; font-weight:800; color:var(--fg)}   /* '관련' 머리 (2026-10-24) */
-.wex.bysense, .appex.bysense{border-color:var(--accent)}
