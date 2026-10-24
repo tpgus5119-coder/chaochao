@@ -3199,7 +3199,7 @@ function show(v, title, canBack) {
   audio.pause(); myVoice.pause();               // 넘어가면 재생 중이던 소리도 멈춘다
   /* 첫 화면 소리 살리기 (대표님 2026-10-05 "테스트 첫 화면 나올 때 그 단어(문장)도 소리 나라") — 문제·카드는 화면을 그리면서 autoSay 를 부르고
      그 **뒤에** show 가 불려, 위 pause 가 방금 튼 첫 소리를 끊었다. 방금(0.6초 안) 자동 재생을 부탁한 것이 있으면 다시 튼다 */
-  if (AS_PEND && Date.now() - AS_PEND.t < 600) { const vi = AS_PEND.vi; AS_PEND = null; setTimeout(() => { autoSay(vi); AS_PEND = null; }, 0); }
+  if (AS_PEND && Date.now() - AS_PEND.t < 600) { const vi = AS_PEND.vi, sp = AS_PEND.spd; AS_PEND = null; setTimeout(() => { autoSay(vi, sp); AS_PEND = null; }, 0); }
   resetRec();
   if (v !== 'learn' && v !== 'quiz') releaseMic(true);   // 카드·테스트 밖으로 나가면 마이크를 놓는다
   VIEWS.forEach(x => $('#' + x).hidden = x !== v);
@@ -10209,7 +10209,7 @@ function drawCard() {
       tg.setAttribute('aria-label', f === 'card' ? tr('발음 면으로 넘기기') : tr('단어 면으로 넘기기'));
     };
     FACE = setFace;
-    autoSay(x.vi);                            // 카드가 뜨면 소리 (2026-10-02) — 면을 바꿀 때는 다시 안 튼다
+    autoSay(x.vi, (L.keepFace || 'card') === 'pron' ? SLOW_TAP : 0);   // 카드가 뜨면 소리 (2026-10-02) — 면을 바꿀 때는 다시 안 튼다. 발음 면에서 넘기면 0.1배(SLOW_TAP) (대표님 2026-10-24 "발음카드 옆으로 넘길 때 자동 재생 — 0.1배속 디폴트")
     const tapPair = () => pairPopup(x.vi, { kr: krShow(x), ko: x.ko, dict: !!L.dict });   // 카드와 같은 뜻 목록 규칙으로 (2026-10-09)
 
     /* ── 단어 면 ──
@@ -14834,10 +14834,10 @@ const viVoice = () => viVoices()[0] || null;
    머리띠 스피커 단추로 끈다(수업 중·지하철). 기본은 켜짐 */
 const autoOn = () => true;   // 머리띠 스피커(켜기/끄기) 단추는 뺐다 (대표님 2026-10-02 "최상단 스피커 버튼 왜 있냐 없애") — 늘 켜짐. 예전에 끈 사람(S.autoSnd=false)도 다시 켜짐
 let AS_PEND = null;
-function autoSay(vi) {
+function autoSay(vi, spd) {
   if (!autoOn() || !vi) return;
-  AS_PEND = { vi, t: Date.now() };
-  const k = recKey(vi); k ? play(k, false) : speakVi(vi);
+  AS_PEND = { vi, t: Date.now(), spd };
+  const k = recKey(vi); k ? play(k, false, null, spd || undefined) : speakVi(vi, false, spd || 0);
 }
 function sound(t) {
   if (typeof Q !== 'undefined' && Q && Q.blind && Q._answered && CURV === 'quiz') return;   // 시험 중 답한 뒤 정답 소리를 안 들려준다
