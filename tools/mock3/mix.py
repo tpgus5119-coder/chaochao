@@ -95,12 +95,59 @@ def balance(sets):
                 sets[hi][i], sets[lo][i] = y, x; done = True; break
         if not done: return False
     return False
-import random
-rnd = random.Random(7); ok = False; tried = 0
-while not ok and tried < 400:
-    tried += 1
-    M = [1] * 12 if tried == 1 else [rnd.choice([1, 2, 3]) for _ in range(12)]
+import random, gram_cover
+# 2026-10-24 대표님 "다섯 개 모두 난이도 구분 없이, 문법과 단어 차별 없이 — 문장과 문제만 다르지 범위와 난이도는 동일하게":
+#   나누기 배수 M 을 많이 뽑아, 교재 문법(gram_cover.PAT)마다 벌 사이 개수 차이(최대-최소)의 합이 가장 작은 차례부터 빌드해 본다.
+_CH = json.loads((R / 'data/realbook.json').read_text(encoding='utf-8'))['books'][0]['chapters']
+CHW = {c['bai']: [re.compile(r'(?<!\w)' + re.escape(w['vi'].lower()) + r'(?!\w)') for w in c['words']] for c in _CH if c['bai'] in (8, 9, 10)}
+LEN_SECS = ('A 듣기 · 3', 'A 듣기 · 4', 'B 읽기 · 2', 'B 읽기 · 3', 'C 쓰기 · 1', 'C 쓰기 · 2')
+def spread(sets):
+    """벌 사이 차이 점수 — 교재 문법 개수(×3) + 8·9·10과 낱말 가짓수(×1) + 칸별 평균 문장 길이(낱말, ×4). 낮을수록 다섯 벌이 같다 (2026-10-24 대표님 '난이도·문법·단어 차별 없이')"""
+    rows = {k: {g: sum(1 for u in gram_cover.units(q) if re.search(p, u)) for g, p in gram_cover.PAT.items()} for k, q in sets.items()}
+    sc = 0
+    for g in gram_cover.PAT:
+        v = [rows[k][g] for k in rows]; sc += (max(v) - min(v)) * 3 + (10 if min(v) == 0 else 0)
+    txt = {k: ' '.join(gram_cover.units(q)).lower() for k, q in sets.items()}
+    for b, ws in CHW.items():
+        v = [sum(1 for w in ws if w.search(txt[k])) for k in sets]; sc += max(v) - min(v)
+    for sec in LEN_SECS:
+        v = []
+        for k, q in sets.items():
+            us = gram_cover.units([x for x in q if x['sec'].startswith(sec)]); v.append(sum(len(u.split()) for u in us) / max(1, len(us)))
+        sc += (max(v) - min(v)) * 4
+    return round(sc, 1)
+rnd = random.Random(7)
+cand = [[1] * 12] + [[rnd.choice([1, 2, 3, 4]) for _ in range(12)] for _ in range(600)]
+scored = sorted(((spread({k: assemble(k, M) for k in range(1, 6)}), i, M) for i, M in enumerate(cand)))
+print('문법 차이 점수 — 처음', spread({k: assemble(k, cand[0]) for k in range(1, 6)}), '· 가장 좋은 것', scored[0][0])
+order = [M for _, _, M in scored]
+FIXED = ('A 듣기 · 2', 'B 읽기 · 1', 'B 읽기 · 4', 'C 쓰기 · 3')   # 벌에 붙은 그림 문항·보기 목록을 같이 쓰는 칸은 맞바꾸지 않는다
+def swap_units(q):
+    """맞바꿀 수 있는 자리 묶음 — 같은 지문을 쓰는 읽기 2·3 은 두 문항을 한 묶음으로"""
+    out, i = [], 0
+    while i < len(q):
+        x = q[i]
+        if x['sec'].startswith(FIXED): i += 1; continue
+        j = i + 1
+        while j < len(q) and q[j]['sec'] == x['sec'] and x.get('text') and q[j].get('text') == x.get('text'): j += 1
+        out.append((i, j)); i = j
+    return out
+def polish(sets, seed):
+    """같은 칸 같은 자리 문항을 벌 사이에서 맞바꿔 문법 차이를 줄인다(문장·꼴은 그대로, 어느 벌로 가는지만)"""
+    r = random.Random(seed); best = spread(sets); U = swap_units(sets[1])
+    for _ in range(4000):
+        i, j = U[r.randrange(len(U))]; a, b = r.sample(range(1, 6), 2)
+        if [x['sec'] for x in sets[a][i:j]] != [x['sec'] for x in sets[b][i:j]]: continue
+        sets[a][i:j], sets[b][i:j] = sets[b][i:j], sets[a][i:j]
+        sc = spread(sets)
+        if sc <= best: best = sc
+        else: sets[a][i:j], sets[b][i:j] = sets[b][i:j], sets[a][i:j]
+    return best
+ok = False; tried = 0
+while not ok and tried < min(400, len(order)):
+    M = order[tried]; tried += 1
     sets = {k: assemble(k, M) for k in range(1, 6)}
+    print('맞바꾸기 뒤 문법 차이 점수', polish(sets, tried))
     if not balance(sets): continue
     try:
         for k in range(1, 6): build(k, sets[k])

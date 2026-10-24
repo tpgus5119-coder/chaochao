@@ -12,27 +12,29 @@ S = json.loads((R / 'data/_senses.json').read_text(encoding='utf-8'))
 INSTR = ('베트남어 낱말 a(뜻 a_뜻)와 그 짝으로 적힌 낱말 b(뜻 목록 b_뜻, 1부터 번호)가 있다. rel 은 "유의어"(같은 뜻으로 바꿔 쓸 수 있음) 또는 "반의어"(정반대). '
          'b 의 뜻 가운데 a 와 그 관계가 되는 뜻이 있으면 그 번호, 없으면(엉뚱한 짝이면) 0. 출력은 JSON 배열, 원소는 {"id":..., "n": 번호}. 다른 말은 쓰지 마라.')
 def ask():
+    """한 쌍씩 '숫자 하나만' 답하게 묻는다 — 여덟씩 JSON 으로 물으면 Qwen 이 입력만 되풀이하고 번호를 안 넣었다(744번 중 답 0, 2026-10-24)"""
+    import re as _re
     sys.path.insert(0, str(R / 'tools'))
-    from qwen import ask_json
+    from qwen import ask as qask
     W = json.loads((R / 'data/sib.json').read_text(encoding='utf-8'))['w']
     pairs = json.loads((C / 'no_sense_pairs.json').read_text(encoding='utf-8'))
     op = C / 'nosense_ans.json'; got = json.loads(op.read_text(encoding='utf-8')) if op.exists() else {}
     todo = [(c, p, k, r) for c, p, k in pairs for r in (0, 1) if f'{c}|{p}|{r}' not in got]
     print('물을 것', len(todo), flush=True)
-    for i in range(0, len(todo), 8):
-        part = todo[i:i + 8]; items = []
-        for j, (c, p, k, r) in enumerate(part):
-            ss = S[p] if r == 0 else S[p][::-1]
-            items.append({'id': j, 'rel': '유의어' if k == 's' else '반의어', 'a': c, 'a_뜻': (S.get(c) or [W.get(c, {}).get('k', '')])[:3], 'b': p, 'b_뜻': ss})
-        try: res = ask_json(INSTR, items, chunk=8, max_tokens=1600)
-        except Exception as e: print('  실패', repr(e)[:80], flush=True); time.sleep(3); continue
-        for x in (res if isinstance(res, list) else []):
-            try: c, p, k, r = part[int(x['id'])]; n = int(x.get('n'))
-            except Exception: continue
-            L = len(S[p])
-            if 0 <= n <= L: got[f'{c}|{p}|{r}'] = n if (r == 0 or n == 0) else L + 1 - n   # 거꾸로 물은 번호를 바로 세운다
-        op.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8')
-    print('끝 답', len(got), flush=True)
+    for n0, (c, p, k, r) in enumerate(todo):
+        ss = S[p] if r == 0 else S[p][::-1]
+        am = ' / '.join((S.get(c) or [W.get(c, {}).get('k', '')])[:3])
+        rel = '유의어(같은 뜻으로 바꿔 쓸 수 있는 말)' if k == 's' else '반의어(뜻이 정반대인 말)'
+        q = (f'베트남어 낱말 "{c}"(뜻: {am})의 {rel}로 "{p}"가 적혀 있다. "{p}"의 뜻 목록:\n' + '\n'.join(f'{i}. {x}' for i, x in enumerate(ss, 1)) +
+             f'\n"{p}"의 몇 번 뜻이 "{c}"와 {rel.split("(")[0]} 관계인가? 해당하는 뜻이 없으면(엉뚱한 짝이면) 0. 숫자 하나만 답하라.')
+        try: a = qask(q, max_tokens=8)
+        except Exception as e: print('  실패', repr(e)[:60], flush=True); time.sleep(2); continue
+        m = _re.search(r'\d+', a or '')
+        if not m: continue
+        v = int(m.group()); L = len(S[p])
+        if 0 <= v <= L: got[f'{c}|{p}|{r}'] = v if (r == 0 or v == 0) else L + 1 - v
+        if n0 % 40 == 0: op.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8'); print(f'  {n0}/{len(todo)} · 답 {len(got)}', flush=True)
+    op.write_text(json.dumps(got, ensure_ascii=False), encoding='utf-8'); print('끝 답', len(got), flush=True)
 def apply():
     p0 = R / 'data/sib.json'; sib = json.loads(p0.read_text(encoding='utf-8')); W = sib['w']
     got = json.loads((C / 'nosense_ans.json').read_text(encoding='utf-8'))
