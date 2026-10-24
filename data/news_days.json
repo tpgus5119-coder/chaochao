@@ -221,7 +221,7 @@
     ],
     "extra": []
    },
-   "n": 102
+   "n": 106
   },
   {
    "ts": "2026-10-23",
@@ -466,7 +466,7 @@
    "title_card": "호치민시 해외송금 3분기에 28억 달러로 반등",
    "pub": "2026-10-23",
    "card": 4,
-   "n": 101
+   "n": 105
   },
   {
    "ts": "2026-10-23",
@@ -741,7 +741,7 @@
    "title_card": "한국 기업, 베트남에 새 규정 시행 6~12개월 전 통보 요청",
    "pub": "2026-10-23",
    "card": 1,
-   "n": 100
+   "n": 104
   },
   {
    "ts": "2026-10-23",
@@ -977,7 +977,7 @@
     ],
     "extra": []
    },
-   "n": 99
+   "n": 103
   },
   {
    "ts": "2026-10-23",
@@ -1231,7 +1231,205 @@
     ],
     "extra": []
    },
-   "n": 98
+   "n": 102
+  },
+  {
+   "ts": "2026-10-23",
+   "day": "N762.html",
+   "track": "news",
+   "theme": "자연과 동굴",
+   "title": "120-meter-deep sinkhole explored in Phong Nha-Ke Bang National Park",
+   "u": "https://e.vnexpress.net/news/news/environment/120-meter-deep-sinkhole-explored-in-phong-nha-ke-bang-national-park-5135762.html",
+   "cat": "소식",
+   "intro": "퐁냐케방 국립공원에서 깊이 120미터의 거대한 싱크홀이 새로 탐사되었습니다.",
+   "words": [
+    {
+     "vi": "hang",
+     "ko": "동굴",
+     "kr_read": "항",
+     "emoji": "🕳️",
+     "en": "a dark cave entrance in a limestone mountain",
+     "tones": [
+      {
+       "syl": "hang",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-hang.webp"
+    },
+    {
+     "vi": "rừng",
+     "ko": "숲",
+     "kr_read": "증",
+     "emoji": "🌲",
+     "en": "a dense green forest with tall trees",
+     "tones": [
+      {
+       "syl": "rừng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-rung.webp"
+    },
+    {
+     "vi": "đá",
+     "ko": "돌, 바위",
+     "kr_read": "다",
+     "emoji": "🪨",
+     "en": "a large grey stone on the ground",
+     "tones": [
+      {
+       "syl": "đá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-da.webp"
+    },
+    {
+     "vi": "sâu",
+     "ko": "깊다",
+     "kr_read": "써우",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "sâu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "lớn",
+     "ko": "크다",
+     "kr_read": "런",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "lớn",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "nước",
+     "ko": "물",
+     "kr_read": "느억",
+     "emoji": "💧",
+     "en": "clear drinking water in a glass",
+     "tones": [
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nuoc.webp"
+    }
+   ],
+   "dialog": {
+    "title": "자연과 동굴",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Hang này có sâu không?",
+      "ko": "이 동굴은 깊어요?",
+      "kr_read": "항 나이 꼬 써우 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Hang",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sâu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Rất sâu, bạn đi cẩn thận.",
+      "ko": "매우 깊으니 조심해서 가세요.",
+      "kr_read": "젓 써우 반 디 껀 턴",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sâu,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bạn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cẩn",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "thận.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 101
   },
   {
    "ts": "2026-10-23",
@@ -1438,7 +1636,7 @@
     ],
     "extra": []
    },
-   "n": 97
+   "n": 100
   },
   {
    "ts": "2026-10-23",
@@ -1689,7 +1887,7 @@
    "title_card": "중앙은행, 은행권에 예금금리 0.5%포인트 인하 거듭 촉구",
    "pub": "2026-10-23",
    "card": 3,
-   "n": 96
+   "n": 99
   },
   {
    "ts": "2026-10-23",
@@ -1901,7 +2099,7 @@
     ],
     "extra": []
    },
-   "n": 95
+   "n": 98
   },
   {
    "ts": "2026-10-23",
@@ -2131,7 +2329,7 @@
     ],
     "extra": []
    },
-   "n": 94
+   "n": 97
   },
   {
    "ts": "2026-10-23",
@@ -2354,7 +2552,7 @@
     ],
     "extra": []
    },
-   "n": 93
+   "n": 96
   },
   {
    "ts": "2026-10-23",
@@ -2599,7 +2797,7 @@
    "title_card": "호치민시 수막구균 감염 5건…학생 1명 사망",
    "pub": "2026-10-23",
    "card": 10,
-   "n": 92
+   "n": 95
   },
   {
    "ts": "2026-10-23",
@@ -2832,7 +3030,7 @@
    "title_card": "베트남 새우 수출 9개월 37억 달러…중국이 최대 시장",
    "pub": "2026-10-23",
    "card": 5,
-   "n": 91
+   "n": 94
   },
   {
    "ts": "2026-10-23",
@@ -3062,7 +3260,7 @@
     ],
     "extra": []
    },
-   "n": 90
+   "n": 93
   },
   {
    "ts": "2026-10-23",
@@ -3313,7 +3511,7 @@
    "title_card": "빈그룹, 필리핀에 5억 달러 규모 전기차 공장 추진",
    "pub": "2026-10-23",
    "card": 7,
-   "n": 89
+   "n": 92
   },
   {
    "ts": "2026-10-23",
@@ -3582,7 +3780,7 @@
    "title_card": "빅뱅 하노이 콘서트 앞두고 호텔 객실 매진",
    "pub": "2026-10-23",
    "card": 9,
-   "n": 88
+   "n": 91
   },
   {
    "ts": "2026-10-23",
@@ -3842,7 +4040,7 @@
     ],
     "extra": []
    },
-   "n": 87
+   "n": 90
   },
   {
    "ts": "2026-10-23",
@@ -4093,7 +4291,7 @@
    "title_card": "롯데 에코스마트시티, 23일 호치민서 착공식",
    "pub": "2026-10-23",
    "card": 6,
-   "n": 86
+   "n": 89
   },
   {
    "ts": "2026-10-23",
@@ -4368,7 +4566,7 @@
    "title_card": "대웅제약, 베트남 트라파코 투자 9년…성과는 숙제",
    "pub": "2026-10-23",
    "card": 8,
-   "n": 85
+   "n": 88
   },
   {
    "ts": "2026-10-23",
@@ -4568,7 +4766,7 @@
     ],
     "extra": []
    },
-   "n": 84
+   "n": 87
   },
   {
    "ts": "2026-10-23",
@@ -4798,7 +4996,255 @@
     ],
     "extra": []
    },
-   "n": 83
+   "n": 86
+  },
+  {
+   "ts": "2026-10-23",
+   "day": "Nno=44336",
+   "track": "news",
+   "theme": "가을 여행",
+   "title": "베트남, ‘세계 15대 가을여행지’ 4위 꼽혀…론리플래닛",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44336",
+   "cat": "문화·생활",
+   "intro": "베트남이 세계 가을 여행지 4위에 올랐습니다. 하노이와 사파, 하롱베이가 추천되었습니다.",
+   "words": [
+    {
+     "vi": "mùa thu",
+     "ko": "가을",
+     "kr_read": "무어 투",
+     "emoji": "🍂",
+     "en": "colorful autumn leaves falling",
+     "tones": [
+      {
+       "syl": "mùa",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "thu",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mua-thu.webp"
+    },
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "en": "a travel suitcase with passport",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "thời tiết",
+     "ko": "날씨",
+     "kr_read": "터이 띠엣",
+     "emoji": "☀️",
+     "en": "sun shining with a small cloud",
+     "tones": [
+      {
+       "syl": "thời",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "tiết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thoi-tiet.webp"
+    },
+    {
+     "vi": "mát mẻ",
+     "ko": "선선하다",
+     "kr_read": "맛 매",
+     "emoji": "🍃",
+     "en": "green leaves blowing in cool breeze",
+     "tones": [
+      {
+       "syl": "mát",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "mẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-mat-me.webp"
+    },
+    {
+     "vi": "biển",
+     "ko": "바다",
+     "kr_read": "비엔",
+     "emoji": "🌊",
+     "en": "blue ocean waves on a sandy beach",
+     "tones": [
+      {
+       "syl": "biển",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-bien.webp"
+    },
+    {
+     "vi": "phong cảnh",
+     "ko": "풍경",
+     "kr_read": "퐁 까인",
+     "emoji": "🏞️",
+     "en": "a beautiful mountain and lake landscape",
+     "tones": [
+      {
+       "syl": "phong",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "cảnh",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-phong-canh.webp"
+    }
+   ],
+   "dialog": {
+    "title": "가을 여행",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Hôm nay thời tiết mát mẻ quá.",
+      "ko": "오늘 날씨가 정말 선선하네요.",
+      "kr_read": "홈 나이 터이 띠엣 맛 매 꽈",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thời",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tiết",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mát",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mẻ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "quá.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Chúng ta đi bộ một chút nhé?",
+      "ko": "우리 잠깐 산책할까요?",
+      "kr_read": "쭝 따 디 보 못 쭛 냬",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Chúng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ta",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bộ",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chút",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhé?",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 85
   },
   {
    "ts": "2026-10-23",
@@ -5067,7 +5513,7 @@
    "title_card": "FPT, 3분기 순이익 2조7,230억 동…분기 역대 최대",
    "pub": "2026-10-23",
    "card": 2,
-   "n": 82
+   "n": 84
   },
   {
    "ts": "2026-10-22",
@@ -5308,7 +5754,7 @@
     ],
     "extra": []
    },
-   "n": 81
+   "n": 83
   },
   {
    "ts": "2026-10-22",
@@ -5524,7 +5970,7 @@
     ],
     "extra": []
    },
-   "n": 80
+   "n": 82
   },
   {
    "ts": "2026-10-22",
@@ -5822,7 +6268,7 @@
     ],
     "extra": []
    },
-   "n": 79,
+   "n": 81,
    "card": 1
   },
   {
@@ -6085,7 +6531,7 @@
     ],
     "extra": []
    },
-   "n": 78,
+   "n": 80,
    "card": 2
   },
   {
@@ -6372,7 +6818,7 @@
     ],
     "extra": []
    },
-   "n": 77,
+   "n": 79,
    "card": 3
   },
   {
@@ -6602,7 +7048,7 @@
     ],
     "extra": []
    },
-   "n": 76
+   "n": 78
   },
   {
    "ts": "2026-10-22",
@@ -6808,7 +7254,7 @@
     ],
     "extra": []
    },
-   "n": 75
+   "n": 77
   },
   {
    "ts": "2026-10-22",
@@ -7106,7 +7552,7 @@
     ],
     "extra": []
    },
-   "n": 74,
+   "n": 76,
    "card": 4
   },
   {
@@ -7417,7 +7863,7 @@
     ],
     "extra": []
    },
-   "n": 73,
+   "n": 75,
    "card": 5
   },
   {
@@ -7728,7 +8174,7 @@
     ],
     "extra": []
    },
-   "n": 72,
+   "n": 74,
    "card": 6
   },
   {
@@ -8039,7 +8485,7 @@
     ],
     "extra": []
    },
-   "n": 71,
+   "n": 73,
    "card": 7
   },
   {
@@ -8326,7 +8772,7 @@
     ],
     "extra": []
    },
-   "n": 70,
+   "n": 72,
    "card": 8
   },
   {
@@ -8569,7 +9015,7 @@
     ],
     "extra": []
    },
-   "n": 69
+   "n": 71
   },
   {
    "ts": "2026-10-22",
@@ -8885,8 +9331,236 @@
     ],
     "extra": []
    },
-   "n": 68,
+   "n": 70,
    "card": 9
+  },
+  {
+   "ts": "2026-10-22",
+   "day": "Nxno=1934",
+   "track": "news",
+   "theme": "베트남 증시",
+   "title": "베트남 증시, 이틀 연속 상승...VN지수 6개월여 만에 최고치",
+   "u": "http://www.vietnamkoreatimes.com/news/articleView.html?idxno=1934",
+   "cat": "경제",
+   "intro": "베트남 증시가 이틀 연속 상승하며 6개월 만에 최고치를 기록했습니다. 대형주 강세와 외국인 순매수가 이번 상승세를 이끌었습니다.",
+   "words": [
+    {
+     "vi": "thị trường",
+     "ko": "시장",
+     "kr_read": "티 쯔엉",
+     "emoji": "🛒",
+     "en": "a busy outdoor market with vegetable stalls",
+     "tones": [
+      {
+       "syl": "thị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-thi-truong.webp"
+    },
+    {
+     "vi": "cổ phiếu",
+     "ko": "주식",
+     "kr_read": "꼬 피에우",
+     "emoji": "📈",
+     "en": "a computer screen showing rising stock charts",
+     "tones": [
+      {
+       "syl": "cổ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "phiếu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-co-phieu.webp"
+    },
+    {
+     "vi": "ngân hàng",
+     "ko": "은행",
+     "kr_read": "응언 항",
+     "emoji": "🏦",
+     "en": "a modern bank building exterior",
+     "tones": [
+      {
+       "syl": "ngân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ngan-hang.webp"
+    },
+    {
+     "vi": "tăng",
+     "ko": "오르다",
+     "kr_read": "땅",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "tăng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "tiền",
+     "ko": "돈",
+     "kr_read": "띠엔",
+     "emoji": "💵",
+     "en": "a stack of paper money banknotes",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tien.webp"
+    },
+    {
+     "vi": "giảm",
+     "ko": "내리다",
+     "kr_read": "잠",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "giảm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "베트남 증시",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Hôm nay cổ phiếu tăng phải không?",
+      "ko": "오늘 주식 올랐지요?",
+      "kr_read": "홈 나이 꼬 피에우 땅 파이 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "cổ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "phiếu",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tăng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "phải",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, hôm nay tăng nhiều lắm.",
+      "ko": "네, 오늘 많이 올랐어요.",
+      "kr_read": "벙 홈 나이 땅 니에우 람",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hôm",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tăng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhiều",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "lắm.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 69
   },
   {
    "ts": "2026-10-22",
@@ -9076,6 +9750,194 @@
        },
        {
         "syl": "đồng.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 68
+  },
+  {
+   "ts": "2026-10-22",
+   "day": "N678.html",
+   "track": "news",
+   "theme": "동물과 건강",
+   "title": "The last rare white lion at Saigon Zoo dies at 18",
+   "u": "https://e.vnexpress.net/news/news/environment/the-last-rare-white-lion-at-saigon-zoo-dies-at-18-5135678.html",
+   "cat": "소식",
+   "intro": "사이고온 동물원 마지막 흰 사자 18세로 죽어 사인는 노환으로 인한 장기 부전이었다.",
+   "words": [
+    {
+     "vi": "chết",
+     "ko": "죽다, 사망하다",
+     "kr_read": "쩻",
+     "emoji": "💀",
+     "en": "A dead animal",
+     "tones": [
+      {
+       "syl": "chết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-chet.webp"
+    },
+    {
+     "vi": "già",
+     "ko": "늙다, 낡다",
+     "kr_read": "자",
+     "emoji": "👵",
+     "en": "An old person",
+     "tones": [
+      {
+       "syl": "già",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-gia.webp"
+    },
+    {
+     "vi": "bệnh",
+     "ko": "병, 아픔",
+     "kr_read": "벤",
+     "emoji": "🤒",
+     "en": "A sick person",
+     "tones": [
+      {
+       "syl": "bệnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-benh.webp"
+    },
+    {
+     "vi": "sức khỏe",
+     "ko": "건강",
+     "kr_read": "쓱 코애",
+     "emoji": "💪",
+     "en": "A healthy person",
+     "tones": [
+      {
+       "syl": "sức",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "khỏe",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-suc-khoe.webp"
+    },
+    {
+     "vi": "ăn",
+     "ko": "먹다",
+     "kr_read": "안",
+     "emoji": "🍽️",
+     "en": "A person eating food",
+     "tones": [
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-an.webp"
+    },
+    {
+     "vi": "nghỉ",
+     "ko": "쉬다",
+     "kr_read": "응이",
+     "emoji": "😴",
+     "en": "A person resting",
+     "tones": [
+      {
+       "syl": "nghỉ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-nghi.webp"
+    }
+   ],
+   "dialog": {
+    "title": "동물과 건강",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Con này bệnh à?",
+      "ko": "이 동물 아파요?",
+      "kr_read": "꼰 나이 벤 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Con",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "bệnh",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, nó già rồi.",
+      "ko": "네, 나이가 많아요.",
+      "kr_read": "벙 노 자 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nó",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "già",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rồi.",
         "name": "huyền",
         "ko": "낮게 내려감",
         "shape": "＼"
@@ -26349,5 +27211,5 @@
    "n": 1
   }
  ],
- "updated": "2026-10-24 09:02"
+ "updated": "2026-10-24 23:18"
 }
