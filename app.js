@@ -16,7 +16,18 @@ const S = Object.assign({ voice: 'f', region: 'n', kr: 'show', wspd: .8, pgm: 'w
    전에는 폰 언어로 짐작해 골랐지만(베트남어 폰이면 vi) 이제는 고를 사람 자체가 없다. */
 if (S.ui !== 'ko') { S.ui = 'ko'; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { } }
 let saveWarned = false;
+/* 저장은 0.4초씩 모아 한 번 (2026-10-24 대표님 "오래 사용하면 느려진다, 똥폰에서") — 전엔 문제 하나·누를 때마다 기록 전체(S)를 통째로 글로 바꿔 썼다.
+   오래 쓸수록 S 가 커져 느린 폰에서 매번 멈칫했다. 앱을 숨기거나 닫을 때는 바로 쓴다(saveNow) */
+let SAVE_T = 0, NOSAVE = false;
 function save() {
+  if (SAVE_T || NOSAVE) return;
+  SAVE_T = setTimeout(() => { SAVE_T = 0; saveNow(); }, 400);
+  if (typeof cloudTouch === 'function') cloudTouch();
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden && SAVE_T) { clearTimeout(SAVE_T); SAVE_T = 0; saveNow(); } });
+window.addEventListener('pagehide', () => { if (SAVE_T) { clearTimeout(SAVE_T); SAVE_T = 0; saveNow(); } });
+function saveNow() {
+  if (NOSAVE) return;
   try { if (S.stats) dayTally(); } catch (e) { }              // 하루 집계 (2026-09-30 밤) — 계수기가 는 만큼을 오늘 칸에
   try {
     localStorage.setItem(KEY, JSON.stringify(S));
@@ -804,6 +815,9 @@ const voiceDir = () => S.voice;
    자기 단어이 지금 재생 중일 때만 그 시각에 맞춰 움직인다. 보기는 PB.views 에 등록하고,
    화면에서 사라지면(root.isConnected=false) 알아서 빠진다. */
 const PB = { views: new Set(), raf: 0, hold: null, spdSrc: null };
+const REC_VIEWS = new Set();
+function pbAdd(v) { for (const x of PB.views) if (!x.root.isConnected) PB.views.delete(x); PB.views.add(v); }   // 화면에서 사라진 보기는 달 때마다 치운다 (전엔 재생 중일 때만 치워 소리 안 튼 카드가 쌓였다)
+window.addEventListener('chao-rec', ev => { for (const v of REC_VIEWS) { if (!v.box.isConnected) { REC_VIEWS.delete(v); continue; } v.on(ev); } });
 /* 지금 audio 가 **이 단어의 고른 목소리 파일**인가 — 여·남은 같은 이름(해시)이라 폴더까지 봐야 한다(목소리를 바꾼 뒤 옛 목소리를 이어 트는 일이 없게) */
 const ownsAudio = h => !!h && !!audio.src && audio.src.includes('/' + voiceDir() + '/n/' + h + '.mp3');
 /* 보기(입모양·높낮이 그래프)가 지금 소리 위치를 따라야 하는가 — 재생 중이거나, 사용자가 재생 막대로 멈춰 둔 자리(hold)일 때 */
@@ -2059,7 +2073,7 @@ function pitchStage(text, nat) {
   place(t0, false);
   gW.onclick = () => play(text, false, null, SLOW_TAP);   // 그래프를 누르면 SLOW_TAP(0.1배) 고정 (대표님 지시 2026-09-29 밤 0.2배 → 2026-10-14 0.1배)
   gW.style.cursor = 'pointer';
-  PB.views.add({ root: box, update(playing) {
+  pbAdd({ root: box, update(playing) {
     if (pbLive(h, playing)) place(clamp(audio.currentTime, t0, t0 + span), true);
     else place(t0, false);
   } });
@@ -2204,13 +2218,10 @@ function pitchGraph(text, opt) {
     } else mkM.hidden = true;
   }
 
-  const onRec = ev => {
-    if (!box.isConnected) { window.removeEventListener('chao-rec', onRec); return; }
-    if (ev.detail !== text) return;
-    mine = (REC.key === text && REC.mine) ? REC.mine : null;
-    draw(); update(false, false);
-  };
-  window.addEventListener('chao-rec', onRec);
+  /* 녹음 끝 알림 — 그래프마다 window 에 듣기를 달면 녹음을 안 하는 한 안 풀려 지난 카드 그래프가 메모리에 쌓였다(2026-10-24 '오래 쓰면 느려짐').
+     이제 REC_VIEWS 한 곳에 두고, 새 그래프를 달 때 화면에서 사라진 것을 치운다 */
+  for (const v of REC_VIEWS) if (!v.box.isConnected) REC_VIEWS.delete(v);
+  REC_VIEWS.add({ box, on: ev => { if (ev.detail !== text) return; mine = (REC.key === text && REC.mine) ? REC.mine : null; draw(); update(false, false); } });
   if (REC.key === text && REC.mine) mine = REC.mine;
   nativeCurve(text).then(n => {
     nat = n;
@@ -2222,7 +2233,7 @@ function pitchGraph(text, opt) {
     box.onclick = () => play(text, false, null, SLOW_TAP);
     /* '그래프를 누르면 아주 느리게(0.2배)' 안내 글은 뺐다 (대표님 2026-10-07) */
   });
-  PB.views.add({ root: wrap, update });
+  pbAdd({ root: wrap, update });
   return wrap;
 }
 
@@ -2429,7 +2440,7 @@ function playBar(text) {
   };
   rng.addEventListener('change', endDrag);
   ['pointerup', 'pointercancel', 'touchend', 'mouseup'].forEach(ev => rng.addEventListener(ev, endDrag));
-  PB.views.add({ root: wrap, update() { paint(); } });
+  pbAdd({ root: wrap, update() { paint(); } });
   paint();
   return wrap;
 }
@@ -2582,7 +2593,7 @@ function mouthPanel(text, opt) {
   let nat = null, lastId = '';
   nativeCurve(text).then(n => { nat = n; });
   const show = t => { const id = atBoth(t); if (sing) sing.at(t); if (id !== lastId) { lastId = id; cap.innerHTML = capOf(id); } };
-  PB.views.add({ root: wrap, update(playing) {
+  pbAdd({ root: wrap, update(playing) {
     if (pbLive(h, playing) && nat && nat.raw) {
       const span = nat.raw.length * nat.hop, a = Math.max(0, nat.t0 - .06), b = Math.min(nat.total, nat.t0 + span + .05);
       show(clamp((audio.currentTime - a) / ((b - a) || 1), 0, 1));
@@ -2785,7 +2796,7 @@ const SNDV = ['learn', 'quiz', 'tone', 'speak', 'type', 'write'];
 let CURV = 'home';
 let FACE = null;                     // 단어 카드가 열려 있을 때 [단어|발음] 넘기는 함수 — 머리띠 #face 가 부른다 (2026-09-27)
 const NAV = [];                      // 뒤로가기 발자국 (홈에 오면 비운다)
-const dive = fn => { NAV.push(fn); };
+const dive = fn => { NAV.push(fn); if (NAV.length > 40) NAV.splice(0, NAV.length - 40); };   // 뒤로가기 발자국은 40까지 — 홈에 안 가면 끝없이 쌓여 지난 화면을 붙든 채 무거워졌다 (2026-10-24)
 function topBtns() {
   const need = SNDV.includes(CURV);
   $('#voice').hidden = !need;
@@ -3838,7 +3849,7 @@ async function quitForm() {
   /* 대표님 2026-09-30: "탈퇴한다고 하면 '정말 탈퇴하시겠습니까?' 네/아니요만, 바로 탈퇴". 까닭 묻기·비밀번호 다시 받기는 뺐다.
      서버 v18 은 로그인 증표(tok)로 지운다. 옛 서버(v17 이하)면 비밀번호를 한 번 묻는다. 같은 아이디는 지운 뒤 다시 쓸 수 있다(서버가 계정 열쇠를 지운다) */
   if (!await askYN(tr('정말 탈퇴하시겠습니까?'), tr('네'), true)) return;
-  const bye = () => { try { localStorage.removeItem('vnstudy.prog.' + S.acct.id); } catch (e) { } localStorage.removeItem('vnstudy.v2'); location.reload(); };
+  const bye = () => { NOSAVE = true; if (SAVE_T) { clearTimeout(SAVE_T); SAVE_T = 0; } try { localStorage.removeItem('vnstudy.prog.' + S.acct.id); } catch (e) { } localStorage.removeItem('vnstudy.v2'); location.reload(); };   // 미뤄 둔 저장이 지운 기록을 되살리지 않게 (2026-10-24)
   try {
     const j = await cCall({ act: 'quit', id: S.acct.id, tok: S.acct.tok });
     if (j && j.error && /비밀번호/.test(j.error)) throw new Error('pw');
@@ -7813,31 +7824,24 @@ function senseLine(host, x, o) {
     if (!ss || ss.length < 2) { if (opt.dfe && tn0) tn0.replaceWith(dfullBox(opt.dfe)); return; }   // 뜻 목록이 없으면 사전 전체 뜻 — 팝업도 같은 규칙
     const hit = senseDefault(x.vi, x.ko, x.lk !== undefined ? x.lk : curLessonKey()) - 1;
     const list = el('div', 'senselist');
-    /* 뜻을 누르면 그 뜻의 예문이 뜻 목록 밑에 (대표님 2026-10-24 "chứ 는 '~고 말고요'·'(물음 끝) ~지요?' — 의미별로 예문"). data/_sense_ex.json(tools/sense_ex.py, 문맥 뜻 + Qwen 확인) */
-    const exBox = el('div', 'senseex'); exBox.hidden = true;
+    /* 뜻을 누르면 **기존 예문 자리**의 예문이 그 뜻의 예문으로 바뀐다 (대표님 2026-10-24 "기존 예문과 호환 — 기존 예문 위치에서 뜻 누를 때마다 바뀌게").
+       data/_sense_ex.json(tools/sense_ex.py, 문맥 뜻 + Qwen 확인). 같은 뜻을 다시 누르거나 이 과의 뜻을 누르면 원래 예문으로. 예문 자리는 카드가 opt.onSense 로 맡는다 */
     let open = -1;
-    const showEx = i => {
+    const pick = i => {
       const row = SENSE_EX && SENSE_EX[String(x.vi || '').trim().toLowerCase()];
-      exBox.textContent = '';
-      if (open === i || !row || !row[i] || !row[i].length) { open = -1; exBox.hidden = true; list.querySelectorAll('.sn').forEach(n => n.classList.remove('open')); return; }
-      open = i; exBox.hidden = false;
-      list.querySelectorAll('.sn').forEach((n, j) => n.classList.toggle('open', j === i));
-      row[i].forEach(([vi, ko]) => {
-        const r = el('div', 'senseexrow');
-        r.onclick = () => { const k = recKey(vi); k ? play(k, false) : speakVi(vi); };
-        r.append(tapLine(vi, 'senseexvi tapline'), el('div', 'senseexko', esc(ko)));
-        exBox.append(r);
-      });
+      const back = open === i || i === hit || !row || !row[i] || !row[i].length;
+      open = back ? -1 : i;
+      list.querySelectorAll('.sn').forEach((n, j) => n.classList.toggle('open', j === open));
+      if (opt.onSense) opt.onSense(back ? null : row[i]);
     };
     ss.forEach((t, i) => {
       const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp);   // 3개까지 → 가진 뜻 모두 (대표님 지시 2026-09-28 밤)
       senseExLoad().then(() => { const row = SENSE_EX && SENSE_EX[String(x.vi || '').trim().toLowerCase()];
-        if (row && row[i] && row[i].length) { sp.classList.add('hasex'); sp.onclick = ev => { ev.stopPropagation(); showEx(i); }; } });
+        if (row && row[i] && row[i].length) { sp.classList.add('hasex'); sp.onclick = ev => { ev.stopPropagation(); pick(i); }; } });
     });
     const tn = [...host.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
     if ((hit >= 0 || opt.dict) && tn) tn.replaceWith(list);   // 이 과의 뜻이 목록 안에 있으면(사전 카드는 늘) 목록이 뜻 자리를 대신한다
     else host.append(list);                             // 없으면(이 과만의 특수한 뜻) 원래 뜻을 두고 밑에 목록
-    list.after(exBox);
   };
   if (SENSES && SDEF) draw(); else Promise.all([sensesLoad(), sdefLoad()]).then(draw);
 }
@@ -9963,6 +9967,19 @@ function relChips() {
     const i2 = li >= 0 ? li : src.lessons.findIndex(l => String(l.title).split(' · ')[0] === base);
     if (i2 < 0) return null; const l = src.lessons[i2];
     return () => { SBOX = 'bsrs'; startLearn({ theme: l.title, day: gybmKey('main', i2), basic: 1, words: l.words }); }; };
+  /* 지금 보이는 예문에 쓰인 문법 (대표님 2026-10-24 "문법은 예문의 문법에 의해 다르게 — 뜻을 누를 때마다 바뀌게, '1권 8과 문법상자 11'로는 무슨 문법인지 모른다").
+     L.curEx = 카드 예문 자리의 문장들(뜻을 누르면 그 뜻 예문) → gramDetect → 그 문법 카드 하나를 여는 단추, 이름은 카드 제목 */
+  if (L.curEx && L.curEx.length && GTOK && GRAM) {
+    const me0 = String((L.items[L.i] && L.items[L.i].d && L.items[L.i].d.vi) || '').toLowerCase();
+    const gid = [...new Set(L.curEx.flatMap(v => gramDetect(v)))].map(id => GTOK.find(z => z.id === id)).filter(Boolean)
+      .sort((a, b) => (String(b.t).toLowerCase().includes(me0) - String(a.t).toLowerCase().includes(me0)) || (b.li - a.li)).map(t => t.id);   // 그 낱말의 문법 먼저, 그다음 나중에 배우는(덜 기초인) 문법
+    gid.forEach(id => {
+      const t = GTOK.find(z => z.id === id), b = t && GRAM.books[0].bai[t.li], g = b && !b.ng && b.g.find(z => z.t === t.t);
+      if (!g) return;
+      const label = String(g.t).split(' — ').slice(0, 2).join(' — ');
+      add(label, () => { LCRUMB = label; L = { day: { day: 'X:g' + id, theme: label, gram: 1, cardsOnly: 1 }, i: 0, items: [{ k: 'gram', d: g }] }; drawCard(); show('learn', label, true); }, 'g:' + id, 'gram');
+    });
+  }
   // 지금 과가 어느 묶음에 드는가
   let me = null;
   if (typeof d.day === 'string' && d.day[0] === 'P') me = { basic: d.day };
@@ -9985,8 +10002,8 @@ function relChips() {
       const cards = ids => (ids || []).map(id => { const t = GTOK.find(z => z.id === id), b = t && GRAM.books[0].bai[t.li];
         return b && !b.ng ? b.g.find(g => g.t === t.t) : null; }).filter(Boolean);   // 문법 화면에서 숨긴 과·항목(ng)은 뺀다
       const gramSet = (gs, label) => () => { LCRUMB = label; L = { day: { day: 'X:' + key, theme: label, gram: 1, cardsOnly: 1 }, i: 0, items: gs.map(g => ({ k: 'gram', d: g })) }; drawCard(); show('learn', label, true); };
-      [['문법 상자', ch.box], ['상자 밖 문법', ch.hidden]].forEach(([nm, ids]) => { const gs = cards(ids);
-        if (gs.length) add(book + ' ' + tr(nm) + ' · ' + gs.length, gramSet(gs, book + ' ' + tr(nm)), 'x' + nm); });
+      /* '1권 8과 문법 상자 · 11' 묶음 단추는 뺐다(대표님 2026-10-24 "유저가 무슨 문법인지 아냐") — 위의 예문 문법 단추가 대신한다 */
+      void cards; void gramSet;
     }
     // 교재 1권 1~6과 발음(PHÁT ÂM)이 다루는 소리·숫자 — 7과부터는 '새 낱말·문장 따라 읽기'라 잇지 않는다
     ({ '1-1': ['P1', 'P3', 'P2'], '1-2': ['P1', 'P6', 'P8'], '1-3': ['P4', 'P8'], '1-4': ['P7', 'P3', 'P8'], '1-5': ['P3', 'P5', 'P8'], '1-6': ['P6'] }[key] || []).forEach(k => {
@@ -10008,7 +10025,8 @@ function drawRelLinks() {
   const chips = relChips();
   box.hidden = !chips.length;
   if (!chips.length) return;
-  /* 문법 · 단어 · 기본기 줄을 나눈다 (대표님 2026-10-24 "하단에 관련 표시, 문법과 단어 나눠서") — 줄마다 넷까지 */
+  /* 문법 · 단어 · 기본기 줄을 나눈다 (대표님 2026-10-24 "하단에 관련 표시, 문법과 단어 나눠서") — 줄마다 넷까지, 맨 위에 '관련' */
+  box.append(el('div', 'relhead', tr('관련')));
   const snap = L;
   [['gram', '문법'], ['word', '단어'], ['basic', '기본기']].forEach(([cat, name]) => {
     const cs = chips.filter(c => c.cat === cat).slice(0, 4);
@@ -10029,6 +10047,7 @@ function drawCard() {
   resetRec();
   inkClear();                                  // 카드를 넘기면 앞 카드에 쓴 글씨는 바로 지운다
   if (window.cardArrows) setTimeout(window.cardArrows, 0);
+  if (L) L.curEx = null;                       // 예문 문법은 카드마다 새로 (아래 예문 자리를 그린 뒤 다시 그린다)
   drawRelLinks();                              // 관련 챕터 단추 (2026-10-02)
   const c = $('#card');
   $('#face').hidden = true; FACE = null;
@@ -10323,7 +10342,22 @@ function drawCard() {
     rootPills(kob, x);                                     // 한자·외래어 뿌리 — 검수된 data/_roots.json 만 (2026-09-28 밤). 알약: 한자·음 + 글자마다 훈
     caiNote(cf, x);                                        // 'cái nhà' 처럼 분류사가 붙은 표제어 (2026-09-29)
     const dfe = L.dict && DFULL && DFULL[String(x.vi).trim().toLowerCase()];
-    senseLine(kob, x, { dict: !!L.dict, dfe });           // 카드와 '헷갈리는 짝' 팝업이 같은 뜻 목록을 쓴다 (대표님 2026-10-09 "왜 다르냐") — 뜻 목록(_senses.json)이 먼저, 없을 때만 사전 전체 뜻(dfull)
+    /* 예문 자리 — 뜻을 누르면 이 자리 예문이 그 뜻 예문으로 바뀌고, 아래 '관련'의 문법도 그 예문 기준으로 다시 (2026-10-24) */
+    const EXH = { host: null, orig: null };
+    const onSense = rows => {
+      if (!EXH.host) return;
+      if (!rows) { EXH.host.replaceChildren(...EXH.orig); EXH.host.classList.remove('bysense'); L.curEx = EXH.origEx; drawRelLinks(); return; }
+      EXH.host.classList.add('bysense');
+      EXH.host.replaceChildren(...rows.map(([vi, ko]) => {
+        const r = el('div', 'senseexrow');
+        r.onclick = ev => { ev.stopPropagation(); const k = recKey(vi); k ? play(k, false) : speakVi(vi); };
+        r.append(tapLine(vi, 'wexvi tapline'), el('div', 'wexko', esc(ko)));
+        return r;
+      }));
+      L.curEx = rows.map(r => r[0]); drawRelLinks();
+      const k0 = recKey(rows[0][0]); k0 ? play(k0, false) : speakVi(rows[0][0]);
+    };
+    senseLine(kob, x, { dict: !!L.dict, dfe, onSense });           // 카드와 '헷갈리는 짝' 팝업이 같은 뜻 목록을 쓴다 (대표님 2026-10-09 "왜 다르냐") — 뜻 목록(_senses.json)이 먼저, 없을 때만 사전 전체 뜻(dfull)
     // (옛) 사전 카드는 품사별 모든 뜻(dfullBox)을 따로 그렸다(2026-10-01) — 팝업과 달라 위 한 줄로 합침. 한자 알약은 뜻 목록 밑에 다시(위에서 단 것은 지워진다)
     if (so) cf.append(southLine(so));                       // 남부 말 · 북부에서는 ○○ (2026-09-29)
     else if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
@@ -10343,6 +10377,7 @@ function drawCard() {
       if (exm.ko) eb.append(el('div', 'wexko', esc(exm.ko)));
       /* 예문 밑 [듣기][속도] 단추는 뺐다 (대표님 2026-10-02 "예문의 듣기 버튼 없애자 — 예문 박스 누르면 소리") */
       cf.append(eb);
+      EXH.host = eb; EXH.orig = [...eb.childNodes]; EXH.origEx = [exm.vi]; L.curEx = [exm.vi]; setTimeout(drawRelLinks, 0);
     }
     /* 사전 카드의 예문 — 차례 (대표님 2026-10-01 "1순위 메인 교재 문장, 2순위 사전 문장, 둘 다 없으면 그때 만든 예문"):
        ① 교재 예문: 메인 교재 원문(쪽 이미지로 확인한 2,094문장) 가운데 그 낱말이 낱말로 쓰인 것
@@ -10362,6 +10397,7 @@ function drawCard() {
       };
       const host = el('div', 'appex');
       cf.append(host);
+      EXH.host = host; EXH.orig = []; EXH.origEx = [];
       dexLoad().then(() => {
         const have = new Set(), MAX = 3;
         const take = (list, n) => list.filter(m => { const k = m.vi.toLowerCase(); if (have.has(k)) return false; have.add(k); return true; }).slice(0, n);
@@ -10375,6 +10411,7 @@ function drawCard() {
         let lastH = null;
         const put = (box, [h, m]) => { if (h !== lastH) { box.append(el('div', 'appexh', h)); lastH = h; } box.append(exRow(m)); };
         put(host, all[0]);
+        EXH.origEx = [all[0][1].vi]; if (!host.classList.contains('bysense')) { L.curEx = EXH.origEx; drawRelLinks(); }
         if (all.length > 1) {
           const more = el('div', 'appexmore'); more.hidden = true;
           all.slice(1).forEach(x2 => put(more, x2));
@@ -10382,6 +10419,7 @@ function drawCard() {
           btn.onclick = () => { more.hidden = !more.hidden; btn.textContent = more.hidden ? tr('예문 더 보기') + ' (' + (all.length - 1) + ')' : tr('접기'); };
           host.append(btn, more);
         }
+        EXH.orig = [...host.childNodes];
       });
     }
     // 카드 안의 '헷갈리는 짝 ▾' 줄은 뺐다 — 단어을 누르면 같은 것이 팝업으로 뜬다 (대표님 지시 2026-09-27 저녁)
@@ -13066,6 +13104,8 @@ function viEdit(out, init, onChange) {
   render();
   return api;
 }
+let VK_CLOSE = null;
+document.addEventListener('pointerdown', e => { if (VK_CLOSE) VK_CLOSE(e); }, true);
 function viKeypad(get, set, onGo, opt) {   // opt.move: ◀ ▶ 커서 단추 (viEdit) · opt.ret: ✓ 자리에 '↵'   // opt.ret: ✓ 자리에 '↵'(줄 바꿈) — 여러 문장 쓰기 (2026-10-11)
   const kb = el('div', 'vkb ios');
   let shift = 0, layer = 'abc', shiftAt = 0;          // shift: 0 없음 · 1 다음 한 글자 · 2 고정(두 번 연달아)
@@ -13106,7 +13146,7 @@ function viKeypad(get, set, onGo, opt) {   // opt.move: ◀ ▶ 커서 단추 (v
     ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => k.addEventListener(ev, () => clearTimeout(t)));
     k.addEventListener('click', ev => { if (fired) { ev.stopImmediatePropagation(); fired = false; } }, true);   // 길게 눌렀으면 보통 입력은 안 한다
   };
-  document.addEventListener('pointerdown', e => { if (pop && !e.target.closest('.vkpop')) closePop(); }, true);
+  VK_CLOSE = e => { if (pop && !e.target.closest('.vkpop')) closePop(); };   // 문서 듣기는 한 번만 달고(아래 VK_DOC) 지금 자판의 닫기만 바꿔 끼운다 — 전엔 자판을 띄울 때마다 하나씩 쌓였다 (2026-10-24 '오래 쓰면 느려짐')
   const bottom = (lab, fn) => {
     const row = el('div', 'vkrow bottom');
     row.append(key(lab, fn, 'fn abc'));

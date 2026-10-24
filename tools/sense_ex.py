@@ -76,7 +76,8 @@ def build():
     ok = json.loads((R / 'tools/_ctx/sense_ex_ok.json').read_text(encoding='utf-8'))
     out = {}
     for w, row in C.items():
-        r2 = [[[vi, ko] for vi, ko in L if ok.get(f'{w}|{i}|{vi}') == 1][:3] for i, L in enumerate(row)]
+        q = lambda i, vi: ('물음' not in S[w][i] and '의문' not in S[w][i]) or '?' in vi   # '(물음 끝)' 뜻은 물음표가 있는 문장만 — Qwen 이 '…đấy chứ.'(확언)를 물음 뜻이라 했다 (2026-10-24)
+        r2 = [[[vi, ko] for vi, ko in L if ok.get(f'{w}|{i}|{vi}') == 1 and q(i, vi)][:3] for i, L in enumerate(row)]
         if sum(1 for L in r2 if L) >= 2: out[w] = r2
     p = R / 'data/_sense_ex.json'; p.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     print('낱말', len(out), '· 예문', sum(len(x) for r in out.values() for x in r), '· 파일', p.stat().st_size // 1024, 'KB')

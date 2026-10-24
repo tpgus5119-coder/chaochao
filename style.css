@@ -3251,3 +3251,6 @@ body.inking #quiz .qcount{position:relative; z-index:47}
 .senseex{margin:8px 0 4px; padding:8px 10px; border:1px solid var(--line); border-radius:12px; background:var(--card); display:flex; flex-direction:column; gap:8px; text-align:left}
 .senseexrow{cursor:pointer}
 .senseexko{font-size:13px; color:var(--dim); margin-top:2px}
+
+.rellinks .relhead{font-size:13px; font-weight:800; color:var(--fg)}   /* '관련' 머리 (2026-10-24) */
+.wex.bysense, .appex.bysense{border-color:var(--accent)}
