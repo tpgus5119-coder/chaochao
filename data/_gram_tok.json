@@ -2470,7 +2470,7 @@
 "tok": [
 "cùng"
 ],
-"selftest": "6/6",
+"selftest": "9/9",
 "first": "1-10"
 },
 {
@@ -2487,7 +2487,7 @@
 "tok": [
 "cùng"
 ],
-"selftest": "3/3",
+"selftest": "4/4",
 "first": "1-10"
 },
 {
@@ -3174,7 +3174,7 @@
 "tok": [
 "so với"
 ],
-"selftest": "3/3",
+"selftest": "7/7",
 "first": "1-5"
 },
 {
@@ -3206,7 +3206,7 @@
 ],
 "always": false,
 "tok": [],
-"selftest": "3/3",
+"selftest": "5/6",
 "first": "2-2"
 },
 {
@@ -3255,8 +3255,28 @@
 "bằng",
 "nhau"
 ],
-"selftest": "2/3",
+"selftest": "4/6",
 "first": null
+},
+{
+"id": "33.6",
+"no": 33,
+"li": 32,
+"gi": 6,
+"t": "나이 비교 — nhỏ hơn · lớn hơn … tuổi · bằng tuổi · cùng tuổi — ~살 어리다/많다, 동갑",
+"re": [
+"(?<![A-Za-zÀ-ỹĐđ])(nhỏ|lớn|ít|nhiều)\\s+(tuổi\\s+)?hơn(?![A-Za-zÀ-ỹĐđ]).*?\\btuổi\\b",
+"(?<![A-Za-zÀ-ỹĐđ])(bằng|cùng)\\s+tuổi(?![A-Za-zÀ-ỹĐđ])",
+"(?<![A-Za-zÀ-ỹĐđ])hơn\\s+[^.?!]*?\\s(\\d+|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười)\\s+tuổi",
+"(?:(?<![A-Za-zÀ-ỹĐđ])ít(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nhiều)\\s+tuổi\\s+(hơn(?![A-Za-zÀ-ỹĐđ])|(?<![A-Za-zÀ-ỹĐđ])nhất(?![A-Za-zÀ-ỹĐđ]))"
+],
+"always": false,
+"tok": [
+"bằng",
+"ít"
+],
+"selftest": "7/7",
+"first": "1-10"
 },
 {
 "id": "34.0",

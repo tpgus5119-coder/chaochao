@@ -1236,16 +1236,31 @@ function sibDiff(syl, cur) {
   return a.map((ch, i) => i >= p && i < a.length - q ? '<u class="dif">' + esc(ch) + '</u>' : esc(ch)).join('');
 }
 /* 짝 한 줄: 단어 · 뜻(한국어, 없으면 이 음절이 든 예) · ▶ — 영어 뜻은 화면에 안 올린다(대표님 지시) */
+/* 유의어·반의어 짝의 '그 짝으로 쓰인 뜻' — ① 짝 자료의 뜻 번호(SIB.w[짝].m[지금 낱말], tools/rel_* 판정) ② 없으면 짝의 뜻 가운데 지금 보는 뜻(PAIR_SEL_KO)과 겹치는 것
+   ③ 그래도 없으면 '' (카드 뜻으로). ba 의 첫 뜻은 '셋'이지만 bố 의 유의어로는 2번 '아빠(남부)' 다 */
+let PAIR_SEL_KO = '';
+function relSense(word, cur) {
+  try {
+    const w = String(word || '').toLowerCase().trim(), c = String(cur || '').toLowerCase().trim();
+    const ss = SENSES && SENSES[w]; if (!ss || !c) return '';
+    const n = SIB && SIB.w[w] && SIB.w[w].m && SIB.w[w].m[c];
+    const i = Array.isArray(n) ? n[0] : n;
+    if (i && ss[i - 1]) return ss[i - 1];
+    const sel = PAIR_SEL_KO || ((SIB && SIB.w[c] && SIB.w[c].k) || '');
+    const hit = sel && ss.find(x => koClash(x, sel));
+    return hit || '';
+  } catch (e) { return ''; }
+}
 function pairRow(word, cur, mode) {
   const w0 = SIB.w[word] || {};
   const key = recKey(word), tn = sibToneOf(word.split(' ')[0]);
-  const r = el('div', 'prow' + (cur && (word === cur || (word.indexOf(' ') < 0 && cur.indexOf(' ') < 0 && sibKey(word) === sibKey(cur))) ? ' cur' : ''));
+  const r = el('div', 'prow' + (mode !== 'rel' && cur && (word === cur || (word.indexOf(' ') < 0 && cur.indexOf(' ') < 0 && sibKey(word) === sibKey(cur))) ? ' cur' : ''));
   const one = word.indexOf(' ') < 0;
   const w = el('span', 'psyl ' + (one ? tn : ''));
   w.append(el('b', null, (mode === 'shape' || mode === 'sim') && word !== cur ? sibDiff(word, cur) : esc(word)));
   if (one) w.append(el('i', null, toneArrow(tn)));
   const m = el('span', 'pmn');
-  const cko = koCard(word);                                              // 수업 낱말이면 카드 뜻이 먼저 — 짝 자료의 뜻(w0.k)과 달라 세 곳이 어긋났다 (2026-10-15)
+  const cko = (mode === 'rel' && relSense(word, cur)) || koCard(word);   // 유의어·반의어 줄은 **짝지어진 뜻**(대표님 2026-10-24 "bố 의 유의어 ba 에 뜻이 3 으로 나오면 안 되지 — 전부"). 아니면 카드 뜻 먼저 — 짝 자료의 뜻(w0.k)과 달라 세 곳이 어긋났다 (2026-10-15)
   if (cko) m.append(el('span', 'pko', esc(cko)));
   else if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
   else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
@@ -1352,8 +1367,9 @@ function pairPanel(vi, opt) {
            rel.m = {짝: 뜻 번호} (tools/rel_sense·tools/sense_review, 클로드 판정). 처음엔 이 수업의 기본 뜻. 뜻 목록이 없는 낱말은 예전처럼 한 줄로 */
         const ss = rel.m && SENSES && SENSES[vi.toLowerCase().trim()];
         if (!ss) {
-          if (rel.s && rel.s.length) body.append(section('유의어', '뜻이 비슷함', rel.s, '', 'rel'));
-          if (rel.a && rel.a.length) body.append(section('반의어', '뜻이 반대', rel.a, '', 'rel'));
+          PAIR_SEL_KO = o.ko || '';
+          if (rel.s && rel.s.length) body.append(section('유의어', '뜻이 비슷함', rel.s, vi.toLowerCase().trim(), 'rel'));
+          if (rel.a && rel.a.length) body.append(section('반의어', '뜻이 반대', rel.a, vi.toLowerCase().trim(), 'rel'));
         } else {
           if (sel == null) sel = senseDefault(vi, o.ko, lk0) || 1;
           const of = list => (list || []).filter(x => { const v = rel.m[x]; return Array.isArray(v) ? v.includes(sel) : (v || 0) === sel; });   // 한 짝이 여러 뜻의 짝일 수 있다([1,2])
@@ -1362,14 +1378,15 @@ function pairPanel(vi, opt) {
           sec.append(el('div', 'prelsense cur', '<i>' + sel + '</i>' + esc(ss[sel - 1])));
           if (!syn.length && !ant.length) sec.append(el('div', 'pnote', tr('이 뜻의 유의어·반의어는 아직 자료에 없습니다.')));
           body.append(sec);
-          if (syn.length) body.append(section('유의어', '뜻이 비슷함', syn, '', 'rel'));
-          if (ant.length) body.append(section('반의어', '뜻이 반대', ant, '', 'rel'));
+          PAIR_SEL_KO = ss[sel - 1] || '';
+          if (syn.length) body.append(section('유의어', '뜻이 비슷함', syn, vi.toLowerCase().trim(), 'rel'));
+          if (ant.length) body.append(section('반의어', '뜻이 반대', ant, vi.toLowerCase().trim(), 'rel'));
         }
       }
       /* 사전의 유의어·반의어 (2026-10-01 밤) — 위키는 뜻별로 나뉘어 있지 않아 '뜻 구분 없음'으로 따로 */
       if (drel) {
-        if (drel.s.length) body.append(section('유의어', rel ? '사전, 뜻 구분 없음' : '뜻이 비슷함', drel.s, '', 'rel'));
-        if (drel.a.length) body.append(section('반의어', rel ? '사전, 뜻 구분 없음' : '뜻이 반대', drel.a, '', 'rel'));
+        if (drel.s.length) body.append(section('유의어', rel ? '사전, 뜻 구분 없음' : '뜻이 비슷함', drel.s, vi.toLowerCase().trim(), 'rel'));
+        if (drel.a.length) body.append(section('반의어', rel ? '사전, 뜻 구분 없음' : '뜻이 반대', drel.a, vi.toLowerCase().trim(), 'rel'));
       }
       if (gw) body.append(section('성조·모자가 다른 낱말', '', gw, vi.toLowerCase().trim(), 'tone'));   // 여러 음절 낱말 통째로 (bần cùng ↔ bắn cung)
       if (fams.length > 1) {

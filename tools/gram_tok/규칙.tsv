@@ -283,3 +283,4 @@
 22.7	xin (tự+giới+thiệu|giới+thiệu|mời|cảm+ơn|chúc|hỏi|cho+phép|gửi|trình+bày|báo|được|nhắc|thông+báo|đợi|chờ|lưu+ý|chia+buồn)
 23.7	re:(?<![A-Za-zÀ-ỹĐđ])(bắt đầu|tiếp tục|cố gắng)\s+(?!(lúc|từ|vào|rồi|nhé|nhá|nha|nào|à|mà|và|thì|khi|năm|ngày|tháng|tuần|hôm|sáng|chiều|tối|lên|đi\s*[.!?]?\s*$)(?![A-Za-zÀ-ỹĐđ]))[A-Za-zÀ-ỹĐđ];thôi (hút+thuốc|học|làm+việc|việc|uống+rượu)
 14.6	(hiện+nay|hiện+tại|trước+đây|hồi+nãy|lúc+nãy|ban+nãy|sau+này|ngày+xưa|hồi+trước|dạo+gần+đây);re:^\s*gần đây\s*,?\s+(tôi|em|anh|chị|mình|cháu|chúng tôi|chúng ta|con|bạn|cô|ông|bà|họ|mẹ|bố|thầy|chú|bác|mọi người|các bạn|cậu|nó)(?![A-Za-zÀ-ỹĐđ]);(lúc|khi|hồi)+đó
+33.6	re:(?<![A-Za-zÀ-ỹĐđ])(nhỏ|lớn|ít|nhiều)\s+(tuổi\s+)?hơn(?![A-Za-zÀ-ỹĐđ]).*?\btuổi\b;(bằng|cùng)+tuổi;re:(?<![A-Za-zÀ-ỹĐđ])hơn\s+[^.?!]*?\s(\d+|một|hai|ba|bốn|năm|sáu|bảy|tám|chín|mười)\s+tuổi;(ít|nhiều)+tuổi+(hơn|nhất)
