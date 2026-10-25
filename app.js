@@ -7769,7 +7769,30 @@ function glossAll(vi, extra) {
     }
     else { out.push({ w: toks[i], m: null }); i += 1; }
   }
-  return out;
+  return nameRuns(out);
+}
+/* 사람 이름은 한 덩이로 — 'anh Min Jae' 의 Min 이 따로 '민'으로 눌리던 것 (대표님 2026-10-25 "민재는 이름인데 왜 민을 단어로 인식했냐").
+   문장 첫 낱말이 아닌 대문자 낱말이 둘 이상 이어지고 그중 뜻을 못 찾은 것이 하나라도 있으면 → 이름 한 덩이(뜻 없음).
+   Hà Nội·Việt Nam 처럼 통째로 뜻이 있는 땅 이름은 위에서 이미 한 덩이라 건드리지 않는다. 문장 첫 낱말(Ông Choi 의 Ông)은 끼우지 않는다 */
+function nameRuns(out) {
+  const cap = t => { const w = String(t.w).replace(/^["“‘'(]+/, '').replace(/[,.;:!?"”’)]+$/, ''), c = w.charAt(0);
+    return w.length > 1 && !/\s/.test(w) && c !== c.toLowerCase() && w !== w.toUpperCase(); };   // 첫 글자만 대문자 — 'X'·'Y' 자리표·'NHƯNG' 처럼 다 대문자는 빼고
+  const res = [];
+  let start = true;
+  for (let i = 0; i < out.length;) {
+    const t = out[i];
+    if (t.sp !== undefined) { res.push(t); i++; continue; }
+    if (cap(t) && ((!start && !/^["“‘'(]/.test(t.w)) || !t.m)) {   // 따옴표로 여는 말의 첫 낱말도 문장 첫 낱말 — 다만 뜻이 없는 첫 낱말(Eun Ji 의 Eun)은 이름으로
+      const run = [i]; let j = i;
+      while (out[j + 1] && out[j + 1].sp !== undefined && /^\s+$/.test(out[j + 1].sp) && out[j + 2] && out[j + 2].sp === undefined && cap(out[j + 2]) && !/[,.;:!?]["”’)]*$/.test(out[j].w)) { j += 2; run.push(j); }
+      if (run.length > 1 && run.some(k => !out[k].m)) {
+        res.push({ w: out.slice(i, j + 1).map(x => x.sp !== undefined ? x.sp : x.w).join(''), m: null });
+        start = /[.?!]["”’)]*$/.test(out[j].w); i = j + 1; continue;
+      }
+    }
+    res.push(t); start = /[.?!:]["”’)]*$/.test(t.w); i++;
+  }
+  return res;
 }
 
 /* 문장을 단어 단위로 눌러볼 수 있게 만든다.
@@ -11584,6 +11607,17 @@ function tileText(want, i) {
   if (want[i + 1] && isCap(want[i + 1])) return x;
   return x[0].toLowerCase() + x.slice(1);
 }
+/* 시험지가 정해 준 조각도 문장 첫머리 대문자는 소문자로 — 'Tôi viết' 이 첫 조각인 게 티 난다 (대표님 2026-10-25 "대명사 제외하고는 대문자 쓰지 말라고 했잖아").
+   문장 첫머리 조각만 고치고, 사람·땅 이름(properSet)과 'Hồ Chí Minh' 처럼 다음 낱말도 대문자인 것은 그대로. 채점은 대소문자를 안 가린다 */
+function fixTileCap(t, vi) {
+  const ws = String(t).split(/\s+/), x = ws[0];
+  if (!isCap(x)) return t;
+  const v = String(vi || '').trim(), head = v.startsWith(t) || /[.?!:]\s+$/.test(v.slice(0, Math.max(0, v.indexOf(' ' + t) + 1)));
+  if (!head) return t;
+  try { if (properSet().has(x.replace(/[.,;:?!]+$/, ''))) return t; } catch (e) { return t; }
+  if (ws[1] && isCap(ws[1])) return t;
+  return x[0].toLowerCase() + x.slice(1) + (ws.length > 1 ? ' ' + ws.slice(1).join(' ') : '');
+}
 function drawPuzzle(body, q) {
   const w = q.w, md = q.mode;
   if (w.ask) {                                              // 대답 만들기 — 물음을 보여 주고(누르면 소리) 그 대답을 조각으로 (2026-10-06)
@@ -11602,7 +11636,7 @@ function drawPuzzle(body, q) {
   const want = String(w.vi).trim().replace(/[.?!]+$/, '').split(/\s+/);
   if (want.length < 3) { q.mode = 'listen'; return drawQuiz(); }   // 조각이 둘이면 퍼즐이 아니다
   /* 시험지가 조각을 정해 준 문제(1차 시험지 'anh John'·'sinh viên' 처럼 여러 낱말이 한 조각)는 그 조각 그대로 (2026-09-30) */
-  const tiles = (w.tiles && w.tiles.length ? w.tiles.slice() : want.map((x, i) => tileText(want, i)));
+  const tiles = (w.tiles && w.tiles.length ? w.tiles.map(t => fixTileCap(t, w.vi)) : want.map((x, i) => tileText(want, i)));
   if (!(Q.fixed && w.tiles && w.tiles.length)) tiles.sort(() => Math.random() - .5);   // 시험지 조각은 시험지에 적힌 차례 그대로 — 기기마다 같게 (2026-10-11)   // 시험지 조각은 대소문자도 시험지 그대로   // 첫 낱말 대문자는 소문자로 (고유명사 빼고)
 
   const ans = el('div', 'puzzans');
@@ -12160,7 +12194,11 @@ function drawFixed(body, q) {
       if (settled || aDone || q._peek || ok === null) return; if (ok === false) return attemptEnd(false); v[i] = true; if (v[0] && v[1]) attemptEnd(true); };
     if (mic) mic.onclick = () => {
       const recording = REC.mr && REC.mr.state === 'recording';
-      if (!recording && !settled) { if (tries >= MAXT) return; tries++; q._tries = tries; resumeSave(); v = []; aDone = false; clearTimeout(tm); tm = setTimeout(() => attemptEnd(false), (RECSEC(x.vi) + 10) * 1000); }   // 점수가 정해진 뒤(settled)의 녹음은 연습 — 발음·높낮이 O/X 는 그대로 보인다
+      if (!recording && !settled) { if (tries >= MAXT) return; tries++; q._tries = tries; resumeSave(); v = []; aDone = false; clearTimeout(tm); tm = setTimeout(() => attemptEnd(false), (RECSEC(x.vi) + 10) * 1000);
+        if (tries >= MAXT) { let seen = false; const pl = setInterval(() => {   // 마지막 기회 — 녹음이 끝나면 판정을 3초만 기다리고 바로 [다음] (대표님 2026-10-25 "기회 다 끝나고 다음 버튼이 왜 이렇게 오래 걸리니"; 전엔 녹음 시작부터 녹음 시간+10초)
+          if (settled || aDone) return clearInterval(pl);
+          const on = REC.mr && REC.mr.state === 'recording'; if (on) { seen = true; return; }
+          if (seen) { clearInterval(pl); clearTimeout(tm); tm = setTimeout(() => attemptEnd(false), 3000); } }, 250); } }   // 점수가 정해진 뒤(settled)의 녹음은 연습 — 발음·높낮이 O/X 는 그대로 보인다
       toggleRec(x.vi, mic, cb);
     };
     if (!mic) end(false);                                   // 녹음이 안 되는 기기 — 말하기는 0점으로 넘어간다

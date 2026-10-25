@@ -1,7 +1,7 @@
 /* 오프라인 캐시.
    앱 껍데기와 커리큘럼은 처음 열 때 통째로 받아두고,
    음성은 22MB나 되므로 한 번 재생한 것만 캐시에 남긴다 (데이터 요금 배려). */
-const V = 'vn-4a3adf0e';
+const V = 'vn-801a53fb';
 const SHELL = ['./', './index.html', './app.js', './pitch.js', './mouth.js', './pet.js', './judge.js', './style.css',
                './manifest.json', './icon.png',
                // 새 짜임(일곱 권)의 알맹이 — 이것이 없으면 비행기 모드에서 과정이 안 열린다
@@ -24,7 +24,8 @@ const STALE = ['b-dem', 'b-chi', 'b-hanh-dong', 'tap-the-duc', 'w-fd9a0f67e5',
                'b-duc', 'b-duoc', 'b-nguyen-am', 'b-phu-am', 'w-0d39261f0b', 'w-200a82aec7', 'w-63ced0df1d', 'w-7584d2eef4', 'w-91919d36d6', 'w-b0e06d098e', 'w-bfd6c3d4e6',
                'b-hoi',
                'b-khoanh-tron',
-               'b-trang-thai'].map(n => '/img/' + n + '.webp');   // 2026-10-06 오류 보고 여섯 장(손 없음·볼 빨감·뜻과 안 맞음) · 2026-10-11 뜻과 안 맞던 넷(헤드셋·치파오·은행 같은 건물·뒷모습)
+               'b-trang-thai',
+               'b-nam-sau', 'd42-ve', 'w-32e2da8f4f', 'w-48c6d50e25'].map(n => '/img/' + n + '.webp');   // 2026-10-06 오류 보고 여섯 장(손 없음·볼 빨감·뜻과 안 맞음) · 2026-10-11 뜻과 안 맞던 넷(헤드셋·치파오·은행 같은 건물·뒷모습)
 /* 같은 이름으로 다시 만든 소리(2026-10-17 소리 점검 tools/sound_fix.py) — 전에 들은 기기의 캐시에서 뺀다. tools/stale_imgs.py 가 채운다 */
 const STALE_SND = [
   'f/n/05cd4cd28457.mp3', 'f/n/0aff93a3234a.mp3', 'f/n/180a3d138429.mp3', 'f/n/1a1a6c6106bb.mp3', 'f/n/1fd56ba4630b.mp3', 'f/n/20a055b99314.mp3', 'f/n/228b1e477db4.mp3', 'f/n/2379b4d8dfce.mp3', 'f/n/25e4e87f54b7.mp3', 'f/n/262519c64de2.mp3', 'f/n/26a9c1b29d23.mp3', 'f/n/2ccdcdcdef7a.mp3', 'f/n/35989ae9212d.mp3', 'f/n/35fb2a2d5ea1.mp3', 'f/n/5e39fc5fb1a2.mp3', 'f/n/6d3365df4f4f.mp3', 'f/n/76d1e98ae512.mp3', 'f/n/790503851050.mp3', 'f/n/7f339246d3dc.mp3', 'f/n/9fd504d4c28e.mp3', 'f/n/ab8488f184e4.mp3', 'f/n/b601a33841d6.mp3', 'f/n/bf2eb701282d.mp3', 'f/n/e4df27b11526.mp3', 'f/n/e76346a8498b.mp3', 'f/n/ea442f7af2df.mp3', 'f/n/fca132afd021.mp3', 'f/n/ffd8d9d3d71a.mp3', 'm/n/180a3d138429.mp3', 'm/n/18422ab6cca1.mp3', 'm/n/19c7093a00a7.mp3', 'm/n/2d34f77c6a5b.mp3', 'm/n/36c588d507ef.mp3', 'm/n/42b73b6c91d1.mp3', 'm/n/54c55a2e60ae.mp3', 'm/n/638e8f017157.mp3', 'm/n/7bd72868c792.mp3', 'm/n/7bfcbe489791.mp3', 'm/n/8ad5265638e5.mp3', 'm/n/98f4c0998c5c.mp3', 'm/n/9e692e5c5663.mp3', 'm/n/ac3dfa65b69d.mp3', 'm/n/ad3f9210d65c.mp3', 'm/n/af5f5fd2b951.mp3', 'm/n/b601a33841d6.mp3', 'm/n/b89bf200d19f.mp3', 'm/n/dbb83df2f770.mp3', 'm/n/e784914a56fb.mp3', 'm/n/f0b5bcedceba.mp3', 'm/n/f1d8177ec540.mp3', 'm/n/f4cce6901a14.mp3',
