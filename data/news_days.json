@@ -2,6 +2,188 @@
  "days": [
   {
    "ts": "2026-10-24",
+   "day": "N453.html",
+   "track": "news",
+   "theme": "호텔 스위트",
+   "title": "A $8,500 night at presidential suite in Vietnam's tallest building",
+   "u": "https://e.vnexpress.net/photo/places/a-8500-night-at-presidential-suite-in-vietnams-tallest-building-5135453.html",
+   "cat": "소식",
+   "intro": "베트남 최고층 건물 호화 스위트룸 소개 기사 하룻밤 2억 2천만 동, 비즈니스 및 파티에 적합",
+   "words": [
+    {
+     "vi": "phòng",
+     "ko": "방",
+     "kr_read": "퐁",
+     "emoji": "🏠",
+     "en": "a room in a building",
+     "tones": [
+      {
+       "syl": "phòng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-phong.webp"
+    },
+    {
+     "vi": "nhà",
+     "ko": "집",
+     "kr_read": "냐",
+     "emoji": "🏡",
+     "en": "a small house",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-nha.webp"
+    },
+    {
+     "vi": "bếp",
+     "ko": "부엌",
+     "kr_read": "벱",
+     "emoji": "🧑‍🍳",
+     "en": "a person cooking in a kitchen",
+     "tones": [
+      {
+       "syl": "bếp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-bep.webp"
+    },
+    {
+     "vi": "bàn",
+     "ko": "책상, 테이블",
+     "kr_read": "반",
+     "emoji": "🖥️",
+     "en": "a desk with a computer",
+     "tones": [
+      {
+       "syl": "bàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ban.webp"
+    },
+    {
+     "vi": "ghế",
+     "ko": "의자",
+     "kr_read": "게",
+     "emoji": "🪑",
+     "en": "a wooden chair",
+     "tones": [
+      {
+       "syl": "ghế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ghe.webp"
+    },
+    {
+     "vi": "giường",
+     "ko": "침대",
+     "kr_read": "즈엉",
+     "emoji": "🛌",
+     "en": "a bed",
+     "tones": [
+      {
+       "syl": "giường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-giuong.webp"
+    }
+   ],
+   "dialog": {
+    "title": "호텔 스위트",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Phòng này to không?",
+      "ko": "이 방 커요?",
+      "kr_read": "퐁 나이 또 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Phòng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "to",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, và rất đẹp.",
+      "ko": "네, 그리고 아주 좋아요.",
+      "kr_read": "벙 바 젓 댑",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "và",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đẹp.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 106
+  },
+  {
+   "ts": "2026-10-24",
    "day": "N372.html",
    "track": "news",
    "theme": "학교 위생시설",
@@ -219,6 +401,230 @@
         "name": "nặng",
         "ko": "짧고 무겁게",
         "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 105
+  },
+  {
+   "ts": "2026-10-24",
+   "day": "N130.html",
+   "track": "news",
+   "theme": "업무 지연",
+   "title": "Vietnam's $13B airport Long Thanh short of skilled workers two months before opening",
+   "u": "https://e.vnexpress.net/news/news/traffic/vietnam-s-13b-airport-long-thanh-short-of-skilled-workers-two-months-before-opening-5136130.html",
+   "cat": "소식",
+   "intro": "롱탄 공항 개장 지연, 인력 부족이 원인입니다. 자재난과 서류 처리 지연도 주요 문제입니다.",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport building",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "công nhân",
+     "ko": "직원/작업자",
+     "kr_read": "꽁 년",
+     "emoji": "👷",
+     "en": "a construction worker with a hard hat",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-nhan.webp"
+    },
+    {
+     "vi": "thiếu",
+     "ko": "부족하다",
+     "kr_read": "티에우",
+     "emoji": "📉",
+     "en": "a downward trending arrow",
+     "tones": [
+      {
+       "syl": "thiếu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thieu.webp"
+    },
+    {
+     "vi": "chậm",
+     "ko": "늦다/지연되다",
+     "kr_read": "쩜",
+     "emoji": "⏳",
+     "en": "an hourglass with sand flowing",
+     "tones": [
+      {
+       "syl": "chậm",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-cham.webp"
+    },
+    {
+     "vi": "làm",
+     "ko": "일하다/만들다",
+     "kr_read": "람",
+     "emoji": "🛠️",
+     "en": "a wrench and screwdriver",
+     "tones": [
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-lam.webp"
+    },
+    {
+     "vi": "xong",
+     "ko": "끝나다",
+     "kr_read": "쏭",
+     "emoji": "✅",
+     "en": "a green checkmark",
+     "tones": [
+      {
+       "syl": "xong",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-xong.webp"
+    }
+   ],
+   "dialog": {
+    "title": "업무 지연",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Công việc này xong chưa?",
+      "ko": "이 업무 끝났어요?",
+      "kr_read": "꽁 비엑 나이 쏭 쯔어",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "việc",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "xong",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "chưa?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Chưa. Vẫn còn chậm vì thiếu công nhân.",
+      "ko": "아니요. 직원 부족으로 아직 늦어지고 있어요.",
+      "kr_read": "쯔어 번 꼰 쩜 비 티에우 꽁 년",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Chưa.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "Vẫn",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "còn",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "chậm",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "vì",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "thiếu",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhân.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
        }
       ],
       "gloss": []
@@ -26737,5 +27143,5 @@
    "n": 1
   }
  ],
- "updated": "2026-10-25 08:38"
+ "updated": "2026-10-25 23:42"
 }
