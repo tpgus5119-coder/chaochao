@@ -9,7 +9,11 @@ R = pathlib.Path(__file__).resolve().parent.parent
 S = json.loads((R / 'data/_senses.json').read_text(encoding='utf-8'))
 SEG = json.loads((R / 'data/_seg.json').read_text(encoding='utf-8'))
 SN = json.loads((R / 'tools/_ctx/sents.json').read_text(encoding='utf-8'))
-RANK = {'gybm.json': 0, 'realbook.json': 0, '_dict_ex': 1}
+TEXTBOOK = set(json.loads((R / 'tools/_ctx/textbook_sents.json').read_text(encoding='utf-8')))   # 메인 교재 원문 2,100(realbook 대화·문법 예문 + gybm 의 main_book 예문) — gybm 에는 선배·22기·서브도 섞여 있어 파일 이름으로 가리면 안 된다 (2026-10-24)
+import re as _re0
+def rank(vi, f):
+    v = _re0.sub(r'^[^:]{1,15}:\s*', '', vi).strip().lower()
+    return 0 if v in TEXTBOOK else 1 if f == '_dict_ex' else 2     # 1 교재 원문 · 2 사전 예문 · 3 앱의 다른 예문 (그다음은 sense_ex_fill 이 짓는 것)
 HINT = __import__('re').compile(r'\(([^)]*[a-zà-ỹđ][^)]*)\)')
 def hints(sense):
     """뜻에 괄호로 적힌 베트남어 보기(đi bộ · mất đi·bay đi · chứ không phải) — 그 말이 문장에 있어야 그 뜻 예문으로 쓴다"""
@@ -35,7 +39,7 @@ def cands():
                 if mm not in ss: continue
                 hs = hints(mm)
                 if hs and not any(h in vi.lower() for h in hs): continue
-                by[w][ss.index(mm)].append((RANK.get(info.get('f'), 2), 0 if full else 1, len(vi), vi, ko))
+                by[w][ss.index(mm)].append((rank(vi, info.get('f')), 0 if full else 1, len(vi), vi, ko))
     return by
 def main():
     """1차 후보(뜻마다 여섯) → tools/_ctx/sense_ex_cand.json. Qwen 확인(verify) 뒤 build 가 '예'인 것만 셋까지"""

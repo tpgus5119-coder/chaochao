@@ -11353,6 +11353,11 @@ function drawQuiz() {
     qt.append(pen);
   }
   qt.append(sk); qc0.append(qt);
+  if (Q.retry && q._orig && q._orig.w && q._orig.w.fx) {     // 다시 풀기: 지난번 내 답 · 실제 답 (대표님 2026-10-25)
+    const ob = el('button', 'ghost qorig', tr('내 답·정답'));   // 답한 뒤 단추 잠금에서 뺀다 ob.type = 'button';
+    ob.onclick = () => { const o = body.querySelector('.myans.retryans'); if (o) { o.remove(); return; } const m = myAnsBox(q._orig, q._orig.w.fx); m.classList.add('retryans'); qc0.after(m); };
+    qt.prepend(ob);
+  }
   if (Q.fixed && Q.exam && !Q.review) {                   // 시험지: [‹ 이전] — 지나간 문제로 돌아간다 (대표님 2026-10-09 "다음 문제로 넘어가도 이전 문제로 돌아갈 수 있게")
     if (Q.i > 0) { const pv = el('button', 'ghost qprev', '‹ ' + tr('이전')); pv.type = 'button'; pv.onclick = () => examGo(-1); qc0.prepend(pv); }
     if (q._prev) { sk.textContent = tr('다음') + ' ›'; sk.classList.remove('qskip'); sk.onclick = () => examGo(1); }   // 돌아온 문제는 [스킵] 대신 [다음 ›] — 전 답 그대로 넘어간다
@@ -11853,7 +11858,7 @@ let EXAM1_TIMER = 0, FIXED = {};
    저장: S.resume['fixed:<시험지>' | 'daily:<회차>'] = { i, ok, skip, left(남은 시간 ms), items[문항마다 ok·점수·답함·스킵·okBefore], gen(단어 시험의 문제 목록) }
    — 문제를 그릴 때마다(drawQuiz) 적고, 끝나거나 처음부터 다시 하면 지운다. 폰 안에만 둔다(서버 진도 PROGKEYS 에 없음). 6개까지. */
 const RESUME_MAX = 6;
-const resumeKey = () => (Q && Q.exam) ? (Q.fixed ? 'fixed:' + Q.fixed : Q.daily ? 'daily:' + Q.daily : null) : null;
+const resumeKey = () => (Q && Q.exam && !Q.retry) ? (Q.fixed ? 'fixed:' + Q.fixed : Q.daily ? 'daily:' + Q.daily : null) : null;
 /* 문항 목록 지문 — 시험지 자료가 바뀌면(모의고사 낱말 4~7과로 다시 냄, 2026-10-07) 옛 저장을 엉뚱한 문항에 붙이지 않으려고 글 전체를 해시한다 */
 const qSig = list => { const s = (list || []).map(q => (q.w && q.w.vi) || '').join('|'); let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return h; };
 function resumeSave() {
@@ -11916,18 +11921,29 @@ function resumeAsk(k, start) {
   document.body.append(back);
 }
 
+function fxQ(x) {                                       // 시험지 문항 하나 → 문제 (startExam1 · 틀린 문제 다시 풀기가 같이 쓴다)
+  const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
+  if (x.k === 'puzzle') return { w: { vi: x.vi, ko: String(x.exp || '').split('\n')[1] || '', nograde: true, sent: true, tiles: x.tiles, alt: x.alts || [], fx: x }, mode: 'puzzle', sec: x.sec, opts: [] };   // alt: 같은 조각의 다른 바른 차례 (2026-10-11)
+  if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '', fx: x }, mode: 'fx', sec: x.sec, opts: [] };   // D1 발음 — 읽고 녹음해 스스로 매김 (2026-10-07)
+  if (x.k === 'speak') return { w: { vi: x.ask, ko: '', nograde: true, fx: x }, mode: 'fx', sec: x.sec, opts: [] };                      // D2 그림·D3 상황 말하기
+  return { w, mode: 'fx', sec: x.sec, opts: [] };
+}
+/* 틀린 문제만 그대로 다시 풀기 (대표님 2026-10-25) — 시험 때와 같은 화면·같은 채점, 시계 없음.
+   문항마다 [내 답·정답] 단추로 지난번 낸 답과 실제 답을 본다(_orig). 이 판은 이어 풀기 저장·오답 현황·시험 기록에 넣지 않는다 */
+function startRetry(list, title) {
+  const wrong = list.filter(q => !q._ok && q.w && q.w.fx);
+  if (!wrong.length) return;
+  const L = wrong.map(q0 => Object.assign(fxQ(q0.w.fx), { _orig: q0 }));   // 두 번째 다시 풀기부터는 바로 전 판에 낸 답
+  Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, fixed: Q.fixed, retry: true, rtitle: title };
+  drawQuiz();
+  show('quiz', title + ' · ' + tr('틀린 문제'), true);
+}
 function startExam1(key, r) {
   key = key || 'm1_1';
   const go = () => {
     const J = FIXED[key];
     EXAM_SPD = EXAM_REAL_SPD;                              // 모의고사 듣기는 실제 시험 녹음 속도(0.7배)부터 (2026-10-13 밤; 전엔 1배, 2026-10-06)
-    const L = J.q.map(x => {
-      const w = { vi: x.vi || x.prompt || x.audio || x.sec, ko: x.ko || '', nograde: true, sent: true, fx: x };
-      if (x.k === 'puzzle') return { w: { vi: x.vi, ko: String(x.exp || '').split('\n')[1] || '', nograde: true, sent: true, tiles: x.tiles, alt: x.alts || [], fx: x }, mode: 'puzzle', sec: x.sec, opts: [] };   // alt: 같은 조각의 다른 바른 차례 (2026-10-11)
-      if (x.k === 'say') return { w: { vi: x.vi, ko: '', nograde: true, kr_read: krOf(x.vi) || '', fx: x }, mode: 'fx', sec: x.sec, opts: [] };   // D1 발음 — 읽고 녹음해 스스로 매김 (2026-10-07)
-      if (x.k === 'speak') return { w: { vi: x.ask, ko: '', nograde: true, fx: x }, mode: 'fx', sec: x.sec, opts: [] };                      // D2 그림·D3 상황 말하기
-      return { w, mode: 'fx', sec: x.sec, opts: [] };
-    });                                                    // D 말하기도 낸다 (2026-10-07, 대표님 "말하기 시험은 니가 창조") — 폰 판정은 참고만, 점수는 스스로 매긴다
+    const L = J.q.map(fxQ);                                // D 말하기도 낸다 (2026-10-07, 대표님 "말하기 시험은 니가 창조") — 폰 판정은 참고만, 점수는 스스로 매긴다
     SBOX = 'bsrs';
     Q = { list: L, i: 0, ok: 0, day: null, total: L.length, early: true, opt: {}, exam: true, blind: true, round: 0, exam1: true, fixed: key, deadline: Date.now() + J.time * 60000 };
     if (r && !resumeApply(r)) resumeClear('fixed:' + key);  // 이어서 — 푼 자리·답·남은 시간 (2026-10-07); 자료가 바뀐 저장은 버린다
@@ -12008,7 +12024,7 @@ function peekBtn(body, q) {
     b.remove();
     if (!q._ans) {
       q._ans = true; q._ok = false; q._peek = true; hideSkip();
-      [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay')) bt.disabled = true; });
+      [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay') && !bt.classList.contains('qorig')) bt.disabled = true; });
       [...body.querySelectorAll('.opts button, .picgrid button')].forEach(bt => { if (bt.dataset.vi === q.w.vi) bt.dataset.r = 'ok'; });
       const toks = body.querySelectorAll('.errtok'); if (toks.length && x.bad !== undefined && toks[x.bad]) toks[x.bad].dataset.r = 'ok';
       body.querySelectorAll('textarea').forEach(t => { t.readOnly = true; });
@@ -12037,7 +12053,7 @@ function peekDaily(body, q) {
     b.remove();
     if (!q._ans) {
       q._ans = true; q._ok = false; q._peek = true; Q._answered = true; hideSkip();
-      [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay') && !bt.classList.contains('qtap')) bt.disabled = true; });
+      [...body.querySelectorAll('button')].forEach(bt => { if (!bt.closest('.qplay') && !bt.classList.contains('qtap') && !bt.classList.contains('qorig')) bt.disabled = true; });
       [...body.querySelectorAll('.opts button')].forEach(bt => { if (bt.dataset.vi === w.vi) bt.dataset.r = 'ok'; });
       body.querySelectorAll('input, textarea').forEach(i => { i.disabled = true; });
     }
@@ -12567,9 +12583,19 @@ function finishWeekly() {
   const tb = el('div', 'exsec');
   Object.entries(secs).forEach(([k, v]) => { const row = el('div', 'exsecrow'); row.append(el('span', null, esc(k)), el('b', null, v[0] + ' / ' + v[1])); tb.append(row); });
   r.append(tb);
+  if (Q.retry) {                                         // 틀린 문제 다시 풀기 결과 — 기록에 안 넣고, 또 틀린 것만 다시
+    r.textContent = '';
+    r.append(el('div', 'n', ok + ' / ' + tot), el('div', null, tr('틀린 문제') + ' · ' + tr('다시 풀기')));
+    examWrongList(r, Q.list);
+    const back0 = (() => { const qb = $('#quizBody'), tt = $('#title').textContent, Qr = Q; return () => { Q = Qr; qb.textContent = ''; qb.append(r); $('#quizFill').style.width = '100%'; show('quiz', tt, true); }; })();
+    r.append(examTools(Q.list, Q.rtitle, back0));
+    const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = () => { ACTIVE_TAB = 'home'; renderHome(); }; r.append(b);
+    $('#quizBody').textContent = ''; $('#quizBody').append(r);
+    return;
+  }
   S.stats.wexam = S.stats.wexam || []; S.stats.wexam.push({ d: ymd(), ok, tot, secs, round: Q.fixed || (Q.round || 0), pts: got, max }); if (S.stats.wexam.length > 20) S.stats.wexam.shift(); save();
   examWrongList(r, Q.list);
-  if (Q.fixed) { wexamSave(Q.fixed, Q.list); r.append(examTools(Q.list, FIXED_EXAMS[Q.fixed] ? tr(FIXED_EXAMS[Q.fixed].name) : $('#title').textContent, (() => { const qb = $('#quizBody'), tt = $('#title').textContent; return () => { qb.textContent = ''; qb.append(r); show('quiz', tt, true); }; })())); }   // 채점된 시험지 · 틀린 단어 · 틀린 문법 (2026-10-11)
+  if (Q.fixed) { wexamSave(Q.fixed, Q.list); r.append(examTools(Q.list, FIXED_EXAMS[Q.fixed] ? tr(FIXED_EXAMS[Q.fixed].name) : $('#title').textContent, (() => { const qb = $('#quizBody'), tt = $('#title').textContent, Qr = Q; return () => { Q = Qr; qb.textContent = ''; qb.append(r); $('#quizFill').style.width = '100%'; show('quiz', tt, true); }; })())); }   // 채점된 시험지 · 틀린 단어 · 틀린 문법 (2026-10-11)
   const b = el('button', 'primary big', tr('홈으로')); b.style.marginTop = '20px'; b.onclick = () => { ACTIVE_TAB = 'home'; renderHome(); }; r.append(b);
   $('#quizBody').textContent = ''; $('#quizBody').append(r);
 }
@@ -12662,6 +12688,7 @@ function wexamWrong(k) {                              // 오답 현황 — 틀�
 function examTools(list, title, back) {
   const box = el('div', 'extools');
   const mk = (t, fn) => { const b = el('button', 'ghost big', t); b.type = 'button'; b.style.width = '100%'; b.onclick = () => { dive(back); fn(); }; box.append(b); };
+  if (list.some(q => !q._ok && q.w && q.w.fx)) mk('🔁 ' + tr('틀린 문제 다시 풀기'), () => startRetry(list, title));   // (대표님 2026-10-25)
   mk('📄 ' + tr('채점된 시험지'), () => paperView(list, title));
   mk('🃏 ' + tr('틀린 단어'), () => wrongWordsView(list, title));
   mk('📘 ' + tr('틀린 문법'), () => wrongGramView(list, title));
