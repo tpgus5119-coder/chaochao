@@ -11339,6 +11339,10 @@ function missRow(list, back) {
 function drawQuiz() {
   const body = $('#quizBody');
   body.textContent = ''; body.classList.remove('qsent', 'qout');
+  if (Q && Q.exam) {                                     // 시험: 다음(이전) 문제로 가면 앞 문제 소리는 멈춘다 — 듣기 두 번째 재생 예약도 무효 (대표님 2026-10-25)
+    audio.pause(); myVoice.pause(); try { speechSynthesis.cancel(); } catch (e) { }
+    drawFixed.n = (drawFixed.n || 0) + 1;
+  }
   $('#quizFill').style.width = (Q.i / Q.list.length * 100) + '%';
   if (Q.exam && (Q.fixed || Q.daily)) resumeSave();     // 시험지·단어 시험은 푼 자리를 저장 (끝나면 지움) (2026-10-07)
   if (Q.i >= Q.list.length) return finishQuiz();
