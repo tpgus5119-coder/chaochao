@@ -48,7 +48,7 @@ T = [("Toàn có hai chị gái. Chị cả năm nay 34 tuổi, đã lập gia �
      ("Bố mẹ tôi cùng tuổi. Năm nay bố mẹ tôi 60 tuổi và vẫn còn làm việc. Họ chưa muốn về hưu.", "우리 부모님은 동갑이에요. 올해 예순이시고 아직 일하세요. 아직 은퇴하고 싶어 하지 않으세요.",
       [("Bố và mẹ tôi cùng tuổi.", "아버지와 어머니는 동갑이에요.", True), ("Bố mẹ tôi đã về hưu.", "부모님은 은퇴하셨어요.", False)]),
      ("Sơn sống một mình ở Thành phố Hồ Chí Minh. Sơn rất nhớ bữa ăn tối của gia đình nên mỗi tháng đều về quê.", "선은 호찌민시에서 혼자 살아요. 가족의 저녁 식사가 아주 그리워서 달마다 고향에 가요.",
-      [("Sơn sống với bố mẹ.", "선은 부모님과 함께 살아요.", False), ("Sơn thường về quê.", "선은 자주 고향에 가요.", True)]),
+      [("Sơn sống với bố mẹ.", "선은 부모님과 함께 살아요.", False), ("Mỗi tháng Sơn đều về quê.", "선은 달마다 고향에 가요.", True)]),
      ("Gia đình anh Hùng có khá đông anh em: ba anh trai và hai em gái. Anh cả là người lớn tuổi nhất.", "훙 씨 집은 형제가 꽤 많아요. 형이 셋, 여동생이 둘이에요. 맏형이 나이가 제일 많아요.",
       [("Anh Hùng có ba anh trai.", "훙 씨는 형이 셋이에요.", True), ("Anh Hùng là con một.", "훙 씨는 외동이에요.", False)])]
 for k, (t, tko, two) in enumerate(T): q += B3(t, tko, two, NO, k)

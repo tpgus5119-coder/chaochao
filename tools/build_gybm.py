@@ -237,10 +237,12 @@ def chunk_chapters(chapters, seen, size=15, skey=None):
 
 # ================= 출처 1: 메인 교재 (1·2권 합쳐 하나의 출처) =================
 rb = load(f"{DATA}/realbook.json")
+_D = load(f"{DATA}/_main_drop.json")                       # 문법 틀·문장 조각은 낱말 카드에서 뺀다 (대표님 2026-10-25)
+MAIN_DROP = {nfc(x) for x in _D["frame"] + _D["piece"]}
 main_chapters = []
 for vol in rb["books"]:
     for ch in vol["chapters"]:
-        main_chapters.append({"title": ch["title"], "title_ko": ch.get("title_ko", ""), "words": ch["words"]})
+        main_chapters.append({"title": ch["title"], "title_ko": ch.get("title_ko", ""), "words": [w for w in ch["words"] if nfc(w["vi"]) not in MAIN_DROP]})
     if vol.get("glossary_supplement"):
         main_chapters.append({"title": f"{vol['title']} 낱말장 보충", "title_ko": "", "words": vol["glossary_supplement"]})
 

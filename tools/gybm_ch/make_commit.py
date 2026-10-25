@@ -41,6 +41,7 @@ MY += ["tools/daily22/b14.py", "tools/day_reorg/move_topics.py"]   # 22기 B반 
 MY += ["tools/job_scene/scenes.py", "tools/job_scene/build.py"]   # 직무 낱말 일의 장면으로 (2026-10-07)
 MY += ["tools/grammar_order/순서.tsv"]   # 문법 자주 쓰는 순서 근거 (2026-10-01)
 MY += ["tools/audio_16k.py"]   # 소리 16k (2026-10-01)
+MY += ["data/_main_drop.json", "tools/mock3/ex3.py", "tools/mock3/ex4.py"]   # 낱말 카드에서 뺀 문법 틀·문장 조각 (2026-10-25)
 MY += ["data/cohort22.json"] + [f"tools/ex_source/{n}" for n in ("cand.py", "PROMPT.md", "chk.py", "make_verify.py", "PROMPT_vf.md", "chk_vf.py", "apply.py", "확정.tsv")]   # 수업 예문 교재 원문·사전 예문으로 (2026-10-01) — 시트·후보(sh_*.json·cand.json·vf_*.json)는 교재 글이 들어 있어 안 올림
 MY += ["tools/dict_full/pos_live.py", "tools/dict_full/pos_fix.tsv", "tools/dict_full/pos_amb.json"]   # 위키 품사 제목·틀 어긋남 (2026-10-01)
 MY += ["tools/dict_pos/compare.py", "tools/dict_pos/verify_tagger.py", "tools/dict_pos/검산_태거.tsv", "tools/dict_pos/불일치.tsv"] + [f"tools/dict_pos/pos_{i:02d}.b.tsv" for i in range(10)]   # 품사 판정 검산 (2026-10-01)

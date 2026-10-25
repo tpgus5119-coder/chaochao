@@ -48,7 +48,7 @@ T = [("Anh Nam đang viết đơn xin việc bằng tiếng Anh. Anh ấy ngại
      ("Tôi thường đến cơ quan lúc 7 giờ. Nhưng hôm nay tôi đến muộn vì tối qua thức khuya ôn tập cho kiểm tra cuối khóa.", "저는 보통 7시에 직장에 가요. 그런데 오늘은 어젯밤 기말시험 복습으로 늦게 자서 늦게 갔어요.",
       [("Hôm nay tôi đến cơ quan muộn.", "오늘 나는 직장에 늦게 갔어요.", True), ("Tôi thường đến cơ quan lúc 8 giờ.", "나는 보통 8시에 직장에 가요.", False)]),
      ("Anh Hải sống một mình ở Hà Nội. Ba mẹ anh ấy sống ở quê. Mỗi tháng anh ấy về quê thăm ba mẹ.", "하이 씨는 하노이에서 혼자 살아요. 부모님은 고향에 사세요. 하이 씨는 달마다 고향에 가서 부모님을 뵈어요.",
-      [("Anh Hải sống với ba mẹ.", "하이 씨는 부모님과 함께 살아요.", False), ("Anh Hải thường về quê.", "하이 씨는 자주 고향에 가요.", True)]),
+      [("Anh Hải sống với ba mẹ.", "하이 씨는 부모님과 함께 살아요.", False), ("Mỗi tháng anh Hải đều về quê.", "하이 씨는 달마다 고향에 가요.", True)]),
      ("Lan có một chị gái và một em trai. Chị gái Lan đã lập gia đình, còn em trai Lan là học sinh, năm nay nghỉ hè.", "란에게는 언니 한 명과 남동생 한 명이 있어요. 언니는 결혼했고, 남동생은 학생이라 지금 여름방학이에요.",
       [("Chị gái Lan đã có gia đình.", "란의 언니는 결혼했어요.", True), ("Em trai Lan là sinh viên.", "란의 남동생은 대학생이에요.", False)])]
 for k, (t, tko, two) in enumerate(T): q += B3(t, tko, two, NO, k)
