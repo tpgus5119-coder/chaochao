@@ -249,6 +249,10 @@ SRC_NAME = {
     # 2026-09-23: 아래 셋이 이름표에 없어 카드 아래에 'vietnamkoreatimes.com' 주소가 그대로 찍혔다
     "vietnamkoreatimes.com": "베트남코리아타임즈",
     "chaovietnam.co.kr": "씬짜오베트남",
+    # 2026-10-26: 한국 본사 언론 보충(2026-10-19~)이 이름표에 없어 'yna.co.kr'·'fnnews.com' 주소가 찍혔다
+    "yna.co.kr": "연합뉴스", "fnnews.com": "파이낸셜뉴스", "ajunews.com": "아주경제", "mt.co.kr": "머니투데이",
+    "asiatoday.co.kr": "아시아투데이", "hankyung.com": "한국경제", "mk.co.kr": "매일경제", "biz.chosun.com": "조선비즈",
+    "edaily.co.kr": "이데일리", "sedaily.com": "서울경제", "biz.heraldcorp.com": "헤럴드경제", "newspim.com": "뉴스핌",
     "goodmorningvietnam.co.kr": "굿모닝베트남미디어",
     "vnexpress.net": "VnExpress",
     "tuoitre.vn": "Tuổi Trẻ",
@@ -577,6 +581,14 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-10-26 새벽(예약 작업): 한·베 교역액 기사는 맞는 줄이 없어 경제 기본이, 주차난 기사는 생활 기본(쌀국수)이,
+              # 삼성 스마트공장 기사는 '삼성'에 걸려 회로기판이 깔릴 판이었다. 셋을 맨 위에.
+              (("교역액", "교역,", "교역 "),
+               "container ships and stacked cargo containers at a busy seaport at sunrise"),
+              (("주차", "parking"),
+               "rows of parked cars filling an open-air lot beside office towers in the early morning"),
+              (("스마트공장", "스마트 공장", "smart factory"),
+               "a clean modern factory floor with robotic arms and screens showing production charts"),
               # 2026-10-21 새벽(예약 작업): 송금·전자상거래·귀국 노동자·카펫 공장·대기질·보행교 기사는 맞는 줄이
               # 없어 갈래 기본(경제 동전·일자리·공장 안전모·사회·생활 좌판)이 깔릴 판이었다. 여섯을 맨 위에.
               (("송금", "kiều hối", "remittance"),
