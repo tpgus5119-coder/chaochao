@@ -90,7 +90,9 @@ def ok_rule(w, i, vi):
 def apply():
     made = json.loads(MP.read_text(encoding='utf-8')) if MP.exists() else {}
     got = json.loads(CP.read_text(encoding='utf-8'))
-    out, keep_old, drop_old, add = {}, 0, 0, 0
+    out, keep_old, drop_old, add, rev = {}, 0, 0, 0, {}
+    RP = R / 'tools/_ctx/fill_review_ok.json'                 # 클로드가 읽고 맞다고 한 엇갈린 문장 열쇠 목록
+    REV_OK = set(json.loads(RP.read_text(encoding='utf-8'))) if RP.exists() else set()
     for w, ss in S.items():
         if len(ss) < 2: continue
         row = []
@@ -101,11 +103,14 @@ def apply():
                 elif len(L) < 1: drop_old += 1
             if not L and f'{w}|{i}' in made:
                 vi, ko = made[f'{w}|{i}']
-                if got.get(f'{w}|{i}|{vi}') == i + 1 and ok_rule(w, i, vi): L.append([vi, ko]); add += 1
+                if ok_rule(w, i, vi) and (got.get(f'{w}|{i}|{vi}') == i + 1 or f'{w}|{i}' in REV_OK): L.append([vi, ko]); add += 1
+                elif ok_rule(w, i, vi): rev[f'{w}|{i}'] = [w, i + 1, ss[i], vi, ko, got.get(f'{w}|{i}|{vi}')]   # 제미나이·Qwen 이 엇갈림 → 버리지 않고 클로드가 읽는다 (대표님 2026-10-26 승인)
             row.append(L)
         if sum(1 for L in row if L) >= 1: out[w] = row
     p = R / 'data/_sense_ex.json'; p.write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     tot = sum(len(ss) for ss in S.values() if len(ss) >= 2); has = sum(1 for r in out.values() for L in r if L)
+    (R / 'tools/_ctx/fill_review.json').write_text(json.dumps(rev, ensure_ascii=False, indent=0), encoding='utf-8')
+    print(f'엇갈려 클로드가 읽을 것 {len(rev)} (tools/_ctx/fill_review.json)')
     print(f'있던 예문 남김 {keep_old} · 뺌 {drop_old} · 새로 지은 것 넣음 {add} · 예문 있는 뜻 {has}/{tot} · 파일 {p.stat().st_size // 1024}KB')
 if __name__ == '__main__':
     {'make': make, 'check': check, 'apply': apply}[sys.argv[1]]()

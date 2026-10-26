@@ -116,6 +116,13 @@ texts |= set(fill_audio.collect())
 _fq = json.loads((ROOT / "data/_dict_freq.json").read_text(encoding="utf-8")); _df = json.loads((ROOT / "data/_dict_full.json").read_text(encoding="utf-8"))
 for _w, _r in _fq.items():
     if _r <= 3000: texts.add((_df.get(_w) or {}).get("h") or _w); texts.add(_w)
+# 소리 점검 2판(tools/sound_audit2.py)에서 다시 만든 소리 — 수업 자료 밖 글(사전·뜻별 예문 등)이라 위 목록에 안 걸려 고친 소리가 안 올라갔다 (2026-10-26 발견, 237개)
+_fx2 = ROOT / "tools/_sound_fix/점검2.jsonl"
+if _fx2.exists():
+    for _l in _fx2.read_text(encoding="utf-8").splitlines():
+        try: _r = json.loads(_l)
+        except Exception: continue
+        if _r.get("fixed"): texts.add(_r["k"])
 for _t in list(texts):
     for _w in _re0.sub(r'[,.!?;:…"“”‘’()]', " ", _t).split():
         texts.add(_w); texts.add(_w.lower())
