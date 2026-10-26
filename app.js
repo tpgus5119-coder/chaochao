@@ -2901,12 +2901,13 @@ function studyHubEntry() {
     c.innerHTML = `<span class="hubico">${ico}</span><span class="hubbody"><b class="hubt">${esc(tr(t))}</b>` +
       (prog ? `<span class="hubprog"><i class="hubbar"><i style="width:${done ? Math.max(3, pct) : 0}%"></i></i><small>${done}/${all}</small></span>` : '') +
       `</span><svg class="hubchev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>`;
-    c.onclick = () => { dive(studyHubEntry); WOPEN = null; GOPEN = null; fn(); };   // 들어갈 때 토글은 모두 닫힌 채로 (대표님 지시 2026-09-30: "토글 열려 있지 마라")
+    c.onclick = () => { dive(studyHubEntry); WOPEN = null; GOPEN = null; XOPEN = null; fn(); };   // 들어갈 때 토글은 모두 닫힌 채로 (대표님 지시 2026-09-30: "토글 열려 있지 마라")
     b.append(c);
   };
   card(HUB_ICO.basic, '기본기', st.basic, studyBasicsEntry);
   card(HUB_ICO.words, '단어', st.words, studyWordsEntry);       // 내 단어장은 단어 안으로 옮겼다 (대표님 지시 2026-09-30)
   card(HUB_ICO.gram, '문법', st.gram, studyGramEntry);
+  card(HUB_ICO.book, '주간시험 범위', null, studyExamScope);     // 회차별 단어·문법 과 모음 (대표님 2026-10-26 — 10-01 에 뺀 '주간 시험' 칸과 달리 범위 과를 모은 길)
   card(HUB_ICO.test, '단어 시험', null, () => dailyEntry('study'));   // 이름 '매일 단어 시험' → '단어 시험' (대표님 2026-10-01) · 22기 반 시험 — 학습에서는 카드로 학습만, 시험은 테스트 탭 (2026-09-30)
   /* '한자어 맞히기' 카드는 뺐다 (대표님 2026-10-02 "학습 탭에 한자어 맞히기가 왜 있냐") — hanQuizEntry 함수는 남겨 둠 */
   /* 학습 탭의 '주간 시험'은 뺐다 (대표님 2026-10-01: 주간 시험은 범위 낱말+문법의 종합이라 단어·문법에서 이미 배운다). 쓰기 연습은 테스트 탭 회차 화면으로 */
@@ -3016,6 +3017,7 @@ function studyWordsEntry(scroll) {
   const back = () => studyWordsEntry();
   const still = () => CURV === 'sub' && $('#title').textContent === tr('단어');   // 탭 상태(ACTIVE_TAB)는 안 본다 — 다른 길로 들어와도 자료가 오면 다시 그려야 한다 (2026-09-28 무한 로딩 원인)
   if (!TLINK) tlinkLoad(() => { if (still()) studyWordsEntry(true); });
+  if (!TBCH) tbchLoad().then(() => { if (still() && TBCH) studyWordsEntry(true); });
   const rows = [];
   // ① 일상
   const days = ALL.filter(d => typeof d.day === 'number' && !d.track).sort((x, y) => (x.n || 0) - (y.n || 0));
@@ -3041,7 +3043,7 @@ function studyWordsEntry(scroll) {
   [['main', '교재']].forEach(([key, title]) => {   // '선배 단어 시험 자료' 칸은 지웠다 (대표님 2026-10-03 "선배 단어 완전 삭제") — 일상·직무에 섞여 들어간 낱말은 그대로
     const src = GYBM && GYBM.find(s => s.key === key);
     if (!src) { rows.push({ key, title, sub: '', done: 0, all: 0, nodes: null }); return; }
-    const nodes = src.lessons.map((l, li) => ({ key: gybmKey(key, li), title: l.title,
+    const nodes = src.lessons.map((l, li) => ({ key: gybmKey(key, li), title: (key === 'main' && chLabel(l.title) ? chLabel(l.title) + ' · ' : '') + l.title,   // 과 번호 (대표님 2026-10-26)
       sub: (l.sub ? l.sub + ' · ' : '') + l.words.length + tr('단어') + (l.words.some(isCore) ? ' · ' + tr('핵심') + ' ' + l.words.filter(isCore).length : ''),
       rel: key === 'main' ? tlinkMain(l.title) : '',   // 관련 일상 주제 (2026-09-29)
       num: li + 1, done: !!bdone()[gybmKey(key, li)],
@@ -3064,6 +3066,67 @@ function studyWordsEntry(scroll) {
       const rb = el('button', 'ghost sm', tr('다시 시도')); rb.type = 'button'; rb.onclick = () => { GYBM = null; studyWordsEntry(true); }; note.append(rb);
     }, 8000);
   }
+}
+/* 교재 과 번호·과 문법·주간시험 범위 (data/textbook_ch.json — tools/exam_scope/build.py, 대표님 2026-10-26) */
+let TBCH = null, TBCH_P = null, XOPEN = null;
+function tbchLoad() {
+  if (TBCH) return Promise.resolve();
+  if (!TBCH_P) TBCH_P = fetch('data/textbook_ch.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { TBCH = j; }).catch(() => { TBCH_P = null; });
+  return TBCH_P;
+}
+const chBase = t => String(t || '').split(' · ')[0].normalize('NFC').trim();
+function chKeyOf(title) {                              // 낱말 레슨 이름('Anh ấy nói được tiếng gì? · 1부') → '1-8'
+  if (!TBCH) return null;
+  const b = chBase(title);
+  return Object.keys(TBCH.ch).find(k => TBCH.ch[k].t === b) || null;
+}
+const chLabelK = k => { const [bk, n] = String(k).split('-'); return bk + tr('권') + ' ' + n + tr('과'); };
+function chLabel(title) { const k = chKeyOf(title); return k ? chLabelK(k) : ''; }
+/* 그 과의 낱말 레슨들(1부·2부…) 번호 */
+function chLessons(k) {
+  const src = GYBM && GYBM.find(s => s.key === 'main'); if (!src || !TBCH) return [];
+  const t = TBCH.ch[k] && TBCH.ch[k].t;
+  return src.lessons.map((l, li) => [l, li]).filter(([l]) => chBase(l.title) === t);
+}
+/* 문형 id(과.번) → 문법 카드 */
+function gramCardOf(id) {
+  const t = GTOK && GTOK.find(z => z.id === id), b = t && GRAM && GRAM.books[0].bai[t.li];
+  return b && !b.ng ? b.g.find(z => z.t === t.t) : null;
+}
+/* 주간시험 범위 — 회차마다 그 범위 교재 과의 단어·문법을 모은다 (대표님 2026-10-26 "각 주간시험 회차별로 어떤 단어와 어떤 문법을 공부해야 하는지 — 학습 탭에, 단어와 문법 챕터를 모아줘").
+   단어는 그 과 낱말 레슨(1부·2부…)을 한 판으로, 문법은 교재 문법 상자에 해당하는 앱 문법 카드를 한 판으로. 3회는 10과 나이 비교·쌤 10과 비교(bằng·như)까지 */
+function studyExamScope(scroll) {
+  const b = $('#subBody'); b.textContent = '';
+  const back = () => studyExamScope();
+  const still = () => CURV === 'sub' && $('#title').textContent === tr('주간시험 범위');
+  show('sub', '주간시험 범위', true);
+  if (!TBCH || !GYBM || !GRAM || !GTOK) {
+    b.append(el('p', 'lede', tr('불러오는 중…')));
+    Promise.all([tbchLoad(), gramTokLoad(), GRAM ? 0 : fetch('data/grammar.json', { cache: 'no-cache' }).then(r => r.json()).then(j => { GRAM = gramReady(j); }),
+                 GYBM ? 0 : new Promise(res => gybmBuild(res))]).then(() => { if (still()) studyExamScope(); }).catch(() => {});
+    return;
+  }
+  const wordsOf = ks => ks.flatMap(k => chLessons(k).flatMap(([l]) => l.words));
+  const gramsOf = (ks, extra) => [...new Set(ks.flatMap(k => (TBCH.ch[k] && TBCH.ch[k].g) || []).concat(extra || []))].map(gramCardOf).filter(Boolean)
+    .filter((g, i, a) => a.indexOf(g) === i);
+  const wDone = ks => { const ls = ks.flatMap(k => chLessons(k)); return ls.length && ls.every(([, li]) => bdone()[gybmKey('main', li)]); };
+  const learnW = (key, theme, ws) => () => { SBOX = 'bsrs'; dive(back); startLearn({ theme, day: key, basic: 1, words: ws }); };
+  const learnG = (key, theme, gs) => () => { dive(back); LCRUMB = theme; L = { day: { day: key, theme, gram: 1, cardsOnly: 1 }, i: 0, items: gs.map(g => ({ k: 'gram', d: g })) }; drawCard(); show('learn', theme, true); };
+  TBCH.rounds.forEach(r => {
+    const ks = r.ch, nm = tr('주간시험') + ' ' + r.n, first = ks[0].split('-'), last = ks[ks.length - 1].split('-');
+    const range = first[0] + tr('권') + ' ' + first[1] + (ks.length > 1 ? '~' + last[1] : '') + tr('과');
+    const nodes = [];
+    const W = wordsOf(ks), Gs = gramsOf(ks, r.extra);
+    nodes.push({ key: 'XW:' + r.n, title: tr('단어 전체'), sub: W.length + tr('단어'), done: wDone(ks), fn: learnW('XW:' + r.n, nm + ' · ' + tr('단어'), W) });
+    nodes.push({ key: 'XG:' + r.n, title: tr('문법 전체'), sub: Gs.length + tr('개 문법'), done: false, fn: learnG('XG:' + r.n, nm + ' · ' + tr('문법'), Gs) });
+    ks.forEach((k, i) => {
+      const lab = chLabelK(k) + ' · ' + TBCH.ch[k].t, w = wordsOf([k]), g = gramsOf([k], i === ks.length - 1 ? r.extra : []);
+      if (w.length) nodes.push({ key: 'XW:' + k, title: tr('단어') + ' · ' + lab, sub: w.length + tr('단어'), done: wDone([k]), fn: learnW('XW:' + k, lab, w) });
+      if (g.length) nodes.push({ key: 'XG:' + k, title: tr('문법') + ' · ' + lab, sub: g.length + tr('개 문법'), done: false, fn: learnG('XG:' + k, lab, g) });
+    });
+    nodes.forEach((n, i) => { n.num = i + 1; });
+    accRow(b, { key: 'X' + r.n, title: nm, sub: range, done: nodes.filter(n => n.done).length, all: nodes.length, nodes }, XOPEN === r.n, () => { XOPEN = XOPEN === r.n ? null : r.n; studyExamScope(true); }, scroll);
+  });
 }
 /* 문법 — 책마다 아코디언, 펼치면 과가 길로 */
 function studyGramEntry(scroll) {
