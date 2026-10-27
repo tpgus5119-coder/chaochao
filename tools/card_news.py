@@ -251,7 +251,7 @@ SRC_NAME = {
     "chaovietnam.co.kr": "씬짜오베트남",
     # 2026-10-26: 한국 본사 언론 보충(2026-10-19~)이 이름표에 없어 'yna.co.kr'·'fnnews.com' 주소가 찍혔다
     "yna.co.kr": "연합뉴스", "fnnews.com": "파이낸셜뉴스", "ajunews.com": "아주경제", "mt.co.kr": "머니투데이",
-    "asiatoday.co.kr": "아시아투데이", "hankyung.com": "한국경제", "mk.co.kr": "매일경제", "biz.chosun.com": "조선비즈",
+    "asiatoday.co.kr": "아시아투데이", "hankyung.com": "한국경제", "mk.co.kr": "매일경제", "stock.mk.co.kr": "매일경제", "biz.chosun.com": "조선비즈",
     "edaily.co.kr": "이데일리", "sedaily.com": "서울경제", "biz.heraldcorp.com": "헤럴드경제", "newspim.com": "뉴스핌",
     "goodmorningvietnam.co.kr": "굿모닝베트남미디어",
     "vnexpress.net": "VnExpress",

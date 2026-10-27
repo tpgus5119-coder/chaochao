@@ -153,7 +153,7 @@ def foot_text(d, ts):
             "tuoitre.vn": "Tuổi Trẻ", "thanhnien.vn": "Thanh Niên",
             # 2026-10-26: 한국 본사 언론 보충분 — card_news.SRC_NAME 과 맞춘다
             "yna.co.kr": "연합뉴스", "fnnews.com": "파이낸셜뉴스", "ajunews.com": "아주경제", "mt.co.kr": "머니투데이",
-            "asiatoday.co.kr": "아시아투데이", "hankyung.com": "한국경제", "mk.co.kr": "매일경제", "biz.chosun.com": "조선비즈",
+            "asiatoday.co.kr": "아시아투데이", "hankyung.com": "한국경제", "mk.co.kr": "매일경제", "stock.mk.co.kr": "매일경제", "biz.chosun.com": "조선비즈",
             "edaily.co.kr": "이데일리", "sedaily.com": "서울경제", "biz.heraldcorp.com": "헤럴드경제", "newspim.com": "뉴스핌"}.get(host, host)
     return "짜오짜오 · " + (d.get("pub") or ts) + ("  ·  출처 " + name if name else "")
 
