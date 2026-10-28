@@ -39,7 +39,7 @@ AGE = {"t": "나이 비교 — nhỏ hơn · lớn hơn … tuổi · bằng tu�
               EX('Hoa lớn hơn Lan 5 tuổi.', '호아는 란보다 다섯 살 많아요.'), EX('Lan ít tuổi hơn Hoa.', '란은 호아보다 나이가 적어요.'),
               EX('Ai ít tuổi nhất ở lớp B?', 'B반에서 누가 제일 어려요?')],
        "kw": [["nhỏ hơn", "~보다 어리다"], ["lớn hơn", "~보다 나이가 많다"], ["bằng tuổi", "동갑이다"], ["cùng tuổi", "동갑이다"]],
-       "tip": "몇 살 차이는 늘 맨 뒤: Em tôi nhỏ hơn tôi <b>4 tuổi</b>.",
+       "tip": "몇 살 차이는 늘 맨 뒤: Em tôi nhỏ hơn tôi 4 tuổi.",
        "d": {"use": "나이를 견줌.", "pos": "A + <b>nhỏ hơn / lớn hơn</b> + B + 숫자 tuổi · A + <b>bằng tuổi</b> + B · A và B + <b>cùng tuổi</b>.",
              "cmp": [["… hơn …", "나이 말고 다른 것도 같은 꼴: cao hơn · rộng hơn(33.0)."], ["bằng · như", "정도가 같음(33.5·33.2): cao bằng · đẹp như."]],
              "warn": "nhỏ 는 '작다'지만 나이에선 '어리다', lớn 은 '크다'지만 '나이가 많다'."}}

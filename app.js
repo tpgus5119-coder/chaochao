@@ -135,7 +135,7 @@ const UIVI = {
   '1분 · 이름 안 받습니다': '1 phút · Không hỏi tên',
   '어떤 시험이었나요?': 'Bạn thi kỳ nào?',
   '어떤 소재가 나왔나요? (여러 개 고를 수 있습니다)': 'Đề nói về chủ đề gì? (chọn nhiều được)',
-  '기억나는 단어이 있으면 적어 주세요 (쉼표로 나눠서, 단어만)':
+  '기억나는 단어가 있으면 적어 주세요 (쉼표로 나눠서, 단어만)':
     'Nhớ từ nào thì ghi lại (ngăn bằng dấu phẩy, chỉ từ thôi)',
   '예: 환승, 계약서, 분리배출': 'Ví dụ: 환승, 계약서, 분리배출',
   '많이 어려웠나요?': 'Đề có khó không?',
@@ -354,9 +354,9 @@ const UIVI = {
   '⚠ 자주 틀린 것': '⚠ Hay sai',
   '틀림': 'Sai', '번': 'lần',
   '아직 뜻이 없는 단어입니다': 'Từ này chưa có nghĩa trong từ điển',
-  '아직 담은 단어이 없습니다. 배우는 화면에서 단어 옆 <b>☆</b>를 누르면 여기에 모입니다.':
+  '아직 담은 단어가 없습니다. 배우는 화면에서 단어 옆 <b>☆</b>를 누르면 여기에 모입니다.':
     'Chưa có từ nào được lưu. Nhấn <b>☆</b> bên cạnh từ ở màn hình học để lưu vào đây.',
-  '아직 자주 틀린 단어이 없습니다. 퀴즈에서 틀린 단어이 여기에 저절로 모입니다.':
+  '아직 자주 틀린 단어가 없습니다. 퀴즈에서 틀린 단어가 여기에 저절로 모입니다.':
     'Chưa có từ nào hay sai. Những từ bạn làm sai trong bài kiểm tra sẽ tự động vào đây.',
   '퀴즈에서 <b>맞힐 때마다 횟수가 줄어</b> 저절로 사라집니다 — 지울 필요가 없습니다.':
     'Mỗi lần bạn trả lời đúng, <b>số lần sai sẽ giảm</b> và từ đó tự biến mất — không cần xóa.',
@@ -384,7 +384,7 @@ const UIVI = {
   '오늘 해볼 것': 'Hôm nay hãy thử',
   '이전': 'Trước',
   '다음': 'Sau',
-  '뜻과 단어을 짝지어 보세요': 'Hãy ghép nghĩa với từ',
+  '뜻과 단어를 짝지어 보세요': 'Hãy ghép nghĩa với từ',
   '조각을 눌러 문장을 만들어 보세요': 'Nhấn các mảnh để ghép thành câu',
   '아래 조각을 눌러 보세요': 'Hãy nhấn các mảnh bên dưới',
   'N개 중 M개를 한 번에 맞혔어요': 'Bạn đúng M/N ngay lần đầu',
@@ -562,7 +562,7 @@ const UIVI = {
   '단어 N개 · 베트남어로도 한국어로도 찾습니다': 'N từ · tra được cả tiếng Việt lẫn tiếng Hàn',
   '찾을 말 (성조는 안 찍어도 됩니다)': 'Từ cần tra (không cần dấu)',
   '한 글자만 넣어도 찾습니다': 'Gõ một chữ cũng tra được', '찾는 말이 없습니다': 'Không tìm thấy',
-  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 낱말': 'Tìm theo nghĩa', '발음으로 찾은 낱말': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '관련': 'Liên quan', '문법 상자': 'Hộp ngữ pháp', '상자 밖 문법': 'Ngữ pháp ngoài hộp', '혀 투명': 'Lưỡi trong suốt', '위아래 벌림': 'Mở dọc', '좌우 벌림': 'Mở ngang', '오므림': 'Tròn môi', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
+  'N개 찾음': 'Tìm thấy N', '사전, 뜻 구분 없음': 'từ điển, không chia theo nghĩa', '문장 속에서': 'Trong câu', '예문 더 보기': 'Thêm câu ví dụ', '교재 예문': 'Câu ví dụ trong giáo trình', '만든 예문': 'Câu ví dụ tự soạn', '원문에 품사가 없어 판정한 것': 'Từ loại do chúng tôi xác định (bản gốc không ghi)', '단어 시험': 'Kiểm tra từ vựng', '베트남 기사': 'Tin Việt Nam', '기사 N개': 'N bài', '카드뉴스가 아직 없습니다': 'Chưa có thẻ tin', '한자어 맞히기': 'Đoán từ Hán Việt', '맞히기 시작': 'Bắt đầu', '발음 규칙 표': 'Bảng quy tắc âm', '첫소리': 'Phụ âm đầu', '받침': 'Âm cuối', '한자 글자 N쌍을 세어 낸 비율입니다': 'Tỉ lệ đếm từ N cặp chữ Hán', '선배 메모': 'Ghi chú của khóa trước', '선배 예문': 'Câu ví dụ của khóa trước', '보충': 'Bổ sung', '사전 예문': 'Câu ví dụ trong từ điển', '자주 쓰는 말': 'Thông dụng', '앱 속 예문': 'Câu ví dụ trong ứng dụng', '뜻으로 찾은 단어': 'Tìm theo nghĩa', '발음으로 찾은 단어': 'Tìm theo cách đọc', '베트남어 낱말': 'Từ tiếng Việt', '영어 뜻으로 찾은 낱말': 'Tìm theo nghĩa tiếng Anh', 'N개': 'N từ', 'N개 더 보기': 'Xem thêm N', '앞 60개만 보입니다 — 더 적어 보세요': 'Chỉ hiện 60 mục đầu — hãy gõ thêm', '아니요': 'Không', '네': 'Vâng', '소리 자동 재생': 'Tự phát âm', '관련': 'Liên quan', '문법 상자': 'Hộp ngữ pháp', '상자 밖 문법': 'Ngữ pháp ngoài hộp', '혀 투명': 'Lưỡi trong suốt', '위아래 벌림': 'Mở dọc', '좌우 벌림': 'Mở ngang', '오므림': 'Tròn môi', '베트남 단어': 'Từ tiếng Việt', '영어 뜻': 'Nghĩa tiếng Anh', '문법 고르기': 'Chọn ngữ pháp', '문장에 쓰인 문형을 고른다 (끝낸 문법 과)': 'Chọn mẫu câu được dùng (bài ngữ pháp đã học)', '위 문제를 섞는다': 'Trộn các dạng trên', '문법 카드': 'Thẻ ngữ pháp', '소리 자동 재생 켜짐 — 누르면 끔': 'Đang tự phát âm — bấm để tắt', '소리 자동 재생 꺼짐 — 누르면 켬': 'Đã tắt tự phát âm — bấm để bật',
   ' 에서 탈퇴할까요?': ' — rời câu lạc bộ?', '탈퇴하는 중…': 'Đang rời…', '영역별 정답률': 'Tỷ lệ đúng theo kỹ năng',
   '말하기·듣기·읽기·쓰기·암기': 'Nói · Nghe · Đọc · Viết · Nhớ',
   '모든 문제 유형을 합친 값': 'Gộp mọi dạng câu hỏi', '자주 헷갈리는 짝': 'Cặp hay nhầm',
@@ -672,7 +672,7 @@ const UIVI = {
   '천천히': 'Chậm', '알아 둘 것': 'Cần nhớ', '북부에서 같은 소리': 'Miền Bắc đọc giống nhau', '다른 소리 — 구별해야 함': 'Âm khác — cần phân biệt', '뜻을 누르면 그 뜻의 유의어·반의어로 바뀝니다': 'Chạm vào một nghĩa để xem từ đồng nghĩa · trái nghĩa của nghĩa đó', '이 뜻의 유의어·반의어는 아직 자료에 없습니다.': 'Chưa có từ đồng nghĩa · trái nghĩa cho nghĩa này.', '발음 면으로 넘기기': 'Chuyển sang mặt phát âm', '단어 면으로 넘기기': 'Chuyển sang mặt từ vựng',
   '원어민 소리 높낮이': 'Cao độ giọng người bản xứ',
   '녹음': 'Ghi âm', '듣기 속도': 'Tốc độ nghe', '재생 위치': 'Vị trí phát', '멈춤': 'Tạm dừng', '재생': 'Phát', '닫기': 'Đóng',
-  '이 단어과 헷갈리는 짝이 없습니다.': 'Từ này không có từ dễ nhầm.',
+  '이 단어와 헷갈리는 짝이 없습니다.': 'Từ này không có từ dễ nhầm.',
   '유의어': 'Đồng nghĩa', '반의어': 'Trái nghĩa', '뜻이 비슷함': 'Nghĩa gần giống', '뜻이 반대': 'Nghĩa ngược lại', '따라가는 것': 'Hiển thị', '입모양': 'Khẩu hình', '그림': 'Hình',
   /* 탈퇴 · 순위 · 가입 화면 (2026-08-29 대표님 지시) */
   '내 말 (화면에 나올 말)':
@@ -719,7 +719,7 @@ const UIVI = {
     'Khi nói theo đạt cả phát âm và thanh điệu',
   '둘 중 하나만 맞아서는 안 됩니다':
     'Chỉ đúng một trong hai thì chưa được',
-  '자주 틀리던 단어을 하나 외울 때마다':
+  '자주 틀리던 단어를 하나 외울 때마다':
     'Mỗi khi thuộc được một từ hay sai',
   '틀린 것을 고친 순간이 가장 값집니다':
     'Khoảnh khắc sửa được lỗi là quý nhất',
@@ -774,7 +774,7 @@ const pic = (x, cls) => {
    단어·문장·보기 같은 **내용**까지 사전을 타면 안 된다 —
    화면 말이 베트남어일 때 한국어 단어 '이름'이 'Tên' 으로 바뀌어 나왔다.
    한국어를 배우러 온 사람이 한국어 자리에서 베트남어를 보는 것이다.
-   실제로 이렇게 바뀌던 단어이 열다섯 개였다(이름·국적·사람·사진·날씨·하루·
+   실제로 이렇게 바뀌던 단어가 열다섯 개였다(이름·국적·사람·사진·날씨·하루·
    다시·지역·필요·신청·분).
 
    고치는 자리는 여기 하나면 된다. tr() 은 이미 '문자열이 아니면 그대로 돌려준다'.
@@ -812,7 +812,7 @@ const voiceDir = () => S.voice;
    이제 남부 파일이 없으면 기기 목소리로 낸다(성별은 맞춘다). 없는 소리는 내지 않는다. */
 /* ── 재생 위치 하나로 묶기 (대표님 지시 2026-09-24·25: 소리·높낮이·입모양·그림을 한꺼번에) ──
    audio.currentTime 하나를 시계로 삼아, 화면에 떠 있는 '보기'(높낮이 그래프 위 단어, 입모양)들이
-   자기 단어이 지금 재생 중일 때만 그 시각에 맞춰 움직인다. 보기는 PB.views 에 등록하고,
+   자기 단어가 지금 재생 중일 때만 그 시각에 맞춰 움직인다. 보기는 PB.views 에 등록하고,
    화면에서 사라지면(root.isConnected=false) 알아서 빠진다. */
 const PB = { views: new Set(), raf: 0, hold: null, spdSrc: null };
 const REC_VIEWS = new Set();
@@ -1030,8 +1030,8 @@ function toneRow(tones, small) {
 /* ---------- 헷갈리는 짝 ----------
    대표님 제안(2026-09-24): 단어 하나를 볼 때 ① 성조만 다른 단어 ② o·ô·ơ 처럼 글자 모양이 조금 다른
    단어도 같이 본다. 자료는 data/sib.json(옛 짝 파일은 2026-10-13 정리 때 뺐다).
-   뜻은 앱 안 단어과 사전(영어 위키단어·한국어기초사전 겹침 → 눈 검수)에서만 가져온다 — 근거가 없는 짝은 화면에 올리지 않는다(2026-09-26, tools/apply_sib_meanings.py).
-   처음 배울 때 관련 단어을 한꺼번에 외우면 오히려 헷갈린다는 연구(의미 군집)가 많아서, 단어 카드에서는
+   뜻은 앱 안 단어와 사전(영어 위키단어·한국어기초사전 겹침 → 눈 검수)에서만 가져온다 — 근거가 없는 짝은 화면에 올리지 않는다(2026-09-26, tools/apply_sib_meanings.py).
+   처음 배울 때 관련 단어를 한꺼번에 외우면 오히려 헷갈린다는 연구(의미 군집)가 많아서, 단어 카드에서는
    접어 두고 퀴즈에서 틀렸을 때만 펼쳐 보여 준다. */
 let SIB = null, SIBP = null;
 /* 낱말 뜻 찾기 — 여러 자료를 차례로: 앱 낱말(DICT) → 뜻 목록(_senses, 흔한 차례) → 짝 사전(sib.json 한국어 뜻) → 참고 사전(_dict_ko, 검수본) */
@@ -1440,7 +1440,7 @@ function pairPanel(vi, opt) {
   return wrap;
 }
 
-/* 단어을 누르면 **팝업**으로 헷갈리는 짝을 보여 준다 (대표님 지시 2026-09-26) — 단어 면·발음 면 똑같이. */
+/* 단어를 누르면 **팝업**으로 헷갈리는 짝을 보여 준다 (대표님 지시 2026-09-26) — 단어 면·발음 면 똑같이. */
 function pairPopup(vi, info) {
   const inf = info || {};
   const back = el('div', 'modalback');
@@ -1466,7 +1466,7 @@ function pairPopup(vi, info) {
   const close = () => { const w = body.firstChild; if (w) w._seq = false; back.remove(); };
   ok.onclick = close;
   box.append(sub, body, ok);
-  // 팝업이 떠 있는 채로도 오류를 보낼 수 있게 (대표님 지시 2026-09-27) — 짝 단어이 보고에 같이 붙는다
+  // 팝업이 떠 있는 채로도 오류를 보낼 수 있게 (대표님 지시 2026-09-27) — 짝 단어가 보고에 같이 붙는다
   const rp = el('button', 'ghost sm bugsm', '⚑ ' + tr('이 화면 오류 보고'));
   rp.type = 'button'; rp.onclick = () => bugReport({ pair: vi });
   box.append(rp);
@@ -1475,7 +1475,7 @@ function pairPopup(vi, info) {
   document.body.append(back);
   sibLoad().then(() => {
     if (!SIB) { body.append(el('div', 'pnote', tr('불러오지 못했습니다'))); return; }
-    if (!sibFams(vi).length && !sibRel(vi) && !dictRel(vi) && !sibWhole(vi)) { body.append(el('div', 'pnote', tr('이 단어과 헷갈리는 짝이 없습니다.'))); return; }
+    if (!sibFams(vi).length && !sibRel(vi) && !dictRel(vi) && !sibWhole(vi)) { body.append(el('div', 'pnote', tr('이 단어와 헷갈리는 짝이 없습니다.'))); return; }
     body.append(pairPanel(vi, { bare: true, ko: inf.ko, lk, api: a => { panelApi = a; } }));   // 골라진 뜻(처음엔 기본 뜻)의 동의어·반의어만 (2026-09-28)
   });
 }
@@ -1919,7 +1919,7 @@ async function aiListen(text, blobUrl, box) {
       save();
     }
     // 받아쓰기일 때는 **성조 부호를 떼고** 보여준다. AI는 실제로 낸 높낮이가 아니라
-    // '그런 단어이 있으니까'로 부호를 채워 넣는다 — chao 를 평평하게 읽어도 chào 라고 적는다.
+    // '그런 단어가 있으니까'로 부호를 채워 넣는다 — chao 를 평평하게 읽어도 chào 라고 적는다.
     const show = x => esc(pick ? x : stripTone(x));
     if (ok === null) { verdict(box, 0, null, '발음', '가려내기 어렵습니다 — 조금 크게 다시'); return; }
     verdict(box, 0, ok, '발음',
@@ -1968,7 +1968,7 @@ function verdict(box, i, ok, name, sub) {
 /* 따라 말하기 점수 — **발음과 높낮이가 둘 다 O 일 때만** 준다 (사용자 지시).
    전에는 규칙표에 '+5 따라 말하기를 AI가 알아들으면'이라고 적어 두고 실제로는
    한 번도 주지 않았다. 못 받는 점수를 걸어 둔 셈이었다.
-   둘 중 하나만 맞아서는 안 된다 — 글자를 맞게 읽어도 성조가 틀리면 딴 단어이 되고,
+   둘 중 하나만 맞아서는 안 된다 — 글자를 맞게 읽어도 성조가 틀리면 딴 단어가 되고,
    성조가 맞아도 자음·모음이 틀리면 알아듣지 못한다. */
 function sayCredit(box) {
   if (!box) return;
@@ -2014,8 +2014,8 @@ function popup(html) {
 }
 
 /* 원어민 높낮이 곡선 + 내 녹음 결과 자리. 버튼은 밖에 두고 여기는 그림만 맡는다.
-   2026-09-25 #7: 곡선 위에 **단어이 직접** 얹혀서, 소리가 재생되는 동안 높낮이를 따라 위아래로 움직인다
-   (위쪽 단어 표시는 그대로). 재생 중이 아닐 때는 출발점에 서 있다. 단어을 누르면 소리가 난다. */
+   2026-09-25 #7: 곡선 위에 **단어가 직접** 얹혀서, 소리가 재생되는 동안 높낮이를 따라 위아래로 움직인다
+   (위쪽 단어 표시는 그대로). 재생 중이 아닐 때는 출발점에 서 있다. 단어를 누르면 소리가 난다. */
 function pitchStage(text, nat) {
   const NSs = 'http://www.w3.org/2000/svg';
   const W = 300, H = 118, PAD = 12;
@@ -2088,7 +2088,7 @@ function curveArea(text, box) {
   nativeCurve(text).then(nat => {
     if (!nat || !nat.curve) return;
     pre.append(pitchStage(text, nat));
-    pre.append(el('div', 'curvelegend', '<span class="k nat"></span>원어민 소리 높낮이 — 단어이 소리를 따라 움직입니다'));
+    pre.append(el('div', 'curvelegend', '<span class="k nat"></span>원어민 소리 높낮이 — 단어가 소리를 따라 움직입니다'));
   });
   if (box) wrap.append(pre, box); else wrap.append(pre);
   return wrap;
@@ -2408,7 +2408,7 @@ function playBar(text) {
     if (n && n.e > n.s) span = { a: Math.max(0, n.s - .05), b: Math.min(n.total, n.e + .12) };
     paint();
   });
-  const probe = new Audio();                       // 소리 분석이 안 되는 단어은 파일 길이로
+  const probe = new Audio();                       // 소리 분석이 안 되는 단어는 파일 길이로
   probe.preload = 'metadata';
   probe.onloadedmetadata = () => { dur0 = probe.duration || 0; paint(); };
   probe.src = url();
@@ -2734,7 +2734,7 @@ async function showTone(text, blobUrl, box, hostBox) {
   }
 }
 
-/* 이 단어이 내야 할 성조 무리. 한 음절짜리는 데이터에 적힌 성조를 그대로 쓴다
+/* 이 단어가 내야 할 성조 무리. 한 음절짜리는 데이터에 적힌 성조를 그대로 쓴다
    (원어민 녹음을 다시 재는 것보다 정확하다). 여러 음절이면 원어민 녹음으로 견준다. */
 function targetFam(text) {
   const it = findItem(text);
@@ -3119,8 +3119,9 @@ function studyExamScope(scroll) {
     const W = wordsOf(ks), Gs = gramsOf(ks, r.extra);
     nodes.push({ key: 'XW:' + r.n, title: tr('단어 전체'), sub: W.length + tr('단어'), done: wDone(ks), fn: learnW('XW:' + r.n, nm + ' · ' + tr('단어'), W) });
     nodes.push({ key: 'XG:' + r.n, title: tr('문법 전체'), sub: Gs.length + tr('개 문법'), done: false, fn: learnG('XG:' + r.n, nm + ' · ' + tr('문법'), Gs) });
+    const gSeen = new Set();                              // 한 회차 안에서 같은 문법 카드는 처음 나온 과에만 (대표님 2026-10-26 "중복되는 건 하나로 합쳐")
     ks.forEach((k, i) => {
-      const lab = chLabelK(k) + ' · ' + TBCH.ch[k].t, w = wordsOf([k]), g = gramsOf([k], i === ks.length - 1 ? r.extra : []);
+      const lab = chLabelK(k) + ' · ' + TBCH.ch[k].t, w = wordsOf([k]), g = gramsOf([k], i === ks.length - 1 ? r.extra : []).filter(z => !gSeen.has(z) && gSeen.add(z));
       if (w.length) nodes.push({ key: 'XW:' + k, title: tr('단어') + ' · ' + lab, sub: w.length + tr('단어'), done: wDone([k]), fn: learnW('XW:' + k, lab, w) });
       if (g.length) nodes.push({ key: 'XG:' + k, title: tr('문법') + ' · ' + lab, sub: g.length + tr('개 문법'), done: false, fn: learnG('XG:' + k, lab, g) });
     });
@@ -4479,7 +4480,7 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
   /* 첫 화면은 **누르면 바로 그것**이 나와야 한다 (대표님 지시, 2026-08-30).
      '학습'을 누르면 하위 메뉴 없이 곧장 권 목록이 뜬다.
      기본기·문법·문화는 첫 화면에서 뺐다 — 학습(1권)과 문화 단추 안에 이미 있다.
-     대화 108·핵심만도 뺐다: 단어은 학습으로 합쳤고, 갈래가 늘면 어디로 가야 할지 흐려진다. */
+     대화 108·핵심만도 뺐다: 단어는 학습으로 합쳤고, 갈래가 늘면 어디로 가야 할지 흐려진다. */
   /* 첫 화면 차례 (대표님 지시, 2026-08-30):
        학습 – 복습 – 단어장 – 문화 – 순위 – 사용법
      기사는 문화 안으로 넣었다 — 읽는 자리끼리 모은다. */
@@ -4503,9 +4504,9 @@ const MENUS_VI = {          // 한국인이 베트남어를 배운다 (지금까
    회화·GYBM은 아직 시험 콘텐츠가 없어 준비 중이라고 정직하게 말한다 — 단어만 먼저
    업데이트하고 시험 문항은 나중에 만들라는 지시라 여기서 지어내지 않는다. */
 /* 테스트 탭 (대표님 지시 2026-09-27) — 네 문.
-   3-1 오늘 복습: 간격 반복(1·3·7·14·30·60일 — 강성태식 복습 주기와 같은 원리)으로 오늘 때가 된 단어을
+   3-1 오늘 복습: 간격 반복(1·3·7·14·30·60일 — 강성태식 복습 주기와 같은 원리)으로 오늘 때가 된 단어를
        **카드로 쭉 훑고 → 바로 테스트**. 창고는 셋(하루5분·실전·GYBM)이라 섞지 않고 각각 문을 낸다.
-   3-2 배운 단어 전체: 지금까지 배운 모든 단어을 랜덤으로 (20·50·전부). 맞고 틀림은 단어마다 제 창고에 쌓인다.
+   3-2 배운 단어 전체: 지금까지 배운 모든 단어를 랜덤으로 (20·50·전부). 맞고 틀림은 단어마다 제 창고에 쌓인다.
    3-3 선택 복습: 내 단어장(별표)·오답 노트·일차/레슨 골라서.
    3-4 최근 학습 복습: 가장 마지막에 끝낸 세트를 다시 (카드 → 테스트). */
 function testHubEntry(sub) {
@@ -4542,7 +4543,7 @@ function testHubEntry(sub) {
     show('exam', tr('복습'), true);
     return;
   }
-  /* 오늘 복습은 **하나** — 세 창고(하루5분·실전·GYBM)의 오늘 단어을 한 판에 모은다 (대표님 지시 2026-09-27:
+  /* 오늘 복습은 **하나** — 세 창고(하루5분·실전·GYBM)의 오늘 단어를 한 판에 모은다 (대표님 지시 2026-09-27:
      "gybm단어 오늘 복습, 이거는 뭐냐"). 단어마다 제 창고에 채점이 쌓인다(boxOf). */
   const due = dueCount();
   const pool = learnedPool();
@@ -4563,7 +4564,7 @@ function testHubEntry(sub) {
 function testReviewEntry() { testHubEntry('review'); }
 function cardsThenQuiz(words, title, o) {
   const ws = (words || []).slice(0, qN());          // 카드도 문제 수만큼만 — 카드 50장 보고 문제는 20개면 어긋난다 (2026-09-28 밤)
-  if (!ws.length) { popup(tr('복습할 단어이 없습니다')); return; }
+  if (!ws.length) { popup(tr('복습할 단어가 없습니다')); return; }
   flashRun(ws, title, { next: () => startQuiz(ws, null, ws.length, !!(o && o.early), (o && o.opt) || {}) });
 }
 /* 오늘 때가 된 단어 — 세 창고를 다 본다. 단어마다 제 창고 이름(_box)을 단다 */
@@ -5423,7 +5424,7 @@ function drawDayList() {
   b.append(el('p', 'lede', tr('날마다 배우기 — 초급1부터 중급2까지 78일. 하루에 문법 하나, 단어 열 개, 대화 한 편입니다.')));
 
   /* 오늘 다시 꺼낼 단어 — **맨 위에** 둔다.
-     새 날을 하나 더 배우는 것보다 지난 단어을 다시 꺼내는 편이 남는다(d=4.03).
+     새 날을 하나 더 배우는 것보다 지난 단어를 다시 꺼내는 편이 남는다(d=4.03).
      여기 없으면 복습이 저절로 돌아오지 않는다 — 사람이 스스로 옛 날을 찾아
      들어가야 하는데, 아무도 그러지 않는다. */
   const due = kdue();
@@ -5467,7 +5468,7 @@ function dayWordRow(host, ko, vi, prefix, star, w) {
 }
 
 /* ── 한국어 과정 · 하루 확인 문제 ──────────────────────────────────
-   이 과정에는 **꺼내기가 아예 없었다.** 단어을 읽고, 대화를 읽고, 미션을 읽고
+   이 과정에는 **꺼내기가 아예 없었다.** 단어를 읽고, 대화를 읽고, 미션을 읽고
    다음 날로 넘어갈 뿐이었다. 우리가 모아 둔 근거가 한목소리로 말하는 것이
    "다시 읽기는 공부가 아니다"인데, 정작 주 과정이 읽기만 시키고 있었다.
 
@@ -5651,13 +5652,13 @@ const fmtLeft = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s 
 
 /* 답을 골랐는가 / 맞았는가 — 객관식은 번호, 단답형(KIIP)은 써 넣은 글이라 함께 못 센다.
    단답형 채점은 띄어쓰기와 문장부호를 지우고 견준다. 사람이 '근로 계약서'라고 써도
-   '근로계약서'와 같게 본다 — 맞춤법 시험이 아니라 단어을 아는지 보는 것이라서. */
+   '근로계약서'와 같게 본다 — 맞춤법 시험이 아니라 단어를 아는지 보는 것이라서. */
 /* ── 문항 되풀이 창고 ─────────────────────────────────────────────
    틀린 문항은 **은퇴하지 않는다.** 한 번 맞혔다고 빼면 안 된다 —
    '한 번 도달'과 '기억에 남음'은 다른 일이다(인출 연습). 간격을 두고
    **세 번** 맞힐 때까지 다시 낸다. 틀리면 횟수가 뒤로 두 칸 물러난다.
 
-   단어 창고(S.srs)와 따로 두는 까닭: 단어은 뜻 하나를 아는 것이고,
+   단어 창고(S.srs)와 따로 두는 까닭: 단어는 뜻 하나를 아는 것이고,
    문항은 '그 형식으로 물었을 때 답할 수 있는가'라서 잊는 속도가 다르다. */
 const QSTEPS = [0, 1, 3, 7];        // 맞힌 횟수별 다음 출제까지 일수 (3번 맞히면 7일 뒤)
 const QGOAL = 3;                    // 세 번 맞히면 창고에서 쉰다 — 지우지는 않는다
@@ -6048,7 +6049,7 @@ function finishExam(timeUp) {
         im.src = 'img/' + q.options[q.answer];
         c.append(im);
       }
-      // 틀린 단어은 소리로 한 번 더 — 눈으로만 보면 발음이 안 붙는다
+      // 틀린 단어는 소리로 한 번 더 — 눈으로만 보면 발음이 안 붙는다
       if (q.word && q.word.length > 1 && !(q.audio && q.audio.length)) {
         const p = el('button', 'ghost sm', '🔊 ' + esc(q.word));
         p.onclick = () => speakKo(q.word);
@@ -6261,7 +6262,7 @@ function examSight() {
   });
   b.append(tw);
 
-  b.append(el('p', 'note', tr('기억나는 단어이 있으면 적어 주세요 (쉼표로 나눠서, 단어만)')));
+  b.append(el('p', 'note', tr('기억나는 단어가 있으면 적어 주세요 (쉼표로 나눠서, 단어만)')));
   const wi = el('input', 'keyin'); wi.type = 'text'; wi.maxLength = 140;
   wi.placeholder = tr('예: 환승, 계약서, 분리배출');
   b.append(wi);
@@ -6850,7 +6851,7 @@ function renderMenu(id) {
 /* ---------- 홈 ---------- */
 /* 단어 창고 — 옛 days.json 것 + **새 과정(일곱 권)** 것.
    복습·오답노트·문장 속 단어 풀이가 모두 이 창고를 본다.
-   과정 단어이 여기 없으면 복습 카드가 빈칸으로 뜬다(2026-08-30). */
+   과정 단어가 여기 없으면 복습 카드가 빈칸으로 뜬다(2026-08-30). */
 let CWORDS = [];
 const allWords = () => ALL.flatMap(d => d.words || []).concat(CWORDS);
 /* 끝낸 세트의 대화 문장 — 복습에서 단어와 같이 다룬다 */
@@ -6880,7 +6881,7 @@ const findItem = vi => (SBOX === 'ssrs' ? seniorItems().find(w => w.vi === vi) :
    ±3일 흔들기를 섞어 매번 같은 순서로 나오지 않게 한다. */
 /* 복습 창고가 **셋**이다 — 하루 5분 것(S.srs)·실전 단어 것(S.ssrs)·기초단어 것(S.bsrs).
    대표님 지시: "복습은 이 테스트들은 다른거랑 섞이지 않게해주고".
-   한 창고에 담으면 하루 5분 복습에 실전/기초단어 단어이 쏟아져 원래 공부가 묻힌다.
+   한 창고에 담으면 하루 5분 복습에 실전/기초단어 단어가 쏟아져 원래 공부가 묻힌다.
    진도(S.done)도 따로 둔다(S.sdone·S.bdone) — 안 그러면 '오늘 몇 강 했나'가 부풀어 순위까지 어긋난다. */
 let SBOX = 'srs';
 const srsBox = () => (S[SBOX] = S[SBOX] || {});
@@ -7007,7 +7008,7 @@ function roadInList(list, nodes, opt) {
    · 글자 본문 16px 이상·설명 13px 이상, 누르는 곳 44px 이상(Apple HIG · WCAG 2.5.5). 주간 성적·업적·내일 예고는 내 정보로 옮겼다. */
 const PET_NAME = '짜오';
 const PET_STAGES = [
-  { n: 0,   name: '알',       hint: '단어을 배우면 알이 깨어나요' },
+  { n: 0,   name: '알',       hint: '단어를 배우면 알이 깨어나요' },
   { n: 5,   name: '금 간 알',  hint: '조금만 더 — 곧 깨어나요' },
   { n: 20,  name: '아기 앵무', hint: '배운 단어만 말할 수 있어요' },
   { n: 80,  name: '어린 앵무', hint: '문장을 말하기 시작했어요' },
@@ -7024,7 +7025,7 @@ function petLearned() {
 }
 const petCount = () => new Set(['srs', 'ssrs', 'bsrs'].flatMap(k => Object.keys(S[k] || {}).map(v => v.toLowerCase()))).size;
 function petStage(n) { let i = 0; PET_STAGES.forEach((st, k) => { if (n >= st.n) i = k; }); return i; }
-/* 짜오가 할 말 — **배운 단어로만** 된 문장(예문·대화 문장 가운데 모든 단어을 배운 것). 없으면 배운 단어 하나. */
+/* 짜오가 할 말 — **배운 단어로만** 된 문장(예문·대화 문장 가운데 모든 단어를 배운 것). 없으면 배운 단어 하나. */
 const petTok = t => t.toLowerCase().replace(/[.,!?;:…"“”'()]/g, ' ').split(/\s+/).filter(Boolean);
 /* 짜오 말 만들기 — 배운 단어만으로 (대표님 지시 2026-09-27 밤: "배운 단어를 조합해 문장을 만들어도 된다. 시내+버스를 배웠으면 시내버스도").
    차례: ① 배운 단어로만 된 예문·대화 문장(petSay) ② 없으면 배운 단어를 문법 틀에 넣은 짧은 문장 ③ 그것도 안 되면 배운 단어 둘 나열("나 먹다").
@@ -7682,7 +7683,7 @@ function reveal(txt) {
 const EXTRAG = { 'để': '~하도록·두다', 'dạ': '네 (공손)', 'mắc': '비싸다',
                  'ngàn': '천 (1,000)', 'nhất': '가장', 'bàn': '탁자' };
 /* 예문에만 나오는 단어의 뜻 (data/exgloss.json) — này·đang·ở 처럼 과정 단어표에 없는 말들.
-   없으면 예문 단어을 눌렀을 때 「아직 뜻이 없는 단어입니다」가 뜬다 (466종 3,201회였다).
+   없으면 예문 단어를 눌렀을 때 「아직 뜻이 없는 단어입니다」가 뜬다 (466종 3,201회였다).
    대표님 지시(2026-08-30): 예문 단어도 소리·발음·뜻이 다 나와야 한다. */
 let EXG = {};
 fetch('data/exgloss.json').then(r => r.json()).then(j => { EXG = j; GVOC = null; GKR = null; }).catch(() => {});
@@ -7746,8 +7747,8 @@ function glossOf(vi) {
   return out.filter(x => x.m);
 }
 /* 뜻이 없는 단어까지 **하나도 안 빼고** 돌려준다.
-   glossOf 는 뜻을 못 찾은 단어을 버리는데(.filter), 그러면 문장 밑 뜻줄에서
-   단어이 통째로 사라져 "왜 이건 없지?" 하게 된다. 문장을 누를 수 있게 만들 때는
+   glossOf 는 뜻을 못 찾은 단어를 버리는데(.filter), 그러면 문장 밑 뜻줄에서
+   단어가 통째로 사라져 "왜 이건 없지?" 하게 된다. 문장을 누를 수 있게 만들 때는
    빠짐없이 다 있어야 하므로 이쪽을 쓴다. */
 /* 한글 발음 표기를 고르는 한 자리 — 자료마다 이름이 다르다
    (새 과정은 kr_read, 옛 days.json은 kr). 남부(krs/kr_south)는 완전히 없앴다
@@ -7759,7 +7760,7 @@ function krShow(w) {
   return n || '';
 }
 
-/* 단어 → 한글 소리(kr_read) 찾기표. 예문 안의 단어을 눌렀을 때
+/* 단어 → 한글 소리(kr_read) 찾기표. 예문 안의 단어를 눌렀을 때
    뜻만이 아니라 **어떻게 읽는지**도 같이 보여 주려고 만든다 (대표님 지시, 2026-08-30). */
 let GKR = null, GKRR = null;
 function krOf(w) {
@@ -7860,10 +7861,10 @@ function nameRuns(out) {
 
 /* 문장을 단어 단위로 눌러볼 수 있게 만든다.
    예전에는 문장 **밑에** 단어 뜻을 줄줄이 깔았다. 두 가지가 문제였다 —
-   ① 사전에 없는 단어은 뜻줄에서 아예 빠져 학습자가 "이 단어은 왜 없지?" 하게 된다
+   ① 사전에 없는 단어는 뜻줄에서 아예 빠져 학습자가 "이 단어는 왜 없지?" 하게 된다
    ② 뜻줄이 길어 정작 문장 자체가 화면에서 밀려난다.
-   이제 문장 속 단어을 직접 누르면 그 자리에서 소리가 나고 뜻이 뜬다.
-   빠지는 단어이 없고(모든 단어이 눌린다), 화면도 문장 하나로 짧아진다. */
+   이제 문장 속 단어를 직접 누르면 그 자리에서 소리가 나고 뜻이 뜬다.
+   빠지는 단어가 없고(모든 단어가 눌린다), 화면도 문장 하나로 짧아진다. */
 /* 한자 뿌리 알약 — "翁 · 옹" 밑에 글자마다 훈·음("늙은이 옹"). 훈은 data/_hanja_hun.json(영어 위키낱말사전 {{ko-hanja|훈|음}}, tools/fetch_hanja_hun.py).
    여러 훈음이 있는 글자는 우리 음(뒤의 한글)과 맞는 것을 고른다. 없으면 훈 줄을 안 붙인다 (대표님 지시 2026-09-27 밤) */
 /* 단어의 뜻 여러 개 — 카드 뜻 밑에 작은 글로 (대표님 지시 2026-09-27 밤: 최소 3개, 흔한 순서). data/_senses.json 은 클로드가 검수한 것만 */
@@ -8060,6 +8061,19 @@ function hanjaPill(h, o) {
   if (HUN) draw(); else hunLoad().then(draw);
   return sp;
 }
+/* 문법 설명을 한 문장 한 줄로 (대표님 2026-10-26 "가독성 좋게") — 한국어 문장 끝(다. 요. 니다.) 뒤에서만 끊는다. 괄호 안(예문의 마침표)은 안 끊는다. 글은 원래 HTML(<b> 강조) 그대로 */
+function gLines(html) {
+  const s = String(html || ''), out = []; let depth = 0, cur = '';
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i]; cur += ch;
+    if (ch === '(') depth++; else if (ch === ')') depth = Math.max(0, depth - 1);
+    if (ch !== '.' || depth) continue;
+    const prevKo = /[다요]$/.test(cur.slice(0, -1).replace(/<[^>]*>$/, '')), rest = s.slice(i + 1), nextKo = /^\s+(<[^>]+>)*[가-힣'‘“(]/.test(rest);
+    if ((prevKo && (/^\s/.test(rest) || !rest)) || nextKo) { out.push(cur.trim()); cur = ''; }   // 한국어 문장 끝, 또는 마침표 뒤에 한국어 문장이 시작될 때 (베트남어 예문 안의 마침표는 안 끊음)
+  }
+  if (cur.trim()) out.push(cur.trim());
+  return out.length > 1 ? out.map(t => '<p>' + t + '</p>').join('') : s;
+}
 function tapLine(vi, cls, o) {
   const opt = o || {};
   const wrap = el('div', 'tapwrap');
@@ -8080,8 +8094,8 @@ function tapLine(vi, cls, o) {
       if (on) on.classList.remove('on');
       on = w; w.classList.add('on');
       const bare = t.w.replace(/[,.!?;:"“”‘’'()…]/g, '').trim();   // 따옴표에 싸인 단어('"tôi"')도 우리 소리를 찾는다
-      /* 단어을 누르면 **헷갈리는 짝 팝업**이 뜬다 (대표님 지시 2026-09-27: 단어 카드의 단어과 똑같이).
-         소리는 팝업 머리의 ▶ 로 듣는다(고른 목소리로만 — 예전 주석: 문장 첫 단어은 대문자로 시작하지만
+      /* 단어를 누르면 **헷갈리는 짝 팝업**이 뜬다 (대표님 지시 2026-09-27: 단어 카드의 단어와 똑같이).
+         소리는 팝업 머리의 ▶ 로 듣는다(고른 목소리로만 — 예전 주석: 문장 첫 단어는 대문자로 시작하지만
          단어 녹음은 소문자 표제어라 대소문자 구분 없이 찾는다, 2026-09-09). */
       pairPopup(bare, { kr: krOf(bare), ko: t.m });
       info.textContent = '';
@@ -8110,7 +8124,7 @@ function tapLine(vi, cls, o) {
 /* 단어 뜻 줄 — 대화 화면의 gloss 와 같은 차림새 (아직 쓰는 곳이 있어 남겨 둔다) */
 
 /* ---------- 나만의 단어장 ----------
-   ① 별표 — 배우다가 "이건 따로 챙기자" 싶은 단어을 그 자리에서 담는다.
+   ① 별표 — 배우다가 "이건 따로 챙기자" 싶은 단어를 그 자리에서 담는다.
    ② 오답노트 — 퀴즈에서 자주 틀린 단어(S.stats.miss)이 저절로 모인다.
    두 과정(베트남어·한국어)이 한 단어장을 같이 쓴다. 열쇠는 배우는 말 쪽 글자다. */
 function starOf() { return S.star || (S.star = {}); }
@@ -8358,7 +8372,7 @@ function drawCourse() {
         () => { dive(drawCourse); renderDays(); }, dn >= ds.length && ds.length > 0);
   }
   /* 직무는 **한 권**이다 (대표님 결정, 2026-08-30) — 꼭 필요한 기본 999개만.
-     심화 단어은 앱에 넣지 않는다. 현장에서 배우면 되는 말이다. */
+     심화 단어는 앱에 넣지 않는다. 현장에서 배우면 되는 말이다. */
   const jv0 = jobVol(0);
   if (jv0) {
     const td = jv0.tracks.filter((t, ti) =>
@@ -8367,7 +8381,7 @@ function drawCourse() {
         () => { dive(drawCourse); drawJob(0); }, td >= jv0.tracks.length);
   }
   /* 문화는 **첫 화면에 따로** 뒀다 (대표님 지시, 2026-08-30) —
-     단어을 외우는 자리가 아니라 읽는 자리라 성격이 다르다. 여기서는 뺀다. */
+     단어를 외우는 자리가 아니라 읽는 자리라 성격이 다르다. 여기서는 뺀다. */
   show('course', '학습', true);
 }
 
@@ -8393,7 +8407,7 @@ function drawCh(vi, ci) {
   const c = lifeVols()[vi].chapters[ci];
   const list = $('#dayList'); list.textContent = '';
   /* 레슨 줄은 **길(로드맵)** 로 그린다 (대표님 지시 2026-09-25: GYBM 과 같은 모양).
-     단어을 늘어놓지는 않는다 (2026-08-30) — 그것이 주제인 줄 알게 된다.
+     단어를 늘어놓지는 않는다 (2026-08-30) — 그것이 주제인 줄 알게 된다.
      대신 **꼭지 제목**이 있으면 그것을 쓴다 (2026-09-02). 진짜 주제이기 때문이다. */
   const nodes = c.lessons.map((l, li) => {
     const k = ckey(vi, ci, li);
@@ -9000,12 +9014,12 @@ function dictBuild() {
     // '예문·사전·참고 사전'은 수업 파트가 없을 때만 — '선배·사전'처럼 군더더기가 붙지 않게
     const part = !['예문', '사전', '참고 사전'].includes(src);
     if (src && (part || !(o.src && o.src.length))) { o.src = o.src || []; if (!o.src.includes(src) && o.src.length < 2) o.src.push(src); }
-    /* 여러 자료의 뜻을 합칠 때 겹치는 단어은 다시 안 붙인다 — "누나·언니 / 누나·언니뻘 여자 / 언니" 처럼 길어지지 않게. 세 갈래까지만. */
+    /* 여러 자료의 뜻을 합칠 때 겹치는 단어는 다시 안 붙인다 — "누나·언니 / 누나·언니뻘 여자 / 언니" 처럼 길어지지 않게. 세 갈래까지만. */
     /* 뜻은 **구절** 단위로 합친다 (2026-09-29): 앞서는 낱말 단위라 '요리하다 / 요리하다, 밥을 짓다 / 요리하다·요리·밥을 짓다' 처럼 같은 뜻이 세 번 붙었다.
        새 자료의 구절 중 이미 있는 구절(또는 그것을 품은 구절)과 겹치지 않는 것만 ' · ' 로 잇는다. 여섯 구절까지. */
     if (w) KEEP.forEach(f => { if (o[f] === undefined && w[f] !== undefined) o[f] = w[f]; });
   };
-  /* 앱에 있는 단어은 **전부** (대표님 지시 2026-09-27: "최소한 우리 어플에 있는 모든 단어는 들어가야 함") */
+  /* 앱에 있는 단어는 **전부** (대표님 지시 2026-09-27: "최소한 우리 어플에 있는 모든 단어는 들어가야 함") */
   ALL.forEach(d => (d.words || []).forEach(w => put(w.vi, w.ko, w, false, /^P/.test(String(d.day)) ? '기본기' : '일상')));   // 기본기·일상
   CWORDS.forEach(w => put(w.vi, w.ko, w, false, '직무'));                                                              // 직무(order.json)
   const GSRC = { main: '교재', c22: '22기' };
@@ -9052,7 +9066,7 @@ async function dictReady() {
   dvarApply();
   DICT = null;
 }
-/* 사전에서 단어을 누르면 **단어 카드와 완전히 같은 화면**으로 연다 (대표님 지시 2026-09-27) —
+/* 사전에서 단어를 누르면 **단어 카드와 완전히 같은 화면**으로 연다 (대표님 지시 2026-09-27) —
    단어/발음 면·헷갈리는 짝·듣기·말하기·입모양·높낮이 전부. 학습 진도와는 상관없다(L.dict). */
 function openWordCard(x, back, crumb) {
   const w = Object.assign({}, x);
@@ -9348,7 +9362,7 @@ function dictEntry(q0) {
       }
       /* 발음과 딱 맞는 낱말이 있고, 뜻으로는 그 말 그대로인 낱말이 없으면(깜언·씬짜오) 발음 칸을 위로 */
       const pronFirst = pron.length && dictKrKeys(pron[0]).includes(qp) && !k2v.length && !mean.some(x => phrs(x.ko).includes(qk));
-      const S1 = [tr('뜻으로 찾은 낱말'), mean], S2 = [tr('발음으로 찾은 낱말'), pron];
+      const S1 = [tr('뜻으로 찾은 단어'), mean], S2 = [tr('발음으로 찾은 단어'), pron];
       secs.push(...(pronFirst ? [S2, S1] : [S1, S2]));
       if (!num && qp.length >= 2) secs.push([tr('문장'), dictSentsKo(qk)]);   // 단어 뒤에 문장 — 한국어 뜻에 그 말이 든 문장 (2026-10-02)
     } else {
@@ -9389,8 +9403,8 @@ function dictEntry(q0) {
         tabs.append(t);
       });
       out.append(tabs);
-      if (DTAB === 'en') secs.push([tr('영어 뜻으로 찾은 낱말'), en], [tr('문장'), enS]);
-      else secs.push([tr('낱말별'), parts], [tr('베트남어 낱말'), vi], [tr('문장'), viS]);
+      if (DTAB === 'en') secs.push([tr('영어 뜻'), en], [tr('문장'), enS]);
+      else secs.push([tr('베트남 단어'), [...parts, ...vi.filter(x => !parts.includes(x))]], [tr('문장'), viS]);   // '낱말별'·'베트남어 낱말' 두 칸을 하나로, 이름은 단추와 같게 (대표님 2026-10-27 "최대한 통일하라고 했잖아")
     }
     const live = secs.filter(s2 => s2[1].length);
     if (!live.length) { out.append(el('p', 'note', tr('찾는 말이 없습니다'))); return; }
@@ -9404,7 +9418,7 @@ function dictEntry(q0) {
         out.append(more);
       }
     });
-    out.append(el('p', 'dicthint', tr('단어을 누르면 단어 카드가 열립니다')));
+    out.append(el('p', 'dicthint', tr('단어를 누르면 단어 카드가 열립니다')));
     // 참고 사전 출처 문구는 뺐다 (대표님 2026-10-01). 위키낱말사전·한국어기초사전 출처(CC BY-SA 조건)는 '내 정보'의 자료 출처에 둔다
   };
   let tm = null;
@@ -9465,7 +9479,7 @@ function gybmBuild(cb) {
 }
 const gybmKey = (srcKey, i) => 'B:' + srcKey + i;
 /* GYBM 단어 전체를 한 배열로 — 복습 화면(findItem)과 객관식 오답 보기(buildQuestions)가
-   예전엔 BASICWORDS(선배 원자료)만 봤는데, 이제 GYBM 단어은 메인교재·서브교재·
+   예전엔 BASICWORDS(선배 원자료)만 봤는데, 이제 GYBM 단어는 메인교재·서브교재·
    수업자료에서 온 것도 많아 BASICWORDS에 없을 수 있다. 그래서 GYBM 전체를 대신 쓴다. */
 let GYBM_ALL = null;
 function gybmAllWords() {
@@ -9557,7 +9571,7 @@ function drawGybmLessons(si) {
   b.append(box);
   show('sub', src.label, true);
 }
-/* 단어 찾기 — 레슨 순서로 훑는 것 말고, 특정 단어을 바로 찾고 싶을 때 쓴다. */
+/* 단어 찾기 — 레슨 순서로 훑는 것 말고, 특정 단어를 바로 찾고 싶을 때 쓴다. */
 function gybmSearch() {
   SBOX = 'bsrs';
   const b = $('#subBody'); b.textContent = '';
@@ -9614,7 +9628,7 @@ function wbRow(vi, ko, meta) {
   return r;
 }
 
-/* 지금까지 배운 단어을 모두 모은다 — 하루 5분 창고(S.srs)와 직무 창고(S.ssrs).
+/* 지금까지 배운 단어를 모두 모은다 — 하루 5분 창고(S.srs)와 직무 창고(S.ssrs).
    대표님 지시 (2026-09-03): "지금까지 학습한 모든 단어들을 리스트업한 단어장과
    그 대상으로도 복습할 수 있도록." */
 function learnedAll() {
@@ -10205,7 +10219,7 @@ function drawCard() {
     c.append(el('div', 'ko', esc(x.ko)));   // ko에 발음이 이미 있어 따로 안 겹쳐 쓴다
     /* **글자 소리 그 자체**를 들려준다 (대표님 지시 2026-09-27: "ba 듣기 대신 진짜 그 소리").
        모음은 그 모음 하나를, 자음은 베트남 초등학교가 자음을 읽는 방식(bờ·cờ·dờ… — 자음 뒤에 'ơ'를 붙여
-       첫소리만 들리게)으로 읽은 소리(x.snd)를 튼다. 예시 단어은 그 뒤 작은 단추로 남긴다. */
+       첫소리만 들리게)으로 읽은 소리(x.snd)를 튼다. 예시 단어는 그 뒤 작은 단추로 남긴다. */
     const row = el('div', 'sound');
     const snd = x.snd || x.vi;
     const a = el('button', 'primary', '🔊 ' + tr('소리 듣기'));
@@ -10292,7 +10306,11 @@ function drawCard() {
   }
 
   if (it.k === 'gram') {
-    c.append(el('div', 'gramt', esc(x.t)));
+    /* 차례 (대표님 2026-10-26 "문법 설명하는 것 제일 위에. 가독성 좋게 해 — 모두 다"): 제목(이름 · 뜻 두 줄) → 설명(한 문장 한 줄) → 짜임 → 단어 → 자세히 → 예문 */
+    { const tp = String(x.t || '').split(' — '), tt = el('div', 'gramt', esc(tp[0]));
+      if (tp.length > 1) tt.append(el('small', 'gramtsub', esc(tp.slice(1).join(' — '))));
+      c.append(tt); }
+    c.append(el('div', 'rulenote gramexp', gLines(x.b)));
     c.append(el('div', 'gramk', esc(x.k)));
     /* 짜임에 늘어놓은 단어의 **뜻을 함께** 보여 준다 (대표님 지적, 2026-08-30):
        "모르는 단어들을 나열하면서 사용하라고 하면 되냐?" — 맞는 말이었다.
@@ -10310,13 +10328,12 @@ function drawCard() {
       });
       c.append(kb);
     }
-    c.append(el('div', 'rulenote', x.b));
     if (x.d) {                                   // 자세히 — 쓰임·자리·비교·주의 (대표님 2026-10-12 "어디에 놓는지, 비슷한 말과 비교까지 자세하게 — 모든 문법")
       const dd = el('div', 'gramd');
-      if (x.d.use) dd.append(el('div', 'gdrow', '<b>' + esc(tr('쓰임')) + '</b><span>' + x.d.use + '</span>'));
-      if (x.d.pos) dd.append(el('div', 'gdrow', '<b>' + esc(tr('자리')) + '</b><span>' + x.d.pos + '</span>'));
-      if (x.d.cmp && x.d.cmp.length) dd.append(el('div', 'gdrow', '<b>' + esc(tr('비교')) + '</b><div>' + x.d.cmp.map(([w, m]) => '<p class="gdc"><i class="gdw">' + esc(w) + '</i> ' + m + '</p>').join('') + '</div>'));
-      if (x.d.warn) dd.append(el('div', 'gdrow gdwarn', '<b>' + esc(tr('주의')) + '</b><span>' + x.d.warn + '</span>'));
+      if (x.d.use) dd.append(el('div', 'gdrow', '<b>' + esc(tr('쓰임')) + '</b><div>' + gLines(x.d.use) + '</div>'));
+      if (x.d.pos) dd.append(el('div', 'gdrow', '<b>' + esc(tr('자리')) + '</b><div>' + gLines(x.d.pos) + '</div>'));
+      if (x.d.cmp && x.d.cmp.length) dd.append(el('div', 'gdrow', '<b>' + esc(tr('비교')) + '</b><div>' + x.d.cmp.map(([w, m]) => '<div class="gdc"><i class="gdw">' + esc(w) + '</i>' + gLines(m) + '</div>').join('') + '</div>'));
+      if (x.d.warn) dd.append(el('div', 'gdrow gdwarn', '<b>' + esc(tr('주의')) + '</b><div>' + gLines(x.d.warn) + '</div>'));
       c.append(dd);
     }
     if (x.tip) c.append(el('div', 'gramtip', '💡 ' + esc(x.tip)));
@@ -10351,7 +10368,7 @@ function drawCard() {
     }
     c.append(row);
     c.append(el('div', 'ko', esc(x.ko)));
-    c.append(tapLine(x.vi));                 // 단어을 누르면 소리 + 뜻
+    c.append(tapLine(x.vi));                 // 단어를 누르면 소리 + 뜻
     c.append(el('div', 'rulenote', esc(x.note)));
     // R4(남부 소리 비교 수업)를 없애면서 이 북부/남부 맞대 듣기 버튼도 같이 지웠다.
     c.append(curveArea(x.vi, rbox));
@@ -10359,9 +10376,9 @@ function drawCard() {
 
   if (it.k === 'word') {
     /* 단어 하나에 **두 면** — 단어 면(그림·단어·발음·뜻·예문·높낮이 그래프)과
-       발음 면(입모양·단어이 그래프 위를 따라 움직이는 높낮이·재생 막대). 단추 하나로 넘긴다
+       발음 면(입모양·단어가 그래프 위를 따라 움직이는 높낮이·재생 막대). 단추 하나로 넘긴다
        (대표님 지시, 2026-09-26). 카드를 열 때는 늘 **단어 면**에서 시작한다.
-       단어을 누르면 어느 면에서든 헷갈리는 짝이 팝업으로 뜬다. 단어 뜻 밑에 [듣기][말하기]. */
+       단어를 누르면 어느 면에서든 헷갈리는 짝이 팝업으로 뜬다. 단어 뜻 밑에 [듣기][말하기]. */
     const cf = el('div', 'wfcard');           // 단어 면
     const pf = el('div', 'wfpron');           // 발음 면
     const tg = $('#face');                    // 머리띠 가운데 [단어|발음] (대표님 지시 2026-09-27: 맨 위로 옮김 — 남/여 · 단어/발음 · 내 정보)
@@ -10423,14 +10440,14 @@ function drawCard() {
     }
     // 선배 표시(⭐)는 완전히 없앴다 (대표님 지시, 2026-09-09).
     const kob = el('div', 'ko', esc(x.ko));
-    /* 단어장(교재 맨 뒤 Bảng từ)에 실린 단어은 '핵심' 표시 — 그 밖의 단어은 그냥 둔다
+    /* 단어장(교재 맨 뒤 Bảng từ)에 실린 단어는 '핵심' 표시 — 그 밖의 단어는 그냥 둔다
        (대표님 지시 2026-09-25 #13). 데이터는 gybm.json 의 gl:1 (단어장 표시). */
     if (isCore(x)) kob.prepend(el('span', 'corepill', tr('핵심')));
     cf.append(kob);
     const boxC = el('div', 'cmpbox');         // 말하기(녹음) 결과 — 뜻 바로 아래 [듣기][말하기] 밑에 (대표님 지시 2026-09-27)
     cf.append(wordControls(x.vi, boxC), boxC);
     /* 일터에서 뜻이 달라지는 단어 — 직무 권에 또 두지 않고 여기에 덧붙인다
-       (대표님 지적, 2026-08-30: 같은 단어을 두 번 외우게 하지 않는다). */
+       (대표님 지적, 2026-08-30: 같은 단어를 두 번 외우게 하지 않는다). */
     if (x.work && x.work.length)
       cf.append(el('div', 'workuse', '🏭 ' + tr('일터에서는') + ' ' +
                   x.work.map(t2 => esc(t2)).join(' · ')));
@@ -10457,10 +10474,10 @@ function drawCard() {
     if (so) cf.append(southLine(so));                       // 남부 말 · 북부에서는 ○○ (2026-09-29)
     else if (x.south) cf.append(el('div', 'south', '남부에서는 ' + esc(x.south)));
     /* 예문 — 통째로 누르던 단추를 **단어마다 누르는 줄**로 바꿨다 (대표님 지시, 2026-08-30).
-       단어을 누르면 그 단어만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
+       단어를 누르면 그 단어만 소리가 나고, 한글 소리와 뜻이 아래 줄에 뜬다.
        문장 전체를 듣는 길은 오른쪽 작은 단추로 남겨 둔다. */
     /* 새 짜임에서는 예문이 **단어 안에** 들어 있다(order.json 의 낱말). 없으면 옛 방식대로
-       그날 대화에서 그 단어이 든 문장을 찾아 쓴다. */
+       그날 대화에서 그 단어가 든 문장을 찾아 쓴다. */
     const exm = x.ex || exampleFor(L.day, x);
     WARM = exm && !L.dict ? exm.vi : null;                  // 낱말 소리가 끝나면 이 예문을 미리 물려 둔다 (2026-10-08 밤)
     if (exm && !L.dict) {                                   // 수업 카드: 그 낱말의 예문 그대로
@@ -10517,8 +10534,8 @@ function drawCard() {
         EXH.orig = [...host.childNodes];
       });
     }
-    // 카드 안의 '헷갈리는 짝 ▾' 줄은 뺐다 — 단어을 누르면 같은 것이 팝업으로 뜬다 (대표님 지시 2026-09-27 저녁)
-    cf.append(pitchGraph(x.vi, { img: x.img }));   // 하나뿐인 높낮이 그래프 — 단어이 따라가고, 말하면 내 곡선이 겹친다
+    // 카드 안의 '헷갈리는 짝 ▾' 줄은 뺐다 — 단어를 누르면 같은 것이 팝업으로 뜬다 (대표님 지시 2026-09-27 저녁)
+    cf.append(pitchGraph(x.vi, { img: x.img }));   // 하나뿐인 높낮이 그래프 — 단어가 따라가고, 말하면 내 곡선이 겹친다
     /* 큰 사전 바로가기 — 네이버 베트남어사전을 새 창으로(자료를 가져오지 않고 그 사이트를 여는 것이라 무료·저작권 문제 없음, 2026-10-01).
        자리: 카드 맨 아래 그래프 밑 (대표님 2026-10-01 밤 "그래프 밑, 최하단으로"). 구글 번역 단추는 뺐다("너무 버퍼링 걸린다") */
     if (L.dict) {
@@ -10534,7 +10551,7 @@ function drawCard() {
        입모양·그래프는 폭을 꽉 채운다(big). */
     pf.append(playBar(x.vi));                  // 재생 막대 (2026-09-26 · 10-07 ▶/⏸)
     pf.append(mouthPanel(x.vi, { word: true, kr: krShow(x) }));   // 입모양 2D + 철자 칠해 가기
-    pf.append(pitchGraph(x.vi, { img: x.img, big: true })); // 단어이 소리를 따라 움직이는 하나뿐인 높낮이 그래프 (2026-09-25 #7 · 09-27 합침)
+    pf.append(pitchGraph(x.vi, { img: x.img, big: true })); // 단어가 소리를 따라 움직이는 하나뿐인 높낮이 그래프 (2026-09-25 #7 · 09-27 합침)
 
     c.append(cf, pf);
     setFace(L.keepFace || 'card');           // 목소리를 바꿔 다시 그릴 때만 보던 면을 지킨다
@@ -10574,7 +10591,7 @@ function drawCard() {
       row.append(lrow);
       row.append(reveal(krShow(l)));
       row.append(el('div', 'lko', esc(l.ko)));
-      // 단어 뜻줄은 없앴다 — 위 문장의 단어을 직접 누르면 소리와 뜻이 그 자리에 뜬다.
+      // 단어 뜻줄은 없앴다 — 위 문장의 단어를 직접 누르면 소리와 뜻이 그 자리에 뜬다.
       row.append(speakRow(l.vi));
       lineEls.push(row);
       c.append(row);
@@ -10985,7 +11002,7 @@ const SKILLS = [                                           // 말하기 갈래�
    전에는 사다리 0단(처음 만난 단어)에서 '듣고 고르기'와 '읽고 고르기' 둘뿐이었다.
    그래서 실전 단어처럼 다 새 단어인 곳에서는 **말하기·쓰기가 아예 안 나왔다.**
    이제 0단에도 말하기·타이핑을 섞는다. 다만 처음에는 알아보기(듣기·읽기) 쪽이 두텁다 —
-   한 번도 못 본 단어을 곧바로 쓰라고 하면 틀리는 것 말고 배우는 게 없다.
+   한 번도 못 본 단어를 곧바로 쓰라고 하면 틀리는 것 말고 배우는 게 없다.
    손글씨는 1단부터 — 글자 모양을 한 번은 본 뒤라야 손이 따라간다. */
 /* 짝 맞추기와 문장 퍼즐을 넣었다 (대표님 전달 2026-09-03 — 듀오링고를 써 본 분들 의견:
    "좌측 한글 뜻, 우측 베트남어를 다섯씩 놓고 짝 짓는 퀴즈. + 문장을 퍼즐 맞추듯이").
@@ -11037,7 +11054,7 @@ function buildQuestions(words, forced) {
     let src = w.sent ? spool : pool;
     if (src.length < 4) src = [...src, ...(w.sent ? pool : spool)];             // 모자라면 채운다
     const seen = new Set([w.vi]);
-    /* 뜻이 같은 단어은 오답이 될 수 없다 — 그건 틀린 보기가 아니라 **또 하나의 정답**이다.
+    /* 뜻이 같은 단어는 오답이 될 수 없다 — 그건 틀린 보기가 아니라 **또 하나의 정답**이다.
        실제로 Day 16 의 đau 와 ốm 이 둘 다 '아프다'였고, 둘이 한 문제에 나오면
        어느 쪽을 골라도 맞는 문항이 됐다(1,000문항을 만들어 세어 보니 판마다 0~2건).
        뜻풀이 자체도 갈라 적었지만(days.json), 앞으로 또 겹칠 수 있으니 여기서도 막는다.
@@ -11072,7 +11089,7 @@ function koClash(a, b) {
 }
 /* 단어장에서 바로 복습 (대표님 지시 2026-09-03: "그 대상으로도 복습할 수 있도록").
    단어 글자만 갖고 있으므로 **뜻·예문이 붙은 원래 단어**을 찾아 문제로 만든다.
-   섞어서 스무 개씩 낸다 — 늘 앞에서 스무 개면 뒤쪽 단어은 영영 안 나온다. */
+   섞어서 스무 개씩 낸다 — 늘 앞에서 스무 개면 뒤쪽 단어는 영영 안 나온다. */
 function startWordbookQuiz(viList, name) {
   const all = allWords();
   const sen = typeof seniorItems === 'function' ? seniorItems() : [];
@@ -11086,7 +11103,7 @@ function startWordbookQuiz(viList, name) {
     if (!w) { w = gy.find(x => x.vi === vi); box = 'bsrs'; }
     if (w) { seen[vi] = 1; src.push(w); boxOf[vi] = box; }
   });
-  if (!src.length) { popup('복습할 단어을 못 찾았습니다.'); return; }
+  if (!src.length) { popup('복습할 단어를 못 찾았습니다.'); return; }
   src.sort(() => Math.random() - .5);
   startQuiz(src, null, qN(), false, { boxOf: vi => boxOf[vi] || 'srs' });
   show('quiz', name || '단어장 복습', true);
@@ -11281,8 +11298,8 @@ function freshMenu(kind) {
 
 /* 기사 복습 (대표님 지시, 2026-08-30): "복습에 기사 복습만 따로 만들어주고
    (동일하게 읽기 듣기 쓰기 말하기 모두 가능하도록)".
-   기사 단어은 간격 반복 창고에 넣지 않는다 — 스치는 자리라서다.
-   그래서 **여기서만** 따로 모아 푼다. 일주일치 기사 단어이 대상이다. */
+   기사 단어는 간격 반복 창고에 넣지 않는다 — 스치는 자리라서다.
+   그래서 **여기서만** 따로 모아 푼다. 일주일치 기사 단어가 대상이다. */
 function newsWords() {
   return (NEWSD || []).flatMap(d => (d.words || []).map(w => ({ ...w, news: 1 })));
 }
@@ -11461,12 +11478,12 @@ function drawQuiz() {
   if (q.mode === 'say' || q.mode === 'say_ko' || q.mode === 'shadow' || q.mode === 'say_pic') return drawSay(body, q);
   if (q.mode === 'type' || q.mode === 'dictation' || q.mode === 'write_ko') { drawTypeQ(body, q); if (Q.daily) peekDaily(body, q); return; }   // 단어 시험 [답 보기] (2026-10-09)
   if (q.mode === 'pic_tf' || q.mode === 'pic4' || q.mode === 'cloze' || q.mode === 'gcloze' || q.mode === 'tf' || q.mode === 'err' || q.mode === 'gpat') return drawExamKind(body, q);
-  if (q.mode === 'fx') { drawFixed(body, q); peekBtn(body, q); examPrevMark(body, q); peekedLock(body, q); return; }   // 1차 시험지 그대로 (2026-09-30) · [답 보기] (2026-10-08)
+  if (q.mode === 'fx') { drawFixed(body, q); if (!Q.retry) peekBtn(body, q); examPrevMark(body, q); peekedLock(body, q); return; }   // 1차 시험지 그대로 (2026-09-30) · [답 보기] (2026-10-08)
   if (q.mode === 'hand') return drawHandQ(body, q);
   if (q.mode === 'dict') return drawDict(body, q);
   if (q.mode === 'match') return drawMatch(body, q);
   if (q.mode === 'tone') return drawToneQ(body, q);
-  if (q.mode === 'puzzle' || q.mode === 'puzzle_ko' || q.mode === 'puzzle_vi') { drawPuzzle(body, q); if (Q.fixed) { peekBtn(body, q); examPrevMark(body, q); peekedLock(body, q); } else if (Q.daily) peekDaily(body, q); return; }
+  if (q.mode === 'puzzle' || q.mode === 'puzzle_ko' || q.mode === 'puzzle_vi') { drawPuzzle(body, q); if (Q.fixed) { if (!Q.retry) peekBtn(body, q); examPrevMark(body, q); peekedLock(body, q); } else if (Q.daily) peekDaily(body, q); return; }
 
   /* 소리를 듣는 자리에는 **말하는 길**도 같이 둔다. 듣기만 하면 입이 안 열린다.
      시험 흐름을 흐트러뜨리지 않게, 누를 사람만 누르는 작은 마이크로 둔다.
@@ -11545,9 +11562,9 @@ function nextBtn(box, fn) {
 
 /* ── 짝 맞추기 ──
    왼쪽에 뜻 다섯, 오른쪽에 베트남어 다섯. 하나 고르고 짝을 누르면 맞춰진다.
-   다섯을 다 맞춰야 넘어간다. 한 문제로 다섯 단어을 만지니 복습이 빨리 돈다. */
+   다섯을 다 맞춰야 넘어간다. 한 문제로 다섯 단어를 만지니 복습이 빨리 돈다. */
 function drawMatch(body, q) {
-  // 같은 판의 다른 단어을 짝으로 쓴다 — 같은 세트라 진짜로 헷갈린다
+  // 같은 판의 다른 단어를 짝으로 쓴다 — 같은 세트라 진짜로 헷갈린다
   /* 짝은 **판 전체에서 고르게 섞어** 고른다 (대표님 2026-10-18 "짝짓는 문제는 항상 나오는 단어만 나오는 것 같다 — 골고루") — 전에는 판의 앞쪽 넷을 늘 썼다.
      뜻이 겹치는 짝은 빼다(어느 쪽을 이어도 맞는 칸이 생긴다) */
   const seen = new Set([q.w.vi]);
@@ -13366,7 +13383,7 @@ function drawTypeQ(body, q) {
     S.stats.spellAll = (S.stats.spellAll || 0) + 1;
     if (good) S.stats.spellOk = (S.stats.spellOk || 0) + 1;
     /* 성조만 틀린 것은 **오답이되 따로 알려 준다** (대표님 지시 2026-08-31).
-       ma·mà·má·mả·mã·mạ 는 서로 다른 단어이라 성조를 봐주면 안 된다.
+       ma·mà·má·mả·mã·mạ 는 서로 다른 단어라 성조를 봐주면 안 된다.
        다만 '글자를 틀림' 과 한 덩어리로 묶으면 무엇을 고쳐야 할지 모른다. */
     const toneOnly = !good && bare(txt) === bare(w.vi);
     if (!good) bump('serr', toneOnly ? '성조만 틀림' : '글자를 틀림', false);
@@ -13394,7 +13411,7 @@ function drawTypeQ(body, q) {
    성조는 채점하지 않는다(AI도 성조는 틀린다). 글자가 맞으면 정답으로 친다 —
    "알아들을 수 있게 말했는가"가 이 단계의 목표다. */
 /* 말하기 보기 넷 만들기 — 목표 + 헷갈릴 단어 셋.
-   성조만 다른 단어을 먼저 넣는다(sữa/sửa). 그래야 성조가 어설플 때 그쪽이 골라져
+   성조만 다른 단어를 먼저 넣는다(sữa/sửa). 그래야 성조가 어설플 때 그쪽이 골라져
    '고르기'가 봐주기로 흐르지 않는다. 문장은 보기를 만들 수 없으니 받아쓰기로 간다. */
 function sayOpts(target) {
   const it = findItem(target);
@@ -13620,7 +13637,7 @@ const HARDLTR = ['ư', 'ơ', 'ă', 'â', 'ê', 'ô', 'đ'];
 /* 성조 부호만 뗀 모양. "성조만 틀렸나 글자를 틀렸나"를 가르는 데 쓴다 */
 const bare = t => t.trim().toLowerCase().split(/\s+/).map(stripTone).join(' ');
 /* 창고가 섞인 판(테스트 탭 '배운 단어 전체')은 단어마다 제 창고에 적는다 — opt.boxOf(vi) 가 창고 이름을 준다.
-   그래야 GYBM 단어이 하루 5분 창고(S.srs)로 새어 들어가지 않는다 (복습은 섞이지 않게 — 대표님 지시). */
+   그래야 GYBM 단어가 하루 5분 창고(S.srs)로 새어 들어가지 않는다 (복습은 섞이지 않게 — 대표님 지시). */
 function grade(vi, ok, early) {
   if (typeof Q !== 'undefined' && Q && Q.list && Q.list[Q.i]) { Q.list[Q.i]._ans = true; hideSkip(); }   // 답이 통계에 들어갔다 — 이제 못 넘긴다
   const bx = (typeof Q !== 'undefined' && Q && Q.opt && Q.opt.boxOf) ? Q.opt.boxOf(vi) : null;
@@ -14660,7 +14677,7 @@ function practiceWords(n) {
 let TY = null;
 /* 타이핑 — Telex 익히기 (대표님 지시 2026-09-27: "안녕하세요 같은 걸 치게 하지 말고 à 를 치게").
    부호 하나마다 **두 판**: ① 글자 만들기 — 위에 규칙(a + f → à)을 보여 주고 그 글자 하나를 친다
-   ② 그 글자가 든 단어 — 단어·뜻·소리를 보고 그 단어을 친다. 성조 다섯(f s r x j) → 모자 일곱(aa aw ee oo ow uw dd) 차례.
+   ② 그 글자가 든 단어 — 단어·뜻·소리를 보고 그 단어를 친다. 성조 다섯(f s r x j) → 모자 일곱(aa aw ee oo ow uw dd) 차례.
    틀리면 규칙을 다시 보여 주고 그 자리에서 다시 친다(세 번 틀리면 넘어간다). 자판은 실제 Telex 와 같다. */
 const TYPE_TARGET = { f: 'à', s: 'á', r: 'ả', x: 'ã', j: 'ạ', aa: 'â', aw: 'ă', ee: 'ê', oo: 'ô', ow: 'ơ', uw: 'ư', dd: 'đ' };
 const typeSteps = () => TYPEKEYS.flatMap(x => {
@@ -15060,7 +15077,7 @@ const viVoice = () => viVoices()[0] || null;
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
 /* 소리 한 군데로 — 녹음이 있으면 녹음, 없으면 기기 목소리.
-   전에는 문제 화면이 play() 를 바로 불러서, 녹음 없는 단어은 **아무 소리도 안 났다**. */
+   전에는 문제 화면이 play() 를 바로 불러서, 녹음 없는 단어는 **아무 소리도 안 났다**. */
 /* 소리 자동 재생 (대표님 2026-10-02: "단어카드를 넘기든, 단어 테스트를 넘기든 단어가 화면에 보이면 자동으로 소리 재생") —
    단어 카드가 뜰 때 · 베트남어를 보여 주는 문제가 뜰 때. 한국어를 보고 베트남어를 맞히는 문제는 답을 들려주는 셈이라 안 튼다(답한 뒤에는 원래대로 소리가 난다).
    머리띠 스피커 단추로 끈다(수업 중·지하철). 기본은 켜짐 */
@@ -15078,7 +15095,7 @@ function sound(t) {
 }
 /* 목소리는 **대표님이 고른 것 하나**로 (대표님 지적, 2026-08-29).
    전에는 기본이 메신저 쌤 성별(S.tch)이었다. 그래서 같은 문장 안에서도
-   녹음이 있는 단어은 고른 목소리로, 없는 단어은 쌤 목소리로 나서 남녀가 오갔다.
+   녹음이 있는 단어는 고른 목소리로, 없는 단어는 쌤 목소리로 나서 남녀가 오갔다.
    메신저에서만 쌤 목소리를 쓰고(who='m'/'f' 를 넘긴다), 나머지는 고른 목소리다. */
 function speakVi(t, retry, spd, who) {
   const g = who === 'm' || who === 'f' ? who : (S.voice === 'm' ? 'm' : 'f');

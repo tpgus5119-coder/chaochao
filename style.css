@@ -3252,3 +3252,11 @@ body.inking #quiz .qcount{position:relative; z-index:47}
 .senseexko{font-size:13px; color:var(--dim); margin-top:2px}
 
 .rellinks .relhead{font-size:13px; font-weight:800; color:var(--fg)}   /* '관련' 머리 (2026-10-24) */
+/* 문법 카드 — 설명을 맨 위에, 한 문장 한 줄 (대표님 2026-10-26 "가독성 좋게") */
+.card .gramt .gramtsub{display:block; font-size:15px; font-weight:600; color:var(--dim); margin-top:4px; line-height:1.45}
+.card .rulenote.gramexp{background:var(--surface-2,#f6f8fa); border:1px solid var(--line); border-radius:12px; padding:14px 16px; text-align:left; font-size:16px; line-height:1.7; color:var(--fg); margin:10px 0 12px}
+.card .gramexp p, .gdrow p{margin:0}
+.card .gramexp p + p{margin-top:8px}
+.gdrow > div > p + p{margin-top:6px}
+.gdrow .gdc + .gdc{margin-top:8px}
+.gdrow .gdc .gdw{display:inline-block; margin-bottom:2px}
