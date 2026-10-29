@@ -118,6 +118,10 @@ texts |= set(fill_audio.collect())
 _fq = json.loads((ROOT / "data/_dict_freq.json").read_text(encoding="utf-8")); _df = json.loads((ROOT / "data/_dict_full.json").read_text(encoding="utf-8"))
 for _w, _r in _fq.items():
     if _r <= 3000: texts.add((_df.get(_w) or {}).get("h") or _w); texts.add(_w)
+# 사전 낱말·사전 예문 소리 — 위 목록에 안 걸려 새로 만든 사전 예문 소리가 안 올라갔다 (2026-10-29 tàu cao tốc 넣다가 발견). origin 과 다른 것만 올리므로 늘 같이 넣어도 된다
+for _v in json.loads((ROOT / "data/_dict_ex.json").read_text(encoding="utf-8")).values():
+    for _p in _v: texts.add(_p[0])
+texts |= set(_df.keys()) | {(_e or {}).get("h") for _e in _df.values() if isinstance(_e, dict) and _e.get("h")}
 # 소리 점검 2판(tools/sound_audit2.py)에서 다시 만든 소리 — 수업 자료 밖 글(사전·뜻별 예문 등)이라 위 목록에 안 걸려 고친 소리가 안 올라갔다 (2026-10-26 발견, 237개)
 _fx2 = ROOT / "tools/_sound_fix/점검2.jsonl"
 if _fx2.exists():
