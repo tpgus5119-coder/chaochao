@@ -831,6 +831,65 @@ function pbTick() {
   PB.raf = (playing || mine) ? requestAnimationFrame(pbTick) : 0;
 }
 audio.addEventListener('play', () => { if (!PB.raf) PB.raf = requestAnimationFrame(pbTick); });
+/* 아주 느린 소리 (대표님 2026-10-29 "맥북 크롬에서 입모양 눌러도 재생 자체가 안 된다") — 크롬·사파리는 audio 요소를 0.5배보다 느리게 틀면 소리를 끈다
+   (크롬 audio_renderer_algorithm: 0.5~4배 밖은 무음). 그래서 0.5배 아래(입모양·그래프 0.1배, 듣기 속도 0.4·0.2배)는
+   audio 요소를 소리 없이 시계로만 돌리고(입모양·그래프가 그대로 따라감), 같은 파일을 받아 높낮이를 지킨 채 늘인 소리(WSOLA)를 Web Audio 로 같이 튼다 */
+const SLOWA = { ctx: null, src: null, cache: new Map(), tok: 0 };
+function slowCtx() {
+  if (!SLOWA.ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; SLOWA.ctx = new C(); }
+  if (SLOWA.ctx.state === 'suspended') SLOWA.ctx.resume().catch(() => { });
+  return SLOWA.ctx;
+}
+addEventListener('pointerdown', () => { try { slowCtx(); } catch (e) { } }, true);   // 누를 때 깨워 둔다 (사파리는 누름 안에서만 소리를 연다)
+function wsola(x, sr, rate) {                        // 높낮이 그대로 길이만 1/rate 배 (파형 닮음 겹쳐 잇기)
+  const N = Math.round(sr * .03) & ~1, Hs = N / 2, Ha = Hs * rate, tol = Math.round(sr * .006), L = Math.ceil(x.length / rate) + N;
+  const y = new Float32Array(L), win = new Float32Array(N);
+  for (let i = 0; i < N; i++) win[i] = .5 - .5 * Math.cos(2 * Math.PI * i / N);
+  let prev = 0;
+  for (let k = 0; k * Hs + N < L; k++) {
+    const ideal = Math.round(k * Ha);
+    let best = ideal;
+    if (k > 0) {
+      const nat = prev + Hs; let bc = -Infinity;
+      for (let d = -tol; d <= tol; d += 2) {
+        const p = ideal + d; if (p < 0 || p + N > x.length) continue;
+        let c = 0; for (let i = 0; i < Hs; i += 4) c += x[p + i] * (x[nat + i] || 0);
+        if (c > bc) { bc = c; best = p; }
+      }
+    }
+    if (best + N > x.length) break;
+    const o = k * Hs; for (let i = 0; i < N; i++) y[o + i] += x[best + i] * win[i];
+    prev = best;
+  }
+  return y;
+}
+function slowBuf(url, rate) {
+  const key = url + '|' + rate;
+  if (!SLOWA.cache.has(key)) {
+    if (SLOWA.cache.size > 30) SLOWA.cache.delete(SLOWA.cache.keys().next().value);
+    SLOWA.cache.set(key, fetch(url).then(r => r.arrayBuffer()).then(b => slowCtx().decodeAudioData(b)).then(ab => {
+      const ch = ab.numberOfChannels, n = ab.length, m = new Float32Array(n);
+      for (let c = 0; c < ch; c++) { const d = ab.getChannelData(c); for (let i = 0; i < n; i++) m[i] += d[i] / ch; }
+      const y = wsola(m, ab.sampleRate, rate), out = slowCtx().createBuffer(1, y.length, ab.sampleRate);
+      out.getChannelData(0).set(y); return out;
+    }).catch(e => { SLOWA.cache.delete(key); throw e; }));
+  }
+  return SLOWA.cache.get(key);
+}
+function slowStop() { if (SLOWA.src) { try { SLOWA.src.stop(); } catch (e) { } SLOWA.src = null; } }
+function slowSync() {                                  // audio 요소 상태에 맞춰 느린 소리를 켜고 끈다
+  const tok = ++SLOWA.tok; slowStop();
+  const rate = audio.playbackRate, url = audio.src;
+  if (audio.paused || audio.ended || rate >= .5 || !url || !slowCtx()) { if (audio.muted && rate >= .5) audio.muted = false; return; }
+  audio.muted = true;
+  slowBuf(url, rate).then(buf => {
+    if (tok !== SLOWA.tok || audio.paused || audio.src !== url) return;
+    const s = SLOWA.ctx.createBufferSource(); s.buffer = buf; s.connect(SLOWA.ctx.destination);
+    s.start(0, Math.min(audio.currentTime / rate, buf.duration)); SLOWA.src = s;
+  }).catch(() => { audio.muted = false; });          // 못 늘이면 그냥 원래 소리로
+}
+['play', 'ratechange', 'seeked'].forEach(ev => audio.addEventListener(ev, () => { if (!audio.paused) slowSync(); else if (ev === 'ratechange' && audio.playbackRate >= .5) audio.muted = false; }));
+['pause', 'ended', 'emptied', 'seeking'].forEach(ev => audio.addEventListener(ev, () => { SLOWA.tok++; slowStop(); }));
 audio.addEventListener('ended', () => { PB.hold = null; });
 ['pause', 'ended', 'emptied', 'seeked'].forEach(ev => audio.addEventListener(ev, () => { setTimeout(pbTick, 0); }));
 myVoice.addEventListener('play', () => { if (!PB.raf) PB.raf = requestAnimationFrame(pbTick); });
