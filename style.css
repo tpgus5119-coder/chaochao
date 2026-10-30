@@ -2040,10 +2040,10 @@ button.pchip.pick.on{background:var(--accent); border-color:var(--accent); color
 .puzzhint{font-size:14.5px; color:var(--dim); text-align:center; margin-bottom:4px}
 .puzztiles{display:flex; flex-wrap:wrap; gap:8px; justify-content:center}
 .puzztile{padding:10px 14px; border-radius:10px; border:1.5px solid var(--line,#e4e6eb);
-          background:var(--bg); font-size:16px}
+          background:var(--bg); color:var(--fg); font-size:16px}
 .puzztile:disabled{opacity:.28}
 .puzzpick{padding:8px 12px; border-radius:9px; border:1.5px solid var(--accent,#1877F2);
-          background:color-mix(in srgb, var(--accent,#1877F2) 8%, transparent); font-size:16px}
+          background:color-mix(in srgb, var(--accent,#1877F2) 8%, transparent); color:var(--fg); font-size:16px}
 .ghost.slow{margin-left:8px}
 
 /* ── 인사말 카드 (Stitch 시안 재현, 사진 대신 아이콘) ── */
