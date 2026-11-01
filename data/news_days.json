@@ -2,6 +2,478 @@
  "days": [
   {
    "ts": "2026-10-31",
+   "day": "N874.html",
+   "track": "news",
+   "theme": "환경과 사업",
+   "title": "The Coca-Cola Foundation, IUCN seek business opportunities in ecosystem restoration",
+   "u": "https://e.vnexpress.net/news/business/the-coca-cola-foundation-iucn-seek-business-opportunities-in-ecosystem-restoration-5138874.html",
+   "cat": "소식",
+   "intro": "코카콜라 재단과 IUCN이 생태계 복원을 논의했다. 환경 보호와 연계한 새로운 사업 모델을 모색한다.",
+   "words": [
+    {
+     "vi": "môi trường",
+     "ko": "환경",
+     "kr_read": "모이 쯔엉",
+     "emoji": "🌳",
+     "en": "green trees and a clear blue sky",
+     "tones": [
+      {
+       "syl": "môi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "trường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-moi-truong.webp"
+    },
+    {
+     "vi": "rác",
+     "ko": "쓰레기",
+     "kr_read": "작",
+     "emoji": "🗑️",
+     "en": "a trash bin full of garbage",
+     "tones": [
+      {
+       "syl": "rác",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-rac.webp"
+    },
+    {
+     "vi": "nhựa",
+     "ko": "플라스틱",
+     "kr_read": "느어",
+     "emoji": "🥤",
+     "en": "plastic bottles and disposable cups",
+     "tones": [
+      {
+       "syl": "nhựa",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-nhua.webp"
+    },
+    {
+     "vi": "nước",
+     "ko": "물",
+     "kr_read": "느억",
+     "emoji": "💧",
+     "en": "clear water pouring into a glass",
+     "tones": [
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nuoc.webp"
+    },
+    {
+     "vi": "hoa sen",
+     "ko": "연꽃",
+     "kr_read": "호아 쌘",
+     "emoji": "🪷",
+     "en": "a pink lotus flower blooming in water",
+     "tones": [
+      {
+       "syl": "hoa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "sen",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-hoa-sen.webp"
+    },
+    {
+     "vi": "cá",
+     "ko": "물고기",
+     "kr_read": "까",
+     "emoji": "🐟",
+     "en": "a fresh fish swimming in water",
+     "tones": [
+      {
+       "syl": "cá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-ca.webp"
+    }
+   ],
+   "dialog": {
+    "title": "환경과 사업",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Rác nhựa bỏ ở đâu ạ?",
+      "ko": "플라스틱 쓰레기는 어디에 버려요?",
+      "kr_read": "작 느어 보 어 더우 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Rác",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhựa",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "bỏ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đâu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ạ?",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Bỏ vào thùng rác kia nhé.",
+      "ko": "저기 쓰레기통에 넣으세요.",
+      "kr_read": "보 바오 퉁 작 끼어 냬",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Bỏ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "vào",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "thùng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "rác",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "kia",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 112
+  },
+  {
+   "ts": "2026-10-31",
+   "day": "N722.html",
+   "track": "news",
+   "theme": "하롱베이 여행",
+   "title": "Travel + Leisure, Lonely Planet recommend November visits to Ha Long",
+   "u": "https://e.vnexpress.net/news/travel/travel-leisure-lonely-planet-recommend-november-visits-to-ha-long-5138722.html",
+   "cat": "문화·생활",
+   "intro": "외신이 11월 베트남 하롱베이 여행을 추천했다. 온화하고 건조한 날씨로 크루즈와 온천을 즐기기 좋다.",
+   "words": [
+    {
+     "vi": "thời tiết",
+     "ko": "날씨",
+     "kr_read": "터이 띠엣",
+     "emoji": "🌤️",
+     "en": "a clear sunny sky with light clouds",
+     "tones": [
+      {
+       "syl": "thời",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "tiết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thoi-tiet.webp"
+    },
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "en": "a travel suitcase and a hat",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "thuyền",
+     "ko": "배",
+     "kr_read": "투옌",
+     "emoji": "⛵",
+     "en": "a wooden boat floating on calm water",
+     "tones": [
+      {
+       "syl": "thuyền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-thuyen.webp"
+    },
+    {
+     "vi": "hang",
+     "ko": "동굴",
+     "kr_read": "항",
+     "emoji": "🕳️",
+     "en": "a natural limestone cave entrance",
+     "tones": [
+      {
+       "syl": "hang",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-hang.webp"
+    },
+    {
+     "vi": "cáp treo",
+     "ko": "케이블카",
+     "kr_read": "깝 째오",
+     "emoji": "🚡",
+     "en": "a cable car moving over the water",
+     "tones": [
+      {
+       "syl": "cáp",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "treo",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cap-treo.webp"
+    },
+    {
+     "vi": "suối nước nóng",
+     "ko": "온천",
+     "kr_read": "쑤오이 느억 농",
+     "emoji": "♨️",
+     "en": "an outdoor hot spring bath surrounded by mountains",
+     "tones": [
+      {
+       "syl": "suối",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "nóng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-suoi-nuoc-nong.webp"
+    }
+   ],
+   "dialog": {
+    "title": "하롱베이 여행",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Thời tiết đẹp, anh đi du lịch không?",
+      "ko": "날씨가 좋은데, 여행 가실래요?",
+      "kr_read": "터이 띠엣 댑 아인 디 주 릭 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Thời",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "tiết",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đẹp,",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "du",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lịch",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, tôi muốn đi thuyền ngắm hang.",
+      "ko": "네, 저는 배 타고 동굴 구경하고 싶어요.",
+      "kr_read": "꼬 또이 무온 디 투옌 응암 항",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "muốn",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "thuyền",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ngắm",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "hang.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 111
+  },
+  {
+   "ts": "2026-10-31",
    "day": "N797.html",
    "track": "news",
    "theme": "베트남 경제",
@@ -28341,5 +28813,5 @@
    "n": 1
   }
  ],
- "updated": "2026-11-01 00:59"
+ "updated": "2026-11-01 09:24"
 }
