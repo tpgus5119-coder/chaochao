@@ -232,7 +232,7 @@
     ],
     "extra": []
    },
-   "n": 112
+   "n": 114
   },
   {
    "ts": "2026-11-01",
@@ -438,7 +438,7 @@
     ],
     "extra": []
    },
-   "n": 111
+   "n": 113
   },
   {
    "ts": "2026-10-31",
@@ -656,7 +656,7 @@
     ],
     "extra": []
    },
-   "n": 110
+   "n": 112
   },
   {
    "ts": "2026-10-31",
@@ -903,6 +903,454 @@
         "name": "ngang",
         "ko": "평평하게 그대로",
         "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 111
+  },
+  {
+   "ts": "2026-10-31",
+   "day": "N620.html",
+   "track": "news",
+   "theme": "식당과 음식",
+   "title": "Hanoi chicken pho draws crowds despite charging four times average price at $6",
+   "u": "https://e.vnexpress.net/photo/food-recipes/hanoi-chicken-pho-draws-crowds-despite-charging-four-times-average-price-at-6-5134620.html",
+   "cat": "소식",
+   "intro": "하노이의 유명 닭쌀국수 집이 미슐랭에 지정됐습니다. 높은 가격에도 많은 손님이 꾸준히 방문합니다.",
+   "words": [
+    {
+     "vi": "phở",
+     "ko": "쌀국수",
+     "kr_read": "퍼",
+     "emoji": "🍜",
+     "en": "a bowl of vietnamese noodle soup",
+     "tones": [
+      {
+       "syl": "phở",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-pho.webp"
+    },
+    {
+     "vi": "gà",
+     "ko": "닭",
+     "kr_read": "가",
+     "emoji": "🐔",
+     "en": "a chicken standing on green grass",
+     "tones": [
+      {
+       "syl": "gà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-ga.webp"
+    },
+    {
+     "vi": "quán",
+     "ko": "식당",
+     "kr_read": "꽌",
+     "emoji": "🏪",
+     "en": "a small local restaurant exterior",
+     "tones": [
+      {
+       "syl": "quán",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-quan.webp"
+    },
+    {
+     "vi": "nước dùng",
+     "ko": "국물",
+     "kr_read": "느억 중",
+     "emoji": "🍲",
+     "en": "a hot pot filled with soup broth",
+     "tones": [
+      {
+       "syl": "nước",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "dùng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-nuoc-dung.webp"
+    },
+    {
+     "vi": "giá",
+     "ko": "가격",
+     "kr_read": "자",
+     "emoji": "🏷️",
+     "en": "a price tag",
+     "tones": [
+      {
+       "syl": "giá",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-gia.webp"
+    },
+    {
+     "vi": "ngon",
+     "ko": "맛있다",
+     "kr_read": "응온",
+     "emoji": "😋",
+     "en": "a person enjoying delicious food",
+     "tones": [
+      {
+       "syl": "ngon",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ngon.webp"
+    }
+   ],
+   "dialog": {
+    "title": "식당과 음식",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Phở gà ở đây có đắt không?",
+      "ko": "여기 닭쌀국수는 비싼가요?",
+      "kr_read": "퍼 가 어 더이 꼬 닷 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Phở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "gà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "đắt",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Giá hơi đắt nhưng rất ngon.",
+      "ko": "가격이 좀 비싸지만 정말 맛있어요.",
+      "kr_read": "자 허이 닷 능 젓 응온",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Giá",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "hơi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đắt",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhưng",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 110
+  },
+  {
+   "ts": "2026-10-31",
+   "day": "N140.html",
+   "track": "news",
+   "theme": "베트남 여행",
+   "title": "Lonely Planet's 10 must-visit destinations in Vietnam have most bases covered",
+   "u": "https://e.vnexpress.net/photo/places/lonely-planets-10-must-visit-destinations-in-vietnam-have-most-bases-covered-5135140.html",
+   "cat": "소식",
+   "intro": "론리플래닛이 베트남 필수 여행지를 추천했습니다. 하노이와 후에, 푸꾸옥 등 10곳이 뽑혔습니다.",
+   "words": [
+    {
+     "vi": "du lịch",
+     "ko": "여행",
+     "kr_read": "주 릭",
+     "emoji": "🧳",
+     "en": "a travel suitcase",
+     "tones": [
+      {
+       "syl": "du",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-du-lich.webp"
+    },
+    {
+     "vi": "biển",
+     "ko": "바다",
+     "kr_read": "비엔",
+     "emoji": "🌊",
+     "en": "blue ocean waves hitting a sandy beach",
+     "tones": [
+      {
+       "syl": "biển",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-bien.webp"
+    },
+    {
+     "vi": "đảo",
+     "ko": "섬",
+     "kr_read": "다오",
+     "emoji": "🏝️",
+     "en": "a small tropical island with palm trees",
+     "tones": [
+      {
+       "syl": "đảo",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-dao.webp"
+    },
+    {
+     "vi": "núi",
+     "ko": "산",
+     "kr_read": "누이",
+     "emoji": "⛰️",
+     "en": "a tall green mountain",
+     "tones": [
+      {
+       "syl": "núi",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nui.webp"
+    },
+    {
+     "vi": "máy bay",
+     "ko": "비행기",
+     "kr_read": "마이 바이",
+     "emoji": "✈️",
+     "en": "an airplane flying in the sky",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-may-bay.webp"
+    },
+    {
+     "vi": "khách sạn",
+     "ko": "호텔",
+     "kr_read": "칵 싼",
+     "emoji": "🏨",
+     "en": "a modern hotel building",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-khach-san.webp"
+    }
+   ],
+   "dialog": {
+    "title": "베트남 여행",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Cuối tuần anh đi du lịch không?",
+      "ko": "이번 주말에 여행 가세요?",
+      "kr_read": "꾸오이 뚜언 아인 디 주 릭 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Cuối",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tuần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "du",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "lịch",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, tôi đi biển với bạn.",
+      "ko": "네, 친구와 바다에 가요.",
+      "kr_read": "꼬 또이 디 비엔 버이 반",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "biển",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "với",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bạn.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
        }
       ],
       "gloss": []
@@ -28800,5 +29248,5 @@
    "n": 1
   }
  ],
- "updated": "2026-11-02 02:02"
+ "updated": "2026-11-02 10:04"
 }
