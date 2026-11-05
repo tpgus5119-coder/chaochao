@@ -581,6 +581,9 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-06 새벽(예약 작업): 대출금리 기사가 제목의 '엄포 '가 '포 '에 걸려 쌀국수가 깔렸다.
+              (("대출금리", "예금금리"),
+               "a ceramic piggy bank beside a small stack of coins on a plain table"),
               # 2026-10-27: K-콘텐츠 엑스포 기사가 맞는 줄이 없어 문화·생활 기본(쌀국수)이 깔렸다.
               (("콘텐츠", "엑스포", "웹툰", "애니메이션"),
                "an exhibition hall with colorful display booths, large screens and cartoon character standees"),
