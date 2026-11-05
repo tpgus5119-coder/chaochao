@@ -1312,6 +1312,7 @@ function sibDiff(syl, cur) {
 /* 유의어·반의어 짝의 '그 짝으로 쓰인 뜻' — ① 짝 자료의 뜻 번호(SIB.w[짝].m[지금 낱말], tools/rel_* 판정) ② 없으면 짝의 뜻 가운데 지금 보는 뜻(PAIR_SEL_KO)과 겹치는 것
    ③ 그래도 없으면 '' (카드 뜻으로). ba 의 첫 뜻은 '셋'이지만 bố 의 유의어로는 2번 '아빠(남부)' 다 */
 let PAIR_SEL_KO = '';
+let PAIR_CUR = null;                                 // 짝 목록이 열린 낱말과 그 고른 뜻 — 목록 속 같은 낱말 줄은 이 뜻으로
 function relSense(word, cur) {
   try {
     const w = String(word || '').toLowerCase().trim(), c = String(cur || '').toLowerCase().trim();
@@ -1333,7 +1334,7 @@ function pairRow(word, cur, mode) {
   w.append(el('b', null, (mode === 'shape' || mode === 'sim') && word !== cur ? sibDiff(word, cur) : esc(word)));
   if (one) w.append(el('i', null, toneArrow(tn)));
   const m = el('span', 'pmn');
-  const cko = (mode === 'rel' && relSense(word, cur)) || koCard(word);   // 유의어·반의어 줄은 **짝지어진 뜻**(대표님 2026-10-24 "bố 의 유의어 ba 에 뜻이 3 으로 나오면 안 되지 — 전부"). 아니면 카드 뜻 먼저 — 짝 자료의 뜻(w0.k)과 달라 세 곳이 어긋났다 (2026-10-15)
+  const cko = (PAIR_CUR && PAIR_CUR.w === word && PAIR_CUR.ko) || (mode === 'rel' && relSense(word, cur)) || koCard(word);   // 유의어·반의어 줄은 **짝지어진 뜻**(대표님 2026-10-24 "bố 의 유의어 ba 에 뜻이 3 으로 나오면 안 되지 — 전부"). 아니면 카드 뜻 먼저 — 짝 자료의 뜻(w0.k)과 달라 세 곳이 어긋났다 (2026-10-15)
   if (cko) m.append(el('span', 'pko', esc(cko)));
   else if (w0.k) m.append(el('span', 'pko', esc(w0.k)));
   else if (w0.x) m.append(el('span', 'pko no', tr('예') + ' <b>' + esc(w0.x[0]) + '</b> ' + esc(w0.x[1] || '')));
@@ -1427,6 +1428,8 @@ function pairPanel(vi, opt) {
     };
     const draw = () => {
       body.textContent = '';
+      { const ss0 = SENSES && SENSES[vi.toLowerCase().trim()];        // 고른 뜻을 아래 짝 줄의 이 낱말 뜻에도 (오류 보고 2026-11-01 họ: 친척을 골라도 기본 뜻이 남았다)
+        if (ss0 && ss0.length > 1) { if (sel == null) sel = senseDefault(vi, o.ko, lk0) || 1; PAIR_CUR = { w: vi.toLowerCase().trim(), ko: ss0[sel - 1] || '' }; } else PAIR_CUR = null; }
       if (!o.bare) {                               // 카드 안에 펼친 짝 목록에도 제 속도 토글 (팝업은 머리에 있다)
         const sp = el('div', 'pspdrow');
         sp.append(el('span', null, tr('짝 듣기 속도')), spdChip({ pair: true }));
@@ -7862,7 +7865,7 @@ function glossAll(vi, extra) {
   const noMerge = new Set((Array.isArray(sg) ? sg : (sg.no || [])).map(x => String(x).toLowerCase()));
   const koAt = Array.isArray(sg) ? {} : (sg.ko || {});
   const seenN = {};
-  const look0 = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || exgKo(ph);
+  const look0 = ph => (extra && extra[ph]) || GVOC[ph] || EXTRAG[ph] || exgKo(ph) || koAt[ph + '#' + ((seenN[ph] || 0) + 1)];   // 이 문장 검수 뜻에 있는 묶음(tác giả)도 한 낱말로 (오류 보고 2026-11-01)
   const look = ph => look0(ph) || (toneAlt(ph) !== ph && look0(toneAlt(ph)));     // toà ↔ tòa
   /* 붙여 쓴 기호에서 낱말을 떼어 낸다 — từ...đến · xe lửa/tàu hỏa · (tại)sao · cơm sen… 가 통째로 한 덩이가 되어
      뜻을 못 찾았다. 글자가 하나도 없는 조각(숫자·기호)은 누르는 단추가 아니라 그냥 글로 둔다 (2026-09-28 밤) */
@@ -7960,6 +7963,14 @@ function senseExLoad() {
   if (!SENSE_EX_P) SENSE_EX_P = fetch('data/_sense_ex.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { SENSE_EX = j; }).catch(() => { SENSE_EX = {}; });
   return SENSE_EX_P;
 }
+/* 카드 예문이 쓰인 뜻 — data/_ex_sense.json {낱말: {예문: 뜻 번호(0 = 목록에 없음)}} (클로드가 수업 낱말 예문 2,026개를 읽어 판정, 2026-11-03).
+   카드는 늘 '골라진 뜻'의 예문만 보인다 — 기본 뜻과 원래 예문의 뜻이 다르면 처음부터 그 뜻 예문으로 (오류 보고 xin lỗi·anh·em) */
+let EXS = null, EXS_P = null;
+function exsLoad() {
+  if (EXS) return Promise.resolve();
+  if (!EXS_P) EXS_P = fetch('data/_ex_sense.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).then(j => { EXS = j; }).catch(() => { EXS = {}; });
+  return EXS_P;
+}
 function senseLine(host, x, o) {
   const opt = o || {};
   /* 뜻이 여럿이면 **가진 뜻 모두를 흔히 쓰는 차례로** 번호를 붙여 보여 준다 (대표님 지시 2026-09-28).
@@ -7973,13 +7984,27 @@ function senseLine(host, x, o) {
     /* 뜻을 누르면 **기존 예문 자리**의 예문이 그 뜻의 예문으로 바뀐다 (대표님 2026-10-24 "기존 예문과 호환 — 기존 예문 위치에서 뜻 누를 때마다 바뀌게").
        data/_sense_ex.json(tools/sense_ex.py, 문맥 뜻 + Qwen 확인). 같은 뜻을 다시 누르거나 이 과의 뜻을 누르면 원래 예문으로. 예문 자리는 카드가 opt.onSense 로 맡는다 */
     let open = -1;
-    const pick = i => {
-      const row = SENSE_EX && SENSE_EX[String(x.vi || '').trim().toLowerCase()];
-      const same = open === i, has = row && row[i] && row[i].length;
-      open = same ? -1 : i;                                  // 모든 뜻을 누를 수 있다 (대표님 2026-10-24 "뜻 선택 안 되는 건 뭐냐") — 예문이 아직 없는 뜻은 예문은 그대로, 관련 단어만 그 뜻으로
-      list.querySelectorAll('.sn').forEach((n, j) => n.classList.toggle('open', j === open));
-      if (opt.onSense) opt.onSense(same || !has || i === hit ? null : row[i], same ? null : i + 1);
+    const k = String(x.vi || '').trim().toLowerCase();
+    const baseEx = x.ex && (typeof x.ex === 'string' ? x.ex : x.ex.vi);
+    const baseSn = baseEx && EXS && EXS[k] ? EXS[k][baseEx] : undefined;   // 원래 예문의 뜻(판정 없으면 undefined)
+    const viewFor = i => {                                  // 뜻 i(0부터)에 보일 예문 — null = 원래 예문, [] = 그 뜻 예문이 없음(엉뚱한 뜻 예문은 안 보인다)
+      if (baseSn === i + 1) return null;
+      const row = SENSE_EX && SENSE_EX[k];
+      return row && row[i] && row[i].length ? row[i] : [];
     };
+    const judged = baseSn !== undefined && hit >= 0;
+    const initView = () => judged && baseSn !== hit + 1 ? viewFor(hit) : null;
+    const pick = i => {
+      const row = SENSE_EX && SENSE_EX[k];
+      const same = open === i, has = row && row[i] && row[i].length;
+      open = same ? -1 : i;                                  // 모든 뜻을 누를 수 있다 (대표님 2026-10-24 "뜻 선택 안 되는 건 뭐냐")
+      list.querySelectorAll('.sn').forEach((n, j) => n.classList.toggle('open', j === open));
+      if (!opt.onSense) return;
+      if (same) opt.onSense(initView(), null);              // 다시 누르면 처음 상태(기본 뜻)
+      else if (judged) opt.onSense(viewFor(i), i + 1);      // 고른 뜻의 예문만 (오류 보고 2026-11-01 "미안합니다 눌렀는데 왜 실례합니다 예문이냐")
+      else opt.onSense(!has || i === hit ? null : row[i], i + 1);
+    };
+    if (judged && baseSn !== hit + 1 && opt.onSense) senseExLoad().then(() => opt.onSense(initView(), hit + 1));
     ss.forEach((t, i) => {
       const sp = el('span', 'sn' + (i === hit ? ' cur' : ''), '<i>' + (i + 1) + '</i>' + esc(t)); list.append(sp);   // 3개까지 → 가진 뜻 모두 (대표님 지시 2026-09-28 밤)
       sp.classList.add('hasex'); sp.onclick = ev => { ev.stopPropagation(); senseExLoad().then(() => pick(i)); };
@@ -7988,7 +8013,7 @@ function senseLine(host, x, o) {
     if ((hit >= 0 || opt.dict) && tn) tn.replaceWith(list);   // 이 과의 뜻이 목록 안에 있으면(사전 카드는 늘) 목록이 뜻 자리를 대신한다
     else host.append(list);                             // 없으면(이 과만의 특수한 뜻) 원래 뜻을 두고 밑에 목록
   };
-  if (SENSES && SDEF) draw(); else Promise.all([sensesLoad(), sdefLoad()]).then(draw);
+  if (SENSES && SDEF && EXS) draw(); else Promise.all([sensesLoad(), sdefLoad(), exsLoad()]).then(draw);
 }
 /* 팝업의 뜻 고르개 — 뜻을 누르면 그 뜻이 골라지고(onPick) 동의어·반의어가 그 뜻 기준으로 바뀐다 (대표님 지시 2026-09-28).
    처음 골라진 것은 기본 뜻. 기본 뜻은 옅은 색, 골라진 뜻은 진한 색 */

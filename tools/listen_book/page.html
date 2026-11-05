@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>교재 듣기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#f6f7f4; --surface:#ffffff; --ink:#1c2420; --ink2:#55605a; --mute:#8a948e;
+  --line:#e2e6e1; --accent:#0f7a5c; --accent-ink:#ffffff; --accent-soft:#e3f2ec; --now:#fff6d6; --now-line:#e6c65c;
+  --sp:#6b5a2e; --shadow:0 1px 2px rgba(20,30,25,.06),0 6px 20px rgba(20,30,25,.06);
+  --vi:"Be Vietnam Pro",system-ui,sans-serif; --ko:"Noto Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121614; --surface:#1a201d; --ink:#e7ece9; --ink2:#a9b4ae; --mute:#77827c;
+    --line:#2a322e; --accent:#3fbf93; --accent-ink:#0c1511; --accent-soft:#1d3329; --now:#3a3420; --now-line:#b89a3e;
+    --sp:#d8c48c; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121614; --surface:#1a201d; --ink:#e7ece9; --ink2:#a9b4ae; --mute:#77827c;
+  --line:#2a322e; --accent:#3fbf93; --accent-ink:#0c1511; --accent-soft:#1d3329; --now:#3a3420; --now-line:#b89a3e;
+  --sp:#d8c48c; --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg); color:var(--ink); font-family:var(--ko); -webkit-tap-highlight-color:transparent; padding-bottom:96px}
+button{font:inherit; color:inherit; cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.wrap{max-width:760px; margin:0 auto; padding:0 16px}
+header{position:sticky; top:0; z-index:5; background:var(--bg); padding:14px 0 8px; border-bottom:1px solid var(--line)}
+.top{display:flex; align-items:center; justify-content:space-between; gap:12px}
+h1{font-family:var(--ko); font-size:20px; font-weight:700; margin:0; letter-spacing:-.01em}
+.seg{display:inline-flex; background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:3px}
+.seg button{border:0; background:transparent; padding:6px 14px; border-radius:999px; font-size:14px; font-weight:500; color:var(--ink2)}
+.seg button.on{background:var(--accent); color:var(--accent-ink)}
+.lessons{display:flex; gap:6px; overflow-x:auto; padding:12px 0 4px; scrollbar-width:none}
+.lessons::-webkit-scrollbar{display:none}
+.lessons button{flex:none; min-width:44px; height:36px; border:1px solid var(--line); background:var(--surface); border-radius:10px; font-family:var(--vi); font-weight:600; font-size:14px; color:var(--ink2); font-variant-numeric:tabular-nums}
+.lessons button.on{border-color:var(--accent); color:var(--accent); background:var(--accent-soft)}
+.tracks{display:flex; flex-wrap:wrap; gap:6px; padding:8px 0 2px}
+.tracks button{border:1px solid var(--line); background:transparent; border-radius:8px; padding:6px 11px; font-size:14px; color:var(--ink2)}
+.tracks button.on{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.list{display:flex; flex-direction:column; gap:2px; padding:12px 0}
+.row{display:grid; grid-template-columns:auto 1fr; gap:4px 10px; align-items:baseline; text-align:left; width:100%; border:0; border-left:3px solid transparent; background:transparent; padding:10px 10px 10px 8px; border-radius:6px}
+.row:hover{background:var(--surface)}
+.row.now{background:var(--now); border-left-color:var(--now-line)}
+.sp{font-family:var(--vi); font-size:12.5px; font-weight:600; color:var(--sp); min-width:3.2em; letter-spacing:.01em}
+.sp:empty{min-width:0}
+.vi{font-family:var(--vi); font-size:18px; line-height:1.5; font-weight:500}
+.ko{grid-column:2; font-size:14px; color:var(--ink2); line-height:1.5}
+body.noko .ko{display:none}
+.bar{position:fixed; left:0; right:0; bottom:0; z-index:6; background:var(--surface); border-top:1px solid var(--line); box-shadow:var(--shadow); padding:10px 0 calc(10px + env(safe-area-inset-bottom))}
+.bar .wrap{display:flex; align-items:center; gap:10px}
+.play{width:52px; height:52px; border-radius:50%; border:0; background:var(--accent); color:var(--accent-ink); display:grid; place-items:center; flex:none}
+.play svg{width:22px; height:22px; fill:currentColor}
+.prog{flex:1; min-width:0; display:flex; flex-direction:column; gap:4px}
+.track{height:4px; background:var(--line); border-radius:2px; overflow:hidden}
+.track i{display:block; height:100%; width:0; background:var(--accent)}
+.meta{display:flex; justify-content:space-between; font-size:12px; color:var(--mute); font-variant-numeric:tabular-nums; font-family:var(--vi)}
+.chip{border:1px solid var(--line); background:transparent; border-radius:8px; height:36px; padding:0 10px; font-size:13px; font-weight:600; color:var(--ink2); flex:none; font-family:var(--vi)}
+.chip.on{border-color:var(--accent); color:var(--accent); background:var(--accent-soft)}
+@media (max-width:420px){ .vi{font-size:17px} .chip{padding:0 8px} }
+@media (prefers-reduced-motion: reduce){ *{scroll-behavior:auto !important} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <h1>교재 듣기</h1>
+      <div class="seg" id="vols"></div>
+    </div>
+    <div class="lessons" id="lessons"></div>
+    <div class="tracks" id="tracks"></div>
+  </div>
+</header>
+<main class="wrap"><div class="list" id="list"></div></main>
+<div class="bar">
+  <div class="wrap">
+    <button class="play" id="play" aria-label="전체 재생"></button>
+    <div class="prog"><div class="track"><i id="fill"></i></div><div class="meta"><span id="pos">0:00</span><span id="dur">0:00</span></div></div>
+    <button class="chip" id="rate">1×</button>
+    <button class="chip" id="loop">↻</button>
+    <button class="chip on" id="kob">뜻</button>
+  </div>
+</div>
+<audio id="au" preload="auto"></audio>
+<script>
+const T = /*DATA*/[];
+const $ = s => document.querySelector(s);
+const au = $('#au');
+const ICON = { play: '<svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>', pause: '<svg viewBox="0 0 24 24"><path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></svg>' };
+const store = { get(k, d) { try { const v = localStorage.getItem('kd.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+                set(k, v) { try { localStorage.setItem('kd.' + k, JSON.stringify(v)); } catch (e) {} } };
+let vol = store.get('vol', 1), bai = store.get('bai', null), tid = store.get('tid', null);
+let rows = [], cur = null, segEnd = null, segIdx = -1, loop = false;
+const RATES = [1, .85, .7, .5];
+let rate = store.get('rate', 1);
+const kindName = t => t.k + (T.filter(x => x.v === t.v && x.b === t.b && x.k === t.k).length > 1 ? ' ' + (t.n || '') : '');
+const fmt = s => { s = Math.max(0, s || 0); return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0'); };
+function vols() {
+  const vs = [...new Set(T.map(t => t.v))];
+  $('#vols').innerHTML = '';
+  vs.forEach(v => { const b = document.createElement('button'); b.textContent = v + '권'; b.className = v === vol ? 'on' : '';
+    b.onclick = () => { vol = v; store.set('vol', v); bai = null; tid = null; render(); }; $('#vols').append(b); });
+}
+function render() {
+  vols();
+  const ls = [...new Set(T.filter(t => t.v === vol).map(t => t.b))].sort((a, b) => a - b);
+  if (!ls.includes(bai)) bai = ls[0];
+  $('#lessons').innerHTML = '';
+  ls.forEach(b => { const e = document.createElement('button'); e.textContent = b; e.className = b === bai ? 'on' : '';
+    e.setAttribute('aria-label', 'Bài ' + b);
+    e.onclick = () => { bai = b; store.set('bai', b); tid = null; render(); }; $('#lessons').append(e); });
+  const ts = T.filter(t => t.v === vol && t.b === bai);
+  if (!ts.find(t => t.id === tid)) tid = ts[0] && ts[0].id;
+  $('#tracks').innerHTML = '';
+  ts.forEach(t => { const e = document.createElement('button'); e.textContent = kindName(t); e.className = t.id === tid ? 'on' : '';
+    e.onclick = () => { tid = t.id; store.set('tid', tid); render(); }; $('#tracks').append(e); });
+  store.set('vol', vol); store.set('bai', bai); store.set('tid', tid);
+  load(T.find(t => t.id === tid));
+  const on = $('#lessons .on'); if (on) on.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+function load(t) {
+  if (!t) return;
+  if (cur !== t) { au.pause(); au.src = 'a/' + t.id + '.mp4'; au.playbackRate = rate; cur = t; segEnd = null; segIdx = -1; }
+  const list = $('#list'); list.innerHTML = '';
+  rows = t.L.map((l, i) => {
+    const r = document.createElement('button'); r.className = 'row'; r.type = 'button';
+    const sp = document.createElement('span'); sp.className = 'sp'; sp.textContent = l[0];
+    const vi = document.createElement('span'); vi.className = 'vi'; vi.lang = 'vi'; vi.textContent = l[1];
+    r.append(sp, vi);
+    if (l[2]) { const ko = document.createElement('span'); ko.className = 'ko'; ko.textContent = l[2]; r.append(ko); }
+    r.onclick = () => playSeg(i);
+    list.append(r); return r;
+  });
+  icon();
+}
+function playSeg(i) {
+  const l = cur.L[i]; segIdx = i; segEnd = l[4];
+  au.currentTime = Math.max(0, l[3] - .05); au.playbackRate = rate; au.play();
+}
+function playAll() {
+  if (!au.paused) { au.pause(); return; }
+  segEnd = null; segIdx = -1;
+  if (au.ended || au.currentTime >= (au.duration || 1e9) - .2) au.currentTime = 0;
+  au.playbackRate = rate; au.play();
+}
+function icon() { $('#play').innerHTML = au.paused ? ICON.play : ICON.pause; $('#play').setAttribute('aria-label', au.paused ? '전체 재생' : '멈춤'); }
+function tick() {
+  if (cur && !au.paused) {
+    const t = au.currentTime;
+    if (segEnd != null && t >= segEnd) {
+      if (loop) { au.currentTime = cur.L[segIdx][3] - .05; }
+      else { au.pause(); segEnd = null; }
+    }
+    mark(t);
+  }
+  requestAnimationFrame(tick);
+}
+let lastNow = -1;
+function mark(t) {
+  let k = -1;
+  for (let i = 0; i < cur.L.length; i++) if (t >= cur.L[i][3] - .08) k = i;
+  if (k >= 0 && t > cur.L[k][4] + .4 && segEnd == null && (!cur.L[k + 1] || t < cur.L[k + 1][3] - .08)) k = k;
+  if (k !== lastNow) {
+    rows.forEach((r, i) => r.classList.toggle('now', i === k));
+    if (k >= 0 && segEnd == null) rows[k].scrollIntoView({ block: 'center', behavior: 'smooth' });
+    lastNow = k;
+  }
+  $('#fill').style.width = (au.duration ? t / au.duration * 100 : 0) + '%';
+  $('#pos').textContent = fmt(t);
+}
+au.addEventListener('play', icon); au.addEventListener('pause', icon); au.addEventListener('ended', icon);
+au.addEventListener('loadedmetadata', () => { $('#dur').textContent = fmt(au.duration); });
+$('#play').onclick = playAll;
+const rateLab = () => { $('#rate').textContent = (rate === 1 ? '1' : String(rate).replace(/^0/, '0')) + '×'; $('#rate').classList.toggle('on', rate !== 1); };
+$('#rate').onclick = () => { rate = RATES[(RATES.indexOf(rate) + 1) % RATES.length]; au.playbackRate = rate; store.set('rate', rate); rateLab(); };
+$('#loop').onclick = () => { loop = !loop; $('#loop').classList.toggle('on', loop); };
+$('#loop').setAttribute('aria-label', '한 문장 반복');
+let showKo = store.get('ko', true);
+const koLab = () => { document.body.classList.toggle('noko', !showKo); $('#kob').classList.toggle('on', showKo); };
+$('#kob').onclick = () => { showKo = !showKo; store.set('ko', showKo); koLab(); };
+document.addEventListener('keydown', e => { if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); playAll(); } });
+rateLab(); koLab(); render(); requestAnimationFrame(tick);
+</script>
+</body>
+</html>
