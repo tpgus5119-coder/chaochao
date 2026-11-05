@@ -122,6 +122,10 @@ for _w, _r in _fq.items():
 # 사전 낱말·사전 예문 소리 — 위 목록에 안 걸려 새로 만든 사전 예문 소리가 안 올라갔다 (2026-10-29 tàu cao tốc 넣다가 발견). origin 과 다른 것만 올리므로 늘 같이 넣어도 된다
 for _v in json.loads((ROOT / "data/_dict_ex.json").read_text(encoding="utf-8")).values():
     for _p in _v: texts.add(_p[0])
+# 뜻별 예문(_sense_ex) 소리 — 2026-11-05 빈 뜻 예문 500을 채웠는데 이 목록에 없어 135문장 소리가 안 올라갔다
+for _row in json.loads((ROOT / "data/_sense_ex.json").read_text(encoding="utf-8")).values():
+    for _r in _row or []:
+        for _p in _r: texts.add(_p[0])
 texts |= set(_df.keys()) | {(_e or {}).get("h") for _e in _df.values() if isinstance(_e, dict) and _e.get("h")}
 # 소리 점검 2판(tools/sound_audit2.py)에서 다시 만든 소리 — 수업 자료 밖 글(사전·뜻별 예문 등)이라 위 목록에 안 걸려 고친 소리가 안 올라갔다 (2026-10-26 발견, 237개)
 _fx2 = ROOT / "tools/_sound_fix/점검2.jsonl"
