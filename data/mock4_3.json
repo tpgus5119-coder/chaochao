@@ -1,0 +1,1206 @@
+{
+ "note": "주간시험 4 모의고사 3 — 교재 1권 11·12과 + 2권 1·2과 범위(tools/mock4, 대표님 2026-11-06). 실제 1·2차 시험지 꼴(둘은 틀이 같다 — 다른 곳은 읽기 4 방향·쓰기 시간·말하기 낱말 출처뿐, tools/mock3/common3.py 머리글), 듣기 3·4 는 실제 2회차 녹음처럼 1~5 문장·6~10 대화, 듣기 3 은 오답 보기도 들리게(a3_trap.py), 소리는 두 번. 클로드가 냄(2026-10-13).",
+ "title": "모의고사 3",
+ "time": 90,
+ "pts": {
+  "A": 30,
+  "B": 30,
+  "C": 20,
+  "D": 20
+ },
+ "q": [
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-ket-xe.webp",
+   "audio": "Trên đường phố đang kẹt xe.",
+   "ans": true,
+   "made": true,
+   "word": "kẹt xe",
+   "exp": "들은 말: Trên đường phố đang kẹt xe.\n거리에 차가 막히고 있어요.\n그림: kẹt xe(차가 막히다, 교통체증) → 맞다"
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-thu-vien.webp",
+   "audio": "Đây là một nhà hàng đặc sản.",
+   "ans": false,
+   "made": true,
+   "word": "thư viện",
+   "exp": "들은 말: Đây là một nhà hàng đặc sản.\n이것은 특선 요리 식당이에요.\n그림: thư viện(도서관) → 틀리다"
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-522429cd15.webp",
+   "audio": "Đây là một đĩa chả giò.",
+   "ans": true,
+   "made": true,
+   "word": "chả giò",
+   "exp": "들은 말: Đây là một đĩa chả giò.\n이것은 짜조 한 접시예요.\n그림: chả giò(짜조(튀긴 스프링롤, 남부식 명칭)) → 맞다"
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "b-chia-khoa.webp",
+   "audio": "Đây là chìa khóa phòng khách sạn.",
+   "ans": true,
+   "made": true,
+   "word": "chìa khóa",
+   "exp": "들은 말: Đây là chìa khóa phòng khách sạn.\n이것은 호텔 방 열쇠예요.\n그림: chìa khóa(열쇠) → 맞다"
+  },
+  {
+   "sec": "A 듣기 · 1 그림 맞다/틀리다",
+   "k": "tf",
+   "img": "w-dc680df68a.webp",
+   "audio": "Đây là một cái hồ bơi.",
+   "ans": false,
+   "made": true,
+   "word": "chợ đêm",
+   "exp": "들은 말: Đây là một cái hồ bơi.\n이것은 수영장이에요.\n그림: chợ đêm(야시장) → 틀리다"
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Anh ấy đi làm bằng xe đạp điện.",
+   "opts": [
+    "mock4-3-pe.webp",
+    "mock4-3-pb.webp",
+    "mock4-3-pa.webp",
+    "mock4-3-pc.webp",
+    "mock4-3-pd.webp"
+   ],
+   "ans": 2,
+   "made": true,
+   "words": [
+    "tắm",
+    "nghe nhạc",
+    "xe đạp điện",
+    "tính tiền",
+    "nhận phòng"
+   ],
+   "exp": "들은 말: Anh ấy đi làm bằng xe đạp điện.\n그는 전기 자전거로 출근해요.\n답: C xe đạp điện(전기 자전거)"
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Anh ấy vừa đi bộ vừa nghe nhạc.",
+   "opts": [
+    "mock4-3-pe.webp",
+    "mock4-3-pb.webp",
+    "mock4-3-pa.webp",
+    "mock4-3-pc.webp",
+    "mock4-3-pd.webp"
+   ],
+   "ans": 1,
+   "made": true,
+   "words": [
+    "tắm",
+    "nghe nhạc",
+    "xe đạp điện",
+    "tính tiền",
+    "nhận phòng"
+   ],
+   "exp": "들은 말: Anh ấy vừa đi bộ vừa nghe nhạc.\n그는 걸으면서 음악을 들어요.\n답: B nghe nhạc(음악을 듣다)"
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Anh ấy đang tính tiền ở nhà hàng.",
+   "opts": [
+    "mock4-3-pe.webp",
+    "mock4-3-pb.webp",
+    "mock4-3-pa.webp",
+    "mock4-3-pc.webp",
+    "mock4-3-pd.webp"
+   ],
+   "ans": 3,
+   "made": true,
+   "words": [
+    "tắm",
+    "nghe nhạc",
+    "xe đạp điện",
+    "tính tiền",
+    "nhận phòng"
+   ],
+   "exp": "들은 말: Anh ấy đang tính tiền ở nhà hàng.\n그는 식당에서 계산하고 있어요.\n답: D tính tiền(계산하다)"
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Anh ấy đang nhận phòng ở khách sạn.",
+   "opts": [
+    "mock4-3-pe.webp",
+    "mock4-3-pb.webp",
+    "mock4-3-pa.webp",
+    "mock4-3-pc.webp",
+    "mock4-3-pd.webp"
+   ],
+   "ans": 4,
+   "made": true,
+   "words": [
+    "tắm",
+    "nghe nhạc",
+    "xe đạp điện",
+    "tính tiền",
+    "nhận phòng"
+   ],
+   "exp": "들은 말: Anh ấy đang nhận phòng ở khách sạn.\n그는 호텔에서 체크인하고 있어요.\n답: E nhận phòng(체크인하다)"
+  },
+  {
+   "sec": "A 듣기 · 2 맞는 그림",
+   "k": "pick",
+   "audio": "Anh ấy đang xuống biển tắm.",
+   "opts": [
+    "mock4-3-pe.webp",
+    "mock4-3-pb.webp",
+    "mock4-3-pa.webp",
+    "mock4-3-pc.webp",
+    "mock4-3-pd.webp"
+   ],
+   "ans": 0,
+   "made": true,
+   "words": [
+    "tắm",
+    "nghe nhạc",
+    "xe đạp điện",
+    "tính tiền",
+    "nhận phòng"
+   ],
+   "exp": "들은 말: Anh ấy đang xuống biển tắm.\n그는 바다에 들어가 물놀이를 하고 있어요.\n답: A tắm(목욕하다, 물놀이하다)"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Đi xe buýt mất bao lâu?",
+   "audio": "Đi bộ đến trường mất hai mươi phút, đi xe buýt tám phút.",
+   "opts": [
+    "Mười phút",
+    "Tám phút",
+    "Hai mươi phút"
+   ],
+   "ans": 1,
+   "made": true,
+   "exp": "들은 말: Đi bộ đến trường mất hai mươi phút, đi xe buýt tám phút.\n학교까지 걸어서 20분, 버스로 8분 걸려요.\n물음: Đi xe buýt mất bao lâu? — 버스로 가면 얼마나 걸려요?\n답: Tám phút"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Cuối tuần anh Sơn không làm gì?",
+   "audio": "Cuối tuần anh Sơn vừa nấu ăn vừa nghe nhạc, không gặp bạn.",
+   "opts": [
+    "Nấu ăn",
+    "Nghe nhạc",
+    "Gặp bạn"
+   ],
+   "ans": 2,
+   "made": true,
+   "exp": "들은 말: Cuối tuần anh Sơn vừa nấu ăn vừa nghe nhạc, không gặp bạn.\n주말에 선 씨는 요리하면서 음악을 듣고, 친구를 만나지 않아요.\n물음: Cuối tuần anh Sơn không làm gì? — 주말에 선 씨는 무엇을 안 해요?\n답: Gặp bạn"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Hồ bơi ở tầng mấy?",
+   "audio": "Hồ bơi ở tầng tám, còn nhà hàng ở tầng hai.",
+   "opts": [
+    "Tầng tám",
+    "Tầng hai",
+    "Tầng ba"
+   ],
+   "ans": 0,
+   "made": true,
+   "exp": "들은 말: Hồ bơi ở tầng tám, còn nhà hàng ở tầng hai.\n수영장은 8층에, 식당은 2층에 있어요.\n물음: Hồ bơi ở tầng mấy? — 수영장은 몇 층에 있어요?\n답: Tầng tám"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Đi xe máy mất mấy tiếng?",
+   "audio": "Đi xe hơi mất hai tiếng, đi xe máy mất ba tiếng.",
+   "opts": [
+    "Hai tiếng",
+    "Ba tiếng",
+    "Một tiếng"
+   ],
+   "ans": 1,
+   "made": true,
+   "exp": "들은 말: Đi xe hơi mất hai tiếng, đi xe máy mất ba tiếng.\n자동차로 2시간, 오토바이로 3시간 걸려요.\n물음: Đi xe máy mất mấy tiếng? — 오토바이로 가면 몇 시간 걸려요?\n답: Ba tiếng"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Con mèo nằm ở đâu?",
+   "audio": "Con chó nằm dưới bàn, còn con mèo nằm trên ghế.",
+   "opts": [
+    "Dưới bàn",
+    "Trên ghế",
+    "Trong phòng"
+   ],
+   "ans": 1,
+   "made": true,
+   "exp": "들은 말: Con chó nằm dưới bàn, còn con mèo nằm trên ghế.\n개는 책상 아래에, 고양이는 의자 위에 누워 있어요.\n물음: Con mèo nằm ở đâu? — 고양이는 어디에 누워 있어요?\n답: Trên ghế"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Anh ấy mua vé gì?",
+   "audio": "Anh mua vé một chiều hay khứ hồi?\nVé khứ hồi, chủ nhật tôi về.",
+   "voices": "fm",
+   "opts": [
+    "Vé xe buýt",
+    "Vé một chiều",
+    "Vé khứ hồi"
+   ],
+   "ans": 2,
+   "made": true,
+   "exp": "들은 대화\n여: Anh mua vé một chiều hay khứ hồi? — 편도표를 샀어요, 왕복표를 샀어요?\n남: Vé khứ hồi, chủ nhật tôi về. — 왕복표요, 일요일에 돌아가요.\n물음: Anh ấy mua vé gì? — 그는 어떤 표를 샀어요?\n답: Vé khứ hồi"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Nhà hàng Ngon ở đâu?",
+   "audio": "Nhà hàng Ngon ở Quận 1, phải không chị?\nKhông phải đâu, ở Quận 3.",
+   "voices": "mf",
+   "opts": [
+    "Quận 1",
+    "Quận 5",
+    "Quận 3"
+   ],
+   "ans": 2,
+   "made": true,
+   "exp": "들은 대화\n남: Nhà hàng Ngon ở Quận 1, phải không chị? — 응온 식당은 1군에 있지요?\n여: Không phải đâu, ở Quận 3. — 아니에요, 3군에 있어요.\n물음: Nhà hàng Ngon ở đâu? — 응온 식당은 어디에 있어요?\n답: Quận 3"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Anh ấy ăn sầu riêng mấy lần rồi?",
+   "audio": "Anh đã ăn sầu riêng bao giờ chưa?\nRồi, một lần, nhưng không thích lắm.",
+   "voices": "fm",
+   "opts": [
+    "Hai lần",
+    "Một lần",
+    "Nhiều lần"
+   ],
+   "ans": 1,
+   "made": true,
+   "exp": "들은 대화\n여: Anh đã ăn sầu riêng bao giờ chưa? — 두리안 먹어 본 적 있어요?\n남: Rồi, một lần, nhưng không thích lắm. — 네, 한 번요, 그런데 별로 안 좋아해요.\n물음: Anh ấy ăn sầu riêng mấy lần rồi? — 그는 두리안을 몇 번 먹어 봤어요?\n답: Một lần"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Hôm nay cái áo giá bao nhiêu?",
+   "audio": "Cái áo này giá bao nhiêu, chị?\nMột trăm ngàn, rẻ hơn hôm qua.",
+   "voices": "mf",
+   "opts": [
+    "Một trăm ngàn",
+    "Ba trăm ngàn",
+    "Hai trăm ngàn"
+   ],
+   "ans": 0,
+   "made": true,
+   "exp": "들은 대화\n남: Cái áo này giá bao nhiêu, chị? — 이 옷 얼마예요?\n여: Một trăm ngàn, rẻ hơn hôm qua. — 10만 동이에요, 어제보다 싸요.\n물음: Hôm nay cái áo giá bao nhiêu? — 오늘 그 옷은 얼마예요?\n답: Một trăm ngàn"
+  },
+  {
+   "sec": "A 듣기 · 3 듣고 고르기",
+   "k": "choice",
+   "prompt": "Anh ấy gửi gì cho tiếp tân?",
+   "audio": "Anh có gửi chìa khóa cho tiếp tân không?\nCó, tôi có gửi rồi.",
+   "voices": "fm",
+   "opts": [
+    "Hộ chiếu",
+    "Chìa khóa",
+    "Vé máy bay"
+   ],
+   "ans": 1,
+   "made": true,
+   "exp": "들은 대화\n여: Anh có gửi chìa khóa cho tiếp tân không? — 프런트에 열쇠를 맡겼어요?\n남: Có, tôi có gửi rồi. — 네, 맡겼어요.\n물음: Anh ấy gửi gì cho tiếp tân? — 그는 프런트 직원에게 무엇을 맡겼어요?\n답: Chìa khóa"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "Chị ấy muốn ____ bài hát đó.",
+   "audio": "Chị ấy muốn nghe lại bài hát đó.",
+   "acc": [
+    "nghe lại"
+   ],
+   "made": true,
+   "exp": "들은 말: Chị ấy muốn nghe lại bài hát đó.\n그녀는 그 노래를 다시 듣고 싶어 해요.\n답: nghe lại"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "Năm trước và năm nay tôi vẫn đi bằng ____.",
+   "audio": "Năm trước và năm nay tôi vẫn đi bằng xe đạp.",
+   "acc": [
+    "xe đạp"
+   ],
+   "made": true,
+   "exp": "들은 말: Năm trước và năm nay tôi vẫn đi bằng xe đạp.\n작년에도 올해도 저는 여전히 자전거를 타요.\n답: xe đạp"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "Ông Hai đọc báo ____ rồi.",
+   "audio": "Ông Hai đọc báo xong rồi.",
+   "acc": [
+    "xong"
+   ],
+   "made": true,
+   "exp": "들은 말: Ông Hai đọc báo xong rồi.\n하이 할아버지는 신문을 다 읽으셨어요.\n답: xong"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "Hiện nay tôi vừa đi học vừa ____ nên rất bận.",
+   "audio": "Hiện nay tôi vừa đi học vừa đi làm nên rất bận.",
+   "acc": [
+    "đi làm"
+   ],
+   "made": true,
+   "exp": "들은 말: Hiện nay tôi vừa đi học vừa đi làm nên rất bận.\n요즘 저는 학교도 다니고 일도 해서 아주 바빠요.\n답: đi làm"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "Từ khách sạn đi bộ xuống chợ chỉ mất khoảng ____ phút.",
+   "audio": "Từ khách sạn đi bộ xuống chợ chỉ mất khoảng mười phút.",
+   "acc": [
+    "mười",
+    "10"
+   ],
+   "made": true,
+   "exp": "들은 말: Từ khách sạn đi bộ xuống chợ chỉ mất khoảng mười phút.\n호텔에서 시장까지 걸어 내려가면 10분쯤밖에 안 걸려요.\n답: mười"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "A: Anh đi Vũng Tàu bằng gì? B: Chúng tôi đi bằng ____.",
+   "audio": "Anh đi Vũng Tàu bằng gì?\nChúng tôi đi bằng xe máy.",
+   "voices": "fm",
+   "acc": [
+    "xe máy"
+   ],
+   "made": true,
+   "exp": "들은 대화\n여: Anh đi Vũng Tàu bằng gì? — 붕따우에 뭐 타고 갔어요?\n남: Chúng tôi đi bằng xe máy. — 우리는 오토바이로 갔어요.\n답: xe máy"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "A: Từ đây đến nhà chị bao xa? B: Khoảng ____ cây số.",
+   "audio": "Từ đây đến nhà chị bao xa?\nKhoảng mười lăm cây số.",
+   "voices": "mf",
+   "acc": [
+    "mười lăm"
+   ],
+   "made": true,
+   "exp": "들은 대화\n남: Từ đây đến nhà chị bao xa? — 여기서 댁까지 얼마나 멀어요?\n여: Khoảng mười lăm cây số. — 15킬로미터쯤이에요.\n답: mười lăm"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "A: Em đi bao giờ? B: Em đi từ ____ tuần trước.",
+   "audio": "Em đi bao giờ?\nEm đi từ thứ năm tuần trước.",
+   "voices": "mf",
+   "acc": [
+    "thứ năm"
+   ],
+   "made": true,
+   "exp": "들은 대화\n남: Em đi bao giờ? — 언제 갔었어?\n여: Em đi từ thứ năm tuần trước. — 지난주 목요일에 갔어요.\n답: thứ năm"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "A: Có món gì ăn no không, em? B: Dạ, có lẩu cua, ____.",
+   "audio": "Có món gì ăn no không, em?\nDạ, có lẩu cua, cơm sen.",
+   "voices": "mf",
+   "acc": [
+    "cơm sen"
+   ],
+   "made": true,
+   "exp": "들은 대화\n남: Có món gì ăn no không, em? — 배부르게 먹을 만한 음식 있어요?\n여: Dạ, có lẩu cua, cơm sen. — 네, 게 전골이랑 연잎밥이 있어요.\n답: cơm sen"
+  },
+  {
+   "sec": "A 듣기 · 4 듣고 빈칸",
+   "k": "type",
+   "prompt": "A: Khách sạn anh ở có tốt không? B: Hơi ____.",
+   "audio": "Khách sạn anh ở có tốt không?\nHơi bất tiện.",
+   "voices": "fm",
+   "acc": [
+    "bất tiện"
+   ],
+   "made": true,
+   "exp": "들은 대화\n여: Khách sạn anh ở có tốt không? — 묵은 호텔이 좋아요?\n남: Hơi bất tiện. — 좀 불편해요.\n답: bất tiện"
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸",
+   "k": "choice",
+   "prompt": "____ trời mưa thì tôi đi tắc xi.",
+   "opts": [
+    "trong",
+    "nếu",
+    "đừng",
+    "chưa",
+    "bao xa"
+   ],
+   "ans": 1,
+   "exp": "nếu trời mưa thì tôi đi tắc xi.\n비가 오면 저는 택시를 타요."
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸",
+   "k": "choice",
+   "prompt": "Mệt lắm, chị ____ đi bằng xe máy nhé!",
+   "opts": [
+    "trong",
+    "nếu",
+    "đừng",
+    "chưa",
+    "bao xa"
+   ],
+   "ans": 2,
+   "exp": "Mệt lắm, chị đừng đi bằng xe máy nhé!\n너무 피곤해요, 오토바이로 가지 마세요!"
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸",
+   "k": "choice",
+   "prompt": "A: Từ đây đến chợ ____? B: Khoảng hai cây số.",
+   "opts": [
+    "trong",
+    "nếu",
+    "đừng",
+    "chưa",
+    "bao xa"
+   ],
+   "ans": 4,
+   "exp": "A: Từ đây đến chợ bao xa? B: Khoảng hai cây số.\n여기서 시장까지 얼마나 멀어요? – 2킬로미터쯤이에요."
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸",
+   "k": "choice",
+   "prompt": "Anh đã ăn cơm sen bao giờ ____?",
+   "opts": [
+    "trong",
+    "nếu",
+    "đừng",
+    "chưa",
+    "bao xa"
+   ],
+   "ans": 3,
+   "exp": "Anh đã ăn cơm sen bao giờ chưa?\n연잎밥 먹어 본 적 있어요?"
+  },
+  {
+   "sec": "B 읽기 · 1 빈칸",
+   "k": "choice",
+   "prompt": "Có hai người ____ phòng.",
+   "opts": [
+    "trong",
+    "nếu",
+    "đừng",
+    "chưa",
+    "bao xa"
+   ],
+   "ans": 0,
+   "exp": "Có hai người trong phòng.\n방 안에 두 사람이 있어요."
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 고르기",
+   "k": "choice",
+   "text": "Trước đây tôi phải đến ga xe lửa để mua vé. Bây giờ tôi đặt vé trên mạng, nhanh hơn nhiều.",
+   "prompt": "Bây giờ người viết đặt vé ở đâu?",
+   "opts": [
+    "trên mạng",
+    "ở ga xe lửa",
+    "ở bến xe"
+   ],
+   "ans": 0,
+   "exp": "물음: Bây giờ người viết đặt vé ở đâu? — 지금 글쓴이는 어디에서 표를 예약해요?\n글: 전에는 표를 사러 기차역에 가야 했어요. 지금은 인터넷으로 표를 예약해서 훨씬 빨라요.\n답: trên mạng"
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 고르기",
+   "k": "choice",
+   "text": "Anh Sơn làm kỹ sư. Nhà anh ấy hơi xa nên buổi trưa anh ấy ăn cơm ở cơ quan.",
+   "prompt": "Buổi trưa anh Sơn ăn cơm ở đâu?",
+   "opts": [
+    "ở quán",
+    "ở nhà",
+    "ở cơ quan"
+   ],
+   "ans": 2,
+   "exp": "물음: Buổi trưa anh Sơn ăn cơm ở đâu? — 점심에 선 씨는 어디에서 밥을 먹어요?\n글: 선 씨는 엔지니어예요. 집이 좀 멀어서 점심에는 직장에서 밥을 먹어요.\n답: ở cơ quan"
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 고르기",
+   "k": "choice",
+   "text": "Cuối tuần anh Nam thường nấu ăn cho cả nhà. Anh ấy vừa xem trên mạng vừa làm bánh xèo.",
+   "prompt": "Anh Nam làm bánh xèo thế nào?",
+   "opts": [
+    "hỏi mẹ rồi làm",
+    "đọc sách rồi làm",
+    "vừa xem trên mạng vừa làm"
+   ],
+   "ans": 2,
+   "exp": "물음: Anh Nam làm bánh xèo thế nào? — 남 씨는 반쎄오를 어떻게 만들어요?\n글: 주말에 남 씨는 보통 온 가족을 위해 요리해요. 인터넷을 보면서 반쎄오를 만들어요.\n답: vừa xem trên mạng vừa làm"
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 고르기",
+   "k": "choice",
+   "text": "Chúng tôi đến khách sạn lúc nửa đêm. Cô tiếp tân đang nằm ngủ trên ghế vì chờ chúng tôi lâu.",
+   "prompt": "Vì sao cô tiếp tân ngủ?",
+   "opts": [
+    "vì chờ khách lâu",
+    "vì không có khách",
+    "vì mới ăn no"
+   ],
+   "ans": 0,
+   "exp": "물음: Vì sao cô tiếp tân ngủ? — 프런트 직원은 왜 자요?\n글: 우리는 한밤중에 호텔에 도착했어요. 프런트 직원은 우리를 오래 기다려서 의자에 누워 자고 있었어요.\n답: vì chờ khách lâu"
+  },
+  {
+   "sec": "B 읽기 · 2 읽고 고르기",
+   "k": "choice",
+   "text": "Gia đình anh Hải thuê phòng gần bãi biển. Buổi chiều con trai xuống biển tắm, còn vợ chồng anh uống bia.",
+   "prompt": "Buổi chiều con trai anh Hải làm gì?",
+   "opts": [
+    "đi chợ",
+    "xuống biển tắm",
+    "uống bia"
+   ],
+   "ans": 1,
+   "exp": "물음: Buổi chiều con trai anh Hải làm gì? — 오후에 하이 씨 아들은 무엇을 해요?\n글: 하이 씨 가족은 해변 근처에 방을 빌렸어요. 오후에 아들은 바다에 들어가 놀고, 부부는 맥주를 마셔요.\n답: xuống biển tắm"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Ở Việt Nam có nhiều xe máy. Người nước ngoài ngạc nhiên, nhưng sau khi quen với giao thông, một số người đã thuê xe máy.",
+   "prompt": "Ở Việt Nam có rất ít xe máy.",
+   "ans": false,
+   "exp": "Ở Việt Nam có rất ít xe máy. — 베트남에는 오토바이가 아주 적어요.\n글: 베트남에는 오토바이가 많아요. 외국인은 놀라지만, 교통에 익숙해진 뒤에는 오토바이를 빌리는 사람도 있어요.\n→ 틀리다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Ở Việt Nam có nhiều xe máy. Người nước ngoài ngạc nhiên, nhưng sau khi quen với giao thông, một số người đã thuê xe máy.",
+   "prompt": "Một số người nước ngoài đã thuê xe máy.",
+   "ans": true,
+   "exp": "Một số người nước ngoài đã thuê xe máy. — 오토바이를 빌린 외국인이 있어요.\n글: 베트남에는 오토바이가 많아요. 외국인은 놀라지만, 교통에 익숙해진 뒤에는 오토바이를 빌리는 사람도 있어요.\n→ 맞다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Em gái tôi học tiếng Anh hai ngày một tuần, thứ hai và thứ sáu. Em ấy chưa lập gia đình và sống với bố mẹ.",
+   "prompt": "Em ấy sống với bố mẹ.",
+   "ans": true,
+   "exp": "Em ấy sống với bố mẹ. — 여동생은 부모님과 살아요.\n글: 여동생은 일주일에 이틀, 월요일과 금요일에 영어를 배워요. 아직 결혼하지 않았고 부모님과 살아요.\n→ 맞다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Em gái tôi học tiếng Anh hai ngày một tuần, thứ hai và thứ sáu. Em ấy chưa lập gia đình và sống với bố mẹ.",
+   "prompt": "Em ấy học tiếng Anh ba ngày một tuần.",
+   "ans": false,
+   "exp": "Em ấy học tiếng Anh ba ngày một tuần. — 여동생은 일주일에 사흘 영어를 배워요.\n글: 여동생은 일주일에 이틀, 월요일과 금요일에 영어를 배워요. 아직 결혼하지 않았고 부모님과 살아요.\n→ 틀리다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Trong bữa ăn hằng ngày của người Việt phải có nước mắm. Món chả giò và bánh xèo sẽ không ngon nếu không có nước mắm.",
+   "prompt": "Người Việt dùng nước mắm hằng ngày.",
+   "ans": true,
+   "exp": "Người Việt dùng nước mắm hằng ngày. — 베트남 사람은 매일 느억맘을 써요.\n글: 베트남 사람의 매일 식사에는 느억맘이 꼭 있어야 해요. 짜조와 반쎄오는 느억맘이 없으면 맛이 없어요.\n→ 맞다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Trong bữa ăn hằng ngày của người Việt phải có nước mắm. Món chả giò và bánh xèo sẽ không ngon nếu không có nước mắm.",
+   "prompt": "Chả giò không cần nước mắm.",
+   "ans": false,
+   "exp": "Chả giò không cần nước mắm. — 짜조에는 느억맘이 필요 없어요.\n글: 베트남 사람의 매일 식사에는 느억맘이 꼭 있어야 해요. 짜조와 반쎄오는 느억맘이 없으면 맛이 없어요.\n→ 틀리다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Anh Minh làm việc ở tầng bốn. Công ty có thang máy nhưng anh ấy đi bộ lên để tập thể dục.",
+   "prompt": "Công ty của anh Minh không có thang máy.",
+   "ans": false,
+   "exp": "Công ty của anh Minh không có thang máy. — 민 씨 회사에는 엘리베이터가 없어요.\n글: 민 씨는 4층에서 일해요. 회사에 엘리베이터가 있지만 운동하려고 걸어 올라가요.\n→ 틀리다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Anh Minh làm việc ở tầng bốn. Công ty có thang máy nhưng anh ấy đi bộ lên để tập thể dục.",
+   "prompt": "Anh Minh đi bộ lên tầng bốn.",
+   "ans": true,
+   "exp": "Anh Minh đi bộ lên tầng bốn. — 민 씨는 4층까지 걸어 올라가요.\n글: 민 씨는 4층에서 일해요. 회사에 엘리베이터가 있지만 운동하려고 걸어 올라가요.\n→ 맞다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Mùa hè vừa rồi gia đình tôi đi Đà Lạt. Khách sạn nằm trên đồi, khá đẹp. Tôi nghĩ mình sẽ trở lại khách sạn này.",
+   "prompt": "Người viết nghĩ sẽ trở lại khách sạn này.",
+   "ans": true,
+   "exp": "Người viết nghĩ sẽ trở lại khách sạn này. — 글쓴이는 이 호텔에 다시 올 것이라고 생각해요.\n글: 지난여름 우리 가족은 달랏에 갔어요. 호텔은 언덕 위에 있고 꽤 아름다웠어요. 이 호텔에 다시 올 것 같아요.\n→ 맞다"
+  },
+  {
+   "sec": "B 읽기 · 3 맞다/틀리다",
+   "k": "tf",
+   "text": "Mùa hè vừa rồi gia đình tôi đi Đà Lạt. Khách sạn nằm trên đồi, khá đẹp. Tôi nghĩ mình sẽ trở lại khách sạn này.",
+   "prompt": "Khách sạn nằm gần bãi biển.",
+   "ans": false,
+   "exp": "Khách sạn nằm gần bãi biển. — 호텔은 해변 가까이에 있어요.\n글: 지난여름 우리 가족은 달랏에 갔어요. 호텔은 언덕 위에 있고 꽤 아름다웠어요. 이 호텔에 다시 올 것 같아요.\n→ 틀리다"
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Từ nhà đến công ty anh đi bằng gì?",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 3,
+   "abc": true,
+   "exp": "Từ nhà đến công ty anh đi bằng gì? — 집에서 회사까지 뭐 타고 가요?\n답: D. Tôi đi bằng xe đạp điện. — 전기 자전거로 가요."
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Nhanh lên. Sắp trễ rồi đấy!",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 9,
+   "abc": true,
+   "exp": "Nhanh lên. Sắp trễ rồi đấy! — 서둘러요. 곧 늦어요!\n답: J. Không trễ đâu. Kìa, xe đến rồi kìa! — 안 늦어요. 저기, 차 왔어요!"
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Đi xe khách đến Đà Lạt mất bao lâu?",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 6,
+   "abc": true,
+   "exp": "Đi xe khách đến Đà Lạt mất bao lâu? — 시외버스로 달랏까지 얼마나 걸려요?\n답: G. Khoảng bảy tiếng. — 7시간쯤이요."
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Sách tiếng Việt giá bao nhiêu?",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 7,
+   "abc": true,
+   "exp": "Sách tiếng Việt giá bao nhiêu? — 베트남어 책은 얼마예요?\n답: H. Một trăm năm mươi ngàn một cuốn. — 한 권에 15만 동이에요."
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Em có muốn trở lại đây nữa không?",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 1,
+   "abc": true,
+   "exp": "Em có muốn trở lại đây nữa không? — 여기 다시 오고 싶어?\n답: B. Dạ, có chứ! Cuối năm sau em sẽ trở lại. — 그럼요! 내년 말에 다시 올 거예요."
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Anh đã uống cà phê sữa đá bao giờ chưa?",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 2,
+   "abc": true,
+   "exp": "Anh đã uống cà phê sữa đá bao giờ chưa? — 아이스 연유커피 마셔 본 적 있어요?\n답: C. Rồi, tôi uống nhiều lần rồi. — 네, 여러 번 마셔 봤어요."
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Bánh xèo có phải là đặc sản của miền Nam không?",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 5,
+   "abc": true,
+   "exp": "Bánh xèo có phải là đặc sản của miền Nam không? — 반쎄오가 남부 특산 음식 맞아요?\n답: F. Không phải đâu, nhiều nơi có bánh xèo. — 아니에요, 여러 곳에 반쎄오가 있어요."
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Bạn thấy món bánh mì thịt thế nào?",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 4,
+   "abc": true,
+   "exp": "Bạn thấy món bánh mì thịt thế nào? — 고기 반미 어때요?\n답: E. Tôi thấy hơi mặn, nhưng rất ngon. — 좀 짠데, 아주 맛있어요."
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Anh có đặt phòng trước không ạ?",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 8,
+   "abc": true,
+   "exp": "Anh có đặt phòng trước không ạ? — 방을 미리 예약하셨어요?\n답: I. Có, tôi có đặt một phòng đơn. — 네, 싱글룸을 하나 예약했어요."
+  },
+  {
+   "sec": "B 읽기 · 4 알맞은 문장",
+   "k": "choice",
+   "prompt": "Hồi nãy tôi có hơi buồn.",
+   "opts": [
+    "Vậy à? Bây giờ chị vui chưa?",
+    "Dạ, có chứ! Cuối năm sau em sẽ trở lại.",
+    "Rồi, tôi uống nhiều lần rồi.",
+    "Tôi đi bằng xe đạp điện.",
+    "Tôi thấy hơi mặn, nhưng rất ngon.",
+    "Không phải đâu, nhiều nơi có bánh xèo.",
+    "Khoảng bảy tiếng.",
+    "Một trăm năm mươi ngàn một cuốn.",
+    "Có, tôi có đặt một phòng đơn.",
+    "Không trễ đâu. Kìa, xe đến rồi kìa!"
+   ],
+   "ans": 0,
+   "abc": true,
+   "exp": "Hồi nãy tôi có hơi buồn. — 아까 좀 슬펐어요.\n답: A. Vậy à? Bây giờ chị vui chưa? — 그래요? 이제 기분이 좋아졌어요?"
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Nếu muốn có phòng riêng thì chị nên đặt trước.",
+   "tiles": [
+    "nếu muốn",
+    "có phòng riêng",
+    "thì",
+    "chị nên",
+    "đặt trước"
+   ],
+   "exp": "Nếu muốn có phòng riêng thì chị nên đặt trước.\n별실을 원하면 미리 예약하는 게 좋아요."
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Đừng đi bằng xe máy vì mệt lắm.",
+   "tiles": [
+    "đừng",
+    "đi",
+    "bằng xe máy",
+    "vì",
+    "mệt lắm"
+   ],
+   "exp": "Đừng đi bằng xe máy vì mệt lắm.\n너무 피곤하니까 오토바이로 가지 마세요.",
+   "alts": [
+    "Vì mệt lắm đừng đi bằng xe máy."
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Cơm sen vừa thơm vừa ngon nên tôi rất thích.",
+   "tiles": [
+    "cơm sen",
+    "vừa thơm",
+    "vừa ngon",
+    "nên tôi",
+    "rất thích"
+   ],
+   "exp": "Cơm sen vừa thơm vừa ngon nên tôi rất thích.\n연잎밥은 향긋하고 맛있어서 저는 아주 좋아해요.",
+   "alts": [
+    "Cơm sen vừa ngon vừa thơm nên tôi rất thích."
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Từ khách sạn, anh Hải và vợ con có thể đi bộ ra biển.",
+   "tiles": [
+    "từ khách sạn",
+    "anh Hải và vợ con",
+    "có thể",
+    "đi bộ",
+    "ra biển"
+   ],
+   "exp": "Từ khách sạn, anh Hải và vợ con có thể đi bộ ra biển.\n호텔에서 하이 씨와 아내와 아이는 바다까지 걸어갈 수 있어요.",
+   "alts": [
+    "Anh Hải và vợ con có thể đi bộ ra biển từ khách sạn.",
+    "Anh Hải và vợ con có thể đi bộ từ khách sạn ra biển."
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 1 낱말 배열",
+   "k": "puzzle",
+   "vi": "Cuối tuần, khách sạn mắc hơn ngày thường.",
+   "tiles": [
+    "cuối tuần",
+    "khách sạn",
+    "mắc",
+    "hơn",
+    "ngày thường"
+   ],
+   "exp": "Cuối tuần, khách sạn mắc hơn ngày thường.\n주말에는 호텔이 평일보다 비싸요.",
+   "alts": [
+    "Khách sạn cuối tuần mắc hơn ngày thường."
+   ]
+  },
+  {
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "type",
+   "prompt": "Trời vẫn mưa nên tôi không đi bộ.",
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Trời vẫn mưa nên tôi không đi bộ."
+   ],
+   "fix": "Trời vẫn mưa nên tôi không đi bộ.",
+   "ko": "아직 비가 와서 저는 걸어가지 않아요.",
+   "dung": true,
+   "exp": "Trời vẫn mưa nên tôi không đi bộ.\n답: Đúng\nTrời vẫn mưa nên tôi không đi bộ. — 아직 비가 와서 저는 걸어가지 않아요."
+  },
+  {
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "type",
+   "prompt": "Cuốn sách tiếng Việt này bao lâu tiền?",
+   "acc": [
+    "Cuốn sách tiếng Việt này bao nhiêu tiền?"
+   ],
+   "fix": "Cuốn sách tiếng Việt này bao nhiêu tiền?",
+   "ko": "이 베트남어 책은 얼마예요?",
+   "dung": true,
+   "exp": "Cuốn sách tiếng Việt này bao lâu tiền?\n답: Cuốn sách tiếng Việt này bao nhiêu tiền?\nCuốn sách tiếng Việt này bao nhiêu tiền? — 이 베트남어 책은 얼마예요?"
+  },
+  {
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "type",
+   "prompt": "Tôi thấy món ăn này vừa ngon rẻ vừa.",
+   "acc": [
+    "Tôi thấy món ăn này vừa ngon vừa rẻ.",
+    "Tôi thấy món ăn này vừa rẻ vừa ngon."
+   ],
+   "fix": "Tôi thấy món ăn này vừa ngon vừa rẻ.",
+   "ko": "이 음식은 맛있고 싼 것 같아요.",
+   "dung": true,
+   "exp": "Tôi thấy món ăn này vừa ngon rẻ vừa.\n답: Tôi thấy món ăn này vừa ngon vừa rẻ.\nTôi thấy món ăn này vừa ngon vừa rẻ. — 이 음식은 맛있고 싼 것 같아요."
+  },
+  {
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "type",
+   "prompt": "Chị Lan đi sau, trước cô Hoa đi.",
+   "acc": [
+    "Chị Lan đi sau, cô Hoa đi trước."
+   ],
+   "fix": "Chị Lan đi sau, cô Hoa đi trước.",
+   "ko": "란 씨는 뒤에 가고, 호아 씨는 앞에 가요.",
+   "dung": true,
+   "exp": "Chị Lan đi sau, trước cô Hoa đi.\n답: Chị Lan đi sau, cô Hoa đi trước.\nChị Lan đi sau, cô Hoa đi trước. — 란 씨는 뒤에 가고, 호아 씨는 앞에 가요."
+  },
+  {
+   "sec": "C 쓰기 · 2 맞으면 Đúng, 틀리면 고치기",
+   "k": "type",
+   "prompt": "Hai năm trước tôi có ra Phú Quốc.",
+   "acc": [
+    "Đúng",
+    "Đ",
+    "Hai năm trước tôi có ra Phú Quốc."
+   ],
+   "fix": "Hai năm trước tôi có ra Phú Quốc.",
+   "ko": "2년 전에 저는 푸꾸옥에 갔어요.",
+   "dung": true,
+   "exp": "Hai năm trước tôi có ra Phú Quốc.\n답: Đúng\nHai năm trước tôi có ra Phú Quốc. — 2년 전에 저는 푸꾸옥에 갔어요."
+  },
+  {
+   "sec": "C 쓰기 · 3 그림 보고 5문장",
+   "k": "free",
+   "img": "mock4-3-w3.webp",
+   "prompt": "그림을 보고 문장 5개를 쓰세요.",
+   "model": [
+    "Đây là bãi biển Mũi Né.",
+    "Anh Hải đang chụp ảnh.",
+    "Chị Lan đang ngồi uống nước.",
+    "Bé Bin đang chơi trên cát.",
+    "Anh Nam đang tắm biển."
+   ],
+   "model_ko": [
+    "여기는 무이네 해변이에요.",
+    "하이 씨는 사진을 찍고 있어요.",
+    "란 씨는 앉아서 물을 마시고 있어요.",
+    "빈은 모래에서 놀고 있어요.",
+    "남 씨는 바다에서 물놀이를 하고 있어요."
+   ],
+   "n": 5,
+   "pts": 10,
+   "gram": {
+    "say": [
+     "đây là bãi biển",
+     "đây là một bãi biển",
+     "bãi biển rất đẹp",
+     "bãi biển này rất đẹp",
+     "bãi biển có bốn người",
+     "có bốn người",
+     "trời rất đẹp",
+     "hôm nay trời đẹp",
+     "đây là bãi biển mũi né",
+     "anh hải đang chụp ảnh",
+     "chị lan đang ngồi uống nước",
+     "bé bin đang chơi trên cát",
+     "anh nam đang tắm biển"
+    ],
+    "facts": [
+     [
+      [
+       "anh hải",
+       "anh ấy"
+      ],
+      [
+       "đang chụp ảnh",
+       "đang đứng",
+       "đang đứng chụp ảnh",
+       "đang chụp ảnh biển"
+      ],
+      0
+     ],
+     [
+      [
+       "chị lan",
+       "chị ấy",
+       "cô ấy"
+      ],
+      [
+       "đang ngồi",
+       "đang uống",
+       "đang uống nước",
+       "đang ngồi uống nước",
+       "đang ngồi trên ghế",
+       "đang ngồi trên ghế uống nước"
+      ],
+      0
+     ],
+     [
+      [
+       "bé bin",
+       "bé",
+       "em ấy"
+      ],
+      [
+       "đang ngồi",
+       "đang ngồi trên cát",
+       "đang chơi",
+       "đang chơi trên cát",
+       "đang đi chơi"
+      ],
+      0
+     ],
+     [
+      [
+       "anh nam",
+       "anh ấy"
+      ],
+      [
+       "đang tắm",
+       "đang tắm biển",
+       "đang ở dưới biển"
+      ],
+      0
+     ],
+     [
+      [
+       "họ",
+       "bốn người"
+      ],
+      [
+       "đang đi du lịch",
+       "đang đi chơi",
+       "đang ở bãi biển",
+       "đang ở mũi né"
+      ],
+      1
+     ]
+    ],
+    "pre": [
+     "bây giờ",
+     "hôm nay",
+     "ở bãi biển",
+     "ở mũi né"
+    ],
+    "post": [
+     "ở bãi biển",
+     "ở mũi né",
+     "trên bãi biển",
+     "bây giờ",
+     "hôm nay"
+    ]
+   },
+   "exp": "Đây là bãi biển Mũi Né. — 여기는 무이네 해변이에요.\nAnh Hải đang chụp ảnh. — 하이 씨는 사진을 찍고 있어요.\nChị Lan đang ngồi uống nước. — 란 씨는 앉아서 물을 마시고 있어요.\nBé Bin đang chơi trên cát. — 빈은 모래에서 놀고 있어요.\nAnh Nam đang tắm biển. — 남 씨는 바다에서 물놀이를 하고 있어요."
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "kẹt xe",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "tự do",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "tiện lợi",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "thư viện",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "giá cả",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "gỏi cá",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "rau thơm",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "chìa khóa",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "hồ bơi",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 1 낱말 읽기",
+   "k": "say",
+   "vi": "may mắn",
+   "pts": 1
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Tài xế mới gọi cho tôi.",
+   "pts": 2
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Bao giờ cô ấy về nước?",
+   "pts": 2
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Cho tôi ba món đó trước đi.",
+   "pts": 2
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Cô ấy đang ngồi trên xe.",
+   "pts": 2
+  },
+  {
+   "sec": "D 말하기 · 2 문장 읽기",
+   "k": "say",
+   "vi": "Trong phòng có hai người.",
+   "pts": 2
+  }
+ ]
+}

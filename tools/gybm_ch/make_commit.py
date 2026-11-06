@@ -70,6 +70,7 @@ MY += ["tools/daily22/adda19.py"]   # 2026-10-15 a19
 MY += ["tools/daily22/addb19.py"]   # 2026-10-15 b19
 MY += ["tools/daily22/fix_a17_19.py"]   # 2026-10-16 A반 17~19 바로잡기
 MY += ["tools/mock3/textbook3.py", "tools/daily22/add20.py"]   # 2026-10-17
+MY += [f"data/mock4_{i}.json" for i in range(1, 6)] + [f"tools/mock4/_aud_{i}.json" for i in range(1, 6)] + ["tools/mock4/" + n for n in ("common4.py", "sets_a.py", "sets_b.py", "sets_c.py", "sets_w3.py", "build.py", "make_words.py", "ch114_words.json", "gen_scenes.py", "w3_labels4.py", "cover4.py", "metrics4.py")] + ["tools/exam_scope/build.py", "tools/mock3/dialog_audio3.py", "data/textbook_ch.json", "data/weekly.json"]   # 주간시험 4 모의고사 (2026-11-06)
 MY += ["tools/sound_fix.py"]   # 2026-10-17 소리 점검
 MY = [f for f in MY if (ROOT / f).exists()]   # 아직 없는 파일(_senses.json 은 검수 뒤 생김)은 건너뛴다
 MY += [str(p.relative_to(ROOT)) for p in (ROOT / "tools/gybm_ch").glob("*") if p.is_file()]
@@ -98,7 +99,7 @@ def walk(o):
         for v in o.values(): walk(v)
     elif isinstance(o, list):
         for v in o: walk(v)
-for f in ("gybm", "days", "order", "grammar", "weekly", "daily22", "mock1_1", "mock2_1", "mock2_2", "mock2_3", "mock2_4", "mock2_5", "mock3_1", "mock3_2", "mock3_3", "mock3_4", "mock3_5"): walk(   # weekly: 주간 시험 그림   # grammar: 줌 수업 문법 예문 소리도 올린다 (2026-09-27)   # daily22·exam1: 단어 시험·1차 시험지 문장 소리 — 빠져서 404 였다 (2026-10-02)
+for f in ("gybm", "days", "order", "grammar", "weekly", "daily22", "mock1_1", "mock2_1", "mock2_2", "mock2_3", "mock2_4", "mock2_5", "mock3_1", "mock3_2", "mock3_3", "mock3_4", "mock3_5", "mock4_1", "mock4_2", "mock4_3", "mock4_4", "mock4_5"): walk(   # weekly: 주간 시험 그림   # grammar: 줌 수업 문법 예문 소리도 올린다 (2026-09-27)   # daily22·exam1: 단어 시험·1차 시험지 문장 소리 — 빠져서 404 였다 (2026-10-02)
     json.loads((ROOT / f"data/{f}.json").read_text(encoding="utf-8")))
 sys.path.insert(0, str(ROOT / "tools"))
 import build_gram_main            # 메인 교재 문법의 소리(예문·문장 안 낱말·핵심 낱말)도 같이 올린다

@@ -28,7 +28,8 @@ def main():
     R1 = [f'1-{i}' for i in (1, 2, 3)]
     rounds = [{'n': 1, 'ch': R1, 'extra': []},
               {'n': 2, 'ch': [f'1-{i}' for i in range(4, 8)], 'extra': []},   # 4~7과만 (대표님 2026-10-26 — 1~3과는 1회)
-              {'n': 3, 'ch': ['1-8', '1-9', '1-10'], 'extra': ['33.6', '33.5', '33.2']}]
+              {'n': 3, 'ch': ['1-8', '1-9', '1-10'], 'extra': ['33.6', '33.5', '33.2']},
+              {'n': 4, 'ch': ['1-11', '1-12', '2-1', '2-2'], 'extra': []}]   # 1권 11과 ~ 2권 2과 (대표님 2026-11-06)
     out = {'note': __doc__.split('\n')[1], 'ch': ch, 'rounds': rounds}
     (R / 'data/textbook_ch.json').write_text(json.dumps(out, ensure_ascii=False, separators=(',', ':')), encoding='utf-8')
     for r in rounds: print(r['n'], [(c, len(ch[c]['g'])) for c in r['ch']], r['extra'])
