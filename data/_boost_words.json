@@ -1,0 +1,1369 @@
+{
+ "note": "서브교재(Tiếng Việt Cơ sở)·줌 수업자료 OCR 후보(2026-09-25)에서 일상회화에 '보강' 세션으로 붙일 낱말. 대표님 지시 #2. 앱에는 tools/build_boost.py 가 days.json 35일차부터 붙인다.",
+ "sessions": [
+  {
+   "theme": "보강 · 달 이름",
+   "words": [
+    {
+     "vi": "tháng một",
+     "ko": "1월",
+     "ex": {
+      "vi": "Tháng một ở Hà Nội rất lạnh.",
+      "ko": "1월의 하노이는 아주 추워요."
+     }
+    },
+    {
+     "vi": "tháng hai",
+     "ko": "2월",
+     "ex": {
+      "vi": "Tháng hai có Tết.",
+      "ko": "2월에는 설이 있어요."
+     }
+    },
+    {
+     "vi": "tháng ba",
+     "ko": "3월",
+     "ex": {
+      "vi": "Sinh nhật tôi vào tháng ba.",
+      "ko": "제 생일은 3월이에요."
+     }
+    },
+    {
+     "vi": "tháng tư",
+     "ko": "4월 (tháng bốn 이라 하지 않는다)",
+     "ex": {
+      "vi": "Tháng tư trời bắt đầu nóng.",
+      "ko": "4월이면 날씨가 더워지기 시작해요."
+     }
+    },
+    {
+     "vi": "tháng năm",
+     "ko": "5월",
+     "ex": {
+      "vi": "Tháng năm tôi đi du lịch.",
+      "ko": "5월에 저는 여행을 가요."
+     }
+    },
+    {
+     "vi": "tháng sáu",
+     "ko": "6월",
+     "ex": {
+      "vi": "Tháng sáu ở đây hay mưa.",
+      "ko": "6월에 여기는 비가 자주 와요."
+     }
+    },
+    {
+     "vi": "tháng bảy",
+     "ko": "7월",
+     "ex": {
+      "vi": "Tháng bảy con tôi nghỉ hè.",
+      "ko": "7월에 우리 아이는 여름방학이에요."
+     }
+    },
+    {
+     "vi": "tháng tám",
+     "ko": "8월",
+     "ex": {
+      "vi": "Tháng tám tôi về Hàn Quốc.",
+      "ko": "8월에 저는 한국에 돌아가요."
+     }
+    },
+    {
+     "vi": "tháng chín",
+     "ko": "9월",
+     "ex": {
+      "vi": "Tháng chín trường bắt đầu học.",
+      "ko": "9월에 학교가 개학해요."
+     }
+    },
+    {
+     "vi": "tháng mười",
+     "ko": "10월",
+     "ex": {
+      "vi": "Tháng mười trời mát hơn.",
+      "ko": "10월에는 날씨가 더 시원해요."
+     }
+    },
+    {
+     "vi": "tháng mười một",
+     "ko": "11월",
+     "ex": {
+      "vi": "Tháng mười một tôi rất bận.",
+      "ko": "11월에 저는 아주 바빠요."
+     }
+    },
+    {
+     "vi": "tháng mười hai",
+     "ko": "12월",
+     "ex": {
+      "vi": "Tháng mười hai có lễ Giáng sinh.",
+      "ko": "12월에는 크리스마스가 있어요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 때와 인사 표현",
+   "words": [
+    {
+     "vi": "ngày kia",
+     "ko": "모레",
+     "ex": {
+      "vi": "Ngày kia tôi đi Hà Nội.",
+      "ko": "모레 저는 하노이에 가요."
+     }
+    },
+    {
+     "vi": "ngày hôm nay",
+     "ko": "오늘 하루",
+     "ex": {
+      "vi": "Ngày hôm nay tôi rất bận.",
+      "ko": "오늘 하루 저는 아주 바빠요."
+     }
+    },
+    {
+     "vi": "ngày nay",
+     "ko": "요즘, 오늘날",
+     "ex": {
+      "vi": "Ngày nay ai cũng có điện thoại.",
+      "ko": "요즘은 누구나 휴대전화가 있어요."
+     }
+    },
+    {
+     "vi": "ngày xưa",
+     "ko": "옛날",
+     "ex": {
+      "vi": "Ngày xưa nhà tôi ở quê.",
+      "ko": "옛날에 우리 집은 시골에 있었어요."
+     }
+    },
+    {
+     "vi": "năm mới",
+     "ko": "새해",
+     "ex": {
+      "vi": "Chúc mừng năm mới!",
+      "ko": "새해 복 많이 받으세요!"
+     }
+    },
+    {
+     "vi": "lần nữa",
+     "ko": "한 번 더",
+     "ex": {
+      "vi": "Anh nói lần nữa được không?",
+      "ko": "한 번 더 말씀해 주시겠어요?"
+     }
+    },
+    {
+     "vi": "mọi lúc",
+     "ko": "언제나, 아무 때나",
+     "ex": {
+      "vi": "Chị gọi cho tôi mọi lúc nhé.",
+      "ko": "언제든지 저에게 전화하세요."
+     }
+    },
+    {
+     "vi": "hầu như",
+     "ko": "거의",
+     "ex": {
+      "vi": "Hầu như ngày nào tôi cũng đi bộ.",
+      "ko": "저는 거의 매일 걸어요."
+     }
+    },
+    {
+     "vi": "bỗng nhiên",
+     "ko": "갑자기",
+     "ex": {
+      "vi": "Bỗng nhiên trời mưa to.",
+      "ko": "갑자기 비가 많이 왔어요."
+     }
+    },
+    {
+     "vi": "về sớm",
+     "ko": "일찍 돌아가다",
+     "ex": {
+      "vi": "Hôm nay tôi về sớm.",
+      "ko": "오늘은 제가 일찍 들어가요."
+     }
+    },
+    {
+     "vi": "giờ phút",
+     "ko": "순간, 때",
+     "ex": {
+      "vi": "Giờ phút này tôi rất vui.",
+      "ko": "지금 이 순간 저는 아주 기뻐요."
+     }
+    },
+    {
+     "vi": "tôi đi nhé",
+     "ko": "저 갈게요",
+     "ex": {
+      "vi": "Muộn rồi, tôi đi nhé!",
+      "ko": "늦었네요, 저 갈게요!"
+     }
+    },
+    {
+     "vi": "quý vị",
+     "ko": "여러분 (존칭)",
+     "ex": {
+      "vi": "Xin chào quý vị!",
+      "ko": "여러분 안녕하세요!"
+     }
+    },
+    {
+     "vi": "chào các bạn",
+     "ko": "여러분 안녕 (친구들에게)",
+     "ex": {
+      "vi": "Chào các bạn, mình là Nam.",
+      "ko": "여러분 안녕, 나는 남이야."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 이어 주는 말과 강조",
+   "words": [
+    {
+     "vi": "cho nên",
+     "ko": "그래서",
+     "ex": {
+      "vi": "Trời mưa, cho nên tôi ở nhà.",
+      "ko": "비가 와서 저는 집에 있어요."
+     }
+    },
+    {
+     "vi": "bởi vậy",
+     "ko": "그러니까, 그래서",
+     "ex": {
+      "vi": "Bởi vậy tôi không đi.",
+      "ko": "그래서 저는 안 가요."
+     }
+    },
+    {
+     "vi": "vì thế",
+     "ko": "그 때문에",
+     "ex": {
+      "vi": "Vì thế chúng tôi đến muộn.",
+      "ko": "그 때문에 우리는 늦게 도착했어요."
+     }
+    },
+    {
+     "vi": "tuy vậy",
+     "ko": "그렇지만, 그럼에도",
+     "ex": {
+      "vi": "Món này đắt, tuy vậy rất ngon.",
+      "ko": "이 음식은 비싸지만 아주 맛있어요."
+     }
+    },
+    {
+     "vi": "vậy mà",
+     "ko": "그런데도",
+     "ex": {
+      "vi": "Tôi ngủ sớm, vậy mà vẫn mệt.",
+      "ko": "일찍 잤는데도 여전히 피곤해요."
+     }
+    },
+    {
+     "vi": "thế mà",
+     "ko": "그런데도 (뜻밖)",
+     "ex": {
+      "vi": "Nhìn nhỏ thế mà nặng lắm.",
+      "ko": "작아 보이는데도 아주 무거워요."
+     }
+    },
+    {
+     "vi": "nhờ có",
+     "ko": "~ 덕분에",
+     "ex": {
+      "vi": "Nhờ có bạn, tôi làm xong việc.",
+      "ko": "네 덕분에 일을 끝냈어요."
+     }
+    },
+    {
+     "vi": "hết sức",
+     "ko": "최선을 다해, 매우",
+     "ex": {
+      "vi": "Tôi sẽ hết sức cố gắng.",
+      "ko": "저는 최선을 다해 노력할게요."
+     }
+    },
+    {
+     "vi": "không hề",
+     "ko": "전혀 ~않다",
+     "ex": {
+      "vi": "Tôi không hề biết chuyện đó.",
+      "ko": "저는 그 일을 전혀 몰랐어요."
+     }
+    },
+    {
+     "vi": "biết bao",
+     "ko": "얼마나 ~인지",
+     "ex": {
+      "vi": "Vui biết bao khi gặp lại bạn!",
+      "ko": "너를 다시 만나서 얼마나 기쁜지!"
+     }
+    },
+    {
+     "vi": "đến mức",
+     "ko": "~할 정도로",
+     "ex": {
+      "vi": "Tôi mệt đến mức không muốn ăn.",
+      "ko": "저는 먹기 싫을 정도로 피곤해요."
+     }
+    },
+    {
+     "vi": "ai đó",
+     "ko": "누군가",
+     "ex": {
+      "vi": "Ai đó đang gõ cửa.",
+      "ko": "누군가 문을 두드려요."
+     }
+    },
+    {
+     "vi": "gì nữa",
+     "ko": "또 뭐, 그 밖에 무엇",
+     "ex": {
+      "vi": "Anh còn cần gì nữa không?",
+      "ko": "또 필요한 게 있으세요?"
+     }
+    },
+    {
+     "vi": "phần nào",
+     "ko": "어느 정도",
+     "ex": {
+      "vi": "Tôi hiểu phần nào.",
+      "ko": "저는 어느 정도 이해해요."
+     }
+    },
+    {
+     "vi": "có điều",
+     "ko": "다만, 그런데",
+     "ex": {
+      "vi": "Món này ngon, có điều hơi cay.",
+      "ko": "이 음식은 맛있는데 다만 좀 매워요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 가리키기와 묻기",
+   "words": [
+    {
+     "vi": "cái gì",
+     "ko": "무엇",
+     "ex": {
+      "vi": "Đây là cái gì?",
+      "ko": "이것은 무엇이에요?"
+     }
+    },
+    {
+     "vi": "cái này",
+     "ko": "이것",
+     "ex": {
+      "vi": "Cho tôi cái này.",
+      "ko": "이것 주세요."
+     }
+    },
+    {
+     "vi": "cái kia",
+     "ko": "저것",
+     "ex": {
+      "vi": "Cái kia giá bao nhiêu?",
+      "ko": "저것은 얼마예요?"
+     }
+    },
+    {
+     "vi": "thế này",
+     "ko": "이렇게",
+     "ex": {
+      "vi": "Anh làm thế này nhé.",
+      "ko": "이렇게 하세요."
+     }
+    },
+    {
+     "vi": "như thế",
+     "ko": "그렇게, 그와 같이",
+     "ex": {
+      "vi": "Đừng nói như thế.",
+      "ko": "그렇게 말하지 마세요."
+     }
+    },
+    {
+     "vi": "việc gì",
+     "ko": "무슨 일",
+     "ex": {
+      "vi": "Anh có việc gì không?",
+      "ko": "무슨 일 있으세요?"
+     }
+    },
+    {
+     "vi": "không thích",
+     "ko": "좋아하지 않다",
+     "ex": {
+      "vi": "Tôi không thích ăn cay.",
+      "ko": "저는 매운 걸 안 좋아해요."
+     }
+    },
+    {
+     "vi": "khi nào cũng",
+     "ko": "언제나",
+     "ex": {
+      "vi": "Khi nào cũng có người giúp tôi.",
+      "ko": "언제나 저를 도와주는 사람이 있어요."
+     }
+    },
+    {
+     "vi": "nói chung",
+     "ko": "일반적으로",
+     "ex": {
+      "vi": "Nói chung người Hà Nội dậy sớm.",
+      "ko": "일반적으로 하노이 사람들은 일찍 일어나요."
+     }
+    },
+    {
+     "vi": "nói riêng",
+     "ko": "특히, 개별적으로",
+     "ex": {
+      "vi": "Tôi thích nhiều món, nói riêng là phở.",
+      "ko": "저는 여러 음식을 좋아하지만 특히 쌀국수를 좋아해요."
+     }
+    },
+    {
+     "vi": "tùy theo",
+     "ko": "~에 따라",
+     "ex": {
+      "vi": "Giá thay đổi tùy theo mùa.",
+      "ko": "가격은 계절에 따라 바뀌어요."
+     }
+    },
+    {
+     "vi": "trên dưới",
+     "ko": "위아래, 약 ~쯤",
+     "ex": {
+      "vi": "Anh ấy trên dưới bốn mươi tuổi.",
+      "ko": "그분은 마흔 살쯤 되었어요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 음식과 음료",
+   "words": [
+    {
+     "vi": "đồ uống",
+     "ko": "음료",
+     "ex": {
+      "vi": "Chị muốn gọi đồ uống gì?",
+      "ko": "어떤 음료를 주문하시겠어요?"
+     }
+    },
+    {
+     "vi": "cà phê sữa",
+     "ko": "연유 커피",
+     "ex": {
+      "vi": "Cho tôi một ly cà phê sữa đá.",
+      "ko": "연유 아이스커피 한 잔 주세요."
+     }
+    },
+    {
+     "vi": "nước dừa",
+     "ko": "코코넛 주스",
+     "ex": {
+      "vi": "Trời nóng nên tôi uống nước dừa.",
+      "ko": "더워서 저는 코코넛 주스를 마셔요."
+     }
+    },
+    {
+     "vi": "nước chanh",
+     "ko": "레몬(라임) 주스",
+     "ex": {
+      "vi": "Cho tôi một ly nước chanh.",
+      "ko": "레몬 주스 한 잔 주세요."
+     }
+    },
+    {
+     "vi": "rượu vang",
+     "ko": "와인",
+     "ex": {
+      "vi": "Tối nay chúng ta uống rượu vang nhé.",
+      "ko": "오늘 저녁에 우리 와인 마셔요."
+     }
+    },
+    {
+     "vi": "khoai lang",
+     "ko": "고구마",
+     "ex": {
+      "vi": "Tôi thích ăn khoai lang nướng.",
+      "ko": "저는 군고구마를 좋아해요."
+     }
+    },
+    {
+     "vi": "thanh long",
+     "ko": "용과",
+     "ex": {
+      "vi": "Thanh long ở đây rất ngọt.",
+      "ko": "여기 용과는 아주 달아요."
+     }
+    },
+    {
+     "vi": "gỏi cuốn",
+     "ko": "월남쌈(생 스프링롤)",
+     "ex": {
+      "vi": "Gỏi cuốn chấm với nước mắm.",
+      "ko": "월남쌈은 느억맘에 찍어 먹어요."
+     }
+    },
+    {
+     "vi": "kim chi",
+     "ko": "김치",
+     "ex": {
+      "vi": "Người Hàn Quốc ăn kim chi mỗi ngày.",
+      "ko": "한국 사람들은 매일 김치를 먹어요."
+     }
+    },
+    {
+     "vi": "bánh đa",
+     "ko": "쌀과자, 쌀국수 면 (종류)",
+     "ex": {
+      "vi": "Bà bán bánh đa ở chợ.",
+      "ko": "할머니가 시장에서 쌀과자를 팔아요."
+     }
+    },
+    {
+     "vi": "dưa",
+     "ko": "참외·수박류, 절임채소",
+     "ex": {
+      "vi": "Mùa hè tôi hay ăn dưa hấu.",
+      "ko": "여름에 저는 수박을 자주 먹어요."
+     }
+    },
+    {
+     "vi": "mía",
+     "ko": "사탕수수",
+     "ex": {
+      "vi": "Nước mía uống rất mát.",
+      "ko": "사탕수수 주스는 마시면 아주 시원해요."
+     }
+    },
+    {
+     "vi": "ốc",
+     "ko": "달팽이, 고둥",
+     "ex": {
+      "vi": "Chúng tôi đi ăn ốc buổi tối.",
+      "ko": "우리는 저녁에 달팽이 요리를 먹으러 가요."
+     }
+    },
+    {
+     "vi": "ăn thịt",
+     "ko": "고기를 먹다",
+     "ex": {
+      "vi": "Tối nay tôi muốn ăn thịt.",
+      "ko": "오늘 저녁엔 고기를 먹고 싶어요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 동네와 장소",
+   "words": [
+    {
+     "vi": "khu phố",
+     "ko": "동네, 거리 구역",
+     "ex": {
+      "vi": "Khu phố này rất yên tĩnh.",
+      "ko": "이 동네는 아주 조용해요."
+     }
+    },
+    {
+     "vi": "ký túc xá",
+     "ko": "기숙사",
+     "ex": {
+      "vi": "Sinh viên ở ký túc xá.",
+      "ko": "학생들은 기숙사에 살아요."
+     }
+    },
+    {
+     "vi": "nhà khách",
+     "ko": "게스트하우스",
+     "ex": {
+      "vi": "Chúng tôi ở nhà khách một đêm.",
+      "ko": "우리는 게스트하우스에서 하룻밤 묵었어요."
+     }
+    },
+    {
+     "vi": "khu công nghiệp",
+     "ko": "산업단지",
+     "ex": {
+      "vi": "Công ty tôi ở khu công nghiệp.",
+      "ko": "우리 회사는 산업단지에 있어요."
+     }
+    },
+    {
+     "vi": "bến xe buýt",
+     "ko": "버스 정류장",
+     "ex": {
+      "vi": "Bến xe buýt ở gần đây không?",
+      "ko": "버스 정류장이 이 근처에 있어요?"
+     }
+    },
+    {
+     "vi": "sân chơi",
+     "ko": "놀이터",
+     "ex": {
+      "vi": "Bọn trẻ chơi ở sân chơi.",
+      "ko": "아이들이 놀이터에서 놀아요."
+     }
+    },
+    {
+     "vi": "làng nghề",
+     "ko": "수공예 전통 마을",
+     "ex": {
+      "vi": "Chúng tôi thăm một làng nghề gốm.",
+      "ko": "우리는 도자기 전통 마을을 방문했어요."
+     }
+    },
+    {
+     "vi": "núi",
+     "ko": "산",
+     "ex": {
+      "vi": "Cuối tuần tôi leo núi.",
+      "ko": "주말에 저는 산에 올라요."
+     }
+    },
+    {
+     "vi": "đền",
+     "ko": "사당, 신전",
+     "ex": {
+      "vi": "Người ta đến đền để cầu may.",
+      "ko": "사람들은 행운을 빌러 사당에 가요."
+     }
+    },
+    {
+     "vi": "đất",
+     "ko": "땅, 흙",
+     "ex": {
+      "vi": "Anh ấy mua một mảnh đất ở quê.",
+      "ko": "그는 시골에 땅을 샀어요."
+     }
+    },
+    {
+     "vi": "ngoài trời",
+     "ko": "야외",
+     "ex": {
+      "vi": "Tối nay ta ăn ngoài trời nhé.",
+      "ko": "오늘 저녁은 야외에서 먹어요."
+     }
+    },
+    {
+     "vi": "bên ngoài",
+     "ko": "바깥",
+     "ex": {
+      "vi": "Bên ngoài trời đang mưa.",
+      "ko": "바깥에 비가 오고 있어요."
+     }
+    },
+    {
+     "vi": "hang động",
+     "ko": "동굴",
+     "ex": {
+      "vi": "Chúng tôi vào tham quan hang động.",
+      "ko": "우리는 동굴을 구경하러 들어갔어요."
+     }
+    },
+    {
+     "vi": "cây xanh",
+     "ko": "초목, 푸른 나무",
+     "ex": {
+      "vi": "Thành phố này có nhiều cây xanh.",
+      "ko": "이 도시에는 푸른 나무가 많아요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 입고 씻고 사고 팔기",
+   "words": [
+    {
+     "vi": "giày cao gót",
+     "ko": "하이힐",
+     "ex": {
+      "vi": "Chị ấy đi giày cao gót đến công ty.",
+      "ko": "그녀는 하이힐을 신고 회사에 와요."
+     }
+    },
+    {
+     "vi": "thợ may",
+     "ko": "재단사",
+     "ex": {
+      "vi": "Tôi nhờ thợ may sửa cái áo này.",
+      "ko": "저는 재단사에게 이 옷을 고쳐 달라고 부탁해요."
+     }
+    },
+    {
+     "vi": "giặt quần áo",
+     "ko": "빨래하다",
+     "ex": {
+      "vi": "Cuối tuần tôi giặt quần áo.",
+      "ko": "주말에 저는 빨래를 해요."
+     }
+    },
+    {
+     "vi": "gội đầu",
+     "ko": "머리를 감다",
+     "ex": {
+      "vi": "Sáng nào tôi cũng gội đầu.",
+      "ko": "저는 아침마다 머리를 감아요."
+     }
+    },
+    {
+     "vi": "mũ bảo hiểm",
+     "ko": "헬멧",
+     "ex": {
+      "vi": "Đi xe máy phải đội mũ bảo hiểm.",
+      "ko": "오토바이를 탈 때는 헬멧을 써야 해요."
+     }
+    },
+    {
+     "vi": "bánh xe",
+     "ko": "바퀴",
+     "ex": {
+      "vi": "Bánh xe sau bị xẹp rồi.",
+      "ko": "뒷바퀴가 바람이 빠졌어요."
+     }
+    },
+    {
+     "vi": "tăng giá",
+     "ko": "값이 오르다",
+     "ex": {
+      "vi": "Xăng lại tăng giá rồi.",
+      "ko": "휘발유가 또 올랐어요."
+     }
+    },
+    {
+     "vi": "miễn thuế",
+     "ko": "면세",
+     "ex": {
+      "vi": "Cửa hàng miễn thuế ở sân bay.",
+      "ko": "공항에 면세점이 있어요."
+     }
+    },
+    {
+     "vi": "mở hàng",
+     "ko": "장사를 시작하다 (첫 손님)",
+     "ex": {
+      "vi": "Chị ơi, mua giúp em để mở hàng nhé!",
+      "ko": "언니, 첫 손님으로 좀 사 주세요!"
+     }
+    },
+    {
+     "vi": "tiền bạc",
+     "ko": "돈, 금전",
+     "ex": {
+      "vi": "Tiền bạc không phải là tất cả.",
+      "ko": "돈이 전부는 아니에요."
+     }
+    },
+    {
+     "vi": "quần",
+     "ko": "바지",
+     "ex": {
+      "vi": "Tôi muốn mua một cái quần mới.",
+      "ko": "저는 새 바지를 사고 싶어요."
+     }
+    },
+    {
+     "vi": "lụa",
+     "ko": "비단",
+     "ex": {
+      "vi": "Áo dài làm bằng lụa rất đẹp.",
+      "ko": "비단으로 만든 아오자이는 아주 예뻐요."
+     }
+    },
+    {
+     "vi": "may mặc",
+     "ko": "옷 짓기, 의류",
+     "ex": {
+      "vi": "Chị ấy làm ở công ty may mặc.",
+      "ko": "그녀는 의류 회사에서 일해요."
+     }
+    },
+    {
+     "vi": "thuê bao",
+     "ko": "가입자, 회선(휴대전화 번호)",
+     "ex": {
+      "vi": "Số thuê bao này không liên lạc được.",
+      "ko": "이 번호는 연결되지 않아요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 서류와 여행",
+   "words": [
+    {
+     "vi": "tờ khai",
+     "ko": "신고서, 양식",
+     "ex": {
+      "vi": "Anh điền vào tờ khai này nhé.",
+      "ko": "이 신고서에 기입해 주세요."
+     }
+    },
+    {
+     "vi": "nhập cảnh",
+     "ko": "입국",
+     "ex": {
+      "vi": "Tôi làm thủ tục nhập cảnh ở sân bay.",
+      "ko": "저는 공항에서 입국 수속을 해요."
+     }
+    },
+    {
+     "vi": "mã số",
+     "ko": "번호, 코드",
+     "ex": {
+      "vi": "Anh cho tôi mã số của anh.",
+      "ko": "번호를 알려 주세요."
+     }
+    },
+    {
+     "vi": "hướng dẫn viên",
+     "ko": "가이드",
+     "ex": {
+      "vi": "Hướng dẫn viên nói tiếng Hàn rất giỏi.",
+      "ko": "가이드가 한국어를 아주 잘해요."
+     }
+    },
+    {
+     "vi": "thư điện tử",
+     "ko": "이메일",
+     "ex": {
+      "vi": "Chị gửi thư điện tử cho tôi nhé.",
+      "ko": "저에게 이메일 보내 주세요."
+     }
+    },
+    {
+     "vi": "xin việc",
+     "ko": "구직하다, 일자리를 구하다",
+     "ex": {
+      "vi": "Anh ấy đang đi xin việc.",
+      "ko": "그는 일자리를 구하러 다니고 있어요."
+     }
+    },
+    {
+     "vi": "lý lịch",
+     "ko": "이력, 신상 정보",
+     "ex": {
+      "vi": "Tôi đã nộp lý lịch cho công ty.",
+      "ko": "저는 회사에 이력서를 냈어요."
+     }
+    },
+    {
+     "vi": "công dân",
+     "ko": "시민, 국민",
+     "ex": {
+      "vi": "Công dân Hàn Quốc được miễn thị thực.",
+      "ko": "한국 국민은 비자가 면제돼요."
+     }
+    },
+    {
+     "vi": "quốc kỳ",
+     "ko": "국기",
+     "ex": {
+      "vi": "Quốc kỳ Việt Nam màu đỏ có ngôi sao vàng.",
+      "ko": "베트남 국기는 빨간 바탕에 노란 별이 있어요."
+     }
+    },
+    {
+     "vi": "thám hiểm",
+     "ko": "탐험하다",
+     "ex": {
+      "vi": "Anh ấy thích đi thám hiểm.",
+      "ko": "그는 탐험 다니는 걸 좋아해요."
+     }
+    },
+    {
+     "vi": "đóng cửa",
+     "ko": "문을 닫다, 문 닫다",
+     "ex": {
+      "vi": "Cửa hàng đóng cửa lúc chín giờ.",
+      "ko": "가게는 9시에 문을 닫아요."
+     }
+    },
+    {
+     "vi": "đón bạn",
+     "ko": "친구를 마중하다",
+     "ex": {
+      "vi": "Tôi ra sân bay đón bạn.",
+      "ko": "저는 친구를 마중하러 공항에 나가요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 사람과 관계",
+   "words": [
+    {
+     "vi": "bác trai",
+     "ko": "큰아버지, 아저씨(부모 연배 남자)",
+     "ex": {
+      "vi": "Bác trai tôi sống ở Đà Nẵng.",
+      "ko": "우리 큰아버지는 다낭에 사세요."
+     }
+    },
+    {
+     "vi": "ông chủ",
+     "ko": "사장님, 주인",
+     "ex": {
+      "vi": "Ông chủ đang họp.",
+      "ko": "사장님은 회의 중이에요."
+     }
+    },
+    {
+     "vi": "em bé",
+     "ko": "아기",
+     "ex": {
+      "vi": "Em bé đang ngủ.",
+      "ko": "아기가 자고 있어요."
+     }
+    },
+    {
+     "vi": "người quen",
+     "ko": "아는 사람",
+     "ex": {
+      "vi": "Tôi có một người quen ở Huế.",
+      "ko": "저는 후에에 아는 사람이 있어요."
+     }
+    },
+    {
+     "vi": "người đẹp",
+     "ko": "미인",
+     "ex": {
+      "vi": "Cô ấy là một người đẹp.",
+      "ko": "그녀는 미인이에요."
+     }
+    },
+    {
+     "vi": "họa sĩ",
+     "ko": "화가",
+     "ex": {
+      "vi": "Chú tôi là họa sĩ.",
+      "ko": "우리 삼촌은 화가예요."
+     }
+    },
+    {
+     "vi": "nhà văn",
+     "ko": "작가",
+     "ex": {
+      "vi": "Nhà văn này rất nổi tiếng.",
+      "ko": "이 작가는 아주 유명해요."
+     }
+    },
+    {
+     "vi": "nhà giáo",
+     "ko": "교육자, 교사",
+     "ex": {
+      "vi": "Mẹ tôi là nhà giáo.",
+      "ko": "우리 어머니는 교사세요."
+     }
+    },
+    {
+     "vi": "giúp việc",
+     "ko": "가사도우미",
+     "ex": {
+      "vi": "Nhà tôi có người giúp việc.",
+      "ko": "우리 집에는 가사도우미가 있어요."
+     }
+    },
+    {
+     "vi": "đối tác",
+     "ko": "협력 상대, 파트너",
+     "ex": {
+      "vi": "Chúng tôi gặp đối tác hôm nay.",
+      "ko": "우리는 오늘 협력사를 만나요."
+     }
+    },
+    {
+     "vi": "trai gái",
+     "ko": "남녀, 아들딸",
+     "ex": {
+      "vi": "Nhà anh ấy có hai trai gái.",
+      "ko": "그 집에는 아들딸이 둘 있어요."
+     }
+    },
+    {
+     "vi": "thế hệ",
+     "ko": "세대",
+     "ex": {
+      "vi": "Thế hệ trẻ thích dùng điện thoại.",
+      "ko": "젊은 세대는 휴대전화를 즐겨 써요."
+     }
+    },
+    {
+     "vi": "hoa hậu",
+     "ko": "미스 (미인대회 우승자)",
+     "ex": {
+      "vi": "Cô ấy được chọn làm hoa hậu.",
+      "ko": "그녀는 미스로 뽑혔어요."
+     }
+    },
+    {
+     "vi": "mẹ con",
+     "ko": "엄마와 아이",
+     "ex": {
+      "vi": "Hai mẹ con đang đi chợ.",
+      "ko": "엄마와 아이가 시장에 가고 있어요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 성격과 느낌",
+   "words": [
+    {
+     "vi": "khôn ngoan",
+     "ko": "현명한, 영리한",
+     "ex": {
+      "vi": "Anh ấy là người khôn ngoan.",
+      "ko": "그는 현명한 사람이에요."
+     }
+    },
+    {
+     "vi": "xinh xắn",
+     "ko": "예쁘장한, 귀여운",
+     "ex": {
+      "vi": "Em bé này xinh xắn quá!",
+      "ko": "이 아기는 정말 귀여워요!"
+     }
+    },
+    {
+     "vi": "lúng túng",
+     "ko": "당황하는, 어쩔 줄 모르는",
+     "ex": {
+      "vi": "Tôi lúng túng khi nói tiếng Việt.",
+      "ko": "저는 베트남어를 말할 때 당황해요."
+     }
+    },
+    {
+     "vi": "chăm học",
+     "ko": "공부를 열심히 하는",
+     "ex": {
+      "vi": "Con gái tôi rất chăm học.",
+      "ko": "우리 딸은 공부를 아주 열심히 해요."
+     }
+    },
+    {
+     "vi": "tốt đẹp",
+     "ko": "좋은, 훌륭한",
+     "ex": {
+      "vi": "Chúc anh mọi điều tốt đẹp.",
+      "ko": "모든 일이 잘되시길 바랍니다."
+     }
+    },
+    {
+     "vi": "mới mẻ",
+     "ko": "새로운, 신선한",
+     "ex": {
+      "vi": "Mọi thứ ở đây đều mới mẻ với tôi.",
+      "ko": "여기 모든 것이 저에겐 새로워요."
+     }
+    },
+    {
+     "vi": "sâu sắc",
+     "ko": "깊은, 깊이 있는",
+     "ex": {
+      "vi": "Bộ phim để lại ấn tượng sâu sắc.",
+      "ko": "그 영화는 깊은 인상을 남겼어요."
+     }
+    },
+    {
+     "vi": "khô ráo",
+     "ko": "보송보송한, 마른",
+     "ex": {
+      "vi": "Trời nắng nên quần áo khô ráo.",
+      "ko": "날이 맑아서 옷이 보송보송해요."
+     }
+    },
+    {
+     "vi": "cao to",
+     "ko": "키가 크고 체격 좋은",
+     "ex": {
+      "vi": "Anh ấy cao to lắm.",
+      "ko": "그는 키도 크고 체격도 아주 좋아요."
+     }
+    },
+    {
+     "vi": "dáng vẻ",
+     "ko": "모습, 몸가짐",
+     "ex": {
+      "vi": "Dáng vẻ chị ấy rất thanh lịch.",
+      "ko": "그녀의 모습은 아주 우아해요."
+     }
+    },
+    {
+     "vi": "mong ước",
+     "ko": "소망하다, 소망",
+     "ex": {
+      "vi": "Mong ước của tôi là mở một quán cà phê.",
+      "ko": "제 소망은 카페를 여는 거예요."
+     }
+    },
+    {
+     "vi": "tình yêu",
+     "ko": "사랑",
+     "ex": {
+      "vi": "Tình yêu cần sự tin tưởng.",
+      "ko": "사랑에는 믿음이 필요해요."
+     }
+    },
+    {
+     "vi": "sức mạnh",
+     "ko": "힘, 능력",
+     "ex": {
+      "vi": "Đoàn kết tạo nên sức mạnh.",
+      "ko": "단결은 힘을 만들어요."
+     }
+    },
+    {
+     "vi": "tuổi trẻ",
+     "ko": "젊은 시절, 청춘",
+     "ex": {
+      "vi": "Tôi nhớ tuổi trẻ của mình.",
+      "ko": "저는 제 젊은 시절이 그리워요."
+     }
+    },
+    {
+     "vi": "đương nhiên",
+     "ko": "당연히",
+     "ex": {
+      "vi": "Đương nhiên tôi sẽ đến.",
+      "ko": "당연히 저는 갈 거예요."
+     }
+    },
+    {
+     "vi": "trân trọng",
+     "ko": "소중히 여기다, 정중히",
+     "ex": {
+      "vi": "Tôi rất trân trọng tình bạn này.",
+      "ko": "저는 이 우정을 아주 소중히 여겨요."
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 공부와 일, 하는 일",
+   "words": [
+    {
+     "vi": "nói rõ",
+     "ko": "분명히 말하다",
+     "ex": {
+      "vi": "Anh nói rõ hơn được không?",
+      "ko": "더 분명히 말씀해 주시겠어요?"
+     }
+    },
+    {
+     "vi": "kể lại",
+     "ko": "다시 이야기하다",
+     "ex": {
+      "vi": "Chị kể lại chuyện hôm qua đi.",
+      "ko": "어제 일을 다시 이야기해 보세요."
+     }
+    },
+    {
+     "vi": "tra cứu",
+     "ko": "찾아보다, 조회하다",
+     "ex": {
+      "vi": "Tôi tra cứu từ này trên mạng.",
+      "ko": "저는 이 낱말을 인터넷에서 찾아봐요."
+     }
+    },
+    {
+     "vi": "học thêm",
+     "ko": "추가로 배우다, 과외",
+     "ex": {
+      "vi": "Con tôi đi học thêm buổi tối.",
+      "ko": "우리 아이는 저녁에 보충 수업을 가요."
+     }
+    },
+    {
+     "vi": "tìm thấy",
+     "ko": "찾아내다",
+     "ex": {
+      "vi": "Tôi tìm thấy chìa khóa rồi.",
+      "ko": "열쇠를 찾았어요."
+     }
+    },
+    {
+     "vi": "đặt tên",
+     "ko": "이름을 짓다",
+     "ex": {
+      "vi": "Vợ chồng tôi đang đặt tên cho con.",
+      "ko": "우리 부부는 아이 이름을 짓고 있어요."
+     }
+    },
+    {
+     "vi": "ghi nhớ",
+     "ko": "기억해 두다",
+     "ex": {
+      "vi": "Anh hãy ghi nhớ địa chỉ này.",
+      "ko": "이 주소를 기억해 두세요."
+     }
+    },
+    {
+     "vi": "thúc giục",
+     "ko": "재촉하다",
+     "ex": {
+      "vi": "Đừng thúc giục tôi.",
+      "ko": "저를 재촉하지 마세요."
+     }
+    },
+    {
+     "vi": "khuyên bảo",
+     "ko": "타이르다, 충고하다",
+     "ex": {
+      "vi": "Mẹ luôn khuyên bảo tôi.",
+      "ko": "어머니는 늘 저에게 충고해 주세요."
+     }
+    },
+    {
+     "vi": "đem theo",
+     "ko": "가져가다, 지참하다",
+     "ex": {
+      "vi": "Anh nhớ đem theo hộ chiếu.",
+      "ko": "여권을 꼭 가져가세요."
+     }
+    },
+    {
+     "vi": "thi đỗ",
+     "ko": "시험에 합격하다",
+     "ex": {
+      "vi": "Em ấy thi đỗ đại học rồi.",
+      "ko": "그 애는 대학에 합격했어요."
+     }
+    },
+    {
+     "vi": "thi đấu",
+     "ko": "경기하다",
+     "ex": {
+      "vi": "Đội Việt Nam thi đấu tối nay.",
+      "ko": "베트남 팀이 오늘 밤 경기해요."
+     }
+    },
+    {
+     "vi": "đá bóng",
+     "ko": "축구하다",
+     "ex": {
+      "vi": "Chiều nào tôi cũng đá bóng.",
+      "ko": "저는 오후마다 축구를 해요."
+     }
+    },
+    {
+     "vi": "thể dục",
+     "ko": "체육, 운동",
+     "ex": {
+      "vi": "Sáng nào tôi cũng tập thể dục.",
+      "ko": "저는 아침마다 운동해요."
+     }
+    },
+    {
+     "vi": "chơi điện tử",
+     "ko": "게임하다",
+     "ex": {
+      "vi": "Con trai tôi thích chơi điện tử.",
+      "ko": "우리 아들은 게임하는 걸 좋아해요."
+     }
+    },
+    {
+     "vi": "thời khóa biểu",
+     "ko": "시간표",
+     "ex": {
+      "vi": "Anh xem thời khóa biểu chưa?",
+      "ko": "시간표 보셨어요?"
+     }
+    }
+   ]
+  },
+  {
+   "theme": "보강 · 몸과 건강",
+   "words": [
+    {
+     "vi": "kháng sinh",
+     "ko": "항생제",
+     "ex": {
+      "vi": "Bác sĩ cho tôi thuốc kháng sinh.",
+      "ko": "의사가 저에게 항생제를 줬어요."
+     }
+    },
+    {
+     "vi": "chảy máu",
+     "ko": "피가 나다",
+     "ex": {
+      "vi": "Ngón tay tôi bị chảy máu.",
+      "ko": "제 손가락에서 피가 나요."
+     }
+    },
+    {
+     "vi": "y học",
+     "ko": "의학",
+     "ex": {
+      "vi": "Em gái tôi học y học.",
+      "ko": "제 여동생은 의학을 공부해요."
+     }
+    },
+    {
+     "vi": "y tế",
+     "ko": "의료, 보건",
+     "ex": {
+      "vi": "Trạm y tế ở gần nhà tôi.",
+      "ko": "보건소가 우리 집 근처에 있어요."
+     }
+    },
+    {
+     "vi": "sự cố",
+     "ko": "사고, 문제",
+     "ex": {
+      "vi": "Có sự cố ở nhà máy.",
+      "ko": "공장에 사고가 났어요."
+     }
+    },
+    {
+     "vi": "chân tay",
+     "ko": "팔다리",
+     "ex": {
+      "vi": "Chân tay tôi đau nhức.",
+      "ko": "제 팔다리가 쑤셔요."
+     }
+    },
+    {
+     "vi": "mi mắt",
+     "ko": "눈꺼풀",
+     "ex": {
+      "vi": "Mi mắt tôi hơi sưng.",
+      "ko": "제 눈꺼풀이 좀 부었어요."
+     }
+    },
+    {
+     "vi": "xương",
+     "ko": "뼈",
+     "ex": {
+      "vi": "Anh ấy bị đau xương.",
+      "ko": "그는 뼈가 아파요."
+     }
+    },
+    {
+     "vi": "mỡ",
+     "ko": "기름, 지방",
+     "ex": {
+      "vi": "Tôi không ăn nhiều mỡ.",
+      "ko": "저는 기름진 것을 많이 안 먹어요."
+     }
+    },
+    {
+     "vi": "động tác",
+     "ko": "동작",
+     "ex": {
+      "vi": "Chị làm theo động tác của cô giáo.",
+      "ko": "선생님의 동작을 따라 하세요."
+     }
+    }
+   ]
+  }
+ ]
+}
