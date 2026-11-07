@@ -57,15 +57,3 @@ C2_ = {
      C2("Tôi để trên cuốn sách bàn.", "Tôi để cuốn sách trên bàn.", "저는 책을 책상 위에 둬요.", ["Tôi để cuốn sách lên bàn."]),
      C2("Về kỹ năng Nói thì Nam hơn Lan.", "Về kỹ năng Nói thì Nam hơn Lan.", "말하기는 남이 란보다 나아요.", dung=True)],
 }
-D_ = {
- 1: D(['xe đạp', 'phức tạp', 'thân thiện', 'trái cây', 'bánh mì', 'cơm sen', 'nước mắm', 'hộ chiếu', 'miễn phí', 'bãi biển'],
-      ['Người lái xe rất thân thiện.', 'Gia đình chị đi khi nào?', 'Nhà hàng này có món gì ngon?', 'Ở đó có nhiều món hải sản.', 'Phòng của ông ở tầng năm.']),
- 2: D(['xe ôm', 'nguy hiểm', 'giao thông', 'cây số', 'nhà cửa', 'chả giò', 'gia vị', 'thang máy', 'đối diện', 'hài lòng'],
-      ['Hôm nay xe của tôi hư.', 'Bố mẹ sẽ giận đấy.', 'Tôi thích nhất là cơm sen.', 'Anh có vào ăn ở Chợ Đêm không?', 'Tôi thường nói tiếng Việt với họ.']),
- 3: D(['kẹt xe', 'tự do', 'tiện lợi', 'thư viện', 'giá cả', 'gỏi cá', 'rau thơm', 'chìa khóa', 'hồ bơi', 'may mắn'],
-      ['Tài xế mới gọi cho tôi.', 'Bao giờ cô ấy về nước?', 'Cho tôi ba món đó trước đi.', 'Cô ấy đang ngồi trên xe.', 'Trong phòng có hai người.']),
- 4: D(['đúng giờ', 'bến xe', 'cẩn thận', 'sáng sớm', 'khoảng cách', 'bánh xèo', 'đặc sản', 'tiếp tân', 'khỏe mạnh', 'sạch sẽ'],
-      ['Nếu đến trễ thì ngại quá!', 'Đã mua vé chưa, em?', 'Chị chờ em một chút!', 'Có một cuốn sách trên bàn.', 'Chủ nhật cô ấy có ở nhà.']),
- 5: D(['xe khách', 'tài xế', 'trở lại', 'bao xa', 'xe cộ', 'tính tiền', 'đặt bàn', 'nhận phòng', 'mùa hè', 'chụp ảnh'],
-      ['Có internet rất tiện lợi.', 'Lúc đó có nhiều trái cây lắm.', 'Anh thấy Phú Quốc rất đẹp.', 'Một chút nữa ăn, anh sẽ biết.', 'Phòng đơn hay phòng đôi?']),
-}
