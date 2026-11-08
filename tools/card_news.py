@@ -581,6 +581,14 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-09 새벽(예약 작업): 한국 기업 잔류 기사가 '경영 지속 의사'의 '의사'에 걸려 병원 복도가,
+              # 비상물자 기사는 맞는 줄이 없어 사회 기본(거리)이 깔릴 판이었다. 두리안은 항구 대신 과일로.
+              (("철수", "잔류"),
+               "a busy factory production line with workers in uniforms"),
+              (("비상물자", "생필품"),
+               "bottled water and canned food neatly stacked on a pantry shelf"),
+              (("두리안",),
+               "a pile of spiky durian fruits at a market stall"),
               # 2026-11-06 새벽(예약 작업): 대출금리 기사가 제목의 '엄포 '가 '포 '에 걸려 쌀국수가 깔렸다.
               (("대출금리", "예금금리"),
                "a ceramic piggy bank beside a small stack of coins on a plain table"),
