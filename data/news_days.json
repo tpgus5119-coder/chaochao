@@ -2,6 +2,451 @@
  "days": [
   {
    "ts": "2026-11-07",
+   "day": "N932.html",
+   "track": "news",
+   "theme": "실종 신고",
+   "title": "Homicide squad takes over hunt for 13-year-old Vietnamese girl missing in Berlin",
+   "u": "https://e.vnexpress.net/news/news/crime/homicide-squad-takes-over-hunt-for-13-year-old-vietnamese-girl-missing-in-berlin-5141932.html",
+   "cat": "소식",
+   "intro": "베를린에서 실종된 13세 베트남 소녀 수사, 살인 전담반 이관 경찰은 납치 가능성 수사 중이며 시민들에게 제보 요청",
+   "words": [
+    {
+     "vi": "tìm",
+     "ko": "찾다",
+     "kr_read": "띰",
+     "emoji": "🔎",
+     "en": "a person looking for something",
+     "tones": [
+      {
+       "syl": "tìm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-tim.webp"
+    },
+    {
+     "vi": "mất",
+     "ko": "잃다, 없어지다",
+     "kr_read": "멋",
+     "emoji": "❓",
+     "en": "a question mark",
+     "tones": [
+      {
+       "syl": "mất",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-mat.webp"
+    },
+    {
+     "vi": "nhà",
+     "ko": "집",
+     "kr_read": "냐",
+     "emoji": "🏠",
+     "en": "a house",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-nha.webp"
+    },
+    {
+     "vi": "đi",
+     "ko": "가다",
+     "kr_read": "디",
+     "emoji": "🚶‍♀️",
+     "en": "a person walking",
+     "tones": [
+      {
+       "syl": "đi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-di.webp"
+    },
+    {
+     "vi": "đến",
+     "ko": "도착하다",
+     "kr_read": "덴",
+     "emoji": "📍",
+     "en": "a map pin",
+     "tones": [
+      {
+       "syl": "đến",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-den.webp"
+    },
+    {
+     "vi": "gọi",
+     "ko": "부르다, 전화하다",
+     "kr_read": "고이",
+     "emoji": "📞",
+     "en": "a phone call",
+     "tones": [
+      {
+       "syl": "gọi",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-goi.webp"
+    }
+   ],
+   "dialog": {
+    "title": "실종 신고",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Con tôi mất rồi. Giúp tôi!",
+      "ko": "제 아이가 없어졌어요. 도와주세요!",
+      "kr_read": "꼰 또이 멋 조이 줍 또이",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Con",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Giúp",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tôi!",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Bạn biết con đi đâu không?",
+      "ko": "아이가 어디로 갔는지 아세요?",
+      "kr_read": "반 비엣 꼰 디 더우 콩",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Bạn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "biết",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "con",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đâu",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 111
+  },
+  {
+   "ts": "2026-11-07",
+   "day": "N448.html",
+   "track": "news",
+   "theme": "식당 음식",
+   "title": "5 Vietnamese restaurants named among Asia-Pacific's 100 best by Tatler",
+   "u": "https://e.vnexpress.net/news/travel/food-recipes/5-vietnamese-restaurants-named-among-asia-pacific-s-100-best-by-tatler-5137448.html",
+   "cat": "문화·생활",
+   "intro": "베트남 식당 5곳이 아시아-태평양 100대 최고 식당에 선정 이 식당들은 베트남 요리에 유럽, 아시아 영향을 결합함",
+   "words": [
+    {
+     "vi": "nhà hàng",
+     "ko": "식당",
+     "kr_read": "냐 항",
+     "emoji": "🍽️",
+     "en": "a restaurant building",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "hàng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-nha-hang.webp"
+    },
+    {
+     "vi": "ngon",
+     "ko": "맛있다",
+     "kr_read": "응온",
+     "emoji": "😋",
+     "en": "",
+     "tones": [
+      {
+       "syl": "ngon",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "món ăn",
+     "ko": "음식",
+     "kr_read": "몬 안",
+     "emoji": "🍲",
+     "en": "a dish of food",
+     "tones": [
+      {
+       "syl": "món",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-mon-an.webp"
+    },
+    {
+     "vi": "ăn",
+     "ko": "먹다",
+     "kr_read": "안",
+     "emoji": "🍽️",
+     "en": "",
+     "tones": [
+      {
+       "syl": "ăn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "uống",
+     "ko": "마시다",
+     "kr_read": "우옹",
+     "emoji": "🥤",
+     "en": "",
+     "tones": [
+      {
+       "syl": "uống",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "thực đơn",
+     "ko": "메뉴",
+     "kr_read": "특 던",
+     "emoji": "📜",
+     "en": "a menu card",
+     "tones": [
+      {
+       "syl": "thực",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "đơn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-thuc-don.webp"
+    }
+   ],
+   "dialog": {
+    "title": "식당 음식",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Nhà hàng này có món ăn ngon không?",
+      "ko": "이 식당 음식 맛있어요?",
+      "kr_read": "냐 항 나이 꼬 몬 안 응온 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Nhà",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "hàng",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "này",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "món",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ngon",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, món ăn ở đây rất ngon.",
+      "ko": "네, 여기 음식 아주 맛있어요.",
+      "kr_read": "벙 몬 안 어 더이 젓 응온",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "món",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ăn",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "rất",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ngon.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 110
+  },
+  {
+   "ts": "2026-11-07",
    "day": "N908.html",
    "track": "news",
    "theme": "관광 정책",
@@ -276,7 +721,7 @@
     ],
     "extra": []
    },
-   "n": 108
+   "n": 109
   },
   {
    "ts": "2026-11-07",
@@ -504,7 +949,7 @@
     ],
     "extra": []
    },
-   "n": 107
+   "n": 108
   },
   {
    "ts": "2026-11-07",
@@ -745,7 +1190,7 @@
     ],
     "extra": []
    },
-   "n": 106
+   "n": 107
   },
   {
    "ts": "2026-11-06",
@@ -945,7 +1390,7 @@
     ],
     "extra": []
    },
-   "n": 105
+   "n": 106
   },
   {
    "ts": "2026-11-06",
@@ -1212,7 +1657,7 @@
    },
    "title_card": "호찌민 국제 채권시장 나선다…5년 투자 수요 1,200억 달러",
    "pub": "2026-11-06",
-   "n": 104,
+   "n": 105,
    "card": 10
   },
   {
@@ -1516,7 +1961,7 @@
    },
    "title_card": "호찌민 10개월 외국인 투자 191억 달러…4.2배 늘어",
    "pub": "2026-11-06",
-   "n": 103,
+   "n": 104,
    "card": 12
   },
   {
@@ -1741,7 +2186,7 @@
     ],
     "extra": []
    },
-   "n": 102
+   "n": 103
   },
   {
    "ts": "2026-11-06",
@@ -2002,7 +2447,7 @@
    },
    "title_card": "베트남 북부 일요일부터 이번 시즌 최강 한파…중부 폭우",
    "pub": "2026-11-06",
-   "n": 101,
+   "n": 102,
    "card": 2
   },
   {
@@ -2270,7 +2715,7 @@
    },
    "title_card": "베트남 피클볼 열풍 3년째…일부 코트는 예약 반토막",
    "pub": "2026-11-06",
-   "n": 100,
+   "n": 101,
    "card": 1
   },
   {
@@ -2586,7 +3031,7 @@
    },
    "title_card": "베트남 코인 단속 시작…미인가 거래 최대 1억 동 과태료",
    "pub": "2026-11-06",
-   "n": 99,
+   "n": 100,
    "card": 15
   },
   {
@@ -2860,7 +3305,7 @@
    },
    "title_card": "베트남 증권계좌 1,438만 개…10월에만 25만 개 늘어",
    "pub": "2026-11-06",
-   "n": 98,
+   "n": 99,
    "card": 11
   },
   {
@@ -3120,7 +3565,7 @@
     ],
     "extra": []
    },
-   "n": 97
+   "n": 98
   },
   {
    "ts": "2026-11-06",
@@ -3368,7 +3813,7 @@
     ],
     "extra": []
    },
-   "n": 96
+   "n": 97
   },
   {
    "ts": "2026-11-06",
@@ -3659,7 +4104,7 @@
    },
    "title_card": "호찌민 유치원 교사 영어 적격 3%뿐…외부 강사에 의존",
    "pub": "2026-11-06",
-   "n": 95,
+   "n": 96,
    "card": 8
   },
   {
@@ -3860,7 +4305,7 @@
     ],
     "extra": []
    },
-   "n": 94
+   "n": 95
   },
   {
    "ts": "2026-11-06",
@@ -4169,7 +4614,7 @@
    },
    "title_card": "아마존, 베트남 브랜드 30곳 세계 진출 돕는다",
    "pub": "2026-11-06",
-   "n": 93,
+   "n": 94,
    "card": 6
   },
   {
@@ -4375,7 +4820,7 @@
     ],
     "extra": []
    },
-   "n": 92
+   "n": 93
   },
   {
    "ts": "2026-11-06",
@@ -4642,7 +5087,7 @@
    },
    "title_card": "베트남 소매판매 6,618조9,000억 동…13.5% 늘어",
    "pub": "2026-11-06",
-   "n": 91,
+   "n": 92,
    "card": 9
   },
   {
@@ -4879,7 +5324,7 @@
     ],
     "extra": []
    },
-   "n": 90
+   "n": 91
   },
   {
    "ts": "2026-11-06",
@@ -5152,7 +5597,7 @@
    },
    "title_card": "베트남 산업생산 12.4% 늘어…2019년 이후 최고",
    "pub": "2026-11-06",
-   "n": 89,
+   "n": 90,
    "card": 7
   },
   {
@@ -5407,7 +5852,7 @@
     ],
     "extra": []
    },
-   "n": 88
+   "n": 89
   },
   {
    "ts": "2026-11-06",
@@ -5698,7 +6143,7 @@
    },
    "title_card": "삼일PwC \"베트남 민간병원 투자 기회 크다\"",
    "pub": "2026-11-06",
-   "n": 87,
+   "n": 88,
    "card": 5
   },
   {
@@ -5917,7 +6362,7 @@
     ],
     "extra": []
    },
-   "n": 86
+   "n": 87
   },
   {
    "ts": "2026-11-06",
@@ -6202,7 +6647,7 @@
    },
    "title_card": "모바일월드 3분기 이익 3조5,210억 동…97% 급증",
    "pub": "2026-11-06",
-   "n": 85,
+   "n": 86,
    "card": 13
   },
   {
@@ -6437,7 +6882,7 @@
     ],
     "extra": []
    },
-   "n": 84
+   "n": 85
   },
   {
    "ts": "2026-11-06",
@@ -6685,7 +7130,7 @@
     ],
     "extra": []
    },
-   "n": 83
+   "n": 84
   },
   {
    "ts": "2026-11-06",
@@ -6946,7 +7391,7 @@
    },
    "title_card": "베트남 은행 신규 대출금리 최대 0.5%포인트 내려",
    "pub": "2026-11-06",
-   "n": 82,
+   "n": 83,
    "card": 14
   },
   {
@@ -7226,7 +7671,7 @@
    },
    "title_card": "달랏 도시철도 100km 넘게 구상…공항·관광지 잇는다",
    "pub": "2026-11-06",
-   "n": 81,
+   "n": 82,
    "card": 3
   },
   {
@@ -7548,8 +7993,250 @@
    },
    "title_card": "한국딥러닝, 신한베트남파이낸스와 금융 AI 실증 마쳐",
    "pub": "2026-11-06",
-   "n": 80,
+   "n": 81,
    "card": 4
+  },
+  {
+   "ts": "2026-11-06",
+   "day": "N661.html",
+   "track": "news",
+   "theme": "국제결혼",
+   "title": "Thai women rank third among foreign brides of South Korean men",
+   "u": "https://e.vnexpress.net/news/life/trend/thai-women-rank-third-among-foreign-brides-of-south-korean-men-5141661.html",
+   "cat": "소식",
+   "intro": "한국 남성과 결혼한 외국인 중 베트남이 1위였다. 다문화 혼인 중 남편이 연상인 비율이 75%였다.",
+   "words": [
+    {
+     "vi": "vợ",
+     "ko": "아내",
+     "kr_read": "버",
+     "emoji": "👩",
+     "en": "a smiling woman",
+     "tones": [
+      {
+       "syl": "vợ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-vo.webp"
+    },
+    {
+     "vi": "chồng",
+     "ko": "남편",
+     "kr_read": "쫑",
+     "emoji": "👨",
+     "en": "a smiling man",
+     "tones": [
+      {
+       "syl": "chồng",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-chong.webp"
+    },
+    {
+     "vi": "kết hôn",
+     "ko": "결혼하다",
+     "kr_read": "껫 혼",
+     "emoji": "💍",
+     "en": "a pair of gold wedding rings",
+     "tones": [
+      {
+       "syl": "kết",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "hôn",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-ket-hon.webp"
+    },
+    {
+     "vi": "gia đình",
+     "ko": "가족",
+     "kr_read": "자 딘",
+     "emoji": "👨‍👩‍👦",
+     "en": "a family of father, mother, and child",
+     "tones": [
+      {
+       "syl": "gia",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "đình",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-gia-dinh.webp"
+    },
+    {
+     "vi": "phụ nữ",
+     "ko": "여성",
+     "kr_read": "푸 느",
+     "emoji": "👩",
+     "en": "a woman standing and smiling",
+     "tones": [
+      {
+       "syl": "phụ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "nữ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "n-phu-nu.webp"
+    },
+    {
+     "vi": "đàn ông",
+     "ko": "남성",
+     "kr_read": "단 옹",
+     "emoji": "👨",
+     "en": "a man standing and smiling",
+     "tones": [
+      {
+       "syl": "đàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "ông",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-dan-ong.webp"
+    }
+   ],
+   "dialog": {
+    "title": "국제결혼",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Vợ anh là người Việt Nam à?",
+      "ko": "형 아내는 베트남 사람이에요?",
+      "kr_read": "버 아인 라 응으어이 비엣 남 아",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Vợ",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "người",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Việt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "Nam",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "à?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Đúng rồi, vợ tôi là người Việt.",
+      "ko": "맞아요, 제 아내는 베트남 사람이에요.",
+      "kr_read": "둥 조이 버 또이 라 응으어이 비엣",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Đúng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "rồi,",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "vợ",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "là",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "người",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Việt.",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 80
   },
   {
    "ts": "2026-11-06",
@@ -27706,5 +28393,5 @@
    "n": 1
   }
  ],
- "updated": "2026-11-08 01:51"
+ "updated": "2026-11-08 10:01"
 }
