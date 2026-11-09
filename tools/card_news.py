@@ -581,6 +581,27 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-10 새벽(예약 작업): 공휴일 기사가 '상이군인'의 '군'에 걸려 전투기가, 취업박람회·한국어 교육·
+              # 제조기업 포럼이 '무역(관·협회)'에 걸려 항구가, 증권 사기 기사가 '증권'에 걸려 동전 차트가 깔릴 판이었다.
+              # 철강·과자 공장·텀블러·외국인 가족 생활비는 맞는 줄이 없어 갈래 기본이 깔릴 판이었다. 아홉을 맨 위에.
+              (("취업박람회", "채용박람회"),
+               "a job fair hall with company booths, empty chairs and small interview tables"),
+              (("실무 한국어", "한국어 전공"),
+               "a bright university classroom with desks, a whiteboard and open textbooks"),
+              (("공휴일",),
+               "a quiet sunny holiday street decorated with red flags and lanterns"),
+              (("공장 규제", "제조기업 포럼"),
+               "a factory floor with fire extinguishers, safety signs and yellow floor markings"),
+              (("가짜 증권", "투자 사기", "사기 의혹"),
+               "a laptop showing a trading website and several smartphones on a dark desk"),
+              (("스테인리스", "철강", "강철"),
+               "rolls of shiny stainless steel coils in a steel mill warehouse"),
+              (("쌀과자", "과자 공장", "오리온"),
+               "a snack factory line with packaged rice crackers on a conveyor belt"),
+              (("텀블러",),
+               "colorful insulated tumblers neatly displayed on shelves in a bright store"),
+              (("미국인 가족", "생활비"),
+               "a bright serviced apartment living room overlooking a city skyline"),
               # 2026-11-09 새벽(예약 작업): 한국 기업 잔류 기사가 '경영 지속 의사'의 '의사'에 걸려 병원 복도가,
               # 비상물자 기사는 맞는 줄이 없어 사회 기본(거리)이 깔릴 판이었다. 두리안은 항구 대신 과일로.
               (("철수", "잔류"),
