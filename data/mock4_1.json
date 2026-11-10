@@ -849,11 +849,11 @@
    "k": "puzzle",
    "vi": "Nếu đi bằng tắc xi thì em sẽ đến sân bay nhanh hơn.",
    "tiles": [
+    "thì em sẽ đến",
     "nếu",
     "đi bằng tắc xi",
-    "thì em sẽ đến",
-    "sân bay",
-    "nhanh hơn"
+    "nhanh hơn",
+    "sân bay"
    ],
    "exp": "Nếu đi bằng tắc xi thì em sẽ đến sân bay nhanh hơn.\n택시를 타고 가면 공항에 더 빨리 도착할 거예요."
   },
@@ -862,11 +862,11 @@
    "k": "puzzle",
    "vi": "Chúng ta thuê xe đi Bến Tre chơi đi.",
    "tiles": [
-    "chúng ta",
-    "thuê xe",
     "đi Bến Tre",
     "chơi",
-    "đi"
+    "đi",
+    "thuê xe",
+    "chúng ta"
    ],
    "exp": "Chúng ta thuê xe đi Bến Tre chơi đi.\n우리 차 빌려서 벤쩨로 놀러 가요.",
    "alts": [
@@ -878,11 +878,11 @@
    "k": "puzzle",
    "vi": "Có phải nhà hàng đó ở gần Nhà hát Thành phố không?",
    "tiles": [
-    "có phải",
-    "nhà hàng đó",
-    "ở gần",
+    "không",
     "Nhà hát Thành phố",
-    "không"
+    "ở gần",
+    "nhà hàng đó",
+    "có phải"
    ],
    "exp": "Có phải nhà hàng đó ở gần Nhà hát Thành phố không?\n그 식당이 시립 극장 근처에 있는 게 맞아요?",
    "alts": [
@@ -894,11 +894,11 @@
    "k": "puzzle",
    "vi": "Thầy giáo viết từ mới lên bảng.",
    "tiles": [
+    "bảng",
     "thầy giáo",
-    "viết",
     "từ mới",
-    "lên",
-    "bảng"
+    "viết",
+    "lên"
    ],
    "exp": "Thầy giáo viết từ mới lên bảng.\n선생님이 새 단어를 칠판에 써요.",
    "alts": [
@@ -910,11 +910,11 @@
    "k": "puzzle",
    "vi": "So với xe máy thì xe hơi an toàn hơn.",
    "tiles": [
-    "so với",
     "xe máy",
+    "so với",
     "thì",
-    "xe hơi",
-    "an toàn hơn"
+    "an toàn hơn",
+    "xe hơi"
    ],
    "exp": "So với xe máy thì xe hơi an toàn hơn.\n오토바이와 비교하면 자동차가 더 안전해요."
   },
