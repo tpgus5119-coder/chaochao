@@ -581,6 +581,16 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-11 새벽(예약 작업): 불꽃놀이 기사가 '문화의 날'에 걸려 미술관이, 오토바이 기사가 '택시'에 걸려
+              # 전기차 충전소가, 호텔 AI 가전 기사가 '호텔'에 걸려 바닷가가, 가전 유통이 '전자'에 걸려 회로기판이 깔릴 판이었다.
+              (["불꽃놀이"], "colorful fireworks over a river at night"),
+              (["오토바이 기사", "오토바이 택시"], "a motorbike parked on a winding mountain road"),
+              (["해상풍력", "풍력"], "offshore wind turbines in a calm blue sea"),
+              (["가전 체험", "ai 가전"], "a modern hotel room with a smart TV and a refrigerator"),
+              (["가전 유통"], "a home appliance store aisle with TVs and washing machines"),
+              (["디지털경제", "디지털 경제"], "a laptop and a smartphone with shopping bags on a desk"),
+              (["달러 정기 매입", "달러 매입"], "US dollar banknotes and Vietnamese dong notes on a table"),
+              (["투자동아리"], "an empty university lecture hall with desks and a laptop"),
               # 2026-11-10 새벽(예약 작업): 공휴일 기사가 '상이군인'의 '군'에 걸려 전투기가, 취업박람회·한국어 교육·
               # 제조기업 포럼이 '무역(관·협회)'에 걸려 항구가, 증권 사기 기사가 '증권'에 걸려 동전 차트가 깔릴 판이었다.
               # 철강·과자 공장·텀블러·외국인 가족 생활비는 맞는 줄이 없어 갈래 기본이 깔릴 판이었다. 아홉을 맨 위에.
