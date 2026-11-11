@@ -581,6 +581,14 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-12 새벽(예약 작업): 사무실 임대가 '금융'에 걸려 동전 그림이, 라면 공장·마트 미국산·KFC 인수·
+              # 화학단지·첨단 산업단지 기사는 아무 줄에도 안 걸려 갈래 기본 배경이 깔릴 판이었다.
+              (["사무실", "오피스"], "a modern glass office tower against a clear sky"),
+              (["라면"], "bowls of instant noodles on a factory packing line"),
+              (["쇠고기", "미국산"], "a supermarket aisle with fresh produce and meat counters"),
+              (["KFC", "피자헛"], "a fast food counter with fried chicken and pizza boxes"),
+              (["화학"], "a chemical plant with storage tanks and pipes"),
+              (["산업단지"], "rows of new factory buildings in an industrial park"),
               # 2026-11-11 새벽(예약 작업): 불꽃놀이 기사가 '문화의 날'에 걸려 미술관이, 오토바이 기사가 '택시'에 걸려
               # 전기차 충전소가, 호텔 AI 가전 기사가 '호텔'에 걸려 바닷가가, 가전 유통이 '전자'에 걸려 회로기판이 깔릴 판이었다.
               (["불꽃놀이"], "colorful fireworks over a river at night"),
