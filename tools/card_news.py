@@ -581,6 +581,16 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-13 새벽(예약 작업): K팝 시상식·로봇·LNG 발전·계절근로자 기사는 아무 줄에도 안 걸려 기본 배경이,
+              # 정유 기사는 '화학'에, 호텔 예약 기술은 '여행' 해변에, 은행 자본금·부산은행은 증시와 같은 동전 그림에 걸릴 판이었다.
+              (["골든디스크", "시상식"], "a concert stage with colorful lights over an empty arena"),
+              (["로봇"], "industrial robot arms on a modern assembly line"),
+              (["LNG"], "an LNG power plant with round gas tanks by the sea at dusk"),
+              (["계절근로"], "green farm fields with a small greenhouse in the countryside"),
+              (["정유"], "an oil refinery with distillation towers at sunset"),
+              (["호텔 예약"], "a hotel lobby reception desk with a laptop and a bell"),
+              (["자본금"], "a bank building facade with tall columns"),
+              (["부산은행"], "a modern bank branch entrance on a city street"),
               # 2026-11-12 새벽(예약 작업): 사무실 임대가 '금융'에 걸려 동전 그림이, 라면 공장·마트 미국산·KFC 인수·
               # 화학단지·첨단 산업단지 기사는 아무 줄에도 안 걸려 갈래 기본 배경이 깔릴 판이었다.
               (["사무실", "오피스"], "a modern glass office tower against a clear sky"),
