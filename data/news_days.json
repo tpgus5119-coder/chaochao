@@ -228,7 +228,7 @@
     ],
     "extra": []
    },
-   "n": 127
+   "n": 132
   },
   {
    "ts": "2026-11-13",
@@ -483,7 +483,7 @@
    },
    "title_card": "호찌민 껀저~붕따우 14km 해상도로 설계안 확정…93조 동",
    "pub": "2026-11-13",
-   "n": 126,
+   "n": 131,
    "card": 4
   },
   {
@@ -708,7 +708,7 @@
     ],
     "extra": []
    },
-   "n": 125
+   "n": 130
   },
   {
    "ts": "2026-11-13",
@@ -999,7 +999,7 @@
    },
    "title_card": "부산은행 호찌민지점, 부산 기업 베트남 진출·복귀 돕는다",
    "pub": "2026-11-13",
-   "n": 124,
+   "n": 129,
    "card": 10
   },
   {
@@ -1267,7 +1267,7 @@
    },
    "title_card": "VN지수 12포인트 내려…외국인 한 달여 만에 최대 매도",
    "pub": "2026-11-13",
-   "n": 123,
+   "n": 128,
    "card": 12
   },
   {
@@ -1517,7 +1517,7 @@
    },
    "title_card": "하노이 주차장 1,690곳 계획에 72곳만 운영…차들 인도로",
    "pub": "2026-11-13",
-   "n": 122,
+   "n": 127,
    "card": 2
   },
   {
@@ -1803,8 +1803,250 @@
    },
    "title_card": "빈선정유화학, 9월까지 이익 11.6배…고유가에 정유소 풀가동",
    "pub": "2026-11-13",
-   "n": 121,
+   "n": 126,
    "card": 6
+  },
+  {
+   "ts": "2026-11-13",
+   "day": "Nno=44498",
+   "track": "news",
+   "theme": "작업 사고 배상",
+   "title": "한국서 숨진 베트남 근로자, 배상금 한국 소득 적용할까? [양원준 변호사의 리걸 비나]",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44498",
+   "cat": "일자리",
+   "intro": "한국 내 베트남 근로자의 사고 배상금은 한국과 베트남 소득을 나눠 산정합니다.",
+   "words": [
+    {
+     "vi": "tai nạn",
+     "ko": "사고",
+     "kr_read": "따이 난",
+     "emoji": "💥",
+     "en": "a car crash scene",
+     "tones": [
+      {
+       "syl": "tai",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tai-nan.webp"
+    },
+    {
+     "vi": "bảo hiểm",
+     "ko": "보험",
+     "kr_read": "바오 히엠",
+     "emoji": "📄",
+     "en": "an official insurance document",
+     "tones": [
+      {
+       "syl": "bảo",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-bao-hiem.webp"
+    },
+    {
+     "vi": "công nhân",
+     "ko": "근로자",
+     "kr_read": "꽁 년",
+     "emoji": "👷",
+     "en": "a factory worker wearing a hard hat",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "nhân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-nhan.webp"
+    },
+    {
+     "vi": "luật sư",
+     "ko": "변호사",
+     "kr_read": "루엇 쓰",
+     "emoji": "⚖️",
+     "en": "a wooden judge gavel",
+     "tones": [
+      {
+       "syl": "luật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "sư",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-luat-su.webp"
+    },
+    {
+     "vi": "an toàn",
+     "ko": "안전",
+     "kr_read": "안 또안",
+     "emoji": "🛡️",
+     "en": "a yellow safety helmet",
+     "tones": [
+      {
+       "syl": "an",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "toàn",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-an-toan.webp"
+    },
+    {
+     "vi": "bệnh viện",
+     "ko": "병원",
+     "kr_read": "벤 비엔",
+     "emoji": "🏥",
+     "en": "a hospital building with a red cross",
+     "tones": [
+      {
+       "syl": "bệnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "viện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-benh-vien.webp"
+    }
+   ],
+   "dialog": {
+    "title": "작업 사고 배상",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Công ty có bảo hiểm không?",
+      "ko": "회사에 보험이 있나요?",
+      "kr_read": "꽁 띠 꼬 바오 히엠 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bảo",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "hiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, công ty có bảo hiểm.",
+      "ko": "네, 회사에 보험이 있어요.",
+      "kr_read": "꼬 꽁 띠 꼬 바오 히엠",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bảo",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "hiểm.",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 125
   },
   {
    "ts": "2026-11-13",
@@ -2059,7 +2301,7 @@
    },
    "title_card": "TBH글로벌, 겨울옷 잘 팔려 베트남 법인서 추가 생산",
    "pub": "2026-11-13",
-   "n": 120,
+   "n": 124,
    "card": 3
   },
   {
@@ -2309,7 +2551,7 @@
    },
    "title_card": "테크콤뱅크, 자본금 106조 동으로 베트남 1위 은행 올라",
    "pub": "2026-11-13",
-   "n": 119,
+   "n": 123,
    "card": 11
   },
   {
@@ -2551,7 +2793,231 @@
     ],
     "extra": []
    },
-   "n": 118
+   "n": 122
+  },
+  {
+   "ts": "2026-11-13",
+   "day": "N952.html",
+   "track": "news",
+   "theme": "연말 행사",
+   "title": "Da Nang resort plans Nordic-themed Christmas and New Year celebrations",
+   "u": "https://e.vnexpress.net/news/travel/da-nang-resort-plans-nordic-themed-christmas-and-new-year-celebrations-5143952.html",
+   "cat": "소식",
+   "intro": "다낭 리조트에서 북유럽풍 연말 행사를 엽니다. 크리스마스 뷔페와 카운트다운 파티를 진행합니다.",
+   "words": [
+    {
+     "vi": "tiệc",
+     "ko": "파티",
+     "kr_read": "띠엑",
+     "emoji": "🎉",
+     "en": "a festive party table with food and decorations",
+     "tones": [
+      {
+       "syl": "tiệc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tiec.webp"
+    },
+    {
+     "vi": "khách sạn",
+     "ko": "호텔",
+     "kr_read": "칵 싼",
+     "emoji": "🏨",
+     "en": "a luxury hotel building",
+     "tones": [
+      {
+       "syl": "khách",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sạn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-khach-san.webp"
+    },
+    {
+     "vi": "quà",
+     "ko": "선물",
+     "kr_read": "꽈",
+     "emoji": "🎁",
+     "en": "a wrapped gift box with a red ribbon",
+     "tones": [
+      {
+       "syl": "quà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-qua.webp"
+    },
+    {
+     "vi": "trẻ em",
+     "ko": "아이들",
+     "kr_read": "째 앰",
+     "emoji": "👶",
+     "en": "smiling little children",
+     "tones": [
+      {
+       "syl": "trẻ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "em",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-tre-em.webp"
+    },
+    {
+     "vi": "nhạc",
+     "ko": "음악",
+     "kr_read": "냑",
+     "emoji": "🎵",
+     "en": "musical notes",
+     "tones": [
+      {
+       "syl": "nhạc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-nhac.webp"
+    },
+    {
+     "vi": "biển",
+     "ko": "바다",
+     "kr_read": "비엔",
+     "emoji": "🌊",
+     "en": "blue ocean waves on a sandy beach",
+     "tones": [
+      {
+       "syl": "biển",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-bien.webp"
+    }
+   ],
+   "dialog": {
+    "title": "연말 행사",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Tối nay có tiệc Giáng sinh không?",
+      "ko": "오늘 저녁에 크리스마스 파티가 있나요?",
+      "kr_read": "또이 나이 꼬 띠엑 장 씬 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Tối",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tiệc",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "Giáng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sinh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, tiệc ở khách sạn này.",
+      "ko": "네, 파티는 이 호텔에서 해요.",
+      "kr_read": "꼬 띠엑 어 칵 싼 나이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tiệc",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "khách",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sạn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "này.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 121
   },
   {
    "ts": "2026-11-13",
@@ -2806,8 +3272,267 @@
    },
    "title_card": "올마이투어, 베트남 여행사에 AI 호텔 예약 시스템 시험",
    "pub": "2026-11-13",
-   "n": 117,
+   "n": 120,
    "card": 9
+  },
+  {
+   "ts": "2026-11-13",
+   "day": "Nno=44502",
+   "track": "news",
+   "theme": "앱 위반 벌금",
+   "title": "베트남 3대 차량호출 플랫폼 비(be), 소비자보호법 위반 과징금 ‘철퇴’…2.4만 달러",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44502",
+   "cat": "일자리",
+   "intro": "베트남 차량호출 앱 비가 소비자보호법 위반으로 과태료 처분을 받았습니다. 해당 회사는 위반 사항을 시정하고 과태료를 전액 납부했습니다.",
+   "words": [
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꽁 띠",
+     "emoji": "🏢",
+     "en": "a high office building",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ty",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-ty.webp"
+    },
+    {
+     "vi": "vi phạm",
+     "ko": "위반하다",
+     "kr_read": "비 팜",
+     "emoji": "🚫",
+     "en": "a red prohibition symbol",
+     "tones": [
+      {
+       "syl": "vi",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "phạm",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-vi-pham.webp"
+    },
+    {
+     "vi": "dịch vụ",
+     "ko": "서비스",
+     "kr_read": "직 부",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "dịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "vụ",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ]
+    },
+    {
+     "vi": "ứng dụng",
+     "ko": "앱/어플리케이션",
+     "kr_read": "응 중",
+     "emoji": "📱",
+     "en": "a smartphone displaying app icons",
+     "tones": [
+      {
+       "syl": "ứng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "dụng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-ung-dung.webp"
+    },
+    {
+     "vi": "xe ôm",
+     "ko": "오토바이 택시",
+     "kr_read": "쌔 옴",
+     "emoji": "🛵",
+     "en": "a motorcycle driver with helmet",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ôm",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-xe-om.webp"
+    },
+    {
+     "vi": "ô tô",
+     "ko": "자동차",
+     "kr_read": "오 또",
+     "emoji": "🚗",
+     "en": "a small car",
+     "tones": [
+      {
+       "syl": "ô",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tô",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-o-to.webp"
+    }
+   ],
+   "dialog": {
+    "title": "앱 위반 벌금",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Em gọi xe qua ứng dụng được không?",
+      "ko": "앱으로 차 좀 불러 줄 수 있어?",
+      "kr_read": "앰 고이 쌔 꽈 응 중 드억 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Em",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "gọi",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "qua",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ứng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "dụng",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Được chứ, anh chờ một chút nhé.",
+      "ko": "그럼요, 잠시만 기다리세요.",
+      "kr_read": "드억 쯔 아인 쩌 못 쭛 냬",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Được",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chứ,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "chờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "một",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chút",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nhé.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 119
   },
   {
    "ts": "2026-11-13",
@@ -3062,7 +3787,7 @@
    },
    "title_card": "베트남 10월 신차 판매 2만8,957대…17% 줄어",
    "pub": "2026-11-13",
-   "n": 116,
+   "n": 118,
    "card": 7
   },
   {
@@ -3348,7 +4073,7 @@
    },
    "title_card": "삼성, 낸드 조립공정까지 베트남 이전 검토…2030년 목표",
    "pub": "2026-11-13",
-   "n": 115,
+   "n": 117,
    "card": 15
   },
   {
@@ -3622,7 +4347,7 @@
    },
    "title_card": "호찌민 국립대·한국로봇산업진흥원, 로봇 협력 협약",
    "pub": "2026-11-13",
-   "n": 114,
+   "n": 116,
    "card": 5
   },
   {
@@ -3859,7 +4584,7 @@
     ],
     "extra": []
    },
-   "n": 113
+   "n": 115
   },
   {
    "ts": "2026-11-13",
@@ -4078,8 +4803,262 @@
    },
    "title_card": "베트남 휘발유값 리터당 2만 동 아래로…11월 네 번째 인하",
    "pub": "2026-11-13",
-   "n": 112,
+   "n": 114,
    "card": 13
+  },
+  {
+   "ts": "2026-11-13",
+   "day": "N317.html",
+   "track": "news",
+   "theme": "공항 보안",
+   "title": "US traveler allowed to fly on after 19 live rounds found in luggage at Incheon airport",
+   "u": "https://e.vnexpress.net/news/news/traffic/us-traveler-allowed-to-fly-on-after-19-live-rounds-found-in-luggage-at-incheon-airport-5144317.html",
+   "cat": "문화·생활",
+   "intro": "인천공항에서 미국인 여행객 짐에서 실탄 발견 테러 혐의 없어 상하이로 출국 조치",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport with planes",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "kiểm tra",
+     "ko": "검사하다",
+     "kr_read": "끼엠 짜",
+     "emoji": "🔎",
+     "en": "a magnifying glass",
+     "tones": [
+      {
+       "syl": "kiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "tra",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-kiem-tra.webp"
+    },
+    {
+     "vi": "hành lý",
+     "ko": "짐",
+     "kr_read": "하인 리",
+     "emoji": "🧳",
+     "en": "a suitcase",
+     "tones": [
+      {
+       "syl": "hành",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "lý",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-hanh-ly.webp"
+    },
+    {
+     "vi": "an ninh",
+     "ko": "보안",
+     "kr_read": "안 닌",
+     "emoji": "🔒",
+     "en": "a padlock",
+     "tones": [
+      {
+       "syl": "an",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ninh",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-an-ninh.webp"
+    },
+    {
+     "vi": "phát hiện",
+     "ko": "발견하다",
+     "kr_read": "팟 히엔",
+     "emoji": "💡",
+     "en": "a light bulb turning on",
+     "tones": [
+      {
+       "syl": "phát",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "hiện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-phat-hien.webp"
+    },
+    {
+     "vi": "cấm",
+     "ko": "금지",
+     "kr_read": "껌",
+     "emoji": "🚫",
+     "en": "a red stop sign",
+     "tones": [
+      {
+       "syl": "cấm",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-cam.webp"
+    }
+   ],
+   "dialog": {
+    "title": "공항 보안",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Kiểm tra hành lý ở đây phải không?",
+      "ko": "여기서 짐 검사해요?",
+      "kr_read": "끼엠 짜 하인 리 어 더이 파이 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Kiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "tra",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hành",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "lý",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "ở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đây",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "phải",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Vâng, đúng rồi. Xin mời đi qua.",
+      "ko": "네, 맞아요. 통과해 주세요.",
+      "kr_read": "벙 둥 조이 씬 머이 디 꽈",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Vâng,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đúng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "Xin",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mời",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "qua.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 113
   },
   {
    "ts": "2026-11-13",
@@ -4364,8 +5343,226 @@
    },
    "title_card": "안성시, 베트남 라오까이성과 계절근로자 유치 협약",
    "pub": "2026-11-13",
-   "n": 111,
+   "n": 112,
    "card": 14
+  },
+  {
+   "ts": "2026-11-13",
+   "day": "N404.html",
+   "track": "news",
+   "theme": "가스 폭발 사고",
+   "title": "2 dead, 12 injured as gas shop explosion destroys houses in Ho Chi Minh City",
+   "u": "https://e.vnexpress.net/news/news/2-dead-12-injured-as-gas-shop-explosion-destroys-houses-in-ho-chi-minh-city-5144404.html",
+   "cat": "소식",
+   "intro": "호찌민의 가스 가게 폭발로 건물이 무너졌습니다. 이 사고로 2명이 숨지고 12명이 다쳤습니다.",
+   "words": [
+    {
+     "vi": "bình gas",
+     "ko": "가스통",
+     "kr_read": "빈 가",
+     "emoji": "🛢️",
+     "en": "a metal gas cylinder",
+     "tones": [
+      {
+       "syl": "bình",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "gas",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-binh-gas.webp"
+    },
+    {
+     "vi": "mùi",
+     "ko": "냄새",
+     "kr_read": "무이",
+     "emoji": "👃",
+     "en": "a nose smelling something",
+     "tones": [
+      {
+       "syl": "mùi",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-mui.webp"
+    },
+    {
+     "vi": "nổ",
+     "ko": "폭발하다",
+     "kr_read": "노",
+     "emoji": "💥",
+     "en": "a loud explosion with smoke",
+     "tones": [
+      {
+       "syl": "nổ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-no.webp"
+    },
+    {
+     "vi": "nguy hiểm",
+     "ko": "위험하다",
+     "kr_read": "응우이 히엠",
+     "emoji": "⚠️",
+     "en": "a yellow warning sign with an exclamation mark",
+     "tones": [
+      {
+       "syl": "nguy",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "hiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-nguy-hiem.webp"
+    },
+    {
+     "vi": "chạy",
+     "ko": "달리다, 대피하다",
+     "kr_read": "짜이",
+     "emoji": "🏃",
+     "en": "a person running away quickly",
+     "tones": [
+      {
+       "syl": "chạy",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-chay.webp"
+    },
+    {
+     "vi": "bị thương",
+     "ko": "다치다",
+     "kr_read": "비 트엉",
+     "emoji": "🩹",
+     "en": "a person with a bandage on arm",
+     "tones": [
+      {
+       "syl": "bị",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "thương",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-bi-thuong.webp"
+    }
+   ],
+   "dialog": {
+    "title": "가스 폭발 사고",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Có mùi gas, nguy hiểm lắm!",
+      "ko": "가스 냄새가 나요, 매우 위험해요!",
+      "kr_read": "꼬 무이 가 응우이 히엠 람",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mùi",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "gas,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nguy",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "hiểm",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "lắm!",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Mau chạy ra ngoài đi!",
+      "ko": "얼른 밖으로 대피하세요!",
+      "kr_read": "마우 짜이 자 응오아이 디",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Mau",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "chạy",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "ra",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ngoài",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "đi!",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 111
   },
   {
    "ts": "2026-11-13",
@@ -31644,5 +32841,5 @@
    "n": 1
   }
  ],
- "updated": "2026-11-14 03:24"
+ "updated": "2026-11-14 10:48"
 }
