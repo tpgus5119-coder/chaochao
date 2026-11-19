@@ -581,6 +581,15 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-20 새벽(예약 작업): 일하기 좋은 기업 기사가 '오리온'에 걸려 과자 공장이, 박람회 기사가 '수출'에 걸려
+              # 항구가 깔릴 판이었고, 세금 벌금·임대료 거리·식음료 시장·냉연강판·외국인 거주 신고는 맞는 줄이 없었다.
+              (["일하기 좋은"], "a bright modern office with desks, plants and large windows"),
+              (["세무번호", "세금 벌금"], "tax forms, a calculator and a pen on a wooden desk"),
+              (["동커이", "임대료 세계"], "an elegant shopping street with boutique storefronts and trees"),
+              (["박람회"], "exhibition booths with product displays in a bright hall"),
+              (["식음료"], "coffee beans, rice and tropical fruits arranged on a wooden table"),
+              (["냉연강판"], "rolls of steel coils stacked in a steel mill warehouse"),
+              (["임시거주"], "a quiet apartment doorway with shoes and a small suitcase"),
               # 2026-11-13 새벽(예약 작업): K팝 시상식·로봇·LNG 발전·계절근로자 기사는 아무 줄에도 안 걸려 기본 배경이,
               # 정유 기사는 '화학'에, 호텔 예약 기술은 '여행' 해변에, 은행 자본금·부산은행은 증시와 같은 동전 그림에 걸릴 판이었다.
               (["골든디스크", "시상식"], "a concert stage with colorful lights over an empty arena"),
