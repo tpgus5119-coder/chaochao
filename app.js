@@ -8229,6 +8229,9 @@ function folderAdd(name) {
   foldersOf().push(f); save(); cloudSave(true); return f;
 }
 const folderHas = (f, vi) => (f.w || []).includes(vi);
+/* 폴더 고르는 창은 최근에 만든 폴더가 위 (대표님 2026-11-20) — 만든 때 t, 없으면 id 속 시각 */
+const folderMade = f => f.t || parseInt(String(f.id || '').slice(1), 36) || 0;
+const foldersNewest = () => foldersOf().slice().sort((a, b) => folderMade(b) - folderMade(a));
 /* 폴더에 넣으면 별표도 (대표님 2026-10-09 "폴더에 단어를 넣으면 내 단어장에도 — 폴더 단추로 넣어도 별표가 동시에") — 폴더에서 뺄 때 별은 그대로 둔다 */
 function starOnWith(vi, ko) {
   if (isStar(vi)) return;
@@ -8272,7 +8275,7 @@ function folderPopup(vi, ko, onChange) {
   const list = el('div', 'folist');
   const draw = () => {
     list.textContent = '';
-    const fo = foldersOf();
+    const fo = foldersNewest();
 
     fo.forEach(f => {
       const r = el('button', 'forow' + (folderHas(f, vi) ? ' on' : '')); r.type = 'button';
@@ -8304,7 +8307,7 @@ function folderPopupMany(vis, onChange) {
   const list = el('div', 'folist');
   const draw = () => {
     list.textContent = '';
-    const fo = foldersOf();
+    const fo = foldersNewest();
 
     fo.forEach(f => {
       const n = vis.filter(v => folderHas(f, v)).length, all = n === vis.length && n > 0;
@@ -12055,7 +12058,10 @@ const FIXED_EXAMS = { m1_1: { file: 'data/mock1_1.json', name: '모의고사 1',
   m3_4: { file: 'data/mock3_4.json', name: '모의고사 4', round: 3 }, m3_5: { file: 'data/mock3_5.json', name: '모의고사 5', round: 3 },
   /* 주간시험 4 (교재 1권 11·12과 + 2권 1·2과, 2026-11-06) — tools/mock4. 틀은 주간시험 3 과 같다 */
   m4_1: { file: 'data/mock4_1.json', name: '모의고사 1', round: 4 }, m4_2: { file: 'data/mock4_2.json', name: '모의고사 2', round: 4 }, m4_3: { file: 'data/mock4_3.json', name: '모의고사 3', round: 4 },
-  m4_4: { file: 'data/mock4_4.json', name: '모의고사 4', round: 4 }, m4_5: { file: 'data/mock4_5.json', name: '모의고사 5', round: 4 } };
+  m4_4: { file: 'data/mock4_4.json', name: '모의고사 4', round: 4 }, m4_5: { file: 'data/mock4_5.json', name: '모의고사 5', round: 4 },
+  /* 주간시험 5 (교재 2권 3~6과, 2026-11-20) — tools/mock5. 틀은 4회와 같다(말하기 뺌) */
+  m5_1: { file: 'data/mock5_1.json', name: '모의고사 1', round: 5 }, m5_2: { file: 'data/mock5_2.json', name: '모의고사 2', round: 5 }, m5_3: { file: 'data/mock5_3.json', name: '모의고사 3', round: 5 },
+  m5_4: { file: 'data/mock5_4.json', name: '모의고사 4', round: 5 }, m5_5: { file: 'data/mock5_5.json', name: '모의고사 5', round: 5 } };
 /* 주간시험 1 = 실제 1차 시험지 그대로, 주간시험 2 = 2차 시험 안내 틀(tools/mock2/common.py)로 낸 모의고사 다섯(1~7과). 옛 2차 예상 시험지(exam2)는 모의고사 1 로 다시 냈다 (2026-10-06) */   // 파일 이름을 글자 그대로 적어야 배포 목록에 든다. 2차는 교재 1권 1~7과로 클로드가 냄 (2026-10-06)
 let EXAM1_TIMER = 0, FIXED = {};
 /* 시험 이어 하기 (대표님 2026-10-07 "테스트들은 중간에 나가도 시험 보던 곳이 기억되도록") — **주간시험(시험지)과 22기 단어 시험만**.
