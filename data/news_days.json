@@ -2,6 +2,242 @@
  "days": [
   {
    "ts": "2026-11-20",
+   "day": "N204.html",
+   "track": "news",
+   "theme": "치과 진료",
+   "title": "Australian tourist completes dental veneer treatment during HCMC holiday",
+   "u": "https://e.vnexpress.net/news/life/australian-tourist-completes-dental-veneer-treatment-during-hcmc-holiday-5147204.html",
+   "cat": "소식",
+   "intro": "호치민을 찾은 외국인 관광객이 일주일 동안 치과 치료를 마쳤다. 사전 상담과 현대 기술로 단기 체류자도 빠른 치료가 가능하다.",
+   "words": [
+    {
+     "vi": "răng",
+     "ko": "치아",
+     "kr_read": "장",
+     "emoji": "🦷",
+     "en": "a clean white human tooth",
+     "tones": [
+      {
+       "syl": "răng",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-rang.webp"
+    },
+    {
+     "vi": "bác sĩ",
+     "ko": "의사",
+     "kr_read": "박 씨",
+     "emoji": "👨‍⚕️",
+     "en": "a dentist wearing a white coat",
+     "tones": [
+      {
+       "syl": "bác",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "sĩ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "n-bac-si.webp"
+    },
+    {
+     "vi": "bệnh viện",
+     "ko": "병원",
+     "kr_read": "벤 비엔",
+     "emoji": "🏥",
+     "en": "a modern hospital building",
+     "tones": [
+      {
+       "syl": "bệnh",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "viện",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-benh-vien.webp"
+    },
+    {
+     "vi": "lịch hẹn",
+     "ko": "예약",
+     "kr_read": "릭 핸",
+     "emoji": "📅",
+     "en": "a calendar page with a date circled",
+     "tones": [
+      {
+       "syl": "lịch",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "hẹn",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-lich-hen.webp"
+    },
+    {
+     "vi": "đau",
+     "ko": "아프다",
+     "kr_read": "다우",
+     "emoji": "🤕",
+     "en": "a person holding a cheek in pain",
+     "tones": [
+      {
+       "syl": "đau",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-dau.webp"
+    },
+    {
+     "vi": "kiểm tra",
+     "ko": "검진하다",
+     "kr_read": "끼엠 짜",
+     "emoji": "🔍",
+     "en": "a magnifying glass",
+     "tones": [
+      {
+       "syl": "kiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "tra",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-kiem-tra.webp"
+    }
+   ],
+   "dialog": {
+    "title": "치과 진료",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Chiều nay tôi đi bác sĩ răng.",
+      "ko": "오늘 오후에 치과에 가요.",
+      "kr_read": "찌에우 나이 또이 디 박 씨 장",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Chiều",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bác",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "sĩ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "răng.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Anh đã đặt lịch hẹn chưa?",
+      "ko": "예약을 하셨나요?",
+      "kr_read": "아인 다 닷 릭 핸 쯔어",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đã",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "đặt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "lịch",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "hẹn",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chưa?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 135
+  },
+  {
+   "ts": "2026-11-20",
    "day": "Nno=44553",
    "track": "news",
    "theme": "직장 생활",
@@ -221,7 +457,7 @@
     ],
     "extra": []
    },
-   "n": 129
+   "n": 134
   },
   {
    "ts": "2026-11-20",
@@ -433,7 +669,7 @@
     ],
     "extra": []
    },
-   "n": 128
+   "n": 133
   },
   {
    "ts": "2026-11-20",
@@ -674,7 +910,7 @@
     ],
     "extra": []
    },
-   "n": 127
+   "n": 132
   },
   {
    "ts": "2026-11-20",
@@ -989,7 +1225,7 @@
    },
    "title_card": "외국 국적 아들 재우고 신고 안 해 과태료 400만 동",
    "pub": "2026-11-20",
-   "n": 126,
+   "n": 131,
    "card": 14
   },
   {
@@ -1269,7 +1505,7 @@
    },
    "title_card": "베트남 일하기 좋은 기업 100곳에 한국 기업 다수",
    "pub": "2026-11-20",
-   "n": 125,
+   "n": 130,
    "card": 1
   },
   {
@@ -1549,7 +1785,7 @@
    },
    "title_card": "외국인이 산 베트남 아파트 6,188채…한국인이 48%로 1위",
    "pub": "2026-11-20",
-   "n": 124,
+   "n": 129,
    "card": 5
   },
   {
@@ -1823,7 +2059,7 @@
    },
    "title_card": "베트남 1~10월 신차 55만 대 팔려…21% 가까이 늘어",
    "pub": "2026-11-20",
-   "n": 123,
+   "n": 128,
    "card": 12
   },
   {
@@ -2103,7 +2339,7 @@
    },
    "title_card": "베트남, 동남아에서 가장 역동적인 식음료 시장",
    "pub": "2026-11-20",
-   "n": 122,
+   "n": 127,
    "card": 9
   },
   {
@@ -2383,7 +2619,7 @@
    },
    "title_card": "세무번호 방치 250만 명…벌금 30%만 내게 감면 추진",
    "pub": "2026-11-20",
-   "n": 121,
+   "n": 126,
    "card": 2
   },
   {
@@ -2687,7 +2923,7 @@
    },
    "title_card": "삼성 스마트공장 지원에 베트남 기업 생산기간 3일로",
    "pub": "2026-11-20",
-   "n": 120,
+   "n": 125,
    "card": 11
   },
   {
@@ -2882,7 +3118,254 @@
     ],
     "extra": []
    },
-   "n": 119
+   "n": 124
+  },
+  {
+   "ts": "2026-11-20",
+   "day": "Nno=44554",
+   "track": "news",
+   "theme": "베트남 휴일",
+   "title": "베트남 “연휴 조성 위한 근무일 교환 법제화 불가”…노동법 개정안",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44554",
+   "cat": "일자리",
+   "intro": "베트남은 일률적인 연휴 교환 제도를 도입하지 않기로 했습니다. 대신 공휴일을 추가해 연간 휴일을 13일로 늘릴 예정입니다.",
+   "words": [
+    {
+     "vi": "ngày lễ",
+     "ko": "공휴일",
+     "kr_read": "응아이 레",
+     "emoji": "🎈",
+     "en": "colorful balloons decoration",
+     "tones": [
+      {
+       "syl": "ngày",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "lễ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      }
+     ],
+     "img": "n-ngay-le.webp"
+    },
+    {
+     "vi": "ngày nghỉ",
+     "ko": "휴일",
+     "kr_read": "응아이 응이",
+     "emoji": "📅",
+     "en": "a wall calendar",
+     "tones": [
+      {
+       "syl": "ngày",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "nghỉ",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-ngay-nghi.webp"
+    },
+    {
+     "vi": "tuần sau",
+     "ko": "다음 주",
+     "kr_read": "뚜언 싸우",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "tuần",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "sau",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    },
+    {
+     "vi": "làm việc",
+     "ko": "일하다",
+     "kr_read": "람 비엑",
+     "emoji": "💼",
+     "en": "a desk with a laptop",
+     "tones": [
+      {
+       "syl": "làm",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "việc",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-lam-viec.webp"
+    },
+    {
+     "vi": "công ty",
+     "ko": "회사",
+     "kr_read": "꽁 띠",
+     "emoji": "🏢",
+     "en": "an office building",
+     "tones": [
+      {
+       "syl": "công",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "ty",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-cong-ty.webp"
+    },
+    {
+     "vi": "nhà máy",
+     "ko": "공장",
+     "kr_read": "냐 마이",
+     "emoji": "🏭",
+     "en": "a factory building",
+     "tones": [
+      {
+       "syl": "nhà",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-nha-may.webp"
+    }
+   ],
+   "dialog": {
+    "title": "베트남 휴일",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Tuần sau công ty có nghỉ không?",
+      "ko": "다음 주에 회사 쉬나요?",
+      "kr_read": "뚜언 싸우 꽁 띠 꼬 응이 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Tuần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "sau",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "công",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ty",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "nghỉ",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có, thứ Hai tuần sau nghỉ.",
+      "ko": "네, 다음 주 월요일에 쉬어요.",
+      "kr_read": "꼬 트 하이 뚜언 싸우 응이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "thứ",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "Hai",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tuần",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "sau",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nghỉ.",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 123
   },
   {
    "ts": "2026-11-20",
@@ -3142,7 +3625,235 @@
     ],
     "extra": []
    },
-   "n": 118
+   "n": 122
+  },
+  {
+   "ts": "2026-11-20",
+   "day": "N235.html",
+   "track": "news",
+   "theme": "베트남 뉴스",
+   "title": "Vietnam scraps death penalty for 6 crimes",
+   "u": "https://e.vnexpress.net/news/news/vietnam-scraps-death-penalty-for-6-crimes-5147235.html",
+   "cat": "사회",
+   "intro": "베트남이 사형 적용 범죄를 10개에서 4개로 줄였습니다. 마약 밀매 등 6개 범죄의 사형 제도가 폐지됩니다.",
+   "words": [
+    {
+     "vi": "tin tức",
+     "ko": "뉴스, 소식",
+     "kr_read": "띤 뜩",
+     "emoji": "📰",
+     "en": "a newspaper with printed text",
+     "tones": [
+      {
+       "syl": "tin",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "tức",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-tin-tuc.webp"
+    },
+    {
+     "vi": "luật",
+     "ko": "법, 법률",
+     "kr_read": "루엇",
+     "emoji": "📜",
+     "en": "a legal document paper",
+     "tones": [
+      {
+       "syl": "luật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-luat.webp"
+    },
+    {
+     "vi": "mới",
+     "ko": "새로운",
+     "kr_read": "머이",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "mới",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "thay đổi",
+     "ko": "바뀌다, 변경",
+     "kr_read": "타이 도이",
+     "emoji": "🔄",
+     "en": "two green arrows forming a circle",
+     "tones": [
+      {
+       "syl": "thay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "đổi",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-thay-doi.webp"
+    },
+    {
+     "vi": "nghe",
+     "ko": "듣다",
+     "kr_read": "응애",
+     "emoji": "👂",
+     "en": "a human ear",
+     "tones": [
+      {
+       "syl": "nghe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-nghe.webp"
+    },
+    {
+     "vi": "chưa",
+     "ko": "아직 (~않다)",
+     "kr_read": "쯔어",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "chưa",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ]
+    }
+   ],
+   "dialog": {
+    "title": "베트남 뉴스",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Anh đã nghe tin tức mới chưa?",
+      "ko": "새 소식 들었어요?",
+      "kr_read": "아인 다 응애 띤 뜩 머이 쯔어",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Anh",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đã",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "nghe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tin",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tức",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "mới",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chưa?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Tôi chưa xem, có tin gì vậy?",
+      "ko": "아직 안 봤어요, 무슨 소식인데요?",
+      "kr_read": "또이 쯔어 쌤 꼬 띤 지 버이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Tôi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "chưa",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xem,",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "tin",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "gì",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "vậy?",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 121
   },
   {
    "ts": "2026-11-20",
@@ -3415,7 +4126,7 @@
    },
    "title_card": "또 럼 서기장·푸틴 회담…원전·가스 협력 확대",
    "pub": "2026-11-20",
-   "n": 117,
+   "n": 120,
    "card": 13
   },
   {
@@ -3695,7 +4406,7 @@
    },
    "title_card": "호찌민 동커이길 임대료 세계 17위…㎡당 연 3,743달러",
    "pub": "2026-11-20",
-   "n": 116,
+   "n": 119,
    "card": 7
   },
   {
@@ -3981,7 +4692,7 @@
    },
    "title_card": "경북 기업 15곳, 베트남 달랏 박람회서 판로 찾아",
    "pub": "2026-11-20",
-   "n": 115,
+   "n": 118,
    "card": 8
   },
   {
@@ -4249,7 +4960,7 @@
    },
    "title_card": "다낭, 론리플래닛 연말 추천 여행지 4위…아시아 유일",
    "pub": "2026-11-20",
-   "n": 114,
+   "n": 117,
    "card": 15
   },
   {
@@ -4565,7 +5276,7 @@
    },
    "title_card": "EU, 베트남산 냉연강판에 반덤핑 관세 16% 부과",
    "pub": "2026-11-20",
-   "n": 113,
+   "n": 116,
    "card": 10
   },
   {
@@ -4791,8 +5502,268 @@
    },
    "title_card": "휘발유 리터당 19,100동…11월 들어 다섯 번 연속 인하",
    "pub": "2026-11-20",
-   "n": 112,
+   "n": 115,
    "card": 3
+  },
+  {
+   "ts": "2026-11-20",
+   "day": "N735.html",
+   "track": "news",
+   "theme": "교통 법규",
+   "title": "Three foreigners filmed weaving on motorbikes without helmets in Vietnam fined $752",
+   "u": "https://e.vnexpress.net/news/news/traffic/three-foreigners-filmed-weaving-on-motorbikes-without-helmets-in-vietnam-fined-752-5146735.html",
+   "cat": "소식",
+   "intro": "베트남에서 헬멧 없이 오토바이를 탄 외국인 3명이 경찰에 적발되어 벌금을 물었습니다.",
+   "words": [
+    {
+     "vi": "xe máy",
+     "ko": "오토바이",
+     "kr_read": "쌔 마이",
+     "emoji": "🛵",
+     "en": "a motor scooter",
+     "tones": [
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-xe-may.webp"
+    },
+    {
+     "vi": "mũ bảo hiểm",
+     "ko": "헬멧",
+     "kr_read": "무 바오 히엠",
+     "emoji": "🪖",
+     "en": "a motorcycle helmet",
+     "tones": [
+      {
+       "syl": "mũ",
+       "name": "ngã",
+       "ko": "끊었다 올림",
+       "shape": "∿"
+      },
+      {
+       "syl": "bảo",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "hiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      }
+     ],
+     "img": "n-mu-bao-hiem.webp"
+    },
+    {
+     "vi": "cảnh sát",
+     "ko": "경찰",
+     "kr_read": "까인 쌋",
+     "emoji": "👮",
+     "en": "a police officer",
+     "tones": [
+      {
+       "syl": "cảnh",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "sát",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-canh-sat.webp"
+    },
+    {
+     "vi": "đường",
+     "ko": "길, 도로",
+     "kr_read": "드엉",
+     "emoji": "🛣️",
+     "en": "a paved road",
+     "tones": [
+      {
+       "syl": "đường",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      }
+     ],
+     "img": "n-duong.webp"
+    },
+    {
+     "vi": "lái xe",
+     "ko": "운전하다",
+     "kr_read": "라이 쌔",
+     "emoji": "🛵",
+     "en": "a person riding a scooter",
+     "tones": [
+      {
+       "syl": "lái",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "xe",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-lai-xe.webp"
+    },
+    {
+     "vi": "tiền phạt",
+     "ko": "벌금",
+     "kr_read": "띠엔 팟",
+     "emoji": "💵",
+     "en": "paper money cash",
+     "tones": [
+      {
+       "syl": "tiền",
+       "name": "huyền",
+       "ko": "낮게 내려감",
+       "shape": "＼"
+      },
+      {
+       "syl": "phạt",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-tien-phat.webp"
+    }
+   ],
+   "dialog": {
+    "title": "교통 법규",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Đi xe máy có phải đội mũ không?",
+      "ko": "오토바이 탈 때 헬멧 써야 해요?",
+      "kr_read": "디 쌔 마이 꼬 파이 도이 무 콩",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Đi",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "xe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "máy",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "phải",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "đội",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "mũ",
+        "name": "ngã",
+        "ko": "끊었다 올림",
+        "shape": "∿"
+       },
+       {
+        "syl": "không?",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Có chứ, không đội bị phạt đấy.",
+      "ko": "그럼요, 안 쓰면 벌금 나와요.",
+      "kr_read": "꼬 쯔 콩 도이 비 팟 더이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Có",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "chứ,",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "không",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "đội",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "phạt",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "đấy.",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 114
   },
   {
    "ts": "2026-11-20",
@@ -5065,8 +6036,479 @@
    },
    "title_card": "베트남 올해 교역 1조702억 달러…무역적자 117억 달러",
    "pub": "2026-11-20",
-   "n": 111,
+   "n": 113,
    "card": 4
+  },
+  {
+   "ts": "2026-11-20",
+   "day": "Nno=44552",
+   "track": "news",
+   "theme": "공항 공사 지연",
+   "title": "베트남 롱탄신공항, 핵심사업 지연에 12월 개항 ‘빨간불’…건설부 “신중 검토 필요”",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44552",
+   "cat": "정치",
+   "intro": "롱탄 신공항의 12월 개항이 지연될 위기에 처했습니다. 공사 지연과 자재 부족으로 인허가 검토가 필요합니다.",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an international airport building with airplanes",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "vật liệu",
+     "ko": "자재, 재료",
+     "kr_read": "벗 리에우",
+     "emoji": "🧱",
+     "en": "stacks of construction bricks",
+     "tones": [
+      {
+       "syl": "vật",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "liệu",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-vat-lieu.webp"
+    },
+    {
+     "vi": "xây dựng",
+     "ko": "건설하다",
+     "kr_read": "써이 증",
+     "emoji": "🏗️",
+     "en": "a construction crane near a building",
+     "tones": [
+      {
+       "syl": "xây",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "dựng",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-xay-dung.webp"
+    },
+    {
+     "vi": "kiểm tra",
+     "ko": "점검하다, 검사하다",
+     "kr_read": "끼엠 짜",
+     "emoji": "📋",
+     "en": "a checklist with a pencil checking items",
+     "tones": [
+      {
+       "syl": "kiểm",
+       "name": "hỏi",
+       "ko": "내렸다 올림",
+       "shape": "∨"
+      },
+      {
+       "syl": "tra",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-kiem-tra.webp"
+    },
+    {
+     "vi": "thiếu",
+     "ko": "부족하다",
+     "kr_read": "티에우",
+     "emoji": "",
+     "en": "",
+     "tones": [
+      {
+       "syl": "thiếu",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ]
+    },
+    {
+     "vi": "chuyến bay",
+     "ko": "운항편, 비행편",
+     "kr_read": "쭈옌 바이",
+     "emoji": "🛫",
+     "en": "an airplane taking off into the sky",
+     "tones": [
+      {
+       "syl": "chuyến",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-chuyen-bay.webp"
+    }
+   ],
+   "dialog": {
+    "title": "공항 공사 지연",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Sân bay mới bao giờ mở cửa?",
+      "ko": "새 공항은 언제 개항해요?",
+      "kr_read": "썬 바이 머이 바오 저 머 끄어",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Sân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "mới",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bao",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "giờ",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "mở",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       },
+       {
+        "syl": "cửa?",
+        "name": "hỏi",
+        "ko": "내렸다 올림",
+        "shape": "∨"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Nghe nói bị chậm rồi.",
+      "ko": "듣자하니 지연되었다고 해요.",
+      "kr_read": "응애 노이 비 쩜 조이",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Nghe",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "nói",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "bị",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "chậm",
+        "name": "nặng",
+        "ko": "짧고 무겁게",
+        "shape": "↓"
+       },
+       {
+        "syl": "rồi.",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 112
+  },
+  {
+   "ts": "2026-11-20",
+   "day": "Nno=44558",
+   "track": "news",
+   "theme": "공항 개항",
+   "title": "ACV “롱탄신공항, 12월 24일 1단계 개항” 재확인…베트남항공·비엣젯항공 일 30편 운항",
+   "u": "https://www.insidevina.com/news/articleView.html?idxno=44558",
+   "cat": "정치",
+   "intro": "롱탄신공항이 12월 24일 1단계 개항을 앞두고 있습니다. 베트남항공과 비엣젯항공이 국내선과 단거리 국제선을 운항합니다.",
+   "words": [
+    {
+     "vi": "sân bay",
+     "ko": "공항",
+     "kr_read": "썬 바이",
+     "emoji": "✈️",
+     "en": "an airport with planes",
+     "tones": [
+      {
+       "syl": "sân",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-san-bay.webp"
+    },
+    {
+     "vi": "chuyến bay",
+     "ko": "항공편",
+     "kr_read": "쭈옌 바이",
+     "emoji": "🎫",
+     "en": "a flight ticket",
+     "tones": [
+      {
+       "syl": "chuyến",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-chuyen-bay.webp"
+    },
+    {
+     "vi": "tháng",
+     "ko": "월",
+     "kr_read": "탕",
+     "emoji": "🗓️",
+     "en": "a calendar showing a month",
+     "tones": [
+      {
+       "syl": "tháng",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-thang.webp"
+    },
+    {
+     "vi": "quốc tế",
+     "ko": "국제",
+     "kr_read": "꾸옥 떼",
+     "emoji": "🌍",
+     "en": "a globe showing different countries",
+     "tones": [
+      {
+       "syl": "quốc",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "tế",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      }
+     ],
+     "img": "n-quoc-te.webp"
+    },
+    {
+     "vi": "nội địa",
+     "ko": "국내",
+     "kr_read": "노이 디어",
+     "emoji": "🇻🇳",
+     "en": "a map of Vietnam",
+     "tones": [
+      {
+       "syl": "nội",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      },
+      {
+       "syl": "địa",
+       "name": "nặng",
+       "ko": "짧고 무겁게",
+       "shape": "↓"
+      }
+     ],
+     "img": "n-noi-dia.webp"
+    },
+    {
+     "vi": "máy bay",
+     "ko": "비행기",
+     "kr_read": "마이 바이",
+     "emoji": "✈️",
+     "en": "a passenger airplane",
+     "tones": [
+      {
+       "syl": "máy",
+       "name": "sắc",
+       "ko": "짧게 올라감",
+       "shape": "／"
+      },
+      {
+       "syl": "bay",
+       "name": "ngang",
+       "ko": "평평하게 그대로",
+       "shape": "—"
+      }
+     ],
+     "img": "n-may-bay.webp"
+    }
+   ],
+   "dialog": {
+    "title": "공항 개항",
+    "emoji": "📰",
+    "lines": [
+     {
+      "vi": "Sân bay Long Thành khai trương ngày nào?",
+      "ko": "롱탄 공항은 언제 개장해요?",
+      "kr_read": "썬 바이 롱 타인 카이 쯔엉 응아이 나오",
+      "who": "A",
+      "tones": [
+       {
+        "syl": "Sân",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "bay",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "Long",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "Thành",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "khai",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "trương",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "ngày",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "nào?",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       }
+      ],
+      "gloss": []
+     },
+     {
+      "vi": "Ngày 24 tháng 12.",
+      "ko": "12월 24일입니다.",
+      "kr_read": "응아이 탕",
+      "who": "B",
+      "tones": [
+       {
+        "syl": "Ngày",
+        "name": "huyền",
+        "ko": "낮게 내려감",
+        "shape": "＼"
+       },
+       {
+        "syl": "24",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       },
+       {
+        "syl": "tháng",
+        "name": "sắc",
+        "ko": "짧게 올라감",
+        "shape": "／"
+       },
+       {
+        "syl": "12.",
+        "name": "ngang",
+        "ko": "평평하게 그대로",
+        "shape": "—"
+       }
+      ],
+      "gloss": []
+     }
+    ],
+    "extra": []
+   },
+   "n": 111
   },
   {
    "ts": "2026-11-20",
@@ -33743,5 +35185,5 @@
    "n": 1
   }
  ],
- "updated": "2026-11-21 04:07"
+ "updated": "2026-11-21 11:53"
 }
