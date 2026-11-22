@@ -581,6 +581,20 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-23 새벽(예약 작업): 화장품 수출상담·과일 수출이 '수출'에 걸려 항구가, 치과 의료관광·호텔 기사가 '관광'에
+              # 걸려 해변이 깔릴 판이었고, 채용·방치 토지·금값·보석·스마트폰·APEC·출산율은 맞는 줄이 없었다.
+              # 장면 문구엔 글자를 부르는 낱말을 넣지 않는다(11/20 'tax forms' 에서 TAX 글자가 그려졌다).
+              (["선그룹"], "resort staff in white uniforms carrying towels beside a pool with palm trees"),  # 로비 장면은 가짜 간판 글자를 그렸다
+              (["GS리테일", "K뷰티"], "skincare bottles and cosmetic jars neatly arranged on a shelf"),
+              (["방치 토지", "놀리는 땅"], "an empty overgrown plot of land beside new buildings"),
+              (["금값", "금괴"], "shiny gold bars stacked on a dark velvet cloth"),
+              (["과일·채소", "두리안"], "a pile of durians, mangoes and dragon fruits at a market"),
+              (["PNJ", "귀금속"], "a jewelry store display case with rings and necklaces"),
+              (["스마트폰"], "several smartphones lying on a wooden desk"),
+              (["호텔신라", "신라모노그램"], "a modern luxury hotel lobby with a lake view"),
+              (["APEC"], "a large summit conference hall with rows of national flags"),
+              (["출산율"], "a young mother holding a baby's hand in a sunny park"),
+              (["임플란트", "치과"], "a clean modern dental clinic room with a dental chair"),
               # 2026-11-20 새벽(예약 작업): 일하기 좋은 기업 기사가 '오리온'에 걸려 과자 공장이, 박람회 기사가 '수출'에 걸려
               # 항구가 깔릴 판이었고, 세금 벌금·임대료 거리·식음료 시장·냉연강판·외국인 거주 신고는 맞는 줄이 없었다.
               (["일하기 좋은"], "a bright modern office with desks, plants and large windows"),
