@@ -581,6 +581,16 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-24 새벽(예약 작업): 목재칩이 '칩'에 걸려 회로기판이, 스마트건설이 '무역'(무역협회)에 걸려 항구가,
+              # 레고 태양광이 '배터리'에 걸려 재활용통이 깔릴 판이었다. 보험사·단기 임대·AI 세미나·노무관리는 맞는 줄이 없었다.
+              (["목재칩", "펠릿"], "piles of wood chips and stacked logs at a timber yard"),
+              (["재생에너지", "태양광"], "rows of solar panels on a large factory roof under a blue sky"),
+              (["스마트건설", "투티엠"], "a construction site with tower cranes and a concrete building frame at dawn"),
+              (["AI 도입", "인공지능"], "a laptop beside a small white robot arm on a bright office desk"),
+              (["생명보험", "보험사"], "a modern glass office tower against a blue sky"),
+              (["단기 임대", "숙박용"], "a cozy furnished apartment bedroom with a suitcase by the bed"),
+              (["안전보건", "노무관리"], "yellow safety helmets and reflective vests hanging on a factory wall"),
+              (["부품 공장", "카메라 모듈"], "tiny camera modules and electronic parts on a clean factory bench"),
               # 2026-11-23 새벽(예약 작업): 화장품 수출상담·과일 수출이 '수출'에 걸려 항구가, 치과 의료관광·호텔 기사가 '관광'에
               # 걸려 해변이 깔릴 판이었고, 채용·방치 토지·금값·보석·스마트폰·APEC·출산율은 맞는 줄이 없었다.
               # 장면 문구엔 글자를 부르는 낱말을 넣지 않는다(11/20 'tax forms' 에서 TAX 글자가 그려졌다).
