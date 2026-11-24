@@ -581,6 +581,14 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-25 새벽(예약 작업): 원전 기사가 '철수'에 걸려 조립 라인이, 식당 폭발 기사가 '식당'에 걸려
+              # 쌀국수 그릇이 깔릴 판이었다. 뗏 위로금·중소기업법·전기요금·이마트는 맞는 줄이 없었다.
+              (["원전", "원자력"], "a nuclear power plant with cooling towers by the sea under a clear sky"),
+              (["폭발"], "a quiet city street at dawn with fire trucks and flashing emergency lights"),
+              (["위로금", "뗏 상여금"], "yellow apricot blossoms and a basket of fruit on a wooden table"),
+              (["중소기업"], "a small tidy workshop with shelves and a wooden workbench"),
+              (["전기요금", "전력법"], "power lines and an electric pylon against an evening sky"),
+              (["이마트", "K-브랜드"], "a shopping cart in a bright supermarket aisle with colorful shelves"),
               # 2026-11-24 새벽(예약 작업): 목재칩이 '칩'에 걸려 회로기판이, 스마트건설이 '무역'(무역협회)에 걸려 항구가,
               # 레고 태양광이 '배터리'에 걸려 재활용통이 깔릴 판이었다. 보험사·단기 임대·AI 세미나·노무관리는 맞는 줄이 없었다.
               (["목재칩", "펠릿"], "piles of wood chips and stacked logs at a timber yard"),
