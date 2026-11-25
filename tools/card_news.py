@@ -581,6 +581,15 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-26 새벽(예약 작업): 국제금융센터 기사가 '회원사'의 '원사'에 걸려 직물 공장이, 체육단지 기사가
+              # '선그룹'에 걸려 수영장이 깔릴 판이었다. 짱안은 맞는 줄이 없었고, 은행 기사 둘·건설사가 같은 장면에 몰렸다.
+              (["배터리 저장"], "rows of large white energy storage containers beside solar panels on open land"),
+              (["금융센터"], "a modern glass financial district skyline at dusk"),
+              (["경기장", "체육단지"], "an empty large football stadium with a green pitch under evening floodlights"),
+              (["짱안", "지질유산"], "limestone karst mountains rising from a calm river with small wooden boats"),
+              (["경영진", "최고경영자"], "an empty boardroom with leather chairs around a long polished table"),
+              (["부실채권"], "a heavy steel bank vault door slightly open in a quiet room"),
+              (["호아빈 건설"], "a construction site with tall cranes and steel frames at sunrise"),
               # 2026-11-25 새벽(예약 작업): 원전 기사가 '철수'에 걸려 조립 라인이, 식당 폭발 기사가 '식당'에 걸려
               # 쌀국수 그릇이 깔릴 판이었다. 뗏 위로금·중소기업법·전기요금·이마트는 맞는 줄이 없었다.
               (["원전", "원자력"], "a nuclear power plant with cooling towers by the sea under a clear sky"),
