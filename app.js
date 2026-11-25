@@ -841,6 +841,19 @@ function slowCtx() {
   return SLOWA.ctx;
 }
 addEventListener('pointerdown', () => { try { slowCtx(); } catch (e) { } }, true);   // 누를 때 깨워 둔다 (사파리는 누름 안에서만 소리를 연다)
+/* 아이폰에서 입모양·그래프(0.1배)를 눌러도 소리가 안 나던 것 (대표님 2026-11-25 "발음카드 입모양 누르면 재생 안 됨, 정면 측면 모두"):
+   ① 아이폰은 무음 스위치를 켜 두면 Web Audio 소리를 끈다(audio 요소는 그대로 남) — 느린 소리만 Web Audio 라 그것만 안 났다.
+      소리 세션을 '재생(playback)'으로 두면 무음 스위치와 무관하게 난다(사파리 16.4+ navigator.audioSession).
+   ② 사파리는 pointerdown 을 '누름'으로 안 칠 때가 있다 — 손을 뗄 때(touchend·click)도 깨우고, 처음 한 번은 빈 소리를 틀어 길을 연다 */
+try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { }
+let SLOW_OPEN = false;
+const slowUnlock = () => {
+  try {
+    const c = slowCtx(); if (!c) return;
+    if (!SLOW_OPEN) { const b = c.createBuffer(1, 1, 22050), s = c.createBufferSource(); s.buffer = b; s.connect(c.destination); s.start(0); SLOW_OPEN = true; }
+  } catch (e) { }
+};
+['touchend', 'click', 'keydown'].forEach(ev => addEventListener(ev, slowUnlock, true));
 function wsola(x, sr, rate) {                        // 높낮이 그대로 길이만 1/rate 배 (파형 닮음 겹쳐 잇기)
   const N = Math.round(sr * .03) & ~1, Hs = N / 2, Ha = Hs * rate, tol = Math.round(sr * .006), L = Math.ceil(x.length / rate) + N;
   const y = new Float32Array(L), win = new Float32Array(N);
@@ -884,12 +897,15 @@ function slowSync() {                                  // audio 요소 상태에
   audio.muted = true;
   slowBuf(url, rate).then(buf => {
     if (tok !== SLOWA.tok || audio.paused || audio.src !== url) return;
+    if (SLOWA.ctx.state !== 'running') { audio.muted = false; return; }   // 느린 소리 길이 안 열렸으면 원래 소리라도 (무음보다 낫다)
     const s = SLOWA.ctx.createBufferSource(); s.buffer = buf; s.connect(SLOWA.ctx.destination);
     s.start(0, Math.min(audio.currentTime / rate, buf.duration)); SLOWA.src = s;
   }).catch(() => { audio.muted = false; });          // 못 늘이면 그냥 원래 소리로
 }
 ['play', 'ratechange', 'seeked'].forEach(ev => audio.addEventListener(ev, () => { if (!audio.paused) slowSync(); else if (ev === 'ratechange' && audio.playbackRate >= .5) audio.muted = false; }));
-['pause', 'ended', 'emptied', 'seeking'].forEach(ev => audio.addEventListener(ev, () => { SLOWA.tok++; slowStop(); }));
+/* 끝까지 다 튼 것(ended)에는 느린 소리를 끊지 않는다 — 늘인 소리는 받아 푸는 만큼(0.1~0.3초) 늦게 시작해 끝소리(ăn 의 n)가 잘렸다 (2026-11-25) */
+const audioAtEnd = () => audio.ended || (audio.duration > 0 && audio.currentTime >= audio.duration - .02);
+['pause', 'ended', 'emptied', 'seeking'].forEach(ev => audio.addEventListener(ev, () => { if ((ev === 'pause' || ev === 'ended') && audioAtEnd()) return; SLOWA.tok++; slowStop(); }));
 audio.addEventListener('ended', () => { PB.hold = null; });
 ['pause', 'ended', 'emptied', 'seeked'].forEach(ev => audio.addEventListener(ev, () => { setTimeout(pbTick, 0); }));
 myVoice.addEventListener('play', () => { if (!PB.raf) PB.raf = requestAnimationFrame(pbTick); });
