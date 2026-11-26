@@ -581,6 +581,13 @@ def main():
             # 것을 잡았다 — 폭우 기사에 아파트, 화재 기사에 아파트, 차량호출 기사에 조립 공장이
             # 깔렸다. 위에 놓아야 아래의 넓은 낱말('주택'·'전기차')보다 먼저 걸린다.
             SUBJECT = [
+              # 2026-11-27 새벽(예약 작업): AI 기판 공장이 기본 배경, 은행 사칭 사기가 동전 차트, 전자신원이 회로 기판,
+              # 빈그룹 인도 주택·호텔과 야간 관광열차가 해변에 걸릴 판이었다. 글자를 부르는 화면·간판은 넣지 않았다.
+              (["전자신원"], "a fingerprint scanner device on a clean white desk in soft light"),
+              (["사칭 사기"], "a smartphone with a blank glowing screen on a dark table beside a small metal padlock"),
+              (["회로 기판", "AI 기판"], "green printed circuit boards stacked on a clean factory workbench"),
+              (["인도 진출"], "a large housing construction site with tower cranes under a clear sky"),
+              (["관광열차", "야간열차"], "a sleeper train passing through green terraced mountains at dusk"),
               # 2026-11-26 새벽(예약 작업): 국제금융센터 기사가 '회원사'의 '원사'에 걸려 직물 공장이, 체육단지 기사가
               # '선그룹'에 걸려 수영장이 깔릴 판이었다. 짱안은 맞는 줄이 없었고, 은행 기사 둘·건설사가 같은 장면에 몰렸다.
               (["배터리 저장"], "rows of large white energy storage containers beside solar panels on open land"),
